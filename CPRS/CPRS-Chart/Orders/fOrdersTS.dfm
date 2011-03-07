@@ -8,20 +8,18 @@ inherited frmOrdersTS: TfrmOrdersTS
   Constraints.MinWidth = 310
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitLeft = 84
-  ExplicitTop = 77
   ExplicitWidth = 464
   ExplicitHeight = 385
   PixelsPerInch = 96
   TextHeight = 13
   object pnlMiddle: TPanel [0]
     Left = 0
-    Top = 78
+    Top = 60
     Width = 456
     Height = 56
     Align = alTop
     Constraints.MinHeight = 45
-    TabOrder = 0
+    TabOrder = 1
     object grpChoice: TGroupBox
       Left = 1
       Top = 1
@@ -80,36 +78,37 @@ inherited frmOrdersTS: TfrmOrdersTS
     Left = 0
     Top = 0
     Width = 456
-    Height = 78
+    Height = 60
     Align = alTop
     Anchors = [akLeft, akTop, akRight, akBottom]
     AutoSize = True
     BorderStyle = bsSingle
-    TabOrder = 1
-    object lblPtInfo: TLabel
+    TabOrder = 0
+    object lblPtInfo: TVA508StaticText
+      Name = 'lblPtInfo'
       Left = 1
       Top = 1
-      Width = 3
+      Width = 450
       Height = 34
       Align = alTop
-      Color = clBtnFace
+      Alignment = taLeftJustify
       Constraints.MinHeight = 34
-      ParentColor = False
-      Layout = tlCenter
+      TabOrder = 0
+      ShowAccelChar = True
     end
     object pnldif: TPanel
       Left = 1
       Top = 35
       Width = 450
-      Height = 38
+      Height = 20
       Align = alTop
       Anchors = [akLeft, akTop, akRight, akBottom]
-      TabOrder = 0
+      TabOrder = 1
       object Image1: TImage
         Left = 1
         Top = 1
         Width = 24
-        Height = 22
+        Height = 18
         Align = alLeft
         AutoSize = True
         Enabled = False
@@ -130,52 +129,62 @@ inherited frmOrdersTS: TfrmOrdersTS
         Transparent = True
         ExplicitHeight = 36
       end
-      object Label1: TLabel
+      object lblUseAdmit: TVA508StaticText
+        Name = 'lblUseAdmit'
         Left = 34
         Top = 4
-        Width = 327
-        Height = 13
+        Width = 329
+        Height = 15
+        Alignment = taLeftJustify
         Caption = 
           'Use Admit: if patient is newly admitted to the hospital or nursi' +
           'ng home.'
+        TabOrder = 0
+        ShowAccelChar = True
       end
-      object Label2: TLabel
+      object lblUseTransfer: TVA508StaticText
+        Name = 'lblUseTransfer'
         Left = 34
         Top = 21
-        Width = 361
-        Height = 13
+        Width = 363
+        Height = 15
+        Alignment = taLeftJustify
         Caption = 
           'Use Transfer: if inpatient will move from one ward or treating t' +
           'eam to another.'
+        TabOrder = 1
+        Visible = False
+        ShowAccelChar = True
       end
     end
   end
-  object Panel1: TPanel [2]
+  object pnlBottom: TPanel [2]
     Left = 0
-    Top = 134
+    Top = 116
     Width = 456
-    Height = 217
+    Height = 235
     Align = alClient
     TabOrder = 2
+    ExplicitTop = 112
+    ExplicitHeight = 239
     inline fraEvntDelayList: TfraEvntDelayList
       Left = 1
       Top = 1
       Width = 454
-      Height = 215
+      Height = 233
       Align = alClient
       AutoScroll = True
       TabOrder = 0
-      TabStop = True
       Visible = False
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 454
-      ExplicitHeight = 215
+      ExplicitHeight = 237
       inherited pnlDate: TPanel
         Left = 349
-        Height = 215
+        Height = 233
         ExplicitLeft = 349
-        ExplicitHeight = 215
+        ExplicitHeight = 237
         inherited lblEffective: TLabel
           Left = 453
           Width = 71
@@ -189,19 +198,20 @@ inherited frmOrdersTS: TfrmOrdersTS
       end
       inherited pnlList: TPanel
         Width = 349
-        Height = 215
+        Height = 233
         ExplicitWidth = 349
-        ExplicitHeight = 215
+        ExplicitHeight = 237
         inherited lblEvntDelayList: TLabel
           Width = 347
           ExplicitWidth = 80
         end
         inherited mlstEvents: TORListBox
           Width = 347
-          Height = 179
+          Height = 197
           OnDblClick = cmdOKClick
+          OnChange = fraEvntDelayListmlstEventsChange
           ExplicitWidth = 347
-          ExplicitHeight = 179
+          ExplicitHeight = 201
         end
         inherited edtSearch: TCaptionEdit
           Width = 347
@@ -237,7 +247,7 @@ inherited frmOrdersTS: TfrmOrdersTS
         'Component = pnldif'
         'Status = stsDefault')
       (
-        'Component = Panel1'
+        'Component = pnlBottom'
         'Status = stsDefault')
       (
         'Component = fraEvntDelayList'
@@ -259,6 +269,15 @@ inherited frmOrdersTS: TfrmOrdersTS
         'Status = stsDefault')
       (
         'Component = frmOrdersTS'
+        'Status = stsDefault')
+      (
+        'Component = lblUseTransfer'
+        'Status = stsDefault')
+      (
+        'Component = lblPtInfo'
+        'Status = stsDefault')
+      (
+        'Component = lblUseAdmit'
         'Status = stsDefault'))
   end
 end

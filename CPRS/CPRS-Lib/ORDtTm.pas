@@ -98,6 +98,7 @@ type
     FTemplateField: boolean;
     FCaption: TStaticText;
     FBlackColorMode: boolean;
+    FOnDateDialogClosed : TNotifyEvent;
     procedure ButtonClick(Sender: TObject);
     function GetFMDateTime: TFMDateTime;
     function GetRelativeTime: string;
@@ -114,6 +115,7 @@ type
     procedure Change; override;
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
     property DateButton: TORDateButton read FButton;
+    procedure SetEnabled(Value: Boolean); override; //wat v28  when disabling TORDateBox, button still appears active, this addresses that
   public
     constructor Create(AOwner: TComponent); override;
     function IsValid: Boolean;
@@ -129,6 +131,7 @@ type
     property DateOnly:    Boolean     read FDateOnly    write SetDateOnly;
     property RequireTime: Boolean     read FRequireTime write SetRequireTime;
     property Caption: string read GetCaption write SetCaption;
+    property OnDateDialogClosed: TNotifyEvent read FOnDateDialogClosed write FOnDateDialogClosed;
   end;
 
   // 508 classes
@@ -645,6 +648,7 @@ begin
     FTimeIsNow := DateDialog.RelativeTime = 'NOW';
   end;
   DateDialog.Free;
+  if Assigned(OnDateDialogClosed) then OnDateDialogClosed(Self);
   if Visible and Enabled then //Some events may hide the component
     SetFocus;
 end;
@@ -739,6 +743,12 @@ begin
   ErrMsg := '';
   if Length(Text) > 0 then
   begin
+   {
+!!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - VHAISPBELLC !!!!!!
+    //We need to make sure that there is a date entered before parse
+    if FRequireTime and ((Pos('@', Text) = 0) or (Length(Piece(Text, '@', 1)) = 0)) then
+     ErrMsg := 'Date Required';
+    }
     FFMDateTime := ServerParseFMDate(Text);
     if FFMDateTime <= 0 then Errmsg := 'Invalid Date/Time';
     if FRequireTime and (Frac(FFMDateTime) = 0) then ErrMsg := 'Time Required';
@@ -776,6 +786,12 @@ begin
        FCaption.BringtoFront;
     end;
     FCaption.Caption := Value;
+end;
+
+procedure TORDateBox.SetEnabled(Value: Boolean);
+begin
+  FButton.Enabled := Value;
+  inherited;
 end;
 
 function TORDateBox.GetCaption(): string;

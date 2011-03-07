@@ -45,7 +45,7 @@ procedure HealthSummaryCheck(Dest: TStrings; aQualifier: string);
 function GetFormattedReport(AReport: string; const Qualifier, Patient: string;
            aComponents: TStringlist; ARemoteSiteID, ARemoteQuery, AHSTag: string): TStrings;
 procedure PrintWindowsReport(ARichEdit: TRichEdit; APageBreak, ATitle: string;
-  var ErrMsg: string);
+  var ErrMsg: string; IncludeHeader: Boolean = false);
 function DefaultToWindowsPrinter: Boolean;
 procedure PrintGraph(GraphImage: TChart; PageTitle: string);
 procedure PrintBitmap(Canvas: TCanvas; DestRect: TRect; Bitmap: TBitmap);
@@ -542,7 +542,7 @@ begin
   Result := (StrToIntDef(sCallV('ORWRP WINPRINT DEFAULT',[]), 0) > 0);
 end;
 
-procedure PrintWindowsReport(ARichEdit: TRichEdit; APageBreak, Atitle: string; var ErrMsg: string);
+procedure PrintWindowsReport(ARichEdit: TRichEdit; APageBreak, Atitle: string; var ErrMsg: string; IncludeHeader: Boolean = false);
 var
   i, j, x, y, LineHeight: integer;
   aGoHead: string;
@@ -585,13 +585,23 @@ begin
               LineHeight := Printer.Canvas.TextHeight(TX_FONT_NAME);
               y := LineHeight * 5;            // 5 lines = .83" top margin   v15.9 (RV)
               Printer.BeginDoc;
+
+              //Do we need to add the header?
+              IF IncludeHeader then begin
+               for j := 0 to aHeader.Count - 1 do
+                begin
+                 Printer.Canvas.TextOut(x, y, aHeader[j]);
+                 y := y + LineHeight;
+                end;
+              end;
+
               for i := 0 to Lines.Count - 1 do
                 begin
                   if Lines[i] = APageBreak then
                     begin
                       Printer.NewPage;
                       y := LineHeight * 5;   // 5 lines = .83" top margin    v15.9 (RV)
-                      if aGoHead = '1' then
+                      if (IncludeHeader) then
                         begin
                           for j := 0 to aHeader.Count - 1 do
                             begin

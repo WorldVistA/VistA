@@ -831,7 +831,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       TabOrder = 0
     end
     object btnNew: TButton
-      Left = 711
+      Left = 710
       Top = 2
       Width = 75
       Height = 21
@@ -841,7 +841,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       OnClick = mnuNewClick
     end
     object btnCopy: TButton
-      Left = 632
+      Left = 631
       Top = 2
       Width = 75
       Height = 21
@@ -852,7 +852,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       OnClick = mnuCopyClick
     end
     object btnDelete: TButton
-      Left = 553
+      Left = 552
       Top = 2
       Width = 75
       Height = 21

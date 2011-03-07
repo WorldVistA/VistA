@@ -1,4 +1,4 @@
-unit fMeds;
+                                                                       unit fMeds;
 
 {$OPTIMIZATION OFF}                              // REMOVE AFTER UNIT IS DEBUGGED
 
@@ -88,6 +88,7 @@ type
     N3: TMenuItem;
     pnlView: TPanel;
     txtView: TVA508StaticText;
+    mnuActUnhold: TMenuItem;
     procedure mnuChartTabClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -156,6 +157,7 @@ type
       Sender: TObject);
     procedure SortbyDrugalphabeticallystatusactivestatusrecentexpired1Click(
       Sender: TObject);
+    procedure mnuActUnholdClick(Sender: TObject);
   private
     FIterating: Boolean;
     FActionOnMedsTab: Boolean;
@@ -237,7 +239,7 @@ var
 
 implementation
 
-uses uCore, rCore, fFrame, fRptBox, uOrders, fODBase, fOrdersDC, fOrdersHold,
+uses uCore, rCore, fFrame, fRptBox, uOrders, fODBase, fOrdersDC, fOrdersHold, fOrdersUnhold,
      fOrdersRenew, fOMNavA, fOrdersRefill, fMedCopy, fOrders, fODChild, rODBase, 
      StrUtils, fActivateDeactivate, VA2006Utils, VA508AccessibilityRouter,
   VAUtils;
@@ -267,7 +269,9 @@ const
   TX_NO_RENEW   = CRLF + CRLF + '- cannot be changed.' + CRLF + CRLF + 'Reason: ';
   TC_NO_RENEW   = 'Unable to Renew Order';
   TX_NO_HOLD    = CRLF + CRLF + '- cannot be placed on hold.' + CRLF + CRLF + 'Reason:  ';
-  TC_NO_HOLD    = 'Unable to Hold';
+  TC_NO_HOLD    = 'Unable to Hold';  
+  TX_NO_UNHOLD  = CRLF + CRLF + '- cannot be released from hold.' + CRLF + CRLF + 'Reason: ';
+  TC_NO_UNHOLD  = 'Unable to Release from Hold';
   TX_NO_COPY    = CRLF + CRLF + '- cannot be copied.' + CRLF + CRLF + 'Reason: ';
   TC_NO_COPY    = 'Unable to Copy Order';
   TX_NO_CHANGE  = CRLF + CRLF + '- cannot be changed.' + CRLF + CRLF + 'Reason: ';
@@ -728,23 +732,24 @@ end;
 
 procedure TfrmMeds.RefreshMedLists;
 var
-  i,view: Integer;
+  i, view: Integer;
   AMed: TMedListRec;
+  DateRange: string;
 begin
+  if frmFrame.TimedOut then Exit;  
   lstMedsIn.Clear;
   lstMedsOut.Clear;
   lstMedsNonVA.Clear;
+  DateRange := '';
   StatusText('Retrieving active medications...');
   view := self.FSortView;
   //AGP Fix for CQ 10410 added view arguement to control Meds Tab sort criteria
-  LoadActiveMedLists(uMedListIn, uMedListOut, uMedListNonVA, view);
-  if view <> self.FSortView then
-    begin
+  LoadActiveMedLists(uMedListIn, uMedListOut, uMedListNonVA, view, DateRange);
       self.FSortView := view;
       if view = 1 then
         begin
           self.SortbyStatusthenLocation1.Checked := True;
-          SetViewCaption(SortbyStatusthenLocation1.Caption);
+          SetViewCaption(SortbyStatusthenLocation1.Caption + ' ' + DateRange);
           self.SortbyClinicOrderthenStatusthenStopDate1.Checked := False;
           self.SortbyDrugalphabeticallystatusactivestatusrecentexpired1.checked := false;
         end
@@ -752,7 +757,7 @@ begin
         begin
           self.SortbyStatusthenLocation1.Checked := False;
           self.SortbyClinicOrderthenStatusthenStopDate1.Checked := True;
-          SetViewCaption(SortbyClinicOrderthenStatusthenStopDate1.Caption);
+          SetViewCaption(SortbyClinicOrderthenStatusthenStopDate1.Caption + ' ' + DateRange);
           self.SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Checked := false;
         end
       else if view = 3 then
@@ -760,9 +765,8 @@ begin
           self.SortbyStatusthenLocation1.Checked := False;
           self.SortbyClinicOrderthenStatusthenStopDate1.Checked := false;
           self.SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Checked := true;
-          SetViewCaption(SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Caption);
-        end
-    end;
+          SetViewCaption(SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Caption + ' ' + DateRange);
+        end;
   uPharmacyOrdersIn.Clear;
   uPharmacyOrdersOut.Clear;
   uNonVAOrdersOut.Clear;
@@ -807,6 +811,8 @@ begin
     else if Abbreviation = 'HD' then result := 'Hold'
     else if Abbreviation = 'DL' then result := 'Deleted'
     else if Abbreviation = 'DC' then result := 'DC'
+    else if Abbreviation = 'UH' then result := 'Unhold'
+         
     else result := Abbreviation;
   end;
 end;
@@ -1146,7 +1152,6 @@ begin
       MakeSelectedList(ActiveList, SelectedList);
       if ExecuteDCOrders(SelectedList,DelEvt) then
       begin
-        if frmFrame.TimedOut = true then  exit;
         ResetSelectedForList(ActiveList);
         SynchListToOrders(ActiveList, SelectedList);
       end;
@@ -1180,14 +1185,13 @@ begin
       MakeSelectedList(ActiveList, SelectedList);
       if ExecuteHoldOrders(SelectedList) then
       begin
-        if frmFrame.TimedOut = true then  exit;
         AddSelectedToChanges(SelectedList);
         ResetSelectedForList(ActiveList);
         SynchListToOrders(ActiveList, SelectedList);
       end;
     end;
   finally
-    if frmFrame.TimedOut = false then ActiveList.SetFocus;
+    ActiveList.SetFocus;
     FIterating := False;
     SelectedList.Free;
     UnlockIfAble;
@@ -1225,14 +1229,43 @@ begin
       end;
       if ExecuteRenewOrders(SelectedList) then
       begin
-        if frmFrame.TimedOut = true then  exit;
         AddSelectedToChanges(SelectedList);
         ResetSelectedForList(ActiveList);
         SynchListToOrders(ActiveList, SelectedList);
       end;
    end;
   finally
-    if frmFrame.TimedOut = false then ActiveList.SetFocus;
+    ActiveList.SetFocus;
+    FIterating := False;
+    SelectedList.Free;
+    UnlockIfAble;
+  end;
+end;
+
+procedure TfrmMeds.mnuActUnholdClick(Sender: TObject);
+var    
+  ActiveList: TListBox;
+  SelectedList: TList;
+begin
+  inherited;
+  ActiveList := ListSelected(TX_NOSEL);
+  if ActiveList = nil then Exit;
+  if not AuthorizedUser then Exit;
+  if not EncounterPresent then Exit;
+  if not LockedForOrdering then Exit;
+  SelectedList := TList.Create;
+  try
+    if CheckMedStatus(ActiveList) = True then Exit;
+    ValidateSelected(ActiveList, OA_UNHOLD, TX_NO_UNHOLD, TC_NO_UNHOLD);  // validate release hold action
+    MakeSelectedList(ActiveList, SelectedList);                           // build list of selected orders
+    if ExecuteUnholdOrders(SelectedList) then
+    begin
+      AddSelectedToChanges(SelectedList);   
+      ResetSelectedForList(ActiveList);
+      SynchListToOrders(ActiveList, SelectedList);
+    end;
+  finally  
+    ActiveList.SetFocus;
     FIterating := False;
     SelectedList.Free;
     UnlockIfAble;
@@ -1267,7 +1300,6 @@ begin
     with SelectedList do for i := 0 to Count - 1 do ChangeIFNList.Add(TOrder(Items[i]).ID);
     if not ShowMsgOn(ChangeIFNList.Count = 0, TX_NOSEL, TC_NOSEL)
       then ChangeOrders(ChangeIFNList, DelayEvent);
-    if frmFrame.TimedOut = true then  exit;
     SynchListToOrders(ActiveList, SelectedList);    // rehighlights
     Activelist.SetFocus;
   finally
@@ -1281,7 +1313,7 @@ procedure TfrmMeds.mnuActCopyClick(Sender: TObject);
 { similar to action on fOrders}
 const
   CP_TXT = 'copied';
-  XF_TXT = 'transfered';
+  XF_TXT = 'transferred';
 var
   i: Integer;
   LimitEvent: Char;
@@ -1419,7 +1451,6 @@ begin
           end;
       end;
     end;
-    if frmFrame.TimedOut = true then  exit;
     SynchListToOrders(ActiveList, SelectedList);    // rehighlights
     if IsTransferAction then
        IsTransferAction := False;
@@ -1429,7 +1460,7 @@ begin
       XfInToOutNow := False;
     frmOrders.PtEvtCompleted(TempEvent.PtEventIFN,TempEvent.EventName,True);
   finally
-    if frmFrame.TimedOut = false then  ActiveList.SetFocus;
+    ActiveList.SetFocus;
     FActionOnMedsTab := False;
     uAutoAC := False;
     SelectedList.Free;
@@ -1488,13 +1519,12 @@ begin
       MakeSelectedList(ActiveList, SelectedList);
       if ExecuteRefillOrders(SelectedList) then
       begin
-        if frmFrame.TimedOut = true then  exit;
         ResetSelectedForList(ActiveList);
         SynchListToOrders(ActiveList, SelectedList);
       end;
     end;
   finally
-    if frmFrame.TimedOut = false then ActiveList.SetFocus;
+    ActiveList.SetFocus;
     FIterating := False;
     SelectedList.Free;
     UnlockIfAble;
@@ -1589,7 +1619,7 @@ begin
       begin
         if (AnOrder.DGroup = ClinDisp) then                          //imo
         begin
-          x := AnOrder.Text +  #13#10 + 'Clinic medication orders can not be transfered';
+          x := AnOrder.Text +  #13#10 + 'Clinic medication orders can not be transferred';
           if ShowMsgOn(Length(x) > 0, x, 'Unable to transfer.') then
           begin
             AListBox.Selected[i] := False;
@@ -2149,10 +2179,6 @@ procedure TfrmMeds.SortbyStatusthenLocation1Click(Sender: TObject);
 begin
   inherited;
   self.FSortView := 1;
-  self.SortbyStatusthenLocation1.Checked := True;
-  SetViewCaption(SortbyStatusthenLocation1.Caption);
-  self.SortbyClinicOrderthenStatusthenStopDate1.Checked := False;
-  self.SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Checked := false;
   self.RefreshMedLists;
 end;
 
@@ -2161,10 +2187,6 @@ procedure TfrmMeds.SortbyClinicOrderthenStatusthenStopDate1Click(
 begin
   inherited;
   self.FSortView := 2;
-  self.SortbyStatusthenLocation1.Checked := False;
-  self.SortbyClinicOrderthenStatusthenStopDate1.Checked := True;
-  SetViewCaption(SortbyClinicOrderthenStatusthenStopDate1.Caption);
-  self.SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Checked := false;
   self.RefreshMedLists;
 end;
 
@@ -2173,10 +2195,6 @@ procedure TfrmMeds.SortbyDrugalphabeticallystatusactivestatusrecentexpired1Click
 begin
   inherited;
   self.FSortView := 3;
-  self.SortbyStatusthenLocation1.Checked := False;
-  self.SortbyClinicOrderthenStatusthenStopDate1.Checked := false;
-  self.SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Checked := true;
-  SetViewCaption(SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Caption);
   self.RefreshMedLists;
 end;
 

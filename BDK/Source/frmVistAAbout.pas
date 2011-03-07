@@ -6,7 +6,7 @@
 	Description: Generic About form, simply call ShowAboutBox.
 	             Includes display of date, CRC32, and info from
 	             Program Info.
-	Current Release: Version 1.1 Patch 47 (February 7, 2007))
+	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
 *************************************************************** }
 
 unit frmVistAAbout;

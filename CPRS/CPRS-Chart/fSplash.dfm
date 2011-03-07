@@ -9,10 +9,8 @@ inherited frmSplash: TfrmSplash
   OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitLeft = 260
-  ExplicitTop = 126
-  ExplicitWidth = 394
-  ExplicitHeight = 446
+  ExplicitWidth = 386
+  ExplicitHeight = 412
   PixelsPerInch = 96
   TextHeight = 13
   object pnlMain: TPanel [0]
@@ -75,7 +73,7 @@ inherited frmSplash: TfrmSplash
       TabOrder = 3
       object Image1: TImage
         Left = 3
-        Top = 4
+        Top = 7
         Width = 300
         Height = 159
         Picture.Data = {
@@ -1620,21 +1618,16 @@ inherited frmSplash: TfrmSplash
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       Lines.Strings = (
-        'VHA'#39's Office of Information, System Design & Development staff '
+        'Veteran'#39's Administration OI&T Office of Enterprise Development '
+        'staff have made every effort during the design, development and '
         
-          'have made every effort during the design, development and testin' +
-          'g '
+          'testing of this application to ensure full accessibility to all ' +
+          'users in '
         
-          'of this application to ensure full accessibility to all users in' +
-          ' '
-        
-          'compliance with Section 508 of the Rehabilitation Act of 1973, a' +
-          's '
-        'amended.  Please send any comments, questions or concerns '
-        
-          'regarding the accessibility of this application to EMAIL ADDRESS' +
-          ': '
-        'vhaoihdisection508@va.gov')
+          'compliance with Section 508 of the Rehabilitation Action of 1973' +
+          ', '
+        'as amended.  If any issues are encountered while running this '
+        'application, please contact your local help desk for support.')
       ParentFont = False
       ReadOnly = True
       TabOrder = 1

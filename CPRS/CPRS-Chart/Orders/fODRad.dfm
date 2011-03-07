@@ -7,8 +7,6 @@ inherited frmODRad: TfrmODRad
   Caption = 'Order an Imaging Procedure'
   Constraints.MinHeight = 404
   Constraints.MinWidth = 586
-  ExplicitLeft = 282
-  ExplicitTop = 225
   ExplicitWidth = 586
   ExplicitHeight = 404
   PixelsPerInch = 96
@@ -18,7 +16,7 @@ inherited frmODRad: TfrmODRad
     Top = 326
     Width = 490
     Anchors = [akLeft, akRight, akBottom]
-    TabOrder = 6
+    TabOrder = 4
     ExplicitLeft = 0
     ExplicitTop = 326
     ExplicitWidth = 490
@@ -31,7 +29,7 @@ inherited frmODRad: TfrmODRad
     ItemHeight = 13
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 7
+    TabOrder = 3
     Visible = False
     ItemTipColor = clWindow
     LongList = False
@@ -172,19 +170,11 @@ inherited frmODRad: TfrmODRad
       Width = 102
       Height = 18
       Caption = 'Remove'
-      TabOrder = 4
+      TabOrder = 5
       OnClick = cmdRemoveClick
     end
   end
-  inherited cmdAccept: TButton
-    Left = 497
-    Top = 326
-    Anchors = [akRight, akBottom]
-    TabOrder = 3
-    ExplicitLeft = 497
-    ExplicitTop = 326
-  end
-  object pnlRightBase: TORAutoPanel [4]
+  object pnlRightBase: TORAutoPanel [3]
     Left = 215
     Top = 0
     Width = 362
@@ -232,7 +222,7 @@ inherited frmODRad: TfrmODRad
       end
       object lblSubmit: TLabel
         Left = 154
-        Top = 42
+        Top = 45
         Width = 48
         Height = 13
         Caption = 'Submit To'
@@ -263,7 +253,7 @@ inherited frmODRad: TfrmODRad
         Top = 170
         Width = 96
         Height = 21
-        TabOrder = 8
+        TabOrder = 9
         OnChange = calPreOpChange
         OnExit = calPreOpExit
         DateOnly = False
@@ -279,7 +269,7 @@ inherited frmODRad: TfrmODRad
         Caption = 'Isolation'
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 6
+        TabOrder = 7
         OnClick = ControlChange
         OnExit = chkIsolationExit
       end
@@ -372,7 +362,7 @@ inherited frmODRad: TfrmODRad
         Width = 61
         Height = 17
         Caption = 'Pre-Op'
-        TabOrder = 9
+        TabOrder = 13
         Visible = False
         OnClick = ControlChange
       end
@@ -411,7 +401,7 @@ inherited frmODRad: TfrmODRad
         MultiSelect = True
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 5
+        TabOrder = 6
         Caption = 'Exams Over the Last 7 Days'
         ItemTipColor = clWindow
         LongList = False
@@ -423,7 +413,7 @@ inherited frmODRad: TfrmODRad
         Width = 158
         Height = 41
         Caption = 'Pregnant'
-        TabOrder = 7
+        TabOrder = 8
         object radPregnant: TRadioButton
           Left = 2
           Top = 17
@@ -451,6 +441,19 @@ inherited frmODRad: TfrmODRad
           TabOrder = 2
           OnClick = ControlChange
         end
+      end
+      object Submitlbl508: TVA508StaticText
+        Name = 'Submitlbl508'
+        Left = 154
+        Top = 43
+        Width = 120
+        Height = 15
+        Alignment = taLeftJustify
+        Caption = 'Submit To (for screen R.)'
+        Enabled = False
+        TabOrder = 5
+        Visible = False
+        ShowAccelChar = True
       end
     end
     object pnlHandR: TPanel
@@ -504,11 +507,19 @@ inherited frmODRad: TfrmODRad
       end
     end
   end
+  inherited cmdAccept: TButton
+    Left = 497
+    Top = 326
+    Anchors = [akRight, akBottom]
+    TabOrder = 5
+    ExplicitLeft = 497
+    ExplicitTop = 326
+  end
   inherited cmdQuit: TButton
     Left = 498
     Top = 353
     Anchors = [akRight, akBottom]
-    TabOrder = 4
+    TabOrder = 6
     ExplicitLeft = 498
     ExplicitTop = 353
   end
@@ -518,6 +529,7 @@ inherited frmODRad: TfrmODRad
     Width = 408
     Height = 55
     TabOrder = 2
+    OnMouseUp = pnlMessageMouseUp
     ExplicitLeft = 5
     ExplicitTop = 318
     ExplicitWidth = 408
@@ -595,7 +607,8 @@ inherited frmODRad: TfrmODRad
         'Status = stsDefault')
       (
         'Component = grpPregnant'
-        'Status = stsDefault')
+        'Text = Pregnant group box.  Disabled.  Patient is male.'
+        'Status = stsOK')
       (
         'Component = radPregnant'
         'Status = stsDefault')
@@ -613,7 +626,10 @@ inherited frmODRad: TfrmODRad
         'Status = stsDefault')
       (
         'Component = txtReason'
-        'Status = stsDefault')
+        
+          'Text = Reason for Study REQUIRED text 64 characters maximum leng' +
+          'th'
+        'Status = stsOK')
       (
         'Component = memOrder'
         'Status = stsDefault')
@@ -631,6 +647,20 @@ inherited frmODRad: TfrmODRad
         'Status = stsDefault')
       (
         'Component = frmODRad'
+        'Status = stsDefault')
+      (
+        'Component = Submitlbl508'
         'Status = stsDefault'))
+  end
+  object VA508ComponentAccessibility1: TVA508ComponentAccessibility
+    Component = memHistory
+    OnStateQuery = VA508ComponentAccessibility1StateQuery
+    Left = 336
+    Top = 64
+  end
+  object VA508ComponentAccessibility2: TVA508ComponentAccessibility
+    Component = grpPregnant
+    Left = 536
+    Top = 224
   end
 end

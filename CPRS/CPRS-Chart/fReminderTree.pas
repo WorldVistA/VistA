@@ -64,6 +64,7 @@ type
     procedure mnuCoverSheetClick(Sender: TObject);
     procedure tvRemNodeCaptioning(Sender: TObject; var Caption: String);
     procedure mnuExitClick(Sender: TObject);
+    procedure tvRemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     tvRem508Manager : TtvRem508Manager;
     FLinking: boolean;
@@ -168,6 +169,8 @@ begin
         begin
           idx := lbRem.Items.IndexOfObject(tvRem.Selected);
           lbRem.ItemIndex := idx;
+          tvRem.Selected := TTreeNode(lbRem.Items.Objects[lbRem.ItemIndex]);
+          tvRem.SetFocus;
         end
         else
           lbRem.ItemIndex := -1;
@@ -177,7 +180,10 @@ begin
         if(lbRem.ItemIndex < 0) then
           tvRem.Selected := nil
         else
-          tvRem.Selected := TTreeNode(lbRem.Items.Objects[lbRem.ItemIndex]);
+          begin
+            tvRem.Selected := TTreeNode(lbRem.Items.Objects[lbRem.ItemIndex]);
+            tvRem.SetFocus;
+          end;
       end;
     finally
       FLinking := FALSE;
@@ -320,11 +326,19 @@ begin
   if(FUpdating) then exit;
   FUpdating := TRUE;
   try
+    tvRem.Selected := Node;
     ResetlbItems(Node);
     pnlTopResize(Self);
   finally
     FUpdating := FALSE;
   end;
+end;
+
+procedure TfrmReminderTree.tvRemKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_LEFT) or (Key = VK_RIGHT) then  tvRemClick(Sender);    
 end;
 
 procedure TfrmReminderTree.tvRemCollapsed(Sender: TObject;
@@ -333,6 +347,7 @@ begin
   if(FUpdating) then exit;
   FUpdating := TRUE;
   try
+    tvRem.Selected := Node;
     ResetlbItems(Node);
     pnlTopResize(Self);
   finally
@@ -554,7 +569,7 @@ end;
 procedure TfrmReminderTree.tvRemMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  Resync(TRUE);
+    //Resync(TRUE);
 end;
 
 procedure TfrmReminderTree.Resync(FromTree: boolean);

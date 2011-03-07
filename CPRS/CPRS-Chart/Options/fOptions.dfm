@@ -1,7 +1,6 @@
 inherited frmOptions: TfrmOptions
   Left = 315
   Top = 110
-  Width = 435
   Height = 397
   HelpContext = 9999
   VertScrollBar.Range = 360
@@ -10,11 +9,8 @@ inherited frmOptions: TfrmOptions
   Caption = 'Options'
   Font.Name = 'Tahoma'
   HelpFile = 'CPRSWT.HLP'
-  OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
-  ExplicitWidth = 435
   ExplicitHeight = 397
   PixelsPerInch = 96
   TextHeight = 13
@@ -1358,10 +1354,10 @@ inherited frmOptions: TfrmOptions
           TabOrder = 6
         end
         object memReport2: TMemo
-          Left = 128
-          Top = 213
+          Left = 135
+          Top = 212
           Width = 273
-          Height = 47
+          Height = 48
           TabStop = False
           BorderStyle = bsNone
           Color = clBtnFace

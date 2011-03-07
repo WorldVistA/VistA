@@ -46,7 +46,9 @@ begin
       with SelectedList do for i := 0 to Count - 1 do
       begin
         OriginalID := TOrder(Items[i]).ID;
-        ReleaseOrderHold(TOrder(Items[i]));
+        ReleaseOrderHold(TOrder(Items[i]));   
+        TOrder(Items[i]).ActionOn := OriginalID + '=UH';
+        SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_ACT, Integer(Items[i]));
       end;
       Result := True;
     end

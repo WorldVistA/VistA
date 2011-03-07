@@ -254,6 +254,7 @@ var
 begin
   Result := True;
   if Changes.Count = 0 then Exit;
+  if assigned(frmReview) then Exit;
   frmReview := TfrmReview.Create(Application);
   try
     Changes.OnRemove := frmReview.CleanupChangesList;     {**RV**}
@@ -298,6 +299,7 @@ begin
   finally
    Changes.OnRemove := nil;     {**RV**}
    frmReview.Release;
+   frmReview := nil;
   end;
 end;
 
@@ -405,7 +407,7 @@ var
   LabelHeight: integer;
   PrevGrpName, temp: string;
   displayHeader, displaySpacer, otherUserOrders: boolean;
-
+  I, ColHeight: Integer;
 begin
   tempOrderList := TStringList.Create;
   tempOrderList.Clear;
@@ -502,6 +504,7 @@ begin
                   end;
             end;
         end;
+    OrderGrp.Sorted := false;
   end; {if Orders}
     // determine the appropriate panel to display
     case User.OrderRole of
@@ -591,6 +594,15 @@ begin
       AdjustSignatureTop(-fraCoPay.Height - 9);
     end;
   end;
+
+  if lstReview.Count > 0 then begin
+   for I := 1 to lstReview.Count - 1 do begin
+    lstReviewMeasureItem(lstReview, I, ColHeight);
+    lstReview.Perform(LB_SETITEMHEIGHT,I,ColHeight);
+   end;
+  end;
+  RedrawWindow(lstReview.Handle, nil, 0, RDW_ERASE or RDW_FRAME or RDW_INVALIDATE or RDW_ALLCHILDREN);
+
 end; {BuildFullList}
 
 
@@ -890,13 +902,13 @@ var
   ChangeItem, TempChangeItem: TChangeItem;
   OrderList, OrderPrintList: TStringList;
   SaveCoPay: boolean;
-  DigSigErr, DigStoreErr, CryptoChecked, displayEncSwitch: Boolean;
+  DigSigErr, DigStoreErr, CryptoChecked, displayEncSwitch, DelayOnly: Boolean;
   SigData, SigUser, SigDrugSch, SigDEA: string;
   cSignature, cHashData, cCrlUrl, cErr, WardName, ASvc: string;
   cProvDUZ: Int64;
-  AList, ClinicList, DCList, WardList: TStringList;
+  AList, ClinicList, WardList: TStringList;
   IsOk, ContainsIMOOrders, DoNotPrint : Boolean;
-  EncLocName, EncLocText: string;
+  EncLocName, EncLocText, tempInpLoc: string;
   EncLocIEN: integer;
   EncDT: TFMDateTime;
   EncVC: Char;
@@ -942,6 +954,8 @@ begin
   PrintLoc := 0;
   EncLocIEN := 0;
   DoNotPrint := False;
+  tempInpLoc := '';
+  DelayOnly := false;
   if BILLING_AWARE then
   begin
      if Assigned(UBAGlobals.UnsignedOrders) then
@@ -1221,13 +1235,15 @@ begin
         //hds7591  Clinic/Ward movement.  Nurse orders
           if (cmdOk.Caption = 'Sign') or (cmdOK.Caption = 'OK') and (not frmFrame.TimedOut) then
           begin
-             if ((Patient.Inpatient = false) and (frmClinicWardMeds.rpcIsPatientOnWard(patient.DFN))) or
+             tempInpLoc := frmPrintLocation.rpcIsPatientOnWard(patient.dfn);
+             if ((Patient.Inpatient = false) and (tempInpLoc <> '')) or
                  ((Patient.Inpatient = True) and (Encounter.Location <> Patient.Location)) or
                  ((Patient.Inpatient = True) and (Encounter.Location = Patient.Location) and
-                 (encounter.Location <> uCore.TempEncounterLoc) and (uCore.TempEncounterLoc <> 0)) then
-                 //or ((frmFrame.DoNotChangeEncWindow = true) and (encounter.Location  = uCore.TempOutEncounterLoc)) then
+                 (encounter.Location <> uCore.TempEncounterLoc) and (uCore.TempEncounterLoc <> 0))
+                 or((Patient.Inpatient) and (tempInpLoc <> '') and (Piece(tempInpLoc, U, 2) <> InttoStr(Encounter.location))) then
              begin
-                 if Encounter.Location <> Patient.Location then
+                 if (Encounter.Location <> Patient.Location) or
+                     ((tempInpLoc <> '') and ((InttoStr(Encounter.location)) <> (Piece(tempInpLoc,U,2)))) then
                    begin
                      EncLocName := Encounter.LocationName;
                      EncLocIEN  := Encounter.Location;
@@ -1245,56 +1261,56 @@ begin
                     end;
                  if frmFrame.mnuFile.Tag = 0 then displayEncSwitch := false
                  else displayEncSwitch := true;
-
-                 (*displayEncSwitch := False;
-                 if (frmFrame.mnuFile.Items[frmFrame.mnuFile.menuIndex].Caption = 'Refresh Patient &Information') or
-                 (frmFrame.mnuFile.Items[frmFrame.mnuFile.menuIndex].Caption = '&Review/Sign Changes...') then
-                      displayEncSwitch := True;    *)
-                 DCList := TStringList.Create;
+                 if Encounter.Location = 0  then
+                   begin
+                     DisplayEncSwitch := True;
+                     DelayOnly := True;
+                   end;
                  for i := 0 to lstReview.Items.Count-1 do
                    begin
+                    //disregard orders that are not signed
                     if (lstReview.Checked[i] = false) and (lstReview.State[i] <> cbGrayed) then continue;
                     TempChangeItem := TChangeItem(lstReview.Items.Objects[i]);
+                    //DC Orders should print at the ward location
                     if TempChangeItem.DCOrder = True then
                       begin
-                        DCList.Add(tempChangeItem.ID);
+                        WardList.Add(tempChangeItem.ID);
                         continue;
                       end;
+                    //disregard Non-VA Meds orders
                     if TempChangeItem.OrderDG = NONVAMEDGROUP then continue;
                     if TempChangeItem.OrderDG = 'Clinic Orders' then ContainsIMOORders := true;
                     if (tempChangeItem.OrderDG = '') then continue;
+                    //Delay orders should be printed when the order is release to service not when the order is sign
                     if tempChangeItem.Delay = True then continue;
                     OrderPrintList.Add(tempChangeItem.ID + ':' + tempChangeItem.Text);
-                  end;
-                  if OrderPrintList.Count > 0 then
+                   end;
+                 if (OrderPrintList.Count > 0) and (DelayOnly = False) then
                     frmPrintLocation.PrintLocation(OrderPrintList, EncLocIEN, EncLocName, EncLocText, EncDT, EncVC, ClinicList,
                                                    WardList, wardIEN, wardName, ContainsIMOOrders, displayEncSwitch)
-                  else
+                  //Only Display encounter switch form if staying in the patient chart
+                  else if displayEncSwitch = true then
                     begin
-                    frmPrintLocation.SwitchEncounterLoction(EncLocIEN, EncLocName, EncLocText, EncDT, EncVC);
-                    fframe.frmFrame.OrderPrintForm := True;
-                    DoNotPrint := True;
+                      frmPrintLocation.SwitchEncounterLoction(EncLocIEN, EncLocName, EncLocText, EncDT, EncVC);
+                      fframe.frmFrame.OrderPrintForm := True;
+                      DoNotPrint := True;
                     end;
-
-                  if DCList.Count > 0 then
-                    begin
-                       for i := 0 to DCList.Count - 1 do
-                         WardList.Add(DCList.Strings[i]);
-                       if (WardIEN = 0) and (WardName = '') then
-                          CurrentLocationForPatient(Patient.DFN, WardIEN, WardName, ASvc);
-                    end;
-                  if DCList <> nil then DCList.Free;                  
-               end;
-          end;
-          if (cmdOk.Caption = 'Don''t Sign') and (not frmFrame.TimedOut) then
+                 if (WardIEN = 0) and (WardName = '') then CurrentLocationForPatient(Patient.DFN, WardIEN, WardName, ASvc);
+                  //All other scenarios should not print
+                 if (ClinicList.count = 0) and (WardList.count = 0) then DoNotPrint := True;
+             end;
+          end; //CmdOK.Caption = Sign
+          if (cmdOk.Caption = 'Don''t Sign') and (not frmFrame.TimedOut) and (frmFrame.mnuFile.Tag <> 0) then
                begin
-                  if ((Patient.Inpatient = false) and (frmClinicWardMeds.rpcIsPatientOnWard(patient.DFN))) or
+                 tempInpLoc := frmPrintLocation.rpcIsPatientOnWard(patient.dfn);
+                 if ((Patient.Inpatient = false) and (tempInpLoc <> '')) or
                  ((Patient.Inpatient = True) and (Encounter.Location <> Patient.Location)) or
                  ((Patient.Inpatient = True) and (Encounter.Location = Patient.Location) and
-                 (encounter.Location <> uCore.TempEncounterLoc) and (uCore.TempEncounterLoc <> 0)) then
-                 //or ((frmFrame.DoNotChangeEncWindow = true) and (encounter.Location  = uCore.TempOutEncounterLoc)) then
+                 (encounter.Location <> uCore.TempEncounterLoc) and (uCore.TempEncounterLoc <> 0))
+                 or((Patient.Inpatient) and (tempInpLoc <> '') and (Piece(tempInpLoc, U, 2) <> InttoStr(Encounter.location))) then
                     begin
-                      if Encounter.Location <> Patient.Location then
+                      if (Encounter.Location <> Patient.Location) or
+                          ((tempInpLoc <> '') and ((InttoStr(Encounter.location)) <> (Piece(tempInpLoc,U,2)))) then
                         begin
                           EncLocName := Encounter.LocationName;
                           EncLocIEN  := Encounter.Location;
@@ -1316,6 +1332,7 @@ begin
                end;
           uCore.TempEncounterLoc := 0;
           uCore.TempEncounterLocName := '';
+          tempInpLoc := '';
         end;
         //hds7591  Clinic/Ward movement.
         
@@ -1323,6 +1340,7 @@ begin
             SigItems.SaveSettings; // Save CoPay FIRST
           SendOrders(OrderList, ESCode);   {*KCM*}
 
+      //CQ #15813 Modired code to look for error string mentioned in CQ and change strings to conts - JCS
         with OrderList do for i := 0 to Count - 1 do
         begin
           if Pos('E', Piece(OrderList[i], U, 2)) > 0 then
@@ -1330,11 +1348,13 @@ begin
             ChangeItem := Changes.Locate(CH_ORD, Piece(OrderList[i], U, 1));
             if not FSilent then
               begin
-                if Piece(OrderList[i],U,4) = 'Invalid Pharmacy order number' then
+                if Piece(OrderList[i],U,4) = TX_SAVERR_PHARM_ORD_NUM_SEARCH_STRING then
                   InfoBox(TX_SAVERR1 + Piece(OrderList[i], U, 4) + TX_SAVERR2 + ChangeItem.Text + CRLF + CRLF +
-                        'The changes to this order have not been saved.  You must contact Pharmacy to complete any action on this order.',
-                        TC_SAVERR, MB_OK)
-               else
+                        TX_SAVERR_PHARM_ORD_NUM, TC_SAVERR, MB_OK)
+                else if Piece(OrderList[i],U,4) = TX_SAVERR_IMAGING_PROC_SEARCH_STRING then
+                  InfoBox(TX_SAVERR1 + Piece(OrderList[i], U, 4) + TX_SAVERR2 + ChangeItem.Text + CRLF + CRLF +
+                        TX_SAVERR_IMAGING_PROC, TC_SAVERR, MB_OK)
+                else
                  InfoBox(TX_SAVERR1 + Piece(OrderList[i], U, 4) + TX_SAVERR2 + ChangeItem.Text,
                     TC_SAVERR, MB_OK);
               end;
@@ -1365,7 +1385,7 @@ begin
           end;
           if (ClinicList.Count > 0) or (WardList.Count > 0) then
                 PrintOrdersOnSignReleaseMult(OrderList, CLinicList, WardList, Nature, EncLocIEN, WardIEN, EncLocName, wardName)
-          else if DoNotPrint = false then PrintOrdersOnSignRelease(OrderList, Nature, PrintLoc);
+          else if DoNotPrint = False then PrintOrdersOnSignRelease(OrderList, Nature, PrintLoc);
         end;
         StatusText('');
         UpdateUnsignedOrderAlerts(Patient.DFN);
@@ -1464,6 +1484,7 @@ begin
   with lstReview do if Index < Items.Count then
   begin
     ARect := ItemRect(Index);
+    ARect.Left := lstReview.CheckWidth;
     Canvas.FillRect(ARect);
     x := FilteredString(Items[Index]);
     AHeight := WrappedTextHeightByFont( lstReview.Canvas, Font, x, ARect) + SIG_ITEM_VERTICAL_PAD;
@@ -2032,7 +2053,8 @@ begin
   dec(BottomEdge, 4);
   if (lstReview.Top + lstReview.Height) > BottomEdge then
     lstReview.Height := BottomEdge - lstReview.Top;
-              //INITIALIZATIONS
+    
+     //INITIALIZATIONS
       Paste1.Enabled := false;
       fReview.srcOrderID := '';
       fReview.srcDx := '';
@@ -2164,9 +2186,17 @@ begin
 end;
 
 procedure TfrmReview.FormResize(Sender: TObject);
+VAR
+ I, ColHeight: Integer;
 begin
   inherited;
-  lstReview.Invalidate;
+  if lstReview.Count > 0 then begin
+   for I := 1 to lstReview.Count - 1 do begin
+    lstReviewMeasureItem(lstReview, I, ColHeight);
+    lstReview.Perform(LB_SETITEMHEIGHT,I,ColHeight);
+   end;
+  end;
+  RedrawWindow(lstReview.Handle, nil, 0, RDW_ERASE or RDW_FRAME or RDW_INVALIDATE or RDW_ALLCHILDREN);
 end;
 
 procedure TfrmReview.FormMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);

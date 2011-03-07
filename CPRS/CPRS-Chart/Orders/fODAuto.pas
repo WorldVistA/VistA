@@ -60,6 +60,9 @@ begin
     else
       CheckBoilerplate4Fields(tmp, cptn);
 
+
+      if WasTemplateDialogCanceled then AnErrMsg := 'The Auto-Accept Quick Order cannot be saved since the template was cancelled.';
+
     if tmp <> '' then
       Responses.Update('COMMENT', 1, TX_WPTYPE, tmp)
     else
@@ -86,6 +89,7 @@ begin
   FillerID := FillerIDForDialog(DialogIEN);
   IdentifyDialog(DialogNames, DialogIEN);
   Responses.Dialog := DialogNames.BaseName;                      // loads formatting info
+  Responses.DialogDisplayName := DialogNames.Display;
   StatusText('');
 end;
 

@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, StdCtrls, ORCtrls, ORDtTm, ComCtrls, ExtCtrls, ORFn, uConst,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, VA508AccessibilityRouter;
 
 type
   TfrmODMisc = class(TfrmODBase)
@@ -55,6 +55,7 @@ begin
   //CtrlInits.LoadDefaults(ODForMisc);           // there are no defaults for OR GXMISC
   InitDialog;
   StatusText('');
+  if ScreenReaderSystemActive then memOrder.TabStop := true;
 end;
 
 procedure TfrmODMisc.InitDialog;
@@ -76,7 +77,7 @@ begin
     SetControl(calStop,    'STOP',      1);
     Changing := False;
     ControlChange(Self);
-    SetFocusedControl(txtComment);
+    if not ScreenReaderSystemActive then SetFocusedControl(txtComment);
   end;
 end;
 

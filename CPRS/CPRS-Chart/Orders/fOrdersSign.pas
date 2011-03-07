@@ -6,7 +6,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fAutoSz, StdCtrls, ORFn, ORCtrls, AppEvnts, mCoPayDesc, XUDIGSIGSC_TLB,
+  fAutoSz, StdCtrls, StrUtils, ORFn, ORCtrls, AppEvnts, mCoPayDesc, XUDIGSIGSC_TLB,
   ComCtrls, CheckLst, ExtCtrls, uConsults, UBAGlobals,UBACore, UBAMessages, UBAConst,
   Menus, ORClasses, fBase508Form, fPrintLocation, VA508AccessibilityManager;
 
@@ -210,11 +210,12 @@ var
   cProvDUZ: Int64;
   OrderText, ASvc: string;
   PrintLoc: Integer;
-  AList, ClinicList, DCList, OrderPrintList, WardList: TStringList;
+  AList, ClinicList, OrderPrintList, WardList: TStringList;
   EncLocName, EncLocText: string;
   EncLocIEN: integer;
   EncDT: TFMDateTime;
   EncVC: Char;
+  //ChangeItem: TChangeItem;
 
   function FindOrderText(const AnID: string): string;
   var
@@ -329,7 +330,7 @@ begin
         UBAGlobals.NonBillableOrderList := rpcNonBillableOrders(tempOrderList);
     end;
 
-      frmSignOrders.ShowModal;
+     frmSignOrders.ShowModal;
       if frmSignOrders.OKPressed then
       begin
         Result := True;
@@ -427,7 +428,6 @@ begin
             begin
                if (Patient.Inpatient = True) and (Encounter.Location <> Patient.Location) then
                    begin
-                     DCList := TStringList.Create;
                      EncLocName := Encounter.LocationName;
                      EncLocIEN  := Encounter.Location;
                      EncLocText := Encounter.LocationText;
@@ -439,21 +439,26 @@ begin
                          if frmSignOrders.clstOrders.Checked[cidx] = false then continue;
                          if TOrder(SelectedList.Items[i]).DGroupName = 'Clinic Orders' then ContainsIMOOrders := true;
                          if TOrder(SelectedList.Items[i]).DGroupName = '' then continue;
-                         if TOrder(SelectedList.Items[i]).EventPtr <> '' then continue;
-                         if Pos('DC', TOrder(SelectedList.Items[i]).ActionOn) > 0 then
+                         if (Pos('DC', TOrder(SelectedList.Items[i]).ActionOn) > 0) or
+                            (TOrder(SelectedList.Items[i]).IsOrderPendDC = true) then
                            begin
-                             DCList.Add(TOrder(SelectedList.Items[i]).ID);
+                             WardList.Add(TOrder(SelectedList.Items[i]).ID);
                              Continue;
                            end;
+                         //ChangeItem := Changes.Locate(20,TOrder(SelectedList.Items[i]).ID);
+                         //if ChangeItem = nil then continue;
+                         //if ChangeItem.Delay = true then continue;
+                         if TOrder(SelectedList.Items[i]).IsDelayOrder = true then continue;                         
                          OrderPrintList.Add(TOrder(SelectedList.Items[i]).ID + ':' + TOrder(SelectedList.Items[i]).Text);
                        end;
-                      if OrderPrintList.Count > 0 then                        begin                          frmPrintLocation.PrintLocation(OrderPrintList, EncLocIEN, EncLocName, EncLocText, EncDT, EncVC, ClinicList,                                                        WardList, WardIen,WardName, ContainsIMOOrders, true);                          fframe.frmFrame.OrderPrintForm := false;
-                        end                      else DoNotPrint := True;                      if (DCList <> nil) and (DCList.Count > 0) then                        begin                          for i := 0 to DCList.Count - 1 do
-                             WardList.Add(DCList.Strings[i]);
-                          if (WardIEN = 0) and (WardName = '') then
-                          CurrentLocationForPatient(Patient.DFN, WardIEN, WardName, ASvc);
-                        end;                      if DCList <> nil then DCList.Free;                   end;
-            end;
+                      if OrderPrintList.Count > 0 then
+                        begin                          frmPrintLocation.PrintLocation(OrderPrintList, EncLocIEN, EncLocName, EncLocText, EncDT, EncVC, ClinicList,
+                                                        WardList, WardIen,WardName, ContainsIMOOrders, true);
+                          //fframe.frmFrame.OrderPrintForm := false;
+                        end
+                        else if (clinicList.count = 0) and (wardList.Count = 0) then DoNotPrint := True;
+                        if (WardIEN = 0) and (WardName = '') then CurrentLocationForPatient(Patient.DFN, WardIEN, WardName, ASvc);
+                        end;            end;
             uCore.TempEncounterLoc := 0;
             uCore.TempEncounterLocName := '';
             //hds7591  Clinic/Ward movement  Patient Admission IMO
@@ -462,15 +467,19 @@ begin
             SendOrders(SignList, frmSignOrders.ESCode);
           end;
 
+          //CQ #15813 Modified code to look for error string mentioned in CQ and change strings to conts - JCS
+          //CQ #15813 Adjusted code to handle error message properly - TDP
             with SignList do if Count > 0 then for i := 0 to Count - 1 do
             begin
               if Pos('E', Piece(SignList[i], U, 2)) > 0 then
                 begin
                   OrderText := FindOrderText(Piece(SignList[i], U, 1));
-                  if Piece(SignList[i],U,4) = 'Invalid Pharmacy order number' then
+                  if Piece(SignList[i],U,4) = TX_SAVERR_PHARM_ORD_NUM_SEARCH_STRING then
                   InfoBox(TX_SAVERR1 + Piece(SignList[i], U, 4) + TX_SAVERR2 + OrderText + CRLF + CRLF +
-                        'The changes to this order have not been saved.  You must contact Pharmacy to complete any action on this order.',
-                        TC_SAVERR, MB_OK)
+                        TX_SAVERR_PHARM_ORD_NUM, TC_SAVERR, MB_OK)
+                  else if AnsiContainsStr(Piece(SignList[i],U,4), TX_SAVERR_IMAGING_PROC_SEARCH_STRING) then
+                  InfoBox(TX_SAVERR1 + Piece(SignList[i], U, 4) + TX_SAVERR2 + OrderText + CRLF + CRLF +
+                        TX_SAVERR_IMAGING_PROC, TC_SAVERR, MB_OK)
                   else
                   InfoBox(TX_SAVERR1 + Piece(SignList[i], U, 4) + TX_SAVERR2 + OrderText,
                         TC_SAVERR, MB_OK);

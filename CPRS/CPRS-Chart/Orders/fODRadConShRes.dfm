@@ -8,6 +8,8 @@ inherited frmODRadConShRes: TfrmODRadConShRes
   ClientWidth = 288
   OldCreateOrder = True
   Position = poScreenCenter
+  ExplicitWidth = 294
+  ExplicitHeight = 146
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]

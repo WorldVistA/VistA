@@ -280,6 +280,7 @@ begin
     smiWarning:   Caption := ' Warning';
     smiError:     Caption := ' Error';
     smiQuestion:  Caption := ' Inquiry';
+    smiInfo:      Caption := ' Information';
   end;
   Caption := Application.Title + Caption;
   Result := ShowMsg(Msg, Caption, Icon, Buttons);

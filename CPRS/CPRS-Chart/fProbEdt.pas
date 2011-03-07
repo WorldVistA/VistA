@@ -99,6 +99,8 @@ type
     procedure GetEditedComments;
     procedure GetNewComments(Reason:char);
     function  OkToQuit:boolean;
+    procedure ShowServiceCombo;
+    procedure ShowClinicLocationCombo;
   protected
     procedure CreateParams(var Params: TCreateParams); override;
     procedure DoShow; override;
@@ -149,6 +151,10 @@ begin
   if OkToQuit then
     begin
       frmProblems.lblProbList.caption := frmProblems.pnlRight.Caption ;
+      frmProblems.wgProbData.TabStop := True; //CQ #15531 part (c) [CPRS v28.1] {TC}.
+      //correct JAWS from reading the 'Edit Problem' caption of the wgProbData captionlistbx.
+      if AnsiCompareText(frmProblems.wgProbData.Caption, 'Edit Problem')=0 then
+         frmProblems.wgProbData.Caption := frmProblems.lblProbList.caption;
       close;
     end
   else
@@ -162,6 +168,10 @@ begin
       else
         begin
           frmProblems.lblProbList.caption := frmProblems.pnlRight.Caption ;
+          frmProblems.wgProbData.TabStop := True; //CQ #15531 part (c) [CPRS v28.1] {TC}.
+          //correct JAWS from reading the 'Edit Problem' caption of the wgProbData captionlistbx.
+          if AnsiCompareText(frmProblems.wgProbData.Caption, 'Edit Problem')=0 then
+             frmProblems.wgProbData.Caption := frmProblems.lblProbList.caption;
           FCanQuit := True;
           close;
         end;
@@ -324,23 +334,19 @@ begin
         end ;
     cbProv.InitLongList(ProbRec.RespProvider.extern) ;
     if (ProbRec.RespProvider.intern <> '') and (StrToInt64Def(ProbRec.RespProvider.intern, 0) > 0) then
-      cbProv.SelectByIEN(StrToInt64(ProbRec.RespProvider.intern)) ;
+      cbProv.SelectByIEN(StrToInt64(ProbRec.RespProvider.intern));
 
     if UpperCase(Reason) = 'A' then
       begin
         if Encounter.Inpatient then
           begin
-            cbLoc.visible:=false;
-            cbServ.Visible:=true;
-            lblLoc.caption:='Service:';
+            ShowServiceCombo();
             cbServ.InitLongList('');
           end
         else
           begin
-            cbLoc.visible:=true;
-            cbServ.Visible:=false;
-            lblLoc.caption:='Clinic:';
-            cbLoc.InitLongList(Encounter.LocationName) ;
+            ShowClinicLocationCombo();
+            cbLoc.InitLongList(Encounter.LocationName);
             cbLoc.SelectByIEN(Encounter.Location);
           end;
       end
@@ -348,41 +354,33 @@ begin
       begin
         if (ProbRec.Service.DHCPField = '^') and  (ProbRec.Clinic.DHCPField <> '^') then
           begin
-            cbLoc.visible:=true;
-            cbServ.Visible:=false;
-            lblLoc.caption:='Clinic:';
-            cbLoc.InitLongList(ProbRec.Clinic.Extern) ;
-            cbLoc.SelectByID(ProbRec.Clinic.Intern) ;
+            ShowClinicLocationCombo();
+            cbLoc.InitLongList(ProbRec.Clinic.Extern);
+            cbLoc.SelectByID(ProbRec.Clinic.Intern);
           end
         else if (ProbRec.Clinic.DHCPField = '^') and  (ProbRec.Service.DHCPField <> '^') then
           begin
-            cbLoc.visible:=false;
-            cbServ.Visible:=true;
-            lblLoc.caption:='Service:';
-            cbServ.InitLongList(ProbRec.Service.Extern) ;
-            cbServ.SelectByID(ProbRec.Service.Intern) ;
+            ShowServiceCombo();
+            cbServ.InitLongList(ProbRec.Service.Extern);
+            cbServ.SelectByID(ProbRec.Service.Intern);
           end
         else
           begin
             if Encounter.Inpatient then
               begin
-                cbLoc.visible:=false;
-                cbServ.Visible:=true;
-                lblLoc.caption:='Service:';
+                ShowServiceCombo();
                 cbServ.InitLongList('');
               end
             else
               begin
-                cbLoc.visible:=true;
-                cbServ.Visible:=false;
-                lblLoc.caption:='Clinic:';
-                cbLoc.InitLongList('') ;
+                ShowClinicLocationCombo();
+                cbLoc.InitLongList('');
               end;
           end;
       end;
     cbLoc.Caption := lblLoc.Caption;
 
-    if Pos(Reason,'E,C') > 0 then ShowComments  ;
+    ShowComments;
     if ProbRec.CmtIsXHTML then
       begin
         bbAdd.Enabled := FALSE;
@@ -464,15 +462,16 @@ end;
 
 procedure TfrmdlgProb.bbFileClick(Sender: TObject);
 const
-  TX_INACTIVE_CODE   = 'This problem references an inactive ICD code.' + #13#10 +
+  TX_INACTIVE_ICODE   = 'This problem references an inactive ICD-9-CM code.' + #13#10 +
                        'The code must be updated using the ''Change''' + #13#10 +
                        'button before it can be saved';
-  TC_INACTIVE_CODE   = 'Inactive Code';
+  TC_INACTIVE_ICODE   = 'Inactive ICD-9-CM Code';
 var
   AList: TstringList;
   remcom, vu, ut: string;
   i: integer;
 begin
+  frmProblems.wgProbData.TabStop := True;  //CQ #15531 part (c) [CPRS v28.1] {TC}.
   if (Reason <> 'R') and (Reason <> 'r') then
     if (rgStatus.itemindex=-1) or (cbProv.itemindex=-1) then
       begin
@@ -482,7 +481,7 @@ begin
   if Reason in ['C','c','E','e'] then
     if not IsActiveICDCode(ProbRec.Diagnosis.extern) then
       begin
-        InfoBox(TX_INACTIVE_CODE, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
+        InfoBox(TX_INACTIVE_ICODE, TC_INACTIVE_ICODE, MB_ICONWARNING or MB_OK);
         exit;
       end;
   if BadDates then exit;
@@ -718,8 +717,11 @@ begin  {BODY }
   alist.add('NEW' + v + '1.11' + v + '0' + u + 'NO'); {AO}
   alist.add('NEW' + v + '1.12' + v + '0' + u + 'NO'); {RAD}
   alist.add('NEW' + v + '1.13' + v + '0' + u + 'NO'); {ENV}
-  alist.add('NEW' + v + '1.14' + v + '0' + u + 'NO'); {SHD}
-  alist.add('NEW' + v + '1.15' + v + '');
+  alist.add('NEW' + v + '1.14' + v + ''); {Priority: 'A', 'C', or ''}
+  alist.add('NEW' + v + '1.15' + v + '0' + u + 'NO'); {HNC}
+  alist.add('NEW' + v + '1.16' + v + '0' + u + 'NO'); {MST}
+  alist.add('NEW' + v + '1.17' + v + '0' + u + 'NO'); {CV}
+  alist.add('NEW' + v + '1.18' + v + '0' + u + 'NO'); {SHAD}
 end;
 
 
@@ -730,7 +732,8 @@ var
 
   procedure Msg(msg: string);
   begin
-    InfoBox('Dates must be in format m/d/y or m/d or y, or T+d or T-d' +
+// CQ #16123 - Modified error text to clarify proper date formats - JCS
+    InfoBox('Dates must be in format m/d/yy, m/d/yyyy, m/d, m/yyyy, yyyy, T+d or T-d' +
       #13#10 + msg + ' is formatted improperly.' +
       #13#10 + '     Please check the other dates as well.',
       'Information', MB_OK or MB_ICONINFORMATION);
@@ -903,6 +906,20 @@ begin
   ResizeAnchoredFormToFont( self );
 end;
 
+procedure TfrmdlgProb.ShowClinicLocationCombo;
+begin
+  cbLoc.visible := true;
+  cbServ.Visible := false;
+  lblLoc.caption := 'Clinic:';
+end;
+
+procedure TfrmdlgProb.ShowServiceCombo;
+begin
+  cbLoc.visible := false;
+  cbServ.Visible := true;
+  lblLoc.caption := 'Service:';
+end;
+
 { base form procedures (shared by all ordering dialogs) }
 
 
@@ -965,6 +982,7 @@ begin
   {problems are in the form of: ien^.01^icd^icdifn , although only the .01 is required}
   if PLProblem='' then exit ;
   newprob := PLProblem ;
+
   if frmProblems.HighlightDuplicate(NewProb, Piece(newprob, U, 2) + #13#10#13#10 +
       'This problem would be a duplicate.'+#13#10 +
       'Return to the list and see the highlighted problem.',
@@ -974,9 +992,9 @@ begin
     begin
       {ien^.01^icd^icdifn - see SetDefaultProblem}
       {Set new problem properties}
-      ProbRec.Problem.DHCPtoKeyVal(Piece(NewProb,u,1) + u + Piece(NewProb,u,2)) ;   {1.01}
-      ProbRec.Diagnosis.DHCPtoKeyVal(Piece(NewProb,u,4) + u + Piece(NewProb,u,3)) ;  {.01}
-      ProbRec.Narrative.DHCPtoKeyVal(u + Piece(NewProb,u,2));                        {.05}
+      ProbRec.Problem.DHCPtoKeyVal(Piece(NewProb,u,1) + u + Piece(NewProb,u,2)) ;    {1.01}
+      ProbRec.Diagnosis.DHCPtoKeyVal(Piece(NewProb,u,4) + u + Piece(NewProb,u,3)) ;   {.01}
+      ProbRec.Narrative.DHCPtoKeyVal(u + Piece(NewProb,u,2));                         {.05}
 
       {mark it as changed}
       fchanged := true ;

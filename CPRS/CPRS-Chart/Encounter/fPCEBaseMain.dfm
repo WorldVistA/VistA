@@ -2,8 +2,6 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
   Left = 302
   Top = 166
   Caption = 'frmPCEBaseMain'
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object lblSection: TLabel [0]
@@ -157,8 +155,6 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
         LongList = False
         Pieces = '3'
         CheckEntireLine = True
-        ExplicitLeft = -3
-        ExplicitTop = -2
       end
       object btnOther: TButton
         Left = 65

@@ -81,6 +81,7 @@ type
     FFromCreate: Boolean;
     FOldHintEvent: TShowHintEvent;
     OKPressed: Boolean;
+    DoNotNeedLocation: Boolean;     //AGP This is used to not force a location when writing a delayed order
     procedure AppShowHint(var HintStr: string; var CanShow: Boolean;
                           var HintInfo: THintInfo);
     procedure SetVisitCat;
@@ -89,7 +90,7 @@ type
     { Public declarations }
   end;
 
-procedure UpdateEncounter(PersonFilter: Int64; ADate: TFMDateTime = 0; TIULocation: integer = 0);
+procedure UpdateEncounter(PersonFilter: Int64; ADate: TFMDateTime = 0; TIULocation: integer = 0; DelayedOrder: Boolean = False);
 procedure UpdateVisit(FontSize: Integer); overload;
 procedure UpdateVisit(FontSize: Integer; TIULocation: integer); overload;
 
@@ -123,7 +124,7 @@ begin
   UpdateEncounter(NPF_SUPPRESS, 0, TIULocation);
 end;
 
-procedure UpdateEncounter(PersonFilter: Int64; ADate: TFMDateTime = 0;  TIULocation: integer = 0);
+procedure UpdateEncounter(PersonFilter: Int64; ADate: TFMDateTime = 0;  TIULocation: integer = 0; DelayedOrder: Boolean = False);
 const
   UP_SHIFT = 85;
 var
@@ -135,6 +136,8 @@ begin
   if uTIULocation <> 0 then uTIULocationName := ExternalName(uTIULocation, FN_HOSPITAL_LOCATION);
   frmEncounter := TfrmEncounter.Create(Application);
   try
+    if DelayedOrder = True then frmEncounter.DoNotNeedLocation := True
+    else frmEncounter.DoNotNeedLocation := False;
     TimedOut := False;
     ResizeAnchoredFormToFont(frmEncounter);
     with frmEncounter do
@@ -396,21 +399,24 @@ var
 begin
   inherited;
   msg := '';
-  if FLocation = 0 then msg := TX_NO_LOC;
-  if FDateTime <= 0 then msg := msg + CRLF + TX_NO_DATE
-  else if(pos('.',FloatToStr(FDateTime)) = 0) then msg := msg + CRLF + TX_NO_TIME;
-  if(msg <> '') then
-  begin
-    InfoBox(msg, TC_MISSING, MB_OK);
-    Exit;
-  end
-  else
-  begin
-    ADate := FMDateTimeToDateTime(Trunc(FDateTime));
-    AMaxDate := FMDateTimeToDateTime(FMToday) + StrToIntDef(FEncFutureLimit, 0);
-    if ADate > AMaxDate then
-      if InfoBox(TX_FUTURE_WARNING, TC_FUTURE_WARNING, MB_YESNO or MB_ICONQUESTION) = MRNO then exit;
-  end;
+  if DoNotNeedLocation = False then
+    begin
+      if FLocation = 0 then msg := TX_NO_LOC;
+      if FDateTime <= 0 then msg := msg + CRLF + TX_NO_DATE
+      else if(pos('.',FloatToStr(FDateTime)) = 0) then msg := msg + CRLF + TX_NO_TIME;
+      if(msg <> '') then
+        begin
+          InfoBox(msg, TC_MISSING, MB_OK);
+          Exit;
+        end
+      else
+        begin
+          ADate := FMDateTimeToDateTime(Trunc(FDateTime));
+          AMaxDate := FMDateTimeToDateTime(FMToday) + StrToIntDef(FEncFutureLimit, 0);
+          if ADate > AMaxDate then
+              if InfoBox(TX_FUTURE_WARNING, TC_FUTURE_WARNING, MB_YESNO or MB_ICONQUESTION) = MRNO then exit;
+        end;
+    end;
   if FFilter <> NPF_SUPPRESS then FProvider := cboPtProvider.ItemIEN;
   OKPressed := True;
   Close;

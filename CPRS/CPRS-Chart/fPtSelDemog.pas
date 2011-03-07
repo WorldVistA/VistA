@@ -22,8 +22,10 @@ type
     lblRoomBed: TStaticText;
     lblPtName: TStaticText;
     Memo: TCaptionMemo;
+    lblCombatVet: TStaticText;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FLastDFN: string;
     FOldWinProc :TWndMethod;
@@ -39,7 +41,7 @@ var
 
 implementation
 
-uses rCore, VA508AccessibilityRouter;
+uses rCore, VA508AccessibilityRouter, uCombatVet;
 
 {$R *.DFM}
 
@@ -68,7 +70,7 @@ procedure TfrmPtSelDemog.ShowDemog(ItemID: string);
 var
   PtRec: TPtIDInfo;
   i: Integer;
-
+  CV : TCombatVet;
 begin
   if ItemID = FLastDFN then Exit;
   Memo.Clear;
@@ -109,6 +111,13 @@ begin
     lblRoomBed.Hide
   else
     lblRoomBed.Show;
+  CV := TCombatVet.Create(ItemID);
+  if CV.IsEligible then begin
+    lblCombatVet.Caption := 'CV ' + CV.ExpirationDate + ' ' + CV.OEF_OIF;
+    Memo.Lines.Add(lblCombatVet.Caption);
+  end else
+    lblCombatVet.Caption := '';
+  CV.Free;
   Memo.SelectAll;
 end;
 
@@ -181,12 +190,19 @@ begin
     lblRoomBed.Top    :=(lblLocation.Top + uHeight)+ 2;
     lblPtRoomBed.Height := uHeight;
     lblPtRoomBed.Top  := lblRoomBed.Top ;
+    lblCombatVet.Top := (lblRoomBed.Top + uHeight) + 2;
   end;
 end;
 
 procedure TfrmPtSelDemog.FormDestroy(Sender: TObject);
 begin
   orapnlMain.WindowProc := FOldWinProc;
+end;
+
+procedure TfrmPtSelDemog.FormShow(Sender: TObject);
+begin
+  inherited;
+  lblCombatVet.Caption := '';
 end;
 
 initialization

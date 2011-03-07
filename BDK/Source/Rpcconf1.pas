@@ -4,7 +4,7 @@
 	Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
 	Developers: Danila Manapsal, Raul Mendoza, Joel Ivey
 	Description: Server selection dialog.
-	Current Release: Version 1.1 Patch 47 (February 7, 2007))
+	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
 *************************************************************** }
 
 {**************************************************
@@ -32,7 +32,6 @@ type
     Panel4: TPanel;
     btnHelp: TBitBtn;
     btnNew: TButton;
-    btnDelete: TButton;
     procedure cboServerClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -117,7 +116,7 @@ begin
      pnlPort.Caption := rPort;
      rServer := Piece(ServerPairs[index], ',', 1);
      btnOk.Enabled := True;
-     btnDelete.Enabled := True;
+     //btnDelete.Enabled := True;
 
      {Based on Server, get IP addresss.}
      Panel4.Caption := GetServerIP(rServer);
@@ -285,7 +284,7 @@ begin
      ServerPairs.Delete(index);
      // and set buttons dependent on selection back to disabled
      btnOK.Enabled := False;
-     btnDelete.Enabled := False;
+     //btnDelete.Enabled := False;
 end;
 
 end.

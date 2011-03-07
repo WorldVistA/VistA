@@ -44,6 +44,15 @@ type
     lblFirstDose: TVA508StaticText;
     txtAllIVRoutes: TLabel;
     lblTypeHelp: TLabel;
+    cboAddFreq: TCaptionComboBox;
+    lblAddFreq: TLabel;
+    lblPrevAddFreq: TLabel;
+    lbl508Required: TVA508StaticText;
+    VA508CompOrderSig: TVA508ComponentAccessibility;
+    VA508CompRoute: TVA508ComponentAccessibility;
+    VA508CompType: TVA508ComponentAccessibility;
+    VA508CompSchedule: TVA508ComponentAccessibility;
+    VA508CompGrdSelected: TVA508ComponentAccessibility;
     procedure FormCreate(Sender: TObject);
     procedure tabFluidChange(Sender: TObject);
     procedure  cboAdditiveNeedData(Sender: TObject; const StartFrom: string; Direction,
@@ -58,10 +67,8 @@ type
     procedure cmdRemoveClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure txtSelectedExit(Sender: TObject);
-    procedure cboSelectedExit(Sender: TObject);
     procedure ControlChange(Sender: TObject);
     procedure txtSelectedChange(Sender: TObject);
-    procedure cboSelectedChange(Sender: TObject);
     procedure grdSelectedDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
       State: TGridDrawState);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
@@ -93,6 +100,34 @@ type
     procedure txtAllIVRoutesClick(Sender: TObject);
     procedure cboRouteClick(Sender: TObject);
     procedure lblTypeHelpClick(Sender: TObject);
+    procedure cboSelectedCloseUp(Sender: TObject);
+    procedure cboRouteKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure cboScheduleKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cboPriorityKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cboAddFreqKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cboAddFreqCloseUp(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure txtSelectedKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cboSelectedKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cboTypeKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cboRouteKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cboScheduleKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure VA508CompOrderSigStateQuery(Sender: TObject; var Text: string);
+    procedure VA508CompRouteInstructionsQuery(Sender: TObject;
+      var Text: string);
+    procedure VA508CompTypeInstructionsQuery(Sender: TObject; var Text: string);
+    procedure VA508CompScheduleInstructionsQuery(Sender: TObject;
+      var Text: string);
+    procedure VA508CompGrdSelectedCaptionQuery(Sender: TObject;
+      var Text: string);
   private
     FInpatient: Boolean;
     FNSSAdminTime: string;
@@ -101,13 +136,13 @@ type
     OAddIEN: integer;
     OSchedule: string;
     oAdmin: string;
-    Action: integer;
     OrderIEN: string;
     FAdminTimeText: string;
     JAWSON: boolean;
     FOriginalDurationType: integer;
     FOriginalInfusionType: integer;
-    FInitialOrderID: boolean;
+    FIVTypeDefined: boolean;
+    //FInitialOrderID: boolean;
     procedure SetValuesFromResponses;
     procedure DoSetFontSize( FontSize: integer);
     procedure ClickOnGridCell;
@@ -118,7 +153,11 @@ type
     procedure DisplayDoseNow(Status: boolean);
     procedure UpdateDuration(SchType: string);
     procedure ClearAllFields;
+    function UpdateAddFreq(OI: integer): string;
+    function IsAltCtrl_L_Pressed(Shift : TShiftState; Key : Word) : Boolean;
+    procedure SetCtrlAlt_L_LabelAccessText(var Text: string; theLabel : TLabel);
   public
+    OrdAction: integer;
     procedure InitDialog; override;
     procedure SetupDialog(OrderAction: Integer; const ID: string); override;
     procedure Validate(var AnErrMsg: string); override;
@@ -151,6 +190,7 @@ type
     Amount: Integer;
     Units: string;
     Volumes: string;
+    AddFreq: string;
   end;
 
 const
@@ -167,6 +207,9 @@ const
   TX_NO_INFUSION_UNIT = 'Invalid Unit of Time, select either "Minutes" or "Hours" for the Infusion Length';
   TX_BAD_ROUTE = 'Route cannot be free-text';
   TX_LEADING_NUMERIC = 'this additive must start with a leading numeric value';
+  TX_BAD_BAG = 'A valid additive frequency must be entered for ';
+  Tx_BAG_NO_COMMENTS ='"See Comments" entered for additive ';
+  TX_BAG_NO_COMMENTS1 = ' no comments defined for this order.';
 
 (*
   { TIVComponent methods }
@@ -199,6 +242,7 @@ begin
     Close;
     Exit;
   end;
+  OrdAction := -1;
   DoSetFontSize(MainFontSize);
   FillerID := 'PSIV';                            // does 'on Display' order check **KCM**
   StatusText('Loading Dialog Definition');
@@ -220,15 +264,36 @@ end;
 procedure TfrmODMedIV.FormResize(Sender: TObject);
 var
 bottom: integer;
+isNewOrder: boolean;
 begin
   inherited;
+  if OrdAction in [ORDER_COPY, ORDER_EDIT] then isNewOrder := false
+  else isNewOrder := True;
   with grdSelected do
   begin
     ColWidths[1] := Canvas.TextWidth(' 10000 ') + GetSystemMetrics(SM_CXVSCROLL);
     ColWidths[2] := Canvas.TextWidth('meq.') + GetSystemMetrics(SM_CXVSCROLL);
-    ColWidths[0] := ClientWidth - ColWidths[1] - ColWidths[2] - 4;
+    //AGP ADDITIVE FREQUENCY CHANGES
+    ColWidths[3] := Canvas.TextWidth(lblAddFreq.Caption + '  ') + GetSystemMetrics(SM_CXVSCROLL);
+     if IsNewOrder = false then
+      begin
+        ColWidths[4] := Canvas.TextWidth(lblPrevAddFreq.Caption) + GetSystemMetrics(SM_CXVSCROLL);
+        ColWidths[0] := ClientWidth - ColWidths[1] - ColWidths[2] - ColWidths[3] - ColWidths[4] - 5;
+      end
+    else
+      begin
+        ColWidths[4] := 0;
+        ColWidths[0] := ClientWidth - ColWidths[1] - ColWidths[2] - ColWidths[3] - ColWidths[4] - 25;
+      end;
   end;
   lblAmount.Left := grdSelected.Left + grdSelected.ColWidths[0];
+  lblAddFreq.Left := grdSelected.Left +  grdSelected.ColWidths[0] +  grdSelected.ColWidths[1] + grdSelected.ColWidths[2];
+  if isNewOrder = false then
+    begin
+      lblPrevAddFreq.Visible := True;
+      lblPrevAddFreq.Left := grdSelected.Left +  grdSelected.ColWidths[0] +  grdSelected.ColWidths[1] + grdSelected.ColWidths[2] + grdSelected.ColWidths[3];
+    end
+  else lblPrevAddFreq.Visible := False;
   self.cboType.SelLength := 0;
   self.cboInfusionTime.SelLength := 0;
   self.cboDuration.SelLength := 0;
@@ -242,9 +307,10 @@ begin
   self.lblFirstDose.Width := TextWidthByFont(self.lblFirstDose.Font.Handle, self.lblFirstDose.Caption + '  ');
   self.lblAdminTime.Top := self.chkDoseNow.Top + self.chkDoseNow.Height + 2;
   self.lblFirstDose.Top := self.lblAdminTime.Top + self.lblAdminTime.Height + 2;
-  if self.Label1.Top < (self.lblFirstDose.Top + self.lblFirstDose.Height) then
+  self.lbl508Required.Top := self.lblFirstDose.Top + self.lblFirstDose.Height + 5;
+  if self.Label1.Top < (self.lbl508Required.Top + self.lbl508Required.Height) then
     begin
-      self.Label1.Top := self.lblFirstDose.Top + self.lblFirstDose.Height + 2;
+      self.Label1.Top := self.lbl508Required.Top + self.lbl508Required.Height + 5;
       self.memOrder.Top := self.Label1.Top + self.Label1.Height;
     end;
 end;
@@ -261,6 +327,8 @@ begin
   //grdSelected.Selection := NOSELECTION;
   //FRouteConflict := False;
   //lblTypeHelp.Hint := IVTypeHelpText;
+  ClearAllFields;
+  //FIVTypeDefined := false;
   lblType.Hint := IVTypeHelpText;
   cboType.Hint := IVTYpeHelpText;
   with grdSelected do for i := 0 to RowCount - 1 do
@@ -285,7 +353,6 @@ begin
     LoadSchedules(cboSchedule.Items, patient.Inpatient);
     //if (Patient.Inpatient) and (cboSchedule.Items.IndexOfName('Other')<0) then
     if cboSchedule.Items.IndexOf('Other') = -1 then cboSchedule.Items.Add('OTHER');
-
     cboSchedule.Enabled := False;
     lblschedule.Enabled := False;
     if cboInfusionTime.Items.Count = 0 then
@@ -309,6 +376,13 @@ begin
     if (chkDoseNow.Visible = true) and (chkDoseNow.Checked = true) then chkDoseNow.Checked := false;
     chkDoseNow.Visible := false;
     chkPRN.Enabled := false;
+    //AGP ADDITIVE FREQUENCY CHANGES
+    if cboAddFreq.Items.Count = 0 then
+      begin
+        cboAddFreq.Items.Add('1 Bag/Day');
+        cboAddFreq.Items.Add('All Bags');
+        cboAddFreq.Items.Add('See Comments');
+      end;
   end;
   tabFluid.TabIndex := 0;
   tabFluidChange(Self);            // this makes cboSolution visible
@@ -329,6 +403,8 @@ begin
   OSchedule := '';
   oAdmin := '';
   self.txtAllIVRoutes.Visible := false;
+  memorder.text := '';
+  memOrder.Lines.Clear;
 end;
 
 function TfrmODMedIV.IVTypeHelpText: string;
@@ -338,6 +414,12 @@ begin
              '     IV’s administered at scheduled intervals (Q4H, QDay) or One-Time only, ' +
              CRLF + '     “over a specified time period” (e.g. “Infuse over 30 min.”).' + CRLF + CRLF +
              'Examples:' + CRLF + 'Continuous = Infusion/drip' + CRLF + 'Intermittent = IVP/IVPB';
+end;
+
+procedure TfrmODMedIV.SetCtrlAlt_L_LabelAccessText(var Text: string; theLabel : TLabel);
+begin
+  if theLabel.Visible then
+    Text := 'Press Ctrl + Alt + L to access ' + theLabel.Caption;
 end;
 
 procedure TfrmODMedIV.lblTypeHelpClick(Sender: TObject);
@@ -454,10 +536,54 @@ begin
   else self.lblAdminTime.TabStop := false;
 end;
 
+procedure TfrmODMedIV.VA508CompRouteInstructionsQuery(
+  Sender: TObject; var Text: string);
+begin
+  inherited;
+  SetCtrlAlt_L_LabelAccessText(Text, txtAllIVRoutes);
+end;
+
+procedure TfrmODMedIV.VA508CompScheduleInstructionsQuery(Sender: TObject;
+  var Text: string);
+begin
+  inherited;
+  SetCtrlAlt_L_LabelAccessText(Text, txtNSS);
+end;
+
+procedure TfrmODMedIV.VA508CompTypeInstructionsQuery(Sender: TObject;
+  var Text: string);
+begin
+  inherited;
+  SetCtrlAlt_L_LabelAccessText(Text, lblTypeHelp);
+end;
+
+procedure TfrmODMedIV.VA508CompGrdSelectedCaptionQuery(Sender: TObject;
+  var Text: string);
+begin
+  inherited;
+  if grdSelected.Col = 0 then
+    Text := lblComponent.Caption
+  else if grdSelected.Col = 1 then
+    Text := lblAmount.Caption
+  else if grdSelected.Col = 2 then
+    Text := lblAmount.Caption + ', Unit'
+  else if grdSelected.Col = 3 then
+    Text := lblAddFreq.Caption
+  else if grdSelected.Col = 4 then
+    Text := lblPrevAddFreq.Caption;
+end;
+
+procedure TfrmODMedIV.VA508CompOrderSigStateQuery(Sender: TObject;
+  var Text: string);
+begin
+  inherited;
+  Text := memOrder.Text;
+end;
+
 procedure TfrmODMedIV.Validate(var AnErrMsg: string);
 var
   DispWarning, ItemOK, Result: Boolean;
-  LDec,RDec,x, tempStr, iunit, infError: string;
+  LDec,RDec,x, tempStr, iunit, infError, Bag: string;
   digits, i, j, Len, temp, Value: Integer;
 
   procedure SetError(const x: string);
@@ -498,6 +624,24 @@ begin
                   Exit;
                 end;
             end;
+           //AGP ADDITIVE FREQUENCY CHANGES
+           if MixedCase(self.cboType.Items.Strings[self.cboType.ItemIndex]) = 'Continuous' then
+             begin
+               Bag := (Cells[3, i]);
+               if Length(Bag) = 0 then
+                 begin
+                   SetError(TX_BAD_BAG + cells[0, i]);
+                 end
+               else if cboAddFreq.Items.IndexOf(Bag) = -1 then
+                  begin
+                    SetError(TX_BAD_BAG + cells[0, i]);
+                  end
+               else if (MixedCase(Bag) = 'See Comments') and ((self.memComments.Text = '') or (self.memComments.Text = CRLF)) then
+                  begin
+                    SetError(Tx_BAG_NO_COMMENTS + cells[0,i] + Tx_BAG_NO_COMMENTS1);
+                  end;
+                    
+             end;
         end;
   end;
   end;
@@ -573,13 +717,19 @@ begin
           if (iunit = 'Minutes') and (Len > 4) then setError('Infuse Over Time cannot exceed 4 spaces for ' + iunit)
           else if (iunit = 'Hours') and (Len > 2) then setError('Infuse Over Time cannot exceed 2 spaces for ' + iunit);
         end;
-      if (cboSchedule.ItemIndex = -1) and (cboSchedule.Text = '')  then SetError(TX_NO_SCHEDULE);
+      if (cboSchedule.ItemIndex = -1) and (cboSchedule.Text = '') and (chkPRN.Checked = false) then SetError(TX_NO_SCHEDULE);
+      if (cboSchedule.ItemIndex > -1) and (cboSchedule.Text = '') then
+        begin
+          cboSchedule.ItemIndex := -1;
+          SetError(TX_NO_SCHEDULE)
+        end;
       if (cboSchedule.ItemIndex = -1) and (cboSchedule.Text <> '') then SetError(TX_BAD_SCHEDULE);
     end;
   if txtXDuration.Text = '' then
     begin
-      if AnErrMsg = '' then self.FInitialOrderID := True;
-      exit;
+      if AnErrMsg = '' then exit;
+      //if AnErrMsg = '' then self.FInitialOrderID := True;
+      //exit;
     end;
   Len := Length(txtXDuration.Text);
   if LeftStr(txtXDuration.Text,1) <> '.' then
@@ -606,7 +756,7 @@ begin
        else if (Value < 0) or (Value > 2000000) then
          SetError('Duration with a unit of "doses" must be greater then 0 and less then 2000000');
      end;
-  if AnErrMsg = '' then self.FInitialOrderID := True;
+  //if AnErrMsg = '' then self.FInitialOrderID := True;
   
 end;
 
@@ -628,17 +778,19 @@ end;
 
 procedure TfrmODMedIV.SetValuesFromResponses;
 var
-  x, addRoute, tempSch, AdminTime, TempOrder, tmpSch, tempIRoute, tempRoute: string;
-  AnInstance, i, idx: Integer;
-  AResponse: TResponse;
+  x, addRoute, tempSch, AdminTime, TempOrder, tmpSch, tempIRoute, tempRoute, PreAddFreq: string;
+  AnInstance, i, idx, j: Integer;
+  AResponse, AddFreqResp: TResponse;
   AnIVComponent: TIVComponent;
   AllIVRoute: TStringList;
   PQO: boolean;
 begin
   Changing := True;
-  self.FInitialOrderID := false;
+  //self.FInitialOrderID := false;
   with Responses do
   begin
+    SetControl(cboType, 'TYPE', 1);
+    if cboType.ItemIndex > -1 then  FIVTypeDefined := True;
     FInpatient := OrderForInpatient;
     AnInstance := NextInstance('ORDERABLE', 0);
     while AnInstance > 0 do
@@ -681,6 +833,7 @@ begin
           if AnIVComponent.Amount <> 0 then
             Cells[1, RowCount - 1] := IntToStr(AnIVComponent.Amount);
           Cells[2, RowCount - 1] := AnIVComponent.Units;
+          Cells[3, RowCount - 1] := 'N/A';
         end;
       end;
       AResponse := FindResponseByName('VOLUME', AnInstance);
@@ -720,6 +873,19 @@ begin
         AnIVComponent.Amount  := StrToIntDef(Piece(x, U, 2), 0);
         AnIVComponent.Units   := Piece(x, U, 1);
         AnIVComponent.Volumes := Copy(x, Pos(U, x) + 1, Length(x));
+        //AGP ADDITIVE FREQUENCY CHANGES
+        AnIVComponent.AddFreq := '';
+        PreAddFreq := '';
+        AddFreqResp := FindResponseByName('ADDFREQ', AnInstance);
+        if AddFreqResp <> nil then
+          begin
+            if cboAddFreq.Items.IndexOf(AddFreqResp.IValue) = -1 then
+                 begin
+                   AnIvComponent.AddFreq := '';
+                 end
+            else AnIvComponent.AddFreq := AddFreqResp.IValue;
+            PreAddFreq := AddFreqResp.IValue;
+          end;
         with grdSelected do
         begin
           if Objects[0, RowCount - 1] <> nil then RowCount := RowCount + 1;
@@ -728,6 +894,8 @@ begin
           if AnIVComponent.Amount <> 0 then
             Cells[1, RowCount - 1] := IntToStr(AnIVComponent.Amount);
           Cells[2, RowCount - 1] := AnIVComponent.Units;
+          Cells[3, RowCount -1] := AnIVComponent.AddFreq;
+          if OrdAction in [ORDER_COPY, ORDER_EDIT] then Cells[4, RowCount -1] := PreAddFreq;
         end;
       end;
       AResponse := FindResponseByName('STRENGTH', AnInstance);
@@ -802,7 +970,7 @@ begin
          SetSchedule(tempSch);
          //if (cboSchedule.ItemIndex > -1) then lblAdminTime.Caption := 'Admin. Time: ' + Piece(cboSchedule.Items.strings[cboSchedule.itemindex],U,5);
          //if (cboSchedule.ItemIndex > -1) and (Piece(lblAdminTime.Caption, ':' ,2) = ' ') then lblAdminTime.Caption := 'Admin. Time: ' + AdminTime;
-         if (Action in [ORDER_COPY, ORDER_EDIT])  then
+         if (OrdAction in [ORDER_COPY, ORDER_EDIT])  then
            begin
             TempOrder := Piece(OrderIEN,';',1);
             TempOrder := Copy(tempOrder, 2, Length(tempOrder));
@@ -811,7 +979,7 @@ begin
                 AResponse := Responses.FindResponseByName('ADMIN', 1);
                 if AResponse <> nil then AdminTime := AResponse.EValue;
                 //lblAdminTime.Caption := 'Admin. Time: ' + AdminTime;
-                if cboSchedule.ItemIndex > -1 then
+                if (cboSchedule.ItemIndex > -1) and (AdminTime <> '') then
                   begin
                     tmpSch := cboSchedule.Items.Strings[cboSchedule.itemindex];
                     setPiece(tmpSch,U,4,AdminTime);
@@ -847,6 +1015,8 @@ begin
              cboInfusionTime.Text := 'Minutes';
              cboInfusionTime.itemindex := 0;
            end;
+          For j := 0 to grdSelected.RowCount -1 do
+            grdSelected.Cells[3,j] := 'N/A';
       end
     else
       begin
@@ -889,15 +1059,15 @@ end;
 procedure TfrmODMedIV.SetupDialog(OrderAction: Integer; const ID: string);
 begin
   inherited;
-  Action := OrderAction;
+  OrdAction := OrderAction;
   OrderIEN := id;
-  self.FInitialOrderID := True;
+  //self.FInitialOrderID := True;
   if self.EvtID > 0 then FAdminTimeText := 'To Be Determined';
+  if isIMO = true then self.Caption := 'Clinic ' + self.Caption;
   if (isIMO) or ((patient.Inpatient = true) and (encounter.Location <> patient.Location)) and (FAdminTimeText = '') then
       FAdminTimeText := 'Not defined for Clinic Locations';
   if OrderAction in [ORDER_COPY, ORDER_EDIT, ORDER_QUICK] then
     begin
-
       SetValuesFromResponses;
     end;
 end;
@@ -927,16 +1097,13 @@ end;
 
 procedure TfrmODMedIV.cboSolutionNeedData(Sender: TObject; const StartFrom: string;
   Direction, InsertAt: Integer);
-var
-  CurString: string;
 begin
-  inherited;
-  if (Direction = 1) then
-    CurString := AnsiUpperCase(StartFrom) + '          ';
-  cboSolution.ForDataUse(SubSetOfOrderItems(CurString, Direction, 'S.IVB RX'));
+  cboSolution.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.IVB RX'));
 end;
 
 procedure TfrmODMedIV.cbotypeChange(Sender: TObject);
+var
+i: integer;
 begin
   inherited;
   //if (self.cbotype.Text = 'Intermittent') or (self.cboType.itemIndex = 1) then
@@ -954,7 +1121,16 @@ begin
       chkPRN.Enabled := True;
       lblInfusionRate.Caption := 'Infuse Over Time (Optional)';
       cboInfusionTime.Enabled := true;
-      cboDuration.Items.Add('doses');
+      if cboDuration.items.IndexOf('doses') = -1 then cboDuration.Items.Add('doses');
+      //AGP ADDITIVE FREQUECNY CHANGES
+      lblAddFreq.Caption := 'Additive Frequency';
+      for i := 0 to grdselected.RowCount - 1 do
+        begin
+          if (TIVComponent(grdselected.Objects[0, i]) <> nil) and (TIVComponent(grdselected.Objects[0, i]).Fluid = 'A') then
+            begin
+              grdSelected.Cells[3, i] := 'N/A';
+            end;
+        end;
     end
   //else if (self.cbotype.Text = 'Continuous') or (self.cboType.itemIndex = 0) then
   else
@@ -974,9 +1150,34 @@ begin
       lblAdminTime.Visible := false;
       updateDuration('');
       cboduration.Items.Delete(cboDuration.Items.IndexOf('doses'));
+      lblAddFreq.Caption := 'Additive Frequency*';
+      if FIVTypeDefined = True then
+        begin
+          for i := 0 to grdselected.RowCount - 1 do
+            begin
+              if (TIVComponent(grdselected.Objects[0, i]) <> nil) and (TIVComponent(grdselected.Objects[0, i]).Fluid = 'A') then
+                begin
+                  grdSelected.Cells[3, i] := '';
+                end;
+            end;
+        end;
     end;
+  FIVTypeDefined := True;
   self.txtRate.Text := '';
   ControlChange(Sender);
+end;
+
+procedure TfrmODMedIV.cboTypeKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if IsAltCtrl_L_Pressed(Shift, Key) then
+    lblTypeHelpClick(lblTypeHelp);
+end;
+
+function TfrmODMedIV.IsAltCtrl_L_Pressed(Shift : TShiftState; Key : Word) : Boolean;
+begin
+  Result := (ssCtrl in Shift) and (ssAlt in Shift) and (Key = Ord('L'));
 end;
 
 procedure TfrmODMedIV.chkDoseNowClick(Sender: TObject);
@@ -985,12 +1186,14 @@ Const
   T1 = 'By checking the "Give additional dose now" box, you have actually entered two orders for the same medication.';
   T2 = #13#13'The first order''s administrative schedule is "';
   T3 = #13'The second order''s administrative schedule is "';
-  T4 = #13#13'Do you want to continue?';
+  T4 = #13#13'Do you want to continue?';    
+  T5 = '" and a priority of "';
   T1A = 'By checking the "Give additional dose now" box, you have actually entered a new order with the schedule "NOW"';
   T2A = ' in addition to the one you are placing for the same medication.';
 var
   medNm: string;
   theSch: string;
+  ordPriority: string;
   //SchID: integer;
 begin
   inherited;
@@ -999,10 +1202,12 @@ begin
     medNm := 'Test';
     //SchID := cboSchedule.ItemIndex;
     theSch := cboSchedule.Text;
+    ordPriority := cboPriority.SelText;
     if length(theSch)>0 then
     begin
       //if (InfoBox(T1+medNm+T+T2+theSch+T+T3+'NOW"'+T4, 'Warning', MB_OKCANCEL or MB_ICONWARNING) = IDCANCEL)then
-      if (InfoBox(T1+T2+theSch+T+T3+'NOW"'+T4, 'Warning', MB_OKCANCEL or MB_ICONWARNING) = IDCANCEL)then
+      //if (InfoBox(T1+T2+theSch+T+T3+'NOW"'+T4, 'Warning', MB_OKCANCEL or MB_ICONWARNING) = IDCANCEL)then
+      if (InfoBox(T1+T2+'NOW'+T5+ordPriority+T+T3+theSch+T5+ordPriority+T+T4, 'Warning', MB_OKCANCEL or MB_ICONWARNING) = IDCANCEL)then
       begin
         chkDoseNow.Checked := False;
         Exit;
@@ -1088,17 +1293,19 @@ begin
     Cells[0, RowCount - 1] := AnIVComponent.Name;
     Cells[1, RowCount - 1] := IntToStr(AnIVComponent.Amount);
     Cells[2, RowCount - 1] := AnIVComponent.Units;
+    Cells[3, RowCount - 1] := 'N/A';
     Row := RowCount - 1;
     if Length(Piece(AnIVComponent.Volumes, U, 2)) > 0 then Col := 1 else Col := 0;
-    if RowCount = 1 then        // switch to additives after 1st IV
+  (*  if RowCount = 1 then        // switch to additives after 1st IV
     begin
        tabFluid.TabIndex := 1;
        tabFluidChange(Self);
-    end;
+    end;  *)
   end;
   Application.ProcessMessages;         //CQ: 10157
-  ClickOnGridCell;
   updateRoute;
+  ClickOnGridCell;
+  //updateRoute;
   ControlChange(Sender);
   //updateRoute(routeIEN);
 end;
@@ -1116,13 +1323,35 @@ end;
 
 procedure TfrmODMedIV.cboAdditiveNeedData(Sender: TObject; const StartFrom: string;
   Direction, InsertAt: Integer);
-var
-  CurString: string;
+begin
+  cboAdditive.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.IVA RX'));
+end;
+
+procedure TfrmODMedIV.cboAddFreqCloseUp(Sender: TObject);
 begin
   inherited;
-  if (Direction = 1) then
-    CurString := AnsiUpperCase(StartFrom) + '          ';
-  cboAdditive.ForDataUse(SubSetOfOrderItems(CurString, Direction, 'S.IVA RX'));
+  with cboAddFreq do
+  begin
+    if tag < 0 then exit;
+    grdSelected.Cells[Tag div 256, Tag mod 256] := MixedCase(items.Strings[itemindex]);
+    Tag := -1;
+    Hide;
+    ControlChange(Sender);
+    TControl(self.grdSelected).Enabled := True;
+    ActiveControl := self.grdSelected;
+  end;
+  grdSelected.Refresh;
+end;
+
+procedure TfrmODMedIV.cboAddFreqKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_RETURN) or (Key = VK_Tab) then
+  begin
+    cboAddFreqCloseUp(cboAddFreq);
+    Key := 0;
+  end;
 end;
 
 procedure TfrmODMedIV.cboDurationChange(Sender: TObject);
@@ -1178,6 +1407,13 @@ begin
     end;
 end;
 
+procedure TfrmODMedIV.cboPriorityKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_BACK) and (cboPriority.Text = '') then cboPriority.ItemIndex := -1;
+end;
+
 procedure TfrmODMedIV.cboRouteChange(Sender: TObject);
 begin
   inherited;
@@ -1231,6 +1467,21 @@ begin
     end; *)
 end;
 
+procedure TfrmODMedIV.cboRouteKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if IsAltCtrl_L_Pressed(Shift, Key) then
+    txtAllIVRoutesClick(txtAllIVRoutes);
+end;
+
+procedure TfrmODMedIV.cboRouteKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_BACK) and (cboRoute.Text = '') then cboRoute.ItemIndex := -1;  
+end;
+
 procedure TfrmODMedIV.cboAdditiveMouseClick(Sender: TObject);
 var
   AnIVComponent: TIVComponent;
@@ -1272,6 +1523,7 @@ begin
     Objects[0, RowCount - 1] := AnIVComponent;
     Cells[0, RowCount - 1] := AnIVComponent.Name;
     Cells[2, RowCount - 1] := AnIVComponent.Units;
+    Cells[3, RowCount -1] :=  UpdateAddFreq(AnIVComponent.IEN);
     Row := RowCount - 1;
     Col := 1;
   end;
@@ -1301,9 +1553,10 @@ begin
   self.cboDuration.ItemIndex := -1;
   self.cboDuration.Text := '';
   self.txtAllIVRoutes.Visible := false;
-  self.FInitialOrderID := True;
+  //self.FInitialOrderID := True;
   cbotypeChange(self.cboType);
   if self.cboroute.Items.Count > 0 then self.cboRoute.Clear;
+  FIVTypeDefined := false;
 end;
 
 procedure TfrmODMedIV.ClickOnGridCell;
@@ -1323,13 +1576,20 @@ var
       Show;
       SetFocus;
       if AControl is TComboBox then                    //CQ: 10157
-        TComboBox(AControl).DroppedDown := True;
+        begin
+          TComboBox(AControl).DroppedDown := True;
+          TControl(self.grdSelected).Enabled := false;
+        end;
     end;
   end;
 
 begin
   AnIVComponent := TIVComponent(grdSelected.Objects[0, grdSelected.Row]);
-  if (AnIVComponent = nil) or (grdSelected.Col = 0) then Exit;
+  if (AnIVComponent = nil) or (grdSelected.Col = 0) then
+    begin
+      if (AnIVComponent <> nil) and (grdSelected.Col = 0) then grdSelected.Refresh;
+      Exit;
+    end;
   // allow selection if more the 1 unit to choose from
   if (grdSelected.Col = 2) and (Length(Piece(AnIVComponent.Units, U, 2)) > 0) then
   begin
@@ -1353,6 +1613,13 @@ begin
     txtSelected.Tag  := (grdSelected.Col * 256) + grdSelected.Row;
     PlaceControl(txtSelected);
   end;
+  // AGP ADDITIVE FREQUENCY CHANGES
+  if (Self.cboType.ItemIndex < 1) and (grdSelected.Col = 3) and (AnIVComponent.Fluid = 'A') then
+  begin
+    cboAddFreq.ItemIndex := cboAddFreq.Items.IndexOf(grdSelected.Cells[grdSelected.Col, grdSelected.Row]);
+    cboAddFreq.Tag  := (grdSelected.Col * 256) + grdSelected.Row;
+    PlaceControl(cboAddFreq);
+  end;
 end;
 
 procedure TfrmODMedIV.txtSelectedChange(Sender: TObject);   // text editor for grid
@@ -1375,9 +1642,26 @@ begin
     Tag := -1;
     Hide;
   end;
+  grdSelected.Refresh;
+end;
+
+
+
+procedure TfrmODMedIV.txtSelectedKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_RETURN) or (Key = VK_Tab) then
+    begin
+      ActiveControl := grdSelected;
+      Key := 0;
+    end;
 end;
 
 procedure TfrmODMedIV.cboScheduleChange(Sender: TObject);
+var
+othSch: string;
+idx: integer;
 begin
   inherited;
    if self.txtXDuration.Enabled = true then
@@ -1385,14 +1669,28 @@ begin
        self.txtXDuration.Text := '';
        self.cboDuration.ItemIndex := -1;
      end;
-   if self.cboSchedule.ItemIndex > -1 then updateDuration(Piece(cboSchedule.Items.Strings[cboSchedule.itemindex],U,3));
+   if self.cboSchedule.ItemIndex > -1 then
+      begin
+        if cboSchedule.ItemIndex = cboSchedule.Items.IndexOf('Other') then
+          begin
+            othSch := CreateOtherSchedule;
+            if length(trim(othSch)) > 1 then
+              begin
+                cboSchedule.Items.Add(othSch + U + U + NSSScheduleType + U + NSSAdminTime);
+                idx := cboSchedule.Items.IndexOf(Piece(OthSch, U, 1));
+                cboSchedule.ItemIndex := idx;
+            end
+            else cboSchedule.itemindex := -1;
+        end;
+        if cboSchedule.itemIndex > -1  then  updateDuration(Piece(cboSchedule.Items.Strings[cboSchedule.itemindex],U,3));
+      end;
   ControlChange(sender);
 end;
 
 procedure TfrmODMedIV.cboScheduleClick(Sender: TObject);
 var
   othSch: string;
-  idx, i : integer;
+  idx: integer;
 begin
   inherited;
   if cboSchedule.ItemIndex = cboSchedule.Items.IndexOf('Other') then
@@ -1401,14 +1699,7 @@ begin
       if length(trim(othSch)) > 1 then
         begin
           cboSchedule.Items.Add(othSch + U + U + NSSScheduleType + U + NSSAdminTime);
-          idx := -1;
-          for I := 0 to cboSchedule.Items.Count - 1 do
-            if Piece(cboSchedule.Items.Strings[i], U, 1) = othSch then
-              begin
-                idx := i;
-                break;
-              end;
-          //idx := cboSchedule.Items.IndexOfName(othSch);
+          idx := cboSchedule.Items.IndexOf(Piece(OthSch, U, 1));
           cboSchedule.ItemIndex := idx;
         end;
     end
@@ -1430,27 +1721,48 @@ begin
       cboSchedule.Text := '';
       cboSchedule.SetFocus;
     end;
+    if (cboSchedule.ItemIndex > -1) and (cboSchedule.Text = '') then cboSchedule.ItemIndex := -1;
 end;
 
-procedure TfrmODMedIV.cboSelectedChange(Sender: TObject);   // combo editor for grid
+procedure TfrmODMedIV.cboScheduleKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if IsAltCtrl_L_Pressed(Shift, Key) then
+    txtNSSClick(txtNSS);
+end;
+
+procedure TfrmODMedIV.cboScheduleKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_BACK) and (cboSchedule.Text = '') then cboSchedule.ItemIndex := -1;  
+end;
+
+procedure TfrmODMedIV.cboSelectedCloseUp(Sender: TObject);
 begin
   inherited;
   with cboSelected do
   begin
-    if Tag < 0 then Exit;
-    grdSelected.Cells[Tag div 256, Tag mod 256] := Text;
-  end;
-  ControlChange(Sender);
-end;
-
-procedure TfrmODMedIV.cboSelectedExit(Sender: TObject);
-begin
-  inherited;
-  with cboSelected do
-  begin
-    grdSelected.Cells[Tag div 256, Tag mod 256] := Text;
+    if tag < 0 then exit;
+    grdSelected.Cells[Tag div 256, Tag mod 256] := MixedCase(items.Strings[itemindex]);
     Tag := -1;
     Hide;
+    ControlChange(Sender);
+    TControl(self.grdSelected).Enabled := True;
+    ActiveControl := self.grdSelected;
+  end;
+  grdSelected.Refresh;
+end;
+
+procedure TfrmODMedIV.cboSelectedKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_RETURN) or (Key = VK_Tab) then
+  begin
+    cboSelectedCloseUp(cboSelected);
+    Key := 0;
   end;
 end;
 
@@ -1527,6 +1839,8 @@ begin
         if IEN > 0                then Responses.Update('ADDITIVE', CurAdd, IntToStr(IEN), Name);
         if Length(Cells[1,i]) > 0 then Responses.Update('STRENGTH', CurAdd, Cells[1,i], Cells[1,i]);
         if Length(Cells[2,i]) > 0 then Responses.Update('UNITS',    CurAdd, Cells[2,i], Cells[2,i]);
+        //AGP ADDITIVE FREQUECNY CHANGES
+        if (Length(Cells[3,i]) > 0) and (Cells[3,i] <> 'N/A') then Responses.Update('ADDFREQ',    CurAdd, Cells[3,i], Cells[3,i]);
         Inc(CurAdd);
       end; {if Fluid A}
     end; {with AnIVComponent}
@@ -1557,8 +1871,9 @@ begin
       xlimEx := '';
     end;
   end;
-  if cboType.Text = 'Intermittent' then iType := 'I'
-  else iType := 'C';
+  if (cboType.ItemIndex > -1) and (cboType.Items.Strings[cboType.ItemIndex] = 'Intermittent') then iType := 'I'
+  else if (cboType.ItemIndex > -1) and (cboType.Items.Strings[cboType.ItemIndex] = 'Continuous') then iType := 'C'
+  else iType := '';
   Responses.Update('TYPE',1,iType,cboType.Text);
   Responses.Update('ROUTE',1,cboRoute.ItemID,cboRoute.Text);
   tmpSch := UpperCase(Trim(cboSchedule.Text));
@@ -1634,12 +1949,10 @@ var
   aSchedule: string;
 begin
   aSchedule := '';
-  if not ShowOtherSchedule(aSchedule) then
-  begin
-    cboSchedule.ItemIndex := -1;
-    cboSchedule.Text      := '';
-  end
-  else
+  cboSchedule.ItemIndex := -1;
+  cboSchedule.Text      := '';
+  cboSchedule.DroppedDown := false;
+  if ShowOtherSchedule(aSchedule) then
     begin
         Result := Piece(aSchedule,U,1);
         NSSAdminTime := Piece(aschedule,u,2);
@@ -1651,12 +1964,28 @@ procedure TfrmODMedIV.grdSelectedDrawCell(Sender: TObject; ACol, ARow: Integer; 
   State: TGridDrawState);
 begin
   inherited;
-  if Sender = ActiveControl then Exit;
-  if not (gdSelected in State) then Exit;
+  //if Sender = ActiveControl then Exit;
+  //if not (gdSelected in State) then Exit;
   with Sender as TStringGrid do
   begin
-    Canvas.Brush.Color := Color;
-    Canvas.Font := Font;
+    if State = [gdSelected..gdFocused] then
+      begin
+        Canvas.Font.Color := Get508CompliantColor(clWhite);
+        Canvas.Brush.Color := clHighlight;
+        //Canvas.Font.Color := clHighlightText;
+        Canvas.Font.Style := [fsBold];
+        Canvas.MoveTo(Rect.Left,Rect.top);
+      end
+    else
+      begin
+        if (ACol = 4) and (ColWidths[4] > 0) then
+          Canvas.Brush.Color := clInactiveBorder
+        else  Canvas.Brush.Color := clWindow;
+        Canvas.Font := Font;
+      end;
+    Canvas.FillRect(Rect);
+    //Canvas.Brush.Color := Color;
+
     Canvas.TextRect(Rect, Rect.Left + 2, Rect.Top + 2, Cells[ACol, ARow]);
   end;
 end;
@@ -1695,6 +2024,13 @@ begin
     Key := 0;
     tabFluidChange(tabFluid);
   end;
+end;
+
+procedure TfrmODMedIV.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  if (Key = #13) and (ActiveControl = grdSelected) then
+  Key := #0;   //Don't let the base class turn it into a forward tab!
+  inherited;
 end;
 
 procedure TfrmODMedIV.grdSelectedKeyPress(Sender: TObject; var Key: Char);
@@ -1781,6 +2117,12 @@ begin
         cboSchedule.ItemIndex := idx;
         exit;
       end;
+    //if PRN schedule than set the checkbox than exit
+    if (X = ' PRN') or (X = 'PRN') then
+      begin
+        chkPRN.Checked := True;
+        Exit;
+      end;
       //Check to see if schedule is a Day-of-Week Schedule (MO-WE-FR@BID)
       if (Pos('@', x) > 0) then
         begin
@@ -1804,7 +2146,6 @@ begin
                 begin
                   //tempSch := U + Piece(x, '@', 1) + '@' + Pieces(cboSchedule.Items.Strings[idx], U, 2, 5);
                   tempSch := Piece(x, '@', 1) + '@' + cboSchedule.Items.Strings[idx];
-                  cboSchedule.Items.Add(tempSch);
                   cboSchedule.Text := (Piece(tempSch,U,1));
                   cboSchedule.ItemIndex := cboSchedule.Items.IndexOf(Piece(tempSch, U, 1));
                   chkPRN.Checked := True;
@@ -1885,6 +2226,13 @@ begin
   ControlChange(Sender);
 end;
 
+function TfrmODMedIV.UpdateAddFreq(OI: integer): string;
+begin
+  if (self.cboType.ItemIndex = -1) or (MixedCase(self.cboType.Items.Strings[self.cboType.ItemIndex]) = 'Continuous') then
+     Result := GetDefaultAddFreq(OI)
+  else Result := '';
+end;
+
 procedure TfrmODMedIV.UpdateDuration(SchType: string);
 begin
 if SchType = 'O' then
@@ -1908,7 +2256,7 @@ var
 AnIVComponent: TIVComponent;
 i: integer;
 OrderIds, TempIVRoute: TStringList;
-Default: boolean;
+//Default: boolean;
 begin
   if self.grdSelected.RowCount > 0 then self.txtAllIVRoutes.Visible := True;
   TempIVRoute := TStringList.Create;
@@ -1927,19 +2275,21 @@ begin
     end;
  if OrderIds.Count > 0 then
    begin
-     if (self.FInitialOrderID = True) and (self.grdSelected.RowCount = 1) then Default := True
-     else Default := False;
-     LoadDosageFormIVRoutes(self.cboRoute.Items, OrderIds, Default);
-     if default = True then
+     //if (self.FInitialOrderID = True) and (self.grdSelected.RowCount = 1) then Default := True
+     //else Default := False;
+     LoadDosageFormIVRoutes(self.cboRoute.Items, OrderIds);
+     //if default = True then
+     //  begin
+     for I := 0 to cboRoute.items.Count - 1 do
        begin
-         for I := 0 to cboRoute.items.Count - 1 do
-           if Piece(cboRoute.Items.Strings[i], U, 5) = 'D' then
-             begin
-               cboRoute.ItemIndex := i;
-               break;
-             end;
-         self.FInitialOrderID := false;
+        if Piece(cboRoute.Items.Strings[i], U, 5) = 'D' then
+          begin
+           cboRoute.ItemIndex := i;
+           break;
+          end;
        end;
+       //  self.FInitialOrderID := false;
+       //end;
      OrderIds.Free;
    end;
  if TempIVRoute.Count > 0 then
@@ -1953,13 +2303,14 @@ end;
 
 procedure TfrmODMedIV.txtAllIVRoutesClick(Sender: TObject);
 var
-i: integer;
+  i: integer;
+  msg : String;
 begin
   inherited;
-  if MessageDlg('You can also select "OTHER" from the Route list'
+  msg := 'You can also select "OTHER" from the Route list'
      + ' to select a Route from the Expanded Med Route List.'
-     + #13#10 + 'Click OK to launch the Expanded Med Route List.',
-     mtInformation, [mbOK, mbCancel],0) = mrOK then
+     + #13#10 + 'Click OK to launch the Expanded Med Route List.';
+  if ShowMsg(msg, smiInfo, smbOKCancel) = smrOk then
   begin
       for I := 0 to cboRoute.Items.Count - 1 do if cboRoute.Items.Strings[i] = U + 'OTHER' then break;
       cboRoute.ItemIndex := i;
@@ -1970,13 +2321,14 @@ end;
 
 procedure TfrmODMedIV.txtNSSClick(Sender: TObject);
 var
-i: integer;
+  i: integer;
+  msg : String;
 begin
   inherited;
-  if MessageDlg('You can also select ' + '"' + 'Other' + '"' + ' from the schedule list'
+  msg := 'You can also select ' + '"' + 'Other' + '"' + ' from the schedule list'
     + ' to create a day-of-week schedule.'
-    + #13#10 + 'Click OK to launch schedule builder',
-    mtInformation, [mbOK, mbCancel],0) = mrOK then
+    + #13#10 + 'Click OK to launch schedule builder';
+  if ShowMsg(msg, smiInfo, smbOKCancel) = smrOK then
   begin
       //cboSchedule.Items.Add(U + 'OTHER');
       for I := 0 to cboSchedule.Items.Count - 1 do if cboSchedule.Items.Strings[i] = 'OTHER' then break;

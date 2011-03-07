@@ -1,18 +1,18 @@
 inherited frmPtSel: TfrmPtSel
-  Left = 145
-  Top = 113
-  BorderIcons = []
+  Left = 290
+  Top = 232
+  BorderIcons = [biSystemMenu]
   Caption = 'Patient Selection'
   ClientHeight = 555
   ClientWidth = 785
   OldCreateOrder = True
+  Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
   OnShow = FormShow
-  ExplicitLeft = 145
-  ExplicitTop = 113
+  ExplicitTop = -20
   ExplicitWidth = 793
   ExplicitHeight = 589
   PixelsPerInch = 96
@@ -108,6 +108,7 @@ inherited frmPtSel: TfrmPtSel
       OnEnter = cboPatientEnter
       OnExit = cboPatientExit
       OnKeyDown = cboPatientKeyDown
+      OnKeyUp = cboPatientKeyUp
       OnKeyPause = cboPatientKeyPause
       OnMouseClick = cboPatientMouseClick
       OnNeedData = cboPatientNeedData
@@ -152,23 +153,83 @@ inherited frmPtSel: TfrmPtSel
     BevelOuter = bvNone
     TabOrder = 2
     Visible = False
-    object cmdProcessInfo: TButton
-      Left = 11
-      Top = 10
-      Width = 95
-      Height = 21
-      Caption = 'Process Info'
-      TabOrder = 0
-      OnClick = cmdProcessInfoClick
+    object txtCmdComments: TVA508StaticText
+      Name = 'txtCmdComments'
+      Left = 441
+      Top = 0
+      Width = 159
+      Height = 15
+      Alignment = taLeftJustify
+      Caption = 'Show Comments Button Disabled'
+      TabOrder = 7
+      Visible = False
+      ShowAccelChar = True
     end
-    object cmdProcessAll: TButton
-      Left = 120
+    object txtCmdRemove: TVA508StaticText
+      Name = 'txtCmdRemove'
+      Left = 577
+      Top = 0
+      Width = 120
+      Height = 15
+      Alignment = taLeftJustify
+      Caption = 'Remove Button Disabled'
+      TabOrder = 9
+      Visible = False
+      ShowAccelChar = True
+    end
+    object txtCmdForward: TVA508StaticText
+      Name = 'txtCmdForward'
+      Left = 344
+      Top = 0
+      Width = 118
+      Height = 15
+      Alignment = taLeftJustify
+      Caption = 'Forward Button Disabled'
+      TabOrder = 5
+      Visible = False
+      ShowAccelChar = True
+    end
+    object txtCmdProcess: TVA508StaticText
+      Name = 'txtCmdProcess'
+      Left = 232
+      Top = 0
+      Width = 118
+      Height = 15
+      Alignment = taLeftJustify
+      Caption = 'Process Button Disabled'
+      TabOrder = 3
+      Visible = False
+      ShowAccelChar = True
+    end
+    object cmdRemove: TButton
+      Left = 577
       Top = 10
       Width = 95
       Height = 21
-      Caption = 'Process All'
-      TabOrder = 1
-      OnClick = cmdProcessAllClick
+      Caption = 'Remove'
+      Enabled = False
+      TabOrder = 8
+      OnClick = cmdRemoveClick
+    end
+    object cmdComments: TButton
+      Left = 441
+      Top = 10
+      Width = 95
+      Height = 21
+      Caption = 'Show Comments'
+      Enabled = False
+      TabOrder = 6
+      OnClick = cmdCommentsClick
+    end
+    object cmdForward: TButton
+      Left = 335
+      Top = 10
+      Width = 95
+      Height = 21
+      Caption = 'Forward'
+      Enabled = False
+      TabOrder = 4
+      OnClick = cmdForwardClick
     end
     object cmdProcess: TButton
       Left = 229
@@ -180,35 +241,23 @@ inherited frmPtSel: TfrmPtSel
       TabOrder = 2
       OnClick = cmdProcessClick
     end
-    object cmdForward: TButton
-      Left = 335
+    object cmdProcessAll: TButton
+      Left = 120
       Top = 10
       Width = 95
       Height = 21
-      Caption = 'Forward'
-      Enabled = False
-      TabOrder = 3
-      OnClick = cmdForwardClick
+      Caption = 'Process All'
+      TabOrder = 1
+      OnClick = cmdProcessAllClick
     end
-    object cmdRemove: TButton
-      Left = 577
+    object cmdProcessInfo: TButton
+      Left = 11
       Top = 10
       Width = 95
       Height = 21
-      Caption = 'Remove'
-      Enabled = False
-      TabOrder = 5
-      OnClick = cmdRemoveClick
-    end
-    object cmdComments: TButton
-      Left = 441
-      Top = 10
-      Width = 95
-      Height = 21
-      Caption = 'Show Comments'
-      Enabled = False
-      TabOrder = 4
-      OnClick = cmdCommentsClick
+      Caption = 'Process Info'
+      TabOrder = 0
+      OnClick = cmdProcessInfoClick
     end
   end
   object lstvAlerts: TCaptionListView [4]
@@ -269,6 +318,7 @@ inherited frmPtSel: TfrmPtSel
     OnDblClick = lstvAlertsDblClick
     OnInfoTip = lstvAlertsInfoTip
     OnKeyDown = lstvAlertsKeyDown
+    OnMouseUp = lstvAlertsMouseUp
     OnSelectItem = lstvAlertsSelectItem
     Caption = 'Notifications'
   end
@@ -318,6 +368,18 @@ inherited frmPtSel: TfrmPtSel
         'Status = stsDefault')
       (
         'Component = cmdComments'
+        'Status = stsDefault')
+      (
+        'Component = txtCmdComments'
+        'Status = stsDefault')
+      (
+        'Component = txtCmdRemove'
+        'Status = stsDefault')
+      (
+        'Component = txtCmdForward'
+        'Status = stsDefault')
+      (
+        'Component = txtCmdProcess'
         'Status = stsDefault'))
   end
   object popNotifications: TPopupMenu

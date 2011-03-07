@@ -126,19 +126,11 @@ begin
 end;
 
 procedure TfrmAllgyBox.cmdAddClick(Sender: TObject);
-var
-  Changed: boolean;
 begin
   inherited;
   Visible := False;
-  Changed := EnterEditAllergy(0, NEW_ALLERGY, not ENTERED_IN_ERROR);
-  if not Changed then
-    Close
-  else
-    begin
-      frmCover.UpdateAllergiesList;
-      Close;
-    end
+  EnterEditAllergy(0, NEW_ALLERGY, not ENTERED_IN_ERROR);
+  Close;
 end;
 
 procedure TfrmAllgyBox.cmdEditClick(Sender: TObject);
@@ -153,18 +145,11 @@ begin
 end;
 
 procedure TfrmAllgyBox.cmdInErrorClick(Sender: TObject);
-var
-  Changed: boolean;
 begin
   inherited;
   Visible := False;
-  Changed := MarkEnteredInError(FAllergyIEN);
-  if Changed then
-    begin
-      frmCover.UpdateAllergiesList;
-      Close;
-    end
-  else Visible := True;
+  MarkEnteredInError(FAllergyIEN);
+  Close;
 end;
 
 procedure TfrmAllgyBox.RefreshText;

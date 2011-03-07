@@ -4,7 +4,7 @@
 	Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
 	Developers: Joel Ivey
 	Description: Type library for use with SharedRPCBroker.
-	Current Release: Version 1.1 Patch 47 (February 7, 2007))
+	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
 *************************************************************** }
 
 unit RPCSharedBrokerSessionMgr1_TLB;

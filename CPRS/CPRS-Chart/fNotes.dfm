@@ -3,35 +3,38 @@ inherited frmNotes: TfrmNotes
   Top = 171
   HelpContext = 5000
   Caption = 'Progress Notes Page'
-  ClientHeight = 394
+  ClientHeight = 413
   ClientWidth = 679
   HelpFile = 'overvw'
   Menu = mnuNotes
   OnDestroy = FormDestroy
   OnHide = FormHide
   OnShow = FormShow
+  ExplicitLeft = 402
+  ExplicitTop = 171
   ExplicitWidth = 687
-  ExplicitHeight = 440
+  ExplicitHeight = 471
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
-    Top = 389
+    Top = 408
     Width = 679
-    ExplicitTop = 358
+    ExplicitTop = 408
     ExplicitWidth = 679
   end
   inherited sptHorz: TSplitter
     Left = 64
-    Height = 389
+    Height = 408
     OnCanResize = sptHorzCanResize
     ExplicitLeft = 64
-    ExplicitHeight = 358
+    ExplicitHeight = 408
   end
   inherited pnlLeft: TPanel
     Width = 64
-    Height = 389
+    Height = 408
+    Constraints.MinWidth = 37
     ExplicitWidth = 64
-    ExplicitHeight = 389
+    ExplicitHeight = 408
     object lblNotes: TOROffsetLabel
       Left = 0
       Top = 0
@@ -48,17 +51,16 @@ inherited frmNotes: TfrmNotes
     end
     object lblSpace1: TLabel
       Left = 0
-      Top = 344
+      Top = 363
       Width = 64
       Height = 3
       Align = alBottom
       AutoSize = False
       Caption = ' '
-      ExplicitTop = 313
     end
     object cmdNewNote: TORAlignButton
       Left = 0
-      Top = 347
+      Top = 366
       Width = 64
       Height = 21
       Align = alBottom
@@ -69,7 +71,7 @@ inherited frmNotes: TfrmNotes
     end
     object cmdPCE: TORAlignButton
       Left = 0
-      Top = 368
+      Top = 387
       Width = 64
       Height = 21
       Align = alBottom
@@ -83,18 +85,18 @@ inherited frmNotes: TfrmNotes
       Left = 0
       Top = 19
       Width = 64
-      Height = 325
+      Height = 344
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
       object splDrawers: TSplitter
         Left = 0
-        Top = 322
+        Top = 341
         Width = 64
         Height = 3
         Cursor = crVSplit
         Align = alBottom
-        ExplicitTop = 291
+        ExplicitTop = 342
       end
       object lstNotes: TORListBox
         Left = 0
@@ -120,7 +122,7 @@ inherited frmNotes: TfrmNotes
         Left = 0
         Top = 0
         Width = 64
-        Height = 322
+        Height = 341
         Align = alClient
         Constraints.MinWidth = 30
         HideSelection = False
@@ -141,28 +143,29 @@ inherited frmNotes: TfrmNotes
         Caption = 'Last 100 Notes'
         NodePiece = 0
         ShortNodeCaptions = True
+        ExplicitHeight = 342
       end
     end
   end
   inherited pnlRight: TPanel
     Left = 68
     Width = 611
-    Height = 389
+    Height = 408
+    Constraints.MinWidth = 30
     ExplicitLeft = 68
     ExplicitWidth = 611
-    ExplicitHeight = 389
+    ExplicitHeight = 408
     object sptVert: TSplitter
       Left = 0
-      Top = 340
+      Top = 359
       Width = 611
       Height = 4
       Cursor = crVSplit
       Align = alBottom
-      ExplicitTop = 309
     end
     object memPCEShow: TRichEdit
       Left = 0
-      Top = 344
+      Top = 363
       Width = 611
       Height = 45
       Align = alBottom
@@ -179,7 +182,7 @@ inherited frmNotes: TfrmNotes
       Left = 0
       Top = 0
       Width = 611
-      Height = 340
+      Height = 359
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
@@ -189,13 +192,14 @@ inherited frmNotes: TfrmNotes
         Left = 0
         Top = 67
         Width = 611
-        Height = 273
+        Height = 292
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Courier New'
         Font.Style = []
+        MaxLength = 2147483645
         ParentFont = False
         PlainText = True
         PopupMenu = popNoteMemo
@@ -294,7 +298,7 @@ inherited frmNotes: TfrmNotes
           Color = clCream
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -12
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentColor = False
@@ -334,7 +338,7 @@ inherited frmNotes: TfrmNotes
       Left = 0
       Top = 0
       Width = 611
-      Height = 340
+      Height = 359
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
@@ -363,7 +367,7 @@ inherited frmNotes: TfrmNotes
         Left = 0
         Top = 116
         Width = 611
-        Height = 224
+        Height = 243
         Align = alClient
         Color = clCream
         Ctl3D = True

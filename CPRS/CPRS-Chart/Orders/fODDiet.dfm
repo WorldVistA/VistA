@@ -21,6 +21,10 @@ inherited frmODDiet: TfrmODDiet
     OnChanging = nbkDietChanging
     object pgeDiet: TTabSheet
       Caption = 'Diet'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object lblDietAvail: TLabel
         Left = 4
         Top = 0
@@ -434,6 +438,10 @@ inherited frmODDiet: TfrmODDiet
     end
     object pgeTubefeeding: TTabSheet
       Caption = 'Tubefeeding'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object lblTFProductList: TLabel
         Left = 4
         Top = 0
@@ -583,7 +591,7 @@ inherited frmODDiet: TfrmODDiet
         Height = 21
         Style = csDropDownList
         Ctl3D = False
-        ItemHeight = 13
+        ItemHeight = 0
         ParentCtl3D = False
         TabOrder = 2
         Visible = False
@@ -639,6 +647,10 @@ inherited frmODDiet: TfrmODDiet
     end
     object pgeEarlyLate: TTabSheet
       Caption = 'Early / Late Tray'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object lblELStart: TLabel
         Left = 287
         Top = 2
@@ -871,6 +883,10 @@ inherited frmODDiet: TfrmODDiet
     end
     object pgeIsolations: TTabSheet
       Caption = 'Isolations / Precautions'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object lblIsolation: TLabel
         Left = 4
         Top = 0
@@ -931,6 +947,10 @@ inherited frmODDiet: TfrmODDiet
     end
     object pgeAdditional: TTabSheet
       Caption = 'Additional Order'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object lblAddlOrder: TLabel
         Left = 4
         Top = 24

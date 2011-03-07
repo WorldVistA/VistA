@@ -8,40 +8,48 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ORfn, uConst, Buttons,
   Menus, UBAGlobals, rOrders, fBALocalDiagnoses, UBAConst, UBACore, ORNet,
-  VA508AccessibilityManager ;
+  ORDtTm, VA508AccessibilityManager ;
 
 type
   TfrmODCslt = class(TfrmODBase)
+    pnlMain: TPanel;
+    lblService: TLabel;
+    lblProvDiag: TLabel;
+    lblUrgency: TLabel;
+    lblPlace: TLabel;
+    lblAttn: TLabel;
+    lblLatest: TStaticText;
+    lblEarliest: TStaticText;
+    pnlReason: TPanel;
+    lblReason: TLabel;
+    memReason: TRichEdit;
     cboService: TORComboBox;
     cboUrgency: TORComboBox;
     cboPlace: TORComboBox;
     txtProvDiag: TCaptionEdit;
     txtAttn: TORComboBox;
-    lblService: TLabel;
-    lblUrgency: TLabel;
-    lblPlace: TLabel;
-    lblAttn: TLabel;
-    lblProvDiag: TLabel;
     treService: TORTreeView;
     cboCategory: TORComboBox;
     pnlServiceTreeButton: TKeyClickPanel;
     btnServiceTree: TSpeedButton;
+    gbInptOpt: TGroupBox;
+    radInpatient: TRadioButton;
+    radOutpatient: TRadioButton;
+    btnDiagnosis: TButton;
+    cmdLexSearch: TButton;
+    calEarliest: TORDateBox;
+    calLatest: TORDateBox;
     mnuPopProvDx: TPopupMenu;
     mnuPopProvDxDelete: TMenuItem;
-    cmdLexSearch: TButton;
     popReason: TPopupMenu;
     popReasonCut: TMenuItem;
     popReasonCopy: TMenuItem;
     popReasonPaste: TMenuItem;
     popReasonPaste2: TMenuItem;
     popReasonReformat: TMenuItem;
-    gbInptOpt: TGroupBox;
-    radInpatient: TRadioButton;
-    radOutpatient: TRadioButton;
-    pnlReason: TPanel;
-    lblReason: TLabel;
-    memReason: TRichEdit;
-    btnDiagnosis: TButton;
+    pnlCombatVet: TPanel;
+    txtCombatVet: TVA508StaticText;
+    servicelbl508: TVA508StaticText;
     procedure FormCreate(Sender: TObject);
     procedure txtAttnNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
@@ -95,6 +103,7 @@ type
     FLastServiceID: string;
     FEditCtrl: TCustomEdit;
     FNavigatingTab: boolean;
+    LLS_LINE_INDEX: integer;
     procedure BuildQuickTree(QuickList: TStrings; const Parent: string; Node: TTreeNode);
     procedure ReadServerVariables;
     procedure SetProvDiagPromptingMode;
@@ -106,6 +115,11 @@ type
     procedure SaveConsultDxForNurse(pDiagnosis: string);  // save the dx entered by nurese if Master BA switch is ON
     procedure SetUpCopyConsultDiagnoses(pOrderID:string);
     procedure AdjustMemReasonSize;
+    function NotinIndex(AList: TStringList; i: integer): boolean;
+    function GetItemIndex(Service: String; Index: integer): integer;
+    procedure SetUpCombatVet;
+    procedure SetUpEarliestDate; //wat v28
+    procedure setup508Label(lbl: TVA508StaticText; ctrl: TORComboBox);
   protected
     procedure InitDialog; override;
     procedure Validate(var AnErrMsg: string); override;
@@ -122,13 +136,16 @@ var
   consultQuickOrder: boolean;
 
 
+function CanFreeConsultDialog(dialog : TfrmODBase) : boolean;
+
 implementation
 
 {$R *.DFM}
 
 uses
     rODBase, rConsults, uCore, uConsults, rCore, fConsults, fPCELex, rPCE, fPreReq,
-    ORClasses, clipbrd, uTemplates, fFrame, uODBase, uVA508CPRSCompatibility;
+    ORClasses, clipbrd, uTemplates, fFrame, uODBase, uVA508CPRSCompatibility,
+    VA508AccessibilityRouter;
 
 var
   SvcList, QuickList, Defaults: TStrings ;
@@ -136,7 +153,7 @@ var
   GMRCREAF: string;
   BADxUpdated: boolean;
   quickCode: string;
-
+  AreGlobalsFree: boolean;
 
 
 
@@ -155,10 +172,44 @@ const
   TX_INACTIVE_CODE1  = 'The provisional diagnosis code is not active as of today''s date.' + #13#10;
   TX_INACTIVE_CODE_REQD     = 'Another code must be selected before the order can be saved.';
   TX_INACTIVE_CODE_OPTIONAL = 'If another code is not selected, no code will be saved.';
+  TX_PAST_DATE       = 'Earliest appropriate date must be today or later.';
+  TX_BAD_DATES       = 'Latest appropriate date must be equal to or later than earliest date.';
 
   TX_SVC_HRCHY = 'services/specialties hierarchy';
   TX_VIEW_SVC_HRCHY = 'View services/specialties hierarchically';
   TX_CLOSE_SVC_HRCHY = 'Close services/specialties hierarchy tree view';
+
+
+{************** Static Unit Methods ***************}
+
+function CanFreeConsultDialog(dialog : TfrmODBase) : boolean;
+begin
+  Result := true;
+  if (dialog is TfrmODCslt) then
+    Result := AreGlobalsFree;
+end;
+
+procedure InitializeGlobalLists;
+begin
+  Defaults := TStringList.Create;
+  SvcList := TStringList.Create;
+  QuickList := TStringList.Create;
+  AreGlobalsFree := false;
+end;
+
+function FreeGlobalLists : Boolean;
+begin
+  Result := false;
+  if AreGlobalsFree then
+    Exit;
+  Defaults.Free;
+  SvcList.Free;
+  QuickList.Free;
+  AreGlobalsFree := true;
+  Result := true;
+end;
+
+{*************** TfrmODCslt Methods ***********}
 
 procedure TfrmODCslt.FormCreate(Sender: TObject);
 begin
@@ -175,9 +226,7 @@ begin
      btnDiagnosis.Visible := False;
      cmdLexSearch.Visible := True;
   end;
-  Defaults  := TStringList.Create ;
-  SvcList   := TStringList.Create ;
-  QuickList := TStringList.Create ;
+  InitializeGlobalLists;
   AllowQuickOrder := True;
   LastNode := 0;
   FLastServiceID := '' ;
@@ -189,15 +238,26 @@ begin
   StatusText('Loading Default Values');
   FastAssign(ODForConsults, Defaults);  // ODForConsults returns TStrings with defaults
   CtrlInits.LoadDefaults(Defaults);
+  calEarliest.Text := 'TODAY';
+  //calLatest.Text := 'TODAY+30';
   txtAttn.InitLongList('') ;
   PreserveControl(txtAttn);
+  PreserveControl(calEarliest);
+  //PreserveControl(calLatest);
+    if (patient.CombatVet.IsEligible = True) then
+   begin
+     SetUpCombatVet;
+   end
+   else
+    begin
+      txtCombatVet.Enabled := False;
+      pnlCombatVet.SendToBack;
+    end;
   InitDialog;
   //Calling virtual SetFontSize in constructor is a bad idea!
   DoSetFontSize( MainFontSize);
   FcboServiceKeyDownStopClick := false;
   consultQuickOrder := false;
-
-
 end;
 
 procedure TfrmODCslt.InitDialog;
@@ -232,12 +292,14 @@ begin
   memOrder.Clear ;
   memReason.Clear;
   cboService.Enabled := True;
+  setup508Label(servicelbl508, cboService);
   cboService.Font.Color := clWindowText;
-  cboService.Height := 25 + (7 * cboService.ItemHeight);
+  cboService.Height := 25 + (11 * cboService.ItemHeight);
   btnServiceTree.Enabled := True;
   pnlServiceTreeButton.Enabled := True;
   SetProvDiagPromptingMode;
-  ActiveControl := cboService; // set after call to SetProvDiagPromptingMode
+  ActiveControl := cboService;
+
   Changing := False;
   StatusText('');
 end;
@@ -257,6 +319,7 @@ var
  SvcIEN: string;
 begin
   inherited;
+  LLS_LINE_INDEX := -1;
   ReadServerVariables;
   AList := TStringList.Create;
   try
@@ -280,6 +343,7 @@ begin
           Close;
           Exit;
         end;
+
       cboService.Items.Add(SvcIEN + U + tmpResp.EValue + '^^^^' + tmpResp.IValue);
       cboService.SelectByID(SvcIEN);
       tmpResp := TResponse(FindResponseByName('CLASS',1));
@@ -288,10 +352,14 @@ begin
         radInpatient.Checked := True
       else
         radOutpatient.Checked := True ;
-      SetControl(cboUrgency,    'URGENCY',     1);
+      SetUpEarliestDate;   //wat v28
+      SetControl(cboUrgency,    'URGENCY',   1);
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
+      SetControl(calEarliest,   'EARLIEST',  1);
+      //SetControl(calLatest,     'LATEST',    1);
       cboService.Enabled := False;
+      setup508Label(servicelbl508, cboService);
       cboService.Font.Color := clGrayText;
       btnServiceTree.Enabled := False;
       pnlServiceTreeButton.Enabled := False;
@@ -307,6 +375,7 @@ begin
       if WasTemplateDialogCanceled then
       begin
         AbortOrder := True;
+		SetTemplateDialogCanceled(FALSE);
         Close;
         Exit;
       end;
@@ -315,6 +384,7 @@ begin
       if WasTemplateDialogCanceled then
       begin
         AbortOrder := True;
+		SetTemplateDialogCanceled(FALSE);
         Close;
         Exit;
       end;
@@ -342,11 +412,13 @@ begin
         begin
           FastAssign(QuickList, cboService.Items);
           Items.Add(LLS_LINE);
+          LLS_LINE_INDEX := Items.IndexOf(Trim(Piece(LLS_LINE, U, 2))); {TP - HDS00015782: Used to determine if QO}
           Items.Add(LLS_SPACE);
         end;
       Changing := True;
       for i := 0 to AList.Count - 1 do
-        if (cboService.Items.IndexOf(Trim(Piece(AList.Strings[i], U, 2))) = -1) and   {RV}
+        //if (cboService.Items.IndexOf(Trim(Piece(AList.Strings[i], U, 2))) = -1) and   {RV}
+        if (NotinIndex(AList,i)) and   {TP - HDS00015782: Check if service is already in index (not including QO)}
         //if (cboService.SelectByID(Piece(AList.Strings[i], U, 1)) = -1) and
            (Piece(AList.Strings[i], U, 5) <> '1') then
           cboService.Items.Add(AList.Strings[i]);
@@ -409,6 +481,9 @@ begin
       else
         SetError(TX_SELECT_DIAG);
     end;
+  if (lblEarliest.Enabled) and (calEarliest.FMDateTime < FMToday) then SetError(TX_PAST_DATE);
+  //if calLatest.FMDateTime < FMToday then SetError(TX_PAST_DATE);
+  //if calLatest.FMDateTime < calEarliest.FMDateTime then SetError(TX_BAD_DATES);
 end;
 
 procedure TfrmODCslt.txtAttnNeedData(Sender: TObject;
@@ -547,6 +622,7 @@ begin
           cboService.ItemIndex := -1;
         FLastServiceID := ItemID;
         cboService.Enabled := False;
+        setup508Label(servicelbl508, cboService);
         cboService.Font.Color := clGrayText;
         btnServiceTree.Enabled := False;
         pnlServiceTreeButton.Enabled := False;
@@ -587,11 +663,14 @@ begin
       SetControl(cboUrgency,    'URGENCY',     1);
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
+      SetControl(calEarliest,   'EARLIEST',  1);
+      //SetControl(calLatest,     'LATEST',    1);
       SetTemplateDialogCanceled(FALSE);
       SetControl(memReason,     'COMMENT',   1);
       if WasTemplateDialogCanceled and OrderContainsObjects then
       begin
         AbortOrder := TRUE;
+		SetTemplateDialogCanceled(FALSE);
         Close;
         Exit;
       end;
@@ -615,6 +694,7 @@ begin
         end;
     end;
   SetProvDiagPromptingMode;
+  SetUpEarliestDate; //wat v28
   tmpSvc := Piece(cboService.Items[cboService.ItemIndex], U, 6);
   pnlMessage.TabOrder := treService.TabOrder + 1;
   OrderMessage(ConsultMessage(StrToIntDef(tmpSvc, 0)));
@@ -645,11 +725,13 @@ begin
         end
       else Responses.Update('ORDERABLE', 1, '', '');
     end;
-  with memReason     do if GetTextLen   > 0 then Responses.Update('COMMENT',   1, TX_WPTYPE, Text);
-  with cboCategory   do if ItemID     <> '' then Responses.Update('CLASS',     1, ItemID, Text);
-  with cboUrgency    do if ItemIEN      > 0 then Responses.Update('URGENCY',   1, ItemID, Text);
-  with cboPlace      do if ItemID     <> '' then Responses.Update('PLACE',     1, ItemID, Text);
-  with txtAttn       do if ItemIEN      > 0 then Responses.Update('PROVIDER',  1, ItemID, Text);
+  with memReason     do  Responses.Update('COMMENT',   1, TX_WPTYPE, Text);
+  with cboCategory   do  Responses.Update('CLASS',     1, ItemID, Text);
+  with cboUrgency    do  Responses.Update('URGENCY',   1, ItemID, Text);
+  with cboPlace      do  Responses.Update('PLACE',     1, ItemID, Text);
+  with txtAttn       do  Responses.Update('PROVIDER',  1, ItemID, Text);
+  with calEarliest   do if Length(Text) > 0 then Responses.Update('EARLIEST',  1, Text,   Text);
+  //with calLatest     do if Length(Text) > 0 then Responses.Update('LATEST',    1, Text,   Text);
   //with txtProvDiag   do if Length(Text) > 0 then Responses.Update('MISC',      1, Text,   Text);
   if Length(ProvDx.Text)                > 0 then Responses.Update('MISC',      1, ProvDx.Text,   ProvDx.Text)
    else Responses.Update('MISC',      1, '',   '');
@@ -757,6 +839,7 @@ begin
   memReason.Clear;
   with cboService do
     begin
+      setup508Label(servicelbl508, cboService);
       if (ItemIndex < 0) or (ItemID = '') then
         begin
           Responses.Update('ORDERABLE', 1, '', '');
@@ -778,9 +861,11 @@ begin
         begin
           Changing := True;
           Responses.QuickOrder := ExtractInteger(ItemID);
-          consultQuickOrder := True;   
+          consultQuickOrder := True;
           tmpSvc := TResponse(Responses.FindResponseByName('ORDERABLE',1)).EValue;
           ItemIndex := Items.IndexOf(Trim(tmpSvc));
+          If ItemIndex < LLS_LINE_INDEX then       {TP - HDS00015782: Check if index is of a QO}
+            ItemIndex := GetItemIndex(tmpSvc,ItemIndex);
 (*          tmpSvc := TResponse(Responses.FindResponseByName('ORDERABLE',1)).IValue;
           for i := 0 to Items.Count-1 do
             begin
@@ -792,6 +877,7 @@ begin
             end;*)
           FLastServiceID := ItemID;
           Enabled := False;
+          setup508Label(servicelbl508, cboService);
           Font.Color := clGrayText;
           btnServiceTree.Enabled := False;
           pnlServiceTreeButton.Enabled := False;
@@ -810,11 +896,14 @@ begin
               SetControl(cboUrgency,    'URGENCY',     1);
               SetControl(cboPlace,      'PLACE',     1);
               SetControl(txtAttn,       'PROVIDER',  1);
+              SetControl(calEarliest,   'EARLIEST',  1);
+              //SetControl(calLatest,     'LATEST',    1);
               SetTemplateDialogCanceled(FALSE);
               SetControl(memReason,     'COMMENT',   1);
               if WasTemplateDialogCanceled and OrderContainsObjects then
               begin
                 AbortOrder := TRUE;
+				SetTemplateDialogCanceled(FALSE);
                 Close;
                 Exit;
               end;
@@ -860,13 +949,14 @@ begin
   OrderMessage(ConsultMessage(StrToIntDef(tmpSvc, 0)));
   //OrderMessage(ConsultMessage(cboService.ItemIEN));
   ControlChange(Self) ;
+  SetUpEarliestDate;    //wat v28
+  setup508Label(servicelbl508, cboService);
 end;
 
 procedure TfrmODCslt.FormDestroy(Sender: TObject);
 begin
-  Defaults.Free;
-  SvcList.Free ;
-  QuickList.Free;
+  if not FreeGlobalLists then
+    Exit;
   inherited;
 end;
 
@@ -985,7 +1075,6 @@ begin
  if ProvDx.Text[i-1] = '*' then i := i - 2;
  ProvDx.Text := Copy(ProvDx.Text, 1, i - 1);
  txtProvDiag.Text := ProvDx.Text + ' (' + ProvDx.Code + ')';
-
  ProvDx.CodeInactive := False;
 end;
 
@@ -1055,6 +1144,17 @@ begin
     end;
 end;
 
+
+procedure TfrmODCslt.setup508Label(lbl: TVA508StaticText; ctrl: TORComboBox);
+begin
+  if ScreenReaderSystemActive and not ctrl.Enabled then begin
+    lbl.Enabled := True;
+    lbl.Visible := True;
+    lbl.Caption := lblService.Caption + ', ' + ctrl.Text;
+    lbl.Width := (ctrl.Left + ctrl.Width) - lbl.Left;
+  end else
+    lbl.Visible := false;
+end;
 
 procedure TfrmODCslt.mnuPopProvDxDeleteClick(Sender: TObject);
 begin
@@ -1492,6 +1592,73 @@ const
 begin
   pnlReason.Top := cboService.Top + cboService.Height + PIXEL_SPACE;
   pnlReason.Height := memOrder.Top - pnlReason.Top - PIXEL_SPACE;
+  if patient.CombatVet.IsEligible then pnlReason.Height := pnlReason.Height - PIXEL_SPACE*20;
+end;
+
+function TfrmODCslt.NotinIndex(AList: TStringList; i: integer): Boolean;   {TP - HDS00015782:}
+{This function determines if a Consult Service will be added to the cboService
+component.  If name does not exist or if name does not exist below the Quick
+Order listing, then it is added.}
+var
+  x: Integer;
+  y: String;
+begin
+  Result := False;
+  x := cboService.Items.IndexOf(Trim(Piece(AList.Strings[i], U, 2)));
+  if (x = -1) then
+    Result := True;
+  if (x <> -1) and (x < LLS_LINE_INDEX) then
+  begin
+    y := cboService.Items[x];
+    cboService.Items.Delete(x);
+    if (cboService.Items.IndexOf(Trim(Piece(AList.Strings[i], U, 2))) = -1) then
+      Result := True;
+    cboService.Items.Insert(x,y);
+  end;
+
+end;
+
+function TfrmODCslt.GetItemIndex(Service: String; Index: integer): integer;     {TP - HDS00015782:}
+{This function returns ItemIndexOf value for Service Consult when a Quick Order
+has the exact same name}
+var
+  y: String;
+
+begin
+  y := cboService.Items[Index];
+  cboService.Items.Delete(Index);
+  Result := (cboService.Items.IndexOf(Trim(Service)) + 1);
+  cboService.Items.Insert(Index,y);
+end;
+
+procedure TfrmODCslt.SetUpCombatVet;
+begin
+     pnlCombatVet.BringToFront;
+     txtCombatVet.Enabled := True;
+     txtCombatVet.Caption := 'Combat Veteran Eligibility Expires on ' + patient.CombatVet.ExpirationDate;
+     pnlMain.Top := pnlMain.Top + pnlCombatVet.Height;
+     pnlMain.Anchors := [akLeft,akTop,akRight];
+     treService.Anchors := [akLeft,akTop,akRight];
+     self.Height := self.Height + pnlCombatVet.Height;
+     treService.Anchors := [akLeft,akTop,akRight,akBottom];
+     pnlMain.Anchors := [akLeft,akTop,akRight,akBottom];
+end;
+
+procedure TfrmODCslt.SetUpEarliestDate;  //wat v28
+begin
+  if IsProstheticsService(cboService.ItemIEN) = '1' then
+    begin
+      lblEarliest.Enabled := False;
+      calEarliest.Enabled := False;
+      calEarliest.Text := '';
+      Responses.Update('EARLIEST',1,'','');
+    end
+  else
+    begin
+      lblEarliest.Enabled := True;
+      calEarliest.Enabled := True;
+      calEarliest.Text := 'TODAY';
+    end;
 end;
 
 end.

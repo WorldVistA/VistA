@@ -326,6 +326,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
             ShowHint = True
             TabOrder = 0
             OnClick = sbCopyRightClick
+            OnExit = sbCopyRightExit
             Glyph.Data = {
               76010000424D7601000000000000760000002800000020000000100000000100
               0400000000000001000000000000000000001000000010000000000000000000
@@ -409,6 +410,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       TabOrder = 0
       OnChange = cbxLocationChange
       OnDropDownClose = cbxDropDownClose
+      OnExit = cbxUserLocExit
       OnKeyDown = cbxDivisionKeyDown
       OnNeedData = cbxLocationNeedData
       CharsNeedMatch = 1
@@ -467,6 +469,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        TabStop = True
         ExplicitTop = 13
         ExplicitWidth = 174
         inherited img: TImage
@@ -512,6 +515,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         Font.Style = []
         ParentFont = False
         TabOrder = 2
+        TabStop = True
         ExplicitTop = 33
         ExplicitWidth = 174
         inherited img: TImage
@@ -550,6 +554,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         Font.Style = []
         ParentFont = False
         TabOrder = 3
+        TabStop = True
         ExplicitTop = 53
         ExplicitWidth = 174
         ExplicitHeight = 47
@@ -600,6 +605,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         Font.Style = []
         ParentFont = False
         TabOrder = 4
+        TabStop = True
         ExplicitTop = 100
         ExplicitWidth = 174
         inherited img: TImage
@@ -648,6 +654,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         Font.Style = []
         ParentFont = False
         TabOrder = 5
+        TabStop = True
         ExplicitTop = 120
         ExplicitWidth = 174
         ExplicitHeight = 41
@@ -691,6 +698,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         Caption = 'View Cover Sheet Reminders'
         TabOrder = 0
         OnClick = btnViewClick
+        OnExit = btnViewExit
       end
     end
     object pnlTopLeft: TPanel
@@ -753,6 +761,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         OnChange = lvViewChange
         OnColumnClick = lvViewColumnClick
         OnCompare = lvViewCompare
+        OnExit = lvViewExit
         OnSelectItem = lvViewSelectItem
         Caption = 'Cover Sheet Reminders (Cumulative List)'
       end
@@ -772,6 +781,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 1
+        OnExit = lblCACExit
         ShowAccelChar = True
       end
     end
@@ -797,6 +807,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       Caption = 'System'
       TabOrder = 0
       OnClick = cbEditLevelClick
+      OnExit = cbSystemExit
       AutoSize = True
       GroupIndex = 1
       RadioStyle = True
@@ -1037,6 +1048,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       ModalResult = 1
       TabOrder = 0
       OnClick = btnOKClick
+      OnExit = btnOKExit
     end
     object btnCancel: TButton
       Left = 584

@@ -49,6 +49,13 @@ var
 
 begin
   Result := FALSE;
+  (* agp moved from FormCreate to addrss a problem with editing an encounter without a note displaying in CPRS*)
+  if uPatient <> Patient.DFN then
+    begin
+      KillObj(@uPCETemp);
+      KillObj(@uPCETempOld);
+    end;
+  uPatient := Patient.DFN;
   if (Encounter.VisitCategory = 'H') then
   begin
     if Assigned(NoteData) then
@@ -129,12 +136,14 @@ end;
 
 procedure TfrmPCEEdit.FormCreate(Sender: TObject);
 begin
+  (* agp moved to EditPCEData procedure to addrss a problem
+  with editing an encounter without a note displaying in CPRS
   if uPatient <> Patient.DFN then
     begin
       KillObj(@uPCETemp);
       KillObj(@uPCETempOld);
     end;
-  uPatient := Patient.DFN;
+  uPatient := Patient.DFN;   *)
 end;
 
 initialization

@@ -1,6 +1,8 @@
 inherited frmReportBox: TfrmReportBox
   Left = 512
   Top = 214
+  HorzScrollBar.Visible = False
+  VertScrollBar.Visible = False
   Anchors = []
   BorderIcons = [biSystemMenu]
   Caption = 'frmReportBox'
@@ -10,6 +12,7 @@ inherited frmReportBox: TfrmReportBox
   OldCreateOrder = True
   Position = poScreenCenter
   OnClose = FormClose
+  OnResize = FormResize
   ExplicitWidth = 356
   ExplicitHeight = 353
   PixelsPerInch = 96
@@ -39,6 +42,7 @@ inherited frmReportBox: TfrmReportBox
     Font.Height = -11
     Font.Name = 'Courier New'
     Font.Style = []
+    HideScrollBars = False
     Lines.Strings = (
       'memReport')
     ParentFont = False

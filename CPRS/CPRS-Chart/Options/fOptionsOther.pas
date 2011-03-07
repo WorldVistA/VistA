@@ -47,11 +47,14 @@ type
     procedure txtEncStartExit(Sender: TObject);
     procedure txtEncStopExit(Sender: TObject);
     procedure btnEncDefaultsClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure btnCancelClick(Sender: TObject);
   private
     { Private declarations }
     FstartDt: TFMDateTime;
     FstopDt: TFMDateTime;
     FEncStartDays, FEncStopDays, FEncDefStartDays, FEncDefStopDays: integer;
+    OK2Closed: boolean;
     //FDefaultEvent: string;
   public
     { Public declarations }
@@ -106,6 +109,7 @@ var
   last: integer;
   values, tab: string;
 begin
+  OK2Closed := True;
   FastAssign(rpcGetOtherTabs, cboTab.Items);
   if (cboTab.Items.IndexOf('Surgery') > -1) and (not ShowSurgeryTab) then
     cboTab.Items.Delete(cboTab.Items.IndexOf('Surgery'));
@@ -141,6 +145,7 @@ procedure TfrmOptionsOther.btnOKClick(Sender: TObject);
 var
   values, theVal: string;
 begin
+  OK2Closed := True;
   values := '';
   if cboTab.ItemIEN <> cboTab.Tag then
     values := values + cboTab.ItemID;
@@ -153,6 +158,40 @@ begin
       values := values + '0';
   values := values + '^^';
   rpcSetOther(values);
+   if (dtStart.Text = '') and (dtStop.Text = '') then
+    begin
+      if InfoBox('A date range is not set for the meds tab. Continue?', 'No Date Range Defined', MB_YESNO) = ID_NO then
+      begin
+         dtStart.SetFocus;
+         OK2Closed := false;
+         Exit;
+      end;
+    end
+  else if (dtStart.Text = '') or (dtStop.Text = '') then
+    begin
+      ShowMsg('A complete date range needs to be set. ');
+      if dtStart.Text = '' then dtStart.SetFocus
+      else dtStop.SetFocus;
+      OK2Closed := false;
+      Exit;
+    end;
+  //if Pos('Y', Uppercase(dtStart.Text))>0 then
+  if Uppercase(Copy(dtStart.Text, Length(dtStart.Text), Length(dtStart.Text))) = 'Y' then
+
+    begin
+      ShowMsg('Start Date relative date cannot have a Y');
+      OK2Closed := false;
+      dtStart.SetFocus;
+      Exit;
+    end;
+  //if Pos('Y', Uppercase(dtStop.Text))>0 then
+  if Uppercase(Copy(dtStop.Text, Length(dtStop.Text), Length(dtStop.Text))) = 'Y' then
+    begin
+      ShowMsg('Stop Date relative date cannot have a Y');
+      OK2Closed := false;
+      dtStart.SetFocus;
+      Exit;
+    end;
   if (dtStop.FMDateTime > 0) and (dtStart.FMDateTime > 0) then
   begin
     if dtStop.FMDateTime < dtStart.FMDateTime then
@@ -160,6 +199,7 @@ begin
       ShowMsg('The stop time can not prior to the start time.');
       dtStop.FMDateTime := FMToday;
       dtStop.SetFocus;
+      OK2Closed := false;
       Exit;
     end;
     theVal := dtStart.RelativeTime + ';' + dtStop.RelativeTime;
@@ -170,6 +210,14 @@ begin
   rpcPutRangeForEncs(txtEncStart.Text, txtEncStop.Text);
   if frmMeds <> nil then
     frmMeds.RefreshMedLists;
+end;
+
+procedure TfrmOptionsOther.FormCloseQuery(Sender: TObject;
+  var CanClose: Boolean);
+begin
+  inherited;
+  CanClose := OK2Closed;
+  
 end;
 
 procedure TfrmOptionsOther.FormCreate(Sender: TObject);
@@ -203,13 +251,13 @@ end;
 
 procedure TfrmOptionsOther.dtStartChange(Sender: TObject);
 begin
-  if (dtStart.FMDateTime > FMToday) then
+ (* if (dtStart.FMDateTime > FMToday) then
   begin
     ShowMsg('Start time can not greater than today.');
     dtStart.FMDateTime := FMToday;
     dtStart.SetFocus;
     Exit;
-  end;
+  end;    *)
 end;
 
 procedure TfrmOptionsOther.txtEncStartChange(Sender: TObject);
@@ -262,6 +310,12 @@ begin
 with txtEncStart do
   if Text = '' then
     Text := '0';
+end;
+
+procedure TfrmOptionsOther.btnCancelClick(Sender: TObject);
+begin
+  inherited;
+  OK2Closed := True;
 end;
 
 procedure TfrmOptionsOther.btnEncDefaultsClick(Sender: TObject);

@@ -172,9 +172,14 @@ begin
 end;
 
 procedure TfrmLabTestGroups.cmdClearClick(Sender: TObject);
+//var
+  //i: integer;
 begin
   lstList.Clear;
   lstListClick(self);
+  lstTestGroups.ClearSelection;
+  //for i := 0 to lstTestGroups.Count - 1 do
+  //  lstTestGroups.Selected[i] := false;
 end;
 
 procedure TfrmLabTestGroups.cmdRemoveClick(Sender: TObject);
@@ -191,6 +196,7 @@ begin
     if lstList.Items.Count > 0 then lstList.ItemIndex := newindex;
   end;
   lstListClick(self);
+  lstTestGroups.ClearSelection;
 end;
 
 procedure TfrmLabTestGroups.cmdUpClick(Sender: TObject);

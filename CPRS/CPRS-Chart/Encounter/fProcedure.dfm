@@ -3,7 +3,7 @@ inherited frmProcedures: TfrmProcedures
   Top = 172
   Caption = 'Encounter Procedure'
   ExplicitWidth = 632
-  ExplicitHeight = 427
+  ExplicitHeight = 434
   PixelsPerInch = 96
   TextHeight = 13
   object lblProcQty: TLabel [0]
@@ -92,12 +92,13 @@ inherited frmProcedures: TfrmProcedures
     TabOrder = 2
   end
   object spnProcQty: TUpDown [11]
-    Left = 348
+    Left = 353
     Top = 371
     Width = 15
     Height = 21
     Associate = txtProcQty
     Min = 1
+    Max = 999
     Position = 1
     TabOrder = 5
   end

@@ -30,7 +30,6 @@ type
       Direction, InsertAt: Integer);
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
-    procedure cboSrcListMouseClick(Sender: TObject);
     procedure btnRemoveSignersClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -40,7 +39,6 @@ type
     procedure cboCosignerNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cboCosignerExit(Sender: TObject);
-    procedure cboSrcListClick(Sender: TObject);
     procedure DstListChange(Sender: TObject);
     procedure btnRemoveAllSignersClick(Sender: TObject);
     procedure cboSrcListChange(Sender: TObject);
@@ -189,28 +187,6 @@ begin
   Close;
 end;
 
-procedure TfrmAddlSigners.cboSrcListMouseClick(Sender: TObject);
-var
-  i: integer;
-begin
-  if cboSrcList.ItemIndex = -1 then exit;
-  if (DstList.SelectByID(cboSrcList.ItemID) <> -1) then
-    begin
-      InfoBox(TX_DUP_SIGNER, TX_SIGNER_CAP, MB_OK or MB_ICONWARNING);
-      Exit;
-    end;
-  for i := 0 to FExclusions.Count-1 do
-    if (Piece(FExclusions.Strings[i],U,1) = cboSrcList.ItemID) then
-      begin
-        InfoBox(TX_BAD_SIGNER, TX_SIGNER_CAP, MB_OK or MB_ICONWARNING);
-        Exit;
-      end;
-  DstList.Items.Add(cboSrcList.Items[cboSrcList.Itemindex]) ;
-  btnRemoveSigners.Enabled := DstList.SelCount > 0;
-  btnRemoveAllSigners.Enabled := DstList.Items.Count > 0;
-   
-end;
-
 procedure TfrmAddlSigners.btnRemoveAllSignersClick(Sender: TObject);
 begin
   inherited;
@@ -237,9 +213,29 @@ begin
 end;
 
 procedure TfrmAddlSigners.btnAddSignersClick(Sender: TObject);
+var
+  i: integer;
 begin
-  inherited;
-  cboSrcListMouseClick(btnAddSigners);
+  if cboSrcList.ItemIndex = -1 then
+    exit;
+  if UserInactive(cboSrcList.ItemID) then
+    if (InfoBox(fNoteProps.TX_USER_INACTIVE, TC_INACTIVE_USER, MB_OKCANCEL)= IDCANCEL) then
+      exit;
+
+  if (DstList.SelectByID(cboSrcList.ItemID) <> -1) then
+    begin
+      InfoBox(TX_DUP_SIGNER, TX_SIGNER_CAP, MB_OK or MB_ICONWARNING);
+      Exit;
+    end;
+  for i := 0 to FExclusions.Count-1 do
+    if (Piece(FExclusions.Strings[i],U,1) = cboSrcList.ItemID) then
+      begin
+        InfoBox(TX_BAD_SIGNER, TX_SIGNER_CAP, MB_OK or MB_ICONWARNING);
+        Exit;
+      end;
+  DstList.Items.Add(cboSrcList.Items[cboSrcList.Itemindex]) ;
+  btnRemoveSigners.Enabled := DstList.SelCount > 0;
+  btnRemoveAllSigners.Enabled := DstList.Items.Count > 0;
 end;
 
 procedure TfrmAddlSigners.cboCosignerChange(Sender: TObject);
@@ -278,7 +274,7 @@ end;
 procedure TfrmAddlSigners.DstListChange(Sender: TObject);
 begin
   inherited;
-if DstList.SelCount = 1 then
+  if DstList.SelCount = 1 then
     if Piece(DstList.Items[0], '^', 1) = '' then
     begin
       btnRemoveSigners.Enabled := false;
@@ -292,7 +288,7 @@ end;
 procedure TfrmAddlSigners.cboSrcListKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if Key = VK_RETURN then cboSrcListMouseClick(Self);
+  if Key = VK_RETURN then btnAddSignersClick(Self);
 end;
 
 function TfrmAddlSigners.CosignerOK: Boolean;
@@ -331,11 +327,11 @@ begin
   case FTabID of
     CT_NOTES:     TORComboBox(Sender).ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FToday));
     CT_CONSULTS:  TORComboBox(Sender).ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FToday));
+
     //CQ #17218 - Updated to properly filter co-signers - JCS
     //CT_DCSUMM:    TORComboBox(Sender).ForDataUse(SubSetOfProviders(StartFrom, Direction));
     CT_DCSUMM: (Sender as TORComboBox).ForDataUse(SubSetOfCosigners(StartFrom, Direction,
         FMToday, 0, frmDCSumm.lstSumms.ItemIEN));
-
   end;
 end;
 
@@ -347,14 +343,9 @@ end;
 procedure TfrmAddlSigners.cboSrcListChange(Sender: TObject);
 begin
   inherited;
-btnAddSigners.Enabled := CboSrcList.ItemIndex > -1;
-end;
-
-procedure TfrmAddlSigners.cboSrcListClick(Sender: TObject);
-begin
-  if UserInactive(cboSrcList.ItemID) then
-    if (InfoBox(fNoteProps.TX_USER_INACTIVE, TC_INACTIVE_USER, MB_OKCANCEL)= IDCANCEL) then exit;
-
+  btnAddSigners.Enabled := CboSrcList.ItemIndex > -1;
+  if (DstList.SelectByID(cboSrcList.ItemID) <> -1) then
+    btnAddSigners.Enabled := false;
 end;
 
 end.

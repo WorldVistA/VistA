@@ -6,10 +6,9 @@ inherited frmPCELex: TfrmPCELex
   Caption = 'Lookup Other Diagnosis'
   ClientHeight = 275
   ClientWidth = 429
-  Position = poScreenCenter
+  Position = poOwnerFormCenter
   OnCreate = FormCreate
-  ExplicitWidth = 320
-  ExplicitHeight = 240
+  ExplicitHeight = 307
   PixelsPerInch = 96
   TextHeight = 13
   object lblSearch: TLabel [0]

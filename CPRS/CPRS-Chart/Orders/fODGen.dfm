@@ -1,12 +1,23 @@
 inherited frmODGen: TfrmODGen
   Left = 223
   Top = 290
+  Height = 295
   Caption = 'frmODGen'
-  ExplicitLeft = 223
-  ExplicitTop = 290
+  ExplicitHeight = 295
   PixelsPerInch = 96
   TextHeight = 13
-  object sbxMain: TScrollBox [0]
+  object lblOrderSig: TLabel [0]
+    Left = 8
+    Top = 193
+    Width = 44
+    Height = 13
+    Caption = 'Order Sig'
+  end
+  inherited memOrder: TCaptionMemo
+    Top = 209
+    ExplicitTop = 209
+  end
+  object sbxMain: TScrollBox [2]
     Left = 0
     Top = 0
     Width = 520
@@ -14,9 +25,17 @@ inherited frmODGen: TfrmODGen
     Align = alTop
     TabOrder = 4
   end
+  inherited cmdAccept: TButton
+    Top = 209
+    ExplicitTop = 209
+  end
   inherited cmdQuit: TButton
-    Top = 219
-    ExplicitTop = 219
+    Top = 234
+    ExplicitTop = 234
+  end
+  inherited pnlMessage: TPanel
+    Top = 191
+    ExplicitTop = 191
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -25,7 +44,8 @@ inherited frmODGen: TfrmODGen
         'Status = stsDefault')
       (
         'Component = memOrder'
-        'Status = stsDefault')
+        'Label = lblOrderSig'
+        'Status = stsOK')
       (
         'Component = cmdAccept'
         'Status = stsDefault')
@@ -41,5 +61,11 @@ inherited frmODGen: TfrmODGen
       (
         'Component = frmODGen'
         'Status = stsDefault'))
+  end
+  object VA508CompMemOrder: TVA508ComponentAccessibility
+    Component = memOrder
+    OnStateQuery = VA508CompMemOrderStateQuery
+    Left = 96
+    Top = 232
   end
 end

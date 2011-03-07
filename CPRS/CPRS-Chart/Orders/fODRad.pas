@@ -5,7 +5,7 @@ interface
 uses
   SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls, ORCtrls, fODBase, ORFn, ExtCtrls,
-  ComCtrls, uConst, ORDtTm, VA508AccessibilityManager;
+  ComCtrls, uConst, ORDtTm, VA508AccessibilityManager, VA508AccessibilityRouter;
 
 type
   TfrmODRad = class(TfrmODBase)
@@ -48,6 +48,9 @@ type
     lblReason: TLabel;
     txtReason: TCaptionEdit;
     pnlRightBase: TORAutoPanel;
+    Submitlbl508: TVA508StaticText;
+    VA508ComponentAccessibility1: TVA508ComponentAccessibility;
+    VA508ComponentAccessibility2: TVA508ComponentAccessibility;
     procedure cboProcedureNeedData(Sender: TObject;
               const StartFrom: string; Direction, InsertAt: Integer);
     procedure cboAvailModMouseClick(Sender: TObject);
@@ -70,6 +73,11 @@ type
     procedure chkIsolationExit(Sender: TObject);
     procedure calPreOpExit(Sender: TObject);
     procedure cboImTypeDropDownClose(Sender: TObject);
+    procedure pnlMessageExit(Sender: TObject);
+    procedure VA508ComponentAccessibility1StateQuery(Sender: TObject;
+      var Text: string);
+    procedure pnlMessageMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     FLastRadID: string;
     FEditCopy: boolean;
@@ -81,6 +89,7 @@ type
     function NoPregnantSelection : Boolean;
     procedure ImageTypeChange;
     procedure FormFirstOpened(Sender: TObject);
+    procedure setup508Label(text: string; lbl: TVA508StaticText; ctrl: TControl);
   protected
     procedure InitDialog; override;
     procedure Validate(var AnErrMsg: string); override;
@@ -220,6 +229,7 @@ procedure TfrmODRad.InitDialog;
 var
    i: integer;
    tmplst: TStringList;
+   cboSubmitText: String;
 begin
   if not FEditCopy then
   begin
@@ -265,6 +275,10 @@ begin
         cboSubmit.ItemIndex := -1;
         lblSubmit.Enabled := False;
         cboSubmit.Enabled := False;
+        //TDP - CQ#19393 cboSubmit 508 changes
+        cboSubmitText := cboSubmit.Text;
+        if cboSubmitText = '' then cboSubmitText := 'No Value';
+        setup508Label(cboSubmitText, Submitlbl508, cboSubmit);
         cboSubmit.Font.Color := clGrayText;
       end
     else if (lblAskSubmit.Caption = 'YES') then
@@ -282,6 +296,10 @@ begin
             cboSubmit.ItemIndex := -1 ;
             lblSubmit.Enabled := True;
             cboSubmit.Enabled := True;
+            //TDP - CQ#19393 cboSubmit 508 changes
+            cboSubmitText := cboSubmit.Text;
+            if cboSubmitText = '' then cboSubmitText := 'No Value';
+            setup508Label(cboSubmitText, Submitlbl508, cboSubmit);
             cboSubmit.Font.Color := clWindowText;
           end
         else
@@ -289,6 +307,10 @@ begin
             cboSubmit.ItemIndex := 0;
             lblSubmit.Enabled := False;
             cboSubmit.Enabled := False;
+            //TDP - CQ#19393 cboSubmit 508 changes
+            cboSubmitText := cboSubmit.Text;
+            if cboSubmitText = '' then cboSubmitText := 'No Value';
+            setup508Label(cboSubmitText, Submitlbl508, cboSubmit);
             cboSubmit.Font.Color := clGrayText;
           end;
       end
@@ -300,6 +322,10 @@ begin
           cboSubmit.ItemIndex := -1 ;
         lblSubmit.Enabled := False;
         cboSubmit.Enabled := False;
+        //TDP - CQ#19393 cboSubmit 508 changes
+        cboSubmitText := cboSubmit.Text;
+        if cboSubmitText = '' then cboSubmitText := 'No Value';
+        setup508Label(cboSubmitText, Submitlbl508, cboSubmit);
         cboSubmit.Font.Color := clGrayText;
       end;
     chkIsolation.Checked := PatientOnIsolationProcedures(Patient.DFN) ;
@@ -310,7 +336,6 @@ begin
   StatusText('Initializing Long List');
   cboProcedure.InitLongList('') ;
   StatusText('');
-  
 end;
 
 procedure TfrmODRad.ControlChange(Sender: TObject);
@@ -348,6 +373,14 @@ begin
   if ALocation > 0 then  Responses.Update('LOCATION', 1, IntToStr(ALocation), AName)
   else with Encounter do Responses.Update('LOCATION', 1, IntToStr(Location) , LocationName);
   memOrder.Text := Responses.OrderText;
+end;
+
+//TDP - CQ#19393 Made history memobox read text
+procedure TfrmODRad.VA508ComponentAccessibility1StateQuery(Sender: TObject;
+  var Text: string);
+begin
+  inherited;
+  Text := memHistory.Text;
 end;
 
 procedure TfrmODRad.Validate(var AnErrMsg: string);
@@ -638,6 +671,8 @@ begin
   PreserveControl(memHistory);      {WPB-1298-30758}
   if (Patient.Sex <> 'F') then
   begin
+    //TDP - CQ#19393 change to allow grpPregnant to be tabbed to if screen reader active
+    if ScreenReaderSystemActive then grpPregnant.TabStop := True;
     radPregnant.Enabled := False;
     radPregnantNo.Enabled := False;
     radPregnantUnknown.Enabled := False;
@@ -694,7 +729,10 @@ end;
 procedure TfrmODRad.SetDefaultPregant;
 begin
   if (Patient.Sex = 'F') and ((Patient.Age > 55) or (Patient.Age < 12)) then
+  begin
     radPregnantNo.Checked := True;
+    grpPregnant.TabStop := False;
+  end;
 end;
 
 procedure TfrmODRad.cmdAcceptClick(Sender: TObject);
@@ -719,6 +757,18 @@ begin
   inherited;
 end;
 
+//TDP - CQ#19393 cboSubmit 508 changes. Can change in future to be generic if needed. (See fODLab.pas)
+procedure TfrmODRad.setup508Label(text: string; lbl: TVA508StaticText; ctrl: TControl);
+begin
+  if ScreenReaderSystemActive and not ctrl.Enabled then begin
+    lbl.Enabled := True;
+    lbl.Visible := True;
+    lbl.Caption := lblSubmit.Caption + '. Read Only. Value is ' + Text;
+    lbl.Width := lblSubmit.Width + 2;
+  end else
+    lbl.Visible := false;
+end;
+
 procedure TfrmODRad.cboProcedureExit(Sender: TObject);
 var
   i: integer;
@@ -738,6 +788,8 @@ begin
   with lstSelectMod do
     for i := 0 to Items.Count - 1 do
       Responses.Update('MODIFIER',i+1, Piece(Items[i],U,1), Piece(Items[i],U,2));
+  //TDP - Made Order Message next focus if showing and Tab or Entered was pressed
+  if (pnlMessage.Showing) AND ((TabIsPressed()) OR (EnterIsPressed())) then memMessage.SetFocus;
 end;
 
 
@@ -777,6 +829,24 @@ end;
 function TfrmODRad.NoPregnantSelection : Boolean;
 begin
   result := not ((radPregnant.Checked) or (radPregnantNo.Checked) or (radPregnantUnknown.Checked));
+end;
+
+{TDP - Added to control where focus went now that pnlMessage was being focused
+       out of turn after cboProcedure.}
+procedure TfrmODRad.pnlMessageExit(Sender: TObject);
+begin
+  inherited;
+  if TabIsPressed() then cboAvailMod.SetFocus;
+  if ShiftTabIsPressed() then cboProcedure.SetFocus;
+end;
+
+{TDP - Added to control where focus went now that pnlMessage was being focused
+       out of turn after cboProcedure.}
+procedure TfrmODRad.pnlMessageMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  cboProcedure.SetFocus;
 end;
 
 procedure TfrmODRad.cboImTypeDropDownClose(Sender: TObject);

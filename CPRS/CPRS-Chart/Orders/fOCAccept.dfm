@@ -3,21 +3,27 @@ inherited frmOCAccept: TfrmOCAccept
   Top = 257
   BorderIcons = []
   Caption = 'Order Checking'
-  ClientHeight = 169
-  ClientWidth = 472
+  ClientHeight = 186
+  ClientWidth = 622
+  Constraints.MinHeight = 200
+  Constraints.MinWidth = 600
   Position = poScreenCenter
-  ExplicitLeft = 305
-  ExplicitTop = 257
-  ExplicitWidth = 480
-  ExplicitHeight = 203
+  ExplicitWidth = 630
+  ExplicitHeight = 220
   PixelsPerInch = 96
   TextHeight = 13
   object memChecks: TRichEdit [0]
     Left = 0
     Top = 0
-    Width = 472
-    Height = 136
+    Width = 622
+    Height = 153
     Align = alClient
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Courier New'
+    Font.Style = []
+    ParentFont = False
     ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 0
@@ -25,15 +31,15 @@ inherited frmOCAccept: TfrmOCAccept
   end
   object pnlBottom: TPanel [1]
     Left = 0
-    Top = 136
-    Width = 472
+    Top = 153
+    Width = 622
     Height = 33
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
     object cmdAccept: TButton
       Left = 148
-      Top = 7
+      Top = 6
       Width = 80
       Height = 21
       Caption = 'Accept Order'
@@ -50,6 +56,17 @@ inherited frmOCAccept: TfrmOCAccept
       Caption = 'Cancel Order'
       ModalResult = 7
       TabOrder = 1
+      OnClick = cmdCancelClick
+    end
+    object Button1: TButton
+      Left = 384
+      Top = 6
+      Width = 145
+      Height = 21
+      Caption = 'Drug Interaction Monograph'
+      Enabled = False
+      TabOrder = 2
+      OnClick = Button1Click
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -68,6 +85,9 @@ inherited frmOCAccept: TfrmOCAccept
         'Status = stsDefault')
       (
         'Component = frmOCAccept'
+        'Status = stsDefault')
+      (
+        'Component = Button1'
         'Status = stsDefault'))
   end
 end

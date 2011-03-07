@@ -15,9 +15,12 @@ type
     txtStop: TORDateBox;
     lblStart: TLabel;
     lblStop: TLabel;
+    VA508CompMemOrder: TVA508ComponentAccessibility;
+    lblOrderSig: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure ControlChange(Sender: TObject);
     procedure cmdAcceptClick(Sender: TObject);
+    procedure VA508CompMemOrderStateQuery(Sender: TObject; var Text: string);
   public
     procedure InitDialog; override;
     procedure SetupDialog(OrderAction: Integer; const ID: string); override;
@@ -69,6 +72,13 @@ begin
     SetControl(txtStop,  'STOP',    1);
   end
   else txtStart.Text := 'NOW';
+end;
+
+procedure TfrmODText.VA508CompMemOrderStateQuery(Sender: TObject;
+  var Text: string);
+begin
+  inherited;
+  Text := memOrder.Text;
 end;
 
 procedure TfrmODText.Validate(var AnErrMsg: string);

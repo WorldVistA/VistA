@@ -8,6 +8,7 @@ inherited frmPtSelDemog: TfrmPtSelDemog
   Position = poDesigned
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   ExplicitWidth = 169
   ExplicitHeight = 193
   PixelsPerInch = 96
@@ -150,6 +151,15 @@ inherited frmPtSelDemog: TfrmPtSelDemog
       Caption = 'Room-Bed:'
       TabOrder = 10
     end
+    object lblCombatVet: TStaticText
+      Tag = 2
+      Left = 1
+      Top = 127
+      Width = 66
+      Height = 17
+      Caption = 'lblCombatVet'
+      TabOrder = 13
+    end
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -197,6 +207,9 @@ inherited frmPtSelDemog: TfrmPtSelDemog
         'Status = stsDefault')
       (
         'Component = frmPtSelDemog'
+        'Status = stsDefault')
+      (
+        'Component = lblCombatVet'
         'Status = stsDefault'))
   end
 end

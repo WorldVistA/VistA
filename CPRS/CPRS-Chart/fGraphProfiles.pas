@@ -85,6 +85,8 @@ type
     procedure lstSourcesDblClick(Sender: TObject);
     procedure lstSourcesEnter(Sender: TObject);
     procedure lstSourcesExit(Sender: TObject);
+    procedure lstOtherSourcesEnter(Sender: TObject);
+    procedure lstOtherSourcesExit(Sender: TObject);
     procedure radSourceAllClick(Sender: TObject);
 
     procedure btnDeleteClick(Sender: TObject);
@@ -95,13 +97,13 @@ type
     procedure ArrangeList(aCheckFile, aCheckItem, aItem: string;
       aListBox: TORListBox; var addtolist: boolean);
     procedure AssignHints;
-    procedure AssignProfile(aList: TStrings; aProfile: string; UserNum: integer; allitems: boolean);
-    procedure AssignProfilePre(aList: TStrings; var aProfile: string; UserNum: integer);
+    procedure AssignProfile(aList: TStrings; aProfile: string; UserNum: int64; allitems: boolean);
+    procedure AssignProfilePre(aList: TStrings; var aProfile: string; UserNum: int64);
     procedure AssignProfilePost(aList: TStrings; var aProfile, typedata: string);
     procedure CheckPublic;
     procedure FillSource(aList: TORListBox);
     function ProfileExists(aName, aType: string): boolean;
-    procedure btnAddAllClick(Sender: TObject);
+    procedure lstOtherSourcesChange(Sender: TObject);
   private
     FHintPauseTime: integer;
     FPublicEditor: boolean;
@@ -192,9 +194,7 @@ begin
         if GtslViews.Count = 0 then
           GtslViews.Insert(0, VIEW_CURRENT + '^<current selections>^' + aSelections)
         else if Piece(GtslViews[0], '^', 1) <> VIEW_CURRENT then
-          GtslViews.Insert(0, VIEW_CURRENT + '^<current selections>^' + aSelections)
-        else if GtslViews.Count > 0 then
-          GtslViews[0] := VIEW_CURRENT + '^<current selections>^' + aSelections;
+          GtslViews.Insert(0, VIEW_CURRENT + '^<current selections>^' + aSelections);
       end;
       ResizeAnchoredFormToFont(frmGraphProfiles);
       ShowModal;
@@ -255,12 +255,12 @@ begin
   if GtslData = nil then
   begin
     radSourceAll.Checked := true;
-    //radSourcePat.Enabled := false;
+    radSourcePat.Enabled := false;
   end
   else if GtslData.Count < 1 then
   begin
     radSourceAll.Checked := true;
-    //radSourcePat.Enabled := false;
+    radSourcePat.Enabled := false;
   end;
   cboAllItems.Visible := radSourceAll.Checked;
   FillSource(lstSources);
@@ -303,32 +303,25 @@ begin
   else if lstSources.ItemIndex > 0 then
   begin
     lstOtherSources.Tag := BIG_NUMBER;
-    lstSourcesChange(lstOtherSources);
+    lstOtherSourcesChange(lstOtherSources);
   end;
 end;
 
 procedure TfrmGraphProfiles.lstSourcesChange(Sender: TObject);
 var
+// CQ #15852 - Changed UserNum to Int64 for a long DUZ - JCS
   UserNum: int64;
   filetype, typedata: string;
-  aListBox, oppositeListBox: TORListBox;
-  viewselected: boolean;
+  aListBox: TORListBox;
 begin
   CheckPublic;
   aListBox := (Sender as TORListBox);
-  if aListBox = lstSources then
-  begin
-    oppositeListBox := lstOtherSources;
-    UserNum := User.DUZ;
-  end
-  else
-  begin
-    oppositeListBox := lstSources;
-    UserNum := cboUser.ItemID;
-  end;
-  if aListBox.Tag <> BIG_NUMBER then
+  if aListBox = lstOtherSources then
     exit;
-  oppositeListBox.ItemIndex := -1;
+  if lstSources.Tag <> BIG_NUMBER then
+    exit;
+  UserNum := User.DUZ;
+  lstOtherSources.ItemIndex := -1;
   cboAllItems.Items.Clear;
   cboAllItems.Text := '';
   if aListBox.ItemIndex = -1 then exit;
@@ -347,32 +340,15 @@ begin
   or (filetype = VIEW_TEMPORARY)
   or (filetype = VIEW_CURRENT) then
   begin
-    RadSourceAll.Checked := true;
-    RadSourcePat.Enabled := false;
     AssignProfile(cboAllItems.Items, typedata, UserNum, false);
     FastAssign(cboAllItems.Items, lstItemsSelection.Items);
-    viewselected := true;
   end
   else
   begin
-    RadSourcePat.Enabled := true;
     AllItemsBefore(typedata);
     AllItemsAfter(filetype, typedata);
-    viewselected := false;
   end;
-  lstItemsSelection.Visible := viewselected or radSourcePat.Checked;
-  cboAllItems.Visible := not lstItemsSelection.Visible;
   cboAllItemsChange(cboAllItems);
-end;
-
-procedure TfrmGraphProfiles.lstSourcesEnter(Sender: TObject);
-begin
-  (Sender as TORListBox).Tag := BIG_NUMBER;
-end;
-
-procedure TfrmGraphProfiles.lstSourcesExit(Sender: TObject);
-begin
-  (Sender as TORListBox).Tag := 0;
 end;
 
 procedure TfrmGraphProfiles.lstSourcesDblClick(Sender: TObject);
@@ -386,10 +362,71 @@ begin
   else
   begin
     if lstItemsSelection.Items.Count < 1 then exit;
-    //lstItemsSelection.Selected[0] := true;
+    lstItemsSelection.Selected[0] := true;
     cboAllItemsClick(lstItemsSelection);
-    btnAddAllClick(self);
   end;
+end;
+
+procedure TfrmGraphProfiles.lstSourcesEnter(Sender: TObject);
+begin
+  lstSources.Tag := BIG_NUMBER;
+end;
+
+procedure TfrmGraphProfiles.lstSourcesExit(Sender: TObject);
+begin
+  lstSources.Tag := 0;
+end;
+
+procedure TfrmGraphProfiles.lstOtherSourcesChange(Sender: TObject);
+var
+// CQ #15852 - Changed UserNum to Int64 for a long DUZ - JCS
+  UserNum: int64;
+  filetype, typedata: string;
+  aListBox: TORListBox;
+begin
+  CheckPublic;
+  aListBox := (Sender as TORListBox);
+  if aListBox = lstSources then
+    exit;
+  if lstOtherSources.Tag <> BIG_NUMBER then
+    exit;
+  UserNum := cboUser.ItemID;
+  lstSources.ItemIndex := -1;
+  cboAllItems.Items.Clear;
+  cboAllItems.Text := '';
+  if aListBox.ItemIndex = -1 then exit;
+  typedata :=  aListBox.Items[aListBox.ItemIndex];
+  if pos(LLS_FRONT, typedata) > 0 then  // <clear all selections>
+  begin
+    lstItemsSelection.Clear;
+    cboAllItems.Items.Clear;
+    cboAllItems.Text := '';
+    exit;
+  end;
+  filetype := Piece(typedata, '^', 1);
+  if (filetype = VIEW_PERSONAL)
+  or (filetype = VIEW_PUBLIC)
+  or (filetype = VIEW_LABS) then
+  begin
+    AssignProfile(cboAllItems.Items, typedata, UserNum, false);
+    FastAssign(cboAllItems.Items, lstItemsSelection.Items);
+  end
+  else
+  begin
+    AllItemsBefore(typedata);
+    AllItemsAfter(filetype, typedata);
+  end;
+  cboAllItemsChange(cboAllItems);
+end;
+
+procedure TfrmGraphProfiles.lstOtherSourcesEnter(Sender: TObject);
+begin
+  lstOtherSources.Tag := BIG_NUMBER;
+end;
+
+procedure TfrmGraphProfiles.lstOtherSourcesExit(Sender: TObject);
+begin
+  lstOtherSources.Tag := 0;
 end;
 
 procedure TfrmGraphProfiles.cboUserClick(Sender: TObject);
@@ -408,8 +445,8 @@ begin
 end;
 
 procedure TfrmGraphProfiles.cboAllItemsChange(Sender: TObject);
-//var
- //astring: string;
+var
+ astring: string;
 begin
  if (Sender is TORListBox) then
    btnClear.Enabled := btnSave.Enabled or ((Sender as TORListBox).Items.Count > 0)
@@ -419,8 +456,8 @@ begin
  begin
    btnAddAll.Enabled := lstItemsSelection.Items.Count > 0;
    btnAdd.Enabled := lstItemsSelection.ItemIndex > -1;
-   //if btnAdd.Enabled then
-     //astring := lstItemsSelection.Items[lstItemsSelection.ItemIndex];
+   if btnAdd.Enabled then
+     astring := lstItemsSelection.Items[lstItemsSelection.ItemIndex];
  end
  else
  begin
@@ -430,41 +467,20 @@ begin
 end;
 
 procedure TfrmGraphProfiles.cboAllItemsClick(Sender: TObject);
-var
-  i: integer;
 begin
   if Sender is TButton then
   begin
     if lstItemsSelection.Visible then
     begin
       if Sender = btnAddAll then
-      begin
-        for i := 0 to lstItemsSelection.Items.Count - 1 do
-        begin
-          lstItemsSelection.Selected[i] := true;
-          lstItemsSelection.ItemIndex := i;
-          ListBoxSetup(lstItemsSelection);
-        end;
-        lstItemsSelection.Clear;
-      end
-      else
-      begin
-        lstItemsDisplayed.ItemIndex := 0;
-        ListBoxSetup(lstItemsSelection);
-      end;
-      lstItemsDisplayedChange(self);
-      CheckToClear;
-      exit;
+        lstItemsSelection.ItemIndex := 0;
+      Sender := lstItemsSelection;
     end
     else
     begin
-      if Sender = btnAdd then
-      begin
-        ComboBoxSetup(cboAllItems);
-        lstItemsDisplayedChange(self);
-        CheckToClear;
-        exit;
-      end;
+      if Sender = btnAddAll then
+        cboAllItems.ItemIndex := 0;
+      Sender := cboAllItems;
     end;
   end;
   if (Sender is TORComboBox) then
@@ -508,21 +524,6 @@ begin
   lstItemsDisplayed.Items.Delete(lstItemsDisplayed.ItemIndex);
   QualifierDelete(line);
   lstItemsDisplayedChange(self);
-end;
-
-procedure TfrmGraphProfiles.btnAddAllClick(Sender: TObject);
-begin
-  if cboAllItems.Visible then
-  begin
-    if cboAllItems.Items.Count < 1 then exit;
-    cboAllItems.ItemIndex := 0;
-    cboAllItemsClick(cboAllItems);
-  end
-  else
-  begin
-    if lstItemsSelection.Items.Count < 1 then exit;
-    cboAllItemsClick(btnAddAll);
-  end;
 end;
 
 procedure TfrmGraphProfiles.btnRemoveOneClick(Sender: TObject);
@@ -977,7 +978,7 @@ begin
     end
     else
       AddToList(selection, lstItemsDisplayed);
-    //if ItemIndex = 0 then Clear;        //profile or type <any>
+    if ItemIndex = 0 then Clear;        //profile or type <any>
     ItemIndex := -1;
   end;
 end;
@@ -1134,20 +1135,14 @@ end;
 procedure TfrmGraphProfiles.AllItemsAfter(var filetype, typedata: string);
 var
   i: integer;
-  itemdata, itemname: string;
+  itemdata: string;
 begin
   with lstItemsSelection.Items do
   begin
     Clear;
     lstItemsSelection.Sorted := true;
-    itemname := Piece(typedata, '^', 3);
-    if copy(itemname, 1, 1) = ' ' then
-    begin
-      itemname := copy(itemname, 2, length(itemname));   // strip preceding space
-      typedata := '0^' + Piece(typedata, '^', 2) + '^ ' + itemname;
-    end
-    else
-      typedata := '0^' + Piece(typedata, '^', 1) + '^ ' + itemname;
+    //typedata := '0^' + Piece(typedata, '^', 1) + '^ ' + Piece(typedata, '^', 2) + ' <any>';
+    typedata := '0^' + Piece(typedata, '^', 1) + '^ ' + Piece(typedata, '^', 3);
     Insert(0, typedata);
     Insert(1, '^' + LLS_LINE);
     if filetype = '63AP' then                         // finish subitems ***********
@@ -1294,7 +1289,8 @@ begin
   end;
 end;
 
-procedure TfrmGraphProfiles.AssignProfile(aList: TStrings; aProfile: string; UserNum: integer; allitems: boolean);
+// CQ #15852 - Changed UserNum to Int64 for a long DUZ - JCS
+procedure TfrmGraphProfiles.AssignProfile(aList: TStrings; aProfile: string; UserNum: int64; allitems: boolean);
 var
   i, k: integer;
   preprofile, typedata, typepart, typeone, typetwo, testname, teststring: string;
@@ -1390,7 +1386,8 @@ begin
   AssignProfilePost(aList, aProfile, typedata);
 end;
 
-procedure TfrmGraphProfiles.AssignProfilePre(aList: TStrings; var aProfile: string; UserNum: integer);
+// CQ #15852 - Changed UserNum to Int64 for a long DUZ - JCS
+procedure TfrmGraphProfiles.AssignProfilePre(aList: TStrings; var aProfile: string; UserNum: int64);
 var
   i: integer;
 begin
@@ -1472,7 +1469,9 @@ end;
 
 procedure TfrmGraphProfiles.FillSource(aList: TORListBox);
 var
-  i, UserNum: integer;
+  i: integer;
+// CQ #15852 - Changed UserNum to Int64 for a long DUZ - JCS
+  UserNum: Int64;
   dfntype, firstline, listline: string;
 begin
   with aList do
@@ -1647,7 +1646,7 @@ var
 begin
   if length(profilename) > 0 then
     lblSave.Hint := profilename;
-  //btnClearClick(self);
+  btnClearClick(self);
   lstScratch.Items.Clear;
   lstSources.Items.Clear;
   GraphDataOnUser;

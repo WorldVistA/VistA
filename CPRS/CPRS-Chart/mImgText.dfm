@@ -1,7 +1,7 @@
 object fraImgText: TfraImgText
   Left = 0
   Top = 0
-  Width = 451
+  Width = 443
   Height = 20
   Align = alTop
   AutoScroll = True
@@ -12,7 +12,7 @@ object fraImgText: TfraImgText
   Font.Style = []
   ParentFont = False
   TabOrder = 0
-  TabStop = True
+  ExplicitWidth = 451
   object img: TImage
     Left = 4
     Top = 2

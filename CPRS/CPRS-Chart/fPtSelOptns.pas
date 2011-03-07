@@ -387,6 +387,9 @@ begin
   begin
     radDflt.Enabled := False;
     radAll.Checked := True;                  // causes radHideSrcClick to be called
+    bvlPtList.TabStop := True;
+    bvlPtList.Hint := 'No default radio button unavailable 1 of 7 to move to the other patient list categories press tab';
+    // fixes CQ #4716: 508 - No Default rad btn on Patient Selection screen doesn't read in JAWS. [CPRS v28.1] (TC).
   end;
 end;
 

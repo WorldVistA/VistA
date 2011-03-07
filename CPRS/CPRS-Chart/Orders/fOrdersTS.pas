@@ -11,7 +11,7 @@ type
   TfrmOrdersTS = class(TfrmAutoSz)
     pnlMiddle: TPanel;
     pnlTop: TPanel;
-    lblPtInfo: TLabel;
+    lblPtInfo: TVA508StaticText;
     grpChoice: TGroupBox;
     radReleaseNow: TRadioButton;
     radDelayed: TRadioButton;
@@ -19,9 +19,9 @@ type
     Image1: TImage;
     cmdOK: TButton;
     cmdCancel: TButton;
-    Label1: TLabel;
-    Label2: TLabel;
-    Panel1: TPanel;
+    lblUseAdmit: TVA508StaticText;
+    lblUseTransfer: TVA508StaticText;
+    pnlBottom: TPanel;
     fraEvntDelayList: TfraEvntDelayList;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
@@ -169,7 +169,9 @@ begin
   FCurrSpecialty      := '';
 end;
 
-procedure TfrmOrdersTS.cmdOKClick(Sender: TObject);
+procedure TfrmOrdersTS.cmdOKClick(Sender: TObject);   
+var
+  tempStr: String;
 begin
   inherited;
   if grpChoice.Tag = 0 then
@@ -182,6 +184,15 @@ begin
     InfoBox('A release event must be selected.', 'No Selection Made', MB_OK);
     Exit;
   end;
+  
+  tempStr := fraEvntDelayList.mlstEvents.Items.ValueFromIndex[fraEvntDelayList.mlstEvents.ItemIndex];
+
+  if(fraEvntDelayList.mlstEvents.ItemIndex >= 0) and (Length(Piece(tempStr,'^',2))<1)then
+  begin
+    InfoBox('Invalid release event selected.', 'No Selection Made', MB_OK);
+    Exit;
+  end;
+
   if (fraEvntDelayList.mlstEvents.ItemIndex >= 0) and F1stClick then
   begin
     fraEvntDelayList.CheckMatch;

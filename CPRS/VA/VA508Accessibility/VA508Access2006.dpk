@@ -1,0 +1,58 @@
+package VA508Access2006;
+
+{$R *.res}
+{$R 'VA508AccessibilityManager.dcr'}
+{$R 'VA508ImageListLabeler.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'VA Section 508 Accessibility'}
+{$DESIGNONLY}
+{$IMPLICITBUILD OFF}
+{$DEFINE DEBUG_ACCESSIBILITY_MANAGER}
+
+requires
+  vcl,
+  designide,
+  vcldb,
+  VclSmp,
+  VAShared2006,
+  rtl;
+
+contains
+  VA508AccessibilityCompiler in 'VA508AccessibilityCompiler.pas',
+  VA508AccessibilityPE in 'VA508AccessibilityPE.pas',
+  VA508AccessibilityCompileInfo in 'VA508AccessibilityCompileInfo.pas' {frmProgress},
+  VA508Classes in 'VA508Classes.pas',
+  VA508AccessibilityManager in 'VA508AccessibilityManager.pas',
+  VA508ScreenReaderDLLLinker in 'VA508ScreenReaderDLLLinker.pas',
+  VA508DelphiCompatibility in 'VA508DelphiCompatibility.pas',
+  VA508ImageListLabelerPE in 'VA508ImageListLabelerPE.pas' {frmImageListEditor},
+  VA508ImageListLabeler in 'VA508ImageListLabeler.pas',
+  VA508AccessibilityConst in 'VA508AccessibilityConst.pas',
+  VA508MSAASupport in 'VA508MSAASupport.pas',
+  MSAAConstants in 'MSAAConstants.pas',
+  oleacc2 in 'oleacc2.pas',
+  VA508AccessibilityRouter in 'VA508AccessibilityRouter.pas';
+
+//  ToolWnds in 'C:\Program Files\Borland\Delphi 2006\source\ToolsAPI\ToolWnds.pas';
+
+end.

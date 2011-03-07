@@ -2,7 +2,7 @@ unit rCover;
 
 interface
 
-uses SysUtils, Windows, Classes, ORNet, ORFn, uConst, extctrls, ORCtrls;
+uses SysUtils, Windows, Classes, ORNet, ORFn, uConst, extctrls, ORCtrls, fFrame;
 
 type
   TCoverSheetList = class(TObject)
@@ -390,6 +390,7 @@ var
   end;
 
 begin
+  if frmFrame.DLLActive = true then exit;  
   CallV('ORWCV POLL', [Patient.DFN, IPAddr, IntToHex(AHandle, 8)]);
   with RPCBrokerV do
   begin

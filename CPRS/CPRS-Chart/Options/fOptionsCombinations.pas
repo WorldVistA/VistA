@@ -184,7 +184,10 @@ begin
   valuesource := radAddByType.Items[radAddByType.ItemIndex];
   if copy(valuesource, 1, 1) = '&' then
     valuesource := copy(valuesource, 2, length(valuesource) - 1);
-  valuename := Piece(lstAddBy.DisplayText[lstAddBy.ItemIndex], '-', 1);
+ { if radAddByType.ItemIndex = 2 then
+   valuename := Piece(lstAddBy.DisplayText[lstAddBy.ItemIndex], '-', 1)
+  else } //Removed per PTM 274 - should not peice by the "-" at all
+   valuename := lstAddBy.DisplayText[lstAddBy.ItemIndex];
   valueien := Piece(lstAddBy.Items[lstAddBy.ItemIndex], '^', 1);
   if Duplicate(valueien, valuesource) then exit; // check for duplicates
   aListItem := lvwCombinations.Items.Add;

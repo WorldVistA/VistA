@@ -8,8 +8,6 @@ inherited frmSurgery: TfrmSurgery
   HelpFile = 'overvw'
   Menu = mnuNotes
   OnDestroy = FormDestroy
-  ExplicitLeft = 468
-  ExplicitTop = 224
   ExplicitWidth = 720
   ExplicitHeight = 417
   PixelsPerInch = 96
@@ -239,6 +237,7 @@ inherited frmSurgery: TfrmSurgery
         Font.Height = -11
         Font.Name = 'Courier New'
         Font.Style = []
+        MaxLength = 2147483645
         ParentFont = False
         PlainText = True
         PopupMenu = popNoteMemo

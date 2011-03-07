@@ -83,6 +83,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Top = 8
       Width = 94
       Height = 15
+      Alignment = taLeftJustify
       AutoSize = True
       Caption = 'Define Test Groups'
       TabOrder = 10
@@ -103,7 +104,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       OnExit = pnlUpButtonExit
       OnResize = pnlUpButtonResize
       object cmdUp: TSpeedButton
-        Left = 2
+        Left = 1
         Top = 2
         Width = 25
         Height = 25
@@ -127,7 +128,7 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       OnExit = pnlDownButtonExit
       OnResize = pnlDownButtonResize
       object cmdDown: TSpeedButton
-        Left = 2
+        Left = 1
         Top = 2
         Width = 25
         Height = 25

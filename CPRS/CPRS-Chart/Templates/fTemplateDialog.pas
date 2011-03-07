@@ -27,6 +27,8 @@ type
     procedure btnPreviewClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   private
     FFirstBuild: boolean;
     SL: TStrings;
@@ -70,6 +72,7 @@ type
 function DoTemplateDialog(SL: TStrings; const CaptionText: string; PreviewMode: boolean = FALSE): boolean;
 procedure CheckBoilerplate4Fields(SL: TStrings; const CaptionText: string = ''; PreviewMode: boolean = FALSE); overload;
 procedure CheckBoilerplate4Fields(var AText: string; const CaptionText: string = ''; PreviewMode: boolean = FALSE); overload;
+procedure ShutdownTemplateDialog;
 
 var
   frmTemplateDialog: TfrmTemplateDialog;
@@ -80,6 +83,9 @@ uses dShared, uTemplateFields, fRptBox, uInit, rMisc, uDlgComponents,
   VA508AccessibilityRouter, VAUtils;
 
 {$R *.DFM}
+
+var
+  uTemplateDialogRunning: boolean = false;
 
 const
   Gap = 4;
@@ -286,6 +292,15 @@ begin
     CheckBoilerplate4Fields(SL, CaptionText, PreviewMode);
   end;
   
+end;
+
+procedure ShutdownTemplateDialog;
+begin
+  if uTemplateDialogRunning and assigned(frmTemplateDialog) then
+  begin
+    frmTemplateDialog.Silent := True;
+    frmTemplateDialog.ModalResult := mrCancel;
+  end;
 end;
 
 procedure CheckBoilerplate4Fields(SL: TStrings; const CaptionText: string = ''; PreviewMode: boolean = FALSE);
@@ -688,15 +703,17 @@ end;
 
 procedure TfrmTemplateDialog.FormCreate(Sender: TObject);
 begin
+  uTemplateDialogRunning := True;
   FFirstBuild := TRUE;
   BuildIdx := TStringList.Create;
   Entries := TStringList.Create;
   NoTextID := TStringList.Create;
   FOldHintEvent := Application.OnShowHint;
   Application.OnShowHint := AppShowHint;
-  ResizeAnchoredFormToFont(Self);
+  //ResizeAnchoredFormToFont(Self);
   FMaxPnlWidth := FontWidthPixel(sbMain.Font.Handle) * MAX_ENTRY_WIDTH; //AGP change Template Dialog to wrap at 80 instead of 74
   SetFormPosition(Self);
+  ResizeAnchoredFormToFont(Self);
   SizeFormToCancelBtn();
 end;
 
@@ -719,6 +736,17 @@ begin
   FreeEntries(Entries);
   Entries.Free;
   BuildIdx.Free;
+  uTemplateDialogRunning := False;  
+end;
+
+procedure TfrmTemplateDialog.FormMouseWheel(Sender: TObject; Shift: TShiftState;
+  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+begin
+  If RectContains(sbMain.BoundsRect, SbMain.ScreenToClient(MousePos)) then
+  begin
+    ScrollControl(sbMain, (WheelDelta > 0));
+    Handled := True;
+  end;
 end;
 
 procedure TfrmTemplateDialog.FieldChanged(Sender: TObject);

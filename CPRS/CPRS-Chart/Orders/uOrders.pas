@@ -3,8 +3,9 @@ unit uOrders;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Controls, Forms, uConst, rOrders, ORFn,
-  Dialogs, ORCtrls, stdCtrls, strUtils, fODBase, fODMedOIFA;
+  Windows, Messages, SysUtils, Classes, Controls, Forms, uConst, rConsults,
+  rOrders, ORFn, Dialogs, ORCtrls, stdCtrls, strUtils, fODBase, fODMedOIFA,
+  VA508AccessibilityRouter;
 
 type
   EOrderDlgFail = class(Exception);
@@ -71,6 +72,7 @@ procedure NextMove(var NMRec: TNextMoveRec; LastIndex: Integer; NewIndex: Intege
 function IsIMODialog(DlgID: integer): boolean;
 function AllowActionOnIMO(AnEvtTyp: char): boolean;
 function IMOActionValidation(AnId: string; var IsIMOOD: boolean; var x: string; AnEventType: char): boolean;
+function IMOTimeFrame: TFMDateTime;
 
 
 var
@@ -289,7 +291,7 @@ begin
   if (Encounter.Provider = 0) or
     ((Encounter.Provider > 0) and (not PersonHasKey(Encounter.Provider, 'PROVIDER'))) then
   begin
-    UpdateEncounter(NPF_PROVIDER);
+    UpdateEncounter(NPF_PROVIDER, 0, 0, True);
     frmFrame.DisplayEncounterText;
   end;
   if (Encounter.Provider = 0) then
@@ -490,6 +492,13 @@ begin
   MedsOutDlgFormId := FormIDForDialog(MedsOutDlgIen);
   MedsNVADlgFormID := FormIDForDialog(MedsNVADlgIen);
   MedsIVDlgFormID := FormIDForDialog(MedsIVDlgIen);
+end;
+
+function CanCloseDialog(dialog : TfrmODBase) : Boolean;
+begin
+  if uOrderDialog.FillerID = 'GMRC' then
+    result := fODConsult.CanFreeConsultDialog(dialog)
+            or fODProc.CanFreeProcDialog(dialog);
 end;
 
 function IsValidActionOnComplexOrder(AnOrderID, AnAction: string;
@@ -749,7 +758,13 @@ begin
   begin
     case AFormID of
       OM_ALLERGY:     if ARTPatchInstalled then
-                        DialogClass := TfrmARTAllergy
+                      begin
+//                        DialogClass := TfrmARTAllergy;
+                          EnterEditAllergy(0, TRUE, FALSE, AnOwner, ARefNum);
+                          Result := True;
+//                          uOrderMenu.Close;
+                          Exit;
+                      end
                       else
                         begin
                           Result := False;
@@ -785,6 +800,12 @@ const
   TC_IMO_ERROR  = 'Inpatient medication order on outpatient authorization required';
   TX_EVTDEL_DIET_CONFLICT = 'Have you done either of the above?';
   TC_EVTDEL_DIET_CONFLICT = 'Possible delayed order conflict';
+  TX_INACTIVE_SVC = 'This consult service is currently inactive and not receiving requests.' + CRLF +
+                    'Please contact your Clinical Coordinator/IRM staff to fix this order.';
+  TX_INACTIVE_SVC_CAP = 'Inactive Service';
+  TX_NO_SVC = 'The order or quick order you have selected does not specify a consult service.' + CRLF +
+              'Please contact your Clinical Coordinator/IRM staff to fix this order.';
+  TC_NO_SVC = 'No service specified';
 var
   ResolvedDialog: TOrderDialogResolved;
   x, EditedOrder, chkCopay, OrderID, PkgInfo,OrderPtEvtID,OrderEvtID,NssErr, tempUnit, tempSupply, tempDrug, tempSch: string;
@@ -795,6 +816,8 @@ var
   tmpResp: TResponse;
   CxMsg: string;
   AButton: TButton;
+  SvcIEN: string;
+  //CsltFrmID: integer;
 begin
   IsPsoSupply := False;
   Result := False;
@@ -806,6 +829,7 @@ begin
   DrugCheck := false;
   DrugTestDlgType := false;
   //QOAltOI.OI := 0;
+  Application.ProcessMessages;
   // double check environment before continuing with order
   if uOrderDialog <> nil then uOrderDialog.Close; // then x := uOrderDialog.Name else x := '';
   //if ShowMsgOn(uOrderDialog <> nil, TX_DLG_ERR + CRLF + x, TC_DLG_ERR) then Exit;
@@ -858,6 +882,9 @@ begin
     ForIMO := True;
   OrderPtEvtID := GetOrderPtEvtID(Copy(AnID, 2, Length(AnID)));
   OrderEvtID := Piece(EventInfo(OrderPtEvtID),'^',2);
+  //CQ 18660 Orders for events should be modal. Orders for non-event should not be modal
+  if AnEvent.EventIFN > 0 then frmOrders.NeedShowModal := true
+  else frmOrders.NeedShowModal := false;
   // evaluate order dialog, build response list & see what form should be presented
   FillChar(ResolvedDialog, SizeOf(ResolvedDialog), #0);
   ResolvedDialog.InputID := AnID;
@@ -966,7 +993,11 @@ begin
   begin
     if QuickLevel = QL_REJECT then InfoBox(ShowText, TC_DLG_REJECT, MB_OK);
     if (QuickLevel = QL_VERIFY) and (IsPharmacyOrder or ANeedVerify) then  ShowVerifyText(QuickLevel, ShowText, DisplayGroup=InptDisp);
-    if QuickLevel = QL_AUTO   then FormID := OD_AUTOACK;
+    if QuickLevel = QL_AUTO then
+    begin
+      //CsltFrmID := FormID;
+      FormID := OD_AUTOACK;
+    end;
     if (QuickLevel = QL_REJECT) or (QuickLevel = QL_CANCEL) then Exit;
     PushKeyVars(ResolvedDialog.QOKeyVars);
   end;
@@ -1045,15 +1076,21 @@ begin
                   if IsPSOSupplyDlg(ResolvedDialog.DialogIEN,1) then
                     uOrderDialog.IsSupply := True;
                   SetupDialog(ORDER_QUICK, ResolvedDialog.ResponseID);
+                  {if ((ResolvedDialog.DisplayGroup = CsltDisp)
+                    and (ResolvedDialog.QuickLevel = QL_AUTO)) then
+                    TfrmODCslt.SetupDialog(ORDER_QUICK, ResolvedDialog.ResponseID);}
                 end;
           end;
 
           if Assigned(uOrderDialog) then
-            with uOrderDialog do if AbortOrder then
-              begin
-                Close;
-                Exit;
-              end;
+            with uOrderDialog do
+              if AbortOrder and CanCloseDialog(uOrderDialog) then
+                begin
+                  Close;
+                  if Assigned(uOrderDialog) then
+                    uOrderDialog.Destroy;
+                  Exit;
+                end;
 
           if CharAt(AnID, 1) = 'T' then
              begin
@@ -1147,8 +1184,34 @@ begin
                    end;
                  if ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur, tempOI, StrtoInt(tempSupply), StrtoInt(tempQuantity), StrtoInt(tempRefills)) = false then Exit;
                end;
+             if ((ResolvedDialog.DisplayGroup = CsltDisp) and (ResolvedDialog.QuickLevel = QL_AUTO)) then
+             begin
+               with Responses do
+               begin
+                 Changing := True;
+                 tmpResp := TResponse(FindResponseByName('ORDERABLE',1));
+                 if tmpResp <> nil then
+                   SvcIEN := GetServiceIEN(tmpResp.IValue)
+                 else
+                 begin
+                   InfoBox(TX_NO_SVC, TC_NO_SVC, MB_ICONERROR or MB_OK);
+                   //AbortOrder := True;
+                   //Close;
+                   Exit;
+                 end;
+                 if SvcIEN = '-1' then
+                 begin
+                   InfoBox(TX_INACTIVE_SVC, TX_INACTIVE_SVC_CAP, MB_OK);
+                   //AbortOrder := True;
+                   //Close;
+                   Exit;
+                 end;
+               end;
+             end;
              cmdAcceptClick(Application);  // auto-accept order
              Result := uOrderDialog.AcceptOK;
+             if (result = true) and (ScreenReaderActive) then
+               GetScreenReader.Speak('Auto Accept Quick Order '+ Responses.DialogDisplayName + ' placed.');
 
              //BAPHII 1.3.2
              //Show508Message('DEBUG: About to copy BA CI''s to copied order from Order: '+AnID+'#13'+' in uOrders.ActivateOrderDialog()');
@@ -1303,8 +1366,27 @@ function ActivateOrderList(AList: TStringList; AnEvent: TOrderDelayEvent;
   AnOwner: TComponent; ARefNum: Integer; const KeyVarStr, ACaption: string): Boolean;
 var
   InitialCall: Boolean;
+  i: integer;
+  str: string;
 begin
   InitialCall := False;
+  if ScreenReaderActive then
+    begin
+      for i := 0 to AList.Count - 1 do
+         begin
+           if Piece(Alist.Strings[i],U,2) = 'Q' then str := str + CRLF + 'Quick Order ' + Piece(Alist.Strings[i],U,3)
+           else if Piece(Alist.Strings[i],U,2) = 'S' then str := str + CRLF + 'Order Set ' + Piece(Alist.Strings[i],U,3)
+           else if Piece(Alist.Strings[i],U,2) = 'M' then str := str + CRLF + 'Order Menu ' + Piece(Alist.Strings[i],U,3)
+           else if Piece(Alist.Strings[i],U,2) = 'A' then str := str + CRLF + 'Order Action ' + Piece(Alist.Strings[i],U,3)
+           else str := str + CRLF + 'Order Dialog ' + Piece(Alist.Strings[i],U,3);
+         end;
+      if infoBox('This order set contains the following items:'+ CRLF + str + CRLF+ CRLF + 'Select the OK button to start this order set.' +
+                 'To stop the order set while it is in process, press “Alt +F6” to navigate to the order set dialog, and select the Stop Order Set Button.', 'Starting Order Set'  ,MB_OKCANCEL) = IDCANCEL then
+        begin
+          Result := False;
+          exit;
+        end;
+    end;
   if uOrderSet = nil then
   begin
     uOrderSet := TfrmOMSet.Create(AnOwner);
@@ -1378,7 +1460,14 @@ begin
   Result := False;
   { make sure a location and provider are selected before ordering }
   if not AuthorizedUser then Exit;
-  if (not Patient.Inpatient) and (AnEvent.EventIFN > 0 ) then x := ''
+  //Added to force users without the Provider or ORES key to select an a provider when adding new orders to existing delay orders
+  if (not Patient.Inpatient) and (AnEvent.EventIFN > 0 ) then
+    begin
+      if (User.OrderRole = OR_PHYSICIAN) and (Encounter.Provider = User.DUZ) and (User.IsProvider) then
+        x := ''
+      else if not EncounterPresentEDO then Exit;
+      x := '';
+    end
   else
   begin
     if not EncounterPresent then Exit;
@@ -1841,10 +1930,9 @@ begin
     end;
   //else
   //Encounter.Location := PrintLoc;
+  if (PrintLoc = 0) and (Encounter.Location > 0) then PrintLoc := Encounter.Location;
   if PrintLoc = 0
     then PrintLoc := CommonLocationForOrders(OrderList);
-  if (PrintLoc = 0) and (Encounter.Location > 0) then PrintLoc := Encounter.Location;
-  
   if PrintLoc = 0 then                      // location required for DEVINFO
   begin
     LookupLocation(ALocation, AName, LOC_ALL, TX_LOC_PRINT);
@@ -1864,24 +1952,6 @@ begin
       PrintServiceCopies(OrderList, PrintLoc);
   end
   else InfoBox(TX_SIGN_LOC, TC_REQ_LOC, MB_OK or MB_ICONWARNING);
- (*   Encounter.Location := PrintLoc;
-  if Encounter.Location = 0
-    then Encounter.Location := CommonLocationForOrders(OrderList);
-  if Encounter.Location = 0 then                      // location required for DEVINFO
-  begin
-    LookupLocation(ALocation, AName, LOC_ALL, TX_LOC_PRINT);
-    if ALocation > 0 then Encounter.Location := ALocation;
-  end;
-  if printLoc = 0 then frmFrame.DisplayEncounterText;
-  if Encounter.Location <> 0 then
-  begin
-    SetupOrdersPrint(OrderList, DeviceInfo, Nature, False, PrintIt, PrintName);
-    if PrintIt then
-      PrintOrdersOnReview(OrderList, DeviceInfo)
-    else
-      PrintServiceCopies(OrderList);
-  end
-  else InfoBox(TX_SIGN_LOC, TC_REQ_LOC, MB_OK or MB_ICONWARNING);  *)
 end;
 
 procedure SetFontSize( FontSize: integer);
@@ -1915,7 +1985,9 @@ var
 begin
   result := False;
   IsInptDlg := False;
-  Td := FMToday;
+  //CQ #15188 - allow IMO functionality 23 hours after encounter date/time - TDP
+  //Td := FMToday;
+  Td := IMOTimeFrame;
   if ( (DlgID = MedsInDlgIen) or (DlgID = MedsIVDlgIen) or (IsInptQO(dlgId)) or (IsIVQO(dlgId))) then IsInptDlg := TRUE;
   IsIMOLocation := IsValidIMOLoc(Encounter.Location,Patient.DFN);
   if (IsInptDlg or IsInptQO(DlgID)) and (not Patient.Inpatient) and IsIMOLocation and (Encounter.DateTime > Td) then
@@ -1935,7 +2007,9 @@ begin
   end
   else
   begin
-    Td := FMToday;
+    //CQ #15188 - allow IMO functionality 23 hours after encounter date/time - TDP
+    //Td := FMToday;
+    Td := IMOTimeFrame;
     if IsValidIMOLoc(Encounter.Location,Patient.DFN) and (Encounter.DateTime > Td) then
       Result := True
     else if AnEvtTyp in ['A','T'] then
@@ -2003,6 +2077,12 @@ begin
       end;
     end;
   end;
+end;
+
+//CQ #15188 - New function to allow IMO functionality 23 hours after encounter date/time - TDP
+function IMOTimeFrame: TFMDateTime;
+begin
+  Result := DateTimeToFMDateTime(FMDateTimeToDateTime(FMNow) - (23/24));
 end;
 
 initialization

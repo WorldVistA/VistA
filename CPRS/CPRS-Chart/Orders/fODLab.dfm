@@ -98,7 +98,7 @@ inherited frmODLab: TfrmODLab
     Caption = 'Collection Type'
   end
   inherited memOrder: TCaptionMemo
-    TabOrder = 20
+    TabOrder = 22
   end
   object txtImmedColl: TCaptionEdit [13]
     Left = 149
@@ -107,7 +107,7 @@ inherited frmODLab: TfrmODLab
     Height = 21
     Color = clBtnFace
     ReadOnly = True
-    TabOrder = 14
+    TabOrder = 16
     Text = 'txtImmedColl'
   end
   object calCollTime: TORDateBox [14]
@@ -115,7 +115,7 @@ inherited frmODLab: TfrmODLab
     Top = 166
     Width = 165
     Height = 21
-    TabOrder = 13
+    TabOrder = 15
     OnChange = ControlChange
     DateOnly = False
     RequireTime = False
@@ -127,7 +127,7 @@ inherited frmODLab: TfrmODLab
     Height = 118
     BevelInner = bvLowered
     BevelOuter = bvNone
-    TabOrder = 8
+    TabOrder = 10
     object lblUrineVolume: TOROffsetLabel
       Left = 6
       Top = 29
@@ -155,7 +155,7 @@ inherited frmODLab: TfrmODLab
     Height = 118
     BevelInner = bvLowered
     BevelOuter = bvNone
-    TabOrder = 7
+    TabOrder = 9
     object lblAntiCoagulant: TOROffsetLabel
       Left = 6
       Top = 8
@@ -183,7 +183,7 @@ inherited frmODLab: TfrmODLab
     Height = 118
     BevelInner = bvLowered
     BevelOuter = bvNone
-    TabOrder = 6
+    TabOrder = 8
     Visible = False
     object lblOrderComment: TOROffsetLabel
       Left = 6
@@ -211,7 +211,7 @@ inherited frmODLab: TfrmODLab
     Width = 133
     Height = 118
     BevelOuter = bvNone
-    TabOrder = 5
+    TabOrder = 7
   end
   object pnlDoseDraw: TORAutoPanel [19]
     Left = 378
@@ -220,7 +220,7 @@ inherited frmODLab: TfrmODLab
     Height = 118
     BevelInner = bvLowered
     BevelOuter = bvNone
-    TabOrder = 10
+    TabOrder = 12
     object lblDose: TOROffsetLabel
       Left = 10
       Top = 15
@@ -267,7 +267,7 @@ inherited frmODLab: TfrmODLab
     Height = 118
     BevelInner = bvLowered
     BevelOuter = bvNone
-    TabOrder = 9
+    TabOrder = 11
     object lblPeakTrough: TOROffsetLabel
       Left = 6
       Top = 7
@@ -293,44 +293,14 @@ inherited frmODLab: TfrmODLab
       OnClick = grpPeakTroughClick
     end
   end
-  inherited cmdAccept: TButton
-    Left = 443
-    TabOrder = 18
-    ExplicitLeft = 443
-  end
-  inherited cmdQuit: TButton
-    TabOrder = 19
-  end
-  inherited pnlMessage: TPanel
-    Left = 18
-    Top = 192
-    Height = 56
-    TabOrder = 21
-    ExplicitLeft = 18
-    ExplicitTop = 192
-    ExplicitHeight = 56
-    inherited imgMessage: TImage
-      Top = 11
-      ExplicitTop = 11
-    end
-    inherited memMessage: TRichEdit
-      Left = 41
-      Top = 5
-      Height = 43
-      PopupMenu = MessagePopup
-      ExplicitLeft = 41
-      ExplicitTop = 5
-      ExplicitHeight = 43
-    end
-  end
-  object pnlCollTimeButton: TKeyClickPanel [24]
+  object pnlCollTimeButton: TKeyClickPanel [21]
     Left = 288
     Top = 167
     Width = 20
     Height = 19
     BevelOuter = bvNone
     Caption = 'Select collection time'
-    TabOrder = 15
+    TabOrder = 17
     TabStop = True
     OnClick = cmdImmedCollClick
     OnEnter = pnlCollTimeButtonEnter
@@ -359,7 +329,7 @@ inherited frmODLab: TfrmODLab
       OnClick = cmdImmedCollClick
     end
   end
-  object cboAvailTest: TORComboBox [25]
+  object cboAvailTest: TORComboBox [22]
     Left = 6
     Top = 18
     Width = 168
@@ -385,7 +355,7 @@ inherited frmODLab: TfrmODLab
     OnNeedData = cboAvailTestNeedData
     CharsNeedMatch = 1
   end
-  object cboFrequency: TORComboBox [26]
+  object cboFrequency: TORComboBox [23]
     Left = 326
     Top = 166
     Width = 97
@@ -405,11 +375,11 @@ inherited frmODLab: TfrmODLab
     Pieces = '2'
     Sorted = False
     SynonymChars = '<>'
-    TabOrder = 16
+    TabOrder = 18
     OnChange = cboFrequencyChange
     CharsNeedMatch = 1
   end
-  object cboCollSamp: TORComboBox [27]
+  object cboCollSamp: TORComboBox [24]
     Left = 269
     Top = 28
     Width = 100
@@ -436,7 +406,7 @@ inherited frmODLab: TfrmODLab
     OnMouseClick = cboCollSampMouseClick
     CharsNeedMatch = 1
   end
-  object cboSpecimen: TORComboBox [28]
+  object cboSpecimen: TORComboBox [25]
     Left = 269
     Top = 55
     Width = 100
@@ -458,14 +428,14 @@ inherited frmODLab: TfrmODLab
     ShowHint = True
     Sorted = False
     SynonymChars = '<>'
-    TabOrder = 2
+    TabOrder = 3
     OnChange = cboSpecimenChange
     OnEnter = cboSpecimenMouseClick
     OnKeyPause = cboSpecimenKeyPause
     OnMouseClick = cboSpecimenMouseClick
     CharsNeedMatch = 1
   end
-  object cboUrgency: TORComboBox [29]
+  object cboUrgency: TORComboBox [26]
     Left = 269
     Top = 82
     Width = 100
@@ -485,32 +455,32 @@ inherited frmODLab: TfrmODLab
     Pieces = '2'
     Sorted = False
     SynonymChars = '<>'
-    TabOrder = 3
+    TabOrder = 5
     OnChange = cboUrgencyChange
     CharsNeedMatch = 1
   end
-  object txtAddlComment: TCaptionEdit [30]
+  object txtAddlComment: TCaptionEdit [27]
     Left = 187
     Top = 122
     Width = 180
     Height = 21
-    TabOrder = 4
+    TabOrder = 6
     Visible = False
     OnExit = txtAddlCommentExit
     Caption = 'Additional Comment'
   end
-  object txtDays: TCaptionEdit [31]
+  object txtDays: TCaptionEdit [28]
     Left = 430
     Top = 166
     Width = 84
     Height = 21
     Hint = 'Enter a number of days, or an "X" followed by a number of times.'
     Enabled = False
-    TabOrder = 17
+    TabOrder = 20
     OnChange = ControlChange
     Caption = 'How Long?'
   end
-  object FLabCommonCombo: TORListBox [32]
+  object FLabCommonCombo: TORListBox [29]
     Left = 440
     Top = 247
     Width = 121
@@ -519,12 +489,12 @@ inherited frmODLab: TfrmODLab
     ItemHeight = 13
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 22
+    TabOrder = 26
     Visible = False
     ItemTipColor = clWindow
     LongList = False
   end
-  object cboCollTime: TORComboBox [33]
+  object cboCollTime: TORComboBox [30]
     Left = 149
     Top = 166
     Width = 168
@@ -544,12 +514,12 @@ inherited frmODLab: TfrmODLab
     Pieces = '2'
     Sorted = False
     SynonymChars = '<>'
-    TabOrder = 12
+    TabOrder = 14
     OnChange = cboCollTimeChange
     OnExit = cboCollTimeExit
     CharsNeedMatch = 1
   end
-  object cboCollType: TORComboBox [34]
+  object cboCollType: TORComboBox [31]
     Left = 6
     Top = 166
     Width = 136
@@ -569,9 +539,91 @@ inherited frmODLab: TfrmODLab
     Pieces = '2'
     Sorted = False
     SynonymChars = '<>'
-    TabOrder = 11
+    TabOrder = 13
     OnChange = cboCollTypeChange
     CharsNeedMatch = 1
+  end
+  object Frequencylbl508: TVA508StaticText [32]
+    Name = 'Frequencylbl508'
+    Left = 323
+    Top = 149
+    Width = 59
+    Height = 15
+    Alignment = taLeftJustify
+    Caption = 'How Often?'
+    Enabled = False
+    TabOrder = 19
+    Visible = False
+    ShowAccelChar = True
+  end
+  object HowManyDayslbl508: TVA508StaticText [33]
+    Name = 'HowManyDayslbl508'
+    Left = 431
+    Top = 152
+    Width = 57
+    Height = 15
+    Alignment = taLeftJustify
+    Caption = 'How Long?'
+    Enabled = False
+    TabOrder = 21
+    Visible = False
+    ShowAccelChar = True
+  end
+  inherited cmdAccept: TButton
+    Left = 443
+    TabOrder = 23
+    ExplicitLeft = 443
+  end
+  object specimenlbl508: TVA508StaticText [35]
+    Name = 'specimenlbl508'
+    Left = 210
+    Top = 56
+    Width = 49
+    Height = 15
+    Alignment = taLeftJustify
+    Caption = 'Specimen'
+    Enabled = False
+    TabOrder = 4
+    Visible = False
+    ShowAccelChar = True
+  end
+  inherited cmdQuit: TButton
+    TabOrder = 24
+  end
+  object CollSamplbl508: TVA508StaticText [37]
+    Name = 'CollSamplbl508'
+    Left = 187
+    Top = 31
+    Width = 72
+    Height = 15
+    Alignment = taLeftJustify
+    Caption = 'Collect Sample'
+    Enabled = False
+    TabOrder = 2
+    Visible = False
+    ShowAccelChar = True
+  end
+  inherited pnlMessage: TPanel
+    Left = 18
+    Top = 192
+    Height = 56
+    TabOrder = 25
+    ExplicitLeft = 18
+    ExplicitTop = 192
+    ExplicitHeight = 56
+    inherited imgMessage: TImage
+      Top = 11
+      ExplicitTop = 11
+    end
+    inherited memMessage: TRichEdit
+      Left = 41
+      Top = 5
+      Height = 43
+      PopupMenu = MessagePopup
+      ExplicitLeft = 41
+      ExplicitTop = 5
+      ExplicitHeight = 43
+    end
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -667,6 +719,18 @@ inherited frmODLab: TfrmODLab
         'Status = stsDefault')
       (
         'Component = frmODLab'
+        'Status = stsDefault')
+      (
+        'Component = Frequencylbl508'
+        'Status = stsDefault')
+      (
+        'Component = HowManyDayslbl508'
+        'Status = stsDefault')
+      (
+        'Component = specimenlbl508'
+        'Status = stsDefault')
+      (
+        'Component = CollSamplbl508'
         'Status = stsDefault'))
   end
   object dlgLabCollTime: TORDateTimeDlg

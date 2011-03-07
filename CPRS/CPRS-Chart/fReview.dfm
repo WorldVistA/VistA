@@ -16,7 +16,7 @@ inherited frmReview: TfrmReview
   OnResize = FormResize
   OnShow = FormShow
   ExplicitWidth = 713
-  ExplicitHeight = 549
+  ExplicitHeight = 556
   DesignSize = (
     705
     522)

@@ -13,7 +13,7 @@ inherited frmSignOrders: TfrmSignOrders
   OnResize = FormResize
   OnShow = FormShow
   ExplicitWidth = 841
-  ExplicitHeight = 514
+  ExplicitHeight = 521
   DesignSize = (
     833
     487)

@@ -37,7 +37,8 @@ function GetAdminTime(const StartText, Schedule: string; OrdItem: Integer): TFMD
 procedure LoadSchedules(Dest: TStrings; IsInptDlg: boolean = False);
 procedure LoadDOWSchedules(Dest: TStrings);
 procedure LoadAllIVRoutes(Dest: TStrings);
-procedure LoadDosageFormIVRoutes(Dest: TStrings; OrderIDs: TStringList; Default: boolean);
+procedure LoadDosageFormIVRoutes(Dest: TStrings; OrderIDs: TStringList);
+function GetDefaultAddFreq(OID: integer): string;
 function QtyToDays(Quantity: Double;   const UnitsPerDose, Schedule, Duration, Drug: string): Integer;
 function DaysToQty(DaysSupply: Integer; const UnitsPerDose, Schedule, Duration, Drug: string): Integer;
 function DurToQty(DaysSupply: Integer; const UnitStr, SchedStr: string): Integer;
@@ -203,11 +204,17 @@ begin
   FastAssign(RPCBrokerV.Results, Dest);
 end;
 
-procedure LoadDosageFormIVRoutes(Dest: TStrings; OrderIDs: TStringList; Default: boolean);
+procedure LoadDosageFormIVRoutes(Dest: TStrings; OrderIDs: TStringList);
 begin
-  CallV('ORWDPS33 IVDOSFRM', [OrderIDs, Default, False]);
+  CallV('ORWDPS33 IVDOSFRM', [OrderIDs, False]);
   FastAssign(RPCBrokerV.Results, Dest);
 end;
+
+function GetDefaultAddFreq(OID: integer): string;
+begin
+  result := sCallV('ORWDPS33 GETADDFR', [OID]);
+end;
+
 procedure LoadDOWSchedules(Dest: TStrings);
 begin
   // if uMedSchedules = nil then CallV('ORWDPS ALLSCHD', [nil]); uMedSchedules.Assign(...);

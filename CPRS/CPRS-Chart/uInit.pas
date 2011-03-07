@@ -21,6 +21,8 @@ procedure InitTimeOut(AUserCondition: TCPRSTimeoutTimerCondition;
 procedure UpdateTimeOutInterval(NewTime: Cardinal);
 function TimedOut: boolean;
 procedure ShutDownTimeOut;
+procedure SuspendTimeout;
+procedure ResumeTimeout;
 
 implementation
 
@@ -43,6 +45,7 @@ type
 var
   timTimeout: TCPRSTimeoutTimer = nil;
   FTimedOut: boolean = FALSE;
+  uSuspended: boolean = False;
 
 function TimeoutKeyHook(Code: Integer; wParam: WPARAM; lParam: LPARAM): LRESULT; StdCall; forward;
 function TimeoutMouseHook(Code: Integer; wParam: WPARAM; lParam: LPARAM): LRESULT; StdCall; forward;
@@ -162,6 +165,11 @@ end;
 procedure TCPRSTimeoutTimer.timTimeoutTimer(Sender: TObject);
 { when the timer expires, the application is closed after warning the user }
 begin
+  if uSuspended then
+  begin
+    ResetTimeout;
+    exit;
+  end;
   Enabled := False;
   if(assigned(FUserCondition)) then
     FTimedOut := FUserCondition or AllowTimeout
@@ -173,6 +181,18 @@ begin
   end
   else
     Enabled := True;
+end;
+
+procedure SuspendTimeout;
+begin
+  uSuspended := True;
+end;
+
+procedure ResumeTimeout;
+begin
+  if assigned(timTimeout) then
+    timTimeout.ResetTimeout;
+  uSuspended := False;
 end;
 
 initialization

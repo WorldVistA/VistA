@@ -5,7 +5,7 @@
 	Developers: Joel Ivey
 	Description: Error Display to permit application control over
 	             bringing it to the front.
-	Current Release: Version 1.1 Patch 47 (February 7, 2007))
+	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
 *************************************************************** }
 
 unit fRPCBErrMsg;

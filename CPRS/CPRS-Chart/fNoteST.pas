@@ -33,7 +33,7 @@ type
     SearchString: string;
   end;
 
-procedure SelectSearchText(FontSize: Integer; var SearchText: String; var SearchContext: TSearchContext);
+procedure SelectSearchText(FontSize: Integer; var SearchText: String; var SearchContext: TSearchContext; FormCaption: String = 'List Signed Notes by Author');
 
 implementation
 
@@ -45,7 +45,7 @@ const
   TX_SEARCH_TEXT = 'Select a search string or press Cancel.';
   TX_SEARCH_CAP = 'Missing search string';
 
-procedure SelectSearchText(FontSize: Integer; var SearchText: String; var SearchContext: TSearchContext);
+procedure SelectSearchText(FontSize: Integer; var SearchText: String; var SearchContext: TSearchContext; FormCaption: String = 'List Signed Notes by Author');
 { displays author select form for progress notes and returns a record of the selection }
 var
   frmNotesSearchText: TfrmNotesSearchText;
@@ -54,6 +54,7 @@ var
 begin
   frmNotesSearchText := TfrmNotesSearchText.Create(Application);
   try
+    frmNotesSearchText.Caption := FormCaption;
     with frmNotesSearchText do
     begin
       edtSearchText.Text:=SearchText;

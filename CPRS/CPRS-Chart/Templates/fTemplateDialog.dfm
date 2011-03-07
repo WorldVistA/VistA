@@ -10,6 +10,7 @@ inherited frmTemplateDialog: TfrmTemplateDialog
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnMouseWheel = FormMouseWheel
   OnPaint = FormPaint
   OnShow = FormShow
   ExplicitWidth = 640

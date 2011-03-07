@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, StdCtrls, ORFn, ORCtrls, ComCtrls, ImgList, VA508AccessibilityManager,
-  VA508ImageListLabeler;
+  VA508ImageListLabeler, ExtCtrls;
 
 type
   TfrmAllgyFind = class(TfrmAutoSz)
@@ -22,6 +22,7 @@ type
     lblDetail: TLabel;
     lblSearchCaption: TLabel;
     imgLblAllgyFindTree: TVA508ImageListLabeler;
+    NoAllergylbl508: TVA508StaticText;
     procedure cmdSearchClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -41,7 +42,7 @@ implementation
 
 {$R *.DFM}
 
-uses rODAllergy, fARTFreeTextMsg;
+uses rODAllergy, fARTFreeTextMsg, VA508AccessibilityRouter;
 
 const
   IMG_MATCHES_FOUND = 1;
@@ -86,6 +87,7 @@ const
                       'Please contact your allergy coordinator if you need assistance.';
 var
   uFileCount: integer;
+  ScreenReader: boolean;
 
 procedure AllergyLookup(var Allergy: string; NKAEnabled: boolean);
 var
@@ -94,7 +96,27 @@ begin
   frmAllgyFind := TfrmAllgyFind.Create(Application);
   try
     ResizeFormToFont(TForm(frmAllgyFind));
+    //TDP - CQ#19731 Need adjust 508StaticText label slightly when font 12 or larger
+    case frmAllgyFind.Font.Size of
+      18: frmAllgyFind.NoAllergylbl508.Left := frmAllgyFind.NoAllergylbl508.Left - 10;
+      14: frmAllgyFind.NoAllergylbl508.Left := frmAllgyFind.NoAllergylbl508.Left - 6;
+      12: frmAllgyFind.NoAllergylbl508.Left := frmAllgyFind.NoAllergylbl508.Left - 3;
+    end;
     frmAllgyFind.ckNoKnownAllergies.Enabled := NKAEnabled;
+    //TDP - CQ#19731 make sure NoAllergylbl508 is enabled and visible if
+    //      ckNoKnownAllergies is disabled
+    if (ScreenReaderSystemActive) and (frmAllgyFind.ckNoKnownAllergies.Enabled = False) then
+    begin
+      frmAllgyFind.NoAllergylbl508.Enabled := True;
+      frmAllgyFind.NoAllergylbl508.Visible := True;
+    end;
+    //TDP - CQ#19731 make sure NoAllergylbl508 is not enabled or visible if
+    //      ckNoKnownAllergies is enabled
+    if frmAllgyFind.ckNoKnownAllergies.Enabled = True then
+    begin
+      frmAllgyFind.NoAllergylbl508.Enabled := False;
+      frmAllgyFind.NoAllergylbl508.Visible := False;
+    end;
     frmAllgyFind.ShowModal;
     Allergy := frmAllgyFind.FAllergy;
   finally
@@ -107,6 +129,14 @@ begin
   inherited;
   FAllergy := '';
   cmdOK.Enabled := False;
+  //TDP - CQ#19731 Allow tab to empty search results (tvAgent) when JAWS running
+  //      and provide 508 hint
+  if ScreenReaderSystemActive then
+  begin
+    tvAgent.TabStop := True;
+    amgrMain.AccessText[tvAgent] := 'No Search Items to Display';
+    ScreenReader := True;
+  end;
 end;
 
 procedure TfrmAllgyFind.txtSearchChange(Sender: TObject);
@@ -146,6 +176,12 @@ begin
       cmdOK.Default := False;
       cmdSearch.Default := True;
       stsFound.SimpleText := ST_NONE_FOUND;
+
+      //TDP - CQ#19731 Provide 508 hint for empty search results (tvAgent) when JAWS active.
+      if ScreenReader then amgrMain.AccessText[tvAgent] := 'No Search Items to Display'
+      //TDP - CQ#19731 Stop tab to empty search results (tvAgent) when JAWS not active.
+      else tvAgent.TabStop := False;
+
       cmdOKClick(Self);
     end else
     begin
@@ -192,6 +228,12 @@ begin
               end;
         end;
       lblSelect.Visible := True;
+
+      //TDP - CQ#19731 Clear 508 hint when JAWS active.
+      if ScreenReader then amgrMain.AccessText[tvAgent] := ''
+      //TDP - CQ#19731 Allow tab to search results (tvAgent) when JAWS not active.
+      else tvAgent.TabStop := True;
+
       tvAgent.SetFocus;
       cmdSearch.Default := False;
       cmdOK.Enabled := True;
@@ -200,6 +242,8 @@ begin
   finally
     AList.Free;
     StatusText('');
+    if stsFound.SimpleText = ''  then stsFound.TabStop := False
+    else if ScreenReaderSystemActive then stsFound.TabStop := True;
   end;
 end;
 
@@ -299,7 +343,13 @@ begin
       lblSearch.Enabled := not Checked;
       lblSelect.Enabled := not Checked;
       tvAgent.Enabled   := not Checked;
-      cmdOK.Enabled := Checked;
+
+      // CQ #15770 - Allow OK button again if unchecked and items exist - JCS
+      //cmdOK.Enabled := Checked;
+      if Checked then
+        cmdOK.Enabled := True
+      else
+        cmdOK.Enabled := (tvAgent.Items.Count > 0);
     end;
 end;
 

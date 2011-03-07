@@ -2,29 +2,29 @@ inherited frmODMedNVA: TfrmODMedNVA
   Left = 203
   Top = 183
   Width = 632
-  Height = 536
+  Height = 542
   Caption = 'Document Herbal/OTC/Non-VA Medications'
   Constraints.MinHeight = 365
   ExplicitWidth = 632
-  ExplicitHeight = 536
+  ExplicitHeight = 542
   PixelsPerInch = 96
   TextHeight = 13
   inherited memOrder: TCaptionMemo
     Left = 0
-    Top = 461
+    Top = 467
     Width = 525
     Anchors = [akLeft, akRight, akBottom]
     Constraints.MinWidth = 25
     TabOrder = 4
     ExplicitLeft = 0
-    ExplicitTop = 461
+    ExplicitTop = 467
     ExplicitWidth = 525
   end
   object pnlMeds: TPanel [1]
     Left = 6
     Top = 34
     Width = 593
-    Height = 415
+    Height = 421
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
     Caption = 'pnlMeds'
@@ -72,7 +72,7 @@ inherited frmODMedNVA: TfrmODMedNVA
       Left = 0
       Top = 137
       Width = 593
-      Height = 278
+      Height = 284
       Align = alClient
       Columns = <
         item
@@ -98,7 +98,7 @@ inherited frmODMedNVA: TfrmODMedNVA
   end
   object txtMed: TEdit [2]
     Left = 5
-    Top = 6
+    Top = 12
     Width = 596
     Height = 21
     Anchors = [akLeft, akTop, akRight]
@@ -112,9 +112,9 @@ inherited frmODMedNVA: TfrmODMedNVA
   end
   object pnlFields: TPanel [3]
     Left = 3
-    Top = 30
+    Top = 43
     Width = 624
-    Height = 428
+    Height = 423
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
     Enabled = False
@@ -124,14 +124,14 @@ inherited frmODMedNVA: TfrmODMedNVA
       Left = 0
       Top = 0
       Width = 624
-      Height = 264
+      Height = 259
       Align = alClient
       Constraints.MinHeight = 80
       Constraints.MinWidth = 30
       TabOrder = 0
       DesignSize = (
         624
-        264)
+        259)
       object lblRoute: TLabel
         Left = 349
         Top = 23
@@ -171,7 +171,7 @@ inherited frmODMedNVA: TfrmODMedNVA
         OnClick = lblGuidelineClick
       end
       object tabDose: TTabControl
-        Left = -7
+        Left = 1
         Top = 19
         Width = 175
         Height = 17
@@ -187,7 +187,7 @@ inherited frmODMedNVA: TfrmODMedNVA
         Left = 8
         Top = 36
         Width = 383
-        Height = 222
+        Height = 217
         Anchors = [akLeft, akTop, akRight, akBottom]
         Style = orcsSimple
         AutoSelect = True
@@ -209,13 +209,14 @@ inherited frmODMedNVA: TfrmODMedNVA
         OnChange = cboDosageChange
         OnClick = cboDosageClick
         OnExit = cboDosageExit
+        OnKeyUp = cboDosageKeyUp
         CharsNeedMatch = 1
       end
       object cboRoute: TORComboBox
         Left = 355
         Top = 36
         Width = 114
-        Height = 223
+        Height = 218
         Anchors = [akTop, akRight, akBottom]
         Style = orcsSimple
         AutoSelect = True
@@ -237,14 +238,14 @@ inherited frmODMedNVA: TfrmODMedNVA
         TabOrder = 2
         OnChange = cboRouteChange
         OnClick = ControlChange
-        OnExit = cboRouteExit
+        OnKeyUp = cboRouteKeyUp
         CharsNeedMatch = 1
       end
       object cboSchedule: TORComboBox
         Left = 467
-        Top = 36
+        Top = 37
         Width = 157
-        Height = 223
+        Height = 218
         Anchors = [akTop, akRight, akBottom]
         Style = orcsSimple
         AutoSelect = True
@@ -264,7 +265,7 @@ inherited frmODMedNVA: TfrmODMedNVA
         TabOrder = 3
         OnChange = cboScheduleChange
         OnClick = cboScheduleClick
-        OnExit = cboScheduleExit
+        OnKeyUp = cboScheduleKeyUp
         CharsNeedMatch = 1
       end
       object chkPRN: TCheckBox
@@ -282,7 +283,7 @@ inherited frmODMedNVA: TfrmODMedNVA
     end
     object pnlBottom: TPanel
       Left = 0
-      Top = 264
+      Top = 259
       Width = 624
       Height = 164
       Align = alBottom
@@ -387,7 +388,7 @@ inherited frmODMedNVA: TfrmODMedNVA
   end
   object btnSelect: TButton [4]
     Left = 539
-    Top = 463
+    Top = 469
     Width = 72
     Height = 21
     Anchors = [akRight, akBottom]
@@ -399,23 +400,23 @@ inherited frmODMedNVA: TfrmODMedNVA
   end
   inherited cmdAccept: TButton
     Left = 540
-    Top = 463
+    Top = 469
     Width = 69
     Anchors = [akRight, akBottom]
     TabOrder = 6
     Visible = False
     ExplicitLeft = 540
-    ExplicitTop = 463
+    ExplicitTop = 469
     ExplicitWidth = 69
   end
   inherited cmdQuit: TButton
     Left = 546
-    Top = 489
+    Top = 495
     Width = 49
     Anchors = [akRight, akBottom]
     TabOrder = 7
     ExplicitLeft = 546
-    ExplicitTop = 489
+    ExplicitTop = 495
     ExplicitWidth = 49
   end
   inherited pnlMessage: TPanel
@@ -435,7 +436,8 @@ inherited frmODMedNVA: TfrmODMedNVA
         'Status = stsDefault')
       (
         'Component = txtMed'
-        'Status = stsDefault')
+        'Text = Medication'
+        'Status = stsOK')
       (
         'Component = pnlFields'
         'Status = stsDefault')
@@ -483,7 +485,8 @@ inherited frmODMedNVA: TfrmODMedNVA
         'Status = stsDefault')
       (
         'Component = memOrder'
-        'Status = stsDefault')
+        'Text = Order Sig'
+        'Status = stsOK')
       (
         'Component = cmdAccept'
         'Status = stsDefault')

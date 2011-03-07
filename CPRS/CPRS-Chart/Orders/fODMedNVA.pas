@@ -62,14 +62,12 @@ type
     procedure lstAllData(Sender: TObject; Item: TListItem);
     procedure lblGuidelineClick(Sender: TObject);
     procedure ListViewClick(Sender: TObject);
-    procedure cboScheduleExit(Sender: TObject);
     procedure cboScheduleChange(Sender: TObject);
     procedure cboRouteChange(Sender: TObject);
     procedure ControlChange(Sender: TObject);
     procedure cboDosageClick(Sender: TObject);
     procedure cboDosageChange(Sender: TObject);
     procedure cboScheduleClick(Sender: TObject);
-    procedure cboRouteExit(Sender: TObject);
     procedure DispOrderMessage(const AMessage: string);
 
 
@@ -91,6 +89,11 @@ type
     procedure lstChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure cboDosageKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cboRouteKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure cboScheduleKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
 
   private
     {selection}
@@ -379,6 +382,7 @@ begin
   LoadOTCStatements(lbStatements.Items);
   FRemoveText := True;
   FShrinkDrugMsg := False;
+  if ScreenReaderActive then lstQuick.TabStop := True;
 end;
 
 procedure TfrmODMedNVA.FormDestroy(Sender: TObject);
@@ -812,9 +816,12 @@ begin
   LoadNonVAMedCache(Item.Index, Item.Index);
   chunk := GetCacheChunkIndex(Item.Index);
   list := TStringList(FNVAMedCache[chunk]);
-  x := list[Item.Index mod MED_CACHE_CHUNK_SIZE];
-  Item.Caption := Piece(x, U, 2);
-  Item.Data := Pointer(StrToIntDef(Piece(x, U, 1), 0));
+  //This is to make sure that the index that is being used is not outside of the stringlist
+  If Item.Index mod MED_CACHE_CHUNK_SIZE < list.Count then begin
+   x := list[Item.Index mod MED_CACHE_CHUNK_SIZE];
+   Item.Caption := Piece(x, U, 2);
+   Item.Data := Pointer(StrToIntDef(Piece(x, U, 1), 0));
+  end;
 end;
 
 procedure TfrmODMedNVA.lstAllDataHint(Sender: TObject; StartIndex,
@@ -1137,7 +1144,7 @@ begin
   btnSelect.Anchors := [akRight, akTop];
   btnSelect.Default := False;
   cmdAccept.Visible := True;
-  cmdAccept.Default := True;
+  cmdAccept.Default := False;
   btnSelect.TabOrder := txtMed.TabOrder + 1;
   cmdAccept.TabStop := True;
   txtMed.Width      := memOrder.Width;
@@ -1390,6 +1397,13 @@ begin
   end;
 end;
 
+procedure TfrmODMedNVA.cboDosageKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_BACK) and (cboDosage.Text = '') then cboDosage.ItemIndex := -1;
+end;
+
 { cboRoute -------------------------------------- }
 
 procedure TfrmODMedNVA.cboRouteChange(Sender: TObject);
@@ -1406,9 +1420,13 @@ begin
   if Sender <> Self then ControlChange(Sender);
 end;
 
-procedure TfrmODMedNVA.cboRouteExit(Sender: TObject);
+
+
+procedure TfrmODMedNVA.cboRouteKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
   inherited;
+  if (Key = VK_BACK) and (cboRoute.Text = '') then cboRoute.ItemIndex := -1;
 end;
 
 { cboSchedule ----------------------------------- }
@@ -1425,8 +1443,12 @@ begin
   UpdateRelated;
 end;
 
-procedure TfrmODMedNVA.cboScheduleExit(Sender: TObject);
+
+procedure TfrmODMedNVA.cboScheduleKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
+  inherited;
+  if (Key = VK_BACK) and (cboSchedule.Text = '') then cboSchedule.ItemIndex := -1;
 end;
 
 { values changing }

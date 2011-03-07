@@ -9,10 +9,9 @@ inherited frmBALocalDiagnoses: TfrmBALocalDiagnoses
   ShowHint = True
   OnActivate = FormActivate
   OnCreate = FormCreate
-  OnKeyPress = FormKeyPress
   OnShow = FormShow
   ExplicitWidth = 620
-  ExplicitHeight = 551
+  ExplicitHeight = 544
   PixelsPerInch = 96
   TextHeight = 13
   object pnlTop: TPanel [0]

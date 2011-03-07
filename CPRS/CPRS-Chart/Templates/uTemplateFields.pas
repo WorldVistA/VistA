@@ -600,7 +600,7 @@ begin
           if(assigned(Entry)) then
           begin
             NewTxt := Entry.GetControlText(CtrlID, TRUE, FoundEntry, FALSE);
-            if FoundEntry and (NewTxt = '') then
+            if FoundEntry and (NewTxt = '') then{(Trim(NewTxt) = '') then //CODE ADDED BACK IN - VHAISPBELLC}
               Result := TRUE;
           end;
           if FoundEntry then break;
@@ -1159,7 +1159,7 @@ begin
           cbo.Items.Text := StripEmbedded(Items);
           cbo.SelectByID(StripEmbedded(FItemDefault));
           cbo.Tag := CtrlID;
-          cbo.OnClick := Entry.DoChange;
+          cbo.OnChange := Entry.DoChange;
 
           if cbo.Items.Count > 12 then
           begin
@@ -1294,6 +1294,10 @@ begin
           pnl.Height := pnl.Edit.Height;
           pnl.Width := pnl.Edit.Width + pnl.UpDown.Width;
           UpdateColorsFor508Compliance(pnl, TRUE);
+          //CQ 17597 wat
+          pnl.Edit.Align := alLeft;
+          pnl.UpDown.Align := alLeft;
+          //end 17597
           ctrl := pnl;
         end;
 
@@ -1931,6 +1935,7 @@ begin
         end;
       end
       else
+      //!!!!!! CODE ADDED BACK IN - VHAISPBELLC !!!!!!
       if(Ctrl is TEdit) then
         Result := TEdit(Ctrl).Text
       else
@@ -1944,6 +1949,15 @@ begin
       if(Ctrl is TORDateCombo) then
         Result := TORDateCombo(Ctrl).Text + ':' + FloatToStr(TORDateCombo(Ctrl).FMDate)
       else
+     {!!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - VHAISPBELLC !!!!!!
+      if(Ctrl is TORDateBox) then begin
+        if TORDateBox(Ctrl).IsValid then
+         Result := TORDateBox(Ctrl).Text
+        else
+         Result := '';
+      end else
+      }
+      //!!!!!! CODE ADDED BACK IN - VHAISPBELLC !!!!!!
       if(Ctrl is TORDateBox) then
         Result := TORDateBox(Ctrl).Text
       else
@@ -1972,6 +1986,10 @@ begin
         end;
       end
       else
+     {!!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - VHAISPBELLC !!!!!!
+      if(Ctrl is TEdit) then
+        Result := TEdit(Ctrl).Text
+      else }
       if(Ctrl is TORCheckBox) then
       begin
         Done := FALSE;

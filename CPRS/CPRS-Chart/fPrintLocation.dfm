@@ -14,7 +14,7 @@ inherited frmPrintLocation: TfrmPrintLocation
   ExplicitHeight = 472
   DesignSize = (
     442
-    445)
+    438)
   PixelsPerInch = 96
   TextHeight = 13
   object lblEncounter: TLabel [0]

@@ -11,7 +11,7 @@ inherited frmOtherSchedule: TfrmOtherSchedule
   OnClose = FormClose
   OnCreate = FormCreate
   ExplicitWidth = 600
-  ExplicitHeight = 389
+  ExplicitHeight = 396
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter [0]
@@ -307,7 +307,7 @@ inherited frmOtherSchedule: TfrmOtherSchedule
       TabOrder = 2
       object NSScboSchedule: TORComboBox
         Left = 5
-        Top = 16
+        Top = 19
         Width = 121
         Height = 180
         Style = orcsSimple
@@ -325,6 +325,8 @@ inherited frmOtherSchedule: TfrmOtherSchedule
         Sorted = False
         SynonymChars = '<>'
         TabOrder = 0
+        OnExit = NSScboScheduleExit
+        OnKeyUp = NSScboScheduleKeyUp
         CharsNeedMatch = 1
         UniqueAutoComplete = True
       end

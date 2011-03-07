@@ -390,10 +390,8 @@ var
 begin
   aBasket := TStringList.Create;
   aBasket.Clear;
-  //frmReports.MemText.Clear;
   aHead := '';
   cnt := 2;
-  //aWPFlag := false;
   for i := 0 to uColumns.Count - 1 do
     begin
       if (piece(uColumns[i],'^',7) = '1') and (not(piece(uColumns[i],'^',4) = '1')) then
@@ -417,8 +415,6 @@ begin
     begin
       FReportText.Lines.Add(aHead);
       FReportText.Lines.Add('-------------------------------------------------------------------------------');
-      //frmReports.memText.Lines.Add(aHead);
-      //frmReports.MemText.Lines.Add('-------------------------------------------------------------------------------');
     end;
   for i := 0 to frmLabs.lvReports.Items.Count - 1 do
     if frmLabs.lvReports.Items[i].Selected then
@@ -433,16 +429,16 @@ begin
             x := StringPad(ListItem.Caption, L, L+1);
             aData := x;
           end;
-        for j := 0 to RowObjects.ColumnList.Count - 1 do
+        for j := 0 to LabRowObjects.ColumnList.Count - 1 do
           begin
-            aCol := TCellObject(RowObjects.ColumnList[j]).Handle;
-            if piece(aID,':',1) = piece(TCellObject(RowObjects.ColumnList[j]).Handle,':',1) then
-              if ListItem.Caption = (piece(TCellObject(RowObjects.ColumnList[j]).Site,';',1)) then
+            aCol := TCellObject(LabRowObjects.ColumnList[j]).Handle;
+            if piece(aID,':',1) = piece(TCellObject(LabRowObjects.ColumnList[j]).Handle,':',1) then
+              if ListItem.Caption = (piece(TCellObject(LabRowObjects.ColumnList[j]).Site,';',1)) then
                 begin
                   if (piece(uColumns[StrToInt(piece(aCol,':',2))],'^',7) = '1') and
                    (not (piece(uColumns[StrToInt(piece(aCol,':',2))],'^',4) = '1')) then
                     begin
-                      FastAssign(TCellObject(RowObjects.ColumnList[j]).Data, aBasket);
+                      FastAssign(TCellObject(LabRowObjects.ColumnList[j]).Data, aBasket);
                       for k := 0 to aBasket.Count - 1 do
                         begin
                           L := StrToIntDef(piece(uColumns[StrToInt(piece(aCol,':',2))],'^',6),15);
@@ -452,38 +448,33 @@ begin
                     end;
                 end;
           end;
-        //frmReports.memText.Lines.Add(aData);
         FReportText.Lines.Add(aData);
         cnt := cnt + 1;
         if cnt > 40 then
           begin
             cnt := 0;
-            //frmReports.memText.Lines.Add('**PAGE BREAK**');
             FReportText.Lines.Add('**PAGE BREAK**');
           end;
-        for j := 0 to RowObjects.ColumnList.Count - 1 do
+        for j := 0 to LabRowObjects.ColumnList.Count - 1 do
           begin
-            aCol := TCellObject(RowObjects.ColumnList[j]).Handle;
-            if piece(aID,':',1) = piece(TCellObject(RowObjects.ColumnList[j]).Handle,':',1) then
-              if ListItem.Caption = (piece(TCellObject(RowObjects.ColumnList[j]).Site,';',1)) then
+            aCol := TCellObject(LabRowObjects.ColumnList[j]).Handle;
+            if piece(aID,':',1) = piece(TCellObject(LabRowObjects.ColumnList[j]).Handle,':',1) then
+              if ListItem.Caption = (piece(TCellObject(LabRowObjects.ColumnList[j]).Site,';',1)) then
                 begin
                   if (piece(uColumns[StrToInt(piece(aCol,':',2))],'^',7) = '1') and
                      (piece(uColumns[StrToInt(piece(aCol,':',2))],'^',4) = '1') then
                     begin
                       aWPFlag := true;
-                      FastAssign(TCellObject(RowObjects.ColumnList[j]).Data, aBasket);
-                      //frmReports.MemText.Lines.Add(TCellObject(RowObjects.ColumnList[j]).Name);
-                      FReportText.Lines.Add(TCellObject(RowObjects.ColumnList[j]).Name);
+                      FastAssign(TCellObject(LabRowObjects.ColumnList[j]).Data, aBasket);
+                      FReportText.Lines.Add(TCellObject(LabRowObjects.ColumnList[j]).Name);
                       cnt := cnt + 1;
                       for k := 0 to aBasket.Count - 1 do
                         begin
-                          //frmReports.memText.Lines.Add('  ' + aBasket[k]);
-                          FReportText.Lines.Add('  ' + aBasket[k]);
+                          FReportText.Lines.Add('' + aBasket[k]);
                           cnt := cnt + 1;
                           if cnt > 40 then
                             begin
                               cnt := 0;
-                              //frmReports.memText.Lines.Add('**PAGE BREAK**');
                               FReportText.Lines.Add('**PAGE BREAK**');
                             end;
                         end;
@@ -492,7 +483,6 @@ begin
           end;
         if aWPFlag = true then
           begin
-            //frmReports.MemText.Lines.Add('===============================================================================');
             FReportText.Lines.Add('===============================================================================');
           end;
       end;

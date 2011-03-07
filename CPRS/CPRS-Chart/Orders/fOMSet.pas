@@ -108,15 +108,17 @@ procedure TfrmOMSet.DoNextItem;
 var
   SetItem: TSetItem;
   theOwner: TComponent;
+  ok: boolean;
 
   procedure SkipToNext;
   begin
+    if FClosing then Exit;
     lstSet.Checked[lstSet.ItemIndex] := True;
     DoNextItem;
   end;
 
 begin
-  DoingNextItem := true;
+   DoingNextItem := true;
   //frmFrame.UpdatePtInfoOnRefresh;
   if FClosing then Exit;
   if frmOrders <> nil then
@@ -143,11 +145,40 @@ begin
     case SetItem.DialogType of
     'A':      if not ActivateAction(IntToStr(SetItem.DialogIEN), Self, ItemIndex) then
               begin
-                if IsCreatedByMenu(SetItem) and (lstSet.ItemIndex < lstSet.Items.Count - 1) then
-                  lstSet.Checked[lstSet.ItemIndex] := True
-                else SkipToNext;
+                if Not FClosing then
+                begin
+                  if IsCreatedByMenu(SetItem) and (lstSet.ItemIndex < lstSet.Items.Count - 1) then
+                    lstSet.Checked[lstSet.ItemIndex] := True
+                  else SkipToNext;
+                end;
               end;
     'D', 'Q': if not ActivateOrderDialog(IntToStr(SetItem.DialogIEN), FDelayEvent, Self, ItemIndex) then
+              begin
+                if Not FClosing then
+                begin
+                  if IsCreatedByMenu(SetItem) and (lstSet.ItemIndex < lstSet.Items.Count - 1) then
+                    lstSet.Checked[lstSet.ItemIndex] := True
+                  else SkipToNext;
+                end;
+              end;
+    'M':      begin
+                ok := ActivateOrderMenu(IntToStr(SetItem.DialogIEN), FDelayEvent, Self, ItemIndex);
+                if not FClosing then
+                begin
+                  if ok then
+                    Inc(FActiveMenus)
+                  else
+                  begin
+                    if IsCreatedByMenu(SetItem) and (lstSet.ItemIndex < lstSet.Items.Count - 1) then
+                      lstSet.Checked[lstSet.ItemIndex] := True
+                    else
+                      SkipToNext;
+                  end;
+                end;
+              end;
+    'O':      begin
+                if (Self.Owner.Name = 'frmOMNavA') then theOwner := Self.Owner else theOwner := self;
+                if not ActivateOrderSet( IntToStr(SetItem.DialogIEN), FDelayEvent, theOwner, ItemIndex) then
                 begin
                   if Not FClosing then
                   begin
@@ -155,23 +186,6 @@ begin
                       lstSet.Checked[lstSet.ItemIndex] := True
                     else SkipToNext;
                   end;
-                end;
-    'M':      if ActivateOrderMenu(  IntToStr(SetItem.DialogIEN), FDelayEvent, Self, ItemIndex)
-                then Inc(FActiveMenus)
-                else
-                begin
-                  if IsCreatedByMenu(SetItem) and (lstSet.ItemIndex < lstSet.Items.Count - 1) then
-                    lstSet.Checked[lstSet.ItemIndex] := True
-                  else
-                    SkipToNext;
-                end;
-    'O':      begin
-                if (Self.Owner.Name = 'frmOMNavA') then theOwner := Self.Owner else theOwner := self;
-                if not ActivateOrderSet( IntToStr(SetItem.DialogIEN), FDelayEvent, theOwner, ItemIndex) then
-                begin
-                  if IsCreatedByMenu(SetItem) and (lstSet.ItemIndex < lstSet.Items.Count - 1) then
-                    lstSet.Checked[lstSet.ItemIndex] := True
-                  else SkipToNext;
                 end;
               end;
     else      begin
@@ -185,12 +199,21 @@ end;
 
 procedure TfrmOMSet.UMDelayEvent(var Message: TMessage);
 begin
+  if CloseRequested then
+  begin
+    Close;
+    if Not FClosing then
+      begin
+        CloseRequested := False;
+        FClosing := False;
+        DoNextItem;
+      end
+      else Exit;
+  end;
   // ignore if delay from other than current itemindex
   // (prevents completion of an order set from calling DoNextItem)
   if Message.WParam = lstSet.ItemIndex then
     if lstSet.ItemIndex < lstSet.Items.Count - 1 then DoNextItem else Close;
-  if CloseRequested then
-    Close;
 end;
 
 procedure TfrmOMSet.UMDestroy(var Message: TMessage);
@@ -251,6 +274,7 @@ begin
     CanClose := True
  else if lstSet.ItemIndex < (lstSet.Items.Count - 1)
    then CanClose := InfoBox(TX_STOP, TC_STOP, MB_YESNO) = IDYES;
+   FClosing := CanClose;
 end;
 
 procedure TfrmOMSet.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -280,7 +304,10 @@ end;
 procedure TfrmOMSet.cmdInteruptClick(Sender: TObject);
 begin
   if DoingNextItem then
-    CloseRequested := true              //Fix for CQ: 8297
+  begin
+    CloseRequested := true;             //Fix for CQ: 8297
+    FClosing := true;
+  end
   else
     Close;
 end;

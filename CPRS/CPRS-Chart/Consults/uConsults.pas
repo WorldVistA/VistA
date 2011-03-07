@@ -3,7 +3,8 @@ unit uConsults;
 interface
 
 uses
-    SysUtils, Windows, Messages, Controls, Classes, StdCtrls, ORfn, uTIU, ORCtrls;
+    SysUtils, Windows, Messages, Controls, Classes, StdCtrls, ORfn, uTIU, ORCtrls,
+    Contnrs, DateUtils;
 
 type
 
@@ -37,8 +38,8 @@ type
     ProvDiagnosis: string ;                 {  30}       { * }
     ProvDxCode: string;                     {  30.1}
     RequestProcessingActivity: TStringList; {  40}
-    //EarliestDate: TFMDateTime;
-    //LatestDate: TFMDateTime;
+    EarliestDate: TFMDateTime;
+    //LatestDate: TFMDateTime; //dropped requirement WAT
   end ;
 
   TEditResubmitRec = record
@@ -52,8 +53,8 @@ type
     ConsultProcName: string;
     Urgency: integer;
     UrgencyName: string;
-    //EarliestDate: TFMDateTime;
-    //LatestDate: TFMDateTime;
+    EarliestDate: TFMDateTime;
+    //LatestDate: TFMDateTime; //dropped requirement WAT
     Place: string;
     PlaceName: string;
     Attention: int64;
@@ -258,36 +259,109 @@ end;
 
 procedure BuildServiceTree(Tree: TORTreeView; SvcList: TStrings; const Parent: string; Node: TORTreeNode);
 var
-  MyID, MyParent, Name, temp: string;
-  i: Integer;
-  ChildNode, tmpNode: TORTreeNode;
+  MyID, MyParent, Name, item: string;
+  i, Idx: Integer;
+  ParentNode, ChildNode: TORTreeNode;
+//  tmpNode: TORTreeNode;
   HasChildren: Boolean;
+//  AllNodes: TStringList;
+  ParentNodes: TStringList;
+//  List: TList;
+//  Lists: TObjectList;
+//  bad: boolean;
+
+// Former code was only filtering out half the duplicates, depending on
+// how they appeared in the tree.  Commented out code filters out all the duplicates,
+// and still keeps the fast tree build.  However, CPRS Clinical Workgroup determined
+// that no duplicates should be filtered out.  Code kept here in order to keep fast filter
+// logic, in case duplicates are ever filtered out in the future.
+
+{
+  procedure FilterOutDuplicates;
+  var
+    j: integer;
+  begin
+    bad := false;
+    if AllNodes.Find(MyID, Idx) then
+    begin
+      if AllNodes.Objects[Idx] is TORTreeNode then
+      begin
+        tmpNode := TORTreeNode(AllNodes.Objects[Idx]);
+        bad := tmpNode.HasAsParent(ParentNode);
+        if (not bad) and assigned(tmpNode.Parent) then
+          bad := ParentNode.HasAsParent(tmpNode.Parent);
+      end
+      else
+      begin
+        bad := False;
+        List := TList(AllNodes.Objects[Idx]);
+        for j := 0 to List.Count - 1 do
+        begin
+          tmpNode := TORTreeNode(List[j]);
+          bad := TORTreeNode(List[j]).HasAsParent(ParentNode);
+          if (not bad) and assigned(tmpNode.Parent) then
+            bad := ParentNode.HasAsParent(tmpNode.Parent);
+          if bad then break;
+        end;
+      end;
+    end;
+  end;
+
+  procedure AddNode;
+  begin
+    if AllNodes.Find(MyID, Idx) then
+    begin
+      if AllNodes.Objects[Idx] is TORTreeNode then
+      begin
+        List := TList.Create;
+        Lists.Add(List);
+        List.Add(AllNodes.Objects[Idx]);
+        AllNodes.Objects[Idx] := List;
+      end
+      else
+        List := TList(AllNodes.Objects[Idx]);
+      List.Add(ChildNode);
+    end
+    else
+      AllNodes.AddObject(MyId, ChildNode);
+  end;
+}
+
 begin
   Tree.Items.BeginUpdate;
-  with SvcList do for i := 0 to Count - 1 do
+  ParentNodes := TStringList.Create;
+//  AllNodes := TStringList.Create;
+//  Lists := TObjectList.Create;
+  try
+    ParentNodes.Sorted := True;
+//    AllNodes.Sorted := True;
+    for i := 0 to SvcList.Count - 1 do
     begin
-      if Piece(Strings[i], U, 5) = 'S' then Continue;  // V19.4 {rv}
-      //if Piece(Strings[i], U, 6) = 'S' then Continue;
-      MyParent := Piece(Strings[i], U, 3);
-      if (MyParent = Parent) then
-        begin
-          MyID := Piece(Strings[i], U, 1);
-          Name := Piece(Strings[i], U, 2);
-          temp  := Strings[i];
-          tmpNode := nil;
-          HasChildren := Piece(Strings[i], U, 4) = '+';
-          if Node <> nil then if Node.HasChildren then
-            tmpNode := Tree.FindPieceNode(MyID, 1, U, Node);
-          if (tmpNode <> nil) and tmpNode.HasAsParent(Node) then
-            Continue
-          else
-            begin
-              ChildNode := TORTreeNode(Tree.Items.AddChild(Node, Name));
-              ChildNode.StringData := temp;
-              if HasChildren then BuildServiceTree(Tree, SvcList, MyID, ChildNode);
-            end;
-        end;
+      item := SvcList[i];
+      if Piece(item, U, 5) = 'S' then Continue; 
+      MyParent := Piece(item, U, 3);
+      MyID := Piece(item, U, 1);
+      if not ParentNodes.Find(MyParent, Idx) then
+        ParentNode := nil
+      else
+      begin
+        ParentNode := TORTreeNode(ParentNodes.Objects[Idx]);
+//        FilterOutDuplicates;
+//        if bad then Continue;
+      end;
+      Name := Piece(item, U, 2);
+      HasChildren := Piece(item, U, 4) = '+';
+      ChildNode := TORTreeNode(Tree.Items.AddChild(ParentNode, Name));
+      ChildNode.StringData := item;
+//      AddNode;
+      if HasChildren then
+        ParentNodes.AddObject(MyID, ChildNode);
     end;
+  finally
+    ParentNodes.Free;
+//    AllNodes.Free;
+//    Lists.Free;
+  end;
   Tree.Items.EndUpdate;
 end;
 

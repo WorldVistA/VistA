@@ -59,7 +59,9 @@ begin
              txtResearch.Enabled := False;
              Enabled := True;
              SelectByID(Piece(Source,U,1));
-             BringToFront;
+             cboSource.Visible := True;
+             txtResearch.Visible := False;
+             //BringToFront;
              ShowModal;
             end
            {else if Items.Count = 1 then
@@ -70,7 +72,10 @@ begin
       else if SrcType = 'R' then
         begin
           cboSource.Enabled := False;
-          txtResearch.BringToFront;
+          cboSource.Visible := False;
+          srcLabel.Caption := 'Enter Source:';
+          txtResearch.Visible := True;
+          //txtResearch.BringToFront;
           txtResearch.Text := Source;
           ShowModal;
           FSource := txtResearch.Text;

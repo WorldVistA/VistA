@@ -1,0 +1,46 @@
+package ORDateLib2006;
+
+{$R *.res}
+{$R 'ORDtTm.dcr'}
+{$R 'ORDtTmRng.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'CPRS Date/Time Dialogs'}
+{$DESIGNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  vclsmp,
+  vcl,
+  tee,
+  ORCtrlLib2006,
+  XWB_R2006;
+
+contains
+  ORDtTmCal in 'ORDtTmCal.pas',
+  ORDtTm in 'ORDtTm.pas',
+  ORDtTmRng in 'ORDtTmRng.pas',
+  ORNet in 'ORNet.pas',
+  ORFn in 'ORFn.pas',
+  OR2006Compatibility in 'OR2006Compatibility.pas' {frm2006Compatibility};
+
+end.

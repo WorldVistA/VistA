@@ -12,6 +12,7 @@ inherited frmOptionsOther: TfrmOptionsOther
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
   ShowHint = True
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
@@ -96,6 +97,7 @@ inherited frmOptionsOther: TfrmOptionsOther
       Caption = 'Cancel'
       ModalResult = 2
       TabOrder = 1
+      OnClick = btnCancelClick
     end
   end
   object stStart: TStaticText [6]

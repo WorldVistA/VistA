@@ -1,6 +1,6 @@
 inherited frmProblems: TfrmProblems
-  Left = 627
-  Top = 64
+  Left = 303
+  Top = 268
   HelpContext = 2000
   Caption = 'Problems List Page'
   ClientHeight = 355
@@ -11,8 +11,6 @@ inherited frmProblems: TfrmProblems
   OnHide = FormHide
   OnMouseMove = FormMouseMove
   OnShow = FormShow
-  ExplicitLeft = 627
-  ExplicitTop = 64
   ExplicitWidth = 639
   ExplicitHeight = 409
   PixelsPerInch = 96
@@ -36,9 +34,8 @@ inherited frmProblems: TfrmProblems
   inherited pnlLeft: TPanel
     Width = 159
     Height = 350
-    TabStop = True
     ExplicitWidth = 159
-    ExplicitHeight = 358
+    ExplicitHeight = 350
     object pnlButtons: TPanel
       Left = 0
       Top = 304
@@ -81,7 +78,6 @@ inherited frmProblems: TfrmProblems
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitHeight = 312
       object lblView: TOROffsetLabel
         Left = 0
         Top = 0
@@ -173,7 +169,6 @@ inherited frmProblems: TfrmProblems
       BevelOuter = bvNone
       Constraints.MinHeight = 90
       TabOrder = 0
-      ExplicitHeight = 312
       object sptProbPanel: TSplitter
         Left = 0
         Top = 157
@@ -205,6 +200,7 @@ inherited frmProblems: TfrmProblems
           Width = 159
           Height = 144
           Hint = 'Select problem category'
+          TabStop = False
           Align = alClient
           ExtendedSelect = False
           ItemHeight = 13
@@ -228,7 +224,6 @@ inherited frmProblems: TfrmProblems
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitHeight = 152
         object lblProblems: TLabel
           Left = 0
           Top = 0
@@ -260,7 +255,6 @@ inherited frmProblems: TfrmProblems
           ItemTipColor = clWindow
           LongList = False
           Pieces = '2,3'
-          ExplicitHeight = 139
         end
       end
     end
@@ -295,7 +289,6 @@ inherited frmProblems: TfrmProblems
       TabOrder = 0
       Visible = False
       OnMouseMove = FormMouseMove
-      ExplicitHeight = 322
     end
     object wgProbData: TCaptionListBox
       Left = 0

@@ -445,8 +445,8 @@ end;
 
 procedure PutNewOrder(var AnOrder: TOrder; ConstructOrder: TConstructOrder; OrderSource: string);
 var
-  i: Integer;
-  x, y, z: string;
+  i, inc, len, numLoop, remain: Integer;
+  ocStr, tmpStr, x, y, z: string;
 begin
   with RPCBrokerV do
   begin
@@ -468,7 +468,7 @@ begin
     Param[5].Value := IntToStr(ConstructOrder.OrderItem);
     Param[6].PType := literal;
     Param[6].Value := AnOrder.EditOf;        // null if new order, otherwise ORIFN of original
-    if (ConstructOrder.DGroup = IVDisp) then
+    if (ConstructOrder.DGroup = IVDisp) or (ConstructOrder.DialogName = 'PSJI OR PAT FLUID OE') then
       SetupORDIALOG(Param[7], ConstructOrder.ResponseList, True)
     else
       SetupORDIALOG(Param[7], ConstructOrder.ResponseList);
@@ -482,7 +482,26 @@ begin
       // put quotes around everything to prevent broker from choking
       y := '"ORCHECK","' + Piece(OCList[i], U, 1) + '","' + Piece(OCList[i], U, 3) +
         '","' + IntToStr(i+1) + '"';
-      Param[7].Mult[y] := Pieces(OCList[i], U, 2, 4);
+      //Param[7].Mult[y] := Pieces(OCList[i], U, 2, 4);
+      OCStr :=  Pieces(OCList[i], U, 2, 4);
+      len := Length(OCStr);
+      if len > 255 then
+        begin
+          numLoop := len div 255;
+          remain := len mod 255;
+          inc := 0;
+          while inc <= numLoop do
+            begin
+              tmpStr := Copy(OCStr, 1, 255);
+              OCStr := Copy(OCStr, 256, Length(OcStr));
+              Param[7].Mult[y + ',' + InttoStr(inc)] := tmpStr;
+              inc := inc +1;
+            end;
+          if remain > 0 then  Param[7].Mult[y + ',' + inttoStr(inc)] := OCStr;
+
+        end
+      else
+       Param[7].Mult[y] := OCStr;
     end;
     if ConstructOrder.DelayEvent in ['A','D','T','M','O'] then
       Param[7].Mult['"OREVENT"'] := ConstructOrder.PTEventPtr;

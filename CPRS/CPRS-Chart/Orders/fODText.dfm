@@ -1,5 +1,10 @@
 inherited frmODText: TfrmODText
+  Width = 525
+  Height = 279
+  Anchors = [akLeft, akTop, akBottom]
   Caption = 'Text Only Order'
+  ExplicitWidth = 525
+  ExplicitHeight = 279
   PixelsPerInch = 96
   TextHeight = 13
   object lblText: TLabel [0]
@@ -23,18 +28,23 @@ inherited frmODText: TfrmODText
     Height = 13
     Caption = 'Stop Date/Time'
   end
-  inherited memOrder: TCaptionMemo
-    TabOrder = 6
+  object lblOrderSig: TLabel [3]
+    Left = 8
+    Top = 178
+    Width = 44
+    Height = 13
+    Caption = 'Order Sig'
   end
-  inherited cmdAccept: TButton
-    TabOrder = 3
+  inherited memOrder: TCaptionMemo
+    TabOrder = 4
   end
   object memText: TMemo [5]
     Left = 6
     Top = 18
     Width = 508
     Height = 124
-    TabOrder = 0
+    Anchors = [akLeft, akTop, akBottom]
+    TabOrder = 1
     OnChange = ControlChange
   end
   object txtStart: TORDateBox [6]
@@ -42,7 +52,7 @@ inherited frmODText: TfrmODText
     Top = 164
     Width = 140
     Height = 21
-    TabOrder = 1
+    TabOrder = 2
     OnChange = ControlChange
     DateOnly = False
     RequireTime = False
@@ -53,17 +63,20 @@ inherited frmODText: TfrmODText
     Top = 164
     Width = 140
     Height = 21
-    TabOrder = 2
+    TabOrder = 3
     OnChange = ControlChange
     DateOnly = False
     RequireTime = False
     Caption = 'Stop Date/Time'
   end
+  inherited cmdAccept: TButton
+    TabOrder = 5
+  end
   inherited cmdQuit: TButton
-    TabOrder = 4
+    TabOrder = 6
   end
   inherited pnlMessage: TPanel
-    TabOrder = 5
+    TabOrder = 0
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -78,7 +91,8 @@ inherited frmODText: TfrmODText
         'Status = stsDefault')
       (
         'Component = memOrder'
-        'Status = stsDefault')
+        'Label = lblOrderSig'
+        'Status = stsOK')
       (
         'Component = cmdAccept'
         'Status = stsDefault')
@@ -94,5 +108,11 @@ inherited frmODText: TfrmODText
       (
         'Component = frmODText'
         'Status = stsDefault'))
+  end
+  object VA508CompMemOrder: TVA508ComponentAccessibility
+    Component = memOrder
+    OnStateQuery = VA508CompMemOrderStateQuery
+    Left = 152
+    Top = 216
   end
 end

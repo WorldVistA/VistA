@@ -9,7 +9,7 @@ inherited frmReports: TfrmReports
   OnDestroy = FormDestroy
   OnShow = FormShow
   ExplicitWidth = 725
-  ExplicitHeight = 654
+  ExplicitHeight = 661
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
@@ -568,7 +568,6 @@ inherited frmReports: TfrmReports
     end
     object GotoTop1: TMenuItem
       Caption = 'Go to Top'
-      Enabled = False
       OnClick = GotoTop1Click
     end
     object GotoBottom1: TMenuItem

@@ -4,6 +4,8 @@ inherited frmEncVitals: TfrmEncVitals
   Caption = 'Vitals'
   OnActivate = FormActivate
   OnShow = FormShow
+  ExplicitWidth = 632
+  ExplicitHeight = 427
   PixelsPerInch = 96
   TextHeight = 13
   object lvVitals: TCaptionListView [0]

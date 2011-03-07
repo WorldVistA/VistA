@@ -44,8 +44,6 @@ type
   TGraphActivity = class
   public
     CurrentSetting: string;
-    DefaultInpatientDate: string;
-    DefaultOutpatientDate: string;
     OldDFN: string;
     PublicSetting: string;
     PersonalSetting: string;

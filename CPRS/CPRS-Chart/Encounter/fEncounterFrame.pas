@@ -399,8 +399,9 @@ begin
       uProviders.AddProvider(AUser, uProviders.PendingName(FALSE), FALSE);
 
     frmEncounterFrame.CreateChildForms(frmEncounterFrame, PCEData.Location);
-    ResizeAnchoredFormToFont(frmEncounterFrame);
     SetFormPosition(frmEncounterFrame);
+    ResizeAnchoredFormToFont(frmEncounterFrame);
+    //SetFormPosition(frmEncounterFrame);
 
     with frmEncounterFrame do
     begin

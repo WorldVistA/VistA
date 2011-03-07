@@ -33,7 +33,20 @@ TCellObject = class          //Data Object for each Cell in ListView
     property Count      :integer read FCount write FCount;
   end;
 
-TRowObject = class           //List of Row objects for ListView
+TRowObject = class           //List of Row objects for ReportsTab ListView
+  private
+    FCount     :integer;
+    FColumnList:TList;
+  public
+    constructor Create;
+    destructor  Destroy; override;
+    procedure   Add(ASite, AHandle, AColumnData: string; AData: TStringList);
+    procedure   Clear;
+    property    Count           :integer     read FCount;
+    property    ColumnList      :TList       read FColumnList;
+  end;
+
+TLabRowObject = class           //List of Row objects for Labs Tab ListView
   private
     FCount     :integer;
     FColumnList:TList;
@@ -79,6 +92,7 @@ end;
 
 var
   RowObjects: TRowObject;
+  LabRowObjects: TLabRowObject;
 
 //procedures & functions for Report Tree & ListView objects
 
@@ -177,6 +191,40 @@ begin
 end;
 
 procedure TRowObject.Clear;
+var
+  i: Integer;
+begin
+  with FColumnList do
+    for i := 0 to Count - 1 do
+      with TCellObject(Items[i]) do Free;
+  FColumnList.Clear;
+  FCount := 0;
+end;
+
+constructor TLabRowObject.Create;
+begin
+  FColumnList := TList.Create;
+  FCount := 0;
+end;
+
+destructor TLabRowObject.Destroy;
+begin
+  //Clear;
+  FColumnList.Free;
+  inherited Destroy;
+end;
+
+procedure TLabRowObject.Add(ASite, AHandle, AColumnData: string; AData: TStringList);
+var
+  ACell: TCellObject;
+begin
+  ACell := TCellObject.Create;
+  ACell.Add(ASite,AHandle,AColumnData,AData);
+  FColumnList.Add(ACell);
+  FCount := FColumnList.Count;
+end;
+
+procedure TLabRowObject.Clear;
 var
   i: Integer;
 begin

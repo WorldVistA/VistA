@@ -4,7 +4,7 @@
 	Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
 	Developers: Danila Manapsal, Don Craven, Joel Ivey
 	Description: Registers components and property editors.
-	Current Release: Version 1.1 Patch 47 (February 7, 2007))
+	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
 *************************************************************** }
 
 unit XWBReg;

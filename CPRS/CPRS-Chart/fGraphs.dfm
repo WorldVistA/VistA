@@ -633,15 +633,11 @@ inherited frmGraphs: TfrmGraphs
           Top = 22
           Width = 148
           Height = 76
-          ActivePage = tsBottomViews
+          ActivePage = tsBottomItems
           Align = alClient
           TabOrder = 1
           object tsBottomItems: TTabSheet
             Caption = 'Items'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object lvwItemsBottom: TListView
               Left = 0
               Top = 0
@@ -689,6 +685,10 @@ inherited frmGraphs: TfrmGraphs
           object tsBottomViews: TTabSheet
             Caption = 'Views'
             ImageIndex = 1
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object splViewsBottom: TSplitter
               Left = 0
               Top = 45
@@ -710,7 +710,6 @@ inherited frmGraphs: TfrmGraphs
               ShowHint = False
               TabOrder = 0
               OnEnter = lstViewsBottomEnter
-              OnMouseDown = lstViewsBottomMouseDown
               ItemTipColor = clWindow
               LongList = False
               Pieces = '2'
@@ -1082,6 +1081,7 @@ inherited frmGraphs: TfrmGraphs
     Left = 30
     object mnuPopGraphDetails: TMenuItem
       Caption = 'Details...'
+      Enabled = False
       OnClick = mnuPopGraphDetailsClick
     end
     object mnuPopGraphValueMarks: TMenuItem
@@ -1256,8 +1256,6 @@ inherited frmGraphs: TfrmGraphs
     end
     object mnuGraphData: TMenuItem
       Caption = 'Show Graph Data...'
-      Enabled = False
-      Visible = False
       OnClick = mnuGraphDataClick
     end
     object mnuPopGraphToday: TMenuItem

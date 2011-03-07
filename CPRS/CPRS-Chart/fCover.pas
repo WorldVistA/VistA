@@ -57,6 +57,7 @@ type
     lbl_3: TOROffsetLabel;
     lst_3: TORListBox;
     sptFlag: TSplitter;
+    VA508ComponentAccessibility1: TVA508ComponentAccessibility;
     procedure CoverItemClick(Sender: TObject);
     procedure timPollTimer(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -135,9 +136,12 @@ const
   TAG_VSIT = 80;
   RemID    = '50';
 
-  TX_INACTIVE_CODE = 'This problem references an ICD code that is not currently active.' + #13#10 +
+  TX_INACTIVE_ICODE = 'This problem references an ICD-9-CM code that is not currently active.' + #13#10 +
                      'Please correct this code using the ''Problems'' tab.';
-  TC_INACTIVE_CODE = 'Inactive ICD code';
+  TC_INACTIVE_ICODE = 'Inactive ICD-9-CM code';
+  TX_INACTIVE_SCODE = 'This problem references an SNOMED CT code that is not currently active.' + #13#10 +
+                     'Please correct this code using the ''Problems'' tab.';
+  TC_INACTIVE_SCODE = 'Inactive SNOMED CT code';
 
 var
   uIPAddress: string;
@@ -411,49 +415,82 @@ begin
                begin
                  i := ItemIndex;
                  if Piece(Items[ItemIndex], U, 13) = '#' then
-                   InfoBox(TX_INACTIVE_CODE, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
+                   InfoBox(TX_INACTIVE_ICODE, TC_INACTIVE_ICODE, MB_ICONWARNING or MB_OK)
+                 else if Piece(Items[ItemIndex], U, 13) = '$' then
+                   InfoBox(TX_INACTIVE_SCODE, TC_INACTIVE_SCODE, MB_ICONWARNING or MB_OK);
                  ItemIndex := i;
                  ReportBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True);
+                 lst_1.SetFocus;
                end;
      TAG_ALLG:
 { TODO -oRich V. -cART/Allergy : What to do about NKA only via right-click menu?  Add here? }
              if ItemIEN > 0 then
                begin
                  if ARTPatchInstalled then
-                   AllergyBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True, ItemIEN)
+                 begin
+                   AllergyBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True, ItemIEN);
+                   lst_2.SetFocus;
+                   //TDP - Fixed allergy form focus problem
+                   if (frmARTAllergy <> nil) and frmARTAllergy.Showing then frmARTAllergy.SetFocus;
+                 end
                  else
+                 begin    
                    ReportBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True);
+                   lst_2.SetFocus;
+                 end;
                end;
      TAG_POST:
              if DisplayText[ItemIndex] = 'Allergies' then
-               ReportBox(DetailPosting('A'), DisplayText[ItemIndex], True)
+               begin
+               ReportBox(DetailPosting('A'), DisplayText[ItemIndex], True);
+               lst_3.SetFocus;
+               end
              else if ItemID <> '' then
                begin
                  NotifyOtherApps(NAE_REPORT, 'TIU^' + ItemID);
                  ReportBox(DetailPosting(ItemID), DisplayText[ItemIndex], True);
+                 lst_3.SetFocus;
                end;
      TAG_MEDS:
              if (ItemID <> '') and (ItemID <> '0') then
+             begin
                ReportBox(DetailMed(ItemID), DisplayText[ItemIndex], True);
+               lst_4.SetFocus;
+             end;
      TAG_RMND:
              if ItemIEN > 0  then
+             begin
                ReportBox(DetailReminder(ItemIEN), ClinMaintText + ': ' + DisplayText[ItemIndex], True);
+               lst_5.SetFocus;
+             end;
      TAG_LABS:
              if (ItemID <> '') and (Piece(ItemID,';',1) <> '0') and (not ContainsAlpha(Piece(ItemID,';',1))) then
+             begin
                ReportBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True);
+               lst_6.SetFocus;
+             end;
      TAG_VITL:
              if ItemID <> '' then
                begin
-                 frmFrame.DLLActive := True;
+                 //agp prevent double clicking on Vitals which can cause CPRS to shut down when exiting vitals
+                 TORListBox(Sender).Enabled := false;
                  SelectVitals(Piece(DisplayText[ItemIndex],Char(9),1)); //Char(9) = Tab Character
-                 frmFrame.DLLActive := False;
                  ClearPtData;
+                 //agp set InitialRemindersLoaded to False only if reminders are still evaluating. This prevent
+                 //a problem with reminders not finishing the evaluation if the Vital DLL is launch and it prevent
+                 //an automatic re-evaluation of reminders if reminders are done evaluating.
+                 if RemindersEvaluatingInBackground = true then  InitialRemindersLoaded := False;
                  DisplayPage;
+                 TORListBox(Sender).Enabled := True;
+                 lst_7.SetFocus;
                end;
 
      TAG_VSIT:
              if (ItemID <> '') and (ItemID <> '0') then
+             begin
                ReportBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True);
+               lst_8.SetFocus;
+             end
     else
       //don't try to display a detail report
     end;
@@ -642,9 +679,25 @@ begin
       //AGP End Change for 26.8
     if(RemindersEvaluatingInBackground) then
       lb.Items.Insert(0,'0^Evaluating Reminders...')
-    else
-    if(lb.Items.Count = 0) and (RemindersStarted) then
-      lb.Items.Add(NoDataText(TRUE));
+    //AGP added code below to change the reminder panel picture if the clock has not stop by this point. CQ
+    else if(lb.Items.Count = 0) and (RemindersStarted) then
+      begin
+        lb.Items.Add(NoDataText(TRUE));
+        if frmFrame.anmtRemSearch.Visible = true then
+          begin
+            frmFrame.anmtRemSearch.Visible := FALSE;
+            frmFrame.imgReminder.Visible := TRUE;
+            frmFrame.imgReminder.Picture.Bitmap.LoadFromResourceName(hInstance, 'BMP_REMINDERS_APPLICABLE');
+            frmFrame.anmtRemSearch.Active := FALSE;
+          end;
+      end
+    else if (lb.Items.Count > 0) and (RemindersStarted) and (frmFrame.anmtRemSearch.Visible = true) then
+       begin
+            frmFrame.anmtRemSearch.Visible := FALSE;
+            frmFrame.imgReminder.Visible := TRUE;
+            frmFrame.imgReminder.Picture.Bitmap.LoadFromResourceName(hInstance, 'BMP_REMINDERS_DUE');
+            frmFrame.anmtRemSearch.Active := FALSE;
+       end;
   end;
 end;
 
@@ -777,12 +830,9 @@ procedure TfrmCover.popNewAllergyClick(Sender: TObject);
 const
   NEW_ALLERGY = True;
   ENTERED_IN_ERROR = True;
-var
-  Changed: boolean;
 begin
   inherited;
-  Changed := EnterEditAllergy(0, NEW_ALLERGY, not ENTERED_IN_ERROR);
-  if Changed then UpdateAllergiesList;
+  EnterEditAllergy(0, NEW_ALLERGY, not ENTERED_IN_ERROR);
 end;
 
 procedure TfrmCover.popNKAClick(Sender: TObject);
@@ -804,12 +854,9 @@ begin
 end;
 
 procedure TfrmCover.popEnteredInErrorClick(Sender: TObject);
-var
-  Changed: boolean;
 begin
   inherited;
-  Changed := MarkEnteredInError((popMenuAllergies.PopupComponent as TORListBox).ItemIEN);
-  if Changed then UpdateAllergiesList;
+  MarkEnteredInError((popMenuAllergies.PopupComponent as TORListBox).ItemIEN);
 end;
 
 procedure TfrmCover.UpdateAllergiesList;

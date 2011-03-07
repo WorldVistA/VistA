@@ -8,10 +8,8 @@ inherited frmAllgyFind: TfrmAllgyFind
   ClientWidth = 445
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitLeft = 408
-  ExplicitTop = 234
-  ExplicitWidth = 453
-  ExplicitHeight = 506
+  ExplicitWidth = 451
+  ExplicitHeight = 497
   PixelsPerInch = 96
   TextHeight = 13
   object lblSearch: TLabel [0]
@@ -86,7 +84,7 @@ inherited frmAllgyFind: TfrmAllgyFind
     Width = 75
     Height = 22
     Caption = '&OK'
-    TabOrder = 4
+    TabOrder = 5
     OnClick = cmdOKClick
   end
   object cmdCancel: TButton [7]
@@ -96,7 +94,7 @@ inherited frmAllgyFind: TfrmAllgyFind
     Height = 22
     Cancel = True
     Caption = '&Cancel'
-    TabOrder = 5
+    TabOrder = 6
     OnClick = cmdCancelClick
   end
   object stsFound: TStatusBar [8]
@@ -113,7 +111,7 @@ inherited frmAllgyFind: TfrmAllgyFind
     Width = 119
     Height = 17
     Caption = '&No Known Allergies'
-    TabOrder = 3
+    TabOrder = 4
     OnClick = ckNoKnownAllergiesClick
   end
   object tvAgent: TORTreeView [10]
@@ -126,9 +124,25 @@ inherited frmAllgyFind: TfrmAllgyFind
     ReadOnly = True
     StateImages = imTree
     TabOrder = 2
+    TabStop = False
     OnDblClick = tvAgentDblClick
     Caption = 'Select from one of the following items'
     NodePiece = 0
+  end
+  object NoAllergylbl508: TVA508StaticText [11]
+    Name = 'NoAllergylbl508'
+    Left = 320
+    Top = 120
+    Width = 12
+    Height = 12
+    Alignment = taLeftJustify
+    BevelInner = bvLowered
+    BorderStyle = bsSingle
+    Enabled = False
+    TabOrder = 3
+    TabStop = True
+    Visible = False
+    ShowAccelChar = True
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -155,7 +169,11 @@ inherited frmAllgyFind: TfrmAllgyFind
         'Status = stsDefault')
       (
         'Component = frmAllgyFind'
-        'Status = stsDefault'))
+        'Status = stsDefault')
+      (
+        'Component = NoAllergylbl508'
+        'Text = No Known Allergies checkbox disabled'
+        'Status = stsOK'))
   end
   object imTree: TImageList
     Left = 396
@@ -317,7 +335,7 @@ inherited frmAllgyFind: TfrmAllgyFind
         OverlayIndex = -1
       end
       item
-        Caption = 'Greyed X and Exclaimation'
+        Caption = 'No Matches'
         ImageIndex = 2
         OverlayIndex = -1
       end>

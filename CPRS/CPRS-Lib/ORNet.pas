@@ -1,11 +1,11 @@
 unit ORNet;
 
-{$DEFINE CCOWBROKER}
+//{$DEFINE CCOWBROKER}
 
 interface
 
-uses SysUtils, Windows, Classes, Forms, Controls, ORFn, TRPCB, RPCConf1, Dialogs    
-{$IFDEF CCOWBROKER}, CCOWRPCBroker {$ENDIF} ;  //, SharedRPCBroker;
+uses SysUtils, Windows, Classes, Forms, Controls, ORFn, TRPCB, RPCConf1, Dialogs
+      ;  //, SharedRPCBroker;
 
 
 procedure SetBrokerServer(const AName: string; APort: Integer; WantDebug: Boolean);
@@ -25,6 +25,7 @@ function GetRPCMax: integer;
 procedure LoadRPCData(Dest: TStrings; ID: Integer);
 function DottedIPStr: string;
 procedure CallRPCWhenIdle(CallProc: TORIdleCallProc; Msg: String);
+function ShowRPCList: Boolean;
 
 procedure EnsureBroker;
 
@@ -35,12 +36,7 @@ procedure WrapWP(Buf: pChar);
 *)
 
 var
-{$IFDEF CCOWBROKER}
-  RPCBrokerV: TCCOWRPCBroker;
-{$ELSE}
   RPCBrokerV: TRPCBroker;
-  //RPCBrokerV: TSharedRPCBroker;
-{$ENDIF}
   RPCLastCall: string;
 
   AppStartedCursorForm: TForm = nil;
@@ -68,12 +64,7 @@ procedure EnsureBroker;
 begin
   if RPCBrokerV = nil then
   begin
-{$IFDEF CCOWBROKER}
-    RPCBrokerV := TCCOWRPCBroker.Create(Application);
-{$ELSE}
     RPCBrokerV := TRPCBroker.Create(Application);
-    //RPCBrokerV := TSharedRPCBroker.Create(Application);
-{$ENDIF}
     with RPCBrokerV do
     begin
       KernelLogIn := True;
@@ -511,11 +502,18 @@ begin
   CallWhenIdleNotifyWhenDone(CallProc, RPCIdleCallDone, Msg);
 end;
 
+function ShowRPCList: Boolean;
+begin
+  if uShowRPCS then Result := True
+  else Result := False;
+end;
+
+
 initialization
   RPCBrokerV := nil;
   RPCLastCall := 'No RPCs called';
   uCallList := TList.Create;
-  uMaxCalls := 10;
+  uMaxCalls := 100;
   uShowRPCs := False;
 
 finalization

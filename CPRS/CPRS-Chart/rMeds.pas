@@ -30,7 +30,7 @@ procedure ClearMedList(AList: TList);
 function DetailMedLM(ID: string): TStrings;
 function MedAdminHistory(OrderID: string): TStrings;
 function MedStatusGroup(const s: string): Integer;
-procedure LoadActiveMedLists(InPtMeds, OutPtMeds, NonVAMeds: TList; var view: integer);
+procedure LoadActiveMedLists(InPtMeds, OutPtMeds, NonVAMeds: TList; var view: integer; var DateRange: string);
 function GetNewDialog: string;
 function PickUpDefault: string;
 procedure Refill(AnOrderID, PickUpAt: string);
@@ -155,7 +155,7 @@ begin
   else Result := 0;
 end;
 
-procedure LoadActiveMedLists(InPtMeds, OutPtMeds, NonVAMeds: TList; var view: integer);
+procedure LoadActiveMedLists(InPtMeds, OutPtMeds, NonVAMeds: TList; var view: integer; var DateRange: string);
 var
   idx, ASeq: Integer;
   x, y: string;
@@ -170,10 +170,11 @@ begin
   ClearMedList(InPtMeds);
   ClearMedList(OutPtMeds);
   ClearMedList(NonVAMeds);
-  CallV('ORWPS ACTIVE', [Patient.DFN, User.DUZ, view, True]);
+  CallV('ORWPS ACTIVE', [Patient.DFN, User.DUZ, view, '1']);
   ASeq := 0;
   if (view = 0) and (RPCBrokerV.Results.Count > 0) then
-    view := StrToIntDef(RPCBrokerV.Results.Strings[0],0);
+    view := StrToIntDef(Piece(RPCBrokerV.Results.Strings[0], U, 1), 0);
+  DateRange := Piece(RPCBrokerV.Results.Strings[0], U, 2);
   with RPCBrokerV do while Results.Count > 0 do
   begin
     x := Results[0];

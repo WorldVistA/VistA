@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, StdCtrls, ComCtrls, ORFn, rOrders, Mask, ORCtrls, ExtCtrls, fBase508Form,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, VA508AccessibilityRouter;
 
 type
   TfrmRenewOutMed = class(TfrmBase508Form)
@@ -18,9 +18,13 @@ type
     lblPickup: TLabel;
     txtRefills: TCaptionEdit;
     lblRefills: TLabel;
+    VA508ComponentAccessibility1: TVA508ComponentAccessibility;
     procedure FormCreate(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
+    procedure VA508ComponentAccessibility1StateQuery(Sender: TObject;
+      var Text: string);
+    procedure FormShow(Sender: TObject);
   private
     OKPressed: Boolean;
   end;
@@ -70,6 +74,23 @@ begin
     Add('M^by Mail');
     Add('C^in Clinic');
   end;
+end;
+
+procedure TfrmRenewOutMed.FormShow(Sender: TObject);
+begin
+  inherited;
+  if ScreenReaderSystemActive then
+  begin
+    memOrder.TabStop := true;
+    memOrder.SetFocus;
+  end;
+end;
+
+procedure TfrmRenewOutMed.VA508ComponentAccessibility1StateQuery(
+  Sender: TObject; var Text: string);
+begin
+  inherited;
+  Text := memOrder.Text;
 end;
 
 procedure TfrmRenewOutMed.cmdOKClick(Sender: TObject);

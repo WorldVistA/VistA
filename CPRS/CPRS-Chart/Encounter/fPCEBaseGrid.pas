@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fPCEBase, ComCtrls, StdCtrls, ORCtrls, ExtCtrls, Buttons, ORFn,
+  fPCEBase, ComCtrls, StdCtrls, ORCtrls, ExtCtrls, Buttons, ORFn, uPCE,
   VA508AccessibilityManager;
 
 type

@@ -4,10 +4,10 @@ interface
 
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
   Buttons, ComCtrls, ExtCtrls, ORCtrls, OrFn, Dialogs, ORDtTmRng, fBAOptionsDiagnoses,
-  uBAGlobals, fBase508Form, VA508AccessibilityManager;
+  uBAGlobals, fBase508Form, VA508AccessibilityManager, fAutoSz;
 
 type
-  TfrmOptions = class(TfrmBase508Form)
+  TfrmOptions = class(TfrmAutoSz)
     pnlMain: TPanel;
     pnlBottom: TPanel;
     pagOptions: TPageControl;

@@ -5,7 +5,7 @@
 	Developers: Danila Manapsal, Don Craven, Joel Ivey
 	Description: manages Winsock connections and creates/parses
 	             messages
-	Current Release: Version 1.1 Patch 47 (Sept. 22, 2004)
+	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008)
 *************************************************************** }
 
 unit Wsockc;
@@ -162,7 +162,7 @@ type
     procedure NetError(Action: string; ErrType: integer);
 function NetStart1(ForegroundM: boolean; Server: string; ListenerPort: integer; 
     var hSocket: integer): Integer; virtual;
-    function BuildPar1(hSocket: integer; api, RPCVer: string; const Parameters: 
+    function BuildPar1(hSocket: integer; api, RPCVer: string; const Parameters:
         TParams): String; virtual;
     property CountWidth: Integer read FCountWidth write FCountWidth;
     property IsBackwardsCompatible: Boolean read FIsBackwardsCompatible write 
@@ -176,6 +176,8 @@ function LPack(Str: String; NDigits: Integer): String;
 function SPack(Str: String): String;
 
 function NetBlockingHook: BOOL; export;
+// 080619 function to get socket port number
+function NewSocket(): Integer;
 
 var
   HookTimeOut: Integer;
@@ -1583,6 +1585,159 @@ begin
 
   Result := Prefix + tResult;  {return result}
 
+end;
+
+function NewSocket(): Integer;
+Var
+  WinSockData: TWSADATA;
+  LocalHost: TSockAddr;
+  LocalName, workstation: string;
+  upArrow, rAccept, rLost: string;
+  pLocalname: array [0..255] of char;
+  LocalPort, AddrLen, hSocketListen: integer;
+  HostBuf: PHostEnt;
+  lin: TLinger;
+  s_lin: array [0..3] of char absolute lin;
+  ChangeCursor: Boolean;
+  SocketError: Integer;
+  hSocket: Integer;
+begin
+    { -- initialize Windows Sockets API for this task }
+    if Screen.Cursor = crDefault then
+      ChangeCursor := True
+    else
+      ChangeCursor := False;
+    if ChangeCursor then
+      Screen.Cursor := crHourGlass;
+    upArrow := string('^');
+    rAccept := string('accept');
+    rLost := string('(connection lost)');
+
+    SocketError := WSAStartup(WINSOCK1_1, WinSockData);
+    If SocketError >0 Then
+            NetError( 'WSAStartup',0);
+
+    { -- set up a hook for blocking calls so there is no automatic DoEvents
+     in the background }
+    NetCallPending := False;
+//    if ForeGroundM = False then if WSASetBlockingHook(@NetBlockingHook) = nil
+//       then NetError('WSASetBlockingHook',0);
+
+    { -- establish HostEnt and Address structure for local machine}
+    SocketError := gethostname(pLocalName, 255); { -- name of local system}
+    If SocketError >0 Then
+       NetError ('gethostname (local)',0);
+    HostBuf := gethostbyname(pLocalName); { -- info for local name}
+    If HostBuf = nil Then
+       NetError( 'gethostbyname',0);
+    LocalHost.sin_addr.S_addr := longint(plongint(HostBuf^.h_addr_list^)^);
+    LocalName := inet_ntoa(LocalHost.sin_addr);
+    workstation := string(HostBuf.h_name);
+
+    { -- make connection to DHCP }
+    hSocket := socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+    If hSocket = INVALID_SOCKET Then
+            NetError( 'socket',0);
+
+    {establish local IP now that connection is done}
+{    AddrLen := SizeOf(LocalHost);
+    SocketError := getsockname(hSocket, LocalHost, AddrLen);
+    if SocketError = SOCKET_ERROR then
+       NetError ('getsockname',0);
+    LocalName := inet_ntoa(LocalHost.sin_addr);
+}
+//    { -- set up listening socket for DHCP return connect }
+    hSocketListen := socket(PF_INET, SOCK_STREAM, IPPROTO_TCP); // --  new socket
+    If hSocketListen = INVALID_SOCKET Then
+      NetError ('socket (listening)',0);
+
+    LocalHost.sin_family := PF_INET;            // -- internet address type
+    LocalHost.sin_port := 0;                    // -- local listening port
+    SocketError := bind(hSocketListen, LocalHost,
+                SizeOf(LocalHost)); // -- bind socket to address
+    If SocketError = SOCKET_ERROR Then
+      NetError( 'bind',0);
+
+    AddrLen := sizeof(LocalHost);
+    SocketError := getsockname(hSocketListen, LocalHost,
+                AddrLen);  // -- get listening port #
+    If SocketError = SOCKET_ERROR Then
+       NetError( 'getsockname',0);
+    LocalPort := ntohs(LocalHost.sin_port);    // -- put in proper byte order
+    NewSocket := LocalPort;
+{
+    SocketError := listen(hSocketListen, 1);   // -- put socket in listen mode
+    If SocketError = SOCKET_ERROR Then
+            NetError( 'listen',0);
+
+//         ShowMessage(t);  //TODO
+    end;
+  // remove debug mode from client
+
+    tmpPChar := NetCall(hSocket, PChar(y));                {eg 11-1-96}
+{    tmp := tmpPchar;
+    StrDispose(tmpPchar);
+    if CompareStr(tmp, rlost) = 0 then
+       begin
+            lin.l_onoff := 1;
+            lin.l_linger := 0;
+
+            SocketError := setsockopt(hSocket, SOL_SOCKET, SO_LINGER,
+                        s_lin, sizeof(lin));
+            If SocketError = SOCKET_ERROR Then
+               NetError( 'setsockopt (connect)',0);
+
+          closesocket(hSocket);
+          WSACleanup;
+          Result := 10002;
+          exit;
+       end;
+    r := CompareStr(tmp, rAccept);
+    If r <> 0 Then
+       NetError ('NetCall',XWB_M_REJECT);
+  // JLI 021217 remove disconnect and reconnect code -- use UCX connection directly.
+    lin.l_onoff := 1;
+    lin.l_linger := 0;
+
+    SocketError := setsockopt(hSocket, SOL_SOCKET, SO_LINGER,
+                s_lin, sizeof(lin));
+    If SocketError = SOCKET_ERROR Then
+       NetError( 'setsockopt (connect)',0);
+    SocketError := closesocket(hSocket);          // -- done with this socket
+    If SocketError > 0 Then
+            NetError( 'closesocket',0);
+
+    // -- wait for connect from DHCP and accept it - (uses blocking call)
+    AddrLen := SizeOf(DHCPHost);
+    hSocket := accept(hSocketListen, @DHCPHost, @AddrLen); // -- returns new socket
+    If hSocket = INVALID_SOCKET Then
+       begin
+            NetError( 'accept',0);
+       end;
+
+    lin.l_onoff := 1;
+    lin.l_linger := 0;
+
+    SocketError := setsockopt(hSocketListen, SOL_SOCKET, SO_LINGER,
+                s_lin, sizeof(lin));
+    If SocketError = SOCKET_ERROR Then
+       NetError( 'setsockopt (connect)',0);
+
+    SocketError := closesocket(hSocketListen);   // -- done with listen skt
+
+    If SocketError > 0 Then
+       begin
+            NetError ('closesocket (listening)',0);
+       end;
+             // JLI 12/17/02  end of section commented out
+
+    if ChangeCursor then
+      Screen.Cursor := crDefault;
+    NetStart1 := 0;
+{ -- connection established, socket handle now in:  hSocket
+        ifrmWinSock.txtStatus := 'socket obtained' *** }
+  if ChangeCursor then
+    Screen.Cursor := crDefault;
 end;
 
 end.

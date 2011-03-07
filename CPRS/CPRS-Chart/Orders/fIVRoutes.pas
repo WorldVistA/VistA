@@ -15,9 +15,11 @@ type
     btnCancel: TButton;
     procedure BtnOKClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
-   // procedure FormCreate(Sender: TObject);
+
   public
     { Public declarations }
   end;
@@ -38,7 +40,7 @@ begin
      frmIVRoutes := TfrmIVRoutes.Create(Application);
      ResizeFormToFont(TForm(frmIVRoutes));
      SetFormPosition(frmIVRoutes);
-     LoadAllIVRoutes(frmIVRoutes.cboAllIVRoutes.Items);
+     //LoadAllIVRoutes(frmIVRoutes.cboAllIVRoutes.Items);
      if frmIVRoutes.ShowModal = mrOK then
        begin
          idx := frmIVRoutes.cboAllIVRoutes.ItemIndex;
@@ -50,6 +52,7 @@ begin
          else Route := '';
          Result := True;
        end;
+     frmIVRoutes.Free;
 end;
 { TfrmIVRoutes }
 
@@ -69,9 +72,17 @@ begin
   modalResult := mrOK;
 end;
 
-//procedure TfrmIVRoutes.FormCreate(Sender: TObject);
-//begin
-//   LoadAllIVRoutes(cboAllIVRoutes.Items);
-//end;
+
+procedure TfrmIVRoutes.FormCreate(Sender: TObject);
+begin
+   frmIVRoutes := nil;
+   LoadAllIVRoutes(cboAllIVRoutes.Items);
+end;
+
+procedure TfrmIVRoutes.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  frmIVRoutes := nil;
+end;
 
 end.

@@ -2,19 +2,27 @@ unit rMisc;
 
 interface
 
-uses SysUtils, Windows, Classes, Forms, Controls, ComCtrls, Grids, ORFn, ORNet;
+uses SysUtils, Windows, Classes, Forms, Controls, ComCtrls, Grids, ORFn, ORNet,
+    Menus, Contnrs, StrUtils;
 
 const
   MAX_TOOLITEMS = 30;
 
 type
-  TToolItem = record
+  TToolMenuItem = class
+  public
     Caption: string;
+    Caption2: string;
     Action: string;
+    MenuID: string;
+    SubMenuID: string;
+    MenuItem: TMenuItem;
   end;
 
-  TToolItemList = array[0..MAX_TOOLITEMS] of TToolItem;
+var
+  uToolMenuItems: TObjectList = nil;
 
+type
   {An Object of this Class is Created to Hold the Sizes of Controls(Forms)
    while the app is running, thus reducing calls to RPCs SAVESIZ and LOADSIZ}
   TSizeHolder = class(TObject)
@@ -29,7 +37,7 @@ type
   end;
 
 function DetailPrimaryCare(const DFN: string): TStrings;  //*DFN*
-procedure GetToolMenu(var ToolItems: TToolItemList; var OverLimit: boolean);
+procedure GetToolMenu;
 procedure ListSymbolTable(Dest: TStrings);
 function MScalar(const x: string): string;
 procedure SetShareNode(const DFN: string; AHandle: HWND);  //*DFN*
@@ -44,10 +52,12 @@ procedure SetUserBounds(var AControl: TControl);
 procedure SetUserBounds2(AName: string; var v1, v2, v3, v4: integer);
 procedure SetUserWidths(var AControl: TControl);
 procedure SetUserColumns(var AControl: TControl);
+procedure SetUserString(StrName: string; var Str: string);
 function StrUserBounds(AControl: TControl): string;
 function StrUserBounds2(AName: string; v1, v2, v3, v4: integer): string;
 function StrUserWidth(AControl: TControl): string;
 function StrUserColumns(AControl: TControl): string;
+function StrUserString(StrName: string; Str: string): string;
 function UserFontSize: integer;
 procedure SaveUserFontSize( FontSize: integer);
 
@@ -67,25 +77,113 @@ begin
   Result := RPCBrokerV.Results;
 end;
 
-procedure GetToolMenu(var ToolItems: TToolItemList; var OverLimit: boolean);
+const
+  SUBMENU_KEY = 'SUBMENU';
+  SUBMENU_KEY_LEN = length(SUBMENU_KEY);  
+  SUB_LEFT = '[';
+  SUB_RIGHT = ']';
+  MORE_ID = 'MORE^';
+  MORE_NAME = 'More...';
+
+procedure GetToolMenu;
 var
-  i: Integer;
-  x: string;
-  LoopIndex: integer;
+  i, p, LastIdx, count, MenuCount: Integer;
+  id, x: string;
+  LastItem, item: TToolMenuItem;
+  caption, action: string;
+  CurrentMenuID: string;
+  MenuIDs: TStringList;
 begin
-  for i := 0 to MAX_TOOLITEMS do with ToolItems[i] do
-  begin
-    Caption := '';
-    Action := '';
-  end;
+  if not assigned(uToolMenuItems) then
+    uToolMenuItems := TObjectList.Create
+  else
+    uToolMenuItems.Clear;
   CallV('ORWU TOOLMENU', [nil]);
-  OverLimit := (MAX_TOOLITEMS < RPCBrokerV.Results.Count - 1);
-  LoopIndex := Min(MAX_TOOLITEMS, RPCBrokerV.Results.Count - 1);
-  with RPCBrokerV do for i := 0 to LoopIndex do with ToolItems[i] do
-  begin
-    x := Piece(Results[i], U, 1);
-    Caption := Piece(x, '=', 1);
-    Action := Copy(x, Pos('=', x) + 1, Length(x));
+  MenuIDs := TStringList.Create;
+  try
+    for i := 0 to RPCBrokerV.Results.Count - 1 do
+    begin
+      x := Piece(RPCBrokerV.Results[i], U, 1);
+      item := TToolMenuItem.Create;
+      Caption := Piece(x, '=', 1);
+      Action := Copy(x, Pos('=', x) + 1, Length(x));
+      item.Caption2 := Caption;
+      if UpperCase(copy(Action,1,SUBMENU_KEY_LEN)) = SUBMENU_KEY then
+      begin
+        id := UpperCase(Trim(Copy(Action, SUBMENU_KEY_LEN+1, MaxInt)));
+        if (LeftStr(id,1) = SUB_LEFT) and (RightStr(id,1) = SUB_RIGHT) then
+          id := copy(id, 2, length(id)-2);
+        item.MenuID := id;
+        Action := '';
+        if MenuIDs.IndexOf(item.MenuID) < 0 then
+          MenuIDs.Add(item.MenuID)
+        else
+        begin
+          item.SubMenuID := item.MenuID;
+          item.MenuID := '';
+        end;
+      end;
+      if RightStr(Caption, 1) = SUB_RIGHT then
+      begin
+        p := length(Caption) - 2;
+        while (p > 0) and (Caption[p] <> SUB_LEFT) do
+          dec(p);
+        if (p > 0) and (Caption[p] = SUB_LEFT) then
+        begin
+          item.SubMenuID := UpperCase(Trim(copy(Caption,p+1, length(Caption)-1-p)));
+          Caption := copy(Caption,1,p-1);
+        end;
+      end;
+      item.Caption := Caption;
+      item.Action := Action;
+      uToolMenuItems.add(item);
+    end;
+    // see if all child menu items have parents
+    for I := 0 to uToolMenuItems.Count - 1 do
+    begin
+      item := TToolMenuItem(uToolMenuItems[i]);
+      if MenuIDs.IndexOf(item.SubMenuID) < 0 then
+      begin
+        item.SubMenuID := '';
+        item.Caption := item.Caption2;
+      end;
+    end;
+
+    // see if there are more than MAX_TOOLITEMS in the root menu
+    // if there are, add automatic sub menus
+    LastIdx := (MAX_TOOLITEMS - 1);
+    count := 0;
+    CurrentMenuID := '';
+    i := 0;
+    LastItem := nil;
+    MenuCount := 0;
+    repeat
+      item := TToolMenuItem(uToolMenuItems[i]);
+      if item.SubMenuID = '' then
+      begin
+        item.SubMenuID := CurrentMenuID;
+        inc(count);
+        if Count > MAX_TOOLITEMS then
+        begin
+          item.SubMenuID := '';
+          inc(MenuCount);
+          item := TToolMenuItem.Create;
+          item.Caption := MORE_NAME;
+          item.MenuID := MORE_ID + IntToStr(MenuCount);
+          item.SubMenuID := CurrentMenuID;
+          CurrentMenuID := item.MenuID;
+          LastItem.SubMenuID := CurrentMenuID;
+          uToolMenuItems.Insert(LastIdx, item);
+          inc(LastIdx,MAX_TOOLITEMS);
+          Count := 1;
+        end;
+        LastItem := item;
+      end;
+      inc(i);
+    until i >= uToolMenuItems.Count;
+
+  finally
+    MenuIDs.Free;
   end;
 end;
 
@@ -250,16 +348,26 @@ begin
   if AControl is TCustomGrid then {nothing for now};
 end;
 
+procedure SetUserString(StrName: string; var Str: string);
+begin
+  Str := uColumns.Values[StrName];
+end;
+
 procedure SaveUserBounds(AControl: TControl);
 var
   x: string;
+  NewHeight: integer;
 begin
   if (AControl is TForm) and (TForm(AControl).WindowState = wsMaximized) then
     x := '0,0,0,0'
   else
     with AControl do
-      x := IntToStr(Left) + ',' + IntToStr(Top) + ',' +
-           IntToStr(Width) + ',' + IntToStr(Height);
+      begin
+        //Done to remove the adjustment for Window XP style before saving the form size
+        NewHeight := Height - (GetSystemMetrics(SM_CYCAPTION) - 19);
+        x := IntToStr(Left) + ',' + IntToStr(Top) + ',' +
+           IntToStr(Width) + ',' + IntToStr(NewHeight);
+      end;
 //  CallV('ORWCH SAVESIZ', [AControl.Name, x]);
   SizeHolder.SetSize(AControl.Name, x);
 end;
@@ -347,6 +455,11 @@ begin
   if CharAt(Result, Length(Result)) = ',' then Result := Copy(Result, 1, Length(Result) - 1);
 end;
 
+function StrUserString(StrName: string; Str: string): string;
+begin
+  Result := 'C' + U + StrName + U + Str;
+end;
+
 { TSizeHolder }
 
 procedure TSizeHolder.AddSizesToStrList(theList: TStringList);
@@ -354,12 +467,8 @@ procedure TSizeHolder.AddSizesToStrList(theList: TStringList);
 var
   i: integer;
 begin
-  for i := 0 to FNameList.Count-1 do begin
-    if Piece(FNameList[i],U,1) = 'C' then
-      theList.Add(FNameList[i] + U + FSizeList[i])
-    else
-      theList.Add('B' + U + FNameList[i] + U + FSizeList[i]);
-  end;
+  for i := 0 to FNameList.Count-1 do
+    theList.Add('B' + U + FNameList[i] + U + FSizeList[i]);
 end;
 
 constructor TSizeHolder.Create;
@@ -398,10 +507,6 @@ begin
   end
   else //Currently is in the NameList
     rSizeVal := FSizeList[nameIndex];
-  if (rSizeVal = '') and (Piece(AName,U,1) = 'C') then begin
-    if not Assigned(uColumns) then LoadSizes;
-    rSizeVal := uColumns.Values[Piece(AName,U,2)];
-  end;
   result := rSizeVal;
 end;
 
@@ -429,5 +534,7 @@ finalization
   if uBounds  <> nil then uBounds.Free;
   if uWidths  <> nil then uWidths.Free;
   if uColumns <> nil then uColumns.Free;
+  if assigned(uToolMenuItems) then
+    FreeAndNil(uToolMenuItems);
 
 end.

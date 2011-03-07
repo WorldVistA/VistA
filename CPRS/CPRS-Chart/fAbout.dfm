@@ -1,6 +1,6 @@
 inherited frmAbout: TfrmAbout
-  Left = 61
-  Top = 137
+  Left = 346
+  Top = 50
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'About CPRS'
@@ -8,10 +8,8 @@ inherited frmAbout: TfrmAbout
   ClientWidth = 337
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitLeft = 61
-  ExplicitTop = 137
-  ExplicitWidth = 345
-  ExplicitHeight = 521
+  ExplicitWidth = 343
+  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 13
   object bvlBottom: TBevel [0]
@@ -81,7 +79,6 @@ inherited frmAbout: TfrmAbout
     Lines.Strings = (
       'lblLegalCopyright')
     ReadOnly = True
-    ScrollBars = ssVertical
     TabOrder = 9
   end
   object lblFileDescription: TStaticText [8]
@@ -1668,23 +1665,23 @@ inherited frmAbout: TfrmAbout
   end
   object lbl508Notice: TMemo [13]
     Left = 8
-    Top = 341
+    Top = 342
     Width = 327
     Height = 118
     BorderStyle = bsNone
     Color = clBtnFace
     Lines.Strings = (
-      'VHA'#39's Office of Information, System Design & Development staff '
-      'have made every effort during the design, development and '
+      'Veteran'#39's Administration OI&T Office of Enterprise Development '
+      'staff have made every effort during the design, development and '
       
         'testing of this application to ensure full accessibility to all ' +
         'users in '
-      'compliance with Section 508 of the Rehabilitation Act of 1973, '
-      'as amended.  Please send any comments, questions or concerns '
-      'regarding the accessibility of this application to '
-      'EMAIL ADDRESS:vhaoihdisection508@va.gov')
+      
+        'compliance with Section 508 of the Rehabilitation Action of 1973' +
+        ', '
+      'as amended.  If any issues are encountered while running this '
+      'application, please contact your local help desk for support.')
     ReadOnly = True
-    ScrollBars = ssVertical
     TabOrder = 10
     WantReturns = False
   end

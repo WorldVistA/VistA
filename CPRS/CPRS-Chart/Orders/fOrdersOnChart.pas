@@ -92,15 +92,18 @@ begin
           uCore.TempEncounterLoc := 0;
           uCore.TempEncounterLocName := '';
 
+      //CQ #15813 Modired code to look for error string mentioned in CQ and change strings to conts - JCS
         with SignList do if Count > 0 then for i := 0 to Count - 1 do
           begin
             if Pos('E', Piece(SignList[i], U, 2)) > 0 then
               begin
                 OrderText := FindOrderText(Piece(SignList[i], U, 1));
-                if Piece(SignList[i],U,4) = 'Invalid Pharmacy order number' then
+                if Piece(SignList[i],U,4) = TX_SAVERR_PHARM_ORD_NUM_SEARCH_STRING then
                 InfoBox(TX_SAVERR1 + Piece(SignList[i], U, 4) + TX_SAVERR2 + OrderText + CRLF + CRLF +
-                        'The changes to this order have not been saved.  You must contact Pharmacy to complete any action on this order.',
-                        TC_SAVERR, MB_OK)
+                        TX_SAVERR_PHARM_ORD_NUM, TC_SAVERR, MB_OK)
+                else if Piece(SignList[i],U,4) = TX_SAVERR_IMAGING_PROC_SEARCH_STRING then
+                InfoBox(TX_SAVERR1 + Piece(SignList[i], U, 4) + TX_SAVERR2 + OrderText + CRLF + CRLF +
+                        TX_SAVERR_IMAGING_PROC, TC_SAVERR, MB_OK)
                 else
                 InfoBox(TX_SAVERR1 + Piece(SignList[i], U, 4) + TX_SAVERR2 + OrderText,
                         TC_SAVERR, MB_OK);

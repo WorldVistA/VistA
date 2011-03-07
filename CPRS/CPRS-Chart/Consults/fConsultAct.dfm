@@ -3,30 +3,34 @@ inherited frmConsultAction: TfrmConsultAction
   Top = 217
   BorderIcons = []
   Caption = 'frmConsultAction'
-  ClientHeight = 379
+  ClientHeight = 429
   ClientWidth = 592
   Constraints.MinHeight = 406
   Constraints.MinWidth = 600
   OldCreateOrder = True
   Position = poScreenCenter
+  ExplicitWidth = 600
+  ExplicitHeight = 456
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TPanel [0]
     Left = 0
     Top = 0
     Width = 592
-    Height = 379
+    Height = 429
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitHeight = 379
     object pnlForward: TPanel
       Left = 0
       Top = 0
       Width = 224
-      Height = 379
+      Height = 429
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitHeight = 379
       object lblToService: TOROffsetLabel
         Left = 2
         Top = 0
@@ -169,10 +173,11 @@ inherited frmConsultAction: TfrmConsultAction
       Left = 224
       Top = 0
       Width = 368
-      Height = 379
+      Height = 429
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitHeight = 379
       object pnlSigFind: TPanel
         Left = 0
         Top = 0
@@ -201,11 +206,12 @@ inherited frmConsultAction: TfrmConsultAction
         Left = 0
         Top = 57
         Width = 368
-        Height = 224
+        Height = 274
         Align = alClient
         Alignment = taLeftJustify
         BevelOuter = bvNone
         TabOrder = 1
+        ExplicitHeight = 224
         object lblComments: TOROffsetLabel
           Left = 0
           Top = 0
@@ -222,7 +228,7 @@ inherited frmConsultAction: TfrmConsultAction
           Left = 0
           Top = 19
           Width = 368
-          Height = 170
+          Height = 220
           Align = alClient
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
@@ -233,15 +239,17 @@ inherited frmConsultAction: TfrmConsultAction
           ScrollBars = ssVertical
           TabOrder = 0
           Caption = 'Comments'
+          ExplicitHeight = 170
         end
         object pnlAlert: TPanel
           Left = 0
-          Top = 189
+          Top = 239
           Width = 368
           Height = 35
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitTop = 189
           object lblAutoAlerts: TStaticText
             Left = 6
             Top = 1
@@ -262,12 +270,13 @@ inherited frmConsultAction: TfrmConsultAction
       end
       object pnlAllActions: TPanel
         Left = 0
-        Top = 281
+        Top = 331
         Width = 368
         Height = 98
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 2
+        ExplicitTop = 281
         DesignSize = (
           368
           98)

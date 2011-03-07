@@ -152,11 +152,15 @@ function TfrmConsultAction.SetupForward(IsProcedure: boolean; ProcIEN: integer):
 var
   i: integer;
   OrdItmIEN: integer;
+  attention: string;                                                              //wat cq 15561
+  AList: TStringList;                                                             {WAT cq 19626}
 begin
  pnlSigFind.Visible := False;
  with frmConsultAction do Height := Height - pnlSigFind.Height;
  pnlComments.Visible := True;
  memComments.Clear;
+ AList := TStringList.Create;
+try                                                                               {WAT cq 19626}
  if IsProcedure then
    begin
      OrdItmIEN := GetOrderableIEN(IntToStr(ConsultRec.ORFileNumber));
@@ -182,7 +186,9 @@ begin
    end
  else
    begin
-     SortByPiece(TStringList(SvcList), U, 2);                                   {RV}
+     FastAssign(SvcList, AList);                                                  {WAT cq 19626}
+     SortByPiece(AList, U, 2);                                                    {WAT cq 19626}
+     //SortByPiece(TStringList(SvcList), U, 2);                                   {RV}
      for i := 0 to SvcList.Count - 1 do
         if (cboService.Items.IndexOf(Trim(Piece(SvcList.Strings[i], U, 2))) = -1) and   {RV}
           (Piece(SvcList.Strings[i], U, 5) <> '1') then
@@ -199,11 +205,17 @@ begin
                Selected := Items[0] ;
              end ;
        end;
-     pnlForward.Visible := True ;        
+     pnlForward.Visible := True ;
    end ;
  if cboService.Items.Count = 1 then cboService.ItemIndex := 0;
  FToService := cboService.ItemIEN;
- cboAttentionOf.InitLongList('') ;
+ //wat cq 15561
+ //cboAttentionOf.InitLongList('') ;
+ FAttentionOf := ConsultRec.Attention;
+ attention := ExternalName(FAttentionOf,200);
+ cboAttentionOf.InitLongList(attention);
+ cboAttentionOf.SelectByIEN(FAttentionOf);
+ //end cq 15561
  with cboUrgency do
   begin
     FastAssign(SubsetofUrgencies(ConsultRec.IEN), cboUrgency.Items) ;
@@ -223,10 +235,13 @@ begin
   cboPerson.Caption := lblActionBy.Caption;
   cboPerson.OnNeedData := NewPersonNeedData;         //
   cboPerson.InitLongList(User.Name)  ;
-  cboPerson.SelectByIEN(User.DUZ);        
+  cboPerson.SelectByIEN(User.DUZ);
   ckAlert.Visible := False ;
   lblAutoAlerts.Visible := False;
   Result := True;
+finally
+  AList.Free;                                                                      {WAT cq 19626}
+end;
 end;
 
 procedure TfrmConsultAction.SetupAddComment;
@@ -600,30 +615,30 @@ var
   x: string;
 begin
   case FUserLevel of
-    UL_NONE, UL_REVIEW:
-      begin
-        if FUserIsRequester then
-          x := TX_ALERT1 + TX_ALERT_SVC_USERS
-        else
-          x := TX_ALERT1 + TX_ALERT_PROVIDER + ' and to ' + TX_ALERT_SVC_USERS;
-      end;
-    UL_UPDATE, UL_ADMIN, UL_UPDATE_AND_ADMIN:
-      begin
-        if FUserIsRequester then
-          //x := TX_ALERT_NOBODY   Replace with following line
-          x := TX_ALERT1 + TX_ALERT_SVC_USERS
-        else
-          x := TX_ALERT1 + TX_ALERT_PROVIDER + '.';
-      end;
-    UL_UNRESTRICTED:
-      begin
-        if FUserIsRequester then
-          x := TX_ALERT1 + TX_ALERT_SVC_USERS
-        else
-          x := TX_ALERT1 + TX_ALERT_PROVIDER + ' and to ' + TX_ALERT_SVC_USERS;
-      end;
-  end;
-  lblAutoAlerts.Caption := x;
+     UL_NONE, UL_REVIEW:
+       begin
+         if FUserIsRequester then
+           x := TX_ALERT1 + TX_ALERT_SVC_USERS
+         else
+           x := TX_ALERT1 + TX_ALERT_PROVIDER + ' and to ' + TX_ALERT_SVC_USERS;
+       end;
+     UL_UPDATE, UL_ADMIN, UL_UPDATE_AND_ADMIN:
+       begin
+         if FUserIsRequester then
+           //x := TX_ALERT_NOBODY   Replace with following line
+            x := TX_ALERT1 + TX_ALERT_SVC_USERS
+         else
+           x := TX_ALERT1 + TX_ALERT_PROVIDER + '.';
+       end;
+     UL_UNRESTRICTED:
+       begin
+         if FUserIsRequester then
+           x := TX_ALERT1 + TX_ALERT_SVC_USERS
+         else
+           x := TX_ALERT1 + TX_ALERT_PROVIDER + ' and to ' + TX_ALERT_SVC_USERS;
+       end;
+   end;
+   lblAutoAlerts.Caption := x;
 end;
 
 

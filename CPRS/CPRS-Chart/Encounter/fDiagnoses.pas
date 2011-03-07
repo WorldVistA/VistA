@@ -24,7 +24,8 @@ type
       Rect: TRect; State: TOwnerDrawState);
   private
     procedure EnsurePrimaryDiag;
-
+    function isProblem(diagnosis: TPCEDiag): Boolean;
+    function isEncounterDx(problem: string): Boolean;
   protected
     procedure UpdateNewItemStr(var x: string); override;
     procedure UpdateControls; override;
@@ -37,6 +38,9 @@ const
                      'Before you can select this problem, you must update the ICD code it contains' + #13#10 +
                      'via the Problems tab.';
   TC_INACTIVE_CODE = 'Problem Contains Inactive Code';
+  TX_REDUNDANT_DX  = 'The problem that you''ve selected is already included in the list of diagnoses' + #13#10 +
+                     'for this encounter. No need to select it again...';
+  TC_REDUNDANT_DX  = 'Redundant Diagnosis: ';
 
 var
   frmDiagnoses: TfrmDiagnoses;
@@ -64,8 +68,8 @@ begin
 
     if not Primary and (Items.Count > 0) then
     begin
-      GridIndex := 0;
-      TPCEDiag(Items.Objects[0]).Primary := True;
+      GridIndex := Items.Count - 1;//0; vhaispbellc CQ 15836
+      TPCEDiag(Items.Objects[Items.Count - 1]).Primary := True;
       GridChanged;
     end;
   end;
@@ -100,6 +104,7 @@ begin
     for i := 0 to lbGrid.Items.Count-1 do
       if(lbGrid.Selected[i]) then
         TPCEDiag(lbGrid.Items.Objects[i]).AddProb := (ckbDiagProb.Checked) and
+                                                     (not isProblem(TPCEDiag(lbGrid.Items.Objects[i]))) and
                                                      (TPCEDiag(lbGrid.Items.Objects[i]).Category <> PL_ITEMS);
     GridChanged;
   end;
@@ -131,6 +136,81 @@ begin
     x := x + U + '0';
 end;
 
+function TfrmDiagnoses.isProblem(diagnosis: TPCEDiag): Boolean;
+var
+  i: integer;
+  p, code, narr, sct: String;
+begin
+  result := false;
+  for i := 0 to FProblems.Count - 1 do
+  begin
+    p := FProblems[i];
+    code := piece(p, '^', 1);
+    narr := piece(p, '^', 2);
+    if (pos('SCT', narr) > 0) or (pos('SNOMED', narr) > 0) then
+      sct := piece(piece(piece(narr, ')', 1), '(', 2), ' ', 2)
+    else
+      sct := '';
+    narr := TrimRight(piece(narr, '(',1));
+    if pos(diagnosis.Code, code) > 0 then
+    begin
+      result := true;
+      break;
+    end
+    else if (sct <> '') and (pos(sct, diagnosis.Narrative) > 0) then
+    begin
+      result := true;
+      break;
+    end
+    else if pos(narr, diagnosis.Narrative) > 0 then
+    begin
+      result := true;
+      break;
+    end;
+  end;
+end;
+
+function TfrmDiagnoses.isEncounterDx(problem: string): Boolean;
+var
+  i: integer;
+  dx, code, narr, pCode, pNarrative, sct: String;
+
+function getSCT(narr: string): string;
+begin
+  if (pos('SNOMED CT ', narr) > 0) then
+    result := copy(narr, pos('SNOMED CT ', narr) + 10, length(narr))
+  else
+    result := '';
+end;
+
+begin
+  result := false;
+  pCode := piece(problem, U, 1);
+  pNarrative := piece(problem, U, 2);
+  for i := 0 to lbGrid.Items.Count - 1 do
+  begin
+    dx := lbGrid.Items[i];
+    narr := piece(dx, U, 3);
+    code := piece(piece(copy(narr, pos('ICD-9-CM', narr), length(narr)), ' ', 2), ')', 1);
+    sct := getSCT(piece(narr, ':', 1));
+    if pos(pCode, narr) > 0 then
+    begin
+      result := true;
+      break;
+    end
+    else if (sct <> '') and (pos(sct, pNarrative) > 0) then
+    begin
+      result := true;
+      break;
+    end
+    else if pos(narr, pNarrative) > 0 then
+    begin
+      result := true;
+      break;
+    end;
+  end;
+end;
+
 procedure TfrmDiagnoses.UpdateControls;
 var
   i, j, k, PLItemCount: integer;
@@ -148,8 +228,13 @@ begin
       PLItemCount := 0;
       if OK then
         for k := 0 to lbGrid.Items.Count - 1 do
-          if (lbGrid.Selected[k]) and (TPCEDiag(lbGrid.Items.Objects[k]).Category = PL_ITEMS) then
-            PLItemCount := PLItemCount + 1;
+        begin
+          if (lbGrid.Selected[k]) then
+          begin
+            if (TPCEDiag(lbGrid.Items.Objects[k]).Category = PL_ITEMS) or isProblem(TPCEDiag(lbGrid.Items.Objects[k])) then
+              PLItemCount := PLItemCount + 1;
+          end;
+        end;
       OK := OK and (PLItemCount < lbGrid.SelCount);
       ckbDiagProb.Enabled := OK;
       if(OK) then
@@ -179,8 +264,7 @@ end;
 procedure TfrmDiagnoses.FormResize(Sender: TObject);
 begin
   inherited;
-  if lbxSection.width = 0 then Exit;
-  FSectionTabs[0] := -(lbxSection.width - LBCheckWidthSpace - (8*MainFontWidth) - ScrollBarWidth);
+  FSectionTabs[0] := -(lbxSection.width - LBCheckWidthSpace - (10 * MainFontWidth) - ScrollBarWidth);
   FSectionTabs[1] := -FSectionTabs[0]+2;
   FSectionTabs[2] := -FSectionTabs[0]+4;
   UpdateTabPos;
@@ -189,13 +273,22 @@ end;
 procedure TfrmDiagnoses.lbxSectionClickCheck(Sender: TObject;
   Index: Integer);
 begin
-  if not FUpdatingGrid then
-    if (lbxSection.Checked[Index]) and (Piece(lbxSection.Items[Index], U, 5) = '#') then
-      begin
-        InfoBox(TX_INACTIVE_CODE, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
-        lbxSection.Checked[Index] := False;
-        exit;
-      end;
+  if (not FUpdatingGrid) and (lbxSection.Checked[Index]) then
+  begin
+    if (Piece(lbxSection.Items[Index], U, 5) = '#') then
+    begin
+      InfoBox(TX_INACTIVE_CODE, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
+      lbxSection.Checked[Index] := False;
+      exit;
+    end
+    else if isEncounterDx(lbxSection.Items[Index]) then
+    begin
+      InfoBox(TX_REDUNDANT_DX, TC_REDUNDANT_DX + piece(lbxSection.Items[Index], '^',2),
+        MB_ICONWARNING or MB_OK);
+      lbxSection.Checked[Index] := False;
+      exit;
+    end;
+  end;
   inherited;
   EnsurePrimaryDiag;
 end;
@@ -219,7 +312,7 @@ var
   dxCode, dxName: string;
   ADiagnosis: TPCEItem;
 begin
-   inherited;
+  inherited;
   UBAGlobals.BAPCEDiagList.Clear;
   with lbGrid do for i := 0 to Items.Count - 1 do
   begin

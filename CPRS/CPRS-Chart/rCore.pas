@@ -77,6 +77,7 @@ type
     PrimaryTeam: string;
     PrimaryProvider: string;
     Attending: string;
+    Associate: string;
   end;
 
   TEncounterText = record                         // record for ORWPT ENCTITL
@@ -146,7 +147,7 @@ procedure ListWardAll(Dest: TStrings);
 procedure ListProviderTop(Dest: TStrings);
 function SubSetOfProviders(const StartFrom: string; Direction: Integer): TStrings;
 function SubSetOfCosigners(const StartFrom: string; Direction: Integer; Date: TFMDateTime;
-  ADocType: integer; ATitle: integer): TStrings;
+  ATitle: integer; ADocType: integer): TStrings;
 procedure ListClinicTop(Dest: TStrings);
 function SubSetOfClinics(const StartFrom: string; Direction: Integer): TStrings;
 function GetDfltSort: string;
@@ -605,13 +606,13 @@ begin
 end;
 
 function SubSetOfCosigners(const StartFrom: string; Direction: Integer; Date: TFMDateTime;
-  ADocType: integer; ATitle: integer): TStrings;
+  ATitle: integer; ADocType: integer): TStrings;
 { returns a pointer to a list of cosigners (for use in a long list box) -  The return value is
   a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
 begin
   if ATitle > 0 then ADocType := 0;
-  // CQ #17218 - Correcting order of parameters for this call
-  //  CallV('ORWU2 COSIGNER', [StartFrom, Direction, Date, ATitle, ADocType]);
+  // CQ #17218 - Correcting order of parameters for this call - jcs
+  //CallV('ORWU2 COSIGNER', [StartFrom, Direction, Date, ATitle, ADocType]);
   CallV('ORWU2 COSIGNER', [StartFrom, Direction, Date, ADocType, ATitle]);
 
   //  MixedCaseList(RPCBrokerV.Results);
@@ -1113,6 +1114,7 @@ begin
     if Length(Location) > 0 then
       begin
         Attending := Piece(x, U, 3);
+        Associate := Piece(x, U, 4);
         x := sCallV('ORWPT INPLOC', [DFN]);
         WardService := Piece(x, U, 3);
       end;

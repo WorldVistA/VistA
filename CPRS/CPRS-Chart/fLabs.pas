@@ -1,6 +1,6 @@
 unit fLabs;
 
-interface
+interface                                     
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
@@ -21,11 +21,6 @@ type
   end;
 
   TfrmLabs = class(TfrmHSplit)
-    PopupMenu1: TPopupMenu;
-    GotoTop1: TMenuItem;
-    GotoBottom1: TMenuItem;
-    FreezeText1: TMenuItem;
-    UnfreezeText1: TMenuItem;
     popChart: TPopupMenu;
     popValues: TMenuItem;
     pop3D: TMenuItem;
@@ -60,18 +55,12 @@ type
     chkGraphValues: TCheckBox;
     chkGraphZoom: TCheckBox;
     pnlButtons: TORAutoPanel;
-    lblOld: TOROffsetLabel;
-    lblPrev: TOROffsetLabel;
-    lblNext: TOROffsetLabel;
-    lblRecent: TOROffsetLabel;
     lblMostRecent: TLabel;
-    lblCollection: TLabel;
     lblDate: TVA508StaticText;
     cmdNext: TButton;
     cmdPrev: TButton;
     cmdRecent: TButton;
     cmdOld: TButton;
-    TabControl1: TTabControl;
     grdLab: TCaptionStringGrid;
     pnlChart: TPanel;
     lblGraph: TLabel;
@@ -81,8 +70,6 @@ type
     serLow: TLineSeries;
     serTest: TLineSeries;
     pnlRightTopHeader: TPanel;
-    lblHeading: TOROffsetLabel;
-    lblTitle: TOROffsetLabel;
     PopupMenu2: TPopupMenu;
     Print1: TMenuItem;
     Copy1: TMenuItem;
@@ -91,10 +78,10 @@ type
     Print2: TMenuItem;
     Copy2: TMenuItem;
     SelectAll2: TMenuItem;
-    MenuItem1: TMenuItem;
-    MenuItem2: TMenuItem;
-    MenuItem3: TMenuItem;
-    MenuItem4: TMenuItem;
+    GoToTop1: TMenuItem;
+    GoToBottom1: TMenuItem;
+    FreezeText1: TMenuItem;
+    UnFreezeText1: TMenuItem;
     sptHorzRight: TSplitter;
     pnlFooter: TORAutoPanel;
     lblSpecimen: TLabel;
@@ -116,7 +103,14 @@ type
     pnlOtherTests: TORAutoPanel;
     bvlOtherTests: TBevel;
     cmdOtherTests: TButton;
+    TabControl1: TTabControl;
+    pnlRightTopHeaderTop: TPanel;
+    lblHeading: TOROffsetLabel;
     chkMaxFreq: TCheckBox;
+    lblTitle: TOROffsetLabel;
+    Label1: TLabel;
+    lblSample: TLabel;
+    Label2: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure DisplayHeading(aRanges: string);
     //procedure lstReportsClick(Sender: TObject);
@@ -142,7 +136,6 @@ type
     procedure GotoBottom1Click(Sender: TObject);
     procedure FreezeText1Click(Sender: TObject);
     procedure UnfreezeText1Click(Sender: TObject);
-    procedure PopupMenu1Popup(Sender: TObject);
     procedure chkZoomClick(Sender: TObject);
     procedure chtChartUndoZoom(Sender: TObject);
     procedure popCopyClick(Sender: TObject);
@@ -197,7 +190,8 @@ type
       var Accept: Boolean);
     procedure SelectAll2Click(Sender: TObject);
     procedure chkMaxFreqClick(Sender: TObject);
-    procedure sptHorzRightMoved(Sender: TObject);
+    procedure PopupMenu3Popup(Sender: TObject);
+    procedure grdLabTopLeftChanged(Sender: TObject);
   private
     { Private declarations }
     SortIdx1, SortIdx2, SortIdx3: Integer;
@@ -218,6 +212,7 @@ type
     procedure GoRemoteOld(Dest: TStringList; AItem, AReportID: Int64; AQualifier, ARpc, AHSType, ADaysBack, ASection: string; ADate1, ADate2: TFMDateTime);
     procedure GoRemote(Dest: TStringList; AItem: string; AQualifier, ARpc: string; AHSTag: string; AHDR: string; aFHIE: string);
     procedure ShowTabControl;
+    procedure HideTabControl;
     procedure ChkBrowser;
     procedure CommonComponentVisible(A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12: Boolean);
   public
@@ -234,13 +229,12 @@ end;
 var
   frmLabs: TfrmLabs;
   uFormat: integer;
-  uPrevReportNode: TTreeNode;  
+  uPrevReportNode: TTreeNode;
   uDate1, uDate2: Tdatetime;
   tmpGrid: TStringList;
   uLabLocalReportData: TStringList;  //Storage for Local report data
   uLabRemoteReportData: TStringList; //Storage for Remote lab query
   uUpdateStat: boolean;              //flag turned on when remote status is being updated
-  uScreenSplitMoved: boolean;        //set if user moves the sptHorzRight Bar
   uScreenSplitLoc: Integer;          //location of user changed split - sptHorzRight Bar
   uTreeStrings: TStrings;
   uReportInstruction: String;        //User Instructions
@@ -401,9 +395,9 @@ var
   aList: TStrings;
 begin
   inherited;
+  LabRowObjects := TLabRowObject.Create;
   PageID := CT_LABS;
   uFrozen := False;
-  uScreenSplitMoved := False;
   aList := TStringList.Create;
   FastAssign(rpcGetGraphSettings, aList);
   uGraphingActivated := aList.Count > 0;
@@ -420,7 +414,7 @@ begin
   uRemoteReportData := TStringList.Create;
   uPrevReportNode := tvReports.Items.GetFirstNode;
   tvReports.Selected := uPrevReportNode;
-  if Patient.Inpatient then lstDates.ItemIndex := 2 else lstDates.ItemIndex := 5;
+  if Patient.Inpatient then lstDates.ItemIndex := 2 else lstDates.ItemIndex := 4;
   lblSingleTest.Caption := '';
   lblSpecimen.Caption := '';
   SerTest.GetHorizAxis.ExactDateTime := true;
@@ -486,7 +480,7 @@ begin
   uLabLocalReportData.Clear;
   uLabRemoteReportData.Clear;
   TabControl1.Tabs.Clear;
-  TabControl1.Visible := false;
+  HideTabControl;
   tmpGrid.Clear;
   lvReports.SmallImages := uEmptyImageList;
   uLocalReportData.Clear;
@@ -502,6 +496,10 @@ end;
 procedure TfrmLabs.DisplayPage;
 var
   i: integer;
+  {OrigSelection: integer;
+  OrigDateIEN: Int64;
+  OrigDateItemID: Variant;
+  OrigReportCat: TTreeNode; }
 begin
   inherited DisplayPage;
   frmFrame.mnuFilePrint.Tag := CT_LABS;
@@ -528,7 +526,7 @@ begin
   if InitPatient and not (CallingContext = CC_NOTIFICATION) then
   begin
     uColChange := '';
-    if Patient.Inpatient then lstDates.ItemIndex := 2 else lstDates.ItemIndex := 5;
+    if Patient.Inpatient then lstDates.ItemIndex := 2 else lstDates.ItemIndex := 4;
     tvReports.Selected := tvReports.Items.GetFirstNode;
     tvReportsClick(self);
   end;
@@ -564,7 +562,7 @@ begin
   case CallingContext of
     CC_INIT_PATIENT:  if not InitPatient then
       begin
-        if Patient.Inpatient then lstDates.ItemIndex := 2 else lstDates.ItemIndex := 5;
+        if Patient.Inpatient then lstDates.ItemIndex := 2 else lstDates.ItemIndex := 4;
         tvReports.Selected := tvReports.Items.GetFirstNode;
         tvReportsClick(self);
         lvReports.SmallImages := uEmptyImageList;
@@ -583,6 +581,52 @@ begin
             end;
       end;
     CC_NOTIFICATION:  ProcessNotifications;
+
+    //This corrects the reload of the labs when switching back to the tab.
+    {This code was causing the processing of Lab notifications to display
+     the wrong set of labs for a given notification the 1st notification
+     after selecting/switching patients.  Upon checking the problem that
+     this code was trying to solve, we found that the problem no longer
+     exists, which may be a result of subsequent changes for similar
+     issues found during development/testing of V28 (CQ 18267, 18268)
+     CC_CLICK: if not InitPatient then
+      begin
+        //Clear our local variables
+        OrigReportCat := nil;
+        OrigDateIEN := -1;
+        OrigSelection := -1;
+        OrigDateItemID := '';
+
+        //What was last selected before they switched tabs.
+        if tvReports.Selected <> nil then OrigReportCat := tvReports.Selected;
+        if lstDates.ItemIEN > 0 then OrigDateIEN := lstDates.ItemIEN;
+        if lvReports.Selected <> nil then OrigSelection := lvReports.Selected.Index;
+        if lstQualifier.ItemID <> '' then OrigDateItemID := lstQualifier.ItemID;
+
+        //Load the tree and select the last selected
+        if OrigReportCat <> nil then begin
+         tvReports.Select(OrigReportCat);
+         tvReportsClick(self);
+        end;
+
+        //Did they click on a date (lstDates box)
+        if OrigDateIEN > -1 then begin
+          lstDates.SelectByIEN(OrigDateIEN);
+          lstDatesClick(self);
+        end;
+
+        //Did they click on a date (lstQualifier)
+        if OrigDateItemID <> '' then begin
+          lstQualifier.SelectByID(OrigDateItemID);
+          lstQualifierClick(self);
+        end;
+
+        //Did they click on a lab
+        if OrigSelection > -1 then begin
+         lvReports.Selected := lvReports.Items[OrigSelection];
+         lvReportsSelectItem(self, lvReports.Selected, true);
+        end;
+      end; }
   end;
 end;
 
@@ -688,7 +732,7 @@ begin
                                     ListItem.SubItems.Add(y);
                                   end;
                               end;
-                            RowObjects.Add(aSite, IntToStr(aCurRow) + ':' + IntToStr(aCurCol), uColumns.Strings[aCurCol], aTmpAray);
+                            LabRowObjects.Add(aSite, IntToStr(aCurRow) + ':' + IntToStr(aCurCol), uColumns.Strings[aCurCol], aTmpAray);
                             aTmpAray.Clear;
                           end;
                         aColCtr := 0;
@@ -733,7 +777,7 @@ begin
                               c := c + '...';
                             ListItem.SubItems.Add(c);
                           end;
-                        RowObjects.Add(aSite, IntToStr(aCurRow) + ':' + IntToStr(aCurCol), uColumns.Strings[aCurCol], aTmpAray);
+                        LabRowObjects.Add(aSite, IntToStr(aCurRow) + ':' + IntToStr(aCurCol), uColumns.Strings[aCurCol], aTmpAray);
                         aTmpAray.Clear;
                       end;
                     aCurCol := aColID;
@@ -769,7 +813,7 @@ begin
                           c := c + '...';
                         ListItem.SubItems.Add(c);
                       end;
-                    RowObjects.Add(aSite, IntToStr(aCurRow) + ':' + IntToStr(aCurCol), uColumns.Strings[aCurCol], aTmpAray);
+                    LabRowObjects.Add(aSite, IntToStr(aCurRow) + ':' + IntToStr(aCurCol), uColumns.Strings[aCurCol], aTmpAray);
                     aTmpAray.Clear;
                   end;
               end;
@@ -808,10 +852,14 @@ begin
                 aRanges := piece(aRanges,';',1);
               end;
             DaysBack := Copy(aRanges, 2, Length(aRanges));
+            if DaysBack = '' then DaysBack := '7';
             if DaysBack = '0' then
               aRanges := 'T' + ';T'
             else
-              aRanges := 'T-' + DaysBack + ';T';
+              if Copy(aRanges, 2, 1) = 'T' then
+                aRanges := DaysBack + ';T'
+              else
+                aRanges := 'T-' + DaysBack + ';T';
           end;
         if length(piece(aRanges,';',1)) > 0 then
           begin
@@ -837,7 +885,7 @@ begin
               x := x + x1;
         end;
       end;
-    if piece(uRemoteType, '^', 9) = '1' then x := x + ' <<ONLY REMOTE DOD DATA INCLUDED IN REPORT>>';
+    if piece(uRemoteType, '^', 9) = '1' then x := x + ' <<ONLY REMOTE DATA INCLUDED IN REPORT>>';
     Caption := x;
   end;
   lvReports.Caption := x;
@@ -1228,7 +1276,7 @@ end;
 procedure TfrmLabs.lstQualifierClick(Sender: TObject);
   var
   MoreID: String;  //Restores MaxOcc value
-  aRemote, aHDR, aFHIE: string;
+  aRemote, aHDR, aFHIE, aMax: string;
   i: integer;
   tmpList: TStringList;
   daysback: integer;
@@ -1280,6 +1328,11 @@ begin
       MoreID := '';
       SetPiece(uQualifier,';',3,'');
     end;
+  aMax := piece(uQualifier,';',3);
+  if (CharAt(lstQualifier.ItemID,1) = 'd')
+    and (length(aMax)>0)
+    and (StrToInt(aMax)<101) then
+      MoreID := ';101';
   aRemote :=  piece(uRemoteType,'^',1);
   aHDR := piece(uRemoteType,'^',7);
   aFHIE := piece(uRemoteType,'^',8);
@@ -1378,7 +1431,7 @@ begin
           lvReports.SmallImages := uEmptyImageList;
           lvReports.Items.Clear;
           memLab.Lines.Clear;
-          RowObjects.Clear;
+          LabRowObjects.Clear;
           if ((aRemote = '1') or (aRemote = '2')) then
             GoRemote(uRemoteReportData, 'L:' + uRptID, lstQualifier.ItemID + MoreID, uReportRPC, uHState, aHDR, aFHIE);
           if not(piece(uRemoteType, '^', 9) = '1') then
@@ -1409,7 +1462,7 @@ begin
         begin      //      = 6
           lvReports.SmallImages := uEmptyImageList;
           lvReports.Items.Clear;
-          RowObjects.Clear;
+          LabRowObjects.Clear;
           memLab.Lines.Clear;
           if ((aRemote = '1') or (aRemote = '2'))  then
             begin
@@ -1634,7 +1687,8 @@ case StrToInt(Piece(uRptID,':',1)) of
         else
           uHTMLDoc := uHTMLPatient + uLocalReportData.Text;
         WebBrowser1.Navigate('about:blank');
-      end;               }
+      end;
+               }
 end;
 
 procedure TfrmLabs.lblDateEnter(Sender: TObject);
@@ -1704,7 +1758,7 @@ begin
       uLabLocalReportData.Clear;
       uLabRemoteReportData.Clear;
       StatusText('Retrieving data for cumulative report...');
-      GoRemoteOld(uLabRemoteReportData,0,2,'',uReportRPC,'',IntToStr(daysback),'',date1,date2);
+      GoRemoteOld(uLabRemoteReportData,21,2,'',uReportRPC,'',IntToStr(daysback),'',date1,date2);
       TabControl1.OnChange(nil);
       Cumulative(uLabLocalReportData, Patient.DFN, daysback, date1, date2, uReportRPC);
       if uLabLocalReportData.Count > 0 then
@@ -1721,7 +1775,7 @@ begin
       uLabLocalReportData.Clear;
       uLabRemoteReportData.Clear;
       StatusText('Retrieving data for interim report...');
-      GoRemoteOld(uLabRemoteReportData,0,3,'',uReportRPC,'','','',date1,date2);
+      GoRemoteOld(uLabRemoteReportData,3,3,'',uReportRPC,'','','',date1,date2);
       TabControl1.OnChange(nil);
       Interim(uLabLocalReportData, Patient.DFN, date1, date2, uReportRPC);
       if uLabLocalReportData.Count < 1 then
@@ -1826,7 +1880,7 @@ begin
       uLabLocalReportData.Clear;
       uLabRemoteReportData.Clear;
       StatusText('Retrieving microbiology data...');
-      GoRemoteOld(uLabRemoteReportData,0,4,'',uReportRPC,'','','',date1,date2);
+      GoRemoteOld(uLabRemoteReportData,4,4,'',uReportRPC,'','','',date1,date2);
       TabControl1.OnChange(nil);
       Micro(uLabLocalReportData, Patient.DFN, date1, date2, uReportRPC);
       if uLabLocalReportData.Count < 1 then
@@ -1920,6 +1974,20 @@ begin
     end;
     if not ok then lstTestGraph.Items.Add(lstTests.Items[i]);
   end;
+end;
+
+procedure TfrmLabs.grdLabTopLeftChanged(Sender: TObject);
+var
+  i: integer;
+begin
+  inherited;
+  if piece(uRptID,':',1) ='1' then
+    begin
+      for i := 2 to grdLab.RowCount do
+        grdLab.Cells[0,i] := '';
+      if not(grdLab.TopRow = 1) then
+        grdLab.Cells[0,grdLab.TopRow] := lblDate.Caption;
+    end;
 end;
 
 procedure TfrmLabs.HGrid(griddata: TStrings);
@@ -2052,7 +2120,7 @@ begin
         Cells[i - testcnt, 0] := FormatFMDateTime('mm/dd/yy hh:nn',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
       end;
       //------------------------------------------------------------------------------------------
-      Cells[i - testcnt, 1] := MixedCase(Piece(griddata[i + offset], '^', 4));
+      Cells[i - testcnt, 1] := MixedCase(Piece(griddata[i + offset], '^', 4)) + ' ' + Piece(griddata[i + offset], '^', 5);
     end;
     for i := testcnt + datecnt + 1 to linecnt do
     begin
@@ -2102,6 +2170,7 @@ begin
   uColumns.Free;
   uLocalReportData.Free;
   uRemoteReportData.Free;
+  LabRowObjects.Free;
 end;
 
 procedure TfrmLabs.FillGrid(agrid: TStringGrid; aitems: TStrings);
@@ -2112,30 +2181,34 @@ begin
   with agrid do
   begin
     if testcnt = 0 then RowCount := 3 else RowCount := testcnt + 1;
-    ColCount := 5;
+    ColCount := 6;
     DefaultColWidth := agrid.Width div ColCount - 2;
-    ColWidths[0] := agrid.Width div 4;
-    ColWidths[4] := agrid.Width div 4;
-    ColWidths[2] := agrid.Width div 9;
-    ColWidths[3] := agrid.Width div 6;
-    ColWidths[1] := agrid.Width - ColWidths[0] - ColWidths[2] - ColWidths[3] - ColWidths[4] - 8;
+    ColWidths[0] := 120;               //agrid.Width div 6;
+    ColWidths[1] := agrid.Width div 4; //5
+    ColWidths[5] := agrid.Width div 7; //5
+    ColWidths[3] := agrid.Width div 14;//12
+    ColWidths[4] := agrid.Width div 12;//9
+    ColWidths[2] := agrid.Width div 5; //agrid.Width - ColWidths[0] - ColWidths[1] - ColWidths[3] - ColWidths[4] - 8;
     FixedCols := 0;
     FixedRows := 1;
     for y := 0 to RowCount - 1 do
       for x := 0 to ColCount - 1 do
         Cells[x, y] := '';
-    Cells[0, 0] := 'Test';
-    Cells[1, 0] := 'Result';
-    Cells[2, 0] := 'Flag';
-    Cells[3, 0] := 'Units';
-    Cells[4, 0] := 'Ref Range';
+    Cells[0, 0] := 'Collection Date/Time';
+    Cells[1, 0] := 'Test';
+    Cells[2, 0] := 'Result / Status';
+    Cells[3, 0] := 'Flag';
+    Cells[4, 0] := 'Units';
+    Cells[5, 0] := 'Ref Range';
     for i := 1 to testcnt do
     begin
-      Cells[0, i] := Piece(aitems[i], '^', 2);
-      Cells[1, i] := Piece(aitems[i], '^', 3);
-      Cells[2, i] := Piece(aitems[i], '^', 4);
-      Cells[3, i] := Piece(aitems[i], '^', 5);
-      Cells[4, i] := Piece(aitems[i], '^', 6);
+      if i = 1 then Cells[0, i] := lblDate.Caption
+      else Cells[0, i] := '';
+      Cells[1, i] := Piece(aitems[i], '^', 2);
+      Cells[2, i] := Piece(aitems[i], '^', 3);
+      Cells[3, i] := Piece(aitems[i], '^', 4);
+      Cells[4, i] := Piece(aitems[i], '^', 5);
+      Cells[5, i] := Piece(aitems[i], '^', 6);
     end;
   end;
 end;
@@ -2160,12 +2233,17 @@ procedure TfrmLabs.GetInterimGrid(adatetime: TFMDateTime; direction: integer);
 var
   tmpList: TStringList;
   nexton, prevon: boolean;
-  newest, oldest, DisplayDate: string;
+  newest, oldest, DisplayDate, aCollection, aSpecimen, aX: string;
+  i,ix: integer;
 begin
   tmpList := TStringList.Create;
   GetNewestOldest(Patient.DFN, newest, oldest);  //****** PATCH
-  nexton := true;
   prevon := true;
+  aCollection := '';
+  aSpecimen := '';
+  aX := '';
+  lblSample.Caption := '';
+  lblSample.Color := clBtnFace;
   try
     FastAssign(InterimGrid(Patient.DFN, adatetime, direction, uFormat), tmpList);
     if tmpList.Count > 0 then
@@ -2206,31 +2284,65 @@ begin
         nexton := true;
       if (not prevon) and (uFormat = 2) then
         prevon := true;
+      if Piece(tmpList[0], '^', 2) = 'CH' then
+        begin
+          lblSample.Caption := 'Specimen: ' + Piece(tmpList[0], '^', 5);
+          lblSample.Color := clWindow;
+        end;
+      if Piece(tmpList[0], '^', 2) = 'MI' then
+        begin
+          for i  := 0 to tmpList.Count - 1 do
+            begin
+              if i > 5 then break;
+              if ansiContainsStr(tmpList[i],'Collection sample:') then
+                begin
+                  ix := 0;
+                  if length(piece(tmpList[i], ':',2)) > 0 then
+                    begin
+                      ix := Length(piece(tmpList[i], ':',2));
+                      if ix > 15 then ix := ix - 15;
+                    end;
+                  aCollection := '  Sample: ' + LeftStr(piece(tmpList[i], ':',2),ix);
+                end;
+            end;
+          for i  := 0 to tmpList.Count - 1 do
+            begin
+              if i > 5 then break;
+              if ansiContainsStr(tmpList[i],'Site/Specimen:') then
+                begin
+                  aSpecimen := 'Specimen: ' + piece(tmpList[i], ':', 2);
+                end;
+            end;
+          aX := aSpecimen + aCollection;
+          if Length(aX) > 0 then
+            begin
+              lblSample.Caption := aX;
+              lblSample.Color := clWindow;
+            end;
+        end;
     end
     else
     begin
       lblDateFloat.Caption := '';
       lblDate.Caption := '';
+      nexton := false;
+      prevon := false;
     end;
     cmdNext.Enabled := nexton;
     cmdRecent.Enabled := nexton;
-    lblNext.Enabled := nexton;
-    lblRecent.Enabled := nexton;
     cmdPrev.Enabled := prevon;
     cmdOld.Enabled := prevon;
-    lblPrev.Enabled := prevon;
-    lblOld.Enabled := prevon;
     if cmdOld.Enabled and cmdRecent.Enabled then
       lblMostRecent.Visible := false
     else
     begin
       lblMostRecent.Visible := true;
       if (not cmdOld.Enabled) and (not cmdRecent.Enabled) then
-        lblMostRecent.Caption := 'No Lab Results'
+        lblMostRecent.Caption := 'No Lab Data'
       else if cmdOld.Enabled then
-        lblMostRecent.Caption := 'Most Recent Lab Result'
+        lblMostRecent.Caption := 'Most Recent Lab Data'
       else
-        lblMostRecent.Caption := 'Oldest Lab Result';
+        lblMostRecent.Caption := 'Oldest Lab Data';
     end;
     if tmpList.Count > 0 then
     begin
@@ -2238,13 +2350,9 @@ begin
       begin
         FillGrid(grdLab, tmpList);
         FillComments(memLab, tmpList);
-        if uScreenSplitMoved = false then
-          begin
-            pnlRightTop.Height := pnlRight.Height - (pnlRight.Height div 5);
-            uScreenSplitLoc := sptHorzRight.Top;
-          end
-        else
-          pnlRightTop.Height := uScreenSplitLoc;
+        pnlRightTop.Height := pnlRight.Height - (pnlRight.Height div 5);
+        sptHorzRight.Top := pnlRightTop.Height;
+        uScreenSplitLoc := sptHorzRight.Top;
         pnlRightBottom.Height := pnlLeft.Height div 5;
         memLab.Height := pnlLeft.Height div 5;
         memLab.Lines.Insert(0,' ');
@@ -2271,7 +2379,8 @@ begin
         grdLab.Visible := false;
         pnlFooter.Visible := false;
         sptHorzRight.Visible := true;
-        pnlRightTop.Height := pnlHeader.Height + TabControl1.Height;
+        TabControl1.Visible := false;
+        pnlRightTop.Height := pnlHeader.Height;
         memLab.Height := pnlRight.Height - (lblHeading.Height + lblTitle.Height + pnlHeader.Height);
         pnlRightTop.Visible := true;
         memLab.Align := alClient;
@@ -2382,44 +2491,44 @@ begin
   serHigh.Clear;  serLow.Clear;  serTest.Clear;
   if numtest > 0 then
   begin
-  for i := 1 to numtest do
-    if testnum = Piece(aitems[i], '^', 2) then
-    begin
-      testorder := inttostr(i);
-      break;
-    end;
-  GetStartStop(start, stop, aitems);
-  if OKFloatValue(high) then
-  begin
-    serHigh.AddXY(FMToDateTime(start), strtofloat(high), '',clTeeColor);
-    serHigh.AddXY(FMToDateTime(stop), strtofloat(high), '',clTeeColor);
-  end;
-  if OKFloatValue(low) then
-  begin
-    serLow.AddXY(FMToDateTime(start), strtofloat(low), '',clTeeColor);
-    serLow.AddXY(FMToDateTime(stop), strtofloat(low), '',clTeeColor);
-  end;
-  numspec := Piece(specimen, '^', 1);
-  chtChart.Legend.Color := grdLab.Color;
-  chtChart.Title.Font.Size := MainFontSize;
-  chtChart.LeftAxis.Title.Caption := units;
-  serTest.Title := Piece(test, '^', 2);
-  serHigh.Title := 'Ref High ' + high;
-  serLow.Title := 'Ref Low ' + low;
-  testcheck := testorder;
-  for i := numtest + numcol + 1 to numtest + numcol + numvalues do
-    if Piece(aitems[i], '^', 2) = testcheck then
-      if Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 3) = numspec then
+    for i := 1 to numtest do
+      if testnum = Piece(aitems[i], '^', 2) then
       begin
-        value := Piece(aitems[i], '^', 3);
-        if OkFloatValue(value) then
-        begin
-          labvalue := strtofloat(value);
-          datevalue := FMToDateTime(Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 2));
-          serTest.AddXY(datevalue, labvalue, '', clTeeColor);
-          inc(valuecount);
-        end;
+        testorder := inttostr(i);
+        break;
       end;
+    GetStartStop(start, stop, aitems);
+    if OKFloatValue(high) then
+    begin
+      serHigh.AddXY(FMToDateTime(start), strtofloat(high), '',clTeeColor);
+      serHigh.AddXY(FMToDateTime(stop), strtofloat(high), '',clTeeColor);
+    end;
+    if OKFloatValue(low) then
+    begin
+      serLow.AddXY(FMToDateTime(start), strtofloat(low), '',clTeeColor);
+      serLow.AddXY(FMToDateTime(stop), strtofloat(low), '',clTeeColor);
+    end;
+    numspec := Piece(specimen, '^', 1);
+    chtChart.Legend.Color := grdLab.Color;
+    chtChart.Title.Font.Size := MainFontSize;
+    chtChart.LeftAxis.Title.Caption := units;
+    serTest.Title := Piece(test, '^', 2);
+    serHigh.Title := 'Ref High ' + high;
+    serLow.Title := 'Ref Low ' + low;
+    testcheck := testorder;
+    for i := numtest + numcol + 1 to numtest + numcol + numvalues do
+      if Piece(aitems[i], '^', 2) = testcheck then
+        if Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 3) = numspec then
+        begin
+          value := Piece(aitems[i], '^', 3);
+          if OkFloatValue(value) then
+          begin
+            labvalue := strtofloat(value);
+            datevalue := FMToDateTime(Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 2));
+            serTest.AddXY(datevalue, labvalue, '', clTeeColor);
+            inc(valuecount);
+          end;
+        end;
   end;
   if valuecount = 0 then
   begin
@@ -2973,17 +3082,17 @@ begin
                       if (Items[i].Selected) and (aID <> Items[i].SubItems[0]) then
                         begin
                           aSID := Items[i].SubItems[0];
-                          for j := 0 to RowObjects.ColumnList.Count - 1 do
-                            if piece(aSID,':',1) = piece(TCellObject(RowObjects.ColumnList[j]).Handle,':',1) then
-                              if Item.Caption = (piece(TCellObject(RowObjects.ColumnList[j]).Site,';',1)) then
-                                if (TCellObject(RowObjects.ColumnList[j]).Data.Count > 0) and
-                                  (TCellObject(RowObjects.ColumnList[j]).Include = '1') then
+                          for j := 0 to LabRowObjects.ColumnList.Count - 1 do
+                            if piece(aSID,':',1) = piece(TCellObject(LabRowObjects.ColumnList[j]).Handle,':',1) then
+                              if Item.Caption = (piece(TCellObject(LabRowObjects.ColumnList[j]).Site,';',1)) then
+                                if (TCellObject(LabRowObjects.ColumnList[j]).Data.Count > 0) and
+                                  (TCellObject(LabRowObjects.ColumnList[j]).Include = '1') then
                                   begin
                                     aWPFlag := true;
-                                    MemLab.Lines.Add(TCellObject(RowObjects.ColumnList[j]).Name);
-                                    FastAssign(TCellObject(RowObjects.ColumnList[j]).Data, aBasket);
+                                    MemLab.Lines.Add(TCellObject(LabRowObjects.ColumnList[j]).Name);
+                                    FastAssign(TCellObject(LabRowObjects.ColumnList[j]).Data, aBasket);
                                     for k := 0 to aBasket.Count - 1 do
-                                      MemLab.Lines.Add('  ' + aBasket[k]);
+                                      MemLab.Lines.Add(' ' + aBasket[k]);
                                   end;
                           if aWPFlag = true then
                             begin
@@ -2994,17 +3103,17 @@ begin
                   end;
                 aBasket.Clear;
                 aWPFlag := false;
-                for i := 0 to RowObjects.ColumnList.Count - 1 do
-                  if piece(aID,':',1) = piece(TCellObject(RowObjects.ColumnList[i]).Handle,':',1) then
-                    if Item.Caption = (piece(TCellObject(RowObjects.ColumnList[i]).Site,';',1)) then
-                      if (TCellObject(RowObjects.ColumnList[i]).Data.Count > 0) and
-                        (TCellObject(RowObjects.ColumnList[i]).Include = '1') then
+                for i := 0 to LabRowObjects.ColumnList.Count - 1 do
+                  if piece(aID,':',1) = piece(TCellObject(LabRowObjects.ColumnList[i]).Handle,':',1) then
+                    if Item.Caption = (piece(TCellObject(LabRowObjects.ColumnList[i]).Site,';',1)) then
+                      if (TCellObject(LabRowObjects.ColumnList[i]).Data.Count > 0) and
+                        (TCellObject(LabRowObjects.ColumnList[i]).Include = '1') then
                         begin
                           aWPFlag := true;
-                          MemLab.Lines.Add(TCellObject(RowObjects.ColumnList[i]).Name);
-                          FastAssign(TCellObject(RowObjects.ColumnList[i]).Data, aBasket);
+                          MemLab.Lines.Add(TCellObject(LabRowObjects.ColumnList[i]).Name);
+                          FastAssign(TCellObject(LabRowObjects.ColumnList[i]).Data, aBasket);
                           for j := 0 to aBasket.Count - 1 do
-                            MemLab.Lines.Add('  ' + aBasket[j]);
+                            MemLab.Lines.Add(' ' + aBasket[j]);
                         end;
                 if aWPFlag = true then
                   begin
@@ -3113,28 +3222,17 @@ end;
 procedure TfrmLabs.GotoTop1Click(Sender: TObject);
 begin
   inherited;
-with memLab do
-  begin
-    SetFocus;
-    SelStart :=0;
-    SelLength :=0;
-  end;
+  SendMessage(memLab.Handle, WM_VSCROLL, SB_TOP, 0);
+  {GoToTop1.Enabled := false;
+  GoToBottom1.Enabled := true; }
 end;
 
 procedure TfrmLabs.GotoBottom1Click(Sender: TObject);
-var
-  I,CharCount : Integer;
 begin
   Inherited;
-  CharCount :=0;
-  with memLab do
-  begin
-    for I := 0 to lines.count-1 do
-      CharCount := CharCount + Length(Lines[I]) + 2;
-    SetFocus;
-    SelStart := CharCount;
-    SelLength :=0;
-  end;
+  SendMessage(memLab.Handle, WM_VSCROLL, SB_BOTTOM, 0);
+  {GoToTop1.Enabled := true;
+  GoToBottom1.Enabled := false; }
 end;
 
 procedure TfrmLabs.FreezeText1Click(Sender: TObject);
@@ -3170,7 +3268,7 @@ begin
   end;
 end;
 
-procedure TfrmLabs.PopupMenu1Popup(Sender: TObject);
+procedure TfrmLabs.PopupMenu3Popup(Sender: TObject);
 begin
  inherited;
   If Screen.ActiveControl.Name <> memLab.Name then
@@ -3184,7 +3282,7 @@ begin
     FreezeText1.Enabled := False;
   If Memo1.Visible Then
     UnFreezeText1.Enabled := True;
-  If memLab.SelStart > 0 then
+  {If memLab.SelStart > 0 then
     GotoTop1.Enabled := True
   Else
     GotoTop1.Enabled := False;
@@ -3192,7 +3290,7 @@ begin
     memLab.SelStart,0) < memLab.Lines.Count then
     GotoBottom1.Enabled := True
   Else
-    GotoBottom1.Enabled := False;
+    GotoBottom1.Enabled := False; }
   {case lstReports.ItemIEN of
     1: FreezeText1.Enabled := False;
     5: FreezeText1.Enabled := False;
@@ -3226,15 +3324,15 @@ begin
   OrderIFN                := Piece(Notifications.AlertData, '@', 1);
   if StrToIntDef(OrderIFN,0) > 0 then
    begin
-    //the following if condition & clause resolves CQ 16405 & 17076 - a mixture of two different patient's lab results in one display.
+    //the following if condition & clause resolves CQ 16405 & 17076 - a mixture of two different patient's lab results in one display (TC).
     if (AnsiContainsStr(tvReports.Selected.Text, 'Microbiology')) or (AnsiContainsStr(tvReports.Selected.Text, 'Anatomic Pathology'))
     or (AnsiContainsStr(tvReports.Selected.Text, 'Cytology')) or (AnsiContainsStr(tvReports.Selected.Text, 'Electron Microscopy'))
     or (AnsiContainsStr(tvReports.Selected.Text, 'Surgical Pathology')) and (lvReports.Visible = TRUE) then
        begin
-         tvReports.Selected := tvReports.TopItem;
          lvReports.Visible := FALSE;
-         DisplayHeading('');
        end;
+    tvReports.Selected := tvReports.TopItem;    //moved here to fix the conflicting lab results caption header that is displayed with the alert message text.
+    DisplayHeading('');    //fixes part B of CQ #17548 - CPRS v28.1 (TC)
     lstDates.ItemIndex      := -1;
     Memo1.Visible           := false;
     lblHeaders.Visible      := false;
@@ -3263,7 +3361,7 @@ begin
    end
    else
    begin
-     if Patient.Inpatient then lstDates.ItemIndex := 2 else lstDates.ItemIndex := 5;
+     if Patient.Inpatient then lstDates.ItemIndex := 2 else lstDates.ItemIndex := 4;
      tvReports.Selected := tvReports.Items.GetFirstNode;
      tvReportsClick(self);
    end;
@@ -3511,7 +3609,7 @@ end;
 
 procedure TfrmLabs.Timer1Timer(Sender: TObject);
 var
-  i,j: integer;
+  i,j,fail: integer;
   r0: String;
 begin
   inherited;
@@ -3519,25 +3617,48 @@ begin
    begin
     for i := 0 to Count - 1 do
       if TRemoteSite(Items[i]).Selected then
+       begin
         if Length(TRemoteSite(Items[i]).LabRemoteHandle) > 0 then
           begin
             r0 := GetRemoteStatus(TRemoteSite(Items[i]).LabRemoteHandle);
             TRemoteSite(Items[i]).LabQueryStatus := r0; //r0='1^Done' if no errors
+            UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, piece(r0,'^',2));
             if piece(r0,'^',1) = '1' then
               begin
-                RemoteReports.Add(TRemoteSite(Items[i]).CurrentLabQuery,
-                  TRemoteSite(Items[i]).LabRemoteHandle);
                 GetRemoteData(TRemoteSite(Items[i]).LabData,
                   TRemoteSite(Items[i]).LabRemoteHandle,Items[i]);
+                RemoteReports.Add(TRemoteSite(Items[i]).CurrentLabQuery,
+                  TRemoteSite(Items[i]).LabRemoteHandle);
                 TRemoteSite(Items[i]).LabRemoteHandle := '';
                 TabControl1.OnChange(nil);
+                if (length(piece(uHState,';',2)) > 0) then
+                  begin
+                    uRemoteReportData.Clear;
+                    QuickCopy(TRemoteSite(Items[i]).LabData,uRemoteReportData);
+                    fail := 0;
+                    if uRemoteReportData.Count > 0 then
+                      begin
+                        if uRemoteReportData[0] = 'Report not available at this time.' then
+                          begin
+                            fail := 1;
+                            UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID,'Report not available');
+                          end;
+                        if piece(uRemoteReportData[0],'^',1) = '-1' then
+                          begin
+                            fail := 1;
+                            UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID,'Communication failure');
+                          end;
+                        if fail = 0 then
+                          LoadListView(uRemoteReportData);
+                      end;
+                  end;
               end
             else
               begin
                 uRemoteCount := uRemoteCount + 1;
-                if uRemoteCount > 60 then //5 minute limit
+                if uRemoteCount > 90 then //~7 minute limit
                   begin
-                    Timer1.Enabled := False;
+                    TRemoteSite(Items[i]).LabRemoteHandle := '';
                     TRemoteSite(Items[i]).LabQueryStatus := '-1^Timed out';
                     UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, 'Timed out');
                     StatusText('');
@@ -3547,14 +3668,20 @@ begin
                   StatusText('Retrieving Lab data from '
                     + TRemoteSite(Items[i]).SiteName + '...');
               end;
-            Timer1.Interval := 5000;
+            Timer1.Interval := 10000;
           end;
+       end;
      if Timer1.Enabled = True then
        begin
          j := 0;
          for i := 0 to Count -1 do
-           if Length(TRemoteSite(Items[i]).LabRemoteHandle) > 0 then
-             j := 1;
+           begin
+             if Length(TRemoteSite(Items[i]).LabRemoteHandle) > 0 then
+               begin
+                 j := 1;
+                 break;
+               end;
+           end;
          if j = 0 then  //Shutdown timer if all sites have been processed
            begin
              Timer1.Enabled := False;
@@ -3563,7 +3690,10 @@ begin
          j := 0;
          for i := 0 to Count -1 do
            if TRemoteSite(Items[i]).Selected = true then
-             j := 1;
+             begin
+               j := 1;
+               break;
+             end;
          if j = 0 then  //Shutdown timer if user has de-selected all sites
            begin
              Timer1.Enabled := False;
@@ -3577,13 +3707,17 @@ end;
 procedure TfrmLabs.tvReportsClick(Sender: TObject);
 var
   i: integer;
-  ListItem: TListItem;
   aHeading, aReportType, aRPC, aQualifier, aStartTime, aStopTime, aMax, aRptCode, aRemote, aCategory, aSortOrder, aDaysBack, x, x1, x2: string;
   aIFN, aOldID: integer;
-  aID, aHSTag, aRadParam, aColChange, aDirect, aHDR, aFHIE, aFHIEONLY, aQualifierID: string;
-  CurrentParentNode, CurrentNode: TTreeNode;
+  aID, aHSTag, aColChange, aDirect, aHDR, aFHIE, aFHIEONLY, aQualifierID: string;
+  CurrentNode: TTreeNode;
 begin
   inherited;
+  if (Length(lblHeading.Caption) > 0) and (Length(frmFrame.stsArea.Panels.Items[1].Text) > 0) then
+    begin                                           //ProcessNotfications post-cleanup and clearing of notification message text
+      lblHeading.Caption := '';                     //in the header and status bar display when clicking to view lab results.
+      frmFrame.stsArea.Panels.Items[1].Text := '';
+    end;
   lvReports.Hint := 'To sort, click on column headers|';
   tvReports.TopItem := tvReports.Selected;
   uRemoteCount := 0;
@@ -3631,6 +3765,7 @@ begin
   if aReportType = '' then aReportType := 'R';
   uReportRPC := aRPC;
   uRptID := aID;
+  uLabRepID := aID;
   uDirect := aDirect;
   uReportType := aReportType;
   uQualifier := aQualifier;
@@ -3641,18 +3776,12 @@ begin
   RedrawSuspend(memLab.Handle);
   uHState := aHSTag;
   Timer1.Enabled := False;
-  TabControl1.Visible := false;
-  TabControl1.TabStop := false;
+  HideTabControl;
   sptHorzRight.Visible := true;
   lvReports.Visible := false;
   if (aRemote = '1') or (aRemote = '2') then
     if not(uReportType = 'V') then
-      if TabControl1.Tabs.Count > 1 then
-        begin
-          TabControl1.Visible := true;
-          TabControl1.TabStop := true;
-          pnlRightTop.Height := lblTitle.Height + TabControl1.Height;
-        end;
+      ShowTabControl;
   StatusText('');
   uHTMLDoc := '';
   //WebBrowser1.Navigate('about:blank');   **Browser Remove**
@@ -3662,7 +3791,6 @@ begin
   lvReports.SmallImages := uEmptyImageList;
   lvReports.Items.Clear;
   lvReports.Columns.Clear;
-  lblHeading.Caption := '';  //clears Notification text to reduce confusion with lblTitle.Caption.
   DisplayHeading('');
   if uReportType = 'H' then
     begin
@@ -3731,7 +3859,7 @@ begin
         RedrawActivate(memLab.Handle);
       end;
   uLocalReportData.Clear;
-  RowObjects.Clear;
+  LabRowObjects.Clear;
   uRemoteReportData.Clear;
   lstHeaders.Visible := false;
   lstHeaders.TabStop := false;
@@ -3828,7 +3956,12 @@ begin
                      cmdOtherTests.Default := true;
                      uPrevReportNode := tvReports.Selected;
                     end
-                    else tvReports.Selected := uPrevReportNode;
+                    else
+                      begin
+                        uPrevReportNode := tvReports.Items.GetFirstNode;
+                        tvReports.Selected := uPrevReportNode;
+                        tvReportsClick(self);
+                      end;
                   end
             else if aID = '5:WORKSHEET' then
                   begin               // Worksheet
@@ -3857,15 +3990,30 @@ begin
                      lblFooter.Caption := '  KEY: "L" = Abnormal Low, "H" = Abnormal High, "*" = Critical Value, "**" = Comments on Specimen';
                      //chkZoom.Checked := false;
                      //chkZoomClick(self);
-                     lstDatesClick(self);
+                     //lstDatesClick(self);
                      //lstQualifierClick(self);
                      cmdOtherTests.SetFocus;
                      cmdOtherTests.Default := true;
                      uPrevReportNode := tvReports.Selected;
+                     if lstDates.ItemIndex = -1 then
+                      if Patient.Inpatient then lstDates.ItemIndex := 2
+                      else lstDates.ItemIndex := 4;
+                     //for i := 1 to lstDates.Count - 1 do  //Sets default date range to next item > 1 Month (which should be 6 months)
+                      //if strToInt(piece(lstDates.Items[i],'^',1)) > 31 then
+                        //begin
+                          //lstDates.ItemIndex := i;
+                          //break;
+                        //end;
+                     lstDatesClick(self);
                      if ScreenReaderSystemActive then
                        grdLab.SetFocus;
                     end
-                    else tvReports.Selected := uPrevReportNode;
+                    else
+                      begin
+                        uPrevReportNode := tvReports.Items.GetFirstNode;
+                        tvReports.Selected := uPrevReportNode;
+                        tvReportsClick(self);
+                      end;
                   end
 
             else if aID = '6:GRAPH' then
@@ -3936,7 +4084,7 @@ begin
                        uPrevReportNode := tvReports.Selected;
                      end
                      else
-                       tvReports.Selected := uPrevReportNode;
+                       tvReports.Selected := uPrevReportNode; 
                     end;
                   end
 
@@ -3950,13 +4098,25 @@ begin
                     pnlRightBottom.Visible := false;
                     sptHorzRight.Visible := false;
                     pnlRightTop.Height := lblHeading.Height;
+                    if ((aRemote = '1') or (aRemote = '2')) then
+                      ShowTabControl;
+                    pnlRightTopHeader.Align := alTop;
                     pnlRightTop.Align := alTop;
+                    TabControl1.Align := alTop;
                     pnlRightBottom.Align := alclient;
                     sptHorzRight.Visible := true;
                     pnlRightBottom.Visible := true;
                     lvReports.Visible := false;
-                    memLab.Height := pnlRight.Height - (lblHeading.Height + lblTitle.Height);
                     memLab.Align := alClient;
+                    if lstDates.ItemIndex = -1 then
+                      if Patient.Inpatient then lstDates.ItemIndex := 2
+                      else lstDates.ItemIndex := 4;
+                    {for i := 1 to lstDates.Count - 1 do  //Sets default date range to next item > 1 Month (which should be 6 months)
+                      if strToInt(piece(lstDates.Items[i],'^',1)) > 31 then
+                        begin
+                          lstDates.ItemIndex := i;
+                          break;
+                        end;  }
                     FormResize(self);
                     aOldID := 1;
                     if aID = '9:MICROBIOLOGY' then aOldID := 4;
@@ -3977,7 +4137,7 @@ begin
                       0: begin
                           CommonComponentVisible(false,false,false,false,false,false,false,false,false,false,false,false);
                           StatusText('Retrieving data...');
-                          GoRemoteOld(uLabRemoteReportData,0,aOldID,'',uReportRPC,'0','9999','1',0,0);
+                          GoRemoteOld(uLabRemoteReportData,StrToInt(Piece(aID,':',1)),aOldID,'',uReportRPC,'0','9999','1',0,0);
                           //GoRemote(uRemoteReportData, aID, aRptCode, aRPC, uHState, aHDR, aFHIE);
                           TabControl1.OnChange(nil);
                           Reports(uLabLocalReportData,Patient.DFN, 'L:' + Piece(aID,':',1), '0', '9999', '1', 0, 0, uReportRPC);
@@ -4004,7 +4164,7 @@ begin
                           CommonComponentVisible(true,true,false,false,false,false,false,false,false,false,false,false);
                           lstHeaders.Clear;
                           StatusText('Retrieving data...');
-                          GoRemoteOld(uLabRemoteReportData,0,aOldID,'',uReportRPC,'0','9999','1',0,0);
+                          GoRemoteOld(uLabRemoteReportData,StrToInt(Piece(aID,':',1)),aOldID,'',uReportRPC,'0','9999','1',0,0);
                           //GoRemote(uRemoteReportData, aID, aRptCode, aRPC, uHState, aHDR, aFHIE);
                           TabControl1.OnChange(nil);
                           Reports(uLabLocalReportData,Patient.DFN, Piece(aID,':',1), '0', '9999', '1', 0, 0, uReportRPC);
@@ -4091,7 +4251,7 @@ begin
             lvReports.Visible := true;
             lvReports.SmallImages := uEmptyImageList;
             lvReports.Items.Clear;
-            RowObjects.Clear;
+            LabRowObjects.Clear;
             memLab.Lines.Clear;
             if (length(piece(aHSTag,';',2)) > 0) then
               begin
@@ -4181,13 +4341,9 @@ begin
           end;
         QT_HSWPCOMPONENT:
           begin      //      = 6
-            if uScreenSplitMoved = false then
-              begin
-                pnlRightTop.Height := pnlRight.Height - (pnlRight.Height div 2);
-                uScreenSplitLoc := sptHorzRight.Top;
-              end
-            else
-              pnlRightTop.Height := uScreenSplitLoc;
+            pnlRightTop.Height := pnlRight.Height - (pnlRight.Height div 2);
+            sptHorzRight.top := pnlRightTop.Height;
+            uScreenSplitLoc := sptHorzRight.Top;
             pnlLeftBottom.Visible := false;
             splitter1.Visible := false;
             StatusText('Retrieving ' + tvReports.Selected.Text + '...');
@@ -4198,10 +4354,11 @@ begin
             sptHorzRight.Visible := true;
             memLab.Visible := true;
             TabControl1.OnChange(nil);
-            RowObjects.Clear;
+            LabRowObjects.Clear;
             memLab.Lines.Clear;
             lvReports.SmallImages := uEmptyImageList;
             lvReports.Items.Clear;
+            memLab.Repaint;
             if (length(piece(aHSTag,';',2)) > 0) then
               begin
                 if aCategory <> '0' then
@@ -4449,17 +4606,17 @@ begin
     if (AHDR='1') and (LeftStr(TRemoteSite(Items[i]).SiteID, 5) = '200HD') then
       begin
         TRemoteSite(Items[i]).Selected := true;
-        frmFrame.lstCIRNLocations.Checked[i+2] := true;
+        frmFrame.lstCIRNLocations.Checked[i+1] := true;
       end;
     if TRemoteSite(Items[i]).Selected then
       begin
         TRemoteSite(Items[i]).ReportClear;
         if (LeftStr(TRemoteSite(Items[i]).SiteID, 5) = '200HD') and not(AHDR = '1') then
           begin
-            TRemoteSite(Items[i]).QueryStatus := '1^Not Included';
+            TRemoteSite(Items[i]).LabQueryStatus := '1^Not Included';
             UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, 'NOT INCLUDED');
-            TRemoteSite(Items[i]).RemoteHandle := '';
-            TRemoteSite(Items[i]).QueryStatus := '1^Done';
+            TRemoteSite(Items[i]).LabRemoteHandle := '';
+            TRemoteSite(Items[i]).LabQueryStatus := '1^Done';
             if uQualifierType = 6 then seq := '1^';
             TRemoteSite(Items[i]).Data.Add(seq + TRemoteSite(Items[i]).SiteName);
             if uQualifierType = 6 then seq := '2^';
@@ -4471,10 +4628,10 @@ begin
           end;
         if (AHDR = '1') and not(LeftStr(TRemoteSite(Items[i]).SiteID, 5) = '200HD') then
           begin
-            TRemoteSite(Items[i]).QueryStatus := '1^Not Included';
+            TRemoteSite(Items[i]).LabQueryStatus := '1^Not Included';
             UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, 'NOT INCLUDED');
-            TRemoteSite(Items[i]).RemoteHandle := '';
-            TRemoteSite(Items[i]).QueryStatus := '1^Done';
+            TRemoteSite(Items[i]).LabRemoteHandle := '';
+            TRemoteSite(Items[i]).LabQueryStatus := '1^Done';
             if uQualifierType = 6 then seq := '1^';
             TRemoteSite(Items[i]).Data.Add(seq + TRemoteSite(Items[i]).SiteName);
             if uQualifierType = 6 then seq := '2^';
@@ -4486,10 +4643,10 @@ begin
           end;
         if (LeftStr(TRemoteSite(Items[i]).SiteID, 5) = '200') and not(aFHIE = '1') then
           begin
-            TRemoteSite(Items[i]).QueryStatus := '1^Not Included';
+            TRemoteSite(Items[i]).LabQueryStatus := '1^Not Included';
             UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, 'NOT INCLUDED');
-            TRemoteSite(Items[i]).RemoteHandle := '';
-            TRemoteSite(Items[i]).QueryStatus := '1^Done';
+            TRemoteSite(Items[i]).LabRemoteHandle := '';
+            TRemoteSite(Items[i]).LabQueryStatus := '1^Done';
             if uQualifierType = 6 then seq := '1^';
             TRemoteSite(Items[i]).Data.Add(seq + TRemoteSite(Items[i]).SiteName);
             if uQualifierType = 6 then seq := '2^';
@@ -4518,8 +4675,8 @@ begin
           with RemoteSites.SiteList do
             begin
               GetRemoteData(TRemoteSite(Items[i]).Data,LocalHandle,Items[i]);
-              TRemoteSite(Items[i]).RemoteHandle := '';
-              TRemoteSite(Items[i]).QueryStatus := '1^Done';
+              TRemoteSite(Items[i]).LabRemoteHandle := '';
+              TRemoteSite(Items[i]).LabQueryStatus := '1^Done';
               UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, 'Done');
               TabControl1.OnChange(nil);
               if (length(piece(uHState,';',2)) > 0) then //and (chkText.Checked = false) then
@@ -4530,12 +4687,12 @@ begin
             if uDirect = '1' then
               begin
                 StatusText('Retrieving reports from ' + TRemoteSite(Items[i]).SiteName + '...');
-                TRemoteSite(Items[i]).QueryStatus := '1^Direct Call';
+                TRemoteSite(Items[i]).LabQueryStatus := '1^Direct Call';
                 UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, 'Direct Call');
                 DirectQuery(Dest, AItem, HSType, Daysback, ExamID, Alpha, Omega, TRemoteSite(Items[i]).SiteID, ARpc, AHSTag);
                 if Copy(Dest[0],1,2) = '-1' then
                   begin
-                    TRemoteSite(Items[i]).QueryStatus := '-1^Communication error';
+                    TRemoteSite(Items[i]).LabQueryStatus := '-1^Communication error';
                     UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID,'Communication error');
                     if uQualifierType = 6 then seq := '1^';
                     TRemoteSite(Items[i]).Data.Add(seq + TRemoteSite(Items[i]).SiteName);
@@ -4548,8 +4705,8 @@ begin
                 else
                   begin
                     QuickCopy(Dest,TRemoteSite(Items[i]).Data);
-                    TRemoteSite(Items[i]).RemoteHandle := '';
-                    TRemoteSite(Items[i]).QueryStatus := '1^Done';
+                    TRemoteSite(Items[i]).LabRemoteHandle := '';
+                    TRemoteSite(Items[i]).LabQueryStatus := '1^Done';
                     UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, 'Done');
                     TabControl1.OnChange(nil);
                     if (length(piece(uHState,';',2)) > 0) then
@@ -4562,7 +4719,7 @@ begin
                 RemoteQuery(Dest, AItem, HSType, Daysback, ExamID, Alpha, Omega, TRemoteSite(Items[i]).SiteID, ARpc, AHSTag);
                 if Dest[0] = '' then
                   begin
-                    TRemoteSite(Items[i]).QueryStatus := '-1^Communication error';
+                    TRemoteSite(Items[i]).LabQueryStatus := '-1^Communication error';
                     UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID,'Communication error');
                     if uQualifierType = 6 then seq := '1^';
                     TRemoteSite(Items[i]).Data.Add(seq + TRemoteSite(Items[i]).SiteName);
@@ -4574,8 +4731,8 @@ begin
                   end
                 else
                   begin
-                    TRemoteSite(Items[i]).RemoteHandle := Dest[0];
-                    TRemoteSite(Items[i]).QueryStatus := '0^initialization...';
+                    TRemoteSite(Items[i]).LabRemoteHandle := Dest[0];
+                    TRemoteSite(Items[i]).LabQueryStatus := '0^initialization...';
                     UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, 'initialization');
                     Timer1.Enabled := True;
                     StatusText('Retrieving reports from ' + TRemoteSite(Items[i]).SiteName + '...');
@@ -4590,13 +4747,13 @@ procedure TfrmLabs.GoRemoteOld(Dest: TStringList; AItem, AReportID: Int64; AQual
   ARpc, AHSType, ADaysBack, ASection: string; ADate1, ADate2: TFMDateTime);
 var
   i,j: integer;
-  LocalHandle, Report, Query, seq: String;
+  LocalHandle, Report, Query: String;
 begin
   { AReportID := 1  Generic report   RemoteLabReports
                  2  Cumulative       RemoteLabCumulative
                  3  Interim          RemoteLabInterim
                  4  Microbioloby     RemoteLabMicro }
-seq := '';
+
   with RemoteSites.SiteList do
     for i := 0 to Count - 1 do
       if TRemoteSite(Items[i]).Selected then
@@ -4611,13 +4768,13 @@ seq := '';
           end;
            if (LeftStr(TRemoteSite(Items[i]).SiteID, 5) = '200') then
           begin
-            TRemoteSite(Items[i]).QueryStatus := '1^Not Included';
+            TRemoteSite(Items[i]).LabQueryStatus := '1^Not Included';
             UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, 'NOT INCLUDED');
             TabControl1.OnChange(nil);
             continue;
           end;
           TRemoteSite(Items[i]).CurrentLabQuery := 'Lab' + Patient.DFN + ';' + Patient.ICN +
-            '^' + IntToStr(AItem) + '^' + 'L:' + IntToStr(AReportID) + '^^' + ARpc + '^' + AHSType +
+            '^' + 'L:' + IntToStr(AItem) + '^' +  IntToStr(AReportID) + '^^' + ARpc + '^' + AHSType +
             '^' + ADaysBack + '^' + ASection + '^' + DateToStr(ADate1) + '^' + DateToStr(ADate2) + '^' +
             TRemoteSite(Items[i]).SiteID;
           LocalHandle := '';
@@ -4644,7 +4801,7 @@ seq := '';
             begin
               case AReportID of
               1: begin
-                   RemoteLabReports(Dest, Patient.DFN + ';' + Patient.ICN, IntToStr(AItem),
+                   RemoteLabReports(Dest, Patient.DFN + ';' + Patient.ICN, 'L:' + IntToStr(AItem),
                      AHSType, ADaysBack, ASection, ADate1, ADate2,
                      TRemoteSite(Items[i]).SiteID, ARpc);
                  end;
@@ -4661,7 +4818,7 @@ seq := '';
                      TRemoteSite(Items[i]).SiteID, ARpc);
                  end;
               else begin
-                     RemoteLab(Dest, Patient.DFN + ';' + Patient.ICN, IntToStr(AItem),
+                     RemoteLab(Dest, Patient.DFN + ';' + Patient.ICN, 'L:' + IntToStr(AItem),
                      AHSType, ADaysBack, ASection, ADate1, ADate2,
                      TRemoteSite(Items[i]).SiteID, ARpc);
                    end;
@@ -4691,9 +4848,10 @@ var
   i: integer;
 begin
   inherited;
-  memLab.Lines.Clear;
+  if (uQualifiertype <> 6) or (length(piece(uHState,';',2)) < 1) then
+    memLab.Lines.Clear;
   lstHeaders.Items.Clear;
-  with TabControl1 do
+  if (length(piece(uHState,';',2)) = 0) then with TabControl1 do
     begin
       memLab.Lines.BeginUpdate;
       if TabIndex > 0 then
@@ -4707,7 +4865,7 @@ begin
                   hook := false;
                   for i := 1 to TRemoteSite(Tabs.Objects[TabIndex]).LabData.Count - 1 do
                     if hook = true then
-                      memLab.Lines.Add(TRemoteSite(Tabs.Objects[TabIndex]).LabData[i])
+                        memLab.Lines.Add(TRemoteSite(Tabs.Objects[TabIndex]).LabData[i])
                     else
                       begin
                         lstHeaders.Items.Add(MixedCase(TRemoteSite(Tabs.Objects[TabIndex]).LabData[i]));
@@ -4723,9 +4881,9 @@ begin
           if Piece(aStatus,'^',1) = '-1' then
             memLab.Lines.Add('Remote data transmission error: ' + Piece(aStatus,'^',2));
           if Piece(aStatus,'^',1) = '0' then
-            memLab.Lines.Add('Transmission in progress: ' + Piece(aStatus,'^',2));
+            memLab.Lines.Add('Retrieving data... ' + Piece(aStatus,'^',2));
           if Piece(aStatus,'^',1) = '' then
-            memLab.Lines.Add('Select a report...');
+            memLab.Lines.Add(uReportInstruction);
         end
       else
         if uLabLocalReportData.Count > 0 then
@@ -4745,10 +4903,15 @@ begin
                     end;
               end
             else
-              QuickCopy(uLabLocalReportData,memLab);
+              if tvReports.Selected.Text = 'Imaging (local only)' then 
+                   memLab.Lines.clear
+              else
+                QuickCopy(uLabLocalReportData,memLab);
             memLab.Lines.Insert(0,' ');
             memLab.Lines.Delete(0);
-          end;
+          end
+        else
+          memLab.Lines.Add(uReportInstruction);
       memLab.SelStart := 0;
       memLab.Lines.EndUpdate;
     end;
@@ -4792,6 +4955,22 @@ end;
 
 procedure TfrmLabs.CommonComponentVisible(A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12: Boolean);
 begin
+  //Clear the last date selection
+  //if not A4 then lstDates.ItemIndex := -1;
+  lstDates.Caption := lblDates.Caption;
+  lstHeaders.Caption := lblHeaders.Caption;
+  if A4 or A2 or A12 then
+    begin
+      pnlLefTop.Height := (frmLabs.Height div 2);
+      pnlLeftBottom.Visible := true;
+      Splitter1.Visible := true;
+    end
+    else
+    begin
+      pnlLefTop.Height := frmLabs.Height;
+      pnlLeftBottom.Visible := false;
+      Splitter1.Visible := false;
+    end;
   lstDates.Visible := false;    // turned off to realign correctly
   lblDates.Visible := false;
   lstQualifier.Visible := false;
@@ -4812,24 +4991,18 @@ begin
   pnlChart.Visible := A8;
   pnlFooter.Visible := A9;
   lvReports.Visible := A10;
-  sptHorzRight.Visible := A10;
+  sptHorzRight.Visible := true;
   if A4 and A1 and (lblDates.Top < lblHeaders.Top) then
-  begin
-    lblDates.Caption := 'Headings';  // swithes captions if not aligned
-    lblHeaders.Caption := 'Date Range';
-  end
-  else
-  begin
-    lblDates.Caption := 'Date Range';
-    lblHeaders.Caption := 'Headings';
-  end;
-  lstDates.Caption := lblDates.Caption;
-  lstHeaders.Caption := lblHeaders.Caption;
-  if A4 or A2 or A12 then
     begin
-      pnlLeftBottom.Visible := true;
-      Splitter1.Visible := true;
+      lblDates.Caption := 'Headings';  // swithes captions if not aligned
+      lblHeaders.Caption := 'Date Range';
+    end
+    else
+    begin
+      lblDates.Caption := 'Date Range';
+      lblHeaders.Caption := 'Headings';
     end;
+  frmLabs.Realign;
 end;
 
 procedure TfrmLabs.ShowTabControl;
@@ -4838,8 +5011,15 @@ begin
     begin
       TabControl1.Visible := true;
       TabControl1.TabStop := true;
-      pnlRightTop.Height := lblTitle.Height + TabControl1.Height;
+      pnlRightTopHeader.Height := pnlRightTopHeaderTop.Height + TabControl1.Height;
     end;
+end;
+
+procedure TfrmLabs.HideTabControl;
+begin
+      TabControl1.Visible := false;
+      TabControl1.TabStop := false;
+      pnlRightTopHeader.Height := pnlRightTopHeaderTop.Height;
 end;
 
 procedure TfrmLabs.Splitter1CanResize(Sender: TObject; var NewSize: Integer;
@@ -4854,15 +5034,8 @@ procedure TfrmLabs.sptHorzRightCanResize(Sender: TObject; var NewSize: Integer;
   var Accept: Boolean);
 begin
   inherited;
-  if NewSize < 10 then
-      Newsize := 10;
-end;
-
-procedure TfrmLabs.sptHorzRightMoved(Sender: TObject);
-begin
-  inherited;
-  uScreenSplitMoved := true;
-  uScreenSplitLoc := sptHorzRight.Top;
+  if NewSize < 5 then
+      Newsize := 5;
 end;
 
 procedure TfrmLabs.Memo1KeyUp(Sender: TObject; var Key: Word;

@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, ORFn, StdCtrls, ComCtrls, Buttons, ORCtrls, uReminders, uConst,
   ORClasses, fRptBox, Menus, rPCE, uTemplates,fBase508Form,
-  VA508AccessibilityManager, fMHTest;
+  VA508AccessibilityManager, fMHTest, fFrame;
 
 type
   TfrmRemDlg = class(TfrmBase508Form)
@@ -41,7 +41,9 @@ type
     procedure btnClinMaintClick(Sender: TObject);
     procedure btnVisitClick(Sender: TObject);
     procedure KillDlg(ptr: Pointer; ID: string; KillObjects: boolean = FALSE);
-    procedure FormShow(Sender: TObject); //AGP Change 24.8
+    procedure FormShow(Sender: TObject);
+    procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean); //AGP Change 24.8
   private
     FSCCond: TSCConditions;
     FSCPrompt: boolean;
@@ -81,6 +83,7 @@ type
     procedure PositionTrees(NodeID: string);
     procedure ClinMaintDestroyed(Sender: TObject);
     procedure ProcessTemplate(Template: TTemplate);
+    procedure ClearMHTest(Rien: string);
   public
     procedure ProcessReminder(ARemData: string; NodeID: string);
     procedure SetFontSize;
@@ -198,7 +201,10 @@ begin
         else
         begin
           if(OwningForm = frmNotes) then
-            frmNotes.AssignRemForm
+            begin
+              frmNotes.AssignRemForm;
+              if FutureEncounter(RemForm.PCEObj) then Err := 'Can not process a reminder dialog for a future encounter date.';
+            end
           else
           if(OwningForm = frmConsults) then
             frmConsults.AssignRemForm
@@ -208,6 +214,8 @@ begin
         end;
       end;
     end;
+    if (Err = '') and (FutureEncounter(RemForm.PCEObj)) then
+       Err := 'Can not process a reminder dialog for a future encounter date.';
     if Err <> '' then
     begin
       InfoBox(Err, 'Reminders in Process', MB_OK or MB_ICONERROR);
@@ -253,7 +261,7 @@ end;
 procedure ViewRemDlg(RemNode: TORTreeNode; InitDlg, IsTemplate: boolean);
 var
   own: TComponent;
-
+  
 begin
   if assigned(RemNode) then
   begin
@@ -418,6 +426,19 @@ begin
   RemForm.Form := nil;
 end;
 
+procedure TfrmRemDlg.FormMouseWheel(Sender: TObject; Shift: TShiftState;
+  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+var
+  box: TScrollBox;
+begin
+  box := GetBox(TRUE);
+  If RectContains(box.BoundsRect, box.ScreenToClient(MousePos)) then
+  begin
+    ScrollControl(box, (WheelDelta > 0));
+    Handled := True;
+  end;
+end;
+
 procedure TfrmRemDlg.ClearControls(All: boolean = FALSE);
 
   procedure WipeOutControls(const Ctrl: TWinControl);
@@ -444,6 +465,62 @@ begin
   end
   else
     WipeOutControls(GetBox);
+end;
+
+procedure TfrmRemDlg.ClearMHTest(Rien: string);
+var
+MHKillArray: TStringList;
+i,idx, j: integer;
+TestName: string;
+begin
+  MHKillArray := TStringList.Create;
+  idx := RemindersInProcess.IndexOf(RIEN);
+  //Find All MH Test in the current Reminders and stored them in a temp Array
+  if idx > -1 then
+    begin
+       if (TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray <> nil) and
+       (TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray.Count > 0) then
+         begin
+           for j := 0 to TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray.Count - 1 do
+             begin
+               TestName := Piece(TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray.Strings[j], U, 1);
+               //TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray.Delete(j);
+               MHKillArray.Add(TestName);
+             end;
+         end;
+       if Assigned(TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray) then
+          TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray.Free;
+      (* if (TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray <> nil) and
+       (TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray.Count = 0) then
+          TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray.Free; *)
+    end;
+  //Check to see if other reminders contains any of the MH test in the temp Array if so set entry to null
+  if (MHKillArray.Count > 0) and (RemindersInProcess.Count > 1) then
+    begin
+      for I := 0 to RemindersInProcess.Count - 1 do
+        begin
+          if (TReminderDialog(TReminder(RemindersInProcess.Objects[i])).IEN <> RIEN) and
+             (TReminderDialog(TReminder(RemindersInProcess.Objects[i])).MHTestArray <> nil) and
+             (TReminderDialog(TReminder(RemindersInProcess.Objects[i])).MHTestArray.Count > 0) then
+               begin
+                  for j := 0 to TReminderDialog(TReminder(RemindersInProcess.Objects[i])).MHTestArray.Count - 1 do
+                    begin
+                      TestName := Piece(TReminderDialog(TReminder(RemindersInProcess.Objects[i])).MHTestArray.Strings[j], U, 1);
+                      idx := MHKillArray.IndexOf(TestName);
+                      if idx > -1 then MHKillArray.Strings[idx] := '';
+                    end;
+               end;
+        end;
+    end;
+  //Delete the temp file stored in the MH dll for any MH tests names left in the temp array
+  if MHKillArray.Count > 0 then
+    begin
+      for I := 0 to MHKillArray.Count - 1 do
+        begin
+          if MHKillArray.Strings[i] <> '' then RemoveMHTest(MHKillArray.Strings[i]);
+        end;
+    end;
+  if Assigned(MHKillArray) then FreeandNil(MHKillArray);
 end;
 
 procedure TfrmRemDlg.BuildControls;
@@ -747,8 +824,7 @@ begin
         OK := TRUE;
       if(OK) then
       begin
-        FReminder.ClearMHTest(FReminder.IEN);
-        if (FReminder.MHTestArray <> nil) and (FReminder.MHTestArray.Count = 0) then FReminder.MHTestArray.Free;
+        ClearMHTest(Freminder.IEN);
         RemindersInProcess.Delete(i);
         Tmp := (FReminder as TReminder).RemData; // clear should never be active if template
         TmpNode := (FReminder as TReminder).CurrentNodeID;
@@ -781,17 +857,30 @@ function TfrmRemDlg.KillAll: boolean;
 var
   i, cnt: integer;
   msg, RemWipe: string;
-  ClearMH: boolean;
+  //ClearMH: boolean;
 
 begin
  //AGP 25.11 Added RemWipe section to cancel button to
  //flag the patient specific dialog to be destroy if not in process.
  RemWipe := '';
- ClearMH := false;
+ //ClearMH := false;
+  if frmFrame.TimedOut = True then
+     begin
+       result := True;
+       Exit;
+     end;
   if FProcessingTemplate or FSilent then
     begin
       Result := TRUE;
       if FReminder.RemWipe = 1 then RemWipe := Piece(FReminder.DlgData,U,1);
+      if (FProcessingTemplate) and (FReminder.Processing) then
+          begin
+            msg := msg + '  ' + FReminder.PrintName + CRLF;
+            msg := 'The Following Reminders are being processed:' + CRLF + CRLF + msg;
+            msg := msg + CRLF + 'Canceling will cause all processing information to be lost.' + CRLF +
+                          'Do you still want to cancel out of reminder processing?';
+            Result := (InfoBox(msg, 'Cancel Reminder Processing', MB_YESNO or MB_DEFBUTTON2) = ID_YES);
+          end;
     end
   else
   begin
@@ -799,7 +888,6 @@ begin
     cnt := 0;
     for i := 0 to RemindersInProcess.Count-1 do
     begin
-      //if Piece(TReminder(RemindersInProcess.Objects[i]).RemData,U,11)='1' then
       if TReminderDialog(TReminder(RemindersInProcess.Objects[i])).RemWipe = 1 then
           begin
              if RemWipe ='' then RemWipe := TReminder(RemindersInProcess.Objects[i]).IEN
@@ -826,24 +914,36 @@ begin
   end;
   if(Result) then
     begin
-      for i := 0 to RemindersInProcess.Count - 1 do
+      if FProcessingTemplate or FSilent then
         begin
-          if (TReminderDialog(TReminder(RemindersInProcess.Objects[i])).MHTestArray <> nil) and
-             (TReminderDialog(TReminder(RemindersInProcess.Objects[i])).MHTestArray.Count > 0) then
-             begin
-               if ClearMH = false then
-                 begin
-                   RemoveMHTest('');
-                   ClearMH := true;
-                 end;
-                TReminderDialog(TReminder(RemindersInProcess.Objects[i])).MHTestArray.Free;
-             end;
+          if (FReminder.MHTestArray <> nil) and (FReminder.MHTestArray.Count > 0) then
+            begin
+             (* if ClearMH = false then
+                begin
+                  RemoveMHTest('');
+                  ClearMH := true;
+                end; *)
+              RemoveMHTest('');
+              FReminder.MHTestArray.Free;
+            end;
+        end
+      else
+        begin
+          for i := 0 to RemindersInProcess.Count - 1 do
+            begin
+              if (TReminderDialog(TReminder(RemindersInProcess.Objects[i])).MHTestArray <> nil) and
+                 (TReminderDialog(TReminder(RemindersInProcess.Objects[i])).MHTestArray.Count > 0) then
+                begin
+                  (*if ClearMH = false then
+                    begin
+                      RemoveMHTest('');
+                      ClearMH := true;
+                    end;  *)
+                  RemoveMHTest('');
+                  TReminderDialog(TReminder(RemindersInProcess.Objects[i])).MHTestArray.Free;
+                end;
+            end;
         end;
-      (* if (FReminder.MHTestArray <> nil) and (FReminder.MHTestArray.Count > 0) then
-         begin
-           RemoveMHTest('');
-           FReminder.MHTestArray.Free;
-         end; *)
     ResetProcessing(RemWipe);
   end;
 end;
@@ -1750,6 +1850,8 @@ begin
   Top := RemDlgTop;
   Width := RemDlgWidth;
   Height := RemDlgHeight;
+  pnlFrmBottom.Height := RemDlgSpltr1 + lblFootnotes.Height;
+  reData.Height := RemDlgSpltr2;
 end;
 
 initialization

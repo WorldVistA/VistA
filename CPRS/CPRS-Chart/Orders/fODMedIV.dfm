@@ -4,7 +4,7 @@ inherited frmODMedIV: TfrmODMedIV
   Width = 668
   Height = 465
   Caption = 'Infusion Order'
-  Constraints.MinHeight = 350
+  Constraints.MinHeight = 360
   Constraints.MinWidth = 500
   ExplicitWidth = 668
   ExplicitHeight = 465
@@ -26,14 +26,14 @@ inherited frmODMedIV: TfrmODMedIV
   end
   object lblComponent: TLabel [2]
     Left = 214
-    Top = 7
+    Top = 6
     Width = 85
     Height = 13
     Caption = 'Solution/Additive*'
   end
   object lblAmount: TLabel [3]
     Left = 328
-    Top = 7
+    Top = 6
     Width = 84
     Height = 13
     Caption = 'Volume/Strength*'
@@ -54,11 +54,11 @@ inherited frmODMedIV: TfrmODMedIV
     Caption = 'Duration or Total Volume (Optional)'
   end
   object Label1: TLabel [6]
-    Left = 8
-    Top = 344
-    Width = 133
+    Left = 10
+    Top = 345
+    Width = 44
     Height = 13
-    Caption = ' * Indicates a Required Field'
+    Caption = 'Order Sig'
   end
   object lblRoute: TLabel [7]
     Left = 8
@@ -130,17 +130,31 @@ inherited frmODMedIV: TfrmODMedIV
     ShowHint = False
     OnClick = lblTypeHelpClick
   end
-  object txtRate: TCaptionEdit [13]
+  object lblAddFreq: TLabel [13]
+    Left = 488
+    Top = 6
+    Width = 95
+    Height = 13
+    Caption = 'Additive Frequency*'
+  end
+  object lblPrevAddFreq: TLabel [14]
+    Left = 557
+    Top = 6
+    Width = 77
+    Height = 13
+    Caption = 'Prev. Add. Freq.'
+  end
+  object txtRate: TCaptionEdit [15]
     Left = 486
     Top = 211
     Width = 91
     Height = 21
     AutoSelect = False
-    TabOrder = 8
+    TabOrder = 10
     OnChange = txtRateChange
     Caption = 'Infusion Rate'
   end
-  object cboPriority: TORComboBox [14]
+  object cboPriority: TORComboBox [16]
     Left = 8
     Top = 252
     Width = 72
@@ -160,40 +174,40 @@ inherited frmODMedIV: TfrmODMedIV
     Pieces = '2'
     Sorted = False
     SynonymChars = '<>'
-    TabOrder = 10
+    TabOrder = 12
     OnChange = cboPriorityChange
     OnExit = cboPriorityExit
+    OnKeyUp = cboPriorityKeyUp
     CharsNeedMatch = 1
   end
-  object grdSelected: TCaptionStringGrid [15]
-    Left = 214
-    Top = 21
+  object grdSelected: TCaptionStringGrid [17]
+    Left = 215
+    Top = 18
     Width = 437
     Height = 76
-    ColCount = 3
     DefaultColWidth = 100
     DefaultRowHeight = 19
+    DefaultDrawing = False
     FixedCols = 0
     RowCount = 1
     FixedRows = 0
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goDrawFocusSelected]
     ScrollBars = ssVertical
-    TabOrder = 1
+    TabOrder = 2
     OnDrawCell = grdSelectedDrawCell
     OnKeyPress = grdSelectedKeyPress
     OnMouseDown = grdSelectedMouseDown
-    Caption = 'Selected Solution and Additives'
   end
-  object cmdRemove: TButton [16]
+  object cmdRemove: TButton [18]
     Left = 443
     Top = 100
     Width = 72
     Height = 18
     Caption = 'Remove'
-    TabOrder = 2
+    TabOrder = 3
     OnClick = cmdRemoveClick
   end
-  object memComments: TCaptionMemo [17]
+  object memComments: TCaptionMemo [19]
     Left = 214
     Top = 121
     Width = 437
@@ -201,11 +215,11 @@ inherited frmODMedIV: TfrmODMedIV
     Lines.Strings = (
       'memComments')
     ScrollBars = ssVertical
-    TabOrder = 13
+    TabOrder = 4
     OnChange = ControlChange
     Caption = 'Comments'
   end
-  object txtSelected: TCaptionEdit [18]
+  object txtSelected: TCaptionEdit [20]
     Tag = -1
     Left = 416
     Top = 45
@@ -218,11 +232,12 @@ inherited frmODMedIV: TfrmODMedIV
     Visible = False
     OnChange = txtSelectedChange
     OnExit = txtSelectedExit
+    OnKeyDown = txtSelectedKeyDown
     Caption = 'Volume'
   end
-  object cboSelected: TCaptionComboBox [19]
+  object cboSelected: TCaptionComboBox [21]
     Tag = -1
-    Left = 460
+    Left = 462
     Top = 45
     Width = 53
     Height = 21
@@ -230,27 +245,26 @@ inherited frmODMedIV: TfrmODMedIV
     Ctl3D = False
     ItemHeight = 13
     ParentCtl3D = False
-    TabOrder = 4
+    TabOrder = 6
     Visible = False
-    OnChange = cboSelectedChange
-    OnExit = cboSelectedExit
+    OnCloseUp = cboSelectedCloseUp
+    OnKeyDown = cboSelectedKeyDown
     Caption = 'Volume/Strength'
   end
   inherited memOrder: TCaptionMemo
-    Top = 359
+    Top = 364
     Width = 475
-    TabStop = True
-    TabOrder = 16
-    ExplicitTop = 359
+    TabOrder = 17
+    ExplicitTop = 364
     ExplicitWidth = 475
   end
-  object pnlXDuration: TPanel [21]
+  object pnlXDuration: TPanel [23]
     Left = 184
     Top = 252
     Width = 150
     Height = 21
     BevelOuter = bvNone
-    TabOrder = 11
+    TabOrder = 13
     OnEnter = pnlXDurationEnter
     object txtXDuration: TCaptionEdit
       Left = 0
@@ -260,7 +274,6 @@ inherited frmODMedIV: TfrmODMedIV
       TabOrder = 0
       OnChange = txtXDurationChange
       OnExit = txtXDurationExit
-      Caption = 'Duration'
     end
     object cboDuration: TComboBox
       Left = 70
@@ -268,18 +281,18 @@ inherited frmODMedIV: TfrmODMedIV
       Width = 75
       Height = 21
       ItemHeight = 13
-      TabOrder = 2
+      TabOrder = 1
       OnChange = cboDurationChange
       OnEnter = cboDurationEnter
     end
   end
-  object pnlCombo: TPanel [22]
+  object pnlCombo: TPanel [24]
     Left = 8
     Top = 2
     Width = 200
     Height = 185
     BevelOuter = bvNone
-    TabOrder = 25
+    TabOrder = 26
     object cboAdditive: TORComboBox
       Left = 0
       Top = 20
@@ -302,7 +315,7 @@ inherited frmODMedIV: TfrmODMedIV
       Sorted = False
       SynonymChars = '<>'
       TabPositions = '20'
-      TabOrder = 0
+      TabOrder = 1
       OnExit = cboAdditiveExit
       OnMouseClick = cboAdditiveMouseClick
       OnNeedData = cboAdditiveNeedData
@@ -320,7 +333,6 @@ inherited frmODMedIV: TfrmODMedIV
         '   Solutions   '
         '   Additives   ')
       TabIndex = 0
-      TabStop = False
       OnChange = tabFluidChange
     end
     object cboSolution: TORComboBox
@@ -345,14 +357,14 @@ inherited frmODMedIV: TfrmODMedIV
       Sorted = False
       SynonymChars = '<>'
       TabPositions = '20'
-      TabOrder = 1
+      TabOrder = 0
       OnExit = cboSolutionExit
       OnMouseClick = cboSolutionMouseClick
       OnNeedData = cboSolutionNeedData
       CharsNeedMatch = 1
     end
   end
-  object cboRoute: TORComboBox [23]
+  object cboRoute: TORComboBox [25]
     Left = 8
     Top = 211
     Width = 168
@@ -371,14 +383,16 @@ inherited frmODMedIV: TfrmODMedIV
     Pieces = '2'
     Sorted = False
     SynonymChars = '<>'
-    TabOrder = 3
+    TabOrder = 5
     OnChange = cboRouteChange
     OnClick = cboRouteClick
     OnExit = cboRouteExit
+    OnKeyDown = cboRouteKeyDown
+    OnKeyUp = cboRouteKeyUp
     CharsNeedMatch = 1
     UniqueAutoComplete = True
   end
-  object cboSchedule: TORComboBox [24]
+  object cboSchedule: TORComboBox [26]
     Left = 304
     Top = 211
     Width = 129
@@ -397,14 +411,16 @@ inherited frmODMedIV: TfrmODMedIV
     Pieces = '1'
     Sorted = True
     SynonymChars = '<>'
-    TabOrder = 6
+    TabOrder = 8
     OnChange = cboScheduleChange
     OnClick = cboScheduleClick
     OnExit = cboScheduleExit
+    OnKeyDown = cboScheduleKeyDown
+    OnKeyUp = cboScheduleKeyUp
     CharsNeedMatch = 1
     UniqueAutoComplete = True
   end
-  object cboType: TComboBox [25]
+  object cboType: TComboBox [27]
     Left = 184
     Top = 211
     Width = 114
@@ -412,19 +428,20 @@ inherited frmODMedIV: TfrmODMedIV
     ItemHeight = 13
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 5
+    TabOrder = 7
     OnChange = cboTypeChange
+    OnKeyDown = cboTypeKeyDown
   end
-  object chkPRN: TCheckBox [26]
+  object chkPRN: TCheckBox [28]
     Left = 436
     Top = 213
     Width = 45
     Height = 21
     Caption = 'PRN'
-    TabOrder = 7
+    TabOrder = 9
     OnClick = chkPRNClick
   end
-  object chkDoseNow: TCheckBox [27]
+  object chkDoseNow: TCheckBox [29]
     Left = 8
     Top = 279
     Width = 147
@@ -432,20 +449,20 @@ inherited frmODMedIV: TfrmODMedIV
     Anchors = [akLeft]
     Caption = 'Give Additional Dose Now'
     Constraints.MinWidth = 147
-    TabOrder = 12
+    TabOrder = 14
     OnClick = chkDoseNowClick
   end
-  object cboInfusionTime: TComboBox [28]
+  object cboInfusionTime: TComboBox [30]
     Left = 576
     Top = 211
     Width = 74
     Height = 21
     ItemHeight = 13
-    TabOrder = 9
+    TabOrder = 11
     OnChange = cboInfusionTimeChange
     OnEnter = cboInfusionTimeEnter
   end
-  object lblAdminTime: TVA508StaticText [29]
+  object lblAdminTime: TVA508StaticText [31]
     Name = 'lblAdminTime'
     Left = 8
     Top = 308
@@ -454,52 +471,76 @@ inherited frmODMedIV: TfrmODMedIV
     Alignment = taLeftJustify
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 14
+    TabOrder = 15
     TabStop = True
     Visible = False
     ShowAccelChar = True
   end
-  object lblFirstDose: TVA508StaticText [30]
+  object lblFirstDose: TVA508StaticText [32]
     Name = 'lblFirstDose'
     Left = 8
     Top = 323
     Width = 4
     Height = 4
     Alignment = taLeftJustify
-    TabOrder = 15
+    TabOrder = 16
     TabStop = True
     Visible = False
     ShowAccelChar = True
   end
+  object cboAddFreq: TCaptionComboBox [33]
+    Left = 488
+    Top = 72
+    Width = 145
+    Height = 21
+    ItemHeight = 13
+    TabOrder = 25
+    Visible = False
+    OnCloseUp = cboAddFreqCloseUp
+    OnKeyDown = cboAddFreqKeyDown
+  end
   inherited cmdAccept: TButton
     Left = 495
-    Top = 359
-    TabOrder = 17
+    Top = 364
+    TabOrder = 18
     ExplicitLeft = 495
-    ExplicitTop = 359
+    ExplicitTop = 364
   end
   inherited cmdQuit: TButton
     Left = 495
-    Top = 386
-    TabOrder = 18
+    Top = 391
+    TabOrder = 19
     ExplicitLeft = 495
-    ExplicitTop = 386
+    ExplicitTop = 391
   end
   inherited pnlMessage: TPanel
     Left = 56
-    Top = 349
-    TabOrder = 19
+    Top = 341
+    TabOrder = 20
     ExplicitLeft = 56
-    ExplicitTop = 349
+    ExplicitTop = 341
+  end
+  object lbl508Required: TVA508StaticText [37]
+    Name = 'lbl508Required'
+    Left = 6
+    Top = 318
+    Width = 135
+    Height = 15
+    Alignment = taLeftJustify
+    Caption = ' * Indicates a Required Field'
+    TabOrder = 1
+    ShowAccelChar = True
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
       (
         'Component = txtRate'
-        'Status = stsDefault')
+        'Label = lblInfusionRate'
+        'Status = stsOK')
       (
         'Component = cboPriority'
-        'Status = stsDefault')
+        'Label = lblPriority'
+        'Status = stsOK')
       (
         'Component = grdSelected'
         'Status = stsDefault')
@@ -520,7 +561,8 @@ inherited frmODMedIV: TfrmODMedIV
         'Status = stsDefault')
       (
         'Component = txtXDuration'
-        'Status = stsDefault')
+        'Label = lblLimit'
+        'Status = stsOK')
       (
         'Component = pnlCombo'
         'Status = stsDefault')
@@ -535,13 +577,16 @@ inherited frmODMedIV: TfrmODMedIV
         'Status = stsDefault')
       (
         'Component = cboRoute'
-        'Status = stsDefault')
+        'Label = lblRoute'
+        'Status = stsOK')
       (
         'Component = cboSchedule'
-        'Status = stsDefault')
+        'Label = lblSchedule'
+        'Status = stsOK')
       (
         'Component = cboType'
-        'Status = stsDefault')
+        'Label = lblType'
+        'Status = stsOK')
       (
         'Component = chkPRN'
         'Status = stsDefault')
@@ -550,7 +595,8 @@ inherited frmODMedIV: TfrmODMedIV
         'Status = stsDefault')
       (
         'Component = memOrder'
-        'Status = stsDefault')
+        'Label = Label1'
+        'Status = stsOK')
       (
         'Component = cmdAccept'
         'Status = stsDefault')
@@ -568,15 +614,53 @@ inherited frmODMedIV: TfrmODMedIV
         'Status = stsDefault')
       (
         'Component = cboInfusionTime'
-        'Status = stsDefault')
+        'Text = Infusion Rate Time'
+        'Status = stsOK')
       (
         'Component = cboDuration'
-        'Status = stsDefault')
+        'Text = Duration/Volume Units'
+        'Status = stsOK')
       (
         'Component = lblAdminTime'
         'Status = stsDefault')
       (
         'Component = lblFirstDose'
+        'Status = stsDefault')
+      (
+        'Component = cboAddFreq'
+        'Status = stsDefault')
+      (
+        'Component = lbl508Required'
         'Status = stsDefault'))
+  end
+  object VA508CompOrderSig: TVA508ComponentAccessibility
+    Component = memOrder
+    OnStateQuery = VA508CompOrderSigStateQuery
+    Left = 24
+    Top = 368
+  end
+  object VA508CompRoute: TVA508ComponentAccessibility
+    Component = cboRoute
+    OnInstructionsQuery = VA508CompRouteInstructionsQuery
+    Left = 104
+    Top = 240
+  end
+  object VA508CompType: TVA508ComponentAccessibility
+    Component = cboType
+    OnInstructionsQuery = VA508CompTypeInstructionsQuery
+    Left = 224
+    Top = 280
+  end
+  object VA508CompSchedule: TVA508ComponentAccessibility
+    Component = cboSchedule
+    OnInstructionsQuery = VA508CompScheduleInstructionsQuery
+    Left = 384
+    Top = 240
+  end
+  object VA508CompGrdSelected: TVA508ComponentAccessibility
+    Component = grdSelected
+    OnCaptionQuery = VA508CompGrdSelectedCaptionQuery
+    Left = 288
+    Top = 64
   end
 end

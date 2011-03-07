@@ -8,6 +8,7 @@ inherited frmIVRoutes: TfrmIVRoutes
   Constraints.MinWidth = 220
   Font.Name = 'Tahoma'
   OldCreateOrder = False
+  OnCreate = FormCreate
   ExplicitWidth = 230
   ExplicitHeight = 366
   DesignSize = (

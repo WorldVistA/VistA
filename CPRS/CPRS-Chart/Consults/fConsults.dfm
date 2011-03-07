@@ -10,7 +10,7 @@ inherited frmConsults: TfrmConsults
   OnHide = FormHide
   OnShow = FormShow
   ExplicitWidth = 723
-  ExplicitHeight = 467
+  ExplicitHeight = 475
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
@@ -659,6 +659,11 @@ inherited frmConsults: TfrmConsults
       Caption = 'Edit Encounter Information'
       ShortCut = 16453
       OnClick = cmdPCEClick
+    end
+    object popNoteMemoViewCslt: TMenuItem
+      Caption = 'View Consult Details'
+      ShortCut = 24661
+      OnClick = popNoteMemoViewCsltClick
     end
   end
   object popConsultList: TPopupMenu

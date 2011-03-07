@@ -33,24 +33,26 @@ inherited frmODMisc: TfrmODMisc
     Caption = 'Instructions'
   end
   inherited memOrder: TCaptionMemo
-    TabOrder = 6
-  end
-  inherited cmdAccept: TButton
-    TabOrder = 4
-  end
-  inherited cmdQuit: TButton
+    TabStop = False
     TabOrder = 5
   end
-  inherited pnlMessage: TPanel
+  inherited cmdAccept: TButton
+    TabOrder = 6
+  end
+  inherited cmdQuit: TButton
     TabOrder = 7
   end
+  inherited pnlMessage: TPanel
+    TabOrder = 1
+  end
   object cboCare: TORComboBox [8]
-    Left = 6
-    Top = 20
+    Left = 8
+    Top = 25
     Width = 292
     Height = 21
     Style = orcsDropDown
     AutoSelect = True
+    Caption = 'Patient Care'
     Color = clWindow
     DropDownCount = 8
     ItemHeight = 13
@@ -74,7 +76,7 @@ inherited frmODMisc: TfrmODMisc
     Top = 114
     Width = 140
     Height = 21
-    TabOrder = 2
+    TabOrder = 3
     Text = 'Now'
     OnChange = ControlChange
     DateOnly = False
@@ -86,7 +88,7 @@ inherited frmODMisc: TfrmODMisc
     Top = 114
     Width = 140
     Height = 21
-    TabOrder = 3
+    TabOrder = 4
     OnChange = ControlChange
     DateOnly = False
     RequireTime = False
@@ -97,7 +99,7 @@ inherited frmODMisc: TfrmODMisc
     Top = 67
     Width = 508
     Height = 21
-    TabOrder = 1
+    TabOrder = 2
     OnChange = ControlChange
     Caption = 'Instructions'
   end

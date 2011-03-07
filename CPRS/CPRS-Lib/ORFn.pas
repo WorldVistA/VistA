@@ -35,11 +35,13 @@ procedure SetListFMDateTime(AFormat: string; AList: TStringList; ADelim: Char;
 function HigherOf(i, j: Integer): Integer;
 function LowerOf(i, j: Integer): Integer;
 function StrToFloatDef(const S: string; ADefault: Extended): Extended;
+function RectContains(Rect: TRect; Point: TPoint): boolean;
 
 { String functions }
 function CharAt(const x: string; APos: Integer): Char;
 function ContainsAlpha(const x: string): Boolean;
 function ContainsVisibleChar(const x: string): Boolean;
+function ContainsUpCarretChar(const x: string): Boolean;
 function ConvertSpecialStrings(const x: string): String;
 function CRCForFile(AFileName: string): DWORD;
 function CRCForStrings(AStringList: TStrings): DWORD;
@@ -117,16 +119,19 @@ function ListGridRowHeight(AListBox: TListBox; AHeader: THeaderControl; ARow, AC
   const x: string): Integer;
 
 { Misc functions }
+function CPRSInstances: integer;
 { You MUST pass an address to an object variable to get KillObj to work }
 procedure KillObj(ptr: Pointer; KillObjects: boolean = FALSE);
 
 { do NOT use CallWhenIdle to call RPCs.  Use CallRPCWhenIdle in ORNet }
 procedure CallWhenIdle(CallProc: TORIdleCallProc; Msg: String);
 procedure CallWhenIdleNotifyWhenDone(CallProc, DoneProc: TORIdleCallProc; Msg: String);
+
 procedure menuHideAllBut(aMenuItem: tMenuItem; butItems: array of tMenuItem);
 function TabIsPressed : Boolean;
 function ShiftTabIsPressed : Boolean;
 function EnterIsPressed : Boolean;
+procedure ScrollControl(Window: TScrollingWinControl; ScrollingUp: boolean; Amount: integer = 40);
 
 implementation  // ---------------------------------------------------------------------------
 
@@ -386,6 +391,14 @@ begin
     Result := ADefault;
 end;
 
+function RectContains(Rect: TRect; Point: TPoint): boolean;
+begin
+  Result := ((Point.X >= Rect.Left) and 
+             (Point.X <= Rect.Right) and
+             (Point.Y >= Rect.Top) and
+             (Point.Y <= Rect.Bottom));
+end;
+
 { String functions }
 
 function CharAt(const x: string; APos: Integer): Char;
@@ -414,6 +427,19 @@ var
 begin
   Result := False;
   for i := 1 to Length(x) do if x[i] in ['!'..'~'] then  // ordinal values 33..126
+  begin
+    Result := True;
+    break;
+  end;
+end;   
+
+function ContainsUpCarretChar(const x: string): Boolean;
+{ returns true if the string contains the ^ character }
+var
+  i: Integer;
+begin
+  Result := False;
+  for i := 1 to Length(x) do if x[i] = '^' then  // ordinal values 33..126
   begin
     Result := True;
     break;
@@ -2021,6 +2047,33 @@ begin
 end;
 *)
 
+function CPRSInstances: integer;
+// returns the number of CPRS sessions open
+var
+  AHandle: hWnd;
+  LengthText, LengthConst, counter: Integer;
+  CharText: array [0..254] of Char;
+  TitleText, TitleCompare: string;
+const
+  TX_IN_USE = 'VistA CPRS in use by: '; // use same as in fFrame
+begin
+  counter := 0;
+  LengthConst := length(TX_IN_USE);
+  AHandle := FindWindow(nil, nil);
+  while AHandle <> 0 do begin
+    LengthText := GetWindowText(AHandle, CharText, 255);
+    if LengthText > 0 then
+    begin
+      TitleText := CharText;
+      TitleCompare := copy(TitleText, 1, LengthConst);
+      if TitleCompare = TX_IN_USE then
+        counter := counter + 1;
+    end;
+    AHandle := GetWindow(AHandle, GW_HWNDNEXT);
+  end;
+  Result := counter;
+end;
+
 { You MUST pass an address to an object variable to get KillObj to work }
 procedure KillObj(ptr: Pointer; KillObjects: boolean = FALSE);
 var
@@ -2194,6 +2247,48 @@ end;
 function EnterIsPressed : Boolean;
 begin
   Result := Boolean(Hi(GetKeyState(VK_RETURN)));
+end;
+
+procedure ScrollControl(Window: TScrollingWinControl; ScrollingUp: boolean; Amount: integer = 40);
+var
+  Delta: integer;
+
+  // This is needed to tell the child components that they are moving,
+  // The TORCombo box, for example, needs to close a dropped down window when it moves.
+  // If Delphi had used standard scroll bars, instead of the customized flat ones, this
+  // code wouldn't be needed
+  procedure SendMoveMessage(Ctrl: TWinControl);
+  var
+    i: integer;
+  begin
+    for i := 0 to Ctrl.ControlCount - 1 do
+    begin
+      if Ctrl.Controls[i] is TWinControl then with TWinControl(Ctrl.Controls[i]) do
+      begin
+        SendMessage(Handle, WM_MOVE, 0, (Top * 65536) + Left);
+        SendMoveMessage(TWinControl(Ctrl.Controls[i]));
+      end;
+    end;
+  end;
+  
+begin
+  Delta := Amount;
+  if ScrollingUp then
+  begin
+    if Window.VertScrollBar.Position < Delta then
+      Delta := Window.VertScrollBar.Position;
+    Delta := - Delta;
+  end
+  else
+  begin
+    if (Window.VertScrollBar.Range - Window.VertScrollBar.Position) < Delta then
+      Delta := Window.VertScrollBar.Range - Window.VertScrollBar.Position;
+  end;
+  if Delta <> 0 then
+  begin
+    Window.VertScrollBar.Position := Window.VertScrollBar.Position + Delta;
+    SendMoveMessage(Window);
+  end;
 end;
 
 initialization

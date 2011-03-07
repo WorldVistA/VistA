@@ -6,6 +6,8 @@ inherited frmCover: TfrmCover
   Caption = 'Cover Sheet'
   HelpFile = 'overvw'
   OnDestroy = FormDestroy
+  ExplicitWidth = 648
+  ExplicitHeight = 395
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TPanel [1]
@@ -629,5 +631,13 @@ inherited frmCover: TfrmCover
       Caption = 'Mark patient as having "No Known Allergies" (NKA)'
       OnClick = popNKAClick
     end
+  end
+  object VA508ComponentAccessibility1: TVA508ComponentAccessibility
+    Component = lst_2
+    Instructions = 
+      'To move to an item use the arrow keys or press the context key t' +
+      'o access more options such as entering a new allergy.'
+    Left = 360
+    Top = 48
   end
 end

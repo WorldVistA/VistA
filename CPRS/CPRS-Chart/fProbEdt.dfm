@@ -10,6 +10,8 @@ inherited frmdlgProb: TfrmdlgProb
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
+  ExplicitWidth = 504
+  ExplicitHeight = 392
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel [0]
@@ -43,7 +45,7 @@ inherited frmdlgProb: TfrmdlgProb
     Height = 131
     Align = alClient
     BevelOuter = bvNone
-    TabOrder = 5
+    TabOrder = 1
     DesignSize = (
       496
       131)
@@ -115,7 +117,7 @@ inherited frmdlgProb: TfrmdlgProb
       Caption = 'Remove comment'
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 2
+      TabOrder = 3
       OnClick = bbRemoveClick
       Layout = blGlyphBottom
       NumGlyphs = 2
@@ -130,7 +132,7 @@ inherited frmdlgProb: TfrmdlgProb
       ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 3
+      TabOrder = 4
       Caption = 'Comments'
       ItemTipColor = clWindow
       LongList = True
@@ -148,7 +150,7 @@ inherited frmdlgProb: TfrmdlgProb
       Caption = 'Edit comment'
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 6
+      TabOrder = 2
       OnClick = bbEditClick
       Layout = blGlyphBottom
       NumGlyphs = 2
@@ -161,7 +163,7 @@ inherited frmdlgProb: TfrmdlgProb
     Height = 27
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 2
+    TabOrder = 4
     DesignSize = (
       496
       27)
@@ -170,11 +172,12 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 4
       Width = 78
       Height = 21
+      Hint = 'Cancel problem update...'
       Anchors = [akTop, akRight]
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
-      TabOrder = 0
+      TabOrder = 3
       OnClick = bbQuitClick
       Layout = blGlyphBottom
       NumGlyphs = 2
@@ -184,11 +187,12 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 4
       Width = 78
       Height = 21
+      Hint = 'Submit problem update...'
       Anchors = [akTop, akRight]
       Caption = 'OK'
       Default = True
       ModalResult = 1
-      TabOrder = 1
+      TabOrder = 2
       OnClick = bbFileClick
       Layout = blGlyphBottom
       NumGlyphs = 2
@@ -200,18 +204,18 @@ inherited frmdlgProb: TfrmdlgProb
       Height = 15
       TabStop = False
       Caption = 'Problem Verified'
-      TabOrder = 2
+      TabOrder = 0
       Visible = False
     end
     object edRecDate: TCaptionEdit
-      Left = 145
-      Top = 7
+      Left = 151
+      Top = 6
       Width = 94
       Height = 21
       TabStop = False
       Color = clInactiveCaptionText
       Enabled = False
-      TabOrder = 3
+      TabOrder = 1
       Text = 'Today'
       Visible = False
       OnChange = ControlChange
@@ -226,7 +230,7 @@ inherited frmdlgProb: TfrmdlgProb
     TabStop = False
     Color = clInactiveCaptionText
     Enabled = False
-    TabOrder = 0
+    TabOrder = 2
     Text = 'Today'
     Visible = False
     OnChange = ControlChange
@@ -240,7 +244,7 @@ inherited frmdlgProb: TfrmdlgProb
     TabStop = False
     Color = clInactiveCaptionText
     Enabled = False
-    TabOrder = 1
+    TabOrder = 3
     Text = 'Today'
     Visible = False
     OnChange = ControlChange
@@ -253,7 +257,7 @@ inherited frmdlgProb: TfrmdlgProb
     Height = 200
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 6
+    TabOrder = 0
     DesignSize = (
       496
       200)
@@ -314,7 +318,7 @@ inherited frmdlgProb: TfrmdlgProb
       Items.Strings = (
         'Active'
         'Inactive')
-      TabOrder = 0
+      TabOrder = 2
       TabStop = True
       OnClick = rgStatusClick
     end
@@ -331,7 +335,7 @@ inherited frmdlgProb: TfrmdlgProb
         'Chronic'
         '<unknown>')
       ParentCtl3D = False
-      TabOrder = 1
+      TabOrder = 3
       TabStop = True
       OnClick = ControlChange
     end
@@ -342,7 +346,7 @@ inherited frmdlgProb: TfrmdlgProb
       Height = 21
       Anchors = [akTop, akRight]
       Caption = 'Change problem...'
-      TabOrder = 2
+      TabOrder = 1
       OnClick = bbChangeProbClick
       Layout = blGlyphBottom
     end
@@ -351,9 +355,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 19
       Width = 296
       Height = 21
+      Hint = 'Problem Name'
       Anchors = [akLeft, akTop, akRight]
       ReadOnly = True
-      TabOrder = 3
+      TabOrder = 0
       Text = 'Problem Title'
       OnChange = ControlChange
       Caption = 'Activity'
@@ -365,7 +370,7 @@ inherited frmdlgProb: TfrmdlgProb
       Height = 142
       Anchors = [akTop, akRight]
       Caption = 'Treatment Factors'
-      TabOrder = 5
+      TabOrder = 8
       DesignSize = (
         181
         142)
@@ -388,7 +393,7 @@ inherited frmdlgProb: TfrmdlgProb
         Anchors = [akTop, akRight]
         Caption = 'Radiation '
         Enabled = False
-        TabOrder = 1
+        TabOrder = 2
         OnClick = ControlChange
       end
       object ckAO: TCheckBox
@@ -399,7 +404,7 @@ inherited frmdlgProb: TfrmdlgProb
         Anchors = [akTop, akRight]
         Caption = 'Agent Orange '
         Enabled = False
-        TabOrder = 2
+        TabOrder = 1
         OnClick = ControlChange
       end
       object ckENV: TCheckBox
@@ -421,7 +426,7 @@ inherited frmdlgProb: TfrmdlgProb
         Anchors = [akTop, akRight]
         Caption = 'Head and/or Neck Cancer'
         Enabled = False
-        TabOrder = 4
+        TabOrder = 6
         OnClick = ControlChange
       end
       object ckMST: TCheckBox
@@ -441,7 +446,7 @@ inherited frmdlgProb: TfrmdlgProb
         Width = 170
         Height = 17
         Caption = 'Shipboard Hazard and Defense'
-        TabOrder = 6
+        TabOrder = 4
       end
     end
     object cbServ: TORComboBox
@@ -471,15 +476,15 @@ inherited frmdlgProb: TfrmdlgProb
       Pieces = '2'
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 6
+      TabOrder = 7
       Visible = False
       OnChange = ControlChange
       OnNeedData = cbServNeedData
       CharsNeedMatch = 1
     end
     object cbLoc: TORComboBox
-      Left = 186
-      Top = 166
+      Left = 185
+      Top = 168
       Width = 113
       Height = 21
       Anchors = [akLeft, akTop, akRight]
@@ -503,7 +508,7 @@ inherited frmdlgProb: TfrmdlgProb
       Pieces = '2'
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 7
+      TabOrder = 6
       OnChange = ControlChange
       OnClick = cbLocClick
       OnKeyPress = cbLocKeyPress
@@ -537,7 +542,7 @@ inherited frmdlgProb: TfrmdlgProb
       Pieces = '2,3'
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 8
+      TabOrder = 5
       OnChange = ControlChange
       OnClick = cbProvClick
       OnKeyPress = cbProvKeyPress
@@ -550,13 +555,14 @@ inherited frmdlgProb: TfrmdlgProb
       Width = 113
       Height = 21
       Anchors = [akLeft, akTop, akRight]
-      TabOrder = 9
+      TabOrder = 4
       Text = 'Today'
       OnChange = ControlChange
       Caption = 'Date of Onset'
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 472
     Data = (
       (
         'Component = pnlComments'
@@ -566,31 +572,39 @@ inherited frmdlgProb: TfrmdlgProb
         'Status = stsDefault')
       (
         'Component = bbAdd'
-        'Status = stsDefault')
+        'Property = Hint'
+        'Status = stsOK')
       (
         'Component = bbRemove'
-        'Status = stsDefault')
+        'Property = Hint'
+        'Status = stsOK')
       (
         'Component = lstComments'
-        'Status = stsDefault')
+        'Property = Caption'
+        'Status = stsOK')
       (
         'Component = bbEdit'
-        'Status = stsDefault')
+        'Property = Hint'
+        'Status = stsOK')
       (
         'Component = pnlBottom'
         'Status = stsDefault')
       (
         'Component = bbQuit'
-        'Status = stsDefault')
+        'Property = Hint'
+        'Status = stsOK')
       (
         'Component = bbFile'
-        'Status = stsDefault')
+        'Property = Hint'
+        'Status = stsOK')
       (
         'Component = ckVerify'
-        'Status = stsDefault')
+        'Property = Caption'
+        'Status = stsOK')
       (
         'Component = edRecDate'
-        'Status = stsDefault')
+        'Label = Label1'
+        'Status = stsOK')
       (
         'Component = edResDate'
         'Status = stsDefault')
@@ -602,19 +616,24 @@ inherited frmdlgProb: TfrmdlgProb
         'Status = stsDefault')
       (
         'Component = rgStatus'
-        'Status = stsDefault')
+        'Property = Caption'
+        'Status = stsOK')
       (
         'Component = rgStage'
-        'Status = stsDefault')
+        'Property = Caption'
+        'Status = stsOK')
       (
         'Component = bbChangeProb'
-        'Status = stsDefault')
+        'Property = Caption'
+        'Status = stsOK')
       (
         'Component = edProb'
-        'Status = stsDefault')
+        'Property = Hint'
+        'Status = stsOK')
       (
         'Component = gbTreatment'
-        'Status = stsDefault')
+        'Property = Caption'
+        'Status = stsOK')
       (
         'Component = ckSC'
         'Status = stsDefault')
@@ -638,16 +657,20 @@ inherited frmdlgProb: TfrmdlgProb
         'Status = stsDefault')
       (
         'Component = cbServ'
-        'Status = stsDefault')
+        'Property = Caption'
+        'Status = stsOK')
       (
         'Component = cbLoc'
-        'Status = stsDefault')
+        'Label = lblLoc'
+        'Status = stsOK')
       (
         'Component = cbProv'
-        'Status = stsDefault')
+        'Text = Responsible Provider'
+        'Status = stsOK')
       (
         'Component = edOnsetdate'
-        'Status = stsDefault')
+        'Property = Caption'
+        'Status = stsOK')
       (
         'Component = frmdlgProb'
         'Status = stsDefault'))

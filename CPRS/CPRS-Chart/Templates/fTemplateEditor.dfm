@@ -5,7 +5,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   ActiveControl = tvPersonal
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Template Editor'
-  ClientHeight = 450
+  ClientHeight = 562
   ClientWidth = 740
   Position = poScreenCenter
   Scaled = False
@@ -15,7 +15,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   OnDestroy = FormDestroy
   OnShow = FormShow
   ExplicitWidth = 748
-  ExplicitHeight = 477
+  ExplicitHeight = 596
   PixelsPerInch = 96
   TextHeight = 13
   object splMain: TSplitter [0]
@@ -28,262 +28,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     AutoSnap = False
     Beveled = True
     MinSize = 40
+    OnCanResize = splMainCanResize
     OnMoved = splMainMoved
   end
-  object splNotes: TSplitter [1]
-    Left = 0
-    Top = 377
-    Width = 740
-    Height = 3
-    Cursor = crVSplit
-    Align = alBottom
-    AutoSnap = False
-    Beveled = True
-    Visible = False
-    OnMoved = splBoilMoved
-    ExplicitTop = 371
-  end
-  object pnlBottom: TPanel [2]
-    Left = 0
-    Top = 423
-    Width = 740
-    Height = 27
-    Align = alBottom
-    BevelOuter = bvNone
-    TabOrder = 4
-    ExplicitTop = 416
-    DesignSize = (
-      740
-      27)
-    object btnApply: TButton
-      Left = 664
-      Top = 4
-      Width = 75
-      Height = 22
-      Anchors = [akTop, akRight]
-      Caption = 'Apply'
-      ParentShowHint = False
-      ShowHint = False
-      TabOrder = 5
-      OnClick = btnApplyClick
-    end
-    object btnCancel: TButton
-      Left = 584
-      Top = 4
-      Width = 75
-      Height = 22
-      Anchors = [akTop, akRight]
-      Cancel = True
-      Caption = 'Cancel'
-      ModalResult = 2
-      ParentShowHint = False
-      ShowHint = False
-      TabOrder = 4
-      OnClick = btnCancelClick
-    end
-    object btnOK: TButton
-      Left = 504
-      Top = 4
-      Width = 75
-      Height = 22
-      Anchors = [akTop, akRight]
-      Caption = 'OK'
-      ParentShowHint = False
-      ShowHint = False
-      TabOrder = 3
-      OnClick = btnOKClick
-    end
-    object cbEditShared: TCheckBox
-      Left = 0
-      Top = 6
-      Width = 129
-      Height = 17
-      Caption = 'E&dit Shared Templates'
-      TabOrder = 0
-      OnClick = cbEditSharedClick
-    end
-    object cbNotes: TCheckBox
-      Left = 259
-      Top = 6
-      Width = 128
-      Height = 17
-      Hint = 
-        'Keep notes about a template that can be seen from the templates ' +
-        'drawer'
-      Caption = 'Sh&ow Template Notes'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 2
-      OnClick = cbNotesClick
-    end
-    object cbEditUser: TCheckBox
-      Left = 132
-      Top = 6
-      Width = 123
-      Height = 17
-      Caption = 'E&dit User'#39's Templates'
-      TabOrder = 1
-      Visible = False
-      OnClick = cbEditSharedClick
-    end
-  end
-  object pnlBoilerplate: TPanel [3]
-    Left = 0
-    Top = 284
-    Width = 740
-    Height = 93
-    Align = alClient
-    BevelOuter = bvNone
-    TabOrder = 2
-    OnCanResize = pnlBoilerplateCanResize
-    OnResize = pnlBoilerplateResize
-    object splBoil: TSplitter
-      Left = 0
-      Top = 14
-      Width = 740
-      Height = 3
-      Cursor = crVSplit
-      Align = alTop
-      AutoSnap = False
-      Beveled = True
-      Visible = False
-      OnMoved = splBoilMoved
-      ExplicitTop = 43
-    end
-    object reBoil: TRichEdit
-      Left = 0
-      Top = 17
-      Width = 740
-      Height = 30
-      Align = alClient
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Courier New'
-      Font.Style = []
-      Constraints.MinHeight = 30
-      ParentFont = False
-      PlainText = True
-      PopupMenu = popBoilerplate
-      ScrollBars = ssBoth
-      TabOrder = 1
-      WantTabs = True
-      OnChange = reBoilChange
-      OnKeyDown = reBoilKeyDown
-      OnKeyPress = reBoilKeyPress
-      OnKeyUp = reBoilKeyUp
-      OnResizeRequest = reResizeRequest
-      OnSelectionChange = reBoilSelectionChange
-      ExplicitTop = 14
-    end
-    object pnlGroupBP: TPanel
-      Left = 0
-      Top = 47
-      Width = 740
-      Height = 46
-      Align = alBottom
-      BevelOuter = bvNone
-      TabOrder = 2
-      Visible = False
-      object lblGroupBP: TLabel
-        Left = 0
-        Top = 0
-        Width = 740
-        Height = 13
-        Align = alTop
-        Caption = 'Group Boilerplate'
-        ExplicitWidth = 81
-      end
-      object lblGroupRow: TLabel
-        Left = 264
-        Top = 0
-        Width = 23
-        Height = 13
-        Caption = 'Line:'
-      end
-      object lblGroupCol: TLabel
-        Left = 336
-        Top = 0
-        Width = 38
-        Height = 13
-        Caption = 'Column:'
-      end
-      object reGroupBP: TRichEdit
-        Left = 0
-        Top = 16
-        Width = 740
-        Height = 30
-        Align = alClient
-        Color = clCream
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Courier New'
-        Font.Style = []
-        Constraints.MinHeight = 30
-        ParentFont = False
-        PlainText = True
-        PopupMenu = popGroup
-        ReadOnly = True
-        ScrollBars = ssBoth
-        TabOrder = 0
-        WantReturns = False
-        OnSelectionChange = reGroupBPSelectionChange
-      end
-      object pnlGroupBPGap: TPanel
-        Left = 0
-        Top = 13
-        Width = 740
-        Height = 3
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 1
-      end
-    end
-    object pnlBP: TPanel
-      Left = 0
-      Top = 0
-      Width = 740
-      Height = 14
-      Align = alTop
-      BevelOuter = bvNone
-      TabOrder = 0
-      object lblBoilerplate: TLabel
-        Left = 0
-        Top = 0
-        Width = 96
-        Height = 13
-        Caption = 'Template &Boilerplate'
-        FocusControl = reBoil
-      end
-      object lblBoilRow: TLabel
-        Left = 264
-        Top = 0
-        Width = 23
-        Height = 13
-        Caption = 'Line:'
-      end
-      object lblBoilCol: TLabel
-        Left = 336
-        Top = 0
-        Width = 38
-        Height = 13
-        Caption = 'Column:'
-        Color = clBtnFace
-        ParentColor = False
-      end
-      object cbLongLines: TCheckBox
-        Left = 120
-        Top = -2
-        Width = 105
-        Height = 17
-        Caption = 'Allow Lon&g Lines'
-        TabOrder = 0
-        OnClick = cbLongLinesClick
-      end
-    end
-  end
-  object pnlTop: TPanel [4]
+  object pnlTop: TPanel [1]
     Left = 0
     Top = 0
     Width = 740
@@ -1215,8 +963,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Height = 20
           Align = alLeft
           AutoSize = True
-          ButtonHeight = 21
-          ButtonWidth = 43
+          ButtonHeight = 0
+          ButtonWidth = 0
           Caption = 'mbMain'
           Menu = mnuMain
           ShowCaptions = True
@@ -1226,50 +974,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       end
     end
   end
-  object pnlNotes: TPanel [5]
-    Left = 0
-    Top = 380
-    Width = 740
-    Height = 43
-    Align = alBottom
-    BevelOuter = bvNone
-    TabOrder = 3
-    Visible = False
-    object lblNotes: TLabel
-      Left = 0
-      Top = 0
-      Width = 740
-      Height = 13
-      Align = alTop
-      Caption = 'Template Notes:'
-      ExplicitWidth = 78
-    end
-    object reNotes: TRichEdit
-      Left = 0
-      Top = 13
-      Width = 740
-      Height = 30
-      Align = alClient
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Courier New'
-      Font.Style = []
-      Constraints.MinHeight = 30
-      ParentFont = False
-      PlainText = True
-      PopupMenu = popNotes
-      ScrollBars = ssBoth
-      TabOrder = 0
-      WantTabs = True
-      OnChange = reNotesChange
-      OnKeyDown = reBoilKeyDown
-      OnKeyPress = reBoilKeyPress
-      OnKeyUp = reBoilKeyUp
-      OnResizeRequest = reResizeRequest
-    end
-  end
-  object pnlCOM: TPanel [6]
+  object pnlCOM: TPanel [2]
     Left = 0
     Top = 263
     Width = 740
@@ -1334,14 +1039,14 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       CharsNeedMatch = 1
     end
   end
-  object pnlLink: TPanel [7]
+  object pnlLink: TPanel [3]
     Left = 0
     Top = 242
     Width = 740
     Height = 21
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 5
+    TabOrder = 3
     Visible = False
     object lblLink: TLabel
       Left = 0
@@ -1378,9 +1083,323 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       TabPositions = '30,5000'
       TabOrder = 0
       TabStop = True
-      OnChange = cbxLinkChange
+      OnExit = cbxLinkExit
       OnNeedData = cbxLinkNeedData
       CharsNeedMatch = 1
+    end
+  end
+  object Panel1: TPanel [4]
+    Left = 0
+    Top = 284
+    Width = 740
+    Height = 251
+    Align = alClient
+    TabOrder = 4
+    ExplicitLeft = 138
+    ExplicitTop = 221
+    object pnlBoilerplate: TPanel
+      Left = 1
+      Top = 1
+      Width = 738
+      Height = 249
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 0
+      OnCanResize = pnlBoilerplateCanResize
+      OnResize = pnlBoilerplateResize
+      ExplicitLeft = 17
+      ExplicitTop = 2
+      object splBoil: TSplitter
+        Left = 0
+        Top = 14
+        Width = 738
+        Height = 3
+        Cursor = crVSplit
+        Align = alTop
+        AutoSnap = False
+        Beveled = True
+        Visible = False
+        OnMoved = splBoilMoved
+        ExplicitTop = 43
+        ExplicitWidth = 740
+      end
+      object splNotes: TSplitter
+        Left = 0
+        Top = 203
+        Width = 738
+        Height = 3
+        Cursor = crVSplit
+        Align = alBottom
+        AutoSnap = False
+        Beveled = True
+        Visible = False
+        OnMoved = splBoilMoved
+        ExplicitTop = 132
+        ExplicitWidth = 740
+      end
+      object reBoil: TRichEdit
+        Left = 0
+        Top = 17
+        Width = 738
+        Height = 140
+        Align = alClient
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Courier New'
+        Font.Style = []
+        Constraints.MinHeight = 30
+        ParentFont = False
+        PlainText = True
+        PopupMenu = popBoilerplate
+        ScrollBars = ssBoth
+        TabOrder = 1
+        WantTabs = True
+        OnChange = reBoilChange
+        OnKeyDown = reBoilKeyDown
+        OnKeyPress = reBoilKeyPress
+        OnKeyUp = reBoilKeyUp
+        OnResizeRequest = reResizeRequest
+        OnSelectionChange = reBoilSelectionChange
+      end
+      object pnlGroupBP: TPanel
+        Left = 0
+        Top = 157
+        Width = 738
+        Height = 46
+        Align = alBottom
+        BevelOuter = bvNone
+        Constraints.MinHeight = 30
+        TabOrder = 2
+        Visible = False
+        ExplicitLeft = -1
+        ExplicitTop = 154
+        object lblGroupBP: TLabel
+          Left = 0
+          Top = 0
+          Width = 738
+          Height = 13
+          Align = alTop
+          Caption = 'Group Boilerplate'
+          ExplicitWidth = 81
+        end
+        object lblGroupRow: TLabel
+          Left = 264
+          Top = 0
+          Width = 23
+          Height = 13
+          Caption = 'Line:'
+        end
+        object lblGroupCol: TLabel
+          Left = 336
+          Top = 0
+          Width = 38
+          Height = 13
+          Caption = 'Column:'
+        end
+        object reGroupBP: TRichEdit
+          Left = 0
+          Top = 16
+          Width = 738
+          Height = 30
+          Align = alClient
+          Color = clCream
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = []
+          Constraints.MinHeight = 30
+          ParentFont = False
+          PlainText = True
+          PopupMenu = popGroup
+          ReadOnly = True
+          ScrollBars = ssBoth
+          TabOrder = 0
+          WantReturns = False
+          OnSelectionChange = reGroupBPSelectionChange
+        end
+        object pnlGroupBPGap: TPanel
+          Left = 0
+          Top = 13
+          Width = 738
+          Height = 3
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 1
+        end
+      end
+      object pnlBP: TPanel
+        Left = 0
+        Top = 0
+        Width = 738
+        Height = 14
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        object lblBoilerplate: TLabel
+          Left = 0
+          Top = 0
+          Width = 96
+          Height = 13
+          Caption = 'Template &Boilerplate'
+          FocusControl = reBoil
+        end
+        object lblBoilRow: TLabel
+          Left = 264
+          Top = 0
+          Width = 23
+          Height = 13
+          Caption = 'Line:'
+        end
+        object lblBoilCol: TLabel
+          Left = 336
+          Top = 0
+          Width = 38
+          Height = 13
+          Caption = 'Column:'
+          Color = clBtnFace
+          ParentColor = False
+        end
+        object cbLongLines: TCheckBox
+          Left = 120
+          Top = -2
+          Width = 105
+          Height = 17
+          Caption = 'Allow Lon&g Lines'
+          TabOrder = 0
+          OnClick = cbLongLinesClick
+        end
+      end
+      object pnlNotes: TPanel
+        Left = 0
+        Top = 206
+        Width = 738
+        Height = 43
+        Align = alBottom
+        BevelOuter = bvNone
+        Constraints.MinHeight = 30
+        TabOrder = 3
+        Visible = False
+        ExplicitTop = 158
+        object lblNotes: TLabel
+          Left = 0
+          Top = 0
+          Width = 78
+          Height = 13
+          Align = alTop
+          Caption = 'Template Notes:'
+        end
+        object reNotes: TRichEdit
+          Left = 0
+          Top = 13
+          Width = 738
+          Height = 30
+          Align = alClient
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = []
+          Constraints.MinHeight = 30
+          ParentFont = False
+          PlainText = True
+          PopupMenu = popNotes
+          ScrollBars = ssBoth
+          TabOrder = 0
+          WantTabs = True
+          OnChange = reNotesChange
+          OnKeyDown = reBoilKeyDown
+          OnKeyPress = reBoilKeyPress
+          OnKeyUp = reBoilKeyUp
+          OnResizeRequest = reResizeRequest
+        end
+      end
+    end
+  end
+  object pnlBottom: TPanel [5]
+    Left = 0
+    Top = 535
+    Width = 740
+    Height = 27
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 2
+    ExplicitLeft = 40
+    ExplicitTop = 498
+    DesignSize = (
+      740
+      27)
+    object btnApply: TButton
+      Left = 664
+      Top = 4
+      Width = 75
+      Height = 22
+      Anchors = [akTop, akRight]
+      Caption = 'Apply'
+      ParentShowHint = False
+      ShowHint = False
+      TabOrder = 5
+      OnClick = btnApplyClick
+    end
+    object btnCancel: TButton
+      Left = 584
+      Top = 4
+      Width = 75
+      Height = 22
+      Anchors = [akTop, akRight]
+      Cancel = True
+      Caption = 'Cancel'
+      ModalResult = 2
+      ParentShowHint = False
+      ShowHint = False
+      TabOrder = 4
+      OnClick = btnCancelClick
+    end
+    object btnOK: TButton
+      Left = 504
+      Top = 4
+      Width = 75
+      Height = 22
+      Anchors = [akTop, akRight]
+      Caption = 'OK'
+      ParentShowHint = False
+      ShowHint = False
+      TabOrder = 3
+      OnClick = btnOKClick
+    end
+    object cbEditShared: TCheckBox
+      Left = 0
+      Top = 6
+      Width = 129
+      Height = 17
+      Caption = 'E&dit Shared Templates'
+      TabOrder = 0
+      OnClick = cbEditSharedClick
+    end
+    object cbNotes: TCheckBox
+      Left = 259
+      Top = 6
+      Width = 128
+      Height = 17
+      Hint = 
+        'Keep notes about a template that can be seen from the templates ' +
+        'drawer'
+      Caption = 'Sh&ow Template Notes'
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 2
+      OnClick = cbNotesClick
+    end
+    object cbEditUser: TCheckBox
+      Left = 132
+      Top = 6
+      Width = 123
+      Height = 17
+      Caption = 'E&dit User'#39's Templates'
+      TabOrder = 1
+      Visible = False
+      OnClick = cbEditSharedClick
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -1405,29 +1424,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Status = stsDefault')
       (
         'Component = cbEditUser'
-        'Status = stsDefault')
-      (
-        'Component = pnlBoilerplate'
-        'Status = stsDefault')
-      (
-        'Component = reBoil'
-        'Label = lblBoilerplate'
-        'Status = stsOK')
-      (
-        'Component = pnlGroupBP'
-        'Status = stsDefault')
-      (
-        'Component = reGroupBP'
-        'Label = lblGroupBP'
-        'Status = stsOK')
-      (
-        'Component = pnlGroupBPGap'
-        'Status = stsDefault')
-      (
-        'Component = pnlBP'
-        'Status = stsDefault')
-      (
-        'Component = cbLongLines'
         'Status = stsDefault')
       (
         'Component = pnlTop'
@@ -1601,13 +1597,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Component = mbMain'
         'Status = stsDefault')
       (
-        'Component = pnlNotes'
-        'Status = stsDefault')
-      (
-        'Component = reNotes'
-        'Label = lblNotes'
-        'Status = stsOK')
-      (
         'Component = pnlCOM'
         'Status = stsDefault')
       (
@@ -1627,6 +1616,36 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Status = stsOK')
       (
         'Component = frmTemplateEditor'
+        'Status = stsDefault')
+      (
+        'Component = Panel1'
+        'Status = stsDefault')
+      (
+        'Component = pnlBoilerplate'
+        'Status = stsDefault')
+      (
+        'Component = reBoil'
+        'Status = stsDefault')
+      (
+        'Component = pnlGroupBP'
+        'Status = stsDefault')
+      (
+        'Component = reGroupBP'
+        'Status = stsDefault')
+      (
+        'Component = pnlGroupBPGap'
+        'Status = stsDefault')
+      (
+        'Component = pnlBP'
+        'Status = stsDefault')
+      (
+        'Component = cbLongLines'
+        'Status = stsDefault')
+      (
+        'Component = pnlNotes'
+        'Status = stsDefault')
+      (
+        'Component = reNotes'
         'Status = stsDefault'))
   end
   object popTemplates: TPopupMenu

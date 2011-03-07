@@ -1,3 +1,12 @@
+{ **************************************************************
+	Package: XWB - Kernel RPCBroker
+	Date Created: Sept 18, 1997 (Version 1.1)
+	Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
+	Developers: Danila Manapsal, Don Craven, Joel Ivey
+	Description: Contains TRPCBroker and related components.
+	Current Release: Version 1.1 Patch 47 (Oct. 11, 2007))
+*************************************************************** }
+
 {===============================================================================
   Ray Konopka's Conference 2001 Include File
 

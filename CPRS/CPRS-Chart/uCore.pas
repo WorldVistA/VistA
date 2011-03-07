@@ -6,7 +6,7 @@ unit uCore;
 
 interface
 
-uses SysUtils, Windows, Classes, Forms, ORFn, rCore, uConst, ORClasses;
+uses SysUtils, Windows, Classes, Forms, ORFn, rCore, uConst, ORClasses, uCombatVet;
 
 type
   TUser = class(TObject)
@@ -85,6 +85,7 @@ type
     FCWAD:       string;                         // chars identify if pt has CWAD warnings
     FRestricted: Boolean;                        // True if this is a restricted record
     FInpatient:  Boolean;                        // True if that patient is an inpatient
+    FStatus:     string;                         // Patient status indicator (Inpatient or Outpatient)
     FLocation:   Integer;                        // IEN in Hosp Loc if inpatient
     FWardService: string;
     FSpecialty:  Integer;                        // IEN of the treating specialty if inpatient
@@ -94,12 +95,16 @@ type
     FPrimTeam:   string;                         // name of primary care team
     FPrimProv:   string;                         // name of primary care provider
     FAttending:  string;                         // if inpatient, name of attending
+    FAssociate:  string;                         // if inpatient, name of associate
     FDateDied: TFMDateTime;                      // Date of Patient Death (<=0 or still alive)
     FDateDiedLoaded: boolean;                    // Used to determine of DateDied has been loaded
+    FCombatVet : TCombatVet;                     // Object Holding CombatVet Data
     procedure SetDFN(const Value: string);
-    function GetDateDied: TFMDateTime;       // *DFN*
+    function GetDateDied: TFMDateTime;
+    function GetCombatVet: TCombatVet;       // *DFN*
   public
     procedure Clear;
+    destructor Destroy; override;
     property DFN:              string      read FDFN write SetDFN;  //*DFN*
     property ICN:              string      read FICN;
     property Name:             string      read FName;
@@ -109,6 +114,7 @@ type
     property Sex:              Char        read FSex;
     property CWAD:             string      read FCWAD;
     property Inpatient:        Boolean     read FInpatient;
+    property Status:           string      read FStatus;
     property Location:         Integer     read FLocation;
     property WardService:      string      read FWardService;
     property Specialty:        Integer     read FSpecialty;
@@ -119,6 +125,8 @@ type
     property PrimaryTeam:      string      read FPrimTeam;
     property PrimaryProvider:  string      read FPrimProv;
     property Attending:        string      read FAttending;
+    property Associate:        string      read FAssociate;
+    property CombatVet:        TCombatVet  read GetCombatVet;
   end;
 
   TEncounter = class(TObject, IORNotifier)
@@ -174,7 +182,7 @@ type
     FSignState: Integer;
     FParentID : string;
     FUser     : Int64;
-    FOrderDG  : String;
+    FOrderDG   : String;
     FDCOrder  : boolean;
     FDelay    : boolean;
     constructor Create(AnItemType: Integer; const AnID, AText, AGroupName: string;
@@ -209,7 +217,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Add(ItemType: Integer; const AnID, ItemText, GroupName: string; SignState: Integer; AParentID: string = '';
-                  User: int64 = 0; OrderDG: String = ''; DCOrder: boolean = FALSE; Delay: boolean = FALSE);
+                  User: int64 = 0; OrderDG: String = ''; DCOrder: boolean = FALSE; Delay: boolean = False);
     procedure Clear;
     function CanSign: Boolean;
     function Exist(ItemType: Integer; const AnID: string): Boolean;
@@ -237,6 +245,7 @@ type
     FollowUp: Integer;
     //AlertData: string;
     RecordID: string;
+    HighLightSection: String;
   end;
 
   TNotifications = class
@@ -248,12 +257,13 @@ type
     function GetDFN: string;  //*DFN*
     function GetFollowUp: Integer;
     function GetAlertData: string;
+    function GetHighLightSection: String; //CB
     function GetRecordID: string;
     function GetText: string;
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Add(const ADFN: string; AFollowUp: Integer; const ARecordID: string);  //*DFN*
+    procedure Add(const ADFN: string; AFollowUp: Integer; const ARecordID: string; AHighLightSection : string = '');  //*DFN*  CB
     procedure Clear;
     procedure Next;
     procedure Prior;
@@ -265,6 +275,7 @@ type
     property AlertData: string read GetAlertData;
     property RecordID: string  read GetRecordID;
     property Text:     string  read GetText;
+    property HighLightSection: String read GetHighLightSection; //cb
   end;
 
   TRemoteSite = class
@@ -718,6 +729,7 @@ begin
   FCWAD        := '';
   FRestricted  := False;
   FInpatient   := False;
+  FStatus      := '';
   FLocation    := 0;
   FWardService := '';
   FSpecialty   := 0;
@@ -727,6 +739,20 @@ begin
   FPrimTeam    := '';
   FPrimProv    := '';
   FAttending   := '';
+  FreeAndNil(FCombatVet);
+end;
+
+destructor TPatient.Destroy;
+begin
+  FreeAndNil(FCombatVet);
+  inherited;
+end;
+
+function TPatient.GetCombatVet: TCombatVet;
+begin
+  if FCombatVet = nil then
+    FCombatVet := TCombatVet.Create(FDFN);
+  Result := FCombatVet;
 end;
 
 function TPatient.GetDateDied: TFMDateTime;
@@ -757,6 +783,8 @@ begin
   FCWAD       := PtSelect.CWAD;
   FRestricted := PtSelect.Restricted;
   FInpatient  := Length(PtSelect.Location) > 0;
+  if FInpatient then FStatus := ' (INPATIENT)'
+  else FStatus := ' (OUTPATIENT)';
   FWardService :=PtSelect.WardService;
   FLocation   := PtSelect.LocationIEN;
   FSpecialty  := PtSelect.SpecialtyIEN;
@@ -766,6 +794,7 @@ begin
   FPrimTeam   := PtSelect.PrimaryTeam;
   FPrimProv   := PtSelect.PrimaryProvider;
   FAttending  := PtSelect.Attending;
+  FAssociate  := PtSelect.Associate;
 end;
 
 { TEncounter ------------------------------------------------------------------------------- }
@@ -1270,9 +1299,10 @@ procedure TChanges.AddUnsignedToChanges;
 var
   i, CanSign(*, OrderUser*): Integer;
   OrderUser: int64;
-  AnID: string;
+  AnID, Display: string;
   HaveOrders, OtherOrders: TStringList;
   AChangeItem: TChangeItem;
+  IsDiscontinue, IsDelay: boolean;
 begin
   if Patient.DFN = '' then Exit;
   // exit if there is already an 'Other Unsigned' group?
@@ -1294,7 +1324,13 @@ begin
       AnID := Piece(OtherOrders[i],U,1);
       if Piece(OtherOrders[i],U,2) = '' then OrderUser := 0
       else OrderUser := StrtoInt64(Piece(OtherOrders[i],U,2));
-      Add(CH_ORD, AnID, TextForOrder(AnID), 'Other Unsigned', CanSign,'', OrderUser);
+      //agp change the M code to pass back the value for the new order properties
+      Display := Piece(OtherOrders[i],U,3);
+      if Piece(OtherOrders[i],U,4) = '1' then  IsDiscontinue := True
+      else IsDiscontinue := False;
+      if Piece(OtherOrders[i],U,5) = '1' then  IsDelay := True
+      else IsDelay := False;
+      Add(CH_ORD, AnID, TextForOrder(AnID), 'Other Unsigned', CanSign,'', OrderUser, Display, IsDiscontinue, IsDelay);
     end;
   finally
     StatusText('');
@@ -1319,7 +1355,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TNotifications.Add(const ADFN: string; AFollowUp: Integer; const ARecordID: string);  //*DFN*
+procedure TNotifications.Add(const ADFN: string; AFollowUp: Integer; const ARecordID: string; AHighLightSection : string = '');  //*DFN*
 var
   NotifyItem: TNotifyItem;
 begin
@@ -1327,6 +1363,7 @@ begin
   NotifyItem.DFN := ADFN;
   NotifyItem.FollowUp := AFollowUp;
   NotifyItem.RecordID := ARecordId;
+  If AHighLightSection <> '' then NotifyItem.HighLightSection := AHighLightSection;
   FList.Add(NotifyItem);
   FActive := True;
 end;
@@ -1370,6 +1407,12 @@ begin
     then Result := Piece(Piece(FNotifyItem.RecordID, U, 1 ), ':', 2)
     else Result := '';
 end;
+
+function TNotifications.GetHighLightSection: String; //CB
+begin
+  if FNotifyItem <> nil then Result := FNotifyItem.HighLightSection else Result := '';
+end;
+
 
 procedure TNotifications.Next;
 begin

@@ -1,4 +1,13 @@
 unit XlfSid;
+{ **************************************************************
+	Package: XWB - Kernel RPCBroker
+	Date Created: Sept 18, 1997 (Version 1.1)
+	Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
+	Developers: Danila Manapsal, Don Craven, Joel Ivey
+	Description: Contains TRPCBroker and related components.
+	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
+*************************************************************** }
+
 //*******************************************************
 //These functions get thier data from the Thread
 // or Process security ID in Windows.

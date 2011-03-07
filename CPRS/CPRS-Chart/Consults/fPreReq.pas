@@ -136,7 +136,6 @@ begin
             repeat
               with Lines do
                 begin
-                  AddStrings(AHeader);
                   for i := 0 to MaxLines do
                     if i < memReport.Lines.Count then
                       Add(memReport.Lines[LastLine + i])
@@ -156,7 +155,7 @@ begin
                     end;
                 end;
               until LastLine >= memReport.Lines.Count - 1;
-            PrintWindowsReport(memPrintReport, PAGE_BREAK, Self.Caption, ErrMsg);
+            PrintWindowsReport(memPrintReport, PAGE_BREAK, Self.Caption, ErrMsg, True);
           end;
       finally
         memPrintReport.Free;
@@ -184,8 +183,9 @@ end;
 procedure TfrmPrerequisites.FormCreate(Sender: TObject);
 begin
   inherited;
-  ResizeAnchoredFormToFont(Self);
   SetFormPosition(Self); //Get Saved Position & Size of Form
+  ResizeAnchoredFormToFont(Self);
+  //SetFormPosition(Self); //Get Saved Position & Size of Form
 end;
 
 procedure TfrmPrerequisites.OnActivate(Sender: TObject);

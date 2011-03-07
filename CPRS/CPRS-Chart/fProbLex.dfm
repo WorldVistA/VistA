@@ -1,19 +1,23 @@
 inherited frmPLLex: TfrmPLLex
   Left = 239
   Top = 88
+  BorderIcons = []
+  BorderStyle = bsDialog
   Caption = 'Problem List  Lexicon Search'
-  ClientHeight = 274
-  ClientWidth = 425
+  ClientHeight = 276
+  ClientWidth = 427
   Constraints.MinHeight = 200
   Constraints.MinWidth = 433
   OldCreateOrder = True
-  Position = poScreenCenter
+  Position = poOwnerFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
+  ExplicitWidth = 433
+  ExplicitHeight = 308
   DesignSize = (
-    425
-    274)
+    427
+    276)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel [0]
@@ -24,8 +28,8 @@ inherited frmPLLex: TfrmPLLex
     Caption = 'Enter Term to Search'
   end
   object bbCan: TBitBtn [1]
-    Left = 230
-    Top = 215
+    Left = 232
+    Top = 217
     Width = 89
     Height = 21
     Anchors = [akRight, akBottom]
@@ -38,8 +42,8 @@ inherited frmPLLex: TfrmPLLex
     NumGlyphs = 2
   end
   object bbOK: TBitBtn [2]
-    Left = 322
-    Top = 215
+    Left = 324
+    Top = 217
     Width = 89
     Height = 21
     Anchors = [akRight, akBottom]
@@ -50,35 +54,40 @@ inherited frmPLLex: TfrmPLLex
     OnClick = bbOKClick
     NumGlyphs = 2
   end
-  object Panel1: TPanel [3]
+  object pnlStatus: TPanel [3]
     Left = 0
-    Top = 245
-    Width = 425
+    Top = 247
+    Width = 427
     Height = 29
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 5
     DesignSize = (
-      425
+      427
       29)
     object Bevel1: TBevel
       Left = 4
       Top = 4
-      Width = 417
+      Width = 419
       Height = 21
       Anchors = [akLeft, akTop, akRight]
+      ExplicitWidth = 417
     end
-    object lblstatus: TLabel
+    object lblstatus: TVA508StaticText
+      Name = 'lblstatus'
       Left = 16
       Top = 8
       Width = 3
       Height = 13
+      Alignment = taLeftJustify
+      TabOrder = 0
+      ShowAccelChar = True
     end
   end
   object ebLex: TCaptionEdit [4]
     Left = 12
     Top = 27
-    Width = 321
+    Width = 323
     Height = 21
     Anchors = [akLeft, akTop, akRight]
     Constraints.MaxHeight = 21
@@ -89,8 +98,8 @@ inherited frmPLLex: TfrmPLLex
   object lbLex: TORListBox [5]
     Left = 12
     Top = 63
-    Width = 401
-    Height = 143
+    Width = 403
+    Height = 145
     Anchors = [akLeft, akTop, akRight, akBottom]
     ExtendedSelect = False
     ItemHeight = 13
@@ -104,7 +113,7 @@ inherited frmPLLex: TfrmPLLex
     Pieces = '2'
   end
   object bbSearch: TBitBtn [6]
-    Left = 340
+    Left = 342
     Top = 27
     Width = 73
     Height = 21
@@ -125,7 +134,7 @@ inherited frmPLLex: TfrmPLLex
         'Component = bbOK'
         'Status = stsDefault')
       (
-        'Component = Panel1'
+        'Component = pnlStatus'
         'Status = stsDefault')
       (
         'Component = ebLex'

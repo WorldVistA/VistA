@@ -6,7 +6,7 @@ inherited frmEncounterFrame: TfrmEncounterFrame
   ClientWidth = 632
   FormStyle = fsMDIForm
   OldCreateOrder = True
-  Position = poScreenCenter
+  Position = poMainFormCenter
   OnCanResize = FormCanResize
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery

@@ -57,6 +57,7 @@ type
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure lstAddByKeyPress(Sender: TObject; var Key: Char);
     procedure grpVisibilityClick(Sender: TObject);
+    procedure lstAddByChange(Sender: TObject);
   private
     { Private declarations }
     FLastList: integer;
@@ -145,7 +146,7 @@ begin
   begin
     case radAddByType.ItemIndex of
       0: begin
-           ListItemsOnly := true;
+           ListItemsOnly := false;
            LongList := true;
            InitLongList('');
            lblAddby.Caption := 'Patient:';
@@ -255,6 +256,37 @@ begin
   btnListSaveChanges.Enabled := false;
 end;
 
+procedure TfrmOptionsLists.lstAddByChange(Sender: TObject);
+  procedure ShowMatchingPatients;
+  begin
+    with lstAddBy do begin
+      if ShortCount > 0 then begin
+        if ShortCount = 1 then begin
+          ItemIndex := 0;
+        end;
+        Items.Add(LLS_LINE);
+        Items.Add(LLS_SPACE);
+      end;
+      InitLongList('');
+    end;
+  end;
+
+begin
+  inherited;
+  if radAddByType.ItemIndex = 0 {patient} then begin
+    with lstAddBy do
+    if frmPtSelOptns.IsLast5(Text) then begin
+        ListPtByLast5(Items, Text);
+        ShowMatchingPatients;
+      end
+    else if frmPtSelOptns.IsFullSSN(Text) then begin
+        ListPtByFullSSN(Items, Text);
+        ShowMatchingPatients;
+    end;
+  end;
+end;
+
+
 procedure TfrmOptionsLists.lstAddByClick(Sender: TObject);
 var
   ien: string;
@@ -265,6 +297,7 @@ var
 begin
   if lstAddBy.ItemIndex < 0 then exit;
   ien := Piece(lstAddBy.Items[lstAddBy.ItemIndex], '^', 1);
+  If ien = '' then exit;
   case radAddByType.ItemIndex of
     0:
     begin

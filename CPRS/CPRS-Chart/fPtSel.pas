@@ -37,6 +37,10 @@ type
     lstvAlerts: TCaptionListView;
     N1: TMenuItem;
     cmdComments: TButton;
+    txtCmdComments: TVA508StaticText;
+    txtCmdRemove: TVA508StaticText;
+    txtCmdForward: TVA508StaticText;
+    txtCmdProcess: TVA508StaticText;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure cboPatientChange(Sender: TObject);
@@ -76,6 +80,10 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure cmdCommentsClick(Sender: TObject);
+    procedure lstvAlertsMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure cboPatientKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     FsortCol: integer;
     FsortAscending: boolean;
@@ -84,6 +92,7 @@ type
     FUserCancelled: boolean;
     FNotificationBtnsAdjusted: Boolean;
     FAlertsNotReady: boolean;
+    FMouseUpPos: TPoint;
     procedure WMReadyAlert(var Message: TMessage); message UM_MISC;
     procedure ReadyAlert;
     procedure AdjustFormSize(ShowNotif: Boolean; FontSize: Integer);
@@ -97,6 +106,8 @@ type
     procedure ReformatAlertDateTime;
     procedure AdjustButtonSize(pButton:TButton);
     procedure AdjustNotificationButtons;
+    procedure SetupDemographicsForm;
+    procedure ShowDisabledButtonTexts;
 
   public
     procedure Loaded; override;
@@ -117,10 +128,11 @@ implementation
 {$R *.DFM}
 
 uses rCore, uCore, fDupPts, fPtSens, fPtSelDemog, fPtSelOptns, fPatientFlagMulti,
-     uOrPtf, fAlertForward, rMisc, fFrame, fRptBox, VA508AccessibilityRouter;
+     uOrPtf, fAlertForward, rMisc, fFrame, fRptBox, VA508AccessibilityRouter,
+     VAUtils;
 
-resourcestring
-  StrFPtSel_lstvAlerts_Co = 'C'+U+'fPtSel.lstvAlerts.Cols';
+var
+  FDragging: Boolean = False;
 
 const
   AliasString = ' -- ALIAS';
@@ -166,39 +178,27 @@ procedure TfrmPtSel.AdjustFormSize(ShowNotif: Boolean; FontSize: Integer);
 { Adjusts the initial size of the form based on the font used & if notifications should show. }
 var
   Rect: TRect;
-//  TheFormHeight: integer;
   SplitterTop, t1, t2, t3: integer;
 begin
+  SetFormPosition(self);
   ResizeAnchoredFormToFont(self);
-//  TheFormHeight := pnlPtSel.Height;
-  // Make the form bigger (140%) to show notifications and show notification controls.
   if ShowNotif then
   begin
-//    TheFormHeight := Round(TheFormHeight * 2.4);
-//    pnlDivide.Height := lblNotifications.Height + 4;
     pnlDivide.Visible := True;
     lstvAlerts.Visible := True;
     pnlNotifications.Visible := True;
     pnlPtSel.BevelOuter := bvRaised;
-//    ClientHeight := TheFormHeight;
   end
   else
   begin
     pnlDivide.Visible := False;
     lstvAlerts.Visible := False;
     pnlNotifications.Visible := False;
-//    ClientHeight := TheFormHeight;
-//    pnlPtSel.Anchors := [akLeft,akRight,akTop,akBottom];
   end;
-//  ClientHeight := TheFormHeight;
-//  VertScrollBar.Range := TheFormHeight;
-
-  //After all of this calcualtion, we still use the saved preferences when possible
-  SetFormPosition(self);
+  //SetFormPosition(self);
   Rect := BoundsRect;
   ForceInsideWorkArea(Rect);
   BoundsRect := Rect;
-
   if frmFrame.EnduringPtSelSplitterPos <> 0 then
     SplitterTop := frmFrame.EnduringPtSelSplitterPos
   else
@@ -403,6 +403,13 @@ begin
   begin
     ClearIDInfo;
   end;
+end;
+
+procedure TfrmPtSel.cboPatientKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_BACK) and (cboPatient.Text = '') then cboPatient.ItemIndex := -1;
 end;
 
 procedure TfrmPtSel.cboPatientMouseClick(Sender: TObject);
@@ -638,7 +645,7 @@ begin
         begin
           ADFN := Piece(XQAID, ',', 2);  //*DFN*
           AFollowUp := StrToIntDef(Piece(Piece(XQAID, ';', 1), ',', 3), 0);
-          Notifications.Add(ADFN, AFollowUp, RecordID);
+          Notifications.Add(ADFN, AFollowUp, RecordID, Items[i].SubItems[3]); //CB
           enableclose := true;
         end
       else if Copy(XQAID, 1, 6) = 'TIUERR' then
@@ -719,8 +726,21 @@ begin
 end;
 
 procedure TfrmPtSel.lstvAlertsDblClick(Sender: TObject);
+var
+  ScreenCurPos, ClientCurPos: TPoint;
 begin
   cmdProcessClick(Self);
+  ScreenCurPos.X := 0;
+  ScreenCurPos.Y := 0;
+  ClientCurPos.X := 0;
+  ClientCurPos.Y := 0;
+  if GetCursorPos(ScreenCurPos) then ClientCurPos := lstvAlerts.ScreenToClient(ScreenCurPos); //convert screen coord. to client coord.
+  //fixes CQ 18657: double clicking on notification, does not go to pt. chart until mouse is moved. [v28.4 - TC]
+  if (FMouseUpPos.X = ClientCurPos.X) and (FMouseUpPos.Y = ClientCurPos.Y) then
+    begin
+      lstvAlerts.BeginDrag(False,0);
+      FDragging := True;
+    end;
 end;
 
 procedure TfrmPtSel.cmdForwardClick(Sender: TObject);
@@ -773,9 +793,19 @@ begin
 end;
 
 procedure TfrmPtSel.FormDestroy(Sender: TObject);
+var
+  i: integer;
+  AString: string;
 begin
   SaveUserBounds(Self);
   frmFrame.EnduringPtSelSplitterPos := pnlPtSel.Height;
+  AString := '';
+  for i := 0 to 6 do
+  begin
+    AString := AString + IntToStr(lstvAlerts.Column[i].Width);
+    if i < 6 then AString:= AString + ',';
+  end;
+  frmFrame.EnduringPtSelColumns := AString;
  end;
 
 procedure TfrmPtSel.FormResize(Sender: TObject);
@@ -802,17 +832,7 @@ end;
 procedure TfrmPtSel.Loaded;
 begin
   inherited;
-// This needs to be in Loaded rather than FormCreate or the TORAutoPanel resize logic breaks.
-  frmPtSelDemog := TfrmPtSelDemog.Create(Self);  // Was application - kcm
-  with frmPtSelDemog do
-  begin
-    parent := pnlPtSel;
-    Top := cmdCancel.Top + cmdCancel.Height + 2;
-    Left := cboPatient.Left + cboPatient.Width + 9;
-    Width := pnlPtSel.Width - Left - 2;
-    TabOrder := cmdCancel.TabOrder + 1;  //Place after cancel button
-    Show;
-  end;
+  SetupDemographicsForm;
 
   frmPtSelOptns := TfrmPtSelOptns.Create(Self);  // Was application - kcm
   with frmPtSelOptns do
@@ -834,6 +854,38 @@ begin
     ActiveControl := cboPatient;
 end;
 
+procedure TfrmPtSel.ShowDisabledButtonTexts;
+begin
+  if ScreenReaderActive then
+  begin
+    txtCmdProcess.Visible := not cmdProcess.Enabled;
+    txtCmdRemove.Visible := not cmdRemove.Enabled;
+    txtCmdForward.Visible := not cmdForward.Enabled;
+    txtCmdComments.Visible := not cmdComments.Enabled;
+  end;
+end;
+
+procedure TfrmPtSel.SetupDemographicsForm;
+begin
+  // This needs to be in Loaded rather than FormCreate or the TORAutoPanel resize logic breaks.
+  frmPtSelDemog := TfrmPtSelDemog.Create(Self);
+  // Was application - kcm
+  with frmPtSelDemog do
+  begin
+    parent := pnlPtSel;
+    Top := cmdCancel.Top + cmdCancel.Height + 2;
+    Left := cboPatient.Left + cboPatient.Width + 9;
+    Width := pnlPtSel.Width - Left - 2;
+    TabOrder := cmdCancel.TabOrder + 1;
+    //Place after cancel button
+    Show;
+  end;
+  if ScreenReaderActive then begin
+    frmPtSelDemog.Memo.Show;
+    frmPtSelDemog.Memo.BringToFront;
+  end;
+end;
+
 procedure TfrmPtSel.RPLDisplay;
 begin
 
@@ -844,20 +896,12 @@ frmPtSelOptns.visible := false;
 end;
 
 procedure TfrmPtSel.FormClose(Sender: TObject; var Action: TCloseAction);
-var
-  colSizes : String;
 begin
-  colSizes := '';
-  with lstvAlerts do begin
-    colSizes := IntToStr(Columns[0].Width) + ',';  //Info                 Caption
-    colSizes := colSizes + IntToStr(Columns[1].Width) + ',';  //Patient              SubItems[0]
-    colSizes := colSizes + IntToStr(Columns[2].Width) + ',';  //Location             SubItems[1]
-    colSizes := colSizes + IntToStr(Columns[3].Width) + ',';  //Urgency              SubItems[2]
-    colSizes := colSizes + IntToStr(Columns[4].Width) + ',';  //Alert Date/Time      SubItems[3]
-    colSizes := colSizes + IntToStr(Columns[5].Width) + ',';  //Message Text         SubItems[4]
-    colSizes := colSizes + IntToStr(Columns[6].Width);  //Forwarded By/When    SubItems[5]
-  end;
-  SizeHolder.SetSize(StrFPtSel_lstvAlerts_Co,colSizes);
+if FDragging then
+begin
+  lstvAlerts.EndDrag(True); //terminate fake dragging operation from lstvAlertsDblClick.
+  FDragging := False;
+end;
 
 if (IsRPL = '1') then                          // Deal with restricted patient list users.
   KillRPLPtList(RPLJob);                       // Kills server global data each time.
@@ -869,6 +913,7 @@ begin
   inherited;
   DefaultButton := cmdOK;
   FAlertsNotReady := FALSE;
+  ShowDisabledButtonTexts;
 end;
 
 procedure TfrmPtSel.cboPatientKeyDown(Sender: TObject; var Key: Word;
@@ -954,10 +999,9 @@ var
   List: TStringList;
   NewItem: TListItem;
   I,J: Integer;
-  Comment,colSizes : String;
+  Comment: String;
 begin
   // Load the items
-  colSizes := '';
   lstvAlerts.Items.Clear;
   List := TStringList.Create;
   NewItem := nil;
@@ -986,32 +1030,17 @@ begin
    end;
    with lstvAlerts do
      begin
-        colSizes := SizeHolder.GetSize(StrFPtSel_lstvAlerts_Co);
-        if colSizes = '' then begin
-          Columns[0].Width := 40;          //Info                 Caption
-          Columns[1].Width := 195;         //Patient              SubItems[0]
-          Columns[2].Width := 75;          //Location             SubItems[1]
-          Columns[3].Width := 95;          //Urgency              SubItems[2]
-          Columns[4].Width := 150;         //Alert Date/Time      SubItems[3]
-          Columns[5].Width := 310;         //Message Text         SubItems[4]
-          Columns[6].Width := 290;         //Forwarded By/When    SubItems[5]
-        end else begin
-          Columns[0].Width := StrToInt(piece(colSizes,',',1));          //Info                 Caption
-          Columns[1].Width := StrToInt(piece(colSizes,',',2));         //Patient              SubItems[0]
-          Columns[2].Width := StrToInt(piece(colSizes,',',3));          //Location             SubItems[1]
-          Columns[3].Width := StrToInt(piece(colSizes,',',4));          //Urgency              SubItems[2]
-          Columns[4].Width := StrToInt(piece(colSizes,',',5));         //Alert Date/Time      SubItems[3]
-          Columns[5].Width := StrToInt(piece(colSizes,',',6));         //Message Text         SubItems[4]
-          Columns[6].Width := StrToInt(piece(colSizes,',',7));         //Forwarded By/When    SubItems[5]
-        end;
-
+        Columns[0].Width := StrToIntDef(Piece(frmFrame.EnduringPtSelColumns, ',', 1), 40);          //Info                 Caption
+        Columns[1].Width := StrToIntDef(Piece(frmFrame.EnduringPtSelColumns, ',', 2), 195);         //Patient              SubItems[0]
+        Columns[2].Width := StrToIntDef(Piece(frmFrame.EnduringPtSelColumns, ',', 3), 75);          //Location             SubItems[1]
+        Columns[3].Width := StrToIntDef(Piece(frmFrame.EnduringPtSelColumns, ',', 4), 95);          //Urgency              SubItems[2]
+        Columns[4].Width := StrToIntDef(Piece(frmFrame.EnduringPtSelColumns, ',', 5), 150);         //Alert Date/Time      SubItems[3]
+        Columns[5].Width := StrToIntDef(Piece(frmFrame.EnduringPtSelColumns, ',', 6), 310);         //Message Text         SubItems[4]
+        Columns[6].Width := StrToIntDef(Piece(frmFrame.EnduringPtSelColumns, ',', 7), 290);         //Forwarded By/When    SubItems[5]
      //Items not displayed in Columns:     XQAID                SubItems[6]
      //                                    Remove w/o process   SubItems[7]
      //                                    Forwarding comments  SubItems[8]
      end;
-  //with lstvAlerts do      ca comment out 12/24/03 to prevent default selection of first alert on list
-    //if (ItemIndex = -1) and (Items.Count > 0) then
-      //ItemIndex := 0;
 end;
 
 procedure TfrmPtSel.lstvAlertsColumnClick(Sender: TObject; Column: TListColumn);
@@ -1148,6 +1177,7 @@ begin
   cmdRemove.Enabled := ShowButts;
   cmdForward.Enabled := ShowButts;
   cmdComments.Enabled := ShowButts and (lstvAlerts.SelCount = 1) and (lstvAlerts.Selected.SubItems[8] <> '');
+  ShowDisabledButtonTexts;
 end;
 
 procedure TfrmPtSel.lstvAlertsInfoTip(Sender: TObject; Item: TListItem;
@@ -1179,6 +1209,13 @@ begin
      end;
 end;
 
+procedure TfrmPtSel.lstvAlertsMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  FMouseUpPos := Point(X,Y);
+end;
+
 procedure TfrmPtSel.FormShow(Sender: TObject);
 {
  //KW
@@ -1190,6 +1227,8 @@ var
 begin
   sortResult := rCore.GetSortMethod;
   sortMethod := Piece(sortResult, U, 1);
+  if sortMethod = '' then
+     sortMethod := 'D';
   FsortDirection := Piece(sortResult, U, 2);
   if FsortDirection = 'F' then
      FsortAscending := true

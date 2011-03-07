@@ -5,10 +5,26 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ORfn, uConst, uConsults, Buttons,
-  Menus, fBase508Form, VA508AccessibilityManager;
+  Menus, fAutoSz, ORDtTm, VA508AccessibilityManager, fBase508Form;
 
 type
-  TfrmEditCslt = class(TfrmBase508Form)
+  TfrmEditCslt = class(TfrmAutoSz)
+    pnlMessage: TPanel;
+    imgMessage: TImage;
+    memMessage: TRichEdit;
+    cmdAccept: TButton;
+    cmdQuit: TButton;
+    pnlMain: TPanel;
+    lblService: TLabel;
+    lblReason: TLabel;
+    lblComment: TLabel;
+    lblComments: TLabel;
+    lblUrgency: TStaticText;
+    lblPlace: TStaticText;
+    lblAttn: TStaticText;
+    lblProvDiag: TStaticText;
+    lblInpOutp: TStaticText;
+    memReason: TRichEdit;
     cboService: TORComboBox;
     cboUrgency: TORComboBox;
     radInpatient: TRadioButton;
@@ -16,34 +32,25 @@ type
     cboPlace: TORComboBox;
     txtProvDiag: TCaptionEdit;
     txtAttn: TORComboBox;
-    lblReason: TLabel;
-    lblService: TLabel;
-    lblUrgency: TStaticText;
-    lblPlace: TStaticText;
-    lblAttn: TStaticText;
-    lblProvDiag: TStaticText;
     cboCategory: TORComboBox;
-    pnlMessage: TPanel;
-    imgMessage: TImage;
-    memMessage: TRichEdit;
-    cmdAccept: TButton;
-    cmdQuit: TButton;
     memComment: TRichEdit;
-    lblComment: TLabel;
-    lblComments: TLabel;
     btnCmtCancel: TButton;
     btnCmtOther: TButton;
+    cmdLexSearch: TButton;
+    lblEarliest: TStaticText;
+    calEarliest: TORDateBox;
+    lblLatest: TStaticText;
+    calLatest: TORDateBox;
     mnuPopProvDx: TPopupMenu;
     mnuPopProvDxDelete: TMenuItem;
-    cmdLexSearch: TButton;
-    lblInpOutp: TStaticText;
-    memReason: TRichEdit;
     popReason: TPopupMenu;
     popReasonCut: TMenuItem;
     popReasonCopy: TMenuItem;
     popReasonPaste: TMenuItem;
     popReasonPaste2: TMenuItem;
     popReasonReformat: TMenuItem;
+    pnlCombatVet: TPanel;
+    txtCombatVet: TVA508StaticText;
     procedure txtAttnNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure radInpatientClick(Sender: TObject);
@@ -68,13 +75,21 @@ type
     procedure memCommentKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure memCommentKeyPress(Sender: TObject; var Key: Char);
+    procedure calEarliestExit(Sender: TObject);
+    procedure calLatestExit(Sender: TObject);
+    procedure memCommentExit(Sender: TObject);
   private
     FLastServiceID: string;
     FChanged: boolean;
     FChanging: boolean;
     FEditCtrl: TCustomEdit;
     FNavigatingTab: boolean;
+    FEarliestDate: TFMDateTime;
+    FProstheticsSvc: boolean;
+    //FLatestDate: TFMDateTime;
     procedure SetProvDiagPromptingMode;
+    procedure SetUpCombatVet;
+    procedure SetUpEarliestDate;
   protected
     procedure InitDialog;
     procedure Validate(var AnErrMsg: string);
@@ -117,6 +132,8 @@ const
   TX_INACTIVE_CODE   = 'The provisional diagnosis code is not active as of today''s date.' + #13#10 +
                        'Another code must be selected';
   TC_INACTIVE_CODE   = 'Inactive ICD Code';
+  TX_PAST_DATE       = 'Earliest appropriate date must be today or later.';
+  TX_BAD_DATES       = 'Latest appropriate date must be equal to or later than earliest date.';
 
 function EditResubmitConsult(FontSize: Integer; ConsultIEN: integer): boolean;
 begin
@@ -195,6 +212,14 @@ begin
   cboPlace.SelectByID(OldRec.Place);
   with cboUrgency do for i := 0 to Items.Count-1 do
     if UpperCase(DisplayText[i]) = UpperCase(OldRec.UrgencyName) then ItemIndex := i;
+  SetUpEarliestDate;         //wat v28
+  if Not FProstheticsSvc then         //wat v28
+    begin
+      calEarliest.FMDateTime := OldRec.EarliestDate;
+      FEarliestDate := OldRec.EarliestDate;
+      //calLatest.FMDateTime := OldRec.LatestDate;
+      //FLatestDate := OldRec.LatestDate;
+    end;
   txtProvDiag.Text := OldRec.ProvDiagnosis;
   ProvDx.Code := OldRec.ProvDxCode;
   if OldRec.ProvDxCodeInactive then
@@ -212,6 +237,15 @@ begin
   else
     txtAttn.ItemIndex := -1;
   SetProvDiagPromptingMode;
+  if (patient.CombatVet.IsEligible = True) then
+   begin
+    SetUpCombatVet;
+   end
+   else
+    begin
+      txtCombatVet.Enabled := False;
+      pnlCombatVet.SendToBack;
+    end;
   FChanging := False;
   StatusText('');
 end;
@@ -246,6 +280,13 @@ begin
     end;
   if OldRec.ProvDxCodeInactive and ProvDx.CodeInactive then
     SetError(TX_INACTIVE_CODE);
+  if Not FProstheticsSvc then     //wat v28
+    begin
+       if calEarliest.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
+       //if calLatest.FMDateTime < FMToday       then SetError(TX_PAST_DATE);
+       //if calLatest.FMDateTime < calEarliest.FMDateTime then SetError(TX_BAD_DATES);
+    end;
+
 end;
 
 procedure TfrmEditCslt.txtAttnNeedData(Sender: TObject;
@@ -316,6 +357,22 @@ begin
            Urgency     := 0;
            UrgencyName := '';
          end;
+
+     if FEarliestDate > 0 then
+     begin
+       if FEarliestDate <> OldRec.EarliestDate then
+         EarliestDate := FEarliestDate
+       else
+         EarliestDate := 0;
+     end;
+
+(*     if FLatestDate > 0 then
+     begin
+       if FLatestDate <> OldRec.LatestDate then
+         LatestDate := FLatestDate
+       else
+         LatestDate := 0;
+     end;*)
 
      with cboPlace do if Length(ItemID) > 0 then
        if ItemID <> OldRec.Place then
@@ -407,6 +464,20 @@ begin
       if not ValidSave then Action := caNone;
 end;
 
+procedure TfrmEditCslt.calEarliestExit(Sender: TObject);
+begin
+  inherited;
+  FEarliestDate := calEarliest.FMDateTime;
+  ControlChange(Self);
+end;
+
+procedure TfrmEditCslt.calLatestExit(Sender: TObject);
+begin
+  inherited;
+  //FLatestDate := calLatest.FMDateTime;
+  //ControlChange(Self);
+end;
+
 procedure TfrmEditCslt.cmdAcceptClick(Sender: TObject);
 {Begin BillingAware}
 var
@@ -477,6 +548,18 @@ begin
   end;
   if (ProvDx.Reqd = 'R') and (Length(txtProvDiag.Text) = 0) and (ProvDx.PromptMode = 'L') then
     cmdLexSearchClick(Self);
+end;
+
+procedure TfrmEditCslt.SetUpCombatVet;
+begin
+  pnlCombatVet.BringToFront;
+  txtCombatVet.Enabled := True;
+  txtCombatVet.Caption := 'Combat Veteran Eligibility Expires on ' + patient.CombatVet.ExpirationDate;
+  pnlMain.Top := pnlMain.Top + pnlCombatVet.Height;
+  pnlMain.Anchors := [akLeft, akTop, akRight];
+  self.Height := self.Height + pnlCombatVet.Height;
+  pnlMain.Anchors := [akLeft, akTop, akRight, akBottom];
+  ActiveControl := txtCombatVet;
 end;
 
 
@@ -654,6 +737,25 @@ begin
   end;
 end;
 
+procedure TfrmEditCslt.memCommentExit(Sender: TObject);
+//added OnExit code for CQ17822 WAT
+var
+  AStringList: TStringList;
+begin
+  inherited;
+  AStringList := TStringList.Create;
+  try
+    //QuickCopy(memComment, AStringList);
+    AStringList.Text := memComment.Text;
+    LimitStringLength(AStringList, 74);
+    //QuickCopy(AstringList, memComment);
+    memComment.Text := AStringList.Text;
+    ControlChange(Self);   
+  finally
+    AStringList.Free;
+  end;
+end;
+
 procedure TfrmEditCslt.memCommentKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -668,6 +770,24 @@ procedure TfrmEditCslt.memCommentKeyPress(Sender: TObject; var Key: Char);
 begin
   if FNavigatingTab then
     Key := #0;  //Disable shift-tab processin
+end;
+
+procedure TfrmEditCslt.SetUpEarliestDate;  //wat v28
+begin
+  if IsProstheticsService(cboService.ItemIEN) = '1' then
+    begin
+      lblEarliest.Enabled := False;
+      calEarliest.Enabled := False;
+      calEarliest.Text := '';
+      FProstheticsSvc := true;
+    end
+  else
+    begin
+      lblEarliest.Enabled := True;
+      calEarliest.Enabled := True;
+      calEarliest.Text := 'TODAY';
+      FProstheticsSvc := false;
+    end;
 end;
 
 end.

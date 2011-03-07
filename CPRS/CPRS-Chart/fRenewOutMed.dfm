@@ -7,6 +7,7 @@ inherited frmRenewOutMed: TfrmRenewOutMed
   OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnShow = FormShow
   ExplicitWidth = 364
   ExplicitHeight = 227
   PixelsPerInch = 96
@@ -16,6 +17,7 @@ inherited frmRenewOutMed: TfrmRenewOutMed
     Top = 0
     Width = 356
     Height = 95
+    TabStop = False
     Align = alClient
     Color = clBtnFace
     ReadOnly = True
@@ -31,11 +33,12 @@ inherited frmRenewOutMed: TfrmRenewOutMed
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitTop = 165
     DesignSize = (
       356
       41)
     object cmdOK: TButton
-      Left = 173
+      Left = 170
       Top = 7
       Width = 72
       Height = 27
@@ -64,7 +67,7 @@ inherited frmRenewOutMed: TfrmRenewOutMed
     Height = 64
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 3
+    TabOrder = 1
     object lblPickup: TLabel
       Left = 100
       Top = 7
@@ -99,7 +102,7 @@ inherited frmRenewOutMed: TfrmRenewOutMed
       Pieces = '2'
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 0
+      TabOrder = 1
       CharsNeedMatch = 1
     end
     object txtRefills: TCaptionEdit
@@ -107,7 +110,7 @@ inherited frmRenewOutMed: TfrmRenewOutMed
       Top = 31
       Width = 49
       Height = 21
-      TabOrder = 1
+      TabOrder = 0
       Caption = 'Refills'
     end
   end
@@ -137,5 +140,11 @@ inherited frmRenewOutMed: TfrmRenewOutMed
       (
         'Component = frmRenewOutMed'
         'Status = stsDefault'))
+  end
+  object VA508ComponentAccessibility1: TVA508ComponentAccessibility
+    Component = memOrder
+    OnStateQuery = VA508ComponentAccessibility1StateQuery
+    Left = 296
+    Top = 8
   end
 end

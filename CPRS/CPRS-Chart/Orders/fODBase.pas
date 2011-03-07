@@ -43,6 +43,7 @@ type
   TResponses = class
   private
     FDialog: string;
+    FDialogDisplayName: string;
     FResponseList: TList;
     FPrompts: TList;
     FCopyOrder: string;
@@ -98,6 +99,7 @@ type
     procedure Update(const APromptID: string; AnInstance: Integer;
       const AnIValue, AnEValue: string);
     property Dialog: string            read FDialog         write SetDialog;
+    property DialogDisplayName: string read FDialogDisplayName write FDialogDisplayName;
     property DisplayGroup: Integer     read FDisplayGroup   write FDisplayGroup;
     property CopyOrder:    string      read FCopyOrder      write SetCopyOrder;
     property EditOrder:    string      read FEditOrder;  //  write SetEditOrder;
@@ -644,23 +646,35 @@ begin
   if EditOrder <> '' then DupORIFN := EditOrder;
   if CopyOrder <> '' then DupORIFN := CopyOrder;
   //if {(CopyOrder <> '') or} (EditOrder <> '') then Exit;  // only check new orders
-  with FResponseList do for i := 0 to Count - 1 do with TResponse(Items[i]) do
-    if (PromptID = 'ORDERABLE') or (PromptID = 'ADDITIVE') then
-    begin
-      OrderableIEN := IValue;
-      TheInstance := Instance;
-      PkgPart := '';
-      if AFillerID = 'LR' then PkgPart := '^LR^' + IValueFor('SPECIMEN', TheInstance);
-      if (AFillerID = 'PSI') or (AFillerID = 'PSO') or (AFillerID = 'PSH')
-        then PkgPart := U + AFillerID + U + IValueFor('DRUG', TheInstance);
-        // was -- then PkgPart := '^PS^' + IValueFor('DRUG', TheInstance);
-      if AFillerID = 'PSIV' then
+  with FResponseList do
+    for i := 0 to FResponseList.Count - 1 do
       begin
-        if PromptID = 'ORDERABLE' then PkgPart := '^PSIV^B;' + IValueFor('VOLUME', TheInstance);
-        if PromptID = 'ADDITIVE'  then PkgPart := '^PSIV^A';
+        with TResponse(Items[i]) do
+          begin
+            if (PromptID = 'ORDERABLE') or (PromptID = 'ADDITIVE') then
+              begin
+                OrderableIEN := IValue;
+                TheInstance := Instance;
+                PkgPart := '';
+                if AFillerID = 'LR' then PkgPart := '^LR^' + IValueFor('SPECIMEN', TheInstance);
+                if (AFillerID = 'PSI') or (AFillerID = 'PSO') or (AFillerID = 'PSH') or (AFillerID = 'PSNV')
+                  then PkgPart := U + AFillerID + U + IValueFor('DRUG', TheInstance);
+                // was -- then PkgPart := '^PS^' + IValueFor('DRUG', TheInstance);
+                if AFillerID = 'PSIV' then
+                  begin
+                    if PromptID = 'ORDERABLE' then PkgPart := '^PSIV^B;' + IValueFor('VOLUME', TheInstance);
+                    if PromptID = 'ADDITIVE'  then PkgPart := '^PSIV^A';
+                  end;
+                AList.Add(OrderableIEN + PkgPart);
+              end;
+            //AGP IV CHANGES
+            if (AFillerID = 'PSI') or (AFillerID = 'PSO') or (AFillerID = 'PSH') or (AFillerID = 'PSIV') or (AFillerID = 'PSNV') then
+              begin
+                IF PromptID = 'COMMENT' then continue;
+                Alist.Add(AFillerID + U + PromptID + U + InttoStr(Instance) + U + IValueFor(PromptID, Instance) + U + EValueFor(PromptID, Instance));
+              end;
       end;
-      AList.Add(OrderableIEN + PkgPart);
-    end;
+  end;
   AStartDtTm := IValueFor('START', 1);
 end;
 
@@ -1137,6 +1151,13 @@ var
     end;
     ExpandOrderObjects(tmp, HasObjects);
     FOrderContainsObjects := FOrderContainsObjects or HasObjects;
+    
+    if frmODBase.FAbortOrder then
+    begin
+      SetTemplateDialogCanceled(FALSE);
+      Exit;
+    end;
+
     if IEN <> 0 then
       begin
         // template will execute on copy order if commented out  (tried to eliminate for CSV v22, RV)
@@ -1154,6 +1175,8 @@ var
     else
       CheckBoilerplate4Fields(tmp, cptn);
     List.Text := tmp;
+    if WasTemplateDialogCanceled then frmODBase.FAbortOrder := True;
+
   end;
 
 begin
@@ -1300,6 +1323,8 @@ end;
 procedure TfrmODBase.OrderMessage(const AMessage: string);
 {Caller needs to set pnlMessage.TabOrder}
 begin
+  //TDP - Added pnlMessage.Caption for screen reader readability
+  pnlMessage.Caption := 'Informational Message.';
   memMessage.Lines.SetText(PChar(AMessage));
   //begin CQ: 2640
   memMessage.SelStart := 0; // Put at first character
@@ -1322,6 +1347,7 @@ procedure TfrmODBase.SetupDialog(OrderAction: Integer; const ID: string);
 begin
   FOrderAction := OrderAction;
   FAbortOrder := False;
+  SetTemplateDialogCanceled(False);   //wat/jh CQ 20061
   case OrderAction of
   ORDER_NEW:   {nothing};
   ORDER_EDIT:  Responses.SetEditOrder(ID);
@@ -1467,7 +1493,7 @@ begin
   try
     StatusText('Order Checking...');
     Responses.BuildOCItems(OIList, StartDtTm, FillerID);
-    OrderChecksOnAccept(Responses.OrderChecks, FillerID, StartDtTm, OIList, DupORIFN);
+    OrderChecksOnAccept(Responses.OrderChecks, FillerID, StartDtTm, OIList, DupORIFN,'0');
     DupORIFN := '';
     StatusText('');
     Result :=  AcceptOrderWithChecks(Responses.OrderChecks);
@@ -1489,8 +1515,8 @@ var
   //thisSourceOrder: TOrder;
 begin
   Result := True;
-  Validate(ErrMsg);
   IsDelayOrder := False;
+  Validate(ErrMsg);
   if Length(ErrMsg) > 0 then
   begin
     InfoBox(TX_NO_SAVE + ErrMsg, TX_NO_SAVE_CAP, MB_OK);
@@ -1499,6 +1525,12 @@ begin
   end;
   if not AcceptOrderChecks then
   begin
+    //added code to shut CPRS down without access violations if the fOCAccept is open when timing out.
+    if frmFrame.TimedOut then
+      begin
+         Result := False;
+         Exit;
+      end;
     if AskAnotherOrder(DialogIEN) then
         InitDialog           // ClearDialogControls is in InitDialog
       else
@@ -1540,8 +1572,9 @@ begin
         then CanSign := CH_SIGN_YES
         else CanSign := CH_SIGN_NA;
       if NewOrder.Signature = OSS_NOT_REQUIRE then CanSign := CH_SIGN_NA;
-      if NewOrder.EventPtr <> '' then IsDelayOrder := True;
-      Changes.Add(CH_ORD, NewOrder.ID, NewOrder.Text, Responses.FViewName, CanSign,'',0, NewOrder.DGroupName, False,IsDelayOrder);
+      if (NewOrder.EventPtr <> '') and (GetEventDefaultDlg(responses.FEventIFN) <> InttoStr(Responses.QuickOrder)) then
+          IsDelayOrder := True;
+      Changes.Add(CH_ORD, NewOrder.ID, NewOrder.Text, Responses.FViewName, CanSign,'',0, NewOrder.DGroupName, False, IsDelayOrder);
 
     UBAGlobals.TargetOrderID := NewOrder.ID;
 
@@ -1710,7 +1743,11 @@ begin
   inherited;
   //self.Responses.Cancel := False;
   if User.NoOrdering then Exit;
-  if FAbortOrder then exit;
+  if FAbortOrder then
+  begin
+    SetTemplateDialogCanceled(FALSE);
+    exit;
+  end;
   if FOrderAction in [ORDER_EDIT, ORDER_COPY] then Exit;  // don't invoke verify dialog
   if FOrderAction = ORDER_QUICK then Exit;                // should this be here??
   if frmFrame.ContextChanging then

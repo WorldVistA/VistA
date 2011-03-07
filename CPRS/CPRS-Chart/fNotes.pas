@@ -8,7 +8,7 @@ uses
   fHSplit, StdCtrls, ExtCtrls, Menus, ComCtrls, ORCtrls, ORFn, uConst, ORDtTm,
   uPCE, ORClasses, fDrawers, ImgList, rTIU, uTIU, uDocTree, fRptBox, fPrintList,
   fNoteST, ORNet, fNoteSTStop, fBase508Form, VA508AccessibilityManager,
-  VA508ImageListLabeler;
+  VA508ImageListLabeler, RichEdit;
 
 type
   TfrmNotes = class(TfrmHSplit)
@@ -415,6 +415,7 @@ var
   ColumnSortForward: Boolean;
   uChanging: Boolean;
   uIDNotesActive: Boolean;
+  NoteTotal: string;
 
 
 { TPage common methods --------------------------------------------------------------------- }
@@ -452,6 +453,16 @@ begin
                  frmRemDlg.Silent := True;
                  frmRemDlg.btnCancelClick(Self);
                end;
+             //agp fix for a problem with reminders not clearing out when switching patients
+             if WhyNot = '' then
+                begin
+                 frmRemDlg.btnCancelClick(Self);
+                 if assigned(frmRemDlg) then
+                   begin
+                     result := false;
+                     exit;
+                   end;
+                end;
            end;
     end;
   if EditingIndex <> -1 then
@@ -465,7 +476,7 @@ begin
            end;
       '0': begin
              if WhyNot = 'COMMIT' then FSilent := True;
-             SaveCurrentNote(Result)
+             SaveCurrentNote(Result);
            end;
     end;
   if Assigned(frmEncounterFrame) then
@@ -528,6 +539,7 @@ begin
   uPCEShow.Clear;
   uPCEEdit.Clear;
   frmDrawers.ResetTemplates;
+  NoteTotal := sCallV('ORCNOTE GET TOTAL', [Patient.DFN]);
 end;
 
 procedure TfrmNotes.DisplayPage;
@@ -591,14 +603,21 @@ var
   i: integer;
 begin
   with AForm.lbIDParents do
-  for i := 0 to Items.Count - 1 do
-  if Selected[i] then
   begin
-    NoteIEN := StrToInt64def(Piece(Items[i], U, 1), 0);
-    if NoteIEN > 0 then PrintNote(NoteIEN, DisplayText[i], TRUE)
-    else if NoteIEN = 0 then InfoBox(TX_NONOTE, TX_NONOTE_CAP, MB_OK)
-    else InfoBox(TX_NOPRT_NEW, TX_NOPRT_NEW_CAP, MB_OK);
-  end;
+    for i := 0 to Items.Count - 1 do
+     begin
+       if Selected[i] then
+        begin
+         AForm.lbIDParents.ItemIndex := i;
+         NoteIEN := ItemIEN;  //StrToInt64def(Piece(TStringList(Items.Objects[i])[0],U,1),0);
+         if NoteIEN > 0 then PrintNote(NoteIEN, DisplayText[i], TRUE) else
+         begin
+           if NoteIEN = 0 then InfoBox(TX_NONOTE, TX_NONOTE_CAP, MB_OK);
+           if NoteIEN < 0 then InfoBox(TX_NOPRT_NEW, TX_NOPRT_NEW_CAP, MB_OK);
+         end;
+        end; {if selected}
+     end; {for}
+  end; {with}
 end;
 
 procedure TfrmNotes.SetFontSize(NewFontSize: Integer);
@@ -648,7 +667,7 @@ begin
   end;
   // clear the editing controls (also clear the new labels?)
   txtSubject.Text := '';
-  //lblNotes.Caption := '';
+  lblNotes.Caption := '';
   SearchTextStopFlag := false;
   if memNewNote <> nil then memNewNote.Clear; //CQ7012 Added test for nil
   timAutoSave.Enabled := False;
@@ -702,8 +721,16 @@ begin
         if(GetReminderStatus = rsNone) then
           EnableList := [odTemplates]
         else
-          EnableList := [odTemplates, odReminders];
-        ShowList := [odTemplates, odReminders];
+          if FutureEncounter(uPCEEdit) then
+            begin
+              EnableList := [odTemplates];
+              ShowList := [odTemplates];
+            end
+          else
+            begin
+              EnableList := [odTemplates, odReminders];
+              ShowList := [odTemplates, odReminders];
+            end;
       end
       else
       begin
@@ -1358,7 +1385,7 @@ begin
   end;
   if(assigned(frmReminderTree)) then
     frmReminderTree.EnableActions;
-  DisplayPCE;  
+  DisplayPCE;
   pnlRight.Refresh;
   memNewNote.Repaint;
   memNote.Repaint;
@@ -1372,7 +1399,7 @@ procedure TfrmNotes.cmdNewNoteClick(Sender: TObject);
 begin
   inherited;
   mnuActNewClick(Self);
- end;
+end;
 
 procedure TfrmNotes.cmdPCEClick(Sender: TObject);
 var
@@ -1483,7 +1510,8 @@ begin
         begin
           if not NoteEmpty then
 //            if not FChanged and (InfoBox(TX_BLR_CLEAR, TC_BLR_CLEAR, MB_YESNO) = ID_YES)
-            if (InfoBox(TX_BLR_CLEAR, TC_BLR_CLEAR, MB_YESNO) = ID_YES)
+            if (InfoBox(TX_BLR_CLEAR, TC_BLR_CLEAR,
+                        MB_ICONQUESTION or MB_YESNO or MB_DEFBUTTON2) = ID_YES)
               then memNewNote.Lines.Clear;
         end;
     end; {if BoilerText.Text <> ''}
@@ -1658,7 +1686,7 @@ begin
   // Text Search CQ: HDS00002856 --------------------
   NC_SEARCHTEXT: begin;
                    SearchTextStopFlag := False;
-                   SelectSearchText(Font.Size, FCurrentContext.SearchString, SearchCtxt );
+                   SelectSearchText(Font.Size, FCurrentContext.SearchString, SearchCtxt, StringReplace(TMenuItem(Sender).Caption, '&', '', [rfReplaceAll]) );
                    with SearchCtxt do if Changed then
                    begin
                      //FCurrentContext.Status := IntToStr(ViewContext);
@@ -1742,8 +1770,11 @@ begin
   If SearchTextStopFlag = True then begin;
     lblNotes.Caption := 'Search for "'+FCurrentContext.SearchString+'" was stopped!';
   end;
+  //Clear the search text. We are done searching
+  FCurrentContext.SearchString := '';
   frmSearchStop.Hide;
   // Text Search CQ: HDS00002856 --------------------
+  lblNotes.Caption := lblNotes.Caption + ' (Total: ' + NoteTotal + ')'; 
   lblNotes.hint := lblNotes.Caption;
   tvNotes.Caption := lblNotes.Caption;
   StatusText('');
@@ -1983,6 +2014,11 @@ var
 begin
   inherited;
   if lstNotes.ItemIEN = 0 then Exit;
+  if assigned(frmRemDlg) then
+    begin
+       frmRemDlg.btnCancelClick(Self);
+       if assigned(frmRemDlg) then exit;
+    end;
   ActOnDocument(ActionSts, lstNotes.ItemIEN, 'DELETE RECORD');
   if ShowMsgOn(not ActionSts.Success, ActionSts.Reason, TX_IN_AUTH) then Exit;
   ReasonForDelete := SelectDeleteReason(lstNotes.ItemIEN);
@@ -2354,7 +2390,7 @@ end;
 procedure TfrmNotes.popNoteMemoPasteClick(Sender: TObject);
 begin
   inherited;
-  FEditCtrl.SelText := Clipboard.AsText; {*KCM*}
+  Sendmessage(FEditCtrl.Handle,EM_PASTESPECIAL,CF_TEXT,0);
   frmNotes.pnlWriteResize(Self);
   //FEditCtrl.PasteFromClipboard;        // use AsText to prevent formatting
 end;
@@ -2944,7 +2980,10 @@ begin
                 end;
               end;
             Dest.Free;
-          end;
+          end else
+          //Reset the caption
+          lblNotes.Caption := SetNoteTreeLabel(FCurrentContext);
+
         // Text Search CQ: HDS00002856 ---------------------------------------
 
         UpdateTreeView(FDocList, tvNotes);

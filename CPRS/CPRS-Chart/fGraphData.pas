@@ -86,8 +86,6 @@ var
 
   function GetATestGroup(testgroup: Integer; userx: int64): TStrings;
   function GetCurrentSetting: string;
-  function GetDefaultInpatientDate: string;
-  function GetDefaultOutpatientDate: string;
   function GetGraphProfiles(profiles, permission: string; ext: integer; userx: int64): TStrings;
   function GetGraphStatus: string;
   function GetOldDFN: string;
@@ -96,8 +94,6 @@ var
   function GraphPublicEditor: boolean;
   function GraphTurboOn: boolean;
   procedure SetCurrentSetting(aString: string);
-  procedure SetDefaultInpatientDate(aString: string);
-  procedure SetDefaultOutpatientDate(aString: string);
   procedure SetGraphStatus(aString: string);
   procedure SetOldDFN(aString: string);
   procedure SetPersonalSetting(aString: string);
@@ -144,8 +140,6 @@ begin
   with FGraphActivity do
   begin
     CurrentSetting := '';
-    DefaultInpatientDate := '';
-    DefaultOutpatientDate := '';
     OldDFN := '';
     PublicSetting := '';
     PersonalSetting := '';
@@ -184,8 +178,6 @@ begin
     else
       FGraphActivity.PersonalSetting := FGraphActivity.PublicSetting;
     FGraphActivity.CurrentSetting := FGraphActivity.PersonalSetting;
-    FGraphActivity.DefaultInpatientDate := Piece(FGraphActivity.PersonalSetting, '|', 10);
-    FGraphActivity.DefaultOutpatientDate := Piece(FGraphActivity.PersonalSetting, '|', 9);
     FGraphActivity.PublicEditor := rpcPublicEdit;    // use this as PublicEdit permission for user
   end;
   FreeAndNil(aList);
@@ -221,6 +213,7 @@ begin
     exit;                                  // if graphing is turned off, don't process
   ClearMemos;
   ClearGtsl;
+  pnlData.Hint := '';
   oldDFN := FGraphActivity.OldDFN;         // cleanup any previous patient cache
   FastAssign(rpcGetTypes(Patient.DFN, false), GtslTypes);
   faststatus := rpcFastTask(Patient.DFN, oldDFN);
@@ -435,6 +428,7 @@ end;
 
 procedure TfrmGraphData.btnRefreshClick(Sender: TObject);
 begin
+  frmGraphData.WindowState := wsMaximized;
   ClearMemos;
   FillMemos;
 end;
@@ -533,16 +527,6 @@ begin
   Result := FGraphActivity.CurrentSetting;
 end;
 
-function GetDefaultInpatientDate: string;
-begin
-  Result := FGraphActivity.DefaultInpatientDate;
-end;
-
-function GetDefaultOutpatientDate: string;
-begin
-  Result := FGraphActivity.DefaultOutpatientDate;
-end;
-
 function GetGraphProfiles(profiles, permission: string; ext: integer; userx: int64): TStrings;
 var      // temporary fix - converting definitions in GtslAllViews to rpc format
   allviews, fulltext: boolean;
@@ -591,6 +575,8 @@ begin
         end
         else
         begin
+          if length(bigline) > 0 then
+            GtslScratchTemp.Add(bigline);
           break;
         end;
       end
@@ -605,8 +591,6 @@ begin
           partsnum := avnum;
       end;
     end;
-    if length(bigline) > 0 then
-      GtslScratchTemp.Add(bigline);      
     if allviews or fulltext then
       MixedCaseList(GtslScratchTemp);
     Result := GtslScratchTemp;
@@ -684,16 +668,6 @@ end;
 procedure SetCurrentSetting(aString: string);
 begin
   FGraphActivity.CurrentSetting := aString;
-end;
-
-procedure SetDefaultInpatientDate(aString: string);
-begin
-  FGraphActivity.DefaultInpatientDate := aString;
-end;
-
-procedure SetDefaultOutpatientDate(aString: string);
-begin
-  FGraphActivity.DefaultOutpatientDate := aString;
 end;
 
 procedure SetGraphStatus(aString: string);

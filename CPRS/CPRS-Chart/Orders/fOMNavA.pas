@@ -646,8 +646,9 @@ begin
   inherited;
   if grdMenu.Objects[grdMenu.Col, grdMenu.Row] is TOrderMenuItem then begin
     OrderMenuItem := TOrderMenuItem(grdMenu.Objects[grdMenu.Col, grdMenu.Row]);
+    Text := OrderMenuItem.Mnemonic + ', ' + OrderMenuItem.ItemText;
     if OrderMenuItem.AutoAck then
-      Text := 'Auto Accept, '+ OrderMenuItem.ItemText;
+      Text := 'Auto Accept, '+ Text;
   end;
 end;
 

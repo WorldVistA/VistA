@@ -234,12 +234,21 @@ const
   TX_TFQTY  = 'A quantity must be entered for ';
   TX_TFAMT  = 'The quantity is invalid for ';
   TX_TF5000 = 'The total quantity ordered may not exceed 5000ml.';
-  TX_HLPQTY = CRLF + 'The following may be entered for quantity:' + CRLF +
-              '  Units may be K for Kcals, C for cc''s, M for ml, O for oz. or U for units (e.g. cans).' + CRLF +
-              '  Frequency may be DAY, HOUR, QD, QH, BID, TID, QID, Q2H, Q3H, Q4H, or Q6H.' + CRLF +
-              '  May also input 100CC/HR X 16 for 16 hours.  Valid quantity for powder form' + CRLF +
-              '  product can be "# GRAMS" as 20 G, GRAMS, or GMS, or as 1 PKG or 1 U and the' + CRLF +
-              '  frequency (e.g. 20 GRAMS/DAY or 1 PKG/TID).';
+
+  // CQ #15833 - Removed references of 'c' and 'cc', changed 100CC example to 100ML - JCS
+  TX_HLPQTY = CRLF + 'Valid entries for quantity:' + CRLF + CRLF +
+              'Units             K for Kcals;  M for ml;  O for oz.;  U for units (e.g. cans), PKG' + CRLF +
+              'Frequency     DAILY  HOUR  QH  BID  TID  QID  Q2H  Q3H  Q4H  Q6H' + CRLF + CRLF +
+              'Or   100 ml/HR X 16  for 16 hours' + CRLF + CRLF +
+              'IF powder form product, Then' + CRLF +
+              '          (# GRAMS or # Unit or PKG) / FREQUENCY' + CRLF + CRLF +
+              'Examples:' + CRLF +
+              '          20 GRAMS/Day' + CRLF +
+              '          1 PKG/TID' + CRLF +
+              '          6 U/D' + CRLF +
+              '          1 U/Q3H' + CRLF +
+              '          50ml/TID' + CRLF +
+              '          100 ML/HR';
   TX_ELMEAL      = 'A meal must be selected.';
   TX_ELTIME      = 'A meal time must be selected.';
   TX_ELNOSTART   = 'A valid start date must be entered.';

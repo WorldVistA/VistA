@@ -57,7 +57,7 @@ inherited frmRenewOrders: TfrmRenewOrders
       Cancel = True
       Caption = 'Cancel'
       Constraints.MinHeight = 21
-      TabOrder = 0
+      TabOrder = 2
       OnClick = cmdCancelClick
     end
     object cmdOK: TButton
@@ -80,7 +80,7 @@ inherited frmRenewOrders: TfrmRenewOrders
       Caption = 'Change...'
       Constraints.MinHeight = 21
       Enabled = False
-      TabOrder = 2
+      TabOrder = 0
       OnClick = cmdChangeClick
     end
   end
@@ -110,6 +110,7 @@ inherited frmRenewOrders: TfrmRenewOrders
     OnDrawItem = lstOrdersDrawItem
     OnMeasureItem = lstOrdersMeasureItem
     HintOnItem = True
+    ExplicitTop = 12
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (

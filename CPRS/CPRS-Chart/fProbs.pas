@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fHSplit, StdCtrls, ExtCtrls, Menus, ORCtrls, Buttons, uProbs,
   Grids, Vawrgrid, ORfn, uCore, fProbEdt, uConst, ComCtrls,
-  VA508AccessibilityManager, fBase508Form;
+  VA508AccessibilityManager, VAUtils, fBase508Form;
 
 type
   TfrmProblems = class(TfrmHSplit)
@@ -187,11 +187,12 @@ const
   TC_PROV_LOC        = 'Incomplete Information';
   TX_INVALID_PATIENT = 'Problem list is unavailable:  Patient DFN is undefined.';
   TC_NO_PATIENT      = 'No patient is selected';
-  TX_INACTIVE_CODE_V = 'references an inactive ICD code, and must be updated'  + #13#10 +
+  TX_INACTIVE_CODE_V = 'references an inactive ICD-9-CM code, and must be updated'  + #13#10 +
                        'using the ''Change'' option before it can be verified.';
   TC_INACTIVE_CODE   = 'Inactive Code';
-  TX_INACTIVE_CODE   = 'This problem references an inactive ICD code,' + #13#10 +
+  TX_INACTIVE_ICODE  = 'This problem references an inactive ICD-9-CM code,' + #13#10 +
                        'and must be updated using the ''Change'' option.';
+  TC_INACTIVE_ICODE  = 'Inactive ICD-9-CM code';
   TX_ADD_REMOVED     = 'Cannot add to the "Removed Problem List"';
   TC_ADD_REMOVED     = 'Unable to add';
 
@@ -281,6 +282,12 @@ begin
       pnlButtons.Hide;
       LoadProblems ;
     end;
+  //CQ #11529: 508 PL tab - defaults the focus to the New Problem button ONLY upon switching to the Probs tab.  {TC}
+  if TabCtrlClicked and (ChangingTab = CT_PROBLEMS) then ProbTabClicked := True;
+  if (bbNewProb.CanFocus) and (not pnlButtons.Visible) and ((not PTSwitchRefresh) or ProbTabClicked) then bbNewProb.SetFocus;
+  if PTSwitchRefresh then PTSwitchRefresh := False;
+  if TabCtrlClicked then TabCtrlClicked := False;
+  if ProbTabClicked then ProbTabClicked := False;
 end;
 
 procedure TfrmProblems.mnuChartTabClick(Sender: TObject);
@@ -569,9 +576,9 @@ begin
               ProbRec.PIFN := ProblemIFN;
               if not IsActiveICDCode(ProbRec.Diagnosis.extern) then
                 begin
-                  InfoBox(TX_INACTIVE_CODE, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
+                  InfoBox(TX_INACTIVE_ICODE, TC_INACTIVE_ICODE, MB_ICONWARNING or MB_OK);
                   exit;
-                end ;
+                end;
               if ProbRec.CmtIsXHTML then
                 begin
                   InfoBox(ProbRec.CmtNoEditReason, 'Unable to add new comment', MB_ICONWARNING or MB_OK);
@@ -583,7 +590,7 @@ begin
                   ProbRec.AddNewComment(Piece(cmt, U, 3));
                   ut := '';
                   If PLUser.usPrimeUser then ut := '1';
-                  FastAssign(EditSave(ProblemIFN,pProviderID,PLPt.ptVAMC,ut,ProbRec.FilerObject), AList) ;
+                  FastAssign(EditSave(ProblemIFN, pProviderID, PLPt.ptVAMC, ut, ProbRec.FilerObject), AList);
                   LoadPatientProblems(AList,PlUser.usViewAct[1],true);
                 end ;
             finally
@@ -716,7 +723,7 @@ var
 begin
   pnlRight.font.color := self.font.color;
   S := MString(wgProbData.ItemIndex);
-  pnlRight.caption := Piece(Piece(S, U , 3), #13, 1);
+  //pnlRight.caption := Piece(Piece(S, U , 3), #13, 1); //fixes part (b) of CQ #15531: 508 Problems Tab [CPRS v28.1] {TC}
   if (Piece(S, U, 1) = '') or
      (Pos('No data available',  Piece(S, U, 2)) > 0) or
      (Pos('No problems found.', Piece(S, U, 2)) > 0)
@@ -994,7 +1001,7 @@ end;
 procedure TfrmProblems.LoadPatientProblems(AList:TStringList; const Status:char; init:boolean);
 var {init should only be true when initializing a list for a new patient}
   x, line, ver, prio, comments: string;
-  i, j, inact: Integer;
+  i, j, inactI: Integer;
   st: char;
   CmtList: TStringList;
   //SCCond, tmpSCstr: string;
@@ -1019,7 +1026,7 @@ begin  {Body}
     PLFilters:=TPLFilters.create;
   try
     ClearGrid;
-    inact := 0;
+    inactI := 0;
     if PLPt = nil then
       begin
         InfoBox(TX_INVALID_PATIENT, TC_NO_PATIENT, MB_OK or MB_ICONWARNING);
@@ -1062,7 +1069,7 @@ begin  {Body}
       if (Piece(x, U, 18) = '#') and (CharAt(UpperCase(Status), 1) in ['A', 'B', 'I', 'R']) then
         begin
           ver := '#';      // inactive ICD code flag takes precedence over unverified flag
-          if (Piece(x, U, 2) = 'A') then inact := inact + 1;
+          if (Piece(x, U, 2) = 'A') then inactI := inactI + 1;
         end
       else if (PlUSer.usVerifyTranscribed) and
               (Piece(x, U, 9) = 'T') then
@@ -1125,11 +1132,11 @@ begin  {Body}
     else
       NoRowSelected;
     pnlRightResize(Self);
-    if (not FWarningShown) and (inact > 0) and (CharAt(UpperCase(Status), 1) in ['A', 'B']) then
+    if (not FWarningShown) and (inactI > 0) and (CharAt(UpperCase(Status), 1) in ['A', 'B']) then
       begin
-       InfoBox('There are ' + IntToStr(inact) + ' active problem(s) flagged with a "#" as having' + #13#10 +
-               'inactive ICD codes as of today''s date.  Please correct these' + #13#10 +
-               'problems using the "Change" option.', 'Inactive ICD Codes Found', MB_ICONWARNING or MB_OK);
+       InfoBox('There are ' + IntToStr(inactI) + ' active problem(s) flagged with a "#" as having' + #13#10 +
+               'inactive ICD-9-CM codes as of today''s date.  Please correct these' + #13#10 +
+               'problems using the "Change" option.', 'Inactive ICD-9-CM Codes Found', MB_ICONWARNING or MB_OK);
        FWarningShown := True;
       end;
   finally
@@ -1215,11 +1222,12 @@ function TfrmProblems.HighlightDuplicate( NewProb: string; const Msg: string;
   DlgType: TMsgDlgType; Action: string): boolean;
 var
   dup: string;
-  cmplist: TstringList;
-  cmpp, i: integer;
+  exprList, icdList, textList: TstringList;
+  cmpp, i, exprPos, icdPos, textPos: integer;
   collapserow: boolean;
 begin
   Result := False;
+  cmpp := -1;
   if Piece(newprob, U, 1) = '' then
     dup := CheckForDuplicateProblem('1', Piece(newprob, U, 2))
   else
@@ -1235,13 +1243,27 @@ begin
             lstView.SelectByID(Piece(dup, U, 2));
             lstViewClick(Self);
           end;
-        cmplist:=Tstringlist.create;
+        exprList := TStringList.Create;
+        icdList := TStringList.Create;
+        textList := TStringList.create;
         try {find and highlight duplicate problem - match problem text minus trailing '*'}
           for i := 0 to FAllProblems.Count - 1 do
-            cmpList.Add(TrimRight(Piece(Piece(Piece(FAllProblems[i], U, 3), #13, 1), '*', 1)));
-          cmpp:=cmpList.indexof(TrimRight(Piece(Piece(newprob, U, 2), '*', 1)));
+          begin
+            exprList.Add(TrimRight(Piece(FAllProblems[i], U, 1)));
+            icdList.Add(TrimRight(Piece(FAllProblems[i], U, 14)));
+            textList.Add(TrimRight(Piece(Piece(Piece(Piece(FAllProblems[i], U, 3), #13, 1), '*', 1),'(', 1)));
+          end;
+          exprPos := exprList.IndexOf(TrimRight(Piece(dup, U, 1)));
+          icdPos  := icdList.IndexOf(TrimRight(Piece(newprob, U, 3)));
+          textPos := textList.indexof(TrimRight(Piece(Piece(Piece(newprob, U, 2), '*', 1),'(', 1)));
+          if exprPos > -1 then
+            cmpp := exprPos
+          else if icdPos > -1 then
+            cmpp := icdPos
+          else if textPos > -1 then
+            cmpp := textPos;
         finally
-          cmplist.free;
+          textList.free;
         end;
         if cmpp > -1 then
           begin
@@ -1256,8 +1278,10 @@ begin
                 TopIndex := i;
                 ItemIndex := i;
                 Selected[i] := True;
-                break;
-              end;
+                //break;
+              end
+              else if wgProbData.Selected[i] = True then
+                wgProbData.Selected[i] := False;
             end;
             case DlgType of
               mtInformation:
@@ -1325,6 +1349,9 @@ begin
       dlgProbs.SubjProb:=newprob;
       dlgProbs.show;
       PostMessage(dlgProbs.Handle, UM_TAKEFOCUS, 0, 0);
+      wgProbData.TabStop := False; //fixes part (c) of CQ #15531: 508 Problems tab [CPRS v28.1] {TC}.
+      //prevents the selected problem or last entered problem from the PL captionlistbox
+      //underneath pnlProbDlg to be focused & read by Jaws
     end
   else
     InfoBox('Current Add/Edit/Display activity must be completed' + #13#10 +
@@ -1353,6 +1380,8 @@ begin
       wgProbData.Caption := lblProbList.Caption;
       pnlProbDlg.Visible := True;
       pnlProbDlg.BringToFront ;
+      //prevents JAWS from reading the top item in the wgProbData caption listbox when hidden from view.
+      pnlProbDlg.SetFocus;
       dlgProbs           := TFrmDlgProb.create(pnlProbDlg);
       dlgProbs.HorzScrollBar.Range := dlgProbs.ClientWidth;
       dlgProbs.VertScrollBar.Range := dlgProbs.ClientHeight;
@@ -1363,6 +1392,9 @@ begin
       StatusText('') ;
       dlgProbs.Show;
       PostMessage(dlgProbs.Handle, UM_TAKEFOCUS, 0, 0);
+      wgProbData.TabStop := False;  //fixes part (c) of CQ #15531: 508 Problems tab [CPRS v28.1] {TC}.
+      //prevents the selected problem or last entered problem from the PL captionlistbox
+      //underneath pnlProbDlg to be focused & read by Jaws
     end
   else
     begin
@@ -1405,7 +1437,7 @@ begin
       'V': begin
             if not IsActiveICDCode(ProbRec.Diagnosis.extern) then
               begin
-                InfoBox(TX_INACTIVE_CODE, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
+                InfoBox(TX_INACTIVE_ICODE, TC_INACTIVE_ICODE, MB_ICONWARNING or MB_OK);
                 exit;
               end;
              Probrec.condition := 'P';
@@ -1607,6 +1639,9 @@ begin
 
   //Show pnlView & Add Back to tab Order
   ShowPnlView;
+  //shift focus to another ctrl so the Cancel btn does not get read twice by JAWS,
+  //once upon tabbing to the btn & 2nd after it is selected/clicked (focus remained on btn)
+  lstView.SetFocus;
 end;
 
 procedure TfrmProblems.lstViewClick(Sender: TObject);
@@ -1686,6 +1721,8 @@ begin
       PLUser.Destroy;
       PLUser := nil;
     end;
+  if ScreenReaderActive then
+     GetScreenReader.Speak('Returning to default view.');
   ShowPnlView;
   LoadProblems ;
 end;

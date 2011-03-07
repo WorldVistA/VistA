@@ -539,21 +539,26 @@ begin
   end;
 end;
 
-{for printing multiple notes}
 procedure TfrmDCSumm.RequestMultiplePrint(AForm: TfrmPrintList);
 var
   NoteIEN: int64;
   i: integer;
 begin
   with AForm.lbIDParents do
-  for i := 0 to Items.Count - 1 do
-  if Selected[i] then
   begin
-    NoteIEN := StrToInt64def(Piece(Items[i], U, 1), 0);
-    if NoteIEN > 0 then PrintNote(NoteIEN, DisplayText[i], TRUE)
-    else if NoteIEN = 0 then InfoBox(TX_NO_NOTE, TX_NOSUMM_CAP, MB_OK)
-    else InfoBox(TX_NOPRT_NEW, TX_NOPRT_NEW_CAP, MB_OK);
-  end;
+    for i := 0 to Items.Count - 1 do
+     begin
+       if Selected[i] then
+        begin
+         NoteIEN := ItemIEN;  //StrToInt64def(Piece(TStringList(Items.Objects[i])[0],U,1),0);
+         if NoteIEN > 0 then PrintNote(NoteIEN, DisplayText[i], TRUE) else
+          begin
+            if ItemIEN = 0 then InfoBox(TX_NO_NOTE, TX_NOSUMM_CAP, MB_OK);
+            if ItemIEN < 0 then InfoBox(TX_NOPRT_NEW, TX_NOPRT_NEW_CAP, MB_OK);
+          end;
+        end; {if selected}
+     end; {for}
+  end {with}
 end;
 
 procedure TfrmDCSumm.SetFontSize(NewFontSize: Integer);
@@ -2166,23 +2171,23 @@ begin
   EditingIndex := -1;
   tvSumms.Enabled := True ;
   pnlRead.BringToFront ;
-  if FCurrentContext.Status <> '' then with uDCSummContext do
+  if AContext.Status <> '' then with uDCSummContext do
     begin
-      BeginDate      := FCurrentContext.BeginDate;
-      EndDate        := FCurrentContext.EndDate;
-      FMBeginDate    := FCurrentContext.FMBeginDate;
-      FMEndDate      := FCurrentContext.FMEndDate;
-      Status         := FCurrentContext.Status;
-      Author         := FCurrentContext.Author;
-      MaxDocs        := FCurrentContext.MaxDocs;
-      ShowSubject    := FCurrentContext.ShowSubject;
-      GroupBy        := FCurrentContext.GroupBy;
-      SortBy         := FCurrentContext.SortBy;
-      ListAscending  := FCurrentContext.ListAscending;
-      TreeAscending  := FCurrentContext.TreeAscending;
-      Keyword        := FCurrentContext.Keyword;
-      SearchField    := FCurrentContext.SearchField;
-      Filtered       := FCurrentContext.Filtered;
+      BeginDate      := AContext.BeginDate;
+      EndDate        := AContext.EndDate;
+      FMBeginDate    := AContext.FMBeginDate;
+      FMEndDate      := AContext.FMEndDate;
+      Status         := AContext.Status;
+      Author         := AContext.Author;
+      MaxDocs        := AContext.MaxDocs;
+      ShowSubject    := AContext.ShowSubject;
+      GroupBy        := AContext.GroupBy;
+      SortBy         := AContext.SortBy;
+      ListAscending  := AContext.ListAscending;
+      TreeAscending  := AContext.TreeAscending;
+      Keyword        := AContext.Keyword;
+      SearchField    := AContext.SearchField;
+      Filtered       := AContext.Filtered;
       Changed        := True;
       mnuViewClick(Self);
     end

@@ -65,6 +65,9 @@ type
     procedure btnSchAddClick(Sender: TObject);
     procedure btnSchRemoveClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure NSScboScheduleExit(Sender: TObject);
+    procedure NSScboScheduleKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     FDaySchedule: array [1..7] of string;
     FTimeSchedule: TStringList;
@@ -136,6 +139,7 @@ var
   i: integer;
   nssMsg: string;
 begin
+  frmOtherSchedule := nil;
   FFromCheckBox := False;
   FFromEditBox := False;
   image1.Picture.Icon.Handle := LoadIcon(0, IDI_WARNING);
@@ -158,6 +162,7 @@ begin
   inherited;
     //FDaySchedule
     FTimeSchedule.Free;
+    frmOtherSchedule := nil;
     //FSchedule: String;
     //FOtherSchedule: String;
 end;
@@ -491,6 +496,7 @@ begin
   except
     Action := caFree;
   end;
+  //frmOtherSchedule := nil;
 end;
 
 procedure TfrmOtherSchedule.UpdateOnFreeTextInput;
@@ -677,6 +683,36 @@ begin
   if lstHour.ItemIndex < 0 then Exit;
   //btnAddClick(Self);
   FFromCheckBox := False;
+end;
+
+procedure TfrmOtherSchedule.NSScboScheduleExit(Sender: TObject);
+begin
+  inherited;
+  if Pos(CRLF, NSScboSchedule.Text)> 0 then
+    begin
+      NSScboSchedule.Text := '';
+      NSScboSchedule.ItemIndex := -1;
+      Application.MessageBox('Schedule field cannot contain a control character. Please select a valid unique schedule from the list.' +CRLF +
+                             'Or remove the schedule text from the schedule list and select specific times from the administration times list.',
+                              'Incorrect Schedule.');
+      NSScboSchedule.SetFocus;
+    end;
+  if (NSScboSchedule.Text <> '') and (NSScboSchedule.ItemIndex = -1) then
+    begin
+      Application.MessageBox('Please select a valid unique schedule from the list.' +CRLF +
+                             'Or remove the schedule text from the schedule list and select specific times from the administration times list.',
+                              'Incorrect Schedule.');
+      NSSCboSchedule.Text := '';
+      NSScboSchedule.SetFocus;
+    end;
+
+end;
+
+procedure TfrmOtherSchedule.NSScboScheduleKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_BACK) and (NSScboSchedule.Text = '') then NSScboSchedule.itemindex:= -1;
 end;
 
 procedure TfrmOtherSchedule.lstMinuteKeyDown(Sender: TObject;

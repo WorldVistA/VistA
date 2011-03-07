@@ -19,6 +19,7 @@ type
     procedure cmdPrintClick(Sender: TObject);
     procedure cmdCloseClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormResize(Sender: TObject);
   end;
 
 procedure ReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean);
@@ -34,9 +35,8 @@ uses
 
 function CreateReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean): TfrmReportBox;
 var
-  i, AWidth, MaxWidth, AHeight: Integer;
+  i, AWidth, MinWidth, MaxWidth, AHeight: Integer;
   Rect: TRect;
-  // %$@# buttons!
   BtnArray: array of TButton;
   BtnRight: array of integer;
   BtnLeft:  array of integer;
@@ -49,6 +49,7 @@ begin
     with Result do
     begin
       k := 0;
+      MinWidth := 0;
       with pnlButton do for j := 0 to ControlCount - 1 do
         if Controls[j] is TButton then
           begin
@@ -74,29 +75,32 @@ begin
       if MaxWidth > Screen.Width then MaxWidth := Screen.Width;
       ClientWidth := MaxWidth;
       ClientHeight := AHeight;
-      Rect := BoundsRect;
-      ForceInsideWorkArea(Rect);
-      BoundsRect := Rect;
       ResizeAnchoredFormToFont(Result);
-
       memReport.Align := alClient; //CQ6661
-
       //CQ6889 - force Print & Close buttons to bottom right of form regardless of selected font size
       cmdClose.Left := (pnlButton.Left+pnlButton.Width)-cmdClose.Width;
       cmdPrint.Left := (cmdClose.Left-cmdPrint.Width)-1;
       //end CQ6889
-
       SetLength(BtnLeft, k);
       for j := 0 to k - 1 do
       begin
         BtnLeft[j] := pnlButton.Width - BtnArray[j].Width - BtnRight[j];
+        MinWidth := MinWidth + BtnArray[j].Width;
       end;
-      //cmdClose.Left := pnlButton.Width - cmdClose.Width - cmdCloseRightMargin;
-      //cmdPrint.Left := pnlButton.Width - cmdPrint.Width - cmdPrintRightMargin;
+      Width := width + (GetSystemMetrics(SM_CXVSCROLL) *2);
+      Constraints.MinWidth := MinWidth + (MinWidth div 2) + (GetSystemMetrics(SM_CXVSCROLL) *2);
+      if (mainFontSize = 8) then Constraints.MinHeight := 285
+      else if (mainFontSize = 10) then Constraints.MinHeight := 325
+      else if (mainFontSize = 12) then Constraints.MinHeight := 390
+      else if mainFontSize = 14 then Constraints.MinHeight := 460
+      else Constraints.MinHeight := 575;
       QuickCopy(ReportText, memReport);
       for i := 1 to Length(ReportTitle) do if ReportTitle[i] = #9 then ReportTitle[i] := ' ';
       Caption := ReportTitle;
       memReport.SelStart := 0;
+      Rect := BoundsRect;
+      ForceInsideWorkArea(Rect);
+      BoundsRect := Rect;
     end;
   except
     KillObj(@Result);
@@ -109,11 +113,15 @@ var
   frmReportBox: TfrmReportBox;
   
 begin
+  Screen.Cursor := crHourglass;  //wat cq 18425 added hourglass and disabled mnuFileOpen
+  fFrame.frmFrame.mnuFileOpen.Enabled := False;
   frmReportBox := CreateReportBox(ReportText, ReportTitle, AllowPrint);
   try
     frmReportBox.ShowModal;
   finally
     frmReportBox.Release;
+    Screen.Cursor := crDefault;
+    fFrame.frmFrame.mnuFileOpen.Enabled := True;
   end;
 end;
 
@@ -133,13 +141,15 @@ var
 //  RemoteSiteID: string;    //for Remote site printing
 //  RemoteQuery: string;    //for Remote site printing
   dlgPrintReport: TPrintDialog;
-
+    BM: TBitmap;
 const
   PAGE_BREAK = '**PAGE BREAK**';
 
 begin
 //  RemoteSiteID := '';
 //  RemoteQuery := '';
+ BM := TBitmap.Create;
+  try
   dlgPrintReport := TPrintDialog.Create(Form);
   try
     frmFrame.CCOWBusy := True;
@@ -152,17 +162,27 @@ begin
         MaxLines := 60 - AHeader.Count;
         LastLine := 0;
         ThisPage := 0;
+        BM.Canvas.Font := memPrintReport.Font;
         with memPrintReport do
           begin
             repeat
               with Lines do
                 begin
-                  AddStrings(AHeader);
-                  for i := 0 to MaxLines do
+                 for i := 0 to MaxLines do begin
+                   if BM.Canvas.TextWidth(StringText[LastLine + i]) > Width then begin
+                     MaxLines := Maxlines - (BM.Canvas.TextWidth(StringText[LastLine + i]) div Width);
+                   end;
+                   if i >= MaxLines then begin
+                     break;
+                   end;
+
                     if i < StringText.Count then
-                      Add(StringText[LastLine + i])
+                     // Add(IntToStr(i) + ') ' + StringText[LastLine + i])
+                     Add(StringText[LastLine + i])
                     else
                       Break;
+                  end;
+
                   LastLine := LastLine + i;
                   Add(' ');
                   Add(' ');
@@ -174,10 +194,11 @@ begin
                       ThisPage := ThisPage + 1;
                       Add('Page ' + IntToStr(ThisPage));
                       Add(PAGE_BREAK);
+                      MaxLines := 60 - AHeader.Count;
                     end;
                 end;
               until LastLine >= StringText.Count - 1;
-            PrintWindowsReport(memPrintReport, PAGE_BREAK, Title, ErrMsg);
+            PrintWindowsReport(memPrintReport, PAGE_BREAK, Title, ErrMsg, True);
           end;
       finally
         memPrintReport.Free;
@@ -187,6 +208,9 @@ begin
   finally
     frmFrame.CCOWBusy := False;
     dlgPrintReport.Free;
+  end;
+  finally
+    BM.free;
   end;
 end;
 
@@ -210,6 +234,13 @@ procedure TfrmReportBox.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if(not (fsModal in FormState)) then
     Action := caFree;
+end;
+
+
+procedure TfrmReportBox.FormResize(Sender: TObject);
+begin
+  inherited;
+  self.memReport.Refresh;
 end;
 
 end.

@@ -56,8 +56,10 @@ type
     calCollTime: TORDateBox;
     txtImmedColl: TCaptionEdit;
     pnlCollTimeButton: TKeyClickPanel;
-    cmdImmedColl: TSpeedButton;
     lblTNS: TLabel;
+    lblNoBloodReq: TLabel;
+    cmdImmedColl: TSpeedButton;
+    Splitter1: TSplitter;
     procedure FormCreate(Sender: TObject);
     procedure cboAvailTestSelect(Sender: TObject);
     procedure cboAvailCompSelect(Sender: TObject);
@@ -96,10 +98,25 @@ type
     procedure cboReasonsChange(Sender: TObject);
     procedure cboModifiersChange(Sender: TObject);
     procedure lvSelectionListClick(Sender: TObject);
-    procedure cboAvailCompChange(Sender: TObject);
     procedure cboCollTimeChange(Sender: TObject);
     procedure memDiagCommentChange(Sender: TObject);
     procedure cboUrgencyExit(Sender: TObject);
+    procedure pnlBloodComponentsEnter(Sender: TObject);
+    procedure pnlDiagnosticTestsEnter(Sender: TObject);
+    procedure pnlDiagnosticTestsExit(Sender: TObject);
+    procedure pnlBloodComponentsExit(Sender: TObject);
+    procedure pnlBloodComponentsClick(Sender: TObject);
+    procedure pnlDiagnosticTestsClick(Sender: TObject);
+    procedure cboCollTypeClick(Sender: TObject);
+    procedure cboAvailTestEnter(Sender: TObject);
+    procedure cboCollTypeEnter(Sender: TObject);
+    procedure txtImmedCollEnter(Sender: TObject);
+    procedure calCollTimeEnter(Sender: TObject);
+    procedure cboCollTimeEnter(Sender: TObject);
+    procedure cboModifiersEnter(Sender: TObject);
+    procedure calWantTimeEnter(Sender: TObject);
+    procedure cboAvailCompEnter(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   protected
     FCmtTypes: TStringList ;
     procedure InitDialog; override;
@@ -243,6 +260,7 @@ var
   uDfltCollType, uReason: string;
   ALabTest: TLabTest;
   UserHasLRLABKey: boolean;
+  uChangingMSBOS: boolean;
   LRFZX     : string;  //the default collection type  (LC,WC,SP,I)
   LRFSAMP   : string;  //the default sample           (ptr)
   LRFSPEC   : string;  //the default specimen         (ptr)
@@ -292,6 +310,7 @@ begin
   uDfltUrgency := 9;
   uSelUrgency := '';
   uSelSurgery := 0;
+  uChangingMSBOS := false;
   TabResults.Caption := 'Lab Results';
   edtResults.Lines.Clear;
   edtResults.Lines.Add('Lab results are ONLY available after selecting/adding a component on the Blood Bank Orders tab that has been designated for results retrieval.');
@@ -313,6 +332,20 @@ begin
     FEvtDivision := 0;
     UserHasLRLABKey := User.HasKey('LRLAB');
     AllowQuickOrder := True;
+    if GetDiagnosticPanelLocation then
+      begin
+        pnlDiagnosticTests.Left := 0;
+        pnlBloodComponents.Left := (pnlDiagnosticTests.Width + 10);
+        pnlDiagnosticTests.TabOrder := 0;
+        pnlBloodComponents.TabOrder := 1;
+      end
+    else
+      begin
+        pnlBloodComponents.Left := 0;
+        pnlDiagnosticTests.Left := (pnlBloodComponents.Width + 10);
+        pnlBloodComponents.TabOrder := 0;
+        pnlDiagnosticTests.TabOrder := 1;
+      end;
     StatusText('Loading Dialog Definition');
     FCmtTypes := TStringList.Create;
     for i := 0 to 6 do FCmtTypes.Add(CmtType[i]) ;
@@ -341,11 +374,13 @@ begin
         cboCollType.SelectByID('LC')
       else
         cboCollType.SelectByID('SP');
-      SetupCollTimes(cboCollType.ItemID);
-      StatusText('Initializing List of Tests');
-      FVbecLookup := 'S.VBT';
-      cboAvailTest.InitLongList('');      //Populates cboAvailTest control based on S.VBT xref
+      //SetupCollTimes(cboCollType.ItemID);
     end;
+    cboAvailTest.Clear;
+    aList.Clear;
+    GetDiagnosticTests(aList);            //Get Tests in right order
+    for i := 0 to aList.Count - 1 do
+      cboAvailTest.Items.Add(aList[i]);
     cboAvailComp.Clear;
     aList.Clear;
     GetBloodComponents(aList);            //Get Components in right order
@@ -364,19 +399,19 @@ begin
       cboSurgery.Items.Add(AList[i]);
     AList.Clear;
     ExtractUrgencies(uUrgencyList, uVBECList);
-    ExtractTNSOrders(uTNSOrders, uVBECList);
+    if not(self.EvtID > 0) then ExtractTNSOrders(uTNSOrders, uVBECList);
     LoadUrgencies(cboUrgency);
     ExtractModifiers(uModifierList, uVBECList);
     ExtractReasons(uReasonsList, uVBECList);
     LoadModifiers(cboModifiers);
     LoadReasons(cboReasons);
-    calWantTime.Text := 'NOW'; //FormatFMDateTime('mmm dd,yyyy@hh:nn',DateTimeToFMDateTime(Now));
     pgeProduct.TabIndex := TI_INFO;
     lvSelectionList.Column[0].Width := 240;
     lvSelectionList.Column[1].Width := 30;
     lvSelectionList.Column[2].Width := 100;
     DisableComponentControls;
     DisableDiagTestControls;
+    pnlDiagnosticTests.Caption := 'Diagnostic Tests';
     pgeProduct.ActivePageIndex := TI_INFO;
     StatusText('');
     x := 'VBEC';
@@ -424,24 +459,31 @@ procedure TfrmODBBank.SetupDialog(OrderAction: Integer; const ID: string);
 var
   AnInstance, CurAdd: Integer;
   AResponse: TResponse;
-  i, j, k, aTNS, aTNSDays, getTest, TestAdded: integer;
-  aStr, aTestYes, aName, aTypeScreen, aSpecimen, aModifier, sub, sub1, x, aTNSString: string;
+  i, j, k, aTNS, getTest, TestAdded, aMSBOSContinue: integer;
+  aStr, aTestYes, aName, aTypeScreen, aSpecimen, aSpecimenUID, aSpecimenReq, aModifier, sub, sub1, x, aTNSString, aUrgText: string;
   ListItem: TListItem;
-  aList: TStringList;
+  aList, cList: TStringList;
   aTests: TStringList;
+  xLabTest: TLabTest;
+  aGotTNS : Boolean;
 begin
   inherited;
   aList := TStringList.Create;
+  cList := TStringList.Create;
   aTests:= TStringList.Create;
+  aGotTNS := false;
   try
   FOrderAction := OrderAction;
   ReadServerVariables;
   sub1 := '';
   aTypeScreen := '';
-  aSpecimen := '^';
+  aSpecimen := '';
+  aSpecimenUID := '';
+  aSpecimenReq := '';
   aModifier := '';
   if OrderAction in [ORDER_COPY, ORDER_EDIT, ORDER_QUICK] then with Responses, ALabTest do
     begin
+      pgeProduct.ActivePageIndex := TI_COMPONENT;
       AnInstance := NextInstance('ORDERABLE', 0);
       while AnInstance > 0 do
         begin
@@ -452,7 +494,9 @@ begin
               if sub = 't' then
                 begin
                   SetControl(cboAvailTest,        'ORDERABLE', AnInstance);
-                  ALabTest := TLabTest.Create(cboAvailTest.ItemID, Responses);
+                  changing := true;
+                  cboAvailTestSelect(Self);
+                  changing := false;
                 end
               else
                 begin
@@ -467,11 +511,15 @@ begin
                   SetControl(memDiagComment,     'COMMENT', AnInstance);
                   SetControl(chkConsent,         'YN', AnInstance);
                   //DetermineCollectionDefaults(Responses);
-                  SetControl(cboCollType,        'COLLECT', AnInstance);
-                  SetControl(cboCollTime,        'START', AnInstance);
-                  SetupCollTimes(cboCollType.ItemID);
-                  SetControl(cboUrgency,         'URGENCY', AnInstance);
                   SetControl(cboSurgery,         'MISC', AnInstance);
+                  SetControl(cboUrgency,         'URGENCY', AnInstance);
+                  if cboUrgency.ItemIEN = 0 then
+                    begin
+                      if StrToIntDef(LRFURG, 0) > 0 then
+                        cboUrgency.SelectByID(LRFURG)
+                      else if (Urgency = 0) and (cboUrgency.Items.Count = 1) then
+                        cboUrgency.ItemIndex := 0;
+                    end;
                   Urgency := cboUrgency.ItemIEN;
                   if (Urgency = 0) and (cboUrgency.Items.Count = 1) then
                     begin
@@ -486,6 +534,7 @@ begin
                       Inc(i);
                       AResponse := Responses.FindResponseByName('COMMENT',i);
                     end ;
+                  cboUrgencyChange(self);
                 end;
               if sub = 't' then with ALabTest do      //DIAGNOSTIC TEST
                 begin
@@ -493,81 +542,31 @@ begin
                   DisableComponentControls;
                   EnableDiagTestControls;
                   LRORDERMODE := TORDER_MODE_DIAG;
+                  //DetermineCollectionDefaults(Responses);
                   aList.Clear;
                   aTestYes := '1';
                   ExtractTypeScreen(aList, uVBECList);
                   if aList.Count > 0 then aTypeScreen := aList[0];
                   aList.Clear;
-                  with lvSelectionList do
-                    begin
-                      ListItem := Items.Add;
-                      ListItem.Caption := piece(cboAvailTest.Items[cboAvailTest.ItemIndex],'^',2);
-                      ListItem.SubItems.Add('');
-                      ListItem.SubItems.Add('');
-                      ListItem.SubItems.Add('');
-                      ListItem.SubItems.Add(piece(cboAvailTest.Items[cboAvailTest.ItemIndex],'^',1));
-                      if piece(cboAvailTest.Items[cboAvailTest.ItemIndex],'^',1) = aTypeScreen then
-                        begin
-                          lblTNS.Caption := '';
-                          lblTNS.Visible := false;
-                          memMessage.Text := '';
-                          pnlMessage.Visible := false;
-                          uGetTnS := 0;
-                          pnlDiagnosticTests.Caption := 'Diagnostic Tests';
-                        end;
-                    end;
-                  aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimen + '^' + IntToStr(aLabTest.ItemID);  //aSpecimen has 2 pieces additional pieces added for Tests
-                  uSelectedItems.Add(aStr);
                   if Length(calWantTime.Text) > 0 then Responses.Update('DATETIME',1,ValidCollTime(calWantTime.Text),calWantTime.Text);
-                  {with cboCollType do if Length(ItemID) > 0 then
-                    begin
-                      Responses.Update('COLLECT', 1, ItemID, ItemID) ;
-                      FLastCollType := ItemID;
-                    end;  }
-                  if Length(cboUrgency.Text) > 0 then Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text);
+                  if Length(cboUrgency.Text) > 0 then Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text)
+                    else
+                      begin
+                        cboUrgency.ItemIndex := 2;
+                        for i := 0 to cboUrgency.Items.Count - 1 do
+                          begin
+                            aUrgText := cboUrgency.Items[i];
+                            if aUrgText = '9^ROUTINE' then    // Find urgency default of ROUTINE
+                              begin
+                                cboUrgency.ItemIndex := i;
+                                break;
+                              end;
+                          end;
+                        Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text);
+                        cboUrgencyChange(self);
+                      end;
                   if Length(memDiagComment.Text) > 0 then Responses.Update('COMMENT',1,memDiagComment.Text,memDiagComment.Text);
                   if Length(cboReasons.Text) > 0 then Responses.Update('REASON',1,cboReasons.Text,cboReasons.Text);
-                  LoadCollType(cboCollType);
-                  if (cboCollType.ItemID = 'LC') or (cboCollType.ItemID = 'I') then
-                    if not(ALabTest.LabCanCollect) and OrderForInpatient then
-                      cboCollType.SelectByID('WC')
-                    else if not(ALabTest.LabCanCollect) then
-                      cboCollType.SelectByID('SP');
-                  SetupCollTimes(cboCollType.ItemID);
-                  if cboCollType.ItemID = 'LC' then
-                    begin
-                      with cboCollTime do
-                        if Length(ItemID) > 0 then
-                          begin
-                            Responses.Update('START', 1, Copy(ItemID, 2, 999), Copy(ItemID, 2, 999));
-                            FLastLabCollTime := ItemID + U + Text;
-                          end
-                        else if Length(Text) > 0 then
-                          begin
-                            Responses.Update('START', 1, ValidCollTime(Text), Text) ;
-                            FLastLabCollTime := ValidCollTime(Text);
-                          end;
-                    end
-                  else
-                    begin
-                      with calCollTime do
-                        if FMDateTime > 0 then
-                          begin
-                            Responses.Update('START', 1, ValidCollTime(Text), Text);
-                            FLastColltime := ValidCollTime(Text);
-                          end
-                        else
-                          begin
-                            Responses.Update('START', 1, '', '') ;
-                            FLastCollTime := '';
-                          end;
-                    end;
-                  with cboCollType do if Length(ItemID) > 0 then
-                    begin
-                      Responses.Update('COLLECT', 1, ItemID, ItemID) ;
-                      FLastCollType := ItemID;
-                    end;
-                  //if Length(cboCollType.Text) > 0 then Responses.Update('COLLECT',1,cboCollType.ItemID,cboCollType.ItemID);
                   memOrder.Text := Responses.OrderText;
                   Changing := False;
                   if ObtainCollSamp then
@@ -624,13 +623,16 @@ begin
                       end;
                     if TestAdded = 1 then
                       begin
-                        edtResults.Clear;
                         aTests.Clear;
                         GetPatientBloodResults(aTests, Patient.DFN, uTestsForResults);
-                        QuickCopy(ATests,edtResults);
-                        if edtResults.Lines.Count > 0 then TabResults.Caption := 'Lab Results Available'; //TabResults.ImageIndex := 1;
-                        uRaw.Clear;
-                        GetPatientBloodResultsRaw(uRaw, Patient.DFN, uTestsForResults);
+                        if aTests.Count > 0 then
+                          begin
+                            edtResults.Clear;
+                            QuickCopy(ATests,edtResults);
+                            TabResults.Caption := 'Lab Results Available';
+                            uRaw.Clear;
+                            GetPatientBloodResultsRaw(uRaw, Patient.DFN, uTestsForResults);
+                          end;
                       end;
                     CurAdd := 1;
                     if uRaw.Count > 0 then
@@ -639,6 +641,35 @@ begin
                         if Length(uRaw[j]) > 0 then Responses.Update('RESULTS', CurAdd, uRaw[j], piece(uRaw[j],'^',1));
                         Inc(CurAdd);
                       end;
+                  for i := lvSelectionList.Items.Count - 1 downto 0 do
+                    begin
+                      if lvSelectionList.Items[i].SubItems[3] = aTypeScreen then
+                        begin
+                          aGotTNS := true;
+                          break;
+                        end;
+                    end;
+                  if (uTNSOrders.Count < 1) and (aGotTNS = false) and (SpecimenNeeded(aList, uVBECList, aLabTest.ItemID)) then  //check to see if type and screen is needed CQ 17349
+                    begin
+                      uGetTnS := 1;
+                    end;
+                  if aList.Count > 0 then
+                    begin
+                      aSpecimen := piece(aList[0], '^',1);
+                      aSpecimenUID := piece(aList[0], '^',2);
+                    end;
+                  aList.Clear;
+                  ExtractSpecimens(aList, uVBECList);    //Get specimen values to pass back to Server
+                  for i := 0 to aList.Count - 1 do
+                    begin
+                      if (StrToInt(piece(aList[i],'^',1)) = aLabTest.ItemID) then
+                        begin
+                          aSpecimenReq := piece(aList[i],'^',2);
+                          if (SpecimenNeeded(aList, uVBECList, aLabTest.ItemID)) then
+                            aSpecimenUID := '';
+                          break;
+                        end;
+                    end;
                   with lvSelectionList do
                     begin
                       ListItem := Items.Add;
@@ -656,10 +687,20 @@ begin
                           end;
                       ListItem.SubItems.Add(piece(cboAvailComp.Items[cboAvailComp.ItemIndex],'^',1));
                     end;
-                  aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimen + '^' + IntToStr(aLabTest.ItemID);  //aSpecimen has 2 pieces additional pieces added for Tests
+                  aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimenReq + '^' + aSpecimen + '^' + aSpecimenUID + '^' + IntToStr(aLabTest.ItemID);
                   uSelectedItems.Add(aStr);
                   memOrder.Text := Responses.OrderText;
                   Changing := False;
+                  if (Length(cboSurgery.Text) > 0) then
+                    begin
+                      for i := 0 to cboSurgery.Items.Count - 1 do
+                        if uppercase(cboSurgery.Text) = uppercase(piece(cboSurgery.Items[i],'^',2)) then
+                          begin
+                            cboSurgery.ItemIndex := i;
+                            Break;
+                          end;
+                      cboSurgeryChange(self);
+                    end;
                 end;
             end;
           StatusText('');
@@ -668,6 +709,106 @@ begin
       DisableComponentControls;
       DisableDiagTestControls;
     end;
+    cList.Clear;
+    if (Length(cboSurgery.ItemID) > 0) then
+      begin
+        for j := 0 to uSelectedItems.Count - 1 do
+          begin
+            xLabTest := TLabTest.Create(piece(uSelectedItems[j],'^',2), Responses);
+            if (piece(uSelectedItems[j],'^',1) = '0') and (not(piece(uSelectedItems[j],'^',3)='')) and (StrToInt(piece(uSelectedItems[j],'^',3)) > 0) and (piece(cboSurgery.Items[cboSurgery.ItemIndex],'^',3) = '1') then
+              begin
+                cList.Add(xLabTest.TestName + '^' + piece(uSelectedItems[j],'^',3));
+              end;
+            xLabTest.Free;
+          end;
+      end;
+    if (uChangingMSBOS = false) and (cList.Count > 0) then
+      begin
+        lblNoBloodReq.Visible := true;
+        with Application do
+          begin
+            NormalizeTopMosts;
+            aMSBOSContinue :=
+              MessageBox(PChar('No blood is required for the surgical procedure: ' + cboSurgery.text +
+               '.' + CRLF +
+               'If you still need to order any components, please enter a justification in the Comment box.'
+                + CRLF + CRLF + 'Do you want me to remove ALL the component orders you''ve just entered? '),
+               PChar('No Blood Required'),MB_YESNO);
+            RestoreTopMosts;
+          end;
+        if aMSBOSContinue = 6 then
+          begin
+            tQuantity.Text := '';
+            for j := uSelectedItems.Count - 1 downto 0 do
+              begin
+                if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '0') then
+                  begin
+                    lvSelectionList.Items[j].Delete;
+                    uSelectedItems.Delete(j);
+                    Responses.Update('ORDERABLE', (j+1) ,'', '');
+                    Responses.Update('MODIFIER', (j+1), '', '');
+                    Responses.Update('QTY', (j+1), '', '');
+                  end;
+              end;
+            cboAvailComp.Text := '';
+            cboAvailComp.ItemIndex := -1;
+            cboModifiers.Text := '';
+            cboModifiers.ItemIndex := -1;
+            lblNoBloodReq.Visible := false;
+            //if fODBBank. Active then cboAvailTest.SetFocus;
+            lblTNS.Caption := '';
+            lblTNS.Visible := false;
+            DisableComponentControls;
+          end;
+      end;
+      for i := 0 to lvSelectionList.Items.Count - 1 do
+        begin
+          if lvSelectionList.Items[i].SubItems[3] = aTypeScreen then
+            begin
+              uGetTnS := 0;
+              aGotTNS := true;
+              uDfltUrgency := cboUrgency.ItemID;
+              lblTNS.Caption := '';
+              lblTNS.Visible := false;
+              memMessage.Text := '';
+              pnlMessage.Visible := false;
+              pnlDiagnosticTests.Caption := 'Diagnostic Tests';
+              if uTNSOrders.Count > 0 then
+                begin
+                  for j := 0 to uTNSOrders.Count - 1 do
+                    aTNSString := aTNSString + CRLF + uTNSOrders[j];
+                  with Application do
+                    begin
+                      NormalizeTopMosts;
+                      aTNS :=
+                        MessageBox(PChar(aTNSString + CRLF + CRLF +
+                           'Do you wish to cancel this request for Type & Screen?'),
+                           PChar('Type & Screen Entered in Past ' + IntToStr(TNSDaysBack) + ' Days'),
+                           MB_YESNO);
+                      RestoreTopMosts;
+                      if aTNS = 6 then
+                        begin
+                          lvSelectionList.ItemIndex := i;
+                          lvSelectionListClick(self);
+                          btnRemoveClick(self);
+                          break;
+                        end;
+                    end;
+                end;
+              break;
+            end;
+        end;
+      if uSelectedItems.Count < 1 then uGetTNS := 0;
+
+      for i := uSelectedItems.Count - 1 downto 0 do
+        begin
+          if (aGotTNS = false) and not(piece(uSelectedItems[i],'^',1) = '1') and (uTNSOrders.Count < 1) and (piece(uSelectedItems[i],'^',5) = '1') then //CQ 17349
+            begin
+              uGetTnS := 1;
+              break;
+            end;
+        end;
+
     CurAdd := 1;
     for i := 0 to uSelectedItems.Count - 1 do
       begin
@@ -688,198 +829,44 @@ begin
             if Length(cboUrgency.Text) > 0 then Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text)
               else
                 begin
-                  cboUrgency.ItemIndex := 1;
+                  cboUrgency.ItemIndex := 2;
+                  for j := 0 to cboUrgency.Items.Count - 1 do
+                    begin
+                      aUrgText := cboUrgency.Items[j];
+                      if aUrgText = '9^ROUTINE' then    // Find urgency default of ROUTINE
+                        begin
+                          cboUrgency.ItemIndex := j;
+                          break;
+                        end;
+                    end;
                   Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text);
                   cboUrgencyChange(self);
                 end;
           end;
         Inc(CurAdd);
       end;
-    for i := 0 to lvSelectionList.Items.Count - 1 do
+    if uGetTnS = 1 then
       begin
-        if lvSelectionList.Items[i].SubItems[3] = aTypeScreen then
-          begin
-            if uTNSOrders.Count > 0 then
-              begin
-                for j := 0 to uTNSOrders.Count - 1 do
-                  aTNSString := aTNSString + CRLF + uTNSOrders[j];
-                with Application do
-                  begin
-                    NormalizeTopMosts;
-                    aTNSDays := TNSDaysBack;
-                    aTNS :=
-                      MessageBox(PChar(aTNSString + CRLF + CRLF +
-                                 'Do you wish to continue with this request for Type & Screen?'),
-                                 PChar('Type & Screen Entered in Past ' + IntToStr(TNSDaysBack) + ' Days'),
-                                 MB_YESNO);
-                    RestoreTopMosts;
-                    if aTNS = 7 then
-                      begin
-                        lvSelectionList.ItemIndex := i;
-                        lvSelectionListClick(self);
-                        btnRemoveClick(self);
-                        break;
-                      end;
-                  end;
-              end;
-            break;
-          end;
-      end;
-  {if OrderAction in [ORDER_COPY, ORDER_EDIT, ORDER_QUICK] then with Responses, ALabTest do
-    begin
-      if OrderAction in [ORDER_QUICK, ORDER_EDIT] then uQuickInProcess := 1;
-      AnInstance := NextInstance('ORDERABLE', 0);
-      while AnInstance > 0 do
-        begin
-          AResponse := FindResponseByName('ORDERABLE', AnInstance);
-          if AResponse <> nil then
-            begin
-              sub := GetSubtype(AResponse.EValue);
-              if sub = 't' then
-                begin
-                  SetControl(cboAvailTest,        'ORDERABLE', AnInstance);
-                  ALabTest := TLabTest.Create(cboAvailTest.ItemID, Responses);
-                end
-              else
-                begin
-                  SetControl(cboAvailComp,        'ORDERABLE', AnInstance);
-                  ALabTest := TLabTest.Create(cboAvailComp.ItemID, Responses);
-                end;
-              //SetControl(cboTests,           'ORDERABLE', AnInstance);
-              //ALabTest := TLabTest.Create(cboTests.ItemID, Responses);
-              if ALabTest = nil then Exit;  // Causes access violation
-              //sub := GetSubtype(ALabTest.TestName);
-              if AnInstance = 1 then
-                begin
-                  DetermineCollectionDefaults(Responses);
-                  SetControl(cboReasons,         'REASON', AnInstance);
-                  SetControl(chkConsent,         'YN', AnInstance);
-                  SetControl(cboSurgery,         'MISC', AnInstance);
-                  //SetControl(cboCollType,        'COLLECT', AnInstance);
-                  //SetControl(cboCollTime,        'START', AnInstance);
-                  SetControl(calWantTime,        'DATETIME', AnInstance);
-                  //LoadUrgency(cboCollType.ItemID, cboUrgency);
-                  SetControl(cboUrgency,         'URGENCY', AnInstance);
-                  Urgency := cboUrgency.ItemIEN;
-                  if (Urgency = 0) and (cboUrgency.Items.Count = AnInstance) then
-                    begin
-                      cboUrgency.ItemIndex := 0;
-                      Urgency := cboUrgency.ItemIEN;
-                    end;
-                  i := 1 ;
-                  AResponse := Responses.FindResponseByName('COMMENT',i);
-                  while AResponse <> nil do
-                      begin
-                        if Length(AResponse.Evalue) > 0 then
-                          Comment.Add(AResponse.EValue);
-                        Inc(i);
-                        AResponse := Responses.FindResponseByName('COMMENT',i);
-                      end ;
-                end;
-              if sub = 't' then with ALabTest do      //DIAGNOSTIC TEST
-                begin
-                  Changing := True;
-                  DisableComponentControls;
-                  EnableDiagTestControls;
-                  LRORDERMODE := TORDER_MODE_DIAG;
-                  with Responses do
-                    begin
-                      StatusText('Initializing Order');
-                      AResponse := FindResponseByName('ORDERABLE', AnInstance);
-                      if AResponse <> nil then
-                        sub1 := GetSubtype(AResponse.EValue);
-                      if sub1 = 't' then
-                        begin
-                          SetControl(cboAvailTest,       'ORDERABLE', AnInstance);
-                          //SetControl(cboTests,           'ORDERABLE', AnInstance);
-                          //DetermineCollectionDefaults(Responses);   //cboCollType = COLLECT , calCollTime = START
-                          cboAvailTestSelect(self);
-                        end;
-                    end;
-                  Changing := False;
-                  if ObtainCollSamp then
-                    begin
-                      //For BloodBank orders, this condition should never occur
-                    end
-                  else
-                    begin
-                      with ALabTest do
-                        with TCollSamp(CollSampList.Items[IndexOfCollSamp(CollSamp)]) do
-                          begin
-                            x := '' ;
-                            for i := 0 to WardComment.Count-1 do
-                            x := x + WardComment.strings[i]+#13#10 ;
-                            pnlMessage.TabOrder := cboAvailTest.TabOrder + 1;
-                            OrderMessage(x) ;
-                          end ;
-                    end;
-                end;
-              if sub = 'c' then with ALabTest do  //COMPONENT
-                begin
-                  Changing := True;
-                  DisableDiagTestControls;
-                  EnableComponentControls;
-                  LRORDERMODE := TORDER_MODE_COMP;
-                  with Responses do
-                    begin
-                      StatusText('Initializing Order');
-                      AResponse := FindResponseByName('ORDERABLE', AnInstance);
-                      if AResponse <> nil then
-                        sub1 := GetSubtype(AResponse.EValue);
-                      if sub1 = 'c' then
-                        begin
-                          SetControl(cboAvailComp,       'ORDERABLE', AnInstance);
-                          //SetControl(cboTests,           'ORDERABLE', AnInstance);
-                          SetControl(cboModifiers,       'MODIFIER', AnInstance);
-                          SetControl(tQuantity,          'QTY', AnInstance);
-                          //DetermineCollectionDefaults(Responses);
-                          cboAvailCompSelect(self);
-                        end;
-                    end;
-                  Changing := False;
-                end;
-              with ALabTest do
-                begin
-                  if ObtainComment then
-                    LoadRequiredComment(FCmtTypes.IndexOf(CurReqComment))
-                  else
-                    DisableCommentPanels;
-                  x := '' ;
-                  for i := 0 to CurWardComment.Count-1 do
-                    x := x + CurWardComment.strings[i]+#13#10 ;
-                  i :=  IndexOfCollSamp(CollSamp);
-                  if i > -1 then with TCollSamp(CollSampList.Items[IndexOfCollSamp(CollSamp)]) do
-                    for i := 0 to WardComment.Count-1 do
-                      x := x + WardComment.strings[i]+#13#10 ;
-                  pnlMessage.TabOrder := cboAvailTest.TabOrder + 1;
-                  if Length(x) > 0 then
-                    begin
-                      OrderMessage(x) ;
-                    end;
-                end;
-              StatusText('');
-              Changing := True;
-              //if not(FOrderAction = ORDER_EDIT) then DetermineCollectionDefaults(Responses);
-              Changing := False;
-            end;
-          AnInstance := NextInstance('ORDERABLE', AnInstance);
-        end; //while AnInstance - ORDERABLE
-      DisableComponentControls;
-      DisableDiagTestControls;
-      uQuickInProcess := 0;
-    end;  }
+        lblTNS.Caption := 'TYPE + SCREEN must be added to order';
+        lblTNS.Visible := true;
+        memMessage.Text := 'TYPE + SCREEN must be added to order';
+        pnlMessage.Visible := true;
+        pnlDiagnosticTests.Caption := 'Diagnostic Tests*';
+      end
+      else pnlDiagnosticTests.Caption := 'Diagnostic Tests';
   finally
     aList.Free;
+    cList.Free;
     aTests.Free;
   end;
-  edtResults.Height := 247;
-  edtInfo.Height := 247;
   if lvSelectionList.Items.Count > 0 then
     begin
       pnlSelectedTests.Visible := True;
       cmdAccept.Visible := True;
       memOrder.Visible := True;
       GroupBox1.Visible := False;
+      lvSelectionList.Items[0].Selected := true;
+      lvSelectionListClick(self);
     end;
 end;
 
@@ -889,16 +876,19 @@ procedure TfrmODBBank.SetOnQuickOrder;
   AResponse: TResponse;
   i: integer;
   x,sub,sub1,aTNSString: string;
-  aList: TStringList;
-  aGotIt: boolean;
+  aList, cList: TStringList;
+  aGotIt, aGotTNS: boolean;
   aTests: TStringList;
   ListItem: TListItem;
-  aName, aMsg, aStr, aModifier, aReason, aSurgery, aCollTime, aTestYes, aSpecimen, aTypeScreen: String;
-  CurAdd, j, k, getTest, TestAdded, aMSBOS, aMSBOSContinue, aTNS, aTNSDays: Integer;
+  xLabTest: TLabTest;
+  aName, aMsg, aStr, aModifier, aReason, aSurgery, aCollTime, aTestYes, aSpecimen, aSpecimenUID, aSpecimenReq, aTypeScreen, aUrgText: String;
+  CurAdd, j, k, getTest, TestAdded, aMSBOS, aMSBOSContinue, aTNS: Integer;
 begin
   inherited;
   aList := TStringList.Create;
+  cList := TStringList.Create;
   aTests := TStringList.Create;
+  pgeProduct.ActivePageIndex := TI_COMPONENT;
   try
     aModifier := '';
     aReason := '';
@@ -907,12 +897,19 @@ begin
     aTestYes := '0';
     aTypeScreen := '';
     aSpecimen := '';
+    aSpecimenUID := '';
+    aSpecimenReq := '';
     sub1 := '';
+    aGotTNS := false;
     ExtractTypeScreen(aList, uVBECList);
     if aList.Count > 0 then aTypeScreen := aList[0];
     aList.Clear;
-    Extractspecimen(aList, uVBECList);
-    if aList.Count > 0 then aSpecimen := aList[0];
+    ExtractSpecimen(aList, uVBECList);
+    if aList.Count > 0 then
+      begin
+        aSpecimen := piece(aList[0], '^',1);
+        aSpecimenUID := piece(aList[0], '^',2);
+      end;
     with Responses, ALabTest do
       begin
         Changing := True;
@@ -962,27 +959,27 @@ begin
                     SetControl(memDiagComment,     'COMMENT', AnInstance);
                     SetControl(chkConsent,         'YN', AnInstance);
                     //DetermineCollectionDefaults(Responses);
-                    SetControl(cboCollType,        'COLLECT', AnInstance);
-                    SetupCollTimes(cboCollType.ItemID);
-                    //SetControl(cboCollTime,        'START', AnInstance);
-                    //LoadUrgency(cboCollType.ItemID, cboUrgency);
                     SetControl(cboUrgency,         'URGENCY', AnInstance);
-                    Urgency := cboUrgency.ItemIEN;
-                    if (Urgency = 0) and (cboUrgency.Items.Count = AnInstance) then
+                    if cboUrgency.ItemIEN = 0 then
                       begin
-                        cboUrgency.ItemIndex := 0;
-                        Urgency := cboUrgency.ItemIEN;
-                        cboUrgencyChange(self);
+                        if StrToIntDef(LRFURG, 0) > 0 then
+                          cboUrgency.SelectByID(LRFURG)
+                        else if (Urgency = 0) and (cboUrgency.Items.Count = 1) then
+                          cboUrgency.ItemIndex := 0;
                       end;
                     SetControl(cboSurgery,         'MISC', AnInstance);
+                    if Length(cboSurgery.Text) > 0 then
+                      begin
+                        for i := 0 to cboSurgery.Items.Count - 1 do
+                          if uppercase(cboSurgery.Text) = uppercase(piece(cboSurgery.Items[i],'^',2)) then
+                            begin
+                              cboSurgery.ItemIndex := i;
+                              Break;
+                            end;
+                        cboSurgeryChange(self);
+                      end;
                     if not(ALabTest = nil) then
                       begin
-                        Urgency := cboUrgency.ItemIEN;
-                        if (Urgency = 0) and (cboUrgency.Items.Count = 1) then
-                          begin
-                            cboUrgency.ItemIndex := 0;
-                            Urgency := cboUrgency.ItemIEN;
-                          end;
                         i := 1 ;
                         AResponse := Responses.FindResponseByName('COMMENT',i);
                         while AResponse <> nil do
@@ -991,18 +988,6 @@ begin
                             Inc(i);
                             AResponse := Responses.FindResponseByName('COMMENT',i);
                           end ;
-                      end;
-                    if not(cboCollType.ItemID = 'LC') then
-                      begin
-                        if Length(cboCollTime.Text) > 0 then
-                          begin
-                            calCollTime.FMDateTime := StrToFMDateTime(cboCollTime.Text);
-                            FLastCollTime := cboCollTime.Text;
-                          end
-                        else
-                          begin
-                            FLastCollTime := '';
-                          end;
                       end;
                   end;
                 if sub1 = 'c' then
@@ -1013,8 +998,6 @@ begin
                     SetControl(cboAvailComp,       'ORDERABLE', AnInstance);
                     SetControl(cboModifiers,       'MODIFIER', AnInstance);
                     SetControl(tQuantity,          'QTY', AnInstance);
-                    //DetermineCollectionDefaults(Responses);
-                    //Check for and display any associated Lab Results
                     aList.Clear;
                     TestAdded := 0;
                     getTest := 0;
@@ -1042,13 +1025,16 @@ begin
                         end;
                       if TestAdded = 1 then
                         begin
-                          edtResults.Clear;
                           aTests.Clear;
                           GetPatientBloodResults(aTests, Patient.DFN, uTestsForResults);
-                          QuickCopy(ATests,edtResults);
-                          if edtResults.Lines.Count > 0 then TabResults.Caption := 'Lab Results Available'; //TabResults.ImageIndex := 1;
-                          uRaw.Clear;
-                          GetPatientBloodResultsRaw(uRaw, Patient.DFN, uTestsForResults);
+                          if aTests.Count > 0 then
+                            begin
+                              edtResults.Clear;
+                              QuickCopy(ATests,edtResults);
+                              TabResults.Caption := 'Lab Results Available';
+                              uRaw.Clear;
+                              GetPatientBloodResultsRaw(uRaw, Patient.DFN, uTestsForResults);
+                            end;
                         end;
                       CurAdd := 1;
                       if uRaw.Count > 0 then
@@ -1057,17 +1043,22 @@ begin
                           if Length(uRaw[j]) > 0 then Responses.Update('RESULTS', CurAdd, uRaw[j], piece(uRaw[j],'^',1));
                           Inc(CurAdd);
                         end;
-                    aSpecimen := '^';
+                    aSpecimen := '';
+                    aSpecimenUID := '';
+                    aSpecimenReq := '';
                     aTestYes := '0';
                     aReason := '';
                     aSurgery := '';
                     aCollTime := '';
                     ExtractSpecimen(aList, uVBECList);
-                    if aList.Count > 0 then aSpecimen := aList[0];
+                    if aList.Count > 0 then
+                      begin
+                        aSpecimen := piece(aList[0], '^', 1);
+                        aSpecimenUID := piece(aList[0], '^', 2);
+                      end;
                     if length(cboModifiers.ItemID) > 0 then aModifier := cboModifiers.Items[cboModifiers.ItemIndex];
                     if length(cboReasons.ItemID) > 0 then aReason := cboReasons.Items[cboReasons.ItemIndex];
                     if length(cboSurgery.ItemID) > 0 then aSurgery := cboSurgery.Items[cboSurgery.ItemIndex];
-                    if length(cboCollTime.ItemID) > 0 then aCollTime := cboCollTime.Items[cboCollTime.ItemIndex];
                     if Length(cboSurgery.ItemID) > 0 then
                       begin
                         aList.Clear;
@@ -1075,7 +1066,7 @@ begin
                         for i := 0 to aList.Count - 1 do
                           begin
                             if (StrToInt(piece(aList[i],'^',1)) = aLabTest.ItemID)
-                             and (piece(aList[i],'^',3) = cboSurgery.Text) then
+                             and (uppercase((piece(aList[i],'^',3))) = uppercase(cboSurgery.Text)) then
                               begin
                                 aMSBOS := StrToInt(piece(aList[i],'^',4));
                                 if (aMSBOS > 0) and (StrToInt(tQuantity.Text) > aMSBOS) then
@@ -1085,24 +1076,63 @@ begin
                                       NormalizeTopMosts;
                                       aMSBOSContinue :=
                                         MessageBox(PChar('The number of units ordered (' + tQuantity.Text +
-                                                   ') for ' + aLabTest.TestName + ' exceeds the maximum number of units ('
-                                                   + IntToStr(aMSBOS) +
-                                                   ') for the ' + cboSurgery.text +
-                                                   ' surgical procedure selected.' + CRLF + CRLF + 'Do you wish to continue?'),
-                                                   PChar('Maximum Number of Units Exceeded'),
-                                                   MB_YESNO);
+                                           ') for ' + aLabTest.TestName + ' Exceeds the maximum number recommended ('
+                                           + IntToStr(aMSBOS) +
+                                           ') for the ' + cboSurgery.text +
+                                           ' surgical procedure.' + CRLF +
+                                           'If you need to order more than the maximum number of units, please enter a justification in the Comment box.'
+                                            + CRLF + CRLF + 'Edit the Blood component Quantity?'),
+                                           PChar('Maximum Number of Units Exceeded'),
+                                           MB_YESNO);
                                       RestoreTopMosts;
                                     end;
-                                    if aMSBOSContinue = 7 then
+                                    if aMSBOSContinue = 6 then
                                       begin
                                         ShowMsg(cboAvailComp.Text + ' has NOT been added to this request.');
+                                        lvSelectionList.Clear;
+                                        uSelectedItems.Clear;
+                                        uTestsForResults.Clear;
+                                        uRaw.Clear;
+                                        uGetTnS := 0;
+                                        lblTNS.Caption := '';
+                                        lblTNS.Visible := false;
+                                        memMessage.Text := '';
+                                        pnlMessage.Visible := false;
+                                        FLastItemID := '';
+                                        InitDialog;
+                                        cboModifiers.ItemIndex := -1;
+                                        cboAvailTest.ItemIndex := -1;
+                                        cboAvailComp.ItemIndex := -1;
+                                        cboSurgery.ItemIndex := -1;
+                                        cboUrgency.ItemIndex := -1;
+                                        cboReasons.ItemIndex := -1;
+                                        cboCollType.ItemIndex := -1;
+                                        cboCollTime.ItemIndex := -1;
+                                        cboQuick.ItemIndex := -1;
+                                        calWantTime.Text := '';
+                                        memDiagComment.Text := '';
+                                        GroupBox1.Visible := true;
+                                        tQuantity.Text := '';
+                                        FLastCollType := '';
+                                        FLastCollTime := '';
+                                        FLastLabCollTime := '';
+                                        txtImmedColl.Text := '';
+                                        calCollTime.text := '';
                                         exit;
                                       end;
                                   end;
                               end;
                           end;
                       end;
-                    if (uTNSOrders.Count < 1) then //SpecimenNeeded(aList, uVBECList, aLabTest.ItemID) then  //check to see if type and screen is needed
+                    for i := lvSelectionList.Items.Count - 1 downto 0 do
+                      begin
+                        if lvSelectionList.Items[i].SubItems[3] = aTypeScreen then
+                          begin
+                            aGotTNS := true;
+                            break;
+                          end;
+                      end;
+                    if (uTNSOrders.Count < 1) and (aGotTNS = false) and (SpecimenNeeded(aList, uVBECList, aLabTest.ItemID)) then  //check to see if type and screen is needed CQ 17349
                       begin
                         uGetTnS := 1;
                       end;
@@ -1112,7 +1142,9 @@ begin
                       begin
                         if (StrToInt(piece(aList[i],'^',1)) = aLabTest.ItemID) then
                           begin
-                            aSpecimen := piece(aList[i],'^',2) + '^' + aSpecimen;
+                            aSpecimenReq := piece(aList[i],'^',2);
+                            if (SpecimenNeeded(aList, uVBECList, aLabTest.ItemID)) then
+                              aSpecimenUID := '';
                             break;
                           end;
                       end;
@@ -1135,7 +1167,7 @@ begin
                         ListItem.SubItems.Add(piece(cboAvailComp.Items[cboAvailComp.ItemIndex],'^',1));
                       end;
                     CurAdd := 1;
-                    aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimen + '^' + IntToStr(aLabTest.ItemID);  //aSpecimen has 2 pieces additional pieces added for Tests
+                    aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimenReq + '^' + aSpecimen + '^' + aSpecimenUID + '^' + IntToStr(aLabTest.ItemID);
                     uSelectedItems.Add(aStr);
                     for i := 0 to uSelectedItems.Count - 1 do
                       begin
@@ -1159,63 +1191,6 @@ begin
                     GroupBox1.Visible := False;
                   aMsg := '';
                   LRORDERMODE := TORDER_MODE_INFO;
-                  {if uGetTnS = 1 then
-                    begin
-                      lblTNS.Caption := 'TYPE + SCREEN must be added to order';
-                      lblTNS.Visible := true;
-                      memMessage.Text := 'TYPE + SCREEN must be added to order';
-                      memMessage.Visible := false;
-                      pnlMessage.Visible := true;
-                      pnlDiagnosticTests.Caption := 'Diagnostic Tests*';
-                    end;  }
-                  {if uGetTnS = 1 then
-                    begin
-                      if responses.QuickOrder < 1 then
-                        begin
-                          for i := 1 to cboAvailTest.Items.Count - 1 do
-                            begin
-                              if piece(cboAvailTest.Items[i],'^',1) = aTypeScreen then
-                                begin
-                                  if piece(aSpecimen,'^',1) = '1' then
-                                    begin
-                                      cboCollTime.Text := calWantTime.Text;
-                                      aCollSave := cboCollTime.Text + '^' + cboCollTime.ItemID + '^' + cboCollType.Text + '^' + cboCollType.ItemID;
-                                      cboCollTime.Text := '';
-                                      cboCollType.Text := '';
-                                      uSpecimen := 1;
-                                    end;
-                                  cboModifiers.Text := '';
-                                  cboAvailTest.SelectByID(aTypeScreen);
-                                  cboTests.SelectByID(aTypeScreen);
-                                  cboTestsClick(self);
-                                  //cboAvailTestSelect(Self);
-                                  uSpecimen := 0;
-                                  cboCollTime.Text := piece(aCollSave,'^',1);
-                                  cboCollType.Text := piece(aCollSave,'^',3);
-                                  aCollSave := '';
-                                  break;
-                                end;
-                            end;
-                          aMsg := 'An order for Type and Screen has been added to this request' + '.';
-                        end
-                        else
-                          begin
-                            lblTNS.Caption := 'TYPE + SCREEN must be added to order';
-                            lblTNS.Visible := true;
-                            memMessage.Text := 'TYPE + SCREEN must be added to order';
-                            memMessage.Visible := false;
-                            pnlMessage.Visible := true;
-                          end;
-                    end;
-                  if (uGetTnS = 1) then
-                    begin
-                      if length(aMsg) > 0 then aMsg := aMsg + crlf + crlf;
-                      ShowMsg(aMsg);
-                    end;  }
-
-                  //cboModifiers.Text := '';
-                  edtResults.Height := 247;
-                  edtInfo.Height := 247;
                   if lvSelectionList.Items.Count > 0 then
                     begin
                       pnlSelectedTests.Visible := True;
@@ -1233,7 +1208,7 @@ begin
                         LRORDERMODE := TORDER_MODE_DIAG;
                         aTestYes := '1';
                         SetControl(cboAvailTest,       'ORDERABLE', AnInstance);
-                        //DetermineCollectionDefaults(Responses);   //cboCollType = COLLECT , calCollTime = START
+                        //DetermineCollectionDefaults(Responses); //cboCollType = COLLECT , calCollTime = START
                         i := 1 ;
                         AResponse := Responses.FindResponseByName('COMMENT',i);
                         while AResponse <> nil do
@@ -1259,61 +1234,24 @@ begin
                                 end ;
                           end;
                         if Length(calWantTime.Text) > 0 then Responses.Update('DATETIME',1,ValidCollTime(calWantTime.Text),calWantTime.Text);
-                        with cboCollType do if Length(ItemID) > 0 then
-                          begin
-                            Responses.Update('COLLECT', 1, ItemID, ItemID) ;
-                            FLastCollType := ItemID;
-                          end;
                         if Length(cboUrgency.Text) > 0 then Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text)
                           else
                             begin
-                              cboUrgency.ItemIndex := 1;
+                              cboUrgency.ItemIndex := 2;
+                              for i := 0 to cboUrgency.Items.Count - 1 do
+                                begin
+                                  aUrgText := cboUrgency.Items[i];
+                                  if aUrgText = '9^ROUTINE' then    // Find urgency default of ROUTINE
+                                    begin
+                                      cboUrgency.ItemIndex := i;
+                                      break;
+                                    end;
+                                end;
                               Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text);
                               cboUrgencyChange(self);
                             end;
                         if Length(memDiagComment.Text) > 0 then Responses.Update('COMMENT',1,memDiagComment.Text,memDiagComment.Text);
                         if Length(cboReasons.Text) > 0 then Responses.Update('REASON',1,cboReasons.Text,cboReasons.Text);
-                        LoadCollType(cboCollType);
-                        if (cboCollType.ItemID = 'LC') or (cboCollType.ItemID = 'I') then
-                          if not(ALabTest.LabCanCollect) and OrderForInpatient then
-                            cboCollType.SelectByID('WC')
-                          else if not(ALabTest.LabCanCollect) then
-                            cboCollType.SelectByID('SP');
-                        SetupCollTimes(cboCollType.ItemID);
-                        if cboCollType.ItemID = 'LC' then
-                          begin
-                            with cboCollTime do
-                              if Length(ItemID) > 0 then
-                                begin
-                                  Responses.Update('START', 1, Copy(ItemID, 2, 999), Copy(ItemID, 2, 999));
-                                  FLastLabCollTime := ItemID + U + Text;
-                                end
-                              else if Length(Text) > 0 then
-                                begin
-                                  Responses.Update('START', 1, ValidCollTime(Text), Text) ;
-                                  FLastLabCollTime := ValidCollTime(Text);
-                                end;
-                          end
-                        else
-                          begin
-                            with calCollTime do
-                              if FMDateTime > 0 then
-                                begin
-                                  Responses.Update('START', 1, ValidCollTime(Text), Text);
-                                  FLastColltime := ValidCollTime(Text);
-                                end
-                              else
-                                begin
-                                  Responses.Update('START', 1, '', '') ;
-                                  FLastCollTime := '';
-                                end;
-                          end;
-                        if length(cboCollTime.ItemID) > 0 then aCollTime := cboCollTime.Items[cboCollTime.ItemIndex];
-                        with cboCollType do if Length(ItemID) > 0 then
-                          begin
-                            Responses.Update('COLLECT', 1, ItemID, ItemID) ;
-                            FLastCollType := ItemID;
-                          end;
                         uTestSelected := true;
                         with lvSelectionList do
                           begin
@@ -1325,7 +1263,7 @@ begin
                             ListItem.SubItems.Add(piece(cboAvailTest.Items[cboAvailTest.ItemIndex],'^',1));
                           end;
                         CurAdd := 1;
-                        aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimen + '^' + aCollTime + '^' + cboCollType.Text + '^' + IntToStr(aLabTest.ItemID);  //aSpecimen has 2 pieces
+                        aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimenReq + '^' + aSpecimen + '^' + aSpecimenUID + '^' + IntToStr(aLabTest.ItemID);
                         uSelectedItems.Add(aStr);
                         for i := 0 to uSelectedItems.Count - 1 do
                           begin
@@ -1338,8 +1276,6 @@ begin
                             Inc(CurAdd);
                           end;
                         memOrder.Text := Responses.OrderText;
-                      edtResults.Height := 247;
-                      edtInfo.Height := 247;
                       if lvSelectionList.Items.Count > 0 then
                         begin
                           pnlSelectedTests.Visible := True;
@@ -1352,6 +1288,58 @@ begin
                   AnInstance := NextInstance('ORDERABLE', AnInstance);
               end;
               //Quick Order
+          end;
+        cList.Clear;
+        if (Length(cboSurgery.ItemID) > 0) then
+          begin
+            for j := 0 to uSelectedItems.Count - 1 do
+              begin
+                xLabTest := TLabTest.Create(piece(uSelectedItems[j],'^',2), Responses);
+                if (piece(uSelectedItems[j],'^',1) = '0') and (not(piece(uSelectedItems[j],'^',3)='')) and (StrToInt(piece(uSelectedItems[j],'^',3)) > 0) and (piece(cboSurgery.Items[cboSurgery.ItemIndex],'^',3) = '1') then
+                  begin
+                    cList.Add(xLabTest.TestName + '^' + piece(uSelectedItems[j],'^',3));
+                  end;
+                xLabTest.Free;
+              end;
+          end;
+        if (uChangingMSBOS = false) and (cList.Count > 0) then
+          begin
+            lblNoBloodReq.Visible := true;
+            with Application do
+              begin
+                NormalizeTopMosts;
+                aMSBOSContinue :=
+                  MessageBox(PChar('No blood is required for the surgical procedure: ' + cboSurgery.text +
+                   '.' + CRLF +
+                   'If you still need to order any components, please enter a justification in the Comment box.'
+                    + CRLF + CRLF + 'Do you want me to remove ALL the component orders you''ve just entered? '),
+                   PChar('No Blood Required'),MB_YESNO);
+                RestoreTopMosts;
+              end;
+            if aMSBOSContinue = 6 then
+              begin
+                tQuantity.Text := '';
+                for j := uSelectedItems.Count - 1 downto 0 do
+                  begin
+                    if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '0') then
+                      begin
+                        lvSelectionList.Items[j].Delete;
+                        uSelectedItems.Delete(j);
+                        Responses.Update('ORDERABLE', (j+1) ,'', '');
+                        Responses.Update('MODIFIER', (j+1), '', '');
+                        Responses.Update('QTY', (j+1), '', '');
+                      end;
+                  end;
+                cboAvailComp.Text := '';
+                cboAvailComp.ItemIndex := -1;
+                cboModifiers.Text := '';
+                cboModifiers.ItemIndex := -1;
+                lblNoBloodReq.Visible := false;
+                //if fODBBank. Active then cboAvailTest.SetFocus;
+                lblTNS.Caption := '';
+                lblTNS.Visible := false;
+                DisableComponentControls;
+              end;
           end;
         for i := 0 to lvSelectionList.Items.Count - 1 do
           begin
@@ -1371,14 +1359,13 @@ begin
                     with Application do
                       begin
                         NormalizeTopMosts;
-                        aTNSDays := TNSDaysBack;
                         aTNS :=
                           MessageBox(PChar(aTNSString + CRLF + CRLF +
-                                     'Do you wish to continue with this request for Type & Screen?'),
-                                     PChar('Type & Screen Entered in Past ' + IntToStr(TNSDaysBack) + ' Days'),
-                                     MB_YESNO);
+                             'Do you wish to cancel this request for Type & Screen?'),
+                             PChar('Type & Screen Entered in Past ' + IntToStr(TNSDaysBack) + ' Days'),
+                             MB_YESNO);
                         RestoreTopMosts;
-                        if aTNS = 7 then
+                        if aTNS = 6 then
                           begin
                             lvSelectionList.ItemIndex := i;
                             lvSelectionListClick(self);
@@ -1397,7 +1384,8 @@ begin
             memMessage.Text := 'TYPE + SCREEN must be added to order';
             pnlMessage.Visible := true;
             pnlDiagnosticTests.Caption := 'Diagnostic Tests*';
-          end;
+          end
+          else pnlDiagnosticTests.Caption := 'Diagnostic Tests';
         if ALabTest <> nil then
           begin
             if ObtainCollSamp then
@@ -1439,6 +1427,7 @@ begin
       end;
   finally                      //**SubTest
     alist.Free;
+    cList.Free;
     aTests.Free;
   end;
 end;
@@ -1718,19 +1707,28 @@ end;
 
 procedure TLabTest.LoadUrgency(CollType: string; AComboBox:TORComboBox);
 var
-  i: integer;
+  i, PreviousSelectionIndex: integer;
+  PreviousSelectionString: String;
 begin
   if UrgencyList.Count < 1 then Exit;
   with AComboBox do
     begin
+     PreviousSelectionIndex := -1;
+     PreviousSelectionString := SelText;
       Clear;
       for i := 0 to UrgencyList.Count - 1 do
+        begin
          if (CollType = 'LC') and (Piece(UrgencyList[i], U, 3) = '') then
            Continue
          else
            Items.Add(UrgencyList[i]);
+         if (PreviousSelectionString <> '') and (PreviousSelectionString = Piece(UrgencyList[i], U, 2)) then
+           PreviousSelectionIndex := i;
+        end;
       if (LRFURG <> '') and (ALabTest.ObtainUrgency) then
         SelectByID(LRFURG)
+      else if PreviousSelectionIndex > -1 then
+        ItemIndex := PreviousSelectionIndex
       else
         SelectByIEN(uDfltUrgency);
       Urgency := AComboBox.ItemIEN;
@@ -1863,12 +1861,13 @@ function TfrmODBBank.SpecimenNeeded(OutList:TStrings; AList:TStrings; CompID:int
 var
   i:integer;
   aborh: boolean;
-  aSpecimen, aSpecimenDate: string;
+  aSpecimen, aSpecimenUID, aSpecimenDate: string;
   aWantDateTime, aExpiredSpecimenDate: TFMDateTime;
 begin
   result := false;
   aborh := false;
   aSpecimen := '';
+  aSpecimenUID := '';
   OutList.Clear;
   ExtractItems(OutList,Alist,'ABORH');
   for i := 0 to OutList.Count - 1 do
@@ -1885,27 +1884,37 @@ begin
     end;
   OutList.Clear;
   ExtractSpecimen(OutList, uVBECList);
-  if OutList.Count > 0 then aSpecimen := OutList[0];
+  if OutList.Count > 0 then
+    begin
+      aSpecimen := Piece(OutList[0], '^',1);
+      aSpecimenUID := Piece(OutList[0], '^',2);
+    end;
   OutList.Clear;
   ExtractItems(OutList,AList,'SPECIMENS');
   aWantDateTime := calWantTime.FMDateTime;
-  aSpecimenDate := piece(aSpecimen,'^',1);
+  aSpecimenDate := aSpecimen;
   aExpiredSpecimenDate := 0;
   if Length(aSpecimenDate) > 0 then aExpiredSpecimenDate := StrToFloat(aSpecimenDate);
-
   for i := 0 to OutList.Count - 1 do
     begin
       if (IntToStr(aLabTest.ItemID) = piece(OutList[i],'^',1)) and (piece(OutList[i],'^',2) = '1') then
-        if aSpecimen = '' then
-          begin
-            result := true;
-            exit;
-          end
-        else if (Length(calWantTime.Text) > 0) and (aExpiredSpecimenDate < aWantDateTime) then
-          begin
-            result := true;
-            exit;
-          end;
+        begin
+          if self.EvtID > 0 then
+            begin
+              result := true;
+              exit;
+            end;
+          if aSpecimen = '' then
+            begin
+              result := true;
+              exit;
+            end
+          else if (Length(calWantTime.Text) > 0) and (aExpiredSpecimenDate < aWantDateTime) then
+            begin
+              result := true;
+              exit;
+            end;
+        end;
     end;
 end;
 
@@ -1962,11 +1971,9 @@ const
   TX_NO_STOP_DATE   = 'Could not calculate the stop date for the order.  Check "for n Days"';
   TX_TOO_MANY_DAYS  = 'Maximum number of days allowed is ';
   TX_TOO_MANY_TIMES = 'For this frequency, the maximum number of times allowed is:  X';
-  //TX_NO_COMMENT     = 'A comment is required for this test and collection sample.';
   TX_NUMERIC_REQD   = 'A numeric value is required for urine volume';
   TX_DOSEDRAW_REQD  = 'Both DOSE and DRAW times are required for this order';
   TX_TDM_REQD       = 'A value for LEVEL is required for this order';
-  //TX_ANTICOAG_REQD  = 'You must specify an anticoagulant on this order.' ;
   TX_NO_COLLSAMPLE  = 'A collection sample MUST be specified';
   TX_NO_SPECIMEN    = 'A specimen MUST be specified';
   TX_NO_URGENCY     = 'An urgency MUST be specified';
@@ -2188,7 +2195,19 @@ procedure TfrmODBBank.SetupCollTimes(CollType: string);
 var
   tmpImmTime, tmpTime: TFMDateTime;
   x, tmpORECALLType, tmpORECALLTime: string;
+  j: integer;
+  havetest: boolean;
 begin
+  havetest := false;
+  for j := uSelectedItems.Count - 1 downto 0 do
+    begin
+      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '1') and ((length(calCollTime.Text) > 0) or (length(cboCollTime.Text) > 0)) then
+        begin
+          havetest := true;
+          Break;
+        end;
+    end;
+  //if (havetest = True) and (not(FOrderAction in [ORDER_QUICK, ORDER_EDIT])) then havetest := false;
   x := GetLastCollectionTime;
   tmpORECALLType := Piece(x, U, 1);
   tmpORECALLTime := Piece(x, U, 2);
@@ -2199,14 +2218,14 @@ begin
       pnlCollTimeButton.Visible   := False;
       pnlCollTimeButton.TabStop := False;
       calCollTime.Visible    := True;
-      calColltime.Enabled    := True;
+      calCollTime.Enabled    := True;
       if FLastCollTime <> '' then
         begin
           calCollTime.Text := ValidCollTime(FLastColltime);
           if IsFMDateTime(calCollTime.Text) then
             begin
               calCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calColltime.Text));
-              calColltime.FMDateTime := StrToFMDateTime(FLastCollTime);
+              calCollTime.FMDateTime := StrToFMDateTime(FLastCollTime);
             end;
         end
       else if tmpORECALLTime <> '' then
@@ -2215,13 +2234,20 @@ begin
           if IsFMDateTime(calCollTime.Text) then
             begin
               calCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calColltime.Text));
-              calColltime.FMDateTime := StrToFMDateTime(tmpORECALLTime);
+              calCollTime.FMDateTime := StrToFMDateTime(tmpORECALLTime);
             end;
         end
       else if LRFDATE <> '' then
         calCollTime.Text     := LRFDATE
-      else
+      else if not(FOrderAction in [ORDER_EDIT]) then
+        calCollTime.Text     := 'TODAY'
+      else if (havetest = false) then
         calCollTime.Text     := 'TODAY';
+     if (havetest = false) and (RemoveCollTimeDefault = True) then
+        begin
+          calCollTime.Text := '';
+          calCollTime.FMDateTime := 0;
+        end;
     end
   else if CollType = 'WC' then
     begin
@@ -2237,7 +2263,7 @@ begin
           if IsFMDateTime(calCollTime.Text) then
             begin
               calCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calColltime.Text));
-              calColltime.FMDateTime := StrToFMDateTime(FLastCollTime);
+              calCollTime.FMDateTime := StrToFMDateTime(FLastCollTime);
             end;
         end
       else if tmpORECALLTime <> '' then
@@ -2246,13 +2272,18 @@ begin
           if IsFMDateTime(calCollTime.Text) then
             begin
               calCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calColltime.Text));
-              calColltime.FMDateTime := StrToFMDateTime(tmpORECALLTime);
+              calCollTime.FMDateTime := StrToFMDateTime(tmpORECALLTime);
             end;
         end
       else if LRFDATE <> '' then
         calCollTime.Text     := LRFDATE
-      else
+      else if not(FOrderAction in [ORDER_EDIT]) then
         calCollTime.Text     := 'NOW';
+      if (havetest = false) and (RemoveCollTimeDefault = True) then
+        begin
+          calCollTime.Text := '';
+          calCollTime.FMDateTime := 0;
+        end;
     end
   else if CollType = 'LC' then
     begin
@@ -2273,12 +2304,16 @@ begin
         cboCollTime.Text     := LRFDATE
       else
         cboCollTime.ItemIndex := 0;
+      if (havetest = false) and (RemoveCollTimeDefault = True) then
+        begin
+          cboCollTime.Text := '';
+        end;
     end
   else if CollType = 'I' then
     begin
       cboColltime.Visible    := False;
       calCollTime.Visible    := False;
-      calColltime.Enabled    := False;
+      calCollTime.Enabled    := False;
       txtImmedColl.Visible   := True;
       pnlCollTimeButton.Visible   := True;
       pnlCollTimeButton.TabStop := True;
@@ -2290,7 +2325,6 @@ begin
         tmpTime := StrToFMDateTime(tmpORECALLTime)
       else if LRFDATE <> '' then
         tmpTime := StrToFMDateTime(LRFDATE);
-
       if tmpTime > tmpImmTime then
         begin
           calCollTime.FMDateTime := tmpTime;
@@ -2300,6 +2334,12 @@ begin
         begin
           calCollTime.FMDateTime := GetDefaultImmCollTime;
           txtImmedColl.Text      := FormatFMDateTime('mmm dd,yy@hh:nn', calCollTime.FMDateTime);
+        end;
+      if (havetest = false) and (RemoveCollTimeDefault = True) then
+        begin
+          calCollTime.Text := '';
+          calCollTime.FMDateTime := 0;
+          txtImmedColl.Text := '';
         end;
     end;
 end;
@@ -2386,6 +2426,7 @@ end;
 procedure TfrmODBBank.cboReasonsChange(Sender: TObject);
 begin
   inherited;
+  cboReasons.Text := StringReplace(cboReasons.Text,CRLF,'  ',[rfReplaceAll]);
   if (length(cboReasons.Text) > 75) then
     begin
       ShowMsg('REASON FOR REQUEST cannot be longer than 75 characters');
@@ -2413,24 +2454,27 @@ end;
 procedure TfrmODBBank.cboAvailTestSelect(Sender: TObject);
 var
   i: integer;
-  text : string;
   ListItem: TListItem;
-  aCollTime,aTypeScreen,aStr,aModifier,aSpecimen,aTestYes,x,aName,aTNSString: string;
+  aCollTime,aTypeScreen,aStr,aModifier,aSpecimen,aSpecimenUID,aSpecimenReq,aTestYes,x,aName,aTNSString, aUrgText: string;
   aList: TStringList;
-  curAdd,AnInstance,aTNS,aTNSDays: Integer;
+  curAdd,aTNS: Integer;
   sub,sub1: string;
-  AResponse: TResponse;
+  aChanging: Boolean;
 begin
   if cboAvailTest.ItemID = '' then Exit;
   aList := TStringList.Create;
+  aChanging := changing;
   try
     ALabTest := nil;
     aTypeScreen := '';
-    aSpecimen := '^';
+    aSpecimen := '';
+    aSpecimenUID := '';
+    aSpecimenReq := '';
     aTestYes := '1';
     aModifier := '';
     changing := true;
     tQuantity.Text := '';
+    changing := aChanging;
     sub1 := '';
     cboModifiers.ItemIndex := -1;
     DisableComponentControls;
@@ -2438,26 +2482,16 @@ begin
     LRORDERMODE := TORDER_MODE_DIAG;
     ALabTest := TLabTest.Create(cboAvailTest.ItemID, Responses);
     sub := GetSubtype(ALabTest.TestName);
-    with CtrlInits do
-        begin
-          SetControl(cboCollType, 'Collection Types');
-          LoadCollType(cboCollType);
-          if FLastCollType <> '' then
-            cboCollType.SelectByID(FLastCollType)
-          else if uDfltCollType <> '' then
-            cboCollType.SelectByID(uDfltCollType)
-          else if OrderForInpatient then
-            if (ALabTest.LabCanCollect) then
-              cboCollType.SelectByID('LC')
-            else
-              cboCollType.SelectByID('WC')
-          else
-            cboCollType.SelectByID('SP');
-          SetupCollTimes(cboCollType.ItemID);
-        end;
+    {if not(FOrderAction in [ORDER_COPY, ORDER_EDIT, ORDER_QUICK]) then
+      DetermineCollectionDefaults(Responses); }
+    DetermineCollectionDefaults(Responses);
     with cboAvailTest do
       begin
-        if (Length(ItemID) = 0) or (ItemID = '0') then Exit;
+        if (Length(ItemID) = 0) or (ItemID = '0') then
+          begin
+            changing := aChanging;
+            Exit;
+          end;
         FLastLabID := ItemID ;
         FLastItemID := ItemID;
         for i := 0 to uSelectedItems.Count - 1 do
@@ -2466,29 +2500,27 @@ begin
               ItemIndex := -1;
               lvSelectionList.Items[i].Selected := true;
               lvSelectionListClick(self);
+              changing := aChanging;
               Exit;
             end;
-        Changing := True;
-        Changing := False;
         ExtractTypeScreen(aList, uVBECList);
         if aList.Count > 0 then aTypeScreen := aList[0];
         aList.Clear;
         aTNSString := '';
-        if (StrToInt(aTypeScreen) = cboAvailTest.ItemID) and (uTNSOrders.Count > 0) then
+        if (Changing = false) and (StrToInt(aTypeScreen) = cboAvailTest.ItemID) and (uTNSOrders.Count > 0) then
           begin
             for i := 0 to uTNSOrders.Count - 1 do
               aTNSString := aTNSString + CRLF + uTNSOrders[i];
             with Application do
               begin
                 NormalizeTopMosts;
-                aTNSDays := TNSDaysBack;
                 aTNS :=
                   MessageBox(PChar(aTNSString + CRLF + CRLF +
-                             'Do you wish to continue?'),
-                             PChar('Type & Screen Entered in Past ' + IntToStr(TNSDaysBack) + ' Days'),
-                             MB_YESNO);
+                   'Do you wish to cancel this request for Type & Screen?'),
+                   PChar('Type & Screen Entered in Past ' + IntToStr(TNSDaysBack) + ' Days'),
+                   MB_YESNO);
                 RestoreTopMosts;
-                if aTNS = 7 then
+                if aTNS = 6 then
                   begin
                     cboAvailTest.ItemIndex := -1;
                     exit;
@@ -2514,24 +2546,28 @@ begin
                     end ;
               end;
         end;
-        Changing := False;
       end;
     if LRORDERMODE = TORDER_MODE_DIAG then
       begin
         if Length(calWantTime.Text) > 0 then Responses.Update('DATETIME',1,ValidCollTime(calWantTime.Text),calWantTime.Text);
-        with cboCollType do if Length(ItemID) > 0 then
-          begin
-            Responses.Update('COLLECT', 1, ItemID, ItemID) ;
-            FLastCollType := ItemID;
-          end;
         if Length(cboUrgency.Text) > 0 then Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text)
-        else
+        else if changing = false then
           begin
-            cboUrgency.ItemIndex := 1;
+            for i := 0 to cboUrgency.Items.Count - 1 do
+              begin
+                aUrgText := cboUrgency.Items[i];
+                if aUrgText = '9^ROUTINE' then    // Find urgency default of ROUTINE
+                  begin
+                    cboUrgency.ItemIndex := i;
+                    break;
+                  end;
+              end;
             Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text);
           end;
         if Length(memDiagComment.Text) > 0 then Responses.Update('COMMENT',1,memDiagComment.Text,memDiagComment.Text);
         if Length(cboReasons.Text) > 0 then Responses.Update('REASON',1,cboReasons.Text,cboReasons.Text);
+        with cboCollTime do
+
         if cboCollType.ItemID = 'LC' then
           begin
             with cboCollTime do
@@ -2546,23 +2582,22 @@ begin
                   FLastLabCollTime := ValidCollTime(Text);
                 end;
           end
-          else
-            begin
-              with calCollTime do
-                if FMDateTime > 0 then
-                  begin
-                    Responses.Update('START', 1, ValidCollTime(Text), Text);
-                    FLastColltime := ValidCollTime(Text);
-                  end
-                else
-                  begin
-                    Responses.Update('START', 1, '', '') ;
-                    FLastCollTime := '';
-                  end;
-            end;
-          if Length(cboCollType.Text) > 0 then Responses.Update('COLLECT',1,cboCollType.ItemID,cboCollType.ItemID);
+        else
+          begin
+            with calCollTime do
+              if FMDateTime > 0 then
+                begin
+                  Responses.Update('START', 1, ValidCollTime(Text), Text);
+                  FLastColltime := ValidCollTime(Text);
+                end
+              else
+                begin
+                  Responses.Update('START', 1, '', '') ;
+                  FLastCollTime := '';
+                end;
+          end;
+        if Length(cboCollType.Text) > 0 then Responses.Update('COLLECT',1,cboCollType.ItemID,cboCollType.ItemID);
       end;
-    if length(cboCollTime.ItemID) > 0 then aCollTime := cboCollTime.Items[cboCollTime.ItemIndex];
     uTestSelected := true;
     with lvSelectionList do
       begin
@@ -2582,7 +2617,7 @@ begin
             pnlDiagnosticTests.Caption := 'Diagnostic Tests';
           end;
       end;
-    aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimen + '^' + aCollTime + '^' + cboCollType.Text + '^' + IntToStr(aLabTest.ItemID);  //aSpecimen has 2 pieces
+    aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimenReq + '^' + aSpecimen + '^' + aSpecimenUID + '^' + IntToStr(aLabTest.ItemID);
     uSelectedItems.Add(aStr);
     CurAdd := 1;
     for i := 0 to uSelectedItems.Count - 1 do
@@ -2599,8 +2634,6 @@ begin
   finally
     aList.Free;
   end;
-  edtResults.Height := 247;
-  edtInfo.Height := 247;
   if lvSelectionList.Items.Count > 0 then
     begin
       pnlSelectedTests.Visible := True;
@@ -2617,14 +2650,15 @@ procedure TfrmODBBank.cboAvailCompSelect(Sender: TObject);
   text : string;
   aMSBOS,aMSBOSContinue,curAdd,AnInstance: integer;
   sub,sub1: string;
-  AResponse: TResponse;
   ListItem: TListItem;
-  aTypeScreen,aSpecimen,aTestYes,aStr,aMsg,aModifier,x,x1,aReason,aSurgery,aCollTime,aCollSave,aName: String;
+  aTypeScreen,aSpecimen,aSpecimenUID,aSpecimenReq,aTestYes,aStr,aMsg,aModifier,x,x1,aReason,aSurgery,aCollTime,aCollSave,aName,aUrgText: String;
+  aChanging: Boolean;
 begin
   if cboAvailComp.ItemID = '' then Exit;
   aList := TStringList.Create;
   aTests := TStringList.Create;
   sub1 := '';
+  aChanging := changing;
   try
     DisableDiagTestControls;
     EnableComponentControls;
@@ -2633,7 +2667,7 @@ begin
         changing := true;
         tQuantity.Text := '';
         cboModifiers.ItemIndex := -1;
-        changing := false;
+        changing := aChanging;
       end;
     LRORDERMODE := TORDER_MODE_COMP;
     with cboAvailComp do
@@ -2651,14 +2685,13 @@ begin
             end;
         ALabTest := TLabTest.Create(ItemID, Responses);
         sub := GetSubtype(ALabTest.TestName);
-        Changing := False;
+        changing := aChanging;
         StatusText('');
       end;
-    //Check for and display any associated Lab Results
     aList.Clear;
     TestAdded := 0;
     getTest := 0;
-    ExtractTests(aList, uVBECList);   //Get Results associated with ordered components
+    ExtractTests(aList, uVBECList);   //Get Lab Results associated with ordered components
       for j := 0 to aList.Count - 1 do
         begin
           if StrToInt(piece(aList[j],'^',1)) = aLabTest.ItemID then
@@ -2682,13 +2715,16 @@ begin
         end;
       if TestAdded = 1 then
         begin
-          edtResults.Clear;
           aTests.Clear;
           GetPatientBloodResults(aTests, Patient.DFN, uTestsForResults);
-          QuickCopy(ATests,edtResults);
-          if edtResults.Lines.Count > 0 then TabResults.Caption := 'Lab Results Available';
-          uRaw.Clear;
-          GetPatientBloodResultsRaw(uRaw, Patient.DFN, uTestsForResults);
+          if aTests.Count > 0 then
+            begin
+              edtResults.Clear;
+              QuickCopy(ATests,edtResults);
+              TabResults.Caption := 'Lab Results Available';
+              uRaw.Clear;
+              GetPatientBloodResultsRaw(uRaw, Patient.DFN, uTestsForResults);
+            end;
         end;
       CurAdd := 1;
       if uRaw.Count > 0 then
@@ -2698,7 +2734,9 @@ begin
           Inc(CurAdd);
         end;
     aTypeScreen := '';
-    aSpecimen := '^';
+    aSpecimen := '';
+    aSpecimenUID := '';
+    aSpecimenReq := '';
     aTestYes := '0';
     aReason := '';
     aSurgery := '';
@@ -2708,19 +2746,35 @@ begin
     if aList.Count > 0 then aTypeScreen := aList[0];
     aList.Clear;
     ExtractSpecimen(aList, uVBECList);
-    if aList.Count > 0 then aSpecimen := aList[0];
+    if aList.Count > 0 then
+      begin
+        aSpecimen := piece(aList[0], '^', 1);
+        aSpecimenUID := piece(aList[0], '^', 2);
+      end;
+    if (cboSurgery.ItemID = '') and (length(cboSurgery.Text) > 0) then
+      begin
+        for i := 0 to cboSurgery.Items.Count - 1 do
+          if uppercase(cboSurgery.Text) = uppercase(piece(cboSurgery.Items[i],'^',2)) then
+            begin
+              cboSurgery.ItemIndex := i;
+              Break;
+            end;
+      end;
     if length(cboModifiers.ItemID) > 0 then aModifier := cboModifiers.Items[cboModifiers.ItemIndex];
     if length(cboReasons.ItemID) > 0 then aReason := cboReasons.Items[cboReasons.ItemIndex];
     if length(cboSurgery.ItemID) > 0 then aSurgery := cboSurgery.Items[cboSurgery.ItemIndex];
-    if length(cboCollTime.ItemID) > 0 then aCollTime := cboCollTime.Items[cboCollTime.ItemIndex];
-    if Length(cboSurgery.ItemID) > 0 then
+    if (Length(cboSurgery.ItemID) > 0) and (length(tQuantity.Text) > 0) and (strToInt(tQuantity.Text) > 0) then
       begin
+        uChangingMSBOS := true;
+        cboSurgeryChange(self);
+        uChangingMSBOS := false;
+        if cboAvailComp.ItemIndex = -1 then Exit;
         aList.Clear;
         ExtractMSBOS(aList, uVBECList);    //Get maximum units for selected Surgey
         for i := 0 to aList.Count - 1 do
           begin
             if (StrToInt(piece(aList[i],'^',1)) = aLabTest.ItemID)
-             and (piece(aList[i],'^',3) = cboSurgery.Text) then
+             and (uppercase((piece(aList[i],'^',3))) = uppercase(cboSurgery.Text)) then
               begin
                 aMSBOS := StrToInt(piece(aList[i],'^',4));
                 if (aMSBOS > 0) and (Length(tQuantity.Text) > 0) and (StrToInt(tQuantity.Text) > aMSBOS) then
@@ -2730,15 +2784,17 @@ begin
                       NormalizeTopMosts;
                       aMSBOSContinue :=
                         MessageBox(PChar('The number of units ordered (' + tQuantity.Text +
-                                   ') for ' + aLabTest.TestName + ' exceeds the maximum number of units ('
-                                   + IntToStr(aMSBOS) +
-                                   ') for the ' + cboSurgery.text +
-                                   ' surgical procedure selected.' + CRLF + CRLF + 'Do you wish to continue?'),
-                                   PChar('Maximum Number of Units Exceeded'),
-                                   MB_YESNO);
+                         ') for ' + aLabTest.TestName + ' Exceeds the maximum number recommended ('
+                         + IntToStr(aMSBOS) +
+                         ') for the ' + cboSurgery.text +
+                         ' surgical procedure.' + CRLF +
+                         'If you need to order more than the maximum number of units, please enter a justification in the Comment box.'
+                          + CRLF + CRLF + 'Edit the Blood component Quantity?'),
+                         PChar('Maximum Number of Units Exceeded'),
+                         MB_YESNO);
                       RestoreTopMosts;
                     end;
-                    if aMSBOSContinue = 7 then
+                    if aMSBOSContinue = 6 then
                       begin
                         ShowMsg(cboAvailComp.Text + ' has NOT been added to this request.');
                         exit;
@@ -2747,7 +2803,7 @@ begin
               end;
           end;
       end;
-    if (uTNSOrders.Count < 1) then // SpecimenNeeded(aList, uVBECList, aLabTest.ItemID) then  //check to see if type and screen is needed
+    if (uTNSOrders.Count < 1) and (SpecimenNeeded(aList, uVBECList, aLabTest.ItemID)) then  //check to see if type and screen is needed CQ 17349
       begin
         uGetTnS := 1;
         for i := 0 to lvSelectionList.Items.Count - 1 do
@@ -2771,7 +2827,9 @@ begin
       begin
         if (StrToInt(piece(aList[i],'^',1)) = aLabTest.ItemID) then
           begin
-            aSpecimen := piece(aList[i],'^',2) + '^' + aSpecimen;
+            aSpecimenReq := piece(aList[i],'^',2);
+            if (SpecimenNeeded(aList, uVBECList, aLabTest.ItemID)) then
+              aSpecimenUID := '';
             break;
           end;
       end;
@@ -2793,7 +2851,7 @@ begin
             end;
         ListItem.SubItems.Add(piece(cboAvailComp.Items[cboAvailComp.ItemIndex],'^',1));
       end;
-      aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimen + '^' + IntToStr(aLabTest.ItemID);  //aSpecimen has 2 pieces additional pieces added for Tests
+      aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimenReq + '^' + aSpecimen + '^' + aSpecimenUID + '^' + IntToStr(aLabTest.ItemID);
       uSelectedItems.Add(aStr);
       CurAdd := 1;
       for i := 0 to uSelectedItems.Count - 1 do
@@ -2815,7 +2873,16 @@ begin
               if Length(cboUrgency.Text) > 0 then Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text)
                 else
                   begin
-                    cboUrgency.ItemIndex := 1;
+                    cboUrgency.ItemIndex := 2;
+                    for j := 0 to cboUrgency.Items.Count - 1 do
+                      begin
+                        aUrgText := cboUrgency.Items[j];
+                        if aUrgText = '9^ROUTINE' then    // Find urgency default of ROUTINE
+                          begin
+                            cboUrgency.ItemIndex := i;
+                            break;
+                          end;
+                      end;
                     Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text);
                   end;
             end;
@@ -2835,53 +2902,8 @@ begin
       memMessage.Text := 'TYPE + SCREEN must be added to order';
       pnlMessage.Visible := true;
       pnlDiagnosticTests.Caption := 'Diagnostic Tests*';
-    end;
-  {if uGetTnS = 1 then
-    begin
-      if responses.QuickOrder < 1 then
-        begin
-          for i := 1 to cboAvailTest.Items.Count - 1 do
-            begin
-              if piece(cboAvailTest.Items[i],'^',1) = aTypeScreen then
-                begin
-                  if piece(aSpecimen,'^',1) = '1' then
-                    begin
-                      cboCollTime.Text := calWantTime.Text;
-                      aCollSave := cboCollTime.Text + '^' + cboCollTime.ItemID + '^' + cboCollType.Text + '^' + cboCollType.ItemID;
-                      cboCollTime.Text := '';
-                      cboCollType.Text := '';
-                      uSpecimen := 1;
-                    end;
-                  cboModifiers.Text := '';
-                  cboAvailTest.SelectByID(aTypeScreen);
-                  cboTests.SelectByID(aTypeScreen);
-                  cboTestsClick(self);
-                  //cboAvailTestSelect(Self);
-                  uSpecimen := 0;
-                  cboCollTime.Text := piece(aCollSave,'^',1);
-                  cboCollType.Text := piece(aCollSave,'^',3);
-                  aCollSave := '';
-                  break;
-                end;
-            end;
-          aMsg := 'An order for Type and Screen has been added to this request' + '.';
-        end
-        else
-          begin
-            lblTNS.Caption := 'TYPE + SCREEN must be added to order';
-            lblTNS.Visible := true;
-            memMessage.Text := 'TYPE + SCREEN must be added to order';
-            memMessage.Visible := false;
-            pnlMessage.Visible := true;
-          end;
-      end;
-  if (uGetTnS = 1) then
-    begin
-      if length(aMsg) > 0 then aMsg := aMsg + crlf + crlf;
-      ShowMsg(aMsg);
-    end;  }
-  edtResults.Height := 247;
-  edtInfo.Height := 247;
+    end
+    else pnlDiagnosticTests.Caption := 'Diagnostic Tests';
   if lvSelectionList.Items.Count > 0 then
     begin
       pnlSelectedTests.Visible := True;
@@ -2898,12 +2920,26 @@ begin
 end;
 
 procedure TfrmODBBank.DisableComponentControls;
+var
+  j: integer;
 begin
   lblQuantity.Enabled := false;
   tQuantity.Enabled := false;
   lblModifiers.Enabled := false;
   cboModifiers.Enabled := false;
+  lblQuantity.Caption := 'Quantity';
+  lblWanted.Caption := 'Date/Time Wanted';
+  lblReason.Caption := 'Reason for Request';
   cboAvailComp.ItemIndex := -1;
+  for j := uSelectedItems.Count - 1 downto 0 do
+    begin
+      if piece(uSelectedItems[j],'^',1) = '0' then
+        begin
+          lblReason.Caption := 'Reason for Request*';
+          lblWanted.Caption := 'Date/Time Wanted*';
+          Break;
+        end;
+    end;
 end;
 
 procedure TfrmODBBank.EnableComponentControls;
@@ -2912,36 +2948,76 @@ begin
   tQuantity.Enabled := true;
   lblModifiers.Enabled := true;
   cboModifiers.Enabled := true;
+  lblQuantity.Caption := 'Quantity*';
+  lblWanted.Caption := 'Date/Time Wanted*';
+  lblReason.Caption := 'Reason for Request*';
   if not(changing) then
     if not(uSelUrgency = 'PRE-OP') then
       if uSelUrgency = '' then
         if lvSelectionList.Items.Count < 1 then
           cboUrgency.SelectByID(IntToStr(uDfltUrgency));
   if cboUrgency.Text = 'PRE-OP' then
-    begin
-      lblSurgery.Enabled := true;
-      cboSurgery.Enabled := true;
-      lblSurgery.Caption := 'Surgery*';
-    end
-    else
-      begin
-        lblSurgery.Enabled := false;
-        cboSurgery.Enabled := false;
-        lblSurgery.Caption := 'Surgery';
-      end;
+        begin
+          lblSurgery.Enabled := true;
+          cboSurgery.Enabled := true;
+          lblSurgery.Caption := 'Surgery*';
+        end
+      else
+        begin
+          if Length(cboSurgery.Text) > 0 then
+            begin
+              lblSurgery.Enabled := true;
+              cboSurgery.Enabled := true;
+              lblSurgery.Caption := 'Surgery*';
+            end
+            else
+            begin
+              lblSurgery.Enabled := false;
+              cboSurgery.Enabled := false;
+              lblSurgery.Caption := 'Surgery';
+              cboSurgery.ItemIndex := -1;
+              Responses.Update('MISC',1,cboSurgery.Text,cboSurgery.Text);
+            end;
+        end;
+
   lblDiagComment.Enabled := true;
 end;
 
 procedure TfrmODBBank.DisableDiagTestControls;
+var
+  i,j: integer;
+  diagflg: boolean;
 begin
-  lblCollTime.Enabled := false;
-  calCollTime.Enabled := false;
-  cboCollTime.Enabled := false;
-  lblCollType.Enabled := false;
-  cboCollType.Enabled := false;
-  cmdImmedColl.Enabled := false;
+  diagflg := false;
+  for i := 0 to uSelectedItems.Count - 1 do
+    begin
+      if (piece(uSelectedItems[i],'^',1) = '1') then
+        begin
+          diagflg := true;
+          Break;
+        end;
+    end;
+  if diagflg = false then
+    begin
+      lblCollTime.Enabled := false;
+      calCollTime.Enabled := false;
+      cboCollTime.Enabled := false;
+      lblCollType.Enabled := false;
+      cboCollType.Enabled := false;
+      cmdImmedColl.Enabled := false;
+    end;
+  lblCollTime.Caption := 'Collection Date/Time';
+  lblCollType.Caption := 'Collection Type';
   cboAvailTest.ItemIndex := -1;
-  cboAvailTest.InitLongList('');
+  for j := uSelectedItems.Count - 1 downto 0 do
+    begin
+      if piece(uSelectedItems[j],'^',1) = '1' then
+        begin
+          lblCollTime.Caption := 'Collection Date/Time*';
+          lblCollType.Caption := 'Collection Type*';
+          Break;
+        end;
+    end;
 end;
 
 procedure TfrmODBBank.EnableDiagTestControls;
@@ -2952,6 +3028,8 @@ begin
   lblCollType.Enabled := true;
   cboCollType.Enabled := true;
   cmdImmedColl.Enabled := true;
+  lblCollTime.Caption := 'Collection Date/Time*';
+  lblCollType.Caption := 'Collection Type*';
   if not(changing) then
     if not(uSelUrgency = 'PRE-OP') then
       if uSelUrgency = '' then
@@ -2970,9 +3048,6 @@ var
   RespCollect, RespStart: TResponse;
 begin
   if ALabTest = nil then exit;
-  if ALabTest.LabSubscript = 'BB' then exit;
-  calCollTime.Clear;
-  cboCollTime.Clear;
   calCollTime.Enabled := True;
   lblCollTime.Enabled := True;
   cboColltime.Enabled := True;
@@ -3023,7 +3098,14 @@ begin
             else
               begin
                 calCollTime.Enabled := False;
-                if RespStart <> nil then txtImmedColl.Text := RespStart.EValue;
+                cboCollType.SelectByID('I');
+                SetupCollTimes('I');
+                //cboCollTypeClick(self);
+                //txtImmedColl.Enabled := True;
+                if RespStart <> nil then
+                  begin
+                    txtImmedColl.Text := RespStart.EValue;
+                  end;
               end;
         end
       else   // if (RespCollect = nil)
@@ -3031,31 +3113,66 @@ begin
     end;
 end;
 
+procedure TfrmODBBank.cboAvailTestEnter(Sender: TObject);
+var
+  j: integer;
+begin
+  inherited;
+  if Length(cboAvailTest.Text) > 0 then Exit;
+  for j := uSelectedItems.Count - 1 downto 0 do
+    begin
+      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '1') then
+        begin
+          lvSelectionList.Items[j].Selected := true;
+          lvSelectionListClick(self);
+          Break;
+        end;
+    end;
+end;
+
 procedure TfrmODBBank.cboAvailTestExit(Sender: TObject);
 begin
   inherited;
-  if (Length(cboAvailTest.ItemID) = 0) or (cboAvailTest.ItemID = '0') then Exit;
+  if (Length(cboAvailTest.Text)>0) and (Length(cboAvailTest.ItemID) = 0) or (cboAvailTest.ItemID = '0') then
+    begin
+      ShowMsg('Invalid Test Selection. Please select a valid Test.');
+      cboAvailTestSelect(cboAvailTest);
+      cboAvailTest.SetFocus;
+      Exit;
+    end;
   if cboAvailTest.ItemID = FLastLabID then Exit;
-  cboAvailTestSelect(cboAvailTest);
-  cboAvailTest.SetFocus;
-  PostMessage(Handle, WM_NEXTDLGCTL, 0, 0);
+  if not (Length(cboAvailTest.ItemID) = 0) then cboAvailTestSelect(cboAvailTest);
 end;
 
-procedure TfrmODBBank.cboAvailCompChange(Sender: TObject);
+procedure TfrmODBBank.cboAvailCompEnter(Sender: TObject);
+var
+  j: integer;
 begin
   inherited;
-  changing := true;
-  changing := false;
+  if Length(cboAvailComp.Text) > 0 then Exit;
+  for j := uSelectedItems.Count - 1 downto 0 do
+    begin
+      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '0') then
+        begin
+          lvSelectionList.Items[j].Selected := true;
+          lvSelectionListClick(self);
+          Break;
+        end;
+    end;
 end;
 
 procedure TfrmODBBank.cboAvailCompExit(Sender: TObject);
 begin
   inherited;
-  if (Length(cboAvailComp.ItemID) = 0) or (cboAvailComp.ItemID = '0') then Exit;
+  if (Length(cboAvailComp.Text)>0) and (Length(cboAvailComp.ItemID) = 0) or (cboAvailComp.ItemID = '0') then
+    begin
+      ShowMsg('Invalid Component selection. Please select a valid Component.');
+      cboAvailCompSelect(cboAvailComp);
+      cboAvailComp.SetFocus;
+      Exit;
+    end;
   if cboAvailComp.ItemID = FLastLabID then Exit;
-  cboAvailCompSelect(cboAvailComp);
-  cboAvailComp.SetFocus;
-  PostMessage(Handle, WM_NEXTDLGCTL, 0, 0);
+  if not (Length(cboAvailComp.ItemID) = 0) then cboAvailCompSelect(cboAvailComp);
 end;
 
 procedure TfrmODBBank.cboAvailTestNeedData(Sender: TObject;
@@ -3129,6 +3246,42 @@ begin
   end; {case}
 end;
 
+procedure TfrmODBBank.pnlBloodComponentsClick(Sender: TObject);
+begin
+  inherited;
+  cboAvailComp.SetFocus;
+end;
+
+procedure TfrmODBBank.pnlBloodComponentsEnter(Sender: TObject);
+begin
+  inherited;
+  pnlBloodComponents.Color := clActiveborder;
+end;
+
+procedure TfrmODBBank.pnlBloodComponentsExit(Sender: TObject);
+begin
+  inherited;
+  pnlBloodcomponents.Color := clBtnFace;
+end;
+
+procedure TfrmODBBank.pnlDiagnosticTestsClick(Sender: TObject);
+begin
+  inherited;
+  cboAvailTest.SetFocus;
+end;
+
+procedure TfrmODBBank.pnlDiagnosticTestsEnter(Sender: TObject);
+begin
+  inherited;
+  pnlDiagnosticTests.Color := clActiveBorder;
+end;
+
+procedure TfrmODBBank.pnlDiagnosticTestsExit(Sender: TObject);
+begin
+  inherited;
+  pnlDiagnosticTests.Color := clBtnFace;
+end;
+
 procedure TfrmODBBank.cboCollTimeChange(Sender: TObject);
 var
   CollType: string;
@@ -3162,6 +3315,23 @@ begin
     end;
 end;
 
+procedure TfrmODBBank.cboCollTimeEnter(Sender: TObject);
+var
+  j: integer;
+begin
+  inherited;
+  if Length(cboAvailTest.Text) > 0 then Exit;
+  for j := uSelectedItems.Count - 1 downto 0 do
+    begin
+      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '1') then
+        begin
+          lvSelectionList.Items[j].Selected := true;
+          lvSelectionListClick(self);
+          Break;
+        end;
+    end;
+end;
+
 procedure TfrmODBBank.cboCollTypeChange(Sender: TObject);
 begin
   if (ALabTest = nil) or Changing or (cboCollType.ItemID = '') then exit;
@@ -3179,8 +3349,30 @@ begin
   end;
   SetupCollTimes(cboCollType.ItemID);
   if Length(cboCollType.Text) > 0 then Responses.Update('COLLECT',1,cboCollType.ItemID,cboCollType.ItemID);
-  FLastCollType := cboCollType.ItemID;
   calCollTimeChange(self);
+end;
+
+procedure TfrmODBBank.cboCollTypeClick(Sender: TObject);
+begin
+  inherited;
+  FOrderAction := 0;
+end;
+
+procedure TfrmODBBank.cboCollTypeEnter(Sender: TObject);
+var
+  j: integer;
+begin
+  inherited;
+  if Length(cboAvailTest.Text) > 0 then Exit;
+  for j := uSelectedItems.Count - 1 downto 0 do
+    begin
+      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '1') then
+        begin
+          lvSelectionList.Items[j].Selected := true;
+          lvSelectionListClick(self);
+          Break;
+        end;
+    end;
 end;
 
 procedure TfrmODBBank.cboModifiersChange(Sender: TObject);
@@ -3225,6 +3417,23 @@ begin
     end;
 end;
 
+procedure TfrmODBBank.cboModifiersEnter(Sender: TObject);
+var
+  j: integer;
+begin
+  inherited;
+  if Length(cboAvailComp.Text) > 0 then Exit;
+  for j := uSelectedItems.Count - 1 downto 0 do
+    begin
+      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '0') then
+        begin
+          lvSelectionList.Items[j].Selected := true;
+          lvSelectionListClick(self);
+          Break;
+        end;
+    end;
+end;
+
 procedure TfrmODBBank.LoadModifiers(AComboBox:TORComboBox);
 var
   i: integer;
@@ -3256,11 +3465,13 @@ begin
   with AComboBox do
     begin
       Clear;
-      for i := 0 to uUrgencyList.Count - 1 do
+      {for i := 0 to uUrgencyList.Count - 1 do
          if (piece(uUrgencyList[i],'^',2) = 'STAT') and (StatAllowed(Patient.DFN) = false) then
            Continue
          else
-           Items.Add(uUrgencyList[i]);
+           Items.Add(uUrgencyList[i]); }
+      for i := 0 to uUrgencyList.Count - 1 do
+        Items.Add(uUrgencyList[i]);
     end;
 end;
 
@@ -3280,10 +3491,10 @@ begin
   j := 0;
   if cboCollType.ItemID = 'LC' then
     begin
-      if FLastLabCollTime <> '' then
+      if (FLastLabCollTime <> '') and (length(cboCollTime.Text) < 1) then
         cboCollTime.SelectByID(piece(FLastLabCollTime,'^',1));
     end
-  else
+  else if length(calcollTime.Text) < 1 then
     begin
       if FLastCollTime = 'TODAY' then
         calCollTime.Text := FLastCollTime
@@ -3292,7 +3503,7 @@ begin
       else if FLastCollTime <> '' then
         calCollTime.Text := FormatFMDateTime('mmm dd,yyyy@hh:nn',StrToFMDateTime(FLastCollTime));
     end;
-  if FLastCollType <> '' then
+  if (FLastCollType <> '') and (length(cboCollType.Text) < 1) then
     cboCollType.SelectByID(FLastCollType);
   if uSelectedItems.Count > 0 then
     begin
@@ -3324,6 +3535,7 @@ end;
 procedure TfrmODBBank.memDiagCommentChange(Sender: TObject);
 begin
   inherited;
+  memDiagComment.Text := StringReplace(memDiagComment.Text,CRLF,'  ',[rfReplaceAll]);
   if (length(memDiagComment.Text) > 250) then
     begin
       ShowMsg('COMMENT cannot be longer than 250 characters');
@@ -3352,12 +3564,18 @@ begin
   uRaw.Free;
 end;
 
+procedure TfrmODBBank.FormShow(Sender: TObject);
+begin
+  inherited;
+  pgeProduct.SetFocus;
+end;
+
 procedure TfrmODBBank.btnRemoveClick(Sender: TObject);
 var
   i,j,curAdd: integer;
   x, aName, aModifier, aReason, aTypeScreen: string;
   aList: TStringList;
-  aSel, aSelTst : boolean;
+  aSel, aSelTst, aSelComp, aGotTNS : boolean;
 begin
   inherited;
   aList := TStringList.Create;
@@ -3368,6 +3586,8 @@ begin
     aTypeScreen := '';
     aSel := false;
     aSelTst := false;
+    aSelComp := false;
+    aGotTNS := false;
     ExtractTypeScreen(aList, uVBECList);
     if aList.Count > 0 then aTypeScreen := aList[0];
     aList.Clear;
@@ -3380,6 +3600,8 @@ begin
       end;
     cboAvailComp.ItemIndex := -1;
     tQuantity.Text := '';
+    tQuantity.Enabled := false;
+    lblQuantity.Enabled := false;
     cboAvailTest.ItemIndex := -1;
     uGetTnS := 0;
     lblTNS.Caption := '';
@@ -3397,16 +3619,6 @@ begin
                 for j := uSelectedItems.Count - 1 downto 0 do
                   if lvSelectionList.Items[i].SubItems[3] = piece(uSelectedItems[j],'^',2) then
                     begin
-                      {if (uGetTnS = 1) and (lvSelectionList.Items[i].SubItems[3] = aTypeScreen) then
-                        begin
-                          uGetTnS := 1;
-                          lblTNS.Caption := 'TYPE+SCREEN must be added to order';
-                          lblTNS.Visible := true;
-                          memMessage.Text := 'TYPE + SCREEN must be added to order';
-                          //memMessage.Visible := true;
-                          pnlMessage.Visible := true;
-                          pnlDiagnosticTests.Caption := 'Diagnostic Tests*';
-                        end; }
                       uSelectedItems.Delete(j);
                       lvSelectionList.Items[i].Delete;
                       break;
@@ -3414,37 +3626,67 @@ begin
               end;
           end;
       end;
-    for i := uSelectedItems.Count - 1 downto 0 do
+    for i := lvSelectionList.Items.Count - 1 downto 0 do
       begin
-        if (not(piece(uSelectedItems[i],'^',1) = '1')) and (uTNSOrders.Count < 1) then // and (SpecimenNeeded(aList, uVBECList, StrToInt(piece(uSelectedItems[i],'^',9)))) then
+        if lvSelectionList.Items[i].SubItems[3] = aTypeScreen then
           begin
-            uGetTnS := 1;
-            lblTNS.Caption := 'TYPE+SCREEN must be added to order';
-            lblTNS.Visible := true;
-            memMessage.Text := 'TYPE + SCREEN must be added to order';
-            //memMessage.Visible := true;
-            pnlMessage.Visible := true;
-            pnlDiagnosticTests.Caption := 'Diagnostic Tests*';
+            aGotTNS := true;
             break;
           end;
       end;
-      
+    if aGotTNS = false then
+      begin
+        for i := uSelectedItems.Count - 1 downto 0 do
+          begin
+            if not(piece(uSelectedItems[i],'^',1) = '1') and (uTNSOrders.Count < 1) and (piece(uSelectedItems[i],'^',5) = '1') then //CQ 17349
+              begin
+                uGetTnS := 1;
+                lblTNS.Caption := 'TYPE + SCREEN must be added to order';
+                lblTNS.Visible := true;
+                memMessage.Text := 'TYPE + SCREEN must be added to order';
+                pnlMessage.Visible := true;
+                pnlDiagnosticTests.Caption := 'Diagnostic Tests*';
+                break;
+              end
+              else pnlDiagnosticTests.Caption := 'Diagnostic Tests';
+          end;
+      end;
     if (aSel = false) and (lvSelectionList.Items.Count > 0) then
       begin
         ShowMsg('Please select an item from the list to be removed.');
         exit;
       end;
     Responses.Clear;
+    pnlDiagnosticTests.Caption := 'Diagnostic Tests';
+    lblCollTime.Caption := 'Collection Date/Time';
+    lblCollType.Caption := 'Collection Type';
+    lblQuantity.Caption := 'Quantity';
+    lblWanted.Caption := 'Date/Time Wanted';
+    lblReason.Caption := 'Reason for Request';
     if lvSelectionList.Items.Count < 1 then
       begin
-        cboReasons.ItemIndex := -1;
-        memDiagComment.Text := '';
-        cboSurgery.ItemIndex := -1;
-        cboUrgency.ItemIndex := -1;
+        uGetTnS := 0;
+        lblTNS.Caption := '';
+        lblTNS.Visible := false;
+        memMessage.Text := '';
+        pnlMessage.Visible := false;
+        FLastItemID := '';
+        InitDialog;
+        cboModifiers.ItemIndex := -1;
+        cboAvailTest.ItemIndex := -1;
+        cboAvailComp.ItemIndex := -1;
         cboCollType.ItemIndex := -1;
         cboCollTime.ItemIndex := -1;
         cboQuick.ItemIndex := -1;
-        calCollTime.Text := '';
+        calWantTime.Text := '';
+        GroupBox1.Visible := true;
+        tQuantity.Text := '';
+        FLastCollType := '';
+        FLastCollTime := '';
+        FLastLabCollTime := '';
+        txtImmedColl.Text := '';
+        calCollTime.text := '';
+        lblNoBloodReq.Visible := false;
       end;
     for i := 0 to uSelectedItems.Count - 1 do
       begin
@@ -3453,6 +3695,8 @@ begin
         if piece(x,'^',1) = '1' then    //Diagnostic Test related fields
           begin
             if Length(piece(x,'^',2)) > 0 then Responses.Update('ORDERABLE', CurAdd, piece(x,'^',2), aName);
+            lblCollTime.Caption := 'Collection Date/Time*';
+            lblCollType.Caption := 'Collection Type*';
             aSelTst := true;
           end
         else
@@ -3464,6 +3708,10 @@ begin
             cboModifiers.ItemIndex := -1;
             cboAvailComp.ItemIndex := -1;
             tQuantity.Text := '';
+            lblQuantity.Caption := 'Quantity*';
+            lblWanted.Caption := 'Date/Time Wanted*';
+            lblReason.Caption := 'Reason for Request*';
+            //aSelComp := true;
           end;
         Inc(CurAdd);
       end;
@@ -3473,6 +3721,10 @@ begin
         cboCollTime.ItemIndex := -1;
         calCollTime.Text := '';
       end;
+    {if aSelcomp = false then
+      lblNoBloodReq.Visible := false
+    else
+      lblNoBloodReq.Visible := true;  }
     if Length(calWantTime.Text) > 0 then Responses.Update('DATETIME',1,ValidCollTime(calWantTime.Text),calWantTime.Text);
     if cboCollType.ItemID = 'LC' then
       begin
@@ -3568,6 +3820,7 @@ begin
   lblTNS.Visible := false;
   memMessage.Text := '';
   pnlMessage.Visible := false;
+  FLastItemID := '';
   InitDialog;
   cboModifiers.ItemIndex := -1;
   cboAvailTest.ItemIndex := -1;
@@ -3582,10 +3835,20 @@ begin
   memDiagComment.Text := '';
   GroupBox1.Visible := true;
   tQuantity.Text := '';
+  tQuantity.Enabled := false;
+  lblQuantity.Enabled := false;
   FLastCollType := '';
   FLastCollTime := '';
   FLastLabCollTime := '';
   txtImmedColl.Text := '';
+  calCollTime.text := '';
+  lblNoBloodReq.Visible := false;
+  pnlDiagnosticTests.Caption := 'Diagnostic Tests';
+  lblCollTime.Caption := 'Collection Date/Time';
+  lblCollType.Caption := 'Collection Type';
+  lblQuantity.Caption := 'Quantity';
+  lblWanted.Caption := 'Date/Time Wanted';
+  lblReason.Caption := 'Reason for Request';
 end;
 
 procedure TfrmODBBank.cmdAcceptClick(Sender: TObject);
@@ -3621,18 +3884,29 @@ begin
 end;
 
 procedure TfrmODBBank.calWantTimeChange(Sender: TObject);
+var
+  i: integer;
+  aList: TStringList;
+  aSpecimen, aSpecimenUID, aSpecimenReq: string;
+  aChanging: Boolean;
 begin
   inherited;
+  aList := TStringList.Create;
+  aChanging := changing;
+  try
+  aSpecimen := '';
+  aSpecimenUID := '';
+  aSpecimenReq := '';
   if uSelectedItems.Count > 0 then
     begin
-      with calWantTime do if not Changing then
+      with calWantTime do if not changing then
         begin
           if FMDateTime = 0 then
             begin
               ShowMsg('Invalid Date/Time entered');
-              Changing := true;
+              changing := true;
               calWantTime.Text := '';
-              Changing := false;
+              changing := aChanging;
               Exit;
             end
           else
@@ -3641,15 +3915,55 @@ begin
               if (UpperCase(Text) <> 'NOW') and not(Trunc(FMNow) = Trunc(FMDateTime)) and (FMDateTime < FMNow) then
                 begin
                   ShowMsg('Date/Time Wanted must be a future Date/Time');
-                  Changing := true;
+                  changing := true;
                   calWantTime.Text := '';
-                  Changing := false;
+                  changing := aChanging;
                   Exit;
                 end;
             end;
         end;
       if Length(calWantTime.Text) > 0 then Responses.Update('DATETIME',1,ValidCollTime(calWantTime.Text),calWantTime.Text);
       memOrder.Text := Responses.OrderText;
+      aList.Clear;
+      ExtractSpecimen(aList, uVBECList);
+      if aList.Count > 0 then
+      begin
+        aSpecimen := piece(aList[0], '^', 1);
+        aSpecimenUID := piece(aList[0], '^', 2);
+      end;
+      aList.Clear;
+      ExtractSpecimens(aList, uVBECList);    //Get specimen values to pass back to Server
+      for i := 0 to aList.Count - 1 do
+        begin
+          if (StrToInt(piece(aList[i],'^',1)) = aLabTest.ItemID) then
+            begin
+              aSpecimenReq := piece(aList[i],'^',2);
+              if (SpecimenNeeded(aList, uVBECList, aLabTest.ItemID)) then
+                aSpecimenUID := '';
+              break;
+            end;
+        end;
+      Responses.Update('SPECSTS', 1, aSpecimenReq + '^' + aSpecimen + '^' + aSpecimenUID, aSpecimenReq);
+    end;
+  finally
+    aList.Free;
+  end;
+end;
+
+procedure TfrmODBBank.calWantTimeEnter(Sender: TObject);
+var
+  j: integer;
+begin
+  inherited;
+  if Length(cboAvailComp.Text) > 0 then Exit;
+  for j := uSelectedItems.Count - 1 downto 0 do
+    begin
+      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '0') then
+        begin
+          lvSelectionList.Items[j].Selected := true;
+          lvSelectionListClick(self);
+          Break;
+        end;
     end;
 end;
 
@@ -3678,11 +3992,20 @@ begin
         end
       else
         begin
-          lblSurgery.Enabled := false;
-          cboSurgery.Enabled := false;
-          lblSurgery.Caption := 'Surgery';
-          cboSurgery.ItemIndex := -1;
-          Responses.Update('MISC',1,cboSurgery.Text,cboSurgery.Text);
+          if Length(cboSurgery.Text) > 0 then
+            begin
+              lblSurgery.Enabled := true;
+              cboSurgery.Enabled := true;
+              lblSurgery.Caption := 'Surgery*';
+            end
+            else
+            begin
+              lblSurgery.Enabled := false;
+              cboSurgery.Enabled := false;
+              lblSurgery.Caption := 'Surgery';
+              cboSurgery.ItemIndex := -1;
+              Responses.Update('MISC',1,cboSurgery.Text,cboSurgery.Text);
+            end;
         end;
     end
   else
@@ -3699,48 +4022,52 @@ end;
 
 procedure TfrmODBBank.cboSurgeryChange(Sender: TObject);
 var
-  aList: TStringList;
+  aList, bList, cList: TStringList;
   i,j,aMSBOS,aMSBOSContinue: integer;
-  x: string;
-  handled: boolean;
+  x,aTypeScreen: string;
+  handled,aGotTNS: boolean;
+  xLabTest: TLabTest;
 begin
   inherited;
+  cboSurgery.Text := StringReplace(cboSurgery.Text,CRLF,'  ',[rfReplaceAll]);
   aList := TStringList.Create;
+  bList := TStringList.Create;
+  cList := TStringList.Create;
   handled := false;
+  //uGetTNS := 0;
+  //aGotTNS := false;
+  ExtractTypeScreen(aList, uVBECList);
+  if aList.Count > 0 then aTypeScreen := aList[0];
+  aList.Clear;
+  bList.Clear;
+  cList.Clear;
   try
-    if (Length(cboSurgery.ItemID) > 0) and (Length(tQuantity.Text) > 0) then
+    cboSurgery.DroppedDown := false;
+    if (Length(cboSurgery.ItemID) > 0) then
+      begin
+        for j := 0 to uSelectedItems.Count - 1 do
+          begin
+            xLabTest := TLabTest.Create(piece(uSelectedItems[j],'^',2), Responses);
+            if (piece(uSelectedItems[j],'^',1) = '0') and (not(piece(uSelectedItems[j],'^',3)='')) and (StrToInt(piece(uSelectedItems[j],'^',3)) > 0) and (piece(cboSurgery.Items[cboSurgery.ItemIndex],'^',3) = '1') then
+              begin
+                cList.Add(xLabTest.TestName + '^' + piece(uSelectedItems[j],'^',3));
+              end;
+            xLabTest.Free;
+          end;
+      end;
+    if (Length(cboSurgery.ItemID) > 0) and (Length(tQuantity.Text) > 0) and (Length(cboAvailComp.Text) > 0) then
       begin
         aList.Clear;
         ExtractMSBOS(aList, uVBECList);    //Get maximum units for selected Surgey
         for i := 0 to aList.Count - 1 do
           begin
             if (StrToInt(piece(aList[i],'^',1)) = aLabTest.ItemID)
-             and (piece(aList[i],'^',3) = cboSurgery.Text) then
+             and (uppercase((piece(aList[i],'^',3))) = uppercase(cboSurgery.Text)) then
               begin
                 aMSBOS := StrToInt(piece(aList[i],'^',4));
                 if (aMSBOS > 0) and (StrToInt(tQuantity.Text) > aMSBOS) then
                   begin
-                    with Application do
-                    begin
-                      NormalizeTopMosts;
-                      aMSBOSContinue :=
-                        MessageBox(PChar('The number of unit Quantity selected (' + tQuantity.Text +
-                                   ') for ' + aLabTest.TestName + ' exceeds the maximum number of units ('
-                                   + IntToStr(aMSBOS) +
-                                   ') for the ' + cboSurgery.text +
-                                   ' surgical procedure selected.' + CRLF + CRLF + 'Continue to order ' + tQuantity.Text + ' units?'),
-                                   PChar('Maximum Number of Units Exceeded'),
-                                   MB_YESNO);
-                      RestoreTopMosts;
-                    end;
-                    if aMSBOSContinue = 7 then
-                      begin
-                        ShowMsg('Please enter a new quantity for ' + cboAvailComp.Text);
-                        tQuantity.Text := '0';
-                        tQuantity.SelLength := 2;
-                        tQuantity.SelectAll;
-                        break;
-                      end;
+                    bList.Add(aLabTest.TestName + '^' + tQuantity.Text + '^' + IntToStr(aMSBOS));
                   end;
                 handled := true;
                 break;
@@ -3753,46 +4080,111 @@ begin
         ExtractMSBOS(aList, uVBECList);    //Get maximum units for selected Surgey
         for j := 0 to uSelectedItems.Count - 1 do
           begin
-            ALabTest := TLabTest.Create(piece(uSelectedItems[j],'^',2), Responses);
+            xLabTest := TLabTest.Create(piece(uSelectedItems[j],'^',2), Responses);
             for i := 0 to aList.Count - 1 do
               begin
                 if (piece(uSelectedItems[j],'^',1) = '0')
-                 and (StrToInt(piece(aList[i],'^',1)) = aLabTest.ItemID)
-                 and (piece(aList[i],'^',3) = cboSurgery.Text) then
+                 and (StrToInt(piece(aList[i],'^',1)) = xLabTest.ItemID)
+                 and (uppercase((piece(aList[i],'^',3))) = uppercase(cboSurgery.Text)) then
                   begin
                     aMSBOS := StrToInt(piece(aList[i],'^',4));
                     if (aMSBOS > 0) and (length(piece(uSelectedItems[j],'^',3)) > 0) and (StrToInt(piece(uSelectedItems[j],'^',3)) > aMSBOS) then
                       begin
-                        with Application do
-                        begin
-                          NormalizeTopMosts;
-                          aMSBOSContinue :=
-                            MessageBox(PChar('The number of unit Quantity selected (' + piece(uSelectedItems[j],'^',3) +
-                               ') for ' + lvSelectionList.Items[j].Caption + ' exceeds the maximum number of units ('
-                               + IntToStr(aMSBOS) +
-                               ') for the ' + cboSurgery.text +
-                               ' surgical procedure selected.' + CRLF + CRLF + 'Continue to order ' + piece(uSelectedItems[j],'^',3) + ' units?'),
-                               PChar('Maximum Number of Units Exceeded'),
-                               MB_YESNO);
-                          RestoreTopMosts;
-                        end;
-                        if aMSBOSContinue = 7 then
-                          begin
-                            ShowMsg('Please enter a new quantity for ' + lvSelectionList.Items[j].Caption);
-                            tQuantity.Text := '0';
-                            tQuantity.SelLength := 2;
-                            tQuantity.SelectAll;
-                            x := uSelectedItems[j];
-                            SetPiece(x,U,3,'');
-                            uSelectedItems[j] := x;
-                            lvSelectionList.Items[j].SubItems[0] := '';
-                            RePaint;
-                            break;
-                          end;
+                        bList.Add(xLabTest.TestName + '^' + piece(uSelectedItems[j],'^',3) + '^' + IntToStr(aMSBOS));
                       end;
                     break;
                   end;
               end;
+            xLabTest.Free;
+          end;
+      end;
+    if (uChangingMSBOS = false) and (cList.Count > 0) then
+      begin
+        lblNoBloodReq.Visible := true;
+        with Application do
+          begin
+            NormalizeTopMosts;
+            aMSBOSContinue :=
+              MessageBox(PChar('No blood is required for the surgical procedure: ' + cboSurgery.text +
+               '.' + CRLF +
+               'If you still need to order any components, please enter a justification in the Comment box.'
+                + CRLF + CRLF + 'Do you want me to remove ALL the component orders you''ve just entered? '),
+               PChar('No Blood Required'),MB_YESNO);
+            RestoreTopMosts;
+          end;
+        if aMSBOSContinue = 6 then
+          begin
+            tQuantity.Text := '';
+            bList.Clear;
+            for j := uSelectedItems.Count - 1 downto 0 do
+              begin
+                if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '0') then
+                  begin
+                    lvSelectionList.Items[j].Delete;
+                    uSelectedItems.Delete(j);
+                    Responses.Update('ORDERABLE', (j+1) ,'', '');
+                    Responses.Update('MODIFIER', (j+1), '', '');
+                    Responses.Update('QTY', (j+1), '', '');
+                  end;
+              end;
+            cboAvailComp.Text := '';
+            cboAvailComp.ItemIndex := -1;
+            cboModifiers.Text := '';
+            cboModifiers.ItemIndex := -1;
+            lblNoBloodReq.Visible := false;
+            //if fODBBank. Active then cboAvailTest.SetFocus;
+            lblTNS.Caption := '';
+            lblTNS.Visible := false;
+            uGetTNS := 0;
+            aGotTNS := false;
+            DisableComponentControls;
+            for i := lvSelectionList.Items.Count - 1 downto 0 do
+              begin
+                if lvSelectionList.Items[i].SubItems[3] = aTypeScreen then
+                  begin
+                    aGotTNS := true;
+                    break;
+                  end;
+              end;
+            for i := uSelectedItems.Count - 1 downto 0 do
+              begin
+                if (aGotTNS = false) and not(piece(uSelectedItems[i],'^',1) = '1') and (uTNSOrders.Count < 1) and (piece(uSelectedItems[i],'^',5) = '1') then //CQ 17349
+                  begin
+                    uGetTnS := 1;
+                    lblTNS.Caption := 'TYPE + SCREEN must be added to order';
+                    lblTNS.Visible := true;
+                    memMessage.Text := 'TYPE + SCREEN must be added to order';
+                    pnlMessage.Visible := true;
+                    pnlDiagnosticTests.Caption := 'Diagnostic Tests*';
+                    break;
+                  end
+                  else pnlDiagnosticTests.Caption := 'Diagnostic Tests';
+              end;
+          end;
+      end
+      else
+        begin
+          lblNoBloodReq.Visible := false;
+        end;
+
+    if (uChangingMSBOS = false) and (bList.Count > 0) then
+      begin
+        x := '';
+        for i := 0 to bList.Count - 1 do
+          begin
+            x := x + CRLF + piece(bList[i],'^',1) + ' (' + piece(bList[i],'^',2) + ') Max allowed: ' + piece(bList[i],'^',3);
+          end;
+        with Application do
+          begin
+            NormalizeTopMosts;
+            aMSBOSContinue :=
+              MessageBox(PChar('The number of units ordered' + x + CRLF +
+               'Exceeds the maximum number recommended for '
+               + cboSurgery.text + CRLF + CRLF +
+               'If you need to order more than the recommended maximum units, please enter a justification in the Comment box.')
+               ,PChar('Maximum Number of Units Exceeded'),
+               MB_OK);
+            RestoreTopMosts;
           end;
       end;
     if uSelectedItems.Count > 0 then
@@ -3805,9 +4197,11 @@ begin
         cboReasons.Text := cboSurgery.Text;
         Responses.Update('REASON',1,cboReasons.Text,cboReasons.Text);
       end;
-    memOrder.Text := Responses.OrderText; 
+    memOrder.Text := Responses.OrderText;
     finally
       aList.Free;
+      bList.Free;
+      cList.Free;
     end;
 end;
 
@@ -3843,14 +4237,17 @@ begin
         end;
     end;
   try
-    if (Length(cboSurgery.ItemID) > 0) and (Length(tQuantity.Text) > 0) then
+    if not(aLabTest = nil) and (Length(cboSurgery.ItemID) > 0) and (Length(tQuantity.Text) > 0) then
       begin
+        uChangingMSBOS := true;
+        cboSurgeryChange(self);
+        uChangingMSBOS := false;
         aList.Clear;
         ExtractMSBOS(aList, uVBECList);    //Get maximum units for selected Surgery
         for i := 0 to aList.Count - 1 do
           begin
             if (StrToInt(piece(aList[i],'^',1)) = aLabTest.ItemID)
-             and (piece(aList[i],'^',3) = cboSurgery.Text) then
+             and (uppercase((piece(aList[i],'^',3))) = uppercase(cboSurgery.Text)) and (Length(tQuantity.Text) > 0) then
               begin
                 aMSBOS := StrToInt(piece(aList[i],'^',4));
                 if (aMSBOS > 0) and (StrToInt(tQuantity.Text) > aMSBOS) then
@@ -3860,15 +4257,18 @@ begin
                       NormalizeTopMosts;
                       aMSBOSContinue :=
                         MessageBox(PChar('The number of units ordered (' + tQuantity.Text +
-                                   ') for ' + aLabTest.TestName + ' exceeds the maximum number of units ('
-                                   + IntToStr(aMSBOS) +
-                                   ') for the ' + cboSurgery.text +
-                                   ' surgical procedure selected.' + CRLF + CRLF + 'Do you wish to continue?'),
-                                   PChar('Maximum Number of Units Exceeded'),
-                                   MB_YESNO);
+                         ') for ' + aLabTest.TestName + ' Exceeds the maximum number recommended ('
+                         + IntToStr(aMSBOS) +
+                         ') for the ' + cboSurgery.text +
+                         ' surgical procedure.' + CRLF +
+                         'If you need to order more than the maximum number of units, please enter a justification in the Comment box.'
+                          + CRLF + CRLF + 'Edit the Blood component Quantity?'),
+                         PChar('Maximum Number of Units Exceeded'),
+                         MB_YESNO);
+
                       RestoreTopMosts;
                     end;
-                    if aMSBOSContinue = 7 then
+                    if aMSBOSContinue = 6 then
                       begin
                         ShowMsg('Please enter a new quantity for ' + cboAvailComp.Text);
                         tQuantity.Text := '0';
@@ -3926,10 +4326,39 @@ begin
 end;
 
 procedure TfrmODBBank.tQuantityEnter(Sender: TObject);
+var
+  j: integer;
 begin
   inherited;
   tQuantity.SelLength := 2;
   tQuantity.SelectAll;
+  if Length(cboAvailComp.Text) > 0 then Exit;
+  for j := uSelectedItems.Count - 1 downto 0 do
+    begin
+      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '0') then
+        begin
+          lvSelectionList.Items[j].Selected := true;
+          lvSelectionListClick(self);
+          Break;
+        end;
+    end;
+end;
+
+procedure TfrmODBBank.txtImmedCollEnter(Sender: TObject);
+var
+  j: integer;
+begin
+  inherited;
+  if Length(cboAvailTest.Text) > 0 then Exit;
+  for j := uSelectedItems.Count - 1 downto 0 do
+    begin
+      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '1') then
+        begin
+          lvSelectionList.Items[j].Selected := true;
+          lvSelectionListClick(self);
+          Break;
+        end;
+    end;
 end;
 
 procedure TfrmODBBank.calCollTimeChange(Sender: TObject);
@@ -3966,6 +4395,23 @@ begin
               end;
         end;
       memOrder.Text := Responses.OrderText;
+    end;
+end;
+
+procedure TfrmODBBank.calCollTimeEnter(Sender: TObject);
+var
+  j: integer;
+begin
+  inherited;
+  if Length(cboAvailTest.Text) > 0 then Exit;
+  for j := uSelectedItems.Count - 1 downto 0 do
+    begin
+      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '1') then
+        begin
+          lvSelectionList.Items[j].Selected := true;
+          lvSelectionListClick(self);
+          Break;
+        end;
     end;
 end;
 

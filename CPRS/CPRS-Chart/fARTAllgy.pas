@@ -1,5 +1,5 @@
 unit fARTAllgy;
-
+  
 interface
 
 uses
@@ -20,7 +20,7 @@ type
     btnCurrent: TButton;
     lblAgent: TOROffsetLabel;
     lstAllergy: TORListBox;
-    btnAgent: TSpeedButton;
+    btnAgent1: TSpeedButton;
     lblOriginator: TOROffsetLabel;
     cboOriginator: TORComboBox;
     lblOriginateDate: TOROffsetLabel;
@@ -32,13 +32,11 @@ type
     cboVerifier: TORComboBox;
     calVerifyDate: TORDateBox;
     lblVerifyDate: TOROffsetLabel;
-    dlgReactionDateTime: TORDateTimeDlg;
     Bevel1: TBevel;
     lblSymptoms: TOROffsetLabel;
     cboSymptoms: TORComboBox;
     lblSelectedSymptoms: TOROffsetLabel;
     lstSelectedSymptoms: TORListBox;
-    btnDateTime: TButton;
     btnRemove: TButton;
     grpObsHist: TRadioGroup;
     lblSeverity: TOROffsetLabel;
@@ -59,8 +57,16 @@ type
     cboNatureOfReaction: TORComboBox;
     lblNatureOfReaction: TOROffsetLabel;
     btnSevHelp: TORAlignButton;
-    procedure btnAgentClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject); 
+    VA508ComponentAccessibility1: TVA508ComponentAccessibility;
+    VA508ComponentAccessibility2: TVA508ComponentAccessibility;
+    origlbl508: TVA508StaticText;
+    origdtlbl508: TVA508StaticText;
+    SymptomDateBox: TORDateBox;
+    btnAgent: TButton;
+    VA508ComponentAccessibility3: TVA508ComponentAccessibility;
+    NoAllergylbl508: TVA508StaticText;
+    procedure btnAgent1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     procedure cboOriginatorNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cboSymptomsNeedData(Sender: TObject; const StartFrom: String;
@@ -76,7 +82,6 @@ type
     procedure btnCurrentClick(Sender: TObject);
     procedure btnRemoveClick(Sender: TObject);
     procedure lstAllergyClick(Sender: TObject);
-    procedure btnDateTimeClick(Sender: TObject);
     procedure cboSymptomsMouseClick(Sender: TObject);
     procedure cboSymptomsKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -89,12 +94,35 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure btnSevHelpClick(Sender: TObject);
+    procedure VA508ComponentAccessibility1StateQuery(Sender: TObject;
+      var Text: string);
+    procedure VA508ComponentAccessibility2ValueQuery(Sender: TObject;
+      var Text: string);
+    procedure VA508ComponentAccessibility2StateQuery(Sender: TObject;
+      var Text: string);
+    procedure VA508ComponentAccessibility2ItemInstructionsQuery(Sender: TObject;
+      var Text: string);
+    procedure VA508ComponentAccessibility2ItemQuery(Sender: TObject;
+      var Item: TObject);
+    procedure VA508ComponentAccessibility2InstructionsQuery(Sender: TObject;
+      var Text: string);
+    procedure VA508ComponentAccessibility2ComponentNameQuery(Sender: TObject;
+      var Text: string);
+    procedure VA508ComponentAccessibility2CaptionQuery(Sender: TObject;
+      var Text: string);
+    procedure SymptomDateBoxExit(Sender: TObject);
+    procedure SymptomDateBoxDateDialogClosed(Sender: TObject);
+    procedure calObservedDateExit(Sender: TObject);
+    procedure VA508ComponentAccessibility3StateQuery(Sender: TObject;
+      var Text: string);
+    procedure memErrCmtsExit(Sender: TObject);
   private
     FLastAllergyID: string;
     FEditAllergyIEN: integer;
     FNKAOrder: boolean;
     FChanged: Boolean;
     FOldHintPause : integer;
+    procedure SetDate;
   protected
     procedure EnableDisableControls(EnabledStatus: boolean);
     procedure InitDialog; override;
@@ -105,15 +133,17 @@ type
     procedure SetUpEnteredInErrorFields(ARec: TAllergyRec);
   end;
 
-function EnterEditAllergy(AllergyIEN: integer; AddNew, MarkAsEnteredInError: boolean): boolean;
+function EnterEditAllergy(AllergyIEN: integer; AddNew, MarkAsEnteredInError: boolean; AnOwner: TComponent = nil; ARefNum: Integer = -1): boolean;
 function MarkEnteredInError(AllergyIEN: integer): boolean;
 function EnterNKAForPatient: boolean;
 
 var
+  frmARTAllergy: TfrmARTAllergy;
   AllergyList: TStringList;
   OldRec, NewRec: TAllergyRec;
   Defaults: TStringList;
   Changing: Boolean;
+  FAbort: Boolean;
   uAddingNew: boolean = FALSE;
   uEditing: Boolean = FALSE;
   uEnteredInError: Boolean = FALSE;
@@ -125,7 +155,7 @@ implementation
 {$R *.DFM}
 
 uses
-  rODBase, uCore, rCore, rCover, fAllgyFind, fPtCWAD, fRptBox;
+  rODBase, uCore, rCore, rCover, fCover, fAllgyFind, fPtCWAD, fRptBox, VA508AccessibilityRouter;
 
 const
   TX_NO_ALLERGY       = 'A causative agent must be specified.'    ;
@@ -182,16 +212,23 @@ begin
   Result := EnterEditAllergy(AllergyIEN, not NEW_ALLERGY, ENTERED_IN_ERROR);
 end;
 
-function EnterEditAllergy(AllergyIEN: integer; AddNew, MarkAsEnteredInError: boolean): boolean;
+function EnterEditAllergy(AllergyIEN: integer; AddNew, MarkAsEnteredInError: boolean; AnOwner: TComponent = nil; ARefNum: Integer = -1): boolean;
 var
-  frmARTAllergy: TfrmARTAllergy;
   Allergy: string;
-begin
+begin      
+  Result := False;
+  if AnOwner = nil then AnOwner := Application;
+  
+  if frmARTAllergy <> nil then
+  begin
+    InfoBox('You are already entering/editing an Allergy.', 'Information', MB_OK);
+    exit;
+  end;
   uAddingNew := AddNew;
   uEditing := (not AddNew) and (not MarkAsEnteredInError);
   uEnteredInError := MarkAsEnteredInError;
-  Result := False;
-  frmARTAllergy := TfrmARTAllergy.Create(Application);
+  frmARTAllergy := TfrmARTAllergy.Create(AnOwner);
+  if ARefNum <> -1 then frmARTAllergy.RefNum := ARefNum;
   if frmARTAllergy.AbortAction then exit;
   with frmARTAllergy do
     try
@@ -227,6 +264,7 @@ begin
             begin
               ckNoKnownAllergies.Checked := True;
               Result := EnterNKAForPatient;
+              frmARTAllergy.Close;
               Exit;
             end
           else if Allergy <> '' then
@@ -252,14 +290,17 @@ begin
         Close;
         Exit;
       end;
-      ShowModal;
+
+      origlbl508.Caption := 'Originator. Read Only. Value is ' + cboOriginator.SelText;
+      origdtlbl508.Caption := 'Origination Date. Read Only. Value is '+ calOriginated.Text;
+      Show;
       Result := FChanged;
     finally
-      uAddingNew := FALSE;
-      uEditing := FALSE;
-      uEnteredInError := FALSE;
-      uUserCanVerify := FALSE;
-      frmARTAllergy.Release;
+//      uAddingNew := FALSE;
+//      uEditing := FALSE;
+//      uEnteredInError := FALSE;
+//      uUserCanVerify := FALSE;
+      //frmARTAllergy.Release;
     end;
 end;
 
@@ -267,6 +308,7 @@ procedure TfrmARTAllergy.FormCreate(Sender: TObject);
 begin
   inherited;       // what to do here?  How to set up dialog defaults without order dialog to supply prompts?
   Changing := True;
+  FAbort := True;
   AbortAction := False;
   AllergyList := TStringList.Create;
   uDeletedSymptoms := TStringList.Create;
@@ -288,7 +330,8 @@ begin
   FastAssign(ODForAllergies, Defaults);
   StatusText('Initializing Long List');
   ExtractItems(cboSymptoms.Items, Defaults, 'Top Ten');
-  cboSymptoms.InsertSeparator;
+  if ScreenReaderSystemActive then cboSymptoms.Items.Add('^----Separator for end of Top Ten signs and symptoms------')
+  else cboSymptoms.InsertSeparator;
   cboSymptoms.InitLongList('');
   cboOriginator.InitLongList(User.Name) ;
   cboOriginator.SelectByIEN(User.DUZ);
@@ -305,6 +348,7 @@ end;
 procedure TfrmARTAllergy.InitDialog;
 var
   Allergy: string;
+  i: Integer;
   //ErrMsg: string;
 begin
   inherited;
@@ -343,21 +387,40 @@ begin
   ckIDBand.Enabled := Patient.Inpatient and MarkIDBand;
   ckChartMarked.Checked := ckChartMarked.Checked or uAddingNew;
   ListAllergies(AllergyList);
+  for i:=0 to grpObsHist.ControlCount -1 do
+  TWinControl(grpObsHist.Controls[i]).TabStop := true;
   with AllergyList do
     if Count > 0 then
       begin
         if (Piece(Strings[0], U, 1) = '') and (Piece(Strings[0], U, 2) <> 'No Known Allergies') then
-          ckNoKnownAllergies.Enabled := True
+          begin
+            ckNoKnownAllergies.Enabled := True;
+            //TDP - CQ#19731 make sure NoAllergylbl508 is not enabled or visible if
+            //      ckNoKnownAllergies is enabled
+            NoAllergylbl508.Enabled := False;
+            NoAllergylbl508.Visible := False;
+          end
         else
           begin
             ckNoKnownAllergies.Enabled := False;
             btnCurrent.Enabled := True;
+            //TDP - CQ#19731 make sure NoAllergylbl508 is enabled and visible if
+            //      ckNoKnownAllergies is disabled
+            if ScreenReaderSystemActive then
+              begin
+                NoAllergylbl508.Enabled := True;
+                NoAllergylbl508.Visible := True;
+              end;
           end;
       end
     else
       begin
         btnCurrent.Enabled := False;
         ckNoKnownAllergies.Enabled := True;
+        //TDP - CQ#19731 make sure NoAllergylbl508 is not enabled or visible if
+        //      ckNoKnownAllergies is enabled
+        NoAllergylbl508.Enabled := False;
+        NoAllergylbl508.Visible := False;
       end;
   if (not uEditing) and (not uEnteredInError) and (not uAddingNew) then
     begin
@@ -386,6 +449,41 @@ begin
   StatusText('');
   Changing := False;
   ControlChange(lstAllergy);
+  origlbl508.Visible := False;
+  origdtlbl508.Visible := False;
+  if ScreenReaderSystemActive then
+    begin
+      origlbl508.Enabled := True;
+      origdtlbl508.Enabled := True;
+      origlbl508.Visible := True;
+      origdtlbl508.Visible := True;
+//    cboOriginator.Enabled := True;
+//    calOriginated.Enabled := True;
+//    calOriginated.ReadOnly := True;
+    end;
+end;
+
+procedure TfrmARTAllergy.SetDate;
+var
+  x: string;
+begin
+  Changing := True;
+  with lstSelectedSymptoms do
+    begin
+      if (Items.Count = 0) or (ItemIndex = -1) or (not SymptomDateBox.IsValid) then exit;
+
+      if SymptomDateBox.FMDateTime > FMNow then
+        InfoBox(TX_NO_FUTURE_DATES, TX_CAP_FUTURE, MB_OK)
+      else
+        begin
+          x := Items[ItemIndex];
+          x := ORFn.Pieces(x, U, 1, 2) + U + FloatToStr(SymptomDateBox.FMDateTime) + U +
+                            FormatFMDateTime('mmm dd,yyyy@hh:nn', SymptomDateBox.FMDateTime);
+          Items[ItemIndex] := x;
+        end;
+    end;
+  Changing := False;
+  ControlChange(SymptomDateBox);
 end;
 
 procedure TfrmARTAllergy.SetupDialog;
@@ -436,6 +534,73 @@ begin
       SetUpEnteredInErrorFields(OldRec);
       Changing := False;
     end;
+
+end;
+
+procedure TfrmARTAllergy.VA508ComponentAccessibility1StateQuery(Sender: TObject;
+  var Text: string);
+begin
+  inherited;
+Text := 'Comments ' + memComments.Text;
+end;
+
+procedure TfrmARTAllergy.VA508ComponentAccessibility2CaptionQuery(
+  Sender: TObject; var Text: string);
+begin
+  inherited;
+
+ Text := 'Causative Agent';
+end;
+
+procedure TfrmARTAllergy.VA508ComponentAccessibility2ComponentNameQuery(
+  Sender: TObject; var Text: string);
+begin
+  inherited;
+
+ Text := 'List Box';
+end;
+
+procedure TfrmARTAllergy.VA508ComponentAccessibility2InstructionsQuery(
+  Sender: TObject; var Text: string);
+begin
+  //inherited;
+
+ Text := 'Read Only';
+end;
+
+procedure TfrmARTAllergy.VA508ComponentAccessibility2ItemInstructionsQuery(
+  Sender: TObject; var Text: string);
+begin
+  //inherited;
+  Text := ' ';
+end;
+
+procedure TfrmARTAllergy.VA508ComponentAccessibility2ItemQuery(Sender: TObject;
+  var Item: TObject);
+begin
+  inherited;
+ Text := ' ';
+end;
+
+procedure TfrmARTAllergy.VA508ComponentAccessibility2StateQuery(Sender: TObject;
+  var Text: string);
+begin
+//  inherited;
+  Text := ' ';
+end;
+
+procedure TfrmARTAllergy.VA508ComponentAccessibility2ValueQuery(Sender: TObject;
+  var Text: string);
+begin
+  inherited;
+  Text := Piece(lstAllergy.Items[0],U,2);
+end;
+
+procedure TfrmARTAllergy.VA508ComponentAccessibility3StateQuery(Sender: TObject;
+  var Text: string);
+begin
+  inherited;
+  Text := memErrCmts.Text;
 end;
 
 procedure TfrmARTAllergy.Validate(var AnErrMsg: string);
@@ -523,6 +688,15 @@ begin
   end;
 end;
 
+procedure TfrmARTAllergy.calObservedDateExit(Sender: TObject);
+var
+  x: string;
+begin
+  inherited;
+  calObservedDate.Validate(x);
+  calObservedDate.FMDateTime := calObservedDate.FMDateTime;
+end;
+
 procedure TfrmARTAllergy.cboOriginatorNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 begin
@@ -541,7 +715,7 @@ procedure TfrmARTAllergy.grpObsHistClick(Sender: TObject);
 begin
   inherited;
   Changing := True;
-  cboSeverity.ItemIndex := -1;
+  cboSeverity.ItemIndex := 1;
   case grpObsHist.ItemIndex of
     0:  begin
           cboSeverity.Visible := True;
@@ -699,7 +873,35 @@ begin
   end;
 end;
 
-procedure TfrmARTAllergy.btnAgentClick(Sender: TObject);
+procedure TfrmARTAllergy.memErrCmtsExit(Sender: TObject);
+var
+  AStringList: TStringList;
+begin
+  inherited;
+  AStringList := TStringList.Create;
+  try
+    QuickCopy(memErrCmts, AStringList);
+    LimitStringLength(AStringList, 74);
+    QuickCopy(AstringList, memErrCmts);
+    ControlChange(Self);
+  finally
+    AStringList.Free;
+  end;
+end;
+
+procedure TfrmARTAllergy.SymptomDateBoxDateDialogClosed(Sender: TObject);
+begin
+  inherited;
+  SetDate;
+end;
+
+procedure TfrmARTAllergy.SymptomDateBoxExit(Sender: TObject);
+begin
+  inherited;
+  SetDate;
+end;
+
+procedure TfrmARTAllergy.btnAgent1Click(Sender: TObject);
 var
   Allergy: string;
 begin
@@ -755,6 +957,14 @@ begin
   Defaults.Free;
   uDeletedSymptoms.Free;
   AllergyList.Free;
+  frmARTAllergy := NIL;
+
+  uAddingNew := FALSE;
+  uEditing := FALSE;
+  uEnteredInError := FALSE;
+  uUserCanVerify := FALSE;
+  frmCover.UpdateAllergiesList;
+  
   inherited;
 end;
 
@@ -795,7 +1005,7 @@ begin
    btnSevHelp.Enabled              := EnabledStatus;
    lstAllergy.Enabled              := EnabledStatus;
    cboSymptoms.Enabled             := EnabledStatus;
-   btnDateTime.Enabled             := EnabledStatus;
+   SymptomDateBox.Enabled          := EnabledStatus;
 end;
 
 procedure TfrmARTAllergy.cmdOKClick(Sender: TObject);
@@ -811,6 +1021,7 @@ begin
         if not (InfoBox(TX_ENTERED_IN_ERROR, TC_ENTERED_IN_ERROR, MB_YESNO or MB_ICONQUESTION) = ID_YES) then
           begin
             FChanged := False;
+            FAbort := False;
             Close;
             Exit;
           end;
@@ -823,6 +1034,7 @@ begin
           SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_SIGN, 0);
           Application.ProcessMessages;
         end;
+      FAbort := False;
       Close;
     end;
 end;
@@ -880,36 +1092,6 @@ procedure TfrmARTAllergy.lstAllergyClick(Sender: TObject);
 begin
   inherited;
   lstAllergy.ItemIndex := -1;
-end;
-
-procedure TfrmARTAllergy.btnDateTimeClick(Sender: TObject);
-var
-  AFMDateTime: TFMDateTime;
-  x: string;
-begin
-  inherited;
-  Changing := True;
-  with lstSelectedSymptoms do
-    begin
-      if (Items.Count = 0) or (ItemIndex = -1) then exit;
-      AFMDateTime := MakeFMDateTime(Piece(Items[ItemIndex], U, 3));
-      if AFMDateTime > 0 then
-        dlgReactionDateTime.FMDateTime := AFMDateTime
-      else
-        dlgReactionDateTime.FMDateTime := FMNow;
-      if not dlgReactionDateTime.Execute then exit;
-      if dlgReactionDateTime.FMDateTime > FMNow then
-        InfoBox(TX_NO_FUTURE_DATES, TX_CAP_FUTURE, MB_OK)
-      else
-        begin
-          x := Items[ItemIndex];
-          x := ORFn.Pieces(x, U, 1, 2) + U + FloatToStr(dlgReactionDateTime.FMDateTime) + U +
-                            FormatFMDateTime('mmm dd,yyyy@hh:nn', dlgReactionDateTime.FMDateTime);
-          Items[ItemIndex] := x;
-        end;
-    end;
-  Changing := False;
-  ControlChange(btnDateTime);
 end;
 
 procedure TfrmARTAllergy.cboSymptomsMouseClick(Sender: TObject);
@@ -983,14 +1165,21 @@ begin
 end;
 
 procedure TfrmARTAllergy.lstSelectedSymptomsChange(Sender: TObject);
+var
+  AFMDateTime: TFMDateTime;
 begin
   inherited;
   with lstSelectedSymptoms do
     begin
-      btnDateTime.Enabled := (ItemIndex <> -1);
-      btnRemove.Enabled := btnDateTime.Enabled;
+      SymptomDateBox.Enabled := (ItemIndex <> -1);
+      btnRemove.Enabled := (ItemIndex <> -1);
+
+      if SymptomDateBox.Enabled then begin
+        AFMDateTime := MakeFMDateTime(Piece(Items[ItemIndex], U, 3));
+        if AFMDateTime > 0 then
+          SymptomDateBox.FMDateTime := AFMDateTime
+      end;
     end;
-  //ControlChange(Self);
 end;
 
 procedure TfrmARTAllergy.cboVerifierNeedData(Sender: TObject;
@@ -1082,17 +1271,27 @@ procedure TfrmARTAllergy.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   inherited;
+  Release;
   uEditing := False;
   uEnteredInError := False;
   uAddingNew := False;
   Application.HintHidePause := FOldHintPause;
   Action  := caFree;
+                  
 end;
 
 procedure TfrmARTAllergy.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
   inherited;
+  if FAbort and frmARTAllergy.Visible then
+  begin
+    if InfoBox('Are you sure you want to cancel Entering/Editing this allergy?', 'Exiting Allergy Enter/Edit form', MB_YESNO) = ID_NO then
+    begin
+    CanClose := false;
+    exit;
+    end;
+  end;
   if AbortAction then exit;
 end;
 

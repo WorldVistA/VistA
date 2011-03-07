@@ -27,7 +27,10 @@ procedure SubsetOfQuickOrders(Dest: TStringList; AListIEN, First, Last: Integer)
 procedure GetPatientBloodResults(Dest: TStrings; PatientID: string; ATests: TStringList);
 procedure GetPatientBloodResultsRaw(Dest: TStrings; PatientID: string; ATests: TStringList);
 function  StatAllowed(PatientID: string): boolean;
+function  RemoveCollTimeDefault: boolean;
+function  GetDiagnosticPanelLocation: boolean;
 procedure GetBloodComponents(Dest: TStrings);
+procedure GetDiagnosticTests(Dest: TStrings);
 function  NursAdminSuppress: boolean;
 function  GetSubtype(TestName: string): string;
 function  TNSDaysBack: integer;
@@ -53,6 +56,11 @@ begin
   tCallV(Dest, 'ORWDXVB COMPORD', []);
 end;
 
+procedure GetDiagnosticTests(Dest: TStrings);
+begin
+  tCallV(Dest, 'ORWDXVB3 DIAGORD', []);
+end;
+
 function NursAdminSuppress: boolean;
 begin
   Result := (StrToInt(sCallV('ORWDXVB NURSADMN',[nil])) < 1);
@@ -61,6 +69,16 @@ end;
 function  StatAllowed(PatientID: string): boolean;
 begin
   Result := (StrToInt(sCallV('ORWDXVB STATALOW',[PatientID])) > 0);
+end;
+
+function  RemoveCollTimeDefault: boolean;
+begin
+  Result := (StrToInt(sCallV('ORWDXVB3 COLLTIM',[nil])) > 0);
+end;
+
+function  GetDiagnosticPanelLocation: boolean;
+begin
+  Result := (StrToInt(sCallV('ORWDXVB3 SWPANEL',[nil])) > 0);
 end;
 
 procedure GetPatientBloodResultsRaw(Dest: TStrings; PatientID: string; ATests: TStringList);

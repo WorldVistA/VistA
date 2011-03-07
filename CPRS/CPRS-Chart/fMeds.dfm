@@ -4,7 +4,7 @@ inherited frmMeds: TfrmMeds
   HelpContext = 3000
   VertScrollBar.Visible = False
   Caption = 'Medications Page'
-  ClientHeight = 651
+  ClientHeight = 671
   ClientWidth = 701
   HelpFile = 'qnoback'
   Menu = mnuMeds
@@ -14,7 +14,7 @@ inherited frmMeds: TfrmMeds
   OnResize = FormResize
   OnShow = FormShow
   ExplicitWidth = 709
-  ExplicitHeight = 697
+  ExplicitHeight = 717
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
@@ -28,7 +28,7 @@ inherited frmMeds: TfrmMeds
   end
   object splitTop: TSplitter [1]
     Left = 0
-    Top = 440
+    Top = 460
     Width = 701
     Height = 4
     Cursor = crVSplit
@@ -44,7 +44,7 @@ inherited frmMeds: TfrmMeds
   end
   object pnlBottom: TORAutoPanel [2]
     Left = 0
-    Top = 444
+    Top = 464
     Width = 701
     Height = 207
     Align = alBottom
@@ -221,7 +221,7 @@ inherited frmMeds: TfrmMeds
     Left = 0
     Top = 22
     Width = 701
-    Height = 418
+    Height = 438
     Align = alClient
     Ctl3D = True
     ParentCtl3D = False
@@ -231,7 +231,7 @@ inherited frmMeds: TfrmMeds
       Left = 1
       Top = 17
       Width = 699
-      Height = 400
+      Height = 420
       Style = lbOwnerDrawVariable
       Align = alClient
       Color = clCream
@@ -555,6 +555,11 @@ inherited frmMeds: TfrmMeds
       object mnuActDC: TMenuItem
         Caption = '&Discontinue / Cancel...'
         OnClick = mnuActDCClick
+      end
+      object mnuActUnhold: TMenuItem
+        Caption = 'Re&lease Hold...'
+        Hint = 'Release Hold'
+        OnClick = mnuActUnholdClick
       end
       object mnuActHold: TMenuItem
         Caption = '&Hold...'

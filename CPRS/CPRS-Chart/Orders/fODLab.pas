@@ -5,7 +5,7 @@ interface
 uses
   SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls, ORCtrls, ORfn, fODBase, ExtCtrls, ComCtrls, uConst,
-  ORDtTm, Buttons, Menus, VA508AccessibilityManager;
+  ORDtTm, Buttons, Menus, VA508AccessibilityManager, VA508AccessibilityRouter;
 
 type
   TfrmODLab = class(TfrmODBase)
@@ -56,6 +56,10 @@ type
     cmdImmedColl: TSpeedButton;
     MessagePopup: TPopupMenu;
     ViewinReportWindow1: TMenuItem;
+    Frequencylbl508: TVA508StaticText;
+    HowManyDayslbl508: TVA508StaticText;
+    specimenlbl508: TVA508StaticText;
+    CollSamplbl508: TVA508StaticText;
     procedure FormCreate(Sender: TObject);
     procedure ControlChange(Sender: TObject);
     procedure cboAvailTestNeedData(Sender: TObject;
@@ -106,6 +110,7 @@ type
     FEvtDivision: integer;
     procedure ReadServerVariables;
     procedure DisplayChangedOrders(ACollType: string);
+    procedure setup508Label(text: string; lbl: TVA508StaticText; ctrl: TControl; lbl2: string);
   public
     procedure SetupDialog(OrderAction: Integer; const ID: string); override;
     procedure LoadRequiredComment(CmtType: integer);
@@ -205,7 +210,7 @@ const
 
 procedure TfrmODLab.FormCreate(Sender: TObject);
 var
-  i, n: integer;
+  i, n, HMD508: integer;
   AList: TStringList;
 begin
   frmFrame.pnlVisit.Enabled := false;
@@ -262,7 +267,10 @@ begin
       SetControl(cboAvailTest, 'ShortList');
       if cboAvailTest.Items.Count > 0 then cboAvailTest.InsertSeparator;
       cboAvailTest.InitLongList('');
+      //TDP - CQ#19396 HMD508 added to guarantee 508 label did not change width
+      HMD508 := HowManyDayslbl508.Width;
       SetControl(cboFrequency, 'Schedules');
+      HowManydayslbl508.Width := HMD508;
       with cboFrequency do
         begin
           if ItemIndex < 0 then ItemIndex := Items.IndexOf('ONE TIME');
@@ -270,6 +278,8 @@ begin
         end;
       lblHowManyDays.Enabled := False;                 { have this call change event in case }
       txtDays.Enabled := False;                         { the default is not 'one time'?      }
+      //TDP - CQ#19396 Following line does not appear to be needed
+      //setup508Label(HowManyText, HowManyDayslbl508, txtDays, lblHowManyDays.Caption);
     end;
     if EvTDelayLoc>0 then
       n := MaxDays(EvtDelayLoc, 0)
@@ -282,6 +292,7 @@ begin
         Enabled := False;
         Font.Color := clGrayText;
         lblFrequency.Enabled := False;
+        setup508Label(Text, Frequencylbl508, cboFrequency, lblFrequency.Caption);
       end;
     PreserveControl(cboAvailTest);
     PreserveControl(cboCollType);
@@ -293,6 +304,22 @@ begin
   finally
     AList.Free;
   end;
+end;
+
+{TDP - CQ#19396 Added to address 508 related changes. I modified slightly to
+       change lbl.Caption and retain lbl.Width}
+procedure TfrmODLab.setup508Label(text: string; lbl: TVA508StaticText; ctrl: TControl; lbl2: string);
+var
+Width: integer;
+begin
+  if ScreenReaderSystemActive and not ctrl.Enabled then begin
+    lbl.Enabled := True;
+    lbl.Visible := True;
+    Width := lbl.Width;
+    lbl.Caption := lbl2 +'. Read Only. Value is ' + Text;
+    lbl.Width := Width;
+  end else
+    lbl.Visible := false;
 end;
 
 procedure TfrmODLab.InitDialog;
@@ -744,18 +771,28 @@ end;
 
 procedure TLabTest.LoadUrgency(CollType: string; AComboBox:TORComboBox);
 var
-  i: integer;
+  i, PreviousSelectionIndex: integer;
+  PreviousSelectionString: String;
 begin
   with AComboBox do
     begin
+    PreviousSelectionIndex := -1;
+    PreviousSelectionString := SelText;
+
       Clear;
-      for i := 0 to UrgencyList.Count - 1 do
+      for i := 0 to UrgencyList.Count - 1 do begin
          if (CollType = 'LC') and (Piece(UrgencyList[i], U, 3) = '') then
            Continue
          else
            Items.Add(UrgencyList[i]);
+         if (PreviousSelectionString <> '') and (PreviousSelectionString = Piece(UrgencyList[i], U, 2)) then
+           PreviousSelectionIndex := i;
+      end;
+
       if (LRFURG <> '') and (ALabTest.ObtainUrgency) then
         SelectByID(LRFURG)
+      else if PreviousSelectionIndex > -1 then
+        ItemIndex := PreviousSelectionIndex
       else
         SelectByIEN(uDfltUrgency);
       Urgency := AComboBox.ItemIEN;
@@ -1291,6 +1328,8 @@ begin
       begin
         lblCollSamp.Enabled := True;
         cboCollSamp.Enabled := True;
+        //TDP - CQ#19396 Added cboCollSamp 508 changes
+        setup508Label(cboCollSamp.Text, collsamplbl508, cboCollSamp, lblCollSamp.Caption);
       end
     else
       begin
@@ -1305,15 +1344,19 @@ begin
             end ;
         lblCollSamp.Enabled := False;
         cboCollSamp.Enabled := False;
+        //TDP - CQ#19396 Added cboCollSamp 508 changes
+        setup508Label(cboCollSamp.Text, collsamplbl508, cboCollSamp, lblCollSamp.Caption);
       end;
     if ObtainSpecimen then
     begin
       lblSpecimen.Enabled:= True;
       cboSpecimen.Enabled:= True;
+      setup508Label(cboSpecimen.Text, specimenlbl508, cboSpecimen, lblSpecimen.Caption);
     end else
     begin
       lblSpecimen.Enabled:= False;
       cboSpecimen.Enabled:= False;
+      setup508Label(cboSpecimen.Text, specimenlbl508, cboSpecimen, lblSpecimen.Caption);
     end;
     if ObtainUrgency then
     begin
@@ -1359,10 +1402,12 @@ begin
      begin
       lblSpecimen.Enabled:= True;
       cboSpecimen.Enabled:= True;
+      setup508Label(cboSpecimen.Text, specimenlbl508, cboSpecimen, lblSpecimen.Caption);
      end else
      begin
       lblSpecimen.Enabled:= False;
       cboSpecimen.Enabled:= False;
+      setup508Label(cboSpecimen.Text, specimenlbl508, cboSpecimen, lblSpecimen.Caption);
      end;
     if ObtainComment then
        LoadRequiredComment(FCmtTypes.IndexOf(CurReqComment))
@@ -1418,7 +1463,7 @@ end;
 
 procedure TfrmODLab.cboFrequencyChange(Sender: TObject);
 var
-  x: string;
+  x, HowManyText: string;
 const
   HINT_TEXT1 = 'Enter a number of days';
   HINT_TEXT2 = ', or an "X" followed by a number of times.';
@@ -1433,6 +1478,10 @@ begin
         else
           txtDays.Hint := '';
         txtDays.Enabled := True;
+        //TDP - txtDays 508 changes
+        if txtDays.Text = '' then HowManyText := 'no value'
+        else HowManyText := txtDays.Text;
+        setup508Label(HowManyText, HowManyDayslbl508, txtDays, lblHowManyDays.Caption);
         txtDays.Showhint := True;
       end
     else
@@ -1440,6 +1489,9 @@ begin
         txtDays.Text := '';
         lblHowManyDays.Enabled := False;
         txtDays.Enabled := False;
+        //TDP - txtDays 508 changes
+        HowManyText := 'no value';
+        setup508Label(HowManyText, HowManyDayslbl508, txtDays, lblHowManyDays.Caption);
         txtDays.ShowHint := False;
       end;
   ControlChange(Self);
@@ -2024,5 +2076,3 @@ begin
 end;
 
 end.
-
-

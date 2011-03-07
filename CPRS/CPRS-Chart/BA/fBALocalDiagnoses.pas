@@ -63,7 +63,6 @@ type
     procedure lvDxGridClick(Sender: TObject);
     procedure lbOrdersMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
-    procedure FormKeyPress(Sender: TObject; var Key: Char);
 
   private
     { Private declarations }
@@ -101,13 +100,11 @@ type
     function  PersonalListDxFound(pDxCode:string):boolean;
     procedure ReSetCheckBoxStatus(pDxCode:String);
     procedure DeleteSelectedDx;
-    function  IsCtrlDown: boolean;
 
   public
      FLastHintItemNum: integer;
      procedure Enter(theCaller: smallint; pOrderIDList: TStringList);
      procedure LoadTempRec(var thisRec: TBADxRecord; thisOrderID: string);
-
   end;
 
   const
@@ -172,17 +169,6 @@ begin
      PrimaryChanged := False;
      FLastHintItemNum := -1;
      ClearAndDisableCBoxes
-end;
-
-procedure TfrmBALocalDiagnoses.FormKeyPress(Sender: TObject; var Key: Char);
-begin
-  inherited;
-   if frmBALocalDiagnoses.IsCtrlDown then
-   begin
-     if ( Key = #10 ) then
-        frmBALocalDiagnoses.buOK.Click;
-   end;
-   
 end;
 
 procedure TfrmBALocalDiagnoses.ListDiagnosisSections(Dest: TStrings);
@@ -1558,16 +1544,6 @@ begin
   end;
 
 end;
-
-function  TfrmBALocalDiagnoses.IsCtrlDown: boolean;
-var
-  State: TKeyboardState;
-begin { isCtrlDown }
-  GetKeyboardState(State);
-  Result := ((State[VK_CONTROL] and 128)<>0); // Ctrl-button
-end; { isCtrlDown }
-
-
 
 
 Initialization

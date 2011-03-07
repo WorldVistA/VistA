@@ -162,6 +162,7 @@ type
     procedure hdrOrdersSectionClick(HeaderControl: THeaderControl;
       Section: THeaderSection);
     procedure sptHorzMoved(Sender: TObject);
+    procedure sptVertMoved(Sender: TObject);
   private
     { Private declarations }
     OrderListClickProcessing : Boolean;
@@ -224,7 +225,7 @@ type
     function getTotalSectionsWidth : integer; //CQ6170
     function AllowContextChange(var WhyNot: string): Boolean; override;
     function PlaceOrderForDefaultDialog(ADlgInfo: string; IsDefaultDialog: boolean; AEvent: TOrderDelayEvent): boolean;
-    function PtEvtCompleted(APtEvtID: integer; APtEvtName: string; FromMeds: boolean = False): boolean;
+    function PtEvtCompleted(APtEvtID: integer; APtEvtName: string; FromMeds: boolean = False; Signing: boolean = False): boolean;
     procedure RefreshToFirstItem;
     procedure ChangesUpdate(APtEvtID: string);
     procedure GroupChangesUpdate(GrpName: string);
@@ -1175,7 +1176,9 @@ begin
    if AnOrderView.EventDelay.PtEventIFN > 0 then
     FCompress := False;
   end;
-
+  //CQ 18660 Orders for events should be modal. Orders for non-event should not be modal
+  if AnOrderView.EventDelay.EventIFN = 0 then NeedShowModal := False
+  else NeedShowModal := True;
   if (FCurrentView <> nil) and (AnOrderView.EventDelay.EventIFN <> FCurrentView.EventDelay.EventIFN) and (FCurrentView.EventDelay.EventIFN > 0 ) then
   begin
     APtEvtID := IntToStr(FCurrentView.EventDelay.PtEventIFN);
@@ -1397,7 +1400,9 @@ begin
       4:
       begin
         result := MixedCase(ProviderName);
-        result := Piece(result, ',', 1) + ',' + Copy(Piece(result, ',', 2), 1, 1);
+//        result := Piece(result, ',', 1) + ',' + Copy(Piece(result, ',', 2), 1, 1);
+// CQ#15915
+        result := Piece(result, ',', 1) + ',' + Piece(result, ',', 2);
       end;
       5: result := VerNurse;
       6: result := VerClerk;
@@ -2349,8 +2354,10 @@ var
   SelectedList: TList;
   ALocation: Integer;
   AName: string;
+  Delayed: boolean;
 begin
   inherited;
+  Delayed := False;
   if NoneSelected(TX_NOSEL_SIGN) then Exit;
   if not AuthorizedUser then Exit;
   if (User.OrderRole <> 2) and (User.OrderRole <> 3) then
@@ -2374,8 +2381,11 @@ begin
   end;
   if not LockedForOrdering then Exit;
 
-  if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
-    Exit;
+  //CQ 18392 and CQ 18121 Made changes to this code, PtEVTComplete function and the finally statement at the end to support the fix for these CQs
+  if (FCurrentView.EventDelay.PtEventIFN>0) then
+      Delayed := (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName, false, true));
+  //if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
+  //  Exit;
 
   SelectedList := TList.Create;
   try
@@ -2412,6 +2422,16 @@ begin
   finally
     SelectedList.Free;
     UnlockIfAble;
+    //CQ #17491: Added UpdatePtInfoOnRefresh here to allow for the updating of the patient
+    //status indicator in the header bar if the patient becomes admitted/discharged.
+    frmFrame.UpdatePtInfoOnRefresh;
+    if Delayed = True then
+      begin
+        InitOrderSheetsForEvtDelay;
+        lstSheets.ItemIndex := 0;
+        lstSheetsClick(self);
+        RefreshOrderList(True);
+      end;
   end;
 end;
 
@@ -3242,7 +3262,7 @@ begin
     end;
 end;
 
-function TfrmOrders.PtEvtCompleted(APtEvtID: integer; APtEvtName: string; FromMeds: boolean): boolean;
+function TfrmOrders.PtEvtCompleted(APtEvtID: integer; APtEvtName: string; FromMeds: boolean; Signing: boolean): boolean;
 begin
   Result := False;
   if IsCompletedPtEvt(APtEvtID) then
@@ -3252,6 +3272,11 @@ begin
     else
       InfoBox('The event "Delayed ' + APtEvtName + '" ' + TX_CMPTEVT, 'Warning', MB_OK or MB_ICONWARNING);
     GroupChangesUpdate('Delayed ' + APtEvtName);
+    if signing = true then
+      begin
+        Result := True;
+        exit;
+      end;
     InitOrderSheetsForEvtDelay;
     lstSheets.ItemIndex := 0;
     lstSheetsClick(self);
@@ -3337,6 +3362,7 @@ begin
       for i := 0 to hdrOrders.Sections.Count - 1 do
         hdrOrders.Sections[i].Width := origWidths[i];
       lstOrders.Invalidate;
+      RefreshOrderList(false);
     end;
   end;
   //end CQ6170
@@ -3471,6 +3497,14 @@ procedure TfrmOrders.sptHorzMoved(Sender: TObject);
 begin
   inherited;
   mnuOptimizeFieldsClick(self);
+end;
+
+procedure TfrmOrders.sptVertMoved(Sender: TObject);
+begin
+  inherited;
+  if self.sptVert.Top < self.lstSheets.Constraints.MinHeight then
+     self.sptVert.Top := self.lstSheets.Constraints.MinHeight + 1;
+  
 end;
 
 initialization

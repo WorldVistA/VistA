@@ -24,14 +24,12 @@ inherited frmODBase: TfrmODBase
     Top = 194
     Width = 430
     Height = 48
-    TabStop = False
     Color = clCream
     Ctl3D = True
     ParentCtl3D = False
     ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 0
-    Caption = 'Order'
   end
   object cmdAccept: TButton [1]
     Left = 442

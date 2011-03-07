@@ -4,7 +4,7 @@
 	Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
 	Developers: Danila Manapsal, Don Craven, Joel Ivey
 	Description: Contains TRPCBroker and related components.
-	Current Release: Version 1.1 Patch 47 (February 7, 2007)
+	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008)
 *************************************************************** }
 
 {**************************************************
@@ -64,7 +64,7 @@ protected
   FCCOWLogonVpid: String;
   FCCOWLogonVpidValue: String;
   FWasUserDefined: Boolean;
-  procedure   SetConnected(Value: Boolean); override;
+//  procedure   SetConnected(Value: Boolean); override;
   function  GetCCOWHandle(ConnectedBroker: TCCOWRPCBroker): string;
   procedure CCOWsetUser(Uname, token, Domain, Vpid: string; Contextor:
     TContextorControl);
@@ -103,22 +103,28 @@ var
 
 
 {--------------------- TCCOWRPCBroker.SetConnected --------------------
-------------------------------------------------------------------}
+------------------------------------------------------------------
 procedure TCCOWRPCBroker.SetConnected(Value: Boolean);
 var
   BrokerDir, Str1, Str2, Str3 :string;
   RPCBContextor: TContextorControl;
+  UseSSH: TSecure;
+  ParamVal: String;
+  ParamNum: Integer;
+  PseudoServer: String;
+  PseudoPortStr: String;
+  PseudoPort: Integer;
 begin
   RPCBError := '';
   Login.ErrorText := '';
   if (Connected <> Value) and not(csReading in ComponentState) then begin
-    if Value and (FConnecting <> Value) then begin                 {connect}
+    if Value and (FConnecting <> Value) then begin                 {connect
       FSocket := ExistingSocket(Self);
       FConnecting := True; // FConnected := True;
       try
         if FSocket = 0  then
         begin
-          {Execute Client Agent from directory in Registry.}
+          {Execute Client Agent from directory in Registry.
           BrokerDir := ReadRegData(HKLM, REG_BROKER, 'BrokerDr');
           if BrokerDir <> '' then
             ProcessExecute(BrokerDir + '\ClAgent.Exe', sw_ShowNoActivate)
@@ -131,12 +137,27 @@ begin
             Str3 := '4. Connect the client application using the port number entered in Step #3.';
             ShowMessage(Str1 + Str2 + Str3);
           end;
+
+          CheckSSH;
+          if not (FUseSecureConnection = secureNone) then
+          begin
+            if not StartSecureConnection(PseudoServer, PseudoPortStr) then
+              exit;
+            //Val(PseudoPortStr,PseudoPort,Code)
+            PseudoPort := StrToInt(PseudoPortStr);
+          end
+          else
+          begin
+            PseudoPort := ListenerPort;
+            PseudoServer := Server;
+          end;
+            // 060920  end of addition
           TXWBWinsock(XWBWinsock).IsBackwardsCompatible := IsBackwardCompatibleConnection;
           TXWBWinsock(XWBWinsock).OldConnectionOnly := OldConnectionOnly;
-          FSocket := TXWBWinsock(XWBWinsock).NetworkConnect(DebugMode, FServer,
-                                    ListenerPort, FRPCTimeLimit);
+          FSocket := TXWBWinsock(XWBWinsock).NetworkConnect(DebugMode, PseudoServer, // {FServer,
+                                    PseudoPort {ListenerPort, FRPCTimeLimit);
               //  060919 Prefix added to handle multiple brokers including old and new
-              Prefix := TXWBWinsock(XWBWinsock).Prefix;
+{              Prefix := TXWBWinsock(XWBWinsock).Prefix;
               FIsNewStyleConnection := TXWBWinsock(XWBWinsock).IsNewStyle;
           AuthenticateUser(Self);
           StoreConnection(Self);  //MUST store connection before CreateContext()
@@ -178,6 +199,18 @@ begin
         end;                      //p13
         FConnected := True;         // jli mod 12/17/01
         FConnecting := False;
+        // 080620 If connected via SSH, With no command box
+        //        visible, should let users know they have it.
+        if not (CommandBoxProcessHandle = 0) then
+        begin
+          thisOwner := self.Owner;
+          if (thisOwner is TForm) then
+          begin
+            thisParent := TForm(self.Owner);
+            if not (Pos('(SSH Secure connection)',thisParent.Caption) > 0) then
+              thisParent.Caption := thisParent.Caption + ' (SSH Secure connection)';
+          end;
+        end;
       except
         on E: EBrokerError do begin
           if E.Code = XWB_BadSignOn then
@@ -185,6 +218,8 @@ begin
           FSocket := 0;
           FConnected := False;
           FConnecting := False;
+          if not (CommandBoxProcessHandle = 0) then
+                TerminateProcess(CommandBoxProcessHandle,10);
           FRPCBError := E.Message;               // p13  handle errors as specified
           if Login.ErrorText <> '' then
             FRPCBError := E.Message + chr(10) + Login.ErrorText;
@@ -192,24 +227,39 @@ begin
             FOnRPCBFailure(Self)                 // p13
           else if ShowErrorMsgs = semRaise then
             Raise;                               // p13
-//          raise;   {this is where I would do OnNetError}
-        end{on};
-      end{try};
-    end{if}
+//          raise;   {this is where I would do OnNetError
+        end{on;
+      end{try;
+    end{if
     else if not Value then
     begin                           //p13
       FConnected := False;          //p13
       FPulse.Enabled := False;      //p13
       if RemoveConnection(Self) = NoMore then begin
-        {FPulse.Enabled := False;  ///P6;p13 }
-        TXWBWinsock(XWBWinsock).NetworkDisconnect(Socket);   {actually disconnect from server}
-        FSocket := 0;                {store internal}
+        {FPulse.Enabled := False;  ///P6;p13
+        TXWBWinsock(XWBWinsock).NetworkDisconnect(Socket);   {actually disconnect from server
+        FSocket := 0;                {store internal
         //FConnected := False;      //p13
-      end{if};
-    end; {else}
-  end{if};
+        // 080618 following added to close command box if SSH is being used
+        if not (CommandBoxProcessHandle = 0) then
+        begin
+          TerminateProcess(CommandBoxProcessHandle,10);
+          thisOwner := self.Owner;
+          if (thisOwner is TForm) then
+          begin
+            thisParent := TForm(self.Owner);
+            if (Pos('(SSH Secure connection)',thisParent.Caption) > 0) then
+            begin
+              // 080620 remove ' (SSH Secure connection)' on disconnection
+              thisParent.Caption := Copy(thisParent.Caption,1,Length(thisParent.Caption)-24);
+            end;
+          end;
+        end;
+      end{if;
+    end; {else
+  end{if;
 end;
-
+}
 function TCCOWRPCBroker.WasUserDefined: Boolean;
 begin
   Result := FWasUserDefined;

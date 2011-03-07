@@ -43,6 +43,7 @@ var
 
 procedure PrintReports(AReports: string; const AReportsTitle: string);
 function StringPad(aString: string; aStringCount, aPadCount: integer): String;
+function DeleteLineBreaks(const S: string): string;
 
 implementation
 
@@ -114,13 +115,15 @@ var
   aID, aHead, aData, aCol, x: string;
   ListItem: TListItem;
   aWPFlag: Boolean;
+  DistanceFromLeft, DistanceRemaining, TotalSpaceAvailable: Integer;
+  SigText, LineBreak, PageBreak, LeftMask: string;
+  LinesPerPage, Limit, Z: Integer;
+  WrappedSig: TStringList;
 begin
   aBasket := TStringList.Create;
   aBasket.Clear;
-  //frmReports.MemText.Clear;
   aHead := '';
   cnt := 2;
-  //aWPFlag := false;
   for i := 0 to uColumns.Count - 1 do
     begin
       if (piece(uColumns[i],'^',7) = '1') and (not(piece(uColumns[i],'^',4) = '1')) then
@@ -144,8 +147,7 @@ begin
     begin
       FReportText.Lines.Add(aHead);
       FReportText.Lines.Add('-------------------------------------------------------------------------------');
-      //frmReports.memText.Lines.Add(aHead);
-      //frmReports.MemText.Lines.Add('-------------------------------------------------------------------------------');
+      TotalSpaceAvailable := Length(FReportText.Lines[FReportText.Lines.Count - 1]);
     end;
   for i := 0 to frmReports.lvReports.Items.Count - 1 do
     if frmReports.lvReports.Items[i].Selected then
@@ -170,22 +172,49 @@ begin
                    (not (piece(uColumns[StrToInt(piece(aCol,':',2))],'^',4) = '1')) then
                     begin
                       FastAssign(TCellObject(RowObjects.ColumnList[j]).Data, aBasket);
-                      for k := 0 to aBasket.Count - 1 do
-                        begin
-                          L := StrToIntDef(piece(uColumns[StrToInt(piece(aCol,':',2))],'^',6),15);
-                          x := StringPad(aBasket[k], L, L+1);
-                          aData := aData + x;
+                      if POS('SIG', piece(uColumns[StrToInt(piece(aCol, ':', 2))], '^', 1)) > 0 then begin
+                       DistanceFromLeft := Length(aData); //distance from the left side of the page
+                       DistanceRemaining := TotalSpaceAvailable - DistanceFromLeft; //Distance to end of page
+                       LinesPerPage := 40;
+                       Limit := 10; //Arbitrary limit to detrmine if there is enough space to bother with wrapping.
+                       LineBreak := #13#10;
+                       PageBreak := '**PAGE BREAK**';
+                       X := '';
+                       LeftMask := StringOfChar(' ', DistanceFromLeft);
+                       //remove any line breaks from the text
+                       SigText := StringReplace(aBasket.Text, #13#10, '', [rfReplaceAll]);
+                       if DistanceRemaining < Limit then begin
+                        DistanceRemaining := TotalSpaceAvailable;
+                        LeftMask := '';
+                       end;
+                       WrappedSig := TStringList.Create;
+                       try
+                        WrappedSig.Text := WrapText(SigText, LineBreak + LeftMask, [' '], DistanceRemaining);
+                        For Z := 0 to WrappedSig.Count - 1 do begin
+                          Inc(Cnt);
+                          If Cnt > LinesPerPage then x := x  + PageBreak;
+                          X := X + WrappedSig.Strings[Z] + LineBreak;
                         end;
+                       finally
+                        FreeAndNil(WrappedSig);
+                       end;
+                       aData := aData + x;
+                      end else begin
+                      for k := 0 to aBasket.Count - 1 do
+                      begin
+                       L := StrToIntDef(piece(uColumns[StrToInt(piece(aCol,':',2))],'^',6),15);
+                       x := StringPad(aBasket[k], L, L+1);
+                       aData := aData + x;
+                      end;
                     end;
                 end;
+            end;
           end;
-        //frmReports.memText.Lines.Add(aData);
         FReportText.Lines.Add(aData);
         cnt := cnt + 1;
         if cnt > 40 then
           begin
             cnt := 0;
-            //frmReports.memText.Lines.Add('**PAGE BREAK**');
             FReportText.Lines.Add('**PAGE BREAK**');
           end;
         for j := 0 to RowObjects.ColumnList.Count - 1 do
@@ -199,18 +228,15 @@ begin
                     begin
                       aWPFlag := true;
                       FastAssign(TCellObject(RowObjects.ColumnList[j]).Data, aBasket);
-                      //frmReports.MemText.Lines.Add(TCellObject(RowObjects.ColumnList[j]).Name);
                       FReportText.Lines.Add(TCellObject(RowObjects.ColumnList[j]).Name);
                       cnt := cnt + 1;
                       for k := 0 to aBasket.Count - 1 do
                         begin
-                          //frmReports.memText.Lines.Add('  ' + aBasket[k]);
-                          FReportText.Lines.Add('  ' + aBasket[k]);
+                          FReportText.Lines.Add('' + aBasket[k]);
                           cnt := cnt + 1;
                           if cnt > 40 then
                             begin
                               cnt := 0;
-                              //frmReports.memText.Lines.Add('**PAGE BREAK**');
                               FReportText.Lines.Add('**PAGE BREAK**');
                             end;
                         end;
@@ -219,11 +245,27 @@ begin
           end;
         if aWPFlag = true then
           begin
-            //frmReports.MemText.Lines.Add('===============================================================================');
             FReportText.Lines.Add('===============================================================================');
           end;
       end;
   aBasket.Free;
+end;
+
+function DeleteLineBreaks(const S: string): string;
+var
+  Source, SourceEnd: PChar;
+begin
+  Source := Pointer(S);
+  SourceEnd := Source + Length(S);
+  while Source < SourceEnd do
+  begin
+    case Source^ of
+      #10: Source^ := #32;
+      #13: Source^ := #32;
+    end;
+    Inc(Source);
+  end;
+  Result := S;
 end;
 
 function StringPad(aString: string; aStringCount, aPadCount: integer): String;

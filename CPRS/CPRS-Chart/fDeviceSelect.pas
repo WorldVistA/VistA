@@ -66,8 +66,7 @@ begin
                 Items.Add('^--------------------VistA Printers----------------------');
               end;
           end;
-        if Sender <> frmFrame then
-          begin
+
             DefPrt := User.CurrentPrinter;
             if DefPrt = '' then DefPrt := GetDefaultPrinter(User.Duz, Encounter.Location);
             if DefPrt <> '' then
@@ -93,12 +92,7 @@ begin
                 cboDevice.InitLongList('');
               end;
            if ACaption<>'' then frmDeviceSelect.Caption:=ACaption;
-          end
-         else
-          begin
-            frmDeviceSelect.Caption := 'Print Device Selection';
-            cboDevice.InitLongList('');
-          end;
+         
         ShowModal;
         Result := ADevice;
         //Result := Piece(ADevice, ';', 1) + U + Piece(ADevice, U, 2);
@@ -127,14 +121,17 @@ begin
     Exit;
   end;
   ADevice := cboDevice.Items[cboDevice.ItemIndex];
-  if chkDefault.Checked then SaveDefaultPrinter(Piece(cboDevice.ItemID, ';', 1));
+  if chkDefault.Checked then begin
+   SaveDefaultPrinter(Piece(cboDevice.ItemID, ';', 1));
+   User.CurrentPrinter := cboDevice.ItemID;
+  end;
   Close;
 end;
 
 procedure TfrmDeviceSelect.cmdCancelClick(Sender: TObject);
 begin
   inherited;
-  ADevice := '';
+  ADevice := User.CurrentPrinter;
   Close;
 end;
 

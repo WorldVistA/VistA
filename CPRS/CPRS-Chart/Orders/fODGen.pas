@@ -21,9 +21,12 @@ type
 
   TfrmODGen = class(TfrmODBase)
     sbxMain: TScrollBox;
+    lblOrderSig: TLabel;
+    VA508CompMemOrder: TVA508ComponentAccessibility;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cmdAcceptClick(Sender: TObject);
+    procedure VA508CompMemOrderStateQuery(Sender: TObject; var Text: string);
   private
     FilterOut: boolean;
     TsID: string; //treating specialty id
@@ -34,16 +37,17 @@ type
     procedure LookupNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
     procedure PlaceControls;
-    procedure PlaceDateTime(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
-    procedure PlaceFreeText(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
+    procedure PlaceDateTime(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
+    procedure PlaceFreeText(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
     procedure PlaceHidden(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
-    procedure PlaceNumeric(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
-    procedure PlaceSetOfCodes(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
-    procedure PlaceYesNo(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
-    procedure PlaceLookup(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
-    procedure PlaceMemo(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
+    procedure PlaceNumeric(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
+    procedure PlaceSetOfCodes(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
+    procedure PlaceYesNo(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
+    procedure PlaceLookup(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
+    procedure PlaceMemo(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
     procedure PlaceLabel(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
     procedure TrimAllMemos;
+    function SetComponentName(Editor: TWinControl; Index: Integer; DialogCtrl: TDialogCtrl): Boolean;
   protected
     FFormCloseCalled : Boolean;
     FCharHt: Integer;
@@ -83,7 +87,7 @@ var
   TheEvtType: string;
   IDs,TSstr, AttendStr: string;
 begin
-  FFormCloseCalled := false;
+  FFormCloseCalled := false;   
   inherited;
   FilterOut := True;
   if Self.EvtID < 1 then
@@ -242,6 +246,13 @@ begin
   if FFirstCtrl <> nil then ActiveControl := FFirstCtrl;
 end;
 
+procedure TfrmODGen.VA508CompMemOrderStateQuery(Sender: TObject;
+  var Text: string);
+begin
+  inherited;
+  Text := memOrder.Text;
+end;
+
 procedure TfrmODGen.Validate(var AnErrMsg: string);
 var
   i: Integer;
@@ -327,22 +338,22 @@ begin
     DialogCtrl.Required := DialogItem.Required;
     DialogCtrl.Preserve := Length(DialogItem.EDefault) > 0;
     case DialogItem.DataType of
-    'D': PlaceDateTime(DialogCtrl, DialogItem);
-    'F': PlaceFreeText(DialogCtrl, DialogItem);
+    'D': PlaceDateTime(DialogCtrl, DialogItem, I);
+    'F': PlaceFreeText(DialogCtrl, DialogItem, i);
     'H': PlaceHidden(DialogCtrl, DialogItem);
-    'N': PlaceNumeric(DialogCtrl, DialogItem);
-    'P': PlaceLookup(DialogCtrl, DialogItem);
-    'R': PlaceDateTime(DialogCtrl, DialogItem);
-    'S': PlaceSetOfCodes(DialogCtrl, DialogItem);
-    'W': PlaceMemo(DialogCtrl, DialogItem);
-    'Y': PlaceYesNo(DialogCtrl, DialogItem);
+    'N': PlaceNumeric(DialogCtrl, DialogItem, i);
+    'P': PlaceLookup(DialogCtrl, DialogItem, i);
+    'R': PlaceDateTime(DialogCtrl, DialogItem, i);
+    'S': PlaceSetOfCodes(DialogCtrl, DialogItem, i);
+    'W': PlaceMemo(DialogCtrl, DialogItem, i);
+    'Y': PlaceYesNo(DialogCtrl, DialogItem, i);
     end;
     FDialogCtrlList.Add(DialogCtrl);
     if (DialogCtrl.Editor <> nil) and (FFirstCtrl = nil) then FFirstCtrl := DialogCtrl.Editor;
   end;
 end;
 
-procedure TfrmODGen.PlaceDateTime(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
+procedure TfrmODGen.PlaceDateTime(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
 const
   NUM_CHAR = 22;
 begin
@@ -353,6 +364,8 @@ begin
     Editor.SetBounds(FEditorLeft, FEditorTop, NUM_CHAR * FCharWd, HT_FRAME * FCharHt);
     TORDateBox(Editor).DateOnly := Pos('T', DialogItem.Domain) = 0;
     with TORDateBox(Editor) do RequireTime := (not DateOnly) and (Pos('R', DialogItem.Domain) > 0); //v26.48 - RV  PSI-05-002
+    SetComponentName(Editor, CurrentItemNumber, DialogCtrl);
+  //  TORDateBox(Editor).Name := DialogCtrl.ID + IntToStr(CurrentItemNumber);
     TORDateBox(Editor).Text := DialogItem.EDefault;
     TORDateBox(Editor).Hint := DialogItem.HelpText;
     TORDateBox(Editor).Caption := DialogItem.Prompt;
@@ -363,7 +376,7 @@ begin
   end;
 end;
 
-procedure TfrmODGen.PlaceFreeText(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
+procedure TfrmODGen.PlaceFreeText(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
 begin
   with DialogCtrl do
   begin
@@ -373,6 +386,8 @@ begin
                      sbxMain.Width - FEditorLeft - WD_MARGIN - GetSystemMetrics(SM_CXVSCROLL),
                      HT_FRAME * FCharHt);
     TEdit(Editor).MaxLength := StrToIntDef(Piece(DialogItem.Domain, ':', 2), 0);
+    SetComponentName(Editor, CurrentItemNumber, DialogCtrl);
+  //  TCaptionEdit(Editor).Name := DialogCtrl.ID + IntToStr(CurrentItemNumber);
     TEdit(Editor).Text := DialogItem.EDefault;
     TEdit(Editor).Hint := DialogItem.HelpText;
     TCaptionEdit(Editor).Caption := DialogItem.Prompt;
@@ -383,7 +398,7 @@ begin
   end;
 end;
 
-procedure TfrmODGen.PlaceNumeric(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
+procedure TfrmODGen.PlaceNumeric(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
 const
   NUM_CHAR = 16;
 begin
@@ -393,6 +408,8 @@ begin
     Editor.Parent := sbxMain;
     Editor.SetBounds(FEditorLeft, FEditorTop, NUM_CHAR * FCharWd, HT_FRAME * FCharHt);
     TEdit(Editor).MaxLength := NUM_CHAR;
+    SetComponentName(Editor, CurrentItemNumber, DialogCtrl);
+   // TCaptionEdit(Editor).Name := DialogCtrl.ID + IntToStr(CurrentItemNumber);
     TEdit(Editor).Text := DialogItem.EDefault;
     TEdit(Editor).Hint := DialogItem.HelpText + '|' + DialogItem.Domain;
     TCaptionEdit(Editor).Caption := DialogItem.Prompt;
@@ -403,7 +420,7 @@ begin
   end;
 end;
 
-procedure TfrmODGen.PlaceSetOfCodes(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
+procedure TfrmODGen.PlaceSetOfCodes(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
 const
   NUM_CHAR = 32;
 var
@@ -416,6 +433,8 @@ begin
     TORComboBox(Editor).Style := orcsDropDown;
     TORComboBox(Editor).ListItemsOnly := True;
     TORComboBox(Editor).Pieces := '2';
+    SetComponentName(Editor, CurrentItemNumber, DialogCtrl);
+  //  TORComboBox(Editor).Name := DialogCtrl.ID + IntToStr(CurrentItemNumber);
     Editor.SetBounds(FEditorLeft, FEditorTop, NUM_CHAR * FCharWd, HT_FRAME * FCharHt);
     x := DialogItem.Domain;
     repeat
@@ -426,7 +445,7 @@ begin
     until Length(x) = 0;
     TORComboBox(Editor).SelectByID(DialogItem.IDefault);
     //TORComboBox(Editor).Text := DialogItem.EDefault;
-    TORComboBox(Editor).Hint := DialogItem.HelpText;
+    TORComboBox(Editor).RpcCall := DialogItem.HelpText;
     if Length(DialogItem.HelpText) > 0 then TORComboBox(Editor).ShowHint := True;
     TORComboBox(Editor).OnChange := ControlChange;
     PlaceLabel(DialogCtrl, DialogItem);
@@ -434,7 +453,7 @@ begin
   end;
 end;
 
-procedure TfrmODGen.PlaceYesNo(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
+procedure TfrmODGen.PlaceYesNo(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
 const
   NUM_CHAR = 9;
 begin
@@ -445,12 +464,14 @@ begin
     TORComboBox(Editor).Style := orcsDropDown;
     TORComboBox(Editor).ListItemsOnly := True;
     TORComboBox(Editor).Pieces := '2';
+    SetComponentName(Editor, CurrentItemNumber, DialogCtrl);
+    //TORComboBox(Editor).Name := DialogCtrl.ID + IntToStr(CurrentItemNumber);
     Editor.SetBounds(FEditorLeft, FEditorTop, NUM_CHAR * FCharWd, HT_FRAME * FCharHt);
     TORComboBox(Editor).Items.Add('0^No');
     TORComboBox(Editor).Items.Add('1^Yes');
     TORComboBox(Editor).SelectByID(DialogItem.IDefault);
     //TORComboBox(Editor).Text := DialogItem.EDefault;
-    TORComboBox(Editor).Hint := DialogItem.HelpText;
+    TORComboBox(Editor).RpcCall := DialogItem.HelpText;
     if Length(DialogItem.HelpText) > 0 then TORComboBox(Editor).ShowHint := True;
     TORComboBox(Editor).OnChange := ControlChange;
     PlaceLabel(DialogCtrl, DialogItem);
@@ -458,7 +479,7 @@ begin
   end;
 end;
 
-procedure TfrmODGen.PlaceLookup(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
+procedure TfrmODGen.PlaceLookup(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
 const
   NUM_CHAR = 32;
 var
@@ -481,8 +502,10 @@ begin
     TORComboBox(Editor).ListItemsOnly := True;
     TORComboBox(Editor).Pieces := '2';
     TORComboBox(Editor).LongList := True;
+     SetComponentName(Editor, CurrentItemNumber, DialogCtrl);
+   // TORComboBox(Editor).Name := DialogCtrl.ID + IntToStr(CurrentItemNumber);
     // 2nd bar piece of hint is not visible, hide xref, global ref, & screen code in tab pieces
-    TORComboBox(Editor).Hint := DialogItem.HelpText + '|' + XRef + #9 + GblRef + #9 +
+    TORComboBox(Editor).RpcCall := DialogItem.HelpText + '|' + XRef + #9 + GblRef + #9 +
                                 DialogItem.ScreenRef;
     if ( compareText(TsID,DialogItem.Id)=0 ) or (compareText(TSDomain,DialogItem.Domain)=0)then
     begin
@@ -537,14 +560,14 @@ var
   XRef, GblRef, ScreenRef: string;
 begin
   inherited;
-  XRef := Piece(TORComboBox(Sender).Hint, '|', 2);
+  XRef := Piece(TORComboBox(Sender).RpcCall, '|', 2);
   GblRef    := Piece(XRef, #9, 2);
   ScreenRef := Piece(XRef, #9, 3);
   XRef      := Piece(XRef, #9, 1);
   TORComboBox(Sender).ForDataUse(SubsetOfEntries(StartFrom, Direction, XRef, GblRef, ScreenRef));
 end;
 
-procedure TfrmODGen.PlaceMemo(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
+procedure TfrmODGen.PlaceMemo(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
 const
   NUM_LINES = 3;
 begin
@@ -555,6 +578,8 @@ begin
     Editor.SetBounds(FEditorLeft, FEditorTop,
                      sbxMain.Width - FEditorLeft - WD_MARGIN - GetSystemMetrics(SM_CXVSCROLL),
                      (FCharHt * NUM_LINES) + HT_FRAME);
+    SetComponentName(Editor, CurrentItemNumber, DialogCtrl);
+   // TCaptionMemo(Editor).Name := DialogCtrl.ID + IntToStr(CurrentItemNumber);
     TMemo(Editor).Text := DialogItem.EDefault;
     TMemo(Editor).Hint := DialogItem.HelpText;
     TCaptionMemo(Editor).Caption := DialogItem.Prompt;
@@ -573,14 +598,19 @@ begin
 end;
 
 procedure TfrmODGen.PlaceLabel(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
+var
+  ht: integer;
 begin
   with DialogCtrl do
   begin
     Prompt := TStaticText.Create(Self);
     Prompt.Parent := sbxMain;
     Prompt.Caption := DialogItem.Prompt;
+    ht := Prompt.Height;   // CQ#15849
+    if ht < FCharHt then
+      ht := FCharHt;
     Prompt.AutoSize := False;
-    Prompt.SetBounds(WD_MARGIN, FEditorTop + HT_LBLOFF, FLabelWd, FCharHt);
+    Prompt.SetBounds(WD_MARGIN, FEditorTop + HT_LBLOFF, FLabelWd, ht);
     Prompt.Alignment := taRightJustify;
     Prompt.Visible := True;
   end;
@@ -603,8 +633,8 @@ end;
 procedure TfrmODGen.cmdAcceptClick(Sender: TObject);
 begin
   inherited;
-  Application.ProcessMessages;
   TrimAllMemos;
+  Application.ProcessMessages;
 end;
 
 procedure TfrmODGen.ControlChange(Sender: TObject);
@@ -629,6 +659,31 @@ begin
     end;
   end;
   memOrder.Text := Responses.OrderText;
+end;
+
+function TfrmODGen.SetComponentName(Editor: TWinControl; Index: Integer; DialogCtrl: TDialogCtrl): Boolean;
+Var
+ I: Integer;
+ SaveName: String;
+begin
+ //strip all non alphanumeric characters to create the save name
+ SaveName := '';
+ //Check for blank id
+ if DialogCtrl.ID = '' then DialogCtrl.ID := 'EMPTY';
+
+ for i := 1 to length(DialogCtrl.ID) do begin
+   if (DialogCtrl.ID[i] in ['A'..'Z']) or (DialogCtrl.ID[i] in ['a'..'z']) or (DialogCtrl.ID[i] in ['0'..'9']) then
+    SaveName := SaveName + DialogCtrl.ID[i];
+ end;
+ SaveName := SaveName + '_' + IntToStr(Index);
+
+ //extra backup - make sure that the component name doesn't already exist
+ //Now set up the component name
+ try
+  Editor.Name := SaveName;
+ except
+  Editor.Name := SaveName + '_' + IntToStr(Index);
+ end;
 end;
 
 end.

@@ -4,7 +4,7 @@ inherited frmReminderTree: TfrmReminderTree
   HelpContext = 11200
   BorderIcons = [biSystemMenu]
   Caption = 'Available Reminders'
-  ClientHeight = 221
+  ClientHeight = 241
   ClientWidth = 472
   FormStyle = fsStayOnTop
   Menu = mmMain
@@ -12,14 +12,14 @@ inherited frmReminderTree: TfrmReminderTree
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ExplicitWidth = 480
-  ExplicitHeight = 267
+  ExplicitHeight = 295
   PixelsPerInch = 96
   TextHeight = 13
   object pnlTop: TPanel [0]
     Left = 0
     Top = 0
     Width = 472
-    Height = 221
+    Height = 241
     Align = alClient
     BevelOuter = bvNone
     Caption = 'pnlTop'
@@ -27,6 +27,7 @@ inherited frmReminderTree: TfrmReminderTree
     Constraints.MinWidth = 300
     TabOrder = 0
     OnResize = pnlTopResize
+    ExplicitHeight = 221
     object tvRem: TORTreeView
       Tag = 999
       Left = 0
@@ -47,6 +48,7 @@ inherited frmReminderTree: TfrmReminderTree
       OnEnter = tvRemEnter
       OnExit = tvRemExit
       OnExpanded = tvRemExpanded
+      OnKeyDown = tvRemKeyDown
       OnMouseDown = tvRemMouseDown
       Caption = 'Available Reminders'
       NodePiece = 0
@@ -94,14 +96,15 @@ inherited frmReminderTree: TfrmReminderTree
       Left = 266
       Top = 17
       Width = 206
-      Height = 204
+      Height = 224
       Align = alRight
       BevelOuter = bvNone
       Caption = 'pnlTopRight'
       TabOrder = 2
+      ExplicitHeight = 204
       object bvlGap: TBevel
         Left = 0
-        Top = 187
+        Top = 207
         Width = 206
         Height = 17
         Align = alBottom
@@ -113,7 +116,7 @@ inherited frmReminderTree: TfrmReminderTree
         Left = 0
         Top = 0
         Width = 206
-        Height = 187
+        Height = 207
         TabStop = False
         Style = lbOwnerDrawFixed
         Align = alClient
@@ -129,6 +132,7 @@ inherited frmReminderTree: TfrmReminderTree
         ItemTipEnable = False
         LongList = False
         OnChange = lbRemChange
+        ExplicitHeight = 187
       end
     end
   end

@@ -275,17 +275,39 @@ begin
   end
   else if GraphForm.btnClose.Tag = 1 then
     Exit
-  else
-  begin
+  else if GraphFormActive and (frmGraphData.pnlData.Hint = Patient.DFN) then
+  begin   // displaying same patient
+    if Tag <> reportien then
     with GraphForm do
-    if pnlMain.Tag <> reportien then
-    begin  // different report
+    begin  // new report
       pnlMain.Tag := reportien;
       Initialize;
+      //DisplayData('top');
+      //DisplayData('bottom');
       GtslCheck.Clear;
       GraphPanel(true);
       BringToFront;
     end;
+    //no action
+  end
+  else if frmGraphData.pnlData.Hint = Patient.DFN then
+  begin   // same patient, bring back graph
+    GraphPanel(true);
+    BringToFront;
+    GraphFormActive := true;
+  end
+  else
+  with GraphForm do
+  begin  // new patient
+    pnlMain.Tag := reportien;
+    Initialize;
+    DisplayData('top');
+    DisplayData('bottom');
+    GtslCheck.Clear;
+    frmGraphData.pnlData.Hint := Patient.DFN;
+    GraphPanel(true);
+    BringToFront;
+    GraphFormActive := true;
   end;
 end;
 
@@ -417,7 +439,10 @@ end;
 
 procedure TfrmReports.DisplayPage;
 var
-  i: integer;
+  i{, OrigSelection}: integer;
+  {OrigDateIEN: Int64;
+  OrigDateItemID: Variant;
+  OrigReportCat, OrigProcedure: TTreeNode; }
 begin
   inherited DisplayPage;
   frmFrame.mnuFilePrint.Tag := CT_REPORTS;
@@ -437,8 +462,8 @@ begin
                   + '</TR></TABLE></DIV><HR>';
                   //the preferred method would be to use headers and footers
                   //so this is just an interim solution.
-  if not GraphFormActive then
-    pnlLeftBottom.Visible := False;
+  {if not GraphFormActive then
+    pnlLeftBottom.Visible := False;  } //This was keeping Date Range selection box from appearing when leaving and coming back to this Tab
   if InitPage then
     begin
       Splitter1.Visible := false;
@@ -497,7 +522,57 @@ begin
                             end;
                         end;
     CC_NOTIFICATION:  ProcessNotifications;
-  end;
+    
+    //This corrects the reload of the reports when switching back to the tab.
+     {Remove this since it has already been corrected. Related code was also removed from fLabs.
+    CC_CLICK: if not InitPatient then
+      begin
+        //Clear our local variables
+        OrigReportCat := nil;
+        OrigDateIEN := -1;
+        OrigSelection := -1;
+        OrigDateItemID := '';
+        OrigProcedure := nil;
+
+        //What was last selected before they switched tabs.
+        if tvReports.Selected <> nil then OrigReportCat := tvReports.Selected;
+        if lstDateRange.ItemIEN > 0 then OrigDateIEN := lstDateRange.ItemIEN;
+        if lvReports.Selected <> nil then OrigSelection := lvReports.Selected.Index;
+        if lstQualifier.ItemID <> '' then OrigDateItemID := lstQualifier.ItemID;
+        if tvProcedures.Selected <> nil then OrigProcedure := tvProcedures.Selected;
+
+        //Load the tree and select the last selected
+        if OrigReportCat <> nil then begin
+         tvReports.Select(OrigReportCat);
+         tvReportsClick(self);
+        end;
+
+        //Did they click on a date (lstDates box)
+        if OrigDateIEN > -1 then begin
+          lstDateRange.SelectByIEN(OrigDateIEN);
+          lstDateRangeClick(self);
+        end;
+
+        //Did they click on a date (lstQualifier)
+         if OrigDateItemID <> '' then begin
+          lstQualifier.SelectByID(OrigDateItemID);
+          lstQualifierClick(self);
+        end;
+
+        //Did they click on a procedure
+        if OrigProcedure <> nil then begin
+          tvProcedures.Select(OrigProcedure);
+          tvProceduresClick(tvProcedures);
+        end;
+
+
+        //Did they click on a report
+        if OrigSelection > -1 then begin
+         lvReports.Selected := lvReports.Items[OrigSelection];
+         lvReportsSelectItem(self, lvReports.Selected, true);
+        end;
+      end;  }
+  end;  
 end;
 
 procedure TfrmReports.UpdateRemoteStatus(aSiteID, aStatus: string);
@@ -866,7 +941,7 @@ end;
 procedure TfrmReports.lstQualifierClick(Sender: TObject);
 var
   MoreID: String;  //Restores MaxOcc value
-  aRemote, aHDR, aFHIE: string;
+  aRemote, aHDR, aFHIE, aMax: string;
   i: integer;
 begin
   inherited;
@@ -881,6 +956,11 @@ begin
       MoreID := '';
       SetPiece(uQualifier,';',3,'');
     end;
+  aMax := piece(uQualifier,';',3);
+  if (CharAt(lstQualifier.ItemID,1) = 'd')
+    and (length(aMax)>0)
+    and (StrToInt(aMax)<101) then
+      MoreID := ';101';
   aRemote :=  piece(uRemoteType,'^',1);
   aHDR := piece(uRemoteType,'^',7);
   aFHIE := piece(uRemoteType,'^',8);
@@ -1091,41 +1171,19 @@ begin
 end;
 
 procedure TfrmReports.GotoTop1Click(Sender: TObject);
-var
-  Current, Desired : Longint;
 begin
   inherited;
-  with memText do
-  begin
-    SetFocus;
-    SelStart :=0;
-    SelLength :=0;
-    Current := SendMessage(memText.handle, EM_GETFIRSTVISIBLELINE, 0, 0);
-    Desired := SendMessage(memText.handle, EM_LINEFROMCHAR,
-               memText.SelStart + memText.SelLength ,0) - 1;
-    SendMessage(memText.Handle,EM_LINESCROLL, 0, Desired - Current);
-  end;
+  SendMessage(memText.Handle, WM_VSCROLL, SB_TOP, 0);
+  {GoToTop1.Enabled := false;
+  GoToBottom1.Enabled := true;    }
 end;
 
 procedure TfrmReports.GotoBottom1Click(Sender: TObject);
-var
-  Current, Desired : Longint;
-  I,LineCount : Integer;
 begin
   Inherited;
-  LineCount :=0;
-  with memText do
-    begin
-      for I := 0 to lines.count-1 do
-        LineCount := LineCount + Length(Lines[I]) + 2;
-      SetFocus;
-      SelStart := LineCount;
-      SelLength :=0;
-    end;
-  Current := SendMessage(memText.handle, EM_GETFIRSTVISIBLELINE, 0, 0);
-  Desired := SendMessage(memText.handle, EM_LINEFROMCHAR,
-             memText.SelStart + memText.SelLength ,0);
-  SendMessage(memText.Handle,EM_LINESCROLL, 0, Desired - Current - 5);
+  SendMessage(memText.Handle, WM_VSCROLL, SB_BOTTOM, 0);
+  {GoToTop1.Enabled := true;
+  GoToBottom1.Enabled := false;    }
 end;
 
 procedure TfrmReports.FreezeText1Click(Sender: TObject);
@@ -1177,7 +1235,7 @@ begin
     FreezeText1.Enabled := False;
   If Memo1.Visible Then
     UnFreezeText1.Enabled := True;
-  If memText.SelStart > 0 then
+  {If memText.SelStart > 0 then
     GotoTop1.Enabled := True
   Else
     GotoTop1.Enabled := False;
@@ -1185,7 +1243,7 @@ begin
     memText.SelStart,0) < memText.Lines.Count then
     GotoBottom1.Enabled := True
   Else
-    GotoBottom1.Enabled := False;
+    GotoBottom1.Enabled := False;   }
 end;
 
 procedure TfrmReports.FormCreate(Sender: TObject);
@@ -1300,7 +1358,7 @@ begin
       //OR_EM^Electron Microscopy
       //OR_AU^Autopsy
       begin
-        if Notifications.AlertData = '^1^^^0^0^0' then   //code snippet to handle the processing of v26 AP alerts in a v27 environment.
+        if Notifications.AlertData = '^1^^^0^0^0' then  //code snippet to handle the processing of v26 AP alerts in a v27 environment.
           begin
             if pnlRightMiddle.Visible then pnlRightMiddle.Visible := FALSE;
             InfoBox('This alert was generated in a v26 environment as an informational alert and'
@@ -1387,7 +1445,6 @@ begin
               aRanges := 'T-' + DaysBack + ';T';
           end;
         if length(piece(aRanges,';',1)) > 0 then
-          if uReportType <> 'G' then    // graphs don't display date ranges here
           begin
             d1 := ValidDateTimeStr(piece(aRanges,';',1),'');
             d2 := ValidDateTimeStr(piece(aRanges,';',2),'');
@@ -1409,7 +1466,7 @@ begin
               x := x + x1 + x2;
         end;
       end;
-    if piece(uRemoteType, '^', 9) = '1' then x := x + ' <<ONLY REMOTE DOD DATA INCLUDED IN REPORT>>';
+    if piece(uRemoteType, '^', 9) = '1' then x := x + ' <<ONLY REMOTE DATA INCLUDED IN REPORT>>';
     Caption := x;
   end;
   lvReports.Caption := x;
@@ -1641,10 +1698,10 @@ begin
     begin
       if HDRActive = '0' then
         begin
-          InfoBox('The HDR is currently inactive.' + CRLF + 'Unable to retrieve HDR data at this time.', 'HDR Error', MB_OK);
+          InfoBox('The HDR is currently inactive in CPRS.' + CRLF + 'You must use VistaWeb to view this report.', 'Use VistaWeb for HDR data', MB_OK);
           Exit;
         end;
-      InfoBox('You must use VistaWeb to view this report.', 'Use VistaWeb for HDR data', MB_OK);
+      //InfoBox('You must use VistaWeb to view this report.', 'Use VistaWeb for HDR data', MB_OK);
       if (Piece(AItem, ':', 1) = 'OR_VWAL') or (Piece(AItem, ':', 1) = 'OR_VWRX') then
         AQualifier := 'T-50000;T+50000;99999';
       if (Piece(AItem, ':', 1) = 'OR_VWVS') and (CharAt(AQualifier, 1) = ';') then
@@ -1678,8 +1735,8 @@ begin
     begin
     if (AHDR='1') and (LeftStr(TRemoteSite(Items[i]).SiteID, 5) = '200HD') then
       begin
-        TRemoteSite(Items[i]).Selected := true;
-        frmFrame.lstCIRNLocations.Checked[i+2] := true;
+        //TRemoteSite(Items[i]).Selected := true;
+        //frmFrame.lstCIRNLocations.Checked[i+1] := true;
       end;
     if TRemoteSite(Items[i]).Selected then
       begin
@@ -1984,6 +2041,7 @@ begin
   if aReportType = '' then aReportType := 'R';
   uReportRPC := aRPC;
   uRptID := aID;
+  uReportID := aID;
   uDirect := aDirect;
   uReportType := aReportType;
   uQualifier := aQualifier;
@@ -2237,7 +2295,7 @@ begin
                 pnlRightTop.Height := lblTitle.Height + lblProcTypeMsg.Height;
                 pnlLeftBottom.Visible := FALSE;
                 pnlProcedures.Visible := TRUE;
-                Splitter1.Visible := True;
+                Splitter1.Visible := True;                                      
                 if lvReports.Columns.Count > 0 then lvReports.Columns[1].Width := 0;
                 Items.EndUpdate;
                 tvProcedures.TopItem := tvProcedures.Selected;
@@ -2882,7 +2940,7 @@ begin
                                     MemText.Lines.Add(TCellObject(RowObjects.ColumnList[j]).Name);
                                     FastAssign(TCellObject(RowObjects.ColumnList[j]).Data, aBasket);
                                     for k := 0 to aBasket.Count - 1 do
-                                      MemText.Lines.Add('  ' + aBasket[k]);
+                                      MemText.Lines.Add(' ' + aBasket[k]);
                                   end;
                           if aWPFlag = true then
                             begin
@@ -2903,7 +2961,7 @@ begin
                           MemText.Lines.Add(TCellObject(RowObjects.ColumnList[i]).Name);
                           FastAssign(TCellObject(RowObjects.ColumnList[i]).Data, aBasket);
                           for j := 0 to aBasket.Count - 1 do
-                            MemText.Lines.Add('  ' + aBasket[j]);
+                            MemText.Lines.Add(' ' + aBasket[j]);
                         end;
                 if aWPFlag = true then
                   begin

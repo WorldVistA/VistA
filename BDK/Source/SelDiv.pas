@@ -5,7 +5,7 @@
 	Developers: Danila Manapsal, Don Craven, Joel Ivey
 	Description: Handles Division selection for multidivision
 	             users.
-	Current Release: Version 1.1 Patch 47 (February 7, 2007))
+	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
 *************************************************************** }
 
 {**************************************************

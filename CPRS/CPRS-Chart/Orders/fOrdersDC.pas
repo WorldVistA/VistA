@@ -79,6 +79,7 @@ begin
     begin
       frmDCOrders.lblReason.Visible := True;
       frmDCOrders.lstReason.Visible := True;
+      frmDCOrders.lstReason.ScrollWidth := 10;
     end else
     begin
       frmDCOrders.lblReason.Visible := False;

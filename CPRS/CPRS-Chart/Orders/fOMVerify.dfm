@@ -7,6 +7,7 @@ inherited frmOMVerify: TfrmOMVerify
   ClientWidth = 579
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   ExplicitWidth = 587
   ExplicitHeight = 208
   PixelsPerInch = 96
@@ -45,6 +46,7 @@ inherited frmOMVerify: TfrmOMVerify
     Top = 6
     Width = 567
     Height = 132
+    TabStop = False
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -64,11 +66,12 @@ inherited frmOMVerify: TfrmOMVerify
       '9'
       '10')
     ParentFont = False
+    ReadOnly = True
     ScrollBars = ssBoth
     TabOrder = 3
     WantTabs = True
     WordWrap = False
-    OnKeyUp = memTextKeyUp
+    OnKeyDown = memTextKeyDown
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -83,9 +86,16 @@ inherited frmOMVerify: TfrmOMVerify
         'Status = stsDefault')
       (
         'Component = memText'
-        'Status = stsDefault')
+        'Text = Order information.'
+        'Status = stsOK')
       (
         'Component = frmOMVerify'
         'Status = stsDefault'))
+  end
+  object VA508ComponentAccessibility1: TVA508ComponentAccessibility
+    Component = memText
+    OnStateQuery = VA508ComponentAccessibility1StateQuery
+    Left = 48
+    Top = 32
   end
 end

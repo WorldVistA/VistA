@@ -276,7 +276,10 @@ begin
   FModifyingZOrder := TRUE;
   try
     activeHandle := GetActiveFormHandle;
-    modal := ModalDelphiForm;
+    if (activeHandle <> 0) and (not assigned(FactiveForm)) then
+        modal := true    //assumes DLL created forms are modal
+      else
+      modal := ModalDelphiForm;
     FZOrderHandles.Clear;
     fTopOnList.Clear;
     fTopOffList.Clear;

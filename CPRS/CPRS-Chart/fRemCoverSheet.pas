@@ -124,6 +124,13 @@ type
       Change: TItemChange);
     procedure lvViewSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
+    procedure lvViewExit(Sender: TObject);
+    procedure btnViewExit(Sender: TObject);
+    procedure lblCACExit(Sender: TObject);
+    procedure cbxUserLocExit(Sender: TObject);
+    procedure cbSystemExit(Sender: TObject);
+    procedure sbCopyRightExit(Sender: TObject);
+    procedure btnOKExit(Sender: TObject);
   private
     FData: TORStringList;     // DataCode IEN ^ Modified Flag  Object=TStringList
     FUserInfo: TORStringList; // C^User Class, D^Division
@@ -393,6 +400,18 @@ begin
   FInitialized := TRUE;
   UpdateView;
   UpdateButtons;
+end;
+
+procedure TfrmRemCoverSheet.lblCACExit(Sender: TObject);
+begin
+  inherited;
+  //TDP - CQ#19733 Corrected tabbing issues
+  if TabIsPressed() then
+  begin
+    if pnlUser.Visible then cbxUserLoc.SetFocus
+    else cbSystem.SetFocus;
+  end;
+  if ShiftTabIsPressed() then btnView.SetFocus;
 end;
 
 procedure TfrmRemCoverSheet.cbxLocationNeedData(Sender: TObject;
@@ -728,6 +747,17 @@ begin
     cbxDropDownClose(nil);
 end;
 
+procedure TfrmRemCoverSheet.cbxUserLocExit(Sender: TObject);
+begin
+  inherited;
+  //TDP - CQ#19733 Corrected tabbing issues
+  if ShiftTabIsPressed() then
+  begin
+    if ScreenReaderSystemActive then lblCAC.SetFocus
+    else btnView.SetFocus;
+  end;
+end;
+
 procedure TfrmRemCoverSheet.cbxDropDownClose(Sender: TObject);
 begin
   if assigned(FUpdatePending) then
@@ -809,6 +839,17 @@ begin
     end;
   end;
 
+end;
+
+procedure TfrmRemCoverSheet.cbSystemExit(Sender: TObject);
+begin
+  inherited;
+  //TDP - CQ#19733 Corrected tabbing issues
+  if ShiftTabIsPressed() then
+  begin
+    if ScreenReaderSystemActive then lblCAC.SetFocus
+    else btnView.SetFocus;
+  end;
 end;
 
 procedure TfrmRemCoverSheet.UpdateMasterListView;
@@ -1211,6 +1252,13 @@ begin
     Compare := -Compare;
 end;
 
+procedure TfrmRemCoverSheet.lvViewExit(Sender: TObject);
+begin
+  inherited;
+  //TDP - CQ#19733 Corrected tabbing issues
+  if TabIsPressed() then btnView.SetFocus;
+end;
+
 procedure TfrmRemCoverSheet.lvCoverCompare(Sender: TObject; Item1,
   Item2: TListItem; Data: Integer; var Compare: Integer);
 var
@@ -1388,6 +1436,19 @@ begin
   end;
 end;
 
+procedure TfrmRemCoverSheet.sbCopyRightExit(Sender: TObject);
+begin
+  inherited;
+  //TDP - CQ#19733 On Tab from sbCopyRight, go to btnOK if no data in lvCover
+  if TabIsPressed() then
+  begin
+    if not ScreenReaderSystemActive then
+    begin
+      if lvCover.Items.Count = 0 then btnOK.SetFocus;
+    end;
+  end;
+end;
+
 function TfrmRemCoverSheet.ListHasData(Seq: string; SubIdx: integer): boolean;
 var
   i: integer;
@@ -1470,6 +1531,19 @@ end;
 procedure TfrmRemCoverSheet.btnOKClick(Sender: TObject);
 begin
   SaveData(FALSE);
+end;
+
+procedure TfrmRemCoverSheet.btnOKExit(Sender: TObject);
+begin
+  inherited;
+  //TDP - CQ#19733 On ShiftTab from btnOK, go to sbCopyRight if no data in lvCover
+  if ShiftTabIsPressed() then
+  begin
+    if not ScreenReaderSystemActive then
+    begin
+      if lvCover.Items.Count = 0 then sbCopyRight.SetFocus;
+    end;
+  end;
 end;
 
 procedure TfrmRemCoverSheet.SaveData(FromApply: boolean);
@@ -1766,6 +1840,21 @@ begin
   finally
     Screen.OnActiveControlChange := ActiveControlChanged;
   end;
+end;
+
+procedure TfrmRemCoverSheet.btnViewExit(Sender: TObject);
+begin
+  inherited;
+  //TDP - CQ#19733 Corrected tabbing issues
+  if TabIsPressed() then
+  begin
+    if ScreenReaderSystemActive then lblCAC.SetFocus
+    else begin
+      if pnlUser.Visible then cbxUserLoc.SetFocus
+      else cbSystem.SetFocus;
+    end;
+  end;
+  if ShiftTabIsPressed() then lvView.SetFocus;
 end;
 
 procedure TfrmRemCoverSheet.lvCoverKeyDown(Sender: TObject; var Key: Word;

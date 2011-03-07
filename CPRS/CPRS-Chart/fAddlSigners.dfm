@@ -30,7 +30,7 @@ inherited frmAddlSigners: TfrmAddlSigners
       BevelOuter = bvNone
       TabOrder = 2
       object cmdOK: TButton
-        Left = 125
+        Left = 138
         Top = 14
         Width = 75
         Height = 25
@@ -39,7 +39,7 @@ inherited frmAddlSigners: TfrmAddlSigners
         OnClick = cmdOKClick
       end
       object cmdCancel: TButton
-        Left = 215
+        Left = 230
         Top = 14
         Width = 75
         Height = 25
@@ -73,8 +73,8 @@ inherited frmAddlSigners: TfrmAddlSigners
         Caption = 'Current additional signers'
       end
       object cboSrcList: TORComboBox
-        Left = 11
-        Top = 33
+        Left = 10
+        Top = 37
         Width = 174
         Height = 185
         Style = orcsSimple
@@ -95,9 +95,8 @@ inherited frmAddlSigners: TfrmAddlSigners
         TabOrder = 0
         TabStop = True
         OnChange = cboSrcListChange
-        OnClick = cboSrcListClick
         OnKeyDown = cboSrcListKeyDown
-        OnMouseClick = cboSrcListMouseClick
+        OnMouseClick = btnAddSignersClick
         OnNeedData = NewPersonNeedData
         CharsNeedMatch = 1
       end
@@ -111,8 +110,9 @@ inherited frmAddlSigners: TfrmAddlSigners
         ParentShowHint = False
         ShowHint = True
         Sorted = True
-        TabOrder = 2
+        TabOrder = 1
         OnClick = DstListChange
+        OnDblClick = btnRemoveSignersClick
         Caption = 'Current additional signers'
         ItemTipColor = clWindow
         LongList = False
@@ -120,7 +120,7 @@ inherited frmAddlSigners: TfrmAddlSigners
         OnChange = DstListChange
       end
       object btnRemoveSigners: TButton
-        Left = 189
+        Left = 190
         Top = 108
         Width = 71
         Height = 25
@@ -136,17 +136,17 @@ inherited frmAddlSigners: TfrmAddlSigners
         Height = 25
         Caption = '&Add'
         Enabled = False
-        TabOrder = 1
+        TabOrder = 2
         OnClick = btnAddSignersClick
       end
       object btnRemoveAllSigners: TButton
-        Left = 189
+        Left = 190
         Top = 139
         Width = 71
         Height = 25
         Caption = 'R&emove All'
         Enabled = False
-        TabOrder = 4
+        TabOrder = 5
         OnClick = btnRemoveAllSignersClick
       end
     end
@@ -159,8 +159,8 @@ inherited frmAddlSigners: TfrmAddlSigners
       BevelOuter = bvNone
       TabOrder = 0
       object lblAuthor: TOROffsetLabel
-        Left = 12
-        Top = 9
+        Left = 19
+        Top = 6
         Width = 97
         Height = 15
         Caption = 'Author (not editable)'
@@ -183,7 +183,7 @@ inherited frmAddlSigners: TfrmAddlSigners
       object cboCosigner: TORComboBox
         Left = 246
         Top = 27
-        Width = 174
+        Width = 178
         Height = 21
         Style = orcsDropDown
         AutoSelect = True
@@ -209,7 +209,7 @@ inherited frmAddlSigners: TfrmAddlSigners
         CharsNeedMatch = 1
       end
       object txtAuthor: TCaptionEdit
-        Left = 14
+        Left = 19
         Top = 27
         Width = 178
         Height = 21

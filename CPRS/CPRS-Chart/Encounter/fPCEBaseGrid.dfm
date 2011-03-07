@@ -2,8 +2,6 @@ inherited frmPCEBaseGrid: TfrmPCEBaseGrid
   Left = 128
   Top = 192
   Caption = 'frmPCEBaseGrid'
-  ExplicitLeft = 128
-  ExplicitTop = 192
   PixelsPerInch = 96
   TextHeight = 13
   object pnlGrid: TPanel [2]

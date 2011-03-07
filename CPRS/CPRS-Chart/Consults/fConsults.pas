@@ -179,6 +179,7 @@ type
     imgLblNotes: TVA508ImageListLabeler;
     imgLblImages: TVA508ImageListLabeler;
     imgLblConsults: TVA508ImageListLabeler;
+    popNoteMemoViewCslt: TMenuItem;   //wat cq 17586
     procedure mnuChartTabClick(Sender: TObject);
     procedure lstConsultsClick(Sender: TObject);
     procedure pnlRightResize(Sender: TObject);
@@ -284,6 +285,7 @@ type
     procedure pnlRightExit(Sender: TObject);
     procedure cmdEditResubmitExit(Sender: TObject);
     procedure cmdNewConsultExit(Sender: TObject);
+    procedure popNoteMemoViewCsltClick(Sender: TObject);   //wat cq 17586
   private
     FocusToRightPanel : Boolean;
     FEditingIndex: Integer;      // TIU index of document being currently edited
@@ -347,6 +349,8 @@ type
     procedure DoAttachIDChild(AChild, AParent: TORTreeNode);
     function UserIsSigner(NoteIEN: integer): boolean;
   public
+    function CustomCanFocus(Control: TWinControl): Boolean; //CB
+    function LinesVisible(richedit: Trichedit): integer; //CB
     function ActiveEditOf(AnIEN: Int64): Boolean;
     function  AllowContextChange(var WhyNot: string): Boolean; override;
     procedure ClearPtData; override;
@@ -363,6 +367,7 @@ type
   published
     property Drawers: TFrmDrawers read GetDrawers; // Keep Drawers published
   end;
+
 
 var
   frmConsults: TfrmConsults;
@@ -637,8 +642,9 @@ begin
   FCurrentContext := AContext;
   CurrNotifIEN := 0;
   EditingIndex := -1;
-  tvConsults.Enabled := True;
-  lstConsults.Enabled := True ;
+  pnlConsultList.Enabled := True; //CQ#15785
+//  tvConsults.Enabled := True;
+//  lstConsults.Enabled := True ;
   lstNotes.Enabled := True ;
   pnlRead.BringToFront ;
   memConsult.TabStop := True;
@@ -768,8 +774,9 @@ begin
   TmpBoilerPlate := nil;
   try
     ClearEditControls;
-    tvConsults.Enabled := False;
-    lstConsults.Enabled := False ;
+    pnlConsultList.Enabled := False; //CQ#15785
+//    tvConsults.Enabled := False;
+//    lstConsults.Enabled := False ;
     FillChar(FEditNote, SizeOf(FEditNote), 0);  //v15.7
     with FEditNote do
     begin
@@ -898,8 +905,9 @@ begin
     if not HaveRequired then
       begin
         ClearEditControls;
-        lstConsults.Enabled := True;
-        tvConsults.Enabled := True;
+        pnlConsultList.Enabled := True; //CQ#15785
+//        lstConsults.Enabled := True;
+//        tvConsults.Enabled := True;
       end;
     SetResultMenus ;
   finally
@@ -929,8 +937,9 @@ var
 begin
   AClassName := DCL_CONSULTS;
   ClearEditControls;
-  lstConsults.Enabled := False ;
-  tvConsults.Enabled := False;
+  pnlConsultList.Enabled := False; //CQ#15785
+//  lstConsults.Enabled := False ;
+//  tvConsults.Enabled := False;
   with FEditNote do
   begin
     DocType      := TYP_ADDENDUM;
@@ -1007,8 +1016,9 @@ begin
       //if FEditNote.Consult > 0 then UnlockConsultRequest(0, FEditNote.Consult);
       InfoBox(CreatedNote.ErrorText, TX_CREATE_ERR, MB_OK);
       HaveRequired := False;
-      lstConsults.Enabled := True;
-      tvConsults.Enabled := True;
+      pnlConsultList.Enabled := True; //CQ#15785
+//      lstConsults.Enabled := True;
+//      tvConsults.Enabled := True;
     end; {if CreatedNote.IEN}
   end; {if HaveRequired}
   if not HaveRequired then ClearEditControls;
@@ -1558,6 +1568,26 @@ begin
   else if NoteIEN = -1 then Exit
 end;
 
+//wat cq 17586
+procedure TfrmConsults.popNoteMemoViewCsltClick(Sender: TObject);
+var
+  CsltIEN: integer ;
+  ConsultDetail: TStringList;
+  x: string;
+begin
+  inherited;
+  if (Screen.ActiveControl <> memResults) or (FEditNote.PkgPtr <> PKG_CONSULTS) then Exit;
+  CsltIEN := frmConsults.FEditNote.PkgIEN;
+  x := FindConsult(CsltIEN);
+  ConsultDetail := TStringList.Create;
+  try
+    LoadConsultDetail(ConsultDetail, CsltIEN) ;
+    ReportBox(ConsultDetail, 'Consult Details: #' + IntToStr(CsltIEN) + ' - ' + Piece(x, U, 4), TRUE);
+  finally
+    ConsultDetail.Free;
+  end;
+end;  //END cq 17586
+
 procedure TfrmConsults.mnuActAddIDEntryClick(Sender: TObject);
 const
   IS_ID_CHILD = True;
@@ -1791,8 +1821,9 @@ begin
       cmdPCE.Visible := FALSE;
       popNoteMemoEncounter.Visible := FALSE;
       UpdateList;
-      lstConsults.Enabled := True ;
-      tvConsults.Enabled := True;
+      pnlConsultList.Enabled := True; //CQ#15785
+//      lstConsults.Enabled := True ;
+//      tvConsults.Enabled := True;
       with tvConsults do Selected := FindPieceNode(IntToStr(SaveConsult), 1, U, Items.GetFirstNode);
       tvConsultsClick(Self);
 (*      lstConsults.SelectByIEN(ConsultRec.IEN);
@@ -1850,8 +1881,9 @@ begin
         begin
           pnlResults.Visible := False;
           pnlResults.SendToBack;
-          lstConsults.Enabled := True;
-          tvConsults.Enabled := True;
+          pnlConsultList.Enabled := True; //CQ#15785
+//          lstConsults.Enabled := True;
+//          tvConsults.Enabled := True;
           if Notifications.Active then
             with tvConsults do
               begin
@@ -1970,8 +2002,9 @@ begin
         begin
           pnlResults.Visible := False;
           pnlResults.SendToBack;
-          lstConsults.Enabled := True;
-          tvConsults.Enabled := True;
+          pnlConsultList.Enabled := True; //CQ#15785
+//          lstConsults.Enabled := True;
+//          tvConsults.Enabled := True;
           if Notifications.Active then
             with tvConsults do
               begin
@@ -2181,8 +2214,9 @@ begin
   FActionType := TMenuItem(Sender).Tag ;
   ClearEditControls ;
   lstNotes.Enabled := False ;
-  lstConsults.Enabled  := False ;
-  tvConsults.Enabled := False;
+  pnlConsultList.Enabled := False; //CQ#15785
+//  lstConsults.Enabled  := False ;
+//  tvConsults.Enabled := False;
   x := Piece(lstConsults.Items[lstConsults.ItemIndex], U, 12);
   if x <> '' then
     IsProcedure := (x[1] in ['P', 'M'])
@@ -2222,8 +2256,9 @@ begin
   UnlockConsultRequest(lstNotes.ItemIEN, StrToIntDef(SavedCsltID, 0));  // v20.4  RV (unlocking problem)
   //UnlockConsultRequest(lstNotes.ItemIEN, lstConsults.ItemIEN);
   lstNotes.Enabled := True ;
-  lstConsults.Enabled := True ;
-  tvConsults.Enabled := True;
+  pnlConsultList.Enabled := True; //CQ#15785
+//  lstConsults.Enabled := True ;
+//  tvConsults.Enabled := True;
 end;
 
 procedure TfrmConsults.UpdateList;
@@ -2395,7 +2430,6 @@ begin
                                         (MenuAccessRec.UserLevel = UL_UPDATE_AND_ADMIN) or
                                         (MenuAccessRec.UserLevel = UL_UNRESTRICTED))
                                         and
-                                        (ConsultRec.ORStatus=ST_COMPLETE) and
                                        ((lstNotes.ItemIndex > -1) and
                                        ((ConsultRec.TIUResultNarrative>0) or
                                        (lstNotes.ItemIEN > 0)));
@@ -2624,8 +2658,9 @@ begin
   with lstNotes do
    if ItemIndex = EditingIndex then
      begin
-       lstConsults.Enabled := False ;
-       tvConsults.Enabled := False;
+       pnlConsultList.Enabled := False; //CQ#15785
+//       lstConsults.Enabled := False ;
+//       tvConsults.Enabled := False;
        pnlResults.Visible := True;
        pnlResults.BringToFront;
        memConsult.TabStop := False;
@@ -2638,8 +2673,9 @@ begin
        StatusText('Retrieving selected item...');
        if EditingIndex = -1 then
          begin
-           lstConsults.Enabled := True ;
-           tvConsults.Enabled := True;
+           pnlConsultList.Enabled := True; //CQ#15785
+//           lstConsults.Enabled := True ;
+//           tvConsults.Enabled := True;
          end;
        lblTitle.Caption := MakeConsultNoteDisplayText(lstNotes.Items[lstNotes.ItemIndex]);
        lblTitle.Hint := lblTitle.Caption;
@@ -2709,6 +2745,7 @@ begin
     popNoteMemoReplace.Enabled  := (FEditCtrl.GetTextLen > 0);
     popNoteMemoPreview.Enabled  := (frmDrawers.TheOpenDrawer = odTemplates) and Assigned(frmDrawers.tvTemplates.Selected);
     popNoteMemoInsTemplate.Enabled  := (frmDrawers.TheOpenDrawer = odTemplates) and Assigned(frmDrawers.tvTemplates.Selected);
+    popNoteMemoViewCslt.Enabled := (FEditNote.PkgPtr = PKG_CONSULTS);  //wat cq 17586
   end else
   begin
     popNoteMemoSpell.Enabled    := False;
@@ -2717,6 +2754,7 @@ begin
     popNoteMemoReplace.Enabled  := False;
     popNoteMemoPreview.Enabled  := False;
     popNoteMemoInsTemplate.Enabled := False;
+    popNoteMemoViewCslt.Enabled := FALSE; //wat cq 17586
   end;
 end;
 
@@ -2837,21 +2875,27 @@ begin
      end;
 end;
 
-{for printing multiple notes}
 procedure TfrmConsults.RequestMultiplePrint(AForm: TfrmPrintList);
 var
   NoteIEN: int64;
   i: integer;
 begin
+  inherited;
   with AForm.lbIDParents do
-  for i := 0 to Items.Count - 1 do
-  if Selected[i] then
   begin
-    NoteIEN := StrToInt64def(Piece(Items[i], U, 1), 0);
-    if NoteIEN > 0 then PrintSF513(NoteIEN, DisplayText[i])
-    else if NoteIEN = 0 then InfoBox(TX_NOCONSULT, TX_NOCSLT_CAP, MB_OK)
-    else InfoBox(TX_NOPRT_NEW, TX_NOPRT_NEW_CAP, MB_OK);
-  end;
+    for i := 0 to Items.Count - 1 do
+     begin
+       if Selected[i] then
+        begin
+         NoteIEN := ItemIEN;  //StrToInt64def(Piece(TStringList(Items.Objects[i])[0],U,1),0);
+         if NoteIEN > 0 then PrintSF513(NoteIEN, DisplayText[i]) else
+          begin
+           if NoteIEN = 0 then InfoBox(TX_NOCONSULT, TX_NOCSLT_CAP, MB_OK);
+           if NoteIEN < 0 then InfoBox(TX_NOPRT_NEW, TX_NOPRT_NEW_CAP, MB_OK);
+          end;
+        end; {if selected}
+     end; {for}
+  end; {with}
 end;
 
 procedure TfrmConsults.mnuActDisplayResultsClick(Sender: TObject);
@@ -3103,6 +3147,10 @@ var
   Saved: boolean;
   AnObject: PDocTreeObject;
   tmpNode: TORTreeNode;
+  I:Integer;
+  CommentDate: String;
+  Format: CHARFORMAT2;
+  VisibleLineCount: integer;
 begin
   if EditingIndex <> -1 then
   begin
@@ -3115,8 +3163,9 @@ begin
   lblConsults.Caption := Notifications.Text;
   tvConsults.Caption := Notifications.Text;
   EditingIndex := -1;
-  lstConsults.Enabled := True ;
-  tvConsults.Enabled := True;
+  pnlConsultList.Enabled := True; //CQ#15785
+//  lstConsults.Enabled := True ;
+//  tvConsults.Enabled := True;
   lstNotes.Enabled := True ;
   pnlRead.BringToFront ;
   memConsult.TabStop := True;
@@ -3203,9 +3252,40 @@ begin
         end;
       tvCsltNotesChange(Self, tvCsltNotes.Selected);
     end
-  else if (ConsultRec.ORStatus = ST_COMPLETE) and ((ConsultRec.TIUDocuments.Count + ConsultRec.MedResults.Count) > 0) then
+  else if (ConsultRec.ORStatus = ST_COMPLETE) and ((ConsultRec.TIUDocuments.Count + ConsultRec.MedResults.Count) > 0)
+  and (Pos(UpperCase('Comment added'), UpperCase(Notifications.Text)) = 0) then //CB
     mnuActDisplayResultsClick(Self);
-    
+
+  //CB
+   If (Notifications.HighLightSection <> '') and (Pos(UpperCase('Comment added'), UpperCase(Notifications.Text)) > 0) then begin
+   CommentDate := FormatDateTime('mm/dd/yy hh:mm', StrToDateTime(StringReplace(Notifications.HighLightSection, '@', ' ', [rfReplaceAll])) );
+   for I := 0 to memConsult.Lines.Count - 1 do begin
+     If (Pos(CommentDate, memConsult.Lines.Strings[i]) > 0) and (Pos(UpperCase('ADDED COMMENT'), UpperCase(memConsult.Lines.Strings[i])) > 0) then begin
+      if CustomCanFocus(memconsult) then
+        memConsult.SetFocus;
+      memConsult.SelStart := memConsult.Perform(EM_LINEINDEX, i,0);
+      memConsult.SelLength := Length(memConsult.Lines.Strings[i]);
+
+      //Set the background color
+      Format.cbSize := SizeOf(Format);
+      Format.dwMask := CFM_BACKCOLOR;
+
+      Format.crBackColor := clRed;
+      memConsult.Perform(EM_SETCHARFORMAT, SCF_SELECTION, Longint(@Format));
+          //Get visible Line Couunt
+       VisibleLineCount := LinesVisible(memConsult);
+
+      if (I + VisibleLineCount)>= memConsult.Lines.Count - 1 then
+        memConsult.SelStart := memConsult.Perform(EM_LINEINDEX, memConsult.Lines.Count - 1,0)
+      else memConsult.SelStart := memConsult.Perform(EM_LINEINDEX,I + VisibleLineCount - 1,0);
+
+      memConsult.Perform($00B7, 0, 0);  //EM_SETCARRET DEFINED WRONG in Richedit.pas
+      memConsult.SelLength := 0;
+      break;
+     end;
+   end;
+  end;
+
   case Notifications.Followup of
     NF_CONSULT_REQUEST_RESOLUTION   :  Notifications.Delete;
     NF_NEW_SERVICE_CONSULT_REQUEST  :  Notifications.Delete;
@@ -3220,6 +3300,53 @@ begin
   if Copy(Piece(Notifications.RecordID, U, 2), 1, 5) = 'TIUID' then Notifications.Delete;
   FNotifPending := False;
 end;
+
+// *****************************************************************
+//                  Delphi's Can Focus has a bug.
+//     Source: http://qc.embarcadero.com/wc/qcmain.aspx?d=11229
+// *****************************************************************
+function TfrmConsults.CustomCanFocus(Control: TWinControl): Boolean;
+var
+  Form: TCustomForm;
+begin
+  Result := False;
+  Form := GetParentForm(Self);
+  if Form <> nil then
+  begin
+    Control := Self;
+    repeat
+      if not (Control.Visible and Control.Enabled) then
+       Exit;
+      Control := Control.Parent;
+    until Control = nil;
+    Result := True;
+  end;
+end;
+
+ function TfrmConsults.LinesVisible(richedit: Trichedit): integer;
+    Var
+      OldFont : HFont;
+      Hand : THandle;
+      TM : TTextMetric;
+      Rect  : TRect;
+      tempint : integer;
+    begin
+      Hand := GetDC(richedit.Handle);
+      try
+        OldFont := SelectObject(Hand, richedit.Font.Handle);
+        try
+          GetTextMetrics(Hand, TM);
+          richedit.Perform(EM_GETRECT, 0, longint(@Rect));
+          tempint := (Rect.Bottom - Rect.Top) div
+             (TM.tmHeight + TM.tmExternalLeading);
+        finally
+          SelectObject(Hand, OldFont);
+        end;
+      finally
+        ReleaseDC(richedit.Handle, Hand);
+      end;
+      Result := tempint;
+    end;
 
 procedure TfrmConsults.mnuActEditResubmitClick(Sender: TObject);
 var
@@ -3947,8 +4074,9 @@ begin
       AConsult := ItemIEN;
       if not LockConsultRequest(AConsult) then Exit;
       lstNotes.Enabled := False ;
-      lstConsults.Enabled  := False ;
-      tvConsults.Enabled := False;
+      pnlConsultList.Enabled := False; //CQ#15785
+//      lstConsults.Enabled  := False ;
+//      tvConsults.Enabled := False;
       if ActionType = 'ATTACH' then
         begin
           FormTitle := TX_ATTACH + Piece(DisplayText[ItemIndex], #9, 3);
@@ -3979,8 +4107,9 @@ begin
         end;
     end;
   lstNotes.Enabled := True ;
-  lstConsults.Enabled  := True ;
-  tvConsults.Enabled := True;
+  pnlConsultList.Enabled := True; //CQ#15785
+//  lstConsults.Enabled  := True ;
+//  tvConsults.Enabled := True;
   FOrderID := GetConsultOrderIEN(AConsult);
   UnlockOrderIfAble(FOrderID);
   FOrderID := '';
@@ -4067,8 +4196,9 @@ begin
           frmDrawers.DisplayDrawers(FALSE);
           cmdPCE.Visible := FALSE;
           popNoteMemoEncounter.Visible := FALSE;
-          lstConsults.Enabled := True ;
-          tvConsults.Enabled := True;
+          pnlConsultList.Enabled := True; //CQ#15785
+//          lstConsults.Enabled := True ;
+//          tvConsults.Enabled := True;
           lstNotes.Enabled := True;
           lblTitle.Caption := '';
           lblTitle.Hint := lblTitle.Caption;
@@ -4434,8 +4564,9 @@ begin
       end;
       popNoteListExpandSelected.Enabled := Selected.HasChildren;
       popNoteListCollapseSelected.Enabled := Selected.HasChildren;
-      lstConsults.Enabled := True ;
-      tvConsults.Enabled := True;
+      pnlConsultList.Enabled := True; //CQ#15785
+//      lstConsults.Enabled := True ;
+//      tvConsults.Enabled := True;
       lstNotes.Enabled := True;
       if (Selected.ImageIndex in [IMG_GMRC_TOP_LEVEL, IMG_GMRC_GROUP_OPEN, IMG_GMRC_GROUP_SHUT]) then
         begin
@@ -4449,8 +4580,9 @@ begin
           frmDrawers.DisplayDrawers(FALSE);
           cmdPCE.Visible := FALSE;
           popNoteMemoEncounter.Visible := FALSE;
-          lstConsults.Enabled := True ;
-          tvConsults.Enabled := True;
+          pnlConsultList.Enabled := True; //CQ#15785
+//          lstConsults.Enabled := True ;
+//          tvConsults.Enabled := True;
           KillDocTreeObjects(tvCsltNotes);
           tvCsltNotes.Items.Clear;
           lstNotes.Clear;

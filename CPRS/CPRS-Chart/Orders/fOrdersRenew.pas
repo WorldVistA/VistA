@@ -261,8 +261,10 @@ begin
   inherited;
   FixHeaderControlDelphi2006Bug(hdrOrders);
   OKPressed := False;
+  hdrOrders.Sections[0].Width := Round(self.width * 0.75);
+  hdrOrders.Sections[1].Width := Round(self.width * 0.25);
   ResizeFormToFont(Self);
-  SetFormPosition(Self);  
+  SetFormPosition(Self);
 end;
 
 procedure TfrmRenewOrders.FormResize(Sender: TObject);
@@ -409,12 +411,28 @@ function TfrmRenewOrders.MeasureColumnHeight(TheOrderText: string; Index,
   Column: integer): integer;
 var
   ARect: TRect;
+  cnt: integer;
+  x: string;
 begin
+  cnt := 0;
   ARect.Left := 0;
   ARect.Top := 0;
   ARect.Bottom := 0;
   ARect.Right := hdrOrders.Sections[Column].Width -6;
   Result := WrappedTextHeightByFont(lstOrders.Canvas,lstOrders.Font,TheOrderText,ARect);
+  //AGP 28.0 this fix address the issue of WrappedTextHeightByFont appearing to not take in account CRLF
+  if Pos(CRLF, TheOrderText) > 0 then
+    begin
+      repeat
+        x := Copy(TheOrderText, 1, Pos(CRLF, TheOrderText) - 1);
+        if Length(x) = 0 then x := TheOrderText;
+        Delete(TheOrderText, 1, Length(x) + 2);  {delete text + CRLF}
+        cnt := cnt + 1;
+      until TheOrderText = '';
+      if cnt > 0 then Result := Result + (cnt * Abs(self.Font.Height));
+      if Result > 255 then Result := 255;
+    end;
+  
 end;
 
 function TfrmRenewOrders.AcceptOrderCheckOnRenew(const AnOrderID: string;
@@ -422,12 +440,18 @@ function TfrmRenewOrders.AcceptOrderCheckOnRenew(const AnOrderID: string;
 var
   OIInfo,FillerID: string;
   AnOIList: TStringList;
+  subI: integer;
 begin
   AnOIList := TStringList.Create;
   OIInfo := DataForOrderCheck(AnOrderID);
   FillerID := Piece(OIInfo,'^',2);
-  AnOIList.Add(OIInfo);
-  OrderChecksOnAccept(OCList, FillerID, '', AnOIList, AnOrderID);
+  subI := 1;
+  while Length(Piece(OIInfo,'|',subI))>1 do
+  begin
+    AnOIList.Add(Piece(OIInfo,'|',subI));
+    subI := subI + 1;
+  end;
+  OrderChecksOnAccept(OCList, FillerID, '', AnOIList, AnOrderID,'1');
   Result :=  AcceptOrderWithChecks(OCList);
 end;
 

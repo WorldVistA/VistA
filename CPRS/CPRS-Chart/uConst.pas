@@ -391,6 +391,12 @@ const
     DGSR_ASK  =  2;
     DGSR_DENY =  3;
 
+  //CQ #15813 added strings here, rather then being duplicated in numerous sections of code - JCS
+  TX_SAVERR_PHARM_ORD_NUM = 'The changes to this order have not been saved.  You must contact Pharmacy to complete any action on this order.';
+  TX_SAVERR_IMAGING_PROC = 'The order has not been saved.  You must contact the Imaging Department for help completing this order.';
+  TX_SAVERR_PHARM_ORD_NUM_SEARCH_STRING = 'Invalid Pharmacy order number';
+  TX_SAVERR_IMAGING_PROC_SEARCH_STRING = 'Invalid Procedure, Inactive, no Imaging Type or no Procedure Type';
+
 var
   ScrollBarWidth: integer = 0;
 

@@ -41,7 +41,6 @@ type
     function BuildControls(ParentWidth: integer; AParent, AOwner: TWinControl): TWinControl;
     function Processing: boolean;
     procedure AddText(Lst: TStrings);
-    procedure ClearMHTest(RIEN: String);
     property PrintName: string read GetPrintName;
     property IEN: string read GetIEN;
     property Elements: TStringList read FElements;
@@ -2087,7 +2086,7 @@ begin
   MHLoop := 1;
   MHRes := False;
   tmpText := '';
-  if Pos('~', AText)>0 then MHLoop := 2;
+  if (MHTest = True) and (Pos('~', AText)>0) then MHLoop := 2;
   for j := 1 to MHLoop do
   begin
   if (j = 1) and (MHLoop = 2) then
@@ -2639,25 +2638,6 @@ begin
         inc(Result, Elem.AddData(Lst, Finishing, Historical));
     end;
   end;
-end;
-
-procedure TReminderDialog.ClearMHTest(RIEN: String);
-var
-i,j: integer;
-TestName: string;
-begin
-  if (self.MHTestArray <> nil) and (self.MHTestArray.Count > 0) then
-    begin
-      i := self.MHTestArray.IndexOfPiece(RIEN, U, 2, -1);
-      while i > -1 do
-        begin
-          TestName := Piece(self.MHTestArray.Strings[i], U, 1);
-          self.MHTestArray.Delete(i);
-          j := self.MHTestArray.IndexOfPiece(TestName, U, 1, -1);
-          if j = -1 then RemoveMHTest(TestName);
-          i := self.MHTestArray.IndexOfPiece(RIEN, U, 2, -1);
-        end;
-    end;
 end;
 
 procedure TReminderDialog.ComboBoxCheckedText(Sender: TObject; NumChecked: integer; var Text: string);
@@ -3516,6 +3496,9 @@ var
     // The FieldPanelChange event handler is where the Entry.FieldValues are saved to the
     // Element.FFieldValues.
     Entry.OnChange := FieldPanelChange;
+    //AGP BACKED OUT THE CHANGE CAUSE A PROBLEM WITH TEMPLATE WORD PROCESSING FIELDS WHEN RESIZING
+    //FieldPanelChange(Entry); // to accomodate fields with default values - CQ#15960
+    //AGP END BACKED OUT
     // Calls TTemplateDialogEntry.SetFieldValues which calls
     // TTemplateDialogEntry.SetControlText to reset the template field default
     // values to the values that were restored to the Entry from the Element if
@@ -4649,7 +4632,11 @@ begin
         begin
           Prompt := TRemPrompt(FPrompts[i]);
           if(not Prompt.FIsShared) then
-            WordWrap(Prompt.NoteText, Lst, ilvl);
+            begin
+               if Prompt.PromptType = ptMHTest then  WordWrap(Prompt.NoteText, Lst, ilvl, 4, true)
+               else WordWrap(Prompt.NoteText, Lst, ilvl);
+            end;
+
         end;
       end;
       if(assigned(FParent) and FParent.FHasSharedPrompts) then
@@ -6694,8 +6681,8 @@ var
 begin
   TestComp := 0;
   try
-  if (sender is TCPRSDialogButton) then
-     (Sender as TCPRSDialogButton).Enabled := false;
+  if (Sender is TCPRSDialogButton) then
+    (Sender as TCPRSDialogButton).Enabled := false;
   if FParent.FReminder.MHTestArray = nil then FParent.FReminder.MHTestArray := TORStringList.Create;
   if(MHTestAuthorized(FData.Narrative)) then
   begin
@@ -6797,7 +6784,12 @@ begin
                 InfoBox('Not Authorized to score the ' + FData.Narrative + ' test.',
                    'Insufficient Authorization', MB_OK + MB_ICONERROR);
   finally
-     (Sender as TCPRSDialogButton).Enabled := true;
+    if (Sender is TCPRSDialogButton) then
+      begin
+        (Sender as TCPRSDialogButton).Enabled := true;
+        (Sender as TCPRSDialogButton).SetFocus;
+      end;
+
   end;
 end;
 

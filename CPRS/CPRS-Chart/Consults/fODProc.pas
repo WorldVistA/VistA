@@ -5,38 +5,46 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ORfn, uConst, Buttons,
-  Menus, VA508AccessibilityManager;
+  Menus, ORDtTm, VA508AccessibilityManager;
 
 type
   TfrmODProc = class(TfrmODBase)
-    cboUrgency: TORComboBox;
-    cboPlace: TORComboBox;
-    txtAttn: TORComboBox;
+    pnlMain: TPanel;
+    pnlCombatVet: TPanel;
     lblProc: TLabel;
-    cboProc: TORComboBox;
+    lblService: TOROffsetLabel;
+    lblReason: TLabel;
     lblUrgency: TStaticText;
     lblPlace: TStaticText;
     lblAttn: TStaticText;
     lblProvDiag: TStaticText;
+    pnlReason: TPanel;
+    memReason: TCaptionRichEdit;
+    cboUrgency: TORComboBox;
+    cboPlace: TORComboBox;
+    txtAttn: TORComboBox;
+    cboProc: TORComboBox;
     cboCategory: TORComboBox;
     cboService: TORComboBox;
-    lblService: TOROffsetLabel;
+    cmdLexSearch: TButton;
+    gbInptOpt: TGroupBox;
+    radInpatient: TRadioButton;
+    radOutpatient: TRadioButton;
+    txtProvDiag: TCaptionEdit;
+    lblEarliest: TStaticText;
+    calEarliest: TORDateBox;
+    lblLatest: TStaticText;
+    calLatest: TORDateBox;
     mnuPopProvDx: TPopupMenu;
     mnuPopProvDxDelete: TMenuItem;
-    cmdLexSearch: TButton;
     popReason: TPopupMenu;
     popReasonCut: TMenuItem;
     popReasonCopy: TMenuItem;
     popReasonPaste: TMenuItem;
     popReasonPaste2: TMenuItem;
     popReasonReformat: TMenuItem;
-    pnlReason: TPanel;
-    memReason: TCaptionRichEdit;
-    gbInptOpt: TGroupBox;
-    radInpatient: TRadioButton;
-    radOutpatient: TRadioButton;
-    txtProvDiag: TCaptionEdit;
-    lblReason: TLabel;
+    txtCombatVet: TVA508StaticText;
+    servicelbl508: TVA508StaticText;
     procedure FormCreate(Sender: TObject);
     procedure txtAttnNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
@@ -63,6 +71,7 @@ type
     procedure memReasonKeyPress(Sender: TObject; var Key: Char);
     procedure FormResize(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
   private
     FLastProcID: string;
     FEditCtrl: TCustomEdit;
@@ -73,6 +82,9 @@ type
     procedure GetProvDxandValidateCode(AResponses: TResponses);
     function ShowPrerequisites: boolean;
     procedure DoSetFontSize( FontSize: integer);
+    procedure SetUpCombatVet;
+    procedure updateService;
+    procedure setup508Label(text: string; lbl: TVA508StaticText; ctrl: TControl);
   protected
     procedure InitDialog; override;
     procedure Validate(var AnErrMsg: string); override;
@@ -82,18 +94,23 @@ type
     procedure SetFontSize( FontSize: integer); override;
   end;
 
+
+function CanFreeProcDialog(dialog : TfrmODBase) : boolean;
+
 implementation
 
 {$R *.DFM}
 
 uses
     rODBase, rConsults, uCore, uConsults, rCore, fConsults, fPCELex, rPCE, ORClasses,
-    clipbrd, fPreReq, uTemplates, fFrame, uODBase,
-  uVA508CPRSCompatibility;
+    clipbrd, fPreReq, uTemplates, fFrame, uODBase, VA508AccessibilityRouter,
+    uVA508CPRSCompatibility;
+
 
 var
   ProvDx:  TProvisionalDiagnosis;
   GMRCREAF: string;
+  OkToFreeProcDialog: boolean;
 
 const
   TX_NO_PROC         = 'A procedure must be specified.'    ;
@@ -107,12 +124,26 @@ const
   TX_INACTIVE_CODE1  = 'The provisional diagnosis code is not active as of today''s date.' + #13#10;
   TX_INACTIVE_CODE_REQD     = 'Another code must be selected before the order can be saved.';
   TX_INACTIVE_CODE_OPTIONAL = 'If another code is not selected, no code will be saved.';
+  TX_PAST_DATE       = 'Earliest appropriate date must be today or later.';
+  TX_BAD_DATES       = 'Latest appropriate date must be equal to or later than earliest date.';
+
+{ ********* Static Unit Methods ************ }
+
+function CanFreeProcDialog(dialog : TfrmODBase) : boolean;
+begin
+  Result := true;
+  if (dialog is TfrmODProc) then
+    Result := OkToFreeProcDialog;
+end;
+
+{ ********************* TfrmODProc Methods **************** }
 
 procedure TfrmODProc.FormCreate(Sender: TObject);
 begin
   frmFrame.pnlVisit.Enabled := false;
   AutoSizeDisabled := True;
   inherited;
+  OkToFreeProcDialog := False;
   DoSetFontSize(MainFontSize);
   AllowQuickOrder := True;
   FillChar(ProvDx, SizeOf(ProvDx), 0);
@@ -125,8 +156,21 @@ begin
   ReadServerVariables;
   cboProc.InitLongList('') ;
   txtAttn.InitLongList('') ;
+  calEarliest.Text := 'TODAY';
+  //calLatest.Text := 'TODAY+30';
+  PreserveControl(calEarliest);
+  //PreserveControl(calLatest);
   PreserveControl(txtAttn);
   PreserveControl(cboProc);
+  if (patient.CombatVet.IsEligible = True) then
+   begin
+     SetUpCombatVet;
+   end
+   else
+    begin
+      txtCombatVet.Enabled := False;
+      pnlCombatVet.SendToBack;
+    end;
   InitDialog;
 end;
 
@@ -197,6 +241,8 @@ begin
     SetControl(cboUrgency,    'URGENCY',     1);
     SetControl(cboPlace,      'PLACE',     1);
     SetControl(txtAttn,       'PROVIDER',  1);
+    SetControl(calEarliest,   'EARLIEST',  1);
+    //SetControl(calLatest,     'LATEST',    1);
     cboProc.Enabled := False;
     cboProc.Font.Color := clGrayText;
    //SetControl(cboService,    'SERVICE',   1);     // to fix OR*3.0*95 bug in v17.6  (RV)
@@ -228,7 +274,9 @@ begin
     SetControl(memReason,     'COMMENT',   1);
     if WasTemplateDialogCanceled then
     begin
-      AbortOrder := True;
+      AbortOrder := True;   
+      OkToFreeProcDialog := true;
+      SetTemplateDialogCanceled(FALSE);
       Close;
       Exit;
     end;
@@ -237,6 +285,8 @@ begin
     if WasTemplateDialogCanceled then
     begin
       AbortOrder := True;
+      OkToFreeProcDialog := true;
+      SetTemplateDialogCanceled(FALSE);
       Close;
       Exit;
     end;
@@ -257,18 +307,21 @@ procedure TfrmODProc.Validate(var AnErrMsg: string);
 begin
   inherited;
   if cboProc.ItemIEN = 0                  then SetError(TX_NO_PROC);
-  if cboUrgency.ItemIEN = 0 then SetError(TX_NO_URGENCY);
-  if cboPlace.ItemID = '' then SetError(TX_NO_PLACE);
+  if cboUrgency.ItemIEN = 0               then SetError(TX_NO_URGENCY);
+  if cboPlace.ItemID = ''                 then SetError(TX_NO_PLACE);
   if (not ContainsVisibleChar(memReason.Text))
                                           then SetError(TX_NO_REASON);
   if cboService.ItemIEN = 0               then SetError(TX_NO_SERVICE);
   if (ProvDx.Reqd = 'R') and (Length(txtProvDiag.Text) = 0) then
     begin
-      if ProvDx.PromptMode = 'F' then
+      if ProvDx.PromptMode = 'F'          then
         SetError(TX_NO_DIAG)
       else
         SetError(TX_SELECT_DIAG);
     end;
+  if calEarliest.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
+  //if calLatest.FMDateTime < FMToday       then SetError(TX_PAST_DATE);
+  //if calLatest.FMDateTime < calEarliest.FMDateTime then SetError(TX_BAD_DATES);
 end;
 
 procedure TfrmODProc.txtAttnNeedData(Sender: TObject;
@@ -336,15 +389,14 @@ begin
         end
       else Responses.Update('ORDERABLE', 1, '', '');
     end;
-(*  with cboProc       do if ItemIEN      > 0 then Responses.Update('ORDERABLE', 1, ItemID, Text)
-                                            else Responses.Update('ORDERABLE', 1, '', '');*)
-  with cboService    do if ItemIEN      > 0 then Responses.Update('SERVICE', 1, ItemID, Text)
-                                            else Responses.Update('SERVICE', 1, '', '');
+  updateService();
   with memReason     do if GetTextLen   > 0 then Responses.Update('COMMENT',   1, TX_WPTYPE, Text);
   with cboCategory   do if ItemID     <> '' then Responses.Update('CLASS',     1, ItemID, Text);
   with cboUrgency    do if ItemIEN      > 0 then Responses.Update('URGENCY',   1, ItemID, Text);
   with cboPlace      do if ItemID     <> '' then Responses.Update('PLACE',     1, ItemID, Text);
   with txtAttn       do if ItemIEN      > 0 then Responses.Update('PROVIDER',  1, ItemID, Text);
+  with calEarliest   do if Length(Text) > 0 then Responses.Update('EARLIEST',  1, Text, Text);
+  //with calLatest     do if Length(Text) > 0 then Responses.Update('LATEST',    1, Text,   Text);
   if Length(ProvDx.Text)                > 0 then Responses.Update('MISC',      1, ProvDx.Text,   ProvDx.Text)
    else Responses.Update('MISC',      1, '',   '');
   if Length(ProvDx.Code)                > 0 then Responses.Update('CODE',      1, ProvDx.Code,   ProvDx.Code)
@@ -414,6 +466,8 @@ begin
       SetControl(cboUrgency,    'URGENCY',     1);
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
+      SetControl(calEarliest,   'EARLIEST',  1);
+      //SetControl(calLatest,     'LATEST',    1);
       SetTemplateDialogCanceled(FALSE);
       SetControl(memReason,     'COMMENT',   1);
       if WasTemplateDialogCanceled and OrderContainsObjects then
@@ -585,6 +639,17 @@ begin
               txtProvDiag.Hint       := TX_USE_LEXICON;
             end;
     end;
+end;
+
+procedure TfrmODProc.setup508Label(text: string; lbl: TVA508StaticText; ctrl: TControl);
+begin
+  if ScreenReaderSystemActive and not ctrl.Enabled then begin
+    lbl.Enabled := True;
+    lbl.Visible := True;
+    lbl.Caption := lblService.Caption + ', ' + Text;
+    lbl.Width := (ctrl.Left + ctrl.Width) - lbl.Left;
+  end else
+    lbl.Visible := false;
 end;
 
 procedure TfrmODProc.cboServiceChange(Sender: TObject);
@@ -812,6 +877,20 @@ begin
   DoSetFontSize(FontSize);
 end;
 
+procedure TfrmODProc.updateService;
+begin
+  with cboService do
+    if ItemIEN > 0 then
+    begin
+      setup508Label(Text, servicelbl508, cboService);
+      Responses.Update('SERVICE', 1, ItemID, Text);
+    end
+    else begin
+      Responses.Update('SERVICE', 1, '', '');
+      setup508Label('No service selected.', servicelbl508, cboService);
+    end;
+end;
+
 procedure TfrmODProc.DoSetFontSize(FontSize: integer);
 begin
   memReason.Width := pnlReason.ClientWidth;
@@ -839,8 +918,21 @@ end;
 procedure TfrmODProc.FormResize(Sender: TObject);
 begin
   inherited;
-  memOrder.Top := PnlReason.Top + PnlReason.Height + 5;
+  if Patient.CombatVet.IsEligible then
+  begin
+    memOrder.Top := pnlCombatVet.Height + PnlReason.Top + PnlReason.Height + 7;
+   end
+  else
+   begin
+       memOrder.Top := PnlReason.Top + PnlReason.Height + 7;
+   end;
 
+end;
+
+procedure TfrmODProc.FormShow(Sender: TObject);
+begin
+  inherited;
+  setup508Label('No service selected.', servicelbl508, cboService);
 end;
 
 procedure TfrmODProc.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -848,6 +940,17 @@ begin
   inherited;
   frmFrame.pnlVisit.Enabled := true;
 end;
+
+procedure TfrmODProc.SetUpCombatVet;
+   begin
+     pnlCombatVet.BringToFront;
+     txtCombatVet.Enabled := True;
+     txtCombatVet.Caption := 'Combat Veteran Eligibility Expires on ' + patient.CombatVet.ExpirationDate;
+     pnlMain.Top := pnlMain.Top + pnlCombatVet.Height;
+     pnlMain.Anchors := [akLeft,akTop,akRight];
+     self.Height := self.Height + pnlCombatVet.Height;
+     pnlMain.Anchors := [akLeft,akTop,akRight,akBottom];
+  end;
 
 end.
 

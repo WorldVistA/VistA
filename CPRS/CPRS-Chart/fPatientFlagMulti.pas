@@ -23,8 +23,9 @@ type
   end;
 
   TfrmFlags = class(TfrmBase508Form)
+    Panel1: TPanel;
+    Splitter3: TSplitter;
     Splitter1: TSplitter;
-    pnlTop: TORAutoPanel;
     lblFlags: TLabel;
     lstFlagsCat2: TORListBox;
     memFlags: TRichEdit;
@@ -310,14 +311,29 @@ Const
   FLAG_TYPE_POS = 3;
   TRUE_STRING = '1';
 var
-  i : integer;
+  i, TypeOneCount, TypeTwoCount : integer;
 begin
+  TypeOneCount := 0;
+  TypeTwoCount := 0;
   for i := 0 to flags.Count-1 do begin
-    if Piece(flags[i],U,FLAG_TYPE_POS) = TRUE_STRING then
-      Cat1List.Add(flags[i])
-    else
+    if Piece(flags[i],U,FLAG_TYPE_POS) = TRUE_STRING then begin
+      Cat1List.Add(flags[i]);
+      Inc(TypeOneCount);
+    end else begin
       Cat2List.Add(flags[i]);
+      Inc(TypeTwoCount);
+    end;
   end;
+  If TypeOneCount > 0 then
+   lblCat1.Caption := 'Category I Flags: ' + IntToStr(TypeOneCount) + ' Item(s)'
+  else
+   lblCat1.Caption := 'Category I Flags';
+
+  If TypeTwoCount > 0 then
+   lblFlags.Caption := 'Category II Flags: ' + IntToStr(TypeTwoCount) + ' Item(s)'
+  else
+   lblFlags.Caption := 'Category II Flags';
 end;
+
 
 end.

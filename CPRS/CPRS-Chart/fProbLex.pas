@@ -12,9 +12,9 @@ type
     Label1: TLabel;
     bbCan: TBitBtn;
     bbOK: TBitBtn;
-    Panel1: TPanel;
+    pnlStatus: TPanel;
     Bevel1: TBevel;
-    lblstatus: TLabel;
+    lblstatus: TVA508StaticText;
     ebLex: TCaptionEdit;
     lbLex: TORListBox;
     bbSearch: TBitBtn;
@@ -104,7 +104,7 @@ begin
   ProblemList:=TStringList.create;
   ResizeAnchoredFormToFont(self);
   //Resize bevel to center horizontally
-  Bevel1.Width := Panel1.ClientWidth - Bevel1.Left- Bevel1.Left;
+  Bevel1.Width := pnlStatus.ClientWidth - Bevel1.Left- Bevel1.Left;
 end;
 
 procedure TfrmPLLex.ebLexKeyPress(Sender: TObject; var Key: Char);

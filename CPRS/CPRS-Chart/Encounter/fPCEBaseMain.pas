@@ -59,6 +59,7 @@ type
     FPCEItemClass: TPCEItemClass;
     FPCECode: string;
     FSplitterMove: boolean;
+    FProblems: TStringList;
     function GetCat: string;
     procedure UpdateNewItemStr(var x: string); virtual;
 //    procedure UpdateNewItem(APCEItem: TPCEItem); virtual;
@@ -85,7 +86,7 @@ const
 implementation
 
 uses fPCELex, fPCEOther, fEncounterFrame, fHFSearch, VA508AccessibilityRouter,
-  ORCtrlsVA508Compatibility, fBase508Form;
+  ORCtrlsVA508Compatibility, fBase508Form, UBAConst;
 
 {$R *.DFM}
 
@@ -103,6 +104,11 @@ begin
   FPCEListCodesProc(lbxSection.Items, lbSection.ItemIEN);
   CheckOffEntries;
   FSectionPopulated := TRUE;
+  if (lbSection.Items.Count > 0) then
+    lblList.Caption := StringReplace(lbSection.DisplayText[lbSection.ItemIndex],
+      '&', '&&', [rfReplaceAll] );
+  if (lbSection.DisplayText[lbSection.ItemIndex] = DX_PROBLEM_LIST_TXT) then
+    FastAssign(lbxSection.Items, FProblems);
 end;
 
 procedure TfrmPCEBaseMain.lbSectionExit(Sender: TObject);
@@ -295,17 +301,15 @@ end;
 procedure TfrmPCEBaseMain.FormCreate(Sender: TObject);
 begin
   inherited FormCreate(Sender);
+  FProblems := TStringList.Create;
   lbxSection.HideSelection := TRUE;
   amgrMain.ComponentManager[lbSection] := TLBSectionManager.Create;
 end;
 
 procedure TfrmPCEBaseMain.FormDestroy(Sender: TObject);
-var
-  i:integer;
-
 begin
   inherited;
-  with lbGrid.Items do for i := 0 to Count - 1 do TPCEItem(Objects[i]).Free;
+  FProblems.Free;
 end;
 
 procedure TfrmPCEBaseMain.InitTab(ACopyProc: TCopyItemsMethod; AListProc: TListSectionsProc);

@@ -16,7 +16,7 @@ inherited frmEncounter: TfrmEncounter
   OnResize = FormResize
   OnShow = FormShow
   ExplicitWidth = 470
-  ExplicitHeight = 450
+  ExplicitHeight = 457
   DesignSize = (
     462
     423)
@@ -156,10 +156,6 @@ inherited frmEncounter: TfrmEncounter
       OnMouseDown = pgeVisitMouseDown
       object tabClinic: TTabSheet
         Caption = 'Clinic Appointments'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object lstClinic: TORListBox
           Left = 0
           Top = 20
@@ -205,10 +201,6 @@ inherited frmEncounter: TfrmEncounter
       end
       object tabAdmit: TTabSheet
         Caption = 'Hospital Admissions'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object lstAdmit: TORListBox
           Left = 0
           Top = 17
@@ -245,17 +237,12 @@ inherited frmEncounter: TfrmEncounter
       end
       object tabNewVisit: TTabSheet
         Caption = 'New Visit'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object lblVisitDate: TLabel
           Left = 220
           Top = 4
           Width = 85
           Height = 13
           Caption = 'Date/Time of Visit'
-          Visible = False
         end
         object lblNewVisit: TLabel
           Left = 4
@@ -367,7 +354,8 @@ inherited frmEncounter: TfrmEncounter
         'Status = stsDefault')
       (
         'Component = calVisitDate'
-        'Status = stsDefault')
+        'Text = Date/Time of Visit'
+        'Status = stsOK')
       (
         'Component = ckbHistorical'
         'Status = stsDefault')

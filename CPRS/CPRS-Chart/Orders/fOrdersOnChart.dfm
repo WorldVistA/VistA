@@ -7,7 +7,7 @@ inherited frmOnChartOrders: TfrmOnChartOrders
   Position = poScreenCenter
   OnCreate = FormCreate
   ExplicitWidth = 470
-  ExplicitHeight = 368
+  ExplicitHeight = 375
   PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel [0]

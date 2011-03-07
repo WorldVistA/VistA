@@ -8,14 +8,25 @@ uses
 
 type
   TfrmTimeout = class(TfrmAutoSz)
+    timCountDown: TTimer;
+    pnlTop: TPanel;
     Label1: TStaticText;
     Label2: TStaticText;
+    pnlBottom: TPanel;
+    btnClose: TButton;
     cmdContinue: TButton;
     lblCount: TStaticText;
-    timCountDown: TTimer;
+    pnlWarning: TPanel;
+    imgWarning: TImage;
+    lblWarning: TLabel;
+    lblWarningMultiple: TLabel;
+    lblWarningContinue: TLabel;
+    lblWarningPatient: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure cmdContinueClick(Sender: TObject);
     procedure timCountDownTimer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnCloseClick(Sender: TObject);
   private
     { Private declarations }
     FContinue: Boolean;
@@ -54,6 +65,26 @@ begin
   lblCount.Caption := IntToStr(FCount);
 end;
 
+procedure TfrmTimeout.FormShow(Sender: TObject);
+begin
+  inherited;
+  SetForegroundWindow(Handle);
+  lblWarningPatient.Caption := Patient.Name;
+  lblWarning.Font.Size := lblWarningPatient.Font.Size + 4;
+  if CPRSInstances < 2 then
+  begin
+    pnlWarning.Visible := false;
+    Height := Height - pnlWarning.Height;
+  end;
+end;
+
+procedure TfrmTimeout.btnCloseClick(Sender: TObject);
+begin
+  inherited;
+  FContinue := False;
+  Close;
+end;
+
 procedure TfrmTimeout.cmdContinueClick(Sender: TObject);
 begin
   inherited;
@@ -73,7 +104,7 @@ begin
   end;
   Dec(FCount);
   lblCount.Caption := IntToStr(FCount);
-  if FCount = 0 then
+  if FCount < 1 then
   begin
     timCountDown.Enabled := False;
     Close;

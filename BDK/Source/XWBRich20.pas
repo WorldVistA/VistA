@@ -5,7 +5,7 @@
 	Developers: Joel Ivey
 	Description: Provides a RichEdit Component with ability
 	             to recognize a URL within the RichEdit control.
-	Current Release: Version 1.1 Patch 47 (February 7, 2007))
+	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
 *************************************************************** }
 {: Unit XWBRich20
    Based on the article "Detect URLS in the RichEdit Control" by

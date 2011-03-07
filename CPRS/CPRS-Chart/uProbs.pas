@@ -476,7 +476,7 @@ begin
   LoadField(fPriority,'1.14','PRIORITY');
   LoadField(fHNC,'1.15','HNC');
   LoadField(fMST,'1.16','MST');
-  LoadField(fMST,'1.17','CV');   // not used at this time
+  LoadField(fCV,'1.17','CV');   // not used at this time
   LoadField(fSHAD,'1.18','SHD');
   LoadComments;
 end;
@@ -507,6 +507,8 @@ begin
   fPriority.free;
   fHNC.free;
   fMST.free;
+  fSHAD.Free;
+  fCV.Free;
   fFieldList.free;
   fFilerObj.free;
   EraseComments(fComments);

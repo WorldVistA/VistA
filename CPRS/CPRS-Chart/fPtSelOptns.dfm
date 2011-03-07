@@ -8,10 +8,8 @@ inherited frmPtSelOptns: TfrmPtSelOptns
   DefaultMonitor = dmDesktop
   Position = poDesigned
   OnCreate = FormCreate
-  ExplicitLeft = 200
-  ExplicitTop = 190
-  ExplicitWidth = 198
-  ExplicitHeight = 303
+  ExplicitWidth = 190
+  ExplicitHeight = 269
   PixelsPerInch = 96
   TextHeight = 13
   object orapnlMain: TORAutoPanel [0]
@@ -178,28 +176,36 @@ inherited frmPtSelOptns: TfrmPtSelOptns
         'Status = stsDefault')
       (
         'Component = bvlPtList'
-        'Status = stsDefault')
+        'Property = Hint'
+        'Status = stsOK')
       (
         'Component = radAll'
-        'Status = stsDefault')
+        'Text = Patient List All'
+        'Status = stsOK')
       (
         'Component = radWards'
-        'Status = stsDefault')
+        'Text = Patient List Wards'
+        'Status = stsOK')
       (
         'Component = radClinics'
-        'Status = stsDefault')
+        'Text = Patient List Clinics'
+        'Status = stsOK')
       (
         'Component = radSpecialties'
-        'Status = stsDefault')
+        'Text = Patient List Specialties'
+        'Status = stsOK')
       (
         'Component = radTeams'
-        'Status = stsDefault')
+        'Text = Patient List Team/Personal'
+        'Status = stsOK')
       (
         'Component = radProviders'
-        'Status = stsDefault')
+        'Text = Patient List Providers'
+        'Status = stsOK')
       (
         'Component = radDflt'
-        'Status = stsDefault')
+        'Text = Patient List No Default'
+        'Status = stsOK')
       (
         'Component = cboList'
         'Status = stsDefault')

@@ -1,12 +1,13 @@
 unit uVitals;
 { Old class TVital currently not used - commented out at bottom of unit }
 
+{$DEFINE CCOWBROKER}
+
 interface
 
 uses
   SysUtils, Dialogs, Controls, Windows, Classes, ORClasses, ORCtrls, ORFn, Forms
-  , TRPCB
-  ;
+  , TRPCB ;
 
 const
   NoVitalOverrideValue = '^None^';
@@ -85,18 +86,18 @@ type
   VitalTags = TAG_VITBP..TAG_VITPAIN;
 
   TGMV_VitalsEnterForm = function(
-        aBroker:TRPCBroker;
+         RPCBrokerV: TRPCBroker;
         aPatient, aLocation, aTemplate,aSignature:String;
         aDateTime:TDateTime): TCustomForm; stdcall;
 
   TGMV_VitalsEnterDLG = function(
-        aBroker:TRPCBroker;
+         RPCBrokerV: TRPCBroker;
         aDFN, aLocation, aTemplate,aSignature:String;
         aDateTime:TDateTime;
         aName,anInfo:String): Integer; stdcall;
 
   TGFM_VitalsViewDLG = function(
-        aBroker:TRPCBroker;
+         RPCBrokerV: TRPCBroker;
         aDFN, aLocation,
         DateStart, DateStop,
         aSignature,
@@ -104,7 +105,7 @@ type
         aName,anInfo,aHospitalName:String): Integer; stdcall;
 
   TGMV_VitalsViewForm = function(
-        aBroker:TRPCBroker;
+         RPCBrokerV: TRPCBroker;
         aDFN, aLocation,
         DateStart, DateStop,
         aSignature,
@@ -113,7 +114,7 @@ type
         aDynamicParameter {HospitolName^Vital Type Abbreviation} :String): TCustomForm; stdcall;
 
   TGMV_LatestVitalsList = function (
-        aBroker:TRPCBroker;
+         RPCBrokerV: TRPCBroker;
         aDFN,
         aDelim:String;
         bSilent:Boolean
@@ -122,9 +123,13 @@ type
   TGMV_VitalsExit = Procedure;
 
 var
-  VitalsDLLHandle : THandle;
-  DLLForceClose : Boolean = False;
+  VitalsDLLHandle : THandle = 0;
 
+const
+  VitalsDLLName = 'GMV_VitalsViewEnter.dll';
+
+procedure LoadVitalsDLL;
+procedure UnloadVitalsDLL;
 
 const
   VitalTagSet = [TAG_VITBP..TAG_VITPAIN];
@@ -187,7 +192,7 @@ begin
     @VitalsExit := GetProcAddress(VitalsDLLHandle,PChar('GMV_VitalsExit'));
     if assigned(VitalsExit) then
       VitalsExit();
-    DLLForceClose := True;
+    UnloadVitalsDLL;
   end;
 end;
 
@@ -616,6 +621,28 @@ begin
   Result := True;
   for i := 1 to Length(x) do if not (x[i] in ['0'..'9','.']) then Result := False;
 end;
+
+procedure LoadVitalsDLL;
+var
+  GMV_LibName: String;
+
+begin
+  if VitalsDLLHandle = 0 then
+  begin
+    GMV_LibName := GetProgramFilesPath + SHARE_DIR + VitalsDLLName;
+    VitalsDLLHandle := LoadLibrary(PChar(GMV_LibName));
+  end;
+end;
+
+procedure UnloadVitalsDLL;
+begin
+  if VitalsDLLHandle <> 0 then
+  begin
+    FreeLibrary(VitalsDLLHandle);
+    VitalsDLLHandle := 0;
+  end;
+end;
+
 (* Old class currently not used
 {$OPTIMIZATION OFF}                              // REMOVE AFTER UNIT IS DEBUGGED
 

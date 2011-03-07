@@ -79,6 +79,7 @@ begin
   if MaxWidth > Screen.Width then MaxWidth := Screen.Width;
   Width := MaxWidth;
   Height := AHeight;
+  Constraints.MinHeight := pnlTop.Height + GetSystemMetrics(SM_CYCAPTION) + GetSystemMetrics(SM_CYHSCROLL) + 7;
   Rect := BoundsRect;
   ForceInsideWorkArea(Rect);
   BoundsRect := Rect;
@@ -123,7 +124,6 @@ begin
             repeat
               with Lines do
                 begin
-                  AddStrings(AHeader);
                   for i := StartLine to MaxLines do
                     //if i < memPtDemo.Lines.Count - 1 then
                     if i < memPtDemo.Lines.Count then
@@ -145,7 +145,7 @@ begin
                     end;
                 end;
               until LastLine >= memPtDemo.Lines.Count - 1;
-            PrintWindowsReport(memPrintReport, PAGE_BREAK, Self.Caption, ErrMsg);
+            PrintWindowsReport(memPrintReport, PAGE_BREAK, Self.Caption, ErrMsg, True);
           end;
       finally
         memPrintReport.Free;

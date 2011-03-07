@@ -5,8 +5,6 @@ inherited frmReleaseOrders: TfrmReleaseOrders
   ClientHeight = 343
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitLeft = 318
-  ExplicitTop = 186
   ExplicitHeight = 377
   PixelsPerInch = 96
   TextHeight = 13

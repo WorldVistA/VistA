@@ -402,7 +402,7 @@ begin
   uVitalNew.free;
 
 {== Vitals Lite 2004-05-21 ===================================================}
-  FreeLibrary(VitalsDLLHandle);
+  UnloadVitalsDLL;
 {== Vitals Lite 2004-05-21 ===================================================}
   inherited;
 end;
@@ -424,17 +424,13 @@ end;
 
 
 procedure TfrmEncVitals.FormShow(Sender: TObject);
-var
-  GMV_LibName: String;
 begin
   inherited;
   //Begin Vitals Lite
   {Visit is Assumed to Be selected when Opening Encounter Dialog}
-  GMV_LibName :='GMV_VitalsViewEnter.dll';
-  GMV_LibName := GetProgramFilesPath + SHARE_DIR + GMV_LibName;
-  VitalsDLLHandle := LoadLibrary(PChar(GMV_LibName));
+  LoadVitalsDLL;
   if VitalsDLLHandle = 0 then // No Handle found
-    MessageDLG('Can''t find library "'+GMV_LibName+'".',mtError,[mbok],0)
+    MessageDLG('Can''t find library '+VitalsDLLName+'.',mtError,[mbok],0)
   else
     LoadVitalsList;
   //End Vitals Lite
@@ -613,7 +609,6 @@ begin
   @VLPtVitals := GetProcAddress(VitalsDLLHandle,PChar(GMV_FName));
   if assigned(VLPtVitals) then
   begin
-    frmFrame.DLLActive := True;  // need this flag for CCOW (RV)
     VitalsList := VLPtVitals(RPCBrokerV,Patient.DFN,U,false);
     if assigned(VitalsList) then
       LoadVitalView(VitalsList);
@@ -621,7 +616,6 @@ begin
   else
     MessageDLG('Can''t find function "'+GMV_FName+'".',mtError,[mbok],0);
   @VLPtVitals := nil;
-  frmFrame.DLLActive := False;  // need this flag for CCOW (RV)
 end;
 //End Vitals Lite
 

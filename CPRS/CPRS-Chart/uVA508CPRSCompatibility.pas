@@ -275,8 +275,9 @@ end;
 
 procedure SpeakPatient;
 begin
-  if assigned(Patient) and (Patient.Name <> '') then
-    GetScreenReader.Speak(Patient.Name);
+  //CQ #17491: Associating 508 change that allows JAWS to dictate the patient status indicator along with the name.
+  if assigned(Patient) and (Patient.Name <> '') and (Patient.Status <> '') then
+    GetScreenReader.Speak(Patient.Name + Patient.Status);
 end;
 
 procedure SpeakTabAndPatient;
@@ -288,8 +289,9 @@ begin
     text := text + ' tab';
   if text <> '' then
     text := text + ', ';
-  if assigned(Patient) and (Patient.Name <> '') then
-    text := text + Patient.Name
+  //CQ #17491: Associating 508 change that allows JAWS to dictate the patient status indicator along with the name.
+  if assigned(Patient) and (Patient.Name <> '') and (Patient.Status <> '') then
+    text := text + Patient.Name + Patient.Status
   else
     text := text + 'no patient selected';
   if text <> '' then

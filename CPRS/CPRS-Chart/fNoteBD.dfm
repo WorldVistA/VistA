@@ -1,14 +1,16 @@
 inherited frmNotesByDate: TfrmNotesByDate
-  Left = 590
-  Top = 294
+  Left = 544
+  Top = 280
   BorderIcons = []
   Caption = 'List Signed Notes by Date Range'
   ClientHeight = 151
   ClientWidth = 251
   OldCreateOrder = True
   Position = poScreenCenter
+  ExplicitLeft = 544
+  ExplicitTop = 280
   ExplicitWidth = 259
-  ExplicitHeight = 178
+  ExplicitHeight = 185
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]

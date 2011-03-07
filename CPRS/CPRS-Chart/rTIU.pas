@@ -912,7 +912,8 @@ end;
 function AllowChartPrintForNote(ANote: Integer): Boolean;
 { returns true if a progress note may be printed outside of MAS }
 begin
-  Result := (Piece(sCallV('TIU GET DOCUMENT PARAMETERS', [ANote]), U, 9) = '1');
+  Result := (Piece(sCallV('TIU GET DOCUMENT PARAMETERS', [ANote]), U, 9) = '1')
+            or (sCallV('TIU AUTHORIZATION', [ANote , 'PRINT RECORD']) = '1');
   //        or (sCallV('TIU USER IS MEMBER OF CLASS', [User.DUZ, 'MEDICAL INFORMATION SECTION']) = '1');
   //         (V16? - RV)  New TIU RPC required, per discussion on NOIS MAR-0900-21265
 end;

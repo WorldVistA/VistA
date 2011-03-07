@@ -24,7 +24,6 @@ type
     orpnlTopBottom: TORAutoPanel;
     cboEncLoc: TComboBox;
     procedure pnlFieldsResize(Sender: TObject);
-    //procedure FormCreate(Sender: TObject);
     procedure orderGridMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure OrderGridDrawCell(Sender: TObject; ACol, ARow: Integer;
@@ -37,21 +36,25 @@ type
     procedure btnOKClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
+    CLoc,WLoc: string;
+    CIEN,WIEN: integer;
     function ValFor(FieldID, ARow: Integer): string;
     procedure ShowEditor(ACol, ARow: Integer; AChar: Char);
     procedure ProcessClinicOrders(WardList, ClinicList: TStringList; WardIEN, ClinicIEN: integer; ContainsIMO: boolean);
     procedure rpcChangeOrderLocation(pOrderList:TStringList; ContainsIMO: boolean);
+    function ClinicText(ALoc: integer): string;
   public
      { Public declarations }
-  CLoc,WLoc: string;
   CloseOK: boolean;
   DisplayOrders: boolean;
   procedure PrintLocation(OrderLst: TStringList; pEncounterLoc: integer; pEncounterLocName, pEncounterLocText: string;
              pEncounterDT: TFMDateTime; pEncounterVC: Char; var ClinicLst, WardLst: TStringList;
              var wardIEN: integer; var wardLocation: string; ContainsIMOOrders: boolean; displayEncSwitch: boolean = false);
   procedure SwitchEncounterLoction(pEncounterLoc: integer; pEncounterLocName, pEncounterLocText: string; pEncounterDT: TFMDateTime; pEncounterVC: Char);
+  function rpcIsPatientOnWard(Patient: string): string;
   end;
 
 var
@@ -72,10 +75,11 @@ COL_ORDERINFO = 0;
 COL_ORDERTEXT = 1;
 COL_LOCATION  = 2;
 TAB           = #9;
-  LOCATION_CHANGE_1 = 'This patient is currently admitted to ward';
-  LOCATION_CHANGE_2 = 'These orders are written at clinic';
-  LOCATION_CHANGE_3 = 'What Location are these orders associated with?';
-  LOCATION_CHANGE_4 = 'The encounter location is currently at clinic';
+  LOCATION_CHANGE_1  = 'The patient is admitted to ward';
+  LOCATION_CHANGE_2  = 'You have the chart open to a clinic location of';
+  LOCATION_CHANGE_2W = 'You have the chart open with the patient still on ward';
+  LOCATION_CHANGE_3  = 'What Location are these orders associated with?';
+  LOCATION_CHANGE_4  = 'The patient has now been admitted to ward: ';
 
 
 { TfrmPrintLocation }
@@ -178,29 +182,23 @@ begin
     Action := caFree;
 end;
 
+procedure TfrmPrintLocation.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  frmPrintLocation := nil;
+end;
+
 procedure TfrmPrintLocation.FormResize(Sender: TObject);
 begin
   inherited;
   pnlFieldsResize(Sender)
 end;
 
-(*procedure TfrmPrintLocation.FormCreate(Sender: TObject);
-var
-  ListCount: Integer;
-  x: string;
+function TfrmPrintLocation.ClinicText(ALoc: integer): string;
 begin
-   inherited;
-   with OrderGrid do
-     begin
-       ColWidths[0] := 8;
-       ColWidths[1] := 50;
-       ColWidths[2] := 50;
-       Cells[1,0] := 'Order';
-       Cells[2,0] := 'Location';
-     end;
-   //TAccessibleStringGrid.WrapControl(OrderGrid);
-
-end;  *)
+  if SCallV('ORIMO ISCLOC', [ALoc]) = '1' then Result := LOCATION_CHANGE_2
+  else Result := LOCATION_CHANGE_2W
+end;
 
 procedure TfrmPrintLocation.OrderGridDrawCell(Sender: TObject; ACol,
   ARow: Integer; Rect: TRect; State: TGridDrawState);
@@ -250,7 +248,13 @@ begin
         lblText.Caption := LOCATION_CHANGE_1 + ': ' + frmPrintLocation.WLoc + CRLF;
         if frmPrintLocation.DisplayOrders = false then
           begin
-            lblText.Caption := lblText.Caption + LOCATION_CHANGE_4 + ': ' + frmPrintLocation.CLoc + CRLF;
+            if frmPrintlocation.CLoc = '' then
+              begin
+                lblText.Caption := LOCATION_CHANGE_4 + frmPrintLocation.WLoc + CRLF;
+                cboEncLoc.Enabled := false;
+                lblEncounter.Enabled := false;
+              end
+            else lblText.Caption := lblText.Caption + ClinicText(frmPrintLocation.CIEN) + ': ' + frmPrintLocation.CLoc + CRLF;
             btnClinic.Visible := false;
             btnWard.Visible := false;
             pnlTop.Height := lbltext.Top + lbltext.Height * 2;
@@ -264,9 +268,9 @@ begin
           end
         else
           begin
-            lblText.Caption := lblText.Caption + LOCATION_CHANGE_2 + ': ' + frmPrintLocation.CLoc + CRLF + CRLF;
+            lblText.Caption := lblText.Caption + ClinicText(frmPrintLocation.CIEN) + ': ' + frmPrintLocation.CLoc + CRLF + CRLF;
             lblText.Caption := lblText.Caption + LOCATION_CHANGE_3;
-            lblText.Caption := lblText.Caption + CRLF + 'One clinic location allowed; ' + frmPrintLocation.CLoc + ' will be used';
+            //lblText.Caption := lblText.Caption + CRLF + 'One clinic location allowed; ' + frmPrintLocation.CLoc + ' will be used';
             btnClinic.Caption := 'All ' + frmPrintLocation.CLoc;
             btnWard.Caption := 'All ' + frmPrintLocation.WLoc;
             btnClinic.Width := TextWidthByFont(btnClinic.Handle, btnClinic.Caption);
@@ -334,6 +338,7 @@ OrderInfo, OrderText: string;
 cidx, i, widx: integer;
 begin
   frmPrintLocation := TfrmPrintLocation.Create(Application);
+  try
   frmPrintLocation.DisplayOrders := true;
   frmPrintLocation.CloseOK := false;
   ClinicArr := TStringList.Create;
@@ -344,6 +349,8 @@ begin
   frmPrintLocation.cboEncLoc.Enabled := displayEncSwitch;
   frmPrintLocation.Cloc := pEncounterLocName;
   frmPrintLocation.WLoc := WardLocation;
+  frmPrintLocation.CIEN := pEncounterLoc;
+  frmPrintLocation.WIEN := wardIEN;
   ResizeAnchoredFormToFont(frmPrintLocation);
   frmPrintLocation.orderGrid.DefaultRowHeight := frmPrintLocation.cbolocation.Height;
   for i := 0 to OrderLst.Count - 1 do
@@ -368,26 +375,18 @@ begin
   widx := frmPrintLocation.cboEncLoc.Items.IndexOf(frmPrintLocation.WLoc);
   if frmPrintLocation.cboEncLoc.ItemIndex = cidx then
     begin
-      //Encounter.Location := pEncounterLoc;
-      //Encounter.LocationName := pEncounterLocName;
-      //Encounter.LocationText := pEncounterLocText;
       uCore.Encounter.EncounterSwitch(pEncounterLoc, pEncounterLocName, pEncounterLocText, pEncounterDT, pEncounterVC);
       fframe.frmFrame.DisplayEncounterText;
-      //fframe.frmFrame.DoNotChangeEncWindow := true;
       fframe.frmFrame.OrderPrintForm := True;
     end
   else if frmPrintLocation.cboEncLoc.ItemIndex = widx then
     begin
-    uCore.Encounter.EncounterSwitch(WardIEN, WardLocation, '', Patient.AdmitTime, 'H');
-   (* Encounter.Location := WardIEN;
-    Encounter.DateTime := Patient.AdmitTime;
-    Encounter.VisitCategory := 'H';
-    Encounter.Location := WardIEN;
-    Encounter.LocationName := WardLocation; *)
-      //fframe.frmFrame.DoNotChangeEncWindow := false;
+    uCore.Encounter.EncounterSwitch(WardIEN, WardLocation, WardLocation, Patient.AdmitTime, 'H');
       fFrame.frmFrame.DisplayEncounterText;
     end;
-  frmPrintLocation.Close;
+  finally
+   frmPrintLocation.Destroy;
+  end;
 end;
 
 procedure TfrmPrintLocation.ProcessClinicOrders(WardList, ClinicList: TStringList;
@@ -421,10 +420,15 @@ begin
 end;
 
 
+function TfrmPrintLocation.rpcIsPatientOnWard(Patient: string): string;
+begin
+  //Ward Loction Name^Ward Location IEN
+  result := sCallV('ORWDX1 PATWARD',[Patient]);
+end;
+
 procedure TfrmPrintLocation.ShowEditor(ACol, ARow: Integer; AChar: Char);
 var
   tmpText: string;
-  //Index: integer;
 
   procedure PlaceControl(AControl: TWinControl);
   var
@@ -454,10 +458,7 @@ var
 
 begin
   inherited;
-  //if AChar = ' ' then AChar := #0;
   if ARow = 0 then Exit;
-  //with OrderGrid do if (Acol > COL_ORDER) and (ValFor(COL_ORDER, ARow) = '') then Exit;
-  //if (ACol = COL_Order) and (ARow > 1) and (ValFor(COL_Order, ARow-1) = '') then Exit;
   Case ACol of
   COL_LOCATION: begin
                   TmpText := ValFor(COL_Location, ARow);
@@ -474,8 +475,8 @@ var
 cidx, widx, WardIEN: integer;
 Asvc, WardLocation: string;
 begin
-  //frmPrintLocation.Caption := 'Refresh Encounter Location Form';
   frmPrintLocation := TfrmPrintLocation.Create(Application);
+  try
   frmPrintLocation.DisplayOrders := false;
   frmPrintLocation.CloseOK := false;
   CurrentLocationForPatient(Patient.DFN, WardIEN, WardLocation, ASvc);
@@ -483,6 +484,8 @@ begin
   frmPrintLocation.cboEncLoc.Enabled := True;
   frmPrintLocation.Cloc := pEncounterLocName;
   frmPrintLocation.WLoc := WardLocation;
+  frmPrintLocation.CIEN := pEncounterLoc;
+  frmPrintLocation.WIEN := wardIEN;
   ResizeAnchoredFormToFont(frmPrintLocation);
   frmPrintLocation.cboEncLoc.Items.Add(frmPrintLocation.CLoc);
   frmPrintLocation.cboEncLoc.Items.Add(frmPrintLocation.WLoc);
@@ -490,23 +493,23 @@ begin
   frmPrintLocation.ShowModal;
   cidx := frmPrintLocation.cboEncLoc.Items.IndexOf(frmPrintLocation.CLoc);
   widx := frmPrintLocation.cboEncLoc.Items.IndexOf(frmPrintLocation.WLoc);
+  if frmPrintLocation.cboEncLoc.Enabled = FALSE then frmPrintLocation.cboEncLoc.ItemIndex := widx;
+  
   if frmPrintLocation.cboEncLoc.ItemIndex = cidx then
     begin
       Encounter.Location := pEncounterLoc;
       Encounter.LocationName := pEncounterLocName;
       Encounter.LocationText := pEncounterLocText;
       fframe.frmFrame.DisplayEncounterText;
-      //fframe.frmFrame.DoNotChangeEncWindow := true;
     end
   else if frmPrintLocation.cboEncLoc.ItemIndex = widx then
     begin
       uCore.Encounter.EncounterSwitch(WardIEN, WardLocation, '', Patient.AdmitTime, 'H');
-      (*Encounter.Location := WardIEN;
-      Encounter.LocationName := WardLocation; *)
-      //fframe.frmFrame.DoNotChangeEncWindow := false;
       fFrame.frmFrame.DisplayEncounterText;
     end;
-  frmPrintLocation.Close;
+  finally
+    frmPrintLocation.Destroy;
+  end;
 end;
 
 function TfrmPrintLocation.ValFor(FieldID, ARow: Integer): string;

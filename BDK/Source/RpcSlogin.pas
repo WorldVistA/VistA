@@ -4,7 +4,7 @@
 	Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
 	Developers: Danila Manapsal, Joel Ivey
 	Description: Silent Login functionality.
-	Current Release: Version 1.1 Patch 47 (February 7, 2007))
+	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
 *************************************************************** }
 
 unit RpcSLogin;
@@ -34,7 +34,10 @@ end; }
 function SilentLogIn(SLBroker: TRPCBroker): boolean;
 procedure GetUserInfo(ConnectedBroker: TRPCBroker);
 procedure GetSessionInfo(ConnectedBroker: TRPCBroker);
-procedure StartProgSLogin(const ProgLine: String; ConnectedBroker: TRPCBroker);
+// 080620 added WindowType argument to StartProgSLogin with SW_NORMAL as default
+// to allow SSH startup to specify a minimized window
+//procedure StartProgSLogin(const ProgLine: String; ConnectedBroker: TRPCBroker);
+procedure StartProgSLogin(const ProgLine: String; ConnectedBroker: TRPCBroker; WindowType: Integer = SW_SHOWNORMAL);
 function CheckCmdLine(SLBroker: TRPCBroker): Boolean;
 
 implementation
@@ -136,7 +139,8 @@ begin
         if ValidAppHandle(SLBroker)then Result := True;
       if Login.Mode = lmNTToken then
           if ValidNTToken(SLBroker) then Result := True;
-      if Result and (not (SLBroker is TCCOWRPCBroker)) then
+//      if Result and (not (SLBroker is TCCOWRPCBroker)) then
+      IF Result and (SLBroker.Contextor = nil) then
       begin
         //determine if user is multidivisional - makes calls to Seldiv.
         LogIn.MultiDivision := MultDiv(SLBroker);
@@ -222,30 +226,47 @@ for the new application was loaded.  This procedure can also be used to start a 
 application. If the value for ConnectedBroker is nil, the application specified in ProgLine 
 will be started and any command line included in ProgLine will be passed to the application.
 }
-procedure StartProgSLogin(const ProgLine: String; ConnectedBroker: TRPCBroker);
+procedure StartProgSLogin(const ProgLine: String; ConnectedBroker: TRPCBroker; WindowType: Integer = SW_SHOWNORMAL);
 var
   StartupInfo: TStartupInfo;
   ProcessInfo: TProcessInformation;
   AppHandle: String;
   CmndLine: String;
+  //
+  currHandle1: THandle;
 begin
+  currHandle1 := GetCurrentProcess;
   FillChar(StartupInfo, SizeOf(TStartupInfo), 0);
   with StartupInfo do
   begin
     cb := SizeOf(TStartupInfo);
     dwFlags := STARTF_USESHOWWINDOW;
+// 080620 - removed code specific to SSH, replaced with new
+//          parameter to specify window type with default of
+//          SW_SHOWNORMAL
+{  
     wShowWindow := SW_SHOWNORMAL;
+    // 080618 following added to minimize SSH command box
+    if (Pos('SSH2',ProgLine) = 1) then
+      wShowWindow := SW_SHOWMINIMIZED;
+}
+    WShowWindow := WindowType;
   end;
   CmndLine := ProgLine;
   if ConnectedBroker <> nil then
   begin
     AppHandle := GetAppHandle(ConnectedBroker);
-    CmndLine := CmndLine + ' s='+ConnectedBroker.Server + ' p=' 
+    CmndLine := CmndLine + ' s='+ConnectedBroker.Server + ' p='
                          + IntToStr(ConnectedBroker.ListenerPort) + ' h=' 
                          + AppHandle + ' d=' + ConnectedBroker.User.Division;
   end;
   CreateProcess(nil, PChar(CmndLine), nil, nil, False,
       NORMAL_PRIORITY_CLASS, nil, nil, StartupInfo, ProcessInfo);
+  // 080618 following added to handle closing of command box for SSH
+  CommandBoxProcessHandle := ProcessInfo.hProcess;
+  CommandBoxThreadHandle := ProcessInfo.hThread;
+  // 080618 make broker window active again, so user can type immediately
+  SetActiveWindow(currHandle1);
 end;
 
 {:

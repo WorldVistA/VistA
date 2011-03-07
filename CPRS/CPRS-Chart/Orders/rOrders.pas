@@ -39,6 +39,8 @@ type
     LinkObject:   TObject;
     EnteredInError:     Integer; //AGP Changes 26.12 PSI-04-053
     DCOriginalOrder: boolean;
+    IsOrderPendDC: boolean;
+    IsDelayOrder: boolean;
     procedure Assign(Source: TOrder);
     procedure Clear;
   end;
@@ -311,11 +313,16 @@ procedure GetTSListForEvt(Dest: TStrings; AnEvtID:integer);
 procedure GetChildEvent(var AChildList: TStringList; APtEvtID: string);
 
 { Order Checking }
+function IsMonograph(): Boolean; 
+procedure DeleteMonograph();
+procedure GetMonographList(ListOfMonographs: TStringList);
+procedure GetMonograph(Monograph: TStringList; x: Integer);
+procedure GetXtraTxt(OCText: TStringList; x: String; y: String);
 function FillerIDForDialog(IEN: Integer): string;
 function OrderChecksEnabled: Boolean;
 function OrderChecksOnDisplay(const FillerID: string): string;
 procedure OrderChecksOnAccept(ListOfChecks: TStringList; const FillerID, StartDtTm: string;
-  OIList: TStringList; DupORIFN: string);
+  OIList: TStringList; DupORIFN: string; Renewal: string);
 procedure OrderChecksOnDelay(ListOfChecks: TStringList; const FillerID, StartDtTm: string;
   OIList: TStringList);
 procedure OrderChecksForSession(ListOfChecks, OrderList: TStringList);
@@ -577,8 +584,8 @@ begin
 end;
 
 procedure SetOrderFields(AnOrder: TOrder; const x, y, z: string);
-{           1   2    3     4      5     6   7   8   9    10    11    12    13    14     15     16  17    18    19     20
-{ Pieces: ~IFN^Grp^ActTm^StrtTm^StopTm^Sts^Sig^Nrs^Clk^PrvID^PrvNam^ActDA^Flag^DCType^ChrtRev^DEA#^VA#^DigSig^IMO^DCOrigOrder}
+{           1   2    3     4      5     6   7   8   9    10    11    12    13    14     15     16  17    18    19     20         21          22
+{ Pieces: ~IFN^Grp^ActTm^StrtTm^StopTm^Sts^Sig^Nrs^Clk^PrvID^PrvNam^ActDA^Flag^DCType^ChrtRev^DEA#^VA#^DigSig^IMO^DCOrigOrder^ISDCOrder^IsDelayOrder}
 begin
   with AnOrder do
   begin
@@ -613,6 +620,10 @@ begin
     //if DGroupName = 'Non-VA Meds' then Text := 'Non-VA  ' + Text;
     if Piece(x,U,20) = '1' then DCOriginalOrder := True
     else DCOriginalOrder := False;
+    if Piece(X,u,21) = '1' then  IsOrderPendDC := True
+    else IsOrderPendDC := False;
+    if Piece(x,u,22) = '1' then IsDelayOrder := True
+    else IsDelayOrder := False;
   end;
 end;
 
@@ -1249,13 +1260,19 @@ procedure LoadOrderMenu(AnOrderMenu: TOrderMenu; AMenuIEN: Integer);
 var
   OrderMenuItem: TOrderMenuItem;
   i: Integer;
+  OrderTitle: String;
 begin
   CallV('ORWDXM MENU', [AMenuIEN]);
   with RPCBrokerV do if Results.Count > 0 then
   begin
     // Results[0] = Name^Cols^PathSwitch^^^LRFZX^LRFSAMP^LRFSPEC^LRFDATE^LRFURG^LRFSCH^PSJNPOC^
     //              GMRCNOPD^GMRCNOAT^GMRCREAF^^^^^
-    AnOrderMenu.Title   := Piece(Results[0], U, 1);
+   OrderTitle := Piece(Results[0], U, 1);
+   if (Pos('&', OrderTitle) > 0) and
+   (Copy(OrderTitle, Pos('&', OrderTitle) + 1, 1) <> '&') then
+   OrderTitle := Copy(OrderTitle, 1, Pos('&', OrderTitle)) + '&' + Copy(OrderTitle, Pos('&', OrderTitle) + 1, Length(OrderTitle));
+
+    AnOrderMenu.Title   := OrderTitle;
     AnOrderMenu.NumCols := StrToIntDef(Piece(Results[0], U, 2), 1);
     AnOrderMenu.KeyVars := Pieces(Results[0], U, 6, 6 + MAX_KEYVARS);
     for i := 1 to Results.Count - 1 do
@@ -2199,6 +2216,35 @@ end;
 function FillerIDForDialog(IEN: Integer): string;
 begin
   Result := sCallV('ORWDXC FILLID', [IEN]);
+end;  
+function IsMonograph(): Boolean;
+var ret: string;
+begin
+  ret := CharAt(sCallV('ORCHECK ISMONO', [nil]), 1);
+  Result := ret = '1';
+end;
+
+procedure GetMonographList(ListOfMonographs: TStringList);
+begin
+  CallV('ORCHECK GETMONOL', []);
+  FastAssign(RPCBrokerV.Results, ListOfMonographs);
+end;
+
+procedure GetMonograph(Monograph: TStringList; x: Integer);
+begin
+  CallV('ORCHECK GETMONO', [x]);
+  FastAssign(RPCBrokerV.Results, Monograph);
+end;
+
+procedure DeleteMonograph();
+begin
+  CallV('ORCHECK DELMONO', []);
+end;  
+
+procedure GetXtraTxt(OCText: TStringList; x: String; y: String);
+begin
+  CallV('ORCHECK GETXTRA', [x,y]);
+  FastAssign(RPCBrokerV.Results, OCText);
 end;
 
 function OrderChecksEnabled: Boolean;
@@ -2214,11 +2260,11 @@ begin
 end;
 
 procedure OrderChecksOnAccept(ListOfChecks: TStringList; const FillerID, StartDtTm: string;
-  OIList: TStringList; DupORIFN: string);
+  OIList: TStringList; DupORIFN: string; Renewal: string);
 begin
   // don't pass OIList if no items, since broker pauses 5 seconds per order
   if OIList.Count > 0
-    then CallV('ORWDXC ACCEPT', [Patient.DFN, FillerID, StartDtTm, Encounter.Location, OIList, DupORIFN])
+    then CallV('ORWDXC ACCEPT', [Patient.DFN, FillerID, StartDtTm, Encounter.Location, OIList, DupORIFN, Renewal])
     else CallV('ORWDXC ACCEPT', [Patient.DFN, FillerID, StartDtTm, Encounter.Location]);
   FastAssign(RPCBrokerV.Results, ListOfChecks);
 end;
@@ -2240,9 +2286,43 @@ begin
 end;
 
 procedure SaveOrderChecksForSession(const AReason: string; ListOfChecks: TStringList);
+var
+ i, inc, len, numLoop, remain, y: integer;
+ OCStr, TmpStr: string;
 begin
-  CallV('ORWDXC SAVECHK', [Patient.DFN, AReason, ListOfChecks]);
+  //CallV('ORWDXC SAVECHK', [Patient.DFN, AReason, ListOfChecks]);
   { no result used currently }
+  RPCBrokerV.ClearParameters := True;
+  RPCBrokerV.RemoteProcedure := 'ORWDXC SAVECHK';
+  RPCBrokerV.Param[0].PType := literal;
+  RPCBrokerV.Param[0].Value := Patient.DFN;  //*DFN*
+  RPCBrokerV.Param[1].PType := literal;
+  RPCBrokerV.Param[1].Value := AReason;
+  RPCBrokerV.Param[2].PType := list;
+  RPCBrokerV.Param[2].Mult['"ORCHECKS"'] := IntToStr(ListOfChecks.count);
+  for i := 0 to ListOfChecks.Count - 1 do
+    begin
+       OCStr := ListofChecks.Strings[i];
+       len := Length(OCStr);
+       if len > 255 then
+        begin
+          numLoop := len div 255;
+          remain := len mod 255;
+          inc := 0;
+          while inc <= numLoop do
+            begin
+              tmpStr := Copy(OCStr, 1, 255);
+              OCStr := Copy(OCStr, 256, Length(OcStr));
+              RPCBrokerV.Param[2].Mult['"ORCHECKS",' + InttoStr(i) + ',' + InttoStr(inc)] := tmpStr;
+              inc := inc +1;
+            end;
+          if remain > 0 then  RPCBrokerV.Param[2].Mult['"ORCHECKS",' + InttoStr(i) + ',' + inttoStr(inc)] := OCStr;
+
+        end
+      else
+       RPCBrokerV.Param[2].Mult['"ORCHECKS",' + InttoStr(i)] := OCStr;
+    end;
+   CallBroker;
 end;
 
 function DeleteCheckedOrder(const OrderID: string): Boolean;

@@ -95,6 +95,7 @@ function GetProcedureIEN(ORIEN: string): string;
 function GetConsultOrderIEN(ConsultIEN: integer): string;
 function GetServicePrerequisites(Service: string): TStrings;
 procedure GetProvDxMode(var ProvDx: TProvisionalDiagnosis; SvcIEN: string);
+function IsProstheticsService(SvcIen: int64) : string;
 
 { Clinical Procedures Specific}
 function GetSavedCPFields(NoteIEN: integer): TEditNoteRec;
@@ -353,6 +354,8 @@ begin
       InOut                 := Piece(x, U, 18)  ;
       Findings              := Piece(x, U, 19)  ;
       TIUResultNarrative    := StrToIntDef(Piece(x, U, 20),0);
+      EarliestDate          := StrToFloatDef(Piece(x, U, 98), 0);
+      //LatestDate            := StrToFloatDef(Piece(x, U, 99), 0); //dropped requirement WAT
       //ProvDiagnosis         := Piece(x, U, 23);  NO!!!!! Up to 180 Characters!!!!
       alist.delete(0) ;
       TIUDocuments := TStringList.Create ;
@@ -667,6 +670,8 @@ begin
          ConsultProcName := Piece(ExtractDefault(Dest, 'PROCEDURE'), U, 2);
          Urgency         := StrToIntDef(Piece(ExtractDefault(Dest, 'URGENCY'), U, 3), 0);
          UrgencyName     := Piece(ExtractDefault(Dest, 'URGENCY'), U, 2);
+         EarliestDate    := StrToFloatDef(Piece(ExtractDefault(Dest, 'EARLIEST'), U, 2), 0);
+         //LatestDate      := StrToFloatDef(Piece(ExtractDefault(Dest, 'LATEST'), U, 2), 0); //dropped requirement WAT
          Place           := Piece(ExtractDefault(Dest, 'PLACE'), U, 1);
          PlaceName       := Piece(ExtractDefault(Dest, 'PLACE'), U, 2);
          Attention       := StrToInt64Def(Piece(ExtractDefault(Dest, 'ATTENTION'), U, 1), 0);
@@ -733,6 +738,10 @@ begin
               for i := 0 to NewComments.Count - 1 do
                 Mult['10,' + IntToStr(i+1)] := NewComments.Strings[i];
             end;
+          if EarliestDate > 0 then
+             Mult['11']  := 'GMRCERDT^'  + FloatToStr(EarliestDate);  //wat renamed v28
+          {if LatestDate > 0 then
+             Mult['12']  := 'GMRCLATE^'  + FloatToStr(LatestDate);} //dropped requirement WAT
         end;
       CallBroker;
       Result := '0';
@@ -834,6 +843,11 @@ begin
     end;
   Result := AnEditRec;
 end;
+
+function IsProstheticsService(SvcIen : int64) : string;  //wat v28
+ begin
+   Result := sCallV('ORQQCN ISPROSVC', [SvcIen]);
+ end;
 
 initialization
   uLastOrderedIEN := 0;

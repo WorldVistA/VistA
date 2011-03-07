@@ -1,12 +1,12 @@
 object rpcConfig: TrpcConfig
-  Left = 359
+  Left = 421
   Top = 329
   HelpContext = 4
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Connect To'
   ClientHeight = 157
-  ClientWidth = 494
+  ClientWidth = 428
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,7 +22,7 @@ object rpcConfig: TrpcConfig
   object cboServer: TComboBox
     Left = 8
     Top = 16
-    Width = 482
+    Width = 416
     Height = 24
     Hint = 'Choose a Server Name'
     Style = csDropDownList
@@ -39,7 +39,7 @@ object rpcConfig: TrpcConfig
   object Panel2: TPanel
     Left = 0
     Top = 133
-    Width = 494
+    Width = 428
     Height = 24
     Align = alBottom
     TabOrder = 3
@@ -115,8 +115,8 @@ object rpcConfig: TrpcConfig
     end
   end
   object btnOk: TBitBtn
-    Left = 5
-    Top = 104
+    Left = 21
+    Top = 96
     Width = 85
     Height = 26
     Anchors = [akLeft, akBottom]
@@ -192,8 +192,8 @@ object rpcConfig: TrpcConfig
     IsControl = True
   end
   object btnCancel: TBitBtn
-    Left = 108
-    Top = 104
+    Left = 124
+    Top = 96
     Width = 85
     Height = 26
     Anchors = [akLeft, akBottom]
@@ -212,8 +212,8 @@ object rpcConfig: TrpcConfig
     IsControl = True
   end
   object btnHelp: TBitBtn
-    Left = 211
-    Top = 104
+    Left = 226
+    Top = 96
     Width = 85
     Height = 25
     Anchors = [akRight, akBottom]
@@ -221,22 +221,13 @@ object rpcConfig: TrpcConfig
     Kind = bkHelp
   end
   object btnNew: TButton
-    Left = 313
-    Top = 104
+    Left = 327
+    Top = 96
     Width = 85
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = '&New'
     TabOrder = 5
     OnClick = btnNewClick
-  end
-  object btnDelete: TButton
-    Left = 416
-    Top = 104
-    Width = 75
-    Height = 25
-    Caption = '&Delete'
-    TabOrder = 6
-    OnClick = btnDeleteClick
   end
 end

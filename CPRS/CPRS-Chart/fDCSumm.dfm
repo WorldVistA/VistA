@@ -9,7 +9,7 @@ inherited frmDCSumm: TfrmDCSumm
   Menu = mnuSumms
   OnDestroy = FormDestroy
   ExplicitWidth = 687
-  ExplicitHeight = 428
+  ExplicitHeight = 436
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
@@ -194,6 +194,7 @@ inherited frmDCSumm: TfrmDCSumm
         Font.Height = -11
         Font.Name = 'Courier New'
         Font.Style = []
+        MaxLength = 2147483645
         ParentFont = False
         PlainText = True
         PopupMenu = popSummMemo

@@ -811,6 +811,7 @@ begin
   SearchOpts := [];
   with ARichEdit do
   begin
+    SetFocus;
     { begin the search after the current selection if there is one }
     { otherwise, begin at the start of the text }
     if SelStart <> 0 then
@@ -840,6 +841,7 @@ begin
       if not (frReplaceAll in AFindDialog.Options) then InfoBox(TX_NOMATCH, TC_NOMATCH, MB_OK);
       SelStart := 0;
       SelLength := 0;
+      Windows.SetFocus(AFindDialog.Handle);
       //AFindDialog.CloseDialog;
     end;
   end;

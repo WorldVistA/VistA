@@ -1,5 +1,5 @@
 unit fGraphSettings;
-                                          
+
 interface
 
 uses
@@ -85,7 +85,7 @@ type
 
 var
   frmGraphSettings: TfrmGraphSettings;
-  
+
   procedure DialogOptionsGraphSettings(topvalue, leftvalue, fontsize: integer;
     var actiontype: boolean);
   procedure DialogGraphSettings(fontsize: integer;  var okbutton: boolean;
@@ -98,6 +98,9 @@ implementation
 
 uses
   rGraphs, fGraphData, VAUtils;
+
+var
+  FPersonalSettings, FPublicSettings, FCloseSettings: string;
 
 procedure DialogOptionsGraphSettings(topvalue, leftvalue, fontsize: integer;
   var actiontype: boolean);
@@ -143,9 +146,11 @@ end;
 procedure DialogGraphSettings(fontsize: integer;  var okbutton: boolean;
   aGraphSetting: TGraphSetting; DisplaySource: TStrings; var conv: integer; var aSettings: string);
 var
+  t1, t2: string;
   aList: TStrings;
   frmGraphSettings: TfrmGraphSettings;
 begin
+  FCloseSettings := '';
   okbutton := false;
   aSettings := '';
   aList := TStringList.Create;
@@ -159,8 +164,9 @@ begin
         cboDateRangeOutpatient.Items.Delete(0);
       FastAssign(cboDateRangeOutpatient.Items, cboDateRangeInpatient.Items);
       FastAssign(rpcGetGraphSettings, aList);
-      btnPersonal.Hint := GetPersonalSetting;
-      btnPublic.Hint := GetPublicSetting;
+      t1 := GetPersonalSetting; t2 := GetPublicSetting;   // t1 are personal, t2 public settings
+      FPersonalSettings := t1;
+      FPublicSettings := t2;
       GetTypeList(aList);
       SetSources(aList, DisplaySource);
       SetSettings(aGraphSetting);
@@ -176,7 +182,7 @@ begin
       okbutton := (btnClose.Tag = 1);
       if okbutton then
       begin
-        aSettings := btnClose.Hint;
+        aSettings := FCloseSettings;
         conv := cboConversions.ItemIndex;
         ChangeSources(DisplaySource);
         ChangeSettings(aGraphSetting);
@@ -325,14 +331,15 @@ begin
     spnMaxSelect.Position := MaxSelect;
     spnMaxSelect.Min := MaxSelectMin;
     spnMaxSelect.Max := MaxSelectMax;
-    cboDateRangeOutpatient.SelectByID(GetDefaultOutpatientDate);
-    cboDateRangeInpatient.SelectByID(GetDefaultInpatientDate);
+    cboDateRangeOutpatient.SelectByID(DateRangeOutpatient);
+    cboDateRangeInpatient.SelectByID(DateRangeInpatient);
     if SortByType then SortColumn := 1 else SortColumn := 0;
     lstOptions.Tag := SortColumn;
     if (SortColumn > 0) then
       if Pos(SETTING_SORT, OptionSettings) = 0 then
         OptionSettings := OptionSettings + SETTING_SORT;
-    if Turbo then OptionSettings := OptionSettings + SETTING_TURBO;
+    if Turbo then
+      OptionSettings := OptionSettings + SETTING_TURBO;
     if GraphPublicEditor or GraphTurboOn then
     begin
       lstOptions.Items.Add('Turbo^N');
@@ -453,7 +460,7 @@ end;
 procedure TfrmGraphSettings.btnCloseClick(Sender: TObject);
 begin
   btnClose.Tag := 1; // forces check for changes
-  btnClose.Hint := DisplaySettings;
+  FCloseSettings := DisplaySettings;
   Close;
 end;
 
@@ -482,9 +489,9 @@ begin
   settings := settings + '|';
   settings := settings + txtMaxGraphs.Text + '|';
   settings := settings + txtMinGraphHeight.Text + '|';
-  settings := settings + '|';     // not used
+  settings := settings + '|';     // not used - reserved - set by server
   settings := settings + txtMaxSelect.Text + '|';
-  settings := settings + Piece(btnPublic.Hint, '|', 8) + '|';
+  settings := settings + Piece(FPublicSettings, '|', 8) + '|';
   settings := settings + cboDateRangeOutpatient.ItemID + '|';
   settings := settings + cboDateRangeInpatient.ItemID + '|';
   Result := settings;
@@ -496,9 +503,9 @@ var
   dfntype, filename, settings, settings1, settings2, value: string;
 begin
   if Sender = btnPublic then
-    settings := btnPublic.Hint
+    settings := FPublicSettings
   else
-    settings := btnPersonal.Hint;
+    settings := FPersonalSettings;
   settings1 := Piece(settings, '|', 1);
   settings2 := Piece(settings, '|', 2);  //piece 3 not used
   spnMaxGraphs.Position := strtointdef(Piece(settings, '|', 4), 5);
@@ -590,22 +597,13 @@ begin
   if (Sender = btnPersonalSave) then
   begin
     rpcSetGraphSettings(settings, '0');
-    btnPersonal.Hint := settings;
+    FPersonalSettings := settings;
   end;
   if (Sender = btnPublicSave) then
   begin
+    SetPiece(settings, '|', 6, Piece(FPublicSettings, '|', 6));  // retain turbo setting
     rpcSetGraphSettings(settings, '1');
-    btnPublic.Hint := settings;
-  end;
-  if length(btnPersonal.Hint) > 0 then
-  begin
-    SetDefaultInpatientDate(Piece(btnPersonal.Hint, '|', 10));
-    SetDefaultOutpatientDate(Piece(btnPersonal.Hint, '|', 9));
-  end
-  else
-  begin
-    SetDefaultInpatientDate(Piece(btnPublic.Hint, '|', 10));
-    SetDefaultOutpatientDate(Piece(btnPublic.Hint, '|', 9));
+    FPublicSettings := settings;
   end;
 end;
 

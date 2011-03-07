@@ -1,8 +1,6 @@
 inherited frmGraphProfiles: TfrmGraphProfiles
   Left = 721
   Top = 528
-  HorzScrollBar.Visible = False
-  VertScrollBar.Visible = False
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsDialog
   Caption = 'Select Items and Define Views'
@@ -13,7 +11,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
   OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 483
-  ExplicitHeight = 404
+  ExplicitHeight = 411
   PixelsPerInch = 96
   TextHeight = 13
   object lblSelection: TLabel [0]
@@ -148,7 +146,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     OnClick = btnRemoveAllClick
   end
   object lstItemsDisplayed: TORListBox [13]
-    Left = 319
+    Left = 312
     Top = 44
     Width = 150
     Height = 228
@@ -285,7 +283,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     ParentShowHint = False
     ShowHint = False
     TabOrder = 3
-    OnClick = btnAddAllClick
+    OnClick = cboAllItemsClick
   end
   object btnRename: TButton [19]
     Left = 195
@@ -485,12 +483,12 @@ inherited frmGraphProfiles: TfrmGraphProfiles
           ShowHint = False
           TabOrder = 0
           OnDblClick = lstSourcesDblClick
-          OnEnter = lstSourcesEnter
-          OnExit = lstSourcesExit
+          OnEnter = lstOtherSourcesEnter
+          OnExit = lstOtherSourcesExit
           ItemTipColor = clWindow
           LongList = False
           Pieces = '2'
-          OnChange = lstSourcesChange
+          OnChange = lstOtherSourcesChange
         end
         object pnlOtherViews: TPanel
           Left = 0

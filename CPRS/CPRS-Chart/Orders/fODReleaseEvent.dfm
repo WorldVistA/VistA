@@ -8,7 +8,7 @@ inherited frmOrdersReleaseEvent: TfrmOrdersReleaseEvent
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ExplicitWidth = 494
-  ExplicitHeight = 488
+  ExplicitHeight = 495
   PixelsPerInch = 96
   TextHeight = 13
   object lblRelease: TLabel [0]

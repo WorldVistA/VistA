@@ -31,6 +31,7 @@ type
       Direction, InsertAt: Integer);
     procedure cboCosignerExit(Sender: TObject);
   private
+    FStartingCosigner: Int64;
     { Private declarations }
   public
     { Public declarations }
@@ -97,7 +98,7 @@ begin
   cboCosigner.Items.Add('0^<none>');
   cboCosigner.InitLongList(cosignername);
   cboCosigner.SelectByIEN(cosigner);
-  cboCosigner.Tag := cosigner;
+  FStartingCosigner := cosigner;
   chkAskSubject.Checked := rpcGetSubject;
   if chkAskSubject.Checked then chkAskSubject.Tag := 1;
 end;
@@ -125,7 +126,7 @@ begin
   if (Checked and (Tag = 0)) or (not Checked and (Tag = 1)) then
     rpcSetSubject(Checked);
   with cboCosigner do
-    if Tag <> ItemIEN then
+    if FStartingCosigner <> ItemIEN then
       rpcSetDefaultCosigner(ItemIEN);
   ResetTIUPreferences;
   ResetDCSummPreferences;

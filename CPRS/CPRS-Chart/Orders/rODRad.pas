@@ -12,7 +12,7 @@ function PatientOnIsolationProcedures(const PatientDFN: string): boolean ;  //*D
 function SubsetOfRadiologists: TStrings;
 function SubsetOfImagingTypes: TStrings;
 function SubsetOfRadSources(SrcType: string): TStrings;
-function LocationType(Location: integer): string;  
+function LocationType(Location: integer): string;
 function ReasonForStudyCarryOn: Boolean;
 
 implementation
@@ -73,7 +73,7 @@ end ;
 function LocationType(Location: integer): string;
 begin
   Result := sCallV('ORWDRA32 LOCTYPE',[Location]);
-end;    
+end;
 
 function ReasonForStudyCarryOn: Boolean;
 begin

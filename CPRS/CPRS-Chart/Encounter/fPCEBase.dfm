@@ -4,6 +4,7 @@ inherited frmPCEBase: TfrmPCEBase
   Caption = 'Basic Page'
   ClientHeight = 400
   ClientWidth = 624
+  Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   ExplicitWidth = 320

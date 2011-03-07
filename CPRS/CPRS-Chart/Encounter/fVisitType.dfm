@@ -6,9 +6,8 @@ inherited frmVisitType: TfrmVisitType
   Constraints.MinHeight = 465
   Constraints.MinWidth = 600
   OnCloseQuery = FormCloseQuery
-  ExplicitLeft = 260
   ExplicitWidth = 600
-  ExplicitHeight = 472
+  ExplicitHeight = 465
   PixelsPerInch = 96
   TextHeight = 13
   inherited btnOK: TBitBtn
@@ -192,7 +191,7 @@ inherited frmVisitType: TfrmVisitType
       Height = 164
       Align = alRight
       TabOrder = 1
-      ExplicitLeft = 384
+      ExplicitLeft = 422
       ExplicitWidth = 208
       ExplicitHeight = 164
       inherited gbVisitRelatedTo: TGroupBox
@@ -255,6 +254,7 @@ inherited frmVisitType: TfrmVisitType
         TabOrder = 0
         OnEnter = memSCDisplayEnter
         Caption = 'Service Connection && Rated Disabilities'
+        ExplicitWidth = 422
       end
     end
   end

@@ -2,24 +2,24 @@ inherited frmODMeds: TfrmODMeds
   Left = 321
   Top = 183
   Width = 584
-  Height = 572
-  HorzScrollBar.Range = 558
-  VertScrollBar.Range = 399
+  Height = 578
+  AutoScroll = True
   Caption = 'Medication Order'
   Constraints.MinHeight = 325
+  Constraints.MinWidth = 452
   OnShow = FormShow
   ExplicitWidth = 584
-  ExplicitHeight = 572
+  ExplicitHeight = 578
   DesignSize = (
     576
-    545)
+    544)
   PixelsPerInch = 96
   TextHeight = 13
   object pnlMeds: TPanel [0]
     Left = 6
     Top = 34
     Width = 580
-    Height = 470
+    Height = 476
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
     TabOrder = 1
@@ -67,7 +67,7 @@ inherited frmODMeds: TfrmODMeds
       Left = 0
       Top = 137
       Width = 580
-      Height = 333
+      Height = 339
       Align = alClient
       BevelInner = bvLowered
       BevelOuter = bvNone
@@ -98,17 +98,16 @@ inherited frmODMeds: TfrmODMeds
   end
   inherited memOrder: TCaptionMemo
     Tag = 13
-    Top = 505
+    Top = 511
     Width = 502
-    TabStop = True
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 4
-    ExplicitTop = 505
+    ExplicitTop = 511
     ExplicitWidth = 502
   end
   object txtMed: TEdit [2]
     Left = 6
-    Top = 6
+    Top = 12
     Width = 580
     Height = 21
     Anchors = [akLeft, akTop, akRight]
@@ -122,7 +121,7 @@ inherited frmODMeds: TfrmODMeds
   end
   object btnSelect: TButton [3]
     Left = 515
-    Top = 505
+    Top = 511
     Width = 72
     Height = 21
     Anchors = [akRight, akBottom]
@@ -134,9 +133,9 @@ inherited frmODMeds: TfrmODMeds
   end
   object pnlFields: TPanel [4]
     Left = 6
-    Top = 34
+    Top = 44
     Width = 580
-    Height = 470
+    Height = 465
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
     Enabled = False
@@ -147,13 +146,13 @@ inherited frmODMeds: TfrmODMeds
       Left = 0
       Top = 0
       Width = 580
-      Height = 197
+      Height = 192
       Align = alClient
       Constraints.MinHeight = 80
       TabOrder = 3
       DesignSize = (
         580
-        197)
+        192)
       object lblRoute: TLabel
         Left = 280
         Top = 23
@@ -194,7 +193,7 @@ inherited frmODMeds: TfrmODMeds
         Left = 0
         Top = 36
         Width = 580
-        Height = 156
+        Height = 151
         Anchors = [akLeft, akTop, akRight, akBottom]
         ColCount = 7
         DefaultColWidth = 76
@@ -258,7 +257,7 @@ inherited frmODMeds: TfrmODMeds
         Left = 1
         Top = 36
         Width = 279
-        Height = 155
+        Height = 150
         Anchors = [akLeft, akTop, akRight, akBottom]
         Style = orcsSimple
         AutoSelect = True
@@ -288,7 +287,7 @@ inherited frmODMeds: TfrmODMeds
         Left = 280
         Top = 36
         Width = 113
-        Height = 156
+        Height = 151
         Anchors = [akTop, akRight, akBottom]
         Style = orcsSimple
         AutoSelect = True
@@ -311,6 +310,7 @@ inherited frmODMeds: TfrmODMeds
         OnChange = cboRouteChange
         OnClick = ControlChange
         OnExit = cboRouteExit
+        OnKeyUp = cboRouteKeyUp
         CharsNeedMatch = 1
         UniqueAutoComplete = True
       end
@@ -318,7 +318,7 @@ inherited frmODMeds: TfrmODMeds
         Left = 394
         Top = 36
         Width = 178
-        Height = 156
+        Height = 151
         Anchors = [akTop, akRight, akBottom]
         Style = orcsSimple
         AutoSelect = False
@@ -340,6 +340,7 @@ inherited frmODMeds: TfrmODMeds
         OnClick = cboScheduleClick
         OnEnter = cboScheduleEnter
         OnExit = cboScheduleExit
+        OnKeyUp = cboScheduleKeyUp
         CharsNeedMatch = 1
         UniqueAutoComplete = True
       end
@@ -472,6 +473,7 @@ inherited frmODMeds: TfrmODMeds
         TabOrder = 2
         TabStop = True
         OnClick = btnXDurationClick
+        OnEnter = pnlXDurationButtonEnter
         object btnXDuration: TSpeedButton
           Left = 0
           Top = 0
@@ -557,6 +559,7 @@ inherited frmODMeds: TfrmODMeds
         OnEnter = cboXScheduleEnter
         OnExit = cboXScheduleExit
         OnKeyDown = memMessageKeyDown
+        OnKeyUp = cboXScheduleKeyUp
         CharsNeedMatch = 1
         UniqueAutoComplete = True
       end
@@ -574,7 +577,7 @@ inherited frmODMeds: TfrmODMeds
     end
     object pnlBottom: TPanel
       Left = 0
-      Top = 197
+      Top = 192
       Width = 580
       Height = 273
       Align = alBottom
@@ -599,7 +602,7 @@ inherited frmODMeds: TfrmODMeds
         Caption = 'Days Supply'
       end
       object lblQuantity: TLabel
-        Left = 84
+        Left = 81
         Top = 65
         Width = 39
         Height = 13
@@ -608,14 +611,14 @@ inherited frmODMeds: TfrmODMeds
         ShowHint = True
       end
       object lblRefills: TLabel
-        Left = 164
+        Left = 140
         Top = 65
         Width = 28
         Height = 13
         Caption = 'Refills'
       end
       object lblPriority: TLabel
-        Left = 500
+        Left = 503
         Top = 61
         Width = 31
         Height = 13
@@ -681,9 +684,9 @@ inherited frmODMeds: TfrmODMeds
         TabOrder = 2
       end
       object txtQuantity: TCaptionEdit
-        Left = 83
+        Left = 80
         Top = 78
-        Width = 60
+        Width = 40
         Height = 21
         AutoSize = False
         TabOrder = 3
@@ -693,7 +696,7 @@ inherited frmODMeds: TfrmODMeds
         Caption = 'Quantity'
       end
       object spnQuantity: TUpDown
-        Left = 143
+        Left = 120
         Top = 78
         Width = 16
         Height = 21
@@ -702,7 +705,7 @@ inherited frmODMeds: TfrmODMeds
         TabOrder = 4
       end
       object txtRefills: TCaptionEdit
-        Left = 164
+        Left = 140
         Top = 78
         Width = 30
         Height = 21
@@ -714,7 +717,7 @@ inherited frmODMeds: TfrmODMeds
         Caption = 'Refills'
       end
       object spnRefills: TUpDown
-        Left = 194
+        Left = 170
         Top = 78
         Width = 15
         Height = 21
@@ -723,11 +726,10 @@ inherited frmODMeds: TfrmODMeds
         TabOrder = 6
       end
       object grpPickup: TGroupBox
-        Left = 283
+        Left = 188
         Top = 66
         Width = 172
         Height = 36
-        Anchors = [akTop, akRight]
         Caption = 'Pick Up'
         TabOrder = 7
         object radPickWindow: TRadioButton
@@ -759,7 +761,7 @@ inherited frmODMeds: TfrmODMeds
         end
       end
       object cboPriority: TORComboBox
-        Left = 499
+        Left = 502
         Top = 76
         Width = 72
         Height = 21
@@ -781,6 +783,7 @@ inherited frmODMeds: TfrmODMeds
         SynonymChars = '<>'
         TabOrder = 9
         OnChange = ControlChange
+        OnKeyUp = cboPriorityKeyUp
         CharsNeedMatch = 1
       end
       object stcPI: TStaticText
@@ -884,27 +887,28 @@ inherited frmODMeds: TfrmODMeds
       OnEnter = cboXSequenceEnter
       OnExit = cboXSequenceExit
       OnKeyDown = memMessageKeyDown
+      OnKeyUp = cboXSequenceKeyUp
       CharsNeedMatch = 1
     end
   end
   inherited cmdAccept: TButton
     Left = 514
-    Top = 505
+    Top = 511
     Anchors = [akRight, akBottom]
     TabOrder = 6
     TabStop = False
     Visible = False
     ExplicitLeft = 514
-    ExplicitTop = 505
+    ExplicitTop = 511
   end
   inherited cmdQuit: TButton
     Left = 514
-    Top = 530
+    Top = 536
     Width = 51
     Anchors = [akRight, akBottom]
     TabOrder = 7
     ExplicitLeft = 514
-    ExplicitTop = 530
+    ExplicitTop = 536
     ExplicitWidth = 51
   end
   inherited pnlMessage: TPanel
@@ -1063,7 +1067,8 @@ inherited frmODMeds: TfrmODMeds
         'Status = stsDefault')
       (
         'Component = memOrder'
-        'Status = stsDefault')
+        'Text = Order Sig'
+        'Status = stsOK')
       (
         'Component = cmdAccept'
         'Status = stsDefault')
@@ -1084,7 +1089,8 @@ inherited frmODMeds: TfrmODMeds
         'Status = stsDefault')
       (
         'Component = lblAdminSch'
-        'Status = stsDefault')
+        'Text = Admin Schedule.'
+        'Status = stsOK')
       (
         'Component = lblAdminTime'
         'Status = stsDefault'))

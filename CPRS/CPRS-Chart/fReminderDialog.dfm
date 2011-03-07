@@ -1,8 +1,8 @@
 inherited frmRemDlg: TfrmRemDlg
   Left = 310
   Top = 154
-  Width = 543
-  Height = 405
+  Width = 545
+  Height = 407
   HelpContext = 11100
   VertScrollBar.Range = 162
   BorderIcons = [biSystemMenu]
@@ -14,26 +14,26 @@ inherited frmRemDlg: TfrmRemDlg
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnMouseWheel = FormMouseWheel
   OnShow = FormShow
-  ExplicitWidth = 543
-  ExplicitHeight = 405
+  ExplicitWidth = 545
+  ExplicitHeight = 407
   PixelsPerInch = 96
   TextHeight = 13
   object splTxtData: TSplitter [0]
     Left = 0
-    Top = 216
-    Width = 535
+    Top = 211
+    Width = 537
     Height = 3
     Cursor = crVSplit
     Align = alBottom
     ExplicitTop = 218
-    ExplicitWidth = 537
   end
   object sb1: TScrollBox [1]
     Left = 0
     Top = 0
-    Width = 535
-    Height = 216
+    Width = 537
+    Height = 211
     HorzScrollBar.Tracking = True
     VertScrollBar.Tracking = True
     Align = alClient
@@ -46,14 +46,13 @@ inherited frmRemDlg: TfrmRemDlg
     TabOrder = 0
     Visible = False
     OnResize = sbResize
-    ExplicitWidth = 537
     ExplicitHeight = 218
   end
   object sb2: TScrollBox [2]
     Left = 0
     Top = 0
-    Width = 535
-    Height = 216
+    Width = 537
+    Height = 211
     HorzScrollBar.Tracking = True
     VertScrollBar.Tracking = True
     Align = alClient
@@ -65,63 +64,58 @@ inherited frmRemDlg: TfrmRemDlg
     ParentFont = False
     TabOrder = 1
     OnResize = sbResize
-    ExplicitWidth = 537
     ExplicitHeight = 218
   end
   object pnlFrmBottom: TPanel [3]
     Left = 0
-    Top = 219
-    Width = 535
+    Top = 214
+    Width = 537
     Height = 159
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
     ExplicitTop = 221
-    ExplicitWidth = 537
     object lblFootnotes: TLabel
       Left = 0
       Top = 144
-      Width = 535
+      Width = 537
       Height = 15
       Align = alBottom
       AutoSize = False
       Caption = ' * Indicates a Required Field'
-      ExplicitWidth = 537
     end
     object pnlBottom: TPanel
       Left = 0
       Top = 0
-      Width = 535
+      Width = 537
       Height = 144
       Align = alClient
       TabOrder = 0
-      ExplicitWidth = 537
       object splText: TSplitter
         Left = 1
         Top = 94
-        Width = 533
+        Width = 535
         Height = 3
         Cursor = crVSplit
         Align = alBottom
-        ExplicitWidth = 535
       end
       object reData: TRichEdit
         Left = 1
         Top = 97
-        Width = 533
+        Width = 535
         Height = 46
         Align = alBottom
         Color = clCream
+        Constraints.MinHeight = 30
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 2
         WantReturns = False
-        ExplicitWidth = 535
       end
       object reText: TRichEdit
         Left = 1
         Top = 25
-        Width = 533
+        Width = 535
         Height = 69
         Align = alClient
         Color = clCream
@@ -130,25 +124,24 @@ inherited frmRemDlg: TfrmRemDlg
         Font.Height = -11
         Font.Name = 'Courier New'
         Font.Style = []
+        Constraints.MinHeight = 30
         ParentFont = False
         ReadOnly = True
         ScrollBars = ssBoth
         TabOrder = 1
         WantReturns = False
         WordWrap = False
-        ExplicitWidth = 535
       end
       object pnlButtons: TORAutoPanel
         Left = 1
         Top = 1
-        Width = 533
+        Width = 535
         Height = 24
         Align = alTop
         BevelOuter = bvNone
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
-        ExplicitWidth = 535
         object btnClear: TButton
           Left = 2
           Top = 2
