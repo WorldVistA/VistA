@@ -950,7 +950,7 @@ class spawn (object):
         if self.logfile_send is not None:
             self.logfile_send.write (s)
             self.logfile_send.flush()
-        c = os.write(self.child_fd, s)
+        c = os.write(self.child_fd, s.encode('ascii'))
         return c
 
     def sendline(self, s=''):
@@ -1499,7 +1499,7 @@ class spawn (object):
         """
 
         while data != '' and self.isalive():
-            n = os.write(fd, data)
+            n = os.write(fd, data.encode('ascii'))
             data = data[n:]
 
     def __interact_read(self, fd):
@@ -1522,7 +1522,7 @@ class spawn (object):
                 if self.logfile is not None:
                     self.logfile.write (data)
                     self.logfile.flush()
-                os.write(self.STDOUT_FILENO, data)
+                os.write(self.STDOUT_FILENO, data.encode('ascii'))
             if self.STDIN_FILENO in r:
                 data = self.__interact_read(self.STDIN_FILENO)
                 if input_filter: data = input_filter(data)
@@ -1624,7 +1624,7 @@ class searcher_string (object):
         if self.timeout_index >= 0:
             ss.append ((self.timeout_index,'    %d: TIMEOUT' % self.timeout_index))
         ss.sort()
-        ss = zip(*ss)[1]
+        ss = [ s[1] for s in ss ]
         return '\n'.join(ss)
 
     def search(self, buffer, freshlen, searchwindowsize=None):
@@ -1722,7 +1722,7 @@ class searcher_re (object):
         if self.timeout_index >= 0:
             ss.append ((self.timeout_index,'    %d: TIMEOUT' % self.timeout_index))
         ss.sort()
-        ss = zip(*ss)[1]
+        ss = [ s[1] for s in ss ]
         return '\n'.join(ss)
 
     def search(self, buffer, freshlen, searchwindowsize=None):
