@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#---------------------------------------------------------------------------
+# Copyright 2011 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+
+remote=gerrit
+
+SUBDIRECTORY_OK=Yes
+. "$(git --exec-path)/git-sh-setup"
+
+topic="$(git symbolic-ref HEAD | sed -e 's|^refs/heads/||')"
+if test "$topic" = "master"; then
+  die 'Please name your topic:
+  git checkout -b descriptive-name'
+fi
+refspecs="HEAD:refs/for/master/$topic"
+
+# Fetch the current upstream master branch head.
+# This helps the computation of a minimal pack to push.
+echo "Fetching $remote master"
+fetch_out=$(git fetch "$remote" master 2>&1) || die "$fetch_out"
+
+# Now push the topic branch
+echo "Pushing to $remote"
+push_stdout=$(git push --porcelain "$remote" $refspecs); push_exit=$?
+echo "$push_stdout"
+exit $push_exit
