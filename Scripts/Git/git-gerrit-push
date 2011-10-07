@@ -15,11 +15,30 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-remote=gerrit
-
+USAGE="[<remote>] [--]"
+OPTIONS_SPEC=
 SUBDIRECTORY_OK=Yes
 . "$(git --exec-path)/git-sh-setup"
 
+#-----------------------------------------------------------------------------
+
+remote=''
+
+# Parse command line options.
+while test $# != 0; do
+  case "$1" in
+    --) shift; break ;;
+    -*) usage ;;
+    *) test -z "$remote" || usage ; remote="$1" ;;
+  esac
+  shift
+done
+test $# = 0 || usage
+
+# Default remote.
+test -n "$remote" || remote="gerrit"
+
+# Identify and validate the topic branch name.
 topic="$(git symbolic-ref HEAD | sed -e 's|^refs/heads/||')"
 if test "$topic" = "master"; then
   die 'Please name your topic:
