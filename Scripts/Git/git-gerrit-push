@@ -15,7 +15,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-USAGE="[<remote>] [--]"
+USAGE="[<remote>] [--dry-run] [--]"
 OPTIONS_SPEC=
 SUBDIRECTORY_OK=Yes
 . "$(git --exec-path)/git-sh-setup"
@@ -23,10 +23,12 @@ SUBDIRECTORY_OK=Yes
 #-----------------------------------------------------------------------------
 
 remote=''
+dry_run=''
 
 # Parse command line options.
 while test $# != 0; do
   case "$1" in
+    --dry-run) dry_run=--dry-run ;;
     --) shift; break ;;
     -*) usage ;;
     *) test -z "$remote" || usage ; remote="$1" ;;
@@ -52,4 +54,4 @@ fetch_out=$(git fetch "$remote" master 2>&1) || die "$fetch_out"
 
 # Now push the topic branch
 echo "Pushing to $remote"
-git push "$remote" HEAD:refs/for/master/$topic
+git push $dry_run "$remote" HEAD:refs/for/master/$topic
