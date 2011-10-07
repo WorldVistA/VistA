@@ -16,9 +16,9 @@
 #---------------------------------------------------------------------------
 
 spawn gtm -run ^XINDEX
-log_file -noappend ${VISTA_BINARY_DIR}/Testing/Temporary/${RFILE}.txt
+log_file -noappend ${VISTA_BINARY_DIR}/Testing/Temporary/${package_file_name}.txt
 expect "Routine:"
-send "${RFILE}\n"
+${send_commands}
 expect "Routine:"
 send "\n"
 expect "Select BUILD NAME:"
@@ -32,7 +32,7 @@ send "\n"
 expect "DEVICE:"
 send "\n"
 set count 1;
-while {$count <5} {
+while {$count <20} {
 expect "   Press return to continue:" {send "\n"}\
 expect "DEVICE:      " { abort }\
 expect "Do you want your output QUEUED? NO//" { abort }

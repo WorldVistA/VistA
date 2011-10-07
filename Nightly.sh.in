@@ -14,10 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
-. @GTMPROFILE@
-gtmgbldir="@VISTA_GLOBALS_DIR@/mumps.gld"
-gtmroutines="${gtmroutines} @VISTA_ROUTINE_DIR@"
-export gtmgbldir gtmroutines
 cd @VISTA_BINARY_DIR@
-ctest -j8 -D Nightly
+. ./GTMEnvironment.sh
+ctest -D Nightly

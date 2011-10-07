@@ -13,32 +13,15 @@
 ; See the License for the specific language governing permissions and
 ; limitations under the License.
 ;---------------------------------------------------------------------------
-
-SetTitleMatchMode, 2
-run ${CControl} cterminal ${SERVER} XINDEX ${INSTANCE}
-WinWait, Cache
-;WinHide Cache
-send !l
-WinWaitNotActive
-send ${VISTA_BINARY_DIR}/Testing/Temporary/${package_file_name}Test`r
+run "${CControl}" cterminal ${SERVER} `%RI ${INSTANCE}
+WinWait Cache
+send ${OSEHRA_PATH}\routines.ro`r
 send `r
-send N`r
-${send_commands}
+send Y`r
+send `r
+send All`r
+send Yes`r
 send `r
 send `r
-send `r
-send N`r
-send `r
-send `r
-send `r
-While TRUE
-{
-	WinWait,Terminal,,.1
-	if !ErrorLevel
-	{
-	break
-	}
-	send `r	
-}
-
-send `r
+WinWait Cache
+WinWaitClose

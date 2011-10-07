@@ -14,13 +14,15 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-execute_process(COMMAND "@AutoHK@" @VISTA_BINARY_DIR@/Testing/@Letter@Test.ahk )
+execute_process(COMMAND "@AutoHK@" "@VISTA_BINARY_DIR@/Testing/@package_file_name@Test.ahk" )
 
-file(STRINGS @VISTA_BINARY_DIR@/Testing/Temporary/@Letter@Test.log OUTPUT REGEX "F -|W -|^@Letter@[0-9A-Z*]" )
-
-if(OUTPUT OR OUTPUT2)
-FOREACH(text ${OUTPUT})
-message(${text})
-ENDFOREACH(text ${OUTPUT})
-endif(OUTPUT OR OUTPUT2)
-
+file(STRINGS "@VISTA_BINARY_DIR@/Testing/Temporary/@package_file_name@Test.log" OUTPUT)
+string(REPLACE "[" "{" OUTPUT "${OUTPUT}" )
+string(REPLACE "]" "}" OUTPUT "${OUTPUT}" )
+foreach(line ${OUTPUT})
+  if(line MATCHES "^[A-Z].*")
+    string(REGEX MATCH "^[A-Z0-9]+[^ ]" last_name "${line}")
+  elseif(line MATCHES "F -|W -")
+    message("${last_name} in package @package_file_name@:\n${line}")
+    endif()
+endforeach()

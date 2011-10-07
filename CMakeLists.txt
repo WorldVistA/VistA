@@ -17,7 +17,7 @@
 
 cmake_minimum_required(VERSION 2.8.0)
 
-set(CMAKE_MAKE_PROGRAM EMPTY CACHE string "N" FORCE)
+set(CMAKE_MAKE_PROGRAM " " CACHE string "N" FORCE)
 project(VISTA NONE)
 
 
@@ -30,57 +30,79 @@ mark_as_advanced(WARNING_FAILURE)
 #The next two options designate what system will be used as the Mumps Environment, this dicates the way routines are found.
 find_program(CControl NAMES Ccontrol.exe HINTS "C:/InterSystems/TryCache/bin/" DOC "Path to the Ccontrol executable of Cache")
 find_file(GTMPROFILE NAMES gtmprofile DOC "Path to the GTM Profile")
+find_path(OSEHRA_PATH NAMES VistA-FOIA DOC "Path to the folder that contains the routines and globals from OSEHRA")
 
 set(FAILURE_CONDITIONS "F -" "W -")
 
 #if CControl is found, the Cache system and paths are used
 if(CControl)
 
-# Creates the Testing/Temporary/ directories used in CTest if the optino is selected
-if(BUILD_TESTING)
+  find_program(AutoHK NAMES AutoHotKey.exe DOC "Path to the executable for AutoHotKey")#AutoHotKey is our Windows Driver to automate the XINDEX routine
+  find_path(VISTA_Path NAMES mgr DOC "Path to the VistA folder within Cache")
+
+  # Creates the Testing/Temporary/ directories used in CTest if the optino is selected
+  if(BUILD_TESTING)
     enable_testing()
     include(CTest)
-endif(BUILD_TESTING)
+  endif(BUILD_TESTING)
 
+  # Creates the reports folder with style guides for submitting to the OSEHR journal if the option is selected
+  if( BUILD_REPORTS )
+    add_subdirectory( Reports )
+  endif()
 
-# Creates the reports folder with style guides for submitting to the OSEHR journal if the option is selected
-if( BUILD_REPORTS )
-  add_subdirectory( Reports )
-endif()
-
-    find_program(AutoHK NAMES AutoHotKey.exe DOC "Path to the executable for AutoHotKey")                                                                                                #AutoHotKey is our Windows Driver to automate the XINDEX routine
-    find_path(VISTA_Path NAMES mgr DOC "Path to the VistA folder within Cache")
-
-    #Captures the name of the VistA instance and server for configuring.
-    get_filename_component(INSTANCE ${VISTA_Path} NAME)
-    get_filename_component(TEMP ${VISTA_Path} PATH)
-    get_filename_component(TEMP ${TEMP} PATH)
-    get_filename_component(SERVER ${TEMP} NAME)
-    string(COMPARE EQUAL ${SERVER} "Cache" match)
-    if (match )
+  #Captures the name of the VistA instance and server for configuring.
+  get_filename_component(INSTANCE ${VISTA_Path} NAME)
+  get_filename_component(TEMP ${VISTA_Path} PATH)
+  get_filename_component(TEMP ${TEMP} PATH)
+  get_filename_component(SERVER ${TEMP} NAME)
+  string(COMPARE EQUAL ${SERVER} "Cache" match)
+  if (match)
     set(SERVER ${SERVER}Web)
-    endif()
+  endif()
 
+  OPTION(CLEAN_CACHE "Overwrite the Cache.dat file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
 
+  IF(CLEAN_CACHE)
+    find_program(GIT_EXEC NAMES git.exe HINTS "C:/Program Files (x86)/Git/bin/" DOC "Path to the Git Executable")
+    find_program(PYTHON_EXEC NAMES python.exe "C:/Python27/bin/" DOC "Path to the Python Executable")
+    configure_file(${VISTA_SOURCE_DIR}/ImportRG.cmake.in ${VISTA_BINARY_DIR}/ImportRG.cmake)
+    configure_file(${VISTA_SOURCE_DIR}/RoutineImport.ahk.in ${VISTA_BINARY_DIR}/RoutineImport.ahk)
+    configure_file(${VISTA_SOURCE_DIR}/GlobalImport.ahk.in ${VISTA_BINARY_DIR}/GlobalImport.ahk)
+    configure_file(${VISTA_SOURCE_DIR}/Initialize.ahk.in ${VISTA_BINARY_DIR}/Initialize.ahk)
+    SET(MAKECOMMAND " cmake -P ${VISTA_BINARY_DIR}/ImportRG.cmake" CACHE STRING "Import Routines and Globals into CACHE as Build Step" FORCE)
+  ELSE()
+    SET(MAKECOMMAND "NULLCOMMAND" CACHE STRING "NO BUILD" FORCE)
+  ENDIF()
 
-	#Calls the routines by the first letter of the name
-    foreach( Letter A B C D E F G H I J K L M N O P Q R S T U V W X Y Z)
-
-	#Configures the AHK script for testing, by replacing known variables in the .in file
-    configure_file(${VISTA_SOURCE_DIR}/CacheXINDEXScript.ahk.in ${VISTA_BINARY_DIR}/Testing/${Letter}Test.ahk)
-
-	#Configures the CMAKE testing
-    configure_file(${VISTA_SOURCE_DIR}/WinRoutine.cmake.in ${VISTA_BINARY_DIR}/Testing/${Letter}Test.cmake @ONLY)
-
-	#Creates the command that will be called for the Test
-	add_test(${Letter}Test ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${Letter}Test.cmake)
-
-	#Sets a custom failure condition so that the test will fail if "W -" or "F -" is found in the test output
-    set_property(TEST ${Letter}Test PROPERTY FAIL_REGULAR_EXPRESSION "${FAILURE_CONDITIONS}" )
+  file(GLOB PACKAGES ${OSEHRA_PATH}/Packages/*)
+  foreach(package ${PACKAGES})
+    message(${package})
+    get_filename_component(package_name ${package} NAME)
+    file(GLOB routines "${package}/Routines/*.m")
+    set(send_commands "")
+    foreach(routine ${routines})
+      get_filename_component(routine_name ${routine} NAME_WE)
+      set(send_commands "${send_commands} send ${routine_name}`r\n")
     endforeach()
 
-	#end the program
-    return()
+    string(REPLACE  " " "_" package_file_name "${package_name}")
+
+    #Configures the AHK script for testing, by replacing known variables in the .in file
+    configure_file(${VISTA_SOURCE_DIR}/CacheXINDEXScript.ahk.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.ahk)
+
+    #Configures the CMAKE testing
+    configure_file(${VISTA_SOURCE_DIR}/WinRoutine.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake @ONLY)
+
+    #Creates the command that will be called for the Test
+    add_test(${package_file_name}Test ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake)
+
+    #Sets a custom failure condition so that the test will fail if "W -" or "F -" is found in the test output
+    set_property(TEST ${package_file_name}Test PROPERTY FAIL_REGULAR_EXPRESSION "${FAILURE_CONDITIONS}" )
+    endforeach()
+
+  #end the program
+  return()
 endif(CControl)
 
 
@@ -93,6 +115,8 @@ find_program(EXPECT_EXEC NAMES expect)
 #Creates variables for the routines and globals directorys within GT.M
 find_path (VISTA_ROUTINE_DIR NAMES Routines HINTS ${VISTA_SOURCE_DIR}/routines DOC "Path to the Routines folder within GT.M")
 find_path (VISTA_GLOBALS_DIR NAMES Globals HINTS ${VISTA_SOURCE_DIR}/globals DOC " Path to the Globals folder within GT.M")
+get_filename_component(VISTA_DATABASE ${VISTA_GLOBALS_DIR} PATH)
+
 
 #Configures a .sh file to completely set up the environment variables beyond what sourcing the gtmprofile will
 configure_file(${VISTA_SOURCE_DIR}/GTMEnvironment.sh.in ${VISTA_BINARY_DIR}/GTMEnvironment.sh @ONLY)
@@ -109,35 +133,31 @@ if( BUILD_REPORTS )
   add_subdirectory( Reports )
   endif(BUILD_REPORTS)
 
-#Goes into the Routines directory and grabs all files with the extension ".m", it should find all the routines in that folder
- file (GLOB ROUTINES ${VISTA_ROUTINE_DIR}/*.m)
 
- #For every value that was grabbed in the previous step
-foreach(ROUTINE ${ROUTINES})
-
-#The files name is taken, leaving the extension behind
-get_filename_component(RFILE ${ROUTINE} NAME_WE)
-
-#This matches the first character on the files name
-string(REGEX MATCH ^. CHAR1 ${RFILE})
-
-#An underscore ( _ ) is used as the file name's first charater to represent a routine that starst with the percent sign (%)
-if(${CHAR1} STREQUAL "_")
-#This replaces the underscore in the string with a percent sign
-    string(REGEX REPLACE ^[_] % RFILE ${RFILE})
-endif()
+  file(GLOB PACKAGES ${OSEHRA_PATH}/Packages/*)
+  foreach(package ${PACKAGES})
+    #message(${package})
+    get_filename_component(package_name ${package} NAME)
+    file(GLOB routines "${package}/Routines/*.m")
+    set(send_commands "")
+    foreach(routine ${routines})
+      get_filename_component(routine_name ${routine} NAME_WE)
+      set(send_commands "${send_commands} send \"${routine_name}\\n\"\n")
+    endforeach()
+    #message(${send_commands})
+    string(REPLACE  " " "_" package_file_name "${package_name}")
 
 #Configures the Expect script with the name of the routine
-configure_file(${VISTA_SOURCE_DIR}/XINDEXscript.exp.in ${VISTA_BINARY_DIR}/Testing/${RFILE}.exp)
+configure_file(${VISTA_SOURCE_DIR}/XINDEXscript.exp.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}.exp)
 
 #Configures the CMake file to be called by the correct test and call the correct script
-configure_file(${VISTA_SOURCE_DIR}/RoutineTest.cmake.in ${VISTA_BINARY_DIR}/Testing/${RFILE}.cmake @ONLY)
+configure_file(${VISTA_SOURCE_DIR}/RoutineTest.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}.cmake @ONLY)
 
 #Adds the test to the list available
-add_test( ${RFILE}Test ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${RFILE}.cmake)
+add_test( ${package_file_name}Test ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}.cmake)
 
  #Sets the failure conditions for the test, if either is found in the output the test is deemed to have failed.
-set_property(TEST ${RFILE}Test PROPERTY FAIL_REGULAR_EXPRESSION "${FAILURE_CONDITIONS}")
+set_property(TEST ${package_file_name}Test PROPERTY FAIL_REGULAR_EXPRESSION "${FAILURE_CONDITIONS}")
 endforeach()
 #Configures a .sh File that can be used to automatically set up the proper environment and start a test that submits a Nightly test.
 configure_file(${VISTA_SOURCE_DIR}/Nightly.sh.in ${VISTA_BINARY_DIR}/Nightly.sh @ONLY)

@@ -13,9 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
-execute_process(COMMAND expect -f @VISTA_BINARY_DIR@/Testing/@RFILE@.exp )
-file(WRITE @VISTA_BINARY_DIR@/Testing/Temporary/@RFILE@Errors.txt "" )
-
-file(STRINGS @VISTA_BINARY_DIR@/Testing/Temporary/@RFILE@.txt OUTPUT REGEX ^...@RFILE@)
-file(APPEND @VISTA_BINARY_DIR@/Testing/Temporary/@RFILE@Errors.txt "${OUTPUT}\n")
+execute_process(COMMAND expect -f @VISTA_BINARY_DIR@/Testing/@package_file_name@.exp ERROR_VARIABLE ERROR OUTPUT_VARIABLE OUTPUT)
+string(REPLACE "[" "{" OUTPUT "${OUTPUT}" )
+string(REPLACE "]" "}" OUTPUT "${OUTPUT}" )
+string(REPLACE ";" "\\;" OUTPUT "${OUTPUT}")
+string(REPLACE "\n" ";" OUTPUT "${OUTPUT}")
+foreach(line ${OUTPUT})
+  if(line MATCHES "^[A-Z].*")
+    string(REGEX MATCH "^[A-Z0-9]+[^ ]" last_name "${line}")
+  elseif(line MATCHES "F -|W -")
+    message("${last_name} in package @package_file_name@:\n${line}")
+  endif()
+  endforeach()

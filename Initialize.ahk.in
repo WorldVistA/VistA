@@ -13,32 +13,30 @@
 ; See the License for the specific language governing permissions and
 ; limitations under the License.
 ;---------------------------------------------------------------------------
-
-SetTitleMatchMode, 2
-run ${CControl} cterminal ${SERVER} XINDEX ${INSTANCE}
-WinWait, Cache
-;WinHide Cache
-send !l
-WinWaitNotActive
-send ${VISTA_BINARY_DIR}/Testing/Temporary/${package_file_name}Test`r
-send `r
-send N`r
-${send_commands}
+SendMode Input
+run "${CControl}" cterminal ${SERVER}
+WinWait Cache
+SendInput {RAW}D ^`%CD`r
+send ${INSTANCE}`r
+SendInput {RAW}K ^`%ZOSF("UCI")`r
+SendInput {RAW}D ^ZTMGRSET`r
+send Y`r
 send `r
 send `r
 send `r
-send N`r
+send `r
+send Y`r
+send S DUZ=1`r
+send {RAW}D Q`^DI`r
+send 1`r
+send DEVICE`r
+send {RAW}$I`r
+send `r
+send TELNET`r
+send 1`r
+send {RAW}|TRM|`r
 send `r
 send `r
-send `r
-While TRUE
-{
-	WinWait,Terminal,,.1
-	if !ErrorLevel
-	{
-	break
-	}
-	send `r	
-}
-
-send `r
+send h`r
+WinWait Cache
+WinWaitClose

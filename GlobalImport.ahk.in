@@ -13,32 +13,11 @@
 ; See the License for the specific language governing permissions and
 ; limitations under the License.
 ;---------------------------------------------------------------------------
-
-SetTitleMatchMode, 2
-run ${CControl} cterminal ${SERVER} XINDEX ${INSTANCE}
-WinWait, Cache
-;WinHide Cache
-send !l
-WinWaitNotActive
-send ${VISTA_BINARY_DIR}/Testing/Temporary/${package_file_name}Test`r
-send `r
-send N`r
-${send_commands}
-send `r
-send `r
-send `r
-send N`r
-send `r
-send `r
-send `r
-While TRUE
-{
-	WinWait,Terminal,,.1
-	if !ErrorLevel
-	{
-	break
-	}
-	send `r	
-}
-
-send `r
+run "${CControl}" cterminal ${SERVER}
+WinWait Cache
+SendInput {RAW}D ^`%CD`r
+send ${INSTANCE}`r
+SendInput {RAW}D LIST`^ZGI("${OSEHRA_PATH}\globals.lst","${OSEHRA_PATH}\")`r
+send h`r
+WinWait Cache
+WinWaitClose

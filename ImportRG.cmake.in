@@ -13,16 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-## This file should be placed in the root directory of your project.
-## Then modify the CMakeLists.txt file in the root directory of your
-## project to incorporate the testing dashboard.
-## # The following are required to uses Dart and the Cdash dashboard
-##   ENABLE_TESTING()
-##   INCLUDE(CTest)
-set(CTEST_PROJECT_NAME "Open Source EHR")
-set(CTEST_NIGHTLY_START_TIME "00:00:00 EST")
-
-set(CTEST_DROP_METHOD "http")
-set(CTEST_DROP_SITE "code.osehra.org")
-set(CTEST_DROP_LOCATION "/CDash/submit.php?project=Open+Source+EHR")
-set(CTEST_DROP_SITE_CDASH TRUE)
+execute_process( COMMAND "${CControl}" stop ${SERVER})
+file(COPY ${OSEHRA_PATH}/cache.dat DESTINATION ${VISTA_Path})
+execute_process(COMMAND "${CControl}" start ${SERVER})
+execute_process(COMMAND "${GIT_EXEC}" ls-files "*.m" COMMAND "${PYTHON_EXEC}" Scripts/PackRO.py WORKING_DIRECTORY ${OSEHRA_PATH} OUTPUT_FILE routines.ro)
+execute_process(COMMAND "${GIT_EXEC}" ls-files "*.zwr" WORKING_DIRECTORY ${OSEHRA_PATH} OUTPUT_FILE globals.lst)
+execute_process(COMMAND "${AutoHK}" ${VISTA_BINARY_DIR}/RoutineImport.ahk)
+execute_process(COMMAND "${AutoHK}" ${VISTA_BINARY_DIR}/GlobalImport.ahk)
+execute_process(COMMAND "${AutoHK}" ${VISTA_BINARY_DIR}/Initialize.ahk)
