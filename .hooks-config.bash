@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 #---------------------------------------------------------------------------
 # Copyright 2011 The Open Source Electronic Health Record Agent
 #
@@ -15,34 +14,9 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-# Run this script to set up appropriate remotes and macros for development.
-# Make sure we are inside the repository.
-cd "$(echo "$0"|sed 's/[^/]*$//')"/..
+# Loaded by .git/hooks/(pre-commit|commit-msg|prepare-commit-msg)
+# during git commit after Scripts/SetupForDevelopment.sh has run.
 
-if test -d .git/.git; then
-  die "The directory '.git/.git' exists, indicating a configuration error.
-
-Please 'rm -rf' this directory."
-fi
-
-# Rebase the master branch by default.
-git config rebase.stat true
-git config branch.master.rebase true
-
-cd Scripts
-
-echo "Checking basic user information..."
-./SetupUser.sh || exit 1
-echo
-
-echo "Setting up git hooks..."
-./SetupHooks.sh || exit 1
-echo
-
-echo "Setting up git aliases..."
-./SetupGitAliases.sh || exit 1
-echo
-
-echo "Setting up Gerrit..."
-./SetupGerrit.sh || exit 1
-echo
+hooks_chain_pre_commit="Scripts/Git/pre-commit"
+hooks_chain_commit_msg="Scripts/Git/commit-msg"
+hooks_chain_prepare_commit_msg="Scripts/Git/prepare-commit-msg"

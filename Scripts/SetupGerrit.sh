@@ -82,3 +82,16 @@ if [ "$ans" == "y" ] || [ "$ans" == "Y" ]; then
     die "Could not fetch gerrit remote. You need to upload your public SSH key to Gerrit."
   echo "Done."
 fi
+
+if git config hooks.GerritId >/dev/null; then
+  echo 'GerritId hook already configured.'
+else
+  echo '
+Configuring GerritId hook to automatically add a "Change-Id" footer
+to commit messages to make interaction with Gerrit easier.  Run
+
+  git config hooks.GerritId false
+
+to disable this feature.'
+  git config hooks.GerritId true
+fi

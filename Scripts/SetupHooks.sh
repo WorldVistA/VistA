@@ -15,34 +15,34 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-# Run this script to set up appropriate remotes and macros for development.
-# Make sure we are inside the repository.
-cd "$(echo "$0"|sed 's/[^/]*$//')"/..
+egrep-q() {
+  egrep "$@" >/dev/null 2>/dev/null
+}
 
-if test -d .git/.git; then
-  die "The directory '.git/.git' exists, indicating a configuration error.
+die() {
+  echo 'failure during hook setup' 1>&2
+  echo '-------------------------' 1>&2
+  echo '' 1>&2
+  echo "$@" 1>&2
+  exit 1
+}
 
-Please 'rm -rf' this directory."
+u=$(cd "$(echo "$0"|sed 's/[^/]*$//')"; pwd)
+cd "$u/../.git/hooks"
+
+# We need to have a git repository to do a fetch.
+if ! test -d ./.git; then
+  git init || die "Could not run git init."
 fi
 
-# Rebase the master branch by default.
-git config rebase.stat true
-git config branch.master.rebase true
-
-cd Scripts
-
-echo "Checking basic user information..."
-./SetupUser.sh || exit 1
-echo
-
-echo "Setting up git hooks..."
-./SetupHooks.sh || exit 1
-echo
-
-echo "Setting up git aliases..."
-./SetupGitAliases.sh || exit 1
-echo
-
-echo "Setting up Gerrit..."
-./SetupGerrit.sh || exit 1
-echo
+# Fetch the hooks.  Use the local hooks branch if possible.
+echo "Fetching the hooks..."
+if GIT_DIR=.. git for-each-ref refs/remotes/origin/hooks 2>/dev/null | \
+  egrep-q 'refs/remotes/origin/hooks$'; then
+  git fetch .. remotes/origin/hooks
+else
+  git fetch http://code.osehra.org/OSEHRA-Automated-Testing.git hooks
+fi &&
+git reset --hard FETCH_HEAD || die "Failed to install hooks"
+cd ../..
+echo "Done."

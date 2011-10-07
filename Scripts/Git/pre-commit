@@ -15,34 +15,13 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-# Run this script to set up appropriate remotes and macros for development.
-# Make sure we are inside the repository.
-cd "$(echo "$0"|sed 's/[^/]*$//')"/..
+die() {
+  echo 'pre-commit hook failure' 1>&2
+  echo '-----------------------' 1>&2
+  echo '' 1>&2
+  echo "$@" 1>&2
+  exit 1
+}
 
-if test -d .git/.git; then
-  die "The directory '.git/.git' exists, indicating a configuration error.
-
-Please 'rm -rf' this directory."
-fi
-
-# Rebase the master branch by default.
-git config rebase.stat true
-git config branch.master.rebase true
-
-cd Scripts
-
-echo "Checking basic user information..."
-./SetupUser.sh || exit 1
-echo
-
-echo "Setting up git hooks..."
-./SetupHooks.sh || exit 1
-echo
-
-echo "Setting up git aliases..."
-./SetupGitAliases.sh || exit 1
-echo
-
-echo "Setting up Gerrit..."
-./SetupGerrit.sh || exit 1
-echo
+# This is a placeholder for future pre-commit checks.
+exit 0
