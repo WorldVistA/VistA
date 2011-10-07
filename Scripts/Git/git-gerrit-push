@@ -44,7 +44,6 @@ if test "$topic" = "master"; then
   die 'Please name your topic:
   git checkout -b descriptive-name'
 fi
-refspecs="HEAD:refs/for/master/$topic"
 
 # Fetch the current upstream master branch head.
 # This helps the computation of a minimal pack to push.
@@ -53,6 +52,4 @@ fetch_out=$(git fetch "$remote" master 2>&1) || die "$fetch_out"
 
 # Now push the topic branch
 echo "Pushing to $remote"
-push_stdout=$(git push --porcelain "$remote" $refspecs); push_exit=$?
-echo "$push_stdout"
-exit $push_exit
+git push "$remote" HEAD:refs/for/master/$topic
