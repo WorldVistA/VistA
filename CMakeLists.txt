@@ -37,7 +37,8 @@ set(FAILURE_CONDITIONS "F -" "W -")
 #if CControl is found, the Cache system and paths are used
 if(CControl)
 
-  find_program(AutoHK NAMES AutoHotKey.exe DOC "Path to the executable for AutoHotKey")#AutoHotKey is our Windows Driver to automate the XINDEX routine
+  #AutoHotKey is our Windows Driver to automate the XINDEX routine
+  find_program(AutoHK NAMES AutoHotKey.exe DOC "Path to the executable for AutoHotKey")
   find_path(VISTA_Path NAMES mgr DOC "Path to the VistA folder within Cache")
 
   # Creates the Testing/Temporary/ directories used in CTest if the optino is selected
@@ -51,29 +52,33 @@ if(CControl)
     add_subdirectory( Reports )
   endif()
 
-  #Captures the name of the VistA instance and server for configuring.
-  get_filename_component(INSTANCE ${VISTA_Path} NAME)
-  get_filename_component(TEMP ${VISTA_Path} PATH)
-  get_filename_component(TEMP ${TEMP} PATH)
-  get_filename_component(SERVER ${TEMP} NAME)
-  string(COMPARE EQUAL ${SERVER} "Cache" match)
-  if (match)
-    set(SERVER ${SERVER}Web)
+  if( VISTA_Path )
+    #Captures the name of the VistA instance and server for configuring.
+    get_filename_component(INSTANCE ${VISTA_Path} NAME)
+    get_filename_component(TEMP ${VISTA_Path} PATH)
+    get_filename_component(TEMP ${TEMP} PATH)
+    get_filename_component(SERVER ${TEMP} NAME)
+    string(COMPARE EQUAL ${SERVER} "Cache" match)
+    if ( match )
+      set(SERVER ${SERVER}Web)
+    endif()
   endif()
 
   OPTION(CLEAN_CACHE "Overwrite the Cache.dat file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
 
+  find_program(GIT_EXEC NAMES git.exe HINTS "C:/Program Files (x86)/Git/bin/" DOC "Path to the Git Executable")
+  find_program(PYTHON_EXEC NAMES python.exe "C:/Python27/bin/" DOC "Path to the Python Executable")
+
   IF(CLEAN_CACHE)
-    find_program(GIT_EXEC NAMES git.exe HINTS "C:/Program Files (x86)/Git/bin/" DOC "Path to the Git Executable")
-    find_program(PYTHON_EXEC NAMES python.exe "C:/Python27/bin/" DOC "Path to the Python Executable")
     configure_file(${VISTA_SOURCE_DIR}/ImportRG.cmake.in ${VISTA_BINARY_DIR}/ImportRG.cmake)
     configure_file(${VISTA_SOURCE_DIR}/RoutineImport.ahk.in ${VISTA_BINARY_DIR}/RoutineImport.ahk)
     configure_file(${VISTA_SOURCE_DIR}/GlobalImport.ahk.in ${VISTA_BINARY_DIR}/GlobalImport.ahk)
     configure_file(${VISTA_SOURCE_DIR}/Initialize.ahk.in ${VISTA_BINARY_DIR}/Initialize.ahk)
-    SET(MAKECOMMAND " cmake -P ${VISTA_BINARY_DIR}/ImportRG.cmake" CACHE STRING "Import Routines and Globals into CACHE as Build Step" FORCE)
+    set(MAKECOMMAND " ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/ImportRG.cmake" CACHE STRING "Import Routines and Globals into CACHE as Build Step" FORCE)
   ELSE()
-    SET(MAKECOMMAND "NULLCOMMAND" CACHE STRING "NO BUILD" FORCE)
+    set(MAKECOMMAND " ${CMAKE_COMMAND} -E echo No_Build_Required" CACHE STRING "No build process is required when CLEAN_CACHE if OFF" FORCE)
   ENDIF()
+
 
   file(GLOB PACKAGES ${OSEHRA_PATH}/Packages/*)
   foreach(package ${PACKAGES})
