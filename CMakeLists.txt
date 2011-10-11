@@ -28,21 +28,19 @@ option(WARNING_FAILURE "Use the XINDEX Condition output of warning as a failure 
 mark_as_advanced(WARNING_FAILURE)
 
 #The next two options designate what system will be used as the Mumps Environment, this dicates the way routines are found.
-find_program(CControl NAMES Ccontrol.exe HINTS "C:/InterSystems/TryCache/bin/" DOC "Path to the Ccontrol executable of Cache")
+find_program(CTerm NAMES CTerm.exe HINTS "C:/InterSystems/TryCache/bin/" DOC "Path to the CTerm executable of Cache")
 find_file(GTMPROFILE NAMES gtmprofile DOC "Path to the GTM Profile")
 find_path(OSEHRA_PATH NAMES VistA-FOIA DOC "Path to the folder that contains the routines and globals from OSEHRA")
 find_path(PRISTINE_CACHE_DAT_PATH NAMES CACHE.DAT DOC "Path to the folder that contains a pristine empty CACHE.DAT file")
 
 set(FAILURE_CONDITIONS "F -" "W -")
 
-#if CControl is found, the Cache system and paths are used
-if(CControl)
+#if CTerm is found, the Cache system and paths are used
+if(CTerm)
 
-  #AutoHotKey is our Windows Driver to automate the XINDEX routine
-  find_program(AutoHK NAMES AutoHotKey.exe DOC "Path to the executable for AutoHotKey")
   find_path(VISTA_Path NAMES mgr DOC "Path to the VistA folder within Cache")
 
-  # Creates the Testing/Temporary/ directories used in CTest if the optino is selected
+  # Creates the Testing/Temporary/ directories used in CTest if the option is selected
   if(BUILD_TESTING)
     enable_testing()
     include(CTest)
@@ -83,19 +81,18 @@ if(CControl)
 
   file(GLOB PACKAGES ${OSEHRA_PATH}/Packages/*)
   foreach(package ${PACKAGES})
-    message(${package})
+    #message(${package})
     get_filename_component(package_name ${package} NAME)
     file(GLOB routines "${package}/Routines/*.m")
     set(send_commands "")
     foreach(routine ${routines})
       get_filename_component(routine_name ${routine} NAME_WE)
-      set(send_commands "${send_commands} send ${routine_name}`r\n")
+      set(send_commands "${send_commands} wait for:Routine:\n send:${routine_name}<CR>\n")
     endforeach()
-
     string(REPLACE  " " "_" package_file_name "${package_name}")
 
-    #Configures the AHK script for testing, by replacing known variables in the .in file
-    configure_file(${VISTA_SOURCE_DIR}/CacheXINDEXScript.ahk.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.ahk)
+    #Configures the Cache Terminal script for testing, by replacing known variables in the .in file
+    configure_file(${VISTA_SOURCE_DIR}/CacheXINDEXScript.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.scp)
 
     #Configures the CMAKE testing
     configure_file(${VISTA_SOURCE_DIR}/WinRoutine.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake @ONLY)
@@ -105,11 +102,12 @@ if(CControl)
 
     #Sets a custom failure condition so that the test will fail if "W -" or "F -" is found in the test output
     set_property(TEST ${package_file_name}Test PROPERTY FAIL_REGULAR_EXPRESSION "${FAILURE_CONDITIONS}" )
-    endforeach()
+
+  endforeach()
 
   #end the program
   return()
-endif(CControl)
+endif(CTerm)
 
 
 #if gtmprofile.sh is found, the linux programs and GT.M testing evironment is used.

@@ -14,9 +14,9 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-execute_process(COMMAND "@AutoHK@" "@VISTA_BINARY_DIR@/Testing/@package_file_name@Test.ahk" )
+execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "@VISTA_BINARY_DIR@/Testing/@package_file_name@Test.scp")
 
-file(STRINGS "@VISTA_BINARY_DIR@/Testing/Temporary/@package_file_name@Test.log" OUTPUT)
+file(STRINGS "@VISTA_BINARY_DIR@/Testing/Log/@package_file_name@.log" OUTPUT)
 string(REPLACE "[" "{" OUTPUT "${OUTPUT}" )
 string(REPLACE "]" "}" OUTPUT "${OUTPUT}" )
 foreach(line ${OUTPUT})
