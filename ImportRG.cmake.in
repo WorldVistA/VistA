@@ -14,7 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 execute_process( COMMAND "${CControl}" stop ${SERVER})
-file(COPY ${OSEHRA_PATH}/cache.dat DESTINATION ${VISTA_Path})
+file(COPY ${PRISTINE_CACHE_DAT_PATH}/CACHE.DAT DESTINATION ${VISTA_Path})
 execute_process(COMMAND "${CControl}" start ${SERVER})
 execute_process(COMMAND "${GIT_EXEC}" ls-files "*.m" COMMAND "${PYTHON_EXEC}" Scripts/PackRO.py WORKING_DIRECTORY ${OSEHRA_PATH} OUTPUT_FILE routines.ro)
 execute_process(COMMAND "${GIT_EXEC}" ls-files "*.zwr" WORKING_DIRECTORY ${OSEHRA_PATH} OUTPUT_FILE globals.lst)

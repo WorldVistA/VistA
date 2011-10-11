@@ -31,6 +31,7 @@ mark_as_advanced(WARNING_FAILURE)
 find_program(CControl NAMES Ccontrol.exe HINTS "C:/InterSystems/TryCache/bin/" DOC "Path to the Ccontrol executable of Cache")
 find_file(GTMPROFILE NAMES gtmprofile DOC "Path to the GTM Profile")
 find_path(OSEHRA_PATH NAMES VistA-FOIA DOC "Path to the folder that contains the routines and globals from OSEHRA")
+find_path(PRISTINE_CACHE_DAT_PATH NAMES CACHE.DAT DOC "Path to the folder that contains a pristine empty CACHE.DAT file")
 
 set(FAILURE_CONDITIONS "F -" "W -")
 
