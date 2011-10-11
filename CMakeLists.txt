@@ -120,8 +120,7 @@ find_program(EXPECT_EXEC NAMES expect)
 
 #Creates variables for the routines and globals directorys within GT.M
 find_path (VISTA_ROUTINE_DIR NAMES Routines HINTS ${VISTA_SOURCE_DIR}/routines DOC "Path to the Routines folder within GT.M")
-find_path (VISTA_GLOBALS_DIR NAMES Globals HINTS ${VISTA_SOURCE_DIR}/globals DOC " Path to the Globals folder within GT.M")
-get_filename_component(VISTA_DATABASE ${VISTA_GLOBALS_DIR} PATH)
+find_path (VISTA_GLOBALS_DIR NAMES Globals HINTS ${VISTA_SOURCE_DIR}/globals DOC " Path to the folder that contains the GT.M database.dat")
 
 
 #Configures a .sh file to completely set up the environment variables beyond what sourcing the gtmprofile will
