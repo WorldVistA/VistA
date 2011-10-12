@@ -31,22 +31,22 @@ sys.stdout.write(ro.readline())
 m = None
 
 for line in ro:
-	if line == '\n':
-		# Routine terminated by blank line
-		if m:
-			m.close()
-			m = None
-	elif m:
-		m.write(line)
-	else:
-		# Routine started by line with its name.  Some %RO
-		# implementations add a '^' followed by more data;
-		# ignore that.
-		name,up,rest = line.partition('^')
-		name = name.strip()
-		m = open(name+'.m','w')
-		# Report the new routine name for human reference.
-		sys.stdout.write('%s\n' % name)
+    if line == '\n':
+        # Routine terminated by blank line
+        if m:
+            m.close()
+            m = None
+    elif m:
+        m.write(line)
+    else:
+        # Routine started by line with its name.  Some %RO
+        # implementations add a '^' followed by more data;
+        # ignore that.
+        name,up,rest = line.partition('^')
+        name = name.strip()
+        m = open(name+'.m','w')
+        # Report the new routine name for human reference.
+        sys.stdout.write('%s\n' % name)
 if m:
-	m.close()
-	m = None
+    m.close()
+    m = None
