@@ -14,9 +14,28 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "@VISTA_BINARY_DIR@/Testing/@package_file_name@Test.scp")
+#define a variable to store the final log file name & path
+set(LOGFILENAME "@VISTA_BINARY_DIR@/Testing/Temporary/@package_file_name@Test.log")
+#Test the total length of the whole path of the log file to make sure it is within 120 (logfile:also takes 8 chars)
+string(LENGTH ${LOGFILENAME} LOGFILENAME_LEN)
+if (LOGFILENAME_LEN GREATER 120)
+  # execute CMake -E md5sum on input scp script to get MD5 Hash in 32 chars
+  execute_process(COMMAND ${CMAKE_COMMAND} "-E" "md5sum" "@VISTA_BINARY_DIR@/Testing/@package_file_name@Test.scp"
+                  OUTPUT_VARIABLE MD5)
+  string(REGEX MATCH "^[0-9a-f]+" MD5 "${MD5}")
+  # this is not perfect, but should be good enough for now
+  set(NEWLOGFILENAME "@VISTA_BINARY_DIR@/${MD5}")
+  #message("New log file name is ${NEWLOGFILENAME}")
+  execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "@VISTA_BINARY_DIR@/Testing/@package_file_name@Test.scp" "${NEWLOGFILENAME}")
+  # move the log file to the new place
+  file(RENAME "${NEWLOGFILENAME}" "${LOGFILENAME}")
 
-file(STRINGS "@VISTA_BINARY_DIR@/Testing/Log/@package_file_name@.log" OUTPUT)
+else()
+  execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "@VISTA_BINARY_DIR@/Testing/@package_file_name@Test.scp" "${LOGFILENAME}")
+
+endif()
+
+file(STRINGS "${LOGFILENAME}" OUTPUT)
 string(REPLACE "[" "{" OUTPUT "${OUTPUT}" )
 string(REPLACE "]" "}" OUTPUT "${OUTPUT}" )
 foreach(line ${OUTPUT})
