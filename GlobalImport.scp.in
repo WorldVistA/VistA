@@ -1,0 +1,53 @@
+;---------------------------------------------------------------------------
+; Copyright 2011 The Open Source Electronic Health Record Agent
+;
+; Licensed under the Apache License, Version 2.0 (the "License");
+; you may not use this file except in compliance with the License.
+; You may obtain a copy of the License at
+;
+;     http://www.apache.org/licenses/LICENSE-2.0
+;
+; Unless required by applicable law or agreed to in writing, software
+; distributed under the License is distributed on an "AS IS" BASIS,
+; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+; See the License for the specific language governing permissions and
+; limitations under the License.
+;---------------------------------------------------------------------------
+;initialization -- turn match off to make comparisons more lenient
+case match: off
+
+;set the title
+title: VistA Globals Import Script
+logfile:<P1>
+
+on error: $Exit
+; set up a timer for 2 hours(2*3600*10), should be more than enough to finish
+timer 72000
+
+;switch to the right namespace
+send: znspace "${INSTANCE}"<CR>
+wait for:${INSTANCE}>
+;---------------------------------------------------------------------
+;- SECTION TO RUN GLOBAL IMPORT -
+;---------------------------------------------------------------------
+send: D LIST^ZGI("${OSEHRA_PATH}\globals.lst","${OSEHRA_PATH}\")<CR>
+wait for:${INSTANCE}
+send:K ^%ZOSF("UCI")<CR>
+wait for:${INSTANCE}
+send:D ^ZTMGRSET<CR>
+wait for: System:
+send:<CR>
+wait for: NAME OF
+send:<CR>
+wait for: PRODUCTION
+send:<CR>
+wait for:NAME OF THIS
+send:<CR>
+wait for:Want to rename the FileMan routines: No//
+send:YES<CR>
+wait for:${INSTANCE}>
+$Exit:
+    ; close the log file
+    closelog
+    ; exit the terminal
+    terminate
