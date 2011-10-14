@@ -59,7 +59,48 @@ find_path(PRISTINE_CACHE_DAT_PATH NAMES CACHE.DAT DOC "Path to the folder that c
 set(FAILURE_CONDITIONS "F -" "W -")
 
 #if CTerm is found, the Cache system and paths are used
-if(CTerm)
+if(CControl AND CTerm)
+  if(NOT INSTANCE)
+    # Detect Cache instances.
+    execute_process(
+      COMMAND ${CControl} qlist nodisplay
+      OUTPUT_FILE ${VISTA_BINARY_DIR}/cache_qlist.txt
+      ERROR_VARIABLE err
+      RESULT_VARIABLE failed
+      TIMEOUT 30 # should never happen, listing is fast
+      )
+    if(failed)
+      string(REPLACE "\n" "\n  " err "  ${err}")
+      message(FATAL_ERROR "Failed to run \"${CControl} qlist nodisplay\": ${failed}\n${err}")
+    endif()
+    file(STRINGS ${VISTA_BINARY_DIR}/cache_qlist.txt qlist)
+    set(instances "")
+    foreach(instance ${qlist})
+      string(REPLACE "^" ";" instance "${instance}")
+      list(GET instance 0 name)
+      list(GET instance 1 ${name}_DIRECTORY)
+      list(GET instance 2 ${name}_VERSION)
+      list(GET instance 6 ${name}_WEB_PORT)
+      list(APPEND instances ${name})
+    endforeach()
+
+    # Select a default instance.
+    set(default "")
+    foreach(guess CACHEWEB TRYCACHE)
+      if(${guess}_DIRECTORY)
+        set(default ${guess})
+        break()
+      endif()
+    endforeach()
+    if(instances AND NOT default)
+      list(GET instances 0 default)
+    endif()
+
+    # Present an INSTANCE option.
+    set(INSTANCE "${default}" CACHE STRING "Cache instance name")
+    set_property(CACHE INSTANCE PROPERTY STRINGS "${instances}")
+  endif()
+  message(STATUS "Using Cache instance ${INSTANCE}")
 
   find_path(VISTA_Path NAMES mgr DOC "Path to the VistA folder within Cache")
 
@@ -71,13 +112,6 @@ if(CTerm)
   if( VISTA_Path )
     #Captures the name of the VistA instance and server for configuring.
     get_filename_component(NAMESPACE ${VISTA_Path} NAME)
-    get_filename_component(TEMP ${VISTA_Path} PATH)
-    get_filename_component(TEMP ${TEMP} PATH)
-    get_filename_component(INSTANCE ${TEMP} NAME)
-    string(COMPARE EQUAL ${INSTANCE} "Cache" match)
-    if ( match )
-      set(INSTANCE ${INSTANCE}Web)
-    endif()
   endif()
 
   OPTION(CLEAN_CACHE "Overwrite the Cache.dat file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
@@ -124,7 +158,7 @@ if(CTerm)
 
   #end the program
   return()
-endif(CTerm)
+endif()
 
 
 #if gtmprofile.sh is found, the linux programs and GT.M testing evironment is used.
