@@ -20,9 +20,10 @@ cmake_minimum_required(VERSION 2.8.0)
 set(CMAKE_MAKE_PROGRAM " " CACHE string "N" FORCE)
 project(VISTA NONE)
 
+include(CTest)
+set(BUILD_TESTING "ON" CACHE INTERNAL "Always build testing")
 
 #options that will show up on the CMake Gui that allows customization of the project
-option(BUILD_TESTING "Test the project" ON)
 option(BUILD_REPORTS "Build Reports." OFF)
 option(WARNING_FAILURE "Use the XINDEX Condition output of warning as a failure condition for testing" ON)
 mark_as_advanced(WARNING_FAILURE)
@@ -40,12 +41,6 @@ set(FAILURE_CONDITIONS "F -" "W -")
 if(CTerm)
 
   find_path(VISTA_Path NAMES mgr DOC "Path to the VistA folder within Cache")
-
-  # Creates the Testing/Temporary/ directories used in CTest if the option is selected
-  if(BUILD_TESTING)
-    enable_testing()
-    include(CTest)
-  endif(BUILD_TESTING)
 
   # Creates the reports folder with style guides for submitting to the OSEHR journal if the option is selected
   if( BUILD_REPORTS )
@@ -124,13 +119,6 @@ find_path (VISTA_GLOBALS_DIR NAMES Globals HINTS ${VISTA_SOURCE_DIR}/globals DOC
 
 #Configures a .sh file to completely set up the environment variables beyond what sourcing the gtmprofile will
 configure_file(${VISTA_SOURCE_DIR}/GTMEnvironment.sh.in ${VISTA_BINARY_DIR}/GTMEnvironment.sh @ONLY)
-
-# Creates the Testing/Temporary/ directories used in CTest if the option is selected
-if(BUILD_TESTING)
-    enable_testing()
-    include(CTest)
-endif(BUILD_TESTING)
-
 
 # Creates the reports folder with style guides for submitting to the OSEHR journal if the option is selected.
 if( BUILD_REPORTS )
