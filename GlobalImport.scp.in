@@ -36,7 +36,8 @@ send:K ^%ZOSF("UCI")<CR>
 wait for:${NAMESPACE}
 send:D ^ZTMGRSET<CR>
 wait for: System:
-send:<CR>
+;there is no default value any more, we have to send 3 explicitly
+send:3<CR>
 wait for: NAME OF
 send:<CR>
 wait for: PRODUCTION
