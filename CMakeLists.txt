@@ -27,9 +27,30 @@ option(BUILD_REPORTS "Build Reports." OFF)
 option(WARNING_FAILURE "Use the XINDEX Condition output of warning as a failure condition for testing" ON)
 mark_as_advanced(WARNING_FAILURE)
 
-#The next two options designate what system will be used as the Mumps Environment, this dicates the way routines are found.
-find_program(CTerm NAMES CTerm.exe HINTS "C:/InterSystems/TryCache/bin/" DOC "Path to the CTerm executable of Cache")
-find_program(CControl NAMES CControl.exe HINTS "C:/InterSystems/TryCache/bin/" DOC "Path to the CControl executable of Cache")
+#-----------------------------------------------------------------------------
+# Find InterSystems Cache
+if(WIN32)
+  # The InterSystems Cache installation directory appears only under instance
+  # names which we do not know yet.  Try all of them.
+  foreach(query "HKLM\\SOFTWARE\\InterSystems\\Cache\\Configurations"
+                "HKLM\\SOFTWARE\\Wow6432Node\\InterSystems\\Cache\\Configurations")
+    execute_process(COMMAND reg query "${query}" OUTPUT_VARIABLE out ERROR_VARIABLE err)
+    string(REGEX REPLACE "\r?\n" ";" configs "${out}")
+    foreach(config ${configs})
+      list(APPEND _Cache_PATHS "[${config}\\Directory]/bin")
+    endforeach()
+  endforeach()
+  # Hard-coded guesses.
+  list(APPEND _Cache_PATHS
+    "C:/InterSystems/Cache/bin"
+    "C:/InterSystems/TryCache/bin"
+    )
+endif()
+foreach(tool CControl CTerm)
+  find_program(${tool} NAMES ${tool} DOC "Path to Cache ${tool}" PATHS ${_Cache_PATHS})
+endforeach()
+
+#-----------------------------------------------------------------------------
 find_file(GTMPROFILE NAMES gtmprofile DOC "Path to the GTM Profile")
 find_path(OSEHRA_PATH NAMES VistA-FOIA DOC "Path to the folder that contains the routines and globals from OSEHRA")
 find_path(PRISTINE_CACHE_DAT_PATH NAMES CACHE.DAT DOC "Path to the folder that contains a pristine empty CACHE.DAT file")
