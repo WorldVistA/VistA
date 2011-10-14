@@ -54,13 +54,13 @@ if(CTerm)
 
   if( VISTA_Path )
     #Captures the name of the VistA instance and server for configuring.
-    get_filename_component(INSTANCE ${VISTA_Path} NAME)
+    get_filename_component(NAMESPACE ${VISTA_Path} NAME)
     get_filename_component(TEMP ${VISTA_Path} PATH)
     get_filename_component(TEMP ${TEMP} PATH)
-    get_filename_component(SERVER ${TEMP} NAME)
-    string(COMPARE EQUAL ${SERVER} "Cache" match)
+    get_filename_component(INSTANCE ${TEMP} NAME)
+    string(COMPARE EQUAL ${INSTANCE} "Cache" match)
     if ( match )
-      set(SERVER ${SERVER}Web)
+      set(INSTANCE ${INSTANCE}Web)
     endif()
   endif()
 
