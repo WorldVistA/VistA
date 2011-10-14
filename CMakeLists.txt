@@ -116,6 +116,15 @@ if(CControl AND CTerm)
 
   OPTION(CLEAN_CACHE "Overwrite the Cache.dat file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
 
+  configure_file(${VISTA_SOURCE_DIR}/CacheVerifyTelnet.scp.in ${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp)
+  message(STATUS "Testing if Cache Telnet service is enable:")
+  execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.log" TIMEOUT 5 RESULT_VARIABLE rcode)
+  message(STATUS "Testing if Cache Telnet service is enable: ${rcode}")
+  if ( (rcode EQUAL 0) OR "${rcode}" MATCHES "timeout" )
+      message(FATAL_ERROR "Error connecting to Cache ${INSTANCE} namespace ${NAMESPACE} via telnet, please enable the telnet setting via"
+                          " Cache Managements Portal->System->Security Management->Service to switch on %Service_telnet by checking enabled checkbox and save."
+                          " Also verify that telnet port is set to 23 via Configuration->Device Settings->Telnet Settings ")
+  endif()
   find_program(GIT_EXEC NAMES git.exe HINTS "C:/Program Files (x86)/Git/bin/" DOC "Path to the Git Executable")
   find_program(PYTHON_EXEC NAMES python.exe "C:/Python27/bin/" DOC "Path to the Python Executable")
 
