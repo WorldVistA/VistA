@@ -17,7 +17,8 @@
 
 cmake_minimum_required(VERSION 2.8.0)
 
-set(CMAKE_MAKE_PROGRAM " " CACHE string "N" FORCE)
+set(CMAKE_MAKE_PROGRAM "/" CACHE INTERNAL "This does not build")
+set(CMAKE_INSTALL_PREFIX "/" CACHE INTERNAL "This does not install")
 project(VISTA NONE)
 
 include(CTest)
