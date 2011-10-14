@@ -13,12 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-cd /home/joseph/Downloads/Testbin
+cd /home/joseph/Downloads/OSEHRA-Automated-Testing
 GTMPROFILE=/opt/lsb-gtm/V5.4-000A_x86_64/gtmprofile
 VISTA_GLOBALS_DIR=/home/joseph/vista
 VISTA_ROUTINES_DIR=/home/joseph/vista/r
 . $GTMPROFILE
 gtmgbldir="$VISTA_GLOBALS_DIR/database"
-gtmroutines="${gtmroutines} $VISTA_ROUTINE_DIR"
+gtmroutines="${gtmroutines} $VISTA_ROUTINES_DIR"
 export GTMPROFILE VISTA_GLOBALS_DIR VISTA_ROUTINES_DIR gtmgbldir gtmroutines
 ctest -S DashboardScripts/kitware/joseph-desktop.cmake -VV
