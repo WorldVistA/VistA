@@ -24,8 +24,8 @@ display:Log file name is <P1><CR><LF>
 logfile:<P1>
 
 ; switch to the right namespace
-send: znspace "${INSTANCE}"<CR>
-wait for:${INSTANCE}>
+send: znspace "${NAMESPACE}"<CR>
+wait for:${NAMESPACE}>
 ; run XINDEX on
 send: D ^XINDEX<CR>
 wait for:All Routines? No =>

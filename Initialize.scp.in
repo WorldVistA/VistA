@@ -27,13 +27,13 @@ on error: $Exit
 timer 100
 
 ;switch to the right namespace
-send: znspace "${INSTANCE}"<CR>
-wait for:${INSTANCE}>
+send: znspace "${NAMESPACE}"<CR>
+wait for:${NAMESPACE}>
 ;---------------------------------------------------------------------
 ;- SECTION TO SET TELNET DEVICE TYPE
 ;---------------------------------------------------------------------
 send:S DUZ=1<CR>
-;wait for:${INSTANCE}
+;wait for:${NAMESPACE}
 send:D P^DI<CR>
 wait for:Select OPTION:
 send:1<CR>
@@ -53,7 +53,7 @@ wait for:Select DEVICE NAME:
 send:<CR>
 wait for:Select OPTION:
 send:<CR>
-wait for:${INSTANCE}
+wait for:${NAMESPACE}
 $Exit:
     ; close the log file
     closelog

@@ -25,15 +25,15 @@ on error: $Exit
 timer 72000
 
 ;switch to the right namespace
-send: znspace "${INSTANCE}"<CR>
-wait for:${INSTANCE}>
+send: znspace "${NAMESPACE}"<CR>
+wait for:${NAMESPACE}>
 ;---------------------------------------------------------------------
 ;- SECTION TO RUN GLOBAL IMPORT -
 ;---------------------------------------------------------------------
 send: D LIST^ZGI("${OSEHRA_PATH}\globals.lst","${OSEHRA_PATH}\")<CR>
-wait for:${INSTANCE}
+wait for:${NAMESPACE}
 send:K ^%ZOSF("UCI")<CR>
-wait for:${INSTANCE}
+wait for:${NAMESPACE}
 send:D ^ZTMGRSET<CR>
 wait for: System:
 send:<CR>
@@ -45,7 +45,7 @@ wait for:NAME OF THIS
 send:<CR>
 wait for:Want to rename the FileMan routines: No//
 send:YES<CR>
-wait for:${INSTANCE}>
+wait for:${NAMESPACE}>
 $Exit:
     ; close the log file
     closelog

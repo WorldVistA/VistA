@@ -25,8 +25,8 @@ on error: $Exit
 timer 72000
 
 ;switch to the right namespace
-send: znspace "${INSTANCE}"<CR>
-wait for:${INSTANCE}>
+send: znspace "${NAMESPACE}"<CR>
+wait for:${NAMESPACE}>
 ;---------------------------------------------------------------------
 ;- SECTION TO RUN ROUTINES IMPORT -
 ;---------------------------------------------------------------------
@@ -52,7 +52,7 @@ wait for:Recompile? Yes =>
 send:<CR>
 wait for:Display Syntax Errors? Yes =>
 send:<CR>
-wait for:${INSTANCE}>
+wait for:${NAMESPACE}>
 $Exit:
     ; close the log file
     closelog
