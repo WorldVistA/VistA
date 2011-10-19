@@ -16,8 +16,7 @@
 #---------------------------------------------------------------------------
 
 spawn gtm -run ^XINDEX
-log_file -noappend ${VISTA_BINARY_DIR}/Testing/Temporary/${package_file_name}.txt
-expect "Routine:"
+log_file -noappend ${VISTA_BINARY_DIR}/Testing/Temporary/${package_file_name}Test.log
 ${send_commands}
 expect "Routine:"
 send "\n"
@@ -29,14 +28,21 @@ expect "Print more than compiled errors and warnings? YES//"
 send "N\n"
 expect "Index all called routines? NO//"
 send "\n"
-expect "DEVICE:"
+expect "DEVICE: "
 send "\n"
-set count 1;
-while {$count <20} {
-expect "   Press return to continue:" {send "\n"}\
-expect "DEVICE:      " { abort }\
-expect "Do you want your output QUEUED? NO//" { abort }
-set count "[expr $count+1]"
+send "\n"
+#the default expect timeout is 20 seconds, set to 1500
+set timeout 1500
+expect {
+    "Press return to continue:" {
+        send "\n"
+        exp_continue
+    }
+    "Do you want your output QUEUED? NO//" {
+        send "\n"
+        exp_continue
+    }
+    "END ---"{
+        exit
+    }
 }
-
-
