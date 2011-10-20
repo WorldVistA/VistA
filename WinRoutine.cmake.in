@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+include(@VISTA_SOURCE_DIR@/CommonFunctions.cmake)
 #define a variable to store the final log file name & path
 set(LOGFILENAME "@VISTA_BINARY_DIR@/Testing/Temporary/@package_file_name@Test.log")
 #Test the total length of the whole path of the log file to make sure it is within 120 (logfile:also takes 8 chars)
@@ -38,26 +38,4 @@ endif()
 file(STRINGS "${LOGFILENAME}" OUTPUT)
 string(REPLACE "[" "{" OUTPUT "${OUTPUT}" )
 string(REPLACE "]" "}" OUTPUT "${OUTPUT}" )
-foreach(line ${OUTPUT})
-  if(line MATCHES "^[A-Z].*")
-    string(REGEX MATCH "^[A-Z0-9]+[^ ]" last_name "${line}")
-  elseif(line MATCHES "F -|W -")
-    # assume the path to the XINDEX package exception list is @VISTA_SOURCE_DIR@\XindexException
-    # also assume the file name is @package_file_name@.${routinename}
-    set(ExceptionFound FALSE)
-    if (EXISTS @VISTA_SOURCE_DIR@/XindexException/@package_file_name@.${last_name})
-      file(STRINGS @VISTA_SOURCE_DIR@/XindexException/@package_file_name@.${last_name} ExceptionList)
-      foreach (Exception ${ExceptionList})
-        string(STRIP "${line}" newline)
-        # this is quite stricty to ensure the text is the exactly the same
-        if ("${Exception}" STREQUAL "${newline}")
-          set(ExceptionFound TRUE)
-          break()
-        endif()
-      endforeach()
-    endif()
-    if (NOT ExceptionFound)
-      message("${last_name} in package @package_file_name@:\n${line}")
-    endif()
-  endif()
-endforeach()
+ReportXINDEXResult(@package_file_name@ @VISTA_SOURCE_DIR@ "${OUTPUT}")

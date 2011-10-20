@@ -13,15 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+include(@VISTA_SOURCE_DIR@/CommonFunctions.cmake)
 execute_process(COMMAND expect -f @VISTA_BINARY_DIR@/Testing/@package_file_name@.exp ERROR_VARIABLE ERROR OUTPUT_VARIABLE OUTPUT)
 string(REPLACE "[" "{" OUTPUT "${OUTPUT}" )
 string(REPLACE "]" "}" OUTPUT "${OUTPUT}" )
 string(REPLACE ";" "\\;" OUTPUT "${OUTPUT}")
 string(REPLACE "\n" ";" OUTPUT "${OUTPUT}")
-foreach(line ${OUTPUT})
-  if(line MATCHES "^[A-Z].*")
-    string(REGEX MATCH "^[A-Z0-9]+[^ ]" last_name "${line}")
-  elseif(line MATCHES "F -|W -")
-    message("${last_name} in package @package_file_name@:\n${line}")
-  endif()
-  endforeach()
+ReportXINDEXResult(@package_file_name@ @VISTA_SOURCE_DIR@ "${OUTPUT}")
