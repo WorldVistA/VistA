@@ -1,0 +1,94 @@
+;---------------------------------------------------------------------------
+; Copyright 2011 The Open Source Electronic Health Record Agent
+;
+; Licensed under the Apache License, Version 2.0 (the "License");
+; you may not use this file except in compliance with the License.
+; You may obtain a copy of the License at
+;
+;     http://www.apache.org/licenses/LICENSE-2.0
+;
+; Unless required by applicable law or agreed to in writing, software
+; distributed under the License is distributed on an "AS IS" BASIS,
+; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+; See the License for the specific language governing permissions and
+; limitations under the License.
+;---------------------------------------------------------------------------
+
+;initialization -- turn match off to make comparisons more lenient
+case match: off
+
+;set the title
+title: ${package_name}
+display:Log file name is <P1><CR><LF>
+;log everthing in a log, log file name will be passed in as parameter 1
+logfile:<P1>
+
+; switch to the right namespace
+on error:$no namespace
+timer:50
+send: znspace "${NAMESPACE}"<CR>
+wait for:${NAMESPACE}>
+timer:0
+goto:$run_routines
+$no namespace:
+    timer: 0
+    goto:$exit
+$run_routines:
+    ;send: D ^XINDEX<CR>
+    ;wait for:All Routines?
+    ;send:No<CR>
+    ;wait for:Routine:
+    ;send:<routine_name>
+    ;subroutine: $Run Xindex for one routine:
+${send_commands}
+
+;define a routine to run Xindex for one routine at a time
+$Run Xindex for one routine:
+    wait for:Routine:
+    send:<CR>
+    wait for:Select BUILD NAME:
+    send:<CR>
+    wait for:Select PACKAGE NAME:
+    send:<CR>
+    ;this is to handle the 0 routines cases
+    on error: $error
+    ;0.5 seconds should be good enough to wait for the following inputs
+    timer: 5
+    wait for:Print more than compiled errors and warnings?
+    send:YES<CR>
+    wait for:Print summary only?
+    send:YES<CR>
+    wait for:Index all called routines?
+    send:NO<CR>
+    ;device input
+    wait for:Device
+    send:<CR><LF>
+    send:<CR><LF>
+    ;reset the timer and jump to the loop
+    timer: 0
+    on error: $timedout
+    goto: $Start Loop
+    $error:
+        goto:$Got it
+    ;wait for:Press return to continue:
+    ; set a timer to handle "Press return to continue:"
+    on error: $timedout
+    ;use goto to fake loop operation since script does not support for/while loop
+    $Start Loop:
+        timer: 1
+        wait for:--- END ---
+        goto: $Got it
+    $timedout:
+        send: <CR>
+        timer:0
+        goto:$Start Loop
+
+    $Got it:
+        timer: 0
+    return
+;end of the subroutine
+$exit:
+    ; close the log file
+    closelog
+    ; exit the terminal
+    terminate
