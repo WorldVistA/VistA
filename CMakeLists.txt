@@ -32,7 +32,7 @@ if(WIN32)
   # The InterSystems Cache installation directory appears only under instance
   # names which we do not know yet.  Try all of them.
   foreach(query "HKLM\\SOFTWARE\\InterSystems\\Cache\\Configurations"
-                "HKLM\\SOFTWARE\\Wow6432Node\\InterSystems\\Cache\\Configurations")
+      "HKLM\\SOFTWARE\\Wow6432Node\\InterSystems\\Cache\\Configurations")
     execute_process(COMMAND reg query "${query}" OUTPUT_VARIABLE out ERROR_VARIABLE err)
     string(REGEX REPLACE "\r?\n" ";" configs "${out}")
     foreach(config ${configs})
@@ -117,9 +117,9 @@ if(CControl AND CTerm)
   execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.log" TIMEOUT 5 RESULT_VARIABLE rcode)
   message(STATUS "Testing if Cache Telnet service is enable: ${rcode}")
   if ( (rcode EQUAL 0) OR "${rcode}" MATCHES "timeout" )
-      message(FATAL_ERROR "Error connecting to Cache ${INSTANCE} namespace ${NAMESPACE} via telnet, please enable the telnet setting via"
-                          " Cache Managements Portal->System->Security Management->Service to switch on %Service_telnet by checking enabled checkbox and save."
-                          " Also verify that telnet port is set to 23 via Configuration->Device Settings->Telnet Settings ")
+    message(FATAL_ERROR "Error connecting to Cache ${INSTANCE} namespace ${NAMESPACE} via telnet, please enable the telnet setting via"
+      " Cache Managements Portal->System->Security Management->Service to switch on %Service_telnet by checking enabled checkbox and save."
+      " Also verify that telnet port is set to 23 via Configuration->Device Settings->Telnet Settings ")
   endif()
   find_program(GIT_EXEC NAMES git.exe HINTS "C:/Program Files (x86)/Git/bin/" DOC "Path to the Git Executable")
   find_program(PYTHON_EXEC NAMES python.exe "C:/Python27/bin/" DOC "Path to the Python Executable")
@@ -166,26 +166,25 @@ endif()
 #if gtmprofile.sh is found, the linux programs and GT.M testing evironment is used.
 if(GTMPROFILE)
 
-#Finds the scripting program for the Linux Based system
-find_program(EXPECT_EXEC NAMES expect)
+  #Finds the scripting program for the Linux Based system
+  find_program(EXPECT_EXEC NAMES expect)
 
-#Creates variables for the routines and globals directorys within GT.M
-find_path (VISTA_ROUTINE_DIR NAMES Routines HINTS ${VISTA_SOURCE_DIR}/routines DOC "Path to the Routines folder within GT.M")
-find_path (VISTA_GLOBALS_DIR NAMES Globals HINTS ${VISTA_SOURCE_DIR}/globals DOC " Path to the folder that contains the GT.M database.dat")
+  #Creates variables for the routines and globals directorys within GT.M
+  find_path (VISTA_ROUTINE_DIR NAMES Routines HINTS ${VISTA_SOURCE_DIR}/routines DOC "Path to the Routines folder within GT.M")
+  find_path (VISTA_GLOBALS_DIR NAMES Globals HINTS ${VISTA_SOURCE_DIR}/globals DOC " Path to the folder that contains the GT.M database.dat")
 
 
-#Configures a .sh file to completely set up the environment variables beyond what sourcing the gtmprofile will
-configure_file(${VISTA_SOURCE_DIR}/GTMEnvironment.sh.in ${VISTA_BINARY_DIR}/GTMEnvironment.sh @ONLY)
+  #Configures a .sh file to completely set up the environment variables beyond what sourcing the gtmprofile will
+  configure_file(${VISTA_SOURCE_DIR}/GTMEnvironment.sh.in ${VISTA_BINARY_DIR}/GTMEnvironment.sh @ONLY)
 
-# Creates the reports folder with style guides for submitting to the OSEHR journal if the option is selected.
-if( BUILD_REPORTS )
-  add_subdirectory( Reports )
+  # Creates the reports folder with style guides for submitting to the OSEHR journal if the option is selected.
+  if( BUILD_REPORTS )
+    add_subdirectory( Reports )
   endif(BUILD_REPORTS)
 
 
   file(GLOB PACKAGES ${OSEHRA_PATH}/Packages/*)
   foreach(package ${PACKAGES})
-    #message(${package})
     get_filename_component(package_name ${package} NAME)
     file(GLOB routines "${package}/Routines/*.m")
     set(send_commands "")
@@ -193,18 +192,18 @@ if( BUILD_REPORTS )
       get_filename_component(routine_name ${routine} NAME_WE)
       set(send_commands "${send_commands} expect \"Routine:\"\nsend \"${routine_name}\\n\"\n")
     endforeach()
-    #message(${send_commands})
     string(REPLACE  " " "_" package_file_name "${package_name}")
+    list(LENGTH routines NumberRoutines )
 
-#Configures the Expect script with the name of the routine
-configure_file(${VISTA_SOURCE_DIR}/XINDEXscript.exp.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}.exp)
+    #Configures the Expect script with the name of the routine
+    configure_file(${VISTA_SOURCE_DIR}/XINDEXscript.exp.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}.exp)
 
-#Configures the CMake file to be called by the correct test and call the correct script
-configure_file(${VISTA_SOURCE_DIR}/RoutineTest.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}.cmake @ONLY)
+    #Configures the CMake file to be called by the correct test and call the correct script
+    configure_file(${VISTA_SOURCE_DIR}/RoutineTest.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}.cmake @ONLY)
 
-#Adds the test to the list available
-add_test( XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}.cmake)
-endforeach()
-#Configures a .sh File that can be used to automatically set up the proper environment and start a test that submits a Nightly test.
-configure_file(${VISTA_SOURCE_DIR}/Nightly.sh.in ${VISTA_BINARY_DIR}/Nightly.sh @ONLY)
+    #Adds the test to the list available
+    add_test( XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}.cmake)
+  endforeach()
+  #Configures a .sh File that can be used to automatically set up the proper environment and start a test that submits a Nightly test.
+  configure_file(${VISTA_SOURCE_DIR}/Nightly.sh.in ${VISTA_BINARY_DIR}/Nightly.sh @ONLY)
 endif(GTMPROFILE)

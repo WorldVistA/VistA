@@ -14,6 +14,12 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 include(@VISTA_SOURCE_DIR@/CommonFunctions.cmake)
+# check to see if we have any routines to test
+if(@NumberRoutines@ EQUAL 0)
+  message("No routines to test in @package_name@, XINDEX test passes.")
+  return()
+endif()
+
 execute_process(COMMAND expect -f @VISTA_BINARY_DIR@/Testing/@package_file_name@.exp ERROR_VARIABLE ERROR OUTPUT_VARIABLE OUTPUT RESULT_VARIABLE return)
 
 # function takes a string variable by name
