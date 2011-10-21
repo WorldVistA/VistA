@@ -192,29 +192,60 @@ get_filename_component(_name "${CTEST_SOURCE_DIRECTORY}" NAME)
 set(ctest_checkout_script ${CTEST_DASHBOARD_ROOT}/${_name}-init.cmake)
 file(WRITE ${ctest_checkout_script} "# git repo init script for ${_name}
 
+macro(CheckResult Result Message)
+  if(NOT "${Result}" EQUAL 0)
+    message(FATAL_ERROR "ERROR: ${Message}")
+  endif()
+endmacro()
+
 if(EXISTS \"${CTEST_SOURCE_DIRECTORY}/.git\")
- execute_process(
-  COMMAND \"${CTEST_GIT_COMMAND}\" pull
-  WORKING_DIRECTORY \"${CTEST_SOURCE_DIRECTORY}\"
+  execute_process(
+    COMMAND \"${CTEST_GIT_COMMAND}\" checkout master
+    WORKING_DIRECTORY \"${CTEST_SOURCE_DIRECTORY}\"
+    RESULT_VARIABLE return
   )
+  CheckResult(return "Git Checkout Master in ${CTEST_SOURCE_DIRECTORY}")
+
+
+  execute_process(
+  COMMAND \"${CTEST_GIT_COMMAND}\" pull
+    WORKING_DIRECTORY \"${CTEST_SOURCE_DIRECTORY}\"
+    RESULT_VARIABLE return
+    )
+  CheckResult(return "Git Pull in ${CTEST_SOURCE_DIRECTORY}")
+
 else()
   execute_process(
   COMMAND \"${CTEST_GIT_COMMAND}\" clone ${git_branch_new} \"${testing_git_url}\"
           \"${CTEST_SOURCE_DIRECTORY}\"
+  RESULT_VARIABLE return
   )
+  CheckResult(return "Git Clone in ${CTEST_SOURCE_DIRECTORY}")
 endif()
 
 
 if(EXISTS \"${CTEST_VISTA_CODE_DIRECTORY}/.git\")
-execute_process(
-  COMMAND \"${CTEST_GIT_COMMAND}\" pull
-  WORKING_DIRECTORY \"${CTEST_VISTA_CODE_DIRECTORY}\"
-  )
+  execute_process(
+    COMMAND \"${CTEST_GIT_COMMAND}\" checkout master
+    WORKING_DIRECTORY \"${CTEST_VISTA_CODE_DIRECTORY}\"
+    RESULT_VARIABLE return
+    )
+  CheckResult(return "Git Checkout Master in ${CTEST_VISTA_CODE_DIRECTORY}")
+
+  execute_process(
+    COMMAND \"${CTEST_GIT_COMMAND}\" pull
+    WORKING_DIRECTORY \"${CTEST_VISTA_CODE_DIRECTORY}\"
+    RESULT_VARIABLE return
+    )
+  CheckResult(return "Git Pull in ${CTEST_VISTA_CODE_DIRECTORY}")
+
 else()
   execute_process(
   COMMAND \"${CTEST_GIT_COMMAND}\" clone ${git_branch_new} \"${foia_git_url}\"
           \"${CTEST_VISTA_CODE_DIRECTORY}\"
+  RESULT_VARIABLE return
   )
+  CheckResult(return "Git Clone in ${CTEST_VISTA_CODE_DIRECTORY}")
 endif()
 
 ")
