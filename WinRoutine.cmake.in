@@ -26,15 +26,21 @@ if (LOGFILENAME_LEN GREATER 120)
   # this is not perfect, but should be good enough for now
   set(NEWLOGFILENAME "@VISTA_BINARY_DIR@/${MD5}")
   #message("New log file name is ${NEWLOGFILENAME}")
-  execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "@VISTA_BINARY_DIR@/Testing/@package_file_name@Test.scp" "${NEWLOGFILENAME}")
+  execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "@VISTA_BINARY_DIR@/Testing/@package_file_name@Test.scp" "${NEWLOGFILENAME}"
+    RESULT_VARIABLE return ERROR_VARIABLE ERROR)
   # move the log file to the new place
   file(RENAME "${NEWLOGFILENAME}" "${LOGFILENAME}")
 
 else()
-  execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "@VISTA_BINARY_DIR@/Testing/@package_file_name@Test.scp" "${LOGFILENAME}")
-
+  execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "@VISTA_BINARY_DIR@/Testing/@package_file_name@Test.scp" "${LOGFILENAME}"
+  RESULT_VARIABLE return ERROR_VARIABLE ERROR)
 endif()
 
+
+if(NOT return EQUAL 1)
+  file(READ ${LOGFILENAME} contents)
+  message(FATAL_ERROR "Error running CTerm:\nReturn Value = ${return}\n${contents}\n${ERROR}")
+endif()
 file(STRINGS "${LOGFILENAME}" OUTPUT)
 string(REPLACE "[" "{" OUTPUT "${OUTPUT}" )
 string(REPLACE "]" "}" OUTPUT "${OUTPUT}" )

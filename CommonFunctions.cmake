@@ -16,6 +16,7 @@
 #-----------------------------------------------------------------------------
 # Define a function for parsing and reporting XINDEX output results
 function(ReportXINDEXResult PACKAGE_NAME DIRNAME OUTPUT)
+   set(test_passed TRUE)
    foreach (line ${OUTPUT})
       # the XINDEX will always check the integrity of the routine using checksum
       if(line MATCHES "^[A-Z0-9][^ ]+ +\\* \\* .*[cC]hecksum:.*")
@@ -37,7 +38,13 @@ function(ReportXINDEXResult PACKAGE_NAME DIRNAME OUTPUT)
         endif()
         if (NOT ExceptionFound)
           message("${routine_name} in package ${PACKAGE_NAME}:\n${line}")
+          set(test_passed FALSE)
         endif()
       endif()
    endforeach()
+   if(test_passed)
+     message("${PACKAGE_NAME} Passed:\n${OUTPUT}")
+   else()
+     message(FATAL_ERROR "${PACKAGE_NAME} has XINDEX Errors")
+     endif()
 endfunction()

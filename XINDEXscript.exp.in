@@ -43,6 +43,10 @@ expect {
         exp_continue
     }
     "END ---"{
-        exit
+        break
     }
+
 }
+set ret [exp_wait]
+set exit_status [lindex $ret 3]
+exit $exit_status
