@@ -105,10 +105,8 @@ if(CControl AND CTerm)
     add_subdirectory( Reports )
   endif()
 
-  if( VISTA_Path )
-    #Captures the name of the VistA instance and server for configuring.
-    get_filename_component(NAMESPACE ${VISTA_Path} NAME)
-  endif()
+  # Select a namespace for VistA
+  set(NAMESPACE "VISTA" CACHE STRING "Cache namespace to store VistA")
 
   OPTION(CLEAN_CACHE "Overwrite the Cache.dat file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
 
