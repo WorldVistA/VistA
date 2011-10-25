@@ -20,7 +20,7 @@ cmake_minimum_required(VERSION 2.8.0)
 set(CMAKE_MAKE_PROGRAM " " CACHE string "N" FORCE)
 project(VISTA NONE)
 
-include(CTest)
+
 set(BUILD_TESTING "ON" CACHE INTERNAL "Always build testing")
 
 #options that will show up on the CMake Gui that allows customization of the project
@@ -158,8 +158,6 @@ if(CControl AND CTerm)
 
   endforeach()
 
-  #end the program
-  return()
 endif()
 
 
@@ -218,3 +216,5 @@ if(GTMPROFILE)
   #Configures a .sh File that can be used to automatically set up the proper environment and start a test that submits a Nightly test.
   configure_file(${VISTA_SOURCE_DIR}/Nightly.sh.in ${VISTA_BINARY_DIR}/Nightly.sh @ONLY)
 endif(GTMPROFILE)
+configure_file(CTestCustom.cmake.in ${VISTA_BINARY_DIR}/CTestCustom.cmake)
+include(CTest)
