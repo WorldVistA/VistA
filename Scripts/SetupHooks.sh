@@ -32,17 +32,15 @@ cd "$u/../.git/hooks"
 
 # We need to have a git repository to do a fetch.
 if ! test -d ./.git; then
-  git init || die "Could not run git init."
+  git init -q || die "Could not run git init."
 fi
 
 # Fetch the hooks.  Use the local hooks branch if possible.
-echo "Fetching the hooks..."
 if GIT_DIR=.. git for-each-ref refs/remotes/origin/hooks 2>/dev/null | \
   egrep-q 'refs/remotes/origin/hooks$'; then
-  git fetch .. remotes/origin/hooks
+  git fetch -q .. remotes/origin/hooks
 else
-  git fetch http://code.osehra.org/OSEHRA-Automated-Testing.git hooks
+  git fetch -q http://code.osehra.org/OSEHRA-Automated-Testing.git hooks
 fi &&
-git reset --hard FETCH_HEAD || die "Failed to install hooks"
+git reset -q --hard FETCH_HEAD || die "Failed to install hooks"
 cd ../..
-echo "Done."
