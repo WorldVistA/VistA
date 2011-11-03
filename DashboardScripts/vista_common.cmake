@@ -117,9 +117,6 @@ if(NOT CTEST_TEST_TIMEOUT)
   set(CTEST_TEST_TIMEOUT 1500)
 endif()
 
-# Path to OSEHRA code base:  OSEHRA_PATH:PATH=C:/cygwin/home/joe.snyder/VistAFOIA/VistA-FOIA
-
-
 # Select Git source to use.
 if(NOT DEFINED foia_git_url)
   set(foia_git_url "git://code.osehra.org/VistA-FOIA.git")
@@ -340,6 +337,11 @@ while(NOT dashboard_done)
   endif()
   set(ENV{HOME} "${dashboard_user_home}")
 
+  # This needs to occur before ctest_start is called
+  if(EXISTS "${CTEST_SOURCE_DIRECTORY}/.git")
+    set(CTEST_CHECKOUT_COMMAND)
+  endif()
+
   # Start a new submission.
   if(COMMAND dashboard_hook_start)
     dashboard_hook_start()
@@ -354,20 +356,42 @@ while(NOT dashboard_done)
     write_cache()
   endif()
 
-  # Look for updates.
-  ctest_update(RETURN_VALUE count)
-  set(CTEST_CHECKOUT_COMMAND) # checkout on first iteration only
-  safe_message("Found ${count} changed files")
 
+  # Look for updates.
+  if(NOT EXISTS "${CTEST_SOURCE_DIRECTORY}/.git")
+  # checkout on first iteration only
+    ctest_update(RETURN_VALUE count)
+  else() #Source Environment exists
+  #Update the OSEHRA Code Base Repository
+    execute_process(COMMAND "${CTEST_GIT_COMMAND}" checkout master
+      WORKING_DIRECTORY "${CTEST_VISTA_CODE_DIRECTORY}"
+      )
+    execute_process(COMMAND "${CTEST_GIT_COMMAND}" pull
+      WORKING_DIRECTORY "${CTEST_VISTA_CODE_DIRECTORY}"
+      OUTPUT_FILE "${CTEST_BINARY_DIRECTORY}/OSEHRA_Code_Update.log")
+    #Get the SHA key for the current HEAD
+    execute_process(COMMAND "${CTEST_GIT_COMMAND}" rev-parse HEAD
+      WORKING_DIRECTORY "${CTEST_VISTA_CODE_DIRECTORY}"
+      OUTPUT_VARIABLE RepositorySHA)
+    #Append the SHA and a message saying what directory was updated to the result of the pull
+    file(APPEND ${CTEST_BINARY_DIRECTORY}/OSEHRA_Code_Update.log "New Checkout SHA: ${RepositorySHA}\nResult of Update in ${CTEST_VISTA_CODE_DIRECTORY}")
+    #Insert the file that will be read as part of the notes submitted to the dashboard.
+    set(CTEST_NOTES_FILES "${CTEST_BINARY_DIRECTORY}/OSEHRA_Code_Update.log" "${CTEST_NOTES_FILES}")
+    #Update the OSEHRA Testing Repository
+    ctest_update(SOURCE ${CTEST_SOURCE_DIRECTORY} RETURN_VALUE count)
+  endif()
+
+
+  safe_message("Found ${count} changed files")
   if(dashboard_fresh OR NOT dashboard_continuous OR count GREATER 0)
     ctest_configure()
     ctest_read_custom_files(${CTEST_BINARY_DIRECTORY})
 
-    if(COMMAND dashboard_hook_build)
-      dashboard_hook_build()
+   if(COMMAND dashboard_hook_build)
+     dashboard_hook_build()
     endif()
     ctest_build()
-    ctest_submit(PARTS Build Update Configure Notes)
+    ctest_submit(PARTS Update Notes Build  Configure )
 
     if(COMMAND dashboard_hook_test)
       dashboard_hook_test()
