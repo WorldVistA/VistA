@@ -21,32 +21,38 @@
 
 import sys
 
-# Read from standard input.
-ro = sys.stdin
+def unpack(ro):
+    # Write out the two header lines for human reference.
+    sys.stdout.write(ro.readline())
+    sys.stdout.write(ro.readline())
 
-# Write out the two header lines for human reference.
-sys.stdout.write(ro.readline())
-sys.stdout.write(ro.readline())
-
-m = None
-
-for line in ro:
-    if line == '\n':
-        # Routine terminated by blank line
-        if m:
-            m.close()
-            m = None
-    elif m:
-        m.write(line)
-    else:
-        # Routine started by line with its name.  Some %RO
-        # implementations add a '^' followed by more data;
-        # ignore that.
-        name,up,rest = line.partition('^')
-        name = name.strip()
-        m = open(name+'.m','w')
-        # Report the new routine name for human reference.
-        sys.stdout.write('%s\n' % name)
-if m:
-    m.close()
     m = None
+
+    for line in ro:
+        if line == '\n':
+            # Routine terminated by blank line
+            if m:
+                m.close()
+                m = None
+        elif m:
+            m.write(line)
+        else:
+            # Routine started by line with its name.  Some %RO
+            # implementations add a '^' followed by more data;
+            # ignore that.
+            name,up,rest = line.partition('^')
+            name = name.strip()
+            m = open(name+'.m','w')
+            # Report the new routine name for human reference.
+            sys.stdout.write('%s\n' % name)
+    if m:
+        m.close()
+        m = None
+
+def main():
+    # Read from standard input.
+    ro = sys.stdin
+    unpack(ro)
+
+if __name__ == '__main__':
+    main()
