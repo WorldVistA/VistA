@@ -25,19 +25,28 @@
 import sys
 import os
 
-sys.stdout.write('Routines\n\n')
-files = sys.argv[1:]
-if not files:
-    files = [a.rstrip() for a in sys.stdin]
-for f in files:
-    if not f.endswith('.m'):
-        sys.stderr.write('Skipping non-.m file: %s\n' % f)
-        continue
-    n = os.path.basename(f)[:-2]
-    m = open(f,"r")
-    sys.stdout.write('%s\n'%n)
-    for line in m:
-        sys.stdout.write(line)
-    sys.stdout.write('\n')
-sys.stdout.write('\n')
-sys.stdout.write('\n')
+def pack(files, output):
+    output.write('Routines\n\n')
+    for f in files:
+        if not f.endswith('.m'):
+            sys.stderr.write('Skipping non-.m file: %s\n' % f)
+            continue
+        n = os.path.basename(f)[:-2]
+        m = open(f,"r")
+        output.write('%s\n'%n)
+        for line in m:
+            output.write(line)
+        output.write('\n')
+    output.write('\n')
+    output.write('\n')
+
+
+def main():
+    files = sys.argv[1:]
+    if not files:
+        files = [a.rstrip() for a in sys.stdin]
+
+    pack(files, sys.stdout)
+
+if __name__ == '__main__':
+    main()
