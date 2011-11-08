@@ -66,60 +66,68 @@ def place(src,dst):
 
 #-----------------------------------------------------------------------------
 
-# Parse packages and namespaces from CSV table on stdin.
-packages = []
-pkg = None
-for line in sys.stdin:
-    fields = line.split(',')
-    if fields[0]:
-        pkg = Package(fields[0], fields[4])
-        packages.append(pkg)
-    if pkg:
-        pkg.add_namespaces(fields[1:3])
-        pkg.add_global(fields[3])
+def populate(packages_csv):
+    # Parse packages and namespaces from CSV table on stdin.
+    packages = []
+    pkg = None
+    for line in (packages_csv):
+        fields = line.split(',')
+        if fields[0]:
+            pkg = Package(fields[0], fields[4])
+            packages.append(pkg)
+        if pkg:
+            pkg.add_namespaces(fields[1:3])
+            pkg.add_global(fields[3])
 
-# Construct "namespace => path" map.
-namespaces = {}
-for p in packages:
-    for ns in p.included:
-        namespaces[ns] = p.path
-    for ns in p.excluded:
-        if not namespaces.has_key(ns):
-            namespaces[ns] = None
+    # Construct "namespace => path" map.
+    namespaces = {}
+    for p in packages:
+        for ns in p.included:
+            namespaces[ns] = p.path
+        for ns in p.excluded:
+            if not namespaces.has_key(ns):
+                namespaces[ns] = None
 
-#-----------------------------------------------------------------------------
+    #-----------------------------------------------------------------------------
 
-# Collect routines and globals in current directory.
-routines = set(glob.glob('*.m'))
-globals = set(glob.glob('*.zwr'))
+    # Collect routines and globals in current directory.
+    routines = set(glob.glob('*.m'))
+    globals = set(glob.glob('*.zwr'))
 
-#-----------------------------------------------------------------------------
+    #-----------------------------------------------------------------------------
 
-# Map by package namespace (prefix).
-for ns in sorted(namespaces.keys(),order_long_to_short):
-    path = namespaces[ns]
-    gbls = [gbl for gbl in globals if gbl.startswith(ns)]
-    rtns = [rtn for rtn in routines if rtn.startswith(ns)]
-    if (rtns or gbls) and not path:
-        sys.stderr.write('Namespace "%s" has no path!\n' % ns)
-        continue
-    routines.difference_update(rtns)
-    globals.difference_update(gbls)
-    for src in sorted(rtns):
-        place(src,os.path.join(path,'Routines',src))
-    for src in sorted(gbls):
-        place(src,os.path.join(path,'Globals',src))
+    # Map by package namespace (prefix).
+    for ns in sorted(namespaces.keys(),order_long_to_short):
+        path = namespaces[ns]
+        gbls = [gbl for gbl in globals if gbl.startswith(ns)]
+        rtns = [rtn for rtn in routines if rtn.startswith(ns)]
+        if (rtns or gbls) and not path:
+            sys.stderr.write('Namespace "%s" has no path!\n' % ns)
+            continue
+        routines.difference_update(rtns)
+        globals.difference_update(gbls)
+        for src in sorted(rtns):
+            place(src,os.path.join(path,'Routines',src))
+        for src in sorted(gbls):
+            place(src,os.path.join(path,'Globals',src))
 
-# Map globals explicitly listed in each package.
-for p in packages:
-    gbls = [gbl for gbl in globals
-            if gbl[:-4].split('+')[0].split('-')[0] in p.globals]
-    globals.difference_update(gbls)
-    for src in sorted(gbls):
-        place(src,os.path.join(p.path,'Globals',src))
+    # Map globals explicitly listed in each package.
+    for p in packages:
+        gbls = [gbl for gbl in globals
+                if gbl[:-4].split('+')[0].split('-')[0] in p.globals]
+        globals.difference_update(gbls)
+        for src in sorted(gbls):
+            place(src,os.path.join(p.path,'Globals',src))
 
-# Put leftover routines and globals in Uncategorized package.
-for src in routines:
-    place(src,os.path.join('Uncategorized','Routines',src))
-for src in globals:
-    place(src,os.path.join('Uncategorized','Globals',src))
+    # Put leftover routines and globals in Uncategorized package.
+    for src in routines:
+        place(src,os.path.join('Uncategorized','Routines',src))
+    for src in globals:
+        place(src,os.path.join('Uncategorized','Globals',src))
+
+def main():
+    packages_csv = sys.stdin
+    populate(packages_csv)
+
+if __name__ == '__main__':
+    main()
