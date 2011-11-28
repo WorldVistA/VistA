@@ -138,23 +138,25 @@ if(CControl AND CTerm)
   foreach(package ${PACKAGES})
     #message(${package})
     get_filename_component(package_name ${package} NAME)
-    file(GLOB routines "${package}/Routines/*.m")
-    set(send_commands "")
-    foreach(routine ${routines})
-      get_filename_component(routine_name ${routine} NAME_WE)
-      set(send_commands "${send_commands} wait for:Routine:\n send:${routine_name}<CR>\n")
-    endforeach()
-    string(REPLACE  " " "_" package_file_name "${package_name}")
+    string(REGEX MATCH ^[.] Packageflag ${package_name})
+    if(NOT Packageflag)
+      file(GLOB routines "${package}/Routines/*.m")
+      set(send_commands "")
+      foreach(routine ${routines})
+        get_filename_component(routine_name ${routine} NAME_WE)
+        set(send_commands "${send_commands} wait for:Routine:\n send:${routine_name}<CR>\n")
+      endforeach()
+      string(REPLACE  " " "_" package_file_name "${package_name}")
 
-    #Configures the Cache Terminal script for testing, by replacing known variables in the .in file
-    configure_file(${VISTA_SOURCE_DIR}/CacheXINDEXScript.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.scp)
+      #Configures the Cache Terminal script for testing, by replacing known variables in the .in file
+      configure_file(${VISTA_SOURCE_DIR}/CacheXINDEXScript.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.scp)
 
-    #Configures the CMAKE testing
-    configure_file(${VISTA_SOURCE_DIR}/WinRoutine.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake @ONLY)
+      #Configures the CMAKE testing
+      configure_file(${VISTA_SOURCE_DIR}/WinRoutine.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake @ONLY)
 
-    #Creates the command that will be called for the Test
-    add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake)
-
+      #Creates the command that will be called for the Test
+      add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake)
+    endif()
   endforeach()
 
 endif()
@@ -194,23 +196,26 @@ if(GTMPROFILE)
   file(GLOB PACKAGES ${OSEHRA_PATH}/Packages/*)
   foreach(package ${PACKAGES})
     get_filename_component(package_name ${package} NAME)
-    file(GLOB routines "${package}/Routines/*.m")
-    set(send_commands "")
-    foreach(routine ${routines})
-      get_filename_component(routine_name ${routine} NAME_WE)
-      set(send_commands "${send_commands} expect \"Routine:\"\nsend \"${routine_name}\\n\"\n")
-    endforeach()
-    string(REPLACE  " " "_" package_file_name "${package_name}")
-    list(LENGTH routines NumberRoutines )
+    string(REGEX MATCH ^[.] Packageflag ${package_name})
+    if(NOT Packageflag)
+      file(GLOB routines "${package}/Routines/*.m")
+      set(send_commands "")
+      foreach(routine ${routines})
+        get_filename_component(routine_name ${routine} NAME_WE)
+        set(send_commands "${send_commands} expect \"Routine:\"\nsend \"${routine_name}\\n\"\n")
+      endforeach()
+      string(REPLACE  " " "_" package_file_name "${package_name}")
+      list(LENGTH routines NumberRoutines )
 
-    #Configures the Expect script with the name of the routine
-    configure_file(${VISTA_SOURCE_DIR}/XINDEXscript.exp.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}.exp)
+      #Configures the Expect script with the name of the routine
+      configure_file(${VISTA_SOURCE_DIR}/XINDEXscript.exp.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}.exp)
 
-    #Configures the CMake file to be called by the correct test and call the correct script
-    configure_file(${VISTA_SOURCE_DIR}/RoutineTest.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}.cmake @ONLY)
+      #Configures the CMake file to be called by the correct test and call the correct script
+      configure_file(${VISTA_SOURCE_DIR}/RoutineTest.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}.cmake @ONLY)
 
-    #Adds the test to the list available
-    add_test( XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}.cmake)
+      #Adds the test to the list available
+      add_test( XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}.cmake)
+    endif()
   endforeach()
   #Configures a .sh File that can be used to automatically set up the proper environment and start a test that submits a Nightly test.
   configure_file(${VISTA_SOURCE_DIR}/Nightly.sh.in ${VISTA_BINARY_DIR}/Nightly.sh @ONLY)
