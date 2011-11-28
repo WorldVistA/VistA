@@ -15,7 +15,7 @@
 #---------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 # Define a function for parsing and reporting XINDEX output results
-function(ReportXINDEXResult PACKAGE_NAME EXCEPTION_DIR OUTPUT USE_XINDEX_WARNINGS_AS_FAILURES)
+function(ReportXINDEXResult PACKAGE_NAME EXCEPTION_DIR GREP_EXEC OUTPUT USE_XINDEX_WARNINGS_AS_FAILURES OSEHRA_PATH)
    if(USE_XINDEX_WARNINGS_AS_FAILURES)
      set(FAILURE_CONDITION "F -|W -")
    else()
@@ -41,7 +41,22 @@ function(ReportXINDEXResult PACKAGE_NAME EXCEPTION_DIR OUTPUT USE_XINDEX_WARNING
           endforeach()
         endif()
         if (NOT ExceptionFound)
+          string(REGEX MATCH ^\ \ \ [A-Z]+ tag ${line})
           message("${routine_name} in package ${PACKAGE_NAME}:\n${line}")
+          if(tag AND GREP_EXEC)
+            string(REGEX MATCH "\\+[0-9]+" position ${line})
+            string(STRIP ${tag} tag)
+            string(REPLACE "_" " " PACKAGE_NAME ${PACKAGE_NAME})
+            execute_process(COMMAND ${GREP_EXEC} -n -h ^${tag}
+                            "${OSEHRA_PATH}/Packages/${PACKAGE_NAME}/Routines/${routine_name}.m"
+                            OUTPUT_VARIABLE linematch)
+            if(linematch)
+
+              string(REGEX MATCH ^[0-9]+ linenumber ${linematch})
+              math(EXPR errorposition ${linenumber}${position})
+              message("Error is found in ${routine_name}.m on line: ${errorposition}\n")
+            endif()
+          endif()
           set(test_passed FALSE)
         endif()
       endif()

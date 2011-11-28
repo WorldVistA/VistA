@@ -20,6 +20,7 @@ cmake_minimum_required(VERSION 2.8.0)
 set(CMAKE_MAKE_PROGRAM "/" CACHE INTERNAL "This does not build")
 set(CMAKE_INSTALL_PREFIX "/" CACHE INTERNAL "This does not install")
 project(VISTA NONE)
+find_program(GREP_EXEC NAMES grep DOC "Path to the grep executable for finding the line number of the found errors")
 
 if("${CMAKE_VERSION}" VERSION_LESS 2.8.2)
   find_program(GIT_EXECUTABLE NAMES git)
