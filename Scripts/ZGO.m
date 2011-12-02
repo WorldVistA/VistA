@@ -85,8 +85,7 @@ FILENAME(N) ; Return FileMan file name
 HOSTPATH(N)
  Q DIR_N_".zwr"
 HOSTFILE(F)
- N HF S HF=$QS(F,1),HF=$E(HF,2,$L(HF))_"+"
- S HF=HF_$TRANSLATE($$FILENAME(@F),"/()*'","-") ; #&
+ N HF S HF=@F_"+"_$TRANSLATE($$FILENAME(@F),"/()*'","-") ; #&
  Q $$HOSTPATH(HF)
 OPENGBL(G)
  N IO S IO=$$HOSTPATH($E(G,2,$L(G)))
