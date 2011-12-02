@@ -45,7 +45,7 @@ FILES ; Build FILES() mapping FGR components to file number
 FILE(N)
  N I,FILE
  S FILE=$NAME(FILES($QS(N,0)))
- F I=1:1:$QL(N) S FILE=$NAME(@($E(FILE,1,$L(FILE)-1)_",$QS(N,I))"))
+ F I=1:1:$QL(N) S FILE=$NAME(@FILE@($QS(N,I)))
  Q FILE
 GLOBALS
  N G
@@ -67,17 +67,13 @@ VISIT(IO,F,G) ; Visit node G and recurse
  I DF#10 D CLOSE(IO)
  Q
 FOLLOW(IO,F,G) ; Follow children of node G
- N RI,FI,I
- S RI=$S(G["(":$E(G,1,$L(G)-1)_",I)",1:G_"(I)")
- S FI=$E(F,1,$L(F)-1)_",I)"
- S I="" F  S I=$O(@RI) Q:I=""  D
- . N G,DG,NF
- . S G=$NAME(@RI),DG=$D(@G)
- . I DG#10 D WRITE(IO,G)
+ N I S I="" F  S I=$O(@G@(I)) Q:I=""  D
+ . N NG,DG S NG=$NAME(@G@(I)),DG=$D(@NG)
+ . I DG#10 D WRITE(IO,NG)
  . I DG<10 Q
- . S NF=$NAME(@FI)
- . I $D(@NF) D VISIT(IO,NF,G)
- . E         D DUMP(IO,G)
+ . N NF S NF=$NAME(@F@(I))
+ . I $D(@NF) D VISIT(IO,NF,NG)
+ . E         D DUMP(IO,NG)
  Q
 DUMP(IO,G) ; Dump everything under node G, excluding G itself
  N R,LR
