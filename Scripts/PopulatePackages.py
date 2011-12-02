@@ -5,7 +5,7 @@
 #
 # The input packages.csv table must have these columns:
 #
-#   Package Name,Prefix,Additional Prefixes,Additional Globals,Directory Name
+#   Package Name,Directory Name,Prefixes,File Numbers,File Names,Globals
 #
 # Rows with an empty package name specify additional prefixes and
 # globals for the most recently named package.  Prepend '!' to exclude
@@ -28,6 +28,7 @@
 #---------------------------------------------------------------------------
 import sys
 import os
+import csv
 import glob
 
 class Package:
@@ -37,13 +38,15 @@ class Package:
         self.included = set()
         self.excluded = set()
         self.globals = set()
-    def add_namespaces(self, names):
-        for ns in names:
-            if ns:
-                if ns[0] in ('-','!'):
-                    self.excluded.add(ns[1:])
-                else:
-                    self.included.add(ns)
+    def add_namespace(self, ns):
+        if ns:
+            if ns[0] in ('-','!'):
+                self.excluded.add(ns[1:])
+            else:
+                self.included.add(ns)
+    def add_number(self, n):
+        if n:
+            self.globals.add(n) # numbers work just like globals
     def add_global(self, g):
         if g:
             self.globals.add(g)
@@ -66,18 +69,19 @@ def place(src,dst):
 
 #-----------------------------------------------------------------------------
 
-def populate(packages_csv):
+def populate(input):
+    packages_csv = csv.DictReader(input)
     # Parse packages and namespaces from CSV table on stdin.
     packages = []
     pkg = None
-    for line in (packages_csv):
-        fields = line.split(',')
-        if fields[0]:
-            pkg = Package(fields[0], fields[4])
+    for fields in packages_csv:
+        if fields['Package Name']:
+            pkg = Package(fields['Package Name'], fields['Directory Name'])
             packages.append(pkg)
         if pkg:
-            pkg.add_namespaces(fields[1:3])
-            pkg.add_global(fields[3])
+            pkg.add_namespace(fields['Prefixes'])
+            pkg.add_number(fields['File Numbers'])
+            pkg.add_global(fields['Globals'])
 
     # Construct "namespace => path" map.
     namespaces = {}
@@ -93,6 +97,7 @@ def populate(packages_csv):
     # Collect routines and globals in current directory.
     routines = set(glob.glob('*.m'))
     globals = set(glob.glob('*.zwr'))
+    globals.update(set(glob.glob('.*.zwr'))) # File numbers < 1
 
     #-----------------------------------------------------------------------------
 
@@ -126,8 +131,7 @@ def populate(packages_csv):
         place(src,os.path.join('Uncategorized','Globals',src))
 
 def main():
-    packages_csv = sys.stdin
-    populate(packages_csv)
+    populate(sys.stdin)
 
 if __name__ == '__main__':
     main()
