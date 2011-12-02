@@ -38,14 +38,9 @@ ASKDIR
 SLASH(DIR)
  I $E(DIR,$L(DIR))?1(1"/",1"\") Q 1
  E  U $P W "Output directory must end in a slash!" Q 0
-FILES
- N FGR,FGRS,N
- S N=0 F  S N=$O(^DIC(N)) Q:N=""  I $D(^DIC(N,0))#10 S FGR=^DIC(N,0,"GL") S FGRS(FGR)=$P(^DIC(N,0),"^")
- S FGR="" F  S FGR=$O(FGRS(FGR)) Q:FGR=""  D
- . S R=$E(FGR,1,$L(FGR)-1)
- . I $E(FGR,$L(FGR))="," S R=R_")"
- . S F=$$FILE(R)
- . S @F=FGRS(FGR)
+FILES ; Build FILES() mapping FGR components to file number
+ N N S N=0 F  S N=$O(^DIC(N)) Q:N=""  D:+N
+ . N F S F=$$FILE($$ROOT^DILFD(N,"",1)),@F=N
  Q
 FILE(N)
  N I,FILE
@@ -89,11 +84,13 @@ DUMP(IO,G) ; Dump everything under node G, excluding G itself
  S R=$S(G["(":$E(G,1,$L(G)-1)_",",1:G_"("),LR=$L(R)
  F  S G=$Q(@G) Q:G=""  Q:$L(G)<LR  Q:$E(G,1,LR)'=R  D WRITE(IO,G)
  Q
+FILENAME(N) ; Return FileMan file name
+ Q $P(^DIC(N,0),"^")
 HOSTPATH(N)
  Q DIR_N_".zwr"
 HOSTFILE(F)
  N HF S HF=$QS(F,1),HF=$E(HF,2,$L(HF))_"+"
- S HF=HF_$TRANSLATE(@F,"/()*'","-") ; #&
+ S HF=HF_$TRANSLATE($$FILENAME(@F),"/()*'","-") ; #&
  Q $$HOSTPATH(HF)
 OPENGBL(G)
  N IO S IO=$$HOSTPATH($E(G,2,$L(G)))
@@ -106,7 +103,7 @@ OPENFILE(F)
  U $P W IO,!
  D OPEN(IO)
  ;U $P W " ",F,!
- U IO W @F,!,"ZWR",!
+ U IO W $$FILENAME(@F),!,"ZWR",!
  Q IO
 OPEN(IO)
  ;U $P W "OPEN ",IO,!
