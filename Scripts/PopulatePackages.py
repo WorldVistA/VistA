@@ -46,6 +46,8 @@ class Package:
                 self.included.add(ns)
     def add_number(self, n):
         if n:
+            if n[0] == '.':
+                n = '0' + n
             self.globals.add(n) # numbers work just like globals
     def add_global(self, g):
         if g:
@@ -97,7 +99,6 @@ def populate(input):
     # Collect routines and globals in current directory.
     routines = set(glob.glob('*.m'))
     globals = set(glob.glob('*.zwr'))
-    globals.update(set(glob.glob('.*.zwr'))) # File numbers < 1
 
     #-----------------------------------------------------------------------------
 

@@ -86,6 +86,7 @@ HOSTPATH(N)
  Q DIR_N_".zwr"
 HOSTFILE(F)
  N HF S HF=@F_"+"_$TRANSLATE($$FILENAME(@F),"/()*'","-") ; #&
+ I $E(HF,1)="." S HF="0"_HF ; File numbers < 1
  Q $$HOSTPATH(HF)
 OPENGBL(G)
  N IO S IO=$$HOSTPATH($E(G,2,$L(G)))
