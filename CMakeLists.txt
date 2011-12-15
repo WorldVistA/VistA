@@ -158,9 +158,7 @@ if(CControl AND CTerm)
       add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake)
     endif()
   endforeach()
-
 endif()
-
 
 #if gtmprofile.sh is found, the linux programs and GT.M testing evironment is used.
 if(GTMPROFILE)
@@ -222,3 +220,32 @@ if(GTMPROFILE)
 endif(GTMPROFILE)
 configure_file(CTestCustom.cmake.in ${VISTA_BINARY_DIR}/CTestCustom.cmake)
 include(CTest)
+
+OPTION(ROUTINE_CALL_GRAPH "Build Rouine Call Graph." OFF)
+if(ROUTINE_CALL_GRAPH AND CTerm)
+  file(GLOB PACKAGES ${OSEHRA_PATH}/Packages/*)
+  SET(SCRIPT_OUTPUT_DIR "${VISTA_BINARY_DIR}/Docs/CallerGraph")
+  SET(CALLER_GRAPH_LOG_DIR "${SCRIPT_OUTPUT_DIR}/Log")
+  file(MAKE_DIRECTORY "${CALLER_GRAPH_LOG_DIR}")
+  foreach(package ${PACKAGES})
+    get_filename_component(package_name ${package} NAME)
+    file(GLOB routines "${package}/Routines/*.m")
+    set(send_commands "")
+    foreach(routine ${routines})
+      get_filename_component(routine_name ${routine} NAME_WE)
+      set(send_commands "${send_commands}send: D ^XINDEX<CR>\nwait for:All Routines?\nsend:No<CR>\nwait for:Routine:\nsend:${routine_name}<CR>\nsubroutine: $Run Xindex for one routine\n")
+    endforeach()
+    set(send_commands "${send_commands}goto:$exit\n")
+    string(REPLACE  " " "_" package_file_name "${package_name}")
+
+    #Configures the Expect script with the name of the routine
+    configure_file(${VISTA_SOURCE_DIR}/CacheXINDEXCallerGraph.scp.in
+                   ${VISTA_BINARY_DIR}/Docs/CallerGraph/${package_file_name}.scp)
+
+    configure_file(${VISTA_SOURCE_DIR}/CacheCallerGraph.cmake.in
+                   ${VISTA_BINARY_DIR}/Docs/CallerGraph/${package_file_name}.cmake @ONLY)
+
+    #Creates the command that will be called for the Test
+    add_test(CALLERGRAPH_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Docs/CallerGraph/${package_file_name}.cmake)
+  endforeach()
+endif()
