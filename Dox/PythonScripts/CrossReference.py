@@ -107,10 +107,15 @@ class Routine:
         self._totalCaller=0
         self._totalCalled=0
         self._comment=[]
+        self._originalName=routineName
     def setName(self, routineName):
         self._name = routineName
     def getName(self):
         return self._name
+    def setOriginalName(self, originalName):
+        self._originalName=originalName
+    def getOriginalName(self):
+        return self._originalName
     def addComment(self, comment):
         self._comment.append(comment)
     def getComment(self):
@@ -201,6 +206,8 @@ class Routine:
         write("\n")
     def printResult(self):
         write ("Routine Name: %s\n" % (self._name))
+        if self.isRenamed():
+            write("Original Name: %s\n" % self._originalName)
         write("Package Name: %s\n" % self._package.getName())
         self.printVariables("Global Vars", self._globalVariables)
         self.printVariables("Local Vars", self._localVariables)
@@ -208,6 +215,8 @@ class Routine:
         self.printVariables("Marked Globals", self._markedItems)
         self.printCallRoutines(True)
         self.printCallRoutines(False)
+    def isRenamed(self):
+        return self._name != self._originalName
     #===========================================================================
     # operator
     #===========================================================================
@@ -344,6 +353,8 @@ class Package:
         self._globalDependencies = dict()
         self._globalDependents = dict()
         self._origName=packageName
+        self._docLink=""
+        self._docMirrorLink=""
     def addRoutine(self, Routine):
         self._routines[Routine.getName()] = Routine
         Routine.setPackage(self)
@@ -413,6 +424,14 @@ class Package:
         self._globalNamespace.append(namespace)
     def getGlobalNamespace(self):
         return self._globalNamespace
+    def getDocLink(self):
+        return self._docLink
+    def getDocMirrorLink(self):
+        return self._docMirrorLink
+    def setDocLink(self,docLink):
+        self._docLink=docLink
+    def setMirrorLink(self, docMirrorLink):
+        self._docMirrorLink = docMirrorLink
     def printRoutineDependency(self, dependencyList=True):
         if dependencyList:
             header = "Routine Dependencies list"
@@ -568,7 +587,9 @@ class CrossReference:
         self._orphanRoutines = set()
         self._allGlobals = dict()
         self._orphanGlobals = set()
-        self._percentageRoutine=set()
+        self._percentRoutine=set()
+        self._PercentRoutineMapping=dict()
+        self._renameRoutines=dict()
     def getAllRoutines(self):
         return self._allRoutines
     def getAllPackages(self):
@@ -628,10 +649,45 @@ class CrossReference:
         routine=self.getRoutineByName(routineName)
         if routine:
             routine.setComment(comment)
-    def addPercentageRoutine(self,routineName):
-        self._percentageRoutine.add(routineName)
-    def getAllPercentageRoutine(self):
-        return self._percentageRoutine
+    def addPercentRoutine(self,routineName):
+        self._percentRoutine.add(routineName)
+    def getAllPercentRoutine(self):
+        return self._percentRoutine
+    # this should be called after we have all the call graph information
+    def addPercentRoutineMapping(self, routineName,
+                                mappingRoutineName,
+                                mappingPackage):
+        if routineName not in self._PercentRoutineMapping:
+            self._PercentRoutineMapping[routineName] = []
+        self._PercentRoutineMapping[routineName].append(mappingRoutineName)
+        self._PercentRoutineMapping[routineName].append(mappingPackage)
+        if len(mappingRoutineName) > 0:
+            self._renameRoutines[mappingRoutineName]=routineName
+    def getPercentRoutineMapping(self):
+        return self._PercentRoutineMapping
+    def routineNeedRename(self, routineName):
+        return routineName in self._renameRoutines
+    def getNewRoutineName(self,routineName):
+        return self._renameRoutines.get(routineName)
+    def categorizeRoutineByNamespace(self, routineName):
+        for package in self._allPackages.itervalues():
+            hasMatch = False
+            matchNamespace = ""
+            for namespace in package.getNamespaces():
+                if routineName.startswith(namespace):
+                    hasMatch = True
+                    matchNamespace = namespace
+                if namespace.startswith("!"):
+                    if not hasMatch:
+                        break
+                    elif routineName.startswith(namespace[1:]):
+                        hasMatch = False
+                        matchNamespace = ""
+                        break
+            if hasMatch:
+                return (matchNamespace,package)
+        return (None,None)
+
 def testPackage():
     packageA=Package("A")
     packageB=Package("B")
