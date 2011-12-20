@@ -21,6 +21,20 @@ set(CMAKE_MAKE_PROGRAM "/" CACHE INTERNAL "This does not build")
 set(CMAKE_INSTALL_PREFIX "/" CACHE INTERNAL "This does not install")
 project(VISTA NONE)
 
+#if(EXISTS "C:/Program Files (x86)/Git/bin/git.exe")
+#  set(GIT_EXECUTABLE "C:/Program Files (x86)/Git/bin/git.exe" CACHE FILEPATH "prefer git.exe")
+#elseif(EXISTS "C:/Program Files/Git/bin/git.exe")
+#  set(GIT_EXECUTABLE "C:/Program Files/Git/bin/git.exe" CACHE FILEPATH "prefer git.exe")
+#endif()
+find_package(Git)
+if(NOT GIT_FOUND)
+ mark_as_advanced(CLEAR GIT_EXECUTABLE)
+endif()
+
+find_package(PythonInterp)
+if(NOT PYTHONINTERP_FOUND)
+   mark_as_advanced(CLEAR PYTHON_EXECUTABLE)
+endif()
 
 set(BUILD_TESTING "ON" CACHE INTERNAL "Always build testing")
 
@@ -120,8 +134,7 @@ if(CControl AND CTerm)
       " Cache Managements Portal->System->Security Management->Service to switch on %Service_telnet by checking enabled checkbox and save."
       " Also verify that telnet port is set to 23 via Configuration->Device Settings->Telnet Settings ")
   endif()
-  find_program(GIT_EXEC NAMES git.exe HINTS "C:/Program Files (x86)/Git/bin/" DOC "Path to the Git Executable")
-  find_program(PYTHON_EXEC NAMES python.exe "C:/Python27/bin/" DOC "Path to the Python Executable")
+
 
   IF(CLEAN_CACHE AND CControl AND PRISTINE_CACHE_DAT_PATH)
     configure_file(${VISTA_SOURCE_DIR}/ImportRG.cmake.in ${VISTA_BINARY_DIR}/ImportRG.cmake)
@@ -181,8 +194,6 @@ if(GTMPROFILE)
 
   OPTION(CLEAN_DATABASE "Overwrite the database file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
   if(CLEAN_DATABASE)
-    find_program(GIT_EXEC NAMES git.exe HINTS "C:/Program Files (x86)/Git/bin/" DOC "Path to the Git Executable")
-    find_program(PYTHON_EXEC NAMES python.exe "C:/Python27/bin/" DOC "Path to the Python Executable")
     configure_file(${VISTA_SOURCE_DIR}/GTMImportRG.cmake.in ${VISTA_BINARY_DIR}/GTMImportRG.cmake @ONLY)
     configure_file(${VISTA_SOURCE_DIR}/RoutineImportGTM.exp.in ${VISTA_BINARY_DIR}/RoutineImportGTM.exp)
     configure_file(${VISTA_SOURCE_DIR}/GlobalImportandInitializeGTM.exp.in ${VISTA_BINARY_DIR}/GlobalImportandInitializeGTM.exp)
