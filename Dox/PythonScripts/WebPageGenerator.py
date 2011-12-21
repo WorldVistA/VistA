@@ -32,6 +32,8 @@ import csv
 
 from datetime import datetime, date, time
 from CrossReference import *
+import LogManager
+import logging
 
 MAX_DEPENDENCY_LIST_SIZE = 20 # Do not generated the graph if have more than 20 nodes
 
@@ -69,11 +71,11 @@ class CplusRoutineVisit(CallerGraphParser.RoutineVisit):
     def visitRoutine(self, routine, outputDir):
         calledRoutines=routine.getCalledRoutines()
         if not calledRoutines or len(calledRoutines) == 0:
-            print("No called Routines found! for package:%s") % (routineName)
+            logger.warn("No called Routines found! for package:%s" % routineName)
             return
         routineName=routine.getName()
         if not routine.getPackage():
-            print "ERROR: package: %s does not belongs to a package" % routineName
+            logger.error( "ERROR: package: %s does not belongs to a package" % routineName)
             return
 
         packageName = routine.getPackage().getName()
@@ -82,7 +84,7 @@ class CplusRoutineVisit(CallerGraphParser.RoutineVisit):
             if not os.path.exists(dirName):
                 os.makedirs(dirName)
         except OSError, e:
-            print "Error making dir %s : Error: %s"  % (dirName, e)
+            logger.error( "Error making dir %s : Error: %s"  % (dirName, e))
             return
 
         outputFile = open(os.path.join(dirName,routineName), 'w')
@@ -120,27 +122,27 @@ class CplusRoutineVisit(CallerGraphParser.RoutineVisit):
 
 # utility functions
 def getGlobalHtmlFileNameByName(globalName):
-    return "Global_%s.html" % normalizeGlobalName(globalName)
+    return urllib.quote("Global_%s.html" %
+                        normalizeGlobalName(globalName))
 def getGlobalHtmlFileName(globalVar):
-    return "Global_%s.html" % normalizeGlobalName(globalVar.getName())
+    return urllib.quote("Global_%s.html" %
+                        normalizeGlobalName(globalVar.getName()))
 def getRoutineHtmlFileName(routineName):
+    return urllib.quote(getRoutineHtmlFileNameUnquoted(routineName))
+def getRoutineHtmlFileNameUnquoted(routineName):
     return "Routine_%s.html" % routineName
-
 def getPackageHtmlFileName(packageName):
-    return "Package_%s.html" % normalizePackageName(packageName)
-
+    return urllib.quote("Package_%s.html" %
+                        normalizePackageName(packageName))
 def getRoutineHypeLinkByName(routineName):
     return "<a href=\"%s\">%s</a>" % (getRoutineHtmlFileName(routineName),
                                       routineName);
-
 def getGlobalHypeLinkByName(globalName):
     return "<a href=\"%s\">%s</a>" % (getGlobalHtmlFileNameByName(globalName),
                                       globalName);
-
 def getPackageHyperLinkByName(packageName):
     return "<a href=\"%s\">%s</a>" % (getPackageHtmlFileName(packageName),
                                       packageName);
-
 def normalizePackageName(packageName):
     newName = packageName.replace(' ','_')
     return newName.replace('-',"_")
@@ -156,8 +158,10 @@ def getRoutineSourceCodeFileByName(routineName,
                         os.path.sep+"Routines"+
                         os.path.sep+
                         routineName+".m")
-def getRoutineSourceHtmlFileName(routineName):
+def getRoutineSourceHtmlFileNameUnquoted(routineName):
     return "Routine_%s_source.html" % routineName
+def getRoutineSourceHtmlFileName(routineName):
+    return urllib.quote(getRoutineSourceHtmlFileNameUnquoted(routineName))
 # generate index bar based on input list
 def generateIndexBar(outputFile, inputList, archList=None):
     if (not inputList) or len(inputList) == 0:
@@ -250,13 +254,14 @@ def writeSubSectionHeader(headerName, outputFile):
     outputFile.write("<h3 align=\"left\">%s</h3>\n" % (headerName))
 # class to generate the web page based on input
 class WebPageGenerator:
-    def __init__(self, crossReference, outDir, repDir, webDir):
+    def __init__(self, crossReference, outDir, repDir, docRepDir):
+        self._crossRef=crossReference
         self._allPackages=crossReference.getAllPackages()
         self._allRoutines=crossReference.getAllRoutines()
         self._allGlobals=crossReference.getAllGlobals()
         self._outDir=outDir
         self._repDir=repDir
-        self._webDir=webDir
+        self._docRepDir=docRepDir
         self._header=[]
         self._footer=[]
         self._source_header=[]
@@ -266,9 +271,10 @@ class WebPageGenerator:
 
     def __initWebTemplateFile__(self):
         #load _header and _footer in the memory
-        header = open(os.path.join(self._webDir,"header.html"),'r')
-        footer = open(os.path.join(self._webDir,"footer.html"),'r')
-        source_header = open(os.path.join(self._webDir,"source_header.html"),'r')
+        webDir = os.path.join(self._docRepDir, "Web")
+        header = open(os.path.join(webDir, "header.html"),'r')
+        footer = open(os.path.join(webDir,"footer.html"),'r')
+        source_header = open(os.path.join(webDir,"source_header.html"),'r')
         for line in header:
             self._header.append(line)
         for line in footer:
@@ -294,54 +300,64 @@ class WebPageGenerator:
 # Template method to generate the web pages
 #===============================================================================
     def generateWebPage(self):
-        self.generatePackageNamespaceGlobalMappingPage()
-        if self._hasDot and self._dotPath:
-            self.generatePackageDependenciesGraph()
-            self.generatePackageDependentsGraph()
-        self.generateGlobalNameIndexPage()
-        self.generateGlobalFileNoIndexPage()
-        self.generateIndividualGlobalPage()
-        self.generateRoutineIndexPage()
-        self.generatePackageIndexPage()
-        self.generatePackagePackageInteractionDetail()
+#        self.generatePackageNamespaceGlobalMappingPage()
+#        if self._hasDot and self._dotPath:
+#            self.generatePackageDependenciesGraph()
+#            self.generatePackageDependentsGraph()
+#        self.generateGlobalNameIndexPage()
+#        self.generateGlobalFileNoIndexPage()
+#        self.generateIndividualGlobalPage()
+#        self.generateRoutineIndexPage()
+#        self.generatePackageIndexPage()
+#        self.generatePackagePackageInteractionDetail()
         self.generateIndividualPackagePage()
-        if self._hasDot and self._dotPath:
-            self.generateRoutineCallGraph()
-            self.generateRoutineCallerGraph()
-        self.generateSourceCodePage(False)
-        self.generateIndividualRoutinePage()
+#        if self._hasDot and self._dotPath:
+#            self.generateRoutineCallGraph()
+#            self.generateRoutineCallerGraph()
+#        self.generateSourceCodePage(False)
+#        self.generateIndividualRoutinePage()
 #===============================================================================
 #
 #===============================================================================
     def generatePackageNamespaceGlobalMappingPage(self):
-        packagesFile=open(os.path.join(self._repDir,"Packages.csv"),'r')
         outputFile=open(os.path.join(self._outDir,"Packages_Namespace_Mapping.html"), 'w')
         self.includeHeader(outputFile)
-        reader=csv.reader(packagesFile)
         outputFile.write("<div><h1>%s</h1></div>\n" % "Package Namespace Mapping")
 #        writeSectionHeader("Package Namespace Mapping", "Package Namespace Mapping", outputFile)
         # print the table header
         outputFile.write("<table>\n")
         writeTableHeader(["PackageName",
-                          "Namespace",
-                          "Additional Namespace",
+                          "Namespaces",
                           "Additional Globals"],
                          outputFile)
-        for line in reader:
-            outputFile.write("<tr>")
-            # write the package name
-            outputFile.write("<td class=\"IndexKey\">%s</td>" % getPackageHyperLinkByName(line[-1]))
-            # write the namespace
-            outputFile.write("<td class=\"IndexValue\">%s</td>" % line[1])
-            # write the additional namespace
-            outputFile.write("<td class=\"IndexValue\">%s</td>" % line[2])
-            # write the additional globals
-            outputFile.write("<td class=\"IndexValue\">%s</td>" % line[3])
-            outputFile.write("</tr>\n")
+        allPackage=sorted(self._allPackages.keys())
+        for packageName in allPackage:
+            package=self._allPackages[packageName]
+            namespaces = package.getNamespaces()
+            globalNamespaces= package.getGlobalNamespace()
+            totalCol = max(len(namespaces),
+                           len(globalNamespaces))
+            for index in range(totalCol):
+                outputFile.write("<tr>")
+                # write the package name
+                if index == 0:
+                    outputFile.write("<td class=\"IndexKey\">%s</td>" % getPackageHyperLinkByName(packageName))
+                else:
+                    outputFile.write("<td class=\"IndexKey\"></td>")
+                # write the namespace
+                if index <= len(namespaces) -1:
+                    outputFile.write("<td class=\"IndexValue\">%s</td>" % namespaces[index])
+                else:
+                    outputFile.write("<td class=\"IndexValue\"></td>")
+                # write the additional globals
+                if index <= len(globalNamespaces) - 1:
+                    outputFile.write("<td class=\"IndexValue\">%s</td>" % globalNamespaces[index])
+                else:
+                    outputFile.write("<td class=\"IndexValue\"></td>")
+                outputFile.write("</tr>\n")
         outputFile.write("</table>\n")
         outputFile.write("<BR>\n")
         self.includeFooter(outputFile)
-        packagesFile.close()
         outputFile.close()
 #===============================================================================
 #
@@ -387,8 +403,7 @@ class WebPageGenerator:
 #
 #===============================================================================
     def generateIndividualGlobalPage(self):
-        print "Start generating individual globals......"
-        print "Time is: %s" % datetime.now()
+        logger.info( "Start generating individual globals......")
         indexList=["Info", "Accessed By Routines"]
         for package in self._allPackages.itervalues():
             if isUnknownPackage(package.getName()):
@@ -418,8 +433,7 @@ class WebPageGenerator:
                 generateIndexBar(outputFile, indexList)
                 self.includeFooter(outputFile)
                 outputFile.close()
-        print "Time is: %s" % datetime.now()
-        print "End of generating individual globals......"
+        logger.info( "End of generating individual globals......")
 #===============================================================================
 #
 #===============================================================================
@@ -509,7 +523,7 @@ class WebPageGenerator:
         if globalDepDict and depPackage in globalDepDict:
             referredRoutines=globalDepDict[depPackage][0]
             referredGlobals=globalDepDict[depPackage][1]
-#            print ("%s->%s called routine list %s" % (package, depPackage, calledRoutines.keys()))
+            logger.debug("%s->%s called routine list %s" % (package, depPackage, calledRoutines.keys()))
         totalCalledHtml="<span class=\"comment\">%d</span>" % len(callerRoutines)
         totalCallerHtml="<span class=\"comment\">%d</span>" % len(calledRoutines)
         totalReferredRoutineHtml="<span class=\"comment\">%d</span>" % len(referredRoutines)
@@ -580,18 +594,21 @@ class WebPageGenerator:
             if isUnknownPackage(packageName):
                 continue
             for routineName in self._allPackages[packageName].getAllRoutines().iterkeys():
-                sourcePath=getRoutineSourceCodeFileByName(routineName,
+                sourceCodeName = self._allRoutines[routineName].getOriginalName()
+                sourcePath=getRoutineSourceCodeFileByName(sourceCodeName,
                                                           packageName,
                                                           self._repDir)
                 if not os.path.exists(sourcePath):
-                    print "Error:Souce file:[%s] does not exit\n" % sourcePath
+                    logger.error("Souce file:[%s] does not exit\n" % sourcePath)
                     continue
                 sourceFile=open(sourcePath,'r')
                 if not justComment:
-                    outputFile=open(os.path.join(self._outDir, getRoutineSourceHtmlFileName(routineName)),'w')
+                    outputFile=open(os.path.join(self._outDir,
+                                                 getRoutineSourceHtmlFileNameUnquoted(sourceCodeName)),'wb')
                     self.inlcudeSourceHeader(outputFile)
-                    outputFile.write("<div><h1>%s.m</h1></div>\n" % routineName)
-                    outputFile.write("<a href=\"%s\">Go to the documentation of this file.</a>" % getRoutineHtmlFileName(routineName))
+                    outputFile.write("<div><h1>%s.m</h1></div>\n" % sourceCodeName)
+                    outputFile.write("<a href=\"%s\">Go to the documentation of this file.</a>" %
+                                     getRoutineHtmlFileName(routineName))
                     outputFile.write("<xmp class=\"prettyprint lang-mumps linenums:1\">\n")
                 lineNo=0
                 currentRoutine=self._allRoutines[routineName]
@@ -680,14 +697,15 @@ class WebPageGenerator:
         if depPackagesDict:
             totalPackage=len(depPackagesDict)
         if  (totalPackage == 0) or (totalPackage > MAX_DEPENDENCY_LIST_SIZE):
-            print "Nothing to do exiting... Package: %s Total: %d " % (packageName, totalPackage)
+            logger.info( "Nothing to do exiting... Package: %s Total: %d " %
+                         (packageName, totalPackage))
             return
         try:
             dirName=os.path.join(self._outDir,packageName)
             if not os.path.exists(dirName):
                 os.makedirs(dirName)
         except OSError, e:
-            print "Error making dir %s : Error: %s"  % (dirName, e)
+            logger.error( "Error making dir %s : Error: %s"  % (dirName, e))
             return
         output=open(os.path.join(dirName,normalizedName+packageSuffix+".dot"),'w')
         output.write("digraph %s {\n" % (normalizedName+packageSuffix))
@@ -766,10 +784,9 @@ class WebPageGenerator:
                                                                outputName,
                                                                outputmap,
                                                                inputName)
-    #        print command
         retCode=subprocess.call(command)
         if retCode != 0:
-            print "Error: calling dot with command[%s] returns %d" % (command,retCode)
+            logger.error("calling dot with command[%s] returns %d" % (command,retCode))
 #===============================================================================
 #
 #===============================================================================
@@ -778,16 +795,14 @@ class WebPageGenerator:
             dependencyList = True
         else:
             dependencyList = False
-        print "Start generating call graph......"
-        print "Time is: %s" % datetime.now()
+        logger.info("Start generating call graph......")
         for package in self._allPackages.itervalues():
             if isUnknownPackage(package.getName()):
                 continue
             routines=package.getAllRoutines()
             for routine in routines.itervalues():
                 self.generateRoutineDependencyGraph(routine, dependencyList)
-        print "Time is: %s" % datetime.now()
-        print "End of generating call graph......"
+        logger.info("End of generating call graph......")
 #===============================================================================
 #
 #===============================================================================
@@ -816,46 +831,41 @@ class WebPageGenerator:
             or len(depRoutines) == 0
             or  totalDep > MAX_DEPENDENCY_LIST_SIZE
             or len(depRoutines) == 1 and Package(UNKNOWN_PACKAGE) in depRoutines):
-#            print("No called Routines found! for routine:%s package:%s") % (routineName, packageName)
+            logger.warn("No called Routines found! for routine:%s package:%s" % (routineName, packageName))
             return
         try:
             dirName=os.path.join(self._outDir,packageName)
             if not os.path.exists(dirName):
                 os.makedirs(dirName)
         except OSError, e:
-            print "Error making dir %s : Error: %s"  % (dirName, e)
+            logger.error("Error making dir %s : Error: %s"  % (dirName, e))
             return
         output=open(os.path.join(dirName,routineName+routineSuffix+".dot"),'w')
-        output.write("digraph %s {\n" % (routineName+routineSuffix))
+        output.write("digraph \"%s\" {\n" % (routineName+routineSuffix))
         output.write("\tnode [shape=box fontsize=14];\n") # set the node shape to be box
         output.write("\tnodesep=0.45;\n") # set the node sep to be 0.15
         output.write("\transsep=0.45;\n") # set the rank sep to be 0.75
 #        output.write("\tedge [fontsize=12];\n") # set the edge label and size props
         if routine.getPackage() not in depRoutines:
             output.write("\tsubgraph \"cluster_%s\"{\n" % (routine.getPackage()))
-            output.write("\t\t%s [style=filled fillcolor=orange];\n" % routineName)
+            output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % routineName)
             output.write("\t}\n")
         for (package, callDict) in depRoutines.iteritems():
             if isUnknownPackage(str(package)):
                 continue
             output.write("\tsubgraph \"cluster_%s\"{\n" % (package))
             for routine in callDict.keys():
-                output.write("\t\t%s [URL=\"%s\"];\n" % (routine,
+                output.write("\t\t\"%s\" [URL=\"%s\"];\n" % (routine,
                                                          getRoutineHtmlFileName(routine)))
                 if str(package) == packageName:
-                    output.write("\t\t%s [style=filled fillcolor=orange];\n" % routineName)
+                    output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % routineName)
             output.write("\t\tlabel=\"%s\";\n" % package)
             output.write("\t}\n")
             for (routine, tags) in callDict.iteritems():
                 if dependencyList:
-                    output.write("\t\t%s->%s" % (routineName, routine))
+                    output.write("\t\t\"%s\"->\"%s\"" % (routineName, routine))
                 else:
-                    output.write("\t\t%s->%s" % (routine, routineName))
-#                if tags and len(tags) > 0:
-#                    output.write(" [label=\"")
-#                    for tag in tags:
-#                        output.write("%s " % tag)
-#                    output.write("\"]")
+                    output.write("\t\t\"%s\"->\"%s\"" % (routine, routineName))
                 output.write(";\n")
         output.write("}\n")
         output.close()
@@ -869,10 +879,9 @@ class WebPageGenerator:
                                                                outputName,
                                                                outputmap,
                                                                inputName)
-#        print command
         retCode=subprocess.call(command)
         if retCode != 0:
-            print "Error: calling dot with command[%s] returns %d" % (command,retCode)
+            logger.error("calling dot with command[%s] returns %d" % (command,retCode))
 #===============================================================================
 #
 #===============================================================================
@@ -882,15 +891,13 @@ class WebPageGenerator:
             name="dependencies"
         else:
             name="dependents"
-        print ("Start generating package %s......" % name)
-        print ("Time is: %s" % datetime.now())
-        print "Total Packages: %d" % len(self._allPackages)
+        logger.info("Start generating package %s......" % name)
+        logger.info("Total Packages: %d" % len(self._allPackages))
         for package in self._allPackages.values():
             if isUnknownPackage(package.getName()):
                 continue
             self.generatePackageDependencyGraph(package, isDependency)
-        print "Time is: %s" % datetime.now()
-        print "End of generating package %s......" % name
+        logger.info("End of generating package %s......" % name)
 #===============================================================================
 #
 #===============================================================================
@@ -1039,7 +1046,14 @@ class WebPageGenerator:
             outputFile.write("<h1>Package: %s</h1>\n</div>\n</div>" % packageName)
             # link to VA documentation
             writeSectionHeader("Documentation", "Doc", outputFile)
-            outputFile.write("<p><h4><a href=\"http://www.va.gov/vdl/\">VA documentation in the VistA Documentation Library</a></h4>\n")
+            if len(package.getDocLink()) > 0:
+                outputFile.write("<p><h4>VA documentation in the <a href=\"%s\">VistA Documentation Library</a>" % package.getDocLink())
+                if len(package.getDocMirrorLink()) > 0:
+                    outputFile.write("&nbsp;or&nbsp;<a href=\"%s\">OSEHRA Mirror site</a></h4>\n" % package.getDocMirrorLink())
+                else:
+                    outputFile.write("</h4>\n")
+            else:
+                outputFile.write("<p><h4><a href=\"http://www.va.gov/vdl/\">VA documentation in the VistA Documentation Library</a></h4>\n")
             self.generatePackageDependencySection(packageName,outputFile,True)
             self.generatePackageDependencySection(packageName,outputFile,False)
             totalNumGlobals = len(package.getAllGlobals())
@@ -1089,7 +1103,7 @@ class WebPageGenerator:
                 cmapFile = open(os.path.join(self._outDir,packageName+"/"+fileNamePrefix+".cmapx"),'r')
                 outputFile.write("<div class=\"contents\">\n")
                 outputFile.write("<img src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"#%s\"/>\n"
-                           % (packageName+"/"+fileNamePrefix+".gif",
+                           % (urllib.quote(packageName+"/"+fileNamePrefix+".gif"),
                               sectionGraphHeader,
                               fileNamePrefix))
                 #append the content of map outputFile
@@ -1159,14 +1173,14 @@ class WebPageGenerator:
 # Method to generate individual routine page
 #===============================================================================
     def generateIndividualRoutinePage(self):
-        print "Start generating individual Routines......"
-        print "Time is: %s" % datetime.now()
+        logger.info("Start generating individual Routines......")
         indexList=["Info", "Source", "Call Graph", "Called Routines", "Caller Graph", "Caller Routines", "Global Variables", "Naked Globals", "Local Variables", "Marked Items"]
         for package in self._allPackages.itervalues():
             if isUnknownPackage(package.getName()):
                 continue
             for (routineName, routine) in package.getAllRoutines().iteritems():
-                outputFile = open(os.path.join(self._outDir,getRoutineHtmlFileName(routineName)),'w')
+                outputFile = open(os.path.join(self._outDir,
+                                               getRoutineHtmlFileNameUnquoted(routineName)),'w')
                 # write the same _header file
                 self.includeHeader(outputFile)
                 # generated the qindex bar
@@ -1180,7 +1194,8 @@ class WebPageGenerator:
                     outputFile.write("<p><span class=\"information\">%s</span></p>\n" % comment)
                 writeSectionHeader("Source Code", "Source", outputFile)
                 outputFile.write("<p><span class=\"information\">Source file &lt;<a class=\"el\" href=\"%s\">%s.m</a>&gt;</span></p>\n" %
-                                 (getRoutineSourceHtmlFileName(routineName), routineName))
+                                 (getRoutineSourceHtmlFileName(routine.getOriginalName()),
+                                  routine.getOriginalName()))
                 self.generateRoutineDependencySection(routine, outputFile, True)
                 self.generateRoutineDependencySection(routine, outputFile, False)
                 self.generateRoutineVariableSection(outputFile,
@@ -1200,36 +1215,74 @@ class WebPageGenerator:
                 generateIndexBar(outputFile, indexList)
                 self.includeFooter(outputFile)
                 outputFile.close()
-        print "Time is: %s" % datetime.now()
-        print "End of generating individual routines......"
+        logger.info("End of generating individual routines......")
 
-def testGenerateIndexBar(inputList):
-    outputFile=open("C:/Temp/VistA/Test.html", 'w')
+def testGenerateIndexBar(inputList, outputFile):
+    outputFile=open(outputFile, 'w')
     outputFile.write("<html><head>Test</head><body>\n")
     generateIndexBar(outputFile, inputList)
     outputFile.write("</body></html>")
     outputFile.close()
+
 #test to play around the Dot
-def testDotCall():
+def testDotCall(outputDir):
     packageName="Nursing Service"
     routineName="NURA6F1"
-    dirName = os.path.join("c:/temp/VistA/", packageName);
+    dirName = os.path.join(outputDir, packageName);
     outputName = os.path.join(dirName,routineName+".svg")
     inputName=os.path.join(dirName,routineName+".dot")
     command="dot -Tsvg -o \"%s\" \"%s\"" % (outputName, inputName)
-    print "command is [%s]" % command
+    logger.info ("command is [%s]" % command)
     retCode=subprocess.call(command)
-    print "calling dot returns %d" % retCode
+    logger.info ("calling dot returns %d" % retCode)
+
+# Get the lastest git SHA1 Key from git repository
+def testGetGitLastRev(GitRepoDir, gitPath):
+    gitCommand=gitPath + "git rev-parse --verify HEAD"
+    os.chdir(GitRepoDir)
+    result = subprocess.check_output(gitCommand)
+    print result.strip()
+
 # test parsing package.csv file from VistA-FOIA release
-def testPackageNamespaceParsing():
-    packageFile=open("c:/users/jason.li/git/VistA-FOIA/Packages.csv",'r')
-#    for line in packageFile:
-#        print (line.strip().split(','))
-#        print ("\n")
-    reader=csv.reader(packageFile)
-    for row in reader:
-        print (row)
-    packageFile.close()
+def testPackageCsvParser(packageFile):
+    csvFile=open(packageFile,'rb')
+    sniffer=csv.Sniffer()
+    dialect=sniffer.sniff(csvFile.read(1024))
+    csvFile.seek(0)
+    hasHeader=sniffer.has_header(csvFile.read(1024))
+    logger.info ("hasHeader: %s" % hasHeader)
+    csvFile.seek(0)
+    reader=csv.reader(csvFile,dialect)
+    for line in reader:
+        print line
+
+# some testing constants
+PACKAGE_CSV_FILE = "c:/users/jason.li/git/VistA-FOIA/Packages.csv"
+GIT_PATH = "c:/Program Files (x86)/Git/bin/"
+VISTA_FOIA_GIT_REP = "c:/users/jason.li/git/VistA-FOIA"
+DEFAULT_OUTPUT_FILE_DIR = "c:/temp/VistA/"
+# constants
+DEFAULT_OUTPUT_LOG_FILE_NAME = "WebPageGen.log"
+
+import tempfile
+def getTempLogFile():
+    return os.path.join(tempfile.gettempdir(),DEFAULT_OUTPUT_LOG_FILE_NAME)
+
+def initLogging(outputFileName):
+    logger = LogManager.logger
+    logger.setLevel(logging.DEBUG)
+    fileHandle = logging.FileHandler(outputFileName,'w')
+    fileHandle.setLevel(logging.DEBUG)
+    formatStr = '%(asctime)s %(levelname)s %(message)s'
+    formatter = logging.Formatter(formatStr)
+    fileHandle.setFormatter(formatter)
+    #set up the stream handle (console)
+    consoleHandle = logging.StreamHandler()
+    consoleHandle.setLevel(logging.INFO)
+    consoleFormatter = logging.Formatter(formatStr)
+    consoleHandle.setFormatter(consoleFormatter)
+    logger.addHandler(fileHandle)
+    logger.addHandler(consoleHandle)
 #===============================================================================
 # main
 #===============================================================================
@@ -1240,38 +1293,45 @@ if __name__ == '__main__':
                              '${CMAKE_BUILD_DIR}/Docs/CallerGraph/')
     parser.add_argument('-r', required=True, dest='repositDir',
                         help='VistA Git Repository Directory')
-    parser.add_argument('-b', required=True, dest="webDir",
-                        help="webDir contains javascripts and html templates")
+    parser.add_argument('-b', required=True, dest="docRepositDir",
+                        help="doc Repository directory contains code generating the documentation")
     parser.add_argument('-o', required=True, dest='outputDir',
                         help='Output Web Page dirctory')
     parser.add_argument('-dot', required=False, dest='hasDot', default="False", action='store_true',
                         help='is Dot installed')
     parser.add_argument('-dotpath', required=False, dest='dotPath',
                         help='the path to the dox excecutable')
+    parser.add_argument('-Log', required=False, dest='outputLogFileName',
+                        help='the output Logging file')
     result = vars(parser.parse_args());
-    print result
+    if not result['outputLogFileName']:
+        outputLogFile = getTempLogFile()
+    else:
+        outputLogFile = result['outputLogFileName']
+    logger = LogManager.logger
+    initLogging(outputLogFile)
+    LogManager.logger.debug (result)
     logParser = CallerGraphParser.CallerGraphLogFileParser()
-    print "Starting parsing package/routine...."
-    print "Time is: %s" % datetime.now()
+    LogManager.logger.info ("Starting parsing package/routine....")
+    logger.info ("The log file is: %s" % outputLogFile)
     packagesDir=os.path.join(result['repositDir'],"Packages")
-    logParser.parsePackageFile(os.path.join(result['repositDir'],"Packages.csv"))
-    logParser.findGlobalsBySource(packagesDir, "*/Globals/*.zwr")
+    logParser.parsePercentRoutineMappingFile(os.path.join(result['docRepositDir'],"PercentRoutineMapping.csv"))
+    logParser.parsePackagesFile(os.path.join(result['repositDir'],"Packages.csv"))
+    logParser.findGlobalsBySourceV2(packagesDir, "*/Globals/*.zwr")
     routineFilePattern = "*/Routines/*.m"
     logParser.findPackagesAndRoutinesBySource(packagesDir, routineFilePattern)
-    print "End parsing package/routine...."
-    print "Time is: %s" % datetime.now()
-    print "Starting parsing caller graph log file...."
+    logParser.parsePackageDocumentationLink(os.path.join(result['docRepositDir'],"PackageToVDL.csv"))
+    logger.info ("End parsing package/routine....")
+    logger.info ("Starting parsing caller graph log file....")
 
     callLogPattern="*.log"
     logParser.parseAllCallerGraphLog(result['logFileDir'], callLogPattern)
-    print "Starting generating web pages...."
-    print "Time is: %s" % datetime.now()
+    logger.info ("Starting generating web pages....")
     webPageGen=WebPageGenerator(logParser.getCrossReference(),
                                 result['outputDir'],
                                 result['repositDir'],
-                                result['webDir'])
+                                result['docRepositDir'])
     if result['hasDot'] and result['dotPath']:
         webPageGen.setDotPath(result['dotPath'])
     webPageGen.generateWebPage()
-    print "Time is: %s" % datetime.now()
-    print "End of generating web pages...."
+    logger.info ("End of generating web pages....")
