@@ -26,23 +26,25 @@ import re
 import sys
 from datetime import datetime, date, time
 import csv
+from LogManager import logger
+import logging
 
-routineName=re.compile("^R:(?P<name>[^ ]+)")
-packageName=re.compile("^P:(?P<name>.*)")
-globalName=re.compile("^G:(?P<name>.*)")
+routineName = re.compile("^R:(?P<name>[^ ]+)")
+packageName = re.compile("^P:(?P<name>.*)")
+globalName = re.compile("^G:(?P<name>.*)")
 
 def findRoutinesWithMostOfCallers(logParser):
-    maxCallerRoutine=None
-    maxCalledRoutine=None
+    maxCallerRoutine = None
+    maxCalledRoutine = None
     for routine in logParser.getAllRoutines().itervalues():
         if not maxCallerRoutine:
-            maxCallerRoutine=routine
+            maxCallerRoutine = routine
         if not maxCalledRoutine:
-            maxCalledRoutine=routine
+            maxCalledRoutine = routine
         if routine.getTotalCaller() > maxCallerRoutine.getTotalCaller():
-            maxCallerRoutine=routine
+            maxCallerRoutine = routine
         if routine.getTotalCalled() > maxCalledRoutine.getTotalCalled():
-            maxCalledRoutine=routine
+            maxCalledRoutine = routine
     print ("Max Caller Routine is %s, package: %s, total Caller: %d" % (maxCallerRoutine,
                                                                         maxCallerRoutine.getPackage(),
                                                                         maxCallerRoutine.getTotalCaller()))
@@ -51,25 +53,25 @@ def findRoutinesWithMostOfCallers(logParser):
                                                                         maxCalledRoutine.getTotalCalled()))
 
 def findPackagesWithMostOfDependency(logParser):
-    maxPackageDependency=None
-    maxPackageDependent=None
+    maxPackageDependency = None
+    maxPackageDependent = None
     for package in logParser.getAllPackages().itervalues():
         if not maxPackageDependency:
-            maxPackageDependency=package
+            maxPackageDependency = package
         if not maxPackageDependent:
-            maxPackageDependent=package
+            maxPackageDependent = package
         if len(package.getPackageRoutineDependencies()) > len(maxPackageDependency.getPackageRoutineDependencies()):
-            maxPackageDependency=package
+            maxPackageDependency = package
         if len(package.getPackageRoutineDependents()) > len(maxPackageDependent.getPackageRoutineDependents()):
-            maxPackageDependent=package
+            maxPackageDependent = package
     print ("Max Dependency package: %s, total Dependencies: %d" % (maxPackageDependency.getName(),
                                                                    len(maxPackageDependency.getPackageRoutineDependencies())))
     print ("Max Dependent package: %s, total Dependents: %d" % (maxPackageDependent.getName(),
                                                                 len(maxPackageDependent.getPackageRoutineDependents())))
 
 def normalizePackageName(packageName):
-    newName = packageName.replace(' ','_')
-    return newName.replace('-',"_")
+    newName = packageName.replace(' ', '_')
+    return newName.replace('-', "_")
 
 # this is too big to generate the whole graph
 def generateAllPackageDependencyGraph(allPackages, outputFile):
@@ -78,7 +80,7 @@ def generateAllPackageDependencyGraph(allPackages, outputFile):
     output.write("\tnode [shape=box fontsize=11];\n")
     output.write("\tnodesep=0.45;\n")
     for name in allPackages.iterkeys():
-         output.write("\t%s [label=\"%s\"];\n" % (normalizePackageName(name),name))
+         output.write("\t%s [label=\"%s\"];\n" % (normalizePackageName(name), name))
     for package in allPackages.itervalues():
         for depPack in package.getPackageDependencies().iterkeys():
             output.write("\t %s->%s;\n" % (normalizePackageName(package.getName()),
@@ -86,7 +88,7 @@ def generateAllPackageDependencyGraph(allPackages, outputFile):
     output.write("}\n")
 
 def generateAllPackageDependencyList(allPackages):
-    dependentList=set()
+    dependentList = set()
     for package in allPackages.itervalues():
         for depPack in package.getPackageDependencies().iterkeys():
             name = "%s-%s" % (package, depPack)
@@ -96,55 +98,56 @@ def generateAllPackageDependencyList(allPackages):
     print ("Total # items is %d" % len(dependentList))
     print (sorted(dependentList))
 def printAllPercentRoutines(crossReference, outputFile=None):
-    allRoutines=crossReference.getAllPercentRoutine()
-    sortedRoutine=sorted(allRoutines)
-    index=0
+    allRoutines = crossReference.getAllPercentRoutine()
+    sortedRoutine = sorted(allRoutines)
+    index = 0
     print ("Total # of Percent routines: %d" % len(allRoutines))
     if outputFile:
-        outputFile = open(outputFile,"wb")
-        csvWriter=csv.writer(outputFile)
+        outputFile = open(outputFile, "wb")
+        csvWriter = csv.writer(outputFile)
     for routineName in sortedRoutine:
         sys.stdout.write(" %s " % routineName)
         if outputFile:
-            csvWriter.writerow([routineName,"",""])
-        if (index+1) % 10 == 0:
+            csvWriter.writerow([routineName, "", ""])
+        if (index + 1) % 10 == 0:
             sys.stdout.write ("\n")
-        index+=1
+        index += 1
     sys.stdout.write("\n")
 def printOrphanGlobals(orphanGlobals):
-    sortedGlobals=sorted(orphanGlobals)
-    index=0
+    sortedGlobals = sorted(orphanGlobals)
+    index = 0
     print ("Total # of orphan globals: %d" % len(orphanGlobals))
     for globalName in sortedGlobals:
         sys.stdout.write(" %s " % globalName)
-        if (index+1) % 10 ==0:
+        if (index + 1) % 10 == 0:
             sys.stdout.write("\n")
-        index+=1
+        index += 1
     sys.stdout.write("\n")
-def printAllUnknownRoutines(crossRef, outputFile):
-    unknownPackage=crossRef.getPackageByName("UNKNOWN")
-    allPercentRoutines=sorted(crossRef.getAllPercentRoutine())
-    outputFile=open(outputFile,'wb')
-    csvWriter=csv.writer(outputFile)
+def printAllUnknownRoutines(crossRef, outputFileName=None):
+    unknownPackage = crossRef.getPackageByName("UNKNOWN")
+    allPercentRoutines = sorted(crossRef.getAllPercentRoutine())
+    if outputFileName:
+        outputFile = open(outputFile, 'wb')
+        csvWriter = csv.writer(outputFile)
     if unknownPackage:
         allRoutines = unknownPackage.getAllRoutines()
         print ("Total # of routines: %d" % len(allRoutines))
         index = 0
-        totalPercentRoutines=0
+        totalPercentRoutines = 0
         for routineName in sorted(allRoutines.keys()):
             routine = allRoutines[routineName]
             if not routineName.startswith("%"):
                 tempName = "%" + routineName
                 if tempName in allPercentRoutines:
                     routineName = tempName
-                    totalPercentRoutines+=1
+                    totalPercentRoutines += 1
             sys.stdout.write(" %s " % routineName)
-            csvWriter.writerow([routineName,"",""])
+            if outputFileName: csvWriter.writerow([routineName, "", ""])
             if (index + 1) % 10 == 0:
                 sys.stdout.write("\n")
-            index+=1
+            index += 1
         sys.stdout.write("\n")
-        print ("Total Percent routines are: %d" % totalPercentRoutines )
+        print ("Total Percent routines are: %d" % totalPercentRoutines)
 
 def printUsage():
     print ("Please enter quit to exit")
@@ -170,38 +173,45 @@ if __name__ == '__main__':
     parser.add_argument('-d', required=True, dest='docRepositDir',
                         help='VistA Cross-Reference Git Repository Directory')
     result = vars(parser.parse_args());
+    logger.setLevel(logging.INFO)
+    consoleHandler = logging.StreamHandler()
+    consoleHandler.setLevel(logging.INFO)
+    logger.addHandler(consoleHandler)
     logParser = CallerGraphParser.CallerGraphLogFileParser()
     print "Starting parsing package/routine...."
     print "Time is: %s" % datetime.now()
 
-    logParser.parsePercentRoutineMappingFile(os.path.join(result['docRepositDir'], "PercentRoutineMapping.csv"))
+    logParser.parsePercentRoutineMappingFile(os.path.join(result['docRepositDir'],
+                                                          "PercentRoutineMapping.csv"))
     logParser.parsePackagesFile(os.path.join(result['repositDir'], "Packages.csv"))
+    logParser.parsePlatformDependentRoutineFile(os.path.join(result['docRepositDir'],
+                                                                 "PlatformDependentRoutine.csv"))
     packagesDir = os.path.join(result['repositDir'], "Packages")
-    globalFilePattern="*/Globals/*.zwr"
+    globalFilePattern = "*/Globals/*.zwr"
     logParser.findGlobalsBySourceV2(packagesDir, globalFilePattern)
     routineFilePattern = "*/Routines/*.m"
     logParser.findPackagesAndRoutinesBySource(packagesDir, routineFilePattern)
     print "End parsing package/routine...."
     print "Time is: %s" % datetime.now()
     print "Starting parsing caller graph log file...."
-    callLogPattern="*.log"
+    callLogPattern = "*.log"
     logParser.parseAllCallerGraphLog(result['logFileDir'], callLogPattern)
-    orphanRoutines=sorted(logParser.getCrossReference().getOrphanRoutines())
+    orphanRoutines = sorted(logParser.getCrossReference().getOrphanRoutines())
     print "End of parsing log file......"
     print "Time is: %s" % datetime.now()
     # read the user input from the terminal
-    isExit=False
+    isExit = False
     printUsage()
     while not isExit:
         var = raw_input("Please enter the routine Name or package Name:")
         if (var == 'quit'):
-            isExit=True
+            isExit = True
             continue
-        if (var=='orphan_routine'):
+        if (var == 'orphan_routine'):
             for routine in orphanRoutines:
                 print routine
             continue
-        if (var=='orphan_global'):
+        if (var == 'orphan_global'):
             printOrphanGlobals(logParser.getCrossReference().getOrphanGlobals())
             continue
         if var == "max_call":
@@ -222,15 +232,15 @@ if __name__ == '__main__':
         if var == "help":
             printUsage()
             continue
-        result=routineName.search(var)
+        result = routineName.search(var)
         if result:
             logParser.printRoutine(result.group('name'))
             continue
-        result=packageName.search(var)
+        result = packageName.search(var)
         if result:
             logParser.printPackage(result.group('name').strip())
             continue
-        result=globalName.search(var)
+        result = globalName.search(var)
         if result:
             logParser.printGlobal(result.group('name').strip())
             continue

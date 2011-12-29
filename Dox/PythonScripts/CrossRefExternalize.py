@@ -27,36 +27,36 @@ from datetime import datetime, date, time
 
 class CrossRefExternalize:
     def __init__(self):
-        self.crossRef=CrossReference()
-        self.root=Element("CrossReference", version="1.0")
+        self.crossRef = CrossReference()
+        self.root = Element("CrossReference", version="1.0")
     def __init__(self, crossRef):
-        self.crossRef=crossRef
-        self.root=Element("CrossReference", version="1.0")
+        self.crossRef = crossRef
+        self.root = Element("CrossReference", version="1.0")
     def getCrossReference(self):
         return self.crossRef
     def outputRoutineVariables(self, parent, variables, tag):
-        variablesElement=SubElement(parent,tag)
+        variablesElement = SubElement(parent, tag)
         for var in variables:
-            varElement=SubElement(variablesElement,"Var",
+            varElement = SubElement(variablesElement, "Var",
                                   name=var.getName(),
                                   EK=str(var.getNotKilledExp()),
                                   N=str(var.getNewed()),
                                   C=str(var.getChanged()),
                                   K=str(var.getKilled()))
     def outputRoutineCalledRoutines(self, parent, calledRoutines):
-        calledRoutinesElement=SubElement(parent,"CalledRoutines")
+        calledRoutinesElement = SubElement(parent, "CalledRoutines")
         for callInfo in calledRoutines:
-            varElement=SubElement(calledRoutinesElement,"Routine",
+            varElement = SubElement(calledRoutinesElement, "Routine",
                                   name=callInfo.getCalledRoutine().getName())
     def outputRoutinesAsXML(self, parent):
         allRoutineElement = SubElement(parent, "Routines")
         allRoutines = self.crossRef.getAllRoutines()
         for routine in allRoutines.values():
-            packageName=""
+            packageName = ""
             package = routine.getPackage()
             if package:
-                packageName=package.getName()
-            routineElement = SubElement(allRoutineElement,"Routine",
+                packageName = package.getName()
+            routineElement = SubElement(allRoutineElement, "Routine",
                                         name=routine.getName(),
                                         package=packageName)
             self.outputRoutineVariables(routineElement,
@@ -74,31 +74,31 @@ class CrossRefExternalize:
             self.outputRoutineCalledRoutines(routineElement,
                                              routine.getCalledRoutines())
     def outputOrphanRoutinesAsXML(self, parent):
-        routinesElement=SubElement(parent,"OrphanRoutines")
+        routinesElement = SubElement(parent, "OrphanRoutines")
         for routineName in self.crossRef.getOrphanRoutines():
-            routineElement=SubElement(routinesElement,"Routine", name=routineName)
+            routineElement = SubElement(routinesElement, "Routine", name=routineName)
     def outputPackagesAsXML(self, parent):
-        allPackageElement = SubElement(parent,"Packages")
+        allPackageElement = SubElement(parent, "Packages")
         allPackages = self.crossRef.getAllPackages()
         for packageName in allPackages.iterkeys():
-            packageElement = SubElement(allPackageElement,"Package",
+            packageElement = SubElement(allPackageElement, "Package",
                                         name=packageName,
                                         total="%d" % len(allPackages[packageName].getAllRoutines()))
-    def outputRoutinesAsPlainLog(self,outputFile):
+    def outputRoutinesAsPlainLog(self, outputFile):
         outputFile.write("Total Routines, %s" % len(allRoutines))
     def outputPackagesAsPlainLog(self, outputFile):
         allPackages = self.crossRef.getAllPackages()
         outputFile.write("Total Packages, %d" % len(allPackages))
         for packageName, package in allPackages.iteritems():
             outputFile.write("Package,%s, Total,%d" % (packageName, len(package.getAllRoutines())))
-    def outputAsXML(self,outputFile):
+    def outputAsXML(self, outputFile):
         self.outputPackagesAsXML(self.root)
         self.outputRoutinesAsXML(self.root)
         self.outputOrphanRoutinesAsXML(self.root)
-        fileHandle=open(outputFile,'w')
+        fileHandle = open(outputFile, 'w')
         ElementTree(self.root).write(fileHandle, "utf-8")
-    def outputAsPlainLog(self,outputFile):
-        fileHandle=open(outputFile,'w')
+    def outputAsPlainLog(self, outputFile):
+        fileHandle = open(outputFile, 'w')
         self.outputPackagesAsPlainLog(fileHandle)
         self.outputRoutinesAsPlainLog(fileHandle)
         self.outputOrphanRoutinesAsPlainLog(fileHandle)
@@ -133,7 +133,7 @@ if __name__ == '__main__':
     print "Time is: %s" % datetime.now()
     print "Starting parsing caller graph log file...."
 
-    callLogPattern="*.log"
+    callLogPattern = "*.log"
     logParser.parseAllCallerGraphLog(result['logFileDir'], callLogPattern)
     print "End of parsing log file......"
     print "Time is: %s" % datetime.now()

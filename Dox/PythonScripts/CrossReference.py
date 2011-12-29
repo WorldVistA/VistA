@@ -18,6 +18,8 @@
 #----------------------------------------------------------------
 import sys
 import types
+from LogManager import logger
+import csv
 #some constants
 NOT_KILLED_EXPLICITLY_VALUE = ">>"
 NOT_KILLED_EXPLICITLY_NAME = "not _killed explicitly"
@@ -30,8 +32,9 @@ NEWED_NAME = "Newed"
 
 UNKNOWN_PACKAGE = "UNKNOWN"
 write = sys.stdout.write
+MUMPS_ROUTINE_PREFIX = "Mumps"
 
-BoolDict={True:"Y",False:"N"}
+BoolDict = {True:"Y", False:"N"}
 
 def isUnknownPackage(packageName):
     return packageName == UNKNOWN_PACKAGE
@@ -102,18 +105,19 @@ class Routine:
         self._markedItems = []
         self._calledRoutines = RoutineCallDict()
         self._callerRoutines = RoutineCallDict()
-        self._refGlobals=dict()
+        self._refGlobals = dict()
         self._package = package
-        self._totalCaller=0
-        self._totalCalled=0
-        self._comment=[]
-        self._originalName=routineName
+        self._totalCaller = 0
+        self._totalCalled = 0
+        self._comment = []
+        self._originalName = routineName
+        self._hasSourceCode = True
     def setName(self, routineName):
         self._name = routineName
     def getName(self):
         return self._name
     def setOriginalName(self, originalName):
-        self._originalName=originalName
+        self._originalName = originalName
     def getOriginalName(self):
         return self._originalName
     def addComment(self, comment):
@@ -134,7 +138,7 @@ class Routine:
         return self._globalVariables
     def addReferredGlobal(self, globalVar):
         if globalVar.getName() not in self._refGlobals:
-            self._refGlobals[globalVar.getName()]=globalVar
+            self._refGlobals[globalVar.getName()] = globalVar
     def getReferredGlobal(self):
         return self._refGlobals
     def addNakedGlobals(self, globals):
@@ -147,18 +151,18 @@ class Routine:
         return self._markedItems
     def addCallDepRoutines(self, routine, tag, isCalled=True):
         if isCalled:
-            depRoutines=self._calledRoutines
+            depRoutines = self._calledRoutines
         else:
-            depRoutines=self._callerRoutines
-        routinePackage=routine.getPackage()
+            depRoutines = self._callerRoutines
+        routinePackage = routine.getPackage()
         if routinePackage not in depRoutines:
-            depRoutines[routinePackage]=dict()
+            depRoutines[routinePackage] = dict()
         if routine not in depRoutines[routinePackage]:
-            depRoutines[routinePackage][routine]=[]
+            depRoutines[routinePackage][routine] = []
             if isCalled:
-                self._totalCalled+=1
+                self._totalCalled += 1
             else:
-                self._totalCaller+=1
+                self._totalCaller += 1
         # tag only applies to called routine.
         if isCalled and tag and len(tag) > 0 and tag not in depRoutines[routinePackage][routine]:
             depRoutines[routinePackage][routine].append(tag)
@@ -175,6 +179,12 @@ class Routine:
         self._package = package
     def getPackage(self):
         return self._package
+    def isRenamed(self):
+        return self._name != self._originalName
+    def hasSourceCode(self):
+        return self._hasSourceCode
+    def setHasSourceCode(self, hasSourceCode):
+        self._hasSourceCode = hasSourceCode
     def printVariables(self, name, variables):
         write("%s: \n" % name)
         for var in variables:
@@ -193,7 +203,7 @@ class Routine:
             callRoutines = self._callerRoutines
             title = "Caller Routines:"
             write("%s: Total: %d\n" % (title, self._totalCaller))
-        sortedDepRoutines=sorted(sorted(callRoutines.keys()),
+        sortedDepRoutines = sorted(sorted(callRoutines.keys()),
                                  key=lambda item: len(callRoutines[item]),
                                  reverse=True)
         for package in sortedDepRoutines:
@@ -208,15 +218,16 @@ class Routine:
         write ("Routine Name: %s\n" % (self._name))
         if self.isRenamed():
             write("Original Name: %s\n" % self._originalName)
-        write("Package Name: %s\n" % self._package.getName())
+        if self._package:
+            write("Package Name: %s\n" % self._package.getName())
+        write("Renamed: %s, hasSource: %s\n" % (self.isRenamed(),
+                                              self.hasSourceCode()))
         self.printVariables("Global Vars", self._globalVariables)
         self.printVariables("Local Vars", self._localVariables)
         self.printVariables("Naked Globals", self._nakedGlobals)
         self.printVariables("Marked Globals", self._markedItems)
         self.printCallRoutines(True)
         self.printCallRoutines(False)
-    def isRenamed(self):
-        return self._name != self._originalName
     #===========================================================================
     # operator
     #===========================================================================
@@ -225,31 +236,62 @@ class Routine:
     def __repr__(self):
         return "Routine: %s" % self._name
     def __eq__(self, other):
-        if not isinstance(other,Routine):
+        if not isinstance(other, Routine):
             return False;
         return self._name == other._name
     def __lt__(self, other):
-        if not isinstance(other,Routine):
+        if not isinstance(other, Routine):
             return False
         return self._name < other._name
     def __gt__(self, other):
-        if not isinstance(other,Routine):
+        if not isinstance(other, Routine):
             return False
         return self._name > other._name
     def __le__(self, other):
-        if not isinstance(other,Routine):
+        if not isinstance(other, Routine):
             return False
         return self._name <= other._name
     def __ge__(self, other):
-        if not isinstance(other,Routine):
+        if not isinstance(other, Routine):
             return False
         return self._name >= other._name
     def __ne__(self, other):
-        if not isinstance(other,Routine):
+        if not isinstance(other, Routine):
             return True
         return self._name != other._name
     def __hash__(self):
         return self._name.__hash__()
+#===============================================================================
+# # class to represent a platform dependent generic routine
+#===============================================================================
+class PlatformDependentGenericRoutine(Routine):
+    def __init__(self, routineName, package):
+        Routine.__init__(self, routineName, package)
+        self._platformRoutines = dict()
+    def getComment(self):
+        return ""
+    def addLocalVariables(self, localVariables):
+        pass
+    def addNakedGlobals(self, globals):
+        pass
+    def addMarkedItems(self, markedItem):
+        pass
+    def addCalledRoutines(self, routine, tag=None):
+        pass
+    def hasSourceCode(self):
+        return False
+    def printVariables(self, name, variables):
+        pass
+    def addPlatformRoutines(self, mappingList):
+        for item in mappingList:
+            if item[0] not in self._platformRoutines:
+                self._platformRoutines[item[0]] = [Routine(item[0], self._package),
+                                                   item[1]]
+    # return a list of two elements, first is the Routine, second is the platform name
+    def getPlatformDepRoutineInfoByName(self, routineName):
+        return self._platformRoutines.get(routineName, [None, None])
+    def getAllPlatformDepRoutines(self):
+        return self._platformRoutines
 #===============================================================================
 # # class to represent a global variable
 #===============================================================================
@@ -260,13 +302,13 @@ class Global:
                  package=None,
                  fileNo=None):
         self._name = globalName
-        self._description=description
+        self._description = description
         self._package = package
         self._references = dict() # accessed by routines
-        self._totalReferenced=0
-        self._fileNo=fileNo
+        self._totalReferenced = 0
+        self._fileNo = fileNo
     def setName(self, globalName):
-        self._name=globalName
+        self._name = globalName
     def getName(self):
         return self._name
     def getAllReferencedRoutines(self):
@@ -274,21 +316,21 @@ class Global:
     def addReferencedRoutine(self, routine):
         if not routine:
             return
-        package=routine.getPackage()
+        package = routine.getPackage()
         if not package:
             return
         if package not in self._references:
-            self._references[package]=set()
+            self._references[package] = set()
         self._references[package].add(routine)
-        self._totalReferenced=self._totalReferenced+1
+        self._totalReferenced = self._totalReferenced + 1
     def getReferredRoutineByPackage(self, package):
         return self._references.get(package)
     def setPackage(self, package):
-        self._package=package
+        self._package = package
     def setDescription(self, description):
         self._description = description
     def setFileNo(self, fileNo):
-        self._fileNo=fileNo
+        self._fileNo = fileNo
     def getFileNo(self):
         return self._fileNo
     def getDescription(self):
@@ -312,27 +354,27 @@ class Global:
     def __repr__(self):
         return "Global: %s" % self._name
     def __eq__(self, other):
-        if not isinstance(other,Global):
+        if not isinstance(other, Global):
             return False;
         return self._name == other._name
     def __lt__(self, other):
-        if not isinstance(other,Global):
+        if not isinstance(other, Global):
             return False
         return self._name < other._name
     def __gt__(self, other):
-        if not isinstance(other,Global):
+        if not isinstance(other, Global):
             return False
         return self._name > other._name
     def __le__(self, other):
-        if not isinstance(other,Global):
+        if not isinstance(other, Global):
             return False
         return self._name <= other._name
     def __ge__(self, other):
-        if not isinstance(other,Global):
+        if not isinstance(other, Global):
             return False
         return self._name >= other._name
     def __ne__(self, other):
-        if not isinstance(other,Global):
+        if not isinstance(other, Global):
             return True
         return self._name != other._name
     def __hash__(self):
@@ -345,16 +387,16 @@ class Package:
     def __init__(self, packageName):
         self._name = packageName
         self._routines = dict()
-        self._globals=dict()
-        self._namespaces=[]
-        self._globalNamespace=[]
+        self._globals = dict()
+        self._namespaces = []
+        self._globalNamespace = []
         self._routineDependencies = dict()
         self._routineDependents = dict()
         self._globalDependencies = dict()
         self._globalDependents = dict()
-        self._origName=packageName
-        self._docLink=""
-        self._docMirrorLink=""
+        self._origName = packageName
+        self._docLink = ""
+        self._docMirrorLink = ""
     def addRoutine(self, Routine):
         self._routines[Routine.getName()] = Routine
         Routine.setPackage(self)
@@ -381,29 +423,29 @@ class Package:
         for routine in self._routines.itervalues():
             calledRoutines = routine.getCalledRoutines()
             for package in calledRoutines.iterkeys():
-                if package != self and package._name != UNKNOWN_PACKAGE:
+                if package and package != self and package._name != UNKNOWN_PACKAGE:
                     if package not in self._routineDependencies:
                         # the first set consists of all caller routine in the self package
                         # the second set consists of all called routines in dependency package
-                        self._routineDependencies[package] = (set(),set())
+                        self._routineDependencies[package] = (set(), set())
                     self._routineDependencies[package][0].add(routine)
                     self._routineDependencies[package][1].update(calledRoutines[package])
                     if self not in package._routineDependents:
                         # the first set consists of all called routine in the package
                         # the second set consists of all caller routines in that package
-                        package._routineDependents[self] = (set(),set())
+                        package._routineDependents[self] = (set(), set())
                     package._routineDependents[self][0].add(routine)
                     package._routineDependents[self][1].update(calledRoutines[package])
             referredGlobals = routine.getReferredGlobal()
             for globalVar in referredGlobals.itervalues():
                 package = globalVar.getPackage()
-                if package !=self and package._name != UNKNOWN_PACKAGE:
+                if package != self and package._name != UNKNOWN_PACKAGE:
                     if package not in self._globalDependencies:
-                        self._globalDependencies[package]=(set(),set())
+                        self._globalDependencies[package] = (set(), set())
                     self._globalDependencies[package][0].add(routine)
                     self._globalDependencies[package][1].add(globalVar)
                     if self not in package._globalDependents:
-                        package._globalDependents[self]=(set(),set())
+                        package._globalDependents[self] = (set(), set())
                     package._globalDependents[self][0].add(routine)
                     package._globalDependents[self][1].add(globalVar)
     def getPackageRoutineDependencies(self):
@@ -428,8 +470,8 @@ class Package:
         return self._docLink
     def getDocMirrorLink(self):
         return self._docMirrorLink
-    def setDocLink(self,docLink):
-        self._docLink=docLink
+    def setDocLink(self, docLink):
+        self._docLink = docLink
     def setMirrorLink(self, docMirrorLink):
         self._docMirrorLink = docMirrorLink
     def printRoutineDependency(self, dependencyList=True):
@@ -495,27 +537,27 @@ class Package:
     def __repr__(self):
         return "Package: %s" % self._name
     def __eq__(self, other):
-        if not isinstance(other,Package):
+        if not isinstance(other, Package):
             return False;
         return self._name == other._name
     def __lt__(self, other):
-        if not isinstance(other,Package):
+        if not isinstance(other, Package):
             return False
         return self._name < other._name
     def __gt__(self, other):
-        if not isinstance(other,Package):
+        if not isinstance(other, Package):
             return False
         return self._name > other._name
     def __le__(self, other):
-        if not isinstance(other,Package):
+        if not isinstance(other, Package):
             return False
         return self._name <= other._name
     def __ge__(self, other):
-        if not isinstance(other,Package):
+        if not isinstance(other, Package):
             return False
         return self._name >= other._name
     def __ne__(self, other):
-        if not isinstance(other,Package):
+        if not isinstance(other, Package):
             return True
         return self._name != other._name
     def __hash__(self):
@@ -532,35 +574,35 @@ class RoutineCallerInfo:
     def getCallTag(self):
         return self.callTag
     def __eq__(self, other):
-        if not isinstance(other,RoutineCallerInfo):
+        if not isinstance(other, RoutineCallerInfo):
             return False
         return (self.routine == other.routine) \
             and (self.tag == other.tag)
     def __ne__(self, other):
-        if not isinstance(other,RoutineCallerInfo):
+        if not isinstance(other, RoutineCallerInfo):
             return True
         return (self.routine != other.routine) \
             or (self.tag != other.tag)
     def __gt__(self, other):
-        if not isinstance(other,RoutineCallerInfo):
+        if not isinstance(other, RoutineCallerInfo):
             return False
         if self.routine == other.routine:
             return self.tag > other.tag
         return self.routine > other.routine
     def __lt__(self, other):
-        if not isinstance(other,RoutineCallerInfo):
+        if not isinstance(other, RoutineCallerInfo):
             return False
         if self.routine == other.routine:
             return self.tag < other.tag
         return self.routine < other.routine
     def __ge__(self, other):
-        if not isinstance(other,RoutineCallerInfo):
+        if not isinstance(other, RoutineCallerInfo):
             return False
         if self.routine == other.routine:
             return self.tag >= other.tag
         return self.routine >= other.routine
     def __lt__(self, other):
-        if not isinstance(other,RoutineCallerInfo):
+        if not isinstance(other, RoutineCallerInfo):
             return False
         if self.routine == other.routine:
             return self.tag <= other.tag
@@ -587,9 +629,12 @@ class CrossReference:
         self._orphanRoutines = set()
         self._allGlobals = dict()
         self._orphanGlobals = set()
-        self._percentRoutine=set()
-        self._PercentRoutineMapping=dict()
-        self._renameRoutines=dict()
+        self._percentRoutine = set()
+        self._percentRoutineMapping = dict()
+        self._renameRoutines = dict()
+        self._mumpsRoutines = set()
+        self._platformDepRoutines = dict() # [name, package, mapping list]
+        self._platformDepRoutineMappings = dict() # [platform dep routine -> generic routine]
     def getAllRoutines(self):
         return self._allRoutines
     def getAllPackages(self):
@@ -616,17 +661,22 @@ class CrossReference:
         if not self.hasGlobal(globalName):
             self._allGlobals[globalName] = Global(globalName)
     def getRoutineByName(self, routineName):
+        if self.isPlatformDependentRoutineByName(routineName):
+            return self.getPlatformDependentRoutineByName(routineName)
         return self._allRoutines.get(routineName)
     def getPackageByName(self, packageName):
         return self._allPackages.get(packageName)
     def getGlobalByName(self, globalName):
         return self._allGlobals.get(globalName)
-    def addRoutineToPackageByName(self, routineName, packageName):
+    def addRoutineToPackageByName(self, routineName, packageName, hasSourceCode=True):
         if packageName not in self._allPackages:
             self._allPackages[packageName] = Package(packageName)
         if routineName not in self._allRoutines:
             self._allRoutines[routineName] = Routine(routineName)
-        self._allPackages[packageName].addRoutine(self._allRoutines[routineName])
+        routine = self._allRoutines[routineName]
+        if not hasSourceCode:
+            routine.setHasSourceCode(hasSourceCode)
+        self._allPackages[packageName].addRoutine(routine)
     def addGlobalToPackageByName(self, globalName, packageName):
         if packageName not in self._allPackages:
             self._allPackages[packageName] = Package(packageName)
@@ -645,11 +695,11 @@ class CrossReference:
     def addToOrphanGlobalByName(self, globalName):
         if not self.hasGlobal(globalName):
             self._orphanGlobals.add(globalName)
-    def addRoutineCommentByName(self,routineName, comment):
-        routine=self.getRoutineByName(routineName)
+    def addRoutineCommentByName(self, routineName, comment):
+        routine = self.getRoutineByName(routineName)
         if routine:
             routine.setComment(comment)
-    def addPercentRoutine(self,routineName):
+    def addPercentRoutine(self, routineName):
         self._percentRoutine.add(routineName)
     def getAllPercentRoutine(self):
         return self._percentRoutine
@@ -657,18 +707,54 @@ class CrossReference:
     def addPercentRoutineMapping(self, routineName,
                                 mappingRoutineName,
                                 mappingPackage):
-        if routineName not in self._PercentRoutineMapping:
-            self._PercentRoutineMapping[routineName] = []
-        self._PercentRoutineMapping[routineName].append(mappingRoutineName)
-        self._PercentRoutineMapping[routineName].append(mappingPackage)
+        if routineName not in self._percentRoutineMapping:
+            self._percentRoutineMapping[routineName] = []
+        self._percentRoutineMapping[routineName].append(mappingRoutineName)
+        self._percentRoutineMapping[routineName].append(mappingPackage)
         if len(mappingRoutineName) > 0:
-            self._renameRoutines[mappingRoutineName]=routineName
+            self._renameRoutines[mappingRoutineName] = routineName
+        elif mappingPackage.startswith(MUMPS_ROUTINE_PREFIX):
+            self._mumpsRoutines.add(routineName)
     def getPercentRoutineMapping(self):
-        return self._PercentRoutineMapping
+        return self._percentRoutineMapping
     def routineNeedRename(self, routineName):
         return routineName in self._renameRoutines
-    def getNewRoutineName(self,routineName):
+    def getRenamedRoutineName(self, routineName):
         return self._renameRoutines.get(routineName)
+    def isMumpsRoutine(self, routineName):
+        return routineName in self._mumpsRoutines
+    def addPlatformDependentRoutineMapping(self, routineName,
+                                           packageName,
+                                           mappingList):
+        if routineName not in self._platformDepRoutines:
+            routine = PlatformDependentGenericRoutine(routineName,
+                                                      self.getPackageByName(packageName))
+            self._platformDepRoutines[routineName] = routine
+        routine = self._platformDepRoutines[routineName]
+        routine.addPlatformRoutines(mappingList)
+        self._allRoutines[routineName] = routine
+        self._allPackages[packageName].addRoutine(routine)
+        for item in mappingList:
+            self._platformDepRoutineMappings[item[0]] = routineName
+    def isPlatformDependentRoutineByName(self, routineName):
+        return routineName in self._platformDepRoutineMappings
+    def isPlatformGenericRoutineByName(self, routineName):
+        return routineName in self._platformDepRoutines
+    def getGenericPlatformDepRoutineNameByName(self, routineName):
+        return self._platformDepRoutineMappings.get(routineName)
+    def getGenericPlatformDepRoutineByName(self, routineName):
+        genericName = self._platformDepRoutineMappings.get(routineName)
+        if genericName:
+            return self._platformDepRoutines[genericName]
+        return None
+    def getPlatformDependentRoutineByName(self, routineName):
+        genericRoutine = self.getGenericPlatformDepRoutineByName(routineName)
+        if genericRoutine:
+            assert isinstance(genericRoutine, PlatformDependentGenericRoutine)
+            return genericRoutine.getPlatformDepRoutineInfoByName(routineName)[0]
+        return None
+    # should be using trie structure for quick find, but
+    # as python does not have trie and seems to be OK now
     def categorizeRoutineByNamespace(self, routineName):
         for package in self._allPackages.itervalues():
             hasMatch = False
@@ -685,42 +771,94 @@ class CrossReference:
                         matchNamespace = ""
                         break
             if hasMatch:
-                return (matchNamespace,package)
-        return (None,None)
+                return (matchNamespace, package)
+        return (None, None)
+    def categorizeGlobalByNamespace(self, globalName):
+        pass
+    def routineHasSourceCodeByName(self, routineName):
+        routine = self.getRoutineByName(routineName)
+        return routine and routine.hasSourceCode()
+    def __generatePlatformDependentRoutineDependencies__(self):
+        for genericRoutine in self._platformDepRoutines.itervalues():
+            genericRoutine.setHasSourceCode(False)
+            callerRoutines = genericRoutine.getCallerRoutines()
+            for routineDict in callerRoutines.values():
+                for routine in routineDict.keys():
+                    routineName = routine.getName()
+                    if self.isPlatformDependentRoutineByName(routineName):
+                        value = routineDict.pop(routine)
+                        newRoutine = self.getGenericPlatformDepRoutineByName(routineName)
+                        routineDict[newRoutine] = value
+    def __fixPlatformDependentRoutines__(self):
+        for routineName in self._platformDepRoutineMappings:
+            if routineName in self._allRoutines:
+                logger.info("Removing Routine: %s" % routineName)
+                self._allRoutines.pop(routineName)
+    def generateAllPackageDependencies(self):
+        self.__fixPlatformDependentRoutines__()
+        self.__generatePlatformDependentRoutineDependencies__()
+        for package in self._allPackages.itervalues():
+            package.generatePackageDependencies()
 
 def testPackage():
-    packageA=Package("A")
-    packageB=Package("B")
-    anotherA=Package("A")
-    routineA=Routine("A")
+    packageA = Package("A")
+    packageB = Package("B")
+    anotherA = Package("A")
+    routineA = Routine("A")
     assert isinstance(packageA, Package)
-    assert not isinstance(routineA,Package)
+    assert not isinstance(routineA, Package)
     assert packageA != packageB
     assert packageA == anotherA
-    assert routineA !=packageA
+    assert routineA != packageA
 
 def testRoutine():
-    RoutineA=Routine("A")
-    RoutineB=Routine("B")
-    anotherA=Routine("A")
-    packageA=Package("A")
+    RoutineA = Routine("A")
+    RoutineB = Routine("B")
+    anotherA = Routine("A")
+    packageA = Package("A")
     assert isinstance(RoutineA, Routine)
     assert not isinstance(packageA, Routine)
     assert not RoutineA == RoutineB
     assert RoutineA != RoutineB
     assert RoutineA == anotherA
-    assert not packageA==RoutineA
+    assert not packageA == RoutineA
 
 def testGlobal():
-    globalA=Global("A")
-    globalB=Global("B")
-    anotherA=Global("A")
-    routineA=Routine("A")
+    globalA = Global("A")
+    globalB = Global("B")
+    anotherA = Global("A")
+    routineA = Routine("A")
     assert isinstance(globalA, Global)
-    assert not isinstance(routineA,Global)
+    assert not isinstance(routineA, Global)
     assert globalA != globalB
     assert globalA == anotherA
-    assert routineA !=globalA
+    assert routineA != globalA
+
+def testParsePlatformDependentRoutines(fileName):
+    routineFile = open(fileName, "rb")
+    sniffer = csv.Sniffer()
+    dialect = sniffer.sniff(routineFile.read(128))
+    routineFile.seek(0)
+    hasHeader = sniffer.has_header(routineFile.read(128))
+    routineFile.seek(0)
+    result = csv.reader(routineFile, dialect)
+    currentName = ""
+    routineDict = dict()
+    index = 0
+    for line in result:
+        if hasHeader and index == 0:
+            index += 1
+            continue
+        if len(line[0]) > 0:
+            currentName = line[0]
+            if line[0] not in routineDict:
+                routineDict[currentName] = []
+            routineDict[currentName].append(line[-1])
+        routineDict[currentName].append([line[1], line[2]])
+    print ("Total # is %d" % len(routineDict))
+    for (routine, platform) in routineDict.iteritems():
+        print ("Routine: %s, Package %s" % (routine, platform[0]))
+        print ("Total platform: %d %s" % (len(platform[1:]), platform[1:]))
 #===============================================================================
 # Main routine
 #===============================================================================
@@ -728,3 +866,5 @@ if __name__ == '__main__':
     testPackage()
     testRoutine()
     testGlobal()
+    PLATFORM_DEPENDENT_ROUTINE_CSV = "C:/Users/jason.li/git/OSEHRA-Automated-Testing/Dox/PlatformDependentRoutine.csv"
+    testParsePlatformDependentRoutines(PLATFORM_DEPENDENT_ROUTINE_CSV)
