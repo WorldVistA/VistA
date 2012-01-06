@@ -62,8 +62,8 @@ $Run Xindex for one routine:
     send:NO<CR>
     ;device input
     wait for:Device
-    send:<CR><LF>
-    send:<CR><LF>
+    ;use telnet, with right margin 132
+    send:TELNET;132;999<CR><LF>
     ;reset the timer and jump to the loop
     timer: 0
     on error: $timedout
