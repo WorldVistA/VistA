@@ -20,16 +20,9 @@ import sys
 import types
 from LogManager import logger
 import csv
+from operator import itemgetter, attrgetter
 #some constants
 NOT_KILLED_EXPLICITLY_VALUE = ">>"
-NOT_KILLED_EXPLICITLY_NAME = "not _killed explicitly"
-CHANGED_VALUE = "*"
-CHANGED_NAME = "Changed"
-KILLED_VALUE = "!"
-KILLED_NAME = "Killed"
-NEWED_VALUE = "~"
-NEWED_NAME = "Newed"
-
 UNKNOWN_PACKAGE = "UNKNOWN"
 write = sys.stdout.write
 MUMPS_ROUTINE_PREFIX = "Mumps"
@@ -39,44 +32,31 @@ BoolDict = {True:"Y", False:"N"}
 def isUnknownPackage(packageName):
     return packageName == UNKNOWN_PACKAGE
 
+LINE_OFFSET_DELIM = ","
 #===============================================================================
-# A Class to represent the variable in a routine
+# A Class to represent the variable in a _calledRoutine
 #===============================================================================
 class AbstractVariable:
-    def __init__(self, name, prefix, cond):
+    def __init__(self, name, prefix, lineOffsets):
         self._name = name
-        if prefix and (prefix.strip() == NOT_KILLED_EXPLICITLY_VALUE):
+        self._prefix = prefix
+        if prefix and prefix.strip() == NOT_KILLED_EXPLICITLY_VALUE:
             self._notKilledExp = True
         else:
             self._notKilledExp = False
-        self._changed = False
-        self._newed = False
-        self._killed = False
-        if cond:
-            if cond.find(NEWED_VALUE) != -1:
-                self._newed = True
-            if cond.find(CHANGED_VALUE) != -1:
-                self._changed = True
-            if cond.find(KILLED_VALUE) != -1:
-                self._killed = True
+        self._lineOffsets = lineOffsets.split(LINE_OFFSET_DELIM)
     def getName(self):
         return self._name
-    def getKilled(self):
-        return self._killed
-    def setKilled(self, killed):
-        self._killed = killed
-    def getNewed(self):
-        return self._newed
-    def setNewed(self, newed):
-        self._newed = newed
-    def getChanged(self):
-        return self._changed
-    def setChanged(self, changed):
-        self._changed = changed
     def getNotKilledExp(self):
         return self._notKilledExp
     def setNotKilledExp(self, notKilledExp):
         self._notKilledExp = notKilledExp
+    def appendLineOffsets(self, lineOffsets):
+        self._lineOffsets.extend(lineOffsets)
+    def getLineOffsets(self):
+        return self._lineOffsets
+    def getPrefix(self):
+        return self._prefix
 #===============================================================================
 # Wrapper classes around the AbstractVariable, place holders
 #===============================================================================
@@ -92,6 +72,9 @@ class NakedGlobal(AbstractVariable):
 class MarkedItem(AbstractVariable):
     def __init__(self, name, prefix, cond):
         AbstractVariable.__init__(self, name, prefix, cond)
+class LabelReference(AbstractVariable):
+    def __init__(self, name, prefix, cond):
+        AbstractVariable.__init__(self, name, prefix, cond)
 #===============================================================================
 #  A class to wrap up information about a VistA Routine
 #===============================================================================
@@ -99,17 +82,18 @@ class Routine:
     #constructor
     def __init__(self, routineName, package=None):
         self._name = routineName
-        self._localVariables = []
-        self._globalVariables = []
-        self._nakedGlobals = []
-        self._markedItems = []
-        self._calledRoutines = RoutineCallDict()
-        self._callerRoutines = RoutineCallDict()
+        self._localVariables = dict()
+        self._globalVariables = dict()
+        self._nakedGlobals = dict()
+        self._markedItems = dict()
+        self._labelReference = dict()
+        self._calledRoutines = RoutineDepDict()
+        self._callerRoutines = RoutineDepDict()
         self._refGlobals = dict()
         self._package = package
         self._totalCaller = 0
         self._totalCalled = 0
-        self._comment = []
+        self._comments = []
         self._originalName = routineName
         self._hasSourceCode = True
     def setName(self, routineName):
@@ -121,19 +105,28 @@ class Routine:
     def getOriginalName(self):
         return self._originalName
     def addComment(self, comment):
-        self._comment.append(comment)
+        self._comments.append(comment)
     def getComment(self):
-        return self._comment
+        return self._comments
     def getTotalCaller(self):
         return self._totalCaller
     def getTotalCalled(self):
         return self._totalCalled
-    def addLocalVariables(self, localVariables):
-        self._localVariables.append(localVariables)
+    def addLocalVariables(self, localVar):
+        varName = localVar.getName()
+        if varName not in self._localVariables:
+            self._localVariables[varName] = localVar
+        else:
+            self._localVariables[varName].appendLineOffsets(
+                                                localVar.getLineOffsets())
     def getLocalVariables(self):
         return self._localVariables
-    def addGlobalVariables(self, globalVariables):
-        self._globalVariables.append(globalVariables)
+    def addGlobalVariables(self, GlobalVariable):
+        varName = GlobalVariable.getName()
+        if varName not in self._globalVariables:
+            self._globalVariables[varName] = GlobalVariable
+        else:
+            self._globalVariables[varName].appendLineOffsets(GlobalVariable.getLineOffsets())
     def getGlobalVariables(self):
         return self._globalVariables
     def addReferredGlobal(self, globalVar):
@@ -141,38 +134,63 @@ class Routine:
             self._refGlobals[globalVar.getName()] = globalVar
     def getReferredGlobal(self):
         return self._refGlobals
-    def addNakedGlobals(self, globals):
-        self._nakedGlobals.append(globals)
+    def addNakedGlobals(self, NakedGlobal):
+        varName = NakedGlobal.getName()
+        if varName not in self._nakedGlobals:
+            self._nakedGlobals[varName] = NakedGlobal
+        else:
+            self._nakedGlobals[varName].appendLineOffsets(NakedGlobal.getLineOffsets())
     def getNakedGlobals(self):
         return self._nakedGlobals
-    def addMarkedItems(self, markedItem):
-        self._markedItems.append(markedItem)
+    def addMarkedItems(self, MarkedItem):
+        varName = MarkedItem.getName()
+        if varName not in self._markedItems:
+            self._markedItems[varName] = MarkedItem
+        else:
+            self._markedItems[varName].appendLineOffsets(MarkedItem.getLineOffsets())
     def getMarkedItems(self):
         return self._markedItems
-    def addCallDepRoutines(self, routine, tag, isCalled=True):
+    def getLabelReferences(self):
+        return self._labelReference
+    def addLabelReference(self, LabelReference):
+        varName = LabelReference.getName()
+        if varName not in self._labelReference:
+            self._labelReference[varName] = LabelReference
+        else:
+            self._labelReference[varName].appendLineOffsets(LabelReference.getLineOffsets())
+    def getExternalReference(self):
+        output = dict()
+        for routineDict in self._calledRoutines.itervalues():
+            for (routine, callTagDict) in routineDict.iteritems():
+                routineName = routine.getName()
+                for (callTag, lineOffsets) in callTagDict.iteritems():
+                    output[(routineName, callTag)] = lineOffsets
+        return output
+    def addCallDepRoutines(self, depRoutine, callTag, lineOccurences, isCalled=True):
         if isCalled:
             depRoutines = self._calledRoutines
         else:
             depRoutines = self._callerRoutines
-        routinePackage = routine.getPackage()
-        if routinePackage not in depRoutines:
-            depRoutines[routinePackage] = dict()
-        if routine not in depRoutines[routinePackage]:
-            depRoutines[routinePackage][routine] = []
+        package = depRoutine.getPackage()
+        if package not in depRoutines:
+            depRoutines[package] = dict()
+        if depRoutine not in depRoutines[package]:
+            depRoutines[package][depRoutine] = dict()
             if isCalled:
                 self._totalCalled += 1
             else:
                 self._totalCaller += 1
-        # tag only applies to called routine.
-        if isCalled and tag and len(tag) > 0 and tag not in depRoutines[routinePackage][routine]:
-            depRoutines[routinePackage][routine].append(tag)
-    def addCalledRoutines(self, routine, tag=None):
-        self.addCallDepRoutines(routine, tag, True)
-        routine.addCallerRoutines(self, tag)
+        if callTag not in depRoutines[package][depRoutine]:
+            depRoutines[package][depRoutine][callTag] = lineOccurences.split(LINE_OFFSET_DELIM)
+        else:
+            depRoutines[package][depRoutine][callTag].extend(lineOccurences.split(LINE_OFFSET_DELIM))
+    def addCalledRoutines(self, routine, callTag, lineOccurences):
+        self.addCallDepRoutines(routine, callTag, lineOccurences, True)
+        routine.addCallerRoutines(self, callTag, lineOccurences)
     def getCalledRoutines(self):
         return self._calledRoutines
-    def addCallerRoutines(self, routine, tag=None):
-        self.addCallDepRoutines(routine, tag, False)
+    def addCallerRoutines(self, depRoutine, callTag, lineOccurences):
+        self.addCallDepRoutines(depRoutine, callTag, lineOccurences, False)
     def getCallerRoutines(self):
         return self._callerRoutines
     def setPackage(self, package):
@@ -187,12 +205,18 @@ class Routine:
         self._hasSourceCode = hasSourceCode
     def printVariables(self, name, variables):
         write("%s: \n" % name)
-        for var in variables:
-            write("%s:%s Name:%s %s:%s %s:%s %s:%s\n" % (NOT_KILLED_EXPLICITLY_NAME, var.getNotKilledExp(),
-                                                       var.getName(),
-                                                       KILLED_NAME, BoolDict[var.getKilled()],
-                                                       CHANGED_NAME, BoolDict[var.getChanged()],
-                                                       NEWED_NAME, BoolDict[var.getNewed()]))
+        allVars = sorted(variables.iterkeys())
+        for varName in allVars:
+            var = variables[varName]
+            write("%s %s %s\n" % (var.getPrefix(), varName, var.getLineOffsets()))
+        write("\n")
+    def printExternalReference(self):
+        write("External References:\n")
+        output = self.getExternalReference()
+        allVar = sorted(output.iterkeys(), key = itemgetter(0,1))
+        for nameTag in allVar:
+            value = output[nameTag]
+            write("%s %s\n" % (nameTag[1]+"^"+nameTag[0],value))
         write("\n")
     def printCallRoutines(self, isCalledRoutine=True):
         if isCalledRoutine:
@@ -208,11 +232,10 @@ class Routine:
                                  reverse=True)
         for package in sortedDepRoutines:
             write ("Package: %s Total: %d" % (package, len(callRoutines[package])))
-            for (routine, tags) in callRoutines[package].iteritems():
+            for (routine, tagDict) in callRoutines[package].iteritems():
                 write(" %s " % routine)
-                if len(tags) > 0:
-                    write(str(tags))
-            write("\n")
+                for (tag, lineOccurences) in tagDict.iteritems():
+                        write("%s: %s\n" % (tag, lineOccurences))
         write("\n")
     def printResult(self):
         write ("Routine Name: %s\n" % (self._name))
@@ -226,6 +249,8 @@ class Routine:
         self.printVariables("Local Vars", self._localVariables)
         self.printVariables("Naked Globals", self._nakedGlobals)
         self.printVariables("Marked Globals", self._markedItems)
+        self.printVariables("Label References", self._labelReference)
+        self.printExternalReference()
         self.printCallRoutines(True)
         self.printCallRoutines(False)
     #===========================================================================
@@ -262,7 +287,7 @@ class Routine:
     def __hash__(self):
         return self._name.__hash__()
 #===============================================================================
-# # class to represent a platform dependent generic routine
+# # class to represent a platform dependent generic _calledRoutine
 #===============================================================================
 class PlatformDependentGenericRoutine(Routine):
     def __init__(self, routineName, package):
@@ -425,13 +450,13 @@ class Package:
             for package in calledRoutines.iterkeys():
                 if package and package != self and package._name != UNKNOWN_PACKAGE:
                     if package not in self._routineDependencies:
-                        # the first set consists of all caller routine in the self package
+                        # the first set consists of all caller _calledRoutine in the self package
                         # the second set consists of all called routines in dependency package
                         self._routineDependencies[package] = (set(), set())
                     self._routineDependencies[package][0].add(routine)
                     self._routineDependencies[package][1].update(calledRoutines[package])
                     if self not in package._routineDependents:
-                        # the first set consists of all called routine in the package
+                        # the first set consists of all called _calledRoutine in the package
                         # the second set consists of all caller routines in that package
                         package._routineDependents[self] = (set(), set())
                     package._routineDependents[self][0].add(routine)
@@ -562,57 +587,40 @@ class Package:
         return self._name != other._name
     def __hash__(self):
         return self._name.__hash__()
-#===============================================================================
-# A Class represent the Routine call information NOT USED
-#===============================================================================
-class RoutineCallerInfo:
-    def __init__(self, routine, tag):
-        self.routine = routine
-        self.callTag = tag
-    def getRoutine(self):
-        return self.routine
+##===============================================================================
+## Class represent a detailed call info NOT USED
+##===============================================================================
+class RoutineCallDetails:
+    def __init__(self, callTag, lineOccurences):
+        self._callDetails = callTag
+        self._lineOccurences = []
+        lineOccurs = lineOccurences.split(LINE_OFFSET_DELIM)
+        self._lineOccurences.extend(lineOccurs)
+        self._isExtrinsic = callTag.startswith("$$")
     def getCallTag(self):
-        return self.callTag
-    def __eq__(self, other):
-        if not isinstance(other, RoutineCallerInfo):
-            return False
-        return (self.routine == other.routine) \
-            and (self.tag == other.tag)
-    def __ne__(self, other):
-        if not isinstance(other, RoutineCallerInfo):
-            return True
-        return (self.routine != other.routine) \
-            or (self.tag != other.tag)
-    def __gt__(self, other):
-        if not isinstance(other, RoutineCallerInfo):
-            return False
-        if self.routine == other.routine:
-            return self.tag > other.tag
-        return self.routine > other.routine
-    def __lt__(self, other):
-        if not isinstance(other, RoutineCallerInfo):
-            return False
-        if self.routine == other.routine:
-            return self.tag < other.tag
-        return self.routine < other.routine
-    def __ge__(self, other):
-        if not isinstance(other, RoutineCallerInfo):
-            return False
-        if self.routine == other.routine:
-            return self.tag >= other.tag
-        return self.routine >= other.routine
-    def __lt__(self, other):
-        if not isinstance(other, RoutineCallerInfo):
-            return False
-        if self.routine == other.routine:
-            return self.tag <= other.tag
-        return self.routine <= other.routine
+        return self._callDetails
+    def getLineOccurence(self):
+        return self._lineOccurences
+    def isExtrinsic(self):
+        return self._isExtrinsic
+    def appendLineOccurence(self, lineOccurences):
+        self._lineOccurences.extend(lineOccurences)
 #===============================================================================
-# A Class represent All call/caller routine Set
+# A Class represent the call information between routine and called routine
 #===============================================================================
-class RoutineCallDict(dict):
-    def __init__(self):
-        pass
+class RoutineCallInfo(dict):
+    def addCallDetail(self, callTag, lineOccurences):
+        if callTag not in self:
+            self[callTag] = lineOccurences.split(LINE_OFFSET_DELIM)
+        else:
+            self[callTag].extend(lineOccurences.split(LINE_OFFSET_DELIM))
+#===============================================================================
+# A Class represent all called/caller _calledRoutine Dictionary
+#===============================================================================
+class RoutineDepDict(dict):
+    '''
+    placeholder
+    '''
 #===============================================================================
 # A class represents _package dependency between two packages based on call _routines
 #===============================================================================
@@ -634,7 +642,7 @@ class CrossReference:
         self._renameRoutines = dict()
         self._mumpsRoutines = set()
         self._platformDepRoutines = dict() # [name, package, mapping list]
-        self._platformDepRoutineMappings = dict() # [platform dep routine -> generic routine]
+        self._platformDepRoutineMappings = dict() # [platform dep _calledRoutine -> generic _calledRoutine]
     def getAllRoutines(self):
         return self._allRoutines
     def getAllPackages(self):
@@ -782,7 +790,7 @@ class CrossReference:
         for genericRoutine in self._platformDepRoutines.itervalues():
             genericRoutine.setHasSourceCode(False)
             callerRoutines = genericRoutine.getCallerRoutines()
-            for routineDict in callerRoutines.values():
+            for routineDict in callerRoutines.itervalues():
                 for routine in routineDict.keys():
                     routineName = routine.getName()
                     if self.isPlatformDependentRoutineByName(routineName):
@@ -812,6 +820,9 @@ def testPackage():
     assert routineA != packageA
 
 def testRoutine():
+    #===========================================================================
+    # Test Routine operator overrides
+    #===========================================================================
     RoutineA = Routine("A")
     RoutineB = Routine("B")
     anotherA = Routine("A")
@@ -822,6 +833,42 @@ def testRoutine():
     assert RoutineA != RoutineB
     assert RoutineA == anotherA
     assert not packageA == RoutineA
+    #===========================================================================
+    # Test Routine
+    #===========================================================================
+    packageA = Package("Imaging")
+    packageB = Package("VA FileMan")
+    rMAGDHWA = Routine("MAGDHWA", packageA)
+    # add local variables
+    lVar = LocalVariable("DEL", ">> ",
+                         "MSH+1,MSH+2,MSH+3,PID+5,PID+13,PID+14,PID+18,PID+19,PID+20,PID+21,PID+22,PID+23,PID+24,PID+32,PID+35,PID+37,PID+39")
+    rMAGDHWA.addLocalVariables(lVar)
+    lVar = LocalVariable("DEL", ">> ",
+                          "PID+41,PID+43,PID+45,ORC+5,ORC+8,ORC+10,OBR+3,OBR+5,OBR+8,OBR+12,OBR+19,OBR+23,OBR+28,OBR+32,OBR+37,ZSV+3,ZSV+4")
+    rMAGDHWA.addLocalVariables(lVar)
+    lVar = LocalVariable("DEL", ">> ", "ALLERGY+5")
+    print ("lineOffsets: %s"  % lVar.getLineOffsets())
+    rMAGDHWA.addLocalVariables(lVar)
+    lVar = LocalVariable("DEL", ">> ", "ALLERGY+7,POSTINGS+7,POSTINGS+9")
+    print ("lineOffsets: %s"  % lVar.getLineOffsets())
+    rMAGDHWA.addLocalVariables(lVar)
+    # add global variables
+    gVar = GlobalVariable("^MAG(2006.5839","   ", "NEWTIU+5,NEWTIU+6,NEWTIU+17!,NEWTIU+18,NEWTIU+19*,NEWTIU+20")
+    gVar1 = GlobalVariable('''^%ZOSF("TRAP"''',"   ", "TIUXLINK+11")
+    rMAGDHWA.addGlobalVariables(gVar)
+    rMAGDHWA.addGlobalVariables(gVar1)
+    # add called routines
+    calledRoutine = Routine("DIQ", packageB)
+    lineOccurences = '''ORC+8,OBR+4,OBR+5,OBR+7,OBR+8,OBR+10,OBR+16,OBR+27,OBR+28,OBR+36,OBR+37'''
+    rMAGDHWA.addCalledRoutines(calledRoutine, "$$GET1", lineOccurences)
+
+    calledRoutine = Routine("VADPT", Package("Registration"))
+    lineOccurences = "PID+7"
+    rMAGDHWA.addCalledRoutines(calledRoutine, "ADD", lineOccurences)
+    rMAGDHWA.addCalledRoutines(calledRoutine, "DEM", lineOccurences)
+    rMAGDHWA.addCalledRoutines(calledRoutine, "INP", lineOccurences)
+
+    rMAGDHWA.printResult()
 
 def testGlobal():
     globalA = Global("A")
@@ -860,11 +907,14 @@ def testParsePlatformDependentRoutines(fileName):
         print ("Routine: %s, Package %s" % (routine, platform[0]))
         print ("Total platform: %d %s" % (len(platform[1:]), platform[1:]))
 #===============================================================================
-# Main routine
+# Test Constants
+#===============================================================================
+PLATFORM_DEPENDENT_ROUTINE_CSV = "C:/Users/jason.li/git/OSEHRA-Automated-Testing/Dox/PlatformDependentRoutine.csv"
+#===============================================================================
+# Main _calledRoutine
 #===============================================================================
 if __name__ == '__main__':
     testPackage()
     testRoutine()
     testGlobal()
-    PLATFORM_DEPENDENT_ROUTINE_CSV = "C:/Users/jason.li/git/OSEHRA-Automated-Testing/Dox/PlatformDependentRoutine.csv"
-    testParsePlatformDependentRoutines(PLATFORM_DEPENDENT_ROUTINE_CSV)
+#    testParsePlatformDependentRoutines(PLATFORM_DEPENDENT_ROUTINE_CSV)
