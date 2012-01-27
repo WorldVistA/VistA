@@ -25,8 +25,17 @@ message(STATUS "Collecting globals...")
 execute_process(COMMAND "${GIT_EXECUTABLE}" ls-files "*.zwr" WORKING_DIRECTORY ${OSEHRA_PATH} OUTPUT_FILE globals.lst)
 file(MAKE_DIRECTORY "${VISTA_BINARY_DIR}/Testing/Log")
 message(STATUS "Importing routines...")
-execute_process(COMMAND "${CTerm}" "/console=cn_iptcp:127.0.0.1[23]" "${VISTA_BINARY_DIR}/RoutineImport.scp" "${VISTA_BINARY_DIR}/Testing/Log/RoutineImport.log")
+execute_process(COMMAND "${CTerm}" "/console=cn_iptcp:127.0.0.1[23]" "${VISTA_BINARY_DIR}/RoutineImport.scp" "${VISTA_BINARY_DIR}/Testing/Log/RoutineImport.log" "${OSEHRA_PATH}/routines.ro")
 message(STATUS "Importing globals...")
 execute_process(COMMAND "${CTerm}" "/console=cn_iptcp:127.0.0.1[23]" "${VISTA_BINARY_DIR}/GlobalImport.scp" "${VISTA_BINARY_DIR}/Testing/Log/GlobalImport.log")
 message(STATUS "Initializing VistA...")
 execute_process(COMMAND "${CTerm}" "/console=cn_iptcp:127.0.0.1[23]" "${VISTA_BINARY_DIR}/Initialize.scp" "${VISTA_BINARY_DIR}/Testing/Log/Initialize.log")
+string(LENGTH "${MUNIT_KIDS_FILE}" KIDS_FILE_LEN)
+string(LENGTH "${MUNIT_PACKAGE_INSTALL_NAME}" INSTALL_NAME_LEN)
+if( (KIDS_FILE_LEN GREATER 0) AND (INSTALL_NAME_LEN GREATER 0))
+  message(STATUS "Installing MUnit Kids Build")
+  execute_process(COMMAND "${CTerm}" "/console=cn_iptcp:127.0.0.1[23]"
+                          "${VISTA_BINARY_DIR}/${MUNIT_INSTALLATION_SCRIPT}"
+                          "${VISTA_BINARY_DIR}/InstallMUnitKIDSBuild.log"
+                          RESULT_VARIABLE return)
+endif()

@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2011-2012 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,21 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
-spawn gtm -run ^%RI
-set timeout -1
-#path of the .ro file
-set arg1 [lindex $argv 0]
-set arg2 [lindex $argv 1]
-log_file -noappend $arg2
-expect "Formfeed delimited <No>?"
-send "No\n"
-expect "Input device: <terminal>:"
-send "$arg1\n"
-expect "Output directory :"
-send "${VISTA_ROUTINE_DIR}/\n"
-expect "Restored "
-send "\n"
-set ret [exp_wait]
-set exit_status [lindex $ret 3]
-exit $exit_status
+SET(RoutineImportFile "@SCRIPT_OUTPUT_DIR@/UnitTestRoutines.ro")
+SET(LogDir "@UNITTEST_LOG_DIR@/Testing/Log")
+file(MAKE_DIRECTORY "${LogDir}")
+message(STATUS "Collecting Unit Testing Routines...")
+execute_process(COMMAND "@GIT_EXECUTABLE@" ls-files "*.m" COMMAND "@PYTHON_EXECUTABLE@" @OSEHRA_PATH@/Scripts/PackRO.py WORKING_DIRECTORY @VISTA_SOURCE_DIR@ OUTPUT_FILE ${RoutineImportFile})
+message(STATUS "Importing Unit Testing Routines...")
+execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "@VISTA_BINARY_DIR@/RoutineImport.scp" "${LogDir}/ImportUnitTestRoutines.log" "${RoutineImportFile}")

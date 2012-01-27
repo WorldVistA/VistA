@@ -67,6 +67,25 @@ endforeach()
 find_file(GTMPROFILE NAMES gtmprofile DOC "Path to the GTM Profile")
 find_path(OSEHRA_PATH NAMES VistA-FOIA DOC "Path to the folder that contains the routines and globals from OSEHRA")
 find_path(PRISTINE_CACHE_DAT_PATH NAMES CACHE.DAT DOC "Path to the folder that contains a pristine empty CACHE.DAT file")
+#------ SET UP UNIT TEST ENV -----#
+find_file(MUNIT_KIDS_FILE NAMES XT_7-3_81_TESTVER9.KID DOC "Path to the MUNIT KIDS file XT_7-3_81_TESTVER9.KID")
+set(MUNIT_PACKAGE_INSTALL_NAME "XT*7.3*81" CACHE STRING "MUnit Kids build package install name")
+if(CTerm)
+  SET(MUNIT_INSTALLATION_SCRIPT "InstallMUnitKIDSBuild.scp")
+  SET(ROUTINE_IMPORT_SCRIPT "RoutineImport.scp")
+  SET(UNIT_TEST_CMAKE_FILE "UnitTestEnvSetup.cmake")
+elseif(GTMPROFILE)
+  SET(MUNIT_INSTALLATION_SCRIPT "InstallMUnitKIDSBuild.exp")
+  SET(ROUTINE_IMPORT_SCRIPT "RoutineImportGTM.exp")
+  SET(UNIT_TEST_CMAKE_FILE "UnitTestEnvSetupGTM.cmake")
+endif()
+if(MUNIT_KIDS_FILE)
+  file(TO_NATIVE_PATH ${MUNIT_KIDS_FILE} MUNIT_KIDS_FILE)
+endif()
+
+SET(SCRIPT_OUTPUT_DIR "${VISTA_BINARY_DIR}/UnitTest/")
+SET(UNITTEST_LOG_DIR "${SCRIPT_OUTPUT_DIR}/Log")
+file(MAKE_DIRECTORY "${UNITTEST_LOG_DIR}")
 
 #if CTerm is found, the Cache system and paths are used
 if(CControl AND CTerm)
@@ -121,6 +140,7 @@ if(CControl AND CTerm)
 
   # Select a namespace for VistA
   set(NAMESPACE "VISTA" CACHE STRING "Cache namespace to store VistA")
+  set(VOLUME_SET "VISTA" CACHE STRING "Volume Set for new Vista Instance")
 
   OPTION(CLEAN_CACHE "Overwrite the Cache.dat file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
 
@@ -140,6 +160,9 @@ if(CControl AND CTerm)
     configure_file(${VISTA_SOURCE_DIR}/RoutineImport.scp.in ${VISTA_BINARY_DIR}/RoutineImport.scp)
     configure_file(${VISTA_SOURCE_DIR}/GlobalImport.scp.in ${VISTA_BINARY_DIR}/GlobalImport.scp)
     configure_file(${VISTA_SOURCE_DIR}/Initialize.scp.in ${VISTA_BINARY_DIR}/Initialize.scp)
+    if(MUNIT_KIDS_FILE AND MUNIT_PACKAGE_INSTALL_NAME)
+      configure_file(${VISTA_SOURCE_DIR}/${MUNIT_INSTALLATION_SCRIPT}.in ${VISTA_BINARY_DIR}/${MUNIT_INSTALLATION_SCRIPT})
+    endif()
     set(MAKECOMMAND " ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/ImportRG.cmake" CACHE STRING "Import Routines and Globals into CACHE as Build Step" FORCE)
   ELSE()
     set(MAKECOMMAND " ${CMAKE_COMMAND} -E echo No_Build_Required" CACHE STRING "No build process is required when CLEAN_CACHE if OFF" FORCE)
@@ -170,6 +193,9 @@ if(GTMPROFILE)
     configure_file(${VISTA_SOURCE_DIR}/GTMImportRG.cmake.in ${VISTA_BINARY_DIR}/GTMImportRG.cmake @ONLY)
     configure_file(${VISTA_SOURCE_DIR}/RoutineImportGTM.exp.in ${VISTA_BINARY_DIR}/RoutineImportGTM.exp)
     configure_file(${VISTA_SOURCE_DIR}/GlobalImportandInitializeGTM.exp.in ${VISTA_BINARY_DIR}/GlobalImportandInitializeGTM.exp)
+    if(MUNIT_KIDS_FILE AND MUNIT_PACKAGE_INSTALL_NAME)
+      configure_file(${VISTA_SOURCE_DIR}/${MUNIT_INSTALLATION_SCRIPT}.in ${VISTA_BINARY_DIR}/${MUNIT_INSTALLATION_SCRIPT})
+    endif()
     set(MAKECOMMAND " ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/GTMImportRG.cmake" CACHE STRING "Import Routines and Globals into GT.M as Build Step" FORCE)
   else()
     set(MAKECOMMAND " ${CMAKE_COMMAND} -E echo No_Build_Required" CACHE STRING "No build process is required when CLEAN_CACHE if OFF" FORCE)
@@ -209,7 +235,9 @@ endforeach()
 
 configure_file(CTestCustom.cmake.in ${VISTA_BINARY_DIR}/CTestCustom.cmake)
 include(CTest)
-
+#-----------------------------------------------------------------------------#
+##### SECTION TO GENERATE VISUAL CROSS REFERENCE DOCUMENTATION #####
+#-----------------------------------------------------------------------------#
 OPTION(ROUTINE_CALL_GRAPH "Build Rouine Call Graph." OFF)
 if(ROUTINE_CALL_GRAPH AND CTerm)
   file(GLOB PACKAGES ${OSEHRA_PATH}/Packages/*)
@@ -218,23 +246,88 @@ if(ROUTINE_CALL_GRAPH AND CTerm)
   file(MAKE_DIRECTORY "${CALLER_GRAPH_LOG_DIR}")
   foreach(package ${PACKAGES})
     get_filename_component(package_name ${package} NAME)
-    file(GLOB routines "${package}/Routines/*.m")
-    set(send_commands "")
-    foreach(routine ${routines})
-      get_filename_component(routine_name ${routine} NAME_WE)
-      set(send_commands "${send_commands}send: D ^XINDEX<CR>\nwait for:All Routines?\nsend:No<CR>\nwait for:Routine:\nsend:${routine_name}<CR>\nsubroutine: $Run Xindex for one routine\n")
-    endforeach()
-    set(send_commands "${send_commands}goto:$exit\n")
-    string(REPLACE  " " "_" package_file_name "${package_name}")
+    if(IS_DIRECTORY ${package})
+      file(GLOB routines "${package}/Routines/*.m")
+      set(send_commands "")
+      foreach(routine ${routines})
+        get_filename_component(routine_name ${routine} NAME_WE)
+        set(send_commands "${send_commands}send: D ^XINDEX<CR>\n")
+        set(send_commands "${send_commands}wait for:All Routines?\n")
+        set(send_commands "${send_commands}send:No<CR>\n")
+        set(send_commands "${send_commands}wait for:Routine:\n")
+        set(send_commands "${send_commands}send:${routine_name}<CR>\n")
+        set(send_commands "${send_commands}subroutine: $Run Xindex for one routine\n")
+      endforeach()
+      set(send_commands "${send_commands}goto:$exit\n")
+      string(REPLACE  " " "_" package_file_name "${package_name}")
 
-    #Configures the Expect script with the name of the routine
-    configure_file(${VISTA_SOURCE_DIR}/CacheXINDEXCallerGraph.scp.in
-                   ${VISTA_BINARY_DIR}/Docs/CallerGraph/${package_file_name}.scp)
+      #Configures the Expect script with the name of the routine
+      configure_file(${VISTA_SOURCE_DIR}/CacheXINDEXCallerGraph.scp.in
+                     ${SCRIPT_OUTPUT_DIR}/${package_file_name}.scp)
 
-    configure_file(${VISTA_SOURCE_DIR}/CacheCallerGraph.cmake.in
-                   ${VISTA_BINARY_DIR}/Docs/CallerGraph/${package_file_name}.cmake @ONLY)
+      configure_file(${VISTA_SOURCE_DIR}/CacheCallerGraph.cmake.in
+                     ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake @ONLY)
 
-    #Creates the command that will be called for the Test
-    add_test(CALLERGRAPH_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Docs/CallerGraph/${package_file_name}.cmake)
+      #Creates the command that will be called for the Test
+      add_test(CALLERGRAPH_${package_file_name} ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake)
+    endif()
+  endforeach()
+endif()
+#-----------------------------------------------------------------------------#
+##### SECTION TO RUN UNIT TESTING #####
+#-----------------------------------------------------------------------------#
+OPTION(AUTOMATED_UNIT_TESTING "Run Automated Unit Testing" ON)
+OPTION(INSTALL_MUNIT "Install MUNIT KIDS BUILD" OFF)
+if(VISTA_SOURCE_DIR AND AUTOMATED_UNIT_TESTING)
+  file(GLOB PACKAGES ${VISTA_SOURCE_DIR}/UnitTest/VistA-FOIA/Packages/*)
+  # Set up the platform dependent script files
+  if(INSTALL_MUNIT AND MUNIT_KIDS_FILE AND MUNIT_PACKAGE_INSTALL_NAME)
+    message(STATUS "Installing MUnit KIDS Build")
+    configure_file(${VISTA_SOURCE_DIR}/${MUNIT_INSTALLATION_SCRIPT}.in ${VISTA_BINARY_DIR}/${MUNIT_INSTALLATION_SCRIPT})
+    if(CTerm)
+      execute_process(COMMAND "${CTerm}" "/console=cn_iptcp:127.0.0.1[23]" "${VISTA_BINARY_DIR}/InstallMUnitKIDSBuild.scp" "${UNITTEST_LOG_DIR}/InstallMUnitKIDSBuild.log")
+    elseif(GTMPROFILE)
+      execute_process(COMMAND "${EXPECT_EXEC}" "-f" "${VISTA_BINARY_DIR}/${MUNIT_INSTALLATION_SCRIPT}" "${UNITTEST_LOG_DIR}/InstallMUnitKIDSBuild.log")
+    endif()
+  endif()
+  #configure_file(${VISTA_SOURCE_DIR}/${UNIT_TEST_CMAKE_FILE}.in ${VISTA_BINARY_DIR}/${UNIT_TEST_CMAKE_FILE} @ONLY)
+  configure_file(${VISTA_SOURCE_DIR}/${ROUTINE_IMPORT_SCRIPT}.in ${VISTA_BINARY_DIR}/${ROUTINE_IMPORT_SCRIPT})
+
+  if(GTMPROFILE)
+    set(GTM_PROMPT "$ENV{gtm_prompt}")
+  endif()
+  foreach(package ${PACKAGES})
+    get_filename_component(package_name ${package} NAME)
+
+    if(IS_DIRECTORY ${package})
+      file(GLOB routines "${package}/*.m")
+      set(send_commands "")
+      foreach(routine ${routines})
+        get_filename_component(routine_name ${routine} NAME_WE)
+        if(CTerm)
+          set(send_commands "${send_commands}send: D ^${routine_name}<CR>\n")
+          set(send_commands "${send_commands}wait for:${NAMESPACE}\n")
+        elseif(GTMPROFILE)
+          set(send_commands "${send_commands}send \"D ^${routine_name}\\n\"\n")
+          set(send_commands "${send_commands}expect \"${GTM_PROMPT}\"")
+        endif()
+      endforeach()
+      string(REPLACE  " " "_" package_file_name "${package_name}")
+      #Configures the Expect script with the name of the routine
+      SET(INPUT_UNIT_TEST_SCRIPT "")
+      SET(INPUT_UNIT_TEST_CMAKE "")
+      if(CTerm)
+        SET(INPUT_UNIT_TEST_SCRIPT "CacheUnitTest.scp.in")
+        SET(INPUT_UNIT_TEST_CMAKE "CacheUnitTest.cmake.in")
+      elseif(GTMPROFILE)
+        SET(INPUT_UNIT_TEST_SCRIPT "UnitTestGTM.exp.in")
+        SET(INPUT_UNIT_TEST_CMAKE "UnitTestGTM.cmake.in")
+      endif()
+      configure_file(${VISTA_SOURCE_DIR}/${INPUT_UNIT_TEST_SCRIPT} ${SCRIPT_OUTPUT_DIR}/${package_file_name}.scp)
+      configure_file(${VISTA_SOURCE_DIR}/${INPUT_UNIT_TEST_CMAKE} ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake @ONLY)
+
+      #Creates the command that will be called for the Test
+      add_test(UNITTEST_${package_file_name} ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake)
+    endif()
   endforeach()
 endif()

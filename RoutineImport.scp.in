@@ -34,7 +34,7 @@ wait for:${NAMESPACE}>
 send: D ^%RI<CR>
 wait for:Device:
 ;set the device to be routines.ro file
-send:${OSEHRA_PATH}/routines.ro<CR>
+send:<P2><CR>
 wait for:Parameters? "R" =>
 ;just use default
 send:<CR>

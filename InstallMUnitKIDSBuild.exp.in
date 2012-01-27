@@ -1,0 +1,74 @@
+#---------------------------------------------------------------------------
+# Copyright 2011-2012 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+set timeout -1
+set arg1 [lindex $argv 0]
+log_file -noappend $arg1
+spawn gtm
+#---------------------------------------------------------------------------
+#- SECTION TO INSTALL MUNIT KIDS BUILD
+#---------------------------------------------------------------------
+expect ">"
+send "S DUZ=1 D ^XUP\n"
+expect "Select OPTION NAME:"
+send "EVE\n"
+expect "CHOOSE 1-"
+send "1\n"
+expect "Select Systems Manager Menu Option: "
+send "Programmer Options\n"
+expect "Select Programmer Options Option: "
+send "KIDS\n"
+expect "Select Kernel Installation & Distribution System Option: "
+send "Installation\n"
+expect "Select Installation Option: "
+send "1\n"
+expect "Enter a Host File:"
+send "${MUNIT_KIDS_FILE}\n"
+expect {
+ "OK to continue with Load?" {
+    send "YES\n"
+    exp_continue
+  }
+ "Want to Continue with Load?" {
+    send "YES\n"
+    exp_continue
+  }
+ "Select Installation Option:" {
+    send "Install\n"
+  }
+}
+expect "Select INSTALL NAME:"
+send "${MUNIT_PACKAGE_INSTALL_NAME}\n"
+expect "Want KIDS to Rebuild Menu Trees Upon Completion of Install?"
+send "NO\n"
+expect "Want KIDS to INHIBIT LOGONs during the install?"
+send "NO\n"
+expect "Want to DISABLE Scheduled Options, Menu Options, and Protocols?"
+send "NO\n"
+expect "DEVICE:"
+send "HOME;82;999\n"
+expect "Select Installation Option:"
+send "\n"
+expect "Select Kernel Installation & Distribution System Option:"
+send "\n"
+expect "Select Programmer Options Option:"
+send "\n"
+expect "Select Systems Manager Menu Option:"
+send "^\n"
+expect ">"
+send "h\n"
+set ret [exp_wait]
+set exit_status [lindex $ret 3]
+exit $exit_status

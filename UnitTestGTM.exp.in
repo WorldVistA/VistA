@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2011-2012 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,20 +14,23 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-spawn gtm -run ^%RI
+### set up the IO that is need by unit test
+
 set timeout -1
-#path of the .ro file
 set arg1 [lindex $argv 0]
-set arg2 [lindex $argv 1]
-log_file -noappend $arg2
-expect "Formfeed delimited <No>?"
-send "No\n"
-expect "Input device: <terminal>:"
-send "$arg1\n"
-expect "Output directory :"
-send "${VISTA_ROUTINE_DIR}/\n"
-expect "Restored "
+log_file -noappend $arg1
+spawn gtm
+expect "${GTM_PROMPT}"
+send "S DUZ=1 D Q^DI\n"
+expect "Select OPTION:"
 send "\n"
+expect "${GTM_PROMPT}"
+send "D ^%ZIS\n"
+expect "DEVICE:"
+send "HOME;300;999\n"
+expect "${GTM_PROMPT}"
+${send_commands}
+send "HALT\n"
 set ret [exp_wait]
 set exit_status [lindex $ret 3]
 exit $exit_status

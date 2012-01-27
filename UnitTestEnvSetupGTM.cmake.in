@@ -13,21 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
-spawn gtm -run ^%RI
-set timeout -1
-#path of the .ro file
-set arg1 [lindex $argv 0]
-set arg2 [lindex $argv 1]
-log_file -noappend $arg2
-expect "Formfeed delimited <No>?"
-send "No\n"
-expect "Input device: <terminal>:"
-send "$arg1\n"
-expect "Output directory :"
-send "${VISTA_ROUTINE_DIR}/\n"
-expect "Restored "
-send "\n"
-set ret [exp_wait]
-set exit_status [lindex $ret 3]
-exit $exit_status
+SET(LogDir "@UNITTEST_LOG_DIR@/Testing/Log")
+file(MAKE_DIRECTORY "${LogDir}")
+message(STATUS "Collecting Unit Testing Routines...")
+execute_process(COMMAND "find" "@VISTA_SOURCE_DIR@" -name "*.m" COMMAND "@PYTHON_EXECUTABLE@" @OSEHRA_PATH@/Scripts/PackRO.py WORKING_DIRECTORY @VISTA_SOURCE_DIR@ OUTPUT_FILE ${RoutineImportFile})
+message(STATUS "Importing Unit Testing Routines...")
+execute_process(COMMAND "@EXPECT_EXEC@" "-f" "@VISTA_BINARY_DIR@/RoutineImportGTM.exp" "${RoutineImportFile}" "${LogDir}/ImportUnitTestRoutines.log")

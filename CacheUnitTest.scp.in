@@ -1,5 +1,5 @@
 ;---------------------------------------------------------------------------
-; Copyright 2011 The Open Source Electronic Health Record Agent
+; Copyright 2011-2012 The Open Source Electronic Health Record Agent
 ;
 ; Licensed under the Apache License, Version 2.0 (the "License");
 ; you may not use this file except in compliance with the License.
@@ -13,40 +13,32 @@
 ; See the License for the specific language governing permissions and
 ; limitations under the License.
 ;---------------------------------------------------------------------------
+
 ;initialization -- turn match off to make comparisons more lenient
 case match: off
 
 ;set the title
-title: VistA Globals Import Script
+title: ${package_name}
+display:Log file name is <P1><CR><LF>
+;log everthing in a log, log file name will be passed in as parameter 1
 logfile:<P1>
-
 on error: $Exit
-; set up a timer for 2 hours(2*3600*10), should be more than enough to finish
-timer 72000
-
-;switch to the right namespace
+; set up a timer for 30 minutes (30*60*10), should be more than enough to finish
+timer 18000
+wait for:>
+; switch to the right namespace
 send: znspace "${NAMESPACE}"<CR>
 wait for:${NAMESPACE}>
-;---------------------------------------------------------------------
-;- SECTION TO RUN GLOBAL IMPORT -
-;---------------------------------------------------------------------
-send: D LIST^ZGI("${OSEHRA_PATH}\globals.lst","${OSEHRA_PATH}\")<CR>
-wait for:${NAMESPACE}
-send:K ^%ZOSF("UCI")<CR>
-wait for:${NAMESPACE}
-send:D ^ZTMGRSET<CR>
-wait for: System:
-;there is no default value any more, we have to send 3 explicitly
-send:3<CR>
-wait for: NAME OF MANAGER'S NAMESPACE:
-send:${NAMESPACE}<CR>
-wait for: PRODUCTION (SIGN-ON) NAMESPACE:
-send:${NAMESPACE}<CR>
-wait for: NAME OF THIS CONFIGURATION:
-send:${VOLUME_SET}<CR>
-wait for:Want to rename the FileMan routines:
-send:YES<CR>
+;;; set up the IO that is need by unit test
+send:S DUZ=1 D Q^DI<CR>
+wait for:Select OPTION:
+send:<CR>
 wait for:${NAMESPACE}>
+send: D ^%ZIS<CR>
+wait for: DEVICE:
+send:TELNET;300;999<CR>
+wait for:${NAMESPACE}>
+${send_commands}
 $Exit:
     timer 0
     ; close the log file

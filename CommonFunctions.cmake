@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2011-2012 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -48,4 +48,26 @@ function(ReportXINDEXResult PACKAGE_NAME DIRNAME OUTPUT)
    else()
      message(FATAL_ERROR "${PACKAGE_NAME} has XINDEX Errors")
      endif()
+endfunction()
+
+# Define a function for parsing and reporting munit output results
+function(ReportUnitTestResult PACKAGE_NAME DIRNAME OUTPUT)
+   set(test_passed TRUE)
+   foreach (line ${OUTPUT})
+     if(line MATCHES "^[^\\^]+>D \\^ZZUT[A-Z0-9]+")
+       string(REGEX MATCH "ZZUT[A-Z0-9]+$" routine_name "${line}")
+     elseif(line MATCHES "^ ?[^\\^]+\\^ZZUT[A-Z0-9]+")
+       message("${routine_name}: ${line}")
+       set(test_passed FALSE)
+     elseif(line MATCHES "^ ?Checked.*, with [1-9]+ failure")
+       message("${routine_name} in package ${PACKAGE_NAME}:\n${line}")
+       set(test_passed FALSE)
+     endif()
+   endforeach()
+   if(test_passed)
+     string(REPLACE ";" "\n" OUTPUT "${OUTPUT}")
+     message("${PACKAGE_NAME} Passed:\n${OUTPUT}")
+   else()
+     message(FATAL_ERROR "${PACKAGE_NAME} unit test Errors")
+   endif()
 endfunction()
