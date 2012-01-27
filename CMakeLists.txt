@@ -181,6 +181,7 @@ foreach(package ${PACKAGES})
   string(REPLACE  " " "_" package_file_name "${package_name}")
 
   # Varibles for creating the testing scripts based upon system and found files
+
 if(WIN32)
   set (library "telnetlib")
   set (wait "test.write(t.read_until(")
@@ -218,6 +219,7 @@ endif()
   if(NOT Packageflag)
     file(GLOB routines "${package}/Routines/*.m")
     file(WRITE ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.py "import sys
+sys.path = ['${VISTA_SOURCE_DIR}/Python'] + sys.path
 import ${library}
 ${header}
 ")
@@ -253,7 +255,9 @@ ${wait}'--- END ---'))
 ${write}'h\\r')")
 
     #Configures the CMAKE testing
+
     configure_file(${VISTA_SOURCE_DIR}/PythonRoutine.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake @ONLY)
+
 
     #Creates the command that will be called for the Test
     add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake)
