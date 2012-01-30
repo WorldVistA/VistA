@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-    <DCC_DependencyCheckOutputName>$(BDSUSERDIR)\Bpl\XWB_R2007.bpl</DCC_DependencyCheckOutputName>
+    <DCC_DependencyCheckOutputName>Bpl\XWB_R2007.bpl</DCC_DependencyCheckOutputName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Version>7.0</Version>
@@ -15,12 +15,16 @@
     <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
     <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
     <DCC_Define>RELEASE</DCC_Define>
-    <DCC_DcuOutput>..\D2007\Dcu\$(Configuration)</DCC_DcuOutput>
-    <DCC_ObjOutput>..\D2007\Dcu\$(Configuration)</DCC_ObjOutput>
-    <DCC_HppOutput>..\D2007\Dcu\$(Configuration)</DCC_HppOutput>
-    <DCC_DcpOutput>..\D2007\Dcp\$(Configuration)</DCC_DcpOutput>
-    <DCC_BplOutput>$(BDSUSERDIR)\Bpl</DCC_BplOutput>
-  </PropertyGroup>
+    <DCC_DcuOutput>Dcu\$(Configuration)</DCC_DcuOutput>
+    <DCC_ObjOutput>Dcu\$(Configuration)</DCC_ObjOutput>
+    <DCC_HppOutput>Dcu\$(Configuration)</DCC_HppOutput>
+    <DCC_DcpOutput>Dcp\$(Configuration)</DCC_DcpOutput>
+    <DCC_BplOutput>Bpl</DCC_BplOutput>
+    <DCC_IncludePath>@SOURCE@</DCC_IncludePath>
+    <DCC_UnitSearchPath>@SOURCE@</DCC_UnitSearchPath>
+    <DCC_ResourcePath>@SOURCE@</DCC_ResourcePath>
+    <DCC_ObjPath>@SOURCE@</DCC_ObjPath>
+</PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <Version>7.0</Version>
     <DCC_AssertionsAtRuntime>False</DCC_AssertionsAtRuntime>
@@ -28,11 +32,16 @@
     <DCC_WriteableConstants>True</DCC_WriteableConstants>
     <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
     <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
-    <DCC_DcuOutput>..\D2007\Dcu\$(Configuration)</DCC_DcuOutput>
-    <DCC_ObjOutput>..\D2007\Dcu\$(Configuration)</DCC_ObjOutput>
-    <DCC_HppOutput>..\D2007\Dcu\$(Configuration)</DCC_HppOutput>
-    <DCC_DcpOutput>..\D2007\Dcp\$(Configuration)</DCC_DcpOutput>
-    <DCC_BplOutput>$(BDSUSERDIR)\Bpl</DCC_BplOutput>
+    <DCC_Define>RELEASE</DCC_Define>
+    <DCC_DcuOutput>Dcu\$(Configuration)</DCC_DcuOutput>
+    <DCC_ObjOutput>Dcu\$(Configuration)</DCC_ObjOutput>
+    <DCC_HppOutput>Dcu\$(Configuration)</DCC_HppOutput>
+    <DCC_DcpOutput>Dcp\$(Configuration)</DCC_DcpOutput>
+    <DCC_BplOutput>Bpl</DCC_BplOutput>
+    <DCC_IncludePath>@SOURCE@</DCC_IncludePath>
+    <DCC_UnitSearchPath>@SOURCE@</DCC_UnitSearchPath>
+    <DCC_ResourcePath>@SOURCE@</DCC_ResourcePath>
+    <DCC_ObjPath>@SOURCE@</DCC_ObjPath>
   </PropertyGroup>
   <ProjectExtensions>
     <Borland.Personality>Delphi.Personality</Borland.Personality>

@@ -1,6 +1,6 @@
 package Borland2007;
 
-{$R *.res}
+{$R '@SOURCE@\Borland2007.res'}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -30,6 +30,6 @@ requires
   vcl;
 
 contains
-  Menubar in 'Menubar.pas';
+  Menubar in '@SOURCE@\Menubar.pas';
 
 end.

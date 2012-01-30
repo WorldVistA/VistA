@@ -1,6 +1,6 @@
 package VA2007;
 
-{$R *.res}
+{$R '@SOURCE@\VA2007.res'}
 {$ALIGN 8}
 {$ASSERTIONS OFF}
 {$BOOLEVAL OFF}
@@ -30,6 +30,6 @@ requires
   vcl;
 
 contains
-  Vawrgrid in 'Vawrgrid.pas';
+  Vawrgrid in '@SOURCE@\Vawrgrid.pas';
 
 end.

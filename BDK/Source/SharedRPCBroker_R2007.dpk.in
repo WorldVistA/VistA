@@ -9,7 +9,7 @@ package SharedRPCBroker_R2007;
 	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
 *************************************************************** }
 
-{$R *.res}
+{$R '@SOURCE@\SharedRPCBroker_R2007.res'}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -40,9 +40,9 @@ requires
   XWB_R2007;
 
 contains
-  SharedRPCBroker in 'SharedRPCBroker.pas',
-  RPCSharedBrokerSessionMgr1_TLB in 'RPCSharedBrokerSessionMgr1_TLB.pas',
-  SharedRPCBrokerSink in 'SharedRPCBrokerSink.pas',
-  RPCSharedBrokerSessionMgr1_TLB_SRB in 'RPCSharedBrokerSessionMgr1_TLB_SRB.pas';
+  SharedRPCBroker in '@SOURCE@\SharedRPCBroker.pas',
+  RPCSharedBrokerSessionMgr1_TLB in '@SOURCE@\RPCSharedBrokerSessionMgr1_TLB.pas',
+  SharedRPCBrokerSink in '@SOURCE@\SharedRPCBrokerSink.pas',
+  RPCSharedBrokerSessionMgr1_TLB_SRB in '@SOURCE@\RPCSharedBrokerSessionMgr1_TLB_SRB.pas';
 
 end.

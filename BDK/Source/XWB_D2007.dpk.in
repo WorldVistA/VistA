@@ -1,7 +1,6 @@
 package XWB_D2007;
 
-{$R *.res}
-{$R 'XWB_D2007.dcr'}
+{$R '@SOURCE@\XWB_D2007.dcr'}
 {$ALIGN 8}
 {$ASSERTIONS OFF}
 {$BOOLEVAL OFF}
@@ -34,7 +33,7 @@ requires
   designide;
 
 contains
-  RpcbEdtr in 'RpcbEdtr.pas',
-  XWBReg in 'XWBReg.pas';
+  RpcbEdtr in '@SOURCE@\RpcbEdtr.pas',
+  XWBReg in '@SOURCE@\XWBReg.pas';
 
 end.

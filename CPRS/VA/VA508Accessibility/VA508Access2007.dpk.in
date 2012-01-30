@@ -1,8 +1,8 @@
 package VA508Access2007;
 
-{$R *.res}
-{$R 'VA508AccessibilityManager.dcr'}
-{$R 'VA508ImageListLabeler.dcr'}
+{$R '@SOURCE@\VA508Access2007.res'}
+{$R '@SOURCE@\VA508AccessibilityManager.dcr'}
+{$R '@SOURCE@\VA508ImageListLabeler.dcr'}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -38,19 +38,19 @@ requires
   rtl;
 
 contains
-  VA508AccessibilityCompiler in 'VA508AccessibilityCompiler.pas',
-  VA508AccessibilityPE in 'VA508AccessibilityPE.pas',
-  VA508AccessibilityCompileInfo in 'VA508AccessibilityCompileInfo.pas' {frmProgress},
-  VA508Classes in 'VA508Classes.pas',
-  VA508AccessibilityManager in 'VA508AccessibilityManager.pas',
-  VA508ScreenReaderDLLLinker in 'VA508ScreenReaderDLLLinker.pas',
-  VA508DelphiCompatibility in 'VA508DelphiCompatibility.pas',
-  VA508ImageListLabelerPE in 'VA508ImageListLabelerPE.pas' {frmImageListEditor},
-  VA508ImageListLabeler in 'VA508ImageListLabeler.pas',
-  VA508AccessibilityConst in 'VA508AccessibilityConst.pas',
-  VA508MSAASupport in 'VA508MSAASupport.pas',
-  MSAAConstants in 'MSAAConstants.pas',
-  oleacc2 in 'oleacc2.pas',
-  VA508AccessibilityRouter in 'VA508AccessibilityRouter.pas';
+  VA508AccessibilityCompiler in '@SOURCE@\VA508AccessibilityCompiler.pas',
+  VA508AccessibilityPE in '@SOURCE@\VA508AccessibilityPE.pas',
+  VA508AccessibilityCompileInfo in '@SOURCE@\VA508AccessibilityCompileInfo.pas' {frmProgress},
+  VA508Classes in '@SOURCE@\VA508Classes.pas',
+  VA508AccessibilityManager in '@SOURCE@\VA508AccessibilityManager.pas',
+  VA508ScreenReaderDLLLinker in '@SOURCE@\VA508ScreenReaderDLLLinker.pas',
+  VA508DelphiCompatibility in '@SOURCE@\VA508DelphiCompatibility.pas',
+  VA508ImageListLabelerPE in '@SOURCE@\VA508ImageListLabelerPE.pas' {frmImageListEditor},
+  VA508ImageListLabeler in '@SOURCE@\VA508ImageListLabeler.pas',
+  VA508AccessibilityConst in '@SOURCE@\VA508AccessibilityConst.pas',
+  VA508MSAASupport in '@SOURCE@\VA508MSAASupport.pas',
+  MSAAConstants in '@SOURCE@\MSAAConstants.pas',
+  oleacc2 in '@SOURCE@\oleacc2.pas',
+  VA508AccessibilityRouter in '@SOURCE@\VA508AccessibilityRouter.pas';
 
 end.

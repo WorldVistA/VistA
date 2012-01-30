@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-    <DCC_DependencyCheckOutputName>..\D2007\Bpl\ORDateLib2007.bpl</DCC_DependencyCheckOutputName>
+    <DCC_DependencyCheckOutputName>Bpl\ORDateLib2007.bpl</DCC_DependencyCheckOutputName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Version>7.0</Version>
@@ -18,15 +18,15 @@
     <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
     <DCC_MapFile>3</DCC_MapFile>
     <DCC_Define>RELEASE</DCC_Define>
-    <DCC_DcuOutput>..\D2007\Dcu\$(Configuration)</DCC_DcuOutput>
-    <DCC_ObjOutput>..\D2007\Dcu\$(Configuration)</DCC_ObjOutput>
-    <DCC_HppOutput>..\D2007\Dcu\$(Configuration)</DCC_HppOutput>
-    <DCC_DcpOutput>..\D2007\Dcp\$(Configuration)</DCC_DcpOutput>
-    <DCC_BplOutput>..\D2007\Bpl</DCC_BplOutput>
-    <DCC_UnitSearchPath>..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration)</DCC_UnitSearchPath>
-    <DCC_ResourcePath>..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration)</DCC_ResourcePath>
-    <DCC_ObjPath>..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration)</DCC_ObjPath>
-    <DCC_IncludePath>..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration)</DCC_IncludePath>
+    <DCC_DcuOutput>Dcu\$(Configuration)</DCC_DcuOutput>
+    <DCC_ObjOutput>Dcu\$(Configuration)</DCC_ObjOutput>
+    <DCC_HppOutput>Dcu\$(Configuration)</DCC_HppOutput>
+    <DCC_DcpOutput>Dcp\$(Configuration)</DCC_DcpOutput>
+    <DCC_BplOutput>Bpl</DCC_BplOutput>
+    <DCC_UnitSearchPath>Dcp\$(Configuration);..\VA\Dcp\$(Configuration);..\..\BDK\Source\Dcp\$(Configuration);..\..\BDK\Source\Dcu\$(Configuration);@SOURCE@</DCC_UnitSearchPath>
+    <DCC_ResourcePath>Dcp\$(Configuration);..\VA\Dcp\$(Configuration);..\..\BDK\Source\Dcp\$(Configuration);..\..\BDK\Source\Dcu\$(Configuration);@SOURCE@</DCC_ResourcePath>
+    <DCC_ObjPath>Dcp\$(Configuration);..\VA\Dcp\$(Configuration);..\..\BDK\Source\Dcp\$(Configuration);..\..\BDK\Source\Dcu\$(Configuration);@SOURCE@</DCC_ObjPath>
+    <DCC_IncludePath>Dcp\$(Configuration);..\VA\Dcp\$(Configuration);..\..\BDK\Source\Dcp\$(Configuration);..\..\BDK\Source\Dcu\$(Configuration);@SOURCE@</DCC_IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <Version>7.0</Version>
@@ -36,15 +36,15 @@
     <DCC_RangeChecking>True</DCC_RangeChecking>
     <DCC_GenerateStackFrames>True</DCC_GenerateStackFrames>
     <DCC_MapFile>3</DCC_MapFile>
-    <DCC_DcuOutput>..\D2007\Dcu\$(Configuration)</DCC_DcuOutput>
-    <DCC_ObjOutput>..\D2007\Dcu\$(Configuration)</DCC_ObjOutput>
-    <DCC_HppOutput>..\D2007\Dcu\$(Configuration)</DCC_HppOutput>
-    <DCC_DcpOutput>..\D2007\Dcp\$(Configuration)</DCC_DcpOutput>
-    <DCC_BplOutput>..\D2007\Bpl</DCC_BplOutput>
-    <DCC_UnitSearchPath>..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration)</DCC_UnitSearchPath>
-    <DCC_ResourcePath>..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration)</DCC_ResourcePath>
-    <DCC_ObjPath>..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration)</DCC_ObjPath>
-    <DCC_IncludePath>..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration)</DCC_IncludePath>
+    <DCC_DcuOutput>Dcu\$(Configuration)</DCC_DcuOutput>
+    <DCC_ObjOutput>Dcu\$(Configuration)</DCC_ObjOutput>
+    <DCC_HppOutput>Dcu\$(Configuration)</DCC_HppOutput>
+    <DCC_DcpOutput>Dcp\$(Configuration)</DCC_DcpOutput>
+    <DCC_BplOutput>Bpl</DCC_BplOutput>
+    <DCC_UnitSearchPath>Dcp\$(Configuration);..\VA\Dcp\$(Configuration);..\..\BDK\Source\Dcp\$(Configuration);..\..\BDK\Source\Dcu\$(Configuration);@SOURCE@</DCC_UnitSearchPath>
+    <DCC_ResourcePath>Dcp\$(Configuration);..\VA\Dcp\$(Configuration);..\..\BDK\Source\Dcp\$(Configuration);..\..\BDK\Source\Dcu\$(Configuration);@SOURCE@</DCC_ResourcePath>
+    <DCC_ObjPath>Dcp\$(Configuration);..\VA\Dcp\$(Configuration);..\..\BDK\Source\Dcp\$(Configuration);..\..\BDK\Source\Dcu\$(Configuration);@SOURCE@</DCC_ObjPath>
+    <DCC_IncludePath>Dcp\$(Configuration);..\VA\Dcp\$(Configuration);..\..\BDK\Source\Dcp\$(Configuration);..\..\BDK\Source\Dcu\$(Configuration);@SOURCE@</DCC_IncludePath>
   </PropertyGroup>
   <ProjectExtensions>
     <Borland.Personality>Delphi.Personality</Borland.Personality>

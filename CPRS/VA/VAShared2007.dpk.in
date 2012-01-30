@@ -1,6 +1,6 @@
 package VAShared2007;
 
-{$R *.res}
+{$R '@SOURCE@\VAShared2007.res'}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -31,10 +31,10 @@ requires
   vcl;
 
 contains
-  VAUtils in 'VAUtils.pas',
-  VAClasses in 'VAClasses.pas',
-  HRBuffers in 'HRBuffers.pas',
-  HRParser in 'HRParser.pas',
-  HRParserPas in 'HRParserPas.pas';
+  VAUtils in '@SOURCE@\VAUtils.pas',
+  VAClasses in '@SOURCE@\VAClasses.pas',
+  HRBuffers in '@SOURCE@\HRBuffers.pas',
+  HRParser in '@SOURCE@\HRParser.pas',
+  HRParserPas in '@SOURCE@\HRParserPas.pas';
 
 end.

@@ -1,6 +1,6 @@
 package ORDateLib2007;
 
-{$R *.res}
+{$R '@SOURCE@\ORDateLib2007.res'}
 {$R 'ORDtTm.dcr'}
 {$R 'ORDtTmRng.dcr'}
 {$ALIGN 8}
@@ -36,11 +36,11 @@ requires
   XWB_R2007;
 
 contains
-  ORDtTmCal in 'ORDtTmCal.pas',
-  ORDtTm in 'ORDtTm.pas',
-  ORDtTmRng in 'ORDtTmRng.pas',
-  ORNet in 'ORNet.pas',
-  ORFn in 'ORFn.pas',
-  OR2006Compatibility in 'OR2006Compatibility.pas' {frm2006Compatibility};
+  ORDtTmCal in '@SOURCE@\ORDtTmCal.pas',
+  ORDtTm in '@SOURCE@\ORDtTm.pas',
+  ORDtTmRng in '@SOURCE@\ORDtTmRng.pas',
+  ORNet in '@SOURCE@\ORNet.pas',
+  ORFn in '@SOURCE@\ORFn.pas',
+  OR2006Compatibility in '@SOURCE@\OR2006Compatibility.pas' {frm2006Compatibility};
 
 end.

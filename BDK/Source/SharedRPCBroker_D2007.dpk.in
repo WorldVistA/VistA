@@ -10,7 +10,7 @@ package SharedRPCBroker_D2007;
 *************************************************************** }
 
 {$R *.res}
-{$R 'SharedRPCBroker.dcr'}
+{$R '@SOURCE@\SharedRPCBroker.dcr'}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -43,6 +43,6 @@ requires
   XWB_R2007;
 
 contains
-  SharedRPCBrokerReg in 'SharedRPCBrokerReg.pas';
+  SharedRPCBrokerReg in '@SOURCE@\SharedRPCBrokerReg.pas';
 
 end.
