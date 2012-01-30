@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-    <DCC_DependencyCheckOutputName>CPRSChart.exe</DCC_DependencyCheckOutputName>
+    <DCC_DependencyCheckOutputName>..\Bin\$(Configuration)\CPRSChart.exe</DCC_DependencyCheckOutputName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Version>7.0</Version>
@@ -17,17 +17,17 @@
     <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
     <DCC_MapFile>3</DCC_MapFile>
     <DCC_StackSize>32768,1048576</DCC_StackSize>
-    <DCC_ExeOutput>C:\Vista\cprs\main\CPRS-Chart</DCC_ExeOutput>
-    <DCC_DcuOutput>C:\Vista\cprs\main\CPRS-Chart\DCU</DCC_DcuOutput>
-    <DCC_ObjOutput>C:\Vista\cprs\main\CPRS-Chart\DCU</DCC_ObjOutput>
-    <DCC_HppOutput>C:\Vista\cprs\main\CPRS-Chart\DCU</DCC_HppOutput>
-    <DCC_BplOutput>C:\Vista\cprs\main\Packages</DCC_BplOutput>
-    <DCC_DcpOutput>C:\Vista\cprs\main\Packages</DCC_DcpOutput>
-    <DCC_UnitSearchPath>..\cprs-chart;C:\Vista\cprs\main\CPRS-Lib;..\va;C:\Vista\cprs\main\VA\VA508Accessibility</DCC_UnitSearchPath>
-    <DCC_ResourcePath>..\cprs-chart;C:\Vista\cprs\main\CPRS-Lib;..\va;C:\Vista\cprs\main\VA\VA508Accessibility</DCC_ResourcePath>
-    <DCC_ObjPath>..\cprs-chart;C:\Vista\cprs\main\CPRS-Lib;..\va;C:\Vista\cprs\main\VA\VA508Accessibility</DCC_ObjPath>
-    <DCC_IncludePath>..\cprs-chart;C:\Vista\cprs\main\CPRS-Lib;..\va;C:\Vista\cprs\main\VA\VA508Accessibility</DCC_IncludePath>
     <DCC_Define>RELEASE</DCC_Define>
+    <DCC_ExeOutput>..\Bin\$(Configuration)</DCC_ExeOutput>
+    <DCC_DcuOutput>..\D2007\Dcu\$(Configuration)</DCC_DcuOutput>
+    <DCC_ObjOutput>..\D2007\Dcu\$(Configuration)</DCC_ObjOutput>
+    <DCC_HppOutput>..\D2007\Dcu\$(Configuration)</DCC_HppOutput>
+    <DCC_DcpOutput>..\D2007\Dcp\$(Configuration)</DCC_DcpOutput>
+    <DCC_BplOutput>..\D2007\Bpl</DCC_BplOutput>
+    <DCC_UnitSearchPath>..\CPRS-Lib;..\D2007\Dcp\$(Configuration);..\D2007\Dcu\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration);..\..\BDK\Source</DCC_UnitSearchPath>
+    <DCC_ResourcePath>..\CPRS-Lib;..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration);..\..\BDK\Source</DCC_ResourcePath>
+    <DCC_ObjPath>..\CPRS-Lib;..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration);..\..\BDK\Source</DCC_ObjPath>
+    <DCC_IncludePath>..\CPRS-Lib;..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration);..\..\BDK\Source</DCC_IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <Version>7.0</Version>
@@ -36,60 +36,64 @@
     <DCC_RangeChecking>True</DCC_RangeChecking>
     <DCC_MapFile>3</DCC_MapFile>
     <DCC_StackSize>32768,1048576</DCC_StackSize>
-    <DCC_ExeOutput>C:\Vista\cprs\main\CPRS-Chart</DCC_ExeOutput>
-    <DCC_DcuOutput>C:\Vista\cprs\main\CPRS-Chart\DCU</DCC_DcuOutput>
-    <DCC_ObjOutput>C:\Vista\cprs\main\CPRS-Chart\DCU</DCC_ObjOutput>
-    <DCC_HppOutput>C:\Vista\cprs\main\CPRS-Chart\DCU</DCC_HppOutput>
-    <DCC_BplOutput>C:\Vista\cprs\main\Packages</DCC_BplOutput>
-    <DCC_DcpOutput>C:\Vista\cprs\main\Packages</DCC_DcpOutput>
-    <DCC_UnitSearchPath>..\cprs-chart;C:\Vista\cprs\main\CPRS-Lib;..\va;C:\Vista\cprs\main\VA\VA508Accessibility</DCC_UnitSearchPath>
-    <DCC_ResourcePath>..\cprs-chart;C:\Vista\cprs\main\CPRS-Lib;..\va;C:\Vista\cprs\main\VA\VA508Accessibility</DCC_ResourcePath>
-    <DCC_ObjPath>..\cprs-chart;C:\Vista\cprs\main\CPRS-Lib;..\va;C:\Vista\cprs\main\VA\VA508Accessibility</DCC_ObjPath>
-    <DCC_IncludePath>..\cprs-chart;C:\Vista\cprs\main\CPRS-Lib;..\va;C:\Vista\cprs\main\VA\VA508Accessibility</DCC_IncludePath>
-    <DCC_Define>DEBUG</DCC_Define>
+    <DCC_Define></DCC_Define>
+    <DCC_ExeOutput>..\Bin\$(Configuration)</DCC_ExeOutput>
+    <DCC_DcuOutput>..\D2007\Dcu\$(Configuration)</DCC_DcuOutput>
+    <DCC_ObjOutput>..\D2007\Dcu\$(Configuration)</DCC_ObjOutput>
+    <DCC_HppOutput>..\D2007\Dcu\$(Configuration)</DCC_HppOutput>
+    <DCC_DcpOutput>..\D2007\Dcp\$(Configuration)</DCC_DcpOutput>
+    <DCC_BplOutput>..\D2007\Bpl</DCC_BplOutput>
+    <DCC_UnitSearchPath>..\CPRS-Lib;..\D2007\Dcp\$(Configuration);..\D2007\Dcu\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration);..\..\BDK\Source</DCC_UnitSearchPath>
+    <DCC_ResourcePath>..\CPRS-Lib;..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration);..\..\BDK\Source</DCC_ResourcePath>
+    <DCC_ObjPath>..\CPRS-Lib;..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration);..\..\BDK\Source</DCC_ObjPath>
+    <DCC_IncludePath>..\CPRS-Lib;..\D2007\Dcp\$(Configuration);..\..\BDK\D2007\Dcu\$(Configuration);..\..\BDK\Source</DCC_IncludePath>
   </PropertyGroup>
   <ProjectExtensions>
     <Borland.Personality>Delphi.Personality</Borland.Personality>
     <Borland.ProjectType>VCLApplication</Borland.ProjectType>
     <BorlandProject>
-<BorlandProject xmlns=""> <Delphi.Personality>   <Parameters>
-      <Parameters Name="UseLauncher">False</Parameters>
-      <Parameters Name="LoadAllSymbols">True</Parameters>
-      <Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
-    </Parameters>
-    <VersionInfo>
-      <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
-      <VersionInfo Name="AutoIncBuild">False</VersionInfo>
-      <VersionInfo Name="MajorVer">1</VersionInfo>
-      <VersionInfo Name="MinorVer">0</VersionInfo>
-      <VersionInfo Name="Release">28</VersionInfo>
-      <VersionInfo Name="Build">6</VersionInfo>
-      <VersionInfo Name="Debug">False</VersionInfo>
-      <VersionInfo Name="PreRelease">False</VersionInfo>
-      <VersionInfo Name="Special">False</VersionInfo>
-      <VersionInfo Name="Private">False</VersionInfo>
-      <VersionInfo Name="DLL">False</VersionInfo>
-      <VersionInfo Name="Locale">1033</VersionInfo>
-      <VersionInfo Name="CodePage">1252</VersionInfo>
-    </VersionInfo>
-    <VersionInfoKeys>
-      <VersionInfoKeys Name="CompanyName">Department of Veterans Affairs</VersionInfoKeys>
-      <VersionInfoKeys Name="FileDescription">12/22/2009</VersionInfoKeys>
-      <VersionInfoKeys Name="FileVersion">1.0.28.6</VersionInfoKeys>
-      <VersionInfoKeys Name="InternalName">1.0.28.6 server required</VersionInfoKeys>
-      <VersionInfoKeys Name="LegalCopyright">Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.</VersionInfoKeys>
-      <VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>
-      <VersionInfoKeys Name="OriginalFilename">Patch 280</VersionInfoKeys>
-      <VersionInfoKeys Name="ProductName">Computerized Patient Record System</VersionInfoKeys>
-      <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
-      <VersionInfoKeys Name="Comments">Version 1.0.28.6</VersionInfoKeys>
-    </VersionInfoKeys>
-    <Source>
-      <Source Name="MainSource">CPRSChart.dpr</Source>
-    </Source>
-  </Delphi.Personality> </BorlandProject></BorlandProject>
+      <BorlandProject xmlns="">
+        <Delphi.Personality>
+          <Parameters>
+            <Parameters Name="UseLauncher">False</Parameters>
+            <Parameters Name="LoadAllSymbols">True</Parameters>
+            <Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+          </Parameters>
+          <VersionInfo>
+            <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+            <VersionInfo Name="AutoIncBuild">False</VersionInfo>
+            <VersionInfo Name="MajorVer">1</VersionInfo>
+            <VersionInfo Name="MinorVer">0</VersionInfo>
+            <VersionInfo Name="Release">28</VersionInfo>
+            <VersionInfo Name="Build">6</VersionInfo>
+            <VersionInfo Name="Debug">False</VersionInfo>
+            <VersionInfo Name="PreRelease">False</VersionInfo>
+            <VersionInfo Name="Special">False</VersionInfo>
+            <VersionInfo Name="Private">False</VersionInfo>
+            <VersionInfo Name="DLL">False</VersionInfo>
+            <VersionInfo Name="Locale">1033</VersionInfo>
+            <VersionInfo Name="CodePage">1252</VersionInfo>
+          </VersionInfo>
+          <VersionInfoKeys>
+            <VersionInfoKeys Name="CompanyName">Department of Veterans Affairs</VersionInfoKeys>
+            <VersionInfoKeys Name="FileDescription">12/22/2009</VersionInfoKeys>
+            <VersionInfoKeys Name="FileVersion">1.0.28.6</VersionInfoKeys>
+            <VersionInfoKeys Name="InternalName">1.0.28.6 server required</VersionInfoKeys>
+            <VersionInfoKeys Name="LegalCopyright">Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.</VersionInfoKeys>
+            <VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>
+            <VersionInfoKeys Name="OriginalFilename">Patch 280</VersionInfoKeys>
+            <VersionInfoKeys Name="ProductName">Computerized Patient Record System</VersionInfoKeys>
+            <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+            <VersionInfoKeys Name="Comments">Version 1.0.28.6</VersionInfoKeys>
+          </VersionInfoKeys>
+          <Source>
+            <Source Name="MainSource">CPRSChart.dpr</Source>
+          </Source>
+        </Delphi.Personality>
+      </BorlandProject>
+    </BorlandProject>
   </ProjectExtensions>
-  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
   <ItemGroup>
     <DelphiCompile Include="CPRSChart.dpr">
       <MainSource>MainSource</MainSource>
@@ -882,5 +886,4 @@
     <DCCReference Include="Vitals\uVitals.pas" />
     <DCCReference Include="XuDigSigSC_TLB.pas" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
 </Project>

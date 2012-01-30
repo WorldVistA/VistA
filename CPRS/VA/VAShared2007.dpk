@@ -1,4 +1,4 @@
-package Borland2006;
+package VAShared2007;
 
 {$R *.res}
 {$ALIGN 8}
@@ -12,24 +12,29 @@ package Borland2006;
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
 {$OPTIMIZATION ON}
-{$OVERFLOWCHECKS ON}
-{$RANGECHECKS ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES ON}
+{$STACKFRAMES OFF}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
-{$WRITEABLECONST ON}
+{$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'Components downloaded from Borland''s Web Page'}
+{$DESCRIPTION 'VA Shared Units (no components)'}
 {$DESIGNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
+  rtl,
   vcl;
 
 contains
-  Menubar in 'Menubar.pas';
+  VAUtils in 'VAUtils.pas',
+  VAClasses in 'VAClasses.pas',
+  HRBuffers in 'HRBuffers.pas',
+  HRParser in 'HRParser.pas',
+  HRParserPas in 'HRParserPas.pas';
 
 end.
