@@ -17,7 +17,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls, ComCtrls, ORCtrls, Buttons, Mask, ORFn, ORNet,
-  uTemplates, Menus, ImgList, Clipbrd, ToolWin, MenuBar, TypInfo, MSXML_TLB, fBase508Form,
+  uTemplates, Menus, ImgList, Clipbrd, ToolWin, MenuBar, TypInfo, MSXML, fBase508Form,
   VA508AccessibilityManager, VA508ImageListLabeler;
 
 type

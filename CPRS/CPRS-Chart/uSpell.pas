@@ -9,7 +9,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Controls, Forms, ComObj, StdCtrls, ComCtrls,
-  rCore, ORFn, Word2000, Office_TLB, Variants, clipbrd, ActiveX, Contnrs, PSAPI, ExtCtrls;
+  rCore, ORFn, Word2000, Variants, clipbrd, ActiveX, Contnrs, PSAPI, ExtCtrls;
 
 type
   TSpellCheckAvailable = record
