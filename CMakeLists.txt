@@ -39,6 +39,7 @@ set(BUILD_TESTING "ON" CACHE INTERNAL "Always build testing")
 
 #options that will show up on the CMake Gui that allows customization of the project
 option(BUILD_REPORTS "Build Reports." OFF)
+option(CLEAN_DATABASE "Overwrite the database file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
 
 #-----------------------------------------------------------------------------
 # Find InterSystems Cache
@@ -58,8 +59,14 @@ if(WIN32)
     "C:/InterSystems/Cache/bin"
     "C:/InterSystems/TryCache/bin"
     )
+else()
+# append hard-coded guesses for linux
+  list(APPEND _Cache_PATHS
+    "/usr/bin"
+    "/usr/local/bin"
+  )
 endif()
-foreach(tool CControl CTerm)
+foreach(tool ccontrol CTerm)
   find_program(${tool} NAMES ${tool} DOC "Path to Cache ${tool}" PATHS ${_Cache_PATHS})
 endforeach()
 
@@ -87,12 +94,12 @@ SET(SCRIPT_OUTPUT_DIR "${VISTA_BINARY_DIR}/UnitTest/")
 SET(UNITTEST_LOG_DIR "${SCRIPT_OUTPUT_DIR}/Log")
 file(MAKE_DIRECTORY "${UNITTEST_LOG_DIR}")
 
-#if CTerm is found, the Cache system and paths are used
-if(CControl AND CTerm)
+#if ccontrol is found, the Cache system and paths are used
+if(ccontrol)
   if(NOT INSTANCE)
     # Detect Cache instances.
     execute_process(
-      COMMAND ${CControl} qlist nodisplay
+      COMMAND ${ccontrol} qlist nodisplay
       OUTPUT_FILE ${VISTA_BINARY_DIR}/cache_qlist.txt
       ERROR_VARIABLE err
       RESULT_VARIABLE failed
@@ -100,7 +107,7 @@ if(CControl AND CTerm)
       )
     if(failed)
       string(REPLACE "\n" "\n  " err "  ${err}")
-      message(FATAL_ERROR "Failed to run \"${CControl} qlist nodisplay\": ${failed}\n${err}")
+      message(FATAL_ERROR "Failed to run \"${ccontrol} qlist \": ${failed}\n${err}")
     endif()
     file(STRINGS ${VISTA_BINARY_DIR}/cache_qlist.txt qlist)
     set(instances "")
@@ -142,38 +149,28 @@ if(CControl AND CTerm)
   set(NAMESPACE "VISTA" CACHE STRING "Cache namespace to store VistA")
   set(VOLUME_SET "VISTA" CACHE STRING "Volume Set for new Vista Instance")
 
-  OPTION(CLEAN_CACHE "Overwrite the Cache.dat file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
-
-  configure_file(${VISTA_SOURCE_DIR}/CacheVerifyTelnet.scp.in ${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp)
-  message(STATUS "Testing if Cache Telnet service is enable:")
-  execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.log" TIMEOUT 5 RESULT_VARIABLE rcode)
-  message(STATUS "Testing if Cache Telnet service is enable: ${rcode}")
-  if ( (rcode EQUAL 0) OR "${rcode}" MATCHES "timeout" )
-    message(FATAL_ERROR "Error connecting to Cache ${INSTANCE} namespace ${NAMESPACE} via telnet, please enable the telnet setting via"
-      " Cache Managements Portal->System->Security Management->Service to switch on %Service_telnet by checking enabled checkbox and save."
-      " Also verify that telnet port is set to 23 via Configuration->Device Settings->Telnet Settings ")
-  endif()
-
-
-  IF(CLEAN_CACHE AND CControl AND PRISTINE_CACHE_DAT_PATH)
-    configure_file(${VISTA_SOURCE_DIR}/ImportRG.cmake.in ${VISTA_BINARY_DIR}/ImportRG.cmake)
-    configure_file(${VISTA_SOURCE_DIR}/RoutineImport.scp.in ${VISTA_BINARY_DIR}/RoutineImport.scp)
-    configure_file(${VISTA_SOURCE_DIR}/GlobalImport.scp.in ${VISTA_BINARY_DIR}/GlobalImport.scp)
-    configure_file(${VISTA_SOURCE_DIR}/Initialize.scp.in ${VISTA_BINARY_DIR}/Initialize.scp)
-    if(MUNIT_KIDS_FILE AND MUNIT_PACKAGE_INSTALL_NAME)
-      configure_file(${VISTA_SOURCE_DIR}/${MUNIT_INSTALLATION_SCRIPT}.in ${VISTA_BINARY_DIR}/${MUNIT_INSTALLATION_SCRIPT})
+  if(WIN32)
+    configure_file(${VISTA_SOURCE_DIR}/CacheVerifyTelnet.scp.in ${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp)
+    message(STATUS "Testing if Cache Telnet service is enable:")
+    execute_process(COMMAND "@CTerm@" "/console=cn_iptcp:127.0.0.1[23]" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.log" TIMEOUT 5 RESULT_VARIABLE rcode)
+    message(STATUS "Testing if Cache Telnet service is enable: ${rcode}")
+    if ( (rcode EQUAL 0) OR "${rcode}" MATCHES "timeout" )
+      message(FATAL_ERROR "Error connecting to Cache ${INSTANCE} namespace ${NAMESPACE} via telnet, please enable the telnet setting via"
+        " Cache Managements Portal->System->Security Management->Service to switch on %Service_telnet by checking enabled checkbox and save."
+        " Also verify that telnet port is set to 23 via Configuration->Device Settings->Telnet Settings ")
     endif()
-    set(MAKECOMMAND " ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/ImportRG.cmake" CACHE STRING "Import Routines and Globals into CACHE as Build Step" FORCE)
-  ELSE()
-    set(MAKECOMMAND " ${CMAKE_COMMAND} -E echo No_Build_Required" CACHE STRING "No build process is required when CLEAN_CACHE if OFF" FORCE)
-  ENDIF()
+  endif()
 endif()
 
 #if gtmprofile.sh is found, the linux programs and GT.M testing evironment is used.
 if(GTMPROFILE)
 
+  get_filename_component(GTMDIR ${GTMPROFILE} PATH)
+
   #Finds the scripting program for the Linux Based system
   find_program(EXPECT_EXEC NAMES expect)
+  set(UCI_NAME "PLA" CACHE STRING "GTM  UCI to store VistA")
+  set(VOLUME_SET "PLA" CACHE STRING "Volume Set for new Vista Instance")
 
   #Creates variables for the routines and globals directorys within GT.M
   find_path (VISTA_ROUTINE_DIR NAMES Routines HINTS ${VISTA_SOURCE_DIR}/routines DOC "Path to the Routines folder within GT.M")
@@ -187,20 +184,14 @@ if(GTMPROFILE)
   if( BUILD_REPORTS )
     add_subdirectory( Reports )
   endif(BUILD_REPORTS)
-
-  OPTION(CLEAN_DATABASE "Overwrite the database file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
-  if(CLEAN_DATABASE)
-    configure_file(${VISTA_SOURCE_DIR}/GTMImportRG.cmake.in ${VISTA_BINARY_DIR}/GTMImportRG.cmake @ONLY)
-    configure_file(${VISTA_SOURCE_DIR}/RoutineImportGTM.exp.in ${VISTA_BINARY_DIR}/RoutineImportGTM.exp)
-    configure_file(${VISTA_SOURCE_DIR}/GlobalImportandInitializeGTM.exp.in ${VISTA_BINARY_DIR}/GlobalImportandInitializeGTM.exp)
-    if(MUNIT_KIDS_FILE AND MUNIT_PACKAGE_INSTALL_NAME)
-      configure_file(${VISTA_SOURCE_DIR}/${MUNIT_INSTALLATION_SCRIPT}.in ${VISTA_BINARY_DIR}/${MUNIT_INSTALLATION_SCRIPT})
-    endif()
-    set(MAKECOMMAND " ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/GTMImportRG.cmake" CACHE STRING "Import Routines and Globals into GT.M as Build Step" FORCE)
-  else()
-    set(MAKECOMMAND " ${CMAKE_COMMAND} -E echo No_Build_Required" CACHE STRING "No build process is required when CLEAN_CACHE if OFF" FORCE)
-  endif()
 endif()
+
+option(USE_LOGIN "Sign into the VistA Instance using a name and password" OFF)
+if(USE_LOGIN)
+  set (USERNAME "admin" CACHE STRING "Username for instance")
+  set (PASSWORD "cache" CACHE STRING "Password for instance")
+endif()
+
 
 # Glob through the Packages directory for the routines to test.
 file(GLOB PACKAGES ${OSEHRA_PATH}/Packages/*)
@@ -217,7 +208,6 @@ foreach(package ${PACKAGES})
     file(GLOB routines "${package}/Routines/*.m")
     set(send_commands "")
 
-
     foreach(routine ${routines})
       get_filename_component(routine_name ${routine} NAME_WE)
       set(send_commands "${send_commands},${routine_name}")
@@ -232,6 +222,23 @@ foreach(package ${PACKAGES})
     add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake)
   endif()
 endforeach()
+
+
+IF(CLEAN_DATABASE)
+  configure_file(${VISTA_SOURCE_DIR}/ImportRG.cmake.in ${VISTA_BINARY_DIR}/ImportRG.cmake @ONLY)
+  set(logfile "${VISTA_BINARY_DIR}/Testing/Log/RoutineImport.log")
+  configure_file(${VISTA_SOURCE_DIR}/RoutineImport.py.in ${VISTA_BINARY_DIR}/RoutineImport.py)
+  set(logfile "${VISTA_BINARY_DIR}/Testing/Log/GlobalImport.log")
+  configure_file(${VISTA_SOURCE_DIR}/GlobalImport.py.in ${VISTA_BINARY_DIR}/GlobalImport.py)
+  set(logfile "${VISTA_BINARY_DIR}/Testing/Log/Initialize.log")
+  configure_file(${VISTA_SOURCE_DIR}/Initialize.py.in ${VISTA_BINARY_DIR}/Initialize.py)
+  if(MUNIT_KIDS_FILE AND MUNIT_PACKAGE_INSTALL_NAME)
+    configure_file(${VISTA_SOURCE_DIR}/${MUNIT_INSTALLATION_SCRIPT}.in ${VISTA_BINARY_DIR}/${MUNIT_INSTALLATION_SCRIPT})
+  endif()
+  set(MAKECOMMAND " ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/ImportRG.cmake" CACHE STRING "Import Routines and Globals into CACHE as Build Step" FORCE)
+ELSE()
+  set(MAKECOMMAND " ${CMAKE_COMMAND} -E echo No_Build_Required" CACHE STRING "No build process is required when CLEAN_CACHE if OFF" FORCE)
+ENDIF()
 
 configure_file(CTestCustom.cmake.in ${VISTA_BINARY_DIR}/CTestCustom.cmake)
 include(CTest)

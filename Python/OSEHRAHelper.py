@@ -47,10 +47,12 @@ class ConnectMUMPS(object):
     self.write(password)
 
 class ConnectWinCache(ConnectMUMPS):
-  def __init__(self,logfile,instance,namespace='VISTA',location='127.0.0.1'):
+  def __init__(self,logfile,instance,namespace,location='127.0.0.1'):
     global connection,log
     super(ConnectMUMPS,self).__init__()
     connection=telnetlib.Telnet(location,23)
+    if len(namespace) ==0:
+      namespace='VISTA'
     self.namespace=namespace
     log=file(logfile,'w')
     self.type='cache'
@@ -66,10 +68,12 @@ class ConnectWinCache(ConnectMUMPS):
     log.write(connection.read_until(command))
 
 class ConnectLinuxCache(ConnectMUMPS):
-  def __init__(self,logfile,instance,namespace='VISTA',location='127.0.0.1'):
+  def __init__(self,logfile,instance,namespace,location='127.0.0.1'):
     global connection,log
     super(ConnectMUMPS,self).__init__()
     connection=pexpect.spawn('ccontrol session ' + instance + ' -U ' + namespace,timeout=None)
+    if len(namespace) == 0:
+      namespace='VISTA'
     self.namespace=namespace
     connection.logfile_read = file(logfile,'w')
     self.type='cache'
@@ -83,10 +87,12 @@ class ConnectLinuxCache(ConnectMUMPS):
     connection.expect(command)
 
 class ConnectLinuxGTM(ConnectMUMPS):
-  def __init__(self,logfile,instance,namespace='GTM',location='127.0.0.1'):
+  def __init__(self,logfile,instance,namespace,location='127.0.0.1'):
     global connection,log
     super(ConnectMUMPS,self).__init__()
     connection=pexpect.spawn('gtm', timeout=None)
+    if len(namespace) == 0:
+      namespace='GTM'
     connection.logfile_read = file(logfile,'w')
     self.namespace=namespace
     self.type='GTM'
