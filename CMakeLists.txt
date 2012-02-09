@@ -175,90 +175,29 @@ endif()
 # Glob through the Packages directory for the routines to test.
 file(GLOB PACKAGES ${OSEHRA_PATH}/Packages/*)
 foreach(package ${PACKAGES})
-  #message(${package})
   get_filename_component(package_name ${package} NAME)
   string(REGEX MATCH ^[.] Packageflag ${package_name})
   string(REPLACE  " " "_" package_file_name "${package_name}")
 
   # Varibles for creating the testing scripts based upon system and found files
-
-if(WIN32)
-  set (library "telnetlib")
-  set (wait "test.write(t.read_until(")
-  set (write "t.write(")
-  set (header "t=telnetlib.Telnet('localhost',23)
-test=file('${VISTA_BINARY_DIR}/Testing/Temporary/${package_file_name}Test.log','w')
-${wait}'USER>'))
-${write}'ZN \"${NAMESPACE}\"\\r')
-${wait}'${NAMESPACE}>'))
-${write}'D ^XINDEX\\r')
-${wait}'No =>'))
-${write}'N\\r')")
-else()
-  set (library "pexpect")
-  set (wait "child.expect((")
-  set (write "child.send(")
-  if(CControl)
-    set(USERNAME "admin" CACHE STRING "Username for instance")
-    set(PASSWORD "cache" CACHE STRING "Password for instance")
-    set (header "child=pexpect.spawn('ccontrol session ${INSTANCE} -U ${NAMESPACE}')
-child.logfile_read = file('${VISTA_BINARY_DIR}/Testing/Temporary/${package_file_name}Test.log','w')
-${wait}'Username:'))
-${write}'${USERNAME}\\r')
-${wait}'Password:'))
-${write}'${PASSWORD}\\r')
-${wait}'${NAMESPACE}>'))
-${write}'D ^XINDEX\\r')
-${wait}'No =>'))
-${write}'N\\r')")
-  else()
-    set (header "child=pexpect.spawn('gtm -run XINDEX')\nchild.logfile_read = file('${VISTA_BINARY_DIR}/Testing/Temporary/${package_file_name}Test.log','w')")
-  endif()
-endif()
+  option(CHANGE_NAMESPACE OFF "When first connecting to the instance, change to the desired namespace")
+  option(USE_LOGIN "Sign into the VistA Instance using a name and password" OFF)
 
   if(NOT Packageflag)
     file(GLOB routines "${package}/Routines/*.m")
-    file(WRITE ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.py "import sys
-sys.path = ['${VISTA_SOURCE_DIR}/Python'] + sys.path
-import ${library}
-${header}
-")
     set(send_commands "")
+
+
     foreach(routine ${routines})
       get_filename_component(routine_name ${routine} NAME_WE)
-      set(send_commands "${send_commands}${wait}'Routine:'))\n${write}'${routine_name}\\r')\n")
+      set(send_commands "${send_commands},${routine_name}")
     endforeach()
+    string(REGEX REPLACE  "^," "" send_commands "${send_commands}")
     list(LENGTH routines NumberRoutines)
     string(REPLACE  " " "_" package_file_name "${package_name}")
 
-    file(APPEND ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.py "${send_commands}${wait}'Routine:'))
-${write}('\\r'))
-${wait}'Select BUILD NAME:'))
-${write}'\\r')
-${wait}'Select PACKAGE NAME:'))
-${write}'\\r')
-${wait}'warnings?'))
-${write}'No\\r')
-${wait}'routines?'))
-${write}'NO\\r')
-${wait}'DEVICE:'))
-${write}';;9999\\r')")
-    if(WIN32)
-      file(APPEND ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.py "
-${wait}'Right Margin:'))
-${write}'\\r')")
-    endif()
-    file(APPEND ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.py "
-${wait}'continue:'))
-${write}'\\r')
-${wait}'--- END ---'))
-${write}'h\\r')")
-
     #Configures the CMAKE testing
-
     configure_file(${VISTA_SOURCE_DIR}/PythonRoutine.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake @ONLY)
-
-
     #Creates the command that will be called for the Test
     add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake)
   endif()
