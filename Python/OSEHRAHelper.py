@@ -38,8 +38,7 @@ class ConnectMUMPS(object):
   def ZN(self,namespace):
     self.wait('>')
     self.write('ZN "' + namespace + '"')
-    self.wait(namespace + '>')
-    self.namespace = namespace
+    self.namespace=namespace
 
   def login(self,username,password):
     self.wait('Username:')
@@ -52,6 +51,7 @@ class ConnectWinCache(ConnectMUMPS):
     global connection,log
     super(ConnectMUMPS,self).__init__()
     connection=telnetlib.Telnet(location,23)
+    self.namespace=namespace
     log=file(logfile,'w')
     self.type='cache'
 
@@ -70,6 +70,7 @@ class ConnectLinuxCache(ConnectMUMPS):
     global connection,log
     super(ConnectMUMPS,self).__init__()
     connection=pexpect.spawn('ccontrol session ' + instance + ' -U ' + namespace,timeout=None)
+    self.namespace=namespace
     connection.logfile_read = file(logfile,'w')
     self.type='cache'
 
@@ -87,6 +88,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
     super(ConnectMUMPS,self).__init__()
     connection=pexpect.spawn('gtm', timeout=None)
     connection.logfile_read = file(logfile,'w')
+    self.namespace=namespace
     self.type='GTM'
 
   def write(self,command ):
