@@ -11,6 +11,7 @@ if VistA.type=='cache':
     VistA.ZN(sys.argv[4])
   except IndexError,no_namechange:
     pass
+VistA.wait(PROMPT)
 VistA.write('D ^XINDEX')
 if VistA.type == 'cache':
   VistA.wait('No =>')
