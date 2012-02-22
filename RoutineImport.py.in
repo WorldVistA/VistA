@@ -34,7 +34,7 @@ if VistA.type=='GTM':
   VistA.wait('Input device: <terminal>:')
   VistA.write('${OSEHRA_PATH}/routines.ro')
   VistA.wait('Output directory :')
-  VistA.write('${VISTA_ROUTINE_DIR}')
+  VistA.write('${VISTA_ROUTINE_DIR}/')
   VistA.wait(PROMPT)
   VistA.write('H')
 else:
