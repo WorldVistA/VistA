@@ -98,13 +98,23 @@ file(MAKE_DIRECTORY "${UNITTEST_LOG_DIR}")
 if(ccontrol)
   if(NOT INSTANCE)
     # Detect Cache instances.
-    execute_process(
-      COMMAND ${ccontrol} qlist nodisplay
-      OUTPUT_FILE ${VISTA_BINARY_DIR}/cache_qlist.txt
-      ERROR_VARIABLE err
-      RESULT_VARIABLE failed
-      TIMEOUT 30 # should never happen, listing is fast
-      )
+    if(WIN32)
+      execute_process(
+        COMMAND ${ccontrol} qlist nodisplay
+        OUTPUT_FILE ${VISTA_BINARY_DIR}/cache_qlist.txt
+        ERROR_VARIABLE err
+        RESULT_VARIABLE failed
+        TIMEOUT 30 # should never happen, listing is fast
+        )
+    else()
+      execute_process(
+        COMMAND ${ccontrol} qlist
+        OUTPUT_FILE ${VISTA_BINARY_DIR}/cache_qlist.txt
+        ERROR_VARIABLE err
+        RESULT_VARIABLE failed
+        TIMEOUT 30
+        )
+    endif()
     if(failed)
       string(REPLACE "\n" "\n  " err "  ${err}")
       message(FATAL_ERROR "Failed to run \"${ccontrol} qlist \": ${failed}\n${err}")
