@@ -27,7 +27,7 @@ if VistA.type=='cache':
   except IndexError,no_namechange:
     pass
 VistA.wait(PROMPT)
-VistA.write('D LIST^ZGI("${OSEHRA_PATH}/globals.lst","${OSEHRA_PATH}")')
+VistA.write('D LIST^ZGI("${OSEHRA_PATH}/globals.lst","${OSEHRA_PATH}/")')
 VistA.wait(PROMPT)
 VistA.write('D ^ZTMGRSET')
 VistA.wait('System:')
