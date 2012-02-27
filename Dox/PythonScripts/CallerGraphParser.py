@@ -618,7 +618,7 @@ class CallerGraphLogFileParser:
             zwrFile = open(file, 'r')
             lineNo = 0
             fileName = os.path.basename(file)
-            result = re.search("(?P<fileNo>^[0-9.]+)\+(?P<des>.*)\.zwr$", fileName)
+            result = re.search("(?P<fileNo>^[0-9.]+)(-1)?\+(?P<des>.*)\.zwr$", fileName)
             if result:
                 fileNo = result.group('fileNo')
                 globalDes = result.group('des')
@@ -627,6 +627,8 @@ class CallerGraphLogFileParser:
                 if result:
                     namespace = result.group('namespace')
 #                    package.addGlobalNamespace(namespace)
+                    continue
+                else:
                     continue
             globalName = "" # find out the global name by parsing the global file
             logger.debug ("Parsing file: %s" % file)
