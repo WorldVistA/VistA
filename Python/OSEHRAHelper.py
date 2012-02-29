@@ -47,6 +47,52 @@ class ConnectMUMPS(object):
     self.wait('Password')
     self.write(password)
 
+  def getenv(self,volume):
+    self.write('D GETENV^%ZOSV W Y')
+    if sys.platform=='win32':
+      match=connection.expect([volume + ':[0-9A-Za-z-]+'],None)
+      test=match[1].span()
+      VistAboxvol=''
+      for i in range(test[0],test[1]):
+        VistAboxvol = VistAboxvol + match[2][i]
+      self.boxvol=VistAboxvol
+    else:
+      connection.expect([volume + ':[0-9A-Za-z-]+'],None)
+      print connection.after
+      self.boxvol=connection.after
+
+  def IEN(self,file,objectname):
+    self.write('S DUZ=1 D Q^DI')
+    self.wait('OPTION')
+    self.write('5')
+    self.wait('FILE:')
+    self.write(file)
+    self.wait(file + ' NAME')
+    self.write(objectname + '\r')
+    self.wait('CAPTIONED OUTPUT?')
+    self.write('N')
+    self.wait('PRINT FIELD')
+    self.write('NUMBER\r')
+    self.wait('Heading')
+    self.write('')
+    self.wait('DEVICE')
+    if sys.platform=='win32':
+      self.write('\r')
+      match=connection.expect(['\r\n[0-9]+'],None)
+      test=match[1].span()
+      number=''
+      for i in range(test[0],test[1]):
+        number = number + match[2][i]
+      number=number.lstrip('\r\n')
+      self.IENumber = number
+    else:
+      self.write('')
+      connection.expect(['\n[0-9]+'],None)
+      number=connection.after
+      number=number.lstrip('\r\n')
+      self.IENumber = number
+    self.write('')
+
 class ConnectWinCache(ConnectMUMPS):
   def __init__(self,logfile,instance,namespace,location='127.0.0.1'):
     global connection,log

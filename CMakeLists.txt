@@ -204,7 +204,7 @@ foreach(package ${PACKAGES})
   string(REGEX MATCH ^[.] Packageflag ${package_name})
   string(REPLACE  " " "_" package_file_name "${package_name}")
 
-  # Varibles for creating the testing scripts based upon system and found files
+  # Variables for creating the testing scripts based upon system and found files
   option(CHANGE_NAMESPACE OFF "When first connecting to the instance, change to the desired namespace")
   option(USE_LOGIN "Sign into the VistA Instance using a name and password" OFF)
 
@@ -247,6 +247,28 @@ ENDIF()
 
 configure_file(CTestCustom.cmake.in ${VISTA_BINARY_DIR}/CTestCustom.cmake)
 include(CTest)
+
+#-----------------------------------------------------------------------------#
+##### SECTION TO SETUP AUTOMATIC SYSTEM TESTING #####
+#-----------------------------------------------------------------------------#
+option(VISTA_CPRS_FUNCTIONAL_TESTING "Use Python and Sikuli to test Vitals and CPRS" OFF)
+if(VISTA_CPRS_FUNCTIONAL_TESTING)
+  set(VISTA_SITE_NAME "DEMO.OSEHRA.ORG" CACHE STRING "Name to set for the site address when initializing VistA instance.  Default is 'DEMO.OSEHRA.ORG'")
+  if(GTMPROFILE)
+    message(WARNING "If testing the connection to CPRS from a GT.M instance, ensure that the changes to ZTLOAD1.m described here\rhttp://groups.google.com/group/hardhats/browse_thread/thread/f9c2716d7fd17b57/f9c4f09852a8e3db\rare made and the utility ZTMGRSET is re-run prior to running the script")
+  endif()
+  configure_file("${VISTA_SOURCE_DIR}/FunctionalTestingSuite/CPRSPostImportSetupScript.py.in" "@VISTA_BINARY_DIR@/CPRSPostImportSetupScript.py")
+  configure_file("${VISTA_SOURCE_DIR}/FunctionalTestingSuite/CPRSTesting.cmake.in" "${VISTA_BINARY_DIR}/Testing/FT_CPRSPostImportTest.cmake" @ONLY)
+  add_test(FT_CPRSPostImport ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/FT_CPRSPostImportTest.cmake)
+# CPRS only runs on Windows, Thus the Sikuli and GUI test will be added only for those types of machines
+  if(WIN32)
+    find_program(SIKULI_EXECUTABLE Sikuli-IDE.bat DOC "Path to the Sikul-IDE.bat file" HINTS "C:/Program Files/Sikuli X/" "C:/Program Files (x86)/Sikuli X/" )
+    add_test(FT_CPRSSikuli "@SIKULI_EXECUTABLE@" -s -r "@VISTA_SOURCE_DIR@/FunctionalTestingSuite/FunctionalTesting.sikuli")
+    set_tests_properties(FT_CPRSSikuli PROPERTIES DEPENDS FT_CPRSPostImport)
+    set_tests_properties(FT_CPRSSikuli PROPERTIES FAIL_REGULAR_EXPRESSION "FindFailed")
+  endif()
+endif()
+
 #-----------------------------------------------------------------------------#
 ##### SECTION TO GENERATE VISUAL CROSS REFERENCE DOCUMENTATION #####
 #-----------------------------------------------------------------------------#
@@ -278,6 +300,7 @@ if(ROUTINE_CALL_GRAPH)
       add_test(CALLERGRAPH_${package_file_name} ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake)
     endif()
   endforeach()
+
 endif()
 #-----------------------------------------------------------------------------#
 ##### SECTION TO RUN UNIT TESTING #####
