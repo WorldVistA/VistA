@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2011-2012 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,12 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+
+### set up the IO that is need by unit test
 import sys
 sys.path = ['${VISTA_SOURCE_DIR}/Python'] + sys.path
 
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
-
-VistA=ConnectToMUMPS("${logfile}","${INSTANCE}","${NAMESPACE}")
+VistA=ConnectToMUMPS("${UNITTEST_LOG_DIR}/${package_file_name}.log","${INSTANCE}","${NAMESPACE}")
 if ('${USERNAME}' and '${PASSWORD}'):
   VistA.login('${USERNAME}','${PASSWORD}')
 if VistA.type=='cache':
@@ -27,35 +28,13 @@ if VistA.type=='cache':
   except IndexError,no_namechange:
     pass
 VistA.wait(PROMPT)
-VistA.write('D ^%RI')
-if VistA.type=='GTM':
-  VistA.wait('Formfeed delimited <No>?')
-  VistA.write('No')
-  VistA.wait('Input device: <terminal>:')
-  VistA.write('${RoutineImportFile}')
-  VistA.wait('Output directory :')
-  VistA.write('${VISTA_ROUTINE_DIR}/')
-  VistA.wait(PROMPT)
-  VistA.write('H')
-else:
-  VistA.wait('Device:')
-  #set the device to be routines.ro file
-  VistA.write('${RoutineImportFile}')
-  VistA.wait('"R" =>')
-  #just use default
-  VistA.write('')
-  VistA.wait('No =>')
-  #we need to Override the routines
-  VistA.write('YES')
-  VistA.wait('<0>')
-  VistA.write('')
-  VistA.wait('Routine Input Option:')
-  VistA.write('All Routines')
-  VistA.wait('No =>')
-  VistA.write('YES')
-  VistA.wait('Yes =>')
-  VistA.write('')
-  VistA.wait('Yes =>')
-  VistA.write('')
-  VistA.wait(PROMPT)
-  VistA.write('h')
+VistA.write('S DUZ=1 D Q^DI')
+VistA.wait('Select OPTION:')
+VistA.write('')
+VistA.wait(PROMPT)
+VistA.write('D ^%ZIS')
+VistA.wait('DEVICE:')
+VistA.write('HOME;300;999')
+VistA.wait(PROMPT)
+${send_commands}
+VistA.write('HALT')

@@ -67,6 +67,14 @@ class ConnectWinCache(ConnectMUMPS):
       command = self.namespace + '>'
     log.write(connection.read_until(command))
 
+  def multiwait(self,options):
+    if isinstance(options,list):
+      index=connection.expect(options)
+      log.write(index[2])
+      return index[0]
+    else:
+      raise IndexError('Input to multiwait function is not a list')
+
 class ConnectLinuxCache(ConnectMUMPS):
   def __init__(self,logfile,instance,namespace,location='127.0.0.1'):
     global connection,log
@@ -82,9 +90,17 @@ class ConnectLinuxCache(ConnectMUMPS):
     connection.send(command + '\r')
 
   def wait(self,command ):
+    global connection
     if command is PROMPT:
       command = self.namespace + '>'
     connection.expect(command)
+
+  def multiwait(self,options):
+    if isinstance(options,list):
+      index=connection.expect(options)
+      return index
+    else:
+      raise IndexError('Input to multiwait function is not a list')
 
 class ConnectLinuxGTM(ConnectMUMPS):
   def __init__(self,logfile,instance,namespace,location='127.0.0.1'):
@@ -101,9 +117,17 @@ class ConnectLinuxGTM(ConnectMUMPS):
     connection.send(command + '\r')
 
   def wait(self,command ):
+    global connection
     if command is PROMPT:
       command = self.namespace + '>'
     connection.expect(command)
+
+  def multiwait(self,options):
+    if isinstance(options,list):
+      index=connection.expect(options)
+      return index
+    else:
+      raise IndexError('Input to multiwait function is not a list')
 
 def ConnectToMUMPS(logfile,instance='CACHE',namespace='VISTA',location='127.0.0.1'):
 

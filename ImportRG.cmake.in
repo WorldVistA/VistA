@@ -55,12 +55,9 @@ if(EXISTS "@ccontrol@")
   message(STATUS "Initializing VistA...")
   execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@VISTA_BINARY_DIR@/Initialize.py" )
 endif()
-string(LENGTH "${MUNIT_KIDS_FILE}" KIDS_FILE_LEN)
-string(LENGTH "${MUNIT_PACKAGE_INSTALL_NAME}" INSTALL_NAME_LEN)
+string(LENGTH "@MUNIT_KIDS_FILE@" KIDS_FILE_LEN)
+string(LENGTH "@MUNIT_PACKAGE_INSTALL_NAME@" INSTALL_NAME_LEN)
 if( (KIDS_FILE_LEN GREATER 0) AND (INSTALL_NAME_LEN GREATER 0))
   message(STATUS "Installing MUnit Kids Build")
-  execute_process(COMMAND "${CTerm}" "/console=cn_iptcp:127.0.0.1[23]"
-                          "${VISTA_BINARY_DIR}/${MUNIT_INSTALLATION_SCRIPT}"
-                          "${VISTA_BINARY_DIR}/InstallMUnitKIDSBuild.log"
-                          RESULT_VARIABLE return)
+  execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@VISTA_BINARY_DIR@/@MUNIT_INSTALLATION_SCRIPT@" RESULT_VARIABLE return)
 endif()
