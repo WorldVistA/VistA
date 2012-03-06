@@ -15,13 +15,18 @@
 #---------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 # Define a function for parsing and reporting XINDEX output results
-function(ReportXINDEXResult PACKAGE_NAME DIRNAME OUTPUT)
+function(ReportXINDEXResult PACKAGE_NAME DIRNAME OUTPUT USE_XINDEX_WARNINGS_AS_FAILURES)
+   if(USE_XINDEX_WARNINGS_AS_FAILURES)
+     set(FAILURE_CONDITION "F -|W -")
+   else()
+     set(FAILURE_CONDITION "F -")
+   endif(USE_WARNINGS)
    set(test_passed TRUE)
    foreach (line ${OUTPUT})
       # the XINDEX will always check the integrity of the routine using checksum
       if(line MATCHES "^[A-Z0-9][^ ]+ +\\* \\* .*[cC]hecksum:.*")
         string(REGEX MATCH "^[A-Z0-9]+[^ ]" routine_name "${line}")
-      elseif(line MATCHES "F -|W -")
+      elseif(line MATCHES ${FAILURE_CONDITION})
         # assume the path to the XINDEX package exception list is DIRNAME\XindexException
         # also assume the file name is ${PACKAGE_NAME}.${routinename}
         set(ExceptionFound FALSE)
