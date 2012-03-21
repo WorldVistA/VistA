@@ -39,6 +39,7 @@ class ConnectMUMPS(object):
     self.wait('>')
     self.write('ZN "' + namespace + '"')
     self.namespace=namespace
+    self.prompt=self.namespace + '>'
 
   def login(self,username,password):
     self.wait('Username:')
@@ -54,6 +55,7 @@ class ConnectWinCache(ConnectMUMPS):
     if len(namespace) ==0:
       namespace='VISTA'
     self.namespace=namespace
+    self.prompt=self.namespace + '>'
     log=file(logfile,'w')
     self.type='cache'
 
@@ -64,7 +66,7 @@ class ConnectWinCache(ConnectMUMPS):
   def wait(self,command ):
     global connection
     if command is PROMPT:
-      command = self.namespace + '>'
+      command = self.prompt
     log.write(connection.read_until(command))
 
   def multiwait(self,options):
@@ -83,6 +85,7 @@ class ConnectLinuxCache(ConnectMUMPS):
     if len(namespace) == 0:
       namespace='VISTA'
     self.namespace=namespace
+    self.prompt=self.namespace + '>'
     connection.logfile_read = file(logfile,'w')
     self.type='cache'
 
@@ -92,7 +95,7 @@ class ConnectLinuxCache(ConnectMUMPS):
   def wait(self,command ):
     global connection
     if command is PROMPT:
-      command = self.namespace + '>'
+      command = self.prompt
     connection.expect(command)
 
   def multiwait(self,options):
@@ -108,18 +111,21 @@ class ConnectLinuxGTM(ConnectMUMPS):
     super(ConnectMUMPS,self).__init__()
     connection=pexpect.spawn('gtm', timeout=None)
     if len(namespace) == 0:
-      namespace='GTM'
+        self.prompt=os.getenv("gtm_prompt")
+        print self.prompt
+        if self.prompt==None:
+          self.prompt="GTM>"
     connection.logfile_read = file(logfile,'w')
-    self.namespace=namespace
     self.type='GTM'
 
   def write(self,command ):
     connection.send(command + '\r')
 
   def wait(self,command ):
+    print self.prompt
     global connection
     if command is PROMPT:
-      command = self.namespace + '>'
+      command = self.prompt
     connection.expect(command)
 
   def multiwait(self,options):
