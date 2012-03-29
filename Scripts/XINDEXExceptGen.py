@@ -9,7 +9,7 @@
 #    logDir is the directory contains all XINDEX log files, normally under
 #           <CMAKE_BUILD_DIR>/Testing/Temporary/
 #    outputDir is the directory to stores all XINDEX Exception file list, normally
-#           under <OSEHRA-Automated-Testing git repo>/XindexException/
+#           under <OSEHRA-Automated-Testing git repo>/XindexException/[Cache|GTM]
 #
 # To generate XINDEX Exception file list for packages Foo1 Foo2 Foo3
 # python XindexExceptGen.py -l <logDir> -o <outputDir>
@@ -71,7 +71,7 @@ def generateXindexExceptionList(logFileName, outputDir, routineSet=None):
                     fileHandle=exceptionFileList[outputFilename]
                 else:
                     absPath = os.path.join(outputDir,outputFilename)
-                    fileHandle=open(absPath,'w')
+                    fileHandle=open(absPath,'wb')
                     exceptionFileList[outputFilename] = fileHandle
                 fileHandle.write(line.strip()+"\n")
     packageLogFile.close()
@@ -87,13 +87,14 @@ if __name__ == '__main__':
                              'CMAKE_BUILD_DIR/Testing/Temporary/')
     parser.add_argument('-o', required=True, dest='outputDir',
                         help='Output directory to store the XINDEX Exception file list')
+
     parser.add_argument('-a',  dest="allPackage", action='store_true',
                         help='All packages')
     parser.add_argument('-p', dest='packageName', nargs='*',
-                        help='Only Specified Package Names')
+                        help='only specified package names')
     parser.add_argument('-r', nargs='*', dest='routinesNames',
                          help='Specified routines under one package')
-    result = vars(parser.parse_args());
+    result = vars(parser.parse_args())
     searchFiles=[]
     routines=set()
     if (result['allPackage']):
