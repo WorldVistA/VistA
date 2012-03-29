@@ -20,7 +20,7 @@ function(ReportXINDEXResult PACKAGE_NAME DIRNAME OUTPUT USE_XINDEX_WARNINGS_AS_F
      set(FAILURE_CONDITION "F -|W -")
    else()
      set(FAILURE_CONDITION "F -")
-   endif(USE_WARNINGS)
+   endif()
    set(test_passed TRUE)
    foreach (line ${OUTPUT})
       # the XINDEX will always check the integrity of the routine using checksum
@@ -52,7 +52,7 @@ function(ReportXINDEXResult PACKAGE_NAME DIRNAME OUTPUT USE_XINDEX_WARNINGS_AS_F
      message("${PACKAGE_NAME} Passed:\n${OUTPUT}")
    else()
      message(FATAL_ERROR "${PACKAGE_NAME} has XINDEX Errors")
-     endif()
+   endif()
 endfunction()
 
 # Define a function for parsing and reporting munit output results
