@@ -289,6 +289,9 @@ endif()
 #-----------------------------------------------------------------------------#
 OPTION(AUTOMATED_UNIT_TESTING "Run Automated Unit Testing" OFF)
 OPTION(INSTALL_MUNIT "Install MUNIT KIDS BUILD" OFF)
+if(AUTOMATED_UNIT_TESTING AND CLEAN_DATABASE AND NOT INSTALL_MUNIT)
+  message(WARNING "Current configuration will cause Dashboard submissions to fail all MUnit Tests. Either include INSTALL_MUNIT or remove CLEAN_DATABASE")
+endif()
 if(AUTOMATED_UNIT_TESTING)
   file(GLOB PACKAGES ${VISTA_SOURCE_DIR}/UnitTest/VistA-FOIA/Packages/*)
   # Set up the platform dependent script files
