@@ -15,7 +15,7 @@
 #---------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 # Define a function for parsing and reporting XINDEX output results
-function(ReportXINDEXResult PACKAGE_NAME DIRNAME OUTPUT USE_XINDEX_WARNINGS_AS_FAILURES)
+function(ReportXINDEXResult PACKAGE_NAME EXCEPTION_DIR OUTPUT USE_XINDEX_WARNINGS_AS_FAILURES)
    if(USE_XINDEX_WARNINGS_AS_FAILURES)
      set(FAILURE_CONDITION "F -|W -")
    else()
@@ -27,11 +27,10 @@ function(ReportXINDEXResult PACKAGE_NAME DIRNAME OUTPUT USE_XINDEX_WARNINGS_AS_F
       if(line MATCHES "^[A-Z0-9][^ ]+ +\\* \\* .*[cC]hecksum:.*")
         string(REGEX MATCH "^[A-Z0-9]+[^ ]" routine_name "${line}")
       elseif(line MATCHES ${FAILURE_CONDITION})
-        # assume the path to the XINDEX package exception list is DIRNAME\XindexException
         # also assume the file name is ${PACKAGE_NAME}.${routinename}
         set(ExceptionFound FALSE)
-        if (EXISTS ${DIRNAME}/XindexException/${PACKAGE_NAME}.${routine_name})
-            file(STRINGS ${DIRNAME}/XindexException/${PACKAGE_NAME}.${routine_name} ExceptionList)
+        if (EXISTS ${EXCEPTION_DIR}/${PACKAGE_NAME}.${routine_name})
+          file(STRINGS ${EXCEPTION_DIR}/${PACKAGE_NAME}.${routine_name} ExceptionList)
           foreach (Exception ${ExceptionList})
             string(STRIP "${line}" newline)
             # this is quite stricty to ensure the text is the exactly the same

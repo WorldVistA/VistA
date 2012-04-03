@@ -89,6 +89,7 @@ file(MAKE_DIRECTORY "${UNITTEST_LOG_DIR}")
 
 #if ccontrol is found, the Cache system and paths are used
 if(ccontrol)
+  SET(VENDER_NAME "Cache")
   if(NOT INSTANCE)
     # Detect Cache instances.
     if(WIN32)
@@ -167,7 +168,7 @@ endif()
 
 #if gtmprofile.sh is found, the linux programs and GT.M testing evironment is used.
 if(GTMPROFILE)
-
+  SET(VENDER_NAME "GTM")
   get_filename_component(GTMDIR ${GTMPROFILE} PATH)
 
   #Finds the scripting program for the Linux Based system
