@@ -251,7 +251,7 @@ include(CTest)
 ##### SECTION TO GENERATE VISUAL CROSS REFERENCE DOCUMENTATION #####
 #-----------------------------------------------------------------------------#
 OPTION(ROUTINE_CALL_GRAPH "Build Rouine Call Graph." OFF)
-if(ROUTINE_CALL_GRAPH AND CTerm)
+if(ROUTINE_CALL_GRAPH)
   file(GLOB PACKAGES ${OSEHRA_PATH}/Packages/*)
   SET(SCRIPT_OUTPUT_DIR "${VISTA_BINARY_DIR}/Docs/CallerGraph")
   SET(CALLER_GRAPH_LOG_DIR "${SCRIPT_OUTPUT_DIR}/Log")
@@ -260,24 +260,18 @@ if(ROUTINE_CALL_GRAPH AND CTerm)
     get_filename_component(package_name ${package} NAME)
     if(IS_DIRECTORY ${package})
       file(GLOB routines "${package}/Routines/*.m")
-      set(send_commands "")
+      set(AllRoutines "")
       foreach(routine ${routines})
         get_filename_component(routine_name ${routine} NAME_WE)
-        set(send_commands "${send_commands}send: D ^XINDEX<CR>\n")
-        set(send_commands "${send_commands}wait for:All Routines?\n")
-        set(send_commands "${send_commands}send:No<CR>\n")
-        set(send_commands "${send_commands}wait for:Routine:\n")
-        set(send_commands "${send_commands}send:${routine_name}<CR>\n")
-        set(send_commands "${send_commands}subroutine: $Run Xindex for one routine\n")
+        set(AllRoutines "${AllRoutines}AllRoutines.append(\"${routine_name}\")\n")
       endforeach()
-      set(send_commands "${send_commands}goto:$exit\n")
       string(REPLACE  " " "_" package_file_name "${package_name}")
+      set(logfile "@CALLER_GRAPH_LOG_DIR@/@package_file_name@.log")
+      #Configures the python script with the name of the routine
+      configure_file(${VISTA_SOURCE_DIR}/XindexCallerGraph.py.in
+                     ${SCRIPT_OUTPUT_DIR}/${package_file_name}.py)
 
-      #Configures the Expect script with the name of the routine
-      configure_file(${VISTA_SOURCE_DIR}/CacheXINDEXCallerGraph.scp.in
-                     ${SCRIPT_OUTPUT_DIR}/${package_file_name}.scp)
-
-      configure_file(${VISTA_SOURCE_DIR}/CacheCallerGraph.cmake.in
+      configure_file(${VISTA_SOURCE_DIR}/XindexCallerGraph.cmake.in
                      ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake @ONLY)
 
       #Creates the command that will be called for the Test
