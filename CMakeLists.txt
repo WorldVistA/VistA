@@ -40,11 +40,15 @@ Note that Delphi 2007 installs its framework files incorrectly on 64-bit Windows
 ")
 endif()
 
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Build Configuration (Debug,Release)" FORCE)
+endif()
+
 function(add_delphi_build p t)
   file(TO_NATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" SOURCE)
   configure_file(${p}.dproj.in ${p}.dproj @ONLY)
   configure_file(${p}.${t}.in ${p}.${t} @ONLY)
-  add_custom_target(${p} ALL COMMAND msbuild ${p}.dproj)
+  add_custom_target(${p} ALL COMMAND msbuild /p:Configuration=$<CONFIGURATION> ${p}.dproj)
 endfunction()
 
 function(add_delphi_package package)
