@@ -22,7 +22,7 @@ if(NOT "${CMAKE_GENERATOR}" MATCHES "Borland Makefiles")
 endif()
 execute_process(COMMAND ${CMAKE_MAKE_PROGRAM} -h OUTPUT_VARIABLE output ERROR_VARIABLE output)
 if(NOT "x${output}" MATCHES "MAKE Version[^\n]*Borland")
-  message(FATAL_ERROR "Make tool \"${CMAKE_MAKE_PROGRAM\" is not a Borland make!  Fix your PATH.")
+  message(FATAL_ERROR "Make tool \"${CMAKE_MAKE_PROGRAM}\" is not a Borland make!  Fix your PATH.")
 endif()
 if(NOT DEFINED ENV{BDS} OR
    NOT DEFINED ENV{FrameworkDir} OR
