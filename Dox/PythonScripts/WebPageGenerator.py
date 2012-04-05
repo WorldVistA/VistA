@@ -417,10 +417,10 @@ class WebPageGenerator:
         sha1Key = self.__getGitRepositLatestSha1Key__()
         outputFile.write("""<h6><a class ="anchor" id="howto"></a>Note:Repository SHA1 key:%s</h6>\n""" % sha1Key)
     def __getGitRepositLatestSha1Key__(self):
-        gitCommand = os.path.join(self._gitPath, "git") + " rev-parse --verify HEAD"
+        gitCommand = "\"" + os.path.join(self._gitPath, "git") + "\"" + " rev-parse --verify HEAD"
         os.chdir(self._repDir)
         logger.debug("git Command is %s" % gitCommand)
-        result = subprocess.check_output(gitCommand)
+        result = subprocess.check_output(gitCommand, shell=True)
         return result.strip()
     def __generateHtmlPageHeader__(self, isSource = False):
         if isSource:
@@ -950,11 +950,12 @@ class WebPageGenerator:
         inputName = os.path.join(dirName, normalizedName + packageSuffix + ".dot")
         # this is to generated the image in gif format and also cmapx (client side map) to make sure link
         # embeded in the graph is clickable
-        command = "%s -Tgif -o\"%s\" -Tcmapx -o\"%s\" \"%s\"" % (os.path.join(self._dotPath, "dot"),
+        command = "\"%s\" -Tgif -o\"%s\" -Tcmapx -o\"%s\" \"%s\"" % (os.path.join(self._dotPath, "dot"),
                                                                outputName,
                                                                outputmap,
                                                                inputName)
-        retCode = subprocess.call(command)
+        logger.debug("command is %s" % command)
+        retCode = subprocess.call(command, shell=True)
         if retCode != 0:
             logger.error("calling dot with command[%s] returns %d" % (command, retCode))
 #===============================================================================
@@ -1056,11 +1057,12 @@ class WebPageGenerator:
         # this is to generated the image in gif format and also cmapx (client side map) to make sure link
         # embeded in the graph is clickable
         # @TODO this should be able to run in parallel
-        command = "%s -Tgif -o\"%s\" -Tcmapx -o\"%s\" \"%s\"" % (os.path.join(self._dotPath, "dot"),
+        command = "\"%s\" -Tgif -o\"%s\" -Tcmapx -o\"%s\" \"%s\"" % (os.path.join(self._dotPath, "dot"),
                                                                outputName,
                                                                outputmap,
                                                                inputName)
-        retCode = subprocess.call(command)
+        logger.debug("command is %s" % command)
+        retCode = subprocess.call(command, shell=True)
         if retCode != 0:
             logger.error("calling dot with command[%s] returns %d" % (command, retCode))
 #===============================================================================
@@ -1534,9 +1536,9 @@ def testDotCall(outputDir):
 
 # Get the lastest git SHA1 Key from git repository
 def testGetGitLastRev(GitRepoDir, gitPath):
-    gitCommand = gitPath + "git rev-parse --verify HEAD"
+    gitCommand = "\"" + os.path.join(gitPath + "git") + "\"" + " rev-parse --verify HEAD"
     os.chdir(GitRepoDir)
-    result = subprocess.check_output(gitCommand)
+    result = subprocess.check_output(gitCommand, shell=True)
     print result.strip()
 
 # test parsing package.csv file from VistA-FOIA release
