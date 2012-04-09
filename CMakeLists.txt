@@ -14,7 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.8)
-project(VistaDelphi NONE)
+project(VistA-FOIA NONE)
 
 # Check the environment
 if(NOT "${CMAKE_GENERATOR}" MATCHES "Borland Makefiles")
@@ -59,5 +59,5 @@ function(add_delphi_project project)
   add_delphi_build(${project} dpr)
 endfunction()
 
-add_subdirectory(BDK)
-add_subdirectory(CPRS)
+add_subdirectory("Packages/RPC Broker/BDK" BDK)
+add_subdirectory("Packages/Order Entry Results Reporting/CPRS" CPRS)
