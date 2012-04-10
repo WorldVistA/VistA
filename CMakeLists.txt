@@ -15,7 +15,7 @@
 #---------------------------------------------------------------------------
 
 
-cmake_minimum_required(VERSION 2.8.2)
+cmake_minimum_required(VERSION 2.8.0)
 
 set(CMAKE_MAKE_PROGRAM "/" CACHE INTERNAL "This does not build")
 set(CMAKE_INSTALL_PREFIX "/" CACHE INTERNAL "This does not install")
