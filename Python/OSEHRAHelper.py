@@ -112,7 +112,6 @@ class ConnectLinuxGTM(ConnectMUMPS):
     connection=pexpect.spawn('gtm', timeout=None)
     if len(namespace) == 0:
         self.prompt=os.getenv("gtm_prompt")
-        print self.prompt
         if self.prompt==None:
           self.prompt="GTM>"
     connection.logfile_read = file(logfile,'w')
@@ -122,7 +121,6 @@ class ConnectLinuxGTM(ConnectMUMPS):
     connection.send(command + '\r')
 
   def wait(self,command ):
-    print self.prompt
     global connection
     if command is PROMPT:
       command = self.prompt
