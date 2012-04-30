@@ -1,0 +1,889 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{d008760c-d3c7-4922-b5ca-7134478bce35}</ProjectGuid>
+    <MainSource>CPRSTesting.dpr</MainSource>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+    <DCC_DependencyCheckOutputName>..\Bin\$(Configuration)\CPRSTesting.exe</DCC_DependencyCheckOutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_AssertionsAtRuntime>False</DCC_AssertionsAtRuntime>
+    <DCC_DebugInformation>False</DCC_DebugInformation>
+    <DCC_WriteableConstants>True</DCC_WriteableConstants>
+    <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+    <DCC_RangeChecking>True</DCC_RangeChecking>
+    <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    <DCC_MapFile>3</DCC_MapFile>
+    <DCC_StackSize>32768,1048576</DCC_StackSize>
+    <DCC_Define>RELEASE</DCC_Define>
+    <DCC_ExeOutput>Bin\$(Configuration)</DCC_ExeOutput>
+    <DCC_DcuOutput>Dcu\$(Configuration)</DCC_DcuOutput>
+    <DCC_ObjOutput>Dcu\$(Configuration)</DCC_ObjOutput>
+    <DCC_HppOutput>Dcu\$(Configuration)</DCC_HppOutput>
+    <DCC_DcpOutput>Dcp\$(Configuration)</DCC_DcpOutput>
+    <DCC_BplOutput>Bpl</DCC_BplOutput>
+    <DCC_UnitSearchPath>..\BDK\Source\Dcu\$(Configuration);..\CPRS\VA\Dcu\$(Configuration);..\CPRS\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS\CPRS-Lib;@SOURCE@\..\BDK\Source;@SOURCE@\..\..\Packages\RPC Broker\BDK\Source</DCC_UnitSearchPath>
+    <DCC_ResourcePath>..\BDK\Source\Dcu\$(Configuration);..\CPRS\VA\Dcu\$(Configuration);..\CPRS\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS\CPRS-Lib;@SOURCE@\..\BDK\Source;@SOURCE@\..\..\Packages\RPC Broker\BDK\Source</DCC_ResourcePath>
+    <DCC_ObjPath>..\BDK\Source\Dcu\$(Configuration);..\CPRS\VA\Dcu\$(Configuration);..\CPRS\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS\CPRS-Lib;@SOURCE@\..\BDK\Source;@SOURCE@\..\..\Packages\RPC Broker\BDK\Source</DCC_ObjPath>
+    <DCC_IncludePath>..\BDK\Source\Dcu\$(Configuration);..\CPRS\VA\Dcu\$(Configuration);..\CPRS\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS\CPRS-Lib;@SOURCE@\..\BDK\Source;@SOURCE@\..\..\Packages\RPC Broker\BDK\Source</DCC_IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_AssertionsAtRuntime>False</DCC_AssertionsAtRuntime>
+    <DCC_WriteableConstants>True</DCC_WriteableConstants>
+    <DCC_RangeChecking>True</DCC_RangeChecking>
+    <DCC_MapFile>3</DCC_MapFile>
+    <DCC_StackSize>32768,1048576</DCC_StackSize>
+    <DCC_Define></DCC_Define>
+    <DCC_ExeOutput>Bin\$(Configuration)</DCC_ExeOutput>
+    <DCC_DcuOutput>Dcu\$(Configuration)</DCC_DcuOutput>
+    <DCC_ObjOutput>Dcu\$(Configuration)</DCC_ObjOutput>
+    <DCC_HppOutput>Dcu\$(Configuration)</DCC_HppOutput>
+    <DCC_DcpOutput>Dcp\$(Configuration)</DCC_DcpOutput>
+    <DCC_BplOutput>Bpl</DCC_BplOutput>
+    <DCC_UnitSearchPath>..\BDK\Source\Dcu\$(Configuration);..\CPRS\VA\Dcu\$(Configuration);..\CPRS\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\BDK\Source;@SOURCE@..\..\BDK\Source</DCC_UnitSearchPath>
+    <DCC_ResourcePath>..\BDK\Source\Dcu\$(Configuration);..\CPRS\VA\Dcu\$(Configuration);..\CPRS\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\BDK\Source</DCC_ResourcePath>
+    <DCC_ObjPath>..\BDK\Source\Dcu\$(Configuration);..\CPRS\VA\Dcu\$(Configuration);..\CPRS\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\BDK\Source</DCC_ObjPath>
+    <DCC_IncludePath>..\BDK\Source\Dcu\$(Configuration);..\CPRS\VA\Dcu\$(Configuration);..\CPRS\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@..\..\BDK\Source</DCC_IncludePath>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Delphi.Personality</Borland.Personality>
+    <Borland.ProjectType>VCLApplication</Borland.ProjectType>
+    <BorlandProject>
+      <BorlandProject xmlns="">
+        <Delphi.Personality>
+          <Parameters>
+            <Parameters Name="UseLauncher">False</Parameters>
+            <Parameters Name="LoadAllSymbols">True</Parameters>
+            <Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+          </Parameters>
+          <VersionInfo>
+            <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+            <VersionInfo Name="AutoIncBuild">False</VersionInfo>
+            <VersionInfo Name="MajorVer">1</VersionInfo>
+            <VersionInfo Name="MinorVer">0</VersionInfo>
+            <VersionInfo Name="Release">28</VersionInfo>
+            <VersionInfo Name="Build">6</VersionInfo>
+            <VersionInfo Name="Debug">False</VersionInfo>
+            <VersionInfo Name="PreRelease">False</VersionInfo>
+            <VersionInfo Name="Special">False</VersionInfo>
+            <VersionInfo Name="Private">False</VersionInfo>
+            <VersionInfo Name="DLL">False</VersionInfo>
+            <VersionInfo Name="Locale">1033</VersionInfo>
+            <VersionInfo Name="CodePage">1252</VersionInfo>
+          </VersionInfo>
+          <VersionInfoKeys>
+            <VersionInfoKeys Name="CompanyName">Department of Veterans Affairs</VersionInfoKeys>
+            <VersionInfoKeys Name="FileDescription">12/22/2009</VersionInfoKeys>
+            <VersionInfoKeys Name="FileVersion">1.0.28.6</VersionInfoKeys>
+            <VersionInfoKeys Name="InternalName">1.0.28.6 server required</VersionInfoKeys>
+            <VersionInfoKeys Name="LegalCopyright">Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.</VersionInfoKeys>
+            <VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>
+            <VersionInfoKeys Name="OriginalFilename">Patch 280</VersionInfoKeys>
+            <VersionInfoKeys Name="ProductName">Computerized Patient Record System</VersionInfoKeys>
+            <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+            <VersionInfoKeys Name="Comments">Version 1.0.28.6</VersionInfoKeys>
+          </VersionInfoKeys>
+          <Source>
+            <Source Name="MainSource">CPRSTesting.dpr</Source>
+          </Source>
+        </Delphi.Personality>
+      </BorlandProject>
+    </BorlandProject>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
+  <ItemGroup>
+    <DelphiCompile Include="CPRSTesting.dpr">
+      <MainSource>MainSource</MainSource>
+    </DelphiCompile>
+    <DCCReference Include="..\CPRS-Lib\ORClasses.pas" />
+    <DCCReference Include="..\CPRS-Lib\ORCtrls.pas" />
+    <DCCReference Include="..\CPRS-Lib\ORCtrlsVA508Compatibility.pas" />
+    <DCCReference Include="..\CPRS-Lib\ORDtTm.pas">
+      <Form>ORfrmDtTm</Form>
+    </DCCReference>
+    <DCCReference Include="..\CPRS-Lib\ORDtTmCal.pas" />
+    <DCCReference Include="..\CPRS-Lib\ORDtTmRng.pas">
+      <Form>ORfrmDateRange</Form>
+    </DCCReference>
+    <DCCReference Include="..\CPRS-Lib\ORFn.pas" />
+    <DCCReference Include="..\CPRS-Lib\ORNet.pas" />
+    <DCCReference Include="..\CPRS-Lib\Vawrgrid.pas" />
+    <DCCReference Include="..\CPRS-Lib\XMLUtils.pas" />
+    <DCCReference Include="..\VA\VA2006Utils.pas" />
+    <DCCReference Include="..\VA\VA508Accessibility\VA508AccessibilityManager.pas" />
+    <DCCReference Include="..\VA\VA508Accessibility\VA508AccessibilityRouter.pas" />
+    <DCCReference Include="..\VA\VA508Accessibility\VA508DelphiCompatibility.pas" />
+    <DCCReference Include="..\VA\VAClasses.pas" />
+    <DCCReference Include="..\VA\VAUtils.pas" />
+    <DCCReference Include="BA\fBALocalDiagnoses.pas">
+      <Form>frmBALocalDiagnoses</Form>
+    </DCCReference>
+    <DCCReference Include="BA\fBAOptionsDiagnoses.pas">
+      <Form>frmBAOptionsDiagnoses</Form>
+    </DCCReference>
+    <DCCReference Include="BA\UBAConst.pas" />
+    <DCCReference Include="BA\UBACore.pas" />
+    <DCCReference Include="BA\UBAGlobals.pas" />
+    <DCCReference Include="BA\UBAMessages.pas" />
+    <DCCReference Include="Consults\fConsMedRslt.pas">
+      <Form>frmConsMedRslt</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fConsult513Prt.pas">
+      <Form>frm513Print</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fConsultAct.pas">
+      <Form>frmConsultAction</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fConsultAlertTo.pas">
+      <Form>frmConsultAlertsTo</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fConsultBD.pas">
+      <Form>frmConsultsByDate</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fConsultBS.pas">
+      <Form>frmConsultsByService</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fConsultBSt.pas">
+      <Form>frmConsultsByStatus</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fConsults.pas">
+      <Form>frmConsults</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fConsultsView.pas">
+      <Form>frmConsultsView</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fCsltNote.pas">
+      <Form>frmCsltNote</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fEditConsult.pas">
+      <Form>frmEditCslt</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fEditProc.pas">
+      <Form>frmEditProc</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fODConsult.pas">
+      <Form>frmODCslt</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fODProc.pas">
+      <Form>frmODProc</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\fPreReq.pas">
+      <Form>frmPrerequisites</Form>
+    </DCCReference>
+    <DCCReference Include="Consults\rConsults.pas" />
+    <DCCReference Include="Consults\uConsults.pas" />
+    <DCCReference Include="CPRSTesting_TLB.pas" />
+    <DCCReference Include="dShared.pas">
+      <Form>dmodShared</Form>
+      <DesignClass>TDataModule</DesignClass>
+    </DCCReference>
+    <DCCReference Include="Encounter\fDiagnoses.pas">
+      <Form>frmDiagnoses</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fEncounterFrame.pas">
+      <Form>frmEncounterFrame</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fEncVitals.pas">
+      <Form>frmEncVitals</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fExam.pas">
+      <Form>frmExams</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fGAF.pas">
+      <Form>frmGAF</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fHealthFactor.pas">
+      <Form>frmHealthFactors</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fHFSearch.pas">
+      <Form>frmHFSearch</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fImmunization.pas">
+      <Form>frmImmunizations</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fPatientEd.pas">
+      <Form>frmPatientEd</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fPCEBase.pas">
+      <Form>frmPCEBase</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fPCEBaseGrid.pas">
+      <Form>frmPCEBaseGrid</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fPCEBaseMain.pas">
+      <Form>frmPCEBaseMain</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fPCEEdit.pas">
+      <Form>frmPCEEdit</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fPCELex.pas">
+      <Form>frmPCELex</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fPCEOther.pas">
+      <Form>frmPCEOther</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fPCEProvider.pas">
+      <Form>frmPCEProvider</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fProcedure.pas">
+      <Form>frmProcedures</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fSkinTest.pas">
+      <Form>frmSkinTests</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\fVisitType.pas">
+      <Form>frmVisitType</Form>
+    </DCCReference>
+    <DCCReference Include="Encounter\mVisitRelated.pas">
+      <Form>fraVisitRelated</Form>
+      <DesignClass>TFrame</DesignClass>
+    </DCCReference>
+    <DCCReference Include="Encounter\rPCE.pas" />
+    <DCCReference Include="Encounter\uPCE.pas" />
+    <DCCReference Include="fAbout.pas">
+      <Form>frmAbout</Form>
+    </DCCReference>
+    <DCCReference Include="fActivateDeactivate.pas">
+      <Form>frmActivateDeactive</Form>
+    </DCCReference>
+    <DCCReference Include="fAddlSigners.pas">
+      <Form>frmAddlSigners</Form>
+    </DCCReference>
+    <DCCReference Include="fAlertForward.pas">
+      <Form>frmAlertForward</Form>
+    </DCCReference>
+    <DCCReference Include="fAllgyBox.pas">
+      <Form>frmAllgyBox</Form>
+    </DCCReference>
+    <DCCReference Include="fAllgyFind.pas">
+      <Form>frmAllgyFind</Form>
+    </DCCReference>
+    <DCCReference Include="fAResize.pas">
+      <Form>frmAutoResize</Form>
+    </DCCReference>
+    <DCCReference Include="fARTAllgy.pas">
+      <Form>frmARTAllergy</Form>
+    </DCCReference>
+    <DCCReference Include="fARTFreeTextMsg.pas">
+      <Form>frmARTFreeTextMsg</Form>
+    </DCCReference>
+    <DCCReference Include="fAutoSz.pas">
+      <Form>frmAutoSz</Form>
+    </DCCReference>
+    <DCCReference Include="fBase508Form.pas">
+      <Form>frmBase508Form</Form>
+    </DCCReference>
+    <DCCReference Include="fClinicWardMeds.pas">
+      <Form>frmClinicWardMeds</Form>
+    </DCCReference>
+    <DCCReference Include="fCombatVet.pas">
+      <Form>frmCombatVet</Form>
+    </DCCReference>
+    <DCCReference Include="fCover.pas">
+      <Form>frmCover</Form>
+    </DCCReference>
+    <DCCReference Include="fDateRange.pas">
+      <Form>frmDateRange</Form>
+    </DCCReference>
+    <DCCReference Include="fDCSumm.pas">
+      <Form>frmDCSumm</Form>
+    </DCCReference>
+    <DCCReference Include="fDCSummProps.pas">
+      <Form>frmDCSummProperties</Form>
+    </DCCReference>
+    <DCCReference Include="fDefaultEvent.pas">
+      <Form>frmDefaultEvent</Form>
+    </DCCReference>
+    <DCCReference Include="fDeviceSelect.pas">
+      <Form>frmDeviceSelect</Form>
+    </DCCReference>
+    <DCCReference Include="fDrawers.pas">
+      <Form>frmDrawers</Form>
+    </DCCReference>
+    <DCCReference Include="fDupPts.pas">
+      <Form>frmDupPts</Form>
+    </DCCReference>
+    <DCCReference Include="fEffectDate.pas">
+      <Form>frmEffectDate</Form>
+    </DCCReference>
+    <DCCReference Include="fEncnt.pas">
+      <Form>frmEncounter</Form>
+    </DCCReference>
+    <DCCReference Include="fFrame.pas">
+      <Form>frmFrame</Form>
+    </DCCReference>
+    <DCCReference Include="fGraphData.pas">
+      <Form>frmGraphData</Form>
+    </DCCReference>
+    <DCCReference Include="fGraphOthers.pas">
+      <Form>frmGraphOthers</Form>
+    </DCCReference>
+    <DCCReference Include="fGraphProfiles.pas">
+      <Form>frmGraphProfiles</Form>
+    </DCCReference>
+    <DCCReference Include="fGraphs.pas">
+      <Form>frmGraphs</Form>
+    </DCCReference>
+    <DCCReference Include="fGraphSettings.pas">
+      <Form>frmGraphSettings</Form>
+    </DCCReference>
+    <DCCReference Include="fHP.pas">
+      <Form>frmHP</Form>
+    </DCCReference>
+    <DCCReference Include="fHSplit.pas">
+      <Form>frmHSplit</Form>
+    </DCCReference>
+    <DCCReference Include="fIconLegend.pas">
+      <Form>frmIconLegend</Form>
+    </DCCReference>
+    <DCCReference Include="fLabCollTimes.pas">
+      <Form>frmLabCollectTimes</Form>
+    </DCCReference>
+    <DCCReference Include="fLabInfo.pas">
+      <Form>frmLabInfo</Form>
+    </DCCReference>
+    <DCCReference Include="fLabPrint.pas">
+      <Form>frmLabPrint</Form>
+    </DCCReference>
+    <DCCReference Include="fLabs.pas">
+      <Form>frmLabs</Form>
+    </DCCReference>
+    <DCCReference Include="fLabTest.pas">
+      <Form>frmLabTest</Form>
+    </DCCReference>
+    <DCCReference Include="fLabTestGroups.pas">
+      <Form>frmLabTestGroups</Form>
+    </DCCReference>
+    <DCCReference Include="fLabTests.pas">
+      <Form>frmLabTests</Form>
+    </DCCReference>
+    <DCCReference Include="fLkUpLocation.pas">
+      <Form>frmLkUpLocation</Form>
+    </DCCReference>
+    <DCCReference Include="fMedCopy.pas">
+      <Form>frmMedCopy</Form>
+    </DCCReference>
+    <DCCReference Include="fMeds.pas">
+      <Form>frmMeds</Form>
+    </DCCReference>
+    <DCCReference Include="fMHTest.pas">
+      <Form>frmMHTest</Form>
+    </DCCReference>
+    <DCCReference Include="fNoteBA.pas">
+      <Form>frmNotesByAuthor</Form>
+    </DCCReference>
+    <DCCReference Include="fNoteBD.pas">
+      <Form>frmNotesByDate</Form>
+    </DCCReference>
+    <DCCReference Include="fNoteCPFields.pas">
+      <Form>frmNoteCPFields</Form>
+    </DCCReference>
+    <DCCReference Include="fNoteCslt.pas">
+      <Form>frmNoteConsult</Form>
+    </DCCReference>
+    <DCCReference Include="fNoteDR.pas">
+      <Form>frmNoteDelReason</Form>
+    </DCCReference>
+    <DCCReference Include="fNoteIDParents.pas">
+      <Form>frmNoteIDParents</Form>
+    </DCCReference>
+    <DCCReference Include="fNoteProps.pas">
+      <Form>frmNoteProperties</Form>
+    </DCCReference>
+    <DCCReference Include="fNotePrt.pas">
+      <Form>frmNotePrint</Form>
+    </DCCReference>
+    <DCCReference Include="fNotes.pas">
+      <Form>frmNotes</Form>
+    </DCCReference>
+    <DCCReference Include="fNotesBP.pas">
+      <Form>frmNotesBP</Form>
+    </DCCReference>
+    <DCCReference Include="fNoteST.pas">
+      <Form>frmNotesSearchText</Form>
+    </DCCReference>
+    <DCCReference Include="fNoteSTStop.pas">
+      <Form>frmSearchStop</Form>
+    </DCCReference>
+    <DCCReference Include="fPage.pas">
+      <Form>frmPage</Form>
+    </DCCReference>
+    <DCCReference Include="fPatientFlagMulti.pas">
+      <Form>frmFlags</Form>
+    </DCCReference>
+    <DCCReference Include="fPostings.pas">
+      <Form>frmPostings</Form>
+    </DCCReference>
+    <DCCReference Include="fPrintList.pas">
+      <Form>frmPrintList</Form>
+    </DCCReference>
+    <DCCReference Include="fPrintLocation.pas">
+      <Form>frmPrintLocation</Form>
+    </DCCReference>
+    <DCCReference Include="fProbCmt.pas">
+      <Form>frmProbCmt</Form>
+    </DCCReference>
+    <DCCReference Include="fProbEdt.pas">
+      <Form>frmdlgProb</Form>
+    </DCCReference>
+    <DCCReference Include="fProbFlt.pas">
+      <Form>frmPlVuFilt</Form>
+    </DCCReference>
+    <DCCReference Include="fProbLex.pas">
+      <Form>frmPLLex</Form>
+    </DCCReference>
+    <DCCReference Include="fProbs.pas">
+      <Form>frmProblems</Form>
+    </DCCReference>
+    <DCCReference Include="fPtCWAD.pas">
+      <Form>frmPtCWAD</Form>
+    </DCCReference>
+    <DCCReference Include="fPtDemo.pas">
+      <Form>frmPtDemo</Form>
+    </DCCReference>
+    <DCCReference Include="fPtSel.pas">
+      <Form>frmPtSel</Form>
+    </DCCReference>
+    <DCCReference Include="fPtSelDemog.pas">
+      <Form>frmPtSelDemog</Form>
+    </DCCReference>
+    <DCCReference Include="fPtSelMsg.pas">
+      <Form>frmPtSelMsg</Form>
+    </DCCReference>
+    <DCCReference Include="fPtSelOptns.pas">
+      <Form>frmPtSelOptns</Form>
+    </DCCReference>
+    <DCCReference Include="fPtSelOptSave.pas">
+      <Form>frmPtSelOptSave</Form>
+    </DCCReference>
+    <DCCReference Include="fPtSens.pas">
+      <Form>frmPtSens</Form>
+    </DCCReference>
+    <DCCReference Include="fRemCoverPreview.pas">
+      <Form>frmRemCoverPreview</Form>
+    </DCCReference>
+    <DCCReference Include="fRemCoverSheet.pas">
+      <Form>frmRemCoverSheet</Form>
+    </DCCReference>
+    <DCCReference Include="fReminderDialog.pas">
+      <Form>frmRemDlg</Form>
+    </DCCReference>
+    <DCCReference Include="fReminderTree.pas">
+      <Form>frmReminderTree</Form>
+    </DCCReference>
+    <DCCReference Include="fRemVisitInfo.pas">
+      <Form>frmRemVisitInfo</Form>
+    </DCCReference>
+    <DCCReference Include="fRename.pas">
+      <Form>frmRename</Form>
+    </DCCReference>
+    <DCCReference Include="fRenewOutMed.pas">
+      <Form>frmRenewOutMed</Form>
+    </DCCReference>
+    <DCCReference Include="fReports.pas">
+      <Form>frmReports</Form>
+    </DCCReference>
+    <DCCReference Include="fReportsAdhocComponent1.pas">
+      <Form>frmReportsAdhocComponent1</Form>
+    </DCCReference>
+    <DCCReference Include="fReportsAdhocSubItem1.pas">
+      <Form>frmReportsAdhocSubItem1</Form>
+    </DCCReference>
+    <DCCReference Include="fReportsPrint.pas">
+      <Form>frmReportPrt</Form>
+    </DCCReference>
+    <DCCReference Include="fReview.pas">
+      <Form>frmReview</Form>
+    </DCCReference>
+    <DCCReference Include="fRptBox.pas">
+      <Form>frmReportBox</Form>
+    </DCCReference>
+    <DCCReference Include="fSignItem.pas">
+      <Form>frmSignItem</Form>
+    </DCCReference>
+    <DCCReference Include="fSpellNotify.pas">
+      <Form>frmSpellNotify</Form>
+    </DCCReference>
+    <DCCReference Include="fSplash.pas">
+      <Form>frmSplash</Form>
+    </DCCReference>
+    <DCCReference Include="fSurgery.pas">
+      <Form>frmSurgery</Form>
+    </DCCReference>
+    <DCCReference Include="fSurgeryView.pas">
+      <Form>frmSurgeryView</Form>
+    </DCCReference>
+    <DCCReference Include="fTimeout.pas">
+      <Form>frmTimeout</Form>
+    </DCCReference>
+    <DCCReference Include="fTIUView.pas">
+      <Form>frmTIUView</Form>
+    </DCCReference>
+    <DCCReference Include="fVisit.pas">
+      <Form>frmVisit</Form>
+    </DCCReference>
+    <DCCReference Include="fvit.pas">
+      <Form>frmVit</Form>
+    </DCCReference>
+    <DCCReference Include="fVitals.pas">
+      <Form>frmVitals</Form>
+    </DCCReference>
+    <DCCReference Include="fxBroker.pas">
+      <Form>frmBroker</Form>
+    </DCCReference>
+    <DCCReference Include="fxLists.pas">
+      <Form>frmDbgList</Form>
+    </DCCReference>
+    <DCCReference Include="fxServer.pas">
+      <Form>frmDbgServer</Form>
+    </DCCReference>
+    <DCCReference Include="mCoPayDesc.pas">
+      <Form>fraCoPayDesc</Form>
+      <DesignClass>TFrame</DesignClass>
+    </DCCReference>
+    <DCCReference Include="mEvntDelay.pas">
+      <Form>fraEvntDelayList</Form>
+      <DesignClass>TFrame</DesignClass>
+    </DCCReference>
+    <DCCReference Include="mImgText.pas">
+      <Form>fraImgText</Form>
+      <DesignClass>TFrame</DesignClass>
+    </DCCReference>
+    <DCCReference Include="Options\fOptions.pas">
+      <Form>frmOptions</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsCombinations.pas">
+      <Form>frmOptionsCombinations</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsDays.pas">
+      <Form>frmOptionsDays</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsLists.pas">
+      <Form>frmOptionsLists</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsNewList.pas">
+      <Form>frmOptionsNewList</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsNotes.pas">
+      <Form>frmOptionsNotes</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsOther.pas">
+      <Form>frmOptionsOther</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsPatientSelection.pas">
+      <Form>frmOptionsPatientSelection</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsPrimaryList.pas">
+      <Form>frmOptionsPrimaryList</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsReminders.pas">
+      <Form>frmOptionsReminders</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsReportsCustom.pas">
+      <Form>frmOptionsReportsCustom</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsReportsDefault.pas">
+      <Form>frmOptionsReportsDefault</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsSubscribe.pas">
+      <Form>frmOptionsSubscribe</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsSurrogate.pas">
+      <Form>frmOptionsSurrogate</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsTeams.pas">
+      <Form>frmOptionsTeams</Form>
+    </DCCReference>
+    <DCCReference Include="Options\fOptionsTitles.pas">
+      <Form>frmOptionsTitles</Form>
+    </DCCReference>
+    <DCCReference Include="Options\rOptions.pas" />
+    <DCCReference Include="Options\uOptions.pas" />
+    <DCCReference Include="Orders\fIVRoutes.pas">
+      <Form>frmIVRoutes</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOCAccept.pas">
+      <Form>frmOCAccept</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOCMonograph.pas">
+      <Form>frmOCMonograph</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOCSession.pas">
+      <Form>frmOCSession</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODActive.pas">
+      <Form>frmODActive</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODAllgy.pas">
+      <Form>frmODAllergy</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODAuto.pas" />
+    <DCCReference Include="Orders\fODBase.pas">
+      <Form>frmODBase</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODBBank.pas">
+      <Form>frmODBBank</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODChangeEvtDisp.pas">
+      <Form>frmChangeEventDisp</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODChangeUnreleasedRenew.pas">
+      <Form>frmODChangeUnreleasedRenew</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODChild.pas">
+      <Form>frmODChild</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODDiet.pas">
+      <Form>frmODDiet</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODDietLT.pas">
+      <Form>frmODDietLT</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODGen.pas">
+      <Form>frmODGen</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODLab.pas">
+      <Form>frmODLab</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODLabImmedColl.pas">
+      <Form>frmODLabImmedColl</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODLabOthCollSamp.pas">
+      <Form>frmODLabOthCollSamp</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODLabOthSpec.pas">
+      <Form>frmODLabOthSpec</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODMedComplex.pas">
+      <Form>frmODMedComplex</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODMedFA.pas">
+      <Form>frmODMedFA</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODMedIn.pas">
+      <Form>frmODMedIn</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODMedIV.pas">
+      <Form>frmODMedIV</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODMedNVA.pas">
+      <Form>frmODMedNVA</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODMedOIFA.pas">
+      <Form>frmODMedOIFA</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODMedOut.pas">
+      <Form>frmODMedOut</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODMeds.pas">
+      <Form>frmODMeds</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODMessage.pas">
+      <Form>frmODMessage</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODMisc.pas">
+      <Form>frmODMisc</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODRad.pas">
+      <Form>frmODRad</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODRadApproval.pas">
+      <Form>frmODRadApproval</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODRadConShRes.pas">
+      <Form>frmODRadConShRes</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODRadImType.pas">
+      <Form>frmODRadImType</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODReleaseEvent.pas">
+      <Form>frmOrdersReleaseEvent</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODSaveQuick.pas">
+      <Form>frmODQuick</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODText.pas">
+      <Form>frmODText</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODValidateAction.pas">
+      <Form>frmInvalidActionList</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fODVitals.pas">
+      <Form>frmODVitals</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOMAction.pas">
+      <Form>frmOMAction</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOMHTML.pas">
+      <Form>frmOMHTML</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOMNavA.pas">
+      <Form>frmOMNavA</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOMProgress.pas">
+      <Form>frmOMProgress</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOMSet.pas">
+      <Form>frmOMSet</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOMVerify.pas">
+      <Form>frmOMVerify</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrderComment.pas">
+      <Form>frmWardComments</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrderFlag.pas">
+      <Form>frmFlagOrder</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrders.pas">
+      <Form>frmOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersAlert.pas">
+      <Form>frmAlertOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrderSaveQuick.pas">
+      <Form>frmSaveQuickOrder</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersComplete.pas">
+      <Form>frmCompleteOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersCopy.pas">
+      <Form>frmCopyOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersCV.pas">
+      <Form>frmChgEvent</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersDC.pas">
+      <Form>frmDCOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersEvntRelease.pas">
+      <Form>frmOrdersEvntRelease</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersHold.pas">
+      <Form>frmHoldOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersOnChart.pas">
+      <Form>frmOnChartOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersPrint.pas">
+      <Form>frmOrdersPrint</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersRefill.pas">
+      <Form>frmRefillOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersRelease.pas">
+      <Form>frmReleaseOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersRenew.pas">
+      <Form>frmRenewOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersSign.pas">
+      <Form>frmSignOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersTS.pas">
+      <Form>frmOrdersTS</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersUnhold.pas">
+      <Form>frmUnholdOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrdersVerify.pas">
+      <Form>frmVerifyOrders</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrderUnflag.pas">
+      <Form>frmUnflagOrder</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOrderVw.pas">
+      <Form>frmOrderView</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\fOtherSchedule.pas">
+      <Form>frmOtherSchedule</Form>
+    </DCCReference>
+    <DCCReference Include="Orders\rODAllergy.pas" />
+    <DCCReference Include="Orders\rODBase.pas" />
+    <DCCReference Include="Orders\rODDiet.pas" />
+    <DCCReference Include="Orders\rODLab.pas" />
+    <DCCReference Include="Orders\rODMeds.pas" />
+    <DCCReference Include="Orders\rODRad.pas" />
+    <DCCReference Include="Orders\rOrders.pas" />
+    <DCCReference Include="Orders\uODBase.pas" />
+    <DCCReference Include="Orders\uOrders.pas" />
+    <DCCReference Include="rCore.pas" />
+    <DCCReference Include="rCover.pas" />
+    <DCCReference Include="rDCSumm.pas" />
+    <DCCReference Include="rECS.pas" />
+    <DCCReference Include="rEventHooks.pas" />
+    <DCCReference Include="rGraphs.pas" />
+    <DCCReference Include="rLabs.pas" />
+    <DCCReference Include="rMeds.pas" />
+    <DCCReference Include="rMisc.pas" />
+    <DCCReference Include="rProbs.pas" />
+    <DCCReference Include="rReminders.pas" />
+    <DCCReference Include="rReports.pas" />
+    <DCCReference Include="rSurgery.pas" />
+    <DCCReference Include="rTIU.pas" />
+    <DCCReference Include="Templates\fFindingTemplates.pas">
+      <Form>frmFindingTemplates</Form>
+    </DCCReference>
+    <DCCReference Include="Templates\fTemplateAutoGen.pas">
+      <Form>frmTemplateAutoGen</Form>
+    </DCCReference>
+    <DCCReference Include="Templates\fTemplateDialog.pas">
+      <Form>frmTemplateDialog</Form>
+    </DCCReference>
+    <DCCReference Include="Templates\fTemplateEditor.pas">
+      <Form>frmTemplateEditor</Form>
+    </DCCReference>
+    <DCCReference Include="Templates\fTemplateFieldEditor.pas">
+      <Form>frmTemplateFieldEditor</Form>
+    </DCCReference>
+    <DCCReference Include="Templates\fTemplateFields.pas">
+      <Form>frmTemplateFields</Form>
+    </DCCReference>
+    <DCCReference Include="Templates\fTemplateImport.pas">
+      <Form>frmTemplateImport</Form>
+    </DCCReference>
+    <DCCReference Include="Templates\fTemplateObjects.pas">
+      <Form>frmTemplateObjects</Form>
+    </DCCReference>
+    <DCCReference Include="Templates\fTemplateView.pas">
+      <Form>frmTemplateView</Form>
+    </DCCReference>
+    <DCCReference Include="Templates\mTemplateFieldButton.pas">
+      <Form>fraTemplateFieldButton</Form>
+      <DesignClass>TFrame</DesignClass>
+    </DCCReference>
+    <DCCReference Include="Templates\rTemplates.pas" />
+    <DCCReference Include="Templates\uTemplateFields.pas" />
+    <DCCReference Include="Templates\uTemplates.pas" />
+    <DCCReference Include="uCaseTree.pas" />
+    <DCCReference Include="uCombatVet.pas" />
+    <DCCReference Include="uConst.pas" />
+    <DCCReference Include="uCore.pas" />
+    <DCCReference Include="uDCSumm.pas" />
+    <DCCReference Include="uDlgComponents.pas" />
+    <DCCReference Include="uDocTree.pas" />
+    <DCCReference Include="uEventHooks.pas" />
+    <DCCReference Include="uFormMonitor.pas" />
+    <DCCReference Include="uGraphs.pas" />
+    <DCCReference Include="uInit.pas" />
+    <DCCReference Include="uOrPtf.pas" />
+    <DCCReference Include="uProbs.pas" />
+    <DCCReference Include="uReminders.pas" />
+    <DCCReference Include="uReports.pas" />
+    <DCCReference Include="uSignItems.pas" />
+    <DCCReference Include="uSpell.pas" />
+    <DCCReference Include="uSurgery.pas" />
+    <DCCReference Include="uTIU.pas" />
+    <DCCReference Include="uVA508CPRSCompatibility.pas" />
+    <DCCReference Include="VERGENCECONTEXTORLib_TLB.pas" />
+    <DCCReference Include="Vitals\fVitalsDate.pas">
+      <Form>frmVitalsDate</Form>
+    </DCCReference>
+    <DCCReference Include="Vitals\rVitals.pas" />
+    <DCCReference Include="Vitals\uVitals.pas" />
+    <DCCReference Include="XuDigSigSC_TLB.pas" />
+  </ItemGroup>
+</Project>

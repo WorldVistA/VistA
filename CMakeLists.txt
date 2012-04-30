@@ -63,3 +63,6 @@ add_subdirectory("Packages/RPC Broker/BDK" BDK)
 add_subdirectory("Packages/Order Entry Results Reporting/CPRS" CPRS)
 
 include(CTest)
+if(BUILD_TESTING)
+  add_subdirectory("Testing/CPRS" CPRSTesting)
+endif()
