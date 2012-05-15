@@ -301,7 +301,7 @@ class PlatformDependentGenericRoutine(Routine):
         pass
     def addMarkedItems(self, markedItem):
         pass
-    def addCalledRoutines(self, routine, tag=None):
+    def addCalledRoutines(self, routine, tag=None, lineOccurance=None):
         pass
     def hasSourceCode(self):
         return False
@@ -318,59 +318,476 @@ class PlatformDependentGenericRoutine(Routine):
     def getAllPlatformDepRoutines(self):
         return self._platformRoutines
 #===============================================================================
-# # class to represent a global variable
+# # class to represent A FileMan File
 #===============================================================================
-class Global:
+class FileManFile(object):
+    def __init__(self, fileNo, fileManName, parentFile = None):
+        self._fileNo = None
+        self._fileManName = fileManName
+        self._parentFile = parentFile
+        self._fields = None # dict of all fields
+        self._subFiles = None  # dict of all subFiles
+        self._description = None # description of fileMan file
+        self.setFileNo(fileNo)
+        self._description = None
+    def getFileNo(self):
+        return self._fileNo
+    def setFileNo(self, fileNo):
+        if fileNo:
+            try:
+                floatFileNo = float(fileNo)
+                self._fileNo = fileNo
+            except ValueError:
+                self._fileNo = None
+        else:
+            self._fileNo = None
+    def getFileManName(self):
+        return self._fileManName
+    def setFileManName(self, fileManName):
+        self._fileManName = fileManName
+    def addFileManField(self, FileManField):
+        if not self._fields:
+            self._fields = dict()
+        self._fields[FileManField.getFieldNo()] = FileManField
+    def getAllFileManFields(self):
+        return self._fields
+    def addFileManSubFile(self, FileManSubFile):
+        if not self._subFiles:
+            self._subFiles = dict()
+        self._subFiles[FileManSubFile.getFileNo()] = FileManSubFile
+    def hasSubFile(self):
+        return self._subFiles and len(self._subFiles) > 0
+    def getAllSubFiles(self):
+        return self._subFiles
+    def isRootFile(self):
+        return self._parentFile == None
+    def isSubFile(self):
+        return not self.isRootFile()
+    def getParentFile(self):
+        return self._parentFile
+    def getSubFileByFileNo(self, fileNo):
+        if not self._subFiles:
+            return None
+        return self._subFiles.get(fileNo)
+    def getFileManFieldByFieldNo(self, fieldNo):
+        if not self._fields:
+            return None
+        return self._fields.get(fieldNo)
+    def getDescription(self):
+        return self._description
+    def setDescription(self, description):
+        self._description = description
+    def printFileManInfo(self):
+        self.printFileManDescription()
+        self.printFileManFields()
+        self.printFileManSubFiles()
+    def printFileManDescription(self):
+        if not self._description or len(self._description) == 0:
+            return
+        write("\n################################################\n")
+        write("%s %s\n" % (self._fileNo, "Description"))
+        for line in self._description:
+            write(line + "\n")
+    def printFileManFields(self):
+        if not self._fields or len(self._fields) == 0:
+            return
+        write("################################################\n")
+        write("%s: Total # of FileMan Fields: %d\n" % (self._fileNo, len(self._fields)))
+        for field in self._fields.itervalues():
+            field.printResult()
+        write("\n")
+    def printFileManSubFiles(self):
+        if not self._subFiles or len(self._subFiles) == 0:
+            return
+        write("\n################################################\n")
+        write("%s: Total # of FileMan SubFiles: %d\n" % (self._fileNo, len(self._subFiles)))
+        for subFile in self._subFiles.itervalues():
+            write(" %s(%s) " % (subFile.getFileNo(), subFile.getParentFile().getFileNo()))
+        write("\n")
+        for subFile in self._subFiles.itervalues():
+            subFile.printFileManInfo()
+        write("\n")
+    #===========================================================================
+    # operator
+    #===========================================================================
+    def __str__(self):
+        return self._fileNo
+    def __repr__(self):
+        return "File: %s, Name: %s" % (self._fileNo, self._fileManName)
+#===============================================================================
+# # class to represent a Field in FileMan File
+#===============================================================================
+class FileManField(object):
+    FIELD_TYPE_NONE = 0 # Field has No Type, normally just a place hold
+    FIELD_TYPE_DATE_TIME = 1
+    FIELD_TYPE_NUMBER = 2
+    FIELD_TYPE_SET = 3
+    FIELD_TYPE_FREE_TEXT = 4
+    FIELD_TYPE_WORD_PROCESSING = 5
+    FIELD_TYPE_COMPUTED = 6
+    FIELD_TYPE_FILE_POINTER = 7
+    FIELD_TYPE_VARIABLE_FILE_POINTER = 8
+    FIELD_TYPE_SUBFILE_POINTER = 9
+    FIELD_TYPE_MUMPS = 10
+    FIELD_TYPE_LAST = 11
+    def __init__(self, fieldNo, name, fType ,location = None):
+        self._fieldNo = None
+        self.setFieldNo(fieldNo)
+        self._name = name
+        self._loc = location
+        self._type = fType
+        self._typeName = None
+        self._indexName = None
+        self._propList = None # store extra information is name value pair format
+        # attributes
+        self._isRequired = False
+        self._isAudited = False
+        self._isAddNewEntryWithoutAsking = False
+        self._isMultiplyAsked = False
+        self._isKeyField = False
+    def setFieldNo(self, fieldNo):
+        if fieldNo:
+            try:
+                floatFieldNo = float(fieldNo)
+                self._fieldNo = fieldNo
+            except ValueError:
+                self._fieldNo = None
+        else:
+            self._fieldNo = None
+    def getName(self):
+        return self._name
+    def getLocation(self):
+        return self._loc
+    def getType(self):
+        return self._type
+    def getFieldNo(self):
+        return self._fieldNo
+    def setType(self, fType):
+        self._type = fType
+    def getTypeName(self):
+        return self._typeName
+    def setTypeName(self, typeName):
+        self._typeName = typeName
+    def getIndexName(self):
+        return self._indexName
+    def setIndexName(self, index):
+        self._indexName = index
+    def setRequired(self, required):
+        self._isRequired = required
+    def setAudited(self, audited):
+        self._isAudited = audited
+    def setAddNewEntryWithoutAsking(self, value):
+        self._isAddNewEntryWithoutAsking = value
+    def setMultiplyAsked(self, value):
+        self._isMultiplyAsked = value
+    def isRequired(self):
+        return self._isRequired
+    def isAudited(self):
+        return self._isAudited
+    def isAddNewEntryWithoutAsking(self):
+        return self._isAddNewEntryWithoutAsking
+    def isMultiplyAsked(self):
+        return self._isMultiplyAsked
+    def isKeyField(self):
+        return self._isKeyField
+    def addProp(propName, propValue):
+        if not self._propList: self._propList = []
+        value = self.getProp(propName)
+        if not value:
+            self.append((propName, [propValue]))
+        else:
+            value.append(propValue)
+    def hasProp(propName):
+        if not self._propList: return False
+        for item in self._propList:
+            if item[0] == propName:
+                return True
+        return False
+    def getProp(propName):
+        if not self._propList: return None
+        for item in self._propList:
+            if item[0] == propName:
+                return item[1]
+        return None
+    def printResult(self):
+        return write("%r\n" % self)
+    # type checking method
+    def isFilePointerType(self):
+        return self._type == self.FIELD_TYPE_FILE_POINTER
+    def isSubFilePointerType(self):
+        return self._type == self.FIELD_TYPE_SUBFILE_POINTER
+    def isVariablePointerType(self):
+        return self._type == self.FIELD_TYPE_VARIABLE_FILE_POINTER
+    def isWordProcessingType(self):
+        return self._type == self.FIELD_TYPE_WORD_PROCESSING_TYPE
+    def isSetType(self):
+        return self._type == self.FIELD_TYPE_SET
+    #===========================================================================
+    # operator
+    #===========================================================================
+    def __str__(self):
+        return self._fieldNo
+    def __repr__(self):
+        return ("%s, %s, %s, %s" % (self.getFieldNo(),
+                                    self.getName(),
+                                    self.getLocation(),
+                                    self.getTypeName()))
+#===============================================================================
+# # A series of subclass of FileManField based on type
+#===============================================================================
+class FileManNoneTypeField(FileManField):
+    def __init__(self, fieldNo, name, fType ,location = None):
+        assert fType == self.FIELD_TYPE_NONE
+        FileManField.__init__(self, fieldNo, name, fType ,location)
+
+class FileManDateTimeTypeField(FileManField):
+    def __init__(self, fieldNo, name, fType ,location = None):
+        assert fType == self.FIELD_TYPE_DATE_TIME
+        FileManField.__init__(self, fieldNo, name, fType ,location)
+
+class FileManNumberTypeField(FileManField):
+    def __init__(self, fieldNo, name, fType ,location = None):
+        assert fType == self.FIELD_TYPE_NUMBER
+        FileManField.__init__(self, fieldNo, name, fType ,location)
+
+class FileManSetTypeField(FileManField):
+    def __init__(self, fieldNo, name, fType ,location = None):
+        assert fType == self.FIELD_TYPE_SET
+        FileManField.__init__(self, fieldNo, name, fType ,location)
+        self._setMembers = []
+    def getSetMembers(self):
+        return self._setMembers
+    def setSetMembers(self, memList):
+        self._setMembers = memList
+    def __repr__(self):
+        return ("%s, %s, %s, %s, %s" % (self.getFieldNo(),
+                                      self.getName(),
+                                      self.getLocation(),
+                                      self.getTypeName(),
+                                      self._setMembers))
+
+class FileManFreeTextTypeField(FileManField):
+    def __init__(self, fieldNo, name, fType ,location = None):
+        assert fType == self.FIELD_TYPE_FREE_TEXT
+        FileManField.__init__(self, fieldNo, name, fType ,location)
+
+class FileManWordProcessingTypeField(FileManField):
+    def __init__(self, fieldNo, name, fType ,location = None):
+        assert fType == self.FIELD_TYPE_WORD_PROCESSING
+        FileManField.__init__(self, fieldNo, name, fType ,location)
+        self._isNoWrap = False
+        self._ignorePipe = False
+    def setNoWrap(self, noWrap):
+        self._isNoWrap = noWrap
+    def getNoWrap(self):
+        return self._isNoWrap
+    def __repr__(self):
+        return ("%s, %s, %s, %s, %s, %s" % (self.getFieldNo(),
+                                      self.getName(),
+                                      self.getLocation(),
+                                      self.getTypeName(),
+                                      self._isNoWrap,
+                                      self._ignorePipe))
+
+class FileManComputedTypeField(FileManField):
+    def __init__(self, fieldNo, name, fType ,location = None):
+        assert fType == self.FIELD_TYPE_COMPUTED
+        assert location == None
+        FileManField.__init__(self, fieldNo, name, fType ,location)
+
+class FileManFilePointerTypeField(FileManField):
+    def __init__(self, fieldNo, name, fType ,location = None):
+        assert fType == self.FIELD_TYPE_FILE_POINTER
+        FileManField.__init__(self, fieldNo, name, fType ,location)
+        self._filePointedTo = None
+    def setPointedToFile(self, filePointedTo):
+        assert isinstance(filePointedTo, FileManFile)
+        self._filePointedTo = filePointedTo
+    def getPointedToFile(self):
+        return self._filePointedTo
+    def __repr__(self):
+        return ("%s, %s, %s, %s, %s" % (self.getFieldNo(),
+                                      self.getName(),
+                                      self.getLocation(),
+                                      self.getTypeName(),
+                                      self._filePointedTo))
+
+class FileManVariablePointerTypeField(FileManField):
+    def __init__(self, fieldNo, name, fType ,location = None):
+        assert fType == self.FIELD_TYPE_VARIABLE_FILE_POINTER
+        FileManField.__init__(self, fieldNo, name, fType ,location)
+        self._pointedToFiles = []
+    def setPointedToFiles(self, pointedToFiles):
+        self._pointedToFiles = pointedToFiles
+    def getPointedToFiles(self):
+        return self._pointedToFiles
+    def __repr__(self):
+        return ("%s, %s, %s, %s, %s" % (self.getFieldNo(),
+                                      self.getName(),
+                                      self.getLocation(),
+                                      self.getTypeName(),
+                                      self._pointedToFiles))
+
+class FileManSubFileTypeField(FileManField):
+    def __init__(self, fieldNo, name, fType ,location = None):
+        assert fType == self.FIELD_TYPE_SUBFILE_POINTER
+        FileManField.__init__(self, fieldNo, name, fType ,location)
+        self._pointedToSubFile= None
+    def setPointedToSubFile(self, pointedToSubFile):
+        assert isinstance(pointedToSubFile, FileManFile)
+        assert not pointedToSubFile.isRootFile()
+        self._pointedToSubFile = pointedToSubFile
+    def getPointedToSubFile(self):
+        return self._pointedToSubFile
+    def __repr__(self):
+        return ("%s, %s, %s, %s, %s" % (self.getFieldNo(),
+                                      self.getName(),
+                                      self.getLocation(),
+                                      self.getTypeName(),
+                                      self._pointedToSubFile))
+
+class FileManMumpsTypeField(FileManField):
+    def __init__(self, fieldNo, name, fType ,location = None):
+        assert fType == self.FIELD_TYPE_MUMPS
+        FileManField.__init__(self, fieldNo, name, fType ,location)
+
+class FileManFieldFactory:
+    _creationTuple_ = (FileManNoneTypeField, FileManDateTimeTypeField,
+                       FileManNumberTypeField, FileManSetTypeField,
+                       FileManFreeTextTypeField, FileManWordProcessingTypeField,
+                       FileManComputedTypeField, FileManFilePointerTypeField,
+                       FileManVariablePointerTypeField, FileManSubFileTypeField,
+                       FileManMumpsTypeField)
+    @staticmethod
+    def createField(fieldNo, name, fType, location = None):
+        assert (fType >= FileManField.FIELD_TYPE_NONE and
+                fType < FileManField.FIELD_TYPE_LAST)
+        return FileManFieldFactory._creationTuple_[fType](fieldNo, name, fType, location)
+#===============================================================================
+# # class to represent a global variable inherits FileManFile
+#===============================================================================
+class Global(FileManFile):
     #constructor
     def __init__(self, globalName,
-                 description=None,
-                 package=None,
-                 fileNo=None):
+                 fileNo=None,
+                 fileManName = None,
+                 package=None):
+        FileManFile.__init__(self, fileNo, fileManName)
         self._name = globalName
-        self._description = description
         self._package = package
-        self._references = dict() # accessed by routines
-        self._totalReferenced = 0
-        self._fileNo = fileNo
+        self._referencesRoutines = dict() # accessed by routines
+        self._filePointers = dict() # pointer to some other file
+        self._filePointedBy = dict() # pointed to by some other files
+        self._totalReferencedRoutines = 0
+        self._totalReferencedGlobals = 0
+        self._totalReferredGlobals = 0
     def setName(self, globalName):
         self._name = globalName
     def getName(self):
         return self._name
+    def getTotalNumberOfReferencedRoutines(self):
+        return self._totalReferencedRoutines
     def getAllReferencedRoutines(self):
-        return self._references
+        return self._referencesRoutines
+    def getTotalNumberOfReferencedGlobals(self):
+        return self._totalReferencedGlobals
+    def getAllReferencedFileManFiles(self):
+        return self._filePointedBy
+    def getTotalNumberOfReferredGlobals(self):
+        return self._totalReferredGlobals
+    def getAllReferredFileManFiles(self):
+        return self._filePointers
+    def hasPointerToFileManFile(self, fileManFile, fileManFieldNo, subFileNo):
+        return self.__hasFileManFileDependency__(fileManFile, fileManFieldNo, subFileNo, False)
+    def isPointedToByFileManFile(self, fileManFile, fileManFieldNo, subFileNo):
+        return self.__hasFileManFileDependency__(fileManFile, fileManFieldNo, subFileNo, True)
+    def __hasFileManFileDependency__(self, fileManFile, fileManFieldNo, subFileNo, isPointedToBy = True):
+        assert isinstance(fileManFile, Global),  "Must be a Global instance, [%s]" % fileManFile
+        package = fileManFile.getPackage()
+        if not package:
+            return False
+        filePointerDeps = self._filePointedBy
+        if not isPointedToBy:
+            filePointerDeps = self._filePointers
+        if package not in filePointerDeps:
+            return False
+        if fileManFile in filePointerDeps[package]:
+            return (fileManFieldNo, subFileNo) in filePointerDeps[package][fileManFile]
+        return False
     def addReferencedRoutine(self, routine):
         if not routine:
             return
         package = routine.getPackage()
         if not package:
             return
-        if package not in self._references:
-            self._references[package] = set()
-        self._references[package].add(routine)
-        self._totalReferenced = self._totalReferenced + 1
+        if package not in self._referencesRoutines:
+            self._referencesRoutines[package] = set()
+        self._referencesRoutines[package].add(routine)
+        self._totalReferencedRoutines = self._totalReferencedRoutines + 1
     def getReferredRoutineByPackage(self, package):
-        return self._references.get(package)
+        return self._referencesRoutines.get(package)
+    def addPointedToByFile(self, Global, fieldNo, subFileNo=None):
+        self.__addReferenceGlobalFilesCommon__(Global, fieldNo, subFileNo, True)
+        Global.__addPointedToFiles__(self, fieldNo, subFileNo)
+    def getPointedByFilesByPackage(self, Package):
+        return self._filePointedBy.get(package)
+    def __addPointedToFiles__(self, Global, fieldNo, subFileNo):
+        self.__addReferenceGlobalFilesCommon__(Global, fieldNo, subFileNo, False)
+    def __addReferenceGlobalFilesCommon__(self, Global, fieldNo, subFileNo, pointedToBy=True):
+        if not Global:
+            return
+        package = Global.getPackage()
+        if not package:
+            return
+        depFileDict = self._filePointedBy
+        if not pointedToBy:
+            depFileDict = self._filePointers
+        if package not in depFileDict:
+            depFileDict[package] = dict()
+        if Global not in depFileDict[package]:
+            depFileDict[package][Global] = []
+            if pointedToBy:
+              self._totalReferredGlobals = self._totalReferredGlobals + 1
+              Global._totalReferencedGlobals = Global._totalReferencedGlobals + 1
+        depFileDict[package][Global].append((fieldNo, subFileNo))
+    def getPointedToFilesByPackage(self, Package):
+        return self._filePointers.get(Package)
     def setPackage(self, package):
         self._package = package
-    def setDescription(self, description):
-        self._description = description
-    def setFileNo(self, fileNo):
-        self._fileNo = fileNo
-    def getFileNo(self):
-        return self._fileNo
-    def getDescription(self):
-        return self._description
+    def isFileManFile(self):
+        return self.getFileNo() != None
     def getPackage(self):
         return self._package
     def printResult(self):
-        write("Name:[%s], FileNo:[%s]: Des:[%s], Package:[%s]\n" %
-              (self._name, self._fileNo, self._description, self._package))
-        write("Referenced By:\n")
-        for (package, routineSet) in self._references.iteritems():
-            write("Package: %s " % package)
+        write("Name:[%s], FileNo:[%s]: FileManName:[%s], Package:[%s]\n" %
+              (self._name, self._fileNo, self._fileManName, self._package))
+        #self.printReferencedRoutines()
+        self.printFileManFileDependencies()
+        if self.isFileManFile:
+            self.printFileManInfo()
+    def printReferencedRoutines(self):
+        write("Referenced By Routines: %d\n" % self._totalReferencedRoutines)
+        for (package, routineSet) in self._referencesRoutines.iteritems():
+            write("Package: %s Total: %d" % (package, len(routineSet)))
             for routine in routineSet:
                 write(" %s" % routine)
             write("\n")
+        write("################################################\n")
+    def printFileManFileDependencies(self):
+        write("Pointed By FileMan Files: %d\n" % self._totalReferredGlobals)
+        for (package, filePointerDict) in self._filePointedBy.iteritems():
+            write("Package: %s Total: %d" % (package, len(filePointerDict)))
+            for (Global, detailList) in filePointerDict.iteritems():
+                write(" %s:%s" % (Global.getFileNo(), detailList))
+            write("\n")
+        write("################################################\n")
+        write("Pointers to FileMan Files: %d\n" % self._totalReferencedGlobals)
+        for (package, filePointerDict) in self._filePointers.iteritems():
+            write("Package: %s Total: %d" % (package, len(filePointerDict)))
+            for (Global, detailList) in filePointerDict.iteritems():
+                write(" %s:%s" % (Global.getFileNo(), detailList))
+            write("\n")
+        write("\n")
     #===========================================================================
     # operator
     #===========================================================================
@@ -404,8 +821,9 @@ class Global:
         return self._name != other._name
     def __hash__(self):
         return self._name.__hash__()
+
 #===============================================================================
-# # class to represent a VistA _package
+# # class to represent a VistA Package
 #===============================================================================
 class Package:
     #constructor
@@ -419,6 +837,8 @@ class Package:
         self._routineDependents = dict()
         self._globalDependencies = dict()
         self._globalDependents = dict()
+        self._fileManDependencies = dict()
+        self._fileManDependents = dict()
         self._origName = packageName
         self._docLink = ""
         self._docMirrorLink = ""
@@ -445,6 +865,10 @@ class Package:
     def setOriginalName(self, origName):
         self._origName = origName
     def generatePackageDependencies(self):
+        self.generateRoutineBasedDependencies()
+        self.generateFileManFileBasedDependencies()
+    def generateRoutineBasedDependencies(self):
+        # build routine based dependencies
         for routine in self._routines.itervalues():
             calledRoutines = routine.getCalledRoutines()
             for package in calledRoutines.iterkeys():
@@ -462,6 +886,7 @@ class Package:
                     package._routineDependents[self][0].add(routine)
                     package._routineDependents[self][1].update(calledRoutines[package])
             referredGlobals = routine.getReferredGlobal()
+            # based in referred Globals
             for globalVar in referredGlobals.itervalues():
                 package = globalVar.getPackage()
                 if package != self and package._name != UNKNOWN_PACKAGE:
@@ -473,6 +898,69 @@ class Package:
                         package._globalDependents[self] = (set(), set())
                     package._globalDependents[self][0].add(routine)
                     package._globalDependents[self][1].add(globalVar)
+    def generateFileManFileBasedDependencies(self):
+        # build fileman file based dependencies
+        self.__correctFileManFilePointerDependencies__()
+        for Global in self._globals.itervalues():
+            if not Global.isFileManFile(): # only care about the file man file now
+                continue
+            pointerToFiles = Global.getAllReferredFileManFiles()
+            for package in pointerToFiles.iterkeys():
+                if package != self and package._name != UNKNOWN_PACKAGE:
+                    if package not in self._fileManDependencies:
+                        self._fileManDependencies[package] = (set(), set())
+                    self._fileManDependencies[package][0].add(Global)
+                    self._fileManDependencies[package][1].update(pointerToFiles[package])
+                    if self not in package._fileManDependents:
+                        package._fileManDependents[self] = (set(), set())
+                    package._fileManDependents[self][0].add(Global)
+                    package._fileManDependents[self][1].update(pointerToFiles[package])
+    # this routine will correct any inconsistence caused by parsing logic
+    def __correctFileManFilePointerDependencies__(self):
+        for Global in self._globals.itervalues():
+            if not Global.isFileManFile(): # only care about the file man file now
+                continue
+            self.__checkIndividualFileManPointers__(Global)
+    def __checkIndividualFileManPointers__(self, Global, subFile = None):
+        currentGlobal = Global
+        if subFile: currentGlobal = subFile
+        allFileManFields = currentGlobal.getAllFileManFields()
+        # get all fields of the current global
+        if allFileManFields:
+            for field in allFileManFields.itervalues():
+                if field.isFilePointerType():
+                    fileManFile = field.getPointedToFile()
+                    self.__checkFileManPointerField__(field, fileManFile, Global, subFile)
+                    continue
+                if field.isVariablePointerType():
+                    fileManFiles = field.getPointedToFiles()
+                    for fileManFile in fileManFiles:
+                        self.__checkFileManPointerField__(field, fileManFile, Global, subFile)
+                    continue
+        else:
+            logger.warn("[%s] does not have any fields" % currentGlobal)
+        if not subFile:
+            # get all subfiles of current globals
+            allSubFiles = Global.getAllSubFiles()
+            if not allSubFiles: return
+            for subFile in allSubFiles.itervalues():
+                self.__checkIndividualFileManPointers__(Global, subFile)
+    def __checkFileManPointerField__(self, field, fileManFile, Global, subFile = None):
+        if not fileManFile:
+            logger.warning("Invalid fileMan File pointed to by field:[%s], Global:[%s], subFile:[%s]" % (field, Global, subFile))
+            return
+        # make sure that fileManFile is in the Global' filePointers
+        fieldNo = field.getFieldNo()
+        subFileNo = None
+        if subFile: subFileNo = subFile.getFileNo()
+        if not Global.hasPointerToFileManFile(fileManFile, fieldNo, subFileNo):
+            logger.warning("Global[%r] does not have a pointer to [%r] at [%s]:[%s]" % (Global, fileManFile, fieldNo, subFileNo))
+            fileManFile.addPointedToByFile(Global, fieldNo, subFileNo)
+            return
+        if not fileManFile.isPointedToByFileManFile(Global, fieldNo, subFileNo):
+            logger.warning("FileMan file[%r] does not pointed to by [%r] at [%s]:[%s]" % (fileManFile, Global, fieldNo, subFileNo))
+            fileManFile.addPointedToByFile(Global, fieldNo, subFileNo)
+            return
     def getPackageRoutineDependencies(self):
         return self._routineDependencies
     def getPackageRoutineDependents(self):
@@ -481,6 +969,10 @@ class Package:
         return self._globalDependencies
     def getPackageGlobalDependents(self):
         return self._globalDependents
+    def getPackageFileManFileDependencies(self):
+        return self._fileManDependencies
+    def getPackageFileManFileDependents(self):
+        return self._fileManDependents
     def addNamespace(self, namespace):
         self._namespaces.append(namespace)
     def addNamespaceList(self, namespaceList):
@@ -535,6 +1027,24 @@ class Package:
                 write (" %s " % (globalVar))
             write("]\n")
         write("\n")
+    def printFileManFileDependency(self, dependencyList=True):
+        if dependencyList:
+            header = "FileMan File Dependencies list"
+            depPackages = self._fileManDependencies
+        else:
+            header = "FileMan File Dependents list"
+            depPackages = self._fileManDependents
+        write("Package %s: \n" % header)
+        for package, depFileManTuple in depPackages.iteritems():
+            write(" %s: Total Files Pointed To By: %d [ " % (package, len(depFileManTuple[0])))
+            for globalVar in depFileManTuple[0]:
+                write (" %s " % (globalVar))
+            write("]\n")
+            write(" %s: Total File Pointer To : %d [ " % (package, len(depFileManTuple[1])))
+            for globalVar in depFileManTuple[1]:
+                write (" %s " % (globalVar))
+            write("]\n")
+        write("\n")
     def printResult(self):
         write("Package :%s, total Num of Routines: %d, Total Num of Globals: %d\n" %
               (self, len(self._routines), len(self._globals)))
@@ -554,6 +1064,8 @@ class Package:
         self.printRoutineDependency(False)
         self.printGlobalDependency(True)
         self.printGlobalDependency(False)
+        self.printFileManFileDependency(True)
+        self.printFileManFileDependency(False)
     #===========================================================================
     # operator
     #===========================================================================
@@ -636,6 +1148,7 @@ class CrossReference:
         self._allRoutines = dict()
         self._orphanRoutines = set()
         self._allGlobals = dict()
+        self._allFileManGlobals = dict() # Globals that are managed by FileMan
         self._orphanGlobals = set()
         self._percentRoutine = set()
         self._percentRoutineMapping = dict()
@@ -651,6 +1164,8 @@ class CrossReference:
         return self._orphanRoutines
     def getAllGlobals(self):
         return self._allGlobals
+    def getAllFileManGlobals(self):
+        return self._allFileManGlobals
     def getOrphanGlobals(self):
         return self._orphanGlobals
     def hasPackage(self, packageName):
@@ -665,9 +1180,6 @@ class CrossReference:
     def addRoutineByName(self, routineName):
         if not self.hasRoutine(routineName):
             self._allRoutines[routineName] = Routine(routineName)
-    def addGlobalByName(self, globalName):
-        if not self.hasGlobal(globalName):
-            self._allGlobals[globalName] = Global(globalName)
     def getRoutineByName(self, routineName):
         if self.isPlatformDependentRoutineByName(routineName):
             return self.getPlatformDependentRoutineByName(routineName)
@@ -676,6 +1188,8 @@ class CrossReference:
         return self._allPackages.get(packageName)
     def getGlobalByName(self, globalName):
         return self._allGlobals.get(globalName)
+    def getGlobalByFileNo(self, globalFileNo):
+        return self._allFileManGlobals.get(float(globalFileNo))
     def addRoutineToPackageByName(self, routineName, packageName, hasSourceCode=True):
         if packageName not in self._allPackages:
             self._allPackages[packageName] = Package(packageName)
@@ -697,6 +1211,12 @@ class CrossReference:
         if globalVar.getName() not in self._allGlobals:
             self._allGlobals[globalVar.getName()] = globalVar
         self._allPackages[packageName].addGlobal(globalVar)
+        # also added to fileMan Globals
+        fileNo = globalVar.getFileNo()
+        if fileNo:
+            realFileNo = float(fileNo)
+            if realFileNo not in self._allFileManGlobals:
+                self._allFileManGlobals[realFileNo] = globalVar
     def addToOrphanRoutinesByName(self, routineName):
         if not self.hasRoutine(routineName):
             self._orphanRoutines.add(routineName)
@@ -764,25 +1284,31 @@ class CrossReference:
     # should be using trie structure for quick find, but
     # as python does not have trie and seems to be OK now
     def categorizeRoutineByNamespace(self, routineName):
+        return self.__categorizeVariableNameByNamespace__(routineName)
+    def categorizeGlobalByNamespace(self, globalName):
+        return self.__categorizeVariableNameByNamespace__(globalName, True)
+    def __categorizeVariableNameByNamespace__(self, variableName, isGlobal = False):
         for package in self._allPackages.itervalues():
             hasMatch = False
             matchNamespace = ""
+            if isGlobal:
+                for globalNameSpace in package.getGlobalNamespace():
+                    if variableName.startswith(globalNameSpace):
+                        return (globalNameSpace, package)
             for namespace in package.getNamespaces():
-                if routineName.startswith(namespace):
+                if variableName.startswith(namespace):
                     hasMatch = True
                     matchNamespace = namespace
                 if namespace.startswith("!"):
                     if not hasMatch:
                         break
-                    elif routineName.startswith(namespace[1:]):
+                    elif variableName.startswith(namespace[1:]):
                         hasMatch = False
                         matchNamespace = ""
                         break
             if hasMatch:
                 return (matchNamespace, package)
         return (None, None)
-    def categorizeGlobalByNamespace(self, globalName):
-        pass
     def routineHasSourceCodeByName(self, routineName):
         routine = self.getRoutineByName(routineName)
         return routine and routine.hasSourceCode()
@@ -880,6 +1406,23 @@ def testGlobal():
     assert globalA != globalB
     assert globalA == anotherA
     assert routineA != globalA
+    # Testing fileMan global referencing
+    pTestA = Package("TestA")
+    pTestB = Package("TestB")
+    gPackage = Global("Package", "9.4", pTestA, "Package Test")
+    gDialog = Global("Dialog", ".84", pTestB, "Dialog Test")
+    gInstall = Global("Install", "9.7", pTestB, "Install Test")
+    gBuild = Global("Build", "9.6", pTestA, "Build Test")
+    gPackage.addPointedToByFile(gDialog, "0.1")
+    gPackage.addPointedToByFile(gInstall, "45.1")
+    gPackage.addPointedToByFile(gBuild, "23.1")
+    gPackage.addPointedToByFile(gBuild, "23.4", "9.611")
+    gBuild.addPointedToByFile(gPackage, ".03")
+    gBuild.addPointedToByFile(gPackage, "34.56", "9.423")
+    assert gBuild.hasPointerToFileManFile(gPackage, "23.1", None)
+    assert gBuild.hasPointerToFileManFile(gPackage, "23.4", "9.611")
+    gPackage.printResult()
+    gBuild.printResult()
 
 def testParsePlatformDependentRoutines(fileName):
     routineFile = open(fileName, "rb")

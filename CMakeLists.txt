@@ -300,7 +300,9 @@ if(ROUTINE_CALL_GRAPH)
       add_test(CALLERGRAPH_${package_file_name} ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake)
     endif()
   endforeach()
-
+  configure_file(${VISTA_SOURCE_DIR}/FileManGlobalAttributes.py.in ${VISTA_BINARY_DIR}/FilemanGlobalAttributes.py)
+  configure_file(${VISTA_SOURCE_DIR}/GetFilemanSchema.cmake.in ${VISTA_BINARY_DIR}/GetFilemanSchema.cmake @ONLY)
+  add_test(CALLERGRAPH_GetFilemanSchema ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/GetFilemanSchema.cmake)
 endif()
 #-----------------------------------------------------------------------------#
 ##### SECTION TO RUN UNIT TESTING #####

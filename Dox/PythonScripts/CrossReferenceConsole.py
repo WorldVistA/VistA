@@ -22,6 +22,7 @@
 import argparse
 import os
 import CallerGraphParser
+from DataDictionaryParser import DataDictionaryListFileLogParser
 import re
 import sys
 from datetime import datetime, date, time
@@ -113,15 +114,38 @@ def printAllPercentRoutines(crossReference, outputFile=None):
             sys.stdout.write ("\n")
         index += 1
     sys.stdout.write("\n")
-def printOrphanGlobals(orphanGlobals):
+def printOrphanGlobals(logParser):
+    crossRef = logParser.getCrossReference()
+    orphanGlobals = crossRef.getOrphanGlobals()
     sortedGlobals = sorted(orphanGlobals)
     index = 0
-    print ("Total # of orphan globals: %d" % len(orphanGlobals))
+    topLevel = dict()
+    topLevelRegex = re.compile("(?P<Name>^\^[^ \(]+)\(?(?P<Index>.*)")
     for globalName in sortedGlobals:
-        sys.stdout.write(" %s " % globalName)
-        if (index + 1) % 10 == 0:
-            sys.stdout.write("\n")
-        index += 1
+        result = topLevelRegex.search(globalName)
+        if result:
+            varName = result.group('Name')
+            index = result.group('Index')
+            if varName not in topLevel:
+                topLevel[varName] = set()
+            topLevel[varName].add(index)
+        else:
+            sys.stderr.write("Could not parse global %s\n" % globalName)
+            continue
+        #sys.stdout.write(" %s " % globalName)
+        #if (index + 1) % 10 == 0:
+        #    sys.stdout.write("\n")
+        #index += 1
+    print ("Total # of top level orphan globals: %d" % len(topLevel))
+    topLevelFileMan = set()
+    for key in sorted(topLevel.keys()):
+        sys.stdout.write("%s %s\n" % (key,topLevel[key]))
+        globalVar = crossRef.getGlobalByName(key)
+        if globalVar:
+            topLevelFileMan.add(globalVar)
+    sys.stdout.write("\n")
+    print ("Total # of top level FileMan File: %d\n" % len(topLevelFileMan))
+    sys.stdout.write("%s\n" % (topLevelFileMan))
     sys.stdout.write("\n")
 def printAllUnknownRoutines(crossRef, outputFileName=None):
     unknownPackage = crossRef.getPackageByName("UNKNOWN")
@@ -172,6 +196,8 @@ if __name__ == '__main__':
                         help='VistA Git Repository Directory')
     parser.add_argument('-d', required=True, dest='docRepositDir',
                         help='VistA Cross-Reference Git Repository Directory')
+    parser.add_argument('-f', dest='fileSchemaDir',
+                        help='VistA File Man Schema log Directory')
     result = vars(parser.parse_args());
     logger.setLevel(logging.INFO)
     consoleHandler = logging.StreamHandler()
@@ -197,6 +223,12 @@ if __name__ == '__main__':
     callLogPattern = "*.log"
     logParser.parseAllCallerGraphLog(result['logFileDir'], callLogPattern)
     orphanRoutines = sorted(logParser.getCrossReference().getOrphanRoutines())
+    if result['fileSchemaDir']:
+      dataDictLogParser = DataDictionaryListFileLogParser(logParser.getCrossReference())
+      dataDictLogParser.parseAllDataDictionaryListLog(result['fileSchemaDir'],"*.schema")
+      dataDictLogParser.parseAllDataDictionaryListLog(result['fileSchemaDir'],".*.schema")
+    # generate package direct dependency based on XINDEX call graph and fileman reference
+    logParser.getCrossReference().generateAllPackageDependencies()
     print "End of parsing log file......"
     print "Time is: %s" % datetime.now()
     # read the user input from the terminal
@@ -212,7 +244,7 @@ if __name__ == '__main__':
                 print routine
             continue
         if (var == 'orphan_global'):
-            printOrphanGlobals(logParser.getCrossReference().getOrphanGlobals())
+            printOrphanGlobals(logParser)
             continue
         if var == "max_call":
             findRoutinesWithMostOfCallers(logParser)

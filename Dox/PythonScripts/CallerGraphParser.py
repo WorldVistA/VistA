@@ -112,7 +112,7 @@ class AbstractSectionParser (ISectionParser):
         self._varValue = self._varName[self._valueStartIdx - DEFAULT_NAME_FIELD_START_INDEX:]
         self._varName = self._varName[:self._valueStartIdx - DEFAULT_NAME_FIELD_START_INDEX]
         if self._addVarToRoutine:
-            self._addVarToRoutine(Routine)
+            self._addVarToRoutine(Routine, CrossReference)
         if self._postParsingRoutine:
             self._postParsingRoutine(Routine, CrossReference)
     def __isNameValuePairLine__(self, line):
@@ -155,7 +155,7 @@ class AbstractSectionParser (ISectionParser):
         # handle three cases:
         # 1. continuation of the previous info with value info
         # 2. Name too long.
-        # 3. normal name var pair
+        # 3. normal name/value pair
         result = self.__isNameValuePairLine__(line)
         if result:
             if self._suspiousLine:
@@ -165,7 +165,7 @@ class AbstractSectionParser (ISectionParser):
             self._varValue = line[self._valueStartIdx:]
             self._varName = line[DEFAULT_NAME_FIELD_START_INDEX:self._valueStartIdx].strip()
             if self._addVarToRoutine:
-                self._addVarToRoutine(Routine)
+                self._addVarToRoutine(Routine, CrossReference)
             if self._postParsingRoutine:
                 self._postParsingRoutine(Routine, CrossReference)
             return
@@ -177,7 +177,7 @@ class AbstractSectionParser (ISectionParser):
                 logger.error("No varname is set, Routine: %s line: %s" % (Routine, line))
                 return
             if self._addVarToRoutine:
-                self._addVarToRoutine(Routine)
+                self._addVarToRoutine(Routine, CrossReference)
             if self._postParsingRoutine:
                 self._postParsingRoutine(Routine, CrossReference)
             return
@@ -197,7 +197,7 @@ class LocalVarSectionParser (AbstractSectionParser):
     def __init__(self):
         AbstractSectionParser.__init__(self, IXindexLogFileParser.LOCAL_VARIABLE)
         self.registerAddVarToRoutine(self.__addVarToRoutine__)
-    def __addVarToRoutine__(self, Routine):
+    def __addVarToRoutine__(self, Routine, CrossReference):
         Routine.addLocalVariables(LocalVariable(self._varName,
                                                 self._varPrefix,
                                                 self._varValue))
@@ -211,26 +211,54 @@ class GlobalVarSectionParser (AbstractSectionParser):
                                              GLOBAL_VAR_VALUE_FIELD_START_INDEX)
         self.registerAddVarToRoutine(self.__addVarToRoutine__)
         self.registerPostParsingRoutine(self.__postParsing__)
-    def __addVarToRoutine__(self, Routine):
+    def __addVarToRoutine__(self, Routine, CrossReference):
+        globalVar = CrossReference.getGlobalByName(self._varName)
+        if not globalVar:
+           # this is to fix a problem with the name convention of a top level global
+           # like ICD9 can be referred as eith ICD9 or ICD9(
+           altName = self.getAlternateGlobalName(self._varName)
+           globalVar = CrossReference.getGlobalByName(altName)
+           if globalVar:
+              logger.debug("Changing global name from %s to %s" % (self._varName, altName))
+              self._varName = altName
         Routine.addGlobalVariables(GlobalVariable(self._varName,
                                                   self._varPrefix,
                                                   self._varValue))
+    @staticmethod
+    def getAlternateGlobalName(globalName):
+        pos = globalName.find("(") # this should find the very first "("
+        if pos == -1:
+            return globalName + "("
+        if pos == len(globalName) - 1:
+            return globalName[0:len(globalName)-1]
+        return globalName
+    @staticmethod
+    def getTopLevelGlobalName(globalName):
+        pos = globalName.find("(") # this should find the very first "("
+        if pos == -1: # could not find, must be the top level name already
+            return globalName[1:]
+        return globalName[1:pos]
     def __postParsing__(self, Routine, CrossReference):
         globalVar = CrossReference.getGlobalByName(self._varName)
-        if globalVar:
-            routineName = Routine.getName()
-            # case to handle the platform dependent routines
-            if CrossReference.isPlatformDependentRoutineByName(routineName):
-                genericRoutine = CrossReference.getGenericPlatformDepRoutineByName(routineName)
-                assert genericRoutine
-                globalVar.addReferencedRoutine(genericRoutine)
-                genericRoutine.addReferredGlobal(globalVar)
-            else:
-                globalVar.addReferencedRoutine(Routine)
-            Routine.addReferredGlobal(globalVar)
+        if not globalVar:
+            topLevelName = self.getTopLevelGlobalName(self._varName)
+            (namespace, package) = CrossReference.categorizeGlobalByNamespace(topLevelName)
+            logger.debug("Global: %s, namespace: %s, package: %s" % (self._varName, namespace, package))
+            if not package:
+                package = CrossReference.getPackageByName("Uncategorized")
+                CrossReference.addToOrphanGlobalByName(self._varName)
+            globalVar = Global(self._varName, None, None, package)
+            CrossReference.addGlobalToPackage(globalVar, package.getName())
+        routineName = Routine.getName()
+        # case to handle the platform dependent routines
+        if CrossReference.isPlatformDependentRoutineByName(routineName):
+            genericRoutine = CrossReference.getGenericPlatformDepRoutineByName(routineName)
+            assert genericRoutine
+            globalVar.addReferencedRoutine(genericRoutine)
+            genericRoutine.addReferredGlobal(globalVar)
         else:
-            CrossReference.addToOrphanGlobalByName(self._varName)
-
+            globalVar.addReferencedRoutine(Routine)
+        Routine.addReferredGlobal(globalVar)
 #===============================================================================
 # Implementation of a section logFileParser to parse the Naked Globals part
 #===============================================================================
@@ -238,7 +266,7 @@ class NakedGlobalsSectionParser (AbstractSectionParser):
     def __init__(self):
         AbstractSectionParser.__init__(self, IXindexLogFileParser.NAKED_GLOBAL)
         self.registerAddVarToRoutine(self.__addVarToRoutine__)
-    def __addVarToRoutine__(self, Routine):
+    def __addVarToRoutine__(self, Routine, CrossReference):
         Routine.addNakedGlobals(NakedGlobal(self._varName,
                                             self._varPrefix,
                                             self._varValue))
@@ -249,7 +277,7 @@ class MarkedItemsSectionParser (AbstractSectionParser):
     def __init__(self):
         AbstractSectionParser.__init__(self, IXindexLogFileParser.MARKED_ITEMS)
         self.registerAddVarToRoutine(self.__addVarToRoutine__)
-    def __addVarToRoutine__(self, Routine):
+    def __addVarToRoutine__(self, Routine, CrossReference):
         Routine.addMarkedItems(MarkedItem(self._varName,
                                           self._varPrefix,
                                           self._varValue))
@@ -260,7 +288,7 @@ class LabelReferenceSectionParser (AbstractSectionParser):
     def __init__(self):
         AbstractSectionParser.__init__(self, IXindexLogFileParser.LABEL_REFERENCE)
         self.registerAddVarToRoutine(self.__addVarToRoutine__)
-    def __addVarToRoutine__(self, Routine):
+    def __addVarToRoutine__(self, Routine, CrossReference):
         Routine.addLabelReference(LabelReference(self._varName,
                                                 self._varPrefix,
                                                 self._varValue))
@@ -538,7 +566,7 @@ class CallerGraphLogFileParser:
                     globalNamespace = ""
                 if len(globals) > index:
                     globalFileNo = globalList[index].getFileNo()
-                    globalDes = globalList[index].getDescription()
+                    globalDes = globalList[index].getFileManName()
                 else:
                     globalFileNo = ""
                     globalDes = ""
@@ -566,8 +594,6 @@ class CallerGraphLogFileParser:
         for logFileName in allFiles:
             logger.info("Start paring log file [%s]" % logFileName)
             XindexParser.parseXindexLogFile(logFileName)
-        # generate package direct dependency based on XINDEX call graph
-        self._crossRef.generateAllPackageDependencies()
     #===========================================================================
     # find all the package name and routines by reading the repository directory
     #===========================================================================
@@ -622,6 +648,7 @@ class CallerGraphLogFileParser:
             result = re.search("(?P<fileNo>^[0-9.]+)(-1)?\+(?P<des>.*)\.zwr$", fileName)
             if result:
                 fileNo = result.group('fileNo')
+                if fileNo.startswith('0'): fileNo = fileNo[1:]
                 globalDes = result.group('des')
             else:
                 result = re.search("(?P<namespace>^[^.]+)\.zwr$", fileName)
@@ -665,8 +692,8 @@ class CallerGraphLogFileParser:
                 if file not in skipFile:
                     logger.warn ("Warning: No FileNo found for file %s" % file)
                 continue
-            globalVar = Global(globalName, globalDes,
-                               allPackages.get(packageName), fileNo)
+            globalVar = Global(globalName, fileNo, globalDes,
+                               allPackages.get(packageName))
             try:
                 fileNum = float(globalVar.getFileNo())
             except ValueError, es:
@@ -774,8 +801,8 @@ class CallerGraphLogFileParser:
                 if file not in skipFile:
                     logger.warn ("Warning: No FileNo found for file %s" % file)
                 continue
-            globalVar = Global(globalName, globalDes,
-                               allPackages.get(packageName), fileNo)
+            globalVar = Global(globalName, fileNo,  globalDes,
+                               allPackages.get(packageName))
             try:
                 fileNum = float(globalVar.getFileNo())
             except ValueError, es:
@@ -828,11 +855,11 @@ class CallerGraphLogFileParser:
                                 globalVar.setFileNo(line[0])
                         else:
                             line[0] = globalVar.getFileNo()
-                    if (globalVar.getDescription() != line[1] and
+                    if (globalVar.getFileManName() != line[1] and
                         globalVar.getFileNo() == line[0]):
-                            logger.warn ("Diff in Description [%s], [%s]" % (globalVar.getDescription(), line[1]))
+                            logger.warn ("Diff in Description [%s], [%s]" % (globalVar.getFileManName(), line[1]))
     #                        fix the description part (name)
-                            line[1] = globalVar.getDescription()
+                            line[1] = globalVar.getFileManName()
                     if (globalVar.getPackage().getName() != line[-1] and
                         globalVar.getPackage().getOriginalName() != line[-1]):
                         logger.warn("Diff in package name [%s], [%s]" %
@@ -858,7 +885,7 @@ class CallerGraphLogFileParser:
             crossReference.addGlobalToPackage(globalVar,
                                               globalVar.getPackage().getName())
 #            outputWriter.writerow([globalVar.getFileNo(),
-#                                   globalVar.getDescription(),
+#                                   globalVar.getFileManName(),
 #                                   globalVar.getName(),
 #                                   globalVar.getPackage().getOriginalName()])
     def parsePackagesFile(self, packageFilename):
@@ -966,8 +993,10 @@ class CallerGraphLogFileParser:
         for item in excludeNamespace:
             if item[1:] not in sortedSet:
                 logger.warn("item: %s not in the namespace set" % item[1:])
-    def getRoutineNameSpace(self, routineName):
+    def getRoutinePackageNameSpace(self, routineName):
         return self._crossRef.categorizeRoutineByNamespace(routineName)
+    def getGlobalPackageNameSpace(self, globalName):
+        return self._crossRef.categorizeGlobalByNamespace(globalName)
 # end of class CallerGraphLogFileParser
 
 #===============================================================================
@@ -977,11 +1006,14 @@ class CallerGraphLogFileParser:
 # Unit test of categorizing routine based on namespace
 RoutineNamespaceMappingTestDict = {"%ZTLOAD": ("%Z", Package("Kernel")),
                                    "PRC0A": ("PRC", Package("IFCAP")),
+                                   "PRCABIL1": ("PRCA", Package("Accounts Receivable")),
+                                   "RGUTALR": ("RGUT", Package("Run Time Library")),
+                                   "IBQL356": ("IBQ", Package("Utilization Management Rollup")),
                                    "A1B2OSR": (None,None)}
 
 def testingRoutineNamespaceMapping(loggerParser, testMapping):
     for (routineName, expectedValue) in testMapping.iteritems():
-        result = logFileParser.getRoutineNameSpace(routineName)
+        result = logFileParser.getRoutinePackageNameSpace(routineName)
         assert result == expectedValue, "result: %s, expect: %s" % (result, expectedValue)
 
 # regression testing functions
@@ -1017,7 +1049,7 @@ globalVarRegressionTest = {"MAGGA03":['''^TMP("MAGGA03A.NAME"'''],
                                        '''^PXRMINDX(9000010.13''','''^PXRMINDX(9000010.07''',
                                        '''^PXRMINDX(9000010.11''', '''^PXRMINDX(9000010.12'''],
                            "PXPXRMI1":['''^PXRMINDX(9000010.11''', '''^PXRMINDX(9000010.18''',
-                                       '''^PXRMINDX(9000010.23''', '''^AUTTIMM(''']
+                                       '''^PXRMINDX(9000010.23''', '''^AUTTIMM''']
 }
 routineInvokeRegressionTest = {}
 nakedGlobalsRegressionTest = {"FSCCLEAN":['''^("STATUS HIST"''',
@@ -1069,6 +1101,13 @@ def regressionTestingMarkedItemParsing(markedItemDict, crossRef):
                 assert item in markedItems, "Marked Items: %s not found in routine %s" % (item, routineName)
                 assert len(markedItems[item].getLineOffsets()[0]) > 0
 
+def runRegressionTestingCases():
+    testingRoutineNamespaceMapping(logFileParser, RoutineNamespaceMappingTestDict)
+    regressionTestingLocalVarParsing(localVarRegressionTest, logFileParser.getCrossReference())
+    regressionTestingGlobalVarParsing(globalVarRegressionTest, logFileParser.getCrossReference())
+    regressionTestingNakedGLobalParsing(nakedGlobalsRegressionTest, logFileParser.getCrossReference())
+    regressionTestingMarkedItemParsing(markedItemRegressionTest, logFileParser.getCrossReference())
+
 import logging
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='VistA Cross-Reference Log Files Parser')
@@ -1100,8 +1139,4 @@ if __name__ == '__main__':
                                                                "Packages"),
                                                   "*/Routines/*.m")
     logFileParser.parseAllCallerGraphLog(result['logFileDir'], "*.log")
-    testingRoutineNamespaceMapping(logFileParser, RoutineNamespaceMappingTestDict)
-    regressionTestingLocalVarParsing(localVarRegressionTest, logFileParser.getCrossReference())
-    regressionTestingGlobalVarParsing(globalVarRegressionTest, logFileParser.getCrossReference())
-    regressionTestingNakedGLobalParsing(nakedGlobalsRegressionTest, logFileParser.getCrossReference())
-    regressionTestingMarkedItemParsing(markedItemRegressionTest, logFileParser.getCrossReference())
+    runRegressionTestingCases()

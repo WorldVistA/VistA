@@ -35,6 +35,7 @@ from CrossReference import *
 from LogManager import logger
 import logging
 from operator import itemgetter, attrgetter
+from DataDictionaryParser import *
 
 MAX_DEPENDENCY_LIST_SIZE = 20 # Do not generate the graph if have more than 20 nodes
 PROGRESS_METER = 1000
@@ -62,6 +63,7 @@ TOP_INDEX_BAR_PART = """
 <a href="packages.html" class="qindex">Package List</a>&nbsp;&nbsp;
 <a href="routines.html" class="qindex">Routine Alphabetical List</a>&nbsp;&nbsp;
 <a href="globals.html" class="qindex">Global Alphabetical List</a>&nbsp;&nbsp;
+<a href="filemanfiles.html" class="qindex">FileMan Files List</a>&nbsp;&nbsp;
 <a href="Packages_Namespace_Mapping.html" class="qindex">Package-Namespace Mapping</a>&nbsp;&nbsp;
 <BR>
 </center>
@@ -197,11 +199,35 @@ class CplusRoutineVisit(CallerGraphParser.RoutineVisit):
 
 # utility functions
 def getGlobalHtmlFileNameByName(globalName):
-    return urllib.quote("Global_%s.html" %
+    return ("Global_%s.html" %
                         normalizeGlobalName(globalName))
 def getGlobalHtmlFileName(globalVar):
-    return urllib.quote("Global_%s.html" %
-                        normalizeGlobalName(globalVar.getName()))
+    return getGlobalHtmlFileNameByName(globalVar.getName())
+def getGlobalDisplayName(globalVar):
+    if globalVar.isFileManFile():
+        return "%s(#%s)" % ( globalVar.getFileManName(), globalVar.getFileNo() )
+    return globalVar.getName()
+# FileMan File (Global) related Functions
+def getFileManFileHypeLink(GlobalVar):
+    if not GlobalVar.isFileManFile(): return getGlobalHypeLinkByName(GlobalVar.getName())
+    return "<a href=\"%s\">%s</a>" % (getGlobalHtmlFileName(GlobalVar),
+                                      getGlobalDisplayName(GlobalVar))
+def getFileManFileHypeLinkWithFileNo(GlobalVar):
+    if not GlobalVar.isFileManFile(): return getGlobalHypeLinkByName(GlobalVar.getName())
+    return "<a href=\"%s\">%s</a>" % (getGlobalHtmlFileName(GlobalVar),
+                                      GlobalVar.getFileNo())
+def getFileManFileHypeLinkWithFileManName(GlobalVar):
+    if not GlobalVar.isFileManFile(): return getGlobalHypeLinkByName(GlobalVar.getName())
+    return "<a href=\"%s\">%s</a>" % (getGlobalHtmlFileName(GlobalVar),
+                                      GlobalVar.getFileManName())
+# sub fileman files related functions
+def getFileManSubFileHtmlFileNameByName(subFileNo):
+    return urllib.quote("SubFile_%s.html" % subFileNo)
+def getFileManSubFileHtmlFileName(subFile):
+    return getFileManSubFileHtmlFileNameByName(subFile.getFileNo())
+def getFileManSubFileHypeLinkByName(subFileNo):
+    return "<a href=\"%s\">%s</a>" % (getFileManSubFileHtmlFileNameByName(subFileNo),
+                                      subFileNo)
 def getRoutineHtmlFileName(routineName):
     return urllib.quote(getRoutineHtmlFileNameUnquoted(routineName))
 def getRoutineHtmlFileNameUnquoted(routineName):
@@ -223,7 +249,9 @@ def normalizePackageName(packageName):
     return newName.replace('-', "_")
 
 def normalizeGlobalName(globalName):
-    return globalName.replace('^', '').replace('%', '_').replace('.', '_').replace("(", '_').replace('"', '_').replace(' ', '_')
+    import base64
+    return base64.urlsafe_b64encode(globalName)
+    #return globalName.replace('^', '').replace('%', '_').replace('.', '_').replace("(", '_').replace('"', '_').replace(' ', '_').replace('/','_').replace('\\','_').replace('$','_').replace('?','_')
 
 def getRoutineSourceCodeFileByName(routineName,
                                    packageName,
@@ -333,6 +361,26 @@ def writeGenericTablizedData(headerList, itemList, outputFile):
         for itemRow in itemList:
             writeTableData(itemRow, outputFile)
     outputFile.write("</table>\n")
+def writeListData(listData, outputFile):
+    outputFile.write(generateHtmlListData(listData))
+def generateHtmlListData(listData):
+    if not listData : return ""
+    output = "<ul>"
+    for item in listData:
+        output += "<li>%s</li>" % item
+    output += "</ul>"
+    return output
+def listDataToCommaSeperatorString(listData):
+    if not listData: return ""
+    result = ""
+    index = 0
+    for item in listData:
+        if index < len(listData) - 1:
+            result += "%s,&nbsp;" % item
+        else:
+            result += "%s&nbsp;" % item
+        index += 1
+    return result
 def writeSectionHeader(headerName, archName, outputFile):
     outputFile.write("<h2 align=\"left\"><a name=\"%s\">%s</a></h2>\n" % (archName,
                                                                        headerName))
@@ -389,15 +437,10 @@ class WebPageGenerator:
         self.generateGlobalNameIndexPage()
         self.generateGlobalFileNoIndexPage()
         self.generateIndividualGlobalPage()
-        self.generateRoutineIndexPage()
         self.generatePackageIndexPage()
         self.generatePackagePackageInteractionDetail()
         self.generateIndividualPackagePage()
-        if self._hasDot and self._dotPath:
-            self.generateRoutineCallGraph()
-            self.generateRoutineCallerGraph()
-        self.generateAllSourceCodePage(False)
-        self.generateAllIndividualRoutinePage()
+        self.generateRoutineRelatedPages()
 #===============================================================================
 # Method to generate the index.html page
 #===============================================================================
@@ -519,48 +562,256 @@ class WebPageGenerator:
 #
 #===============================================================================
     def generateGlobalFileNoIndexPage(self):
-        pass
+        outputFile = open(os.path.join(self._outDir, "filemanfiles.html"), 'wb')
+        allFileManFilesList = []
+        for item in self._allGlobals.itervalues():
+            if item.isFileManFile():
+                allFileManFilesList.append(item)
+        self.__includeHeader__(outputFile)
+        outputFile.write("<div><h1>%s</h1></div>\n" % "All FileMan Files List Total: %d" % len(allFileManFilesList))
+#        writeSectionHeader("Package Namespace Mapping", "Package Namespace Mapping", outputFile)
+        # print the table header
+        outputFile.write("<table>\n")
+        writeTableHeader(["FileMan Name",
+                          "FileMan FileNo",
+                          "Global Name"],
+                         outputFile)
+        sortedFileManList = sorted(allFileManFilesList, key=lambda item: float(item.getFileNo()))
+        for fileManFile in sortedFileManList:
+            outputFile.write("<tr>")
+            outputFile.write("<td class=\"IndexKey\">%s</td>" % getFileManFileHypeLinkWithFileManName(fileManFile))
+            outputFile.write("<td class=\"IndexKey\">%s</td>" % getFileManFileHypeLinkWithFileNo(fileManFile))
+            outputFile.write("<td class=\"IndexKey\">%s</td>" % getGlobalHypeLinkByName(fileManFile.getName()))
+            outputFile.write("</tr>\n")
+        outputFile.write("</table>\n")
+        outputFile.write("<BR>\n")
+        self.__includeFooter__(outputFile)
+        outputFile.close()
 #===============================================================================
 #
 #===============================================================================
     def generateIndividualGlobalPage(self):
         logger.info("Start generating individual globals......")
-        indexList = ["Info", "Accessed By Routines"]
+        indexListFileMan = ["Info", "Desc", "Accessed By Routines",
+                     "Pointed To By FileMan Files",
+                     "Pointer To FileMan Files", "Fields"]
+        indexListGlobal = ["Accessed By Routines"]
         for package in self._allPackages.itervalues():
             if isUnknownPackage(package.getName()):
                 continue
             for (globalName, globalVar) in package.getAllGlobals().iteritems():
+                isFileManFile = globalVar.isFileManFile()
                 outputFile = open(os.path.join(self._outDir,
-                                               getGlobalHtmlFileNameByName(globalName)), 'w')
+                                               getGlobalHtmlFileNameByName(globalName)), 'wb')
                 # write the same _header file
                 self.__includeHeader__(outputFile)
                 # generated the qindex bar
-                generateIndexBar(outputFile, indexList)
+                if isFileManFile:
+                    generateIndexBar(outputFile, indexListFileMan)
+                else:
+                    generateIndexBar(outputFile, indexListGlobal)
                 outputFile.write("<div class=\"_header\">\n")
                 outputFile.write("<div class=\"headertitle\">")
                 outputFile.write(("<h4>Package: %s</h4>\n</div>\n</div>"
                                    % getPackageHyperLinkByName(package.getName())))
                 outputFile.write("<h1>Global: %s</h1>\n</div>\n</div><br/>\n" % globalName)
-                writeSectionHeader("Information", "Info", outputFile)
-                infoHeader = ["FileMan FileNo", "FileMan Filename", "Package"]
-                itemList = [[globalVar.getFileNo(),
-                          globalVar.getDescription(),
-                          getPackageHyperLinkByName(package.getName())]]
-                writeGenericTablizedData(infoHeader, itemList, outputFile)
-                writeSectionHeader("Accessed By Routines", "Accessed By Routines", outputFile)
-                self.generateGlobalDependentsSection(globalVar, outputFile, True)
-                outputFile.write("<br/>\n")
+                if isFileManFile:
+                    writeSectionHeader("Information", "Info", outputFile)
+                    infoHeader = ["FileMan FileNo", "FileMan Filename", "Package"]
+                    itemList = [[globalVar.getFileNo(),
+                              globalVar.getFileManName(),
+                              getPackageHyperLinkByName(package.getName())]]
+                    writeGenericTablizedData(infoHeader, itemList, outputFile)
+                    writeSectionHeader("Description", "Desc", outputFile)
+                    writeListData(globalVar.getDescription(), outputFile)
+                writeSectionHeader("Accessed By Routines, Total: %d" % globalVar.getTotalNumberOfReferencedRoutines(), "Accessed By Routines", outputFile)
+                self.generateGlobalRoutineDependentsSection(globalVar, outputFile)
+                if isFileManFile:
+                    writeSectionHeader("Pointed To By FileMan Files, Total: %d" % globalVar.getTotalNumberOfReferredGlobals(), "Pointed To By FileMan Files", outputFile)
+                    self.generateGlobalPointedToSection(globalVar, outputFile, True)
+                    writeSectionHeader("Pointer To FileMan Files, Total: %d" % globalVar.getTotalNumberOfReferencedGlobals(), "Pointer To FileMan Files", outputFile)
+                    self.generateGlobalPointedToSection(globalVar, outputFile, False)
+                    outputFile.write("<br/>\n")
+                    totalNoFields = 0
+                    allFields = globalVar.getAllFileManFields()
+                    if allFields: totalNoFields = len(allFields)
+                    writeSectionHeader("Fields, Total: %d" % totalNoFields, "Fields", outputFile)
+                    self.__generateFileManFileDetails__(globalVar, outputFile)
                 # generated the index bar at the bottom
-                generateIndexBar(outputFile, indexList)
+                if isFileManFile:
+                    generateIndexBar(outputFile, indexListFileMan)
+                else:
+                    generateIndexBar(outputFile, indexListGlobal)
                 self.__includeFooter__(outputFile)
                 outputFile.close()
+                # generate individual sub files
+                if isFileManFile:
+                    subFiles = globalVar.getAllSubFiles()
+                    if subFiles:
+                        for subFile in subFiles.itervalues():
+                            self.__generateFileManSubFilePage__(subFile)
         logger.info("End of generating individual globals......")
+
 #===============================================================================
 #
 #===============================================================================
-    def generateGlobalDependentsSection(self, globalVar,
-                                        outputFile,
-                                        isDependents=True):
+    def __generateFileManSubFilePage__(self, subFile):
+        logger.debug("Start generating individual subfile [%s]" % subFile.getFileNo())
+        indexList = ["Info", "Details"]
+        outputFile = open(os.path.join(self._outDir,
+                                       getFileManSubFileHtmlFileName(subFile)), 'wb')
+        # write the same _header file
+        self.__includeHeader__(outputFile)
+        # generated the qindex bar
+        generateIndexBar(outputFile, indexList)
+        # get the root file package
+        fileIter = subFile
+        topDownList=[fileIter]
+        while not fileIter.isRootFile():
+            fileIter = fileIter.getParentFile()
+            topDownList.append(fileIter)
+        topDownList.reverse()
+        package = fileIter.getPackage()
+        outputFile.write("<div class=\"_header\">\n")
+        outputFile.write("<div class=\"headertitle\">")
+        outputFile.write(("<h4>Package: %s</h4>\n</div>\n</div>"
+                           % getPackageHyperLinkByName(package.getName())))
+        # generate # link list
+        linkHtmlTxt = ""
+        index = 0
+        for item in topDownList:
+            if index == 0:
+                linkHtmlTxt += getFileManFileHypeLink(item)
+            else:
+                linkHtmlTxt += getFileManSubFileHypeLinkByName(item.getFileNo())
+            if index < len(topDownList) - 1:
+                linkHtmlTxt += "-->"
+            index += 1
+        outputFile.write("<h4>%s</h4>\n</div>\n</div><br/>\n" % linkHtmlTxt)
+        outputFile.write("<h1>Sub-Field: %s</h1>\n</div>\n</div><br/>\n" % subFile.getFileNo())
+        writeSectionHeader("Information", "Info", outputFile)
+        infoHeader = ["Parent File", "Name", "Number", "Package"]
+        parentFile = subFile.getParentFile()
+        parentFileLink = ""
+        if parentFile.isRootFile():
+            parentFileLink = getFileManFileHypeLink(parentFile)
+        else:
+            parentFileLink =  getFileManSubFileHypeLinkByName(parentFile.getFileNo())
+        itemList = [[parentFileLink, subFile.getFileManName(), subFile.getFileNo(),
+                  getPackageHyperLinkByName(package.getName())]]
+        writeGenericTablizedData(infoHeader, itemList, outputFile)
+        writeSectionHeader("Details", "Details", outputFile)
+        self.__generateFileManFileDetails__(subFile, outputFile)
+        # generated the index bar at the bottom
+        generateIndexBar(outputFile, indexList)
+        self.__includeFooter__(outputFile)
+        outputFile.close()
+        logger.debug("End of generating individual subFile [%s]" % subFile.getFileNo())
+#===============================================================================
+#
+#===============================================================================
+    def __generateFileManFileDetails__(self, fileManFile, outputFile):
+        assert isinstance(fileManFile, FileManFile)
+        # sort the file man field by file #
+        allFields = fileManFile.getAllFileManFields()
+        if not allFields or len(allFields) == 0: return
+        # sort the fields # by the float value
+        sortedFields = sorted(allFields.keys(), key=lambda item: float(item))
+        outputFieldsList = []
+        fieldHeaderList = ["Field #", "Name", "Loc", "Type", "Details"]
+        for key in sortedFields:
+            value = allFields[key]
+            location = value.getLocation()
+            if not location: location = ""
+            fieldNo = value.getFieldNo()
+            fieldNoTxt = "<a name=\"%s\">%s</a>" % (fieldNo, fieldNo)
+            fieldRow = [fieldNoTxt, value.getName(), location, value.getTypeName()]
+            if value.isSetType():
+                # nice display of set members
+                setIter = value.getSetMembers()
+                setOutput = generateHtmlListData(setIter)
+                fieldRow.append(setOutput)
+            elif value.isFilePointerType():
+                if value.getPointedToFile():
+                    fieldRow.append(getFileManFileHypeLink(value.getPointedToFile()))
+                else:
+                    fieldRow.append("")
+            elif value.isVariablePointerType():
+                fileManFiles = value.getPointedToFiles()
+                htmlText = ""
+                for pointedToFile in fileManFiles:
+                    htmlText += getFileManFileHypeLink(pointedToFile) + "&nbsp;&nbsp;"
+                fieldRow.append(htmlText)
+            elif value.isSubFilePointerType():
+                filePointer = value.getPointedToSubFile()
+                if filePointer:
+                    fieldRow.append(getFileManSubFileHypeLinkByName(filePointer.getFileNo()))
+                else:
+                    fieldRow.append("")
+            else:
+                fieldRow.append("")
+            outputFieldsList.append(fieldRow)
+        writeGenericTablizedData(fieldHeaderList, outputFieldsList, outputFile)
+#===============================================================================
+#
+#===============================================================================
+    def generateGlobalPointedToSection(self, globalVar,
+                                       outputFile, isPointedBy=True):
+        if isPointedBy:
+          pointedByGlobals = globalVar.getAllReferencedFileManFiles()
+        else:
+          pointedByGlobals = globalVar.getAllReferredFileManFiles()
+        sortedPackage = sorted(sorted(pointedByGlobals.keys()),
+                           key=lambda item: len(pointedByGlobals[item]),
+                           reverse=True)
+        infoHeader = ["Package", "Total", "FileMan Files"]
+        itemList = []
+        for package in sortedPackage:
+            globalDict = pointedByGlobals[package]
+            itemRow = []
+            itemRow.append(getPackageHyperLinkByName(package.getName()))
+            itemRow.append(len(globalDict))
+            globalData = ""
+            index = 0
+            for Global in sorted(globalDict.keys()):
+                globalData += ("<a class=\"e1\" href=\"%s\">%s</a>" %
+                             (getGlobalHtmlFileNameByName(Global.getName()),
+                              getGlobalDisplayName(Global)))
+                detailedList = globalDict[Global]
+                if not detailedList or len(detailedList) ==0:
+                    continue
+                fieldLinkGlobal = Global
+                if not isPointedBy:
+                    fieldLinkGlobal = globalVar
+                globalData +="["
+                index = 0
+                for item in detailedList:
+                    if not item[1]:
+                        itemHtmlText = ("<a class=\"e2\" href=\"%s#%s\">%s</a>" %
+                                       (getGlobalHtmlFileNameByName(fieldLinkGlobal.getName()),
+                                        item[0], item[0]))
+                    else:
+                        itemHtmlText = ("<a class=\"e2\" href=\"%s#%s\">#%s(%s)</a>" %
+                                       (getFileManSubFileHtmlFileNameByName(item[1]),
+                                        item[0], item[1], item[0]))
+                    globalData += itemHtmlText
+                    if index < len(detailedList) - 1:
+                        globalData += ",&nbsp"
+                    index += 1
+                globalData +="]"
+                if (index + 1) % 4 == 0:
+                    globalData += "<BR>"
+                else:
+                    globalData += "&nbsp;&nbsp;&nbsp;&nbsp;"
+                index += 1
+            itemRow.append(globalData)
+            itemList.append(itemRow)
+        writeGenericTablizedData(infoHeader, itemList, outputFile)
+#===============================================================================
+#
+#===============================================================================
+    def generateGlobalRoutineDependentsSection(self, globalVar,
+                                               outputFile):
         depRoutines = globalVar.getAllReferencedRoutines()
         sortedPackage = sorted(sorted(depRoutines.keys()),
                            key=lambda item: len(depRoutines[item]),
@@ -634,20 +885,28 @@ class WebPageGenerator:
                            package.getName(), outputFile)
         routineDepDict = package.getPackageRoutineDependencies()
         globalDepDict = package.getPackageGlobalDependencies()
+        fileManDepDict = package.getPackageFileManFileDependencies()
         callerRoutines = set()
         calledRoutines = set()
         referredRoutines = set()
         referredGlobals = set()
+        referredFileManFiles = set()
+        referencedFileManFiles = set()
         if routineDepDict and depPackage in routineDepDict:
             callerRoutines = routineDepDict[depPackage][0]
             calledRoutines = routineDepDict[depPackage][1]
         if globalDepDict and depPackage in globalDepDict:
             referredRoutines = globalDepDict[depPackage][0]
             referredGlobals = globalDepDict[depPackage][1]
+        if fileManDepDict and depPackage in fileManDepDict:
+            referredFileManFiles = fileManDepDict[depPackage][0]
+            referencedFileManFiles = fileManDepDict[depPackage][1]
         totalCalledHtml = "<span class=\"comment\">%d</span>" % len(callerRoutines)
         totalCallerHtml = "<span class=\"comment\">%d</span>" % len(calledRoutines)
         totalReferredRoutineHtml = "<span class=\"comment\">%d</span>" % len(referredRoutines)
         totalReferredGlobalHtml = "<span class=\"comment\">%d</span>" % len(referredGlobals)
+        totalReferredFileManFilesHtml = "<span class=\"comment\">%d</span>" % len(referredFileManFiles)
+        totalReferencedFileManFilesHtml = "<span class=\"comment\">%d</span>" % len(referencedFileManFiles)
         summaryHeader = "Summary:<BR> Total %s routine(s) in %s called total %s routine(s) in %s" % (totalCalledHtml,
                                                                                                packageHyperLink,
                                                                                                totalCallerHtml,
@@ -655,6 +914,10 @@ class WebPageGenerator:
         summaryHeader += "<BR> Total %s routine(s) in %s accessed total %s global(s) in %s" % (totalReferredRoutineHtml,
                                                                                              packageHyperLink,
                                                                                              totalReferredGlobalHtml,
+                                                                                             depPackageHyperLink)
+        summaryHeader += "<BR> Total %s fileman file(s) in %s pointed to total %s fileman file(s) in %s" % (totalReferredFileManFilesHtml,
+                                                                                             packageHyperLink,
+                                                                                             totalReferencedFileManFilesHtml,
                                                                                              depPackageHyperLink)
         writeSubSectionHeader(summaryHeader, outputFile)
         # print out the routine details
@@ -677,11 +940,23 @@ class WebPageGenerator:
             self.generateTablizedItemList(sorted(referredRoutines), outputFile,
                                           getRoutineHtmlFileName, self.getRoutineDisplayName)
         if len(referredGlobals) > 0:
-            writeSubSectionHeader("Referenced Global List in %s : %s" % (depPackageHyperLink,
+            writeSubSectionHeader("Referenced Globals List in %s : %s" % (depPackageHyperLink,
                                                                        totalReferredGlobalHtml),
                                                                        outputFile)
             self.generateTablizedItemList(sorted(referredGlobals), outputFile,
                                           getGlobalHtmlFileName)
+        if len(referredFileManFiles) > 0:
+            writeSubSectionHeader("Referred FileMan Files List in %s : %s" % (packageHyperLink,
+                                                                       totalReferredFileManFilesHtml),
+                                                                       outputFile)
+            self.generateTablizedItemList(sorted(referredFileManFiles), outputFile,
+                                          getGlobalHtmlFileName, getGlobalDisplayName)
+        if len(referencedFileManFiles) > 0:
+            writeSubSectionHeader("Referenced FileMan Files List in %s : %s" % (depPackageHyperLink,
+                                                                       totalReferencedFileManFilesHtml),
+                                                                       outputFile)
+            self.generateTablizedItemList(sorted(referencedFileManFiles), outputFile,
+                                          getGlobalHtmlFileName, getGlobalDisplayName)
         outputFile.write("<br/>\n")
 #===============================================================================
 # method to generate the individual package/package interaction detail page
@@ -829,43 +1104,47 @@ class WebPageGenerator:
         self.__includeFooter__(outputFile)
         outputFile.close()
     #===============================================================================
-    # Return a dict with package as key, a list of 4 as value
+    # Return a dict with package as key, a list of 6 as value
     #===============================================================================
     def __mergePackageDependenciesList__(self, package, isDependencies=True):
-        routineDepDict = dict()
+        packageDepDict = dict()
         if isDependencies:
             routineDeps = package.getPackageRoutineDependencies()
             globalDeps = package.getPackageGlobalDependencies()
+            fileManDeps = package.getPackageFileManFileDependencies()
         else:
             routineDeps = package.getPackageRoutineDependents()
             globalDeps = package.getPackageGlobalDependents()
+            fileManDeps = package.getPackageFileManFileDependents()
         for (package, depTuple) in routineDeps.iteritems():
-            if package not in routineDepDict:
-                routineDepDict[package] = [0, 0, 0, 0]
-            routineDepDict[package][0] = len(depTuple[0])
-            routineDepDict[package][1] = len(depTuple[1])
+            if package not in packageDepDict:
+                packageDepDict[package] = [0, 0, 0, 0, 0, 0]
+            packageDepDict[package][0] = len(depTuple[0])
+            packageDepDict[package][1] = len(depTuple[1])
         for (package, depTuple) in globalDeps.iteritems():
-            if package not in routineDepDict:
-                routineDepDict[package] = [0, 0, 0, 0]
-            routineDepDict[package][2] = len(depTuple[0])
-            routineDepDict[package][3] = len(depTuple[1])
-        return routineDepDict
+            if package not in packageDepDict:
+                packageDepDict[package] = [0, 0, 0, 0, 0, 0]
+            packageDepDict[package][2] = len(depTuple[0])
+            packageDepDict[package][3] = len(depTuple[1])
+        for (package, depTuple) in fileManDeps.iteritems():
+            if package not in packageDepDict:
+                packageDepDict[package] = [0, 0, 0, 0, 0, 0]
+            packageDepDict[package][4] = len(depTuple[0])
+            packageDepDict[package][5] = len(depTuple[1])
+        return packageDepDict
     #===============================================================================
     ## Method to generate the package dependency/dependent graph
     #===============================================================================
     def generatePackageDependencyGraph(self, package, dependencyList=True):
-        depPackagesDict = None
+        # merge the routine and package list
+        depPackageMerged = self.__mergePackageDependenciesList__(package, dependencyList)
         if dependencyList:
-            depPackagesDict = package.getPackageRoutineDependencies()
             packageSuffix = "_dependency"
         else:
-            depPackagesDict = package.getPackageRoutineDependents()
             packageSuffix = "_dependent"
         packageName = package.getName()
         normalizedName = normalizePackageName(packageName)
-        totalPackage = 0
-        if depPackagesDict:
-            totalPackage = len(depPackagesDict)
+        totalPackage = len(depPackageMerged)
         if  (totalPackage == 0) or (totalPackage > MAX_DEPENDENCY_LIST_SIZE):
             logger.info("Nothing to do exiting... Package: %s Total: %d " %
                          (packageName, totalPackage))
@@ -882,14 +1161,12 @@ class WebPageGenerator:
         output.write("\tnode [shape=box fontsize=14];\n") # set the node shape to be box
         output.write("\tnodesep=0.35;\n") # set the node sep to be 0.35
         output.write("\transsep=0.55;\n") # set the rank sep to be 0.75
-        output.write("\tedge [fontsize=14];\n") # set the edge label and size props
+        output.write("\tedge [fontsize=12];\n") # set the edge label and size props
         output.write("\t%s [style=filled fillcolor=orange label=\"%s\"];\n" % (normalizedName,
                                                                                packageName))
-        # merge the routine and package list
-        depPackageMerged = self.__mergePackageDependenciesList__(package, dependencyList)
         # sort by the sum of the total # of routines
         depPackages = sorted(depPackageMerged.keys(),
-                           key=lambda item: sum(depPackageMerged[item][0:3:2]),
+                           key=lambda item: sum(depPackageMerged[item][0:5:2]),
                            reverse=True)
         for depPackage in depPackages:
             depPackageName = depPackage.getName()
@@ -899,7 +1176,7 @@ class WebPageGenerator:
                                                                 getPackageHtmlFileName(depPackageName)))
     #            output.write("\t%s->%s [label=\"depends\"];\n" % (normalizedName, normalizePackageName(depPackageName.getName())))
             depMetricsList = depPackageMerged[depPackage]
-            edgeWeight = depMetricsList[0] + depMetricsList[2]
+            edgeWeight = sum(depMetricsList[0:5:2])
             edgeLinkURL = getPackageDependencyHtmlFile(normalizedName, normalizedDepPackName)
             edgeStartNode = normalizedName
             edgeEndNode = normalizedDepPackName
@@ -911,28 +1188,10 @@ class WebPageGenerator:
                 edgeEndNode = normalizedName
                 edgeLinkArch = depPackageName
                 toolTipStartPackage = depPackageName
-                toolTipEndPackage = toolTipEndPackage
-            # default for routine only
-            edgeToolTip = "Total %d routines in %s called total %d routines in %s" % (depMetricsList[0],
-                                                                         toolTipStartPackage,
-                                                                         depMetricsList[1],
-                                                                         toolTipEndPackage)
-            edgeLabel = "%s(R)" % (depMetricsList[0])
-            edgeStyle = "solid"
-            if depMetricsList[0] > 0 and depMetricsList[2] > 0:
-                edgeLabel = "%d(R)\\n%d(G)" % (depMetricsList[0], depMetricsList[2])
-                edgeToolTip += " Total %d routines in %s accessed total %d globals in %s" % (depMetricsList[2],
-                                                                                   toolTipStartPackage,
-                                                                                   depMetricsList[3],
-                                                                                   toolTipEndPackage)
-                edgeStyle = "bold"
-            elif depMetricsList[2] > 0:
-                edgeLabel = "%s(G)" % (depMetricsList[2])
-                edgeToolTip = " Total %d routines in %s accessed total %d globals in %s" % (depMetricsList[2],
-                                                                                  toolTipStartPackage,
-                                                                                  depMetricsList[3],
-                                                                                  toolTipEndPackage)
-                edgeStyle = "dashed"
+                toolTipEndPackage = packageName
+            (edgeLabel, edgeToolTip, edgeStyle) = self.__getPackageGraphEdgePropsByMetrics__(depMetricsList,
+                                                                                             toolTipStartPackage,
+                                                                                             toolTipEndPackage)
             output.write("\t%s->%s [label=\"%s\" weight=%d URL=\"%s#%s\" style=\"%s\" labeltooltip=\"%s\" edgetooltip=\"%s\"];\n" % (edgeStartNode,
                                                      edgeEndNode,
                                                      edgeLabel,
@@ -958,6 +1217,59 @@ class WebPageGenerator:
         retCode = subprocess.call(command, shell=True)
         if retCode != 0:
             logger.error("calling dot with command[%s] returns %d" % (command, retCode))
+#===============================================================================
+#  return a tuple of Edge Label, Edge ToolTip, Edge Style
+#===============================================================================
+    def __getPackageGraphEdgePropsByMetrics__(self, depMetricsList, toolTipStartPackage, toolTipEndPackage):
+        assert(len(depMetricsList) >= 6)
+        # default for routine only
+        toolTip =("Total %d routines in %s called total %d routines in %s" % (depMetricsList[0],
+                                                                     toolTipStartPackage,
+                                                                     depMetricsList[1],
+                                                                     toolTipEndPackage),
+                  "Total %d routines in %s accessed total %d globals in %s" % (depMetricsList[2],
+                                                                     toolTipStartPackage,
+                                                                     depMetricsList[3],
+                                                                     toolTipEndPackage),
+                  "Total %d fileman files in %s pointed to total %d fileman file in %s" % (depMetricsList[4],
+                                                                     toolTipStartPackage,
+                                                                     depMetricsList[5],
+                                                                     toolTipEndPackage))
+        labelText =("%s(R)" % (depMetricsList[0]),
+                    "%s(G)" % (depMetricsList[2]),
+                    "%s(F)" % (depMetricsList[4]))
+
+        metricValue = 0
+        (edgeLabel, edgeToolTip, edgeStyle) = ("","","")
+        metricValue = 0
+        for i in range(0,3):
+            if depMetricsList[i*2] > 0:
+                edgeLabel = "%s\\n%s" % (edgeLabel, labelText[i])
+                if len(edgeToolTip) > 0:
+                  edgeToolTip = "%s. %s" % (edgeToolTip, toolTip[i])
+                else:
+                  edgeToolTip = toolTip[i]
+                metricValue += 1 * 2**i
+        if metricValue == 7:
+            edgeStyle = "bold"
+        elif metricValue == 2:
+            edgeStyle = "dashed"
+        elif metricValue == 4:
+            edgeStyle = "dotted"
+        else:
+            edgeStyle = "solid"
+        return (edgeLabel, edgeToolTip, edgeStyle)
+
+#===============================================================================
+#
+#===============================================================================
+    def generateRoutineRelatedPages(self):
+        self.generateRoutineIndexPage()
+        if self._hasDot and self._dotPath:
+            self.generateRoutineCallGraph()
+            self.generateRoutineCallerGraph()
+        self.generateAllSourceCodePage(False)
+        self.generateAllIndividualRoutinePage()
 #===============================================================================
 #
 #===============================================================================
@@ -1146,19 +1458,11 @@ class WebPageGenerator:
             pass
         # write the list of the package dependency list
         package = self._allPackages[packageName]
-        depPackagesByRoutineDict = dict()
-        depPackagesByGlobalDict = dict()
-        if isDependencyList:
-            depPackagesByRoutineDict = package.getPackageRoutineDependencies()
-            depPackagesByGlobalDict = package.getPackageGlobalDependencies()
-        else:
-            depPackagesByRoutineDict = package.getPackageRoutineDependents()
-            depPackagesByGlobalDict = package.getPackageGlobalDependents()
         #sort the packages by total # of routines
         depPackagesMerged = self.__mergePackageDependenciesList__(package,
                                                             isDependencyList)
         depPackages = sorted(depPackagesMerged.keys(),
-                           key=lambda item: sum(depPackagesMerged[item][0:3:2]),
+                           key=lambda item: sum(depPackagesMerged[item][0:5:2]),
                            reverse=True)
         totalPackages = 0
         if depPackages:
@@ -1166,7 +1470,10 @@ class WebPageGenerator:
         writeSectionHeader("%s Total: %d " % (sectionListHeder, totalPackages),
                            sectionListHeder,
                            outputFile)
-        outputFile.write("<h4>Format:&nbsp;&nbsp;package[# of caller routines(R):# of global accessing routines(G)]</h4><BR>\n")
+        outputFile.write("""<h4>Format:&nbsp;&nbsp;
+                            package[# of caller routines(R):
+                            # of global accessing routines(G):
+                            # of fileman file references(F)]</h4><BR>\n""")
         if totalPackages > 0:
             outputFile.write("<div class=\"contents\"><table>\n")
             numOfCol = 6
@@ -1178,7 +1485,7 @@ class WebPageGenerator:
                         depPackage = depPackages[index * numOfCol + j]
                         depPackageName = depPackage.getName()
                         depMetricsList = depPackagesMerged[depPackage]
-                        linkName = "%d(R):%d(G)" % (depMetricsList[0], depMetricsList[2])
+                        linkName = "%d(R):%d(G):%d(F)" % (depMetricsList[0], depMetricsList[2], depMetricsList[4])
                         depHyperLink = getPackagePackageDependencyHyperLink(packageName,
                                                                           depPackageName,
                                                                           linkName,
@@ -1188,7 +1495,7 @@ class WebPageGenerator:
                 outputFile.write("</tr>\n")
             outputFile.write("</table></div>\n")
 #===============================================================================
-# method to generate a tablized representation of routines
+# method to generate a tablized representation of data
 #===============================================================================
     def generateTablizedItemList(self, sortedItemList, outputFile, htmlMappingFunc,
                                  nameFunc=None, totalCol=8, isUnknownPkg=False):
@@ -1218,7 +1525,7 @@ class WebPageGenerator:
 # method to generate individual package page
 #===============================================================================
     def generateIndividualPackagePage(self):
-        indexList = ["Doc", "Dependency Graph", "Package Dependency List", "Dependent Graph", "Package Dependent List", "All Globals", "All Routines"]
+        indexList = ["Namespace", "Doc", "Dependency Graph", "Package Dependency List", "Dependent Graph", "Package Dependent List", "FileMan Files", "Non-FileMan Globals", "All Routines"]
         for packageName in self._allPackages.iterkeys():
             isUnknownPkg = isUnknownPackage(packageName)
             package = self._allPackages[packageName]
@@ -1229,6 +1536,14 @@ class WebPageGenerator:
             outputFile.write("<div class=\"_header\">\n")
             outputFile.write("<div class=\"headertitle\">")
             outputFile.write("<h1>Package: %s</h1>\n</div>\n</div>" % packageName)
+            # Namespace
+            writeSectionHeader("Namespace", "Namespace", outputFile)
+            outputFile.write("<p><h4>Namespace: %s" % listDataToCommaSeperatorString(package.getNamespaces()))
+            globalNamespaces = package.getGlobalNamespace()
+            if globalNamespaces and len(globalNamespaces) > 0:
+                outputFile.write("&nbsp;&nbsp;Additional Global Namespace: %s</h4>" % listDataToCommaSeperatorString(globalNamespaces))
+            else:
+                outputFile.write("</h4>")
             # link to VA documentation
             writeSectionHeader("Documentation", "Doc", outputFile)
             if len(package.getDocLink()) > 0:
@@ -1241,13 +1556,31 @@ class WebPageGenerator:
                 outputFile.write("<p><h4><a href=\"http://www.va.gov/vdl/\">VA documentation in the VistA Documentation Library</a></h4>\n")
             self.generatePackageDependencySection(packageName, outputFile, True)
             self.generatePackageDependencySection(packageName, outputFile, False)
-            totalNumGlobals = len(package.getAllGlobals())
-            writeSectionHeader("All Globals Total: %d" % totalNumGlobals,
-                               "All Globals",
+            # seperate fileman files and non-fileman globals
+            fileManList, globalList = [], []
+            allGlobals = package.getAllGlobals()
+            for globalVar in allGlobals.itervalues():
+                if globalVar.isFileManFile():
+                    fileManList.append(globalVar)
+                else:
+                    globalList.append(globalVar)
+            # section of All FileMan files
+            writeSectionHeader("All FileMan Files Total: %d" % len(fileManList),
+                               "FileMan Files",
                                outputFile)
-            sortedGlobals = sorted(package.getAllGlobals().keys())
-            self.generateTablizedItemList(sortedGlobals, outputFile,
-                                          getGlobalHtmlFileNameByName)
+            sortedFileManList = sorted(fileManList, key=lambda item: float(item.getFileNo())) # sorted by fileMan file No
+            self.generateTablizedItemList(sortedFileManList, outputFile,
+                                          getGlobalHtmlFileName,
+                                          getGlobalDisplayName)
+            # section of All Non-FileMan Globals
+            writeSectionHeader("Non FileMan Globals Total: %d" % len(globalList),
+                               "Non-FileMan Globals",
+                               outputFile)
+            sortedGlobalList = sorted(globalList, key=lambda item: item.getName()) # sorted by global Name
+            self.generateTablizedItemList(sortedGlobalList, outputFile,
+                                          getGlobalHtmlFileName,
+                                          getGlobalDisplayName)
+            # section of all routines
             sortedRoutines = sorted(package.getAllRoutines().keys())
             totalNumRoutine = len(sortedRoutines)
             writeSectionHeader("All Routines Total: %d" % totalNumRoutine,
@@ -1602,6 +1935,8 @@ if __name__ == '__main__':
                         help='path to the folder containing dot excecutable')
     parser.add_argument('-Log', required=False, dest='outputLogFileName',
                         help='the output Logging file')
+    parser.add_argument('-f', dest='fileSchemaDir',
+                        help='VistA File Man Schema log Directory')
     result = vars(parser.parse_args());
     if not result['outputLogFileName']:
         outputLogFile = getTempLogFile()
@@ -1628,6 +1963,13 @@ if __name__ == '__main__':
 
     callLogPattern = "*.log"
     logParser.parseAllCallerGraphLog(result['logFileDir'], callLogPattern)
+    if result['fileSchemaDir']:
+      dataDictLogParser = DataDictionaryListFileLogParser(logParser.getCrossReference())
+      dataDictLogParser.parseAllDataDictionaryListLog(result['fileSchemaDir'],"*.schema")
+      dataDictLogParser.parseAllDataDictionaryListLog(result['fileSchemaDir'],".*.schema") # this is to handle fileman # less 0
+
+    # generate package direct dependency based on XINDEX call graph and fileman reference
+    logParser.getCrossReference().generateAllPackageDependencies()
     logger.info ("Starting generating web pages....")
     webPageGen = WebPageGenerator(logParser.getCrossReference(),
                                 result['outputDir'],

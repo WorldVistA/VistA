@@ -1,0 +1,47 @@
+#---------------------------------------------------------------------------
+# Copyright 2011 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+message(STATUS "Gathering FileMan information...")
+
+if(NOT EXISTS "@OSEHRA_PATH@/globals.lst")
+  execute_process(COMMAND "@GIT_EXECUTABLE@" ls-files "*.zwr" WORKING_DIRECTORY @OSEHRA_PATH@ OUTPUT_FILE globals.lst RESULT_VARIABLE return )
+endif()
+file(STRINGS "@OSEHRA_PATH@/globals.lst" FilemanFileList)
+set(masterfilelist "")
+foreach(files ${FilemanFileList})
+  get_filename_component(filename ${files} NAME)
+  string(REGEX MATCH ^[0-9.]+ filenumber ${filename})
+  if(filenumber)
+    string(REGEX REPLACE ^0 "" cutnumber ${filenumber})
+    set(index -1)
+    LIST(FIND masterfilelist ${cutnumber} index)
+    if(${index} EQUAL -1)
+      LIST(APPEND masterfilelist ${cutnumber})
+    endif()
+  endif()
+endforeach()
+
+make_directory(@VISTA_BINARY_DIR@/Docs/Schema/)
+make_directory(@VISTA_BINARY_DIR@/Docs/Log/)
+
+foreach(file ${masterfilelist})
+  file(TO_NATIVE_PATH "@VISTA_BINARY_DIR@/Docs/Schema/${file}.schema" schemafile)
+  file(TO_NATIVE_PATH "@VISTA_BINARY_DIR@/Docs/Log/${file}.log" slogfile)
+  execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@VISTA_BINARY_DIR@/FilemanGlobalAttributes.py" "${file}" "${schemafile}" "${slogfile}" RESULT_VARIABLE retValue ERROR_VARIABLE errCode)
+  if(NOT retValue EQUAL 0)
+    #file(READ @logfile@ contents)
+    message(FATAL_ERROR "Error running python script to get FileMan Schema:\nReturn Value = ${return}\n${contents}\n${ERROR}")
+  endif()
+endforeach()
