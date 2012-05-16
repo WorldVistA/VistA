@@ -71,8 +71,44 @@ def unpack(kid, routineDir):
                         routine.write(code)
                     line=f.next()
 
+def checksum(routine):
+    checksum = 0
+    lineNumber = 0
+    characterPosition = 0
+    savedcharater=""
+    with open(routine, 'r') as f:
+        for line in f:
+            lineNumber += 1
+            # ignore the second line
+            if lineNumber == 2:
+                continue
+            lengthOfLine = mFind(line," ")
+            if mExtract(line,lengthOfLine) != ";":
+                lengthOfLine = line.__len__()-1
+            elif mExtract(line, 1+lengthOfLine) == ";":
+                lengthOfLine = line.__len__()-1
+            else:
+                lengthOfLine = lengthOfLine - 1
+            for character in xrange(lengthOfLine):
+                characterPosition +=1
+                # normal code
+                temp = lineNumber+characterPosition
+                checksum += ord(mExtract(line,character))*temp
+            characterPosition = 0
+
+    sys.stdout.write("Checksum is: "+str(checksum)+"\n")
+
+def mExtract(string,position):
+    chars = list(string)
+    return chars[--position]
+
+def mFind(string,substring):
+    f = string.index(substring)
+    return f +1
+
 def main():
-    unpack(sys.argv[1], sys.argv[2])
+    #unpack(sys.argv[1], sys.argv[2])
+    checksum(sys.argv[1])
 
 if __name__ == '__main__':
     main()
