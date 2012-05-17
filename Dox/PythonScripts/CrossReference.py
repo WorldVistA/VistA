@@ -23,14 +23,10 @@ import csv
 from operator import itemgetter, attrgetter
 #some constants
 NOT_KILLED_EXPLICITLY_VALUE = ">>"
-UNKNOWN_PACKAGE = "UNKNOWN"
 write = sys.stdout.write
 MUMPS_ROUTINE_PREFIX = "Mumps"
 
 BoolDict = {True:"Y", False:"N"}
-
-def isUnknownPackage(packageName):
-    return packageName == UNKNOWN_PACKAGE
 
 LINE_OFFSET_DELIM = ","
 #===============================================================================
@@ -871,7 +867,7 @@ class Package(object):
         for routine in self._routines.itervalues():
             calledRoutines = routine.getCalledRoutines()
             for package in calledRoutines.iterkeys():
-                if package and package != self and package._name != UNKNOWN_PACKAGE:
+                if package and package != self:
                     if package not in self._routineDependencies:
                         # the first set consists of all caller _calledRoutine in the self package
                         # the second set consists of all called routines in dependency package
@@ -888,7 +884,7 @@ class Package(object):
             # based in referred Globals
             for globalVar in referredGlobals.itervalues():
                 package = globalVar.getPackage()
-                if package != self and package._name != UNKNOWN_PACKAGE:
+                if package != self:
                     if package not in self._globalDependencies:
                         self._globalDependencies[package] = (set(), set())
                     self._globalDependencies[package][0].add(routine)
@@ -905,7 +901,7 @@ class Package(object):
                 continue
             pointerToFiles = Global.getAllReferredFileManFiles()
             for package in pointerToFiles.iterkeys():
-                if package != self and package._name != UNKNOWN_PACKAGE:
+                if package != self:
                     if package not in self._fileManDependencies:
                         self._fileManDependencies[package] = (set(), set())
                     self._fileManDependencies[package][0].add(Global)

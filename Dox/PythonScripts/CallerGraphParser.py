@@ -30,7 +30,7 @@ import argparse
 from datetime import datetime, date, time
 from CrossReference import CrossReference, Routine, Package, Global, PlatformDependentGenericRoutine
 from CrossReference import LocalVariable, GlobalVariable, NakedGlobal, MarkedItem, LabelReference
-from CrossReference import RoutineCallInfo, UNKNOWN_PACKAGE
+from CrossReference import RoutineCallInfo
 
 from LogManager import logger, initConsoleLogging
 
@@ -577,7 +577,6 @@ class CallerGraphLogFileParser(object):
             if ARoutineEx.search(routineName):
                 logger.debug("A Routines %s should be exempted" % routineName)
                 pass
-        crossReference.addPackageByName(UNKNOWN_PACKAGE)
         logger.info("Total package is %d and Total Routines are %d" %
                     (len(allPackages), len(allRoutines)))
 #===============================================================================

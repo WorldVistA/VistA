@@ -275,31 +275,6 @@ def printOrphanGlobals(crossRef):
     print ("Total # of top level FileMan File: %d\n" % len(topLevelFileMan))
     sys.stdout.write("%s\n" % (topLevelFileMan))
     sys.stdout.write("\n")
-def printAllUnknownRoutines(crossRef, outputFileName=None):
-    unknownPackage = crossRef.getPackageByName("UNKNOWN")
-    allPercentRoutines = sorted(crossRef.getAllPercentRoutine())
-    if outputFileName:
-        outputFile = open(outputFile, 'wb')
-        csvWriter = csv.writer(outputFile)
-    if unknownPackage:
-        allRoutines = unknownPackage.getAllRoutines()
-        print ("Total # of routines: %d" % len(allRoutines))
-        index = 0
-        totalPercentRoutines = 0
-        for routineName in sorted(allRoutines.keys()):
-            routine = allRoutines[routineName]
-            if not routineName.startswith("%"):
-                tempName = "%" + routineName
-                if tempName in allPercentRoutines:
-                    routineName = tempName
-                    totalPercentRoutines += 1
-            sys.stdout.write(" %s " % routineName)
-            if outputFileName: csvWriter.writerow([routineName, "", ""])
-            if (index + 1) % 10 == 0:
-                sys.stdout.write("\n")
-            index += 1
-        sys.stdout.write("\n")
-        print ("Total Percent routines are: %d" % totalPercentRoutines)
 
 def printUsage():
     print ("Please enter quit to exit")
@@ -313,7 +288,6 @@ def printUsage():
     print ("please enter R:<routineName> to print all information related to a routine")
     print ("please enter G:<globalname> to print all information related to a global")
     print ("please enter P:<packageName> to print all information related to a package")
-    print ("please enter output-unknown to print all routines under package UNKNOWN")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='VistA Cross-Reference information Finder')
@@ -358,9 +332,6 @@ if __name__ == '__main__':
             continue
         if var == "all_percent":
             printAllPercentRoutines(crossRef)
-            continue
-        if var == "output-unknown":
-            printAllUnknownRoutines(crossRef)
             continue
         if var == "help":
             printUsage()
