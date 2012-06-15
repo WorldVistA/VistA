@@ -390,6 +390,7 @@ class WebPageGenerator:
         self.generatePackagePackageInteractionDetail()
         self.generateIndividualPackagePage()
         self.generateRoutineRelatedPages()
+        self.copyFilesToOutputDir()
 #===============================================================================
 # Method to generate the index.html page
 #===============================================================================
@@ -673,32 +674,44 @@ class WebPageGenerator:
             fieldNo = value.getFieldNo()
             fieldNoTxt = "<a name=\"%s\">%s</a>" % (fieldNo, fieldNo)
             fieldRow = [fieldNoTxt, value.getName(), location, value.getTypeName()]
+            fieldDetails = ""
             if value.isSetType():
                 # nice display of set members
                 setIter = value.getSetMembers()
-                setOutput = generateHtmlListData(setIter)
-                fieldRow.append(setOutput)
+                fieldDetails = generateHtmlListData(setIter)
             elif value.isFilePointerType():
                 if value.getPointedToFile():
-                    fieldRow.append(getFileManFileHypeLink(value.getPointedToFile()))
-                else:
-                    fieldRow.append("")
+                    fieldDetails = (getFileManFileHypeLink(value.getPointedToFile()))
             elif value.isVariablePointerType():
                 fileManFiles = value.getPointedToFiles()
-                htmlText = ""
                 for pointedToFile in fileManFiles:
-                    htmlText += getFileManFileHypeLink(pointedToFile) + "&nbsp;&nbsp;"
-                fieldRow.append(htmlText)
+                    fieldDetails += getFileManFileHypeLink(pointedToFile) + "&nbsp;&nbsp;"
             elif value.isSubFilePointerType():
                 filePointer = value.getPointedToSubFile()
                 if filePointer:
-                    fieldRow.append(getFileManSubFileHypeLinkByName(filePointer.getFileNo()))
-                else:
-                    fieldRow.append("")
-            else:
-                fieldRow.append("")
+                    fieldDetails = getFileManSubFileHypeLinkByName(filePointer.getFileNo())
+            # logic to append field extra details here
+            fieldDetails += self.__generateFileManFieldPropsDetailsList__(value)
+            fieldRow.append(fieldDetails)
             outputFieldsList.append(fieldRow)
         writeGenericTablizedData(fieldHeaderList, outputFieldsList, outputFile)
+#===============================================================================
+#
+#===============================================================================
+    def __generateFileManFieldPropsDetailsList__(self, fileManField):
+        if not fileManField:
+            return ""
+        propList = fileManField.getPropList()
+        if not propList or len(propList) == 0:
+            return ""
+        output = "<p><ul>"
+        for (name, values) in propList:
+            output += "<li><dl><dt>%s&nbsp;&nbsp;<code>%s</code></dt>" % (name, values[0])
+            for value in values[1:]:
+                output += "<dd><pre>%s</pre></dd>" % value
+            output += "</dl></li>"
+        output += "</ul>"
+        return output
 #===============================================================================
 #
 #===============================================================================
@@ -1223,6 +1236,14 @@ class WebPageGenerator:
             self.generateRoutineCallerGraph()
         self.generateAllSourceCodePage(False)
         self.generateAllIndividualRoutinePage()
+#===============================================================================
+#
+#===============================================================================
+    def copyFilesToOutputDir(self):
+       cssFile = os.path.join(os.path.abspath(self._docRepDir),
+                              "Web/DoxygenStyle.css")
+       import shutil
+       shutil.copy(cssFile, self._outDir)
 #===============================================================================
 #
 #===============================================================================
@@ -1854,7 +1875,7 @@ def initLogging(outputFileName):
 # main
 #===============================================================================
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='VistA Routine information Finder')
+    parser = argparse.ArgumentParser(description='VistA Visual Cross-Reference Documentation Generator')
     parser.add_argument('-l', required=True, dest='logFileDir',
                         help='Input XINDEX log files directory, nomally under'
                              '${CMAKE_BUILD_DIR}/Docs/CallerGraph/')
