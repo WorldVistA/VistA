@@ -8,5 +8,7 @@ mkdir -p $VistADir/o
 source $gtm_dist/gtmprofile
 export gtmgbldir=$VistADir/database
 export gtmroutines="$VistADir/o($VistADir/r) $gtm_dist/libgtmutil.so"
-echo "change -s DEFAULT -f=/home/contestant/VistA/database" | $gtm_dist/mumps -r GDE
+echo "change -s DEFAULT -f=$VistADir/database" | $gtm_dist/mumps -r GDE
+$gtm_dist/mupip create
+$gtm_dist/dse change -f -key_max=1023 -rec=4096
 
