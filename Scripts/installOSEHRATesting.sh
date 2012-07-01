@@ -1,4 +1,8 @@
 #!/bin/sh
+#
+# More details at
+# http://www.osehra.org/wiki/obtaining-testing-code
+#
 mkdir -p $HOME/OSEHRA
 cd $HOME/OSEHRA
 git clone git://github.com/OSEHRA/OSEHRA-Automated-Testing.git
