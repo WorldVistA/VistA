@@ -1,11 +1,13 @@
 #!/bin/sh
 cd $HOME
-mkdir -p cmake
-mkdir -p cmake/src
-mkdir -p cmake/bin
+mkdir -p $HOME/local
+mkdir -p $HOME/cmake
+mkdir -p $HOME/cmake/src
+mkdir -p $HOME/cmake/bin
 cd $HOME/cmake/src
 wget http://www.cmake.org/files/v2.8/cmake-2.8.8.tar.gz
 tar -xzf cmake-2.8.8.tar.gz
 cd $HOME/cmake/bin
-../cmake-2.8.8/configure
-
+$HOME/cmake/src/cmake-2.8.8/configure --prefix=$HOME/local
+make -j4
+make install
