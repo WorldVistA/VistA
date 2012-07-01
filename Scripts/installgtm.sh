@@ -255,8 +255,8 @@ if [ -d "utf8" ]; then
 	else
 		library_path="/usr/local/lib32 /usr/local/lib /usr/lib32 /usr/lib /lib32 /lib"
 	fi
-	$echo "UTF-8 support will be installed? \c"
-	resp="y"
+	$echo "UTF-8 support will NOT be installed? \c"
+	resp="n"
 	if [ "$resp" = "Y" -o "$resp" = "y" ] ; then
 		would_like_utf8=1
 		$echo "Using the default ICU version \c"
