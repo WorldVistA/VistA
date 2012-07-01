@@ -1,5 +1,5 @@
 #!/bin/sh
-cd ~
+cd $HOME
 VistADir=$HOME/VistA
 gtm_dist=/usr/lib/fis-gtm/V5.5-000_x86_64
 mkdir -p $VistADir
