@@ -7,6 +7,6 @@ mkdir -p $VistADir/r
 mkdir -p $VistADir/o
 export gtmprofilefile=$gtm_dist/gtmprofile
 source $gtmprofilefile
-export gtmgbldir=$VistADir/database
+export gtmgbldir=$VistADir/g/database
 export gtmroutines="$VistADir/o($VistADir/r) $gtm_dist/libgtmutil.so"
-echo "change -s DEFAULT -f=$VistADir/database" | $gtm_dist/mumps -r GDE
+echo "change -s DEFAULT -f=$VistADir/g/database" | $gtm_dist/mumps -r GDE
