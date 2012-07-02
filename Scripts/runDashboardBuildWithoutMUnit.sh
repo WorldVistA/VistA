@@ -9,6 +9,5 @@ export gtmgbldir=$VistADir/database
 export gtmroutines="$VistADir/o($VistADir/r) $gtm_dist/libgtmutil.so"
 mkdir -p $DashboardsDir/Logs
 $HOME/local/bin/ctest \
--S $HOME/OSEHRA/VistA-installation-scripts/Scripts/setupTestingDashboardBuild.cmake \
+-S $HOME/OSEHRA/VistA-installation-scripts/Scripts/runDashboardBuildWithoutMUnit.cmake \
 -VV > $DashboardsDir/Logs/build.log
-
