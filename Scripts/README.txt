@@ -12,6 +12,11 @@ The scripts must be run in the following order
       6) installOSEHRATesting.sh
       7) installMUnit.sh
 
+Once all this environment is setup
+a Dashboar build can be triggered by calling:
+
+         setupTestingDashboardBuild.sh
+
 
 #
 # The following scripts are optional,
