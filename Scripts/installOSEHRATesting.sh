@@ -7,5 +7,5 @@ export DashboardsDir=$HOME/OSEHRA/Dashboards
 mkdir -p $DashboardsDir
 cd $DashboardsDir
 git clone git://github.com/OSEHRA/OSEHRA-Automated-Testing.git
-ln -s $DashboardsDir/OSEHRA-Automated-Testing/DashboardsScripts/vista_common.cmake $HOME/OSEHRA/VistA-installation-scripts/Scripts
+ln -s $DashboardsDir/OSEHRA-Automated-Testing/DashboardScripts/vista_common.cmake $HOME/OSEHRA/VistA-installation-scripts/Scripts
 
