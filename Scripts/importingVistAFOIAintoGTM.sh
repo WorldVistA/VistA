@@ -36,3 +36,11 @@ $gtm_dist/gtm
 #  System: 8
 #
 #
+#  NAME OF MANAGER'S UCI,VOLUME SET: VAH,ROU// PLA,PLA
+#  The value of PRODUCTION will be used in the GETENV api.
+#  PRODUCTION (SIGN-ON) UCI,VOLUME SET: VAH,ROU// PLA,PLA
+#  The VOLUME name must match the one in PRODUCTION.
+#  NAME OF VOLUME SET: PLA//PLA
+#  The temp directory for the system: '/tmp/'//
+#  Want to rename the FileMan routines: No//Y
+#
