@@ -18,4 +18,4 @@ set(CTEST_DASHBOARD_ROOT $ENV{HOME}/OSHERA/Dashboards)
 
 #Path to the Git Executable.
 set(CTEST_GIT_COMMAND /usr/bin/git)
-include(${CTEST_SCRIPT_DIRECTORY}/../vista_common.cmake)
+include(${CTEST_SCRIPT_DIRECTORY}/vista_common.cmake)
