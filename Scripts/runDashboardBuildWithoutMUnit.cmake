@@ -14,7 +14,7 @@ USE_XINDEX_WARNINGS_AS_FAILURES:BOOL=ON
 VISTA_CPRS_FUNCTIONAL_TESTING:BOOL=ON
  ")
 #Where the files from git will be placed
-set(CTEST_DASHBOARD_ROOT $ENV{HOME}/OSHERA/Dashboards)
+set(CTEST_DASHBOARD_ROOT $ENV{HOME}/OSEHRA/Dashboards)
 
 #Path to the Git Executable.
 set(CTEST_GIT_COMMAND /usr/bin/git)
