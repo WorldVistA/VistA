@@ -15,7 +15,12 @@ The scripts must be run in the following order
 Once all this environment is setup
 a Dashboar build can be triggered by calling:
 
-         setupTestingDashboardBuild.sh
+         runDashboardBuildWithoutMUnit.sh
+
+and once it has created a VistA database, we can
+then invoke the one that uses MUnit:
+
+        runDashboardBuildWithMUnit.sh
 
 
 #
