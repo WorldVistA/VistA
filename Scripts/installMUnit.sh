@@ -1,11 +1,9 @@
 #!/bin/sh
 #
-# More details at
-# http://www.osehra.org/wiki/importing-osehra-code-base-gtm
+# Install the M-Unit KIDS file.
 #
-cd $HOME
-mkdir -p $HOME/OSEHRA
-cd $HOME/OSEHRA
+mkdir -p $HOME/OSEHRA/Dashboards
+cd $HOME/OSEHRA/Dashboards
 git clone git://github.com/OSEHR/M-Tools.git
 cd M-Tools
 cd "Utilities XT_7.3_81 not yet released"

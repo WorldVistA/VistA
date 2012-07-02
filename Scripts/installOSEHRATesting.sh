@@ -3,9 +3,10 @@
 # More details at
 # http://www.osehra.org/wiki/obtaining-testing-code
 #
-mkdir -p $HOME/OSEHRA
-cd $HOME/OSEHRA
+export DashboardsDir=$HOME/OSEHRA/Dashboards
+mkdir -p $DashboardsDir
+cd $DashboardsDir
 git clone git://github.com/OSEHRA/OSEHRA-Automated-Testing.git
-mkdir -p OSEHRA-Automated-Testing-Build
-cd $HOME/OSEHRA/OSEHRA-Automated-Testing-Build
-$HOME/local/bin/ccmake $HOME/OSEHRA/OSEHRA-Automated-Testing
+mkdir -p $DashboardsDir/OSEHRA-Automated-Testing-Build
+cd $DashboardsDir/OSEHRA-Automated-Testing-Build
+$HOME/local/bin/ccmake $DashboardsDir/OSEHRA-Automated-Testing

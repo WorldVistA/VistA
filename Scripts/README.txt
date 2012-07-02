@@ -4,10 +4,21 @@ full VistA instance in a fresh Linux installation.
 The scripts must be run in the following order
 
 
-installREHLPackages.sh
-installGTM.sh
-installCMakeinUserAccount.sh
-installVistAinUserAccount.sh
-installVistAFOIARepository.sh
-installOSEHRATesting.sh
-importingVistAFOIAintoGTM.sh
+      1) installREHLPackages.sh
+      2) installGTM.sh
+      3) installCMakeinUserAccount.sh
+      4) installVistAinUserAccount.sh
+      5) installVistAFOIARepository.sh
+      6) installOSEHRATesting.sh
+      7) installMUnit.sh
+
+
+#
+# The following scripts are optional,
+# all these tasks are actually performed
+# by CMake as part of the set up of the
+# testing infrastructure and the process
+# of running the Experimental of Nightly
+# build.
+#
+# importingVistAFOIAintoGTM.sh
