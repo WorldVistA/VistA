@@ -7,5 +7,7 @@ export gtmprofilefile=$gtm_dist/gtmprofile
 source $gtmprofilefile
 export gtmgbldir=$VistADir/database
 export gtmroutines="$VistADir/o($VistADir/r) $gtm_dist/libgtmutil.so"
-$HOME/local/bin/ctest -S $HOME/OSEHRA/VistA-installation-scripts/Scripts/setupTestingDashboardBuild.cmake -VV > OSEHRA/Logs/build`date`.log
+$HOME/local/bin/ctest \
+-S $HOME/OSEHRA/VistA-installation-scripts/Scripts/setupTestingDashboardBuild.cmake \
+-VV > OSEHRA/Logs/build.log
 
