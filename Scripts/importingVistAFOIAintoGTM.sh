@@ -12,3 +12,12 @@ $gtm_dist/gtm
 #
 # DO ^%RI
 #
+# Formfeed delimited <No>?  No
+# Input device: <terminal>: $HOME/OSEHRA/VistA-FOIA/routines.ro
+# Output directory : $HOME/VistA/r/
+#
+#
+# DO LIST^ZGI("$HOME/OSEHRA/VistA-FOIA/globals.lst","$HOME/OSEHRA/VistA-FOIA/")
+#
+# D ^ZTMGRSET
+#
