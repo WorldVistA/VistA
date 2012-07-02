@@ -7,6 +7,3 @@ export DashboardsDir=$HOME/OSEHRA/Dashboards
 mkdir -p $DashboardsDir
 cd $DashboardsDir
 git clone git://github.com/OSEHRA/OSEHRA-Automated-Testing.git
-mkdir -p $DashboardsDir/OSEHRA-Automated-Testing-Build
-cd $DashboardsDir/OSEHRA-Automated-Testing-Build
-$HOME/local/bin/ccmake $DashboardsDir/OSEHRA-Automated-Testing
