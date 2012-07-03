@@ -1,0 +1,13 @@
+service cprs-vista
+{
+  port = 9430
+  socket_type = stream
+  protocol = tcp
+  type = UNLISTED
+  user = vista
+  server = $HOME/VistA-Instance/inet/cprs.sh
+  wait = no
+  disable = no
+  per_source = UNLIMITED
+  instances = UNLIMITED
+}
