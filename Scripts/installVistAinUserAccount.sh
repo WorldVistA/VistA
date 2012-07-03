@@ -6,6 +6,7 @@ mkdir -p $VistADir
 mkdir -p $VistADir/r
 mkdir -p $VistADir/o
 mkdir -p $VistADir/g
+mkdir -p $VistADir/inet
 export gtmprofilefile=$gtm_dist/gtmprofile
 source $gtmprofilefile
 export gtmgbldir=$VistADir/g/database
