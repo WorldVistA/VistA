@@ -10,6 +10,6 @@ git clone git://code.osehra.org/VistA-FOIA.git
 #
 # switch position of two lines to solve problem with Locks.
 #
-sed i.bak -e '82 i\
+sed -i.bak -e '82 i\
  TCOMMIT  ;' $HOME/OSEHRA/Dashboards/VistA-FOIA/Packages/Kernel/Routines/ZTLOAD1.m
-sed i.bak -e '84 d' $HOME/OSEHRA/Dashboards/VistA-FOIA/Packages/Kernel/Routines/ZTLOAD1.m
+sed -i.bak -e '84 d' $HOME/OSEHRA/Dashboards/VistA-FOIA/Packages/Kernel/Routines/ZTLOAD1.m
