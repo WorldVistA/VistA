@@ -8,5 +8,6 @@ yum install gcc-c++
 yum install make
 yum install expect
 yum install xinetd
+yum install nmap
 yum install ncurses
 yum install ncurses-devel
