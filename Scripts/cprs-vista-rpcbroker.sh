@@ -2,6 +2,7 @@
 #
 #  This is a file to run RPCBroker as a Linux service
 #
+export HOME=TODO:PUT HOME HERE
 source $HOME/OSEHRA/VistA-installation-scripts/Scripts/setupEnvironmentVariables.sh
 
 LOG=$VistADir/inet/Logs/cprs.log
