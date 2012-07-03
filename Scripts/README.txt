@@ -11,6 +11,7 @@ The scripts must be run in the following order
       5) installVistAFOIARepository.sh
       6) installOSEHRATesting.sh
       7) installMUnit.sh
+      8) installBashConfiguration.sh
 
 Once all this environment is setup
 a Dashboar build can be triggered by calling:
