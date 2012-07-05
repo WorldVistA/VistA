@@ -1,13 +1,8 @@
 #!/bin/sh
-export VistADir=$HOME/VistA-Instance
+source $HOME/OSEHRA/VistA-installation-scripts/Scripts/setupEnvironmentVariables.sh
 export VistAGlobalsDir=$VistADir/g
 export DashboardsDir=$HOME/OSEHRA/Dashboards
-export VistARoutines=$VistADir/r
-export gtm_dist=/usr/lib/fis-gtm/V5.5-000_x86_64
-export gtmprofilefile=$gtm_dist/gtmprofile
-source $gtmprofilefile
-export gtmgbldir=$VistADir/g/database
-export gtmroutines="$VistADir/o($VistADir/r) $gtm_dist/libgtmutil.so"
+export PATH=$PATH:$gtm_dist:$HOME/local/bin
 mkdir -p $DashboardsDir/Logs
 $HOME/local/bin/ctest \
 -S $HOME/OSEHRA/VistA-installation-scripts/Scripts/runDashboardBuildWithoutMUnit.cmake \
