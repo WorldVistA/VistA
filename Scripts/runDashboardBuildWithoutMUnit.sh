@@ -4,6 +4,6 @@ export VistAGlobalsDir=$VistADir/g
 export DashboardsDir=$HOME/OSEHRA/Dashboards
 export PATH=$PATH:$gtm_dist:$HOME/local/bin
 mkdir -p $DashboardsDir/Logs
-$HOME/local/bin/ctest \
+$HOME/local/bin/ctest -j 4 \
 -S $HOME/OSEHRA/VistA-installation-scripts/Scripts/runDashboardBuildWithoutMUnit.cmake \
 -VV > $DashboardsDir/Logs/build.log
