@@ -1,6 +1,6 @@
 #Client maintainer: name@email
 set(CTEST_SITE "osehra001.rackspace")
-set(CTEST_BUILD_NAME "RHEL6.1-GT.M")
+set(CTEST_BUILD_NAME "RHEL6.1-GT.M-MUnit")
 set(dashboard_cache "
 GTMPROFILE:PATH=$ENV{gtmprofilefile}
 VISTA_GLOBALS_DIR:PATH=$ENV{VistAGlobalsDir}
