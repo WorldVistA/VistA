@@ -6,3 +6,4 @@ export gtmprofilefile=$gtm_dist/gtmprofile
 source $gtmprofilefile
 export gtmgbldir=$VistADir/g/database
 export gtmroutines="$VistADir/o($VistADir/r) $gtm_dist/libgtmutil.so"
+export gtm_tmp=/tmp
