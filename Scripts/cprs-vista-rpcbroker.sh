@@ -3,6 +3,7 @@
 #  This is a file to run RPCBroker as a Linux service
 #
 export HOME=TODO:PUT HOME HERE
+export REMOTE_HOST=`echo $REMOTE_HOST | sed 's/::ffff://'`
 source $HOME/OSEHRA/VistA-installation-scripts/Scripts/setupEnvironmentVariables.sh
 
 LOG=$VistADir/inet/Logs/cprs.log
