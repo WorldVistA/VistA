@@ -1,5 +1,5 @@
 #Client maintainer: name@email
-set(CTEST_SITE "$ENV{HOSTNAME}.rackspace")
+set(CTEST_SITE "$ENV{HOST_NAME}.rackspace")
 set(CTEST_BUILD_NAME "RHEL6.1-GT.M-MUnit")
 set(dashboard_cache "
 GTMPROFILE:PATH=$ENV{gtmprofilefile}
