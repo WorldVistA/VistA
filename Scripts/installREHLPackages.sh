@@ -12,3 +12,4 @@ yum install nmap
 yum install ncurses
 yum install ncurses-devel
 yum install tmux
+yum install rdate
