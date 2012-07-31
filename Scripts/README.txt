@@ -35,3 +35,4 @@ then invoke the one that uses MUnit:
 # build.
 #
 # importingVistAFOIAintoGTM.sh
+# restoreVistAInstanceFromBackupForGTM.sh
