@@ -5,13 +5,14 @@ The scripts must be run in the following order
 
 
       1) installREHLPackages.sh
-      2) installGTM.sh
-      3) installCMakeinUserAccount.sh
-      4) installVistAinUserAccount.sh
-      5) installVistAFOIARepository.sh
-      6) installOSEHRATesting.sh
-      7) installMUnit.sh
-      8) installBashConfiguration.sh
+      2) setupREHLTimeZone.sh
+      3) installGTM.sh
+      4) installCMakeinUserAccount.sh
+      5) installVistAinUserAccount.sh
+      6) installVistAFOIARepository.sh
+      7) installOSEHRATesting.sh
+      8) installMUnit.sh
+      9) installBashConfiguration.sh
 
 Once all this environment is setup
 a Dashboar build can be triggered by calling:
