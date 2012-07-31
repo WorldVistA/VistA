@@ -4,6 +4,7 @@ full VistA instance in a fresh Linux installation.
 The scripts must be run in the following order
 
 
+      0) bootstrapREHLserver.sh
       1) installREHLPackages.sh
       2) setupREHLTimeZone.sh
       3) installGTM.sh
