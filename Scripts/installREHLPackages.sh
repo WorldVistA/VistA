@@ -26,4 +26,5 @@ nmap \
 ncurses \
 ncurses-devel \
 tmux \
-rdate
+rdate \
+mlocate
