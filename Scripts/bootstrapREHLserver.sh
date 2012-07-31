@@ -41,4 +41,6 @@ passwd $1
 #
 #-------------------------------------------------------------
 echo "$1  ALL=(ALL)   ALL" > /etc/sudoers.d/customsudoers
+chmod 0440 /etc/sudoers.d/customsudoers
+
 
