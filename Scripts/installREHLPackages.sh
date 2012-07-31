@@ -1,15 +1,29 @@
 #!/bin/sh
+
+#-----------------------------
+#
+#  General Update of Packages
+#
+#------------------------------
 yum update
-yum install libicu
-yum install libicu-devel
-yum install git
-yum install gcc
-yum install gcc-c++
-yum install make
-yum install expect
-yum install xinetd
-yum install nmap
-yum install ncurses
-yum install ncurses-devel
-yum install tmux
-yum install rdate
+
+
+#-----------------------------
+#
+#  Install specific packages
+#
+#------------------------------
+yum install \
+libicu \
+libicu-devel \
+git \
+gcc \
+gcc-c++ \
+make \
+expect \
+xinetd \
+nmap \
+ncurses \
+ncurses-devel \
+tmux \
+rdate
