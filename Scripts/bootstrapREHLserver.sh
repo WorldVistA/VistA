@@ -44,3 +44,12 @@ echo "$1  ALL=(ALL)   ALL" > /etc/sudoers.d/customsudoers
 chmod 0440 /etc/sudoers.d/customsudoers
 
 
+
+#---------------------------------------------------------------
+#
+# Add the cache manager user, and add our own user to its group.
+#
+#---------------------------------------------------------------
+useradd cacheusr
+sudo usermod -a -G cacheusr $1
+groups $1
