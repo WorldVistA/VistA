@@ -958,8 +958,8 @@ class spawn (object):
         """This is like send(), but it adds a line feed (os.linesep). This
         returns the number of bytes written. """
 
+        s += os.linesep
         n = self.send(s)
-        n = n + self.send (os.linesep)
         return n
 
     def sendcontrol(self, char):
