@@ -33,7 +33,7 @@ from CrossReference import FileManField, FileManFile, FileManFieldFactory
 from CrossReference import LocalVariable, GlobalVariable, NakedGlobal, MarkedItem, LabelReference
 from CrossReference import RoutineCallInfo, UNKNOWN_PACKAGE
 
-from LogManager import logger
+from LogManager import logger, initConsoleLogging
 
 class IDDSectionParser:
     def __init__(self):
@@ -568,10 +568,7 @@ if __name__ == '__main__':
     parser.add_argument('-d', required=True, dest='docRepositDir',
                         help='VistA Cross-Reference Git Repository Directory')
     result = vars(parser.parse_args());
-    logger.setLevel(logging.INFO)
-    consoleHandler = logging.StreamHandler()
-    consoleHandler.setLevel(logging.INFO)
-    logger.addHandler(consoleHandler)
+    initConsoleLogging()
     logFileParser = CallerGraphLogFileParser()
     logFileParser.parsePackagesFile(os.path.join(result['repositDir'],
                                                  "Packages.csv"))

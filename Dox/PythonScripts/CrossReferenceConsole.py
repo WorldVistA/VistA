@@ -21,23 +21,152 @@
 # limitations under the License.
 import argparse
 import os
-import CallerGraphParser
-from DataDictionaryParser import DataDictionaryListFileLogParser
 import re
 import sys
 from datetime import datetime, date, time
 import csv
-from LogManager import logger
+from LogManager import logger, initConsoleLogging
 import logging
+from CrossReferenceBuilder import CrossReferenceBuilder
 
 routineName = re.compile("^R:(?P<name>[^ ]+)")
 packageName = re.compile("^P:(?P<name>.*)")
 globalName = re.compile("^G:(?P<name>.*)")
 
-def findRoutinesWithMostOfCallers(logParser):
+#===============================================================================
+# interface to generated the output based on a routine, global, package
+#===============================================================================
+class RoutineVisit:
+    def visitRoutine(self, routine, outputDir=None):
+        pass
+
+class PackageVisit:
+    def visitPackage(self, package, outputDir=None):
+        pass
+#===============================================================================
+# Default implementation of the routine Visit
+#===============================================================================
+class DefaultRoutineVisit(RoutineVisit):
+    def visitRoutine(self, routine, outputDir=None):
+        routine.printResult()
+
+#===============================================================================
+#
+#===============================================================================
+class GraphvizCallGraphRoutineVisit(CallerGraphParser.RoutineVisit):
+    def visitRoutine(self, routine, outputDir):
+        pass
+#        generateRoutineDependencyGraph(routine, outputDir)
+#===============================================================================
+#
+#===============================================================================
+class GraphvizCallerGraphRoutineVisit(CallerGraphParser.RoutineVisit):
+    def visitRoutine(self, routine, outputDir):
+        pass
+#        generateRoutineDependencyGraph(routine, outputDir, False)
+
+#===============================================================================
+#
+#===============================================================================
+class GraphvizPackageDependencyVisit(CallerGraphParser.PackageVisit):
+    def visitPackage(self, package, outputDir):
+        generatePackageDependencyGraph(package, outputDir, True)
+#===============================================================================
+#
+#===============================================================================
+class GraphvizPackageDependentVisit(CallerGraphParser.PackageVisit):
+    def visitPackage(self, package, outputDir):
+        generatePackageDependencyGraph(package, outputDir, False)
+#===============================================================================
+#
+#===============================================================================
+class CplusRoutineVisit(CallerGraphParser.RoutineVisit):
+    def visitRoutine(self, routine, outputDir):
+        calledRoutines = routine.getCalledRoutines()
+        if not calledRoutines or len(calledRoutines) == 0:
+            logger.warn("No called Routines found! for package:%s" % routineName)
+            return
+        routineName = routine.getName()
+        if not routine.getPackage():
+            logger.error("ERROR: package: %s does not belongs to a package" % routineName)
+            return
+
+        packageName = routine.getPackage().getName()
+        try:
+            dirName = os.path.join(outputDir, packageName)
+            if not os.path.exists(dirName):
+                os.makedirs(dirName)
+        except OSError, e:
+            logger.error("Error making dir %s : Error: %s" % (dirName, e))
+            return
+
+        outputFile = open(os.path.join(dirName, routineName), 'w')
+        outputFile.write(("/*! \\namespace %s \n") % (packageName))
+        outputFile.write("*/\n")
+        outputFile.write("namespace %s {" % packageName)
+
+        outputFile.write("/* Global Vars: */\n")
+        for var in routine.getGlobalVariables():
+            outputFile.write(" int %s;\n" % var)
+        outputFile.write("\n")
+        outputFile.write("/* Naked Globals: */\n")
+        for var in routine.getNakeGlobals:
+            outputFile.write(" int %s;\n" % var)
+        outputFile.write("\n")
+        outputFile.write("/* Marked Items: */\n")
+        for var in routine.getMarkedItems():
+            outputFile.write(" int %s;\n" % var)
+        outputFile.write("\n")
+        outputFile.write("/*! \callgraph\n")
+        outputFile.write("*/\n")
+        outputFile.write ("void " + self.name + "(){\n")
+
+        outputFile.write("/* Local Vars: */\n")
+        for var in routine.getLocalVariables():
+            outputFile.write(" int %s; \n" % var)
+
+
+        outputFile.write("/* Called Routines: */\n")
+        for var in calledRoutines:
+            outputFile.write("  %s ();\n" % var)
+        outputFile.write("}\n")
+        outputFile.write("}// end of namespace")
+        outputFile.close()
+#===============================================================================
+# Default implementation of the package Visit
+#===============================================================================
+class DefaultPackageVisit(PackageVisit):
+    def visitPackage(self, package, outputDir=None):
+        package.printResult()
+
+def printRoutine(crossRef, routineName, visitor=DefaultRoutineVisit()):
+    routine = crossRef.getRoutineByName(routineName)
+    if routine:
+        visitor.visitRoutine(routine)
+    else:
+        logger.error ("Routine: %s Not Found!" % routineName)
+
+def printPackage(crossRef, packageName, visitor=DefaultPackageVisit()):
+    package = crossRef.getPackageByName(packageName)
+    if package:
+        visitor.visitPackage(package)
+    else:
+        logger.error ("Package: %s Not Found!" % packageName)
+
+def printGlobal(crossRef, globalName, visitor=None):
+    globalVar = crossRef.getGlobalByName(globalName)
+    if globalVar:
+        if visitor:
+            visitor.visitGlobal(globalVar)
+        else:
+            globalVar.printResult()
+    else:
+        logger.error ("Global: %s Not Found!" % globalName)
+
+def findRoutinesWithMostOfCallers(crossRef):
     maxCallerRoutine = None
     maxCalledRoutine = None
-    for routine in logParser.getAllRoutines().itervalues():
+    for routine in crossRef.getAllRoutines().itervalues():
         if not maxCallerRoutine:
             maxCallerRoutine = routine
         if not maxCalledRoutine:
@@ -53,10 +182,10 @@ def findRoutinesWithMostOfCallers(logParser):
                                                                         maxCalledRoutine.getPackage(),
                                                                         maxCalledRoutine.getTotalCalled()))
 
-def findPackagesWithMostOfDependency(logParser):
+def findPackagesWithMostOfDependency(crossRef):
     maxPackageDependency = None
     maxPackageDependent = None
-    for package in logParser.getAllPackages().itervalues():
+    for package in crossRef.getAllPackages().itervalues():
         if not maxPackageDependency:
             maxPackageDependency = package
         if not maxPackageDependent:
@@ -114,8 +243,7 @@ def printAllPercentRoutines(crossReference, outputFile=None):
             sys.stdout.write ("\n")
         index += 1
     sys.stdout.write("\n")
-def printOrphanGlobals(logParser):
-    crossRef = logParser.getCrossReference()
+def printOrphanGlobals(crossRef):
     orphanGlobals = crossRef.getOrphanGlobals()
     sortedGlobals = sorted(orphanGlobals)
     index = 0
@@ -199,38 +327,11 @@ if __name__ == '__main__':
     parser.add_argument('-f', dest='fileSchemaDir',
                         help='VistA File Man Schema log Directory')
     result = vars(parser.parse_args());
-    logger.setLevel(logging.INFO)
-    consoleHandler = logging.StreamHandler()
-    consoleHandler.setLevel(logging.INFO)
-    logger.addHandler(consoleHandler)
-    logParser = CallerGraphParser.CallerGraphLogFileParser()
-    print "Starting parsing package/routine...."
-    print "Time is: %s" % datetime.now()
-
-    logParser.parsePercentRoutineMappingFile(os.path.join(result['docRepositDir'],
-                                                          "PercentRoutineMapping.csv"))
-    logParser.parsePackagesFile(os.path.join(result['repositDir'], "Packages.csv"))
-    logParser.parsePlatformDependentRoutineFile(os.path.join(result['docRepositDir'],
-                                                                 "PlatformDependentRoutine.csv"))
-    packagesDir = os.path.join(result['repositDir'], "Packages")
-    globalFilePattern = "*/Globals/*.zwr"
-    logParser.findGlobalsBySourceV2(packagesDir, globalFilePattern)
-    routineFilePattern = "*/Routines/*.m"
-    logParser.findPackagesAndRoutinesBySource(packagesDir, routineFilePattern)
-    print "End parsing package/routine...."
-    print "Time is: %s" % datetime.now()
-    print "Starting parsing caller graph log file...."
-    callLogPattern = "*.log"
-    logParser.parseAllCallerGraphLog(result['logFileDir'], callLogPattern)
-    orphanRoutines = sorted(logParser.getCrossReference().getOrphanRoutines())
-    if result['fileSchemaDir']:
-      dataDictLogParser = DataDictionaryListFileLogParser(logParser.getCrossReference())
-      dataDictLogParser.parseAllDataDictionaryListLog(result['fileSchemaDir'],"*.schema")
-      dataDictLogParser.parseAllDataDictionaryListLog(result['fileSchemaDir'],".*.schema")
-    # generate package direct dependency based on XINDEX call graph and fileman reference
-    logParser.getCrossReference().generateAllPackageDependencies()
-    print "End of parsing log file......"
-    print "Time is: %s" % datetime.now()
+    initConsoleLogging()
+    crossRef = CrossReferenceBuilder().buildCrossReference(result['logFileDir'],
+                                                           result['repositDir'],
+                                                           result['docRepositDir'],
+                                                           result['fileSchemaDir'])
     # read the user input from the terminal
     isExit = False
     printUsage()
@@ -247,32 +348,32 @@ if __name__ == '__main__':
             printOrphanGlobals(logParser)
             continue
         if var == "max_call":
-            findRoutinesWithMostOfCallers(logParser)
+            findRoutinesWithMostOfCallers(crossRef)
             continue
         if var == "max_dep":
-            findPackagesWithMostOfDependency(logParser)
+            findPackagesWithMostOfDependency(crossRef)
             continue
         if var == "gen_allpack":
-            generateAllPackageDependencyList(logParser.getAllPackages())
+            generateAllPackageDependencyList(crossRef.getAllPackages())
             continue
         if var == "all_percent":
-            printAllPercentRoutines(logParser.getCrossReference())
+            printAllPercentRoutines(crossRef)
             continue
         if var == "output-unknown":
-            printAllUnknownRoutines(logParser.getCrossReference())
+            printAllUnknownRoutines(crossRef)
             continue
         if var == "help":
             printUsage()
             continue
         result = routineName.search(var)
         if result:
-            logParser.printRoutine(result.group('name'))
+            printRoutine(crossRef, result.group('name'))
             continue
         result = packageName.search(var)
         if result:
-            logParser.printPackage(result.group('name').strip())
+            printPackage(crossRef, result.group('name').strip())
             continue
         result = globalName.search(var)
         if result:
-            logParser.printGlobal(result.group('name').strip())
+            printGlobal(crossRef, result.group('name').strip())
             continue

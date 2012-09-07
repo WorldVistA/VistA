@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-# A Python model to manage the logging, placeholder
+# A logFileParser class to parse XINDEX log files and generate the routine/package information in CrossReference Structure
 #---------------------------------------------------------------------------
-# Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2012 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,15 +15,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import logging
-import sys
-logger = logging.getLogger()
+#----------------------------------------------------------------
 
-def initConsoleLogging(defaultLevel=logging.INFO,
-                       formatStr = '%(asctime)s %(levelname)s %(message)s'):
-    logger.setLevel(defaultLevel)
-    consoleHandler = logging.StreamHandler(sys.stdout)
-    formatter = logging.Formatter(formatStr)
-    consoleHandler.setLevel(defaultLevel)
-    consoleHandler.setFormatter(formatter)
-    logger.addHandler(consoleHandler)
+from CrossReference import Global, Routine, Package
+from LogManager import logger, initConsoleLogging
+
+class CrossReferenceDiff(object):
+  def __init__(self):
+    pass
+  def generateDiffReport(self, CrossRefA, CrossRefB):
+    pass
