@@ -28,9 +28,15 @@ if VistA.type=='cache':
     pass
 VistA.wait(PROMPT)
 VistA.write('D LIST^ZGI("${OSEHRA_PATH}/globals.lst","${OSEHRA_PATH}/")')
-VistA.wait(PROMPT)
+VistA.wait(PROMPT, ${GLOBALS_IMPORT_TIMEOUT})
 VistA.write('D ^ZTMGRSET')
-VistA.wait('System:')
+while True:
+  index = VistA.multiwait(['Should I continue?', 'System:'])
+  if index == 0:
+    VistA.write('YES')
+    continue
+  elif index == 1:
+    break
 if VistA.type =='cache':
   VistA.write('3')
   VistA.wait('NAME OF')
@@ -51,4 +57,4 @@ else:
   VistA.write('')
 VistA.wait('Want to rename the FileMan routines: No//')
 VistA.write('YES')
-VistA.wait(PROMPT)
+VistA.wait(PROMPT, 200)

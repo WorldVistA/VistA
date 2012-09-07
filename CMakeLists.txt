@@ -42,6 +42,9 @@ option(USE_XINDEX_WARNINGS_AS_FAILURES "Use warnings as a failure condition for 
 option(BUILD_REPORTS "Build Reports." OFF)
 option(CLEAN_DATABASE "Overwrite the database file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
 
+# how much time to allocate in seconds for the process of importing globals
+set(GLOBALS_IMPORT_TIMEOUT 3600 CACHE STRING "Timeout in seconds for importing globals")
+
 #-----------------------------------------------------------------------------
 # Find InterSystems Cache
 if(WIN32)
