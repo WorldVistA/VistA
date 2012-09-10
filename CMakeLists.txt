@@ -253,7 +253,7 @@ include(CTest)
 #-----------------------------------------------------------------------------#
 ##### SECTION TO SETUP AUTOMATIC SYSTEM TESTING #####
 #-----------------------------------------------------------------------------#
-option(VISTA_FUNCTIONAL_TESTING "Use Python and/or Sikuli to run UseCases.  Requires VISTA_SETUP_SITE to be selected." OFF)
+option(VISTA_CPRS_FUNCTIONAL_TESTING "Use Python and/or Sikuli to run UseCases.  Requires VISTA_SETUP_SITE to be selected." OFF)
 option(VISTA_SETUP_SITE "Prepopulate the database with sample data including users, patients, locations, etc. " ON)
 if(VISTA_SETUP_SITE)
   configure_file("${VISTA_SOURCE_DIR}/PostImportSetupScript.py.in" "@VISTA_BINARY_DIR@/PostImportSetupScript.py")
