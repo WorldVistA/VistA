@@ -141,7 +141,7 @@ class TIMEOUT(ExceptionPexpect):
 ##class MAXBUFFER(ExceptionPexpect):
 ##    """Raised when a scan buffer fills before matching an expected pattern."""
 
-def run (command, timeout=-1, withexitstatus=False, events=None, extra_args=None, logfile=None, cwd=None, env=None):
+def run (command, timeout= -1, withexitstatus=False, events=None, extra_args=None, logfile=None, cwd=None, env=None):
 
     """
     This function runs the given command; waits for it to finish; then
@@ -223,8 +223,8 @@ def run (command, timeout=-1, withexitstatus=False, events=None, extra_args=None
         patterns = events.keys()
         responses = events.values()
     else:
-        patterns=None # We assume that EOF or TIMEOUT will save us.
-        responses=None
+        patterns = None # We assume that EOF or TIMEOUT will save us.
+        responses = None
     child_result_list = []
     event_count = 0
     while 1:
@@ -336,12 +336,12 @@ class spawn (object):
         the input from the child and output sent to the child. Sometimes you
         don't want to see everything you write to the child. You only want to
         log what the child sends back. For example::
-        
+
             child = pexpect.spawn('some_command')
             child.logfile_read = sys.stdout
 
         To separately log output sent to the child use logfile_send::
-        
+
             self.logfile_send = fout
 
         The delaybeforesend helps overcome a weird behavior that many users
@@ -412,9 +412,9 @@ class spawn (object):
         self.closed = True # File-like object.
         self.cwd = cwd
         self.env = env
-        self.__irix_hack = (sys.platform.lower().find('irix')>=0) # This flags if we are running on irix
+        self.__irix_hack = (sys.platform.lower().find('irix') >= 0) # This flags if we are running on irix
         # Solaris uses internal __fork_pty(). All others use pty.fork().
-        if (sys.platform.lower().find('solaris')>=0) or (sys.platform.lower().find('sunos5')>=0):
+        if (sys.platform.lower().find('solaris') >= 0) or (sys.platform.lower().find('sunos5') >= 0):
             self.use_native_pty_fork = False
         else:
             self.use_native_pty_fork = True
@@ -480,7 +480,7 @@ class spawn (object):
         s.append('delayafterterminate: ' + str(self.delayafterterminate))
         return '\n'.join(s)
 
-    def _spawn(self,command,args=[]):
+    def _spawn(self, command, args=[]):
 
         """This starts the given command in a child process. This does all the
         fork/exec type of stuff for a pty. This is called by __init__. If args
@@ -682,7 +682,7 @@ class spawn (object):
 
         return os.isatty(self.child_fd)
 
-    def waitnoecho (self, timeout=-1):
+    def waitnoecho (self, timeout= -1):
 
         """This waits until the terminal ECHO flag is set False. This returns
         True if the echo mode is off. This returns False if the ECHO flag was
@@ -704,7 +704,7 @@ class spawn (object):
         if timeout == -1:
             timeout = self.timeout
         if timeout is not None:
-            end_time = time.time() + timeout 
+            end_time = time.time() + timeout
         while True:
             if not self.getecho():
                 return True
@@ -766,7 +766,7 @@ class spawn (object):
         # and blocked on some platforms. TCSADRAIN is probably ideal if it worked.
         termios.tcsetattr(self.child_fd, termios.TCSANOW, attr)
 
-    def read_nonblocking (self, size = 1, timeout = -1):
+    def read_nonblocking (self, size=1, timeout= -1):
 
         """This reads at most size characters from the child application. It
         includes a timeout. If the read does not complete within the timeout
@@ -800,7 +800,7 @@ class spawn (object):
         # For this case, I test isalive() before doing any reading.
         # If isalive() is false, then I pretend that this is the same as EOF.
         if not self.isalive():
-            r,w,e = self.__select([self.child_fd], [], [], 0) # timeout of 0 means "poll"
+            r, w, e = self.__select([self.child_fd], [], [], 0) # timeout of 0 means "poll"
             if not r:
                 self.flag_eof = True
                 raise EOF ('End Of File (EOF) in read_nonblocking(). Braindead platform.')
@@ -812,7 +812,7 @@ class spawn (object):
                 self.flag_eof = True
                 raise EOF ('End Of File (EOF) in read_nonblocking(). Pokey platform.')
 
-        r,w,e = self.__select([self.child_fd], [], [], timeout)
+        r, w, e = self.__select([self.child_fd], [], [], timeout)
 
         if not r:
             if not self.isalive():
@@ -844,7 +844,7 @@ class spawn (object):
 
         raise ExceptionPexpect ('Reached an unexpected state in read_nonblocking().')
 
-    def read (self, size = -1):   # File-like object.
+    def read (self, size= -1):   # File-like object.
 
         """This reads at most "size" bytes from the file (less if the read hits
         EOF before obtaining size bytes). If the size argument is negative or
@@ -871,7 +871,7 @@ class spawn (object):
             return self.after ### self.before should be ''. Should I assert this?
         return self.before
 
-    def readline (self, size = -1):    # File-like object.
+    def readline (self, size= -1):    # File-like object.
 
         """This reads and returns one entire line. A trailing newline is kept
         in the string, but may be absent when a file ends with an incomplete
@@ -907,7 +907,7 @@ class spawn (object):
             raise StopIteration
         return result
 
-    def readlines (self, sizehint = -1):    # File-like object.
+    def readlines (self, sizehint= -1):    # File-like object.
 
         """This reads until EOF using readline() and returns a list containing
         the lines thus read. The optional "sizehint" argument is ignored. """
@@ -974,7 +974,7 @@ class spawn (object):
 
         char = char.lower()
         a = ord(char)
-        if a>=97 and a<=122:
+        if a >= 97 and a <= 122:
             a = a - ord('a') + 1
             return self.send (chr(a))
         d = {'@':0, '`':0,
@@ -1230,7 +1230,7 @@ class spawn (object):
 
         return compiled_pattern_list
 
-    def expect(self, pattern, timeout = -1, searchwindowsize=None):
+    def expect(self, pattern, timeout= -1, searchwindowsize=None):
 
         """This seeks through the stream until a pattern is matched. The
         pattern is overloaded and may take several types. The pattern can be a
@@ -1310,7 +1310,7 @@ class spawn (object):
         compiled_pattern_list = self.compile_pattern_list(pattern)
         return self.expect_list(compiled_pattern_list, timeout, searchwindowsize)
 
-    def expect_list(self, pattern_list, timeout = -1, searchwindowsize = -1):
+    def expect_list(self, pattern_list, timeout= -1, searchwindowsize= -1):
 
         """This takes a list of compiled regular expressions and returns the
         index into the pattern_list that matched the child output. The list may
@@ -1324,7 +1324,7 @@ class spawn (object):
 
         return self.expect_loop(searcher_re(pattern_list), timeout, searchwindowsize)
 
-    def expect_exact(self, pattern_list, timeout = -1, searchwindowsize = -1):
+    def expect_exact(self, pattern_list, timeout= -1, searchwindowsize= -1):
 
         """This is similar to expect(), but uses plain string matching instead
         of compiled regular expressions in 'pattern_list'. The 'pattern_list'
@@ -1342,7 +1342,7 @@ class spawn (object):
             pattern_list = [pattern_list]
         return self.expect_loop(searcher_string(pattern_list), timeout, searchwindowsize)
 
-    def expect_loop(self, searcher, timeout = -1, searchwindowsize = -1):
+    def expect_loop(self, searcher, timeout= -1, searchwindowsize= -1):
 
         """This is the common loop used inside expect. The 'searcher' should be
         an instance of searcher_re or searcher_string, which describes how and what
@@ -1355,7 +1355,7 @@ class spawn (object):
         if timeout == -1:
             timeout = self.timeout
         if timeout is not None:
-            end_time = time.time() + timeout 
+            end_time = time.time() + timeout
         if searchwindowsize == -1:
             searchwindowsize = self.searchwindowsize
 
@@ -1447,7 +1447,7 @@ class spawn (object):
         s = struct.pack('HHHH', r, c, 0, 0)
         fcntl.ioctl(self.fileno(), TIOCSWINSZ, s)
 
-    def interact(self, escape_character = chr(29), input_filter = None, output_filter = None):
+    def interact(self, escape_character=chr(29), input_filter=None, output_filter=None):
 
         """This gives control of the child process to the interactive user (the
         human at the keyboard). Keystrokes are sent to the child process, and
@@ -1509,13 +1509,13 @@ class spawn (object):
 
         return os.read(fd, 1000)
 
-    def __interact_copy(self, escape_character = None, input_filter = None, output_filter = None):
+    def __interact_copy(self, escape_character=None, input_filter=None, output_filter=None):
 
         """This is used by the interact() method.
         """
 
         while self.isalive():
-            r,w,e = self.__select([self.child_fd, self.STDIN_FILENO], [], [])
+            r, w, e = self.__select([self.child_fd, self.STDIN_FILENO], [], [])
             if self.child_fd in r:
                 data = self.__interact_read(self.child_fd)
                 if output_filter: data = output_filter(data)
@@ -1553,7 +1553,7 @@ class spawn (object):
                     if timeout is not None:
                         timeout = end_time - time.time()
                         if timeout < 0:
-                            return ([],[],[])
+                            return ([], [], [])
                 else: # something else caused the select.error, so this really is an exception
                     raise
 
@@ -1617,12 +1617,12 @@ class searcher_string (object):
         """This returns a human-readable string that represents the state of
         the object."""
 
-        ss =  [ (ns[0],'    %d: "%s"' % ns) for ns in self._strings ]
-        ss.append((-1,'searcher_string:'))
+        ss = [ (ns[0], '    %d: "%s"' % ns) for ns in self._strings ]
+        ss.append((-1, 'searcher_string:'))
         if self.eof_index >= 0:
-            ss.append ((self.eof_index,'    %d: EOF' % self.eof_index))
+            ss.append ((self.eof_index, '    %d: EOF' % self.eof_index))
         if self.timeout_index >= 0:
-            ss.append ((self.timeout_index,'    %d: TIMEOUT' % self.timeout_index))
+            ss.append ((self.timeout_index, '    %d: TIMEOUT' % self.timeout_index))
         ss.sort()
         ss = zip(*ss)[1]
         return '\n'.join(ss)
@@ -1653,12 +1653,12 @@ class searcher_string (object):
         # rescanning until we've read three more bytes.
         #
         # Sadly, I don't know enough about this interesting topic. /grahn
-        
+
         for index, s in self._strings:
             if searchwindowsize is None:
                 # the match, if any, can only be in the fresh data,
                 # or at the very end of the old data
-                offset = -(freshlen+len(s))
+                offset = -(freshlen + len(s))
             else:
                 # better obey searchwindowsize
                 offset = -searchwindowsize
@@ -1715,12 +1715,12 @@ class searcher_re (object):
         """This returns a human-readable string that represents the state of
         the object."""
 
-        ss =  [ (n,'    %d: re.compile("%s")' % (n,str(s.pattern))) for n,s in self._searches]
-        ss.append((-1,'searcher_re:'))
+        ss = [ (n, '    %d: re.compile("%s")' % (n, str(s.pattern))) for n, s in self._searches]
+        ss.append((-1, 'searcher_re:'))
         if self.eof_index >= 0:
-            ss.append ((self.eof_index,'    %d: EOF' % self.eof_index))
+            ss.append ((self.eof_index, '    %d: EOF' % self.eof_index))
         if self.timeout_index >= 0:
-            ss.append ((self.timeout_index,'    %d: TIMEOUT' % self.timeout_index))
+            ss.append ((self.timeout_index, '    %d: TIMEOUT' % self.timeout_index))
         ss.sort()
         ss = zip(*ss)[1]
         return '\n'.join(ss)
@@ -1732,7 +1732,7 @@ class searcher_re (object):
         'buffer' which have not been searched before.
 
         See class spawn for the 'searchwindowsize' argument.
-        
+
         If there is a match this returns the index of that string, and sets
         'start', 'end' and 'match'. Otherwise, returns -1."""
 
@@ -1743,7 +1743,7 @@ class searcher_re (object):
         if searchwindowsize is None:
             searchstart = 0
         else:
-            searchstart = max(0, len(buffer)-searchwindowsize)
+            searchstart = max(0, len(buffer) - searchwindowsize)
         for index, s in self._searches:
             match = s.search(buffer, searchstart)
             if match is None:

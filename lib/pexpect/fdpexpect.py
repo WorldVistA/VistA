@@ -79,4 +79,3 @@ class fdspawn (spawn):
     def kill (self, sig):
 
         return
-

@@ -1,5 +1,5 @@
 import sys
-sys.path = [sys.argv[7] + '/Python'] + sys.path
+sys.path = [sys.argv[7] + '/lib/vista'] + sys.path
 
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
 
@@ -41,7 +41,7 @@ if sys.platform == 'win32':
   VistA.wait('Right Margin:')
   VistA.write('')
 VistA.write('')
-VistA.wait('continue:')
+VistA.wait('continue:',60)
 VistA.write('')
-VistA.wait('--- END ---')
+VistA.wait('--- END ---',60)
 VistA.write('h')

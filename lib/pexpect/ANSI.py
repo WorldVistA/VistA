@@ -82,14 +82,14 @@ def DoHome (fsm):
     c = int(fsm.memory.pop())
     r = int(fsm.memory.pop())
     screen = fsm.memory[0]
-    screen.cursor_home (r,c)
+    screen.cursor_home (r, c)
 
 def DoHomeOrigin (fsm):
 
     c = 1
     r = 1
     screen = fsm.memory[0]
-    screen.cursor_home (r,c)
+    screen.cursor_home (r, c)
 
 def DoEraseDown (fsm):
 
@@ -142,7 +142,7 @@ def DoScrollRegion (fsm):
     screen = fsm.memory[0]
     r2 = int(fsm.memory.pop())
     r1 = int(fsm.memory.pop())
-    screen.scroll_screen_rows (r1,r2)
+    screen.scroll_screen_rows (r1, r2)
 
 def DoMode (fsm):
 
@@ -159,23 +159,23 @@ def Log (fsm):
     fout.close()
 
 class term (screen.screen):
-    """This is a placeholder. 
+    """This is a placeholder.
     In theory I might want to add other terminal types.
     """
     def __init__ (self, r=24, c=80):
-        screen.screen.__init__(self, r,c)
+        screen.screen.__init__(self, r, c)
 
 class ANSI (term):
 
     """This class encapsulates a generic terminal. It filters a stream and
     maintains the state of a screen object. """
 
-    def __init__ (self, r=24,c=80):
+    def __init__ (self, r=24, c=80):
 
-        term.__init__(self,r,c)
+        term.__init__(self, r, c)
 
         #self.screen = screen (24,80)
-        self.state = FSM.FSM ('INIT',[self])
+        self.state = FSM.FSM ('INIT', [self])
         self.state.set_default_transition (Log, 'INIT')
         self.state.add_transition_any ('INIT', Emit, 'INIT')
         self.state.add_transition ('\x1b', 'INIT', None, 'ESC')
@@ -218,8 +218,8 @@ class ANSI (term):
         ### but the specs say it's allowed. crap!
         self.state.add_transition ('m', 'NUMBER_1', None, 'INIT')
         ### LED control. Same problem as 'm' code.
-        self.state.add_transition ('q', 'NUMBER_1', None, 'INIT') 
-        
+        self.state.add_transition ('q', 'NUMBER_1', None, 'INIT')
+
         # \E[?47h appears to be "switch to alternate screen"
         # \E[?47l restores alternate screen... I think.
         self.state.add_transition_list (string.digits, 'MODECRAP', StartNumber, 'MODECRAP_NUM')
@@ -241,7 +241,7 @@ class ANSI (term):
         ### but the specs say it's allowed. crap!
         self.state.add_transition ('m', 'NUMBER_2', None, 'INIT')
         ### LED control. Same problem as 'm' code.
-        self.state.add_transition ('q', 'NUMBER_2', None, 'INIT') 
+        self.state.add_transition ('q', 'NUMBER_2', None, 'INIT')
 
     def process (self, c):
 

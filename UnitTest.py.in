@@ -16,7 +16,7 @@
 
 ### set up the IO that is need by unit test
 import sys
-sys.path = ['${VISTA_SOURCE_DIR}/Python'] + sys.path
+sys.path = ['${VISTA_SOURCE_DIR}/lib/vista'] + sys.path
 
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
 VistA=ConnectToMUMPS("${UNITTEST_LOG_DIR}/${package_file_name}.log","${INSTANCE}","${NAMESPACE}")

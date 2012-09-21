@@ -11,8 +11,8 @@ import copy
 NUL = 0    # Fill character; ignored on input.
 ENQ = 5    # Transmit answerback message.
 BEL = 7    # Ring the bell.
-BS  = 8    # Move cursor left.
-HT  = 9    # Move cursor to next tab stop.
+BS = 8    # Move cursor left.
+HT = 9    # Move cursor to next tab stop.
 LF = 10    # Line feed.
 VT = 11    # Same as LF.
 FF = 12    # Same as LF.
@@ -45,7 +45,7 @@ class screen:
     by an ANSI text screen. Row and column indexes are 1-based (not zero-based,
     like arrays). """
 
-    def __init__ (self, r=24,c=80):
+    def __init__ (self, r=24, c=80):
 
         """This initializes a blank scree of the given dimentions."""
 
@@ -79,14 +79,14 @@ class screen:
         around the screen border. This is similar to __str__ except that it
         adds a box. """
 
-        top_bot = '+' + '-'*self.cols + '+\n'
-        return top_bot + '\n'.join(['|'+line+'|' for line in str(self).split('\n')]) + '\n' + top_bot
+        top_bot = '+' + '-' * self.cols + '+\n'
+        return top_bot + '\n'.join(['|' + line + '|' for line in str(self).split('\n')]) + '\n' + top_bot
 
     def fill (self, ch=SPACE):
 
-        self.fill_region (1,1,self.rows,self.cols, ch)
+        self.fill_region (1, 1, self.rows, self.cols, ch)
 
-    def fill_region (self, rs,cs, re,ce, ch=SPACE):
+    def fill_region (self, rs, cs, re, ce, ch=SPACE):
 
         rs = constrain (rs, 1, self.rows)
         re = constrain (re, 1, self.rows)
@@ -96,9 +96,9 @@ class screen:
             rs, re = re, rs
         if cs > ce:
             cs, ce = ce, cs
-        for r in range (rs, re+1):
+        for r in range (rs, re + 1):
             for c in range (cs, ce + 1):
-                self.put_abs (r,c,ch)
+                self.put_abs (r, c, ch)
 
     def cr (self):
 
@@ -141,7 +141,7 @@ class screen:
         r = constrain (r, 1, self.rows)
         c = constrain (c, 1, self.cols)
         ch = str(ch)[0]
-        self.w[r-1][c-1] = ch
+        self.w[r - 1][c - 1] = ch
 
     def put (self, ch):
 
@@ -159,25 +159,25 @@ class screen:
 
         r = constrain (r, 1, self.rows)
         c = constrain (c, 1, self.cols)
-        for ci in range (self.cols, c, -1): 
-            self.put_abs (r,ci, self.get_abs(r,ci-1))
-        self.put_abs (r,c,ch)
+        for ci in range (self.cols, c, -1):
+            self.put_abs (r, ci, self.get_abs(r, ci - 1))
+        self.put_abs (r, c, ch)
 
     def insert (self, ch):
 
         self.insert_abs (self.cur_r, self.cur_c, ch)
 
     def get_abs (self, r, c):
-    
+
         r = constrain (r, 1, self.rows)
         c = constrain (c, 1, self.cols)
-        return self.w[r-1][c-1]
+        return self.w[r - 1][c - 1]
 
     def get (self):
 
         self.get_abs (self.cur_r, self.cur_c)
 
-    def get_region (self, rs,cs, re,ce):
+    def get_region (self, rs, cs, re, ce):
 
         """This returns a list of lines representing the region.
         """
@@ -191,10 +191,10 @@ class screen:
         if cs > ce:
             cs, ce = ce, cs
         sc = []
-        for r in range (rs, re+1):
+        for r in range (rs, re + 1):
             line = ''
             for c in range (cs, ce + 1):
-                ch = self.get_abs (r,c)
+                ch = self.get_abs (r, c)
                 line = line + ch
             sc.append (line)
         return sc
@@ -213,22 +213,22 @@ class screen:
         self.cur_c = c
         self.cursor_constrain ()
 
-    def cursor_back (self,count=1): # <ESC>[{COUNT}D (not confused with down)
+    def cursor_back (self, count=1): # <ESC>[{COUNT}D (not confused with down)
 
         self.cur_c = self.cur_c - count
         self.cursor_constrain ()
 
-    def cursor_down (self,count=1): # <ESC>[{COUNT}B (not confused with back)
+    def cursor_down (self, count=1): # <ESC>[{COUNT}B (not confused with back)
 
         self.cur_r = self.cur_r + count
         self.cursor_constrain ()
 
-    def cursor_forward (self,count=1): # <ESC>[{COUNT}C
+    def cursor_forward (self, count=1): # <ESC>[{COUNT}C
 
         self.cur_c = self.cur_c + count
         self.cursor_constrain ()
 
-    def cursor_up (self,count=1): # <ESC>[{COUNT}A
+    def cursor_up (self, count=1): # <ESC>[{COUNT}A
 
         self.cur_r = self.cur_r - count
         self.cursor_constrain ()
@@ -302,7 +302,7 @@ class screen:
         # Screen is indexed from 1, but arrays are indexed from 0.
         s = self.scroll_row_start - 1
         e = self.scroll_row_end - 1
-        self.w[s+1:e+1] = copy.deepcopy(self.w[s:e])
+        self.w[s + 1:e + 1] = copy.deepcopy(self.w[s:e])
 
     def scroll_up (self): # <ESC>M
 
@@ -311,7 +311,7 @@ class screen:
         # Screen is indexed from 1, but arrays are indexed from 0.
         s = self.scroll_row_start - 1
         e = self.scroll_row_end - 1
-        self.w[s:e] = copy.deepcopy(self.w[s+1:e+1])
+        self.w[s:e] = copy.deepcopy(self.w[s + 1:e + 1])
 
     def erase_end_of_line (self): # <ESC>[0K -or- <ESC>[K
 
@@ -347,7 +347,7 @@ class screen:
         screen."""
 
         self.erase_start_of_line ()
-        self.fill_region (self.cur_r-1, 1, 1, self.cols)
+        self.fill_region (self.cur_r - 1, 1, 1, self.cols)
 
     def erase_screen (self): # <ESC>[2J
 
@@ -377,4 +377,3 @@ class screen:
 #        Delete line             Esc [ Pn M
 #        Delete character        Esc [ Pn P
 #        Scrolling region        Esc [ Pn(top);Pn(bot) r
-

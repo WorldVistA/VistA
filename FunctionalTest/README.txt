@@ -1,5 +1,26 @@
-The files in the FunctionalTestingSuite are used to run the automated testing of the CPRS and Vitals GUI.
+The files in FunctionalTest are used to run the automated testing for VistA Roll-n-Scroll, CPRS and Vitals GUI.
 
+--------------------------
+***VISTA Roll-n-Scroll***
+--------------------------
+OSEHRA Automated Testing Framework for Functional Testing of VistA Packages
+
+This project provides tools and scripts to perform functional testing on the roll and scroll VistA interface running under a GT.M or InterSystems Cache environment.
+
+To run the Roll and Scroll tests do the following:
+
+1. run cmake-gui to configure and generate cmake files, making a /bin or /build folder
+2. from the /bin (/build) folder do the following:
+  > cmake -P ImportRG.cmake
+  > ctest -R RAS_
+
+NOTES:
+-- The cmake -P ImportRG.cmake must be run before every ctest -R RAS_ since these functional tests have database state pre-requisits. Once we establish a means to restore the database to it original test more quickly, this procedure can be incorporated into the python test scripts eliminating the need to rebuild the database for each run.
+-- Functional test result logs are located in the @TEST_RESULTS_DIR@ directory specified within cmake-gui
+
+--------------------------
+***CPRS and Vitals GUI***
+--------------------------
 The program uses CPRS 28 and Vitals Manager.  A zip file containing the two programs needed can be found on the OSEHRA website:
 http://osehra.org/document/guis-used-automatic-functional-testing
 

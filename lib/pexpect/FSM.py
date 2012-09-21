@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """This module implements a Finite State Machine (FSM). In addition to state
 this FSM also maintains a user defined "memory". So this FSM can be used as a
 Push-down Automata (PDA) since a PDA is a FSM + memory.
@@ -205,7 +203,7 @@ class FSM:
             return self.default_transition
         else:
             raise ExceptionFSM ('Transition is undefined: (%s, %s).' %
-                (str(input_symbol), str(state)) )
+                (str(input_symbol), str(state)))
 
     def process (self, input_symbol):
 
@@ -237,7 +235,7 @@ class FSM:
 # process an RPN expression. Run this module from the command line. You will
 # get a prompt > for input. Enter an RPN Expression. Numbers may be integers.
 # Operators are * / + - Use the = sign to evaluate and print the expression.
-# For example: 
+# For example:
 #
 #    167 3 2 2 * * * 1 - =
 #
@@ -249,7 +247,7 @@ class FSM:
 import sys, os, traceback, optparse, time, string
 
 #
-# These define the actions. 
+# These define the actions.
 # Note that "memory" is a list being used as a stack.
 #
 
@@ -293,11 +291,11 @@ def main():
     f = FSM ('INIT', []) # "memory" will be used as a stack.
     f.set_default_transition (Error, 'INIT')
     f.add_transition_any  ('INIT', None, 'INIT')
-    f.add_transition      ('=',               'INIT',            DoEqual,          'INIT')
-    f.add_transition_list (string.digits,     'INIT',            BeginBuildNumber, 'BUILDING_NUMBER')
-    f.add_transition_list (string.digits,     'BUILDING_NUMBER', BuildNumber,      'BUILDING_NUMBER')
-    f.add_transition_list (string.whitespace, 'BUILDING_NUMBER', EndBuildNumber,   'INIT')
-    f.add_transition_list ('+-*/',            'INIT',            DoOperator,       'INIT')
+    f.add_transition      ('=', 'INIT', DoEqual, 'INIT')
+    f.add_transition_list (string.digits, 'INIT', BeginBuildNumber, 'BUILDING_NUMBER')
+    f.add_transition_list (string.digits, 'BUILDING_NUMBER', BuildNumber, 'BUILDING_NUMBER')
+    f.add_transition_list (string.whitespace, 'BUILDING_NUMBER', EndBuildNumber, 'INIT')
+    f.add_transition_list ('+-*/', 'INIT', DoOperator, 'INIT')
 
     print
     print 'Enter an RPN Expression.'

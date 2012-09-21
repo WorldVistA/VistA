@@ -256,20 +256,17 @@ include(CTest)
 #-----------------------------------------------------------------------------#
 ##### SECTION TO SETUP AUTOMATIC SYSTEM TESTING #####
 #-----------------------------------------------------------------------------#
-option(VISTA_CPRS_FUNCTIONAL_TESTING "Use Python and/or Sikuli to run UseCases.  Requires VISTA_SETUP_SITE to be selected." OFF)
+option(SIK_SYSTEM_TESTING "Use Python and Sikuli to test Vitals and CPRS" OFF)
+option(RAS_SYSTEM_TESTING "Use Python to test VistA via roll and scroll" OFF)
 option(VISTA_SETUP_SITE "Prepopulate the database with sample data including users, patients, locations, etc. " ON)
 if(VISTA_SETUP_SITE)
-  configure_file("${VISTA_SOURCE_DIR}/PostImportSetupScript.py.in" "@VISTA_BINARY_DIR@/PostImportSetupScript.py")
+  set(logfile "${VISTA_BINARY_DIR}/Testing/Log/PostImport.log")
+  configure_file("${VISTA_SOURCE_DIR}/PostImportSetupScript.py.in" "${VISTA_BINARY_DIR}/PostImportSetupScript.py")
+  configure_file("${VISTA_SOURCE_DIR}/importUsers.py.in" "${VISTA_BINARY_DIR}/importUsers.py")
+  configure_file("${VISTA_SOURCE_DIR}/ClinicSetup.py.in" "${VISTA_BINARY_DIR}/ClinicSetup.py")
 endif()
-if(VISTA_CPRS_FUNCTIONAL_TESTING AND VISTA_SETUP_SITE)
-  configure_file("${VISTA_SOURCE_DIR}/FunctionalTestingSuite/CPRSTesting.cmake.in" "${VISTA_BINARY_DIR}/Testing/FT_CPRSPostImportTest.cmake" @ONLY)
-# CPRS only runs on Windows, Thus the Sikuli and GUI test will be added only for those types of machines
-  if(WIN32)
-    find_program(SIKULI_EXECUTABLE Sikuli-IDE.bat DOC "Path to the Sikul-IDE.bat file" HINTS "C:/Program Files/Sikuli X/" "C:/Program Files (x86)/Sikuli X/" )
-    add_test(FT_CPRSSikuli "@SIKULI_EXECUTABLE@" -s -r "@VISTA_SOURCE_DIR@/FunctionalTestingSuite/FunctionalTesting.sikuli")
-    set_tests_properties(FT_CPRSSikuli PROPERTIES DEPENDS FT_CPRSPostImport)
-    set_tests_properties(FT_CPRSSikuli PROPERTIES FAIL_REGULAR_EXPRESSION "FindFailed")
-  endif()
+if((SIK_SYSTEM_TESTING OR RAS_SYSTEM_TESTING) AND VISTA_SETUP_SITE)
+  add_subdirectory(FunctionalTest)
 endif()
 
 #-----------------------------------------------------------------------------#
