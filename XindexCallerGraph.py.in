@@ -19,6 +19,7 @@ sys.path.append('${VISTA_SOURCE_DIR}/Python')
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
 
 def runXindexForRoutine(connection, routineName):
+  VistA.write('K ^XUTL("XQ",$J)')
   connection.write("D ^XINDEX")
   while True:
     index = connection.multiwait(["All Routines?",
@@ -31,10 +32,14 @@ def runXindexForRoutine(connection, routineName):
       break
   connection.wait("Routine")
   connection.write("")
-  connection.wait("Select BUILD NAME:")
-  connection.write("")
-  connection.wait("Select PACKAGE NAME:")
-  connection.write("")
+  selectionList = ['Select BUILD NAME:',
+                   'Select INSTALL NAME:',
+                   'Select PACKAGE NAME:']
+  while True:
+    index = VistA.multiwait(selectionList)
+    VistA.write('')
+    if index == len(selectionList) - 1:
+      break
   connection.wait("Print more than compiled errors and warnings?")
   connection.write("YES")
   connection.wait("Print summary only?")

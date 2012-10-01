@@ -12,6 +12,7 @@ if VistA.type=='cache':
   except IndexError,no_namechange:
     pass
 VistA.wait(PROMPT)
+VistA.write('K ^XUTL("XQ",$J)')
 VistA.write('D ^XINDEX')
 if VistA.type == 'cache':
   VistA.wait('No =>')
@@ -22,10 +23,14 @@ for routine in arglist:
   VistA.write(routine)
 VistA.wait('Routine:')
 VistA.write('')
-VistA.wait('Select BUILD NAME:')
-VistA.write('')
-VistA.wait('Select PACKAGE NAME:')
-VistA.write('')
+selectionList = ['Select BUILD NAME:',
+                 'Select INSTALL NAME:',
+                 'Select PACKAGE NAME:']
+while True:
+  index = VistA.multiwait(selectionList)
+  VistA.write('')
+  if index == len(selectionList) - 1:
+    break
 VistA.wait('warnings?')
 VistA.write('No')
 VistA.wait('routines?')
