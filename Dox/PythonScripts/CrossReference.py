@@ -78,7 +78,7 @@ class LabelReference(AbstractVariable):
 #===============================================================================
 #  A class to wrap up information about a VistA Routine
 #===============================================================================
-class Routine:
+class Routine(object):
     #constructor
     def __init__(self, routineName, package=None):
         self._name = routineName
@@ -329,7 +329,6 @@ class FileManFile(object):
         self._subFiles = None  # dict of all subFiles
         self._description = None # description of fileMan file
         self.setFileNo(fileNo)
-        self._description = None
     def getFileNo(self):
         return self._fileNo
     def setFileNo(self, fileNo):
@@ -376,7 +375,7 @@ class FileManFile(object):
     def getDescription(self):
         return self._description
     def setDescription(self, description):
-        self._description = description
+        self._description = [x.decode('latin1').encode('utf8') for x in description]
     def printFileManInfo(self):
         self.printFileManDescription()
         self.printFileManFields()
@@ -519,7 +518,7 @@ class FileManField(object):
     def isVariablePointerType(self):
         return self._type == self.FIELD_TYPE_VARIABLE_FILE_POINTER
     def isWordProcessingType(self):
-        return self._type == self.FIELD_TYPE_WORD_PROCESSING_TYPE
+        return self._type == self.FIELD_TYPE_WORD_PROCESSING
     def isSetType(self):
         return self._type == self.FIELD_TYPE_SET
     #===========================================================================
@@ -825,7 +824,7 @@ class Global(FileManFile):
 #===============================================================================
 # # class to represent a VistA Package
 #===============================================================================
-class Package:
+class Package(object):
     #constructor
     def __init__(self, packageName):
         self._name = packageName
@@ -938,7 +937,7 @@ class Package:
                         self.__checkFileManPointerField__(field, fileManFile, Global, subFile)
                     continue
         else:
-            logger.warn("[%s] does not have any fields" % currentGlobal)
+            logger.debug("[%s] does not have any fields" % currentGlobal)
         if not subFile:
             # get all subfiles of current globals
             allSubFiles = Global.getAllSubFiles()
@@ -1204,19 +1203,19 @@ class CrossReference:
             self._allPackages[packageName] = Package(packageName)
         if globalName not in self._allGlobals:
             self._allGlobals[globalName] = Global(globalName)
-        self._allPackages[packageName].addGlobalToPackage(self._allGlobals[globalName])
+        self._allPackages[packageName].addGlobal(self._allGlobals[globalName])
     def addGlobalToPackage(self, globalVar, packageName):
         if packageName not in self._allPackages:
             self._allPackages[packageName] = Package(packageName)
         if globalVar.getName() not in self._allGlobals:
             self._allGlobals[globalVar.getName()] = globalVar
-        self._allPackages[packageName].addGlobal(globalVar)
+        self._allPackages[packageName].addGlobal(self._allGlobals[globalVar.getName()])
         # also added to fileMan Globals
         fileNo = globalVar.getFileNo()
         if fileNo:
             realFileNo = float(fileNo)
             if realFileNo not in self._allFileManGlobals:
-                self._allFileManGlobals[realFileNo] = globalVar
+                self._allFileManGlobals[realFileNo] = self._allGlobals[globalVar.getName()]
     def addToOrphanRoutinesByName(self, routineName):
         if not self.hasRoutine(routineName):
             self._orphanRoutines.add(routineName)

@@ -18,7 +18,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import CallerGraphParser
 import os
 import os.path
 import sys
@@ -31,11 +30,11 @@ import shutil
 import csv
 
 from datetime import datetime, date, time
-from CrossReference import *
 from LogManager import logger
 import logging
 from operator import itemgetter, attrgetter
-from DataDictionaryParser import *
+from CrossReferenceBuilder import CrossReferenceBuilder
+from CrossReference import *
 
 MAX_DEPENDENCY_LIST_SIZE = 20 # Do not generate the graph if have more than 20 nodes
 PROGRESS_METER = 1000
@@ -114,88 +113,6 @@ To view information related to a specified package like dependency graph and lis
 <br/>
 <br/>
 """
-#===============================================================================
-#
-#===============================================================================
-class GraphvizCallGraphRoutineVisit(CallerGraphParser.RoutineVisit):
-    def visitRoutine(self, routine, outputDir):
-        pass
-#        generateRoutineDependencyGraph(routine, outputDir)
-#===============================================================================
-#
-#===============================================================================
-class GraphvizCallerGraphRoutineVisit(CallerGraphParser.RoutineVisit):
-    def visitRoutine(self, routine, outputDir):
-        pass
-#        generateRoutineDependencyGraph(routine, outputDir, False)
-
-#===============================================================================
-#
-#===============================================================================
-class GraphvizPackageDependencyVisit(CallerGraphParser.PackageVisit):
-    def visitPackage(self, package, outputDir):
-        generatePackageDependencyGraph(package, outputDir, True)
-#===============================================================================
-#
-#===============================================================================
-class GraphvizPackageDependentVisit(CallerGraphParser.PackageVisit):
-    def visitPackage(self, package, outputDir):
-        generatePackageDependencyGraph(package, outputDir, False)
-#===============================================================================
-#
-#===============================================================================
-class CplusRoutineVisit(CallerGraphParser.RoutineVisit):
-    def visitRoutine(self, routine, outputDir):
-        calledRoutines = routine.getCalledRoutines()
-        if not calledRoutines or len(calledRoutines) == 0:
-            logger.warn("No called Routines found! for package:%s" % routineName)
-            return
-        routineName = routine.getName()
-        if not routine.getPackage():
-            logger.error("ERROR: package: %s does not belongs to a package" % routineName)
-            return
-
-        packageName = routine.getPackage().getName()
-        try:
-            dirName = os.path.join(outputDir, packageName)
-            if not os.path.exists(dirName):
-                os.makedirs(dirName)
-        except OSError, e:
-            logger.error("Error making dir %s : Error: %s" % (dirName, e))
-            return
-
-        outputFile = open(os.path.join(dirName, routineName), 'w')
-        outputFile.write(("/*! \\namespace %s \n") % (packageName))
-        outputFile.write("*/\n")
-        outputFile.write("namespace %s {" % packageName)
-
-        outputFile.write("/* Global Vars: */\n")
-        for var in routine.getGlobalVariables():
-            outputFile.write(" int %s;\n" % var)
-        outputFile.write("\n")
-        outputFile.write("/* Naked Globals: */\n")
-        for var in routine.getNakeGlobals:
-            outputFile.write(" int %s;\n" % var)
-        outputFile.write("\n")
-        outputFile.write("/* Marked Items: */\n")
-        for var in routine.getMarkedItems():
-            outputFile.write(" int %s;\n" % var)
-        outputFile.write("\n")
-        outputFile.write("/*! \callgraph\n")
-        outputFile.write("*/\n")
-        outputFile.write ("void " + self.name + "(){\n")
-
-        outputFile.write("/* Local Vars: */\n")
-        for var in routine.getLocalVariables():
-            outputFile.write(" int %s; \n" % var)
-
-
-        outputFile.write("/* Called Routines: */\n")
-        for var in calledRoutines:
-            outputFile.write("  %s ();\n" % var)
-        outputFile.write("}\n")
-        outputFile.write("}// end of namespace")
-        outputFile.close()
 
 # utility functions
 def getGlobalHtmlFileNameByName(globalName):
@@ -1887,11 +1804,6 @@ def testPackageCsvParser(packageFile):
     for line in reader:
         print line
 
-# some testing constants
-PACKAGE_CSV_FILE = "c:/users/jason.li/git/VistA-FOIA/Packages.csv"
-GIT_PATH = "c:/Program Files (x86)/Git/bin/"
-VISTA_FOIA_GIT_REP = "c:/users/jason.li/git/VistA-FOIA"
-DEFAULT_OUTPUT_FILE_DIR = "c:/temp/VistA/"
 # constants
 DEFAULT_OUTPUT_LOG_FILE_NAME = "WebPageGen.log"
 
@@ -1907,7 +1819,7 @@ def initLogging(outputFileName):
     formatter = logging.Formatter(formatStr)
     fileHandle.setFormatter(formatter)
     #set up the stream handle (console)
-    consoleHandle = logging.StreamHandler()
+    consoleHandle = logging.StreamHandler(sys.stdout)
     consoleHandle.setLevel(logging.INFO)
     consoleFormatter = logging.Formatter(formatStr)
     consoleHandle.setFormatter(consoleFormatter)
@@ -1944,34 +1856,12 @@ if __name__ == '__main__':
         outputLogFile = result['outputLogFileName']
     initLogging(outputLogFile)
     logger.debug (result)
-    logParser = CallerGraphParser.CallerGraphLogFileParser()
-    logger.info ("Starting parsing package/routine....")
-    logger.info ("The log file is: %s" % outputLogFile)
-    packagesDir = os.path.join(result['repositDir'], "Packages")
-    logParser.parsePercentRoutineMappingFile(os.path.join(result['docRepositDir'],
-                                                          "PercentRoutineMapping.csv"))
-    logParser.parsePackagesFile(os.path.join(result['repositDir'],
-                                             "Packages.csv"))
-    logParser.parsePlatformDependentRoutineFile(os.path.join(result['docRepositDir'],
-                                                                 "PlatformDependentRoutine.csv"))
-    logParser.findGlobalsBySourceV2(packagesDir, "*/Globals/*.zwr")
-    routineFilePattern = "*/Routines/*.m"
-    logParser.findPackagesAndRoutinesBySource(packagesDir, routineFilePattern)
-    logParser.parsePackageDocumentationLink(os.path.join(result['docRepositDir'], "PackageToVDL.csv"))
-    logger.info ("End parsing package/routine....")
-    logger.info ("Starting parsing caller graph log file....")
-
-    callLogPattern = "*.log"
-    logParser.parseAllCallerGraphLog(result['logFileDir'], callLogPattern)
-    if result['fileSchemaDir']:
-      dataDictLogParser = DataDictionaryListFileLogParser(logParser.getCrossReference())
-      dataDictLogParser.parseAllDataDictionaryListLog(result['fileSchemaDir'],"*.schema")
-      dataDictLogParser.parseAllDataDictionaryListLog(result['fileSchemaDir'],".*.schema") # this is to handle fileman # less 0
-
-    # generate package direct dependency based on XINDEX call graph and fileman reference
-    logParser.getCrossReference().generateAllPackageDependencies()
+    crossRef = CrossReferenceBuilder().buildCrossReference(result['logFileDir'],
+                                                           result['repositDir'],
+                                                           result['docRepositDir'],
+                                                           result['fileSchemaDir'])
     logger.info ("Starting generating web pages....")
-    webPageGen = WebPageGenerator(logParser.getCrossReference(),
+    webPageGen = WebPageGenerator(crossRef,
                                 result['outputDir'],
                                 result['repositDir'],
                                 result['docRepositDir'],

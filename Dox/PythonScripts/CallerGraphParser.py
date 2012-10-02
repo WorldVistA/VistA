@@ -32,7 +32,7 @@ from CrossReference import CrossReference, Routine, Package, Global, PlatformDep
 from CrossReference import LocalVariable, GlobalVariable, NakedGlobal, MarkedItem, LabelReference
 from CrossReference import RoutineCallInfo, UNKNOWN_PACKAGE
 
-from LogManager import logger
+from LogManager import logger, initConsoleLogging
 
 #Routines starts with A followed by a number
 ARoutineEx = re.compile("^A[0-9][^ ]+$")
@@ -332,28 +332,6 @@ class ExternalReferenceSectionParser (AbstractSectionParser):
                 CrossReference.addRoutineToPackageByName(routineName, defaultPackageName, False)
             routine = CrossReference.getRoutineByName(routineName)
             Routine.addCalledRoutines(routine, tag, self._varValue)
-#===============================================================================
-# interface to generated the output based on a routine
-#===============================================================================
-class RoutineVisit:
-    def visitRoutine(self, routine, outputDir=None):
-        pass
-
-class PackageVisit:
-    def visitPackage(self, package, outputDir=None):
-        pass
-#===============================================================================
-# Default implementation of the routine Visit
-#===============================================================================
-class DefaultRoutineVisit(RoutineVisit):
-    def visitRoutine(self, routine, outputDir=None):
-        routine.printResult()
-#===============================================================================
-# Default implementation of the package Visit
-#===============================================================================
-class DefaultPackageVisit(PackageVisit):
-    def visitPackage(self, package, outputDir=None):
-        package.printResult()
 
 #===============================================================================
 # Interface for a Xindex Log File Parser
@@ -501,35 +479,13 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
 #===============================================================================
 # A class to parse XINDEX log file output and convert to Routine/Package
 #===============================================================================
-class CallerGraphLogFileParser:
+class CallerGraphLogFileParser(object):
     def __init__(self):
         self._crossRef = CrossReference()
 
     def printResult(self):
         logger.info("Total Routines are %d" % len(self._crossRef.getAllRoutines()))
 
-    def printRoutine(self, routineName, visitor=DefaultRoutineVisit()):
-        routine = self._crossRef.getRoutineByName(routineName)
-        if routine:
-            visitor.visitRoutine(routine)
-        else:
-            logger.error ("Routine: %s Not Found!" % routineName)
-
-    def printPackage(self, packageName, visitor=DefaultPackageVisit()):
-        package = self._crossRef.getPackageByName(packageName)
-        if package:
-            visitor.visitPackage(package)
-        else:
-            logger.error ("Package: %s Not Found!" % packageName)
-    def printGlobal(self, globalName, visitor=None):
-        globalVar = self._crossRef.getGlobalByName(globalName)
-        if globalVar:
-            if visitor:
-                visitor.visitGlobal(globalVar)
-            else:
-                globalVar.printResult()
-        else:
-            logger.error ("Global: %s Not Found!" % globalName)
     def getCrossReference(self):
         return self._crossRef
     def getAllRoutines(self):
@@ -1119,10 +1075,7 @@ if __name__ == '__main__':
     parser.add_argument('-d', required=True, dest='docRepositDir',
                         help='VistA Cross-Reference Git Repository Directory')
     result = vars(parser.parse_args());
-    logger.setLevel(logging.INFO)
-    consoleHandler = logging.StreamHandler()
-    consoleHandler.setLevel(logging.INFO)
-    logger.addHandler(consoleHandler)
+    initConsoleLogging()
     logFileParser = CallerGraphLogFileParser()
     logFileParser.parsePercentRoutineMappingFile(os.path.join(result['docRepositDir'],
                                                               "PercentRoutineMapping.csv"))
