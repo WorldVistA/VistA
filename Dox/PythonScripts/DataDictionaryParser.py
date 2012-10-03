@@ -31,7 +31,6 @@ from datetime import datetime, date, time
 from CrossReference import CrossReference, Routine, Package, Global, PlatformDependentGenericRoutine
 from CrossReference import FileManField, FileManFile, FileManFieldFactory
 from CrossReference import LocalVariable, GlobalVariable, NakedGlobal, MarkedItem, LabelReference
-from CrossReference import RoutineCallInfo, UNKNOWN_PACKAGE
 
 from LogManager import logger, initConsoleLogging
 

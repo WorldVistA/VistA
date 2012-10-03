@@ -514,8 +514,6 @@ class WebPageGenerator:
                      "Pointer To FileMan Files", "Fields"]
         indexListGlobal = ["Accessed By Routines"]
         for package in self._allPackages.itervalues():
-            if isUnknownPackage(package.getName()):
-                continue
             for (globalName, globalVar) in package.getAllGlobals().iteritems():
                 isFileManFile = globalVar.isFileManFile()
                 outputFile = open(os.path.join(self._outDir,
@@ -760,18 +758,12 @@ class WebPageGenerator:
     def generatePackagePackageInteractionDetail(self):
         packDepDict = dict()
         for package in self._allPackages.itervalues():
-            if isUnknownPackage(package.getName()):
-                continue
             for depPack in package.getPackageRoutineDependencies().iterkeys():
-                if isUnknownPackage(package.getName()):
-                    continue
                 fileName = getPackageDependencyHtmlFile(package.getName(),
                                                         depPack.getName())
                 if fileName not in packDepDict:
                     packDepDict[fileName] = (package, depPack)
             for depPack in package.getPackageGlobalDependencies().iterkeys():
-                if isUnknownPackage(package.getName()):
-                    continue
                 fileName = getPackageDependencyHtmlFile(package.getName(),
                                                         depPack.getName())
                 if fileName not in packDepDict:
@@ -957,8 +949,6 @@ class WebPageGenerator:
 #===============================================================================
     def generateAllSourceCodePage(self, justComment=True):
         for packageName in self._allPackages.iterkeys():
-            if isUnknownPackage(packageName):
-                continue
             for (routineName, routine) in self._allPackages[packageName].getAllRoutines().iteritems():
                 if self._crossRef.isPlatformGenericRoutineByName(routineName):
                     self.__generatePlatformDependentRoutineSourcePage__(routine, justComment)
@@ -996,9 +986,6 @@ class WebPageGenerator:
         outputFile.write("<div class=\"contents\">\n")
         sortedRoutines = []
         for routine in self._allRoutines.itervalues():
-            # ignore the routines from UNKNOWN Package
-            if isUnknownPackage(routine.getPackage().getName()):
-                continue
             sortedRoutines.append(routine.getName())
         sortedRoutines = sorted(sortedRoutines)
         for letter in indexList:
@@ -1193,8 +1180,6 @@ class WebPageGenerator:
     def generateRoutineCallGraph(self, isCalled=True):
         logger.info("Start generating call graph......")
         for package in self._allPackages.itervalues():
-            if isUnknownPackage(package.getName()):
-                continue
             routines = package.getAllRoutines()
             for routine in routines.itervalues():
                 isPlatformGenericRoutine = self._crossRef.isPlatformGenericRoutineByName(routine.getName())
@@ -1223,8 +1208,7 @@ class WebPageGenerator:
 ## generate all dot file and use dot to generated the image file format
 #===============================================================================
     def generateRoutineDependencyGraph(self, routine, isDependency=True):
-        if (not routine.getPackage()
-            or isUnknownPackage(routine.getPackage().getName())):
+        if not routine.getPackage():
             return
         routineName = routine.getName()
         packageName = routine.getPackage().getName()
@@ -1237,11 +1221,10 @@ class WebPageGenerator:
             routineSuffix = "_caller"
             totalDep = routine.getTotalCaller()
         #do not generate graph if no dep routines, totalDep routines > max_dependency_list
-        # or only have unknown routines
         if (not depRoutines
             or len(depRoutines) == 0
             or  totalDep > MAX_DEPENDENCY_LIST_SIZE
-            or len(depRoutines) == 1 and Package(UNKNOWN_PACKAGE) in depRoutines):
+            or len(depRoutines) == 1):
             logger.debug("No called Routines found! for routine:%s package:%s" % (routineName, packageName))
             return
         try:
@@ -1262,8 +1245,6 @@ class WebPageGenerator:
             output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % routineName)
             output.write("\t}\n")
         for (package, callDict) in depRoutines.iteritems():
-            if isUnknownPackage(str(package)):
-                continue
             output.write("\tsubgraph \"cluster_%s\"{\n" % (package))
             for routine in callDict.keys():
                 output.write("\t\t\"%s\" [URL=\"%s\"];\n" % (routine,
@@ -1306,8 +1287,6 @@ class WebPageGenerator:
         logger.info("Start generating package %s......" % name)
         logger.info("Total Packages: %d" % len(self._allPackages))
         for package in self._allPackages.values():
-            if isUnknownPackage(package.getName()):
-                continue
             self.generatePackageDependencyGraph(package, isDependency)
         logger.info("End of generating package %s......" % name)
 #===============================================================================
@@ -1415,7 +1394,7 @@ class WebPageGenerator:
 # method to generate a tablized representation of data
 #===============================================================================
     def generateTablizedItemList(self, sortedItemList, outputFile, htmlMappingFunc,
-                                 nameFunc=None, totalCol=8, isUnknownPkg=False):
+                                 nameFunc=None, totalCol=8):
         totalNumRoutine = 0
         if sortedItemList:
             totalNumRoutine = len(sortedItemList)
@@ -1429,13 +1408,9 @@ class WebPageGenerator:
                     if position < totalNumRoutine:
                         displayName = sortedItemList[position]
                         if nameFunc: displayName = nameFunc(displayName)
-                        if not isUnknownPkg:
-                            outputFile.write("<td class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
-                                       % (htmlMappingFunc(sortedItemList[position]),
-                                          displayName))
-                        else:
-                            outputFile.write("<td class=\"indexkey\">%s&nbsp;&nbsp;&nbsp;&nbsp;</td>"
-                                       % displayName)
+                        outputFile.write("<td class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
+                                   % (htmlMappingFunc(sortedItemList[position]),
+                                      displayName))
                 outputFile.write("</tr>\n")
             outputFile.write("</table>\n</div>\n<br/>")
 #===============================================================================
@@ -1444,7 +1419,6 @@ class WebPageGenerator:
     def generateIndividualPackagePage(self):
         indexList = ["Namespace", "Doc", "Dependency Graph", "Package Dependency List", "Dependent Graph", "Package Dependent List", "FileMan Files", "Non-FileMan Globals", "All Routines"]
         for packageName in self._allPackages.iterkeys():
-            isUnknownPkg = isUnknownPackage(packageName)
             package = self._allPackages[packageName]
             outputFile = open(os.path.join(self._outDir, getPackageHtmlFileName(packageName)), 'w')
             #write the _header part
@@ -1506,7 +1480,7 @@ class WebPageGenerator:
             self.generateTablizedItemList(sortedRoutines, outputFile,
                                           getRoutineHtmlFileName,
                                           self.getRoutineDisplayNameByName,
-                                          8, isUnknownPkg)
+                                          8)
             generateIndexBar(outputFile, indexList)
             self.__includeFooter__(outputFile)
             outputFile.close()
@@ -1560,35 +1534,28 @@ class WebPageGenerator:
                                      key=lambda item: len(depRoutines[item]),
                                      reverse=True)
             for depPackage in sortedDepRoutines:
-                isUnknownPkg = isUnknownPackage(str(depPackage))
-                if not isUnknownPkg:
-                    routinePackageLink = getPackageHyperLinkByName(depPackage.getName())
-                else:
-                    routinePackageLink = depPackage
+                routinePackageLink = getPackageHyperLinkByName(depPackage.getName())
                 routineNameLink = ""
                 index = 0
                 for depRoutine in sorted(depRoutines[depPackage].keys()):
-                    if isUnknownPkg:
-                        routineNameLink += depRoutine.getName()
-                    else:
-                        if dependencyList: # append tag information for called routines
+                    if dependencyList: # append tag information for called routines
 #                            allTags = filter(len, depRoutines[depPackage][depRoutine].iterkeys())
-                            allTags = depRoutines[depPackage][depRoutine].keys()
-                            sortedTags = sorted(allTags)
-                            # format the tag
-                            tagString = ""
-                            if len(sortedTags) > 1:
-                                tagString = "("
-                            idx = 0
-                            for tag in sortedTags:
-                                if idx > 0:
-                                    tagString += ","
-                                idx += 1
-                                tagString += tag
-                            if len(sortedTags) > 1:
-                                tagString += ")"
-                            routineNameLink += tagString + "^"
-                        routineNameLink += getRoutineHypeLinkByName(depRoutine.getName())
+                        allTags = depRoutines[depPackage][depRoutine].keys()
+                        sortedTags = sorted(allTags)
+                        # format the tag
+                        tagString = ""
+                        if len(sortedTags) > 1:
+                            tagString = "("
+                        idx = 0
+                        for tag in sortedTags:
+                            if idx > 0:
+                                tagString += ","
+                            idx += 1
+                            tagString += tag
+                        if len(sortedTags) > 1:
+                            tagString += ")"
+                        routineNameLink += tagString + "^"
+                    routineNameLink += getRoutineHypeLinkByName(depRoutine.getName())
                     routineNameLink += "&nbsp;&nbsp;"
                     if (index + 1) % 8 == 0:
                         routineNameLink += "<BR>"
@@ -1752,8 +1719,6 @@ class WebPageGenerator:
         totalNoRoutines = len(self._allRoutines)
         routineIndex = 0
         for package in self._allPackages.itervalues():
-            if isUnknownPackage(package.getName()):
-                continue
             for routine in package.getAllRoutines().itervalues():
                 if (routineIndex + 1) % PROGRESS_METER == 0:
                     logger.info("Processing %d of total %d" % (routineIndex, totalNoRoutines))
