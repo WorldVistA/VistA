@@ -22,7 +22,9 @@ import time
 import re
 import logging
 
-sys.path = ['../pexpect'] + sys.path
+filedir = os.path.dirname(os.path.abspath(__file__))
+pexpectdir = os.path.normpath(os.path.join(filedir, "../pexpect/"))
+sys.path.append(pexpectdir)
 try:
   import pexpect
   no_pexpect = None
