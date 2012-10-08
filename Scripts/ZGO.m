@@ -51,7 +51,7 @@ GLOBALS
  N G
  D Fetch^%SYS.GD("*",1,0) ; Undocumented API, stores in ^CacheTempJ($J,
  S G="" F  S G=$O(^CacheTempJ($J,G)) Q:G=""  I G'?.E1L.E S GLOBALS(G)=""
- F G="^ROUTINE","^TMP","^UTILITY","^XUTL" K GLOBALS(G)
+ F G="^ROUTINE","^TMP","^UTILITY","^XUTL","^%ZOSF","^XTMP" K GLOBALS(G)
  Q
 GLOBAL(G) ; Dump global G
  N IO S IO=$$OPENGBL(G)
