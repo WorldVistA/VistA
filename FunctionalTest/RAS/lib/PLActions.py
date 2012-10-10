@@ -398,8 +398,11 @@ class PLActions (Actions):
         self.VistA.write('')
         self.VistA.wait('PROBLEM')
         self.VistA.write(icd)
-        self.VistA.wait('Ok?')
-        self.VistA.write('\r\r\r\r\r')
+        index = self.VistA.multiwait(['Ok?','Select 1-5'])
+        if index==1:
+          self.VistA.write('1\r\r\r\r')
+        else:
+          self.VistA.write('\r\r\r\r\r')
         self.VistA.wait('Select Item')
         self.VistA.write('SV')
         self.VistA.wait('Select Action')
