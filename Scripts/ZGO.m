@@ -14,30 +14,52 @@ ZGO ; Save globals to ZWR files organized by FileMan
  ; See the License for the specific language governing permissions and
  ; limitations under the License.
  ;---------------------------------------------------------------------------
- N  W "ZWR Global Output, organized by FileMan"
+ N  D CONFIG
+ W "ZWR Global Output, organized by FileMan"
  D ASKDIR Q:DIR["^"
- D SAVEALL(DIR)
+ D DUMPALL
  Q
 SAVEALL(DIR) ; Save all globals to files in host DIR
+ N CONFIG D CONFIG
  I '$$SLASH(DIR) Q
- D FILES
- D GLOBALS
- S G="" F  S G=$O(GLOBALS(G)) Q:G=""  D GLOBAL(G)
+ D DUMPALL
  Q
 SAVEONE(DIR,G) ; Save global G to files in host DIR
+ N CONFIG D CONFIG
  I '$$SLASH(DIR) Q
- D FILES
- D GLOBAL(G)
+ D DUMPONE
  Q
  ;---------------------------------------------------------------------------
  ; Private implementation entry points below
  ;
+CONFIG
+ I $D(CONFIG) Q
+ I $ZV["Cache" D  Q
+ . S CONFIG("OPENIORW")="O IO:(""WNS""):1"
+ . S CONFIG("GLOBALS")="D Fetch^%SYS.GD(""*"",1,0) S G="""" F  S G=$O(^CacheTempJ($J,G)) Q:G=""""  I G'?.E1L.E S GLOBALS(G)="""""
+ I $ZV["GT.M" D  Q
+ . S CONFIG("OPENIORW")="D GTMIOW(IO)"
+ . S CONFIG("GLOBALS")="S G=""^%"" F  S G=$O(@G) Q:G=""""  S:$D(^%) G(""^%"")="""" I G'?.E1L.E S GLOBALS(G)="""""
+ W "ZGO does not support "_$ZV,!
+ Q
+GTMIOW(IO) ; GT.M open-for-output impl.
+ O IO:(newversion:noreadonly:nowrap:except="S IO=""""") I IO'=""
+ Q
 ASKDIR
  R !,!,"Host output directory: ",DIR,! Q:DIR["^"   G:'$$SLASH(DIR) ASKDIR
  Q
 SLASH(DIR)
  I $E(DIR,$L(DIR))?1(1"/",1"\") Q 1
  E  U $P W "Output directory must end in a slash!" Q 0
+DUMPALL
+ D FILES
+ D GLOBALS
+ S G="" F  S G=$O(GLOBALS(G)) Q:G=""  D GLOBAL(G)
+ Q
+DUMPONE
+ D FILES
+ D GLOBAL(G)
+ Q
 FILES ; Build FILES() mapping FGR components to file number
  N N S N=0 F  S N=$O(^DIC(N)) Q:N=""  D:+N
  . N F S F=$$FILE($$ROOT^DILFD(N,"",1)),@F=N
@@ -49,8 +71,7 @@ FILE(N)
  Q FILE
 GLOBALS
  N G
- D Fetch^%SYS.GD("*",1,0) ; Undocumented API, stores in ^CacheTempJ($J,
- S G="" F  S G=$O(^CacheTempJ($J,G)) Q:G=""  I G'?.E1L.E S GLOBALS(G)=""
+ X CONFIG("GLOBALS")
  F G="^ROUTINE","^TMP","^UTILITY","^XUTL","^%ZOSF","^XTMP" K GLOBALS(G)
  Q
 GLOBAL(G) ; Dump global G
@@ -103,7 +124,7 @@ OPENFILE(F)
  Q IO
 OPEN(IO)
  ;U $P W "OPEN ",IO,!
- C IO O IO:("WNS"):1 I '$T U $P W "Cannot open """_IO_""" for write!",!
+ C IO X CONFIG("OPENIORW") I '$T U $P W "Cannot open """_IO_""" for write!",!
  Q
 CLOSE(IO)
  ;U $P W "CLOSE ",IO,!
