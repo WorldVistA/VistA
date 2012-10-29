@@ -62,7 +62,7 @@ DUMPONE
  Q
 FILES ; Build FILES() mapping FGR components to file number
  N N S N=0 F  S N=$O(^DIC(N)) Q:N=""  D:+N
- . N FGR S FGR=$$ROOT^DILFD(N,"",1)
+ . N FGR S FGR=$$ROOT^DILFD(N,"",1),FGR=$$FGRFIX(FGR)
  . Q:'$$FGROK(FGR,N)
  . N F S F=$$FILE(FGR),@F=N
  Q
@@ -71,6 +71,11 @@ FGROK(FGR,N) ; Verify that FGR is a canonical M node name
  N $ET S $ET="S $EC="""" W ""W: File "_N_" has non-canonical root: ""_FGR,! Q 0"
  N (FGR) ; Hide local variables from evaluation of @FGR
  Q ($NA(@FGR)]"")&($QL(FGR)'<0)
+FGRFIX(FGR) ; Fix known non-canonical FGRs
+ N N F N="DUZ(2)" D
+ . N B,E,S S B=$L(FGR)-$L(N) Q:B<1  S E=$L(FGR)-1,S=$E(FGR,B-1)
+ . I ((S=",")!(S="("))&($E(FGR,B,E)=N)&($E(FGR,E+1)=")") S $E(FGR,B-1,E+1)=$S(S="(":"",1:")")
+ Q FGR
 FILE(N)
  N I,FILE
  S FILE=$NAME(FILES($QS(N,0)))
