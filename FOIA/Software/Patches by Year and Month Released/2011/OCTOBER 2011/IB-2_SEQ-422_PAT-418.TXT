@@ -1,0 +1,154 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 08/15/11 at 14:26
+=============================================================================
+Run Date: OCT 28, 2011                     Designation: IB*2*418
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #422                      Status: Released
+                  Compliance Date: NOV 28, 2011
+=============================================================================
+
+Associated patches: (v)IB*2*422    <<= must be installed BEFORE `IB*2*418'
+
+Subject: COST-BASED INTERAGENCY BILLING UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will install the Tortiously Liable, Cost-Based and Interagency
+ rates into the Charge Master, with an effective date of 07/11/2011.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000478452 Need FY2012 Cost/Based Interagency Billing Updates
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ James A. Haley Veterans' Hospital - Tampa
+ VA Butler Healthcare - Butler
+ West Palm Beach VAMC
+  
+ OVERVIEW OF REMEDY TICKETS(s):
+ ==============================
+ 1. HD0000000478452 Need FY2012 Cost/Based Interagency Billing Updates
+  
+    Problem:
+    --------
+    The Chief Business Office has requested a patch to update 
+    Cost-Based and Interagency billing rates. These charges are for 
+    applicable care, treatment and services provided in VA facilities in 
+    humanitarian emergencies or to VA employees, family members or 
+    ineligibles.
+  
+    Resolution:
+    -----------
+    The post-init routine IB20P418 will complete the following:
+  
+    - Add 3 Billable Bedsections POLYTRAUMA INPATIENT, PM&RS OUTPATIENT 
+      VISIT and POLYTRAUMA OUTPATIENT VISIT to the MCCR UTILITY file (#399.1)
+    - Add 4 Charge Sets TL-OPT VST PM&RS, TL-OPT VST POLYTRAUMA, IA-OPT
+      VST PM&RS and IA-OPT VST POLYTRAUMA to the Charge Set file (#363.1) 
+    - Add 68 Tortiously Liable and Interagency charges to the Charge Item
+      file (#363.2)
+    - Update the Tortiously Liable/Interagency rate schedules linked to
+      Reasonable Charges with the 4 Charge Sets in the Rate Schedule file
+      (#363)
+  
+     Routine IBCRBG2 was also modified to move the Treating Specialty from
+     the previous Billable Bedsection to the new POLYTRAUMA INPATIENT
+     Billable Bedsection.
+  
+   Code Treating Specialty              Previous Billable Bedsection
+   ---- ----------------------------    ----------------------------
+   112  POLYTRAUMA REHAB UNIT           REHABILITATION MEDICINE
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*418):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P418.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P418
+    Before:       n/a   After: B84843173  **418**
+Routine Name: IBCRBG2
+    Before:  B7843001   After:  B8339633  **245,175,332,364,399,422,418**
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : JUN 24, 2009
+Completed By: DAWSON,TIM                    Date Completed: OCT 19, 2011
+Released By : CAULFIELD,MARY                Date Released : OCT 28, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

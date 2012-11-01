@@ -1,0 +1,135 @@
+$TXT Created by BECKWITH,RALPH at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Sunday, 07/01/12 at 11:52
+=============================================================================
+Run Date: AUG 27, 2012                     Designation: RMPR*3*171
+Package : RMPR - PROSTHETICS                  Priority: EMERGENCY
+Version : 3       SEQ #149                      Status: Released
+                  Compliance Date: AUG 29, 2012
+=============================================================================
+
+Associated patches: (v)RMPR*3*163  <<= must be installed BEFORE `RMPR*3*171'
+
+Subject: LINK PATIENT RECORD TO SUSPENSE PROBLEM
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ 1. When select patients appearing on the GUI Delayed Order some 
+    patient unlinked charges do not appear using suspense link option.
+  
+  
+ Associated Remedy Tickets:
+ =========================
+ 1) HD0000000723319 Cannot link patient record to Suspense
+       Duplicates: HD0000000724441  Unlinked charges not appearing
+       HD0000000725824, HD0000000740960, HD0000000711885
+   
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Test Sites:
+ ==========
+ VA Central Plains HCS
+ Clement J Zablocki Veterans Affairs Medical Center - Milwaukee
+ White River Junction VA Medical Center 
+  
+ Remedy Overview:
+ ================ 
+ 1) HD0000000723319 Cannot link patient record to Suspense
+  
+  
+ Problem:
+ --------
+ User may get false message '>> NO patient unlinked items available
+ to be posted to Suspense, hit return' when using the option "Link 
+ Patient Record to Suspense". 
+  
+ The false message is caused by some 2319 entries having null file
+ node 10 suspense information.
+  
+   
+ Resolution:
+ -----------
+ Modifications have been made to the system to improve the suspense
+ linking process by considering a null 2319 suspense node as unlinked
+ item and display such items for linking to suspense.
+   
+  
+ Routines: RMPRPCE1
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ It is necessary that you disable an option.  You may install this patch 
+ at any time without interruption to users.  It should take less than 2
+ minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*171)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       RMPR*3.0*171.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//hit enter. When prompted to select the 
+       options you would like to place out of order, enter the following:
+                                                                  
+       RMPR LINK 2319 TO SUSPENSE     Link Patient Record to Suspense
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPRPCE1
+    Before: B35212918   After: B35595468  **62,69,77,78,146,163,171**
+ 
+Routine list of preceding patches: 163
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : JUN 29, 2012
+Completed By: HEFFERNAN,COREY               Date Completed: AUG 27, 2012
+Released By : MORRIS,DELISA                 Date Released : AUG 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

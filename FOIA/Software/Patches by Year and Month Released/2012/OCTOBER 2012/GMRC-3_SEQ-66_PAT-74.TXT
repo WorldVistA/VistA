@@ -1,0 +1,307 @@
+$TXT Created by CLARK,KAREN at SMA.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 06/05/12 at 12:32
+=============================================================================
+Run Date: OCT 30, 2012                     Designation: GMRC*3*74
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #66                      Status: Released
+                  Compliance Date: NOV 30, 2012
+=============================================================================
+
+
+Subject: Non-VA Care Interface Support
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ THIS PATCH IS REQUIRED FOR PATCH DSIF*3.2*23
+  
+ This patch creates a new Consult parameter and edit option to be added
+ to the Consult Management [GMRC MGR] menu so that sites may define Fee
+ consult services that need to interface with the Fee Basis Claims System
+ (FBCS) and Healthcare Claims Processing (HCP) applications.
+  
+ NOTE:  Coordination between the Consult Clinical Coordinator and the Fee 
+ Basis department is crucial, please identify your counterpart and work 
+ with them so that both sides understand what is being put in place and 
+ when that has been completed so that the Fee Basis department can verify 
+ the new functionality.  
+  
+ Enhancements
+ ============
+  
+ 1. Created new parameter, GMRC FEE SERVICES file (#8989.51) , which will 
+    store a list of IENs defined in the REQUEST SERVICES (#123.5) file.
+    This constitutes a list of consult services defined as Non VA Care.
+  
+ 2. Created new menu option, Define Fee Services [GMRC FEE PARAM], which 
+    will manage the GMRC FEE SERVICES parameter..
+  
+ 3. Added the Define Fee Services [GMRC FEE PARAM] Option to the Consult
+    Management [GMRC MGR] Menu Option.
+  
+ 4. Created GMRC FEE PARAM List Template file(#409.61) with associated 
+    Protocols file (#101)
+      GMRC FEE PARAM ADD
+      GMRC FEE PARAM MENU
+      GMRC FEE PARAM QUIT
+      GMRC FEE PARAM REMOVE
+      GMRC FEE PARAM SAVE) 
+  
+ 5. Created two new routines, GMRCFP & GMRCFPA to support the new option
+    and ListManager functions that allow users to define Fee Services.
+  
+  
+ Patch Components
+ ================
+ Files & Fields Associated: N/A
+ Forms Associated: N/A
+ Mail Groups Associated: N/A
+  
+ Options Associated:
+  
+ Option Name                           Type          New/Modified/Deleted
+ -----------                           ----          --------------------
+ Define Fee Services [GMRC FEE PARAM]  action             New
+ Consult Management [GMRC MGR]         menu               Modified
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              --------------------
+ GMRC FEE PARAM ADD         New
+ GMRC FEE PARAM MENU        New
+ GMRC FEE PARAM QUIT        New
+ GMRC FEE PARAM REMOVE      New
+ GMRC FEE PARAM SAVE        New
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted
+ -------------      ----      ------------------  --------------------
+ GMRC FEE PARAM     LIST      N/A                 New
+  
+ Parameter Definitions Associated:
+  
+ Parameter Definition Name        New/Modified/Deleted
+ -------------------------        --------------------
+ GMRC FEE SERVICES                New
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ 20100117 - Expanded Fee Pilot - CPRS Integration
+ Non-VA care services are initiated by VA providers as a component of
+ Veterans health care services. Having an automated link from CPRS, where
+ the initial requests are entered, to the Referral and Authorization
+ System (RAS), can assure more timely care for Veterans. In addition, VA
+ providers frequently have no insight into when non-VA care is scheduled,
+ provided and completed. Integration from RAS to CPRS can serve to update
+ VA providers on patient status.
+  
+ Patient Safety Issues (PSIs): N/A
+ Remedy Ticket(s) & Overview: N/A
+  
+ Test Sites:
+ ----------
+ St Louis, MO
+ Poplar Bluff, MO
+ Marion, IL
+ Omaha, NE
+ Iowa City,IA
+ DesMoines,  IA
+ Sioux Falls, SD
+ Minneapolis, MN
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by
+ this patch is available. Documentation can be found on the VA Software
+ Documentation Library at:  http://www4.va.gov/vdl/
+  
+ Title                                         File Names
+ -----------------------------------------------------------------------
+ Consult/Request Tracking Technical Manual     constm.doc and constm.pdf
+  
+  
+ Patch Installation:
+  
+ Pre/Post-Installation Overview
+ ------------------------------
+ NOTE:  Coordination between the Consult Clinical Coordinator and the Fee 
+ Basis department is crucial, please identify your counterpart and work 
+ with them so that both sides understand what is being put in place and 
+ when that has been completed so that the Fee Basis department can verify 
+ the new functionality.  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.
+  
+ This patch should take less than 5 minutes to install.
+  
+ The GMRC MGR menu option needs to be disabled when installing the patch.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, you may elect to use the
+    following options:
+    (When prompted for the INSTALL NAME enter the patch GMRC*3.0*74)
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option.
+    When prompted for the INSTALL NAME enter GMRC*3.0*74
+  
+    Install Questions for GMRC*3.0*74
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? YES//'  answer YES
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+    NO//'  answer NO
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols? YES//' answer YES
+  
+ 8. When prompted 'Enter options you wish to mark as 'Out Of Order':'
+    answer GMRC MGR
+  
+ 9. When prompted 'Enter options you wish to mark as 'Out Of Order':'
+    hit Enter
+  
+ 10.When prompted 'Enter protocols you wish to mark as 'Out Of Order':'
+    hit Enter
+  
+ 11.If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ 12.Enter the Device you want to print the Install messages.
+    You can queue the install by enter a 'Q' at the device prompt.
+    Enter a '^' to abort the install.
+  
+    DEVICE: HOME//
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ This step should be completed by a Clinical Applications Coordinator!
+  
+ All Non-VA Care (Fee Basis)which have been setup/defined in Consult 
+ REQUEST SERVICES (#123.5) need to be added in the new Define Fee Services 
+ [GMRC FEE PARAM] Option which is located on the Consult Management [GMRC 
+ MGR] Menu Option.  
+  
+ These consult services may be named something like FEE BASIS RADIOLOGY or 
+ may be standardized (by the Non-VA Care Coordination project) to begin 
+ with "NON VA CARE".
+  
+ From the Consult Management Menu:
+  
+    RPT    Consult Tracking Reports ...
+    SS     Set up Consult Services
+    SU     Service User Management
+    CS     Consult Service Tracking
+    RX     Pharmacy TPN Consults
+    GU     Group update of consult/procedure requests
+    UA     Determine users' update authority
+    UN     Determine if user is notification recipient
+    NR     Determine notification recipients for a service
+    TD     Test Default Reason for Request
+    LH     List Consult Service Hierarchy
+    PR     Setup procedures
+    CP     Copy Prosthetics services
+    DS     Duplicate Sub-Service
+    FS     Define Fee Services
+    IFC    IFC Management Menu ...
+    TP     Print Test Page
+  
+  
+ Select Consult Management Option: FS Define Fee Services
+  
+ Edit Fee Services       Jun 05, 2012@11:53:48        Page:    0 of    0
+ -----------------------------------------------------------------------
+ Services defined in GMRC FEE SERVICES system parameter
+ as fee-basis services.
+ -----------------------------------------------------------------------
+  
+  
+  
+  
+  
+  
+      Add                       Save
+      Remove                    Quit
+ Select Action:Quit// ADD   Add
+ Select REQUEST SERVICES SERVICE NAME: NON VA CARE AUDIOLOGY
+  
+ ...add until all Non-VA Care/Fee Basis services are listed.
+ then select Save, then Quit.
+  
+  
+ Edit Fee Services       Jun 05, 2012@11:58:22        Page:    1 of    1
+ -----------------------------------------------------------------------
+ Services defined in GMRC FEE SERVICES system parameter
+ as fee-basis services.
+ -----------------------------------------------------------------------
+ 1    NON VA CARE AUDIOLOGY
+ 2    NON VA CARE BEHAVIORAL HEALTH
+ 3    NON VA CARE DENTAL
+ 4    NON VA CARE OPHTHALMOLOGY
+ 5    NON VA CARE RADIOLOGY
+  
+  
+  
+           **NON VA CARE RADIOLOGY ADDED**
+      Add                       Save
+      Remove                    Quit
+ Select Action:Quit// S   Save
+  
+ ...etc...
+           **CURRENT LIST SAVED**
+      Add                       Save
+      Remove                    Quit
+ Select Action:Quit//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCFP
+    Before:       n/a   After:  B1714290  **74**
+Routine Name: GMRCFPA
+    Before:       n/a   After:  B2885977  **74**
+
+=============================================================================
+User Information:
+Entered By  : CLARK,KAREN Y                 Date Entered  : NOV 15, 2011
+Completed By: DEWAYNE,BRANDON               Date Completed: OCT 29, 2012
+Released By : SCHMIT,BECKY                  Date Released : OCT 30, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

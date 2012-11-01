@@ -1,0 +1,162 @@
+$TXT Created by ENELOW,JASON at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 07/25/11 at 09:01
+=============================================================================
+Run Date: OCT 12, 2011                     Designation: PSJ*5*250
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #216                      Status: Released
+                  Compliance Date: NOV 12, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*97    <<= must be installed BEFORE `PSJ*5*250'
+
+Subject: INVALID BARCODE WHEN IVPB ORDER CHANGED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects an issue in which it is possible to reprint an old 
+ label for an IVPB order after the Solution or Volume has been changed.  
+ If a user prints a label for an IVPB order, then changes the Solution 
+ (or Volume) in Inpatient Order Entry [PSJ OE], then goes to Individual
+ Labels (IV) [PSJI LBLI], it is possible to reprint the original label 
+ even though it now has the incorrect Solution (or Volume) on it.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ HD0000000124912 - Invalid barcode when IVPB order changed.  PSPO #256.
+  
+  
+ Participating Test Sites:
+ =========================
+ Boise VAMC
+ Oklahoma City VAMC
+ Western NY HCS
+  
+  
+ Remedy Overview:
+ ================
+ HD0000000124912 - Invalid barcode when IVPB order changed
+  
+   Patient Safety Issue:
+   ---------------------
+   PSPO #256
+  
+   Problem:
+   -------
+   If a user prints a label for an IVPB order, then changes the Solution in
+   Inpatient Order Entry [PSJ OE], then goes to Individual Labels (IV)
+   [PSJI LBLI], it is possible to reprint the original label even though it
+   now has the incorrect solution on it.  The same problem exists if the 
+   Volume is changed.
+  
+   Resolution:
+   ------------
+   Modified routine PSIVLBRP to prevent the re-printing of a label with
+   inaccurate Solution (or Volume) data and added the message, "Solution on
+   label [label #] does not match current order."
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch should be installed at off-peak hours when Pharmacy Data 
+ Management users can be off the system.  Other VISTA users will not be
+ affected.
+  
+ Install Time - less than 2 minutes
+  
+ 1.  Load Transport Global 
+     ---------------------------
+  
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*250):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer YES. 
+  
+         1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+                 Inpatient Order Entry [PSJ OE]
+  
+         2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVLBRP
+    Before: B11352485   After: B15941220  **58,97,250**
+ 
+Routine list of preceding patches: 97
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : OCT 22, 2010
+Completed By: WERNER,GARY                   Date Completed: SEP 16, 2011
+Released By : FOX,KIRK                      Date Released : OCT 12, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

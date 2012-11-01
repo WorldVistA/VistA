@@ -1,0 +1,408 @@
+
+=============================================================================
+Run Date: MAR 21, 2012                     Designation: MAG*3*121
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #80                      Status: Released
+                  Compliance Date: APR 21, 2012
+=============================================================================
+
+Associated patches: (v)MAG*3*39    <<= must be installed BEFORE `MAG*3*121'
+                    (v)MAG*3*108   <<= must be installed BEFORE `MAG*3*121'
+                    (v)MAG*3*117   <<= must be installed BEFORE `MAG*3*121'
+
+Subject: Watermarking Rescinded Advance Directives
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This document describes Patch 121, the Watermarking Rescinded Advance 
+ Directives patch. This patch facilitates watermarking an image or group 
+ of images as "Rescinded  when the associated Advanced Directive is 
+ rescinded from the Text Integrated Utility (TIU). Major changes and
+ detailed information are in the MAG3_0P121_Patch_Descrtion document.
+  
+ Patch 121 allows for the watermarking of images associated with an advance
+ directive that has been rescinded by the patient. When a note title is 
+ changed in TIU from Advance Directive to Rescinded Advance Directive, the 
+ TIU application will call a new Imaging  M  API to Rescind the associated 
+ Image. After the process is complete, all images associated with the 
+ rescinded advance directive will be watermarked "Rescinded  and a 
+ confirmation email will be sent to the subscribers of G.MAG SERVER mail 
+ group with the status of the watermarking.
+  
+ The image associated with the advance directive is marked deleted and a 
+ copy of the original image with the watermark "Rescinded  is made 
+ available to Clinical Display users.
+  
+ NOTE    Patch TIU*1.0*261 is needed to rescind advance directives.
+  
+ Distribution of Software
+ ========================
+  
+ The release build of this patch can be downloaded from:
+  
+ ftp.imaging.med.va.gov/Software/Released_Software/
+ Mag3_0P121_and_TIU1_0P261
+  
+ Installation instructions are included in this document.
+  
+ NOTE: Any late-breaking news about this patch will be found in a readme 
+       file. If present, this file will also be located in the
+       Mag3_0P121_and_TIU1_0P261 directory.
+  
+ Patch Contents
+ ==============
+  
+ This patch includes the following files:
+  
+ Software
+ ========
+  
+ MAG3_0P121.KID - KIDS (Kernel Installation & Distribution System) package 
+                   to be installed on the VistA system.
+  
+ Mag3_0P121_BPSetup.exe - Installation file for BP Queue Processor,
+                          Verifier and Purge client software to be
+                          installed on a server class machine.
+  
+ TIU_10_P261.KID - KIDS package for TIU patch.
+  
+ Documentation 
+ =============
+  
+ MAG3_0P121_Patch_Description.pdf - Detailed patch description.
+  
+ IMGtechman.pdf - VistA Imaging Technical Manual updated for this patch
+  
+ MAG_BP_User_Manual.pdf - VistA Imaging System Background Processor User 
+                          Manual updated for this patch.
+  
+ MAG_Display_User_Manual.pdf - VistA Imaging Clinical Display Workstation
+                               User Manual updated for this patch.
+  
+ TIU1_0P261_Patch_Description.doc - TIU*1.0*261 Patch Description
+  
+ tiuum.pdf - TIU Clinical Coordinator User Manual
+  
+ Associated Patches
+ ==================
+  
+ Before Patch 121 is installed, the following patches must be installed:
+  
+  MAG*3.0*108
+  MAG*3.0*117
+  MAG*3.0*39
+  
+ For a list of all released Imaging (MAG) patches, refer to the 
+ patch_list.txt file available on the Imaging FTP server (go to
+ ftp://ftp.imaging.med.va.gov, 
+ then navigate to the \Docs\Imaging_Docs_Latest folder).
+  
+ Test Sites
+ ==========
+  
+ The following sites are test sites for this patch:
+  
+  Battle Creek, MI (Medium) 
+  Fayetteville, NC (Large) 
+  Huntington, WV (Medium) 
+  Orlando, FL (Large)
+  West Haven, CT (Integrated, Large) 
+  VISN 2 (Integrated, Large) 
+  
+ Remedy Calls
+ ============
+  
+ There are no Remedy tickets being addressed in this patch.  This is an
+ enhancement patch based on an NSR.
+  
+ NSRs
+ ====
+  
+ This patch addresses the following New Service Requests (NSRs):
+  
+  20060401 Watermarking Rescinded Images
+  
+ Patient Safety Issues
+ =====================
+  
+ There are no Patient Safety Issue (PSI) reports associated with this 
+ patch.
+  
+ KIDS File Summary
+ =================
+  
+ Data Dictionaries
+ =================
+  
+ The following files and fields are included in this patch:
+  
+ IMAGE File (#2005)   Modified.
+  
+  LINKED IMAGE (#2005,115.1)   New. This is a pointer to the rescinded 
+                               image.
+                               For example, when an image is rescinded a 
+                               new image entry is created and the original
+                               is deleted. A link is established between
+                               the new image and the rescinded image. The
+                               value of the field is the rescinded image.
+  
+  LINKED TYPE (#2005,115.2)   New. This is the type of the image link. For 
+                              example, when an image is rescinded a new 
+                              image entry is created and the original is
+                              deleted. A link is established between the
+                              new image and the rescinded image. The value
+                              of the LINKED TYPE will be "RESCINDED".
+  
+  LINKED DATE (#2005,115.3)   New. This is the date that the 
+                              Document/Image was associated with the LINKED
+                              IMAGE.
+  
+ IMAGE AUDIT File (#2005.1)   Modified.
+  
+  LINKED IMAGE (#2005.1,115.1)   New. This is a pointer to the rescinded 
+                                 image.
+                                 For example, when an image is rescinded a 
+                                 new image entry is created and the
+                                 original is deleted. A link is established
+                                 between the new image and the rescinded
+                                 image. The value of the field is the
+                                 rescinded image.
+  
+  LINKED TYPE (#2005.1,115.2)   New. This is the type of the image link. 
+                                For example, when an image is rescinded a
+                                new image entry is created and the original
+                                is deleted. A link is established between
+                                the new image and the rescinded image. The
+                                value of the LINKED TYPE will be
+                                "RESCINDED".
+  
+  LINKED DATE (#2005.1,115.3)   New. This is the date that the 
+                                Document/Image was associated with the
+                                LINKED IMAGE.
+  
+ Mail Groups
+ ===========
+  
+ The following mail groups are included in this patch:
+  
+ Once the watermarking of an image is completed, an email message is sent 
+ to the subscribers of G.MAG SERVER mail group
+  
+ Security Keys
+ =============
+  
+ There are no new or modified security keys included in this patch.
+  
+ Remote Procedure Calls
+ ======================
+  
+ No Procedure calls are affected by this patch
+  
+ Menu Options
+ ============
+  
+ There are no new menu options in this patch.
+  
+ Installation
+ ============
+  
+ This patch is to be installed on the VistA System and on the servers 
+ running the Background Processor Queue Processor.
+  
+ This patch must be installed by the compliance date to conform with VHA
+ Directive 2001-023.        
+  
+ NOTE: All sites running VistA Imaging 3.0 must install the KIDS portion of
+ this patch. 
+  
+ This patch may be loaded while VistA Imaging System is active. 
+ Installation will take less than one minute.
+  
+ NOTE:  The KIDS file should be installed first. The Background Processor
+ clients for patch 121 will not run if the updated MAGQBUT4 routine (for
+ version checking) is not in VistA.
+  
+ Installation Prerequisites
+ ==========================
+  
+ Before installing this patch, you will need to download the Patch 121 
+ files from the Imaging FTP site to a local storage location.
+  
+ Review the Pre and Post Installation Activity (if any) section to 
+ familiarize yourself with the activities that take place during this 
+ patch installation.
+  
+ Verify that the patches listed in the Required Patches section have been 
+ installed.
+  
+ Important: Any Background Processor that is running must be stopped 
+ (applications are closed) prior to the installation of the KIDS and 
+ Client software. Any image capture application (Clinical Capture and DICOM
+ gateway processing) can continue.
+  
+ VistA System (KIDS) Installation
+ ================================
+  
+ 1 Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+  
+ 2 Run the Installation option [XPD INSTALLATION MENU].
+  
+ 3 Load the KIDS file by performing the following steps.
+  
+   a Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load the
+     KIDS distribution.
+   b When prompted, enter the path and file name (MAG3_0P121.KID) of the 
+     Patch 121 KIDS file that you downloaded from the Imaging FTP server.
+   c When prompted to continue with the load, enter YES.  A Distribution 
+     OK! message will be displayed when the load is complete.
+  
+ 4 After loading the KIDS file, use the following options to verify the
+   contents of the patch and to back up any affected routines.
+  
+   Verify Checksums in Transport Global [XPD PRINT CHECKSUM]  run this 
+     option to verify the integrity of the routines in the patch.
+  
+   Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]
+     run this option to view all changes that will be made when the patch
+     is installed. All components (routines, options, and so on) in the
+     patch will be compared.
+  
+   Backup a Transport Global [XPD BACKUP]   run this option to create a 
+     backup message of any routines exported with the patch.  It will NOT
+     back up any of the other changes.
+  
+ 5 After performing the load and any optional verification steps, perform 
+   the following steps to install the KIDS file:
+  
+   a Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b When prompted for the install name, enter MAG*3.0*121.
+   c Answer NO to the following prompts:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? No//NO
+  Want KIDS to INHIBIT LOGONs during the install? No//NO
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//NO
+  
+ When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ =========================
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*121      10/20/11@11:23:28
+      => VistA Imaging V3.0 - Patch 121 - 10/20/2011 07:46AM  ;Created o
+  
+ This Distribution was loaded on Oct 20, 2011@11:23:28 with header of 
+    VistA Imaging V3.0 - Patch 121 - 10/20/2011 07:46AM  ;Created on Oct 2
+ 0, 2011@07:46:45
+    It consisted of the following Install(s):
+     MAG*3.0*121
+ Checking Install for Package MAG*3.0*121
+  
+ Install Questions for MAG*3.0*121
+  
+ Incoming Files:
+  
+    2005      IMAGE  (Partial Definition)
+ Note:  You already have the 'IMAGE' File.
+  
+  
+    2005.1    IMAGE AUDIT  (Partial Definition)
+ Note:  You already have the 'IMAGE AUDIT' File.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*121 : 
+                Oct 20, 2011@11:23:59
+  
+ Build Distribution Date: Oct 20, 2011
+  
+  Installing Routines:........
+                Oct 20, 2011@11:23:59
+  
+  Installing Data Dictionaries: ...
+                Oct 20, 2011@11:23:59
+  
+  Running Post-Install Routine: POS^MAGIP121...
+  
+    Adding new Reason to the MAG REASONS file.
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*121 Installed. 
+                Oct 20, 2011@11:23:59
+  
+  
+ Background Processor Client Installation
+ ========================================
+  
+ Refer to the Installation section of the MAG3_0P121_Patch_Description.pdf
+ for BP installation instructions.
+  
+ VistA Routines 
+ ==============
+  
+ This section lists new and modified Imaging routines for the VistA 
+ system. For each routine, the second line will contain the following 
+ information.
+  
+ ;;3.0;IMAGING;**[Patch List]**; Mar 19, 2002; Build 2340; October 20, 
+ 2011 
+  
+ Please note that the before checksum may differ if an Imaging Field Unit 
+ Test has been installed.
+  
+ Checksum values are calculated using the kernel utility program 
+ CHECK1^XTSUMBLD.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGGSIA1
+    Before: B42690778   After: B49156448  **7,8,85,59,93,106,117,121**
+Routine Name: MAGGSIU4
+    Before:       n/a   After: B78099135  **121**
+Routine Name: MAGGSIU5
+    Before:       n/a   After: B37701586  **121**
+Routine Name: MAGGSIUI
+    Before: B54395865   After: B59096090  **7,8,48,20,85,59,108,121**
+Routine Name: MAGGSIV
+    Before: B56346793   After: B57664823  **7,8,20,59,108,121**
+Routine Name: MAGIP121
+    Before:       n/a   After:  B7990393  **121**
+Routine Name: MAGQBUT4
+    Before: B92803022   After: B92803022  **7,8,48,20,81,39,121**
+ 
+Routine list of preceding patches: 39, 108, 117
+
+=============================================================================
+User Information:
+Entered By  : CASUGAY,ELSIE G               Date Entered  : MAR 15, 2011
+Completed By: TROMBETTA,KATHY               Date Completed: MAR 21, 2012
+Released By : BOSAK,GREG                    Date Released : MAR 21, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

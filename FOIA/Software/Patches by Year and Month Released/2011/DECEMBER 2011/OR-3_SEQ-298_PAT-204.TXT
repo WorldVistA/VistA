@@ -1,0 +1,122 @@
+$TXT Created by CRUMLEY,JAMIE at CPRS27.FO-SLC.MED.VA.GOV  (KIDS) on Thursday, 06/23/11 at 16:02
+=============================================================================
+Run Date: DEC 19, 2011                     Designation: OR*3*204
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #298                      Status: Released
+                  Compliance Date: JAN 19, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*289    <<= must be installed BEFORE `OR*3*204'
+
+Subject: DO NOT ALLOW TRANSFER OF THEN CONJUNCTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Problem:
+ A site reported a problem with the transfer of complex Outpatient 
+ Medication orders that contained a conjunction of THEN. The problem is 
+ that when the order goes (in its entirety) to Inpatient Medications there 
+ is no way for the provider or the finishing pharmacist to determine how 
+ far into the process the order has progressed.
+  
+ The patient safety workgroup recommended that transfer of Outpatient 
+ medication orders with a THEN conjunction should be prevented.
+  
+ Resolution:
+ Modified routine ORCACT0 to disallow the transfer of a complex order with 
+ THEN as the conjunction.
+  
+ Associated Remedy:
+ ==================
+ HD0000000205100  -  1 Complex Orders Transferring for Providers
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+  
+  
+ Installation Instructions
+ =========================
+ This patch can be loaded with users in the system. Installation time is 
+ less than five minutes.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+  1.  Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*204
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      OR*3.0*204
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO. 
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu Options
+          and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCACT0
+    Before: B56723098   After: B58407841  **7,27,48,72,86,92,94,141,165,
+                                           177,173,190,215,243,289,204**
+ 
+Routine list of preceding patches: 289
+
+=============================================================================
+User Information:
+Entered By  : NABER,DAVID A                 Date Entered  : SEP 12, 2003
+Completed By: SHANE,CLARK                   Date Completed: DEC 19, 2011
+Released By : KREUZ,SHERI B                 Date Released : DEC 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

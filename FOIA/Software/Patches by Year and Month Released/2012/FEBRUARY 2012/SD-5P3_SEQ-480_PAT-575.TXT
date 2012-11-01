@@ -1,0 +1,233 @@
+$TXT Created by REESE,DARRYL at CHEY159.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 10/04/11 at 11:08
+=============================================================================
+Run Date: FEB 13, 2012                     Designation: SD*5.3*575
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #480                    Status: Released
+                  Compliance Date: MAR 15, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*177  <<= must be installed BEFORE `SD*5.3*575'
+                    (v)SD*5.3*504  <<= must be installed BEFORE `SD*5.3*575'
+                    (v)SD*5.3*584  <<= must be installed BEFORE `SD*5.3*575'
+
+Subject: PCMM Principal Mental Health Provider API's
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch was developed in support of the Improve Veteran Mental Health 
+ (IVMH) initiative.  It addresses the need of displaying a patient's 
+ Mental Health Treatment Coordinator (MHTC) in the CPRS and providing a 
+ means to display all MHTC's in the CPRS.  The modifications and 
+ enhancements to PCMM are as follows:
+  
+ 1.      Provide an API to display the MHTC on the CPRS patient inquiry 
+         screen.
+  
+ 2.      Provide an API to display all MHTC's in CPRS.
+  
+ 3.      Within Primary Care Management Module (PCMM) the STANDARD 
+         POSITION (403.46) file is modified to accommodate the following
+         new roles. These new roles are used by Mental Health to identify
+         the MHTC's and other Mental Health providers.
+  
+             Addiction Therapist
+             Addiction Therapist (MHTC)
+             Chaplain
+             Chaplain (MHTC)
+             Clinical Nurse Specialist (MHTC)
+             Clinical Pharmacist (MHTC)
+             MFT
+             MFT (MHTC) 
+             LPC
+             LPC (MHTC)
+             Nurse (RN) (MHTC)
+             Nurse Practitioner (MHTC)
+             Occupational Therapist
+             Occupational Therapist (MHTC)
+             Peer Support Staff
+             Physician Assistant (MHTC)
+             Physician-Psychiatrist (MHTC)
+             Psychologist (MHTC)
+             Recreation Therapist
+             Recreation Therapist (MHTC)
+             Rehab/Psych Technician (MHTC)
+             Social Worker (MHTC)
+             Voc Rehab Spec/Counselor
+             Voc Rehab Spec/Counselor (MHTC)
+  
+ National training will be provided to Mental Health Service in the use of 
+ PCMM and the set up of MHTC's within PCMM.
+  
+ This patch includes a new GUI executable.
+  
+ This patch addresses the following New Service Request (NSR): 2008051
+ ===========================================================
+ Identification of Principal Mental Health Provider
+ In order to improve continuity of care for veterans receiving mental 
+ health treatment, the primary provider in mental health needs to be 
+ easily identifiable in the patient record. Currently, this is not the 
+ case, and it can create difficulties in coordination of care. On the 
+ surface, it would seem that modifying PCMM to allow for designation and 
+ display of primary mental health provider would be the most 
+ straightforward approach, but the OMHS program office would defer to 
+ other recommendations based on further analysis.
+  
+ There are no Remedy Tickets associated with this patch.
+ ======================================================
+  
+ Components Sent With Patch:
+ ==========================
+                                             
+                                   SEND  DATA   O/RIDE       USER
+                              UP   SEC.  COMES  SITE   RSLV  CODE
+ FILE#   NAME                 DD   CODE  W/FILE DATA   PTS   O/RIDE
+  
+ 403.46  STANDARD POSITION    No   No    Yes    Yes    No    No
+  
+ Test Sites
+ ==========
+ Durham, NC
+ Maryland HCS
+ Phoenix, AZ
+ West Palm Beach, FL
+ Upstate New York
+  
+  
+  
+ =================INSTALLATION INSTRUCTIONS =================
+  
+ If installed during the normal workday, it is recommended that the 
+ following entry in the OPTION file (#19) be disabled to prevent possible 
+ conflicts while running the KIDS Install. Other VISTA users will not be 
+ affected.
+  
+ [SCMC PCMM MAIN MENU]       PCMM Main Menu
+  
+ Install Time - less than 5 minutes
+      
+  1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter SD*5.3*575):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO (unless otherwise indicated)
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer YES (unless otherwise
+         indicated)
+  
+             [SCMC PCMM MAIN MENU]       PCMM Main Menu
+  
+ 5.  The following software file is exported as part of this patch:
+  
+     File Name Contents                  Retrieval Format
+     ------------------                  ----------------     
+     PCMM_GUI_1_3_0_26.ZIP               PCMM Executable BINARY
+     SD_5_3_575RN.DOC                    MHTC Release Notes BINARY
+     SD_5_3_575RN.PDF                    MHTC Release Notes BINARY
+     PCMMMHTCUG.DOC                      User Manual BINARY
+     PCMMMHTCUG.PDF                      User Manual BINARY
+    
+  
+  
+ The file listed above may be obtained via FTP. The preferred method
+ is to FTP the file from:
+  
+ download.vista.med.va.gov
+  
+ This transmits the files from the first available FTP server.  Sites
+ may also elect to retrieve software directly from a specific server
+ as follows:
+  
+ CIO FIELD OFFICE   FTP ADDRESS                 DIRECTORY
+ -------------------------------------------------------------------
+ Albany             ftp.fo-albany.med.va.gov    [anonymous.software]
+ Hines              ftp.fo-hines.med.va.gov     [anonymous.software]
+ Salt Lake City     ftp.fo-slc.med.va.gov       [anonymous.software]
+  
+ PCMM.EXE will replace the existing PCMM.EXE which is
+ usually found in the Program File/VISTA/PCMM directory of the client
+ workstation. Workstations without an existing PCMM GUI application
+ installed should first download and run SD_53_P204.EXE to install the
+ previous version of PCMM. Then the PCMM.EXE should be replaced with
+ the new version.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCMCMH
+    Before:       n/a   After:   B267664  **575**
+Routine Name: SCMCMHTC
+    Before:       n/a   After:  B9636096  **575**
+Routine Name: SCRPU4
+    Before:   B311081   After:   B424357  **41,177,575**
+ 
+Routine list of preceding patches: 177
+
+=============================================================================
+User Information:
+Entered By  : REESE,DARRYL M                Date Entered  : OCT 20, 2010
+Completed By: REYNOLDS,KRISTEN              Date Completed: FEB 13, 2012
+Released By : BENBOW,PHYLLIS O              Date Released : FEB 13, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

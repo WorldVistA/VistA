@@ -1,0 +1,197 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 12/30/10 at 16:30
+=============================================================================
+Run Date: MAR 16, 2011                     Designation: IB*2*443
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #413                      Status: Released
+                  Compliance Date: APR 16, 2011
+=============================================================================
+
+
+Subject: UPDATES TO MCCR UTILITY/REVENUE CODE/PLACE OF SERVICE FILES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains updates to the MCCR Utility (#399.1) file, the Revenue
+ Code (#399.2) file, and the Place of Service (#353.1) file.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000439627 Need Updates to Occurrence, Revenue, Value and Condition
+    Codes
+ 2. HD0000000381418 Need Condition Code of 45 added to MCCR Utility file
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Martinsburg VA Medical Center
+ VA Maryland HCS
+ VA Sierra Nevada HCS - Reno
+ VA West Los Angeles HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000439627 Need Updates to Occurrence, Revenue, Value and Condition
+    Codes
+ 2. HD0000000381418 Need Condition Code of 45 added to MCCR Utility file
+  
+    Problem:
+    --------
+    The Chief Business Office has requested the following updates to the
+    the MCCR Utility (#399.1) file, the Revenue Code (#399.2) file, and the
+    Place of Service (#353.1) file.
+  
+    Resolution:
+    -----------
+    Created a post-init routine IB20P443 to contain updates for the following
+    codes in these three files:
+  
+    The MCCR Utility (#399.1) file will have the following adds or updates
+    made for 1 new value code, 4 occurrence codes and 36 condition codes.
+  
+    Value Code
+           D5   LAST KT/V READING
+    Occurrence Code
+           50   ASSESSMENT DATE (name updated)
+           51   DATE OF LAST KT/V READING (name updated)
+           52   MEDICAL CERTIFICATION/RECERTIFICATION DATE (name updated)
+           54   PHYSICIAN FOLLOW-UP DATE (name updated)
+    Condition Code
+           17   PATIENT IS HOMELESS (name updated)      
+           30   NON-RESEARCH SERV PROV TO PTS ENROLL IN QUAL CLINIC TRIAL
+           44   INPATIENT ADMISSION CHANGED TO OUTPATIENT
+           45   AMBIGUOUS GENDER CATEGORY
+           47   TRANSFER FROM ANOTHER HOME HEALTH AGENCY
+           59   NON-PRIMARY ESRD FACILITY
+           80   HOME DIALYSIS-NURSING FACILITY
+           A7   RZD FOR NATIONAL ASSIGNMENT (name updated)
+           A8   RZD FOR NATIONAL ASSIGNMENT (name updated)
+           AA   ABORTION PERFORMED DUE TO RAPE
+           AB   ABORTION PERFORMED DUE TO INCEST
+           AC   ABORT PERF DUE TO SERIOUS FETAL GENE DEFCT, DEFORM OR ABNORM
+           AD   ABORT PERF DUE TO LIFE ENDANGERING PHYSICAL CONDITION
+           AE   ABORT PERF DUE TO PHYS HLTH OF MOTHER THAT NOT LIFE ENDANGER
+           AF   ABORT PERF DUE TO EMOTIONAL/PSYCHOLOGICAL HLTH OF THE MOTHER
+           AG   ABORTION PERFORMED DUE TO SOCIAL OR ECONOMIC REASONS
+           AH   ELECTIVE ABORTION
+           AI   STERILIZATION
+           AJ   PAYER RESPONSIBLE FOR COPAYMENT
+           AK   AIR AMBULANCE REQUIRED
+           AL   SPECIALIZED TRMT/BED UNAVAILABLE-ALTERNATE FAC TRANSPORT
+           AM   NON-EMERGENCY MEDICALLY NECESSARY STRETCHER TRANSPORT REQ
+           AN   PREADMISSION SCREENING NOT REQUIRED
+           B4   ADMISSION UNRELATED TO DISCHARGE ON SAME DAY
+           P7   DIRECT INPATIENT ADMISSION FROM EMERGENCY ROOM
+           D4   CHANGE IN CLINICAL CODES (ICD) FOR DX AND/OR PROCEDURE CODES
+                (name updated)
+           D5   CANCEL TO CORRECT INSURED OR PROVIDER ID (name updated) 
+           DR   DISASTER RELATED
+           H0   DELAYED FILING, STATEMENT OF INTENT SUBMITTED
+           H3   GI BLEED
+           H4   BACTERIAL PNEUMONIA
+           H5   PERICARDITIS
+           W2   DUPLICATE OF ORIGINAL BILL
+           W3   LEVEL I APPEAL
+           W4   LEVEL II APPEAL
+           W5   LEVEL III APPEAL
+  
+    The Revenue Code (#399.2) file will be updated for these 4 revenue
+    codes.
+  
+           392  PROCESSING AND STORAGE 
+           860  MAGNETOENCEPHALOGRAHY (MEG) - GENERAL CLASSIFICATION 
+           861  MAGNETOENCEPHALOGRAHY 
+           948  PULMONARY REHABILITATION 
+  
+     The Place of Service (#353.1) file will be updated for this 1 place
+     of service code.
+  
+           99   OTHER PLACE OF SERVICE 
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu 
+      [XPD MAIN]:
+  
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+                                                               ---
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s) 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*443):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//' answer NO
+  
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P443.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P443
+    Before:       n/a   After: B27828210  **443**
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : OCT 29, 2010
+Completed By: DAWSON,TIM                    Date Completed: MAR 10, 2011
+Released By : GROOMS,CARMEN L               Date Released : MAR 16, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

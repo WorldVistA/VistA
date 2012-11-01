@@ -1,0 +1,134 @@
+$TXT Created by CREMEANS,THERESA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 08/24/11 at 14:28
+=============================================================================
+Run Date: FEB 06, 2012                     Designation: PSO*7*384
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #326                      Status: Released
+                  Compliance Date: MAR 08, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*251   <<= must be installed BEFORE `PSO*7*384'
+
+Subject: ROUTE PULLED FROM PREV RX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the issue where the ROUTE from the previous 
+ prescription is displayed on the screen for the next prescription when 
+ there is no ROUTE associated with it.
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ HD0000000467936     Route being pulled from previous prescription.
+  
+        
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ VA N. CA HCS
+ Oklahoma City VA Medical Center
+ James J. Peters VA Medical Center - Bronx
+  
+ PSPO
+ ==== 
+ PSPO1996
+  
+ Remedy Overview:
+ ================
+  
+ HD0000000467936  Route being pulled from previous prescription.
+   
+ Problem: 
+ ========
+ When a Pharmacist was processing prescriptions via COMPLETE ORDERS 
+ FROM OERR [PSO LMOE FINISH], the second prescription for the same patient 
+ displayed the ROUTE from the first prescription.  The second prescription 
+ did not have a ROUTE associated with it so the ROUTE from the prior 
+ prescription displayed on the screen.  
+  
+ This is a display issue only.  The file was not updated with the wrong 
+ information.
+  
+ Resolution:
+ ===========
+ Reset the variable ROUTE to spaces prior to checking for the existence of 
+ a ROUTE for the next prescription.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  Users should not be on the 
+ system when this patch is installed.  
+  
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*384 )
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*384 .
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOORFI3
+    Before: B74326144   After: B74513334  **15,27,32,46,84,99,130,117,
+                                           139,172,225,300,384**
+Routine Name: PSOORFI4
+    Before: B81645508   After: B81736847  **46,74,78,99,117,131,207,258,
+                                           274,300,308,251,384**
+Routine Name: PSOORRNW
+    Before: B24091362   After: B24262987  **11,27,51,46,71,94,130,131,
+                                           146,206,225,384**
+ 
+Routine list of preceding patches: 251
+
+=============================================================================
+User Information:
+Entered By  : CREMEANS,THERESA              Date Entered  : MAR 02, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: JAN 18, 2012
+Released By : BAYLIS,RANDALL S              Date Released : FEB 06, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

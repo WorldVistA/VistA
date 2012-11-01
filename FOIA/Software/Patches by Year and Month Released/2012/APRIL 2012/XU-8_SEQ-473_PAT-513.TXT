@@ -1,0 +1,408 @@
+$TXT Created by WESTRA,HERLAN at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 02/23/12 at 06:29
+=============================================================================
+Run Date: APR 11, 2012                     Designation: XU*8*513
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #473                      Status: Released
+                  Compliance Date: MAY 12, 2012
+=============================================================================
+
+
+Subject: Alert Fixes
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ 1. This patch fixes problems where a user might be specified as a
+ surrogate for someone who was currently or subsequently acting as
+ surrogate for the same user.  In some cases, the setting of the surrogate
+ might be rejected.  In other cases, the setting of the surrogate appeared
+ to succeed, but it disappeared when checked, or if any other activity,
+ such as an incoming alert, caused the relationship to be checked.  This
+ patch corrects this problem.  The time period will be checked and the
+ surrogate relationship added.  [Remedy Ticket HD0000000332819 and 
+ duplicates.  PSPO #1776 and #1865.]
+  
+ 2. This patch fixes instances where a surrogate relationship has ended,
+ but unprocessed alerts are not returned to the user in a timely manner. 
+ A check will be made for expiring surrogacy the first time a user logs 
+ into VistA or a Graphical User Interface (GUI) application, and
+ unprocessed alerts will be returned immediately.  [Remedy Ticket 
+ HD0000000070184 and duplicates.  PSPO #1862.]
+  
+ 3. This patch fixes instances where the ALERT TRACKING file is not 
+ updated to show the date/time an alert was viewed or processed.  In some 
+ cases, when an alert is processed through a GUI, the ALERT TRACKING file 
+ shows that the alert was deleted, but never viewed or processed.  The 
+ ALERT TRACKING file will now be updated when an alert is processed 
+ through a GUI.  [Remedy Ticket HD0000000069554 and duplicates.]
+  
+ 4. Alerts which are indicated as critical are, at least in roll and 
+ scroll mode, moved to the beginning of the list of alerts presented to 
+ the user, and shown in reverse video [GUI applications determine how they 
+ show the alerts].  However, it has required that a new Kernel patch be 
+ released to add a new text to be identified as indicating a critical 
+ alert.  There also was no checking for the word 'NOT' before the critical 
+ text.  Patch XU*8*513 adds a new ALERT CRITICAL TEXT file (#8992.3) which 
+ can hold a string of text that will identify an alert that should be 
+ identified as critical.  See file details below.  [Remedy Ticket 
+ HD0000000254755.]
+  
+  
+ Blood Bank Team Coordination: 7/26/2011
+ =============================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*513 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*513 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ ALERT CRITICAL             CRITICAL TEXT (.01)  New
+ TEXT (#8992.3)
+                            PACKAGE-ID (.02)     New
+  
+                            CREATING             New
+                            PACKAGE (.03)
+  
+ The ALERT CRITICAL TEXT file (#8992.3) was added to make it easier for 
+ packages or Medical Centers to specify text that should be used to 
+ indicate an alert to be marked as critical.  This file contains those text
+ strings that were previously identified as indicating a critical alert and
+ adds "Possible Malig" as text as well. In addition, this checking is not
+ case sensitive, and if the identified string is immediately preceeded by a
+ NOT it will not be indicated as sensitive.  Using this file means that the
+ package or medical center can add desired text for identification without
+ it having to be included in a Kernel patch.  It is also possible to
+ require a specific identifier as part of a the package ID for the alert in
+ conjunction with the critical text to limit the identified text to a
+ specific package.
+  
+ STANDARD DATA DICTIONARY #8992.3 -- ALERT CRITICAL TEXT FILE   
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+  
+ CROSS REFERENCED BY: CRITICAL TEXT(B)
+  
+  
+ 8992.3,.01    CRITICAL TEXT          0;1 FREE TEXT (Required)
+  
+               INPUT TRANSFORM:  K:$L(X)>30!($L(X)<3)!'(X'?1P.E) X
+               LAST EDITED:      JAN 11, 2011 
+               HELP-PROMPT:      Enter a string of text which, if 
+                                 present in the message text for an 
+                                 alert, indicates a critical alert.  
+                                 Answer must be 3-30 characters in 
+                                 length.  This is not case-sensitive. 
+               DESCRIPTION:      This is a string of text which if
+                                 present in the message text for an
+                                 alert should be identified as text
+                                 identifying a critical alert and the
+                                 alert emphasized in whatever manner
+                                 available.  
+  
+                                 A second field PACKAGE-ID (#.02) may
+                                 contain the identifier used by a 
+                                 package in the ALERTID when creating an
+                                 alert.  If that field is non-null, an
+                                 alert will only be marked critical if
+                                 the PACKAGE-ID value is present in the
+                                 ALERTID for the current alert.  This
+                                 may be used to make critical text
+                                 package-specific.  
+  
+                                 The comparison of the text entered with
+                                 the text in the alert is NOT case 
+                                 sensitive.  Also, if the critical text
+                                 in the alert is preceded by the word
+                                 'NOT', it will not be identified as a
+                                 critical alert.  
+  
+  
+               CROSS-REFERENCE:  8992.3^B 
+                                 1)= S ^XTV(8992.3,"B",$E(X,1,30),DA)=""
+                                 2)= K ^XTV(8992.3,"B",$E(X,1,30),DA)
+  
+  
+ 8992.3,.02    PACKAGE-ID             0;2 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>30!($L(X)<1) X
+               LAST EDITED:      JAN 14, 2011 
+               HELP-PROMPT:      Optional.  Enter the PACKAGE-ID used 
+                                 when creating alerts that the CRITICAL 
+                                 TEXT should be associated with.  Enter 
+                                 1-30 characters, it is not 
+                                 case-sensitive. 
+               DESCRIPTION:      This field is used to specify, if
+                                 desired, a specific package ID to be 
+                                 associated with the CRITICAL TEXT
+                                 entered in field #.01.  The value
+                                 entered should be the textual part of
+                                 the value used for XQAID when creating
+                                 the alert(s) (e.g., OR for Order Entry
+                                 or TIU for Text Integration Utility). 
+                                 If a non-null value is in this field,
+                                 alerts containing the CRITICAL TEXT
+                                 string will only be indicated as
+                                 critical alerts if they also have text
+                                 matching the PACKAGE-ID as a part of
+                                 the ALERTID field.  Matching of this
+                                 value will not be case sensitive.  
+  
+  
+ 8992.3,.03    CREATING PACKAGE       0;3 POINTER TO PACKAGE FILE (#9.4)
+  
+               LAST EDITED:      JAN 14, 2011 
+               HELP-PROMPT:      Answer with the PACKAGE NAME that is 
+                                 responsible for creating this CRITICAL
+                                 TEXT entry. 
+               DESCRIPTION:      This field provides a pointer to the
+                                 PACKAGE file (#9.4) for the package 
+                                 which is responsible for creating this
+                                 CRITICAL TEXT entry.  
+  
+ Patient Safety Issues:
+ ======================
+  PSPO #1776 Surrogates for patient alerts/notifications are not staying 
+             set.
+  PSPO #1862 CBOC MD not getting the abnormal imaging alert after the 
+             surrogacy expired
+  PSPO #1865 Surrogates for view alerts. (Duplicate of PSPO #1776.)
+  
+  
+ Remedy Ticket(s) & Overview
+ ===========================
+  HD0000000069554    6 PAL-1101-69797 Data not displayed in notification
+  HD0000000070147    MON-0603-50232  Alerts Tracking Problem
+  HD0000000070184    6 PRE-0703-60448 Delay in Viewing Alert
+  HD0000000070189    PAL-0703-60607  MEDICATION EXP ALERT PROBLEM
+  HD0000000070558    6 LON-0204-61486  Alert display after 2 days from 
+                     creation date
+  HD0000000211528    Surrogate mysteriously disappears
+  HD0000000254755    Kernel alert doesn't include POSSIBLE MALIG
+  HD0000000287982    5 DNR expiring alert does not display as processed
+  HD0000000306313    6 A check to return previous surrogate alerts is
+                     missing from a CPRS GUI call
+  HD0000000332810    Unable to get user to stay as surrogate
+  HD0000000365033    Once alerts are set they do not release
+  HD0000000397123    Surrogates not staying set. Same as ticket 332810 I 
+                     think.
+  HD0000000407757    Surrogate Settings Not Staying
+  HD0000000420820    alerts don't get forwarded until surrogate signs into 
+                     system
+  HD0000000436041    Surrogates falling off
+  HD0000000462716    Notification/Alert received or not received?
+  HD0000000515480    Why are notifications coming back
+  HD0000000532704    Alerts issue in CPRS
+  HD0000000588136    Tucson is not able to assign a view alert surrogate
+                     for a any user.
+  HD0000000592062    Problems setting surrogates
+  
+ 1. HD0000000069554    6 PAL-1101-69797 Data not displayed in notification 
+ tracking (duplicates HD0000000070147, HD0000000070189, HD0000000287982, 
+ HD0000000462716)
+  
+ Problem:
+ -------
+ GUI processing of alerts does not update the ALERT TRACKING (file 
+ #8992.1) RECIPIENT (20) fields ALERT FIRST DISPLAYED (.02) and FIRST 
+ SELECTED ALERT (.03).
+  
+ Resolution:
+ ----------
+ Modified GETUSER1^XQALDATA to update the alert tracking file when viewing 
+ alerts in a RPC Broker call.
+  
+ 2. HD0000000070184    6 PRE-0703-60448 Delay in Viewing Alert (duplicates 
+ HD0000000070558, HD0000000532704)
+  
+ Problem:
+ -------
+ Combination of problems.  ALERT TRACKING (file #8992.1) information may 
+ be inaccurate (see #1 above). Also may be a problem with expiring 
+ surrogacy. A VistA user's alerts would only be returned if (a) the user 
+ manually checked for expired surrogates, or (b) a new alert is received 
+ and surrogate relationships are checked automatically.
+  
+ Resolution:
+ ----------
+ Modified DISPLAY^XQALERT to check surrogacy relationships and return 
+ alerts from expired surrogates during a VistA user sign-on.  [Partial 
+ resolution of PSPO #1862 for VistA sign-on.]
+  
+ 3. HD0000000306313    6 A check to return previous surrogate alerts is 
+ missing from a CPRS GUI call (duplicates HD0000000420820)
+  
+ Problem:
+ -------
+ A check to return previous surrogate alerts is missing from a CPRS 
+ Graphical User Interface (GUI) Remote Procedure Call (RPC).   [Partial 
+ resultion of PSPO #1862 for GUI sign-on.]
+  
+ Resolution:
+ ----------
+ Modified GETUSER1^XQALDATA to check surrogacy relationships and return 
+ alerts from expired surrogates during a CPRS GUI user sign-on.
+  
+ 4. HD0000000332810    Unable to get user to stay as surrogate 
+ (duplicates HD0000000211528, HD0000000365033, HD0000000397123, 
+ HD0000000407757, HD0000000436041, HD0000000588136, HD0000000592062)
+  
+ Problem:
+ -------
+ Surrogate settings are rejected or end prematurely.  A user might be 
+ specified as a surrogate for someone who is currently or subsequently 
+ acting as a surrogate for the same user.  [PSPO #1776 and #1865]
+  
+ Resolution:
+ ----------
+ Alert routines are modified to properly check surrogate start and end 
+ date/times for surrogate loops.  If a loop exists, the surrogate settings 
+ will not be permitted.  If a loop does not exist, then the surrogacy will 
+ be set.
+  
+ 5. HD0000000515480    Why are notifications coming back
+  
+ Problem:
+ -------
+ Notifications are being returned to the original recipient after a 
+ surrogacy expires, even though the surrogate has viewed and processed the 
+ alerts.
+  
+ Resolution:
+ ----------
+ Patch XU*8*366 (RETURN ALERTS FROM SURROGATE) resolved a patient safety 
+ issue (PSI-04-036) by modifying the handling of alerts sent to surrogates 
+ to return unprocessed alerts to the originally intended recipient of the 
+ alert after a surrogacy period ends.  As a side-effect of Remedy ticket 
+ HD0000000069554, the alerts are identified as deleted, but not processed, 
+ when a GUI user processes the alerts.  Modified GETUSER1^XQALDATA to 
+ update the alert tracking file when viewing alerts in a RPC Broker call.
+  
+ 6. HD0000000254755    Kernel alert doesn't include POSSIBLE MALIG
+  
+ Problem:
+ -------
+ Kernel alert doesn't include POSSIBLE MALIG in the routine XQALERT1 at 
+ DOIT1 to notify clinicians on urgent matters.
+  
+ Resolution:
+ ----------
+ Patch XU*8*513 adds a new ALERT CRITICAL TEXT file (#8992.3) which 
+ can hold a string of text that will identify an alert that should be 
+ identified as critical.  Routines XQALERT and XQALERT1 have been modified
+ to use information from this file instead of hard-coded text within the 
+ routines.
+  
+  
+ Test Sites: (Patch Tracking Message #56165411)
+ ----------
+ Edward Hines Jr. VA Hospital, Hines, IL (L)
+ Ralph H. Johnson VA Medical Center, Charleston, SC (L)
+ Sioux Falls VA HCS, Sioux Falls, SD (M)
+ VA Northwest Iowa HCS (Central Iowa HCS - Des Moines), IA (I)
+  
+ Installation Instructions
+ -------------------------
+ WARNING:  Since this patch involves routines which process alerts to 
+ users, it is recommended that the installation should be with users off 
+ the system or with a minimal number of users on the system to minimize 
+ the possible loss of data.  It may be queued to install during non-peak
+ hours.  Installation takes less than a minute.
+  
+ You do NOT need to stop TaskMan or the HL7 background filers.
+  
+ You do NOT need to disable any menu options or protocols.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*513):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+         Install Package(s)  'XU*8.0*513'
+                              ==========
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".  There are no menu options included in 
+     this patch.
+     
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQALDATA
+    Before:  B8047519   After: B11750303  **207,285,443,513**
+Routine Name: XQALERT
+    Before: B16208814   After: B18400944  **1,65,125,173,285,366,513**
+Routine Name: XQALERT1
+    Before: B78786817   After: B79700717  **20,65,114,123,125,164,173,
+                                           285,366,443,513**
+Routine Name: XQALGUI
+    Before: B18668830   After: B18911432  **207,513**
+Routine Name: XQALSET1
+    Before:  B4576629   After:  B4976921  **285,443,513**
+Routine Name: XQALSUR2
+    Before:  B6279756   After:  B3811185  **366,513**
+Routine Name: XQALSURO
+    Before: B77946006   After: B90015726  **114,125,173,285,366,443,513**
+ 
+Routine list of preceding patches: 443
+
+=============================================================================
+User Information:
+Entered By  : IVEY,JOEL                     Date Entered  : OCT 08, 2008
+Completed By: BEST,LISA                     Date Completed: MAR 21, 2012
+Released By : TILLIS,LEWIS                  Date Released : APR 11, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

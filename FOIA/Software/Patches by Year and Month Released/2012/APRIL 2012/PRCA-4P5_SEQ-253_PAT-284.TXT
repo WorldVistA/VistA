@@ -1,0 +1,394 @@
+$TXT Created by OSHRIN,RONALD at MNTDEM.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 03/15/12 at 11:26
+=============================================================================
+Run Date: APR 18, 2012                     Designation: PRCA*4.5*284
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #253                    Status: Released
+                  Compliance Date: MAY 19, 2012
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*275<<= must be installed BEFORE `PRCA*4.5*284'
+                    (v)PRCA*4.5*276<<= must be installed BEFORE `PRCA*4.5*284'
+
+Subject: 5010 PROD SUPPORT MODS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ This patch includes enhancements (as requested by CBO), and Remedy Tickets
+ submitted to the ACCOUNTS RECEIVABLE application. Enhancement/repair
+ descriptions, and installation steps are described below.
+  
+  
+ 1. Mark ERA option changes 
+    -----------------------
+  Per CBO request the Mark ERA Returned to Payer option was replaced with 
+  the new option - Remove ERA from Worklist.  The latter option will 
+  implement the software procedures as the former option. There were 
+  minor changes to this existing software, but the functionality will 
+  essentially behave the same. The following modifications have been made:
+  
+    a. The following option (Old) attached in the EDI Lockbox [RCDPE EDI 
+       LOCKBOX MENU] menu was replaced (New):
+  
+    Old: Mark ERA Returned To Payer [RCDPE ERA RETURNED TO PAYER]
+    New: Remove ERA from Active Worklist [RCDPE REMOVE ERA FROM WORKLIST]
+  
+    b. The following option (Old) attached in the EDI Lockbox Reports 
+       Menu [RCDPE EDI LOCKBOX REPORTS MENU] menu was replaced (New):
+  
+    Old: Mark ERAs Returned to Payer Audit Report [RCDPE RETURNED ERA
+         AUDIT]
+    New: Remove ERA from Active Worklist Audit Report [RCDPE REMOVED 
+         ERA AUDIT]
+  
+    c. When the user selects an ERA to be removed from the EEOB Worklist 
+       with the use of the Mark ERA from Active Worklist option, the EFT
+       MATCH STATUS for the ERA entry is updated to REMOVED FROM WORKLIST
+       (refer to item d below for associated data dictionary change).
+  
+  
+    d. The following fields defined in the ELECTRONIC REMITTANCE ADVICE 
+       file (#344.4) were modified to reflect the option name change from
+       "RETURNED" to "REMOVED":
+        
+    -  EFT MATCH STATUS (344.4,.09) - new SET OF CODES item was added.
+       4-REMOVED FROM WORKLIST
+    -  DETAIL POST STATUS (#344.4,.14) - a SET OF CODES description 
+       was modified.  4-NOT POSTED-RETURNED was changed to 4-NOT
+       POSTED-REMOVED
+    -  RETURNED BY was changed to REMOVED BY (#344.4,.16)
+    -  RETURNED DATED was changed to REMOVED DATE (#344. 4,.17)
+    -  RETURN REASON was changed to REMOVE REASON (#344.4,.18)
+  
+ 2. Correction to the Claims Matching Report 
+    ----------------------------------------
+    Identified in Remedy ticket HD0000000594126 - a modification to the
+    Claims Matching Report [RCDP CLAIMS MATCH] option has been made to
+    correct the undefined error (<UNDEFINED> HDR+4^RCDPRTP1 *RCPT) that
+    occurs during printing when the 'Receipt  Number' option (#4) is
+    chosen.
+  
+    Remedy ticket HD0000000600366 identified another issue affecting the 
+    Claims Matching Report [RCDP CLAIMS MATCH]: an undefined error while
+    executing the Payment Dates selection (#3) for the report. 
+    Modifications have been made to correct the undefined error.
+   
+ 3. Modification to locate 3rd Party claims with EEOB's 
+    ---------------------------------------------------
+    Identified in remedy ticket HD0000000597554 - it was determined that
+    patches IB*2.0*451 and PRCA*4.5*276 added the ability to identify, via
+    a '%' indicator, first party bills with associated third party bills
+    with EEOB's on file. The code to locate these utilized the 399,"D"
+    (bills by date) index. It was found that these changes substantially
+    slowed down the display of the corresponding reports to unsatisfactory
+    levels. The functions that drive the report now utilize the 399,"APDT" 
+    (bills by patient by date) index to speed it up.
+  
+    Accounts Receivable namespace options affected
+    ----------------------------------------------
+    Brief Account Profile   [PRCAY ACCOUNT PROFILE]      
+    Full Account Profile    [PRCAY FULL ACCOUNT PROFILE]    
+    List All Bills          [PRCA LIST ALL BILLS]   
+    Bill Profile            [RCDP BILL PROFILE] 
+    Bill Transactions       [RCDP BILL TRANSACTIONS]
+    Transaction Profile     [RCDP TRANSACTION PROFILE]
+    Transaction Profile     [PRCAC TRANS PROFILE]
+   
+ 4. Update ERA Posted Using Paper EOB default change 
+    ------------------------------------------------
+    When an automatic update is performed on an ERA, the default response
+    to the prompt 'Link to update Remittance entry #xxx with receipt xxx?'
+    has been changed from "YES" to "NO". This modification helps prevent
+    accidental updates.
+  
+ 5. Correction to printed EDI Lockbox reports
+    -----------------------------------------
+    It was reported by the test sites that the Daily Activity, 
+    ERA Unmatched Aging & EFT Unmatched Aging reports
+    when queued for printing returned no results. It was also
+    determined that this issue was only occurring on sites with a
+    particular server set-up that prevented the background job accessing 
+    the saved global references that had been recorded during user 
+    input selection at the start of the report.  The particular server
+    configuration for sites that reported the issue have multiple 
+    nodes and the VistA logon may reside on a different node than the
+    the node the print tasks are performed on. 
+  
+ 6. Correction to the Daily Activity Report
+    ---------------------------------------
+    Identified during field testing - it was determined that ERA# would be
+    truncated if it was longer than 7 characters. Changes were made to
+    allow for the full 10 characters. 
+   
+ 7. Correction to RECEIPT PROCESSING
+    --------------------------------
+    Identified by test sites - when adding a new receipt for an EDI Lockbox
+    type payment, the user was allowed to select an EFT record that had 
+    already been matched to an ERA record.  Changes were made to prevent
+    selection of EFT records that are in a matched status. 
+  
+    The following field defined in the AR BATCH PAYMENT file (#344) was 
+    modified to reflect the input transform code change.
+        
+    -  EFT RECORD (344,.17) - input transform modified.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)        New/Modified/Deleted
+ ------------------      -------------------        --------------------
+ EFT DETAIL (#344.4)     EFT MATCH STATUS (#.09)         Modified
+                         DETAIL POST STATUS (#.14)       Modified
+                         REMOVED BY (#.16)               Modified
+                         REMOVED DATE (#.17)             Modified
+                         REMOVE REASON (#.18)            Modified
+ AR BATCH PAYMENT (#344) EFT RECORD (#.17)               Modified 
+  
+ Options Associated:
+  
+ Option Name                        Type          New/Modified/Deleted
+ -----------                        ----          --------------------
+ RCDPE EDI LOCKBOX MENU             menu          Modified
+ RCDPE EDI LOCKBOX REPORTS MENU     menu          Modified
+ RCDPE ERA RETURNED TO PAYER        run routine   Deleted
+ RCDPE REMOVE ERA FROM WORKLIST     run routine   New
+ RCDPE REMOVED ERA AUDIT            run routine   New
+ RCDPE RETURNED ERA AUDIT           run routine   Deleted
+  
+  
+ Templates Associated:
+  
+ Template Name       Type      File Name (Number)     New/Modified/Deleted
+ -------------       ----      ------------------     --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A 
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. HD0000000594126 - <UNDEFINED>HDR+4^RCDPRTP1 *RCPT
+   
+ Problem:
+ --------
+ Site reported a <UNDEFINED>HDR+4^RCDPRTP1 error occurred when
+ trying to run the Claims Matching Report option.
+  
+  
+ Resolution:
+ -----------
+ When printing the Claims Matching Report with the 'Receipt Number'
+ option (#4) selected, the routine 'NEWs' the original receipt number
+ variable RCPT (which holds the number the user had selected), thus
+ killing it. When the reports header attempts to display the receipt#
+ an undefined error occurs.
+  
+ Modified routine RCDPRTP1 to remove the variable RCPT from the NEW
+ variable line.
+  
+  
+ 2. HD0000000600366 - <UNDEFINED>PROC+16^RCDPRTP1 ^TMP("IBRBT")
+  
+ Problem:
+ --------
+ Site reported an undefined error when executing Claims Matching 
+ Report, Option #3 (Payment Dates). 
+  
+  
+ Resolution:
+ -----------
+ Troubleshooting led to the routine RCDPRTP1, tag PROCQ where the 
+ ^TMP global was being cleaned up improperly. Modified the routine to
+ accomplish cleaning up the global correctly.
+ 
+  
+ 3. HD0000000597554
+ 
+ Problem:
+ --------
+ Sites reported that reports modified in patches IB*2.0*451 and PRCA*4.5*276
+ to display first party bills with associated third party bills substantially
+ slowed down the display of the corresponding reports to unsatisfactory levels. 
+ 
+ Resolution:
+ -----------
+ The functions that drive the report now utilize the 399,"APDT" (bills by
+ patient by date) index to speed it up.
+ 
+  
+ Test Sites:
+ ----------
+ Birmingham
+ Louisville
+ Martinsburg
+ New Jersey HCS
+ North Florida/South Georgia
+ Richmond
+ Palo Alto
+  
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ Title                            File Name                     FTP Mode
+ -----------------------------------------------------------------------
+ ePayments User Guide    EPAYMENTS_USER_MANUAL_R0412.PDF        Binary
+ (EDI Lockbox)                    
+  
+ AR Technical Manual/         PRCA_4_5_P284_TM.PDF              Binary
+ Security Guide
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no pre/post installation instructions for this patch. 
+  
+  
+  
+ Installation Instructions
+ -------------------------
+ Accounts Receivable users should not be on the system while this patch is
+ being installed. 
+  
+  
+ The following options should be disabled:
+  
+  EDI Lockbox             [RCDPE EDI LOCKBOX MENU]
+  Claims Matching Report  [RCDP CLAIMS MATCH]
+  Receipt Processing      [RCDP RECEIPT PROCESSING]
+  
+  
+ This patch should take less than 5 minutes to install.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     PRCA*4.5*284:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer NO if this is done as a nightly job    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// answer YES
+  
+ 8.  Enter options you wish to mark as 'Out Of Order': 
+  
+       EDI Lockbox             [RCDPE EDI LOCKBOX MENU]
+       Claims Matching Report  [RCDP CLAIMS MATCH]
+       Receipt Processing      [RCDP RECEIPT PROCESSING]
+  
+ 9.  Enter protocols you wish to mark as 'Out Of Order': press RETURN
+  
+ 10. Delay Install (Minutes):  (0-60): 0//
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 35
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAAPR1
+    Before: B43589285   After: B41639363  **34,45,108,143,141,206,192,
+                                           218,276,275,284**
+Routine Name: RCDPEAR1
+    Before:B109842855   After:B125070101  **173,269,276,284**
+Routine Name: RCDPEAR2
+    Before: B60443432   After: B61283482  **173,269,276,284**
+Routine Name: RCDPEDA1
+    Before: B22465629   After: B23249063  **173,269,276,284**
+Routine Name: RCDPEDAR
+    Before:B105086845   After:B111611189  **173,276,284**
+Routine Name: RCDPEM2
+    Before:B171488766   After:B181574834  **173,208,276,284**
+Routine Name: RCDPEM3
+    Before:B109331342   After:B110558911  **276,284**
+Routine Name: RCDPEM4
+    Before:B186028415   After:B186253544  **276,284**
+Routine Name: RCDPEM9
+    Before: B25446642   After: B27056813  **276,284**
+Routine Name: RCDPRTP1
+    Before: B33114320   After: B33480590  **151,169,276,284**
+
+=============================================================================
+User Information:
+Entered By  : OSHRIN,RONALD TODD            Date Entered  : JAN 06, 2012
+Completed By: ROBBINS,BRADLEY               Date Completed: MAR 29, 2012
+Released By : CAULFIELD,MARY                Date Released : APR 18, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

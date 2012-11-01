@@ -1,0 +1,430 @@
+$TXT Created by FAIRBROTHER,EILEEN at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 07/20/11 at 14:29
+=============================================================================
+Run Date: JUL 28, 2011                     Designation: DVBA*2.7*173
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #151                    Status: Released
+                  Compliance Date: JUL 31, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*166<<= must be installed BEFORE `DVBA*2.7*173'
+
+Subject: CAPRI CPWM TEMPLATES AND AMIE WORKSHEET DBQS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+                       *******     PLEASE NOTE     *******
+                   This mandatory patch has a 3 day compliance
+                   *******************************************
+   
+ I.  OVERVIEW
+  
+   This patch introduces enhancements to the AUTOMATED MED INFO EXCHANGE
+   (AMIE) V 2.7 package and the Compensation & Pension Record Interchange
+   (CAPRI) application, Compensation & Pension Worksheet Module (CPWM)
+   in support of new Compensation and Pension (C&P) Disability Benefit
+   Questionnaires (DBQs).
+  
+   The following provides a high level overview of patch DVBA*2.7*173.
+  
+   1. CAPRI - Template Additions
+  
+     Veterans Benefits Administration Veterans Affairs Central Office
+     (VBAVACO) has approved content for the following new CAPRI Disability
+     Benefits Questionnaires:
+          * DBQ AMPUTATIONS
+          * DBQ ARTERY AND VEIN CONDITIONS (VASCULAR DISEASES INCLUDING 
+            VARICOSE VEINS)
+          * DBQ ELBOW AND FOREARM CONDITIONS
+          * DBQ FLATFOOT (PES PLANUS)
+          * DBQ FOOT MISCELLANEOUS (OTHER THAN FLATFOOT PES PLANUS)
+          * DBQ HAND AND FINGER CONDITIONS
+          * DBQ HIP AND THIGH CONDITIONS
+          * DBQ MUSCLE INJURIES
+          * DBQ TEMPOROMANDIBULAR JOINT (TMJ) CONDITIONS
+          * DBQ WRIST CONDITIONS  
+  
+   2. AMIE - C&P Examination Worksheet Additions
+   
+     VBAVACO has approved content for the following new AMIE C&P
+     questionnaire worksheets:
+          * DBQ AMPUTATIONS
+          * DBQ ARTERY AND VEIN CONDITIONS
+          * DBQ ELBOW AND FOREARM CONDITIONS
+          * DBQ FLATFOOT (PES PLANUS)
+          * DBQ FOOT MISCELLANEOUS (OTHER THAN FLATFOOT PES PLANUS)
+          * DBQ HAND AND FINGER CONDITIONS
+          * DBQ HIP AND THIGH CONDITIONS
+          * DBQ MUSCLE INJURIES
+          * DBQ TEMPOROMANDIBULAR JOINT (TMJ) CONDITIONS
+          * DBQ WRIST CONDITIONS  
+   
+   3. CAPRI - Template Defects
+   
+      Defects have been addressed in the following CAPRI templates:
+   
+         No CAPRI Template defects are being addressed.
+   
+   4. AMIE - C&P Examination Worksheet Defects
+   
+      Defects have been addressed within the following AMIE worksheets:
+  
+         No AMIE worksheet defects are being addressed.
+   
+ II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+   
+   The following section lists the Remedy tickets and/or New Service
+   Requests associated with this patch.
+   
+   1. Associated Remedy Ticket(s):
+   
+     There are no Remedy Tickets associated with this patch.
+   
+   2. Associated New Service Request(s):
+      ----------------------------------
+      There are no New Service Requests associated with this patch.
+   
+ III. FUNCTIONAL OVERVIEW
+   
+   The following section contains an overview of the changes and primary
+   functionality that is being delivered in this patch.
+   
+   1. CAPRI - Template Additions
+   
+     VBAVACO has approved the following new CAPRI CPWM DBQ templates based
+     on new C&P questionnaire worksheets.
+          * DBQ AMPUTATIONS
+          * DBQ ARTERY AND VEIN CONDITIONS (VASCULAR DISEASES INCLUDING 
+            VARICOSE VEINS)
+          * DBQ ELBOW AND FOREARM CONDITIONS
+          * DBQ FLATFOOT (PES PLANUS)
+          * DBQ FOOT MISCELLANEOUS (OTHER THAN FLATFOOT PES PLANUS)
+          * DBQ HAND AND FINGER CONDITIONS
+          * DBQ HIP AND THIGH CONDITIONS
+          * DBQ MUSCLE INJURIES
+          * DBQ TEMPOROMANDIBULAR JOINT (TMJ) CONDITIONS
+          * DBQ WRIST CONDITIONS  
+  
+     This patch implements these new templates, which are accessible
+     through the Compensation & Pension Worksheet Module (CPWM) of the
+     CAPRI GUI.
+   
+   2. AMIE - C&P Examination Worksheet Additions
+   
+     VBAVACO has approved the following new AMIE C&P DBQ Exam worksheets.
+          * DBQ AMPUTATIONS
+          * DBQ ARTERY AND VEIN CONDITIONS
+          * DBQ ELBOW AND FOREARM CONDITIONS
+          * DBQ FLATFOOT (PES PLANUS)
+          * DBQ FOOT MISCELLANEOUS (OTHER THAN FLATFOOT PES PLANUS)
+          * DBQ HAND AND FINGER CONDITIONS
+          * DBQ HIP AND THIGH CONDITIONS
+          * DBQ MUSCLE INJURIES
+          * DBQ TEMPOROMANDIBULAR JOINT (TMJ) CONDITIONS
+          * DBQ WRIST CONDITIONS  
+   
+     This patch implements the new content for the AMIE C&P Disability
+     Benefit Questionnaire Exam worksheets, which are accessible through
+     the VISTA AMIE software package.
+   
+  
+ IV. TECHNICAL COMPONENTS
+   
+   The following section describes the technical components being exported
+   with this patch.
+   
+   1. The following FILE will be included.
+   
+  
+                                        UP    SEND  DATA               USER
+                                        DATE  SEC.  COMES  SITE  RSLV  OVER
+     FILE# NAME                         DD    CODE  W/FILE DATA  PTS   RIDE
+     ----------------------------------------------------------------------
+     396.18 CAPRI TEMPLATE DEFINITIONS  NO    YES   YES    OVER  NO    NO
+   
+   2. The following Template Definition updates will be added to the CAPRI
+      TEMPLATE DEFINITIONS (#396.18) file:
+          * DBQ AMPUTATIONS~173
+          * DBQ ARTERY AND VEIN CONDITIONS (VASCULAR DISEASES INCLUDING 
+            VARICOSE VEINS)~173
+          * DBQ ELBOW AND FOREARM CONDITIONS~173
+          * DBQ FLATFOOT (PES PLANUS)~173
+          * DBQ FOOT MISCELLANEOUS (OTHER THAN FLATFOOT PES PLANUS)~173
+          * DBQ HAND AND FINGER CONDITIONS~173
+          * DBQ HIP AND THIGH CONDITIONS~173
+          * DBQ MUSCLE INJURIES~173
+          * DBQ TEMPOROMANDIBULAR JOINT (TMJ) CONDITIONS~173
+          * DBQ WRIST CONDITIONS~173  
+  
+   3. The following new entries with the following C&P questionnaire 
+      worksheet(s) will be created and STATUS field made "ACTIVE" in the
+      AMIE EXAM (#396.6) file:
+                                                    Access     Text 
+      IEN  Exam Name                                Routine    Routine
+      ---  -------------------------------------    --------   --------
+      349  DBQ AMPUTATIONS                          DVBCQAM1   DVBCQAM2
+      346  DBQ ARTERY AND VEIN CONDITIONS           DVBCQAV1   DVBCQAV2
+                                                               DVBCQAV3
+      341  DBQ ELBOW AND FOREARM CONDITIONS         DVBCQEL1   DVBCQEL2
+                                                               DVBCQEL3
+      342  DBQ FLATFOOT (PES PLANUS)                DVBCQFF1   DVBCQFF2
+      347  DBQ FOOT MISCELLANEOUS (OTHER THAN 
+           FLATFOOT PES PLANUS)                     DVBCQFM1   DVBCQFM2
+      344  DBQ HAND AND FINGER CONDITIONS           DVBCQHF1   DVBCQHF2
+                                                               DVBCQHF3
+      340  DBQ HIP AND THIGH CONDITIONS             DVBCQHP1   DVBCQHP2
+                                                               DVBCQHP3
+      348  DBQ MUSCLE INJURIES                      DVBCQMI1   DVBCQMI2
+                                                               DVBCQMI3
+      345  DBQ TEMPOROMANDIBULAR JOINT (TMJ) 
+           CONDITIONS                               DVBCQTJ1   DVBCQTJ2
+      343  DBQ WRIST CONDITIONS                     DVBCQWR1   DVBCQWR2
+   
+   4. The following new routines will be added with this patch:
+       * DVBCQAM1 - Used for DBQ AMPUTATIONS
+       * DVBCQAM2 - Used for DBQ AMPUTATIONS
+       * DVBCQAV1 - Used for DBQ ARTERY AND VEIN CONDITIONS
+       * DVBCQAV2 - Used for DBQ ARTERY AND VEIN CONDITIONS
+       * DVBCQAV3 - Used for DBQ ARTERY AND VEIN CONDITIONS
+       * DVBCQEL1 - Used for DBQ ELBOW AND FOREARM CONDITIONS
+       * DVBCQEL2 - Used for DBQ ELBOW AND FOREARM CONDITIONS
+       * DVBCQEL3 - Used for DBQ ELBOW AND FOREARM CONDITIONS
+       * DVBCQFF1 - Used for DBQ FLATFOOT (PES PLANUS)
+       * DVBCQFF2 - Used for DBQ FLATFOOT (PES PLANUS)
+       * DVBCQFM1 - Used for DBQ FOOT MISCELLANEOUS (OTHER THAN 
+                    FLATFOOT PES PLANUS) 
+       * DVBCQFM2 - Used for DBQ FOOT MISCELLANEOUS (OTHER THAN 
+                    FLATFOOT PES PLANUS) 
+       * DVBCQHF1 - Used for DBQ HAND AND FINGER CONDITIONS
+       * DVBCQHF2 - Used for DBQ HAND AND FINGER CONDITIONS
+       * DVBCQHF3 - Used for DBQ HAND AND FINGER CONDITIONS
+       * DVBCQHP1 - Used for DBQ HIP AND THIGH CONDITIONS
+       * DVBCQHP2 - Used for DBQ HIP AND THIGH CONDITIONS
+       * DVBCQHP3 - Used for DBQ HIP AND THIGH CONDITIONS
+       * DVBCQMI1 - Used for DBQ MUSCLE INJURIES
+       * DVBCQMI2 - Used for DBQ MUSCLE INJURIES
+       * DVBCQMI3 - Used for DBQ MUSCLE INJURIES
+       * DVBCQTJ1 - Used for DBQ TEMPOROMANDIBULAR JOINT (TMJ)
+                    CONDITIONS                               
+       * DVBCQTJ2 - Used for DBQ TEMPOROMANDIBULAR JOINT (TMJ)
+                    CONDITIONS                               
+       * DVBCQWR1 - Used for DBQ WRIST CONDITIONS
+       * DVBCQWR2 - Used for DBQ WRIST CONDITIONS
+   
+ V. SOFTWARE & DOCUMENTATION RETRIEVAL
+  
+   The following section provides information regarding the retrieval of
+   the software and related user documentation.
+   
+   1. VistA Patch DVBA*2.7*173
+   
+      This patch is being distributed as a PackMan patch message through
+      the National Patch Module (NPM). The KIDS build for this patch is
+      DVBA*2.7*173.
+   
+   2. User Documentation
+   
+     a. The user documentation for this patch may be retrieved directly
+        using FTP. The preferred method is to FTP the files from:
+   
+            download.vista.med.va.gov
+   
+        This transmits the files from the first available FTP server.
+   
+        Sites may also elect to retrieve documentation directly from a
+        specific server as follows:
+   
+          OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+          -----------------       -----------                ---------
+          Albany            ftp.fo-albany.med.va.gov   [anonymous.software]
+          Hines             ftp.fo-hines.med.va.gov    [anonymous.software]
+          Salt Lake City    ftp.fo-slc.med.va.gov      [anonymous.software]
+   
+        The following files will be available:
+   
+        File Name                              Format  Description
+        ----------------------------           ------  -----------------
+        DVBA_27_P173_RN.PDF                    Binary  Release Notes
+   
+     b. Documentation may also be retrieved from the VistA Documentation
+        Library (VDL) on the Internet at the following address. This web
+        site is usually updated within 1-3 days of the patch release date.
+   
+             http://www4.va.gov/vdl/application.asp?appid=133
+   
+     c. Content and/or changes to the DBQs is communicated by the 
+        Disability Examination Management Office (DEMO) through:
+  
+             http://vbacodmoint1.vba.va.gov/bl/21/DBQ/default.asp
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES
+   
+   The following section provides pre-installation notes and requirements
+   for installing the software.
+   
+   1. Users On the System
+   
+     a. CAPRI GUI Users - This patch may be installed while users are
+        running the CAPRI GUI.
+   
+     b. VistA Users - This patch may be installed with users on the
+        system, but should be loaded during non-peak hours to minimize
+        disruption to users and to reduce the possibility of errors when
+        the routines and file entries are updated.
+   
+     c. VistA Options - There are no VistA options to disable while
+        installing this patch.
+   
+   2. Software Installation Time
+   
+     The estimated installation time is less than 5 minutes during off
+     peak hours.
+   
+   3. Required Builds
+   
+     The following is a list of REQUIRED builds for this KIDS software
+     distribution.  KIDS will not allow the installation of this patch
+     without their prior installation.
+  
+          Required Build(s):
+          ------------------
+           DVBA*2.7*166
+  
+ VII. INSTALLATION INSTRUCTIONS
+   
+   The following section provides the steps for installing the software.
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+   
+    2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+   
+    3. From this menu, you may now elect to use the following options (when
+       prompted for INSTALL NAME, enter DVBA*2.7*173).
+   
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any changes such as DDs or templates.
+   
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed.
+   
+         CAUTION: Do not use the KIDS "Full Comparison" option. Due to
+         the length of some CAPRI Template names, the "Full Comparison"
+         option can go into a loop.  This problem has been reported to
+         the Kernel developers and will be fixed with XU*8*559. The
+         "Second line of Routines Only", "Routines only", and "Old style
+         Routine compare" options may be used.
+   
+      c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+   
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+   
+    4. Use the Install Package(s) option and select package DVBA*2.7*173.
+   
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO.
+  
+    6. When prompted to 'Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//', answer NO.
+   
+    7. NOTE: Pre/Post-init routine DVBA173P is a temporary routine used as
+       part of the pre/post-install process and will be automatically
+       deleted by KIDS after patch installation. However, in some cases
+       Cache doesn't always delete the routine. You may delete it manually
+       if you discover this at your site.
+   
+ VIII. TEST SITES
+   
+    The following sites participated in the testing of the DVBA*2.7*173
+    software.
+      
+       Test Sites
+       ----------      
+       Alexandria
+       Upstate New York
+       Miami
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA173P
+    Before:       n/a   After: B44399902  **173**
+Routine Name: DVBCQAM1
+    Before:       n/a   After:  B2962641  **173**
+Routine Name: DVBCQAM2
+    Before:       n/a   After:B137455799  **173**
+Routine Name: DVBCQAV1
+    Before:       n/a   After:  B3525266  **173**
+Routine Name: DVBCQAV2
+    Before:       n/a   After:B126611635  **173**
+Routine Name: DVBCQAV3
+    Before:       n/a   After: B40858353  **173**
+Routine Name: DVBCQEL1
+    Before:       n/a   After:  B3196144  **173**
+Routine Name: DVBCQEL2
+    Before:       n/a   After:B196420843  **173**
+Routine Name: DVBCQEL3
+    Before:       n/a   After: B26011145  **173**
+Routine Name: DVBCQFF1
+    Before:       n/a   After:  B3027314  **173**
+Routine Name: DVBCQFF2
+    Before:       n/a   After:B125150222  **173**
+Routine Name: DVBCQFM1
+    Before:       n/a   After:  B3607762  **173**
+Routine Name: DVBCQFM2
+    Before:       n/a   After:B181806272  **173**
+Routine Name: DVBCQHF1
+    Before:       n/a   After:  B3226530  **173**
+Routine Name: DVBCQHF2
+    Before:       n/a   After:B199330417  **173**
+Routine Name: DVBCQHF3
+    Before:       n/a   After:B103585820  **173**
+Routine Name: DVBCQHP1
+    Before:       n/a   After:  B3169116  **173**
+Routine Name: DVBCQHP2
+    Before:       n/a   After:B224737541  **173**
+Routine Name: DVBCQHP3
+    Before:       n/a   After: B26548889  **173**
+Routine Name: DVBCQMI1
+    Before:       n/a   After:  B3112523  **173**
+Routine Name: DVBCQMI2
+    Before:       n/a   After:B199206732  **173**
+Routine Name: DVBCQMI3
+    Before:       n/a   After:B116384025  **173**
+Routine Name: DVBCQTJ1
+    Before:       n/a   After:  B3503366  **173**
+Routine Name: DVBCQTJ2
+    Before:       n/a   After:B106074039  **173**
+Routine Name: DVBCQWR1
+    Before:       n/a   After:  B3048881  **173**
+Routine Name: DVBCQWR2
+    Before:       n/a   After:B220385154  **173**
+
+=============================================================================
+User Information:
+Entered By  : FAIRBROTHER,EILEEN            Date Entered  : JUN 14, 2011
+Completed By: DAWSON,JEREMIAH               Date Completed: JUL 26, 2011
+Released By : FRANCE,KATHI                  Date Released : JUL 28, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

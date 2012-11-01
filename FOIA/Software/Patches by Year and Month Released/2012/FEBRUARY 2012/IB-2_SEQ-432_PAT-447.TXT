@@ -1,0 +1,519 @@
+
+=============================================================================
+Run Date: FEB 17, 2012                     Designation: IB*2*447
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #432                      Status: Released
+                  Compliance Date: MAR 19, 2012
+=============================================================================
+
+Associated patches: (v)IB*2*133    <<= must be installed BEFORE `IB*2*447'
+                    (v)IB*2*206    <<= must be installed BEFORE `IB*2*447'
+                    (v)IB*2*240    <<= must be installed BEFORE `IB*2*447'
+                    (v)IB*2*359    <<= must be installed BEFORE `IB*2*447'
+                    (v)IB*2*389    <<= must be installed BEFORE `IB*2*447'
+                    (v)IB*2*432    <<= must be installed BEFORE `IB*2*447'
+                    (v)IB*2*451    <<= must be installed BEFORE `IB*2*447'
+                    (v)IB*2*455    <<= must be installed BEFORE `IB*2*447'
+
+Subject: E-CLAIMS ITERATION 5
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Input Template
+  - Other
+
+Description:
+============
+
+ This Integrated Billing (IB) patch expands the HIPAA 5010 enhancements 
+ introduced in patch IB*2.0*432.
+  
+ The intent of this patch is to:
+  
+  1. Add new fields to the Enter/Edit Billing Information option [IB
+     EDIT BILLING INFO] to allow users to enter additional data
+     elements to claims for health care services provided to patients.
+  
+  2. Modify the logic which calculates what the monetary amounts that 
+     were bill to the secondary payers on the MRA Statistics Report
+     option [IBCEM MRA STATISTICS REPORT].
+  
+  3. Modify the outbound 837 Heath Care Claims transmissions to 
+     incorporate the additional or modified data elements that may be
+     added to a claim.
+  
+  4. Modify the printing process for outpatient, UB04 claims to print 
+     the Priority (Type) of Admission.
+  
+  5. Modify the printing process for UB04 and CMS-1500 claims to allow 
+     the printing of Revenue/Procedure codes with zero dollar amounts.
+  
+  6. Modify the Insurance Company Entry/Edit option [IBCN INSURANCE CO 
+     EDIT] to allow users to assign additional MEDIGAP policies as Type
+     of Plan for an Insurance Company.
+  
+  7. Create a new option called the Non-MRA Productivity Report option 
+     [IBCEM NON-MRA REPORT].
+  
+  8. Modify the mnemonic for the Third Party Billing Menu [IB THIRD 
+     PARTY BILLING MENU].
+  
+  9. Modify the Insurance Payment Trend Report option [IB OUTPUT TREND 
+     REPORT] to display the Insurance Plan Group Number.
+  
+  10. Modify the Correct Rejected/Denied Bill option [IB CORRECT 
+      REJECTED/DENIED] to allow the correction of claims to
+      non-accruing funds such as TRICARE claims.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)     New/Modified/Deleted
+ ------------------       -------------------     --------------------
+ IB ERROR (#350.8)                                New/Modified Entries
+  
+ BILL FORM TYPE           LOCAL BILLING           Modified
+ (#353)                   SCREEN(#2.09)
+   
+ TRANSPORT REASON         FULL DICTIONARY         New
+ CODE(#353.4)
+   
+ AMBULANCE CONDITION      FULL DICTIONARY         New
+ INDICATORS(#353.5)
+   
+ TYPE OF PLAN             EFFECTIVE DATE (#14)    New
+ (#355.1)                 
+   
+ TYPE OF PLAN             EFFECTIVE DATE (#.01)   New
+ (#355.14)                  
+                          GROUP CODE (#1)         New
+    
+ TYPE OF PLAN             GROUP CODE (#.01)       New
+ (#355.141)             
+                          REASON CODE (#1)        New
+    
+ TYPE OF PLAN             REASON CODE (#.01)      New
+ (#355.1411)            
+                          PART A PERCENTAGE (#1)  New
+                          PART B PERCENTAGE (#2)  New
+   
+ IB NON/OTHER VA BILLING  LICENSE STATE (#.16)    New
+ PROVIDER (#355.93)
+  
+ EXPLANATION OF           EOB TYPE(#.04)          Modified
+ BENEFITS(#361.1)           
+                          ENTRY DATE/TIME(#.05)   Modified
+   
+ IB DATA ELEMENT                                  New/Modified Entries
+ DEFINITION(#364.5)
+   
+ IB FORM SKELETON                                 New/Modified Entries
+ DEFINITION(#364.6)
+   
+ IB FORM FIELD                                    New/Modified Entries
+ CONTENT(#364.7)
+   
+ BILL/CLAIMS(#399)        BILL CLASSIFICATION     Modified
+                              (#.05)
+                          BILL CHARGE TYPE        Modified
+                              (#.27)   
+                          PATIENT WEIGHT (LB)     New
+                              (#287)   
+                          TRANSPORT REASON CODE   New
+                              (#288)     
+                          AMBULANCE TRANSPORT     New
+                              DISTANCE(#289)
+                          ROUND TRIP PURPOSE      New
+                              DESCRIPTION(#290) 
+                          STRETCHER PURPOSE       New
+                              DESCRIPTION(#291) 
+   
+ AMBULANCE CONDITION                              New
+ INDICATOR(#399.0292)
+   
+ PROCEDURES(#399.0304)    PROCEDURES(#.01)        Modified
+                          DIVISION(#5)            Modified
+   
+ REVENUE CODE(#399.042)   CHARGES(#.02)           Modified
+                          MANUALLY EDITED(#.16)   New
+                               
+  
+ Options Associated:
+   
+ Option Name                     Type           New/Modified/Deleted
+ -----------                     ----           --------------------
+ IB OUTPUT MANAGEMENT REPORTS    menu           Modified
+ IBCEM NON-MRA REPORT            run routine    New
+ IB OUTPUT PATIENT REPORT MENU   menu           Modified
+ IB COPY SECOND/THIRD                           Deleted
+  
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ IB SCREEN5         INPUT     BILL/CLAIMS(399)    Modified
+ IB SCREEN6         INPUT     BILL/CLAIMS(399)    Modified
+ IB SCREEN7         INPUT     BILL/CLAIMS(399)    Modified
+ IB SCREEN8         INPUT     BILL/CLAIMS(399)    Modified
+ IB SCREEN9         INPUT     BILL/CLAIMS(399)    New
+ IBCEM COB          List      BILL/CLAIMS(#399)   Modified
+ MANAGEMENT                               
+ IBCEM MRA          List      BILL/CLAIMS(#399)   Modified
+ MANAGEMENT
+ IBJT INACTIVE      List      BILL/CLAIMS(#399)   Modified
+ LIST
+   
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20090216 - eClaims Phase 5 
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A 
+  
+  
+ Test Sites:
+ ----------
+ Altoona
+ North Florida/South Georgia
+ Palo Alto
+ VISN 2
+  
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/. This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software directly
+ from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ Title                         File Name                FTP Mode
+ ---------------------------------------------------------------
+ IB Release Notes/           IB_2_0_P447_RN.PDF         Binary
+ Installation Guide
+ (IB*2*P447)
+  
+ EDI Billing User Guide      EDI_USER_GUIDE_R0312.PDF   Binary
+  
+ IB Technical Manual/        IB_2_0_P447_TM.PDF         Binary
+ Security Guide        
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post-install routine will set up the server process to move the
+ mail message from FSC into the file AR MEDICAL DEDUCTIBLE ALERTS PART 
+ A (#436.1). 
+  
+ Note: The Pre-Install and Post-Install routines will be removed at the 
+       end of the installation.
+  
+  
+ **** Please note, if you select the option below, Compare Transport Global
+      to Current System, and select #1 Full Comparison, you will get a
+      system error:  <UNDEFINED>S+1^DIQ ^IBA(364.6,2209,0) due to a known
+      issue with the KIDS Full Compare option (see Remedy Ticket
+      HD0000000449218). You can run any of the other 3 compare options
+      without issue.
+  
+  
+ Installation Instructions
+ -------------------------
+ You should install this patch during non-peak hours, when no Integrated 
+ Billing or Accounts Receivable users are on the system. This patch should 
+ take less than 5 minutes to install.
+  
+  
+ There are no options to disable.
+  
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file ECLAIMS_5_5010.KID, which contains the following
+     two patch installs:
+   
+         PRCA*4.5*275
+         IB*2.0*447
+   
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+   
+                     download.vista.med.va.gov
+   
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+   
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+   
+      The ECLAIMS_5_5010.KID host file is located in the anonymous.software
+      directory.  Use ASCII Mode when downloading the file.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+   
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+   
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+   
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+   
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file ECLAIMS_5_5010.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]ECLAIMS_5_5010.KID).
+   
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+   
+     The following will display:
+   
+       Loading Distribution...
+   
+         ECLAIMS 5 BUNDLE 1.0
+         PRCA*4.5*275
+         IB*2.0*447
+       Use INSTALL NAME: ECLAIMS 5 BUNDLE 1.0 to install this Distribution.
+   
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options:
+  
+     (when prompted for the INSTALL NAME, enter ECLAIMS 5 BUNDLE 1.0)
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+         **** Please note, if you select the option below, Compare 
+              Transport Globalto Current System, and select #1 Full 
+              Comparison, you will get a system error:  
+              <UNDEFINED>S+1^DIQ ^IBA(364.6,2209,0) due to a known
+              issue with the KIDS Full Compare option (see Remedy Ticket
+              HD0000000449218). You can run any of the other 3 compare 
+              options without issue.
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of the KIDS patches.
+     **** Note: The install questions will be displayed twice, first for
+     PRCA*4.5*275 and then for IB*2.0*447.
+     
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", 
+         enter ECLAIMS 5 BUNDLE 1.0
+     c.  When prompted for 'Enter the Coordinator for Mail Group 'MDA':",
+         respond with the name of the Mail Group Coordinator for the 
+         Accounts Receivable package or a facility Mail Group Coordinator.
+     d.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+         of Install? NO//', respond NO
+     e.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+         of Install? YES//', respond YES
+         *** Please Note:  It is important that you respond to these
+         prompts in the proper order or else the IB menus will not be
+         rebuilt.
+     f.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         YES//', respond NO.
+     g.  When prompted to DISABLE Scheduled Options, Menu Options, and
+         Protocols YES//', respond NO.
+  
+ 6. Routines ^IBY447PO and ^IBY447PR will be deleted upon completion of 
+    installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[PATCH LIST]**;21-MAR-94;Build 80
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCAPP
+    Before: B19459268   After: B21485583  **432,447**
+Routine Name: IBCAPP1
+    Before: B37999170   After: B38009717  **432,447**
+Routine Name: IBCAPP2
+    Before: B40572879   After: B43298709  **432,447**
+Routine Name: IBCB2
+    Before: B52497710   After: B52688677  **52,51,161,182,155,447**
+Routine Name: IBCBB1
+    Before: B87354166   After: B98716914  **27,52,80,93,106,51,151,148,
+                                           153,137,232,280,155,320,343,
+                                           349,363,371,395,384,432,447**
+Routine Name: IBCBB13
+    Before:       n/a   After: B19726855  **447**
+Routine Name: IBCBB2
+    Before: B49120476   After: B50172747  **51,137,210,245,232,296,320,
+                                           349,371,403,432,447**
+Routine Name: IBCBB21
+    Before: B15422214   After: B14595417  **51,137,210,232,155,291,348,
+                                           349,403,400,432,447**
+Routine Name: IBCBB6
+    Before:   B579316   After:   B235040  **51,447**
+Routine Name: IBCBB7
+    Before: B26711457   After: B27582918  **51,137,240,447**
+Routine Name: IBCC
+    Before: B58814397   After: B57603103  **2,19,77,80,51,142,137,161,
+                                           199,241,155,276,320,358,433,
+                                           432,447**
+Routine Name: IBCCC
+    Before: B20747072   After: B20967189  **80,109,106,51,320,433,432,447**
+Routine Name: IBCCC2
+    Before: B89240196   After:B108841715  **80,106,124,138,51,151,137,
+                                           161,182,211,245,155,296,320,
+                                           348,349,371,400,433,432,447**
+Routine Name: IBCCCB
+    Before: B88589489   After: B65683261  **80,106,51,151,137,182,155,
+                                           323,436,432,447**
+Routine Name: IBCECOB1
+    Before: B99389484   After:B102535687  **137,155,288,348,377,417,432,447**
+Routine Name: IBCECOB2
+    Before:B156849928   After:B167373990  **137,155,433,432,447**
+Routine Name: IBCEF
+    Before: B55741819   After: B58449164  **52,80,51,137,288,296,361,371,447**
+Routine Name: IBCEF1
+    Before: B58389025   After: B60116186  **52,124,51,137,210,155,349,371,447**
+Routine Name: IBCEF11
+    Before: B72157495   After: B73456164  **51,137,155,309,335,348,349,
+                                           371,432,447**
+Routine Name: IBCEFP
+    Before: B85133537   After:B100162925  **432,447**
+Routine Name: IBCEMQC
+    Before: B29878168   After: B30540187  **155,323,302,350,359,447**
+Routine Name: IBCEMSR
+    Before: B49071063   After: B53975881  **155,288,294,349,447**
+Routine Name: IBCEMSR2
+    Before:       n/a   After: B83574265  **447**
+Routine Name: IBCEMSR3
+    Before:       n/a   After:B132530577  **447**
+Routine Name: IBCEMSR4
+    Before:       n/a   After:B110188807  **447**
+Routine Name: IBCEMSR5
+    Before:       n/a   After:  B7131681  **447**
+Routine Name: IBCEMU4
+    Before:  B1508771   After: B29651910  **288,432,447**
+Routine Name: IBCEP5A
+    Before: B21730261   After: B26443385  **137,232,320,348,447**
+Routine Name: IBCEP8
+    Before:B124106207   After:B124149510  **51,137,232,288,320,343,374,
+                                           377,391,400,436,432,447**
+Routine Name: IBCRBC2
+    Before: B26657513   After: B28219080  **52,106,138,148,245,370,447**
+Routine Name: IBCRBC3
+    Before: B14097205   After: B15092850  **52,106,138,51,447**
+Routine Name: IBCRBE
+    Before: B31036524   After: B31355983  **52,106,245,287,447**
+Routine Name: IBCRBF
+    Before:  B6390569   After: B10793881  **52,106,51,447**
+Routine Name: IBCRCC
+    Before: B32466815   After: B34225525  **52,80,106,138,245,223,309,
+                                           347,370,383,427,455,447**
+Routine Name: IBCSC102
+    Before: B40563126   After: B41181952  **432,447**
+Routine Name: IBCSC11
+    Before:       n/a   After:  B7658686  **52,51,447**
+Routine Name: IBCSC5
+    Before: B16666314   After: B17112329  **52,125,51,210,266,288,287,
+                                           309,389,447**
+Routine Name: IBCSC8
+    Before:  B8784188   After:  B7203948  **432,447**
+Routine Name: IBCSC9
+    Before:  B7447010   After:  B7536045  **447**
+Routine Name: IBCSCE
+    Before:  B9117892   After:  B9204544  **52,80,91,106,51,137,236,245,
+                                           287,349,371,400,432,447**
+Routine Name: IBCSCH
+    Before: B47256662   After: B48120299  **52,80,106,124,138,51,148,137,
+                                           161,245,232,287,348,349,374,
+                                           371,395,400,432,447**
+Routine Name: IBCSCP
+    Before: B10801833   After: B11636365  **52,51,161,266,432,447**
+Routine Name: IBCSCU
+    Before: B12080989   After: B12535542  **52,51,348,432,447**
+Routine Name: IBCU5
+    Before: B14993646   After: B14664584  **8,52,80,117,51,206,447**
+Routine Name: IBCU61
+    Before:  B5204953   After:  B6243488  **153,447**
+Routine Name: IBCU62
+    Before:  B9904267   After: B10149874  **133,447**
+Routine Name: IBCU7
+    Before: B78100882   After: B81426431  **62,52,106,125,51,137,210,245,
+                                           228,260,348,371,432,447**
+Routine Name: IBCU7B
+    Before: B52236174   After: B55412712  **432,447**
+Routine Name: IBCU9
+    Before:       n/a   After:  B4596044  **447**
+Routine Name: IBJTTC
+    Before: B68420577   After: B69337757  **39,377,431,432,447**
+Routine Name: IBOTR2
+    Before: B18730525   After: B22290146  **21,42,52,80,100,118,128,451,447**
+Routine Name: IBOTR3
+    Before: B27079166   After: B29774240  **42,80,100,118,128,133,447**
+Routine Name: IBY447PO
+    Before:       n/a   After:  B4342146  **447**
+Routine Name: IBY447PR
+    Before:       n/a   After: B24484648  **447**
+ 
+Routine list of preceding patches: 133, 206, 240, 359, 389, 432, 451, 455
+
+=============================================================================
+User Information:
+Entered By  : JUTZI,WILLIAM CHRISTOPHER     Date Entered  : FEB 01, 2011
+Completed By: ROBBINS,BRADLEY               Date Completed: FEB 09, 2012
+Released By : CAULFIELD,MARY                Date Released : FEB 17, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

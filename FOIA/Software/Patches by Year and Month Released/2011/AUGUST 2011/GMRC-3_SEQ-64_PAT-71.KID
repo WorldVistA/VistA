@@ -1,0 +1,816 @@
+Released GMRC*3*71 SEQ #64
+Extracted from mail message
+**KIDS**:GMRC*3.0*71^
+
+**INSTALL NAME**
+GMRC*3.0*71
+"BLD",8153,0)
+GMRC*3.0*71^CONSULT/REQUEST TRACKING^0^3100804^y
+"BLD",8153,1,0)
+^^14^14^3100804^^^
+"BLD",8153,1,1,0)
+This patch will address the following 3 items:
+"BLD",8153,1,2,0)
+ 
+"BLD",8153,1,3,0)
+1. In CPRS GUI, users can forward to a tracking only service when they 
+"BLD",8153,1,4,0)
+   have update authority at the parent level.  However, when using CPRS
+"BLD",8153,1,5,0)
+   List Manager in VistA, users cannot forward to a tracking only service
+"BLD",8153,1,6,0)
+   when they have update authority at the parent level.
+"BLD",8153,1,7,0)
+ 
+"BLD",8153,1,8,0)
+2. When users change the SERVICE USAGE of a Consult Service to 'Grouper 
+"BLD",8153,1,9,0)
+   Only' or 'Disabled', they are not warned when there are any RELATED 
+"BLD",8153,1,10,0)
+   SERVICES tied to the Consult Service.
+"BLD",8153,1,11,0)
+ 
+"BLD",8153,1,12,0)
+3. The Consult/Request Tracking Technical Manual and the Consult/Result
+"BLD",8153,1,13,0)
+   Tracking User Manual do not state that the alert CONSULT/REQUEST
+"BLD",8153,1,14,0)
+   UPDATED is sent when a consult is scheduled.
+"BLD",8153,4,0)
+^9.64PA^123.5^1
+"BLD",8153,4,123.5,0)
+123.5
+"BLD",8153,4,123.5,2,0)
+^9.641^123.5^1
+"BLD",8153,4,123.5,2,123.5,0)
+REQUEST SERVICES  (File-top level)
+"BLD",8153,4,123.5,2,123.5,1,0)
+^9.6411^2^1
+"BLD",8153,4,123.5,2,123.5,1,2,0)
+SERVICE USAGE
+"BLD",8153,4,123.5,222)
+y^y^p^^^^n^^n
+"BLD",8153,4,123.5,224)
+
+"BLD",8153,4,"APDD",123.5,123.5)
+
+"BLD",8153,4,"APDD",123.5,123.5,2)
+
+"BLD",8153,4,"B",123.5,123.5)
+
+"BLD",8153,6.3)
+14
+"BLD",8153,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8153,"KRN",.4,0)
+.4
+"BLD",8153,"KRN",.4,"NM",0)
+^9.68A^^0
+"BLD",8153,"KRN",.401,0)
+.401
+"BLD",8153,"KRN",.401,"NM",0)
+^9.68A^^0
+"BLD",8153,"KRN",.402,0)
+.402
+"BLD",8153,"KRN",.402,"NM",0)
+^9.68A^^0
+"BLD",8153,"KRN",.403,0)
+.403
+"BLD",8153,"KRN",.5,0)
+.5
+"BLD",8153,"KRN",.84,0)
+.84
+"BLD",8153,"KRN",3.6,0)
+3.6
+"BLD",8153,"KRN",3.8,0)
+3.8
+"BLD",8153,"KRN",9.2,0)
+9.2
+"BLD",8153,"KRN",9.8,0)
+9.8
+"BLD",8153,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",8153,"KRN",9.8,"NM",1,0)
+GMRCASV^^0^B66657699
+"BLD",8153,"KRN",9.8,"NM",2,0)
+GMRC1235^^0^B2139381
+"BLD",8153,"KRN",9.8,"NM","B","GMRC1235",2)
+
+"BLD",8153,"KRN",9.8,"NM","B","GMRCASV",1)
+
+"BLD",8153,"KRN",19,0)
+19
+"BLD",8153,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",8153,"KRN",19.1,0)
+19.1
+"BLD",8153,"KRN",19.1,"NM",0)
+^9.68A^^0
+"BLD",8153,"KRN",101,0)
+101
+"BLD",8153,"KRN",101,"NM",0)
+^9.68A^^0
+"BLD",8153,"KRN",409.61,0)
+409.61
+"BLD",8153,"KRN",409.61,"NM",0)
+^9.68A^^0
+"BLD",8153,"KRN",771,0)
+771
+"BLD",8153,"KRN",771,"NM",0)
+^9.68A^^0
+"BLD",8153,"KRN",779.2,0)
+779.2
+"BLD",8153,"KRN",870,0)
+870
+"BLD",8153,"KRN",8989.51,0)
+8989.51
+"BLD",8153,"KRN",8989.51,"NM",0)
+^9.68A^^0
+"BLD",8153,"KRN",8989.52,0)
+8989.52
+"BLD",8153,"KRN",8989.52,"NM",0)
+^9.68A^^0
+"BLD",8153,"KRN",8994,0)
+8994
+"BLD",8153,"KRN",8994,"NM",0)
+^9.68A^^0
+"BLD",8153,"KRN","B",.4,.4)
+
+"BLD",8153,"KRN","B",.401,.401)
+
+"BLD",8153,"KRN","B",.402,.402)
+
+"BLD",8153,"KRN","B",.403,.403)
+
+"BLD",8153,"KRN","B",.5,.5)
+
+"BLD",8153,"KRN","B",.84,.84)
+
+"BLD",8153,"KRN","B",3.6,3.6)
+
+"BLD",8153,"KRN","B",3.8,3.8)
+
+"BLD",8153,"KRN","B",9.2,9.2)
+
+"BLD",8153,"KRN","B",9.8,9.8)
+
+"BLD",8153,"KRN","B",19,19)
+
+"BLD",8153,"KRN","B",19.1,19.1)
+
+"BLD",8153,"KRN","B",101,101)
+
+"BLD",8153,"KRN","B",409.61,409.61)
+
+"BLD",8153,"KRN","B",771,771)
+
+"BLD",8153,"KRN","B",779.2,779.2)
+
+"BLD",8153,"KRN","B",870,870)
+
+"BLD",8153,"KRN","B",8989.51,8989.51)
+
+"BLD",8153,"KRN","B",8989.52,8989.52)
+
+"BLD",8153,"KRN","B",8994,8994)
+
+"BLD",8153,"QUES",0)
+^9.62^^
+"BLD",8153,"REQB",0)
+^9.611^1^1
+"BLD",8153,"REQB",1,0)
+GMRC*3.0*53^2
+"BLD",8153,"REQB","B","GMRC*3.0*53",1)
+
+"FIA",123.5)
+REQUEST SERVICES
+"FIA",123.5,0)
+^GMR(123.5,
+"FIA",123.5,0,0)
+123.5I
+"FIA",123.5,0,1)
+y^y^p^^^^n^^n
+"FIA",123.5,0,10)
+
+"FIA",123.5,0,11)
+
+"FIA",123.5,0,"RLRO")
+
+"FIA",123.5,0,"VR")
+3.0^GMRC
+"FIA",123.5,123.5)
+1
+"FIA",123.5,123.5,2)
+
+"MBREQ")
+0
+"PKG",300,-1)
+1^1
+"PKG",300,0)
+CONSULT/REQUEST TRACKING^GMRC^CONSULTS/REQUESTS
+"PKG",300,20,0)
+^9.402P^^
+"PKG",300,22,0)
+^9.49I^1^1
+"PKG",300,22,1,0)
+3.0^2980101^2980417^1271
+"PKG",300,22,1,"PAH",1,0)
+71^3100804
+"PKG",300,22,1,"PAH",1,1,0)
+^^14^14^3100804
+"PKG",300,22,1,"PAH",1,1,1,0)
+This patch will address the following 3 items:
+"PKG",300,22,1,"PAH",1,1,2,0)
+ 
+"PKG",300,22,1,"PAH",1,1,3,0)
+1. In CPRS GUI, users can forward to a tracking only service when they 
+"PKG",300,22,1,"PAH",1,1,4,0)
+   have update authority at the parent level.  However, when using CPRS
+"PKG",300,22,1,"PAH",1,1,5,0)
+   List Manager in VistA, users cannot forward to a tracking only service
+"PKG",300,22,1,"PAH",1,1,6,0)
+   when they have update authority at the parent level.
+"PKG",300,22,1,"PAH",1,1,7,0)
+ 
+"PKG",300,22,1,"PAH",1,1,8,0)
+2. When users change the SERVICE USAGE of a Consult Service to 'Grouper 
+"PKG",300,22,1,"PAH",1,1,9,0)
+   Only' or 'Disabled', they are not warned when there are any RELATED 
+"PKG",300,22,1,"PAH",1,1,10,0)
+   SERVICES tied to the Consult Service.
+"PKG",300,22,1,"PAH",1,1,11,0)
+ 
+"PKG",300,22,1,"PAH",1,1,12,0)
+3. The Consult/Request Tracking Technical Manual and the Consult/Result
+"PKG",300,22,1,"PAH",1,1,13,0)
+   Tracking User Manual do not state that the alert CONSULT/REQUEST
+"PKG",300,22,1,"PAH",1,1,14,0)
+   UPDATED is sent when a consult is scheduled.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","GMRC1235")
+0^2^B2139381^n/a
+"RTN","GMRC1235",1,0)
+GMRC1235 ;BP/SBR - Input Transform for SERVICE USAGE field ; 11/5/2009
+"RTN","GMRC1235",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**71**;DEC 27, 1997;Build 14
+"RTN","GMRC1235",3,0)
+USAGE ;
+"RTN","GMRC1235",4,0)
+ N CNT,PC,GMRCPROC,PROC
+"RTN","GMRC1235",5,0)
+ S CNT=0
+"RTN","GMRC1235",6,0)
+ I X=9!(X=1) D
+"RTN","GMRC1235",7,0)
+ . S PC="" F  S PC=$O(^GMR(123.3,PC)) Q:PC=""  D
+"RTN","GMRC1235",8,0)
+ . . I $D(^GMR(123.3,PC,2,"B",GMRCSRVC)) S GMRCPROC($P($G(^GMR(123.3,PC,0)),"^",1))=""
+"RTN","GMRC1235",9,0)
+ I $D(GMRCPROC) D
+"RTN","GMRC1235",10,0)
+ . D EN^DDIOL(,,"!")
+"RTN","GMRC1235",11,0)
+    . D EN^DDIOL("WARNING:  By changing the service usage of this service,")
+"RTN","GMRC1235",12,0)
+    . D EN^DDIOL("you are making it unselectable by the users.  The following")
+"RTN","GMRC1235",13,0)
+    . D EN^DDIOL("procedure(s) contain this Service in the RELATED SERVICES")
+"RTN","GMRC1235",14,0)
+    . D EN^DDIOL("field and should be edited to remove/replace this service")
+"RTN","GMRC1235",15,0)
+    . D EN^DDIOL("as necessary:")
+"RTN","GMRC1235",16,0)
+ . S PROC="" F  S PROC=$O(GMRCPROC(PROC)) Q:PROC=""  D EN^DDIOL("     "_PROC)
+"RTN","GMRC1235",17,0)
+ . D EN^DDIOL(,,"!")
+"RTN","GMRC1235",18,0)
+ Q
+"RTN","GMRCASV")
+0^1^B66657699^B66332685
+"RTN","GMRCASV",1,0)
+GMRCASV ;SLC/KCM,DLT - Build ^TMP("GMRCS" of Svc(s)/Specialties ; 9/8/09 11:47am
+"RTN","GMRCASV",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**1,12,18,22,53,71**;DEC 27, 1997;Build 14
+"RTN","GMRCASV",3,0)
+ ; This routine invokes IA #2426
+"RTN","GMRCASV",4,0)
+ ;
+"RTN","GMRCASV",5,0)
+ASRV ;Ask for service/specialty group {output} GMRCDG,GMRCBUF,GMRCACT,^TMP("GMRCS",$J,^TMP("GMRCSLIST",$J
+"RTN","GMRCASV",6,0)
+ K GMRCQUT
+"RTN","GMRCASV",7,0)
+ N GMRCSEL
+"RTN","GMRCASV",8,0)
+ D SERV0 D:GMRCDG SERV1
+"RTN","GMRCASV",9,0)
+ K W,X,Y Q
+"RTN","GMRCASV",10,0)
+SERV0 ;Assume that the lookup must begin with ALL SERVICES, or value of GMRCSVNM
+"RTN","GMRCASV",11,0)
+ ;GMRCASV=the ask prompt text
+"RTN","GMRCASV",12,0)
+ ;GMRCSVNM=text to use for default name
+"RTN","GMRCASV",13,0)
+ S GMRCDG=0
+"RTN","GMRCASV",14,0)
+ S:$G(GMRCASV)["Forward" GMRCTO=1
+"RTN","GMRCASV",15,0)
+ F  D ASKPRMPT S:X["^^" DIROUT=1 S:X["^" GMRCQUT=1 Q:X["^"  D @$S(X["?":"LISTALL",1:"LKUP") D:($L($G(GMRCSVNM))&GMRCDG) LISTSRV Q:GMRCDG
+"RTN","GMRCASV",16,0)
+ Q
+"RTN","GMRCASV",17,0)
+ASKPRMPT ;Write the prompt and do the Read to get the user text entered in X
+"RTN","GMRCASV",18,0)
+ W !!,$S($D(GMRCASV):GMRCASV,1:"Select Service/Specialty: ")_$S($L($G(GMRCSVNM)):GMRCSVNM,1:"ALL SERVICES")_"// "
+"RTN","GMRCASV",19,0)
+ R X:DTIME
+"RTN","GMRCASV",20,0)
+ I '$T S X="^"
+"RTN","GMRCASV",21,0)
+ I X'["^" S X=$S($G(GMRCASV)["Forward"&('$L(X)):"^",'$L(X):"ALL SERVICES",1:X) Q
+"RTN","GMRCASV",22,0)
+ Q
+"RTN","GMRCASV",23,0)
+SERV1 ;Create selected SERVICE ^TMP array of service information
+"RTN","GMRCASV",24,0)
+ ;If GMRCTO=1 then the BILD section will not include disabled or tracking services which the user cannot send to.
+"RTN","GMRCASV",25,0)
+ N GMRCDGT
+"RTN","GMRCASV",26,0)
+ S GMRCBUF=GMRCDG
+"RTN","GMRCASV",27,0)
+ I GMRCBUF>0 D
+"RTN","GMRCASV",28,0)
+ . K ^TMP("GMRCS",$J),^TMP("GMRCSLIST",$J)
+"RTN","GMRCASV",29,0)
+ . S GMRCDGT=0,GMRCSEL="BILD" D EN
+"RTN","GMRCASV",30,0)
+ . S GMRCGRP("NAM")=^GMR(123.5,GMRCBUF,0)
+"RTN","GMRCASV",31,0)
+ . S (GMRCDG,GMRCGRP("ROOT"))=GMRCBUF
+"RTN","GMRCASV",32,0)
+ . S GMRCGRP("NAM")=$S($L($P(GMRCGRP("NAM"),"^",3)):$P(GMRCGRP("NAM"),"^",3),1:$E($P(GMRCGRP("NAM"),"^"),1,5))
+"RTN","GMRCASV",33,0)
+ K GMRCSEQ,GMRCBUF
+"RTN","GMRCASV",34,0)
+ Q
+"RTN","GMRCASV",35,0)
+LKUP ;Ask the user for the service; use the value of x for lookup; branch to list on ??
+"RTN","GMRCASV",36,0)
+ ; Patch 18 added Identifier to 123.5 in place of DIC("W")
+"RTN","GMRCASV",37,0)
+ ; Remove commented line in next patch.
+"RTN","GMRCASV",38,0)
+ ;S DIC="^GMR(123.5,",DIC(0)="MNEQZ"
+"RTN","GMRCASV",39,0)
+ ;D ^DIC K DIC
+"RTN","GMRCASV",40,0)
+ ; Patch 53 added screen to prevent Forwarding to a Tracking Service
+"RTN","GMRCASV",41,0)
+ I $G(GMRCTO)=1 S DIC("S")="I ($$VALID^GMRCAU(Y,DUZ)&($P($G(^GMR(123.5,Y,0)),U,2)=2))!($P($G(^GMR(123.5,Y,0)),U,2)="""")!($P($G(^GMR(123.5,Y,0)),U,2)=1)"
+"RTN","GMRCASV",42,0)
+ S DIC="^GMR(123.5,",DIC(0)="MNEQZ",D="B^D"
+"RTN","GMRCASV",43,0)
+ D MIX^DIC1 K DIC
+"RTN","GMRCASV",44,0)
+ I '$D(Y(0)) D LISTALL Q
+"RTN","GMRCASV",45,0)
+ N W,GMRCEXCL I +$G(GMRCTO) D
+"RTN","GMRCASV",46,0)
+ . S W=Y(0),GMRCDG=+Y
+"RTN","GMRCASV",47,0)
+ . S GMRCEXCL=0 D EXCLUDE
+"RTN","GMRCASV",48,0)
+ . I GMRCEXCL=1 S GMRCSVNM=Y(0,0),GMRCEXCL=0 Q
+"RTN","GMRCASV",49,0)
+ . K GMRCSVNM ;Service selected is not a grouper for lookup
+"RTN","GMRCASV",50,0)
+ . I GMRCEXCL=9 S GMRCMSG="You have selected a disabled service!" D EXAC^GMRCADC(GMRCMSG) K GMRCMSG Q
+"RTN","GMRCASV",51,0)
+ . I GMRCEXCL=3 S GMRCMSG="You may not forward this Inter-facility Consult to another inter-facility consult service." D EXAC^GMRCADC(GMRCMSG) K GMRCMSG Q
+"RTN","GMRCASV",52,0)
+ . N GMRCDAD D CHECKDAD
+"RTN","GMRCASV",53,0)
+ . I GMRCEXCL=90 S GMRCMSG="You have selected a service that is not part of the ALL SERVICES hierarchy!",GMRCMSG(1)="Contact Consult ADPAC" D EXAC^GMRCADC(.GMRCMSG) K GMRCMSG Q
+"RTN","GMRCASV",54,0)
+ . ;I GMRCEXCL=9 S GMRCMSG="You have selected a service whose parent is disabled!" D EXAC^GMRCADC(GMRCMSG) K GMRCMSG Q
+"RTN","GMRCASV",55,0)
+ . I GMRCEXCL=2 S GMRCMSG="You have selected a service whose parent is a tracking service!",GMRCMSG(1)="You do not have authorization to send consults to this service." D EXAC^GMRCADC(.GMRCMSG) K GMRCMSG Q
+"RTN","GMRCASV",56,0)
+ . I GMRCEXCL=3 S GMRCMSG="You may not forward this Inter-facility Consult to another inter-facility consult service." D EXAC^GMRCADC(GMRCMSG) K GMRCMSG Q
+"RTN","GMRCASV",57,0)
+ I +$G(GMRCEXCL) S Y=0,GMRCDG=0
+"RTN","GMRCASV",58,0)
+ S:Y>0 GMRCDG=+Y ;falls to here when service is a grouper or not excluded
+"RTN","GMRCASV",59,0)
+ Q
+"RTN","GMRCASV",60,0)
+ ;
+"RTN","GMRCASV",61,0)
+LISTOPT ;called from option to list hierarchy
+"RTN","GMRCASV",62,0)
+ S %ZIS="Q"
+"RTN","GMRCASV",63,0)
+ D ^%ZIS I POP Q
+"RTN","GMRCASV",64,0)
+ I $D(IO("Q")) D QUEUE^GMRCASV1 D ^%ZISC,HOME^%ZIS Q
+"RTN","GMRCASV",65,0)
+ D PRTLST
+"RTN","GMRCASV",66,0)
+ D ^%ZISC,HOME^%ZIS
+"RTN","GMRCASV",67,0)
+ Q
+"RTN","GMRCASV",68,0)
+ ;
+"RTN","GMRCASV",69,0)
+PRTLST ;queued entry point or just print it
+"RTN","GMRCASV",70,0)
+ I $D(ZTQUEUED) S ZTREQ="@"
+"RTN","GMRCASV",71,0)
+ U IO
+"RTN","GMRCASV",72,0)
+ N GMRCPRT,GMRCPG,GMRCTO,GMRCDG,GMRCOUT
+"RTN","GMRCASV",73,0)
+ N DUOUT,DTOUT,DIROUT
+"RTN","GMRCASV",74,0)
+ S GMRCPG=0,GMRCPRT=1
+"RTN","GMRCASV",75,0)
+ D PAGE^GMRCASV1(.GMRCPG)
+"RTN","GMRCASV",76,0)
+ D LISTALL I $D(GMRCOUT) Q
+"RTN","GMRCASV",77,0)
+ I $Y>(IOSL-4) D READ I $D(GMRCOUT) Q
+"RTN","GMRCASV",78,0)
+ W !!,"Services not currently part of the Consults Hierarchy:"
+"RTN","GMRCASV",79,0)
+ N SERV S SERV=1
+"RTN","GMRCASV",80,0)
+ F  S SERV=$O(^GMR(123.5,SERV)) Q:'SERV  Q:$D(GMRCOUT)  D
+"RTN","GMRCASV",81,0)
+ . I '$D(^GMR(123.5,"APC",SERV)) D
+"RTN","GMRCASV",82,0)
+ .. I $Y>(IOSL-4) D READ I $D(GMRCOUT) Q
+"RTN","GMRCASV",83,0)
+ .. W !,?3,$P(^GMR(123.5,SERV,0),U) I '$P(^(0),U,2) Q
+"RTN","GMRCASV",84,0)
+ .. N USE S USE=$P(^GMR(123.5,SERV,0),U,2)
+"RTN","GMRCASV",85,0)
+ .. W "  ("
+"RTN","GMRCASV",86,0)
+ .. W $S(USE=1:"Grouper Only",USE=9:"Disabled",1:"Tracking Only")_")"
+"RTN","GMRCASV",87,0)
+ K GMRCDG D EXIT
+"RTN","GMRCASV",88,0)
+ Q
+"RTN","GMRCASV",89,0)
+LISTALL ;display LIST of Services in their hierarchy beginning with ALL SERVICES
+"RTN","GMRCASV",90,0)
+ S GMRCDG=$O(^GMR(123.5,"B","ALL SERVICES",0)) Q:'GMRCDG
+"RTN","GMRCASV",91,0)
+ S GMRCSEL="DISP" W:'$D(GMRCPRT) @IOF D EN
+"RTN","GMRCASV",92,0)
+ S GMRCDG=0 W !
+"RTN","GMRCASV",93,0)
+ Q
+"RTN","GMRCASV",94,0)
+LISTSRV ;display LIST of sub-services beginning with a selected service
+"RTN","GMRCASV",95,0)
+ S GMRC1=0,GMRCDG=$O(^GMR(123.5,"B",GMRCSVNM,0)) Q:'GMRCDG
+"RTN","GMRCASV",96,0)
+ S GMRCSEL="DISP" W @IOF D EN
+"RTN","GMRCASV",97,0)
+ S GMRCDG=0 W !
+"RTN","GMRCASV",98,0)
+ Q
+"RTN","GMRCASV",99,0)
+EN ;Setup Specialty groups   entry: GMRCDG,GMRCSEL   exit: GMRCGRP if GMRCSEL="BILD"
+"RTN","GMRCASV",100,0)
+ N GMRCSTK,PARENT,GMRCUSG,GMRCEXCL
+"RTN","GMRCASV",101,0)
+ S GMRCSTK=0,PARENT=0 ;beginning service logic
+"RTN","GMRCASV",102,0)
+ D @GMRCSEL Q:$D(DUOUT)!($D(DIROUT))!($D(GMRCOUT))
+"RTN","GMRCASV",103,0)
+EN1 ;GMRCSTK is used to manage the level of stacks under beginning service
+"RTN","GMRCASV",104,0)
+ S GMRCSTK=1,GMRCSTK(GMRCSTK)=GMRCDG_"^0",GMRCSTK(0)=0,GMRCMEM=0,GMRCNAM=""
+"RTN","GMRCASV",105,0)
+ F  S GMRCNAM=$O(^GMR(123.5,+GMRCSTK(GMRCSTK),10,"AC",GMRCNAM)) D  D @$S(+GMRCMEM'>0:"POP",1:"PROC") Q:GMRCSTK<1
+"RTN","GMRCASV",106,0)
+ . I $G(GMRCEXCL) S GMRCMEM=0 Q  ;Exclude children of excluded parent
+"RTN","GMRCASV",107,0)
+ . I '$L(GMRCNAM) S GMRCMEM=0 ;No more 10th node children
+"RTN","GMRCASV",108,0)
+ . E  S GMRCMEM=$O(^GMR(123.5,+GMRCSTK(GMRCSTK),10,"AC",GMRCNAM,""))
+"RTN","GMRCASV",109,0)
+ K DUOUT,GMRCMEM,GMRCNAM,GMRCSTK,GMRCSEL
+"RTN","GMRCASV",110,0)
+ Q
+"RTN","GMRCASV",111,0)
+POP ;Go back one level in service stack hierarchy and initialize exclude
+"RTN","GMRCASV",112,0)
+ S GMRCSTK=GMRCSTK-1,GMRCMEM=$P(GMRCSTK(GMRCSTK),"^",2),GMRCNAM=$P(GMRCSTK(GMRCSTK),"^",3),GMRCEXCL=0
+"RTN","GMRCASV",113,0)
+ Q
+"RTN","GMRCASV",114,0)
+PROC ;GMRCMEM is the member ien in the 10th node being processed
+"RTN","GMRCASV",115,0)
+ ;GMRCDG is the ien of file 123.5 being processed
+"RTN","GMRCASV",116,0)
+ ;GMRCNAM is the services name
+"RTN","GMRCASV",117,0)
+ S $P(GMRCSTK(GMRCSTK),"^",2)=GMRCMEM
+"RTN","GMRCASV",118,0)
+ S $P(GMRCSTK(GMRCSTK),"^",3)=GMRCNAM
+"RTN","GMRCASV",119,0)
+ Q:'$D(^GMR(123.5,+GMRCSTK(GMRCSTK),10,GMRCMEM,0))  ;ghost "AC" x-ref 
+"RTN","GMRCASV",120,0)
+ S GMRCDG=$P(^GMR(123.5,+GMRCSTK(GMRCSTK),10,GMRCMEM,0),"^",1)
+"RTN","GMRCASV",121,0)
+ S PARENT=+GMRCSTK(GMRCSTK)
+"RTN","GMRCASV",122,0)
+ S W=$G(^GMR(123.5,GMRCDG,0))
+"RTN","GMRCASV",123,0)
+ I $G(GMRCTO)=1 S GMRCEXCL=0 D EXCLUDE S:GMRCEXCL=1 GMRCEXCL=0 ;Includes grouper only
+"RTN","GMRCASV",124,0)
+ D:'+$G(GMRCEXCL) @GMRCSEL G:($D(DUOUT)!$D(DIROUT)) EXIT
+"RTN","GMRCASV",125,0)
+ ;Initialize a stack level entry to process children of the multiple
+"RTN","GMRCASV",126,0)
+ S GMRCSTK=GMRCSTK+1,GMRCSTK(GMRCSTK)=GMRCDG_"^0",GMRCMEM=0,GMRCNAM=""
+"RTN","GMRCASV",127,0)
+ Q
+"RTN","GMRCASV",128,0)
+DISP ;Display individual entries alphabetically for each service as processed
+"RTN","GMRCASV",129,0)
+ Q:$D(GMRCOUT)
+"RTN","GMRCASV",130,0)
+ I $Y>(IOSL-4) D READ S:$D(DUOUT)!($D(DIROUT)) GMRCSTK=0 G:GMRCSTK=0 EXIT
+"RTN","GMRCASV",131,0)
+ S W=$G(^GMR(123.5,GMRCDG,0))
+"RTN","GMRCASV",132,0)
+ S GMRCUSG=$P(W,"^",2)
+"RTN","GMRCASV",133,0)
+ W !,?((GMRCSTK*2)),$S(GMRCUSG=9:"<",1:"")_$P(W,"^")_$S(GMRCUSG=9:">",1:"")_"  "_$S(GMRCUSG=1:"(Grouper Only)",GMRCUSG=2:"(Tracking Only)",GMRCUSG=9:"<Disabled>",1:"")_"  "_$S($G(^GMR(123.5,GMRCDG,"IFC")):"(Inter-facility)",1:"")
+"RTN","GMRCASV",134,0)
+ Q
+"RTN","GMRCASV",135,0)
+BILD ;The following logic will build an array for review for GUI
+"RTN","GMRCASV",136,0)
+ ;GMRCDGT=sequential number,GMRCDG=service pointer,
+"RTN","GMRCASV",137,0)
+ ;W=^GMR(123.5,GMRCDG,0),1st piece is name, 2nd piece usage
+"RTN","GMRCASV",138,0)
+ ;If GMRCTO=1 then services that only consults can be sent to will be
+"RTN","GMRCASV",139,0)
+ ;included with the exception of "grouper only" which keeps the
+"RTN","GMRCASV",140,0)
+ ;hierarchy in order.
+"RTN","GMRCASV",141,0)
+ N CHILD
+"RTN","GMRCASV",142,0)
+ S W=$G(^GMR(123.5,GMRCDG,0))
+"RTN","GMRCASV",143,0)
+ S ^TMP("GMRCS",$J,GMRCDG)=$P(W,"^")
+"RTN","GMRCASV",144,0)
+ S GMRCDGT=GMRCDGT+1
+"RTN","GMRCASV",145,0)
+ S CHILD=$O(^GMR(123.5,GMRCDG,10,0)) S CHILD=$S(+CHILD:"+",1:"")
+"RTN","GMRCASV",146,0)
+ S ^TMP("GMRCSLIST",$J,GMRCDGT)=GMRCDG_U_$P(W,"^")_U_PARENT_U_CHILD_U_$P(W,"^",2)
+"RTN","GMRCASV",147,0)
+ Q
+"RTN","GMRCASV",148,0)
+EXCLUDE ;This logic excludes services the user cannot send a consult to.
+"RTN","GMRCASV",149,0)
+ ;If GMRCTO=1 the user is forwarding or sending a consult
+"RTN","GMRCASV",150,0)
+ ;W=zeroth node of service,GMRCDG=ien of service,GMRCO=ien of consult (optional)
+"RTN","GMRCASV",151,0)
+ Q:'$L($G(W))
+"RTN","GMRCASV",152,0)
+ S GMRCEXCL=+$P(W,"^",2) ;Include grouper for hierarchy building only
+"RTN","GMRCASV",153,0)
+ I $G(GMRCTO),$G(GMRCO) D  ;exclude fwd'ing into IFC svc
+"RTN","GMRCASV",154,0)
+ . I $P($G(^GMR(123,+GMRCO,12)),U,5)'="F" Q
+"RTN","GMRCASV",155,0)
+ . I +$G(^GMR(123.5,+GMRCDG,"IFC")) S GMRCEXCL=3 Q
+"RTN","GMRCASV",156,0)
+ . I $L($P($G(^GMR(123.5,+GMRCDG,"IFC")),U,2)) S GMRCEXCL=3 Q
+"RTN","GMRCASV",157,0)
+ I GMRCEXCL=2 D  ;tracking service exclusion check
+"RTN","GMRCASV",158,0)
+ . N GMRCSRV I +$G(GMRCO) S GMRCSRV=$P($G(^GMR(123,+GMRCO,0)),"^",5) I $D(^GMR(123.5,"APC",+GMRCDG,+GMRCSRV)) S GMRCEXCL=0 Q  ;Checks if parent is the consults current service
+"RTN","GMRCASV",159,0)
+ . I $$VALID^GMRCAU(+GMRCDG,,DUZ) S GMRCEXCL=0 ;update user?
+"RTN","GMRCASV",160,0)
+ . Q
+"RTN","GMRCASV",161,0)
+ Q
+"RTN","GMRCASV",162,0)
+CHECKDAD ;Check the service usage statuses for a selected services parents
+"RTN","GMRCASV",163,0)
+ ;There are two passes, one to get any user accessible parent
+"RTN","GMRCASV",164,0)
+ ;and the second pass is through the GMRCDAD array to check the parents usage
+"RTN","GMRCASV",165,0)
+ ;The GMRCEXCL value is returned for exclusion due to parent
+"RTN","GMRCASV",166,0)
+ S GMRCDAD=""
+"RTN","GMRCASV",167,0)
+ ;FIRST PASS
+"RTN","GMRCASV",168,0)
+ F  S GMRCDAD=$O(^GMR(123.5,"APC",+GMRCDG,GMRCDAD)) Q:GMRCDAD=""  D  I $P($G(GMRCDAD(+GMRCDAD)),U,2)="OK" S GMRCEXCL="OK"
+"RTN","GMRCASV",169,0)
+ . S GMRCDAD(+GMRCDAD)=$P(^GMR(123.5,+GMRCDAD,0),U,2) ;dads service usage
+"RTN","GMRCASV",170,0)
+ . ;I $P($G(^GMR(123.5,+GMRCDAD,0)),U,1)="ALL SERVICES" S $P(GMRCDAD(GMRCDAD),U,2,3)="OK^ALL" Q  ;If one of the dad's is all services, than OK to send to if not previously excluded.
+"RTN","GMRCASV",171,0)
+ . I GMRCDAD(+GMRCDAD)=1 S $P(GMRCDAD(+GMRCDAD),"^",2)="OK" Q  ;Groupers Only are OK!
+"RTN","GMRCASV",172,0)
+ . I $$VALID^GMRCAU(+GMRCDAD,,DUZ) S $P(GMRCDAD(GMRCDAD),U,2,3)="OK^Update access" ;update user?
+"RTN","GMRCASV",173,0)
+ . Q
+"RTN","GMRCASV",174,0)
+ I GMRCEXCL="OK" S GMRCEXCL=0 Q  ;There is a parent which user has access to.
+"RTN","GMRCASV",175,0)
+ ;Second Pass of the GMRCDAD array (multiple parents)
+"RTN","GMRCASV",176,0)
+ S GMRCDAD=$O(GMRCDAD("")) I 'GMRCDAD S GMRCEXCL=90 Q  ;Not part of hierarchy; missing dad
+"RTN","GMRCASV",177,0)
+ ;Use first parent found in hierarchy.
+"RTN","GMRCASV",178,0)
+ S GMRCEXCL=+GMRCDAD(GMRCDAD)
+"RTN","GMRCASV",179,0)
+ Q
+"RTN","GMRCASV",180,0)
+READ ;;Hold screen
+"RTN","GMRCASV",181,0)
+ I $D(IOST) Q:$E(IOST)'="C"
+"RTN","GMRCASV",182,0)
+ W ! I $D(IOSL),$Y<(IOSL-4) G READ
+"RTN","GMRCASV",183,0)
+ N X W !?5,"Press RETURN to continue, ^ to exit: " R X:DTIME
+"RTN","GMRCASV",184,0)
+ S:X="^" DUOUT=1 S:'$T!(X="^^") DIROUT=1
+"RTN","GMRCASV",185,0)
+ I $D(DUOUT)!$D(DIROUT) S:$D(GMRCPRT) GMRCOUT=1
+"RTN","GMRCASV",186,0)
+ W @IOF
+"RTN","GMRCASV",187,0)
+ I '$D(DTOUT),('$D(DUOUT))&($D(GMRCPRT)) D PAGE^GMRCASV1(.GMRCPG)
+"RTN","GMRCASV",188,0)
+ Q
+"RTN","GMRCASV",189,0)
+ ;
+"RTN","GMRCASV",190,0)
+EXIT ;Kill off variables and quit
+"RTN","GMRCASV",191,0)
+ K DIROUT,DUOUT,DTOUT,DIRUT
+"RTN","GMRCASV",192,0)
+ Q
+"VER")
+8.0^22.0
+"^DD",123.5,123.5,2,0)
+SERVICE USAGE^SX^1:GROUPER ONLY;2:TRACKING ONLY;9:DISABLED;^0;2^Q:$G(GMRCSRVC)=""  D USAGE^GMRC1235
+"^DD",123.5,123.5,2,3)
+Enter '1' if the service is Grouper Only, 2 if the service is to be used for TRACKING Only, and 9 to DISABLE the service.
+"^DD",123.5,123.5,2,21,0)
+^^24^24^3091105^^^
+"^DD",123.5,123.5,2,21,1,0)
+Whenever a value is defined in the SERVICE USAGE field, the Service
+"^DD",123.5,123.5,2,21,2,0)
+entry will NOT be selectable to send consults TO in the OE/RR ordering
+"^DD",123.5,123.5,2,21,3,0)
+process.  
+"^DD",123.5,123.5,2,21,4,0)
+  
+"^DD",123.5,123.5,2,21,5,0)
+Service Usages cause functioning as follows:
+"^DD",123.5,123.5,2,21,6,0)
+GROUPER ONLY - Allows a service to be used for grouping other 
+"^DD",123.5,123.5,2,21,7,0)
+services together for review purposes, and aids in defining the 
+"^DD",123.5,123.5,2,21,8,0)
+service hierarchy (e.g., ALL SERVICES, INPATIENT SERVICES, OUTSIDE
+"^DD",123.5,123.5,2,21,9,0)
+SERVICES).  During the order process, a user selecting a grouper only
+"^DD",123.5,123.5,2,21,10,0)
+service will be shown the service hierarchy under that service grouper.
+"^DD",123.5,123.5,2,21,11,0)
+A Grouper ONLY service should never be a "TO" Service on a consult.
+"^DD",123.5,123.5,2,21,12,0)
+  
+"^DD",123.5,123.5,2,21,13,0)
+TRACKING ONLY - Allows a service to be defined in a hierarchy,
+"^DD",123.5,123.5,2,21,14,0)
+but will not allow users ordering consults in OE/RR to be able to see
+"^DD",123.5,123.5,2,21,15,0)
+or select a service marked for TRACKING ONLY.  (e.g., Psychology
+"^DD",123.5,123.5,2,21,16,0)
+may be defined with its Service Usage blank, and its Sub-specialty
+"^DD",123.5,123.5,2,21,17,0)
+multiple defined with services of which some or all may be "TRACKING
+"^DD",123.5,123.5,2,21,18,0)
+ONLY" services.  This hierarchy facilitates the situation when a
+"^DD",123.5,123.5,2,21,19,0)
+service, such as Psychology, prefers a common location for all related
+"^DD",123.5,123.5,2,21,20,0)
+consults to be sent to. A Tracking user at the common location then 
+"^DD",123.5,123.5,2,21,21,0)
+"Forwards" the request to one of the sub-service TRACKING ONLY services
+"^DD",123.5,123.5,2,21,22,0)
+for completion.)
+"^DD",123.5,123.5,2,21,23,0)
+ 
+"^DD",123.5,123.5,2,21,24,0)
+DISABLED - Disabled services are not selectable for ordering or tracking.
+"^DD",123.5,123.5,2,23,0)
+^^4^4^3091105^
+"^DD",123.5,123.5,2,23,1,0)
+If the SERVICE USAGE value is changed to GROUPER ONLY or DISABLED and the 
+"^DD",123.5,123.5,2,23,2,0)
+service is defined in RELATED SERVICES to a PROCEDURE in file #123.3,
+"^DD",123.5,123.5,2,23,3,0)
+then the PROCEDURES containing the SERVICE in RELATED SERVICES are
+"^DD",123.5,123.5,2,23,4,0)
+displayed to the user.
+"^DD",123.5,123.5,2,"DT")
+3091105
+"BLD",8153,6)
+^64
+**END**
+**END**

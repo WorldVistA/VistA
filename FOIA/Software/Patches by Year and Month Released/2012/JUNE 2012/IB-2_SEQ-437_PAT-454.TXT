@@ -1,0 +1,293 @@
+
+=============================================================================
+Run Date: JUN 29, 2012                     Designation: IB*2*454
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #437                      Status: Released
+                  Compliance Date: JUL 29, 2012
+=============================================================================
+
+Associated patches: (v)IB*2*402    <<= must be installed BEFORE `IB*2*454'
+                    (v)IB*2*449    <<= must be installed BEFORE `IB*2*454'
+
+Subject: NON-INSTITUTIONAL LTC CD PATIENT EXEMPTION
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+ Note:  This patch is being released in support of the Enrollment System
+        Re-design (ESR) 3.6 Public Law 111-163 project.  DG*5.3*841 is 
+        being released along with IB*2*454 (Integrated Billing) in host
+        file DG_53_P841.KID.
+   
+        It is important that these patches be installed no later than the
+        compliance date.  Your understanding and support is appreciated.
+ **************************************************************************
+  
+ On May 5, 2010, the President signed into law, Public Law (PL) 111-163, 
+ the Caregivers and Veterans Omnibus Health Services Act of 2010.  This law
+ provides assistance to caregivers of Veterans and improves the provisions
+ of health care services to Veterans.  Section 511, Prohibitions on
+ collections of certain copayments from Veterans who are Catastrophically
+ Disabled.  Some of the provisions were implemented with the install of 
+ IB*2*449.  This patch will implement the remainder of the copayment 
+ related provisions.
+  
+ With the install of this patch, Veterans who are identified as being 
+ Catastrophically Disabled will no longer be charged copayments for 
+ Non-Institutional (Outpatient) Extended Care/Long Term Care from the
+ effective date of their Catastrophically Disabled determination and
+ installation forward.  This patch does not cancel charges created prior to
+ the install, sites should continue to use the CBO guidance they have been
+ provided to cancel those previously billed charges where necessary.
+  
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ N/A
+  
+ Forms Associated:
+ N/A
+  
+ Mail Groups Associated:
+ N/A
+  
+ Options Associated:
+ N/A
+  
+ Protocols Associated:
+ N/A
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ There is no NSR associated with this patch. 
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ There are no PSAs associated with this patch.
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Test Sites:
+ ----------
+ VA Health Care Upstate New York, NY
+ Chillicothe VAMC, OH
+ VA Puget Sound HCS, WA
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ N/A
+  
+  
+ Note:
+ If you run ^XINDEX on routine IBAECU, you will receive the following 
+ error messages:
+  
+        S IBTS=$T(@("T"_IBSPEC)^IBAECU1)
+    LTCSPEC+10   F - Invalid or wrong number of arguments to a function.
+        S IBSTOP=$T(@("C"_IBSCDATA(40.7,IB407,1,"E"))^IBAECU1)
+    LTCSTOP+16   F - Invalid or wrong number of arguments to a function.
+  
+ The error messages are a result of ^XINDEX's inability to understand 
+ indirection inside the $TEXT function.  These lines of code have been 
+ tested and will function without error.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is HIGHLY
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Menu Options to disable:
+      Admit a Patient [DG ADMIT PATIENT]
+      Discharge a Patient [DG DISCHARGE PATIENT]
+      Extended Bed Control [DG BED CONTROL EXTENDED]
+      Provider Change [DGPM PROVIDER CHANGE]
+      Transfer a Patient [DG TRANSFER PATIENT]
+      Treating Specialty Transfer [DG TREATING TRANSFER]
+      Appointment Management [SDAM APPT MGT]
+      Appointment Check-in/Check-out [SDAM APPT CHECK IN/OUT]
+      Add/Edit Stop Codes [SDADDEDIT]
+      Make Appointment [SDM]
+      Cancel/Edit/Add Patient Charges [IB CANCEL/EDIT/ADD CHARGES]
+      Catastrophically Disabled Copay Report [IB CD CHARGE REPORT] 
+      Register a Patient                   [DG REGISTER PATIENT]
+      Load/Edit Patient Data               [DG LOAD PATIENT DATA]
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ N/A
+  
+  
+  
+  
+  1.  OBTAIN PATCHES
+      ==============
+   
+      Obtain the host file DG_53_P841.KID, which contains the following
+      two patches:
+   
+         DG*5.3*841
+         IB*2.0*454
+   
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+   
+         download.vista.med.va.gov
+   
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+   
+         Albany                  ftp.fo-albany.med.va.gov
+         Hines                   ftp.fo-hines.med.va.gov
+         Salt Lake City          ftp.fo-slc.med.va.gov
+   
+      The DG_53_P841.KID host file is located in the anonymous.software
+      directory.  Use ASCII Mode when downloading the file.
+   
+  2.  From the Installation menu, select the LOAD A DISTRIBUTION option.
+   
+      When prompted for "Enter a Host File:", enter the full directory path
+      where you saved the host file DG_53_P841.KID (e.g.,
+      SYS$SYSDEVICE:[ANONYMOUS]DG_53_P841.KID).
+   
+      When prompted for "OK to continue with Load? NO//", enter "YES."
+   
+      The following will display:
+   
+         Loading Distribution...
+   
+         DG*5.3*841
+         IB*2.0*454
+   
+      Use INSTALL NAME: DG*5.3*841 to install this
+      distribution.
+  
+  
+  3.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD:
+      ==================================================
+      From the Installation menu, you may select to use the following
+      options (when prompted for the INSTALL NAME, enter
+      DG*5.3*841):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch.  It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+  4.  INSTALL MULTI-BUILD:
+      ====================
+      This is the step to start the installation of this KIDS build.  This
+      will need to be run for DG*5.3*841 multi-build.
+   
+      a.  Choose the Install Package(s) option to start the install.
+      b.  When prompted for the "Select INSTALL NAME:", enter DG*5.3*841.
+      c.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion
+          of Install? NO//"  enter NO.
+      d.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? YES//"  enter NO.
+      e.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? YES//"  enter YES.
+      f.  When prompted "Enter options you wish to mark as 'Out Of
+          Order':"  enter the following options:
+   
+          Admit a Patient [DG ADMIT PATIENT]
+          Discharge a Patient [DG DISCHARGE PATIENT]
+          Extended Bed Control [DG BED CONTROL EXTENDED]
+          Provider Change [DGPM PROVIDER CHANGE]
+          Transfer a Patient [DG TRANSFER PATIENT]
+          Treating Specialty Transfer [DG TREATING TRANSFER]
+          Appointment Management [SDAM APPT MGT]
+          Appointment Check-in/Check-out [SDAM APPT CHECK IN/OUT]
+          Add/Edit Stop Codes [SDADDEDIT]
+          Make Appointment [SDM]
+          Cancel/Edit/Add Patient Charges [IB CANCEL/EDIT/ADD CHARGES]
+          Catastrophically Disabled Copay Report [IB CD CHARGE REPORT] 
+          Register a Patient                   [DG REGISTER PATIENT]
+          Load/Edit Patient Data               [DG LOAD PATIENT DATA]
+            
+      g.  When prompted "Enter protocols you wish to mark as 'Out Of
+          Order':"  enter <return>.
+      h.  When prompted "Delay Install (Minutes):  (0-60): 0//"  enter an
+          appropriate number of minutes to delay the installation in 
+          order to give users enough time to exit the disabled options
+          before the installation starts.
+      i.  When prompted "Device: Home//"  respond with the correct device.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBAECO
+    Before: B16561245   After: B17633008  **164,171,176,188,312,454**
+Routine Name: IBAECU
+    Before: B53768496   After: B55994641  **164,171,176,198,188,454**
+Routine Name: IBAECU3
+    Before: B12653741   After: B13146832  **176,454**
+Routine Name: IBECEA3
+    Before: B67649889   After: B65921657  **7,57,52,132,150,153,166,156,
+                                           167,176,198,188,183,202,240,
+                                           312,402,454**
+ 
+Routine list of preceding patches: 402
+
+=============================================================================
+User Information:
+Entered By  : ZEIGLER,EDWARD L              Date Entered  : MAY 02, 2011
+Completed By: MORRIS,DARLENE V              Date Completed: JUN 13, 2012
+Released By : KUBIAK,PHILLIP A              Date Released : JUN 29, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

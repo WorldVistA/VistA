@@ -1,0 +1,153 @@
+$TXT Created by HSI,TUAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 09/23/10 at 10:29
+=============================================================================
+Run Date: APR 06, 2011                     Designation: PRCA*4.5*261
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #244                    Status: Released
+                  Compliance Date: MAY 06, 2011
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*208<<= must be installed BEFORE `PRCA*4.5*261'
+
+Subject: FIX <NOLINE> ERRORS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will fix a line tag with a wrong routine name when queuing an 
+ AR - Print ERA Discrepancy Report from the EEOB Worklist [RCDPE EDI 
+ LOCKBOX WORKLIST].
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) HD0000000258731 - <NOLINE>RUN+3^ZTMS3
+    Duplicates:
+    HD0000000329949 - <NOLINE>RUN+3^%ZTMS3 when attempting to print ERA 
+                      Discrepancy Report from Worklist
+    HD0000000342440 - No line label in routine
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Montana HCS                                     
+ James A. Haley Veterans' Hospital - Tampa
+ VA Heartland - West
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1.  HD0000000258731 - <NOLINE>RUN+3^ZTMS3
+  
+     Problem:
+     --------
+     Site reported a <NOLINE>RUN+3^ZTMS3 error occurred when queuing the 
+     AR - Print ERA Discrepancy Report from Worklist.
+  
+     Resolution:
+     -----------
+     When queuing the AR - Print ERA Discrepancy Report from Worklist by 
+     using EEOB Worklist [RCDPE EDI LOCKBOX WORKLIST] option, it calls
+     DISRPT^RCDPEV. But, Routine RCDPEV does not have the line tag DISRPT.
+  
+     Modified routine RCDPEV0 to replace the routine name RCDPEV for the
+     line tag DISRPT with RCDPEV0.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users on the system. 
+  
+ Install time - less than 2 minutes.
+  
+ 1)  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2)  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu [XPD 
+     MAIN]:
+  
+     Edits and Distribution...
+     Utilities...
+     Installation...
+  
+     Select Kernel Installation and Distribution System Option:
+     INStallation
+     ---
+         1. Load a Distribution
+         2. Verify Checksums in Transport Global
+         3. Print Transport Global
+         4. Compare Transport Global to Current System
+         5. Backup a Transport Global
+         6. Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+  
+ 3)  From this menu, you may elect to use the following options (when 
+     prompted for INSTALL NAME, enter PRCA*4.5*261):
+  
+     a. Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will NOT
+        backup any other changes such as DDs or templates.
+  
+     b. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when the patch is 
+        installed. It compares all components of the patch (routines, DDs,
+        templates, etc.)
+  
+     c. Verify Checksums in Transport Global - This option will ensure the 
+        integrity of the routines that are in the transport global.
+  
+     d. Print Transport Global - This option will allow you to view the 
+        components of the KIDS build.
+  
+ 4)  Use the Install Package(s) option and select the package PRCA*4.5*261.
+  
+     a. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//", answer NO.
+  
+     b. When prompted "Want to DISABLE Scheduled Options and Menu Options 
+        and Protocols? YES//, answer YES.
+  
+     c. When prompted "Enter options you wish to mark as "Out of Order":",
+        enter the following option:
+  
+        EEOB Worklist            [RCDPE EDI LOCKBOX WORKLIST]
+  
+     d. When prompted "Enter protocols you wish to mark as 'Out of 
+        Order':", press return.
+  
+     e. When prompted "Delay Install (Minutes): (0-60): 0//", enter the 
+        number of minutes to delay installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCDPEV0
+    Before: B24399353   After: B24403974  **208,261**
+ 
+Routine list of preceding patches: 208
+
+=============================================================================
+User Information:
+Entered By  : HSI,TUAN                      Date Entered  : JUN 10, 2009
+Completed By: DAWSON,TIM                    Date Completed: MAR 24, 2011
+Released By : BATIE,NADINE                  Date Released : APR 06, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

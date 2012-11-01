@@ -1,0 +1,287 @@
+$TXT Created by METELLUS,ANAJA at CHEY20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 12/13/10 at 15:46
+=============================================================================
+Run Date: MAY 26, 2011                     Designation: TIU*1*241
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #237                      Status: Released
+                  Compliance Date: JUN 26, 2011
+=============================================================================
+
+Associated patches: (v)TIU*1*232   <<= must be installed BEFORE `TIU*1*241'
+
+Subject: FIXES FOR ADDITIONAL SIGNER AND LENGTH OF SIGNER ALERT ISSUES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1) On CPRS/Notes tab and certain List Manager options if a document is 
+ Administratively Closed the Additional Signer information does not 
+ display.
+  
+ 2) For TIU PARAMETER "START OF ADD SGNR ALERT" the ??doc or TIU Technical
+ Manual does not give a clear explanation of how to set the field since 
+ parameter LENGTH OF SIGNER ALERT PERIOD was added.
+  
+ 3) There is no documentation in the TIU Technical Manual on how to set 
+ LENGTH OF SIGNER ALERT PERIOD. In the TIU Technical Manual there is no
+ documentation on the TIU Nightly Task.
+  
+ 4) Additional signers are unable to sign Administratively Closed notes
+ due to blank character strings (***). 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1) HD0000000229090 - 2 ADDITIONAL SIGNERS on an iMedConsent-generated 
+ 2) HD0000000247418 - 2 view alerts disappearing
+      DUPLICATES:
+      HD0000000247124
+      HD0000000254993
+      HD0000000282477
+ 3) HD0000000070039 - TIU Technical Manual needs to be updated
+ 4) HD0000000449777 - Unable to sign as additional signer due to blank
+ character string
+  
+ Participating Test Sites:
+ =========================
+ VA Hudson Valley HCS
+ Durham VAMC
+ Hines VAMC
+  
+ Remedy Overview:
+ ================
+  
+ 1) HD0000000229090 - 2 ADDITIONAL SIGNERS on an iMedConsent-generated 
+  
+ Problem 1:
+ ----------
+ On the CPRS Notes Tab, Additional Signer information does not show for 
+ documents that are Administratively Closed in the regular display.  It 
+ does show in the detailed display.  This is for both Awaiting Signature
+ and Electronic Signature.
+  
+ In List Manager, the same problem with Additional Signature for 
+ Administratively Closed documents occurs for the following options:
+  
+  Progress Notes User Menu
+         Review Progress Notes by Patient
+         Review Progress Notes/Browse
+  TIU MAIN MENU MGR
+         Individual Patient Document
+  TIU MAIN MENU MRT
+         Individual Patient Document
+  TIU MAIN MENU TRANSCRIPTION
+         Individual Patient Document
+  
+  
+ Resolution:
+ -----------
+ For CPRS, modify routine TIUSRVR3 to display the Additional Signature on 
+ Administratively closed documents. For LM, modify routine TIUBR1 to 
+ display the Additional Signature on Administratively closed documents.
+  
+ 2) HD0000000247418 - 2 view alerts disappearing
+  
+ Problem:
+ --------
+ Since the addition of the parameter LENGTH OF SIGNER ALERT PERIOD to the 
+ TIU PARAMETER FILE (8925.99), there has been some confusion over the
+ effect that parameter has on parameter START OF ADD SGNR ALERT
+ PERIOD.  The patch that added LENGTH OF SIGNER ALERT PERIOD detailed that 
+ START OF ADD SGNR ALERT should be set to the same value. The '??doc' or 
+ the TIU Technical Manual does not detail this setting.
+  
+ Resolution:
+ -----------
+ Update the '??doc' for START OF ADD SGNR ALERT PERIOD to read as follows:
+  
+    START OF ADD SGNR ALERT PERIOD: 
+         This is the start date for evaluating documents that have overdue
+         additional signatures. The value must be in a FileMan date range 
+         format such as 6D, 3W or 4M. If this field is left blank, all
+         documents evaluated that have a date less than the END OF ADD SGNR
+         ALERT PERIOD date will be included.
+          
+         Since the addition of the LENGTH OF SIGNER ALERT PERIOD parameter 
+         this field should be set to the same value as that field. If
+         LENGTH OF SIGNER ALERT PERIOD is left blank then set this field to
+         12M, the default value of the LENGTH OF SIGNER ALERT PERIOD when
+         no value is entered.  LENGTH OF SIGNER ALERT PERIOD determines how
+         far back in time documents are evaluated.
+  
+ Update the TIU Technical Manual with the same information.  
+  
+ Also, add missing documentation in the TIU Technical Manual for LENGTH OF 
+ SIGNER ALERT PERIOD to read as follows:
+  
+    LENGTH OF SIGNER ALERT PERIOD: 
+         This is the length of time that the TIU NIGHTLY TASK will go back 
+         prior to "today" when searching for documents that have overdue
+         signatures. The value must be in a FileMan date range format such
+         as 6D, 3W or 4M.
+          
+         If no value is entered, the TIU NIGHTLY TASK will begin searching 
+         for documents starting at 1 year prior to "today" in the TIU
+         DOCUMENTS file (8925).
+  
+ In addition, modify the TIU Technical Manual for END OF ADD SGNR ALERT 
+ PERIOD to read as follows:
+  
+    END OF ADD SGNR ALERT PERIOD: 
+         This is the length in time from the current date that the TIU 
+         NIGHTLY TASK will stop regenerating alerts for overdue additional
+         signatures. The value must be in a FileMan date range format such
+         as 6D, 3W or 4M.
+          
+         If no value is entered, the TIU NIGHTLY TASK will search for 
+         documents in the TIU DOCUMENT File (8925) up to the current date.
+    
+  
+ 3) HD0000000070039 - There are no instructions in the TIU Technical 
+ Manual for the TIU NIGHTLY TASK.
+  
+ Problem:
+ --------
+ There are no instructions in the TIU Technical Manual for the TIU NIGHTLY 
+ TASK.
+  
+ Resolution:
+ -----------
+ Add documentation and scheduling instructions to the TIU Technical Manual 
+ for the TIU NIGHTLY TASK.
+  
+  
+ 4) HD0000000449777 - Unable to sign as additional signer due to blank
+ character string.
+  
+ Problem:
+ --------
+ After installing this patch, it was determined that Additional Signers
+ would be prevented from signing iMED Consent notes because the document
+ generated by the iMED Consent application contained some characters that
+ are used as the site's blank character string. 
+  
+ Resolution:
+ -----------
+ Modify routine TIULP to bypass the check for blank character strings on
+ Administratively Closed documents. Since these notes aren't entered manually,
+ scanning them for blank characters is not necessary.
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ The revised TIU Technical Manual is available on the ANONYMOUS.SOFTWARE 
+ directory at one of the following Office of Information (OI) Field 
+ Offices. These files should be retrieved in binary format.
+     
+ Sites may retrieve documentation in one of the following ways:
+    
+  (1) The preferred method is to FTP the files from
+  download.vista.med.va.gov, which will transmit the files from  the first
+  available FTP server.
+     
+  (2) Sites may also elect to retrieve documentation directly from a  
+  specific server as follows:
+  
+      Albany                ftp.fo-albany.med.va.gov
+      Hines                 ftp.fo-hines.med.va.gov
+      Salt Lake City        ftp.fo-slc.med.va.gov
+     
+  The documentation distribution includes:
+  
+  File Name            Description           Protocol
+  ---------            -----------           --------
+  tiutm.pdf            TIU Technical Manual  Binary
+  
+  
+ The updated manual will be posted to the VDL immediately after the
+ release of the patch.
+  
+  
+  
+ =====================INSTALLATION INSTRUCTIONS =================
+  
+ This patch can be loaded with users on the system but it is recommended 
+ that it be scheduled for off hours. The installation time will vary
+ but it should be less than 2 minutes.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*241)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       TIU*1.0*241.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond YES.
+  
+        Enter options you wish to mark as 'Out Of Order': 
+  
+         TIU BROWSE DOCUMENT CLINICIAN   Individual Patient Document
+         TIU BROWSE DOCUMENT MGR         Individual Patient Document
+         TIU BROWSE DOCUMENT MRT         Individual Patient Document
+         TIU BROWSE DOCUMENT READ ONLY   Individual Patient Document
+         TIU BROWSE PN CLINICIAN         Review Progress Notes by Patient
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUBR1
+    Before: B66608015   After: B66911823  **31,100,123,176,157,241**
+Routine Name: TIULP
+    Before: B50989073   After: B51642995  **98,100,116,109,138,152,175,
+                                           157,182,184,217,236,234,232,
+                                           241**
+Routine Name: TIUSRVR3
+    Before: B18170093   After: B18417891  **100,176,157,241**
+ 
+Routine list of preceding patches: 232
+
+=============================================================================
+User Information:
+Entered By  : ROWLANDS,ELMER                Date Entered  : JUL 08, 2008
+Completed By: SHERMAN,BILL                  Date Completed: MAY 25, 2011
+Released By : STOKER,ELAINE                 Date Released : MAY 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

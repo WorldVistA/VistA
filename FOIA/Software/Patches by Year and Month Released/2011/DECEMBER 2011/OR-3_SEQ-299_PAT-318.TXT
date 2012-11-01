@@ -1,0 +1,129 @@
+$TXT Created by ESCALERA,DIEGO at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 11/01/11 at 11:17
+=============================================================================
+Run Date: DEC 27, 2011                     Designation: OR*3*318
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #299                      Status: Released
+                  Compliance Date: JAN 27, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*208    <<= must be installed BEFORE `OR*3*318'
+
+Subject: Lab orders
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects the following issue within the ORDER ENTRY/RESULTS
+ REPORTING package:
+  
+ If there are multiple lab orders in a given day, the Lab Orders
+ clinical report will only display one.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ HD0000000343856 - inaccuracy between two views
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Palo Alto VAMC
+ Milwaukee VAMC
+ Heartland West HCS 
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ HD0000000343856 - inaccuracy between two views
+  
+    Problem:
+    --------
+    If two or more lab orders are made on the same day, then the Lab Orders
+    clinical report will only display one of those orders.
+  
+    Resolution:
+    -----------
+    Fix Lab Orders to show all orders in a given day.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users on the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*318):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      OR*3.0*318.
+  
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORDV02
+    Before: B72915194   After: B73651377  **109,118,146,141,208,318**
+ 
+Routine list of preceding patches: 208
+
+=============================================================================
+User Information:
+Entered By  : ESCALERA,DIEGO                Date Entered  : AUG 13, 2009
+Completed By: BYRD,TIERRA                   Date Completed: DEC 27, 2011
+Released By : KREUZ,SHERI B                 Date Released : DEC 27, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,207 @@
+$TXT Created by HSI,TUAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 02/22/11 at 15:41
+=============================================================================
+Run Date: JUL 29, 2011                     Designation: SD*5.3*569
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #470                    Status: Released
+                  Compliance Date: AUG 29, 2011
+=============================================================================
+
+Associated patches: (v)SD*5.3*536  <<= must be installed BEFORE `SD*5.3*569'
+                    (v)SD*5.3*561  <<= must be installed BEFORE `SD*5.3*569'
+
+Subject: RECALL REMINDER LETTER PRINTING ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will implement the following fixes:
+  
+ 1. Allow printing for only one "second" letter or card for the 
+     nonresponsive patients within the Clinic Recall Print Menu [SDRR
+     PRINT MENU] option.
+  
+ 2. Correct the words for the Lab test(s) line that do not wrap 
+     properly when manually printing recall reminder letters.
+  
+ 3. An issue for patient's clinics that do not  match the selected 
+     hospital location when choosing sub option 
+     "Print a Letter by Patient" within the Clinic Recall Print Menu.
+  
+  
+ Associated Remedy tickets:
+ ==========================
+ 1. HD0000000391866 - Problem with Print Letters for Nonresponsive
+                      Patients.
+ 2. HD0000000418683 - Letter printing Lab test(s) line is not printing 
+                      correctly.
+    Duplicate:
+    HD0000000457175 - Recall reminder letter formatting
+ 3. HD0000000428646 - can manually print a letter even if pt does not have 
+                      a recall listed.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ BUTLER, PA
+ LEXINGTON, KY
+ MINNEAPOLIS, MN
+  
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000391866 - Problem with Print Letters for Nonresponsive Patients
+  
+    Problem:
+    --------
+    Site reported that nonresponsive patients keep receiving a "second"
+    recall letter, even though they have already received multiple second
+    letters. Often, patients are receiving another letter before they have
+    time to respond to a letter just received.
+  
+    Resolution:
+    -----------
+    Modified routine SDRRRECL and SDRRRECP to print only one "second" 
+    letter or card to the nonresponsive patients.
+  
+ 2. HD0000000418683 - Letter printing Lab test(s) line is not printing 
+                      correctly
+    Duplicate:
+    HD0000000457175 - Recall reminder letter formatting
+  
+    Problem:
+    --------
+    Site reported the text line starting with the words "Lab test(s)" do 
+    not wrap properly. The lines break at a fixed number of characters
+    splitting words into fragments.
+  
+    The problem only occurs with the manual print; the tasked print works 
+    fine. Only recall letters are affected.
+  
+    Resolution:
+    -----------
+    Modified routine SDRRRECL to change the tab setting from column 25 to 
+    2 and add three more lines before printing the "Lab test(s)" line. 
+    This also allows non-address information to be out of view from the
+    window of the envelope in which the recall reminders are sent.
+  
+    This change will make the tab setting consistent with auto print.
+  
+ 3. HD0000000428646 - can manually print a letter even if pt does not have 
+                      a recall listed
+  
+    Problem:
+    --------
+    Site reported that they can manually print a letter for a particular 
+    clinic even if patient does not have a recall listed for that clinic.
+    Also, patients with the same first letter of their last name and same
+    last 4 digits of SSN can print a reminder letter for the wrong patient
+    even though the hospital location does not match the one selected for
+    the letter.
+  
+    Resolution:
+    -----------
+    Modified routine SDRRRECL to prevent recall letters to be printed if 
+    patient's clinic does not match the selected hospital location. Also, 
+    when patients have the same first letter of their last
+    name and same last 4 digits of SSN, check if the clinic of the selected
+    patient matches the selected hospital location.
+  
+  
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the Recall 
+ Reminder and Scheduling users be off the system. Other VistA users will 
+ not be affected.
+  
+ Install Time - less than 2 minutes.
+  
+ 1.  Load Transport Global 
+     ---------------------
+  
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+   
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter SD*5.3*569):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     *** This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO. 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? YES//' answer YES.
+  
+        Clinic Recall Print Menu [SDRR PRINT MENU]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDRRRECL
+    Before: B85115679   After: B91056668  **536,561,569**
+Routine Name: SDRRRECP
+    Before: B67349870   After: B68844995  **536,569**
+ 
+Routine list of preceding patches: 561
+
+=============================================================================
+User Information:
+Entered By  : HSI,TUAN                      Date Entered  : APR 08, 2010
+Completed By: LANG,MICKEY                   Date Completed: JUL 13, 2011
+Released By : BENBOW,PHYLLIS O              Date Released : JUL 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,152 @@
+$TXT Created by DIMICELI,RON at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 05/03/11 at 13:50
+=============================================================================
+Run Date: OCT 26, 2011                     Designation: XU*8*543
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #461                      Status: Released
+                  Compliance Date: NOV 26, 2011
+=============================================================================
+
+Associated patches: (v)XU*8*312    <<= must be installed BEFORE `XU*8*543'
+                    (v)XU*8*523    <<= must be installed BEFORE `XU*8*543'
+                    (v)XU*8*546    <<= must be installed BEFORE `XU*8*543'
+
+Subject: Auto Sign-on fix
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch Tracking #: 51750855
+ Test Sites: Albuquerque, El Paso, N Florida/S Georgia HCS, San Diego VAMC
+ Blood Bank Clearance: 3/18/2010
+  
+ HD 384176, 387716
+ There are more cases of Auto Sign-on selecting the incorrect user with the 
+ use of Linux front ends.  We think it is caused by the interaction of 
+ several things;
+  1. The switch to ECP for the Linux front end so a lock timeout of zero can
+   sometimes return that the lock could not be gotten when there is not a
+   real lock being held.
+  2. Users that don't do a normal sign-off, but just close the terminal
+   emulator.
+  3. No date checking in the auto sign-on code.
+  4. A long Sign-on log so that the user's PC has been issued the IP address
+   of a user that did not sign-off.
+ Fix: A non-zero timeout on the lock has been added. The sign-on record must 
+ have been created within the last 8 hours. Added code so that if we have a 
+ workstation name (true for CPRS) and the Sign-on log has a workstation name 
+ they must match. Also, a better check for the IP address that only works
+ for SSH connections.
+  
+ A change to the Sign-on log purge code to make sure the cross references 
+ are cleaned up correctly.
+  
+ The option Send Test Pattern to Terminal [XUTTEST] did not allow the output
+ to be queued.
+ Test: Run the option and try and queue the output.
+  
+ HD 439273
+ SSL Proxy causes delays in sign-on when Auto Sign-on trys to call back to
+ the ClAgent.
+ Use option 'Edit Site IP lockout' to enter the IP address of a SSL proxy
+ or Terminal Server that should not be called by the Auto Sign-on code.
+  
+ =========================================================================
+ Installation:
+  
+ >>>Do not allow users to log in to the system during installation.
+ >>>Users may remain on the system.
+ >>>Allow KIDS to inhibit new sign-ons.
+ >>>TaskMan does *not* need to be stopped.
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the Transport global.
+       On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global
+          Compare Transport Global to Current System
+          Backup a Transport Global
+  
+   3.  Users can remain on the system. 
+       This patch can be loaded any non-peak time.
+       TaskMan can remain running.
+  
+   4.  Installation will take less than 2 minutes.
+          Install Package(s)  'XU*8.0*543'
+                               ==========
+       Accept the following defaults.
+  
+       Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  
+       Want KIDS to INHIBIT LOGONs during the install? Yes//
+  
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+  
+  
+ EXAMPLE OF POST INSTALL
+ =======================
+  
+ Running Post-Install Routine: POST^XU8P543
+  
+ Rename the routines in Patch 543
+  
+ I will now rename a group of routines specific to your operating system.
+ Routine:  ZOSVONT
+  
+ Routine:  ZIS4ONT Loaded, Saved as    %ZIS4
+ Routine:  ZISFONT
+ Routine:  ZISHONT
+  
+ ...(there is a long list of routines that are not saved)
+  
+ Routine:   ZTRDEL
+ Routine:   ZTMOVE
+ Installing ^%Z editor
+  
+ ALL DONE
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P543
+    Before:       n/a   After:    B31582  **543**
+Routine Name: XUDHUTL
+    Before:       n/a   After:   B552843  **543**
+Routine Name: XUS1
+    Before: B26024789   After: B25184482  **9,59,111,165,150,252,265,419,
+                                           469,523,543**
+Routine Name: XUS1B
+    Before:  B3544888   After:  B8553582  **59,337,395,469,543**
+Routine Name: XUSPURGE
+    Before:  B7738964   After:  B8394877  **180,312,543**
+Routine Name: ZIS4ONT
+    Before: B30953938   After: B31901858  **34,59,69,191,278,293,440,499,
+                                           524,546,543**
+ 
+Routine list of preceding patches: 312, 523, 546
+
+=============================================================================
+User Information:
+Entered By  : FORT,WALLY                    Date Entered  : MAR 16, 2010
+Completed By: SINGH,GURBIR                  Date Completed: OCT 25, 2011
+Released By : HARROD,PAUL                   Date Released : OCT 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

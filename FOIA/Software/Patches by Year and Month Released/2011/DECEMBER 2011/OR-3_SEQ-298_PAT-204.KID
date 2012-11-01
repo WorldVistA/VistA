@@ -1,0 +1,580 @@
+Released OR*3*204 SEQ #298
+Extracted from mail message
+**KIDS**:OR*3.0*204^
+
+**INSTALL NAME**
+OR*3.0*204
+"BLD",19701,0)
+OR*3.0*204^ORDER ENTRY/RESULTS REPORTING^0^3110623^y
+"BLD",19701,1,0)
+^^26^26^3110623^
+"BLD",19701,1,1,0)
+Problem:
+"BLD",19701,1,2,0)
+A site reported a problem with the transfer of complex Outpatient 
+"BLD",19701,1,3,0)
+Medication orders that contained a conjunction of THEN. The problem is 
+"BLD",19701,1,4,0)
+that when the order goes (in its entirety) to Inpatient Medications there 
+"BLD",19701,1,5,0)
+is no way for the provider or the finishing pharmacist to determine how 
+"BLD",19701,1,6,0)
+far into the process the order has progressed.
+"BLD",19701,1,7,0)
+ 
+"BLD",19701,1,8,0)
+The patient safety workgroup recommended that transfer of Outpatient 
+"BLD",19701,1,9,0)
+medication orders with a THEN conjunction should be prevented.
+"BLD",19701,1,10,0)
+ 
+"BLD",19701,1,11,0)
+Resolution:
+"BLD",19701,1,12,0)
+Modified routine ORCACT0 to disallow the transfer of a complex order with 
+"BLD",19701,1,13,0)
+THEN as the conjunction.
+"BLD",19701,1,14,0)
+ 
+"BLD",19701,1,15,0)
+Associated Remedy:
+"BLD",19701,1,16,0)
+==================
+"BLD",19701,1,17,0)
+HD0000000205100  -  1 Complex Orders Transferring for Providers
+"BLD",19701,1,18,0)
+ 
+"BLD",19701,1,19,0)
+ 
+"BLD",19701,1,20,0)
+Associated NSR(s):
+"BLD",19701,1,21,0)
+==================
+"BLD",19701,1,22,0)
+N/A
+"BLD",19701,1,23,0)
+ 
+"BLD",19701,1,24,0)
+ 
+"BLD",19701,1,25,0)
+Test Sites:
+"BLD",19701,1,26,0)
+===========
+"BLD",19701,4,0)
+^9.64PA^^
+"BLD",19701,6.3)
+1
+"BLD",19701,"ABPKG")
+n
+"BLD",19701,"KRN",0)
+^9.67PA^779.2^20
+"BLD",19701,"KRN",.4,0)
+.4
+"BLD",19701,"KRN",.401,0)
+.401
+"BLD",19701,"KRN",.402,0)
+.402
+"BLD",19701,"KRN",.403,0)
+.403
+"BLD",19701,"KRN",.5,0)
+.5
+"BLD",19701,"KRN",.84,0)
+.84
+"BLD",19701,"KRN",3.6,0)
+3.6
+"BLD",19701,"KRN",3.8,0)
+3.8
+"BLD",19701,"KRN",9.2,0)
+9.2
+"BLD",19701,"KRN",9.8,0)
+9.8
+"BLD",19701,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",19701,"KRN",9.8,"NM",1,0)
+ORCACT0^^0^B58407841
+"BLD",19701,"KRN",9.8,"NM","B","ORCACT0",1)
+
+"BLD",19701,"KRN",19,0)
+19
+"BLD",19701,"KRN",19.1,0)
+19.1
+"BLD",19701,"KRN",101,0)
+101
+"BLD",19701,"KRN",409.61,0)
+409.61
+"BLD",19701,"KRN",771,0)
+771
+"BLD",19701,"KRN",779.2,0)
+779.2
+"BLD",19701,"KRN",870,0)
+870
+"BLD",19701,"KRN",8989.51,0)
+8989.51
+"BLD",19701,"KRN",8989.52,0)
+8989.52
+"BLD",19701,"KRN",8994,0)
+8994
+"BLD",19701,"KRN","B",.4,.4)
+
+"BLD",19701,"KRN","B",.401,.401)
+
+"BLD",19701,"KRN","B",.402,.402)
+
+"BLD",19701,"KRN","B",.403,.403)
+
+"BLD",19701,"KRN","B",.5,.5)
+
+"BLD",19701,"KRN","B",.84,.84)
+
+"BLD",19701,"KRN","B",3.6,3.6)
+
+"BLD",19701,"KRN","B",3.8,3.8)
+
+"BLD",19701,"KRN","B",9.2,9.2)
+
+"BLD",19701,"KRN","B",9.8,9.8)
+
+"BLD",19701,"KRN","B",19,19)
+
+"BLD",19701,"KRN","B",19.1,19.1)
+
+"BLD",19701,"KRN","B",101,101)
+
+"BLD",19701,"KRN","B",409.61,409.61)
+
+"BLD",19701,"KRN","B",771,771)
+
+"BLD",19701,"KRN","B",779.2,779.2)
+
+"BLD",19701,"KRN","B",870,870)
+
+"BLD",19701,"KRN","B",8989.51,8989.51)
+
+"BLD",19701,"KRN","B",8989.52,8989.52)
+
+"BLD",19701,"KRN","B",8994,8994)
+
+"BLD",19701,"QUES",0)
+^9.62^^
+"BLD",19701,"REQB",0)
+^9.611^1^1
+"BLD",19701,"REQB",1,0)
+OR*3.0*289^2
+"BLD",19701,"REQB","B","OR*3.0*289",1)
+
+"MBREQ")
+0
+"PKG",22,-1)
+1^1
+"PKG",22,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",22,20,0)
+^9.402P^^
+"PKG",22,22,0)
+^9.49I^1^1
+"PKG",22,22,1,0)
+3.0^2971217^2980204^64
+"PKG",22,22,1,"PAH",1,0)
+204^3110623
+"PKG",22,22,1,"PAH",1,1,0)
+^^26^26^3110623
+"PKG",22,22,1,"PAH",1,1,1,0)
+Problem:
+"PKG",22,22,1,"PAH",1,1,2,0)
+A site reported a problem with the transfer of complex Outpatient 
+"PKG",22,22,1,"PAH",1,1,3,0)
+Medication orders that contained a conjunction of THEN. The problem is 
+"PKG",22,22,1,"PAH",1,1,4,0)
+that when the order goes (in its entirety) to Inpatient Medications there 
+"PKG",22,22,1,"PAH",1,1,5,0)
+is no way for the provider or the finishing pharmacist to determine how 
+"PKG",22,22,1,"PAH",1,1,6,0)
+far into the process the order has progressed.
+"PKG",22,22,1,"PAH",1,1,7,0)
+ 
+"PKG",22,22,1,"PAH",1,1,8,0)
+The patient safety workgroup recommended that transfer of Outpatient 
+"PKG",22,22,1,"PAH",1,1,9,0)
+medication orders with a THEN conjunction should be prevented.
+"PKG",22,22,1,"PAH",1,1,10,0)
+ 
+"PKG",22,22,1,"PAH",1,1,11,0)
+Resolution:
+"PKG",22,22,1,"PAH",1,1,12,0)
+Modified routine ORCACT0 to disallow the transfer of a complex order with 
+"PKG",22,22,1,"PAH",1,1,13,0)
+THEN as the conjunction.
+"PKG",22,22,1,"PAH",1,1,14,0)
+ 
+"PKG",22,22,1,"PAH",1,1,15,0)
+Associated Remedy:
+"PKG",22,22,1,"PAH",1,1,16,0)
+==================
+"PKG",22,22,1,"PAH",1,1,17,0)
+HD0000000205100  -  1 Complex Orders Transferring for Providers
+"PKG",22,22,1,"PAH",1,1,18,0)
+ 
+"PKG",22,22,1,"PAH",1,1,19,0)
+ 
+"PKG",22,22,1,"PAH",1,1,20,0)
+Associated NSR(s):
+"PKG",22,22,1,"PAH",1,1,21,0)
+==================
+"PKG",22,22,1,"PAH",1,1,22,0)
+N/A
+"PKG",22,22,1,"PAH",1,1,23,0)
+ 
+"PKG",22,22,1,"PAH",1,1,24,0)
+ 
+"PKG",22,22,1,"PAH",1,1,25,0)
+Test Sites:
+"PKG",22,22,1,"PAH",1,1,26,0)
+===========
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","ORCACT0")
+0^1^B58407841^B56723098
+"RTN","ORCACT0",1,0)
+ORCACT0 ;SLC/MKB-Validate order action ;5/19/08
+"RTN","ORCACT0",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**7,27,48,72,86,92,94,141,165,177,173,190,215,243,289,204**;Dec 17, 1997;Build 1
+"RTN","ORCACT0",3,0)
+ ;
+"RTN","ORCACT0",4,0)
+ ;Reference to REFILL^PSOREF supported by IA #2399
+"RTN","ORCACT0",5,0)
+ ;
+"RTN","ORCACT0",6,0)
+VALID(IFN,ACTION,ERROR,NATR) ; -- Determines if action is valid for order IFN
+"RTN","ORCACT0",7,0)
+ N OR0,OR3,ORA0,AIFN,PKG,DG,ORDSTS,ACTSTS,VER,X,Y,MEDPARM K ERROR
+"RTN","ORCACT0",8,0)
+ S OR0=$G(^OR(100,+IFN,0)),OR3=$G(^(3)),PKG=$$NMSP^ORCD($P(OR0,U,14))
+"RTN","ORCACT0",9,0)
+ S DG=$P($G(^ORD(100.98,+$P(OR0,U,11),0)),U,3)
+"RTN","ORCACT0",10,0)
+ S MEDPARM=$S($G(NATR)="A":2,PKG'="PS":2,'$D(^XUSEC("OREMAS",DUZ)):2,DG="NV RX":$$GET^XPAR("ALL","OR OREMAS NON-VA MED ORDERS"),1:$$GET^XPAR("ALL","OR OREMAS MED ORDERS"))
+"RTN","ORCACT0",11,0)
+ S AIFN=$P(IFN,";",2) S:'AIFN AIFN=+$P(OR3,U,7)
+"RTN","ORCACT0",12,0)
+ S ORA0=$G(^OR(100,+IFN,8,AIFN,0)),ACTSTS=$P(ORA0,U,15)
+"RTN","ORCACT0",13,0)
+ S ORDSTS=$P(OR3,U,3),VER=$S($P(OR0,U,5)["101.41":3,1:2)
+"RTN","ORCACT0",14,0)
+CM I ACTION="CM" S ERROR="This action is no longer available!" G VQ ; ward comments - no restrictions
+"RTN","ORCACT0",15,0)
+FL I ACTION="FL" D  G VQ ; flag
+"RTN","ORCACT0",16,0)
+ . I +$G(^OR(100,+IFN,8,AIFN,3)) S ERROR="This order is already flagged!" Q
+"RTN","ORCACT0",17,0)
+UF I ACTION="UF" D  G VQ ; unflag
+"RTN","ORCACT0",18,0)
+ . I '+$G(^OR(100,+IFN,8,AIFN,3)) S ERROR="This order is not flagged!" Q
+"RTN","ORCACT0",19,0)
+DC1 I ACTION="DC",ACTSTS D  G VQ ; discontinue/cancel unrel or canc order
+"RTN","ORCACT0",20,0)
+ . I (ACTSTS=11)!(ACTSTS=10) D  Q  ; unreleased
+"RTN","ORCACT0",21,0)
+ .. I 'MEDPARM S ERROR="You are not authorized to cancel med orders!" Q
+"RTN","ORCACT0",22,0)
+ .. I $G(NATR)="A" S X=$O(^ORE(100.2,"AO",+IFN,0)) I X,'$G(^ORE(100.2,X,1)) S ERROR="Future event orders may not be auto-discontinued!" Q
+"RTN","ORCACT0",23,0)
+ . I ACTSTS=12 S ERROR="This order has been dc'd due to edit!" Q
+"RTN","ORCACT0",24,0)
+ . I ACTSTS=13 S ERROR="This order has been cancelled!" Q
+"RTN","ORCACT0",25,0)
+ES I (ACTION="ES")!(ACTION="OC")!(ACTION="RS")!(ACTION="DS") D ES^ORCACT01 G VQ ; sign
+"RTN","ORCACT0",26,0)
+VR I ACTION="VR" D  G VQ ; verify
+"RTN","ORCACT0",27,0)
+ . I $G(ORVER)="N",$P(ORA0,U,9) S ERROR="This order has been verified!" Q
+"RTN","ORCACT0",28,0)
+ . I $G(ORVER)="C",$P(ORA0,U,11) S ERROR="This order has been verified!" Q
+"RTN","ORCACT0",29,0)
+ . I $G(ORVER)="R",$P(ORA0,U,19) S ERROR="This order has been reviewed!" Q
+"RTN","ORCACT0",30,0)
+ . I (ACTSTS=11)!(ACTSTS=10) S ERROR="This order has not been released to the service." Q
+"RTN","ORCACT0",31,0)
+ . I AIFN=1,ORDSTS=5,PKG="PS" S X=$$DISABLED I X S ERROR=$P(X,U,2) Q
+"RTN","ORCACT0",32,0)
+DIS S X=$$DISABLED I X S ERROR=$P(X,U,2) G VQ
+"RTN","ORCACT0",33,0)
+MN I ACTION="MN" D  G VQ ; manually release (delayed)
+"RTN","ORCACT0",34,0)
+ . I ACTSTS'=10,ACTSTS'=11 S ERROR="This order has already been released!" Q
+"RTN","ORCACT0",35,0)
+ . I $P(OR0,U,12)="I",'$G(^DPT(+ORVP,.105)) S ERROR="This patient is not currently admitted!"
+"RTN","ORCACT0",36,0)
+GMRA I PKG="GMRA" S ERROR="This action is not allowed on an allergy/adverse reaction!" G VQ ; no actions allowed on Allergies
+"RTN","ORCACT0",37,0)
+MEDS I PKG="PS",'MEDPARM S ERROR="You are not authorized to enter med orders!" G VQ
+"RTN","ORCACT0",38,0)
+RW I ACTION="RW" D RW^ORCACT01 G VQ ; rewrite/copy
+"RTN","ORCACT0",39,0)
+XFR I ACTION="XFR" D  G VQ
+"RTN","ORCACT0",40,0)
+ . N A
+"RTN","ORCACT0",41,0)
+ . S A=""
+"RTN","ORCACT0",42,0)
+ . F  S A=$O(^OR(100,+IFN,4.5,"ID","CONJ",A)) Q:'A  I ^OR(100,+IFN,4.5,A,1)="X" S ERROR="Orders with a conjunction of 'EXCEPT' may not be transferred." Q
+"RTN","ORCACT0",43,0)
+ . F  S A=$O(^OR(100,+IFN,4.5,"ID","CONJ",A)) Q:'A  I ^OR(100,+IFN,4.5,A,1)="T" S ERROR="Orders with a conjunction of 'THEN' may not be transferred." Q
+"RTN","ORCACT0",44,0)
+ . I $G(ERROR)]"" Q
+"RTN","ORCACT0",45,0)
+ . D XFR^ORCACT01 ; transfer to in/outpt
+"RTN","ORCACT0",46,0)
+RN I ACTION="RN" D RN^ORCACT01 G VQ ; renew
+"RTN","ORCACT0",47,0)
+TRM I $$DONE G VQ ; ORDSTS=1,2,7,12,13
+"RTN","ORCACT0",48,0)
+EV I ACTION="EV" D  G VQ ; change delay event
+"RTN","ORCACT0",49,0)
+ . I ORDSTS'=10,ORDSTS'=11 S ERROR="This order has been released!" Q
+"RTN","ORCACT0",50,0)
+ . I DG="NV RX" S ERROR="Non-VA Med orders do not support this action!" Q
+"RTN","ORCACT0",51,0)
+ . I $$EVTORDER^OREVNTX(IFN) S ERROR="The release event for this order may not be changed!" Q
+"RTN","ORCACT0",52,0)
+ . S X=$P(ORA0,U,4) I X'=2,X'=3 S ERROR="Signed orders may not be delayed to another event!" Q
+"RTN","ORCACT0",53,0)
+DC2 I ACTION="DC",ACTSTS="" D  G VQ ; DC released order
+"RTN","ORCACT0",54,0)
+ . I $G(NATR)="A" D  Q:$D(ERROR)
+"RTN","ORCACT0",55,0)
+ .. S X=$O(^ORE(100.2,"AO",+IFN,0)) I X S:'$G(^ORE(100.2,X,1)) ERROR="Future event orders may not be auto-discontinued!" Q
+"RTN","ORCACT0",56,0)
+ .. I $$GET1^DIQ(9.4,+$P(OR0,U,14)_",",1)="PSO",$G(DGPMT)=1 Q  ;177 If admission auto-dc and order is outpt med then no further checking needed
+"RTN","ORCACT0",57,0)
+ .. I $G(DGPMT)=1,$P($G(^SC(+$P(OR0,U,10),0)),U,3)'="C" S ERROR="Only outpatient orders may be auto-discontinued!" Q
+"RTN","ORCACT0",58,0)
+ .. I $G(DGPMT)'=1,$P($G(^SC(+$P(OR0,U,10),0)),U,3)="C",PKG'="PS" S ERROR="Only inpatient orders may be auto-discontinued!" Q
+"RTN","ORCACT0",59,0)
+ . I PKG="RA",ORDSTS=6 S ERROR="Active Radiology orders cannot be discontinued!" Q
+"RTN","ORCACT0",60,0)
+ . I PKG="VBEC",ORDSTS=6 S ERROR="Active Blood Product orders cannot be discontinued!" Q
+"RTN","ORCACT0",61,0)
+ . I PKG="LR" D  Q
+"RTN","ORCACT0",62,0)
+ .. I $$COLLECTD S ERROR="Lab orders that have been collected may not be discontinued!" Q
+"RTN","ORCACT0",63,0)
+ .. I $G(NATR)="A","^12^38^"'[(U_$P($G(DGPMA),U,18)_U),$$VALUE^ORX8(+IFN,"COLLECT")="SP",$P(OR0,U,8)'<DT S ERROR="Future Send Patient orders may not be auto-discontinued!" Q
+"RTN","ORCACT0",64,0)
+ . I PKG="GMRC",ORDSTS=9 S ERROR="Consults orders with partial results cannot be discontinued!" Q
+"RTN","ORCACT0",65,0)
+ . I DG="DO",$G(DGPMT)'=3,ORDSTS=6,'$$NPO(+IFN) S ERROR="Active Diets cannot be discontinued; please order a new diet!" Q
+"RTN","ORCACT0",66,0)
+RL I ACTION="RL" D  G VQ  ; release hold
+"RTN","ORCACT0",67,0)
+ . I ORDSTS'=3 D  Q
+"RTN","ORCACT0",68,0)
+ ..I $P(ORA0,U,4)=2 S ERROR="Providers has not yet signed the hold order and therefor it cannot yet be released" Q
+"RTN","ORCACT0",69,0)
+ ..S ERROR="Orders not on hold cannot be released!" Q
+"RTN","ORCACT0",70,0)
+ . I ACTSTS S ERROR=$$ACTION($P(ORA0,U,2))_" orders cannot be released from hold!" Q
+"RTN","ORCACT0",71,0)
+ . N NATR,ACT S ACT=$S($P(ORA0,U,2)="HD":AIFN,1:+$P(OR3,U,7))
+"RTN","ORCACT0",72,0)
+ . S NATR=+$P($G(^OR(100,+IFN,8,ACT,0)),U,12),ACT=$P($G(^(0)),U,2)
+"RTN","ORCACT0",73,0)
+ . I PKG="RA"!(ACT'="HD")!($P($G(^ORD(100.02,NATR,0)),U,2)="S") S ERROR="Orders held by a service must be released from hold through the service!" Q
+"RTN","ORCACT0",74,0)
+AIFN S X=$P(ORA0,U,2) I AIFN>1,ACTSTS S ERROR="This action is not allowed on a "_$$ACTION(X)_" order!" G VQ
+"RTN","ORCACT0",75,0)
+RF I ACTION="RF" D  G VQ
+"RTN","ORCACT0",76,0)
+ . I DG'="O RX" S ERROR="Only Outpatient Med orders may be refilled!" Q
+"RTN","ORCACT0",77,0)
+ . I ORDSTS=5 S ERROR="Pending orders may not be refilled!" Q
+"RTN","ORCACT0",78,0)
+ . I ORDSTS=7 S ERROR="Expired orders may not be refilled!" Q
+"RTN","ORCACT0",79,0)
+ . N X,PSIFN S PSIFN=$G(^OR(100,+IFN,4))
+"RTN","ORCACT0",80,0)
+ . S X=$$REFILL^PSOREF(PSIFN) I X'>0 S ERROR=$P(X,U,2) Q
+"RTN","ORCACT0",81,0)
+CP I ACTION="CP" D  G VQ ; complete
+"RTN","ORCACT0",82,0)
+ . I PKG'="OR" S ERROR="Only generic text orders may be completed through this option!" Q
+"RTN","ORCACT0",83,0)
+ . I ORDSTS=11!(ORDSTS=10) S ERROR="This order has not been released!" Q
+"RTN","ORCACT0",84,0)
+AL I ACTION="AL" D  G VQ
+"RTN","ORCACT0",85,0)
+ . I PKG'="LR",PKG'="RA",PKG'="GMRC" S ERROR="This order does not generate results!" Q
+"RTN","ORCACT0",86,0)
+ . I $P(OR3,U,10) S ERROR="This order is already flagged to alert the provider when resulted!" Q
+"RTN","ORCACT0",87,0)
+XX I ACTION="XX" D  G VQ ; edit/change
+"RTN","ORCACT0",88,0)
+ . I ORDSTS=7 S ERROR="Expired orders may not be changed!" Q
+"RTN","ORCACT0",89,0)
+ . D XX^ORCACT01
+"RTN","ORCACT0",90,0)
+HD I ACTION="HD" D  G VQ ; hold
+"RTN","ORCACT0",91,0)
+ . I PKG="FH" S ERROR="Diet orders cannot be held!" Q
+"RTN","ORCACT0",92,0)
+ . I PKG="LR" S ERROR="Lab orders cannot be held!" Q
+"RTN","ORCACT0",93,0)
+ . I PKG="RA" S ERROR="Radiology orders cannot be held!" Q
+"RTN","ORCACT0",94,0)
+ . I PKG="GMRC" S ERROR="Consult orders cannot be held!" Q
+"RTN","ORCACT0",95,0)
+ . I DG="NV RX" S ERROR="Non-VA Med orders cannot be held!" Q
+"RTN","ORCACT0",96,0)
+ . I ORDSTS=3 S ERROR="This order is already on hold!" Q
+"RTN","ORCACT0",97,0)
+ . I ORDSTS'=6,PKG="PS" S ERROR="Only active Pharmacy orders may be held!" Q
+"RTN","ORCACT0",98,0)
+ . I (ORDSTS=11)!(ORDSTS=10) S ERROR="This order has not been released to the service." Q
+"RTN","ORCACT0",99,0)
+VQ S Y=$S($D(ERROR):0,1:1)
+"RTN","ORCACT0",100,0)
+ Q Y
+"RTN","ORCACT0",101,0)
+ ;
+"RTN","ORCACT0",102,0)
+ACTION(X) ; -- Return text of action X
+"RTN","ORCACT0",103,0)
+ N Y S Y=$S(X="NW":"New",X="DC":"Discontinue",X="HD":"Hold",X="RL":"Release Hold",X="RN":"Renew",1:X)
+"RTN","ORCACT0",104,0)
+ Q Y
+"RTN","ORCACT0",105,0)
+ ;
+"RTN","ORCACT0",106,0)
+NPO(ORIFN) ; -- Returns 1 or 0, if order ORIFN is for NPO
+"RTN","ORCACT0",107,0)
+ N X,Y S X=$$VALUE^ORX8(+ORIFN,"ORDERABLE",1,"E")
+"RTN","ORCACT0",108,0)
+ S Y=$S($E(X,1,3)="NPO":1,1:0)
+"RTN","ORCACT0",109,0)
+ Q Y
+"RTN","ORCACT0",110,0)
+ ;
+"RTN","ORCACT0",111,0)
+COLLECTD() ; -- Lab order collected/active (incl all children)?
+"RTN","ORCACT0",112,0)
+ I (ORDSTS=11)!(ORDSTS=10) Q 0 ; unreleased
+"RTN","ORCACT0",113,0)
+ I '$O(^OR(100,+IFN,2,0)) Q (ORDSTS'=5)
+"RTN","ORCACT0",114,0)
+ ;I ORDSTS'=6 Q 1 ; Parent -> active instead of pending
+"RTN","ORCACT0",115,0)
+ N Y,Z S Y=1,Z=0
+"RTN","ORCACT0",116,0)
+ F  S Z=$O(^OR(100,+IFN,2,Z)) Q:Z'>0  I $P($G(^OR(100,Z,3)),U,3)=5 S Y=0 Q
+"RTN","ORCACT0",117,0)
+ Q Y
+"RTN","ORCACT0",118,0)
+ ;
+"RTN","ORCACT0",119,0)
+DONE() ; -- sets ERROR if terminal status
+"RTN","ORCACT0",120,0)
+ I ORDSTS=1 S ERROR="This order has been discontinued!" Q 1
+"RTN","ORCACT0",121,0)
+ I ORDSTS=2 S ERROR="This order has been completed!" Q 1
+"RTN","ORCACT0",122,0)
+ I ORDSTS=7,DG'="O RX" S ERROR="This order has expired!" Q 1
+"RTN","ORCACT0",123,0)
+ I ORDSTS=12 S ERROR="This order has been changed!" Q 1
+"RTN","ORCACT0",124,0)
+ I ORDSTS=13 S ERROR="This order has been cancelled!" Q 1
+"RTN","ORCACT0",125,0)
+ I ORDSTS=14 S ERROR="This order has lapsed!" Q 1
+"RTN","ORCACT0",126,0)
+ I ORDSTS=15 S ERROR="This order has been renewed!" Q 1
+"RTN","ORCACT0",127,0)
+ Q 0
+"RTN","ORCACT0",128,0)
+ ;
+"RTN","ORCACT0",129,0)
+DISABLED() ; -- Order dialog [or protocol] disabled?
+"RTN","ORCACT0",130,0)
+ N X,DLG S DLG=$P(OR0,U,5),X=0 I +DLG'>0 Q X
+"RTN","ORCACT0",131,0)
+ I VER'<3,DLG?1.N1";ORD(101.41," S X=$$MSG^ORXD(+DLG) Q X
+"RTN","ORCACT0",132,0)
+ S DLG=$S(PKG="RA":"RA OERR EXAM",PKG="GMRC":"GMRCOR CONSULT",1:"")
+"RTN","ORCACT0",133,0)
+ I $L(DLG) S DLG=+$O(^ORD(101.41,"AB",DLG,0)),X=$$MSG^ORXD(DLG)
+"RTN","ORCACT0",134,0)
+ Q X
+"VER")
+8.0^22.0
+"BLD",19701,6)
+^298
+**END**
+**END**

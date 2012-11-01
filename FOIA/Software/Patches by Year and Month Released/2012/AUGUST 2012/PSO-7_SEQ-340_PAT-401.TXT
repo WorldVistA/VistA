@@ -1,0 +1,126 @@
+$TXT Created by HERRING,VENESSA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 04/09/12 at 14:19
+=============================================================================
+Run Date: AUG 30, 2012                     Designation: PSO*7*401
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #340                      Status: Released
+                  Compliance Date: SEP 29, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*251   <<= must be installed BEFORE `PSO*7*401'
+
+Subject: Error Message
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will prevent an Undefined error when the Drug Class, for data
+ received from the HDR, does not exist in the site's VA Drug Class file 
+ (#50.605).
+  
+ Associated Remedy ticket(s):
+ ============================
+ HD0000000540720 - Error Message (PSPO2141) 
+ Duplicates:
+ HD0000000540856(d)
+ HD0000000540819(d)
+ HD0000000540663(d)
+ HD0000000541324(d)
+   
+ Test Sites:
+ ===========
+ Wilmington VA Medical Center
+ Charlie Norwood VA Medical Center
+ WM Jennings Bryan Dorn VA Medical Center - Columbia
+  
+ PSPO
+ ==== 
+ PSPO2141 
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ HD0000000540720 - Error Message (PSPO2141) 
+  
+ Problem:
+ --------
+ An Undefined error occurs if the Drug Class for a prescription received from 
+ the HDR does not exist in the site's VA Drug Class file (#50.605).
+  
+ Resolution:
+ -----------
+ Modify processing to display the message "Warning: The following drug class 
+ does not exist in the VA DRUG CLASS file (#50.605). Please do a manual 
+ Drug-Allergy order check and notify the pharmacy ADPAC for follow up." Then
+ list any Drug Classes that are not defined in the site's Drug Class 
+ file (#50.605).
+  
+ Technical Resolution:
+ ---------------------
+ Modify DRCL^PSODGAL1.  Create a list of Drug Classes that are not defined in
+ the site's Drug Class file then display the message above and the drug classes
+ found.
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install this 
+ patch when users are off the system.  It should take less than 2 minutes to
+ install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*401)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*401.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODGAL1
+    Before: B18486423   After: B23109209  **251,401**
+ 
+Routine list of preceding patches: 251
+
+=============================================================================
+User Information:
+Entered By  : HERRING,VENESSA               Date Entered  : DEC 06, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: AUG 15, 2012
+Released By : BAYLIS,RANDALL S              Date Released : AUG 30, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

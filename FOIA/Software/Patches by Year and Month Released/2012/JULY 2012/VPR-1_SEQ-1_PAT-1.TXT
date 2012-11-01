@@ -1,0 +1,215 @@
+$TXT Created by BUECHLER,MELANIE at DAYTSHR.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 05/22/12 at 17:20
+=============================================================================
+Run Date: JUL 31, 2012                     Designation: VPR*1*1
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: Mandatory
+Version : 1         SEQ #1                      Status: Released
+                  Compliance Date: AUG 31, 2012
+=============================================================================
+
+Associated patches: (v)VPR*1*0     <<= must be installed BEFORE `VPR*1*1'
+
+Subject: RPC UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Virtual Patient Record (VPR) package provides a remote procedure call 
+ (RPC) to enable extraction of patient health data from a Veterans Health 
+ Information Systems and Technology Architecture (VistA) database into an 
+ Extensible Markup Language (XML) document.  This patch will correct two 
+ reported issues with VPR 1.0, and make additional data domains available:
+  * Clinical Observations (CLiO)
+  * Clinical Procedures
+  * Inpatient Medications (complex orders)
+  * Insurance (from Integrated Billing)
+  * PCE Exams, Patient Education, and Skin Tests
+  * Womens Health Pregnancy Log, returned as a condition with the Problem 
+ List if the patient is currently pregnant
+  
+  
+ Patch Components
+ ================
+ This patch consists of routines only; eighteen existing routines are 
+ updated and seven new ones are added.
+  
+  
+ New Service Requests (NSRs)
+ ===========================
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ============================
+ PSPO #2183
+  
+  
+ Remedy Tickets & Issues
+ =======================
+  
+ 1. HD0000000592277  Non-VA Medications in NwHIN
+  
+ Problem:
+ -------
+ Nationwide Health Information Network (NwHIN) is looking for only active 
+ medications from VistA, but because non-VA medications are not filled by 
+ VA a status was not being returned for those; screening by status=active 
+ was preventing non-VA medications from displaying.
+  
+ Resolution:
+ ----------
+ A status will be determined and returned with each non-VA medication.
+  
+  
+ 2. [no Remedy#]     Vital Sign units
+  
+ Problem:
+ -------
+ The VistA Vitals application does not save a unit with some measurements, 
+ but NwHIN requires an appropriate unit of measure.
+  
+ Resolution:
+ ----------
+ VPR will now populate the units with the appropriate value, when Vitals 
+ does not explicitly return the assumed value.
+  
+  
+ Test Sites:
+ ==========
+ San Diego, CA
+ Hampton, VA
+ Upstate New York Health Care System
+  
+  
+ Documentation Retrieval Instructions
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from:
+   ftp://download.vista.med.va.gov/
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server:
+   
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library:
+  http://www4.va.gov/vdl/
+  
+ Title                         File Name                    FTP Mode
+ -----------------------------------------------------------------------
+ VPR Technical Manual          VPR_TM.PDF                   binary
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minute 
+ to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL, enter VPR*1.0*1.
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted Want KIDS to INHIBIT LOGONs during the install?
+     NO//
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// 
+  
+ 7.  If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 38
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPRD
+    Before: B24278674   After: B28899728  **1**
+Routine Name: VPRDGMPL
+    Before: B20610705   After: B27790775  **1**
+Routine Name: VPRDGMRA
+    Before: B21412184   After: B22392321  **1**
+Routine Name: VPRDGMRC
+    Before: B10314726   After: B10880986  **1**
+Routine Name: VPRDGMV
+    Before: B39440303   After: B41671211  **1**
+Routine Name: VPRDIB
+    Before:       n/a   After: B12692505  **1**
+Routine Name: VPRDLRA
+    Before: B69605973   After: B76300469  **1**
+Routine Name: VPRDMC
+    Before:       n/a   After: B58328454  **1**
+Routine Name: VPRDMDC
+    Before:       n/a   After: B44678829  **1**
+Routine Name: VPRDOR
+    Before:  B9187731   After: B13221791  **1**
+Routine Name: VPRDPROC
+    Before:  B8662758   After: B10570617  **1**
+Routine Name: VPRDPS
+    Before: B14378656   After: B18817165  **1**
+Routine Name: VPRDPSI
+    Before: B41960179   After: B41207623  **1**
+Routine Name: VPRDPSO
+    Before: B68282901   After: B15569449  **1**
+Routine Name: VPRDPSOR
+    Before:       n/a   After: B39128356  **1**
+Routine Name: VPRDPT
+    Before: B65865871   After: B70553505  **1**
+Routine Name: VPRDPXAM
+    Before:       n/a   After:  B9620825  **1**
+Routine Name: VPRDPXED
+    Before:       n/a   After:  B9831355  **1**
+Routine Name: VPRDPXHF
+    Before:  B9504608   After: B10068928  **1**
+Routine Name: VPRDPXSK
+    Before:       n/a   After:  B9706647  **1**
+Routine Name: VPRDRA
+    Before: B39795192   After: B41770325  **1**
+Routine Name: VPRDSDAM
+    Before:  B9762566   After: B20114385  **1**
+Routine Name: VPRDSR
+    Before: B29738621   After: B30371946  **1**
+Routine Name: VPRDTIU
+    Before: B61120410   After: B80235055  **1**
+Routine Name: VPRDVSIT
+    Before: B71801802   After: B89381077  **1**
+
+=============================================================================
+User Information:
+Entered By  : BUECHLER,MELANIE K            Date Entered  : MAR 01, 2012
+Completed By: CHIPMAN,HONEY                 Date Completed: JUL 31, 2012
+Released By : HINES,RICK                    Date Released : JUL 31, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

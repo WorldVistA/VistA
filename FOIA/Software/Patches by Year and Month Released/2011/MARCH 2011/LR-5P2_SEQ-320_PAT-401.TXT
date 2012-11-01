@@ -1,0 +1,232 @@
+
+=============================================================================
+Run Date: MAR 08, 2011                     Designation: LR*5.2*401
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #320                    Status: Released
+                  Compliance Date: APR 22, 2011
+=============================================================================
+
+Associated patches: (v)LR*5.2*325  <<= must be installed BEFORE `LR*5.2*401'
+                    (v)VBEC*1*10   <<= must be installed BEFORE `LR*5.2*401'
+
+Subject: VBECS RELATED LAB UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ LR*5.2*401 is exported as part of the VistA Blood Establishment 
+ Computer System (VBECS) Version 1.5.1.0 release.
+  
+ VBECS related VistA patches require customer validation in local 
+ Test accounts prior to installation in Production to meet Food & 
+ Drug Administration (FDA) requirements. The user validates the 
+ Blood Bank software for its intended use prior to its acceptance 
+ and use for patient care.
+  
+ Therefore, it is imperative that OI&T Field Operations coordinate 
+ the installation of Blood Bank software patches with Pathology & 
+ Laboratory Medicine Service staff to allow adequate time for impact 
+ analysis and testing the changes prior to installation in Production. 
+  
+  
+ The LR*5.2*401 patch, in conjunction with VBEC*1.0*10 address several
+ issues. Refer to the VBECS 1.5.1.0 Release Notes for sample validation 
+ scenarios: 
+  
+  1. 092 VistA MR 032310 - This will move the check for workload
+     transmissions from the XTMP global to a VBECS name spaced 
+     global and limit the transmission of workload from VBECS to VistA 
+     to once per day. 
+  
+  2. 094 VistA MR 041310 - This will correct problems with LMIP workload
+     Reporting to the DSS extract. 
+  
+  3. 095 VistA MR 042210 - This will correct workload reporting problems
+     with multidivisional LMIP by changing the IEN lookup process so 
+     that each VBECS division in a shared server will transmit 
+     uniquely identified workload to VistA.
+  
+  4. 097 VistA MR 060210 - This ensures workload processing in VistA 
+     when a user ID is not recorded for a VBECS workload event. 
+  
+ There is also a VistA Blood Establishment Computer Software (VBECS) 
+ 1.5.1.0 server update patch that is also being released. Please refer 
+ to the VistA Blood Establishment Computer Software (VBECS) 1.5.1.0 
+ Release Notes for detailed information about corrections in that patch. 
+ These documents will be found in the VBECS_1_5_1_DOCS_BUNDLE.ZIP file.
+  
+ BLOOD BANK CLEARANCE: 
+ =====================
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*401 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch 
+  does not alter or modify any VistA Blood Bank software design 
+  safeguards or safety critical elements functions.
+  
+  RISK ANALYSIS: Changes made by patch LR*5.2*401 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+  
+ ROUTINES:
+ =========
+  LRCAPBV
+  LRCAPBV1
+  
+ REMEDY TICKETS:
+ ===============
+  HD0000000412074
+  HD0000000411624
+  HD0000000409755
+  HD0000000406017
+  HD0000000403691
+  HD0000000400426
+  HD0000000399468
+  HD0000000390694
+  HD0000000387587
+  HD0000000387352
+  HD0000000386861
+  HD0000000385878
+  HD0000000383846
+  HD0000000377602
+  HD0000000376293
+  HD0000000317027
+  
+ TEST SITES:
+ ===========
+  DURHAM, N.C. 
+  HEARTLAND-EAST HCS 
+  MILWAUKEE, WI 
+  PHILADELPHIA, PA 
+  SEATTLE, WA 
+  SAN DIEGO, CA 
+  SAN FRANCISCO, CA 
+  
+ INSTALLATION INFORMATION:
+ ==========================
+  
+ The file listed below is obtained via the controlled VBECS software 
+ FTP. The installation of VBECS and its related patches are being 
+ handled as a controlled release until all sites have installed. 
+  
+ Sites that have already installed VBECS in test or production must 
+ obtain the LR*5.2*401 patch from the controlled VBECS software FTP 
+ site at: 
+      IP: 10.3.21.76 
+      Port: 20001 
+  
+      Enter your Domain and NT user name and password to gain access.
+  
+ These patches are released with a (30) day compliance for all sites that 
+ have VBECS installed in test or production.
+  
+ Sites that have not installed VBECS will be contacted by the VBECS 
+ Implementation Manager prior to your installation date. Access 
+ to the controlled VBECS software FTP site will be granted along with 
+ the location of the patch at that time.
+  
+ Installation Files: 
+ ===================
+  LR_5_2_401.KID
+  
+ Documentation:  
+ ============== 
+ Documentation is available for the VBECS package on the 
+ ANONYMOUS.SOFTWARE directory at one of the following Office of 
+ Information (OI) Field Offices. Sites will be able to utilize
+ Documentation in either the ".PDF" or "DOC" format after they extract 
+ the ZIP file.
+  
+ The preferred method is to FTP the files from:
+ Download.vista.med.va.gov
+  
+ This transmits files from the first available FTP server. Sites may also 
+ elect to retrieve documentation directly from a specific server as 
+ follows:
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+  
+ NOTE:  The ZIP file listed below will be listed in each of the 
+ VBECS and LR patches that are part of the VBECS package and associated 
+ Patches. It only needs to be downloaded once.
+  
+ File Name                                   Retrieval format:  
+ ===========                                 ================= 
+ VBECS_1_5_1_DOCS_BUNDLE.ZIP                 BINARY 
+  
+  
+ The following files are contained in the VBECS_1_5_1_DOCS_BUNDLE.ZIP file 
+ and will not be individually located on the OI Field Office Anonymous 
+ Directories.
+  
+ The VBECS_1_5_1_DOCS_BUNDLE.ZIP file needs to be extracted on your 
+ system for use.
+  
+ =======================================================================
+ VistA Blood Establishment Computer Software (VBECS) 1.5.1 Patch 
+ Installation Guide.doc
+ VistA Blood Establishment Computer Software (VBECS) 1.5.1 Patch 
+ Installation Guide.pdf
+ VistA Blood Establishment Computer Software (VBECS) 1.5.1.0 
+ Release Notes.doc
+ VistA Blood Establishment Computer Software (VBECS) 1.5.1.0 
+ Release Notes.pdf
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be loaded with users on the system.
+ Installation will take less than 5 minutes.
+  
+     1) Use the 'LOAD A DISTRIBUTION' option on the KIDS Installation
+        menu. The Host File name is LR_5_2_401.KID Answer YES to the
+        question: Want to Continue with Load? YES// 
+     2) From the Kernel Installation and Distribution System Menu,
+        select the Installation menu.
+     3) From this menu, you may elect to use the following options
+        (when prompted for the INSTALL NAME, enter LR*5.2*401).
+        a) Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b) Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch
+           (routines, DDs, templates, etc.).
+        c) Verify Checksums in Transport Global - this option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+        d) Print Transport Global - this option will allow you to view 
+           the components of the KIDS build.
+     4) Use the Install Package(s) option and select the package 
+        LR*5.2*401.
+     5) When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//'  respond NO
+     6) When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//'  respond NO.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRCAPBV
+    Before: B50416998   After: B56413322  **325,401**
+Routine Name: LRCAPBV1
+    Before:  B5105874   After:  B5486069  **325,401**
+ 
+Routine list of preceding patches: 325
+
+=============================================================================
+User Information:
+Entered By  : MORTON,RANDY                  Date Entered  : JAN 15, 2010
+Completed By: KANIA,KEVIN                   Date Completed: FEB 07, 2011
+Released By : CURTIS,SEAN                   Date Released : MAR 08, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

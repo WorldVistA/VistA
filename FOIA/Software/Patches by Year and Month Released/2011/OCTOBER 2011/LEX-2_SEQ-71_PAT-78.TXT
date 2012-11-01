@@ -1,0 +1,268 @@
+$TXT Created by ROWE,KIMBALL at LEXNXT.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 10/04/11 at 13:02
+=============================================================================
+Run Date: OCT 18, 2011                     Designation: LEX*2*78
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #71                      Status: Released
+                  Compliance Date: OCT 25, 2011
+=============================================================================
+
+Associated patches: (v)LEX*2*77    <<= must be installed BEFORE `LEX*2*78'
+
+Subject: Code Set FY12 1st Qtr Update
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+  This patch contains the FY12 1st Quarter Code Set distribution with 99
+  changes effective Oct 01, 2011.  Also included are three fixes for problems
+  reported by sites on Remedy Tickets.
+  
+  This patch installs the data for the following Informational patches:
+   
+            ICD*18.0*59
+            ICPT*6.0*57
+   
+  This patch writes to the following files:
+   
+       ICD DIAGNOSIS             #80       ^ICD9(       ICR 4485
+       ICD OPERATION/PROCEDURE   #80.1     ^ICD0(       ICR 4486
+       CPT                       #81       ^ICPT(       ICR 4489
+       CPT MODIFIER              #81.3     ^DIC(81.3,   ICR 4492
+       LEXICON files          #757-757.41  ^LEX(        N/A
+   
+  ENHANCEMENTS
+  ============
+   
+    FY12 1st Quarter Update
+  
+      CPT Procedure Revisions
+      -----------------------
+  
+        Effective Oct 01, 2011                                (4 Codes)
+          75962   75964   93271   93923
+  
+      HCPCS Procedure Additions
+      -------------------------
+  
+        Effective Oct 01, 2011                                (3 Codes)
+          C1830   C1840   C9286
+  
+      ICD Diagnosis Inactivations
+      ---------------------------
+  
+        Effective Oct 01, 2011                               (33 Codes)
+          041.4   173.0   173.1   173.2   173.3   173.4   173.5   173.6
+          173.7   173.8   173.9   284.1   286.5   310.8   425.1   444.0
+          512.8   516.3   518.5   596.8   631.    718.60  747.3   793.1
+          795.5   997.4   998.0   999.4   999.5   V12.2   V13.8   V19.1
+          V40.3
+  
+      ICD Diagnosis Re-Used
+      ---------------------
+  
+        Effective Oct 01, 2011                                (6 Codes)
+          282.40  282.43  282.44  282.45  282.46  282.47
+  
+      ICD Diagnosis Revisions
+      -----------------------
+  
+        Effective Oct 01, 2011                               (28 Codes)
+          317.    318.0   318.1   318.2   319.    323.41  323.42  365.01
+          488.11  488.12  488.19  646.70  646.71  646.73  995.0   995.60
+          995.61  995.62  995.63  995.64  995.65  995.66  995.67  995.68
+          995.69  999.31  V18.4   V79.2
+  
+      ICD Procedure Inactivations
+      ---------------------------
+  
+        Effective Oct 01, 2011                                 (1 Code)
+          02.2
+  
+      ICD Procedures Re-Used
+      ----------------------
+  
+        Effective Oct 01, 2011                                 (1 Code)
+          02.21
+  
+      ICD Procedure Revisions
+      -----------------------
+  
+        Effective Oct 01, 2011                               (23 Codes)
+          00.56   00.61   00.62   00.64   00.66   02.39   13.65   35.20
+          35.21   35.22   35.23   35.24   35.25   35.26   35.27   35.28
+          37.36   39.50   39.71   39.72   43.89   86.95   86.98
+  
+  
+  REMEDY TICKETS:
+  ==============
+  
+    497904 - Re-code 'stroke' as 434.91
+    504327 - Modifier AJ with 90818
+    514121 - Modifier 26 with 76010-76125
+  
+  
+  FTP SOFTWARE RETRIEVAL:
+  =======================
+  
+    Global Host File:                  LEX_2_78.GBL  (ASCII)
+  
+    The preferred method is to FTP the files from download.vista.med.va.gov,
+    which will transmit the files from the first available FTP server.
+  
+    The files may also be downloaded directly from a particular FTP
+    location at the following locations.
+  
+         Hines           ftp.fo-hines.med.va.gov
+         Albany          ftp.fo-albany.med.va.gov
+         Salt Lake       ftp.fo-slc.med.va.gov
+  
+         Files are available in the ANONYMOUS.SOFTWARE directory. 
+  
+  INSTALLATION INSTRUCTIONS
+  =========================
+  
+     1)  Users may be on the system during the install of LEX*2.0*78.
+         It is recommended that this patch be installed during non-peak
+         hours.  This patch should take from 19 to 40 minutes to install
+         depending on the system.
+  
+             Create a backup    12-25 minutes
+             Load the Global    01-05 minutes
+             Kids Install       06-10 minutes
+  
+     2)  Create a backup of the following global files before continuing:
+  
+             ICD Diagnosis               #80         ^ICD9(
+             ICD Operation/Procedure     #80.1       ^ICD0(
+             CPT/HCPCS Procedure         #81         ^ICPT(
+             CPT Modifier                #81.3       ^DIC(81.3,
+             Lexicon Files            #757-757.41    ^LEX(
+  
+         These backup files may get as large as 1.5 gigabytes.  Make sure
+         space is available before proceeding.  It should take from 12 to
+         25 minutes to create the backup files.
+  
+         When you are creating a backup of non-subscripted globals, you are
+         saving the entire global.  You should use the utility ^%GO for
+         non-subscripted globals, and when prompted for a global, enter 
+         the global root (global name only, no open parenthesis, no file
+         number and no commas, as shown below).  Examples:
+  
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICD9            ICD Diagnosis
+             ^ICD0            ICD Operation/Procedure
+             ^ICPT            CPT/HCPCS Procedure
+             ^LEX             Lexicon Files
+  
+         When you are creating a backup of a subscripted global, you are
+         saving a partial global (a file within a global).  You should use
+         the utility ^%GOGEN, and when prompted for a global, enter the open
+         global reference (as shown below).  Examples:
+  
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^DIC(81.3,       CPT Modifier
+  
+     3)  Install the data from the global host file LEX_2_78.GBL.  This
+         file contains the Lexicon Utility's import global ^LEXM.
+  
+         This global is approximately 56 megabytes in size.  Make sure
+         there is sufficient space available to load this global with
+         journaling on.  The loading of the global should take from 
+         1 to 5 minutes.
+  
+         Thin Client Global Restore
+  
+           Using the Cache Thin Client, right-click on the Cache 
+           cube, then select "Explorer."  Open the "Namespaces"
+           folder, then open the "VAH" folder, and right click on
+           the "Globals" folder. Select the "Import from disk" 
+           option. Click on the "Options..." button.  Select the 
+           "Globals" tab, make sure the format is VAX DSM, then 
+           click "OK." Find the file in the directory, double click
+           on LEX_2_78.GBL.  Next, select "Import All."  At the 
+           prompt "Do you wish to restore '^LEXM'," select "Yes."
+  
+         Programmer Mode
+  
+           From the Programmer prompt, execute the following routine:
+  
+             >D ^%GI
+             
+             Global input
+             
+             Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_78.GBL
+             Parameters? "RS" => 
+             Globals were saved on 04 Oct 2011  12:56 PM   Cache
+             with description: LEX*2.0*78 Data
+            
+             Input option: A
+             ^LEXM
+  
+     4)  Set up user and IO variables (D ^XUP) for programmer access.
+  
+     5)  Distribution Load:
+  
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+  
+     6)  KIDS Installation:
+  
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LEX*2.0*78.
+  
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+  
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+  
+         The KIDs install should take from 6-10 minutes.
+  
+     7)  Cleanup
+  
+         a)  The Environment Check routine LEX2078 and the Post-Install 
+             routine LEX2078P should be deleted using the KERNEL option 
+             'Delete Routines' [XTRDEL] upon completion of the
+             installation.
+  
+             NOTE:  The installation of this patch should trigger an
+                    update protocol and may spawn background tasks for 
+                    the Clinical Reminders or Consult packages.  You 
+                    do not need to wait for these background jobs to 
+                    complete to delete the Environment Check and 
+                    Post-Install routines.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2078
+    Before:       n/a   After:B108593250  **78**
+Routine Name: LEX2078P
+    Before:       n/a   After: B21121022  **78**
+
+=============================================================================
+User Information:
+Entered By  : ROWE,KIMBALL                  Date Entered  : APR 26, 2011
+Completed By: BASKETT,BARBARA J             Date Completed: OCT 13, 2011
+Released By : SCHWARTZ,VIKIE                Date Released : OCT 18, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

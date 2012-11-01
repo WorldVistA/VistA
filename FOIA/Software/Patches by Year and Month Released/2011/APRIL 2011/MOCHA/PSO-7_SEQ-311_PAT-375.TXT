@@ -1,0 +1,315 @@
+$TXT Created by BROWN,STANLEY A at VEHUCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Thursday, 02/17/11 at 13:06
+=============================================================================
+Run Date: APR 19, 2011                     Designation: PSO*7*375
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #311                      Status: Released
+                  Compliance Date: SEP 15, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*251   <<= must be installed BEFORE `PSO*7*375'
+                    (v)PSS*1*136   <<= must be installed BEFORE `PSO*7*375'
+
+Subject: MOCHA v1.0 (Increment 3) add on patch to PSO*7.0*251
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is part of a group of patches that make up the new Medication
+ Order Check Healthcare Application v1.0 (MOCHA).  These patches will replace
+ most of the current VistA medication order checking system with version 1.0
+ of the new Medication Order Check Healthcare Application (MOCHA) system that
+ uses the First DataBank (FDB) Drug Information Framework (DIF) interfaces
+ and database. The VistA Drug Interaction module will be replaced by the FDB
+ Drug-Drug Interaction Module (DDIM). 
+ The VistA Duplicate Class module will be replaced by the FDB Enhanced
+ Therapeutic Classification (ETC) System. In addition, the following three
+ order checks that use VistA data have been added to Inpatient Medications
+ and Outpatient Pharmacy. These checks currently occur in Computerized
+ Patient Record System (CPRS), but will be new to Pharmacy with the
+ installation of these patches:
+  
+         Aminoglycoside Ordered
+         Dangerous Meds for Patients > 64
+         Glucophage - Lab Results
+   
+ A new Graphical User Interface (GUI) module is also being introduced called
+ Pharmacy Enterprise Customization System (PECS), to be used only by members
+ of Pharmacy Benefits Management (PBM).  It will allow the NDF Support Group
+ to customize the data provided by FDB for use in VistA.
+  
+ The following three patient safety issues have also been addressed in 
+ this release:
+         Order Checks on PreMix IV Solutions (PSI-06-012)
+         Order Check display sequence changes (PSI-07-080)
+         Eliminating confusion in Inpatient Medications Order Check display 
+         and processing (PSI-07-080)
+  
+ Please refer to the MOCHA v1.0 Release Notes for additional information.
+   
+  
+ MOCHA v1.0 consists of two host files: PSS_1_136.zip,
+ PRE_1_3_INTERFACE_BUILD_T31.KID, and two patches PSS*1*117 and PSO*7*375.
+ These files and patches contain software that support MOCHA v1.0
+ functionality. The host files were created to simplify installation at
+ Veterans Health Administration (VHA) facilities and to assist in the
+ phased implementation release method for MOCHA v1.0.  To see current
+ status and target dates for Sites/VISN/Region please refer to the
+ following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx 
+  
+ Sites will be provided instructions and guidance on installation and
+ implementation by the MOCHA Implementation team.  Installation information
+ for MOCHA v1.0 is included in the VistA to MOCHA v1.0 Interface Installation
+ Guide and the MOCHA v1.0 Combined Build Installation Guide.  
+                                                                 
+  
+  ************************** WARNING ***************************
+  **************************************************************
+  If your facility has the Parata or Kirby Lester interface from ILC, this
+  patch will overwrite any "local" modifications in routines PSOCAN2 and
+  PSOCAN3. This could affect certain orders being sent across this
+  interface. The modifications will have to be reintroduced following
+  installation of this patch.
+  **************************************************************
+  ************************************************************** 
+  
+  
+ Patch Information:
+ PSS_1_136.zip includes the components necessary for the interface that
+ will be used in MOCHA v1.0:
+  PRE_I_3_INTERFACE_BUILD.KID (contains PSS*1*136) 
+  PSSPRE_1_0.XML     
+  
+ PRE_I_3_PHARMACY_BUILD.KID includes the following required patches to enable
+ the MOCHA v1.0 functionality:
+  PSO*7*251
+  PSJ*5*181
+  OR*3*272
+  
+ These patches will be distributed as stand alone patches via FORUM and
+ will support MOCHA v1.0:
+  PSS*1*117
+  PSO*7*375
+  
+ The software will be distributed in a controlled process due to the phased
+ implementation.  During each implementation phase, the Implementation Team
+ will provide each site the instructions and location to obtain the software.
+  
+ This patch, PSO*7*375, should be installed immediately after the MOCHA 
+ 1.0 patch group.
+  
+ This patch contains the following:
+  
+ 1. Corrects a problem when a tech/clerk reinstates a prescription
+ from previously being discontinued.  The problem occurs when the site
+ parameter VERFICATION (#.12) field in the OUTPATIENT SITE (#59) file is set
+ to 'No' and a user does not hold the PSORPH key and reinstates a
+ prescription, the prescription gets put into a 'NON-VERIFIED' status.  In
+ this situation the prescription should have a status of 'ACTIVE'.
+  
+ 2. Corrects a problem when a tech/clerk enters a new duplicate
+ drug and the confirmation message that the duplicate drug order was
+ discontinued did not display when it should have displayed.
+  
+ 3. During dosing edit, the messages for "no GCNSEQNO" and "not 
+ matched to NDF" is displaying once during dosing and again when 
+ enhanced order checks are performed.  A modification was made to 
+ correct this issue.
+  
+ 4. The exception message displayed for a free text dosage is formatted 
+ incorrectly and wrapping inappropriately. Additionally changes
+ were made to eliminate extra spaces.
+  
+ 5. Corrects a problem where the SIG for duplicate therapy med orders did not
+ format and display correctly (ccr3803).
+  
+ 6. Modifications have been made to exit order checks more efficiently 
+ (CCR 3779).
+  
+ 7. Corrected a hard error within the Discontinue Prescription(s) [PSO C] 
+ option (3813).
+  
+ 8. Corrects a problem when copying an Rx and the duplicate therapy Rx 
+ list selected for deletion does not re-display the complete list of Rxs
+ to be deleted as a duplicate therapy (ccr 3817).
+  
+ 9. OP Intervention Hidden Action When viewing interventions via the View
+ Intervention prompt data does not display correctly. Data is displayed until
+ screen has filled and then overlaps on bottom few lines. The user cannot
+ view the intervention due to scrolling issue (ccr 3821).
+  
+ 10. Corrected double return prompts occurring during new order entry in a 
+ scenario with 2 duplicate non-va medications (CCR 3824).
+  
+ 11. Corrected phantom sig from remote orders occurring when there is a 
+ therapeutic duplication with a local medication (CCR 3823).
+  
+ 12. Corrects issue where text from remote SIG carries forward to next
+ remote message (CCR 3826).
+  
+ 13. Corrects order check sequence. (CCR 3832)
+  
+ 14. IP REQ 3.8.10.28 Failing - no Therapeutic Duplication messages for OP
+ Therapeutic Duplication Discontinued Meds (ccr 3837).
+  
+ 15. Hard error during clerk reinstate of an rx with a duplicate drug non-va
+ med (ccr 3851).
+  
+ 16. IP Remote Rx display in Therapeutic Duplication warning does not match
+ the SRS and FR 3.8.10.16 (ccr 3853).
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch. 
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Associated PSIs: 
+ ----------------
+ N/A 
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ N/a
+  
+ Components Exported With Patch: 
+ -------------------------------
+  
+ N/A
+  
+                                                                          
+ Test Sites:
+ -----------
+ BOISE, ID
+ CHARLESTON, SC
+ KANSAS CITY, MO
+ NORTHERN CALIFORNIA HCS, CA
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+                
+  
+ Documentation Retrieval:
+  
+ N/A
+    
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ This patch, PSO*7*375, should be installed immediately after the MOCHA 
+ v1.0 patch group. Please refer to the VISTA TO MOCHA v1.0 INTERFACE
+ INSTALLATION GUIDE and the MOCHA v1.0 COMBINED BUILD INSTALLATION GUIDE.
+  
+ Do not install this patch while Outpatient Pharmacy users are on the
+ system or when Outpatient orders are being entered and signed through
+ Computerized Patient Record System. Installation will take no longer than
+ 5 minutes.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSO*7.0*375):
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as Data Dictionaries or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSO*7.0*375.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCAN
+    Before: B49079548   After: B49510977  **11,21,24,27,32,37,88,117,131,
+                                           185,253,251,375**
+Routine Name: PSOCAN2
+    Before: B76842420   After: B76751507  **8,18,62,46,88,164,235,148,
+                                           259,281,287,251,375**
+Routine Name: PSOCAN3
+    Before: B71472770   After: B70028792  **15,24,27,32,36,94,88,117,131,
+                                           146,139,132,223,235,148,249,
+                                           225,324,251,375**
+Routine Name: PSOCPPRE
+    Before: B10424566   After:  B8382340  **251,375**
+Routine Name: PSODDPR1
+    Before: B53867555   After: B63959036  **251,375**
+Routine Name: PSODDPR2
+    Before:B152050761   After:B152114617  **251,375**
+Routine Name: PSODDPR3
+    Before:B158305951   After:B101107926  **251,375**
+Routine Name: PSODDPR4
+    Before: B78835687   After: B96800031  **251,375**
+Routine Name: PSODDPR5
+    Before: B70994765   After: B78969137  **251,375**
+Routine Name: PSODDPRE
+    Before:B115217514   After:B107494371  **251,375**
+Routine Name: PSODELI
+    Before:  B7741003   After:  B7805536  **10,268,251,375**
+Routine Name: PSODGDG2
+    Before: B14020404   After: B14065824  **27,130,251,375**
+Routine Name: PSODOSU2
+    Before: B79224153   After: B78738834  **251,375**
+Routine Name: PSODOSUT
+    Before:B107545070   After:B108976039  **251,375**
+Routine Name: PSODRDU2
+    Before: B21988780   After: B22449078  **132,251,375**
+Routine Name: PSODRG
+    Before: B61621761   After: B66921179  **20,23,36,53,54,46,112,139,
+                                           207,148,243,268,324,251,375**
+Routine Name: PSODSPL
+    Before: B20367519   After: B21224855  **132,251,375**
+Routine Name: PSONEW2
+    Before: B41668970   After: B41973174  **32,37,46,71,94,124,139,157,
+                                           143,226,237,239,225,251,375**
+Routine Name: PSORENW0
+    Before: B84117072   After: B84148716  **11,27,32,59,64,46,71,96,100,
+                                           130,237,206,251,375**
+Routine Name: PSOVER
+    Before: B81926399   After: B79569350  **16,21,27,117,131,146,251,375**
+Routine Name: PSOVER1
+    Before:B108309187   After:B114770420  **32,46,90,131,202,207,148,243,
+                                           268,281,324,358,251,375**
+ 
+Routine list of preceding patches: 251
+
+=============================================================================
+User Information:
+Entered By  : BROWN,STANLEY A               Date Entered  : JAN 20, 2011
+Completed By: TASNEEM,SONIA                 Date Completed: APR 19, 2011
+Released By : VECE,VIRGINIA                 Date Released : APR 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

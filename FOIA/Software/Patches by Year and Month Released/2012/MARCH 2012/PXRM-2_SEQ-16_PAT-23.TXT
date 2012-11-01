@@ -1,0 +1,234 @@
+
+=============================================================================
+Run Date: MAR 08, 2012                     Designation: PXRM*2*23
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #16                      Status: Released
+                  Compliance Date: APR 08, 2012
+=============================================================================
+
+Associated patches: (v)PXRM*2*20   <<= must be installed BEFORE `PXRM*2*23'
+
+Subject: ARCH PILOT UPDATE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This build is a multi-package build that contains FB*3.5*138
+ and PXRM*2.0*23. It supports the third increment for Project ARCH 
+ (Access to Care Received Closer to Home).
+  
+ The Veterans' Mental Health And Other Care Improvements Act Of 2008, 
+ Section 403, Public Law 110-387 mandates that the Department of
+ Veterans Affairs (VA) conduct a pilot program over three years for
+ contract care of eligible Veterans in selected Veterans Integrated
+ Service Networks (VISNs).
+  
+ The Office of Policy Analysis within the Office of the Assistant
+ Deputy  Under Secretary for Health for Policy and Planning
+ (ADUSH/PP) requested the capability to automatically identify all
+ Veterans who are eligible for a high visibility Congressionally
+ mandated contract care pilot program (named Project ARCH, Access to
+ Care Received Closer to Home) in five VISNs (1, 6, 15, 18, and 19).
+  
+ FB*3.5*138:
+ This build adds the PROJECT ARCH REMINDER DELAY field (#38) to the 
+ FEE BASIS SITE PARAMETERS file (#161.4) that allows sites to customize
+ number of days that the Project ARCH Clinical Reminder will become due
+ again after the patient Declines or Refuses services offered. Two new
+ options are also installed on the Project ARCH Menu. The ARCH
+ Eligibility Data Upload option allows sites to upload the national
+ Project ARCH data extract files that contain the updates  for Project
+ ARCH Eligibility. The ARCH Clinical Reminder Due Delay option sets
+ the value in the new PROJECT ARCH REMINDER DELAY field with a number
+ between 1 and 180 days.
+  
+ PXRM*2*23:
+ This build places updated VA-PROJECT ARCH VISN CONTRACT CARE PILOT 
+ ELIGIBILITY in the Reminder Exchange file. Updates to this reminder
+ include a new Health Factor ARCH-SERVICE NEEDED THIS VISIT REFUSES.
+ The updates also include a mandatory checkbox indicating that the 
+ patient has signed the consent form when the ARCH-SERVICE NEEDED 
+ THIS VISIT CONSENTS Health Factor is selected in the Reminder
+ Dialog.
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+  
+ This patch addresses the following Remedy Tickets:
+ --------------------------------------------------
+ There is no Remedy Tickets associated with this patch.
+  
+  
+ This build contains the following new and existing components that 
+ will be installed during the post-init.
+  
+ ROUTINE
+  PXRMARCH                                                            
+  
+ TIU TEMPLATE FIELD
+  ARCH SERVICE LIST                                                   
+  ARCH CONSENT URL   
+  ARCH PATIENT SIGNED CONSENT                                            
+  ARCH OVERVIEW TEXT                                                  
+  ARCH FAQ URL                                                        
+  ARCH CARE COORDINATOR                                               
+  
+ HEALTH FACTORS
+  ARCH
+  ARCH-NO SERVICE NEEDED THIS VISIT                                   
+  ARCH-SERVICE NEEDED THIS VISIT DECLINES                             
+  ARCH-SERVICE NEEDED THIS VISIT CONSENTS
+  ARCH-SERVICE NEEDED THIS VISIT REFUSES                             
+  
+ REMINDER SPONSOR
+  VHA Office of the Assistant Deputy Under Secretary for Health for
+  Policy and Planning                             
+  
+ REMINDER COMPUTED FINDINGS
+  VA-PROJECT ARCH ELIGIBILITY
+  VA-ARCH REMINDER CUSTOM DUE DATE                                         
+  
+ REMINDER DEFINITION
+  VA-PROJECT ARCH VISN CONTRACT CARE PILOT                            
+  
+ REMINDER DIALOG
+  VA-PROJECT ARCH VISN CONTRACT CARE PILOT ELIGIBILITY                           
+  
+  Documentation:
+  ==============
+ Updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ The preferred method is to FTP (File Transfer Protocol) the files from
+ download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites
+ may also elect to retrieve software directly from a specific server as
+ follows:
+  
+ Albany          ftp.fo-albany.med.va.gov 
+ <ftp://ftp.fo-albany.med.va.gov>
+ Hines           ftp.fo-hines.med.va.gov  
+ <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City  ftp.fo-slc.med.va.gov    
+ <ftp://ftp.fo-slc.med.va.gov>
+  
+ This documentation will be in the form of Adobe Acrobat files.
+ The updated documentation associated with this patch is:
+  Installation Guide: Init8_ARC3_InstallationUserGuide.pdf
+  
+ Clinical Reminders documentation can also be found in the VistA
+ Documentation Library: (http://vista.med.va.gov/vdl/) or
+ http://www.va.gov/vdl.
+  
+ Build Components:
+ =================
+  
+  Data Dictionary:
+  ================
+  
+ FILE #       NAME
+ -------------------------------------------------------------------------------
+ 811.8       REMINDER EXCHANGE
+  
+  
+  Test Sites:
+  ===========
+ Togus
+ Richmond
+ Kansas City
+ Prescott
+ Fort Harrison
+  
+  
+  Host File
+  ==========
+ This is a multi-package build, consequently it will be available
+ only as a host file. The name of the file is
+ ARCH_PILOT_PROJECT_INCREMENT_3_0.KID.
+  
+ Sites will retrieve VistA software from the following FTP addresses. 
+ The preferred method is to FTP the files from
+ download.vista.med.va.gov.  This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software
+ directly from a specific server as follows:
+  
+ Albany          ftp.fo-albany.med.va.gov 
+ <ftp://ftp.fo-albany.med.va.gov>
+ Hines           ftp.fo-hines.med.va.gov  
+ <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City  ftp.fo-slc.med.va.gov    
+ <ftp://ftp.fo-slc.med.va.gov>
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system. Installation will
+ take less than 5 minutes. The Clinical Reminders Exchange entry
+ containing the reminder and dialog will be installed and the
+ installer may be prompted for replacement items. Because of this the
+ patch should not be queued and the site's Clinical Reminders manager
+ should be on hand during the install.
+  
+ 1. Use the 'Load a Distribution' option on the KIDS installation menu.
+    When prompted to enter a host file type in
+    [DIR]:ARCH_PILOT_PROJECT_INCREMENT_3_0.KID,
+    where [DIR] is the local directory where you have stored the host
+    file.
+  
+ 2. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    options, as desired:
+        Print Transport Global
+        Compare Transport Global to Current System
+        Verify Checksums in Transport Global
+        Backup a Transport Global
+  
+ 3. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    option to install the patch:
+        Install Package(s) ARCH PILOT PROJECT INCREMENT 3.0
+  
+ 4. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//", respond 'NO'.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+    NO//", respond 'NO'.
+  
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//", respond 'NO'.
+  
+ 7. The init routines PXRMP23E and PXRMP23I may be deleted once the
+    installation has completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMARCH
+    Before:  B2152245   After:  B4665333  **20,23**
+Routine Name: PXRMP23E
+    Before:       n/a   After:   B831621  **23**
+Routine Name: PXRMP23I
+    Before:       n/a   After:  B4131496  **23**
+ 
+Routine list of preceding patches: 20
+
+=============================================================================
+User Information:                          Hold Date     : MAR 08, 2012
+Entered By  : REDINGTON,PATRICK             Date Entered  : DEC 07, 2011
+Completed By: LEONARD,KEN                   Date Completed: MAR 08, 2012
+Released By : MONTGOMERY,ALAN               Date Released : MAR 08, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

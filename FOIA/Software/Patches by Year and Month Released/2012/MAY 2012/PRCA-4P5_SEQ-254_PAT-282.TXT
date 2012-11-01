@@ -1,0 +1,180 @@
+$TXT Created by HSI,TUAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 03/09/12 at 16:07
+=============================================================================
+Run Date: MAY 29, 2012                     Designation: PRCA*4.5*282
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #254                    Status: Released
+                  Compliance Date: JUN 04, 2012
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*273<<= must be installed BEFORE `PRCA*4.5*282'
+
+Subject: BAD DEBT REPORT CORRECTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ VA Central Office (VACO) reported an issue found in the Accounts 
+ Receivable Bad Debt Report [PRCA NR BAD DEBT ACCR. REPORT]. This defect 
+ causes "No Fault Auto" receivables to be incorrectly accounted for on the 
+ Bad Debt Report. Only members in the facility's local RC AR DATA COLLECTOR
+ mail group will receive this report.
+  
+  
+ Associated Remedy Ticket:
+ =========================
+ HD0000000526331 Located a defect in routine RCRJRBD
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Charleston, SC
+ Manchester, NH
+ Upstate New York HCS
+  
+  
+ Remedy Overview:
+ ================
+ HD0000000526331 Located a defect in routine RCRJRBD
+  
+ Problem:
+ --------
+ A). VA Central Office (VACO) reported an issue found in the Accounts 
+ Receivable Bad Debt Report. This defect causes "No Fault Auto" 
+ receivables to be incorrectly accounted for on the Bad Debt Report.
+  
+ B). In routine RCRJRBD, a LOCK is not compliant with the Programming
+ Standards and Conventions (SAC) standards. Based on the SAC, the LOCK
+ command must have a timeout. However, the LOCK command in routine
+ RCRJRBD is missing the timeout.
+  
+ 2.4.6 LOCK Command 
+  
+ 2.4.6.1 All LOCKs shall be of the incremental form. (Exemption: Kernel) 
+  
+ All incremental LOCKS must have a timeout, the timeout must not be less 
+ than the value of the Kernel variable "DILOCKTM". 
+  
+ Resolution:
+ -----------
+ A). Modified routine RCRJRBD to correct order of expression evaluation; 
+ the use of parentheses can alter the strict left to right order of 
+ expression evaluation. To get the correct Standard General Ledger  
+ (SGL) and Fund, both expressions have to be true. For example, the
+ Fund is 528711 AND the category has to be either Workman's Comp (6) OR 
+ No-Fault Auto (7). If both expressions are true, the SGL is 1319.5.
+  
+ The line of the code is changed
+ from "I $G(FUND)=528711&(CAT=6)!(CAT=7) Q 1319.5"
+ to   "I $G(FUND)=528711&((CAT=6)!(CAT=7)) Q 1319.5"
+  
+ So, the "No-Fault Auto" receivables will have the correct SGL for the 
+ Fund other than 528711. Otherwise, it will be causing the allowance in 
+ 528711 to be overstated.
+  
+ B). The timeout has been added to the LOCK command in routine RCRJRBD; 
+ therefore, the LOCK is now SAC compliant.
+  
+  
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the AR 
+ users be off the system. Other VistA users will not be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated).
+  
+ 1. Load Transport Global
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE Packman option.
+  
+ 2. Start up KIDS
+    -------------
+    Start up the Kernel Installation and Distribution system Menu
+    [XPD MAIN]:
+  
+         Edits and Distribution...
+         Utilities...
+         Installation...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+ 3. Select Installation Option:
+    ---------------------------
+    NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+          NAME, enter PRCA*4.5*282):
+    
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any 
+       other changes such as DD's or templates.
+    b. Compare Transport Global to Current system - This option will allow 
+       you to view all changes that will be made when this patch is 
+       installed. It compares all components of this patch (routines, DD's,
+       templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow you 
+       to ensure the integrity of the routines that are in the transport 
+       global.
+  
+ 4. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+    ** This is the step to start the installation of this KIDS patch:
+  
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//' answer NO.
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? YES//' answer YES.
+  
+    d. When prompted 'Enter options you wish to mark as 'Out of Order':'   
+       Enter the following option:
+  
+       Monthly NDB, SV and WR Regenerate [PRCA FMS NDB,SV,WR REGEN]
+       Bad Debt Report [PRCA NR BAD DEBT ACCR. REPORT]
+  
+    e. When prompted 'Enter protocols you wish to mark as 'Out of Order':'
+       press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCRJRBD
+    Before: B70045536   After: B70206811  **101,139,170,193,203,215,220,
+                                           138,239,273,282**
+ 
+Routine list of preceding patches: 273
+
+=============================================================================
+User Information:
+Entered By  : HSI,TUAN                      Date Entered  : NOV 03, 2011
+Completed By: LEANORD,TATIANA               Date Completed: MAY 24, 2012
+Released By : GROOMS,CARMEN L               Date Released : MAY 29, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

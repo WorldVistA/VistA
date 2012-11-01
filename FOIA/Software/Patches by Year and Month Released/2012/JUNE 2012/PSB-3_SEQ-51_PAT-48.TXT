@@ -1,0 +1,246 @@
+
+=============================================================================
+Run Date: JUN 01, 2012                     Designation: PSB*3*48
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #51                      Status: Released
+                  Compliance Date: JUL 02, 2012
+=============================================================================
+
+Associated patches: (v)PSB*3*29    <<= must be installed BEFORE `PSB*3*48'
+                    (v)PSB*3*37    <<= must be installed BEFORE `PSB*3*48'
+
+Subject: STOP FUTURE & HELD MEDS FROM PRINTING; CORRECT A DEFAULT RESPONSE  
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  *************************Important Note***********************************
+  If the site is running the BCMA Contingency software then this patch
+  must also be installed on the workstations. Once installed it is suggested
+  that the sites review the Contingency system reports.
+  **************************************************************************
+  
+ This patch addresses the following four issues:
+ 1. Future medication orders display on the Bar Code Medication
+    Administration Backup System (BCBU) Medication Administration Record (MAR)
+    as current. An asterisk should be displaying in the administration time
+    fields until the actual start dates have been reached. 
+  
+ 2. Held medications are currently being displayed on the BCBU MAR option 
+    Print MAR for a Selected Patient. Held medications should not be
+    displayed on the BCBU MAR report. PSPO# 1613
+  
+ 3. A prompt and help message under the BCMA Backup System 
+    [PSB BCBU WRKSTN MAIN] option is currently not displaying properly
+    or consistently among the following three BCBU MAR print options 
+    Print MAR for All Wards, Print MAR for Selected Patient, and Print MAR 
+    for Selected Ward.
+  
+ 4. While using Room/Bed sort in the BCMA Backup System (Wrkstn) option 
+    Print MAR for Selected Ward, the system produces an error if a patient
+    has no Room or Bed assigned.
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. HD0000000336762 - Future order showing on Contingency MAR
+  
+ 2. HD0000000339368 - Hold Meds being displayed on BC/BU
+  
+ 3. HD0000000160805 - Errors
+  
+ 4. HD0000000439582 - Print MAR for Selected Ward sort issues
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Alexandria VAMC
+ Dublin VAMC
+ Wilkes Barre VAMC
+                                                      
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000336762 - Future order showing on Contingency MAR
+    
+    Problem:   
+    --------
+    Future medication orders are displaying on the BCBU MAR for each of the 
+    print report options (Print MAR for All Wards, Print MAR for Selected 
+    Patient, and Print MAR for Selected Ward) as current medications that 
+    need to be given. The date/time boxes are not displaying with an asterisk.
+    Asterisks should display in the administration time fields until the 
+    actual start dates have been reached.
+  
+    Resolution:
+    -----------
+    Modified routine ALPBFRM1 which will now add asterisks to the
+    BCBU MAR if the patient's medication start dates are in the future. 
+    The report will continue to display asterisks in the date/time
+    boxes for administrations until the medication start date/time
+    is reached.  
+  
+  
+ 2. HD0000000339368 - Hold Meds being displayed on BC/BU 
+    
+    Patient Safety Issue:
+    ---------------------
+    PSPO #1613
+  
+    Problem:   
+    --------  
+    Held Medications are currently being displayed on the BCBU MAR Print 
+    option Print MAR for a Selected Patient.  Held medications should not
+    display on this report.
+  
+    Resolution:
+    -----------
+    Modified routine ALPBPPAT which will now stop medications from 
+    printing if the medications have a status of 'HD' (or held) when users
+    choose to print the BCBU MAR for selected patients.
+  
+  
+ 3. HD0000000160805 - Errors
+  
+    Problem:   
+    --------  
+    A prompt and help message in VistA under the BCMA Backup System 
+    [PSB BCBU WRKSTN MAIN] option is currently not displaying properly
+    or consistently among the following three BCBU MAR print options 
+    Print MAR for All Wards, Print MAR for Selected Patient, and Print MAR 
+    for Selected Ward. The prompt asks the user "Print how many days MAR?".
+    The number of acceptable days should be from 1 to 7, however the system 
+    currently displays 3 to 7.
+  
+    Resolution:
+    -----------
+    Modified routines ALPBPWRD, ALPBPPAT, and ALPBPALL to only accept the
+    default number of days 1 to 7. This also makes the three BCBU MAR print
+    options consistent.
+  
+  
+ 4. HD0000000439582 - Print MAR for Selected Ward sort issues
+  
+    Problem:
+    --------  
+    While using the Print MAR for Selected Ward option under the option name
+    BCMA Backup System (Wrkstn) [PSB BCBU WRKSTN MAIN] the system is currently 
+    producing a SUBSCRIPT error.  This error occurs if a patient has not 
+    been assigned a Room or Bed when using the Room/Bed option for the sort
+    question 'Sort Patients by [N]ame or [R]oom/Bed?'.
+  
+    Resolution:
+    -----------
+    Modified routine ALPBPWRD which now processes the users response to
+    the 'Sort Patients by [N]ame or [R]oom/Bed?' question without error.
+  
+  
+ Patch retrieval Instructions: 
+ =============================
+ 1.  Retrieve the KIDS distribution host file. This patch will be
+     distributed in a host file due to the amount of data contained in
+     the patch.  The name of the host file is:
+  
+          PSB_3_48.KID
+  
+     The preferred method is to FTP the files from download.vista.med.va.gov,
+     which will transmit the files from the first available FTP server.
+  
+     The files may also be downloaded directly from a particular FTP
+     location at the following locations.
+  
+        Albany          ftp.fo-albany.med.va.gov
+        Hines           ftp.fo-hines.med.va.gov
+        Salt Lake City  ftp.fo-slc.med.va.gov
+  
+     The PSB_3_48.KID host file is available in the ANONYMOUS.PUB
+     directory. Use ASCII Mode when downloading the file.
+  
+     There is no documentation distribution included in this patch.
+   
+  
+ Installation Instructions:
+ ========================== 
+  
+   ************************ NOTE **************************
+   IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS 
+   AN EDITED ERROR WILL OCCUR.  
+   The patch should be installed when NO Barcode Medication 
+   Administration (BCMA) users are on the system.
+   ********************************************************
+   
+  Installation will take less than 5 minutes.
+  
+  Suggested time to install: non-peak requirement hours.
+  
+    1. From the Kernel Installation & Distribution System menu, select
+       the LOAD DISTRIBUTION option and load PSB_3_48.KID  
+   
+    2. Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]:
+  
+        Edits and Distribution ...
+        Utilities ...
+        Installation ...  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSB*3.0*48)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSB*3.0*48.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ALPBFRM1
+    Before: B58605688   After: B63576803  **8,48**
+Routine Name: ALPBPALL
+    Before: B25843033   After: B26374660  **8,29,48**
+Routine Name: ALPBPPAT
+    Before: B20620583   After: B22283739  **8,48**
+Routine Name: ALPBPWRD
+    Before: B51146671   After: B51543358  **8,37,48**
+ 
+Routine list of preceding patches: 29, 37
+
+=============================================================================
+User Information:
+Entered By  : WYNN,ERIC                     Date Entered  : DEC 18, 2008
+Completed By: PODLEY,CHRIS                  Date Completed: MAY 14, 2012
+Released By : BLACK,KATHLEEN                Date Released : JUN 01, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

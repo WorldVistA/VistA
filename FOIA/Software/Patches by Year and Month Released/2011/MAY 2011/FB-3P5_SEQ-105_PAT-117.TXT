@@ -1,0 +1,357 @@
+$TXT Created by BAUMANN,SCOTT A at DEVVPP.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 04/11/11 at 14:21
+=============================================================================
+Run Date: MAY 31, 2011                     Designation: FB*3.5*117
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #105                    Status: Released
+                  Compliance Date: JUL 01, 2011
+=============================================================================
+
+Associated patches: (v)FB*3.5*61   <<= must be installed BEFORE `FB*3.5*117'
+                    (v)FB*3.5*116  <<= must be installed BEFORE `FB*3.5*117'
+                    (v)PRC*5.1*152 <<= must be installed BEFORE `FB*3.5*117'
+
+Subject: 1358 SEGREGATION OF DUTIES
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+  
+  ************************************************************************
+  *  If your site is using the Fee Basis Claims System (FBCS), you must  * 
+  *  install DSIF*3.2*17 immediately after installing FB*3.5*117 to      *
+  *  avoid application/processing errors. If your site is not using      *
+  *  FBCS, there is no need to install the FBCS patch.                   *
+  ************************************************************************
+  
+ This patch enhances VistA Fee Basis to enforce segregation of duties when
+ payments are certified.
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ 20080801 Enhancing Internal Controls and Reporting Capabilities for 1358 
+          Misc Obligations: Implements adequate controls with respect to 
+          segregation of duties and oversight by contracting officials,
+          improving documentation requirements, and enhancing 1358
+          reporting capabilities within Integrated Funds Distribution,
+          Control Point Activity, Accounting and Procurement (IFCAP) that
+          will be used at the station, Veterans Integrated Service Network
+          (VISN), and enterprise levels.  A Government Accountability
+          Office (GAO) review questioned VHA's internal control standards
+          governing the authorization and use of miscellaneous obligations
+          as well as oversight abilities. Direction by the Congressional
+          Oversight Committee of the House.  GAO Report - GAO-08-1056T
+          Improvements Needed in Design of Controls over Miscellaneous 
+          Obligations, July 31, 2008.  Department of Veterans Affairs
+          Memorandum, Interim Memos (Interim Guidance on Miscellaneous
+          Obligations, VA Form 4-1358, dated January 30, 2008 AND
+          Department of Veterans Affairs Memorandum, Revised Guidance for
+          Processing of Miscellaneous Obligations, VA Form 4-1358, dated
+          May 18, 2008.
+  
+ The changes made by this patch are described below:
+  
+ 1.  ENFORCE SEGREGATION OF DUTIES FOR CERTIFIER ROLE
+     ------------------------------------------------
+     After this patch is installed, the Release a Batch [FBAA SUPERVISOR
+     RELEASE] option will not allow the user to release a payment batch if
+     they are the requestor, approving official, or obligator of the 1358
+     obligation (initial obligation and any adjustments) associated with
+     that batch.
+  
+     Fee Basis will call an IFCAP application programming interface (API)
+     UOKCERT^PRCEMOA to make this determination per Integration Agreement
+     #5573.  The IFCAP API is added by patch PRC*5.1*152 which must be 
+     installed prior to this Fee Basis patch.
+  
+  
+ 2.  ADD FEE 1358 SEGREGATION OF DUTIES REPORT
+     -----------------------------------------
+     This patch adds the Fee Basis 1358 Segregation of Duty Report [FB SEG 
+     DUTY RPT] to the Supervisor Main Menu [FBAA SUPERVISOR OPTIONS].
+     A description of the new option follows:
+  
+     This report reviews fee invoice certification events and determines if
+     there was a segregation of duty violation.  The certifier of a fee
+     invoice must not be the requestor, approving official, or obligator of
+     the associated 1358 obligation or any increase/decrease adjustments to
+     the 1358 that were obligated before the invoice certification took
+     place.
+   
+     The release of a payment batch by a fee supervisor is the
+     certification event.  The report examines all payment batches that
+     were released during a specified period.  Each batch is associated
+     with a single 1358.
+   
+     The results are sorted by 1358 and within that by the date and time of
+     an event.  Three event types may be listed.
+       Obligate - Initial obligation of the 1358 in IFCAP.  
+       Adjust   - Obligation of an increase/decrease to the 1358 in IFCAP.
+       Certify  - Release of a fee payment batch associated with the 1358 
+                  by a fee supervisor.  The batch number is shown.  
+   
+     The IFCAP events have three roles (requestor, approver, and
+     obligator).
+   
+     The specified reporting period is used to select released fee batches.
+     All prior IFCAP events for the 1358 are relevant to segregation of
+     duty and will be considered even if they precede the reporting period.
+   
+     If YES is entered at the "Only list 1358s with a violation (Y/N)?" 
+     prompt, only 1358s with at least one violation will be displayed.  
+     Additionally, the fee certifications (batch release) that do not
+     violate segregation of duties will not be displayed. IFCAP and Fee
+     Basis have been enhanced by patches PRC*5.1*148 and FB*3.5*117 to
+     enforce segregation of duties for a 1358 so no violations are expected
+     after installation of those patches.  
+   
+     The Fee Basis batch data can optionally be purged by a site.  The
+     IFCAP data is normally retained for at least 7 years, but must be
+     purged prior to 10 years since the document numbers are recycled. If
+     the source data for this report has been purged, it will not be
+     included in the report.  Selection of a period starting 9 or more
+     years ago may return inaccurate results due to recycling of 1358
+     document numbers.  
+  
+     A sample of the new report follows:
+  
+     Fee Basis 1358 Segregation of Duties      NOV 02, 2010@14:56:57 page 1
+     Including Certifications from Oct 01, 2010 TO Oct 31, 2010 for all 
+     stations
+  
+  
+     1358       DATE/TIME      EVENT/BATCH ROLE       NAME
+     ---------- -------------- ----------- ---------  --------------------
+     500-C10003 04/24/01@16:01 OBLIGATE    REQUESTOR  IFCAP,CPCLERK
+                                           APPROVER   IFCAP,CPOFFICIAL
+                                           OBLIGATOR  IFCAP,ACCTECH
+                10/26/10@10:11 133         CERTIFIER  FEE,SUPERVISOR
+     ---------- -------------- ----------- ---------  --------------------
+  
+     1 batch certification was found during the report period.
+     1 1358 Obligations is referenced.
+     A violation of segregation of duties was detected on none of the 1358s
+  
+  
+ 3.  RETAIN TIME WHEN BATCH RELEASED
+     -------------------------------
+     This patch modifies the software to store the date and time instead
+     of just the date in the DATE SUPERVISOR CLOSED (#5) field of the FEE
+     BASIS BATCH (#161.7) file when a supervisor releases a payment batch.
+  
+     This patch also adds a regular cross-reference on the DATE SUPERVISOR 
+     CLOSED field to support the new report.
+  
+  
+ 4.  RESTRICT DATE ON BATCH PURGE
+     ----------------------------
+     This patch modifies the batch purge to require the specified purge
+     date to be at least 18 months in the past. The batch purge is invoked
+     by directly calling routine FBAABPG and is not associated with a menu
+     option.
+  
+  
+ Components Sent With Patch
+ --------------------------
+  
+ The following is a list of files included in this patch:
+  
+                                      UP    SEND  DATA                
+                                      DATE  SEC.  COMES  SITE   RSLV  
+ FILE #  NAME                         DD    CODE  W/FILE DATA   PTS 
+ --------------------------------------------------------------------
+ 161.7   FEE BASIS BATCH              YES   NO    NO        
+ Partial DD: subDD 161.7   fld: 5
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name (Number)           File Name (Number)
+ -------------------           ------------------
+ DATE SUPERVISOR CLOSED (5)    FEE BASIS BATCH (161.7)
+  
+  
+ The following is a list of options included in this patch:
+  
+ Option Name                 Type               New/Modified/Delete
+ -----------                 ----               ------------------- 
+ FB SEG OF DUTY RPT         ROUTINE             New
+ FBAA SUPERVISOR OPTIONS     MENU               Use as Link 
+  
+  
+ Test Sites:
+ -----------
+ Central Texas, TX
+ Erie,  PA
+ St. Cloud,  MN 
+ Tomah, WI
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www.va.gov/vdl/
+  
+ Title                         File Name                       FTP Mode
+ USER MANUAL             FB_35_UM_REVISED_MAY11.PDF        (binary)
+ TECH MANUAL             FB_35_TM_REVISED_MAY11.PDF        (binary)
+ -----------------------------------------------------------------------
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+   Release a Batch [FBAA SUPERVISOR RELEASE]
+   Pricer Batch Release [FBCH PRICER RELEASE]
+  
+ Install Time - less than 5 minutes
+  
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter FB*3.5*117):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//'  Answer NO unless your system does not do this in a
+         nightly TaskMan process.
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer YES (unless otherwise
+         indicated)
+     e.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':'  Enter the following options:
+  
+           Release a Batch [FBAA SUPERVISOR RELEASE]
+           Pricer Batch Release [FBCH PRICER RELEASE]  
+  
+     f.  When prompted 'Enter protocols you wish to mark as 'Out Of
+         Order':' press <return>.
+  
+ ************** POST-INSTALLATION INSTRUCTIONS **************
+  
+ 5.  DELETE INSTALL ROUTINE FROM SYSTEM
+     -----------------------------------
+     (Optional) Delete the FBXIP117 install routine.
+  
+     Routine FBXIP117 automatically sets the new ADS cross-reference for
+     all existing entries in the FEE BASIS BATCH (#161.7) file when the
+     patch is installed. The routine can be deleted after installation.
+  
+ ***********************************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAABPG
+    Before: B14762556   After: B14141003  **117**
+ Description of Changes:
+  Modify the batch purge to only accept a date at least 18 months ago.
+
+Routine Name: FBAASCB
+    Before: B23609721   After: B26810368  **38,61,116,117**
+ Description of Changes:
+  Modify the Release a Batch option to enforce segregation of duties and save
+  the date and time in the DATE SUPERVISOR CLOSED field. Use FileMan instead
+  of a global set to update fields #5 and #6 in the FEE BASIS BATCH file.
+
+Routine Name: FBAASDR
+    Before:       n/a   After: B85549111  **117**
+ Description of Changes:
+  New routine that generates the Fee Basis 1358 Segregation of Duty Report.
+
+Routine Name: FBCHSCB
+    Before:  B7463731   After:  B7320590  **117**
+ Description of Changes:
+  Use FileMan instead of a global set to update fields #5 and #6 in the FEE
+  BASIS BATCH file.
+
+Routine Name: FBXIP117
+    Before:       n/a   After:   B552645  **117**
+ Description of Changes:
+  Post install routine that sets the new ADS x-ref for existing batches.
+
+ 
+Routine list of preceding patches: 116
+
+=============================================================================
+User Information:
+Entered By  : BAUMANN,SCOTT A               Date Entered  : OCT 21, 2010
+Completed By: LYNCH,MARY F.                 Date Completed: MAY 25, 2011
+Released By : JACKSON,SHERYL                Date Released : MAY 31, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

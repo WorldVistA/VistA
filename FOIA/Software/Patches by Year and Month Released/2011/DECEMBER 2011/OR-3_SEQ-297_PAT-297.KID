@@ -1,0 +1,1066 @@
+Released OR*3*297 SEQ #297
+Extracted from mail message
+**KIDS**:OR*3.0*297^
+
+**INSTALL NAME**
+OR*3.0*297
+"BLD",7702,0)
+OR*3.0*297^ORDER ENTRY/RESULTS REPORTING^0^3110909^y
+"BLD",7702,1,0)
+^^13^13^3110217^
+"BLD",7702,1,1,0)
+1. Patch OR*3*281 added a temporary menu option and routine to the system
+"BLD",7702,1,2,0)
+to assist in cleaning up Radiology quick orders. This patch removes that
+"BLD",7702,1,3,0)
+option and routine. HD0000000218893
+"BLD",7702,1,4,0)
+2. Patch OR*3*299 added a temporary routine to the system to clean up 
+"BLD",7702,1,5,0)
+problem Outpatient medication orders. This patch removes that routine.
+"BLD",7702,1,6,0)
+HD0000000284146
+"BLD",7702,1,7,0)
+3. Enter/edit QO restriction [ORCM QO ITEMS] allows PHARMACY as a 
+"BLD",7702,1,8,0)
+restriction. However, the code that processes restrictions does not check 
+"BLD",7702,1,9,0)
+for this. The workgroup decision was that the specific package needed to 
+"BLD",7702,1,10,0)
+be used. This patch removes PHARMACY as an option.
+"BLD",7702,1,11,0)
+4. Enter/edit quick orders [ORCM QUICK ORDERS] option would get an 
+"BLD",7702,1,12,0)
+undefined error when editing the infusion rate field if the text was over 
+"BLD",7702,1,13,0)
+20 characters in length.
+"BLD",7702,4,0)
+^9.64PA^^
+"BLD",7702,6)
+4^
+"BLD",7702,6.3)
+14
+"BLD",7702,"ABPKG")
+n
+"BLD",7702,"INID")
+^n
+"BLD",7702,"INIT")
+EN1^ORY297
+"BLD",7702,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7702,"KRN",.4,0)
+.4
+"BLD",7702,"KRN",.401,0)
+.401
+"BLD",7702,"KRN",.402,0)
+.402
+"BLD",7702,"KRN",.403,0)
+.403
+"BLD",7702,"KRN",.5,0)
+.5
+"BLD",7702,"KRN",.84,0)
+.84
+"BLD",7702,"KRN",3.6,0)
+3.6
+"BLD",7702,"KRN",3.8,0)
+3.8
+"BLD",7702,"KRN",9.2,0)
+9.2
+"BLD",7702,"KRN",9.8,0)
+9.8
+"BLD",7702,"KRN",9.8,"NM",0)
+^9.68A^10^9
+"BLD",7702,"KRN",9.8,"NM",2,0)
+ORY281^^1^
+"BLD",7702,"KRN",9.8,"NM",3,0)
+ORY281A^^1^
+"BLD",7702,"KRN",9.8,"NM",4,0)
+ORY299^^1^
+"BLD",7702,"KRN",9.8,"NM",5,0)
+ORCMEDT6^^0^B25826080
+"BLD",7702,"KRN",9.8,"NM",6,0)
+ORY281B^^1^
+"BLD",7702,"KRN",9.8,"NM",7,0)
+ORY299A^^1^
+"BLD",7702,"KRN",9.8,"NM",8,0)
+ORY299B^^1^
+"BLD",7702,"KRN",9.8,"NM",9,0)
+ORCDLG2^^0^B67157200
+"BLD",7702,"KRN",9.8,"NM",10,0)
+ORY297^^0^B8397277
+"BLD",7702,"KRN",9.8,"NM","B","ORCDLG2",9)
+
+"BLD",7702,"KRN",9.8,"NM","B","ORCMEDT6",5)
+
+"BLD",7702,"KRN",9.8,"NM","B","ORY281",2)
+
+"BLD",7702,"KRN",9.8,"NM","B","ORY281A",3)
+
+"BLD",7702,"KRN",9.8,"NM","B","ORY281B",6)
+
+"BLD",7702,"KRN",9.8,"NM","B","ORY297",10)
+
+"BLD",7702,"KRN",9.8,"NM","B","ORY299",4)
+
+"BLD",7702,"KRN",9.8,"NM","B","ORY299A",7)
+
+"BLD",7702,"KRN",9.8,"NM","B","ORY299B",8)
+
+"BLD",7702,"KRN",19,0)
+19
+"BLD",7702,"KRN",19,"NM",0)
+^9.68A^1^1
+"BLD",7702,"KRN",19,"NM",1,0)
+ORCM RA SEARCH^^1^
+"BLD",7702,"KRN",19,"NM","B","ORCM RA SEARCH",1)
+
+"BLD",7702,"KRN",19.1,0)
+19.1
+"BLD",7702,"KRN",101,0)
+101
+"BLD",7702,"KRN",409.61,0)
+409.61
+"BLD",7702,"KRN",771,0)
+771
+"BLD",7702,"KRN",779.2,0)
+779.2
+"BLD",7702,"KRN",870,0)
+870
+"BLD",7702,"KRN",8989.51,0)
+8989.51
+"BLD",7702,"KRN",8989.52,0)
+8989.52
+"BLD",7702,"KRN",8994,0)
+8994
+"BLD",7702,"KRN","B",.4,.4)
+
+"BLD",7702,"KRN","B",.401,.401)
+
+"BLD",7702,"KRN","B",.402,.402)
+
+"BLD",7702,"KRN","B",.403,.403)
+
+"BLD",7702,"KRN","B",.5,.5)
+
+"BLD",7702,"KRN","B",.84,.84)
+
+"BLD",7702,"KRN","B",3.6,3.6)
+
+"BLD",7702,"KRN","B",3.8,3.8)
+
+"BLD",7702,"KRN","B",9.2,9.2)
+
+"BLD",7702,"KRN","B",9.8,9.8)
+
+"BLD",7702,"KRN","B",19,19)
+
+"BLD",7702,"KRN","B",19.1,19.1)
+
+"BLD",7702,"KRN","B",101,101)
+
+"BLD",7702,"KRN","B",409.61,409.61)
+
+"BLD",7702,"KRN","B",771,771)
+
+"BLD",7702,"KRN","B",779.2,779.2)
+
+"BLD",7702,"KRN","B",870,870)
+
+"BLD",7702,"KRN","B",8989.51,8989.51)
+
+"BLD",7702,"KRN","B",8989.52,8989.52)
+
+"BLD",7702,"KRN","B",8994,8994)
+
+"BLD",7702,"QDEF")
+^^^^^^^^
+"BLD",7702,"QUES",0)
+^9.62^^
+"BLD",7702,"REQB",0)
+^9.611^2^2
+"BLD",7702,"REQB",1,0)
+OR*3.0*164^2
+"BLD",7702,"REQB",2,0)
+OR*3.0*243^2
+"BLD",7702,"REQB","B","OR*3.0*164",1)
+
+"BLD",7702,"REQB","B","OR*3.0*243",2)
+
+"INIT")
+EN1^ORY297
+"KRN",19,13848,-1)
+1^1
+"KRN",19,13848,0)
+ORCM RA SEARCH
+"MBREQ")
+0
+"ORD",0,9.8)
+9.8;;1;RTNF^XPDTA;RTNE^XPDTA
+"ORD",0,9.8,0)
+ROUTINE
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",170,-1)
+1^1
+"PKG",170,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",170,20,0)
+^9.402P^^
+"PKG",170,22,0)
+^9.49I^1^1
+"PKG",170,22,1,0)
+3.0^2971217^2980917^11712
+"PKG",170,22,1,"PAH",1,0)
+297^3110909^1000020
+"PKG",170,22,1,"PAH",1,1,0)
+^^13^13^3110909
+"PKG",170,22,1,"PAH",1,1,1,0)
+1. Patch OR*3*281 added a temporary menu option and routine to the system
+"PKG",170,22,1,"PAH",1,1,2,0)
+to assist in cleaning up Radiology quick orders. This patch removes that
+"PKG",170,22,1,"PAH",1,1,3,0)
+option and routine. HD0000000218893
+"PKG",170,22,1,"PAH",1,1,4,0)
+2. Patch OR*3*299 added a temporary routine to the system to clean up 
+"PKG",170,22,1,"PAH",1,1,5,0)
+problem Outpatient medication orders. This patch removes that routine.
+"PKG",170,22,1,"PAH",1,1,6,0)
+HD0000000284146
+"PKG",170,22,1,"PAH",1,1,7,0)
+3. Enter/edit QO restriction [ORCM QO ITEMS] allows PHARMACY as a 
+"PKG",170,22,1,"PAH",1,1,8,0)
+restriction. However, the code that processes restrictions does not check 
+"PKG",170,22,1,"PAH",1,1,9,0)
+for this. The workgroup decision was that the specific package needed to 
+"PKG",170,22,1,"PAH",1,1,10,0)
+be used. This patch removes PHARMACY as an option.
+"PKG",170,22,1,"PAH",1,1,11,0)
+4. Enter/edit quick orders [ORCM QUICK ORDERS] option would get an 
+"PKG",170,22,1,"PAH",1,1,12,0)
+undefined error when editing the infusion rate field if the text was over 
+"PKG",170,22,1,"PAH",1,1,13,0)
+20 characters in length.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+9
+"RTN","ORCDLG2")
+0^9^B67157200^B64872872
+"RTN","ORCDLG2",1,0)
+ORCDLG2 ;SLC/MKB-Order dialogs cont ;10/12/2007
+"RTN","ORCDLG2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**4,60,79,94,243,297**;Dec 17, 1997;Build 14
+"RTN","ORCDLG2",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORCDLG2",4,0)
+ ;;
+"RTN","ORCDLG2",5,0)
+ ;Reference to ^DISV supported by IA #510
+"RTN","ORCDLG2",6,0)
+ ;
+"RTN","ORCDLG2",7,0)
+DIR ; -- ^DIR read of X, returns Y
+"RTN","ORCDLG2",8,0)
+ N INPUTXFM,LKUP,REPL K DTOUT,DUOUT,DIRUT,DIROUT,DDER,Y
+"RTN","ORCDLG2",9,0)
+ S (X,Y)="",INPUTXFM=$P(DIR(0),U,3,99)
+"RTN","ORCDLG2",10,0)
+ S LKUP=$G(ORDIALOG(PROMPT,"LKP")) ; special lookup rtn
+"RTN","ORCDLG2",11,0)
+ S REPL=$S(DATATYPE'="F":0,$L($G(DIR("B")))>20:1,1:0) S:REPL DIR(0)=$E(DIR(0))_"AO^"_$P(DIR(0),U,2,99)
+"RTN","ORCDLG2",12,0)
+DIR1 I 'REPL W !,DIR("A")_$S($D(DIR("B")):DIR("B")_"// ",1:"") R X:DTIME I '$T S DTOUT=1 Q
+"RTN","ORCDLG2",13,0)
+ I REPL D ^DIR Q:$D(DTOUT)!$D(DUOUT)
+"RTN","ORCDLG2",14,0)
+ I X="" S:$D(DIR("B")) X=DIR("B"),Y=ORDIALOG(PROMPT,ORI) S:'$L(X)&(SEQ=1)&('MULT) X="^" Q:'REQD!$L(X)  W $C(7),!!,$$REQUIRED^ORCDLG1,! G DIR1
+"RTN","ORCDLG2",15,0)
+ I X="@" Q:'REQD  W $C(7),!!,$$REQUIRED^ORCDLG1,! G DIR1
+"RTN","ORCDLG2",16,0)
+ I X?1"^".E S (DUOUT,DIRUT)=1,Y=X S:X="^^" DIROUT=1 Q
+"RTN","ORCDLG2",17,0)
+ I X?1"?".E D  G DIR1
+"RTN","ORCDLG2",18,0)
+ . N XHELP
+"RTN","ORCDLG2",19,0)
+ . S XHELP=$S($D(DIR("??")):$P(DIR("??"),U,2,99),1:("D "_DATATYPE_"^ORCDLGH"))
+"RTN","ORCDLG2",20,0)
+ . I (DATATYPE="P")!(DATATYPE="S")!(X?1"??".E) X XHELP
+"RTN","ORCDLG2",21,0)
+ . S:'$D(DIR("?")) DIR("?")=$$HELP(DATATYPE)
+"RTN","ORCDLG2",22,0)
+ . I $L(DIR("?"))<80 W !,DIR("?"),!
+"RTN","ORCDLG2",23,0)
+ . E  D  W !
+"RTN","ORCDLG2",24,0)
+ . . N X,DIWL,DIWR,I S X=DIR("?"),DIWL=1,DIWR=80 K ^UTILITY($J,"W")
+"RTN","ORCDLG2",25,0)
+ . . D ^DIWP F I=1:1:^UTILITY($J,"W",DIWL) W !,$G(^UTILITY($J,"W",DIWL,I,0))
+"RTN","ORCDLG2",26,0)
+ I $L(INPUTXFM) X INPUTXFM I '$D(X) D ERR G DIR1
+"RTN","ORCDLG2",27,0)
+ I $L(LKUP),$L($T(@LKUP)) D @LKUP Q:Y>0  D ERR G DIR1
+"RTN","ORCDLG2",28,0)
+ I $G(ORDIALOG(PROMPT,"LIST")) D  Q:$L(Y)  I $P(ORDIALOG(PROMPT,"LIST"),U,2) W $C(7) D LIST^ORCD G DIR1
+"RTN","ORCDLG2",29,0)
+ . N OROOT,ORY S OROOT="ORDIALOG("_PROMPT_",""LIST"")"
+"RTN","ORCDLG2",30,0)
+ . S:(X=" ")&(DATATYPE="P") X=$$SPACE(DOMAIN)
+"RTN","ORCDLG2",31,0)
+ . S ORY=$$FIND(OROOT,X)
+"RTN","ORCDLG2",32,0)
+ . I $L(ORY)!$P(ORDIALOG(PROMPT,"LIST"),U,2) S Y=ORY ;matched, or require list
+"RTN","ORCDLG2",33,0)
+ I DATATYPE="P" D DIC I Y'>0 D ERR G DIR1
+"RTN","ORCDLG2",34,0)
+ I (DATATYPE="R")!(DATATYPE="D") D DT I Y<0 D ERR G DIR1
+"RTN","ORCDLG2",35,0)
+ I "^F^N^S^Y^"[(U_DATATYPE_U) D  I $G(DDER) D ERR G DIR1
+"RTN","ORCDLG2",36,0)
+ . I REPL S Y=X Q                  ; free text - already validated
+"RTN","ORCDLG2",37,0)
+ . N I F I=1:1:31 S X=$TR(X,$C(I)) ; strip out control char's
+"RTN","ORCDLG2",38,0)
+ . S DIR("V")="" D ^DIR K DIR("V") ; silent
+"RTN","ORCDLG2",39,0)
+ Q
+"RTN","ORCDLG2",40,0)
+ ;
+"RTN","ORCDLG2",41,0)
+ERR ; -- show help msg on error
+"RTN","ORCDLG2",42,0)
+ W:$D(DIR("?")) $C(7),!,DIR("?"),!
+"RTN","ORCDLG2",43,0)
+ Q
+"RTN","ORCDLG2",44,0)
+ ;
+"RTN","ORCDLG2",45,0)
+FIND(LIST,X) ; -- find value X in LIST(#) or LIST("B",name)
+"RTN","ORCDLG2",46,0)
+ N Y,XP,CNT,MATCH,I,DIR
+"RTN","ORCDLG2",47,0)
+ S:$L(X)>63 X=$E(X,1,63) S X=$$UP^XLFSTR(X)
+"RTN","ORCDLG2",48,0)
+ S CNT=0,XP="" F  S XP=$O(@LIST@("B",XP)) Q:XP=""  I $S(X=+X:+XP=+X,1:$E(XP,1,$L(X))=X) S CNT=CNT+1,MATCH(CNT)=@LIST@("B",XP)_U_XP,DIR("A",CNT)=$J(CNT,3)_" "_XP
+"RTN","ORCDLG2",49,0)
+ I X=+X!(X?1"0."1.N) S Y=$G(@LIST@(X)) I $L(Y) W "   "_$P(Y,U,2) G:$$OK FQ S X="" W "   " ;force entire text to echo if CNT=1
+"RTN","ORCDLG2",50,0)
+ I 'CNT S Y="" G FQ
+"RTN","ORCDLG2",51,0)
+ I CNT=1 S Y=MATCH(1),XP=$P(Y,U,2) W $E(XP,$L(X)+1,$L(XP)) G FQ
+"RTN","ORCDLG2",52,0)
+ S DIR("A")="Select 1-"_CNT_": ",DIR(0)="NAO^1:"_CNT
+"RTN","ORCDLG2",53,0)
+ S DIR("?")="Select the desired value, by number"
+"RTN","ORCDLG2",54,0)
+ D ^DIR I $D(DTOUT)!($D(DUOUT))!(Y="") S Y="" G FQ
+"RTN","ORCDLG2",55,0)
+ S Y=MATCH(Y) W "  "_$P(Y,U,2)
+"RTN","ORCDLG2",56,0)
+FQ D:Y&((+DOMAIN=101.43)!(DOMAIN?1"ORD(101.43,:".E)) SETDISV
+"RTN","ORCDLG2",57,0)
+ Q Y
+"RTN","ORCDLG2",58,0)
+ ;
+"RTN","ORCDLG2",59,0)
+OK() ; -- Return 1 or 0, if selected item is correct
+"RTN","ORCDLG2",60,0)
+ N X,Y,DIR I CNT'>0 Q 1 ;no other matches
+"RTN","ORCDLG2",61,0)
+ S DIR(0)="YA",DIR("A")="   ...OK? ",DIR("B")="YES"
+"RTN","ORCDLG2",62,0)
+ S DIR("?")="Enter YES if this is the item you wish to select, or NO to continue searching the list"
+"RTN","ORCDLG2",63,0)
+ D ^DIR S:$D(DUOUT)!$D(DTOUT) Y=""
+"RTN","ORCDLG2",64,0)
+ Q +Y
+"RTN","ORCDLG2",65,0)
+ ;
+"RTN","ORCDLG2",66,0)
+DIC ; -- ^DIC lookup on X, return Y
+"RTN","ORCDLG2",67,0)
+ N ORDMN,ORDITM,DIC,D,ORDIC,TYPE S Y=-1,ORDMN=$P(ORDIALOG(PROMPT,0),U,2)
+"RTN","ORCDLG2",68,0)
+ S ORDITM=$S(+ORDMN=101.43:1,ORDMN?1"ORD(101.43,:".E:1,1:0) ; OI file?
+"RTN","ORCDLG2",69,0)
+ I X=" ",ORDITM D SPBAR W $S(Y>0:"   "_X,1:$C(7)_"  ??") Q
+"RTN","ORCDLG2",70,0)
+ I ORDITM,X?1"`"1.N W $C(7),!,"Lookup by internal entry number not allowed!",! Q
+"RTN","ORCDLG2",71,0)
+ I X=$G(DIR("B")) S Y=ORDIALOG(PROMPT,ORI) Q  ; default
+"RTN","ORCDLG2",72,0)
+ S DIC=$P(ORDMN,":"),DIC(0)=$P(ORDMN,":",2),ORDIC="^DIC" S:'DIC DIC=U_DIC
+"RTN","ORCDLG2",73,0)
+ S:$D(ORDIALOG(PROMPT,"S")) DIC("S")=ORDIALOG(PROMPT,"S")
+"RTN","ORCDLG2",74,0)
+ S TYPE=$P($G(^ORD(100.98,+$G(ORDG),0)),U,3)
+"RTN","ORCDLG2",75,0)
+ S:ORDITM DIC("W")="W:$S('$D(%):0,'$D(DIY):0,%=DIY:0,1:1) $G(DIY)"_$S(TYPE["RX":" W:$P($G(^(""PS"")),U,6) ""   (non-formulary)"" ",1:"") ;W NAME if OI/synm, or NF
+"RTN","ORCDLG2",76,0)
+ S D=$G(ORDIALOG(PROMPT,"D")),D=$TR(D,";","^")
+"RTN","ORCDLG2",77,0)
+ I $L(D) S ORDIC="IX^DIC" S:$L(D,U)>1 ORDIC="MIX^DIC1",DIC(0)=DIC(0)_"M"
+"RTN","ORCDLG2",78,0)
+ D @ORDIC,SETDISV:Y&ORDITM
+"RTN","ORCDLG2",79,0)
+ I DIC(0)["S",X'=$P(Y,"^",2) W "  ",$P(Y,"^",2)
+"RTN","ORCDLG2",80,0)
+ Q
+"RTN","ORCDLG2",81,0)
+ ;
+"RTN","ORCDLG2",82,0)
+SPACE(FILE) ; -- Resolve spbar-return for ptrs
+"RTN","ORCDLG2",83,0)
+ N X,Y,DIC,ROOT S X=" ",FILE=$P(FILE,":")
+"RTN","ORCDLG2",84,0)
+ I (+FILE=101.43)!(FILE="ORD(101.43,") D SPBAR Q X
+"RTN","ORCDLG2",85,0)
+ S ROOT=$S(+FILE:$$ROOT^DILFD(+FILE),1:U_FILE),Y=$G(^DISV(DUZ,ROOT))
+"RTN","ORCDLG2",86,0)
+ S:Y X=$P(@(ROOT_Y_",0)"),U)
+"RTN","ORCDLG2",87,0)
+ Q X
+"RTN","ORCDLG2",88,0)
+ ;
+"RTN","ORCDLG2",89,0)
+SPBAR ; -- Resolve spbar-return for #101.43
+"RTN","ORCDLG2",90,0)
+ N SDX,I,X1,D S SDX="",D=$G(ORDIALOG(PROMPT,"D")),D=$TR(D,";","^")
+"RTN","ORCDLG2",91,0)
+ F I=1:1:$L(D,"^") I $P(D,U,I)?1"S."1.E S SDX=$P(D,U,I) Q
+"RTN","ORCDLG2",92,0)
+ Q:'$L(SDX)  S X1=$G(^DISV(DUZ,"ORDITM",SDX,1)) Q:'$L(X1)
+"RTN","ORCDLG2",93,0)
+ S Y=$O(^ORD(101.43,SDX,X1,0)) S:Y X=X1,Y=Y_U_X1
+"RTN","ORCDLG2",94,0)
+ Q
+"RTN","ORCDLG2",95,0)
+ ;
+"RTN","ORCDLG2",96,0)
+SETDISV ; -- Save entry Y=ifn^name in ^DISV for #101.43
+"RTN","ORCDLG2",97,0)
+ N SDX,I Q:'$L($P(Y,U,2))
+"RTN","ORCDLG2",98,0)
+ S SDX="",D=$G(ORDIALOG(PROMPT,"D")) Q:D'["S."
+"RTN","ORCDLG2",99,0)
+ F I=1:1:$L(D,";") I $P(D,";",I)?1"S."1.E S SDX=$P(D,";",I) Q
+"RTN","ORCDLG2",100,0)
+ Q:'$L(SDX)  S ^DISV(DUZ,"ORDITM",SDX,1)=$P(Y,U,2)
+"RTN","ORCDLG2",101,0)
+ Q
+"RTN","ORCDLG2",102,0)
+ ;
+"RTN","ORCDLG2",103,0)
+DT ; -- %DT validation on X, return Y
+"RTN","ORCDLG2",104,0)
+ N %DT,BEG,END S %DT=$P(DOMAIN,":",3),X=$$UP^XLFSTR(X)
+"RTN","ORCDLG2",105,0)
+ I $L($P(DOMAIN,":")) S BEG=$$FMDT($P(DOMAIN,":")) ;earliest date allowed
+"RTN","ORCDLG2",106,0)
+ I $L($P(DOMAIN,":",2)) S END=$$FMDT($P(DOMAIN,":",2)) ;latest allowed
+"RTN","ORCDLG2",107,0)
+ D ^%DT Q:Y'>0
+"RTN","ORCDLG2",108,0)
+ I $G(BEG) D  Q:Y<0
+"RTN","ORCDLG2",109,0)
+ . I $L(Y,".")'=$L(BEG,".") S BEG=$P(BEG,".") ; date only
+"RTN","ORCDLG2",110,0)
+ . I Y<BEG W $C(7),!,"Date may not be before "_$$FMTE^XLFDT(BEG) S Y=-1 Q
+"RTN","ORCDLG2",111,0)
+ I $G(END) D  Q:Y<0
+"RTN","ORCDLG2",112,0)
+ . I $L(Y,".")'=$L(END,".") S END=$P(END,".") ; date only
+"RTN","ORCDLG2",113,0)
+ . I Y>END W $C(7),!,"Date may not be after "_$$FMTE^XLFDT(END) S Y=-1 Q
+"RTN","ORCDLG2",114,0)
+ I DATATYPE="R",$$RELDT(X) S:(%DT'["T")&("NOW"[X) X="TODAY" S Y=X ;text
+"RTN","ORCDLG2",115,0)
+ Q
+"RTN","ORCDLG2",116,0)
+DT1 S:X="NOON" X="T@NOON" S:$E("MIDNIGHT",1,$L(X))=X X="T@MIDNIGHT"
+"RTN","ORCDLG2",117,0)
+ I X'?1"V".E,X'?1"T".E D ^%DT S:Y>0&("NOW"[X) Y="NOW" Q
+"RTN","ORCDLG2",118,0)
+ S D=$$UP^XLFSTR($P(X,"@")),T=$P(X,"@",2)
+"RTN","ORCDLG2",119,0)
+ S Y=$E(D) I "VT"'[Y S Y=-1 Q
+"RTN","ORCDLG2",120,0)
+ I (D["+")!(D["-") D  Q:Y<0
+"RTN","ORCDLG2",121,0)
+ . N SIGN,OFFSET,X1,X2
+"RTN","ORCDLG2",122,0)
+ . S SIGN=$S(D["+":"+",1:"-"),OFFSET=$P(D,SIGN,2) I 'OFFSET S Y=-1 Q
+"RTN","ORCDLG2",123,0)
+ . S X1=+OFFSET,X2=$P(OFFSET,X1,2) I "DWM"'[$E(X2) S Y=-1 Q
+"RTN","ORCDLG2",124,0)
+ . S Y=Y_SIGN_X1_$E(X2) ; T+3W, e.g.
+"RTN","ORCDLG2",125,0)
+ I '$L(T)&(DOMAIN["R") S Y=-1 Q  ; time missing, required
+"RTN","ORCDLG2",126,0)
+ I $L(T) D  I '$D(T) S Y=-1 Q
+"RTN","ORCDLG2",127,0)
+ . I '(DOMAIN["T"!(DOMAIN["R")) K T Q  ; time prohibited
+"RTN","ORCDLG2",128,0)
+ . N X,Y S X="T@"_T,%DT=$TR(DOMAIN,"E") D ^%DT I Y<0 K T Q
+"RTN","ORCDLG2",129,0)
+ . S T=$E($P(Y,".",2),1,4) S:$L(T)<4 T=T_$E("0000",1,4-$L(T))
+"RTN","ORCDLG2",130,0)
+ S:$L(T) Y=Y_"@"_T ; Y=date text, or -1 if error
+"RTN","ORCDLG2",131,0)
+ Q
+"RTN","ORCDLG2",132,0)
+ ;
+"RTN","ORCDLG2",133,0)
+RELDT(X) ; -- Returns 1 or 0, if X is relative date
+"RTN","ORCDLG2",134,0)
+ N Y S X=$G(X)
+"RTN","ORCDLG2",135,0)
+ I ("NOON"[X)!("MIDNIGHT"[X)!($E(X)="T")!($E(X)="N") S Y=1
+"RTN","ORCDLG2",136,0)
+ E  S Y=0
+"RTN","ORCDLG2",137,0)
+ Q Y
+"RTN","ORCDLG2",138,0)
+ ;
+"RTN","ORCDLG2",139,0)
+FMDT(X) ; -- Return FM form of date X
+"RTN","ORCDLG2",140,0)
+ N Y,%DT S %DT="T" D ^%DT
+"RTN","ORCDLG2",141,0)
+ Q Y
+"RTN","ORCDLG2",142,0)
+ ;
+"RTN","ORCDLG2",143,0)
+WP ; -- edit WP field
+"RTN","ORCDLG2",144,0)
+ N DIC,DWLW,DWPK,DIWESUB,DONE,ORLINEDT,LCNT,UPCARR
+"RTN","ORCDLG2",145,0)
+ S DIC="^TMP(""ORWORD"",$J,"_PROMPT_","_INST_",",DWLW=80,DWPK=1
+"RTN","ORCDLG2",146,0)
+ S DIWESUB=$P(DIR("A"),":"),ORLINEDT=$$LINEDTR(DUZ)
+"RTN","ORCDLG2",147,0)
+ I '$D(^TMP("ORWORD",$J,PROMPT,INST)) M:$D(^ORD(101.41,+ORDIALOG,10,ITM,8))>9 ^TMP("ORWORD",$J,PROMPT,INST)=^(8)
+"RTN","ORCDLG2",148,0)
+ I 'ORLINEDT,'REQD,'$$EDITWP Q  ;94
+"RTN","ORCDLG2",149,0)
+WP1 W:ORLINEDT !,DIR("A") S DIWESUB=$P(DIR("A"),":")
+"RTN","ORCDLG2",150,0)
+ D EN^DIWE I $D(DTOUT)!($D(DUOUT)) S ORQUIT=1 Q
+"RTN","ORCDLG2",151,0)
+ I REQD,'$O(^TMP("ORWORD",$J,PROMPT,INST,0)) W $C(7),!!,"A response is required!" G:'$$DONE WP1 S ORQUIT=1 Q
+"RTN","ORCDLG2",152,0)
+ I '$O(^TMP("ORWORD",$J,PROMPT,INST,0)) K ^TMP("ORWORD",$J,PROMPT,INST),ORDIALOG(PROMPT,INST) Q  ;empty
+"RTN","ORCDLG2",153,0)
+ S LCNT="",UPCARR=0
+"RTN","ORCDLG2",154,0)
+ F  S LCNT=$O(^TMP("ORWORD",$J,PROMPT,INST,LCNT)) Q:LCNT=""!(UPCARR=1)  D
+"RTN","ORCDLG2",155,0)
+ .I LCNT>0,$G(^TMP("ORWORD",$J,PROMPT,INST,LCNT,0))[U S UPCARR=1
+"RTN","ORCDLG2",156,0)
+ I UPCARR=1 W !!,"An ""^"" is not allowed in a word processing field." G:'$$DONE WP1 S ORQUIT=1 Q
+"RTN","ORCDLG2",157,0)
+ S ORDIALOG(PROMPT,INST)="^TMP(""ORWORD"","_$J_","_PROMPT_","_INST_")",DONE=1
+"RTN","ORCDLG2",158,0)
+ I $D(^ORD(101.41,+ORDIALOG,10,ITM,5)) X ^(5) Q:$G(ORQUIT)!($G(DONE))  G WP1
+"RTN","ORCDLG2",159,0)
+ Q
+"RTN","ORCDLG2",160,0)
+ ;
+"RTN","ORCDLG2",161,0)
+EDITWP() ; -- Want to edit WP field?
+"RTN","ORCDLG2",162,0)
+ N X,Y,%,%Y
+"RTN","ORCDLG2",163,0)
+ W !,ORDIALOG(PROMPT,"A") S Y=$D(ORDIALOG(PROMPT,INST))
+"RTN","ORCDLG2",164,0)
+ I 'Y,REQD Q 1 ; no data, req'd
+"RTN","ORCDLG2",165,0)
+ W:'Y !,"  No existing text",! I Y D  ; show comments
+"RTN","ORCDLG2",166,0)
+ . N X,DIWL,DIWR,DIWF,ORI
+"RTN","ORCDLG2",167,0)
+ . S DIWL=3,DIWR=79,DIWF="W" K ^UTILITY($J,"W")
+"RTN","ORCDLG2",168,0)
+ . S ORI=0 F  S ORI=$O(^TMP("ORWORD",$J,PROMPT,INST,ORI)) Q:ORI'>0  S X=$G(^(ORI,0)) D:$L(X) ^DIWP
+"RTN","ORCDLG2",169,0)
+ . D ^DIWW
+"RTN","ORCDLG2",170,0)
+ED1 S %=$S($D(OREDIT):1,1:2) W "  Edit" D YN^DICN
+"RTN","ORCDLG2",171,0)
+ I %=0 W !,"  Enter 'YES' if you wish to go into the editor.",!,"  Enter 'NO' if you do not wish to edit at this time.",! G ED1
+"RTN","ORCDLG2",172,0)
+ S Y=$S(%<0:"^",%=2:0,1:1)
+"RTN","ORCDLG2",173,0)
+ Q Y
+"RTN","ORCDLG2",174,0)
+ ;
+"RTN","ORCDLG2",175,0)
+LINEDTR(USER) ; -- Returns 1 or 0, if user's editor will be LineEd
+"RTN","ORCDLG2",176,0)
+ N X,Y
+"RTN","ORCDLG2",177,0)
+ S X=+$P($G(^VA(200,USER,1)),U,5),Y=0 I 'X S Y=1
+"RTN","ORCDLG2",178,0)
+ E  S:$$GET1^DIQ(1.2,+X_",",.01)="LINE EDITOR - VA FILEMAN" Y=1
+"RTN","ORCDLG2",179,0)
+ Q Y
+"RTN","ORCDLG2",180,0)
+ ;
+"RTN","ORCDLG2",181,0)
+RETURN() ; -- press return to cont
+"RTN","ORCDLG2",182,0)
+ N X W !,"Press <return> to continue ..." R X:DTIME
+"RTN","ORCDLG2",183,0)
+ Q ""
+"RTN","ORCDLG2",184,0)
+ ;
+"RTN","ORCDLG2",185,0)
+DONE() ; -- Done editing?
+"RTN","ORCDLG2",186,0)
+ N DIR,X,Y
+"RTN","ORCDLG2",187,0)
+ S DIR(0)="YA",DIR("A")="Do you want to quit? ",DIR("B")="NO"
+"RTN","ORCDLG2",188,0)
+ S DIR("?")="Enter YES to exit this order, or NO to continue editing"
+"RTN","ORCDLG2",189,0)
+ D ^DIR
+"RTN","ORCDLG2",190,0)
+ Q +Y
+"RTN","ORCDLG2",191,0)
+ ;
+"RTN","ORCDLG2",192,0)
+HELP(TYPE) ; -- Returns default help msg for TYPE prompt
+"RTN","ORCDLG2",193,0)
+ N Y S Y=""
+"RTN","ORCDLG2",194,0)
+ I TYPE="D" S Y="Enter a date[/time]."
+"RTN","ORCDLG2",195,0)
+ I TYPE="R" S Y="Enter a date[/time] as T for TODAY or T+1 for TOMORROW."
+"RTN","ORCDLG2",196,0)
+ I TYPE="F" S Y="Enter a string of text."
+"RTN","ORCDLG2",197,0)
+ I TYPE="N" S Y="Enter a number."
+"RTN","ORCDLG2",198,0)
+ I TYPE="S" S Y="Enter an item from the list."
+"RTN","ORCDLG2",199,0)
+ I TYPE="Y" S Y="Enter YES or NO."
+"RTN","ORCDLG2",200,0)
+ I TYPE="P" S Y="Enter an item from the file."
+"RTN","ORCDLG2",201,0)
+ I TYPE="W" S Y=""
+"RTN","ORCDLG2",202,0)
+ Q Y
+"RTN","ORCMEDT6")
+0^5^B25826080^B25635065
+"RTN","ORCMEDT6",1,0)
+ORCMEDT6 ;SLC/MKB-QO editor utilities ;12/18/02  13:33
+"RTN","ORCMEDT6",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**164,297**;Dec 17, 1997;Build 14
+"RTN","ORCMEDT6",3,0)
+ ;
+"RTN","ORCMEDT6",4,0)
+QO ; -- Enter/edit QO restriction on orderable items
+"RTN","ORCMEDT6",5,0)
+ N X,Y,DA,DR,DIE,ORIT,OLDVAL,OREBLD
+"RTN","ORCMEDT6",6,0)
+ F  S ORIT=$$OI("S.RX^S.LAB","Select an ORDERABLE ITEM (meds or labs only): ") Q:ORIT'>0  D  W !!
+"RTN","ORCMEDT6",7,0)
+ . W !!,"Select the type of usage for which you wish to restrict ordering of this item."
+"RTN","ORCMEDT6",8,0)
+ . F  S ORDG=$$SET(+ORIT) Q:"^"[ORDG  D
+"RTN","ORCMEDT6",9,0)
+ .. S DA(1)=+ORIT,DA=+$O(^ORD(101.43,+ORIT,9,"B",ORDG,0))
+"RTN","ORCMEDT6",10,0)
+ .. S OLDVAL=$G(^ORD(101.43,+ORIT,9,DA,0))
+"RTN","ORCMEDT6",11,0)
+ .. S DR=2,DIE="^ORD(101.43,"_DA(1)_",9," D ^DIE W !
+"RTN","ORCMEDT6",12,0)
+ .. I ORDG="O RX"!(ORDG="UD RX"),OLDVAL'=$G(^ORD(101.43,+ORIT,9,DA,0)) S OREBLD(ORDG)=1
+"RTN","ORCMEDT6",13,0)
+ F ORDG="O RX","UD RX" I $G(OREBLD(ORDG)) D FVBLDQ^ORWUL(ORDG)
+"RTN","ORCMEDT6",14,0)
+ Q
+"RTN","ORCMEDT6",15,0)
+ ;
+"RTN","ORCMEDT6",16,0)
+SET(OI) ; -- Returns Set Membership for OI
+"RTN","ORCMEDT6",17,0)
+ N X,Y,I,DOMAIN,NAME,HELP,DONE
+"RTN","ORCMEDT6",18,0)
+ S X="",I=0 F  S X=$O(^ORD(101.43,+OI,9,"B",X)) Q:X=""  S NAME=$$NAME(X) I NAME'="PHARMACY" S I=I+1,DOMAIN(I)=X_U_NAME,DOMAIN("B",NAME)=I
+"RTN","ORCMEDT6",19,0)
+ S DOMAIN(0)=I,HELP="Select the type of usage for which you wish to restrict ordering of this item."
+"RTN","ORCMEDT6",20,0)
+ S DONE=0,Y="" F  D  Q:DONE
+"RTN","ORCMEDT6",21,0)
+ . W !,"Usage: "
+"RTN","ORCMEDT6",22,0)
+ . R X:DTIME S:'$T X="^" I X["^" S Y="^",DONE=1 Q
+"RTN","ORCMEDT6",23,0)
+ . I X="" S Y="^",DONE=1 Q
+"RTN","ORCMEDT6",24,0)
+ . I X["?" W !!,HELP D LIST Q
+"RTN","ORCMEDT6",25,0)
+ . D  I 'Y W $C(7),!,HELP Q
+"RTN","ORCMEDT6",26,0)
+ . . N XP,XY,CNT,MATCH,DIR,I
+"RTN","ORCMEDT6",27,0)
+ . . S X=$$UP^XLFSTR(X),Y=+$G(DOMAIN("B",X)) Q:Y  ; done
+"RTN","ORCMEDT6",28,0)
+ . . S CNT=0,XP=X F  S XP=$O(DOMAIN("B",XP)) Q:XP=""  Q:$E(XP,1,$L(X))'=X  S CNT=CNT+1,XY=+DOMAIN("B",XP),MATCH(CNT)=XY_U_$P(DOMAIN(XY),U,2)
+"RTN","ORCMEDT6",29,0)
+ . . Q:'CNT
+"RTN","ORCMEDT6",30,0)
+ . . I CNT=1 S Y=+MATCH(1),XP=$P(MATCH(1),U,2) W $E(XP,$L(X)+1,$L(XP)) Q
+"RTN","ORCMEDT6",31,0)
+ . . S DIR(0)="NAO^1:"_CNT,DIR("A")="Select 1-"_CNT_": "
+"RTN","ORCMEDT6",32,0)
+ . . F I=1:1:CNT S DIR("A",I)=$J(I,3)_" "_$P(MATCH(I),U,2)
+"RTN","ORCMEDT6",33,0)
+ . . S DIR("?")="Select the desired value, by number"
+"RTN","ORCMEDT6",34,0)
+ . . D ^DIR I $D(DIRUT) S Y="" Q
+"RTN","ORCMEDT6",35,0)
+ . . S Y=+MATCH(Y) W "  "_$P(DOMAIN(Y),U,2)
+"RTN","ORCMEDT6",36,0)
+ . S Y=$P(DOMAIN(Y),U),DONE=1
+"RTN","ORCMEDT6",37,0)
+ Q Y
+"RTN","ORCMEDT6",38,0)
+ ;
+"RTN","ORCMEDT6",39,0)
+LIST ; -- List order statuses in DOMAIN
+"RTN","ORCMEDT6",40,0)
+ N I,Z,CNT,DONE
+"RTN","ORCMEDT6",41,0)
+ S CNT=0 W !,"Choose from:"
+"RTN","ORCMEDT6",42,0)
+ F I=1:1:DOMAIN(0) D  Q:$G(DONE)
+"RTN","ORCMEDT6",43,0)
+ . S CNT=CNT+1 W ! I CNT>(IOSL-3) D  Q:$G(DONE)
+"RTN","ORCMEDT6",44,0)
+ .. W ?3,"'^' TO STOP: " R Z:DTIME S:'$T!(Z["^") DONE=1 S CNT=1
+"RTN","ORCMEDT6",45,0)
+ . W $C(13),"  "_$P(DOMAIN(I),U,2)
+"RTN","ORCMEDT6",46,0)
+ Q
+"RTN","ORCMEDT6",47,0)
+ ;
+"RTN","ORCMEDT6",48,0)
+NAME(X) ; -- Returns full name of set X
+"RTN","ORCMEDT6",49,0)
+ N Y,I S Y=$S(X="IVA RX":"IV ADDITIVES",X="IVB RX":"IV SOLUTIONS",X="IVM RX":"IV MEDICATIONS",1:"")
+"RTN","ORCMEDT6",50,0)
+ I Y="" S I=+$O(^ORD(100.98,"B",X,0)),Y=$S(I:$P($G(^ORD(100.98,I,0)),U),1:X)
+"RTN","ORCMEDT6",51,0)
+ Q Y
+"RTN","ORCMEDT6",52,0)
+ ;
+"RTN","ORCMEDT6",53,0)
+OI(IDX,CAPTION) ; -- Returns selected OI from file #101.43 using IDX xrefs
+"RTN","ORCMEDT6",54,0)
+ N X,Y,D,DIC,DTOUT,DUOUT,DIRUT,DIROUT,ORDIC
+"RTN","ORCMEDT6",55,0)
+ S DIC="^ORD(101.43,",DIC(0)="AEQS" S:$L($G(CAPTION)) DIC("A")=CAPTION
+"RTN","ORCMEDT6",56,0)
+ S DIC("W")="W:$S('$D(%):0,'$D(DIY):0,%=DIY:0,1:1) $G(DIY)"
+"RTN","ORCMEDT6",57,0)
+ S D=IDX,ORDIC="IX^DIC" S:$L(D,U)>1 ORDIC="MIX^DIC1",DIC(0)=DIC(0)_"M"
+"RTN","ORCMEDT6",58,0)
+ D @ORDIC
+"RTN","ORCMEDT6",59,0)
+ Q Y
+"RTN","ORCMEDT6",60,0)
+ ;
+"RTN","ORCMEDT6",61,0)
+OIB(CAPTION) ; -- Returns selected OI from file #101.43 using B xref
+"RTN","ORCMEDT6",62,0)
+ N X,Y,DIC,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","ORCMEDT6",63,0)
+ S DIC="^ORD(101.43,",DIC(0)="AEQ"
+"RTN","ORCMEDT6",64,0)
+ S:$L($G(CAPTION)) DIC("A")=CAPTION
+"RTN","ORCMEDT6",65,0)
+ D ^DIC
+"RTN","ORCMEDT6",66,0)
+ Q Y
+"RTN","ORCMEDT6",67,0)
+ ;
+"RTN","ORCMEDT6",68,0)
+SEARCH ; -- Search/replace orderables in QO responses
+"RTN","ORCMEDT6",69,0)
+ N I,ORP,ORIT
+"RTN","ORCMEDT6",70,0)
+ S I=0 F  S I=$O(^ORD(101.41,I)) Q:I<1  I $P($G(^(I,0)),U,4)="P",$P($G(^(1)),U)="P",+$P($G(^(1)),U,2)=101.43 S ORP(I)="" ;OI prompts
+"RTN","ORCMEDT6",71,0)
+ F  S ORIT=$$OIB("Search for: ") Q:ORIT<1  D SR1 W !!
+"RTN","ORCMEDT6",72,0)
+ Q
+"RTN","ORCMEDT6",73,0)
+ ;
+"RTN","ORCMEDT6",74,0)
+SR1 ; -- list QO's & Dlgs where ORIT is used, get replacement
+"RTN","ORCMEDT6",75,0)
+ N I,X,ORDAD,ORDG,ORY,ORNMBR,NUM,DA,ORNM,TYPE,SET
+"RTN","ORCMEDT6",76,0)
+ D FIND(ORIT,.ORDAD) I ORDAD<1 W !,$P(ORIT,U,2)_" is not used by any quick orders or dialogs." Q
+"RTN","ORCMEDT6",77,0)
+ W @IOF,"Quick Orders and Dialogs containing "_$P(ORIT,U,2),!,$$REPEAT^XLFSTR("-",79)
+"RTN","ORCMEDT6",78,0)
+ S I=0 F  S I=$O(ORDAD(I)) Q:I'>0  D
+"RTN","ORCMEDT6",79,0)
+ . S X=+ORDAD(I) W !,I,?4,$P(^ORD(101.41,X,0),U)
+"RTN","ORCMEDT6",80,0)
+ W !,$$REPEAT^XLFSTR("-",79)
+"RTN","ORCMEDT6",81,0)
+ S ORDG=+$P($G(^ORD(101.43,+ORIT,0)),U,5),ORDG=$P($G(^ORD(100.98,ORDG,0)),U,3)
+"RTN","ORCMEDT6",82,0)
+ S ORY=$$OI("S."_ORDG,"Replace with: ") Q:ORY<1
+"RTN","ORCMEDT6",83,0)
+ D SELECT(ORDAD,.ORNMBR) Q:ORNMBR="^"
+"RTN","ORCMEDT6",84,0)
+ Q:'$$OK  W !!,"Replacing "_$P(ORIT,U,2)_" with "_$P(ORY,U,2)_" in:"
+"RTN","ORCMEDT6",85,0)
+ F I=1:1:$L(ORNMBR,",") S NUM=$P(ORNMBR,",",I) I NUM D
+"RTN","ORCMEDT6",86,0)
+ . S DA(1)=+ORDAD(NUM),DA=$P(ORDAD(NUM),U,2),SET=$P(ORDAD(NUM),U,3)
+"RTN","ORCMEDT6",87,0)
+ . S ORNM=$P(^ORD(101.41,DA(1),0),U),TYPE=$P($G(^(0)),U,4)
+"RTN","ORCMEDT6",88,0)
+ . I '$O(^ORD(101.43,+ORY,9,"B",SET,0)) W !?3,ORNM_" canceled: item invalid for this dialog." Q
+"RTN","ORCMEDT6",89,0)
+ . I TYPE="Q" S ^ORD(101.41,DA(1),6,DA,1)=+ORY
+"RTN","ORCMEDT6",90,0)
+ . I TYPE="D" S ^ORD(101.41,DA(1),10,DA,7)="S Y="_+ORY
+"RTN","ORCMEDT6",91,0)
+ . W !?3,ORNM_" ...done."
+"RTN","ORCMEDT6",92,0)
+ Q
+"RTN","ORCMEDT6",93,0)
+ ;
+"RTN","ORCMEDT6",94,0)
+FIND(X,QO) ; -- Find QO's, Dlg's that use ord item X
+"RTN","ORCMEDT6",95,0)
+ N IFN,P,TYPE,NODE,DEF,DA,DLG,PRMT,SET S IFN=0,QO=0
+"RTN","ORCMEDT6",96,0)
+ F  S IFN=+$O(^ORD(101.41,IFN)) Q:IFN<1  S TYPE=$P($G(^(IFN,0)),U,4) D
+"RTN","ORCMEDT6",97,0)
+ . S NODE=$S(TYPE="Q":6,TYPE="D":10,1:0) Q:'NODE
+"RTN","ORCMEDT6",98,0)
+ . S P=0 F  S P=$O(ORP(P)) Q:P<1  S DA=$O(^ORD(101.41,IFN,NODE,"D",P,0)) I DA D
+"RTN","ORCMEDT6",99,0)
+ .. I TYPE="Q" Q:+$G(^ORD(101.41,IFN,6,DA,1))'=+X  S DLG=$$DEFDLG^ORCD(IFN),PRMT=+$O(^ORD(101.41,DLG,10,"D",P,0))
+"RTN","ORCMEDT6",100,0)
+ .. I TYPE="D" S DEF=$G(^ORD(101.41,IFN,10,DA,7)) Q:DEF'?1"S Y=".E  S DEF=$P(DEF,"=",2) S:$E(DEF)="""" DEF=$P(DEF,"""",2) Q:+DEF'=+X  S DLG=IFN,PRMT=DA
+"RTN","ORCMEDT6",101,0)
+ .. S SET=$P($G(^ORD(101.41,DLG,10,PRMT,0)),U,10),SET=$P($P(SET,";"),".",2)
+"RTN","ORCMEDT6",102,0)
+ .. S QO=QO+1,QO(QO)=IFN_U_DA_U_SET
+"RTN","ORCMEDT6",103,0)
+ Q
+"RTN","ORCMEDT6",104,0)
+ ;
+"RTN","ORCMEDT6",105,0)
+SELECT(MAX,Y) ; -- Select which QOs to replace Ord Item
+"RTN","ORCMEDT6",106,0)
+ N X,DIR
+"RTN","ORCMEDT6",107,0)
+ S DIR(0)="LA^1:"_MAX,DIR("A")="Replace in: ",DIR("B")=$S(MAX>1:"1-"_MAX,1:"1")
+"RTN","ORCMEDT6",108,0)
+ ; S DIR("?")
+"RTN","ORCMEDT6",109,0)
+ D ^DIR S:$D(DTOUT)!(X["^") Y="^"
+"RTN","ORCMEDT6",110,0)
+ Q
+"RTN","ORCMEDT6",111,0)
+ ;
+"RTN","ORCMEDT6",112,0)
+OK() ; -- Are you ready?
+"RTN","ORCMEDT6",113,0)
+ N X,Y,DIR
+"RTN","ORCMEDT6",114,0)
+ S DIR(0)="YA",DIR("A")="Are you ready? ",DIR("B")="NO"
+"RTN","ORCMEDT6",115,0)
+ W ! D ^DIR
+"RTN","ORCMEDT6",116,0)
+ Q +Y
+"RTN","ORY281")
+1^2^^B27046619
+"RTN","ORY281A")
+1^3^^n/a
+"RTN","ORY281B")
+1^6^^n/a
+"RTN","ORY297")
+0^10^B8397277^n/a
+"RTN","ORY297",1,0)
+ORY297 ;SLC/JLC-Search for OIs with PHARMACY restriction ; 3/8/11 11:02am
+"RTN","ORY297",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**297**;Dec 17, 1997;Build 14
+"RTN","ORY297",3,0)
+ ;
+"RTN","ORY297",4,0)
+ ;
+"RTN","ORY297",5,0)
+EN1 ; -- main entry point
+"RTN","ORY297",6,0)
+ I $G(DUZ)="" W "Your DUZ is not defined.",! Q
+"RTN","ORY297",7,0)
+ N ZTDESC,ZTIO,ZTRTN,ZTSK,ZTSAVE
+"RTN","ORY297",8,0)
+TASK S ZTRTN="EN^ORY297",ZTIO=""
+"RTN","ORY297",9,0)
+ S ZTDESC="Check of Orderable Items"
+"RTN","ORY297",10,0)
+ D ^%ZTLOAD
+"RTN","ORY297",11,0)
+ W !!,"The check of Orderable Item Quick Order Restrictions is",$S($D(ZTSK):"",1:" NOT")," queued",!
+"RTN","ORY297",12,0)
+ I $D(ZTSK) W " (to start NOW).",!!,"YOU WILL RECEIVE A MAILMAN MESSAGE WHEN TASK #"_ZTSK_" HAS COMPLETED."
+"RTN","ORY297",13,0)
+ Q
+"RTN","ORY297",14,0)
+ ;
+"RTN","ORY297",15,0)
+EN       ; -- tasked entry point
+"RTN","ORY297",16,0)
+ S:$D(ZTQUEUED) ZTREQ="@"
+"RTN","ORY297",17,0)
+ N CREAT,EXPR,%
+"RTN","ORY297",18,0)
+ D NOW^%DTC S CREAT=$E(%,1,7),EXPR=$$FMADD^XLFDT(CREAT,30,0,0,0)
+"RTN","ORY297",19,0)
+ N NAME,OI
+"RTN","ORY297",20,0)
+ S NAME="" F  S NAME=$O(^ORD(101.43,"S.RX",NAME)) Q:NAME=""  D
+"RTN","ORY297",21,0)
+ . S OI=0 F  S OI=$O(^ORD(101.43,"S.RX",NAME,OI)) Q:'OI  D
+"RTN","ORY297",22,0)
+ .. I $D(MSG(OI)) Q
+"RTN","ORY297",23,0)
+ .. I $P(^ORD(101.43,"S.RX",NAME,OI),U,5) D
+"RTN","ORY297",24,0)
+ ... S MSG(OI)=$P($G(^ORD(101.43,OI,0)),U)
+"RTN","ORY297",25,0)
+ ... I ^ORD(101.43,OI,.1) S MSG(OI)=MSG(OI)_"(INACTIVE)"
+"RTN","ORY297",26,0)
+ I $D(MSG) S MSG(0)=EXPR_"^"_CREAT
+"RTN","ORY297",27,0)
+ D SEND
+"RTN","ORY297",28,0)
+ K ZTQUEUED,ZTREQ Q
+"RTN","ORY297",29,0)
+SEND     ;Send message
+"RTN","ORY297",30,0)
+ K ^TMP($J,"ORMSG"),XMY
+"RTN","ORY297",31,0)
+ N OI,CNT,OCNT,XMDUZ,XMSUB,XMTEXT
+"RTN","ORY297",32,0)
+ S XMDUZ="CPRS, SEARCH",XMSUB="ORDERABLE ITEM QUICK ORDER RESTRICTION SEARCH",XMTEXT="^TMP("_$J_",""ORMSG"",",XMY(DUZ)=""
+"RTN","ORY297",33,0)
+ S ^TMP($J,"ORMSG",1,0)="  The check of Orderable Item Quick Order Restrictions is complete."
+"RTN","ORY297",34,0)
+ S ^TMP($J,"ORMSG",2,0)=" "
+"RTN","ORY297",35,0)
+ s ^TMP($J,"ORMSG",3,0)="  Here is the list of all orderable items that should be reviewed:"
+"RTN","ORY297",36,0)
+ S ^TMP($J,"ORMSG",4,0)=" "
+"RTN","ORY297",37,0)
+ s ^TMP($J,"ORMSG",5,0)="These orderable items are marked with PHARMACY as the usage and"
+"RTN","ORY297",38,0)
+ S ^TMP($J,"ORMSG",6,0)="have QO ONLY set to YES. Please follow the instructions provided"
+"RTN","ORY297",39,0)
+ S ^TMP($J,"ORMSG",7,0)="in the patch description of OR*3.0*297 to confirm the quick order"
+"RTN","ORY297",40,0)
+ S ^TMP($J,"ORMSG",8,0)="restrictions are correct for these items."
+"RTN","ORY297",41,0)
+ S ^TMP($J,"ORMSG",9,0)=" "
+"RTN","ORY297",42,0)
+ S OI=0,OCNT=9,CNT=0
+"RTN","ORY297",43,0)
+ F  S OI=$O(MSG(OI)) Q:OI=""  S OCNT=OCNT+1,^TMP($J,"ORMSG",OCNT,0)=MSG(OI),CNT=CNT+1 I '(CNT#10) S OCNT=OCNT+1,^TMP($J,"ORMSG",OCNT,0)=" "
+"RTN","ORY297",44,0)
+ D ^XMD
+"RTN","ORY297",45,0)
+ Q
+"RTN","ORY299")
+1^4^^B17744000
+"RTN","ORY299A")
+1^7^^n/a
+"RTN","ORY299B")
+1^8^^n/a
+"VER")
+8.0^22.0
+"BLD",7702,6)
+^297
+**END**
+**END**

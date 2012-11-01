@@ -1,0 +1,71 @@
+
+=============================================================================
+Run Date: MAR 25, 2010                     Designation: XOBV*1.5*2
+Package : XOBV - VISTALINK                    Priority: Mandatory
+Version : 1.5         SEQ #2                    Status: Released
+                  Compliance Date: APR 25, 2010
+=============================================================================
+
+Associated patches: (v)XOBV*1.5*1  <<= must be installed BEFORE `XOBV*1.5*2'
+
+Subject: DNS ENTRY CACHING, WL CONSOLE ROLE RESTRICTION FIXES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ VISTA SITES NEED NOT INSTALL ANY PATCH ON THE M SIDE FOR THIS. THIS PATCH
+ WILL BE INSTALLED ONLY ON THE CENTRALIZED (J2EE) SERVER.
+ The patch contains updates to the java components only. While it contains 
+ a full Java side VistALink distribution, an M side component -
+ XOB_1_5.KID build was removed from the package to avoid confusion and
+ accidental downgrading of the installation.
+  
+ If you are performing a brand new VistALink 1.5 installation, install 
+ XOBV*1.5*0, followed by XOBV*1.5*1. If you are performing an upgrade,
+ there is no need to do anything on the M side, since there are no updates
+ to the routines in this patch.
+  
+ This patch addresses the following issues:
+  
+ 1. A fix for internal caching of DNS resolved entries. A fix has to do 
+ with the fact that due to caching of resolved IP addresses by 
+ the VistALink code, several sites have reported connectivity problems
+ after DNS information was changed and connectors were not redeployed.
+ Caching has been disabled and from now on it is being controlled by the
+ corresponding settings of an underlying JVM. The values controlling the 
+ Caching Policy of the JVM the Connector is running on are being displayed
+ on the Connector Detail page of VistALink Console as well. Refer to the 
+ corresponding Console's Online Help pages for more information. 
+  
+ 2. Introduction of additional security contraints to the VistALink 
+ Console. The request came from the personnel supporting the production 
+ sites. Members of the WebLogic's Monitors role will be able to navigate 
+ to Connector Details pages, but not to the Connector Configuration 
+ section of the console.
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+  
+ HD0000000242319
+ HD0000000229547                  
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : MIKHAILUTSA,ARSEN             Date Entered  : MAY 27, 2009
+Completed By: SUBBARAMAN,PADMA              Date Completed: DEC 04, 2009
+Released By : LASHLEY,ANTHONY               Date Released : MAR 25, 2010
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

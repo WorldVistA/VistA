@@ -1,0 +1,674 @@
+Released PSS*1*149 SEQ #145
+Extracted from mail message
+**KIDS**:PSS*1.0*149^
+
+**INSTALL NAME**
+PSS*1.0*149
+"BLD",8743,0)
+PSS*1.0*149^PHARMACY DATA MANAGEMENT^0^3110610^y
+"BLD",8743,1,0)
+^^11^11^3110223^
+"BLD",8743,1,1,0)
+This patch will correct the issues reported in Remedy Tickets:
+"BLD",8743,1,2,0)
+ 
+"BLD",8743,1,3,0)
+1) HD0000000222760 - Pharmacy standard schedule problem
+"BLD",8743,1,4,0)
+The use of the @ in the ADMINISTRATION SCHEDULE file #51.1 Name field 
+"BLD",8743,1,5,0)
+.01 with the exception of day-of-week schedules, causes the user to be
+"BLD",8743,1,6,0)
+locked into a prescription for a 1 time order (reorder)
+"BLD",8743,1,7,0)
+ 
+"BLD",8743,1,8,0)
+2) HD0000000422160 - <UNDEFINED>ENPSJ+6^PSSJSV *X
+"BLD",8743,1,9,0)
+When using the VistA Standard Schedule Edit[ PSS SCHEDULE EDIT] option and
+"BLD",8743,1,10,0)
+the user enters a schedule with "QD","QOD","HS","TIW" the user is kicked
+"BLD",8743,1,11,0)
+out of Vista with this error <UNDEFINED>ENPSJ+6^PSSJSV *X.
+"BLD",8743,4,0)
+^9.64PA^^
+"BLD",8743,6)
+2^
+"BLD",8743,6.3)
+7
+"BLD",8743,"ABPKG")
+n
+"BLD",8743,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8743,"KRN",.4,0)
+.4
+"BLD",8743,"KRN",.401,0)
+.401
+"BLD",8743,"KRN",.402,0)
+.402
+"BLD",8743,"KRN",.403,0)
+.403
+"BLD",8743,"KRN",.5,0)
+.5
+"BLD",8743,"KRN",.84,0)
+.84
+"BLD",8743,"KRN",3.6,0)
+3.6
+"BLD",8743,"KRN",3.8,0)
+3.8
+"BLD",8743,"KRN",9.2,0)
+9.2
+"BLD",8743,"KRN",9.8,0)
+9.8
+"BLD",8743,"KRN",9.8,"NM",0)
+^9.68A^3^1
+"BLD",8743,"KRN",9.8,"NM",3,0)
+PSSJSV^^0^B74597072
+"BLD",8743,"KRN",9.8,"NM","B","PSSJSV",3)
+
+"BLD",8743,"KRN",19,0)
+19
+"BLD",8743,"KRN",19.1,0)
+19.1
+"BLD",8743,"KRN",101,0)
+101
+"BLD",8743,"KRN",409.61,0)
+409.61
+"BLD",8743,"KRN",771,0)
+771
+"BLD",8743,"KRN",779.2,0)
+779.2
+"BLD",8743,"KRN",870,0)
+870
+"BLD",8743,"KRN",8989.51,0)
+8989.51
+"BLD",8743,"KRN",8989.52,0)
+8989.52
+"BLD",8743,"KRN",8994,0)
+8994
+"BLD",8743,"KRN","B",.4,.4)
+
+"BLD",8743,"KRN","B",.401,.401)
+
+"BLD",8743,"KRN","B",.402,.402)
+
+"BLD",8743,"KRN","B",.403,.403)
+
+"BLD",8743,"KRN","B",.5,.5)
+
+"BLD",8743,"KRN","B",.84,.84)
+
+"BLD",8743,"KRN","B",3.6,3.6)
+
+"BLD",8743,"KRN","B",3.8,3.8)
+
+"BLD",8743,"KRN","B",9.2,9.2)
+
+"BLD",8743,"KRN","B",9.8,9.8)
+
+"BLD",8743,"KRN","B",19,19)
+
+"BLD",8743,"KRN","B",19.1,19.1)
+
+"BLD",8743,"KRN","B",101,101)
+
+"BLD",8743,"KRN","B",409.61,409.61)
+
+"BLD",8743,"KRN","B",771,771)
+
+"BLD",8743,"KRN","B",779.2,779.2)
+
+"BLD",8743,"KRN","B",870,870)
+
+"BLD",8743,"KRN","B",8989.51,8989.51)
+
+"BLD",8743,"KRN","B",8989.52,8989.52)
+
+"BLD",8743,"KRN","B",8994,8994)
+
+"BLD",8743,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8743,"QUES",0)
+^9.62^^
+"BLD",8743,"REQB",0)
+^9.611^2^1
+"BLD",8743,"REQB",2,0)
+PSS*1.0*143^1
+"BLD",8743,"REQB","B","PSS*1.0*143",2)
+
+"MBREQ")
+0
+"PKG",488,-1)
+1^1
+"PKG",488,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",488,20,0)
+^9.402P^^
+"PKG",488,22,0)
+^9.49I^1^1
+"PKG",488,22,1,0)
+1.0^2970930^3000316^66481
+"PKG",488,22,1,"PAH",1,0)
+149^3110610^100104
+"PKG",488,22,1,"PAH",1,1,0)
+^^11^11^3110610
+"PKG",488,22,1,"PAH",1,1,1,0)
+This patch will correct the issues reported in Remedy Tickets:
+"PKG",488,22,1,"PAH",1,1,2,0)
+ 
+"PKG",488,22,1,"PAH",1,1,3,0)
+1) HD0000000222760 - Pharmacy standard schedule problem
+"PKG",488,22,1,"PAH",1,1,4,0)
+The use of the @ in the ADMINISTRATION SCHEDULE file #51.1 Name field 
+"PKG",488,22,1,"PAH",1,1,5,0)
+.01 with the exception of day-of-week schedules, causes the user to be
+"PKG",488,22,1,"PAH",1,1,6,0)
+locked into a prescription for a 1 time order (reorder)
+"PKG",488,22,1,"PAH",1,1,7,0)
+ 
+"PKG",488,22,1,"PAH",1,1,8,0)
+2) HD0000000422160 - <UNDEFINED>ENPSJ+6^PSSJSV *X
+"PKG",488,22,1,"PAH",1,1,9,0)
+When using the VistA Standard Schedule Edit[ PSS SCHEDULE EDIT] option and
+"PKG",488,22,1,"PAH",1,1,10,0)
+the user enters a schedule with "QD","QOD","HS","TIW" the user is kicked
+"PKG",488,22,1,"PAH",1,1,11,0)
+out of Vista with this error <UNDEFINED>ENPSJ+6^PSSJSV *X.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSSJSV")
+0^3^B74597072^B42095424
+"RTN","PSSJSV",1,0)
+PSSJSV ;BIR/CML3/WRT-SCHEDULE VALIDATION ;06/24/96
+"RTN","PSSJSV",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**20,38,56,59,110,121,143,149**;9/30/97;Build 7
+"RTN","PSSJSV",3,0)
+ ;
+"RTN","PSSJSV",4,0)
+ ; Reference to ^PS(51.15 is supported by DBIA #2132
+"RTN","PSSJSV",5,0)
+ ; Reference to $$UP^XLFSTR(P1) is supported by DBIA #10104
+"RTN","PSSJSV",6,0)
+ ;
+"RTN","PSSJSV",7,0)
+EN ;
+"RTN","PSSJSV",8,0)
+ S X=PSJX,(PSJAT,PSJM,PSJTS,PSJY,PSJAX)="" I $S(X["""":1,$A(X)=45:1,X'?.ANP:1,$L(X," ")>2:1,$L(X)>70:1,$L(X)<1:1,X["P RN":1,1:X["PR N") K PSJX,X Q
+"RTN","PSSJSV",9,0)
+ I X["PRN"!(X="ON CALL")!(X="ONCALL")!(X="ON-CALL") G DONE
+"RTN","PSSJSV",10,0)
+ I X?1."?" D:'$D(PSJNE) ENSVH^PSSJSV0 Q
+"RTN","PSSJSV",11,0)
+ I X["@" D DW S:$D(X) PSJAT=$P(X,"@",2) G DONE
+"RTN","PSSJSV",12,0)
+ S X0=X,(XT,Y)="" I X,X'["X",(X?2.4N1"-".E!(X?2.4N)) D ENCHK S:$D(X) PSJAT=X G DONE
+"RTN","PSSJSV",13,0)
+ I $S($D(^PS(51.1,"AC",PSJPP,X)):1,1:$E($O(^(X)),1,$L(X))=X) D DIC G:$S(PSJY:PSJTS'="C",1:PSJM) DONE
+"RTN","PSSJSV",14,0)
+ I $S(X="NOW":1,X="ONCE":1,X="STAT":1,X="ONE TIME":1,X="ONETIME":1,X="1TIME":1,X="1-TIME":1,X="1 TIME":1,1:X="ONE-TIME") S PSJTS="O" W:'$D(PSJNE) "  (ONCE ONLY)" G DONE
+"RTN","PSSJSV",15,0)
+ S:PSJTS="" PSJTS="C" I PSJAT="" W:'$D(PSJNE) "  (Non standard schedule)" S X=PSJX
+"RTN","PSSJSV",16,0)
+ I $E(X,1,2)="AD" K X G DONE
+"RTN","PSSJSV",17,0)
+ I $E(X,1,3)="BID"!($E(X,1,3)="TID")!($E(X,1,3)="QID") S PSJM=1440\$F("BTQ",$E(X)) G DONE
+"RTN","PSSJSV",18,0)
+ S:$E(X)="Q" X=$E(X,2,99) S:'X X="1"_X S X1=+X,X=$P(X,+X,2),X2=0 S:X1<0 X1=-X1 S:$E(X)="X" X2=X1,X=$E(X,2,99) I 'X2,$E(X)="O" S X2=.5,X=$E(X,2,99)
+"RTN","PSSJSV",19,0)
+ S XT=$S(X["'":1,(X["D"&(X'["AD"))!(X["AM")!(X["PM")!(X["HS"&(X'["THS")):1440,X["H"&(X'["TH"):60,X["AC"!(X["PC"):480,X["W":10080,X["M":40320,1:-1) I XT<0,PSJAT="" K X G DONE
+"RTN","PSSJSV",20,0)
+ S X=PSJX I XT S:X2 XT=XT\X2 S:'X2 XT=XT*X1
+"RTN","PSSJSV",21,0)
+ S PSJM=XT
+"RTN","PSSJSV",22,0)
+ ;
+"RTN","PSSJSV",23,0)
+DONE ;
+"RTN","PSSJSV",24,0)
+ K:$D(X)[0 PSJX K D,DIC,Q,QX,SDW,SWD,X,X0,X1,X2,XT,Y,Z Q
+"RTN","PSSJSV",25,0)
+ ;
+"RTN","PSSJSV",26,0)
+ENCHK ; admin times
+"RTN","PSSJSV",27,0)
+ I $S($L($P(X,"-"))>4:1,$L(X)>119:1,$L(X)<2:1,X'>0:1,1:X'?.ANP) K X Q
+"RTN","PSSJSV",28,0)
+ S X(1)=$P(X,"-") I X(1)'?2N,X(1)'?4N K X Q
+"RTN","PSSJSV",29,0)
+ S X(1)=$L(X(1)) F X(2)=2:1:$L(X,"-") S X(3)=$P(X,"-",X(2)) I $S($L(X(3))'=X(1):1,X(3)>$S(X(1)=2:24,1:2400):1,1:X(3)'>$P(X,"-",X(2)-1)) K X Q
+"RTN","PSSJSV",30,0)
+ Q:'$D(X)
+"RTN","PSSJSV",31,0)
+ S X(1)=$L(X,"-")
+"RTN","PSSJSV",32,0)
+ S IENS=$S($G(DA(1))]"":DA(1),1:DA)
+"RTN","PSSJSV",33,0)
+ S X(4)=$S($G(PSSJSE)&($G(PSSSCT)]""):PSSSCT,1:$$GET1^DIQ(51.1,IENS,5,"I"))
+"RTN","PSSJSV",34,0)
+ I X(4)="D" D  Q  ;DOW schedules require at least one admin time
+"RTN","PSSJSV",35,0)
+ . I X(1)>0 K:$D(X) X(1),X(2),X(3) Q
+"RTN","PSSJSV",36,0)
+ . K X
+"RTN","PSSJSV",37,0)
+ I X(4)="O" D  Q
+"RTN","PSSJSV",38,0)
+ . I $L(X,"-")>1 K X Q  ;One Time schedules allow one admin time
+"RTN","PSSJSV",39,0)
+ . I X="" K X Q  ;One Time schedules require one admin time
+"RTN","PSSJSV",40,0)
+ S X(2)=$S($G(PSSJSE)&($G(PSSFRQ)):PSSFRQ,1:$$GET1^DIQ(51.1,IENS,2,"I"))
+"RTN","PSSJSV",41,0)
+ I X(2)="" K:$D(X) X(1),X(2),X(3) Q
+"RTN","PSSJSV",42,0)
+ I X(2)>0,X(2)<1440,(1440/X(2))'=X(1) K X Q  ;PSS*1*143 Admin times must match frequency
+"RTN","PSSJSV",43,0)
+ I X(2)>0,X(2)<1440,(1440#X(2))'=0,X(1)>0 K X Q  ;PSS*1*143 Odd schedules cannot have admin times
+"RTN","PSSJSV",44,0)
+ I X(2)>1440,(X(2)#1440)'=0,X(1)>1 K X Q  ;PSS*1*143 Odd schedules cannot have admin times
+"RTN","PSSJSV",45,0)
+ I X(2)>1439,$L(X,"-")'=1 K X Q  ;PSS*1*143 Schedules with frequency equal to or greater than 1 day can only have one admin time.
+"RTN","PSSJSV",46,0)
+ K:$D(X) X(1),X(2),X(3)
+"RTN","PSSJSV",47,0)
+ Q
+"RTN","PSSJSV",48,0)
+ ;
+"RTN","PSSJSV",49,0)
+DIC ; 51.1 look-up
+"RTN","PSSJSV",50,0)
+ S DIC="^PS(51.1,",DIC(0)=$E("E",'$D(PSJNE))_"ISZ",DIC("W")="I '$D(PSJNE) D DICW^PSSJSV0",D="AP"_PSJPP
+"RTN","PSSJSV",51,0)
+ D IX^DIC K DIC Q:Y'>0  S PSJY=+Y,(PSJX,X,X0)=Y(0,0),PSJM=$P(Y(0),"^",3),PSJTS=$P(Y(0),"^",5),PSJAX=$P(Y(0),U,7) S:PSJTS="" PSJTS="C" Q:PSJTS="O"!(PSJTS["R")  I $D(PSJW),$D(^PS(51.1,+Y,1,+PSJW,0)) S PSJAT=$P(^(0),"^",PSJTS="S"+2)
+"RTN","PSSJSV",52,0)
+ E  S PSJAT=$P(Y(0),"^",PSJTS="S"*4+2)
+"RTN","PSSJSV",53,0)
+ Q:PSJTS'="S"
+"RTN","PSSJSV",54,0)
+ F Y=1:1:$L(PSJAT,"-") S Y(1)=$P(PSJAT,"-",Y),PSJAT(Y(1))="",Y(2)=$O(^PS(51.15,"ACP",PSJPP,Y(1),0)) I Y(2),$D(^PS(51.15,Y(2),0)) S PSJAT(Y(1))=$P(^(0),"^",3) I $D(PSJW),$D(^(1,PSJW,0)),$P(^(0),"^",2)]"" S PSJAT(Y(1))=$P(^(0),"^",2)
+"RTN","PSSJSV",55,0)
+ Q
+"RTN","PSSJSV",56,0)
+ ;
+"RTN","PSSJSV",57,0)
+DW ;  week days
+"RTN","PSSJSV",58,0)
+ S SWD="SUNDAYS^MONDAYS^TUESDAYS^WEDNESDAYS^THURSDAYS^FRIDAYS^SATURDAYS",SDW=X,X=$P(X,"@",2) D ENCHK Q:'$D(X)
+"RTN","PSSJSV",59,0)
+ S X=$P(SDW,"@"),X(1)="-" I X?.E1P.E,X'["-" F QX=1:1:$L(X) I $E(X,QX)?1P S X(1)=$E(X,QX) Q
+"RTN","PSSJSV",60,0)
+ F Q=1:1:$L(X,X(1)) K:SWD="" X Q:SWD=""  S Z=$P(X,X(1),Q) D DWC Q:'$D(X)
+"RTN","PSSJSV",61,0)
+ K X(1) S:$D(X) X=SDW Q
+"RTN","PSSJSV",62,0)
+DWC I $L(Z)<2 K X Q
+"RTN","PSSJSV",63,0)
+ F QX=1:1:$L(SWD,"^") S Y=$P(SWD,"^",QX) I $P(Y,Z)="" S SWD=$P(SWD,Y,2) S:$L(SWD) SWD=$E(SWD,2,50) Q
+"RTN","PSSJSV",64,0)
+ E  K X
+"RTN","PSSJSV",65,0)
+ Q
+"RTN","PSSJSV",66,0)
+ ;
+"RTN","PSSJSV",67,0)
+ENSNV ; schedule name
+"RTN","PSSJSV",68,0)
+ I $S(X["""":1,$A(X)=45:1,X'?.ANP:1,$L(X)>20:1,$L(X)<2:1,1:X?1P.E) K X Q
+"RTN","PSSJSV",69,0)
+ I $S('$D(PSJPP):0,PSJPP="":1,PSJPP'?.ANP:1,1:'$$VERSION^XPDUTL(PSJPP)) K X
+"RTN","PSSJSV",70,0)
+ I $D(DA),$D(^PS(51.1,DA,0)),$P(^(0),"^",5)["D" S ZX=X D DNVX S:$D(X) X=ZX K Z1,Z2,Z3,Z4,ZX
+"RTN","PSSJSV",71,0)
+ Q
+"RTN","PSSJSV",72,0)
+ ;
+"RTN","PSSJSV",73,0)
+ENSHV ;  shift in 51.1
+"RTN","PSSJSV",74,0)
+ I $S($L(X)>11:1,$L(X)<1:1,'$D(PSJPP):1,PSJPP="":1,PSJPP'?.ANP:1,1:'$$VERSION^XPDUTL(PSJPP)) K X Q
+"RTN","PSSJSV",75,0)
+ F X(1)=1:1:$L(X,"-") S X(2)=$P(X,"-",X(1)) I $S(X(2)="":1,X(2)'?.ANP:1,1:'$D(^PS(51.15,"ACP",PSJPP,X(2)))) K X Q
+"RTN","PSSJSV",76,0)
+ K X(1),X(2) Q
+"RTN","PSSJSV",77,0)
+ ;
+"RTN","PSSJSV",78,0)
+ENVSST ;  shift start/stop times
+"RTN","PSSJSV",79,0)
+ I X'?2N1"-"2N,X'?4N1"-"4N K X Q
+"RTN","PSSJSV",80,0)
+ F X(1)=1,2 I $P(X,"-",X(1))>$S($L($P(X,"-",X(1)))<4:24,1:2400) K X Q
+"RTN","PSSJSV",81,0)
+ K X(1) Q
+"RTN","PSSJSV",82,0)
+ ;
+"RTN","PSSJSV",83,0)
+ENFQD ; frequency default
+"RTN","PSSJSV",84,0)
+ N X1,X2,Z S Z=$S($D(^PS(51.1,DA,0)):$P(^(0),"^"),1:""),X=""
+"RTN","PSSJSV",85,0)
+ S X=$P(Z,"^",3) I Z]"" Q
+"RTN","PSSJSV",86,0)
+ S Z=DA I $E(Z,1,2)="AD" Q
+"RTN","PSSJSV",87,0)
+ I $E(Z,1,3)="BID"!($E(Z,1,3)="TID")!($E(Z,1,3)="QID") S X=1440/$F("BTQ",$E(Z)) Q
+"RTN","PSSJSV",88,0)
+ E  S:$E(Z)="Q" Z=$E(Z,2,99) S:'Z Z="1"_Z S X1=+Z,Z=$P(Z,+Z,2),X2=0 S:$E(Z)="X" X2=X1,Z=$E(Z,2,99) I 'X2,$E(Z)="O" S X2=.5,Z=$E(Z,2,99)
+"RTN","PSSJSV",89,0)
+ S X=$S(Z["'":1,(Z["D"&(Z'["AD"))!(Z["AM")!(Z["PM")!(Z["HS"&(Z'["THS")):1440,Z["H"&(Z'["TH"):60,Z["AC"!(Z["PC"):480,Z["W":10080,Z["M":40320,1:"") Q:'X  S:X2 X=X\X2 S:'X2 X=X*X1 Q
+"RTN","PSSJSV",90,0)
+ ;
+"RTN","PSSJSV",91,0)
+ENFREQ ;validate frequency
+"RTN","PSSJSV",92,0)
+ K:+X'=X!(X>129600)!(X<1)!(X?.E1"."1N.N) X
+"RTN","PSSJSV",93,0)
+ Q
+"RTN","PSSJSV",94,0)
+ ;
+"RTN","PSSJSV",95,0)
+ENDNV ; day of the week name
+"RTN","PSSJSV",96,0)
+ N Z1,Z2,Z3,Z4 S X=$S($D(^PS(51.1,DA,0)):$P(^(0),"^"),1:"") I X="" K X Q
+"RTN","PSSJSV",97,0)
+ ;
+"RTN","PSSJSV",98,0)
+DNVX S Z2=1,Z4="-" I X'["-",X?.E1P.E F Z1=1:1:$L(X) I $E(X,Z1)?1P S Z4=$E(X,Z1) Q
+"RTN","PSSJSV",99,0)
+ F Z1=1:1:$L(X,Z4) Q:'Z2  S Z2=0 I $L($P(X,Z4,Z1))>1 F Z3="MONDAYS","TUESDAYS","WEDNESDAYS","THURSDAYS","FRIDAYS","SATURDAYS","SUNDAYS" I $P(Z3,$P(X,Z4,Z1))="" S Z2=1 Q
+"RTN","PSSJSV",100,0)
+ K:'Z2 X S:Z2 X="D" Q
+"RTN","PSSJSV",101,0)
+ ;
+"RTN","PSSJSV",102,0)
+ENPSJ ;validate schedule names for PSJ package
+"RTN","PSSJSV",103,0)
+ N A,B,I,PSSCNT
+"RTN","PSSJSV",104,0)
+ S X=$$UP^XLFSTR(X)
+"RTN","PSSJSV",105,0)
+ I $G(PSJPP)'="PSJ" Q
+"RTN","PSSJSV",106,0)
+ S A=$TR(X,".","") I A="OTHER" K X Q
+"RTN","PSSJSV",107,0)
+ F I=1:1:$L(A," ") S B=$P(A," ",I) I B="QD"!(B="QOD")!(B="HS")!(B="TIW") K X ;;>> *149 RJS
+"RTN","PSSJSV",108,0)
+ Q:'$D(X)
+"RTN","PSSJSV",109,0)
+ S DOW=0,ZX=X S X=$P(X,"@") D DNVX I $G(X)="" S X=ZX K ZX
+"RTN","PSSJSV",110,0)
+ I X="D" S X=ZX,DOW=1 D:X["@" CHKORD I $D(X),$G(PSSCNT)>1 D  S:'$D(X) X=ZX K Z1,Z2,Z3,Z4,ZX
+"RTN","PSSJSV",111,0)
+ .N MSG
+"RTN","PSSJSV",112,0)
+ .S MSG(1)="",MSG(2)="The day of the week schedule must be in the correct day of week order."
+"RTN","PSSJSV",113,0)
+ .S MSG(3)="The correct order is: SU-MO-TU-WE-TH-FR-SA"
+"RTN","PSSJSV",114,0)
+ .D EN^DDIOL(.MSG,"","!")
+"RTN","PSSJSV",115,0)
+ .Q
+"RTN","PSSJSV",116,0)
+SCRN ;LOGIC TO SCREEN OUT @ IF NOT DAILY
+"RTN","PSSJSV",117,0)
+ S (PSSFLG,PSSDFLG,PSSTFLG,PSSAFLG)=0
+"RTN","PSSJSV",118,0)
+ Q:X'["@"
+"RTN","PSSJSV",119,0)
+ I $G(PSSCNT) K PSSCNT,X Q
+"RTN","PSSJSV",120,0)
+ D DAYS,TIMECHK
+"RTN","PSSJSV",121,0)
+ I $L(X)<2!($L(X)>20) D MSG1
+"RTN","PSSJSV",122,0)
+ I $G(PSSAFLG) D MSG4
+"RTN","PSSJSV",123,0)
+ I $G(PSSTFLG) D MSG3
+"RTN","PSSJSV",124,0)
+ I $G(PSSDFLG) D MSG2
+"RTN","PSSJSV",125,0)
+ I $G(PSSFLG) S MSG(4)="",MSG(5)="  "_X D EN^DDIOL(.MSG,"","!") K MSG
+"RTN","PSSJSV",126,0)
+ K:$G(PSSFLG) X
+"RTN","PSSJSV",127,0)
+ K PSSFLG,PSSDFLG,PSSTFLG,PSSAFLG
+"RTN","PSSJSV",128,0)
+ Q
+"RTN","PSSJSV",129,0)
+ ;
+"RTN","PSSJSV",130,0)
+ENPSJT ; Validate schedule type (one-time PRN conflict)
+"RTN","PSSJSV",131,0)
+ N A,B
+"RTN","PSSJSV",132,0)
+ S A=$$GET1^DIQ(51.1,DA,.01),B=""
+"RTN","PSSJSV",133,0)
+ I A["PRN",X'="P" D
+"RTN","PSSJSV",134,0)
+ . S B="Conflict: Schedule Name contains PRN but selected Schedule Type is not PRN."
+"RTN","PSSJSV",135,0)
+ . K X
+"RTN","PSSJSV",136,0)
+ I A'["PRN",X="P" D
+"RTN","PSSJSV",137,0)
+ . S B="Conflict: Schedule Name does not contain PRN but selected Schedule Type is PRN."
+"RTN","PSSJSV",138,0)
+ . K X
+"RTN","PSSJSV",139,0)
+ I $L(B)>0 D EN^DDIOL(.B,"","!") Q
+"RTN","PSSJSV",140,0)
+ S A=$$GET1^DIQ(51.1,DA,2),B=""
+"RTN","PSSJSV",141,0)
+ Q
+"RTN","PSSJSV",142,0)
+ ;
+"RTN","PSSJSV",143,0)
+CHKORD ;Check order of days in DOW schedule name
+"RTN","PSSJSV",144,0)
+ N I,J,L,N,P,W
+"RTN","PSSJSV",145,0)
+ S N=$P(X,"@"),L=0,P=$L(N,"-"),W="SUNDAYS,MONDAYS,TUESDAYS,WEDNESDAYS,THURSDAYS,FRIDAYS,SATURDAYS",PSSCNT=0
+"RTN","PSSJSV",146,0)
+ F I=1:1:P F J=1:1:7 I $P(W,",",J)=$P(N,"-",I) K:J'>L X Q:'$D(X)  S:J>L L=J,PSSCNT=PSSCNT+1
+"RTN","PSSJSV",147,0)
+ Q
+"RTN","PSSJSV",148,0)
+ ;
+"RTN","PSSJSV",149,0)
+RMTIME ;Remove ward times when schedule becomes odd
+"RTN","PSSJSV",150,0)
+ N R
+"RTN","PSSJSV",151,0)
+ S R=0 F  S R=$O(^PS(51.1,D0,1,R)) Q:R=""  K ^PS(51.1,D0,1,R)
+"RTN","PSSJSV",152,0)
+ Q
+"RTN","PSSJSV",153,0)
+DAYS ; check days of week for correct order sequence
+"RTN","PSSJSV",154,0)
+ N PSSD2,PSSD3,PSSD4,PSSD1,PSSD5,PSSD6,PSSFND
+"RTN","PSSJSV",155,0)
+ S PSSD1=$P(X,"@"),PSSD4=0,PSSD5=$L(PSSD1,"-"),PSSD6="SU,MO,TU,WE,TH,FR,SA",PSSFND=0
+"RTN","PSSJSV",156,0)
+ F PSSD2=1:1:PSSD5 Q:'$D(PSSD1)  D
+"RTN","PSSJSV",157,0)
+ .F PSSD3=1:1:7 D  Q:'$D(PSSD1)
+"RTN","PSSJSV",158,0)
+ ..I $P(PSSD6,",",PSSD3)=$P(PSSD1,"-",PSSD2) K:PSSD3'>PSSD4 PSSD1 Q:'$D(PSSD1)  S PSSFND=PSSFND+1 S:PSSD3>PSSD4 PSSD4=PSSD3
+"RTN","PSSJSV",159,0)
+ ..I $L($P(PSSD1,"-",PSSD2))>2 K PSSD1
+"RTN","PSSJSV",160,0)
+ .K:PSSFND'=PSSD2 PSSD1
+"RTN","PSSJSV",161,0)
+ I ('$D(PSSD1)!('$D(PSSFND))) S PSSDFLG=1
+"RTN","PSSJSV",162,0)
+ Q
+"RTN","PSSJSV",163,0)
+MSG1 ; max length exceeded message
+"RTN","PSSJSV",164,0)
+ S MSG(1)="",MSG(2)="The Administration Schedule you entered has "_$L(X)_" characters."
+"RTN","PSSJSV",165,0)
+ S MSG(3)="Answer must be 2-20 characters in length."
+"RTN","PSSJSV",166,0)
+ D EN^DDIOL(.MSG,"","!")
+"RTN","PSSJSV",167,0)
+ S PSSFLG=1
+"RTN","PSSJSV",168,0)
+ K MSG
+"RTN","PSSJSV",169,0)
+ Q
+"RTN","PSSJSV",170,0)
+MSG2 ; day of week order squence message
+"RTN","PSSJSV",171,0)
+ S MSG(1)="",MSG(2)="The day of the week schedule must be in the correct day of week order."
+"RTN","PSSJSV",172,0)
+ S MSG(3)="The correct order is: SU-MO-TU-WE-TH-FR-SA"
+"RTN","PSSJSV",173,0)
+ D EN^DDIOL(.MSG,"","!")
+"RTN","PSSJSV",174,0)
+ S PSSFLG=1
+"RTN","PSSJSV",175,0)
+ K MSG
+"RTN","PSSJSV",176,0)
+ Q
+"RTN","PSSJSV",177,0)
+MSG3 ; time input message
+"RTN","PSSJSV",178,0)
+ S MSG(1)="",MSG(2)="The time must be between 0001 - 2400."
+"RTN","PSSJSV",179,0)
+ S MSG(3)="A correct time entry would be: 0800-1200-1600 etc."
+"RTN","PSSJSV",180,0)
+ D EN^DDIOL(.MSG,"","!")
+"RTN","PSSJSV",181,0)
+ S PSSFLG=1
+"RTN","PSSJSV",182,0)
+ K MSG
+"RTN","PSSJSV",183,0)
+ Q
+"RTN","PSSJSV",184,0)
+MSG4 ; time sequence message
+"RTN","PSSJSV",185,0)
+ S MSG(1)="",MSG(2)="The time must be entered in ascending order."
+"RTN","PSSJSV",186,0)
+ S MSG(3)="A correct time entry would be: 0800-1200-1600 etc."
+"RTN","PSSJSV",187,0)
+ D EN^DDIOL(.MSG,"","!")
+"RTN","PSSJSV",188,0)
+ S PSSFLG=1
+"RTN","PSSJSV",189,0)
+ K MSG
+"RTN","PSSJSV",190,0)
+ Q
+"RTN","PSSJSV",191,0)
+TIMECHK ; time validation
+"RTN","PSSJSV",192,0)
+ N PSSXTIME,PSSTLN,PSSLOOP,PSSTCHR,PSSDASH,PSSLEN,PSSTCHK,PSSTIMCT,PSSTIME
+"RTN","PSSJSV",193,0)
+ I $L(X,"@")>2 S (PSSDFLG,PSSTFLG)=1 Q
+"RTN","PSSJSV",194,0)
+ S PSSXTIME=$P(X,"@",2),PSSTLN=$L(PSSXTIME),PSSTFLG=0,PSSDASH=$L(PSSXTIME,"-")
+"RTN","PSSJSV",195,0)
+ I PSSXTIME=0 S PSSTFLG=1 Q
+"RTN","PSSJSV",196,0)
+ F PSSTIMCT=1:1:PSSDASH S PSSTIME=$P(PSSXTIME,"-",PSSTIMCT) D
+"RTN","PSSJSV",197,0)
+ .S PSSTCHK(PSSTIMCT)=PSSTIME,PSSLEN=$L(PSSTIME)
+"RTN","PSSJSV",198,0)
+ .I $L(PSSTCHK(PSSTIMCT))=2 S PSSTCHK(PSSTIMCT)=PSSTCHK(PSSTIMCT)_"00"
+"RTN","PSSJSV",199,0)
+ .F PSSLOOP=1:1:PSSLEN D
+"RTN","PSSJSV",200,0)
+ ..S PSSTCHR=$E(PSSTIME,PSSLOOP)
+"RTN","PSSJSV",201,0)
+ ..I $A(PSSTCHR)<48!($A(PSSTCHR)>57) S PSSTFLG=1
+"RTN","PSSJSV",202,0)
+ .I ((PSSTIME<1)!(PSSLEN=1)!(PSSLEN=3)!(PSSLEN>4)) S PSSTFLG=1
+"RTN","PSSJSV",203,0)
+ F PSSTIMCT=1:1:PSSDASH D
+"RTN","PSSJSV",204,0)
+ .I $G(PSSTCHK(PSSTIMCT+1)),PSSTCHK(PSSTIMCT)>PSSTCHK(PSSTIMCT+1) S PSSAFLG=1
+"RTN","PSSJSV",205,0)
+ .I $L(PSSTCHK(PSSTIMCT))=4 D
+"RTN","PSSJSV",206,0)
+ ..I $E(PSSTCHK(PSSTIMCT),1,4)>2400 S PSSTFLG=1
+"RTN","PSSJSV",207,0)
+ ..I $E(PSSTCHK(PSSTIMCT),1,2)<24 D
+"RTN","PSSJSV",208,0)
+ ...I $E(PSSTCHK(PSSTIMCT),3,4)>59 S PSSTFLG=1
+"RTN","PSSJSV",209,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8743,6)
+^145
+**END**
+**END**

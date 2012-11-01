@@ -1,0 +1,539 @@
+$TXT Created by ROCHA,MARCELO at CFDA.FO-BIRM.MED.VA.GOV  (KIDS) on Wednesday, 02/08/12 at 10:13
+=============================================================================
+Run Date: MAR 27, 2012                     Designation: PSO*7*367
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #332                      Status: Released
+                  Compliance Date: APR 27, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*336   <<= must be installed BEFORE `PSO*7*367'
+                    (v)PSO*7*338   <<= must be installed BEFORE `PSO*7*367'
+                    (v)PSO*7*343   <<= must be installed BEFORE `PSO*7*367'
+                    (v)PSO*7*354   <<= must be installed BEFORE `PSO*7*367'
+                    (v)XU*8*566    <<= must be installed BEFORE `PSO*7*367'
+                    (v)PSO*7*379   <<= must be installed BEFORE `PSO*7*367'
+
+Subject: FDA MED GUIDE - INCREMENT III
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+ This patch contains software modifications to the Outpatient Pharmacy (OP)
+ V. 7.0 application to support the Food and Drug Administration (FDA) 
+ Medication Guides - Increment 3 project. The project objective is to allow
+ pharmacy staff to retrieve the FDA Medication Guide for prescription items
+ that contain FDA approved information that can help patients avoid adverse
+ events. The FDA requires that Medication Guides be included with certain
+ prescribed drugs and biological products when the Agency determines that:
+  
+  . Certain information is necessary to prevent serious adverse effects 
+  . Patient decision-making should be advised by information about a known
+    serious side effect with a product, or 
+  . Patient adherence to directions for the use of a product is essential
+    to its effectiveness. 
+  
+ The features in the FDA Medication Guides project are being delivered in
+ incremental releases. This patch is part of the Increment 3 release, which
+ is the last planned release. The features included in this release are:
+  
+  . Ability to create and maintain a list of FDA Medication Guide printers
+    for a specific pharmacy division.
+  
+  . Automatic printing of the FDA Medication Guide along with prescription
+    labels on designated FDA Medication Guide printers without any direct
+    user interaction. 
+  
+  . Ability to enable or disable the automatic printing of the FDA
+    Medication Guide by pharmacy division.
+  
+  . Ability to reprint the FDA Medication Guide when reprinting a 
+    prescription label.
+  
+  . Ability to change the FDA Medication Guide printer at any point of the
+    dispensing process, similar to changing the label printer.
+  
+  . Ability to reprint the FDA Medication Guide for any given prescription
+    fill or the latest FDA Mediation Guide available for the medication on
+    the prescription.
+   
+  . Display on the prescription label that an FDA Medication Guide is
+    available, and if printed, needs to accompany the documentation before
+    being given to the patient.
+  
+  . Changes to the prescription label activity logs showing which specific
+    FDA Medication Guide document printed along with the label.
+  
+  . Changes to the Consolidated Mail Outpatient Pharmacy (CMOP) Event log
+    showing which specific FDA Medication Guide document was available 
+    for the medication when the prescription fill was transmitted to CMOP.
+  
+  . Introduction of a PC based Java software component to enable the
+    automatic printing of an FDA Medication Guide from within VistA. The
+    software does not require any direct user interaction. The software 
+    identifies a request from VistA for a specific FDA Medication Guide
+    and automatically sends it to the FDA Medication Guide printer
+    selected by the user within VistA when dispensing the medication.
+  
+  . Ability to update the Windows network printer name for a specific
+    device through the Kernel application. Once the pharmacist selects a
+    printer to print the FDA Medication Guide Vista will retrieve the 
+    Windows name for the printer and will pass it on to the Java
+    application responsible for printing the document.
+     
+    ************************** WARNING **********************************
+    *********************************************************************
+    If your facility has the Parata or Kirby Lester interface from ILC,
+    this patch will overwrite any "local" modifications in routines PSOB,    
+    PSOLBL, PSOLLL1, PSOLSET, PSORXL and PSOSULB1. This could affect 
+    certain orders being sent across this interface. The modifications
+    will have to be reintroduced following installation of this patch.
+    *********************************************************************
+  
+ Below is a list of all the applications involved in this release along
+ with their patch number:
+   
+    APPLICATION/VERSION                                    PATCH
+    -----------------------------------------------------------------
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0    PSX*2*70
+    NATIONAL DRUG FILE (NDF) V. 4.0                        PSN*4*264
+    OUTPATIENT PHARMACY (OP) V. 7.0                        PSO*7*367
+    KERNEL V. 8.0                                          XU*8*566
+    
+ The following modifications are included in this patch (PSO*7*367):
+  
+ 1. Site Parameter Enter/Edit [PSO SITE PARAMETERS] option
+    ------------------------------------------------------
+    Two new parameters are being introduced in this option: 
+    a) FDA MED GUIDE PRINT SERVER URL: this field is used to store the
+       Uniform Resource Locator (URL) for the Print Server where the Java
+       application responsible for automatically printing of the FDA
+       Medication Guides for the division was installed 
+       (e.g.,'http://10.4.21.22/'). This field is required for the FDA
+       Medication Guide functionality to work properly.
+  
+    b) FDA MED GUIDE PRINTER: This is a multiple field used to store a
+       list of printers used for printing FDA Medication Guide document 
+       for the division. There are two fields in the multiple: 1) FDA
+       MED GUIDE PRINTER, which is a pointer to the DEVICE file (#3.5).
+       Only devices with a content in the WINDOWS NETWORK PRINTER NAME
+       field (#75) are selectable, and 2) DEFAULT PRINTER, which 
+       indicates whether the printer selected is to be used as the 
+       default printer for the division. Only one printer can be set as
+       default printer for each division. This field is not required.
+       The printers in this multiple will be displayed for selection
+       when the user logs into a division. If there is a printer set as
+       the default printer, it will be set as the default printer.
+    
+   
+ 2. Outpatient Pharmacy Manager [PSO MANAGER] option
+    ------------------------------------------------
+    When logging into a division, after selecting the Profile and Label
+    printers, the user will be prompt to select an FDA Medication Guide
+    printer for the current session. If the division selected has a list
+    of FDA Medication Guide printers they will be displayed (see below),
+    however the user will be able to select other printers as well. The
+    HOME and NULL DEVICE are selectable at this point.
+  
+    Select OPTION NAME: PSO MANAGER       Outpatient Pharmacy Manager
+    Outpatient Pharmacy software - Version 
+  
+    Division:    DIVISION 999 
+  
+           You are logged on under the DIVISION division.
+  
+    Select PROFILE PRINTER: HOME//   GENERIC INCOMING TELNET
+  
+    Select LABEL PRINTER: HOME//   GENERIC INCOMING TELNET
+  
+    OK to assume label alignment is correct? YES// 
+  
+    DIVISIONS's FDA Medication Guide Printer(s) on file:
+  
+      FDA MED GUIDE PRINTER (Default)
+  
+    Select FDA MED GUIDE PRINTER: FDA MED GUIDE PRINTER//
+   
+ 3. Complete Orders from [OERR PSO LMOE FINISH] option
+    Patient Prescription Processing [PSO LM BACKDOOR ORDERS] option
+    ---------------------------------------------------------------
+    There are a few enhancements being added to the prescription processing
+    options regarding the printing of FDA Medication Guides. Among them:
+   
+    a) The FDA Medication Guide document will print automatically for
+       prescriptions, if there is one available, and the functionality is     
+       enabled.
+  
+    b) Users will have the ability to change the FDA Medication Guide 
+       printer in the same way they change the label and profile printers
+       today.
+  
+    c) When queuing labels to print, if there is at least one prescription
+       with an FDA Medication Guide associated, it will require a valid FDA
+       Medication Guide printer to be entered. This is similar to requiring
+       a valid printer for the label printer.
+  
+    d) The actual label document will contain a note under the barcode,
+       before the PMI document, that says "Read FDA MED Guide". Such note
+       should indicate to the pharmacist that an FDA Medication Guide
+       document is available, and if printed, should be included with the  
+       documentation handed to the patient.
+  
+    e) The Label Log and CMOP Event Log will both list the FDA Medication
+       Guide document name (.pdf) associated with each fill.
+    
+    f) Users will have the ability to reprint the FDA Medication Guide for
+       past prescription fills or the latest FDA Medication Guide available
+       for the prescription via a new action RM - Reprint FDA Medication
+       Guide under the OTH - Other OP Actions menu.
+        
+ 4. Print from Suspense File [PSO PNDLBL] option
+    --------------------------------------------
+    In order to run this option users will be required to enter a valid FDA
+    Medication Guide printer. All prescriptions that prints a label via
+    this option and that have an FDA Medication Guide associated will have
+    the document printed as well on the designated printer.
+  
+ 5. Pull Early from Suspense [PSO PNDRX] option
+    -------------------------------------------
+    If the prescription being pulled from suspense has an FDA Medication
+    Guide associated the user will be required to enter a valid FDA
+    Medication Guide printer to where the document will be printed for
+    the prescription.
+  
+ 6. Change Label Printer [PSO CHANGE PRINTER] option
+    ------------------------------------------------
+    This option is used by users to change the profile and label printers
+    after having logged on to a pharmacy division. It is being modified to
+    allow users to change the FDA Medication Guide printer as well.
+    
+ 7. Reprint an Outpatient Rx Label [PSO RXRPT] option
+    -------------------------------------------------
+    If the prescription selected to reprinted the label has an FDA 
+    Medication Guide associated, this option will ask whether the user also
+    wants to reprint the FDA Medication Guide. If they answer YES, a valid
+    FDA Medication Guide printer will be required for the user to proceed
+    with the reprinting of the label and FDA Medication Guide.
+  
+ 8. Label/Profile Monitor Reprint [PSO B] option
+    Reprint External Batches [PSO INTERFACE REPRINT] option
+    Reprint Batches from Suspense [PSO PNDRPT] option
+    -------------------------------------------------------
+    These options are used for reprinting batches of labels that may have 
+    jammed on the printer. When reprinting labels via one of these options
+    users will be prompted if they also want to reprint the FDA Medication
+    Guide. If they answer YES, a valid FDA Medication Guide printer will be
+    required for the user to proceed with the reprinting of the label and
+    FDA Medication Guide, if one is available.
+  
+ 9. The background process that calculates suspense days now rounds any
+    partial day to the next full day. This modification was moved from 
+    patch PSO*7*385 into this patch due to routine overlap and to avoid
+    patch dependency.
+  
+    
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)         Field Name (#)                      New/Modified/Deleted
+ ------------------    ----------------------------------- --------------------
+ PRESCRIPTION (#52)    CMOP EVENT  (sub-file)(#52.01)       
+                         FDA MED GUIDE FILENAME (#35)      New
+                       LABEL DATE/TIME (sub-file)(#52.032)
+                         FDA MED GUIDE FILENAME (#35)      New
+  
+ OUTPATIENT SITE (#59) FDA MED GUIDE PRINT SERVER          
+                       URL (#134)                          New
+                       FDA MED GUIDE PRINTER (sub-file)
+                       (#59.0135)                          New
+  
+ Forms Associated:
+  
+ Form Name             File #                              New/Modified/Deleted
+ ---------             ------                              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                           New/Modified/Deleted
+ ---------------                                           --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name           Type                                New/Modified/Deleted
+ -----------           ----                                --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                                             New/Modified/Deleted
+ -------------                                             --------------------
+ PSO LM HIDDEN OTHER #2                                    Modified
+ PSO LM REPRINT FDA MED GUIDE                              New
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                New/Modified/Deleted
+ -------------      ----      ------------------           --------------------
+ PSO SITE           Input     OUTPATIENT SITE (#59)        Modified
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20061203
+   
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+   
+ Test Sites:
+ -----------
+ LITTLE ROCK, AR
+ OKLAHOMA CITY, OK
+ ORLANDO, FL
+ PALO ALTO HCS
+   
+   
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ File Description                      File Name                     FTP Mode
+ ----------------------------------------------------------------------------
+ Outpatient Pharmacy User Manual       PSO_7_PHAR_UM_R0312.pdf       Binary
+ Outpatient Pharmacy User Manual       PSO_7_P367_PHAR_UM_CP.pdf     Binary
+ Change Pages
+ Outpatient Pharmacy Technical Manual  PSO_7_TM_R0312.pdf            Binary
+ Outpatient Pharmacy Technical Manual  PSO_7_P367_TM_CP.pdf          Binary
+ Change Pages
+ FDA Medication Guides Project         PHAR_FDA_MED_GUIDE_REL3_RN.pdf            
+ Increment 3 Release Notes                                           Binary
+ FDA Medication Guides Project         PHAR_FDA_MED_GUIDE_REL3_IG_VISTA.pdf
+ Increment 3 VistA Installation Guide                                Binary
+ FDA Medication Guides Project         PHAR_FDA_MED_GUIDE_REL3_IG_JAVA.pdf
+ Increment 3 Java Installation Guide                                 Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The 4 patches released with this project should be installed in the
+ following order: 
+  
+    1. XU*8*566
+    2. PSN*4*264
+    3. PSO*7*367
+    4. PSX*2*70
+  
+ In addition to this patch, the FDA Medication Guide Increment 3 project also
+ contains a Java Application component, which is distributed in the
+ PSO_7_367.ZIP file. This file contains an executable file that should
+ be installed on the site print server. This application will be responsible
+ for automatically printing FDA Medication Guides. For detailed installation
+ instructions please refer to the PHAR_FDA_MED_GUIDE_REL3_IG_JAVA.pdf and 
+ PHAR_FDA_MED_GUIDE_REL3_IG_VISTA.pdf documents before proceeding.
+  
+ IMPORTANT: If your site does not plan on using the FDA Medication Guide 
+            automatic printing functionality you must still proceed with the
+            installation of this patch, however you do not need to install
+            the Java Application component that is distributed along with
+            this patch. Please, read the installation instructions in the
+            PHAR_FDA_MED_GUIDE_REL3_IG_VISTA.pdf for further explanation on
+            how to keep the FDA Medication Guide functionality turned off.
+   
+  
+ FTP Instructions:
+ =================
+ The files listed below may be obtained via FTP.  The preferred method is 
+ to FTP the files from:
+  
+    download.vista.med.va.gov
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+    CIO FIELD OFFICE   FTP ADDRESS                 DIRECTORY
+    ----------------   -------------------------   --------------------
+    Albany             ftp.fo-albany.med.va.gov    [anonymous.software]
+    Hines              ftp.fo-hines.med.va.gov     [anonymous.software]
+    Salt Lake City     ftp.fo-slc.med.va.gov       [anonymous.software]
+  
+  
+    File Name                       Contents                   Format
+    --------------                  -------------------------- ---------
+    PSO_7_367.ZIP                   FDAMedGuidesPrinter folder Binary
+            
+   
+ Installation Instructions
+ -------------------------
+ Do not install this patch while Outpatient Pharmacy users are using the
+ system. It is recommended that installation be queued for off peak hours.
+ Installation will take no longer than 2 minutes.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSO*7.0*367):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSO*7.0*367.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+  
+ 7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ The FDA Med Guide automatic printing functionality will not work 
+ immediately after installing this patch. In addition to this patch, there
+ is a Java Application component, which is distributed in the PSO_7_367.ZIP
+ file. This file contains an executable file that should be installed on the
+ site print server. This application will be responsible for automatically
+ printing FDA Medication Guides. For detailed installation instructions
+ please refer to the PHAR_FDA_MED_GUIDE_REL3_IG_JAVA.pdf and 
+ PHAR_FDA_MED_GUIDE_REL3_IG_VISTA.pdf documents.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 62
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOB
+    Before: B19570340   After: B24452523  **10,60,193,367**
+Routine Name: PSOBMST
+    Before: B15703875   After: B15843228  **2,71,193,367**
+Routine Name: PSOEXRST
+    Before: B43903662   After: B45659223  **26,367**
+Routine Name: PSOFDAMG
+    Before:  B1007173   After: B14147162  **343,367**
+Routine Name: PSOFDAUT
+    Before:       n/a   After: B23106089  **367**
+Routine Name: PSOLBL
+    Before: B76752756   After: B76752756  **8,19,30,36,47,71,92,120,157,
+                                           244,206,225,303,266,326,251,
+                                           387,379,367**
+Routine Name: PSOLBL1
+    Before: B28929017   After: B31448686  **107,110,225,326,367**
+Routine Name: PSOLBL2
+    Before: B34647042   After: B36346864  **16,19,30,71,92,117,135,326,367**
+Routine Name: PSOLBLN
+    Before: B62602237   After: B63565356  **16,36,71,107,110,117,135,233,
+                                           251,387,379,367**
+Routine Name: PSOLBLN1
+    Before: B39273947   After: B41952754  **5,30,71,107,110,162,367**
+Routine Name: PSOLLL1
+    Before: B70535351   After: B72361773  **120,141,135,162,161,233,200,
+                                           264,326,338,367**
+Routine Name: PSOLLL4
+    Before: B11100322   After: B13004061  **120,135,161,338,367**
+Routine Name: PSOLLL8
+    Before: B28083638   After: B29282471  **120,251,387,367**
+Routine Name: PSOLLLI
+    Before: B82644773   After: B87322904  **120,157,189,161,244,200,206,
+                                           225,303,266,326,251,387,367**
+Routine Name: PSOLSET
+    Before: B30029461   After: B30523749  **10,22,32,40,120,247,359,367**
+Routine Name: PSOORAL1
+    Before: B57889178   After: B61027800  **71,156,148,247,240,287,354,367**
+Routine Name: PSORXL
+    Before:B108590607   After:B123167297  **8,21,24,32,47,135,148,287,
+                                           334,251,354,367**
+Routine Name: PSORXRP1
+    Before: B25369368   After: B27055758  **11,27,120,156,148,367**
+Routine Name: PSORXRP2
+    Before: B33732214   After: B35963491  **11,27,120,138,135,156,185,
+                                           280,251,367**
+Routine Name: PSORXRPT
+    Before: B37714980   After: B40880121  **3,21,27,34,120,138,156,148,
+                                           280,367**
+Routine Name: PSORXVW1
+    Before: B67852891   After: B71843058  **35,47,46,71,99,117,156,193,
+                                           210,148,258,260,240,281,359,
+                                           354,367**
+Routine Name: PSORXVW2
+    Before: B41122049   After: B44714099  **33,71,117,152,148,367**
+Routine Name: PSOSULB1
+    Before: B43045275   After: B46991126  **10,200,264,289,367**
+Routine Name: PSOSURST
+    Before: B31910797   After: B37361776  **10,367**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : AUG 18, 2010
+Completed By: GREER,MIKE                    Date Completed: MAR 05, 2012
+Released By : BLOCH,JACULYN                 Date Released : MAR 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

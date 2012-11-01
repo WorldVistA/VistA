@@ -1,0 +1,494 @@
+$TXT Created by NAPOLIELLO,GREG at DVACACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Wednesday, 11/30/11 at 11:56
+=============================================================================
+Run Date: JAN 30, 2012                     Designation: PSB*3*58
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #49                      Status: Released
+                  Compliance Date: MAR 01, 2012
+=============================================================================
+
+Associated patches: (v)PSB*3*42    <<= must be installed BEFORE `PSB*3*58'
+                    (v)PSB*3*52    <<= must be installed BEFORE `PSB*3*58'
+                    (v)PSJ*5*254   <<= must be installed BEFORE `PSB*3*58'
+                    (v)PSB*3*60    <<= must be installed BEFORE `PSB*3*58'
+
+Subject: ALLERGY & ALERTS IMR III
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ ********************************************************************
+ IMPORTANT: PATCH PSJ*5*254 MUST BE INSTALLED IMMEDIATELY BEFORE  
+            INSTALLATION OF THIS PATCH.
+  
+ BCMA patch PSB*3*58 contains changes that will not function until patch 
+ PSJ*5*254 is installed. Both patches should be installed at the same time,
+ in the following sequence: PSJ*5*254, PSB*3*58.
+ ********************************************************************
+  
+ ATTENTION: This patch includes a new Graphical User Interface (GUI) 
+ executable file. Installation of this GUI is required immediately after 
+ the KIDS install for the Patch to function.
+  
+ This version of BCMA was successfully tested in the field against Wireless
+ Medication Administration version 4.7 at Pittsburgh and Loma Linda.
+  
+ For retrieval and installation instructions, please see the Client
+ Installation Instructions section.
+  
+ The Allergy and Alerts Project addresses enhancements identified during 
+ Inpatient Medications Requirements for Special Focus Group Initial 
+ Request Analysis (IMR SFG IRA) Phase III/Phase IV, as well as 
+ modifications requested by the Bar Code Medication Administration (BCMA)
+ and Inpatient Medications workgroups.  The Inpatient Pharmacy patches
+ PSJ*5*253 and PSJ*5*254 are also being released as part of these
+ enhancements.
+  
+ 1. Add a flag to the order information sent to the BCMA GUI client via
+    the Remote Procedure Call (RPC) broker call GET ORDER DETAIL, to
+    indicate the order has Provider Override reasons and/or Pharmacist
+    Interventions on the current order.
+    
+     a. On the BCMA Virtual Due List (VDL) tabs and Cover sheet, highlight
+        the cell in the verify "Ver" column to indicate an order has 
+        Computerized Patient Record System (CPRS) Provider override reasons
+        and/or Pharmacist Interventions on the current order.
+  
+     b. Display the CPRS override reasons and/or Pharmacist Interventions 
+        in detail on the BCMA Display Order Detail Report.
+  
+ 2. In order to allow facilities to select a timeframe that better matches
+    their site policies, the site parameter "PRN Effectiveness Entry" 
+    found on the "Parameters" of the "BCMA Site Parameters" GUI has been
+    expanded from 240 to 960 minutes.
+  
+ 3. A new site parameter was added to the PARAMETERS file (#8989.5) & 
+    PARAMETERS DEFINITION file (#8989.51) to allow control of how a site
+    handles the administration of non-nurse verified orders.  The three
+    possible choices are: Allow Administration (No Warning), Allow
+    Administration with Warning, or Prohibit Administration.  Facilities
+    will be able to set this option by division.  Also affects handling 
+    of marking orders Held or Refused, as well as submitting Missing Dose
+    requests.
+  
+ 4. The Missed Medications report will now include a verified "Ver" column
+    that will contain the initials of the nurse who verified the order, or
+    three asterisks, indicating that the order was not nurse verified.  In
+    addition, the Missed Medications report dialog now displays the Held,
+    Refused, and Comments/Reasons checkboxes checked by default.
+  
+ 5. Functionality was added to BCMA to test for scanning of data into the
+    Quantity and Units pop-up fields. The Double Scan routine tests for the
+    following criteria and rejects input that matches:
+  
+            o  Integer only
+            o  All-numeric string (out of range for integer)
+            o  IV label: nnnVnn where n is a numeric digit
+            o  Number and units: nnnnnU or nnnnn U where n is a numeric
+               digit. A single U is also rejected.
+  
+ 6. A new menu option, called "Icon Legend", was added to the BCMA View 
+    Menu so that when selected, a dialog will display showing icons used 
+    throughout BCMA, with their corresponding descriptions, is shown.
+  
+ 7. A new hover-over feature was added to the BCMA VDL. When CPRS Provider 
+    Overrides and/or Pharmacist Interventions exist for an order, the user 
+    will be able to hover over the highlighted "Ver" cell, and the
+    following visual indicator will display: "Override/Intervention
+    reasons."
+  
+ 8. The Missed Medications Report dialog was modified, in BCMA, so that the
+    "Include Admin Status: Held, Refused" and the "Include Detail: 
+    Comments/Reasons" checkboxes will be checked (selected) as a default
+    when the report dialog initially displays.
+  
+ 9. Remedy ticket #HD208693 - Dosage form (GUM,CHEWABLE) creating pop-up
+    box issue.
+  
+       Problem: Attempt to give an Order in BCMA, for Drug that has Dosage
+                Form of "Gum, Chewable".  This causes the BCMA GUI client
+                to pop up a dialogue box asking  "Enter Quantity and
+                Units".
+   
+    Resolution: Correct Unit dose routine PSBVDLUD, to send "GUM,CHEWABLE" 
+                in the dosage from string to the GUI client and this will
+                stop the pop up dialogue box from occurring.
+  
+ 10. Remedy ticket #HD420754 - BCMA Parameters GUI application is
+     displaying the Division ien instead of the Station number.
+  
+       Problem: Upon logging on to the BCMA Parameters GUI application, a 
+                message is displayed "You are currently logged on to
+                Division: nnnnn".  The number, nnnnn, is currently showing
+                the ien of the Division in the INSTITUTION file (#4).
+  
+    Resolution: The STATION NUMBER will be displayed instead of the ien.
+  
+  
+ Please refer to the release notes for a full detailed list and examples 
+ of items included in this patch.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     ----------------------
+ N/A
+  
+ File Name (Number)  Entries added          Value 
+ ------------------  ---------------------- -----------------------------
+ PARAMETERS DEFINITION (#8989.51)
+                     NAME (#.01)            PSB NON-NURSE VERIFIED PROMPT
+                     DISPLAY TEXT (#.02)    Non-Nurse Verified Prompt 
+                                            action
+                     MULTIPLE VALUED (#.03) No
+                     VALUE TERM (#.05)      PSB NON-NURSE VERIFIED PROMPT
+                     VALUE DATA TYPE (#1.1) set of codes
+                     VALUE DOMAIN (#1.2)    1:N-Allow Admin No Warning
+                                            2:W-Allow Admin after Warning
+                                            3:P-Prohibit Administration
+                     ALLOWABLE ENTITIES (#30)<-- file Multiple (#8989.513)
+                      PRECEDENCE (#.01)      700                         
+                      ENTITY FILE (#.02)     DIVISION
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)             New/Mod/Del
+ -------------      ----      ------------------             -----------
+ PSB DIVISION       PARAM     PARAMETER DEFINITION (#8989.51)   MODIFIED
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20110326
+ 20071003
+ 20070205
+  
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ HD208693 - Dosage form (GUM,CHEWABLE) creating pop-up box
+ HD420754 - Displaying Division ien instead of Station number
+  duplicate: HD479155
+  
+  
+ Test Sites:
+ -----------
+ Central Texas
+ Houston, TX
+ Iron Mountain, MI
+ Loma Linda, CA
+ Manchester, NH
+ Minneapolis, MN
+ Phoenix, AZ
+ Pittsburgh, PA
+ St. Cloud, MN
+ Upstate New York
+  
+  
+ Client Installation Instructions:
+ =================================
+ The software distribution includes these modified files:
+  
+  FILE NAME        DESCRIPTION          FILE VERSION      BYTES   CHECKSUM
+  
+  BCMA.CHM         Client help file                       887 KB    n/a
+  BCMA.EXE         Client                3.0.58.26      2,509 KB    n/a
+  BCMAPAR.EXE      Site parameter        3.0.58.7       1,064 KB    n/a
+  BCMAPAR.CHM      Client help file                       143 KB    n/a
+  
+   1. Prior client compatible with patch:  NO
+   2. Client can be copied instead of installed:  YES
+   3. Is your site running the CareFusion Wireless Medication
+      Administration (WMA) software? If YES, please contact Carefusion to
+      ensure your site has the latest compatible WMA patch.
+  
+  
+    Note:  Use Binary mode to retrieve the .EXE file.
+  
+    To obtain the updated .EXE, use FTP to retrieve PSB3_0P58.EXE (4,173
+    KB) from one of the following OI Field Offices' ANONYMOUS.SOFTWARE
+    directories:
+  
+     OI Field Office   FTP Address                Directory
+     VA-wide           download.vista.med.va.gov  anonymous.software
+     Albany            ftp.fo-albany.med.va.gov   anonymous.software
+     Hines             ftp.fo-hines.med.va.gov    anonymous.software
+     Salt Lake City    ftp.fo-slc.med.va.gov      anonymous.software
+  
+    If BCMA is currently running, please exit BCMA. This client
+    installation patch file can be used to upgrade an existing version of
+    BCMA, or can be used for a brand new installation.
+  
+     1. Double Click on PSB3_0P58.EXE which will launch the InstallShield
+        Wizard.
+  
+     2. When the InstallShield Wizard Welcome screen is displayed, click
+        "Next".
+  
+     3. On the Choose Destination Location screen, simply click "Next"
+        If you would like to change the destination folder to one other
+        than default, click "Browse" to navigate to the folder of your
+        choice. Click "Next".
+  
+     4. On the "Setup Type" Screen select one of the following:
+              a. Typical - installs only the BCMA client program
+                 which is necessary for medication administration.
+              b. Complete - installs the BCMA client and the
+                 GUI BCMA site parameters definition program.
+              c. Custom - allows you to select which programs to install
+                 Typical is selected by default. Click "Next".
+  
+     5. The InstallShield Wizard Ready to Install the Program screen
+        will display. Click "Install" to proceed with the installation.
+  
+     6. The InstallShield Wizard Complete screen will be displayed.
+        Click "Finish" and the BCMA installation is now complete.
+  
+   
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.va.gov/vdl/
+  
+ File Description            File Name                             FTP Mode
+ --------------------------------------------------------------------------
+ BCMA V.3.0 GUI User Manual - Chapters 1 through 4
+                             PSB_3_UM_chapters_1_thru_4_R0112.PDF  (binary)
+ BCMA V.3.0 GUI User Manual - Chapters 5 through 11
+                             PSB_3_UM_chapters_5_thru_11_R0112.PDF (binary)
+ BCMA V.3.0 Manager's User Manual  
+                             PSB_3_MAN_UM_R0112.PDF                (binary)
+ BCMA V.3.0 Manager's User Manual Change Pages PSB*3*58
+                             PSB_3_P58_MAN_UM_CP.PDF               (binary)
+ Release Notes - BCMA V.3.0  (PSB*3*58)
+                             PSB_3_P58_RN.PDF                      (binary)
+  
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ A post install routine will run to initialize the New Kernel variable PSB
+ NON-NURSE VERIFIED PROMPT to Allow Administration No Warning.  This will
+ set BCMA initially to treat these types of orders in the same manner as
+ BCMA did prior to this patch.  This parameter may be changed after this
+ install via the BCMA site parameters GUI client, per division, to match
+ site policy.  This new parameter will be initialized for All divisions 
+ that have the Parameter "PSB ONLINE" set to YES as seen in the below
+ example. 
+  
+   *** PSB*3*58 POST INSTALL NOW RUNNING ***
+   
+                       Before update
+  
+     ABC DIVISION
+     XYZ DIVISION                       
+  
+  
+                       After update
+  
+     ABC DIVISION                       N-Allow Admin No Warning
+     XYZ DIVISION                       N-Allow Admin No Warning
+  
+  
+ Do not queue this patch to install at a later time. 
+  
+  
+  
+ Installation Instructions
+ -------------------------
+ Do not queue this patch to install at a later time nor install this patch
+ while BCMA users are on the system. Installation will take no longer than
+ 5 minutes.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSB*3.0*58):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSB*3.0*58.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//  respond NO. 
+  
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The IRM should delete the Post install routine PSB3P58 using the below
+ menu option from the Programmer's Options menu:
+  
+ Select Programmer Options Option: Routine Tools
+  
+  
+           %Index of Routines
+           Check Routines on Other CPUs
+           Compare local/national checksums report
+           Compare routines on tape to disk
+           Compare two routines
+           Delete Routines
+           First Line Routine Print
+           Flow Chart Entire Routine
+           Flow Chart from Entry Point
+           Group Routine Edit
+           Input routines
+           List Routines
+           Load/refresh checksum values into ROUTINE file
+           Output routines
+           Routine Edit
+           Routines by Patch Number
+           Variable changer
+           Version Number Update
+  
+ Select Routine Tools Option: Delete Routines
+  
+ ROUTINE DELETE
+  
+ All Routines? No => No
+  
+ Routine: PSB3P58
+ Routine: 
+ 1 routine
+  
+ 1 routines to DELETE, OK: NO// Y
+ PSB3P58   
+ Done.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 37
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSB3P58
+    Before:       n/a   After:  B2662507  **58**
+Routine Name: PSBCSUTL
+    Before:B137031860   After:B145173894  **16,13,38,32,50,60,58**
+Routine Name: PSBO
+    Before: B80276857   After: B82537040  **13,32,2,25,28,51,50,42,58**
+Routine Name: PSBODO
+    Before:  B9968689   After: B34073273  **5,21,24,38,58**
+Routine Name: PSBOMM
+    Before: B93407461   After:B104750914  **26,32,56,52,58**
+Routine Name: PSBRPC
+    Before:B117132779   After:B118630056  **6,3,4,13,32,28,42,58**
+Routine Name: PSBRPC3
+    Before:   B308951   After:   B309153  **6,3,4,16,13,10,32,28,42,58**
+Routine Name: PSBVDLIV
+    Before: B64891232   After: B70061917  **6,38,32,58**
+Routine Name: PSBVDLPA
+    Before: B14269573   After: B16689356  **5,16,13,38,32,58**
+Routine Name: PSBVDLPB
+    Before: B84339599   After: B89830861  **11,13,38,32,58**
+Routine Name: PSBVDLUD
+    Before: B76110020   After: B82540618  **11,13,38,32,58**
+ 
+Routine list of preceding patches: 42, 52, 60
+
+=============================================================================
+User Information:                          Hold Date     : JAN 21, 2012
+Entered By  : NAPOLIELLO,GREG               Date Entered  : JAN 12, 2011
+Completed By: PAYNE,RONALD                  Date Completed: DEC 22, 2011
+Released By : CONNOLLY,BARBARA              Date Released : JAN 30, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

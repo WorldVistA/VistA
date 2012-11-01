@@ -1,0 +1,162 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Wednesday, 12/01/10 at 07:37
+=============================================================================
+Run Date: FEB 11, 2011                     Designation: RA*5*101
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5        SEQ #94                      Status: Released
+                  Compliance Date: MAR 14, 2011
+=============================================================================
+
+Associated patches: (v)RA*5*27     <<= must be installed BEFORE `RA*5*101'
+
+Subject: CORRECT ISSUE WITH MISSING IMAGES DISPLAYING IN VISTA RAD
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the issue with Images that are not getting 
+ attached to an Exam.  
+  
+ When a user attempts to create a radiology report and another process is 
+ engaged in a case edit operation on the same case, the case edit 
+ operation will inadvertently overwrite the REPORT TEXT field with a null.
+  
+ NOTE:  After installation of this patch, users case editing or status 
+ tracking exams during image storage can result in an incorrect image 
+ count in VistA Imaging Display and VistARad.  This will be resolved in a 
+ future VistA Imaging DICOM gateway patch.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ HD0000000330689 - PSPO-1460 - Not all images in a study display in 
+   VistaRad;
+ Duplicates:
+   HD0000000352681 - Cannot verify or view report
+   HD0000000239080 - "i" indicator missing from radiology image
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ FAYETTEVILLE, AR
+ TUCSON, AZ
+ CONNECTICUT HCS 
+ FAYETTEVILLE, NC
+  
+ REMEDY OVERVIEW:
+ ================
+ HD0000000330689 - Not all images in a study display in VistaRad, 
+  Images are in Imaging display
+  
+ PROBLEM
+ -------
+ When adding images to an exam in the Imaging package, a Radiology stub 
+ report is created for the purpose of attaching the images. This process 
+ calls a Radiology routine (RARIC), which also updates the associated
+ Radiology Exam data in the RAD/NUC MED PATIENT (#70) file, REPORT 
+ TEXT (#17) field.  
+ If a different user is editing the associated exam at the same moment the
+ images are being attached to the stub report, field #17 is overwritten
+ with a null by the Radiology Exam edit.
+ This causes an exam to not be associated with the Radiology stub report.
+  
+ RESOLUTION
+ ----------
+ The events leading to the overwrite of the REPORT TEXT field must be
+ prevented.
+  
+ To correct this issue Process B must LOCK the exam node being updated. 
+ When Process B attempts to LOCK the exam node that LOCK attempt 
+ will fail because Process A has requested and been granted a LOCK 
+ for the same exam node.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Radiology users be off the system.  Other VISTA users will not be
+ affected.
+       
+ Install Time - less than 2 minutes.
+       
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+         
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+         
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option
+     --------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter RA*5.0*101):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+      
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//', answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RARIC
+    Before: B11284123   After: B23522072  **23,27,101**
+ 
+Routine list of preceding patches: 27
+
+=============================================================================
+User Information:
+Entered By  : CEBELINSKI,GREGORY            Date Entered  : AUG 13, 2009
+Completed By: CRICHLOW,SHERRY               Date Completed: JAN 24, 2011
+Released By : DILORENZO,JOHN                Date Released : FEB 11, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

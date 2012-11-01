@@ -1,0 +1,352 @@
+$TXT Created by FAIRBROTHER,EILEEN at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 06/24/11 at 09:31
+=============================================================================
+Run Date: JUL 06, 2011                     Designation: DVBA*2.7*171
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #147                    Status: Released
+                  Compliance Date: JUL 09, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*166<<= must be installed BEFORE `DVBA*2.7*171'
+
+Subject: Updates to CAPRI and AMIE Disability Benefit Questionnaires (DBQs)
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+                    *******     PLEASE NOTE     *******
+                This mandatory patch has a 3 day compliance
+                *******************************************
+  
+ I.  OVERVIEW
+  
+   This patch introduces enhancements to the AUTOMATED MED INFO EXCHANGE
+   (AMIE) V 2.7 package and the Compensation & Pension Record Interchange
+   (CAPRI) application, Compensation & Pension Worksheet Module (CPWM)
+   in support of new and modified Compensation and Pension (C&P)
+   Disability Benefit Questionnaires (DBQs).
+   
+   The following provides a high level overview of patch DVBA*2.7*171.
+  
+  
+   1. CAPRI - Template Modifications
+  
+      Veterans Benefits Administration Veterans Affairs Central Office
+      (VBAVACO) has approved modifications for the following CAPRI 
+      Disability Benefit Questionnaires:
+  
+        * DBQ INITIAL PTSD
+        * DBQ MENTAL DISORDERS (OTHER THAN PTSD AND EATING DISORDERS)
+        * DBQ REVIEW PTSD
+  
+  
+   2. AMIE - C&P Examination Worksheet Modifications
+  
+      VBAVACO has approved modifications for the following AMIE C&P
+      questionnaire  worksheets:
+  
+        * DBQ INITIAL PTSD
+        * DBQ MENTAL DISORDERS (EXCEPT PTSD AND EATING DISORDERS)
+        * DBQ REVIEW PTSD
+  
+   3. CAPRI - Template Defects
+  
+      a. Defects have been addressed in the following CAPRI templates:
+  
+         No CAPRI Template defects are being addressed.
+  
+   4. AMIE - C&P Examination Worksheet Defects
+  
+      a. Defects have been addressed within the following AMIE worksheets:
+  
+         No AMIE worksheet defects are being addressed.
+  
+  II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+  
+    The following section lists the Remedy tickets and/or New Service
+    Requests associated with this patch.
+  
+   1. Associated Remedy Ticket(s):
+      ----------------------------------
+  
+      There are no Remedy Tickets associated with this patch.
+  
+   2. Associated New Service Request(s):
+      ----------------------------------
+      There are no New Service Requests associated with this patch.
+  
+  III. FUNCTIONAL OVERVIEW
+  
+    The following section contains an overview of the changes and primary
+    functionality that are being delivered in this patch.
+  
+  
+   1. CAPRI - Template Modifications
+  
+      a. VBAVACO has approved modifications to the following CAPRI
+         Disability Benefits Questionnaire templates, based on new C&P
+         questionnaire worksheets.
+  
+        * DBQ INITIAL PTSD
+        * DBQ MENTAL DISORDERS (OTHER THAN PTSD AND EATING DISORDERS)
+        * DBQ REVIEW PTSD
+         
+         This patch implements the new content for the CAPRI Disability
+         Benefit Questionnaire templates, which are accessible through the
+         CAPRI software application. 
+  
+  
+   2. AMIE - C&P Examination Worksheet Modifications
+  
+      a. VBAVACO has approved modifications to the following Automated 
+         Medical Information Exchange (AMIE) C&P Questionnaire worksheets,
+         based on new C&P questionnaire worksheets.
+  
+        * DBQ INITIAL PTSD
+        * DBQ MENTAL DISORDERS (EXCEPT PTSD AND EATING DISORDERS)
+        * DBQ REVIEW PTSD
+  
+         This patch implements the new content for the AMIE C&P Disability
+         Benefit Questionnaire worksheets, which are accessible through the
+         VISTA AMIE software package.
+  
+   3. CAPRI - Template Defects
+  
+      There are no CAPRI Template defects associated with this patch.
+  
+   4. AMIE - C&P Examination Worksheet Defects
+  
+      There are no AMIE Examination worksheet defects associated with
+      this patch.
+  
+ IV. TECHNICAL COMPONENTS
+  
+   The following section describes the technical components being exported
+   with this patch.
+  
+   1. The following FILE will be included.
+  
+                                       UP    SEND  DATA               USER
+                                       DATE  SEC.  COMES  SITE  RSLV  OVER
+    FILE#   NAME                       DD    CODE  W/FILE DATA  PTS   RIDE
+    ----------------------------------------------------------------------
+    396.18 CAPRI TEMPLATE DEFINITIONS  NO    YES   YES    OVER  NO    NO
+  
+   2. The following Template Definition updates will be added to the CAPRI
+      TEMPLATE DEFINITIONS (#396.18) file:
+  
+      * DBQ INITIAL PTSD~171
+      * DBQ MENTAL DISORDERS (OTHER THAN PTSD AND EATING DISORDERS)~171
+      * DBQ REVIEW PTSD~171
+  
+  
+   3. New entries with the following C&P questionnaire worksheet(s) will be
+      created and STATUS field made "ACTIVE" in the AMIE EXAM (#396.6) 
+      file:
+  
+                                                     Access     Text 
+        IEN  Exam Name                               Routine    Routine
+        ---  -------------------------------------   --------   --------
+        327  DBQ INITIAL PTSD                        DVBCQPT4   DVBCQPT5
+                                                                DVBCQPT6
+        328  DBQ MENTAL DISORDERS (EXCEPT PTSD AND 
+             EATING DISORDERS)                       DVBCQMD3   DVBCQMD4
+        329  DBQ REVIEW PTSD                         DVBCQPR4   DVBCQPR5
+                                                                DVBCQPR6
+  
+   4. The following new routines will be added with this patch:
+  
+        DVBCQMD3   Driver routine for DBQ MENTAL DISORDERS (EXCEPT PTSD 
+                   AND  EATING DISORDERS) AMIE Worksheet
+        DVBCQMD4   Text routine for DBQ MENTAL DISORDERS (EXCEPT PTSD AND 
+                   EATING DISORDERS) AMIE Worksheet
+        DVBCQPR4   Driver routine for DBQ REVIEW PTSD AMIE Worksheet
+        DVBCQPR5   Text routine for DBQ REVIEW PTSD AMIE Worksheet
+        DVBCQPR6   Text routine for DBQ REVIEW PTSD AMIE Worksheet
+        DVBCQPT4   Driver routine for DBQ INITIAL PTSD AMIE Worksheet
+        DVBCQPT5   Text routine for DBQ INITIAL PTSD AMIE Worksheet
+        DVBCQPT6   Text routine for DBQ INITIAL PTSD AMIE Worksheet 
+  
+ V. SOFTWARE & DOCUMENTATION RETRIEVAL
+  
+    The following section provides information regarding the retrieval of
+    the software and related user documentation.
+  
+   1. VistA Patch DVBA*2.7*171
+  
+      a. This patch is being distributed as a PackMan patch message through
+         the National Patch Module (NPM). The KIDS build for this patch is
+         DVBA*2.7*171.
+  
+   2. User Documentation
+  
+      a. The user documentation for this patch may be retrieved directly
+         using FTP. The preferred method is to FTP the files from:
+  
+             download.vista.med.va.gov
+  
+         This transmits the files from the first available FTP server.
+  
+         Sites may also elect to retrieve documentation directly from a
+         specific server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+         Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+         Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+         The following files will be available:
+  
+         File Name                                Format  Description
+      ------------------------------------        ------  -----------------
+      DVBA_27_P171_RN.PDF                         Binary  Release Notes
+  
+       b. Documentation may also be retrieved from the VistA Documentation
+          Library (VDL) on the Internet at the following address. This web
+          site is usually updated within 1-3 days of the patch release
+          date.
+  
+                http://www4.va.gov/vdl/application.asp?appid=133
+  
+       C. Content and/or changes to the DBQs is communicated by the 
+          Disability Examination Management Office (DEMO) through:
+  
+                http://vbacodmoint1.vba.va.gov/bl/21/DBQ/default.asp
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES
+  
+   The following section provides pre-installation notes and requirements
+   for installing the software.
+  
+   1. Users On the System
+  
+    a. CAPRI GUI Users - This patch may be installed while users are
+       running the CAPRI GUI.
+  
+    b. VistA Users - This patch may be installed with users on the
+       system, but should be loaded during non-peak hours to minimize
+       disruption to users and to reduce the possibility of errors when
+       the routines and file entries are updated.
+  
+    c. VistA Options - There are no VistA options to disable while
+       installing this patch.
+  
+   2. Software Installation Time
+  
+    a. The estimated installation time is less than 5 minutes during off
+       peak hours.
+  
+   3. Required Builds
+  
+    a. The following is a list of REQUIRED builds for this KIDS software
+       distribution.  KIDS will not allow the installation of this patch
+       without their prior installation.
+  
+        Required Build(s):
+        ------------------
+        DVBA*2.7*166
+  
+ VII. INSTALLATION INSTRUCTIONS
+  
+    The following section provides the steps for installing the software.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+      the KIDS distribution included with this message.
+  
+   2. From the 'Kernel Installation & Distribution System' menu, select
+      the Installation menu.
+  
+   3. From this menu, you may now elect to use the following options (when
+      prompted for INSTALL NAME, enter DVBA*2.7*171).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed.
+  
+          CAUTION: Do not use the KIDS "Full Comparison" option. Due to
+          the length of some CAPRI Template names, the "Full Comparison"
+          option can go into a loop. This problem has been reported to
+          the Kernel developers and will be fixed with XU*8*599. The
+          "Second line of Routines Only", "Routines only", and "Old style
+          Routine compare" options may be used.
+  
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+  
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select package DVBA*2.7*171.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', answer NO.
+  
+   6. When prompted to 'Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO//', answer NO.
+  
+   7. NOTE: Pre/Post-init routine DVBA171P is a temporary routine used as
+      part of the pre/post-install process and will be automatically
+      deleted by KIDS after patch installation. However, in some cases
+      Cache doesn't always delete the routine. You may delete it manually
+      if you discover this at your site.
+  
+ VIII. TEST SITES
+  
+    The following sites participated in the testing of the DVBA*2.7*171
+    software.
+  
+    Test Sites
+    -----------
+    North Florida/South Georgia
+    Upstate New York
+    Miami
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA171P
+    Before:       n/a   After: B32768030  **171**
+Routine Name: DVBCQMD3
+    Before:       n/a   After:  B3737046  **171**
+Routine Name: DVBCQMD4
+    Before:       n/a   After:B187366352  **171**
+Routine Name: DVBCQPR4
+    Before:       n/a   After:  B3466255  **171**
+Routine Name: DVBCQPR5
+    Before:       n/a   After:B188294453  **171**
+Routine Name: DVBCQPR6
+    Before:       n/a   After: B20288040  **171**
+Routine Name: DVBCQPT4
+    Before:       n/a   After:  B3727324  **171**
+Routine Name: DVBCQPT5
+    Before:       n/a   After: B74775399  **171**
+Routine Name: DVBCQPT6
+    Before:       n/a   After:B167149678  **171**
+
+=============================================================================
+User Information:
+Entered By  : FAIRBROTHER,EILEEN            Date Entered  : MAY 31, 2011
+Completed By: DAWSON,JEREMIAH               Date Completed: JUL 05, 2011
+Released By : FRANCE,KATHI                  Date Released : JUL 06, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

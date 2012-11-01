@@ -1,0 +1,102 @@
+$TXT Created by TRAN,BAA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 12/03/09 at 06:40
+=============================================================================
+Run Date: JAN 27, 2011                     Designation: XU*8*537
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #449                      Status: Released
+                  Compliance Date: FEB 27, 2011
+=============================================================================
+
+Associated patches: (v)XU*8*494    <<= must be installed BEFORE `XU*8*537'
+
+Subject: Fix an Error in XQ83A
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket:HD000000359135
+ Test sites:
+ - BATTLE CREEK, MI VAMC
+ - CENTRAL TEXAS HCS
+ - PROVIDENCE, RI VAMC
+  
+ This patch fixes an <UNDEFINED> error in the routine XQ83A. The error 
+ occurs when a menu option, that has the global node ^DIC(19,IEN,10,0) 
+ defined, and doesn't have any descendents, is added into a higher level 
+ menu option.
+  
+ Blood Bank Team Coordination
+  ============================
+  Clearance:  12/3/2009 
+   
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*537 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*537 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+   
+  Installation Instructions
+  =========================
+   
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*537
+                                      ========== 
+  
+   Accept the defaults for the following install questions:  
+  
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+                                                                       
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQ83A
+    Before: B28620340   After: B28714957  **157,494,537**
+ 
+Routine list of preceding patches: 494
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : OCT 27, 2009
+Completed By: SINGH,GURBIR                  Date Completed: JAN 24, 2011
+Released By : TILLIS,LEWIS                  Date Released : JAN 27, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

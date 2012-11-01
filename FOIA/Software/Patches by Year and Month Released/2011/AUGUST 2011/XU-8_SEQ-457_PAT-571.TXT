@@ -1,0 +1,118 @@
+$TXT Created by TRAN-TEST,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 06/02/11 at 11:27
+=============================================================================
+Run Date: AUG 10, 2011                     Designation: XU*8*571
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #457                      Status: Released
+                  Compliance Date: SEP 10, 2011
+=============================================================================
+
+
+Subject: ADD A TAXONOMY FOR THE PERSON CLASS FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket#: 484304
+  
+ FORUM Tracking Message: 54448280
+  
+ Test sites:
+ - LITTLE ROCK, AR VAMC      
+ - MONTANA HCS
+ - SALT LAKE CITY, UT VAMC
+  
+                            XU*8*571
+ This patch adds a new entry number 1170 into the PERSON CLASS File 
+ (#8932.1):
+  
+ NUMBER: 1170              PROVIDER TYPE: Other Service Providers
+   CLASSIFICATION: Genetic Counselor, MS
+   STATUS: Active                        VA CODE: V082201
+   X12 CODE: 170300000X
+   DEFINITION:   A masters trained health care provider who collects and
+   interprets genetic family histories; assesses the risk of disease 
+   occurrence or recurrence; identifies interventions to manage or
+   ameliorate disease risk; educates about inheritance, testing,
+   management, prevention, ethical issues, resources, and research; and
+   counsels to promote informed choices and adaptation. Certification was
+   established in 1993 by the American Board of Genetic Counseling and
+   prior to that by the American Board of Medical Genetics. Requirements
+   for experience, licensure, and job responsibilities vary among the
+   states.
+   
+   Source: National Society of Genetic Counselors [7/1/2005: new] 
+   INDIVIDUAL/NON: INDIVIDUAL
+  
+ Blood Bank Team Coordination
+  ============================
+ Blood Bank Clearance: 6/2/11
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*571 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*571 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*571
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ The routine XU8P571 will be deleted after the installation completes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**; July 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P571
+    Before:       n/a   After: B10297065  **571**
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : MAY 05, 2011
+Completed By: SINGH,GURBIR                  Date Completed: AUG 08, 2011
+Released By : HARROD,PAUL                   Date Released : AUG 10, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,201 @@
+$TXT Created by LAM,ESTELLA at DEVCRN.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 09/24/10 at 12:50
+=============================================================================
+Run Date: JAN 25, 2011                     Designation: MPIF*1*55
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #51                      Status: Released
+                  Compliance Date: FEB 08, 2011
+=============================================================================
+
+Associated patches: (v)MPIF*1*48   <<= must be installed BEFORE `MPIF*1*55'
+                    (v)MPIF*1*51   <<= must be installed BEFORE `MPIF*1*55'
+                    (v)MPIF*1*52   <<= must be installed BEFORE `MPIF*1*55'
+
+Subject: SUPPORT FOR NATIONAL HEALTH INFORMATION EXCHANGE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  Patch MPIF*1*55 contains elements to support and enhance VA IdM
+  (Identity Management) service communication with the National Health
+  Information Network (NHIN).  The NHIN can be thought of as the 'parent'
+  gateway that communicates with the Master Patient Index (MPI) on behalf
+  of its National Health Information Exchange (NHIE) 'children'.  The
+  NHIN project has systems that interact with the VA NHIN adapter to
+  search for patients.  On behalf of these systems, NHIN will communicate
+  with the MPI and serve as an interpreter for the NHIE.  Some of NHINS
+  facilities include Kaiser Permanente, the Department of Defense,
+  MedVirginia, and the Consumer Preference and Policy System (CPP).
+   
+  Patch MPIF*1*55 will enhance the capability of VA IdM to support the
+  HL7v3.0 formatted Fully Qualified IDs.  This effort will align the
+  data perspective to support all four elements of the HL7 v2.4 standard
+  PID-3 Identifier sequence as well as the larger HL7 v3.0 formatted
+  unique Source IDs.
+   
+  Extensive information for the PID-3 Identifier sequence can be
+  found in the Master Patient Index/Patient Demographics (MPI/PD),
+  HL7 Interface Specifications document, available on the VistA
+  Documentation Library (VDL).
+   
+  NOTE:  RG* and MPIF* patches should NOT be installed on legacy
+  systems to avoid issues with the legacy systems ending up as
+  Treating Facilities.
+   
+  MPIF*1.0*48, MPIF*1.0*51, and MPIF*1.0*52 are required builds for patch
+  MPIF*1*55.
+   
+  Issue #1
+  On the Master Patient Index (MPI) the Health Care Identity Management
+  (HC IdM) team reported an exception in the Exception Handler from
+  the VistA Blood Establishment Computer Software (VBECS) application.
+  The MPI does not directly communicate with this application.  The
+  exception occurred due to a VBECS protocol which was added as a
+  subscriber to the VistA MPIF ADT-A40 SERVER event protocol. When the
+  VBECS application returned an application acknowledgement error, the
+  MPI logged an exception in the CIRN HL7 EXCEPTION LOG (#991.1) file.
+   
+  To correct this problem, and prevent an exception from being logged,
+  routine MPIFA40 was modified.  It will check that the sending and
+  receiving application in the application acknowledgement are both
+  'MPIF TRIGGER'.  If one or both are not, then the application
+  acknowledgement is being sent from a non-MPI application and should
+  be ignored.
+    
+  Issue #2
+  HC IdM reported that ALIAS SSN is not included as a prompt when the
+  ALIAS data is entered using the PIMS Load/Edit Patient Data [DG LOAD
+  PATIENT DATA], Register a Patient [DG REGISTER PATIENT] and Electronic
+  10-10EZ Processing [EAS EZ 1010EZ PROCESSING] options for a new patient.
+  They requested that the ALIAS SSN prompt be asked immediately after an
+  ALIAS is entered via any of these options.  Routine MPIFAPI has been
+  enhanced to include this data.
+    
+  Issue #3
+  HC IdM requested that when the Add Verified Duplicate Pair [XDR
+  ADD VERIFIED DUPS] option is used on VistA, that a check be made to the
+  MPI DO NOT LINK (#985.28) file on the MPI to ensure that the records
+  have not already been identified as a DO NOT LINK pairing.  This change
+  is made in routine MPIFDNL which is called by the Add Verified Duplicate
+  Pair option to invoke the MPI EVENT LIST remote procedure.
+  
+  If you add a record pair to the DUPLICATE RECORD file (#15) via the Add 
+  Verified Duplicate Pair option and mark the pair as VERIFIED, NOT A 
+  DUPLICATE, the record pair was added to the MPI DO NOT LINK file 
+  (#983.85), but the user's division, the value stored in DUZ(2), was 
+  stored in the ASSIGNING LOCATION and DNL ASSIGNING LOCATION fields. The 
+  fields should be set to the primary station number of the sending site 
+  instead.
+    
+  Issue #4
+  The Display Only Query [MPIF DISPLAY ONLY QUERY TO MPI] option allows
+  the VistA user to query the Master Patient Index (MPI) in Austin for
+  all known data about a patient.  If the Social Security Number is not
+  supplied or is not available for the search, then Display Only Query
+  does not return a complete list of potential matches from the MPI.
+  This occurs because the number used for comparison on the MPI is a high
+  number.  This number is stored in the TASK THRESHOLD (#10.1) field of
+  the MPI PARAMETER (#985.1) file.  A new field has been added to this MPI
+  file called ATTENDED SEARCH THRESHOLD (#10.5).  It defines a lower
+  threshold number to be used by the Display Only Query to improve the
+  search results.  The values established for these two threshold fields
+  was determined by HC IdM.  Code changes have been made in routine MPIFSA2
+  to use the enhanced search values now available on the MPI.
+     
+  NOTE: Issues 3 and 4 will only occur on VistA when the MPI patch,
+  MPI*1.0*84 has been installed on the Master Patient Index in Austin.
+  
+  Associated Remedy Ticket(s):
+  ============================
+  There are no associated Remedy Tickets.
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  Bay Pines VA HCS
+  Huntington VAMC
+  VA Montana HCS
+      
+  Installation Instructions:
+  ==========================
+  This patch takes less than 2 minutes to install.  This patch should
+  be loaded during non-peak hours to minimize disruption to the users.
+   
+  1.  Users are allowed on the system during patch installation.
+     
+  2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+      Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+      Link Management Options [HL MENU FILER LINK MGT] menu on the
+      HL7 Main Menu [HL MAIN MENU].
+     
+  3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  6.  Use the Install Package(s) option and select the package MPIF*1.0*55.
+   
+  7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//',
+      respond NO.
+   
+  8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES.  The following OPTIONS should be
+      disabled during the installation.
+      Register a Patient              [DG REGISTER PATIENT]
+      Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+      Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+      Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+      UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+      Display Only Query              [MPIF DISPLAY ONLY QUERY TO MPI]
+      Add Verified Duplicate Pair     [XDR ADD VERIFIED DUPS]
+     
+  9.  After patch installation has completed, restart the HL7 incoming
+      filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+      option on the Filer and Link Management Options [HL MENU FILER 
+      LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0; MASTER PATIENT INDEX VISTA ;**[Patch List]**;30 Apr 99;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFA40
+    Before: B15017531   After: B15694621  **22,41,51,55**
+Routine Name: MPIFAPI
+    Before: B49088587   After: B49371589  **1,3,14,16,17,21,27,28,33,35,
+                                           37,43,45,44,46,48,55**
+Routine Name: MPIFDNL
+    Before: B17887652   After: B32783071  **52,55**
+Routine Name: MPIFSA2
+    Before: B80384646   After: B81928168  **28,29,35,38,43,52,55**
+ 
+Routine list of preceding patches: 48, 51, 52
+
+=============================================================================
+User Information:                          Hold Date     : JAN 01, 2011
+Entered By  : DAVIS,PAULETTE                Date Entered  : JUL 07, 2010
+Completed By: CHESNEY,CHRISTINE M           Date Completed: DEC 22, 2010
+Released By : HEUER,CINDY                   Date Released : JAN 25, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

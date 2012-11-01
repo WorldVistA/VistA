@@ -1,0 +1,210 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 06/21/12 at 15:12
+=============================================================================
+Run Date: OCT 04, 2012                     Designation: PSJ*5*248
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #236                      Status: Released
+                  Compliance Date: NOV 04, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*145   <<= must be installed BEFORE `PSJ*5*248'
+                    (v)PSJ*5*179   <<= must be installed BEFORE `PSJ*5*248'
+                    (v)PSJ*5*184   <<= must be installed BEFORE `PSJ*5*248'
+
+Subject: EDIT IVPB START DATE WARNING MESSAGE
+
+Category: 
+  - Routine
+  - Input Template
+
+Description:
+============
+
+ This patch will provide solutions to existing issues in Patient 
+ Medications and the IV Site Parameters option. This patch 
+ corrects the following issues:
+   
+  1. The warning message displayed when an IVPB order's start date was 
+     before the last BCMA dose due was too confusing for users.
+  2. An Undefined Error occurs when a report is queued using the 7-Day
+     Medical Administration Report (MAR) 
+  3. An Undefined Error occurs when prompts are skipped in IV Site
+     Parameters 
+  
+ Associated
+ Remedy Ticket(s):
+ ===========================
+  
+ 1. HD0000000489715 - UNABLE TO CHANGE STOP DATE
+ 2. HD0000000486776 - 7 Day MAR for Clinic or Clinic Group
+ 3. HD0000000415472 - I received a hard error when editing the site
+                      parameter for the IV printer
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+ Participating Test Sites:
+ =================
+ Erie VA Medical Center
+ Oklahoma City VA Medical Center
+ Lexington VA Medical Center
+  
+ Remedy Overview:
+ ===============         
+ 1. HD0000000489715 - UNABLE TO CHANGE STOP DATE
+  
+ Problem:
+ -------
+ Patch PSJ*5*179 corrected a potential double-dosing issue by introducing 
+ a check on edits of starred fields in Inpatient Order Entry [PSJ OE].  
+  
+ Editing a starred field causes a new order to be created. When editing 
+ an IVPB order, if the Start Date of the new order is before the last Bar
+ Code Medical Administration (BCMA) given, the user will receive a warning
+ message and edits will not be allowed until the Start Date is updated.
+  
+ The resulting warning message was too confusing for users and the 
+ Inpatient Medications Workgroup decided to clarify the message. 
+  
+ Resolution:
+ ----------
+ Warning message was changed in accordance with the decision of the 
+ Inpatient Medications Workgroup.  The message now reads: "*** Start 
+ date/time must be set AFTER last BCMA admin time (date/time) of this 
+ medication ***" instead of "*** Start date/time CANNOT be before given
+ last dose due (date/time) ***"
+   
+   
+ 2. HD0000000486776 - 7 Day MAR for Clinic or Clinic Group
+   
+ Problem:
+ -------
+  
+ If a report is queued in 7-Day MAR [PSJU 7D MAR] for Clinics or Clinic 
+ Groups, an undefined error will result and the report will not run.
+   
+ Resolution:
+ ----------
+ PSGMMAR was modified so the undefined error does not occur.
+   
+   
+ 3. HD0000000415472 - I received a hard error when editing the site
+                      parameter for the IV printer
+   
+ Problem:
+ -------
+ While editing fields using the SIte Parameters (IV) option [PSJI SITE   
+ PARAMETERS] (#59.5), if the user skips to the Delivery Time prompt and
+ does not start with Start of Coverage, the user will receive an undefined
+ error. 
+  
+  
+ Resolution:
+ ----------
+ Input template PSJI SITE PARAMETERS (file #59.5) was modified so that the
+ template uses the proper variable for the IV room.
+  
+  
+ Installation Instructions:
+ =================
+ If installed during the normal workday, it is recommended that the 
+ the Pharmacy Data Management users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+ 1.  Load Transport Global 
+     ---------------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+  
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*248):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d.  Print Transport Global - This option will allow you to view the 
+         components of the KIDS build.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' Answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+       Options, and Protocols? NO//' Answer YES.
+  
+            1) When prompted "Enter options you wish to mark as "Out
+               of Order":" enter the following options:
+               
+                   Inpatient Order Entry [PSJ OE]
+                   SIte Parameters (IV) [PSJI SITE PARAMETERS]
+   
+            2) When prompted "Enter protocols you wish to mark as "Out of
+               Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGMMAR
+    Before: B27316363   After: B28087316  **15,20,110,111,131,145,248**
+Routine Name: PSIVCHK
+    Before: B24591078   After: B25232244  **54,58,81,111,213,113,179,248**
+Routine Name: PSJDDUT2
+    Before: B32882229   After: B33133794  **184,248**
+ 
+Routine list of preceding patches: 145, 179, 184
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : AUG 30, 2010
+Completed By: LANG,MICKEY                   Date Completed: OCT 04, 2012
+Released By : CONNOLLY,BARBARA              Date Released : OCT 04, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

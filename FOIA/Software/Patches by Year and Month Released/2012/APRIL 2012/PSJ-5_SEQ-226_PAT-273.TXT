@@ -1,0 +1,196 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 01/12/12 at 15:12
+=============================================================================
+Run Date: APR 23, 2012                     Designation: PSJ*5*273
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #226                      Status: Released
+                  Compliance Date: MAY 24, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*273'
+                    (v)PSJ*5*184   <<= must be installed BEFORE `PSJ*5*273'
+
+Subject: ADDITIVE NOT PRINTING ON CHEMOTHERAPY LABEL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Inpatient Medications 
+ package:
+  
+ 1. The additive does not print on chemotherapy label
+ 2. Patient deceased message not displaying properly
+ 3. UNDEFINED error when nurse verifies order in CPRS.
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. HD0000000590288 - IV ORDER PROVIDER CAN NOT CHOOSE IV TYPE
+  
+ 2. HD0000000585063 - Pharmacy Data Management
+  
+ 3. HD0000000293344 - LIMSTOP+7^PSIVORFB Errors
+    Duplicates:
+    HD0000000230800
+    HD0000000233925
+    HD0000000422471
+    HD0000000518897
+  
+  
+ Participating Test Sites:
+ ========================
+ Minneapolis VAMC
+ Oklahoma City VAMC
+ Western NY HCS
+  
+  
+ Remedy Ticket Overview:
+ ======================
+ 1. HD0000000590288 - IV ORDER PROVIDER CAN NOT CHOOSE IV TYPE
+  
+   Problem:
+   -------
+   When creating or renewing a Chemotherapy IV order of admixture type, if
+   the number of labels printed today exceeds the Bottle number for this
+   order, the additive will not show up on the label.
+  
+   Resolution:
+   ----------
+   Changed routine PSIVLABL so that the additive will print on Chemotherapy
+   admixture IV order labels.
+  
+  
+ 2. HD0000000585063 - Pharmacy Data Management
+  
+   Problem:
+   -------
+   When a patient has been discharged with a Discharge Type = 'Regular'
+   and then the patient has been marked deceased from the Death Entry [DG
+   DEATH ENTRY] option, the warning message when attempting to select that
+   patient will read, "PATIENT IS FOUND TO BE DISCHARGED AS OF [date]",
+   instead of "DECEASED".
+  
+   Resolution:
+   ----------
+   Changed routine PSJP to look at a patient's date of death in addition  
+   to discharges due to death to determine if a patient is deceased.
+  
+  
+  
+ 3. HD0000000293344 - LIMSTOP+7^PSIVORFB Errors
+  
+   Problem:
+   -------
+   When an IV order is finished by a pharmacist in Inpatient Order Entry 
+   [PSJ OE], and then verified by a nurse in CPRS, an UNDEFINED error will 
+   occur.
+  
+   Resolution:
+   ----------
+   Changed PSIVORFB so that the UNDEFINED error no longer occurs.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS WHEN THE PATCH IS  
+ INSTALLED, AN 'EDITED' ERROR WILL OCCUR.
+  
+ The patch should be installed when NO Inpatient Pharmacy users are on the
+ system.  Installation should take less than 2 minutes.
+  
+  
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+  
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+          Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     --------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*273):
+                                 
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d.  Print Transport Global - This option will allow you to view the 
+         components of the KIDS build.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVLABL
+    Before: B37326681   After: B38277482  **58,82,104,127,178,184,273**
+Routine Name: PSIVORFB
+    Before: B61355252   After: B62956553  **3,18,28,68,58,85,110,111,120,
+                                           134,213,161,181,273**
+Routine Name: PSJP
+    Before: B20677558   After: B21335743  **10,53,60,181,273**
+ 
+Routine list of preceding patches: 181, 184
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : JAN 11, 2012
+Completed By: BYRD,TIERRA                   Date Completed: APR 23, 2012
+Released By : CONNOLLY,BARBARA              Date Released : APR 23, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

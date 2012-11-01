@@ -1,0 +1,276 @@
+
+=============================================================================
+Run Date: MAR 21, 2012                     Designation: DG*5.3*836
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #750                    Status: Released
+                  Compliance Date: APR 21, 2012
+=============================================================================
+
+
+Subject: HRMH-VISTA CHANGES FOR NATIONAL REMINDER & FLAG
+
+Category: 
+  - Enhancement (Mandatory)
+  - Informational
+  - Routine
+
+Description:
+============
+
+ This patch, DG*5.3*836, is being released as part of a Kernel Installation
+ & Distribution System (KIDS) software distribution (host file).  This
+ patch message contains the informational portion of DG*5.3*836 and
+ provides field personnel with instructions on how to acquire, install, and
+ implement the patch software.
+ *************************************************************************
+  
+ This patch is in support of the Improve Veteran Mental Health 
+ initiative, High Risk Mental Health - National Reminder & Flag.  This
+ patch implements two new Application Programming Interface (APIs) for
+ retrieving Patient Reminder Flag (PRF) information in support of the High
+ Risk Mental Health initiatives.
+  
+  
+ Patch Components
+ ================
+ DGPFAPIH - This routine implements the two Application Programming 
+ Interface call points for retrieving Patient Record Flag
+ information.  One call point is for a specific patient and record and the
+ second call point is for a list of patients with a specific, active,
+ Patient Record Flag.
+  
+ DGPFAPIU - This routine provides support utilities and functions for the 
+ new Application Programming Interface calls. 
+  
+  
+ Files & Fields Associated:
+ N/A
+  
+ Forms Associated:
+ N/A
+  
+ Mail Groups Associated:
+ N/A
+  
+ Options Associated:
+ N/A
+  
+ Protocols Associated:
+ N/A
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A
+  
+ Parameter Definitions:
+ Entity               Parameter            Value
+ ------               ---------            -------
+ PKG.REGISTRATION     DGPF SUICIDE FLAG    HIGH RISK FOR SUICDE
+  
+  
+ Additional Information:
+  
+ Integration Control Registrations:
+ PATIENT RECORD FLAG DATA RETRIEVAL (#4903)
+  
+    Component            Routine
+    ----------           ----------
+    GETINF               DGPFAPIH
+    GETLST               DGPFAPIH
+  
+ PATIENT RECORD FLAG VARIABLE POINTER (#5491)
+  
+    Component            Routine
+    ----------           ----------
+    GETFLAG              DGPFAPIU
+  
+  
+ New Service Requests (NSR's)
+ ----------------------------  
+ High Risk Mental Health Patient - National Reminder and Flag (#20070589)
+ High Risk Mental Health Patient Appointment Cancellation (#20100408)
+  
+  
+ Patient Safety Issues (PSI's)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+  
+ Test Sites:
+ ----------
+ UPSTATE NEW YORK HCS BUFFALO
+ PORTLAND VAMC
+ NORTHPORT VAMC
+ NORTHERN CALIFORNIA HCS
+ MILWAUKEE VAMC
+ MARYLAND HCS
+ INDIANAPOLIS VAMC
+ CHICAGO VAMC
+  
+  
+  
+ Software and Documentation Retrieval Instructions
+ -------------------------------------------------- 
+ The software for this set of patches is not being distributed through the 
+ National Patch Module. There is a multi-package build named HIGH RISK MH 
+ 1.0 which contains the following KIDS builds: DG*5.3*836, SD*5.3*578, 
+ TIU*1.0*260, GMTS*2.7*99, and PXRM*2.0*18.The associated host file is 
+ named HIGH_RISK_MH_1_0.KID.
+  
+ The set of documentation has been bundled into a single zip file named: 
+ HRMHP_DOCS.ZIP.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from: 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve the files directly from a specific 
+ server as
+ follows:
+  
+ Albany      ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines       ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov  <ftp://ftp.fo-slc.med.va.gov>
+  
+ HRMHP_DOCS.ZIP contains the following files:
+  
+ PXRM_2_18_IG.PDF
+ PXRM_2_UM.PDF
+ PXRM_2_TM.PDF
+ PXRM_2_MM.PDF
+ PXRM_2_18_RN.PDF
+ HSUM_2_7_99_UM.PDF
+ HSUM_2_7_99_TM.PDF
+ DG_5_3_836_IG.PDF
+ SD_5_3_578_IG.PDF
+  
+ Documentation can also be found on the VistA Documentation Library (VDL)
+ at:
+ http://www.va.gov/vdl/
+  
+ Title                         File Name                      FTP Mode
+ ----------------------------------------------------------------------- 
+ High Risk Mental Health Patient Project Installation and Setup Guide 
+                                PXRM_2_18_IG.PDF               Binary
+ PXRM User Manual               PXRM_2_UM.PDF                  Binary
+ PXRM Tech Manual               PXRM_2_TM.PDF                  Binary
+ High Risk Mental Health Patient Project Release Notes
+                                PXRM_2_18_RN.PDF               Binary
+ Clinical Reminders Manager's Manual
+                                PXRM_2_MM.PDF                  Binary
+ GMTS User Manual               HSUM_2_7_99_UM.pdf             Binary
+ GMTS Tech Manual               HSUM_2_7_99_TM.pdf             Binary
+ DG Install Guide               DG_5_3_836_IG.PDF              Binary
+ SD Install Guide               SD_5_3_578_IG.PDF              Binary 
+  
+  
+ Patch Installation:
+  
+  
+ Installation Instructions
+ -------------------------
+ The following install steps are only a high level overview, please follow 
+ the PXRM install guide for more detailed instructions and guidance.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Download the HIGH_RISK_MH_1_0.KID file from the appropriate  
+     FTP Server to the directory on your system.
+  
+ 2.  Use LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and 
+     enter: [DIR]:HIGH_RISK_MH_1_0.KID, where [DIR] is the local
+     directory where you have stored the host file.  
+  
+ 3.  From the Kernel Installation & Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch 
+     HIGH_RISK_MH_1_0.KID:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as Data Dictionaries or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, Data Dictionaries, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Do you want to update the Parameter Definition at 
+     This time? YES//' Answer YES (if the correct value is available)
+  
+ 6.  When prompted 'Enter the Local Patient Record Flag that you are
+     using as your Suicide Prevention flag.  Local Flag: HIGH RISK FOR 
+     SUICIDE  Replace' Press enter if the default is correct.  Otherwise 
+     enter '...' and enter the correct value at the 'With' prompt.
+      
+ 7.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' Answer 'NO'    
+  
+ 8.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'   Answer 'NO'
+  
+ 9.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//'  Answer 'NO'
+  
+  
+  
+ Post Installation:
+ ------------------
+  
+ If 'NO' is answered at the first install question, the DGPF SUICIDE 
+ FLAG parameter is installed with the default value of 'HIGH RISK FOR
+ SUICIDE'.  
+  
+ If 'NO' was answered because the correct value was not known, or you 
+ wish to change the parameter value at a later date, there is a 
+ programmer utility that can be run from the post install routine.  At 
+ a programmer prompt, enter 'D UPD^DG53836P'.  You will be prompted for 
+ the new value you would like to assign to the Parameter Definition.
+  
+ 'Enter the Local Patient Record flag that you are using as your Suicide
+ Prevention flag. Local Flag:'  Enter the new value to be assigned
+  
+ If the update is successful you will see 'Parameter Definition has 
+ been updated!', if the update was unsuccessful, you will see an 
+ appropriate error message.  
+  
+ Routine DG53836P may be deleted once the Parameter Definition is 
+ set up correctly.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53836P
+    Before:       n/a   After:  B3205508  **836**
+Routine Name: DGPFAPIH
+    Before:       n/a   After: B25281301  **836**
+Routine Name: DGPFAPIU
+    Before:       n/a   After: B23057347  **836**
+
+=============================================================================
+User Information:
+Entered By  : KOPECKY,STEPHEN C.            Date Entered  : JAN 04, 2011
+Completed By: KIRBY,ROSE                    Date Completed: FEB 24, 2012
+Released By : ADAMS,RITA W                  Date Released : MAR 21, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

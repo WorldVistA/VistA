@@ -1,0 +1,232 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 09/20/11 at 08:53
+=============================================================================
+Run Date: MAY 09, 2012                     Designation: PSJ*5*265
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #229                      Status: Released
+                  Compliance Date: JUN 09, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*179   <<= must be installed BEFORE `PSJ*5*265'
+                    (v)PSJ*5*243   <<= must be installed BEFORE `PSJ*5*265'
+
+Subject: NON-VERIFIED/PENDING CLINIC ORDER DISPLAY FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following 3 issues in the Inpatient
+ Medications package:
+  
+ 1. Pending Clinic orders not accessible in Non-Verified/Pending Orders
+    Report
+ 2. Non-Verified Clinic orders not accessible in Non-Verified/Pending
+    Orders Report
+ 3. Loops when editing STOP DATE/TIME
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000140129 - Clinic Pending Order Not showing
+    Duplicates:
+    -----------
+    HD0000000155005 - NON-VERIFIED ORDER NOT ACCESSIBLE FROM OUTPATIENT
+                      CLINIC
+    HD0000000174609 - Outpatient not receiving medication
+    HD0000000229332 - Non-Verified/Pending Orders Display
+    HD0000000316126 - Pending/Non-Verified Orders
+    HD0000000463812 - PENDING ORDERS can not be accessed by Clinic or
+                      Clinic Group
+    HD0000000469195 - Some orders cannot be retrieved under Clinic group
+                      using PSJU VBW option
+    HD0000000518839 - NFSG problem with scanning orders for clinic sort 
+                      group orders
+  
+ 2. HD0000000155005 - NON-VERIFIED ORDER NOT ACCESSIBLE FROM OUTPATIENT
+                      CLINIC
+    Duplicates:
+    -----------
+    HD0000000343816 - CAN'T GET TO NON-VERIFIED ORDER
+    HD0000000507457 - Unable to find non-verified order using
+                                  PSJU VBW
+ 3. HD0000000517919 - BACKDOOR EDIT LOOP
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================= 
+ RENO, NV                  
+ SAN JUAN, PR                  
+ UPSTATE NEW YORK HCS    
+  
+      
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. HD0000000140129 - Clinic Pending Order Not showing
+  
+    PATIENT SAFETY ISSUES:
+    =====================
+    PSPO #471
+  
+  
+   Problem:
+   -------
+   This patch fixes an issue with the Non-Verified/Pending Orders report 
+   [PSJU VBW] option, in which a pending order at a clinic would sometimes
+   not be visible if the patient had two pending orders at two different
+   clinics. 
+  
+   Resolution:
+   ----------
+   Changed routine PSGVBW so that pending clinic orders display properly on
+   the Non-Verified/Pending Orders report.
+  
+  
+ 2. HD0000000155005 - NON-VERIFIED ORDER NOT ACCESSIBLE FROM OUTPATIENT
+                      CLINIC
+  
+   Problem:
+   -------
+   Related to issue #1, this patch fixes an issue with the
+   Non-Verified/Pending Orders report [PSJU VBW] option in which a
+   non-verified order at a clinic would not be visible.
+  
+   Resolution:
+   ----------
+   Changed routine PSGAXR so that future non-verified orders display
+   properly on the Non-Verified/Pending Orders report, and included
+   post-install routine PSJ50265 to make pre-existing non-verified orders 
+   display properly on the report.
+  
+  
+ 3. HD0000000517919 - BACKDOOR EDIT LOOP
+  
+   Problem:
+   -------
+   This patch corrects an error with the Inpatient Order Entry [PSJ OE] 
+   option, in which attempting to edit the STOP DATE/TIME for an active
+   order, and then using "^" fails to cancel out of the edit.
+  
+   Resolution:
+   ----------
+   Changed routine PSGOE91 so that using "^" will allow the user to cancel 
+   out of the edit.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS WHEN THE PATCH IS  
+ INSTALLED, AN EDITED ERROR WILL OCCUR.
+  
+ The patch should be installed when NO Inpatient Pharmacy users are on the
+ system.  This patch will take less than 15 minutes to install.
+  
+ The routine PSJ50265 may be deleted after installation is successful.
+  
+  
+ 1.  Load Transport Global 
+     ---------------------
+  
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+  
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*265):
+                                 
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d.  Print Transport Global - This option will allow you to view the 
+         components of the KIDS build.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer YES.
+  
+           1) When prompted "Enter options you wish to mark as "Out
+              of Order":" enter the following options:
+              
+                 Inpatient Order Entry [PSJ OE]
+                 Non-Verified/Pending Orders [PSJU VBW]
+  
+           2) When prompted "Enter protocols you wish to mark as "Out of
+              Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGAXR
+    Before:  B7839791   After:  B8428515  **111,265**
+Routine Name: PSGOE91
+    Before: B41627571   After: B41731482  **50,64,58,110,111,136,113,179,265**
+Routine Name: PSGVBW
+    Before: B96214965   After: B96887631  **5,16,39,59,62,67,58,81,80,
+                                           110,111,133,139,155,241,243,
+                                           265**
+Routine Name: PSJ50265
+    Before:       n/a   After:   B666023  **265**
+ 
+Routine list of preceding patches: 179, 243
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : SEP 01, 2011
+Completed By: BYRD,TIERRA                   Date Completed: MAY 09, 2012
+Released By : TEAGUE,LYN                    Date Released : MAY 09, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

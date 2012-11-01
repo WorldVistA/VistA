@@ -1,0 +1,153 @@
+$TXT Created by TRAN-TEST,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 07/27/11 at 05:37
+=============================================================================
+Run Date: OCT 12, 2011                     Designation: XU*8*581
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #460                      Status: Released
+                  Compliance Date: NOV 12, 2011
+=============================================================================
+
+
+Subject: UPDATE PERSON CLASS FILE FOR 10/01/2011
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket#: HD0000000501764
+ FORUM Tracking Message#: 54888531
+ Blood Bank Clearance on: 7/27/2011
+ Test sites:
+ - CENTRAL TEXAS HCS   
+ - LITTLE ROCK, AR (C) VAMC
+ - MONTANA HCS
+               
+                        XU*8*581
+ This patch adds new entries #1171,1172, and 1173 into the PERSON
+ CLASS File (#8932.1):
+  
+ NUMBER: 1171
+   PROVIDER TYPE: Allopathic & Osteopathic Physicians
+   CLASSIFICATION: Internal Medicine
+   AREA OF SPECIALIZATION: Hypertension Specialist
+   STATUS: Active                        VA CODE: V182605
+   X12 CODE: 207RH0005X                  SPECIALTY CODE: 11
+   DEFINITION:   A Hypertension Specialist is a physician who concentrates 
+    on all aspects of the diagnosis and treatment of hypertension.
+   
+    Source: American Society of Hypertension Additional Resources: The 
+    American Society of Hypertension Specialists Program offers an
+    examination and designation for Hypertension Specialists.  This
+    subspecialty is not a Board certificate issued by either the American
+    Board of Internal Medicine or the American Osteopathic Board of
+    Internal Medicine.  
+   INDIVIDUAL/NON: INDIVIDUAL
+   PROVIDER TYPE CODE (c): 20            CLASSIFICATION CODE (c): 7R
+   AREA OF SPECIALIZATION CODE (c): H0005
+  
+ NUMBER: 1172
+   PROVIDER TYPE: Respiratory, Developmental, Rehabilitative and
+    Restorative
+   CLASSIFICATION: Clinical Exercise Physiologist
+   STATUS: Active                        VA CODE: V130601
+   X12 CODE: 224Y00000X                  SPECIALTY CODE: 25
+   DEFINITION:   A Clinical Exercise Physiologist is a health care 
+    professional who is trained to work with patients with chronic disease
+    where exercise training has been shown to be of therapeutic benefit,
+    including but not limited to cardiovascular and pulmonary disease, and
+    metabolic disorders.
+   
+    Source: What is a Clinical Exercise Physiologist? Clinical Exercise 
+    Physiology Association (CEPA), CEPA Executive Board, 2008
+   INDIVIDUAL/NON: INDIVIDUAL
+   PROVIDER TYPE CODE (c): 22            CLASSIFICATION CODE (c): 4Y
+   AREA OF SPECIALIZATION CODE (c): 00000
+  
+ NUMBER: 1173                            
+   PROVIDER TYPE: Suppliers
+   CLASSIFICATION: Medical Foods Supplier
+   STATUS: Active                        X12 CODE: 335G00000X
+   DEFINITION:   A supplier of special replacement foods for clients with 
+    errors of metabolism that prohibit them from eating a regular diet.
+    Medical foods are lacking in the compounds which cause complications of
+    the metabolic disorder, and are not generally available in grocery
+    stores, health food stores, or pharmacies.
+   
+    Source: The Children with Special Healthcare Needs (CSHCN) Services 
+    Program, a program of the Texas Department of State Health Services.
+   INDIVIDUAL/NON: NON-INDIVIDUAL
+   PROVIDER TYPE CODE (c): 33            CLASSIFICATION CODE (c): 5G
+   AREA OF SPECIALIZATION CODE (c): 00000
+  
+  
+ Blood Bank Team Coordination
+  ============================
+ Blood Bank Clearance: 7/27/2011
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*581 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*581 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*581
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ The routine XU8P581 will be deleted after the installation completes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**; July 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P581
+    Before:       n/a   After: B23916414  **581**
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : JUL 11, 2011
+Completed By: SINGH,GURBIR                  Date Completed: OCT 11, 2011
+Released By : HARROD,PAUL                   Date Released : OCT 12, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

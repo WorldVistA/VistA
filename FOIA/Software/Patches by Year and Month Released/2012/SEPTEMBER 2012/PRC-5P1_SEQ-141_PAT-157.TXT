@@ -1,0 +1,191 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Monday, 08/08/11 at 13:38
+=============================================================================
+Run Date: SEP 11, 2012                     Designation: PRC*5.1*157
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #141                    Status: Released
+                  Compliance Date: OCT 12, 2012
+=============================================================================
+
+Associated patches: (v)PRC*5.1*113 <<= must be installed BEFORE `PRC*5.1*157'
+                    (v)PRC*5.1*126 <<= must be installed BEFORE `PRC*5.1*157'
+
+Subject: CANCEL PO WITH CHARGES;FILE RE-INDEXING WARNINGS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 2 issues:
+  
+ 1. Site reported that they were able to cancel a Purchase Card order 
+    before the reconciliation charges were removed.
+       
+ 2. In File Description information for file CONTROL POINT ACTIVITY (#410),
+    PROCUREMENT & ACCOUNTING TRANSACTIONS (#442) AND AMENDMENTS (#443.6) 
+    add informational warning: *********DO NOT RE-INDEX THIS FILE**********
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ Remedy:
+ =======
+ 1. HD0000000454995 Can a P/C order be cancelled before the 
+                    reconciliations are removed?
+  
+ 2. HD0000000418225 File 442 $ File 410 - DO NOT REINDEX "Housekeeping" 
+  
+  
+ Test Sites:
+ ===========
+ Oklahoma City VAMC
+ St. Cloud VAMC
+  
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000454995 Can a P/C order be cancelled before the 
+                    reconciliations are removed?
+  
+    Problem:
+    --------
+    Site reported that they were able to cancel a Purchase Card order 
+    before the reconciliation charges were removed.
+  
+    Resolution:
+    -----------                    
+    Modify the order amendment processing for a direct cancel or to Replace
+    a P.O. number to check the Method of Processing (MOP) is a purchase
+    card AND check to insure that no linked charges exist in file PURCHASE
+    CARD ORDER RECONCILE (#440.6).
+  
+ Routines: PRCHINQ, PRCHMA, PRCHMA1
+  
+  
+ 2. HD0000000418225 File 442 $ File 410 - DO NOT REINDEX "Housekeeping"
+  
+    Problem:
+    --------
+    Based on issues concerning these files National Support would like to
+    add the warning message "DO NOT RE-INDEX". Re-indexing has caused
+    serious structure/processing issues over the years.
+  
+    Resolution:
+    -----------                    
+    Modified file descriptions for file CONTROL POINT ACTIVITY (#410), 
+    PROCUREMENT & ACCOUNTING TRANSACTIONS (#442) and AMENDMENTS (#443.6) to
+    include the following information:
+    *********DO NOT RE-INDEX THIS FILE**********
+  
+ Here is the file description change for file #443.6:
+  
+ STANDARD DATA DICTIONARY #443.6 -- AMENDMENTS FILE  JUL 13,2011@07:48 PG 1
+ STORED IN ^PRC(443.6,  (3072 ENTRIES)   SITE: Washington OIFO   UCI: 
+ MNT,MNT (VERSION 5.1)
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ This is a temporary holding file used to store a purchase order while an 
+ Amendment is being created.  Changes to a P.O. are actually made to this 
+ file, and not to the original P.O.  If the user completes and approves
+ the Amendment, the changes are copied to the P.O.  Whether approved or 
+ not, the "copy" is deleted from this file when the user is finished. The
+ file is also used for amendments to Requisitions.
+     *********DO NOT RE-INDEX THIS FILE********** 
+  
+  
+ Routines: PRC157P (Post Install routine)
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+   ***********************************************************************
+   PLEASE NOTE: Post install routine PRC157P will be deleted once the
+   install is complete.  If you wish to check the checksum of this routine 
+   please use the 'Verify Checksums in Transport Global' under the 
+   Installation Menu.
+   ***********************************************************************
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*157)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*157.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? NO//', respond YES 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+           Amendment to Purchase Order      [PRCHPC AMEND]
+           Amendment To Purchase Card Order [PRCH AMENDMENT TO P/C ORDER]
+           Amendment to Requisition         [PRCHPM REQN AMEND]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Jul 1, 2011;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRC157P
+    Before:       n/a   After:   B945489  **157**
+Routine Name: PRCHINQ
+    Before:  B9819590   After: B10133496  **18,117,126,157**
+Routine Name: PRCHMA
+    Before: B76984326   After: B77711518  **21,79,100,113,157**
+Routine Name: PRCHMA1
+    Before: B46254767   After: B47127085  **22,40,79,157**
+ 
+Routine list of preceding patches: 113, 126
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : FEB 28, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: AUG 29, 2012
+Released By : NELSON,VICKI M                Date Released : SEP 11, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,198 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 11/29/10 at 11:25
+=============================================================================
+Run Date: JAN 26, 2011                     Designation: FH*5.5*21
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #23                    Status: Released
+                  Compliance Date: FEB 26, 2011
+=============================================================================
+
+Associated patches: (v)FH*5.5*8    <<= must be installed BEFORE `FH*5.5*21'
+
+Subject: DISPLAY CORRECT TARGET WEIGHT & PRINTING OF DIET LABELS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+ 1. When entering a nutrition assessment for an elderly patient, the user 
+    is being presented with an incorrect target weight.
+  
+ 2. Diet labels that are printed for newly admitted patients are not
+    printing the DIET ORDER field which should contain 'NO ORDER'.
+  
+ 3. Routine FHPATM will be updated to include the Integration 
+    Agreements in the comments section of the routine. 
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000267395 - Incorrect target weight
+ 2. HD0000000305078 - Diet Labels Not Printing 'NO ORDER'
+    Duplicate(s)
+    ------------
+    HD0000000272864 - Default Diet Orders Problem
+ 3. HD0000000325990 - No integration agreement
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ NORTHPORT, NY
+ N.FLORIDA/S.GEORGIA
+ PUGET SOUND HCS
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1. HD0000000267395 - Incorrect target weight
+ Problem:
+ --------
+ During the entry of the Nutrition Assessment, the user is presented with
+ options for the calculatin of the patient's target body weight. When
+ the user selects G for Geriatric, an incorrect calculated target body
+ weight is presented for elderly patients of certain age group and
+ height combination.
+  
+ Resolution:
+ -----------
+ Modification will be made to routine FHASMB2 to present the user with 
+ the correct message and correct target weight.
+  
+ 2. HD0000000305078 - Diet Labels Not Printing 'NO ORDER'
+ Problem:
+ --------
+ When displaying or printing a Diet Order Label, the "NO ORDER" notation 
+ in the Diet Order field is not printing.
+  
+ Resolution:
+ -----------
+ Modification of routine FHWADM to properly complete the admission in the
+ NUTRITION PERSON file (#115) when the patient has been assigned a 
+ room-bed not mapped to a ward that he/she is admitted to.
+  
+ 3. HD0000000325990 - No integration agreement
+ Problem:
+ --------
+ Routine FHPATM is a very old routine that makes a number of direct
+ global reads of ^DG(405.4, ^DGPM(, and ^DIC(42 without any integration
+ agreements.
+   
+ Resolution:
+   -----------
+ The following integration agreements were modified:
+ IA # 1380 - Dietetics added as a subscribing package 6/29/2009.
+ IA # 2090 - Added 6/8/2009:
+             ^DGPM(APTT2,DFN
+             ^DGPM(D0,0)
+               .03 PATIENT                     0;3
+               .06 WARD LOCATION               0;6
+               .07 ROOM-BED                    0;7
+               .14 ADMISSION/CHECK-IN MOVEMENT 0;14
+               .18 MAS MOVEMENT TYPE           0;18
+               Dietetics added as a subscribing package
+ IA # 10039 -  Added 6/29/2009
+               ^DIC(42,D0,0)
+               .015 DIVISION                    0;11
+   
+ The complete documentation of IA # 1380, # 2090, and # 10039 are
+ available in FORUM. Routine FHPATM was modified to include internal
+ documentation of IA #1380, # 2090, and # 10039. This modification is
+ strictly one of internal documentation of the IAs. No changes have
+ been made to current routine programming or functionality. 
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the
+ the Nutrition and Food Service users be off the system. 
+ Other VISTA users will not be affected.
+  
+ Install Time - less than 2 minutes 
+  
+ Load Transport Global
+ ---------------------
+  
+ Choose the PackMan message containing this patch and invoke the 
+ INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter FH*5.5*21):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHASM2B
+    Before:  B5467504   After:  B6154572  **8,21**
+Routine Name: FHPATM
+    Before: B13051908   After: B15438175  **21**
+Routine Name: FHWADM
+    Before: B26287048   After: B26331626  **5,8,21**
+ 
+Routine list of preceding patches: 8
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : DEC 09, 2008
+Completed By: CRICHLOW,SHERRY               Date Completed: DEC 29, 2010
+Released By : BOSE,MARY ELLEN               Date Released : JAN 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

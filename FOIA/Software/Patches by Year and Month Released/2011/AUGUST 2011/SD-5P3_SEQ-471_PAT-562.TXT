@@ -1,0 +1,282 @@
+$TXT Created by CURTIS,RICHARD L at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 04/21/11 at 13:41
+=============================================================================
+Run Date: AUG 10, 2011                     Designation: SD*5.3*562
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #471                    Status: Released
+                  Compliance Date: SEP 10, 2011
+=============================================================================
+
+Associated patches: (v)SD*5.3*232  <<= must be installed BEFORE `SD*5.3*562'
+                    (v)SD*5.3*441  <<= must be installed BEFORE `SD*5.3*562'
+                    (v)SD*5.3*530  <<= must be installed BEFORE `SD*5.3*562'
+                    (v)SD*5.3*540  <<= must be installed BEFORE `SD*5.3*562'
+
+Subject: ACRP CUSS REPORT, AD HOC REPORT AND OTHER ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+ 1) A problem that exists with the Clinic Utilization Statistical Summary 
+    [SCRPW CLINICUTILIZATION SUMM] option.
+ 2) Erroneous column heading in the ACRP Ad Hoc Report [SCRPW AD HOC 
+    REPORT] option.
+ 3) An error that causes the Ambulatory Care Nightly Transmission to NPCDB 
+    [SCDX AMBCAR NIGHTLY XMIT] option to fail due to an invalid eligibility
+    code. 
+ 4) An error that occurs with the ACRP Ad Hoc Report [SCRPW AD HOC REPORT] 
+    option when data is missing in the PATIENT ENROLLMENT file (#27.11).
+ 5) An error that occurs with the Patient Activity by Appointment Frequency
+    [SCRPW PTACTBYAPPTFREQ] option.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) HD0000000349659 - CUSS Report Problem
+    duplicates - HD0000000428469 
+                 HD0000000412663
+ 2) HD0000000359314 - ACRP column heading error
+ 3) HD0000000374955 - <SUBSCRIPT>MTI+16^SCDXUTL0
+    duplicates - HD0000000336239 
+                 HD0000000405360 
+                 HD0000000477862 
+ 4) HD0000000385528 - $ZE=<UNDEFINED>ENROL+5^SCRPW24
+ 5) HD0000000355942 - SCRPW PTACTBYAPPTFREQ option getting <UNDEF>
+                      EVAL+1^SCRPW11 errors
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ BATTLE CREEK, MI
+ FARGO, ND
+ SALISBURY, NC
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) HD0000000349659 - CUSS Report Problem
+  
+    Problem:
+    --------
+    When a day for a clinic is partially cancelled, the calculations
+    for the Clinic Utilization Statistical Summary [SCRPW CLINICUTILIZATION
+    SUMM] (CUSS report) incorrectly reflects the normal clinic capacity for
+    that day (based on the Master Pattern set up for that day of the week)
+    and is not adjusting for the availability slots that have been
+    cancelled by the clinic.  This also applies to the adjusted 
+    availability.  The value for adjusted availability should initially be
+    the same as that of capacity and will be further adjusted as scheduled
+    and unscheduled appointments are calculated.  For example, if the
+    normal capacity for Mondays is 16 available slots and one Monday was
+    partially cancelled, cancelling 6 of those slots, the capacity for that
+    one Monday should be calculated as 10 (i.e., normal capacity of 16
+    minus 6 cancelled slots) and the adjusted availability for that day
+    should initially be 10.  Instead, the report is calculating the 
+    normal capacity and adjusted availability as 16 for that Monday that
+    was partially cancelled.
+  
+    Resolution:
+    -----------
+    Routine SCRPW3 will be modified so that when a day is partially
+    cancelled, the CUSS report will correctly calculate the clinic
+    capacity and adjusted availability for that day by subtracting the
+    number of cancelled slots from the normal capacity and adjusted
+    availability amounts.
+  
+ 2) HD0000000359314 - ACRP column heading error
+  
+    Problem:
+    --------
+    When running the ACRP Ad Hoc Report [SCRPW AD HOC REPORT] in a
+    delimited format for export to a spreadsheet, the report shows column
+    headings of % CHANGE UNIQUES, % CHANGE VISITS and % CHANGE UNIQUES.  
+    The data for the report is correct; however, that first column heading
+    of % CHANGE UNIQUES is incorrect and should show as % CHANGE
+    ENCOUNTERS.
+  
+    Resolution:
+    -----------
+    Routine SCRPW28 will be modified to insure the correct column heading
+    shows for % CHANGE ENCOUNTERS when running the report in a delimited
+    format for export to a spreadsheet.  The correct column headings will
+    now show as % CHANGE ENCOUNTERS, % CHANGE VISITS and % CHANGE UNIQUES.
+  
+ 3) HD0000000374955 - <SUBSCRIPT>MTI+16^SCDXUTL0
+  
+    Problem:
+    --------
+    Occasionally, this error will occur when the Ambulatory Care Nightly
+    Transmission to NPCDB [SCDX AMBCAR NIGHTLY XMIT] comes across an
+    outpatient encounter that contains an invalid eligibility code of -1 or
+    a date.  When this happens it causes the Ambcare transmission to abort.
+  
+    Resolution:
+    -----------
+    Routine SCDXUTL0 will be modified to make additional checks of the
+    validity of the eligibility code that is pulled from an outpatient
+    encounter record in the OUTPATIENT ENCOUNTER file (#409.68) and passed
+    into this routine.  When one of these additional invalid values is
+    found, the outpatient encounter will be rejected and will then appear
+    on the Incomplete Encounter Error Report [SCENI IEMM ERROR REPORT]
+    for error code 7000, Encounter Eligibility code missing or invalid.  
+    It may also appear on the report for error code 7030, Eligibility Code
+    Inactive.  
+  
+ 4) HD0000000385528 - $ZE= <UNDEFINED>ENROL+5^SCRPW24
+  
+    Problem:
+    --------
+    When the ACRP Ad Hoc Report [SCRPW AD HOC REPORT] is run with a report
+    limitation of enrollment and a sub-limitation of enrollment status,
+    this error will occasionally occur when the Date/Time Entered field 
+    (#75.01) in the PATIENT ENROLLMENT file (#27.11) is undefined.
+  
+    Resolution:
+    -----------
+    Routine SCRPW24 will be modified to check if the Date/Time Entered
+    field (#75.01) in the PATIENT ENROLLMENT file (#27.11) is defined for
+    the patient.  When it is not defined, the routine will then get the
+    patient enrollment record that is most recent to the encounter
+    date using the .01 field (Enrollment Application Date) of the
+    PATIENT ENROLLMENT file (#27.11).
+  
+ 5) HD0000000355942 - SCRPW PTACTBYAPPTFREQ option getting <UNDEF>
+                      EVAL+1^SCRPW11 errors
+  
+    Problem:
+    --------
+    The above undefined variable error occasionally occurs when running
+    the option Patient Activity by Appointment Frequency [SCRPW
+    PTACTBYAPPTFREQ] when it comes across an appointment contained in the
+    Appointment sub-file (#44.001) of the HOSPITAL LOCATION file (#44)
+    where the patient DFN (Data File Number), pointer to the PATIENT file
+    (#2) is missing. This is a rare anomaly which sporadically occurs when
+    an appointment is cancelled.  When an appointment is cancelled, the
+    appointment sub-file record in the HOSPITAL LOCATION file (#44) is
+    supposed to be entirely deleted; however, occasionally (although  
+    rarely), the record is only partially deleted.
+  
+    Resolution:
+    -----------
+    Routine SCRPW11 will be modified so that when running the option
+    Patient Activity by Appointment Frequency [SCRPW PTACTBYAPPTFREQ],
+    if it comes across one of these partially deleted appointment sub-file
+    records in the HOSPITAL LOCATION file (#44), the remainder of that
+    record will be appropriately deleted via FileMan API (Application 
+    Program Interface) DIK (delete entry).  This will prevent the
+    <UNDEFINED> error from occurring, while properly cleaning up the file.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Users can be on the system during the installation of this patch.
+  
+ Installation should take less than 5 minutes.
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+     Select Kernel Installation & Distribution System Option:  INStallation
+                                                               ---
+  
+     1     Load a Distribution
+     2     Verify Checksums in Transport Global
+     3     Print Transport Global
+     4     Compare Transport Global to Current System
+     5     Backup a Transport Global
+     6     Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter SD*5.3*562):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will NOT
+         backup any other changes such as DDs or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed.  It compares all components of the patch
+         (routines, DDs, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+  
+     d.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+  
+ 4.  Use the Install Package(s) option and select the package SD*5.3*562.
+  
+     a.  When prompted "Want KIDS to INHIBIT LOGONS during the
+         install? NO//", respond NO.
+  
+     b.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", respond YES.
+  
+         1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+            Clinic Utilization Statistical Summary
+                               [SCRPW CLINICUTILIZATION SUMM]
+            ACRP Ad Hoc Report [SCRPW AD HOC REPORT]
+            Ambulatory Care Nightly Transmission to NPCDB
+                               [SCDX AMBCAR NIGHTLY XMIT]
+            Patient Activity by Appointment Frequency 
+                               [SCRPW PTACTBYAPPTFREQ]
+  
+         2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCDXUTL0
+    Before: B35211807   After: B36068306  **44,55,69,77,85,110,122,94,
+                                           66,132,180,235,256,258,325,451,
+                                           441,562**
+Routine Name: SCRPW11
+    Before: B66433093   After: B67978916  **139,144,562**
+Routine Name: SCRPW24
+    Before: B77970254   After: B79121310  **144,163,180,254,243,295,329,
+                                           351,510,530,562**
+Routine Name: SCRPW28
+    Before: B53986877   After: B54896570  **144,232,562**
+Routine Name: SCRPW3
+    Before: B47829254   After: B55550828  **139,144,184,194,540,562**
+ 
+Routine list of preceding patches: 232, 441, 530, 540
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : SEP 17, 2009
+Completed By: LANG,MICKEY                   Date Completed: JUL 21, 2011
+Released By : SCHMITT,MARSHA                Date Released : AUG 10, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

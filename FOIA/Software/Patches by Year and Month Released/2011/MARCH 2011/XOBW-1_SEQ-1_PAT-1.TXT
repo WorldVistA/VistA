@@ -1,0 +1,146 @@
+
+=============================================================================
+Run Date: MAR 18, 2011                     Designation: XOBW*1*1
+Package : XOBW - WEB SERVICES CLIENT          Priority: Mandatory
+Version : 1         SEQ #1                      Status: Released
+                  Compliance Date: APR 18, 2011
+=============================================================================
+
+
+Subject: Supplemental Installation Information for HWSC 1.0 (and OR*3*294)
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This informational patch is intended for VistA sites that have not yet 
+ installed HealtheVet Web Services Client (HWSC) 1.0 in Test and/or 
+ Production accounts. It supplements the existing HWC 1.0 Installation 
+ Guide based on site experiences with HWSC 1.0 and OR*3*294 to date (both 
+ were released in early March 2011). Together, these installations migrate
+ remote order checking from HDR-IMS to HDRII.
+  
+ The intent of this information is to improve the installation experience
+ for remaining sites slated to install HWSC 1.0 and OR*3*294.
+  
+ Issues encountered and resolutions are provided below.
+  
+ Issue #1: Possible Existence of Old File #18.02
+ =============================================== 
+ A new HWSC 1.0 file, WEB SERVICES, is installed as File #18.02. In test
+ and/or production accounts at 2 out of 25 sites to date, and old file
+ #18.02, possibly named ROUTINE, has been found to be present. When 
+ overlaid by the HWSC 1.0 installation, the remaining old DD nodes from the
+ previous file definition interfere with the operation of HWSC. The
+ reported symptom is that when patch OR*3*294 is installed (subsequent to
+ the HWSC 1.0 installation), there will be an install error as follows
+ (although the OR*3*294 install will complete successfully):
+  
+   Running Post-Install Routine: POST^ORY294
+   FM Database Server Error Information:
+   File# 18.02 and IEN string +1, represent different subfile levels.
+   *  WEB SERVICE 'CDS WEB SERVICE' addition/update failed.
+  
+ Resolution: Sites that have not yet installed HWSC 1.0 in either Test, 
+ Production or both, should examine those accounts prior to installing HWSC
+ 1.0. If any DD nodes exist under ^DD(18.02, without HWSC 1.0 having been
+ installed, please contact the Help Desk or log a Remedy ticket for the
+ HWSC 1.0 application, and don't proceed with HWSC 1.0 installation until
+ resolved with Product Support.
+  
+ To check for the presence of DD nodes, do a global listing of ^DD(18.02. 
+ If there are no global nodes found, the account you're examining does not 
+ have this issue and you can proceed with HWSC 1.0 installation. The
+ example below shows an example of global listing output if the old DD
+ nodes are present. From Programmers Mode do the following:
+  
+   VISTA>D ^%G <RET>
+  
+   For help on global specifications DO HELP^%G
+   Global ^DD(18.02 <RET>            -- NOTE: translation in effect
+   ^DD(18.02,0)="ROUTINE SUB-FIELD^NL^6^5"
+   ^DD(18.02,0,"IX","B",18.02,.01)=""
+   ^DD(18.02,0,"NM","ROUTINE")=""
+   ^DD(18.02,0,"UP")=18.01
+   ^DD(18.02,.01,0)="ROUTINE^MF^^0;1^K:$L(X)>25!($L(X)<1) X"
+   ^DD(18.02,.01,1,0)="^.1"
+   ^DD(18.02,.01,1,1,0)="18.02^B"
+                   1)="S ^DIC(18,DA(2),100,DA(1),100,""B"",$E(X,1,30),DA)=
+                      """""
+                   2)="K ^DIC(18,DA(2),100,DA(1),100,""B"",$E(X,1,30),DA)"
+   ^DD(18.02,.01,3)="ANSWER MUST BE 1-25 CHARACTERS IN LENGTH"
+            "DT")=2831210
+   ^DD(18.02,1,0)="ROUTINE PROGRAM^F^^0;2^K:$L(X)>8!($L(X)<2) X"
+             3)="ANSWER MUST BE 2-8 CHARACTERS IN LENGTH"
+          "DT")=2820827
+   ^DD(18.02,2,0)="USER^18.03PA^^1;0"
+   ^DD(18.02,3,0)="ENTRY POINT^F^^0;3^K:$L(X)>8!($L(X)<1) X"
+             3)="ANSWER MUST BE 1-8 CHARACTERS IN LENGTH"
+   ^DD(18.02,6,0)="DUZ CODE^F^^0;6^K:$L(X)>8!($L(X)<1) X"
+             3)="ANSWER MUST BE 1-8 CHARACTERS IN LENGTH"
+   ^DD(18.02,"B","DUZ CODE",6)=""
+   ^DD(18.02,"B","ENTRY POINT",3)=""
+  
+ Issue #2: Follow Instructions for Remote Order Checking
+ =======================================================
+ The most frequent reason for an interruption in remote order checking
+ after installs of HWSC 1.0 and OR*3*294 is if the full set of pre- and
+ post-installation steps in the OR*3*294 Installation Guide are not
+ followed, including adding an entry, CDS SERVER, to the Web Server file.
+  
+ Resolution: The OR*3*294 Installation Guide walks the installer through a
+ set of steps designed to ensure as seamless a transition as possible from
+ RDI (Remote Data Interoperability) v1 to RDI v2. It can be obtained at:
+  
+     ftp://download.vista.med.va.gov/SOFTWARE/OR_30_294IG.PDF
+  
+ Issue #3: VMS File System Permissions
+ =====================================
+ Many installations of HWSC 1.0 run into a protection issue with 
+ the file "cacheexport.xsd" located in the Cache installation subdirectory 
+ "BIN", e.g., $DISK:[CACHESYS.ZZZR4PA01.BIN]cacheexport.xsd. 
+  
+ Resolution: Prior to HWSC 1.0 installation, follow the steps outlined in 
+ the section 2.4.1.1, "Cache Error 6301 SAX XML Parser" in the 
+ Troubleshooting Installation Errors section of the HWSC 1.0 Installation 
+ Guide, to ensure that W:RE access is present on both the cacheexport.xsd 
+ file and the [BIN] subdirectory containing it, within the Cache install 
+ directory.
+  
+ Issue #4: SSL/TLS Warning for VMS
+ =================================
+ The following text during the HWSC 1.0 Installation, from the environment
+ check, is displayed on VMS systems only:
+  
+   Note: Your current production M environment does not support SSL/TLS
+         connectivity! SSL/TLS support is provided in Cache v5.2.3 and greater.
+         Also, SSL/TLS is not currently supported on VMS.
+  
+ Resolution: This message can be disregarded during installation as it does
+ not represent a problem for installations.
+  
+ ADDITIONAL INFORMATION
+ ======================
+ If you have any questions concerning the installation or implementation of 
+ this package, please contact the Enterprise VistA Support Help Desk at 
+ 1-888-596-HELP (4357) or enter a HWSC 1.0 problem ticket in Remedy. HWSC 1.0 
+ is listed under the Applications-HealtheVet-VistA category.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : CLARKE,KYLE E                 Date Entered  : MAR 17, 2011
+Completed By: SINGH,GURBIR                  Date Completed: MAR 17, 2011
+Released By : LASHLEY,ANTHONY               Date Released : MAR 18, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

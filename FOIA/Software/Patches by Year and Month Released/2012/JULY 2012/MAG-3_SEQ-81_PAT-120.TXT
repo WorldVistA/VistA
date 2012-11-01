@@ -1,0 +1,542 @@
+
+=============================================================================
+Run Date: JUL 02, 2012                     Designation: MAG*3*120
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #81                      Status: Released
+                  Compliance Date: AUG 02, 2012
+=============================================================================
+
+Associated patches: (v)MAG*3*104   <<= must be installed BEFORE `MAG*3*120'
+                    (v)MAG*3*115   <<= must be installed BEFORE `MAG*3*120'
+
+Subject: VISTARAD MAINTENANCE VII
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ Description
+ ============
+  
+ Patch 120 provides support for the Windows 7 operating system.  The 
+ client installation file included with this patch will execute on either 
+ Windows XP or Windows 7.  Certain installation details differ according 
+ to the target installation environment.
+  
+ NOTE:  Some legacy display adapters for high-resolution screens may no 
+ longer be supported under Windows 7.
+  
+ Patch 120 includes these additional changes
+  
+  - Provides Clinical Context Object Workgroup (CCOW) integration at the
+ user and patient context level. This facilitates integration with the
+ Computerized Patient Record System (CPRS) and other CCOW-enabled
+ applications.
+  
+ VistARad workstations that are configured to enable radiologists to 
+ interpret studies for multiple sites (that is, workstations with 
+ connections to more than one VistA host) must not have CPRS and CCOW 
+ installed. A safety risk arises within the patient context management when
+ the disparate clinical applications are concurrently logged in to separate
+ VistA host databases.
+  
+ Note that there are two mechanisms by which VistARad can be configured to 
+ read for multiple sites:
+  
+ 1.  Multiple "Connect to" destinations to separate VistA hosts are 
+ defined in the Broker configuration settings; this is a machine-dependent 
+ setting.
+  
+ 2.  Users having the MAGJ REMOTE ACCESS CONTROL key can configure 
+ "Monitored Sites" settings (on the "VIX Configuration" settings tab) to 
+ connect to multiple sites. This is a user-level setting that is 
+ independent of machine.
+  
+  - Changes to the Dictation interface where multiple locked exams may be
+    open concurrently.  
+  - Relocates certain files, that maintained on the client workstation, to
+    a new storage location.
+  - Fixes logic for automatically selecting the preferred hanging protocol
+    for multi-modality exams.
+  - Provides an optional pixel erase function prior to storing images to
+    the Medical Imaging Resource Center (MIRC) Teaching file system.
+  - Fixes a sporadic problem when scrolling in linked image stacks.
+  - Fixes a problem opening large exams having numerous (e.g., more than
+    75) series and scouts.
+  - Adds Image Comments field to the default tab of the image data
+    display.
+  - Widens the Demand Route form prompt, "Default Route To" to better 
+    display lengthy destination names.
+  - Improves the results display for the maintenance menu option "ICPT--
+    Inquire VistARad CPT Matching Set" [MAGJ INQUIRE CPT MATCHING SET].
+  - Removes certain unused fields from MAG VISTARAD SITE PARAMETERS file
+    (#2006.69).
+  - Fixes a problem with incomplete updating of the Image Access Log.
+  - Displays EHR Notes in the Requisition and Reports windows for Indian
+    Health Service.
+  
+  
+ Patch Components:
+ =================
+ Distribution of Software
+  
+ For sites that have implemented VistARad, this patch can be downloaded 
+ from: 
+ ftp.imaging.med.va.gov/Software/Sites/<yoursite>/Mag3_0p120
+  
+ Sites that have not implemented VistARad can download the KIDS-only 
+ portion of this patch from:
+ ftp.imaging.med.va.gov/Software/Sites/Mag3_0p120_KIDS_ONLY
+  
+ NOTE: Any late-breaking news about this patch will be found in a readme
+ file.  If present, this file will also be located in the MAG3_0P120 
+ directory.
+  
+ This patch includes the following files:
+  
+ Software
+ File Description                        File Name                FTP
+                                                                  Mode
+ ------------------------------------------------------------------------
+ MAG*3.0*120 KIDS                  MAG3_0P120.KID                 ASCII
+ VistARad Client software          MAG3_0P120_VRAD_Setup.exe      Binary
+  
+  
+ Documentation:
+ All documentation should be downloaded in the Binary format.
+  
+ File Description        File Name                  
+ --------------------------------------------------------------------------
+  
+ VistARad VII Maintenance Patch Description
+                          MAG3_0P120_Patch_Description.pdf
+ Technical Manual change pages
+                          MAG3_0P120_Technical_Manual_Changes.pdf
+ VistARad User Guide      MAG_VistARad_User_Guide.pdf
+ VistARad Quick Reference Guide
+                          MAG_Vrad_Quick_Ref.pdf
+ VistARad Quick Start Guide
+                          MAG_vrad_QSG.pdf
+ VistARad Shortcut Keys   MAG_Vrad_Shortcuts.pdf
+  
+ Associated Patches:
+ ===================
+ Before Patch 120 is installed, the following patches must be installed:
+ MAG*3.0*115
+ MAG*3.0*104
+ For a list of all released Imaging (MAG) patches, refer to the 
+ patch_list.txt file available on the Imaging FTP server (go to 
+ ftp://ftp.imaging.med.va.gov, then navigate to the 
+ \Docs\Imaging_Docs_Latest folder).
+  
+  
+ Files & Fields Associated:
+ ==========================
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ MAG VISTARAD SITE           
+ PARAMETERS file (#2006.69) AUTODISPLAY ACTIVE? (#4)          DELETED
+                            ENABLE SERIES DISPLAY(#5.5)       DELETED
+                            PATIENT LIST LIMIT # YEARS (#10)  DELETED
+                            PATIENT LIST LIMIT # EXAMS (11)   DELETED
+  
+ Mail Groups Associated:
+ =======================
+ This patch contains no new or modified mail groups.
+  
+ Options Associated:
+ ===================
+ Option Name                Type                      New/Modified/Deleted
+ -----------                ----                     --------------------
+ VistaRad CPT Matching Set [MAGJ INQUIRE CPT MATCHING SET]   MODIFIED
+  
+ Forms:
+ ======
+ This patch contains no new or modified forms.
+  
+ Remote Procedures:
+ ==================
+ This patch contains no new or modified remote procedure calls.
+  
+ Protocols:
+ ==========
+ This patch contains no new or modified protocols.
+  
+ Templates:
+ ==========
+ This patch contains no new or modified templates.
+  
+ Security Keys Associated:
+ =========================
+ This patch contains no new or modified Security Keys.
+  
+ New Service Requests (NSRs):
+ ============================  
+ There are no New Service Requests (NSRs) addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no Patient Safety Issue (PSI) reports associated with  this 
+ patch.
+  
+ Remedy Ticket(s) & Overview:
+ ============================
+ This patch addresses the following Remedy help desk calls:
+  
+ Ticket #357161  Wrong date/time in exam list
+  
+ Problem: Sometimes the wrong date/time is displayed in the exam list.  
+ This occurs for mixed modality exams imported from CD--the date that the 
+ report was scanned in is displayed, instead of the date of the acquired 
+ radiology images.
+  
+ Solution: A modification was made to always display the earliest date 
+ found for a study.
+  
+ Ticket #407940  Modality column in VistARad
+  
+ Problem: When opening an exam with multiple modality codes, the preferred
+ hanging protocol is not consistently found.
+  
+ Solution: Program logic was modified to present the multiple modality 
+ codes in a consistent sequence so that the VistARad client's hanging 
+ protocol search would key off of the preferred modality code value.
+  
+ Ticket #440204   How to correct MRI images
+  
+ Problem: The program failed to open a very large MR exam having numerous 
+ sequences and scout images.
+  
+ Solution: The image data storage objects used by the Preview window were 
+ re-designed to use a different type of data representation that requires 
+ much smaller number of  Windows Resources (i.e., internal data objects).
+  
+ Ticket #462795 CT Linking issue
+  
+ Problem: Under certain circumstances with multiple CT series images 
+ displayed, scrolling through one image stack would result in images of 
+ other linked image stacks containing orthogonal image projections also 
+ scrolling.  
+  
+ Solution: A bug in the program logic for detecting parallel vs. orthogonal
+ image planes in linked stacks was corrected.
+  
+ Tickets #488381 & 500601  "Route To" list needs to be enlarged by 15 to 20
+ Characters.
+  
+ Problem: The "Route To" list display on the Demand Route form truncates 
+ some of the destination names because the form's field is not wide enough.
+  
+ Solution: The Demand Route form prompt, "Default Route To", has been 
+ widened to better display lengthy destination names.
+  
+ Ticket #539237  Imaging issue when cluster uses failover node 
+  
+ Problem: In very rare instances, VistARad could not open images if the 
+ Imaging cluster was configured to operate on the failover node.  This was 
+ caused by a bug in handling an error reply message from the VIX server.
+  
+ Solution: The bug in handling the VIX error reply message was isolated 
+ and corrected.
+  
+ Tickets #293535 & 539358  Odd window leveling on studies
+  
+ Problem: Odd window leveling behavior on some images since Patch 
+ MAG*3.0*99. The problem occurs when performing a window/Level adjustment
+ on MONOCHROME1 DICOM images. When dragging the cursor from right to left,
+ the images become darker, whereas the expected response is to become
+ brighter.
+  
+ Solution: The program was modified so that images become brighter when 
+ dragging right to left; this response is consistent for both MONOCHROME1 
+ and MONOCHROME2 images.
+  
+ Ticket #581717  Issue with Report window 
+  
+ Problem: Under certain circumstances with the VistARad Manager window on 
+ screen, after clicking the Report button the Report window remains hidden 
+ behind the Manager window.
+  
+ Solution: The logic controlling the display of the Report window was 
+ modified to allow it to consistently display on top of the Manager window
+  
+ Ticket #584441  DICOM MR and RF images window level display and 
+ adjustments are incorrect 
+  
+ Problem: The DICOM images for certain modalities either display 
+ incorrectly on initial presentation (e.g., images washed out) or respond 
+ to dynamic window/leveling incorrectly (images get darker instead of 
+ brighter as expected).  
+  
+ Solution: The logic controlling the initial display and window/level 
+ adjustments for images having pixel representation of MONOCHROME1 has 
+ been corrected.
+  
+ Test Sites:
+ ===========
+  Fayetteville, NC - Large
+  Fort Harrison - Integrated
+  Houston, TX - Large 
+  
+ Installation:
+ =============
+ This patch is to be installed on the VistA System and on the VistARad 
+ workstations.
+  
+ This patch must be installed by the compliance date to conform with VHA 
+ Directive 2001-023.
+  
+ NOTE: All sites running VistA Imaging 3.0 must install the KIDS portion
+ of this patch. At sites that have implemented VistARad, installation of 
+ both the KIDS and the client software is required; installation of the 
+ client software may be phased in according to each site's needs. 
+  
+ This patch may be loaded while VistA Imaging System is active; however, 
+ all radiologists that would be performing interpretations should be 
+ logged off the system during the KIDS install. Installation will take 
+ less than one minute. 
+  
+ Installation Prerequisites:
+ ===========================
+ Before installing this patch, you will need to download the Patch 120 
+ files from the Imaging FTP site to a local storage location.
+  
+ Verify that the patches listed in the Associated Patch section have been
+ installed.
+  
+ Verify that client workstations have Adobe Reader 6.0 or higher installed 
+ (virgin installs only).
+  
+ VistA System (KIDS) Installation: 
+ =================================
+ NOTE:  This KIDS file includes an environment check that will 
+ automatically disable exam list background compiles during the 
+ installation process. After the KIDS installation is complete, compiles 
+ will be automatically re-enabled. 
+  
+ Installing the KIDS Package
+  
+ 1  Ensure all users log off of all VistARad workstations 
+ 2  Access the Kernel Installation and Distribution System Menu [XPD MAIN]
+ 3  Run the Installation option [XPD INSTALLATION MENU]
+ 4  Load the KIDS file by performing the following steps
+    a.  Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to   
+        load the KIDS distribution.
+    b.  When prompted, enter the path and file name (MAG3_0P120.KID) of 
+        the Patch 120 KIDS file that you downloaded from the Imaging FTP 
+        server
+    c.  When prompted to continue with the load, enter YES.  A 
+        Distribution OK! message will be displayed when the load is
+        complete.
+    d.  When prompted to run the Environment Check Routine, enter YES.
+ 5  After loading the KIDS file, use the following options to verify 
+    the contents of the patch and to back up any affected routines.
+    
+    Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- run 
+    this option to verify the integrity of the routines in the patch. 
+    
+    Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] -
+    run this option to view all changes that will be made when the patch is
+    installed.  All components (routines, options, and so on) in the patch
+    will be compared.
+    
+    Backup a Transport Global [XPD BACKUP] - run this option to create a
+    backup message of any routines exported with the patch.  It will NOT
+    back up any of the other changes.
+  
+ 6  After performing the load and any optional verification steps, perform
+    the following steps to install the KIDS file:
+    a.  Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b.  When prompted for the install name, enter MAG*3.0*120.
+    c.  Answer NO to the following prompts:
+    
+    Want KIDS to Rebuild Menu Trees Upon Completion of Install? No//NO
+    Want KIDS to INHIBIT LOGONs during the install? No//NO
+    Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//NO
+  
+ 7  When installation is finished, an Install Complete message will 
+ be displayed.
+  
+  
+ Sample KIDS Installation:
+ =========================
+ The sample installation below illustrates the installation of the 
+ MAG*3.0*120 KIDS. 
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME:    MAG*3.0*120    6/2/12@23:23:15
+      => VistA Imaging V3.0 - Patch 120 - 05/23/2012 08:07AM  ;Created o
+  
+ This Distribution was loaded on Jun 02, 2012@23:23:15 with header of
+    VistA Imaging V3.0 - Patch 120 - 05/23/2012 08:07AM  ;Created on May 2
+ 3, 2012@08:07:15
+    It consisted of the following Install(s):
+     MAG*3.0*120
+ Checking Install for Package MAG*3.0*120
+ Will first run the Environment Check Routine, MAGJMN1
+  
+ Wait for Background Compile program to stop;
+      this might take up to a few minutes...
+  
+ Background Compile Stopped; proceeding with install.
+  
+ Install Questions for MAG*3.0*120
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   TELNET
+  
+ Install Started for MAG*3.0*120 : 
+                Jun 02, 2012@23:26:27
+  
+ Build Distribution Date: May 23, 2012
+  
+  Installing Routines:...............
+                Jun 02, 2012@23:26:28
+  
+  Running Post-Install Routine: POSTINST^MAGJMN1
+  
+ Deleting deprecated fields from MAG VISTARAD SITE PARAMETERS file ...  
+ done! 
+  ... Enabling background compile .
+  
+ Background Compile Enabled.
+  
+ Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*120 Installed. 
+                Jun 02, 2012@23:26:31
+  Install Message sent #99999
+  
+ Install Completed 
+  
+  
+  
+ VistARad Client Installation:
+ =============================
+ The following steps can be used to install VistARad for the first time, 
+ or to update a workstation that is running VistARad Patch 115 (or Patch 
+ 90) to VistARad Patch 120. Installation should take two to three minutes.
+  
+ NOTE:  If a version of VistARad older than Patch 90 is installed, use 
+ Add/Remove Programs in the Windows Control Panel to remove VistARad 
+ before using the steps below.
+  
+ 1. Log in to the workstation as an administrator, and ensure that no 
+ other programs are running. 
+ 2. Initiate the installation:
+  
+ Windows XP: Double-click MAG3_0P120_VistARad_Setup.exe to start the 
+ installation wizard.
+  
+ Windows 7: Right-click on the MAG3_0P120_VistARad_Setup.exe, and select 
+ option "Run as administrator" to start the installation wizard.
+  
+ 3. After the setup launches
+    a.  You may be prompted to install the Microsoft Visual C++ 2005 
+        Redistributable Package. Click Install to complete this step.
+    b.  There will be a brief delay as the VistARad installation files
+        are extracted.
+  
+ NOTE: There are no configurable installation options. VistARad will be
+  installed in:
+ Windows XP-C:\Program Files\VistA\Imaging\MAG_VistARad
+  
+ Windows 7-C:\Program Files (x86) \VistA\Imaging\MAG_VistARad
+  
+ 4. When the Welcome page appears, click Next.
+ 5. When the Ready to Install page displays, click Install.
+ 6. If you are updating from Patch 115 (or Patch 90) to Patch 120, 
+    you are informed that Patch 115 (or Patch 90) will be removed. Click
+    Yes to continue. (Note that workstation-specific configuration files
+    will be retained from the previous version.)
+ 7. Installation of Patch 120 starts automatically. After 
+    installation is complete, click Finish to exit the wizard.
+ 8. You may be prompted to re-start your workstation in order for the
+    configuration changes to take effect. Click Yes to complete this step.
+ 9. Use the VistARad shortcut on the desktop or in Windows Start menu
+    (Start | Programs | VistA Imaging Programs | MAG_VistARad_Patch120) to 
+    start VistARad.
+ 10. From the Help | About menu, verify that the software client 
+     version is 3.0.120.8
+  
+  
+ Routines:
+ =========
+ For each routine, the second line will contain the following information. 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 27;May 23, 2012
+  
+ New and modified routines for the VistA System are listed below. 
+ CHECK1^XTSUMBLD is used to generate the checksums. Please note that the 
+ "before" checksum may differ if any test software has been installed.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGJEX1
+    Before: B67789912   After: B73006273  **16,22,18,65,101,115,104,120**
+Routine Name: MAGJEX1A
+    Before: B74324316   After: B74002444  **18,65,101,120**
+Routine Name: MAGJEX2
+    Before: B46758312   After: B45090288  **51,18,76,120**
+Routine Name: MAGJLS3
+    Before: B73090068   After: B73486963  **16,22,18,101,90,120**
+Routine Name: MAGJLST1
+    Before: B54042932   After: B51607794  **16,22,18,65,76,101,90,120**
+Routine Name: MAGJMN1
+    Before:B100385788   After:B106024345  **16,9,22,18,65,76,101,90,115,120**
+Routine Name: MAGJMN3
+    Before:  B6561616   After:  B6661799  **18,120**
+Routine Name: MAGJRPT
+    Before: B70154037   After: B78502597  **18,101,120**
+Routine Name: MAGJTU4V
+    Before:  B4995092   After:  B5203794  **90,115,120**
+Routine Name: MAGJUPD1
+    Before: B61185644   After: B61960961  **16,22,18,76,101,120**
+Routine Name: MAGJUTL2
+    Before: B45983614   After: B55943912  **18,65,76,104,120**
+Routine Name: MAGJUTL3
+    Before:B113857123   After:B130108028  **16,9,22,18,65,76,101,90,120**
+Routine Name: MAGJUTL4
+    Before:B148832735   After:B152537255  **18,76,101,90,120**
+Routine Name: MAGJUTL5
+    Before: B38131193   After: B38114169  **65,76,101,90,115,104,120**
+ 
+Routine list of preceding patches: 104
+
+=============================================================================
+User Information:
+Entered By  : CASUGAY,ELSIE G               Date Entered  : MAR 15, 2011
+Completed By: SHOVESTUL,MARYANN             Date Completed: JUL 02, 2012
+Released By : JERNIGAN,JEANNIE M            Date Released : JUL 02, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

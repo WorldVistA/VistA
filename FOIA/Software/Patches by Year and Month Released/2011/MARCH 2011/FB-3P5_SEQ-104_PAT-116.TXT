@@ -1,0 +1,344 @@
+$TXT Created by LEYVA,KATHRYN at DEVVPP.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 01/25/11 at 17:00
+=============================================================================
+Run Date: MAR 17, 2011                     Designation: FB*3.5*116
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #104                    Status: Released
+                  Compliance Date: APR 17, 2011
+=============================================================================
+
+Associated patches: (v)FB*3.5*67   <<= must be installed BEFORE `FB*3.5*116'
+                    (v)FB*3.5*77   <<= must be installed BEFORE `FB*3.5*116'
+                    (v)FB*3.5*79   <<= must be installed BEFORE `FB*3.5*116'
+                    (v)FB*3.5*98   <<= must be installed BEFORE `FB*3.5*116'
+
+Subject: REPORT ZERO DOLLAR LINE ITEMS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+  
+  
+  ************************************************************************
+  *  If your site is using the Fee Basis Claims System (FBCS), you must  * 
+  *  install DSIF*3.2*10 immediately after installing FB*3.5*116 to      *
+  *  avoid application/processing errors. If your site is not using      *
+  *  FBCS, there is no need to install the FBCS patch.                   *
+  *                                                                      *
+  ************************************************************************
+  
+  
+ The Chief Business Office (CBO) requested an enhancement to the VistA Fee
+ Basis package that will report $0 amount paid line items at local Fee and
+ national systems. Although VistA Fee Basis captures line items that are
+ not reimbursed ($0 payment line items), these line items have not been
+ transmitted to national financial processing systems as these systems had
+ not been designed to process $0 line items. Consequently, these line items
+ were not included in workload reporting, and since the remittance advice
+ and explanation of benefits provided to non-VA health care providers does
+ not include $0 line items, they are not considered Health Insurance
+ Portability and Accountability Act (HIPAA) compliant.
+  
+ Enhancements to the existing VistA Fee Basis software application will 
+ allow for transmittal of payment line items that have $0 amount paid. The
+ Central Fee system located at the Austin Information Technology Center (AITC) 
+ and the Fee Payment Processing System (FPPS) located at the Health 
+ Administration Center (HAC) are the external systems that will need to be 
+ able to receive and process the $0 amount paid line items.
+  
+  
+ The changes made by this patch are described below:
+  
+ Queue Data for Transmission [FBAA QUEUE DATA FOR TRANS.] - Transmits to 
+ Central Fee in Austin FEE payments and Master Record Adjustments (MRA)
+ using Mailman. The software that supports this option was modified to
+ remove the software that prevented the $0 amount paid line items being
+ exported to Central Fee.
+  
+ Release a Batch [FBAA SUPERVISOR RELEASE] - Releases a payment batch that 
+ is ready to be transmitted to Central Fee. Since the systematic queue of 
+ EDI invoices with $0.00 line items gets performed when VistA receives the 
+ payment confirmation/cancellation results  from Central Fee, the Release 
+ a Batch software was modified to no longer queue EDI invoices with a total 
+ amount paid of $0.00 to the FPPS QUEUED INVOICES file (#163.5). 
+  
+ As there are restrictions on the size of a batch that Central Fee can 
+ receive and process, the software that supports the payment processing 
+ options was modified to include the payment lines that have $0 amount paid
+ in the line count of a given batch. The count value is populated in the 
+ PAYMENT LINE COUNT field (#10) of the FEE BASIS BATCH (#161.7) file.  The 
+ following options were modified:
+  
+    Enter Payment [FBAA ENTER PAYMENT]
+    C&P/Multiple Patient Payment Entry [FBAA C&P ENTER PAYMENT]
+    Multiple Ancillary Payments [FBCH MULTIPLE PAYMENTS]
+    Multiple Payment Entry [FBAA MULTIPLE PAYMENT ENTRY]
+    Payments for Unauthorized Claims [FBUC PAYMENTS]
+    Close-out Batch [FBAA CLOSE BATCH]
+    Closeout Pharmacy Invoice [FBAA CLOSE OUT INVOICE]
+    List Items in Batch [FBAA LIST BATCH]
+  
+  
+ The software that supports the Close-out Batch [FBAA CLOSE BATCH]
+ option shall be modified to prevent Medical Fee and Pricer Exempt Civil
+ Hospital payment batches from being closed when zero dollar ($0.00) amount
+ paid invoice(s) exist on the batch. The batch shall remain in the "OPEN"
+ status until the zero dollar invoice(s) has/have been removed from the
+ batch or corrected to reflect non-zero dollar line items.
+  
+ The software that supports the Release a Batch [FBAA SUPERVISOR RELEASE]
+ option shall be modified to prevent Pricer Non-Exempt Civil Hospital
+ payment batches being released when zero dollar ($0.00) amount paid
+ invoice(s) exist on the batch. The batch shall remain in the "ASSIGNED
+ PRICE" status until the zero dollar invoice(s) have been removed from the
+ batch or  corrected to reflect non-zero dollar line items.
+  
+ The software that supports the Closeout Pharmacy Invoice [FBAA CLOSE OUT
+ INVOICE] option shall be modified to prevent batch assignment to Pharmacy
+ invoices that have been entered as zero dollar ($0.00) amount paid. The
+ Line Item Status on the Pharmacy invoice shall remain in "Pending Payment
+ Process" until the zero dollar amount paid line item(s) is/ are removed
+ from the invoice or is corrected to reflect non-zero dollar.
+  
+ The payment software issues a prompt so that the user can identify if the 
+ payment lines are to be subject to interest penalty payments. The options
+ that process the entry and edit of Medical Fee payments and Ancillary 
+ payments were modified to no longer gather interest indicators at the
+ payment line level. This means that the user interface prompt, "Is this
+ line item for a contracted service?", will no longer be issued for each
+ payment line. Line items for contracted services will now reflect the
+ interest indicator as it was answered at the invoice level. The PROMPT
+ PAY TYPE field (#34) of the FEE BASIS PAYMENT (#162) file will get
+ populated with the interest indicator value captured at the invoice level
+ for proper processing at the Central Fee system and the Financial 
+ Management System (FMS).  The following options were modified:
+  
+    Ancillary Contract Hosp/CNH Payment [FBCH ANCILLARY PAYMENT]
+    Edit Ancillary Payment [FBCH EDIT ANCILLARY PAYMENT]
+    Edit Payment [FBAA EDIT PAYMENT]
+    Enter Payment [FBAA ENTER PAYMENT]
+    Payments for Unauthorized Claims [FBUC PAYMENTS]
+  
+  
+ The Fee Basis patch FB*3.5*116 has an environment check routine that 
+ checks for batches that are "in-process". Batches with a status of 
+ 'CLERK CLOSED', 'SUPERVISOR CLOSED' and 'REVIEWED AFTER PRICER' are 
+ examined to determine if zero dollar ($0.00) amount paid invoices exist.
+ If it is determined that "in-process" batches exist, then the installation
+ of FB*3.5*116 will terminate; an abort message is generated and displayed
+ to the installer of the patch; a Mailman bulletin will be generated that
+ will identify the batches with $0 invoices and will instruct the Fee staff
+ of the proper action; and the bulletin will be sent to the FEE mailgroup.
+ Until further action is performed by the Fee staff, the patch cannot be
+ installed.
+ 
+ Please refer to the Release Notes distributed with this patch for more 
+ detailed steps on how to resolve $0 invoices that may be on the system.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ 20090614 - Fee Basis $0 Line Item Data Enhancement
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Documentation Retrieval: 
+ ------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Below is a list of the files related to this patch that will be needed 
+ and available via the FTP sites listed above.
+  
+ File Description            File Name                  FTP Mode
+ ---------------------------------------------------------------
+ Release Notes           fb_35_116_rn.pdf               binary
+ User Manual             fb_35_um1_revised_feb11.pdf    binary
+                         fb_35_um2_revised_feb11.pdf    binary
+                         fb_35_um3_revised_feb11.pdf    binary
+  
+  
+ Documentation can also be found, in both Adobe Acrobat and Word, on the
+ System Design and Development Web page at:  http://www.va.gov/vdl/
+  
+  
+ Test Sites:
+ -----------
+ Grand Junction
+ Montana HCS
+ Phoenix
+ Tampa 
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ If installed during the normal workday, it is recommended that the
+ following selection(s) in the OPTION (#19) file be disabled to prevent
+ possible conflicts while running the KIDS Install. Other VISTA users
+ will not be affected.
+  
+    Payment Process Menu [FBCH PAYMENT MENU]
+    Payment menu [FBAA PAYMENT MENU]
+    Payments for Unauthorized Claims [FBUC PAYMENTS]
+    Batch Main Menu - CH [FBCH BATCH OPTIONS]
+    Batch Main Menu [FBAA BATCH MENU]
+    Batch Menu - Pharmacy [FBAA PHARMACY BATCH OPTIONS]
+    Release a Batch [FBAA SUPERVISOR RELEASE]
+    Queue Data for Transmission [FBAA QUEUE DATA FOR TRANS.]
+  
+  
+  Install Time - less than 5 minutes
+  
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter FB*3.5*116):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//'  Answer NO if your system does this in a nightly 
+         TaskMan process. (Answering YES can increase the installation 
+         time.) 
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer YES
+     e.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':'  Enter the following options:
+  
+         Payment Process Menu [FBCH PAYMENT MENU]
+         Payment menu [FBAA PAYMENT MENU]
+         Payments for Unauthorized Claims [FBUC PAYMENTS]
+         Batch Main Menu - CH [FBCH BATCH OPTIONS]
+         Batch Main Menu [FBAA BATCH MENU]
+         Batch Menu - Pharmacy [FBAA PHARMACY BATCH OPTIONS]
+         Release a Batch [FBAA SUPERVISOR RELEASE]
+         Queue Data for Transmission [FBAA QUEUE DATA FOR TRANS]
+  
+     f.  When prompted 'Enter protocols you wish to mark as 'Out Of
+         Order':' press <return>. 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 30
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAACCB
+    Before: B28006172   After: B34837713  **4,61,77,116**
+Routine Name: FBAACCB0
+    Before:  B9170852   After:  B9605771  **5,4,116**
+Routine Name: FBAACCB1
+    Before: B22926738   After: B24359201  **55,61,116**
+Routine Name: FBAACO
+    Before: B31870398   After: B28424330  **4,61,79,116**
+Routine Name: FBAACO2
+    Before: B12950547   After: B12957977  **4,55,61,77,116**
+Routine Name: FBAACO3
+    Before: B47823377   After: B48295702  **4,38,55,61,116**
+Routine Name: FBAACP1
+    Before:  B6734409   After:  B6699484  **4,61,116**
+Routine Name: FBAAMP
+    Before: B63835336   After: B64408896  **4,21,38,55,61,67,116**
+Routine Name: FBAAPET
+    Before: B34367757   After: B33779075  **4,38,55,61,77,116**
+Routine Name: FBAAPIP
+    Before: B13867541   After: B14820302  **116**
+Routine Name: FBAASCB
+    Before: B23905595   After: B23609721  **38,61,116**
+Routine Name: FBAASCB0
+    Before: B16119152   After: B19526441  **116**
+Routine Name: FBAAV0
+    Before: B39511584   After: B39796273  **3,4,55,89,98,116**
+Routine Name: FBAAV2
+    Before: B11520151   After: B11664283  **3,89,98,116**
+Routine Name: FBAAV3
+    Before:  B3268497   After:  B3282866  **3,89,116**
+Routine Name: FBAAV5
+    Before: B47766353   After: B48447360  **3,55,89,98,116**
+Routine Name: FBCHPET
+    Before: B31972937   After: B31374746  **4,38,61,77,116**
+Routine Name: FBXIP116
+    Before:       n/a   After: B32794794  **116**
+ 
+Routine list of preceding patches: 67, 77, 79, 98
+
+=============================================================================
+User Information:
+Entered By  : LEYVA,KATHRYN                 Date Entered  : JUL 07, 2010
+Completed By: ROBBINS,BRADLEY               Date Completed: MAR 16, 2011
+Released By : JACKSON,SHERYL                Date Released : MAR 17, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

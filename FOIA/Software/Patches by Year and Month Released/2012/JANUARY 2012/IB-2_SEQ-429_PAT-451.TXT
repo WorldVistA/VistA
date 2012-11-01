@@ -1,0 +1,312 @@
+$TXT Created by HARTLEY,PETER at MNTDEM.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 12/06/11 at 17:24
+=============================================================================
+Run Date: JAN 12, 2012                     Designation: IB*2*451
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #429                      Status: Released
+                  Compliance Date: FEB 12, 2012
+=============================================================================
+
+Associated patches: (v)IB*2*133    <<= must be installed BEFORE `IB*2*451'
+                    (v)IB*2*227    <<= must be installed BEFORE `IB*2*451'
+                    (v)IB*2*356    <<= must be installed BEFORE `IB*2*451'
+                    (v)IB*2*384    <<= must be installed BEFORE `IB*2*451'
+                    (v)IB*2*431    <<= must be installed BEFORE `IB*2*451'
+                    (v)IB*2*433    <<= must be installed BEFORE `IB*2*451'
+
+Subject: EPAYMENTS II ENHANCEMENTS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ *******************************************************************
+ *                                                                 *
+ *   IB*2*451 must be installed prior to installing PRCA*4.5*276   *
+ *                                                                 *
+ *******************************************************************
+  
+  
+ The Chief Business Office (CBO) in the Veterans Health Administration 
+ (VHA), requested enhancements to the Integrated Billing (IB) system
+ software in order to augment payment processing efficiencies at individual
+ VA Medical Center accounts. The changes distributed with this patch affect
+ reporting options used daily in the delivery of benefits and services
+ provided to the patient population.
+  
+ Improvements to management reporting and additional automation of business
+ process will support VHA performance measures and compliance policies to
+ ensure fiscal accuracy and accountability.
+  
+ The project has two patches (PRCA*4.5*276 and IB*2*451), which are being
+ released in the Kernel Installation and Distribution System (KIDS) using 
+ single build distributions.
+  
+  
+ APPLICATION/VERSION                                  PATCH
+ ----------------------------------------------------------------------
+ ACCOUNTS RECEIVABLE (PRCA) V. 4.5                    PRCA*4.5*276
+ INTEGRATED BILLING (IB) V. 2.0                       IB*2*451
+  
+  
+ Changes made to the INTEGRATED BILLING application and installation steps 
+ are described below. See PRCA*4.5*276 for changes made to the ACCOUNTS 
+ RECEIVABLE application.
+  
+  
+ Changes on Third Party Joint Inquiry (TPJI)
+ ------------------------------------------- 
+ The Integrated Billing application has been enhanced to display the Trace
+ Number and ERA (Electronic Remittance Advice) Number on the TPJI screen
+ when viewing the Electronic Explanation of Benefits (EEOB). This change is
+ applicable to the option Third Party Joint Inquiry [IBJ THIRD PARTY JOINT
+ INQUIRY].
+  
+  
+ Changes on the EDI Lockbox Menu
+ -------------------------------
+ The new option EEOB Move/Copy [RCDPE EEOB MOVE/COPY], which is part of the
+ EDI (Electronic Data Interchange) Lockbox menu [RCDPE EDI LOCKBOX MENU],
+ provides new functionality to enable the user to move an EEOB to another
+ claim, and to copy an EEOB and clone it to several claims. The routine
+ IBCEOB4 is being released to support this new functionality in Accounts
+ Receivable.
+  
+  
+ Changes on Bill Charges Screen of TPJI
+ --------------------------------------
+ The screen Bill Charges found in the option Third Party Joint Inquiry
+ [IBJ THIRD PARTY JOINT INQUIRY] which is shared with Accounts Receivable
+ has been enhanced to display the following new fields from the Explanation
+ of Benefits (EOB) file (#361.1) as a result of a move or copy of a claim:
+  
+    DATE/TIME EOB MOVED
+    EOB MOVE/COPY BY
+    MOVE/COPY REASON
+    ORIGINAL BILL NUMBER
+    OTHER CLAIM NUMBERS (multiple)
+  
+ Additionally, the Accounts Receivable and Integrated Billing systems
+ have been enhanced to display the details of the Move or Copy transaction
+ within the following screen options:
+  
+    Bill Charges screen of TPJI
+    Comment History screen of TPJI  
+    View/Print EEOB screen of the EEOB Worklist
+    View/Print ERA screen of the EEOB Worklist
+  
+  
+ Changes on Individual Report Options
+ ------------------------------------ 
+ Modifications are made to Integrated Billing report options that will 
+ show the character '%' next to the bill number to indicate that there is 
+ a payment in the Explanation of Benefits file (#361.1). The following
+ report options are modified by this patch:
+  
+    First Party Follow-Up Report    [IBJD FOLLOW-UP FIRST PARTY]
+    List All Bills For a Patient    [IB LIST ALL BILLS FOR PAT]
+    Insurance Payment Trend Report  [IB OUTPUT TREND REPORT]
+    Bill Charges                    [IBJ THIRD PARTY JOINT INQUIRY]
+    Third Party Active Bills        [IBJ THIRD PARTY JOINT INQUIRY]
+    Third Party Inactive Bills      [IBJ THIRD PARTY JOINT INQUIRY]
+    Third Party Follow-Up Report    [IBJD FOLLOW-UP THIRD PARTY]
+  
+  
+ The new fields listed in the Patch Components section will support two new
+ options in the ACCOUNTS RECEIVABLE (PRCA) package. Please see PRCA*4.5*276
+ for additional information.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)    New/Modified/Deleted
+ ------------------         -------------------    --------------------
+ EXPLANATION OF BENEFITS    DATE/TIME EOB MOVED    New 
+ (#361.1101)                (#.01)
+                            EOB MOVE/COPY BY       New
+                            (#.02)
+                            MOVE/COPY REASON       New
+                            (#.03)
+                            ORIGINAL BILL NUMBER   New
+                            (#.04)
+                            MOVE/COPY EVENT        New
+                            (#.05)
+                            OTHER CLAIM NUMBERS    New
+                            (#.06)
+  
+  
+ Templates, List Associated:
+                                                           
+ Template Name              Type                   New/Modified/Deleted
+ -------------              ----                   --------------------
+ IBJT ACTIVE LIST           PROTOCOL               Modified
+ IBJT INACTIVE LIST         PROTOCOL               Modified
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20090217 - ePayments Enhancements FY2010
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Test Sites:
+ -----------
+ Birmingham
+ Louisville
+ Martinsburg
+ Milwaukee
+ New Jersey HCS
+ Richmond  
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ Title                            File Name                     FTP Mode
+ --------------------------------------------------------------------------
+ ePayments User Guide             EPAYMENTS_USER_GUIDE_EDI_     Binary
+ (EDI Lockbox)                    LOCKBOX_R0112.PDF
+  
+ IB ePayments II Release Notes/   IB_2_0_P451_RN.PDF            Binary
+ Installation Guide (IB*2.0*451)
+  
+ IB Technical Manual/Security     IB_2_0_TM_R0112.PDF           Binary
+ Guide (IB*2.0*451)
+  
+   
+ Patch Installation:
+  
+ Installation Instructions
+ -------------------------
+ Integrated Billing users should not be on the system while this patch is 
+ being installed. This patch should take less than 5 minutes to install.
+  
+ Make sure all Integrated Billing users are logged off the system 
+ and disable the following menu options:
+  
+   First Party Follow-Up Report          [IBJD FOLLOW-UP FIRST PARTY]
+   List All Bills For a Patient          [IB LIST ALL BILLS FOR PAT]
+   Insurance Payment Trend Report        [IB OUTPUT TREND REPORT]
+   Third Party Joint Inquiry             [IBJ THIRD PARTY JOINT INQUIRY]
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     IB*2*451:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer NO if this is done as a nightly job
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer YES
+  
+ 8.  Enter options you wish to mark as 'Out Of Order': enter the following
+  
+   First Party Follow-Up Report          [IBJD FOLLOW-UP FIRST PARTY]
+   List All Bills For a Patient          [IB LIST ALL BILLS FOR PAT]
+   Insurance Payment Trend Report        [IB OUTPUT TREND REPORT]
+   Third Party Joint Inquiry             [IBJ THIRD PARTY JOINT INQUIRY]
+  
+ 9.  Enter protocols you wish to mark as 'Out Of Order': press RETURN
+  
+ 10. Delay Install (Minutes):  (0-60): 0// press RETURN
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-1994;Build 47
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCECSA6
+    Before:B133569108   After:B167601727  **137,135,155,417,431,451**
+Routine Name: IBCEOB4
+    Before:       n/a   After: B17512247  **451**
+Routine Name: IBJDF11
+    Before: B25856262   After: B27610057  **69,80,118,128,204,205,227,451**
+Routine Name: IBJDF41
+    Before: B65120113   After: B92006724  **123,159,204,356,451**
+Routine Name: IBJTBA1
+    Before: B27347491   After: B50433175  **135,265,155,349,417,451**
+Routine Name: IBJTCA
+    Before:  B2171336   After:  B2378826  **39,137,451**
+Routine Name: IBJTLA
+    Before:  B3799584   After:  B3871013  **39,61,153,451**
+Routine Name: IBJTLA1
+    Before:  B7038251   After: B10714466  **39,80,61,51,153,137,183,276,451**
+Routine Name: IBJTLB
+    Before:  B2542739   After:  B2602328  **39,61,153,451**
+Routine Name: IBJTLB1
+    Before: B10448877   After: B11067077  **39,80,61,137,276,451**
+Routine Name: IBJTU1
+    Before:  B6991546   After:  B7894877  **39,80,276,451**
+Routine Name: IBOA31
+    Before: B15589530   After: B19354784  **95,199,433,451**
+Routine Name: IBOA32
+    Before:  B6792943   After:  B7690123  **7,95,347,433,451**
+Routine Name: IBOTR2
+    Before: B17329987   After: B18730525  **21,42,52,80,100,118,128,451**
+ 
+Routine list of preceding patches: 227, 276, 356, 431, 433
+
+=============================================================================
+User Information:
+Entered By  : NULL,RODGER                   Date Entered  : FEB 25, 2011
+Completed By: TORRANCE,LORI                 Date Completed: DEC 19, 2011
+Released By : GROOMS,CARMEN L               Date Released : JAN 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,182 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 02/28/12 at 07:21
+=============================================================================
+Run Date: JUN 20, 2012                     Designation: PSB*3*67
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #53                      Status: Released
+                  Compliance Date: JUL 21, 2012
+=============================================================================
+
+Associated patches: (v)PSB*3*57    <<= must be installed BEFORE `PSB*3*67'
+
+Subject: BCMA MAH REPORT CORRECTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch Addresses 3 issues:
+  
+ 1. PSPO #2134 - A given dose does not display on the BCMA 
+ Medication Administration History (MAH) report when another dose is
+ given for the same Administration time on the wrong day.
+  
+ 2. A given dose of an IVPB will not display on the BCMA MAH report
+ if the time given is edited to a time prior to the original given time
+ of the medication.
+  
+ 3. The BCMA MAH display all meds as not due until the day after the start
+ date.
+  
+  
+ Associated NSR(s):
+ ------------------
+  N/A
+    
+ Associated Remedy ticket(s):
+ ----------------------------
+ 1. HD0000000531302 - Given Dose Does Not Display
+  
+ 2. HD0000000532639 - BCMA MEDICAL HISTORY ISSUE
+  
+ 3. HD0000000533507 - MAH shows meds as not due
+    Duplicate: HD0000000540362
+    Duplicate: HD0000000534320
+    
+  
+ PARTICIPATING TEST SITES:
+ -------------------------
+ Coatesville VAMC
+ Upstate New York HCS
+  
+ REMEDY OVERVIEW
+ ---------------
+    
+ 1. HD0000000531302 - Given Dose Does Not Display
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #2134
+  
+    Problem:
+    --------
+  
+    A given dose does not display on the BCMA Medication Administration 
+    History (MAH) report when another dose is given for the same 
+    administration time on the wrong day.
+  
+    Resolution:
+    -----------
+    Modified routines PSBOMH1 and PSBOMH3 to print any administrations that
+    are given on the wrong day to above or below the administration times
+    for that day.  Also, if administration times are modified and therefore
+    an administration does not have a corresponding administration time,
+    the administration will line up in chronological order starting on the
+    first line.  Also, routine PSBOMH was modified to print the the ">"
+    symbol in front of the administration which no longer has a
+    corresponding administration time.  Routine PSBOMH2 was modified to
+    print the ">" symbol in the Legend with a definition of "Scheduled
+    administration times for the order have been changed".
+  
+ 2. HD00000000532639 - BCMA MEDICAL HISTORY ISSUE
+  
+    Problem:
+    --------
+    A given dose of an intravenous piggyback (IVPB) will not display on the
+    BCMA MAH report if the time given is edited to a time prior to the
+    original given time of the medication.
+  
+    Resolution:
+    -----------
+    Routine PSBOMH1 was modified to display the administration if the time
+    was edited to a time prior to the original admin time.
+  
+ 3. HD00000000533507 - MAH shows meds as not due
+  
+    Problem:
+    --------
+    The BCMA MAH displays all meds as not due until the day after
+    the start date.
+  
+    Resolution:
+    -----------
+    Routine PSBOMH was modified to check the administration times and
+    display the medication as due if there are administrations due after
+    the start date/time of the order.
+  
+   
+  
+ Installation Instructions:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+     *  AN EDITED ERROR WILL OCCUR.                           *                 
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system.                              *                 
+     * ********************************************************
+    
+     Installation will take less than 1 minute.
+    
+     Suggested time to install: Non-peak requirement hours.
+    
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*67):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSB*3*67.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBOMH
+    Before: B84052119   After: B85302995  **5,9,38,57,67**
+Routine Name: PSBOMH1
+    Before: B95980208   After: B83032453  **6,3,9,11,26,38,45,51,50,57,67**
+Routine Name: PSBOMH2
+    Before: B36786547   After: B39219364  **6,20,27,26,67**
+Routine Name: PSBOMH3
+    Before:       n/a   After: B39249768  **67**
+ 
+Routine list of preceding patches: 57
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : OCT 20, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: JUN 01, 2012
+Released By : LYTTLE,KIM M                  Date Released : JUN 20, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

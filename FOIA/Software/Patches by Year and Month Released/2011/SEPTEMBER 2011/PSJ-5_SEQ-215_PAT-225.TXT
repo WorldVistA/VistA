@@ -1,0 +1,255 @@
+$TXT Created by ENELOW,JASON at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 05/19/11 at 16:17
+=============================================================================
+Run Date: SEP 27, 2011                     Designation: PSJ*5*225
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #215                      Status: Released
+                  Compliance Date: OCT 28, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*113   <<= must be installed BEFORE `PSJ*5*225'
+                    (v)PSJ*5*116   <<= must be installed BEFORE `PSJ*5*225'
+                    (v)PSJ*5*170   <<= must be installed BEFORE `PSJ*5*225'
+                    (v)PSJ*5*213   <<= must be installed BEFORE `PSJ*5*225'
+
+Subject: PRN ORDERS WITH 1440 FREQ, IVP NOT ON WORKSHEET, ORDERS NOT ON CPRS MEDS TAB
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ 1. Inpatient Pharmacy documentation states that Units Per Dose, if entered
+    as 0, should be interpreted as 1. This is not what is actually
+    happening.
+ 2. PRN (as needed) orders coming from CPRS are having their frequency 
+    incorrectly default to 1440 (once per day) in certain circumstances.
+ 3. Intravenous Push (IVP) orders are not showing up on the medications 
+    due worksheet.
+ 4. The CPRS Meds tab is filtering out active orders that have been held 
+    when the sort type is by Drug (Alphabetical)
+ 5. The ORCH CONTEXT MEDS parameter is not being correctly utilized on 
+    the CPRS Meds tab, causing orders to incorrectly display.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. HD0000000359919 - PSPO #1569 IP finishing allows units per dose of "zero"
+    Duplicates:
+    HD0000000335826 - If units per dose of order is zero, error messages
+                      are not helpful to nursing staff
+    HD0000000343845 - Units per dose translates "." And "0." as 1.
+    HD0000000350455 - 0 Units per dose order giving error
+    HD0000000373970 - Scanning Issue
+    HD0000000380227 - Exception List error when scanning BARIUM SULFATE
+                      SUSP 2.1% 450 ML BOTTLE 
+    HD0000000403377 - BCMA Exception Error---Dispense Units = 0
+  
+ 2. HD0000000296843 - PRN IV Piggyback issues
+  
+ 3. HD0000000308987 - Medications Due Worksheet
+  
+ 4. HD0000000315378 - active meds on the meds tab orders held by pharmacy
+                      are not showing to the providers.
+    Duplicates:
+    HD0000000291545 - OERR v27 Expired Medications issue
+    HD0000000293623 - HOLD meds drop off Meds Tab depending on the View
+    HD0000000463721 - PSO*7*331 Not Show Held Unit Dose Meds
+  
+ 5. HD0000000370411 - Meds Tab incorrectly displaying inpatient meds.
+    Duplicate:
+    HD0000000407264 - Meds Tab filtering of inpatient meds with date 
+                      parameter is not working.
+  
+  
+ Participating Test Sites:
+ =========================
+ Erie VAMC
+ Western NY HCS
+ Jerry L. Pettis Memorial VAMC - Loma Linda
+  
+  
+ Remedy Ticket Overview:
+ ======================= 
+ 1. HD0000000359919 - IP finishing allows units per dose of "zero".
+  
+   Patient Safety Issue:
+   ---------------------
+   PSPO #1569
+  
+   Problem:
+   --------
+   If the Units per Dose of an order are entered as "0" or a non-numeric 
+   value, the units per dose is recorded as 0. This is contrary to the 
+   documentation, which states that under these circumstances, the units 
+   per dose should be 1.
+  
+   Resolution:
+   -----------
+   Modified routines PSJBCMA, PSJORRE, PSJORRE1, PSJORRN, PSJORRN1, 
+   PSJORRO, and PSJPXRM1 so that Units per Dose is interpreted as 1 when 
+   sent to BCMA if its value in Inpatient Medications is 0.
+  
+   Note: Displaying the order details in BCMA or CPRS will still show 
+   the Units as 0 under Dispense Drugs, however, it is treated as 1 for
+   purposes of administering medications. The modification to change
+   the display in BCMA and CPRS is a GUI change for both and will be
+   considered for a future patch.
+  
+  
+ 2. HD0000000296843 - PRN IV Piggyback issues
+  
+   Problem:
+   --------
+   Intermittent as needed (PRN) IV Orders created by CPRS which should have
+   no value in the SCHEDULE INTERVAL field (#.17) of the IV SUB-FILE 
+   (#55.01) are being incorrectly set to 1440 (1 day).
+  
+   Resolution:
+   ----------- 
+   Modify routine PSIVORFA to not set SCHEDULE INTERVAL field (#.17) to a
+   default of 1440 when no schedule is set.
+  
+  
+ 3. HD0000000308987 - Medications Due Worksheet
+  
+   Problem:
+   --------
+   Intravenous push (IVP) orders are not showing up on the medications due 
+   worksheet.
+   
+   Resolution:
+   ----------- 
+   Routines PSJMDIR and PSJMIV have been modified to include Intravenous 
+   push (IVP) orders under the IVPB selection of the worksheet.
+  
+  
+ 4. HD0000000315378 - Active meds on the meds tab orders held by pharmacy
+                      are not showing to the providers.
+  
+   Problem:
+   --------
+   The Meds tab in CPRS is not showing active orders that have been placed 
+   on HOLD when the sort type is by Drug (Alphabetical).
+  
+   Resolution:
+   ----------- 
+   Modified routine PSJORRN1 so the API that is called to retrieve the 
+   Active orders sorted by Drug (Alphabetical) includes active orders on
+   HOLD.
+  
+  
+ 5. HD0000000370411 - Meds Tab incorrectly displaying inpatient meds.
+  
+   Problem:
+   --------
+   In CPRS, when the ORCH CONTEXT MEDS parameter is not set, some
+   non-active orders remain visible even though none should be.
+  
+   Resolution:
+   ----------- 
+   Modified routines PSJORRN, PSJORRN1, and PSJORRO so that non-active
+   orders are not visible at all when the ORCH CONTEXT MEDS parameter
+   is not set.
+  
+  
+ Installation Instructions:
+ ========================== 
+ This patch should be installed when NO Inpatient Pharmacy users are on the
+ system.
+  
+ Installation will take less than 2 minutes.
+  
+ Suggested time to install: non-peak requirement hours. 
+   
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu. 
+    [Note: TEXT PRINT/DISPLAY option in the PackMan menu will display the
+    patch text only].
+   
+ 2. From the Kernel Installation and Distribution System (KIDS) menu,
+    select the Installation menu.
+   
+ 3. From this menu, you may elect to use the following options:
+    (when prompted for INSTALL NAME, enter PSJ*5.0*225)
+   
+    a.  Backup a Transport Global - this option will create a backup
+        message of any routines exported with the patch.  It will NOT
+        backup any other changes such as DDs or templates.
+    b.  Compare Transport Global to Current System  - this option will
+        allow you to view all changes that will be made when the patch is
+        installed.  It compares all components of the patch (routines, DDs,
+        templates, etc.).
+    c.  Verify Checksums in Transport Global - this option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+    d.  Print Transport Global - this option will allow you to view the
+        components of the KIDS build.
+   
+ 4. Use the Install Package(s) option and select the package PSJ*5.0*225
+   
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    respond NO.
+   
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond NO.
+  
+ ==========================================================================
+ Note: Since the release of XINDEX patch XT*7.3*128, XINDEX will log the
+       following error: "2nd line of routine violates the SAC".  Since this
+       patch was entered into FORUM prior to 6/11/11, CPS will allow the
+       patch to proceed to release.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0; INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVORFA
+    Before: B24701688   After: B24982662  **4,7,18,28,50,71,58,91,80,110,
+                                           111,134,225**
+Routine Name: PSJBCMA
+    Before: B73076125   After: B74176392  **32,41,46,57,63,66,56,69,58,
+                                           81,91,104,111,112,186,159,173,
+                                           190,113,225**
+Routine Name: PSJMDIR
+    Before: B25417869   After: B25710894  **225**
+Routine Name: PSJMIV
+    Before: B16573670   After: B16816087  **58,116,225**
+Routine Name: PSJORRE
+    Before: B32121973   After: B32342688  **22,51,50,58,81,110,111,112,
+                                           134,225**
+Routine Name: PSJORRE1
+    Before: B35337470   After: B35616681  **22,51,50,58,81,91,110,111,134,225**
+Routine Name: PSJORRN
+    Before: B61459384   After: B62913592  **134,213,225**
+Routine Name: PSJORRN1
+    Before: B55578785   After: B57655173  **134,213,225**
+Routine Name: PSJORRO
+    Before: B62410106   After: B63875984  **134,213,225**
+Routine Name: PSJPXRM1
+    Before: B33327052   After: B33659931  **90,170,225**
+ 
+Routine list of preceding patches: 113, 116, 170, 213
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : MAY 06, 2009
+Completed By: WERNER,GARY                   Date Completed: AUG 25, 2011
+Released By : BLOCH,JACULYN                 Date Released : SEP 27, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

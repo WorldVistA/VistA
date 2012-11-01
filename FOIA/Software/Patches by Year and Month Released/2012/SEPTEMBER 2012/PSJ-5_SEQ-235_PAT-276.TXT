@@ -1,0 +1,192 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 03/20/12 at 09:32
+=============================================================================
+Run Date: SEP 25, 2012                     Designation: PSJ*5*276
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #235                      Status: Released
+                  Compliance Date: OCT 26, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*276'
+                    (v)PSJ*5*204   <<= must be installed BEFORE `PSJ*5*276'
+                    (v)PSJ*5*237   <<= must be installed BEFORE `PSJ*5*276'
+
+Subject: NURSE AUTHORIZATION TO EDIT DISPENSE DRUGS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects the following issues for Inpatient Medications:
+  
+ 1. Nurses who do not have authorization to dispense drugs are able to edit
+    the Dispense Drugs of existing orders.
+  
+ 2. Reinstated orders which are active display a status of "DA" indicating
+    discontinued.
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. HD0000000594816 - Inpatient Medication Order changed as Service
+                      Correction by RN and order was active without
+                      verification by pharmacist
+  
+ 2. HD0000000535987 - Status of DA appears in active section of inpt med 
+                      list
+  
+  
+ Participating Test Sites:
+ ========================
+ Minneapolis VAMC
+ Upstate NY HCS
+  
+  
+ Remedy Overview:
+ ===============
+ 1. HD0000000594816:
+  
+    Problem:
+    -------
+    If a nurse in Inpatient Order Entry [PSJ OE] does not have the PSJ 
+    RNFINISH security key and the Inpatient User Parameter "MAY SELECT 
+    DISPENSE DRUGS" is set to "NO", then a nurse should not be authorized
+    to select Dispense Drugs.  However, a nurse without either of these
+    authorizations may still edit Dispense Drugs on existing orders, which
+    is not intended.
+  
+    Resolution:
+    ----------
+    Modified routines PSGOE82 and PSGOE92 so that a nurse without the PSJ
+    RNFINISH key and whose Inpatient User Parameter "MAY SELECT DISPENSE
+    DRUGS" is set to "NO", will now receive an error message upon trying to
+    edit a Dispense Drug reading, "You are not authorized to edit Dispense
+    Drugs".
+  
+  
+ 2. HD0000000535987:
+  
+    Problem:
+    -------
+    In some instances, if a patient is admitted to an observation ward 
+    with an observation treating specialty and subsequently discharged, the
+    user will be prompted with the question, "Will the patient be
+    re-admitted immediately?"  If the user answers YES and then re-admits
+    the patient, all Inpatient orders which were auto-discontinued upon
+    discharge will be re-instated.  However, their Display Status in
+    Inpatient Order Entry [PSJ OE] will still show them with a status of
+    "DA", indicating discontinued due to patient movement.
+  
+    Resolution:
+    ----------
+    Modified routine PSJOERI so that Display Status is properly updated
+    upon re-instatement, and all re-instated orders appear active again.
+  
+  
+ Installation Instructions:
+ =========================
+ If installed during the normal workday, it is recommended that the
+ Pharmacy Data Management users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes 
+  
+  
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+     Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*276):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d.  Print Transport Global - This option will allow you to view the 
+         components of the KIDS build.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO 
+  
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//' answer YES.
+  
+           1) When prompted "Enter options you wish to mark as "Out
+              of Order":" enter the following option:
+              
+                 Inpatient Order Entry [PSJ OE]
+  
+           2) When prompted "Enter protocols you wish to mark as "Out of
+              Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE82
+    Before: B20946655   After: B21878874  **2,35,50,67,58,81,127,168,181,276**
+Routine Name: PSGOE92
+    Before: B30178235   After: B31221311  **2,35,50,58,81,110,215,237,276**
+Routine Name: PSJOERI
+    Before:  B8184698   After: B10437876  **86,108,204,276**
+ 
+Routine list of preceding patches: 181, 204, 237
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : MAR 06, 2012
+Completed By: WERNER,GARY                   Date Completed: SEP 05, 2012
+Released By : MIAN,NAEEM                    Date Released : SEP 25, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

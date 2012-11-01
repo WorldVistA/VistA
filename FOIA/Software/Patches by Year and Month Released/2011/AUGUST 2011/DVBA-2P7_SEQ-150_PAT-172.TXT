@@ -1,0 +1,556 @@
+$TXT Created by FAIRBROTHER,EILEEN at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 07/12/11 at 15:11
+=============================================================================
+Run Date: JUL 18, 2011                     Designation: DVBA*2.7*172
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #150                    Status: Released
+                  Compliance Date: JUL 21, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*167<<= must be installed BEFORE `DVBA*2.7*172'
+
+Subject: CAPRI CPWM TEMPLATES AND AMIE WORKSHEET DBQS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+  
+                  *********     PLEASE NOTE     *************
+                  This mandatory patch has a 3 day compliance
+                  *******************************************
+  
+ I.  OVERVIEW
+  
+   This patch introduces enhancements to the AUTOMATED MED INFO EXCHANGE
+   (AMIE) V 2.7 package and the Compensation & Pension Record Interchange
+   (CAPRI) application, Compensation & Pension Worksheet Module (CPWM)
+   in support of new and deactivated Compensation and Pension (C&P)
+   Disability Benefit Questionnaires (DBQs).
+   
+   The following provides a high level overview of patch DVBA*2.7*172.
+  
+   1. CAPRI - Template Additions
+  
+      Veterans Benefits Administration Veterans Affairs Central Office
+      (VBAVACO) has approved content for the following new CAPRI Disability
+      Benefits Questionnaires:
+  
+        * DBQ ANKLE CONDITIONS
+        * DBQ DIABETES MELLITUS
+        * DBQ DIABETIC SENSORY-MOTOR PERIPHERAL NEUROPATHY
+        * DBQ EYE CONDITIONS
+        * DBQ HEART CONDITIONS(INCLUDING ISCHEMIC AND NON ISCHEMIC HEART 
+          DISEASE, ARRHYTHMIAS, VALVULAR DISEASE, AND CARDIAC SURGERY)
+        * DBQ HYPERTENSION
+        * DBQ KNEE AND LOWER LEG CONDITIONS
+        * DBQ MEDICAL OPINION 1
+        * DBQ MEDICAL OPINION 2
+        * DBQ MEDICAL OPIONIN 3
+        * DBQ MEDICAL OPINION 4
+        * DBQ MEDICAL OPINION 5
+        * DBQ SCARS DISFIGUREMENT
+        * DBQ SHOULDER AND ARM CONDITIONS
+        * DBQ SKIN DISEASES
+  
+   2. CAPRI - Template Deactivations
+  
+      VBAVACO has approved deactivation of the following CAPRI Disability
+      Benefit Questionnaire:
+  
+        * DBQ MEDICAL OPINION
+  
+   3. AMIE - C&P Examination Worksheet Additions
+  
+      VBAVACO has approved content for the following new AMIE C&P
+      questionnaire worksheets:
+  
+        * DBQ ANKLE CONDITIONS
+        * DBQ DIABETES MELLITUS
+        * DBQ DIABETIC SENSORY-MOTOR PERIPHERAL NEUROPATHY
+        * DBQ EYE CONDITIONS
+        * DBQ HEART CONDITIONS
+        * DBQ HYPERTENSION
+        * DBQ KNEE AND LOWER LEG CONDITIONS 
+        * DBQ MEDICAL OPINION 1
+        * DBQ MEDICAL OPINION 2
+        * DBQ MEDICAL OPINION 3
+        * DBQ MEDICAL OPINION 4
+        * DBQ MEDICAL OPINION 5
+        * DBQ SCARS DISFIGUREMENT 
+        * DBQ SHOULDER AND ARM CONDITIONS
+        * DBQ SKIN DISEASES
+  
+   4. AMIE - C&P Examination Worksheet Deactivations
+  
+      VBAVACO has approved deactivation of the following AMIE C&P
+      questionnaire worksheet:
+  
+        * DBQ MEDICAL OPINION
+  
+   5. CAPRI - Template Defects
+  
+      a. Defects have been addressed in the following CAPRI templates:
+  
+         No CAPRI Template defects are being addressed.
+  
+   6. AMIE - C&P Examination Worksheet Defects
+  
+      a. Defects have been addressed within the following AMIE worksheets:
+  
+         No AMIE worksheet defects are being addressed.
+  
+  II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+  
+    The following section lists the Remedy tickets and/or New Service
+    Requests associated with this patch.
+  
+   1. Associated Remedy Ticket(s):
+      ----------------------------------
+  
+      There are no Remedy Tickets associated with this patch.
+  
+   2. Associated New Service Request(s):
+      ----------------------------------
+      There are no New Service Requests associated with this patch.
+  
+  III. FUNCTIONAL OVERVIEW
+  
+    The following section contains an overview of the changes and primary
+    functionality that is being delivered in this patch.
+  
+   1. CAPRI - Template Additions
+  
+      Veterans Benefits Administration Veterans Affairs Central Office
+      has approved the following new CAPRI Disability Benefit
+      Questionnaire templates based on new C&P questionnaire worksheets.
+  
+           * DBQ ANKLE CONDITIONS
+           * DBQ DIABETES MELLITUS
+           * DBQ DIABETIC SENSORY-MOTOR PERIPHERAL NEUROPATHY
+           * DBQ EYE CONDITIONS   
+           * DBQ HEART CONDITIONS (INCLUDING ISCHEMIC AND NON ISCHEMIC
+             HEART DISEASE, ARRHYTHMIAS, VALVULAR DISEASE, AND CARDIAC
+             SURGERY)
+           * DBQ HYPERTENSION
+           * DBQ KNEE AND LOWER LEG CONDITIONS
+           * DBQ MEDICAL OPINION 1
+           * DBQ MEDICAL OPINION 2
+           * DBQ MEDICAL OPIONIN 3
+           * DBQ MEDICAL OPINION 4
+           * DBQ MEDICAL OPINION 5
+           * DBQ SCARS DISFIGUREMENT
+           * DBQ SHOULDER AND ARM CONDITIONS
+           * DBQ SKIN DISEASES 
+  
+         This patch implements these new templates, which are accessible
+         through the Compensation & Pension Worksheet Module (CPWM) of the
+         CAPRI GUI.
+  
+   2. CAPRI - Template Deactivation
+  
+      a. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved modifications to the following CAPRI Disability
+         Benefits Questionnaire template based on a new C&P questionnaire
+         worksheet.
+  
+           * DBQ MEDICAL OPINION
+  
+         The DBQ MEDICAL OPINION CAPRI CPWM template is being replaced with
+         the DBQ MEDICAL OPINION 1, DBQ MEDICAL OPINION 2, DBQ MEDICAL 
+         OPINION 3, DBQ MEDICAL OPINION 4, and DBQ MEDICAL OPINION 5
+         templates to permit the ordering and completion of multiple
+         Medical Opinions.
+             
+   3. AMIE - C&P Examination Worksheet Additions
+  
+      a. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved the following new Automated Medical Information
+         Exchange (AMIE) C&P Questionnaire worksheets.
+  
+           * DBQ ANKLE CONDITIONS
+           * DBQ DIABETES MELLITUS
+           * DBQ DIABETIC SENSORY-MOTOR PERIPHERAL NEUROPATHY
+           * DBQ EYE CONDITIONS
+           * DBQ HEART CONDITIONS
+           * DBQ HYPERTENSION
+           * DBQ KNEE AND LOWER LEG CONDITIONS 
+           * DBQ MEDICAL OPINION 1
+           * DBQ MEDICAL OPINION 2
+           * DBQ MEDICAL OPINION 3
+           * DBQ MEDICAL OPINION 4
+           * DBQ MEDICAL OPINION 5
+           * DBQ SCARS DISFIGUREMENT 
+           * DBQ SHOULDER AND ARM CONDITIONS
+           * DBQ SKIN DISEASES
+  
+         This patch implements the new content for the AMIE C&P Disability
+         Benefit Questionnaire worksheets, which are accessible through the
+         VISTA AMIE software package.
+  
+   4. AMIE - C&P Examination Worksheet Deactivation
+  
+      a. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved deactivation of the following new Automated Medical
+         Information Exchange (AMIE) C&P Questionnaire worksheet.
+  
+           * DBQ MEDICAL OPINION
+  
+        The DBQ MEDICAL OPINION AMIE Exam Worksheet is being replaced
+        with the DBQ MEDICAL OPINION 1, DBQ MEDICAL OPINION 2, DBQ MEDICAL
+        OPINION 3, DBQ MEDICAL OPINION 4, and DBQ MEDICAL OPINION 5
+        worksheets to permit the ordering and completion of multiple
+        Medical Opinions.
+  
+   5. CAPRI - Template Defects
+  
+      There are no CAPRI Template defects associated with this patch.
+  
+   6. AMIE - C&P Examination Worksheet Defects
+  
+      There are no AMIE Examination worksheet defects associated with
+      this patch.
+  
+ IV. TECHNICAL COMPONENTS
+  
+   The following section describes the technical components being exported
+   with this patch.
+  
+   1. The following FILE will be included.
+  
+                                       UP    SEND  DATA               USER
+                                       DATE  SEC.  COMES  SITE  RSLV  OVER
+    FILE#   NAME                       DD    CODE  W/FILE DATA  PTS   RIDE
+    ----------------------------------------------------------------------
+    396.18 CAPRI TEMPLATE DEFINITIONS  NO    YES   YES    OVER  NO    NO
+  
+    2. The following Template Definition updates will be added to the CAPRI
+       TEMPLATE DEFINITIONS (#396.18) file:
+  
+       DBQ ANKLE CONDITIONS~172
+       DBQ DIABETES MELLITUS~172
+       DBQ DIABETIC SENSORY-MOTOR PERIPHERAL NEUROPATHY~172
+       DBQ EYE CONDITIONS~172
+       DBQ HEART CONDITIONS (INCLUDING ISCHEMIC AND NON ISCHEMIC HEART
+        DISEASE, ARRHYTHMIAS, VALVULAR DISEASE, AND CARDIAC SURGERY)~172  
+       DBQ HYPERTENSION~172
+       DBQ KNEE AND LOWER LEG CONDITIONS~172
+       DBQ MEDICAL OPINION 1~172
+       DBQ MEDICAL OPINION 2~172
+       DBQ MEDICAL OPINION 3~172
+       DBQ MEDICAL OPINION 4~172
+       DBQ MEDICAL OPINION 5~172
+       DBQ SCARS DISFIGUREMENT~172
+       DBQ SHOULDER AND ARM CONDITIONS~172
+       DBQ SKIN DISEASES~172
+  
+    3. The following new entries with the following C&P questionnaire 
+       worksheet(s) will be created and STATUS field made "ACTIVE" in the
+       AMIE EXAM (#396.6) file:
+  
+                                                     Access     Text 
+        IEN  Exam Name                               Routine    Routine(s)
+        ---  -------------------------------------   --------   --------
+        313  DBQ DIABETES MELLITUS                   DVBCQDM1   DVBCQDM2
+        314  DBQ DIABETIC SENSORY-MOTOR PERIPHERAL   DVBCQDN1   DVBCQDN2
+             NEUROPATHY                                         DVBCQDN3
+        332  DBQ SCARS DISFIGUREMENT                 DVBCQSC1   DVBCQSC2
+                                                                DVBCQSC3
+        333  DBQ HEART CONDITIONS                    DVBCQHD1   DVBCQHD2
+                                                                DVBCQHD3
+        334  DBQ HYPERTENSION                        DVBCQHT1   DVBCQHT2
+        335  DBQ EYE CONDITIONS                      DVBCQEY1   DVBCQEY2
+                                                                DVBCQEY3
+                                                                DVBCQEY4
+        336  DBQ SKIN DISEASES                       DVBCQSK1   DVBCQSK2
+                                                                DVBCQSK3
+        337  DBQ KNEE AND LOWER LEG CONDITIONS       DVBCQKL1   DVBCQKL2
+                                                                DVBCQKL3
+        338  DBQ SHOULDER AND ARM CONDITIONS         DVBCQSA1   DVBCQSA2
+                                                                DVBCQSA3
+        339  DBQ ANKLE CONDITIONS                    DVBCQAN1   DVBCQAN2
+                                                                DVBCQAN3
+        354  DBQ MEDICAL OPINION 1                   DVBCQMO3   DVBCQMO4
+    
+        371  DBQ MEDICAL OPINION 2                   DVBCQMO3   DVBCQMO4
+             
+        372  DBQ MEDICAL OPINION 3                   DVBCQMO3   DVBCQMO4
+  
+        373  DBQ MEDICAL OPINION 4                   DVBCQMO3   DVBCQMO4
+  
+        374  DBQ MEDICAL OPINION 5                   DVBCQMO3   DVBCQMO4 
+  
+      The following C&P questionnaire worksheet(s), which is being 
+      replaced with newer versions, as described in Section III.4 above,
+      will be set to "INACTIVE":
+  
+        IEN  Exam Name                               
+        ---  ------------------------------------- 
+        306  DBQ MEDICAL OPINION
+  
+  
+   4. The following new routines will be added with this patch:
+  
+         * DVBCQAN1  Driver for DBQ ANKLE CONDITIONS
+         * DVBCQAN2  Text for DBQ ANKLE CONDITIONS
+         * DVBCQAN3  Text for DBQ ANKLE CONDITIONS
+         * DVBCQDM1  Driver for DBQ DIABETES MELLITUS
+         * DVBCQDM2  Text for DBQ DIABETES MELLITUS
+         * DVBCQDN1  Driver for DBQ DIABETIC SENSORY-MOTOR PERIPHERAL 
+                     NEUROPATHY
+         * DVBCQDN2  Text for DBQ DIABETIC SENSORY-MOTOR PERIPHERAL 
+                     NEUROPATHY
+         * DVBCQDN3  DBQ DIABETIC SENSORY-MOTOR PERIPHERAL 
+                     NEUROPATHY
+         * DVBCQEY1  Driver for DBQ EYE CONDITIONS
+         * DVBCQEY2  Text for DBQ EYE CONDITIONS
+         * DVBCQEY3  Text for DBQ EYE CONDITIONS
+         * DVBCQHD1  Driver for DBQ HEART CONDITIONS
+         * DVBCQHD2  Text for DBQ HEART CONDITIONS
+         * DVBCQHD3  Text for DBQ HEART CONDITIONS
+         * DVBCQHT1  Driver for DBQ HYPERTENSION
+         * DVBCQHT2  Text for DBQ HYPERTENSION
+         * DVBCQKL1  Driver for DBQ KNEE AND LOWER LEG CONDITIONS
+         * DVBCQKL2  Text for DBQ KNEE AND LOWER LEG CONDITIONS
+         * DVBCQKL3  Text for DBQ KNEE AND LOWER LEG CONDITIONS
+         * DVBCQMO3  Driver for DBQ MEDICAL OPINION 1, 2, 3, 4 and 5
+         * DVBCQMO4  Text for DBQ MEDICAL OPINION 1, 2, 3, 4 and 5
+         * DVBCQSA1  Driver for DBQ SHOULDER AND ARM CONDITIONS
+         * DVBCQSA2  Text for DBQ SHOULDER AND ARM CONDITIONS
+         * DVBCQSA3  Text for DBQ SHOULDER AND ARM CONDITIONS
+         * DVBCQSC1  Driver for DBQ SCARS DISFIGUREMENT
+         * DVBCQSC2  Text for DBQ SCARS DISFIGUREMENT
+         * DVBCQSC3  Text for DBQ SCARS DISFIGUREMENT
+         * DVBCQSK1  Driver for DBQ SKIN DISEASES
+         * DVBCQSK2  Text for DBQ SKIN DISEASES
+         * DVBCQSK3  Text for DBQ SKIN DISEASES
+  
+  
+ V. SOFTWARE & DOCUMENTATION RETRIEVAL
+  
+    The following section provides information regarding the retrieval of
+    the software and related user documentation.
+  
+   1. VistA Patch DVBA*2.7*172
+  
+      a. This patch is being distributed as a PackMan patch message through
+         the National Patch Module (NPM). The KIDS build for this patch is
+         DVBA*2.7*172.
+  
+   2. User Documentation
+  
+      a. The user documentation for this patch may be retrieved directly
+         using FTP. The preferred method is to FTP the files from:
+  
+             download.vista.med.va.gov
+  
+         This transmits the files from the first available FTP server.
+  
+         Sites may also elect to retrieve documentation directly from a
+         specific server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+         Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+         Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+         The following files will be available:
+  
+         File Name                               Format  Description
+         ------------------------------------    ------  -----------------
+         DVBA_27_P172_RN.PDF                     Binary  Release Notes
+  
+  
+      b. Documentation may also be retrieved from the VistA Documentation
+         Library (VDL) on the Internet at the following address. This web
+         site is usually updated within 1-3 days of the patch release date.
+  
+                http://www4.va.gov/vdl/application.asp?appid=133
+  
+       c. Content and/or changes to the DBQs is communicated by the 
+          Disabilty Examination Management Office (DEMO) through:
+  
+                http://vbacodmoint1.vba.va.gov/bl/21/DBQ/default.asp
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES
+  
+   The following section provides pre-installation notes and requirements
+   for installing the software.
+  
+   1. Users On the System
+  
+    a. CAPRI GUI Users - This patch may be installed while users are
+       running the CAPRI GUI.
+  
+    b. VistA Users - This patch may be installed with users on the
+       system, but should be loaded during non-peak hours to minimize
+       disruption to users and to reduce the possibility of errors when
+       the routines and file entries are updated.
+  
+    c. VistA Options - There are no VistA options to disable while
+       installing this patch.
+  
+   2. Software Installation Time
+  
+      The estimated installation time is less than 5 minutes during off
+      peak hours.
+  
+   3. Required Builds
+  
+      The following is a list of REQUIRED builds for this KIDS software
+      distribution.  KIDS will not allow the installation of this patch
+      without their prior installation.
+  
+        Required Build(s):
+        ------------------
+        DVBA*2.7*167
+  
+ VII. INSTALLATION INSTRUCTIONS
+  
+    The following section provides the steps for installing the software.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+      the KIDS distribution included with this message.
+  
+   2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+  
+   3. From this menu, you may now elect to use the following options (when
+      prompted for INSTALL NAME, enter DVBA*2.7*172).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed.
+  
+          CAUTION: Do not use the KIDS "Full Comparison" option. Due to
+          the length of some CAPRI Template names, the "Full Comparison"
+          option can go into a loop.  This problem has been reported to
+          the Kernel developers and will be fixed with patch XU*8*559. The
+          "Second line of Routines Only", "Routines only", and "Old style
+          Routine compare" options may be used.
+  
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+  
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select package DVBA*2.7*172.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', answer NO.
+  
+   6. When prompted to 'Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO//', answer NO.
+  
+   7. NOTE: Pre/Post-init routine DVBA172P is a temporary routine used as
+      part of the pre/post-install process and will be automatically
+      deleted by KIDS after patch installation. However, in some cases
+      Cache doesn't always delete the routine. You may delete it manually
+      if you discover this at your site.
+  
+ VIII. TEST SITES
+  
+    The following sites participated in the testing of the DVBA*2.7*172
+    software.
+  
+    Test Sites
+    -----------
+    Alexandria
+    Denver
+    Upstate New York
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA172P
+    Before:       n/a   After: B53284083  **172**
+Routine Name: DVBCQAN1
+    Before:       n/a   After:  B3023141  **172**
+Routine Name: DVBCQAN2
+    Before:       n/a   After:B214669401  **172**
+Routine Name: DVBCQAN3
+    Before:       n/a   After: B28505998  **172**
+Routine Name: DVBCQDM1
+    Before:       n/a   After:  B3035402  **172**
+Routine Name: DVBCQDM2
+    Before:       n/a   After:B111334603  **172**
+Routine Name: DVBCQDN1
+    Before:       n/a   After:  B3489338  **172**
+Routine Name: DVBCQDN2
+    Before:       n/a   After: B94522755  **172**
+Routine Name: DVBCQDN3
+    Before:       n/a   After: B79121322  **172**
+Routine Name: DVBCQEY1
+    Before:       n/a   After:  B3096162  **172**
+Routine Name: DVBCQEY2
+    Before:       n/a   After: B84271207  **172**
+Routine Name: DVBCQEY3
+    Before:       n/a   After:B222927480  **172**
+Routine Name: DVBCQEY4
+    Before:       n/a   After:B217562551  **172**
+Routine Name: DVBCQHD1
+    Before:       n/a   After:  B3962869  **172**
+Routine Name: DVBCQHD2
+    Before:       n/a   After:B218851053  **172**
+Routine Name: DVBCQHD3
+    Before:       n/a   After: B94606647  **172**
+Routine Name: DVBCQHT1
+    Before:       n/a   After:  B3024839  **172**
+Routine Name: DVBCQHT2
+    Before:       n/a   After: B60688638  **172**
+Routine Name: DVBCQKL1
+    Before:       n/a   After:  B3210258  **172**
+Routine Name: DVBCQKL2
+    Before:       n/a   After:B186507276  ***172***
+Routine Name: DVBCQKL3
+    Before:       n/a   After: B81497043  ***172***
+Routine Name: DVBCQMO3
+    Before:       n/a   After:  B3120058  **172**
+Routine Name: DVBCQMO4
+    Before:       n/a   After: B79601268  **172**
+Routine Name: DVBCQSA1
+    Before:       n/a   After:  B3183651  **172**
+Routine Name: DVBCQSA2
+    Before:       n/a   After:B195543868  **172**
+Routine Name: DVBCQSA3
+    Before:       n/a   After: B61445405  **172**
+Routine Name: DVBCQSC1
+    Before:       n/a   After:  B3121966  **172**
+Routine Name: DVBCQSC2
+    Before:       n/a   After:B230862810  **172**
+Routine Name: DVBCQSC3
+    Before:       n/a   After:B141514792  **172**
+Routine Name: DVBCQSK1
+    Before:       n/a   After:  B3027849  **172**
+Routine Name: DVBCQSK2
+    Before:       n/a   After:B194351076  **172**
+Routine Name: DVBCQSK3
+    Before:       n/a   After: B40939287  **172**
+
+=============================================================================
+User Information:
+Entered By  : FAIRBROTHER,EILEEN            Date Entered  : JUN 14, 2011
+Completed By: DAWSON,JEREMIAH               Date Completed: JUL 15, 2011
+Released By : FRANCE,KATHI                  Date Released : JUL 18, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

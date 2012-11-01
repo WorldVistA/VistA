@@ -1,0 +1,160 @@
+
+=============================================================================
+Run Date: MAR 07, 2011                     Designation: GMRA*4*45
+Package : GMRA - ADVERSE REACTION TRACKING    Priority: Mandatory
+Version : 4        SEQ #42                      Status: Released
+                  Compliance Date: JUL 19, 2011
+=============================================================================
+
+Associated patches: (v)GMRA*4*20   <<= must be installed BEFORE `GMRA*4*45'
+                    (v)GMRA*4*41   <<= must be installed BEFORE `GMRA*4*45'
+
+Subject: ORDER CHECK API UPDATE
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is being released in conjunction with CPRS GUI v28.  CPRS GUI 
+ version 28 consists of five host files: PSS_1_151.KID, PSS_1_142.KID, 
+ CPRS28_REQUIRED.KID, OR_PSJ_PXRM_28.KID and CPRS28_RELATED.KID. These 
+ five host files contain software that support CPRS GUI v28 
+ functionality.  The host files were created to simplify installation at 
+ Veterans Health Administration (VHA) facilities and to assist in the 
+ phased implementation release method for CPRS v28.  CPRS v28 will follow 
+ a phased implementation.  To see current status and target dates for 
+ Sites/VISN/Region please refer to the following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+  
+ Please refer to the "CPRS GUI v.28 and Associated Patches Installation 
+ Guide" for installation sequence information.  This document is exported 
+ as OR_30_280IG.doc and OR_30_280IG.pdf and is included in OR_30_280.ZIP.
+  
+ Installation and set-up information specific to OR*3*280 is included in 
+ "CPRS GUI v.28 and Associated Patches Installation Guide".   
+  
+ Patch information:
+ PSS patches exported as two host files support CPRS v28 functionality.
+ PSS_1_142.KID
+ PSS_1_151.KID
+  
+ CPRS28_REQUIRED.KID includes the required patches needed to support CPRS 
+ GUI v28 functionality.  It includes builds for the following patches:
+ OR*3.0*293
+ GMRC*3.0*66
+ GMRA*4.0*45
+  
+ OR_PSJ_PXRM_28.KID includes the CPRS, Pharmacy and Clinical Reminders 
+ patches required for CPRS GUI v28.  It includes builds for the following 
+ patches: 
+ OR*3.0*280
+ PSJ*5.0*226
+ PXRM*2.0*16
+  
+ CPRS28_RELATED.KID includes the related patches needed to support CPRS 
+ GUI v28 functionality.  It includes builds for the following patches:
+ GMRC*3.0*64
+ GMTS*2.7*90
+ OR*3.0*337
+  
+ Installation of these five host files should be coordinated among the 
+ packages affected because these host files will install the software 
+ needed to implement CPRS GUI v28.
+  
+  
+ Patch OR*3.0*293 creates a centralized repository for the collection of 
+ all order check information in each VISTA instance.  This repository is 
+ located in the new file 100.05.  Therefore, order checking information 
+ will no longer be stored with the order in file 100. Thus the ART code 
+ that reads file 100 is updated in this patch to now call an API to get 
+ the order checking information.
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There are no NSRs associated with this patch.
+  
+  
+ This patch addresses the following NOIS/Remedy Ticket(s):
+ ---------------------------------------------------------
+ There are no NOIS/Remedy Ticket(s) associated with this patch.
+  
+ Components Sent With Patch
+ --------------------------
+  
+ Total number of routines modified: 2
+ Total number of new routines: 0
+ Total number of routines: 2
+  
+ The following is a list of files included in this patch:
+ ========================================================
+ There are no files included in this patch
+  
+  
+  INSTALLATION INSTRUCTIONS:  
+  =========================
+    
+  This patch is exported as part of CPRS28_REQUIRED.KID
+   
+  CPRS v28 and associated patches will follow a phased implementation.  
+  Software retreival of CPRS28_REQUIRED.KID will be coordinated with the 
+  phased implementation.  To see current status and target dates for 
+  Sites/VISN/Region please refer to the following site:
+  
+  http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+  For more details and instructions related to CPRS 28 and related 
+  patches, please refer to the install guide OR_30_280IG.DOC, available
+  on the VDL.  It will also be distributed when your site is targeted for 
+  installation.
+  
+  
+  This patch should be loaded during non-peak hours to minimize disruption
+  to users.  Users may be on the system during installation. Installation
+  will take less than 5 minutes.
+   
+  1. From the Kernel Installation and Distribution System Menu, select the
+     Installation menu.
+   
+  2. From this menu, you may elect to use the following options (when 
+     prompted for INSTALL NAME, enter CPRS28 REQUIRED 1.0):
+       a.  Backup a Transport Global
+       b.  Compare Transport Global to Current System
+       c.  Verify Checksums in Transport Global
+   
+  3. Use the Install Package(s) options and select the package CPRS28 
+     REQUIRED 1.0
+  4. When prompted 'Want KIDS to INHIBIT LOGONS during install? YES//',
+     respond "NO".
+   
+  5. When prompted 'Want to DISABLE Scheduled Options, Menu Options and 
+     Protocols? YES//', respond "NO".
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRAFX3
+    Before: B68434515   After: B69479598  **17,19,23,20,45**
+Routine Name: GMRAUTL2
+    Before: B81816140   After: B88611028  **23,36,41,45**
+ 
+Routine list of preceding patches: 20, 41
+
+=============================================================================
+User Information:
+Entered By  : HAWSEY,JASON                  Date Entered  : MAR 16, 2010
+Completed By: SERVICE,JOHN                  Date Completed: MAR 07, 2011
+Released By : CAMPBELL,THOMAS               Date Released : MAR 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

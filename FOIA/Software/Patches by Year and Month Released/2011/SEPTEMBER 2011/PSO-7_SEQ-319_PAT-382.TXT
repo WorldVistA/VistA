@@ -1,0 +1,250 @@
+$TXT Created by MORRISON,JENNIFER ANN at CMAI.FO-BIRM.MED.VA.GOV  (KIDS) on Monday, 05/02/11 at 13:00
+=============================================================================
+Run Date: SEP 28, 2011                     Designation: PSO*7*382
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #319                      Status: Released
+                  Compliance Date: OCT 29, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*276   <<= must be installed BEFORE `PSO*7*382'
+                    (v)PSO*7*306   <<= must be installed BEFORE `PSO*7*382'
+
+Subject: STANDALONE REFILL OPTION FOR HRC
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch addresses a request made by the Health Resource Center (HRC) to 
+ Outpatient Pharmacy V. 7.0 to provide a new standalone option similar to 
+ that of ePharmacy Medication Profile (View Only) [PSO PMP] option for the 
+ Compensation and Pension Record Interchange (CAPRI) system. The Medication 
+ Profile and Refill [PSO HRC PROFILE/REFILL] option will allow users both to 
+ view a medication profile and to refill prescriptions.
+  
+ The patch also corrects the following two issues found in ePharmacy 
+ Medication Profile (View Only) [PSO PMP] option.
+ 1. The calculation of remaining refills on the medication profile screen. 
+    Routine PSOPMP1 was modified to fix the issue.
+  
+ 2. When selecting multiple items to be displayed from the medication profile 
+    list, only the first selection is displayed. Routine PSOPMP0 was modified 
+    so that all selected items are displayed.
+  
+ Integration Control Registration #4595 was modified to grant the CAPRI package
+ access to the Medication Profile and Refill [PSO HRC PROFILE/REFILL] option.
+   
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A 
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ PSO HRC PROFILE/REFILL       ROUTINE            New
+   
+  
+ Protocols Associated:
+  
+ Protocol Name                  New/Modified/Deleted
+ -------------                  -------------------- 
+ PSO ALLERGY/HRC LIST MENU      New 
+ PSO DETAILED ALLERGY/HRC LIST  New
+ PSO HRC MENU                   New
+ PSO HRC PAT INFO MENU          New
+ PSO HRC PATIENT INFORMATION    New 
+ PSO HRC REFILL MENU            New 
+ PSO HRC SELECT                 New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)     New/Modified/Deleted 
+ -------------      ----      ------------------     --------------------
+ PSO HRC DETAILED   LIST                             New
+  ALLERGY      
+ PSO HRC MAIN       LIST                             New
+ PSO HRC Patient    LIST                             New
+  Information   
+ PSO HRC REFILL     LIST                             New
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20100714 - HRC CAPRI Enhancement, Medication Profile and Refill
+   
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ COATESVILLE, PA
+ DURHAM, NC
+ UPSTATE NEW YORK HCS
+  
+   
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.va.gov/vdl/
+  
+ File Description                        File Name             FTP Mode
+ --------------------------------------------------------------------------
+ Outpatient Pharmacy V. 7.0 Manager's    PSO_7_MAN_UM_R0911.PDF    (binary)
+ User Manual
+  
+ Outpatient Pharmacy V. 7.0 Manager's    PSO_7_P382_MAN_UM_CP.PDF  (binary)
+ User Manual Change Pages 
+  
+ Outpatient Pharmacy V. 7.0 Pharmacist's PSO_7_PHAR_UM_R0911.PDF (binary)
+ User Manual
+  
+ Outpatient Pharmacy V. 7.0 Pharmacist's PSO_7_P382_PHAR_UM_CP.PDF (binary)
+ User Manual Change Pages
+  
+ Outpatient Pharmacy V. 7.0 Technical    PSO_7_TM_R0911.PDF        (binary)
+ Manual/Security Guide
+  
+ Outpatient Pharmacy V. 7.0 Technical    PSO_7_P382_TM_CP.PDF      (binary)
+ Manual/Security Guide Change Pages
+  
+     
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+    
+  
+ Installation Instructions
+ -------------------------
+ This patch can be installed during non-peak hours. Installation will take
+ no longer than 3 minutes.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSO*7.0*382):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSO*7.0*382.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//  respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOMPHRC
+    Before:       n/a   After: B21119230  **382**
+Routine Name: PSOPMP0
+    Before: B77858526   After: B81752801  **260,281,303,289,382**
+Routine Name: PSOPMP1
+    Before: B29406474   After: B29384339  **260,285,281,303,289,276,382**
+Routine Name: PSOREF0
+    Before: B36690483   After: B37449897  **14,152,180,186,204,306,382**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : FEB 23, 2011
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: SEP 01, 2011
+Released By : BAYLIS,RANDALL S              Date Released : SEP 28, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,364 @@
+$TXT Created by MORRISON,JENNIFER ANN at CMAI.FO-BIRM.MED.VA.GOV  (KIDS) on Wednesday, 02/01/12 at 12:46
+=============================================================================
+Run Date: MAR 07, 2012                     Designation: PSO*7*354
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #329                      Status: Released
+                  Compliance Date: APR 07, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*312   <<= must be installed BEFORE `PSO*7*354'
+                    (v)PSO*7*330   <<= must be installed BEFORE `PSO*7*354'
+                    (v)PSS*1*156   <<= must be installed BEFORE `PSO*7*354'
+                    (v)PSO*7*359   <<= must be installed BEFORE `PSO*7*354'
+                    (v)PSO*7*387   <<= must be installed BEFORE `PSO*7*354'
+
+Subject: FY11 OPAI ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+  - Input Template
+
+Description:
+============
+
+ This patch is being released as part of Pharmacy Legacy Enhancements Fiscal 
+ Year 2011 to address the Outpatient Pharmacy Automation Interface (OPAI) 
+ Enhancements. The Pharmacy Data Management patch PSS*1*156 is also being 
+ released as part of this enhancement.
+   
+ Veterans Affairs Medical Center (VAMC) facilities have moved to using multiple 
+ vendors for automated medication dispensing systems to improve the efficiency 
+ of outpatient pharmacy operations. The following enhancements were made to the 
+ Outpatient Pharmacy software to allow any one division to have more than one 
+ Automated Dispensing Device (ADD) communicating with Veterans Health 
+ Information Systems and Technology Architecture (VistA) through the OPAI.
+   
+ 1.  A new file named PHARMACY AUTOMATED DISPENSING DEVICES file (#52.53)
+     was created. Entries in this file are required only if the site wants to 
+     utilize the multiple dispensing functionality. The new file contains the 
+     following fields:
+    
+     NAME - A free-text field that is between 3-30 characters in length. It 
+            is the name given to the automated dispensing device.
+     DNS  - A free-text field that is between 1-50 characters in length. It
+            stores the DNS name or IP address of the automated dispensing 
+            device.
+     PORT - This field is a numeric between 1 and 65535 with no decimal places.
+            It stores the port associated with the automated dispensing device. 
+     INACTIVE 
+     DATE - This is a date field, not required, but is used to inactivate 
+            the OPAI connection to an automated dispensing device.
+  
+ 2.  A new menu option named Enter/Edit Automated Dispensing Devices [PSO 
+     AUTO DISPENSING DEVICE] was created to maintain the PHARMACY AUTOMATED 
+     DISPENSING DEVICES file (#52.53). The option is located under the 
+     Maintenance (Outpatient Pharmacy) [PSO MAINTENANCE] menu. Only sites 
+     planning to use the multiple automated dispensing devices for an outpatient
+     division should use this option.
+   
+ 3.  A new sub-file (#59.20081) multiple named OPAI was added to the 
+     DISPENSING SYSTEM PRINTER sub-file (#59.02008) in the OUTPATIENT SITE 
+     file (#59). The sub-file contains the following new fields:
+   
+     DNS NAME      - This field is a pointer to the PHARMACY AUTOMATED 
+                     DISPENSING DEVICES file (#52.53).
+     CATEGORY      - Categories provide the flexibility of routing RXs to
+                     different ADDs. This field contains the following set of 
+                     codes:
+                     MCS    MAIL - CS
+                     MNCS   MAIL - NCS
+                     MAIL   MAIL
+                     WCS    WINDOW - CS
+                     WNCS   WINDOW - NCS
+                     WIND   WINDOW
+                     CS     CONTROLLED SUBSTANCE
+                     NCS    NONCONTROLLED SUBSTANCE
+                     A      ANY
+                     S      STORAGE
+    
+ 4.  The Site Parameter Enter/Edit [PSO SITE PARAMETERS] option was modified 
+     for addition of the new fields in the OPAI multiple (#59.20081) in the 
+     OUTPATIENT SITE file (#59).
+   
+ 5.  During prescription processing, if the label printer selected has ADDs 
+     defined then Rx will be routed to the appropriate ADDs. A message will 
+     be displayed indicating the ADDs where the Rx will be routed. Below is 
+     an example of the routing message.
+  
+       PRESCRIPTIONS SENT TO:
+         OPTIFILL1
+           100002815      ACETAMINOPHEN 325MG C.T.
+           100002816      AMOXICILLIN 250MG CAP
+           100002824      AMOXAPINE 50MG TAB
+    
+         SCRIPTPRO1
+           100002844      CIMETIDINE 200MG TAB
+    
+ 6.  During testing a problem was discovered in the Print from Suspense
+     File [PSO PNDLBL] and Reprint Batches from Suspense [PSO PNDRPT] options. 
+     The ZTIO variable, which stores the label printer, was being reset to null
+     after processing each patient prescription. As a result a printer defined 
+     with multiple ADDs was not routing prescriptions properly. Routines 
+     PSOSULBL and PSOSUSRP were modified to address this problem.
+  
+ 7.  A new Integration Control Registration (ICR) #5579 was created to grant 
+     the Pharmacy Data Management package read access to the PHARMACY 
+     AUTOMATED DISPENSING DEVICES file (#52.53).
+  
+ 8.  As per the User Group request, when a dispense complete message is 
+     received by VistA from the external dispensing interface and if the 
+     mail tracking information is included in the 13th piece of the RXD 
+     segment, then the Comment field of the activity log will be updated with 
+     this information.
+   
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ PHARMACY AUTOMATED DISPENSING DEVICES (#52.53)
+                            NAME (#.01)          New
+                            DNS (#1)             New
+                            PORT (#2)            New
+                            INACTIVE DATE (#3)   New
+ OUTPATIENT SITE sub-file (#59.02008) - DISPENSING SYSTEM PRINTER 
+                            OPAI (#1)            New
+ OUTPATIENT SITE sub-file (#59.20081) - OPAI
+                            DNS NAME (#.01)      New
+                            CATEGORY (#1)        New
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ PSO AUTO DISPENSING DEVICE   RUN ROUTINE        New
+ PSO MAINTENANCE              MENU               Modified
+ PSO SITE PARAMETERS          RUN ROUTINE        Modified 
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)     New/Modified/Deleted 
+ -------------      ----      ------------------     --------------------
+ PSO SITE           INPUT     OUTPATIENT SITE (#59)  Modified
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070106 - OPAI functionality expansion
+  
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ 447576
+  
+  
+ Test Sites:
+ -----------
+ HEARTLAND-WEST (Kansas city)
+ LONG BEACH, CA
+ NEW JERSEY HCS
+ ORLANDO, FL
+ PUGET SOUND HCS
+  
+   
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.va.gov/vdl/
+  
+ File Description                        File Name             FTP Mode
+ --------------------------------------------------------------------------
+ Outpatient Pharmacy V. 7.0 Manager's    PSO_7_MAN_UM_R0312.PDF    (binary)
+ User Manual
+ Outpatient Pharmacy V. 7.0 Manager's    PSO_7_P354_MAN_UM_CP.PDF  (binary)
+ User Manual Change Pages
+ Outpatient Pharmacy V. 7.0 Pharmacist's PSO_7_PHAR_UM_R0312.PDF   (binary) 
+ User Manual
+ Outpatient Pharmacy V. 7.0 Pharmacist's PSO_7_P354_PHAR_UM_CP.PDF (binary)
+ User Manual Change Pages
+ Outpatient Pharmacy V. 7.0 Technical    PSO_7_TM_R0312.PDF        (binary)
+ Manual/Security Guide 
+ Outpatient Pharmacy V. 7.0 Technical    PSO_7_P354_TM_CP.PDF      (binary)
+ Manual/Security Guide Change Pages   
+ Outpatient Pharmacy Automation          PSO_7_354_PSS_1_156_RN.PDF(binary)
+ Interface Expansion Release Notes
+  
+     
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+    
+  
+ Installation Instructions
+ -------------------------
+ Do not install this patch while Outpatient Pharmacy users are on the
+ system or when Outpatient orders are being entered and signed through
+ Computerized Patient Record System. Installation will take no longer than
+ 5 minutes.
+  
+ The following menu options should be disabled.
+  
+     Option Name                Menu Text
+     -----------------------    ------------------------------
+     PSO LM BACKDOOR ORDERS     Patient Prescription Processing
+     PSO LMOE FINISH            Complete Orders from OERR
+     PSO MAINTENANCE            Maintenance (Outpatient Pharmacy)
+     PSO PNDLBL                 Print from Suspense File
+     PSO SITE PARAMETERS        Parameter Enter/Edit
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSO*7.0*354):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSO*7.0*354.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//  respond YES. Select the following options
+     to disable.
+   
+       Option Name                Menu Text
+       -----------------------    ------------------------------
+       PSO LM BACKDOOR ORDERS     Patient Prescription Processing
+       PSO LMOE FINISH            Complete Orders from OERR
+       PSO MAINTENANCE            Maintenance (Outpatient Pharmacy)
+       PSO PNDLBL                 Print from Suspense File
+       PSO SITE PARAMETERS        Parameter Enter/Edit
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOHLDIS
+    Before: B67873568   After: B76066923  **156,189,193,209,148,259,200,
+                                           330,354**
+Routine Name: PSOHLDS
+    Before: B35608322   After: B91277633  **156,312,354**
+Routine Name: PSOLBL4
+    Before: B49656838   After: B50601641  **26,70,156,244,233,246,319,387,354**
+Routine Name: PSOORAL1
+    Before: B57201257   After: B57889178  **71,156,148,247,240,287,354**
+Routine Name: PSORXL
+    Before: B74408988   After:B108590607  **8,21,24,32,47,135,148,287,
+                                           334,251,354**
+Routine Name: PSORXVW1
+    Before: B67070082   After: B67852891  **35,47,46,71,99,117,156,193,
+                                           210,148,258,260,240,281,359,
+                                           354**
+Routine Name: PSOSITED
+    Before:  B6167263   After: B11301085  **24,65,268,354**
+Routine Name: PSOSULBL
+    Before: B73560557   After: B73919713  **139,173,174,148,200,260,264,
+                                           287,289,290,354**
+Routine Name: PSOSUSRP
+    Before: B13909988   After: B14336043  **354**
+Routine Name: PSOUTLA
+    Before: B41786781   After: B43668686  **1,15,23,56,126,222,354**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : APR 14, 2010
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: FEB 21, 2012
+Released By : FOX,KIRK                      Date Released : MAR 07, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

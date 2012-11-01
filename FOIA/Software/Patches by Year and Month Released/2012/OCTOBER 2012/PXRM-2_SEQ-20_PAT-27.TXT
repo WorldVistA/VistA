@@ -1,0 +1,209 @@
+
+=============================================================================
+Run Date: OCT 18, 2012                     Designation: PXRM*2*27
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #20                      Status: Released
+                  Compliance Date: OCT 25, 2012
+=============================================================================
+
+
+Subject: HOMELESSNESS SCREENING REMINDER & LIPID STATIN REMINDER
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch is to correct potential oversights in clinical reminders where
+ Veterans could be unaware of homeless programs by implementing the
+ VA-HOMELESSNESS SCREENING reminder.  Also, drug therapy complications 
+ are addressed by clinical reminder LIPID STATIN RX CVD/DM.
+     
+ NOTE:
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Because of the urgency of this patch to be released according to the 
+ President of the United States and the Secretary of the Department of
+ Veterans Affairs, it will be released with a shortened compliance 
+ date of 7 calendar days.
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      
+ Associated Remedy ticket(s):
+ ============================
+ HD000000734940 - VA-HOMELESSNESS SCREENING
+ HD000000765018 - VA-LIPID STATIN RX CVD/DM (VER 1.0)
+  
+ Associated NSR(s):
+ =================
+ N/A
+    
+ Participating Test Sites:
+ =========================
+ LEBANON, PA
+ ORLANDO, FL
+ PROVIDENCE, RI
+ UPSTATE NEW YORK HCS
+ VA GREATER LOS ANGELES HCS
+    
+ REMEDY OVERVIEW:
+ ===============
+ 1. HD000000734950 - VA-HOMELESSNESS SCREENING
+    
+ Problem:
+ --------
+ The Government has mandated that a VA homeless screening be implemented 
+ as follows:
+  
+ The objectives of the VA-Homelessness Screening clinical reminder are to:
+ (a)identify Veterans and their families who are at imminent risk of
+ homelessness or who have very recently become homeless; (b)ensure that
+ those who are at-risk or who are currently homeless are referred for
+ appropriate assistance; and (c)update documentation in the medical record
+ regarding the current living situation for these at-risk Veterans. It is
+ anticipated that this new screening reminder will help to identify
+ Veterans who might not otherwise seek assistance or who may not be aware
+ of homeless programs offered by VHA. The VA-HOMELESSNESS SCREENING
+ reminder is a NATIONALLY-MANDATED reminder - similar to the VA-TBI and
+ VA-IRAQ&AFGHAN POST DEPLOYMENT screening reminders.  It MUST be
+ placed on the Cover Sheet at all facilities and is intended to be 
+ completed by any staff person.
+    
+ Resolution:
+ -----------
+ Created the necessary VA-Homelessness Screening reminder
+   
+ 2. HD000000765018 - VA-LIPID STATIN RX CVD/DM (VER 1.0)
+   
+ Problem:
+ --------
+ Recent analysis of cardiovascular prevention studies, as well as the 
+ growing appreciation of the downsides of aggressive lipid treatment
+ with high dose statins or non-statin cholesterol-lowering medications,
+ have raised concerns about performance measures for lipid management
+ based solely on achieving a target value of Low Density Lipoprotein
+ Cholesterol(LDL-C)(Hayward and Krumholz, 2012).
+    
+ The use of statin drugs can provide significant patient benefit even if
+ LDL-C values remain above 100. Professional societies now recommend
+ that the adequacy of lipid management be judged by the appropriateness
+ of the therapy and not solely by LDL value(ACCF/AHA/AMA-PCPI,2011).
+ Performance measures that recognize appropriate clinical prescribing
+ provide a better balance of patient benefit and risk and may reduce
+ complications of overzealous drug therapy(e.g., muscle breakdown).
+    
+ Resolution:
+ -----------
+ This national clinical reminder has been created to address the concerns
+ concerns outlined above and to support updated VHA Performance Measures
+ for FY12 and FY13(ihd18hns and dmg25hs) that assess LDL-C values in
+ patients with cardiovascular disease or with diabetes mellitus or
+ whether the patient is on at least a moderate dose of a statin medication.
+ The reminder replaces previous national lipid reminders that were based
+ on threshold LDL-C values.  It was created by the VHA National Clinical
+ Reminders Committee with input from multiple national VA experts on lipid
+ management, diabetes mellitus, ischemic heart disease, and quality
+ measurement.  The reminder is intended to be used by providers with 
+ prescribing privileges.
+               
+ Please refer to PXRM_2_0_27_IG.PDF for more details concerning
+ these clinical reminders.
+     
+ Build Components:
+ =================
+ N/A
+     
+ Data Dictionary:
+ ================
+ REMINDER EXCHANGE (#811.8) file
+     
+ Software & Documentation Retrieval Instructions:
+ ================================================
+    
+ This patch is being distributed as a host file.  The name of the host
+ file is PXRM_2_0_27.KID.  This file should be downloaded in ASCII
+ format.
+       
+ The preferred method for obtaining these files is to use File 
+ Transfer Protocol (FTP) to download them from:
+ ftp://download.vista.med.va.gov/.
+   
+ This transmits the files from the first available FTP server.
+ Sites may also elect to retrieve the files directly from a 
+ specific server as follows:
+         
+ Albany          ftp.fo-albany.med.va.gov
+ ftp://ftp.fo-albany.med.va.gov
+ Hines           ftp.fo-hines.med.va.gov
+ <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City  ftp.fo-slc.med.va.gov
+ ftp://ftp.fo-slc.med.va.gov
+    
+ Install guide and Release Notes are also available on the above
+ servers.  They are available as .pdf format.  These files should
+ be downloaded in BINARY format.  The names of the documentation
+ files are as follows:
+     
+ PXRM_2_0_27_IG.PDF
+ PXRM_2_0_27_RN.PDF
+      
+ Documentation  can also be found on the VistA Documentation
+ Library (VDL) at:  http://www.va.gov/vdl/
+    
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation
+ will take five to ten minutes.  Refer to the Install Guide,
+ PXRM_2_0_27_IG.PDF, for complete details.
+    
+ 1.  Use the "Load a Distribution' option on the KIDS installation
+     menu.  When prompted to enter a host file type in PXRM_2_0_27.KID
+    
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the 
+     following options, as desired:
+         Print Transport Global
+         Compare Transport global to Current System
+         Verify Checksums in Transport Global
+         Backup a Transport Global
+     
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the
+     following option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*27
+      
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the
+     install? NO//," respond 'NO'.
+       
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu
+     Options, and Protocols? NO// respond 'NO'.
+         
+ 6.  After successful installation, the following init 
+     routines may be deleted
+     PXRMP27E
+     PXRM27I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 188
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP27E
+    Before:       n/a   After:  B1845195  **27**
+Routine Name: PXRMP27I
+    Before:       n/a   After:  B7410427  **27**
+
+=============================================================================
+User Information:
+Entered By  : GRIMES,NANCY                  Date Entered  : JUL 25, 2012
+Completed By: LEANORD,TATIANA               Date Completed: OCT 17, 2012
+Released By : MONTGOMERY,ALAN               Date Released : OCT 18, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

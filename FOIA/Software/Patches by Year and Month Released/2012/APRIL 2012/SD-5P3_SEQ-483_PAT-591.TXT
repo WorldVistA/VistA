@@ -1,0 +1,166 @@
+$TXT Created by WOLF,ED at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 01/10/12 at 11:05
+=============================================================================
+Run Date: APR 02, 2012                     Designation: SD*5.3*591
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #483                    Status: Released
+                  Compliance Date: MAY 03, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*567  <<= must be installed BEFORE `SD*5.3*591'
+
+Subject: FIX SUBSCRIPT ERROR
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+ This patch will fix a subscript error that was introduced with patch 
+ SD*5.3*567:  <SUBSCRIPT>CHKENC+6^SDAM1.
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ HD0000000590082 - SUBSCRIPT>CHKENC+6^SDAM1
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Boston HCS
+ Charleston, SC
+ Connecticut HCS
+ South Texas HCS
+ Spokane, WA
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ HD0000000590082 - SUBSCRIPT>CHKENC+6^SDAM1
+  
+ Problem:
+ --------
+ When attempting to retrieve the status for an appointment, if the status 
+ field in the associated OUTPATIENT ENCOUNTER file (#409.68) is null, the 
+ above subscript error will occur.
+  
+ Resolution:
+ -----------
+ Routine SDAM1 is being modified to address the original issue being 
+ fixed with patch SD*5.3*567 in a different manner that allows the original
+ logic flow to remain intact without a break to call the sub-routine 
+ introduced in that patch. The new logic will retrieve the check out date 
+ from the Outpatient Encounter record associated with the appointment from 
+ the OUTPATIENT ENCOUNTER file (#409.68), when the appointment data
+ contained in the HOSPITAL LOCATION file (#44) has been deleted via menu
+ option Purge Scheduling Data [SD PURGE]. This will resolve both the
+ original issue and eliminate the above subscript error.
+  
+  
+ Technical Resolution:
+ ---------------------
+ The code in routine SDAM1, that was introduced with patch SD*5.3*567, has 
+ been modified and the sub-routine (API) CHKENC has been removed.
+  
+ That following code is being added at line STATUS+16^SDAM1:
+  
+ I 'Y,SDT<$$NOW^XLFDT N SDSCE S SDSCE=$P($G(^DPT(DFN,"S",SDT,0)),U,20) D
+   ;pointer to OE
+ .I SDSCE S $P(Y,U,3)=$P($G(^SCE(SDSCE,0)),U,7) ;check out date
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Users are allowed on the system during patch installation.
+  
+ Installation should take less than 2 minutes.
+  
+ 1. LOAD TRANSPORT GLOBAL
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. START UP KIDS
+    -------------
+    Start up the Kernel Installation and Distribution System Menu [XPD
+    MAIN]
+   
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+       1  Load a Distribution
+       2  Verify Checksums in Transport Global
+       3  Print Transport Global
+       4  Compare Transport Global to Current System
+       5  Backup a Transport Global
+       6  Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+  
+ 3. From this menu, you may elect to use the following options (when
+    prompted for INSTALL NAME, enter SD*5.3*591):
+  
+    a. Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch.  It will NOT
+       backup any other changes such as DDs or templates.
+   
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when the patch
+       is installed.  It compares all components of the patch
+       (routines, DDs, templates, etc.).
+  
+    c. Verify Checksums in Transport Global - This option will ensure
+       the integrity of the routines that are in the transport global.
+  
+    d. Print Transport Global - This option will allow you to view
+       the components of the KIDS build.
+  
+ 4. Use the Install Package(s) option and select the package SD*5.3*591.
+  
+    a. When prompted "Want KIDS to INHIBIT LOGONS during the
+       install? NO//", respond NO.
+  
+    b. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? YES//", respond YES.
+  
+     1) When prompted "Enter options you wish to mark as "Out of
+        Order":" enter the following option:
+  
+            Appointment Management          [SDAM APPT MGT]
+            Make Appointment                [SDM]
+  
+     2) When prompted "Enter protocols you wish to mark as "Out of
+        Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAM1
+    Before: B33476298   After: B31062484  **149,155,193,189,445,478,466,
+                                           567,591**
+ 
+Routine list of preceding patches: 567
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : JAN 04, 2012
+Completed By: SESSLER,APRIL                 Date Completed: MAR 22, 2012
+Released By : BENBOW,PHYLLIS O              Date Released : APR 02, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,800 @@
+$TXT Created by ZIMMER,TIMOTHY A at DEVFEY.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 09/16/11 at 09:15
+=============================================================================
+Run Date: OCT 26, 2011                     Designation: IB*2*432
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #421                      Status: Released
+                  Compliance Date: NOV 26, 2011
+=============================================================================
+
+Associated patches: (v)IB*2*240    <<= must be installed BEFORE `IB*2*432'
+                    (v)IB*2*389    <<= must be installed BEFORE `IB*2*432'
+                    (v)IB*2*402    <<= must be installed BEFORE `IB*2*432'
+                    (v)IB*2*405    <<= must be installed BEFORE `IB*2*432'
+                    (v)IB*2*416    <<= must be installed BEFORE `IB*2*432'
+                    (v)IB*2*417    <<= must be installed BEFORE `IB*2*432'
+                    (v)IB*2*419    <<= must be installed BEFORE `IB*2*432'
+                    (v)IB*2*431    <<= must be installed BEFORE `IB*2*432'
+                    (v)IB*2*433    <<= must be installed BEFORE `IB*2*432'
+                    (v)IB*2*436    <<= must be installed BEFORE `IB*2*432'
+                    (v)XU*8*549    <<= must be installed BEFORE `IB*2*432'
+
+Subject: E-CLAIMS - ITERATION 4
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Input Template
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ *****************  MANDATORY PRE-INSTALLATION ACTIVITY  *****************
+ The IB/MCCF Staff MUST empty the 837 extract/transmission queue PRIOR to 
+ the Installation of this patch.
+ See Pre/Post Installation Overview in this patch description for details.
+ *************************************************************************
+  
+ This Integrated Billing (IB) patch introduces substantial changes to the
+ electronic transmission of claims and to the local printing of claim 
+ forms (CMS-1500 and UB-04).
+  
+  
+ The intent of this patch is to:
+  
+ 1. Add new fields to the Enter/Edit Billing Information option [IB EDIT
+    BILLING INFO] to allow users to enter new X12 5010 data elements to
+    claims for health care services provided to patients.
+  
+ 2. Remove fields that are no longer needed in an X12 5010 claims 
+    transmission from the Enter/Edit Billing Information option [IB EDIT 
+    BILLING INFO].
+  
+ 3. Modify the Health Insurance Portability and Accountability Act (HIPAA)
+    837 Health Care Claim message formats to reflect the changes made to
+    Enter/Edit Billing Information [IB EDIT BILLING INFO].
+  
+ 4. Modify the Enter/Edit Billing Information option [IB EDIT BILLING INFO]
+    to retrieve the calculated Billing Provider's name from the new BILLING
+    FACILITY NAME field (#200) of the INSTITUTION file (#4).
+  
+ 5. Modify the Enter/Edit Billing Information option [IB EDIT BILLING INFO]
+    to allow the creation of electronic claims to a payer which are
+    subsequent to Medicare WNR, without first sending the claims to
+    Medicare for receipt of Medicare-Equivalent Remittance Advice (MRA).
+  
+ 6. Modify the Enter/Edit Billing Information option [IB EDIT BILLING INFO]
+    to allow users to enter larger dollar amounts for each line item 
+    (9999999.99).
+  
+ 7. Modify the Enter/Edit Billing Information option [IB EDIT BILLING INFO]
+    and the HIPAA 837 Health Care Claim transmissions to no longer require
+    or transmit Social Security Numbers (SSNs) as primary IDs for human
+    providers.
+  
+ 8. Modify the Auto-biller process so that claims for health care services
+    provided to patients are only created for dates of service that fall
+    within both the Filing Time Frame (FTF) of the payer and the effective
+    dates of the patients' insurance.
+  
+ 9. Modify the Auto-biller process so that institutional claims for health
+    care services provided to patients are created with a calculated
+    Billing Provider of the Veterans Affairs Medical Center (VAMC) if the
+    patient was treated at the VAMC, or the first Community Based
+    Outpatient Clinic (CBOC), if the patient was not treated at the VAMC,
+    but was treated at more than one CBOC on the date of service.
+  
+ 10. Modify the Provider ID Maintenance option [IBCE PROVIDER MAINT] to
+     allow users to define Contact Information for non-VA Facilities.
+  
+ 11. Modify the Insurance Company Entry/Edit option [IBCN INSURANCE CO 
+     EDIT] to allow users to set a flag that will determine when
+     automatically created secondary/tertiary claims must be forced to
+     print locally (set to allow transmission at the time of installation).
+  
+ 12. Modify the Insurance Company Entry/Edit option [IBCN INSURANCE CO 
+     EDIT] to allow users to set a flag that will determine when claims 
+     secondary to Medicare WNR claims, which were not first sent to
+     Medicare (no MRAs), must be forced to print locally (set to not allow
+     transmission at the time of installation).
+  
+ 13. Modify the Insurance Company Entry/Edit option [IBCN INSURANCE CO 
+     EDIT] to allow users to select additional Electronic Plan Type
+     Qualifiers.
+  
+ 14. Add the ability for the system to automatically create and transmit
+     secondary/tertiary claims (non-Medicare) to payers when the
+     Explanation of Benefits (EOB) data from the primary/secondary claims
+     meets specified criteria.
+  
+ 15. Add the ability for users to access a new option, COB Management 
+     Worklist [IBCE COB MANAGEMENT], to manage those secondary/tertiary
+     claims whose EOB data fails to meet specified criteria.
+  
+ 16. Add a new, non-human user called AUTHORIZER,IB REG  to the New 
+     Person (#200) file, to the system to which the automatic
+     processing of secondary/tertiary claims will be attributed.
+  
+ 17. Add new, and remove old warning/error messages, to support the changes
+     to the Enter/Edit Billing Information option [IB EDIT BILLING INFO].
+  
+ 18. Remove the default Billing Provider Secondary ID (the Tax ID Number of
+     the VAMC) that used to be added to claims if no Billing Provider
+     Secondary ID was defined in Insurance Company Entry/Edit [IBCN
+     INSURANCE CO EDIT].
+  
+ 19. Modify the Enter/Edit Billing Information option [IB EDIT BILLING 
+     INFO] to prevent the addition of the hard-coded Medicare Billing
+     Provider Secondary IDs (674499 and 670899) from being erroneously
+     added to Medicare WNR Part A claims when they are not defined in the
+     Insurance Company Entry/Edit option [IBCN INSURANCE CO EDIT].
+  
+ 20. Modify the MCCR Site Parameters Display/Edit option [IBJ MCCR SITE
+     PARAMETERS] to allow users to define printers to which automatically 
+     created secondary/tertiary claims, and their associated EOBs, can be
+     sent when the payer is unable to accept electronic claims, and to
+     disable the automatic processing of secondary/tertiary claims.
+  
+ 21. Addresses an issue with claims rejection due to the Taxonomy code
+     for the rendering provider having no value.
+  
+  
+ Components Sent With Patch
+ --------------------------
+ The following is a list of files included in this patch:
+  
+                                           UP   SEND DATA             USER
+                                           DATE SEC. COMES  SITE RSLV OVER
+ FILE #  FILE NAME                         DD   CODE W/FILE DATA PTRS RIDE
+ -------------------------------------------------------------------------
+  
+ 36     INSURANCE COMPANY                  YES  YES  NO                NO
+ 350.8  IB ERROR                           NO   NO   YES    OVER NO    NO
+ 350.9  IB SITE PARAMETERS                 YES  NO   NO                NO
+ 353.3  IB ATTACHMENT REPORT TYPE          YES  YES  YES    OVER NO    NO 
+ 355.3  GROUP INSURANCE PLAN               YES  NO   NO                NO
+ 355.93 IB NON/OTHER VA BILLING PROVIDER   YES  YES  NO                NO
+ 362.4  IB BILL/CLAIMS PRESCRIPTION REFILL YES  YES  NO                NO 
+ 364.5  IB DATA ELEMENT DEFINITION         NO   NO   YES    OVER YES   NO
+ 364.6  IB FORM SKELETON DEFINITION        NO   NO   YES    OVER YES   NO
+ 364.7  IB FORM FIELD CONTENT              NO   NO   YES    OVER YES   NO
+ 399    BILL/CLAIMS                        YES  NO   NO                NO
+  
+  
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name (Number)                   File Name (Number)
+ -------------------                   ------------------
+ PRINT SEC/TERT AUTO CLAIMS? (6.09)    INSURANCE COMPANY (36)
+ PRINT SEC MED CLAIMS W/O MRA? (6.1)   INSURANCE COMPANY (36)
+ CMS-1500 AUTO PRINTER (8.14)          IB SITE PARAMETERS (350.9)
+ UB-04 AUTO PRINTER(8.15)              IB SITE PARAMETERS (350.9)
+ EOB AUTO PRINTER (8.16)               IB SITE PARAMETERS (350.9)
+ AUTOMATIC REG EOB PROCESS? (8.17)     IB SITE PARAMETERS (350.9)
+ ALLOW REG EOB PROCESSING? (8.18)      IB SITE PARAMETERS (350.9)
+ MRA AUTO PRINTER (8.19)               IB SITE PARAMETERS (350.9)
+ ATTACHMENT REPORT TYPE CODE (.01)     IB ATTACHMENT REPORT TYPE (353.3)
+ ATTACHMENT REPORT TYPE NAME (1)       IB ATTACHMENT REPORT TYPE (353.3)
+ ELECTRONIC PLAN TYPE (.15)            GROUP INSURANCE PLAN (355.3)
+ CONTACT NAME (1.01)                   IB NON/OTHER VA BILLING PROVIDER 
+                                                            (355.93)
+ CONTACT PHONE NUMBER (1.02)           IB NON/OTHER VA BILLING PROVIDER 
+                                                            (355.93)
+ CONTACT PHONE EXTENSION (1.03)        IB NON/OTHER VA BILLING PROVIDER 
+                                                            (355.93)
+ TYPE OF RULE (.11)                    IB BILL/CLAIMS PRESCRIPTION   
+                                                     REFILL (364.4)
+ FORM TYPE (.19)                       BILL/CLAIMS (399)
+ CURRENT BILL PAYER SEQUENCE (.21)     BILL/CLAIMS (399)
+ MRA REVIEW STATUS (28.1)              BILL/CLAIMS (399)
+ AUTO PROCESSED FROM CLAIM (34)        BILL/CLAIMS (399)
+ AUTO PROCESS (35)                     BILL/CLAIMS (399)
+ AUTO PROCESS REASON (36)              BILL/CLAIMS (399)
+ REMOVED FROM WORKLIST BY (37)         BILL/CLAIMS (399)
+ REMOVED FROM WORKLIST HOW (38)        BILL/CLAIMS (399)
+ REMOVED FROM WORKLIST DATE (39)       BILL/CLAIMS (399)
+ PRIMARY INSURANCE CARRIER (101)       BILL/CLAIMS (399)
+ SPECIAL PROGRAM INDICATOR (238)       BILL/CLAIMS (399)
+ PRIMARY REFERRAL NUMBER (253)         BILL/CLAIMS (399)
+ SECONDARY REFERRAL NUMBER (254)       BILL/CLAIMS (399)
+ TERTIARY REFERRAL NUMBER (255)        BILL/CLAIMS (399)
+ COB TOTAL NON-COVERED AMOUNT (260)    BILL/CLAIMS (399)
+ PROPERTY/CASUALTY CLAIM NUMBER (261)  BILL/CLAIMS (399)
+ PROP/CAS DATE OF 1ST CONTACT (262)    BILL/CLAIMS (399)
+ DISABILITY START DATE (263)           BILL/CLAIMS (399)
+ DISABILITY END DATE (264)             BILL/CLAIMS (399)
+ PRIMARY SURGICAL PROC CODE (266)      BILL/CLAIMS (399)
+ SECONDARY SURGICAL PROC CODE (267)    BILL/CLAIMS (399)
+ PROPERTY/CASUALTY CONTACT NAME (268)  BILL/CLAIMS (399)
+ PROP/CAS COMMUNICATION NUMBER (269)   BILL/CLAIMS (399)
+ PROP/CAS EXTENSION NUMBER (269.1)     BILL/CLAIMS (399)
+ AMBULANCE P/U ADDRESS 1 (271)         BILL/CLAIMS (399)
+ AMBULANCE P/U ADDRESS 2 (272)         BILL/CLAIMS (399)
+ AMBULANCE P/U CITY (273)              BILL/CLAIMS (399)
+ AMBULANCE P/U STATE (274)             BILL/CLAIMS (399)
+ AMBULANCE P/U ZIP (275)               BILL/CLAIMS (399)
+ AMBULANCE D/O LOCATION (276)          BILL/CLAIMS (399)
+ AMBULANCE D/O ADDRESS 1 (277)         BILL/CLAIMS (399)
+ AMBULANCE D/O ADDRESS 2 (278)         BILL/CLAIMS (399)
+ AMBULANCE D/O CITY (279)              BILL/CLAIMS (399)
+ AMBULANCE D/O STATE (280)             BILL/CLAIMS (399)
+ AMBULANCE D/O ZIP (281)               BILL/CLAIMS (399)
+ ASSUMED CARE DATE (282)               BILL/CLAIMS (399)
+ RELINQUISHED CARE DATE (283)          BILL/CLAIMS (399)
+ ATTACHMENT CONTROL NUMBER (284)       BILL/CLAIMS (399)
+ ATTACHMENT REPORT TYPE (285)          BILL/CLAIMS (399)
+ ATTACHMENT REPORT TRANS CODE (286)    BILL/CLAIMS (399)
+ FORM LOCATOR 64A (453)                BILL/CLAIMS (399)
+ FORM LOCATOR 64B (454)                BILL/CLAIMS (399)
+ FORM LOCATOR 64C (455)                BILL/CLAIMS (399)
+ FUNCTION (.01)                        PROVIDER SUB-FIELD (399.0222)
+ PERFORMED BY (.02)                    PROVIDER SUB-FIELD (399.0222)
+ PURCHASED COST (19)                   PROCEDURES SUB-FIELD (399.0304)
+ ATTACHMENT CONTROL NUMBER (70)        PROCEDURES SUB-FIELD (399.0304)
+ ATTACHMENT REPORT TYPE (71)           PROCEDURES SUB-FIELD (399.0304)
+ ATTACHMENT REPORT TRANS CODE (72)     PROCEDURES SUB-FIELD (399.0304)
+ ADDITIONAL OB MINUTES (74)            PROCEDURES SUB-FIELD (399.0304)
+ LINE FUNCTION (.01)                   LINE PROVIDER SUB-FIELD (399.0404)
+ LINE PERFORMED BY (.02)               LINE PROVIDER SUB-FIELD (399.0404)
+ CREDENTIALS (.03)                     LINE PROVIDER SUB-FIELD (399.0404)
+ STATE (.04)                           LINE PROVIDER SUB-FIELD (399.0404)
+ PRIMARY INS CO ID NUMBER (.05)        LINE PROVIDER SUB-FIELD (399.0404)
+ SECONDARY INS CO ID NUMBER (.06)      LINE PROVIDER SUB-FIELD (399.0404)
+ TERTIARY INS CO ID NUMBER (.07)       LINE PROVIDER SUB-FIELD (399.0404)
+ SPECIALTY (.08)                       LINE PROVIDER SUB-FIELD (399.0404)
+ PRIM INS PROVIDER ID TYPE (.12)       LINE PROVIDER SUB-FIELD (399.0404)
+ SEC INS PROVIDER ID TYPE (.13)        LINE PROVIDER SUB-FIELD (399.0404)
+ TERT INS PROVIDER ID TYPE (.14)       LINE PROVIDER SUB-FIELD (399.0404)
+ LINE TAXONOMY (.15)                   LINE PROVIDER SUB-FIELD (399.0404)
+ CHARGES (.02)                         REVENUE CODE SUB-FIELD (399.042)
+ TOTAL (.04)                           REVENUE CODE SUB-FIELD (399.042)
+ NON-COVERED CHARGE (.09)              REVENUE CODE SUB-FIELD (399.042)
+ EOB CLAIM COMMENTS (.01)              EOB CLAIM COMMENTS SUB-FIELD 
+                                                              (399.078)
+ COMMENT ENTERED BY (.02)              EOB CLAIM COMMENTS SUB-FIELD 
+                                                              (399.078)
+ COMMENTS (.03)                        EOB CLAIM COMMENTS SUB-FIELD 
+                                                              (399.078)
+  
+  
+ The following is a list of templates included in this patch:
+  
+ Template Name      Type        File Name (Number)
+ -------------      ----        ------------------
+ IB SCREEN10        INPUT       BILL/CLAIMS (399)
+ IB SCREEN102       INPUT       BILL/CLAIMS (399)
+ IB SCREEN10H       INPUT       BILL/CLAIMS (399)
+ IB SCREEN6         INPUT       BILL/CLAIMS (399)
+ IB SCREEN7         INPUT       BILL/CLAIMS (399)
+ IB SCREEN8         INPUT       BILL/CLAIMS (399)
+ IB SCREEN82        INPUT       BILL/CLAIMS (399)
+ IB SCREEN8H        INPUT       BILL/CLAIMS (399)
+ IBEDIT INS CO1     INPUT       INSURANCE COMPANY (36)
+  
+  
+ The following is a list of protocols included in this patch:
+  
+ IBCAPR2 MAIN ENTRY                             SEND TO SITE
+ IBCAPR MENU                                    SEND TO SITE
+ IBCAPR PRINT MAR                               SEND TO SITE
+ IBCAPR PRINT MAR DEFAULT                       SEND TO SITE
+ IBCAPR PRINTF                                  SEND TO SITE
+ IBCAPR PRINTFD                                 SEND TO SITE
+ IBCE EOB VIEW                                  ATTACH TO MENU
+ IBCEM CLONE BILL                               ATTACH TO MENU
+ IBCEM COB CANCEL                               ATTACH TO MENU
+ IBCEM COB EDIT BILL                            ATTACH TO MENU
+ IBCEM COB EXIT                                 ATTACH TO MENU
+ IBCEM COB MANAGEMENT 2                         SEND TO SITE
+ IBCEM COB TPJI                                 ATTACH TO MENU
+ IBCEM COPY SECOND/THIRD                        ATTACH TO MENU
+ IBCEM CORRECT REJECTED/DENIED BILL             ATTACH TO MENU
+ IBCEM MRA STATUS                               ATTACH TO MENU
+ IBCEM REMOVE FROM WORKLIST                     SEND TO SITE
+ IBCEM VIEW COMMENTS                            ATTACH TO MENU 
+  
+  
+ The following is a list of List Templates included in this patch:
+  
+ IBCAPR                                         SEND TO SITE
+ IBCEM COB MANAGEMENT                           SEND TO SITE   
+  
+  
+ The following is a list of options included in this patch:
+  
+ Option Name                                    Action:
+ -----------                                    -------
+ IBCE 837 EDI MENU                              USE AS LINK FOR 
+ MENU/ITEM/SUBSCRIBERS
+ IB THIRD PARTY BILLING MENU                    USE AS LINK FOR 
+ MENU/ITEM/SUBSCRIBERS
+ IBCE COB MANAGEMENT                            SEND TO SITE
+ IBCE PRINT EOB                                 SEND TO SITE
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ eClaims Iteration 4 #20080109
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ 1. HD00000000259725 Billing Problem after user has been terminated in new
+                     person file
+  
+ 2. HD0000000361576  Billing Provider ID Invalid for Payor - 674499
+   
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ 1. HD00000000259725 Billing Problem after user has been terminated in new
+    person file
+  
+ Problem:
+ --------
+ When a provider was inactivated in the option Deactivate a User
+ [XUSERDEACT], and his Taxonomy code was no longer valid, Integrated 
+ Billing (IB) didn't populate the code into the claim in the option
+ Enter/Edit Billing Information [IB EDIT BILLING INFO].
+  
+ Resolution:
+ -----------
+ Modified routine IBCEF73A, and the trigger data definition in the
+ Performed By field of the Provider sub-file under the BILL/CLAIMS (#399)
+ file. It will set the Taxonomy code in the file if the event date on the
+ claim has been covered by the time of the care when the provider was
+ active in the past.
+  
+                                     UP    SEND  DATA                USER
+                                     DATE  SEC.  COMES  SITE   RSLV  OVER
+  FILE #      NAME                   DD    CODE  W/FILE DATA   PTS   RIDE
+  -----------------------------------------------------------------------
+  399         BILL/CLAIMS            YES   NO    NO                  NO
+  Partial DD: subDD: 399.0222   fld: .02
+  
+ The post-init routine will detmine if a Taxonomy code needs to be 
+ added to any claim with the status of Entered/Not Review billing when the
+ Taxonomy for the provider was not set in the BILL/CLAIMS (#399) file. If
+ any are found, they will be listed as part of the install. In addition,
+ all Billing Screen Input templates are re-compiled in the post-install for
+ the taxonomy trigger data definition and the other DD changes introduced
+ with patch *432 (See component list earlier in this description).
+  
+  
+ 2. HD0000000361576  Billing Provider ID Invalid for Payor - 674499
+  
+ Problem:
+ --------
+ Claims have been rejected due to provider number 674499. This number 
+ was provided to the VA a long time ago as a Medicare Psych facility 
+ provider number. The number, 674499, is hard-coded in VistA, which causes
+ it to override the site's wage index number on inpatient psych claims.
+  
+ Resolution:
+ -----------
+ Modified the Enter/Edit Billing Information option [IB EDIT BILLING 
+ INFO] to prevent the addition of the hard-coded Medicare Billing Provider 
+ Secondary IDs (674499 and 670899) from being erroneously added to Medicare
+ WNR Part A claims when they are not defined in the Insurance 
+ Company Entry/Edit option [IBCN INSURANCE CO EDIT].
+  
+  
+ Documentation Retrieval:
+ ------------------------
+ Updated documentation describing the Release Notes for this patch is
+ available.
+  
+ The preferred method is to FTP (binary mode) the files from
+ download.vista.med.va.gov.
+  
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  
+  Hines          ftp.fo-hines.med.va.gov   
+  Salt Lake City ftp.fo-slc.med.va.gov     
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be retrieved from the VistA 
+ Documentation Library (VDL) on the Internet at the following address:
+  
+      http://www.va.gov/vdl
+  
+ The documentation files associated with this patch are listed below.
+  
+ File Name                       Description                       
+ -------------------------------------------------------------------
+ IB_2_P432_RN.PDF      eClaims Iteration 4 Release Notes (IB*2*432)
+  
+ IB_2_P432_TM.PDF      Integrated Billing Technical Manual/Security Guide
+                       (IB*2*432)
+  
+ EDI_USER_GUIDE_R0911.PDF     EDI Billing User Guide
+  
+  
+  
+ Test Sites:
+ -----------
+ Central Plains
+ Louisville
+ TVHCS
+ VISN 2
+ Walla Walla 
+  
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ ****Important Note: There is one **MANDATORY** pre-installation
+     activity associated with this install.
+  
+ The IB Staff MUST empty the 837 extract/transmission queue PRIOR to
+ the installation of this patch. ***
+  
+ The site IRM would coordinate with the Billing Department to insure that 
+ the 837 extract/transmission queue is empty. The Billing Department 
+ should be aware of the set of instructions to be executed. If not 
+ billing supervisor can be contacted. Once the Billing Department has 
+ completed the instruction, the Billing department is to inform IRM that 
+ the patch installation could proceed.   
+  
+ There are no other mandatory pre-installation activities associated
+ with this package.
+  
+  
+ **** Please note, if you select the option below, Compare Transport Global
+      to Current System, and select #1 Full Comparison, you will get a
+      system error:  <UNDEFINED>S+1^DIQ ^IBA(364.6,1937,0) due to a known
+      issue with the KIDS Full Compare option (see Remedy Ticket
+      HD0000000449218). You can run any of the other 3 compare options
+      without issue.
+  
+ Post installation, the site should define the default printers in Section
+ 7 of the IB Site Parameters that will provide the ability to print
+ automatically created non-Medicare secondary/tertiary claims and their
+ associated EOBs for payers who are unable to accept secondary/tertiary
+ claims electronically. Failure to define the default printers will 
+ prevent IB from automatically printing the claims.
+  
+  
+       ================INSTALLATION INSTRUCTIONS =================
+  
+   ******************************************************************
+   *  You should install this patch during non-peak hours, when no  *
+   *  Integrated Billing or Accounts Receivable users are on the    *
+   *  system.                                                       *
+   ******************************************************************
+  
+  
+         ****There are no options to disable.
+  
+ Install Time: The installation time will depend on the size of the
+ BILL/CLAIMS (#399) file.
+  
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+ Select Kernel Installation & Distribution System Option: INStallation
+                                                          ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+ Select Installation Option:
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter IB*2.0*432):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).  
+  
+         ********Please note, if you select option #1 to run a Full
+         Comparison you will get a system error:  <UNDEFINED>S+1^DIQ
+         ^IBA(364.6,1937,0) due to a known issue with the KIDS Full 
+         Compare option (see Remedy Ticket # HD0000000449218). You can run
+         any of the other 3 compare options without issue.
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s)
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch:
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES//' answer YES
+  
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//' answer NO
+  
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu
+         Options, and Protocols? NO//' answer NO
+  
+ 5.  Routines ^IBY423PO and ^IBY432PR will be deleted upon completion of 
+ installstion.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 192
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCAPP
+    Before:       n/a   After: B19459268  **432**
+Routine Name: IBCAPP1
+    Before:       n/a   After: B37999170  **432**
+Routine Name: IBCAPP2
+    Before:       n/a   After: B40572879  **432**
+Routine Name: IBCAPR
+    Before:       n/a   After:B150582034  **432**
+Routine Name: IBCAPR1
+    Before:       n/a   After:  B7280643  **432**
+Routine Name: IBCAPR2
+    Before:       n/a   After: B99779459  **432**
+Routine Name: IBCAPU
+    Before:       n/a   After:   B877398  **432**
+Routine Name: IBCB1
+    Before: B64732488   After: B67924398  **70,106,51,137,161,182,155,327,432**
+Routine Name: IBCBB
+    Before: B73522821   After: B73668257  **80,51,137,288,327,361,371,
+                                           377,400,432**
+Routine Name: IBCBB1
+    Before: B72688329   After: B87354166  **27,52,80,93,106,51,151,148,
+                                           153,137,232,280,155,320,343,
+                                           349,363,371,395,384,432**
+Routine Name: IBCBB11
+    Before: B32717107   After: B97720533  **51,343,363,371,395,392,401,
+                                           384,400,436,432**
+Routine Name: IBCBB12
+    Before:       n/a   After:B132831016  **432**
+Routine Name: IBCBB2
+    Before: B44800809   After: B49120476  **51,137,210,245,232,296,320,
+                                           349,371,403,432**
+Routine Name: IBCBB21
+    Before: B13422784   After: B15422214  **51,137,210,232,155,291,348,
+                                           349,403,400,432**
+Routine Name: IBCBB3
+    Before: B47525889   After: B41965627  **51,137,155,349,371,377,432**
+Routine Name: IBCBB9
+    Before:  B9034446   After:  B8708481  **51,137,155,349,371,432**
+Routine Name: IBCC
+    Before: B55278048   After: B58814397  **2,19,77,80,51,142,137,161,
+                                           199,241,155,276,320,358,433,
+                                           432**
+Routine Name: IBCCC
+    Before: B19833336   After: B20747072  **80,109,106,51,320,433,432**
+Routine Name: IBCCC1
+    Before: B10538987   After: B10846914  **80,109,106,51,320,358,433,432**
+Routine Name: IBCCC2
+    Before: B69917469   After: B89240196  **80,106,124,138,51,151,137,
+                                           161,182,211,245,155,296,320,
+                                           348,349,371,400,433,432**
+Routine Name: IBCCCB
+    Before: B81507982   After: B88589489  **80,106,51,151,137,182,155,
+                                           323,436,432**
+Routine Name: IBCCPT
+    Before: B67101074   After: B86719137  **55,62,52,91,106,125,51,148,
+                                           174,182,245,266,260,339,432**
+Routine Name: IBCECOB
+    Before: B16479682   After: B17473873  **137,155,288,432**
+Routine Name: IBCECOB1
+    Before: B69046565   After: B99389484  **137,155,288,348,377,417,432**
+Routine Name: IBCECOB2
+    Before: B78530862   After:B156849928  **137,155,433,432**
+Routine Name: IBCECOB6
+    Before: B23813020   After: B54280340  **377,432**
+Routine Name: IBCEF11
+    Before: B51577775   After: B72157495  **51,137,155,309,335,348,349,
+                                           371,432**
+Routine Name: IBCEF2
+    Before: B62563812   After: B64226101  **52,85,51,137,232,155,296,349,
+                                           403,400,432**
+Routine Name: IBCEF22
+    Before: B52286279   After: B61306963  **51,137,135,155,309,349,389,432**
+Routine Name: IBCEF31
+    Before:  B8824956   After: B12054415  **155,296,349,400,432**
+Routine Name: IBCEF7
+    Before: B49975711   After: B50797975  **232,349,432**
+Routine Name: IBCEF71
+    Before: B63782219   After: B65598873  **232,155,288,320,349,432**
+Routine Name: IBCEF72
+    Before: B53742177   After: B54190068  **232,320,349,432**
+Routine Name: IBCEF73A
+    Before: B53924008   After: B55865498  **343,374,395,391,400,432**
+Routine Name: IBCEF74
+    Before: B57770095   After: B47493658  **232,280,155,290,291,320,358,
+                                           343,374,432**
+Routine Name: IBCEF74A
+    Before: B23472039   After: B39969650  **320,343,349,395,400,432**
+Routine Name: IBCEF75
+    Before: B23882452   After: B24683660  **320,371,400,432**
+Routine Name: IBCEF76
+    Before: B37942879   After: B45722940  **320,349,400,432**
+Routine Name: IBCEF79
+    Before:B126776634   After:B170462166  **400,419,432**
+Routine Name: IBCEF80
+    Before:       n/a   After: B53774560  **432**
+Routine Name: IBCEF81
+    Before:       n/a   After:B105842498  **432**
+Routine Name: IBCEF82
+    Before:       n/a   After:B111186112  **432**
+Routine Name: IBCEF83
+    Before:       n/a   After: B56319703  **432**
+Routine Name: IBCEF84
+    Before:       n/a   After:  B4728757  **432**
+Routine Name: IBCEFP
+    Before:       n/a   After: B85133537  **432**
+Routine Name: IBCEFP1
+    Before:       n/a   After: B10606502  **432**
+Routine Name: IBCEMQA
+    Before: B12911228   After: B15212408  **155,432**
+Routine Name: IBCEMRAX
+    Before: B48242861   After: B48296303  **155,432**
+Routine Name: IBCEMU1
+    Before: B56645809   After: B59079187  **135,155,432**
+Routine Name: IBCEMU4
+    Before:  B1146588   After:  B1508771  **288,432**
+Routine Name: IBCEOB
+    Before: B81821331   After: B95746536  **137,135,265,155,377,407,431,432**
+Routine Name: IBCEOB21
+    Before: B24441262   After: B26316775  **137,155,432**
+Routine Name: IBCEP2
+    Before: B43750443   After: B54308373  **137,181,232,280,320,349,432**
+Routine Name: IBCEP2B
+    Before: B52920482   After: B59761091  **232,320,400,432**
+Routine Name: IBCEP8
+    Before:B118559850   After:B124106207  **51,137,232,288,320,343,374,
+                                           377,391,400,436,432**
+Routine Name: IBCEP8B
+    Before: B10681479   After: B12352923  **391,432**
+Routine Name: IBCEU
+    Before: B57127468   After:B105674829  **51,137,207,232,349,432**
+Routine Name: IBCEU0
+    Before: B63678448   After: B65545551  **137,197,155,296,349,417,432**
+Routine Name: IBCEU1
+    Before: B42998590   After: B59089714  **137,155,296,349,371,432**
+Routine Name: IBCEU3
+    Before: B60382991   After: B75406373  **51,137,155,323,348,371,400,432**
+Routine Name: IBCEU5
+    Before: B87835412   After: B79445173  **51,137,232,348,349,432**
+Routine Name: IBCEU6
+    Before: B10687368   After: B13249318  **155,371,432**
+Routine Name: IBCEU7
+    Before:       n/a   After: B28602980  **432**
+Routine Name: IBCF23
+    Before: B39555399   After: B40963193  **52,80,106,122,51,152,137,402,432**
+Routine Name: IBCF23A
+    Before: B18929865   After: B19444201  **51,432**
+Routine Name: IBCNSBL2
+    Before: B28176933   After: B33173974  **52,80,153,240,432**
+Routine Name: IBCNSC01
+    Before: B53646224   After: B55647455  **52,137,191,184,232,320,349,
+                                           371,399,416,432**
+Routine Name: IBCSC10
+    Before:       n/a   After:  B3383615  **432**
+Routine Name: IBCSC102
+    Before:       n/a   After: B40563126  **432**
+Routine Name: IBCSC10A
+    Before:       n/a   After:  B7774728  **432**
+Routine Name: IBCSC10B
+    Before:       n/a   After: B42359591  **432**
+Routine Name: IBCSC10H
+    Before:       n/a   After: B48673264  **432**
+Routine Name: IBCSC5A
+    Before: B42695734   After: B46960679  **27,52,106,51,160,137,245,309,
+                                           347,405,432**
+Routine Name: IBCSC5C
+    Before: B44697978   After: B51873840  **27,52,130,51,160,260,309,315,
+                                           339,347,363,381,405,432**
+Routine Name: IBCSC6
+    Before: B16070928   After: B15100068  **52,80,109,106,51,137,343,400,432**
+Routine Name: IBCSC7
+    Before:  B7519963   After:  B6990382  **52,80,109,106,343,400,432**
+Routine Name: IBCSC8
+    Before:  B3226944   After:  B8784188  **432**
+Routine Name: IBCSC82
+    Before: B34330595   After:    Delete  
+Routine Name: IBCSC8A
+    Before:  B7456472   After:    Delete  
+Routine Name: IBCSC8B
+    Before: B41247603   After:    Delete  
+Routine Name: IBCSC8H
+    Before: B42537068   After:    Delete  
+Routine Name: IBCSCE
+    Before:  B9045133   After:  B9117892  **52,80,91,106,51,137,236,245,
+                                           287,349,371,400,432**
+Routine Name: IBCSCH
+    Before: B46654544   After: B47256662  **52,80,106,124,138,51,148,137,
+                                           161,245,232,287,348,349,374,
+                                           371,395,400,432**
+Routine Name: IBCSCP
+    Before: B10607644   After: B10801833  **52,51,161,266,432**
+Routine Name: IBCSCU
+    Before: B11830990   After: B12080989  **52,51,348,432**
+Routine Name: IBCU
+    Before: B57580772   After: B52974983  **52,106,51,191,232,323,320,384,432**
+Routine Name: IBCU2
+    Before:  B7719494   After:  B8155508  **137,287,432**
+Routine Name: IBCU7
+    Before: B54198894   After: B78100882  **62,52,106,125,51,137,210,245,
+                                           228,260,348,371,432**
+Routine Name: IBCU71
+    Before: B21952006   After: B25142768  **41,60,91,106,125,138,210,245,
+                                           349,432**
+Routine Name: IBCU74
+    Before: B34341645   After: B35879024  **228,260,339,432**
+Routine Name: IBCU7B
+    Before:       n/a   After: B52236174  **432**
+Routine Name: IBCU82
+    Before: B21673527   After: B22371343  **43,55,91,124,160,304,347,432**
+Routine Name: IBCVC
+    Before:  B8498241   After: B12760924  **371,400,432**
+Routine Name: IBJPS
+    Before:  B3592314   After:  B3750253  **39,52,70,115,143,51,137,161,
+                                           155,320,348,349,377,384,400,
+                                           432**
+Routine Name: IBJPS2
+    Before: B39779249   After: B43690193  **39,52,115,143,51,137,161,155,
+                                           320,348,349,377,384,400,432**
+Routine Name: IBJPS3
+    Before: B89833158   After: B89166752  **400,432**
+Routine Name: IBJTCA1
+    Before: B47734103   After: B52064339  **39,80,106,137,223,276,363,384,432**
+Routine Name: IBJTTC
+    Before: B51819511   After: B68420577  **39,377,431,432**
+Routine Name: IBY432PO
+    Before:       n/a   After: B24652883  **432**
+Routine Name: IBY432PR
+    Before:       n/a   After:B209623389  **432**
+ 
+Routine list of preceding patches: 240, 389, 402, 405, 416, 417, 419, 431
+                           433, 436
+
+=============================================================================
+User Information:
+Entered By  : JUTZI,WILLIAM CHRISTOPHER     Date Entered  : MAY 17, 2010
+Completed By: ROBBINS,BRADLEY               Date Completed: OCT 06, 2011
+Released By : CAULFIELD,MARY                Date Released : OCT 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

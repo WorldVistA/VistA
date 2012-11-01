@@ -1,0 +1,292 @@
+$TXT Created by KOPECKY,STEVE at MNTVLL.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 04/26/11 at 10:32
+=============================================================================
+Run Date: AUG 17, 2011                     Designation: EAS*1*103
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1        SEQ #84                      Status: Released
+                  Compliance Date: SEP 17, 2011
+=============================================================================
+
+Associated patches: (v)EAS*1*70    <<= must be installed BEFORE `EAS*1*103'
+
+Subject: STORE ERROR IN GATHER VISTA INSURANCE DATA TO PRINT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch IB*2*416 'EIV Enhancements - Phase 3 Iteration 1' introduced the
+ collection of eIV Eligibility/Benefit information from third party
+ insurance payers by adding a new sub-file into the existing INSURANCE TYPE
+ sub-file (#2.312) of the PATIENT File (#2).  This enhancement has allowed
+ for the possibility of a large amount of data to now be stored into the
+ INSURANCE TYPE fields.  Existing code for the DG Registration 10/10
+ Reprint [10-10 Print] option utilized a database server call to retrieve
+ all Insurance Type information into a local variable for processing and
+ printing the Form 10-10EZ.  With the additional data now being collected,
+ it's possible in certain circumstances to overload the local variable when
+ the database server call is made.  This can result in a <STORE> error
+ being generated in the system (which may or may not appear in the error
+ trap.) This patch makes a modification to the current code to limit the
+ data being retrieved and stored from the insurance sub-file to only the
+ specific insurance fields required for the 10-10 Print option to minimize 
+ the possibility of the <STORE> error being generated.
+  
+  
+ Patch Components
+ ================
+ Routine file EASEZPVI
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ None
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ None
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+ 1. HD0000000446802  <STORE>^DIQGQ  Unable to print means test
+  
+ Problem:
+ -------
+ Cannot print 1010 on 1 patient
+  
+ Site is having a problem with printing a 10-10 on a certain patient.  A 
+ <STORE>  error is being generated.  It looks like the insurance subfile 
+ is the issue.  Our MAS and Finance Adpacs are unable to detect any issues 
+ to correct.
+  
+ Resolution:
+ ----------
+ The routine EASEZPVI which gathers VistA insurance data to print the 
+ 10-10 EAS form uses the following database server call to retrieve 
+ ALL the insurance information for a patient before printing the 10-10EZ 
+ form: 
+  
+     D GETS^DIQ(2.312,INDA_","_EASDFN,"**","IE","INSUR")
+  
+ This information is stored in a local parameter.  If there is a large 
+ amount of third party eIV Eligibility/Benefit information stored in 
+ these insurance multiples, the potential exists for overloading the 
+ system and generating a <STORE> error.
+  
+ This line of code is being modified to retrieve only the specific data 
+ pieces currently required for printing the 10-10EZ form and greatly 
+ reduce the size the local parameter being generated, thereby minimizing 
+ the potential for the <STORE> error.
+  
+  
+ 2. HD0000000431089 Registration Menu not allowing completion of means 
+ test menu at the end. - <STORE>AUDIT+6^DIQG
+  
+ Problem:
+ -------
+ See HD0000000446802 problem statement above.
+  
+ Resolution:
+ ----------
+ See HD0000000446802 problem resolution above.
+  
+  
+ 3. HD0000000452286  Unable to Print 10/10 for a certain patient
+  
+ Problem:
+ -------
+ See HD0000000446802 problem statement above.
+  
+ Resolution:
+ ----------
+ See HD0000000446802 problem resolution above.
+  
+  
+ 4. HD0000000454764  user cannot print specific 1010ez for a patient
+  
+ Problem:
+ -------
+ See HD0000000446802 problem statement above.
+  
+ Resolution:
+ ----------
+ See HD0000000446802 problem resolution above.
+  
+  
+ 5.  HD0000000457777  Errors in the error trap and cannot print/hung in 
+ patient record
+  
+ Problem:
+ -------
+ See HD0000000446802 problem statement above.
+  
+ Resolution:
+ ----------
+ See HD0000000446802 problem resolution above.
+  
+  
+ 6. HD0000000462188 10-10EZ not printing for specific patient no errors 
+ being logged
+  
+ Problem:
+ -------
+ See HD0000000446802 problem statement above.
+  
+ Resolution:
+ ----------
+ See HD0000000446802 problem resolution above.
+  
+  
+ 7. HD0000000481011 Cannot print 1010 on 1 patient
+  
+ Problem:
+ -------
+ See HD0000000446802 problem statement above.
+  
+ Resolution:
+ ----------
+ See HD0000000446802 problem resolution above.
+  
+  
+ Change Request/Code Change Requests:
+ ------------------------------------
+  
+ 1. Maint_CodeCR10582 Remedy #HD0000000446802  <STORE>^DIQGQ  Unable to 
+ print means test
+  
+ Problem:
+ --------
+ See HD0000000446802 problem statement above.
+  
+  
+ Resolution:
+ ----------
+ See HD0000000446802 problem resolution above.
+  
+  
+ Test Sites:
+ ----------
+ Richmond VAMC (Large)
+ Miami VAMC (Large)
+ N FL/S GA HCS (Large/Integrated)
+  
+  
+ Patch Installation:
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+ Menu Options to disable:
+   
+ 10-10 Print [10-10 PRINT  DG REGISTRATION 10/10 REPRINT]
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch   
+     EAS*1.0*103:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' Press ENTER.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  Press ENTER.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// Enter 'YES'.
+  
+     10-10 Print [10-10 PRINT  DG REGISTRATION 10/10 REPRINT]
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;ENROLLMENT APPLICATION SYSTEM;**[Patch List]**;Mar 15, 2001;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EASEZPVI
+    Before: B19722232   After: B20529992  **57,70,103**
+ Description of Changes:
+  Before
+  ======
+   12        ;NAME(S) OF INSURED, MEDICARE PART A/B, AND EFFECTIVE DATE(S)
+   13        ;
+   14        N KEY,VDATA,MULTIPLE,INDA,IENS,INSUR,INSORT,FLD,TYPE,IEN,INPTR,NAME
+   
+   
+   21        ;
+   22        S MULTIPLE=0
+   23        S INDA=0 F  S INDA=$O(^DPT(EASDFN,.312,INDA)) Q:'INDA  D
+   24        . D GETS^DIQ(2.312,INDA_","_EASDFN,"**","IE","INSUR")
+   25        S IENS="" F  S IENS=$O(INSUR(2.312,IENS)) Q:IENS=""  D
+   26        . S FLD=0 F  S FLD=$O(INSUR(2.312,IENS,FLD)) Q:'FLD  D
+   27        . . F TYPE="E","I" S INSORT(2.312,+IENS,FLD,TYPE)=$G(INSUR(2.312,IEN
+              S,FLD,TYPE))
+   28        K INSUR
+   
+   
+  After
+  =====
+   13        ;
+   14        ; 103 - MODIFY THE GETS^DIQ TO RETRIEVE ONLY NEEDED DATA ELEMENTS TO
+               REDUCE THE THE LARGE NUMBER
+   15        ; OF ELIGIBILITY/BENEFIT SUB-MULTIPLES THAT ARE BEING RETURNED.
+   16        ; 
+   17        N KEY,VDATA,MULTIPLE,INDA,IENS,INSUR,INSORT,FLD,TYPE,IEN,INPTR,NAME
+   
+   25        S MULTIPLE=0
+   26        S INDA=0 F  S INDA=$O(^DPT(EASDFN,.312,INDA)) Q:'INDA  D
+   27        . D GETS^DIQ(2.312,INDA_","_EASDFN,".01;1.09;1;3;17;.18;21;8","IE","
+              INSUR")
+   28        S IENS="" F  S IENS=$O(INSUR(2.312,IENS)) Q:IENS=""  D
+   29        . S FLD=0 F  S FLD=$O(INSUR(2.312,IENS,FLD)) Q:'FLD  D
+   30        . . F TYPE="E","I" S INSORT(2.312,+IENS,FLD,TYPE)=$G(INSUR(2.312,IEN
+              S,FLD,TYPE))
+   31        K INSUR
+
+ 
+Routine list of preceding patches: 70
+
+=============================================================================
+User Information:
+Entered By  : KOPECKY,STEPHEN C.            Date Entered  : DEC 14, 2010
+Completed By: RUDINGER,NANCY L.             Date Completed: AUG 03, 2011
+Released By : DANE,SIDNEY                   Date Released : AUG 17, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

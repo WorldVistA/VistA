@@ -1,0 +1,439 @@
+$TXT Created by NABER,DAVID at DEVVJJ.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 02/09/12 at 17:42
+=============================================================================
+Run Date: JUN 25, 2012                     Designation: EC*2*112
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #106                      Status: Released
+                  Compliance Date: JUL 26, 2012
+=============================================================================
+
+Associated patches: (v)EC*2*104    <<= must be installed BEFORE `EC*2*112'
+                    (v)EC*2*108    <<= must be installed BEFORE `EC*2*112'
+                    (v)EC*2*110    <<= must be installed BEFORE `EC*2*112'
+
+Subject: Event Capture FY12 Updates
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ The Decision Support System (DSS) Program office requests modifications to
+ the Event Capture System that would provide the field with improved data
+ entry capabilities so that accurate costing information can be gathered
+ nationally.  This patch contains the modifications for Fiscal Year 2012.
+  
+ Functional Overview
+ ===================
+  
+ 1)  Bug - Incorrect inactive associated clinic values.
+  
+     The following options allow the use of an inactive default associated
+     clinic.  The software has been modified to force the use of an active 
+     clinic.
+  
+     Data Entry by Patient
+     Data Entry by Procedure
+     Data Entry Multiple Dates/Multiple Procedures
+  
+ 2)  Bug - Broker error causes use of a random associated clinic in the 
+     Data Entry by Patient option.
+  
+     The software has been modified so that if a broker error occurs during
+     the process, the Associated Clinic is cleared and the user is notified
+     of the error and instructed to enter the Associated Clinic.
+     
+ 3)  Bug - Enforce DSS unit user access rules.
+  
+     When entering event capture from Computerized Patient Record 
+     System (CPRS) it is possible to be granted DSS unit access
+     incorrectly. The software has been updated so that DSS unit access is
+     correctly applied to the user regardless of how access is gained.
+  
+ 4)  Bug - Unable to select user when more than one user has the same name.
+  
+     When using the Grant Access to DSS Units option, if a user selects a 
+     name from the list when a duplicate exists for that name, the 
+     selected name is not retained.  The software has been modified to 
+     provide additional identifiers so that the correct name can be chosen 
+     and will now retain the selection when made.
+  
+ 5)  Create a new maintenance option called Identify/Inactivate Multiple 
+     Event Code Screens.
+  
+     This new option will allow users to select an Event Capture product 
+     code and then display all of the DSS units using the selected product 
+     code in an event code screen.  Users may then choose to inactivate 
+     event code screens.
+  
+ 6)  Modify software to allow for up to 3 reasons per procedure entered.
+  
+     The EVENT CAPTURE PATIENT (#721) file was modified to capture two 
+     additional procedure reasons. The Procedure Reason #2 (#43) and
+     Procedure Reason #3 (#44) fields were added. In addition, the
+     following options were modified to support the collection and display
+     of those additional reasons.
+  
+     Data Entry by Patient
+     Data Entry by Procedure
+     Multiple Dates/Multiple Procedures
+     Patient Summary Report
+     Procedure Reasons Report
+  
+     The following report will no longer show reasons.
+  
+     Provider 1-7 Summary Report
+  
+ 7)  Modify grant access to DSS units screen to allow printing.
+  
+     The software will be modified so that the list of users identified as 
+     having access to a given DSS unit can be printed.
+  
+ 8)  Modify Event Code screen option so print and export buttons are no 
+     longer grayed out.
+  
+     The software will be modified so that the print and export buttons 
+     will now be functional on this screen.
+  
+ 9)  Modify Event Capture GUI so that it can be minimized.
+  
+     The Event Capture software will be modified so that the application 
+     can be minimized on any screen, minimizing all open screens, and 
+     retaining correct focus when application is maximized.
+  
+ 10) Create a security key to restrict access to Event Capture reports.
+  
+     A reverse security key, ECNORPT, will be created so that users that
+     are assigned this key will not be allowed to access the Event Capture
+     reports.
+  
+ 11) Create a new report called Event Capture Encounter Report.
+  
+     A new report will be created that will display and count the unique 
+     occurrences by patient and DSS unit across a selected time frame.  It 
+     will allow sorting by patient or provider.
+  
+ 12) Modify reports so that only the last 4 of the Social Security 
+     Number (SSN) show.
+  
+     The following reports have been modified so that only the last 4 of 
+     the SSN show, rather than the full SSN.
+  
+     DSS Unit Activity Report
+     Provider 1-7 Summary Report
+  
+ 13) Create a new report called Event Code Screens With Inactive Default 
+     Associated Clinic.
+  
+     A new report will be added that will allow you to identify one, many 
+     or all DSS units and then display all event code screens that 
+     currently have an inactive default associated clinic.
+  
+ 14) Create a new report called DSS Units/Event Code (EC) Screens for
+     Selected Procedure Code Report.
+  
+     A new report will be added that will list all DSS units with event 
+     code screens containing a selected procedure code.
+  
+ Components Sent With Patch
+ ==========================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ File Name (Number)           Field Name (Number)      New/Modified/Deleted
+ --------------------------------------------------------------------------
+ EVENT CAPTURE PATIENT (#721) PROCEDURE REASON #2 (#43)         New
+ EVENT CAPTURE PATIENT (#721) PROCEDURE REASON #3 (#44)         New
+  
+ Forms Associated:
+ -----------------
+  
+ Form Name                       File #            New/Modified/Deleted
+ ----------------------------------------------------------------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+  
+ Mail Group Name                    New/Modified/Deleted
+ -------------------------------------------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+  
+ Options
+ -------
+ EC GUI CONTEXT
+  
+ Protocols Associated:
+ ---------------------
+  
+ Protocol Name                      New/Modified/Deleted
+ -------------------------------------------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+  
+ Security Key
+ ------------
+ ECNORPT
+  
+ Help Frames
+ -----------
+ ECRECER    - NEW
+ ECRECSIC   - NEW
+ ECRECSPC   - NEW
+ ECRDSSUA   - NEW
+ ECINACTECS - NEW
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites
+ ========== 
+  
+ The following sites participated in the testing of the EC*2.0*112
+ software.
+  
+  Test Site
+  --------------------
+  Albuquerque, NM
+  Louisville, KY
+  Northern Indiana (Marion, IN)
+  
+ Software and Documentation Retrieval
+ ====================================
+  
+ The VistA server software for this patch is being distributed through 
+ the National Patch Module (NPM).
+  
+ The Event Capture GUI client software is being distributed as a self-
+ extracting Install Shield executable.  The installed executable for
+ this patch is client version 2.1.3.4 with a size of 1670 KB.
+  
+ The GUI client software and documentation for this patch
+ may be retrieved directly using FTP from the ANONYMOUS.SOFTWARE  directory
+ at the following Office of Information (OI) Field Offices:
+  
+   OIFO               FTP ADDRESS                  DIRECTORY
+   ------------       ------------------------     ------------------
+   First available    download.vista.med.va.gov    anonymous.software
+   Albany             ftp.fo-albany.med.va.gov     anonymous.software
+   Hines              ftp.fo-hines.med.va.gov      anonymous.software
+   Salt Lake City     ftp.fo-slc.med.va.gov        anonymous.software
+  
+ The following files will be available:
+  
+     File Name           Format        Description
+     ---------           ------        -----------
+     EC_2_P112.ZIP       BINARY        EC GUI client installer zip file
+  
+ The Technical and User Manuals as well as the Installation Guide and 
+ Release Notes can be obtained via FTP from the following
+ ANONYMOUS.SOFTWARE directories:
+  
+        OI Field Office                  FTP Address
+        ---------------                  ------------------------
+        Albany                           ftp.fo-albany.med.va.gov
+        Hines                            ftp.fo-hines.med.va.gov
+        Salt Lake City                   ftp.fo-slc.med.va.gov
+   
+        File Name           Description
+        ----------------    ----------------------------------------
+        EC_2_P112_IG.DOC    Installation Guide for ECS FY12 Enhancements
+        EC_2_P112_UM.DOC    Updated Event Capture User Manual 
+        EC_2_P112_TM.DOC    Technical Manual for ECS FY12 Enhancements
+        EC_2_P112_RN.DOC    Release Notes for ECS FY12 Enhancements
+  
+ The VistA Documentation Library [VDL] web site will contain the
+ updated 'Event Capture User Manual', 'Event Capture Release Notes', 
+ 'Event Capture Installation Guide' and 'Event Capture Technical Manual'.
+  
+ This web site is usually updated within 1-3 days of the patch release
+ date.
+  
+ The VDL address is http://www.va.gov/vdl/application.asp?appid=39.
+  
+ Installation Instructions
+ ========================= 
+  
+ ********************* IMPORTANT NOTE ***************************
+ This patch updates the software version number of both the VistA
+ server software and the Event Capture client GUI to version 2.1.3.4
+ GUI client versions prior to version 2.1.3.4 are not compatible with 
+ the VistA server software for this patch.  Therefore, it is crucial
+ that the Event Capture client GUI distributed with this patch be
+ installed immediately following the VistA server software install
+ to minimize service disruption to the Event Capture System users.
+  
+ Pre-Installation Items:
+ =======================
+  
+ * Environment Check:
+      
+   Programmer access is required for installing this patch.
+  
+   ** NOTE ** -- Prior to installation, the installer must ensure the  
+                 DUZ(0) node of the DUZ array is set to the "@" symbol.
+   
+ * Users On the System:
+    
+   This patch modifies routines used by the Event Capture application and
+   may affect many users.
+  
+   This patch may be installed with users on the system, but should be
+   loaded during non-peak hours to minimize disruption to users and to
+   reduce the possibility of errors when the routines are updated.
+  
+   If installed during the normal workday, it is recommended that the
+   following selection(s) in the OPTION (#19) file, and all of their
+   descendants be disabled to prevent possible conflicts while running
+   the KIDS Install. Other VISTA users will not be affected.
+  
+         EC GUI Context version 2.1.3.3   ... EC GUI CONTEXT
+    
+ * Software Installation Time:
+  
+   The estimated installation time is less than 5 minutes during off peak
+   hours.
+  
+ * Required Builds:
+    
+   The following is a list of REQUIRED builds for this KIDS
+   distribution.  KIDS will not allow the installation of this patch
+   without their prior installation.
+  
+   Required Build(s):
+   ------------------
+   EC*2*104
+   EC*2*108
+   EC*2*110
+  
+ Installation Steps:
+ ===================
+   
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+  
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter EC*2.0*112):
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+   4.  Use the Install Package(s) option and select the package EC*2.0*112.
+  
+   5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//'  Answer YES unless your system does this in a
+       nightly TaskMan process.
+  
+   6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//' answer NO.
+  
+   7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//' answer YES.
+     
+   8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+       Enter the following options:
+      
+       EC GUI Context version 2.1.3.3   ... EC GUI CONTEXT
+  
+   9.  When prompted 'Enter protocols you wish to mark as 'Out Of
+       Order':' press <enter>.
+  
+  10.  Install the Event Capture GUI client software following the
+       instructions of the EC GUI Installation Guide found on the VistA
+       Documentation Library (VDL) at the following link:
+       http://www.va.gov/vdl/application.asp?appid=39
+  
+  11.  The Event Capture GUI executable file "ECS GUI.exe", that
+       is unbundled after running the install in step #10, may be
+       copied to another machine without additional supporting files.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECEFPAT
+    Before: B57831365   After: B59874823  **25,32,39,42,47,49,54,65,72,
+                                           95,76,112**
+Routine Name: ECPAT
+    Before: B32218957   After: B34100564  **5,18,47,72,95,112**
+Routine Name: ECPROV3
+    Before: B36456147   After: B40301318  **5,8,18,29,47,56,63,72,95,112**
+Routine Name: ECPRSUM1
+    Before: B29801966   After: B30118950  **5,18,33,47,62,63,61,72,88,95,112**
+Routine Name: ECRDSSA
+    Before:B102481577   After:B103256712  **95,104,112**
+Routine Name: ECRDSSEC
+    Before:       n/a   After:  B6543732  **112**
+Routine Name: ECRDSSUA
+    Before:       n/a   After:  B5616622  **112**
+Routine Name: ECRECER
+    Before:       n/a   After: B26467658  **112**
+Routine Name: ECRECSIC
+    Before:       n/a   After:  B9988550  **112**
+Routine Name: ECRECSPC
+    Before:       n/a   After: B10939952  **112**
+Routine Name: ECRPRSN2
+    Before:       n/a   After: B23756227  **112**
+Routine Name: ECRRPC
+    Before: B16341040   After: B21499079  **25,47,61,72,95,101,100,107,112**
+Routine Name: ECRRPT
+    Before: B54625757   After: B55454344  **25,32,41,56,61,82,94,95,108,112**
+Routine Name: ECRRPT1
+    Before: B59190035   After: B61256749  **25,32,33,61,78,72,90,95,100,
+                                           107,112**
+Routine Name: ECRRPT2
+    Before:       n/a   After: B34837441  **112**
+Routine Name: ECRUDSS
+    Before:       n/a   After:  B4128147  **112**
+Routine Name: ECUERPC1
+    Before: B52697567   After: B53869940  **25,33,42,46,47,54,72,76,110,112**
+Routine Name: ECUMRPC1
+    Before: B78953323   After: B80221872  **25,30,33,72,94,95,105,100,
+                                           107,110,112**
+ 
+Routine list of preceding patches: 104, 108, 110
+
+=============================================================================
+User Information:
+Entered By  : NABER,DAVID A                 Date Entered  : OCT 03, 2011
+Completed By: SBERRO,SANDRA                 Date Completed: MAY 30, 2012
+Released By : MORRIS,THERESA                Date Released : JUN 25, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

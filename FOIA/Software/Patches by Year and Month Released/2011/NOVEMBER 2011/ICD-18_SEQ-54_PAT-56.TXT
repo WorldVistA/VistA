@@ -1,0 +1,306 @@
+$TXT Created by GILMORE,JEREMY at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 10/31/11 at 10:06
+=============================================================================
+Run Date: NOV 28, 2011                     Designation: ICD*18*56
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #54                     Status: Released
+                  Compliance Date: DEC 10, 2011
+=============================================================================
+
+Associated patches: (v)ICD*18*53   <<= must be installed BEFORE `ICD*18*56'
+                    (v)LEX*2*78    <<= must be installed BEFORE `ICD*18*56'
+
+Subject: ANNUAL DRG GROUPER UPDATE FY12
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+    This patch provides the annual update to the Medicare Severity Diagnosis 
+    Related Group (MS-DRG) Grouper v28.0. It is the second phase of the 
+    FY 2012 ICD/DRG Update and is the follow up to patch LEX*2.0*78.
+      
+    No code files are included in the patch, as all changes are handled 
+    programmatically by the pre-init routines ICD1856*.
+  
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+  PLEASE NOTE: 
+    It is HIGHLY recommended that you install LEX*2.0*78 prior to
+    installing this patch. Otherwise, you will not be able to add the FY2012 
+    DRG changes for the new diagnosis and procedure codes introduced with
+    that patch without reloading the DRGs.
+    
+    Also, please take note of the shortened compliance date. The changes
+    included in this patch were effective as of 10/1/11 per the Federal
+    Register Vol. 76, No. 160, dated August 18, 2011. 
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+  1) HD0000000483570 - FY12 ANNUAL GROUPER UPDATE
+  
+ ASSOCIATED NSRs:
+ ================
+  N/A
+     
+ PARTICIPATING TEST SITES:
+ =========================
+  Montana HCS
+  Tampa, FL
+  Upstate New York HCS
+         
+ REMEDY OVERVIEW:
+ ================
+  1) HD0000000483570 - FY12 ANNUAL GROUPER UPDATE
+    
+     The changes were published in the Federal Register, Vol. 76, No. 160,
+     dated August 18, 2011 with an effective date of October 1, 2011.
+     Resource documents can be found at http://www.cms.hhs.gov/
+     All page references below are to this issue.  
+      
+  Changes include:
+      
+     I.    New/inactivated/revised DRGs.
+     II.   Revised DRG relative weights & average length of stay (ALOS)
+           values for all DRGs.
+     III.  Additional DRG-related data for the new ICD codes introduced by 
+           LEX*2.0*78.
+     IV.   DRG Reclassification changes to the Grouper.
+      
+     This is a summary of the additions/changes made:
+      
+     I. Routine ICD1856A was written to update the DRG file (#80.2):
+  
+     
+     NEW DRGs for FY 2012
+     --------------------
+     MS-DRG 016 (Autologous Bone Marrow Transplant with MCC/CC)
+     MS-DRG 017 (Autologous Bone Marrow Transplant without MCC/CC)
+     MS-DRG 570 (Skin Debridement with MCC)
+     MS-DRG 571 (Skin Debridement with CC)
+     MS-DRG 572 (Skin Debridement without CC/MCC)
+   
+  
+     INACTIVATED DRGs for FY 2012
+     ----------------------------
+     DRG 015 Autologous Bone Marrow Transplant
+  
+      
+     REVISED DRG descriptions (titles) for FY 2012
+     ---------------------------------------------
+     MS-DRG 237 (Major Cardiovascular Procedures with MCC)
+     MS-DRG 573 (Skin Graft for Skin Ulcer or Cellulitis with MCC)
+     MS-DRG 574 (Skin Graft for Skin Ulcer or Cellulitis with CC)
+     MS-DRG 575 (Skin Graft for Skin Ulcer or Cellulitis without CC/MCC)
+     MS-DRG 576 (Skin Graft Except for Skin Ulcer or Cellulitis with MCC)
+     MS-DRG 577 (Skin Graft except for Skin Ulcer or Cellulitis with CC)
+     MS-DRG 578 (Skin Graft Except for Skin Ulcer or Cellulitis without 
+     CC/MCC) 
+     MS-DRG 640 (Miscellaneous Disorders of Nutrition, Metabolism, and Fluids
+     and Electrolytes with MCC)
+     MS-DRG 641 (Miscellaneous Disorders of Nutrition, Metabolism, and Fluids
+     and Electrolytes without MCC)
+     MS-DRG 642 (Inborn and Other Disorders of Metabolism)
+  
+       
+     II. Routine ICD1856A will also be used to update the finalized values 
+         for DRG relative weights and average length of stay (ALOS). 
+  
+        
+     III. Additional DRG-related values were taken from these Tables:
+      
+                Table 6A for 168 new diagnosis codes
+                Table 6B for 19 new procedure codes     
+      
+     Routine ICD1856B incorporated these values in the following fields of
+     ICD DIAGNOSIS file (#80):
+       IDENTIFIER (#2) as needed 
+       MAJOR DIAGNOSTIC CATEGORY (#5)
+       DRG GROUPER EFFECTIVE DATE (#71) and its sub-file
+       MDC EFFECTIVE DATE (#72)
+    
+     Routine ICD1856C incorporated these values in the following fields of
+     ICD OPERATION/PROCEDURE file (#80.1):
+       IDENTIFIER (#2) as needed
+       DRG GROUPER EFFECTIVE DATE (#71) and its sub-files
+       
+     Routines ICDDRG0 and ICDTBL0D-9D were added/modified to
+     complete the proper grouping of these new diagnoses and procedures.
+       
+     IV.  DRG RECLASSIFICATION.
+          
+     Changes to other DRGs:
+     ---------------------
+      1. PRE MDC (p.51525)
+      a. Effective 10/1/2011 new DRGs 016 and 017 will replace DRG 015,
+         which will be inactivated.
+      
+      2. MDC1 (p.51526)
+      a. Effective 10/1/2011 procedure codes 02.93 and 86.98 will be 
+         assigned to DRG023 and DRG024.
+  
+      3. MDC5 (p.51529)
+      a. Effective 10/1/2011 procedure codes 38.45 and 39.73 will be 
+         assigned to DRGs 216, 217, 218, 219, 220, and 221.
+   
+      4. MDC9 (p.51536)
+      a. Effective 10/1/2011 Procedure code 86.22 will be assigned to 
+         DRGs 570 through 572.
+   
+         Routine changes for 1 - 4:  
+         ICD1856E will change DRGs using the procedure codes for FY2012.
+      
+      5. Surgical Hierarchies (P.51541)
+      a. Ranking of surgical DRGs has changed as follows:
+         PRE MDC - DRG016 and DRG017 above DRG010
+   
+         MDC9    - DRG578 above DRG570
+                 - DRG570 above DRG571
+                 - DRG571 above DRG572
+                 - DRG572 above DRG579
+   
+         Routines changed:
+         ICDDRG1, ICDDRG9
+  
+     
+  INSTALLATION INSTRUCTIONS:
+  ==========================
+   NOTE: Please do not forget to do step 6. This is a very important step 
+   as it updates/recalculates the transfer DRGs for Patient Treatment 
+   File (PTF) records opened during the current fiscal year.
+    
+   This patch can be loaded with users on the system.  However, it would 
+   be preferable if Medical Records coders were off the system.
+       
+   Install Time - 5 to 10 minutes.
+       
+      
+   This patch does not involve global file restoration. Nonetheless, we
+   suggest you create global saves on files #80 (^ICD9), #80.1 (^ICD0) and
+   #80.2 (^ICD) in the event problems develop during the install.  If it
+   became necessary to use the saved files, you should first kill all the
+   records (except the zero node) before applying the global restores.
+       
+   1. From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+       
+   2. From this menu, you may elect to use the following options:
+      (when prompted for INSTALL NAME, enter ICD*18.0*56)
+          a.  Backup a Transport Global - this option will create a backup
+              message of any routines exported with the patch.  It will NOT
+              backup any other changes such as DDs or templates.
+          b.  Compare Transport Global to Current System  - this option will
+              allow you to view all changes that will be made when the patch
+              is installed.  It compares all components of the patch 
+              (routines, DDs, templates, etc.).
+          c.  Verify Checksums in Transport Global - this option will
+              allow you to ensure the integrity of the routines that are in
+              the transport global. 
+          d.  Print Transport Global - this option will allow you to view
+              the components of the KIDS build.
+       
+   3. Use the Install Package(s) option and select the package 
+      ICD*18.0*56.
+       
+   4. When prompted, 'Want KIDS to INHIBIT LOGONs during the install? 
+      NO//', respond NO
+       
+   5. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? YES//', respond YES.
+      
+      When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+      enter:
+             PTF Menu  [DG PTF MENU]
+   
+      When prompted, 'Enter protocols you wish to mark as 'Out Of
+      Order':', press enter.
+   
+   6. Following installation of this patch, it is necessary to run the
+      Update Transfer DRGs for Current FY [DG PTF UPDATE TRANSFER DRGs] 
+      option in order to make the transfer DRGs correspond to the appropriate 
+      grouper.  This option updates/recalculates the transfer DRGs for PTF 
+      records opened during the current fiscal year. The option is locked 
+      with the DG PTFSUP security key.  The Menu path is PTF Menu/Update DRG 
+      Information Menu/Update Transfer DRGs for current FY.
+       
+   7. All routines beginning with ICD1856* can be deleted after the patch
+      has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;18.0;DRG Grouper;**[Patch List]**;Oct 13, 2000;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD1856A
+    Before:       n/a   After: B66606503  **56**
+Routine Name: ICD1856B
+    Before:       n/a   After: B39852167  **56**
+Routine Name: ICD1856C
+    Before:       n/a   After: B13682523  **56**
+Routine Name: ICD1856E
+    Before:       n/a   After:  B9844057  **56**
+Routine Name: ICD1856F
+    Before:       n/a   After: B62542809  **56**
+Routine Name: ICD1856G
+    Before:       n/a   After: B61513555  **56**
+Routine Name: ICD1856H
+    Before:       n/a   After: B63485012  **56**
+Routine Name: ICD1856I
+    Before:       n/a   After: B62228183  **56**
+Routine Name: ICD1856J
+    Before:       n/a   After: B64558643  **56**
+Routine Name: ICD1856K
+    Before:       n/a   After: B67676576  **56**
+Routine Name: ICD1856O
+    Before:       n/a   After:  B2566307  **56**
+Routine Name: ICD1856P
+    Before:       n/a   After:   B614755  **56**
+Routine Name: ICDDRG0
+    Before: B61340562   After: B61340646  **1,2,7,10,14,17,20,24,27,30,
+                                           31,32,33,37,45,50,53,56**
+Routine Name: ICDDRG1
+    Before: B12785919   After: B16897990  **10,17,24,31,50,56**
+Routine Name: ICDDRG9
+    Before:  B1598901   After:  B2434022  **31,56**
+Routine Name: ICDTBL0D
+    Before:       n/a   After: B21269416  **56**
+Routine Name: ICDTBL1D
+    Before:       n/a   After:  B6597931  **56**
+Routine Name: ICDTBL2D
+    Before:       n/a   After: B49289607  **56**
+Routine Name: ICDTBL3D
+    Before:       n/a   After:  B8024597  **56**
+Routine Name: ICDTBL4D
+    Before:       n/a   After: B24726724  **56**
+Routine Name: ICDTBL5D
+    Before:       n/a   After:  B7303976  **56**
+Routine Name: ICDTBL6D
+    Before:       n/a   After: B10354424  **56**
+Routine Name: ICDTBL7D
+    Before:       n/a   After: B14033288  **56**
+Routine Name: ICDTBL8D
+    Before:       n/a   After: B25187707  **56**
+Routine Name: ICDTBL9D
+    Before:       n/a   After:  B4782477  **56**
+ 
+Routine list of preceding patches: 53
+
+=============================================================================
+User Information:
+Entered By  : BOWEN,MARY JANE               Date Entered  : APR 28, 2011
+Completed By: LEANORD,TATIANA               Date Completed: NOV 28, 2011
+Released By : BARFIELD,RICHARD              Date Released : NOV 28, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

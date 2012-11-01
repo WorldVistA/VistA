@@ -1,0 +1,231 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Wednesday, 09/29/10 at 10:17
+=============================================================================
+Run Date: FEB 02, 2011                     Designation: CRHD*1*2
+Package : CRHD - SHIFT CHANGE HANDOFF TOOL    Priority: Mandatory
+Version : 1         SEQ #1                      Status: Released
+                  Compliance Date: MAR 05, 2011
+=============================================================================
+
+
+Subject: DO NOT RESUSCITATE (DNR) DISPLAY PROBLEMS & DUPLICATE PATIENT DISPLAY ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Shift Hand Off Tool was released as a new package (CRHD*1) install on 
+ June 26, 2008.
+  
+ CRHD*1*2 is the first maintenance patch released for the Shift HandOff 
+ Tool package.
+  
+ If you have not installed the SHIFT HANDOFF TOOL KIDS Package  (CRHD*1)  
+ please refer to the Install guide located on the VistA Documentation
+ Library: http://www.va.gov/vdl Navigate to the Clinical Section then
+ select the Shift Handoff Tool category.
+  
+ Install the initial PACKAGE release (CRHD*1)  BEFORE you install this 
+ CRHD*1*2 maintenance patch.
+  
+  
+ This patch addresses the following 4 issues:
+      
+ 1.  When setting up an Ordering Dialog to define a DNR order in CPRS
+     Manager Menu Option [ORCM ORDERS], if the text parameter 'WRAP/DON'T
+     WRAP' is set to 'DON'T WRAP', the Shift Handoff Tool displays 'Code
+     Status Not Found' instead of the DNR order.
+      
+ 2.  Free Text DNR Searches defined in Shift Handoff Tool/Preference
+     Configuration/DNR Orders do not always find the defined DNR Free Text.
+      
+ 3.  Free Text DNR Searches defined in Shift Handoff Tool/Preference
+     Configuration/DNR Orders do not always find the defined DNR Free Text
+     due to being case sensitive.
+            
+ 4.  Correct a display and print issue when encountering patients with
+     duplicate names in the H.O.T. List. 
+  
+  
+ Associated Remedy tickets:
+ ==========================
+ 1.  HD0000000279620 unable to print or view information
+ 2.  HD0000000353133 FREE TEXT DNR Searches
+ 3.  HD0000000353153 Free Text search fails on mixed case
+ 4.  HD0000000264027 Patients with same name do not both display
+     
+       
+ Associated NSR(s):
+ ==================
+ N/A
+       
+  
+ Participating Test Sites:
+ =========================
+ VA West Los Angeles HCS
+ VA Sierra Nevada HCS - Reno
+ Providence VAMC
+ VA Pittsburgh HCS 
+  
+      
+ Remedy Overview:
+ ================     
+ 1.  HD0000000279620 unable to print or view information      
+        
+     Problem:
+     --------
+     When an ordering dialog is used to define a DNR order (code status),
+     if the text parameter 'WRAP/DON'T WRAP' is set to 'DON'T WRAP' for a
+     word processing field, Shift Handoff Tool cannot identify the DNR
+     order and outputs 'Code Status Not Found' in the Code Status box.
+     This problem resulted in Patient Safety Issue PSPO #1112.
+         
+     Resolution:
+     -----------     
+     A modification will be made in routine CRHDDNR to examine the entire
+     order text while looking to match on the defined Free Text DNR Order.
+     By searching the entire order text, Shift Handoff tool will no longer
+     have an issue with finding the "DNR order text to search for" defined
+     in Preference Configuration regardless of how the WRAP/DON'T WRAP
+     parameter is set.
+               
+  
+ 2.  HD0000000353133 FREE TEXT DNR Searches
+        
+     Problem:
+     --------
+     Free Text DNR Order Text defined in Preference Configuration/DNR Order
+     tab is not always found when examining patient orders when displaying
+     the Patient Data Screen.
+  
+     Resolution:
+     -----------  
+     The resolution for problem #1 will also fix this problem.  By 
+     searching the entire order text, Shift Handoff tool will no longer
+     have an issue with Free Text DNR Orders.
+  
+       
+ 3.  HD0000000353153 Free Text search fails on mixed case
+         
+     Problem:
+     --------
+     Free Text DNR Order Text defined in Preference Configuration can be
+     entered as either upper or lower case.  Shift Handoff Tool is case
+     sensitive when attempting to match on Free Text DNR Orders and this
+     causes some Free Text DNR Orders to not match and not display on the
+     Patient Data Screen in some instances.  This could cause DNR Orders to
+     be missed or overlooked.
+        
+     Resolution:
+     -----------
+     A modification will be made in routine CRHDDNR to translate characters
+     from the Patent Order and the Free Text DNR Order Text to Uppercase
+     for the comparison only in order to make the check non-case sensitive.
+      
+  
+ 4.  HD0000000264027 Patients with same name do not both display
+        
+     Problem:
+     --------
+     When displaying or printing H.O.T. List patients (H.O.T. List 
+     Configuration or normal H.O.T. List display/print), if the user
+     encounters patients with duplicate names, the Shift Handoff Tool GUI
+     will only display one of the duplicate patients.
+       
+     Resolution:
+     -----------
+     Routines CRHD8 and CRHD9 will be modified to better handle duplicate
+     patient names by internally changing array subscripting of patient
+     data to uniquely identify patients and make them available for display
+     and printing.
+    
+     
+ ------------------ Installation Instructions ---------------------------
+    
+ If installed during the normal workday, it is recommended that the Shift
+ Handoff Tool users be off the system.  Other VISTA users will not be
+ affected.
+  
+ Install Time - less than 2 minutes
+  
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter CRHD*1.0*2):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+  
+     a.  Choose the Install Package(s) option to start the patch install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CRHD;**[Patch List]**;Jan 28, 2008;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: CRHD8
+    Before: B22543750   After: B28104063  **2**
+Routine Name: CRHD9
+    Before: B70845564   After: B77313307  **2**
+Routine Name: CRHDDNR
+    Before: B16560217   After: B22829110  **2**
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : NOV 13, 2008
+Completed By: WERNER,GARY                   Date Completed: JAN 13, 2011
+Released By : HINES,RICK                    Date Released : FEB 02, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,234 @@
+
+=============================================================================
+Run Date: JAN 31, 2012                     Designation: WEBV*1*24
+Package : WEBV - VISTA WEB                    Priority: Mandatory
+Version : 1        SEQ #19                      Status: Released
+                  Compliance Date: FEB 01, 2012
+=============================================================================
+
+
+Subject: VistAWeb v15
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ ***************************** PLEASE NOTE *******************************
+ *                                                                       *
+ * Version 15.0 of VistaWeb (build last updated 12/8/11) will be         *
+ * promoted to the production  server for national release on 1/31/12.   *
+ *                                                                       *
+ *                                                                       *
+ * NOTE: This patch is loaded on the National Vista Web server. There is *
+ * nothing that local sites can or need to do besides communicate        *
+ * changes to users.                                                     *
+ *                                                                       *
+ * VistaWeb is only supported for use with Internet Explorer version 7   *
+ * or higher.                                                            *
+ *                                                                       *
+ *************************************************************************
+  
+ VistaWeb V15.0 includes the following fixes and enhancements:
+  
+  - VistAWeb will display "NwHIN" instead of "NHIN".
+  - VistAWeb will change the identification format within the NwHIN 
+    adapter interface informing NwHIN partners where patient information is
+    coming from.  *Please Note: This is not seen by the user* 
+  - VistAWeb will send the home community name as "Department of Veterans
+    Affairs - User Site Name". *Please Note: This is not seen by the user*
+  - VistAWeb will add Immunizations, Results Organizer Feature and Vitals 
+    to the NwHIN documents c32 display.
+  - VistAWeb will add Procedures, Results Organizer Feature and Vitals to
+    VistAWeb Aggregated Reports.
+  - The NwHIN c32 display has been changed from 800x600 to 1024x768.
+  - VistAWeb will display c62 clinical note information from the 
+    Department of Defense (DoD) in the Consults and Procedures domain.
+  - VistAWeb will display c62 clinical note information from the 
+    Department of Defense (DoD) in the Discharge Summary domain.
+  - VistAWeb will display c62 clinical note information from the
+    Department of Defense (DoD) in the Progress Notes domain.
+  - VistAWeb will display c62 clinical note information from the 
+    Department of Defense (DoD) in the Radiology: Radiology Reports 
+    domain.
+  - VistAWeb will display c62 clinical note information from the 
+    Department of Defense (DoD) in the Surgery Reports domain.
+  - VistAWeb shall display only VA patient information in the Laboratory > 
+    Surgical Pathology sub-domain.
+  - VistAWeb will display a double dagger for all six new domains that 
+    will display c62 information on the left hand navigation menu.
+  - VistAWeb will add Pathology Studies (Non-VA) domain.
+  
+ VistAWeb will add support for the following NwHIN partners:
+       
+  - Community Health Information Collaborative (CHIC) Minnesota     
+  - Indiana Health Information Network (IHIN)
+  - Inland Northwest Health Services (INHS)
+  - Multicare Health System
+  - North Carolina Health Information and Communications Alliance (NCHICA)
+  - South Carolina Health Information Exchange (SCHIEx)
+  - Utah Health Information Network (UHIN)
+  - Western New York HealtheLink - HIE
+  
+  
+ 508 Compliance fixes:
+ =====================
+  - Table row headers added to the the Site Connections Summary screen.
+  - Raw identification added to table columns and cells in patient reports.
+  - Social Security Numbers and Date of Birth accessible for screen reader 
+    during tab navigation.
+  - Health Summary query building screen modified.
+  
+  
+ ASSOCIATED REMEDY TICKET(s):
+ ============================
+ 1. HD0000000489238 - Vista Web buttons are not displaying properly
+ 2. HD0000000472296 - Name change
+ 3. HD0000000485020 - OOPS error
+ 4. HD0000000491577 - BHS - Resident can't sign on. File 200 issues
+ 5. HD0000000417103 - OOPS Message says contact National HelpDesk
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ New Jersey HCS 
+ Hampton, VA
+ Spokane, WA
+ San Diego, CA
+ Puget Sound, WA
+ Asheville, NC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000489238 - VistaWeb buttons are not displaying properly 
+  
+ PROBLEM:
+ ========
+ Certain VistaWeb buttons are not functioning properly in older versions 
+ of Internet Explorer.
+  
+ SOLUTION:
+ =========
+ VistAWeb is only supported with use of Internet Explorer version 7 or 
+ higher.
+  
+  
+ 2. HD0000000472296 - Name change 
+  
+ PROBLEM:
+ ========
+ If a user's name changes, the name is only updated in the NEW PERSON file
+ (#200) at their local site; causing their old name to display on reports 
+ that are generated from visiting sites while accessing VistAWeb. This 
+ occurs due to the user's name being set from the last VistA system that 
+ VistAWeb connects to after selecting a patient.
+  
+ SOLUTION:
+ =========
+ VistAWeb will now retrieve and set user's name from the NEW PERSON file
+ (#200) at their home site, instead of from the visiting site that the 
+ user is accessing at the time, thus eliminating the issue of displaying 
+ incorrect names on reports.
+  
+  
+ 3. HD0000000485020 - OOPS error
+  
+ PROBLEM:
+ ========
+ VistAWeb throws an OOPs error on patients whose prescriptions contain the 
+ less than or greater than "<>" symbols when generating the All Outpatient 
+ Pharmacy report and selecting two years or All Results date range.
+  
+  
+ SOLUTION:
+ ========= 
+ VistAWeb will no longer throw an OOPs error when generating the All 
+ Outpatient Pharmacy report and will display any and all patient data 
+ whose prescriptions contain the less than or greater than symbols.
+  
+  
+ 4. HD0000000491577 - BHS - Resident can't sign on. File 200 issue
+  
+ PROBLEM: 
+ ========
+ VistAWeb users receive OOPs error when VistA authenticates the user to 
+ the wrong PERSON entry in the NEW PERSON file (#200) in VistA.  This 
+ occurs if the user has duplicate entries in the file.
+  
+ SOLUTION:
+ =========
+ VistAWeb will no longer throw an OOPs error and instead ignore the errors 
+ but report them as warnings in the error log.
+  
+  
+ 5. HD0000000417103 - OOPS Message says contact National HelpDesk
+  
+ PROBLEM:
+ ========
+ When an OOPs error is received the message displays, "contact National 
+ Help Desk". However, users who receive this should contact their IT staff.
+  
+ SOLUTION:
+ =========
+ Now when an OOPs error is received the message displays, "Please contact 
+ your local IRM/Computer support staff or IT Help Desk".
+  
+  
+  
+ DOCUMENTATION INFORMATION:
+ ==========================
+ Please refer to the VistAWeb CPRS Access and Installation Guide, the 
+ VistAWeb User Manual and the VistAWeb Technical Guide for more
+ information. The manuals are provided in Microsoft Word and Adobe PDF
+ formats on the web at the following addresses:
+  
+     http://www.va.gov/vdl 
+     http://vista.med.va.gov/vistaweb
+  
+ The Adobe PDF files are also available for FTP transfer. The preferred
+ method is to FTP the files from:
+  
+      - download.vista.med.va.gov.
+  
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve documents directly from a specific 
+ server, as shown below. These files MUST be obtained in BINARY mode.
+  
+ CIO FIELD OFFICE FTP ADDRESS DIRECTORY:
+  
+ Albany               ftp.fo-albany.med.va.gov [anonymous.software]
+ Hines                ftp.fo-hines.med.va.gov  [anonymous.software]
+ Salt Lake City       ftp.fo-slc.med.va.gov    [anonymous.software]
+  
+ Username is "anonymous" without the quotes. You must FTP in BINARY mode.
+ Once in the FTP server, change directory into the software directory 
+ (i.e., cd software). The names of the files are as shown below:
+  
+          WEBV_1_24_IG.PDF
+          WEBV_1_24_TM.PDF
+          WEBV_1_24_UM.PDF
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : SESSLER,APRIL                 Date Entered  : AUG 16, 2011
+Completed By: SERVICE,JOHN                  Date Completed: JAN 30, 2012
+Released By : KREUZ,SHERI B                 Date Released : JAN 31, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

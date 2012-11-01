@@ -1,0 +1,215 @@
+$TXT Created by ROCHA,MARCELO at CINP.FO-BIRM.MED.VA.GOV  (KIDS) on Thursday, 02/02/12 at 08:33
+=============================================================================
+Run Date: FEB 21, 2012                     Designation: PSN*4*297
+Package : PSN - NATIONAL DRUG FILE            Priority: EMERGENCY
+Version : 4       SEQ #301                      Status: Released
+                  Compliance Date: FEB 23, 2012
+=============================================================================
+
+Associated patches: (v)PSN*4*304   <<= must be installed BEFORE `PSN*4*297'
+
+Subject: DRUG CLASS AM400 (QUINOLONE) ALLERGY FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ VistA Patch PSN*4*304 released November 10, 2011 created a new VA drug 
+ class "AM400 QUINOLONES".  The quinolone antibiotics were previously 
+ located under VA drug class "AM900 ANTI-INFECTIVES,OTHER".  Existing
+ patient allergies in the PATIENT ALLERGIES file (#120.8) to antibiotics 
+ in the quinolone class were not automatically updated to the new VA drug
+ classification with the release of PSN*4*304. Consequently the entry of
+ a new order for an antibiotic in the Quinolone VA drug class will not
+ trigger a drug allergy alert.
+   
+ A facility reported that the drug-allergy order check in VistA/CPRS did
+ not trigger appropriately when a patient was ordered a fluroquinolone type
+ antibiotic that the patient had a known allergy to.  The drug allergy was
+ properly documented in the VistA Adverse Reaction Tracking (ART) System. 
+  
+ This patch contains a post-install routine that will loop through all the
+ patient allergies entries for quinolones and will correctly update such 
+ entries with the new class "AM400 QUINOLONES", which should trigger the
+ drug-allergy order check when the patient is ordered a medication under
+ this drug class. Once completed, the post-install routine will generate
+ and send the Mailman message below to the person who installed the patch,
+ the mail group 'NDF DATA' and all the 'PSNMGR' security key holders.
+  
+     Subj: Post-install results from patch PSN*4*297  [#110557] 02/02/12
+     From: NDF MANAGER  In 'IN' basket.   Page 1
+     ---------------------------------------------------------------------
+     Number of Patient Allergy entries by class:
+   
+     Before update:
+     AM900 - ANTI-INFECTIVES,OTHER: 1601
+     AM400 - QUINOLONES           : 11
+  
+     After update:
+     AM900 - ANTI-INFECTIVES,OTHER: 919
+     AM400 - QUINOLONES           : 693
+  
+     Enter message action (in IN basket): Ignore//
+  
+ The results above will vary from site to site. Some sites might even have
+ the exact same numbers 'Before' and 'After' the update, which means the
+ site was not affected by the problem in PSN*4*304 when it was installed.
+     
+ NOTE: Allergy clean up in the past should have converted all allergies
+       to a match with an entry from National drug files, however, there 
+       might still be some allergies pointing to drug file 50 for example 
+       Levofloxacin 500 MG TAB. These entries if present will not convert.
+       Separate instructions will be sent to the field for correcting such
+       allergies.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                  New/Modified/Deleted
+ -------------------    ------------------------------  --------------------
+ N/A
+   
+ Forms Associated:
+  
+ Form Name              File #                          New/Modified/Deleted
+ ---------              ------                          --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                        New/Modified/Deleted
+ ---------------                                        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type                            New/Modified/Deleted
+ -----------            ----                            --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                                          New/Modified/Deleted
+ -------------                                          --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)             New/Modified/Deleted
+ -------------      ----      ------------------        --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 590635
+   
+    
+ Associated Patient Safety Issues (PSIs):
+ =======================================
+ PSPO #2175
+ PSPO #2141
+   
+ Associated New Service Request (NSR):
+ =====================================
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ HEARTLAND-WEST HCS
+ NEW JERSEY HCS
+ OKLAHOMA CITY, OK
+   
+   
+ Patch Installation:
+   
+ Pre/Post Installation Overview
+ ------------------------------
+ A post-install routine will run and will correct all the entries in the 
+ PATIENT ALLERGIES file (#120.8) to correctly update the Drug Class AM400
+ for patients with allergies for Quinolones. A Mailman message with the
+ number of entries updated will be generated and sent users involved in
+ the NDF Monthly Data Update as mentioned above. The post-install routine
+ PSN297P will be deleted once the installation of the patch is completed.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  The installation may take some time, 
+ therefore it is recommended that it be queued for non-peak hours.
+    
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSN*4.0*297):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSN*4.0*297.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSN297P
+    Before:       n/a   After:  B6228794  **297**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : AUG 10, 2011
+Completed By: GREER,MIKE                    Date Completed: FEB 21, 2012
+Released By : MIAN,NAEEM                    Date Released : FEB 21, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

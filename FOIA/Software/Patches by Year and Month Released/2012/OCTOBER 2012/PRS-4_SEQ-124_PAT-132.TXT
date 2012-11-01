@@ -1,0 +1,583 @@
+$TXT Created by TSAI,PEI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 07/10/12 at 14:14
+=============================================================================
+Run Date: OCT 04, 2012                     Designation: PRS*4*132
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #124                      Status: Released
+                  Compliance Date: NOV 04, 2012
+=============================================================================
+
+Associated patches: (v)PRS*4*126   <<= must be installed BEFORE `PRS*4*132'
+
+Subject: TELEWORK TRACKING
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+  - Sort Template
+  - Other
+
+Description:
+============
+
+ This patch introduces the functionality changes that must be made to the
+ VistA Personnel and Accounting Integrated Data/Enhanced Time and Attendance
+ (PAID/ETA) software to support the Telework Enhancement Act of 2010 (Public Law
+ 111-292), approved by President Barack Obama on December 9, 2010.  The act
+ provides the Federal Government with improved flexibility in managing its
+ workforce through the use of telework. The Act directs federal agencies to
+ satisfy mandatory data collection and reporting requirements beginning with the
+ first report to Congress not later than 18 months from enactment (June 2012)
+ and on an annual basis thereafter. This includes identifying and reporting the
+ number of hours their employees telework. Specifically, this patch
+ introduces functionality updates to account for scheduled, unscheduled,
+ and medical telework hours performed by Veterans Affairs employees.
+  
+  
+  
+ Documentation and Training:
+ --------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+    
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at: 
+  
+        http://www.va.gov/vdl/
+  
+ Below is a list of the files related to this patch that will be needed and 
+ available via the FTP sites listed above.
+  
+   
+ File Description            File Name              FTP Mode
+ -----------------------------------------------------------
+ PAID User Manual            PAID_4_P132_UM.PDF  (binary)
+ Release Notes               PAID_4_P132_RN.PDF     (binary) 
+  
+ The enhancements made by this patch are summarized below:
+ ---------------------------------------------------------
+  
+  
+ Download Formats
+ ----------------
+  
+ The following download formats are updated to receive an indicator from AITC
+ that identifies an employee telework status:
+  
+ 1.     Initial
+ 2.     Edit and Update
+  
+ Download Server
+ --------------
+  
+ The VistA PAID ETA download server is updated to store the telework indicator
+ with the employee's record in the PAID EMPLOYEE file (#450).
+  
+ PAID CODES
+ ----------
+  
+ The PAID CODES file (#454) is updated to include a table entry for the new
+ telework code set as defined below.
+  
+                                     Table 1 
+  
+                                                                     ELIGIBLE
+                                                                     CODE TO
+ CODE                        DEFINITION                              TRACK
+  
+  P     Employee regularly teleworks three or more days per pay period.  Yes
+  
+  R     Employee regularly teleworks one or two days per pay period.     Yes
+  
+  S     Employee regularly teleworks one day per month.                  Yes
+  
+  A     Ad Hoc Telework. Employee teleworks only on an as-needed         Yes
+       basis. This includes Continuity of Operations (COOP),
+       National/Regional emergencies, situational basis (temporary),
+       and Office of Workers Compensation-related telework.
+  
+  X     Position is suitable for telework and employee is                No
+       eligible, but no telework agreement in place.
+  
+  Y     Position is suitable for telework but employee is not            No
+       eligible to telework.
+  
+  Z     Position is not suitable for telework. This code is              No
+       used only when the employee's position makes teleworking
+       impossible.
+  
+  V     Employee who is virtual.                                         No
+  
+  E     Employee regularly teleworks three or more days per work week.   Yes
+  
+ Blank    Default. No telework code has been entered.                    No
+  
+  
+ Payroll Functionality
+ =====================
+  
+ PAID Codes
+ ----------
+  
+ The option, Update PAID Codes [PRSD UPDATE PAID CODES] is updated so Payroll
+ staff can review the new telework PAID codes and their definitions. 
+  
+ Telework Status Code
+ --------------------
+ The following options are updated so Payroll staff can view an employee's
+ telework status code:
+ 1. Employee Inquiry [PRSD 04 EMPLOYEE INQUIRY]
+ 2. Search Employee Entries [PRSD 04 SEARCH EMPLOYEE FILES]
+ 3. Print Employee Entries [PRSD 04 PRINT EMPLOYEE FILES]
+  
+ The option List/Clear Prior Pay Period Corrections [PRSA PAY PPC], is updated
+ so Payroll staff can view
+  
+  (a) telework tour of duty corrections,
+  (b) telework hours, and 
+  (c) telework type,
+  
+ when viewing previously entered pay period corrections.
+  
+  
+ Timekeeper Functionality
+ ========================
+  
+ The option Enter/Edit Employee Tour of Duty [PRSA TK TOUR-EDIT] is updated as
+ follows:
+  
+  (a) Timekeepers can view the Telework Indicator status code when using the
+ screen mode.
+  (b) Timekeepers can enter, update, and delete tour of duty days as either (a)
+ scheduled telework or (b) medical telework when in screen mode.
+  (c) Timekeepers can enter (a) scheduled telework or (b) medical telework for
+ only those employees who are eligible for telework. Eligibility for telework is
+ established by the telework indicator in the PAID Employee file (#450).
+  (d) For employees on a Fixed Monday through Friday tour, timekeepers can enter
+ screen mode and mark employees' tour of duty days as either
+     (i)  scheduled telework or
+     (ii) medical telework.
+  
+ The option Display Posted Data [PRSA TPD] is updated as follows:
+  
+  (a) Timekeepers can view the Telework Indicator status code.
+  (b) Timekeepers can view the scheduled telework (regular or medical).
+  (c) Timekeepers can view the actual telework hours poste(d)
+  
+ The option Display Employee Tour of Duty [PRSA TK TOUR-DISP] is updated as
+ follows:
+  
+ (a) Timekeepers can view the Telework Indicator status code.
+  
+ (b) Timekeepers can view the scheduled telework (regular or medical).
+  
+ The option Post Employee Time [PRSA TK POST] is updated as follows:
+  
+ (a) Timekeepers can enter the actual telework hours for eligible employees
+ after posting employee time and leave data.
+  
+ (b) Timekeepers can indicate whether telework hours are
+     (i)   scheduled telework,
+     (ii)  medical telework, or
+     (iii) ad hoc telework.
+  
+ (c) Timekeepers can enter actual telework hours for each type of telework for a
+ single day or tour of duty.  E.g., consider an 8 hour scheduled telework tour
+ with 2 hours of overtime. The timekeeper can enter 8 hours scheduled telework
+ and 2 hours of ad hoc telework, if applicable.
+  
+ (d) Timekeepers are prompted to enter telework hours for only those employees
+ who are eligible for telework based on the  Telework Indicator in their PAID
+ Employee file (#450). Eligible employees must have an eligible Telework
+ Indicator status code in order to have telework hours posted to their timecard.
+ (Please refer to the definitions shown in Table 1.)
+  
+ e) For scheduled teleworkers (regular or medical), timekeepers are provided
+ with a default value for employees' scheduled telework hours (Equation 1).
+  
+  
+ Default scheduled telework hours (medical or regular) = ( length of the tour )
+ - ( leave )
+  
+  
+ Equation 1: Default Scheduled Telework Hours 
+  
+ f) For scheduled teleworkers, timekeepers can enter telework hours (ad hoc or
+ medical) for any work hours posted outside the tour of duty.
+  
+ g) For unscheduled teleworkers, timekeepers are provided with a default value
+ for employees' telework hours (Equation 2).
+  
+  
+ Default total telework hours = ( length of the tour ) +  ( overtime /comp time
+ ) - ( leave )
+  
+  
+ Equation 2: Default Total Telework Hours 
+  
+ (h) For unscheduled teleworkers, timekeepers can enter the type of telework (ad
+ hoc or medical).
+  
+ (i) Timekeepers are restricted to a value between zero hours and the default
+ telework hours value defined in Equation 1 or 2.       
+  
+ (j) Full Time Physicians:  Full time physicians work daily tours. They work the
+ entire day or take leave for the entire day. 
+  
+   (i)  Timekeepers can enter a day as telework days; and
+   (ii) Timekeepers can enter telework as either scheduled telework, medical
+ telework, or ad hoc telework. 
+  
+ k) There is no provision for timekeepers to provide a scheduled telework on
+ secondary tours.  Timekeepers can enter actual telework hours (medical or ad
+ hoc) if they are applicable to secondary tours.
+  
+ l) Intermittent Employees currently have no specified tour of duty.  There is
+ no provision for timekeepers to schedule telework hours for intermittent
+ employees.  Timekeepers can enter actual telework hours (medical or ad hoc) for
+ intermittent employees.
+  
+ The option Posting/Tour Change [PRSA TP POST] is updated for employees who are
+ eligible for telework as follows:
+  
+ (a)    Timekeepers can add or remove scheduled telework days, as shown in 
+ Table 1, when entering corrections to employees' tours of duty.
+  
+ (b) Timekeepers can add, update, edit, and delete telework hours from daily
+ time records when entering time posting corrections. (Timekeepers are limited
+ to entering telework hours based on the same criteria described with the Post
+ Employee Time option.)
+  
+ (c) Timekeepers can edit the telework type (scheduled telework, medical
+ telework, or ad hoc telework) when entering time posting corrections, also
+ based on criteria described with the Post Employee Time option.
+  
+ T&A Supervisor Functionality
+ ============================
+  
+ The option Pay Period Certification [PRSA SUP REV] is updated as follows:
+  
+ (a) Supervisors can view scheduled telework (regular or medical) and actual
+ telework hours posted for each day of the pay period from within the existing
+ Pay Period Certification option.
+  
+ (b) Supervisors can view telework hours on the existing PAY PERIOD summary
+ screen.
+  
+ Note:  The certification option generates the 8B string in the background when
+ a supervisor releases a timecard to payroll. The requirements for the 8B string
+ are covered in a separate section.
+  
+ The option Supervisory Approvals [PRSA SUP CERT] is updated as follows:
+  
+ (a) Supervisors can review and then approve, disapprove, or bypass changes to
+ scheduled telework (regular or medical).
+  
+ (b) Supervisors can review and then approve, disapprove, or bypass changes to
+ telework hours posted for each day of the pay period from within the existing
+ supervisory approval option.
+  
+ The option Display Employee Tour of Duty [PRSA TK TOUR-DISP-SUP] is updated as
+ follows:
+  
+ Supervisors can view scheduled telework (medical or regular) within this
+ option.
+  
+ The option Display Employee Pay Period [PRSA TPD PP-SUP] is updated as follows:
+  
+  (a) Supervisors can view scheduled telework (medical or regular) on this
+ report.
+  
+  (b) Supervisors can view the posted telework hours on this report.
+  
+ Employee Functionality
+ ======================
+  
+ The option Service Record Screen [PRSD SERVICE RECORD SCREEN] is updated so
+ employees can view their Telework Indicator status code (Table 1).
+  
+ The option Display Pay Period [PRSA TPD PP-EMP] is updated as follows:
+  
+ (a) Employees can view their scheduled telework (medical or regular) on this
+ report.
+  
+ (b) Employees can view their posted telework hours on this report.
+  
+  
+ Time Card Decomposition Functionality
+ =====================================
+  
+ Time cards can be decomposed using the options shown in Table 2. 
+        
+    Option Text                 Option Name            Associated Menu
+   =============               =============          =================
+ Pay Period Certification   [PRSA SUP REV]             Supervisor
+ Decompose Time             [PRSA PAY DECOMP]          Locally assigned
+ T&L Decomposition Report   [PRSA T&L DECOMP REPORT]   Locally assigned
+  
+ Table 2: Decomposing Time Cards
+  
+ 8B String
+ ---------
+ The 8B string decomposition software is updated to report telework hours in the
+ 8B string using the format CCNNX where CC is the two character 8B code, NN is
+ the total number of whole hours in the week, and X represents the remaining
+ quarter hours (0, 1, 2, or 3).
+  
+ The new 8B codes are shown in Table 3.
+  
+ Code           Explanation
+ TW     Scheduled Telework Hours Week 1
+ TX     Scheduled Telework Hours Week 2
+ TS     Situational Telework Hours Week 1
+ TT     Situational Telework Hours Week 2
+ TM     Medical Telework Hours Week 1
+ TN     Medical Telework Hours Week 2
+  
+ Table 3: 8B String Codes
+  
+  
+  
+   
+ ASSOCIATED NSR(s): 
+ ------------------ 
+  
+ NSR 20101107 - Upgrade ETA for Telework (VAIQ 7035744) 
+  
+     
+ ASSOCIATED REMEDY TICKET(S): none
+  ----------------------------
+  
+ Components Sent with Patch
+ ---------------------------
+  
+ FILES:
+ ======
+  
+ FILE #      FILE NAME                      DD    CODE  W/FILE  DATA  PTRS  RIDE
+ ----------------------------------------------------------------------------
+  
+ 450         PAID EMPLOYEE                  YES   YES   NO                  NO
+ Partial DD: subDD: 450        fld: 634
+  
+ 454         PAID CODE FILES                YES   YES   NO                  NO
+ Partial DD: subDD: 454.0131   
+  
+ 458         TIME & ATTENDANCE RECORDS      YES   YES   NO                  NO
+ Partial DD: subDD: 458.01     fld: 7
+             subDD: 458.02     fld: 71
+                               fld: 72
+                               fld: 73
+                               fld: 74
+                               fld: 75
+  
+ FORMS:                                   ACTION:
+ ======
+    PRSA TE EDIT    FILE #458             SEND TO SITE
+  
+ HELP FRAME:                              ACTION:
+ ===========
+    PR SA ENTER TW                        SEND TO SITE
+  
+ ROUTINES:
+ =========
+    PRS8CR
+    PRS8UP
+    PRS8VW
+    PRS8VW2
+    PRSACED6
+    PRSADP1
+    PRSADP2
+    PRSAPPO
+    PRSAPPP
+    PRSAPPQ
+    PRSAPRT
+    PRSASC1
+    PRSASC3
+    PRSASR
+    PRSATE
+    PRSATE0
+    PRSATE1
+    PRSATE2
+    PRSATE3
+    PRSATE6
+    PRSATP
+    PRSATPP
+    PRSATPTW
+    PRSAUD
+    PRSAUDP
+    PRSDEU14
+    PRSDLD19
+    PRSDSRS
+    PRSDVTBL
+    PRSXP132
+  
+ Test Sites:
+ -----------
+   Battle Creek
+   Central Texas
+  
+  
+  ==================== INSTALLATION INSTRUCTIONS ======================
+  
+ This patch may be installed with users on the system, however, it should
+ be installed at a non-peak time to minimize disruption to the users. Other
+ VISTA users will not be affected.
+  
+   
+ Install Time - Less than 5 minutes.
+  
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PRS*4.0*132):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch.
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s)
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch:
+  
+     a.  Choose the Install Package(s) option to start the patch install.
+     b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES//'  Answer NO.
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         YES//' answer NO.
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//' answer YES.
+     e.  When prompted 'Enter options you wish to mark as 'Out Of Order':'
+         Answer:
+  
+           PRS*
+  
+     f.  When prompted 'Enter protocols you wish to mark as 'Out Of
+         Order':' Press Return.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRS8CR
+    Before: B10991558   After: B11394851  **2,6,45,69,112,117,132**
+Routine Name: PRS8UP
+    Before: B37177110   After: B44269268  **6,21,30,45,117,132**
+Routine Name: PRS8VW
+    Before: B16147800   After: B16581161  **2,6,27,45,112,117,132**
+Routine Name: PRS8VW2
+    Before: B25129714   After: B26531664  **6,32,34,45,69,112,117,132**
+Routine Name: PRSACED6
+    Before:  B5380606   After:  B5586294  **6,45,112,132**
+Routine Name: PRSADP1
+    Before: B11335770   After: B16274720  **22,114,126,132**
+Routine Name: PRSADP2
+    Before: B20321723   After: B21796691  **21,28,46,114,132**
+Routine Name: PRSAPPO
+    Before: B16889205   After: B17844809  **93,112,132**
+Routine Name: PRSAPPP
+    Before: B13712907   After: B13937943  **114,132**
+Routine Name: PRSAPPQ
+    Before:  B9658395   After: B11158277  **6,132**
+Routine Name: PRSAPRT
+    Before:  B6082523   After:  B6196723  **7,8,21,111,132**
+Routine Name: PRSASC1
+    Before: B26512238   After: B29081248  **55,93,132**
+Routine Name: PRSASC3
+    Before:  B7711149   After:  B8013769  **6,93,132**
+Routine Name: PRSASR
+    Before: B51691703   After: B52733840  **2,7,8,22,37,43,82,93,112,117,132**
+Routine Name: PRSATE
+    Before: B81331928   After: B89337517  **8,11,27,45,55,93,112,117,121,132**
+Routine Name: PRSATE0
+    Before: B16488191   After: B20872988  **112,117,132**
+Routine Name: PRSATE1
+    Before:  B3156271   After:  B4303406  **115,132**
+Routine Name: PRSATE2
+    Before: B19536924   After: B22049849  **8,22,35,114,132**
+Routine Name: PRSATE3
+    Before:  B7811736   After:  B9035867  **132**
+Routine Name: PRSATE6
+    Before: B54920644   After: B59872089  **45,132**
+Routine Name: PRSATP
+    Before: B32294391   After: B34908799  **22,57,69,92,102,93,112,126,132**
+Routine Name: PRSATPP
+    Before: B14403687   After: B22461168  **117,124,132**
+Routine Name: PRSATPTW
+    Before:       n/a   After: B41651575  **132**
+Routine Name: PRSAUD
+    Before:  B2443115   After:  B2443135  **132**
+Routine Name: PRSAUDP
+    Before:  B9116588   After: B10198895  **116,132**
+Routine Name: PRSDEU14
+    Before: B14488537   After: B15099553  **78,82,132**
+Routine Name: PRSDLD19
+    Before:  B5514367   After:  B5705805  **78,82,132**
+Routine Name: PRSDSRS
+    Before: B20527768   After: B20598813  **114,100,132**
+Routine Name: PRSDVTBL
+    Before: B31749329   After: B32289821  **78,82,86,73,132**
+Routine Name: PRSXP132
+    Before:       n/a   After:  B8320610  **132**
+ 
+Routine list of preceding patches: 73, 100, 111, 115, 116, 121, 124, 126
+
+=============================================================================
+User Information:
+Entered By  : HEIGES,JOHN                   Date Entered  : AUG 01, 2011
+Completed By: LEONARD,KEN                   Date Completed: OCT 04, 2012
+Released By : MCCLARAN,PAM                  Date Released : OCT 04, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

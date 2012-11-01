@@ -1,0 +1,447 @@
+$TXT Created by BEUSCHEL,GARY at FM22-PATCH.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 02/28/12 at 09:28
+=============================================================================
+Run Date: JUN 12, 2012                     Designation: DI*22*168
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22       SEQ #147                     Status: Released
+                  Compliance Date: JUL 13, 2012
+=============================================================================
+
+Associated patches: (v)DI*22*67    <<= must be installed BEFORE `DI*22*168'
+                    (v)DI*22*105   <<= must be installed BEFORE `DI*22*168'
+                    (v)DI*22*130   <<= must be installed BEFORE `DI*22*168'
+                    (v)DI*22*160   <<= must be installed BEFORE `DI*22*168'
+
+Subject: CAN'T TAKE THE WAIT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+                           ** Notice: **
+ ** See "Installation Instructions" section for Installation Warning **
+   
+ This patch addresses the following items:
+ 
+ 1.     Remedy Ticket  492780, 540733:
+ The "Check/Fix DD Structure" [DI DDUCHK] option erroneously flags as an
+ error the situation where a field has a mnemonic cross-reference with the
+ same name as the cross-reference of the .01 field. Mnemonic cross-
+ references are given the same name as the .01 field's cross-reference, so
+ that the mnemonic values are found along with the name values in any lookup.
+ Both fields have a "B" cross-reference. 
+ (Routine ^DDUCHK1)
+ 
+ Let's check it out before we install the patch. The TOPOGRAPHY FIELD (#61)
+ file has a mnemonic cross-reference on the ABBREVIATION (#6) field. Here's
+ that field, along with the NAME (#.01) field, and their "B" cross-references:
+ 
+ 61,.01  NAME                   0;1 FREE TEXT (Required)
+ 
+         INPUT TRANSFORM:  K:$L(X)>80!($L(X)<2)!'(X'?1P.E)!(X'?.ANP) X I $
+                           D(X),X?1"T"1N.E!(X?1"T-".E) K X W *7,!,"Enter S
+                           NOMED CODE without T or T-" Q
+         LAST EDITED:      SEP 11, 1984 
+         HELP-PROMPT:      ANSWER MUST BE 2-80 CHARACTERS IN LENGTH 
+         DESCRIPTION:      The name of the specimen or source.  
+         DELETE TEST:      1,0)= I '$D(^XUSEC("LRLIASON",DUZ))
+         NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+         CROSS-REFERENCE:  61^B 
+                           1)= S ^LAB(61,"B",$E(X,1,30),DA)=""
+                           2)= K ^LAB(61,"B",$E(X,1,30),DA) 
+ 
+ 61,6    ABBREVIATION           0;5 FREE TEXT
+         INPUT TRANSFORM:  K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>3!($L(X)<
+                           1) X
+         LAST EDITED:      OCT 23, 1984 
+         HELP-PROMPT:      ANSWER MUST BE 1-3 CHARACTERS IN LENGTH 
+         DESCRIPTION:      This must be a 1,2, or 3 character abbreviation
+                           of the specimen.  
+         CROSS-REFERENCE:  61^B^MNEMONIC 
+                           1)= S ^LAB(61,"B",$E(X,1,30),DA)=1
+                           2)= K ^LAB(61,"B",$E(X,1,30),DA)
+         CROSS-REFERENCE:  61^E 
+                           1)= S ^LAB(61,"E",$E(X,1,30),DA)=""
+                           2)= K ^LAB(61,"E",$E(X,1,30),DA)
+ 
+ Now let's run that check.
+ Select OPTION: DATA DICTIONARY UTILITIES  
+ Select DATA DICTIONARY UTILITY OPTION: 3  CHECK/FIX DD STRUCTURE
+ 
+ Check the Data Dictionary.
+ Note: Messages that begin with an asterisk(*) can NOT be corrected and
+ will need careful evaluation by software development!
+ 
+  START WITH WHAT FILE: LAB ELECTRONIC CODES// 61  TOPOGRAPHY FIELD
+                                           (8487 entries)
+       GO TO WHAT FILE: TOPOGRAPHY FIELD// 
+ Remove erroneous nodes? NO// 
+ DEVICE: HOME//   VIRTUAL TELNET
+ 
+ Checking file 61
+      *File: 61 Index: "B" has duplicate Fields.
+                      Field: .01  Field: 6
+    Checking subfile 61.01
+    Returning to main file 61.
+    Checking subfile 61.02
+    Returning to main file 61.
+ 
+ Notice that the checker objected to the "B" cross-reference being on more
+ than one field.
+ 
+ After the patch is installed, the checker won't flag this as an error.
+ 
+ 2.     Remedy Ticket 503352:
+ The standard Data Dictionary listing, under the "List File Attributes"
+ [DILIST] option, does not display field-level read/write/delete access
+ restrictions.
+ (Routine ^DID2)
+ 
+ Let's check it out before we install the patch.
+ If we look at page 13-12 of the VA FileMan V. 22.0 Programmer Manual, we
+ see that the following nodes contain the field-level access restrictions:
+               8     Read access
+               8.5 Delete access
+               9     Write access
+ 
+ Let's look at the *LAST DFN CONVERTED (#5) field in the ALLERGY SITE
+ PARAMETERS (#124.80) file, because it has all three nodes:
+ 
+ Global ^DD(120.84,5
+ ^DD(120.84,5,0)="*LAST DFN
+ CONVERTED^NJ8,0^^CONV;1^K:+X'=X!(X>99999999)!(X<0)!(X
+ ?.E1"".""1N.N) X"
+              3)="Type a Number between 0 and 99999999, 0 Decimal Digits"
+              8)="^"
+            8.5)="^"
+              9)="^"
+ ^DD(120.84,5,21,0)="^^4^4^2911106^"
+ ^DD(120.84,5,21,1,0)="The data in this field is the entry number of the
+ Patient file record"
+ ^DD(120.84,5,21,2,0)="whose data was last converted by the Patient file data
+ conversion.  This"
+ ^DD(120.84,5,21,3,0)="field will be 0 before the conversion begins and after
+ the conversion"
+ ^DD(120.84,5,21,4,0)="is over."
+ ^DD(120.84,5,"DT")=2951212
+ 
+ But you wouldn't know it from the DD listing:
+ 
+ 120.84,5  *LAST DFN CONVERTED    CONV;1 NUMBER
+           INPUT TRANSFORM:  K:+X'=X!(X>99999999)!(X<0)!(X?.E1"."1N.N) X
+           LAST EDITED:      DEC 12, 1995 
+           HELP-PROMPT:      Type a Number between 0 and 99999999, 0 Decimal 
+                             Digits 
+           DESCRIPTION:      The data in this field is the entry number of
+                             the Patient file record whose data was last
+                             converted by the Patient file data conversion. 
+                             This field will be 0 before the conversion
+                             begins and after the conversion is over.
+ 
+ After the patch is installed, you will.
+ 
+ 3.     Remedy Ticket 515469:
+ This is a complicated one, so here goes. Let's say file X's .01 field points
+ to file Y. File X's .01 field has a "B" cross-reference. File Y is DINUM'd
+ and has no "B" cross-reference. If you enter "??" at an inquiry on a large
+ file X, you might end up waiting a long time and could potentially fill up
+ temp space and bring your system to its knees. Not good.
+ (Routine ^DICUIX2)
+ 
+ Before we install the patch, let's investigate.
+ 
+ In this particular case, file X is the ORDER CHECK INSTANCE (#100.05) file,
+ and file Y is the ORDER (#100) file. Let's do an inquiry, and be prepared
+ to wait. Also, get ready to abort the inquiry with a CTRL-C!
+ Select OPTION: INQUIRE TO FILE ENTRIES  
+ 
+ OUTPUT FROM WHAT FILE: ORDER// 100.05  ORDER CHECK INSTANCES
+                                           (150271 entries)
+ Select ORDER CHECK INSTANCES: ??
+ Choose from:
+ 
+ Cancel (I did a <CTRL-C> to abort after a minute or so of waiting.)
+ 
+ F  S DIENTRY=$O(@DIROOT@(DIENTRY)) Q:'DIENTRY  D
+    ^
+ <INTERRUPT>BLDB+2^DICUIX1
+ 
+ If you look at the temp global ^TMP("DICLB",100,$J, you'll see that it's
+ got beaucoup records. You may kill it.
+ 
+ After the patch is installed, output should be much faster.
+ 
+ 4.     Remedy Ticket 520366:
+ The "Transfer Entries" [DITRANSFER] option copies an entry from one file to
+ another. It asks the user if the original entry should be deleted after the
+ transfer. If you answer yes, it does so, even if there's a "DEL" node on the
+ DD for the .01 field. The "DEL" node is supposed to prevent deletion. You
+ can read more about a field's "DEL" node on page 14-13 of the VA FileMan
+ Programmer Manual.
+ (Routine ^DIT0)
+ 
+ Before we install the patch, let's duplicate this.
+ 
+ Create a file. I'm calling mine ZZG TRANSFER.
+ Select UTILITY OPTION: EDIT FILE  
+ 
+ MODIFY WHAT FILE: ZZG TRANSFER
+   Are you adding 'ZZG TRANSFER' as a new FILE? No// Y  (Yes)
+    FILE NUMBER: 518951.3// <-- Your file number will be different!
+ 
+ INTERNAL GLOBAL REFERENCE: ^DIZ(518951.3,// 
+ 
+ ...HMMM, JUST A MOMENT PLEASE...
+      A FreeText NAME Field (#.01) has been created.
+ Do you want to use the screen-mode version? YES// NO
+ NAME: ZZG TRANSFER//
+ Just keep hitting enter and accepting the default answers until you're
+ finished.
+ 
+ Now we need to create a "DEL" node for the .01 field. You must do this
+ manually from the programmer prompt. Make sure to use your file number,
+ not mine!
+ >S ^DD(518951.3,.01,"DEL",1,0)="I 1"
+ 
+ Now let's add a record.
+ Select OPTION: ENTER OR EDIT FILE ENTRIES  
+ INPUT TO WHAT FILE: LABORATORY TEST// ZZG TRANSFER    (0 entries)
+ 
+ Select ZZG TRANSFER NAME: FRED
+   Are you adding 'FRED' as a new ZZG TRANSFER (the 1ST)? No// Y  (Yes)
+ 
+ Now let's try to delete it. It won't let us:
+ Select ZZG TRANSFER NAME:    FRED
+ NAME: FRED// @??  Required
+ NAME: FRED// ^
+ 
+ Select ZZG TRANSFER NAME: 
+ 
+ Now let's transfer!
+ Select OPTION: 9  TRANSFER ENTRIES
+ Select TRANSFER OPTION: ?
+     Answer with TRANSFER OPTION NUMBER, or NAME
+    Choose from:
+    1            TRANSFER FILE ENTRIES
+    2            COMPARE/MERGE FILE ENTRIES
+     
+ Select TRANSFER OPTION: 1  TRANSFER FILE ENTRIES
+ 
+ INPUT TO WHAT FILE: ZZG TRANSFER// 
+ TRANSFER FROM FILE: ZZG TRANSFER//   
+ TRANSFER DATA INTO WHICH ZZG TRANSFER: ?
+ TRANSFER DATA INTO WHICH ZZG TRANSFER: GINGER
+   Are you adding 'GINGER' as a new ZZG TRANSFER (the 2ND)? No// Y  (Yes)
+ TRANSFER FROM ZZG TRANSFER: FRED  
+    WANT TO DELETE THIS ENTRY AFTER IT'S TRANSFERRED? No// Y  (Yes)
+ ...EXCUSE ME, LET ME PUT YOU ON 'HOLD' FOR A SECOND...
+ 
+ Oh no! It deleted FRED. Now all we have left is GINGER! The inhumanity...
+ 
+ After the patch, if the original entry shouldn't be deleted, not only won't
+ FileMan delete it, but it won't even ask the question.
+ 
+ 5.     Remedy Ticket 520425:
+ The API EN^DDIOL aborts under certain circumstances.
+ (Routine ^DDIOL)
+ 
+ Let's check it out before we install the patch.
+ 
+ >D EN^DDIOL("Hi Mom","","!?5,$C(7)")
+ 
+      Hi Mom
+ >S DIQUIET=1
+ 
+ >D EN^DDIOL("Hi Mom","","!?5,$C(7)")
+ 
+  S:F["?" @("C="_$P(F,"?",2))
+  ^
+ <SYNTAX>LD1+6^DDIOL
+ 
+ After the patch, it won't abort. You'll find the result in ^TMP("DIMSG",$J
+ 
+ 6.     Remedy Ticket 520932,606233:
+ A subscript error occurs when KIDS is sending data in a file that has a
+ multiple that is two levels down and also has a whole-file cross-reference at
+ this multiple.  The subscript error is caused by the DA array not correctly
+ reflecting the three levels of multiples when the cross reference is being
+ executed.  The solution was a change to the DITR routine to properly set the
+ DA array.
+ (Routine ^DITR)
+ 
+ Unfortunately, there is no easy way to test this. You'd have to have a file
+ with a multiple nested within a multiple, with a whole-file cross-reference
+ at the lower-most multiple. You'd have to create a KIDS build sending data
+ to be installed in your file. Additionally, the IEN of the data in the KIDS
+ build would have to be different from the IEN of the matching data in your
+ file. The sites involved in Remedy ticket 606233 experienced exactly this
+ problem, and the patch fixed it.
+ 
+ Documentation
+ =============
+ No documentation changes were necessary for this patch. No animals were
+ hurt during testing. The most up-to-date VA FileMan end-user documentation
+ is available on the VHA Software Document Library (VDL) at the following
+ Internet Website:
+     http://www.va.gov/vdl/application.asp?appid=5
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ The VA FileMan documentation is also available in HTML format at the 
+ following Intranet Websites:
+  
+   * Getting Started Manual:
+     http://vaww.vista.med.va.gov/fileman/docs/u1/index.shtml
+  
+   * Advanced User Manual:
+     http://vaww.vista.med.va.gov/fileman/docs/u2/index.shtml
+  
+   * APIs/Programmer Manual:
+     http://vaww.vista.med.va.gov/fileman/docs/pm/index.shtml
+  
+   * ScreenMan Tutorial:
+     http://vaww.vista.med.va.gov/fileman/docs/scrnman/index.shtml
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - 9/9/2011
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22*168 contains
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch 
+ does not alter or modify any VistA Blood Bank software design 
+ safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22*168 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+ Remedy Tickets
+ ==============
+ 492780
+ 503352
+ 515469
+ 520366
+ 520425
+ 520932
+ 540733
+ 606233
+  
+ Thanks to Test Sites 
+ ====================
+ Hines VAMC
+ Washington, DC VAMC
+ Black Hills HCS
+ West LA HCS
+ San Diego VAMC
+ Bronx VAMC
+ Jesse Brown VAMC
+  
+ Routine Summary: 
+ ================
+ Please see the "Routine Information" section. 
+ *Note: Routine: DIPR168 issues a warning during the installation of 
+ this patch if it appears that TaskMan is still running and/or logons 
+ have not been inhibited.
+  
+ Installation Instructions:
+ =========================
+ ** Although queuing of this patch is allowed, it is HIGHLY RECOMMENDED
+ that ALL Users be off the system and VISTA Background jobs be STOPPED
+ before this patch is installed. TaskMan should be stopped or placed in
+ a wait state. Failure to do so may result in 'source routine edited'
+ errors during a database update. Edits may be lost and records may be
+ left in an inconsistent state. An error that occurs before a cross-
+ reference is executed, for example, may lead to corrupted data or hard
+ errors in the future. **
+  
+ Also, please make sure that no other patches are installed until
+ installation for this patch has completed.
+  
+ The following installation instructions are based upon the premise 
+ that the installer has heeded the above warning.
+  
+ Installation should take less than a minute.
+  
+      1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+ This option will load the KIDS package onto your system.
+  
+      2.  The patch has now been loaded into a transport global on your 
+ system. You now need to use KIDS to install the transport global.
+  
+      3.  On the KIDS menu, under the 'Installation' menu, use the 
+ following options:
+  
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Backup a Transport Global
+  
+      4.  In accordance with the warning at the beginning of the 
+ installation instructions, make sure ALL interactive processes, and 
+ ALL non-interactive background jobs are stopped following your site 
+ specific procedures. TaskMan should be stopped or placed in a wait state.
+ All users should be off the system. NOT performing this step could result
+ in 'source routine edited' error during database updates, and records may
+ be left in an inconsistent state.
+  
+      5.  On the KIDS menu, under the 'Installation' menu, use the 
+ following option:
+  
+            Select Installation Option: Install Package(s)
+            Select INSTALL NAME: DI*22.0*168
+                                 ===========
+ 
+ The Environment Check Routine DIPR168 runs automatically during this
+ step. DIPR168 issues a warning if it appears that TaskMan is still 
+ running or logons have not been inhibited.
+  
+            Answer 'YES' to 'Want KIDS to INHIBIT LOGONs during the 
+ install?'
+            Answer 'NO' to 'Want to DISABLE Scheduled Options, Menu 
+ Options, and Protocols?'
+  
+      6.  Re-enable all processes stopped in step 4 above.
+ 
+ Post Installation
+ =================
+ Upon successful installation of this patch, routine DIPR168 will be deleted.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.0;VA FileMan;**[Patch List]**;Mar 30, 1999;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDIOL
+    Before:  B4778357   After:  B4782116  **168**
+Routine Name: DDUCHK1
+    Before: B16127954   After: B17200786  **130,168**
+Routine Name: DICUIX2
+    Before: B21635493   After: B23523996  **4,28,67,168**
+Routine Name: DID2
+    Before: B19296587   After: B19378755  **7,105,168**
+Routine Name: DIPR168
+    Before:       n/a   After:  B5149882  **168**
+Routine Name: DIT0
+    Before:  B3891487   After:  B4265897  **168**
+Routine Name: DITR
+    Before: B10510730   After: B11172020  **41,168**
+ 
+Routine list of preceding patches: 41, 67, 105, 130
+
+=============================================================================
+User Information:
+Entered By  : BEUSCHEL,GARY                 Date Entered  : SEP 06, 2011
+Completed By: BEST,LISA                     Date Completed: JUN 07, 2012
+Released By : TILLIS,LEWIS                  Date Released : JUN 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

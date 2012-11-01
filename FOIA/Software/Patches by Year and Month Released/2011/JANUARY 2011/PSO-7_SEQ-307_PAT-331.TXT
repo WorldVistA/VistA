@@ -1,0 +1,198 @@
+$TXT Created by HERRING,VENESSA at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 01/06/10 at 16:00
+=============================================================================
+Run Date: JAN 11, 2011                     Designation: PSO*7*331
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #307                      Status: Released
+                  Compliance Date: FEB 11, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*56    <<= must be installed BEFORE `PSO*7*331'
+                    (v)PSO*7*225   <<= must be installed BEFORE `PSO*7*331'
+
+Subject: HI COST REPORT/MEDS TAB ALPHA VIEW
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ This patch will resolve the 3 issues.
+  
+ 1. If a prescription has a Released Date but not time, the prescription 
+ will not show up on the High Cost Rx Report [PSO HI COST].
+  
+ 2. When selecting the 'Sort by Drug (alphabetically), status active,
+ status recent expired' view on the Meds Tab, prescriptions that have
+ a status of Hold or Provider Hold are not displayed.
+  
+ 3. In CPRS Active Non-VA meds, if they have a start date older than the
+ ORCH CONTEXT MEDS date are not displayed.  Active meds should always
+ display.
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ 1) HD0000000237146     Missing RX
+ 2) HD0000000306395     P&T wants "Hold" orders to remain viewable at the
+                        system level overriding any personal settings.
+                        Is that possible?
+ 3) HD0000000285991     DC'ed Non-VA meds still show
+                        Patient Safety Issue - PSPO1159
+                        Duplicates - HD0000000116739
+                                     HD0000000136269
+                                     HD0000000177218
+                                     HD0000000194997
+                                     HD0000000290251
+                                     HD0000000347500
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ VA Tennessee Valley HCS
+ Coatesville VA Medical Center
+ Ralph H Johnson VA Medical Center - Charleston
+  
+   
+ Remedy Overview:
+ ================
+ 1) HD0000000237146     Missing RX
+   
+ Problem: 
+ ========
+ If a prescription has a Released Date but not time, the prescription 
+ will not show up on the High Cost Rx Report [PSO HI COST]. 
+  
+ Resolution:
+ ===========
+ Need to modify the High Cost Rx Report [PSO HI COST] to include
+ prescriptions that do not have a time for the Released Date.Time.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSOCST10 at START+1 so variable PSDT=NDT-1_".999999" 
+ instead of PSDT=NDT.
+  
+  
+ 2) HD0000000306395     P&T wants "Hold" orders to remain viewable at the
+                        system level overriding any personal settings.
+                        Is that possible?
+ Problem: 
+ ========
+ When selecting the 'Sort by Drug (alphabetically), status active, status
+ recent expired' view on the Meds tab, prescriptions that have the status
+ of Hold or Provider Hold are not displayed.
+  
+ Resolution:
+ ===========
+ Modify the Meds tab in CPRS so prescriptions that are on Hold or Provider
+ Hold will be displayed when choosing the 'Sort by Drug (alphabetically),
+ status active, status recent expired' view.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSOORRL3 at tag OCL+8 to include the statuses of 3 (Hold)
+ and 16 (Provider Hold).
+  
+ 3) H00000000285991     DATE RANGE MAY FILTER OUT ACTIVE MEDS
+                        Duplicates- HD116739,HD136269,HD177218,HD194997
+                                    HD290251,HD347500
+ Patient Safety Issue - PSPO1159
+  
+ Problem:  
+ ========
+ In CPRS Active Non-VA meds, if they have a start date older than the
+ ORCH CONTEXT MEDS date are not displayed.  Active meds should always
+ display. 
+  
+ While testing it was also found that Discontinued Non-VA meds that have a
+ null start date will also never be removed.
+  
+  
+ Solution:  
+ =========
+ Need to modify the three views (Sort by Status/Exp. Date (IMO first on
+ Inpt), Sort by Status Group/Status/Location/Drug Name, Sort by Drug 
+ (alphabetically), status Active, status recent expire) so the Non-VA
+ medications that were active within the ORCH CONTEXT MEDS date range
+ are displayed.
+  
+ Technical Solution:
+ -------------------
+ Modify routines PSOORRLO, PSOORRLN, PSOORRL3 in tag NVA to check which
+ meds were active during the ORCH CONTEXT MEDS date range and only display
+ those.
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  Users should not be
+ generating the Hi Cost Report when this patch is installed.  It should
+ take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*331)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*331.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCST10
+    Before: B13635617   After: B13725207  **31,56,331**
+Routine Name: PSOORRL3
+    Before: B23985690   After: B26670310  **225,331**
+Routine Name: PSOORRLN
+    Before: B43625961   After: B46517542  **225,331**
+Routine Name: PSOORRLO
+    Before: B39129717   After: B42050035  **225,331**
+ 
+Routine list of preceding patches: 56, 225
+
+=============================================================================
+User Information:
+Entered By  : HERRING,VENESSA               Date Entered  : MAR 26, 2009
+Completed By: HEFFERNAN,COREY               Date Completed: DEC 09, 2010
+Released By : FOX,KIRK                      Date Released : JAN 11, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

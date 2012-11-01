@@ -1,0 +1,407 @@
+$TXT Created by GREENE,LYFORD K. at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Friday, 03/18/11 at 12:48
+=============================================================================
+Run Date: JUL 01, 2011                     Designation: PRC*5.1*154
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #130                    Status: Released
+                  Compliance Date: JUL 25, 2011
+=============================================================================
+
+Associated patches: (v)PRC*5.1*148 <<= must be installed BEFORE `PRC*5.1*154'
+                    (v)PRC*5.1*151 <<= must be installed BEFORE `PRC*5.1*154'
+                    (v)PRC*5.1*152 <<= must be installed BEFORE `PRC*5.1*154'
+
+Subject: CERTIFIER ROLE FOR 1358S PROCESSED IN IFCAP INVOICE TRACKING MODULE
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Print Template
+
+Description:
+============
+
+ The Government Accountability Office (GAO) and US Congress have expressed
+ concern about the lack of enforced segregation of duties in the use of the
+ 1358 Miscellaneous Obligation.  This patch introduces changes to IFCAP's
+ Payment/Invoice Tracking module to prevent someone who was a requestor,
+ approver, or obligator of a 1358 from certifying in IFCAP an invoice
+ against that 1358.  It also introduces a new segregation of duties report
+ based on certifications in the INVOICE TRACKING file (#421.5), which will
+ identify violations if they have occurred.  Additionally, it enhances the
+ CLRS(Clinical Logistics Report Server, also known as National Logistics
+ Database) extract to include data from the INVOICE TRACKING file so that
+ upper management can centrally monitor the use of the Payment/Invoice
+ Tracking module and check for segregation of duties violations.
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)      New/Modified/Deleted
+ ------------------        -------------------      --------------------
+ CONTROL POINT ACTIVITY    SERVICE END DATE         Added cleanup of %DT
+   (410)                       (6.5)                  variable
+  
+ INVOICE TRACKING          CERTIFIED BY SIG         Modified (added new
+   (421.5)                   DATE/TIME (61.9)         "AF" index)
+  
+  
+ Forms Associated:
+  
+ Form Name                 File #           New/Modified/Deleted
+ ---------                 ------           --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                            New/Modified/Deleted
+ ---------------                            --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                     Type             New/Modified/Deleted
+ -----------                     ----             --------------------
+ PRC 1358 COMPLIANCE REPORTS     menu             Modified
+ PRCFD INVOICE CERT SOD RPT      run              New
+ PRCHLO CLRS VALIDATION          menu             Modified
+ PRCHLO INVOICE TRKG CERTIFYING  inquire          New
+ PRCHLO INVOICE TRKG FMS LINES   inquire          New
+ PRCHLO INVOICE TRKG HEADER      inquire          New
+ PRCHLO INVOICE TRKG PROMPT PMT  inquire          New
+  
+ Protocols Associated:
+  
+ Protocol Name                 New/Modified/Deleted
+ -------------                 --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name             Type    File Name (Number)  New/Modified/Deleted
+ -------------             -----   ------------------  --------------------
+ PRCHLO410_HDR_VALIDATE    print   CONTROL POINT       Modified
+                                     ACTIVITY (#410)
+ PRCHLO421-5_CERTIFYING    print   INVOICE TRACKING    New
+   _SVC_VAL                           (#421.5)
+ PRCHLO421-5_FMS_LINE      print   INVOICE TRACKING    New
+   _VALIDATE                          (#421.5)
+ PRCHLO421-5_HDR_VALIDATE  print   INVOICE TRACKING    New
+                                      (#421.5)
+ PRCHLO421-5_PROMPT_PAY    print   INVOICE TRACKING    New
+   _VAL                               (#421.5)
+  
+  
+  
+ New Service Requests (NSR's)
+ ----------------------------
+ 20080801 Enhancing Internal Controls and Reporting Capabilities for 1358 
+          Misc Obligations: Implements adequate controls with respect to 
+          segregation of duties and oversight by contracting officials,
+          improving documentation requirements, and enhancing 1358
+          reporting capabilities within Integrated Funds Distribution,
+          Control Point Activity, Accounting and Procurement (IFCAP) that
+          will be used at the station, Veterans Integrated Service Network
+          (VISN), and enterprise levels.  A Government Accountability
+          Office (GAO) review questioned VHA's internal control standards
+          governing the authorization and use of miscellaneous obligations
+          as well as oversight abilities. Direction by the Congressional
+          Oversight Committee of the House.  GAO Report - GAO-08-1056T
+          Improvements Needed in Design of Controls over Miscellaneous 
+          Obligations, July 31, 2008.  Department of Veterans Affairs
+          Memorandum, Interim Memos (Interim Guidance on Miscellaneous
+          Obligations, VA Form 4-1358, dated January 30, 2008 AND
+          Department of Veterans Affairs Memorandum, Revised Guidance for
+          Processing of Miscellaneous Obligations, VA Form 4-1358, dated
+          May 18, 2008.
+  
+ The changes made by this patch are described below:
+ 1. Added check in options New Invoice [PRCFD ADD NEW INVOICE], Log-in 
+    Certified Invoices from Services [PRCFD CHECKIN INVOICE], and Approve 
+    Payment of Invoices Already Checked in [PRCFD APPROVE PAYMENT], to
+    prevent user who was a requestor, approver, or obligator on a 1358 from
+    certifying for payment an invoice against that 1358.
+  
+ 2. Added to Compliance Reports (1358) menu the option Invoice
+    Certification Seg Duties Violation Rpt [PRCFD INVOICE CERT SOD RPT]
+    which shows for invoices certified for payment in IFCAP's
+    Payment/Invoice Tracking module the names of the requestor, approver,
+    obligator, and certifier and identifies any violations in segregation
+    of duties.
+  
+ 3. Enhanced the CLRS (Clinical Logistics Report Server) extract to
+    include data from the INVOICE TRACKING file (#421.5) header and
+    subfiles.
+  
+ 4. Added to menu CLRS Extract Validation Templates [PRCHLO CLRS
+    VALIDATION] the inquire options IH Invoice Tracking Header - F24
+    [PRCHLO INVOICE TRKG HEADER, IP Invoice Tracking Prompt Pmt Terms - F25
+    [PRCHLO INVOICE TRKG PROMPT PMT], IF Invoice Tracking FMS Lines - F26
+    [PRCHLO INVOICE TRKG FMS LINES], and IC Invoice Tracking Certifying Svc
+    - F27 [PRCHLO INVOICE TRKG CERTIFYING] so that users can compare data
+    shown from the database to corresponding data that was extracted into
+    host files for the CLRS database.
+  
+ 5. Changed the logic for extracting the Sort Group value from file #410
+    to prevent abend in the rare instance that an entry's value is corrupt.
+  
+ 6. Changed the logic in print template PRCHLO410_HDR_VALIDATE for fields
+    OBLIGATION VAL CODE DATE/TIME (#29.8) and ES CODE DATE/TIME (#44.6) to
+    display time, as well as, date.
+  
+ 7. Added cleanup of %DT variable in the SERVICE END DATE (#6.5) field of 
+    the CONTROL POINT ACTIVITY (#410) file.  This variable was leaving
+    around the %DT(0) causing some date prompting issues in other date
+    prompts.
+  
+  
+ Patient Safety Issues (PSI's)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Central Texas, TX
+ St. Cloud, MN
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.  This  transmits the files from the 
+ first available FTP server.  Sites may also elect to retrieve software 
+ directly from a specific server as follows:
+  
+ Albany         ftp.fo-albany.med.va.gov <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov  <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov    <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:http://www4.va.gov/vdl
+  
+ Title                       File Name                        FTP mode
+ ---------------------------------------------------------------------
+ Application Coordinator     ifcp5_1application_coord.pdf     binary
+    User's Guide
+ Technical Manual            ifcp5_1tech_manual.pdf           binary
+ Voucher Audit Clerk         ifcp5_1voucher_audit_clerk.pdf   binary
+    User's Guide
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+       ****************************************************************
+       *                        SPECIAL NOTE                          *
+       *  Do NOT install this patch when the PRCHLO CLO PROCUREMENT   *
+       *  option is running or is scheduled to run via TaskMan.       *
+       ****************************************************************
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+          List of Menu Options for site to disable
+          ---------------------------------------- 
+          1358 Request Menu [PRCEC 1358 FCP PROCESSING]
+          Compliance Reports (1358) [PRC 1358 COMPLIANCE REPORTS]
+          Payment/Invoice Tracking Menu [PRCFD PAYMENTS MENU]
+          Clinical Logistics Office Menu [PRCPLO CLO MENU]
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch #
+     PRC*5.1*154:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' respond NO.    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' respond NO.
+  
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond YES.
+     When prompted to select the options you would like to place out of
+     order, enter the following:
+  
+          1358 Request Menu [PRCEC 1358 FCP PROCESSING]
+          Compliance Reports (1358) [PRC 1358 COMPLIANCE REPORTS]
+          Payment/Invoice Tracking Menu [PRCFD PAYMENTS MENU]
+          Clinical Logistics Office Menu [PRCPLO CLO MENU]
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+     As part of the post-init PRC51154 routine's execution, the new "AF"
+     cross reference will be populated. This routine will automatically
+     be deleted upon completion of the KIDS installation process.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;OCT 20, 2000;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRC51154
+    Before:       n/a   After:   B406680  **154**
+ Description of Changes:
+  This is the post-init routine for PRC*5.1*154. It contains code to 
+  reindex the new "AF" cross reference on the CERTIFIED BY SIG DATE/TIME 
+  field (#61.9) of the INVOICE TRACKING file (#421.5).
+   
+  This routine is automatically deleted from the namespace (UCI) at the 
+  conclusion of the KIDS installation process.
+
+Routine Name: PRCFDCI1
+    Before:  B5189866   After:  B5368338  **154**
+ Description of Changes:
+  This routine was modified to invoke extrinsic function 
+  $$VIOLATE^PRCFDSOD() to prevent a requestor, approver, or obligator of a 
+  1358 from certifying for payment an invoice against that 1358 in option 
+  Approve Payment of Invoices Already Checked in.
+
+Routine Name: PRCFDE1
+    Before: B17952536   After: B18830215  **154**
+ Description of Changes:
+  This routine was modified to invoke extrinsic function 
+  $$VIOLATE^PRCFDSOD() to prevent a requestor, approver, or obligator of a 
+  1358 from certifying for payment an invoice against that 1358 in option
+  New Invoice.
+
+Routine Name: PRCFDE3
+    Before: B17247666   After: B17499299  **154**
+ Description of Changes:
+  This routine was modified to invoke extrinsic function 
+  $$VIOLATE^PRCFDSOD() to prevent a requestor, approver, or obligator of a 
+  1358 from certifying for payment an invoice against that 1358 in option
+  Log-in Certified Invoices from Services.
+
+Routine Name: PRCFDES1
+    Before:  B8692790   After:  B9924721  **154**
+ Description of Changes:
+  Routine was edited to include logic for maintaining the "AF" cross 
+  reference on the CERTIFIED BY SIG DATE/TIME field (#61.9) of the INVOICE 
+  TRACKING file (#421.5).
+
+Routine Name: PRCFDSOD
+    Before:       n/a   After:  B9304570  **154**
+ Description of Changes:
+  New extrinsic function $$VIOLATE^PRCFDSOD()checks if the invoice is 
+  against a 1358 obligation and if so invokes function UOKCERT^PRCEMOA() to 
+  determine if the current person has previously signed as a requestor, 
+  approver, or obligator for that 1358 and thus is prohibited from 
+  certifying the invoice for payment. It returns '0' if the person is 
+  permitted to certify and '1' if the person is prohibited from certifying.
+
+Routine Name: PRCFSDR
+    Before:       n/a   After: B93033801  **154**
+ Description of Changes:
+  This new routine generates the 1358 Segregation of Duties report from 
+  INVOICE TRACKING file (#421.5) entries certified in the user specified
+  date range.  It can show all signatures or only those where a violation of
+  segregation of duties has occurred.
+
+Routine Name: PRCHLO
+    Before: B11530843   After: B12154193  **83,104,130,154**
+ Description of Changes:
+  This CLRS extract routine was edited to DO INVCOMPL^PRCHLO7 to compile 
+  the INVOICE TRACKING file (#421.5) data.
+
+Routine Name: PRCHLO4
+    Before:B120154139   After:B122818206  **83,98,130,154**
+ Description of Changes:
+  This CLRS extract routine was edited to invoke code in routine PRCHLO7 to 
+  write compiled INVOICE TRACKING file (#421.5) data to host files.
+
+Routine Name: PRCHLO4A
+    Before: B72350733   After: B72354777  **83,104,98,130,154**
+ Description of Changes:
+  This CLRS extract routine was edited to change the FOR loop counter's
+  upper limit from 23 to 27 so that the 4 new host files for the INVOICE
+  TRACKING file (#421.5) data are transmitted from the VistA site to the
+  CLRS server.
+
+Routine Name: PRCHLO6
+    Before:B136943569   After:B135328049  **130,140,151,154**
+ Description of Changes:
+  The logic for extracting values from fields OBLIGATION VAL CODE DATE/TIME 
+  (#29.8) and ES CODE DATE/TIME (#44.6) of the CONTROL POINT ACTIVITY file 
+  (#410) was changed to extract time, as well as, date.
+   
+  The logic for extracting the value of the SORT GROUP field (#49) was 
+  changed to use a VA FileMan utility that returns null if the value is 
+  corrupt or is a null pointer.
+
+Routine Name: PRCHLO7
+    Before:       n/a   After: B52404203  **154**
+ Description of Changes:
+  This new CLRS extract file compiles data from the header and 3 subfiles 
+  of the INVOICE TRACKING file (#421.5) and writes the data to the 4 new 
+  host files.
+
+ 
+Routine list of preceding patches: 151
+
+=============================================================================
+User Information:
+Entered By  : MCGAUGH,MAVIS L               Date Entered  : DEC 02, 2010
+Completed By: LYNCH,MARY F.                 Date Completed: JUN 09, 2011
+Released By : NELSON,VICKI M                Date Released : JUL 01, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

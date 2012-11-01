@@ -1,0 +1,130 @@
+$TXT Created by HAWSEY,JASON at CPRS28.FO-SLC.MED.VA.GOV  (KIDS) on Monday, 11/22/10 at 08:42
+=============================================================================
+Run Date: MAR 03, 2011                     Designation: OR*3*294
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #286                      Status: Released
+                  Compliance Date: MAR 31, 2011
+=============================================================================
+
+Associated patches: (v)OR*3*232    <<= must be installed BEFORE `OR*3*294'
+                    (v)XOBW*1*0    <<= must be installed BEFORE `OR*3*294'
+
+Subject: RDI VHIM COMPLIANCE
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ NOTE
+ ====
+ The Healthe Vet Web Service Client (HWSC) package is a prerequisite for 
+ OR*3.0*294 and GMRA*4.0*44.
+  
+ The purpose of patch OR*3.0*294 is to transition the method of data 
+ retrieval of the RDI software, which was initially released in patch 
+ OR*3.0*232. Prior to OR*3.0*294 the RDI software used HL7 messages to 
+ communicate with the HDR-IMS server to retrieve patient information for 
+ clinical decision support in order checking and elsewhere in CPRS.  After 
+ this patch the software will no longer communicate with the HDR-IMS 
+ server but will instead communicate with the HDR2 server via HTTP request.
+  
+ There are no functional changes included with this patch. Thus, the users 
+ should not see any difference in the work flow of placing an order or any 
+ difference in the resulting remote order checks.
+  
+ INSTALLATION GUIDE
+ ==================
+ The patch itself is distributed as a packman message. An installation 
+ guide is available for this patch: 
+  
+    File Name
+    =========
+    OR_30_294IG.DOC
+    OR_30_294IG.PDF
+  
+ The files listed above may be obtained via FTP.  The preferred method is 
+ to FTP the files from:
+  
+        download.vista.med.va.gov
+  
+ This transmits the files from the first available FTP server.  Sites may
+ also elect to retrieve the files directly from a specific server as 
+ follows:
+  
+    OI FIELD OFFICE    FTP ADDRESS                 DIRECTORY
+    ----------------   -------------------------   --------------------
+    Albany             ftp.fo-albany.med.va.gov    [anonymous.software]
+    Hines              ftp.fo-hines.med.va.gov     [anonymous.software]
+    Salt Lake City     ftp.fo-slc.med.va.gov       [anonymous.software]
+  
+ The patch itself is distributed as a packman message.
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There are no NSRs associated with this patch.
+   
+   
+ This patch addresses the following NOIS/Remedy Ticket(s):
+ ---------------------------------------------------------
+ There are no NOIS/Remedy Tickets addressed by this patch.
+  
+ Components Sent With Patch
+ --------------------------
+  
+ Routine Summary
+ The following is a list of the routine(s) included in this patch.  The
+ second line of each of these routine(s) will look like:
+  
+  <tab>;;3.0;ORDER ENTRY/RESULTS REPORTING;**[patch list]**;Dec 17, 1997
+  
+ Total number of routines modified: 2
+ Total number of new routines: 1
+ Total number of routines: 3
+  
+  
+ The following is a list of files included in this patch:
+ ========================================================
+ There are no files associated with this patch.   
+  
+   
+  Test Sites:
+  -----------
+  Martinez (Northern California HCS)
+  Palo Alto
+  Tampa
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Please reference the Install Guide for the Installation Instructions 
+ related to this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORRDI1
+    Before: B50225479   After:B113020386  **232,294**
+Routine Name: ORRDI2
+    Before: B28359828   After: B25393824  **232,294**
+Routine Name: ORY294
+    Before:       n/a   After:   B268802  **294**
+
+=============================================================================
+User Information:
+Entered By  : HAWSEY,JASON                  Date Entered  : MAR 19, 2008
+Completed By: BARLOW,KENNETH                Date Completed: MAR 03, 2011
+Released By : MONTGOMERY,ALAN               Date Released : MAR 03, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

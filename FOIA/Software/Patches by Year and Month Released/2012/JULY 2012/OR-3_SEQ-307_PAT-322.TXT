@@ -1,0 +1,232 @@
+$TXT Created by ESCALERA,Diego at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 03/20/12 at 16:56
+=============================================================================
+Run Date: JUL 25, 2012                     Designation: OR*3*322
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #307                      Status: Released
+                  Compliance Date: AUG 25, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*91     <<= must be installed BEFORE `OR*3*322'
+                    (v)OR*3*280    <<= must be installed BEFORE `OR*3*322'
+                    (v)OR*3*295    <<= must be installed BEFORE `OR*3*322'
+
+Subject: MED QO CHECKER/TEAM LISTS/CANCELLED DELAYED ORDERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects 4 issues within the ORDER ENTRY/RESULTS REPORTING 
+ (OERR) package:
+  
+ 1. Cancelling orders from a Delayed Orders list in CPRS (Computerized 
+    Patient Record System) GUI (Graphical User Interface) causes them 
+    to appear in the Active Orders list. They should be filtered out 
+    until the release event happens.
+  
+ 2. Patch OR*3*296 added the prompt 'Do you wish to continue?' to Vista
+    option Medication Quick Order Report [OR MEDICATION QO CHECKER]. If 
+    the user enters a lower case letter 'n' the report runs anyway.
+  
+ 3. When using the remove function for VistA option Team List Mgmt Menu
+    [ORLP TEAM MENU] '999  MORE.' is displayed as the entry value to use
+    to advance the list of patients. However, entering '999' can
+    inadvertently remove a patient from the list instead of advancing the 
+    list. 
+  
+ 4. When using the remove function for VistA option Team List Mgmt Menu
+    [ORLP TEAM MENU] '999 MORE.' is displayed as the entry value to use 
+    to advance the list of patients. However, the entry of '999' can 
+    display a list of patients for removal selection instead of advancing
+    the list. 
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ 1. HD0000000329164 - Cancelled TD Orders Appear on Active Order List
+  
+ 2. HD0000000353327 - OR MEDICATION QO CHECKER
+  
+ 3. HD0000000352987 - Team Lists
+  
+ 4. HD0000000069747 - TEAM LIST PROBLEM 
+  
+  
+ PATIENT SAFETY ISSUE:
+ =====================
+ N/A
+  
+ ASSOCIATED NSR(s):
+ ================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate New York HCS (Albany), NY
+ Bay Pines VAMC, FL
+ VA N. Arizona, AZ
+ Orlando VAMC, FL
+ Asheville VAMC, NC
+  
+  
+ OVERVIEW:
+ =========
+  
+ 1. HD0000000329164 - Cancelled TD Orders Appear on Active Order List
+  
+    Problem:
+    --------
+    When event delayed orders are cancelled before the release event 
+    happens, the cancelled order is listed on both the delayed orders view
+    and the active order view on the CPRS Orders tab. These cancelled
+    orders should not appear on the Active Orders list until the release
+    event happens.
+  
+    Resolution:
+    -----------
+    Cancelled Delayed Orders will not display on the Active Orders list 
+    until the release event occurs.
+  
+  
+ 2. HD0000000353327 - OR MEDICATION QO CHECKER
+  
+    Problem:
+    --------
+    Patch OR*3*296 added the prompt 'Do you wish to continue?' to the 
+    option Medication Quick Order Report [OR MEDICATION QO CHECKER]. If 
+    the user enters a lower case n, the report continues to run anyway.
+  
+    Resolution:
+    -----------
+    An unintentional programming error kept the Medication Quick Order 
+    Report from recognizing a lower case answer. The ATWILL^ORWOD tag 
+    internally converts the response to uppercase but was not using the 
+    converted text. Now the tag has been modified to use the appropriate 
+    text.   
+  
+ 3. HD0000000352987 - Team Lists
+  
+    Problem:
+    --------
+    When using the remove function for VistA option Team List Mgmt Menu
+    [ORLP TEAM MENU] and the team contains more than 39 patients, 
+    '999  MORE.' is displayed as the value to enter to advance the 
+    list to view more patients. However, if the list contains only one 
+    patient having an internal record number (IEN) in file #2 PATIENT 
+    beginning with 999, the entry '999' inadvertently removes this
+    patient from the team list instead of advancing the list. 
+     
+    Resolution:
+    -----------
+    When using the remove function the patient list has been modified
+    to display '+ MORE.' as the value to enter to advance the list to
+    view more patients. The entry of '999' no longer advances the list. 
+  
+  
+  
+  
+ 4. HD0000000069747 - TEAM LIST PROBLEM 
+  
+    Problem:
+    --------
+    When using the remove function for VistA option Team List Mgmt Menu
+    [ORLP TEAM MENU] and the team contains more than 39 patients, 
+    '999  MORE.' is displayed as the value to enter to advance the 
+    list to view more patients. However, if the list contains more than 
+    one patient having an internal record number (IEN) in file #2 PATIENT
+    beginning with 999, the entry of '999' displays these patients for 
+    removal selection instead of advancing the list. 
+   
+    Resolution:
+    -----------
+    When using the remove function the patient list has been modified
+    to display '+ MORE.' as the value to enter to advance the list to
+    view more patients. The entry of '999' no longer advances the list. 
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*322):
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      OR*3.0*322.
+  
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORQ11
+    Before: B64450310   After: B66045788  **7,27,48,72,78,99,94,148,141,
+                                           177,186,190,195,215,243,295,
+                                           322**
+Routine Name: ORUS
+    Before:  B9541231   After:  B9751289  **91,322**
+Routine Name: ORUS1
+    Before: B13048652   After: B13629174  **322**
+Routine Name: ORUS5
+    Before: B12973913   After: B13207739  **322**
+Routine Name: ORWOD
+    Before: B75747824   After: B75952495  **243,296,280,322**
+ 
+Routine list of preceding patches: 91, 280, 295
+
+=============================================================================
+User Information:
+Entered By  : ESCALERA,DIEGO                Date Entered  : SEP 30, 2009
+Completed By: HULET,LEE ANN                 Date Completed: JUL 18, 2012
+Released By : PERSCHON,ANDREA               Date Released : JUL 25, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

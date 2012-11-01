@@ -1,0 +1,3794 @@
+Released PSO*7*354 SEQ #329
+Extracted from mail message
+**KIDS**:PSO*7.0*354^
+
+**INSTALL NAME**
+PSO*7.0*354
+"BLD",7436,0)
+PSO*7.0*354^OUTPATIENT PHARMACY^0^3120201^y
+"BLD",7436,1,0)
+^^91^91^3120131^
+"BLD",7436,1,1,0)
+This patch is being released as part of Pharmacy Legacy Enhancements 
+"BLD",7436,1,2,0)
+Fiscal Year 2011 to address the Outpatient Pharmacy Automation Interface
+"BLD",7436,1,3,0)
+(OPAI) Enhancements. The Pharmacy Data Management patch PSS*1*156 is also
+"BLD",7436,1,4,0)
+being released as part of this enhancement.
+"BLD",7436,1,5,0)
+  
+"BLD",7436,1,6,0)
+Veterans Affairs Medical Center (VAMC) facilities have moved to using 
+"BLD",7436,1,7,0)
+multiple vendors for automated medication dispensing systems to improve
+"BLD",7436,1,8,0)
+the efficiency of outpatient pharmacy operations. The following
+"BLD",7436,1,9,0)
+enhancements were made to the Outpatient Pharmacy software to allow any
+"BLD",7436,1,10,0)
+one division to have more than one Automated Dispensing Device (ADD)
+"BLD",7436,1,11,0)
+communicating with Veterans Health Information Systems and Technology
+"BLD",7436,1,12,0)
+Architecture (VistA) through the OPAI.
+"BLD",7436,1,13,0)
+  
+"BLD",7436,1,14,0)
+1.  A new file named PHARMACY AUTOMATED DISPENSING DEVICES file (#52.53)
+"BLD",7436,1,15,0)
+    was created. Entries in this file are required only if the site wants 
+"BLD",7436,1,16,0)
+    to utilize the multiple dispensing functionality. The new file 
+"BLD",7436,1,17,0)
+    contains the following fields:
+"BLD",7436,1,18,0)
+   
+"BLD",7436,1,19,0)
+    NAME - A free-text field that is between 3-30 characters in length. 
+"BLD",7436,1,20,0)
+           It is the name given to the automated dispensing device.
+"BLD",7436,1,21,0)
+    DNS  - A free-text field that is between 1-50 characters in length. It
+"BLD",7436,1,22,0)
+           stores the DNS name or IP address of the automated dispensing 
+"BLD",7436,1,23,0)
+           device.
+"BLD",7436,1,24,0)
+    PORT - This field is a numeric between 1 and 65535 with no decimal 
+"BLD",7436,1,25,0)
+           places. It stores the port associated with the automated
+"BLD",7436,1,26,0)
+           dispensing device.
+"BLD",7436,1,27,0)
+    INACTIVE 
+"BLD",7436,1,28,0)
+    DATE - This is a date field, not required, but is used to inactivate 
+"BLD",7436,1,29,0)
+           the OPAI connection to an automated dispensing device.
+"BLD",7436,1,30,0)
+ 
+"BLD",7436,1,31,0)
+2.  A new menu option named Enter/Edit Automated Dispensing Devices [PSO 
+"BLD",7436,1,32,0)
+    AUTO DISPENSING DEVICE] was created to maintain the PHARMACY 
+"BLD",7436,1,33,0)
+    AUTOMATED DISPENSING DEVICES file (#52.53). The option is located
+"BLD",7436,1,34,0)
+    under the Maintenance (Outpatient Pharmacy) [PSO MAINTENANCE] menu.
+"BLD",7436,1,35,0)
+    Only sites planning to use the multiple automated dispensing devices
+"BLD",7436,1,36,0)
+    for an outpatient division should use this option.
+"BLD",7436,1,37,0)
+ 
+"BLD",7436,1,38,0)
+3.  A new sub-file (#59.20081) multiple named OPAI was added to the 
+"BLD",7436,1,39,0)
+    DISPENSING SYSTEM PRINTER sub-file (#59.02008) in the OUTPATIENT SITE 
+"BLD",7436,1,40,0)
+    file (#59). The sub-file contains the following new fields:
+"BLD",7436,1,41,0)
+  
+"BLD",7436,1,42,0)
+    DNS NAME      - This field is a pointer to the PHARMACY AUTOMATED 
+"BLD",7436,1,43,0)
+                    DISPENSING DEVICES file (#52.53).
+"BLD",7436,1,44,0)
+    CATEGORY      - Categories provide the flexibility of routing RXs to
+"BLD",7436,1,45,0)
+                    different ADDs. This field contains the following set
+"BLD",7436,1,46,0)
+                    of codes:
+"BLD",7436,1,47,0)
+                    MCS    MAIL - CS
+"BLD",7436,1,48,0)
+                    MNCS   MAIL - NCS
+"BLD",7436,1,49,0)
+                    MAIL   MAIL
+"BLD",7436,1,50,0)
+                    WCS    WINDOW - CS
+"BLD",7436,1,51,0)
+                    WNCS   WINDOW - NCS
+"BLD",7436,1,52,0)
+                    WIND   WINDOW
+"BLD",7436,1,53,0)
+                    CS     CONTROLLED SUBSTANCE
+"BLD",7436,1,54,0)
+                    NCS    NONCONTROLLED SUBSTANCE
+"BLD",7436,1,55,0)
+                    A      ANY
+"BLD",7436,1,56,0)
+                    S      STORAGE
+"BLD",7436,1,57,0)
+   
+"BLD",7436,1,58,0)
+4.  The Site Parameter Enter/Edit [PSO SITE PARAMETERS] option was   
+"BLD",7436,1,59,0)
+    modified for addition of the new fields in the OPAI multiple
+"BLD",7436,1,60,0)
+    (#59.20081) in the OUTPATIENT SITE file (#59).
+"BLD",7436,1,61,0)
+  
+"BLD",7436,1,62,0)
+5.  During prescription processing, if the label printer selected has 
+"BLD",7436,1,63,0)
+    ADDs defined then Rx will be routed to the appropriate ADDs. A message
+"BLD",7436,1,64,0)
+    will be displayed indicating the ADDs where the Rx will be routed.
+"BLD",7436,1,65,0)
+    Below is an example of the routing message.
+"BLD",7436,1,66,0)
+ 
+"BLD",7436,1,67,0)
+      PRESCRIPTIONS SENT TO:
+"BLD",7436,1,68,0)
+        OPTIFILL1
+"BLD",7436,1,69,0)
+          100002815      ACETAMINOPHEN 325MG C.T.
+"BLD",7436,1,70,0)
+          100002816      AMOXICILLIN 250MG CAP
+"BLD",7436,1,71,0)
+          100002824      AMOXAPINE 50MG TAB
+"BLD",7436,1,72,0)
+   
+"BLD",7436,1,73,0)
+        SCRIPTPRO1
+"BLD",7436,1,74,0)
+          100002844      CIMETIDINE 200MG TAB
+"BLD",7436,1,75,0)
+   
+"BLD",7436,1,76,0)
+6.  During testing a problem was discovered in the Print from Suspense
+"BLD",7436,1,77,0)
+    File [PSO PNDLBL] and Reprint Batches from Suspense [PSO PNDRPT] 
+"BLD",7436,1,78,0)
+    options. The ZTIO variable, which stores the label printer, was being
+"BLD",7436,1,79,0)
+    reset to null after processing each patient prescription. As a result 
+"BLD",7436,1,80,0)
+    a printer defined with multiple ADDs was not routing prescriptions 
+"BLD",7436,1,81,0)
+    properly. Routines PSOSULBL and PSOSUSRP were modified to address this
+"BLD",7436,1,82,0)
+    problem.
+"BLD",7436,1,83,0)
+ 
+"BLD",7436,1,84,0)
+7.  A new Integration Control Registration (ICR) #5579 was created to 
+"BLD",7436,1,85,0)
+    grant the Pharmacy Data Management package read access to the PHARMACY
+"BLD",7436,1,86,0)
+    AUTOMATED DISPENSING DEVICES file (#52.53).
+"BLD",7436,1,87,0)
+ 
+"BLD",7436,1,88,0)
+8.  As per the User Group request, when a dispense complete message is 
+"BLD",7436,1,89,0)
+    received by VistA from the external dispensing interface and if the 
+"BLD",7436,1,90,0)
+    mail tracking information is included in the 13th piece of the RXD 
+"BLD",7436,1,91,0)
+    segment, then the activity log will be updated with this information.
+"BLD",7436,4,0)
+^9.64PA^59^2
+"BLD",7436,4,52.53,0)
+52.53
+"BLD",7436,4,52.53,222)
+y^y^f^^^^n
+"BLD",7436,4,59,0)
+59
+"BLD",7436,4,59,2,0)
+^9.641^59.20081^1
+"BLD",7436,4,59,2,59.20081,0)
+OPAI  (sub-file)
+"BLD",7436,4,59,2,59.20081,1,0)
+^9.6411^^
+"BLD",7436,4,59,222)
+y^y^p^^^^n^^n
+"BLD",7436,4,59,224)
+
+"BLD",7436,4,"APDD",59,59.20081)
+
+"BLD",7436,4,"B",52.53,52.53)
+
+"BLD",7436,4,"B",59,59)
+
+"BLD",7436,6.3)
+16
+"BLD",7436,"ABPKG")
+n
+"BLD",7436,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7436,"KRN",.4,0)
+.4
+"BLD",7436,"KRN",.401,0)
+.401
+"BLD",7436,"KRN",.401,"NM",0)
+^9.68A^^
+"BLD",7436,"KRN",.402,0)
+.402
+"BLD",7436,"KRN",.402,"NM",0)
+^9.68A^1^1
+"BLD",7436,"KRN",.402,"NM",1,0)
+PSO SITE    FILE #59^59^0
+"BLD",7436,"KRN",.402,"NM","B","PSO SITE    FILE #59",1)
+
+"BLD",7436,"KRN",.403,0)
+.403
+"BLD",7436,"KRN",.5,0)
+.5
+"BLD",7436,"KRN",.84,0)
+.84
+"BLD",7436,"KRN",3.6,0)
+3.6
+"BLD",7436,"KRN",3.8,0)
+3.8
+"BLD",7436,"KRN",9.2,0)
+9.2
+"BLD",7436,"KRN",9.8,0)
+9.8
+"BLD",7436,"KRN",9.8,"NM",0)
+^9.68A^10^10
+"BLD",7436,"KRN",9.8,"NM",1,0)
+PSOHLDS^^0^B91277633
+"BLD",7436,"KRN",9.8,"NM",2,0)
+PSORXL^^0^B108590607
+"BLD",7436,"KRN",9.8,"NM",3,0)
+PSOLBL4^^0^B50601641
+"BLD",7436,"KRN",9.8,"NM",4,0)
+PSOUTLA^^0^B43668686
+"BLD",7436,"KRN",9.8,"NM",5,0)
+PSOSITED^^0^B11301085
+"BLD",7436,"KRN",9.8,"NM",6,0)
+PSOSULBL^^0^B73919713
+"BLD",7436,"KRN",9.8,"NM",7,0)
+PSOHLDIS^^0^B76066923
+"BLD",7436,"KRN",9.8,"NM",8,0)
+PSOORAL1^^0^B57889178
+"BLD",7436,"KRN",9.8,"NM",9,0)
+PSORXVW1^^0^B67852891
+"BLD",7436,"KRN",9.8,"NM",10,0)
+PSOSUSRP^^0^B14336043
+"BLD",7436,"KRN",9.8,"NM","B","PSOHLDIS",7)
+
+"BLD",7436,"KRN",9.8,"NM","B","PSOHLDS",1)
+
+"BLD",7436,"KRN",9.8,"NM","B","PSOLBL4",3)
+
+"BLD",7436,"KRN",9.8,"NM","B","PSOORAL1",8)
+
+"BLD",7436,"KRN",9.8,"NM","B","PSORXL",2)
+
+"BLD",7436,"KRN",9.8,"NM","B","PSORXVW1",9)
+
+"BLD",7436,"KRN",9.8,"NM","B","PSOSITED",5)
+
+"BLD",7436,"KRN",9.8,"NM","B","PSOSULBL",6)
+
+"BLD",7436,"KRN",9.8,"NM","B","PSOSUSRP",10)
+
+"BLD",7436,"KRN",9.8,"NM","B","PSOUTLA",4)
+
+"BLD",7436,"KRN",19,0)
+19
+"BLD",7436,"KRN",19,"NM",0)
+^9.68A^2^2
+"BLD",7436,"KRN",19,"NM",1,0)
+PSO AUTO DISPENSING DEVICE^^0
+"BLD",7436,"KRN",19,"NM",2,0)
+PSO MAINTENANCE^^2
+"BLD",7436,"KRN",19,"NM","B","PSO AUTO DISPENSING DEVICE",1)
+
+"BLD",7436,"KRN",19,"NM","B","PSO MAINTENANCE",2)
+
+"BLD",7436,"KRN",19.1,0)
+19.1
+"BLD",7436,"KRN",101,0)
+101
+"BLD",7436,"KRN",409.61,0)
+409.61
+"BLD",7436,"KRN",771,0)
+771
+"BLD",7436,"KRN",779.2,0)
+779.2
+"BLD",7436,"KRN",870,0)
+870
+"BLD",7436,"KRN",8989.51,0)
+8989.51
+"BLD",7436,"KRN",8989.52,0)
+8989.52
+"BLD",7436,"KRN",8994,0)
+8994
+"BLD",7436,"KRN","B",.4,.4)
+
+"BLD",7436,"KRN","B",.401,.401)
+
+"BLD",7436,"KRN","B",.402,.402)
+
+"BLD",7436,"KRN","B",.403,.403)
+
+"BLD",7436,"KRN","B",.5,.5)
+
+"BLD",7436,"KRN","B",.84,.84)
+
+"BLD",7436,"KRN","B",3.6,3.6)
+
+"BLD",7436,"KRN","B",3.8,3.8)
+
+"BLD",7436,"KRN","B",9.2,9.2)
+
+"BLD",7436,"KRN","B",9.8,9.8)
+
+"BLD",7436,"KRN","B",19,19)
+
+"BLD",7436,"KRN","B",19.1,19.1)
+
+"BLD",7436,"KRN","B",101,101)
+
+"BLD",7436,"KRN","B",409.61,409.61)
+
+"BLD",7436,"KRN","B",771,771)
+
+"BLD",7436,"KRN","B",779.2,779.2)
+
+"BLD",7436,"KRN","B",870,870)
+
+"BLD",7436,"KRN","B",8989.51,8989.51)
+
+"BLD",7436,"KRN","B",8989.52,8989.52)
+
+"BLD",7436,"KRN","B",8994,8994)
+
+"BLD",7436,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",7436,"QUES",0)
+^9.62^^
+"BLD",7436,"REQB",0)
+^9.611^8^5
+"BLD",7436,"REQB",1,0)
+PSO*7.0*312^2
+"BLD",7436,"REQB",5,0)
+PSS*1.0*156^2
+"BLD",7436,"REQB",6,0)
+PSO*7.0*387^2
+"BLD",7436,"REQB",7,0)
+PSO*7.0*330^2
+"BLD",7436,"REQB",8,0)
+PSO*7.0*359^2
+"BLD",7436,"REQB","B","PSO*7.0*312",1)
+
+"BLD",7436,"REQB","B","PSO*7.0*330",7)
+
+"BLD",7436,"REQB","B","PSO*7.0*359",8)
+
+"BLD",7436,"REQB","B","PSO*7.0*387",6)
+
+"BLD",7436,"REQB","B","PSS*1.0*156",5)
+
+"FIA",52.53)
+PHARMACY AUTOMATED DISPENSING DEVICES
+"FIA",52.53,0)
+^PS(52.53,
+"FIA",52.53,0,0)
+52.53I
+"FIA",52.53,0,1)
+y^y^f^^^^n
+"FIA",52.53,0,10)
+
+"FIA",52.53,0,11)
+
+"FIA",52.53,0,"RLRO")
+
+"FIA",52.53,0,"VR")
+7.0^PSO
+"FIA",52.53,52.53)
+0
+"FIA",59)
+OUTPATIENT SITE
+"FIA",59,0)
+^PS(59,
+"FIA",59,0,0)
+59I
+"FIA",59,0,1)
+y^y^p^^^^n^^n
+"FIA",59,0,10)
+
+"FIA",59,0,11)
+
+"FIA",59,0,"RLRO")
+
+"FIA",59,0,"VR")
+7.0^PSO
+"FIA",59,59)
+1
+"FIA",59,59.02008)
+1
+"FIA",59,59.02008,1)
+
+"FIA",59,59.20081)
+0
+"KRN",.402,1379,-1)
+0^1
+"KRN",.402,1379,0)
+PSO SITE^3120201.0952^^59^^^3120201
+"KRN",.402,1379,"DR",1,59)
+.01:.06;1008;.07:.081;2004;.09:.091;.1:.18;.2:.52;3:5;2008;6:7;105;105.1;105.2;2006;2007;8;100;101;109;1000;1001;1002;2001;2002;1003;1004;1005;1006;2005;2030;2035;
+"KRN",.402,1379,"DR",2,59.02008)
+.01;S DIE("NO^")="BACK";1;K DIE("NO^");
+"KRN",.402,1379,"DR",2,59.08)
+.01;1;
+"KRN",.402,1379,"DR",3,59.20081)
+.01:1;
+"KRN",19,7135,-1)
+2^2
+"KRN",19,7135,0)
+PSO MAINTENANCE^Maintenance (Outpatient Pharmacy)^^M^11712^^^^^^^141^^1^1
+"KRN",19,7135,10,0)
+^19.01IP^30^30
+"KRN",19,7135,10,30,0)
+13583
+"KRN",19,7135,10,30,"^")
+PSO AUTO DISPENSING DEVICE
+"KRN",19,7135,"U")
+MAINTENANCE (OUTPATIENT PHARMA
+"KRN",19,13583,-1)
+0^1
+"KRN",19,13583,0)
+PSO AUTO DISPENSING DEVICE^Enter/Edit Automated Dispensing Devices^^R^^^^^^^^OUTPATIENT PHARMACY^^
+"KRN",19,13583,1,0)
+^19.06^1^1^3100817^^
+"KRN",19,13583,1,1,0)
+This option will be used to setup automated dispensing devices (ADD).
+"KRN",19,13583,10.1)
+setup ADDs
+"KRN",19,13583,20)
+
+"KRN",19,13583,25)
+ADD^PSOUTLA
+"KRN",19,13583,"U")
+ENTER/EDIT AUTOMATED DISPENSIN
+"MBREQ")
+0
+"ORD",7,.402)
+.402;7;;;EDEOUT^DIFROMSO(.402,DA,"",XPDA);FPRE^DIFROMSI(.402,"",XPDA);EPRE^DIFROMSI(.402,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.402,DA,"",XPDA);DEL^DIFROMSK(.402,"",%)
+"ORD",7,.402,0)
+INPUT TEMPLATE
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",141,-1)
+1^1
+"PKG",141,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",141,20,0)
+^9.402P^^
+"PKG",141,22,0)
+^9.49I^1^1
+"PKG",141,22,1,0)
+7.0^2971216^2980917^11712
+"PKG",141,22,1,"PAH",1,0)
+354^3120201
+"PKG",141,22,1,"PAH",1,1,0)
+^^91^91^3120201
+"PKG",141,22,1,"PAH",1,1,1,0)
+This patch is being released as part of Pharmacy Legacy Enhancements 
+"PKG",141,22,1,"PAH",1,1,2,0)
+Fiscal Year 2011 to address the Outpatient Pharmacy Automation Interface
+"PKG",141,22,1,"PAH",1,1,3,0)
+(OPAI) Enhancements. The Pharmacy Data Management patch PSS*1*156 is also
+"PKG",141,22,1,"PAH",1,1,4,0)
+being released as part of this enhancement.
+"PKG",141,22,1,"PAH",1,1,5,0)
+  
+"PKG",141,22,1,"PAH",1,1,6,0)
+Veterans Affairs Medical Center (VAMC) facilities have moved to using 
+"PKG",141,22,1,"PAH",1,1,7,0)
+multiple vendors for automated medication dispensing systems to improve
+"PKG",141,22,1,"PAH",1,1,8,0)
+the efficiency of outpatient pharmacy operations. The following
+"PKG",141,22,1,"PAH",1,1,9,0)
+enhancements were made to the Outpatient Pharmacy software to allow any
+"PKG",141,22,1,"PAH",1,1,10,0)
+one division to have more than one Automated Dispensing Device (ADD)
+"PKG",141,22,1,"PAH",1,1,11,0)
+communicating with Veterans Health Information Systems and Technology
+"PKG",141,22,1,"PAH",1,1,12,0)
+Architecture (VistA) through the OPAI.
+"PKG",141,22,1,"PAH",1,1,13,0)
+  
+"PKG",141,22,1,"PAH",1,1,14,0)
+1.  A new file named PHARMACY AUTOMATED DISPENSING DEVICES file (#52.53)
+"PKG",141,22,1,"PAH",1,1,15,0)
+    was created. Entries in this file are required only if the site wants 
+"PKG",141,22,1,"PAH",1,1,16,0)
+    to utilize the multiple dispensing functionality. The new file 
+"PKG",141,22,1,"PAH",1,1,17,0)
+    contains the following fields:
+"PKG",141,22,1,"PAH",1,1,18,0)
+   
+"PKG",141,22,1,"PAH",1,1,19,0)
+    NAME - A free-text field that is between 3-30 characters in length. 
+"PKG",141,22,1,"PAH",1,1,20,0)
+           It is the name given to the automated dispensing device.
+"PKG",141,22,1,"PAH",1,1,21,0)
+    DNS  - A free-text field that is between 1-50 characters in length. It
+"PKG",141,22,1,"PAH",1,1,22,0)
+           stores the DNS name or IP address of the automated dispensing 
+"PKG",141,22,1,"PAH",1,1,23,0)
+           device.
+"PKG",141,22,1,"PAH",1,1,24,0)
+    PORT - This field is a numeric between 1 and 65535 with no decimal 
+"PKG",141,22,1,"PAH",1,1,25,0)
+           places. It stores the port associated with the automated
+"PKG",141,22,1,"PAH",1,1,26,0)
+           dispensing device.
+"PKG",141,22,1,"PAH",1,1,27,0)
+    INACTIVE 
+"PKG",141,22,1,"PAH",1,1,28,0)
+    DATE - This is a date field, not required, but is used to inactivate 
+"PKG",141,22,1,"PAH",1,1,29,0)
+           the OPAI connection to an automated dispensing device.
+"PKG",141,22,1,"PAH",1,1,30,0)
+ 
+"PKG",141,22,1,"PAH",1,1,31,0)
+2.  A new menu option named Enter/Edit Automated Dispensing Devices [PSO 
+"PKG",141,22,1,"PAH",1,1,32,0)
+    AUTO DISPENSING DEVICE] was created to maintain the PHARMACY 
+"PKG",141,22,1,"PAH",1,1,33,0)
+    AUTOMATED DISPENSING DEVICES file (#52.53). The option is located
+"PKG",141,22,1,"PAH",1,1,34,0)
+    under the Maintenance (Outpatient Pharmacy) [PSO MAINTENANCE] menu.
+"PKG",141,22,1,"PAH",1,1,35,0)
+    Only sites planning to use the multiple automated dispensing devices
+"PKG",141,22,1,"PAH",1,1,36,0)
+    for an outpatient division should use this option.
+"PKG",141,22,1,"PAH",1,1,37,0)
+ 
+"PKG",141,22,1,"PAH",1,1,38,0)
+3.  A new sub-file (#59.20081) multiple named OPAI was added to the 
+"PKG",141,22,1,"PAH",1,1,39,0)
+    DISPENSING SYSTEM PRINTER sub-file (#59.02008) in the OUTPATIENT SITE 
+"PKG",141,22,1,"PAH",1,1,40,0)
+    file (#59). The sub-file contains the following new fields:
+"PKG",141,22,1,"PAH",1,1,41,0)
+  
+"PKG",141,22,1,"PAH",1,1,42,0)
+    DNS NAME      - This field is a pointer to the PHARMACY AUTOMATED 
+"PKG",141,22,1,"PAH",1,1,43,0)
+                    DISPENSING DEVICES file (#52.53).
+"PKG",141,22,1,"PAH",1,1,44,0)
+    CATEGORY      - Categories provide the flexibility of routing RXs to
+"PKG",141,22,1,"PAH",1,1,45,0)
+                    different ADDs. This field contains the following set
+"PKG",141,22,1,"PAH",1,1,46,0)
+                    of codes:
+"PKG",141,22,1,"PAH",1,1,47,0)
+                    MCS    MAIL - CS
+"PKG",141,22,1,"PAH",1,1,48,0)
+                    MNCS   MAIL - NCS
+"PKG",141,22,1,"PAH",1,1,49,0)
+                    MAIL   MAIL
+"PKG",141,22,1,"PAH",1,1,50,0)
+                    WCS    WINDOW - CS
+"PKG",141,22,1,"PAH",1,1,51,0)
+                    WNCS   WINDOW - NCS
+"PKG",141,22,1,"PAH",1,1,52,0)
+                    WIND   WINDOW
+"PKG",141,22,1,"PAH",1,1,53,0)
+                    CS     CONTROLLED SUBSTANCE
+"PKG",141,22,1,"PAH",1,1,54,0)
+                    NCS    NONCONTROLLED SUBSTANCE
+"PKG",141,22,1,"PAH",1,1,55,0)
+                    A      ANY
+"PKG",141,22,1,"PAH",1,1,56,0)
+                    S      STORAGE
+"PKG",141,22,1,"PAH",1,1,57,0)
+   
+"PKG",141,22,1,"PAH",1,1,58,0)
+4.  The Site Parameter Enter/Edit [PSO SITE PARAMETERS] option was   
+"PKG",141,22,1,"PAH",1,1,59,0)
+    modified for addition of the new fields in the OPAI multiple
+"PKG",141,22,1,"PAH",1,1,60,0)
+    (#59.20081) in the OUTPATIENT SITE file (#59).
+"PKG",141,22,1,"PAH",1,1,61,0)
+  
+"PKG",141,22,1,"PAH",1,1,62,0)
+5.  During prescription processing, if the label printer selected has 
+"PKG",141,22,1,"PAH",1,1,63,0)
+    ADDs defined then Rx will be routed to the appropriate ADDs. A message
+"PKG",141,22,1,"PAH",1,1,64,0)
+    will be displayed indicating the ADDs where the Rx will be routed.
+"PKG",141,22,1,"PAH",1,1,65,0)
+    Below is an example of the routing message.
+"PKG",141,22,1,"PAH",1,1,66,0)
+ 
+"PKG",141,22,1,"PAH",1,1,67,0)
+      PRESCRIPTIONS SENT TO:
+"PKG",141,22,1,"PAH",1,1,68,0)
+        OPTIFILL1
+"PKG",141,22,1,"PAH",1,1,69,0)
+          100002815      ACETAMINOPHEN 325MG C.T.
+"PKG",141,22,1,"PAH",1,1,70,0)
+          100002816      AMOXICILLIN 250MG CAP
+"PKG",141,22,1,"PAH",1,1,71,0)
+          100002824      AMOXAPINE 50MG TAB
+"PKG",141,22,1,"PAH",1,1,72,0)
+   
+"PKG",141,22,1,"PAH",1,1,73,0)
+        SCRIPTPRO1
+"PKG",141,22,1,"PAH",1,1,74,0)
+          100002844      CIMETIDINE 200MG TAB
+"PKG",141,22,1,"PAH",1,1,75,0)
+   
+"PKG",141,22,1,"PAH",1,1,76,0)
+6.  During testing a problem was discovered in the Print from Suspense
+"PKG",141,22,1,"PAH",1,1,77,0)
+    File [PSO PNDLBL] and Reprint Batches from Suspense [PSO PNDRPT] 
+"PKG",141,22,1,"PAH",1,1,78,0)
+    options. The ZTIO variable, which stores the label printer, was being
+"PKG",141,22,1,"PAH",1,1,79,0)
+    reset to null after processing each patient prescription. As a result 
+"PKG",141,22,1,"PAH",1,1,80,0)
+    a printer defined with multiple ADDs was not routing prescriptions 
+"PKG",141,22,1,"PAH",1,1,81,0)
+    properly. Routines PSOSULBL and PSOSUSRP were modified to address this
+"PKG",141,22,1,"PAH",1,1,82,0)
+    problem.
+"PKG",141,22,1,"PAH",1,1,83,0)
+ 
+"PKG",141,22,1,"PAH",1,1,84,0)
+7.  A new Integration Control Registration (ICR) #5579 was created to 
+"PKG",141,22,1,"PAH",1,1,85,0)
+    grant the Pharmacy Data Management package read access to the PHARMACY
+"PKG",141,22,1,"PAH",1,1,86,0)
+    AUTOMATED DISPENSING DEVICES file (#52.53).
+"PKG",141,22,1,"PAH",1,1,87,0)
+ 
+"PKG",141,22,1,"PAH",1,1,88,0)
+8.  As per the User Group request, when a dispense complete message is 
+"PKG",141,22,1,"PAH",1,1,89,0)
+    received by VistA from the external dispensing interface and if the 
+"PKG",141,22,1,"PAH",1,1,90,0)
+    mail tracking information is included in the 13th piece of the RXD 
+"PKG",141,22,1,"PAH",1,1,91,0)
+    segment, then the activity log will be updated with this information.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+10
+"RTN","PSOHLDIS")
+0^7^B76066923^B67873568
+"RTN","PSOHLDIS",1,0)
+PSOHLDIS ;BIR/PWC,SAB - Automated Dispense Completion HL7 v.2.4 ;8/28/07 5:00pm
+"RTN","PSOHLDIS",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**156,189,193,209,148,259,200,330,354**;DEC 1997;Build 16
+"RTN","PSOHLDIS",3,0)
+ ;Reference to ^PSDRUG supported by DBIA #221
+"RTN","PSOHLDIS",4,0)
+ ;Reference to $$NDCFMT^PSSNDCUT supported by IA 4707
+"RTN","PSOHLDIS",5,0)
+ ;This routine is called by FACK1^PSOHLDS
+"RTN","PSOHLDIS",6,0)
+ ;
+"RTN","PSOHLDIS",7,0)
+ ;*209 add Drug accountability & fix Copay for refills
+"RTN","PSOHLDIS",8,0)
+ ;*259 check for refill node to exist before updating the Release msg
+"RTN","PSOHLDIS",9,0)
+ ;*330 send variable PSOSITE when updating drug accountability
+"RTN","PSOHLDIS",10,0)
+ ;
+"RTN","PSOHLDIS",11,0)
+EN ;main entry and process
+"RTN","PSOHLDIS",12,0)
+ N NONODE
+"RTN","PSOHLDIS",13,0)
+ D GETHL7,GETPID,GETORC,GETRXD
+"RTN","PSOHLDIS",14,0)
+ ;
+"RTN","PSOHLDIS",15,0)
+ ;Begin Updating files           ;*259
+"RTN","PSOHLDIS",16,0)
+ I $G(MDUP) D  G END             ;duplicate entry w tracking information.
+"RTN","PSOHLDIS",17,0)
+ .I TRKLOC'="" D ALCOM
+"RTN","PSOHLDIS",18,0)
+ I MEDDISP  D                    ;if dispensed
+"RTN","PSOHLDIS",19,0)
+ . I FLL="F",'FLLN D FILL              ;orig fill
+"RTN","PSOHLDIS",20,0)
+ . I FLL="F",FLLN D REFILL             ;refill
+"RTN","PSOHLDIS",21,0)
+ . I FLL="P" D PARTIAL                 ;partial fill
+"RTN","PSOHLDIS",22,0)
+ . D ACTLOG                            ;activity log
+"RTN","PSOHLDIS",23,0)
+ . Q:$G(NONODE)                        ;quit, no refill node to update
+"RTN","PSOHLDIS",24,0)
+ . I $D(BGRP),$D(BNAM),$D(BDIV) D BINGREL^PSOHLDI1    ;bingo board rel
+"RTN","PSOHLDIS",25,0)
+ . D DRGACCT^PSOHLDI1(RXID,PSOSITE)     ;drug accountability *209,*330
+"RTN","PSOHLDIS",26,0)
+ . I '$G(PRT) D CHKADDR^PSODISPS(RXID)
+"RTN","PSOHLDIS",27,0)
+ E  D                            ;else not dispensed
+"RTN","PSOHLDIS",28,0)
+ . D ACTLOG                            ;activity log no release
+"RTN","PSOHLDIS",29,0)
+ ;
+"RTN","PSOHLDIS",30,0)
+ ;if label was printed
+"RTN","PSOHLDIS",31,0)
+ I PRT D
+"RTN","PSOHLDIS",32,0)
+ . S LBI=0 F LB=0:0 S LB=$O(^PSRX(RXID,"L",LB)) Q:'LB  S LBI=LBI+1
+"RTN","PSOHLDIS",33,0)
+ . S LBI=LBI+1,^PSRX(RXID,"L",0)="^52.032DA^"_LBI_"^"_LBI
+"RTN","PSOHLDIS",34,0)
+ . S ^PSRX(RXID,"L",LBI,0)=NOW_"^"_$S(FLL="F":FLLN,1:(99-FLLN))_"^"_"From Rx # "_$P(^PSRX(RXID,0),"^")_$S(FLL="P":" (Partial)",1:"")_$S($G(HLRPT):" (Reprint)",1:"")_" (External Interface)"_"^"_HLUSER
+"RTN","PSOHLDIS",35,0)
+ ;
+"RTN","PSOHLDIS",36,0)
+ D END
+"RTN","PSOHLDIS",37,0)
+ Q
+"RTN","PSOHLDIS",38,0)
+ ;
+"RTN","PSOHLDIS",39,0)
+GETHL7 ;get HL7 segments from msg
+"RTN","PSOHLDIS",40,0)
+ K OK
+"RTN","PSOHLDIS",41,0)
+ F I=0:0 S I=$O(PSOMSG(I)) Q:'I  D
+"RTN","PSOHLDIS",42,0)
+ .I $P(PSOMSG(I),"|")="MSH" S NODE1=PSOMSG(I) Q
+"RTN","PSOHLDIS",43,0)
+ .I $P(PSOMSG(I),"|")="MSA" S NODE2=PSOMSG(I) Q
+"RTN","PSOHLDIS",44,0)
+ .I $P(PSOMSG(I),"|")="PID" S NODE3=PSOMSG(I) Q
+"RTN","PSOHLDIS",45,0)
+ .I $P(PSOMSG(I),"|")="ORC" S NODE4=PSOMSG(I) Q
+"RTN","PSOHLDIS",46,0)
+ .I $P(PSOMSG(I),"|")="RXD" S NODE5=PSOMSG(I) Q
+"RTN","PSOHLDIS",47,0)
+ Q
+"RTN","PSOHLDIS",48,0)
+ ;
+"RTN","PSOHLDIS",49,0)
+GETPID ;get PID segment data
+"RTN","PSOHLDIS",50,0)
+ S PID=$P($G(NODE3),"|",4)   ;this contains all the patient id numbers
+"RTN","PSOHLDIS",51,0)
+ F XX=1:1 S PIDD=$P(PID,"^",XX) Q:PIDD=""  D
+"RTN","PSOHLDIS",52,0)
+ . S PIDID=$P(PIDD,"~",5)
+"RTN","PSOHLDIS",53,0)
+ . I PIDID="NI" S PICN=$P(PIDD,"~",1)   ;ICN #
+"RTN","PSOHLDIS",54,0)
+ . I PIDID="SS" S PSSN=$P(PIDD,"~",1)   ;SSN #
+"RTN","PSOHLDIS",55,0)
+ . I PIDID="PI" S PPID=$P(PIDD,"~",1)   ;patient ID
+"RTN","PSOHLDIS",56,0)
+ . I PIDID="PN" S PCLM=$P(PIDD,"~",1)   ;claim #
+"RTN","PSOHLDIS",57,0)
+ Q
+"RTN","PSOHLDIS",58,0)
+GETORC ;get ORC segment data
+"RTN","PSOHLDIS",59,0)
+ S RXID=$P($P($G(NODE4),"|",3),"^")    ;RX #
+"RTN","PSOHLDIS",60,0)
+ S DFN=$P(^PSRX(RXID,0),"^",2) D DEM^VADPT
+"RTN","PSOHLDIS",61,0)
+ S NAME=VADM(1),DOB=$P(VADM(3),"^"),SEX=$P(VADM(5),"^") K VADM
+"RTN","PSOHLDIS",62,0)
+ S FPER=$P($P($G(NODE4),"|",11),"~")   ;filling person
+"RTN","PSOHLDIS",63,0)
+ K DIC,X,Y S DIC="^VA(200,",DIC(0)="N,Z",X=+FPER D
+"RTN","PSOHLDIS",64,0)
+ .D ^DIC I +Y>0 S FPER=+Y,FPERN=$P(Y,"^",2) Q
+"RTN","PSOHLDIS",65,0)
+ .S FPER="",FPERN="UNKNOWN"
+"RTN","PSOHLDIS",66,0)
+ S CPHARM=$P($P($G(NODE4),"|",12),"~") ;checking pharmacist
+"RTN","PSOHLDIS",67,0)
+ K DIC,X,Y S DIC="^VA(200,",DIC(0)="N,Z",X=+CPHARM D  K DIC,X,Y
+"RTN","PSOHLDIS",68,0)
+ .D ^DIC I +Y>0 S CPHARM=+Y,CPHARMN=$P(Y,"^",2) Q
+"RTN","PSOHLDIS",69,0)
+ .S CPHARM="",CPHARMN="UNKNOWN"
+"RTN","PSOHLDIS",70,0)
+ Q
+"RTN","PSOHLDIS",71,0)
+GETRXD ;get RXD segment data
+"RTN","PSOHLDIS",72,0)
+ S FILL=$P($P($G(NODE5),"|",2),"^")         ;fill #
+"RTN","PSOHLDIS",73,0)
+ S GIVECOD=$P($P($G(NODE5),"|",3),"^")      ;give code
+"RTN","PSOHLDIS",74,0)
+ S X=$P($P($G(NODE5),"|",4),"^"),DISPDT=$$FMDATE^HLFNC(X) K X  ;dispense date
+"RTN","PSOHLDIS",75,0)
+ S PSORX=$P($P($G(NODE5),"|",8),"^")        ;prescription #
+"RTN","PSOHLDIS",76,0)
+ S NDC=$P($P($G(NODE5),"|",10),"^")  ;NDC #
+"RTN","PSOHLDIS",77,0)
+ K F I NDC]"" D  K L,F
+"RTN","PSOHLDIS",78,0)
+ .S F=""
+"RTN","PSOHLDIS",79,0)
+ .F L=1:1:$L(NDC,"^") I $P(NDC,"^",L)'=""  S F=$G(F)_$P(NDC,"^",L)_$S($P(NDC,"^",(L+1))]"":",",1:"")
+"RTN","PSOHLDIS",80,0)
+ .S NDC=F
+"RTN","PSOHLDIS",81,0)
+ S X=$P($P($G(NODE5),"|",10),"^",2),RELDT=$S($$FMDATE^HLFNC(X)>0:$$FMDATE^HLFNC(X),1:"") K X  ;release dt
+"RTN","PSOHLDIS",82,0)
+ S PRT=$S($P($P($G(NODE5),"|",10),"^",3)=1:1,$P($P($G(NODE5),"|",10),"^",3)=2:1,1:0)  ;label printed by vendor
+"RTN","PSOHLDIS",83,0)
+ S MEDDISP=$S($P($P($G(NODE5),"|",10),"^",3)=1:1,$P($P($G(NODE5),"|",10),"^",3)=4:1,1:0)  ;med dispensed by vendor
+"RTN","PSOHLDIS",84,0)
+ S TRKLOC=$P($G(NODE5),"|",14)   ;mail tracking info
+"RTN","PSOHLDIS",85,0)
+ S RPHARM=$P($P($G(NODE5),"|",11),"~",1)      ;releasing pharmacist
+"RTN","PSOHLDIS",86,0)
+ K DIC,X,Y S DIC="^VA(200,",DIC(0)="N,Z",X=+RPHARM D
+"RTN","PSOHLDIS",87,0)
+ .D ^DIC I +Y>0 S RPHARM=+Y Q
+"RTN","PSOHLDIS",88,0)
+ .S RPHARM=""
+"RTN","PSOHLDIS",89,0)
+ S LOT=$P($G(NODE5),"|",19)
+"RTN","PSOHLDIS",90,0)
+ I LOT]"" D  K L,F
+"RTN","PSOHLDIS",91,0)
+ .S F=""
+"RTN","PSOHLDIS",92,0)
+ .F L=1:1:$L(LOT,"^") I $P(LOT,"^",L)'=""  S F=$G(F)_$P(LOT,"^",L)_$S($P(LOT,"^",(L+1))]"":",",1:"")
+"RTN","PSOHLDIS",93,0)
+ .S LOT=F
+"RTN","PSOHLDIS",94,0)
+ S X=$P($P($G(NODE5),"|",20),"^"),EXPDT=$S($$FMDATE^HLFNC(X)>0:$$FMDATE^HLFNC(X),1:"") K X   ;expiration date
+"RTN","PSOHLDIS",95,0)
+ S MFG=$P($P($G(NODE5),"|",21),"^")         ;manufacturer
+"RTN","PSOHLDIS",96,0)
+ K F I MFG]"" D  K L,F
+"RTN","PSOHLDIS",97,0)
+ .F L=1:1:$L(MFG) Q:$P(MFG,"^",L)=""  S F=$G(F)_$P(MFG,"^",L)_$S($P(MFG,"^",(L+1))]"":",",1:"")
+"RTN","PSOHLDIS",98,0)
+ .S MFG=F
+"RTN","PSOHLDIS",99,0)
+ S EXRX=^PS(52.51,EIN,0)
+"RTN","PSOHLDIS",100,0)
+ S IRX=$P(EXRX,"^"),FLL=$P(EXRX,"^",8),FLLN=$P(EXRX,"^",9),RPT=$P(EXRX,"^",5),(DIV,PSOSITE)=$P(EXRX,"^",11),PSOPAR=$G(^PS(59,DIV,0))
+"RTN","PSOHLDIS",101,0)
+ S PSOPAR7=$G(^PS(59,PSOSITE,"IB")),PSOSYS=$G(^PS(59.7,1,40.1))
+"RTN","PSOHLDIS",102,0)
+ S RXN=$P(^PSRX(IRX,0),"^"),DRG=$P(^(0),"^",6),QTY=$P(^(0),"^",7)
+"RTN","PSOHLDIS",103,0)
+ Q
+"RTN","PSOHLDIS",104,0)
+FILL ;Orig fill
+"RTN","PSOHLDIS",105,0)
+ S $P(^PSRX(IRX,2),"^",4)=LOT,$P(^(2),"^",8)=MFG,$P(^(2),"^",11)=EXPDT,$P(^PSRX(IRX,"OR1"),"^",6)=FPER,$P(^("OR1"),"^",7)=CPHARM
+"RTN","PSOHLDIS",106,0)
+ S:$G(^PSDRUG(DRG,660.1))]"" ^PSDRUG(DRG,660.1)=^PSDRUG(DRG,660.1)-QTY
+"RTN","PSOHLDIS",107,0)
+ ;if auto release & rel dt
+"RTN","PSOHLDIS",108,0)
+ I $P($G(^PS(59,DIV,"DISP")),"^",2),$G(RELDT) D
+"RTN","PSOHLDIS",109,0)
+ .S DIE="^PSRX(",DA=IRX,DR="31///"_RELDT_";23////"_RPHARM_";32.1///@;32.2///@" D ^DIE K DIE,DR,DA
+"RTN","PSOHLDIS",110,0)
+ .I $P(^PSRX(IRX,0),"^",11)["W" S BRT="W",BNAM=$P(^PSRX(IRX,0),"^",2),BDIV=$P(^(2),"^",9) S:BDIV'="" BGRP=$P($G(^PS(59,BDIV,1)),"^",20)
+"RTN","PSOHLDIS",111,0)
+ .S PSOCPRX=$P(^PSRX(IRX,0),"^"),RXP=IRX D CP^PSOCP
+"RTN","PSOHLDIS",112,0)
+ .D EN^PSOHLSN1(IRX,"ZD"),AUTOREL^PSOBPSUT(IRX,FLLN,RELDT,NDC,"A",,30)
+"RTN","PSOHLDIS",113,0)
+ ;else if not auto release nor rel dt
+"RTN","PSOHLDIS",114,0)
+ E  I $$NDCFMT^PSSNDCUT(NDC)'="",$$STATUS^PSOBPSUT(IRX,FLLN)="" D SAVNDC^PSONDCUT(IRX,FLLN,NDC)
+"RTN","PSOHLDIS",115,0)
+ Q
+"RTN","PSOHLDIS",116,0)
+REFILL ;refill
+"RTN","PSOHLDIS",117,0)
+ I '$D(^PSRX(IRX,1,FLLN,0)) S NONODE=1 Q
+"RTN","PSOHLDIS",118,0)
+ S $P(^PSRX(IRX,1,FLLN,0),"^",6)=LOT,$P(^(0),"^",14)=MFG,$P(^(0),"^",15)=EXPDT,$P(^(1),"^",4)=FPER,$P(^(1),"^",5)=CPHARM
+"RTN","PSOHLDIS",119,0)
+ S:$G(^PSDRUG(DRG,660.1))]"" ^PSDRUG(DRG,660.1)=^PSDRUG(DRG,660.1)-$P(^PSRX(IRX,1,FLLN,0),"^",4)
+"RTN","PSOHLDIS",120,0)
+ I $P($G(^PS(59,DIV,"DISP")),"^",2),$G(RELDT) D
+"RTN","PSOHLDIS",121,0)
+ .S DIE="^PSRX("_IRX_","""_1_""",",DA(1)=IRX,DA=FLLN
+"RTN","PSOHLDIS",122,0)
+ .S DR="17///"_RELDT_";4////"_RPHARM D ^DIE K DIE,DR,DA
+"RTN","PSOHLDIS",123,0)
+ .I $P(^PSRX(IRX,1,FLLN,0),"^",2)["W" S BRT="W",BDIV=$P(^PSRX(IRX,1,FLLN,0),"^",9),BNAM=$P(^PSRX(IRX,0),"^",2) S:BDIV'="" BGRP=$P($G(^PS(59,BDIV,1)),"^",20)
+"RTN","PSOHLDIS",124,0)
+ .N YY S YY=FLLN        ;*209
+"RTN","PSOHLDIS",125,0)
+ .S PSOCPRX=$P(^PSRX(IRX,0),"^"),RXP=IRX D CP^PSOCP
+"RTN","PSOHLDIS",126,0)
+ .D EN^PSOHLSN1(IRX,"ZD"),AUTOREL^PSOBPSUT(IRX,FLLN,RELDT,NDC,"A",,30)
+"RTN","PSOHLDIS",127,0)
+ ;else if not auto release nor rel dt
+"RTN","PSOHLDIS",128,0)
+ E  I $$NDCFMT^PSSNDCUT(NDC)'="",$$STATUS^PSOBPSUT(IRX,FLLN)="" D SAVNDC^PSONDCUT(IRX,FLLN,NDC)
+"RTN","PSOHLDIS",129,0)
+ Q
+"RTN","PSOHLDIS",130,0)
+PARTIAL ;partial fill dispensed
+"RTN","PSOHLDIS",131,0)
+ I '$D(^PSRX(IRX,"P",FLLN,0)) S NONODE=1 Q
+"RTN","PSOHLDIS",132,0)
+ S $P(^PSRX(IRX,"P",FLLN,0),"^",6)=LOT,$P(^(0),"^",12)=NDC,$P(^PSRX(IRX,"P",FLLN,1),"^")=MFG,$P(^(1),"^",3)=FPER,$P(^(1),"^",4)=CPHARM
+"RTN","PSOHLDIS",133,0)
+ S:$G(^PSDRUG(DRG,660.1))]"" ^PSDRUG(DRG,660.1)=^PSDRUG(DRG,660.1)-$P(^PSRX(IRX,"P",FLLN,0),"^",4)
+"RTN","PSOHLDIS",134,0)
+ I $P($G(^PS(59,DIV,"DISP")),"^",2),$G(RELDT) D
+"RTN","PSOHLDIS",135,0)
+ .S DIE="^PSRX("_IRX_","""_"P"_""",",DA(1)=IRX,DA=FLLN
+"RTN","PSOHLDIS",136,0)
+ .S DR="8///"_RELDT_";.05////"_RPHARM D ^DIE K DIE,DR,DA
+"RTN","PSOHLDIS",137,0)
+ .I $P(^PSRX(IRX,"P",FLLN,0),"^",2)["W" S BRT="W",BDIV=$P(^PSRX(IRX,"P",FLLN,0),"^",9),BNAM=$P(^PSRX(IRX,0),"^",2) S:BDIV'="" BGRP=$P($G(^PS(59,BDIV,1)),"^",20)
+"RTN","PSOHLDIS",138,0)
+ Q
+"RTN","PSOHLDIS",139,0)
+ACTLOG ;activity log entry
+"RTN","PSOHLDIS",140,0)
+ N ATXT,ACTN,RXF
+"RTN","PSOHLDIS",141,0)
+ S:FLL="F" RXF=$S(FLLN>5:FLLN+1,1:FLLN)
+"RTN","PSOHLDIS",142,0)
+ S:FLL="P" RXF=6
+"RTN","PSOHLDIS",143,0)
+ S ACL=0 F I=0:0 S I=$O(^PSRX(RXID,"A",I)) Q:'I  S ACL=(ACL+1)
+"RTN","PSOHLDIS",144,0)
+ D NOW^%DTC S NOW=%,ACL=ACL+1,^PSRX(RXID,"A",0)="^52.3DA^"_ACL_"^"_ACL
+"RTN","PSOHLDIS",145,0)
+ I 'MEDDISP S ATXT="Medication WAS NOT Dispensed through Interface!"
+"RTN","PSOHLDIS",146,0)
+ ;
+"RTN","PSOHLDIS",147,0)
+ ;create activity log text
+"RTN","PSOHLDIS",148,0)
+ I MEDDISP D
+"RTN","PSOHLDIS",149,0)
+ . S ATXT="External Interface Dispensing is Complete."
+"RTN","PSOHLDIS",150,0)
+ . I $G(NONODE) D  Q                                ;node was deleted
+"RTN","PSOHLDIS",151,0)
+ . . S ATXT="External Interface attempted to Release, but "
+"RTN","PSOHLDIS",152,0)
+ . . S ATXT=ATXT_$S(FLL="P":"Partial fill",1:"Refill")_" NOT on file."
+"RTN","PSOHLDIS",153,0)
+ . . S ACTN="No update performed."
+"RTN","PSOHLDIS",154,0)
+ . . D MAIL^PSOHLDI1
+"RTN","PSOHLDIS",155,0)
+ . I $G(^PSRX(RXID,"STA"))>11 D  Q                  ;non-active status
+"RTN","PSOHLDIS",156,0)
+ . . S ATXT="Ext. Disp. Released this Rx, which is Status of "
+"RTN","PSOHLDIS",157,0)
+ . . S ATXT=ATXT_$$GET1^DIQ(52,RXID,100)
+"RTN","PSOHLDIS",158,0)
+ . . S ACTN=""
+"RTN","PSOHLDIS",159,0)
+ . . D MAIL^PSOHLDI1
+"RTN","PSOHLDIS",160,0)
+ S ^PSRX(RXID,"A",ACL,0)=NOW_"^N^"_RPHARM_"^"_RXF_"^"_ATXT
+"RTN","PSOHLDIS",161,0)
+ ;
+"RTN","PSOHLDIS",162,0)
+ ;other comments - additional info when dispensed
+"RTN","PSOHLDIS",163,0)
+ I MEDDISP D
+"RTN","PSOHLDIS",164,0)
+ .S ^PSRX(RXID,"A",ACL,2,0)="^52.34A^2^2"
+"RTN","PSOHLDIS",165,0)
+ .S ^PSRX(RXID,"A",ACL,2,1,0)="Filled By: "_FPERN
+"RTN","PSOHLDIS",166,0)
+ .S ^PSRX(RXID,"A",ACL,2,2,0)="Checking Pharmacist: "_CPHARMN
+"RTN","PSOHLDIS",167,0)
+ I TRKLOC="" Q
+"RTN","PSOHLDIS",168,0)
+ ;
+"RTN","PSOHLDIS",169,0)
+ALCOM ;activity log entry - tracking information
+"RTN","PSOHLDIS",170,0)
+ N DCNT,I
+"RTN","PSOHLDIS",171,0)
+ I $G(ACL)="" S ACL=0 F I=0:0 S I=$O(^PSRX(RXID,"A",I)) Q:'I  I $G(^PSRX(RXID,"A",I,2,1,0))["Filled By: " S ACL=I
+"RTN","PSOHLDIS",172,0)
+ I 'ACL Q
+"RTN","PSOHLDIS",173,0)
+ S DCNT=0 F I=0:0 S I=$O(^PSRX(RXID,"A",ACL,2,I)) Q:'I  S DCNT=I
+"RTN","PSOHLDIS",174,0)
+ S DCNT=DCNT+1 I $G(NOW)="" D NOW^%DTC S NOW=%
+"RTN","PSOHLDIS",175,0)
+ S ^PSRX(RXID,"A",ACL,2,0)="^52.34A^"_DCNT_"^"_DCNT
+"RTN","PSOHLDIS",176,0)
+ S ^PSRX(RXID,"A",ACL,2,DCNT,0)="Mail Tracking Info.: "_TRKLOC_" received at "_$$FMTE^XLFDT(NOW,2)
+"RTN","PSOHLDIS",177,0)
+ Q
+"RTN","PSOHLDIS",178,0)
+ERROR ;sends the error message back to the sending station
+"RTN","PSOHLDIS",179,0)
+ ;parse the data from the msh segment in order to send back the error message release
+"RTN","PSOHLDIS",180,0)
+ ;OK=1 - segment missing
+"RTN","PSOHLDIS",181,0)
+ ;OK=2 - Rx does not exists
+"RTN","PSOHLDIS",182,0)
+ D NOW^%DTC
+"RTN","PSOHLDIS",183,0)
+ S REJ=$S(OK=1:"MISSING SEGMENT(S)",OK=2:"PRESCRIPTION "_$S($G(PSORX):"#: "_PSORX,1:"")_" DOES NOT EXISTS",1:"")
+"RTN","PSOHLDIS",184,0)
+ S ACKDATE=$P($$FMTHL7^XLFDT(%),"-",1)
+"RTN","PSOHLDIS",185,0)
+ S ^TMP("PSO2",$J,1)="MSH|^~\&|PSO VISTA||PSO DISPENSE||"_$G(ACKDATE)_"||RDS^013|10001|P|2.4|||NE|NE"
+"RTN","PSOHLDIS",186,0)
+ ;S ^TMP("PSO2",$J,2)="MFE|MUP|"_$G(J)_"|"_$G(ACKDATE)_"|"_$G(SITE)_"|CE"
+"RTN","PSOHLDIS",187,0)
+ ;S ^TMP("PSO2",$J,3)="ZLF|4|^"_$G(USER)_"||"_$G(REJ)
+"RTN","PSOHLDIS",188,0)
+ K %,ACKDATE,USER,Y,REJ,OK
+"RTN","PSOHLDIS",189,0)
+ Q
+"RTN","PSOHLDIS",190,0)
+END K ACL,I,NOW,LBI,LB,PRT,MEDDISP
+"RTN","PSOHLDIS",191,0)
+ K ADA,BDA,BDIV,BNGRXP,BNGSUS,BNAME,BRX,CNT1,CT,DA,DD,DIC,DIE,DIK,DIR,DO,DR,DTOUT,DUOUT,GRP,GRTP,JOES
+"RTN","PSOHLDIS",192,0)
+ K NAM,NDA,NFLAG,NME,ODA,PSZ,RXO,SSN,TDFN,TFLAG,TIC,TICK,TIEN,TM,TM1,TSSN,X,Y,XX,BNAM,BRT,BGRP
+"RTN","PSOHLDIS",193,0)
+ K Y,OK,XQADATA,SITEN,RDOM,CMOP,REQT,RTDTM,SITENUM,XQSOP,XQMSG,SITEN,NAME,XQAMSG,SITEN
+"RTN","PSOHLDIS",194,0)
+ K XQAROU,XQAID,RDTM,NODE1,NODE2,NODE3,NODE4,NODE5,PIDID,PIDD,PICN,PSSN,PPID,PCLM
+"RTN","PSOHLDIS",195,0)
+ K CPHARM,CPHARMN,FPER,FPERN,RPHARM,TRKLOC
+"RTN","PSOHLDIS",196,0)
+ Q
+"RTN","PSOHLDS")
+0^1^B91277633^B35608322
+"RTN","PSOHLDS",1,0)
+PSOHLDS ;BIR/PWC-HL7 V.2.4 AUTOMATED DISPENSE INTERFACE ;03/01/96 09:45
+"RTN","PSOHLDS",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**156,312,354**;DEC 1997;Build 16
+"RTN","PSOHLDS",3,0)
+ ;External reference to GETAPP^HLCS2  supported by DBIA 2887
+"RTN","PSOHLDS",4,0)
+ ;External reference to INIT^HLFNC2   supported by DBIA 2161
+"RTN","PSOHLDS",5,0)
+ ;External reference to GENERATE^HLMA supported by DBIA 2164
+"RTN","PSOHLDS",6,0)
+ ;External reference to SETUP^XQALERT supported by DBIA 10081
+"RTN","PSOHLDS",7,0)
+ ;External reference to ^XUSEC("PSOINTERFACE" supported by DBIA 10076
+"RTN","PSOHLDS",8,0)
+ ;External reference to ^ORD(101 supported by DBIA 872
+"RTN","PSOHLDS",9,0)
+ ;External reference to ^PSDRUG supported by DBIA 221
+"RTN","PSOHLDS",10,0)
+ ;
+"RTN","PSOHLDS",11,0)
+INIT ;initialize variables and build outgoing message
+"RTN","PSOHLDS",12,0)
+ N DFLAG,HLRESLT,HLP,PSLINK,PSOHLSER,PSOHLCL,PSOHLINX,DDNS,PSOENH,PSOADD,ADDCAT,PSOMES,OPADD,OPNAM
+"RTN","PSOHLDS",13,0)
+ S PSOHLINX=$$GETAPP^HLCS2("PSO EXT SERVER") Q:$P($G(PSOHLINX),"^",2)="i"
+"RTN","PSOHLDS",14,0)
+ K ^TMP("PSO",$J),^TMP("PSOADD",$J)
+"RTN","PSOHLDS",15,0)
+ S PIEN=$O(^ORD(101,"B","PSO EXT SERVER",0)) G:'PIEN EXIT
+"RTN","PSOHLDS",16,0)
+ S PSI=1,HLPDT=DT D INIT^HLFNC2(PIEN,.HL1) I $G(HL1) G EXIT
+"RTN","PSOHLDS",17,0)
+ S FS=HL1("FS"),HL1("ECH")="~^\&",HLECH=HL1("ECH")
+"RTN","PSOHLDS",18,0)
+ S CS=$E(HL1("ECH")),RS=$E(HL1("ECH"),2),EC=$E(HL1("ECH"),3),SCS=$E(HL1("ECH"),4)
+"RTN","PSOHLDS",19,0)
+ I '$G(PSODTM) D NOW^%DTC S DTME=%
+"RTN","PSOHLDS",20,0)
+ I $G(PSODTM) S DTME=PSODTM
+"RTN","PSOHLDS",21,0)
+ S DDNS=$$GET1^DIQ(59,PSOSITE_",",2006)
+"RTN","PSOHLDS",22,0)
+ S PSOENH=0 D GETDEV,ALLADD
+"RTN","PSOHLDS",23,0)
+ F II=0:0 S II=$O(^UTILITY($J,"PSOHL",II)) Q:'II  S ODR=^UTILITY($J,"PSOHL",II) D
+"RTN","PSOHLDS",24,0)
+ .S IRXN=$P(ODR,"^"),IDGN=$P(ODR,"^",2),FP=$P(ODR,"^",3),FPN=$P(ODR,"^",4),DAW=$P(ODR,"^",5),DIN=$P(ODR,"^",6)
+"RTN","PSOHLDS",25,0)
+ .S ^TMP("PSOMID",$J,II)=IRXN_"^"_FP_"^"_FPN I DIN=1 D   ;;*312 - ADDED IRXN AS 4TH PIECE
+"RTN","PSOHLDS",26,0)
+ ..F JJ=0:0 S JJ=$O(^UTILITY($J,"PSOHL",II,JJ)) Q:'JJ  S ING(JJ)=^UTILITY($J,"PSOHL",II,JJ)
+"RTN","PSOHLDS",27,0)
+ .S SDI=$P(ODR,"^",7) I SDI=1 S DRI=^UTILITY($J,"PSOHL",II,"DRI")
+"RTN","PSOHLDS",28,0)
+ .S CPY=$P(ODR,"^",8),RPRT=$P(ODR,"^",9),PRSN=$P(ODR,"^",10),DIV=$G(PSOSITE),DFN=$P(^PSRX(IRXN,0),"^",2),STPMTR=$P($G(^PS(59,DIV,1)),"^",30)
+"RTN","PSOHLDS",29,0)
+ .I $G(STPMTR)>1&($P($G(^PSRX(IRXN,"STA")),"^")=5) D
+"RTN","PSOHLDS",30,0)
+ ..N PSOHLSPZ,PSOHLNDA S PSOHLSPZ=$O(^PS(52.5,"B",IRXN,0)),PSOHLNDA=""
+"RTN","PSOHLDS",31,0)
+ ..I PSOHLSPZ S PSOHLNDA=$G(^PS(52.5,PSOHLSPZ,0))
+"RTN","PSOHLDS",32,0)
+ ..I $G(RXPR(IRXN)),+$G(RXPR(IRXN))'=$P(PSOHLNDA,"^",5) Q
+"RTN","PSOHLDS",33,0)
+ ..I '$G(RXRP(IRXN)),'$G(RXPR(IRXN)),$D(RXFL(IRXN)),$P(PSOHLNDA,"^",13)'="",$P($G(RXFL(IRXN)),"^")'=$P(PSOHLNDA,"^",13) Q
+"RTN","PSOHLDS",34,0)
+ ..D SUS^PSOLBL4(IRXN,FP,FPN,RPRT)
+"RTN","PSOHLDS",35,0)
+ .S PSOADD=""
+"RTN","PSOHLDS",36,0)
+ .I PSOENH D CHKCAT I PSOADD="" Q
+"RTN","PSOHLDS",37,0)
+ .I PSOADD="" S PSOADD=DDNS
+"RTN","PSOHLDS",38,0)
+ .D LOGMSG
+"RTN","PSOHLDS",39,0)
+ .S PSI=$P(OPADD(PSOADD),"^",2) I PSI="" S PSI=1 K PAS,PAS1,PAS2,PAS3
+"RTN","PSOHLDS",40,0)
+ .D START^PSOHLDS1
+"RTN","PSOHLDS",41,0)
+ .M ^TMP("PSOADD",$J,PSOADD)=^TMP("PSO",$J) S $P(OPADD(PSOADD),"^",2)=PSI
+"RTN","PSOHLDS",42,0)
+ .I $D(ADDCAT("S")) D STRAGE
+"RTN","PSOHLDS",43,0)
+ .K ^TMP("PSO",$J)
+"RTN","PSOHLDS",44,0)
+ I $D(ADDCAT("S")) D MORSTG
+"RTN","PSOHLDS",45,0)
+ S PSLINK=$O(^UTILITY($J,"PSOHL",0))
+"RTN","PSOHLDS",46,0)
+ S DDNS="" F  S DDNS=$O(^TMP("PSOADD",$J,DDNS)) Q:DDNS=""  D
+"RTN","PSOHLDS",47,0)
+ .K ^TMP("HLS",$J)
+"RTN","PSOHLDS",48,0)
+ .M ^TMP("HLS",$J)=^TMP("PSOADD",$J,DDNS)
+"RTN","PSOHLDS",49,0)
+ .S DPORT=$P(OPADD(DDNS),"^")
+"RTN","PSOHLDS",50,0)
+ .K HLP,HLMID,HLERR,HLRESLT
+"RTN","PSOHLDS",51,0)
+ .S HLP("CONTPTR")="",HLP("SUBSCRIBER")="^^^^~"_DDNS_":"_DPORT_"~DNS"
+"RTN","PSOHLDS",52,0)
+ .D GENERATE^HLMA(PIEN,"GM",1,.HLRESLT,"",.HLP)
+"RTN","PSOHLDS",53,0)
+ .K HLL S HLMID=$P($G(HLRESLT),"^"),HLERR=$P($G(HLRESLT),"^",2)
+"RTN","PSOHLDS",54,0)
+ .I '$G(HLMID) S XQAMSG="Error transmitting "_$P(^DPT(DFN,0),"^")_" order to external interface"_$S(PSOENH:" TO "_DDNS,1:"") D ALERT Q
+"RTN","PSOHLDS",55,0)
+ .I $G(HLMID),$P($G(HLERR),"^")'="" S XQAMSG="Error transmitting batch "_HLMID_" to the external interface"_$S(PSOENH:" TO "_DDNS,1:""),MESS="TRANSMISSION FAILED"_$S(PSOENH:" TO "_DDNS,1:""),STA=3 D UFILE,ALERT Q
+"RTN","PSOHLDS",56,0)
+ .I $G(HLMID),$P($G(HLERR),"^")="" S MESS="MESSAGE TRANSMITTED"_$S(PSOENH:" TO "_$G(OPNAM(DDNS))_" ("_DDNS_")",1:""),STA=1 D UFILE
+"RTN","PSOHLDS",57,0)
+ G EXIT
+"RTN","PSOHLDS",58,0)
+LOGMSG ;build status of message in log file (#52.51)
+"RTN","PSOHLDS",59,0)
+ N PSODEV,PSOMES,STR
+"RTN","PSOHLDS",60,0)
+ S PSODEV=PSOADD
+"RTN","PSOHLDS",61,0)
+ D LOGBLD
+"RTN","PSOHLDS",62,0)
+ S $P(^TMP("PSOMID",$J,II),"^",4)=PSOMES
+"RTN","PSOHLDS",63,0)
+ ;build message for the storage devices
+"RTN","PSOHLDS",64,0)
+ I PSOENH D
+"RTN","PSOHLDS",65,0)
+ .S PSODEV="" F  S PSODEV=$O(ADDCAT("S",PSODEV)) Q:PSODEV=""  I PSODEV'=PSOADD D
+"RTN","PSOHLDS",66,0)
+ ..D LOGBLD
+"RTN","PSOHLDS",67,0)
+ ..S STR=$P(^TMP("PSOMID",$J,II),"^",4),STR=$S(STR'="":STR_";",1:"")_PSOMES
+"RTN","PSOHLDS",68,0)
+ ..S $P(^TMP("PSOMID",$J,II),"^",4)=STR
+"RTN","PSOHLDS",69,0)
+ Q
+"RTN","PSOHLDS",70,0)
+LOGBLD ;audit log file #52.51
+"RTN","PSOHLDS",71,0)
+ N DIK,DIC,DA,DD,DO
+"RTN","PSOHLDS",72,0)
+ S DIC="^PS(52.51,",X=IRXN,DIC(0)=""
+"RTN","PSOHLDS",73,0)
+ S DIC("DR")="2////"_DFN_";3////"_DTME_";4////"_PRSN_";5////"_RPRT_";6////"_STPMTR_";8////"_FP_";9////"_FPN_";15////"_DIV_";13////"_"BUILDING MESSAGE"_$S(PSOENH:" TO SEND TO "_PSODEV,1:"")_";14////1"
+"RTN","PSOHLDS",74,0)
+ D FILE^DICN K DD,DO,DIC
+"RTN","PSOHLDS",75,0)
+ S PSOMES=$P(Y,"^")
+"RTN","PSOHLDS",76,0)
+ K Y
+"RTN","PSOHLDS",77,0)
+ Q
+"RTN","PSOHLDS",78,0)
+UFILE F II=0:0 S II=$O(^TMP("PSOMID",$J,II)) Q:'II  S III=$G(^(II)) D
+"RTN","PSOHLDS",79,0)
+ .S PRXX=$P(III,"^",4),PFP=$P(III,"^",2),PFPN=$P(III,"^",3)
+"RTN","PSOHLDS",80,0)
+ .F XX=1:1 S PRX=$P(PRXX,";",XX) Q:PRX=""  D
+"RTN","PSOHLDS",81,0)
+ ..Q:'$D(^PS(52.51,PRX))
+"RTN","PSOHLDS",82,0)
+ ..I $P($G(^PS(52.51,PRX,0)),"^",8)=PFP,$P($G(^PS(52.51,PRX,0)),"^",9)=PFPN D
+"RTN","PSOHLDS",83,0)
+ ...I PSOENH,$G(^PS(52.51,PRX,1))'[DDNS Q
+"RTN","PSOHLDS",84,0)
+ ...S DA=PRX,DIE="^PS(52.51,",DR="10////"_HLMID_";13////"_MESS_";14////"_STA_"" D ^DIE
+"RTN","PSOHLDS",85,0)
+ ...I PSOENH D ACLOG
+"RTN","PSOHLDS",86,0)
+ Q
+"RTN","PSOHLDS",87,0)
+ ;
+"RTN","PSOHLDS",88,0)
+EXIT S:$D(ZTQUEUED) ZTREQ="@"
+"RTN","PSOHLDS",89,0)
+ K ^TMP("PSOMID",$J),MESS,PSODTM,STA,HLMID,PRX,PFP,PFPN,CS,CPY,DAW,DIN,DRI,EC,FP,FPN,FS,ING,IRXN,IDGN,II,JJ,ODR,PSI,RS,SCS,SDI,%
+"RTN","PSOHLDS",90,0)
+ K DA,DIE,DIV,DR,DTME,HL1,HLERR,HLPDT,XXX,DFN,PAS,STPMTR,X,III,PIEN,PRSN,RPRT,PAS1,PAS2,PAS3,PRXX,XX,J
+"RTN","PSOHLDS",91,0)
+ K ^TMP("HLS",$J),^TMP("PSO",$J),^TMP("PSOADD",$J)
+"RTN","PSOHLDS",92,0)
+ Q
+"RTN","PSOHLDS",93,0)
+ ;
+"RTN","PSOHLDS",94,0)
+ERRMSG S EMSG=""
+"RTN","PSOHLDS",95,0)
+ F AA=1:1 X HLNEXT Q:HLQUIT'>0  S EMSG=EMSG_"&&"_HLNODE
+"RTN","PSOHLDS",96,0)
+ S ^TMP("PSO2",$J)=EMSG
+"RTN","PSOHLDS",97,0)
+ Q
+"RTN","PSOHLDS",98,0)
+ACK ;process MSA received from the dispense machine (client)
+"RTN","PSOHLDS",99,0)
+ ;
+"RTN","PSOHLDS",100,0)
+ S:'$D(HL("APAT")) HL("APAT")="AL"
+"RTN","PSOHLDS",101,0)
+ S AACK=HL("APAT"),DTM=HL("DTM"),ETN=HL("ETN"),CMID=HL("MID")
+"RTN","PSOHLDS",102,0)
+ S MTN=HL("MTN"),RAN=HL("RAN"),SAN=HL("SAN"),VER=HL("VER")
+"RTN","PSOHLDS",103,0)
+ S EID=HL("EID"),EIDS=HL("EIDS"),FS=HL("FS")
+"RTN","PSOHLDS",104,0)
+ I $G(VER)'="2.4" G EXT
+"RTN","PSOHLDS",105,0)
+ N ORC K PSOMSG F I=1:1 X HLNEXT Q:HLQUIT'>0  S PSOMSG(I)=HLNODE,J=0 D
+"RTN","PSOHLDS",106,0)
+ .I $P(PSOMSG(I),"|")="MSA" S MSACDE=$P(PSOMSG(I),"|",2),SMID=$P(PSOMSG(I),"|",3) S:$P(PSOMSG(I),"|",4)]"" ERRMSG=$P(PSOMSG(I),"|",4)
+"RTN","PSOHLDS",107,0)
+ .I $P(PSOMSG(I),"|")="ORC" S ORC=1_"^"_+$P(PSOMSG(I),"|",3)
+"RTN","PSOHLDS",108,0)
+ .F  S J=$O(HLNODE(J)) Q:'J  S PSOMSG(I,J)=HLNODE(J)
+"RTN","PSOHLDS",109,0)
+ ;
+"RTN","PSOHLDS",110,0)
+ S ^TMP("PSO1",$J,CMID)=CMID_"^"_AACK_"^"_DTM_"^"_ETN_"^"_MTN_"^"_RAN_"^"_SAN_"^"_VER_"^"_EID_"^"_EIDS
+"RTN","PSOHLDS",111,0)
+ ;
+"RTN","PSOHLDS",112,0)
+ S (DIV1,SP1,SP2)="" F  S DIV1=$O(^PS(52.51,"AM",SMID,DIV1)) Q:'DIV1  F  S SP1=$O(^PS(52.51,"AM",SMID,DIV1,SP1)) Q:'SP1!(SP1=2)  S SP2=$P($G(^PS(52.51,SP1,0)),"^",6)
+"RTN","PSOHLDS",113,0)
+ I '$D(MSACDE) G EXT
+"RTN","PSOHLDS",114,0)
+ I $G(MSACDE)="AA" D ACK1
+"RTN","PSOHLDS",115,0)
+ I $G(MSACDE)="AE"!$G(MSACDE)="AR" D ACK2
+"RTN","PSOHLDS",116,0)
+ ;
+"RTN","PSOHLDS",117,0)
+EXT ;
+"RTN","PSOHLDS",118,0)
+ K ^TMP("PSO1",$J),AACK,DTM,ETN,CMID,MTN,RAN,SAN,VER,EID,EIDS,FS,MSA,AA,RPT
+"RTN","PSOHLDS",119,0)
+ K MSA1,MSACDE,SMID,ERRMSG,DIV1,SP1,SP2,HL,UID,FLL,FLLN,IRX,FLD12,FLD13
+"RTN","PSOHLDS",120,0)
+ K DIE,EMSG,HLQUIT,HLNEXT,HLNODE,PSOMSG,ORC,EIN
+"RTN","PSOHLDS",121,0)
+ Q
+"RTN","PSOHLDS",122,0)
+ ;
+"RTN","PSOHLDS",123,0)
+ACK1 ;
+"RTN","PSOHLDS",124,0)
+ S FLD13=$S($G(ORC):"MEDICATION DISPENSED",1:"TO BE PROCESSED") D FACK1
+"RTN","PSOHLDS",125,0)
+ Q
+"RTN","PSOHLDS",126,0)
+ ;
+"RTN","PSOHLDS",127,0)
+ACK2 S XQAMSG="Error processing batch "_SMID_". Interface will continue to transmit.",FLD13="PROCESS FAILED" S:$G(ERRMSG) FLD12=ERRMSG
+"RTN","PSOHLDS",128,0)
+ D FACK2,ALERT
+"RTN","PSOHLDS",129,0)
+ Q
+"RTN","PSOHLDS",130,0)
+ ;
+"RTN","PSOHLDS",131,0)
+ALERT ;send alert to key holders
+"RTN","PSOHLDS",132,0)
+ K XQA,XQAOPT,XQAROU,XQAID,XQADATA,XQAFLAG
+"RTN","PSOHLDS",133,0)
+ F UID=0:0 S UID=$O(^XUSEC("PSOINTERFACE",UID)) Q:'UID  S XQA(UID)=""
+"RTN","PSOHLDS",134,0)
+ D SETUP^XQALERT
+"RTN","PSOHLDS",135,0)
+ Q
+"RTN","PSOHLDS",136,0)
+UDFILE ;updates from vendor
+"RTN","PSOHLDS",137,0)
+ S (DIV1,SP1)="" F  S DIV1=$O(^PS(52.51,"AM",SMID,DIV1)) Q:'DIV1  F  S SP1=$O(^PS(52.51,"AM",SMID,DIV1,SP1)) Q:'SP1  S (EIN,DA)=SP1 D
+"RTN","PSOHLDS",138,0)
+ .S DIE="^PS(52.51,",DR="7////"_SAN_";11////"_CMID_";13////"_FLD13_";14////2" D ^DIE
+"RTN","PSOHLDS",139,0)
+ Q
+"RTN","PSOHLDS",140,0)
+FACK1 ;
+"RTN","PSOHLDS",141,0)
+ D:'$G(ORC) UDFILE
+"RTN","PSOHLDS",142,0)
+ I $G(ORC) D
+"RTN","PSOHLDS",143,0)
+ .S RXN=$P(ORC,"^",2),RX=0 F  S RX=$O(^PS(52.51,"B",RXN,RX)) Q:'RX  S (EIN,DA)=RX
+"RTN","PSOHLDS",144,0)
+ .I $G(DA) D
+"RTN","PSOHLDS",145,0)
+ ..I $P($G(^PS(52.51,DA,1)),"^",4)="MEDICATION DISPENSED",$P(^PS(52.51,DA,0),"^",10)=2 S MDUP=1 D ^PSOHLDIS K EIN,MDUP Q
+"RTN","PSOHLDS",146,0)
+ ..S HLUSER=$P(^PS(52.51,DA,0),"^",4),HLRPT=$P(^(0),"^",5)
+"RTN","PSOHLDS",147,0)
+ ..S DIE="^PS(52.51,",DR="7////"_SAN_";11////"_CMID_";13////"_FLD13_";14////2" D ^DIE,^PSOHLDIS K EIN,HLUSER,HLRPT
+"RTN","PSOHLDS",148,0)
+ Q
+"RTN","PSOHLDS",149,0)
+ ;
+"RTN","PSOHLDS",150,0)
+FACK2 ;
+"RTN","PSOHLDS",151,0)
+ D UDFILE Q:'$G(^PSRX($P(^PS(52.51,EIN,0),"^"),0))
+"RTN","PSOHLDS",152,0)
+ S ACL=0,IRX=$P(^PS(52.51,EIN,0),"^"),FLL=$P(^(0),"^",8),FLLN=$P(^(0),"^",9),RXN=$P(^PSRX(IRX,0),"^")
+"RTN","PSOHLDS",153,0)
+ F I=0:0 S SUB=$O(^PSRX(IRX,"A",I)) Q:'I  S ACL=(ACL+1)
+"RTN","PSOHLDS",154,0)
+ D NOW^%DTC S ACL=ACL+1,^PSRX(IRX,"A",0)="^52.3DA^"_ACL_"^"_ACL
+"RTN","PSOHLDS",155,0)
+ S ^PSRX(IRX,"A",ACL,0)=%_"^N^^"_$S(FLL="F":FLLN,1:(99-FLLN))_"^External Interface Rx NOT Dispensed." K ACL,I,RXN
+"RTN","PSOHLDS",156,0)
+ Q
+"RTN","PSOHLDS",157,0)
+ ;
+"RTN","PSOHLDS",158,0)
+GETDEV ;get devices associated with dispensing printer
+"RTN","PSOHLDS",159,0)
+ ;Create array OPADD & ADDCAT
+"RTN","PSOHLDS",160,0)
+ ; Output: OPADD(dns)=port
+"RTN","PSOHLDS",161,0)
+ ;         ADDCAT(category,dns)=""
+"RTN","PSOHLDS",162,0)
+ ;
+"RTN","PSOHLDS",163,0)
+ N DDNS,DPORT,PIO,PN,DN,DEV,DAT,DAT1
+"RTN","PSOHLDS",164,0)
+ K OPADD,ADDCAT
+"RTN","PSOHLDS",165,0)
+ S PN=$G(^UTILITY($J,"PSOPAI")),PIO=$O(^PS(59,PSOSITE,"P","B",+PN,""))
+"RTN","PSOHLDS",166,0)
+ S DN=$O(^PS(59,PSOSITE,"P",+PIO,"OPAI",0))
+"RTN","PSOHLDS",167,0)
+ I ('PIO)!(DN="") D  Q
+"RTN","PSOHLDS",168,0)
+ .S DDNS=$$GET1^DIQ(59,PSOSITE_",",2006),DPORT=$$GET1^DIQ(59,PSOSITE_",",2007),OPADD(DDNS)=DPORT
+"RTN","PSOHLDS",169,0)
+ S PSOENH=1,DEV=0 F  S DEV=$O(^PS(59,PSOSITE,"P",PIO,"OPAI",DEV)) Q:'DEV  D
+"RTN","PSOHLDS",170,0)
+ .S DAT=$G(^PS(59,PSOSITE,"P",PIO,"OPAI",DEV,0)) I $P(DAT,"^",2)="" Q
+"RTN","PSOHLDS",171,0)
+ .S DAT1=$$ADDCHK($P(DAT,"^")) I DAT1 D
+"RTN","PSOHLDS",172,0)
+ ..S OPADD($P(DAT1,"^",3))=$P(DAT1,"^",4),ADDCAT($P(DAT,"^",2),$P(DAT1,"^",3))=""
+"RTN","PSOHLDS",173,0)
+ Q
+"RTN","PSOHLDS",174,0)
+ ;
+"RTN","PSOHLDS",175,0)
+CHKCAT ;checks the ADD category to determine if and where the prescription should be routed.
+"RTN","PSOHLDS",176,0)
+ N PDAT,DRG,DRG0,DDEV,RTE,CSB,MTH,DEV53
+"RTN","PSOHLDS",177,0)
+ S PSOADD=""
+"RTN","PSOHLDS",178,0)
+ S PDAT=$G(^PSRX(IRXN,0)),DRG=$P(PDAT,"^",6),RTE=$$RTE()
+"RTN","PSOHLDS",179,0)
+ S DRG0=$G(^PSDRUG(+DRG,0)),DDEV=$G(^PSDRUG(DRG,"OPAI",PSOSITE,0))
+"RTN","PSOHLDS",180,0)
+ I DDEV'="" S DEV53=$$ADDCHK($S(RTE="W":$P(DDEV,"^",2),RTE="M":$P(DDEV,"^",3),1:"")) I DEV53 D  Q
+"RTN","PSOHLDS",181,0)
+ .I $D(OPADD($P(DEV53,"^",3))) S PSOADD=$P(DEV53,"^",3) Q
+"RTN","PSOHLDS",182,0)
+ .S OPADD($P(DEV53,"^",3))=$P(DEV53,"^",4),PSOADD=$P(DEV53,"^",3)
+"RTN","PSOHLDS",183,0)
+ I $D(ADDCAT("A")) S PSOADD=$O(ADDCAT("A","")) Q
+"RTN","PSOHLDS",184,0)
+ S CSB=+$P(DRG0,"^",3),CSB=$S((CSB>0)&(CSB<6):"CS",1:"NCS")
+"RTN","PSOHLDS",185,0)
+ I $D(ADDCAT(CSB)) S PSOADD=$O(ADDCAT(CSB,"")) Q
+"RTN","PSOHLDS",186,0)
+ I $D(ADDCAT(RTE_CSB)) S PSOADD=$O(ADDCAT(RTE_CSB,"")) Q
+"RTN","PSOHLDS",187,0)
+ S MTH=$S(RTE="W":"WIND",RTE="M":"MAIL",1:"") I MTH'="",$D(ADDCAT(MTH)) S PSOADD=$O(ADDCAT(MTH,"")) Q
+"RTN","PSOHLDS",188,0)
+ I $D(ADDCAT("S")) S PSOADD=$O(ADDCAT("S","")) Q
+"RTN","PSOHLDS",189,0)
+ Q
+"RTN","PSOHLDS",190,0)
+ ;
+"RTN","PSOHLDS",191,0)
+STRAGE ;set HL7 entries in ^TMP global to be sent to the storage device.
+"RTN","PSOHLDS",192,0)
+ N DNS,CNT,CNT1,STR
+"RTN","PSOHLDS",193,0)
+ S DNS=$O(ADDCAT("S","")) I DNS="" Q
+"RTN","PSOHLDS",194,0)
+ I DNS=PSOADD Q
+"RTN","PSOHLDS",195,0)
+ I '$D(^TMP("PSOADD",$J,DNS)) D  Q
+"RTN","PSOHLDS",196,0)
+ .M ^TMP("PSOADD",$J,DNS)=^TMP("PSO",$J) S $P(OPADD(DNS),"^",2)=PSI
+"RTN","PSOHLDS",197,0)
+ S CNT=0 F  S CNT=$O(^TMP("PSO",$J,CNT)) Q:'CNT  D
+"RTN","PSOHLDS",198,0)
+ .S STR=$G(^TMP("PSO",$J,CNT))
+"RTN","PSOHLDS",199,0)
+ .I "^PID^PV1^PV2^IAM^"[("^"_$E(STR,1,3)_"^") Q
+"RTN","PSOHLDS",200,0)
+ .S CNT1=+$P(OPADD(DNS),"^",2)
+"RTN","PSOHLDS",201,0)
+ .M ^TMP("PSOADD",$J,DNS,CNT1)=^TMP("PSO",$J,CNT)
+"RTN","PSOHLDS",202,0)
+ .S CNT1=CNT1+1,$P(OPADD(DNS),"^",2)=CNT1
+"RTN","PSOHLDS",203,0)
+ Q
+"RTN","PSOHLDS",204,0)
+MORSTG ;if more than one storage device is defined, add the others to the ^TMP global
+"RTN","PSOHLDS",205,0)
+ N RDNS,DNS
+"RTN","PSOHLDS",206,0)
+ S DNS=$O(ADDCAT("S","")) I DNS="" Q
+"RTN","PSOHLDS",207,0)
+ S RDNS=DNS F  S RDNS=$O(ADDCAT("S",RDNS)) Q:RDNS=""  D
+"RTN","PSOHLDS",208,0)
+ .M ^TMP("PSOADD",$J,RDNS)=^TMP("PSOADD",$J,DNS)
+"RTN","PSOHLDS",209,0)
+ Q
+"RTN","PSOHLDS",210,0)
+ ;
+"RTN","PSOHLDS",211,0)
+ADDCHK(DEV) ;check ADD in file #52.53 and return status and the zero node
+"RTN","PSOHLDS",212,0)
+ ; 1 - valid or 0 - invalid
+"RTN","PSOHLDS",213,0)
+ I $G(DEV)="" Q 0
+"RTN","PSOHLDS",214,0)
+ N DEVD
+"RTN","PSOHLDS",215,0)
+ S DEVD=$G(^PS(52.53,DEV,0))
+"RTN","PSOHLDS",216,0)
+ I ($P(DEVD,"^")="")!($P(DEVD,"^",2)="")!($P(DEVD,"^",3)="") Q 0_"^"_DEVD
+"RTN","PSOHLDS",217,0)
+ I $P(DEVD,"^",4),$P(DEVD,"^",4)'>DT Q 0_"^"_DEVD
+"RTN","PSOHLDS",218,0)
+ Q 1_"^"_DEVD
+"RTN","PSOHLDS",219,0)
+ ;
+"RTN","PSOHLDS",220,0)
+ALLADD ;get all active ADDs in #52.53
+"RTN","PSOHLDS",221,0)
+ ;  OPNAM(dns)=dns name
+"RTN","PSOHLDS",222,0)
+ N X,XD
+"RTN","PSOHLDS",223,0)
+ K OPNAM
+"RTN","PSOHLDS",224,0)
+ S X=0 F  S X=$O(^PS(52.53,X)) Q:'X  D
+"RTN","PSOHLDS",225,0)
+ .S XD=$G(^PS(52.53,X,0))
+"RTN","PSOHLDS",226,0)
+ .Q:($P(XD,"^")="")!($P(XD,"^",2)="")!($P(XD,"^",3)="")
+"RTN","PSOHLDS",227,0)
+ .I $P(XD,"^",4),$P(XD,"^",4)'>DT Q
+"RTN","PSOHLDS",228,0)
+ .S OPNAM($P(XD,"^",2))=$P(XD,"^")
+"RTN","PSOHLDS",229,0)
+ Q
+"RTN","PSOHLDS",230,0)
+ ;
+"RTN","PSOHLDS",231,0)
+ACLOG ;activity log (HL7 message transmitted to the interface)
+"RTN","PSOHLDS",232,0)
+ N DTTM,HCOM,HCNT,HJJ,IEN52
+"RTN","PSOHLDS",233,0)
+ S IEN52=$P($G(^PS(52.51,PRX,0)),"^")
+"RTN","PSOHLDS",234,0)
+ D NOW^%DTC S DTTM=%,HCOM=MESS
+"RTN","PSOHLDS",235,0)
+ S HCNT=0 F HJJ=0:0 S HJJ=$O(^PSRX(IEN52,"A",HJJ)) Q:'HJJ  S HCNT=HJJ
+"RTN","PSOHLDS",236,0)
+ S HCNT=HCNT+1,^PSRX(IEN52,"A",0)="^52.3DA^"_HCNT_"^"_HCNT S ^PSRX(IEN52,"A",HCNT,0)=DTTM_"^X^"_$S($G(PDUZ):PDUZ,1:.5)_"^"_"^"_$S($G(HLMID):"HL7 ID - "_HLMID,1:"")_" "_HCOM
+"RTN","PSOHLDS",237,0)
+ Q
+"RTN","PSOHLDS",238,0)
+RTE() ;get RX route
+"RTN","PSOHLDS",239,0)
+ N MW
+"RTN","PSOHLDS",240,0)
+ I $G(FP)="F"&('$G(FPN)) S MW=$P($G(^PSRX(IRXN,0)),"^",11)       ;original
+"RTN","PSOHLDS",241,0)
+ I $G(FP)="F"&($G(FPN)) S MW=$P($G(^PSRX(IRXN,1,FPN,0)),"^",2)   ;refill
+"RTN","PSOHLDS",242,0)
+ I $G(FP)="P"&($G(FPN)) S MW=$P($G(^PSRX(IRXN,"P",FPN,0)),"^",2) ;partial
+"RTN","PSOHLDS",243,0)
+ Q $G(MW)
+"RTN","PSOLBL4")
+0^3^B50601641^B49656838
+"RTN","PSOLBL4",1,0)
+PSOLBL4 ;BIR/RTR-Set up routine for HL7 interface ; 10/9/08 11:37am
+"RTN","PSOLBL4",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**26,70,156,244,233,246,319,387,354**;DEC 1997;Build 16
+"RTN","PSOLBL4",3,0)
+ ;External reference to ^PSDRUG supported by DBIA 221
+"RTN","PSOLBL4",4,0)
+ ;
+"RTN","PSOLBL4",5,0)
+ ;*244 - ignore RX's with a status > 11
+"RTN","PSOLBL4",6,0)
+ ;*246 - send marked drugs & print label (option 4) now working
+"RTN","PSOLBL4",7,0)
+ ;
+"RTN","PSOLBL4",8,0)
+ N DIC,AP,X,Y,DPRT,QPRT
+"RTN","PSOLBL4",9,0)
+ I $G(ZTIO)]"" D
+"RTN","PSOLBL4",10,0)
+ .Q:'$O(^PS(59,PSOSITE,"P",0))
+"RTN","PSOLBL4",11,0)
+ .S DIC=3.5,DIC(0)="",X=ZTIO D ^DIC K DIC,X Q:Y=-1
+"RTN","PSOLBL4",12,0)
+ .S DPRT=+Y,^UTILITY($J,"PSOPAI")=DPRT
+"RTN","PSOLBL4",13,0)
+ .F AP=0:0 S AP=$O(^PS(59,PSOSITE,"P",AP)) Q:'AP  I +$P(^PS(59,PSOSITE,"P",AP,0),"^")=DPRT S QPRT=1
+"RTN","PSOLBL4",14,0)
+ .I '$G(QPRT) S $P(PSOPAR,"^",30)=0
+"RTN","PSOLBL4",15,0)
+ Q:'$P($G(PSOPAR),"^",30)                ;HL7 interface turned off
+"RTN","PSOLBL4",16,0)
+ Q:$G(PSOEXREP)
+"RTN","PSOLBL4",17,0)
+HL N PSODTM,HHHH,PSOQUE,HLFLAG,HLFOUR,HLINGF,HLINRX,HLINRX0,II,HLNEXT,HLRR,HLRX,HLRXY,LL,PPLHL,PSHALP,HDFN,HLDFN,HNEWDFN,HLDAI,HLOSITE,HLJUST,HLRXYZ,PSOLLN,PSOLLL,PSFLG,HDFN1,NOTMD
+"RTN","PSOLBL4",18,0)
+ S HLOSITE=$P($G(PSOPAR),"^",30)
+"RTN","PSOLBL4",19,0)
+ K ^UTILITY($J,"PSOHL"),^UTILITY($J,"PSOHLL"),HLRXY
+"RTN","PSOLBL4",20,0)
+ S PPLHL=PPL
+"RTN","PSOLBL4",21,0)
+ S HLFLAG=0 F II=1:1 S HLRX=$P(PPLHL,",",II) D  Q:$G(HLFLAG)
+"RTN","PSOLBL4",22,0)
+ .S HLNEXT=$P(PPLHL,",",(II+1)) I HLNEXT=""!(HLNEXT=",") S HLFLAG=1
+"RTN","PSOLBL4",23,0)
+ .Q:'$G(HLRX)
+"RTN","PSOLBL4",24,0)
+ .Q:'$D(^PSRX(HLRX,0))
+"RTN","PSOLBL4",25,0)
+ .I $P($G(^PSRX(HLRX,"STA")),"^")=4!($P($G(^PSRX(HLRX,"STA")),"^")=1) Q
+"RTN","PSOLBL4",26,0)
+ .Q:$G(RXRP(HLRX,"RP"))
+"RTN","PSOLBL4",27,0)
+ .I $P($G(^PSRX(HLRX,"STA")),"^")>11!('$P(^PSRX(HLRX,0),"^",2)) Q
+"RTN","PSOLBL4",28,0)
+ .I $G(PSODBQ) S HLRR=$O(^PS(52.5,"B",HLRX,0)) Q:'HLRR  I $G(^PS(52.5,+HLRR,"P"))=1 Q
+"RTN","PSOLBL4",29,0)
+ .;   marked drug options 3 & 4
+"RTN","PSOLBL4",30,0)
+ .I (HLOSITE=3)!(HLOSITE=4) S NOTMD=0 D  Q:NOTMD     ;quit, not marked
+"RTN","PSOLBL4",31,0)
+ ..S HLJUST=+$P($G(^PSRX(HLRX,0)),"^",6)
+"RTN","PSOLBL4",32,0)
+ ..S:'$P($G(^PSDRUG(HLJUST,6)),"^") NOTMD=1
+"RTN","PSOLBL4",33,0)
+ .S HLRXY(II,HLRX)=""                                ;Valid Rx for HL7
+"RTN","PSOLBL4",34,0)
+ .S:HLOSITE=3 HLRXYZ(HLRX)=""
+"RTN","PSOLBL4",35,0)
+ ;
+"RTN","PSOLBL4",36,0)
+ I $G(HLOSITE)=3,$D(HLRXY) D                 ;rebuild PPL print string
+"RTN","PSOLBL4",37,0)
+ .K PPL F II=1:1 S HLRX=$P(PPLHL,",",II) Q:'HLRX  D
+"RTN","PSOLBL4",38,0)
+ ..Q:$D(HLRXYZ(HLRX))
+"RTN","PSOLBL4",39,0)
+ ..S PPL=$G(PPL)_HLRX_","
+"RTN","PSOLBL4",40,0)
+ ;
+"RTN","PSOLBL4",41,0)
+SOMDQ S (II,PSOQUE)=0 F  S II=$O(HLRXY(II)) Q:'II  S ^UTILITY($J,"PSOHLL",II)=$O(HLRXY(II,0)),PSOQUE=II
+"RTN","PSOLBL4",42,0)
+ I PSOQUE=0 G ENDHL                ;Nothing set, bypass Call to Queue
+"RTN","PSOLBL4",43,0)
+ F II=0:0 S II=$O(^UTILITY($J,"PSOHLL",II)) Q:'II  S HLINRX=^(II),HLINRX0=$G(^PSRX(HLINRX,0)) D
+"RTN","PSOLBL4",44,0)
+ .S ^UTILITY($J,"PSOHLL",II)=HLINRX_"^"_+$P(HLINRX0,"^",6)_"^"_$S($G(RXPR(HLINRX)):"P",1:"F")
+"RTN","PSOLBL4",45,0)
+ .I '$G(RXPR(HLINRX)) S HLFOUR=0 F HHHH=0:0 S HHHH=$O(^PSRX(HLINRX,1,HHHH)) Q:'HHHH  I +^(HHHH,0) S HLFOUR=HHHH
+"RTN","PSOLBL4",46,0)
+ .I '$G(RXPR(HLINRX)),$G(RXFL(HLINRX))'="" S HLFOUR=$S($G(RXFL(HLINRX))=0:0,$D(^PSRX(HLINRX,1,+$G(RXFL(HLINRX)),0)):+$G(RXFL(HLINRX)),1:$G(HLFOUR))
+"RTN","PSOLBL4",47,0)
+ .S ^UTILITY($J,"PSOHLL",II)=^UTILITY($J,"PSOHLL",II)_"^"_$S($G(RXPR(HLINRX)):RXPR(HLINRX),1:HLFOUR)_"^"_$S($P($G(^PSRX(HLINRX,3)),"^",6)&('$G(RXPR(HLINRX)))&('$G(RXFL(HLINRX))):1,1:0) D ACLOG
+"RTN","PSOLBL4",48,0)
+ .S HLINGF=0 I $P(^UTILITY($J,"PSOHLL",II),"^",5),$O(^PSRX(HLINRX,"DAI",0)) S HLINGF=1 D
+"RTN","PSOLBL4",49,0)
+ ..F LL=0:0 S LL=$O(^PSRX(HLINRX,"DAI",LL)) Q:'LL  S ^UTILITY($J,"PSOHLL",II,HLINGF)=$G(^PSRX(HLINRX,"DAI",LL,0)),HLINGF=HLINGF+1
+"RTN","PSOLBL4",50,0)
+ .S $P(^UTILITY($J,"PSOHLL",II),"^",6)=$S($G(HLINGF):1,1:0)
+"RTN","PSOLBL4",51,0)
+ .I $D(^PSRX(HLINRX,"DRI")),'$G(RXPR(HLINRX)),'$G(RXFL(HLINRX)) S ^UTILITY($J,"PSOHLL",II,"DRI")=^PSRX(HLINRX,"DRI"),$P(^UTILITY($J,"PSOHLL",II),"^",7)=1
+"RTN","PSOLBL4",52,0)
+ .E  S $P(^UTILITY($J,"PSOHLL",II),"^",7)=0
+"RTN","PSOLBL4",53,0)
+ .S $P(^UTILITY($J,"PSOHLL",II),"^",8)=0 D RPT Q:'$G(^PSRX(HLINRX,"IB"))
+"RTN","PSOLBL4",54,0)
+ .I $P(^PSRX(HLINRX,"STA"),"^")>0,$P(^("STA"),"^")'=2,'$G(PSODBQ) Q
+"RTN","PSOLBL4",55,0)
+ .S $P(^UTILITY($J,"PSOHLL",II),"^",8)=1
+"RTN","PSOLBL4",56,0)
+ ;
+"RTN","PSOLBL4",57,0)
+AAA D STRT^PSOHLSG5
+"RTN","PSOLBL4",58,0)
+ S (HDFN,HDFN1)=$O(^UTILITY($J,"PSOHLL",0)),HDFN=$P(^PSRX($P(^(HDFN),"^"),0),"^",2),PSOLLL=$P(^UTILITY($J,"PSOHLL",HDFN1),"^",12)
+"RTN","PSOLBL4",59,0)
+ F HLDFN=0:0 S HLDFN=$O(^UTILITY($J,"PSOHLL",HLDFN)) Q:'HLDFN  D  S ^UTILITY($J,"PSOHL",HLDFN)=^UTILITY($J,"PSOHLL",HLDFN) D OTHER
+"RTN","PSOLBL4",60,0)
+ .S PSFLG=0,PSOLLN=$P(^UTILITY($J,"PSOHLL",HLDFN),"^",12),HNEWDFN=$P(^PSRX($P(^UTILITY($J,"PSOHLL",HLDFN),"^"),0),"^",2) D
+"RTN","PSOLBL4",61,0)
+ ..I HDFN'=HNEWDFN S HDFN=HNEWDFN,PSFLG=1
+"RTN","PSOLBL4",62,0)
+ ..I PSOLLL'=PSOLLN S PSOLLL=PSOLLN,PSFLG=1
+"RTN","PSOLBL4",63,0)
+ ..I PSFLG=1 D SETZ
+"RTN","PSOLBL4",64,0)
+ I '$D(^UTILITY($J,"PSOHL")) G ENDHL
+"RTN","PSOLBL4",65,0)
+CALL D SETZ
+"RTN","PSOLBL4",66,0)
+ENDHL K ^UTILITY($J,"PSOHL"),^UTILITY($J,"PSOHLL"),^UTILITY($J,"PSOPAI"),HLRXY
+"RTN","PSOLBL4",67,0)
+ Q
+"RTN","PSOLBL4",68,0)
+OTHER I $G(^UTILITY($J,"PSOHLL",HLDFN,"DRI"))'="" S ^UTILITY($J,"PSOHL",HLDFN,"DRI")=^UTILITY($J,"PSOHLL",HLDFN,"DRI")
+"RTN","PSOLBL4",69,0)
+ F HLDAI=0:0 S HLDAI=$O(^UTILITY($J,"PSOHLL",HLDFN,HLDAI)) Q:'HLDAI  S ^UTILITY($J,"PSOHL",HLDFN,HLDAI)=^UTILITY($J,"PSOHLL",HLDFN,HLDAI)
+"RTN","PSOLBL4",70,0)
+ Q
+"RTN","PSOLBL4",71,0)
+ACLOG ;Activity log (sending to Hl7 interface)
+"RTN","PSOLBL4",72,0)
+ N DTTM,HCOM,HCNT,HJJ
+"RTN","PSOLBL4",73,0)
+ D NOW^%DTC S DTTM=%,HCOM="Prescription"_$S($G(RXPR(HLINRX)):" (Partial)",1:"")_$S($G(PSOSUREP)!($G(RXRP(HLINRX))):" (Reprint)",1:"")_" sent to external interface."
+"RTN","PSOLBL4",74,0)
+ S HCNT=0 F HJJ=0:0 S HJJ=$O(^PSRX(HLINRX,"A",HJJ)) Q:'HJJ  S HCNT=HJJ
+"RTN","PSOLBL4",75,0)
+ S HCNT=HCNT+1,^PSRX(HLINRX,"A",0)="^52.3DA^"_HCNT_"^"_HCNT S ^PSRX(HLINRX,"A",HCNT,0)=DTTM_"^X^"_$G(PDUZ)_"^"_$S($G(RXPR(HLINRX)):6,$G(HLFOUR)<6:$G(HLFOUR),1:(HLFOUR+1))_"^"_HCOM
+"RTN","PSOLBL4",76,0)
+ Q
+"RTN","PSOLBL4",77,0)
+SUS(HSREX,HSFL,HSFILL,HSRP) ;
+"RTN","PSOLBL4",78,0)
+ N DA,DIK,DTTM,HSCOM,HSCNT,HSJJ,HSLDUZ,PSHLCPRS
+"RTN","PSOLBL4",79,0)
+ I $P($G(^PSRX(HSREX,"STA")),"^")=5 S $P(^PSRX(HSREX,"STA"),"^")=0 S PSHLCPRS="Removed from Suspense, External Interface." D EN^PSOHLSN1(HSREX,"SC","ZU",PSHLCPRS)
+"RTN","PSOLBL4",80,0)
+ S DA=$O(^PS(52.5,"B",HSREX,0)) I DA K DIK S DIK="^PS(52.5," D ^DIK
+"RTN","PSOLBL4",81,0)
+ I $G(HSFL)="P" S HSLDUZ=+$P($G(^PSRX(HSREX,"P",HSFILL,0)),"^",7)
+"RTN","PSOLBL4",82,0)
+ E  S HSLDUZ=$S('HSFILL:+$P($G(^PSRX(HSREX,0)),"^",16),1:+$P($G(^PSRX(HSREX,1,HSFILL,0)),"^",7))
+"RTN","PSOLBL4",83,0)
+ D NOW^%DTC S DTTM=%,HSCOM="Removed from Suspense"_$S($G(HSFL)="P":" (Partial)",1:"")_$S($G(HSRP):" (Reprint)",1:"")_" (External Interface)"
+"RTN","PSOLBL4",84,0)
+ S HSCNT=0 F HSJJ=0:0 S HSJJ=$O(^PSRX(HSREX,"A",HSJJ)) Q:'HSJJ  S HSCNT=HSJJ
+"RTN","PSOLBL4",85,0)
+ S HSCNT=HSCNT+1,^PSRX(HSREX,"A",0)="^52.3DA^"_HSCNT_"^"_HSCNT S ^PSRX(HSREX,"A",HSCNT,0)=DTTM_"^X^"_$G(HSLDUZ)_"^"_$S($G(HSFL)="P":6,$G(HSFILL)<6:$G(HSFILL),1:(HSFILL+1))_"^"_$G(HSCOM)
+"RTN","PSOLBL4",86,0)
+ Q
+"RTN","PSOLBL4",87,0)
+LAB(HLREX,HLFL,HLFILL,HLREPT) ;
+"RTN","PSOLBL4",88,0)
+ N HLDUZ,NOW,DA,HCT,HFF
+"RTN","PSOLBL4",89,0)
+ D NOW^%DTC S NOW=% S HCT=0 F HFF=0:0 S HFF=$O(^PSRX(HLREX,"L",HFF)) Q:'HFF  S HCT=HFF
+"RTN","PSOLBL4",90,0)
+ I HLFL="F" S HLDUZ=$S('HLFILL:+$P($G(^PSRX(HLREX,0)),"^",16),1:+$P($G(^PSRX(HLREX,1,HLFILL,0)),"^",7))
+"RTN","PSOLBL4",91,0)
+ I HLFL="P" S HLDUZ=+$P($G(^PSRX(HLREX,"P",HLFILL,0)),"^",7)
+"RTN","PSOLBL4",92,0)
+ S HCT=HCT+1,^PSRX(HLREX,"L",0)="^52.032DA^"_HCT_"^"_HCT
+"RTN","PSOLBL4",93,0)
+ S ^PSRX(HLREX,"L",HCT,0)=NOW_"^"_$S($G(HLFL)="F":HLFILL,1:(99-HLFILL))_"^"_"From Rx number "_$P(^PSRX(HLREX,0),"^")_$S($G(HLFL)="P":" (Partial)",1:"")_$S($G(HLREPT):" (Reprint)",1:"")_" (External Interface)"_"^"_$G(HLDUZ)
+"RTN","PSOLBL4",94,0)
+ N PSOBADR,PSOTEMP
+"RTN","PSOLBL4",95,0)
+ S PSOBADR=$$CHKRX^PSOBAI(HLREX)
+"RTN","PSOLBL4",96,0)
+ I $G(PSOBADR) S PSOTEMP=$P(PSOBADR,"^",2),PSOBADR=$P(PSOBADR,"^")
+"RTN","PSOLBL4",97,0)
+ I $G(PSOBADR),'$G(PSOTEMP) D
+"RTN","PSOLBL4",98,0)
+ .S HCT=HCT+1,^PSRX(HLREX,"L",0)="^52.032DA^"_HCT_"^"_HCT
+"RTN","PSOLBL4",99,0)
+ .S ^PSRX(HLREX,"L",HCT,0)=NOW_"^"_$S($G(HLFL)="F":HLFILL,1:(99-HLFILL))_"^"_"ROUTING="_$G(MW)_" (BAD ADDRESS)"_"^"_$G(HLDUZ)
+"RTN","PSOLBL4",100,0)
+ Q
+"RTN","PSOLBL4",101,0)
+RPT ;
+"RTN","PSOLBL4",102,0)
+ S $P(^UTILITY($J,"PSOHLL",II),"^",9)=$S($G(PSOSUREP)!($G(RXRP(HLINRX))):1,1:0)
+"RTN","PSOLBL4",103,0)
+ S $P(^UTILITY($J,"PSOHLL",II),"^",10)=+$G(PDUZ)
+"RTN","PSOLBL4",104,0)
+ Q
+"RTN","PSOLBL4",105,0)
+SETZ ;
+"RTN","PSOLBL4",106,0)
+ D NOW^%DTC S PSODTM=%
+"RTN","PSOLBL4",107,0)
+ S ZTRTN=$S($$GET1^DIQ(59,PSOSITE_",",105,"I")=2.4:"INIT^PSOHLDS",1:"INIT^PSOHLSG")
+"RTN","PSOLBL4",108,0)
+ S ZTIO="",ZTDTH=$H,ZTSAVE("^UTILITY($J,""PSOHL"",")="",ZTSAVE("PSOPAR")="",ZTSAVE("PSOSITE")="",ZTSAVE("PSODTM")="",ZTSAVE("PSOLAP")=""
+"RTN","PSOLBL4",109,0)
+ S ZTSAVE("RXRP(")="",ZTSAVE("RXPR(")="",ZTSAVE("RXFL(")="",ZTSAVE("RXRS(")="",ZTSAVE("^UTILITY($J,""PSOPAI"")")=""
+"RTN","PSOLBL4",110,0)
+ S ZTDESC=$S($$GET1^DIQ(59,PSOSITE_",",105,"I")=2.4:"Outpatient Automation External Interface",1:"GENERIC INTERFACE LABEL INFORMATION")
+"RTN","PSOLBL4",111,0)
+ D ^%ZTLOAD
+"RTN","PSOLBL4",112,0)
+ K ^UTILITY($J,"PSOHL"),^UTILITY($J,"PSOPAI")
+"RTN","PSOLBL4",113,0)
+ Q
+"RTN","PSOORAL1")
+0^8^B57889178^B57201257
+"RTN","PSOORAL1",1,0)
+PSOORAL1 ;BHAM ISC/SAB - Build Listman activity logs ; 12/4/07 12:25pm
+"RTN","PSOORAL1",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**71,156,148,247,240,287,354**;DEC 1997;Build 16
+"RTN","PSOORAL1",3,0)
+ N RX0,VALMCNT K DIR,DTOUT,DUOUT,DIRUT,^TMP("PSOAL",$J) S DA=$P(PSOLST(ORN),"^",2),RX0=^PSRX(DA,0),J=DA,RX2=$G(^(2)),R3=$G(^(3)),CMOP=$O(^PSRX(DA,4,0))
+"RTN","PSOORAL1",4,0)
+ S IEN=0,DIR(0)="LO^1:"_$S(CMOP:8,1:7),DIR("A",1)=" ",DIR("A",2)="Select Activity Log by  number",DIR("A",3)="1.  Refill      2.  Partial      3.  Activity     4.  Labels"
+"RTN","PSOORAL1",5,0)
+ S DIR("A")=$S(CMOP:"5.  Copay       6.  ECME         7.  CMOP Events  8.  All Logs",1:"5.  Copay       6.  ECME         7.  All Logs")
+"RTN","PSOORAL1",6,0)
+ S DIR("B")=$S(CMOP:8,1:7) D ^DIR S PSOELSE=+Y I +Y S Y=$S(CMOP&(Y[8):"1,2,3,4,5,6,7",'CMOP&(Y[7):"1,2,3,4,5,6",1:Y) S ACT=Y D FULL^VALM1 D
+"RTN","PSOORAL1",7,0)
+ .S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Rx #: "_$P(RX0,"^")_"   Original Fill Released: " I $P(RX2,"^",13) S DTT=$P(RX2,"^",13) D DAT S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_DAT K DAT,DTT
+"RTN","PSOORAL1",8,0)
+ .I $P(RX2,"^",15) S DTT=$P(RX2,"^",15) D DAT S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_"(Returned to Stock "_DAT_")" K DAT,DTT
+"RTN","PSOORAL1",9,0)
+ .S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Routing: "_$S($P(RX0,"^",11)="W":"Window",1:"Mail")_$S($P($G(^PSRX(DA,"OR1")),"^",5):"      Finished by: "_$P(^VA(200,$P(^PSRX(DA,"OR1"),"^",5),0),"^"),1:"")
+"RTN","PSOORAL1",10,0)
+ .D:$G(^PSRX(DA,"H"))]""&($P(PSOLST(ORN),"^",3)="HOLD") HLD^PSOORAL2
+"RTN","PSOORAL1",11,0)
+ .F LOG=1:1:$L(ACT,",") Q:$P(ACT,",",LOG)']""  S LBL=$P(ACT,",",LOG) D @$S(LBL=1:"RF^PSOORAL2",LBL=2:"PAR^PSOORAL2",LBL=3:"ACT",LBL=5:"COPAY",LBL=6:"ECME",LBL=7:"^PSORXVW2",1:"LBL")
+"RTN","PSOORAL1",12,0)
+ I 'PSOELSE S VALMBCK="" K PSOELSE Q 
+"RTN","PSOORAL1",13,0)
+ K ST0,RFL,RFLL,RFL1,II,J,N,PHYS,L1,DIRUT,PSDIV,PSEXDT,MED,M1,FFX,DTT,DAT,R3,RTN,SIG,STA,P1,PL,P0,Z0,Z1,EXDT,IFN,DIR,DUOUT,DTOUT,PSOELSE
+"RTN","PSOORAL1",14,0)
+ K LBL,I,RFDATE,%H,%I,RN,RFT
+"RTN","PSOORAL1",15,0)
+ S PSOAL=IEN K IEN,ACT,LBL,LOG D EN^PSOORAL S VALMBCK="R"
+"RTN","PSOORAL1",16,0)
+ Q
+"RTN","PSOORAL1",17,0)
+ACT ;activity log
+"RTN","PSOORAL1",18,0)
+ N CNT
+"RTN","PSOORAL1",19,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=" ",IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Activity Log:"
+"RTN","PSOORAL1",20,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="#   Date        Reason         Rx Ref         Initiator Of Activity",IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0),"=",79)="="
+"RTN","PSOORAL1",21,0)
+ I '$O(^PSRX(DA,"A",0)) S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="There's NO Activity to report" Q
+"RTN","PSOORAL1",22,0)
+ S CNT=0
+"RTN","PSOORAL1",23,0)
+ F N=0:0 S N=$O(^PSRX(DA,"A",N)) Q:'N  S P1=^(N,0),DTT=P1\1 D DAT D
+"RTN","PSOORAL1",24,0)
+ .I $P(P1,"^",2)="M" Q
+"RTN","PSOORAL1",25,0)
+ .S IEN=IEN+1,CNT=CNT+1,^TMP("PSOAL",$J,IEN,0)=CNT_"   "_DAT_"    ",$P(RN," ",15)=" ",REA=$P(P1,"^",2),REA=$F("HUCELPRWSIVDABXGKN",REA)-1
+"RTN","PSOORAL1",26,0)
+ .I REA D
+"RTN","PSOORAL1",27,0)
+ ..S STA=$P("HOLD^UNHOLD^DISCONTINUED^EDIT^RENEWED^PARTIAL^REINSTATE^REPRINT^SUSPENSE^RETURNED^INTERVENTION^DELETED^DRUG INTERACTION^PROCESSED^X-INTERFACE^PATIENT INSTR.^PKI/DEA^DISP COMPLETED^","^",REA)
+"RTN","PSOORAL1",28,0)
+ ..S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_STA_$E(RN,$L(STA)+1,15)
+"RTN","PSOORAL1",29,0)
+ .E  S $P(STA," ",15)=" ",^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_STA
+"RTN","PSOORAL1",30,0)
+ .K STA,RN S $P(RN," ",15)=" ",RF=+$P(P1,"^",4)
+"RTN","PSOORAL1",31,0)
+ .S RFT=$S(RF>0&(RF<6):"REFILL "_RF,RF=6:"PARTIAL",RF>6:"REFILL "_(RF-1),1:"ORIGINAL")
+"RTN","PSOORAL1",32,0)
+ .S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_RFT_$E(RN,$L(RFT)+1,15)_$S($D(^VA(200,+$P(P1,"^",3),0)):$P(^(0),"^"),1:$P(P1,"^",3))
+"RTN","PSOORAL1",33,0)
+ .;S:$P(P1,"^",5)]"" IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Comments: "_$P(P1,"^",5)
+"RTN","PSOORAL1",34,0)
+ .I $P(P1,"^",5)]"" N PSOACBRK,PSOACBRV D
+"RTN","PSOORAL1",35,0)
+ ..S PSOACBRV=$P(P1,"^",5)
+"RTN","PSOORAL1",36,0)
+ ..;PSO*7*240 Use fileman for parsing
+"RTN","PSOORAL1",37,0)
+ ..K ^UTILITY($J,"W") S X="Comments: "_PSOACBRV,(DIWR,DIWL)=1,DIWF="C80" D ^DIWP F I=1:1:^UTILITY($J,"W",1) S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=$G(^UTILITY($J,"W",1,I,0))
+"RTN","PSOORAL1",38,0)
+ .I $P($G(^PSRX(DA,"A",N,1)),"^")]"" S IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0)," ",5)=$P($G(^PSRX(DA,"A",N,1)),"^") I $P($G(^PSRX(DA,"A",N,1)),"^",2)]"" S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_":"_$P($G(^PSRX(DA,"A",N,1)),"^",2)
+"RTN","PSOORAL1",39,0)
+ .I $O(^PSRX(DA,"A",N,2,0)) F I=0:0 S I=$O(^PSRX(DA,"A",N,2,I)) Q:'I  S MIG=^PSRX(DA,"A",N,2,I,0) D
+"RTN","PSOORAL1",40,0)
+ ..S:MIG["Mail Tracking Info.: " IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0)," ",9)=" "
+"RTN","PSOORAL1",41,0)
+ ..F SG=1:1:$L(MIG) S:$L(^TMP("PSOAL",$J,IEN,0)_" "_$P(MIG," ",SG))>80 IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0)," ",9)=" " S:$P(MIG," ",SG)'="" ^TMP("PSOAL",$J,IEN,0)=$G(^TMP("PSOAL",$J,IEN,0))_" "_$P(MIG," ",SG)
+"RTN","PSOORAL1",42,0)
+ K MIG,SG,I,^UTILITY($J,"W"),DIWF,DIWL,DIWR
+"RTN","PSOORAL1",43,0)
+ Q
+"RTN","PSOORAL1",44,0)
+LBL ;label log
+"RTN","PSOORAL1",45,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=" ",IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Label Log:"
+"RTN","PSOORAL1",46,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="#   Date        Rx Ref                    Printed By",IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0),"=",79)="="
+"RTN","PSOORAL1",47,0)
+ I '$O(^PSRX(DA,"L",0)) S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="There are NO Labels printed." Q
+"RTN","PSOORAL1",48,0)
+ F L1=0:0 S L1=$O(^PSRX(DA,"L",L1)) Q:'L1  S LBL=^PSRX(DA,"L",L1,0),DTT=$P(^(0),"^") D DAT D
+"RTN","PSOORAL1",49,0)
+ .S $P(RN," ",26)=" ",IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=L1_"   "_DAT_"    ",RFT=$S($P(LBL,"^",2):"REFILL "_$P(LBL,"^",2),1:"ORIGINAL"),RFT=RFT_$E(RN,$L(RFT)+1,26)
+"RTN","PSOORAL1",50,0)
+ .S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_RFT_$P($G(^VA(200,$P(LBL,"^",4),0)),"^"),IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Comments: "_$P(LBL,"^",3)
+"RTN","PSOORAL1",51,0)
+ Q
+"RTN","PSOORAL1",52,0)
+ ;
+"RTN","PSOORAL1",53,0)
+COPAY ;Copay activity log
+"RTN","PSOORAL1",54,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=" ",IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Copay Activity Log:"
+"RTN","PSOORAL1",55,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="#   Date        Reason               Rx Ref         Initiator Of Activity",IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0),"=",79)="="
+"RTN","PSOORAL1",56,0)
+ I '$O(^PSRX(DA,"COPAY",0)) S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="There's NO Copay activity to report" Q
+"RTN","PSOORAL1",57,0)
+ F N=0:0 S N=$O(^PSRX(DA,"COPAY",N)) Q:'N  S P1=^(N,0),DTT=P1\1 D DAT D
+"RTN","PSOORAL1",58,0)
+ .S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=N_"   "_DAT_"    ",$P(RN," ",21)=" ",REA=$P(P1,"^",2),REA=$F("ARICE",REA)-1
+"RTN","PSOORAL1",59,0)
+ .I REA D
+"RTN","PSOORAL1",60,0)
+ ..S STA=$P("ANNUAL CAP REACHED^COPAY RESET^IB-INITIATED COPAY^REMOVE COPAY CHARGE^RX EDITED^","^",REA)
+"RTN","PSOORAL1",61,0)
+ ..S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_STA_$E(RN,$L(STA)+1,21)
+"RTN","PSOORAL1",62,0)
+ .E  S $P(STA," ",21)=" ",^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_STA
+"RTN","PSOORAL1",63,0)
+ .K STA,RN S $P(RN," ",15)=" ",RF=+$P(P1,"^",4)
+"RTN","PSOORAL1",64,0)
+ .S RFT=$S(RF>0:"REFILL "_RF,1:"ORIGINAL")
+"RTN","PSOORAL1",65,0)
+ .S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_RFT_$E(RN,$L(RFT)+1,15)_$S($D(^VA(200,+$P(P1,"^",3),0)):$P(^(0),"^"),1:$P(P1,"^",3))
+"RTN","PSOORAL1",66,0)
+ .S:$P(P1,"^",5)]""!($P(P1,"^",6)]"")!($P(P1,"^",7)]"") IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Comment: "_$P(P1,"^",5)
+"RTN","PSOORAL1",67,0)
+ .I $P(P1,"^",6)]"" S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_"  Old value="_$P(P1,"^",6)_"   New value="_$P(P1,"^",7)
+"RTN","PSOORAL1",68,0)
+ Q
+"RTN","PSOORAL1",69,0)
+ ;
+"RTN","PSOORAL1",70,0)
+ECME ; ECME activity log
+"RTN","PSOORAL1",71,0)
+ N N,P1,RFT,PSOACBRK,PSOACBRV,MIG,SG,I,NOTFND,CNT,LINE
+"RTN","PSOORAL1",72,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=" ",IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="ECME Log:"
+"RTN","PSOORAL1",73,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="#   Date/Time           Rx Ref          Initiator Of Activity"
+"RTN","PSOORAL1",74,0)
+ S IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0),"=",79)="="
+"RTN","PSOORAL1",75,0)
+ S NOTFND=1,I=0 F  S I=$O(^PSRX(DA,"A",I)) Q:'I  S Z=$G(^PSRX(DA,"A",I,0)) I $P(Z,"^",2)="M" S NOTFND=0 Q
+"RTN","PSOORAL1",76,0)
+ I NOTFND S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="There's NO ECME Activity to report" Q
+"RTN","PSOORAL1",77,0)
+ S CNT=0
+"RTN","PSOORAL1",78,0)
+ F N=0:0 S N=$O(^PSRX(DA,"A",N)) Q:'N  S P1=^(N,0) D
+"RTN","PSOORAL1",79,0)
+ .I $P(P1,"^",2)'="M" Q
+"RTN","PSOORAL1",80,0)
+ .S IEN=IEN+1,CNT=CNT+1
+"RTN","PSOORAL1",81,0)
+ .K STA,RN S $P(RN," ",15)=" ",RF=+$P(P1,"^",4)
+"RTN","PSOORAL1",82,0)
+ .S LINE=CNT,$E(LINE,5)=$$FMTE^XLFDT($P(P1,"^"),2),$E(LINE,25)=$S(RF:"REFILL "_RF,1:"ORIGINAL")
+"RTN","PSOORAL1",83,0)
+ .S $E(LINE,41)=$$GET1^DIQ(200,+$P(P1,"^",3),.01)
+"RTN","PSOORAL1",84,0)
+ .S ^TMP("PSOAL",$J,IEN,0)=LINE
+"RTN","PSOORAL1",85,0)
+ .I $P(P1,"^",5)]"" D
+"RTN","PSOORAL1",86,0)
+ ..S PSOACBRV=$P(P1,"^",5)
+"RTN","PSOORAL1",87,0)
+ ..;PSO*7*240 Use fileman for parsing
+"RTN","PSOORAL1",88,0)
+ ..K ^UTILITY($J,"W") S X="Comments: "_PSOACBRV,(DIWR,DIWL)=1,DIWF="C80" D ^DIWP F I=1:1:^UTILITY($J,"W",1) S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=$G(^UTILITY($J,"W",1,I,0))
+"RTN","PSOORAL1",89,0)
+ .I $O(^PSRX(DA,"A",N,2,0)) F I=0:0 S I=$O(^PSRX(DA,"A",N,2,I)) Q:'I  S MIG=^PSRX(DA,"A",N,2,I,0) D
+"RTN","PSOORAL1",90,0)
+ ..F SG=1:1:$L(MIG) D
+"RTN","PSOORAL1",91,0)
+ ...S:$L(^TMP("PSOAL",$J,IEN,0)_" "_$P(MIG," ",SG))>80 IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0)," ",9)=" "
+"RTN","PSOORAL1",92,0)
+ ...S:$P(MIG," ",SG)'="" ^TMP("PSOAL",$J,IEN,0)=$G(^TMP("PSOAL",$J,IEN,0))_" "_$P(MIG," ",SG)
+"RTN","PSOORAL1",93,0)
+ D DISPREJ
+"RTN","PSOORAL1",94,0)
+ K ^UTILITY($J,"W"),DIWR,DIWF,DIWL
+"RTN","PSOORAL1",95,0)
+ Q
+"RTN","PSOORAL1",96,0)
+ ;
+"RTN","PSOORAL1",97,0)
+DISPREJ  ;
+"RTN","PSOORAL1",98,0)
+ N LN,SEQ,REJ,PRI,VAR,X,X1,X2,I,RFT
+"RTN","PSOORAL1",99,0)
+ I '$D(^PSRX(DA,"REJ")) Q
+"RTN","PSOORAL1",100,0)
+ S PRI="PSOAL",$P(LN,"=",80)="",SEQ=0
+"RTN","PSOORAL1",101,0)
+ S IEN=$G(IEN)+1,^TMP(PRI,$J,IEN,0)=" "
+"RTN","PSOORAL1",102,0)
+ S IEN=IEN+1,^TMP(PRI,$J,IEN,0)="ECME REJECT Log:"
+"RTN","PSOORAL1",103,0)
+ S IEN=IEN+1,^TMP(PRI,$J,IEN,0)="#  Date/Time Rcvd    Rx Ref    Reject Type     STATUS     Date/Time Resolved"
+"RTN","PSOORAL1",104,0)
+ S IEN=IEN+1,^TMP(PRI,$J,IEN,0)=LN
+"RTN","PSOORAL1",105,0)
+ F REJ=0:0 S REJ=$O(^PSRX(DA,"REJ",REJ)) Q:'REJ  D
+"RTN","PSOORAL1",106,0)
+ . S VAR=$G(^PSRX(DA,"REJ",REJ,0))
+"RTN","PSOORAL1",107,0)
+ . S RFT=+$P(VAR,"^",4)
+"RTN","PSOORAL1",108,0)
+ . S SEQ=SEQ+1,X=SEQ,$E(X,4)=$$FMTE^XLFDT($P(VAR,"^",2),2),$E(X,22)=$S(RFT:"REFILL "_RFT,1:"ORIGINAL")
+"RTN","PSOORAL1",109,0)
+ . S $E(X,32)=$S(+VAR=79:"REFILL TOO SOON",+VAR=88:"DUR",1:$E($$EXP^PSOREJP1($P(VAR,"^",1)),1,15))  ;can't + default because values can be 07, 08, etc.
+"RTN","PSOORAL1",110,0)
+ . S $E(X,48)=$S($P(VAR,"^",5):"RESOLVED",1:"UNRESOLVED")
+"RTN","PSOORAL1",111,0)
+ . S:$P(VAR,"^",6) $E(X,59)=$$FMTE^XLFDT($P(VAR,"^",6),2)
+"RTN","PSOORAL1",112,0)
+ . ; S:$P(VAR,"^",14) $E(X,67)="(RE-OPENED)"
+"RTN","PSOORAL1",113,0)
+ . S IEN=IEN+1,^TMP(PRI,$J,IEN,0)=X
+"RTN","PSOORAL1",114,0)
+ . I $P(VAR,"^",5) D
+"RTN","PSOORAL1",115,0)
+ . . S IEN=IEN+1,X=$$GET1^DIQ(52.25,REJ_","_DA,12)
+"RTN","PSOORAL1",116,0)
+ . . S X1=$$GET1^DIQ(52.25,REJ_","_DA,13) S:X1'="" X=X1_" ("_X_")"
+"RTN","PSOORAL1",117,0)
+ . . F I=1:1 Q:X=""  D
+"RTN","PSOORAL1",118,0)
+ . . . S ^TMP(PRI,$J,IEN,0)=$S(I=1:"Comments: ",1:"          ")_$E(X,1,69)
+"RTN","PSOORAL1",119,0)
+ . . . S X=$E(X,70,999) S:X'="" IEN=IEN+1
+"RTN","PSOORAL1",120,0)
+ Q
+"RTN","PSOORAL1",121,0)
+ ;
+"RTN","PSOORAL1",122,0)
+DAT S DAT="",DTT=DTT\1 Q:DTT'?7N  S DAT=$E(DTT,4,5)_"/"_$E(DTT,6,7)_"/"_$E(DTT,2,3)
+"RTN","PSOORAL1",123,0)
+ Q
+"RTN","PSORXL")
+0^2^B108590607^B74408988
+"RTN","PSORXL",1,0)
+PSORXL ;BHAM ISC/SAB - action to be taken on prescriptions ;10/15/08 2:12pm
+"RTN","PSORXL",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**8,21,24,32,47,135,148,287,334,251,354**;DEC 1997;Build 16
+"RTN","PSORXL",3,0)
+ ;External reference to File #50 supported by DBIA 221
+"RTN","PSORXL",4,0)
+ ;External references CHPUS^IBACUS and TRI^IBACUS supported by DBIA 2030
+"RTN","PSORXL",5,0)
+ I $G(PSOTRVV),$G(PPL) S PSORX("PSOL",1)=PPL K PPL
+"RTN","PSORXL",6,0)
+ N SLBL,PSOSONE,PSOKLRXS
+"RTN","PSORXL",7,0)
+ S:'$G(PPL) PPL=$G(PSORX("PSOL",1)) G:$P(PSOPAR,"^",26) P
+"RTN","PSORXL",8,0)
+LBL ;
+"RTN","PSORXL",9,0)
+ I $G(PPL) N PSOCKDC S PSOCKDC=1 D ECME^PSORXL1 I '$G(PPL) S PPL="" G RXSQUIT  ;*334 ;don't prompt to print labels for DC'ed Rx's
+"RTN","PSORXL",10,0)
+ W !! S DIR("A",1)="Label Printer: "_$S($G(SUSPT):PSLION,1:$G(PSOLAP))
+"RTN","PSORXL",11,0)
+ S DIR("A")="LABEL: QUEUE/CHANGE PRINTER"_$S($P(PSOPAR,"^",23):"/HOLD",1:"")_$S($P(PSOPAR,"^",24):"/SUSPEND",1:"")_$S($P(PSOPAR,"^",26):"/LABEL",1:"")_" or '^' to bypass "
+"RTN","PSORXL",12,0)
+ S DIR("?",1)="Enter 'Q' to queue labels to print",DIR("?")="Enter '^' to bypass label functions",DIR("?",4)="Enter 'S' to suspend labels to print later"
+"RTN","PSORXL",13,0)
+ S DIR("?",2)="Enter 'H' to hold label until Rx can be filled",DIR("?",3)="Enter 'P' for Rx profile"
+"RTN","PSORXL",14,0)
+ S DIR("?",5)="Enter 'C' to select another label printer"
+"RTN","PSORXL",15,0)
+ S:$P(PSOPAR,"^",26) DIR("?",5)="Enter 'L' to print labels without queuing"
+"RTN","PSORXL",16,0)
+TRI ;Tricare
+"RTN","PSORXL",17,0)
+ S X="IBACUS" X ^%ZOSF("TEST") K X I '$T G PASS
+"RTN","PSORXL",18,0)
+ I '$$TRI^IBACUS() G PASS
+"RTN","PSORXL",19,0)
+ I '$D(PSORX("PSOL",1))!($G(PSOSUREP))!($G(PSOEXREP)) G PASS
+"RTN","PSORXL",20,0)
+ N GGG,PBILL,PSTRD,PSTRDZ,PSTRF,PSTRP,TRXI,TRIRX,PSTRIVAR,VV,VVV,VVCT
+"RTN","PSORXL",21,0)
+ D DEV^PSOCPTRI
+"RTN","PSORXL",22,0)
+ K ^TMP($J,"PSONOB"),^TMP($J,"PSOBILL")
+"RTN","PSORXL",23,0)
+ S VVCT=0 F VV=0:0 S VV=$O(PSORX("PSOL",VV)) Q:'VV  F VVV=1:1 S TRXI=$P(PSORX("PSOL",VV),",",VVV) Q:'TRXI  D
+"RTN","PSORXL",24,0)
+ .I '$G(DT) S DT=$$DT^XLFDT
+"RTN","PSORXL",25,0)
+ .I $P($G(^PSRX(+TRXI,"STA")),"^")=3 Q
+"RTN","PSORXL",26,0)
+ .S PSTRP=$P($G(^PSRX(+TRXI,0)),"^",2),PSTRD=+$G(PSOSITE),PSTRDZ=+$G(DUZ)
+"RTN","PSORXL",27,0)
+ .S PSTRF=0 F GGG=0:0 S GGG=$O(^PSRX(+TRXI,1,GGG)) Q:'GGG  S PSTRF=GGG
+"RTN","PSORXL",28,0)
+ .S VVCT=VVCT+1
+"RTN","PSORXL",29,0)
+ .I $G(RXRP(TRXI))!($G(RXPR(TRXI)))!($G(RXRH(TRXI))) S ^TMP($J,"PSONOB",VVCT)=TRXI Q
+"RTN","PSORXL",30,0)
+ .S PBILL=$$CHPUS^IBACUS(PSTRP,DT,TRXI,PSTRF,PSOLAP,PSTRD,PSTRDZ) S ^TMP($J,$S($G(PBILL):"PSOBILL",1:"PSONOB"),VVCT)=TRXI
+"RTN","PSORXL",31,0)
+ I '$D(^TMP($J,"PSOBILL")) K ^TMP($J,"PSONOB") G PASS
+"RTN","PSORXL",32,0)
+ I '$D(^TMP($J,"PSONOB")),$D(^TMP($J,"PSOBILL")) S (Y,LBL)="H" G H1
+"RTN","PSORXL",33,0)
+ ;If some Rx's are billable, and some are not
+"RTN","PSORXL",34,0)
+SETP K PSORX("PSOL"),PPL S VVCT=1 F VV=0:0 S VV=$O(^TMP($J,$S($G(PSTRIVAR):"PSONOB",1:"PSOBILL"),VV)) Q:'VV  S TRIRX=^TMP($J,$S($G(PSTRIVAR):"PSONOB",1:"PSOBILL"),VV) I +TRIRX D
+"RTN","PSORXL",35,0)
+ .I $G(PSORX("PSOL",1))="" S PSORX("PSOL",1)=TRIRX_"," Q
+"RTN","PSORXL",36,0)
+ .I $L(PSORX("PSOL",VVCT))+$L(TRIRX)<220 S PSORX("PSOL",VVCT)=PSORX("PSOL",VVCT)_TRIRX_"," Q
+"RTN","PSORXL",37,0)
+ .S VVCT=VVCT+1 S PSORX("PSOL",VVCT)=TRIRX_","
+"RTN","PSORXL",38,0)
+ I '$G(PSTRIVAR) S (Y,LBL)="H" S PSOKLRXS=1 K PSORSAVE,PSOPSAVE,PSOHSAVE D RSAVE D H1 D RREST K PSORSAVE,PSOPSAVE,PSOHSAVE K PSOKLRXS S PSTRIVAR=1 G SETP
+"RTN","PSORXL",39,0)
+ K ^TMP($J,"PSONOB") S PPL=$G(PSORX("PSOL",1))
+"RTN","PSORXL",40,0)
+PASS ;
+"RTN","PSORXL",41,0)
+ I $E($G(DIR("A")),1,6)'="LABEL:" D RESDIR^PSOCPTRI
+"RTN","PSORXL",42,0)
+ S DIR(0)="SA^P:PROFILE;Q:QUEUE;C:CHANGE PRINTER"_$S($P(PSOPAR,"^",23):";H:HOLD",1:"")_$S($P(PSOPAR,"^",24):";S:SUSPENSE",1:"")_$S($P(PSOPAR,"^",26):";L:PRINT",1:""),DIR("B")="Q" D ^DIR D  G:$D(DIRUT)!($D(DUOUT)) EX
+"RTN","PSORXL",43,0)
+ .I $D(DIRUT)!($D(DUOUT)) D AL^PSOLBL("UT") I $G(PSOEXREP) S PSOEXREX=1
+"RTN","PSORXL",44,0)
+ .I $G(PSOPULL) I $D(DIRUT)!($D(DUOUT)) S PSOQFLAG=1
+"RTN","PSORXL",45,0)
+ S:$G(PSOBEDT) NOPP=Y
+"RTN","PSORXL",46,0)
+ I $G(Y)="C" K PSOCLBL,%ZIS("B") S PSOCLBL=1 D @$S('$D(PSOPAR):"^PSOLSET",1:"PLBL^PSOLSET") K PSOCLBL G LBL
+"RTN","PSORXL",47,0)
+ I $G(Y)="Q",$D(RXRS),'$G(PSOPULL) D PPLADD^PSOSUPOE
+"RTN","PSORXL",48,0)
+ I $G(PSXSYS),($G(Y)'="H"),($G(Y)'="P"),('$G(PSOEXREP)) S LBL=Y,(RXLTOP,PPL1)=1 S:'$G(PSOPULL) SLBL=Y D A^PSOCMOP G:'$G(PPL) D1
+"RTN","PSORXL",49,0)
+ K DIR S LBL=Y S:'$G(PSOPULL) SLBL=Y G Q:Y="Q",S:Y="S",H1:Y="H",P:Y="L" I Y="P" W ! S PSDFN=DFN,PSFROM="" D ^PSODSPL K PSDFN,PSFROM G LBL
+"RTN","PSORXL",50,0)
+EX I $D(DUOUT)!$D(DIRUT) K BINGCRT,BINGRTE,BBRX,BBFLG S:$D(RXRS) SLBL="^" G:$D(RXRS) RXS K DIR,X,DIRUT,DUOUT,ACT,Y,DTOUT,PPL,REPRINT S NOBG=1 G RXSQUIT  ;*334
+"RTN","PSORXL",51,0)
+Q S PPL1=1 G:$G(PPL)']"" D1 S PSNP=0,PSL=1 D  I $G(PSOFROM)="NEW",$P(PSOPAR,"^",8) S PSNP=1
+"RTN","PSORXL",52,0)
+ .Q:'$P(PSOPAR,"^",8)!($G(PSONOPRT))
+"RTN","PSORXL",53,0)
+ .F SLPPL=0:0 S SLPPL=$O(RXRS(SLPPL)) Q:'SLPPL!($G(PSNP))  I '$O(^PSRX(SLPPL,1,0)),'$D(RXPR(SLPPL)) S PSNP=1
+"RTN","PSORXL",54,0)
+ I $G(PSOLAP)]"",$G(PSOLAP)'=ION G QLBL
+"RTN","PSORXL",55,0)
+Q1 W ! K POP S %ZIS("B")="",%ZIS="MNQ",%ZIS("A")="Select LABEL DEVICE: " D ^%ZIS S PSLION=ION K %ZIS("A")
+"RTN","PSORXL",56,0)
+ G:$G(POP)&($G(PSPARTXX)) RXSQUIT G:$G(POP)&($G(PSOSONE)) RXSQ D:$G(POP)&($G(PSONOPRT))
+"RTN","PSORXL",57,0)
+ .S PSOQFLAG=1
+"RTN","PSORXL",58,0)
+ G:$G(PSOQFLAG) RXSQUIT G:POP!(IO=IO(0)) LBL S PSOLAP=ION  ;*334
+"RTN","PSORXL",59,0)
+ N PSOIOS S PSOIOS=IOS D DEVBAR^PSOBMST
+"RTN","PSORXL",60,0)
+ S PSOBARS=PSOBAR1]""&(PSOBAR0]"")&$P(PSOPAR,"^",10)
+"RTN","PSORXL",61,0)
+ D ^%ZISC S PSL=0
+"RTN","PSORXL",62,0)
+QLBL I $G(PSXSYS),('$G(RXLTOP)),('$G(PSOEXREP)) D RXL^PSOCMOP G:'$G(PPL) D1
+"RTN","PSORXL",63,0)
+ ;
+"RTN","PSORXL",64,0)
+ ;- Submitting list of Rx to ECME for DUR/79 REJECT check and possible submission to 3rd Pary Payer
+"RTN","PSORXL",65,0)
+ D ECME^PSORXL1 I '$G(PPL) W !!,"No Label(s) printed.",!! S PSOQFLAG=1 G RXSQUIT  ;*334
+"RTN","PSORXL",66,0)
+ ;
+"RTN","PSORXL",67,0)
+ S ZTRTN="DQ^PSOLBL",ZTIO=$S($G(SUSPT):PSLION,1:PSOLAP),ZTDESC="Outpatient Pharmacy "_$S($G(SUSPT):"SUSPENSE ",$G(DG):"DRUG INTERACTION ",1:"")_"LABELS OUTPUT ROUTINE",ZTDTH=$S($G(PSOTIME):PSOTIME,1:$H),PDUZ=DUZ,OPAIO=ZTIO
+"RTN","PSORXL",68,0)
+ F G="PPL1","PSOSYS","DFN","PSOPAR","PDUZ","PCOMX",$S($G(SUSPT):"PFION",1:"PSOLAP"),"PPL","PSOSITE","RXY","COPIES","SIDE","PSOSUSPR","PSOBARS","PSOBAR1","PSOBAR0","PSODELE","PSOPULL","PSTAT","PSODBQ","PSOEXREP","PSOTREP" S:$D(@G) ZTSAVE(G)=""
+"RTN","PSORXL",69,0)
+ S ZTSAVE("PSORX(")="",ZTSAVE("RXRP(")="",ZTSAVE("RXPR(")="",ZTSAVE("RXRS(")="",ZTSAVE("RXFL(")="",ZTSAVE("PCOMH(")=""
+"RTN","PSORXL",70,0)
+ D ^%ZISC,^%ZTLOAD K:$G(PSOSONE) RXRS I $D(ZTSK)&('$G(SUSPT))&('$G(PSOEXREP)) D
+"RTN","PSORXL",71,0)
+ .W !!,"LABEL(S) QUEUED TO PRINT",!!
+"RTN","PSORXL",72,0)
+ .D OPAI
+"RTN","PSORXL",73,0)
+ K OPAIO
+"RTN","PSORXL",74,0)
+ G:$G(PSPARTXX) RXSQUIT K G,PDUZ K:'$G(SUSPT) ZTSK G:$G(DG) RXSQUIT  ;*334
+"RTN","PSORXL",75,0)
+ G:'$G(PSNP) QUEUP G:$G(PSOPRFLG) QUEUP S HOLDRPAS=$G(PSOPRPAS),PSOPRPAS=$P(PSOPAR,"^",13)
+"RTN","PSORXL",76,0)
+PLBL S PSOION=ION
+"RTN","PSORXL",77,0)
+ I '$D(PSOPROP)!($G(PSOPROP)=ION) W $C(7),!,"PROFILES MUST BE SENT TO PRINTER !!",! K IOP,%ZIS,IO("Q"),POP S %ZIS="MNQ",%ZIS("A")="Select PROFILE DEVICE: " D ^%ZIS K %ZIS("A") G:POP QUEUP G:$E(IOST)["C"!(PSOION=ION) PLBL S PSOPROP=ION
+"RTN","PSORXL",78,0)
+QPRF S ZTRTN="DQ^PSOPRF",ZTIO=PSOPROP,ZTDESC="Outpatient Pharmacy "_$S($G(SUSPT):"SUSPENSE ",1:"")_"PATIENT PROFILES",ZTDTH=$S($G(PSOTIME):PSOTIME,1:$H)
+"RTN","PSORXL",79,0)
+ F G="PSOPAR","PSODTCUT","PSOPRPAS","DFN","PSOSITE","NEW1","NEW11","PSOBMST","PFIO","PPL" S:$D(@G) ZTSAVE(G)=""
+"RTN","PSORXL",80,0)
+ D ^%ZTLOAD W:$D(ZTSK)&('$G(SUSPT))&('$G(PSOEXREP)) !,"PROFILE IS QUEUED TO PRINT",!! K G K:'$G(SUSPT) ZTSK D ^%ZISC
+"RTN","PSORXL",81,0)
+QUEUP D:$G(POP)&($G(PSONOPRT))  G:$G(PSOQFLAG) RXSQUIT S PSNP=0,PSOPRPAS=$G(HOLDRPAS) K:PSOPRPAS']"" PSOPRPAS K HOLDRPAS G D1  ;*334
+"RTN","PSORXL",82,0)
+ .S PSOQFLAG=1
+"RTN","PSORXL",83,0)
+ Q
+"RTN","PSORXL",84,0)
+ ;
+"RTN","PSORXL",85,0)
+S G S^PSORXL1
+"RTN","PSORXL",86,0)
+SUS S X="IBACUS" X ^%ZOSF("TEST") K X I '$T G SUSL1
+"RTN","PSORXL",87,0)
+ N TRIDA S TRIDA=DA I '$$TRI^IBACUS() S DA=TRIDA G SUSL1
+"RTN","PSORXL",88,0)
+ I $G(RXRP(TRIDA))!($G(RXPR(TRIDA)))!($G(RXRH(TRIDA))) S DA=TRIDA G SUSL1
+"RTN","PSORXL",89,0)
+ N PBILL,PSTRD,PSTRDZ,PSTRF,PSTRP,GGG
+"RTN","PSORXL",90,0)
+ D DEV^PSOCPTRI
+"RTN","PSORXL",91,0)
+ I '$G(DT) S DT=$$DT^XLFDT
+"RTN","PSORXL",92,0)
+ S PSTRP=$P($G(^PSRX(+TRIDA,0)),"^",2),PSTRD=+$G(PSOSITE),PSTRDZ=+$G(DUZ)
+"RTN","PSORXL",93,0)
+ S PSTRF=0 F GGG=0:0 S GGG=$O(^PSRX(+TRIDA,1,GGG)) Q:'GGG  S PSTRF=GGG
+"RTN","PSORXL",94,0)
+ S PBILL=$$CHPUS^IBACUS(PSTRP,DT,TRIDA,PSTRF,PSOLAP,PSTRD,PSTRDZ)
+"RTN","PSORXL",95,0)
+ I '$G(PBILL) S DA=TRIDA G SUSL1
+"RTN","PSORXL",96,0)
+ S FLD(99)="99",FLD(99.1)="Awaiting CHAMPUS billing approval"
+"RTN","PSORXL",97,0)
+ N RSDT,ACT,PSUS,RXF,RFN,I,PSDA,NOW,IR,FDA
+"RTN","PSORXL",98,0)
+ S DA=TRIDA D H^PSOCPTRH
+"RTN","PSORXL",99,0)
+ Q
+"RTN","PSORXL",100,0)
+SUSL1 G SUS^PSORXL1
+"RTN","PSORXL",101,0)
+H1 S PPL1=1 S:'$G(PPL) PPL=$G(PSORX("PSOL",PPL1))
+"RTN","PSORXL",102,0)
+ D:'$D(^TMP($J,"PSOBILL")) NOOR^PSOHLD I $D(DIRUT) K DIRUT G PSORXL
+"RTN","PSORXL",103,0)
+ I $D(^TMP($J,"PSOBILL")) S FLD(99)="99",FLD(99.1)="Awaiting CHAMPUS billing approval" G H
+"RTN","PSORXL",104,0)
+ G:$G(PPL)']"" D1 D FLD^PSOHLD I $D(DUOUT)!($D(DIRUT)) K DIRUT,DUOUT,FLD,DIR G LBL
+"RTN","PSORXL",105,0)
+H K SPPL G:$D(DTOUT) D1 S SPPL="" F PI=1:1 Q:$P(PPL,",",PI)=""  D
+"RTN","PSORXL",106,0)
+ .S DA=$P(PPL,",",PI) I $P(^PSRX(DA,"STA"),"^")<10,$P(^("STA"),"^")'=4 D @$S($D(^TMP($J,"PSOBILL")):"H^PSOCPTRH",1:"H^PSOHLD") Q
+"RTN","PSORXL",107,0)
+ .I $P(^PSRX(DA,"STA"),"^")=4 S SPPL=SPPL_DA_"," Q
+"RTN","PSORXL",108,0)
+ I $G(SPPL)]"" D
+"RTN","PSORXL",109,0)
+ .W !!,$C(7),"Drug Interaction Rx(s) " F I=1:1 Q:$P(SPPL,",",I)=""  W $P(^PSRX($P(SPPL,",",I),0),"^")_", "
+"RTN","PSORXL",110,0)
+ .S PPL=SPPL,DG=1 D Q K DG,SPPL
+"RTN","PSORXL",111,0)
+D1 K RXLTOP I $G(PPL1),$O(PSORX("PSOL",$G(PPL1))) S PPL1=$O(PSORX("PSOL",PPL1)),PPL=PSORX("PSOL",PPL1) G @$S(LBL="H":"H",LBL="L":"P1",1:"QLBL")
+"RTN","PSORXL",112,0)
+RXS I $D(RXRS),'$G(PSOKLRXS) I $G(SLBL)="H"!($G(SLBL)="S")!($G(SLBL)="^")!($G(SLBL)="") D  G:$G(PPL)'="" Q
+"RTN","PSORXL",113,0)
+ .K PPL,PSORX("PSOL") S PSOSONE=1 D PPLADD^PSOSUPOE
+"RTN","PSORXL",114,0)
+ .Q:$G(PPL)=""  W !!,"You have selected the following Rx(s) to be pulled from suspense:",!
+"RTN","PSORXL",115,0)
+ .F RXSS=0:0 S RXSS=$O(RXRS(RXSS)) Q:'RXSS  W !," Rx # ",$P($G(^PSRX(+$G(RXSS),0)),"^"),?23,$P($G(^PSDRUG(+$P($G(^PSRX(+$G(RXSS),0)),"^",6),0)),"^")
+"RTN","PSORXL",116,0)
+ .K DIR W ! S DIR(0)="Y",DIR("B")="YES",DIR("A")="Do you still want to pull these Rx(s) from suspense" D ^DIR K DIR I Y'=1 W !!,"Rx(s) will remain in Suspense!",! D RESET^PSOSUPOE K RXRS,PPL
+"RTN","PSORXL",117,0)
+RXSQUIT K:'$G(PSOKLRXS) RXRS K ^TMP($J,"PSOBILL"),RXPR,RXRP,RXRH,RXSS,LBL,PPL1,PPL,DIR,%DT,%,SD,COUNT,EXDT,L,PDUZ,REF,REPRINT,RFDATE,RFL1,RFLL,RXN,WARN,ZY,FLD,PI,ZD,ACT,X,Y,DIRUT,DUOUT,DTOUT,DIROUT Q  ;*334 ADDED TAG NAME
+"RTN","PSORXL",118,0)
+P S PPL1=1 S:'$G(PPL) PPL=$G(PSORX("PSOL",1)) G:$G(PPL)']"" D1
+"RTN","PSORXL",119,0)
+ I $G(PSOLAP)']"" W ! K POP,ZTSK S %ZIS="M",%ZIS("A")="Select LABEL DEVICE: " D ^%ZIS K %ZIS("A") G:POP LBL S PSOLAP=ION
+"RTN","PSORXL",120,0)
+ S IOP=PSOLAP D ^%ZIS
+"RTN","PSORXL",121,0)
+ N PSOIOS S PSOIOS=IOS D DEVBAR^PSOBMST
+"RTN","PSORXL",122,0)
+P1 S PSOBARS=PSOBAR1]""&(PSOBAR0]"")&$P(PSOPAR,"^",10),PDUZ=DUZ D DQ1^PSOLBL,^%ZISC
+"RTN","PSORXL",123,0)
+ G:'$P(PSOPAR,"^",8)!(+$G(REPRINT))!($G(PSOFROM)'="NEW") D1 I $G(PSOPROP)']"" S PSOION=ION,%ZIS="M",%ZIS("A")="Select PROFILE DEVICE: " D ^%ZIS K %ZIS("A") G:POP D1 S PSOPROP=ION
+"RTN","PSORXL",124,0)
+ S IOP=PSOPROP D ^%ZIS D DQ^PSOPRF,^%ZISC G D1
+"RTN","PSORXL",125,0)
+ Q
+"RTN","PSORXL",126,0)
+RXSQ K RXRS G RXS
+"RTN","PSORXL",127,0)
+ Q
+"RTN","PSORXL",128,0)
+RSAVE N PMX
+"RTN","PSORXL",129,0)
+ S PMX="" F  S PMX=$O(RXRP(PMX)) Q:PMX=""  S PSORSAVE(PMX)=RXRP(PMX)
+"RTN","PSORXL",130,0)
+ S PMX="" F  S PMX=$O(RXPR(PMX)) Q:PMX=""  S PSOPSAVE(PMX)=RXPR(PMX)
+"RTN","PSORXL",131,0)
+ S PMX="" F  S PMX=$O(RXRH(PMX)) Q:PMX=""  S PSOHSAVE(PMX)=RXRH(PMX)
+"RTN","PSORXL",132,0)
+ Q
+"RTN","PSORXL",133,0)
+RREST N PMXZ
+"RTN","PSORXL",134,0)
+ S PMXZ="" F  S PMXZ=$O(PSORSAVE(PMXZ)) Q:PMXZ=""  S RXRP(PMXZ)=PSORSAVE(PMXZ)
+"RTN","PSORXL",135,0)
+ S PMXZ="" F  S PMXZ=$O(PSOPSAVE(PMXZ)) Q:PMXZ=""  S RXPR(PMXZ)=PSOPSAVE(PMXZ)
+"RTN","PSORXL",136,0)
+ S PSMX="" F  S PMXZ=$O(PSOHSAVE(PMXZ)) Q:PMXZ=""  S RXRH(PMXZ)=PSOHSAVE(PMXZ)
+"RTN","PSORXL",137,0)
+ Q
+"RTN","PSORXL",138,0)
+ ;
+"RTN","PSORXL",139,0)
+OPAI ;This section of code will display where an RX is routed.
+"RTN","PSORXL",140,0)
+ ;To determine where an RX will be routed, check:
+"RTN","PSORXL",141,0)
+ ;1) if the drug for the RX is associated with an ADD device in
+"RTN","PSORXL",142,0)
+ ;   file #50 and if the printer is in the DISPENSING SYSTEM 
+"RTN","PSORXL",143,0)
+ ;   PRINTER multiple sub-file #59.02008. If it is then the RX 
+"RTN","PSORXL",144,0)
+ ;   will display as being routed to that device.  
+"RTN","PSORXL",145,0)
+ ;2) Otherwise, the category of the ADD associated with the
+"RTN","PSORXL",146,0)
+ ;   printer in sub-file #59.20081 will be used to determine 
+"RTN","PSORXL",147,0)
+ ;   where the RX will be routed and the ADD displayed.
+"RTN","PSORXL",148,0)
+ ;
+"RTN","PSORXL",149,0)
+ N DIC,X,Y,PN,II,RX,DEV,DDEV,ADD,DAT,DAT1,PDAT,DRG,DRG0,OPAI,CSB,RTE,FLG
+"RTN","PSORXL",150,0)
+ N ZTIO,MTH,NPPL
+"RTN","PSORXL",151,0)
+ I ($G(OPAIO)="")!($G(PPL)="") Q
+"RTN","PSORXL",152,0)
+ S DIC=3.5,DIC(0)="",X=OPAIO D ^DIC K DIC,X Q:Y=-1  S ZTIO=+Y
+"RTN","PSORXL",153,0)
+ S FLG=1,DEV=0,PN=$O(^PS(59,PSOSITE,"P","B",ZTIO,"")) I PN="" Q 
+"RTN","PSORXL",154,0)
+ I '$P($G(PSOPAR),"^",30) Q
+"RTN","PSORXL",155,0)
+ I $$GET1^DIQ(59,PSOSITE_",",105,"I")'=2.4 Q
+"RTN","PSORXL",156,0)
+ ;
+"RTN","PSORXL",157,0)
+ ;ADD array built base on category.
+"RTN","PSORXL",158,0)
+ ; if category is not "S" then 
+"RTN","PSORXL",159,0)
+ ;               ADD(category)=ADD name^dns^port^inactive date
+"RTN","PSORXL",160,0)
+ ; if category is "S" then (Category "S" can be multiple)
+"RTN","PSORXL",161,0)
+ ;               ADD(category,ADD name)=ADD name^dns^port^inactive date
+"RTN","PSORXL",162,0)
+ ;Array OPAI will be used to display the data on the screen.
+"RTN","PSORXL",163,0)
+ ;               OPAI(ADD name)=ADD name^dns^port^inactive date
+"RTN","PSORXL",164,0)
+ ;               OPAI(ADD name,RX)=drug
+"RTN","PSORXL",165,0)
+ ;
+"RTN","PSORXL",166,0)
+ F  S DEV=$O(^PS(59,PSOSITE,"P",PN,"OPAI",DEV)) Q:'DEV  D
+"RTN","PSORXL",167,0)
+ .S DAT=$G(^PS(59,PSOSITE,"P",PN,"OPAI",DEV,0)) I $P(DAT,"^",2)="" Q
+"RTN","PSORXL",168,0)
+ .S DAT1=$$ADDCHK^PSOHLDS($P(DAT,"^"))
+"RTN","PSORXL",169,0)
+ .I DAT1 D
+"RTN","PSORXL",170,0)
+ ..I $P(DAT,"^",2)'="S" S ADD($P(DAT,"^",2))=$P(DAT1,"^",2,99) Q
+"RTN","PSORXL",171,0)
+ ..S ADD($P(DAT,"^",2),$P(DAT1,"^",2))=$P(DAT1,"^",2,99)
+"RTN","PSORXL",172,0)
+ S NPPL=""
+"RTN","PSORXL",173,0)
+ F II=1:1:$L(PPL,",") S RX=$P(PPL,",",II) D:RX'=""
+"RTN","PSORXL",174,0)
+ .I $G(RXRP(RX,"RP")) Q 
+"RTN","PSORXL",175,0)
+ .S PDAT=$G(^PSRX(RX,0)),DRG=$P(PDAT,"^",6),RTE=$$RTE()
+"RTN","PSORXL",176,0)
+ .S DRG0=$G(^PSDRUG(+DRG,0)),DDEV=$G(^PSDRUG(+DRG,"OPAI",PSOSITE,0))
+"RTN","PSORXL",177,0)
+ .I $S($P(PSOPAR,"^",30)=3:1,$P(PSOPAR,"^",30)=4:1,1:0),'$$GET1^DIQ(50,DRG,28,"I") Q
+"RTN","PSORXL",178,0)
+ .S NPPL=NPPL_","_RX,DAT1=$$ADDCHK^PSOHLDS($S(RTE="W":$P(DDEV,"^",2),RTE="M":$P(DDEV,"^",3),1:"")) I DAT1 D  Q
+"RTN","PSORXL",179,0)
+ ..D SETOP($P(DAT1,"^",2,99),$P(PDAT,"^"),$P(DRG0,"^"))
+"RTN","PSORXL",180,0)
+ .I $D(ADD("A")) D SETOP(ADD("A"),$P(PDAT,"^"),$P(DRG0,"^")) Q
+"RTN","PSORXL",181,0)
+ .S CSB=+$P(DRG0,"^",3),CSB=$S((CSB>0)&(CSB<6):"CS",1:"NCS")
+"RTN","PSORXL",182,0)
+ .I $D(ADD(CSB)) D SETOP(ADD(CSB),$P(PDAT,"^"),$P(DRG0,"^")) Q
+"RTN","PSORXL",183,0)
+ .I $D(ADD(RTE_CSB)) D SETOP(ADD(RTE_CSB),$P(PDAT,"^"),$P(DRG0,"^")) Q
+"RTN","PSORXL",184,0)
+ .S MTH=$S(RTE="W":"WIND",RTE="M":"MAIL",1:"")
+"RTN","PSORXL",185,0)
+ .I MTH'="",$D(ADD(MTH)) D SETOP(ADD(MTH),$P(PDAT,"^"),$P(DRG0,"^"))
+"RTN","PSORXL",186,0)
+ .S FLG=0
+"RTN","PSORXL",187,0)
+ I FLG Q  ;nothing found to print
+"RTN","PSORXL",188,0)
+ I ($D(OPAI))!($D(ADD("S"))) W !,"PRESCRIPTIONS SENT TO:" D
+"RTN","PSORXL",189,0)
+ .S DEV="" F  S DEV=$O(OPAI(DEV)) Q:DEV=""  W !?3,DEV D  W !
+"RTN","PSORXL",190,0)
+ ..S RX=0 F  S RX=$O(OPAI(DEV,RX)) Q:'RX  W !?5,RX,?20,$P(OPAI(DEV,RX),"^")
+"RTN","PSORXL",191,0)
+ I $D(ADD("S")) W !,"STORAGE DEVICES" S II="" D
+"RTN","PSORXL",192,0)
+ .F  S II=$O(ADD("S",II)) Q:II=""  W !?3,II I $D(OPAI) ;W ?20,"The above Prescriptions"
+"RTN","PSORXL",193,0)
+ .F II=1:1:$L(NPPL,",") S RX=$P(NPPL,",",II) D:RX'=""
+"RTN","PSORXL",194,0)
+ ..Q:$G(RXRP(RX,"RP"))  S PDAT=$G(^PSRX(RX,0)),DRG=$P($G(^PSDRUG(+$P(PDAT,"^",6),0)),"^")
+"RTN","PSORXL",195,0)
+ ..W !?5,$P(PDAT,"^"),?20,DRG
+"RTN","PSORXL",196,0)
+ .W !
+"RTN","PSORXL",197,0)
+ Q
+"RTN","PSORXL",198,0)
+ ;
+"RTN","PSORXL",199,0)
+SETOP(DINF,DRX,DDRG) ; Set OPAI array
+"RTN","PSORXL",200,0)
+ N DNAM
+"RTN","PSORXL",201,0)
+ S DNAM=$P(DINF,"^"),OPAI(DNAM)=DINF,OPAI(DNAM,DRX)=DDRG,FLG=0
+"RTN","PSORXL",202,0)
+ Q
+"RTN","PSORXL",203,0)
+ ;
+"RTN","PSORXL",204,0)
+RTE() ; get route for RX
+"RTN","PSORXL",205,0)
+ N FP,FPN,LRF,MW,XX
+"RTN","PSORXL",206,0)
+ S FP=$S($G(RXPR(RX)):"P",1:"F")
+"RTN","PSORXL",207,0)
+ I '$G(RXPR(RX)) S LRF=0 F XX=0:0 S XX=$O(^PSRX(RX,1,XX)) Q:'XX  I +^(XX,0) S LRF=XX
+"RTN","PSORXL",208,0)
+ I '$G(RXPR(RX)),$G(RXFL(RX))'="" S LRF=$S($G(RXFL(RX))=0:0,$D(^PSRX(RX,1,+$G(RXFL(RX)),0)):+$G(RXFL(RX)),1:$G(LRF))
+"RTN","PSORXL",209,0)
+ S FPN=$S($G(RXPR(RX)):RXPR(RX),1:$G(LRF))
+"RTN","PSORXL",210,0)
+ I FP="F"&('FPN) S MW=$P($G(^PSRX(RX,0)),"^",11)       ;original
+"RTN","PSORXL",211,0)
+ I FP="F"&(FPN) S MW=$P($G(^PSRX(RX,1,FPN,0)),"^",2)   ;refill
+"RTN","PSORXL",212,0)
+ I FP="P"&(FPN) S MW=$P($G(^PSRX(RX,"P",FPN,0)),"^",2) ;partial
+"RTN","PSORXL",213,0)
+ Q $G(MW)
+"RTN","PSORXVW1")
+0^9^B67852891^B67070082
+"RTN","PSORXVW1",1,0)
+PSORXVW1 ;BIR/SAB - view prescription con't ;12/4/07 12:28pm
+"RTN","PSORXVW1",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**35,47,46,71,99,117,156,193,210,148,258,260,240,281,359,354**;DEC 1997;Build 16
+"RTN","PSORXVW1",3,0)
+ ;External reference to ^DD(52 supported by DBIA 999
+"RTN","PSORXVW1",4,0)
+ ;External reference to ^VA(200 supported by DBIA 10060
+"RTN","PSORXVW1",5,0)
+ ;PSO*210 add call to WORDWRAP api
+"RTN","PSORXVW1",6,0)
+ ;
+"RTN","PSORXVW1",7,0)
+ I $P($G(^PSRX(RXN,"OR1")),"^",6) D
+"RTN","PSORXVW1",8,0)
+ .K DIC,X,Y S DIC="^VA(200,",DIC(0)="N,Z",X=$P(^PSRX(RXN,"OR1"),"^",6) D ^DIC
+"RTN","PSORXVW1",9,0)
+ .S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="           Filled By: "_$P(Y,"^",2) K DIC,X,Y
+"RTN","PSORXVW1",10,0)
+ I $P($G(^PSRX(RXN,"OR1")),"^",7) D
+"RTN","PSORXVW1",11,0)
+ .K DIC,X,Y S DIC="^VA(200,",DIC(0)="N,Z",X=$P(^PSRX(RXN,"OR1"),"^",7) D ^DIC
+"RTN","PSORXVW1",12,0)
+ .S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="          Checked By: "_$P(Y,"^",2) K DIC,X,Y
+"RTN","PSORXVW1",13,0)
+ K DIC,X,Y S DIC="^VA(200,",DIC(0)="N,Z",X=$P(RX0,"^",16) D ^DIC
+"RTN","PSORXVW1",14,0)
+ S $P(RN," ",35)=" ",IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="   Entry By: "_$P(Y,"^",2)_$E(RN,$L($P(Y,"^",2))+1,35)
+"RTN","PSORXVW1",15,0)
+ S Y=$P(RX2,"^") X ^DD("DD")
+"RTN","PSORXVW1",16,0)
+ S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_"Entry Date: "_$E($P(RX2,"^"),4,5)_"/"_$E($P(RX2,"^"),6,7)_"/"_$E($P(RX2,"^"),2,3)_" "_$P(Y,"@",2) K RN
+"RTN","PSORXVW1",17,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=" " ;,IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0),"=",79)="="
+"RTN","PSORXVW1",18,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Original Fill Released: " I $P(RX2,"^",13) S DTT=$P(RX2,"^",13) D DAT S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_DAT K DAT,DTT
+"RTN","PSORXVW1",19,0)
+ I $P(RX2,"^",15) S DTT=$P(RX2,"^",15) D DAT S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_"(Returned to Stock "_DAT_")" K DAT,DTT
+"RTN","PSORXVW1",20,0)
+ S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_"      Routing: "_$S($P(RX0,"^",11)="W":"Window",1:"Mail")
+"RTN","PSORXVW1",21,0)
+ I $G(^PSRX(DA,"H"))]"",$P(^("STA"),"^")=3 D HLD
+"RTN","PSORXVW1",22,0)
+ D RF,PAR,ACT,COPAY^PSORXVW2,LBL,ECME^PSOORAL1,^PSORXVW2:$O(^PSRX(DA,4,0))
+"RTN","PSORXVW1",23,0)
+ Q
+"RTN","PSORXVW1",24,0)
+ACT ;activity log
+"RTN","PSORXVW1",25,0)
+ N CNT
+"RTN","PSORXVW1",26,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=" ",IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Activity Log:"
+"RTN","PSORXVW1",27,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="#   Date        Reason         Rx Ref         Initiator Of Activity",IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0),"=",79)="="
+"RTN","PSORXVW1",28,0)
+ I '$O(^PSRX(DA,"A",0)) S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="There's NO Activity to report" Q
+"RTN","PSORXVW1",29,0)
+ S CNT=0
+"RTN","PSORXVW1",30,0)
+ F N=0:0 S N=$O(^PSRX(DA,"A",N)) Q:'N  S P1=^(N,0),DTT=P1\1 D DAT D
+"RTN","PSORXVW1",31,0)
+ .I $P(P1,"^",2)="M" Q
+"RTN","PSORXVW1",32,0)
+ .S IEN=IEN+1,CNT=CNT+1,^TMP("PSOAL",$J,IEN,0)=CNT_"   "_DAT_"    ",$P(RN," ",15)=" ",REA=$P(P1,"^",2)
+"RTN","PSORXVW1",33,0)
+ .S REA=$F("HUCELPRWSIVDABXGKNM",REA)-1
+"RTN","PSORXVW1",34,0)
+ .I REA D
+"RTN","PSORXVW1",35,0)
+ ..S STA=$P("HOLD^UNHOLD^DISCONTINUED^EDIT^RENEWED^PARTIAL^REINSTATE^REPRINT^SUSPENSE^RETURNED^INTERVENTION^DELETED^DRUG INTERACTION^PROCESSED^X-INTERFACE^PATIENT INSTR.^PKI/DEA^DISP COMPLETED^ECME^","^",REA)
+"RTN","PSORXVW1",36,0)
+ ..S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_STA_$E(RN,$L(STA)+1,15)
+"RTN","PSORXVW1",37,0)
+ .E  S $P(STA," ",15)=" ",^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_STA
+"RTN","PSORXVW1",38,0)
+ .K STA,RN S $P(RN," ",15)=" ",RF=+$P(P1,"^",4)
+"RTN","PSORXVW1",39,0)
+ .S RFT=$S(RF>0&(RF<6):"REFILL "_RF,RF=6:"PARTIAL",RF>6:"REFILL "_(RF-1),1:"ORIGINAL")
+"RTN","PSORXVW1",40,0)
+ .K DIC,X,Y S DIC="^VA(200,",DIC(0)="N,Z",X=$P(P1,"^",3) D ^DIC
+"RTN","PSORXVW1",41,0)
+ .S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_RFT_$E(RN,$L(RFT)+1,15)_$S(+Y:$P(Y,"^",2),1:$P(P1,"^",3))
+"RTN","PSORXVW1",42,0)
+ .;S:$P(P1,"^",5)]"" IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Comments: "_$P(P1,"^",5)
+"RTN","PSORXVW1",43,0)
+ .I $P(P1,"^",5)]"" N PSOACBRK,PSOACBRV D
+"RTN","PSORXVW1",44,0)
+ ..S PSOACBRV=$P(P1,"^",5)
+"RTN","PSORXVW1",45,0)
+ ..;PSO*7*240 Use fileman to format
+"RTN","PSORXVW1",46,0)
+ ..K ^UTILITY($J,"W") S X="Comments: "_PSOACBRV,(DIWR,DIWL)=1,DIWF="C80" D ^DIWP F I=1:1:^UTILITY($J,"W",1) S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=$G(^UTILITY($J,"W",1,I,0))
+"RTN","PSORXVW1",47,0)
+ .I $G(^PSRX(DA,"A",N,1))]"" S IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0)," ",5)=$P(^PSRX(DA,"A",N,1),"^") I $P(^PSRX(DA,"A",N,1),"^",2)]"" S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_":"_$P(^PSRX(DA,"A",N,1),"^",2)
+"RTN","PSORXVW1",48,0)
+ .I $O(^PSRX(DA,"A",N,2,0)) F I=0:0 S I=$O(^PSRX(RXN,"A",N,2,I)) Q:'I  S MIG=^PSRX(RXN,"A",N,2,I,0) D
+"RTN","PSORXVW1",49,0)
+ ..S:MIG["Mail Tracking Info.: " IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0)," ",9)=" "
+"RTN","PSORXVW1",50,0)
+ ..F SG=1:1:$L(MIG) S:$L(^TMP("PSOAL",$J,IEN,0)_" "_$P(MIG," ",SG))>80 IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0)," ",9)=" " S:$P(MIG," ",SG)'="" ^TMP("PSOAL",$J,IEN,0)=$G(^TMP("PSOAL",$J,IEN,0))_" "_$P(MIG," ",SG)
+"RTN","PSORXVW1",51,0)
+ K MIG,SG,I,^UTILITY($J,"W"),DIWF,DIWL,DIWR
+"RTN","PSORXVW1",52,0)
+ Q
+"RTN","PSORXVW1",53,0)
+LBL ;label log
+"RTN","PSORXVW1",54,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=" ",IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Label Log:"
+"RTN","PSORXVW1",55,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="#   Date        Rx Ref                    Printed By",IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0),"=",79)="="
+"RTN","PSORXVW1",56,0)
+ I '$O(^PSRX(DA,"L",0)) S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="There are NO Labels printed." Q
+"RTN","PSORXVW1",57,0)
+ F L1=0:0 S L1=$O(^PSRX(DA,"L",L1)) Q:'L1  S LBL=^PSRX(DA,"L",L1,0),DTT=$P(^(0),"^") D DAT D
+"RTN","PSORXVW1",58,0)
+ .S $P(RN," ",26)=" ",IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=L1_"   "_DAT_"    ",RFT=$S($P(LBL,"^",2):"REFILL "_$P(LBL,"^",2),1:"ORIGINAL"),RFT=RFT_$E(RN,$L(RFT)+1,26)
+"RTN","PSORXVW1",59,0)
+ .K DIC,X,Y S DIC="^VA(200,",DIC(0)="N,Z",X=$P(LBL,"^",4) D ^DIC
+"RTN","PSORXVW1",60,0)
+ .S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_RFT_$P(Y,"^",2),IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Comments: "_$P(LBL,"^",3)
+"RTN","PSORXVW1",61,0)
+ K DIC,X,Y Q
+"RTN","PSORXVW1",62,0)
+RF ;refill log
+"RTN","PSORXVW1",63,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=" ",IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Refill Log:"
+"RTN","PSORXVW1",64,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="#  Log Date   Refill Date  Qty               Routing  Lot #       Pharmacist",IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0),"=",79)="="
+"RTN","PSORXVW1",65,0)
+ S (RF,PL)=0 F RF=0:0 S RF=$O(^PSRX(DA,1,RF)) Q:'RF  S PL=PL+1
+"RTN","PSORXVW1",66,0)
+ I 'PL S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="There are NO Refills For this  Prescription" Q
+"RTN","PSORXVW1",67,0)
+ F N=0:0 S N=$O(^PSRX(DA,1,N)) Q:'N  S P1=^(N,0) D
+"RTN","PSORXVW1",68,0)
+ .S DTT=$P(P1,"^",8)\1 D DAT S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=N_"   "_DAT_"   "
+"RTN","PSORXVW1",69,0)
+ .S DTT=$P(P1,"^"),$P(RN," ",10)=" " D DAT
+"RTN","PSORXVW1",70,0)
+ .S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_DAT_"     "_$P(P1,"^",4)_$E("               ",$L($P(P1,"^",4))+1,15)_"  "_$S($P(P1,"^",2)="M":"Mail",1:"Window")_" "_$P(P1,"^",6)_$E(RN,$L($P(P1,"^",6))+1,12)
+"RTN","PSORXVW1",71,0)
+ .K DIC,X,Y S DIC="^VA(200,",DIC(0)="N,Z",X=+$P(P1,"^",5) D ^DIC
+"RTN","PSORXVW1",72,0)
+ .S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_$E($S(+Y:$P(Y,"^",2),1:""),1,16) K DIC,X,Y
+"RTN","PSORXVW1",73,0)
+ .S PSDIV=$S($D(^PS(59,+$P(P1,"^",9),0)):$P(^(0),"^",6),1:"Unknown"),IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Division: "_PSDIV_$E("        ",$L(PSDIV)+1,8)_"  "
+"RTN","PSORXVW1",74,0)
+ .S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_"Dispensed: "_$S($P(P1,"^",19):$E($P(P1,"^",19),4,5)_"/"_$E($P(P1,"^",19),6,7)_"/"_$E($P(P1,"^",19),2,3),1:"")_"  "
+"RTN","PSORXVW1",75,0)
+ .S RTS=$S($P(P1,"^",16):" Returned to Stock: "_$E($P(P1,"^",16),4,5)_"/"_$E($P(P1,"^",16),6,7)_"/"_$E($P(P1,"^",16),2,3),1:" Released: "_$S($$RXRLDT^PSOBPSUT(DA,N):$$FMTE^XLFDT($$RXRLDT^PSOBPSUT(DA,N)\1,2),1:""))
+"RTN","PSORXVW1",76,0)
+ .I $$STATUS^PSOBPSUT(DA,N)'="",$$RXRLDT^PSOBPSUT(DA,N) S RTS=RTS_"  NDC: "_$$GETNDC^PSONDCUT(DA,N)
+"RTN","PSORXVW1",77,0)
+ .S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_RTS
+"RTN","PSORXVW1",78,0)
+ .S:$P(P1,"^",3)]"" IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="   Remarks: "_$P(P1,"^",3)
+"RTN","PSORXVW1",79,0)
+ K RTS Q
+"RTN","PSORXVW1",80,0)
+PAR ;partial log
+"RTN","PSORXVW1",81,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=" ",IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Partial Fills:"
+"RTN","PSORXVW1",82,0)
+ S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="#   Log Date   Date     Qty              Routing    Lot #        Pharmacist",IEN=IEN+1,$P(^TMP("PSOAL",$J,IEN,0),"=",79)="="
+"RTN","PSORXVW1",83,0)
+ I '$O(^PSRX(DA,"P",0)) S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="There are NO Partials for this Prescription" Q
+"RTN","PSORXVW1",84,0)
+ S N=0 F  S N=$O(^PSRX(DA,"P",N)) Q:'N  S P1=^(N,0),DTT=$P(P1,"^",8)\1 D DAT D
+"RTN","PSORXVW1",85,0)
+ .S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)=N_"   "_DAT_"  ",QTY=$P(P1,"^",4)_$E("               ",$L($P(P1,"^",4))+1,15)
+"RTN","PSORXVW1",86,0)
+ .S DTT=$P(P1,"^") D DAT S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_DAT_"  "_QTY_"  "
+"RTN","PSORXVW1",87,0)
+ .S PSDIV=$S($D(^PS(59,+$P(P1,"^",9),0)):$P(^(0),"^",6),1:"UNKNOWN"),PSDIV=PSDIV_$E("        ",$L(PSDIV)+1,8)
+"RTN","PSORXVW1",88,0)
+ .S MW=$S($P(P1,"^",2)="M":"Mail",1:"Window"),MW=MW_$E("          ",$L(MW)+1,10)
+"RTN","PSORXVW1",89,0)
+ .K DIC,X,Y S DIC="^VA(200,",DIC(0)="N,Z",X=+$P(P1,"^",16) D ^DIC
+"RTN","PSORXVW1",90,0)
+ .S ^TMP("PSOAL",$J,IEN,0)=^TMP("PSOAL",$J,IEN,0)_MW_"  "_$P(P1,"^",6)_$E("            ",$L($P(P1,"^",6))+1,10)_$E($S(+Y:$P(Y,"^",2),1:""),1,16)
+"RTN","PSORXVW1",91,0)
+ .S RTS=$S($P(P1,"^",16):" RETURNED TO STOCK: "_$E($P(P1,"^",16),4,5)_"/"_$E($P(P1,"^",16),6,7)_"/"_$E($P(P1,"^",16),2,3),1:" RELEASED: "_$S($P(P1,"^",19):$E($P(P1,"^",19),4,5)_"/"_$E($P(P1,"^",19),6,7)_"/"_$E($P(P1,"^",19),2,3),1:""))
+"RTN","PSORXVW1",92,0)
+ .K DIC,X,Y S DIC="^VA(200,",DIC(0)="N,Z",X=$P(P1,"^",7) D ^DIC
+"RTN","PSORXVW1",93,0)
+ .S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Division: "_PSDIV_" "_RTS ;_"      Entry By: "_$P(Y,"^",2) K DIC,X,Y
+"RTN","PSORXVW1",94,0)
+ .S:$P(P1,"^",3)]"" IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="  REMARKS: "_$P(P1,"^",3) K RTS
+"RTN","PSORXVW1",95,0)
+ Q
+"RTN","PSORXVW1",96,0)
+HLD ;hold info
+"RTN","PSORXVW1",97,0)
+ S DTT=$P(^PSRX(DA,"H"),"^",3) D DAT S HLDR=$P(^DD(52,99,0),"^",3),HLDR=$S($P(^PSRX(DA,"H"),"^")'>8:$P(HLDR,";",$P(^PSRX(DA,"H"),"^")),1:$P(HLDR,";",9)),HLDR=$P(HLDR,":",2)
+"RTN","PSORXVW1",98,0)
+ S $P(RN," ",60)=" ",IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Hold Reason: "_HLDR_$E(RN,$L("Hold Reason: "_HLDR)+1,60)_"Hold Date: "_DAT S:$P(^PSRX(DA,"H"),"^",2)]"" IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="Hold Comments: "_$P(^PSRX(DA,"H"),"^",2)
+"RTN","PSORXVW1",99,0)
+ K RN,DAT,DTT,HLDR
+"RTN","PSORXVW1",100,0)
+ Q
+"RTN","PSORXVW1",101,0)
+DAT S DAT="",DTT=DTT\1 Q:DTT'?7N  S DAT=$E(DTT,4,5)_"/"_$E(DTT,6,7)_"/"_$E(DTT,2,3)
+"RTN","PSORXVW1",102,0)
+ Q
+"RTN","PSORXVW1",103,0)
+INST ;formats instruction from front door
+"RTN","PSORXVW1",104,0)
+ I $O(^PSRX(DA,"PI",0)) D
+"RTN","PSORXVW1",105,0)
+ .S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="        Instructions:"
+"RTN","PSORXVW1",106,0)
+ .S T=0 F  S T=$O(^PSRX(RXN,"PI",T)) Q:'T  D                  ;PSO*210
+"RTN","PSORXVW1",107,0)
+ ..S MIG=^PSRX(RXN,"PI",T,0)
+"RTN","PSORXVW1",108,0)
+ ..D WORDWRAP^PSOUTLA2(MIG,.IEN,$NA(^TMP("PSOAL",$J)),21)
+"RTN","PSORXVW1",109,0)
+ K T,TY,MIG,SG
+"RTN","PSORXVW1",110,0)
+ Q
+"RTN","PSORXVW1",111,0)
+PC ;displays provider comments
+"RTN","PSORXVW1",112,0)
+ I $O(^PSRX(DA,"PRC",0)) D
+"RTN","PSORXVW1",113,0)
+ .S IEN=IEN+1,^TMP("PSOAL",$J,IEN,0)="   Provider Comments:"
+"RTN","PSORXVW1",114,0)
+ .S T=0 F  S T=$O(^PSRX(RXN,"PRC",T)) Q:'T  D                 ;PSO*210
+"RTN","PSORXVW1",115,0)
+ ..S MIG=^PSRX(RXN,"PRC",T,0)
+"RTN","PSORXVW1",116,0)
+ ..D WORDWRAP^PSOUTLA2(MIG,.IEN,$NA(^TMP("PSOAL",$J)),21)
+"RTN","PSORXVW1",117,0)
+ K T,TY,MIG,SG
+"RTN","PSORXVW1",118,0)
+ Q
+"RTN","PSORXVW1",119,0)
+DOSE ;displays dosing instruction for both simple and complex Rxs.
+"RTN","PSORXVW1",120,0)
+ D DOSE^PSORXVW2
+"RTN","PSORXVW1",121,0)
+ Q
+"RTN","PSORXVW1",122,0)
+ ;
+"RTN","PSORXVW1",123,0)
+HLP ; Help Text for the VIEW PRESCRIPTION prompt
+"RTN","PSORXVW1",124,0)
+ W !," A prescription number or ECME number may be entered.  To look-up a"
+"RTN","PSORXVW1",125,0)
+ W !," prescription by the ECME number, please enter ""E."" followed by the ECME"
+"RTN","PSORXVW1",126,0)
+ W !," number with or without any leading zeros."
+"RTN","PSORXVW1",127,0)
+ W !!,"  Or just",!
+"RTN","PSORXVW1",128,0)
+ D LKP("?")
+"RTN","PSORXVW1",129,0)
+ Q 
+"RTN","PSORXVW1",130,0)
+LKP(INPUT) ; - Peforms Lookup on the PRESCRIPTION file
+"RTN","PSORXVW1",131,0)
+ N DIC,X,Y
+"RTN","PSORXVW1",132,0)
+ S DIC="^PSRX(",DIC(0)="QE",D="B",X=INPUT
+"RTN","PSORXVW1",133,0)
+ S DIC("S")="I $P($G(^(0)),""^"",2),$D(^(""STA"")),$P($G(^(""STA"")),""^"")'=13"
+"RTN","PSORXVW1",134,0)
+ D IX^DIC
+"RTN","PSORXVW1",135,0)
+ Q Y
+"RTN","PSOSITED")
+0^5^B11301085^B6167263
+"RTN","PSOSITED",1,0)
+PSOSITED ;BHAM ISC/SAB - ENTER/EDIT OUTPATIENT SITE PARAMETERS ; 09/18/92 9:11
+"RTN","PSOSITED",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**24,65,268,354**;DEC 1997;Build 16
+"RTN","PSOSITED",3,0)
+ ;External reference to ^PS(59.7 supported by DBIA 694
+"RTN","PSOSITED",4,0)
+ I $G(PSOPAR)']"" D ^PSOLSET
+"RTN","PSOSITED",5,0)
+1 W ! K DIC S DIC("A")="Select SITE NAME: ",(DIC,DIE)="^PS(59,",DIC(0)="QEALM",DLAYGO=59
+"RTN","PSOSITED",6,0)
+ K PSOSITEX D ^DIC G:"^"[X EX K DIC("A") G:Y<0 1 S DA=+Y D FLDQ G:$D(PSOSITEX) EX S DR="[PSO SITE]" W ! D ^DIE K DIE("NO^")
+"RTN","PSOSITED",7,0)
+ W !!,"Outpatient System Parameters",! S DA=1,DIE=59.7,DR="40;40.1;40.19;40.14;40.15" L +^PS(59.7,DA):$S(+$G(^DD("DILOCKTM"))>0:+^DD("DILOCKTM"),1:3) I '$T W !,"Another person is editing this entry.  Try Later!",! K DA,DIE,DR G 1
+"RTN","PSOSITED",8,0)
+ D ^DIE L -^PS(59.7,DA)
+"RTN","PSOSITED",9,0)
+ N CNT,TOT S (TOT,CNT)=0 F  S CNT=$O(^PS(59,CNT)) Q:'CNT  S TOT=TOT+1
+"RTN","PSOSITED",10,0)
+ D:TOT>1 ^PSODIV K CNT,TOT
+"RTN","PSOSITED",11,0)
+ S:$G(PSOSITE)=DA PSOPAR=$G(^PS(59,DA,1)),PSOPAR7=$G(^PS(59,DA,"IB")),PSOSYS=$G(^PS(59.7,1,40.1)) D EX G 1
+"RTN","PSOSITED",12,0)
+EX K DIC,DA,DIE,DIR,DIV,DR,I,PS1,PS11,PSIX,PSOCNT,PSOSITEX,X,Y,%,%X,%Y,D0,DI,DQ,DX,S Q
+"RTN","PSOSITED",13,0)
+ Q
+"RTN","PSOSITED",14,0)
+FLDQ S DIR("?",1)="Press <RETURN> if you want to see a list of all outpatient",DIR("?")="pharmacy answered site fields.  Enter 'N' if you don't want to see the list."
+"RTN","PSOSITED",15,0)
+ S DIR(0)="Y",DIR("A")="Would you like to see all site parameters for this division",DIR("B")="Y" D ^DIR K DIR S:$D(DTOUT) PSOSITEX="" I Y,'$D(PSOSITEX) W @IOF D EN^DIQ
+"RTN","PSOSITED",16,0)
+ K DIR Q
+"RTN","PSOSITED",17,0)
+ ;
+"RTN","PSOSITED",18,0)
+CATVAL(X) ;Input transform for CATEGORY field #1, OPAI sub-file #59.20081 
+"RTN","PSOSITED",19,0)
+ ;of the DISPENSING SYSTEM PRINTER sub-file #59.02008 of File #59.
+"RTN","PSOSITED",20,0)
+ ;This check ensures that a dispensing printer is not assigned more
+"RTN","PSOSITED",21,0)
+ ;than one ADD device with conflicting categories which guarantees an 
+"RTN","PSOSITED",22,0)
+ ;RX is routed to only one dispensing device. Valid category
+"RTN","PSOSITED",23,0)
+ ;combinations are shown at the COMB line tag. Category "A"ny is
+"RTN","PSOSITED",24,0)
+ ;selectable only when no other category is defined on file for that
+"RTN","PSOSITED",25,0)
+ ;device and vice versa. The category "S"torage can be combined with
+"RTN","PSOSITED",26,0)
+ ;any other category or can standalone.
+"RTN","PSOSITED",27,0)
+ ;
+"RTN","PSOSITED",28,0)
+ I $G(X)="" Q 0
+"RTN","PSOSITED",29,0)
+ N DEV,CAT,CATL,FLG,II,XX
+"RTN","PSOSITED",30,0)
+ S (DEV,FLG)=0,CATL=""
+"RTN","PSOSITED",31,0)
+ F  S DEV=$O(^PS(59,DA(2),"P",DA(1),"OPAI",DEV)) Q:'DEV  D  I FLG Q
+"RTN","PSOSITED",32,0)
+ .S CAT=$P($G(^PS(59,DA(2),"P",DA(1),"OPAI",DEV,0)),"^",2) I CAT="" Q
+"RTN","PSOSITED",33,0)
+ .I DEV=DA Q  ;current entry
+"RTN","PSOSITED",34,0)
+ .I CAT'="S",X=CAT D EN^DDIOL("  <-- Category already on file.","","?0") S FLG=1 Q
+"RTN","PSOSITED",35,0)
+ .S CATL=CATL_"^"_CAT
+"RTN","PSOSITED",36,0)
+ I FLG Q FLG
+"RTN","PSOSITED",37,0)
+ ;if no categories are on file or the category entered is storage then quit
+"RTN","PSOSITED",38,0)
+ I (CATL="")!(X="S") Q FLG
+"RTN","PSOSITED",39,0)
+ S CATL=CATL_"^"_X
+"RTN","PSOSITED",40,0)
+ F II=1:1 S XX=$T(COMB+II) Q:XX["END"  S XX=$P(XX,";;",2),FLG=$$COMCHK(XX,CATL) I 'FLG Q
+"RTN","PSOSITED",41,0)
+ I FLG D
+"RTN","PSOSITED",42,0)
+ .;D EN^DDIOL("  <-- Can't be combined with categories on file.","","?0")
+"RTN","PSOSITED",43,0)
+ .D EN^DDIOL("  <-- Conflicting categories.","","?0")
+"RTN","PSOSITED",44,0)
+ .D EN^DDIOL("*** Valid category combinations are:","","!?5")
+"RTN","PSOSITED",45,0)
+ .F II=1:1 S XX=$T(COMB+II) Q:XX["END"  S XX=$P(XX,";;",2) D
+"RTN","PSOSITED",46,0)
+ ..S XX=$E(XX,2,9999)
+"RTN","PSOSITED",47,0)
+ ..D EN^DDIOL(II_". "_$TR(XX,"^",", "),"","!?8")
+"RTN","PSOSITED",48,0)
+ .D EN^DDIOL("  ","","?0")
+"RTN","PSOSITED",49,0)
+ Q FLG
+"RTN","PSOSITED",50,0)
+ ;
+"RTN","PSOSITED",51,0)
+COMCHK(CMBO,STR) ; check allowable ADD combinations for a printer
+"RTN","PSOSITED",52,0)
+ ;INPUT CMBO - contains a set of categories that can be combined together
+"RTN","PSOSITED",53,0)
+ ;      STR  - checked against CMBO for validity.
+"RTN","PSOSITED",54,0)
+ ;OUTPUT     - returns a 0 if a combination is valid, else a 1.
+"RTN","PSOSITED",55,0)
+ ;
+"RTN","PSOSITED",56,0)
+ N I1,VAL,FLG
+"RTN","PSOSITED",57,0)
+ S FLG=0
+"RTN","PSOSITED",58,0)
+ ;find valid CMBO combination base on value in STR
+"RTN","PSOSITED",59,0)
+ F I1=1:1:$L(STR,"^") S VAL=$P(STR,"^",I1) D  I FLG Q
+"RTN","PSOSITED",60,0)
+ .I VAL'="",VAL'="S",CMBO'[("^"_VAL_"^") S FLG=1
+"RTN","PSOSITED",61,0)
+ Q FLG
+"RTN","PSOSITED",62,0)
+ ;
+"RTN","PSOSITED",63,0)
+COMB ; valid category combinations for ADDs that can be assigned to a dispensing printer.
+"RTN","PSOSITED",64,0)
+ ;;^MCS^MNCS^WCS^WNCS^S
+"RTN","PSOSITED",65,0)
+ ;;^MCS^MNCS^WIND^S
+"RTN","PSOSITED",66,0)
+ ;;^WCS^WNCS^MAIL^S
+"RTN","PSOSITED",67,0)
+ ;;^CS^MNCS^WNCS^S
+"RTN","PSOSITED",68,0)
+ ;;^NCS^WCS^MCS^S
+"RTN","PSOSITED",69,0)
+ ;;^MAIL^WIND^S
+"RTN","PSOSITED",70,0)
+ ;;^CS^NCS^S
+"RTN","PSOSITED",71,0)
+ ;;^A^S
+"RTN","PSOSITED",72,0)
+ ;;^S
+"RTN","PSOSITED",73,0)
+ ;;END
+"RTN","PSOSULBL")
+0^6^B73919713^B73560557
+"RTN","PSOSULBL",1,0)
+PSOSULBL ;BHAM ISC/RTR,SAB-Print Suspended labels ;4/8/93
+"RTN","PSOSULBL",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**139,173,174,148,200,260,264,287,289,290,354**;DEC 1997;Build 16
+"RTN","PSOSULBL",3,0)
+ ;External reference ^PS(55 supported by DBIA 2228
+"RTN","PSOSULBL",4,0)
+ ;Reference to SAVNDC^PSSNDCUT supported by IA 4707
+"RTN","PSOSULBL",5,0)
+ ;Reference ^PSDRUG( supported by DBIA 221
+"RTN","PSOSULBL",6,0)
+ K PDUZ,REPRINT G ^PSOSULB1
+"RTN","PSOSULBL",7,0)
+BEG ;
+"RTN","PSOSULBL",8,0)
+ K PSORUNIN,PSORETRY N BPSCNT
+"RTN","PSOSULBL",9,0)
+ S PSORUNIN="^XTMP(""PSOSUSP"")"     ; global lock fix by patch 290
+"RTN","PSOSULBL",10,0)
+ L +@PSORUNIN:10 I '$T D
+"RTN","PSOSULBL",11,0)
+ . F PSORETRY=1:1:120 L +@PSORUNIN:60 I $T Q  ;wait Max of 2 hrs before continue
+"RTN","PSOSULBL",12,0)
+ . Q
+"RTN","PSOSULBL",13,0)
+ K ^UTILITY($J,"PSOPRO"),^TMP("PSOSBAI",$J) S PSOSEQ=1 F DFN=0:0 S DFN=$O(^PS(52.5,"AC",DFN)) Q:'DFN  D  D:'PSRT PID^VADPT6 D CHKDEAD D:'DEAD&($G(PSOSFLAG)) PRT
+"RTN","PSOSULBL",14,0)
+ .S PSOSFLAG=0 F ZZ=0:0 S ZZ=$O(^PS(52.5,"AC",DFN,ZZ)) Q:'ZZ!$G(PSOSFLAG)  I ZZ'>PRTDT S PSOSFLAG=1
+"RTN","PSOSULBL",15,0)
+ D PPL
+"RTN","PSOSULBL",16,0)
+ D:$D(^UTILITY($J,"PSOPRO"))&($P(PSOPAR,"^",8)) PROF
+"RTN","PSOSULBL",17,0)
+ G EXIT
+"RTN","PSOSULBL",18,0)
+PRT F SDT=0:0 S SDT=$O(^PS(52.5,"AC",DFN,SDT)) D:SDT CHK Q:'SDT
+"RTN","PSOSULBL",19,0)
+ Q
+"RTN","PSOSULBL",20,0)
+EXIT ;
+"RTN","PSOSULBL",21,0)
+ I $D(^TMP("PSOSBAI",$J)) D CHKMAIL
+"RTN","PSOSULBL",22,0)
+ K ^TMP($J),^TMP("PSOSBAI",$J)
+"RTN","PSOSULBL",23,0)
+ I $D(PSORUNIN) L -@PSORUNIN
+"RTN","PSOSULBL",24,0)
+ D ^%ZISC
+"RTN","PSOSULBL",25,0)
+ K %,%ZIS,CNT,COM,DA,DEAD,DFN,DIRUT,DTTM,G,HDPPL,JJ,JJJ,JJJJ,PDUZ,IOP,ORD,PFIOQ,PSLION,PSRT,POP,PRF,PRTDT,PSLIO,PSNP,PSODBQ,PSOSEQ,PSOSFLAG,PSOSU,PSOTIME,PSOOUT,PSOPRFLG,PSOSEQ,PSOSUSPR,PSSPND,PST,PTL,PPLHLD,PSFNIEN,ZTSK
+"RTN","PSOSULBL",26,0)
+ K PSOBADDR,PSORUNIN,PSORETRY,PSRTONE,PSSRT,PSUSDEA,RF,RFCNT,RX,RXDFN,SDT,SFN,SREC,STOP,SUSPT,VADM,VAPA,X,X1,X2,XAK,XDATE,Y,Z,ZZ,WWW,PSDDDATE,SINRX,RXPR,RXPR1,GGGG,XXX,ZII,ZTDESC,ZTRTN,ZTSAVE,RRRR,RXRP,RXRP1,RXFL,SPR S:$D(ZTQUEUED) ZTREQ="@" Q
+"RTN","PSOSULBL",27,0)
+CHK I SDT'>XDATE D TMP Q
+"RTN","PSOSULBL",28,0)
+ Q
+"RTN","PSOSULBL",29,0)
+TMP F SFN=0:0 S SFN=$O(^PS(52.5,"AC",DFN,SDT,SFN)) Q:'SFN  D
+"RTN","PSOSULBL",30,0)
+ . I '$D(^PS(52.5,SFN,0))!'$D(^DPT(+DFN,0)) Q
+"RTN","PSOSULBL",31,0)
+ . N RXSITE,PRINTED,PSDFN,RXSTS,RXIEN,RXFILL,PARTIAL,RXEXPDT,RESP,DSHLD,ESTATUS
+"RTN","PSOSULBL",32,0)
+ . S RXIEN=+$$GET1^DIQ(52.5,SFN,.01,"I"),RXDFN=$$GET1^DIQ(52,RXIEN,2,"I")
+"RTN","PSOSULBL",33,0)
+ . S RXSTS=$$GET1^DIQ(52,RXIEN,100,"I"),RXSITE=+$$GET1^DIQ(52.5,SFN,.06,"I"),PRINTED=+$$GET1^DIQ(52.5,SFN,2,"I")
+"RTN","PSOSULBL",34,0)
+ . S PARTIAL=+$$GET1^DIQ(52.5,SFN,.05,"I"),RXEXPDT=$$GET1^DIQ(52,RXIEN,26,"I")
+"RTN","PSOSULBL",35,0)
+ . S RXFILL=$$GET1^DIQ(52.5,SFN,9,"I") I RXFILL="" S RXFILL=$$LSTRFL^PSOBPSU1(RXIEN)
+"RTN","PSOSULBL",36,0)
+ . I RXSITE=$G(PSOSITE),'PRINTED,RXDFN=DFN,RXSTS<9 D
+"RTN","PSOSULBL",37,0)
+ . . I PARTIAL,'$D(^PSRX(RXIEN,"P",PARTIAL)) Q
+"RTN","PSOSULBL",38,0)
+ . . I RXEXPDT<DT,RXSTS<11 D  Q
+"RTN","PSOSULBL",39,0)
+ . . . N RXREC S RXREC=RXIEN D EX^PSOSUTL
+"RTN","PSOSULBL",40,0)
+ . . . K DIE,DA S DIE=52,DA=RXIEN,DR="100///11" D ^DIE K DIE,DA
+"RTN","PSOSULBL",41,0)
+ . . . K DIK,DA S DA=SFN,DIK="^PS(52.5," D ^DIK K DIK,DA
+"RTN","PSOSULBL",42,0)
+ . . S PSOBADDR=0 D CHKBAI I PSOBADDR Q
+"RTN","PSOSULBL",43,0)
+ . . I PSRT="D" D
+"RTN","PSOSULBL",44,0)
+ . . . S PSSRT=$S($G(PSRTONE)="I":VA("PID"),1:$P(^DPT(DFN,0),"^")_$P(^(0),"^",9))
+"RTN","PSOSULBL",45,0)
+ . . . S PSUSDEA=$P($G(^PS(52.5,SFN,0)),"^",10)
+"RTN","PSOSULBL",46,0)
+ . . . S SRT=$S(PSUSDEA["A"!(PSUSDEA["C"):"A-"_PSSRT,PSUSDEA["S":"S-"_PSSRT,1:"Z-"_PSSRT)
+"RTN","PSOSULBL",47,0)
+ . . I PSRT'="D" D
+"RTN","PSOSULBL",48,0)
+ . . . S SRT=$S(PSRT:$P(^DPT(DFN,0),"^")_$P(^(0),"^",9),1:VA("PID"))
+"RTN","PSOSULBL",49,0)
+ . . ; - If not partial fill, sending Rx to ECME for 3rd Party billing
+"RTN","PSOSULBL",50,0)
+ . . I 'PARTIAL,$$RETRX^PSOBPSUT(RXIEN,RXFILL),SDT>DT Q
+"RTN","PSOSULBL",51,0)
+ . . S ESTATUS=$$STATUS^PSOBPSUT(RXIEN,RXFILL)
+"RTN","PSOSULBL",52,0)
+ . . I 'PARTIAL,ESTATUS'="",ESTATUS'["PAYABLE",'$$ECMESTAT^PSOBPSU2(RXIEN,RXFILL) Q  ;check for existing epharmacy reject codes
+"RTN","PSOSULBL",53,0)
+ . . I 'PARTIAL,$$STATUS^PSOBPSUT(RXIEN,RXFILL-1)'="" S DSHLD=$$DSH^PSOSULB1(SFN) Q:'DSHLD  ;epharmacy-3/4 days supply
+"RTN","PSOSULBL",54,0)
+ . . I 'PARTIAL,$$FIND^PSOREJUT(RXIEN,RXFILL,,"79,88") Q  ;check for DUR/RTS (again as it is done in ECMESTAT above
+"RTN","PSOSULBL",55,0)
+ . . I 'PARTIAL,($$RETRX^PSOBPSUT(RXIEN,RXFILL)!$$ECMEST2^PSOBPSU2(RXIEN,RXFILL)) D  Q:$$TRISTA^PSOREJU3(RXIEN,RXFILL,.RESP,"PL")
+"RTN","PSOSULBL",56,0)
+ . . . D ECMESND^PSOBPSU1(RXIEN,RXFILL,,"PL",,,,,,.RESP)
+"RTN","PSOSULBL",57,0)
+ . . . I $D(RESP),'RESP S BPSCNT=$G(BPSCNT)+1
+"RTN","PSOSULBL",58,0)
+ . . S ^TMP($J,SRT,SFN)=RXIEN
+"RTN","PSOSULBL",59,0)
+ Q
+"RTN","PSOSULBL",60,0)
+PPL ; Wait some time before printing so response from 3rd party payers can be received
+"RTN","PSOSULBL",61,0)
+ I $G(BPSCNT)>0 H 60+$S((BPSCNT*15)>7200:7200,1:(BPSCNT*15))
+"RTN","PSOSULBL",62,0)
+ K PPL,PPL1 S ORD="" F  S ORD=$O(^TMP($J,ORD)) Q:ORD=""  D PPL1
+"RTN","PSOSULBL",63,0)
+ Q
+"RTN","PSOSULBL",64,0)
+PPL1 ; Printing Labels
+"RTN","PSOSULBL",65,0)
+ N PARTIAL,REPRINT,REFILL,Z,QUIT,ESTAT
+"RTN","PSOSULBL",66,0)
+ S (PSOPRFLG,SUSPT)=1 S:$D(PSOPROP) PFIO=PSOPROP
+"RTN","PSOSULBL",67,0)
+ S:'$D(PDUZ) PDUZ=DUZ K RXPR,RXPR1,PPL
+"RTN","PSOSULBL",68,0)
+ F SFN=0:0 S SFN=$O(^TMP($J,ORD,SFN)) Q:'SFN  D
+"RTN","PSOSULBL",69,0)
+ .I '$D(^PS(52.5,SFN,0)) Q
+"RTN","PSOSULBL",70,0)
+ .S Z=$G(^PS(52.5,SFN,0)),SINRX=+$P(Z,"^"),REFILL=+$P(Z,"^",13)
+"RTN","PSOSULBL",71,0)
+ .S PARTIAL=$P(Z,"^",5),REPRINT=$P(Z,"^",12)
+"RTN","PSOSULBL",72,0)
+ .; - Screening out OPEN/UNRESOLVED Rejects (3rd Party Payer) 
+"RTN","PSOSULBL",73,0)
+ .S QUIT=0
+"RTN","PSOSULBL",74,0)
+ .I 'PARTIAL,'REPRINT D  I QUIT Q
+"RTN","PSOSULBL",75,0)
+ ..I $$FIND^PSOREJUT(SINRX,REFILL,,"79,88") S QUIT=1 Q
+"RTN","PSOSULBL",76,0)
+ ..S ESTAT=$$STATUS^PSOBPSUT(SINRX,REFILL)
+"RTN","PSOSULBL",77,0)
+ ..I ESTAT'="E PAYABLE",'$$ECMESTAT^PSOBPSU2(SINRX,REFILL) S QUIT=1 Q  ;host reject
+"RTN","PSOSULBL",78,0)
+ ..I ESTAT="E PAYABLE" D
+"RTN","PSOSULBL",79,0)
+ ...D SAVNDC^PSSNDCUT(+$$GET1^DIQ(52,SINRX,6,"I"),$$RXSITE^PSOBPSUT(SINRX,REFILL),$$GETNDC^PSONDCUT(SINRX,REFILL))
+"RTN","PSOSULBL",80,0)
+ .; 
+"RTN","PSOSULBL",81,0)
+ .I $L($G(PPL))<240 D
+"RTN","PSOSULBL",82,0)
+ ..S PPL=$P(^TMP($J,ORD,SFN),"^")_","_$G(PPL),RXPR(SINRX)=$P(^PS(52.5,SFN,0),"^",5)
+"RTN","PSOSULBL",83,0)
+ ..S:$P(^PS(52.5,SFN,0),"^",12) RXRP(SINRX)=1
+"RTN","PSOSULBL",84,0)
+ .E  D
+"RTN","PSOSULBL",85,0)
+ ..S PPL1=$P(^TMP($J,ORD,SFN),"^")_","_$G(PPL1),RXPR1(SINRX)=$P(^PS(52.5,SFN,0),"^",5)
+"RTN","PSOSULBL",86,0)
+ ..S:$P(^PS(52.5,SFN,0),"^",12) RXRP1(SINRX)=1
+"RTN","PSOSULBL",87,0)
+ .S DFN=$P(^PS(52.5,SFN,0),"^",3)
+"RTN","PSOSULBL",88,0)
+ .I $P(PSOPAR,"^",8),'$D(^PSRX($P(^PS(52.5,SFN,0),"^"),1)),'$G(RXPR(SINRX)),'$G(RXPR1(SINRX)) S PSOPRFLG=0
+"RTN","PSOSULBL",89,0)
+ S PSNP=$S($P(PSOPAR,"^",8):1,1:0)
+"RTN","PSOSULBL",90,0)
+ I $G(PPL) D
+"RTN","PSOSULBL",91,0)
+ .S PPLHLD=$G(PPL1),HDPPL=PPL K PPL1 S (PSODBQ,PSOSUSPR)=1
+"RTN","PSOSULBL",92,0)
+ .F GGGG=0:0 S GGGG=$O(RXPR(GGGG)) Q:'GGGG  K:'$G(RXPR(GGGG)) RXPR(GGGG)
+"RTN","PSOSULBL",93,0)
+ I $G(PPL) S ZTIO=$G(PSLION) D DQ^PSOLBL,SEQ D:'$G(PSOPRFLG) 
+"RTN","PSOSULBL",94,0)
+ .I $G(PSOPROP)'=$G(PSLION) S ^UTILITY($J,"PSOPRO",DFN)="" Q
+"RTN","PSOSULBL",95,0)
+ .D DQ^PSOPRFSS
+"RTN","PSOSULBL",96,0)
+ I $G(PPLHLD) K RXPR S (PPL,HDPPL)=PPLHLD,(PSODBQ,PSOSUSPR)=1,PSNP=0 S:'$D(PDUZ) PDUZ=DUZ F XXX=0:0 S XXX=$O(RXPR1(XXX)) Q:'XXX  S:$G(RXPR1(XXX)) RXPR(XXX)=RXPR1(XXX)
+"RTN","PSOSULBL",97,0)
+ I $G(PPLHLD) F RRRR=0:0 S RRRR=$O(RXRP1(RRRR)) Q:'RRRR  S:$D(RXRP1(RRRR)) RXRP(RRRR)=1
+"RTN","PSOSULBL",98,0)
+ I $G(PPLHLD) S ZTIO=$G(PSLION) D DQ^PSOLBL,SEQ D:'$G(PSOPRFLG)
+"RTN","PSOSULBL",99,0)
+ .I $G(PSOPROP)'=$G(PSLION) S ^UTILITY($J,"PSOPRO",DFN)="" Q
+"RTN","PSOSULBL",100,0)
+ .D DQ^PSOPRFSS
+"RTN","PSOSULBL",101,0)
+ K PPL,PPL1,PPLHLD,RXPR,RXPR1,RXFL Q
+"RTN","PSOSULBL",102,0)
+SEQ ;
+"RTN","PSOSULBL",103,0)
+ S SQCOUNT=0 F JJJ=1:1:$L(HDPPL) S:$E(HDPPL,JJJ)="," SQCOUNT=SQCOUNT+1
+"RTN","PSOSULBL",104,0)
+ F JJJJ=1:1:SQCOUNT S PSFNIEN=$P(HDPPL,",",JJJJ) D:PSFNIEN
+"RTN","PSOSULBL",105,0)
+ .S PSFNIEN=$O(^PS(52.5,"B",PSFNIEN,0)) I PSFNIEN D
+"RTN","PSOSULBL",106,0)
+ ..S $P(^PS(52.5,PSFNIEN,0),"^",11)=PSOSEQ,PSOSEQ=PSOSEQ+1 S:$P(^PS(52.5,PSFNIEN,0),"^",8)&($P(^(0),"^",9))&($P(^(0),"^",6)) ^PS(52.5,"AS",$P(^PS(52.5,PSFNIEN,0),"^",8),$P(^(0),"^",9),$P(^(0),"^",6),$P(^(0),"^",11),PSFNIEN)=""
+"RTN","PSOSULBL",107,0)
+ Q
+"RTN","PSOSULBL",108,0)
+CHKDEAD D DEM^VADPT I VADM(1)="" S DEAD=0 Q
+"RTN","PSOSULBL",109,0)
+ I VADM(6)="" S DEAD=0 Q
+"RTN","PSOSULBL",110,0)
+ S PSDDDATE=$P(VADM(6),"^",2) F WWW=0:0 S WWW=$O(^PS(55,DFN,"P",WWW)) Q:'WWW  I $D(^PS(55,DFN,"P",WWW,0)),$P($G(^(0)),"^") S (DA,RXREC)=$P(^(0),"^") S SFN=$O(^PS(52.5,"B",RXREC,0)) I SFN,$D(^PS(52.5,SFN,0)) S RX=$P(^(0),"^") D DEAD
+"RTN","PSOSULBL",111,0)
+ Q
+"RTN","PSOSULBL",112,0)
+DEAD S $P(^PSRX(RX,"STA"),"^")=12,COM="Died ("_$G(PSDDDATE)_")",DA(1)=RX
+"RTN","PSOSULBL",113,0)
+ S DEAD=1 D ARECD^PSOSUTL S DIK="^PS(52.5,",DA=SFN D ^DIK K DIK
+"RTN","PSOSULBL",114,0)
+ Q
+"RTN","PSOSULBL",115,0)
+PROF ;
+"RTN","PSOSULBL",116,0)
+ S ZTRTN="PRPROF^PSOSULBL",ZTDESC="PRINT PROFILES FROM SUSPENSE",ZTDTH=$H,ZTIO=PSOPROP
+"RTN","PSOSULBL",117,0)
+ S ZTSAVE("^UTILITY($J,""PSOPRO"",")="",ZTSAVE("PSOPAR")="",ZTSAVE("PSODTCUT")="",ZTSAVE("PSOSITE")="",ZTSAVE("PSOPRPAS")="" D ^%ZTLOAD Q
+"RTN","PSOSULBL",118,0)
+PRPROF ;
+"RTN","PSOSULBL",119,0)
+ F LLL=0:0 S LLL=$O(^UTILITY($J,"PSOPRO",LLL)) Q:'LLL  I $D(^DPT(LLL,0)) S DFN=LLL D DQ^PSOPRFSS
+"RTN","PSOSULBL",120,0)
+ K PSOPAR,PSODTCUT,PSOSITE,PSOPRPAS,LLL,DFN,^UTILITY($J,"PSOPRO") D ^%ZISC S:$D(ZTQUEUED) ZTREQ="@"
+"RTN","PSOSULBL",121,0)
+ Q
+"RTN","PSOSULBL",122,0)
+ ;
+"RTN","PSOSULBL",123,0)
+CHKBAI ; IF BAD ADDRESS INDICATOR, NO ACTIVE TEMPORARY ADDRESS AND ROUTING OF MAIL, DO NOT SEND TO OPAI AND/OR DO NOT PRINT LABEL
+"RTN","PSOSULBL",124,0)
+ N PSOBADR,ACTSEQ,XX,PSOFIRST,ACTTYPE
+"RTN","PSOSULBL",125,0)
+ I '$G(RXFILL),$P(^PSRX(RXIEN,0),"^",11)="W" Q
+"RTN","PSOSULBL",126,0)
+ I $P($G(^PSRX(RXIEN,1,RXFILL,0)),"^",2)="W" Q
+"RTN","PSOSULBL",127,0)
+ S ACTTYPE="BAD ADDRESS INDICATOR"
+"RTN","PSOSULBL",128,0)
+ S PSOBADR=$$CHKRX^PSOBAI(RXIEN)
+"RTN","PSOSULBL",129,0)
+ ; GOOD PERMANENT OR TEMPORARY ADDRESS - CHECK FOR DO NOT MAIL
+"RTN","PSOSULBL",130,0)
+ I PSOBADR,'$P(PSOBADR,"^",2) D SETTMP(ACTTYPE) Q
+"RTN","PSOSULBL",131,0)
+ S NOMAIL=0 D NOMAIL I NOMAIL Q
+"RTN","PSOSULBL",132,0)
+ D FOREIGN
+"RTN","PSOSULBL",133,0)
+ Q
+"RTN","PSOSULBL",134,0)
+ ;
+"RTN","PSOSULBL",135,0)
+SETTMP(ACTTYPE) ;
+"RTN","PSOSULBL",136,0)
+ N ACTSEQ,XX,PSOFIRST,ZZ
+"RTN","PSOSULBL",137,0)
+ S PSOFIRST=1
+"RTN","PSOSULBL",138,0)
+ S PSOBADDR=1
+"RTN","PSOSULBL",139,0)
+ S ACTSEQ=0 F  S ACTSEQ=$O(^PSRX(RXIEN,"A",ACTSEQ)) Q:ACTSEQ=""  D
+"RTN","PSOSULBL",140,0)
+ .S XX=$G(^PSRX(RXIEN,"A",ACTSEQ,0)) I $P(XX,"^",2)="S" S ZZ=$P(XX,"^",4),ZZ=$S(ZZ<6:ZZ,1:ZZ-1) I ZZ=RXFILL,$P(XX,"^",5)["due to "_ACTTYPE S PSOFIRST=0 Q
+"RTN","PSOSULBL",141,0)
+ I PSOFIRST D
+"RTN","PSOSULBL",142,0)
+ .S ^TMP("PSOSBAI",$J,RXIEN,+RXFILL)=ACTTYPE
+"RTN","PSOSULBL",143,0)
+ .D ACT(ACTTYPE)
+"RTN","PSOSULBL",144,0)
+ Q
+"RTN","PSOSULBL",145,0)
+ ;
+"RTN","PSOSULBL",146,0)
+NOMAIL ; SEE IF FILE 55 STATUS IS DO NOT MAIL
+"RTN","PSOSULBL",147,0)
+ N ACTTYPE,DFN,MAILST,MAILEXP
+"RTN","PSOSULBL",148,0)
+ S ACTTYPE="DO NOT MAIL"
+"RTN","PSOSULBL",149,0)
+ S DFN=+$P($G(^PSRX(RXIEN,0)),"^",2),MAILST=$P($G(^PS(55,DFN,0)),"^",3) I MAILST'=2 Q
+"RTN","PSOSULBL",150,0)
+ S MAILEXP=$P(^PS(55,DFN,0),"^",5)
+"RTN","PSOSULBL",151,0)
+ I MAILEXP=""!(MAILEXP>DT) D SETTMP(ACTTYPE)
+"RTN","PSOSULBL",152,0)
+ Q
+"RTN","PSOSULBL",153,0)
+ ;
+"RTN","PSOSULBL",154,0)
+FOREIGN ;
+"RTN","PSOSULBL",155,0)
+ N DFN,PSOFORGN
+"RTN","PSOSULBL",156,0)
+ S DFN=+$P($G(^PSRX(RXIEN,0)),"^",2)
+"RTN","PSOSULBL",157,0)
+ D ADD^VADPT
+"RTN","PSOSULBL",158,0)
+ S PSOFORGN=$P($G(VAPA(25)),"^",2) I PSOFORGN'="",PSOFORGN'["UNITED STATES" S PSOFORGN=1
+"RTN","PSOSULBL",159,0)
+ I PSOFORGN D SETTMP("FOREIGN ADDRESS")
+"RTN","PSOSULBL",160,0)
+ Q
+"RTN","PSOSULBL",161,0)
+ ;
+"RTN","PSOSULBL",162,0)
+CHKMAIL ; SEE IF MAILMAN MESSAGE SHOULD BE SENT FOR BAI/MAIL ROUTING
+"RTN","PSOSULBL",163,0)
+ N RXIEN,RXFILL,ACTSEQ,XX,DFN,SSN,NAME,ACTTYPE,ZZ
+"RTN","PSOSULBL",164,0)
+ K ^TMP("PSOSM",$J)
+"RTN","PSOSULBL",165,0)
+ S RXIEN=0 F  S RXIEN=$O(^TMP("PSOSBAI",$J,RXIEN)) Q:'RXIEN  D
+"RTN","PSOSULBL",166,0)
+ .S RXFILL="" F  S RXFILL=$O(^TMP("PSOSBAI",$J,RXIEN,RXFILL)) Q:RXFILL=""  D
+"RTN","PSOSULBL",167,0)
+ ..S ACTTYPE=^TMP("PSOSBAI",$J,RXIEN,RXFILL)
+"RTN","PSOSULBL",168,0)
+ ..S ACTSEQ=0 F  S ACTSEQ=$O(^PSRX(RXIEN,"A",ACTSEQ)) Q:ACTSEQ=""  D
+"RTN","PSOSULBL",169,0)
+ ...S XX=$G(^PSRX(RXIEN,"A",ACTSEQ,0)) I $P(XX,"^",2)="S" S ZZ=$P(XX,"^",4),ZZ=$S(ZZ<6:ZZ,1:ZZ-1) I ZZ=RXFILL,$P(XX,"^",5)["due to "_ACTTYPE Q
+"RTN","PSOSULBL",170,0)
+ ...S DFN=$P(^PSRX(RXIEN,0),"^",2),NAME=$P(^DPT(DFN,0),"^"),SSN=$P(^(0),"^",9) I SSN="" S SSN=0
+"RTN","PSOSULBL",171,0)
+ ...S ^TMP("PSOSM",$J,NAME,SSN,RXIEN,RXFILL)=ACTTYPE
+"RTN","PSOSULBL",172,0)
+ I $D(^TMP("PSOSM",$J)) D BAIMAIL^PSOSULB1
+"RTN","PSOSULBL",173,0)
+ K ^TMP("PSOSM",$J)
+"RTN","PSOSULBL",174,0)
+ Q
+"RTN","PSOSULBL",175,0)
+ ;
+"RTN","PSOSULBL",176,0)
+ACT(ACTTYPE) ;adds activity info for rx not printed from suspense/not sent to OPAI
+"RTN","PSOSULBL",177,0)
+ N NOW,IR,FDA
+"RTN","PSOSULBL",178,0)
+ D NOW^%DTC S NOW=%
+"RTN","PSOSULBL",179,0)
+ S IR=0 F FDA=0:0 S FDA=$O(^PSRX(RXIEN,"A",FDA)) Q:'FDA  S IR=FDA
+"RTN","PSOSULBL",180,0)
+ S IR=IR+1,^PSRX(RXIEN,"A",0)="^52.3DA^"_IR_"^"_IR
+"RTN","PSOSULBL",181,0)
+ S ^PSRX(RXIEN,"A",IR,0)=NOW_"^"_"S"_"^"_DUZ_"^"_$S(+RXFILL>5:RXFILL+1,1:+RXFILL)_"^"_"RX not printed from suspense due to "_ACTTYPE
+"RTN","PSOSULBL",182,0)
+ K PSUS,RXF,I,FDA,DIC,DIE,DR,Y,X,%,%I,%H,RSDT
+"RTN","PSOSULBL",183,0)
+ Q
+"RTN","PSOSULBL",184,0)
+ ;
+"RTN","PSOSUSRP")
+0^10^B14336043^B13909988
+"RTN","PSOSUSRP",1,0)
+PSOSUSRP ;BHAM ISC/RTR-Reprint label driver routine ; 7/20/96
+"RTN","PSOSUSRP",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**354**;DEC 1997;Build 16
+"RTN","PSOSUSRP",3,0)
+ ;
+"RTN","PSOSUSRP",4,0)
+BEG ;
+"RTN","PSOSUSRP",5,0)
+ G:'$D(^UTILITY($J,"PSOREPT")) END
+"RTN","PSOSUSRP",6,0)
+ S (PATIFLAG,RECOUNT)=0
+"RTN","PSOSUSRP",7,0)
+ N PSOREDEV S PSOREDEV=$G(ZTIO)
+"RTN","PSOSUSRP",8,0)
+ F AAAA=0:0 S AAAA=$O(^UTILITY($J,"PSOREPT",AAAA)) Q:'AAAA  F BBBB=0:0 S BBBB=$O(^UTILITY($J,"PSOREPT",AAAA,BBBB)) Q:'BBBB  F CCCC=0:0 S CCCC=$O(^UTILITY($J,"PSOREPT",AAAA,BBBB,CCCC)) Q:'CCCC  D
+"RTN","PSOSUSRP",9,0)
+ .F DDDD=0:0 S DDDD=$O(^PS(52.5,"AS",AAAA,BBBB,CCCC,DDDD)) Q:'DDDD  F EEEE=0:0 S EEEE=$O(^PS(52.5,"AS",AAAA,BBBB,CCCC,DDDD,EEEE)) Q:'EEEE  D:$D(^PS(52.5,EEEE,0))&($P($G(^(0)),"^"))&($P($G(^(0)),"^",3))
+"RTN","PSOSUSRP",10,0)
+ ..S DFN=$P(^PS(52.5,EEEE,0),"^",3) D DEM^VADPT S HLDDEAD=VADM(6) K VADM,VA("PID"),VA("BID"),DFN I HLDDEAD'="" S DA=EEEE,DIK="^PS(52.5," D ^DIK Q
+"RTN","PSOSUSRP",11,0)
+ ..I 'PATIFLAG S OPATIENT=$P(^PS(52.5,EEEE,0),"^",3),PATIFLAG=1
+"RTN","PSOSUSRP",12,0)
+ ..S NPATIENT=$P(^PS(52.5,EEEE,0),"^",3) D:OPATIENT'=NPATIENT!(RECOUNT>15)  S REHLDPPL=$S('$G(REHLDPPL):$P(^PS(52.5,EEEE,0),"^")_",",1:REHLDPPL_$P(^PS(52.5,EEEE,0),"^")_","),RECOUNT=RECOUNT+1,OPATIENT=$P(^PS(52.5,EEEE,0),"^",3)
+"RTN","PSOSUSRP",13,0)
+ ...S PPL=REHLDPPL,RECOUNT=0,PSOSUREP=1,PDUZ=DUZ,ZTIO=PSOREDEV K REHLDPPL D  D:$G(PPL) DQ^PSOLBL K PPL,RXRP,RXPR,RXFL
+"RTN","PSOSUSRP",14,0)
+ ....S REPCOUNT=0 F FFF=1:1:$L(PPL) S FFFF=$E(PPL,FFF) I FFFF="," S REPCOUNT=REPCOUNT+1
+"RTN","PSOSUSRP",15,0)
+ ....F GGGG=1:1:REPCOUNT S HHHH=$P(PPL,",",GGGG) S MMMM=$O(^PS(52.5,"B",HHHH,0)),NNNN=+$P($G(^PS(52.5,+MMMM,0)),"^",5) S:NNNN RXPR(HHHH)=$P($G(^(0)),"^",5) S RXFL(HHHH)=$P($G(^PS(52.5,+MMMM,0)),"^",13)
+"RTN","PSOSUSRP",16,0)
+ I $G(REHLDPPL) S PPL=REHLDPPL,PSOSUREP=1,PDUZ=DUZ,ZTIO=PSOREDEV D  D:$G(PPL) DQ^PSOLBL K RXFL
+"RTN","PSOSUSRP",17,0)
+ .S REPCOUNT=0 F FFF=1:1:$L(PPL) S FFFF=$E(PPL,FFF) I FFFF="," S REPCOUNT=REPCOUNT+1
+"RTN","PSOSUSRP",18,0)
+ .F GGGG=1:1:REPCOUNT S HHHH=$P(PPL,",",GGGG) S MMMM=$O(^PS(52.5,"B",HHHH,0)),NNNN=+$P($G(^PS(52.5,+MMMM,0)),"^",5) S:NNNN RXPR(HHHH)=$P($G(^(0)),"^",5) S RXFL(HHHH)=$P($G(^PS(52.5,+MMMM,0)),"^",13)
+"RTN","PSOSUSRP",19,0)
+END K ^UTILITY($J,"PSOREPT"),AAAA,BBBB,CCCC,DDDD,EEEE,FFF,FFFF,GGGG,HHHH,MMMM,NNNN,NPATIENT,OPATIENT,PATIFLAG,PPL,HLDDEAD,RECOUNT,REHLDPPL,REPCOUNT,RXPR,RXRP,RXFL D ^%ZISC S:$D(ZTQUEUED) ZTREQ="@" Q
+"RTN","PSOSUSRP",20,0)
+AREC ;
+"RTN","PSOSUSRP",21,0)
+ N RFLNUM
+"RTN","PSOSUSRP",22,0)
+ S PSOREEPF=0 S PSOREEP=$O(^PS(52.5,"B",RX,0)) I $G(PSOREEP),$P($G(^PS(52.5,PSOREEP,0)),"^",12) S PSOREEPF=1
+"RTN","PSOSUSRP",23,0)
+ I $G(PSOREEP) S RFLNUM=$P($G(^PS(52.5,PSOREEP,0)),"^",13) I RFLNUM>5 S RFLNUM=RFLNUM+1
+"RTN","PSOSUSRP",24,0)
+ D NOW^%DTC S DTTM=%,COM="Suspense "_$S($G(PSOREEPF):"(Reprint) ",1:"")_"Label Reprinted"_$S($G(RXP):" (Partial)",1:"")
+"RTN","PSOSUSRP",25,0)
+ S CNT=0 F JJ=0:0 S JJ=$O(^PSRX(RX,"A",JJ)) Q:'JJ  S CNT=JJ
+"RTN","PSOSUSRP",26,0)
+ S RFCNT=0 F RF=0:0 S RF=$O(^PSRX(RX,1,RF)) Q:'RF  S RFCNT=RF S:RF>5 RFCNT=RF+1
+"RTN","PSOSUSRP",27,0)
+ S CNT=CNT+1,^PSRX(RX,"A",0)="^52.3DA^"_CNT_"^"_CNT S ^PSRX(RX,"A",CNT,0)=DTTM_"^S^"_PDUZ_"^"_$S($G(RXP):6,$G(RFLNUM)'="":$G(RFLNUM),1:RFCNT)_"^"_COM
+"RTN","PSOSUSRP",28,0)
+ K PSOREEP,PSOREEPF Q
+"RTN","PSOUTLA")
+0^4^B43668686^B41786781
+"RTN","PSOUTLA",1,0)
+PSOUTLA ;BHAM ISC/AMC - pharmacy utility program ; 07/24/96  1:13 pm
+"RTN","PSOUTLA",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**1,15,23,56,126,222,354**;DEC 1997;Build 16
+"RTN","PSOUTLA",3,0)
+ ;External reference ^PS(54 supported by DBIA 2227
+"RTN","PSOUTLA",4,0)
+ ;External reference ^PSDRUG( supported by DBIA 221
+"RTN","PSOUTLA",5,0)
+CHK I '$D(PY(PSPR)) W !?10,$C(7),"  # ",PSPR," is not a valid choice." S PSPOP=1 Q
+"RTN","PSOUTLA",6,0)
+ I $D(PSDUP(PY(PSPR))) W !?10,$C(7),"RX# ",$P(^PSRX(+$P(PY(PSPR),"^"),0),"^")," is a duplicate choice." S PSPOP=1 Q
+"RTN","PSOUTLA",7,0)
+ S PSDUP(PY(PSPR))="" Q:'PSODIV  Q:'$P(^PSRX(+PY(PSPR),2),"^",9)  Q:+$P(^(2),"^",9)=PSOSITE
+"RTN","PSOUTLA",8,0)
+ S PSPRXN=+$P(PY(PSPR),"^")
+"RTN","PSOUTLA",9,0)
+CHK1 I '$P(PSOSYS,"^",2) W !!,$C(7),"RX# "_$P(^PSRX(PSPRXN,0),"^")_" is not a valid choice. (Different Division)",! S PSPOP=1 Q
+"RTN","PSOUTLA",10,0)
+ I $P(PSOSYS,"^",3) K DIR,DUOUT,DTOUT D
+"RTN","PSOUTLA",11,0)
+ .W $C(7) S DIR("A",1)="",DIR("A",2)="RX# "_$P(^PSRX(PSPRXN,0),"^")_" is from another division.",DIR("A")="Continue: (Y/N)",DIR(0)="Y",DIR("?",1)="'Y' FOR YES",DIR("?")="'N' FOR NO"
+"RTN","PSOUTLA",12,0)
+ .S DIR("B")="N" D ^DIR I 'Y!($D(DUOUT))!($D(DTOUT)) S PSPOP=1 W !
+"RTN","PSOUTLA",13,0)
+ K DIR,DUOUT,DTOUT Q
+"RTN","PSOUTLA",14,0)
+ ;
+"RTN","PSOUTLA",15,0)
+ZIPIN ; input transform for ZIP field in file #59 internal format (no '-'s)
+"RTN","PSOUTLA",16,0)
+ ;  Input:  X as user entered value
+"RTN","PSOUTLA",17,0)
+ ; Output:  X as internal value of user input OR
+"RTN","PSOUTLA",18,0)
+ ;            undefined if input from user was invalid
+"RTN","PSOUTLA",19,0)
+ N % I X'?.N F %=1:1:$L(X) I $E(X,%)?1P S X=$E(X,0,%-1)_$E(X,%+1,20),%=%-1
+"RTN","PSOUTLA",20,0)
+ I X'?5N,(X'?9N) K X
+"RTN","PSOUTLA",21,0)
+ Q
+"RTN","PSOUTLA",22,0)
+ ;
+"RTN","PSOUTLA",23,0)
+ZIPOUT ; output transform for ZIP - prints either ZIP or ZIP+4 (in 12345-1234)
+"RTN","PSOUTLA",24,0)
+ ; format.
+"RTN","PSOUTLA",25,0)
+ ; Input:  Y internal value
+"RTN","PSOUTLA",26,0)
+ ; Output:  Y external (12345 or 12345-1234)
+"RTN","PSOUTLA",27,0)
+ S Y=$E(Y,1,5)_$S($E(Y,6,9)]"":"-"_$E(Y,6,9),1:"")
+"RTN","PSOUTLA",28,0)
+ Q
+"RTN","PSOUTLA",29,0)
+YN ;YES/NO PROMPT
+"RTN","PSOUTLA",30,0)
+ W !?5,"'Y' FOR YES",!?5,"'N' FOR NO",!
+"RTN","PSOUTLA",31,0)
+ Q
+"RTN","PSOUTLA",32,0)
+DAYS K PSFMAX S ED=1,PSODEA=$P(^PSDRUG($P(^PSRX(DA,0),"^",6),0),"^",3),PSDAYS=$P(^PSRX(DA,0),"^",8),CS=0 D EDNEW K:ED PSFMAX,ED
+"RTN","PSOUTLA",33,0)
+ K:$P(^PSRX(DA,0),"^",9)'>MAX PSMAX
+"RTN","PSOUTLA",34,0)
+ Q
+"RTN","PSOUTLA",35,0)
+EDNEW K PSMAX,PSFMAX F DEA=1:1 Q:$E(PSODEA,DEA)=""  I $E(+PSODEA,DEA)>1,$E(+PSODEA,DEA)<6 S CS=1
+"RTN","PSOUTLA",36,0)
+ I $D(CLOZPAT) S MAX=$S(CLOZPAT=2&(PSDAYS=14):1,CLOZPAT=2&(PSDAYS=7):3,CLOZPAT=1&(PSDAYS=7):1,1:0) G CLOZPAT
+"RTN","PSOUTLA",37,0)
+ I CS D
+"RTN","PSOUTLA",38,0)
+ .S PSOX1=$S(PTRF>5:5,1:PTRF),PSOX=$S(PSOX1=5:5,1:PSOX1)
+"RTN","PSOUTLA",39,0)
+ .S PSOX=$S('PSOX:0,PSDAYS=90:1,1:PSOX),PSDY1=$S(PSDAYS<60:5,PSDAYS'<60&(PSDAYS'>89):2,PSDAYS=90:1,1:0) S MAX=$S(PSOX'>PSDY1:PSOX,1:PSDY1)
+"RTN","PSOUTLA",40,0)
+ E  D
+"RTN","PSOUTLA",41,0)
+ .S PSOX1=PTRF,PSOX=$S(PSOX1=11:11,1:PSOX1),PSOX=$S('PSOX:0,PSDAYS=90:3,1:PSOX)
+"RTN","PSOUTLA",42,0)
+ .S PSDY1=$S(PSDAYS<60:11,PSDAYS'<60&(PSDAYS'>89):5,PSDAYS=90:3,1:0) S MAX=$S(PSOX'>PSDY1:PSOX,1:PSDY1)
+"RTN","PSOUTLA",43,0)
+CLOZPAT I PSRF>MAX D
+"RTN","PSOUTLA",44,0)
+ .W $C(7),!!,PSRF_" refills are not correct for a "_PSDAYS_" day supply.",!,"Please enter correct # of refills for a "_PSDAYS_" day supply. Max refills allowed is "_MAX_".",!
+"RTN","PSOUTLA",45,0)
+ .;S (PSMAX("MAX"),PSFMAX("MAX"))=MAX,(PSMAX("RF"),PSFMAX("RF"))=PSRF,(PSMAX("DAYS"),PSFMAX("DAYS"))=PSDAYS,(PSMAX,PSFMAX)=1
+"RTN","PSOUTLA",46,0)
+ K PSTMAX D EDSTAT
+"RTN","PSOUTLA",47,0)
+ Q
+"RTN","PSOUTLA",48,0)
+STATDAY K PSMAX,PSRMAX,PSFMAX,PSTMAX S PSDAYS=$P(^PSRX(DA,0),"^",8),PSRF=$P(^PSRX(DA,0),"^",9),PTST=$P(^PS(53,X,0),"^"),PTDY=$P(^(0),"^",3),PTRF=$P(^(0),"^",4)
+"RTN","PSOUTLA",49,0)
+EDSTAT I PSRF>PTRF D EN^DDIOL(PSRF_" refills are greater than "_PTRF_" allowed for "_$P(PTST,"^")_" Rx Patient Status.","","$C(7),!") D EN^DDIOL(" ","","!") ;S PSTMAX=1,PSTMAX("PTRF")=PTRF,PSTMAX("PSRF")=PSRF,PSTMAX("PT")=$P(PTST,"^")
+"RTN","PSOUTLA",50,0)
+ Q
+"RTN","PSOUTLA",51,0)
+PARKILL S CNT=0 F SUB=0:0 S SUB=$O(^PSRX(DA(1),"A",SUB)) Q:'SUB  S CNT=SUB
+"RTN","PSOUTLA",52,0)
+ I '$G(RESK) D  G:$D(DIRUT) PARKILL
+"RTN","PSOUTLA",53,0)
+ .D EN^DDIOL(" ","","!") K DIR S DIR(0)="FO^10:75",DIR("A",1)="Enter Reason for Edit:",DIR("A")="=>",DIR("?",1)="This is a required response.  No Up-arrowing allowed."
+"RTN","PSOUTLA",54,0)
+ .S DIR("?")="Response must be 10-75 characters in length.",DIR("B")="Entered In Error"
+"RTN","PSOUTLA",55,0)
+ .D ^DIR I $D(DIRUT) D EN^DDIOL("This is a required response.  No Up-arrowing allowed.","","!") Q
+"RTN","PSOUTLA",56,0)
+ .S ACOM=$S($G(Y)]""&('$D(DIRUT)):Y,1:"Partial Entered In Error.")
+"RTN","PSOUTLA",57,0)
+ .S PSOPRZ=$G(PSOPRZ)-1 S:PSOPRZ<0 PSOPRZ=0
+"RTN","PSOUTLA",58,0)
+ S:$G(RESK) ACOM="Partial fill returned to stock."
+"RTN","PSOUTLA",59,0)
+ D NOW^%DTC S CNT=CNT+1 S ^PSRX(DA(1),"A",0)="^52.3DA^"_CNT_"^"_CNT,^PSRX(DA(1),"A",CNT,0)=%_"^D^"_DUZ_"^6^"_ACOM K CNT,SUB,DIR,DTOUT,DUOUT
+"RTN","PSOUTLA",60,0)
+ Q
+"RTN","PSOUTLA",61,0)
+SETUP ;enter/edit clinic sort groups
+"RTN","PSOUTLA",62,0)
+ W ! S (DLAYGO,DIC,DIE)=59.8,DIC("A")="Select Clinic Sort Group: ",DIC(0)="AEQML" D ^DIC G:"^"[$E(X) SETUPX G:Y<1 SETUP S DA=+Y,DR=".01;1" D ^DIE
+"RTN","PSOUTLA",63,0)
+SETUPX K DIE,DIC,DA,DLAYGO,Y,X,DR
+"RTN","PSOUTLA",64,0)
+ Q
+"RTN","PSOUTLA",65,0)
+FSIG(PSOFILE,PSOINTR,PSOLENTH) ;Format front door sig
+"RTN","PSOUTLA",66,0)
+ ;PSOFILE is 'P' if in Pending File, 'R' if in Prescription File
+"RTN","PSOUTLA",67,0)
+ ;PSOINTR is internal number for either file
+"RTN","PSOUTLA",68,0)
+ ;PSOLENTH is length of each line of the Sig
+"RTN","PSOUTLA",69,0)
+ ;returned in the FSIG array
+"RTN","PSOUTLA",70,0)
+ K FSIG I $G(PSOFILE)=""!('$G(PSOINTR))!('$G(PSOLENTH)) G FQUIT
+"RTN","PSOUTLA",71,0)
+ I PSOFILE'="P",PSOFILE'="R" G FQUIT
+"RTN","PSOUTLA",72,0)
+ I PSOFILE="P",'$D(^PS(52.41,+PSOINTR,0)) G FQUIT
+"RTN","PSOUTLA",73,0)
+ I PSOFILE="R",'$D(^PSRX(+PSOINTR,0)) G FQUIT
+"RTN","PSOUTLA",74,0)
+ I PSOFILE="R",'$P($G(^PSRX(+PSOINTR,"SIG")),"^",2) G FQUIT
+"RTN","PSOUTLA",75,0)
+ N FFF,NNN,CNT,FVAR,FVAR1,FLIM,HSIG,II
+"RTN","PSOUTLA",76,0)
+ I PSOFILE="P" F NNN=0:0 S NNN=$O(^PS(52.41,PSOINTR,"SIG",NNN)) Q:'NNN  S:$G(^(NNN,0))'="" HSIG(NNN)=^(0)
+"RTN","PSOUTLA",77,0)
+ I PSOFILE="P" G:'$O(HSIG(0)) FQUIT G FSTART
+"RTN","PSOUTLA",78,0)
+ ;S HSIG(1)=$P($G(^PSRX(PSOINTR,"SIG")),"^") S FFF=2 F NNN=0:0 S NNN=$O(^PSRX(PSOINTR,"SIG1",NNN)) Q:'NNN  I $G(^(NNN,0))'="" S HSIG(FFF)=$G(^(0)),FFF=FFF+1
+"RTN","PSOUTLA",79,0)
+ S FFF=1 F NNN=0:0 S NNN=$O(^PSRX(PSOINTR,"SIG1",NNN)) Q:'NNN  I $G(^(NNN,0))'="" S HSIG(FFF)=^(0) S FFF=FFF+1
+"RTN","PSOUTLA",80,0)
+ G:'$O(HSIG(0)) FQUIT
+"RTN","PSOUTLA",81,0)
+FSTART S (FVAR,FVAR1)="",II=1
+"RTN","PSOUTLA",82,0)
+ F FFF=0:0 S FFF=$O(HSIG(FFF)) Q:'FFF  S CNT=0 F NNN=1:1:$L(HSIG(FFF)) I $E(HSIG(FFF),NNN)=" "!($L(HSIG(FFF))=NNN) S CNT=CNT+1 D  I $L(FVAR)>PSOLENTH S FSIG(II)=FLIM_" ",II=II+1,FVAR=FVAR1
+"RTN","PSOUTLA",83,0)
+ .S FVAR1=$P(HSIG(FFF)," ",(CNT))
+"RTN","PSOUTLA",84,0)
+ .S FLIM=FVAR
+"RTN","PSOUTLA",85,0)
+ .S FVAR=$S(FVAR="":FVAR1,1:FVAR_" "_FVAR1)
+"RTN","PSOUTLA",86,0)
+ I $G(FVAR)'="" S FSIG(II)=FVAR
+"RTN","PSOUTLA",87,0)
+ I $G(FSIG(1))=""!($G(FSIG(1))=" ") S FSIG(1)=$G(FSIG(2)) K FSIG(2)
+"RTN","PSOUTLA",88,0)
+FQUIT Q
+"RTN","PSOUTLA",89,0)
+DRUGW ;
+"RTN","PSOUTLA",90,0)
+ F Z0=1:1 Q:$P(X,",",Z0,99)=""  S Z1=$P(X,",",Z0) W:$D(^PS(54,Z1,0)) ?35,$P(^(0),"^"),! I '$D(^(0)) W ?35,"NO SUCH WARNING LABEL" K X Q
+"RTN","PSOUTLA",91,0)
+ Q
+"RTN","PSOUTLA",92,0)
+HLNEW ;formats provider instructions in FSIG for front door order
+"RTN","PSOUTLA",93,0)
+ K FSIG N FFF,NNN,CNT,FVAR,FVAR1,FLIM,HSIG,II,LLP,PSOLENTH
+"RTN","PSOUTLA",94,0)
+ S PSOLENTH=59,LLP=1 F LLL=0:0 S LLL=$O(WPARRAY(7,LLL)) Q:'LLL  S HSIG(LLP)=$G(WPARRAY(7,LLL)),LLP=LLP+1
+"RTN","PSOUTLA",95,0)
+ D FSTART Q
+"RTN","PSOUTLA",96,0)
+HLNEWX ;
+"RTN","PSOUTLA",97,0)
+ K FSIG N FFF,NNN,CNT,FVAR,FVAR1,FLIM,HSIG,II,LLP,PSOLENTH
+"RTN","PSOUTLA",98,0)
+ S PSOLENTH=59,LLP=1 F LLL=0:0 S LLL=$O(WPARRAY(6,LLL)) Q:'LLL  S HSIG(LLP)=$G(WPARRAY(6,LLL)),LLP=LLP+1
+"RTN","PSOUTLA",99,0)
+ D FSTART Q
+"RTN","PSOUTLA",100,0)
+ ;
+"RTN","PSOUTLA",101,0)
+SUSFDS ;
+"RTN","PSOUTLA",102,0)
+ N SUSIEN
+"RTN","PSOUTLA",103,0)
+ Q:$O(^PSRX(DA,1,0))
+"RTN","PSOUTLA",104,0)
+ S SUSIEN=+$O(^PS(52.5,"B",DA,0)) Q:'$G(SUSIEN)
+"RTN","PSOUTLA",105,0)
+ Q:'$D(^PS(52.5,SUSIEN,0))!($G(^PS(52.5,SUSIEN,"P")))
+"RTN","PSOUTLA",106,0)
+ I '$P($G(^PS(52.5,SUSIEN,0)),"^",5),'$P($G(^(0)),"^",13) S $P(^PS(52.5,SUSIEN,0),"^",2)=X,^PS(52.5,"C",X,SUSIEN)="" D
+"RTN","PSOUTLA",107,0)
+ .I $P($G(^PS(52.5,SUSIEN,0)),"^",7)="Q" S ^PS(52.5,"AQ",X,+$P($G(^PS(52.5,SUSIEN,0)),"^",3),SUSIEN)="" D SCMPX^PSOCMOP(SUSIEN,"Q") Q
+"RTN","PSOUTLA",108,0)
+ .S ^PS(52.5,"AC",+$P($G(^PS(52.5,SUSIEN,0)),"^",3),X,SUSIEN)=""
+"RTN","PSOUTLA",109,0)
+ Q
+"RTN","PSOUTLA",110,0)
+SUSFDK ;
+"RTN","PSOUTLA",111,0)
+ N SUSIEN
+"RTN","PSOUTLA",112,0)
+ Q:$O(^PSRX(DA,1,0))
+"RTN","PSOUTLA",113,0)
+ S SUSIEN=+$O(^PS(52.5,"B",DA,0)) Q:'$G(SUSIEN)
+"RTN","PSOUTLA",114,0)
+ Q:'$D(^PS(52.5,SUSIEN,0))!($G(^PS(52.5,SUSIEN,"P")))
+"RTN","PSOUTLA",115,0)
+ I '$P($G(^PS(52.5,SUSIEN,0)),"^",5),'$P($G(^(0)),"^",13) K ^PS(52.5,"C",X,SUSIEN) D
+"RTN","PSOUTLA",116,0)
+ .I $P($G(^PS(52.5,SUSIEN,0)),"^",7)="Q" K ^PS(52.5,"AQ",X,+$P($G(^PS(52.5,SUSIEN,0)),"^",3),SUSIEN) D KCMPX^PSOCMOP(SUSIEN,"Q") Q
+"RTN","PSOUTLA",117,0)
+ .K ^PS(52.5,"AC",+$P($G(^PS(52.5,SUSIEN,0)),"^",3),X,SUSIEN)
+"RTN","PSOUTLA",118,0)
+ Q
+"RTN","PSOUTLA",119,0)
+ADD ;enter/edit automated devices - OPAI
+"RTN","PSOUTLA",120,0)
+ W ! S (DLAYGO,DIC,DIE)=52.53,DIC("A")="Select ADD Name: ",DIC(0)="AEQML" D ^DIC G:"^"[$E(X) ADDX G:Y<1 ADD S DA=+Y,DR=".01;1;2;3" D ^DIE G ADD
+"RTN","PSOUTLA",121,0)
+ADDX K DIE,DIC,DA,Y,X,DR
+"RTN","PSOUTLA",122,0)
+ Q
+"SEC","^DIC",52.53,52.53,0,"AUDIT")
+ 
+"SEC","^DIC",52.53,52.53,0,"DD")
+ 
+"SEC","^DIC",52.53,52.53,0,"DEL")
+
+"SEC","^DIC",52.53,52.53,0,"LAYGO")
+ 
+"SEC","^DIC",52.53,52.53,0,"RD")
+ 
+"SEC","^DIC",52.53,52.53,0,"WR")
+ 
+"UP",59,59.20081,-2)
+59^P
+"UP",59,59.20081,-1)
+59.02008^OPAI
+"UP",59,59.20081,0)
+59.20081
+"VER")
+8.0^22.0
+"^DD",52.53,52.53,0)
+FIELD^^3^4
+"^DD",52.53,52.53,0,"DDA")
+N
+"^DD",52.53,52.53,0,"DT")
+3100527
+"^DD",52.53,52.53,0,"ID",1)
+D EN^DDIOL($P(^(0),U,2),"","?25")
+"^DD",52.53,52.53,0,"ID",2)
+D EN^DDIOL($P(^(0),U,3),"","?50")
+"^DD",52.53,52.53,0,"ID",3)
+I $P(^(0),U,4)'="" D EN^DDIOL("Inactive: "_$$FMTE^DILIBF($P(^(0),U,4),6),"","?60")
+"^DD",52.53,52.53,0,"IX","B",52.53,.01)
+
+"^DD",52.53,52.53,0,"NM","PHARMACY AUTOMATED DISPENSING DEVICES")
+
+"^DD",52.53,52.53,0,"PT",50.0906,1)
+
+"^DD",52.53,52.53,0,"PT",50.0906,2)
+
+"^DD",52.53,52.53,0,"PT",59.20081,.01)
+
+"^DD",52.53,52.53,.01,0)
+NAME^RF^^0;1^K:$L(X)>30!($L(X)<3)!'(X'?1P.E) X
+"^DD",52.53,52.53,.01,1,0)
+^.1
+"^DD",52.53,52.53,.01,1,1,0)
+52.53^B
+"^DD",52.53,52.53,.01,1,1,1)
+S ^PS(52.53,"B",$E(X,1,30),DA)=""
+"^DD",52.53,52.53,.01,1,1,2)
+K ^PS(52.53,"B",$E(X,1,30),DA)
+"^DD",52.53,52.53,.01,3)
+Answer must be 3-30 characters in length.
+"^DD",52.53,52.53,.01,21,0)
+^^1^1^3101130^
+"^DD",52.53,52.53,.01,21,1,0)
+This is the name of the automated dispensing device.
+"^DD",52.53,52.53,.01,"DEL",1,0)
+I 1 D EN^DDIOL("Device cannot be deleted, it must be inactivated!","","$C(7),!?5")
+"^DD",52.53,52.53,.01,"DT")
+3100818
+"^DD",52.53,52.53,1,0)
+DNS^F^^0;2^K:$L(X)>50!($L(X)<1) X
+"^DD",52.53,52.53,1,3)
+Answer must be 1-50 characters in length.
+"^DD",52.53,52.53,1,21,0)
+^^1^1^3101130^
+"^DD",52.53,52.53,1,21,1,0)
+This is the DNS name or IP address of the automated dispensing device.
+"^DD",52.53,52.53,1,"DT")
+3100527
+"^DD",52.53,52.53,2,0)
+PORT^NJ5,0^^0;3^K:+X'=X!(X>65535)!(X<1)!(X?.E1"."1N.N) X
+"^DD",52.53,52.53,2,3)
+Type a number between 1 and 65535, 0 decimal digits.
+"^DD",52.53,52.53,2,21,0)
+^^1^1^3101130^
+"^DD",52.53,52.53,2,21,1,0)
+This is the port associated with this automated dispensing device.
+"^DD",52.53,52.53,2,"DT")
+3100527
+"^DD",52.53,52.53,3,0)
+INACTIVE DATE^D^^0;4^S %DT="EX" D ^%DT S X=Y K:Y<1 X
+"^DD",52.53,52.53,3,3)
+Enter the date to inactivate the automated dispensing device.
+"^DD",52.53,52.53,3,21,0)
+^^3^3^3101130^
+"^DD",52.53,52.53,3,21,1,0)
+This is the date on or after which the automated dispensing device will 
+"^DD",52.53,52.53,3,21,2,0)
+be inactive, and cannot be selected through the Outpatient Pharmacy
+"^DD",52.53,52.53,3,21,3,0)
+options.
+"^DD",52.53,52.53,3,"DT")
+3100527
+"^DD",59,59.02008,1,0)
+OPAI^59.20081IPA^^OPAI;0
+"^DD",59,59.02008,1,21,0)
+^.001^1^1^3120130^^^^
+"^DD",59,59.02008,1,21,1,0)
+This multiple contains automated dispensing devices for this printer.
+"^DD",59,59.20081,0)
+OPAI SUB-FIELD^^1^2
+"^DD",59,59.20081,0,"DT")
+3120130
+"^DD",59,59.20081,0,"ID","W1")
+W "   ",@("$P($P($C(59)_$S($D(^DD(59.20081,1,0)):$P(^(0),U,3),1:0)_$E("_DIC_"Y,0),0),$C(59)_$P(^(0),U,2)_"":"",2),$C(59),1)")
+"^DD",59,59.20081,0,"IX","B",59.20081,.01)
+
+"^DD",59,59.20081,0,"NM","OPAI")
+
+"^DD",59,59.20081,0,"UP")
+59.02008
+"^DD",59,59.20081,.01,0)
+DNS NAME^MP52.53'^PS(52.53,^0;1^Q
+"^DD",59,59.20081,.01,1,0)
+^.1
+"^DD",59,59.20081,.01,1,1,0)
+59.20081^B
+"^DD",59,59.20081,.01,1,1,1)
+S ^PS(59,DA(2),"P",DA(1),"OPAI","B",$E(X,1,30),DA)=""
+"^DD",59,59.20081,.01,1,1,2)
+K ^PS(59,DA(2),"P",DA(1),"OPAI","B",$E(X,1,30),DA)
+"^DD",59,59.20081,.01,3)
+Enter the automated dispensing device associated with this printer.
+"^DD",59,59.20081,.01,21,0)
+^.001^1^1^3110928^^^
+"^DD",59,59.20081,.01,21,1,0)
+This is the automated dispensing device associated with this printer.
+"^DD",59,59.20081,.01,"DT")
+3110928
+"^DD",59,59.20081,1,0)
+CATEGORY^RSX^MCS:MAIL - CS;MNCS:MAIL - NCS;MAIL:MAIL;WCS:WINDOW - CS;WNCS:WINDOW - NCS;WIND:WINDOW;CS:CONTROLLED SUBSTANCE;NCS:NONCONTROLLED SUBSTANCE;A:ANY;S:STORAGE;^0;2^K:$$CATVAL^PSOSITED(X) X
+"^DD",59,59.20081,1,3)
+Enter a category for this automated dispensing device.
+"^DD",59,59.20081,1,4)
+
+"^DD",59,59.20081,1,21,0)
+^.001^1^1^3120130^^^
+"^DD",59,59.20081,1,21,1,0)
+This is the category for this automated dispensing device.
+"^DD",59,59.20081,1,"DT")
+3120130
+"^DIC",52.53,52.53,0)
+PHARMACY AUTOMATED DISPENSING DEVICES^52.53
+"^DIC",52.53,52.53,0,"GL")
+^PS(52.53,
+"^DIC",52.53,52.53,"%",0)
+^1.005^1^1
+"^DIC",52.53,52.53,"%",1,0)
+PSO
+"^DIC",52.53,52.53,"%","B","PSO",1)
+
+"^DIC",52.53,52.53,"%D",0)
+^^2^2^3101130^
+"^DIC",52.53,52.53,"%D",1,0)
+This file stores the automated dispensing devices used by the Outpatient
+"^DIC",52.53,52.53,"%D",2,0)
+Pharmacy application.
+"^DIC",52.53,"B","PHARMACY AUTOMATED DISPENSING DEVICES",52.53)
+
+"BLD",7436,6)
+^329
+**END**
+**END**

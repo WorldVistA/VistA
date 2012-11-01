@@ -1,0 +1,106 @@
+$TXT Created by DIMICELI,RON at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 09/30/10 at 09:34
+=============================================================================
+Run Date: FEB 28, 2011                     Designation: VALM*1*9
+Package : VALM - LIST MANAGER                 Priority: Mandatory
+Version : 1         SEQ #9                      Status: Released
+                  Compliance Date: MAR 31, 2011
+=============================================================================
+
+
+Subject: Correct undefined error in VALM1
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch corrects the undefined error in the List Manager, FULL^VALM1.
+  Several sites have reported this error at different lines within the FULL
+  subroutine call.
+  
+  
+ Remedy Tickets
+ =============
+  410106
+  410341
+  410594 
+  
+  
+ Thanks to Test Sites: 
+ =====================
+ BATTLE CREEK, MI;
+ BLACK HILLS HCS              
+ BOSTON HCS                   
+ DUBLIN, GA                   
+ MARYLAND HCS                 
+ WHITE RIVER JUNCTION, VT     
+   
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - 8/5/2010
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch VALM*1*9 contains 
+    changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+    VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+    not alter or modify any VistA Blood Bank software design safeguards or
+    safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch VALM*1*9 have no effect on Blood Bank
+   software functionality, therefore RISK is none.
+    
+  
+ Installation Instructions
+ =========================
+ This patch may be installed with VISTA users online. However, it is
+ recommended that it be Queued for a time of generally least activity.  
+  
+ TaskMan does not need to be STOPPED or placed in a WAIT state and 
+ installation should take less than a minute.
+  
+     1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+        This option will load the KIDS package onto your system.  
+  
+     2. The patch has now been loaded into a transport global on your 
+        system. You now need to use KIDS to install the transport global.  
+   
+     3. On the KIDS menu, under the 'Installation' menu, use the 
+        following options: 
+            Print Transport Global 
+            Compare Transport Global to Current System 
+            Verify Checksums in Transport Global
+            Backup a Transport Global 
+  
+     4. On the KIDS menu, under the 'Installation' menu, use the 
+        following option: 
+            Select Installation Option: Install Package(s) 
+            Select INSTALL NAME: VALM*1.0*9
+                                 ==========
+        Want KIDS to INHIBIT LOGONs during the install? NO//
+        Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;List Manager;**[Patch List]**;Aug 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VALM1
+    Before: B26058095   After: B26565426  **5,6,8,9**
+ 
+Routine list of preceding patches: 8
+
+=============================================================================
+User Information:
+Entered By  : DIMICELI,RON                  Date Entered  : JUL 19, 2010
+Completed By: SINGH,GURBIR                  Date Completed: FEB 24, 2011
+Released By : HARROD,PAUL                   Date Released : FEB 28, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

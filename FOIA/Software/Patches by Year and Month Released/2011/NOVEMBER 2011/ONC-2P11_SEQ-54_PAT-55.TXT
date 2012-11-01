@@ -1,0 +1,118 @@
+
+=============================================================================
+Run Date: NOV 28, 2011                     Designation: ONC*2.11*55
+Package : ONC - ONCOLOGY                      Priority: Mandatory
+Version : 2.11        SEQ #54                   Status: Released
+                  Compliance Date: DEC 29, 2011
+=============================================================================
+
+Associated patches: (v)ONC*2.11*53 <<= must be installed BEFORE `ONC*2.11*55'
+
+Subject: NCDB error fix
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects a problem with pre-2007 cases which were experiencing
+ an <UNDEFINED> error when attempting to create a NCDB (National Cancer Data
+ Base) download.
+ 
+ Associated Remedy Tickets:
+ ==========================
+ Remedy Ticket #519902
+  
+ Test Sites
+ ==========
+ Upstate New York HCS
+ Washington, DC
+ Hines, Il
+ West Haven, Ct
+  
+ Installation instructions:
+ ==========================
+ This patch should be loaded with Oncology users off the system. Installation
+ will take approximately 1 minute.
+ 
+ This patch is available via FTP as a Kernel Installation and Distribution
+ System (KIDS) distribution file.  The Host File is named ONC211P55.KID and is
+ located in the [ANONYMOUS.SOFTWARE] directory of the following OI Field
+ Offices.
+     
+                                PREFERRED ADDRESS
+                                -----------------
+  First available ftp server    download.vista.med.va.gov
+  
+  SPECIFIC FIELD OFFICE         FTP ADDRESS
+  ---------------------         -----------
+  Albany                        ftp.fo-albany.med.va.gov
+  Hines                         ftp.fo-hines.med.va.gov
+  SLC                           ftp.fo-slc.med.va.gov
+  
+ 1. Load the KIDS distribution file via the 'Load a Distribution' option on the
+    KIDS Installation menu.
+  
+ 2. Prior to installing the patch you may want to make use of the following
+    optional installation options located on the KIDS Installation menu:
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+    c.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 3. Install the KIDS distribution via the 'Install Package(s)' option on the
+    KIDS Installation menu.
+ 
+    a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+        Answer NO.
+   
+    b.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//'
+        Answer NO. 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ONCACD1
+    Before: B46060891   After: B45446923  **9,12,14,18,20,22,24,25,26,
+                                           28,29,31,36,37,41,43,47,48,51,
+                                           52,53,55**
+Routine Name: ONCODIS
+    Before:   B778332   After:   B778412  **6,7,9,10,11,12,13,14,15,16,
+                                           17,18,19,20,21,22,23,24,25,26,
+                                           27,28,29,30,31,32,33,34,35,36,
+                                           37,38,39,40,41,42,43,44,45,46,
+                                           47,48,49,50,51,52,53,55**
+ 
+Routine list of preceding patches: 53
+
+=============================================================================
+User Information:
+Entered By  : BIELO,GARY                    Date Entered  : SEP 06, 2011
+Completed By: BERRY,LINDA                   Date Completed: NOV 28, 2011
+Released By : CONSENTINO,ALBERT             Date Released : NOV 28, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

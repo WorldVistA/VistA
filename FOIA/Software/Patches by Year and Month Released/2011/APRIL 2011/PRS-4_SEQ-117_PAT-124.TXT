@@ -1,0 +1,166 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 01/27/11 at 08:38
+=============================================================================
+Run Date: APR 27, 2011                     Designation: PRS*4*124
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #117                      Status: Released
+                  Compliance Date: MAY 28, 2011
+=============================================================================
+
+Associated patches: (v)PRS*4*117   <<= must be installed BEFORE `PRS*4*124'
+
+Subject: EMPLOYEE APPROVING OWN TIMECARD AND INTERMITTENT EMPLOYEE ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ This patch addresses 2 issues:
+ 1. Employees are able to certify own timecard without security key.
+ 2. Site is unable to change an intermittent employee's time card. 
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. HD0000000261220 - Employees are able to certify their own corrected
+                      timecard without having security key
+ 2. HD0000000266014 - Time card issue
+    duplicate(s):     HD0000000321978 -- How to get a FT Employee 
+                      Intermittent in May 2008 PP 11
+                      HD0000000413357 -- Request to reverse employee changes
+  
+ Participating Test Sites:
+ =========================
+ Central Plains HCS
+ Dublin, GA
+  
+ Remedy Overview:
+ ================ 
+  
+ 1. HD0000000261220 - Employees are able to certify their own corrected
+                      timecard without security key
+  
+ Problem:
+ --------
+ An Overtime/Comp Time (OT/CT) Supervisor is able to certify his/her own 
+ corrected timecard without having the "PRSA SIGN" key.
+  
+ Resolution:
+ -----------
+ Routine PRSAPPX was modified to disallow employees from approving their
+ own corrected timecard if they do not have the "PRSA SIGN" key.
+  
+  
+ 2. HD0000000266014  Time card issue
+  
+ Problem:
+ --------
+ When a POSTING/TOUR CHANGE is done under PRIOR PAY PERIOD ADJUSTMENT for
+ an employee who has a Duty Basis of Intermittent and their Tour of Duty
+ is changed to a fixed tour in error, the employee's Tour of Duty
+ cannot be changed back to Intermittent.
+  
+ Resolution:
+ -----------
+ Routine PRSATPP was modified to allow Intermittent as a valid Tour of 
+ Duty for an employee who has a Duty Basis of Intermittent and has
+ had their Tour of Duty changed from Intermittent to a fixed tour.
+  
+  
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the
+ PAID users are off the system. Other VISTA users will not be affected.
+  
+ Install Time - less than 2 minutes.
+  
+  1.   Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.   Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+           Patch Monitor Main Menu ...
+  
+       Select Kernel Installation & Distribution System Option: INStallation
+                           ---
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+            Select Installation Option:
+  
+  3.   From this menu, you may elect to use the following options
+       (When prompted for the INSTALL NAME, enter PRS*4.0*124):
+  
+       a.  Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed. It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+  
+  4.   Use the Install Package(s) option and select the package
+       PRS*4.0*124.
+  
+       a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+           NO//', answer NO 
+       b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+           Options, and Protocols? YES//', answer YES.
+       c.  When prompted 'Enter options you wish to mark as 'Out Of
+           Order':', enter the following options:
+  
+           Posting/Tour Change   [PRSA TP POST]
+           SUPERVISORY APPROVALS [PRSA SUP CERT]
+  
+       d.  When prompted 'Enter protocols you wish to mark as 'Out Of
+           Order':', press <return>.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSAPPX
+    Before:  B7155774   After:  B8495395  **124**
+Routine Name: PRSATPP
+    Before: B14151243   After: B14403687  **117,124**
+ 
+Routine list of preceding patches: 117
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : APR 22, 2009
+Completed By: LEANORD,TATIANA               Date Completed: APR 27, 2011
+Released By : MCCLARAN,PAM                  Date Released : APR 27, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

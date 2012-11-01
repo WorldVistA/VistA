@@ -1,0 +1,201 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 10/04/11 at 14:40
+=============================================================================
+Run Date: FEB 27, 2012                     Designation: PSJ*5*227
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #222                      Status: Released
+                  Compliance Date: MAR 29, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*76    <<= must be installed BEFORE `PSJ*5*227'
+                    (v)PSJ*5*245   <<= must be installed BEFORE `PSJ*5*227'
+
+Subject: ALLOW SPACE AS RESPONSE TO SCHEDULE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 3 issues:
+  
+ 1. When entering a new UNIT DOSE order in VistA, using <space bar> <enter>
+    at the SCHEDULE prompt causes an error.
+  
+ 2. Undefined error when editing IV Quick Code schedule
+  
+ 3. Incorrect DIN drug information for Unit Dose orders 
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. HD0000000343923 - When entering new UNIT DOSE order in VistA, using
+                      <space bar> <enter> at the SCHEDULE prompt causes an
+                      error
+    Duplicate:
+    ----------
+    HD0000000321646 - Undef A26_8^PSGOE8
+  
+ 2. HD0000000460212 - IV QUICK CODE USUAL IV SCHEDULE field will no longer 
+                      accept standard schedule space PRN
+  
+ 3. HD0000000523772 - DIN drug information link is displaying wrong 
+                      information
+  
+  
+ Participating Test Sites:
+ =========================
+ Cleveland VAMC
+ Puget Sound HCS
+ Western NY HCS
+  
+  
+ Overview of Remedy ticket(s):
+ =============================
+ 1. HD0000000343923 - When entering new UNIT DOSE order in VistA, using 
+                      <space bar> <enter> at the SCHEDULE prompt causes an
+                      error
+  
+    Problem: 
+    --------
+    When entering a new Unit Dose order or editing an existing order in
+    Inpatient Order Entry [PSJ OE], at the Schedule prompt, using <space 
+    bar> <enter> causes an Undefined error.
+  
+    Resolution:
+    -----------
+    Modified routine PSGS0 to allow a response of <space bar> <enter>
+    as a valid entry.
+  
+  
+ 2. HD0000000460212 - IV QUICK CODE USUAL IV SCHEDULE field will no longer 
+                      accept standard schedule space PRN
+  
+    Problem: 
+    --------
+    When editing the "Usual IV Schedule" for an IV quick code from the 
+    Additives File [PSSJI DRUG] option, entering a schedule followed by a
+    space and "PRN", when a PRN version of that schedule does not exist in 
+    the Administration Schedule File [#51.1], will cause an undefined 
+    error.
+  
+    Resolution:
+    -----------
+    Modified the routine PSGS0 so that the undefined error no longer 
+    occurs.
+  
+  
+ 3. HD0000000523772 - DIN drug information link is displaying wrong 
+                      information
+  
+    Problem: 
+    --------
+    When viewing Pending or Non-Verified orders in Inpatient Order Entry 
+    [PSJ OE], if a user views a Pending/Non-Verified IV order followed by a
+    Pending/Non-Verified Unit Dose order and then views the Drug
+    Restriction/Guideline Info (DIN) for the Unit Dose order, it will
+    display the DIN for the IV order instead.
+  
+    Resolution:
+    -----------
+    Changed routine PSJDIN so that the DIN option correctly identifies 
+    Unit Dose orders and displays the proper drug information.
+  
+  
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ the Pharmacy Data Management users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+ 1.  Load Transport Global 
+     ---------------------------
+  
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*227):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+   
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;DEC 16, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGS0
+    Before: B75670987   After: B75935708  **12,25,26,50,63,74,83,116,110,
+                                           111,133,138,174,134,213,207,
+                                           190,113,245,227**
+Routine Name: PSJDIN
+    Before: B30761774   After: B31115413  **50,56,76,227**
+ 
+Routine list of preceding patches: 76, 245
+
+=============================================================================
+User Information:
+Entered By  : DANG,CHAU                     Date Entered  : JUN 10, 2009
+Completed By: WERNER,GARY                   Date Completed: FEB 23, 2012
+Released By : TEAGUE,LYN                    Date Released : FEB 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

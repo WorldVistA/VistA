@@ -1,0 +1,310 @@
+$TXT Created by FIAMENGO,GRACE E at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 04/25/11 at 14:16
+=============================================================================
+Run Date: MAY 26, 2011                     Designation: IB*2*433
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #415                      Status: Released
+                  Compliance Date: JUN 26, 2011
+=============================================================================
+
+Associated patches: (v)IB*2*347    <<= must be installed BEFORE `IB*2*433'
+                    (v)IB*2*358    <<= must be installed BEFORE `IB*2*433'
+                    (v)IB*2*377    <<= must be installed BEFORE `IB*2*433'
+                    (v)IB*2*400    <<= must be installed BEFORE `IB*2*433'
+                    (v)IB*2*420    <<= must be installed BEFORE `IB*2*433'
+                    (v)PRCA*4.5*270<<= must be installed BEFORE `IB*2*433'
+
+Subject: E-BILLING PRESERVE CLAIM NUMBER WHEN CLONED
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+   ******************************************************************
+   *                                                                *
+   *  PRCA*4.5*270 must be installed prior to installing IB*2*433.  *
+   *                                                                *
+   ******************************************************************
+  
+  
+ This release will provide a new Integrated Billing (IB) option that will 
+ allow users to correct rejected or denied claims to third party insurance
+ companies, while maintaining the original claim number. The purpose of
+ this patch, along with PRCA*4.5*270, is to provide the ability for sites
+ to correct claims that have been either rejected at some stage in the
+ processing of the claim or adjudicated by the payer and denied for a
+ correctable reason, and to have the corrected version of the claim
+ maintain the original claim number. Once corrected, the site can then
+ resubmit the claim, electronically or by mail, to the payer for
+ reprocessing. 
+  
+ The changes are primarily to the IB module. Because there is a 
+ correlation between claim numbers in IB and in Accounts Receivable (AR),
+ the accompanying AR patch, PRCA*4.5*270, modifies the BILL NO. field
+ (#.01) of the ACCOUNTS RECEIVABLE file (#430) to support adding the
+ iteration number to the claim number of the original claim once it has
+ been cancelled via the new correction process. This patch, IB*2*433, 
+ contains the new Correct Rejected/Denied Claim menu option and protocol, 
+ as well as the routines to support this new function. In addition, it  
+ adds a new security key, IB CLON, which locks the Copy and Cancel [IB COPY
+ AND CANCEL] menu option to limit future use of this existing option.
+  
+ The new option, Correct Rejected/Denied Bill [IB CORRECT REJECTED/DENIED]  
+ will be added to the following locations:
+  
+ 1. Third Party Billing Menu ... [IB THIRD PARTY BILLING MENU]
+ 2. CSA - Claims Status Awaiting Resolution [IBCE CLAIMS STATUS AWAITING]
+ 3. MRW - MRA Management WorkList [IBCE MRA MANAGEMENT]
+  
+ This new option will function similar to the existing Copy and Cancel 
+ option [IB COPY AND CANCEL]. It is used to correct claims that have been 
+ rejected at any stage in the claims processing by Financial Services
+ Center (FSC), Emdeon, or Insurance Company, or denied by the insurance 
+ company. The old claim will be cancelled & renamed with the original claim
+ number plus an incremental #, KXXXXXX-01. A new claim, which is a copy of
+ the original claim, will be created and will maintain the original claim
+ number. This option can NOT be used to correct a claim if any payment has
+ been posted to the claim in AR, or if the claim/account is a non-accrued 
+ Billing type (such as a Tricare claim). If either of these are true, then
+ the old Copy and Cancel option [IB COPY AND CANCEL] must be used.
+  
+ This is a result from business needs identified by the Chief Business
+ Office (CBO). The ability to resubmit a rejected/denied claim with the
+ original claim number is normal process for most of the industry. This
+ ability will also provide the ability to better track the processing of
+ claims as it provides the ability to follow claims through the
+ resubmission process and track the changes that were required as a result
+ of a rejection or denial.
+  
+  
+ Components Sent With Patch
+ --------------------------
+ The following is a list of files included in this patch:
+  
+                                      UP    SEND  DATA                
+                                      DATE  SEC.  COMES  SITE   RSLV  
+ FILE #  NAME                         DD    CODE  W/FILE DATA   PTS 
+ --------------------------------------------------------------------
+ 399         BILL/CLAIMS              YES   YES   NO
+ Partial DD: subDD: 399        fld: .01
+  
+  
+ The following is a list of options included in this patch:
+  
+ Option Name                                    Action:
+ -----------                                    -------
+ IB COPY AND CANCEL                          SEND TO SITE
+ IB CORRECT REJECTED/DENIED                  SEND TO SITE
+ IB THIRD PARTY BILLING MENU                 USE AS LINK FOR MENU ITEMS
+  
+  
+ The following is a list of security keys included in this patch:
+  
+ Security Key
+ ------------
+ IB CLON                                        SEND TO SITE
+  
+  
+ The following is a list of protocols included in this patch: 
+  
+ IBCEM COB MANAGEMENT                        USE AS LINK FOR MENU ITEMS
+ IBCEM CORRECT REJECTED/DENIED BILL          SEND TO SITE
+ IBCEM CSA COPY/CANCEL BILL                  DELETE AT SITE
+ IBCEM CSA CORRECT REJECTED/DENIED BILL      SEND TO SITE
+ IBCEM CSA MSG MENU                          USE AS LINK FOR MENU ITEMS
+  
+  
+ The following is a list of templates included in this patch: 
+  
+ LIST TEMPLATE:                                 ACTION:
+ IBCEM MRA MANAGEMENT                           SEND TO SITE
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ eBilling - Preserve Claim Number When Cloned #20080110
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Documentation Retrieval: 
+ ------------------------ 
+ Updated documentation describing the Release Notes for this patch is
+ available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at:  http://www.va.gov/vdl/
+  
+ The Release Notes file associated with this patch is listed below.
+  
+ File Name                                      FTP Mode
+ -----------------------------------------------------------------------
+ edi_user_guide.pdf                             (binary)
+ IB_20_433_PRCA_45_270_RN.pdf                   (binary)
+ IB_20_P433_SG_CP.pdf                           (binary)
+ IB_20_P433_TM.pdf                              (binary)
+  
+  
+  
+ Test Sites:
+ -----------
+ El Paso
+ Montana HCS
+ VISN 2
+  
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch introduces a new security key, IB CLON. The intent of this key
+ is to lock out users from the old CLON menu option and encourage them to
+ use the new CRD menu option introduced with this patch. The only time a
+ user would still need to use CLON is in the rare circumstance where a
+ claim needs to be corrected and a payment has already been posted to it,  
+ or when correcting non-accrued Billing types such as Tricare claims.
+ It is recommended that the assignment of this key be limited. Please have
+ the Billing Supervisor determine to whom the key should be assigned when
+ the patch is installed.
+  
+  
+       ================INSTALLATION INSTRUCTIONS =================
+  
+   ******************************************************************
+   *  You should install this patch during non-peak hours, when no  *
+   *  Integrated Billing or Accounts Receivable users are on the    *
+   *  system.                                                       *
+   ****************************************************************** 
+  
+  
+         ****There are no options to disable.
+  
+ Install Time - less than 2 minutes 
+  
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter IB*2.0*433):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES//'  You may answer NO if your system does this in a  
+         nightly TaskMan process. (Answering YES can slightly increase the  
+         installation time, but is recommended since this patch includes 
+         some changes to IB menu options).
+  
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+  
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 36
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCC
+    Before: B36322352   After: B55278048  **2,19,77,80,51,142,137,161,
+                                           199,241,155,276,320,358,433**
+Routine Name: IBCCC
+    Before: B14623718   After: B19833336  **80,109,106,51,320,433**
+Routine Name: IBCCC1
+    Before:  B9524084   After: B10538987  **80,109,106,51,320,358,433**
+Routine Name: IBCCC2
+    Before: B68853950   After: B69917469  **80,106,124,138,51,151,137,
+                                           161,182,211,245,155,296,320,
+                                           348,349,371,400,433**
+Routine Name: IBCECOB2
+    Before: B72912246   After: B78530862  **137,155,433**
+Routine Name: IBCECSA4
+    Before: B57240644   After: B60720503  **137,155,320,371,433**
+Routine Name: IBCNQ
+    Before: B25492974   After: B25510710  **51,320,377,433**
+Routine Name: IBOA31
+    Before: B15171767   After: B15589530  **95,199,433**
+Routine Name: IBOA32
+    Before:  B6461221   After:  B6792943  **7,95,347,433**
+Routine Name: IBOLK
+    Before: B17698535   After: B18563160  **199,420,433**
+ 
+Routine list of preceding patches: 347, 358, 377, 400, 420
+
+=============================================================================
+User Information:
+Entered By  : JUTZI,WILLIAM CHRISTOPHER     Date Entered  : MAY 19, 2010
+Completed By: ROBBINS,BRADLEY               Date Completed: MAY 10, 2011
+Released By : CAULFIELD,MARY                Date Released : MAY 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

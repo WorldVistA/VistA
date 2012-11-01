@@ -1,0 +1,1144 @@
+Released LR*5.2*413 SEQ #326
+Extracted from mail message
+**KIDS**:LR*5.2*413^
+
+**INSTALL NAME**
+LR*5.2*413
+"BLD",8826,0)
+LR*5.2*413^LAB SERVICE^0^3110920^y
+"BLD",8826,1,0)
+^^17^17^3110809^^
+"BLD",8826,1,1,0)
+This patch is a VM patch that addresses 3 issues related to the
+"BLD",8826,1,2,0)
+Anatomic Pathology area of the Lab package.
+"BLD",8826,1,3,0)
+ 
+"BLD",8826,1,4,0)
+1.       When using option LRAPMOD (Print path modifications) an 
+"BLD",8826,1,5,0)
+<UNDEFINED> error is encountered.
+"BLD",8826,1,6,0)
+ 
+"BLD",8826,1,7,0)
+ 
+"BLD",8826,1,8,0)
+2.       Any date in the EXPIRATION DATE FIELD (#3) of the PERSON CLASS
+"BLD",8826,1,9,0)
+multiple (#200.05) of the NEW PERSON file (#200) for a provider
+"BLD",8826,1,10,0)
+will create a situation whereby that provider will not be able to
+"BLD",8826,1,11,0)
+verify/electronically sign Anatomic Pathology reports.  This happens
+"BLD",8826,1,12,0)
+even if the date is a future date.
+"BLD",8826,1,13,0)
+ 
+"BLD",8826,1,14,0)
+3.       If more than one Special Studies is included in an Anatomic 
+"BLD",8826,1,15,0)
+Pathology report, the text of the subsequent Special Studies 
+"BLD",8826,1,16,0)
+is not stored properly in the TIU document and thus doesn't display
+"BLD",8826,1,17,0)
+in CPRS.
+"BLD",8826,4,0)
+^9.64PA^^
+"BLD",8826,6)
+1^
+"BLD",8826,6.3)
+2
+"BLD",8826,"ABPKG")
+n
+"BLD",8826,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8826,"KRN",.4,0)
+.4
+"BLD",8826,"KRN",.401,0)
+.401
+"BLD",8826,"KRN",.402,0)
+.402
+"BLD",8826,"KRN",.403,0)
+.403
+"BLD",8826,"KRN",.5,0)
+.5
+"BLD",8826,"KRN",.84,0)
+.84
+"BLD",8826,"KRN",3.6,0)
+3.6
+"BLD",8826,"KRN",3.8,0)
+3.8
+"BLD",8826,"KRN",9.2,0)
+9.2
+"BLD",8826,"KRN",9.8,0)
+9.8
+"BLD",8826,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",8826,"KRN",9.8,"NM",1,0)
+LRAPMOD^^0^B16806171
+"BLD",8826,"KRN",9.8,"NM",2,0)
+LRAPRES1^^0^B44734045
+"BLD",8826,"KRN",9.8,"NM",3,0)
+LRAPBR3^^0^B13304017
+"BLD",8826,"KRN",9.8,"NM","B","LRAPBR3",3)
+
+"BLD",8826,"KRN",9.8,"NM","B","LRAPMOD",1)
+
+"BLD",8826,"KRN",9.8,"NM","B","LRAPRES1",2)
+
+"BLD",8826,"KRN",19,0)
+19
+"BLD",8826,"KRN",19.1,0)
+19.1
+"BLD",8826,"KRN",101,0)
+101
+"BLD",8826,"KRN",409.61,0)
+409.61
+"BLD",8826,"KRN",771,0)
+771
+"BLD",8826,"KRN",779.2,0)
+779.2
+"BLD",8826,"KRN",870,0)
+870
+"BLD",8826,"KRN",8989.51,0)
+8989.51
+"BLD",8826,"KRN",8989.52,0)
+8989.52
+"BLD",8826,"KRN",8994,0)
+8994
+"BLD",8826,"KRN","B",.4,.4)
+
+"BLD",8826,"KRN","B",.401,.401)
+
+"BLD",8826,"KRN","B",.402,.402)
+
+"BLD",8826,"KRN","B",.403,.403)
+
+"BLD",8826,"KRN","B",.5,.5)
+
+"BLD",8826,"KRN","B",.84,.84)
+
+"BLD",8826,"KRN","B",3.6,3.6)
+
+"BLD",8826,"KRN","B",3.8,3.8)
+
+"BLD",8826,"KRN","B",9.2,9.2)
+
+"BLD",8826,"KRN","B",9.8,9.8)
+
+"BLD",8826,"KRN","B",19,19)
+
+"BLD",8826,"KRN","B",19.1,19.1)
+
+"BLD",8826,"KRN","B",101,101)
+
+"BLD",8826,"KRN","B",409.61,409.61)
+
+"BLD",8826,"KRN","B",771,771)
+
+"BLD",8826,"KRN","B",779.2,779.2)
+
+"BLD",8826,"KRN","B",870,870)
+
+"BLD",8826,"KRN","B",8989.51,8989.51)
+
+"BLD",8826,"KRN","B",8989.52,8989.52)
+
+"BLD",8826,"KRN","B",8994,8994)
+
+"BLD",8826,"QUES",0)
+^9.62^^
+"BLD",8826,"REQB",0)
+^9.611^2^2
+"BLD",8826,"REQB",1,0)
+LR*5.2*259^2
+"BLD",8826,"REQB",2,0)
+LR*5.2*397^2
+"BLD",8826,"REQB","B","LR*5.2*259",1)
+
+"BLD",8826,"REQB","B","LR*5.2*397",2)
+
+"MBREQ")
+0
+"PKG",26,-1)
+1^1
+"PKG",26,0)
+LAB SERVICE^LR^CORE LAB SYSTEM
+"PKG",26,20,0)
+^9.402P^1^1
+"PKG",26,20,1,0)
+2^^LRXDRPT
+"PKG",26,20,1,1)
+
+"PKG",26,20,"B",2,1)
+
+"PKG",26,22,0)
+^9.49I^1^1
+"PKG",26,22,1,0)
+5.2^2940927^2950304
+"PKG",26,22,1,"PAH",1,0)
+413^3110920^33308
+"PKG",26,22,1,"PAH",1,1,0)
+^^17^17^3110920
+"PKG",26,22,1,"PAH",1,1,1,0)
+This patch is a VM patch that addresses 3 issues related to the
+"PKG",26,22,1,"PAH",1,1,2,0)
+Anatomic Pathology area of the Lab package.
+"PKG",26,22,1,"PAH",1,1,3,0)
+ 
+"PKG",26,22,1,"PAH",1,1,4,0)
+1.       When using option LRAPMOD (Print path modifications) an 
+"PKG",26,22,1,"PAH",1,1,5,0)
+<UNDEFINED> error is encountered.
+"PKG",26,22,1,"PAH",1,1,6,0)
+ 
+"PKG",26,22,1,"PAH",1,1,7,0)
+ 
+"PKG",26,22,1,"PAH",1,1,8,0)
+2.       Any date in the EXPIRATION DATE FIELD (#3) of the PERSON CLASS
+"PKG",26,22,1,"PAH",1,1,9,0)
+multiple (#200.05) of the NEW PERSON file (#200) for a provider
+"PKG",26,22,1,"PAH",1,1,10,0)
+will create a situation whereby that provider will not be able to
+"PKG",26,22,1,"PAH",1,1,11,0)
+verify/electronically sign Anatomic Pathology reports.  This happens
+"PKG",26,22,1,"PAH",1,1,12,0)
+even if the date is a future date.
+"PKG",26,22,1,"PAH",1,1,13,0)
+ 
+"PKG",26,22,1,"PAH",1,1,14,0)
+3.       If more than one Special Studies is included in an Anatomic 
+"PKG",26,22,1,"PAH",1,1,15,0)
+Pathology report, the text of the subsequent Special Studies 
+"PKG",26,22,1,"PAH",1,1,16,0)
+is not stored properly in the TIU document and thus doesn't display
+"PKG",26,22,1,"PAH",1,1,17,0)
+in CPRS.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","LRAPBR3")
+0^3^B13304017^B13308643
+"RTN","LRAPBR3",1,0)
+LRAPBR3 ;DALOI/WTY - AP Browser Print Cont.;04/06/01
+"RTN","LRAPBR3",2,0)
+ ;;5.2;LAB SERVICE;**259,413**;Sep 27, 1994;Build 2
+"RTN","LRAPBR3",3,0)
+ ;
+"RTN","LRAPBR3",4,0)
+ ; This routine was created from LRSPRPT1 to be used for printing
+"RTN","LRAPBR3",5,0)
+ ; the SF515 to the browser and storing the report in a global format
+"RTN","LRAPBR3",6,0)
+ ; This routine displays any special studies.  Printing of SNOMED
+"RTN","LRAPBR3",7,0)
+ ; codes and associated journal references (if any) has been removed.
+"RTN","LRAPBR3",8,0)
+MAIN ;
+"RTN","LRAPBR3",9,0)
+ N LRTP,LRCNT1,LRA1,LRFILE,LRFILE1
+"RTN","LRAPBR3",10,0)
+ N LRIENS1,LRA2
+"RTN","LRAPBR3",11,0)
+ Q:$G(LRSF)=""
+"RTN","LRAPBR3",12,0)
+ S LRA1=0,LRIENS=LRI_","_LRDFN_","
+"RTN","LRAPBR3",13,0)
+ S LRFILE=+$$GET1^DID(LRSF,10,"","SPECIFIER")
+"RTN","LRAPBR3",14,0)
+ F  S LRA1=$O(^LR(LRDFN,LRSS,LRI,2,LRA1)) Q:'LRA1  D
+"RTN","LRAPBR3",15,0)
+ .S LRIENS1=LRA1_","_LRIENS
+"RTN","LRAPBR3",16,0)
+ .S LRTP(1)=$$GET1^DIQ(LRFILE,LRIENS1,.01)
+"RTN","LRAPBR3",17,0)
+ .S LRTP(2)=$$GET1^DIQ(LRFILE,LRIENS1,.01,"I")
+"RTN","LRAPBR3",18,0)
+ .S LRTP(8)=$$GET1^DIQ(LRFILE,LRIENS1,".01:2")
+"RTN","LRAPBR3",19,0)
+ .D SPCSTD
+"RTN","LRAPBR3",20,0)
+ .D JRNLREF
+"RTN","LRAPBR3",21,0)
+ Q
+"RTN","LRAPBR3",22,0)
+SPCSTD ;Display Special Studies
+"RTN","LRAPBR3",23,0)
+ Q:'$P($G(^LR(LRDFN,LRSS,LRI,2,LRA1,5,0)),"^",4)
+"RTN","LRAPBR3",24,0)
+ D GLENTRY("SPECIAL STUDIES:","",1)
+"RTN","LRAPBR3",25,0)
+ N LRX,DIWR,DIWL,LRC,LRTMP
+"RTN","LRAPBR3",26,0)
+ S LRC=0 F  S LRC=$O(^LR(LRDFN,LRSS,LRI,2,LRA1,5,LRC)) Q:'LRC  D
+"RTN","LRAPBR3",27,0)
+ .S LRFILE1=+$$GET1^DID(LRFILE,5,"","SPECIFIER")
+"RTN","LRAPBR3",28,0)
+ .F I=.01:.01:.03 D
+"RTN","LRAPBR3",29,0)
+ ..S LRTP(I)=$$GET1^DIQ(LRFILE1,LRC_","_LRIENS1,I)
+"RTN","LRAPBR3",30,0)
+ .D GLENTRY("","",1)
+"RTN","LRAPBR3",31,0)
+ .D GLENTRY(LRTP(.01)_" "_LRTP(.03)_" Date: "_LRTP(.02),"",1)
+"RTN","LRAPBR3",32,0)
+ .D GLENTRY(LRTP(1),"",1)
+"RTN","LRAPBR3",33,0)
+ .K ^UTILITY($J,"W")
+"RTN","LRAPBR3",34,0)
+ .S LRX=$$GET1^DIQ(LRFILE1,LRC_","_LRIENS1,1,"","LRTMP")
+"RTN","LRAPBR3",35,0)
+ .S DIWR=IOM-10,DIWL=10,DIWF=""
+"RTN","LRAPBR3",36,0)
+ .S LRX=+$$GET1^DID(LRFILE1,1,"","SPECIFIER")
+"RTN","LRAPBR3",37,0)
+ .I $$GET1^DID(LRX,.01,"","SPECIFIER")["L" S DIWF="N"
+"RTN","LRAPBR3",38,0)
+ .S LRA2=0 F  S LRA2=$O(LRTMP(LRA2)) Q:'LRA2  S X=LRTMP(LRA2) D ^DIWP
+"RTN","LRAPBR3",39,0)
+ .S LRA2=0 F  S LRA2=$O(^UTILITY($J,"W",DIWL,LRA2)) Q:'LRA2  D
+"RTN","LRAPBR3",40,0)
+ ..D GLENTRY(^UTILITY($J,"W",DIWL,LRA2,0),DIWL,1)
+"RTN","LRAPBR3",41,0)
+ .K ^UTILITY($J,"W")
+"RTN","LRAPBR3",42,0)
+ Q
+"RTN","LRAPBR3",43,0)
+ ;
+"RTN","LRAPBR3",44,0)
+JRNLREF ;Display Journal References
+"RTN","LRAPBR3",45,0)
+ ;Topography
+"RTN","LRAPBR3",46,0)
+ N LRFL,LRM,LRN
+"RTN","LRAPBR3",47,0)
+ S LRFL=LRTP(2),LRFILE1=61 D JREFPRT
+"RTN","LRAPBR3",48,0)
+ ;Morphology
+"RTN","LRAPBR3",49,0)
+ S LRFILE1=61.1,LRFILE3=+$$GET1^DID(LRFILE,4,"","SPECIFIER")
+"RTN","LRAPBR3",50,0)
+ S LRM=0 F  S LRM=$O(^LR(LRDFN,LRSS,LRI,2,LRA1,2,LRM)) Q:'LRM  D
+"RTN","LRAPBR3",51,0)
+ .S LRIENS2=LRM_","_LRIENS1
+"RTN","LRAPBR3",52,0)
+ .S LRFL=$$GET1^DIQ(LRFILE3,LRIENS2,.01,"I")
+"RTN","LRAPBR3",53,0)
+ .D JREFPRT
+"RTN","LRAPBR3",54,0)
+ .;Etiology
+"RTN","LRAPBR3",55,0)
+ .S LRFILE1=61.2,LRFILE4=+$$GET1^DID(LRFILE3,1,"","SPECIFIER")
+"RTN","LRAPBR3",56,0)
+ .S LRN=0 F  S LRN=$O(^LR(LRDFN,LRSS,LRI,2,LRA1,2,LRM,1,LRN)) Q:'LRN  D
+"RTN","LRAPBR3",57,0)
+ ..S LRIENS3=LRN_","_LRIENS2
+"RTN","LRAPBR3",58,0)
+ ..S LRFL=$$GET1^DIQ(LRFILE4,LRIENS3,.01,"I")
+"RTN","LRAPBR3",59,0)
+ ..D JREFPRT
+"RTN","LRAPBR3",60,0)
+ ;Disease
+"RTN","LRAPBR3",61,0)
+ S LRFILE1=61.4,LRFILE3=+$$GET1^DID(LRFILE,3,"","SPECIFIER")
+"RTN","LRAPBR3",62,0)
+ S LRM=0 F  S LRM=$O(^LR(LRDFN,LRSS,LRI,2,LRA1,1,LRM)) Q:'LRM  D
+"RTN","LRAPBR3",63,0)
+ .S LRIENS2=LRM_","_LRIENS1
+"RTN","LRAPBR3",64,0)
+ .S LRFL=$$GET1^DIQ(LRFILE3,LRIENS2,.01,"I")
+"RTN","LRAPBR3",65,0)
+ .D JREFPRT
+"RTN","LRAPBR3",66,0)
+ ;Function
+"RTN","LRAPBR3",67,0)
+ S LRFILE1=61.3,LRFILE3=+$$GET1^DID(LRFILE,1,"","SPECIFIER")
+"RTN","LRAPBR3",68,0)
+ S LRM=0 F  S LRM=$O(^LR(LRDFN,LRSS,LRI,2,LRA1,3,LRM)) Q:'LRM  D
+"RTN","LRAPBR3",69,0)
+ .S LRIENS2=LRM_","_LRIENS1
+"RTN","LRAPBR3",70,0)
+ .S LRFL=$$GET1^DIQ(LRFILE3,LRIENS2,.01,"I")
+"RTN","LRAPBR3",71,0)
+ .D JREFPRT
+"RTN","LRAPBR3",72,0)
+ Q
+"RTN","LRAPBR3",73,0)
+JREFPRT ;
+"RTN","LRAPBR3",74,0)
+ ; Print journal reference on the patient report if the 
+"RTN","LRAPBR3",75,0)
+ ; reference is flagged for printing.
+"RTN","LRAPBR3",76,0)
+ N LRJR,LRINC
+"RTN","LRAPBR3",77,0)
+ S LRFILE2=+$$GET1^DID(LRFILE1,5,"","SPECIFIER")
+"RTN","LRAPBR3",78,0)
+ S LRJR=0 F  S LRJR=$O(^LAB(LRFILE1,LRFL,"JR",LRJR)) Q:'LRJR  D
+"RTN","LRAPBR3",79,0)
+ .S LRJR(.01)=$$GET1^DIQ(LRFILE2,LRJR_","_LRFL_",",.01)
+"RTN","LRAPBR3",80,0)
+ .F LRINC=1:1:5 D
+"RTN","LRAPBR3",81,0)
+ ..S LRJR(LRINC)=$$GET1^DIQ(LRFILE2,LRJR_","_LRFL_",",LRINC)
+"RTN","LRAPBR3",82,0)
+ .S LRJR(6)=$$GET1^DIQ(LRFILE2,LRJR_","_LRFL_",",6,"I")
+"RTN","LRAPBR3",83,0)
+ .Q:'LRJR(6)
+"RTN","LRAPBR3",84,0)
+ .D GLENTRY(,,1),GLENTRY("Reference: ",,1)
+"RTN","LRAPBR3",85,0)
+ .D GLENTRY(LRJR(.01),,1)
+"RTN","LRAPBR3",86,0)
+ .D GLENTRY(LRJR(1),,1),GLENTRY(,,1)
+"RTN","LRAPBR3",87,0)
+ .I LRJR(2)'="" D
+"RTN","LRAPBR3",88,0)
+ ..D GLENTRY(LRJR(2)_"  vol."_LRJR(3),BTAB)
+"RTN","LRAPBR3",89,0)
+ ..D GLENTRY(" pg."_LRJR(4),BTAB)
+"RTN","LRAPBR3",90,0)
+ .D GLENTRY("  Date: "_LRJR(5),BTAB)
+"RTN","LRAPBR3",91,0)
+ Q
+"RTN","LRAPBR3",92,0)
+GLENTRY(LRPR1,LRPR2,LRPR3) ;Write to global
+"RTN","LRAPBR3",93,0)
+ ;LRPR1 = Text to be written to global
+"RTN","LRAPBR3",94,0)
+ ;LRPR2 = Tab position
+"RTN","LRAPBR3",95,0)
+ ;LRPR3 = 1 means start a new line.  Othewise, write on current line.
+"RTN","LRAPBR3",96,0)
+ S LRPR1=$G(LRPR1),LRPR2=+$G(LRPR2),LRPR3=+$G(LRPR3)
+"RTN","LRAPBR3",97,0)
+ D:LRPR3 NEWLN^LRAPUTL(LRPR1,LRPR2)
+"RTN","LRAPBR3",98,0)
+ D:'LRPR3 GLBWRT^LRAPUTL(LRPR1,LRPR2)
+"RTN","LRAPBR3",99,0)
+ Q
+"RTN","LRAPMOD")
+0^1^B16806171^B16465841
+"RTN","LRAPMOD",1,0)
+LRAPMOD ;AVAMC/REG/WTY/KLL - PRINT PATH MICRO MODIFICATIONS ;9/22/00
+"RTN","LRAPMOD",2,0)
+ ;;5.2;LAB SERVICE;**72,248,259,413**;Sep 27, 1994;Build 2
+"RTN","LRAPMOD",3,0)
+ ;
+"RTN","LRAPMOD",4,0)
+ ;Reference to ^%DT supported by IA #10003
+"RTN","LRAPMOD",5,0)
+ ;
+"RTN","LRAPMOD",6,0)
+ ;If ESIG Switch turned ON, print from TIU if found,
+"RTN","LRAPMOD",7,0)
+ ;  otherwise print from LR.
+"RTN","LRAPMOD",8,0)
+ N LRESSW
+"RTN","LRAPMOD",9,0)
+ D GETDATA^LRAPESON(.LRESSW)
+"RTN","LRAPMOD",10,0)
+ I +$G(LRESSW) D TIUPRT,END Q
+"RTN","LRAPMOD",11,0)
+ ;Print from LR
+"RTN","LRAPMOD",12,0)
+ S LRDICS="AUSPCYEM" D ^LRAP G:'$D(Y) END
+"RTN","LRAPMOD",13,0)
+ W !!?15,LRO(68),!!?15,"Print pathology report modifications",!!
+"RTN","LRAPMOD",14,0)
+GETP D EN2^LRUA,EN1^LRUPS
+"RTN","LRAPMOD",15,0)
+ G:LRAN["?" GETP
+"RTN","LRAPMOD",16,0)
+ I LRAN=-1 D END Q
+"RTN","LRAPMOD",17,0)
+ S FLGMOD=1
+"RTN","LRAPMOD",18,0)
+LRPRT I LRSS'="AU" D
+"RTN","LRAPMOD",19,0)
+ .S:($D(^LR(LRDFN,LRSS,LRI,4))!($D(^(5)))!($D(^(6)))!($D(^(7)))) FLGMOD=0
+"RTN","LRAPMOD",20,0)
+ I FLGMOD D  K LRFILE
+"RTN","LRAPMOD",21,0)
+ .S LRFILE=$S(LRSS="AU":"^LR(LRDFN,84",1:"^LR(LRDFN,LRSS,LRI,1.2")
+"RTN","LRAPMOD",22,0)
+ .I $D(@(LRFILE_")")) D
+"RTN","LRAPMOD",23,0)
+ ..F A=0:0 S A=$O(@(LRFILE_",A)")) Q:'A!('FLGMOD)  D
+"RTN","LRAPMOD",24,0)
+ ...S:$D(@(LRFILE_",A,2)")) FLGMOD=0
+"RTN","LRAPMOD",25,0)
+ I FLGMOD W $C(7),!!?5,"No modifications to print." G END
+"RTN","LRAPMOD",26,0)
+ K FLGMOD
+"RTN","LRAPMOD",27,0)
+ S (LRQ(9),LRSAV)=1,LRAP=LRDFN
+"RTN","LRAPMOD",28,0)
+ I LRSS'="AU" D  G DEV^LRSPRPT
+"RTN","LRAPMOD",29,0)
+ .S LRAP=LRAP_"^"_LRI,LRS(99)=1
+"RTN","LRAPMOD",30,0)
+ S X="T",%DT="" D ^%DT,D^LRU S LRH(3)=Y,LRFLG=1
+"RTN","LRAPMOD",31,0)
+ G DEV^LRAPAUSR
+"RTN","LRAPMOD",32,0)
+TIUPRT ;Print from TIU 
+"RTN","LRAPMOD",33,0)
+ N LRPTR,LREL,LRDATA
+"RTN","LRAPMOD",34,0)
+ S (LRQUIT,LRCONT,LRPTR2)=0
+"RTN","LRAPMOD",35,0)
+ S LRDICS="AUSPCYEM" D ^LRAP G:'$D(Y) END
+"RTN","LRAPMOD",36,0)
+ W !!?15,LRO(68),!!?5,"Print All AP Reports for an Accession from TIU",!!
+"RTN","LRAPMOD",37,0)
+ D ACCYR^LRAPMRL
+"RTN","LRAPMOD",38,0)
+ I LRQUIT D END Q
+"RTN","LRAPMOD",39,0)
+ S LRAU=0
+"RTN","LRAPMOD",40,0)
+ I LRSS="AU" S LRAU=1
+"RTN","LRAPMOD",41,0)
+ D LOOKUP^LRAPUTL(.LRDATA,LRH(0),LRO(68),LRSS,LRAD,LRAA)
+"RTN","LRAPMOD",42,0)
+ Q:'LRDATA!(LRDATA=-1)
+"RTN","LRAPMOD",43,0)
+ S FLGMOD=1
+"RTN","LRAPMOD",44,0)
+ S LRDFN=LRDATA,LRI=LRDATA(1)
+"RTN","LRAPMOD",45,0)
+ S LRIENS=LRI_","_LRDFN_","
+"RTN","LRAPMOD",46,0)
+ ;Check for release date
+"RTN","LRAPMOD",47,0)
+ I LRSS'="AU" S LREL=$$GET1^DIQ(LRSF,LRIENS,.11,"I")
+"RTN","LRAPMOD",48,0)
+ I LRSS="AU" S LREL=$$GET1^DIQ(63,LRDFN_",",14.7,"I")
+"RTN","LRAPMOD",49,0)
+ I 'LREL D
+"RTN","LRAPMOD",50,0)
+ .S DIR(0)="Y",DIR("B")="YES",DIR("A")="CONTINUE?"
+"RTN","LRAPMOD",51,0)
+ .S DIR("A",1)="Report not verified. Check for and print"
+"RTN","LRAPMOD",52,0)
+ .S DIR("A",2)="   previous versions?"
+"RTN","LRAPMOD",53,0)
+ .D ^DIR
+"RTN","LRAPMOD",54,0)
+ .I Y=0 S LRQUIT=1
+"RTN","LRAPMOD",55,0)
+ I LRQUIT D END Q
+"RTN","LRAPMOD",56,0)
+ I 'LREL D
+"RTN","LRAPMOD",57,0)
+ .D GETPREV
+"RTN","LRAPMOD",58,0)
+ .;No previous versions found, retrieve from LR?
+"RTN","LRAPMOD",59,0)
+ .I '+$G(LRPTR) D
+"RTN","LRAPMOD",60,0)
+ ..S DIR(0)="Y",DIR("B")="YES",DIR("A")="CONTINUE?"
+"RTN","LRAPMOD",61,0)
+ ..S DIR("A",1)="No previous versions found in TIU."
+"RTN","LRAPMOD",62,0)
+ ..S DIR("A",2)="   Print from LR?"
+"RTN","LRAPMOD",63,0)
+ ..D ^DIR
+"RTN","LRAPMOD",64,0)
+ ..I Y=0 S LRQUIT=1
+"RTN","LRAPMOD",65,0)
+ ..I Y=1 S LRCONT=1
+"RTN","LRAPMOD",66,0)
+ G:LRCONT GETP
+"RTN","LRAPMOD",67,0)
+ I LRQUIT D END Q
+"RTN","LRAPMOD",68,0)
+ ;Release date found, check TIU
+"RTN","LRAPMOD",69,0)
+ I LREL D
+"RTN","LRAPMOD",70,0)
+ .D TIUCHK^LRAPUTL(.LRPTR,LRDFN,LRSS,LRI)
+"RTN","LRAPMOD",71,0)
+ .I '+$G(LRPTR) D
+"RTN","LRAPMOD",72,0)
+ ..S DIR(0)="Y",DIR("B")="YES",DIR("A")="CONTINUE?"
+"RTN","LRAPMOD",73,0)
+ ..S DIR("A",1)="Report not found in TIU."
+"RTN","LRAPMOD",74,0)
+ ..S DIR("A",2)="   Print from LR?"
+"RTN","LRAPMOD",75,0)
+ ..D ^DIR
+"RTN","LRAPMOD",76,0)
+ ..I Y=0 S LRQUIT=1
+"RTN","LRAPMOD",77,0)
+ ..I Y=1 S LRCONT=1
+"RTN","LRAPMOD",78,0)
+ I LRQUIT D END Q
+"RTN","LRAPMOD",79,0)
+ G:LRCONT GETP
+"RTN","LRAPMOD",80,0)
+ ;Found in TIU, print from TIU
+"RTN","LRAPMOD",81,0)
+ I +$G(LRPTR) D
+"RTN","LRAPMOD",82,0)
+ .S LRPTR2=1
+"RTN","LRAPMOD",83,0)
+ .W !
+"RTN","LRAPMOD",84,0)
+ .S %ZIS="Q" D ^%ZIS
+"RTN","LRAPMOD",85,0)
+ .I POP W ! D END Q
+"RTN","LRAPMOD",86,0)
+ .I $D(IO("Q")) D  Q
+"RTN","LRAPMOD",87,0)
+ ..S ZTDESC="Print Anat Path Reports"
+"RTN","LRAPMOD",88,0)
+ ..S ZTSAVE("LR*")="",ZTRTN="PRTRPT^LRAPMOD"
+"RTN","LRAPMOD",89,0)
+ ..D ^%ZTLOAD W:$D(ZTSK) !,"Request Queued, #",ZTSK W !
+"RTN","LRAPMOD",90,0)
+ ..K ZTSK,IO("Q") D HOME^%ZIS
+"RTN","LRAPMOD",91,0)
+ .D PRTRPT
+"RTN","LRAPMOD",92,0)
+ D ^%ZISC
+"RTN","LRAPMOD",93,0)
+ ;Allow print of LR even if stored in TIU
+"RTN","LRAPMOD",94,0)
+ I LRPTR2=1 D
+"RTN","LRAPMOD",95,0)
+ .S DIR(0)="Y",DIR("B")="YES",DIR("A")="CONTINUE?"
+"RTN","LRAPMOD",96,0)
+ .S DIR("A",1)="Print a copy from LR in addition to TIU print?"
+"RTN","LRAPMOD",97,0)
+ .D ^DIR
+"RTN","LRAPMOD",98,0)
+ .I Y=0 S LRQUIT=1
+"RTN","LRAPMOD",99,0)
+ .I Y=1 S LRCONT=1,LRPTR=0
+"RTN","LRAPMOD",100,0)
+ Q:LRQUIT
+"RTN","LRAPMOD",101,0)
+ G:LRCONT GETP
+"RTN","LRAPMOD",102,0)
+ Q
+"RTN","LRAPMOD",103,0)
+PRTRPT ;Print from TIU
+"RTN","LRAPMOD",104,0)
+ N LRSAVPTR
+"RTN","LRAPMOD",105,0)
+ U IO
+"RTN","LRAPMOD",106,0)
+ F  D  Q:'LRPTR!(LRQUIT)
+"RTN","LRAPMOD",107,0)
+ .S LRSAVPTR=LRPTR
+"RTN","LRAPMOD",108,0)
+ .D MAIN^LRAPTIUP(LRPTR,0)
+"RTN","LRAPMOD",109,0)
+ .S LRPTR=$$GET1^DIQ(8925,LRSAVPTR,1406,"I")
+"RTN","LRAPMOD",110,0)
+ Q
+"RTN","LRAPMOD",111,0)
+GETPREV ;
+"RTN","LRAPMOD",112,0)
+ I LRSS="AU" D
+"RTN","LRAPMOD",113,0)
+ .S LRROOT="^LR(LRDFN,101,""A"")",LRIENS=LRDFN_","
+"RTN","LRAPMOD",114,0)
+ .S LRFILE=63.101
+"RTN","LRAPMOD",115,0)
+ I LRSS'="AU" D
+"RTN","LRAPMOD",116,0)
+ .S LRROOT="^LR(LRDFN,LRSS,LRI,.05,""A"")"
+"RTN","LRAPMOD",117,0)
+ .S LRIENS=LRI_","_LRDFN_","
+"RTN","LRAPMOD",118,0)
+ .S LRFILE=$S(LRSS="SP":63.19,LRSS="CY":63.47,LRSS="EM":63.49,1:"")
+"RTN","LRAPMOD",119,0)
+ S LRTREC=$O(@(LRROOT),-1)
+"RTN","LRAPMOD",120,0)
+ I LRFILE=""!(LRTREC="") S LRPTR=0 Q
+"RTN","LRAPMOD",121,0)
+ S LRIENS=LRTREC_","_LRIENS
+"RTN","LRAPMOD",122,0)
+ S LRPTR=+$$GET1^DIQ(LRFILE,LRIENS,1,"I")
+"RTN","LRAPMOD",123,0)
+ I '+$G(LRPTR) D
+"RTN","LRAPMOD",124,0)
+ .W $C(7),"Report not found in TIU",!
+"RTN","LRAPMOD",125,0)
+ .S LRQUIT=1
+"RTN","LRAPMOD",126,0)
+ Q
+"RTN","LRAPMOD",127,0)
+END ;
+"RTN","LRAPMOD",128,0)
+ D V^LRU
+"RTN","LRAPMOD",129,0)
+ Q
+"RTN","LRAPRES1")
+0^2^B44734045^B44582799
+"RTN","LRAPRES1",1,0)
+LRAPRES1 ;DALOI/WTY/KLL/CKA - AP ESIG RELEASE REPORT/ALERT;11/13/01
+"RTN","LRAPRES1",2,0)
+ ;;5.2;LAB SERVICE;**259,336,369,365,397,413**;Sep 27, 1994;Build 2
+"RTN","LRAPRES1",3,0)
+ ;
+"RTN","LRAPRES1",4,0)
+ ;Reference to FILE^TIUSRVP supported by IA #3540
+"RTN","LRAPRES1",5,0)
+ ;Reference to ^TIULQ supported by IA #2693 
+"RTN","LRAPRES1",6,0)
+ ;Reference to ^ORB3LAB supported by IA #4287
+"RTN","LRAPRES1",7,0)
+ ;Reference to DIC lookup on MAIL GROUP file (#3.8) supported by IA #10111
+"RTN","LRAPRES1",8,0)
+ ;
+"RTN","LRAPRES1",9,0)
+MAIN(LRDFN,LRSS,LRI,LRSF,LRP,LRAC) ;Main subroutine
+"RTN","LRAPRES1",10,0)
+ Q:'$D(LRDFN)!('$D(LRSS))!('$D(LRP))!('$D(LRAC))
+"RTN","LRAPRES1",11,0)
+ N LRDOCS,LRMSG,LRC,LRDOCSN,LRNUM,LRADL,LRMORE,LRQUIT,LRXQA
+"RTN","LRAPRES1",12,0)
+ N DIR,DIRUT,DTOUT,DUOUT,X,Y,DIC,XQA,XQAMSG
+"RTN","LRAPRES1",13,0)
+ S LRQUIT=0
+"RTN","LRAPRES1",14,0)
+ ;
+"RTN","LRAPRES1",15,0)
+ ; CPRS alerts only sent for "patients" related to Patient file (#2)
+"RTN","LRAPRES1",16,0)
+ I $P($G(^LR(LRDFN,0)),"^",2)'=2 Q
+"RTN","LRAPRES1",17,0)
+ ;
+"RTN","LRAPRES1",18,0)
+ I $G(LRAU) D
+"RTN","LRAPRES1",19,0)
+ .S LRA=^LR(LRDFN,"AU")
+"RTN","LRAPRES1",20,0)
+ .S LRI=$P(LRA,U)
+"RTN","LRAPRES1",21,0)
+ D DOCS
+"RTN","LRAPRES1",22,0)
+ Q:LRQUIT
+"RTN","LRAPRES1",23,0)
+ D MORE
+"RTN","LRAPRES1",24,0)
+ I LRMORE D LOOKUP
+"RTN","LRAPRES1",25,0)
+ D SEND
+"RTN","LRAPRES1",26,0)
+ Q
+"RTN","LRAPRES1",27,0)
+DOCS ;GET ORDERING PROVIDER AND PCP TO SEND ALERT
+"RTN","LRAPRES1",28,0)
+ W !
+"RTN","LRAPRES1",29,0)
+ S:$G(LRSF)="" LRSF=63
+"RTN","LRAPRES1",30,0)
+ D GETDOCS^LRAPUTL(.LRDOCS,LRDFN,LRSS,$G(LRI),LRSF)
+"RTN","LRAPRES1",31,0)
+ S:LRDOCS(1)=LRDOCS(2) LRDOCS(2)=0
+"RTN","LRAPRES1",32,0)
+ F LRC=1:1:2 D
+"RTN","LRAPRES1",33,0)
+ .I LRDOCS(LRC) D
+"RTN","LRAPRES1",34,0)
+ ..S LRDOCSN(LRC)=$$NAME^XUSER(LRDOCS(LRC),"F")
+"RTN","LRAPRES1",35,0)
+ ..I LRDOCSN(LRC)'="" S LRXQA(LRDOCS(LRC))=""
+"RTN","LRAPRES1",36,0)
+ S LRNUM=1
+"RTN","LRAPRES1",37,0)
+ K LRMSG
+"RTN","LRAPRES1",38,0)
+ D
+"RTN","LRAPRES1",39,0)
+ .S LRMSG(LRNUM)="Alert will be sent to:",LRMSG(LRNUM,"F")="!!"
+"RTN","LRAPRES1",40,0)
+ .I LRDOCS(1) D
+"RTN","LRAPRES1",41,0)
+ ..S LRNUM=LRNUM+1,LRMSG(LRNUM)=LRDOCSN(1),LRMSG(LRNUM,"F")="?24"
+"RTN","LRAPRES1",42,0)
+ .I LRDOCS(2) D
+"RTN","LRAPRES1",43,0)
+ ..S LRNUM=LRNUM+1,LRMSG(LRNUM)=LRDOCSN(2)
+"RTN","LRAPRES1",44,0)
+ ..S LRMSG(LRNUM,"F")=$S(LRDOCS(1):"!",1:"")_"?24"
+"RTN","LRAPRES1",45,0)
+ I LRQUIT D
+"RTN","LRAPRES1",46,0)
+ .S LRMSG(LRNUM)="No Ordering Provider or PCP for alert"
+"RTN","LRAPRES1",47,0)
+ .S LRMSG(LRNUM,"F")="!!"
+"RTN","LRAPRES1",48,0)
+ D EN^DDIOL(.LRMSG)
+"RTN","LRAPRES1",49,0)
+ Q
+"RTN","LRAPRES1",50,0)
+MORE ;Add names or mail groups to the lookup list?
+"RTN","LRAPRES1",51,0)
+ N DIR,DIRUT,DTOUT,DUOUT,X,Y
+"RTN","LRAPRES1",52,0)
+ W !
+"RTN","LRAPRES1",53,0)
+ S LRMORE=1
+"RTN","LRAPRES1",54,0)
+ S DIR(0)="Y"
+"RTN","LRAPRES1",55,0)
+ S DIR("A")="Send the alert to additional names or mail groups"
+"RTN","LRAPRES1",56,0)
+ S X=$$GET^XPAR("USR^DIV^PKG","LRAPRES1 AP ALERT",1,"Q")
+"RTN","LRAPRES1",57,0)
+ S X=$S(X=1:"YES",X=0:"NO",1:"NO")
+"RTN","LRAPRES1",58,0)
+ S DIR("B")=X
+"RTN","LRAPRES1",59,0)
+ D ^DIR
+"RTN","LRAPRES1",60,0)
+ I Y=0 S LRMORE=0 Q
+"RTN","LRAPRES1",61,0)
+ I $D(DUOUT)!($D(DTOUT)) S LRQUIT=1,LRMORE=0
+"RTN","LRAPRES1",62,0)
+ Q
+"RTN","LRAPRES1",63,0)
+LOOKUP ;Add additional names or mail groups to alert list.
+"RTN","LRAPRES1",64,0)
+ F  D  Q:LRQUIT
+"RTN","LRAPRES1",65,0)
+ .W !
+"RTN","LRAPRES1",66,0)
+ .K DIR
+"RTN","LRAPRES1",67,0)
+ .;S DIR(0)="F^3:30^I X'?1""U."".E&(X'?1""G."".E) K X"
+"RTN","LRAPRES1",68,0)
+ .S DIR(0)="FO^3:30^I X["".""&((X'?1""G."".E)&(X'?1""g."".E)) K X"
+"RTN","LRAPRES1",69,0)
+ .S DIR("A")="Enter name or mail group"
+"RTN","LRAPRES1",70,0)
+ .S DIR("?")="Enter lastname,firstname OR G.mailgroup OR ^ to exit"
+"RTN","LRAPRES1",71,0)
+ .D ^DIR
+"RTN","LRAPRES1",72,0)
+ .I $D(DIRUT) S LRQUIT=1 Q
+"RTN","LRAPRES1",73,0)
+ .S X=Y,LRADL=""
+"RTN","LRAPRES1",74,0)
+ .I Y["." S LRADL=$P(Y,"."),X=$P(Y,".",2)
+"RTN","LRAPRES1",75,0)
+ .S Y=$$UP^XLFSTR(Y)
+"RTN","LRAPRES1",76,0)
+ .I LRADL="g" S LRADL="G"
+"RTN","LRAPRES1",77,0)
+ .K DIC
+"RTN","LRAPRES1",78,0)
+ .S DIC(0)="QEZ"
+"RTN","LRAPRES1",79,0)
+ .S DIC=$S(LRADL="G":3.8,1:200)
+"RTN","LRAPRES1",80,0)
+ .D ^DIC
+"RTN","LRAPRES1",81,0)
+ .Q:Y=-1
+"RTN","LRAPRES1",82,0)
+ .S:LRADL="" XQA($P(Y,"^"))=""
+"RTN","LRAPRES1",83,0)
+ .S:LRADL="G" XQA("G."_$P(Y,"^",2))=""
+"RTN","LRAPRES1",84,0)
+ Q
+"RTN","LRAPRES1",85,0)
+SEND ;Send the alert
+"RTN","LRAPRES1",86,0)
+ ;S XQAMSG=$E(LRP,1,9)_" ("_$E(LRP,1)_VA("BID")_"): Pathology report signed for "_LRAC_"."
+"RTN","LRAPRES1",87,0)
+ ;D SETUP^XQALERT
+"RTN","LRAPRES1",88,0)
+ M XQA=LRXQA
+"RTN","LRAPRES1",89,0)
+ D LAB^ORB3LAB(DFN,LRDFN,LRI,$G(LRA),LRSS,.XQA)
+"RTN","LRAPRES1",90,0)
+ I $D(LRADL) D
+"RTN","LRAPRES1",91,0)
+ .S LRMSG="Alerts have been sent to the specified additional users."
+"RTN","LRAPRES1",92,0)
+ .D EN^DDIOL(LRMSG,"","!!")
+"RTN","LRAPRES1",93,0)
+ .K LRMSG
+"RTN","LRAPRES1",94,0)
+ Q
+"RTN","LRAPRES1",95,0)
+AHELP ;Help Frame
+"RTN","LRAPRES1",96,0)
+ K LRMSG
+"RTN","LRAPRES1",97,0)
+ S LRMSG(1)="If answered 'Yes', the alert will notify the primary care"
+"RTN","LRAPRES1",98,0)
+ S LRMSG(1,"F")="!"
+"RTN","LRAPRES1",99,0)
+ S LRMSG(2)="provider and the surgeon/physician that this report has"
+"RTN","LRAPRES1",100,0)
+ S LRMSG(3)="been electronically signed and is now available for"
+"RTN","LRAPRES1",101,0)
+ S LRMSG(4)="viewing. You will also have the opportunity to send the"
+"RTN","LRAPRES1",102,0)
+ S LRMSG(5)="alert to additional names or mail groups."
+"RTN","LRAPRES1",103,0)
+ D EN^DDIOL(.LRMSG)
+"RTN","LRAPRES1",104,0)
+ Q
+"RTN","LRAPRES1",105,0)
+RETRACT(LRDFN,LRSS,LRI,LRTIUPTR) ;
+"RTN","LRAPRES1",106,0)
+ ;Change prior TIU versions of report to RETRACTED status
+"RTN","LRAPRES1",107,0)
+ N LRROOT,LRIENS,LRFILE,LRTIUP,LRTIUAR,LRERR,LRSTAT,LRTIUX,LREXRR
+"RTN","LRAPRES1",108,0)
+ I LRSS=""!("AUSPEMCY"'[LRSS) S LRPTR=0 Q
+"RTN","LRAPRES1",109,0)
+ I LRSS="AU" D
+"RTN","LRAPRES1",110,0)
+ .S LRROOT="^LR(LRDFN,101,""C""",LRIENS=LRDFN_","
+"RTN","LRAPRES1",111,0)
+ .S LRFILE=63.101
+"RTN","LRAPRES1",112,0)
+ I LRSS'="AU" D
+"RTN","LRAPRES1",113,0)
+ .S LRROOT="^LR(LRDFN,LRSS,LRI,.05,""C"""
+"RTN","LRAPRES1",114,0)
+ .S LRIENS=LRI_","_LRDFN_","
+"RTN","LRAPRES1",115,0)
+ .S LRFILE=$S(LRSS="SP":63.19,LRSS="CY":63.47,LRSS="EM":63.49,1:"")
+"RTN","LRAPRES1",116,0)
+ Q:'$D(@(LRROOT_")"))
+"RTN","LRAPRES1",117,0)
+ S LRTIUP=0,LRTIUX(.05)=15
+"RTN","LRAPRES1",118,0)
+ F  S LRTIUP=$O(@(LRROOT_",LRTIUP)"))  Q:LRTIUP'>0!(LRTIUP=LRTIUPTR)  D
+"RTN","LRAPRES1",119,0)
+ .K LRTIUAR S (LRSTAT,LRERR)=0
+"RTN","LRAPRES1",120,0)
+ .D EXTRACT^TIULQ(LRTIUP,"LRTIUAR",.LRERR,".05",,,"I")
+"RTN","LRAPRES1",121,0)
+ .Q:+LRERR
+"RTN","LRAPRES1",122,0)
+ .M LRSTAT=LRTIUAR(LRTIUP,.05,"I")
+"RTN","LRAPRES1",123,0)
+ .Q:LRSTAT'=7  ;Quit if current status is not COMPLETED
+"RTN","LRAPRES1",124,0)
+ .D FILE^TIUSRVP(.LREXRR,LRTIUP,.LRTIUX)
+"RTN","LRAPRES1",125,0)
+ .;Update new TIU version of report with previous TIU pointer value
+"RTN","LRAPRES1",126,0)
+ .N LREXRR,LRTIUX
+"RTN","LRAPRES1",127,0)
+ .S LRTIUX(1406)=LRTIUP
+"RTN","LRAPRES1",128,0)
+ .D FILE^TIUSRVP(.LREXRR,LRTIUPTR,.LRTIUX)
+"RTN","LRAPRES1",129,0)
+ Q
+"RTN","LRAPRES1",130,0)
+CLSSCHK(DUZ,LREND) ;Determine if user has the proper class settings and
+"RTN","LRAPRES1",131,0)
+ ;PROVIDER key
+"RTN","LRAPRES1",132,0)
+ N LRMSG,LRPRCLSS,LRPCEXP,LRVCDE,LRPCSTR,LRMTCH
+"RTN","LRAPRES1",133,0)
+ ;First, check for PROVIDER key
+"RTN","LRAPRES1",134,0)
+ I '$D(^XUSEC("PROVIDER",DUZ)) D  Q
+"RTN","LRAPRES1",135,0)
+ .K LRMSG S LRMSG=$C(7)_"Electronic signature not authorized.  Missing "
+"RTN","LRAPRES1",136,0)
+ .S LRMSG=LRMSG_"PROVIDER key."
+"RTN","LRAPRES1",137,0)
+ .D EN^DDIOL(LRMSG,"","!!")
+"RTN","LRAPRES1",138,0)
+ .K LRMSG S LREND=1
+"RTN","LRAPRES1",139,0)
+ ;Next, check the provider class
+"RTN","LRAPRES1",140,0)
+ S LRPRCLSS=$$GET1^DIQ(200,DUZ_",",53.5)
+"RTN","LRAPRES1",141,0)
+ ;PROVIDER CL MUST CONTAIN PHYSICIAN, OR CYTOTECH ONLY FOR CY SECTION
+"RTN","LRAPRES1",142,0)
+ ;OR DENTIST FOR ORAL AND MAXILLOFACIAL PATHOLOGY
+"RTN","LRAPRES1",143,0)
+ S LRMTCH=0
+"RTN","LRAPRES1",144,0)
+ I LRPRCLSS'["PHYSICIAN",LRPRCLSS'["DENTIST" D
+"RTN","LRAPRES1",145,0)
+ .I LRPRCLSS'["CYTOTECH" S LRMTCH=1
+"RTN","LRAPRES1",146,0)
+ .I LRSS'="CY" S LRMTCH=1
+"RTN","LRAPRES1",147,0)
+ I LRMTCH=1 D  Q
+"RTN","LRAPRES1",148,0)
+ .K LRMSG
+"RTN","LRAPRES1",149,0)
+ .S LRMSG(1)=$C(7)_"You are not authorized to electronically sign "
+"RTN","LRAPRES1",150,0)
+ .S LRMSG(1)=LRMSG(1)_"reports."
+"RTN","LRAPRES1",151,0)
+ .S LRMSG(1,"F")="!!"
+"RTN","LRAPRES1",152,0)
+ .S LRMSG(2)="PROVIDER CLASS must include PHYSICIAN,"
+"RTN","LRAPRES1",153,0)
+ .S LRMSG(2,"F")="!"
+"RTN","LRAPRES1",154,0)
+ .S LRMSG(3)="  OR CYTOTECHNOLOGIST FOR CY SECTIONS ONLY,"
+"RTN","LRAPRES1",155,0)
+ .S LRMSG(3,"F")="!"
+"RTN","LRAPRES1",156,0)
+ .S LRMSG(4)=" OR DENTIST FOR ORAL AND MAXILLOFACIAL PATHOLOGY."
+"RTN","LRAPRES1",157,0)
+ .S LRMSG(4,"F")="!"
+"RTN","LRAPRES1",158,0)
+ .D EN^DDIOL(.LRMSG) K LRMSG
+"RTN","LRAPRES1",159,0)
+ .S LREND=1
+"RTN","LRAPRES1",160,0)
+ ;Finally, check the person class
+"RTN","LRAPRES1",161,0)
+ S LRPCSTR=$$GET^XUA4A72(DUZ)   ;Supported reference #1625
+"RTN","LRAPRES1",162,0)
+ I LRPCSTR<0 D  Q
+"RTN","LRAPRES1",163,0)
+ .K LRMSG
+"RTN","LRAPRES1",164,0)
+ .S LRMSG="PERSON CLASS is inactive or undefined.  Electronic signature"
+"RTN","LRAPRES1",165,0)
+ .S LRMSG=LRMSG_" is not authorized."
+"RTN","LRAPRES1",166,0)
+ .D EN^DDIOL(LRMSG,"","!!")
+"RTN","LRAPRES1",167,0)
+ .K LRMSG
+"RTN","LRAPRES1",168,0)
+ .S LREND=1
+"RTN","LRAPRES1",169,0)
+ S LRPCEXP=+$P(LRPCSTR,"^",6)
+"RTN","LRAPRES1",170,0)
+ I LRPCEXP,LRPCEXP<DT D  Q
+"RTN","LRAPRES1",171,0)
+ .K LRMSG
+"RTN","LRAPRES1",172,0)
+ .S LRMSG="PERSON CLASS has expired.  Electronic signature"
+"RTN","LRAPRES1",173,0)
+ .S LRMSG=LRMSG_" is not authorized."
+"RTN","LRAPRES1",174,0)
+ .D EN^DDIOL(LRMSG,"","!!") K LRMSG
+"RTN","LRAPRES1",175,0)
+ .S LREND=1
+"RTN","LRAPRES1",176,0)
+ S LRVCDE=$P(LRPCSTR,"^",7),LRMTCH=0
+"RTN","LRAPRES1",177,0)
+ ;CORRECT PERSON CLASS SHOULD MATCH PROVIDER CLASS
+"RTN","LRAPRES1",178,0)
+ I LRPRCLSS["PHYSICIAN" D
+"RTN","LRAPRES1",179,0)
+ .I $E(LRVCDE,1,6)="V11370","123568"[+$E(LRVCDE,7) S LRMTCH=1
+"RTN","LRAPRES1",180,0)
+ .I $E(LRVCDE,1,6)="V11371","03"[+$E(LRVCDE,7) S LRMTCH=1
+"RTN","LRAPRES1",181,0)
+ .I $E(LRVCDE,1,6)="V18240","124579"[+$E(LRVCDE,7) S LRMTCH=1
+"RTN","LRAPRES1",182,0)
+ .I LRVCDE="V182413" S LRMTCH=1
+"RTN","LRAPRES1",183,0)
+ I LRPRCLSS["CYTOTECH" D
+"RTN","LRAPRES1",184,0)
+ .I LRVCDE="V150113" S LRMTCH=1
+"RTN","LRAPRES1",185,0)
+ I LRPRCLSS["DENTIST" D
+"RTN","LRAPRES1",186,0)
+ .I LRVCDE="V030503" S LRMTCH=1
+"RTN","LRAPRES1",187,0)
+ I 'LRMTCH D
+"RTN","LRAPRES1",188,0)
+ .K LRMSG
+"RTN","LRAPRES1",189,0)
+ .S LRMSG="Invalid PERSON CLASS.  Electronic Signature is not "
+"RTN","LRAPRES1",190,0)
+ .S LRMSG=LRMSG_"authorized."
+"RTN","LRAPRES1",191,0)
+ .D EN^DDIOL(LRMSG,"","!!")
+"RTN","LRAPRES1",192,0)
+ .K LRMSG
+"RTN","LRAPRES1",193,0)
+ .S LREND=1
+"RTN","LRAPRES1",194,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8826,6)
+^326
+**END**
+**END**

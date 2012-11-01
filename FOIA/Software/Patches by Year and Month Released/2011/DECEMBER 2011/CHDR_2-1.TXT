@@ -1,0 +1,122 @@
+TO:
+G.IRM CHIEFS (NATIONAL) & STAFF
+G.SITEMANAGERSNATIONAL
+G.SSA
+G.PATCH
+G.CS STAFF
+
+FROM: CHDR (Clinical Data Repository/Health Data Repository) TEAM
+
+RELEASE INFORMATION  CHDR version 2.1
+
+TARGET RELEASE DATE: December 3, 2011
+
+There are no VAMC site installs associated with the release of CHDR 2.1. 
+The following is for informational purposes only. 
+
+CHDR works in the background to facilitate the exchange of virtual lifetime 
+electronic health records (VLER) between the Health Data Repository (HDR) 
+at VA, and the Clinical Data Repository (CDR) at DoD for Active Dual 
+Consumers (ADC). Dual consumers are patients eligible to receive healthcare 
+under both DoD and VA health plans, and/or patients being treated at both 
+DoD and VA medical facilities.
+Most patients are marked active by an automated process developed by DoD. 
+At the VA, patients can be marked active manually using VAs CHDR 
+Administration Application Interface (CHDR Admin GUI). The CHDR Admin GUI 
+can also be used by local IT staff to view specific audit log transactions.
+
+NOTE:   Patients must be marked Active before the data can be exchanged.
+
+The clinical data to be exchanged consists of the outpatient pharmacy and 
+drug allergy domains (limited only to drug allergies). Once this data is 
+exchanged it can be used by each agencys native healthcare system. At VA, 
+the integrated data can be viewed through VistAWeb, while triggered 
+Drug/Drug and/or Drug/Allergy alerts will manifest in the Computerized 
+Patient Record System (CPRS).
+This release includes minor enhancements and defect fixes identified by 
+end-users using the CHDR 2.0 Admin GUI currently in production. Many of the 
+CHDR system design improvements work in the background to deliver improved 
+information sharing of outpatient clinical data for ADC patients between 
+DoD and VA. The CHDR Admin GUI can be accessed by visiting: 
+https://hdrchdr.aac.va.gov:5024/CHDR/
+
+The changes you will see in the CHDR Admin GUI include:
+Fixed the patient lookup field to clear upon refresh of field or screen.
+Removed the portrait (camera icon) feature from the Person Service Lookup 
+(PSL) capability when looking up a patient to manually set the ADC status.
+Fixed the timeout message displayed to read: 
+Patient ADC Status. Processing Temporarily Delayed. The request to change 
+the status of patient name to INACTIVE was sent to Department of Defense. 
+The response from Department of Defense (DoD) has not been received. The 
+system will process this status change request as soon as the response is 
+received from DoD. Please continue with other activities and check back 
+later for the outcome of the request.
+
+ 
+FUNTIONALITY PROVIDED by CHDR:
+Supports the DoD patient ADC Automation process.
+Provides bi-directional, real-time, exchange of computable, standardized 
+data in the outpatient pharmacy and drug allergy data domains. Computable 
+data refers to data elements passed individually rather than in text blocks 
+so that the data can be individually sorted and queried, allowing the 
+clinical systems to perform medication and allergy checks.
+Provides integrated outpatient medication lists and integrated drug allergy 
+lists. Includes updates of medications and outpatient pharmacy 
+transactions.
+
+Enables interagency Drug-Drug and Drug-Allergy checks, supported in CPRS 
+automatic alerts and reminders.
+VA receives historical clinical data on separated service members. 
+
+VA and DoD share current health data in a viewable format. At the VA, this 
+is displayed through VistAWeb. Provides the ability to manually mark a 
+patient as active ADC utilizing the CHDR Admin GUI.
+
+The CHDR 2.1 Release will also coincide with an upgrade from STS to VTS 
+2.0. VTS is a remote terminology translation service that is used by CHDR 
+for translating VA proprietary terminology codes known as VUIDs. The VTS 
+upgrade to 2.0 provides:
+Improved order/drug-allergy checks across VA for data exchanged between VA 
+and DoD, and increased flexibility to manage legacy allergy data.
+Improved mediation/translation of one or many DoD mediation codes to a 
+single VUID.
+
+NOTE: Not all mappings have been fixed. Due to the difficulty in 
+comprehending the way physicians document allergies, it is impossible to 
+map all too current standard terms. 
+
+SITE REQUIREMENTS
+
+CHDR 2.0 was installed in the spring of 2010. Sites should already be setup 
+to communicate with the CHDR server and have their security keys assigned, 
+as appropriate for each VAMC.
+Each site should have a selected clinical user identified as the 
+Administrative User (admitting clerk or similar) who can manually mark a 
+known dual consumer that somehow failed in automation.
+This administrative user should be given the CHDRUSER key. With the DG 
+CHDRUSER key, one can search for ADC patients and set their ADC status to 
+active or inactive.
+ 
+Security Keys:
+1.    The DG CHDR USER security key is assigned to users by the local 
+VAMCs OIT staff.
+2.    If you haven't already, Local IRM security personnel must assign the 
+DG CHDRUSER key to the appropriate users. Please ensure that the CHDR users 
+you select have valid access credentials to the appropriate parent division 
+and/or subdivision(s) where you assign the key.
+
+Remember:  DG CHDR USER allows users to look up and to manually mark 
+patients as active ADC.
+
+3.    Basic steps to allocate the keys:
+   a. Select OPTION NAME: KEY MANAGEMENT
+   b. Select Key Management Option: Allocation of Security Keys.
+   c. Allocate key: DG CHDRUSER.
+   d. Holder of key: <username>.
+   e. You are allocating keys. Do you wish to proceed? YES//
+
+Related documentation can be found at:
+http://vista.med.va.gov/chdr/index.asp- CHDR Site Home Page.
+http://www.va.gov/vdl/application.asp?appid=155 CHDR VDL
+http://vaww.vistau.med.va.gov/VistaU/chdr/default.htm- VistA University  
+CHDR link from the left menu.

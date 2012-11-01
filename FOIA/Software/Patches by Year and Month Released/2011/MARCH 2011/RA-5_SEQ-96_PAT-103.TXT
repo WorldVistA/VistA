@@ -1,0 +1,216 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Friday, 09/03/10 at 07:56
+=============================================================================
+Run Date: MAR 31, 2011                     Designation: RA*5*103
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5        SEQ #96                      Status: Released
+                  Compliance Date: MAY 01, 2011
+=============================================================================
+
+Associated patches: (v)RA*5*69     <<= must be installed BEFORE `RA*5*103'
+                    (v)RA*5*81     <<= must be installed BEFORE `RA*5*103'
+                    (v)RA*5*84     <<= must be installed BEFORE `RA*5*103'
+                    (v)RA*5*97     <<= must be installed BEFORE `RA*5*103'
+
+Subject: CORRECT THE CPT DISPLAY AND FIX THE OUTSIDE REPORT ALERT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following 3 issues:
+      
+ 1.  When Outside Reports are entered into Vista, the reports are not
+     being delivered to the Picture Archiving and Communication Systems
+     (PACS) systems via HL7 messages because reports are not being
+     translated as "F" Final.  Outside reports have a REPORT STATUS of "EF"
+     (Electronically Filed) instead of "V" (Verified) and do not get
+     translated  by the system as Final reports.
+ 2.  When running the Procedure/CPT Statistics Report [RA CPTSTATS], if the
+     prompt, "Do you want to count CPT Modifiers separately?"is answered
+     "YES",  CPT Codes w/modifiers will not print on the report.
+ 3.  When an Outside Report is entered and completed, it does not generate
+     a CPRS Notification (alert), "Imaging Results" if no Radiology
+     diagnosis code is specified.
+     
+ ASSOCIATED NSR:
+ ===============
+ N/A
+    
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000363538  Outside Reports status codes
+    PSPO #1680
+ 2. HD0000000349101  Radiology procedures with no CPT codes
+ 3. HD0000000324541  Outside Reports does not generate Imaging Results 
+                     CPRS Alert
+                
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Charleston, SC
+ Sioux Falls
+ Upstate New York HCS
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1.  HD0000000363538  Outside Reports status codes
+  
+ PROBLEM:
+ --------
+ Outside Reports are created with a report status (74:5) of "EF" 
+ (Electronically Filed). VistA translates only reports with a report status
+ of "V" (Verified) as "Final" (F) in HL7 Result Status in OBR-25 and
+ OBX-11) when creating HL7 records/messages.  Most PACS systems are
+ configured to only receive "Final" Reports.  Currently, Outside Reports
+ cannot be stored on most PACS systems.
+      
+ Resolution:
+ -----------   
+ A modification will be made in routines RAHLRPT and RAHLRU to 
+ translate the REPORT STATUS (74;5) of "EF"  provided by Outside 
+ Reporting into an "F" HL7 Result Status (OBR-25 and OBX-11, V2.3) 
+ for Final to be broadcast out to VistA Observation Results Unsolicited 
+ subscribers which will allow reports to be delivered to the PACS systems.
+      
+ 2.  HD0000000349101  Radiology procedures with no CPT codes
+  
+ Problem:
+ -------- 
+ When users use the option Procedure/CPT Statistics Report [RA CPTSTATS] 
+ and answer the prompt "Do you want to count CPT Modifiers separately?"
+ "YES", CPT codes with modifiers will not print/display on the report
+ because a function call in RACPT1 does not correctly interpret the
+ CPT w/modifier.
+      
+ Resolution:
+ ------------
+ A modification will be made in RACPT1 to interpret the CPT code 
+ correctly and display/print the CPT codes w/modifiers.
+      
+ 3.  HD0000000324541  Outside Reports does not generate Imaging Results 
+                      CPRS Alert
+  
+ Problem:
+ ---------
+ If a user enters an Outside Report [RA OUTSIDE RPTENTRY] 
+ without a Radiology diagnosis code, there is no VistA non-critical 
+ Alert/CPRS Notification generated as is generated in Report Entry/Edit
+ [RA RPTENTRY].
+ Currently routine RARTE7 will quit the alert processing if no diagnosis 
+ code is present.
+  
+ Resolution:
+ -----------
+ A modification will be made to continue the alert processing and send a
+ non-critical alert.    
+       
+ Installation Instructions:
+ ==========================
+ *NOTE
+ XINDEX will produce the following error.  This is not a problem 
+ as the reference to a routine not in the UCI is coded with conditions
+ that will only attempt to utilize the identified routine if it exists 
+ in the UCI. This is a pre-existing item that was introduced in RA*5*84.
+       
+ Compiled list of Errors and Warnings          Sep 03, 2010@09:26:39 page 1
+      
+ RAHLRPT  * *  171 Lines,  9872 Bytes, Checksum: B65194652
+    NEW+9 F - Reference to routine '^RAHLRPT1'. That isn't in this UCI.
+    NEW+9 F - Reference to routine '^RAHLRPT1'. That isn't in this UCI.
+      
+ --- END ---
+      
+ If installed during the normal workday, it is recommended that the 
+ Radiology users be off  the system.  Other VISTA users will not be
+ affected.
+       
+ Install Time - less than 2 minutes.
+       
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+         
+          Edits and Distribution ...  
+  
+          Utilities ...  
+          Installation ...  
+         
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option
+     --------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter RA*5.0*103):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+      
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//', answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RACPT1
+    Before: B19705347   After: B21685324  **26,69,103**
+Routine Name: RAHLRPT
+    Before: B65194652   After: B66664791  **2,12,10,25,81,80,84,103**
+Routine Name: RAHLRU
+    Before: B28042615   After: B29214365  **10,25,81,103**
+Routine Name: RARTE7
+    Before: B23848565   After: B24383964  **56,95,97,103**
+ 
+Routine list of preceding patches: 69, 84, 97
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : NOV 24, 2009
+Completed By: CRICHLOW,SHERRY               Date Completed: MAR 22, 2011
+Released By : COWNIE,KEVIN                  Date Released : MAR 31, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

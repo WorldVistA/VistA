@@ -1,0 +1,124 @@
+$TXT Created by CREMEANS,Theresa at CHEY204.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 04/27/11 at 11:00
+=============================================================================
+Run Date: MAY 21, 2012                     Designation: PSJ*5*246
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #230                      Status: Released
+                  Compliance Date: JUN 21, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*246'
+
+Subject: Undefined PSGOSD when copy an existing UNIT DOSE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the issue where the user is getting an UNDEFINED 
+ error when copying an existing inpatient medication order.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ HD0000000423099- Undefined PSGOSD when copy an existing UNIT DOSE
+  
+  
+ Test Sites:
+ ===========
+ VA Western NY HCS
+ Coatesville VAMC
+ Cheyenne VAMC
+  
+   
+ Remedy Overview:
+ ================
+ HD0000000423099     Undefined PSGOSD when copy an existing UNIT DOSE
+   
+ Problem: 
+ ========
+ When a user renews an inpatient unit dose via Inpatient Order Entry 
+ option [PSJ OE] and up carets "^" out of the renewal process then tries to
+ copy the same unit dose and attempts to change the stop date, an undefined
+ error occurs.
+  
+ <UNDEFINED>ENNOU+3^PSGOEE0
+  
+ When the user up carets (^) out of the renewal process several 
+ variables are killed, which include PSGOSD and PSGOPR. Both are required 
+ for the copy process to function properly.
+  
+ Resolution:
+ ===========
+ Modified routine PSGOER so that variables PSGOSD and PSGOPR are not
+ killed.  
+  
+  
+        ================ INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  The patch should be installed 
+ when NO Inpatient Pharmacy users are on the system.  It should take less 
+ than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSJ*5.0*246)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSJ*5.0*246.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+        Protocols? NO//" respond NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0; INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOER
+    Before: B79614016   After: B79379860  **11,30,29,35,70,58,95,110,111,
+                                           133,141,198,181,246**
+ 
+Routine list of preceding patches: 181
+
+=============================================================================
+User Information:
+Entered By  : CREMEANS,THERESA              Date Entered  : AUG 25, 2010
+Completed By: LANG,MICKEY                   Date Completed: MAY 03, 2012
+Released By : TEAGUE,LYN                    Date Released : MAY 21, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

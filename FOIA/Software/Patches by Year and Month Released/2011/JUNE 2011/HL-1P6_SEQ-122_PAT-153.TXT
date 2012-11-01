@@ -1,0 +1,329 @@
+$TXT Created by MOORE,JIM at NXT.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 03/15/11 at 07:46
+=============================================================================
+Run Date: JUN 28, 2011                     Designation: HL*1.6*153
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #122                    Status: Released
+                  Compliance Date: JUL 29, 2011
+=============================================================================
+
+Associated patches: (v)HL*1.6*147  <<= must be installed BEFORE `HL*1.6*153'
+                    (v)HL*1.6*151  <<= must be installed BEFORE `HL*1.6*153'
+
+Subject: HL7 AND HLO ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  Patch HL*1.6*153 provides several Health Level Seven (HL7) and Health Level
+ Seven Optimized (HLO) software enhancements and Data Dictionary changes, all of
+ which are listed below.
+  
+ 
+ Software Enhancements
+ ====================
+ 
+ 1) The 'Link Errors' [HL MENU FILER LINK ERR] menu option has been enhanced to
+    improve its usefulness in troubleshooting issues with TCP links.  It
+    includes these enhancements:
+    a. The 'Clear a Queue of all Entries' [HL CLEAR QUEUE] option has been
+       modified:
+        * The Menu Text was changed to 'Purge Outgoing Queue (Non-TCP Only)'.
+        * The option now allows only non-TCP entries in the HL LOGICAL LINK file
+          (#870) to be selected.
+    b. The 'Purge Outgoing Queue (TCP Only)' [HL PURGE QUEUE (TCP)] option is
+       new.  It can be used to purge messages from an outgoing queue for
+       TCP links only.  The messages are not deleted, just removed from the
+       queue.
+    c. The 'Display Client and Server Links (TCP Only)' [HL DISPLAY LINKS (TCP
+       ONLY)] option is new.  It displays all of the incoming or outgoing
+       queues that have pending  messages for all TCP links.  It includes
+       a count of the messages pending on the queue and the state of the link
+       as shown on the HL7 Systems Link Monitor. 
+    d. The 'Display One Link (TCP Only)' [HL DISPLAY ONE LINK (TCP ONLY)] is
+       new.  It allows the user to select a TCP link. It then displays that
+       link in standard FileMan format, along with a count of messages pending
+       on the incoming and outgoing queues for that link.  It will also 
+       display the first message pending on the queues. 
+    e. The 'Reset Link's Counters (TCP Only)' [HL RESET COUNTERS (TCP ONLY)]
+       option is new.  It is used to reinitialize the counters shown on the 
+       HL7 Systems Link Monitor for a single TCP link.
+ 2) There has been a long standing problem with queues for Mailman and Serial
+    links occasionally becoming 'stuck'.  This problem has been corrected by
+    making these changes:
+     a.  A problem with record locking was discovered and corrected.
+     b.  Unused 'stub' records placed on a queue will automatically be removed
+         from the queue after a certain set period of time, determined by the
+         new RETENTION TIME QUEUED STUB RCD field (#22) of the HL LOGICAL LINK
+         file (#870).  The default time is 10 minutes.
+ 3) There has been a longstanding problem that prevented more than one outgoing
+    filer from executing concurrently.  The problem was determined to be due
+    to improper locking and has been corrected.  If desired, multiple outgoing
+    filers can now be run.
+ 4) It was reported that occasionally multiple instances of the same event
+    monitor were running concurrently.  This patch will stop that by
+    requiring that each event monitor obtain an exclusive lock in order to run. 
+ 5) The 'LINK (870) CHECKS' entry in the HL Monitor file (#776.1) is
+    deactivated. It is no longer needed since this patch fixes the problem
+    with 'stuck' links that previously affected Mailman and serial links.
+ 6) The 'SERVER TRACE' [HLO SERVER TRACE] option and the 'CLIENT TRACE'
+    [HLO CLIENT TRACE] options have been enhanced.  They will now display
+    the raw data each time a READ is done over a TCP/IP connection.  That
+    enhancement will allow the user to troubleshoot problems that prevent
+    messages from being correctly parsed due to formatting problems.
+ 7) A spelling error was corrected that appeared on the 'HLO SYSTEM MONITOR'
+    [HLO SYSTEM MONITOR] option screen.   The HLO listener, when stopped,
+    would display the status misspelled as 'stoppped'.  
+ 8) The 'Purge Messages' [HL PURGE TRANSMISSIONS] option has been enhanced.
+    The option will now treat incoming duplicate messages as completed
+    messages and purge them in the standard timeframe.
+ 9) Two options have been deleted:
+ 
+      HLO RECOUNT MESSAGE QUEUES  [HLO RECOUNT MESSAGE QUEUES]
+      COUNT HL7 MESSAGE RECORDS   [HLO COUNT RECORDS]
+ 
+    Previous to this patch, it was necessary to schedule these options
+    on a regular basis in order to update the count of records found in
+    files HLO MESSAGES (#778) and HLO MESSAGE BODY (#777), and also to 
+    recount the messages pending on various HLO queues.  As of this patch
+    HLO will automatically perform these actions on a regular basis without
+    the need to schedule options.
+ 10) The second line of routine HLOUSR7 correctly includes only 
+     patches HL*1.6*147 and HL*1.6*153.  Additional patches were incorrectly
+     included in the second line by patch HL*1.6*147 and are being removed. 
+ 11) A bug in the SET OUTGOING QUEUE PRIORITY [HLO SET OUTGOING QUEUE
+     PRIORITY] option has been fixed.  The option did not allow the priority
+     of an HLO outgoing queue to be edited once the priority was initially
+     set via this option. This patch fixes the option so that the priority
+     can be edited.
+ 12) The Austin MPI reported that query responses were taking too long.
+     After analysis, it was determined that the query responses could be
+     speeded up by changing how long an in-filer process waited for a lock
+     on an incoming queue.  The timeout was changed from 2 seconds to
+     0 seconds. If the lock is not obtained immediately, it means that an
+     in-filer process is already processing the queue and should not be
+     waited on.
+ 13) It was reported that occasionally a site would begin transmitting
+     an HL7 message via a MailMan link multiple times, resulting in many
+     duplicate messages.  It was determined that this could occur if multiple
+     client processes were running concurrently on the same MailMan link.
+     The HL7 package will no longer allow multiple client processes to runn on
+     the same MailMan link.  This was implemented by requiring that a MailMan
+     client process obtain an exclusive lock on the link. 
+ 
+ Data Dictionary Changes
+ =======================
+ 1) These fields have been added to the HL LOGICAL LINK file (#870):
+    a. RETENTION TIME QUEUED STUB RCD (#22).  This field determines
+       how long a stub record should be retained on a queue before
+       it is removed.
+    b. DATE/TIME STUB RCD FOUND (#10) in the OUT QUEUE (#20) subfile.
+       If an unused stub record is removed from the queue the timestamp
+       will be entered to this field.
+    c. DATE/TIME STUB RCD FOUND (#10) in the IN QUEUE (#19) subfile.
+       If an unused stub record is removed from the queue the timestamp
+       will be entered to this field.
+    d. The 'U' FOR UNUSED STUB RECORD code has been added to the STATUS 
+       field (#1) of the IN QUEUE (#19) subfile.
+    e. The 'U' FOR UNUSED STUB RECORD code has been added to the STATUS 
+       field (#1) of the OUT QUEUE (#20) subfile.
+ 2) The MSH field (#200) of the HL7 MESSAGE ADMINISTRATION file (#773)
+    has been modified to ignore the '|' character.  That change should
+    cause the message header to display normally when doing a FileMan
+    inquiry when '|' is used as one of the HL7 message delimiters. 
+ 3) The MESSAGE TEXT field (#200) of the HL7 MESSAGE TEXT file (#772)
+    has been modified to ignore the '|' character.  That change should
+    cause the message header to display normally when doing a FileMan
+    inquiry when '|' is used as one of the HL7 message delimiters. 
+ 
+ 
+ Test Sites:
+ ===========
+  Upstate NY HCS
+  Oklahoma City
+  Tomah
+  CMOP-NAT
+  
+ Remedy:
+ =======
+ HD0000000403698
+ HD0000000392814
+ HD0000000225863
+ 
+ Installation Instructions:
+ ==========================
+   1.  Users are allowed to be on the system during the installation. It 
+       is highly recommended to install the patch during off-hours. The
+       installation will complete in less than one minute.
+        
+   2.  Disable the HL7 TCPIP services for the HLO multi-listener running on
+       all nodes in the cluster.
+  
+   3.  Disable the HL7 TCPIP services for the HL7 1.6 multi-listener running on
+       all nodes in the cluster.
+ 
+   4.  Use the STOP HLO option of the HLO SYSTEM MONITOR screen to temporarily
+       stop the transmission of HLO messages. Wait several minutes to insure
+       that all HLO processes have terminated.
+ 
+   5.  Shutdown all Logical Links, incoming and outgoing filers using
+       the Filer and Link Management options listed below:
+  
+         Stop All Messaging Background Processes [HL STOP ALL]
+  
+   6.  Shutdown the Link Manager using the Filer and Link Management
+       option listed below:
+  
+         TCP Link Manager Start/Stop [HL START/STOP LINK MANAGER]
+  
+   7.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+  ** NOTE:  The second line of routine HLOUSR7 correctly includes only 
+     patches HL*1.6*147 and HL*1.6*153.  Additional patches were incorrectly
+     included in the second line by patch HL*1.6*147 and are being removed.
+  
+   8.  This patch is now loaded into a transport global on your system.
+       The next step is to use KIDS to install the Transport global.  On
+       the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Backup a Transport Global
+          Install Package(s) 
+  
+       When using the Install Package(s) menu option to install the 
+       patch build, you will be asked several questions.  The questions,
+       and the answers you should supply, are shown below.
+  
+        INSTALL NAME: <HL*1.6*153>
+  
+        Want KIDS to Rebuild Menu Trees Upon Completion of Install? <NO>
+  
+        Want KIDS to INHIBIT LOGONS during the install? NO// <NO>
+  
+        Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO// <NO>
+  
+   9. The post-install routine ^HLP153 will run automatically to
+      deactivate the LINK (870) CHECKS' entry in the HL Monitor
+      file (#776.1) and to update the HLO PROCESS REGISTRY file (#779.3).
+      The routine should not be deleted i ncase the post-install needs to
+      be run again.
+  
+      WARNING:  HLP153 SHOULD NOT BE DELETED.  IT WILL BE USED IF THE
+      POST-INSTALL NEEDS TO BE RUN AGAIN.
+   
+   10. Enable the HL7 TCPIP services for the HLO multi-listeners.
+   
+   11. Enable the HL7 TCPIP services for the HL7 1.6 multi-listeners.
+  
+   12. Use the START HLO option within the HLO SYSTEM MONITOR screen
+       to resume transmission of HLO messages in your production account.
+       This step is optional in test systems. 
+  
+   13. Start up all Logical Links and incoming and outgoing filers using
+       the Filer and Link Management Option's 'Restart/Start All Links
+       and Filers [HL TASK RESTART]' menu option.
+       (Note those links that do not have "autostart" enabled will need
+       to be restarted manually.)
+    
+   14. Restart the Link Manager, that was shutdown in step 6, using the
+       Filer and Link Management option listed below:
+   
+         TCP Link Manager Start/Stop [HL START/STOP LINK MANAGER]
+   
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13, 1995;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLCSIN
+    Before: B39104505   After: B39104327  **2,30,14,19,62,109,115,122,
+                                           140,145,153**
+Routine Name: HLCSMM1
+    Before:  B3431569   After:  B4480587  **35,49,153**
+Routine Name: HLCSOUT
+    Before: B10861157   After: B12989203  **25,30,62,153**
+Routine Name: HLCSQUE
+    Before: B14643380   After: B28207653  **14,61,59,153**
+Routine Name: HLCSQUE1
+    Before:  B4079796   After:  B5361364  **14,59,100,153**
+Routine Name: HLCSTCP2
+    Before: B83867946   After: B83851505  **19,43,49,57,63,64,66,67,76,
+                                           77,87,109,133,122,140,142,145,
+                                           153**
+Routine Name: HLCSTCP3
+    Before: B12715740   After: B14207498  **76,77,133,122,153**
+Routine Name: HLEVAPI3
+    Before: B53454303   After: B59002159  **109,153**
+Routine Name: HLOPROC1
+    Before:B102064543   After: B95639479  **126,138,139,147,153**
+Routine Name: HLOQUE
+    Before:B148335504   After:B153912092  **126,132,134,137,138,143,147,153**
+Routine Name: HLOSITE
+    Before:  B8246314   After:  B8278014  **126,138,147,153**
+Routine Name: HLOSTRAC
+    Before: B43533858   After: B50796847  **146,147,153**
+Routine Name: HLOTCP
+    Before: B85513944   After: B87019003  **126,131,134,137,138,139,146,153**
+Routine Name: HLOTRACE
+    Before: B65409615   After: B73989818  **146,147,153** 
+Routine Name: HLOUSR
+    Before:B121177713   After:B121166141  **126,130,134,137,138,139,146,
+                                           147,153**
+Routine Name: HLOUSR7
+    Before: B22703242   After: B22703242  **147,153**
+Routine Name: HLP153
+    Before:       n/a   After:  B2856907  **153**
+Routine Name: HLQPURGE
+    Before:       n/a   After: B43329113  **153**
+Routine Name: HLUOPT1
+    Before: B57283187   After: B61661726  **10,13,21,36,19,47,62,109,108,153**
+Routine Name: HLUTIL2
+    Before: B29544975   After: B30814753  **19,43,57,59,120,153**
+ 
+Routine list of preceding patches: 100, 108, 120, 145, 147
+
+=============================================================================
+User Information:
+Entered By  : MOORE,CHARLES J               Date Entered  : NOV 19, 2010
+Completed By: BEST,LISA                     Date Completed: JUN 10, 2011
+Released By : APOLONIO,AUGUSTO              Date Released : JUN 28, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

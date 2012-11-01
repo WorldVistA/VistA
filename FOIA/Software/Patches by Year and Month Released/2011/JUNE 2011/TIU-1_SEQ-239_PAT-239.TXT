@@ -1,0 +1,240 @@
+$TXT Created by TROHA,ROBERT at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 04/21/09 at 18:04
+=============================================================================
+Run Date: JUN 16, 2011                     Designation: TIU*1*239
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #239                      Status: Released
+                  Compliance Date: JUL 17, 2011
+=============================================================================
+
+Associated patches: (v)TIU*1*184   <<= must be installed BEFORE `TIU*1*239'
+                    (v)TIU*1*234   <<= must be installed BEFORE `TIU*1*239'
+
+Subject: USER CLASS AND CONSULTS API FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects four site reported issues within the Text Integration
+ Utilities (TIU) package:
+  
+      1) A provider enters a consult and associates a consult note to
+         it, and then decides to change the title to a non-consult title.
+         The consult note does not disassociate from the consult, instead
+         it leaves the consult in partial result (pr) status.
+     
+      2) A provider enters a consult and associates it with a consult note,
+         then later realizes the note was associated to the wrong consult. 
+         The note can be edited and changed to associate with the correct
+         consult, but the status of the first consult does not revert to 
+         the active (a) status, but stays in the partial result (pr)
+         status.
+  
+      3) On the day a user has a particular user class expire that 
+         requires a cosigner, if they create a note they are not prompted
+         for an expected cosigner. When they go to sign the note, however, 
+         they get the message that a cosigner must be named before the note
+         can be signed.
+  
+      4) When a user that requires a cosigner attempts to identify 
+         additional signers to a completed document entered by another 
+         user, the user receives the message box that displays "You must
+         name a cosigner before signing this document". The message box 
+         that should display is "You may not IDENTIFY SIGNERS FOR this 
+         COMPLETED <title of note>."  
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+  
+ 1) HD0000000168903 - TIU documents/consults
+    Duplicate(s): 
+    HD0000000211236 - Nutrition consults completed will print as Cancelled
+    HD0000000202522 - Non-Consult titles being linked to consults
+    HD0000000193385 - Progress Note Linked to 2 Consults - 1 consult is
+                      still at "PR"
+    HD0000000190370 - Cosigned Consult Note does not complete consult
+    HD0000000382474 - Non Consult Note tied to an incorrect consult
+ 2) HD0000000311014 - One Progress Note on two consults
+    Duplicate:
+    HD0000000137609 - Cosigned Consult Note does not complete consult
+ 3) HD0000000152076 - Expected cosigner not being prompted with addendum
+ 4) HD0000000131840 - Addtl Signer - User Class Requiring Cosignature
+                      (error box)
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Fayetteville VAMC, AR
+ Durham VAMC, NC
+ James J. Peters VAMC - Bronx, NY
+ Clement J. Zablocki VAMC - Milwaukee, WI
+ Upstate New York HCS (Bath), NY
+ Hunter Holmes McGuire VAMC, Richmond, VA 
+ Hudson Valley HCS (Castle Point), NY     
+     
+ REMEDY OVERVIEW:
+ =================
+ 1) HD0000000168903 - TIU documents/consults
+  
+ Problem:
+ --------
+ If a provider enters a consult and associates a Consult note to it, saves
+ the note without signing it, then decides to changes the title to a
+ non-consult title, the note does not disassociate from the consult.
+ Instead it leaves the consult in Partial Result (pr) status.
+  
+ Resolution:
+ -----------
+ A consult's status will be rolled back to Active (a) when a Consult 
+ note's title is changed to a non-consult title. 
+  
+ Routines: TIUSRVP
+  
+  
+ 2) HD0000000311014 - One Progress Note on two consults
+  
+ Problem:
+ --------
+ A user enters a consult note and associates it with Consult A.  They 
+ then save the note without a signature. Later, they realize the note is
+ associated with the wrong consult and they Edit the note, select the 
+ Change button but DO NOT change the title.  They simply associate it 
+ with the correct consult, Consult B. Under the Consults tab, both 
+ consults are associated with the same note, while Consult B has a status 
+ of Complete (c) while Consult A still shows the status of Partial Result
+ (pr).
+  
+ Resolution:
+ -----------
+ Upon changing a Consult note's association, the consult the note was 
+ originally associated to will be correctly rolled back to a status of 
+ Active (a).
+  
+ Routines: TIUSRVP
+  
+  
+ 3) HD0000000152076 - Expected cosigner not being prompted with addendum
+  
+ Problem:
+ --------
+ On the day a user has a particular user class expire that requires a 
+ co-signer, if they create a note, they are not prompted for an expected 
+ cosigner. When they go to sign the note, however, they get the following
+ message: "You must name a cosigner before signing this document.".
+  
+ Resolution:
+ ----------- 
+ The code that determines cosigner requirements upon note creation will 
+ now be in sync with that which determines it upon note signature. 
+  
+ Routines: TIUSRVA
+  
+  
+ 4) HD0000000131840 - Addtl Signer - User Class Requiring Cosignature
+  
+ Problem:
+ --------
+ When a user who requires cosigner attempts to add an additional signer 
+ to a note entered by another author, instead of receiving the message box
+ that states "You may not IDENTIFY SIGNERS FOR this COMPLETED <title of 
+ note>", they receive the message box that states "You must name a
+ cosigner before signing this document."  The latter message is misleading
+ to the user and not consistent with the former message.
+  
+ Resolution:
+ -----------
+ The correct message will now appear in the above situation.
+  
+ Routines: TIUSRVA
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be run with users on the system, though it is recommended 
+ that it be scheduled off hours, and not when the TIU NIGHTLY TASK is 
+ scheduled. Installation will take less than 5 minutes.
+    
+ 1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+     the KIDS distribution included with this message.
+   
+ 2. Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+   
+            Edits and Distribution ...  
+            Utilities ...  
+            Installation ...  
+   
+     Select Kernel Installation & Distribution System Option: 
+     Installation
+     ------------
+            1      Load a Distribution
+            2      Verify Checksums in Transport Global
+            3      Print Transport Global
+            4      Compare Transport Global to Current System
+            5      Backup a Transport Global
+            6      Install Package(s)
+                   Restart Install of Package(s)
+                   Unload a Distribution
+   
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter TIU*1.0*239):
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System  - this option will
+         allow you to view all changes that will be made when the patch
+         is installed.  It compares all components of the patch (routines,
+         DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - this option will
+         allow you to ensure the integrity of the routines that are in
+         the transport global.
+     d.  Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+   
+ 4.  Use the Install Package(s) option and select the package TIU*1.0*239.
+   
+ 5.  When prompted ' Want KIDS to INHIBIT LOGONs during the install?
+          NO//', respond NO.
+   
+ 6.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUSRVA
+    Before: B23503804   After: B24002078  **19,28,47,80,100,116,152,160,
+                                           178,175,157,236,234,239**
+Routine Name: TIUSRVP
+    Before: B45548216   After: B49614327  **1,7,19,28,47,89,104,100,115,
+                                           109,167,113,112,175,157,184,
+                                           239**
+ 
+Routine list of preceding patches: 184, 234
+
+=============================================================================
+User Information:
+Entered By  : TROHA,ROBERT                  Date Entered  : JAN 17, 2008
+Completed By: HULET,LEE ANN                 Date Completed: MAY 31, 2011
+Released By : KREUZ,SHERI B                 Date Released : JUN 16, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

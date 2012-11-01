@@ -1,0 +1,244 @@
+$TXT Created by GOLDSMITH,RHONDA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 03/03/11 at 12:04
+=============================================================================
+Run Date: MAR 07, 2011                     Designation: PRS*4*130
+Package : PRS - PAID                          Priority: EMERGENCY
+Version : 4       SEQ #116                      Status: Released
+                  Compliance Date: MAR 08, 2011
+=============================================================================
+
+Associated patches: (v)PRS*4*96    <<= must be installed BEFORE `PRS*4*130'
+
+Subject: ETA UPDATES FOR HYBRID TABLE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  Public Law 111-163, the Omnibus Health Services Act effective May 5, 2010
+  authorized the conversion of Nursing Assistants with occupation series
+  GS-0621, from title 5 competitive service to the title 38 hybrid excepted 
+  service.
+  
+  The following public laws have also provided the authority to both add 
+  additional occupation series to hybrid excepted service and to remove some 
+  existing occupation series/titles from hybrid excepted service.
+  
+    1. Public Law 108-422
+    2. Public Law 108-170
+  
+  This patch updates the PAID Enhanced Time and Attendance (ETA) software,
+  providing updates to the software's Hybrid table which is coded in routine
+  PRSAENT1.  The patch updates the table so that the occupation series/title
+  entries match the list of occupation series/titles that are currently
+  authorized as hybrid positions under public law. 
+  
+  The following occupation series/titles are converted to hybrid positions by
+  adding their occupation series/title codes to the VistA ETA Hybrid table:
+   
+                                              Occupation series/
+            Title                             title code
+           ------------------                 -------------------
+        NURSING ASSISTANT                        062102
+        OPERATING NURSING ASSISTANT              062105
+        PSYCHIATRIC ASSISTANT                    062108
+        NURSING AID                              062114 
+        GRADUATE PSYCHOLOGIST                    018010
+        GRADUATE SOCIAL WORKER                   018510
+        SOCIAL WORK POST DOCTORAL FELLOW         018564
+        CHIEF SOCIAL WORK SVC                    018566
+        SUPV SOCIAL WORKER (VACO ONLY)           018572
+        BLIND REHABILITATION SPECIALIST          060108
+        BLIND REHAB SPEC (INSTRUCTOR)            060122
+        BLIND REHAB SPEC (SERVICES)              060123
+        BLIND REHABILITATION SPEC (OP TRNG)      060125
+        DIRECTOR/BLIND REHABILITATION SERVICE    060143
+        DIETITIAN (NUTRITIONAL SUPPORT)          063009
+        GRADUATE DIETITIAN                       063010
+        GRADUATE MEDICAL TECHNOLOGIST            064410
+        DIAGNOSTIC RAD TECHNOLOGY (GENERAL)      064719
+        DIAGNOSTIC RAD TECH (BONE DENSITOMETRY)  064721
+        DIAGNOSTIC RAD TECH (DIAG ULTRASOUND)    064722
+        DIAGNOSTIC RAD TECH (MAMMOGRAPHY)        064723
+        DIAGNOSTIC RADIOLOGIC TECH (PET/CT)      064724
+        DIAG RAD TECH (CARDIOVAS-INTERVENTION)   064725
+        DIAGNOSTIC RAD TECH (QUALITY MGMT)       064726
+        GRADUATE DIAGNOSTIC RADIOLOGY TECH       064727
+        MEDICAL INSTRUMENT TECH (ANESTHESIA)     064932
+        MEDICAL INSTR TECH (POLYSOMNOGRAPHY)     064933
+        MEDICAL INSTRUMENT TECH (TRAINEE)        064934
+        MEDICAL INSTRUMENT TECH (GI)             064935
+        SUPERVISORY PHARMACIST (CLINICAL COORD)  066013
+        PHARMACIST EXECUTIVE                     066015
+        PHARMACIST (S&A)                         066041
+        GRADUATE AUDIOLOGIST                     066504
+        GRADUATE AUDIOLOGY/SPEECH LANG PATH      066506
+        GRADUATE SPEECH-LANGUAGE PATHOLOGY       066507
+        PROSTHETIC REPRESENTATIVE INTERN         066723
+        HEALTH INFORMATION MGMT INTERN           066907
+        PROSTHETIC REPRESENTATIVE (INTERN)       067207
+        MEDICAL RECORDS TECH (CANCER REGISTRAR)  067507
+        MEDICAL RECORDS TECH (CERTIFIED)         067511
+  
+  The following occupation series/titles are converted from hybrid positions
+  by removing the occupation series/title codes from the VistA ETA Hybrid table:
+  
+                                       Occupation series/
+            Title                      title code
+        ------------------             ------------------
+        PSYCHOLOGIST                     018025
+        CHIROPRACTOR                     060401
+        PHARMACIST                       066080
+        PHARMACY AID/TECHNICIAN          066105
+        PHARMACY AID/TECHNICIAN          066107
+        DENTAL ASSISTANT                 068104
+        DENTAL ASSISTANT                 068145
+        DENTAL ASSISTANT                 068148
+  
+    
+  ASSOCIATED NSR(s):
+  ==================
+    N/A   
+     
+  ASSOCIATED REMEDY TICKET(S):
+  ============================
+  1. HD0000000466098 - Hybrid Employees (0621)/Saturday Premium Pay Issue
+  2. HD0000000439332 - Employees not receiving Saturday premium pay  
+  
+  PARTICIPATING TEST SITES:
+  =========================
+  Salem VA Medical Center
+  Salisbury, North Carolina VA Medical Center
+     
+  Remedy Overview:
+  ================
+  1.  HD0000000466098 - Hybrid Employees (0621)/Saturday Premium Pay Issue
+  
+  Problem:
+  --------
+  
+  On February 17, 2011, 5540 Nursing Assistants, Occupation Series 0621, were 
+  converted to Hybrid status from Health Care worker status.  Prior to the 
+  conversion, the Employee Pay Entitlements table displayed Saturday Premium 
+  as "Yes".  Since the conversion the Saturday Premium changed to "No".  
+  Hybrid positions are entitled to Saturday Premium pay.
+  
+  
+  Resolution:
+  -----------
+  
+  The Nursing Assistants were converted to hybrids in the Central PAID system 
+  and their type of appointment updated with a 5 or 6, via an edit and update 
+  download from Central PAID to VistA PAID ETA field stations. The VistA ETA 
+  software is updated to include the occupation series/title codes of the 
+  employees in the Hybrid table in order to recognize the employees as hybrids.
+  
+  
+   2. HD0000000439332 - Employees not receiving Saturday premium pay
+  
+  Problem:
+  --------
+  
+  Employees listed as medical instrument techs, with occupational series/title 
+  code of 064933 and type of appointment of 5, are not receiving Saturday 
+  premium pay.
+  
+  Resolution:
+  -----------
+  
+  The resolution for the Medical Instrument Techs is exactly as stated for the 
+  Nursing Assistants in the solution to HD0000000466098, listed above in 
+  Remedy item #1.  The techs occupation series/title code is added to the 
+  Hybrid table.
+  
+   INSTALLATION INSTRUCTIONS:
+   ==========================
+   If installed during the normal workday, it is recommended that the PAID
+   users be off the system and that all the PAID ETA options in the OPTION
+   (#19) file be disabled to prevent possible conflicts while running the
+   KIDS install. All the ETA options can be selected by using the PAID ETA
+   namespace of PRS and the asterisk, or wildcard character (*). As shown in
+   steps 4.d. of the installation instructions, type PRS*, to disable all
+   PAID ETA options. Other VISTA users will not be affected. 
+  
+   Install Time - less than 2 minutes.
+   
+   1.   Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.
+   
+   2.   Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]:
+   
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+            Patch Monitor Main Menu ...
+   
+        Select Kernel Installation & Distribution System Option: INStallation
+                            ---
+     1      Load a Distribution
+     2      Verify Checksums in Transport Global
+     3      Print Transport Global
+     4      Compare Transport Global to Current System
+     5      Backup a Transport Global
+     6      Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+   
+             Select Installation Option:
+   
+   3.   From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter PRS*4.0*130):
+   
+        a.  Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+        b.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed. It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+   4.   Use the Install Package(s) option and select the package
+        PRS*4.0*130.
+   
+        a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+            NO//', answer NO
+        b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? YES//', answer YES.
+        c.  When prompted 'Enter options you wish to mark as 'Out Of
+            Order':', enter PRS*
+        d.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order':', press <return>.
+  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSAENT1
+    Before: B29190860   After: B32605125  **96,130**
+ 
+Routine list of preceding patches: 96
+
+=============================================================================
+User Information:
+Entered By  : GOLDSMITH,RHONDA              Date Entered  : FEB 28, 2011
+Completed By: LEANORD,TATIANA               Date Completed: MAR 07, 2011
+Released By : MCCLARAN,PAM                  Date Released : MAR 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

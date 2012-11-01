@@ -1,0 +1,204 @@
+$TXT Created by DELLINGER,BARRY at DEVESR.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 07/07/11 at 14:52
+=============================================================================
+Run Date: JUL 15, 2011                     Designation: IVM*2*148
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #124                      Status: Released
+                  Compliance Date: AUG 15, 2011
+=============================================================================
+
+Associated patches: (v)IVM*2*121   <<= must be installed BEFORE `IVM*2*148'
+                    (v)IVM*2*131   <<= must be installed BEFORE `IVM*2*148'
+
+Subject: DATE OF DEATH UPLOAD ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Under current functionality, when an unsolicited demographic transmission 
+ (ORU~Z05) containing a Date of Death is received from the Enrollment 
+ System (ES), the record is placed into the IVM Demographic Upload Tool 
+ for processing via the Demographics Upload [IVM UPLOAD DEM] option. 
+ Facility staff evaluates whether to accept or reject the date of death 
+ information via their established processes.
+  
+ This patch, IVM*2*148, provides enhanced data sharing between the 
+ Enrollment System (ES) and the Income Verification Matching (IVM) 
+ package, as follows:
+  
+ Automatic upload of Date of Death will occur if ALL of the following 
+ conditions are met at the time the message is received and processed by 
+ the IVM package:
+  
+   a.  Date of Death is received by VistA via the Enrollment System (ES), 
+       AND
+   b.  The Source of Notification is "Death Certificate on File" (internal 
+       code of 3), AND
+   c.  The Patient is NOT an active inpatient at the time of upload, AND
+   d.  VistA does not currently have a Date/Time of Death entry.
+  
+ Exceptions to the above noted criteria will result in processing of the 
+ Date of Death via the Demographics Upload processing [IVM UPLOAD DEM] 
+ unless the VistA Date of Death (#.351) field is already populated. If 
+ VistA already has a date of death on file, VistA will ignore the Date of 
+ Death from ES transmission and will NOT create an entry in the IVM 
+ Demographic Upload option.
+  
+  
+ Associated Remedy Ticket(s):
+ ----------------------------
+ There are no Remedy Ticket(s) associated with this patch.
+  
+ Associated Code Change Request (CCR):
+ -------------------------------------
+ CR9667/CCR10559
+ CR10787/CCR10780
+  
+  
+ Resolution:
+ -----------
+  
+ A new line tag DODCK, was added to the IVMPREC8 routine to check if a 
+ patient currently has the Date of Death (#.351) field populated. if so, 
+ it discontinues further processing.
+  
+ If the Date of Death (#.351) field is null and the data received from the 
+ Enrollment System (ES) contains both a Date of Death and Source of 
+ Notification equal to "Death Certificate on File" (internal value of 3) 
+ upload the data to VistA unless the patient is an active inpatient at the 
+ receiving site.
+  
+ The line tags AUTODOD and AUTOADD in the routine IVMLDEMD were modified 
+ to bypass the IVM Demographic Upload tool if the entire previously noted 
+ criterion is met for auto upload of Date of Death (#.351) information.
+  
+ Documentation Retrieval:
+ ------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at:  http://www.va.gov/vdl/
+  
+  
+ Below is a list of the files related to this patch that will be needed 
+ and available via the FTP sites listed above.
+  
+ File Description                        File Name                 FTP Mode
+ --------------------------------------------------------------------------
+ Revised IVM V2.0 User Manual            IVM_2_P148_UM.PDF         Binary
+  
+  
+ Associated Test Sites:
+ ----------------------
+ Puget Sound Health Care Center
+ VA Heartland West
+ VA Maryland Health Care System
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed during normal working hours; however, 
+ this patch should NOT be installed while the IVM BACKGROUND JOB [IVM 
+ BACKGROUND JOB] is running. VISTA users will not be affected.
+  
+ Install Time - less than 5 minutes
+       
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter IVM*2.0*148):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.  When prompted for INSTALL NAME, enter IVM*2.0*148.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**; 21-OCT-94;Build 34
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMLDEMD
+    Before: B78952880   After: B84869368  **102,108,131,148**
+Routine Name: IVMPREC8
+    Before:B186534384   After:B204616028  **5,6,12,58,73,79,102,115,121,148**
+ 
+Routine list of preceding patches: 121, 131
+
+=============================================================================
+User Information:
+Entered By  : DELLINGER,BARRY L             Date Entered  : OCT 14, 2010
+Completed By: GOLDEN,JEANNE                 Date Completed: JUL 07, 2011
+Released By : GROOMS,ANTHONY E              Date Released : JUL 15, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

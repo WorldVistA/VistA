@@ -1,0 +1,315 @@
+$TXT Created by HOAK,DAVID R at TEST.BECKLEY.MED.VA.GOV  (KIDS) on Monday, 10/17/11 at 15:52
+=============================================================================
+Run Date: JAN 06, 2012                     Designation: LR*5.2*405
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #325                    Status: Released
+                  Compliance Date: FEB 06, 2012
+=============================================================================
+
+
+Subject: HOWDY COMPUTERIZED PHLEBOTOMY LOGIN PROCESS 
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ Patch LR*5.2*405 introduces the Howdy Computerized Phlebotomy Login 
+ Process as an automated laboratory check-in application which can be used
+ within the Veterans Health Information Systems and Technology Architecture
+ (VistA) Laboratory module. This software performs the following functions:
+  
+ 1.Howdy automates laboratory check-in, accessioning of orders, and 
+ printing of specimen labels
+  
+ 2.Howdy captures collection process times and provides the information 
+ required to create phlebotomy performance reports
+  
+ 3.Howdy eliminates the need for a hand-written log book for sign-in where 
+ the patient's name and SSN can be compromised
+  
+ 4.Howdy can utilize bar code technology to assist in the process of 
+ patient and specimen identification
+  
+ BLOOD BANK STATEMENT
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*405 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by VHA 
+ DIRECTIVE 2004-058 titled VISTA BLOOD BANK SOFTWARE VERSION 5.2.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*405 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*405 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)  Field Name (Number)         New/Modified/Deleted
+ ------------------  ------------------          --------------------
+ HOWDY SITE FILE
+ (#69.86)            NAME (#.01)                         NEW
+                     LAB TEST (TO EXCLUDE) (#2)          NEW
+                     COLLECTION SAMPLE (TO EXCLUDE)(#4)  NEW
+                     SITE SPECIMEN (TO EXCLUDE) (#6)     NEW
+                     COLLECTION TYPES (TO EXCLUDE) (#8)  NEW
+                     LABEL PRINTERS (#10)                NEW
+                     ORDER LABEL ROUTINE (#11)           NEW
+                     EXCLUDE CLINICS (#16)               NEW
+                     CHECK FOR FUTURE ORDERS(DAYS) (#18) NEW
+                     CHECK FOR PAST ORDERS(DAYS) (#20)   NEW
+                     ORDER LABEL TESTS (#25)             NEW
+                     EXCLUDE URGENCY (#30)               NEW
+                     GREETING (#32)                      NEW
+                     WELCOME TO (#40)                    NEW
+                     YOUR HOST IS (#42)                  NEW
+                     HOST TITLE (#44)                    NEW
+                     SPACER LABEL PRINTER (#45)          NEW
+                     DELETE SAME DAY DUPLICATES (#52)    NEW
+                     BINGO BOARD DEVICE (#54)            NEW
+                     HOWDY BOT (#56)                     NEW
+  
+ File Name (Number)      Field Name (Number)      New/Modified/Deleted
+ ------------------      -------------------      --------------------
+ HOWDY SPECIMEN TIMES
+ BY UID FILE(#69.87)     SPECIMEN UID (#.01)             NEW
+                         INITIAL SCAN TIME (#2)          NEW
+                         TIME LABELS PRINTED (#4)        NEW
+                         COLLECTOR (#6)                  NEW
+                         COLLECTION TIME (#8)            NEW
+                         LAB ARRIVAL TIME (#10)          NEW
+                         RECEIVER (#12)                  NEW
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+  
+ N/A
+  
+  
+  
+ Options Associated:
+  
+ Option Name                     Type                    New/Modified
+ -----------                     ----                    ------------
+ LRHY HOWDY PPOC MAIN MENU       menu                        NEW
+ LRHY HOWDY MAIN MENU            menu                        NEW
+ LRHY PPOC LABEL PRINT           action                      NEW      
+ LRHY PATIENT CARD SCAN          run routine                 NEW    
+ LRHY PATIENT CARD SCAN (PPOC)   run routine                 NEW    
+ LRHY PATIENT WAIT TIME          run routine                 NEW      
+ LRHY PHLEBOTOMY LOG             run routine                 NEW
+ LRHY SCAN SPECIMENS INTO LAB    action                      NEW  
+ LRHY SITE FILE EDIT             run routine                 NEW  
+ LRHY TRACK COLLECTION           run routine                 NEW
+ LRHY HOWDY BOT                  action                      NEW
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ LRHYKEY
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Salisbury VAMC
+ Poplar Bluff VAMC
+ Wilmington VAMC
+ Central TX VAMC
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The preferred method is to FTP the documentation file from
+ ftp://download.vista.med.va.gov/
+  
+ The file to be downloaded is LR_5_2_405_DOC.ZIP that contains:
+  
+ Title                               File Name          FTP Mode
+ --------------------------------------------------------------------------
+ Howdy Computerized Phlebotomy       LR_52_405_UM.DOC   binary
+  Login Process User Manual          LR_52_405_UM.PDF
+  
+ Howdy Computerized Phlebotomy       LR_52_405_TM.DOC   binary
+  Login Process Technical Manual     LR_52_405_TM.PDF
+  
+ Howdy Computerized Phlebotomy       LR_52_405_IG.DOC   binary 
+  Login Process Installation Guide   LR_52_405_IG.PDF
+  
+ Howdy Computerized Phlebotomy       LR_52_405_RN.DOC   binary 
+  Login Process Release Notes        LR_52_405_RN.PDF
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.va.gov/vdl/
+  
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ INSTALLATION INSTRUCTIONS
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Pre-Installation Instructions
+ -----------------------------  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch 
+     LR*5.2*405:
+  
+     a.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.)    
+     b.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// 
+  
+ 8.  If prompted "Delay Install (Minutes): (0 - 60): 0//respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 93
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRHY0
+    Before:       n/a   After: B39459893  **405**
+Routine Name: LRHY01
+    Before:       n/a   After: B42068305  **405**
+Routine Name: LRHY22
+    Before:       n/a   After:  B4209641  **405**
+Routine Name: LRHY4X
+    Before:       n/a   After: B60499659  **405**
+Routine Name: LRHYA
+    Before:       n/a   After: B29476770  **405**
+Routine Name: LRHYAFT
+    Before:       n/a   After: B93475288  **405**
+Routine Name: LRHYB
+    Before:       n/a   After: B41480183  **405**
+Routine Name: LRHYBC1
+    Before:       n/a   After: B65673282  **405**
+Routine Name: LRHYBC9
+    Before:       n/a   After:   B188141  **405**
+Routine Name: LRHYBL1
+    Before:       n/a   After:   B187896  **405**
+Routine Name: LRHYBLD
+    Before:       n/a   After:  B5635430  **405**
+Routine Name: LRHYDEL
+    Before:       n/a   After: B58771394  **405**
+Routine Name: LRHYED
+    Before:       n/a   After:    B54493  **405**
+Routine Name: LRHYF1
+    Before:       n/a   After: B21719177  **405**
+Routine Name: LRHYF2
+    Before:       n/a   After:  B1996292  **405**
+Routine Name: LRHYF4
+    Before:       n/a   After: B53704668  **405**
+Routine Name: LRHYLRX
+    Before:       n/a   After:  B1258345  **405**
+Routine Name: LRHYLS1
+    Before:       n/a   After:  B9947241  **405**
+Routine Name: LRHYPH0
+    Before:       n/a   After: B38997897  **405**
+Routine Name: LRHYPH2
+    Before:       n/a   After: B12074115  **405**
+Routine Name: LRHYPL
+    Before:       n/a   After:  B9505821  **405**
+Routine Name: LRHYPOST
+    Before:       n/a   After:   B856379  **405**
+Routine Name: LRHYT1
+    Before:       n/a   After: B12777188  **405**
+Routine Name: LRHYT2
+    Before:       n/a   After:  B3165610  **405**
+Routine Name: LRHYU
+    Before:       n/a   After:  B3762458  **405**
+Routine Name: LRHYU4
+    Before:       n/a   After:   B116774  **405**
+Routine Name: LRHYU5
+    Before:       n/a   After:    B83020  **405**
+Routine Name: LRHYUTL
+    Before:       n/a   After:   B160482  **405**
+
+=============================================================================
+User Information:
+Entered By  : HOAK,DAVID                    Date Entered  : JUL 26, 2010
+Completed By: YAMAMOTO,LARRY                Date Completed: JAN 05, 2012
+Released By : BELSCHWINDER,MICHAEL          Date Released : JAN 06, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

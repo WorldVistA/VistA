@@ -1,0 +1,1264 @@
+Released IB*2*455 SEQ #428
+Extracted from mail message
+**KIDS**:IB*2.0*455^
+
+**INSTALL NAME**
+IB*2.0*455
+"BLD",8758,0)
+IB*2.0*455^INTEGRATED BILLING^0^3111007^y
+"BLD",8758,1,0)
+^^6^6^3110617^
+"BLD",8758,1,1,0)
+This patch contains two issues. The first issue is about the unit price
+"BLD",8758,1,2,0)
+of the drug cost with zero resulting in an error message of 'Not ECME
+"BLD",8758,1,3,0)
+Billable: Cannot find price for Item'. This error message prevents
+"BLD",8758,1,4,0)
+IB from generating third party bills for outpatient prescriptions. The
+"BLD",8758,1,5,0)
+second issue concerns payment amounts on e-Pharmacy claims which are more
+"BLD",8758,1,6,0)
+than the billed amounts.
+"BLD",8758,4,0)
+^9.64PA^^
+"BLD",8758,6)
+^411
+"BLD",8758,6.3)
+20
+"BLD",8758,"ABPKG")
+n
+"BLD",8758,"INIT")
+
+"BLD",8758,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8758,"KRN",.4,0)
+.4
+"BLD",8758,"KRN",.401,0)
+.401
+"BLD",8758,"KRN",.402,0)
+.402
+"BLD",8758,"KRN",.403,0)
+.403
+"BLD",8758,"KRN",.5,0)
+.5
+"BLD",8758,"KRN",.84,0)
+.84
+"BLD",8758,"KRN",3.6,0)
+3.6
+"BLD",8758,"KRN",3.8,0)
+3.8
+"BLD",8758,"KRN",9.2,0)
+9.2
+"BLD",8758,"KRN",9.8,0)
+9.8
+"BLD",8758,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",8758,"KRN",9.8,"NM",1,0)
+IBNCPDP1^^0^B163143081
+"BLD",8758,"KRN",9.8,"NM",2,0)
+IBCRCC^^0^B32466815
+"BLD",8758,"KRN",9.8,"NM","B","IBCRCC",2)
+
+"BLD",8758,"KRN",9.8,"NM","B","IBNCPDP1",1)
+
+"BLD",8758,"KRN",19,0)
+19
+"BLD",8758,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",8758,"KRN",19.1,0)
+19.1
+"BLD",8758,"KRN",101,0)
+101
+"BLD",8758,"KRN",409.61,0)
+409.61
+"BLD",8758,"KRN",771,0)
+771
+"BLD",8758,"KRN",779.2,0)
+779.2
+"BLD",8758,"KRN",870,0)
+870
+"BLD",8758,"KRN",8989.51,0)
+8989.51
+"BLD",8758,"KRN",8989.52,0)
+8989.52
+"BLD",8758,"KRN",8994,0)
+8994
+"BLD",8758,"KRN","B",.4,.4)
+
+"BLD",8758,"KRN","B",.401,.401)
+
+"BLD",8758,"KRN","B",.402,.402)
+
+"BLD",8758,"KRN","B",.403,.403)
+
+"BLD",8758,"KRN","B",.5,.5)
+
+"BLD",8758,"KRN","B",.84,.84)
+
+"BLD",8758,"KRN","B",3.6,3.6)
+
+"BLD",8758,"KRN","B",3.8,3.8)
+
+"BLD",8758,"KRN","B",9.2,9.2)
+
+"BLD",8758,"KRN","B",9.8,9.8)
+
+"BLD",8758,"KRN","B",19,19)
+
+"BLD",8758,"KRN","B",19.1,19.1)
+
+"BLD",8758,"KRN","B",101,101)
+
+"BLD",8758,"KRN","B",409.61,409.61)
+
+"BLD",8758,"KRN","B",771,771)
+
+"BLD",8758,"KRN","B",779.2,779.2)
+
+"BLD",8758,"KRN","B",870,870)
+
+"BLD",8758,"KRN","B",8989.51,8989.51)
+
+"BLD",8758,"KRN","B",8989.52,8989.52)
+
+"BLD",8758,"KRN","B",8994,8994)
+
+"BLD",8758,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8758,"QUES",0)
+^9.62^^
+"BLD",8758,"REQB",0)
+^9.611^3^2
+"BLD",8758,"REQB",2,0)
+IB*2.0*427^2
+"BLD",8758,"REQB",3,0)
+IB*2.0*435^2
+"BLD",8758,"REQB","B","IB*2.0*427",2)
+
+"BLD",8758,"REQB","B","IB*2.0*435",3)
+
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+455^3111007
+"PKG",200,22,1,"PAH",1,1,0)
+^^6^6^3111007
+"PKG",200,22,1,"PAH",1,1,1,0)
+This patch contains two issues. The first issue is about the unit price
+"PKG",200,22,1,"PAH",1,1,2,0)
+of the drug cost with zero resulting in an error message of 'Not ECME
+"PKG",200,22,1,"PAH",1,1,3,0)
+Billable: Cannot find price for Item'. This error message prevents
+"PKG",200,22,1,"PAH",1,1,4,0)
+IB from generating third party bills for outpatient prescriptions. The
+"PKG",200,22,1,"PAH",1,1,5,0)
+second issue concerns payment amounts on e-Pharmacy claims which are more
+"PKG",200,22,1,"PAH",1,1,6,0)
+than the billed amounts.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","IBCRCC")
+0^2^B32466815^B28233303
+"RTN","IBCRCC",1,0)
+IBCRCC ;ALB/ARH - RATES: CALCULATION OF ITEM CHARGE ;22-MAY-1996
+"RTN","IBCRCC",2,0)
+ ;;2.0;INTEGRATED BILLING;**52,80,106,138,245,223,309,347,370,383,427,455**;21-MAR-94;Build 20
+"RTN","IBCRCC",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IBCRCC",4,0)
+ ;
+"RTN","IBCRCC",5,0)
+ ; ITMCHG and RATECHG are basic item/set/rate charge functions, IBCRCI contains more standard callable functions
+"RTN","IBCRCC",6,0)
+ ;
+"RTN","IBCRCC",7,0)
+ITMCHG(CS,ITEM,EVDT,MOD,ARR) ; get the base unit charges for a specific item, given a charge set, item and date
+"RTN","IBCRCC",8,0)
+ ; this is the primary function to get an item charge and works for all Charge Methods, given an Item
+"RTN","IBCRCC",9,0)
+ ; returns ARR = count of items in array ^ total charge for item ^ total base charge
+"RTN","IBCRCC",10,0)
+ ;         ARR(x) = charge item IFN (if any) ^ rev code (if any) ^ $ charge ^ $ base charge
+"RTN","IBCRCC",11,0)
+ ; checks Item effective and inactive dates, modifier match, and only sets array if the charge is non-zero
+"RTN","IBCRCC",12,0)
+ ; each item will be passed back separately in the array, no combination of charges
+"RTN","IBCRCC",13,0)
+ ;
+"RTN","IBCRCC",14,0)
+ N IBCSBR,IBEVDT,IBEFDT,IBXREF,IBITEM,IBDA,IBLN,IBCHRG,IBITMFND K ARR S ARR=0
+"RTN","IBCRCC",15,0)
+ S CS=+$G(CS),IBEVDT=$S(+$G(EVDT):+EVDT,1:DT),IBITEM=+$G(ITEM),MOD=$G(MOD) I 'CS!'IBITEM Q
+"RTN","IBCRCC",16,0)
+ S IBCSBR=$$CSBR^IBCRU3(CS)
+"RTN","IBCRCC",17,0)
+ ;
+"RTN","IBCRCC",18,0)
+ ; va cost
+"RTN","IBCRCC",19,0)
+ I $P(IBCSBR,U,5)=2 D  Q  ; va cost
+"RTN","IBCRCC",20,0)
+ . I $P(IBCSBR,U,1)["PROSTHETICS" S IBCHRG=$$PICOST(IBITEM)  I +IBCHRG D SETARR(0,0,+IBCHRG,.ARR) Q
+"RTN","IBCRCC",21,0)
+ . I $P(IBCSBR,U,1)["PRESCRIPTION" S IBCHRG=$$RXCOST(IBITEM) I +IBCHRG D SETARR(0,0,+IBCHRG,.ARR) Q
+"RTN","IBCRCC",22,0)
+ ;
+"RTN","IBCRCC",23,0)
+ ; all others - have Charge Item entries
+"RTN","IBCRCC",24,0)
+ ;
+"RTN","IBCRCC",25,0)
+ ; find most recent Charge Item for the item, search until modifiers match (only BI=CPT should have mods defined)
+"RTN","IBCRCC",26,0)
+ S IBXREF="AIVDTS"_CS,IBITMFND=0
+"RTN","IBCRCC",27,0)
+ S IBEFDT=-(IBEVDT+.01) F  S IBEFDT=$O(^IBA(363.2,IBXREF,IBITEM,IBEFDT)) Q:'IBEFDT  D  Q:IBITMFND
+"RTN","IBCRCC",28,0)
+ . S IBDA=0 F  S IBDA=$O(^IBA(363.2,IBXREF,IBITEM,IBEFDT,IBDA)) Q:'IBDA  D
+"RTN","IBCRCC",29,0)
+ .. S IBLN=$G(^IBA(363.2,IBDA,0))
+"RTN","IBCRCC",30,0)
+ .. I +$P(IBLN,U,7)'=+MOD Q  ; charge item modifier does not match modifier passed in
+"RTN","IBCRCC",31,0)
+ .. S IBITMFND=1 ; item found
+"RTN","IBCRCC",32,0)
+ .. I +$P(IBLN,U,4),+$P(IBLN,U,4)<IBEVDT Q  ; charge is inactive on event date
+"RTN","IBCRCC",33,0)
+ .. I +$P(IBLN,U,5) D SETARR(IBDA,+$P(IBLN,U,6),+$P(IBLN,U,5),.ARR,$P(IBLN,U,8))
+"RTN","IBCRCC",34,0)
+ Q
+"RTN","IBCRCC",35,0)
+ ;
+"RTN","IBCRCC",36,0)
+SETARR(CI,RVCD,CHRG,ARR,CHRGB) ; set charges into an array, does not allow zero charge, a new entry is created each time,
+"RTN","IBCRCC",37,0)
+ ; no attempt to combine like items, the new item charge is added to any that may already be in the array 
+"RTN","IBCRCC",38,0)
+ ; returns ARR = count of items in array ^ total charge for item
+"RTN","IBCRCC",39,0)
+ ;         ARR(x) = charge item IFN (if any) ^ item rev code (if any) ^ $ charge
+"RTN","IBCRCC",40,0)
+ ;
+"RTN","IBCRCC",41,0)
+ N CNT,TCHRG,TCHRGB
+"RTN","IBCRCC",42,0)
+ S CNT=+$G(ARR)+1,TCHRG=$P($G(ARR),U,2)+$G(CHRG) I +$G(CHRGB) S TCHRGB=+$P($G(ARR),U,3)+CHRGB
+"RTN","IBCRCC",43,0)
+ I +$G(CHRG) S ARR=CNT_U_+TCHRG_U_$G(TCHRGB),ARR(CNT)=$G(CI)_U_+$G(RVCD)_U_+CHRG_U_$G(TCHRGB)
+"RTN","IBCRCC",44,0)
+ Q
+"RTN","IBCRCC",45,0)
+ ;
+"RTN","IBCRCC",46,0)
+PICOST(PI) ; returns (PI=ptr 362.5): total VA cost of an item (660,14) ^ quantity (660,5) from prosthetics ^ bill IFN
+"RTN","IBCRCC",47,0)
+ ;
+"RTN","IBCRCC",48,0)
+ N IBPIP,IBLN,IBX,IBIFN S (IBPIP,IBX)=0
+"RTN","IBCRCC",49,0)
+ I +$G(PI) S IBLN=$G(^IBA(362.5,+PI,0)),IBPIP=$P(IBLN,U,4),IBIFN=$P(IBLN,U,2)
+"RTN","IBCRCC",50,0)
+ I +IBPIP S IBLN=$G(^RMPR(660,+IBPIP,0)) I IBLN'="" S IBX=$P(IBLN,U,16)_U_$P(IBLN,U,7)_U_IBIFN
+"RTN","IBCRCC",51,0)
+ Q IBX
+"RTN","IBCRCC",52,0)
+ ;
+"RTN","IBCRCC",53,0)
+RATECHG(RS,CHG,EVDT,FEE) ; returns modifed item charge based on rate schedule:  check effective dates, apply adjustment
+"RTN","IBCRCC",54,0)
+ ; adjusted amount ^ comment (if there is an adjustment)
+"RTN","IBCRCC",55,0)
+ ; if FEE passed by reference, returns disp fee^admin fee
+"RTN","IBCRCC",56,0)
+ ;
+"RTN","IBCRCC",57,0)
+ N IBX,IBRS0,IBRS10,IBEFDT,IBINADT,IBRTY,X S IBRTY=""
+"RTN","IBCRCC",58,0)
+ S IBX=+$G(CHG),IBRS0=$G(^IBE(363,+$G(RS),0)),IBRS10=$G(^IBE(363,+$G(RS),10))
+"RTN","IBCRCC",59,0)
+ S EVDT=$S(+$G(EVDT):EVDT,1:DT),IBEFDT=$P(IBRS0,U,5),IBINADT=$P(IBRS0,U,6)
+"RTN","IBCRCC",60,0)
+ I +IBEFDT>EVDT!(+IBINADT&(IBINADT<EVDT)) S IBX=0
+"RTN","IBCRCC",61,0)
+ I +IBX,IBRS10'="" S X=IBX X IBRS10 S IBX=X,IBRTY="^Rate Schedule Adjustment ("_$J(CHG,"",2)_")"
+"RTN","IBCRCC",62,0)
+ S FEE=$P($G(^IBE(363,+$G(RS),1)),"^",1,2)
+"RTN","IBCRCC",63,0)
+ Q IBX_IBRTY
+"RTN","IBCRCC",64,0)
+ ;
+"RTN","IBCRCC",65,0)
+RXCOST(RX) ; returns (RX=ptr 362.4): VA Cost of an Rx - Per Unit Cost ^ bill IFN
+"RTN","IBCRCC",66,0)
+ ; w/ Per Unit Cost = Refill (Current Unit Price of Drug - 52.1,1.2) or RX (Unit Price of Drug - 52,17) or Drug (Price Per Dispense Unit - 50,16)
+"RTN","IBCRCC",67,0)
+ ;
+"RTN","IBCRCC",68,0)
+ N IBRXP,IBDGP,IBLN,IBX,IBIFN,IBDT,IBY
+"RTN","IBCRCC",69,0)
+ S (IBRXP,IBX,IBDGP,IBDT,IBIFN)=0,IBY=""
+"RTN","IBCRCC",70,0)
+ ; fill number (362.4,.1)
+"RTN","IBCRCC",71,0)
+ I +$G(RX) S IBLN=$G(^IBA(362.4,+RX,0)),IBRXP=$P(IBLN,U,5),IBDGP=$P(IBLN,U,4),IBIFN=$P(IBLN,U,2),IBDT=$P(IBLN,U,3),IBY=$P(IBLN,U,10)
+"RTN","IBCRCC",72,0)
+ I IBY="" S IBY=$$RFLNUM^IBRXUTL(IBRXP,IBDT)
+"RTN","IBCRCC",73,0)
+ ;
+"RTN","IBCRCC",74,0)
+ I IBRXP,IBY S IBX=$$SUBFILE^IBRXUTL(IBRXP,+IBY,52,1.2)_U_IBIFN
+"RTN","IBCRCC",75,0)
+ I IBRXP,'IBX S IBX=$$FILE^IBRXUTL(IBRXP,17)_U_IBIFN
+"RTN","IBCRCC",76,0)
+ I 'IBRXP,IBDGP D DATA^IBRXUTL(+IBDGP) S IBLN=$G(^TMP($J,"IBDRUG",0)) I IBLN'="" S IBX=$G(^TMP($J,"IBDRUG",+IBDGP,16))_U_IBIFN
+"RTN","IBCRCC",77,0)
+ ;
+"RTN","IBCRCC",78,0)
+ ; penny drug cost is 0
+"RTN","IBCRCC",79,0)
+ I $P(IBX,U,1)=0 S IBX=$$DRGCT(IBDGP)_U_IBIFN
+"RTN","IBCRCC",80,0)
+ K ^TMP($J,"IBDRUG")
+"RTN","IBCRCC",81,0)
+ Q IBX
+"RTN","IBCRCC",82,0)
+ ;
+"RTN","IBCRCC",83,0)
+ ;
+"RTN","IBCRCC",84,0)
+DRGCT(IBDGP) ;Penny drug cost calculation
+"RTN","IBCRCC",85,0)
+ ; Input - IEN
+"RTN","IBCRCC",86,0)
+ ; Output - true value of unit price (50-13/15)
+"RTN","IBCRCC",87,0)
+ N IBCUT,IBX,IBY S IBCUT=0
+"RTN","IBCRCC",88,0)
+ G:'IBDGP DRGCTQ
+"RTN","IBCRCC",89,0)
+ D:'$D(^TMP($J,"IBDRUG")) DATA^IBRXUTL(+IBDGP)
+"RTN","IBCRCC",90,0)
+ S IBX=$G(^TMP($J,"IBDRUG",+IBDGP,13))
+"RTN","IBCRCC",91,0)
+ S IBY=$G(^TMP($J,"IBDRUG",+IBDGP,15))
+"RTN","IBCRCC",92,0)
+ I IBX,IBY S IBCUT=$J(IBX/IBY,1,4),IBCUT=$S(IBCUT>0:IBCUT,1:0.0001)
+"RTN","IBCRCC",93,0)
+DRGCTQ Q IBCUT
+"RTN","IBCRCC",94,0)
+ ;
+"RTN","IBCRCC",95,0)
+PRVCHG(CS,CHG,PRV,EVDT,ITEM) ; return discounted amount, based on total charge for a the care, the provider and Charge Set (BR)
+"RTN","IBCRCC",96,0)
+ ; if no discount record found for the Charge Set or the provider then returns original amount
+"RTN","IBCRCC",97,0)
+ ; no provider discount for Lab charges (80000-89999)
+"RTN","IBCRCC",98,0)
+ ;   discounted amount ^ comment (if discounted) ^ percent discount
+"RTN","IBCRCC",99,0)
+ ;
+"RTN","IBCRCC",100,0)
+ N IBPC,IBSGFN,IBSG,IBPDFN,IBPD0,IBPDTY,IBI,IBX,IBY S IBX=+$G(CHG),(IBSGFN,IBPDTY)="" I '$G(EVDT) S EVDT=DT
+"RTN","IBCRCC",101,0)
+ I +$G(ITEM),ITEM>79999,ITEM<90000 S (CS,PRV)=""
+"RTN","IBCRCC",102,0)
+ I +$G(CS) S IBSGFN=+$$CSSG^IBCRU6(+CS,"",2,.IBSG)
+"RTN","IBCRCC",103,0)
+ I +$G(PRV),+IBSGFN S IBPC=$$GET^XUA4A72(PRV,EVDT)
+"RTN","IBCRCC",104,0)
+ ;
+"RTN","IBCRCC",105,0)
+ S IBI=0 F  S IBI=$O(IBSG(IBI)) Q:'IBI  S IBSGFN=+IBSG(IBI) I +IBSGFN D
+"RTN","IBCRCC",106,0)
+ . S IBPDFN=0 F  S IBPDFN=$O(^IBE(363.34,"C",+IBSGFN,IBPDFN)) Q:'IBPDFN  D  Q:IBPDTY'=""
+"RTN","IBCRCC",107,0)
+ .. I '$O(^IBE(363.34,+IBPDFN,11,"B",+IBPC,0)) Q
+"RTN","IBCRCC",108,0)
+ .. S IBPD0=$G(^IBE(363.34,+IBPDFN,0)),IBY=$P(IBPD0,U,3) Q:IBY=""
+"RTN","IBCRCC",109,0)
+ .. S IBY=+IBY/100,IBX=IBY*IBX
+"RTN","IBCRCC",110,0)
+ .. S IBPDTY=U_$P($G(^VA(200,+PRV,0)),U,1)_" - "_$P(IBPD0,U,1)_" "_$P(IBPD0,U,3)_"% of "_$J(CHG,0,2)_U_+IBY
+"RTN","IBCRCC",111,0)
+ Q IBX_IBPDTY
+"RTN","IBCRCC",112,0)
+ ;
+"RTN","IBCRCC",113,0)
+MODCHG(CS,CHG,MODS) ; return adjusted amount due to RC modifier adjustment
+"RTN","IBCRCC",114,0)
+ ; straight adjustment for RC Physician charges by modifier, if no modifier adjustment returns original amount
+"RTN","IBCRCC",115,0)
+ ; Input:  Charge Set, Procedure Charge, Modifiers - list with modifier IEN's separated by ','
+"RTN","IBCRCC",116,0)
+ ; Output: discounted amount ^ comment (if discounted) ^ percent discount
+"RTN","IBCRCC",117,0)
+ ;
+"RTN","IBCRCC",118,0)
+ N IBCS0,IBBR0,IBMOD,IBMODS,IBMODE,IBDSCNT,IBPDTY,IBI,IBX,IBY
+"RTN","IBCRCC",119,0)
+ S CHG=+$G(CHG),MODS=$G(MODS),(IBBR0,IBPDTY,IBMODS)="",IBDSCNT=1,IBX=+CHG
+"RTN","IBCRCC",120,0)
+ I +$G(CS) S IBCS0=$G(^IBE(363.1,+CS,0)),IBBR0=$G(^IBE(363.3,+$P(IBCS0,U,2),0))
+"RTN","IBCRCC",121,0)
+ I $P(IBBR0,U,1)'["RC PHYSICIAN" S MODS="" ; professional charge only
+"RTN","IBCRCC",122,0)
+ I $P(IBBR0,U,4)'=2 S MODS="" ; CPT item only
+"RTN","IBCRCC",123,0)
+ I 'CHG S MODS=""
+"RTN","IBCRCC",124,0)
+ ;
+"RTN","IBCRCC",125,0)
+ I +MODS F IBI=1:1 S IBMOD=$P(MODS,",",IBI) Q:'IBMOD  S IBY=0 D
+"RTN","IBCRCC",126,0)
+ . I IBMOD=3 S IBMODE=22,IBY=1.3,IBX=IBX*IBY ; modifier 22 at 120% adjustment
+"RTN","IBCRCC",127,0)
+ . I IBMOD=10 S IBMODE=50,IBY=1.54,IBX=IBX*IBY ; modifier 50 at 154% adjustment
+"RTN","IBCRCC",128,0)
+ . I +IBY S IBMODS=IBMODS_$S(IBMODS="":"",1:",")_IBMODE,IBDSCNT=IBDSCNT*IBY ; allow for multiple discounts
+"RTN","IBCRCC",129,0)
+ I IBMODS'="" S IBPDTY=U_"Modifier "_IBMODS_" Adjustment "_(IBDSCNT*100)_"% of "_$J(CHG,0,2)_U_+IBDSCNT
+"RTN","IBCRCC",130,0)
+ Q IBX_IBPDTY
+"RTN","IBCRCC",131,0)
+ ;
+"RTN","IBCRCC",132,0)
+HRUNIT(HRS) ; returns Hour Units based on the Hours passed in
+"RTN","IBCRCC",133,0)
+ ; Hour Units are the hours rounded to the nearest whole hour (less than 30 minutes is 0 units)
+"RTN","IBCRCC",134,0)
+ N IBX S IBX=0 I +$G(HRS) S IBX=$J(HRS,0,0)
+"RTN","IBCRCC",135,0)
+ Q IBX
+"RTN","IBCRCC",136,0)
+ ;
+"RTN","IBCRCC",137,0)
+MLUNIT(MLS) ; returns Miles Units based on the Miles passed in
+"RTN","IBCRCC",138,0)
+ ; Mile Units are the miles rounded to the nearest whole mile
+"RTN","IBCRCC",139,0)
+ N IBX S IBX=0 I +$G(MLS) S IBX=$J(MLS,0,0) I 'IBX S IBX=1
+"RTN","IBCRCC",140,0)
+ Q IBX
+"RTN","IBCRCC",141,0)
+ ;
+"RTN","IBCRCC",142,0)
+MNUNIT(MNS) ; return Minute Units based on the Minutes passed in
+"RTN","IBCRCC",143,0)
+ ; Minute Units are 15 minute intervals, rounded up after any minutes
+"RTN","IBCRCC",144,0)
+ N IBX S IBX=0 I +$G(MNS) S IBX=(MNS\15) S:+(MNS#15) IBX=IBX+1 I 'IBX S IBX=1
+"RTN","IBCRCC",145,0)
+ Q IBX
+"RTN","IBNCPDP1")
+0^1^B163143081^B138462172
+"RTN","IBNCPDP1",1,0)
+IBNCPDP1 ;OAK/ELZ - PROCESSING FOR NEW RX REQUESTS ;5/22/08  15:24
+"RTN","IBNCPDP1",2,0)
+ ;;2.0;INTEGRATED BILLING;**223,276,339,363,383,405,384,411,434,437,435,455**;21-MAR-94;Build 20
+"RTN","IBNCPDP1",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IBNCPDP1",4,0)
+ ;
+"RTN","IBNCPDP1",5,0)
+ ; Reference to CL^SDCO21 supported by IA# 406
+"RTN","IBNCPDP1",6,0)
+ ; Reference to IN5^VADPT supported by IA# 10061
+"RTN","IBNCPDP1",7,0)
+ ;
+"RTN","IBNCPDP1",8,0)
+RX(DFN,IBD) ; pharmacy package call, passing in IBD by ref
+"RTN","IBNCPDP1",9,0)
+ ; this is called by PSO for all prescriptions issued, return is
+"RTN","IBNCPDP1",10,0)
+ ; a response to bill ECME or not with array for billing data elements
+"RTN","IBNCPDP1",11,0)
+ ;
+"RTN","IBNCPDP1",12,0)
+ ;warning: back-billing flag:
+"RTN","IBNCPDP1",13,0)
+ ;if passed IBSCRES(IBRXN,IBFIL)=1
+"RTN","IBNCPDP1",14,0)
+ ; - then the SC Determination is just done by the IB clerk (billable)
+"RTN","IBNCPDP1",15,0)
+ ; - set by routine IBNCPBB
+"RTN","IBNCPDP1",16,0)
+ ;
+"RTN","IBNCPDP1",17,0)
+ ; IBD("PLAN") - is specified only if RX API is called for billing determination for 2ndary claim.
+"RTN","IBNCPDP1",18,0)
+ ;
+"RTN","IBNCPDP1",19,0)
+ ;clean up the list of non-answered SC/Env.indicators questions and INS
+"RTN","IBNCPDP1",20,0)
+ K IBD("SC/EI NO ANSW"),IBD("INS")
+"RTN","IBNCPDP1",21,0)
+ ;
+"RTN","IBNCPDP1",22,0)
+ N IBTRKR,IBARR,IBADT,IBRXN,IBFIL,IBTRKRN,IBRMARK,IBANY,IBX,IBT,IBINS,IBSAVE
+"RTN","IBNCPDP1",23,0)
+ N IBFEE,IBBI,IBIT,IBPRICE,IBRS,IBRT,IBTRN,IBCHG,IBRES,IBNEEDS,IBELIG,IBDEA,IBPTYP
+"RTN","IBNCPDP1",24,0)
+ ;
+"RTN","IBNCPDP1",25,0)
+ ; eligibility verification request flag - esg 9/9/10 IB*2*435
+"RTN","IBNCPDP1",26,0)
+ S IBELIG=($G(IBD("RX ACTION"))="ELIG")
+"RTN","IBNCPDP1",27,0)
+ ;
+"RTN","IBNCPDP1",28,0)
+ I '$G(DFN) S IBRES="0^No DFN" G RXQ
+"RTN","IBNCPDP1",29,0)
+ ;
+"RTN","IBNCPDP1",30,0)
+ S IBRES="0^Error"
+"RTN","IBNCPDP1",31,0)
+ S IBADT=+$G(IBD("FILL DATE"),DT)
+"RTN","IBNCPDP1",32,0)
+ ;
+"RTN","IBNCPDP1",33,0)
+ ; -- look up insurance for patient
+"RTN","IBNCPDP1",34,0)
+ D ALL^IBCNS1(DFN,"IBINS",1,IBADT,1)
+"RTN","IBNCPDP1",35,0)
+ ;
+"RTN","IBNCPDP1",36,0)
+ ; -- determine rate type
+"RTN","IBNCPDP1",37,0)
+ S IBRT=$$RT^IBNCPDPU(DFN,IBADT,.IBINS,.IBPTYP)
+"RTN","IBNCPDP1",38,0)
+ ;
+"RTN","IBNCPDP1",39,0)
+ ; If the rate type was selected by the user for manual primary or secondary claims processing, then update IBRT
+"RTN","IBNCPDP1",40,0)
+ I $G(IBD("RTYPE")),$G(IBD("PLAN")) D
+"RTN","IBNCPDP1",41,0)
+ . S $P(IBRT,U,1)=+IBD("RTYPE")                              ; overwrite the rate type ien [1]
+"RTN","IBNCPDP1",42,0)
+ . S $P(IBRT,U,2)=$$COSTTYP^IBNCPUT3(+IBD("RTYPE"),IBADT)    ; overwrite the basis of cost determination [2]
+"RTN","IBNCPDP1",43,0)
+ . I $P(IBRT,U,3)="" S $P(IBRT,U,3)=IBPTYP                   ; overwrite eligibility if null [3]
+"RTN","IBNCPDP1",44,0)
+ . Q
+"RTN","IBNCPDP1",45,0)
+ ;
+"RTN","IBNCPDP1",46,0)
+ ; -- Process an eligibility verification request
+"RTN","IBNCPDP1",47,0)
+ I IBELIG D  G RXQ
+"RTN","IBNCPDP1",48,0)
+ . S IBRES=1
+"RTN","IBNCPDP1",49,0)
+ . D SETINSUR(IBADT,IBRT,IBELIG,.IBINS,.IBD,.IBRES)
+"RTN","IBNCPDP1",50,0)
+ . Q
+"RTN","IBNCPDP1",51,0)
+ ;
+"RTN","IBNCPDP1",52,0)
+ ; additional data integrity checks
+"RTN","IBNCPDP1",53,0)
+ S IBRXN=+$G(IBD("IEN")) I 'IBRXN S IBRES="0^No Rx IEN" G RXQ
+"RTN","IBNCPDP1",54,0)
+ S IBFIL=+$G(IBD("FILL NUMBER"),-1) I IBFIL<0 S IBRES="0^No fill number" G RXQ
+"RTN","IBNCPDP1",55,0)
+ S IBD("QTY")=+$G(IBD("QTY")) I 'IBD("QTY") S IBRES="0^No Quantity" G RXQ
+"RTN","IBNCPDP1",56,0)
+ ;
+"RTN","IBNCPDP1",57,0)
+ ; -- Gather claims tracking information if it exists
+"RTN","IBNCPDP1",58,0)
+ S IBTRKR=$G(^IBE(350.9,1,6))
+"RTN","IBNCPDP1",59,0)
+ ; date can't be before parameters
+"RTN","IBNCPDP1",60,0)
+ S $P(IBTRKR,U)=$S('$P(IBTRKR,U,4):0,+IBTRKR&(IBADT<+IBTRKR):0,1:IBADT)
+"RTN","IBNCPDP1",61,0)
+ ; already in claims tracking
+"RTN","IBNCPDP1",62,0)
+ S IBTRKRN=+$O(^IBT(356,"ARXFL",IBRXN,IBFIL,0))
+"RTN","IBNCPDP1",63,0)
+ ;
+"RTN","IBNCPDP1",64,0)
+ ; -- Check for TRICARE Inpatient - esg 8/5/10 IB*2*434
+"RTN","IBNCPDP1",65,0)
+ I $P(IBRT,U,3)="T",$$INP(DFN,IBRXN,IBFIL) D  G RXQ
+"RTN","IBNCPDP1",66,0)
+ . S IBRMARK="TRICARE INPATIENT/DISCHARGE"            ; reason not billable
+"RTN","IBNCPDP1",67,0)
+ . D CT                                               ; update/add claims tracking entry
+"RTN","IBNCPDP1",68,0)
+ . S IBRES=0_U_IBRMARK                                ; not ECME billable
+"RTN","IBNCPDP1",69,0)
+ . Q
+"RTN","IBNCPDP1",70,0)
+ ;
+"RTN","IBNCPDP1",71,0)
+ ;for secondary billing - skip claim tracking functionality
+"RTN","IBNCPDP1",72,0)
+ G:$G(IBD("RXCOB"))>1 GETINS
+"RTN","IBNCPDP1",73,0)
+ ;
+"RTN","IBNCPDP1",74,0)
+ ; -- claims tracking info
+"RTN","IBNCPDP1",75,0)
+ I IBTRKRN,$$PAPERBIL^IBNCPNB(IBTRKRN) S IBRES="0^Existing IB Bill in CT",IBD("NO ECME INSURANCE")=1 G RXQ
+"RTN","IBNCPDP1",76,0)
+ ; already billed as Tricare
+"RTN","IBNCPDP1",77,0)
+ I $D(^IBA(351.5,"B",IBRXN_";"_IBFIL)) S IBRES="0^Already billed under prior Tricare process",IBD("NO ECME INSURANCE")=1 G RXQ
+"RTN","IBNCPDP1",78,0)
+ ;
+"RTN","IBNCPDP1",79,0)
+ ; -- no pharmacy coverage, update ct if applicable, quit
+"RTN","IBNCPDP1",80,0)
+ I '$$PTCOV^IBCNSU3(DFN,IBADT,"PHARMACY",.IBANY) S IBRMARK=$S($G(IBANY):"SERVICE NOT COVERED",1:"NOT INSURED") D:$P(IBTRKR,U,4)=2 CT S IBRES="0^"_IBRMARK,IBD("NO ECME INSURANCE")=1 G RXQ
+"RTN","IBNCPDP1",81,0)
+ ;
+"RTN","IBNCPDP1",82,0)
+ ;  -- check for DEA SPECIAL HDLG
+"RTN","IBNCPDP1",83,0)
+ S IBDEA=$$DEA^IBNCPDP($G(IBD("DEA")),.IBRMARK) I 'IBDEA S IBRES=IBDEA D CT G RXQ
+"RTN","IBNCPDP1",84,0)
+ ;
+"RTN","IBNCPDP1",85,0)
+ ;retrieve indicators from file #52 and overwrite the indicators in IBD array
+"RTN","IBNCPDP1",86,0)
+ D GETINDIC^IBNCPUT2(+IBD("IEN"),.IBD)
+"RTN","IBNCPDP1",87,0)
+ ; -- process patient exemptions if any (if not already resolved)
+"RTN","IBNCPDP1",88,0)
+ I $G(IBD("SC/EI OVR"))'=1 D CL^SDCO21(DFN,IBADT,"",.IBARR)
+"RTN","IBNCPDP1",89,0)
+ ; check out exemptions
+"RTN","IBNCPDP1",90,0)
+ S IBNEEDS=0 ;flag will be set to 1 if at least one of the questions wasn't answered
+"RTN","IBNCPDP1",91,0)
+ I $G(IBD("SC/EI OVR"))'=1 I $D(IBARR)>9 F IBX=2:1 S IBT=$P($T(EXEMPT+IBX),";;",2) Q:IBT=""  D:$D(IBARR(+IBT))
+"RTN","IBNCPDP1",92,0)
+ . I $G(IBD($P(IBT,U,2)))=0 Q
+"RTN","IBNCPDP1",93,0)
+ . I $G(IBD($P(IBT,U,2))) S IBRMARK=$P(IBT,U,3) Q
+"RTN","IBNCPDP1",94,0)
+ . I '$G(IBSCRES(IBRXN,IBFIL)) S IBNEEDS=1 D
+"RTN","IBNCPDP1",95,0)
+ . . S IBD("SC/EI NO ANSW")=$S($G(IBD("SC/EI NO ANSW"))="":$P(IBT,U,2),1:$G(IBD("SC/EI NO ANSW"))_","_$P(IBT,U,2))
+"RTN","IBNCPDP1",96,0)
+ I '$D(IBRMARK),IBNEEDS=1 S IBRMARK="NEEDS SC DETERMINATION"
+"RTN","IBNCPDP1",97,0)
+ I $D(IBRMARK) D CT S IBRES="0^"_IBRMARK G RXQ
+"RTN","IBNCPDP1",98,0)
+ ; Clean-up the NEEDS SC DETERMINATION record if resolved
+"RTN","IBNCPDP1",99,0)
+ ; And check if it is non-billable in CT
+"RTN","IBNCPDP1",100,0)
+ I IBTRKRN D
+"RTN","IBNCPDP1",101,0)
+ . N IBNBR,IBNBRT
+"RTN","IBNCPDP1",102,0)
+ . S IBNBR=$P($G(^IBT(356,+IBTRKRN,0)),U,19) Q:'IBNBR
+"RTN","IBNCPDP1",103,0)
+ . S IBNBRT=$P($G(^IBE(356.8,IBNBR,0)),U) Q:IBNBRT=""
+"RTN","IBNCPDP1",104,0)
+ . ; if refill was deleted (not RX) and now the refill is re-entered
+"RTN","IBNCPDP1",105,0)
+ . ;use $$RXSTATUS^IBNCPRR instead of $G(^PSRX(IBRXN,"STA"))
+"RTN","IBNCPDP1",106,0)
+ . I IBNBRT="PRESCRIPTION DELETED",$$RXSTATUS^IBNCPRR(DFN,IBRXN)'=13 D  Q
+"RTN","IBNCPDP1",107,0)
+ . . N DIE,DA,DR
+"RTN","IBNCPDP1",108,0)
+ . . ; clean up REASON NOT BILLABLE and ADDITIONAL COMMENT
+"RTN","IBNCPDP1",109,0)
+ . . S DIE="^IBT(356,",DA=+IBTRKRN,DR=".19////@;1.08////@" D ^DIE
+"RTN","IBNCPDP1",110,0)
+ . ; Clean up NBR if released
+"RTN","IBNCPDP1",111,0)
+ . I IBNBRT="PRESCRIPTION NOT RELEASED" D:$G(IBD("RELEASE DATE"))  Q
+"RTN","IBNCPDP1",112,0)
+ . . N DIE,DA,DR
+"RTN","IBNCPDP1",113,0)
+ . . S DIE="^IBT(356,",DA=+IBTRKRN,DR=".19////@" D ^DIE
+"RTN","IBNCPDP1",114,0)
+ . ; Clean up 'Needs SC determ'
+"RTN","IBNCPDP1",115,0)
+ . I IBNBRT="NEEDS SC DETERMINATION" D  Q
+"RTN","IBNCPDP1",116,0)
+ . . N DIE,DA,DR
+"RTN","IBNCPDP1",117,0)
+ . . S DIE="^IBT(356,",DA=+IBTRKRN,DR=".19////@" D ^DIE
+"RTN","IBNCPDP1",118,0)
+ . S IBRMARK=IBNBRT
+"RTN","IBNCPDP1",119,0)
+ I $D(IBRMARK) S IBRES="0^Non-Billable in CT: "_IBRMARK G RXQ
+"RTN","IBNCPDP1",120,0)
+ ;
+"RTN","IBNCPDP1",121,0)
+GETINS ; -- setup insurance data for patient
+"RTN","IBNCPDP1",122,0)
+ ;
+"RTN","IBNCPDP1",123,0)
+ D SETINSUR(IBADT,IBRT,IBELIG,.IBINS,.IBD,.IBRES)       ; build IBD("INS") insurance array
+"RTN","IBNCPDP1",124,0)
+ I $G(IBD("NO ECME INSURANCE")) G RXQ
+"RTN","IBNCPDP1",125,0)
+ ;
+"RTN","IBNCPDP1",126,0)
+ ;for secondary billing - skip ROI functionality
+"RTN","IBNCPDP1",127,0)
+ G:$G(IBD("RXCOB"))>1 RATEPRIC
+"RTN","IBNCPDP1",128,0)
+ ;
+"RTN","IBNCPDP1",129,0)
+ ; -- check drug for sensitive dx special handling code and ROI on file
+"RTN","IBNCPDP1",130,0)
+ I IBD("DEA")["U",$D(IBD("INS",1,3)) D  G:$D(IBRMARK) RXQ
+"RTN","IBNCPDP1",131,0)
+ . I '$$ROI^IBNCPDR4(DFN,$G(IBD("DRUG")),+$P($G(IBD("INS",1,3)),U,5),$G(IBD("FILL DATE"))) D  Q
+"RTN","IBNCPDP1",132,0)
+ .. S IBRMARK="REFUSES TO SIGN RELEASE (ROI)"
+"RTN","IBNCPDP1",133,0)
+ .. D CT
+"RTN","IBNCPDP1",134,0)
+ .. S IBRES="0^NOT BILLABLE, NO ROI - NO ACTIVE ROI ON FILE"
+"RTN","IBNCPDP1",135,0)
+ . D ROICLN^IBNCPDR4(IBTRKRN,IBRXN,IBFIL) K:$G(IBRMARK)="REFUSES TO SIGN RELEASE (ROI)" IBRMARK
+"RTN","IBNCPDP1",136,0)
+ ;
+"RTN","IBNCPDP1",137,0)
+RATEPRIC ;
+"RTN","IBNCPDP1",138,0)
+ ; determine rates/prices to use
+"RTN","IBNCPDP1",139,0)
+ I 'IBRT D CT S IBRES="0^Cannot determine Rate type" G RXQ
+"RTN","IBNCPDP1",140,0)
+ S IBBI=$$EVNTITM^IBCRU3(+IBRT,3,"PRESCRIPTION FILL",IBADT,.IBRS)
+"RTN","IBNCPDP1",141,0)
+ I 'IBBI,$P(IBBI,";")'="VA COST" D CT S IBRES="0^Cannot find Billable Item" G RXQ
+"RTN","IBNCPDP1",142,0)
+ ;1;BEDSECTION;1^
+"RTN","IBNCPDP1",143,0)
+ ;IBRS(1,18,5)=
+"RTN","IBNCPDP1",144,0)
+ S IBRS=+$O(IBRS($P(IBBI,";"),0))
+"RTN","IBNCPDP1",145,0)
+ S IBIT=$$ITPTR^IBCRU2($P(IBBI,";"),$S($P(IBRT,U,2)="A":$$NDC^IBNCPNB($G(IBD("NDC"))),1:"PRESCRIPTION"))
+"RTN","IBNCPDP1",146,0)
+ I 'IBIT,$P(IBRT,U,2)'="C" D CT S IBRES="0^Cannot find Item Pointer" G RXQ
+"RTN","IBNCPDP1",147,0)
+ ;8
+"RTN","IBNCPDP1",148,0)
+ S IBPRICE=+$$BICOST^IBCRCI(+IBRT,3,IBADT,"PRESCRIPTION FILL",+IBIT,,,$S($P(IBRT,U,2)="A":IBD("QTY"),1:1))
+"RTN","IBNCPDP1",149,0)
+ ;36^2991001
+"RTN","IBNCPDP1",150,0)
+ ;
+"RTN","IBNCPDP1",151,0)
+ ; return the true value of drug cost for 3rd party bill if it is zero
+"RTN","IBNCPDP1",152,0)
+ I IBD("COST")=0,$P($G(^DGCR(399.3,+$P(IBRT,U,1),0)),U,5) S IBD("COST")=$$RXPCT(.IBD,.BWHERE)
+"RTN","IBNCPDP1",153,0)
+ ;
+"RTN","IBNCPDP1",154,0)
+ ; get fees if any, ignore return, don't care about price, just need fees
+"RTN","IBNCPDP1",155,0)
+ S IBCHG=$$RATECHG^IBCRCC(+IBRS,$S($P(IBRT,U,2)'="C":1,1:IBD("QTY")*IBD("COST")),IBADT,.IBFEE)
+"RTN","IBNCPDP1",156,0)
+ I $P(IBRT,U,2)="C" S IBPRICE=+IBCHG
+"RTN","IBNCPDP1",157,0)
+ ;
+"RTN","IBNCPDP1",158,0)
+ I 'IBPRICE D CT S IBRES="0^Cannot find price for Item" G RXQ
+"RTN","IBNCPDP1",159,0)
+ ;
+"RTN","IBNCPDP1",160,0)
+ S IBPRICE=(+$G(IBFEE))_U_$S($P(IBRT,U,2)="A":"01",$P(IBRT,U,2)="C":"05",1:"07")_U_$S($P(IBRT,U,2)="C":IBD("QTY")*IBD("COST")+$G(IBFEE),$P(IBRT,U,2)="A":IBPRICE-$G(IBFEE)-$P($G(IBFEE),U,2),1:IBPRICE)_U_IBPRICE_U_(+$P($G(IBFEE),U,2))
+"RTN","IBNCPDP1",161,0)
+ S IBX=0 F  S IBX=$O(IBD("INS",IBX)) Q:IBX<1  S IBD("INS",IBX,2)=IBPRICE
+"RTN","IBNCPDP1",162,0)
+ ;
+"RTN","IBNCPDP1",163,0)
+ ;Check for non-covered drugs
+"RTN","IBNCPDP1",164,0)
+ S IBRES=$$CHCK^IBNCDNC(.IBD) I IBRES]"" S IBRMARK=$P(IBRES,U,2) D CT G RXQ
+"RTN","IBNCPDP1",165,0)
+ ;
+"RTN","IBNCPDP1",166,0)
+ S IBRES=$S($D(IBRMARK):"0^"_IBRMARK,1:1)
+"RTN","IBNCPDP1",167,0)
+ I IBRES,'$G(IBD("RELEASE DATE")) S IBRMARK="PRESCRIPTION NOT RELEASED"
+"RTN","IBNCPDP1",168,0)
+ ;
+"RTN","IBNCPDP1",169,0)
+ D CT
+"RTN","IBNCPDP1",170,0)
+ ;
+"RTN","IBNCPDP1",171,0)
+RXQ ; final processing
+"RTN","IBNCPDP1",172,0)
+ ; set the 3rd piece of IBRES (default Vet)
+"RTN","IBNCPDP1",173,0)
+ S $P(IBRES,U,3)=$S($L($P($G(IBRT),U,3)):$P(IBRT,U,3),1:"V")
+"RTN","IBNCPDP1",174,0)
+ ;
+"RTN","IBNCPDP1",175,0)
+ ; possibly add entries to files 366.14 and 366.15 (not for eligibility verification requests)
+"RTN","IBNCPDP1",176,0)
+ I 'IBELIG D
+"RTN","IBNCPDP1",177,0)
+ . I IBRES D START^IBNCPDP6(IBRXN_";"_IBFIL,$P(IBRES,U,3),+IBRT)
+"RTN","IBNCPDP1",178,0)
+ . D LOG^IBNCPDP2("BILLABLE STATUS CHECK",IBRES)
+"RTN","IBNCPDP1",179,0)
+ . Q
+"RTN","IBNCPDP1",180,0)
+ ;
+"RTN","IBNCPDP1",181,0)
+ Q IBRES
+"RTN","IBNCPDP1",182,0)
+ ;
+"RTN","IBNCPDP1",183,0)
+ ;
+"RTN","IBNCPDP1",184,0)
+CT ; files in claims tracking
+"RTN","IBNCPDP1",185,0)
+ Q:$G(IBD("RXCOB"))>1  ;Claim Tracking is updated only for the primary payer (payer sequence =1)
+"RTN","IBNCPDP1",186,0)
+ ;If null then the payer sequence = Primary is assumed
+"RTN","IBNCPDP1",187,0)
+ I IBTRKR D CT^IBNCPDPU(DFN,IBRXN,IBFIL,IBADT,$G(IBRMARK))
+"RTN","IBNCPDP1",188,0)
+ Q
+"RTN","IBNCPDP1",189,0)
+ ;
+"RTN","IBNCPDP1",190,0)
+SETINSUR(IBADT,IBRT,IBELIG,IBINS,IBD,IBRES) ; build insurance data array
+"RTN","IBNCPDP1",191,0)
+ ; Input variables:
+"RTN","IBNCPDP1",192,0)
+ ;    IBADT - fill date/identify insurance as of this date
+"RTN","IBNCPDP1",193,0)
+ ;     IBRT - rate type variable - [1] rate type ien, [2] type (A/C/T), [3] eligibility (V/T)
+"RTN","IBNCPDP1",194,0)
+ ;   IBELIG - eligibility request flag (1/0)
+"RTN","IBNCPDP1",195,0)
+ ;    IBINS - insurance array as returned by ALL^IBCNS1
+"RTN","IBNCPDP1",196,0)
+ ;      IBD - input/output - array entries passed in and certain array entries returned
+"RTN","IBNCPDP1",197,0)
+ ; Output variable:
+"RTN","IBNCPDP1",198,0)
+ ;    IBRES - only returned if insurance errors
+"RTN","IBNCPDP1",199,0)
+ ;
+"RTN","IBNCPDP1",200,0)
+ ; Note: if more than one insurance with the same COB then the latest insurance occurrence overrides the first one(s)
+"RTN","IBNCPDP1",201,0)
+ ; Example:
+"RTN","IBNCPDP1",202,0)
+ ; IBINS("S",1,1)=""
+"RTN","IBNCPDP1",203,0)
+ ; IBINS("S",1,3)="" <<--- this will be primary
+"RTN","IBNCPDP1",204,0)
+ ;
+"RTN","IBNCPDP1",205,0)
+ K IBD("INS"),IBD("NO ECME INSURANCE")
+"RTN","IBNCPDP1",206,0)
+ ;
+"RTN","IBNCPDP1",207,0)
+ N IBCNT,IBERMSG,IBRXPOL,IBT,IBX
+"RTN","IBNCPDP1",208,0)
+ ; IBERMSG - error message array
+"RTN","IBNCPDP1",209,0)
+ ; IBRXPOL - array of Rx policies found
+"RTN","IBNCPDP1",210,0)
+ ;
+"RTN","IBNCPDP1",211,0)
+ S IBX=0 F  S IBX=$O(IBINS("S",IBX)) Q:'IBX  D
+"RTN","IBNCPDP1",212,0)
+ . S IBT=0 F  S IBT=$O(IBINS("S",IBX,IBT)) Q:'IBT  D
+"RTN","IBNCPDP1",213,0)
+ .. N IBDAT,IBPL,IBINSN,IBPIEN,IBY,IBZ,IBCHNM
+"RTN","IBNCPDP1",214,0)
+ .. S IBZ=$G(IBINS(IBT,0)) Q:IBZ=""
+"RTN","IBNCPDP1",215,0)
+ .. S IBPL=$P(IBZ,U,18) ; plan
+"RTN","IBNCPDP1",216,0)
+ .. Q:'IBPL
+"RTN","IBNCPDP1",217,0)
+ .. Q:'$$PLCOV^IBCNSU3(IBPL,IBADT,3)  ; not a pharmacy plan
+"RTN","IBNCPDP1",218,0)
+ .. ;
+"RTN","IBNCPDP1",219,0)
+ .. I $G(IBD("PLAN")) Q:IBPL'=$G(IBD("PLAN"))  ;skip other plans if we call RX API for a specific plan (IBD("PLAN"))
+"RTN","IBNCPDP1",220,0)
+ .. ;
+"RTN","IBNCPDP1",221,0)
+ .. I '$G(IBD("PLAN")) I '$D(IBD("INS")),$P(IBRT,U,3)="V",($P($G(^IBE(355.1,+$P($G(^IBA(355.3,+IBPL,0)),U,9),0)),U)["TRICARE"!($P($G(^(0)),U)="CHAMPVA")) K IBINS Q  ;Tricare/ChampVa coverage for a Vet
+"RTN","IBNCPDP1",222,0)
+ .. ;
+"RTN","IBNCPDP1",223,0)
+ .. ; at this point we have found an Rx policy.  We'll count these up later by IBX.
+"RTN","IBNCPDP1",224,0)
+ .. S IBRXPOL(IBX,IBT)=""
+"RTN","IBNCPDP1",225,0)
+ .. ;
+"RTN","IBNCPDP1",226,0)
+ .. S IBINSN=$P($G(^DIC(36,+$G(^IBA(355.3,+IBPL,0)),0)),U) ; ins name
+"RTN","IBNCPDP1",227,0)
+ .. S IBPIEN=+$G(^IBA(355.3,+IBPL,6))
+"RTN","IBNCPDP1",228,0)
+ .. I 'IBPIEN S IBERMSG(IBX)="Plan not linked to the Payer" Q  ; Not linked
+"RTN","IBNCPDP1",229,0)
+ .. K IBY D STCHK^IBCNRU1(IBPIEN,.IBY,IBELIG)
+"RTN","IBNCPDP1",230,0)
+ .. I $E($G(IBY(1)))'="A" S IBERMSG(IBX)=$$ERMSG^IBNCPNB($G(IBY(6))) Q  ; not active
+"RTN","IBNCPDP1",231,0)
+ .. ;
+"RTN","IBNCPDP1",232,0)
+ .. ; at this point we have a valid policy for this IBX
+"RTN","IBNCPDP1",233,0)
+ .. S IBERMSG(IBX)=""          ; no error message
+"RTN","IBNCPDP1",234,0)
+ .. S IBDAT=IBPL ; Plan IEN
+"RTN","IBNCPDP1",235,0)
+ .. S IBCHNM=$$NAME^IBCEFG1($P(IBZ,U,17))   ; standardize subscriber/cardholder name
+"RTN","IBNCPDP1",236,0)
+ .. S $P(IBDAT,U,2)=$G(IBY(2)) ; BIN
+"RTN","IBNCPDP1",237,0)
+ .. S $P(IBDAT,U,3)=$G(IBY(3)) ; PCN
+"RTN","IBNCPDP1",238,0)
+ .. S $P(IBDAT,U,4)=$P($G(^BPSF(9002313.92,+$P($G(IBY(5)),",",1),0)),U) ; Payer Sheet B1 name
+"RTN","IBNCPDP1",239,0)
+ .. S $P(IBDAT,U,5)=$P($G(IBINS(IBT,355.3)),U,4) ; Group ID
+"RTN","IBNCPDP1",240,0)
+ .. S $P(IBDAT,U,6)=$P(IBZ,U,2)     ; Cardholder ID
+"RTN","IBNCPDP1",241,0)
+ .. S $P(IBDAT,U,7)=$P(IBZ,U,16)    ; Patient Relationship Code
+"RTN","IBNCPDP1",242,0)
+ .. S $P(IBDAT,U,8)=$P(IBCHNM,U,2)  ; Cardholder First Name
+"RTN","IBNCPDP1",243,0)
+ .. S $P(IBDAT,U,9)=$P(IBCHNM,U,1)  ; Cardholder Last Name
+"RTN","IBNCPDP1",244,0)
+ .. S $P(IBDAT,U,10)=$P($G(^DIC(36,+IBZ,.11)),U,5) ; State
+"RTN","IBNCPDP1",245,0)
+ .. S $P(IBDAT,U,11)=$P($G(^BPSF(9002313.92,+$P($G(IBY(5)),",",2),0)),U) ; Payer Sheet B2 name
+"RTN","IBNCPDP1",246,0)
+ .. S $P(IBDAT,U,12)=$P($G(^BPSF(9002313.92,+$P($G(IBY(5)),",",3),0)),U) ; Payer Sheet B3 name
+"RTN","IBNCPDP1",247,0)
+ .. S $P(IBDAT,U,13)=$G(IBY(4)) ; Software/Vendor Cert ID
+"RTN","IBNCPDP1",248,0)
+ .. S $P(IBDAT,U,14)=IBINSN ; Ins Name
+"RTN","IBNCPDP1",249,0)
+ .. S $P(IBDAT,U,15)=$P($G(^BPSF(9002313.92,+$P($G(IBY(5)),",",4),0)),U) ; Payer Sheet E1 name
+"RTN","IBNCPDP1",250,0)
+ .. S $P(IBDAT,U,16)=+$P($G(IBY(5)),",",1)     ; Payer Sheet B1 ien
+"RTN","IBNCPDP1",251,0)
+ .. S $P(IBDAT,U,17)=+$P($G(IBY(5)),",",2)     ; Payer Sheet B2 ien
+"RTN","IBNCPDP1",252,0)
+ .. S $P(IBDAT,U,18)=+$P($G(IBY(5)),",",3)     ; Payer Sheet B3 ien
+"RTN","IBNCPDP1",253,0)
+ .. S $P(IBDAT,U,19)=+$P($G(IBY(5)),",",4)     ; Payer Sheet E1 ien
+"RTN","IBNCPDP1",254,0)
+ .. S IBD("INS",IBX,1)=IBDAT
+"RTN","IBNCPDP1",255,0)
+ .. ;
+"RTN","IBNCPDP1",256,0)
+ .. S IBDAT=$P($G(IBINS(IBT,355.3)),U,3) ;group name
+"RTN","IBNCPDP1",257,0)
+ .. S $P(IBDAT,U,2)=$$PHONE^IBNCPDP6(+IBZ) ;ins co ph 3
+"RTN","IBNCPDP1",258,0)
+ .. S $P(IBDAT,U,3)=$$GET1^DIQ(366.03,IBPIEN_",",.01) ;plan ID
+"RTN","IBNCPDP1",259,0)
+ .. S $P(IBDAT,U,4)=$S($P($G(^IBE(355.1,+$P($G(IBINS(IBT,355.3)),U,9),0)),U)="TRICARE":"T",1:"V") ; plan type
+"RTN","IBNCPDP1",260,0)
+ .. S $P(IBDAT,U,5)=+$G(^IBA(355.3,+IBPL,0)) ; insurance co ien
+"RTN","IBNCPDP1",261,0)
+ .. S $P(IBDAT,U,6)=$P(IBZ,U,20) ;(#.2) COB field of the (#.3121) insurance Type multiple of the Patient file (#2)
+"RTN","IBNCPDP1",262,0)
+ .. S $P(IBDAT,U,7)=IBT  ; 2.312 subfile ien
+"RTN","IBNCPDP1",263,0)
+ .. S $P(IBDAT,U,8)=$$GET1^DIQ(366.03,IBPIEN_",",10.1) ; maximum ncpdp transactions
+"RTN","IBNCPDP1",264,0)
+ .. S IBD("INS",IBX,3)=IBDAT
+"RTN","IBNCPDP1",265,0)
+ .. Q
+"RTN","IBNCPDP1",266,0)
+ . Q
+"RTN","IBNCPDP1",267,0)
+ ;
+"RTN","IBNCPDP1",268,0)
+ ; Count the number of pharmacy insurance policies by IBX found up above
+"RTN","IBNCPDP1",269,0)
+ S IBX=0 F IBCNT=0:1 S IBX=$O(IBRXPOL(IBX)) Q:'IBX
+"RTN","IBNCPDP1",270,0)
+ ;
+"RTN","IBNCPDP1",271,0)
+ ; Determine the value of the IBX variable here.  This is basically the COB sequence# to be used.
+"RTN","IBNCPDP1",272,0)
+ ; If there is only 1 pharmacy policy or no pharmacy policies, then set IBX in this manner
+"RTN","IBNCPDP1",273,0)
+ I IBCNT'>1 D
+"RTN","IBNCPDP1",274,0)
+ . I $D(IBD("INS")) S IBX=+$O(IBD("INS",0))     ; use the only one in this array
+"RTN","IBNCPDP1",275,0)
+ . I '$D(IBD("INS")) S IBX=+$O(IBERMSG(0))      ; the only one here (or 0)
+"RTN","IBNCPDP1",276,0)
+ . Q
+"RTN","IBNCPDP1",277,0)
+ ;
+"RTN","IBNCPDP1",278,0)
+ ; If there are multiple pharmacy policies on file, then the COB field in the pt. policy must be used correctly
+"RTN","IBNCPDP1",279,0)
+ ;   and primary insurance must be at #1
+"RTN","IBNCPDP1",280,0)
+ I IBCNT>1 S IBX=1
+"RTN","IBNCPDP1",281,0)
+ ;
+"RTN","IBNCPDP1",282,0)
+ ; In all cases, if this variable is set, then use it
+"RTN","IBNCPDP1",283,0)
+ I $G(IBD("RXCOB"))>1 S IBX=$G(IBD("RXCOB"))
+"RTN","IBNCPDP1",284,0)
+ ;
+"RTN","IBNCPDP1",285,0)
+ ; Check insurance at IBX
+"RTN","IBNCPDP1",286,0)
+ I '$D(IBD("INS",IBX)),$G(IBERMSG(IBX))'="" S IBRES="0^Not ECME billable: "_IBERMSG(IBX),IBD("NO ECME INSURANCE")=1 G SETINX
+"RTN","IBNCPDP1",287,0)
+ I '$D(IBD("INS",IBX)) S IBRES="0^No Insurance ECME billable",IBD("NO ECME INSURANCE")=1
+"RTN","IBNCPDP1",288,0)
+SETINX ;
+"RTN","IBNCPDP1",289,0)
+ Q
+"RTN","IBNCPDP1",290,0)
+ ;
+"RTN","IBNCPDP1",291,0)
+INP(DFN,IBRXN,IBFIL) ; Is this an inpatient, NON-BILLABLE Rx as of the Issue Date?    esg 8/5/10 - IB*2*434
+"RTN","IBNCPDP1",292,0)
+ N INP,VAHOW,VAROOT,IBRXINP,VAIP,IBRXISUE,IBMW
+"RTN","IBNCPDP1",293,0)
+ S INP=0
+"RTN","IBNCPDP1",294,0)
+ ;
+"RTN","IBNCPDP1",295,0)
+ S VAROOT="IBRXINP"
+"RTN","IBNCPDP1",296,0)
+ S IBRXISUE=$$FILE^IBRXUTL(IBRXN,1)\1   ; Rx Issue Date (Field# 1)
+"RTN","IBNCPDP1",297,0)
+ I 'IBRXISUE S IBRXISUE=DT
+"RTN","IBNCPDP1",298,0)
+ S VAIP("D")=IBRXISUE        ; if pt was an inpatient at any time during this day
+"RTN","IBNCPDP1",299,0)
+ D IN5^VADPT                 ; DBIA 10061 - inpatient episode API
+"RTN","IBNCPDP1",300,0)
+ I '$G(IBRXINP(1)) G INPX    ; not an inpatient on this day
+"RTN","IBNCPDP1",301,0)
+ ;
+"RTN","IBNCPDP1",302,0)
+ ; check Rx issue date = discharge date. This is billable so get out (esg 9/13/10)
+"RTN","IBNCPDP1",303,0)
+ I IBRXISUE=(+$G(IBRXINP(17,1))\1) G INPX
+"RTN","IBNCPDP1",304,0)
+ ;
+"RTN","IBNCPDP1",305,0)
+ ; if Rx/fill is MAIL, then this is billable so get out (esg 9/13/10)
+"RTN","IBNCPDP1",306,0)
+ I IBFIL S IBMW=$$SUBFILE^IBRXUTL(IBRXN,IBFIL,52,2)    ; 52.1,2 MAIL/WINDOW field
+"RTN","IBNCPDP1",307,0)
+ I 'IBFIL S IBMW=$$FILE^IBRXUTL(IBRXN,11)              ; 52,11 MAIL/WINDOW field
+"RTN","IBNCPDP1",308,0)
+ I IBMW="M" G INPX
+"RTN","IBNCPDP1",309,0)
+ ;
+"RTN","IBNCPDP1",310,0)
+ ; inpatient and non-billable
+"RTN","IBNCPDP1",311,0)
+ S INP=1
+"RTN","IBNCPDP1",312,0)
+INPX ;
+"RTN","IBNCPDP1",313,0)
+ Q INP
+"RTN","IBNCPDP1",314,0)
+ ;
+"RTN","IBNCPDP1",315,0)
+RXPCT(IBD,BWHERE) ; Penny drug cost calculation
+"RTN","IBNCPDP1",316,0)
+ ; Input-IBD array, BWHERE
+"RTN","IBNCPDP1",317,0)
+ ; Output-return quotient of drug true value with 4 decimal places, or 0 
+"RTN","IBNCPDP1",318,0)
+ N IBDIEN,IBDRX,IBNDC,IBFRM,IBDRFL,IBUNIT,IBSYN,IBQUO,IBDQUO,IBPSUF,IBPORD,IBPDISP,IBDRUG
+"RTN","IBNCPDP1",319,0)
+ S IBDIEN=IBD("IEN"),IBNDC=IBD("NDC"),IBDRX=IBD("DRUG"),IBDRFL=IBD("FILL NUMBER")
+"RTN","IBNCPDP1",320,0)
+ S IBFRM=$G(BWHERE),IBQUO=0
+"RTN","IBNCPDP1",321,0)
+ G:'IBDRX RXPCTQ
+"RTN","IBNCPDP1",322,0)
+ ; default unit price from (50-13/15) 
+"RTN","IBNCPDP1",323,0)
+ D GETS^DIQ(50,IBDRX,".01;13;15","I","IBUNIT")
+"RTN","IBNCPDP1",324,0)
+ S IBPORD=$G(IBUNIT(50,IBDRX_",",13,"I"))
+"RTN","IBNCPDP1",325,0)
+ S IBPDISP=$G(IBUNIT(50,IBDRX_",",15,"I"))
+"RTN","IBNCPDP1",326,0)
+ S (IBDQUO,IBQUO)=$S(IBPORD&IBPDISP:(IBPORD/IBPDISP),1:0)
+"RTN","IBNCPDP1",327,0)
+ ;
+"RTN","IBNCPDP1",328,0)
+ ; unit price from (50.1-402/403) if NDC exists in the SYNONYM subfile
+"RTN","IBNCPDP1",329,0)
+ D DATA^IBRXUTL(IBDRX)
+"RTN","IBNCPDP1",330,0)
+ S IBSYN=0 F  S IBSYN=$O(^TMP($J,"IBDRUG",IBDRX,"SYN",IBSYN)) Q:'IBSYN  D
+"RTN","IBNCPDP1",331,0)
+ . I IBNDC'="",$G(^TMP($J,"IBDRUG",IBDRX,"SYN",IBSYN,2))=IBNDC D
+"RTN","IBNCPDP1",332,0)
+ .. S IBPSUF=IBSYN_","_IBDRX_","
+"RTN","IBNCPDP1",333,0)
+ .. D GETS^DIQ(50.1,IBPSUF,".01;402;403","I","IBUNIT")
+"RTN","IBNCPDP1",334,0)
+ .. S IBPORD=$G(IBUNIT(50.1,IBPSUF,402,"I"))
+"RTN","IBNCPDP1",335,0)
+ .. S IBPDISP=$G(IBUNIT(50.1,IBPSUF,403,"I"))
+"RTN","IBNCPDP1",336,0)
+ .. S IBQUO=$S(IBPORD&IBPDISP:(IBPORD/IBPDISP),1:0)
+"RTN","IBNCPDP1",337,0)
+ ;
+"RTN","IBNCPDP1",338,0)
+ ; API #4970 - use the default unit price for CMOP
+"RTN","IBNCPDP1",339,0)
+ I $$MWC^PSOBPSU2(IBDIEN,IBDRFL)="C" D
+"RTN","IBNCPDP1",340,0)
+ . Q:(IBFRM="PE")!(IBFRM="PP")
+"RTN","IBNCPDP1",341,0)
+ . S IBQUO=IBDQUO
+"RTN","IBNCPDP1",342,0)
+ ; set the lowest value 0.0001 with 4 decimal if less than 0.00005
+"RTN","IBNCPDP1",343,0)
+ I IBQUO S IBQUO=$J(IBQUO,1,4),IBQUO=$S(IBQUO>0:IBQUO,1:"0.0001")
+"RTN","IBNCPDP1",344,0)
+ K ^TMP($J,"IBDRUG")
+"RTN","IBNCPDP1",345,0)
+RXPCTQ ;
+"RTN","IBNCPDP1",346,0)
+ Q IBQUO
+"RTN","IBNCPDP1",347,0)
+ ;
+"RTN","IBNCPDP1",348,0)
+EXEMPT ; exemption reasons
+"RTN","IBNCPDP1",349,0)
+ ; variable from SD call ^ variable from PSO ^ reason not billable
+"RTN","IBNCPDP1",350,0)
+ ;;1^AO^AGENT ORANGE
+"RTN","IBNCPDP1",351,0)
+ ;;2^IR^IONIZING RADIATION
+"RTN","IBNCPDP1",352,0)
+ ;;3^SC^SC TREATMENT
+"RTN","IBNCPDP1",353,0)
+ ;;4^SWA^SOUTHWEST ASIA
+"RTN","IBNCPDP1",354,0)
+ ;;5^MST^MILITARY SEXUAL TRAUMA
+"RTN","IBNCPDP1",355,0)
+ ;;6^HNC^HEAD/NECK CANCER
+"RTN","IBNCPDP1",356,0)
+ ;;7^CV^COMBAT VETERAN
+"RTN","IBNCPDP1",357,0)
+ ;;8^SHAD^PROJECT 112/SHAD
+"RTN","IBNCPDP1",358,0)
+ ;;
+"RTN","IBNCPDP1",359,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",8758,6)
+^428
+**END**
+**END**

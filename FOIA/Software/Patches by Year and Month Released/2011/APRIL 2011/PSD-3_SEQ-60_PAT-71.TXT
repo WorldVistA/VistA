@@ -1,0 +1,230 @@
+$TXT Created by MORRISON,JENNIFER ANN at CMNT.FO-BIRM.MED.VA.GOV  (KIDS) on Tuesday, 02/15/11 at 17:10
+=============================================================================
+Run Date: APR 25, 2011                     Designation: PSD*3*71
+Package : PSD - CONTROLLED SUBSTANCES         Priority: Mandatory
+Version : 3        SEQ #60                      Status: Released
+                  Compliance Date: MAY 26, 2011
+=============================================================================
+
+Associated patches: (v)PSD*3*66    <<= must be installed BEFORE `PSD*3*71'
+                    (v)PSD*3*69    <<= must be installed BEFORE `PSD*3*71'
+
+Subject: PSD TECH ADV KEY - ADDITIONAL OPTIONS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ Patch PSD*3.0*71 addresses two (2) issues.
+  
+ 1. The recently released patch PSD*3*69 introduced a new key PSD TECH ADV,
+    intended to allow a Controlled Substances technician access to some of
+    the Pharmacist's menu as described in the PSD*3*69 patch description. 
+    Some users have expressed concerns related to the Outpatient Rx's [PSD
+    OUTPATIENT] option because the new PSD TECH ADV key was supposed to allow
+    the posting of the transaction but not allow the release of the 
+    prescription. This patch will now allow a holder of the PSD TECH ADV key
+    to perform all the functionalities of the Outpatient Rx's [PSD OUTPATIENT]
+    option EXCEPT releasing prescriptions.
+   
+ 2. The use of the PSD TECH ADV key was extended to grant its holder access
+    to the options listed below. These options are available on the 
+    Technician (CS Pharmacy) Menu [PSD PHARM TECH].
+   
+       Complete Green Sheet [PSD COMPLETE GS]
+       Destroyed Drugs Report [PSD DEST DRUGS REPORT]
+       DEA Form 41 Destroyed Drugs Report [PSD DESTROY DEA41]
+       Destructions Holding Report [PSD DESTRUCTION HOLDING]
+       Add Existing Green Sheets at Setup [PSD EXISTING GS]
+       Green Sheet Transfer Between NAOUs Report [PSD GS TRANSFER (NAOU) REPORT] 
+       Transfer Drugs between Dispensing Sites [PSD TRANSFER VAULT DRUGS]
+   
+    Once the patch is installed, the options on the Technician (CS Pharmacy) 
+    Menu [PSD PHARM TECH] will be similar to the list below.
+  
+      Select Technician (CS Pharmacy) Menu Option: 
+  
+              Print CS Dispensing Worksheet
+              Fill/Dispense CS Orders from Worksheet
+              Green Sheet Ready for Pickup Log
+              Pick Up Green Sheet
+              Complete Green Sheet
+              Green Sheet History
+              Add Existing Green Sheets at Setup
+              Green Sheet Transfer Between NAOUs Report
+              CS Order Entry For Ward
+              Receipt of Controlled Substance from Pharmacy
+              Daily Activity Log (in lieu of VA FORM 10-2320)
+              List On-Hand Amounts
+       TD     Transfer Drugs between Dispensing Sites
+       TR     Transfer Drugs between Dispensing Sites Report
+              Receipts Into Pharmacy ...
+              Dispensing Menu ...
+              Destructions Menu ...
+              Destroyed Drugs Report
+              DEA Form 41 Destroyed Drugs Report
+              Destructions Holding Report
+              Manufacturer, Lot #, and Exp. Date - Enter/Edit
+              Outpatient Rx's
+  
+  
+ Associated Patient Safety Issues:
+ =================================
+ N/A
+  
+  
+ Associated New Service Request (NSR):
+ =====================================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 412423
+ 415503
+ 449095
+     
+  
+ TEST Sites:
+ ===========
+ BILOXI, MS (C)
+ HEARTLAND-WEST HCS
+ OKLAHOMA CITY, OK
+ PUGET SOUND HCS
+ TAMPA, FL
+  
+  
+ Documentation Retrieval:
+ ========================
+ The documentation is available on the ANONYMOUS.SOFTWARE directory at one
+ of the following Office of Information (OI) Field Offices.
+  
+    Albany
+    Hines
+    Salt Lake City
+  
+ Sites may retrieve documentation in one of the following ways.
+  
+ (1) The preferred method is to FTP the files from
+     download.vista.med.va.gov, which will transmit the files from the
+     first available FTP server.
+  
+ (2) Sites may also elect to retrieve documentation directly from a
+     specific server listed below.
+  
+     Albany              ftp.fo-albany.med.va.gov
+     Hines               ftp.fo-hines.med.va.gov
+     Salt Lake City      ftp.fo-slc.med.va.gov
+  
+ The documentation distribution includes the following.
+  
+    FILE NAME                         DESCRIPTION
+  
+ PSD_3_UM_SUPV_R0411.PDF      Controlled Substances V. 3.0 Supervisor's
+                              User Manual
+ PSD_3_P71_UM_SUPV_CP.PDF     Controlled Substances V. 3.0 Supervisor's
+                              User Manual Change Pages
+ PSD_3_TM_R0411.PDF           Controlled Substances V. 3.0 Technical Manual
+ PSD_3_P71_TM_CP.PDF          Controlled Substances V. 3.0 Technical Manual
+                              Change Pages
+ PSD_3_INSP_UM_R0411.PDF      Controlled Substances V. 3.0 Inspector's
+                              User Manual
+ PSD_3_P71_INSP_UM_CP.PDF     Controlled Substances V. 3.0 Inspector's
+                              User Manual Change Pages
+ PSD_3_NURSE_UM_R0411.PDF     Controlled Substances V. 3.0 Nurse's User
+                              Manual
+ PSD_3_P71_NURSE_UM_CP.PDF    Controlled Substances V. 3.0 Nurse's User
+                              Manual Change Pages
+ CSPHARM_R0411.PDF            Controlled Substances V. 3.0 Pharmacist's
+                              User Manual
+ PSD_3_P71_CSPHARM_CP.PDF     Controlled Substances V. 3.0 Pharmacist's
+                              User Manual Change Pages
+ CSSECURI_R0411.PDF           Controlled Substances V. 3.0 Package
+                              Security Guide
+ PSD_3_P71_CSSECURI_CP.PDF    Controlled Substances V. 3.0 Package
+                              Security Guide Change Pages
+  
+  
+ 3) Documentation can also be retrieved from the VA Software Documentation
+     Library (VDL) on the Internet at the following address:
+     http://www4.va.gov/vdl.
+  
+  
+ Installation Instructions:
+ ==========================
+ Do not install this patch while Controlled Substance users are on the
+ system. Installation will take no longer than 3 minutes.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSD*3.0*71).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSD*3.0*71.
+  
+   5. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of 
+      Install? NO//" respond NO. 
+  
+   6. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0; CONTROLLED SUBSTANCES ;**[Patch List]**;13 Feb 97;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSDEA41
+    Before: B21460908   After: B21543315  **12,71**
+Routine Name: PSDESTP
+    Before: B47919074   After: B48187487  **8,62,71**
+Routine Name: PSDEXGS
+    Before: B21860103   After: B21978292  **8,33,71**
+Routine Name: PSDGSRV
+    Before: B25482863   After: B26390717  **28,30,71**
+Routine Name: PSDHRPT
+    Before: B25704775   After: B25812497  **8,71**
+Routine Name: PSDNTR
+    Before: B22514137   After: B23255990  **8,71**
+Routine Name: PSDOPT
+    Before: B88195048   After: B86888301  **10,11,15,21,30,39,48,62,69,71**
+Routine Name: PSDOPT1
+    Before: B22714104   After: B23121655  **30,66,71**
+Routine Name: PSDTRV
+    Before: B16960376   After: B17016476  **71**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : JUL 02, 2010
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: APR 07, 2011
+Released By : LYTTLE,KIM M                  Date Released : APR 25, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

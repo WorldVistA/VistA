@@ -1,0 +1,215 @@
+$TXT Created by PHELPS,TY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 08/04/10 at 15:29
+=============================================================================
+Run Date: AUG 10, 2011                     Designation: GMRC*3*71
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #64                      Status: Released
+                  Compliance Date: SEP 10, 2011
+=============================================================================
+
+Associated patches: (v)GMRC*3*53   <<= must be installed BEFORE `GMRC*3*71'
+
+Subject: FORWARD TO TRACKING ONLY SERVICE/CHANGE TO SERVICE USAGE
+
+Category: 
+  - Routine
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will address the following 3 items:
+  
+ 1. In CPRS GUI, users can forward to a tracking only service when they 
+    have update authority at the parent level.  However, when using CPRS
+    List Manager in VistA, users cannot forward to a tracking only service
+    when they have update authority at the parent level.
+  
+ 2. When users change the SERVICE USAGE of a Consult Service to 'Grouper 
+    Only' or 'Disabled', they are not warned when there are any RELATED 
+    SERVICES tied to the Consult Service.
+  
+ 3. The Consult/Request Tracking Technical Manual and the Consult/Result
+    Tracking User Manual do not state that the alert CONSULT/REQUEST
+    UPDATED is sent when a consult is scheduled.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000202541 - Forwarding access different in GUI vs. List Manager
+ 2. HD0000000067401 - Message received after GMRC*3*15
+ 3. HD0000000323526 - Update Consult Documents for CONSULT/REQUEST UPDATE
+                      alert
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Orlando VAMC
+ Palo Alto HCS
+ Washington DC VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1. HD0000000202541 - Forwarding access different in GUI vs. List Manager
+  
+    Problem:
+    --------
+    In CPRS List Manager, a user is unable to forward to a Tracking Only 
+    service if they do not have Administrative Update User access at the 
+    tracking service level.  In CPRS GUI, a user may forward to a Tracking 
+    Only service if they do not have Administrative Update User access at 
+    the tracking service level.
+  
+    Resolution:
+    -----------
+    Modify routine GMRCASV to call VALID^GMRCAU so that the parent levels
+    are checked to see if the user can forward to a tracking service.
+  
+  
+ 2. HD0000000067401 - BAC-0401-40350  Message received after GMRC*3*15
+  
+    Problem:
+    --------
+    Users are not warned when they change a Consult Service to a Grouper or
+    Disabled if there are any RELATED SERVICES tied to the Consult Service.
+  
+    Resolution:
+    -----------
+    Add a check to file REQUEST SERVICES (#123.5), field SERVICE USAGE to 
+    display a warning message to the user if they change a Consult Service
+    to be Disabled or Grouper Only when there are RELATED SERVICES
+    attached.
+  
+ 3. HD0000000323526 - Update Consult Documents for CONSULT/REQUEST UPDATE
+                      alert
+  
+    Problem:
+    --------
+    Consult documents Consult/Request Tracking Technical Manual and 
+    Consult/Result Tracking User Manual do not state that the alert 
+    CONSULT/REQUEST UPDATED is sent when a "schedule" or "add comment"
+    action is taken on the consult.
+  
+    Resolution:
+    -----------
+    Update the manuals to state the alert CONSULT/REQUEST UPDATED is also 
+    triggered by the "schedule" or "add comment" actions.
+  
+ Documentation Retrieval:
+ ========================
+ An updated Consult/Request Tracking Technical Manual and Consult/Result 
+ Tracking User Manual will be distributed with GMRC*3.0*71.  The documents
+ are available on the ANONYMOUS.SOFTWARE directory at one of the following
+ Office of Information (OI) Field Offices.
+   
+  Sites may retrieve documentation in one of the following ways:
+   
+  (1) The preferred method is to FTP the files from
+      download.vista.med.va.gov, which will transmit the files from the
+      first available FTP server.
+   
+  (2) Sites may also elect to retrieve documentation directly from a
+      specific server as follows:
+   
+   Albany          ftp.fo-albany.med.va.gov
+   Hines           ftp.fo-hines.med.va.gov
+   Salt Lake City  ftp.fo-slc.med.va.gov
+   
+   The documentation distribution includes:
+   
+   FILE NAMES                   DESCRIPTION
+   ----------                   -----------
+   constm.pdf                   Consult/Request Tracking Technical Manual
+   consum.pdf                   Consult/Result Tracking User Manual 
+   
+  (3) Documentation can also be retrieved from VHA Software Document
+      Library (VDL) on the Internet at the following address,
+      http://www.va.gov/vdl.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system.  Installation time
+ will be less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: 
+      Installation
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter "GMRC*3.0*71"):
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+ 4.  Use the Install Package(s) option and select the package.
+  
+      Incoming Files:
+  
+      123.5     REQUEST SERVICES  (Partial Definition)   
+    Note:  You already have the 'REQUEST SERVICES' File.
+  
+  
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRC1235
+    Before:       n/a   After:  B2139381  **71**
+Routine Name: GMRCASV
+    Before: B66332685   After: B66657699  **1,12,18,22,53,71**
+ 
+Routine list of preceding patches: 53
+
+=============================================================================
+User Information:
+Entered By  : RANDALL,SHERRY                Date Entered  : JUN 26, 2009
+Completed By: WERNER,GARY                   Date Completed: JUL 29, 2011
+Released By : KREUZ,SHERI B                 Date Released : AUG 10, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

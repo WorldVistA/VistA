@@ -1,0 +1,1128 @@
+Released DGBT*1*18 SEQ #19
+Extracted from mail message
+**KIDS**:DGBT*1.0*18^
+
+**INSTALL NAME**
+DGBT*1.0*18
+"BLD",8068,0)
+DGBT*1.0*18^BENEFICIARY TRAVEL^0^3111118^y
+"BLD",8068,1,0)
+^^6^6^3101105^
+"BLD",8068,1,1,0)
+This patch addresses these issues:
+"BLD",8068,1,2,0)
+- updates the DD in the Beneficiary Travel Claim File (#392) to meet 
+"BLD",8068,1,3,0)
+VA SAC in regards to $NEXT commands.
+"BLD",8068,1,4,0)
+- Prints the second line of an address in the VA 70-3542d form
+"BLD",8068,1,5,0)
+- Corrects the calculations used to find the default mileage value.
+"BLD",8068,1,6,0)
+- Allows a lowercase "p" to print the VA 70-3542d form.
+"BLD",8068,4,0)
+^9.64PA^392^1
+"BLD",8068,4,392,0)
+392
+"BLD",8068,4,392,222)
+y^y^f^^^^n
+"BLD",8068,4,"B",392,392)
+
+"BLD",8068,6.3)
+15
+"BLD",8068,"INI")
+EN^DGBT18PR
+"BLD",8068,"INIT")
+POST^DGBT18PT
+"BLD",8068,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8068,"KRN",.4,0)
+.4
+"BLD",8068,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",8068,"KRN",.401,0)
+.401
+"BLD",8068,"KRN",.402,0)
+.402
+"BLD",8068,"KRN",.403,0)
+.403
+"BLD",8068,"KRN",.5,0)
+.5
+"BLD",8068,"KRN",.84,0)
+.84
+"BLD",8068,"KRN",3.6,0)
+3.6
+"BLD",8068,"KRN",3.8,0)
+3.8
+"BLD",8068,"KRN",9.2,0)
+9.2
+"BLD",8068,"KRN",9.8,0)
+9.8
+"BLD",8068,"KRN",9.8,"NM",0)
+^9.68A^3^2
+"BLD",8068,"KRN",9.8,"NM",2,0)
+DGBTEND^^0^B15041979
+"BLD",8068,"KRN",9.8,"NM",3,0)
+DGBTCR1^^0^B11557361
+"BLD",8068,"KRN",9.8,"NM","B","DGBTCR1",3)
+
+"BLD",8068,"KRN",9.8,"NM","B","DGBTEND",2)
+
+"BLD",8068,"KRN",19,0)
+19
+"BLD",8068,"KRN",19.1,0)
+19.1
+"BLD",8068,"KRN",101,0)
+101
+"BLD",8068,"KRN",409.61,0)
+409.61
+"BLD",8068,"KRN",771,0)
+771
+"BLD",8068,"KRN",779.2,0)
+779.2
+"BLD",8068,"KRN",870,0)
+870
+"BLD",8068,"KRN",8989.51,0)
+8989.51
+"BLD",8068,"KRN",8989.52,0)
+8989.52
+"BLD",8068,"KRN",8994,0)
+8994
+"BLD",8068,"KRN","B",.4,.4)
+
+"BLD",8068,"KRN","B",.401,.401)
+
+"BLD",8068,"KRN","B",.402,.402)
+
+"BLD",8068,"KRN","B",.403,.403)
+
+"BLD",8068,"KRN","B",.5,.5)
+
+"BLD",8068,"KRN","B",.84,.84)
+
+"BLD",8068,"KRN","B",3.6,3.6)
+
+"BLD",8068,"KRN","B",3.8,3.8)
+
+"BLD",8068,"KRN","B",9.2,9.2)
+
+"BLD",8068,"KRN","B",9.8,9.8)
+
+"BLD",8068,"KRN","B",19,19)
+
+"BLD",8068,"KRN","B",19.1,19.1)
+
+"BLD",8068,"KRN","B",101,101)
+
+"BLD",8068,"KRN","B",409.61,409.61)
+
+"BLD",8068,"KRN","B",771,771)
+
+"BLD",8068,"KRN","B",779.2,779.2)
+
+"BLD",8068,"KRN","B",870,870)
+
+"BLD",8068,"KRN","B",8989.51,8989.51)
+
+"BLD",8068,"KRN","B",8989.52,8989.52)
+
+"BLD",8068,"KRN","B",8994,8994)
+
+"BLD",8068,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",8068,"QUES",0)
+^9.62^^
+"BLD",8068,"REQB",0)
+^9.611^^0
+"FIA",392)
+BENEFICIARY TRAVEL CLAIM
+"FIA",392,0)
+^DGBT(392,
+"FIA",392,0,0)
+392ID
+"FIA",392,0,1)
+y^y^f^^^^n
+"FIA",392,0,10)
+
+"FIA",392,0,11)
+
+"FIA",392,0,"RLRO")
+
+"FIA",392,0,"VR")
+1.0^DGBT
+"FIA",392,392)
+0
+"INI")
+EN^DGBT18PR
+"INIT")
+POST^DGBT18PT
+"MBREQ")
+0
+"PKG",154,-1)
+1^1
+"PKG",154,0)
+BENEFICIARY TRAVEL^DGBT^Beneficiary Travel
+"PKG",154,20,0)
+^9.402P^^
+"PKG",154,22,0)
+^9.49I^1^1
+"PKG",154,22,1,0)
+1.0^3030731^3020423^66481
+"PKG",154,22,1,"PAH",1,0)
+18^3111118
+"PKG",154,22,1,"PAH",1,1,0)
+^^6^6^3111118
+"PKG",154,22,1,"PAH",1,1,1,0)
+This patch addresses these issues:
+"PKG",154,22,1,"PAH",1,1,2,0)
+- updates the DD in the Beneficiary Travel Claim File (#392) to meet 
+"PKG",154,22,1,"PAH",1,1,3,0)
+VA SAC in regards to $NEXT commands.
+"PKG",154,22,1,"PAH",1,1,4,0)
+- Prints the second line of an address in the VA 70-3542d form
+"PKG",154,22,1,"PAH",1,1,5,0)
+- Corrects the calculations used to find the default mileage value.
+"PKG",154,22,1,"PAH",1,1,6,0)
+- Allows a lowercase "p" to print the VA 70-3542d form.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","DGBT18PR")
+0^^B534607^n/a
+"RTN","DGBT18PR",1,0)
+DGBT18PR ;ALB/RAM - PRE-INSTALL DGBT*1.0*18 ; 9/10/10 9:22Am
+"RTN","DGBT18PR",2,0)
+ ;;1.0;Beneficiary Travel;**18**;September 25, 2001;Build 15
+"RTN","DGBT18PR",3,0)
+ Q
+"RTN","DGBT18PR",4,0)
+EN ;Pre install entry point
+"RTN","DGBT18PR",5,0)
+ N DGBTX,DGBTY,DGBTKEY,DGBTFLD,DGBTXREF
+"RTN","DGBT18PR",6,0)
+ F DGBTKEY="21,1","22,1,","25,1","26,1" D
+"RTN","DGBT18PR",7,0)
+ . S DGBTFLD=$P(DGBTKEY,","),DGBTXREF=$P(DGBTKEY,",",2)
+"RTN","DGBT18PR",8,0)
+ . D DEL
+"RTN","DGBT18PR",9,0)
+ Q
+"RTN","DGBT18PR",10,0)
+DEL ;Delete trigger on field=FLD, XREF#=XREF of file 392.
+"RTN","DGBT18PR",11,0)
+ N DGBTFILE,DGBTFIELD,DGBTREF
+"RTN","DGBT18PR",12,0)
+ S DGBTFILE=392,DGBTFIELD=DGBTFLD,DGBTREF=DGBTXREF
+"RTN","DGBT18PR",13,0)
+ D DELIX^DDMOD(DGBTFILE,DGBTFIELD,DGBTREF)
+"RTN","DGBT18PR",14,0)
+ Q
+"RTN","DGBT18PT")
+0^^B8322768^n/a
+"RTN","DGBT18PT",1,0)
+DGBT18PT ;ALB/RAM - POST-INSTALL DGBT*1.0*18 ; 9/10/10 9:22Am
+"RTN","DGBT18PT",2,0)
+ ;;1.0;Beneficiary Travel;**18**;September 25, 2001;Build 15
+"RTN","DGBT18PT",3,0)
+ ;;Check for updated X-REFS (Fields: 21,22,25,26) used in Input Templates
+"RTN","DGBT18PT",4,0)
+ ;;
+"RTN","DGBT18PT",5,0)
+ Q
+"RTN","DGBT18PT",6,0)
+POST ;Post init
+"RTN","DGBT18PT",7,0)
+ N DGBTFLD,DGBTMFLD,DGBTOUT,DGBTF
+"RTN","DGBT18PT",8,0)
+ D TEMPL
+"RTN","DGBT18PT",9,0)
+ Q
+"RTN","DGBT18PT",10,0)
+ ;
+"RTN","DGBT18PT",11,0)
+TEMPL ;Determine templates on the FILE file to be compiled.
+"RTN","DGBT18PT",12,0)
+ N DGBTG,DGBTFIELD,DGBTNF,DGBTFILE,DGBTCNT
+"RTN","DGBT18PT",13,0)
+ D BMES^XPDUTL("Beginning to compile templates on the BENEFICIARY TRAVEL CLAIM (#392) file.")
+"RTN","DGBT18PT",14,0)
+ ;
+"RTN","DGBT18PT",15,0)
+ S DGBTNF="21,22,25,26",DGBTFILE=392,DGBTFIELD="",DGBTCNT=1
+"RTN","DGBT18PT",16,0)
+ F  S DGBTFIELD=$P(DGBTNF,",",DGBTCNT) Q:DGBTFIELD=""  D LOOP(DGBTFIELD,DGBTFILE) S DGBTCNT=DGBTCNT+1
+"RTN","DGBT18PT",17,0)
+ W !!
+"RTN","DGBT18PT",18,0)
+ S (DGBTX,DGBTY)=""
+"RTN","DGBT18PT",19,0)
+ D BMES^XPDUTL("The following routine namespace compiled:")
+"RTN","DGBT18PT",20,0)
+ F  S DGBTX=$O(DGBTCF(DGBTX)) Q:DGBTX=""  S DGBTY=$G(DGBTY)+1 S PRINT(DGBTY)=" "_DGBTX_"*"
+"RTN","DGBT18PT",21,0)
+ ;
+"RTN","DGBT18PT",22,0)
+ D MES^XPDUTL(.PRINT)
+"RTN","DGBT18PT",23,0)
+ K DGBTX,DGBTY,PRINT,DGBTCF
+"RTN","DGBT18PT",24,0)
+ Q
+"RTN","DGBT18PT",25,0)
+LOOP(DGBTFIELD,DGBTFILE) ;Compile templates.
+"RTN","DGBT18PT",26,0)
+ N DGBTG,DGBTTEMP,DGBTTEMPN,DGBTX,DGBTY,DGBTDM,DGBTTYPE
+"RTN","DGBT18PT",27,0)
+ F DGBTG="^DIE","^DIPT" D
+"RTN","DGBT18PT",28,0)
+ . S DGBTTYPE="Input" S:DGBTG="^DIPT" TYPE="Print"
+"RTN","DGBT18PT",29,0)
+ . I $D(@DGBTG@("AF",DGBTFILE,DGBTFIELD)) D
+"RTN","DGBT18PT",30,0)
+ .. S DGBTTEMP=0
+"RTN","DGBT18PT",31,0)
+ .. F  S DGBTTEMP=$O(@DGBTG@("AF",DGBTFILE,DGBTFIELD,DGBTTEMP)) Q:'DGBTTEMP  DO
+"RTN","DGBT18PT",32,0)
+ ... S DGBTTEMPN=$P($G(@DGBTG@(DGBTTEMP,0)),"^",1)
+"RTN","DGBT18PT",33,0)
+ ... I DGBTTEMPN="" D BMES^XPDUTL("Could not compile template "_DGBTTEMPN_$C(13,10)_"Please review!") Q
+"RTN","DGBT18PT",34,0)
+ ... S DGBTX=$P($G(@DGBTG@(DGBTTEMP,"ROUOLD")),"^")
+"RTN","DGBT18PT",35,0)
+ ... I DGBTX=""&($D(@DGBTG@(DGBTTEMP,"ROU"))'=0) D BMES^XPDUTL("Could not find routine for template "_DGBTTEMPN_$C(13,10)_"Please review!") Q
+"RTN","DGBT18PT",36,0)
+ ... I DGBTX=""&($D(@DGBTG@(DGBTTEMP,"ROU"))=0) Q
+"RTN","DGBT18PT",37,0)
+ ... W !,"Field: "_DGBTFIELD,!
+"RTN","DGBT18PT",38,0)
+ ... W !,DGBTTYPE," Template "_DGBTTEMPN_" needs to be compiled.",!
+"RTN","DGBT18PT",39,0)
+ ... I $D(DGBTCF(DGBTX)) Q  ;already compiled
+"RTN","DGBT18PT",40,0)
+ ... S DGBTCF(DGBTX)="" ;  remember the template was compiled
+"RTN","DGBT18PT",41,0)
+ ... S DGBTY=DGBTTEMP ;  set up the call for FileMan
+"RTN","DGBT18PT",42,0)
+ ... S DGBTDM=$$ROUSIZE^DILF
+"RTN","DGBT18PT",43,0)
+ ... I DGBTG="^DIE" D BMES^XPDUTL(" "),BMES^XPDUTL("   Compiling Input Templates") D EN^DIEZ Q
+"RTN","DGBT18PT",44,0)
+ ... I DGBTG="^DIPT" D BMES^XPDUTL(" "),BMES^XPDUTL("   Compiling Print Templates") D EN^DIPZ Q
+"RTN","DGBT18PT",45,0)
+ Q
+"RTN","DGBT18PT",46,0)
+ ;
+"RTN","DGBT18PT",47,0)
+ ;
+"RTN","DGBTCR1")
+0^3^B11557361^B10584894
+"RTN","DGBTCR1",1,0)
+DGBTCR1 ;ALB/SCK - BENEFICIARY TRAVEL FORM 70-3542d; 2/7/88@08:00  6/11/93@09:30 ; 7/12/10 1:42pm
+"RTN","DGBTCR1",2,0)
+ ;;1.0;Beneficiary Travel;**18**;September 25, 2001;Build 15
+"RTN","DGBTCR1",3,0)
+ ;This routine is a modification of AIVBTPRT / pmg / GRAND ISLAND ;07 Jul 88  12:02 PM
+"RTN","DGBTCR1",4,0)
+ Q
+"RTN","DGBTCR1",5,0)
+ ;Called by DGBTCR
+"RTN","DGBTCR1",6,0)
+PRINT K I S $P(I,"=",65)="" W !?66,"|",I,"|",!?7,VADM(1),?50 I $D(^DIC(13,+VADM(9),0)) W $P(^(0),"^",4)
+"RTN","DGBTCR1",7,0)
+ W ?66,"|  VOUCHER FOR CASH REIMBURSEMENT OF BENEFICIARY TRAVEL EXPENSES |"
+"RTN","DGBTCR1",8,0)
+ W !?7,VAPA(1),?50,DGBTCC,?66,"|"
+"RTN","DGBTCR1",9,0)
+ K I S $P(I,"=",65)="" W ?67,I,"|"
+"RTN","DGBTCR1",10,0)
+ W !?7 W:VAPA(2)'="" VAPA(2) W:VAPA(2)="" VAPA(3) W:VAPA(2)=""&(VAPA(3)="") VAPA(4),?40,DGBTST,?50,$P(VAPA(11),U,2)
+"RTN","DGBTCR1",11,0)
+ W ?66,"| 2. Name and Address of Issuing Health Care Facility",?131,"|"
+"RTN","DGBTCR1",12,0)
+ W !?7 W:VAPA(3)'="" VAPA(3) W:VAPA(2)'=""&(VAPA(3)="") VAPA(4),?40,DGBTST,?50,$P(VAPA(11),U,2),?66,"|",?131,"|"
+"RTN","DGBTCR1",13,0)
+ W ?66,"|",?131,"|"
+"RTN","DGBTCR1",14,0)
+ W !?7 W:VAPA(2)'=""&(VAPA(3)'="") VAPA(4),?40,DGBTST,?50,$P(VAPA(11),U,2)
+"RTN","DGBTCR1",15,0)
+ W ?66,"|",?88,$P(DGBTINS,"^"),?131,"|"
+"RTN","DGBTCR1",16,0)
+ W !?66,"|",?88 W:$P(DGBTINS1,"^")'="" $P(DGBTINS1,"^") W:$P(DGBTINS1,"^")="" $P(DGBTINS1,"^",2) W:$P(DGBTINS1,"^")=""&($P(DGBTINS1,"^",2)="") DGBTINS2 W ?131,"|"
+"RTN","DGBTCR1",17,0)
+ W !?7,DGBTSSN,?21,$E($P(VADM(10),"^",2),1),?22,$P(VADM(5),"^"),?30,DGBTDOB,?50,DGBTDIV
+"RTN","DGBTCR1",18,0)
+ W ?66,"|",?88 W:$P(DGBTINS1,"^",2)'=""&($P(DGBTINS1,"^")'="") $P(DGBTINS1,"^",2) W:$P(DGBTINS1,"^")'=""&($P(DGBTINS1,"^",2)="") DGBTINS2 W:$P(DGBTINS1,"^")=""&($P(DGBTINS1,"^",2)'="") DGBTINS2 W ?131,"|"
+"RTN","DGBTCR1",19,0)
+ W !?7,VAEL(7),?19 I $D(^DIC(8,+VAEL(1),0)) W $P(^(0),"^",4)
+"RTN","DGBTCR1",20,0)
+ W ?21,DGBTSCP,?28 I $D(^DIC(21,+VAEL(2),0)) W $P(^(0),"^",3)
+"RTN","DGBTCR1",21,0)
+ W ?66,"|",?88 W:$P(DGBTINS1,"^")'=""&($P(DGBTINS1,"^",2)'="")&($P(DGBTINS,"^",2)'="") DGBTINS2 W ?131,"|"
+"RTN","DGBTCR1",22,0)
+ W !,"  1.  Patient Data Card Information",?66,"|",?131,"|" D LINE
+"RTN","DGBTCR1",23,0)
+FISCAL W !,"| 3.  Fiscal Symbols"
+"RTN","DGBTCR1",24,0)
+ W ?30,$P(DGBTRATE,"^",4),?131,"|" D LINE
+"RTN","DGBTCR1",25,0)
+ W !,"| 4.  From (Place of Departure)",?66,"| 5.  To (Destination)",?131,"|"
+"RTN","DGBTCR1",26,0)
+RMV ; W !,"|",?66,"|",?131,"|"
+"RTN","DGBTCR1",27,0)
+ W !,"|",?12,$P(DGBTVAR("D"),"^"),?66,"|",?88,$P(DGBTVAR("T"),"^"),?131,"|"
+"RTN","DGBTCR1",28,0)
+ W !,"|",?12 W:$P(DGBTVAR("D"),"^",2)'="" $P(DGBTVAR("D"),"^",2) W:$P(DGBTVAR("D"),"^",2)="" $P(DGBTVAR("D"),"^",3) W:$P(DGBTVAR("D"),"^",2)=""&($P(DGBTVAR("D"),"^",3)="") DGBTFCTY
+"RTN","DGBTCR1",29,0)
+ W ?66,"|",?88 W:$P(DGBTVAR("T"),"^",2)'="" $P(DGBTVAR("T"),"^",2) W:$P(DGBTVAR("T"),"^",2)="" $P(DGBTVAR("T"),"^",3) W:$P(DGBTVAR("T"),"^",2)=""&($P(DGBTVAR("T"),"^",3)="") DGBTTCTY W ?131,"|"
+"RTN","DGBTCR1",30,0)
+ W !,"|",?12 W:$P(DGBTVAR("D"),"^",3)'="" $P(DGBTVAR("D"),"^",3) W:$P(DGBTVAR("D"),"^",2)'=""&($P(DGBTVAR("D"),"^",3)="") DGBTFCTY
+"RTN","DGBTCR1",31,0)
+ W ?66,"|",?88 W:$P(DGBTVAR("T"),"^",3)'="" $P(DGBTVAR("T"),"^",3) W:$P(DGBTVAR("T"),"^",2)'=""&($P(DGBTVAR("T"),"^",3)="") DGBTTCTY W ?131,"|"
+"RTN","DGBTCR1",32,0)
+ W !,"|",?12 W:$P(DGBTVAR("D"),"^",2)'=""&($P(DGBTVAR("D"),"^",3)'="") DGBTFCTY
+"RTN","DGBTCR1",33,0)
+ W ?66,"|",?88 W:$P(DGBTVAR("T"),"^",2)'=""&($P(DGBTVAR("T"),"^",3)'="") DGBTTCTY W ?131,"|" D LINE
+"RTN","DGBTCR1",34,0)
+ Q
+"RTN","DGBTCR1",35,0)
+LINE K I S $P(I,"=",131)="" W !,"|",I,"|"
+"RTN","DGBTEND")
+0^2^B15041979^B15041844
+"RTN","DGBTEND",1,0)
+DGBTEND ;ALB/SCK - BENEFICIARY TRAVEL CLEAN-UP VARIABLES ROUTINE;12/15/92 3/19/93 ; 8/2/10 3:03pm
+"RTN","DGBTEND",2,0)
+ ;;1.0;Beneficiary Travel;**18**;September 25, 2001;Build 15
+"RTN","DGBTEND",3,0)
+ ;
+"RTN","DGBTEND",4,0)
+END I DGBTTOUT=1 I $D(^DGBT(392,DGBTDT,0)) F I=0,"A","D","M","R","T" S ^DGBT(392,DGBTDT,I)=$S($D(DGBTVAR(I)):DGBTVAR(I),1:"")
+"RTN","DGBTEND",5,0)
+ G:'$D(^DGBT(392,DGBTDT,0))!(DGBTTOUT=1) QUIT I '$D(DGBTACCT) S DGBTVAR(0)=^DGBT(392,DGBTDT,0),DGBTACCT=$S('$D(^DGBT(392.3,+$P(DGBTVAR(0),"^",6),0)):0,1:+$P(^DGBT(392.3,+$P(DGBTVAR(0),"^",6),0),"^",5))
+"RTN","DGBTEND",6,0)
+ S Z="^INFORMATION^DISPLAY^EDIT",PROMPT="<I>nformation, <D>isplay claim, <E>dit claim," I DGBTACCT=4!(DGBTACCT=5) S PROMPT=PROMPT_" <P>rint form,",Z=Z_"^PRINT"
+"RTN","DGBTEND",7,0)
+ S DIR("A")=PROMPT_" or <Q>uit ",DIR("B")="Quit",DIR("?")="^D HELP^DGBTEND",DIR(0)="SA^Q:Quit;I:Information;D:Display;E:Edit;P:Print"
+"RTN","DGBTEND",8,0)
+ D ^DIR K DIR G DELETE:Y["Q"!($D(DIRUT)),SCREEN^DGBTE:Y="I"
+"RTN","DGBTEND",9,0)
+ S DGBTX1=$S(Y="D":"SCREEN^DGBTCD",Y="E":"SCREEN^DGBTCE",Y="P":"START^DGBTCR",1:"") I DGBTX1]"" D @DGBTX1 D:DGBTTOUT QUIT^DGBTCE1 G:DGBTX1="START^DGBTCR" PATIENT^DGBTE G END
+"RTN","DGBTEND",10,0)
+ G END
+"RTN","DGBTEND",11,0)
+DELETE I '$D(^DGBT(392,DGBTDT,"A")) S %=2 W !!,"Do you want to delete this claim" D YN^DICN G:%=2 COMPLT^DGBTE G:%=-1 DELETE1 I %<1 D HELP1^DGBTE G DELETE
+"RTN","DGBTEND",12,0)
+DELETE1 I '$D(^DGBT(392,DGBTDT,"A"))!(DGBTTOUT=-1) W !,"This claim is incomplete and is now being deleted....." S DGBTTOUT="",DIK="^DGBT(392,",DA=DGBTDT D ^DIK
+"RTN","DGBTEND",13,0)
+ G:DGBTTOUT=-1 QUIT D KVAR G PATIENT^DGBTE
+"RTN","DGBTEND",14,0)
+QUIT K DGBTDIV,DGBTDIVI,PRCABN,DGBTMD,DGBTDIVN,DGBTTOUT,ANS,DGBTREC,ERR,RETURN
+"RTN","DGBTEND",15,0)
+QUIT1 K DGBT,DGBTA,DGBTAD,DGBTAI,DGBTAN,DGBTAS,DGBTC,DGBTCA,DGBTCD,DGBTCE,DGBTCH,DGBTCH1,DGBTCL,DGBTCN,DGBTCS,DGBTCSN,DGBTCST,DGBTDD,DGBTDTE,DGBTDTI,DGBTI,DGBTIME,DGBTMTD,DGBTMTI,DGBTNEW,DGBTP,DGBTPAP,DGBTPDE,DGBTPDT,DGBTPDTE,DGBTSCC,DGBTZ
+"RTN","DGBTEND",16,0)
+ K DGBTMTS,DGBTCSC,DGBTELG,DGBTINC,DGBTDEP ; created w/ patch 35
+"RTN","DGBTEND",17,0)
+ K DA,DFN,DIC,DIE,DINUM,DR,S,Y,X,DGBTX1,X2,I,J,VA,VADM,VAEL,VAPA,VADAT,VADATE,VAUTD,VAUTNALL,VAUTSTR,DIK
+"RTN","DGBTEND",18,0)
+ K ^UTILITY($J,"DGBT"),^UTILITY("DGBT",$J),C,DGBTELIG,DGBTSCP,DGBTVAR,DGBTDT,DGBTINFL,DGBTACCT,DGBTACTN,DGBTOACT,DGBTCNU,DGBTFLAG,DGBTFR4,DGBTMETC,DGBTMR,DGBTRATE,DGBTTCTY,DGBTFCTY,CHZFLG,Y1
+"RTN","DGBTEND",19,0)
+KVAR K VADM(4),VADM(5),VADM(6),VADM(7),VADM(8),VADM(9),VADM(10),VAEL(2),VAEL(4),VAEL(5),VAEL(7),VAEL(8),VAERR,VAPA(7),VAPA(8),VAPA(9),VAPA(10),DIC
+"RTN","DGBTEND",20,0)
+ K DGBTDEF,PROMPT,DLAYGO,J,DGBTDV1,DGBTRMK,K,DGBTREC,DGBTMD
+"RTN","DGBTEND",21,0)
+ Q
+"RTN","DGBTEND",22,0)
+HELP ;
+"RTN","DGBTEND",23,0)
+ W !!,"You may choose from the following: ",!!?5,"<I>nformation - to view the two informational screens",!?5,"<D>isplay - to view this claim",!?5,"<E>d it - to change this claim"
+"RTN","DGBTEND",24,0)
+ W:DGBTACCT=4!(DGBTACCT=5) !?5,"<P>rint - to print form 70-3542d (132 columns)" W !?5,"<Q>uit - to exit from this option"
+"RTN","DGBTEND",25,0)
+ Q
+"SEC","^DIC",392,392,0,"DD")
+@
+"SEC","^DIC",392,392,0,"DEL")
+@
+"SEC","^DIC",392,392,0,"LAYGO")
+@
+"SEC","^DIC",392,392,0,"RD")
+d
+"SEC","^DIC",392,392,0,"WR")
+@
+"VER")
+8.0^22.0
+"^DD",392,392,0)
+FIELD^^51^36
+"^DD",392,392,0,"DDA")
+N
+"^DD",392,392,0,"DT")
+2930127
+"^DD",392,392,0,"ID",2)
+S %I=Y,Y=$S('$D(^(0)):"",$D(^DPT(+$P(^(0),U,2),0))#2:$P(^(0),U,1),1:""),C=$P(^DD(2,.01,0),U,2) D Y^DIQ:Y]"" W "   ",Y,@("$E("_DIC_"%I,0),0)") S Y=%I K %I
+"^DD",392,392,0,"ID",6)
+S %I=Y,Y=$S('$D(^(0)):"",$D(^DGBT(392.3,+$P(^(0),U,6),0))#2:$P(^(0),U,1),1:""),C=$P(^DD(392.3,.01,0),U,2) D Y^DIQ:Y]"" W "   ",Y,@("$E("_DIC_"%I,0),0)") S Y=%I K %I
+"^DD",392,392,0,"IX","AC",392,6)
+
+"^DD",392,392,0,"IX","ACTP",392,6)
+
+"^DD",392,392,0,"IX","AD",392,9)
+
+"^DD",392,392,0,"IX","AE",392,3)
+
+"^DD",392,392,0,"IX","AFLS",392,14)
+
+"^DD",392,392,0,"IX","AI",392,2)
+
+"^DD",392,392,0,"IX","AS",392,7)
+
+"^DD",392,392,0,"IX","B",392,.01)
+
+"^DD",392,392,0,"IX","C",392,2)
+
+"^DD",392,392,0,"NM","BENEFICIARY TRAVEL CLAIM")
+
+"^DD",392,392,0,"VRPK")
+DGBT
+"^DD",392,392,.01,0)
+Claim DATE/TIME^RDX^^0;1^S %DT="ESTXR" D ^%DT S X=Y K:Y<1 X I $D(X) S DINUM=X
+"^DD",392,392,.01,1,0)
+^.1
+"^DD",392,392,.01,1,1,0)
+392^B
+"^DD",392,392,.01,1,1,1)
+S ^DGBT(392,"B",$E(X,1,30),DA)=""
+"^DD",392,392,.01,1,1,2)
+K ^DGBT(392,"B",$E(X,1,30),DA)
+"^DD",392,392,.01,3)
+Enter the Beneficiary Travel CLAIM date/time in the usual fileman format.
+"^DD",392,392,.01,21,0)
+^^1^1^2920108^
+"^DD",392,392,.01,21,1,0)
+Enter the date/time of the Bene Travel Claim.
+"^DD",392,392,.01,22)
+
+"^DD",392,392,.01,"DT")
+2890113
+"^DD",392,392,2,0)
+NAME^RP2'I^DPT(^0;2^Q
+"^DD",392,392,2,1,0)
+^.1
+"^DD",392,392,2,1,1,0)
+392^C
+"^DD",392,392,2,1,1,1)
+S ^DGBT(392,"C",$E(X,1,30),DA)=""
+"^DD",392,392,2,1,1,2)
+K ^DGBT(392,"C",$E(X,1,30),DA)
+"^DD",392,392,2,1,2,0)
+392^AI^MUMPS
+"^DD",392,392,2,1,2,1)
+S ^DGBT(392,"AI",$E(X,1,30),9999999.99999-DA)=DA
+"^DD",392,392,2,1,2,2)
+K ^DGBT(392,"AI",$E(X,1,30),9999999.99999-DA)
+"^DD",392,392,2,21,0)
+^^1^1^2920108^
+"^DD",392,392,2,21,1,0)
+Enter the patient that is related to this Bene Travel Claim.
+"^DD",392,392,2,"DT")
+2890129
+"^DD",392,392,3,0)
+ELIGIBILITY^P8'X^DIC(8,^0;3^Q
+"^DD",392,392,3,1,0)
+^.1
+"^DD",392,392,3,1,1,0)
+392^AE
+"^DD",392,392,3,1,1,1)
+S ^DGBT(392,"AE",$E(X,1,30),DA)=""
+"^DD",392,392,3,1,1,2)
+K ^DGBT(392,"AE",$E(X,1,30),DA)
+"^DD",392,392,3,3)
+Enter the primary eligibility or other entitled eligibilities
+"^DD",392,392,3,21,0)
+^^1^1^2920108^
+"^DD",392,392,3,21,1,0)
+This field contains the eligibililty of the patient for this Bene Travel Claim.
+"^DD",392,392,3,"DT")
+2890108
+"^DD",392,392,4,0)
+SC PERCENTAGE^NJ3,0^^0;4^K:+X'=X!(X>100)!(X<0)!(X?.E1"."1N.N) X
+"^DD",392,392,4,3)
+Type a Number between 0 and 100, 0 Decimal Digits
+"^DD",392,392,4,21,0)
+^^1^1^2920109^^
+"^DD",392,392,4,21,1,0)
+Enter the SC percentage of this patient related to this Bene Travel Claim.
+"^DD",392,392,5,0)
+CERTIFICATION DATE^*P392.2'^DGBT(392.2,^0;5^S DIC("S")="I $P(^(0),U,2)=$P(^DGBT(392,DA,0),U,2)" D ^DIC K DIC S DIC=DIE,X=+Y K:Y<0 X
+"^DD",392,392,5,.1)
+ANNUAL CERTIFICATION
+"^DD",392,392,5,3)
+
+"^DD",392,392,5,4)
+
+"^DD",392,392,5,12)
+Only allowed to select Certification Dates for this patient
+"^DD",392,392,5,12.1)
+S DIC("S")="I $P(^(0),U,2)=$P(^DGBT(392,DA,0),U,2)"
+"^DD",392,392,5,21,0)
+^^1^1^2960726^^^
+"^DD",392,392,5,21,1,0)
+This field contains the Beneficiary Travel Certification date.
+"^DD",392,392,5,"DT")
+2890106
+"^DD",392,392,6,0)
+ACCOUNT^R*P392.3'^DGBT(392.3,^0;6^S DIC("S")="I $P(^(0),U,3)'>DA&('$P(^(0),U,4)!($P(^(0),U,4)'<DA))" D ^DIC K DIC S DIC=DIE,X=+Y K:Y<0 X
+"^DD",392,392,6,1,0)
+^.1
+"^DD",392,392,6,1,1,0)
+392^AC
+"^DD",392,392,6,1,1,1)
+S ^DGBT(392,"AC",$E(X,1,30),DA)=""
+"^DD",392,392,6,1,1,2)
+K ^DGBT(392,"AC",$E(X,1,30),DA)
+"^DD",392,392,6,1,2,0)
+392^ACTP^MUMPS
+"^DD",392,392,6,1,2,1)
+Q:'$D(^DGBT(392.3,X,0))  S:+$P(^(0),U,5) ^DGBT(392,"ACTP",+$P(^(0),U,5),DA)=""
+"^DD",392,392,6,1,2,2)
+Q:'$D(^DGBT(392.3,X,0))  K:+$P(^(0),U,5) ^DGBT(392,"ACTP",+$P(^(0),U,5),DA)
+"^DD",392,392,6,3)
+
+"^DD",392,392,6,12)
+Enter the appropriate account at the time of the claim.
+"^DD",392,392,6,12.1)
+S DIC("S")="I $P(^(0),U,3)'>DA&('$P(^(0),U,4)!($P(^(0),U,4)'<DA))"
+"^DD",392,392,6,21,0)
+^^3^3^2930127^^
+"^DD",392,392,6,21,1,0)
+This field is a pointer to the Beneficiary Travel Account file and
+"^DD",392,392,6,21,2,0)
+contains the account number assigned to an individual beneficiary
+"^DD",392,392,6,21,3,0)
+travel claim.
+"^DD",392,392,6,"DT")
+2910219
+"^DD",392,392,7,0)
+CARRIER^RP440'^PRC(440,^0;7^Q
+"^DD",392,392,7,1,0)
+^.1
+"^DD",392,392,7,1,1,0)
+392^AS
+"^DD",392,392,7,1,1,1)
+S ^DGBT(392,"AS",$E(X,1,30),DA)=""
+"^DD",392,392,7,1,1,2)
+K ^DGBT(392,"AS",$E(X,1,30),DA)
+"^DD",392,392,7,3)
+
+"^DD",392,392,7,21,0)
+^.001^2^2^3020507^^
+"^DD",392,392,7,21,1,0)
+This field points to the Vendor File and contains the Carrier providing 
+"^DD",392,392,7,21,2,0)
+services for this Bene Travel Claim.
+"^DD",392,392,7,"DT")
+2890129
+"^DD",392,392,8,0)
+MOST ECON. COST^NJ8,2^^0;8^S:X["$" X=$P(X,"$",2) K:X'?.N.1".".2N!(X>10000)!(X<0) X
+"^DD",392,392,8,3)
+Type a Dollar Amount between 0 and 10000, 2 Decimal Digits
+"^DD",392,392,8,21,0)
+^^2^2^2920109^
+"^DD",392,392,8,21,1,0)
+This field contains the most economical cost amount (whatever cost less) 
+"^DD",392,392,8,21,2,0)
+for this Bene Travel Claim.
+"^DD",392,392,8,"DT")
+2881214
+"^DD",392,392,9,0)
+DEDUCTIBLE AMOUNT^RNJ4,2X^^0;9^S:X["$" X=$P(X,"$",2) K:X'?.N.1".".2N!(X>99)!(X<0) X
+"^DD",392,392,9,1,0)
+^.1
+"^DD",392,392,9,1,1,0)
+392^AD^MUMPS
+"^DD",392,392,9,1,1,1)
+S ^DGBT(392,"AD",$P(^DGBT(392,DA,0),"^",2),$E(DA,2,5),DA)=X
+"^DD",392,392,9,1,1,2)
+K ^DGBT(392,"AD",$P(^DGBT(392,DA,0),"^",2),$E(DA,2,5),DA)
+"^DD",392,392,9,3)
+Type a Dollar Amount between 0 and 99, 2 Decimal Digits
+"^DD",392,392,9,21,0)
+^^1^1^2920109^
+"^DD",392,392,9,21,1,0)
+This field contains the deductible amount applied to this Bene Travel Claim.
+"^DD",392,392,9,"DT")
+3080117
+"^DD",392,392,10,0)
+AMOUNT PAYABLE^RNJ8,2^^0;10^S:X["$" X=$P(X,"$",2) K:X'?.N.1".".2N!(X>10000)!(X<0) X
+"^DD",392,392,10,3)
+Type a Dollar Amount between 0 and 10000, 2 Decimal Digits
+"^DD",392,392,10,21,0)
+^^2^2^2920109^
+"^DD",392,392,10,21,1,0)
+This field contains the amount payable (cost minus any applied deductible) 
+"^DD",392,392,10,21,2,0)
+for this Bene Travel Claim.
+"^DD",392,392,10,"DT")
+2881214
+"^DD",392,392,11,0)
+DIVISION^RP40.8'^DG(40.8,^0;11^Q
+"^DD",392,392,11,21,0)
+^^2^2^2920109^
+"^DD",392,392,11,21,1,0)
+This field contains the medical center division related to this Bene Travel 
+"^DD",392,392,11,21,2,0)
+Claim.
+"^DD",392,392,11,"DT")
+2890127
+"^DD",392,392,12,0)
+WHO ENTERED INTO FILE^P200'^VA(200,^0;12^Q
+"^DD",392,392,12,21,0)
+^^1^1^2920109^^^
+"^DD",392,392,12,21,1,0)
+The name of the user who first entered this patient into the Beneficiary Travel Claim file.
+"^DD",392,392,12,"DT")
+2901017
+"^DD",392,392,13,0)
+DATE ENTERED INTO THE FILE^MD^^0;13^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",392,392,13,21,0)
+^^1^1^2881215^^
+"^DD",392,392,13,21,1,0)
+The date this beneficiary travel claim was entered into this file.
+"^DD",392,392,13,"DT")
+2881215
+"^DD",392,392,14,0)
+COREFLS CARRIER^P392.31'O^DGBT(392.31,^0;14^Q
+"^DD",392,392,14,1,0)
+^.1
+"^DD",392,392,14,1,1,0)
+392^AFLS
+"^DD",392,392,14,1,1,1)
+S ^DGBT(392,"AFLS",$E(X,1,30),DA)=""
+"^DD",392,392,14,1,1,2)
+K ^DGBT(392,"AFLS",$E(X,1,30),DA)
+"^DD",392,392,14,1,1,"DT")
+3020416
+"^DD",392,392,14,2)
+S Y(0)=Y K DGBTPRV S DGBTPRV=$$PREV^DGBTCSL(.Y)
+"^DD",392,392,14,2.1)
+K DGBTPRV S DGBTPRV=$$PREV^DGBTCSL(.Y)
+"^DD",392,392,14,3)
+Enter a COREFLS Carrier for this claim.
+"^DD",392,392,14,21,0)
+^^1^1^3021207^
+"^DD",392,392,14,21,1,0)
+This field contains the COREFLS Carrier for this Bene Travel Claim.
+"^DD",392,392,14,"DEL",1,0)
+I 1 W !,*7,"DELETIONS ARE NOT ALLOWED"
+"^DD",392,392,14,"DT")
+3021211
+"^DD",392,392,21,0)
+PLACE OF DEPARTURE [LINE 1]^F^^D;1^K:$L(X)>35!($L(X)<3) X
+"^DD",392,392,21,1,0)
+^.1
+"^DD",392,392,21,1,1,0)
+^^TRIGGER^392^22
+"^DD",392,392,21,1,1,1)
+Q
+"^DD",392,392,21,1,1,2)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^DGBT(392,D0,"D")):^("D"),1:"") S X=$P(Y(1),U,2),X=X S DIU=X K Y S X="" S DIH=$G(^DGBT(392,DIV(0),"D")),DIV=X S $P(^("D"),U,2)=DIV,DIH=392,DIG=22 D ^DICR
+"^DD",392,392,21,1,1,"CREATE VALUE")
+NO EFFECT
+"^DD",392,392,21,1,1,"DELETE VALUE")
+@
+"^DD",392,392,21,1,1,"DT")
+3100818
+"^DD",392,392,21,1,1,"FIELD")
+PLACE OF DEPARTURE [LINE 2]
+"^DD",392,392,21,3)
+Enter the first line of the place of departure address.  Answer must be 3-35 characters in length.
+"^DD",392,392,21,21,0)
+^^2^2^2920109^^
+"^DD",392,392,21,21,1,0)
+This field contains the first line of the address for the place of 
+"^DD",392,392,21,21,2,0)
+departure for this Bene Travel Claim.
+"^DD",392,392,21,"DT")
+3100818
+"^DD",392,392,22,0)
+PLACE OF DEPARTURE [LINE 2]^F^^D;2^K:$L(X)>30!($L(X)<3) X
+"^DD",392,392,22,1,0)
+^.1^^-1
+"^DD",392,392,22,1,1,0)
+^^TRIGGER^392^23
+"^DD",392,392,22,1,1,1)
+Q
+"^DD",392,392,22,1,1,2)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^DGBT(392,D0,"D")):^("D"),1:"") S X=$P(Y(1),U,3),X=X S DIU=X K Y S X="" S DIH=$G(^DGBT(392,DIV(0),"D")),DIV=X S $P(^("D"),U,3)=DIV,DIH=392,DIG=23 D ^DICR
+"^DD",392,392,22,1,1,"CREATE VALUE")
+NO EFFECT
+"^DD",392,392,22,1,1,"DELETE VALUE")
+@
+"^DD",392,392,22,1,1,"DT")
+3100804
+"^DD",392,392,22,1,1,"FIELD")
+PLACE OF DEPARTURE [LINE 3]
+"^DD",392,392,22,3)
+If the space provided in 'PLACE OF DEPARTURE [LINE 1] was not sufficient, enter the second line of the place of departure address.  Answer must be 3-30 characters in length.
+"^DD",392,392,22,5,1,0)
+392^21^1
+"^DD",392,392,22,21,0)
+^^2^2^2920109^
+"^DD",392,392,22,21,1,0)
+This field contains the second line of the address for the place of 
+"^DD",392,392,22,21,2,0)
+departure for this Bene Travel Claim.
+"^DD",392,392,22,"DT")
+3100804
+"^DD",392,392,23,0)
+PLACE OF DEPARTURE [LINE 3]^F^^D;3^K:$L(X)>30!($L(X)<3) X
+"^DD",392,392,23,3)
+Answer must be 3-30 characters in length.
+"^DD",392,392,23,5,2,0)
+392^22^1
+"^DD",392,392,23,21,0)
+^^2^2^2920109^
+"^DD",392,392,23,21,1,0)
+This field contains the third line of the address for the place of 
+"^DD",392,392,23,21,2,0)
+departure for this Bene Travel Claim.
+"^DD",392,392,23,"DT")
+2881215
+"^DD",392,392,24,0)
+CITY OF DEPARTURE^FX^^D;4^K:$L(X)>30!($L(X)<2)!'(X'?1P.E) X I $D(X) D UP^DGHELP
+"^DD",392,392,24,3)
+Answer must be 2-30 characters in length.
+"^DD",392,392,24,21,0)
+^^2^2^2920109^
+"^DD",392,392,24,21,1,0)
+This field contains the name of the city in the address for the place of 
+"^DD",392,392,24,21,2,0)
+departure for this Bene Travel Claim.
+"^DD",392,392,24,"DT")
+2890227
+"^DD",392,392,24.1,0)
+STATE OF DEPARTURE^P5'^DIC(5,^D;5^Q
+"^DD",392,392,24.1,21,0)
+^^2^2^2920109^
+"^DD",392,392,24.1,21,1,0)
+This field points to the State File and uses this for the state in the 
+"^DD",392,392,24.1,21,2,0)
+address for the place of departure for this Bene Travel Claim.
+"^DD",392,392,24.1,"DT")
+2890227
+"^DD",392,392,24.2,0)
+ZIP CODE/DEPARTURE^FXO^^D;6^K:$L(X)>20!($L(X)<5) X I $D(X) D ZIPIN^VAFADDR
+"^DD",392,392,24.2,2)
+S Y(0)=Y D ZIPOUT^VAFADDR
+"^DD",392,392,24.2,2.1)
+D ZIPOUT^VAFADDR
+"^DD",392,392,24.2,3)
+Answer with either 5 digit or 9 digit zip code.
+"^DD",392,392,24.2,21,0)
+^^2^2^2930614^
+"^DD",392,392,24.2,21,1,0)
+This field contains the 5-digit zip code used in the address for the place
+"^DD",392,392,24.2,21,2,0)
+of departure for this Bene Travel Claim.
+"^DD",392,392,24.2,"DT")
+2930301
+"^DD",392,392,25,0)
+DESTINATION [LINE 1]^F^^T;1^K:$L(X)>35!($L(X)<3) X
+"^DD",392,392,25,1,0)
+^.1^^-1
+"^DD",392,392,25,1,1,0)
+^^TRIGGER^392^26
+"^DD",392,392,25,1,1,1)
+Q
+"^DD",392,392,25,1,1,2)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^DGBT(392,D0,"T")):^("T"),1:"") S X=$P(Y(1),U,2),X=X S DIU=X K Y S X="" S DIH=$G(^DGBT(392,DIV(0),"T")),DIV=X S $P(^("T"),U,2)=DIV,DIH=392,DIG=26 D ^DICR
+"^DD",392,392,25,1,1,"CREATE VALUE")
+NO EFFECT
+"^DD",392,392,25,1,1,"DELETE VALUE")
+@
+"^DD",392,392,25,1,1,"DT")
+3100804
+"^DD",392,392,25,1,1,"FIELD")
+DESTINATION [LINE 2]
+"^DD",392,392,25,3)
+Answer must be 3-35 characters in length.
+"^DD",392,392,25,21,0)
+^^2^2^2920109^
+"^DD",392,392,25,21,1,0)
+This field contains the first line of the address for place of destination 
+"^DD",392,392,25,21,2,0)
+for this Bene Travel Claim.
+"^DD",392,392,25,"DT")
+3100804
+"^DD",392,392,26,0)
+DESTINATION [LINE 2]^F^^T;2^K:$L(X)>30!($L(X)<3) X
+"^DD",392,392,26,1,0)
+^.1^^-1
+"^DD",392,392,26,1,1,0)
+^^TRIGGER^392^27
+"^DD",392,392,26,1,1,1)
+Q
+"^DD",392,392,26,1,1,2)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^DGBT(392,D0,"T")):^("T"),1:"") S X=$P(Y(1),U,3),X=X S DIU=X K Y S X="" S DIH=$G(^DGBT(392,DIV(0),"T")),DIV=X S $P(^("T"),U,3)=DIV,DIH=392,DIG=27 D ^DICR
+"^DD",392,392,26,1,1,"CREATE VALUE")
+NO EFFECT
+"^DD",392,392,26,1,1,"DELETE VALUE")
+@
+"^DD",392,392,26,1,1,"DT")
+3100804
+"^DD",392,392,26,1,1,"FIELD")
+DESTINATION [LINE 3]
+"^DD",392,392,26,3)
+Answer must be 3-30 characters in length.
+"^DD",392,392,26,5,1,0)
+392^25^1
+"^DD",392,392,26,21,0)
+^^2^2^2920109^
+"^DD",392,392,26,21,1,0)
+This field contains the second line of the address for the place of 
+"^DD",392,392,26,21,2,0)
+destination for this Bene Travel Claim.
+"^DD",392,392,26,"DT")
+3100804
+"^DD",392,392,27,0)
+DESTINATION [LINE 3]^F^^T;3^K:$L(X)>30!($L(X)<3) X
+"^DD",392,392,27,3)
+Answer must be 3-30 characters in length.
+"^DD",392,392,27,5,1,0)
+392^26^1
+"^DD",392,392,27,21,0)
+^^2^2^2920109^^
+"^DD",392,392,27,21,1,0)
+This field contains the third line of the address for the place of 
+"^DD",392,392,27,21,2,0)
+destination for this Bene Travel Claim.
+"^DD",392,392,27,"DT")
+2890208
+"^DD",392,392,28,0)
+CITY OF DESTINATION^FX^^T;4^K:$L(X)>30!($L(X)<2)!'(X'?1P.E) X I $D(X) D UP^DGHELP
+"^DD",392,392,28,3)
+Answer must be 2-30 characters in length.
+"^DD",392,392,28,21,0)
+^^2^2^2920109^
+"^DD",392,392,28,21,1,0)
+This field contains the name of the city in the address for the place of 
+"^DD",392,392,28,21,2,0)
+destination for this Bene Travel Claim.
+"^DD",392,392,28,"DT")
+2890309
+"^DD",392,392,28.1,0)
+STATE OF DESTINATION^P5'^DIC(5,^T;5^Q
+"^DD",392,392,28.1,21,0)
+^^2^2^2920109^^
+"^DD",392,392,28.1,21,1,0)
+This field points the the STATE file and contains the state used in the 
+"^DD",392,392,28.1,21,2,0)
+address for the place of destination for this Bene Travel Claim.
+"^DD",392,392,28.1,"DT")
+2890227
+"^DD",392,392,28.2,0)
+ZIP CODE/DESTINATION^FXO^^T;6^K:$L(X)>20!($L(X)<5) X I $D(X) D ZIPIN^VAFADDR
+"^DD",392,392,28.2,2)
+S Y(0)=Y D ZIPOUT^VAFADDR
+"^DD",392,392,28.2,2.1)
+D ZIPOUT^VAFADDR
+"^DD",392,392,28.2,3)
+Answer with either 5 digit or 9 digit zip code.
+"^DD",392,392,28.2,21,0)
+^^2^2^2920109^
+"^DD",392,392,28.2,21,1,0)
+This field contains the 5-digit zip code used in the address for the 
+"^DD",392,392,28.2,21,2,0)
+place of destination for this Bene Travel Claim.
+"^DD",392,392,28.2,"DT")
+2930301
+"^DD",392,392,31,0)
+ONE WAY/ROUND TRIP^RS^1:ONE WAY;2:ROUND TRIP;^M;1^Q
+"^DD",392,392,31,21,0)
+^^1^1^2920109^^
+"^DD",392,392,31,21,1,0)
+This field indicates one way or round trip for this Bene Travel Claim.
+"^DD",392,392,31,"DT")
+2890208
+"^DD",392,392,32,0)
+MILEAGE/ONE WAY^RNJ5,0^^M;2^K:+X'=X!(X>10000)!(X<0)!(X?.E1"."1N.N) X
+"^DD",392,392,32,3)
+Type a Number between 0 and 10000, 0 Decimal Digits
+"^DD",392,392,32,21,0)
+^^1^1^2920109^
+"^DD",392,392,32,21,1,0)
+This field contains the one way mileage for this Bene Travel Calim.
+"^DD",392,392,32,"DT")
+2890129
+"^DD",392,392,33,0)
+TOTAL MILEAGE AMOUNT^NJ8,2^^M;3^S:X["$" X=$P(X,"$",2) K:X'?.N.1".".2N!(X>10000)!(X<0) X
+"^DD",392,392,33,3)
+Type a Dollar Amount between 0 and 10000, 2 Decimal Digits
+"^DD",392,392,33,21,0)
+^^2^2^2930127^^
+"^DD",392,392,33,21,1,0)
+This is a numeric field containing the total mileage entered for a
+"^DD",392,392,33,21,2,0)
+specific beneficiary travel claim.
+"^DD",392,392,33,"DT")
+2890107
+"^DD",392,392,34,0)
+MEALS & LODGING^NJ8,2^^M;4^S:X["$" X=$P(X,"$",2) K:X'?.N.1".".2N!(X>10000)!(X<0) X
+"^DD",392,392,34,3)
+Type a Dollar Amount between 0 and 10000, 2 Decimal Digits
+"^DD",392,392,34,21,0)
+^^1^1^2920109^
+"^DD",392,392,34,21,1,0)
+This field contains meals and lodging costs for this Bene Travel Claim.
+"^DD",392,392,34,"DT")
+2890107
+"^DD",392,392,35,0)
+FERRY, BRIDGES, ETC.^NJ8,2^^M;5^S:X["$" X=$P(X,"$",2) K:X'?.N.1".".2N!(X>10000)!(X<0) X
+"^DD",392,392,35,3)
+Type a Dollar Amount between 0 and 10000, 2 Decimal Digits
+"^DD",392,392,35,21,0)
+^^1^1^2920109^
+"^DD",392,392,35,21,1,0)
+This field contains ferry, bridges, etc. costs for this Bene Travel Claim.
+"^DD",392,392,35,"DT")
+2890107
+"^DD",392,392,41,0)
+AUTHORIZING PERSON^P200'^VA(200,^A;1^Q
+"^DD",392,392,41,21,0)
+^^2^2^2930127^^
+"^DD",392,392,41,21,1,0)
+This field points the person file to indicate who the authorizing person 
+"^DD",392,392,41,21,2,0)
+responsible for this Bene Travel Claim.
+"^DD",392,392,41,"DT")
+2930127
+"^DD",392,392,42,0)
+ATTENDANT/PAYEE^FX^^A;2^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>30!($L(X)<3)!(X?1P.E)!(X'?1U.ANP)!(X'[",") X I $D(X) D UP^DGHELP S Y=", " F I=0:0 Q:$F(X,Y)<1  S X=$E(X,1,($F(X,Y)-2))_$E(X,$F(X,Y),99)
+"^DD",392,392,42,3)
+Enter the name in 'Last,First Middle' format between 3-30 characters.  With the exception of the comma, period, space, hyphen, dash and apostrophe punctuation characters should be avoided.
+"^DD",392,392,42,21,0)
+^^2^2^2930730^^
+"^DD",392,392,42,21,1,0)
+This field contains the 'Last, First Middle' name format of the 
+"^DD",392,392,42,21,2,0)
+attendent/payee of this Bene Travel Claim.
+"^DD",392,392,42,"DT")
+2930730
+"^DD",392,392,43,0)
+C&P REVIEW VISIT^RS^0:NO;1:YES;^A;3^Q
+"^DD",392,392,43,3)
+Answer whether this claim is a C&P review visit and should be paid at the C&P review visit mileage rate as indicated in the BT parameters.
+"^DD",392,392,43,21,0)
+^^3^3^2920109^
+"^DD",392,392,43,21,1,0)
+This field indicates whether this is a C&P review visit and should be 
+"^DD",392,392,43,21,2,0)
+paid at the C&P review visit mileage rate as indicated in the BT 
+"^DD",392,392,43,21,3,0)
+parameters for this Bene Travel Claim.
+"^DD",392,392,43,"DT")
+2890228
+"^DD",392,392,44,0)
+MODE OF TRANSPORTATION^RP392.4^DGBT(392.4,^A;4^Q
+"^DD",392,392,44,3)
+Enter the mode of transportation used for this Beneficiary Travel Claim         (e.g. AMBULANCE, HIRED CAR, HANDICAPPED VAN, etc.)
+"^DD",392,392,44,21,0)
+^^2^2^2920109^
+"^DD",392,392,44,21,1,0)
+This field points to the Beneficiary Travel Mode of Transportation file 
+"^DD",392,392,44,21,2,0)
+and indicates the mode of transportation used for this Bene Travel Claim.
+"^DD",392,392,44,"DT")
+2890302
+"^DD",392,392,51,0)
+REMARKS^FX^^R;1^K:$L(X)>79!($L(X)<1)!(X[";") X
+"^DD",392,392,51,3)
+Answer must be 1-79 characters in length and not containing a ";".
+"^DD",392,392,51,21,0)
+^^1^1^2920109^
+"^DD",392,392,51,21,1,0)
+This field contains remarks related to this Bene Travel Claim.
+"^DD",392,392,51,"DT")
+2900627
+"^DIC",392,392,0)
+BENEFICIARY TRAVEL CLAIM^392ID
+"^DIC",392,392,0,"GL")
+^DGBT(392,
+"^DIC",392,392,"%D",0)
+^^2^2^2950710^^^^
+"^DIC",392,392,"%D",1,0)
+This file contains the completed travel claim entries for patients showing
+"^DIC",392,392,"%D",2,0)
+departure/destination data, as well as specific claim data.
+"^DIC",392,"B","BENEFICIARY TRAVEL CLAIM",392)
+
+"BLD",8068,6)
+^19
+**END**
+**END**

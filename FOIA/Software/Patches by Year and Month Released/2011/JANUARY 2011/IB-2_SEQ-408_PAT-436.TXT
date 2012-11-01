@@ -1,0 +1,351 @@
+$TXT Created by TJERNAGEL,STEVE at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 12/10/10 at 10:45
+=============================================================================
+Run Date: JAN 26, 2011                     Designation: IB*2*436
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #408                      Status: Released
+                  Compliance Date: FEB 26, 2011
+=============================================================================
+
+Associated patches: (v)IB*2*323    <<= must be installed BEFORE `IB*2*436'
+                    (v)IB*2*349    <<= must be installed BEFORE `IB*2*436'
+                    (v)IB*2*400    <<= must be installed BEFORE `IB*2*436'
+
+Subject: HIPAA 5010-MRA & DUAL PROVIDER STATUS & LEGAL CLAIMS
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch will cover HIPAA 5010 - AR FOR MEDICARE POLICY TYPE,
+ DUAL PROVIDER STATUS & ENTITY TYPE, and LEGAL CLAIMS AND THE NPI.
+  
+  A. AR FOR MEDICARE POLICY TYPE:
+     ---------------------------
+  
+     The IB and AR modules are integrated parts of the overall VistA
+     system that exists at each site.  The IB and AR modules make use
+     of FileMan and MailMan.  The IB module receives a MailMan message
+     containing the flatfile 835 (MRA) via the VA Financial Service
+     Center in Austin, TX from Medicare.  In addition, the IB module
+     transmits the flat-file 837 Health Care Claim data to the VA Financial
+     Service Center in Austin, TX via MailMan.
+  
+     The scope of this enhancement is to manage the requirements for the
+     VistA system's IB module as specified below:
+  
+   1. Create a new plan type in VistA to accommodate MediGap plan (F&G).
+      "MEDIGAP (SUPPL - COINS, DED, PART B EXC)"
+  
+   2. When the Medicare Remittance Advice (MRA) is returned:
+  
+      All MRA secondary insurance claims will be billed the patient
+      responsibility amount unless one of the following conditions is true.
+      If an MRA, and the claim is an OUTPATIENT claim and the MRA
+      secondary insurance plan type is NOT "MEDIGAP (SUPPLEMENTAL)" then
+      the secondary insurance claim will be billed under the new
+      calculation of patient responsibility PLUS MediGap unpaid amount.  If
+      an MRA, and the claim is an INPATIENT PROFESSIONAL claim
+      (professional means the same thing as Part B and the same thing as a
+      CMS1500) and the MRA secondary insurance plan type is NOT "MEDIGAP
+      (SUPPLEMENTAL)" then the secondary insurance claim will be billed 
+      under the new calculation of patient responsibility PLUS MediGap
+      unpaid amount.
+  
+      Therefore, for those MRA secondary insurance's whose plan type is the
+      new one for MEDIGAP PLAN F & MEDIGAP PLAN G - only Outpatient claims
+      and INPATIENT Professional claims will fall in the new calculation of
+      of patient responsibility PLUS MediGap unpaid amount.  All inpatient
+      UB04 claims with this new plan type for MEDIGAP PLAN F & MEDIGAP 
+      PLAN G will use the original calculation of patient responsibility.
+  
+ B. DUAL PROVIDER STATUS & ENTITY TYPE:
+    ---------------------------------- 
+  
+   The scope of this enhancement is to manage the requirements for the
+   VistA system's IB module as specified below:
+  
+   1. To allow for entry and storage of a given provider's name (Last,
+      First Middle) to exist in identical content and format in the NEW
+      PERSON file (#200) and the IB NON/OTHER VA BILLING PROVIDER file
+      (#355.93).
+  
+   2. To allow the use of a comma in Non-VA Facility names.
+      
+   3. A clean-up effort is required during the patch installation process:
+  
+          Synchronize values between the NEW PERSON File (#200) and the
+          IB NON/OTHER VA BILLING PROVIDER File (#355.93). This utility
+          is run one time during the installation process to compare
+          the Provider Name values using the NPI as the common field.
+          When differences are identified, the provider name in the NEW
+          PERSON file will be copied to the provider name field of the
+          IB NON/OTHER VA BILLING PROVIDER file.
+  
+    4. Create a one-time report of all the changes resulting from the
+       aforementioned installation utility.
+  
+    5. Email the above report to those users with the "IB PROVIDER EDIT"
+       security key.
+  
+ C. LEGAL CLAIMS AND THE NPI:
+    ------------------------
+  
+   NOTE: For the purpose of these requirements, legal claims will be
+   defined as a Billing Rate Type of "NO FAULT INS.", "WORKERS' COMP.",
+   and "TORT FEASOR".
+  
+   The scope of this enhancement is to manage the requirements for the
+   VistA System's IB module as specified below to allow for the:
+  
+    1. Ability to authorize specified legal claims lacking an NPI.
+  
+    2. Ability to locally print legal claims lacking an NPI.
+  
+    3. Ability to locally print legal claims with any NPI, if any NPI is
+       available.
+  
+    4. Ability to ensure that if the "NO FAULT INS.", "WORKERS' COMP."
+       or "TORT FEASOR" claim is ultimately deemed billable to third-party
+       insurance that the requirement for the NPI remains.
+  
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ ===========================================================
+ The NSR associated with this patch is out of date with the requirements.
+  
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ===================================================
+  
+ There are no Remedy Tickets associated with this patch.
+  
+  
+ Components Sent With Patch
+ ==========================
+  
+  
+ FILES
+ =====
+  
+   The following is a list of files included in this patch:
+  
+                                        UP    SEND  DATA
+                                        DATE  SEC.  COMES  SITE   RSLV
+   FILE #   NAME                        DD    CODE  W/FILE DATA   PTS
+   --------------------------------------------------------------------
+   355.93 IB NON/OTHER VA BILLING PROVIDER  Y   Y    N      N     N
+  
+ FIELDS
+ ======
+  
+   The following is a list of fields included in this patch:
+  
+   Field Name (Number)
+   -------------------
+   NAME                  (.01)
+   PROVIDER TYPE         (.02)
+   STREET ADDRESS LINE 2 (.1)
+  
+ OPTIONS
+ =======
+  
+  The following is a list of the options included in this patch:
+  
+  Option Name                    Type            New/Modified
+  ------------                   -----           -------------
+  None
+  
+ HL7 APPLICATION PARAMETERS
+ ==========================
+  
+  The following is a list of the HL7 Application Parameters included 
+  in this patch:
+  
+  
+  HL7 Application Parameter
+  -------------------------
+  None
+  
+ LOGICAL LINKS
+ =============
+  
+  The following is a list of the HL Logical Links included in this patch:
+  
+  HL Logical Link
+  ---------------
+  None
+  
+ Documentation Retrieval
+ =======================
+ The release notes, technical manual, and user's guide may also be
+ retrieved from the following OI Field Offices' Anonymous.Software
+ Directories. Use the appropriate FTP capability to retrieve the
+ files and use BINARY format.
+  
+  
+ OI Field Office         FTP Address                 Directory
+ ---------------         -----------                 ---------
+ ALBANY                  ftp.fo-albany.med.va.gov    anonymous.software
+ HINES                   ftp.fo-hines.med.va.gov     anonymous.software
+ SALT LAKE               ftp.fo-slc.med.va.gov       anonymous.software
+ FIRST AVAILABLE SERVER  download.vista.med.va.gov   anonymous.software
+  
+   The documentation includes:
+  
+       File Name                     Description
+       ---------                     -----------
+       IB_20_P436_RN.doc             Release Notes
+       IB_20_P436_TM.doc             Technical Manual
+       edi_user_guide.pdf            User's Guide
+  
+ Test Sites
+ ==========
+ HEARTLAND-WEST HCS
+ HONOLULU, HI
+ LOMA LINDA, CA
+ TENNESSEE VALLEY HCS
+  
+ Pre/Post Installation Overview
+ ==============================
+  
+   INSTALLATION INSTRUCTIONS
+   -------------------------
+  
+   It is recommended that this patch be installed outside of normal
+   working hours, however, if installed during the normal workday,
+   other VistA users will not be affected.
+  
+   Users ARE allowed to be on the system during the installation except
+   for those options listed below.  It is recommended that the patch be
+   installed during non-peak time. It will take about ten minutes to 
+   install the patch, but you may queue the installation if you wish.
+  
+   You DO NOT need to stop TaskMan or the background filers.
+  
+  
+   The following options need to be disabled for this patch:
+       ENTER/EDIT BILLING INFORMATION [IB EDIT BILLING INFO]
+       PROVIDER ID MAINTENANCE  [IBCE PROVIDER MAINT]
+  
+   POST-INSTALLATION INSTRUCTIONS
+   ------------------------------
+  
+     After this patch has been installed, those with the
+     "IB PROVIDER EDIT" security key (these individuals would
+     have access to the PROVIDER ID MAINTENANCE option) must
+     review their MailMan messages for the report that is generated
+     as a result of this installation.  The subject line of this
+     email is: "**CLEAN-UP REPORT** - #200 to #355.93".
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+ 3. Select Kernel Installation & Distribution System Option: INStallation
+    ---------------------------------------------------------------------
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+ 4. Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter IB*2.0*436):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+  
+     **This is the step to start the installation of this KIDS patch:
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.                 
+     b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES//' answer NO
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         YES//' answer NO
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu
+         Options, and Protocols? YES//' answer YES (unless otherwise
+         indicated).
+                                         
+     e.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':'  Enter the following options:
+  
+             ENTER/EDIT BILLING INFORMATION [IB EDIT BILLING INFO]
+             PROVIDER ID MAINTENANCE  [IBCE PROVIDER MAINT]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 31
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20A436
+    Before:       n/a   After:   B428203  **436**
+Routine Name: IB20P436
+    Before:       n/a   After: B74022170  **436**
+Routine Name: IBCBB11
+    Before: B25043010   After: B32717107  **51,343,363,371,395,392,401,
+                                           384,400,436**
+Routine Name: IBCCCB
+    Before: B57002902   After: B81507982  **80,106,51,151,137,182,155,323,436**
+Routine Name: IBCEMU2
+    Before: B35260966   After: B50579600  **155,320,349,436**
+Routine Name: IBCEP6
+    Before: B19310181   After: B25055673  **137,232,320,377,436**
+Routine Name: IBCEP8
+    Before: B51555046   After:B118559850  **51,137,232,288,320,343,374,
+                                           377,391,400,436**
+ 
+Routine list of preceding patches: 323, 349, 400
+
+=============================================================================
+User Information:
+Entered By  : WHITE,DARLENE                 Date Entered  : JUN 04, 2010
+Completed By: TJERNAGEL,STEVE               Date Completed: JAN 25, 2011
+Released By : CAULFIELD,MARY                Date Released : JAN 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

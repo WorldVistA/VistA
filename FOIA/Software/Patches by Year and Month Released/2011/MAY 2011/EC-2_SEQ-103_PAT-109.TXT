@@ -1,0 +1,218 @@
+$TXT Created by PANNELL,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 01/31/11 at 12:27
+=============================================================================
+Run Date: JUN 03, 2011                     Designation: EC*2*109
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #103                      Status: Released
+                  Compliance Date: JUL 04, 2011
+=============================================================================
+
+Associated patches: (v)EC*2*108    <<= must be installed BEFORE `EC*2*109'
+
+Subject: TIMEOUT, AUTO-POPULATE LOCATION, AND EXIT SCREEN FIXES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will resolve issues with an Event Capture timeout when started from
+ CPRS (Computerized Patient Record System), Event Capture's exit screen, Event
+ Capture not auto-populating the user's last used location, and it will clean up
+ the ^XTMP global used by Event Capture to store user's last used information.  
+  
+ ****************************Please Note*********************************** 
+  
+ Please make sure that the previous Event Capture patch (EC*2.0*108) has been
+ installed into the VistA server side before proceeding with this patch.  
+  
+ **************************************************************************
+  
+  ASSOCIATED REMEDY: 
+  ==================
+  HD0000000436683  Location is not auto-populating for user 
+  HD0000000444094  Event Capture Issue 
+  HD0000000448513  Broker Error after cancelling exit attempt 
+  HD0000000437260  XTMP Global keeps growing 
+     (d)HD0000000455855  XTMP global keeps filling up with "ECOBUF" nodes 
+  
+  
+  ASSOCIATED NSR: 
+  ===============
+  N/A 
+  
+  PARTICIPATING TEST SITES: 
+  =========================
+  Charlie Norwood VAMC - Augusta
+  Louisville VAMC
+  Central Plains 
+  
+   
+  REMEDY TICKET OVERVIEW: 
+  =====================
+  1) HD0000000436683  Location is not auto-populating for user 
+   
+  Problem: 
+  --------
+  When entering Event Capture from CPRS (Computerized Patient Record System), 
+  the user has noticed that one's last used location at a multi-division site 
+  is not being inputted automatically.  This is functionality that was to be 
+  placed in Event Capture with EC*2.0*100.  The problem is that when using 
+  Event Capture from CPRS it is not saving the user's last used 
+  information, and therefore is not working as intended.  
+  
+  Solution: 
+  ---------
+  The GUI has been updated so that the Last Used information for a user 
+  will be saved off for later use.  
+    
+  2) HD0000000444094  Event Capture Issue 
+   
+  Problem: 
+  --------
+  When entering Event Capture from CPRS (Computerized Patient Record System), 
+  the timeout setting is only 2 minutes.  This issue was reported to be 
+  fixed in EC*2.0*72 as setting the timeout to the CPRS setting.  
+  
+  Solution: 
+  ---------
+  Corrected the GUI to set the timeout to the CPRS setting, if none is 
+  specified, then the default will be 5 minutes.  We also fixed the timeout 
+  itself, which was not correctly closing out of Event Capture.  
+  
+  3) HD0000000448513  Broker Error after canceling exit attempt 
+   
+  Problem: 
+  --------
+  In Event Capture GUI, if a user hits the Exit button on the main menu, 
+  but then clicks cancel instead of ok, the broker session will be 
+  disconnected and will show multiple broker errors when trying to use EC.  
+  
+  Solution: 
+  ---------
+  Fix the GUI so that if the user would like to continue using the EC 
+  program instead of Exiting, then they will be allowed to without having 
+  to re-sign in.  
+  
+  4) HD0000000437260  XTMP Global keeps growing 
+     (d)HD0000000455855  XTMP global keeps filling up with "ECOBUF" nodes 
+   
+  Problem: 
+  --------
+  The ^XTMP global subscripted with "ECOBUF" is growing out of control and 
+  is never being cleaned up by Event Capture.  This happens only when the 
+  user enters Event Capture through the CPRS Tools menu option for Event 
+  Capture Interface.  
+  
+  Solution: 
+  ---------
+  The fix to save off the user's last used information (#1) will also 
+  resolve this issue with the ^XTMP growing out of control.  Also, the 
+  pre-install routine, ECP109PT, will clean up the existing ^XTMP 
+  subscripted with "ECOBUF" in order to restore some memory to sites.  
+  
+  
+  INSTALLATION 
+  ============
+  VistA Server Side: 
+  ------------------
+  Use the following instructions in installing this server-side EC*2.0*109 
+  patch.  Installation should take less than 1 minute.  
+  
+         1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.  
+  
+         2.  Users ARE allowed to be on the system during the 
+             installation, but you should select a time when minimal number 
+             of users are on.  
+      
+         3.  From the Kernel Installation and Distribution System (KIDS) 
+             Menu, select the Installation menu.  
+   
+         4.  From this menu, you may elect to use the following options 
+             (when prompted for INSTALL NAME, enter EC*2.0*109): 
+                 a.  Backup a Transport Global.  
+                 b.  Compare Transport Global to Current System.  
+                 c.  Verify Checksums in Transport Global 
+  
+         5.  Use the Install Packages option (when prompted for the 
+             INSTALL NAME, enter EC*2.0*109).  
+  
+         6.  When prompted 'Want KIDS to INHIBIT LOGONs during the 
+             INSTALL? NO//', respond "NO".  
+  
+         7.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+             Options, and Protocols? YES//', respond "YES".  
+  
+          Enter options you wish to mark as 'Out Of Order': 
+           EC GUI Context version 2.1.3.3    [EC GUI CONTEXT] 
+  
+          Enter protocols you wish to mark as 'Out Of Order': 
+  
+         8.  If prompted 'Delay Install (Minutes):  (0-60): 0//; 
+             respond "0". 
+  
+         9.  The routine ECP109PT will be removed from your production system
+             after the patch has been successfully installed.
+   
+  
+  Client Side: 
+  ------------
+  
+         1.  Retrieve the GUI zip file.  The name of the zip file is 
+   
+                EC_2_109.ZIP 
+   
+       Sites can retrieve VistA software from the following FTP addresses.  
+       The preferred method is to FTP the files from 
+   
+            download.vista.med.va.gov 
+   
+       This will transmit the files from the first available FTP server.  
+       Sites may also elect to retrieve software directly from a specific 
+       server as follows 
+   
+            Albany                  ftp.fo-albany.med.va.gov 
+            Hines                   ftp.fo-hines.med.va.gov 
+            Salt Lake City          ftp.fo-slc.med.va.gov 
+   
+       The EC_2_109.ZIP zip file is located in the anonymous.software 
+       directory.  Use BINARY Mode when downloading the file.  
+  
+         2.  Open the file EC_2_109.ZIP.  Check to make sure the size is 
+             correct (ECS GUI.exe - 2403 KB) 
+  
+         3.  Extract the ECS GUI.exe file to the folder where the existing 
+             Event Capture executable is installed. The usual location of 
+             the Event Capture executable is: 
+  
+                     C:\Program Files\Vista\ECS GUI 
+    
+         4.  When asked to overwrite the existing file, answer Yes.  
+   
+         5.  Following successful extraction of the executable, the 
+             EC_2_109.ZIP file may be deleted.  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0; EVENT CAPTURE ;**[Patch List]**;8 May 96;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECP109PT
+    Before:       n/a   After:    B22956  **109**
+
+=============================================================================
+User Information:
+Entered By  : PANNELL,BRIAN                 Date Entered  : NOV 30, 2010
+Completed By: PODLEY,CHRIS                  Date Completed: MAY 18, 2011
+Released By : COOPER,SAMANTHA               Date Released : JUN 03, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

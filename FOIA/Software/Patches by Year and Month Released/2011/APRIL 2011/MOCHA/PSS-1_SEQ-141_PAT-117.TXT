@@ -1,0 +1,426 @@
+$TXT Created by ELLZEY,LINDA at VEHUCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Thursday, 01/13/11 at 09:51
+=============================================================================
+Run Date: APR 19, 2011                     Designation: PSS*1*117
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #141                      Status: Released
+                  Compliance Date: SEP 15, 2011
+=============================================================================
+
+Associated patches: (v)PSS*1*136   <<= must be installed BEFORE `PSS*1*117'
+
+Subject: MEDICATION ORDER CHECK HEALTHCARE APPLICATION
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ This patch is part of a group of patches that make up the new Medication 
+ Order Check Healthcare Application v1.0 (MOCHA).  These patches will 
+ replace most of the current VistA medication order checking system with 
+ version 1.0 of the new Medication Order Check Healthcare Application 
+ (MOCHA) system that uses the First DataBank (FDB) Drug Information 
+ Framework (DIF) interfaces and database. The VistA Drug Interaction 
+ module will be replaced by the FDB Drug-Drug Interaction Module (DDIM). 
+ The VistA Duplicate Class module will be replaced by the FDB Enhanced 
+ Therapeutic Classification (ETC) System. In addition, the following three 
+ order checks that use VistA data have been added to Inpatient Medications 
+ and Outpatient Pharmacy. These checks currently occur in Computerized 
+ Patient Record System (CPRS), but will be new to Pharmacy with the 
+ installation of these patches:
+  
+         Aminoglycoside Ordered
+         Dangerous Meds for Patients > 64
+         Glucophage - Lab Results
+   
+ A new Graphical User Interface (GUI) module is also being introduced 
+ called Pharmacy Enterprise Customization System (PECS), to be used only by
+ members of Pharmacy Benefits Management (PBM). It will allow the NDF 
+ Support Group to customize the data provided by FDB for use in VistA.
+  
+ The following three patient safety issues have also been addressed in 
+ this release:
+         Order Checks on PreMix IV Solutions (PSI-06-012)
+         Order Check display sequence changes (PSI-07-080)
+         Eliminating confusion in Inpatient Medications Order Check 
+         display and processing (PSI-07-080)
+  
+ Please refer to the MOCHA v1.0 Release Notes for additional information.
+   
+ MOCHA v1.0 consists of two host files: PSS_1_136.zip, 
+ PRE_I_3_PHARMACY_BUILD.KID, and two patches PSS*1*117 and PSO*7*375. These
+ files and patches contain software that support MOCHA v1.0
+ functionality.  The host files were created to simplify installation at
+ Veterans Health Administration (VHA) facilities and to assist in the
+ phased implementation release method for MOCHA v1.0.  MOCHA v1.0 will
+ follow a phased implementation.  To see current status and target dates
+ for Sites/VISN/Region please refer to the following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx 
+  
+ Sites will be provided instructions and guidance on installation and
+ implementation by the MOCHA Implementation team. Installation information
+ for MOCHA v1.0 is included in the VistA to MOCHA v1.0 Interface
+ Installation Guide and the MOCHA v1.0 Combined Build Installation Guide.
+  
+ Patch Information:
+ PSS_1_136.zip includes the components necessary for the 
+ interface that will be used in MOCHA v1.0:  
+         PRE_I_3_INTERFACE_BUILD.KID (contains PSS*1*136) 
+         PSSPRE_1_0.XML
+      
+ PRE_I_3_PHARMACY_BUILD.KID includes the following required patches to 
+ enable the MOCHA v1.0 functionality:
+         PSO*7*251
+         PSJ*5*181
+         OR*3*272
+  
+ These patches will be distributed as standalone patches via FORUM and will
+ support MOCHA v1.0:
+         PSS*1*117
+         PSO*7*375
+  
+ The software will be distributed in a controlled process due to the 
+ phased implementation.  During each implementation phase, the 
+ Implementation Team will provide each site the instructions and location 
+ to obtain the software.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch. 
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ There are no Remedy tickets associated with this patch. 
+  
+  
+ Components Exported With Patch: 
+ -------------------------------
+  
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name                 (Number)     File Name             (Number)
+ -----------------------------------     ------------------------------
+ DISPLAY STATUS                  157     IV Subfile               55.01
+                                         of PHARMACY PATIENT         55
+ DISPLAY STATUS                  136     UNIT DOSE Subfile        55.06
+                                         of PHARMACY PATIENT         55
+ HOURS OF RECENTLY DC/EXPIRED   26.8     PHARMACY SYSTEM           59.7
+  
+  
+ The following is a list of options exported in this patch:
+  
+ Option Name                      Type      Action
+ -----------                      ----      ----------------------
+ PSS ADDITIVE/SOLUTION            Menu      Send to Site
+ PSS ADDITIVE/SOLUTION REPORTS    Menu      Delete at Site
+ PSS DRG INTER MANAGEMENT         Menu      Delete at Site
+ PSS ENHANCED ORDER CHECKS        Menu      Delete at Site 
+ PSS INTERACTION LOCAL ADD        Run       Delete at Site
+ PSS INTERACTION SEVERITY         Action    Delete at Site
+ PSS INTERFACE SCHEDULER          Run       Send to Site
+ PSS LOCAL DOSAGES EDIT           Run       Delete at Site
+ PSS LOCAL DOSAGES EDIT ALL       Run       Delete at Site
+ PSS MAP ONE MED ROUTE            Run       Delete at Site
+ PSS MARK PREMIX SOLUTIONS        Run       Send to Site
+ PSS MED ROUTES INITIAL MAPPING   Run       Delete at Site
+ PSS ORDER CHECK CHANGES          Run       Send to Site
+ PSS ORDER CHECK MANAGEMENT       Menu      Send to site
+ PSS SCHEDULE PEPS INTERFACE CK   Run       Send to Site
+ PSS STRENGTH MISMATCH            Run       Delete at Site 
+  
+  
+ Documentation Retrieval:
+ ------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch will be downloaded to sites from the FTP address as directed by the 
+ PRE Implementation team.
+  
+ The documentation distribution includes:
+  
+ File Description                          File Name               FTP Mode
+ --------------------------------------------------------------------------
+ PDM Technical Manual/Security Guide (Revised April 2011)
+                                           PSS_1_TM_R0411.PDF      (binary)
+ PDM Technical Manual Change Pages         PSS_1_P136_AND_P117_TM_CP.PDF
+                                                                   (binary)
+ PDM User Manual (Revised April 2011)      PSS_1_UM_R0411.PDF      (binary)
+ PDM User Manual Change Pages              PSS_1_P136_AND_P117_UM_CP.PDF
+                                                                   (binary)
+ Medication Order Check Healthcare Application (MOCHA) v1.0 Release Notes 
+                                           PSO_7_PSJ_5_PSS_1_RN.PDF
+                                                                   (binary)
+ Medication Order Check Healthcare Application (MOCHA) v1.0 Combined Build
+ Installation Guide                        MOCHA_CB_PSS_1_P117_IG.PDF
+                                                                   (binary)
+ VistA to MOCHA v1.0 Interface Installation Guide
+                                           PSS_1_IG_R0411.PDF      (binary)
+  
+ Once released, documentation may be retrieved from the VA Software 
+ Document Library (VDL) on the Internet at the following address,
+ http://www.va.gov/vdl
+                                                                       
+  
+ Test Sites:
+ -----------
+ BOISE, ID
+ CHARLESTON, SC
+ KANSAS CITY, MO
+ NORTHERN CALIFORNIA HCS, CA
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL               
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The Environment Check routine PSS117EN will perform the following tasks:
+  
+ 1) Add the PSS ORDER CHECKS VistA Mail group, if it does not already 
+    exist. The patch installer will be prompted to enter a Mail Group
+    Organizer. If an Organizer is not entered, or the mail group cannot be
+    created, the install will be aborted. If the Mail Group already exists
+    upon install, these actions will not occur. The Mail Group should exist
+    on the system, since it was originally exported in patch PSS*1.0*147.
+  
+  2) Add the following three entries to the APSP INTERVENTION TYPE
+     (#9009032.3) File, if they don't already exist in the file:
+     MAX SINGLE DOSE
+     DAILY DOSE RANGE 
+     MAX SINGE DOSE & DAILY DOSE RANGE
+     If any of the entries cannot be added to the file, the install will be
+     aborted.
+  
+  3) Checks to see if any entries in the MEDICATION ROUTES (#51.2) File
+     remain unmapped to an entry in the STANDARD MEDICATION ROUTES (51.23)
+     File. It also checks to see if there are any entries in the LOCAL
+     POSSIBLE DOSAGE (#50.0904) Subfile of the DRUG (#50) File that do not
+     have data populated for either the DOSE UNIT (#4) Field or NUMERIC
+     DOSE (#5) Field. If either of these are true, the patch installer will
+     be given a prompt to either continue with the install, or abort the 
+     install.
+  
+     It should be noted that not all Medication routes can be mapped at
+     this time. For a few medication routes (Intrathoracic,
+     Intrafollicular) it was recommended that they be left unmapped.
+     Because of this, all sites will see a warning message that not all
+     Medication Routes have been mapped during the install and the
+     installer will be prompted to continue:
+  
+     There are still local Medication Routes marked for 'ALL PACKAGES' not
+     yet mapped. Any orders containing an unmapped medication route will
+     not have dosage checks performed. Please refer to the 'Medication
+     Route Mapping Report'option for more details.
+  
+     If the pharmacy ADPAC has completed the rest of the required mapping, 
+     then the installer should continue with the installation.
+  
+  4) Remove the Drug Interaction Management [PSS DRG INTER MANAGEMENT] Menu
+     Option and the Enhanced Order Checks Setup Menu  [PSS ENHANCED ORDER
+     CHECKS] Menu option from the Pharmacy Data Management [PSS MGR] Menu
+     Option.
+   
+ The Post-Init routine PSS117PO will perform the following tasks:
+  
+ 1) Send a mail message to the patch installer and to the members of the
+    PSS ORDER CHECKS Mail Group indicating that the install is complete.
+  
+ 2) Attach the Request Changes to Enhanced Order Check Database [PSS ORDER
+    CHECK CHANGES] Option to the Order Check Management [PSS ORDER CHECK
+    MANAGEMENT] Menu Option.
+  
+ 3) Attach the Report of Locally Entered Interactions [PSS REPORT LOCAL
+    INTERACTIONS] Option to the Order Check Management [PSS ORDER CHECK
+    MANAGEMENT] Menu Option.
+  
+ 4) Attach the Order Check Management [PSS ORDER CHECK MANAGEMENT] Menu
+    Option to the Pharmacy Data Management [PSS MGR] Menu Option.
+  
+ 5) Attach the Schedule/Reschedule Check PEPS Interface [PSS SCHEDULE PEPS 
+    INTERFACE CK] Option to the PEPS Services [PSS PEPS SERVICES] Menu
+    Option.
+  
+ 6) Re-attach the IV Additive/Solution [PSS ADDITIVE/SOLUTION] Menu Option
+    to the Pharmacy Data Management [PSS MGR] Menu Option.
+  
+ 7) Re-attach the Warning Builder [PSS WARNING BUILDER] Option to the
+    Pharmacy Data Management [PSS MGR] Menu Option.
+  
+ 8) Re-attach the Warning Mapping [PSS WARNING MAPPING] Option to the
+    Pharmacy Data Management [PSS MGR] Menu Option.
+  
+ 9) Re-attach the PEPS Services [PSS PEPS SERVICES] Menu Option to the
+    Pharmacy Data Management [PSS MGR] Menu Option.
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ This patch should not be installed when Pharmacy Data Management options
+ are being used. Since this patch exports so many Pharmacy Data Management
+ components that could be invoked from other Clinical Applications, we
+ recommend it should be installed during Non-Peak hours for all Clinical
+ Applications, and that includes tasked jobs from Clinical Applications.
+  
+  
+ Install Time - less than 10 minutes
+  
+ ************ PRE-INSTALLATION INSTRUCTIONS **************
+ Because of the rebuilding of the Pharmacy Data Management menu structure 
+ as part of this patch, any locally added options under the Pharmacy Data 
+ Management [PSS MGR] menu option, or any of it's sub-menus, may no longer
+ be attached to these PSS menus after patch install. Please review the
+ Pharmacy Data Management [PSS MGR] menu option and it's sub-menus prior to
+ install to make note of any locally added options, so they can be
+ re-attached after install.
+ *********************************************************
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSS*1.0*117):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install and enter "PSS*1.0*117" at the INSTALL NAME prompt.
+              
+     Please note that during the Environment check routine, various 
+     messages will be written, and possibly a prompt to continue or
+     abort install will be displayed. Please see Pre/Post Installation
+     Overview for more details.
+    
+    b. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+        Install? NO//'  answer NO
+    c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//'  answer NO
+    d.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//'  answer NO
+  
+  
+ ************ POST-INSTALLATION INSTRUCTIONS **************
+ Please verify that the VistA mail message indicating the POST-INIT has run
+ to completion has been received. If this message is not received, please
+ log a Remedy Ticket. The message subject will be:
+ -------------------------------
+ PSS*1*117 Installation Complete
+ ------------------------------- 
+  
+ And the message text will be:
+ --------------------------------------------------
+ The Installation of patch PSS*1.0*117 is complete.
+ --------------------------------------------------
+               
+ The receipt of this VistA mail message will verify the POST-INIT has run 
+ to completion. It is important that you read the entire message. If there 
+ were any problems with tasks performed by the Environment Check routine 
+ or the POST-INIT routine, they will be explained in this mail message.
+  
+ And as a follow-up to the PRE-INSTALLATION instructions, if you had any 
+ locally added options under the Pharmacy Data Management [PSS MGR] menu
+ option, or any of it's sub-menus, please check to see if they need to be
+ re-attached, once the POST-INSTALL is complete and the VistA mail message
+ indicating this has been received.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 101
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS117EN
+    Before:       n/a   After:B180968609  **117**
+Routine Name: PSS117PO
+    Before:       n/a   After: B57871045  **117**
+Routine Name: PSSCUSRQ
+    Before:       n/a   After: B82903624  **117**
+Routine Name: PSSDSAPD
+    Before:       n/a   After:B200359258  **117**
+Routine Name: PSSDSAPI
+    Before:       n/a   After:B115672717  **117**
+Routine Name: PSSDSAPK
+    Before:       n/a   After:B182688846  **117**
+Routine Name: PSSDSAPL
+    Before:       n/a   After: B89599463  **117**
+Routine Name: PSSDSAPM
+    Before:       n/a   After:B211863558  **117**
+Routine Name: PSSDSBBP
+    Before:       n/a   After: B74998032  **117**
+Routine Name: PSSDSBDA
+    Before:       n/a   After:B108168713  **117**
+Routine Name: PSSDSBDB
+    Before:       n/a   After: B76752781  **117**
+Routine Name: PSSDSBPA
+    Before:       n/a   After:B112434613  **117**
+Routine Name: PSSDSBPB
+    Before:       n/a   After: B55713776  **117**
+Routine Name: PSSDSBPC
+    Before:       n/a   After: B32747800  **117**
+Routine Name: PSSDSBPD
+    Before:       n/a   After: B58003875  **117**
+Routine Name: PSSDSEXC
+    Before:       n/a   After:B219828459  **117**
+
+=============================================================================
+User Information:
+Entered By  : RUZBACKI,RON T                Date Entered  : AUG 28, 2006
+Completed By: HASSETT,ANITA F               Date Completed: APR 14, 2011
+Released By : VECE,VIRGINIA                 Date Released : APR 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

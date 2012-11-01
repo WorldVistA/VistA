@@ -1,0 +1,926 @@
+Released DG*5.3*830 SEQ #741
+Extracted from mail message
+**KIDS**:DG*5.3*830^
+
+**INSTALL NAME**
+DG*5.3*830
+"BLD",7735,0)
+DG*5.3*830^REGISTRATION^0^3110421^y
+"BLD",7735,1,0)
+^^19^19^3110418^
+"BLD",7735,1,1,0)
+This patch will correct the following issue:
+"BLD",7735,1,2,0)
+ 
+"BLD",7735,1,3,0)
+The [DG CO-PAY TEST FUTURE LIST] Copay Exempt Test Needing Update 
+"BLD",7735,1,4,0)
+At Next Appt report menu option is incorrectly including future-appointed 
+"BLD",7735,1,5,0)
+patients whose latest, expired or soon-to expire Co-pay Exemption Tests 
+"BLD",7735,1,6,0)
+have been converted by IVM.  These cases need to be excluded from the
+"BLD",7735,1,7,0)
+report.
+"BLD",7735,1,8,0)
+ 
+"BLD",7735,1,9,0)
+The [DG DEATH ENTRY] Death Entry option is not allowing the entry of a
+"BLD",7735,1,10,0)
+time value when entering the date of death.
+"BLD",7735,1,11,0)
+ 
+"BLD",7735,1,12,0)
+Patch Components
+"BLD",7735,1,13,0)
+================
+"BLD",7735,1,14,0)
+ 
+"BLD",7735,1,15,0)
+Files & Fields Associated:
+"BLD",7735,1,16,0)
+ 
+"BLD",7735,1,17,0)
+File Name (Number)         Field Name (Number)  New/Modified/Deleted
+"BLD",7735,1,18,0)
+------------------         -------------------  --------------------
+"BLD",7735,1,19,0)
+PATIENT       (2)          DATE OF DEATH (.351)  Modified 
+"BLD",7735,4,0)
+^9.64PA^2^1
+"BLD",7735,4,2,0)
+2
+"BLD",7735,4,2,2,0)
+^9.641^2^1
+"BLD",7735,4,2,2,2,0)
+PATIENT  (File-top level)
+"BLD",7735,4,2,2,2,1,0)
+^9.6411^.351^1
+"BLD",7735,4,2,2,2,1,.351,0)
+DATE OF DEATH
+"BLD",7735,4,2,222)
+y^y^p^^^^n^^n
+"BLD",7735,4,2,224)
+
+"BLD",7735,4,"APDD",2,2)
+
+"BLD",7735,4,"APDD",2,2,.351)
+
+"BLD",7735,4,"B",2,2)
+
+"BLD",7735,6.3)
+4
+"BLD",7735,"ABPKG")
+n
+"BLD",7735,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7735,"KRN",.4,0)
+.4
+"BLD",7735,"KRN",.4,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",.401,0)
+.401
+"BLD",7735,"KRN",.401,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",.402,0)
+.402
+"BLD",7735,"KRN",.402,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",.403,0)
+.403
+"BLD",7735,"KRN",.5,0)
+.5
+"BLD",7735,"KRN",.5,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",.84,0)
+.84
+"BLD",7735,"KRN",3.6,0)
+3.6
+"BLD",7735,"KRN",3.6,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",3.8,0)
+3.8
+"BLD",7735,"KRN",3.8,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",9.2,0)
+9.2
+"BLD",7735,"KRN",9.8,0)
+9.8
+"BLD",7735,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",7735,"KRN",9.8,"NM",1,0)
+DGMTOFA^^0^B25657506
+"BLD",7735,"KRN",9.8,"NM","B","DGMTOFA",1)
+
+"BLD",7735,"KRN",19,0)
+19
+"BLD",7735,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",19.1,0)
+19.1
+"BLD",7735,"KRN",19.1,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",101,0)
+101
+"BLD",7735,"KRN",101,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",409.61,0)
+409.61
+"BLD",7735,"KRN",409.61,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",771,0)
+771
+"BLD",7735,"KRN",771,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",779.2,0)
+779.2
+"BLD",7735,"KRN",870,0)
+870
+"BLD",7735,"KRN",870,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",8989.51,0)
+8989.51
+"BLD",7735,"KRN",8989.51,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN",8989.52,0)
+8989.52
+"BLD",7735,"KRN",8994,0)
+8994
+"BLD",7735,"KRN",8994,"NM",0)
+^9.68A^^0
+"BLD",7735,"KRN","B",.4,.4)
+
+"BLD",7735,"KRN","B",.401,.401)
+
+"BLD",7735,"KRN","B",.402,.402)
+
+"BLD",7735,"KRN","B",.403,.403)
+
+"BLD",7735,"KRN","B",.5,.5)
+
+"BLD",7735,"KRN","B",.84,.84)
+
+"BLD",7735,"KRN","B",3.6,3.6)
+
+"BLD",7735,"KRN","B",3.8,3.8)
+
+"BLD",7735,"KRN","B",9.2,9.2)
+
+"BLD",7735,"KRN","B",9.8,9.8)
+
+"BLD",7735,"KRN","B",19,19)
+
+"BLD",7735,"KRN","B",19.1,19.1)
+
+"BLD",7735,"KRN","B",101,101)
+
+"BLD",7735,"KRN","B",409.61,409.61)
+
+"BLD",7735,"KRN","B",771,771)
+
+"BLD",7735,"KRN","B",779.2,779.2)
+
+"BLD",7735,"KRN","B",870,870)
+
+"BLD",7735,"KRN","B",8989.51,8989.51)
+
+"BLD",7735,"KRN","B",8989.52,8989.52)
+
+"BLD",7735,"KRN","B",8994,8994)
+
+"BLD",7735,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",7735,"QUES",0)
+^9.62^^
+"BLD",7735,"REQB",0)
+^9.611^2^2
+"BLD",7735,"REQB",1,0)
+DG*5.3*725^1
+"BLD",7735,"REQB",2,0)
+DG*5.3*754^1
+"BLD",7735,"REQB","B","DG*5.3*725",1)
+
+"BLD",7735,"REQB","B","DG*5.3*754",2)
+
+"FIA",2)
+PATIENT
+"FIA",2,0)
+^DPT(
+"FIA",2,0,0)
+2I
+"FIA",2,0,1)
+y^y^p^^^^n^^n
+"FIA",2,0,10)
+
+"FIA",2,0,11)
+
+"FIA",2,0,"RLRO")
+
+"FIA",2,0,"VR")
+5.3^DG
+"FIA",2,2)
+1
+"FIA",2,2,.351)
+
+"IX",2,2,"ADGFM351",0)
+2^ADGFM351^This x-ref calls the DG FIELD MONITOR event point.^MU^^F^I^I^2^^^^^A
+"IX",2,2,"ADGFM351",.1,0)
+^^5^5^3020624
+"IX",2,2,"ADGFM351",.1,1,0)
+This cross reference activates the DG FIELD MONITOR event point.
+"IX",2,2,"ADGFM351",.1,2,0)
+Applications that wish to monitor edit activity related to this field may
+"IX",2,2,"ADGFM351",.1,3,0)
+subscribe to that event point and take action as indicated by the changes
+"IX",2,2,"ADGFM351",.1,4,0)
+that occur.  Refer to the DG FIELD MONITOR protocol for a description of
+"IX",2,2,"ADGFM351",.1,5,0)
+the information available at the time of the event.
+"IX",2,2,"ADGFM351",1)
+D FC^DGFCPROT(.DA,2,.351,"SET",$H,$G(DUZ),.X,.X1,.X2,$G(XQY0)) Q
+"IX",2,2,"ADGFM351",2)
+D FC^DGFCPROT(.DA,2,.351,"KILL",$H,$G(DUZ),.X,.X1,.X2,$G(XQY0)) Q
+"IX",2,2,"ADGFM351",11.1,0)
+^.114IA^1^1
+"IX",2,2,"ADGFM351",11.1,1,0)
+1^F^2^.351^^^F
+"IX",2,2,"ADGFMD351",0)
+2^ADGFMD351^This x-ref calls the DG FIELD MONITOR event point.^MU^^F^I^I^2^^^^^A
+"IX",2,2,"ADGFMD351",.1,0)
+^^5^5^3020820
+"IX",2,2,"ADGFMD351",.1,1,0)
+This cross reference activates the DG FIELD MONITOR event point.
+"IX",2,2,"ADGFMD351",.1,2,0)
+Applications that wish to monitor edit activity related to this field may
+"IX",2,2,"ADGFMD351",.1,3,0)
+subscribe to that event point and take action as indicated by the changes
+"IX",2,2,"ADGFMD351",.1,4,0)
+that occur.  Refer to the DG FIELD MONITOR protocol for a description of
+"IX",2,2,"ADGFMD351",.1,5,0)
+the information available at the time of the event.
+"IX",2,2,"ADGFMD351",1)
+D FC^DGFCPROT(.DA,2,.351,"SET",$H,$G(DUZ),.X,.X1,.X2,$G(XQY0)) Q
+"IX",2,2,"ADGFMD351",2)
+D FC^DGFCPROT(.DA,2,.351,"KILL",$H,$G(DUZ),.X,.X1,.X2,$G(XQY0)) Q
+"IX",2,2,"ADGFMD351",11.1,0)
+^.114IA^1^1
+"IX",2,2,"ADGFMD351",11.1,1,0)
+1^F^2^.351^^^F
+"MBREQ")
+0
+"PKG",5,-1)
+1^1
+"PKG",5,0)
+REGISTRATION^DG^PATIENT REGISTRATION, ADMISSION, DISCHARGE, EMBOSSER 
+"PKG",5,20,0)
+^9.402P^^
+"PKG",5,22,0)
+^9.49I^1^1
+"PKG",5,22,1,0)
+5.3^2930813
+"PKG",5,22,1,"PAH",1,0)
+830^3110421
+"PKG",5,22,1,"PAH",1,1,0)
+^^19^19^3110421
+"PKG",5,22,1,"PAH",1,1,1,0)
+This patch will correct the following issue:
+"PKG",5,22,1,"PAH",1,1,2,0)
+ 
+"PKG",5,22,1,"PAH",1,1,3,0)
+The [DG CO-PAY TEST FUTURE LIST] Copay Exempt Test Needing Update 
+"PKG",5,22,1,"PAH",1,1,4,0)
+At Next Appt report menu option is incorrectly including future-appointed 
+"PKG",5,22,1,"PAH",1,1,5,0)
+patients whose latest, expired or soon-to expire Co-pay Exemption Tests 
+"PKG",5,22,1,"PAH",1,1,6,0)
+have been converted by IVM.  These cases need to be excluded from the
+"PKG",5,22,1,"PAH",1,1,7,0)
+report.
+"PKG",5,22,1,"PAH",1,1,8,0)
+ 
+"PKG",5,22,1,"PAH",1,1,9,0)
+The [DG DEATH ENTRY] Death Entry option is not allowing the entry of a
+"PKG",5,22,1,"PAH",1,1,10,0)
+time value when entering the date of death.
+"PKG",5,22,1,"PAH",1,1,11,0)
+ 
+"PKG",5,22,1,"PAH",1,1,12,0)
+Patch Components
+"PKG",5,22,1,"PAH",1,1,13,0)
+================
+"PKG",5,22,1,"PAH",1,1,14,0)
+ 
+"PKG",5,22,1,"PAH",1,1,15,0)
+Files & Fields Associated:
+"PKG",5,22,1,"PAH",1,1,16,0)
+ 
+"PKG",5,22,1,"PAH",1,1,17,0)
+File Name (Number)         Field Name (Number)  New/Modified/Deleted
+"PKG",5,22,1,"PAH",1,1,18,0)
+------------------         -------------------  --------------------
+"PKG",5,22,1,"PAH",1,1,19,0)
+PATIENT       (2)          DATE OF DEATH (.351)  Modified 
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","DGMTOFA")
+0^1^B25657506^B19818712
+"RTN","DGMTOFA",1,0)
+DGMTOFA ;ALB/CAW/AEG/PWC - Future Appointments who will require MT ; 4/21/11 10:57am
+"RTN","DGMTOFA",2,0)
+ ;;5.3;Registration;**3,50,182,326,426,568,725,830**;Aug 13, 1993;Build 4
+"RTN","DGMTOFA",3,0)
+ ;
+"RTN","DGMTOFA",4,0)
+EN ; 
+"RTN","DGMTOFA",5,0)
+ I '$$RANGE^DGMTUTL("F") G ENQ
+"RTN","DGMTOFA",6,0)
+ I '$$DIV^DGMTUTL G ENQ
+"RTN","DGMTOFA",7,0)
+ I '$$CLINIC^DGMTUTL G ENQ
+"RTN","DGMTOFA",8,0)
+ ;I '$$LETTER G ENQ
+"RTN","DGMTOFA",9,0)
+ W !! S %ZIS="PMQ" D ^%ZIS I POP G ENQ
+"RTN","DGMTOFA",10,0)
+ I '$D(IO("Q")) D MAIN G ENQ
+"RTN","DGMTOFA",11,0)
+ S Y=$$QUE
+"RTN","DGMTOFA",12,0)
+ENQ ;
+"RTN","DGMTOFA",13,0)
+ D:'$D(ZTQUEUED) ^%ZISC
+"RTN","DGMTOFA",14,0)
+ K DFN,DGAPT,DGBEG,DGCLN,DGDATE,DGDFN,DGDIV,DGEND,DGFLG,DGINFO,DGLINE,DGLST,DGMT,DGMT1,DGPAGE,DGSTOP,DGTMP,DGTMP1,DGTMP2,DGMTYPT,DGYN,DIW,DIWF,DIWR,DIWT,DN,SDFORM,SDLET,VA,VAERR,VAUTC,VAUTD,^TMP("DGMTO",$J),^TMP("DGMTL",$J)
+"RTN","DGMTOFA",15,0)
+ K DGARRAY,CLNARRAY,^TMP($J,"SDAMA"),I,DGTMP,SDCNT
+"RTN","DGMTOFA",16,0)
+ Q
+"RTN","DGMTOFA",17,0)
+ ;
+"RTN","DGMTOFA",18,0)
+QUE() ; -- que job
+"RTN","DGMTOFA",19,0)
+ ; return: did job que [ 1|yes   0|no ]
+"RTN","DGMTOFA",20,0)
+ ;
+"RTN","DGMTOFA",21,0)
+ K ZTSK,IO("Q")
+"RTN","DGMTOFA",22,0)
+ S ZTDESC="Future Appt. w/ Means Test",ZTRTN="MAIN^DGMTOFA"
+"RTN","DGMTOFA",23,0)
+ F X="DGBEG","DGEND","DGYN","DGMTYPT","SDFORM","SDLET","VAUTC","VAUTD","VAUTC(","VAUTD(" S ZTSAVE(X)=""
+"RTN","DGMTOFA",24,0)
+ D ^%ZTLOAD W:$D(ZTSK) "   (Task: ",ZTSK,")"
+"RTN","DGMTOFA",25,0)
+ Q $D(ZTSK)
+"RTN","DGMTOFA",26,0)
+ ;
+"RTN","DGMTOFA",27,0)
+MAIN ; 
+"RTN","DGMTOFA",28,0)
+ K ^TMP("DGMTO",$J) S I=1
+"RTN","DGMTOFA",29,0)
+ I VAUTC=1,VAUTD=1 S DGCLN=0 F  S DGCLN=$O(^SC(DGCLN)) Q:'DGCLN  I $P(^(DGCLN,0),U,3)="C" D CBLD3(DGCLN)
+"RTN","DGMTOFA",30,0)
+ ;
+"RTN","DGMTOFA",31,0)
+ I VAUTC=1,VAUTD=0 S DGDIV="" F  S DGDIV=$O(VAUTD(DGDIV)) Q:'DGDIV  S DGCLN=0 F  S DGCLN=$O(^SC(DGCLN)) Q:'DGCLN  I $P(^SC(DGCLN,0),U,3)="C",$P(^SC(DGCLN,0),U,15)=DGDIV D CBLD3(DGCLN)
+"RTN","DGMTOFA",32,0)
+ I VAUTC=0 S DGCLN="" F  S DGCLN=$O(VAUTC(DGCLN)) Q:'DGCLN  D CBLD3(DGCLN)
+"RTN","DGMTOFA",33,0)
+ D SDAM,CLN1
+"RTN","DGMTOFA",34,0)
+ D ^DGMTOFA1
+"RTN","DGMTOFA",35,0)
+ D CLOSE^DGMTUTL
+"RTN","DGMTOFA",36,0)
+ Q
+"RTN","DGMTOFA",37,0)
+ ;
+"RTN","DGMTOFA",38,0)
+CBLD3(DGCLN) ; Build array of specified Clinics for specified Divisions
+"RTN","DGMTOFA",39,0)
+ S CLNARRAY(I)=$G(CLNARRAY(I))_DGCLN_";"
+"RTN","DGMTOFA",40,0)
+ I $L(CLNARRAY(I))>120 S I=I+1
+"RTN","DGMTOFA",41,0)
+ Q
+"RTN","DGMTOFA",42,0)
+ ;
+"RTN","DGMTOFA",43,0)
+SDAM ; Build TMP Global with Appointment API Data for Report
+"RTN","DGMTOFA",44,0)
+ S DGARRAY(1)=DGBEG_";"_DGEND
+"RTN","DGMTOFA",45,0)
+ S DGARRAY("FLDS")="1;3;10"
+"RTN","DGMTOFA",46,0)
+ F I=1:1 Q:'$D(CLNARRAY(I))  D
+"RTN","DGMTOFA",47,0)
+ .S DGARRAY(2)=CLNARRAY(I)
+"RTN","DGMTOFA",48,0)
+ .I $$SDAPI^SDAMA301(.DGARRAY)>0 M ^TMP($J,"SDAMA")=^TMP($J,"SDAMA301")
+"RTN","DGMTOFA",49,0)
+ .K ^TMP($J,"SDAMA301")
+"RTN","DGMTOFA",50,0)
+ Q
+"RTN","DGMTOFA",51,0)
+ ;
+"RTN","DGMTOFA",52,0)
+CLN1 ; Loop through appointments
+"RTN","DGMTOFA",53,0)
+ ;
+"RTN","DGMTOFA",54,0)
+ N DGTMP S DGDATE=DGBEG-.1,DGLST=DGEND+.9
+"RTN","DGMTOFA",55,0)
+ S DGCLN=0 F  S DGCLN=$O(^TMP($J,"SDAMA",DGCLN)) Q:'DGCLN  D
+"RTN","DGMTOFA",56,0)
+ .S DGDFN=0 F  S DGDFN=$O(^TMP($J,"SDAMA",DGCLN,DGDFN)) Q:'DGDFN  D
+"RTN","DGMTOFA",57,0)
+ ..S DGDATE=0 F  S DGDATE=$O(^TMP($J,"SDAMA",DGCLN,DGDFN,DGDATE)) Q:'DGDATE  D
+"RTN","DGMTOFA",58,0)
+ ...S DGTMP=^TMP($J,"SDAMA",DGCLN,DGDFN,DGDATE)
+"RTN","DGMTOFA",59,0)
+ ...Q:$$DOM(DGDFN,DGDATE)
+"RTN","DGMTOFA",60,0)
+ ...Q:"^NS^NSR^CC^CCR^CP^CPR^"[(U_$P($P(DGTMP,U,3),";")_U)
+"RTN","DGMTOFA",61,0)
+ ...D MT
+"RTN","DGMTOFA",62,0)
+ Q
+"RTN","DGMTOFA",63,0)
+MT ; Is patient going to need to complete a MT/Copay by appt?
+"RTN","DGMTOFA",64,0)
+ S DGMT=$$LST^DGMTU(DGDFN,$P(DGDATE,"."),DGMTYPT),DGMT1=$P($G(^DGMT(408.31,+DGMT,0)),U,3) I DGMT1,"^3^10^"'[("^"_DGMT1_"^") D
+"RTN","DGMTOFA",65,0)
+ . N MTQ,X S MTQ=0  ; only do the following for RX Co-pay tests
+"RTN","DGMTOFA",66,0)
+ .I DGMTYPT=2 D  Q:MTQ=1
+"RTN","DGMTOFA",67,0)
+ .. ;Exclude from report the following:
+"RTN","DGMTOFA",68,0)
+ .. ;Existing RX Copay Test with Source of Test = IVM AND
+"RTN","DGMTOFA",69,0)
+ .. ;Primary eligibility code = NSC OR Primary eligibility code =
+"RTN","DGMTOFA",70,0)
+ .. ; SC Less than 50% and percentage is 0 and Total VA check amt = 0
+"RTN","DGMTOFA",71,0)
+ .. ;  DG*5.3*830
+"RTN","DGMTOFA",72,0)
+ .. I $P($G(^DGMT(408.31,+DGMT,0)),U,23)'=2 Q  ; quit if not IVM
+"RTN","DGMTOFA",73,0)
+ .. S X=$P($G(^DPT(DGDFN,.36)),"^",1)
+"RTN","DGMTOFA",74,0)
+ .. I $P($G(^DIC(8,+X,0)),"^",9)=5!($$SC(DGDFN)) S MTQ=1
+"RTN","DGMTOFA",75,0)
+ .S X1=$P(DGMT,U,2),X2=365 D C^%DTC I $P(DGDATE,".")<X,$S(DGMT1=1:0,DGMT1=9:0,1:1) Q
+"RTN","DGMTOFA",76,0)
+ .;Check to see if Cat C/Pend Adj agreed to pay with test date >10/5/99
+"RTN","DGMTOFA",77,0)
+ .I $P(DGMT,U,2)>2991005,$P($G(^DGMT(408.31,+DGMT,0)),U,11)=1,((DGMT1=6)!(DGMT1=2)) Q
+"RTN","DGMTOFA",78,0)
+ .;Check to see if Cat C, declined to provide income info but agreed to
+"RTN","DGMTOFA",79,0)
+ .;pay -- no date restrictions on these types.
+"RTN","DGMTOFA",80,0)
+ .I $G(DGMT1)=6,+$P($G(^DGMT(408.31,+DGMT,0)),U,14),+$P($G(^DGMT(408.31,+DGMT,0)),U,11) Q
+"RTN","DGMTOFA",81,0)
+ .; checking for future means test based on DT
+"RTN","DGMTOFA",82,0)
+ .N DGNXTMT
+"RTN","DGMTOFA",83,0)
+ .S DGNXTMT=$O(^IVM(301.5,"AE",DGDFN,DT))
+"RTN","DGMTOFA",84,0)
+ .I 'DGNXTMT S DGNXTMT=""
+"RTN","DGMTOFA",85,0)
+ .S ^TMP("DGMTO",$J,$S(+$P(^SC(DGCLN,0),U,15):$P(^(0),U,15),1:$O(^DG(40.8,0))),$P(^SC(DGCLN,0),U),$P(^DPT(DGDFN,0),U),DGDATE)=DGDFN_U_$P(DGMT,U,1,4)_U_$P($P(DGTMP,U,10),";")_U_DGNXTMT,^TMP("DGMTL",$J,$P(^DPT(DGDFN,0),U),DGDFN)=""
+"RTN","DGMTOFA",86,0)
+ Q
+"RTN","DGMTOFA",87,0)
+ ;
+"RTN","DGMTOFA",88,0)
+SC(DFN) ; Check if patient is SC 0% non-compensable
+"RTN","DGMTOFA",89,0)
+ ; Input -- DFN       Patient IEN
+"RTN","DGMTOFA",90,0)
+ ; Output -- 1=Yes and 0=No
+"RTN","DGMTOFA",91,0)
+ N Y
+"RTN","DGMTOFA",92,0)
+ S Y=0
+"RTN","DGMTOFA",93,0)
+ ; Primary eligibility is SC LESS THAN 50%
+"RTN","DGMTOFA",94,0)
+ I $D(^DPT(DFN,.36)),$P($G(^DIC(8,+^(.36),0)),"^",9)=3 S Y=1
+"RTN","DGMTOFA",95,0)
+ G:'Y SCQ
+"RTN","DGMTOFA",96,0)
+ ; Service connected percentage is zero
+"RTN","DGMTOFA",97,0)
+ I $P($G(^DPT(DFN,.3)),"^",2)'=0 S Y=0 G SCQ
+"RTN","DGMTOFA",98,0)
+ ; No Total annual VA check amount
+"RTN","DGMTOFA",99,0)
+ I $P($G(^DPT(DFN,.362)),"^",20) S Y=0
+"RTN","DGMTOFA",100,0)
+SCQ Q +$G(Y)
+"RTN","DGMTOFA",101,0)
+ ;
+"RTN","DGMTOFA",102,0)
+LETTER() ;
+"RTN","DGMTOFA",103,0)
+ ;   Input - none
+"RTN","DGMTOFA",104,0)
+ ;  Output - DGYN - yes/no
+"RTN","DGMTOFA",105,0)
+ ;
+"RTN","DGMTOFA",106,0)
+ N %
+"RTN","DGMTOFA",107,0)
+LTR W !!,"Do you want to generate letters" S %=2 D YN^DICN
+"RTN","DGMTOFA",108,0)
+ ;I %=1 D START^DGMTLTR S DGYN=$S('$D(DGFLG):1,1:0)
+"RTN","DGMTOFA",109,0)
+ I %=2 S DGYN=0
+"RTN","DGMTOFA",110,0)
+ I %=0 W !!,"Enter 'Y'es to generate letters from the listing or",!,"Enter 'N'o to produce the listing, but not the letters." G LTR
+"RTN","DGMTOFA",111,0)
+ Q $D(DGYN)
+"RTN","DGMTOFA",112,0)
+ ;
+"RTN","DGMTOFA",113,0)
+DOM(DFN,DGT) ; Screen out dom patient
+"RTN","DGMTOFA",114,0)
+ ;         Input:   DFN - Patient IEN
+"RTN","DGMTOFA",115,0)
+ ;                  DGT - Date of visit
+"RTN","DGMTOFA",116,0)
+ ;
+"RTN","DGMTOFA",117,0)
+ N Y,DGI,DGXFR0,DGA1,DGINP
+"RTN","DGMTOFA",118,0)
+ S Y=0
+"RTN","DGMTOFA",119,0)
+ D ^DGINPW I DG1 I $P(^DG(43,1,0),U,21),$D(^DIC(42,+DG1,0)),$P(^(0),U,3)="D" S Y=1
+"RTN","DGMTOFA",120,0)
+ Q Y
+"VER")
+8.0^22.0
+"^DD",2,2,.351,0)
+DATE OF DEATH^DXa^^.35;1^S %DT="EPXT" D ^%DT S X=Y K:Y<1 X I $D(X) D H^DGUTL K:X>DGTIME X K DGTIME,DGDATE I $D(X) S DFN=DA D DEATH^DGLOCK
+"^DD",2,2,.351,1,0)
+^.1
+"^DD",2,2,.351,1,1,0)
+^^TRIGGER^2^.091
+"^DD",2,2,.351,1,1,1)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^DPT(D0,0)):^(0),1:"") S X=$P(Y(1),U,10),X=X S DIU=X K Y S X=DIV X ^DD(2,.351,1,1,49.3) S X=$E(Y(8),Y(9),X) S Y=X,X=Y(7),X=X_Y_"]" X ^DD(2,.351,1,1,1.4)
+"^DD",2,2,.351,1,1,1.4)
+S DIH=$G(^DPT(DIV(0),0)),DIV=X S $P(^(0),U,10)=DIV,DIH=2,DIG=.091 D ^DICR
+"^DD",2,2,.351,1,1,2)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^DPT(D0,0)):^(0),1:"") S X=$P(Y(1),U,10),X=X S DIU=X K Y X ^DD(2,.351,1,1,2.1) S DIH=$G(^DPT(DIV(0),0)),DIV=X S $P(^(0),U,10)=DIV,DIH=2,DIG=.091 D ^DICR
+"^DD",2,2,.351,1,1,2.1)
+S X=DIV X ^DD(2,.351,1,1,59.2) S X=$P(Y(5),Y(6),X),Y(7)=$G(X) S X="]",Y(8)=$G(X) S X=2,X=$P(Y(7),Y(8),X) S Y=X,X=Y(3),X=X_Y
+"^DD",2,2,.351,1,1,49.2)
+S X=DIU_"[PATIENT DIED ON ",Y(1)=$G(X) S X=DIV,Y(2)=$G(X) S X=4,Y(3)=$G(X) S X=5,X=$E(Y(2),Y(3),X) S Y=X,X=Y(1),X=X_Y_"/",Y(4)=$G(X) S X=DIV,Y(5)=$G(X) S X=6
+"^DD",2,2,.351,1,1,49.3)
+X ^DD(2,.351,1,1,49.2) S Y(6)=$G(X) S X=7,X=$E(Y(5),Y(6),X) S Y=X,X=Y(4),X=X_Y_"/",Y(7)=$G(X) S X=DIV,Y(8)=$G(X) S X=2,Y(9)=$G(X) S X=3
+"^DD",2,2,.351,1,1,59.2)
+S X=DIU,Y(1)=$G(X) S X="[PATIENT DIED",Y(2)=$G(X) S X=1,X=$P(Y(1),Y(2),X),Y(3)=$G(X),Y(4)=$G(X) S X=DIU,Y(5)=$G(X) S X="PATIENT DIED",Y(6)=$G(X) S X=2
+"^DD",2,2,.351,1,1,"%D",0)
+^^3^3^3080310^
+"^DD",2,2,.351,1,1,"%D",1,0)
+This appends into the REMARKS field a notation regarding the DATE OF
+"^DD",2,2,.351,1,1,"%D",2,0)
+DEATH.  If DATE OF DEATH is deleted, the notation will be stripped out
+"^DD",2,2,.351,1,1,"%D",3,0)
+of the REMARKS field.
+"^DD",2,2,.351,1,1,"CREATE VALUE")
+REMARKS_"[PATIENT DIED ON "_$E(DATE OF DEATH,4,5)_"/"_$E(DATE OF DEATH,6,7)_"/"_$E(DATE OF DEATH,2,3)_"]"
+"^DD",2,2,.351,1,1,"DELETE VALUE")
+$P(REMARKS,"[PATIENT DIED",1)_$P($P(REMARKS,"PATIENT DIED",2),"]",2)
+"^DD",2,2,.351,1,1,"DT")
+3080310
+"^DD",2,2,.351,1,1,"FIELD")
+REMARKS
+"^DD",2,2,.351,1,2,0)
+^^TRIGGER^2^.352
+"^DD",2,2,.351,1,2,1)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^DPT(D0,.35)):^(.35),1:"") S X=$P(Y(1),U,2),X=X S DIU=X K Y S X=DIV S X=$S(($D(DUZ)#2):DUZ,1:"") S DIH=$G(^DPT(DIV(0),.35)),DIV=X S $P(^(.35),U,2)=DIV,DIH=2,DIG=.352 D ^DICR
+"^DD",2,2,.351,1,2,2)
+Q
+"^DD",2,2,.351,1,2,"CREATE VALUE")
+S X=$S(($D(DUZ)#2):DUZ,1:"")
+"^DD",2,2,.351,1,2,"DELETE VALUE")
+NO EFFECT
+"^DD",2,2,.351,1,2,"DT")
+3080310
+"^DD",2,2,.351,1,2,"FIELD")
+DEATH ENTERED BY
+"^DD",2,2,.351,1,3,0)
+2^ADGDBUL^MUMPS
+"^DD",2,2,.351,1,3,1)
+D DSBULL^DGDEATH
+"^DD",2,2,.351,1,3,2)
+D DKBULL^DGDEATH
+"^DD",2,2,.351,1,3,"DT")
+3031008
+"^DD",2,2,.351,1,4,0)
+2^AEXP1
+"^DD",2,2,.351,1,4,1)
+S ^DPT("AEXP1",$E(X,1,30),DA)=""
+"^DD",2,2,.351,1,4,2)
+K ^DPT("AEXP1",$E(X,1,30),DA)
+"^DD",2,2,.351,1,5,0)
+2^AOERR^MUMPS
+"^DD",2,2,.351,1,5,1)
+D DEATH^DGOERNOT
+"^DD",2,2,.351,1,5,2)
+Q
+"^DD",2,2,.351,1,5,"%D",0)
+^^3^3^2910716^^^^
+"^DD",2,2,.351,1,5,"%D",1,0)
+     This cross-reference is used in conjunction with ORDER ENTRY/RESULTS
+"^DD",2,2,.351,1,5,"%D",2,0)
+REPORTING v2.09 or higher to send MAS OE/RR NOTIFICATIONS of
+"^DD",2,2,.351,1,5,"%D",3,0)
+DEATH to users who are on an OE/RR LIST for a patient.
+"^DD",2,2,.351,1,5,"DT")
+2910715
+"^DD",2,2,.351,1,6,0)
+2^APSJD^MUMPS
+"^DD",2,2,.351,1,6,1)
+S XX=X,X="PSJADT" X ^%ZOSF("TEST") S X=XX K XX I  D END^PSJADT
+"^DD",2,2,.351,1,6,2)
+Q
+"^DD",2,2,.351,1,6,3)
+Cancels Inpatient Medication orders.
+"^DD",2,2,.351,1,6,"%D",0)
+^^3^3^2930608^^^
+"^DD",2,2,.351,1,6,"%D",1,0)
+This is used by the Inpatient Medications package to cancel a patient's
+"^DD",2,2,.351,1,6,"%D",2,0)
+IV and Unit Dose orders whenever a date of death is entered for the
+"^DD",2,2,.351,1,6,"%D",3,0)
+patient.
+"^DD",2,2,.351,1,6,"DT")
+2930608
+"^DD",2,2,.351,1,7,0)
+2^ARCDTH^MUMPS
+"^DD",2,2,.351,1,7,1)
+S RCX=X,X="RCAMDTH" X ^%ZOSF("TEST") S X=RCX K RCX I  D SET^RCAMDTH
+"^DD",2,2,.351,1,7,2)
+S RCX=X,X="RCAMDTH" X ^%ZOSF("TEST") S X=RCX K RCX I  D ERR^RCAMDTH
+"^DD",2,2,.351,1,7,3)
+ACCOUNTS RECEIVABLE DEATH NOTIFICATION
+"^DD",2,2,.351,1,7,"%D",0)
+^^3^3^2930722^^^^
+"^DD",2,2,.351,1,7,"%D",1,0)
+This cross-reference is used to notify the Accounts Receivable package (v4 or
+"^DD",2,2,.351,1,7,"%D",2,0)
+higher) of a patient's death so that the patient's account may be reviewed for
+"^DD",2,2,.351,1,7,"%D",3,0)
+appropriate action. 
+"^DD",2,2,.351,1,7,"DT")
+2930609
+"^DD",2,2,.351,1,8,0)
+2^ADEP^MUMPS
+"^DD",2,2,.351,1,8,1)
+D SET^DGDEPINA
+"^DD",2,2,.351,1,8,2)
+D KILL^DGDEPINA
+"^DD",2,2,.351,1,8,"%D",0)
+^^1^1^2941114^
+"^DD",2,2,.351,1,8,"%D",1,0)
+This is used to updated the effective dates in file 408.12.
+"^DD",2,2,.351,1,8,"DT")
+2941114
+"^DD",2,2,.351,1,9,0)
+2^AENR351^MUMPS
+"^DD",2,2,.351,1,9,1)
+D AUTOUPD^DGENA2(DA)
+"^DD",2,2,.351,1,9,2)
+D AUTOUPD^DGENA2(DA)
+"^DD",2,2,.351,1,9,3)
+DO NOT DELETE
+"^DD",2,2,.351,1,9,"%D",0)
+^^1^1^2970630^^^^
+"^DD",2,2,.351,1,9,"%D",1,0)
+Used to update the patient's enrollment.
+"^DD",2,2,.351,1,9,"DT")
+2970630
+"^DD",2,2,.351,1,10,0)
+2^DG714^MUMPS
+"^DD",2,2,.351,1,10,1)
+D START^DGMTDELS(DA)
+"^DD",2,2,.351,1,10,2)
+Q
+"^DD",2,2,.351,1,10,3)
+Deletes last REQUIRED means test
+"^DD",2,2,.351,1,10,"DT")
+3060814
+"^DD",2,2,.351,1,52,0)
+2^APSOD^MUMPS
+"^DD",2,2,.351,1,52,1)
+I $$VERSION^XPDUTL("PSO")>6 D APSOD^PSOCAN3(DA)
+"^DD",2,2,.351,1,52,2)
+I $$VERSION^XPDUTL("PSO")>6 D APSOD^PSOAUTOC(DA)
+"^DD",2,2,.351,1,52,3)
+Discontinues Outpatient Medications.
+"^DD",2,2,.351,1,52,"%D",0)
+^^3^3^2961122^^^^
+"^DD",2,2,.351,1,52,"%D",1,0)
+This xref is used to discontinue all active outpatient medications whenever
+"^DD",2,2,.351,1,52,"%D",2,0)
+a date of death is entered for the patient.  This xref is used with v7 of
+"^DD",2,2,.351,1,52,"%D",3,0)
+Outpatient Pharmacy (DBIA #1624).
+"^DD",2,2,.351,1,52,"%D",4,0)
+Kill logic updated with DG*5.3*455.  Mail message sent to pharmacy when date
+"^DD",2,2,.351,1,52,"%D",5,0)
+of death is deleted to holders of PSORPH key.
+"^DD",2,2,.351,1,52,"DT")
+3020926
+"^DD",2,2,.351,1,301,0)
+2^IVM351^MUMPS
+"^DD",2,2,.351,1,301,1)
+S IVMX=X,X="IVMPXFR" X ^%ZOSF("TEST") D:$T DPT^IVMPXFR S X=IVMX K IVMX
+"^DD",2,2,.351,1,301,2)
+S IVMX=X,X="IVMPXFR" X ^%ZOSF("TEST") D:$T DPT^IVMPXFR S X=IVMX K IVMX
+"^DD",2,2,.351,1,301,"%D",0)
+^^5^5^2930605^
+"^DD",2,2,.351,1,301,"%D",1,0)
+This cross-reference will check the IVM PATIENT file to see if a change
+"^DD",2,2,.351,1,301,"%D",2,0)
+to this field will require transmission to the IVM Center.  If it does,
+"^DD",2,2,.351,1,301,"%D",3,0)
+the IVM PATIENT file entry's TRANSMISSION STATUS will be set to 0 and
+"^DD",2,2,.351,1,301,"%D",4,0)
+the nightly background job will transmit the updated information.
+"^DD",2,2,.351,1,301,"DT")
+2930605
+"^DD",2,2,.351,1,991,0)
+2^AVAFC351^MUMPS
+"^DD",2,2,.351,1,991,1)
+I ($T(AVAFC^VAFCDD01)'="") S VAFCF=".351;" D AVAFC^VAFCDD01(DA)
+"^DD",2,2,.351,1,991,2)
+I ($T(AVAFC^VAFCDD01)'="") S VAFCF=".351;" D AVAFC^VAFCDD01(DA)
+"^DD",2,2,.351,1,991,"%D",0)
+^^15^15^2990204^^
+"^DD",2,2,.351,1,991,"%D",1,0)
+This cross reference is used to remember that changes were made to the
+"^DD",2,2,.351,1,991,"%D",2,0)
+PATIENT file (#2) outside of the Registration process.  Execution of this
+"^DD",2,2,.351,1,991,"%D",3,0)
+cross reference will create an entry in the ADT/HL7 PIVOT file (#391.71)
+"^DD",2,2,.351,1,991,"%D",4,0)
+and mark it as requiring transmission of an HL7 ADT-A08 message.
+"^DD",2,2,.351,1,991,"%D",5,0)
+ 
+"^DD",2,2,.351,1,991,"%D",6,0)
+The local variable VAFCFLG will be set to 1 if the cross reference is
+"^DD",2,2,.351,1,991,"%D",7,0)
+not executed because the change is being made from within the Registration
+"^DD",2,2,.351,1,991,"%D",8,0)
+process.
+"^DD",2,2,.351,1,991,"%D",9,0)
+ 
+"^DD",2,2,.351,1,991,"%D",10,0)
+Execution of this cross reference can be prevented by setting the local
+"^DD",2,2,.351,1,991,"%D",11,0)
+variable VAFCA08 equal to 1.
+"^DD",2,2,.351,1,991,"%D",12,0)
+  
+"^DD",2,2,.351,1,991,"%D",13,0)
+The local variable VAFCF is used to identify the field edited.
+"^DD",2,2,.351,1,991,"%D",14,0)
+This data is stored in the FIELD(S) EDITED (#2.1) field in the 
+"^DD",2,2,.351,1,991,"%D",15,0)
+ADT/HL7 PIVOT file (#391.71).
+"^DD",2,2,.351,1,991,"DT")
+2990204
+"^DD",2,2,.351,1,992,0)
+2^ADGRU351^MUMPS
+"^DD",2,2,.351,1,992,1)
+D:($T(ADGRU^DGRUDD01)'="") ADGRU^DGRUDD01(DA)
+"^DD",2,2,.351,1,992,2)
+D:($T(ADGRU^DGRUDD01)'="") ADGRU^DGRUDD01(DA)
+"^DD",2,2,.351,1,992,"%D",0)
+^^9^9^2990920^
+"^DD",2,2,.351,1,992,"%D",1,0)
+This cross reference is used to remember that changes were made to a 
+"^DD",2,2,.351,1,992,"%D",2,0)
+monitored data field in the PATIENT File (#2) required for a vendor
+"^DD",2,2,.351,1,992,"%D",3,0)
+RAI/MDS COTS system.  Execution of this cross reference will create
+"^DD",2,2,.351,1,992,"%D",4,0)
+an entry in the ADT/HL7 PIVOT file (#391.71) and mark it as requiring
+"^DD",2,2,.351,1,992,"%D",5,0)
+transmission of an HL7 demographic A08 update message to the COTS
+"^DD",2,2,.351,1,992,"%D",6,0)
+interface.
+"^DD",2,2,.351,1,992,"%D",7,0)
+ 
+"^DD",2,2,.351,1,992,"%D",8,0)
+The local variable DGRUGA08 will be set to 1 if the cross reference is
+"^DD",2,2,.351,1,992,"%D",9,0)
+not to be executed as part of a re-indexing.
+"^DD",2,2,.351,1,992,"DT")
+2990920
+"^DD",2,2,.351,3)
+Enter the date the patient died.  Date must not be before date of birth.
+"^DD",2,2,.351,5,1,0)
+405^.01^3
+"^DD",2,2,.351,5,2,0)
+405^.18^2
+"^DD",2,2,.351,21,0)
+^^6^6^3110119^
+"^DD",2,2,.351,21,1,0)
+Enter the date the patient died.  Date needs to be a precise date, i.e. 
+"^DD",2,2,.351,21,2,0)
+a day, month, and year MUST be included.
+"^DD",2,2,.351,21,3,0)
+Date of Death can not be prior to
+"^DD",2,2,.351,21,4,0)
+        P&T Effective Date
+"^DD",2,2,.351,21,5,0)
+        Date Ruled Incompetent (Civil and VA)
+"^DD",2,2,.351,21,6,0)
+        Date of Birth
+"^DD",2,2,.351,"AUDIT")
+y
+"^DD",2,2,.351,"DT")
+3110414
+"BLD",7735,6)
+^741
+**END**
+**END**

@@ -1,0 +1,312 @@
+$TXT Created by BLAESER,DAVE at DEVVII.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 03/09/12 at 09:57
+=============================================================================
+Run Date: APR 18, 2012                     Designation: PSO*7*403
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #334                      Status: Released
+                  Compliance Date: MAY 19, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*385   <<= must be installed BEFORE `PSO*7*403'
+
+Subject: HIPAA 5010 MAINTENANCE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch finalizes the HIPAA 5010 enhancements by correcting issues
+ reported in Remedy tickets and providing other enhancements requested by
+ the Central Business Office (CBO) ePharmacy implementation team.
+  
+ 1.  The SMA (Submit Multiple Actions) action on the Third Party Payer
+     Rejects - Worklist [PSO REJECTS WORKLIST] and Third Party Payer
+     Rejects - View/Process [PSO REJECTS VIEW/PROCESS] options was updated
+     to allow a user the capability to enter Drug Utilization Review (DUR)
+     overrides without needing to also enter submission clarification
+     codes.  (601323)
+  
+ 2.  The SDC (Suspense Date Calc) action on the Third Party Payer Rejects
+     - Worklist [PSO REJECTS WORKLIST] and Third Party Payer Rejects -
+     View/Process [PSO REJECTS VIEW/PROCESS] options was updated to get the
+     default values for the Last Date of Service and Last Days Supply
+     prompts from the previous fill instead of the current fill.  (606020)
+  
+ 3.  After editing the FILL DATE from the Medication Profile, the user
+     will now get the LABEL printer prompt when exiting even if there are
+     unresolved rejects. This will allow the user to suspend the
+     prescription.
+  
+ 4.  Corrected an issue with PP (Pull Rx (OP)) action on the Medication    
+     Profile when a rejected TRICARE/CHAMPVA prescription was discontinued
+     from the Reject Notification screen.
+  
+ 5.  Updated the code for the CMOP release message to prevent a hard
+     error that was occurring when a TRICARE/CHAMPVA prescription was
+     resubmitted to ePharmacy and came back with a status of 'IN 
+     PROGRESS'.  (608025)
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)  New/Modified/Deleted
+ ------------------        -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. HD0000000601323 - Cannot submit multiple override codes using the
+                      Submit Multiple Actions without entering other
+                      actions
+  
+ Problem:
+ -------
+ The SMA (Submit Multiple Actions) action on the Third Party Payer
+ Rejects - Worklist [PSO REJECTS WORKLIST] and Third Party Payer Rejects -
+ View/Process [PSO REJECTS VIEW/PROCESS] options was not allowing a 
+ user the ability to enter DUR override codes without first being required
+ to enter at least one Submission Clarification code.
+  
+  
+ Resolution:
+ ----------
+ The code was modified such that the SMA (Submit Multiple Actions) action 
+ does not require the entry of submission clarification codes.
+  
+  
+ 2. HD0000000606020 - Correct the Calculate Suspense Date Functionality
+  
+ Problem:
+ -------
+ The SDC (Suspense Date Calc) action on the Third Party Payer Rejects -
+ Worklist [PSO REJECTS WORKLIST] and Third Party Payer Rejects -
+ View/Process [PSO REJECTS VIEW/PROCESS] options was defaulting incorrect
+ values for the Last Date of Service and Last Days Supply prompts as it was
+ getting the values for the claim associated with the current prescription
+ instead of the previous prescription.
+  
+  
+ Resolution:
+ ----------
+ The code was modified to use the previous prescription when getting the 
+ default values for the Last Date of Service and Last Days Supply 
+ prompts. For a refill, this means using the previous fill. For an 
+ original fill, this means finding a previous prescription for same
+ patient and drug. In some cases, there will be no default values because 
+ the previous prescription may not exist or the previous prescription or 
+ fill may not have been ePharmacy billable.
+  
+  
+ 3. HD0000000608025 - <UNDEFINED>LOCK+1^PSORXL1
+  
+ Problem:
+ --------
+ If a TRICARE or CHAMPVA prescription was resubmitted to ePharmacy by the 
+ CMOP release message and is returned with a status of 'IN PROGRESS', the
+ code attempts to put the prescription back on suspense.  Unfortunately, 
+ the variable PSOSITE is not defined, resulting in an UNDEFINED error.
+  
+ Resolution:
+ -----------
+ Prior to putting the prescription back on suspense, the code checks 
+ if the variable PSOSITE is defined.  If not, the code will set it to the 
+ appropriate value.
+  
+  
+ Test Sites:
+ ----------
+ Birmingham
+ Loma Linda
+ Phoenix
+ Richmond
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ No documentation is updated with this patch.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no pre or post-installation routines.
+  
+  
+ Installation Instructions
+ -------------------------
+ To avoid disruptions, this patch should be installed during non-peak
+ hours when there is minimal activity on the system. Avoid times when ECME
+ claims are being transmitted. Of particular concern would be the options
+ below.
+  
+   1. BPS NIGHTLY BACKGROUND JOB [BPS NIGHTLY BACKGROUND JOB]
+      Do not install the patch when ECME claims are being generated
+      by the BPS Nightly Background Job option. Wait for this job to
+      finish or complete the installation before this job starts.
+  
+   2. Scheduled CS Transmission [PSXR SCHEDULED CS TRANS] and
+      Scheduled Non-CS Transmission [PSXR SCHEDULED NON-CS TRANS]
+      Do not install the patch when prescriptions are being transmitted
+      to Consolidated Mail Outpatient Pharmacy (CMOP). Wait for the
+      CMOP transmissions to finish or complete the installation before
+      the transmissions start. Both the CS (Controlled Substances) and
+      the non-CS CMOP transmission options should be checked. Check with
+      Pharmacy Service or your Pharmacy ADPAC to find out when CMOP
+      transmissions occur.
+  
+ The installation of this patch can be queued. The installation will
+ take less than 2 minutes.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME, enter
+     PSO*7.0*403:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', enter NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? NO//', enter NO.
+  
+ 7.  When prompted 'Device: Home//' enter the correct device.  This
+     install can be queued.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', enter 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no post-installation processes that need to be performed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBPSU1
+    Before: B62482822   After: B72006346  **148,260,281,287,303,289,290,
+                                           358,359,385,403**
+Routine Name: PSOBPSUT
+    Before: B56402434   After: B55980584  **148,247,260,281,287,289,358,
+                                           385,403**
+Routine Name: PSOREJP1
+    Before:B160842921   After:B163331229  **148,247,260,281,287,289,290,
+                                           358,359,385,403**
+Routine Name: PSOREJP2
+    Before:B107773405   After:B119855234  **148,247,260,287,289,358,385,403**
+Routine Name: PSOREJP3
+    Before:B113373176   After:B113483777  **260,287,289,290,358,359,385,403**
+Routine Name: PSOREJU1
+    Before: B85284158   After: B89732614  **148,247,260,287,289,358,359,
+                                           385,403**
+Routine Name: PSOREJU2
+    Before: B50124980   After: B50173477  **148,260,287,341,290,358,359,
+                                           385,403**
+Routine Name: PSOREJUT
+    Before: B76046787   After: B78935434  **148,247,260,287,289,290,358,
+                                           359,385,403**
+Routine Name: PSORXED
+    Before: B72082911   After: B74971866  **2,16,21,26,56,71,125,201,246,
+                                           289,298,366,385,403**
+Routine Name: PSORXL1
+    Before: B52040688   After: B53111526  **36,46,148,260,274,287,289,
+                                           358,251,385,403**
+Routine Name: PSOSUPOE
+    Before: B74892149   After: B75793355  **8,21,27,34,130,148,281,287,
+                                           289,358,385,403**
+ 
+Routine list of preceding patches: 385
+
+=============================================================================
+User Information:
+Entered By  : BLAESER,DAVID                 Date Entered  : JAN 18, 2012
+Completed By: CONQUEST,KENNETH              Date Completed: MAR 22, 2012
+Released By : HARDY,STACY                   Date Released : APR 18, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,188 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 04/11/11 at 13:14
+=============================================================================
+Run Date: NOV 30, 2011                     Designation: OOPS*2*22
+Package : OOPS - ASISTS                       Priority: Mandatory
+Version : 2        SEQ #21                      Status: Released
+                  Compliance Date: DEC 31, 2011
+=============================================================================
+
+Associated patches: (v)OOPS*2*7    <<= must be installed BEFORE `OOPS*2*22'
+
+Subject: CHARGEBACK CODE updates and <UNDEDFINED> error
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 3 issues:
+  
+ 1. The potential for an undefined error when an employee does not have a 
+      hire date in the ASISTS (Automated Safety Incident Surveillance and 
+      Tracking System) ACCIDENT REPORTING file (#2260).
+  
+ 2. Updates OWCP CHARGEBACK CODES file (#2263.6) with new Ft. Sill
+     National Cemetery code.
+  
+ 3. Updates OWCP CHARGEBACK CODES file (#2263.6) with 3 new entries.
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. HD0000000417677    UNDEF ERROR 
+ 2. HD0000000171144    Need Ft. Sill National Cemetery (4459) listed in
+                       the OWCP charge back codes.
+ 3. HD0000000392958    Chargeback Codes need to be added to file
+  
+  
+ Associated NSRs:
+ ================
+  N/A  
+  
+  
+ Test Sites:
+ ===========
+ Fargo VAMC
+ Oklahoma City VAMC
+ VA Montana HCS - Ft. Harrison
+  
+   
+ REMEDY OVERVIEW:
+ ================
+ 1) HD0000000417677  UNDEF ERROR
+  
+ Problem: 
+ --------
+ If an ASISTS user views an ASISTS ACCIDENT REPORTING file (#2260) 
+ record with the following parameters:
+ PERSONNEL STATUS field (#2) = Employee;
+ SSN field (#5) = empty or null;
+ HIRE DATE field (#336) = empty or null; 
+ using ASISTS option "Complete/Validate/Sign Incident report", an 
+ <UNDEFINED> error occurs in Vista which causes the ASISTS application to
+ fail. 
+  
+    
+ Resolution:
+ -----------
+ When trying to retrieve a hire date for the employee, the software
+ assumes a social security number (SSN) exists and instances where it 
+ does not an undefined error occurs. Routine OOPSGUI7 has been modified to
+ handle instances where the SSN does not exist.
+  
+  
+ 2) HD0000000171144  Need Ft. Sill National Cemetery (4459) listed in
+                     the OWCP charge back codes.
+  
+   
+ Problem: 
+ --------
+ A Fort Sill National Cemetery OWCP Chargeback code is required by DOL
+ (Department of Labor) for the submission of a CA1/CA2 claim.
+    
+  
+ Resolution:
+ -----------
+ Routine OOPS2P22 has been modified to update the ASISTS OWCP CHARGEBACK
+ CODES file (#2263.6) with an entry for Fort Sill National Cemetery (see
+ File Updates section below).
+  
+  
+ 3) HD0000000392958  Chargeback Codes need to be added to file
+  
+   
+ Problem: 
+ --------
+ OWCP Chargeback codes are needed for three entries as required 
+ by DOL for the submission of a CA1/CA2 claims (see File Updates below).
+  
+ Resolution:
+ -----------
+ Routine OOPS2P22 has been modified to update the ASISTS OWCP CHARGEBACK
+ CODES file (#2263.6) with the necessary codes.
+  
+  
+ File Updates:
+ -------------
+  
+ Code #   Station Name                Station#      Region#   VA Org.
+ ------   ------------                 --------      -------   -------
+ 4104     CPAC Murfreesboro, TN        731           9         CPAC
+ 4109     CPAC Asheville, NC           730           6         CPAC
+ 4111     CPAC Madison, WI             732           12        CPAC
+ 4459     Fort Sill National Cemetery  920           3         NCS
+   
+  
+  
+        ================ INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  You may install 
+ these routines at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter OOPS*2.0*22)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package   
+ OOPS*2.0*22.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+  
+    7. You may delete the routine OOPS2P22 from your production system 
+       after the patch has been successfully installed.
+  
+ **During installation the status of each CHARGEBACK CODE update is 
+ displayed.  Please review and verify all codes were added successfully.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ASISTS;**[Patch List]**;Jun 03, 2002;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OOPS2P22
+    Before:       n/a   After:  B4562733  **22**
+Routine Name: OOPSGUI7
+    Before: B29220356   After: B29256546  **2,4,7,22**
+ 
+Routine list of preceding patches: 7
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : MAR 01, 2011
+Completed By: LANG,MICKEY                   Date Completed: NOV 21, 2011
+Released By : MORRIS,DELISA                 Date Released : NOV 30, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

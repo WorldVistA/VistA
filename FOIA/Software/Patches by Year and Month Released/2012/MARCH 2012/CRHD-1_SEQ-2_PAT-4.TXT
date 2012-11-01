@@ -1,0 +1,280 @@
+$TXT Created by BELL,CHRIS at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 06/27/11 at 14:19
+=============================================================================
+Run Date: MAR 06, 2012                     Designation: CRHD*1*4
+Package : CRHD - SHIFT CHANGE HANDOFF TOOL    Priority: Mandatory
+Version : 1         SEQ #2                      Status: Released
+                  Compliance Date: APR 06, 2012
+=============================================================================
+
+Associated patches: (v)CRHD*1*2    <<= must be installed BEFORE `CRHD*1*4'
+
+Subject: VARIOUS GUI MODIFICATIONS
+
+Category: 
+  - Informational
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses 5 issues:
+  
+ 1.  Properly retain Provider Class data when using Hot List configuration
+  
+ 2.  Correct the footer display on the Patient Data report.
+  
+ 3.  Eliminate printing of blank pages on the Patient Data Display Report
+  
+ 4.  Correct Provider Class Display and Print 
+  
+ 5.  Add 'Sensitive' patient warning
+       
+        
+ Associated Remedy Tickets:
+ ==========================
+ 1.  HD0000000309195 List names/titles are not retained
+     Duplicate:
+     HD0000000328991 Hand off tool
+      
+ 2.  HD0000000264610 Printout footer is incorrect
+      
+ 3.  HD0000000287760 We are back to printing 50 pages on rpt for 
+                                 Shift Hand Off Tool
+     Duplicate:  
+     HD0000000296068 Only one H.O.T. team is having printing issues
+     HD0000000326576 Shift handoff Summary report issue
+     HD0000000341009 Blank print preview
+     HD0000000344984 Handoff sheet prints 49 blank pages
+     HD0000000368111 Printing Blank Pages
+     HD0000000461755 Report is printing 50 pages for and not 
+                     capturing 1 patient
+      
+ 4.  HD0000000333816 Contact information not displaying properly
+      
+ 5.  HD0000000265782 No SENSITIVE patient warning
+      
+  
+ PARTICIPATING TEST SITES:
+ -------------------------
+ Detroit VAMC
+ Central Plains HCS
+ New York Harbor HCS
+  
+  
+ Remedy Overview
+ ===============
+  
+ 1. HD0000000309195 List names/titles are not retained
+   
+    Problem:
+    --------  
+    When adding users from the hot list configuration, the last provider 
+    loses their provider class or sometimes even dropped from the list 
+    entirely.  
+       
+    Resolution:
+    -----------     
+    A modification will be made in the ProviderExit procedure within Delphi
+    to make sure the provider class is retained.
+       
+ 2. HD0000000264610 Printout footer is incorrect
+  
+    Problem:
+    --------     
+    The footer of the Patient Data Report needs to reflect Clinician
+    instead of Physician.
+       
+    (Current Text)
+    Notice to Users    
+    Text present on this print-out is a summary intended for use by
+    physicians as they come on duty and for quick reference throughout
+    their shift.  The patient's health record must be consulted in all
+    cases when this summary information is inadequate for patient care.
+      
+    Resolution:
+    -----------     
+    The Patient Data Report footer will now reflect the following:
+      
+    Notice to Users
+    Text present on this print-out is a summary intended for use by
+    clinicians as they come on duty and for quick reference throughout
+    their shift. The patient's health record must be consulted in all cases
+    when this summary information is inadequate for patient care.
+      
+ 3. HD0000000287760 We are back to printing 50 pages on rpt for 
+                    Shift Hand Off Tool
+  
+    Problem:
+    --------  
+    Shift Handoff Tool is printing blank pages (50) when data forces the
+    report to overflow.
+            
+    Resolution:
+    -----------     
+    A modification will be made In Delphi to reduce the header printing to
+    the first page of the report. Demographics, Code Status, Allergies, and
+    Medications will now follow the same logic as the temp fields and 
+    truncate when the wording has exceeded the maximum print value.
+                
+ 4. HD0000000333816 Contact information not displaying properly
+    
+    Problem:
+    --------
+    When Shift Handoff Tool displays clinician data on the Patient Data
+    screen, Contact Information, there are multiple clinicians within the
+    same Class (i.e multiple medical students) Shift Handoff Tool that do
+    not display the clinicians properly.
+      
+    Resolution:
+    -----------     
+    A modification will be made in the Shift Handoff Tool GUI to display
+    the multiple clinicians, delimited with a semi-colon directly across
+    from their corresponding label.
+    Example:
+    Student(s)   student1; student2; student3; etc
+      
+ 5. HD0000000265782 No SENSITIVE patient warning
+   
+    Problem:
+    --------
+    When patient selection is performed in Shift Handoff Tool there is
+    currently no 'Sensitive Patient' Warning displayed.
+      
+    Resolution:
+    -----------     
+    A modification will be made in the Shift Handoff Tool GUI to display
+    the 'Sensitive Patient' warning.  The rpc's DG SENSITIVE RECORD ACCESS 
+    and DG SENSITIVE RECORD BULLETIN were registered (added) to the CRHD 
+    SHIFT CHANGE HANDOFF option. This gives the GUI access to these two
+    RPC's.
+      
+  
+       
+ SOFTWARE AND DOCUMENTATION DISTRIBUTION
+ ======================================= 
+ Sites may retrieve the new GUI and documentation directly via FTP. The 
+ preferred method is to FTP the files from:
+       
+        download.vista.med.va.gov
+       
+ This transmits the files from the first available FTP server.  
+       
+ Sites may also elect to retrieve the documentation directly from the
+ ANONYMOUS.SOFTWARE directory from a specific server as follows:
+       
+ Albany:             ftp.fo-albany.med.va.gov
+ Hines:              ftp.fo-hines.med.va.gov
+ Salt Lake City:     ftp.fo-slc.med.va.gov
+        
+ Filename                   Description
+ ========                   ===========
+ CRHD_1_4.ZIP               Contents below
+ -ShiftHandoffTool.exe      CRHD Executable (the file properties will
+                                             report version 1.0.0.17)
+  
+ NOTE: These files must be transferred using the binary (BIN) file 
+ transfer mode.  The size of the file (ShiftHandoffTool.exe) once 
+ downloaded will be 2,710 KB
+  
+ The CRHD_1_4.ZIP file is located in the anonymous.software 
+ directory.  Use BINARY Mode when downloading the file. 
+  
+  
+ SERVER Installation Instructions:
+ =================================
+  
+ NOTE >>  It is important to install the  Vista CRHD*1.0*4  server side 
+          build first and then update the Client.
+  
+ Users may be on the system during installation.  Installation will take 
+ less than 1 minute. Suggested time to install: Non-peak requirement hours.
+  
+ This install simply adds TWO (2) RPC calls as multiples on the CRHD SHIFT 
+ CHANGE HANDOFF menu option.
+  
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter CRHD*1.0*4):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.  NOTE >>  there are NO ROUTINES included 
+              with this Patch!
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package CRHD*1*4.
+   
+   5. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//" respond NO.
+  
+   6. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+ Post CRHD*1.0*4 Installation:
+ =============================
+ 1. Verify that the following RPC's were added to the RPC Multiple of the 
+ CRHD SHIFT CHANGE HANDOFF  menu option.
+ RPC: DG SENSITIVE RECORD ACCESS
+ RPC: DG SENSITIVE RECORD BULLETIN
+  
+  
+  
+ CLIENT Installation Instructions:
+ =================================
+  
+ Do this step AFTER  you have installed CRHD*1.0*4  on your Vista system
+  
+ 1. Open the file CRHD_1_4.ZIP. Check to make sure the size is 
+    correct.  ShiftHandoffTool.exe once downloaded will be 2710 KB
+  
+ 2. Extract the ShiftHandoffTool.exe file to the folder where the 
+    existing Shift Change Handoff executable is installed. At your 
+    medical center the location of the ShiftHandoffTool executable may be 
+    on a network drive or installed on each workstation under a program 
+    files folder like this example:
+  
+    C:\Program Files\Vista\ShiftHandOff 
+  
+ 3. When asked to overwrite the existing file, answer Yes.  
+  
+ 4. Following successful extraction of the executable, you can delete the  
+    CRHD_1_4.ZIP file.  
+  
+ 5. When this version of ShiftHandoffTool.exe is launched it will show
+    the version as "Shift Handoff Tool 1.0.0.17" on the window title area. 
+ Note:  the Class 3 to Class 1 conversion of the Shifthandoff tool did not 
+        include a client/server version check so please verify the version
+        number is 1.0.0.17 after the Client installation is completed.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : JUN 29, 2009
+Completed By: PODLEY,CHRIS                  Date Completed: MAR 01, 2012
+Released By : HINES,RICK                    Date Released : MAR 06, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

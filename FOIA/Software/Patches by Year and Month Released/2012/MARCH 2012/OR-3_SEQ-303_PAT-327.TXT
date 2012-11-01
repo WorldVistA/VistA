@@ -1,0 +1,222 @@
+$TXT Created by ESCALERA,DIEGO at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 09/15/10 at 12:50
+=============================================================================
+Run Date: MAR 21, 2012                     Designation: OR*3*327
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #303                      Status: Released
+                  Compliance Date: APR 21, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*243    <<= must be installed BEFORE `OR*3*327'
+
+Subject: GUI REPORTS PARAMETERS/MAX NUMBER OF ORDERS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch corrects 4 issues within the ORDER ENTRY/RESULTS REPORTING 
+ package:
+  
+  1. Selecting the GUI Reports User Display Parameters [ORQP REPORT USER 
+     PARAM] option causes a SHWTLT+10^XPAREDT3 Error.
+  
+  2. The GUI Reports User Display Parameters [ORQP REPORT USER PARAM]
+     option does not allow user selection.
+  
+  3. When building a quick order the How long field does not properly 
+     apply the Max days limit when using Xnumber of times format.
+  
+  4. When renewing an order with an invalid/changed schedule, IV orders 
+     are not properly verified.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+  1. HD0000000377325 - SHWTLT+10^XPAREDT3 Error
+  
+  2. HD0000000069559 - PUG-1101-51042  Can't change user values-Report 
+                       parameters
+  
+  3. HD0000000300224 - LAB QUICK ORDER
+     Duplicate:
+     HD0000000394065 - trying to build lab quick order Q4Hr  and X6 at the 
+                       How Long  prompt it keeps telling me cannot order
+                       for more than 1D - Fix?
+  
+  4. HD0000000406792 - Standard Schedule (Changed) Creates Endless 
+                       Loop for Finishing Pharmacist 
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Philadelphia VAMC 
+ VA Pittsburgh HCS
+ White River Junction VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+  1. HD0000000377325 - SHWTLT+10^XPAREDT3 Error
+   
+     Problem:
+     --------
+     Selecting the GUI Reports User Display Parameters [ORQP REPORT USER 
+     PARAM] option causes a SHWTLT+10^XPAREDT3 Error.
+   
+     Resolution:
+     -----------
+     An empty sequence in the ORQP REPORT RANGE (USER) parameter template 
+     is causing the crash. Deleting the sequence fixes the problems.
+  
+  2. HD0000000069559 - PUG-1101-51042  Can't change user values-Report 
+                       parameters 
+  
+     Problem:
+     --------
+     The GUI Reports User Display Parameters [ORQP REPORT USER PARAM]
+     option does not allow user selection.
+  
+     Resolution:
+     -----------
+     Unlike the other options in the GUI Parameters [ORW PARAM GUI] menu
+     that modifies user level parameters, ORQP REPORT USER PARAM is sending
+     the current user's record number in its entry action. Removing the
+     record number causes the parameter editor to prompt for a user.
+  
+  3. HD0000000300224 - LAB QUICK ORDER
+  
+     Problem:
+     --------
+     When building a quick order the How long field does not correctly 
+     apply the Max days limit when using Xnumber of times format. A quick 
+     order using a Q4H schedule with a Max days limit of 3 will reject an
+     entry of X4 (equivalent to 4 repeated orders) with the message 
+     "Cannot order for more than 3 days." The field seems to not recognize 
+     the X prefix and is calculating for days.
+  
+     Resolution:
+     -----------
+     A modification to ORCDLR broke how the SHOWMAX tag was loading the 
+     Frequency field which in turn made the CHKMAX tag unable to verify 
+     entries using the Xnumber of times format.
+     
+  4. HD0000000406792 - Standard Schedule (Changed) Creates Endless 
+                       Loop for Finishing Pharmacist
+  
+     Problem:
+     --------
+     When renewing an order in Computerized Patient Record System (CPRS)
+     after the schedule's name has been changed, the user should be
+     presented with a warning message telling them that the schedule for
+     this order is not valid and the renewal process is cancelled.  
+     However, if the order is an IV with a schedule, this warning does not
+     occur and the user is allowed to renew the order, despite the fact
+     that the schedule is not valid.
+  
+  
+     Resolution:
+     -----------
+     Changed ORWNSS so that the system checks for the IV display group as
+     well as the Unit Dose display group.
+  
+  
+ COMPONENTS:
+ ===========
+     Parameter Template: GUI Reports - User [ORQP REPORT RANGE (USER)]
+  
+     Option: GUI Reports User Display Parameters [ORQP REPORT USER PARAM]
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users on the system but it is recommended 
+ that it be installed when user activity is low. Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*327):
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      OR*3.0*327.
+  
+      a.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion 
+          of Install? NO//", answer NO. 
+      b.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      c.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? YES//", answer YES.
+      d.  When prompted "Enter options you wish to mark as 'Out Of 
+          Order':", select 
+  
+          - Enter/edit quick orders               [ORCM QUICK ORDERS]
+          - GUI Reports User Display Parameters   [ORQP REPORT USER PARAM]
+  
+      e.  When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCDLR
+    Before: B57494194   After: B58582419  **4,29,49,61,71,79,175,243,327**
+Routine Name: ORWNSS
+    Before:  B4680257   After:  B4949733  **195,243,327**
+ 
+Routine list of preceding patches: 243
+
+=============================================================================
+User Information:
+Entered By  : ESCALERA,DIEGO                Date Entered  : JAN 29, 2010
+Completed By: SHERMAN,BILL                  Date Completed: MAR 15, 2012
+Released By : PASTERNOCK,JOY                Date Released : MAR 21, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

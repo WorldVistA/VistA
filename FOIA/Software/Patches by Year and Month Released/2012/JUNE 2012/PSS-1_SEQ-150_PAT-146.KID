@@ -1,0 +1,1472 @@
+Released PSS*1*146 SEQ #150
+Extracted from mail message
+**KIDS**:PSS*1.0*146^
+
+**INSTALL NAME**
+PSS*1.0*146
+"BLD",8371,0)
+PSS*1.0*146^PHARMACY DATA MANAGEMENT^0^3120501^y
+"BLD",8371,1,0)
+^^85^85^3120501^^^
+"BLD",8371,1,1,0)
+This patch corrects a patient safety issue in which editing the IV 
+"BLD",8371,1,2,0)
+ADDITIVES file (#52.6) and/or IV SOLUTIONS file (#52.7) using the Drug
+"BLD",8371,1,3,0)
+Enter/Edit [PSS DRUG ENTER/EDIT] option is problematic. The current
+"BLD",8371,1,4,0)
+functionality needs to be changed to prevent erroneous matching with
+"BLD",8371,1,5,0)
+Dispense Drugs. It is very easy to select the wrong item and incorrectly
+"BLD",8371,1,6,0)
+change the PRINT NAME field (#.01) of the additives or solutions files.
+"BLD",8371,1,7,0)
+Also, once an additive or solution is selected, it is unclear as to
+"BLD",8371,1,8,0)
+whether or not the user is still selecting or editing.
+"BLD",8371,1,9,0)
+ 
+"BLD",8371,1,10,0)
+This process has been enhanced by displaying the previously entered Print
+"BLD",8371,1,11,0)
+Name as the default if only one is entered.
+"BLD",8371,1,12,0)
+  Example:
+"BLD",8371,1,13,0)
+    +------------------------------------------------------------+
+"BLD",8371,1,14,0)
+    |    Select IV ADDITIVES PRINT NAME: ADDITIVE1//             |
+"BLD",8371,1,15,0)
+    +------------------------------------------------------------+
+"BLD",8371,1,16,0)
+ 
+"BLD",8371,1,17,0)
+If more than one Print Name were previously entered, the software will
+"BLD",8371,1,18,0)
+display the list of all linked Additives and/or Solutions to select from
+"BLD",8371,1,19,0)
+so an edit may be made. Example:
+"BLD",8371,1,20,0)
+ 
+"BLD",8371,1,21,0)
+  Example:
+"BLD",8371,1,22,0)
+    +------------------------------------------------------------+     
+"BLD",8371,1,23,0)
+    | <DRUG NAME> currently linked to the following IV Additives:|
+"BLD",8371,1,24,0)
+    |                                                            |
+"BLD",8371,1,25,0)
+    |       1. ADDITIVE1                                         |
+"BLD",8371,1,26,0)
+    |       2. ADDITIVE2                                         |
+"BLD",8371,1,27,0)
+    |                                                            |
+"BLD",8371,1,28,0)
+    |    Select 1-2 from list above or type 'NEW' to link        |
+"BLD",8371,1,29,0)
+    |    to a new IV Additive:                                   |
+"BLD",8371,1,30,0)
+    +------------------------------------------------------------+
+"BLD",8371,1,31,0)
+ 
+"BLD",8371,1,32,0)
+The new enhancement will also allow the user to enter a new Additive or
+"BLD",8371,1,33,0)
+Solution and link it to the dispense drug. The software will give the user
+"BLD",8371,1,34,0)
+the choice to enter and link the dispense drug to a new Additive or
+"BLD",8371,1,35,0)
+Solution as well as require a confirmation of the selected dispense drug
+"BLD",8371,1,36,0)
+that will be linked to the selected Additive/Solution. 
+"BLD",8371,1,37,0)
+ 
+"BLD",8371,1,38,0)
+  Example (Create new IV Additive and link to drug):
+"BLD",8371,1,39,0)
+  +--------------------------------------------------------------------+
+"BLD",8371,1,40,0)
+  | <DRUG NAME> currently linked to the following IV Additives:        |
+"BLD",8371,1,41,0)
+  |                                                                    |
+"BLD",8371,1,42,0)
+  |    1. ADDITIVE1                                                    |
+"BLD",8371,1,43,0)
+  |    2. ADDITIVE2                                                    |
+"BLD",8371,1,44,0)
+  |                                                                    |
+"BLD",8371,1,45,0)
+  |    Select 1-2 from list above or type 'NEW' to link                |
+"BLD",8371,1,46,0)
+  |    to a new IV Additive: NEW                                       |
+"BLD",8371,1,47,0)
+  |                                                                    |
+"BLD",8371,1,48,0)
+  | Select IV ADDITIVES PRINT NAME: TEST                               |
+"BLD",8371,1,49,0)
+  |   Are you adding 'TEST' as a new IV ADDITIVES (the 33RD)? No// Yes |
+"BLD",8371,1,50,0)
+  | IV ADDITIVES DRUG UNIT: GM  GM                                     |
+"BLD",8371,1,51,0)
+  | PRINT NAME: TEST//                                                 |
+"BLD",8371,1,52,0)
+  | Select DRUG GENERIC NAME: CEFAMANDOLE 1GM INJ//  AM116             |
+"BLD",8371,1,53,0)
+  | ARE YOU SURE YOU WANT TO SELECT CEFAMANDOLE 1GM INJ? No// Y  (Yes) |
+"BLD",8371,1,54,0)
+  | ...                                                                |
+"BLD",8371,1,55,0)
+  |                                                                    |
+"BLD",8371,1,56,0)
+  | <DRUG NAME> currently linked to the following IV Additives:        |
+"BLD",8371,1,57,0)
+  |                                                                    |
+"BLD",8371,1,58,0)
+  |    1. ADDITIVE1                                                    |
+"BLD",8371,1,59,0)
+  |    2. ADDITIVE2                                                    |
+"BLD",8371,1,60,0)
+  |    3. TEST                                                         |
+"BLD",8371,1,61,0)
+  |                                                                    |
+"BLD",8371,1,62,0)
+  |    Select 1-3 from list above or type 'NEW' to link                |
+"BLD",8371,1,63,0)
+  |    to a new IV Additive: NEW                                       |
+"BLD",8371,1,64,0)
+  +--------------------------------------------------------------------+
+"BLD",8371,1,65,0)
+ 
+"BLD",8371,1,66,0)
+The new enhancement will also create the new sub-menu Inpatient Drug 
+"BLD",8371,1,67,0)
+Management [PSS INP MGR]. This sub-menu will be located under the 
+"BLD",8371,1,68,0)
+Pharmacy Data Management [PSS MGR] menu and will include the following 
+"BLD",8371,1,69,0)
+options:
+"BLD",8371,1,70,0)
+ - ADditives File [PSSJI DRUG]
+"BLD",8371,1,71,0)
+ - Dispense Drug Fields [PSSJU DRG]
+"BLD",8371,1,72,0)
+ - Dispense Drug/ATC Set Up [PSSJU DRUG/ATC SET UP]
+"BLD",8371,1,73,0)
+ - Edit Cost Data [PSSJU DCC]
+"BLD",8371,1,74,0)
+ - EDit Drug Cost (IV) [PSSJI EDIT DRUG COST]
+"BLD",8371,1,75,0)
+ - MARk/Unmark Dispense Drugs For Unit Dose [PSSJU MARK UD ITEMS]
+"BLD",8371,1,76,0)
+ - PRimary Solution File (IV) [PSSJI SOLN]
+"BLD",8371,1,77,0)
+ 
+"BLD",8371,1,78,0)
+ 
+"BLD",8371,1,79,0)
+In addition to these enhancements, an unrelated defect that was discovered
+"BLD",8371,1,80,0)
+with the PSSIV ADD Input Template during testing was corrected in this 
+"BLD",8371,1,81,0)
+patch. The error prevented valid ADMINISTRATION TIMES from being 
+"BLD",8371,1,82,0)
+associated with the IV ADDITIVE as well as QUICK CODES associated with 
+"BLD",8371,1,83,0)
+the IV ADDITIVE. The error was addressed by correctly validating the 
+"BLD",8371,1,84,0)
+ADMINISTRATION TIMES fields using the same validation as is used in the 
+"BLD",8371,1,85,0)
+ADMINISTRATION SCHEDULE file (#51.1).
+"BLD",8371,4,0)
+^9.64PA^^
+"BLD",8371,6)
+10^
+"BLD",8371,6.3)
+34
+"BLD",8371,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8371,"KRN",.4,0)
+.4
+"BLD",8371,"KRN",.401,0)
+.401
+"BLD",8371,"KRN",.402,0)
+.402
+"BLD",8371,"KRN",.402,"NM",0)
+^9.68A^1^1
+"BLD",8371,"KRN",.402,"NM",1,0)
+PSSIV ADD    FILE #52.6^52.6^0
+"BLD",8371,"KRN",.402,"NM","B","PSSIV ADD    FILE #52.6",1)
+
+"BLD",8371,"KRN",.403,0)
+.403
+"BLD",8371,"KRN",.5,0)
+.5
+"BLD",8371,"KRN",.84,0)
+.84
+"BLD",8371,"KRN",3.6,0)
+3.6
+"BLD",8371,"KRN",3.8,0)
+3.8
+"BLD",8371,"KRN",9.2,0)
+9.2
+"BLD",8371,"KRN",9.8,0)
+9.8
+"BLD",8371,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",8371,"KRN",9.8,"NM",1,0)
+PSSVIDRG^^0^B70076783
+"BLD",8371,"KRN",9.8,"NM",2,0)
+PSSJSV^^0^B76380727
+"BLD",8371,"KRN",9.8,"NM","B","PSSJSV",2)
+
+"BLD",8371,"KRN",9.8,"NM","B","PSSVIDRG",1)
+
+"BLD",8371,"KRN",19,0)
+19
+"BLD",8371,"KRN",19,"NM",0)
+^9.68A^9^9
+"BLD",8371,"KRN",19,"NM",1,0)
+PSS INP MGR^^0
+"BLD",8371,"KRN",19,"NM",2,0)
+PSS MGR^^2
+"BLD",8371,"KRN",19,"NM",3,0)
+PSSJI DRUG^^4^
+"BLD",8371,"KRN",19,"NM",4,0)
+PSSJU DRG^^4^
+"BLD",8371,"KRN",19,"NM",5,0)
+PSSJU DRUG/ATC SET UP^^4^
+"BLD",8371,"KRN",19,"NM",6,0)
+PSSJU DCC^^4^
+"BLD",8371,"KRN",19,"NM",7,0)
+PSSJI EDIT DRUG COST^^4^
+"BLD",8371,"KRN",19,"NM",8,0)
+PSSJU MARK UD ITEMS^^4^
+"BLD",8371,"KRN",19,"NM",9,0)
+PSSJI SOLN^^4^
+"BLD",8371,"KRN",19,"NM","B","PSS INP MGR",1)
+
+"BLD",8371,"KRN",19,"NM","B","PSS MGR",2)
+
+"BLD",8371,"KRN",19,"NM","B","PSSJI DRUG",3)
+
+"BLD",8371,"KRN",19,"NM","B","PSSJI EDIT DRUG COST",7)
+
+"BLD",8371,"KRN",19,"NM","B","PSSJI SOLN",9)
+
+"BLD",8371,"KRN",19,"NM","B","PSSJU DCC",6)
+
+"BLD",8371,"KRN",19,"NM","B","PSSJU DRG",4)
+
+"BLD",8371,"KRN",19,"NM","B","PSSJU DRUG/ATC SET UP",5)
+
+"BLD",8371,"KRN",19,"NM","B","PSSJU MARK UD ITEMS",8)
+
+"BLD",8371,"KRN",19.1,0)
+19.1
+"BLD",8371,"KRN",101,0)
+101
+"BLD",8371,"KRN",409.61,0)
+409.61
+"BLD",8371,"KRN",771,0)
+771
+"BLD",8371,"KRN",779.2,0)
+779.2
+"BLD",8371,"KRN",870,0)
+870
+"BLD",8371,"KRN",8989.51,0)
+8989.51
+"BLD",8371,"KRN",8989.52,0)
+8989.52
+"BLD",8371,"KRN",8994,0)
+8994
+"BLD",8371,"KRN","B",.4,.4)
+
+"BLD",8371,"KRN","B",.401,.401)
+
+"BLD",8371,"KRN","B",.402,.402)
+
+"BLD",8371,"KRN","B",.403,.403)
+
+"BLD",8371,"KRN","B",.5,.5)
+
+"BLD",8371,"KRN","B",.84,.84)
+
+"BLD",8371,"KRN","B",3.6,3.6)
+
+"BLD",8371,"KRN","B",3.8,3.8)
+
+"BLD",8371,"KRN","B",9.2,9.2)
+
+"BLD",8371,"KRN","B",9.8,9.8)
+
+"BLD",8371,"KRN","B",19,19)
+
+"BLD",8371,"KRN","B",19.1,19.1)
+
+"BLD",8371,"KRN","B",101,101)
+
+"BLD",8371,"KRN","B",409.61,409.61)
+
+"BLD",8371,"KRN","B",771,771)
+
+"BLD",8371,"KRN","B",779.2,779.2)
+
+"BLD",8371,"KRN","B",870,870)
+
+"BLD",8371,"KRN","B",8989.51,8989.51)
+
+"BLD",8371,"KRN","B",8989.52,8989.52)
+
+"BLD",8371,"KRN","B",8994,8994)
+
+"BLD",8371,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8371,"QUES",0)
+^9.62^^
+"BLD",8371,"REQB",0)
+^9.611^2^2
+"BLD",8371,"REQB",1,0)
+PSS*1.0*125^2
+"BLD",8371,"REQB",2,0)
+PSS*1.0*149^2
+"BLD",8371,"REQB","B","PSS*1.0*125",1)
+
+"BLD",8371,"REQB","B","PSS*1.0*149",2)
+
+"KRN",.402,2000,-1)
+0^1
+"KRN",.402,2000,0)
+PSSIV ADD^3120426.1805^@^52.6^^@^3120501
+"KRN",.402,2000,"DIAB",1,1,52.62,0)
+ALL
+"KRN",.402,2000,"DIAB",1,1,52.63,0)
+ALL
+"KRN",.402,2000,"DR",1,52.6)
+D PRNMHD^PSSVIDRG;.01;.01///^S X=$$PRNM^PSSVIDRG();1///^S X=$$GEND^PSSVIDRG($S($G(DISPDRG):DISPDRG,$G(PSSDRG):PSSDRG,1:""));D GETD^PSSVIDRG;17;2;3;4;S X=$S($D(PSIVSC):PSIVSC,1:"") K PSIVSC;5;6;7;8;9;10;12;13;14;
+"KRN",.402,2000,"DR",2,52.61)
+.01;1;2;3;4;S X=$S($D(PSIVSC):PSIVSC,1:"") K PSIVSC;5;6;7;
+"KRN",.402,2000,"DR",2,52.62)
+.01:1
+"KRN",.402,2000,"DR",2,52.63)
+.01
+"KRN",19,10541,-1)
+4^6
+"KRN",19,10541,0)
+PSSJU DCC
+"KRN",19,10542,-1)
+4^7
+"KRN",19,10542,0)
+PSSJI EDIT DRUG COST
+"KRN",19,10543,-1)
+4^5
+"KRN",19,10543,0)
+PSSJU DRUG/ATC SET UP
+"KRN",19,10551,-1)
+2^2
+"KRN",19,10551,0)
+PSS MGR^Pharmacy Data Management^^M^11855^^^^^^^517
+"KRN",19,10551,10,0)
+^19.01IP^86^86
+"KRN",19,10551,10,86,0)
+14028^^21
+"KRN",19,10551,10,86,"^")
+PSS INP MGR
+"KRN",19,10551,"U")
+PHARMACY DATA MANAGEMENT
+"KRN",19,10557,-1)
+4^4
+"KRN",19,10557,0)
+PSSJU DRG
+"KRN",19,10558,-1)
+4^3
+"KRN",19,10558,0)
+PSSJI DRUG
+"KRN",19,10559,-1)
+4^9
+"KRN",19,10559,0)
+PSSJI SOLN
+"KRN",19,10560,-1)
+4^8
+"KRN",19,10560,0)
+PSSJU MARK UD ITEMS
+"KRN",19,14028,-1)
+0^1
+"KRN",19,14028,0)
+PSS INP MGR^Inpatient Drug Management^^M^^^^^^^^
+"KRN",19,14028,1,0)
+^^1^1^3110228^
+"KRN",19,14028,1,1,0)
+This Sub-Menu contains options related to INPATIENT DRUG MANAGEMENT.
+"KRN",19,14028,10,0)
+^19.01IP^7^7
+"KRN",19,14028,10,1,0)
+10558^^1
+"KRN",19,14028,10,1,"^")
+PSSJI DRUG
+"KRN",19,14028,10,2,0)
+10557^^2
+"KRN",19,14028,10,2,"^")
+PSSJU DRG
+"KRN",19,14028,10,3,0)
+10543^^3
+"KRN",19,14028,10,3,"^")
+PSSJU DRUG/ATC SET UP
+"KRN",19,14028,10,4,0)
+10541^^4
+"KRN",19,14028,10,4,"^")
+PSSJU DCC
+"KRN",19,14028,10,5,0)
+10542^^5
+"KRN",19,14028,10,5,"^")
+PSSJI EDIT DRUG COST
+"KRN",19,14028,10,6,0)
+10560^^6
+"KRN",19,14028,10,6,"^")
+PSSJU MARK UD ITEMS
+"KRN",19,14028,10,7,0)
+10559^^7
+"KRN",19,14028,10,7,"^")
+PSSJI SOLN
+"KRN",19,14028,99)
+62572,39707
+"KRN",19,14028,"U")
+INPATIENT DRUG MANAGEMENT
+"MBREQ")
+0
+"ORD",7,.402)
+.402;7;;;EDEOUT^DIFROMSO(.402,DA,"",XPDA);FPRE^DIFROMSI(.402,"",XPDA);EPRE^DIFROMSI(.402,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.402,DA,"",XPDA);DEL^DIFROMSK(.402,"",%)
+"ORD",7,.402,0)
+INPUT TEMPLATE
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",517,-1)
+1^1
+"PKG",517,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",517,20,0)
+^9.402P^^
+"PKG",517,22,0)
+^9.49I^1^1
+"PKG",517,22,1,0)
+1.0^2970930^2971014^11595
+"PKG",517,22,1,"PAH",1,0)
+146^3120501^10000000021
+"PKG",517,22,1,"PAH",1,1,0)
+^^85^85^3120501
+"PKG",517,22,1,"PAH",1,1,1,0)
+This patch corrects a patient safety issue in which editing the IV 
+"PKG",517,22,1,"PAH",1,1,2,0)
+ADDITIVES file (#52.6) and/or IV SOLUTIONS file (#52.7) using the Drug
+"PKG",517,22,1,"PAH",1,1,3,0)
+Enter/Edit [PSS DRUG ENTER/EDIT] option is problematic. The current
+"PKG",517,22,1,"PAH",1,1,4,0)
+functionality needs to be changed to prevent erroneous matching with
+"PKG",517,22,1,"PAH",1,1,5,0)
+Dispense Drugs. It is very easy to select the wrong item and incorrectly
+"PKG",517,22,1,"PAH",1,1,6,0)
+change the PRINT NAME field (#.01) of the additives or solutions files.
+"PKG",517,22,1,"PAH",1,1,7,0)
+Also, once an additive or solution is selected, it is unclear as to
+"PKG",517,22,1,"PAH",1,1,8,0)
+whether or not the user is still selecting or editing.
+"PKG",517,22,1,"PAH",1,1,9,0)
+ 
+"PKG",517,22,1,"PAH",1,1,10,0)
+This process has been enhanced by displaying the previously entered Print
+"PKG",517,22,1,"PAH",1,1,11,0)
+Name as the default if only one is entered.
+"PKG",517,22,1,"PAH",1,1,12,0)
+  Example:
+"PKG",517,22,1,"PAH",1,1,13,0)
+    +------------------------------------------------------------+
+"PKG",517,22,1,"PAH",1,1,14,0)
+    |    Select IV ADDITIVES PRINT NAME: ADDITIVE1//             |
+"PKG",517,22,1,"PAH",1,1,15,0)
+    +------------------------------------------------------------+
+"PKG",517,22,1,"PAH",1,1,16,0)
+ 
+"PKG",517,22,1,"PAH",1,1,17,0)
+If more than one Print Name were previously entered, the software will
+"PKG",517,22,1,"PAH",1,1,18,0)
+display the list of all linked Additives and/or Solutions to select from
+"PKG",517,22,1,"PAH",1,1,19,0)
+so an edit may be made. Example:
+"PKG",517,22,1,"PAH",1,1,20,0)
+ 
+"PKG",517,22,1,"PAH",1,1,21,0)
+  Example:
+"PKG",517,22,1,"PAH",1,1,22,0)
+    +------------------------------------------------------------+     
+"PKG",517,22,1,"PAH",1,1,23,0)
+    | <DRUG NAME> currently linked to the following IV Additives:|
+"PKG",517,22,1,"PAH",1,1,24,0)
+    |                                                            |
+"PKG",517,22,1,"PAH",1,1,25,0)
+    |       1. ADDITIVE1                                         |
+"PKG",517,22,1,"PAH",1,1,26,0)
+    |       2. ADDITIVE2                                         |
+"PKG",517,22,1,"PAH",1,1,27,0)
+    |                                                            |
+"PKG",517,22,1,"PAH",1,1,28,0)
+    |    Select 1-2 from list above or type 'NEW' to link        |
+"PKG",517,22,1,"PAH",1,1,29,0)
+    |    to a new IV Additive:                                   |
+"PKG",517,22,1,"PAH",1,1,30,0)
+    +------------------------------------------------------------+
+"PKG",517,22,1,"PAH",1,1,31,0)
+ 
+"PKG",517,22,1,"PAH",1,1,32,0)
+The new enhancement will also allow the user to enter a new Additive or
+"PKG",517,22,1,"PAH",1,1,33,0)
+Solution and link it to the dispense drug. The software will give the user
+"PKG",517,22,1,"PAH",1,1,34,0)
+the choice to enter and link the dispense drug to a new Additive or
+"PKG",517,22,1,"PAH",1,1,35,0)
+Solution as well as require a confirmation of the selected dispense drug
+"PKG",517,22,1,"PAH",1,1,36,0)
+that will be linked to the selected Additive/Solution. 
+"PKG",517,22,1,"PAH",1,1,37,0)
+ 
+"PKG",517,22,1,"PAH",1,1,38,0)
+  Example (Create new IV Additive and link to drug):
+"PKG",517,22,1,"PAH",1,1,39,0)
+  +--------------------------------------------------------------------+
+"PKG",517,22,1,"PAH",1,1,40,0)
+  | <DRUG NAME> currently linked to the following IV Additives:        |
+"PKG",517,22,1,"PAH",1,1,41,0)
+  |                                                                    |
+"PKG",517,22,1,"PAH",1,1,42,0)
+  |    1. ADDITIVE1                                                    |
+"PKG",517,22,1,"PAH",1,1,43,0)
+  |    2. ADDITIVE2                                                    |
+"PKG",517,22,1,"PAH",1,1,44,0)
+  |                                                                    |
+"PKG",517,22,1,"PAH",1,1,45,0)
+  |    Select 1-2 from list above or type 'NEW' to link                |
+"PKG",517,22,1,"PAH",1,1,46,0)
+  |    to a new IV Additive: NEW                                       |
+"PKG",517,22,1,"PAH",1,1,47,0)
+  |                                                                    |
+"PKG",517,22,1,"PAH",1,1,48,0)
+  | Select IV ADDITIVES PRINT NAME: TEST                               |
+"PKG",517,22,1,"PAH",1,1,49,0)
+  |   Are you adding 'TEST' as a new IV ADDITIVES (the 33RD)? No// Yes |
+"PKG",517,22,1,"PAH",1,1,50,0)
+  | IV ADDITIVES DRUG UNIT: GM  GM                                     |
+"PKG",517,22,1,"PAH",1,1,51,0)
+  | PRINT NAME: TEST//                                                 |
+"PKG",517,22,1,"PAH",1,1,52,0)
+  | Select DRUG GENERIC NAME: CEFAMANDOLE 1GM INJ//  AM116             |
+"PKG",517,22,1,"PAH",1,1,53,0)
+  | ARE YOU SURE YOU WANT TO SELECT CEFAMANDOLE 1GM INJ? No// Y  (Yes) |
+"PKG",517,22,1,"PAH",1,1,54,0)
+  | ...                                                                |
+"PKG",517,22,1,"PAH",1,1,55,0)
+  |                                                                    |
+"PKG",517,22,1,"PAH",1,1,56,0)
+  | <DRUG NAME> currently linked to the following IV Additives:        |
+"PKG",517,22,1,"PAH",1,1,57,0)
+  |                                                                    |
+"PKG",517,22,1,"PAH",1,1,58,0)
+  |    1. ADDITIVE1                                                    |
+"PKG",517,22,1,"PAH",1,1,59,0)
+  |    2. ADDITIVE2                                                    |
+"PKG",517,22,1,"PAH",1,1,60,0)
+  |    3. TEST                                                         |
+"PKG",517,22,1,"PAH",1,1,61,0)
+  |                                                                    |
+"PKG",517,22,1,"PAH",1,1,62,0)
+  |    Select 1-3 from list above or type 'NEW' to link                |
+"PKG",517,22,1,"PAH",1,1,63,0)
+  |    to a new IV Additive: NEW                                       |
+"PKG",517,22,1,"PAH",1,1,64,0)
+  +--------------------------------------------------------------------+
+"PKG",517,22,1,"PAH",1,1,65,0)
+ 
+"PKG",517,22,1,"PAH",1,1,66,0)
+The new enhancement will also create the new sub-menu Inpatient Drug 
+"PKG",517,22,1,"PAH",1,1,67,0)
+Management [PSS INP MGR]. This sub-menu will be located under the 
+"PKG",517,22,1,"PAH",1,1,68,0)
+Pharmacy Data Management [PSS MGR] menu and will include the following 
+"PKG",517,22,1,"PAH",1,1,69,0)
+options:
+"PKG",517,22,1,"PAH",1,1,70,0)
+ - ADditives File [PSSJI DRUG]
+"PKG",517,22,1,"PAH",1,1,71,0)
+ - Dispense Drug Fields [PSSJU DRG]
+"PKG",517,22,1,"PAH",1,1,72,0)
+ - Dispense Drug/ATC Set Up [PSSJU DRUG/ATC SET UP]
+"PKG",517,22,1,"PAH",1,1,73,0)
+ - Edit Cost Data [PSSJU DCC]
+"PKG",517,22,1,"PAH",1,1,74,0)
+ - EDit Drug Cost (IV) [PSSJI EDIT DRUG COST]
+"PKG",517,22,1,"PAH",1,1,75,0)
+ - MARk/Unmark Dispense Drugs For Unit Dose [PSSJU MARK UD ITEMS]
+"PKG",517,22,1,"PAH",1,1,76,0)
+ - PRimary Solution File (IV) [PSSJI SOLN]
+"PKG",517,22,1,"PAH",1,1,77,0)
+ 
+"PKG",517,22,1,"PAH",1,1,78,0)
+ 
+"PKG",517,22,1,"PAH",1,1,79,0)
+In addition to these enhancements, an unrelated defect that was discovered
+"PKG",517,22,1,"PAH",1,1,80,0)
+with the PSSIV ADD Input Template during testing was corrected in this 
+"PKG",517,22,1,"PAH",1,1,81,0)
+patch. The error prevented valid ADMINISTRATION TIMES from being 
+"PKG",517,22,1,"PAH",1,1,82,0)
+associated with the IV ADDITIVE as well as QUICK CODES associated with 
+"PKG",517,22,1,"PAH",1,1,83,0)
+the IV ADDITIVE. The error was addressed by correctly validating the 
+"PKG",517,22,1,"PAH",1,1,84,0)
+ADMINISTRATION TIMES fields using the same validation as is used in the 
+"PKG",517,22,1,"PAH",1,1,85,0)
+ADMINISTRATION SCHEDULE file (#51.1).
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSSJSV")
+0^2^B76380727^B74597072
+"RTN","PSSJSV",1,0)
+PSSJSV ;BIR/CML3/WRT-SCHEDULE VALIDATION ;06/24/96
+"RTN","PSSJSV",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**20,38,56,59,110,121,143,149,146**;9/30/97;Build 34
+"RTN","PSSJSV",3,0)
+ ;
+"RTN","PSSJSV",4,0)
+ ; Reference to ^PS(51.15 is supported by DBIA #2132
+"RTN","PSSJSV",5,0)
+ ; Reference to $$UP^XLFSTR(P1) is supported by DBIA #10104
+"RTN","PSSJSV",6,0)
+ ;
+"RTN","PSSJSV",7,0)
+EN ;
+"RTN","PSSJSV",8,0)
+ S X=PSJX,(PSJAT,PSJM,PSJTS,PSJY,PSJAX)="" I $S(X["""":1,$A(X)=45:1,X'?.ANP:1,$L(X," ")>2:1,$L(X)>70:1,$L(X)<1:1,X["P RN":1,1:X["PR N") K PSJX,X Q
+"RTN","PSSJSV",9,0)
+ I X["PRN"!(X="ON CALL")!(X="ONCALL")!(X="ON-CALL") G DONE
+"RTN","PSSJSV",10,0)
+ I X?1."?" D:'$D(PSJNE) ENSVH^PSSJSV0 Q
+"RTN","PSSJSV",11,0)
+ I X["@" D DW S:$D(X) PSJAT=$P(X,"@",2) G DONE
+"RTN","PSSJSV",12,0)
+ S X0=X,(XT,Y)="" I X,X'["X",(X?2.4N1"-".E!(X?2.4N)) D ENCHK S:$D(X) PSJAT=X G DONE
+"RTN","PSSJSV",13,0)
+ I $S($D(^PS(51.1,"AC",PSJPP,X)):1,1:$E($O(^(X)),1,$L(X))=X) D DIC G:$S(PSJY:PSJTS'="C",1:PSJM) DONE
+"RTN","PSSJSV",14,0)
+ I $S(X="NOW":1,X="ONCE":1,X="STAT":1,X="ONE TIME":1,X="ONETIME":1,X="1TIME":1,X="1-TIME":1,X="1 TIME":1,1:X="ONE-TIME") S PSJTS="O" W:'$D(PSJNE) "  (ONCE ONLY)" G DONE
+"RTN","PSSJSV",15,0)
+ S:PSJTS="" PSJTS="C" I PSJAT="" W:'$D(PSJNE) "  (Non standard schedule)" S X=PSJX
+"RTN","PSSJSV",16,0)
+ I $E(X,1,2)="AD" K X G DONE
+"RTN","PSSJSV",17,0)
+ I $E(X,1,3)="BID"!($E(X,1,3)="TID")!($E(X,1,3)="QID") S PSJM=1440\$F("BTQ",$E(X)) G DONE
+"RTN","PSSJSV",18,0)
+ S:$E(X)="Q" X=$E(X,2,99) S:'X X="1"_X S X1=+X,X=$P(X,+X,2),X2=0 S:X1<0 X1=-X1 S:$E(X)="X" X2=X1,X=$E(X,2,99) I 'X2,$E(X)="O" S X2=.5,X=$E(X,2,99)
+"RTN","PSSJSV",19,0)
+ S XT=$S(X["'":1,(X["D"&(X'["AD"))!(X["AM")!(X["PM")!(X["HS"&(X'["THS")):1440,X["H"&(X'["TH"):60,X["AC"!(X["PC"):480,X["W":10080,X["M":40320,1:-1) I XT<0,PSJAT="" K X G DONE
+"RTN","PSSJSV",20,0)
+ S X=PSJX I XT S:X2 XT=XT\X2 S:'X2 XT=XT*X1
+"RTN","PSSJSV",21,0)
+ S PSJM=XT
+"RTN","PSSJSV",22,0)
+ ;
+"RTN","PSSJSV",23,0)
+DONE ;
+"RTN","PSSJSV",24,0)
+ K:$D(X)[0 PSJX K D,DIC,Q,QX,SDW,SWD,X,X0,X1,X2,XT,Y,Z Q
+"RTN","PSSJSV",25,0)
+ ;
+"RTN","PSSJSV",26,0)
+ENCHK ; admin times
+"RTN","PSSJSV",27,0)
+ N SCHED
+"RTN","PSSJSV",28,0)
+ I $S($L($P(X,"-"))>4:1,$L(X)>119:1,$L(X)<2:1,X'>0:1,1:X'?.ANP) K X Q
+"RTN","PSSJSV",29,0)
+ S X(1)=$P(X,"-") I X(1)'?2N,X(1)'?4N K X Q
+"RTN","PSSJSV",30,0)
+ S X(1)=$L(X(1)) F X(2)=2:1:$L(X,"-") S X(3)=$P(X,"-",X(2)) I $S($L(X(3))'=X(1):1,X(3)>$S(X(1)=2:24,1:2400):1,1:X(3)'>$P(X,"-",X(2)-1)) K X Q
+"RTN","PSSJSV",31,0)
+ Q:'$D(X)
+"RTN","PSSJSV",32,0)
+ S X(1)=$L(X,"-")
+"RTN","PSSJSV",33,0)
+ S SCHED=$S($G(DA(1)):$$GET1^DIQ(52.61,+$G(DA)_","_DA(1),4),$G(DA):$$GET1^DIQ(52.6,+DA,4),1:"")
+"RTN","PSSJSV",34,0)
+ Q:(SCHED="")
+"RTN","PSSJSV",35,0)
+ S IENS=$O(^PS(51.1,"B",SCHED,0))
+"RTN","PSSJSV",36,0)
+ S X(4)=$S($G(PSSJSE)&($G(PSSSCT)]""):PSSSCT,1:$$GET1^DIQ(51.1,IENS,5,"I"))
+"RTN","PSSJSV",37,0)
+ I X(4)="D" D  Q  ;DOW schedules require at least one admin time
+"RTN","PSSJSV",38,0)
+ . I X(1)>0 K:$D(X) X(1),X(2),X(3) Q
+"RTN","PSSJSV",39,0)
+ . K X
+"RTN","PSSJSV",40,0)
+ I X(4)="O" D  Q
+"RTN","PSSJSV",41,0)
+ . I $L(X,"-")>1 K X Q  ;One Time schedules allow one admin time
+"RTN","PSSJSV",42,0)
+ . I X="" K X Q  ;One Time schedules require one admin time
+"RTN","PSSJSV",43,0)
+ S X(2)=$S($G(PSSJSE)&($G(PSSFRQ)):PSSFRQ,1:$$GET1^DIQ(51.1,IENS,2,"I"))
+"RTN","PSSJSV",44,0)
+ I X(2)="" K:$D(X) X(1),X(2),X(3) Q
+"RTN","PSSJSV",45,0)
+ I X(2)>0,X(2)<1440,(1440/X(2))'=X(1) K X Q  ;PSS*1*143 Admin times must match frequency
+"RTN","PSSJSV",46,0)
+ I X(2)>0,X(2)<1440,(1440#X(2))'=0,X(1)>0 K X Q  ;PSS*1*143 Odd schedules cannot have admin times
+"RTN","PSSJSV",47,0)
+ I X(2)>1440,(X(2)#1440)'=0,X(1)>1 K X Q  ;PSS*1*143 Odd schedules cannot have admin times
+"RTN","PSSJSV",48,0)
+ I X(2)>1439,$L(X,"-")'=1 K X Q  ;PSS*1*143 Schedules with frequency equal to or greater than 1 day can only have one admin time.
+"RTN","PSSJSV",49,0)
+ K:$D(X) X(1),X(2),X(3)
+"RTN","PSSJSV",50,0)
+ Q
+"RTN","PSSJSV",51,0)
+ ;
+"RTN","PSSJSV",52,0)
+DIC ; 51.1 look-up
+"RTN","PSSJSV",53,0)
+ S DIC="^PS(51.1,",DIC(0)=$E("E",'$D(PSJNE))_"ISZ",DIC("W")="I '$D(PSJNE) D DICW^PSSJSV0",D="AP"_PSJPP
+"RTN","PSSJSV",54,0)
+ D IX^DIC K DIC Q:Y'>0  S PSJY=+Y,(PSJX,X,X0)=Y(0,0),PSJM=$P(Y(0),"^",3),PSJTS=$P(Y(0),"^",5),PSJAX=$P(Y(0),U,7) S:PSJTS="" PSJTS="C" Q:PSJTS="O"!(PSJTS["R")  I $D(PSJW),$D(^PS(51.1,+Y,1,+PSJW,0)) S PSJAT=$P(^(0),"^",PSJTS="S"+2)
+"RTN","PSSJSV",55,0)
+ E  S PSJAT=$P(Y(0),"^",PSJTS="S"*4+2)
+"RTN","PSSJSV",56,0)
+ Q:PSJTS'="S"
+"RTN","PSSJSV",57,0)
+ F Y=1:1:$L(PSJAT,"-") S Y(1)=$P(PSJAT,"-",Y),PSJAT(Y(1))="",Y(2)=$O(^PS(51.15,"ACP",PSJPP,Y(1),0)) I Y(2),$D(^PS(51.15,Y(2),0)) S PSJAT(Y(1))=$P(^(0),"^",3) I $D(PSJW),$D(^(1,PSJW,0)),$P(^(0),"^",2)]"" S PSJAT(Y(1))=$P(^(0),"^",2)
+"RTN","PSSJSV",58,0)
+ Q
+"RTN","PSSJSV",59,0)
+ ;
+"RTN","PSSJSV",60,0)
+DW ;  week days
+"RTN","PSSJSV",61,0)
+ S SWD="SUNDAYS^MONDAYS^TUESDAYS^WEDNESDAYS^THURSDAYS^FRIDAYS^SATURDAYS",SDW=X,X=$P(X,"@",2) D ENCHK Q:'$D(X)
+"RTN","PSSJSV",62,0)
+ S X=$P(SDW,"@"),X(1)="-" I X?.E1P.E,X'["-" F QX=1:1:$L(X) I $E(X,QX)?1P S X(1)=$E(X,QX) Q
+"RTN","PSSJSV",63,0)
+ F Q=1:1:$L(X,X(1)) K:SWD="" X Q:SWD=""  S Z=$P(X,X(1),Q) D DWC Q:'$D(X)
+"RTN","PSSJSV",64,0)
+ K X(1) S:$D(X) X=SDW Q
+"RTN","PSSJSV",65,0)
+DWC I $L(Z)<2 K X Q
+"RTN","PSSJSV",66,0)
+ F QX=1:1:$L(SWD,"^") S Y=$P(SWD,"^",QX) I $P(Y,Z)="" S SWD=$P(SWD,Y,2) S:$L(SWD) SWD=$E(SWD,2,50) Q
+"RTN","PSSJSV",67,0)
+ E  K X
+"RTN","PSSJSV",68,0)
+ Q
+"RTN","PSSJSV",69,0)
+ ;
+"RTN","PSSJSV",70,0)
+ENSNV ; schedule name
+"RTN","PSSJSV",71,0)
+ I $S(X["""":1,$A(X)=45:1,X'?.ANP:1,$L(X)>20:1,$L(X)<2:1,1:X?1P.E) K X Q
+"RTN","PSSJSV",72,0)
+ I $S('$D(PSJPP):0,PSJPP="":1,PSJPP'?.ANP:1,1:'$$VERSION^XPDUTL(PSJPP)) K X
+"RTN","PSSJSV",73,0)
+ I $D(DA),$D(^PS(51.1,DA,0)),$P(^(0),"^",5)["D" S ZX=X D DNVX S:$D(X) X=ZX K Z1,Z2,Z3,Z4,ZX
+"RTN","PSSJSV",74,0)
+ Q
+"RTN","PSSJSV",75,0)
+ ;
+"RTN","PSSJSV",76,0)
+ENSHV ;  shift in 51.1
+"RTN","PSSJSV",77,0)
+ I $S($L(X)>11:1,$L(X)<1:1,'$D(PSJPP):1,PSJPP="":1,PSJPP'?.ANP:1,1:'$$VERSION^XPDUTL(PSJPP)) K X Q
+"RTN","PSSJSV",78,0)
+ F X(1)=1:1:$L(X,"-") S X(2)=$P(X,"-",X(1)) I $S(X(2)="":1,X(2)'?.ANP:1,1:'$D(^PS(51.15,"ACP",PSJPP,X(2)))) K X Q
+"RTN","PSSJSV",79,0)
+ K X(1),X(2) Q
+"RTN","PSSJSV",80,0)
+ ;
+"RTN","PSSJSV",81,0)
+ENVSST ;  shift start/stop times
+"RTN","PSSJSV",82,0)
+ I X'?2N1"-"2N,X'?4N1"-"4N K X Q
+"RTN","PSSJSV",83,0)
+ F X(1)=1,2 I $P(X,"-",X(1))>$S($L($P(X,"-",X(1)))<4:24,1:2400) K X Q
+"RTN","PSSJSV",84,0)
+ K X(1) Q
+"RTN","PSSJSV",85,0)
+ ;
+"RTN","PSSJSV",86,0)
+ENFQD ; frequency default
+"RTN","PSSJSV",87,0)
+ N X1,X2,Z S Z=$S($D(^PS(51.1,DA,0)):$P(^(0),"^"),1:""),X=""
+"RTN","PSSJSV",88,0)
+ S X=$P(Z,"^",3) I Z]"" Q
+"RTN","PSSJSV",89,0)
+ S Z=DA I $E(Z,1,2)="AD" Q
+"RTN","PSSJSV",90,0)
+ I $E(Z,1,3)="BID"!($E(Z,1,3)="TID")!($E(Z,1,3)="QID") S X=1440/$F("BTQ",$E(Z)) Q
+"RTN","PSSJSV",91,0)
+ E  S:$E(Z)="Q" Z=$E(Z,2,99) S:'Z Z="1"_Z S X1=+Z,Z=$P(Z,+Z,2),X2=0 S:$E(Z)="X" X2=X1,Z=$E(Z,2,99) I 'X2,$E(Z)="O" S X2=.5,Z=$E(Z,2,99)
+"RTN","PSSJSV",92,0)
+ S X=$S(Z["'":1,(Z["D"&(Z'["AD"))!(Z["AM")!(Z["PM")!(Z["HS"&(Z'["THS")):1440,Z["H"&(Z'["TH"):60,Z["AC"!(Z["PC"):480,Z["W":10080,Z["M":40320,1:"") Q:'X  S:X2 X=X\X2 S:'X2 X=X*X1 Q
+"RTN","PSSJSV",93,0)
+ ;
+"RTN","PSSJSV",94,0)
+ENFREQ ;validate frequency
+"RTN","PSSJSV",95,0)
+ K:+X'=X!(X>129600)!(X<1)!(X?.E1"."1N.N) X
+"RTN","PSSJSV",96,0)
+ Q
+"RTN","PSSJSV",97,0)
+ ;
+"RTN","PSSJSV",98,0)
+ENDNV ; day of the week name
+"RTN","PSSJSV",99,0)
+ N Z1,Z2,Z3,Z4 S X=$S($D(^PS(51.1,DA,0)):$P(^(0),"^"),1:"") I X="" K X Q
+"RTN","PSSJSV",100,0)
+ ;
+"RTN","PSSJSV",101,0)
+DNVX S Z2=1,Z4="-" I X'["-",X?.E1P.E F Z1=1:1:$L(X) I $E(X,Z1)?1P S Z4=$E(X,Z1) Q
+"RTN","PSSJSV",102,0)
+ F Z1=1:1:$L(X,Z4) Q:'Z2  S Z2=0 I $L($P(X,Z4,Z1))>1 F Z3="MONDAYS","TUESDAYS","WEDNESDAYS","THURSDAYS","FRIDAYS","SATURDAYS","SUNDAYS" I $P(Z3,$P(X,Z4,Z1))="" S Z2=1 Q
+"RTN","PSSJSV",103,0)
+ K:'Z2 X S:Z2 X="D" Q
+"RTN","PSSJSV",104,0)
+ ;
+"RTN","PSSJSV",105,0)
+ENPSJ ;validate schedule names for PSJ package
+"RTN","PSSJSV",106,0)
+ N A,B,I,PSSCNT
+"RTN","PSSJSV",107,0)
+ S X=$$UP^XLFSTR(X)
+"RTN","PSSJSV",108,0)
+ I $G(PSJPP)'="PSJ" Q
+"RTN","PSSJSV",109,0)
+ S A=$TR(X,".","") I A="OTHER" K X Q
+"RTN","PSSJSV",110,0)
+ F I=1:1:$L(A," ") S B=$P(A," ",I) I B="QD"!(B="QOD")!(B="HS")!(B="TIW") K X ;;>> *149 RJS
+"RTN","PSSJSV",111,0)
+ Q:'$D(X)
+"RTN","PSSJSV",112,0)
+ S DOW=0,ZX=X S X=$P(X,"@") D DNVX I $G(X)="" S X=ZX K ZX
+"RTN","PSSJSV",113,0)
+ I X="D" S X=ZX,DOW=1 D:X["@" CHKORD I $D(X),$G(PSSCNT)>1 D  S:'$D(X) X=ZX K Z1,Z2,Z3,Z4,ZX
+"RTN","PSSJSV",114,0)
+ .N MSG
+"RTN","PSSJSV",115,0)
+ .S MSG(1)="",MSG(2)="The day of the week schedule must be in the correct day of week order."
+"RTN","PSSJSV",116,0)
+ .S MSG(3)="The correct order is: SU-MO-TU-WE-TH-FR-SA"
+"RTN","PSSJSV",117,0)
+ .D EN^DDIOL(.MSG,"","!")
+"RTN","PSSJSV",118,0)
+ .Q
+"RTN","PSSJSV",119,0)
+SCRN ;LOGIC TO SCREEN OUT @ IF NOT DAILY
+"RTN","PSSJSV",120,0)
+ S (PSSFLG,PSSDFLG,PSSTFLG,PSSAFLG)=0
+"RTN","PSSJSV",121,0)
+ Q:X'["@"
+"RTN","PSSJSV",122,0)
+ I $G(PSSCNT) K PSSCNT,X Q
+"RTN","PSSJSV",123,0)
+ D DAYS,TIMECHK
+"RTN","PSSJSV",124,0)
+ I $L(X)<2!($L(X)>20) D MSG1
+"RTN","PSSJSV",125,0)
+ I $G(PSSAFLG) D MSG4
+"RTN","PSSJSV",126,0)
+ I $G(PSSTFLG) D MSG3
+"RTN","PSSJSV",127,0)
+ I $G(PSSDFLG) D MSG2
+"RTN","PSSJSV",128,0)
+ I $G(PSSFLG) S MSG(4)="",MSG(5)="  "_X D EN^DDIOL(.MSG,"","!") K MSG
+"RTN","PSSJSV",129,0)
+ K:$G(PSSFLG) X
+"RTN","PSSJSV",130,0)
+ K PSSFLG,PSSDFLG,PSSTFLG,PSSAFLG
+"RTN","PSSJSV",131,0)
+ Q
+"RTN","PSSJSV",132,0)
+ ;
+"RTN","PSSJSV",133,0)
+ENPSJT ; Validate schedule type (one-time PRN conflict)
+"RTN","PSSJSV",134,0)
+ N A,B
+"RTN","PSSJSV",135,0)
+ S A=$$GET1^DIQ(51.1,DA,.01),B=""
+"RTN","PSSJSV",136,0)
+ I A["PRN",X'="P" D
+"RTN","PSSJSV",137,0)
+ . S B="Conflict: Schedule Name contains PRN but selected Schedule Type is not PRN."
+"RTN","PSSJSV",138,0)
+ . K X
+"RTN","PSSJSV",139,0)
+ I A'["PRN",X="P" D
+"RTN","PSSJSV",140,0)
+ . S B="Conflict: Schedule Name does not contain PRN but selected Schedule Type is PRN."
+"RTN","PSSJSV",141,0)
+ . K X
+"RTN","PSSJSV",142,0)
+ I $L(B)>0 D EN^DDIOL(.B,"","!") Q
+"RTN","PSSJSV",143,0)
+ S A=$$GET1^DIQ(51.1,DA,2),B=""
+"RTN","PSSJSV",144,0)
+ Q
+"RTN","PSSJSV",145,0)
+ ;
+"RTN","PSSJSV",146,0)
+CHKORD ;Check order of days in DOW schedule name
+"RTN","PSSJSV",147,0)
+ N I,J,L,N,P,W
+"RTN","PSSJSV",148,0)
+ S N=$P(X,"@"),L=0,P=$L(N,"-"),W="SUNDAYS,MONDAYS,TUESDAYS,WEDNESDAYS,THURSDAYS,FRIDAYS,SATURDAYS",PSSCNT=0
+"RTN","PSSJSV",149,0)
+ F I=1:1:P F J=1:1:7 I $P(W,",",J)=$P(N,"-",I) K:J'>L X Q:'$D(X)  S:J>L L=J,PSSCNT=PSSCNT+1
+"RTN","PSSJSV",150,0)
+ Q
+"RTN","PSSJSV",151,0)
+ ;
+"RTN","PSSJSV",152,0)
+RMTIME ;Remove ward times when schedule becomes odd
+"RTN","PSSJSV",153,0)
+ N R
+"RTN","PSSJSV",154,0)
+ S R=0 F  S R=$O(^PS(51.1,D0,1,R)) Q:R=""  K ^PS(51.1,D0,1,R)
+"RTN","PSSJSV",155,0)
+ Q
+"RTN","PSSJSV",156,0)
+DAYS ; check days of week for correct order sequence
+"RTN","PSSJSV",157,0)
+ N PSSD2,PSSD3,PSSD4,PSSD1,PSSD5,PSSD6,PSSFND
+"RTN","PSSJSV",158,0)
+ S PSSD1=$P(X,"@"),PSSD4=0,PSSD5=$L(PSSD1,"-"),PSSD6="SU,MO,TU,WE,TH,FR,SA",PSSFND=0
+"RTN","PSSJSV",159,0)
+ F PSSD2=1:1:PSSD5 Q:'$D(PSSD1)  D
+"RTN","PSSJSV",160,0)
+ .F PSSD3=1:1:7 D  Q:'$D(PSSD1)
+"RTN","PSSJSV",161,0)
+ ..I $P(PSSD6,",",PSSD3)=$P(PSSD1,"-",PSSD2) K:PSSD3'>PSSD4 PSSD1 Q:'$D(PSSD1)  S PSSFND=PSSFND+1 S:PSSD3>PSSD4 PSSD4=PSSD3
+"RTN","PSSJSV",162,0)
+ ..I $L($P(PSSD1,"-",PSSD2))>2 K PSSD1
+"RTN","PSSJSV",163,0)
+ .K:PSSFND'=PSSD2 PSSD1
+"RTN","PSSJSV",164,0)
+ I ('$D(PSSD1)!('$D(PSSFND))) S PSSDFLG=1
+"RTN","PSSJSV",165,0)
+ Q
+"RTN","PSSJSV",166,0)
+MSG1 ; max length exceeded message
+"RTN","PSSJSV",167,0)
+ S MSG(1)="",MSG(2)="The Administration Schedule you entered has "_$L(X)_" characters."
+"RTN","PSSJSV",168,0)
+ S MSG(3)="Answer must be 2-20 characters in length."
+"RTN","PSSJSV",169,0)
+ D EN^DDIOL(.MSG,"","!")
+"RTN","PSSJSV",170,0)
+ S PSSFLG=1
+"RTN","PSSJSV",171,0)
+ K MSG
+"RTN","PSSJSV",172,0)
+ Q
+"RTN","PSSJSV",173,0)
+MSG2 ; day of week order squence message
+"RTN","PSSJSV",174,0)
+ S MSG(1)="",MSG(2)="The day of the week schedule must be in the correct day of week order."
+"RTN","PSSJSV",175,0)
+ S MSG(3)="The correct order is: SU-MO-TU-WE-TH-FR-SA"
+"RTN","PSSJSV",176,0)
+ D EN^DDIOL(.MSG,"","!")
+"RTN","PSSJSV",177,0)
+ S PSSFLG=1
+"RTN","PSSJSV",178,0)
+ K MSG
+"RTN","PSSJSV",179,0)
+ Q
+"RTN","PSSJSV",180,0)
+MSG3 ; time input message
+"RTN","PSSJSV",181,0)
+ S MSG(1)="",MSG(2)="The time must be between 0001 - 2400."
+"RTN","PSSJSV",182,0)
+ S MSG(3)="A correct time entry would be: 0800-1200-1600 etc."
+"RTN","PSSJSV",183,0)
+ D EN^DDIOL(.MSG,"","!")
+"RTN","PSSJSV",184,0)
+ S PSSFLG=1
+"RTN","PSSJSV",185,0)
+ K MSG
+"RTN","PSSJSV",186,0)
+ Q
+"RTN","PSSJSV",187,0)
+MSG4 ; time sequence message
+"RTN","PSSJSV",188,0)
+ S MSG(1)="",MSG(2)="The time must be entered in ascending order."
+"RTN","PSSJSV",189,0)
+ S MSG(3)="A correct time entry would be: 0800-1200-1600 etc."
+"RTN","PSSJSV",190,0)
+ D EN^DDIOL(.MSG,"","!")
+"RTN","PSSJSV",191,0)
+ S PSSFLG=1
+"RTN","PSSJSV",192,0)
+ K MSG
+"RTN","PSSJSV",193,0)
+ Q
+"RTN","PSSJSV",194,0)
+TIMECHK ; time validation
+"RTN","PSSJSV",195,0)
+ N PSSXTIME,PSSTLN,PSSLOOP,PSSTCHR,PSSDASH,PSSLEN,PSSTCHK,PSSTIMCT,PSSTIME
+"RTN","PSSJSV",196,0)
+ I $L(X,"@")>2 S (PSSDFLG,PSSTFLG)=1 Q
+"RTN","PSSJSV",197,0)
+ S PSSXTIME=$P(X,"@",2),PSSTLN=$L(PSSXTIME),PSSTFLG=0,PSSDASH=$L(PSSXTIME,"-")
+"RTN","PSSJSV",198,0)
+ I PSSXTIME=0 S PSSTFLG=1 Q
+"RTN","PSSJSV",199,0)
+ F PSSTIMCT=1:1:PSSDASH S PSSTIME=$P(PSSXTIME,"-",PSSTIMCT) D
+"RTN","PSSJSV",200,0)
+ .S PSSTCHK(PSSTIMCT)=PSSTIME,PSSLEN=$L(PSSTIME)
+"RTN","PSSJSV",201,0)
+ .I $L(PSSTCHK(PSSTIMCT))=2 S PSSTCHK(PSSTIMCT)=PSSTCHK(PSSTIMCT)_"00"
+"RTN","PSSJSV",202,0)
+ .F PSSLOOP=1:1:PSSLEN D
+"RTN","PSSJSV",203,0)
+ ..S PSSTCHR=$E(PSSTIME,PSSLOOP)
+"RTN","PSSJSV",204,0)
+ ..I $A(PSSTCHR)<48!($A(PSSTCHR)>57) S PSSTFLG=1
+"RTN","PSSJSV",205,0)
+ .I ((PSSTIME<1)!(PSSLEN=1)!(PSSLEN=3)!(PSSLEN>4)) S PSSTFLG=1
+"RTN","PSSJSV",206,0)
+ F PSSTIMCT=1:1:PSSDASH D
+"RTN","PSSJSV",207,0)
+ .I $G(PSSTCHK(PSSTIMCT+1)),PSSTCHK(PSSTIMCT)>PSSTCHK(PSSTIMCT+1) S PSSAFLG=1
+"RTN","PSSJSV",208,0)
+ .I $L(PSSTCHK(PSSTIMCT))=4 D
+"RTN","PSSJSV",209,0)
+ ..I $E(PSSTCHK(PSSTIMCT),1,4)>2400 S PSSTFLG=1
+"RTN","PSSJSV",210,0)
+ ..I $E(PSSTCHK(PSSTIMCT),1,2)<24 D
+"RTN","PSSJSV",211,0)
+ ...I $E(PSSTCHK(PSSTIMCT),3,4)>59 S PSSTFLG=1
+"RTN","PSSJSV",212,0)
+ Q
+"RTN","PSSVIDRG")
+0^1^B70076783^B28763212
+"RTN","PSSVIDRG",1,0)
+PSSVIDRG ;BIR/PR,WRT-ADD OR EDIT IV DRUGS ; 11/19/09 11:02am
+"RTN","PSSVIDRG",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**2,10,32,38,125,146**;9/30/97;Build 34
+"RTN","PSSVIDRG",3,0)
+ ;
+"RTN","PSSVIDRG",4,0)
+ ;Reference to ENIVKV^PSGSETU is supported by DBIA # 2153.
+"RTN","PSSVIDRG",5,0)
+ ;Reference to ^PSIV is supported by DBIA # 2155.
+"RTN","PSSVIDRG",6,0)
+ ;Reference to ^PSIVHLP1 is supported by DBIA # 2156.
+"RTN","PSSVIDRG",7,0)
+ ;Reference to ^PSIVXU is supported by DBIA # 2157.
+"RTN","PSSVIDRG",8,0)
+ ;
+"RTN","PSSVIDRG",9,0)
+ENS ;Enter here to enter/edit solutions
+"RTN","PSSVIDRG",10,0)
+ N FI,PSPRNM S DRUGEDIT=1,FI=52.7
+"RTN","PSSVIDRG",11,0)
+ L +^PS(FI):$S($G(DILOCKTM)>0:DILOCKTM,1:3) E  W $C(7),!!,"Someone else is entering drugs ... try later !",!! G K
+"RTN","PSSVIDRG",12,0)
+ENS1 ;
+"RTN","PSSVIDRG",13,0)
+ ; PSS*1*146 Compare and confirm SOLUTION Print name change
+"RTN","PSSVIDRG",14,0)
+ N DA,DIC,DLAYGO,II,PSDA,PSI,PSSY,PSSDG,PSSEL1,PSSDRG
+"RTN","PSSVIDRG",15,0)
+NS2 S PSI=0 I $G(DISPDRG),$O(^PS(52.7,"AC",DISPDRG,0)) S PSSY=0 F  S PSSY=$O(^PS(52.7,"AC",DISPDRG,PSSY)) Q:'PSSY  S PSI=PSI+1,PSSY(PSI)=PSSY
+"RTN","PSSVIDRG",16,0)
+ I PSI=1 S DIC("B")=$G(PSSY(1)) S DIC=FI,DIC(0)="AEQML",DLAYGO=52.7 D ^DIC I Y<0 K PSFLGA G K1
+"RTN","PSSVIDRG",17,0)
+ I PSI=0 S DIC=FI,DIC(0)="AEQML",DLAYGO=52.7 D ^DIC I Y<0 K PSFLGA G K1
+"RTN","PSSVIDRG",18,0)
+ ;
+"RTN","PSSVIDRG",19,0)
+ENS2 ; IV Solutions Editing
+"RTN","PSSVIDRG",20,0)
+ S PSSQUIT=0
+"RTN","PSSVIDRG",21,0)
+ I '$G(PSFLGA)&(PSI>1) F  D  Q:$G(Y)
+"RTN","PSSVIDRG",22,0)
+ . W !!," ",$$GET1^DIQ(50,DISPDRG,.01)," currently linked to IV Solutions:",!
+"RTN","PSSVIDRG",23,0)
+ . S (PSDA,II)=0 F  S PSDA=$O(PSSY(PSDA)) Q:'PSDA  S II=II+1 W !,?3,II_". ",$P(^PS(52.7,$G(PSSY(PSDA)),0),"^")
+"RTN","PSSVIDRG",24,0)
+ . W !!,"Select "_$S(PSI=1:1,1:"1-"_PSI)_" from list above or type 'NEW' to link to a new IV Solution: "
+"RTN","PSSVIDRG",25,0)
+ . R X:DTIME I '$T!("^"[X) S Y=-1 Q
+"RTN","PSSVIDRG",26,0)
+ . W ! I $$UP^XLFSTR(X)="NEW" D NEW(52.7) Q
+"RTN","PSSVIDRG",27,0)
+ . I '$D(PSSY(X)) W !!,"Select the number corresponding to the IV SOLUTION you want to edit",!,"or type 'NEW' to link ",$$GET1^DIQ(50,DISPDRG,.01)," to a new IV SOLUTION.",$C(7) Q
+"RTN","PSSVIDRG",28,0)
+ . I $D(PSSY(X)) S Y=$G(PSSY(X))
+"RTN","PSSVIDRG",29,0)
+ G K1:($G(Y)<0)
+"RTN","PSSVIDRG",30,0)
+ W ! K PSSEL1 S PSSASK="SOLUTIONS",DRUG=+Y,DIE=FI,(DA,ENTRY)=+Y,DR=".01" D EECK G K1:$G(PSSEL1)="^" I $G(PSSEL1)=2 S Y=0 W ! G NS2
+"RTN","PSSVIDRG",31,0)
+ N PSSQUIT S PSSQUIT=0
+"RTN","PSSVIDRG",32,0)
+ S PSSDRG=$P($G(^PS(52.7,ENTRY,0)),"^",2),DA=ENTRY,DIE="^PS(52.7,",DR="D PRNMHD^PSSVIDRG;.01;.01///^S X=$$PRNM^PSSVIDRG();.02;1///^S X=$$GEND^PSSVIDRG($S($G(DISPDRG):DISPDRG,$G(PSSDRG):PSSDRG,1:""""));D GETD^PSSVIDRG;2:8;10:15;17:99999"
+"RTN","PSSVIDRG",33,0)
+ N PSSENTRY I $G(DA) S PSSENTRY=DA D ^DIE I '$G(PSSQUIT) D MFS^PSSDEE K PSFLGS,PSSY
+"RTN","PSSVIDRG",34,0)
+ Q
+"RTN","PSSVIDRG",35,0)
+ENA ;Enter here to enter/edit additives.
+"RTN","PSSVIDRG",36,0)
+ N FI,PSPRNM S DRUGEDIT=1,FI=52.6
+"RTN","PSSVIDRG",37,0)
+ L +^PS(FI):$S($G(DILOCKTM)>0:DILOCKTM,1:3) E  W $C(7),!!,"Someone else is entering drugs ... try later !",!! G K
+"RTN","PSSVIDRG",38,0)
+ ;
+"RTN","PSSVIDRG",39,0)
+ENA1 ;
+"RTN","PSSVIDRG",40,0)
+ ; PSS*1*146 Compare and confirm ADDITIVE Print name change
+"RTN","PSSVIDRG",41,0)
+ N DA,DIC,DIE,DLAYGO,PSI,PSSY,PSSEL1,PSSDRG
+"RTN","PSSVIDRG",42,0)
+NA2 S PSI=0
+"RTN","PSSVIDRG",43,0)
+ I $G(DISPDRG),$O(^PS(52.6,"AC",DISPDRG,0)) D
+"RTN","PSSVIDRG",44,0)
+ . S PSSY=0 F  S PSSY=$O(^PS(52.6,"AC",DISPDRG,PSSY)) Q:'PSSY  S PSI=PSI+1,PSSY(PSI)=PSSY
+"RTN","PSSVIDRG",45,0)
+ I PSI=1 S DIC("B")=$G(PSSY(1)) S DIC=FI,DIC(0)="AEQML",DLAYGO=52.6 D ^DIC I Y<0 K PSFLGA G K1
+"RTN","PSSVIDRG",46,0)
+ I PSI=0 S DIC=FI,DIC(0)="AEQML",DLAYGO=52.6 D ^DIC I Y<0 K PSFLGA G K1
+"RTN","PSSVIDRG",47,0)
+ ;
+"RTN","PSSVIDRG",48,0)
+ENA2 ; IV Additives Editing
+"RTN","PSSVIDRG",49,0)
+ S PSSQUIT=0
+"RTN","PSSVIDRG",50,0)
+ I '$G(PSFLGA)&(PSI>1) F  D  Q:$G(Y)
+"RTN","PSSVIDRG",51,0)
+ . W !!," ",$$GET1^DIQ(50,DISPDRG,.01)," currently linked to the following IV Additives:",!
+"RTN","PSSVIDRG",52,0)
+ . S (PSDA,II)=0 F  S PSDA=$O(PSSY(PSDA)) Q:'PSDA  S II=II+1 W !,?3,II_". ",$P(^PS(52.6,$G(PSSY(PSDA)),0),"^")
+"RTN","PSSVIDRG",53,0)
+ . W !!,"Select "_$S(PSI=1:1,1:"1-"_PSI)_" from list above or type 'NEW' to link to a new IV Additive: "
+"RTN","PSSVIDRG",54,0)
+ . R X:DTIME I '$T!("^"[X) S Y=-1 Q
+"RTN","PSSVIDRG",55,0)
+ . W ! I $$UP^XLFSTR(X)="NEW" D NEW(52.6) Q
+"RTN","PSSVIDRG",56,0)
+ . I '$D(PSSY(X)) W !!,"Select the number corresponding to the IV ADDITIVE you want to edit",!,"or type 'NEW' to link ",$$GET1^DIQ(50,DISPDRG,.01)," to a new IV ADDITIVE.",$C(7) Q
+"RTN","PSSVIDRG",57,0)
+ . I $D(PSSY(X)) S Y=$G(PSSY(X))
+"RTN","PSSVIDRG",58,0)
+ G K1:($G(Y)<0)
+"RTN","PSSVIDRG",59,0)
+ K PSSEL1 S PSSASK="ADDITIVES",DRUG=+Y,DIE=FI,(DA,ENTRY)=+Y D EECK  G K1:$G(PSSEL1)="^" I $G(PSSEL1)=2 S Y=0 W ! G NA2
+"RTN","PSSVIDRG",60,0)
+ S PSSDRG=$P($G(^PS(52.6,ENTRY,0)),"^",2),DIE="^PS(52.6,",DA=ENTRY,DR="[PSSIV ADD]"
+"RTN","PSSVIDRG",61,0)
+ N PSSENTRY I '$G(PSSQUIT),$G(DA) S PSSENTRY=DA D ^DIE S ENTRY=PSSENTRY D MFA^PSSDEE
+"RTN","PSSVIDRG",62,0)
+ K PSFLGA,PSSY
+"RTN","PSSVIDRG",63,0)
+ Q
+"RTN","PSSVIDRG",64,0)
+ENC ;Enter here to enter/edit IV Categories
+"RTN","PSSVIDRG",65,0)
+ ;S X="PSIVXU" X ^%ZOSF("TEST") I  D ^PSIVXU Q:$D(XQUIT)  K DA,DIC,DIE,DR,DLAYGO S DIC="^PS(50.2,",DIC(0)="AEQL",DLAYGO=50.2 D ^DIC G:Y<0 K S DIE=DIC,DR=".01;1",DA=+Y D ^DIE G K
+"RTN","PSSVIDRG",66,0)
+ Q
+"RTN","PSSVIDRG",67,0)
+K1 ;
+"RTN","PSSVIDRG",68,0)
+ L -^PS(FI)
+"RTN","PSSVIDRG",69,0)
+K S X="PSGSETU" X ^%ZOSF("TEST") I  D ENIVKV^PSGSETU
+"RTN","PSSVIDRG",70,0)
+KDRG K B,DA,DG,DIC,DIE,DIJ,DIX,DIY,DIYS,DLAYGO,DO,DRUG,DRUGEDIT,FI,I,J,P,PSIV,PSIVAT,PSSIVDRG,PSIVSC,XT,Z
+"RTN","PSSVIDRG",71,0)
+ Q
+"RTN","PSSVIDRG",72,0)
+ ;
+"RTN","PSSVIDRG",73,0)
+GETD ;See if generic drug is inactive in file 50.
+"RTN","PSSVIDRG",74,0)
+ I $D(^PSDRUG(X,"I")),^("I"),(DT+1>+^("I")) W $C(7),$C(7),!!,"This drug is inactive and will not be selectable during IV order entry.",! S ^PS(FI,DRUG,"I")=^PSDRUG(X,"I")
+"RTN","PSSVIDRG",75,0)
+ Q
+"RTN","PSSVIDRG",76,0)
+ENTDRG ;This module is no longer utilized by the Inpatient Medications application.
+"RTN","PSSVIDRG",77,0)
+ ;Will print word-processing field in IV add. file (52.6) and
+"RTN","PSSVIDRG",78,0)
+ ;IV sol. file (52.7).
+"RTN","PSSVIDRG",79,0)
+ ;
+"RTN","PSSVIDRG",80,0)
+ Q
+"RTN","PSSVIDRG",81,0)
+ ;S X="PSIV" X ^%ZOSF("TEST") I  D ^PSIV Q:$D(XQUIT)
+"RTN","PSSVIDRG",82,0)
+ S X="PSIV" X ^%ZOSF("TEST") I  D ^PSIVHLP1 Q:$D(XQUIT)
+"RTN","PSSVIDRG",83,0)
+ N P W !!,"Are you inquiring on" S X="... an IV ADDITIVE or IV SOLUTION (A/S): ^ADDITIVE^^ADDITIVE,SOLUTION" D ENQ^PSIV S X=$E(X) Q:"^"[X  I X["?" S HELP="DRGINQ" D ^PSIVHLP1 G ENTDRG
+"RTN","PSSVIDRG",84,0)
+ S FI=$S(X["A":52.6,1:52.7) N D0,D1,DA,DI,DIE,DP,DR,DQ
+"RTN","PSSVIDRG",85,0)
+DRG F Y=0:0 W ! X ^DD(55.11,.01,12.1) K DA,DIC S DIC="^PS("_FI_",",DIC(0)="QEAM" D ^DIC G:Y<0 KDRG S PSSIVDRG=+Y D WPH,WP
+"RTN","PSSVIDRG",86,0)
+ G KDRG
+"RTN","PSSVIDRG",87,0)
+WPH ;
+"RTN","PSSVIDRG",88,0)
+ W:$Y @IOF W ! F Y=1:1:79 W "-"
+"RTN","PSSVIDRG",89,0)
+ W !,"Drug information on: ",$P(^PS(FI,PSSIVDRG,0),"^")
+"RTN","PSSVIDRG",90,0)
+ W !?7,"Last updated: " W:'$D(^PS(FI,PSSIVDRG,4,0)) "N/A" I $D(^(0)) S Y=$P(^(0),"^",5) X ^DD("DD") W $P(Y,"@")," ",$P(Y,"@",2)
+"RTN","PSSVIDRG",91,0)
+ W ! Q
+"RTN","PSSVIDRG",92,0)
+WP W ! I '$D(^PS(FI,PSSIVDRG,4,0)) W !,"*** No information on file. ***"
+"RTN","PSSVIDRG",93,0)
+ F Z=0:0 S Z=$O(^PS(FI,PSSIVDRG,4,Z)) Q:'Z  W !,^(Z,0) I $Y+5>IOSL W $C(7),!!,"Press return key: " R I:DTIME Q:'$T!(I["^")  D WPH
+"RTN","PSSVIDRG",94,0)
+ W ! F Y=1:1:79 W "-"
+"RTN","PSSVIDRG",95,0)
+ Q
+"RTN","PSSVIDRG",96,0)
+ENT ;
+"RTN","PSSVIDRG",97,0)
+ ;Will print out information on IV DRUGS
+"RTN","PSSVIDRG",98,0)
+ Q
+"RTN","PSSVIDRG",99,0)
+ ;S X="PSIV" X ^%ZOSF("TEST") I  D ^PSIV Q:$D(XQUIT)
+"RTN","PSSVIDRG",100,0)
+ S X="PSIV" X ^%ZOSF("TEST") I  D ^PSIVHLP1 Q:$D(XQUIT)
+"RTN","PSSVIDRG",101,0)
+ ;
+"RTN","PSSVIDRG",102,0)
+BEG W !!,"Are you printing drug information from ..." S X="the IV ADDITIVE file or IV SOLUTION file ? ^ADDITIVE^^ADDITIVE,SOLUTION" D ENQ^PSIV G:"^"[X K I X["?" S HELP="DRGINQ" D ^PSIVHLP1 G BEG
+"RTN","PSSVIDRG",103,0)
+ S L=0,DIC="^PS("_$S(X["A":52.6,1:52.7)_"," D EN1^DIP D ^%ZISC G K
+"RTN","PSSVIDRG",104,0)
+ELECTRO ;Edit Electrolyte file
+"RTN","PSSVIDRG",105,0)
+ S X="PSIVXU" X ^%ZOSF("TEST") I  D ^PSIVXU Q:$D(XQUIT)  K DA,DIC S DIC="^PS(50.4,",DIC(0)="AEQLM",DLAYGO=50.4 D ^DIC G:Y<0 K
+"RTN","PSSVIDRG",106,0)
+ S DIE=DIC,DR="[PSSJIDE]",DA=+Y D ^DIE G ELECTRO
+"RTN","PSSVIDRG",107,0)
+ Q
+"RTN","PSSVIDRG",108,0)
+EECK I $D(PSSZ) S FILE=$S(PSSASK="ADDITIVES":$G(^PS(52.6,ENTRY,0)),1:$G(^PS(52.7,ENTRY,0))),PSSIEN=$P(FILE,"^",2) D:PSSIEN']"" PASSIN I PSSIEN'=DISPDRG D:$D(^PSDRUG(PSSIEN)) ECK,EECK1 D
+"RTN","PSSVIDRG",109,0)
+ . W !,"Do you really want to link this ",$S(PSSASK="ADDITIVES":"Additive",1:"Solution")," to ",$P(^PSDRUG(DISPDRG,0),"^",1)
+"RTN","PSSVIDRG",110,0)
+ . F  S %=2 D YN^DICN Q:%  W !,"  (A 'YES' or 'NO' response is required.)"
+"RTN","PSSVIDRG",111,0)
+ . I %Y="^" S PSSEL1="^" Q
+"RTN","PSSVIDRG",112,0)
+ . S PSSEL1=%
+"RTN","PSSVIDRG",113,0)
+ Q
+"RTN","PSSVIDRG",114,0)
+EECK1 Q:'$D(^PSDRUG(PSSIEN,0))  W !,"This Additive or Solution is linked to ",$P(^PSDRUG(PSSIEN,0),"^",1),".",!,"You are editing dispense drug ",$P(^PSDRUG(DISPDRG,0),"^",1),".",!
+"RTN","PSSVIDRG",115,0)
+ Q
+"RTN","PSSVIDRG",116,0)
+ECK W !,"You are editing a Additive or Solution which is linked to a different",!,"dispense drug from the one you are currently editing."
+"RTN","PSSVIDRG",117,0)
+ Q
+"RTN","PSSVIDRG",118,0)
+SOI I $D(^PS(59.7,1,80)),$P(^PS(59.7,1,80),"^",2)>1 W !!,"You are NOW in the ORDERABLE ITEM matching for Solutions." S Y=ENTRY_"^"_$P(^PS(52.7,ENTRY,0),"^",1),PSMASTER=1 D MAS^PSSSOLIT K PSMASTER
+"RTN","PSSVIDRG",119,0)
+ Q
+"RTN","PSSVIDRG",120,0)
+ADDOI I $D(^PS(59.7,1,80)),$P(^PS(59.7,1,80),"^",2)>1 W !!,"You are NOW in the ORDERABLE ITEM matching for Additives." S Y=ENTRY_"^"_$P(^PS(52.6,ENTRY,0),"^",1),PSMASTER=1 D MAS^PSSADDIT K PSMASTER
+"RTN","PSSVIDRG",121,0)
+ Q
+"RTN","PSSVIDRG",122,0)
+PASSIN S FILE=$S(PSSASK="ADDITIVES":$G(^PS(52.6,ENTRY,0)),1:$G(^PS(52.7,ENTRY,0))) S (X,PSSIEN)=DISPDRG ;146
+"RTN","PSSVIDRG",123,0)
+ Q
+"RTN","PSSVIDRG",124,0)
+MASTER F PSSOR=0:0 S PSSOR=$O(^PS(50.7,PSSOR)) Q:'PSSOR  D EN2^PSSHL1(PSSOR,"MUP")
+"RTN","PSSVIDRG",125,0)
+ Q
+"RTN","PSSVIDRG",126,0)
+PRNMHD ; PSS*1*146 Hold the print name when editing
+"RTN","PSSVIDRG",127,0)
+ N FI K PSPRNM
+"RTN","PSSVIDRG",128,0)
+ S FI=DIC I FI'["^" S FI="^PS("_FI_","
+"RTN","PSSVIDRG",129,0)
+ S FI=FI_DA_",0)",PSPRNM=$P($G(@FI),"^")
+"RTN","PSSVIDRG",130,0)
+ Q
+"RTN","PSSVIDRG",131,0)
+PRNM() ; PSS*1*146 compare and confirm Print name change
+"RTN","PSSVIDRG",132,0)
+ N PRNMDONE,%,FI,PRNAME,DUP,DUPLIC S PRNMDONE=0
+"RTN","PSSVIDRG",133,0)
+ S FI=DIC I FI'["^" S FI="^PS("_FI_","
+"RTN","PSSVIDRG",134,0)
+ S FI=FI_DA_",0)",PRNAME=$P($G(@FI),"^")
+"RTN","PSSVIDRG",135,0)
+ I PSPRNM'=PRNAME S DUPLIC=0 D  I DUPLIC Q PSPRNM
+"RTN","PSSVIDRG",136,0)
+ . S DUP=DIC I DUP'["^" S DUP="^PS("_DUP_","
+"RTN","PSSVIDRG",137,0)
+ . S DUP="$O("_DIC_"""B"","""_PRNAME_""","_DA_"))!$O("_DIC_"""B"","""_PRNAME_""","_DA_"),-1)"
+"RTN","PSSVIDRG",138,0)
+ . I @DUP D
+"RTN","PSSVIDRG",139,0)
+ . . W !,"PRINT NAME ALREADY ON FILE! PRINT NAME reset to "_PSPRNM,!,$C(7)
+"RTN","PSSVIDRG",140,0)
+ . . S DUPLIC=1
+"RTN","PSSVIDRG",141,0)
+ I (PSPRNM]"")&(PRNAME]"")&(PSPRNM'=PRNAME) F  Q:$G(PRNMDONE)  D
+"RTN","PSSVIDRG",142,0)
+ . W !,"  ARE YOU SURE YOU WANT TO CHANGE THE PRINT NAME TO "_PRNAME
+"RTN","PSSVIDRG",143,0)
+ . S %=2 D YN^DICN
+"RTN","PSSVIDRG",144,0)
+ . S:(%=1) PSPRNM=PRNAME S:% PRNMDONE=1
+"RTN","PSSVIDRG",145,0)
+ . I %Y="^" S PSSQUIT=1,PRNMDONE=1
+"RTN","PSSVIDRG",146,0)
+ . I 'PRNMDONE W !,"  Answer with 'Yes' or 'No'.",$C(7),! Q
+"RTN","PSSVIDRG",147,0)
+ . W !,"  PRINT NAME set to "_PSPRNM
+"RTN","PSSVIDRG",148,0)
+ Q PSPRNM
+"RTN","PSSVIDRG",149,0)
+GEND(CUR) ;PSS*1*146
+"RTN","PSSVIDRG",150,0)
+ ;Ask and Confirm generic drug.
+"RTN","PSSVIDRG",151,0)
+ ;Returns Selected drug IEN (file 50)
+"RTN","PSSVIDRG",152,0)
+ ; CUR -> Default (Current Drug)
+"RTN","PSSVIDRG",153,0)
+ N DIC,%,PSSEL,Y,X
+"RTN","PSSVIDRG",154,0)
+ S PSSEL=0,DIC=50,DIC("A")="GENERIC DRUG: ",DIC(0)="AEMQ",DIC("B")=$S($G(CUR):CUR,1:"")
+"RTN","PSSVIDRG",155,0)
+ F  D  Q:PSSEL=1
+"RTN","PSSVIDRG",156,0)
+ . D ^DIC W:(Y'>0)&($G(CUR)']"") " ??" I $G(CUR)]"",$G(DUOUT)!$G(DTOUT) S PSSEL=1,PSSQUIT=1 Q
+"RTN","PSSVIDRG",157,0)
+ . I +Y=+CUR D  I PSSEL=1 Q
+"RTN","PSSVIDRG",158,0)
+ . . I PSSASK="ADDITIVES",$D(^PS(52.6,"AC",+Y,+$G(DA))) S PSSEL=1 Q
+"RTN","PSSVIDRG",159,0)
+ . . I PSSASK="SOLUTIONS",$D(^PS(52.7,"AC",+Y,+$G(DA))) S PSSEL=1 Q
+"RTN","PSSVIDRG",160,0)
+ . I Y>0 F  D  Q:$G(PSSEL)
+"RTN","PSSVIDRG",161,0)
+ . . W !,"  ARE YOU SURE YOU WANT TO SELECT "_$$GET1^DIQ(50,+Y,.01,"E")
+"RTN","PSSVIDRG",162,0)
+ . . S %=2 D YN^DICN S:% PSSEL=% I %Y="^" S PSSQUIT=1,DUOUT=1,PSSEL=1 Q
+"RTN","PSSVIDRG",163,0)
+ . . I 'PSSEL W !,"   Answer with 'Yes' or 'No'.",$C(7),! Q
+"RTN","PSSVIDRG",164,0)
+ Q $S($G(DUOUT)!$G(DTOUT)!(Y<0):"^",1:+Y)
+"RTN","PSSVIDRG",165,0)
+ ;
+"RTN","PSSVIDRG",166,0)
+NEW(FI) ; add new additive/solution
+"RTN","PSSVIDRG",167,0)
+ N DA,DIC,DIE,DR,DLAYGO
+"RTN","PSSVIDRG",168,0)
+ S (DLAYGO,DIC)=FI,DIC(0)="AEQL" D ^DIC K DIC
+"RTN","PSSVIDRG",169,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8371,6)
+^150
+**END**
+**END**

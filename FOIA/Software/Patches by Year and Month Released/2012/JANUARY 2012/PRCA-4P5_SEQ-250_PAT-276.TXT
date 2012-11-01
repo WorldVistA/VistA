@@ -1,0 +1,596 @@
+$TXT Created by HARTLEY,PETER at MNTDEM.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 12/08/11 at 14:48
+=============================================================================
+Run Date: JAN 12, 2012                     Designation: PRCA*4.5*276
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #250                    Status: Released
+                  Compliance Date: FEB 12, 2012
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*151<<= must be installed BEFORE `PRCA*4.5*276'
+                    (v)PRCA*4.5*218<<= must be installed BEFORE `PRCA*4.5*276'
+                    (v)PRCA*4.5*220<<= must be installed BEFORE `PRCA*4.5*276'
+                    (v)PRCA*4.5*221<<= must be installed BEFORE `PRCA*4.5*276'
+                    (v)PRCA*4.5*222<<= must be installed BEFORE `PRCA*4.5*276'
+                    (v)PRCA*4.5*226<<= must be installed BEFORE `PRCA*4.5*276'
+                    (v)PRCA*4.5*233<<= must be installed BEFORE `PRCA*4.5*276'
+                    (v)PRCA*4.5*241<<= must be installed BEFORE `PRCA*4.5*276'
+                    (v)PRCA*4.5*247<<= must be installed BEFORE `PRCA*4.5*276'
+                    (v)PRCA*4.5*269<<= must be installed BEFORE `PRCA*4.5*276'
+                    (v)PRCA*4.5*270<<= must be installed BEFORE `PRCA*4.5*276'
+                    (v)PRCA*4.5*271<<= must be installed BEFORE `PRCA*4.5*276'
+                    (v)IB*2*451    <<= must be installed BEFORE `PRCA*4.5*276'
+
+Subject: EPAYMENTS II ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ *******************************************************************
+ *                                                                 *
+ *   IB*2*451 must be installed prior to installing PRCA*4.5*276   *
+ *                                                                 *
+ *******************************************************************       
+  
+  
+ The Chief Business Office (CBO) in the Veterans Health Administration
+ (VHA), requested enhancements to the Integrated Billing system software
+ in order to augment payment processing efficiencies at individual VA
+ medical center accounts. The changes distributed with this patch affect
+ reporting options used daily in the delivery of benefits and services
+ provided to the patient population.
+  
+ Improvements to management reporting and additional automation of business
+ process will support VHA performance measures and compliance policies to
+ ensure fiscal accuracy and accountability.
+  
+ The project has two patches (PRCA*4.5*276 and IB*2*451) which are being
+ released in the Kernel Installation and Distribution System (KIDS) using
+ single build distributions.
+  
+  
+          APPLICATION/VER                     PATCH
+    --------------------------------------------------------
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5       PRCA*4.5*276
+    INTEGRATED BILLING (IB) V. 2.0          IB*2.0*451
+  
+  
+ Enhancements to the ACCOUNTS RECEIVABLE application and installation
+ steps are described below. See patch IB*2.0*451 for enhancements to
+ the INTEGRATED BILLING application.
+  
+  
+ 1) Workload Notification -
+  A new Mail Group RCDPE AUDIT has been created to receive notification
+ bulletins of ERA (Electronic Remittance Advice) over 30 days overdue and
+ EFT (Electronic Funds Transfer) 14 days overdue.
+  
+  ERA and EFT bulletins are created by a new scheduled option 'ePayments
+ Workload Notifications' [RCDPE WORKLOAD NOTIFICATION]. This option should
+ be scheduled in TaskMan to run weekly, biweekly or monthly.
+  
+ Example of ERA bulletin:
+ ------------------------
+ Unmatched ERA bulletin with warning message
+ Subj: EDI LBOX - ACTION REQUIRED-Unmatched ERAs > 30 days  [#293527]
+ 05/09/11@19:34  11 lines
+ From: POSTMASTER  In 'IN' basket.   Page 1  Priority!
+ -----------------------------------------------------------------------
+ The listed ERAs were received more than 30 days ago and have not yet been
+ matched.
+  
+ Total # of ERAs - 2
+ Total Dollar Amount - $ 1,251,862.38
+  
+ ERA#   PAYER NAME                                  FILE DATE       AMT PAID
+ 1009   AETNA INSURANCE COMPANY                     12/12/10    1,251,762.38
+ 1011   ABC INSURANCE COMPANY                        5/8/11           100.00
+  
+  
+ Example of EFT Bulletin:
+ ------------------------
+ Unmatched EFT bulletin with warning message
+ Subj: EDI LBOX - ACTION REQUIRED-EFTs > 14 days  [#141174] 05/09/11@19:45
+ 27 lines
+ From: POSTMASTER  In 'IN' basket.   Page 1  Priority!
+ -------------------------------------------------------------------------
+ The following EFTs were received more than 14 days ago and have not yet
+ been matched.
+  Total # of EFTs - 2
+ Total Dollar Amount - $ 1,251,862.38
+  
+ DEPOSIT#   RECEIPT#  PAYER NAME                      EFT DATE   DEPOSIT AMT
+  123456  1234567890  AETNA INSURANCE COMPANY         12/20/10  1,251,762.38
+  225152    55485542  ABC INSURANCE COMPANY            5/15/11        100.00
+  
+  
+ 2) Linking an ERA to a Receipt -
+  The option 'Update ERA Posted Using Paper EOB' [RCDPE ERA POSTED BY 
+ PAPER EOB] has been changed to include a new option to automatically
+ search for payment receipts related to claims on the ERA. The user may
+ then choose to link the receipt to the ERA.
+  
+  A new option 'ERAs Posted with Paper EOB Audit Report' [RCDPE ERA 
+ W/PAPER EOB REPORT] has been added to the 'EDI Lockbox Reports Menu' 
+ [RCDPE EDI LOCKBOX REPORTS MENU]. This new report lists ERAs that have
+ been linked to a receipt using the above menu option. The report is
+ selectable by date range and division and identifies the user making the
+ changes.
+  
+ 3) EEOB Move/Copy -
+  A new option 'EEOB Move/Copy' [RCDPE EEOB MOVE/COPY] has been added to
+ the 'EDI Lockbox Menu' [RCDPE EDI LOCKBOX MENU]. This new option allows
+ EOBs that are matched to the wrong claim to be corrected. The EOB 
+ (Explanation of Benefits) may be moved to a different claim number or
+ copied to one or more claim numbers (leaving original EOB intact). The
+ user must enter a justification for the change.
+  
+  A history of any EOB changes is recorded as AR (Accounts Receivable)
+ Comments in the TPJI (Third Party Joint Inquiry) menu options.
+  
+  A new option 'EEOB Move/Copy Audit Report' [RCDPE EEOB MOVE/COPY REPORT]
+ has been added to the 'EDI Lockbox Reports Menu' [RCDPE EDI LOCKBOX MENU].
+ This new report lists EOBs that have been changed using the new 'EEOB
+ Move/Copy' [RCDPE EEOB MOVE/COPY] menu option. The report is selectable
+ by date range and division and identifies the user making the changes.
+   
+  Details of EEOB Move and Copy transactions are also displayed in the
+ following options:
+  
+        View/Print ERA screen of the EEOB Worklist
+        View/Print EOB screen of the EEOB Worklist
+        Bill Charges screen of TPJI
+        Comment History screen of TPJI
+  
+   A new Mail Group RCDPE MOVE COPY has been created to receive notification
+ bulletins of EOB for none active claims moved or copied in the previous 
+ 24 hours. These bulletins are generated when the scheduled option 'Accounts
+ Receivable Nightly Process Background Job' [PRCA NIGHTLY PROCESS] runs.
+  
+ 4) EFT Work List -
+  The EFT Worklist has been modified to add new functionality which
+ provides the user with the capability to select an EFT record and
+ mark it as a duplicate so that these duplicate records are no
+ longer reported on the EFT Worklist report. This new capability
+ cannot be used on non-duplicates that are unmatched. To use this
+ new functionality the user must have the new security key [RCDPE 
+ ERA RETURNED TO PAYER].
+  
+  The EDI THIRD PARTY EFT DETAIL file (#344.31) has been modified
+ with three new fields which record the following data each time
+ that this option is used:
+  
+        a. Date/Time the transaction is performed.
+        b. The user who performed the transaction (pointer to the NEW
+        PERSON file (i.e. DUZ or IEN, to file #200).
+        c. A free text field that describes the justification for
+        removing the duplicate EFT (1 to 100 characters in length).
+  
+  A new option is provided in the EDI Lockbox Reports Menu, 'Duplicate EFT
+ Audit Report' [RCDPE EFT AUDIT REPORT] . This option prints a report of
+ EFTs that have been marked as removed/duplicate. The report displays the
+ information contained in the new file #344.31 fields mentioned above as
+ well as the Division/Station, Payer Name of the EFT, the trace number of
+ the EFT and the total number of duplicates removed (on the first page of
+ the report). The justification for marking an EFT record as a duplicate is
+ also listed on the EDI Third Party EFT Detail file.
+  
+ 5) Mark ERA Returned to Payer -
+  This existing option allows the user to mark the corresponding ERA
+ as not paid/returned to payer and will remove it from the Worklist
+ for unmatched ERAs. This existing functionality has been extended
+ to audit the usage of this option.
+  
+ 6) EEOB Worklist - 
+  While a search for ERA records is in progress, a period (".") is 
+ displayed periodically so that the user knows that the system is still
+ searching.
+  
+ 7) EDI Lockbox Reports -
+  Existing and new reports have been modified to have standard features
+ as follows:
+  
+   * A Summary/Detail option.
+   * The ability to filter reports on Station/Division.
+   * The ability to export the report to Microsoft Excel (MS).
+  
+  Sorting and printing features of MS Excel may then be used for further
+ report processing if so desired.
+  
+  The following reports where modified as per the above list:
+  
+  EFT Unmatched Aging Report               [RCDPE EFT AGING REPORT]
+  ERA Unmatched Aging Report               [RCDPE ERA AGING REPORT]
+  Unapplied EFT Deposits Report            [RCDPE UNAPPLIED EFT DEP REPORT]
+  Duplicate EFT Audit Report               [RCDPE EFT AUDIT REPORT]
+  ERAs Returned to Payer Audit Report      [RCDPE RETURNED ERA AUDIT]
+  EEOB Move/Copy Audit report              [RCDPE EEOB MOVE/COPY REPORT]
+  ERAs Posted with Paper EOB Audit Report  [RCDPE ERA W/PAPER EOB REPORT]
+  
+ 8) EEOB Indicator -
+  Modifications are made to Accounts Receivable report options that will 
+ show the character '%' next to the bill number to indicate that an EEOB
+ for the associated claim exists in the EOB file (#361.1).  The following
+ report options are modified by this patch:
+  
+  Brief Account Profile   [PRCAY ACCOUNT PROFILE]
+  Full Account Profile    [PRCAY FULL ACCOUNT PROFILE]
+  List All Bills          [PRCA LIST ALL BILLS]
+  Claims Matching Report  [RCDP CLAIMS MATCH]
+  Bill Profile            [RCDP BILL PROFILE]
+  Bill Transactions       [RCDP BILL TRANSACTIONS]
+  
+ 9) Negative Claim Balance -
+  A problem reported by production sites has proven that the AR application
+ allows claim balances to fall below zero. Corrections have been made to
+ software that support the following options and protocols to prevent a
+ negative claim balance on the claim recorded in the Accounts Receivable
+ file.
+  
+  Options:
+  Receipt Processing  [RCDP RECEIPT PROCESSING]
+  EEOB Worklist       [RCDPE EDI LOCKBOX WORKLIST]
+  
+  Protocols:
+  Process Receipt     [RCDP RECEIPT PROFILE PROCESS RECEIPT]
+  Distribute Adj Amts [RCDPE EOB WORKLIST DIST ADJ]
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)      New/Modified/Deleted
+ ------------------          -------------------      --------------------
+ EDI THIRD PARTY EFT DETAIL  USER WHO REMOVED EFT            New
+ (#344.31)                   (#.17)
+                             DATE/TIME DUPLICATE REMOVED     New
+                             (#.18)
+                             EFT REMOVAL REASON              New
+                             (#.19)
+  
+ EFT DETAIL (#344.4)         ERA DATE (#.04)                 Modified
+                             RETURNED BY (#.16)              New
+                             RETURNED DATE (#.17)            New
+                             RETURN REASON (#.18)            New
+                             DATE/TIME ERA LINKED (#7.01)    New
+                             ERA LINKED BY (#7.02)           New
+  
+ Options Associated:
+  
+ Option Name                        Type          New/Modified/Deleted
+ -----------                        ----          --------------------
+ RCDPE EDI LOCKBOX MENU             menu          used as link
+ RCDPE EDI LOCKBOX REPORTS MENU     menu          used as link
+ RCDPE EFT AUDIT REPORT             run routine   new
+ RCDPE EEOB MOVE/COPY REPORT        run routine   new
+ RCDPE RETURNED ERA AUDIT           run routine   new
+ RCDPE REMOVE DUP DEPOSITS          run routine   modified
+ RCDPE EEOB MOVE/COPY               run routine   new
+ RCDPE ERA POSTED BY PAPER EOB      run routine   modified
+ RCDPE ERA W/PAPER EOB REPORT       run routine   new
+ RCDPE WORKLOAD NOTIFICATION        action        new
+  
+  
+ Templates Associated:
+  
+ Template Name       Type      File Name (Number)     New/Modified/Deleted 
+ -------------       ----      ------------------     --------------------
+ PRCA BILL LIST      PRINT     ACCOUNTS RECEIVABLE    Modified
+                               (#430)
+ PRCA TRANS PROFILE  PRINT     AR TRANSACTION (#433)  Modified
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ [RCDPE REMOVE DUPLICATES]  
+ [RCDOE MARK ERA]     
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ RCDPE AUDIT              New
+ RCDEP MOVE COPY          New
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20090217 - ePayments Enhancements FY2010
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Test Sites:
+ ----------
+ Birmingham
+ Louisville
+ Martinsburg
+ Milwaukee
+ New Jersey HCS
+ Richmond 
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ Title                             File Name                     FTP Mode
+ --------------------------------------------------------------------------
+ ePayments User Guide              EPAYMENTS_USER_GUIDE_EDI_     Binary
+ (EDI Lockbox)                     LOCKBOX_R0112.PDF
+  
+ AR ePayments II Release Notes/    PRCA_4_5_P276_RN.PDF          Binary
+ Installation Guide (PRCA*4.5*276)    
+  
+ AR Technical Manual/Security      AR_4_5_TM_R0112.PDF           Binary
+ Guide (PRCA*4.5*276)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are post installation instructions for this patch related to the
+ new security keys, mail group, and the option to schedule for the ERA 
+ and EFT bulletins. 
+  
+ There is a post-initialization procedure that will execute to set up 
+ cross-references 'AC' for field ERA DATE (#.04) and 'AD' for field 
+ RETURNED DATE (#.17) in file #344.4. The post-initialization will only run
+ if there is data in file #344.4 and its running time will vary with the
+ size of the ELECTRONIC REMITTANCE ADVICE FILE (#344.4) at each site. The
+ routine PRCAP276 will be deleted automatically.
+  
+  
+ Installation Instructions
+ -------------------------
+ Accounts Receivable users should not be on the system while this patch is
+ being installed. This patch should take less than 5 minutes to install.
+  
+ Make sure that all Accounts Receivable users are logged off the system
+ before installing this patch.
+  
+ The following options should be disabled:
+  
+  EDI Lockbox             [RCDPE EDI LOCKBOX MENU]
+  Brief Account Profile   [PRCAY ACCOUNT PROFILE]
+  Full Account Profile    [PRCAY FULL ACCOUNT PROFILE]
+  List All Bills          [PRCA LIST ALL BILLS]
+  Claims Matching Report  [RCDP CLAIMS MATCH]
+  Bill Profile            [RCDP BILL PROFILE]
+  Bill Transactions       [RCDP BILL TRANSACTIONS]
+  Receipt Processing      [RCDP RECEIPT PROCESSING]
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     PRCA*4.5*276:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer NO if this is done as a nightly job    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// answer YES
+  
+ 8.  Enter options you wish to mark as 'Out Of Order': 
+  
+       EDI Lockbox             [RCDPE EDI LOCKBOX MENU]
+       Brief Account Profile   [PRCAY ACCOUNT PROFILE]
+       Full Account Profile    [PRCAY FULL ACCOUNT PROFILE]
+       List All Bills          [PRCA LIST ALL BILLS]
+       Claims Matching Report  [RCDP CLAIMS MATCH]
+       Bill Profile            [RCDP BILL PROFILE]
+       Bill Transactions       [RCDP BILL TRANSACTIONS]
+       Receipt Processing      [RCDP RECEIPT PROCESSING]
+  
+  
+ 9.  Enter protocols you wish to mark as 'Out Of Order': press RETURN
+  
+ 10. Delay Install (Minutes):  (0-60): 0//
+  
+  
+  
+ Pre/Post Installation Instructions
+ ----------------------------------------
+  The pre-install routine PRCAP276 is automatically removed by KIDS at the
+ end of the installation.
+  
+  The coordinator for the new mail group RCDPE AUDIT should be one of the
+ ePayments staff.
+  
+  ePayments users who will need access to the Remove Duplicate EFT 
+ Deposit option will need to be assigned the [RCDPE REMOVE DULICATES]
+ security key.  The ePayments supervisory staff can provide the proper
+ group of users.
+  
+  Users who will need access to the Mark ERA Returned To Payer option will
+ need to be assigned the [RCDPE MARK ERA] security key.   The ePayments
+ supervisory staff can provide the proper group of users.
+  
+  Assign the proper ePayments users to the RCDPE AUDIT mail group.  This
+ is the mail group that will received the ERA and EFT bulletins.  The
+ list of proper users can be obtained from the ePayments supervisory 
+ staff.  
+  
+ The new option [RCDPE WORKLOAD NOTIFICATION] which generates the new
+ bulletins should be scheduled in Task Manager to run weekly, biweekly,
+ or monthly as required. Scheduling frequency should be based on the
+ number of outstanding ERA and EFT workload and will need to be 
+ coordinated with the ePayments staff.
+  
+  Production only: The following email address must be defined to the 
+ REMOTE MEMBER attribute of the RCDPE AUDIT mail group:  
+ vha835notify@va.gov 
+  
+ The correct configuration for the RCDPE AUDIT Mail Group is:
+  
+ NAME: RCDPE AUDIT                       TYPE: public
+   ALLOW SELF ENROLLMENT?: NO           REFERENCE COUNT: 62
+   LAST REFERENCED: SEP 15, 2011         RESTRICTIONS: UNRESTRICTED
+ MEMBER: xxxxx,xxxxxxx
+ DESCRIPTION:   This is the mail group that will receive warning bulletins
+  produced by the ePayments Workload Notification process. Warnings for overdue
+  EFT and ERA are sent to this group.  
+   ORGANIZER: POSTMASTER
+ REMOTE MEMBER: vha835notify@va.gov
+  
+   The Q-NPS.VA.GOV domain must exist and the field 'FLAGS' must be 
+ defined with a value of 'S'.  Example shown below.  
+  
+ Select DOMAIN NAME: Q-NPS.VA.GOV  
+ NUMBER: 579                             NAME: Q-NPS.VA.GOV
+   FLAGS: S                              RELAY DOMAIN: FOC-AUSTIN.VA.GOV
+   DHCP ROUTING INDICATOR: NPS           DISABLE TURN COMMAND: YES
+   LEVEL 1 NAME (c): GOV                 LEVEL 2 NAME (c): VA.GOV
+   LEVEL 3 NAME (c): Q-NPS.VA.GOV        LEVEL 4 NAME (c): Q-NPS.VA.GOV
+  
+  
+ NOTE: The bulletins do not contain any PHI therefore encryption is not 
+ necessary.  Please refer to the ERA and EFT bulletin examples within
+ the patch description.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 87
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAAPR
+    Before: B10684039   After: B12999899  **198,221,276**
+Routine Name: PRCAAPR1
+    Before: B30720068   After: B43343192  **34,45,108,143,141,206,192,218,276**
+Routine Name: PRCAATR
+    Before: B16891827   After: B18030407  **36,104,172,138,233,276**
+Routine Name: PRCABIL1
+    Before: B25254789   After: B25296320  **57,64,109,147,220,276**
+Routine Name: PRCAP276
+    Before:       n/a   After:  B2991391  **276**
+Routine Name: RCBEUBIL
+    Before: B20443775   After: B20763062  **153,226,276**
+Routine Name: RCBEUTR1
+    Before: B33352818   After: B35457473  **153,169,192,226,270,276**
+Routine Name: RCDPAYER
+    Before: B13162829   After: B25868382  **269,276**
+Routine Name: RCDPBPLM
+    Before: B53138816   After: B56287524  **114,153,159,241,276**
+Routine Name: RCDPBTLM
+    Before: B47109458   After: B49476140  **114,148,153,168,169,198,247,
+                                           271,276**
+Routine Name: RCDPE8NZ
+    Before: B24021950   After: B54377716  **173,212,208,269,276**
+Routine Name: RCDPEAC
+    Before: B66599458   After: B83292786  **208,269,276**
+Routine Name: RCDPEAR
+    Before:  B2522562   After:  B2410803  **173,276**
+Routine Name: RCDPEAR1
+    Before: B37135763   After:B109842855  **173,269,276**
+Routine Name: RCDPEAR2
+    Before: B32087204   After: B60443432  **173,269,276**
+Routine Name: RCDPEDA1
+    Before: B14062058   After: B22465629  **173,269,276**
+Routine Name: RCDPEDAR
+    Before: B75522675   After:B105086845  **173,276**
+Routine Name: RCDPEM
+    Before: B54192380   After: B59208170  **173,255,269,276**
+Routine Name: RCDPEM2
+    Before: B62281734   After:B171488766  **173,208,276**
+Routine Name: RCDPEM3
+    Before:       n/a   After:B109331342  **276**
+Routine Name: RCDPEM4
+    Before:       n/a   After:B186028415  **276**
+Routine Name: RCDPEM5
+    Before:       n/a   After: B72301084  **173,208,276**
+Routine Name: RCDPEM6
+    Before:       n/a   After: B40220654  **276**
+Routine Name: RCDPEM7
+    Before:       n/a   After: B44597294  **276**
+Routine Name: RCDPEM8
+    Before:       n/a   After: B32433593  **276**
+Routine Name: RCDPEM9
+    Before:       n/a   After: B25446642  **276**
+Routine Name: RCDPEWL3
+    Before: B80108655   After: B86449608  **173,276**
+Routine Name: RCDPEWL6
+    Before: B65570960   After: B83585540  **173,208,222,276**
+Routine Name: RCDPEWL7
+    Before: B84756815   After: B93160515  **208,222,269,276**
+Routine Name: RCDPEWL8
+    Before: B74316733   After: B78778752  **208,269,276**
+Routine Name: RCDPRPL4
+    Before: B28923437   After: B35834476  **169,172,173,269,276**
+Routine Name: RCDPRTP1
+    Before: B32458537   After: B33114320  **151,169,276**
+Routine Name: RCDPRTP2
+    Before: B10018244   After: B14571790  **151,276**
+ 
+Routine list of preceding patches: 218, 220, 221, 233, 241, 269, 270, 271
+
+=============================================================================
+User Information:
+Entered By  : NULL,RODGER                   Date Entered  : FEB 25, 2011
+Completed By: TORRANCE,LORI                 Date Completed: DEC 21, 2011
+Released By : GROOMS,CARMEN L               Date Released : JAN 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

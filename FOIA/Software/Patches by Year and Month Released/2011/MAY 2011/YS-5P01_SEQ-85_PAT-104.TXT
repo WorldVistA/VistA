@@ -1,0 +1,153 @@
+
+=============================================================================
+Run Date: MAY 06, 2011                     Designation: YS*5.01*104
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01        SEQ #85                   Status: Released
+                  Compliance Date: JUN 06, 2011
+=============================================================================
+
+Associated patches: (v)YS*5.01*96  <<= must be installed BEFORE `YS*5.01*104'
+
+Subject: Defect with GUI in patch YS*5.01*96
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Patch YS*5.01*96 was released nationally on March 10, 2011. A couple of weeks
+ later two problems were reported. 
+ 
+ 
+ Problem 1
+ A few sites have reported a "List out of bounds" error when entering data on
+ the MBMD instrument (Millon Behavioral Medicine Diagnostic). This instrument
+ contains 165 questions. No other instruments in the Mental Health Assistant
+ (MHA3) were found to have problems.
+ 
+ Resolution:
+ The problem was caused by the identification of the first question in the
+ instrument as having a Question IEN of 146 instead of Question IEN 1046.
+ This was a error in the Delphi code and was easily remedied.
+ 
+ 
+ Problem 2:
+ Reports of the administrations of mental health instruments that were entered
+ via the roll-and-scroll version of the Mental Health Package (MHA2); were not
+ being displayed in the Mental Health Assistant (MHA3) Instrument Results Review.
+ The date and the name of the instrument are listed among the administered tests
+ for a given veteran, but when the user attempts to view the report of a MHA2
+ test, the user would see the GUI error dialog "This administration was not saved
+ properly; the identification number is missing in file 601.84"
+ 
+ Resolution:
+ An error catching routine in MHA3 would not display instruments that did not
+ have an administrative IEN. The MHA2 administrations are not saved with
+ administrative IENS but they are identified by date, instrument and patient
+ ID's. The correction to this problem is to display the results of
+ administrations with and without administrative IENs.
+ 
+ Because these issues were found within 30 days of the release of patch
+ YS*5.01*96, it is possible to offer a rapid response to correcting these
+ issues by releasing a new executable for MHA3.
+ 
+ Associated Remedy Tickets:
+ ==========================
+ HD0000000479513
+ HD0000000479610
+ HD0000000475742
+ HD0000000477612
+ HD0000000478755
+ HD0000000481809
+ 
+ Participating Test Sites:
+ ==========================
+ North Texas HCS, TX
+ Upstate New York, NY
+ Oklahoma City, OK
+ Atlanta VAMC, GA
+ 
+ Software and Document Distribution:
+ ===================================
+ 
+ No software or documentation files, KIDS Build or DLL's are exported as
+ part of this patch however, the executable , YS_MHA.exe has been replaced
+ with the corrected executable. The original version was 1.0.3.46 and the
+ corrected version is 1.0.3.47.
+ 
+ Those sites that have already installed patch YS*5.01*96 can follow the
+ instructions within patch YS*5.01*104 and download and run the new
+ YS_501_104_Setup.EXE.
+ 
+ Those sites that have not installed YS*5.01*96 can proceed with installing
+ YS_501_104_Setup.EXE and then run YS_501_104_Setup.EXE.
+ 
+ 
+ All sites are encouraged to use their FTP capability to obtain these
+ files. Use the FTP address "download.vista.med.va.gov" (without the
+ quotes) to connect to the first available FTP server where the files
+ are located.
+   
+ OI FIELD OFFICE   FTP ADDRESS                DIRECTORY
+ ===============   ===========                =========
+ ALBANY            ftp.fo-albany.med.va.gov   [ANONYMOUS.SOFTWARE]
+ HINES             ftp.fo-hines.med.va.gov    [ANONYMOUS.SOFTWARE]
+ SALT LAKE         ftp.fo-slc.med.va.gov      [ANONYMOUS.SOFTWARE]
+ 
+ The following software file is exported as part of this patch:
+ 
+ File Name Format         Contents             Retrieval
+ ----------------         --------             ---------
+ YS_501_104_SETUP.EXE    YS_MHA.EXE           Binary
+                         YS_MHA_AUX.DLL       Binary
+                         YS_MHA_A.DLL         Binary
+                         Borlndmm.DLL         Binary
+ 
+ 
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ 
+ After downloading the YS_501_104_SETUP.EXE from the FTP site to a temporary
+ directory, run the executable by double clicking on it. It will install the
+ four files in their proper directories on a workstation.
+ 
+ If an application server is used, the two files, YS_MHA.exe and borlndmm.dll,
+ should be located in the directory that the CPRS Tools menu, line command
+ points to. 
+ 
+ The two files YS_MHA_AUX.dll and YS_MHA_A.dll should be placed on each
+ workstation that uses CPRS in this directory: C:\Program Files\Vista
+ \Common Files. If Patch YS*5.01*96 has been installed already, this
+ step can be skipped.    
+ 
+ The YS_501_104_SETUP.EXE application will place the files in the following
+ locations.
+ 
+ YS_MHA.EXE           C:\Program Files\Vista\YS\MHA3
+ YS_MHA_AUX.DLL       C:\Program Files\Vista\Common files
+ YS_MHA_A.DLL         C:\Program Files\Vista\Common files
+ Borlndmm.DLL         C:\Program Files\Vista\YS\MHA3
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : TRAXLER,FRANK                 Date Entered  : DEC 03, 2010
+Completed By: SMITH,VAUGHN                  Date Completed: MAY 05, 2011
+Released By : VANCAMP,E PHILIP              Date Released : MAY 06, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

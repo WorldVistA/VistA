@@ -1,0 +1,342 @@
+$TXT Created by ELLZEY,LINDA J at PEPCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Monday, 07/25/11 at 21:37
+=============================================================================
+Run Date: AUG 11, 2011                     Designation: PSO*7*387
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #316                      Status: Released
+                  Compliance Date: SEP 15, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*375   <<= must be installed BEFORE `PSO*7*387'
+
+Subject: MEDICATION ORDER CHECK HEALTHCARE APPLICATION UPDATE
+
+Category: 
+  - Routine
+  - Enhancement ()
+
+Description:
+============
+
+  
+ ****************************** Note **************************************
+ This patch is a follow-up patch for Medication Order Check Healthcare 
+ Application v1.0 (MOCHA).  The MOCHA v1.0 patches are being released as a 
+ phased implementation release.  To see current status and target dates for
+ Sites/VISN/Region please refer to the following site:
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+ Sites should have received instructions and guidance on the installation 
+ of MOCHA v1.0 as it is a phased implementation. Patches PSO*7*387,
+ PSJ*5*263, PSS*1*163 and OR*3*346 need to be installed within 2 business 
+ days at all sites that have MOCHA v1.0 installed in production.  The
+ remaining sites need to install the patches included with this release
+ immediately after the installation of the MOCHA v1.0 patches.  These
+ patches may be installed in any order after the MOCHA v1.0 patches are
+ installed.   (The MOCHA v1.0 installation included patches PSS*1*136,
+ PSO*7*251, PSJ*5*181, OR*3*272, PSS*1*117, PSO*7*375)
+  
+ **************************************************************************
+  
+ This patch corrects the following:
+  
+ 1. Technician order issues:
+  
+    a. For a technician entered order, the message "Remote data not
+       available- Only local order checks processed" was rolling off the 
+       screen. This message is displayed when remote data isn't
+       available just before therapeutic duplications during the
+       prescription order process.  This has been corrected by adding an
+       "Enter to continue" prompt after the messages displayed when the
+       user is a technician.  (CCR 4133)
+  
+    b. A site reported that non-verified prescriptions are being sent to
+       the Outpatient Pharmacy Automated Interface (OPAI). If a 
+       prescription is non-verified, the Rx shouldn't go to OPAI regardless
+       of whether a label is printed due to a critical interaction.  A
+       change was made to prohibit non-verified orders from passing to
+       OPAI.  HD0000000502791 (CCR 4467)
+  
+ 2. Prescription Label issues addressed:
+  
+    a. For the warning label that prints during technician order entry 
+       for NEW LABEL STOCK labels, the text in the middle section of the
+       label was not wrapping properly.  This was for non-laser labels
+       only. A modification was made to properly wrap the text to the next
+       line.  (CCR 4093)
+    
+    b. An issue was reported where partial labels always printed MAIL on 
+       the label even when the user selected WINDOW during entry of a
+       partial prescription.  The system was using whatever route was
+       defined on the original fill.  This issue only applies when the site
+       uses a printer not defined as a laser printer and has the outpatient
+       site parameter NEW LABEL STOCK set to YES.  A correction was made to
+       print partial labels when the user selects WINDOW and to process
+       MAIL partial prescriptions appropriately. (CCR 4421)
+   
+    c. A Meds-by-Mail site reported that the user was prompted to print a 
+       drug interaction warning label when a technician entered an order
+       that resulted in a significant drug interaction without an
+       accompanying critical interaction.  In this case, the site had the
+       pharmacy verification parameter set to ON.  The system should not
+       prompt for nor print a drug interaction warning label in this
+       scenario.  When the Outpatient Pharmacy verification parameter is
+       set to ON for both NEW LABEL STOCK and LASER LABELS, a correction
+       was made to not prompt technicians to print labels when there is
+       only a significant drug interaction.  The functionality that
+       automatically places such orders in a non-verified status has not
+       changed.  HD0000000498667 (CCR 4434)
+  
+    d. When the verification site parameter is off and a technician enters
+       an order that has a critical interaction, the technician warning
+       label does not print for NEW LABEL STOCK labels.   The dispensing
+       label does print.  This issue is not present with laser labels.  
+       With this patch, the critical interaction warning label will print
+       along with the dispensing label for NEW LABEL STOCK labels. (CCR 
+       4494)
+  
+    e. For laser labels when verification is off, a technician entered
+       order was printing the dispensing label, but not printing the
+       warning label. With this patch, both the warning label and the
+       dispensing label will print.  (CCR 4494)
+  
+    f. The text 'This prescription has caused a DRUG-DRUG INTERACION' has 
+       been removed from the first column on the technician warning labels
+       for non-laser labels to make them consistent with laser labels. 
+       (CCR 4111)
+  
+  
+ 3. Undefined Errors found by SQA:
+  
+    These errors have not been reported by a site.
+  
+    a. When a page feed occurs just prior to the "Verify for" prompt:
+       <UNDEFINED> VERIFY+2^PSOVER1 *DFN.(CCR 4126) 
+  
+    b. An undefined error occurs when the user is returned to the "Select
+       RX with Order Checks:" prompt after verifying an order using the
+       PROCESS ORDER CHECKS [PSO ORDER CHECKS VERIFY] option:
+       <UNDEFINED>DGDGI+11^PSOVER *DFN.(CCR 4126)
+  
+    c. Using the Rx Verification by Clerk option, a subscript error occurs
+       after an unsuccessful request to First Data Bank (FDB) is received.
+       This occurs during the order check process just before the PDM API
+       is called: <UNDEFINED> OBX+3^PSODDPRE.
+       ^TMP(547819387,"PSOPEPS","OUT",0).  (CCR 4472) 
+  
+    A modification was made to retain the DFN variable prior to processing 
+    enhanced order checks and restoring it afterward to eliminate each of
+    the undefined errors. (CCR 4487)
+  
+ 5. Enhanced Order Check modifications:
+  
+    a. A site reported that Discontinued/Expired OP orders were not being
+       screened in CPRS or Inpatient Medication for Drug Interaction Order
+       Checking.  With this patch the software will screen out
+       Discontinued/Expired outpatient orders for CPRS and Inpatient
+       Medications and they will not participate in Order Checks. (CCR
+       4448)
+  
+    b. A correction was made to address an occurrence reported in a test
+       account where Order Checks did not occur and no message was
+       displayed to the user.  After the message "Now Processing Enhanced
+       Order Checks!  Please wait..." is displayed, the system calls a
+       Pharmacy Data Management (PDM) Application Program Interface (API)
+       that retrieves order check information.  This API returns a value of
+       -1 for error of some type occurred, 0 (zero) for order checks
+       complete with no issues found, or 1 for interactions found.  
+       Outpatient Pharmacy was not checking for -1.  This patch adds the
+       check for -1, and displays a message when -1 is returned. (CCR 4086)
+  
+  
+ 6. Miscellaneous corrections:
+  
+    a. This patch updates the following PSO namespace routines with 
+       required Integration Agreement comments for the following routines:
+       PSODELI, PSOHLNEW, PSOLBL, PSOLLLI, PSOLMAO, PSORXI. (CCR 4129) 
+  
+    b. A misspelling of the word "Interoperability" was corrected in the
+       first line of routine PSOORRD2. (CCR 4128)
+  
+    c. After installation of MOCHA 1.0, a site reported that the RDD action
+       (Fill/Rel Date Display) on the medication profile screen of the
+       Patient Prescription Processing option no longer functioned.  This
+       action allows the user to toggle between displaying the last filled
+       date and the last released date on the medication profile screen.  
+       The RDD action was restored to working order.
+       HD0000000505651 (CCR 4497)
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ HD0000000498667
+ HD0000000502791 - PSI (PSPO #2061)
+ HD0000000505651 
+  
+  
+ Associated PSIs: 
+ ----------------
+ PSPO #2061
+  
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ HD0000000498667 - Technician warning label was printing for significant 
+ drug interactions.  These type of labels should only print when a 
+ critical interaction is present.  Routines PSODGDGP and  PSOLLLI were 
+ modified to correct this issue.
+  
+ HD0000000502791 - PSI (PSPO #2061) Non-verified prescription orders were
+ being passed to OPAI.  This patch corrects this issue.
+  
+ HD0000000505651 - RDD function within the Patient Prescription Processing
+ option is not displaying the correct release date.
+  
+  
+ Components Exported With Patch: 
+ -------------------------------
+ N/A
+  
+                                                                          
+ Test Sites:
+ -----------
+ KANSAS CITY, MO
+ OKLAHOMA CITY, OK
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+                
+  
+ Documentation Retrieval:
+ N/A
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ This patch is a follow-up defect patch for Medication Order Check
+ Healthcare Application v1.0 (MOCHA).  The MOCHA v1.0 patches are being 
+ released as a phased implementation release.  To see current status and
+ target dates for Sites/VISN/Region please refer to the following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+ Sites will be provided instructions and guidance on installation and of a
+ phased release for MOCHA 1.0, and this patch PSO*7*387 should be installed
+ after MOCHA 1.0 installation.
+  
+ Do not install this patch while Outpatient Pharmacy users are on the
+ system or when Outpatient orders are being entered and signed through
+ Computerized Patient Record System. Installation will take no longer than
+ 5 minutes.
+  
+    1. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       you may select to use the following options (when prompted for
+       INSTALL NAME, enter PSO*7.0*387):
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as Data Dictionaries or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+  
+   5. Use the Install Package(s) option and select the package PSO*7.0*387.
+  
+   6. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO52API
+    Before: B64959703   After: B65813054  **213,229,252,387**
+Routine Name: PSOCPPRE
+    Before:  B8382340   After:  B9017722  **251,375,387**
+Routine Name: PSODDPR4
+    Before: B96800031   After: B99712200  **251,375,387**
+Routine Name: PSODDPRE
+    Before:B107494371   After:B116150731  **251,375,387**
+Routine Name: PSODELI
+    Before:  B7805536   After:  B8034838  **10,268,251,375,387**
+Routine Name: PSODGDGP
+    Before: B48532465   After: B47871096  **251,387**
+Routine Name: PSODRDU2
+    Before: B22449078   After: B22379293  **132,251,375,387**
+Routine Name: PSODRG
+    Before: B66921179   After: B64923938  **20,23,36,53,54,46,112,139,
+                                           207,148,243,268,324,251,375,
+                                           387**
+Routine Name: PSOHLNEW
+    Before: B83284791   After: B85696343  **1,7,15,46,71,98,111,124,117,
+                                           131,146,132,143,223,235,148,
+                                           239,249,225,324,251,387**
+Routine Name: PSOLBL
+    Before: B65338340   After: B74655660  **8,19,30,36,47,71,92,120,157,
+                                           244,206,225,303,266,326,251,
+                                           387**
+Routine Name: PSOLBL4
+    Before: B49493976   After: B49656838  **26,70,156,244,233,246,319,387**
+Routine Name: PSOLBLD
+    Before: B32921586   After: B30177309  **117,251,387**
+Routine Name: PSOLBLN
+    Before: B58195867   After: B61102291  **16,36,71,107,110,117,135,233,
+                                           251,387**
+Routine Name: PSOLLL8
+    Before: B27800299   After: B28083638  **120,251,387**
+Routine Name: PSOLLLI
+    Before: B67875911   After: B82644773  **120,157,189,161,244,200,206,
+                                           225,303,266,326,251,387**
+Routine Name: PSOLMAO
+    Before:  B1822420   After:  B1859588  **225,251,387**
+Routine Name: PSON52
+    Before: B70712029   After: B79042036  **1,16,23,27,32,46,71,111,124,
+                                           117,131,139,157,143,219,148,
+                                           239,201,268,260,225,303,358,
+                                           251,387**
+Routine Name: PSOORRD2
+    Before: B24528466   After: B24528466  **207,251,387**
+Routine Name: PSOORUT1
+    Before: B78073421   After: B77945893  **1,14,30,46,132,148,233,274,
+                                           225,305,289,251,387**
+Routine Name: PSORN52
+    Before: B50777957   After: B58143232  **1,11,27,37,46,79,71,100,117,
+                                           157,143,219,148,239,201,225,
+                                           303,358,251,387**
+Routine Name: PSORN52C
+    Before: B50060838   After: B50785719  **1,7,11,27,46,75,87,100,111,
+                                           124,117,131,146,148,200,225,
+                                           251,387**
+Routine Name: PSORXI
+    Before: B15085329   After: B15276698  **268,324,251,387**
+Routine Name: PSOVER
+    Before: B79569350   After: B79826569  **16,21,27,117,131,146,251,375,387**
+Routine Name: PSOVER1
+    Before:B114770420   After:B116713560  **32,46,90,131,202,207,148,243,
+                                           268,281,324,358,251,375,387**
+ 
+Routine list of preceding patches: 252, 319, 375
+
+=============================================================================
+User Information:
+Entered By  : ELLZEY,LINDA                  Date Entered  : APR 11, 2011
+Completed By: SBERRO,JACQUES                Date Completed: AUG 11, 2011
+Released By : VECE,VIRGINIA                 Date Released : AUG 11, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

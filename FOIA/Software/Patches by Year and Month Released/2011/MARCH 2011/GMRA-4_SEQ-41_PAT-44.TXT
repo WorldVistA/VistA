@@ -1,0 +1,125 @@
+$TXT Created by HAWSEY,JASON at DVF.FO-SLC.MED.VA.GOV  (KIDS) on Monday, 10/26/09 at 09:49
+=============================================================================
+Run Date: MAR 03, 2011                     Designation: GMRA*4*44
+Package : GMRA - ADVERSE REACTION TRACKING    Priority: Mandatory
+Version : 4        SEQ #41                      Status: Released
+                  Compliance Date: MAR 31, 2011
+=============================================================================
+
+Associated patches: (v)OR*3*294    <<= must be installed BEFORE `GMRA*4*44'
+                    (v)GMRA*4*42   <<= must be installed BEFORE `GMRA*4*44'
+
+Subject: RDI VHIM COMPLIANCE UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ NOTE
+ ====
+ The Healthe Vet Web Service Client (HWSC) package is a prerequisite for 
+ OR*3.0*294 and GMRA*4.0*44. The purpose of patch GMRA*4*44 is to support 
+ changes to the RDI API that have been made in patch OR*3.0*294.
+  
+ There are no functional changes included with this patch.  Thus, the 
+ users should not see any difference in the work flow of placing an order 
+ or any difference in the resulting remote order checks.
+  
+ The patch itself is distributed as a packman message.
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There are no NSRs associated with this patch.
+   
+   
+ This patch addresses the following NOIS/Remedy Ticket(s):
+ ---------------------------------------------------------
+ There are no NOIS/Remedy Tickets addressed by this patch.
+  
+ Components Sent With Patch
+ --------------------------
+  
+ Routine Summary
+ --------------- 
+ Total number of routines modified: 1
+ Total number of new routines: 0
+ Total number of routines: 1
+  
+  
+ The following is a list of files included in this patch:
+ ========================================================
+ There are no files associated with this patch.   
+  
+   
+  Test Sites:
+  -----------
+  Martinez (Northern California HCS)
+  Palo Alto
+  Tampa
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+   It is not necessary to disable any options. You may install 
+   these routines at any time without interruption to users. It should
+   take less than 10 minutes to install this patch.
+    
+       1. Choose the PackMan message containing this patch and invoke the
+          INSTALL/CHECK MESSAGE PackMan option. 
+    
+       2. From the Kernel Installation & Distribution System menu, select 
+          the Installation menu.  
+    
+       3. From this menu, you may select to use the following options: 
+          (when prompted for INSTALL NAME, enter GMRA*4.0*44)
+            a. Verify Checksums in Transport Global - This option allows
+                you to ensure the integrity of the routines that are in the
+                transport global.
+    
+            b. Print Transport Global - This option will allow you to view
+                the components of the KIDS build.
+    
+            c. Compare Transport Global to Current System - This option 
+                allows you to view all changes that will be made when this 
+                patch is installed. It compares all components of this 
+                patch (routines, DD's, templates, etc.).
+    
+            d. Backup a Transport Global - This option will create a backup
+                message of any routines exported with this patch. It will 
+                not backup any other changes such as DD's or templates.
+    
+       4. Use the Install Package(s) option and select the package 
+          GMRA*4.0*44
+    
+       5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+          YES//" respond NO.  
+    
+       6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+          and Protocols? YES//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;Adverse Reaction Tracking;**[Patch List]**;Mar 29, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRAOR
+    Before: B67130954   After: B60802991  **2,13,26,37,41,42,44**
+ 
+Routine list of preceding patches: 42
+
+=============================================================================
+User Information:
+Entered By  : HAWSEY,JASON                  Date Entered  : OCT 26, 2009
+Completed By: BARLOW,KENNETH                Date Completed: MAR 03, 2011
+Released By : CAMPBELL,THOMAS               Date Released : MAR 03, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

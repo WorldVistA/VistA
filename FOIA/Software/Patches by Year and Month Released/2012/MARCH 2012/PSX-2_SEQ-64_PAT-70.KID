@@ -1,0 +1,1586 @@
+Released PSX*2*70 SEQ #64
+Extracted from mail message
+**KIDS**:PSX*2.0*70^
+
+**INSTALL NAME**
+PSX*2.0*70
+"BLD",7478,0)
+PSX*2.0*70^CMOP^0^3120208^y
+"BLD",7478,1,0)
+^^78^78^3111103^^
+"BLD",7478,1,1,0)
+This patch contains software modifications to the Consolidated Mail 
+"BLD",7478,1,2,0)
+Outpatient Pharmacy (CMOP) V. 2.0 application to support the Food and Drug
+"BLD",7478,1,3,0)
+Administration (FDA) Medication Guides - Increment 3 project. The project
+"BLD",7478,1,4,0)
+objective is to allow pharmacy staff to retrieve the FDA Medication Guide
+"BLD",7478,1,5,0)
+for prescription items that contain FDA approved information that can help
+"BLD",7478,1,6,0)
+patients avoid adverse events. The FDA requires that Medication Guides be
+"BLD",7478,1,7,0)
+included with certain prescribed drugs and biological products when the
+"BLD",7478,1,8,0)
+Agency determines that:
+"BLD",7478,1,9,0)
+ 
+"BLD",7478,1,10,0)
+ . Certain information is necessary to prevent serious adverse effects 
+"BLD",7478,1,11,0)
+ . Patient decision-making should be advised by information about a known
+"BLD",7478,1,12,0)
+   serious side effect with a product, or 
+"BLD",7478,1,13,0)
+ . Patient adherence to directions for the use of a product is essential
+"BLD",7478,1,14,0)
+   to its effectiveness. 
+"BLD",7478,1,15,0)
+ 
+"BLD",7478,1,16,0)
+The features in the FDA Medication Guides project are being delivered in
+"BLD",7478,1,17,0)
+incremental releases. This patch is part of the Increment 3 release, which
+"BLD",7478,1,18,0)
+is the last planned release. The features included in this release are:
+"BLD",7478,1,19,0)
+ 
+"BLD",7478,1,20,0)
+ . Ability to create and maintain a list of FDA Medication Guide printers
+"BLD",7478,1,21,0)
+   for a specific pharmacy division.
+"BLD",7478,1,22,0)
+ 
+"BLD",7478,1,23,0)
+ . Automatic printing of FDA Medication Guide along with prescription 
+"BLD",7478,1,24,0)
+   labels.
+"BLD",7478,1,25,0)
+ 
+"BLD",7478,1,26,0)
+ . Ability to reprint the FDA Medication Guide when reprinting a 
+"BLD",7478,1,27,0)
+   prescription label.
+"BLD",7478,1,28,0)
+ 
+"BLD",7478,1,29,0)
+ . Ability to change the FDA Medication Guide printer at any point in the
+"BLD",7478,1,30,0)
+   dispensing process, similar to changing the label printer.
+"BLD",7478,1,31,0)
+ 
+"BLD",7478,1,32,0)
+ . Ability to reprint the FDA Medication Guide for any given prescription
+"BLD",7478,1,33,0)
+   fill or the latest FDA Mediation Guide available for the medication on
+"BLD",7478,1,34,0)
+   the prescription.
+"BLD",7478,1,35,0)
+  
+"BLD",7478,1,36,0)
+ . Identification on the label document that an FDA Medication Guide was
+"BLD",7478,1,37,0)
+   printed as well and needs to be collated to the documentation before
+"BLD",7478,1,38,0)
+   being handed over to the patient.
+"BLD",7478,1,39,0)
+ 
+"BLD",7478,1,40,0)
+ . Changes to the prescription label activity logs showing which specific
+"BLD",7478,1,41,0)
+   FDA Medication Guide document printed along with the label.
+"BLD",7478,1,42,0)
+ 
+"BLD",7478,1,43,0)
+ . Changes to the Consolidated Mail Outpatient Pharmacy (CMOP) Event log
+"BLD",7478,1,44,0)
+   showing which specific FDA Medication Guide document was available 
+"BLD",7478,1,45,0)
+   for the medication when the prescription fill was transmitted to CMOP.
+"BLD",7478,1,46,0)
+ 
+"BLD",7478,1,47,0)
+ . Introduction of a PC based Java software component to enable the
+"BLD",7478,1,48,0)
+   automatic printing of an FDA Medication Guide from within VistA. The
+"BLD",7478,1,49,0)
+   software does not require any direct user interaction. The software 
+"BLD",7478,1,50,0)
+   identifies a request from VistA for a specific FDA Medication Guide
+"BLD",7478,1,51,0)
+   and automatically sends it to the FDA Medication Guide printer
+"BLD",7478,1,52,0)
+   selected by the user within VistA when dispensing the medication.
+"BLD",7478,1,53,0)
+ 
+"BLD",7478,1,54,0)
+ . Ability to update the Windows network printer name for a specific
+"BLD",7478,1,55,0)
+   device through the Kernel application. Once the pharmacist selects a
+"BLD",7478,1,56,0)
+   printer to print the FDA Medication Guide Vista will retrieve the 
+"BLD",7478,1,57,0)
+   Windows name for the printer and will pass it on to the Java
+"BLD",7478,1,58,0)
+   application responsible for printing the document.
+"BLD",7478,1,59,0)
+    
+"BLD",7478,1,60,0)
+Below is a list of all the applications involved in this release along
+"BLD",7478,1,61,0)
+with their patch number:
+"BLD",7478,1,62,0)
+  
+"BLD",7478,1,63,0)
+   APPLICATION/VERSION                                    PATCH
+"BLD",7478,1,64,0)
+   -----------------------------------------------------------------
+"BLD",7478,1,65,0)
+   CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 4.0    PSX*2*70
+"BLD",7478,1,66,0)
+   NATIONAL DRUG FILE (NDF) V. 4.0                        PSN*4*264
+"BLD",7478,1,67,0)
+   OUTPATIENT PHARMACY (OP) V. 7.0                        PSO*7*367
+"BLD",7478,1,68,0)
+   KERNEL V. 8.0                                          XU*8*566
+"BLD",7478,1,69,0)
+   
+"BLD",7478,1,70,0)
+The following modification is included in this patch (PSX*2*70):
+"BLD",7478,1,71,0)
+ 
+"BLD",7478,1,72,0)
+The process responsible for the transmission of prescriptions from Outpatient
+"BLD",7478,1,73,0)
+Pharmacy to CMOP will be modified to record the current FDA Medication Guide
+"BLD",7478,1,74,0)
+document name in the CMOP Event Log in the PRESCRIPTION file (#52) if one 
+"BLD",7478,1,75,0)
+exists for the medication in the prescription being transmitted. Such 
+"BLD",7478,1,76,0)
+information will be displayed within Outpatient Pharmacy application when the
+"BLD",7478,1,77,0)
+user selects to view the CMOP Event Log for a specific prescription.
+"BLD",7478,1,78,0)
+ 
+"BLD",7478,4,0)
+^9.64PA^^
+"BLD",7478,6.3)
+9
+"BLD",7478,"ABPKG")
+n
+"BLD",7478,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7478,"KRN",.4,0)
+.4
+"BLD",7478,"KRN",.401,0)
+.401
+"BLD",7478,"KRN",.402,0)
+.402
+"BLD",7478,"KRN",.403,0)
+.403
+"BLD",7478,"KRN",.5,0)
+.5
+"BLD",7478,"KRN",.84,0)
+.84
+"BLD",7478,"KRN",3.6,0)
+3.6
+"BLD",7478,"KRN",3.8,0)
+3.8
+"BLD",7478,"KRN",9.2,0)
+9.2
+"BLD",7478,"KRN",9.8,0)
+9.8
+"BLD",7478,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",7478,"KRN",9.8,"NM",1,0)
+PSXRXU^^0^B29946410
+"BLD",7478,"KRN",9.8,"NM",2,0)
+PSXRPPL^^0^B67417884
+"BLD",7478,"KRN",9.8,"NM",3,0)
+PSXRSUS^^0^B75996121
+"BLD",7478,"KRN",9.8,"NM","B","PSXRPPL",2)
+
+"BLD",7478,"KRN",9.8,"NM","B","PSXRSUS",3)
+
+"BLD",7478,"KRN",9.8,"NM","B","PSXRXU",1)
+
+"BLD",7478,"KRN",19,0)
+19
+"BLD",7478,"KRN",19.1,0)
+19.1
+"BLD",7478,"KRN",101,0)
+101
+"BLD",7478,"KRN",409.61,0)
+409.61
+"BLD",7478,"KRN",771,0)
+771
+"BLD",7478,"KRN",779.2,0)
+779.2
+"BLD",7478,"KRN",870,0)
+870
+"BLD",7478,"KRN",8989.51,0)
+8989.51
+"BLD",7478,"KRN",8989.52,0)
+8989.52
+"BLD",7478,"KRN",8994,0)
+8994
+"BLD",7478,"KRN","B",.4,.4)
+
+"BLD",7478,"KRN","B",.401,.401)
+
+"BLD",7478,"KRN","B",.402,.402)
+
+"BLD",7478,"KRN","B",.403,.403)
+
+"BLD",7478,"KRN","B",.5,.5)
+
+"BLD",7478,"KRN","B",.84,.84)
+
+"BLD",7478,"KRN","B",3.6,3.6)
+
+"BLD",7478,"KRN","B",3.8,3.8)
+
+"BLD",7478,"KRN","B",9.2,9.2)
+
+"BLD",7478,"KRN","B",9.8,9.8)
+
+"BLD",7478,"KRN","B",19,19)
+
+"BLD",7478,"KRN","B",19.1,19.1)
+
+"BLD",7478,"KRN","B",101,101)
+
+"BLD",7478,"KRN","B",409.61,409.61)
+
+"BLD",7478,"KRN","B",771,771)
+
+"BLD",7478,"KRN","B",779.2,779.2)
+
+"BLD",7478,"KRN","B",870,870)
+
+"BLD",7478,"KRN","B",8989.51,8989.51)
+
+"BLD",7478,"KRN","B",8989.52,8989.52)
+
+"BLD",7478,"KRN","B",8994,8994)
+
+"BLD",7478,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",7478,"QUES",0)
+^9.62^^
+"BLD",7478,"REQB",0)
+^9.611^3^1
+"BLD",7478,"REQB",3,0)
+PSX*2.0*69^2
+"BLD",7478,"REQB","B","PSX*2.0*69",3)
+
+"MBREQ")
+0
+"PKG",526,-1)
+1^1
+"PKG",526,0)
+CMOP^PSX^CONSOLIDATED MAIL OUTPATIENT PHARMACY
+"PKG",526,20,0)
+^9.402P^^
+"PKG",526,22,0)
+^9.49I^1^1
+"PKG",526,22,1,0)
+2.0^3000210^3000217^11853
+"PKG",526,22,1,"PAH",1,0)
+70^3120208
+"PKG",526,22,1,"PAH",1,1,0)
+^^78^78^3120208
+"PKG",526,22,1,"PAH",1,1,1,0)
+This patch contains software modifications to the Consolidated Mail 
+"PKG",526,22,1,"PAH",1,1,2,0)
+Outpatient Pharmacy (CMOP) V. 2.0 application to support the Food and Drug
+"PKG",526,22,1,"PAH",1,1,3,0)
+Administration (FDA) Medication Guides - Increment 3 project. The project
+"PKG",526,22,1,"PAH",1,1,4,0)
+objective is to allow pharmacy staff to retrieve the FDA Medication Guide
+"PKG",526,22,1,"PAH",1,1,5,0)
+for prescription items that contain FDA approved information that can help
+"PKG",526,22,1,"PAH",1,1,6,0)
+patients avoid adverse events. The FDA requires that Medication Guides be
+"PKG",526,22,1,"PAH",1,1,7,0)
+included with certain prescribed drugs and biological products when the
+"PKG",526,22,1,"PAH",1,1,8,0)
+Agency determines that:
+"PKG",526,22,1,"PAH",1,1,9,0)
+ 
+"PKG",526,22,1,"PAH",1,1,10,0)
+ . Certain information is necessary to prevent serious adverse effects 
+"PKG",526,22,1,"PAH",1,1,11,0)
+ . Patient decision-making should be advised by information about a known
+"PKG",526,22,1,"PAH",1,1,12,0)
+   serious side effect with a product, or 
+"PKG",526,22,1,"PAH",1,1,13,0)
+ . Patient adherence to directions for the use of a product is essential
+"PKG",526,22,1,"PAH",1,1,14,0)
+   to its effectiveness. 
+"PKG",526,22,1,"PAH",1,1,15,0)
+ 
+"PKG",526,22,1,"PAH",1,1,16,0)
+The features in the FDA Medication Guides project are being delivered in
+"PKG",526,22,1,"PAH",1,1,17,0)
+incremental releases. This patch is part of the Increment 3 release, which
+"PKG",526,22,1,"PAH",1,1,18,0)
+is the last planned release. The features included in this release are:
+"PKG",526,22,1,"PAH",1,1,19,0)
+ 
+"PKG",526,22,1,"PAH",1,1,20,0)
+ . Ability to create and maintain a list of FDA Medication Guide printers
+"PKG",526,22,1,"PAH",1,1,21,0)
+   for a specific pharmacy division.
+"PKG",526,22,1,"PAH",1,1,22,0)
+ 
+"PKG",526,22,1,"PAH",1,1,23,0)
+ . Automatic printing of FDA Medication Guide along with prescription 
+"PKG",526,22,1,"PAH",1,1,24,0)
+   labels.
+"PKG",526,22,1,"PAH",1,1,25,0)
+ 
+"PKG",526,22,1,"PAH",1,1,26,0)
+ . Ability to reprint the FDA Medication Guide when reprinting a 
+"PKG",526,22,1,"PAH",1,1,27,0)
+   prescription label.
+"PKG",526,22,1,"PAH",1,1,28,0)
+ 
+"PKG",526,22,1,"PAH",1,1,29,0)
+ . Ability to change the FDA Medication Guide printer at any point in the
+"PKG",526,22,1,"PAH",1,1,30,0)
+   dispensing process, similar to changing the label printer.
+"PKG",526,22,1,"PAH",1,1,31,0)
+ 
+"PKG",526,22,1,"PAH",1,1,32,0)
+ . Ability to reprint the FDA Medication Guide for any given prescription
+"PKG",526,22,1,"PAH",1,1,33,0)
+   fill or the latest FDA Mediation Guide available for the medication on
+"PKG",526,22,1,"PAH",1,1,34,0)
+   the prescription.
+"PKG",526,22,1,"PAH",1,1,35,0)
+  
+"PKG",526,22,1,"PAH",1,1,36,0)
+ . Identification on the label document that an FDA Medication Guide was
+"PKG",526,22,1,"PAH",1,1,37,0)
+   printed as well and needs to be collated to the documentation before
+"PKG",526,22,1,"PAH",1,1,38,0)
+   being handed over to the patient.
+"PKG",526,22,1,"PAH",1,1,39,0)
+ 
+"PKG",526,22,1,"PAH",1,1,40,0)
+ . Changes to the prescription label activity logs showing which specific
+"PKG",526,22,1,"PAH",1,1,41,0)
+   FDA Medication Guide document printed along with the label.
+"PKG",526,22,1,"PAH",1,1,42,0)
+ 
+"PKG",526,22,1,"PAH",1,1,43,0)
+ . Changes to the Consolidated Mail Outpatient Pharmacy (CMOP) Event log
+"PKG",526,22,1,"PAH",1,1,44,0)
+   showing which specific FDA Medication Guide document was available 
+"PKG",526,22,1,"PAH",1,1,45,0)
+   for the medication when the prescription fill was transmitted to CMOP.
+"PKG",526,22,1,"PAH",1,1,46,0)
+ 
+"PKG",526,22,1,"PAH",1,1,47,0)
+ . Introduction of a PC based Java software component to enable the
+"PKG",526,22,1,"PAH",1,1,48,0)
+   automatic printing of an FDA Medication Guide from within VistA. The
+"PKG",526,22,1,"PAH",1,1,49,0)
+   software does not require any direct user interaction. The software 
+"PKG",526,22,1,"PAH",1,1,50,0)
+   identifies a request from VistA for a specific FDA Medication Guide
+"PKG",526,22,1,"PAH",1,1,51,0)
+   and automatically sends it to the FDA Medication Guide printer
+"PKG",526,22,1,"PAH",1,1,52,0)
+   selected by the user within VistA when dispensing the medication.
+"PKG",526,22,1,"PAH",1,1,53,0)
+ 
+"PKG",526,22,1,"PAH",1,1,54,0)
+ . Ability to update the Windows network printer name for a specific
+"PKG",526,22,1,"PAH",1,1,55,0)
+   device through the Kernel application. Once the pharmacist selects a
+"PKG",526,22,1,"PAH",1,1,56,0)
+   printer to print the FDA Medication Guide Vista will retrieve the 
+"PKG",526,22,1,"PAH",1,1,57,0)
+   Windows name for the printer and will pass it on to the Java
+"PKG",526,22,1,"PAH",1,1,58,0)
+   application responsible for printing the document.
+"PKG",526,22,1,"PAH",1,1,59,0)
+    
+"PKG",526,22,1,"PAH",1,1,60,0)
+Below is a list of all the applications involved in this release along
+"PKG",526,22,1,"PAH",1,1,61,0)
+with their patch number:
+"PKG",526,22,1,"PAH",1,1,62,0)
+  
+"PKG",526,22,1,"PAH",1,1,63,0)
+   APPLICATION/VERSION                                    PATCH
+"PKG",526,22,1,"PAH",1,1,64,0)
+   -----------------------------------------------------------------
+"PKG",526,22,1,"PAH",1,1,65,0)
+   CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 4.0    PSX*2*70
+"PKG",526,22,1,"PAH",1,1,66,0)
+   NATIONAL DRUG FILE (NDF) V. 4.0                        PSN*4*264
+"PKG",526,22,1,"PAH",1,1,67,0)
+   OUTPATIENT PHARMACY (OP) V. 7.0                        PSO*7*367
+"PKG",526,22,1,"PAH",1,1,68,0)
+   KERNEL V. 8.0                                          XU*8*566
+"PKG",526,22,1,"PAH",1,1,69,0)
+   
+"PKG",526,22,1,"PAH",1,1,70,0)
+The following modification is included in this patch (PSX*2*70):
+"PKG",526,22,1,"PAH",1,1,71,0)
+ 
+"PKG",526,22,1,"PAH",1,1,72,0)
+The process responsible for the transmission of prescriptions from Outpatient
+"PKG",526,22,1,"PAH",1,1,73,0)
+Pharmacy to CMOP will be modified to record the current FDA Medication Guide
+"PKG",526,22,1,"PAH",1,1,74,0)
+document name in the CMOP Event Log in the PRESCRIPTION file (#52) if one 
+"PKG",526,22,1,"PAH",1,1,75,0)
+exists for the medication in the prescription being transmitted. Such 
+"PKG",526,22,1,"PAH",1,1,76,0)
+information will be displayed within Outpatient Pharmacy application when the
+"PKG",526,22,1,"PAH",1,1,77,0)
+user selects to view the CMOP Event Log for a specific prescription.
+"PKG",526,22,1,"PAH",1,1,78,0)
+ 
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","PSXRPPL")
+0^2^B67417884^B61658138
+"RTN","PSXRPPL",1,0)
+PSXRPPL ;BIR/WPB,BAB-Gathers data for the CMOP Transmission ;13 Mar 2002  10:31 AM
+"RTN","PSXRPPL",2,0)
+ ;;2.0;CMOP;**3,23,33,28,40,42,41,48,62,58,66,65,69,70**;11 Apr 97;Build 9
+"RTN","PSXRPPL",3,0)
+ ;Reference to ^PS(52.5,  supported by DBIA #1978
+"RTN","PSXRPPL",4,0)
+ ;Reference to ^PSRX(     supported by DBIA #1977
+"RTN","PSXRPPL",5,0)
+ ;Reference to ^PSOHLSN1  supported by DBIA #2385
+"RTN","PSXRPPL",6,0)
+ ;Reference to ^PSORXL    supported by DBIA #1969
+"RTN","PSXRPPL",7,0)
+ ;Reference to ^PSOLSET   supported by DBIA #1973
+"RTN","PSXRPPL",8,0)
+ ;Reference to %ZIS(1     supported by DBIA #290
+"RTN","PSXRPPL",9,0)
+ ;Reference to %ZIS(2     supported by DBIA #2247
+"RTN","PSXRPPL",10,0)
+ ;Reference to ^PSSLOCK   supported by DBIA #2789
+"RTN","PSXRPPL",11,0)
+ ;Reference to ^XTMP("ORLK-" supported by DBIA #4001
+"RTN","PSXRPPL",12,0)
+ ;Reference to ^BPSUTIL   supported by DBIA #4410
+"RTN","PSXRPPL",13,0)
+ ;Reference to ^PS(59     supported by DBIA #1976
+"RTN","PSXRPPL",14,0)
+ ;Reference to $$SELPRT^PSOFDAUT supported by DBIA #5740
+"RTN","PSXRPPL",15,0)
+ ;Called from PSXRSUS -Builds ^PSX(550.2,,15,"C" , and returns to PSXRSUS or PSXRTRAN
+"RTN","PSXRPPL",16,0)
+ ;
+"RTN","PSXRPPL",17,0)
+SDT K ^TMP($J,"PSX"),^TMP($J,"PSXDFN"),^TMP("PSXEPHNB",$J),ZCNT,PSXBAT D:$D(XRTL) T0^%ZOSV
+"RTN","PSXRPPL",18,0)
+ S PSXTDIV=PSOSITE,PSXTYP=$S(+$G(PSXCS):"C",1:"N")
+"RTN","PSXRPPL",19,0)
+ ;
+"RTN","PSXRPPL",20,0)
+ ; - Submitting prescriptions to ECME (Electronic Claims Mgmt Engine) - 3rd pary
+"RTN","PSXRPPL",21,0)
+ I $$ECMEON^BPSUTIL(PSXTDIV),$$CMOPON^BPSUTIL(PSXTDIV) D
+"RTN","PSXRPPL",22,0)
+ . N BPSCNT S BPSCNT=$$SBTECME^PSXRPPL1(PSXTYP,PSXTDIV,PRTDT,PSXDTRG)
+"RTN","PSXRPPL",23,0)
+ . ; - Wait 15 seconds per prescription sent to ECME (max of 2 hours)
+"RTN","PSXRPPL",24,0)
+ . I BPSCNT>0 H 60+$S((BPSCNT*15)>7200:7200,1:(BPSCNT*15))
+"RTN","PSXRPPL",25,0)
+ ;
+"RTN","PSXRPPL",26,0)
+ ; - Transmitting prescription to CMOP (up to THROUGH DATE)
+"RTN","PSXRPPL",27,0)
+ K ^TMP("PSXEPHIN",$J)
+"RTN","PSXRPPL",28,0)
+ S SDT=0 F  S SDT=$O(^PS(52.5,"CMP","Q",PSXTYP,PSXTDIV,SDT)) S XDFN=0 Q:(SDT>PRTDT)!(SDT'>0)  D
+"RTN","PSXRPPL",29,0)
+ . F  S XDFN=$O(^PS(52.5,"CMP","Q",PSXTYP,PSXTDIV,SDT,XDFN)) S REC=0 Q:(XDFN'>0)!(XDFN="")  D
+"RTN","PSXRPPL",30,0)
+ . . F  S REC=$O(^PS(52.5,"CMP","Q",PSXTYP,PSXTDIV,SDT,XDFN,REC)) Q:(REC'>0)!(REC="")  D
+"RTN","PSXRPPL",31,0)
+ . . . D GETDATA D:$G(RXN) PSOUL^PSSLOCK(RXN),OERRLOCK(RXN)
+"RTN","PSXRPPL",32,0)
+ ;
+"RTN","PSXRPPL",33,0)
+ ; - Pulling prescriptions ahead (parameter in OUTPATIENT SITE file #59)
+"RTN","PSXRPPL",34,0)
+ I $G(PSXBAT),'$G(PSXRTRAN) D CHKDFN^PSXRPPL2(PRTDT)
+"RTN","PSXRPPL",35,0)
+ I $G(PSXBAT),'$G(PSXRTRAN) D CHKDFN
+"RTN","PSXRPPL",36,0)
+ ;
+"RTN","PSXRPPL",37,0)
+ ; - Sends a Mailman message if there were transmission problems with the 3rd Party Payer
+"RTN","PSXRPPL",38,0)
+ I $D(^TMP("PSXEPHIN",$J)) D ^PSXBPSMS K ^TMP("PSXEPHIN",$J),^TMP("PSXEPHNB",$J)
+"RTN","PSXRPPL",39,0)
+ ;
+"RTN","PSXRPPL",40,0)
+EXIT ;   
+"RTN","PSXRPPL",41,0)
+ K SDT,DFN,REC,RXNUM,PSXOK,FILNUM,REF,PNAME,CNAME,DIE,DR,NDFN,%,CNT,COM,DTTM,FILL,JJ,PRTDT,PSXDIV,XDFN,NFLAG,CIND,XDFN
+"RTN","PSXRPPL",42,0)
+ K CHKDT,DAYS,DRUG,DRUGCHK,NM,OPDT,PHARCLK,PHY,PSTAT,PTRA,PTRB,QTY,REL,RXERR,RXF,SFN,PSXDGST,PSXMC,PSXMDT
+"RTN","PSXRPPL",43,0)
+ S:$D(XRT0) XRTN=$T(+0) D:$D(XRT0) T1^%ZOSV
+"RTN","PSXRPPL",44,0)
+ K ^TMP("PSXEPHIN",$J),^TMP("PSXEPHNB",$J)
+"RTN","PSXRPPL",45,0)
+ Q
+"RTN","PSXRPPL",46,0)
+GETDATA ;Screens rxs and builds data
+"RTN","PSXRPPL",47,0)
+ ;PSXOK=1:NOT CMOP DRUG OR DO NOT MAIL,2:TRADENAME,3:WINDOW,4:PRINTED,5:NOT SUSPENDED
+"RTN","PSXRPPL",48,0)
+ ;PSXOK=6:ALREADY RELEASED,7:DIFFERENT DIVISION,8:BAD DATA IN 52.5
+"RTN","PSXRPPL",49,0)
+ ;9:CS Mismatch,10:DEA 1 or 2
+"RTN","PSXRPPL",50,0)
+ I '$D(^PS(52.5,REC,0)) K ^PS(52.5,"AQ",SDT,XDFN,REC),^PS(52.5,"CMP","Q",PSXTYP,PSXTDIV,SDT,XDFN,REC) Q
+"RTN","PSXRPPL",51,0)
+ I $P(^PS(52.5,REC,0),"^",7)="" K ^PS(52.5,"AQ",SDT,XDFN,REC),^PS(52.5,"CMP","Q",PSXTYP,PSXTDIV,SDT,XDFN,REC) Q
+"RTN","PSXRPPL",52,0)
+ I ($P(^PS(52.5,REC,0),"^",3)'=XDFN) K ^PS(52.5,"AQ",SDT,XDFN,REC),^PS(52.5,"CMP","Q",PSXTYP,PSXTDIV,SDT,XDFN,REC) Q
+"RTN","PSXRPPL",53,0)
+ N DFN S DFN=XDFN D DEM^VADPT
+"RTN","PSXRPPL",54,0)
+ I $G(VADM(6))'="" D DELETE K VADM Q
+"RTN","PSXRPPL",55,0)
+ S PSXOK=0,NFLAG=0
+"RTN","PSXRPPL",56,0)
+ S RXN=$P($G(^PS(52.5,REC,0)),"^",1) I RXN="" S PSXOK=8 Q
+"RTN","PSXRPPL",57,0)
+ S RFL=+$$GET1^DIQ(52.5,REC,9,"I")
+"RTN","PSXRPPL",58,0)
+ I '$D(^TMP($J,"PSXBAI",DFN)) D
+"RTN","PSXRPPL",59,0)
+ .S PSXGOOD=$$ADDROK^PSXMISC1(RXN)
+"RTN","PSXRPPL",60,0)
+ .I 'PSXGOOD S PSXFIRST=1 D  I 'PSXFIRST S PSXOK=8
+"RTN","PSXRPPL",61,0)
+ ..D CHKACT^PSXMISC1(RXN)
+"RTN","PSXRPPL",62,0)
+ I PSXOK=8 K RXN Q
+"RTN","PSXRPPL",63,0)
+ ;
+"RTN","PSXRPPL",64,0)
+ N EPHQT S EPHQT=0
+"RTN","PSXRPPL",65,0)
+ I $$PATCH^XPDUTL("PSO*7.0*148") D EPHARM^PSXRPPL2 I EPHQT Q
+"RTN","PSXRPPL",66,0)
+ D CHKDATA^PSXMISC1
+"RTN","PSXRPPL",67,0)
+SET Q:(PSXOK=7)!(PSXOK=8)!(PSXOK=9)
+"RTN","PSXRPPL",68,0)
+ S PNAME=$G(VADM(1))
+"RTN","PSXRPPL",69,0)
+ I ($G(PSXCSRX)=1)&($G(PSXCS)=1) S ^XTMP("PSXCS",PSOSITE,DT,RXN)=""
+"RTN","PSXRPPL",70,0)
+ I (PSXOK=0)&(PSXFLAG=1) S ^TMP($J,"PSXDFN",XDFN)="",NFLAG=4 D DQUE,RX550215 Q
+"RTN","PSXRPPL",71,0)
+ I (PSXOK=0)&(PSXFLAG=2) D RX550215 Q
+"RTN","PSXRPPL",72,0)
+ I (PSXOK>0)&(PSXOK<7)!(PSXOK=10) D DELETE Q
+"RTN","PSXRPPL",73,0)
+ Q
+"RTN","PSXRPPL",74,0)
+ ;
+"RTN","PSXRPPL",75,0)
+DELETE ; deletes the CMOP STATUS field in PS(52.5, reindex 'AC' x-ref
+"RTN","PSXRPPL",76,0)
+ L +^PS(52.5,REC):600 Q:'$T
+"RTN","PSXRPPL",77,0)
+ N DR,DIE,DA S DIE="^PS(52.5,",DA=REC,DR="3///@" D ^DIE
+"RTN","PSXRPPL",78,0)
+ S ^PS(52.5,"AC",$P(^PS(52.5,REC,0),"^",3),$P(^PS(52.5,REC,0),"^",2),REC)=""
+"RTN","PSXRPPL",79,0)
+ L -^PS(52.5,REC)
+"RTN","PSXRPPL",80,0)
+ Q
+"RTN","PSXRPPL",81,0)
+ ;the rest of the sub-routines go through the ^PSX(550.2,,15,"C"
+"RTN","PSXRPPL",82,0)
+ ;global and checks for RXs within the days ahead range and
+"RTN","PSXRPPL",83,0)
+ ;builds the ^PSX(550.2,PSXBAT,
+"RTN","PSXRPPL",84,0)
+CHKDFN ; use the patient 'C' index under RX multiple in file 550.2 to GET dfn to gather Patients' future RXs
+"RTN","PSXRPPL",85,0)
+ I '$D(^PSX(550.2,PSXBAT,15,"C")) Q
+"RTN","PSXRPPL",86,0)
+ S PSXPTNM="" F  S PSXPTNM=$O(^PSX(550.2,PSXBAT,15,"C",PSXPTNM)) Q:PSXPTNM=""  D
+"RTN","PSXRPPL",87,0)
+ . S XDFN=0 F  S XDFN=$O(^PSX(550.2,PSXBAT,"15","C",PSXPTNM,XDFN)) Q:(XDFN'>0)  D
+"RTN","PSXRPPL",88,0)
+ . . S SDT=PRTDT F  S SDT=$O(^PS(52.5,"CMP","Q",PSXTYP,PSXTDIV,SDT)),NDFN=0 Q:(SDT>PSXDTRG)!(SDT="")  D
+"RTN","PSXRPPL",89,0)
+ . . . F  S NDFN=$O(^PS(52.5,"CMP","Q",PSXTYP,PSXTDIV,SDT,NDFN)),REC=0 Q:NDFN'>0  I NDFN=XDFN D
+"RTN","PSXRPPL",90,0)
+ . . . . F  S REC=$O(^PS(52.5,"CMP","Q",PSXTYP,PSXTDIV,SDT,NDFN,REC)) Q:REC'>0  D
+"RTN","PSXRPPL",91,0)
+ . . . . . D GETDATA D:$G(RXN) PSOUL^PSSLOCK(RXN),OERRLOCK(RXN)
+"RTN","PSXRPPL",92,0)
+ Q
+"RTN","PSXRPPL",93,0)
+ ;
+"RTN","PSXRPPL",94,0)
+BEGIN ; Select print device
+"RTN","PSXRPPL",95,0)
+ I '$D(PSOPAR) D ^PSOLSET
+"RTN","PSXRPPL",96,0)
+ I $D(PSOLAP),($G(PSOLAP)'=ION) S PSLION=PSOLAP G PROFILE
+"RTN","PSXRPPL",97,0)
+ W ! S %ZIS("A")="PRINTER 'LABEL' DEVICE:  ",%ZIS("B")="",%ZIS="MQN" D ^%ZIS S PSLION=ION G:POP EXIT
+"RTN","PSXRPPL",98,0)
+ I $G(IOST)["C-" W !,"You must select a printer!",! G BEGIN
+"RTN","PSXRPPL",99,0)
+ F J=0,1 S @("PSOBAR"_J)="" I $D(^%ZIS(2,^%ZIS(1,IOS,"SUBTYPE"),"BAR"_J)) S @("PSOBAR"_J)=^("BAR"_J)
+"RTN","PSXRPPL",100,0)
+ S PSOBARS=PSOBAR1]""&(PSOBAR0]"")&$P(PSOPAR,"^",19)
+"RTN","PSXRPPL",101,0)
+ K PSOION,J D ^%ZISC I $D(IO("Q")) K IO("Q")
+"RTN","PSXRPPL",102,0)
+ ;
+"RTN","PSXRPPL",103,0)
+PROFILE I $D(PSOPROP),($G(PSOPROP)'=ION) G FDAMG
+"RTN","PSXRPPL",104,0)
+ I $P(PSOPAR,"^",8) S %ZIS="MNQ",%ZIS("A")="Select PROFILE PRINTER: " D ^%ZIS K %ZIS,IO("Q"),IOP G:POP EXIT S PSOPROP=ION D ^%ZISC
+"RTN","PSXRPPL",105,0)
+ I $G(PSOPROP)=ION W !,"You must select a printer!",! G PROFILE
+"RTN","PSXRPPL",106,0)
+ ;
+"RTN","PSXRPPL",107,0)
+FDAMG ; Selects FDA Medication Guide Printer
+"RTN","PSXRPPL",108,0)
+ I $$GET1^DIQ(59,PSOSITE,134)'="" N FDAPRT S FDAPRT="" D  I FDAPRT="^"!($G(PSOFDAPT)="") S POP=1 G EXIT
+"RTN","PSXRPPL",109,0)
+ . F  D  Q:FDAPRT'=""
+"RTN","PSXRPPL",110,0)
+ . . S FDAPRT=$$SELPRT^PSOFDAUT($P($G(PSOFDAPT),"^"))
+"RTN","PSXRPPL",111,0)
+ . . I FDAPRT="" W $C(7),!,"You must select a valid FDA Medication Guide printer."
+"RTN","PSXRPPL",112,0)
+ . I FDAPRT'="",(FDAPRT'="^") S PSOFDAPT=FDAPRT
+"RTN","PSXRPPL",113,0)
+ Q
+"RTN","PSXRPPL",114,0)
+ ;
+"RTN","PSXRPPL",115,0)
+PRT ; w auto error trapping
+"RTN","PSXRPPL",116,0)
+ D NOW^%DTC S DTTM=% K %
+"RTN","PSXRPPL",117,0)
+ S NM="" F  S NM=$O(^PSX(550.2,PSXBAT,15,"C",NM)) Q:NM=""  D DFN,PPL ;gather patient RXs, print patient RXs
+"RTN","PSXRPPL",118,0)
+ S DIK="^PSX(550.2,",DA=PSXBAT D ^DIK K PSXBAT
+"RTN","PSXRPPL",119,0)
+ K CHKDT,CIND,DAYS,DRUG,DRUGCHK,NFLAG,NM,ORD,PDT,PHARCLK,PHY,PSTAT,PTRA,PTRB,QTY,REL,RXERR,RXF,SFN,SIG,SITE,SUS,SUSPT
+"RTN","PSXRPPL",120,0)
+ Q
+"RTN","PSXRPPL",121,0)
+DFN S DFN=0,NFLAG=2
+"RTN","PSXRPPL",122,0)
+ F  S DFN=$O(^PSX(550.2,PSXBAT,15,"C",NM,DFN)),RXN=0 Q:(DFN="")!(DFN'>0)  D
+"RTN","PSXRPPL",123,0)
+ .F  S RXN=$O(^PSX(550.2,PSXBAT,15,"C",NM,DFN,RXN)),RXF="" Q:(RXN="")!(RXN'>0)  D
+"RTN","PSXRPPL",124,0)
+ ..F  S RXF=$O(^PSX(550.2,PSXBAT,15,"C",NM,DFN,RXN,RXF)) Q:RXF=""  D BLD
+"RTN","PSXRPPL",125,0)
+ Q
+"RTN","PSXRPPL",126,0)
+BLD ;
+"RTN","PSXRPPL",127,0)
+ S BATRXDA=$O(^PSX(550.2,PSXBAT,15,"B",RXN,0)) D NOW^%DTC S DTTM=%
+"RTN","PSXRPPL",128,0)
+ S REC=$P(^PSX(550.2,PSXBAT,15,BATRXDA,0),U,5),SUS=$O(^PS(52.5,"B",RXN,0))
+"RTN","PSXRPPL",129,0)
+ I SUS=REC,+SUS'=0 I 1 ;rx still valid in suspense
+"RTN","PSXRPPL",130,0)
+ E  D  Q  ;rx gone
+"RTN","PSXRPPL",131,0)
+ . N DA,DIK S DIK=550.2,DA(1)=PSXBAT,DA=BATRXDA
+"RTN","PSXRPPL",132,0)
+ . D ^DIK
+"RTN","PSXRPPL",133,0)
+ S PSOSU(DFN,SUS)=RXN,RXCNTR=$G(RXCNTR)+1,NFLAG=2
+"RTN","PSXRPPL",134,0)
+ S $P(^PSRX(RXN,0),U,15)=0,$P(^PSRX(RXN,"STA"),U,1)=0
+"RTN","PSXRPPL",135,0)
+ K % S COM="CMOP Suspense Label "_$S($G(^PS(52.5,SUS,"P"))=0:"Printed",$G(^PS(52.5,SUS,"P"))="":"Printed",1:"Reprinted")_$S($G(^PSRX(RXN,"TYPE"))>0:" (PARTIAL)",1:"")
+"RTN","PSXRPPL",136,0)
+ D EN^PSOHLSN1(RXN,"SC","ZU",COM)
+"RTN","PSXRPPL",137,0)
+ S DA=SUS D DQUE K DA
+"RTN","PSXRPPL",138,0)
+ACTLOG F JJ=0:0 S JJ=$O(^PSRX(RXN,"A",JJ)) Q:'JJ  S CNT=JJ
+"RTN","PSXRPPL",139,0)
+ S RFCNT=0 F RF=0:0 S RF=$O(^PSRX(RXN,1,RF)) Q:'RF  S RFCNT=$S(RF<6:RF,1:RF+1)
+"RTN","PSXRPPL",140,0)
+ S CNT=CNT+1,^PSRX(RXN,"A",0)="^52.3DA^"_CNT_"^"_CNT
+"RTN","PSXRPPL",141,0)
+LOCK L +^PSRX(RXN):600 G:'$T LOCK
+"RTN","PSXRPPL",142,0)
+ S ^PSRX(RXN,"A",CNT,0)=DTTM_"^S^"_DUZ_"^"_RFCNT_"^"_COM L -^PSRX(RXN)
+"RTN","PSXRPPL",143,0)
+ K CNT,COM,RFCNT,%,JJ,RF,Y,RXCNTR
+"RTN","PSXRPPL",144,0)
+ Q
+"RTN","PSXRPPL",145,0)
+PPL K PPL,PPL1 S ORD="" F  S ORD=$O(PSOSU(ORD)) Q:(ORD="")!(ORD'>0)  D PPL1
+"RTN","PSXRPPL",146,0)
+ Q
+"RTN","PSXRPPL",147,0)
+PPL1 ; print patient labels
+"RTN","PSXRPPL",148,0)
+ F SFN=0:0 S SFN=$O(PSOSU(ORD,SFN)) Q:'SFN  D
+"RTN","PSXRPPL",149,0)
+ . S:$L($G(PPL))<240 PPL=$P(PSOSU(ORD,SFN),"^")_","_$G(PPL)
+"RTN","PSXRPPL",150,0)
+ . S:$L($G(PPL))>239 PPL1=$P(PSOSU(ORD,SFN),"^")_","_$G(PPL1)
+"RTN","PSXRPPL",151,0)
+ . S DFN=$P(^PS(52.5,SFN,0),"^",3)
+"RTN","PSXRPPL",152,0)
+ S SUSPT=1,PSNP=$S($P(PSOPAR,"^",8):1,1:0) S:$D(PSOPROP) PFIO=PSOPROP
+"RTN","PSXRPPL",153,0)
+ D QLBL^PSORXL
+"RTN","PSXRPPL",154,0)
+ I $D(PPL1) S PSNP=0,PPL=PPL1 D QLBL^PSORXL
+"RTN","PSXRPPL",155,0)
+ K PPL,PPL1,PSOSU(ORD)
+"RTN","PSXRPPL",156,0)
+ Q
+"RTN","PSXRPPL",157,0)
+DQUE ; sets the CMOP indicator field, and printed field in 52.5
+"RTN","PSXRPPL",158,0)
+ L +^PS(52.5,REC):600 G:'$T DQUE
+"RTN","PSXRPPL",159,0)
+ I NFLAG=4 D
+"RTN","PSXRPPL",160,0)
+ . S DA=REC,DIE="^PS(52.5,",DR="3////L;4////"_DT D ^DIE K DIE,DA,DR L -^PS(52.5,REC)  ; the rest moved into PSXRTR
+"RTN","PSXRPPL",161,0)
+ S CIND=$S(NFLAG=1:"X",NFLAG=2:"P",NFLAG=3:"@",1:0)
+"RTN","PSXRPPL",162,0)
+ I $G(NFLAG)'=2 D
+"RTN","PSXRPPL",163,0)
+ .S DA=REC,DIE="^PS(52.5,",DR="3////"_CIND_";4////"_DT
+"RTN","PSXRPPL",164,0)
+ .D ^DIE K DIE,DA,DR
+"RTN","PSXRPPL",165,0)
+ .S ^PS(52.5,REC,"P")=1,^PS(52.5,"ADL",DT,REC)=""
+"RTN","PSXRPPL",166,0)
+ I $G(NFLAG)=2 D  ;print label cycle
+"RTN","PSXRPPL",167,0)
+ . S DA=REC,DIE="^PS(52.5,",DR="3////"_CIND_";4////"_DTTM_";5////"_DUZ_";7////"_RXCNTR
+"RTN","PSXRPPL",168,0)
+ . D ^DIE K DIE,DA,DR
+"RTN","PSXRPPL",169,0)
+ . S ^PS(52.5,REC,"P")=1,^PS(52.5,"ADL",$E($P(^PS(52.5,REC,0),"^",8),1,7),REC)=""
+"RTN","PSXRPPL",170,0)
+ L -^PS(52.5,REC)
+"RTN","PSXRPPL",171,0)
+ I $G(NFLAG)=2 D EN^PSOHLSN1(RXN,"SC","ZU","CMOP Suspense Label Printed")
+"RTN","PSXRPPL",172,0)
+ Q
+"RTN","PSXRPPL",173,0)
+RX550215 ; put RX into RX multiple TRANS 550.215 for PSXBAT
+"RTN","PSXRPPL",174,0)
+ I '$G(PSXBAT) D BATCH^PSXRSYU ; first time through create batch, & return PSXBAT
+"RTN","PSXRPPL",175,0)
+ K DD,DO,DIC,DA,DR,D0
+"RTN","PSXRPPL",176,0)
+ S:'$D(^PSX(550.2,PSXBAT,15,0)) ^PSX(550.2,PSXBAT,15,0)="^550.215P^^"
+"RTN","PSXRPPL",177,0)
+ S X=RXN,DA(1)=PSXBAT
+"RTN","PSXRPPL",178,0)
+ S DIC="^PSX(550.2,"_PSXBAT_",15,",DIC("DR")=".02////^S X=RXF;.03////^S X=DFN;.05////^S X=REC",DIC(0)="ZF"
+"RTN","PSXRPPL",179,0)
+ D FILE^DICN
+"RTN","PSXRPPL",180,0)
+ S PSXRXTDA=+Y ;RX DA within PSXBAT 'T'ransmission
+"RTN","PSXRPPL",181,0)
+ K DD,DO,DIC,DA,DR,D0
+"RTN","PSXRPPL",182,0)
+ Q
+"RTN","PSXRPPL",183,0)
+OERRLOCK(RXN) ; set XTMP for OERR/CPRS order locking
+"RTN","PSXRPPL",184,0)
+ I $G(PSXBAT),$G(RXN),$G(PSXRXTDA) I 1
+"RTN","PSXRPPL",185,0)
+ E  Q
+"RTN","PSXRPPL",186,0)
+ I $P(^PSX(550.2,PSXBAT,15,PSXRXTDA,0),U,1)'=RXN Q
+"RTN","PSXRPPL",187,0)
+RXNSET ; set ^XTMP("ORLK-"_ORDER per IA 4001 needs RXN
+"RTN","PSXRPPL",188,0)
+ Q:'$G(RXN)
+"RTN","PSXRPPL",189,0)
+ N ORD,NOW,NOW1 S ORD=+$P($G(^PSRX(+$G(RXN),"OR1")),"^",2)
+"RTN","PSXRPPL",190,0)
+ Q:'ORD
+"RTN","PSXRPPL",191,0)
+ S NOW=$$NOW^XLFDT,NOW1=$$FMADD^XLFDT(NOW,1)
+"RTN","PSXRPPL",192,0)
+ S ^XTMP("ORLK-"_+ORD,0)=NOW1_U_NOW_"^CPRS/CMOP RX/Order Lock",^(1)=DUZ_U_$J
+"RTN","PSXRPPL",193,0)
+ Q
+"RTN","PSXRPPL",194,0)
+RXNCLEAR ; needs RXN
+"RTN","PSXRPPL",195,0)
+ Q:'$G(RXN)
+"RTN","PSXRPPL",196,0)
+ N ORD S ORD=+$P($G(^PSRX(+$G(RXN),"OR1")),"^",2) Q:'ORD
+"RTN","PSXRPPL",197,0)
+ I $D(^XTMP("ORLK-"_ORD,0)),^(0)["CPRS/CMOP" K ^XTMP("ORLK-"_ORD)
+"RTN","PSXRPPL",198,0)
+ Q
+"RTN","PSXRSUS")
+0^3^B75996121^B75856096
+"RTN","PSXRSUS",1,0)
+PSXRSUS ;BIR/WPB,BAB,HTW-CMOP Transmission Handler ;15 Dec 2001
+"RTN","PSXRSUS",2,0)
+ ;;2.0;CMOP;**2,3,24,23,26,28,41,57,48,70**;11 Apr 97;Build 9
+"RTN","PSXRSUS",3,0)
+ ;Reference to ^PS(52.5 supported by DBIA #1978
+"RTN","PSXRSUS",4,0)
+ ;Reference to ^PS(59   supported by DBIA #1976
+"RTN","PSXRSUS",5,0)
+ ;Reference to routine DEV1^PSOSULB1 supported by DBIA #2478
+"RTN","PSXRSUS",6,0)
+ ;
+"RTN","PSXRSUS",7,0)
+ ;Select CMOP Rx data from File 52.5,build HL7 segments,
+"RTN","PSXRSUS",8,0)
+ ;and transmit data
+"RTN","PSXRSUS",9,0)
+ ; This routine is called from PSOSULB1 'Print from Suspense'
+"RTN","PSXRSUS",10,0)
+ ;
+"RTN","PSXRSUS",11,0)
+START I '$D(^XUSEC("PSXCMOPMGR",DUZ)) W !,"You are not authorized to use this option!" Q
+"RTN","PSXRSUS",12,0)
+ I '$D(^XUSEC("PSX XMIT",DUZ)) W !,"You are not authorized to use this option!" Q
+"RTN","PSXRSUS",13,0)
+ S (PSXFLAG,PSXTRANS)=0
+"RTN","PSXRSUS",14,0)
+ L +^PSX(550.1):3 I '$T W !,"A lock on the RX QUEUE file was not obtainable. A transmission is in progress, try later." Q
+"RTN","PSXRSUS",15,0)
+ ; lock on 550.1 obtainable, clear flags
+"RTN","PSXRSUS",16,0)
+ I $D(^PSX(550,"TR","T")) F  S PSXSYS=$O(^PSX(550,"TR","T",0)) Q:PSXSYS'>0  S PSXSTAT="H" D PSXSTAT^PSXRSYU
+"RTN","PSXRSUS",17,0)
+ D SET^PSXSYS
+"RTN","PSXRSUS",18,0)
+ S STATUS=$P($G(^PSX(550,+PSXSYS,0)),"^",3) I STATUS'="H" W !,STATUS," no Manual Transmission nor Print CMOP Suspense allowed at this time" G EXIT
+"RTN","PSXRSUS",19,0)
+QRY W ! K DIR
+"RTN","PSXRSUS",20,0)
+ S DIR(0)="NAO^1:5",DIR("A")="Select (1, 2, 3, 4, 5):  "
+"RTN","PSXRSUS",21,0)
+ S DIR("A",1)="  1 - Initiate Standard CMOP Transmission"
+"RTN","PSXRSUS",22,0)
+ S DIR("A",2)="  2 - Initiate CS CMOP Transmission"
+"RTN","PSXRSUS",23,0)
+ S DIR("A",3)="  3 - Print Current Division -  Standard CMOP from Suspense"
+"RTN","PSXRSUS",24,0)
+ S DIR("A",4)="  4 - Print Current Division -  CS CMOP from Suspense"
+"RTN","PSXRSUS",25,0)
+ S DIR("A",5)="  5 - Standard Print from Suspense"
+"RTN","PSXRSUS",26,0)
+ S DIR("A",6)=" "
+"RTN","PSXRSUS",27,0)
+ S DIR("?")="Enter a number between 1 and 5.",DIR("??")="^D MSG1^PSXRHLP" D ^DIR I (Y<0)!($D(DIRUT)) K DIR G EXIT
+"RTN","PSXRSUS",28,0)
+ W !!,DIR("A",X),!
+"RTN","PSXRSUS",29,0)
+ S REPLY=X K Y,X
+"RTN","PSXRSUS",30,0)
+ K DIRUT,DTOUT,DUOUT,DIROUT,DIR
+"RTN","PSXRSUS",31,0)
+DIRECT ;Set PSXCS, PSXTRANS & PSXFLAG as per user choice
+"RTN","PSXRSUS",32,0)
+ I REPLY="5" G DEV1^PSOSULB1
+"RTN","PSXRSUS",33,0)
+ I "24"[REPLY S PSXCS=1
+"RTN","PSXRSUS",34,0)
+ I "12"[REPLY S (PSXTRANS,PSXFLAG)=1
+"RTN","PSXRSUS",35,0)
+ I "34"[REPLY S PSXFLAG=2
+"RTN","PSXRSUS",36,0)
+ K REPLY
+"RTN","PSXRSUS",37,0)
+ ;
+"RTN","PSXRSUS",38,0)
+ASK ;Ask 'all divisions y/n' & date range for data transmission & checks for data
+"RTN","PSXRSUS",39,0)
+ W !
+"RTN","PSXRSUS",40,0)
+ ;ask all divisions y/n
+"RTN","PSXRSUS",41,0)
+ I PSXFLAG=2 S PSXDIVML=0 G ASK2
+"RTN","PSXRSUS",42,0)
+ K DIR S DIR(0)="Y",DIR("A")="Transmit Data for All Divisions ? ",DIR("B")="YES"
+"RTN","PSXRSUS",43,0)
+ S DIR("?",1)="Yes - Transmit/Print All Divisions"
+"RTN","PSXRSUS",44,0)
+ S DIR("?")="No  - Transmit/Print One Division:   "_$$GET1^DIQ(59,PSOSITE,.01)
+"RTN","PSXRSUS",45,0)
+ D ^DIR K DIR
+"RTN","PSXRSUS",46,0)
+ G:(Y<0)!($D(DIRUT)) EXIT
+"RTN","PSXRSUS",47,0)
+ N PSXDIVML S PSXDIVML=+Y
+"RTN","PSXRSUS",48,0)
+ASK2 W !
+"RTN","PSXRSUS",49,0)
+ S %DT="AEX",%DT("A")=$S(PSXFLAG=1:"TRANSMIT CMOP DATA THRU DATE:  ",PSXFLAG=2:"PRINT CMOP LABELS THRU DATE:  ",1:0),%DT("B")="TODAY" D ^%DT K %DT,%DT("A"),%DT("B")
+"RTN","PSXRSUS",50,0)
+ S:Y<0 PFLAG=1 G:Y<0 EXIT
+"RTN","PSXRSUS",51,0)
+ S (PDT,PRTDT,TPRTDT)=Y K Y S Y=PDT X ^DD("DD") S PDT=Y K Y
+"RTN","PSXRSUS",52,0)
+ S CHKDT=$O(^PS(52.5,"AQ","")) I CHKDT>PRTDT W !!,$S(PSXFLAG=1:"NOTHING THRU THIS DATE TO TRANSMIT.",PSXFLAG=2:"NOTHING THRU THIS DATE TO PRINT.",1:0) S PFLAG=1 G EXIT
+"RTN","PSXRSUS",53,0)
+ I '$O(^PS(52.5,"AQ",0)) W !!,$S(PSXFLAG=1:"NOTHING THRU THIS DATE TO TRANSMIT.",PSXFLAG=2:"NOTHING THRU THIS DATE TO PRINT.",1:0) S PFLAG=1 G EXIT
+"RTN","PSXRSUS",54,0)
+ ;
+"RTN","PSXRSUS",55,0)
+ W ! K DIR S DIR(0)="Y",DIR("B")="NO",DIR("A")="Are you sure you wish to continue" D ^DIR K DIR S STOP=Y G:Y=0!($D(DIRUT))!($D(DUOUT)) EXIT K Y
+"RTN","PSXRSUS",56,0)
+ S PSXSTAT="T" D PSXSTAT^PSXRSYU S PFLAG=0 I $G(PSXLOCK)>0 G EX1
+"RTN","PSXRSUS",57,0)
+ ;
+"RTN","PSXRSUS",58,0)
+DRIV ;calls the remaining routines to build the data for transmission and
+"RTN","PSXRSUS",59,0)
+ S PSXDAYS=$P(PSOPAR,"^",27),X1=TPRTDT,X2=PSXDAYS D C^%DTC S PSXDTRG=X K X,X1,X2
+"RTN","PSXRSUS",60,0)
+ S PSXVENDR=$S($P(^PSX(550,+$G(PSXSYS),0),"^")["HINE":"SI BAKER",$P(^PSX(550,+$G(PSXSYS),0),"^")["MURF":"SI BAKER",1:"ELECTROCOM")
+"RTN","PSXRSUS",61,0)
+ ;set up queue device PSX or printer
+"RTN","PSXRSUS",62,0)
+ I PSXFLAG=2 D BEGIN^PSXRPPL G:$G(POP) EXIT ;select printer PSLION
+"RTN","PSXRSUS",63,0)
+QUE ; QUEUE the group/individual PSOSITE jobs for trans or the single job for print labels one division
+"RTN","PSXRSUS",64,0)
+ S PSXDESC="CMOP "_$S($G(PSXCS)=1:"CS ",1:"NON-CS ")_"Transmission"
+"RTN","PSXRSUS",65,0)
+ ;
+"RTN","PSXRSUS",66,0)
+ S ZTDESC=$S(PSXFLAG=1:$G(PSXDESC),PSXFLAG=2:"Print CMOP Suspense",1:"")
+"RTN","PSXRSUS",67,0)
+ S:PSXFLAG=1 ZTIO="",ZTRTN="TRANDIVS^PSXRSUS"
+"RTN","PSXRSUS",68,0)
+ S:PSXFLAG=2 ZTIO=PSLION,ZTRTN="PRT^PSXRSUS"
+"RTN","PSXRSUS",69,0)
+ ;
+"RTN","PSXRSUS",70,0)
+ S PSXDUZ=DUZ,(PSOINST,PSXSITE)=+$P($G(PSXSYS),U,2)
+"RTN","PSXRSUS",71,0)
+ S ZTDTH=$H
+"RTN","PSXRSUS",72,0)
+ F X="PSXDIVML","PSOSITE","PSOLAP","PSOSYS","PSOPAR","PSXSYS","DUZ","PSXTRANS","PSXFLAG","PRTDT","PSOINST","PSXDUZ","PSXSITE","PSXVER" S ZTSAVE(X)=""
+"RTN","PSXRSUS",73,0)
+ F X="PSXCS","PSXDAYS","PSXDTRG","PSOBARS","PSOBAR1","PSOBAR0","PSOPROP","PSXVENDR","PSLION","TPRTDT","PSOFDAPT" S ZTSAVE(X)=""
+"RTN","PSXRSUS",74,0)
+ ;
+"RTN","PSXRSUS",75,0)
+ K ZTSK
+"RTN","PSXRSUS",76,0)
+ D ^%ZTLOAD ;****TESTING switch to tasking vs foreground
+"RTN","PSXRSUS",77,0)
+ W:$G(ZTSK) !,"Tasked ",ZTSK H 4
+"RTN","PSXRSUS",78,0)
+ ;D @ZTRTN ;****TESTING run foreground, comment out above two lines
+"RTN","PSXRSUS",79,0)
+ Q
+"RTN","PSXRSUS",80,0)
+ ;
+"RTN","PSXRSUS",81,0)
+TRANDIVS ;Entry from transmission tasking; loop all divisions / or process only 1
+"RTN","PSXRSUS",82,0)
+ ;process/transmit all divisions
+"RTN","PSXRSUS",83,0)
+LOCK ; >>>**** LOCK OF FILE 550.1 ****<<<
+"RTN","PSXRSUS",84,0)
+ F I=1:1:3 L +^PSX(550.1):10 I $T S I=100
+"RTN","PSXRSUS",85,0)
+ I I'=100 D CANMSG G EXIT ; could not get a lock in 18 minutes of waiting
+"RTN","PSXRSUS",86,0)
+ D STOREVAR^PSXRSUS1 ; store critical variables
+"RTN","PSXRSUS",87,0)
+ I $D(^PSX(550.2,"AQ")) D EN1^PSXRCVRY
+"RTN","PSXRSUS",88,0)
+ I PSXDIVML N PSOSITE,PSOPAR D  G EXIT
+"RTN","PSXRSUS",89,0)
+ . S PSOSITE=0 F  S PSOSITE=$O(^PS(59,PSOSITE)) Q:PSOSITE'>0  D
+"RTN","PSXRSUS",90,0)
+ .. I '$D(^XTMP("PSXAUTOERR")) N $ETRAP,$ESTACK S $ETRAP="D TRAPERR^PSXRSUS"
+"RTN","PSXRSUS",91,0)
+ .. D RESETVAR^PSXRSUS1 ;retrieve critical variables
+"RTN","PSXRSUS",92,0)
+ .. S PSOPAR=^PS(59,PSOSITE,1),PRTDT=TPRTDT
+"RTN","PSXRSUS",93,0)
+ .. S PSXDAYS=$P(PSOPAR,"^",27),X1=PRTDT,X2=PSXDAYS D C^%DTC S PSXDTRG=X K X,X1,X2 ;adjusts variables per divisional parameters.
+"RTN","PSXRSUS",94,0)
+ .. D TRANS
+"RTN","PSXRSUS",95,0)
+ ; process a single division
+"RTN","PSXRSUS",96,0)
+ D
+"RTN","PSXRSUS",97,0)
+ . I '$D(^XTMP("PSXAUTOERR")) N $ETRAP,$ESTACK S $ETRAP="D TRAPERR^PSXRSUS"
+"RTN","PSXRSUS",98,0)
+ . D TRANS
+"RTN","PSXRSUS",99,0)
+ G EXIT
+"RTN","PSXRSUS",100,0)
+ ;
+"RTN","PSXRSUS",101,0)
+ ;Called by Taskman to build CMOP PRINT data
+"RTN","PSXRSUS",102,0)
+TRANS ;;Called by PSXAUTO Taskman to begin CMOP transmissions one division
+"RTN","PSXRSUS",103,0)
+ S PSXZTSK=$G(ZTSK),PSXERFLG=0,PSXDUZ=DUZ
+"RTN","PSXRSUS",104,0)
+ S PSXTST=0,PSXIN=$$GET1^DIQ(59,PSOSITE,2004,"I")
+"RTN","PSXRSUS",105,0)
+ S:PSXIN'=""&(PSXIN<(DT+.1)) PSXTST=1
+"RTN","PSXRSUS",106,0)
+ Q:PSXTST  ;division inactivated
+"RTN","PSXRSUS",107,0)
+ ;VMP OIFO BAY PINES;ELR;PSX*2*57 CK IF ALL NECESSARY ELEMENTS OF DIVISION ARE HERE
+"RTN","PSXRSUS",108,0)
+ NEW PSXDIVER S PSXPRECK=1 D DIV^PSXBLD1 K PSXPRECK I $G(PSXDIVER) Q
+"RTN","PSXRSUS",109,0)
+ S PSXSTAT="T" D PSXSTAT^PSXRSYU
+"RTN","PSXRSUS",110,0)
+ I $G(PSXCS)=1 S X=$$FMADD^XLFDT(DT,+2) S ^XTMP("PSXCS"_PSOSITE,0)=X_U_DT_U_"CMOP CS TRANSMISSION"
+"RTN","PSXRSUS",111,0)
+ D SDT^PSXRPPL I PSXERFLG=1 S PSXJOB=7 D ^PSXERR
+"RTN","PSXRSUS",112,0)
+ I '$G(PSXBAT) D OERRCLR Q  ;no RXs found nor loaded into 550.2
+"RTN","PSXRSUS",113,0)
+RTR ;
+"RTN","PSXRSUS",114,0)
+ ;Clear 550.1 of entries (INSURE NO MERGE) prior to transmission
+"RTN","PSXRSUS",115,0)
+ K DIK,DA S DIK="^PSX(550.1,",DA=0 F  S DA=$O(^PSX(550.1,DA)) Q:DA'>0  D ^DIK ;****TESTING
+"RTN","PSXRSUS",116,0)
+ D EN^PSXBLD ; build entries into 550.1 by alpha patient
+"RTN","PSXRSUS",117,0)
+ I PSXERFLG=1 S PFLAG=1 D EN^PSXERR
+"RTN","PSXRSUS",118,0)
+ D EN^PSXRTR ;complete and send mailman message to CMOP
+"RTN","PSXRSUS",119,0)
+ ;Clear 550.1 of entries (INSURE NO MERGE) after transmission complete
+"RTN","PSXRSUS",120,0)
+ K DIK,DA S DIK="^PSX(550.1,",DA=0 F  S DA=$O(^PSX(550.1,DA)) Q:DA'>0  D ^DIK ;****TESTING
+"RTN","PSXRSUS",121,0)
+ D OERRCLR
+"RTN","PSXRSUS",122,0)
+ Q
+"RTN","PSXRSUS",123,0)
+PRT ; print from CMOP suspense
+"RTN","PSXRSUS",124,0)
+ F I=1:1:3 L +^PSX(550.1):60 I $T S I=100
+"RTN","PSXRSUS",125,0)
+ I I'=100 D CANMSG G EXIT ; could not get a lock in 3 minutes of waiting
+"RTN","PSXRSUS",126,0)
+ ; set auto error trapping
+"RTN","PSXRSUS",127,0)
+ D
+"RTN","PSXRSUS",128,0)
+ . I '$D(^XTMP("PSXAUTOERR")) N $ETRAP,$ESTACK S $ETRAP="D PRTERR^PSXRPPL1"
+"RTN","PSXRSUS",129,0)
+ . D PRT1
+"RTN","PSXRSUS",130,0)
+ D OERRCLR
+"RTN","PSXRSUS",131,0)
+ G EX1
+"RTN","PSXRSUS",132,0)
+PRT1 S ZTREQ="@",PSXERFLG=0,NFLAG=2
+"RTN","PSXRSUS",133,0)
+ D SDT^PSXRPPL
+"RTN","PSXRSUS",134,0)
+ I $G(PSXBAT),$D(^PSX(550.2,PSXBAT,15)) D PRT^PSXRPPL
+"RTN","PSXRSUS",135,0)
+ I PSXERFLG=1 S PSXJOB=7 D ^PSXERR
+"RTN","PSXRSUS",136,0)
+ ;remove the batch from the transmission file as it was used only to hold the RXs for printing and not transmission
+"RTN","PSXRSUS",137,0)
+ I $G(PSXBAT) K DIK,DA S DA=PSXBAT,DIK="^PSX(550.2," D ^DIK K DIK,DA ;****TESTING
+"RTN","PSXRSUS",138,0)
+ G EX1
+"RTN","PSXRSUS",139,0)
+EXIT ;
+"RTN","PSXRSUS",140,0)
+ I $G(POP) S PSXSTAT="H" D PSXSTAT^PSXRSYU ;exit from 'no printer selected' of print labels CMOP
+"RTN","PSXRSUS",141,0)
+ ;I $G(PFLAG)=1 S PSXSTAT="H" D PSXSTAT^PSXRSYU
+"RTN","PSXRSUS",142,0)
+ K DA,DIE,DR
+"RTN","PSXRSUS",143,0)
+ S DA=+PSXSYS,DIE="^PSX(550,",DR="9///@"
+"RTN","PSXRSUS",144,0)
+ L +^PSX(550,DA):600 D ^DIE L -^PSX(550,DA)
+"RTN","PSXRSUS",145,0)
+ K DA,DIE,DR
+"RTN","PSXRSUS",146,0)
+ S PSXSTAT="H" D PSXSTAT^PSXRSYU
+"RTN","PSXRSUS",147,0)
+EX1 K ^PSX("CMOP TRAN")
+"RTN","PSXRSUS",148,0)
+ K CNAME,DFN,FILNUM,PNAME,PSXDAYS,PSXDTRG,^TMP($J,"PSX"),J,Y
+"RTN","PSXRSUS",149,0)
+ K PSXPTR,REC,REF,REPLY,SDT,X,X1,X2,Y,ANSWER,PSXOK,RXNUM,PSXSITE,DIR,DIRUT,DTOUT,DUOUT,DIROUT,PSXCS,TXT,TEXT
+"RTN","PSXRSUS",150,0)
+ K XDFN,STATUS,PSXSTAT,^TMP($J,"PSXDFN"),PDT,PSXDUZ,SITE,CHKDT,PSXERFLG,PSXRXERR,RXEX,FDATE,PSXJOB,PFLAG,PSXZTSK,PSXVENDR,ORSUB,ORST
+"RTN","PSXRSUS",151,0)
+ L -^PSX(550.1)
+"RTN","PSXRSUS",152,0)
+ Q
+"RTN","PSXRSUS",153,0)
+OERRCLR ; clear any locks left in ^XTMP("OERR-"
+"RTN","PSXRSUS",154,0)
+ S (ORST,ORSUB)="ORLK-"
+"RTN","PSXRSUS",155,0)
+ F  S ORSUB=$O(^XTMP(ORSUB)) Q:ORSUB'[ORST  I ^XTMP(ORSUB,0)["CPRS/CMOP" K ^XTMP(ORSUB)
+"RTN","PSXRSUS",156,0)
+ Q
+"RTN","PSXRSUS",157,0)
+CANMSG ; lock on 550.1 not achieved send transmission/print cancelled message
+"RTN","PSXRSUS",158,0)
+ S PSXCS=+$G(PSXCS)
+"RTN","PSXRSUS",159,0)
+ S XMSUB=$S($G(PSXCS):"",1:"NON-")_"CS Manual Scheduled Transmission Canceled"
+"RTN","PSXRSUS",160,0)
+ S:PSXFLAG=2 XMSUB="Print CMOP Suspense Cancelled."
+"RTN","PSXRSUS",161,0)
+ S XMTEXT="TXT("
+"RTN","PSXRSUS",162,0)
+ S TXT(1,0)="The "_$S($G(PSXCS):"",1:"NON-")_"CS Manual Transmission was cancelled"
+"RTN","PSXRSUS",163,0)
+ S:PSXFLAG=2 TXT(1,0)="Print from CMOP Suspense was cancelled"
+"RTN","PSXRSUS",164,0)
+ S TXT(2,0)="It could not obtain a lock on the RX QUEUE file. #550.1"
+"RTN","PSXRSUS",165,0)
+ S TXT(3,0)="This indicates that a transmission was in progress."
+"RTN","PSXRSUS",166,0)
+ S TXT(6,0)=" "
+"RTN","PSXRSUS",167,0)
+ S TXT(7,0)="If you are getting this message frequently, please contact your IRM Group"
+"RTN","PSXRSUS",168,0)
+ D GRP1^PSXNOTE
+"RTN","PSXRSUS",169,0)
+ ;S XMY(DUZ)=""
+"RTN","PSXRSUS",170,0)
+ D ^XMD
+"RTN","PSXRSUS",171,0)
+ Q
+"RTN","PSXRSUS",172,0)
+TRAPERR ; trap/process error
+"RTN","PSXRSUS",173,0)
+ S XXERR=$$EC^%ZOSV
+"RTN","PSXRSUS",174,0)
+ S PSXDIVNM=$$GET1^DIQ(59,PSOSITE,.01)
+"RTN","PSXRSUS",175,0)
+ ;save an image of the transient file 550.1 for 2 days
+"RTN","PSXRSUS",176,0)
+ D NOW^%DTC S DTTM=%
+"RTN","PSXRSUS",177,0)
+ ;VMP OIFO BAY PINES;ELR;PSX*2*57 CHANGE PURGE DAYS TO T+12 FROM T+2
+"RTN","PSXRSUS",178,0)
+ S X=$$FMADD^XLFDT(DT,+12) S ^XTMP("PSXERR "_DTTM,0)=X_U_DT_U_"CMOP "_XXERR
+"RTN","PSXRSUS",179,0)
+ M ^XTMP("PSXERR "_DTTM,550.1)=^PSX(550.1)
+"RTN","PSXRSUS",180,0)
+ S XMSUB="CMOP Error "_PSXDIVNM_" "_$$GET1^DIQ(550.2,+$G(PSXBAT),.01)
+"RTN","PSXRSUS",181,0)
+ D GRP1^PSXNOTE
+"RTN","PSXRSUS",182,0)
+ ;S XMY(DUZ)=""
+"RTN","PSXRSUS",183,0)
+ S XMTEXT="TEXT("
+"RTN","PSXRSUS",184,0)
+ S TEXT(1,0)=$S($G(PSXCS):"",1:"NON-")_"CS CMOP Transmission encountered the following error. Please investigate"
+"RTN","PSXRSUS",185,0)
+ S TEXT(2,0)="Division:         "_PSXDIVNM
+"RTN","PSXRSUS",186,0)
+ S TEXT(3,0)="Type/Batch        "_$S($G(PSXCS):"CS",1:"NON-CS")_" / "_$$GET1^DIQ(550.2,+$G(PSXBAT),.01)
+"RTN","PSXRSUS",187,0)
+ S TEXT(4,0)="Error:            "_XXERR
+"RTN","PSXRSUS",188,0)
+ S TEXT(5,0)="The prescriptions have been reset and other divisions' transmissions are continuing."
+"RTN","PSXRSUS",189,0)
+ S TEXT(6,0)="A copy of the file 550.1 can be found in ^XTMP(""PSXERR "_DTTM_""")"
+"RTN","PSXRSUS",190,0)
+ D ^%ZTER
+"RTN","PSXRSUS",191,0)
+ D ^XMD
+"RTN","PSXRSUS",192,0)
+ ;I $E(IOST)="C" F XX=1:1:5 W !,TEXT(XX,0)
+"RTN","PSXRSUS",193,0)
+ S PSXXDIV=PSOSITE
+"RTN","PSXRSUS",194,0)
+ D EN1^PSXRCVRY ;hopefully no errors will be experienced in recovery
+"RTN","PSXRSUS",195,0)
+ S PSOSITE=PSXXDIV
+"RTN","PSXRSUS",196,0)
+ G UNWIND^%ZTER
+"RTN","PSXRSUS",197,0)
+ Q
+"RTN","PSXRSUS",198,0)
+STOPET ;disable auto error trapping
+"RTN","PSXRSUS",199,0)
+ S ^XTMP("PSXAUTOERR",0)=DT_U_DT_U_"disable PSX CMOP auto error trapping for today"
+"RTN","PSXRSUS",200,0)
+ Q
+"RTN","PSXRSUS",201,0)
+STARTET ;enable auto error trapping
+"RTN","PSXRSUS",202,0)
+ K ^XTMP("PSXAUTOERR",0)
+"RTN","PSXRSUS",203,0)
+ Q
+"RTN","PSXRXU")
+0^1^B29946410^B28830470
+"RTN","PSXRXU",1,0)
+PSXRXU ;BIR/WPB,HTW,BAB-Remote Facility File Utilities ;14 Dec 2001
+"RTN","PSXRXU",2,0)
+ ;;2.0;CMOP;**3,28,41,57,48,70**;11 Apr 97;Build 9
+"RTN","PSXRXU",3,0)
+ ; Reference to ^PS(52.5,  supported by DBIA #1978
+"RTN","PSXRXU",4,0)
+ ; Reference to ^PSOHLSN1  supported by DBIA #2385
+"RTN","PSXRXU",5,0)
+ ; Reference to ^PSRX(     supported by DBIA #1977
+"RTN","PSXRXU",6,0)
+ ; Reference to ^XTMP("ORLK-" supported by DBIA #4001
+"RTN","PSXRXU",7,0)
+ ; Reference to $$GETNDC^PSONDCUT supported by DBIA #4705
+"RTN","PSXRXU",8,0)
+ ; Reference to $$MGONFILE^PSOFDAUT(RX) supported by DBIA #5740
+"RTN","PSXRXU",9,0)
+START ;files transmission data in file 52 52.5 after transmission is sent
+"RTN","PSXRXU",10,0)
+ ; and clear OERR lock ^XTMP("ORLK-"
+"RTN","PSXRXU",11,0)
+ ; setup error trap for updating RXs in 52 & 52.5
+"RTN","PSXRXU",12,0)
+ D
+"RTN","PSXRXU",13,0)
+ . I '$D(^XTMP("PSXAUTOERR")) N $ETRAP,$ESTACK S $ETRAP="D RXERR^PSXRXU"
+"RTN","PSXRXU",14,0)
+ . D START1
+"RTN","PSXRXU",15,0)
+ Q
+"RTN","PSXRXU",16,0)
+START1 ;
+"RTN","PSXRXU",17,0)
+ S PSXNM="",PSXMSG=0
+"RTN","PSXRXU",18,0)
+ F  S PSXNM=$O(^PSX(550.2,PSXBAT,15,"C",PSXNM)) Q:PSXNM']""  D
+"RTN","PSXRXU",19,0)
+ . S DFN="" F  S DFN=$O(^PSX(550.2,PSXBAT,15,"C",PSXNM,DFN)) Q:DFN'>0  D
+"RTN","PSXRXU",20,0)
+ .. S RX=0,PSXMSG=PSXMSG+1 F  S RX=$O(^PSX(550.2,PSXBAT,15,"C",PSXNM,DFN,RX)) Q:RX'>0  D
+"RTN","PSXRXU",21,0)
+ ... S RXF=$O(^PSX(550.2,PSXBAT,15,"C",PSXNM,DFN,RX,0))
+"RTN","PSXRXU",22,0)
+ ... D FILE
+"RTN","PSXRXU",23,0)
+ Q
+"RTN","PSXRXU",24,0)
+F D FILE^DICN
+"RTN","PSXRXU",25,0)
+ Q
+"RTN","PSXRXU",26,0)
+FILE ;files the data in the CMOP event multiple of PSRX(
+"RTN","PSXRXU",27,0)
+ ;update 52, 52.5 called from PSXBLD RX loop
+"RTN","PSXRXU",28,0)
+ S FILL=+RXF
+"RTN","PSXRXU",29,0)
+ S:$G(PSXTDT)="" PSXTDT=$P(^PSX(550.2,PSXBAT,0),"^",6)
+"RTN","PSXRXU",30,0)
+ Q:'$D(^PSRX(RX,0))
+"RTN","PSXRXU",31,0)
+ ;S PSXMSG=$P(^PSX(550.1,XX,0),"^")
+"RTN","PSXRXU",32,0)
+ ; update RX, RX:CMOP multiple
+"RTN","PSXRXU",33,0)
+ ;If Rx status = suspended (5) set to active (0)
+"RTN","PSXRXU",34,0)
+ I $P(^PSRX(RX,"STA"),U,1)=5 S $P(^PSRX(RX,"STA"),U,1)=0
+"RTN","PSXRXU",35,0)
+ D EN^PSOHLSN1(RX,"SC","ZU","Transmitted to CMOP","")
+"RTN","PSXRXU",36,0)
+ S:'$D(^PSRX(RX,4,0)) ^PSRX(RX,4,0)="^52.01DA^^"
+"RTN","PSXRXU",37,0)
+ K DD,DO,DIE,DA,DIC,DR
+"RTN","PSXRXU",38,0)
+ ;VMP OIFO BAY PINES;ELR;PSX*2*57 REMOVE LOCK AND UNLOCK OF PSRX(4
+"RTN","PSXRXU",39,0)
+ ;L +^PSRX(RX,4,0):600 Q:'$T
+"RTN","PSXRXU",40,0)
+ S DA(1)=RX,DIC="^PSRX("_RX_",4,",DIC(0)="Z",X=PSXBAT
+"RTN","PSXRXU",41,0)
+ S DIC("DR")="1////"_$G(PSXMSG)_";2////"_$G(FILL)_";3////0;12///"_$S($$PATCH^XPDUTL("PSO*7.0*148"):$$GETNDC^PSONDCUT(RX,FILL),1:"")
+"RTN","PSXRXU",42,0)
+ I $$MGONFILE^PSOFDAUT(RX) D
+"RTN","PSXRXU",43,0)
+ . S DIC("DR")=DIC("DR")_";35///"_$P($$MGONFILE^PSOFDAUT(RX),"^",2)
+"RTN","PSXRXU",44,0)
+ D:'$D(^PSRX(RX,4,"B",PSXBAT)) FILE^DICN I 1
+"RTN","PSXRXU",45,0)
+ E  S DIE=DIC,DR=DIC("DR"),DA=$O(^PSRX(RX,4,"B",PSXBAT,0)) K DIC D ^DIE
+"RTN","PSXRXU",46,0)
+ K DIC,DA,DR,DIE
+"RTN","PSXRXU",47,0)
+ ;L -^PSRX(RX,4,0)
+"RTN","PSXRXU",48,0)
+ K FAC
+"RTN","PSXRXU",49,0)
+ S FAC=$$GET1^DIQ(550.2,PSXBAT,3)
+"RTN","PSXRXU",50,0)
+ S COM=$S($G(PSXRTRN):"Re-",1:"")_"Transmitted to "_FAC_" CMOP"
+"RTN","PSXRXU",51,0)
+ S:$G(FILL)>5 FILL=$G(FILL)+1
+"RTN","PSXRXU",52,0)
+ S CNT=0 F JJ=0:0 S JJ=$O(^PSRX(RX,"A",JJ)) Q:'JJ  S CNT=JJ
+"RTN","PSXRXU",53,0)
+ S CNT=CNT+1,^PSRX(RX,"A",0)="^52.3DA^"_CNT_"^"_CNT
+"RTN","PSXRXU",54,0)
+ ;VMP OIFO BAY PINES;ELR;PSX*2*57 REMOVE LOCK AND UNLOCK OF PSRX
+"RTN","PSXRXU",55,0)
+ ;L +^PSRX(RX):600 Q:'$T
+"RTN","PSXRXU",56,0)
+ S ^PSRX(RX,"A",CNT,0)=PSXTDT_"^B^"_DUZ_"^"_$G(FILL)_"^"_COM
+"RTN","PSXRXU",57,0)
+ ;L -^PSRX(RX)
+"RTN","PSXRXU",58,0)
+ S IN525=$O(^PS(52.5,"B",RX,""))
+"RTN","PSXRXU",59,0)
+ I $G(IN525)]"" K DIE,DA,DR,DIE,DIC S DIE="^PS(52.5,",DR="3////X",DA=IN525 L +^PS(52.5,IN525):600 Q:'$T  D ^DIE L -^PS(52.5,IN525) K DA,DIE,DA,IN525
+"RTN","PSXRXU",60,0)
+ K DIE,DR,DA
+"RTN","PSXRXU",61,0)
+ S DA=PSXMSG,DIE="^PSX(550.1,",DR="1////5"
+"RTN","PSXRXU",62,0)
+ L +^PSX(550.1,PSXMSG):600 Q:'$T
+"RTN","PSXRXU",63,0)
+ D ^DIE L -^PSX(550.1,PSXMSG) K DA,DR,DIE
+"RTN","PSXRXU",64,0)
+OERR ;clear ^XTMP("ORLK-" if it is CPRS/CMOP
+"RTN","PSXRXU",65,0)
+ N ORD S ORD=+$P($G(^PSRX(+$G(RX),"OR1")),"^",2)
+"RTN","PSXRXU",66,0)
+ I ORD,$D(^XTMP("ORLK-"_ORD,0)),^XTMP("ORLK-"_ORD,0)["CPRS/CMOP" K ^XTMP("ORLK-"_ORD)
+"RTN","PSXRXU",67,0)
+ Q
+"RTN","PSXRXU",68,0)
+PRINT D NOW^%DTC S DTTM=% S COM="CMOP Suspense Label "_$S($G(^PS(52.5,REC,"P"))=0:"Printed",1:"RePrinted")_$S($G(^PSRX(PTR,"TYPE"))>0:" (PARTIAL)",1:"")
+"RTN","PSXRXU",69,0)
+ S CNT=0 F JJ=0:0 S JJ=$O(^PSRX(PTR,"A",JJ)) Q:'JJ  S CNT=JJ
+"RTN","PSXRXU",70,0)
+ S $P(^PSRX(PTR,"STA"),"^",1)=0,^PS(52.5,REC,"P")=1
+"RTN","PSXRXU",71,0)
+ S CNT=CNT+1,^PSRX(PTR,"A",0)="^52.3DA^"_CNT_"^"_CNT L +^PSRX(PTR):600 Q:'$T  S ^PSRX(PTR,"A",CNT,0)=DTTM_"^S^"_DUZ_"^"_FILL_"^"_COM L -^PSRX(PTR)
+"RTN","PSXRXU",72,0)
+ K DTTM,%,COM,CNT,JJ
+"RTN","PSXRXU",73,0)
+ Q
+"RTN","PSXRXU",74,0)
+SUSPS ;goes through the PS(550.1 file and gets the pointer for each rx in PSRX
+"RTN","PSXRXU",75,0)
+ ;CMOP Event entry
+"RTN","PSXRXU",76,0)
+ S XXX=0 F  S XXX=$O(^PSX(550.1,REC,2,XXX)) Q:XXX'>0  D ACLOG
+"RTN","PSXRXU",77,0)
+ K XXX
+"RTN","PSXRXU",78,0)
+ Q
+"RTN","PSXRXU",79,0)
+ACLOG ;
+"RTN","PSXRXU",80,0)
+ D NOW^%DTC
+"RTN","PSXRXU",81,0)
+ S PSXPTR=$P($G(^PSX(550.1,REC,2,XXX,0)),U,1)
+"RTN","PSXRXU",82,0)
+ F RCC=0:0 S RCC=$O(^PSRX(+PSXPTR,4,"B",OLDBAT,RCC)) Q:RCC=""  S RC=RCC
+"RTN","PSXRXU",83,0)
+ S TRNN=$P($G(^PSRX(+PSXPTR,4,RC,0)),"^",1)
+"RTN","PSXRXU",84,0)
+ S FAC=$$GET1^DIQ(550.2,TRNN,3)
+"RTN","PSXRXU",85,0)
+ S FILL=$P($G(^PSRX(+PSXPTR,4,RC,0)),"^",3)
+"RTN","PSXRXU",86,0)
+ S CNT=0 F JJ=0:0 S JJ=$O(^PSRX(+PSXPTR,"A",JJ)) Q:'JJ  S CNT=JJ
+"RTN","PSXRXU",87,0)
+ S COMMENT="Retransmitted to "_FAC_" CMOP"
+"RTN","PSXRXU",88,0)
+ S CNT=CNT+1,^PSRX(+PSXPTR,"A",0)="^52.3DA^"_CNT_"^"_CNT
+"RTN","PSXRXU",89,0)
+ L +^PSRX(+PSXPTR):600 Q:'$T
+"RTN","PSXRXU",90,0)
+ S ^PSRX(+PSXPTR,"A",CNT,0)=%_U_"B"_U_DUZ_U_$S(FILL>5:(FILL+1),1:FILL)_U_COMMENT
+"RTN","PSXRXU",91,0)
+ L -^PSRX(+PSXPTR)
+"RTN","PSXRXU",92,0)
+ L +^PSRX(+PSXPTR,4,0):600 Q:'$T
+"RTN","PSXRXU",93,0)
+ S DA(1)=+PSXPTR,DIE="^PSRX("_+PSXPTR_",4,",DA=RC,DR="3////2"
+"RTN","PSXRXU",94,0)
+ D ^DIE K DIE,DA,DR,DD,DO
+"RTN","PSXRXU",95,0)
+ S:'$D(^PSRX(+PSXPTR,4,0)) ^PSRX(+PSXPTR,4,0)="^52.01DA^^"
+"RTN","PSXRXU",96,0)
+ S DA(1)=+PSXPTR,DIC="^PSRX("_+PSXPTR_",4,",DIC(0)="Z",X=PSXBAT
+"RTN","PSXRXU",97,0)
+ S DIC("DR")="1////"_REC_";2////"_$G(FILL)_";3////0" D F
+"RTN","PSXRXU",98,0)
+ L -^PSRX(+PSXPTR,4,0)
+"RTN","PSXRXU",99,0)
+ K PSXPTR,COMMENT,CNT,JJ,FILL,REF,%,DIC,DA,DIE,DR
+"RTN","PSXRXU",100,0)
+ S DA=REC,DIE="^PSX(550.1,",DR="1////5" L +^PSX(550.1,REC):600 Q:'$T
+"RTN","PSXRXU",101,0)
+ D ^DIE L -^PSX(550.1,REC) K DIE,DA,DR,FAC,TRNN
+"RTN","PSXRXU",102,0)
+ Q
+"RTN","PSXRXU",103,0)
+RXERR ;auto error processing of RX updating 52 & 52.5
+"RTN","PSXRXU",104,0)
+ S XXERR=$$EC^%ZOSV
+"RTN","PSXRXU",105,0)
+ S PSXDIVNM=$$GET1^DIQ(59,PSOSITE,.01)
+"RTN","PSXRXU",106,0)
+ ;save an image of the transient file 550.1 for 2 days
+"RTN","PSXRXU",107,0)
+ D NOW^%DTC S DTTM=%
+"RTN","PSXRXU",108,0)
+ ;VMP OIFO BAY PINES;ELR;PSX*2*57 CHANE PURGE DATE TO T+12 FROM T+2
+"RTN","PSXRXU",109,0)
+ S X=$$FMADD^XLFDT(DT,+12) S ^XTMP("PSXERR "_DTTM,0)=X_U_DT_U_"CMOP "_XXERR
+"RTN","PSXRXU",110,0)
+ M ^XTMP("PSXERR "_DTTM,550.1)=^PSX(550.1)
+"RTN","PSXRXU",111,0)
+ S XMSUB="CMOP Error "_PSXDIVNM_" "_$$GET1^DIQ(550.2,+$G(PSXBAT),.01)
+"RTN","PSXRXU",112,0)
+ D GRP1^PSXNOTE
+"RTN","PSXRXU",113,0)
+ ;S XMY(DUZ)=""
+"RTN","PSXRXU",114,0)
+ S XMTEXT="TEXT("
+"RTN","PSXRXU",115,0)
+ S TEXT(1,0)=$S($G(PSXCS):"",1:"NON-")_"CS CMOP transmission encountered the following error. Please investigate"
+"RTN","PSXRXU",116,0)
+ S TEXT(2,0)="Division:         "_PSXDIVNM
+"RTN","PSXRXU",117,0)
+ S TEXT(3,0)="Type/Batch        "_$S($G(PSXCS):"CS",1:"NON-CS")_" / "_$$GET1^DIQ(550.2,$G(PSXBAT),.01)
+"RTN","PSXRXU",118,0)
+ S TEXT(4,0)="Error:            "_XXERR
+"RTN","PSXRXU",119,0)
+ S TEXT(5,0)=">>>This batch has been sent <<<"
+"RTN","PSXRXU",120,0)
+ S TEXT(6,0)="Call NVS to investigate which prescriptions have been updated"
+"RTN","PSXRXU",121,0)
+ S TEXT(7,0)="or not updated in files Prescription #52 & Suspense 52.5 ."
+"RTN","PSXRXU",122,0)
+ S TEXT(8,0)="A copy of file 550.1 can be found in ^XTMP(""PSXERR "_DTTM_""")"
+"RTN","PSXRXU",123,0)
+ D ^%ZTER
+"RTN","PSXRXU",124,0)
+ D ^XMD
+"RTN","PSXRXU",125,0)
+ G UNWIND^%ZTER
+"VER")
+8.0^22.0
+"BLD",7478,6)
+^64
+**END**
+**END**

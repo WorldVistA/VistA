@@ -1,0 +1,706 @@
+Released PRC*5.1*149 SEQ #132
+Extracted from mail message
+**KIDS**:PRC*5.1*149^
+
+**INSTALL NAME**
+PRC*5.1*149
+"BLD",6574,0)
+PRC*5.1*149^IFCAP^0^3110304^y
+"BLD",6574,1,0)
+^^12^12^3110211^
+"BLD",6574,1,1,0)
+1. Site found that during Reconciliation processing it was possible to 
+"BLD",6574,1,2,0)
+   mark more than one charge as 'FINAL CHARGE' which should not be allowed
+"BLD",6574,1,3,0)
+   as it causes the Approving Official to be delinquent on the Delinquent
+"BLD",6574,1,4,0)
+   Approval Report.
+"BLD",6574,1,5,0)
+ 
+"BLD",6574,1,6,0)
+2. Site reports that Carry Forward processing takes a long time and 
+"BLD",6574,1,7,0)
+   purchase order finalization through Prosthetics GUI will time out 
+"BLD",6574,1,8,0)
+   without completing the order processing.
+"BLD",6574,1,9,0)
+ 
+"BLD",6574,1,10,0)
+3. Site reports that running 'Summary report of Unpaid Purchase Card 
+"BLD",6574,1,11,0)
+   Transactions' under LINUX OS (print queuing is required) results in
+"BLD",6574,1,12,0)
+   system error.
+"BLD",6574,4,0)
+^9.64PA^^
+"BLD",6574,6.3)
+5
+"BLD",6574,"ABPKG")
+n
+"BLD",6574,"INI")
+START^PRCS149P
+"BLD",6574,"INID")
+^^y
+"BLD",6574,"KRN",0)
+^9.67PA^779.2^20
+"BLD",6574,"KRN",.4,0)
+.4
+"BLD",6574,"KRN",.401,0)
+.401
+"BLD",6574,"KRN",.402,0)
+.402
+"BLD",6574,"KRN",.403,0)
+.403
+"BLD",6574,"KRN",.5,0)
+.5
+"BLD",6574,"KRN",.84,0)
+.84
+"BLD",6574,"KRN",3.6,0)
+3.6
+"BLD",6574,"KRN",3.8,0)
+3.8
+"BLD",6574,"KRN",9.2,0)
+9.2
+"BLD",6574,"KRN",9.8,0)
+9.8
+"BLD",6574,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",6574,"KRN",9.8,"NM",1,0)
+PRCSUT3^^0^B14998690
+"BLD",6574,"KRN",9.8,"NM",2,0)
+PRCHRP3^^0^B17367808
+"BLD",6574,"KRN",9.8,"NM",3,0)
+PRCIREC^^0^B1439724
+"BLD",6574,"KRN",9.8,"NM",4,0)
+PRCS149P^^0^B4198171
+"BLD",6574,"KRN",9.8,"NM","B","PRCHRP3",2)
+
+"BLD",6574,"KRN",9.8,"NM","B","PRCIREC",3)
+
+"BLD",6574,"KRN",9.8,"NM","B","PRCS149P",4)
+
+"BLD",6574,"KRN",9.8,"NM","B","PRCSUT3",1)
+
+"BLD",6574,"KRN",19,0)
+19
+"BLD",6574,"KRN",19.1,0)
+19.1
+"BLD",6574,"KRN",101,0)
+101
+"BLD",6574,"KRN",409.61,0)
+409.61
+"BLD",6574,"KRN",771,0)
+771
+"BLD",6574,"KRN",779.2,0)
+779.2
+"BLD",6574,"KRN",870,0)
+870
+"BLD",6574,"KRN",8989.51,0)
+8989.51
+"BLD",6574,"KRN",8989.52,0)
+8989.52
+"BLD",6574,"KRN",8994,0)
+8994
+"BLD",6574,"KRN","B",.4,.4)
+
+"BLD",6574,"KRN","B",.401,.401)
+
+"BLD",6574,"KRN","B",.402,.402)
+
+"BLD",6574,"KRN","B",.403,.403)
+
+"BLD",6574,"KRN","B",.5,.5)
+
+"BLD",6574,"KRN","B",.84,.84)
+
+"BLD",6574,"KRN","B",3.6,3.6)
+
+"BLD",6574,"KRN","B",3.8,3.8)
+
+"BLD",6574,"KRN","B",9.2,9.2)
+
+"BLD",6574,"KRN","B",9.8,9.8)
+
+"BLD",6574,"KRN","B",19,19)
+
+"BLD",6574,"KRN","B",19.1,19.1)
+
+"BLD",6574,"KRN","B",101,101)
+
+"BLD",6574,"KRN","B",409.61,409.61)
+
+"BLD",6574,"KRN","B",771,771)
+
+"BLD",6574,"KRN","B",779.2,779.2)
+
+"BLD",6574,"KRN","B",870,870)
+
+"BLD",6574,"KRN","B",8989.51,8989.51)
+
+"BLD",6574,"KRN","B",8989.52,8989.52)
+
+"BLD",6574,"KRN","B",8994,8994)
+
+"BLD",6574,"QUES",0)
+^9.62^^
+"BLD",6574,"REQB",0)
+^9.611^3^3
+"BLD",6574,"REQB",1,0)
+PRC*5.1*123^2
+"BLD",6574,"REQB",2,0)
+PRC*5.1*113^2
+"BLD",6574,"REQB",3,0)
+PRC*5.1*131^2
+"BLD",6574,"REQB","B","PRC*5.1*113",2)
+
+"BLD",6574,"REQB","B","PRC*5.1*123",1)
+
+"BLD",6574,"REQB","B","PRC*5.1*131",3)
+
+"INI")
+START^PRCS149P
+"MBREQ")
+0
+"PKG",455,-1)
+1^1
+"PKG",455,0)
+IFCAP^PRC^IFCAP System Files
+"PKG",455,20,0)
+^9.402P^^
+"PKG",455,22,0)
+^9.49I^1^1
+"PKG",455,22,1,0)
+5.1^3001012^3001019^68
+"PKG",455,22,1,"PAH",1,0)
+149^3110304
+"PKG",455,22,1,"PAH",1,1,0)
+^^12^12^3110304
+"PKG",455,22,1,"PAH",1,1,1,0)
+1. Site found that during Reconciliation processing it was possible to 
+"PKG",455,22,1,"PAH",1,1,2,0)
+   mark more than one charge as 'FINAL CHARGE' which should not be allowed
+"PKG",455,22,1,"PAH",1,1,3,0)
+   as it causes the Approving Official to be delinquent on the Delinquent
+"PKG",455,22,1,"PAH",1,1,4,0)
+   Approval Report.
+"PKG",455,22,1,"PAH",1,1,5,0)
+ 
+"PKG",455,22,1,"PAH",1,1,6,0)
+2. Site reports that Carry Forward processing takes a long time and 
+"PKG",455,22,1,"PAH",1,1,7,0)
+   purchase order finalization through Prosthetics GUI will time out 
+"PKG",455,22,1,"PAH",1,1,8,0)
+   without completing the order processing.
+"PKG",455,22,1,"PAH",1,1,9,0)
+ 
+"PKG",455,22,1,"PAH",1,1,10,0)
+3. Site reports that running 'Summary report of Unpaid Purchase Card 
+"PKG",455,22,1,"PAH",1,1,11,0)
+   Transactions' under LINUX OS (print queuing is required) results in
+"PKG",455,22,1,"PAH",1,1,12,0)
+   system error.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","PRCHRP3")
+0^2^B17367808^B16956261
+"RTN","PRCHRP3",1,0)
+PRCHRP3 ;WISC/KMB/CR SUMMARY OF UNPAID PURCHASE CARDS ;7/15/98  8:43 AM
+"RTN","PRCHRP3",2,0)
+ ;;5.1;IFCAP;**8,131,149**;Oct 20, 2000;Build 5
+"RTN","PRCHRP3",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PRCHRP3",4,0)
+UNPAID ;   create summary report of unpaid purchase card orders
+"RTN","PRCHRP3",5,0)
+ N P,PRC,ARR,XXZ,EX,I,CP,HDATE,ZP,TOT,AMT,ZTR,ZTR0,ZTR1,NOTASK
+"RTN","PRCHRP3",6,0)
+ ;PRC*5.3*149 insures NOTASK is set for tasked job to avoid undefined
+"RTN","PRCHRP3",7,0)
+ S NOTASK=0
+"RTN","PRCHRP3",8,0)
+ S PRCF("X")="S" D ^PRCFSITE Q:'$D(PRC("SITE"))  Q:$G(X)="^"
+"RTN","PRCHRP3",9,0)
+ W !,"Please select a device for display/print of this report.",!
+"RTN","PRCHRP3",10,0)
+ S %ZIS("B")="",%ZIS="MQ" D ^%ZIS Q:POP
+"RTN","PRCHRP3",11,0)
+ I $D(IO("Q")) S ZTRTN="REPORT^PRCHRP3",ZTSAVE("*")="" D ^%ZTLOAD,^%ZISC QUIT
+"RTN","PRCHRP3",12,0)
+ S NOTASK=1 W !,"COMPILING."
+"RTN","PRCHRP3",13,0)
+ D REPORT,^%ZISC QUIT
+"RTN","PRCHRP3",14,0)
+ ;
+"RTN","PRCHRP3",15,0)
+REPORT ;
+"RTN","PRCHRP3",16,0)
+ K ^TMP($J) S (EX,P)=1
+"RTN","PRCHRP3",17,0)
+ F I=24,29,32,34,37,38,40,41,45,50,51 S ARR(I)=""
+"RTN","PRCHRP3",18,0)
+ S ZP="" F I=1:1 S ZP=$O(^PRC(442,"F",25,ZP)) Q:ZP=""  W:NOTASK=1&(I#5000=0) "." D
+"RTN","PRCHRP3",19,0)
+ .S ZTR0=$G(^PRC(442,ZP,0))
+"RTN","PRCHRP3",20,0)
+ .I $D(PRC("SITE")) Q:$P(ZTR0,"-")'=PRC("SITE")
+"RTN","PRCHRP3",21,0)
+ .S ZTR1=+$P($G(^PRC(442,ZP,7)),"^") Q:ZTR1=""
+"RTN","PRCHRP3",22,0)
+ .S ZTR1=$P($G(^PRCD(442.3,ZTR1,0)),"^",2) Q:$D(ARR(ZTR1))
+"RTN","PRCHRP3",23,0)
+ .S AMT=$P($G(^PRC(442,ZP,0)),"^",15)
+"RTN","PRCHRP3",24,0)
+ .S CP=$P($G(^PRC(442,ZP,0)),"^",3),CP=+$P(CP," ")
+"RTN","PRCHRP3",25,0)
+ .Q:CP=0
+"RTN","PRCHRP3",26,0)
+ .S:'$D(^TMP($J,CP)) ^TMP($J,CP)=0 S ^TMP($J,CP)=^TMP($J,CP)+AMT
+"RTN","PRCHRP3",27,0)
+ I '$D(^TMP($J)) S P=1 D HEADER1 W !!!!,?10,"*** NO RECORDS TO PRINT ***" Q
+"RTN","PRCHRP3",28,0)
+ S CP="" F  S CP=$O(^TMP($J,CP)) Q:CP=""  Q:EX="^"  D
+"RTN","PRCHRP3",29,0)
+ .D:P=1 HEADER1
+"RTN","PRCHRP3",30,0)
+ .W !,"CONTROL POINT: ",CP,?40,"TOTAL: $",$J(^TMP($J,CP),0,2)
+"RTN","PRCHRP3",31,0)
+ .I (IOSL-$Y)<6 D HOLD1 Q:EX["^"
+"RTN","PRCHRP3",32,0)
+ QUIT
+"RTN","PRCHRP3",33,0)
+ ;
+"RTN","PRCHRP3",34,0)
+HOLD1 G HEADER1:$E(IOST)="P"!(IO'=IO(0)) W !,"Press return to continue, '^' to exit: " R XXZ:DTIME S:XXZ="^" EX="^" S:'$T EX="^" D:EX'="^" HEADER1 Q
+"RTN","PRCHRP3",35,0)
+ ;
+"RTN","PRCHRP3",36,0)
+HEADER1 ;
+"RTN","PRCHRP3",37,0)
+ W @IOF
+"RTN","PRCHRP3",38,0)
+ D NOW^%DTC S Y=$P(%,".") D DD^%DT S HDATE=Y
+"RTN","PRCHRP3",39,0)
+ W !,"UNPAID PURCHASE CARD TRANSACTION BY FCP - SUMMARY",?55,HDATE,?70,"PAGE ",P
+"RTN","PRCHRP3",40,0)
+ W:$D(PRC("SITE")) !,?15,"STATION #: "_PRC("SITE")
+"RTN","PRCHRP3",41,0)
+ W ! F I=1:1:8 W "----------"
+"RTN","PRCHRP3",42,0)
+ S P=P+1
+"RTN","PRCHRP3",43,0)
+ QUIT
+"RTN","PRCHRP3",44,0)
+ ;
+"RTN","PRCHRP3",45,0)
+CANDEL ;cancel delivery card transaction
+"RTN","PRCHRP3",46,0)
+ N FLG S FLG=1
+"RTN","PRCHRP3",47,0)
+CAN ;cancel purchase card transaction
+"RTN","PRCHRP3",48,0)
+ N I,TMP1,CREF,CPREF,LABEL,KDA,ZIP,DA,KX,KY D ST^PRCHE Q:'$D(PRC("SITE"))
+"RTN","PRCHRP3",49,0)
+ S DIC("A")="P.O./REQ. NO.: ",DIC(0)="AEMQZ",D="C",DIC("S")="I $P(^(0),""^"",2)=25,$P(^(12),""^"",2)="""",$P(^(7),""^"")<80,$P(^(7),""^"")'=45",DIC="^PRC(442,"
+"RTN","PRCHRP3",50,0)
+ I $G(FLG)=1 S DIC("S")="I $P(^(0),""^"",2)=1,$P(^(12),""^"",2)="""",$P(^(7),""^"")<80"
+"RTN","PRCHRP3",51,0)
+ W !! D IX^DIC K DIC Q:+Y<0  S (DA,KDA)=+Y
+"RTN","PRCHRP3",52,0)
+ S LABEL="CAN" S:$G(FLG)=1 LABEL="CANDEL" S CPREF=$P($G(^PRC(442,KDA,0)),"^",3),CPREF=+$P(CPREF," "),ZIP=$O(^PRC(420,"A",DUZ,PRC("SITE"),CPREF,0))
+"RTN","PRCHRP3",53,0)
+ I ZIP="" W !,"You are not a user for this transaction's control point." G @LABEL
+"RTN","PRCHRP3",54,0)
+ D START^PRCH410
+"RTN","PRCHRP3",55,0)
+ S TMP1=$P(^PRC(442,KDA,0),"^",15)
+"RTN","PRCHRP3",56,0)
+ S X=$O(^PRCD(442.3,"C",45,0)),$P(^PRC(442,KDA,0),"^",15,16)="0^0" K ^(9) S (KX,KY)=45,DA=KDA
+"RTN","PRCHRP3",57,0)
+ Q:$G(^PRCD(442.3,KY,0))=""
+"RTN","PRCHRP3",58,0)
+ L +^PRC(442,KDA):5 E  W !!,$C(7),?8,"Another user is editing this entry, try later." K KDA Q
+"RTN","PRCHRP3",59,0)
+ S X=Y,DIE="^PRC(442,",DR=".5////"_KY D ^DIE L -^PRC(442,KDA) K DIE,DR,X,Y,DA,DIC
+"RTN","PRCHRP3",60,0)
+ L +^PRCS(410,CCDA):5 E  W !!,$C(7),?8,"Another user is editing this entry, try later." K CCDA Q
+"RTN","PRCHRP3",61,0)
+ S DIE="^PRCS(410,",DA=CCDA,DR="20///^S X=TMP1"_";"_"27///^S X=TMP1"_";"_"451////^S X=""""" D ^DIE
+"RTN","PRCHRP3",62,0)
+ S $P(^PRCS(410,CCDA,10),U,3)="",$P(^PRCS(410,CCDA,1),U,2)="" I $P($G(^PRCS(410,CCDA,4)),U,5)'="" K ^PRCS(410,"D",$P(^PRCS(410,CCDA,4),U,5),CCDA)
+"RTN","PRCHRP3",63,0)
+ S $P(^PRCS(410,CCDA,4),U,5)=""
+"RTN","PRCHRP3",64,0)
+ I $D(^PRC(442,KDA,4,0)) S CCNUM=$P($G(^(0)),"^",4) D
+"RTN","PRCHRP3",65,0)
+ .Q:CCNUM=""  F I=1:1:CCNUM S ^PRCS(410,CCDA,"RM",I,0)=^PRC(442,KDA,4,I,0)
+"RTN","PRCHRP3",66,0)
+ .S ^PRCS(410,CCDA,"RM",0)="^442.04^"_CCNUM_"^"_CCNUM
+"RTN","PRCHRP3",67,0)
+ S CREF=$P($G(^PRCS(410,CCDA,0)),"^") W !!,"Use transaction ",CREF," to access this record",!,"from your fund control point." H 3
+"RTN","PRCHRP3",68,0)
+ W !!,$C(7),"Conversion completed." L -^PRCS(410,CCDA) K CCNUM,CCDA,DA
+"RTN","PRCHRP3",69,0)
+ QUIT
+"RTN","PRCHRP3",70,0)
+ ;
+"RTN","PRCHRP3",71,0)
+R1 S FLG=1
+"RTN","PRCHRP3",72,0)
+R2 S:$G(FLG)'=1 FLG=2
+"RTN","PRCHRP3",73,0)
+R3 K FLAG D START^PRCHRP5 K FLG,FLAG QUIT
+"RTN","PRCHRP3",74,0)
+UR1 S FLG=1
+"RTN","PRCHRP3",75,0)
+UR2 S:$G(FLG)'=1 FLG=2
+"RTN","PRCHRP3",76,0)
+UR3 K FLAG D START1^PRCHRP5 K FLG,FLAG QUIT
+"RTN","PRCIREC")
+0^3^B1439724^B1330183
+"RTN","PRCIREC",1,0)
+PRCIREC ;WISC/SWS-PRCIREC continued ;9/7/06  14:22
+"RTN","PRCIREC",2,0)
+V ;;5.1;IFCAP;**113,149**;Oct 20, 2000;Build 5
+"RTN","PRCIREC",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PRCIREC",4,0)
+ ;This routine serves as the input transform for the field Final Charge in File ^PRCH(440.6
+"RTN","PRCIREC",5,0)
+ ;PRC*5.1*149 checks the 'PO' index in file 440.6 as the check for order number in 'C' x-ref was not valid order number, but charge returned order info
+"RTN","PRCIREC",6,0)
+ Q
+"RTN","PRCIREC",7,0)
+START S MYIEN=$P($G(^PRCH(440.6,DA,1)),U) S:'MYIEN MYIEN=$G(PRCRI(442))
+"RTN","PRCIREC",8,0)
+ I '$G(MYIEN) Q
+"RTN","PRCIREC",9,0)
+ S VALUE2=MYIEN,VALUE3=0,BFLAG=0
+"RTN","PRCIREC",10,0)
+ F  S VALUE3=$O(^PRCH(440.6,"PO",VALUE2,VALUE3)) Q:'VALUE3!(BFLAG=1)  D
+"RTN","PRCIREC",11,0)
+ .I VALUE3'=DA D
+"RTN","PRCIREC",12,0)
+ ..I $P($G(^PRCH(440.6,VALUE3,1)),U,4)="Y" D
+"RTN","PRCIREC",13,0)
+ ...S BFLAG=1
+"RTN","PRCIREC",14,0)
+ ...K MSG
+"RTN","PRCIREC",15,0)
+ ...S MSG(1)="Sorry, there is already a final charge for this PC Order."
+"RTN","PRCIREC",16,0)
+ ...S MSG(2)="You need to edit or remove the first final charge to continue."
+"RTN","PRCIREC",17,0)
+ ...S MSG(2,"F")="!"
+"RTN","PRCIREC",18,0)
+ ...S MSG(3)=""
+"RTN","PRCIREC",19,0)
+ ...S MSG(3,"F")="!"
+"RTN","PRCIREC",20,0)
+ ...D EN^DDIOL(.MSG)
+"RTN","PRCIREC",21,0)
+ ...K MSG,X
+"RTN","PRCIREC",22,0)
+ ...S BFLAG=1
+"RTN","PRCIREC",23,0)
+ K BFLAG
+"RTN","PRCIREC",24,0)
+ Q
+"RTN","PRCS149P")
+0^4^B4198171^n/a
+"RTN","PRCS149P",1,0)
+PRCS149P ;VMP/RB-PURGE ALL OLD PRCS(410,"B" REQUEST REFERENCES 
+"RTN","PRCS149P",2,0)
+ ;;5.1;IFCAP;**149**;Oct 01, 2009;Build 5
+"RTN","PRCS149P",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PRCS149P",4,0)
+ ;  Pre install routine in patch PRC*5.1*149 that will purge temporary
+"RTN","PRCS149P",5,0)
+ ;  request entries in cross reference ^PRCS(410,"B") that were left 
+"RTN","PRCS149P",6,0)
+ ;  unkilled when the temporary request was changed via option
+"RTN","PRCS149P",7,0)
+ ;  'CHANGE EXISTING TRANSACTION NUMBER'
+"RTN","PRCS149P",8,0)
+ ;  Also, temporary transaction entries in file 410 that are prior to 
+"RTN","PRCS149P",9,0)
+ ;  10/01/2009 will be purged. 
+"RTN","PRCS149P",10,0)
+ ;;
+"RTN","PRCS149P",11,0)
+ Q
+"RTN","PRCS149P",12,0)
+START ;Kill off extraneous index xref left behind when using CHANGE EXISTING TRANSACTION NUMBER option
+"RTN","PRCS149P",13,0)
+ N RMSTART,REQ,IEN410,RMEND,R0,R1,TRANX,ENTDT,TOT,TOT1
+"RTN","PRCS149P",14,0)
+ I $D(^XTMP("PRCS149P")) Q
+"RTN","PRCS149P",15,0)
+ D NOW^%DTC S RMSTART=%
+"RTN","PRCS149P",16,0)
+ S ^XTMP("PRCS149P","START COMPILE")=RMSTART
+"RTN","PRCS149P",17,0)
+ S ^XTMP("PRCS149P","END COMPILE")="RUNNING"
+"RTN","PRCS149P",18,0)
+ S ^XTMP("PRCS149P",0)=$$FMADD^XLFDT(RMSTART,120)_"^"_RMSTART
+"RTN","PRCS149P",19,0)
+ S U="^",REQ="999-",(TOT,TOT1)=0
+"RTN","PRCS149P",20,0)
+1 S REQ=$O(^PRCS(410,"B",REQ)),IEN410=0 G EXIT:REQ=""
+"RTN","PRCS149P",21,0)
+ I REQ+0>0 G 1
+"RTN","PRCS149P",22,0)
+2 S IEN410=$O(^PRCS(410,"B",REQ,IEN410)) G 1:IEN410=""
+"RTN","PRCS149P",23,0)
+ S R0=$G(^PRCS(410,IEN410,0)),TRANX=$P(R0,U)
+"RTN","PRCS149P",24,0)
+ I REQ=TRANX,$P(R0,U,3)'="",$P(R0,U,2)'="CA",'$D(^PRCS(410,"H",$P(R0,U,3),IEN410)) D
+"RTN","PRCS149P",25,0)
+ . S ^PRCS(410,"H",$P(R0,U,3),IEN410)=$P($G(^PRCS(410,IEN410,1)),U,2)
+"RTN","PRCS149P",26,0)
+ . S ^XTMP("PRCS149P","H",REQ,IEN410)=R0
+"RTN","PRCS149P",27,0)
+ I REQ=TRANX G 4
+"RTN","PRCS149P",28,0)
+3 ;KILL 'B' X-REF
+"RTN","PRCS149P",29,0)
+ K ^PRCS(410,"B",REQ,IEN410)
+"RTN","PRCS149P",30,0)
+ S ^XTMP("PRCS149P","B",REQ,IEN410)=R0,TOT=TOT+1
+"RTN","PRCS149P",31,0)
+ G 2
+"RTN","PRCS149P",32,0)
+4 ;CHECK TEMP TX ENTRY DATE FOR OLD ENTRIES AND CANCEL ALL PRIOR TO 10/01/2009
+"RTN","PRCS149P",33,0)
+ I $P(R0,U,3)'="",$P(R0,U,2)'="CA",'$D(^PRCS(410,"H",$P(R0,U,3),IEN410)) D
+"RTN","PRCS149P",34,0)
+ . S ^PRCS(410,"H",$P(R0,U,3),IEN410)=$P($G(^PRCS(410,IEN410,1)),U,2)
+"RTN","PRCS149P",35,0)
+ . S ^XTMP("PRCS149P","H",REQ,IEN410)=R0
+"RTN","PRCS149P",36,0)
+ S R1=$G(^PRCS(410,IEN410,1)),ENTDT=+R1
+"RTN","PRCS149P",37,0)
+ I ENTDT>3090930 G 2
+"RTN","PRCS149P",38,0)
+ S ^XTMP("PRCS149P","DT",REQ,IEN410)=ENTDT_U_R0,TOT1=TOT1+1
+"RTN","PRCS149P",39,0)
+ S DIE="^PRCS(410,",DA=IEN410,DR="1////^S X=""CA""" D ^DIE K DIE,DA
+"RTN","PRCS149P",40,0)
+ G 2
+"RTN","PRCS149P",41,0)
+EXIT ;
+"RTN","PRCS149P",42,0)
+ D NOW^%DTC S RMEND=%
+"RTN","PRCS149P",43,0)
+ S ^XTMP("PRCS149P","TOTALS")=TOT_U_TOT1
+"RTN","PRCS149P",44,0)
+ S ^XTMP("PRCS149P","END COMPILE")=RMEND
+"RTN","PRCS149P",45,0)
+ K %,DR
+"RTN","PRCS149P",46,0)
+ Q
+"RTN","PRCSUT3")
+0^1^B14998690^B12450340
+"RTN","PRCSUT3",1,0)
+PRCSUT3 ;WISC/SAW/PLT/BGJ-TRANSACTION UTILITY PROGRAM ; 21 Apr 93  10:18 AM
+"RTN","PRCSUT3",2,0)
+V ;;5.1;IFCAP;**115,123,149**;Oct 20, 2000;Build 5
+"RTN","PRCSUT3",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PRCSUT3",4,0)
+EN ;CREATE NEW TRANSACTION NUMBER
+"RTN","PRCSUT3",5,0)
+ D EN1^PRCSUT K DA,DIC G W5:'$D(PRC("SITE")) Q
+"RTN","PRCSUT3",6,0)
+EN1 G:'$D(X) OUT1 S NODE=0,PIECE=2 I $D(PRCS("TYPE")) G:'X OUT1 S T(1)=$O(^DD(410.1,"B",PRCS("TYPE"),0)) G:'T(1)!('$D(^DD(410.1,+T(1),0))) OUT1
+"RTN","PRCSUT3",7,0)
+ S DIC="^PRCS(410.1,",MSG="",ZERSW=0
+"RTN","PRCSUT3",8,0)
+ ;I $D(^PRCS(410.1,"B",X)) S N="",N=$O(^PRCS(410.1,"B",X,N)),DA=N L +^PRCS410.1,N):15 G:$T=0 OUT1 S T=$P(^PRCS(410.1,N,NODE),"^",PIECE)+1 S:T<1 T=1 L -^PRCS(410.1,N))
+"RTN","PRCSUT3",9,0)
+ I $D(^PRCS(410.1,"B",X)) S N="",N=$O(^PRCS(410.1,"B",X,N)),DA=N S T=$P(^PRCS(410.1,N,NODE),"^",PIECE)+1 S:T<1 T=1
+"RTN","PRCSUT3",10,0)
+ I '$D(^PRCS(410.1,"B",X)) S T=1,DLAYGO=410.1,DIC="^PRCS(410.1,",DIC(0)="FLXZ" D ^DIC K DLAYGO G:Y<0 W4 S DA=+Y
+"RTN","PRCSUT3",11,0)
+ S HDA=DA
+"RTN","PRCSUT3",12,0)
+T S T="000"_T,T=$E(T,$L(T)-3,$L(T))
+"RTN","PRCSUT3",13,0)
+T1 I $D(REP) S X=X_"-"_T I $D(^PRCS(410,"B",X)) S T=+T+1,X=$P(X,"-",1,4) G:T>9999 CANCK G T
+"RTN","PRCSUT3",14,0)
+ I '$D(REP),'$D(PRCS("TYPE")) S X=Z,X=X_"-"_T I $D(^PRCS(410,"B",X)) S T=+T+1 G:T>9999 CANCK G T
+"RTN","PRCSUT3",15,0)
+ I '$D(REP),$D(PRCS("TYPE")) S Z=X,X=X_"-"_T I $D(^PRC(424,"B",X)) S T=+T+1,X=Z G T
+"RTN","PRCSUT3",16,0)
+TEX S DA=HDA L +^PRCS(410.1,DA):15 S $P(^PRCS(410.1,DA,NODE),U,PIECE)=+T,$P(^(0),U,3)=DT L -^PRCS(410.1,DA)
+"RTN","PRCSUT3",17,0)
+OUT K DA,DIC,N,NODE,PIECE,PRCS("TYPE"),PRCSL,T,Z,HDA Q
+"RTN","PRCSUT3",18,0)
+OUT1 S X="",Y=-1 D OUT Q
+"RTN","PRCSUT3",19,0)
+EN2 ;add record in file 410
+"RTN","PRCSUT3",20,0)
+ S DLAYGO=410,DIC="^PRCS(410,",DIC(0)="LXZ" D ^DIC K DLAYGO G:Y<0 W4
+"RTN","PRCSUT3",21,0)
+EN2A S DA=+Y S:'$D(T(2)) T(2)=""
+"RTN","PRCSUT3",22,0)
+ S PRC("ACC")=$$ACC^PRC0C(PRC("SITE"),PRC("CP")_"^"_PRC("FY")_"^"_PRC("BBFY"))
+"RTN","PRCSUT3",23,0)
+ S PRCSAPP=$P(PRC("ACC"),"^",11)
+"RTN","PRCSUT3",24,0)
+ S ^PRCS(410,DA,0)=$P(^PRCS(410,DA,0),U)_"^^"_T(2)_"^^"_PRC("SITE"),^PRCS(410,DA,3)=PRC("CP")_"^"_PRCSAPP,$P(^(3),"^",12)=$P(PRC("ACC"),"^",3)
+"RTN","PRCSUT3",25,0)
+ S $P(^PRCS(410,DA,3),"^",11)=$P($$DATE^PRC0C(PRC("BBFY"),"E"),"^",7)
+"RTN","PRCSUT3",26,0)
+ S ^PRCS(410,"AN",$E(PRC("CP"),1,30),DA)=""
+"RTN","PRCSUT3",27,0)
+ D ERS410^PRC0G(DA_"^E")
+"RTN","PRCSUT3",28,0)
+ S:T(2)'="" ^PRCS(410,"H",$E(T(2),1,30),DA)=DUZ,$P(^PRCS(410,DA,11),"^",2)=DUZ,^PRCS(410,"K",+$P(PRC("CP")," "),DA)="",$P(^PRCS(410,DA,6),"^",4)=+$P(PRC("CP")," ") K PRCSAPP
+"RTN","PRCSUT3",29,0)
+EN2B S:$D(PRC("SST")) $P(^PRCS(410,DA,0),"^",10)=PRC("SST")
+"RTN","PRCSUT3",30,0)
+ D:$D(MYY) ERS410^PRC0G(DA_"^E") Q
+"RTN","PRCSUT3",31,0)
+EN3 ;INPUT TRANSFORM FOR REORDERING 410 FILE ENTRIES
+"RTN","PRCSUT3",32,0)
+ ;Add mod (PRC*149) to insure that the next ien used is not below 20,000,000. 
+"RTN","PRCSUT3",33,0)
+ ;Start back at closest ien to last realistic ien using for loop check to look for last used ien when next ien is below 20,000,000.
+"RTN","PRCSUT3",34,0)
+ Q:'$D(X)  I $D(^PRCS(410,"B",X)) Q
+"RTN","PRCSUT3",35,0)
+ N PRCSIEN
+"RTN","PRCSUT3",36,0)
+ L +^PRCS(410,0):$S($G(DILOCKTM)>10:DILOCKTM,1:10) I '$T W $C(7),"ANOTHER USER IS EDITING FILE 410 CONTROL NODE! Please retry in a minute." K X Q
+"RTN","PRCSUT3",37,0)
+ S PRCSIEN=$P(^PRCS(410,0),"^",3)-1
+"RTN","PRCSUT3",38,0)
+ I PRCSIEN<20000000!(PRCSIEN>97999999) D  S:PRCSIEN=20000000 PRCSIEN=97999999
+"RTN","PRCSUT3",39,0)
+ . F I=90000000:-10000000:20000000 I $O(^PRCS(410,I))-I>1000 S PRCSIEN=$O(^PRCS(410,I)) Q
+"RTN","PRCSUT3",40,0)
+ F PRCSIEN=PRCSIEN:-1 I '$D(^PRCS(410,PRCSIEN)) L +^PRCS(410,PRCSIEN):$S($D(DILOCKTM):DILOCKTM,1:3) Q:$T
+"RTN","PRCSUT3",41,0)
+ L -^PRCS(410,0)
+"RTN","PRCSUT3",42,0)
+ I PRCSIEN'>0 K X
+"RTN","PRCSUT3",43,0)
+ E  S DINUM=PRCSIEN
+"RTN","PRCSUT3",44,0)
+ L -^PRCS(410,PRCSIEN)
+"RTN","PRCSUT3",45,0)
+ Q
+"RTN","PRCSUT3",46,0)
+CANCK ;Look for cancelled activity when all seq used
+"RTN","PRCSUT3",47,0)
+ I ZERSW=0 S ZERSW=1,T=1 G T
+"RTN","PRCSUT3",48,0)
+CK0 S ZZH=Z,ZHOLD=Z
+"RTN","PRCSUT3",49,0)
+CK1 S ZZH=$O(^PRCS(410,"B",ZZH)),IEN410=0 G CER:ZZH](Z_"-9999")
+"RTN","PRCSUT3",50,0)
+CK2 S IEN410=$O(^PRCS(410,"B",ZZH,IEN410)) G CK1:IEN410=""
+"RTN","PRCSUT3",51,0)
+ I $P($G(^PRCS(410,IEN410,0)),U,2)'="CA" G CK2
+"RTN","PRCSUT3",52,0)
+ S DA=IEN410,DIK="^PRCS(410," D ^DIK
+"RTN","PRCSUT3",53,0)
+ S T=$P(ZZH,"-",5)
+"RTN","PRCSUT3",54,0)
+CKQ S Z=ZHOLD K DA,DIK,ZZH,ZHOLD,IEN410
+"RTN","PRCSUT3",55,0)
+ G T1
+"RTN","PRCSUT3",56,0)
+CER S MSG="No open sequence number found for "_Z_" for adjustment transaction"
+"RTN","PRCSUT3",57,0)
+ I $G(PRCRMPR)=1 S X="#"
+"RTN","PRCSUT3",58,0)
+ K DA,DIK,ZZH,IEN410
+"RTN","PRCSUT3",59,0)
+ G OUT
+"RTN","PRCSUT3",60,0)
+W1 S %=2 Q:T4'="O"  W !!,"Would you like to edit this request" D YN^DICN G W1:%=0 Q
+"RTN","PRCSUT3",61,0)
+W4 W !!,"Another user is accessing this file...  Try later.",$C(7) R:$E(IOST,1,2)="C-" X:5 G EXIT
+"RTN","PRCSUT3",62,0)
+W5 W !!,"You are not an authorized control point user.",!,"Contact your control point official." R X:5
+"RTN","PRCSUT3",63,0)
+EXIT K %,DA,DIC,DIE,DR,I,L,N,PRCS,PRCSAPP,PRCSDIC,PRC("FY"),PRCSL,PRCSY,PRC("QTR"),T,T1,T2,T3,T4,X,X1,Z,ZERSW Q
+"VER")
+8.0^22.0
+"BLD",6574,6)
+^132
+**END**
+**END**

@@ -1,0 +1,310 @@
+$TXT Created by ROWE,KIMBALL at LEXNXT.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 08/17/11 at 15:31
+=============================================================================
+Run Date: FEB 14, 2012                     Designation: LEX*2*81
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #73                      Status: Released
+                  Compliance Date: MAR 15, 2012
+=============================================================================
+
+Associated patches: (v)LEX*2*73    <<= must be installed BEFORE `LEX*2*81'
+
+Subject: AWRD Cross-Reference/Missing Code fix
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+  This patch fixes two problems reported after the installation of patch 
+  LEX*2.0*73, one problem discovered while performing the analysis for 
+  the solution of the reported problems and one "housekeeping" fix
+  to a grammatical error discovered during development.
+    
+  1)  Incomplete AWRD cross-reference.
+    
+      This problem is directly attributed to patch LEX*2.0*73.  The AWRD
+      cross-reference will be re-built during the installation of this patch.
+      Only the Set logic of the cross-reference will be executed.  This
+      will allow users to remain on the system during both the install and
+      during the rebuilding of the cross-reference.  (Remedy Tickets 502655,
+      503574, 505562, 505567, 505719, 506920, 508352, and 509775)
+    
+      Additionally, this patch exports a utility designed primarily for
+      the Lexicon developers so they can quickly fix a site without
+      kicking users off the system.  Without this utility, it would take
+      between 4 - 5 hours to re-index the Lexicon files.  Users, coders,
+      and providers would be effectively without a Lexicon during that 
+      time.  With this utility, users may remain on the system.  Unlike 
+      FileMan, the utility does not delete the entire cross-reference.
+      Instead, each cross-reference node is inspected and every subscript
+      is evaluated.  If one or more subscript fails verification, then only
+      that node is deleted.  The remainder of the cross-reference
+      remains intact, allowing users to be on the system at the time the 
+      cross-references are repaired.  The utility moves away from the old
+      "delete and set" method to "repair" approach.  This utility runs in
+      the background (TaskMan).  
+    
+          Routine    Function
+          LEXRX      Main Entry
+          LEXRXA     Repair 757     B
+          LEXRXB     Repair 757.001 B/AF
+          LEXRXC     Repair 757.01  B/ADC/ADTERM
+          LEXRXC2    Repair 757.01  AMC/AWRD
+          LEXRXC3    Repair 757.01  ASL/APAR
+          LEXRXD     Repair 757.02  B/ACODE/ACT
+          LEXRXD2    Repair 757.02  ADC/AMC/ASRC
+          LEXRXD3    Repair 757.02  ADCODE/APCODE
+          LEXRXD4    Repair 757.02  AVA/CODE/ADX/APR
+          LEXRXE     Repair 757.1   B/AMCC/AMCT/ASTT
+          LEXRXF     Repair 757.21  B/C/AA
+          LEXRXG     Repair 757.33  B/C/G
+          LEXRXG2    Repair 757.33  ACT/AMAP/AREV
+          LEXRXG3    Repair 757.33  ASRC/ATAR
+          LEXRXS     Re-Index 757.011, 757.014, 757.03-757.06, 757.11, 757.12
+          LEXRXS2    Re-Index 757.13, 757.14, 757.2-757.32, 757.4, 757.41
+          LEXRXXA    Ask/Prompts
+          LEXRXXM    Miscellaneous
+          LEXRXXM2   Miscellaneous (continued)
+          LEXRXXP    Parse Text
+          LEXRXXS    Save/Send
+          LEXRXXT    Task Setup
+          LEXRXXT2   Task 
+          LEXRXXT3   Task Update
+    
+  2)  ICD Codes do not appear on the selection list
+       
+      Patch LEX*2.0*73 did not create this problem, but it did make it 
+      observable and reportable.  This problem has gone undetected since
+      September 24, 2003.  The missing ICD codes occurred so far down on 
+      the selection list that users did not scroll down far enough to 
+      observe the problem.  With the incomplete AWRD cross-reference, the 
+      missing ICD codes occurred closer to the top of the selection list
+      (no scrolling required) and was observed and reported by several users
+      at multiple sites.
+       
+      As it turns out, those terms without codes should never have been added
+      onto the selection list when screening for ICD codes.  The problem 
+      resides in the routine LEXSRC, tag line ONE, where it extracts a single
+      source code for a term.  The routine identifies the code 250.00 as an 
+      active code but fails to identify the code as being inactivated for 
+      the term "Diabetes Mellitus Type II or unspecified"  (IEN 33605).  The 
+      code really is active, just not for that term, so the term should never
+      have been placed on the selection list.  Later, when the list is 
+      presented to the user for selection, it uses another API to get the 
+      code ($$SO^LEXASO).  In this API, the logic is correct and the code is
+      identified as inactive for the term and the code is NOT displayed.
+      So you have a term added to the list without a code.  
+    
+         Before
+    
+                Enter Term/Concept:  DIABETES
+                
+                130 matches found
+       
+                   1   Diabetes *                         
+                   2   Diabetes Insipidus * (ICD-9-CM 253.5)
+                   3   Obesity in Diabetes (ICD-9-CM 278.00)
+                   4   Pregnancy in Diabetes (ICD-9-CM 648.00)
+                   5   Diabetes, Gestational * (ICD-9-CM 648.80)
+                       
+                NOTE:  The first entry (the term without the code)
+                       should not be on the list
+                        
+         After       
+                   
+                Enter Term/Concept:  DIABETES
+                    
+                81 matches found
+                    
+                   1   Diabetes Insipidus * (ICD-9-CM 253.5)
+                   2   Obesity in Diabetes (ICD-9-CM 278.00)
+                   3   Pregnancy in Diabetes (ICD-9-CM 648.00)
+                   4   Diabetes, Gestational * (ICD-9-CM 648.80)
+                   5   Polyneuropathy in diabetes (ICD-9-CM 357.2)
+               
+                NOTE:  The list is shorter (only 81 entries) since
+                       the terms without ICD codes are not included
+                       in the list.
+    
+  3)  Typographical error in Data Dictionary Cross-Reference Set Logic
+    
+      This problem has gone undetected by the sites.  The only way to 
+      observe the problem is to have re-indexed the Lexicon (a 4-5 hour
+      task).  Since no site has done that, the problem remained unreported.
+      It was discovered while developing a solution to the incomplete AWRD
+      cross-reference (#1 above).   This affects:
+    
+        File:    CODES                   #757.01
+        Field:   CLASSIFICATION SOURCE   #2
+        Index:   AVA
+        Source:  BI-RADS  Breast Imaging Reporting and Data Sys
+                 DSM-IV   Diagnostic & Statistical Manual of Mental Disorders
+    
+      The typo will be fixed and the "AVA" cross-reference rebuilt (about 
+      25-40 seconds).
+    
+  4)  Grammatical error in prompt while editing user defaults
+   
+      This problem was discovered during the development of this patch and
+      has gone undetected since the Lexicon's initial release September 23,
+      1996. (routine LEXDM)
+   
+        Prompt changed from:  Display format to used during look-up
+        to:                   Display format to be used during look-up
+   
+   
+    
+  REMEDY TICKETS:
+  ==============
+    
+    Incomplete AWRD cross-reference/Missing ICD codes in display:
+    
+       502655    Philadelphia, PA
+       503574    Erie, PA
+       505562    Richmond, VA
+       505567    Amarillo, TX
+       505719    St. Louis. MO      Heartland East HCS
+       506035    Portland, OR
+       506920    Lake City, FL      N Florida/S Georgia HCS
+       508352    Madison, WI
+       509775    Seattle, WA        Puget Sound HCS
+       509669    Seattle, WA        Puget Sound HCS
+       513036    Fayetteville, AR  
+       517083    Milwaukee, WI 
+       523505    Biloxi, MS         Gulf Coast HCS
+ 
+ 
+  INSTALLATION INSTRUCTIONS:
+  =========================
+      
+    1)  Users may be on the system during the install of LEX*2.0*81.
+        It is recommended that this patch be installed during non-peak
+        hours.  This patch should take from 4 - 5 minutes to install
+        depending on the system.  The install time is short because 
+        the work of repairing the AWRD/AVA cross-references is performed
+        in the background by TaskMan.
+      
+    2)  Set up user and IO variables (D ^XUP) for programmer access.
+      
+    3)  Distribution Load:
+    
+        Load the KIDS Distribution from the Packman Message using the
+        Packman function "Install/Check Message."
+    
+    4)  KIDS Installation:
+    
+        Install the patch using the KIDS Installation Menu action
+        "Install Package(s)" and the install name LEX*2.0*81.
+    
+          Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+          the install?" prompt.
+    
+          Respond "NO" at the "Want to DISABLE Scheduled Options,
+          Menu Options, and Protocols?" prompt.
+    
+        The KIDs install should take from 2-4 minutes.
+      
+    5)  Cleanup
+      
+        Upon completion of the installation, the following routines may be
+        deleted from your system using the KERNEL option 'Delete Routines'
+        [XTRDEL]:
+ 
+             LEX2081     Environment Check routine
+             LEX2081P    Post-Install routine
+        
+        NOTE:  Do NOT delete the routine LEX2081A  
+ 
+               This routine should be running in the background, re-indexing
+               selected cross-references in the Lexicon.
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2081
+    Before:       n/a   After: B88540708  **81**
+Routine Name: LEX2081A
+    Before:       n/a   After: B14855038  **81**
+Routine Name: LEX2081P
+    Before:       n/a   After: B21788237  **81**
+Routine Name: LEXDM
+    Before: B14239136   After: B14264609  **81**
+Routine Name: LEXRX
+    Before:       n/a   After: B25440682  **81**
+Routine Name: LEXRXA
+    Before:       n/a   After: B14298023  **81**
+Routine Name: LEXRXB
+    Before:       n/a   After: B52650110  **81**
+Routine Name: LEXRXC
+    Before:       n/a   After:B104836918  **81**
+Routine Name: LEXRXC2
+    Before:       n/a   After: B70264191  **81**
+Routine Name: LEXRXC3
+    Before:       n/a   After: B17043792  **81**
+Routine Name: LEXRXD
+    Before:       n/a   After: B72163787  **81**
+Routine Name: LEXRXD2
+    Before:       n/a   After: B31445330  **81**
+Routine Name: LEXRXD3
+    Before:       n/a   After: B23248019  **81**
+Routine Name: LEXRXD4
+    Before:       n/a   After: B78250103  **81**
+Routine Name: LEXRXE
+    Before:       n/a   After: B59805790  **81**
+Routine Name: LEXRXF
+    Before:       n/a   After: B89637737  **81**
+Routine Name: LEXRXG
+    Before:       n/a   After: B75572745  **81**
+Routine Name: LEXRXG2
+    Before:       n/a   After: B52721583  **81**
+Routine Name: LEXRXG3
+    Before:       n/a   After: B26643925  **81**
+Routine Name: LEXRXS
+    Before:       n/a   After: B47423657  **81**
+Routine Name: LEXRXS2
+    Before:       n/a   After: B52432847  **81**
+Routine Name: LEXRXXA
+    Before:       n/a   After: B26020561  **81**
+Routine Name: LEXRXXM
+    Before:       n/a   After: B57887286  **81**
+Routine Name: LEXRXXM2
+    Before:       n/a   After: B20334656  **81**
+Routine Name: LEXRXXP
+    Before:       n/a   After: B22174903  **81**
+Routine Name: LEXRXXS
+    Before:       n/a   After:B124182348  **81**
+Routine Name: LEXRXXT
+    Before:       n/a   After: B66601968  **81**
+Routine Name: LEXRXXT2
+    Before:       n/a   After: B40427433  **81**
+Routine Name: LEXRXXT3
+    Before:       n/a   After:  B2392111  **81**
+Routine Name: LEXSRC
+    Before:  B5815442   After:  B6746638  **7,25,26,38,73,81**
+ 
+Routine list of preceding patches: 73
+
+=============================================================================
+User Information:
+Entered By  : ROWE,KIMBALL                  Date Entered  : JUL 26, 2011
+Completed By: LEE,ROBERT                    Date Completed: JAN 24, 2012
+Released By : SCHWARTZ,VIKIE                Date Released : FEB 14, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

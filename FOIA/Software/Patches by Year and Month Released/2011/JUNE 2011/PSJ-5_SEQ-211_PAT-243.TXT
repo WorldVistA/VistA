@@ -1,0 +1,199 @@
+$TXT Created by HARRIS,JAMES at IVBCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Wednesday, 02/16/11 at 22:51
+=============================================================================
+Run Date: JUN 29, 2011                     Designation: PSJ*5*243
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #211                      Status: Released
+                  Compliance Date: JUL 30, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*124   <<= must be installed BEFORE `PSJ*5*243'
+                    (v)PSJ*5*145   <<= must be installed BEFORE `PSJ*5*243'
+                    (v)PSJ*5*241   <<= must be installed BEFORE `PSJ*5*243'
+
+Subject: FY11 PLE SELECT PATIENTS BY ORDER PRIORITY
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ FY11 Pharmacy Legacy Enhancements (PSPO 738/PSI-07-122)
+  
+ The enhancement contained in this patch revises the existing display in
+ the Non-Verified/Pending Orders [PSJU VBW] option from a patient list 
+ sorted alphabetically by TEAM and PATIENT NAME to a categorized listing 
+ sorted by a patient's highest priority order. 
+  
+ Patients that have one or more STAT Pending or Non-Verified orders will
+ be listed first, followed by patients with one or more ASAP Pending or
+ Non-Verified orders, and then all other patients that have only ROUTINE 
+ Pending or Non-Verified orders. Within a given priority, patients will 
+ continue to be sub-sorted alphabetically by TEAM name and PATIENT name.
+  
+ Examples shown here.  Note the addition of PRIORITY column.
+  
+ Search for Patients by WARD:
+ ----------------------------
+  
+ ORDERS NOT VERIFIED BY A PHARMACIST - GEN MED
+  
+  No.   TEAM              PRIORITY     PATIENT
+ --------------------------------------------------------------------------
+  
+    1  Not Found          STAT         DIXPATNM,FORT (0294)
+    2  Not Found          STAT         JACPATNM,OOH YEAH (0407)
+    3  Not Found          ASAP         TESPATNM,COLLATERAL (0177)
+    4  GENERAL MED ONE    ROUTINE      VOLPATNM,JOHNNY (0258)
+    5  GENERAL MED TWO    ROUTINE      NOYPATNM,FORMT (0017)
+    6  Not Found          ROUTINE      JONPATNM,AAAAA (0513)
+    7  Not Found          ROUTINE      NAGPATNM,STEVEN G (0139)
+    8  Not Found          ROUTINE      TESPATNMTHREE,COLLATERAL (0181)
+    9  Not Found          ROUTINE      TESPATNMTWO,COLLATERAL (0180)
+ Select 1 - 9:
+  
+  
+  
+ Search for Patient by PRIORITY:
+  
+  
+ ORDERS NOT VERIFIED BY A PHARMACIST - STAT
+  
+  No.   TEAM              PRIORITY     PATIENT
+ --------------------------------------------------------------------------
+    1  GENERAL MED ONE    STAT         BANPATNM,JAMES E (0091)
+    2  GENERAL MED ONE    STAT         DIXPATNM,FORT (0294)
+    3  GENERAL MED TWO    STAT         JACPATNM,OOH YEAH (0407)
+    4  Not Found          STAT         MARPATNM,TEST (0734)
+ Select 1 - 4:
+  
+  
+  
+ Associated NSRs:
+ ================
+ N/A
+  
+  
+ Associated PSIs:
+ ================
+ PSI-07-122 (PSPO 738) 
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ HD0000000422079
+  
+  
+ Associated E3Rs:
+ ================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ NEW YORK HARBOR HCS
+ OKLAHOMA CITY, OK
+ PUGET SOUND HCS
+ TAMPA, FL
+  
+  
+ Documentation Retrieval:
+ ========================
+ Sites may retrieve documentation in one of the following ways:
+   
+ (1) The preferred method is to FTP the files from
+     download.vista.med.va.gov, which will transmit the files from the
+     first available FTP server.
+   
+ (2) Sites may also elect to retrieve documentation directly from a
+     specific server as follows:
+   
+      Albany          ftp.fo-albany.med.va.gov
+      Hines           ftp.fo-hines.med.va.gov
+      Salt Lake City  ftp.fo-slc.med.va.gov
+   
+ The documentation distribution includes:
+   
+ FILE NAME                              DESCRIPTION
+ --------------------                   -------------------
+ PSJ_5_NURSE_UM_R0711.PDF               Inpatient Medications V. 5.0
+                                        Nurse's User Manual
+  
+ PSJ_5_P243_NURSE_UM_CP.PDF             Inpatient Medications V. 5.0
+                                        Nurse's User Manual Change Pages
+  
+ PSJ_5_PHAR_UM_R0711.PDF                Inpatient Medications V. 5.0
+                                        Pharmacist's User Manual
+  
+ PSJ_5_P243_PHAR_UM_CP.PDF              Inpatient Medications V. 5.0
+                                        Pharmacist's User Manual
+                                        Change Pages
+  
+ (3) Once released, documentation may be retrieved from VA Software 
+     Document Library (VDL) on the Internet at the following
+     address, http://www4.va.gov/vdl
+  
+  
+ Install Information:
+ ====================
+ It is recommended that this patch be installed after normal business hours
+ while no Inpatient Pharmacy users are processing orders.
+  
+ Installation will take no longer than 2 minutes.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+  
+  3. From this menu, you may select to use the following options
+     (when prompted for INSTALL NAME, enter PSJ*5.0*243):
+    a. Backup a Transport Global - This option will create a backup
+       message of any routines exported with the patch. It will NOT
+       backup any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when the patch
+       is installed. It compares all components of the patch (routines,
+       DDs, templates, etc.).
+    c. Verify Checksums in Transport Global - This option will ensure
+       the integrity of the routines that are in the transport global.
+  
+  4. Use the Install Package(s) option and select the package PSJ*5.0*243.
+  
+  5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+     respond NO.
+  
+  6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;DEC 16, 1997;Build 45
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGSEL
+    Before: B40642983   After: B41117725  **3,111,145,243**
+Routine Name: PSGVBW
+    Before: B65649356   After: B96214965  **5,16,39,59,62,67,58,81,80,
+                                           110,111,133,139,155,241,243**
+Routine Name: PSGVBW0
+    Before: B34843910   After: B42020216  **29,39,53,56,95,80,110,127,124,243**
+
+=============================================================================
+User Information:
+Entered By  : HARRIS,JAMES C                Date Entered  : JUN 08, 2010
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: JUN 07, 2011
+Released By : CONNOLLY,BARBARA              Date Released : JUN 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

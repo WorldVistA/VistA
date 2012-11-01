@@ -1,0 +1,399 @@
+$TXT Created by ELLZEY,LINDA J at PEPCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Friday, 01/13/12 at 12:30
+=============================================================================
+Run Date: FEB 06, 2012                     Designation: PSO*7*379
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #327                      Status: Released
+                  Compliance Date: FEB 20, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*387   <<= must be installed BEFORE `PSO*7*379'
+
+Subject: MOCHA 1.0 ANCILLARY EMERGENCY PATCH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This emergency patch updates MEDICATION ORDER CHECK HEALTHCARE APPLICATION
+ (MOCHA) 1.0 functionality and contains the following modifications:
+  
+ 1.  If a non-verified prescription order had a status of 
+ "drug-interaction", the user was not allowed to edit the prescription 
+ during the verification process.  This patch corrects this issue.
+ (CCR 3743)
+  
+ 2.  During verification of a technician entered order using the patient 
+ prescription processing option, the pharmacist is inconsistently returned
+ to the order screen or the med profile screen.  The following lists the
+ inconsistencies and corrections made by this patch:  (CCR 3755)
+  
+     a.  When the user ^ (shift 6) to exit, the user was being returned 
+         to the med profile.  This patch corrects this by returning the
+         user to the order screen.  The exception to this rule is entering
+         ^ (shift 6) at the "EDIT:  (Y/N/P): N//" prompt which return the
+         user to the med profile screen.
+  
+     b.  At the "VERIFY FOR patientlast,first? (Y/N/Delete/Quit): Y//" 
+         during the verification process, the user was returned to the
+         order screen when the user entered N for No or Q for Quit.  This
+         patch corrects this issue by returning the user to the medication
+         profile screen instead.
+  
+     c.  After verifying a clerk entered prescription, the user is not
+         being returned to the medication profile screen using the Patient
+         Prescription Processing option. This patch makes the change to now
+         return the user to the medication profile screen.
+  
+ 3.  When an order was discontinued using the Discontinue Prescription(s) 
+ [PSO C] option, the message "Rx# xxxxxx wasDiscontinued" was being 
+ displayed.  A change was made to add a space between 'was' and 
+ 'Discontinued' for this message.  This was reported in Remedy ticket
+ HD478319. (CCR 4082)
+  
+ 4.  When finishing a pending complex order that had an undefined schedule
+ for the drug ordered on one or more dosing sequences, the system was
+ displaying the header "Instructions:" multiple times.  All of the 
+ medication instructions were displayed correctly but was spaced out 
+ with multiple headers.  This patch corrects this issue. 
+ Remedy 478319 (CCR 4208)
+  
+ 5.  For simple and complex orders, the user is not returned to the 
+ order screen, but is instead returned to the medication profile
+ screen upon responding 'NO' to the 'Do you want to continue?' prompt
+ that is displayed after all drug interactions are displayed.  This
+ occurs during edit of a prescription.  A correction was made to return
+ the user back to the order screen.  (CCR 4337)
+  
+ 6.  A site reported an error when trying to verify an order where the  
+ drug on the order did not have the NAME field (#.01) defined for VA 
+ GENERIC file (#50.6) and the cross reference for this file was damaged.  
+ The system expects for the Name field (#.01 ) of VA GENERIC file (#50.6)
+ to be defined; however, the system should exit gracefully instead of
+ creating a hard error.  This is a very unique incident where the drug at
+ the site was corrupted.  A change was made to prevent a hard error in this
+ situation.  If the VA Generic Name is not available, the system will use
+ the orderable item name or a truncated drug name for sorting the order
+ checks to be displayed. The site corrected the VA Generic Name on the
+ prescription order and was able to process the medication normally. Remedy
+ 494769 (CCR 4407)
+  
+ 7.  When printing a drug interaction monograph to a print device, a hard 
+ error was received (<ENDOFFILE>SCREEN+6^DIR).  This error did not affect
+ print jobs that were queued or where the printer was set up for forced
+ queuing.  When printing the monograph, the systems switches between
+ foreground processing and background processing which handles the task of
+ queuing the monograph to a print device.  The print device must be opened
+ prior to the system printing to the device.  In this scenario, the error
+ was caused by the print device not being open.  This patch corrects this
+ problem by opening the device for non-queued print jobs. 
+ Remedy 511943 (CCR 4334)
+  
+ 8. A change was made in Mocha V. 1.0 when receiving an Outpatient order
+ from CPRS. If only an Orderable Item comes across with no Dispense Drug,
+ but there is only one active Dispense Drug matched to that Orderable Item
+ marked for Outpatient "O" in the APPLICATION PACKAGES' USE Field (#63) of
+ the DRUG File (#50), then regardless of what other drugs are matched to
+ that Orderable Item, the software assigns that drug to the order. For
+ Pending orders that would be correct, but for a NON-VA Med order, that
+ assignment may not be correct because the package use indicator for a
+ NON-VA Med drug is "X" , not "O". This can potentially effect what drug 
+ the order checks (drug interaction and duplicate therapy) are done
+ against, therefore possibly not returning any valid order checks, when in
+ fact there should be order checks displayed to the user if the correct 
+ intended drug was used, depending on the set up of the drugs matched to
+ the Pharmacy Orderable Item. This patch will remove the functionality of
+ assigning a Dispense Drug to any Outpatient order that comes from CPRS
+ without a Dispense Drug, upon file entry. (CCR 4522)
+  
+ 9. When drug interaction and duplicate therapy checks are done against a 
+ Non-VA Med order that only has a Pharmacy Orderable Item without any 
+ Dispense Drugs, logic is executed to find the best drug matched to the
+ Pharmacy Orderable Item to perform the order check. The current logic
+ gives preference to drugs marked for Outpatient "O" in the APPLICATION
+ PACKAGES' USE Field (#63) of the DRUG File (#50) over drugs marked for
+ NON-VA Meds "X". This patch makes the change to give preference to drugs
+ marked for NON-VA Meds "X". Additionally, order checks (drug interaction
+ and duplicate therapy) may not even occur when they should, if there are
+ no drugs marked for Outpatient "O", since in this case preference should
+ be given to drugs marked for NON-VA Meds "X". (CCR 4537 and CCR 3845)
+  
+ 10.  When a medication order is entered through CPRS and there is an 
+ Outpatient Pharmacy Pending order on the profile that has a dispense drug
+ assigned to it, a duplicate drug check will not occur in CPRS if that same
+ drug is the drug being entered. That patch fixes the problem so the
+ duplicate drug check will now display in CPRS.  (CCR 4583)
+  
+ 11.  A site reported that when a Pharmacist and Tech were placing an
+ order, the text "RX DELETED" was displayed on the screen.  This was
+ happening sporadically.  This issue was caused by the POERR variable not 
+ being cleaned up after order check processing was completed.  To correct
+ this problem, the POERR variable has been 'newed' in the PSONEW routine.  
+ Remedy 505644 (CCR 4568) 
+  
+ 12.  A site reported that they received a MAXSTRING hard error when 
+ printing from suspense for local mail.  The MAXSTRING error was caused
+ by the variable LINE becoming too large for the system to handle.  The
+ site was able to print from suspense a second time to generate the rest 
+ of the labels.  This issue occurred with non-laser labels.  This patch
+ corrects this issue by deleting the LINE variable upon exiting label
+ print. Remedy 511486 (CCR 4581) 
+  
+ 13.  Currently when order checks take place, if there is a Non-VA Med 
+ order on the Patient Profile with no Dispense Drug in the order, and all
+ DRUG File (#50) entries matched to the Pharmacy Orderable Item are marked
+ as Supply Items, an error message will be displayed for that Non-VA Med
+ order with this reason:
+  
+ Reason: No active Dispense Drug found.
+  
+ This patch fixes the problem by first checking all drugs matched to the 
+ Pharmacy Orderable Item, and if there are no active Drugs matched to the 
+ Pharmacy Orderable Item that are not marked as a Supply, and every active 
+ drug matched to the Pharmacy Orderable Item marked for Non-VA Med Use in 
+ the APPLICATION PACKAGES' USE Field (#63) in the DRUG File (#50) is marked
+ as a Supply, then this message will not display. Remedy 514738, 512417, 
+ 513402 (CCR 4678)
+  
+ 14.  Sites reported that Outpatient orders are sporadically locking and 
+ pharmacist cannot fill the order.  The Pharmacy Re-engineering work 
+ group decided that drugs on the med profile that the drug being
+ worked on had a drug interaction with will no longer be locked.  The drug 
+ being worked on will continue to be locked. Remedy 512743, 355584, 319666 
+ PSPO 1391, 304596 (CCR 4675)
+  
+ 15.  When reinstating an order, the prescription information rolls off 
+ the screen.  This patch adds an "Enter to continue" prompt to eliminate 
+ this problem.  (CCR 4712)
+  
+ 16.  Discontinued OP orders (outside the formula:  cancel date + days 
+ supply +7) are still being included in duplicate therapy order checks as 
+ reported by two sites. This patch screens out discontinued 
+ prescriptions that exceed the formula.  Remedy 515643 (CCR 4700)
+  
+ 17.  Sites reported that some of their technician entered orders were not 
+ displaying under Rx Verify by Clerk or the List Non-Verified Scripts 
+ options.  When a non-verified prescription did not have a drug
+ interaction, the system was not storing it in RX VERIFY file (#52.4).  
+ With this patch, the system will store non-verified orders with and 
+ without drug interactions.  Remedy 515009, 516416 (CCR 4686)
+  
+ 18.  Sites not using laser labels reported that reprints of multiple
+ non-laser labels for a ScripTalk patient causes MAXSTRING  hard error and
+ a runaway job that printed numerous labels. Both of these issues are 
+ corrected with this patch.  Remedy 515573, 515603, 515927, 515020 (CCR
+ 4687)
+  
+ 19.  When verification is set to off, technician orders that did not have 
+ a drug interaction were being shown on the List Non-Verified Scripts 
+ option.  A modification was made to prevent this type of order from 
+ erroneously be defined in the RX VERIFY file (#52.4). (CCR 4952)
+  
+ 20.  A site reported that they were receiving two "Press return to
+ continue" prompts when placing an order that had multiple duplicate
+ drugs.  Changes were made to eliminate the duplicate prompt. (CCR 4826)
+  
+ 21.  If the Clinical Effects section is lengthy, it rolls off the top of
+ the screen of the drug interaction display.  A modification was made to
+ page break during the display of the clinical affects section when
+ necessary. (CCR 4958)
+  
+ 22.  An order check message was being displayed erroneously in 
+ Inpatient Medication for discontinued prescriptions with a cancel date
+ outside the calculated range (Cancel date + Days Supply +7 days).
+ This message should not display. Remedy 590930 (CCR 4977)
+  
+ 23.  A site reported an issue where sporadically a pending order was not 
+ being discontinued when a duplicate drug was ordered.  Also, the message 
+ following the prompt shown below was not displayed when the user selected
+ to discontinue the pending order:
+  
+    Discontinue Pending Order for SIMVASTATIN 80MG TAB Y/N? YES
+  
+    Pending Order for SIMVASTATIN 80MG TAB will be discontinued after the
+    acceptance of the new order.  
+  
+ Changes were made to appropriately discontinue the order and display the 
+ correct messaging.  (CCR 5062)
+  
+ 24.  A site reported an issue where they received a hard error when they 
+ placed two orders. The first order was entered but the user exited when 
+ drug interactions were displayed.  A second order was immediately placed 
+ for a drug that only received dosing checks. The system gave a hard
+ error after acceptance of the second order. To prevent this error, a 
+ change was made to clean up left over variables and to verify that order 
+ checks are present before displaying the drug interaction dialog. (CCR 
+ 5069)
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ 304596, 319666, 355584, 478319, 494769, 505644, 511486, 511943, 512417,
+ 512743, 513402, 514738, 515009, 515020, 516416, 515573, 515603, 515643,
+ 515927, 590930
+  
+  
+ Associated PSIs: 
+ ----------------
+ PSPO 1391
+  
+  
+ Components Exported With Patch: 
+ -------------------------------
+  
+ N/A
+  
+                                                                          
+ Test Sites:
+ -----------
+ CHARLESTON, SC
+ KANSAS CITY, MO
+ MARTINEZ, CA
+ PALO ALTO, CA
+ TUSCALOOSA, AL
+                
+  
+ Documentation Retrieval:
+  
+ N/A
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ Do not install this patch while Outpatient Pharmacy users are on the
+ system or when Outpatient orders are being entered and signed through
+ Computerized Patient Record System. Installation will take no longer than
+ 5 minutes.
+  
+    1. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       you may select to use the following options (when prompted for
+       INSTALL NAME, enter PSO*7.0*379):
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as Data Dictionaries or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+  
+   5. Use the Install Package(s) option and select the package PSO*7.0*379.
+  
+   6. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+ The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build [#]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCAN
+    Before: B49510977   After: B49661114  **11,21,24,27,32,37,88,117,131,
+                                           185,253,251,375,379**
+Routine Name: PSOCAN2
+    Before: B76751507   After: B77487451  **8,18,62,46,88,164,235,148,
+                                           259,281,287,251,375,379**
+Routine Name: PSOCAN3
+    Before: B70028792   After: B70841219  **15,24,27,32,36,94,88,117,131,
+                                           146,139,132,223,235,148,249,
+                                           225,324,251,375,379**
+Routine Name: PSODDPR1
+    Before: B63959036   After: B62730644  **251,375,379**
+Routine Name: PSODDPR2
+    Before:B152114617   After:B150369494  **251,375,379**
+Routine Name: PSODDPR3
+    Before:B101107926   After:B103323021  **251,375,379**
+Routine Name: PSODDPR4
+    Before: B99712200   After: B94930565  **251,375,387,379**
+Routine Name: PSODDPR5
+    Before: B78969137   After: B80117354  **251,375,379**
+Routine Name: PSODDPRE
+    Before:B116150731   After:B127148270  **251,375,387,379**
+Routine Name: PSODGDGP
+    Before: B47871096   After: B57788736  **251,387,379**
+Routine Name: PSODOSUN
+    Before: B34559589   After: B40464586  **251,379**
+Routine Name: PSOHLNEW
+    Before: B85696343   After: B83121604  **1,7,15,46,71,98,111,124,117,
+                                           131,146,132,143,223,235,148,
+                                           239,249,225,324,251,387,379**
+Routine Name: PSOLBL
+    Before: B74655660   After: B76752756  **8,19,30,36,47,71,92,120,157,
+                                           244,206,225,303,266,326,251,
+                                           387,379**
+Routine Name: PSOLBLN
+    Before: B61102291   After: B62602237  **16,36,71,107,110,117,135,233,
+                                           251,387,379**
+Routine Name: PSON52
+    Before: B79042036   After: B65058460  **1,16,23,27,32,46,71,111,124,
+                                           117,131,139,157,143,219,148,
+                                           239,201,268,260,225,303,358,
+                                           251,387,379**
+Routine Name: PSONEW
+    Before: B28582823   After: B28865824  **11,27,32,46,94,130,268,225,
+                                           251,379**
+Routine Name: PSOORDRG
+    Before: B43185005   After: B43194944  **3,29,49,46,81,105,134,144,
+                                           132,188,207,148,243,251,379**
+Routine Name: PSOORED3
+    Before: B61521458   After: B61839517  **46,78,99,117,133,148,249,251,379**
+Routine Name: PSOOREDT
+    Before: B68307459   After: B68488747  **4,20,27,37,57,46,78,102,104,
+                                           119,143,148,260,281,304,289,
+                                           298,379**
+Routine Name: PSOORNE2
+    Before: B68912310   After: B68864998  **11,21,23,27,32,37,46,84,103,
+                                           117,131,146,156,210,148,222,
+                                           238,264,281,289,251,379**
+Routine Name: PSOORNW1
+    Before: B44316879   After: B43950828  **23,46,78,117,131,133,172,148,
+                                           222,268,206,251,379**
+Routine Name: PSORENW0
+    Before: B84148716   After: B84298548  **11,27,32,59,64,46,71,96,100,
+                                           130,237,206,251,375,379**
+Routine Name: PSORN52
+    Before: B58143232   After: B44688558  **1,11,27,37,46,79,71,100,117,
+                                           157,143,219,148,239,201,225,
+                                           303,358,251,387,379**
+Routine Name: PSORN52C
+    Before: B50785719   After: B50785936  **1,7,11,27,46,75,87,100,111,
+                                           124,117,131,146,148,200,225,
+                                           251,387,379**
+Routine Name: PSOVER
+    Before: B79826569   After: B75971956  **16,21,27,117,131,146,251,375,
+                                           387,379**
+Routine Name: PSOVER1
+    Before:B116713560   After:B118625991  **32,46,90,131,202,207,148,243,
+                                           268,281,324,358,251,375,387,
+                                           379**
+ 
+Routine list of preceding patches: 298, 387
+
+=============================================================================
+User Information:
+Entered By  : FLEGEL,CHRIS M                Date Entered  : FEB 15, 2011
+Completed By: YARBER,KIMBERLY               Date Completed: FEB 02, 2012
+Released By : VECE,VIRGINIA                 Date Released : FEB 06, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

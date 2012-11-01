@@ -1,0 +1,158 @@
+$TXT Created by BECKWITH,RALPH at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Wednesday, 10/12/11 at 10:24
+=============================================================================
+Run Date: OCT 25, 2011                     Designation: RMPR*3*160
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #146                      Status: Released
+                  Compliance Date: NOV 25, 2011
+=============================================================================
+
+Associated patches: (v)RMPR*3*59   <<= must be installed BEFORE `RMPR*3*160'
+                    (v)RMPR*3*159  <<= must be installed BEFORE `RMPR*3*160'
+
+Subject: HO LETTER PRINTING;GUI DISPLAY 2319 FOR HISA
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1. Excessive number of pages print for each letter when selecting
+    'print all' Home Oxygen letters.
+  
+ 2. Prosthetics GUI display for 2319, screen 7 for HISA (Home       
+    Improvement Structural Alterations) displays no HISA information
+    for known HISA orders. 
+  
+  
+  
+ Associated Remedy Tickets:
+ =========================
+ 1) HD0000000404599 Printing too many pages for HO letters
+  
+ 2) HD0000000408436 Prosthetics GUI display 2319, screen 7 for HISA 
+                    (Home Improvement Structural Alterations) activity
+  
+  
+   
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ==========
+ Oklahoma City VA Medical Center
+ VA Western NY HCS
+  
+  
+ Remedy Overview:
+ ================ 
+ 1) HD0000000404599 Printing too many pages for HO letters
+  
+ Problem:
+ --------
+ When printing Home Oxygen letters for all patients an excessive number of
+ pages print for each patient when only one page should typically print.
+  
+   
+ Resolution:
+ -----------
+ Modify routine RMPOLF0A to print directly to printer without using 
+ Fileman DIP call.
+  
+ Routines: RMPOLF0A
+  
+  
+  
+ 2) HD0000000408436 Prosthetics GUI display 2319, screen 7 for HISA 
+                    activity
+  
+ Problem:
+ --------         
+ A site reported that when using Prosthetics GUI to view 2319 for HISA
+ information, there is nothing being displayed in relation to HISA when
+ HISA items were ordered.
+  
+  
+ Resolution:
+ -----------
+ Modified routine RMPR9S7 (called via broker call RMPR TRANS HISA)
+ to check for HISA in HCPCS item description found in the PROSTHETIC HCPCS
+ file (#661.1).
+  
+ Routines: RMPR9S7
+  
+  
+   
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install these routines at any time without interruption to 
+ users. It should take less than 2 minutes to install this patch. 
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*160)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       RMPR*3.0*160.
+   
+    5. Want KIDS to Rebuild Menu Trees Upon Completion of Install? 
+       NO//respond NO.
+  
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//respond NO.  
+   
+    7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//respond YES. When prompted to select the 
+       options you would like to place out of order, enter the following:
+                                                                  
+       GENERATE LETTERS  RMPO LIST/PRINT MANAGER     Generate Letters
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPOLF0A
+    Before: B17972062   After: B40677507  **29,55,115,159,160**
+Routine Name: RMPR9S7
+    Before: B21651675   After: B21952282  **59,160**
+ 
+Routine list of preceding patches: 59, 159
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : JUN 15, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: OCT 25, 2011
+Released By : MORRIS,DELISA                 Date Released : OCT 25, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

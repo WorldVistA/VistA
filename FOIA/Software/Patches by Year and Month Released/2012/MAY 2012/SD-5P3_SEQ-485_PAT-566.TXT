@@ -1,0 +1,268 @@
+$TXT Created by CURTIS,RICHARD L at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 04/13/12 at 13:41
+=============================================================================
+Run Date: MAY 08, 2012                     Designation: SD*5.3*566
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #485                    Status: Released
+                  Compliance Date: JUN 08, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*536  <<= must be installed BEFORE `SD*5.3*566'
+                    (v)SD*5.3*561  <<= must be installed BEFORE `SD*5.3*566'
+
+Subject: MAKE CLINIC FIELD REQUIRED AND CORRECT RECALL PATIENT INQUIRY OPTION
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will address the following issues:
+ 1.  The CLINIC field(#4.5) in the RECALL REMINDERS file(#403.5)
+     should be a "required" field.
+  
+ 2.  Fix the problem with the Recall Patient Inquiry [SDRR PATIENT INQUIRY]
+     option that prints the incorrect data, in the Inactive Recall
+     Reminders section, for a user who entered the recall reminder.
+  
+ 3.  Correct the Patient lookup for options Add/Edit Clinic Recall Patient
+     [SDRR CARD ADD] and Recall Patient Inquiry [SDRR PATIENT INQUIRY],
+     which both allow a user to add a new patient to the PATIENT file(#2),
+     if the selected patient is not found.
+  
+ 4.  The Recall Patient Inquiry option [SDRR PATIENT INQUIRY], indicates 
+     all recall reminders for a patient have been sent, regardless of what
+     the recall date is.
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) HD0000000375545 - Change CLINIC field(#4.5) to be a "required" field.
+    Duplicate(s):
+    HD0000000457299 - Entering Recall allows user to bypass clinic
+ 2) HD0000000398329 - Recall Patient Inquiry is displaying "User Who
+                      Entered Recall" field incorrectly
+ 3) HD0000000424636 - Recall allows a patient to be entered into Patient
+                      file
+ 4) HD0000000425631 - Recall Patient Inquiry quirk
+    Duplicate(s):
+    HD0000000438129 - SDRR Patient Inquiry report issue
+    HD0000000443547 - Patient Inquiry issue
+    HD0000000456726 - The Date Reminder field populating for
+                      veteran and shouldn't be yet
+    HD0000000467347 - Recall date problem
+    HD0000000474368 - Problem with Recall Patient Inquiry
+    HD0000000486447 - Recall Reminders menu data not matching
+                      Recall Reminders file
+    HD0000000510362 - Recall Reminder Letters Printing too soon
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ New York Harbor HCS
+ Wilkes-Barre, PA
+ Tampa, FL
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  HD0000000375545 - Change CLINIC field(#4.5) to be a "required" field.
+  
+     PROBLEM:
+     --------
+     Currently, when using option 'Add/Edit Clinic Recall Patient'
+     [SDRR CARD ADD] or the RR-Recall Reminder Action protocol in
+     Appointment Management to add a recall reminder entry for a
+     patient, the CLINIC field(#4.5) is optional.  When a clinic is not
+     entered by the user, this causes the Recall Reminder cards/letters
+     to not print.
+  
+     RESOLUTION:
+     -----------
+     The CLINIC field(#4.5) in the RECALL REMINDERS file(#403.5) will be
+     changed to a "required" field.  Additionally, post-init routine
+     SD53P566 will provide a report via Mailman to the person 
+     installing the patch, identifying all Recall Reminder entries that do
+     not currently have a clinic identified in CLINIC field(#4.5).  
+     Subject of Mailman is:  RECALL REMINDERS MISSING REQUIRED CLINIC.
+     This report should be shared with the facility Recall Reminder 
+     Coordinator or other appropriate person.
+     Furthermore, when a new recall reminder is being entered, the
+     software creates the new record entry in the RECALL REMINDERS file
+     (#403.5) via Input Template [SDRR RECALL CARD ADD].  Thus, the new
+     record is immediately created.  So, if the user times out while at
+     the Clinic prompt, a new record entry will be created even though
+     the required CLINIC field(#4.5) and other remaining fields have not
+     been entered.  Therefore, routines SDRR1 and SDRRCLR2 will be modified
+     to check for a timeout during creation of a new recall reminder
+     record.  If a timeout occurs, the new record entry just created will
+     be deleted via FileMan API DIK and a message will be displayed letting
+     the user know that the recall reminder was incomplete and therefore
+     not filed.
+  
+ 2.  HD0000000398329 - Recall Patient Inquiry is displaying "User Who
+                       Entered Recall" field incorrectly
+  
+     PROBLEM:
+     --------
+     When the Recall Patient Inquiry [SDRR PATIENT INQUIRY] is run, 
+     Inactive Recall Reminders incorrectly prints the user who deleted
+     the recall entry as the user who entered the recall.  This only
+     occurs with Inactive Recall Reminders.  Active Recall Reminders
+     print the correct user in the User Who Entered Recall field(#7).
+  
+     RESOLUTION:
+     -----------
+     Routines SDRRINQ and SDRRINQ1 will be modified so that the user
+     is correctly pulled from the User Who Entered Recall field(#7) in
+     the RECALL REMINDERS REMOVED file(#403.56).
+  
+ 3.  HD0000000424636 - Recall allows a patient to be entered into Patient
+                       file
+  
+     PROBLEM:
+     --------
+     When using menu options Add/Edit Clinic Recall Patient [SDRR CARD ADD]
+     and Recall Patient Inquiry [SDRR PATIENT INQUIRY], if the selected
+     patient is not found in the PATIENT file(#2), the user is allowed to
+     add the patient to the PATIENT file(#2).  This should never be
+     allowed through Recall Reminder options.
+  
+     Resolution:
+     -----------
+     Routines SDRRCLR2 and SDRRINQ were both making calls to routine DPTLK
+     to do a patient lookup.  Both routines have been modified to use
+     Fileman API DIC to do the patient lookup, so that the user will not be
+     allowed to add the patient to the PATIENT file(#2) if the selected
+     patient is not found.
+  
+ 4.  HD0000000425631 - Recall Patient Inquiry quirk
+  
+     PROBLEM:
+     --------
+     When using the option Recall Patient Inquiry [SDRR PATIENT INQUIRY],
+     it will indicate that all recall reminders have been sent for the
+     selected patient regardless of how far into the future the recall date
+     in the RECALL REMINDERS file(#403.5) is.  A FileMan inquiry into the
+     RECALL REMINDERS file(#403.5) for the selected patient shows the Date
+     Reminder Sent field(#6) is null for those reminders with future dates
+     that should not have printed yet, i.e., they are beyond the Auto Print
+     Days field(#3) set in the RECALL REMINDERS PARAMETERS file(#403.53).
+     So, the problem is just a display issue with the Recall Patient
+     Inquiry [SDRR PATIENT INQUIRY] option.
+  
+     RESOLUTION:
+     -----------
+     Routines SDRRINQ and SDRRINQ1 will be modified so that all variables
+     are properly killed and reset.  Once fixed, the Recall Patient Inquiry
+     [SDRR PATIENT INQUIRY] option will properly display either the Date
+     Reminder Sent or NOTSENT, whichever applies.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Users can be on the system during the installation of this patch.
+  
+ Installation should take less than 5 minutes.
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+     Select Kernel Installation & Distribution System Option:  INStallation
+                                                               ---
+  
+     1     Load a Distribution
+     2     Verify Checksums in Transport Global
+     3     Print Transport Global
+     4     Compare Transport Global to Current System
+     5     Backup a Transport Global
+     6     Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter SD*5.3*566):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will NOT
+         backup any other changes such as DDs or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed.  It compares all components of the patch
+         (routines, DDs, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+  
+     d.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+  
+ 4.  Use the Install Package(s) option and select the package SD*5.3*566.
+  
+     a.  When prompted "Want KIDS to INHIBIT LOGONS during the
+         install? NO//", respond NO.
+  
+     b.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", respond YES.
+  
+         1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+            Appointment Management            [SDAM APPT MGT]
+            Manager Menu for Recall Reminder  [SDRR MANAGER MENU]
+            Add/Edit Clinic Recall Patient    [SDRR CARD ADD]
+            Recall Patient Inquiry            [SDRR PATIENT INQUIRY]
+  
+         2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+  
+ NOTE:  Post-init routine SD53P566 will be deleted after installation of
+        this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;SCHEDULING;**[Patch List]**;Aug 13, 1993;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53P566
+    Before:       n/a   After:  B8115754  **566**
+Routine Name: SDRR1
+    Before: B14295319   After: B16208086  **536,561,566**
+Routine Name: SDRRCLR2
+    Before: B10839141   After: B13219705  **536,561,566**
+Routine Name: SDRRINQ
+    Before: B72514446   After: B77175038  **536,566**
+Routine Name: SDRRINQ1
+    Before: B55827759   After: B58933113  **536,566**
+ 
+Routine list of preceding patches: 561
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : DEC 31, 2009
+Completed By: CRICHLOW,SHERRY               Date Completed: MAY 03, 2012
+Released By : BENBOW,PHYLLIS O              Date Released : MAY 08, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

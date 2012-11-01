@@ -1,0 +1,257 @@
+$TXT Created by WOLF,ED at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 03/29/12 at 11:47
+=============================================================================
+Run Date: JUL 26, 2012                     Designation: SD*5.3*581
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #487                    Status: Released
+                  Compliance Date: AUG 26, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*297  <<= must be installed BEFORE `SD*5.3*581'
+                    (v)SD*5.3*504  <<= must be installed BEFORE `SD*5.3*581'
+                    (v)SD*5.3*532  <<= must be installed BEFORE `SD*5.3*581'
+                    (v)SD*5.3*575  <<= must be installed BEFORE `SD*5.3*581'
+
+Subject: PCMM Interim Enhancements
+
+Category: 
+  - Enhancement (Mandatory)
+  - Print Template
+  - Routine
+  - Sort Template
+  - Data Dictionary
+
+Description:
+============
+
+ This patch includes a new GUI executable.
+  
+ This patch will address issues related to the Primary Care Management 
+ Module (PCMM). Enhancements in this patch will provide improved 
+ patient-to-provider, non-primary care tracking capability and improve 
+ overall patient care. The modifications and enhancements to PCMM are as
+ follows:
+  
+   1. The PRIMARY CARE FTEE EQUIVALENT field (#.09) located in the 
+      POSITION ASSIGNMENT HISTORY file (#404.52) will be renamed to the
+      FTEE EQUIVALENT field (#.09). This will now allow PCMM the ability
+      to store Capacity and FTEE values for all roles in PCMM including:
+      Primary and Non-Primary care teams, by entering and retrieving them
+      in the PCMM GUI.
+      
+       - Non-Primary care Provider position or a position on a non-primary
+         care team will not require entry of an FTEE value when staffed
+         originally.
+       - If an FTEE value is entered on any staffed position, it cannot be
+         removed completely but it can be changed to another value as
+         accepted.
+       - The staffed position that already has a FTEE value can have that
+         value deleted, only if the staffed person is INACTIVATED. This
+         happens automatically as a new, inactive entry is created in the
+         POSITION ASSIGNMENT HISTORY file (#404.52).
+  
+   2. The current VistA report option, Direct PC FTEE and Panel Size 
+      Report [SC PCMM DIRECT PC FTEE], displays the Primary Care Providers
+      that are setup in the Primary Care Team positions as well as other
+      staff members from other teams.  For accuracy, the report title and
+      several column titles should be corrected to reflect the data
+      contents.
+  
+      In summary the following modifications have been made:
+  
+      a) The menu option for the "DIRECT PC FTEE AND PANEL SIZE REPORT" [SC
+         PCMM DIRECT PC FTEE] has been changed to "FTEE AND PANEL SIZE
+         REPORT" [SC FTEE AND PANEL SIZE REPORT].  The report title is now
+         FTEE AND PANEL SIZE.
+      b) Column #2's title has been changed from "PC Team" to "Team".
+      c) Column #3's title has been changed from "Provider's Team Position"
+         to "Team Position".
+      d) Column #4 will display a "blank" if the provider is not a PCP or
+         AP.
+      e) Column #6's title has been changed from "Direct PC FTEE" to
+         "FTEE".
+      f) Modifications to the Report Key located below the report, will 
+         also be altered to reflect the new changes on the report.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ REMEDY TICKET(S):
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Milwaukee, Wisconsin
+ Montana HCS
+ Richmond, VA
+  
+  
+ TECHNICAL SECTION:
+ ==================
+ The following components are sent with this patch:
+  
+                                            UP    SEND  DATA                USER
+                                            DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                      DD    CODE  W/FILE  DATA  PTRS  RIDE
+ -------------------------------------------------------------------------------
+  
+ 404.52      POSITION ASSIGNMENT HISTORY    YES   NO    NO                  NO
+ Partial DD: subDD: 404.52     fld: .09
+  
+ PRINT TEMPLATE:                               ACTION:
+    SCMC DIRECT PC FTEE        FILE #404.52      DELETE AT SITE
+    SCMC DIRECT PC FTEE 1 CLN  FILE #404.52      DELETE AT SITE
+    SCMC FTEE 1 CLN            FILE #404.52      SEND TO SITE
+    SCMC FTEE AND PANEL SIZE   FILE #404.52      SEND TO SITE
+  
+ SORT TEMPLATE:                                ACTION:
+    SCMC DIRECT PC FTEE        FILE #404.52      DELETE AT SITE
+    SCMC FTEE AND PANEL SIZE   FILE #404.52      SEND TO SITE
+  
+ ROUTINE:                                      ACTION:
+    SCMCTSK                                      SEND TO SITE
+    SCMCTSK1                                     SEND TO SITE
+    SCMCTSK6                                     SEND TO SITE
+    SCMCTSK7                                     SEND TO SITE
+  
+ OPTION:                                       ACTION:
+    SC FTEE AND PANEL SIZE REPORT                SEND TO SITE
+    SC PCMM DIRECT PC FTEE                       DELETE AT SITE
+    SCMC PCMM PROVIDER RPTS MENU                 USE AS LINK FOR
+                                                 MENU/ITEM/SUBSCRIBERS
+  
+ ====================INSTALLATION INSTRUCTIONS===========================
+  
+ You can install this patch during the normal workday with NO ACTIVITY in
+ PCMM GUI.
+  
+ Install Time - less than 5 minutes
+      
+  1. LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ------------
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter SD*5.3*581):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 -----------------   
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted, "Want KIDS to Rebuild Menu Trees Upon Completion 
+         of Install? NO//", respond NO.
+     c.  When prompted, "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.
+     d.  When prompted, "Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//", respond YES.
+  
+             [SCMC PCMM MAIN MENU]       PCMM Main Menu
+  
+ 5.  You may delete the init routine SC53P581 when patch is fully 
+     installed.
+  
+ DOCUMENTATION INFORMATION:
+ ==========================
+ The following software file is exported as part of this patch:
+  
+     File Name                 Contents           Retrieval Format
+     ----------------------    ---------------    ----------------
+     PCMM_GUI_1_3_0_27.ZIP     PCMM Executable     BINARY
+     SD_53_581_MHTCUM.PDF      User Manual         BINARY
+     SD_53_581_UM.PDF          User Manual         BINARY
+  
+     The file listed above may be obtained via FTP. The preferred method
+     is to FTP the files from:
+  
+     download.vista.med.va.gov
+  
+     This transmits the files from the first available FTP server.  Sites
+     may also elect to retrieve software directly from a specific server
+     as follows:
+  
+      CIO FIELD OFFICE    FTP ADDRESS                 DIRECTORY
+      ----------------    ------------------------    --------------------
+  
+      Albany              ftp.fo-albany.med.va.gov    [anonymous.software]
+      Hines               ftp.fo-hines.med.va.gov     [anonymous.software]
+      Salt Lake City      ftp.fo-slc.med.va.gov       [anonymous.software]
+  
+  
+     PCMM.EXE will replace the existing PCMM.EXE which is
+     usually found in the Program File/VISTA/PCMM directory of the client
+     workstation. Workstations without an existing PCMM GUI application
+     installed should first download and run SD_53_P204.EXE to install the
+     previous version of PCMM. Then the PCMM.EXE should be replaced with
+     the new version.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;SCHEDULING;**[Patch List]**;Aug 13, 1993;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SC53P581
+    Before:       n/a   After:  B1064594  **581**
+Routine Name: SCMCTSK
+    Before: B36414078   After: B36651125  **264,278,272,297,581**
+Routine Name: SCMCTSK1
+    Before: B83874650   After: B84155124  **297,498,527,499,532,504,581**
+Routine Name: SCMCTSK6
+    Before: B61678804   After: B61520556  **297,532,581**
+Routine Name: SCMCTSK7
+    Before: B31968404   After: B30280517  **297,581**
+ 
+Routine list of preceding patches: 504
+
+=============================================================================
+User Information:
+Entered By  : REESE,DARRYL M                Date Entered  : MAR 01, 2011
+Completed By: SESSLER,APRIL                 Date Completed: JUL 18, 2012
+Released By : BENBOW,PHYLLIS O              Date Released : JUL 26, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

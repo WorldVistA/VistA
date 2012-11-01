@@ -1,0 +1,232 @@
+$TXT Created by ROCHA,MARCELO at CFDA.FO-BIRM.MED.VA.GOV  (KIDS) on Friday, 12/09/11 at 11:10
+=============================================================================
+Run Date: MAR 27, 2012                     Designation: XU*8*566
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #470                      Status: Released
+                  Compliance Date: APR 27, 2012
+=============================================================================
+
+
+Subject: NEW FIELD - WINDOWS NETWORK PRINTER NAME (#75)
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch was created to support Outpatient Pharmacy in printing Food
+ and Drug Administration (FDA) Medication Guide documents using a Java
+ application. These documents are in Adobe Portable Document Format (.pdf),
+ which is a file format not supported by VistA.
+  
+ Below is a list of all the applications involved in this release along
+ with their patch number:
+   
+    APPLICATION/VERSION                                    PATCH
+    -----------------------------------------------------------------
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0    PSX*2*70
+    NATIONAL DRUG FILE (NDF) V. 4.0                        PSN*4*264
+    OUTPATIENT PHARMACY (OP) V. 7.0                        PSO*7*367
+    KERNEL V. 8.0                                          XU*8*566
+  
+ A new field, WINDOWS NETWORK PRINTER NAME (#75), is being added to the
+ DEVICE file (#3.5). This field will be used to store the Windows network
+ printer name, which VistA passes on to a Java Application responsible
+ for printing FDA Medication Guide documents.
+  
+ New field in the DEVICE file (#3.5) - WINDOWS NETWORK PRINTER NAME (#75)
+ ------------------------------------------------------------------------
+ 3.5,75        WINDOWS NETWORK PRINTER NAME WIN;1 FREE TEXT
+  
+               INPUT TRANSFORM: K:$L(X)>50!($L(X)<5) X
+               LAST EDITED:     AUG 23, 2011 
+               HELP-PROMPT:     Answer must be 5-50 characters in length. 
+               DESCRIPTION:     This is the Windows network name for the
+                                printer (e.g., '\\vhaistfpc4\IST-HP4525-1').
+                                It is used by Windows applications that
+                                interact with VistA and need a printer 
+                                identified for output purposes. 
+  
+ The new field can be edited via the Edit All Device Fields [XUDEVEDITALL] 
+ option under the Kernel Device Management options as seen below:
+  
+    Select Device Edit Option:  Edit All Device Fields
+  
+    Select DEVICE NAME: FDAMGPRT      FDA MG Printer       _TNA1316:     
+    NAME: FDAMGPRT// 
+    LOCATION OF TERMINAL: Pharmacy// 
+    Select MNEMONIC: 
+    ...
+    TELNET PORT: 
+    REMOTE PRINTER NAME: 
+    WINDOWS NETWORK PRINTER NAME: ??
+      This is the Windows network name for the printer (e.g., 
+      '\\vhaistfpc4\IST-HP4525-1'). It is used by Windows applications that 
+      interact with VistA and need a printer identified for output purposes.
+    
+    WINDOWS NETWORK PRINTER NAME: \\vhaistfpc4\IST-HP4525-9
+    LAB LABEL PRINTER:
+    ...
+  
+ There was a problem with the HTTP Toolkit API $$GETURL^XTHC10. It was
+ modifying the array variable IO, which could cause issues for the calling
+ routine. The NEW command was placed for the IO variable inside the XTHC10
+ routine to resolve this problem.
+    
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)     Field Name (#)                      New/Modified/Deleted
+ ----------------  ----------------------------------  --------------------
+ DEVICE (#3.5)     WINDOWS NETWORK PRINTER NAME (#75)  New
+  
+ Forms Associated:
+  
+ Form Name              File #                          New/Modified/Deleted
+ ---------              ------                          --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                        New/Modified/Deleted
+ ---------------                                        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type                            New/Modified/Deleted
+ -----------            ----                            --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                                          New/Modified/Deleted
+ -------------                                          --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)             New/Modified/Deleted
+ -------------      ----      ------------------        --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20061203
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ LITTLE ROCK, AR
+ OKLAHOMA CITY, OK
+ ORLANDO, FL
+ PALO ALTO HCS
+  
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - 2/4/2009
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*566 contains changes
+  to a package referenced in VHA OI SEPG SOP 192-023 Review of VISTA Patches 
+  for Effects on VISTA Blood Bank Software. This patch does not alter or
+  modify any VistA Blood Bank software design safeguards or safety critical
+  elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*566 have no effect on Blood Bank
+  software functionality, therefore RISK is none.
+   
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The 4 patches released with this project should be installed in the
+ following order: 
+  
+    1. XU*8*566
+    2. PSN*4*264
+    3. PSO*7*367
+    4. PSX*2*70
+  
+  
+ Installation Instructions
+ =========================
+ This patch may be installed with VISTA users online. However, it is
+ recommended that it be Queued for a time of generally least activity.  
+  
+ TaskMan does not need to be STOPPED or placed in a WAIT state and 
+ installation should take less than a minute.
+  
+     1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+        This option will load the KIDS package onto your system.  
+  
+     2. The patch has now been loaded into a transport global on your 
+        system. You now need to use KIDS to install the transport global.  
+   
+     3. On the KIDS menu, under the 'Installation' menu, use the 
+        following options: 
+            Print Transport Global 
+            Compare Transport Global to Current System 
+            Verify Checksums in Transport Global
+            Backup a Transport Global 
+  
+      4. On the KIDS menu, under the 'Installation' menu, use the 
+        following option: 
+            Select Installation Option: Install Package(s) 
+            Select INSTALL NAME: XU*8.0*566
+                                 ==========
+        Want KIDS to INHIBIT LOGONs during the install? NO//
+        Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XTHC10
+    Before: B19523775   After: B19933013  **123,566**
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : FEB 07, 2011
+Completed By: GREER,MIKE                    Date Completed: MAR 01, 2012
+Released By : TILLIS,LEWIS                  Date Released : MAR 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,200 @@
+$TXT Created by BEUSCHEL,GARY at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 03/09/11 at 08:54
+=============================================================================
+Run Date: JUL 07, 2011                     Designation: XU*8*554
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #456                      Status: Released
+                  Compliance Date: AUG 07, 2011
+=============================================================================
+
+Associated patches: (v)XU*8*534    <<= must be installed BEFORE `XU*8*554'
+                    (v)XU*8*542    <<= must be installed BEFORE `XU*8*554'
+
+Subject: OVERSTUFFED
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ ATTENTION: After the patch is installed, you should edit the new field
+ created by the patch. Please review the instructions.
+  
+ 1.     Remedy Ticket 436497:
+ ^TMP fills up, causing FILEFULL errors at sites whose ^TMP, ^UTILITY, and
+ ^XUTL("XQ") globals are local to each node. Kernel is not doing a good-enough
+ job of cleaning out temp globals left by dead jobs. These jobs ended without
+ cleaning up after themselves, either because they ended abnormally, or
+ because they just weren't programmed to do so. So the task falls to Kernel,
+ just like the task of picking up after a recalcitrant teenager falls to the
+ parent. Kernel has no way of telling whether ^TMP, ^UTILITY, and ^XUTL("XQ"
+ are local to each node or if everything is clustered together. With this
+ patch, Kernel adds a new field to the KERNEL SYSTEM PARAMETERS (#8989.3) file,
+ so that the site can tell Kernel what's what. This will improve Kernel's temp
+ global purging after a job is recognized as dead.
+ (Routine ^XQ82)
+  
+ The following field has been added to the KERNEL SYSTEM PARAMETERS (#8989.3)
+ file. After the patch is installed, you will need to set this new field to
+ YES, if it describes the setup at your site:
+ 8989.3,.07    LOCAL TMP           0;7 SET
+                              '0' FOR No; 
+                              '1' FOR Yes; 
+               LAST EDITED:   NOV 10, 2010 
+               HELP-PROMPT:   Are ^TMP, ^UTILITY, & ^XUTL("XQ") local to each 
+                              node in a multi-node system as in Cache? 
+               DESCRIPTION:   Set this field to Yes if ^TMP, ^UTILITY, and
+                              ^XUTL("XQ") are local to each node in a
+                              multi-node system as in Cache. Set it to No if
+                              everything is clustered together.
+  
+ To test this fix, you'll need to be a site whose ^TMP, ^UTILITY, & ^XUTL("XQ")
+ globals are local to each node. Check your nodes now. Is there a humongous
+ amount of ^TMP hanging around one of your nodes that Kernel never seems to
+ clean out? (Kind of like the pigeons in St. Mark's Square.) Here are some TMP
+ globals to check. They're left by a package I won't identify *cough* BCMA
+ *cough*:
+ ^TMP("PSJ",n,
+ ^TMP("TK PSJ1",n,  (where n should be a $J)
+ Sites have reported seeing hundreds of thousands of nodes under these temp
+ globals. After the patch is installed, set the new field to YES (only if it
+ applies to your site!) and D ^XQ82 from the programmer prompt. ^TMP should
+ be svelte again. If your Cache config is such that each node has its own ^TMP
+ then you will need to run XQ82 from programmer mode on each node.
+  
+ 2.     Remedy Ticket 436667, 439704:
+ After patch XU*8*534, the lock table can fill up. This is because of an
+ unfortunate mismatch of a lock/unlock. The routine locks one node, but later
+ unlocks a different one. Also, the routine can quit before it unlocks the
+ node if it encounters a task without a zero node in ^%ZTSK. These problems
+ are fixed in this patch.
+ (Routine ^XUTMHR)
+  
+ To test this fix, you'd need to monitor the lock table, perhaps with Cache
+ Cube, to watch the locking of ^%ZTSK nodes. Then, from the programmer prompt,
+ D HOUR^XUTMHR. Before the patch, you should notice that the job grabs lots
+ of locks. After the patch, you should notice that the job only has one lock
+ at a time.
+  
+ Documentation
+ =============
+ No documentation changes were necessary for this patch. The most up-to-date
+ Kernel end-user documentation is available on the VHA Software Document
+ Library (VDL) at the following Internet Website:
+     http://www.va.gov/vdl/application.asp?appid=10
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - 2/16/11
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*554 contains
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch 
+ does not alter or modify any VistA Blood Bank software design 
+ safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*554 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+ Remedy Tickets
+ ==============
+ 436497
+ 436667
+ 439704
+  
+ Thanks to Test Sites 
+ ====================
+ Minneapolis VAMC (Thank-you Warren Samuelson for help with the test plan!)
+ Alexandria VAMC
+ N. Florida/S. Georgia VHS
+  
+ Routine Summary
+ ===============
+ Please see the "Routine Information" section. 
+  
+ Installation Instructions
+ =========================
+ *************************************************************************
+ * After the patch is installed, make sure you edit the new field and    *
+ * make sure to set it to the correct value for your site. See Step 5.   *
+ *************************************************************************
+ >>>Users may remain on the system.
+ >>>TaskMan does *not* need to be stopped.
+ >>>Installation will take less than 1 minute.
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the Transport global.
+       On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global
+          Compare Transport Global to Current System              
+          Backup a Transport Global
+  
+   3.  Users can remain on the system. 
+       This patch can be queued and installed, preferably just after the hour.
+       TaskMan can remain running.
+  
+   4.  Installation will take less than 1 minute. Install just after the hour.
+          Install Package(s)  'XU*8.0*554'
+                               ==========
+       Accept the following defaults:
+  
+       Want KIDS to INHIBIT LOGONs during the install? NO//
+  
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+       Note: The Post-Init will delete any pre-existing invalid data at the
+       site of the new field. After the patch is installed, you may delete
+       the Post-Init routine ^XU8P554.
+  
+   5.  Edit the new LOCAL TMP (#.07) field in the KERNEL SYSTEM PARAMETERS
+       (#8989.3) file. If your site's ^TMP, ^UTILITY, & ^XUTL("XQ") globals
+       are local to each node, set it to YES. Otherwise, set it to NO.
+       If you are unsure, enter a Remedy ticket to ask for help.
+  
+   6.  Sites which have instances of ^TMP, ^UTILITY, & ^XUTL on more than
+       one node should schedule option XQ XUTL $J NODES (Clean old Job
+       Nodes in XUTL) to run on each node.
+  
+   7.  From the programmer prompt, D ^XQ82. Again, sites which have instances
+       of ^TMP, ^UTILITY, & ^XUTL on more than one node should D ^XQ82 on
+       each node.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQ82
+    Before: B11169630   After: B12833341  **59,67,157,258,312,353,542,554**
+Routine Name: XU8P554
+    Before:       n/a   After:   B381642  **554**
+Routine Name: XUTMHR
+    Before: B29133359   After: B30318359  **446,534,554**
+ 
+Routine list of preceding patches: 534, 542
+
+=============================================================================
+User Information:
+Entered By  : BEUSCHEL,GARY                 Date Entered  : OCT 19, 2010
+Completed By: SINGH,GURBIR                  Date Completed: JUL 05, 2011
+Released By : TILLIS,LEWIS                  Date Released : JUL 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

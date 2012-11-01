@@ -1,0 +1,180 @@
+$TXT Created by SILVERMAN,ROBERT at CMNU.FO-BIRM.MED.VA.GOV  (KIDS) on Tuesday, 03/02/10 at 11:09
+=============================================================================
+Run Date: APR 28, 2011                     Designation: PSO*7*316
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #313                      Status: Released
+                  Compliance Date: MAY 29, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*273   <<= must be installed BEFORE `PSO*7*316'
+                    (v)PSO*7*294   <<= must be installed BEFORE `PSO*7*316'
+
+Subject: CORRECTIONS TO MEDICATION WORKSHEET (TOOL #2)
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Patches PSO*7*316 and GMTS*2.7*92 correct issues reported with the 
+ Tool #2: Medication Worksheet. The Health Summary patch GMTS*2.7*92
+ will require patch PSO*7*316 and will create a national entry in the
+ HEALTH SUMMARY COMPONENT file (#142.1) for Tool #2: Medication Worksheet.
+  
+ 1. The existing Application Program Interface (API) #4827 did not
+    return fields required by Tool #2: Medication Worksheet.
+  
+ Problem:
+ --------
+ Routine PSS^PSO59 returns data about the demographics of outpatient 
+ pharmacy divisions, such as site name and address.  The existing API did 
+ not return the division's assigned area code and phone number, which are 
+ present in the format of Tool #2: Medication Worksheet.
+  
+ Resolution:
+ -----------
+ This patch modifies routine PSO59 to return the AREA CODE field (#.03)
+ and PHONE NUMBER field (#.04) as part of the target array.
+  
+ 2.  Routine PSOQUAP distributed with patch PSO*7*294 is not used.
+  
+ Problem:
+ --------
+ During testing of patch PSO*7*294, changes were made that resulted in 
+ routine PSOQUAP being no longer required.  The routine was left in the 
+ patch at the time in order to reduce the remaining testing time required.
+  
+ Resolution:
+ -----------
+ This patch removes routine PSOQUAP.  There are no known programs that 
+ call this routine.
+  
+ 3.  PSO*7*294 was noncompliant with Programming Standards and 
+     Conventions (SAC) for VistA applications.
+  
+ Problem:
+ --------
+ During the internal review of some of the routines distributed with 
+ PSO*7*294 findings uncovered some SAC standard violations.  Primarily, 
+ there was a lack of documentation for Integration Agreements for calls 
+ being made from routine PSOQMCAL.
+  
+ Resolution:
+ -----------
+ Routines PSOQ0186 and PSOQMCAL are being replaced with GMTSPST2.  
+ Moving the routines to the Health Summary (GMTS) namespace
+ facilitates the appropriate documentation of Integration 
+ Agreements.  Corresponding Health Summary patch GMTS*2.7*92 creates a
+ national Health Summary component for Tool #2: Medication Worksheet to
+ utilize the replacement routines.
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ HD 258365
+  
+ Associated NSRs:
+ ================
+ N/A
+  
+ Associated E3R's:
+ =================
+ N/A
+  
+ Associated PSIs:
+ ================
+ N/A
+  
+ Test Sites:
+ ===========
+ FAYETTEVILLE, NC
+ HEARTLAND-WEST HCS
+ HINES, IL
+ MANCHESTER, NH
+ WASHINGTON, DC
+  
+ Documentation Retrieval:
+ ========================
+ Sites may retrieve documentation in one of the following ways:
+  
+ 1. The preferred method is to FTP the files from
+    download.vista.med.va.gov, which will transmit the files from
+    the first available FTP server.
+  
+ 2. Sites may also elect to retrieve documentation directly from a
+    specific server as follows:
+  
+    Albany          ftp.fo-albany.med.va.gov
+    Hines           ftp.fo-hines.med.va.gov
+    Salt Lake City  ftp.fo-slc.med.va.gov
+  
+ 3. Documentation can also be retrieved from VA Software Document Library
+    on the Internet at the following address, http://www.va.gov/vdl. 
+  
+    The documentation distribution includes:
+   
+    FILE NAME                       DESCRIPTION
+    ---------                       -----------
+    PHAR_1_API_R0411.PDF            Pharmacy Re-Engineering API Manual
+    GMTS_2_7_P92_PSO_7_P316_IG.PDF  Medication Reconciliation -
+                                    Medication Worksheet (Tool #2)
+                                    Installation Guide
+  
+    Please see patch GMTS*2.7*92 for other documentation associated
+    with this release. The removal of routine PSOQUAP will be documented 
+    in the changes to the Outpatient Pharmacy Technical Manual/Security
+    Guide to be released with patch PSO*7*343.
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ Users may remain on the system.  Installation takes less than a minute.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+ 1.  Use the INSTALL/CHECK MESSAGE on the PackMan menu.
+  
+ 2.  From the Kernel Installation & Distribution System menu, select
+     the Installation menu.  When prompted, select PSO*7.0*316.
+  
+ 3.  From this menu, you may select the option Verify Checksums in
+     Transport Global.  All components of this patch are new so the options
+     Backup a Transport Global and Compare Transport Global to Current
+     System need not be invoked.  When prompted, select PSO*7.0*316.
+  
+ 4.  Use the Install Package(s) option and select PSO*7.0*316.
+  
+ 5.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+     respond NO.
+  
+ 6.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO59
+    Before: B10289625   After: B11268834  **213,229,254,267,273,316**
+Routine Name: PSOQUAP
+    Before: B21998022   After:    Delete  
+
+=============================================================================
+User Information:
+Entered By  : ALEXANDER,DAVID               Date Entered  : AUG 22, 2008
+Completed By: FARMER,LINDA                  Date Completed: APR 18, 2011
+Released By : VECE,VIRGINIA                 Date Released : APR 28, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,283 @@
+
+=============================================================================
+Run Date: SEP 12, 2012                     Designation: PSB*3*69
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #56                      Status: Released
+                  Compliance Date: OCT 13, 2012
+=============================================================================
+
+Associated patches: (v)PSB*3*48    <<= must be installed BEFORE `PSB*3*69'
+
+Subject: BCBU correction for long NTE-21 segment
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ ******************************* ATTENTION ********************************
+   
+ IMR4 UNLIMITED SI/OPI TEXT, LAST INJECTION SITE enhancement includes 4 
+ patches which must be installed in the following order:
+  
+ 1.      PSS*1*171
+ 2.      PSJ*5*267
+ 3.      PSB*3*68
+ 4.      PSB*3*69
+  
+ **************************************************************************
+  
+ The Special Instructions and Other Print Info Project addresses 
+ enhancements identified during Inpatient Medications Requirements for 
+ Special Focus Group Initial Request Analysis (IMR SFG IRA) Phase 
+ III/Phase IV, as well as modifications requested by the Bar Code
+ Medication Administration (BCMA) and Inpatient Medications workgroups.  
+  
+ The Inpatient Pharmacy patch PSJ*5*267 is also being released as part of
+ these enhancements.  The projects purpose is to Standardize the character
+ length between CPRS Provider's Comment, Inpatient Medications Special
+ Instructions, and the IV Pharmacy Other Print Information fields.
+  
+ The Inpatient Pharmacy patch PSJ*5*267 will add new fields to Inpatient 
+ Medication to support an unlimited amount of text for Special 
+ Instructions and Other Print Info (SI/OPI).
+  
+ The enhancement in this patch will support the new unlimited lines of
+ text that will now be sent by Inpatient Medications to the BCMA
+ Contingency software workstations, in the HL7 NTE|21 segment.
+  
+ Please refer to the release notes for a full detailed list and examples 
+ of items included in this patch.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+                                                                
+ New/Modified
+ File Name (Number)            Field Name (Number)                /Deleted
+ ---------------------------   ------------------------------   -----------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name            New/Modified/Deleted
+ ----------------         -------------------- 
+ N/A
+  
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name                 New/Modified/Deleted
+ -------------------      --------------------      
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)             New/Mod/Del
+ -------------      ----      ------------------             -----------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20031205 
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ PSPO 42, 1466, 2037
+  
+  
+ Associated Remedy Tickets:
+ -----------------------------
+ N/A
+  
+ REMEDY OVERVIEW
+ ---------------
+  
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Central Texas
+ Manchester, NH
+ Pittsburgh, PA
+ St. Cloud, MN
+ Albany,NY (VISN 2)
+ Bath, NY (VISN 2)
+ Canandaigua, NY (VISN 2)
+ Syracuse, NY (VISN 2)
+ VA Western New York Healthcare System at Batavia (VISN 2)
+ VA Western New York Healthcare System at Buffalo (VISN 2)
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.va.gov/vdl/
+  
+ File Description            File Name                             FTP Mode
+ --------------------------------------------------------------------------
+ Installation Guide - BCMA Backup System VistA
+                             PSB_3_BCBU_IG_R0912.PDF               (binary)
+  
+  
+ Patch Installation: 
+  
+ Pre-Installation Overview
+ ------------------------------
+ None. 
+  
+  
+ Patch retrieval Instructions: 
+ =============================
+ 1.  Retrieve the KIDS distribution host file. This patch will be
+     distributed in a host file due to the amount of data contained in
+     the patch.  The name of the host file is:
+  
+          PSB_3_69.KID
+  
+     The preferred method is to FTP the files from 
+ download.vista.med.va.gov,
+     which will transmit the files from the first available FTP server.
+  
+     The files may also be downloaded directly from a particular FTP
+     location at the following locations.
+  
+        Albany          ftp.fo-albany.med.va.gov
+        Hines           ftp.fo-hines.med.va.gov
+        Salt Lake City  ftp.fo-slc.med.va.gov
+  
+     The PSB_3_69.KID host file is available in the ANONYMOUS.PUB
+     directory. Use ASCII Mode when downloading the file.
+  
+  
+ Installation Instructions:
+ ========================== 
+ Do not queue this patch to install at a later time nor install this patch
+ while BCMA users are on the system. Installation will take no longer than
+ 5 minutes.
+  
+  Installation will take less than 5 minutes.
+  
+  Suggested time to install: non-peak requirement hours.
+  
+    1. From the Kernel Installation & Distribution System menu, select
+       the LOAD DISTRIBUTION option and load PSB_3_69.KID  
+   
+    2. Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]:
+  
+        Edits and Distribution ...
+        Utilities ...
+        Installation ...  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSB*3.0*69)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSB*3.0*69.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ALPBFRM1
+    Before: B63576803   After: B62585050  **8,48,69**
+Routine Name: ALPBHL1U
+    Before: B52522021   After: B63735023  **7,69**
+ 
+Routine list of preceding patches: 7, 48
+
+=============================================================================
+User Information:
+Entered By  : NAPOLIELLO,GREG               Date Entered  : JAN 23, 2012
+Completed By: PAYNE,RONALD                  Date Completed: SEP 12, 2012
+Released By : COWNIE,KEVIN                  Date Released : SEP 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

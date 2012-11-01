@@ -1,0 +1,99 @@
+$TXT Created by METCALF,ROGER at RAA.FO-OAKLAND.MED.VA.GOV  (KIDS) on Monday, 02/14/11 at 06:20
+=============================================================================
+Run Date: FEB 16, 2011                     Designation: XU*8*567
+Package : XU - KERNEL                         Priority: EMERGENCY
+Version : 8       SEQ #451                      Status: Released
+                  Compliance Date: FEB 18, 2011
+=============================================================================
+
+
+Subject: INSTITUTION DUP FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy tickets:  - HD0000000461704
+  
+ This patch looks for duplicate field STATION NUMBER (#99) in the
+ INSTITUTION (#4) file, sets the INACTIVE FACILITY FLAG (#101)
+ to INACTIVE, deletes the STATION NUMBER (#99), and places ZZ DUP 
+ at beginning of the NAME (#.01) field for any duplicate records found.
+  
+ In particular the patch resolves the known duplication of station
+ number 740 - TEXAS VALLEY COASTAL BEND HCS.  This must be corrected
+ immediately before facility setup can continue.
+  
+  
+   Blood Bank Team Coordination
+    ===========================
+    Clearance: 02/09/2011
+     
+    EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: This patch does 
+    not alter or modify any VistA Blood Bank software design safeguards or 
+    safety critical elements functions.
+     
+    RISK ANALYSIS: Changes made by patch XU*8.0*567 have no effect on Blood 
+    Bank software functionality, therefore RISK is none.
+     
+     
+    Installation Instructions
+    =========================
+    Please note that the developer does NOT intend to delete routine 
+    XUMF567 after installation.
+     
+    1. Users ARE allowed to be on the system during the installation. 
+       However, it is recommended that the patch be installed during
+       non-peak time. It will take about five minute to install the
+       the patch, but it can be queued if you wish.
+     
+    2. You DO NOT need to stop TaskMan or the background filers.
+     
+    3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+       This option will load the KIDS package onto your system.
+     
+    4. The patch has now been loaded into a Transport global on your 
+       system. You now need to use KIDS to install the Transport global. On
+       the KIDS menu, under the 'Installation' menu, use the following
+       options:
+     
+                    Verify Checksums in Transport Global
+                    Print Transport Global
+                    Compare Transport Global to Current System
+                    Backup a Transport Global
+     
+       On the KIDS menu, under the 'Installation' menu, use the following
+       option:
+                    Install Package(s)  
+                    Select INSTALL NAME:XU*8.0*567
+                                        ========== 
+    
+      Accept the defaults for the following install questions:
+      Want KIDS to INHIBIT LOGONs during the install? NO//
+      Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUMF567
+    Before:       n/a   After:  B2212727  **567**
+
+=============================================================================
+User Information:
+Entered By  : METCALF,ROGER A               Date Entered  : FEB 08, 2011
+Completed By: SINGH,GURBIR                  Date Completed: FEB 16, 2011
+Released By : TILLIS,LEWIS                  Date Released : FEB 16, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,400 @@
+$TXT Created by SAUNDERS,ANGELA at CHEY132.FO-BAYPINES.MED.VA.GOV  (KIDS) on Friday, 04/01/11 at 13:28
+=============================================================================
+Run Date: JUL 05, 2011                     Designation: ROR*1.5*14
+Package : ROR - CLINICAL CASE REGISTRIES      Priority: Mandatory
+Version : 1.5        SEQ #14                    Status: Released
+                  Compliance Date: AUG 05, 2011
+=============================================================================
+
+Associated patches: (v)LA*5.2*68   <<= must be installed BEFORE `ROR*1.5*14'
+                    (v)ROR*1.5*13  <<= must be installed BEFORE `ROR*1.5*14'
+
+Subject: REPORT MODIFICATIONS, EXTRACT UPDATES, AND 508 COMPLIANCE
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ The following is a list of changes included in this patch:
+  
+ 1. The 13 risk factors for the human immunodeficiency virus (HIV) 
+ registry have been changed from mandatory to optional.
+  
+ 2. Currently, within the Patient Data Editor in the HIV registry, the
+ user is prompted to click a checkbox if the patient "ever had an AIDS
+ OI."  This prompt and checkbox has been replaced with the question 
+ "Did the patient ever have an AIDS OI?" and the option to select 
+ either Yes, No, or Unknown has been added to the checkbox.
+  
+ 3. The following mandatory question has been added to the Patient 
+ Data Editor:  "Was your VHA facility/station the first health care 
+ setting (VA or non-VA) to diagnose HIV?" along with a checkbox to 
+ select either Yes, No or Unknown.
+  
+ 4. A new column has been added to the List of Registry Patients 
+ Report that allows the user to select "Diagnosed at this Facility".
+ This column indicates whether this facility was the first health care
+ setting (VA or Non-VA) to diagnose HIV.
+  
+ 5. The nightly extract has been enhanced to include Purchased Care 
+ data for registry patients.
+  
+ 6. The "MELD Score by Range" report has been renamed to "Liver Score 
+ By Range". 
+  
+ 7. The "Liver Score by Range" report now includes the list of Logical 
+ Observation Identifiers Names and Codes (LOINC) codes used in the report.
+  
+ 8. The "Renal Score by Range" report now includes the list of LOINC
+ codes used in the report.
+  
+ 9. The "Liver Score by Range" report now includes AST Platelet Ratio 
+ Index (APRI) and FIB-4 calculations.
+  
+ 10. Patients will be automatically confirmed into the Hepatitis C (HEPC)
+ Registry if they have a positive Hepatitis C Virus (HCV) viral load test 
+ result.
+  
+ 11. This patch brings the Clinical Case Registries (CCR) application
+ into 508 compliance in many areas.
+  
+ 12. An historical data extraction for Purchased Care is added to the
+ ROR HISTORICAL DATA EXTRACTION file (#799.6) for automatic execution 
+ during the next nightly extract. 
+  
+ 13. Additional LOINCs have been added to the VA HEPC Lab Search criteria.
+  
+  
+ GLOBAL UPDATES
+ ==============
+  
+  
+ ROR LAB SEARCH file (#798.9)
+ ----------------------------
+ HCV Viremic LOINC values are added to the VA HEPC Lab Search 
+ criteria in sub-file LAB TEST (#2):
+  
+ 11011
+ 29609
+ 34703
+ 34704
+ 10676
+ 20416
+ 20571
+ 49758
+ 50023
+  
+  
+  
+ ROR DATA AREA file (#799.33)
+ ----------------------------
+ New entry "Purchased Care" is added to the file.
+  
+  
+  
+ ROR XML ITEM file (#799.31)
+ ----------------------------
+ New entries "FIRSTDIAG" , "LOINC_CODES" , "APRI", and "FIB4" are 
+ added to the file.
+  
+  
+  
+ DIALOG file (#.84)
+ ------------------
+ Entries modified:
+ 7981001.001  List of Registry Patients (HTML)
+ 7981019.001  Liver Report by Range (HTML)
+ 7981019.002  Liver Report by Range (CSV)
+ 7981020.001  Renal Function by Range (HTML)
+ 7981997.001  Patient Data Templates (HTML)
+  
+  
+  
+ ROR HIV RECORD file (#799.4)
+ -----------------------------
+ 1. New field HIV DX: FIRST DIAGNOSED HERE (#12.08) is added to the
+ file.
+  
+ 2. The CLINICAL AIDS field (#.02) is updated to include the value of
+ "UNKNOWN" in the set of codes.
+  
+  
+  
+ ROR HISTORICAL DATA EXTRACTION file (#799.6)
+ --------------------------------------------
+ Entry "PURCHASED CARE" is added to the file. 
+  
+  
+  
+  
+ ASSOCIATED REMEDY TICKETS
+ =========================
+ None
+  
+  
+ PARTICIPATING TEST SITES
+ ========================
+ PALO ALTO HCS
+ San Antonio, TX
+ Coatsville, PA
+  
+  
+ INSTALLATION FILES
+ ==================
+  
+ GUI UPDATE
+ ==========
+ IMPORTANT NOTE:  This patch includes a revised Graphical User 
+ Interface (GUI) application which must be distributed to the 
+ appropriate workstations.  After the patch is installed correctly,
+ and the GUI is updated, the version of the GUI will be 1.5.14.
+  
+  
+ File Name         Contents      Transfer Mode  
+ ---------         -----------   -------------
+ ROR1_5P14GUI.ZIP  Zipped GUI    BINARY
+  
+  
+ The file listed above may be obtained via File Transfer Protocol
+ (FTP).  The preferred method is to FTP the file from:
+ Download.vista.med.va.gov.
+  
+ This transmits the file from the first available FTP server.  Sites 
+ may also elect to retrieve software directly from a specific server
+ as follows:
+  
+ OIFO              FTP Address                Directory
+ ----------------  -------------------------  --------------------
+ Albany            ftp.fo-albany.med.va.gov   [anonymous.software]
+ Hines             ftp.fo-hines.med.va.gov    [anonymous.software]
+ Salt Lake City    ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+  
+  
+ M CODE 
+ ======
+ Included as a standard PackMan message.
+  
+  
+ DOCUMENTATION FILES
+ ===================
+ The documentation has been updated and is distributed in the following
+ two zipped files. Each zip file contains both the .DOC and .PDF formats. 
+  
+ File Name             Description                        Protocol
+ ----------------------------------------------------------------- 
+ ROR1_5P14DOC1.ZIP     ROR User Manual                    BINARY
+                     
+  
+ ROR1_5P14DOC2.ZIP     Release Notes,                     BINARY
+                       Technical Manual/Security Guide,
+                       Installation/Implementation 
+                       Guide
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ The revised CCR documentation is available on the
+ ANONYMOUS.SOFTWARE directory at one of the following
+  
+  
+ OIFO             FTP Address                Directory
+ --------------   ------------------------   ------------------
+ Albany           ftp.fo-albany.med.va.gov   anonymous.software
+ Hines            ftp.fo-hines.med.va.gov    anonymous.software
+ Salt Lake City   ftp.fo-slc.med.va.gov      anonymous.software
+  
+  
+ Sites may retrieve documentation in one of the following ways:
+  
+ 1. The preferred method is to FTP the files from 
+    download.vista.med.va.gov, which will transmit the files from the 
+    first available FTP server.
+ 2. Sites may also elect to retrieve documentation directly from a
+    specific server listed above.
+  
+  
+ Documentation may also be retrieved from the VistA Documentation 
+ Library (VDL) on the Intranet at the following address:
+ http://www.va.gov/vdl
+  
+  
+ INSTALLATION
+ ============
+  
+ IMPORTANT NOTES: 
+  
+ This patch includes an M patch and a revised Graphical User Interface
+ (GUI) application.
+  
+ Below is a summary of the installation steps required for this patch.
+  
+ 1. Install M code (see detailed instructions below)
+ 2. Update GUI (see Installation and Implementation Guide section 4 or see 
+ below) 
+  
+  
+ M Installation Instructions
+ ===========================
+  
+ Installation of the patch will not take more than 5 minutes.
+  
+ This patch can be installed with VistA users online, but Registry users
+ should be logged out of the CCR Registry Application, as a new GUI is to
+ be installed.
+  
+ NOTE: The nightly task (the [ROR TASK] option) must not be running
+       during the installation.
+  
+ TaskMan does not need to be STOPPED or placed in a WAIT state.
+  
+  
+ 1. Make sure you have the ROR VA IRM security key.
+  
+ 2. Use the "INSTALL/CHECK MESSAGE" option on the PackMan menu. This
+    option loads the patch into a Transport Global on your system.
+  
+ 3. From the Kernel Installation and Distribution System (KIDS)
+    menu, select the Installation menu.
+  
+ 4. From this menu, you may elect to use the following options:
+    (when prompted for INSTALL NAME, enter ROR*1.5*14)
+  
+   a.  Verify Checksums in Transport Global - This option will allow
+       you to ensure the integrity of the routines that are in the
+       transport global.
+   b.  Print Transport Global - This option will allow you to view
+       the components of the KIDS build.
+   c.  Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this
+       patch is installed.  It compares all components of this patch
+       (routines, Data Dictionaries (DD's), templates, etc.).
+   d.  Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch. It will not
+       backup any other changes such as DD's or templates.
+  
+ 5. Use the Install Package(s) option and select the package
+     ROR*1.5*14.
+  
+    The following messages display:
+  
+  
+ Incoming Files:
+  
+  
+    799.33    ROR DATA AREA  (including data)
+ Note:  You already have the 'ROR DATA AREA' File.
+ I will MERGE your data with mine.
+  
+  
+    799.4     ROR HIV RECORD  (Partial Definition)
+ Note:  You already have the 'ROR HIV RECORD' File.
+  
+  
+    799.6     ROR HISTORICAL DATA EXTRACTION  (including data)
+ Note:  You already have the 'ROR HISTORICAL DATA EXTRACTION' File.
+ I will MERGE your data with mine.
+  
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+    NO//', respond "NO".
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond "NO".
+  
+ 8. Enter the Device you want to print the Install message.  
+    You can queue the install by enter a 'Q' at the device prompt. 
+    Enter a '^' to abort the install.  
+  
+ 9. Post-Init routine RORP014 can be deleted if desired. 
+  
+  
+ GUI INSTALLATION INSTRUCTIONS
+ =============================
+     
+ 1. Unzip the ROR1_5P14GUI.ZIP into a temporary folder.
+       
+ 2. Open the temporary folder and double click the file CCRSetup.exe to
+    begin the install.
+       
+ 3. Wait until the setup Wizard prepares the installation 
+    procedure. A welcome message displays.
+   
+ 4. Click Next to continue the installation.
+       
+ 5. Select the directory in which to install the CCR GUI. 
+    We recommend that you accept the default directory: 
+    C:\Program Files\VistA\Clinical Case Registries. To 
+    select a different location, click Change and select 
+    the directory. Click Next to proceed with installation.
+   
+ 6. Review the installation settings and click Install to 
+    proceed. The setup Wizard finishes the installation
+    and a confirmation screen displays.
+       
+ 7. Click Finish.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;CLINICAL CASE REGISTRIES;**[Patch List]**;Feb 17, 2006;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RORDD01
+    Before: B22524971   After: B25430775  **1,14**
+Routine Name: ROREXT02
+    Before: B43965789   After: B65862605  **10,13,14**
+Routine Name: RORHIVUT
+    Before:   B835917   After:  B1604686  **14**
+Routine Name: RORHL02
+    Before: B29938860   After: B35146970  **14**
+Routine Name: RORHL21
+    Before:       n/a   After: B60105937  **14**
+Routine Name: RORP014
+    Before:       n/a   After: B33131484  **14**
+Routine Name: RORRP025
+    Before: B32323014   After: B34425910  **14**
+Routine Name: RORRP033
+    Before: B14303142   After: B17317089  **14**
+Routine Name: RORRP034
+    Before: B16836450   After: B20975903  **2,8,14**
+Routine Name: RORUPD01
+    Before: B64834418   After: B79263856  **14**
+Routine Name: RORUPD04
+    Before: B32325986   After: B52479479  **14**
+Routine Name: RORUPD50
+    Before: B15673892   After: B18841385  **10,14**
+Routine Name: RORUTL11
+    Before:  B3337131   After:  B3195130  **13,14**
+Routine Name: RORX001
+    Before: B38212048   After: B43373564  **8,10,14**
+Routine Name: RORX019
+    Before: B84618518   After:B148477652  **10,13,14**
+Routine Name: RORX019A
+    Before: B87729688   After:B208916635  **10,13,14**
+Routine Name: RORX020
+    Before:B219381178   After:B216151292  **10,13,14**
+Routine Name: RORX020A
+    Before: B38074904   After: B42700433  **10,14**
+ 
+Routine list of preceding patches: 1, 13
+
+=============================================================================
+User Information:                          Hold Date     : JUN 10, 2011
+Entered By  : SAUNDERS,ANGELA C             Date Entered  : JAN 26, 2011
+Completed By: BERRY,LINDA                   Date Completed: MAY 11, 2011
+Released By : VANCAMP,E PHILIP              Date Released : JUL 05, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

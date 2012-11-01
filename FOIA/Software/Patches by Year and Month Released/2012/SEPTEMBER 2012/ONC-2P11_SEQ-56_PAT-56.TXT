@@ -1,0 +1,406 @@
+$TXT Created by KNOEPFLE,RICH at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Thursday, 09/13/12 at 15:30
+=============================================================================
+Run Date: SEP 27, 2012                     Designation: ONC*2.11*56
+Package : ONC - ONCOLOGY                      Priority: Mandatory
+Version : 2.11        SEQ #56                   Status: Released
+                  Compliance Date: OCT 28, 2012
+=============================================================================
+
+Associated patches: (v)ONC*2.11*54 <<= must be installed BEFORE `ONC*2.11*56'
+
+Subject: ICD-10 Modification and Miscellaneous Fixes
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Other
+  - Print Template
+  - Input Template
+
+Description:
+============
+
+ Description:
+ ============
+ 1) References to direct global reads of the ICD9 global will be replaced 
+ by using the ICD API.  The following are the data dictionary changes:
+  
+   ^DD(160,19,0)=CAUSE OF DEATH 
+   ^DD(160,25,0)=COMORBIDITY/COMPLICATION #1
+   ^DD(160,25.1,0)=COMORBIDITY/COMPLICATION #2
+   ^DD(160,25.2,0)=COMORBIDITY/COMPLICATION #3
+   ^DD(160,25.3,0)=COMORBIDITY/COMPLICATION #4
+   ^DD(160,25.4,0)=COMORBIDITY/COMPLICATION #5
+   ^DD(160,25.5,0)=COMORBIDITY/COMPLICATION #6
+   ^DD(160,25.6,0)=COMORBIDITY/COMPLICATION #7
+   ^DD(160,25.7,0)=COMORBIDITY/COMPLICATION #8
+   ^DD(160,25.8,0)=COMORBIDITY/COMPLICATION #9
+   ^DD(160,25.9,0)=COMORBIDITY/COMPLICATION #10
+   ^DD(165.5,1400,0)=LNG CO-MORBID CONDITION 1
+   ^DD(165.5,1400.1,0)=LNG CO-MORBID CONDITION 2
+   ^DD(165.5,1400.2,0)=LNG CO-MORBID CONDITION 3
+   ^DD(165.5,1400.3,0)=LNG CO-MORBID CONDITION 4
+   ^DD(165.5,1400.4,0)=LNG CO-MORBID CONDITION 5
+   ^DD(165.5,1400.5,0)=LNG CO-MORBID CONDITION 6
+   ^DD(165.5,1426,0)=LNG COMPLICATION #1
+   ^DD(165.5,1426.1,0)=LNG COMPLICATION #2
+   ^DD(165.5,1426.2,0)=LNG COMPLICATION #3
+   ^DD(165.5,1426.3,0)=LNG COMPLICATION #4
+   ^DD(165.5,1426.4,0)=LNG COMPLICATION #5  
+   ^DD(165.5,1571,0)=GAS CO-MORBID CONDITION 1
+   ^DD(165.5,1571.1,0)=GAS CO-MORBID CONDITION 2
+   ^DD(165.5,1571.2,0)=GAS CO-MORBID CONDITION 3
+   ^DD(165.5,1571.3,0)=GAS CO-MORBID CONDITION 4
+   ^DD(165.5,1571.4,0)=GAS CO-MORBID CONDITION 5
+   ^DD(165.5,1571.5,0)=GAS CO-MORBID CONDITION 6
+   ^DD(165.5,1579,0)=GAS COMPLICATION #1
+   ^DD(165.5,1579.1,0)=GAS COMPLICATION #2
+   ^DD(165.5,1579.2,0)=GAS COMPLICATION #3
+   ^DD(165.5,1579.3,0)=GAS COMPLICATION #4
+   ^DD(165.5,1579.4,0)=GAS COMPLICATION #5
+   
+ 2) The following templates will be modified to use the ICD API in 
+ accessing the ICD DIAGNOSIS file (#80) and all reference to 'ICD9'
+ will be changed to 'ICD':
+  
+  [ONCO ABSTRACT-I] - input template (file #165.5)
+  [ONCO SUSPENSE-HDR] - print template (file #160)
+  [ONCOY58] - print template (file #165.5)
+  [ONCO XABSTRACT RECORD] - print template (file #165.5)
+  
+ 3) The following routines will be modified to use the ICD API instead of 
+ direct global reads and any reference to 'ICD9' will be replaced by 'ICD':
+  
+  ONCACDU2
+  ONCFUNC
+  ONCOANC1
+  ONCOCFP
+  ONCOPRT
+  ONCOPRT1 - new
+  
+ 4) [RS Registry Summary Reports]
+ Accession Only category added to Registry Summary Reports option
+  
+ Under the OncoTrax "Utility Options" [UTL] menu, the "Registry Summary
+ Reports" [RS] option has been modified to display a new category
+ called "Accession Only".  This new category will display in the overall
+ Total Summary count as well as under the Workload Statistics breakdown.
+ This was added so that cases with an Abstract Status of Accession Only
+ will be counted in the total number of cases in the Registry.
+                       
+                               Analytical:    74
+                           Non-Analytical:    20
+                           Accession Only:     2
+                                           -----
+                                    Total:    96
+  
+  
+                               WORKLOAD STATISTICS
+  
+ Suspense: 10
+ Incomplete: 74     Minimal: 4     Partial: 4     Complete: 12    Acc Only: 2
+                                                                 
+ 5) [EE Abstract Edit Primary]
+ Colon Performance Measures update
+  
+ If the INTENT OF CHEMOTHERAPY (#165.5,258) field is set to "0" (No 
+ Chemotherapy), the TYPE OF CHEMOTHERAPY (#165.5,259) field will now
+ default to a value of "0" (No Chemotherapy) and the REASON CHEMOTHERAPY
+ STOPPED (#165.5,382) field will default to a value of "0" (Treatment
+ Completed, NA).  Previously these fields were not defaulting correctly.
+  
+ Also, the DATE CHEMOTHERAPY RECOMMENDED (#165.5,272) field will now 
+ accept 00/00/0000 and 99/99/9999 values.  Previously this field was not
+ accepting 0's AND 9's for date values.
+  
+ 6) [EE Abstract Edit Primary]
+ Prostate Performance Measures update
+  
+ The DATE ADT INITIATED (#165.5,277) field will now accept 00/00/0000 
+ and 99/99/9999 values.  Previously this field was not correctly accepting 
+ 0's and 9's for date values.
+  
+ 7) All possible DATES entry of 88/88/8888 in ONCOLOGY PRIMARY 
+ (#165.5) file will be disabled except in fields DATE OF CONCLUSIVE DX
+ (#193) and DATE OF MULTIPLE TUMORS (#195).  Also fixes the undefined 
+ error when entering 88/88/88 as date for the two fields.
+  
+ 8) The value of 00/00/0000, 88/88/8888 or 99/99/9999 for various DATES
+ fields were set to blank during the extract process.  This will now be set
+ to 00000000, 88888888 or 99999999 format, respectively. 
+  
+ 9) The routine ONCOPCE was included in patch ONC*2.11*54.  The second line
+ of this routine inadvertently included "47" in the patch list:
+  
+        ;;2.11;ONCOLOGY;**6,7,11,13,16,18,19,22,26,29,47,54**;Mar 07, 1995
+  
+ This routine was not included in patch 47, so the "47" will be removed in
+ this patch.  The corrected second line will now look like this:
+  
+        ;;2.11;ONCOLOGY;**6,7,11,13,16,18,19,22,26,29,54,56**;Mar 07, 1995
+  
+ 10) [EE Abstract Edit Primary]
+ For Thyroid cases, (s) and (m) descriptors added to T values for AJCC 7 Staging
+  
+ For THYROID cases a "descriptor" was added to the AJCC Seventh Edition staging
+ "T" values.  Therefore, when OncoTrax was calling the Collaborative Staging
+ new values were received which were not displaying properly, example below:
+  
+ Schema name: Thyroid
+ --------------------------------------------------------------------------------
+ Tumor Size (CS).........: 001     AJCC-6 T...........: T1
+ Extension (CS)..........: 100     AJCC-6 T Descriptor: pathological
+ Tumor Size/Ext Eval (CS): 3       AJCC-6 N...........: N0
+ Lymph Nodes (CS)........: 000     AJCC-6 N Descriptor: clinical
+ Lymph Nodes Eval (CS)...: 0       AJCC-6 M...........: M0
+ Regional Nodes Examined.: 00      AJCC-6 M Descriptor: clinical
+ Regional Nodes Positive.: 98      AJCC-6 Stage Group.: Stage I
+ Mets at DX (CS).........: 00      AJCC-7 T...........: 121 <--- new value
+ Mets Eval (CS)..........: 0       AJCC-7 T Descriptor: pathological
+ SSF1....................: 010     AJCC-7 N...........: N0
+  
+ To fix this issue the new descriptor values have been accounted for in the
+ output transform of the "DERIVED AJCC-7 T" (#165.5,160.7) field.  This is
+ the list of new values to be displayed:
+  
+ AJCC 7 Value   Display String
+ ------------   --------------
+ 191            T1 NOS(s)
+ 192            T1 NOS(m)
+ 121            T1a(s)
+ 122            T1a(m)
+ 151            T1b(s)
+ 152            T1b(m)
+ 201            T2(s)
+ 202            T2(m)
+ 301            T3(s)
+ 302            T3(m)
+ 491            T4 NOS(s)
+ 492            T4 NOS(m)
+ 411            T4a(s)
+ 412            T4a(m)
+ 421            T4b(s)
+ 422            T4b(m)
+  
+ 11) [RA  Automatic Casefinding-Radiology Search]
+ The word "CANCER" has been added to the search criteria while searching 
+ for the Primary and Secondary Diagnosis of the Radiology cases.  Any 
+ Primary or Secondary Diagnosis in the Radiology Diagnosis file that 
+ contains a word "CANCER" in addition to "MALIG" and "SUSPICIOUS"  will be 
+ included in the casefinding logic.
+                   
+ 12) [EE Abstract Edit Primary]
+ Expanded the M values for Bone primaries to include "M1a" for Lung 
+ and "M1b" for Other distant sites.
+                 
+ 13) New Zip Code
+ 85083 zip code has been added to the ZIP CODE (#5.11) file for Maricopa
+ county, Phoenix, Arizona.
+               
+ 14) [EE Abstract Edit Primary]
+ A new field was added to the ONCOLOGY PRIMARY (#165.5) file.  The new
+ field is called FEE BASIS LOCATION (#165.5,237.1).  If the FEE BASIS (#165.5,
+ 237) field is set to YES, then this new location field will be prompted
+ for in the Abstract.  The new free text field will allow facilities to
+ track where the patient was referred for fee basis treatment.  The new
+ field will be displayed in the Cancer Identification screen, but will
+ not be included in any of the data extracts.
+             
+ 15) [CF Automatic Casefinding-Lab Search]
+ If the Automatic Casefinding-Lab Search option was run and the user
+ queued the report, an undefined variable error could occur:
+           
+ <UNDEFINED>Y+2^ONCOCFL1 *SBCIND
+         
+ This issue was fixed by ensuring that the variable SBCIND was included
+ in the list of saved variables when queuing.
+       
+ 16) [EE Abstract Edit Primary]
+ CS Schema Discriminator added for G-E Junction Staging (Esophagus and Stomach)
+ For certain Stomach cases (all C16.0 and C16.1/C16.2 with CS Schema
+ Discriminator value of "010" "020" "040" or "060") the case should be
+ staged according to Esophagus staging.  The ONCPST56 post-init routine
+ adds the SCHEMA DISCRIMINATOR CODE and SCHEMA DISCRIMINATOR HELP to the
+ C16.0 Topographies.  The code has been modified to check the SCHEMA
+ DISCRIMINATOR and go to the correct staging.
+  
+ 17) [EE Abstract Edit Primary]
+ CS Schema Discriminator updated for Lacrimal Gland Staging     
+ Two new CS Schema Discriminator codes have been added for Lacrimal
+ Gland (C69.5) topographies.  The new codes are "015" and "025".  The CS
+ Schema Discriminator help was also updated.  This change is only for NON-
+ melanomas.  Also, the following fields will default to 88 for "025" CS 
+ Schema Discriminator:
+ CLINICAL T (#165.5,37.1)
+ CLINICAL N (#165.5,37.2)
+ CLINICAL M (#165.5,37.3)
+ STAGE GROUP CLINICAL (#165.5,38)
+ PATHOLOGIC T (#165.5,85)
+ PATHOLOGIC N (#165.5,86)
+ PATHOLOGIC M (#165.5,87)
+ STAGE GROUP PATHOLOGIC (#165.5,88)
+  
+ 18) [EE Abstract Edit Primary]
+ A new set of code "2" (EGFR mutation negative) has been added for EGFR  
+ MUTATION TESTING field (#165.5, 267).
+   
+ 19) [EE Abstract Edit Primary]
+ A new set of code "4" (Combination) has been added for ANDROGEN 
+ DEPRIVATION THERAPY field (#165.5, 276).
+  
+ 20) [EE Abstract Edit Primary]
+ The 7th Edition T-Codes for Mycosis Fungoides primaries were updated.
+ The T1a, T1b, T2a, T2b and TX codes have been removed.  Also the Help Text
+ has been updated with the following text for the T1 and T2 codes:
+  
+     **per ISCL/EORTC: 'May further stratify into T1a (patch only) vs T1b
+     (plaque+/-patch)'. The T1a & T1b values are not part of the AJCC algorithm.
+  
+ 21) [EE Abstract Edit Primary]
+ For old (pre-1995) Leukemia primaries the TNM Edition field was incorrectly
+ defaulting to the value of 4.  This was not correct, it should default to a
+ value of 88.  This was fixed in routine ONCOU55.
+  
+ 22) Collaborative Staging
+ The Collaborative Staging web service URL has been updated to point to a
+ new server located in Washington Central Office, thus replacing the need
+ to point to the Hines development account.  This is a more stable, secure
+ and robust server to use for Collaborative Staging.
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 605338
+ 708618
+ 710496
+ 714945   
+     
+   
+ Test Sites
+ ==========
+ Upstate New York HCS
+ Washington, DC
+ Hines, Il
+ West Haven, Ct
+  
+  
+ Installation instructions:
+ ==========================
+ This patch should be loaded with Oncology users off the system. 
+ Installation will take approximately 10 minutes.
+  
+ 1. Load the distribution.
+    Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Prior to installing the patch you may want to make use of the following
+    optional installation options located on the KIDS Installation menu:
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+    c.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 3. Install the KIDS distribution via the 'Install Package(s)' option on 
+ the KIDS Installation menu.
+  
+    a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+        Answer NO.
+   
+    b.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//'
+        Answer NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.11;Oncology;**[Patch List]**;Mar 07, 1995;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ONCACDU1
+    Before: B22128284   After: B24968526  **12,14,16,20,21,22,24,26,27,
+                                           28,33,36,37,42,45,46,49,51,56**
+Routine Name: ONCACDU2
+    Before: B61713188   After: B63466870  **12,18,20,21,22,24,26,27,29,
+                                           30,31,32,34,36,37,38,39,41,46,
+                                           47,49,50,51,52,53,56**
+Routine Name: ONCATF
+    Before: B46881443   After: B47209323  **19,25,27,36,40,42,46,51,53,56**
+Routine Name: ONCCSOT
+    Before: B33907749   After: B39113425  **40,51,56**
+Routine Name: ONCFUNC
+    Before: B42388404   After: B42640935  **24,25,26,27,28,30,32,33,35,
+                                           36,41,49,51,56**
+Routine Name: ONCOANC1
+    Before: B20882646   After: B21219299  **1,6,25,26,56**
+Routine Name: ONCOCFL1
+    Before: B61653818   After: B61829784  **25,26,27,28,29,32,33,43,44,
+                                           46,49,51,53,54,56**
+Routine Name: ONCOCFP
+    Before: B49907269   After: B50437593  **22,23,25,26,27,28,29,34,43,
+                                           46,49,52,53,56**
+Routine Name: ONCOCFR
+    Before: B29802331   After: B30967942  **13,24,25,26,27,34,37,39,46,
+                                           50,53,56**
+Routine Name: ONCODIS
+    Before:   B778372   After:   B786459  **6,7,9,10,11,12,13,14,15,16,
+                                           17,18,19,20,21,22,23,24,25,26,
+                                           27,28,29,30,31,32,33,34,35,36,
+                                           37,38,39,40,41,42,43,44,45,46,
+                                           47,48,49,50,51,52,53,55,54,56**
+Routine Name: ONCODSP
+    Before: B47131458   After: B50443707  **1,5,6,13,18,22,23,25,26,39,
+                                           40,44,48,51,53,56**
+Routine Name: ONCODSR
+    Before: B82978728   After: B89512891  **1,5,6,7,11,13,15,16,18,27,
+                                           36,37,42,46,47,48,50,51,56**
+Routine Name: ONCOPCE
+    Before: B70189715   After: B70189715  **6,7,11,13,16,18,19,22,26,29,54,56**
+Routine Name: ONCOPRT
+    Before:B139700452   After: B41204141  **24,25,26,27,36,50,51,52,53,56**
+Routine Name: ONCOPRT1
+    Before:       n/a   After: B57470448  **56**
+Routine Name: ONCOTN
+    Before:B117635742   After:B119940311  **1,3,6,7,11,15,19,22,25,28,
+                                           29,35,36,37,41,42,43,44,46,47,
+                                           49,50,51,52,53,54,56**
+Routine Name: ONCOTNM
+    Before:B136328827   After:B137993546  **1,6,15,22,25,28,30,33,35,36,
+                                           41,42,43,51,52,53,54,56**
+Routine Name: ONCOU55
+    Before: B28540990   After: B28674677  **6,7,15,19,22,28,35,41,43,44,51,56**
+Routine Name: ONCPCI
+    Before: B23887389   After: B24563873  **15,19,24,26,27,28,33,35,36,
+                                           42,43,44,45,46,47,49,51,53,54,
+                                           56**
+Routine Name: ONCPST56
+    Before:       n/a   After: B53878693  **56**
+Routine Name: ONCSG1
+    Before:B134157890   After:B152734191  **35,51,52,54,56**
+Routine Name: ONCSUBS
+    Before:  B5242717   After:  B7009875  **51,52,53,56**
+ 
+Routine list of preceding patches: 54
+
+=============================================================================
+User Information:
+Entered By  : DAYON,RUFINO                  Date Entered  : APR 23, 2012
+Completed By: KNOEPFLE,RICH                 Date Completed: SEP 25, 2012
+Released By : CONSENTINO,ALBERT             Date Released : SEP 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

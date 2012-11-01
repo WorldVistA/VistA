@@ -1,0 +1,130 @@
+$TXT Created by GILMORE,JEREMY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 12/24/09 at 14:32
+=============================================================================
+Run Date: APR 04, 2011                     Designation: ACKQ*3*18
+Package : ACKQ - QUASAR                       Priority: Mandatory
+Version : 3        SEQ #16                      Status: Released
+                  Compliance Date: MAY 05, 2011
+=============================================================================
+
+Associated patches: (v)ACKQ*3*14   <<= must be installed BEFORE `ACKQ*3*18'
+
+Subject: UPDATE FOR UNSUPPORTED ICD/CPT FIELDS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ Code Set Versioning patch LEX*2.0*25 and ICD*18*6 added APIs and Multiples
+ to the following files - ICD DIAGNOSIS (#80) and CPT MODIFIER (#81.3) for
+ collection and use of yearly information. During this enhancement, support
+ for some older fields were also discontinued. This patch will use the
+ correct API's in order to get the correct information for Quasar.
+  
+ ASSOCIATED REMEDY:
+ ==================
+ HD0000000370699 UPDATE FOR UNSUPPORTED ICD/CPT FIELDS 
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ James A Haley Veterans Hospital - Tampa
+ VA New York Harbor HCS
+ VA Heartland East HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ HD0000000370699 UPDATE FOR UNSUPPORTED ICD/CPT FIELDS 
+    
+    Problem:   
+    --------
+    A) The first issue has to do with the INACTIVE FLAG field (#5) in
+    the CPT MODIFIER file (#81.3). This field is not supported and 
+    needs to be replaced in order for the software to function properly.
+  
+    B) The second issue concerns the ICD DIAGNOSIS file (#80) and the
+    DIAGNOSIS (#3) field that is also not supported. 
+  
+    Resolution:
+    -----------
+    A) For the first issue changes were made to routine ACKQNQ and it is now
+    using API $$MOD^ICPTMOD in order for the software to function properly.  
+  
+    B) For the second issue routine ACKQUTL5 was modified and now calls API
+    $$ICDDX^ICDCODE which will allow the program to pull the correct 
+    information.
+  
+                          INSTALLATION INSTRUCTIONS:
+                          ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ The installation time will rely on the size of the global in the database.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter ACKQ*3.0*18)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       ACKQ*3.0*18.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond YES.
+  
+       New Clinic Visits      [ACKQAS VISIT ENTRY] 
+       Edit an Existing Visit [ACKQAS VISIT EDIT]
+       Inquire - A&SP Patient [ACKQAS PAT INQ]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;QUASAR;**[Patch List]**;Feb 11, 2000;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ACKQNQ
+    Before: B27196175   After: B27597635  **8,14,18**
+Routine Name: ACKQUTL5
+    Before: B60056302   After: B61333053  **1,4,6,8,18**
+ 
+Routine list of preceding patches: 14
+
+=============================================================================
+User Information:
+Entered By  : GILMORE,JEREMY                Date Entered  : DEC 22, 2009
+Completed By: HEFFERNAN,COREY               Date Completed: MAR 23, 2011
+Released By : COWNIE,KEVIN                  Date Released : APR 04, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

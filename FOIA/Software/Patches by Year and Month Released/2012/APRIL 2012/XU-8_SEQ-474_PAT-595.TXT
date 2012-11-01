@@ -1,0 +1,130 @@
+$TXT Created by WESTRA,HERLAN at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Monday, 02/27/12 at 08:31
+=============================================================================
+Run Date: APR 23, 2012                     Designation: XU*8*595
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #474                      Status: Released
+                  Compliance Date: MAY 24, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*431    <<= must be installed BEFORE `XU*8*595'
+                    (v)XU*8*523    <<= must be installed BEFORE `XU*8*595'
+
+Subject: BSE LOGIN FAILURES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ A problem has been reported at some sites for VistA Imaging's use of 
+ Broker Security Enhancement (BSE). Specifically, both the VIX and VistARad
+ components of VistA Imaging have been affected. These both rely on a
+ station#-based callback mechanism in BSE to call back to the home server
+ during remote authentication. This problem has not been reported for other
+ BSE-using applications (e.g., VistAWeb and CAPRI) that do not use BSE's
+ station#-based callback mechanism. 
+  
+ After this patch, BSE, as used by VistA Imaging, will perform lookups
+ based on station# in the HL LOGICAL LINK file using the "C" (INSTITUTION)
+ index. Lookups were failing previously under at least some circumstances.
+  
+ Additionally, after this patch, BSE, as used by VistA Imaging, is modified
+ to use a fallback station-based reverse DNS lookup mechanism, via the
+ VISTASITESERVICE server (as defined in VistA Imaging's File #2005.2,
+ NETWORK LOCATION).
+  
+ Finally, this patch will record troubleshooting information in the case of
+ BSE login failures. BSE is used to log users into remote sites in several
+ applications, including VistA Imaging (VIX and VistARad functions), CAPRI
+ and VistAWeb. Currently when a BSE login fails, there is little
+ troubleshooting information recorded or displayed to the end-user. 
+ After this patch, When a BSE login failure is encountered, a new error
+ trap will be recorded with the subject of "BSE LOGIN FAILURE". If many of
+ these errors are recorded, they can be both filtered and limited based on
+ this subject line, using Kernel's error trap mechanisms to filter and
+ limit errors.
+  
+ Remedy Tickets
+ ==============
+ 586217 Unable to retrieve remote images
+  
+ Blood Bank Clearance  1/17/12
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*595 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*595 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ Test Sites (Patch Tracking Message #56213585)
+ ==========
+ CENTRAL ARKANSAS VETERANS HEALTHCARE SYSTEM, AR (L)
+ MOUNTAIN HOME VA MEDICAL CENTER, TN (M)
+ OKLAHOMA CITY VA MEDICAL CENTER, OK (L)
+ ORLANDO VA MEDICAL CENTER, FL (L)
+ WEST PALM BEACH VA MEDICAL CENTER, FL (L)
+ SOUTH TEXAS HEALTHCARE SYSTEM, TX (I)
+ TEXAS VALLEY COASTAL BEND HCS, TX (NO DATA)
+  
+ Installation Instructions
+ =========================
+ This patch should be installed during nonpeak time. It may be queued for 
+ installation during nonpeak hours.
+  
+ Users do not need to be off the system.
+  
+ TaskMan does *not* need to be stopped.
+  
+ Installation should take less than a minute.
+   
+ 1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+    This option will load the KIDS package onto your system.  
+    
+ 2. The patch has now been loaded into a transport global on your 
+    system. You now need to use KIDS to install the transport global.  
+     
+ 3. On the KIDS menu, under the 'Installation' menu, use the 
+    following options: 
+         Print Transport Global 
+         Compare Transport Global to Current System 
+         Verify Checksums in Transport Global
+         Backup a Transport Global 
+    
+ 4. On the KIDS menu, under the 'Installation' menu, use the
+    following option: 
+         Select Installation Option: Install Package(s) 
+         Select INSTALL NAME: XU*8.0*595
+                              ==========
+  
+      Want KIDS to INHIBIT LOGONs during the install? NO//
+      Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUSBSE1
+    Before: B46486369   After: B82678942  **404,439,523,595**
+ 
+Routine list of preceding patches: 523
+
+=============================================================================
+User Information:
+Entered By  : CLARKE,KYLE E                 Date Entered  : JAN 11, 2012
+Completed By: DERBES-MURPHY,ELISA           Date Completed: APR 11, 2012
+Released By : MALMIN,PAUL                   Date Released : APR 23, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

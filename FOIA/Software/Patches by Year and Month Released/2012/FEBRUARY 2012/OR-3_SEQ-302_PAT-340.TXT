@@ -1,0 +1,244 @@
+$TXT Created by PHELPS,TY at CPRS27.FO-SLC.MED.VA.GOV  (KIDS) on Friday, 10/07/11 at 06:05
+=============================================================================
+Run Date: FEB 13, 2012                     Designation: OR*3*340
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #302                      Status: Released
+                  Compliance Date: MAR 15, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*575      install with patch       `OR*3*340'
+                    (v)OR*3*280    <<= must be installed BEFORE `OR*3*340'
+
+Subject: IDPMHP DELIVERABLE 1
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is part of the Identification of Principal Mental Health
+ Provider (IPMHP) project within the Improve Veteran Mental Health (IVMH)
+ initiative.  It is to be released in conjunction with PCMM
+ patch SD*5.3*575, with SD*5.3*575 being installed first.  The purpose of
+ this patch is to implement the API being released in SD*5.3*575 to display
+ the Mental Health Treatment Coordinator (MHTC) in two locations within
+ CPRS GUI, one being the Patient Inquiry display and the other being the
+ Primary Care button detailed display.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ 20080514
+   
+  
+ ASSOCIATED REMEDY TICKET(s):
+ ============================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate NY HCS
+ Maryland HCS
+ West Palm Beach VAMC
+ Durham VAMC
+ Phoenix VAMC
+  
+  
+ PROBLEM OVERVIEW:
+ =================
+  
+ Problem #1:
+ -----------
+ The Identification of Principal Mental Health Provider (IPMHP) project
+ requires the Mental Health Treatment Coordinator (MHTC) to be displayed
+ within CPRS GUI as part of the Patient Inquiry display.  The MHTC will
+ be displayed in two locations which currently display the Primary Care
+ Provider/Team information.  The first location is outside CPRS control
+ as it is returned via a Registration package API, which in turn uses
+ a PCMM API to gather the information.  This modification will be part of
+ the SD*5.3*575 patch mentioned earlier.  The output will display as
+ follows (formatted to fit screen):
+  
+  Primary Care Team: TEAM 1                      Phone: ###-###-####
+        PC Provider: PROVIDER,PRIMARY         Position: TEAM LEAD
+                          Pager:                 Phone: 
+  
+  MH Treatment Team: TEAM MH
+ MH Treatment Coord: PROVIDER,M H             Position: PSYCHOLOGIST (MHTC)
+                   Analog Pager:                 Phone: ###-###-####
+                  Digital Pager: 
+  
+ The other location within the Patient Inquiry display is under CPRS
+ control and will be modified to display the MHTC and the MHTC's position
+ just after the Primary Practitioner and Primary Care Team as part of the
+ Primary Care Information section of the Patient Inquiry display.  The
+ MHTC information will include the MHTC providers name and the PCMM
+ position which they were assigned.  If an MHTC was not assigned to the
+ patient, no information will be displayed concerning the MHTC.  Below is
+ how the Primary Care Information section currently displays:
+  
+  Primary Care Information:
+  Primary Practitioner:     PROVIDER,PRIMARY
+  Primary Care Team:        TEAM 1
+  
+  
+ Resolution #1:
+ --------------
+ Routine ORCXPND1 was modified to use the PCMM API to display the MHTC
+ below the Primary Care Information section on the Patient Inquiry display.
+ If an MHTC is assigned to the patient, the MHTC's name and position will
+ be displayed as well as the team (as seen below).  If an MHTC is not
+ assigned to the patient, then the MHTC information will not be displayed
+ and the Primary Care Information section will display by itself.  The new
+ output is displayed below (formatted to fit in this description):
+  
+  Primary Care Information:
+  Primary Practitioner: PROVIDER,PRIMARY
+  Primary Care Team:    TEAM 1
+  
+  MH Treatment Information:
+  MH Treatment Coord:   PROVIDER,M H          Position: PSYCHOLOGIST (MHTC)
+  MH Treatment Team:    TEAM MH
+  
+  
+ Problem #2:
+ -----------
+ The Identification of Principal Mental Health Provider (IPMHP) project
+ requires the Mental Health Treatment Coordinator (MHTC) to be displayed
+ within CPRS GUI as part of the Primary Care detailed display.  This is
+ accessed by depressing the Primary Care button in the header of CPRS GUI
+ which launches the detailed display.  This display currently shows the
+ primary care team information and needs to have the MHTC information
+ included in it as well.
+  
+  
+ Resolution #2:
+ --------------
+ Routine ORWPT1 was modified to use the PCMM API to display the MHTC
+ information on the Primary Care detailed display.  It will be formatted
+ to match the other care providers listed on this display and will
+ include the Mental Health (MH) Treatment Team and the MHTC information
+ (name, analog pager number, digital pager number, and office phone
+ number).  Below is how the formatting of this information will appear:
+  
+                 MH Treatment Team:
+          MH Treatment Coordinator:
+                      Analog Pager:
+                     Digital Pager:
+                      Office Phone:
+  
+  
+ DOCUMENTATION:
+ ==============
+ Updated documentation describing the new functionality introduced by
+ this patch is being made available.
+    
+ The updated documentation associated with this patch is:
+  
+    File Name         Contents                              Retrieval Format
+    ---------         --------                              ----------------
+    CPRSGUIUM.DOC     CPRS User Guide GUI Version                BINARY     
+    CPRSGUIUM.PDF     CPRS User Guide GUI Version                BINARY
+    OR_3_340RN.DOCX   CPRS Patch (OR*3.0*340) Release Notes      BINARY
+    OR_3_340RN.PDF    CPRS Patch (OR*3.0*340) Release Notes      BINARY
+  
+  
+ DOWNLOAD INSTRUCTIONS:
+ ======================
+ The files listed above may be obtained via FTP.  The preferred method is 
+ to FTP the files from:
+  
+    download.vista.med.va.gov
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+    CIO FIELD OFFICE   FTP ADDRESS                 DIRECTORY
+    ----------------   -------------------------   --------------------
+    Albany             ftp.fo-albany.med.va.gov    [anonymous.software]
+    Hines              ftp.fo-hines.med.va.gov     [anonymous.software]
+    Salt Lake City     ftp.fo-slc.med.va.gov       [anonymous.software]
+  
+ CPRS documentation can also be found in the VA Software Document 
+ Library:       
+  
+    http://www.va.gov/vdl
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system.  However, it is
+ suggessted the installation be scheduled for a time when the number of
+ active users is reduced.  Installation time will be less than 1 minute.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter "OR*3.0*340").
+    
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+ 4.  Use the Install Package(s) option and select the package.
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? YES//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? YES//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCXPND1
+    Before: B72214647   After: B77575358  **26,67,75,89,92,94,148,159,
+                                           188,172,215,243,280,340**
+Routine Name: ORWPT1
+    Before: B15675921   After: B19631349  **10,109,280,340**
+ 
+Routine list of preceding patches: 280
+
+=============================================================================
+User Information:
+Entered By  : PHELPS,TY                     Date Entered  : OCT 20, 2010
+Completed By: REYNOLDS,KRISTEN              Date Completed: FEB 13, 2012
+Released By : STOKER,ELAINE                 Date Released : FEB 13, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

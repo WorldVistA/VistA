@@ -1,0 +1,288 @@
+$TXT Created by SMITH,ROBERT at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 06/10/11 at 09:16
+=============================================================================
+Run Date: AUG 29, 2011                     Designation: PSS*1*149
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #145                      Status: Released
+                  Compliance Date: SEP 29, 2011
+=============================================================================
+
+Associated patches: (v)PSS*1*143   <<= must be installed BEFORE `PSS*1*149'
+
+Subject: PHARMACY STANDARD SCHEDULE DATA ENTRY ISSUES
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will address the following 2 items:
+  
+ 1.  Changed the input transform for the NAME field (#.01) of the 
+     ADMINISTRATION SCHEDULE file (#51.1).
+  
+ 2.  Fix the <UNDEFINED> error in the Standard Schedule Edit [PSS 
+     SCHEDULE EDIT] option when attempting to edit "QD","QOD","HS","TIW" 
+     schedules.
+  
+  
+ Associated NSR(S):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1.  HD0000000222760 - Pharmacy standard schedule problem
+  
+ 2.  HD0000000422160 - <UNDEFINED>ENPSJ+6^PSSJSV *X
+  
+     Duplicate:
+     ----------
+     HD0000000465396 - error in PSS SCHEDULE EDIT option
+  
+  
+ Participating Test Sites:
+ =========================
+ Oklahoma City VAMC
+ Maryland HCS
+ VA Puget Sound HCS 
+  
+  
+ Remedy Ticket Overview:
+ =======================
+ 1. HD0000000222760 - Pharmacy standard schedule problem
+  
+    Problem:
+    --------
+    The use of the @ in the ADMINISTRATION SCHEDULE file (#51.1) NAME field
+    (#.01), with the exception of day-of-week schedules, causes the user
+    to be locked into a prescription for a 1 time order (reorder). 
+  
+    Resolution:
+    -----------
+    The use of the @ is for day-of-week schedules only.  This patch will
+    modify the input transform for the NAME field (#.01) to only allow use 
+    of the @ for schedules with a type of day-of-week. 
+    
+  
+    Examples of day-of-week schedules are:
+    
+    MO-WE-FR@1200  OR SU@1200-2400
+  
+    Example of invalid schedule:
+    Q3D@0700
+  
+    Note:
+    -----
+    See the POST-INSTALL steps for how to search the ADMINISTRATION 
+    SCHEDULE file (#51.1) NAME field (#.01) for the @ character.
+  
+  
+ 2. HD0000000422160 - <UNDEFINED>ENPSJ+6^PSSJSV *X
+  
+    Problem:
+    --------
+    When using the Standard Schedule Edit [PSS SCHEDULE EDIT] option
+    and the user enters a schedule with "QD","QOD","HS","TIW", the user
+    will encounter an <UNDEFINED> error.
+   
+    Resolution:
+    -----------
+    The Standard Schedule Edit [PSS SCHEDULE EDIT] option will be
+    modified to prevent the error when editing a schedule containing
+    "QD","QOD","HS","TIW".
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ ***NOTE: There are POST-INSTALL steps for this patch.
+  
+ Suggested time to install: non-peak requirement hours.
+ Install Time - less than 5 minutes
+  
+ 1.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+     Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+ 2.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter PSS*1.0*149):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+  
+ 3.  Use the Install Package(s) option and select the package PSS*1.0*149.
+  
+     a.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+         install? NO//', answer NO.
+     b.  When prompted 'Want to DISABLE Scheduled Options and Menu 
+         Options and Protocols? NO//', answer NO.
+  
+  
+ Post-Install 
+ ============
+ After the patch is installed, a FileMan search should be performed to 
+ identify any Administration Schedules which contain an "@".
+   
+  1) Start a FileMan session and select the 'SEARCH FILE ENTRIES' option.
+  2) At the 'OUTPUT FROM WHAT FILE:' prompt enter ADMINISTRATION SCHEDULE
+  3) At the search criteria prompts enter the following;
+    -A- SEARCH FOR ADMINISTRATION SCHEDULE FIELD: .01  NAME
+    -A- CONDITION: CONTAINS  
+    -A- CONTAINS: @
+    -B- SEARCH FOR ADMINISTRATION SCHEDULE FIELD: PACKAGE PREFIX  
+    -B- CONDITION: EQUALS
+    -B- CONTAINS: PSJ
+  4) Return through to the FIRST PRINT FIELD: prompt and enter [CAPTIONED
+  5) Return through the remaining prompts and either print the information
+     to your screen or send it to a printer.
+   
+  
+  FileMan Search Example:
+  -----------------------
+  VA FileMan 22.0
+   
+  Select OPTION: 
+     Choose from:
+     1            ENTER OR EDIT FILE ENTRIES
+     2            PRINT FILE ENTRIES
+     3            SEARCH FILE ENTRIES
+     4            MODIFY FILE ATTRIBUTES
+     5            INQUIRE TO FILE ENTRIES
+     6            UTILITY FUNCTIONS
+     7            OTHER OPTIONS
+     8            DATA DICTIONARY UTILITIES
+     9            TRANSFER ENTRIES
+      
+  Select OPTION: 3  SEARCH FILE ENTRIES
+   
+  OUTPUT FROM WHAT FILE: ADMINISTRATION SCHEDULE// 
+   
+    -A- SEARCH FOR ADMINISTRATION SCHEDULE FIELD: .01  NAME
+    -A- CONDITION: CONTAINS  
+    -A- CONTAINS: @
+  
+    -B- SEARCH FOR ADMINISTRATION SCHEDULE FIELD: PACKAGE PREFIX  
+    -B- CONDITION: EQUALS  
+    -B- CONTAINS: PSJ
+  
+    -C- SEARCH FOR ADMINISTRATION SCHEDULE FIELD: 
+  
+  IF: A&B    NAME CONTAINS "@"
+                  and PACKAGE PREFIX EQUALS (case-insensitive) "PSJ"
+  OR: 
+  
+  STORE RESULTS OF SEARCH IN TEMPLATE:  
+  SORT BY: NAME// 
+  START WITH NAME: FIRST// 
+  FIRST PRINT FIELD: [CAPTIONED        
+    
+  
+  Include COMPUTED fields:  (N/Y/R/B): NO//  - No record number (IEN), no 
+  Computed
+   Fields
+  Heading (S/C): ADMINISTRATION SCHEDULE SEARCH  Replace 
+  DEVICE:   TELNET TERMINAL    Right Margin: 80// 
+  
+  ADMINISTRATION SCHEDULE SEARCH              JUN  3,2011  10:32    PAGE 1
+  -------------------------------------------------------------------------
+  
+  NAME: MO@0900                         STANDARD ADMINISTRATION TIMES: 0900
+    PACKAGE PREFIX: PSJ                 TYPE OF SCHEDULE: DAY OF THE WEEK
+    OUTPATIENT EXPANSION: MONDAY AT 9AM
+   
+  NAME: Q3D@0700                        STANDARD ADMINISTRATION TIMES: 0700
+    FREQUENCY (IN MINUTES): 4320        PACKAGE PREFIX: PSJ
+    TYPE OF SCHEDULE: CONTINUOUS
+   
+  NAME: TU-THU@0900                     STANDARD ADMINISTRATION TIMES: 0900
+    PACKAGE PREFIX: PSJ                   TYPE OF SCHEDULE: DAY OF THE WEEK
+    OUTPATIENT EXPANSION: TUESDAY AND THURDAY AT 9AM
+  WARD: 7A GEN MED                        WARD ADMINISTRATION TIMES: 0900
+   
+   
+                           3 MATCHES FOUND.
+   
+  **************************** IMPORTAND NOTE******************************
+  *                                                                       *
+  * Any invalid Administration Schedules containing an "@" will need to   *
+  * be renamed or ZZ added to the beginning of the name.                  *
+  *                                                                       *
+  *************************************************************************
+  
+  Examples of valid Administration Schedules:
+  -------------------------------------------
+  MO@0900
+  MO-WE-FR@1200
+  SU@1200-2400
+  
+  
+  Renaming invalid Administrations Schedules via the
+  Standard Schedule Edit [PSS SCHEDULE EDIT] option:
+  -----------------------------------------------------------
+  1) Using VistA, run the Standard Schedule Edit [PSS SCHEDULE EDIT] 
+     option.
+  2) At the 'Select ADMINISTRATION SCHEDULE:' prompt, enter the invalid
+     administration schedule name from your FileMan report.
+  
+     A) Example:
+     --------------------  
+     1) NAME: Q3D@0700// enter a valid name (.i.e. NAME: MO-WE-FR@0700)
+     2) Return through all the prompts.
+  
+     B) Example:
+     -------------------
+     1) NAME: Q3D@0700// ZZQ3D@0700
+     2) Return through all the prompts.
+   
+  Repeat these steps for all invalid Administration Schedules.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSJSV
+    Before: B42095424   After: B74597072  **20,38,56,59,110,121,143,149**
+ 
+Routine list of preceding patches: 143
+
+=============================================================================
+User Information:
+Entered By  : SMITH,ROBERT J                Date Entered  : JUL 30, 2009
+Completed By: BYRD,TIERRA                   Date Completed: AUG 24, 2011
+Released By : MENEGUZZO,KIMBERLY            Date Released : AUG 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

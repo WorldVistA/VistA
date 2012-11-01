@@ -1,0 +1,228 @@
+$TXT Created by CURTIS,RICHARD L at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 09/28/11 at 17:46
+=============================================================================
+Run Date: MAR 20, 2012                     Designation: SD*5.3*587
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #481                    Status: Released
+                  Compliance Date: MAR 31, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*583  <<= must be installed BEFORE `SD*5.3*587'
+
+Subject: MID-FY2012 TABLE MAINTENANCE FOR CLINIC STOP FILE (#40.7)
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch provides mid-Fiscal Year 2012 updates to the CLINIC STOP
+ file (#40.7) as requested by the Decision Support Office (DSO).
+  
+                         ***IMPORTANT NOTE: ***
+ **************************************************************************
+ ** This patch is being released with a compliance date of March 31, 2012.*
+ ** This patch should be installed as close to COB on March 30, 2012      *
+ ** as possible, but not after March 31, 2012.  Early installation of     *
+ ** this patch could result in transmission of incorrect stop codes       *
+ ** that will result in errors from Austin.  Coordination with the        *
+ ** MAS PAS/ADPAC is imperative, as the patch will cause changes to the   *
+ ** CLINIC STOP file (#40.7).  Testing can be done in a site's mirror     *
+ ** account before installation in production to verify changes.          *
+ ** This patch inactivates, creates and modifies descriptions of stop     *
+ ** codes effective March 31, 2012, therefore, installing early may       *
+ ** modify certain stop codes that may currently be in use at your site.  *
+ ** It is advised that clinics with stop codes assigned that will         *
+ ** incur restriction date/type changes should be corrected as soon as    *
+ ** possible after installation.  Please keep in mind that new stop       *
+ ** code corrections should not be assigned until March 31, 2012 as they  *
+ ** will not be accepted in Austin until that date.  All other stop code  *
+ ** corrections should be made as early as possible on March 31, 2012.    *
+ **                                                                       *
+ **************************************************************************
+  
+ DSS Addendum:
+ =============
+ This patch adds changes to the CLINIC STOP (Stop Code) file (#40.7) as of 
+ March 31, 2012.
+  
+ 1)  No clinic can be created using any of the new Stop Codes contained in
+     the patch until after this patch is implemented.
+ 2)  Any clinics using a Stop Code inactivated by the patch should have
+     an active Stop Code assigned.  (This can be done prior to patch
+     implementation, if desired).
+  
+ DSS Site Teams and MAS should coordinate to perform the following 
+ sequence:
+ =================================================================
+  
+ 1)  Run the DSS CREATE DSS CLINIC STOP FILE and determine all values for
+     March clinics before the patch is installed.
+ 2)  IRM installs the patch (SD*5.3*587) in VistA as late as possible on
+     March 30, or by late March 31, 2012.
+ 3)  Make corrections to clinics but NOT to DSS Clinics and Stop Code
+     Worksheet.
+ 4)  Follow normal procedures to run the DSS CLI Extract for March, 2012.
+ 5)  Make changes to the Clinics and Stop Code Worksheet, incorporating the
+     stop code changes prior to extracting April workload.
+  
+ ASSOCIATED NSR:
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ HD0000000525295- Mid-FY2012 Table Maintenance for Clinic Stop file (#40.7)
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Connecticut HCS
+ Louisville, KY
+ Upstate New York HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ HD0000000525295- Mid-FY2012 Table Maintenance for Clinic Stop file (#40.7)
+  
+    Problem:
+    --------
+    As requested by the Decision Support office, the CLINIC STOP file 
+    (#40.7), will be updated to add two new stop codes, inactivating one 
+    stop code and changing the names of three existing stop codes.
+  
+    Resolution:
+    -----------
+    This patch updates the CLINIC STOP file (#40.7) for the following 6
+    stop codes, as indicated:
+  
+    Stop Codes Being Added:  (Will take effect when the patch is installed
+                              but should not be used until 3/31/2012)
+  
+    250  REHAB SRVCS GROUP
+         Restriction Type:   S      Restriction Date:  3/31/2012
+  
+    340  GENOMIC CARE
+         Restriction Type:   E      Restriction Date:  N/A
+  
+    Stop Code Being Inactivated:   (effective 3/31/2012)
+  
+    715  ONGOING TRTMT (NON-MH) 2ND
+         Inactivation Date:  3/31/2012
+  
+    Stop Codes with Name Changes:  (will take effect when the patch is
+                                    installed)
+  
+    218  Old Name: CAT BLIND REHAB
+         New Name: BLIND REHAB CENTER
+  
+    429  Old Name: OUTPATIENT CARE IN OR
+         New Name: PATIENT CARE IN OR
+  
+    710  Old Name: FLU/PNEUMOCOCCAL VACCINATION
+         New Name: PREVENTIVE IMMUNIZATION
+  
+  
+ TECHNICAL SUMMARY:
+ ==================
+ The following Fileman template may help the MAS/ADPAC to identify any 
+ clinics that contain stop code 715 as the Credit Stop Code.  The ADPAC 
+ will have to take necessary action to either remove or replace this 
+ Credit Stop Code in each of the applicable clinics.  Please note that the 
+ IF statement in the Fileman Inquiry echoes back the Internal Entry Number 
+ for the Clinic Stop file (#40.7) for the selected stop code.
+  
+ Select OPTION: 3  SEARCH FILE ENTRIES
+  
+ OUTPUT FROM WHAT FILE: CLINIC STOP// 44  HOSPITAL LOCATION
+                                           (883 entries)
+  
+   -A- SEARCH FOR HOSPITAL LOCATION FIELD: CREDIT STOP CODE  
+   -A- CONDITION: EQUALS  
+   -A- EQUALS CLINIC STOP: 715  ONGOING TRTMT (NON-MH) 2ND     715     
+  
+   -B- SEARCH FOR HOSPITAL LOCATION FIELD: 
+  
+ IF: A//     CREDIT STOP CODE EQUALS 439 (ONGOING TRTMT (NON-MH) 2ND)
+  
+ STORE RESULTS OF SEARCH IN TEMPLATE: 
+  
+ SORT BY: NAME// 
+ START WITH NAME: FIRST// 
+ FIRST PRINT FIELD: .01  NAME
+ THEN PRINT FIELD: CREDIT STOP CODE  
+ THEN PRINT FIELD: 
+ Heading (S/C): HOSPITAL LOCATION SEARCH  Replace
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+  
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+  
+  ***Routine SD12SUPP can be manually deleted after patch is installed***
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+  
+    3. From this menu, you may select the following options:
+       (when prompted for INSTALL NAME, enter SD*5.3*587)
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch
+          is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+    4. Use the Install Package(s) option and select the package SD*5.3*587.
+  
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.
+  
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//" respond NO.
+  
+   NOTE: Details of the changes applied by this patch are provided
+         during the installation and may also be reviewed with the Install
+         File Print option on the Utilities menu on the Kernel Installation
+         and Distribution System menu.
+  
+         It is important to check the CLINIC STOP (#40.7) file post
+         installation to make sure that all of the updates are correctly
+         reflected in the CLINIC STOP file (#40.7). If any discrepancies
+         are found you should enter a Remedy Ticket.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD12SUPP
+    Before:       n/a   After: B63351600  **587**
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : SEP 21, 2011
+Completed By: SESSLER,APRIL                 Date Completed: FEB 13, 2012
+Released By : BENBOW,PHYLLIS O              Date Released : MAR 20, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

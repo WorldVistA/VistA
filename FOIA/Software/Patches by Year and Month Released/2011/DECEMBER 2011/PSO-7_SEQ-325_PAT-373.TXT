@@ -1,0 +1,133 @@
+$TXT Created by CREMEANS,TERRY at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 12/16/10 at 10:37
+=============================================================================
+Run Date: DEC 07, 2011                     Designation: PSO*7*373
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #325                      Status: Released
+                  Compliance Date: JAN 07, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*247   <<= must be installed BEFORE `PSO*7*373'
+
+Subject: INCORRECT PHARMACIST APPEARING ON PRESCRIPTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the issue where the incorrect Pharmacist is 
+ appearing on prescriptions.
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ HD0000000422590 - Incorrect Pharmacist is appearing on prescriptions
+    Duplicate:
+    HD0000000429945  
+        
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Madison VAH
+ Iron Mountain VAMC
+ Hampton VAMC
+  
+  
+   
+ Remedy Overview:
+ ================
+ HD0000000422590 - Incorrect Pharmacist is appearing on prescriptions
+   
+    Problem: 
+    ========
+    When releasing a controlled substance the incorrect Pharmacist is
+    appearing on the prescriptions.  When an original controlled substance
+    prescription is released the pharmacists ID is sent through the input
+    transform prior to storing it in the PRESCRIPTION file (#52).  It was
+    discovered that if the pharmacists ID matches another field, such as
+    SSN, in someone else's NEW PERSON file (#200) it will pull that persons
+    ID and attach it to the prescription instead.
+  
+    Resolution:
+    ===========
+    Modify routine PSOCSRL for the release of an original controlled
+    substance so that the correct pharmacist ID gets attached to the
+    prescription.  
+  
+  
+ Technical Resolution:
+ =====================
+  
+ Modify routine ORI+15^PSOCSRL:  Modify the code to change from a three 
+ slash stuff, which runs the pharmacists ID through the input transform,
+ to a four slash stuff, which will take the pharmacists ID and store it 
+ without going through the input transform.
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  Users should not be
+ releasing controlled substances when this patch is installed.  It should
+ take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*373)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*373.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCSRL
+    Before: B36467799   After: B36552360  **27,71,118,148,247,373**
+ Description of Changes:
+  
+
+
+=============================================================================
+User Information:
+Entered By  : CREMEANS,THERESA              Date Entered  : DEC 07, 2010
+Completed By: PODLEY,CHRIS                  Date Completed: NOV 10, 2011
+Released By : FOX,KIRK                      Date Released : DEC 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

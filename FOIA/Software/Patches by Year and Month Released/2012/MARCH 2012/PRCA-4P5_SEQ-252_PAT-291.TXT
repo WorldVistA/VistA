@@ -1,0 +1,81 @@
+
+=============================================================================
+Run Date: MAR 15, 2012                     Designation: PRCA*4.5*291
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #252                    Status: Released
+                  Compliance Date: APR 15, 2012
+=============================================================================
+
+
+Subject: EPAY II - CORRECTIONS TO PRCA276 DESCRIPTION
+
+Category: 
+  - Informational
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+ The patch description for PRCA*4.5*276 has incorrect statements, which
+ this informational patch identifies and restates accurately.
+  
+  
+ EFT Worklist -
+ The Remove Duplicate EFT Deposits option was added to the EDI Lockbox Menu
+ which provides the capability to remove a duplicate EFT from the EFT
+ Unmatched Aging report [RCDPE EFT AGING REPORT]. Patch PRCA*4.5*276 
+ incorrectly identifies that the user must have the security key 
+ [RCDPE RETURNED TO PAYER]. The security key that should have been 
+ identified (and to be assigned to the proper users) is Remove Duplicate 
+ EFTs [RCDPE REMOVE DUPLICATES].
+  
+  
+ EEOB Worklist Search -
+ While a search for ERA records is in progress, the Vista system displays
+ information to the user that indicates that the system is continuing to
+ gather records to prepare for the display of the EEOB Worklist. Patch
+ PRCA*4.5*276 incorrectly states that the "." character is displayed while
+ this search is in progress. Rather than the "." character, dialogue is
+ displayed (e.g.,"SEARCHING, PLEASE STANDBY").
+  
+  
+ RCDPE MOVE COPY mail group -
+ This is a new mail group delivered with PRCA*4.5*276. Bulletins are sent
+ to this mail group which identify inactive EEOBs that have been moved or
+ copied within the last 24 hours. PRCA*4.5*276 does not provide the member
+ set-up instruction for this new mail group. The following instruction and
+ example can be used:
+  
+ Assign the proper ePayments users to the members field of the RCDPE MOVE
+ COPY mail group. The list of members can be obtained from the ePayments
+ supervisory staff.
+  
+  
+ NAME: RCDPE MOVE COPY                       TYPE: public
+    ALLOW SELF ENROLLMENT?: YES           REFERENCE COUNT: 62
+    LAST REFERENCED: SEP 15, 2011         RESTRICTIONS: UNRESTRICTED
+  MEMBER: xxxxx,xxxxxxx
+  DESCRIPTION:   This is the mail group that will receive bulletins 
+  sent by the AR nightly process. Details of any EEOB move or EEOB 
+  copy transactions from the EDI Lockbox menu option 'EEOB Move/Copy' 
+  are included in the bulletin.   
+  ORGANIZER: POSTMASTER
+  REMOTE MEMBER: vha835notify@va.gov
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : MAR 01, 2012
+Entered By  : LEYVA,KATHRYN                 Date Entered  : JAN 26, 2012
+Completed By: ROBBINS,BRADLEY               Date Completed: JAN 31, 2012
+Released By : GROOMS,CARMEN L               Date Released : MAR 15, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

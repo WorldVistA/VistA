@@ -1,0 +1,235 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 10/25/11 at 13:18
+=============================================================================
+Run Date: JAN 11, 2012                     Designation: FH*5.5*24
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #25                    Status: Released
+                  Compliance Date: FEB 11, 2012
+=============================================================================
+
+Associated patches: (v)FH*5.5*2    <<= must be installed BEFORE `FH*5.5*24'
+                    (v)FH*5.5*5    <<= must be installed BEFORE `FH*5.5*24'
+                    (v)FH*5.5*8    <<= must be installed BEFORE `FH*5.5*24'
+                    (v)FH*5.5*11   <<= must be installed BEFORE `FH*5.5*24'
+                    (v)FH*5.5*17   <<= must be installed BEFORE `FH*5.5*24'
+
+Subject: CORRECTIONS TO OUTPATIENT MEALS AND FOOD PREFERENCES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+ 1. Food preferences without an associated meal will generate an 
+ error in the Patient Profile for inpatients. 
+ 2. Currently, there are 3 issues occurring when ordering meals for 
+ outpatients:  
+   a) The user is allowed to order Recurring Meals for deceased outpatients
+   b) The user is allowed to order Special Meals for deceased outpatients
+   c) The user is allowed to order Guest Meals for deceased outpatients
+ 3. The GMR ALLERGIES field (#25) is not available in the Enter/Edit Food
+ Preferences option [FHSEL1] when manually entering or editing a food
+ preference labeled as an allergy. Additionally, XINDEX is returning a SAC
+ violation in routine FHSEL1 for having a lock command without a time out.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000373581 - No meals were attached to the food preference.
+ 2. HD0000000374390 - Outpatient Meal Issue
+ 3. HD0000000382741 - FGH - Food Prefs Manual Link to GMR ALLERGIES field
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ N.Florida/S. Georgia
+ Puget Sound HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000373581 - No meals were attached to the food preference.
+  
+   Problem:
+   --------
+   It is possible for a food preference to not have a meal associated
+   with it. This will cause the Patient Profile [FHORD9] to generate
+   an on screen error for inpatients. This type of error will cause the
+   user to be forced out of VistA.
+   
+   Resolution:
+   -----------
+   Modify routine FHORD6 to check for a food preference for an
+   associated meal. If no meal is associated with the food preference, the
+   routine will assume the food preference is for all meals.
+  
+ 2. HD0000000374390 - Outpatient Meal Issue
+  
+   Problem A:
+   ----------
+   The Order/Edit Outpatient Meals option [FHOMRO] in the Recurring Meals
+   Menu [FHOMRMGR] will allow the user to order recurring meals for a
+   deceased outpatient. 
+  
+   Resolution A:
+   -----------
+   Modify routines FHOMRO1 and FHOMDPA to determine if the outpatient has
+   a date of death on file. If the outpatient has a date of death 
+   on file, the user will be presented with a message that the outpatient
+   has died. The user will be prevented from ordering a recurring meal for
+   a deceased outpatient.
+  
+   Problem B:
+   ----------
+   The Request a Meal option [FHOMSR] in the Special Meals Menu [FHOMSMGR]
+   will allow the user to order a special meal for a deceased outpatient.
+   
+   Resolution B:
+   -----------
+   Modify routines FHOMSR1 and FHOMDPA to determine if the outpatient 
+   has a date of death on file. If the outpatient has a date of death on 
+   file, the user will be presented with a message that the outpatient has
+   died.  The user will be prevented from ordering a special meal for a
+   deceased outpatient.
+  
+   Problem C:
+   ----------
+   The Request a Meal option [FHOMGR] in the Guest Meals Menu [FHOMGMGR]
+   will allow the user to order a guest meal for a deceased outpatient.
+   
+   Resolution C:
+   -----------
+   Modify routines FHOMGR1 and FHOMDPA to determine if the outpatient 
+   has a date of death on file. If the outpatient has a date of death on 
+   file, the user will be presented with a message that the outpatient has
+   died.  The user will be prevented from ordering a guest meal for a  
+   deceased outpatient.
+  
+  
+ 3. HD0000000382741 - FGH - Food Prefs Manual Link to GMR ALLERGIES field
+  
+   Problem A:
+   ----------
+   The user is able to manually enter or edit a food preference labeled as 
+   an allergy using the Enter/Edit Food Preference [FHSEL1] option. The 
+   GMR ALLERGIES field (#25) is not available to the user when using this
+   option to manually enter or edit a food preference labeled as an
+   allergy.
+   
+   Resolution A:
+   -------------
+   Modification of routine FHSEL1 to present the GMR ALLERGIES field (#25)
+   to the user during the manual entry or edit of a food preference labeled
+   as an allergy.
+   
+  
+   Problem B:
+   ----------
+   XINDEX returned a SAC violation in routine FHSEL1 for having a LOCK 
+   command without having a time out.
+   
+   Resolution B:
+   -----------
+   Modify routine FHSEL1 to have a timeout with the LOCK command.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ the Nutrition & Food Services users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+ 1.  Load Transport Global 
+     ---------------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter FH*5.5*24):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHOMDPA
+    Before:  B5596079   After:  B8212401  **5,17,24**
+Routine Name: FHOMGR1
+    Before:  B8112125   After:  B8135440  **5,24**
+Routine Name: FHOMRO1
+    Before: B80090398   After: B80113713  **1,2,5,24**
+Routine Name: FHOMSR1
+    Before: B29187569   After: B29210923  **2,5,11,24**
+Routine Name: FHORD6
+    Before: B21050058   After: B21098876  **1,5,24**
+Routine Name: FHSEL1
+    Before: B22413340   After: B23134374  **8,24**
+ 
+Routine list of preceding patches: 8, 11, 17
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : JAN 12, 2010
+Completed By: CRICHLOW,SHERRY               Date Completed: DEC 19, 2011
+Released By : KREUZ,SHERI B                 Date Released : JAN 11, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

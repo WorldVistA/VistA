@@ -1,0 +1,197 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 08/16/11 at 09:06
+=============================================================================
+Run Date: APR 04, 2012                     Designation: PSJ*5*264
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #224                      Status: Released
+                  Compliance Date: MAY 05, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*216   <<= must be installed BEFORE `PSJ*5*264'
+                    (v)PSJ*5*222   <<= must be installed BEFORE `PSJ*5*264'
+
+Subject: UNITS PER DOSE CALCULATION FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Inpatient Medications 
+ package:
+                                 
+ 1. Units per Dose calculated incorrectly
+ 2. Erroneous warnings about overlapping complex schedules
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000507571 - Patch PSJ*5*216 question about item #1
+ 2. HD0000000491412 - System prompts erroneous warning regarding  
+                      overlapping admin times
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Durham VAMC
+ Clement J. Zablocki Veterans Affairs Medical Center - Milwaukee
+ Minneapolis VAMC
+ VA Sierra Nevada HCS - Reno
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. HD0000000507571 - Patch PSJ*5*216 question about item #1
+  
+   Problem:
+   -------
+   When an active Unit Dose order is edited to change the Dispense Drug
+   and the Units/Dose, and the value for Units/Dose is a fraction, even
+   though the new Dosage Ordered equals the original Dosage Ordered, the
+   user is incorrectly presented with a warning message:
+  
+     "WARNING: Dosage Ordered and Dispense Units do not match."
+          Please verify Dosage.
+  
+   This warning message should only display when an active Unit Dose order
+   is edited to change the Dispense Drug and the Units/Dose and the new
+   Dosage Ordered does NOT equal the original Dosage Ordered.
+  
+   Resolution:
+   ----------
+   Modified routine PSJDOSE so that Dosage Ordered is correctly compared to
+   Dispense Drug dose times Units per Dose to determine whether an error 
+   message should be displayed.
+  
+   NOTE:
+   -----
+   It should be noted that when dealing with certain fractions or decimals 
+   which are relatively close to each other (e.g. one-eighth and 
+   one-ninth), these will be rounded to values which the system deems 
+   sufficiently close to each other, and the warning message will not
+   display.
+  
+  
+ 2. HD0000000491412 - System prompts erroneous warning regarding  
+                      overlapping admin times
+  
+   Problem:
+   -------
+   When a user enters a Complex Unit Dose order with different day-of-the-
+   week schedules but the same Administration times, the system will
+   erroneously display the warning message, "The highlighted admin times
+   for these portions of this complex order overlap".
+  
+   Resolution:
+   ----------
+   Modified routine PSGOEF2 so that the warning message will only display
+   for day-of-the-week schedules with portions which have the same 
+   admin times on the same days.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS WHEN THE PATCH IS  
+ INSTALLED, AN <EDITED> ERROR WILL OCCUR.
+  
+ The patch should be installed when NO Inpatient Pharmacy users are on the
+ system.
+  
+ Installation will take less than 2 minutes.
+  
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+  
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+     Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*264):
+                                 
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d.  Print Transport Global - This option will allow you to view the 
+         components of the KIDS build.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer YES.
+  
+           1) When prompted "Enter options you wish to mark as "Out
+              of Order":" enter the following options:
+              
+                 Inpatient Order Entry [PSJ OE]
+  
+           2) When prompted "Enter protocols you wish to mark as "Out of
+              Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOEF2
+    Before: B16020117   After: B20186389  **222,264**
+Routine Name: PSJDOSE
+    Before: B47956224   After: B62380893  **50,65,106,111,216,264**
+ 
+Routine list of preceding patches: 216, 222
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : AUG 03, 2011
+Completed By: WERNER,GARY                   Date Completed: MAR 12, 2012
+Released By : LYTTLE,KIM M                  Date Released : APR 04, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

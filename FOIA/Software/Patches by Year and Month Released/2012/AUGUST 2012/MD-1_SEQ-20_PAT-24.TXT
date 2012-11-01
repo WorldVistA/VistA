@@ -1,0 +1,163 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Tuesday, 03/06/12 at 09:38
+=============================================================================
+Run Date: AUG 08, 2012                     Designation: MD*1*24
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #20                      Status: Released
+                  Compliance Date: SEP 08, 2012
+=============================================================================
+
+Associated patches: (v)MD*1*21     <<= must be installed BEFORE `MD*1*24'
+
+Subject: PROCEDURES (LOCAL ONLY) REPORT MODIFICATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issue:
+      
+ When Clinical procedures are displayed in the CONSULTS TAB in CPRS, they
+ are in reverse chronological order.  Clinical procedures with multiple
+ results or amendments received from a medical device are displayed in the
+ REPORTS TAB - Procedures (Local Only) in chronological order.  The display
+ needs to be modified to show the  results in reverse chronological order.
+                     
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000400883 Most recent reports need to be displayed first
+  
+      
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+       
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Long Beach HCS
+ VA Palo Alto HCS (Palo Alto) 
+ VA Upstate NY HCS (Buffalo)
+  
+  
+ REMEDY OVERVIEW:     
+ ================     
+ 1. HD0000000400883 Most recent reports need to be displayed first
+       
+  Problem 1:
+  ----------
+  If a procedure order has more than one related documents, the documents 
+  are displayed in chronological order within the CPRS/Reports
+  Tab/Medicine-CP/Procedures (Local Only) component.  
+  If one of the related documents is an amendment, it will be displayed in 
+  chronological order. 
+          
+  Resolution 1:
+  ------------
+  Modifications are made in routines MCARPS3. MDAR7M, MDARP3, MDPS1, MDPS3,
+  MDPS4 and MDRPCOTH  to display the related documents for a procedure in
+  reverse chronological order in the Procedures (Local Only) component.
+      
+      
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+      
+ If installed during the normal workday, it is recommended that the 
+ the Clinical Procedures users be off the system.  Other VISTA users
+ will not be affected.
+       
+ Install Time - less than 2 minutes (unless otherwise indicated)
+      
+ 1.  Load Transport Global 
+     ---------------------------
+       
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+         
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+         
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter MD*1.0*24):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+       
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MCARPS3
+    Before: B17359352   After: B17359352  **5,13,24**
+Routine Name: MDAR7M
+    Before: B23544832   After: B25818478  **21,24**
+Routine Name: MDARP3
+    Before: B16358381   After: B16358381  **10,13,24**
+Routine Name: MDPS1
+    Before: B81903471   After: B82411649  **2,10,13,21,24**
+Routine Name: MDPS3
+    Before: B10769284   After: B13322697  **2,5,13,24**
+Routine Name: MDPS4
+    Before: B13230454   After: B13216892  **13,24**
+Routine Name: MDRPCOTH
+    Before: B22669741   After: B26710262  **21,24**
+ 
+Routine list of preceding patches: 21
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : JUN 09, 2010
+Completed By: SHERMAN,BILL                  Date Completed: AUG 02, 2012
+Released By : COWNIE,KEVIN                  Date Released : AUG 08, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

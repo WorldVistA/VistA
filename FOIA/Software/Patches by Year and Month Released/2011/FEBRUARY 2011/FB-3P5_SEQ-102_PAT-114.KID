@@ -1,0 +1,926 @@
+Released FB*3.5*114 SEQ #102
+Extracted from mail message
+**KIDS**:FB*3.5*114^
+
+**INSTALL NAME**
+FB*3.5*114
+"BLD",8356,0)
+FB*3.5*114^FEE BASIS^0^3100831^y
+"BLD",8356,1,0)
+^^7^7^3100830^
+"BLD",8356,1,1,0)
+This patch does the following:
+"BLD",8356,1,2,0)
+- corrects a problem with two Fee Basis routines that aren't updating 
+"BLD",8356,1,3,0)
+  data properly.  
+"BLD",8356,1,4,0)
+- corrects the wrong data displaying when using the Enter Unauthorized 
+"BLD",8356,1,5,0)
+  Claim [FBUC UNAUTHORIZED] option.  
+"BLD",8356,1,6,0)
+- corrects a warning that is not displayed when running low on available 
+"BLD",8356,1,7,0)
+  batches.
+"BLD",8356,4,0)
+^9.64PA^^
+"BLD",8356,6.3)
+7
+"BLD",8356,"INID")
+^n
+"BLD",8356,"INIT")
+PS^FBXIP114
+"BLD",8356,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8356,"KRN",.4,0)
+.4
+"BLD",8356,"KRN",.401,0)
+.401
+"BLD",8356,"KRN",.402,0)
+.402
+"BLD",8356,"KRN",.403,0)
+.403
+"BLD",8356,"KRN",.5,0)
+.5
+"BLD",8356,"KRN",.84,0)
+.84
+"BLD",8356,"KRN",3.6,0)
+3.6
+"BLD",8356,"KRN",3.8,0)
+3.8
+"BLD",8356,"KRN",9.2,0)
+9.2
+"BLD",8356,"KRN",9.8,0)
+9.8
+"BLD",8356,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",8356,"KRN",9.8,"NM",1,0)
+FBAARD^^0^B20514488
+"BLD",8356,"KRN",9.8,"NM",2,0)
+FBAARR^^0^B32870767
+"BLD",8356,"KRN",9.8,"NM",3,0)
+FBAAUTL^^0^B23591801
+"BLD",8356,"KRN",9.8,"NM",4,0)
+FBUCEN^^0^B26341993
+"BLD",8356,"KRN",9.8,"NM","B","FBAARD",1)
+
+"BLD",8356,"KRN",9.8,"NM","B","FBAARR",2)
+
+"BLD",8356,"KRN",9.8,"NM","B","FBAAUTL",3)
+
+"BLD",8356,"KRN",9.8,"NM","B","FBUCEN",4)
+
+"BLD",8356,"KRN",19,0)
+19
+"BLD",8356,"KRN",19.1,0)
+19.1
+"BLD",8356,"KRN",101,0)
+101
+"BLD",8356,"KRN",409.61,0)
+409.61
+"BLD",8356,"KRN",771,0)
+771
+"BLD",8356,"KRN",779.2,0)
+779.2
+"BLD",8356,"KRN",870,0)
+870
+"BLD",8356,"KRN",8989.51,0)
+8989.51
+"BLD",8356,"KRN",8989.52,0)
+8989.52
+"BLD",8356,"KRN",8994,0)
+8994
+"BLD",8356,"KRN","B",.4,.4)
+
+"BLD",8356,"KRN","B",.401,.401)
+
+"BLD",8356,"KRN","B",.402,.402)
+
+"BLD",8356,"KRN","B",.403,.403)
+
+"BLD",8356,"KRN","B",.5,.5)
+
+"BLD",8356,"KRN","B",.84,.84)
+
+"BLD",8356,"KRN","B",3.6,3.6)
+
+"BLD",8356,"KRN","B",3.8,3.8)
+
+"BLD",8356,"KRN","B",9.2,9.2)
+
+"BLD",8356,"KRN","B",9.8,9.8)
+
+"BLD",8356,"KRN","B",19,19)
+
+"BLD",8356,"KRN","B",19.1,19.1)
+
+"BLD",8356,"KRN","B",101,101)
+
+"BLD",8356,"KRN","B",409.61,409.61)
+
+"BLD",8356,"KRN","B",771,771)
+
+"BLD",8356,"KRN","B",779.2,779.2)
+
+"BLD",8356,"KRN","B",870,870)
+
+"BLD",8356,"KRN","B",8989.51,8989.51)
+
+"BLD",8356,"KRN","B",8989.52,8989.52)
+
+"BLD",8356,"KRN","B",8994,8994)
+
+"BLD",8356,"QDEF")
+^^^^NO^^^^^^YES
+"BLD",8356,"QUES",0)
+^9.62^^
+"BLD",8356,"REQB",0)
+^9.611^2^2
+"BLD",8356,"REQB",1,0)
+FB*3.5*61^2
+"BLD",8356,"REQB",2,0)
+FB*3.5*101^2
+"BLD",8356,"REQB","B","FB*3.5*101",2)
+
+"BLD",8356,"REQB","B","FB*3.5*61",1)
+
+"INIT")
+PS^FBXIP114
+"MBREQ")
+0
+"PKG",60,-1)
+1^1
+"PKG",60,0)
+FEE BASIS^FB^Used to pay private vendors
+"PKG",60,20,0)
+^9.402P^1^1
+"PKG",60,20,1,0)
+2^^FBPMRG
+"PKG",60,20,1,1)
+
+"PKG",60,20,"B",2,1)
+
+"PKG",60,22,0)
+^9.49I^1^1
+"PKG",60,22,1,0)
+3.5^2950130^2950313
+"PKG",60,22,1,"PAH",1,0)
+114^3100831
+"PKG",60,22,1,"PAH",1,1,0)
+^^7^7^3100831
+"PKG",60,22,1,"PAH",1,1,1,0)
+This patch does the following:
+"PKG",60,22,1,"PAH",1,1,2,0)
+- corrects a problem with two Fee Basis routines that aren't updating 
+"PKG",60,22,1,"PAH",1,1,3,0)
+  data properly.  
+"PKG",60,22,1,"PAH",1,1,4,0)
+- corrects the wrong data displaying when using the Enter Unauthorized 
+"PKG",60,22,1,"PAH",1,1,5,0)
+  Claim [FBUC UNAUTHORIZED] option.  
+"PKG",60,22,1,"PAH",1,1,6,0)
+- corrects a warning that is not displayed when running low on available 
+"PKG",60,22,1,"PAH",1,1,7,0)
+  batches.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+5
+"RTN","FBAARD")
+0^1^B20514488^B20785486
+"RTN","FBAARD",1,0)
+FBAARD ;AISC/DMK-VOUCHER AUDIT DELETE REJECTS ENTERED IN ERROR ; 8/31/10 2:43pm
+"RTN","FBAARD",2,0)
+ ;;3.5;FEE BASIS;**114**;JAN 30, 1995;Build 7
+"RTN","FBAARD",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","FBAARD",4,0)
+ S IOP=$S($D(ION):ION,1:"HOME") D ^%ZIS K IOP
+"RTN","FBAARD",5,0)
+ S Q="",$P(Q,"=",80)="=",UL="",$P(UL,"-",80)="-",(CNT,FBAAOUT,FBINTOT)=0
+"RTN","FBAARD",6,0)
+ D DT^DICRW
+"RTN","FBAARD",7,0)
+BT K QQ W !! S DIC="^FBAA(161.7,",DIC(0)="AEQMN",DIC("S")="I $G(^(""ST""))=""V""&($P(^(0),U,17)]"""")" D ^DIC K DIC("S") G Q:X="^"!(X=""),BT:Y<0 S FBN=+Y,B=FBN,FZ=^FBAA(161.7,FBN,0),FBTYPE=$P(FZ,"^",3),FBAAON=$P(FZ,"^",2),FBAARA=0
+"RTN","FBAARD",8,0)
+ I FBTYPE="B9",$P(FZ,"^",15)="" S FBCNH=1
+"RTN","FBAARD",9,0)
+ S FBAAB=$P(FZ,"^"),FBAAOB=$P(FZ,"^",8)_"-"_FBAAON,FBCOMM="Rejects deleted from batch "_FBAAB
+"RTN","FBAARD",10,0)
+ I '$D(^XUSEC("FBAASUPERVISOR",DUZ)) W !!,*7,"Sorry, only Supervisor can Delete reject flag!" G Q
+"RTN","FBAARD",11,0)
+ I '$S(FBTYPE="B3":$D(^FBAAC("AH",B)),FBTYPE="B2":$D(^FBAAC("AG",B)),FBTYPE="B5":$D(^FBAA(162.1,"AF",B)),FBTYPE="B9":$D(^FBAAI("AH",B)),1:0) W !!,*7,"No items rejected in this batch!" G BT
+"RTN","FBAARD",12,0)
+ S DA=FBN,DR="0;ST" W !! D EN^DIQ
+"RTN","FBAARD",13,0)
+ S FBNUM=$P(^FBAA(161.7,B,0),"^",1),FBVD=$P(^(0),"^",12),FBVDUZ=$P(^(0),"^",16)
+"RTN","FBAARD",14,0)
+ASKLL S B=FBN,FBNNP=1 S DIR(0)="Y",DIR("A")="Want line items listed",DIR("B")="NO" D ^DIR K DIR W:Y @IOF D:Y MORE^FBAARJP:FBTYPE="B3",PMORE^FBAARJP:FBTYPE="B5",TMORE^FBAARJP:FBTYPE="B2",CMORE^FBAARJP:FBTYPE="B9" K FBNNP
+"RTN","FBAARD",15,0)
+RD0 S DIR(0)="Y",DIR("A")="Want to delete rejection codes for the entire Batch",DIR("B")="NO",DIR("?")="^D ^FBAARD0" D ^DIR K DIR G Q:$D(DIRUT),^FBAARD1:Y
+"RTN","FBAARD",16,0)
+RD1 S DIR(0)="Y",DIR("A")="Want to delete rejection code for any line items",DIR("B")="NO" D ^DIR K DIR G Q:'Y,Q:$D(DIRUT) D DELT^FBAARD2:FBTYPE="B2",DELM:FBTYPE="B3",DELP^FBAARD2:FBTYPE="B5",DELC^FBAARD0:FBTYPE="B9"
+"RTN","FBAARD",17,0)
+ G Q:$D(FBERR)
+"RTN","FBAARD",18,0)
+RDD ;
+"RTN","FBAARD",19,0)
+FIN N FBFDART
+"RTN","FBAARD",20,0)
+ S FBFDART(161.7,FBN_",",13)=$G(DT)
+"RTN","FBAARD",21,0)
+ S FBFDART(161.7,FBN_",",14)=$G(DUZ)
+"RTN","FBAARD",22,0)
+ S FBFDART(161.7,FBN_",",11)="V"
+"RTN","FBAARD",23,0)
+ D FILE^DIE(,"FBFDART")
+"RTN","FBAARD",24,0)
+ S DIC="^FBAA(161.7,",DA=FBN,DR="0;ST" W !! D EN^DIQ G BT
+"RTN","FBAARD",25,0)
+Q K B,J,K,L,M,X,Y,Z,DIC,ERR,A,A1,A2,CPTDESC,DIRUT,DR,FBAACB,FBAACPT,FBAAON,FBAAOUT,FBAARA,FBIN,FBINOLD,FBINTOT,FBNUM,FBRR,FBTYPE,FBVD,FBVDUZ,FBVP,FZ,FBN,CNT,Q,P3,P4,UL,VAL,FBERR,FBAAMT,FBAAOB,FBCOMM,FBAAB,V,VID
+"RTN","FBAARD",26,0)
+ K FBAC,FBAP,FBDX,FBFD,FBK,FBX,FBPDT,FBSC,FBTD,S,ZS,PRCSCPAN,FBCNH,DUOUT
+"RTN","FBAARD",27,0)
+ Q
+"RTN","FBAARD",28,0)
+ERR S ERR=1 W !!,"Invalid entry, must enter a number between 1 and ",QQ,!,"or an '^' to exit!" Q
+"RTN","FBAARD",29,0)
+GET W !! S DIC="^FBAAA(",DIC(0)="AEQM" D ^DIC Q:X="^"!(X="")  G GET:Y<0 S DA=+Y,J=DA Q
+"RTN","FBAARD",30,0)
+DELM K QQ D GET Q:X="^"!(X="")  I '$D(^FBAAC("AH",B,J)) W !!,*7,"No payments in this batch for that patient!" G DELM
+"RTN","FBAARD",31,0)
+ S QQ=0,FBAAOUT="" W @IOF D HED^FBAACCB
+"RTN","FBAARD",32,0)
+ F K=0:0 S K=$O(^FBAAC("AH",B,J,K)) Q:K'>0!(FBAAOUT)  F L=0:0 S L=$O(^FBAAC("AH",B,J,K,L)) Q:L'>0!(FBAAOUT)  F M=0:0 S M=$O(^FBAAC("AH",B,J,K,L,M)) Q:M'>0!(FBAAOUT)  D WRITM
+"RTN","FBAARD",33,0)
+RL1 S DIR(0)="Y",DIR("A")="Delete Reject flag for all items for this patient",DIR("B")="YES" D ^DIR K DIR Q:$D(DIRUT)  G LOOP:Y
+"RTN","FBAARD",34,0)
+RL S ERR=0 S DIR(0)="N^1:"_QQ,DIR("A")="Delete reject for which line item" D ^DIR K DIR Q:$D(DIRUT)  S HX=X
+"RTN","FBAARD",35,0)
+ I '$D(QQ(HX)) W !,*7,"You already deleted that one!!" G RL
+"RTN","FBAARD",36,0)
+ASUR S DIR(0)="Y",DIR("A")="Are you sure you want to delete reject for item number "_HX,DIR("B")="NO" D ^DIR K DIR G:$D(DIRUT)!'Y RL
+"RTN","FBAARD",37,0)
+ S J=$P(QQ(HX),"^",1),K=$P(QQ(HX),"^",2),L=$P(QQ(HX),"^",3),M=$P(QQ(HX),"^",4)
+"RTN","FBAARD",38,0)
+ D STUFF^FBAARD3 Q:$D(FBERR)
+"RTN","FBAARD",39,0)
+RDMORE S DIR(0)="Y",DIR("A")=$S($G(FBERR):"",1:"Item Deleted.  ")_"Want to delete another",DIR("B")="YES" D ^DIR K DIR G RL:Y,DELM
+"RTN","FBAARD",40,0)
+WRITM S QQ=QQ+1,QQ(QQ)=J_"^"_K_"^"_L_"^"_M D SET^FBAACCB Q
+"RTN","FBAARD",41,0)
+LOOP F HX=0:0 S HX=$O(QQ(HX)) Q:HX'>0!($D(FBERR))  S J=$P(QQ(HX),"^",1),K=$P(QQ(HX),"^",2),L=$P(QQ(HX),"^",3),M=$P(QQ(HX),"^",4) D STUFF^FBAARD3 Q:$D(FBERR)
+"RTN","FBAARD",42,0)
+ W !,"...DONE!" G DELM
+"RTN","FBAARR")
+0^2^B32870767^B32814537
+"RTN","FBAARR",1,0)
+FBAARR ;AISC/GRR-RE-INITIATE REJECTED LINE ITEMS ; 8/31/10 2:43pm
+"RTN","FBAARR",2,0)
+ ;;3.5;FEE BASIS;**61,114**;JAN 30, 1995;Build 7
+"RTN","FBAARR",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","FBAARR",4,0)
+ N FBILM
+"RTN","FBAARR",5,0)
+ S IOP=$S($D(ION):ION,1:"HOME") D ^%ZIS K IOP
+"RTN","FBAARR",6,0)
+ S Q="",$P(Q,"=",80)="=",UL="",$P(UL,"-",80)="-",(FBAAOUT,CNT,FBINTOT)=0
+"RTN","FBAARR",7,0)
+ D DT^DICRW
+"RTN","FBAARR",8,0)
+BT K QQ W !!
+"RTN","FBAARR",9,0)
+ S DIC="^FBAA(161.7,",DIC(0)="AEQMN",DIC("A")="Select Batch with Rejects: ",DIC("S")="I $G(^(""ST""))=""V""&($P(^(0),U,17)]"""")" D ^DIC K DIC("S"),DIC("A") G Q:X="^"!(X=""),BT:Y<0 S FBN=+Y,B=FBN,FZ=^FBAA(161.7,FBN,0),FBTYPE=$P(FZ,"^",3)
+"RTN","FBAARR",10,0)
+ S FBOB=$P(FZ,"^",2),FBEXMPT=$S($P(FZ,"^",18)]"":$P(FZ,"^",18),1:"N")
+"RTN","FBAARR",11,0)
+ I '$S(FBTYPE="B3":$D(^FBAAC("AH",B)),FBTYPE="B2":$D(^FBAAC("AG",B)),FBTYPE="B5":$D(^FBAA(162.1,"AF",B)),FBTYPE="B9":$D(^FBAAI("AH",B)),1:0) W !!,*7,"No items rejected in this batch!" D  G BT
+"RTN","FBAARR",12,0)
+ .S $P(^FBAA(161.7,B,0),U,17)=""
+"RTN","FBAARR",13,0)
+ I FBTYPE="B9",$P(FZ,"^",15)="Y" D NEWBT^FBAARR0 G ASKLL
+"RTN","FBAARR",14,0)
+BTN W !! S DIC("A")="Select New Batch number: ",DIC("S")="I $P(^(0),U,3)=FBTYPE&($P(^(0),U,5)=DUZ)&($G(^(""ST""))=""O"")" D ^DIC K DIC("A"),DIC("S") G BT:X=""!(X="^"),HELP^FBAARR0:X["?",BTN:Y<0 S FBNB=+Y
+"RTN","FBAARR",15,0)
+ D BATCNT^FBAARR1 I '$D(FBNB) D KILL^FBAARR1 G BT
+"RTN","FBAARR",16,0)
+ S FBNUM=$P(^FBAA(161.7,B,0),"^",1),FBVD=$P(^(0),"^",12),FBVDUZ=$P(^(0),"^",16),FBNOB=$P(^FBAA(161.7,FBNB,0),"^",2) G:FBNOB'=FBOB CHKOB^FBAARR0
+"RTN","FBAARR",17,0)
+ASKLL S B=FBN,FBNNP=1 S DIR(0)="Y",DIR("A")="Want line items listed",DIR("B")="NO" D ^DIR K DIR W:Y @IOF D:Y MORE^FBAARJP:FBTYPE="B3",PMORE^FBAARJP:FBTYPE="B5",TMORE^FBAARJP:FBTYPE="B2",CMORE^FBAARJP:FBTYPE="B9" K FBNNP
+"RTN","FBAARR",18,0)
+RD0 S DIR(0)="Y",DIR("A")="Want to re-initiate all rejected items in the Batch",DIR("B")="NO",DIR("?")="'Yes' will re-initiate all rejected payment items for this batch, 'No' will prompt for re-initiation of specific line items"
+"RTN","FBAARR",19,0)
+ D ^DIR K DIR G:Y ^FBAARR1
+"RTN","FBAARR",20,0)
+RD1 S DIR(0)="Y",DIR("A")="Want to re-initiate any line items",DIR("B")="NO" D ^DIR K DIR Q:$D(DIRUT)!'Y  D DELT^FBAARR2:FBTYPE="B2",DELM:FBTYPE="B3",DELP^FBAARR2:FBTYPE="B5",DELC^FBAARR0:FBTYPE="B9"
+"RTN","FBAARR",21,0)
+RDD ;
+"RTN","FBAARR",22,0)
+FIN N FBFDART
+"RTN","FBAARR",23,0)
+ S FBFDART(161.7,FBN_",",13)=$G(DT)
+"RTN","FBAARR",24,0)
+ S FBFDART(161.7,FBN_",",14)=$G(DUZ)
+"RTN","FBAARR",25,0)
+ S FBFDART(161.7,FBN_",",11)="V"
+"RTN","FBAARR",26,0)
+ D FILE^DIE(,"FBFDART")
+"RTN","FBAARR",27,0)
+ S DIC="^FBAA(161.7,",DA=FBN,DR="0;ST" W !! D EN^DIQ G BT
+"RTN","FBAARR",28,0)
+Q D KILL^FBAARR1
+"RTN","FBAARR",29,0)
+ Q
+"RTN","FBAARR",30,0)
+GET W !! S DIC="^FBAAA(",DIC(0)="AEQ" D ^DIC G RDD:X="^"!(X=""),GET:Y<0 S DA=+Y,J=DA Q
+"RTN","FBAARR",31,0)
+DELM K QQ W !! S DIC="^FBAAA(",DIC(0)="AEQM" D ^DIC G END:X="^"!(X=""),DELM:Y<0 S DA=+Y,J=DA I '$D(^FBAAC("AH",B,J)) W !!,*7,"No payments in this batch for that patient!" G DELM
+"RTN","FBAARR",32,0)
+ S QQ=0 W @IOF D HED^FBAACCB
+"RTN","FBAARR",33,0)
+ F K=0:0 S K=$O(^FBAAC("AH",B,J,K)) Q:K'>0  F L=0:0 S L=$O(^FBAAC("AH",B,J,K,L)) Q:L'>0  F M=0:0 S M=$O(^FBAAC("AH",B,J,K,L,M)) Q:M'>0  D WRITM
+"RTN","FBAARR",34,0)
+RL S ERR=0 S DIR(0)="N^1:"_QQ,DIR("A")="Re-initiate which line item" D ^DIR K DIR G:$D(DIRUT) END S HX=X
+"RTN","FBAARR",35,0)
+ I '$D(QQ(HX)) W !,*7,"You already did that one!!" G RL
+"RTN","FBAARR",36,0)
+ASKSU S DIR(0)="Y",DIR("A")="Are you sure you want to re-initiate line item number "_HX,DIR("B")="NO" D ^DIR K DIR G:$D(DIRUT)!'Y RL
+"RTN","FBAARR",37,0)
+ S J=$P(QQ(HX),"^",1),K=$P(QQ(HX),"^",2),L=$P(QQ(HX),"^",3),M=$P(QQ(HX),"^",4)
+"RTN","FBAARR",38,0)
+STUFF I $P(^FBAAC(J,1,K,1,L,1,M,0),"^",21)="VP" S FBIN=+$P(^(0),"^",16) D VOID^FBAARR1 G END
+"RTN","FBAARR",39,0)
+ S $P(^FBAAC(J,1,K,1,L,1,M,0),"^",8)=FBNB,FBAAAP=+$P(^(0),"^",3),FBIN=+$P(^(0),"^",16)
+"RTN","FBAARR",40,0)
+ S ^FBAAC("AC",FBNB,J,K,L,M)="",^FBAAC("AJ",FBNB,FBIN,J,K,L,M)="" K ^FBAAC("AH",B,J,K,L,M)
+"RTN","FBAARR",41,0)
+ S $P(^FBAA(161.7,FBNB,0),"^",9)=($P(^FBAA(161.7,FBNB,0),"^",9)+FBAAAP),$P(^(0),"^",11)=($P(^(0),"^",11)+1) K ^FBAAC(J,1,K,1,L,1,M,"FBREJ")
+"RTN","FBAARR",42,0)
+ ; update list of invoice lines that were moved to the new batch
+"RTN","FBAARR",43,0)
+ S FBILM(FBIN,M_","_L_","_K_","_J_",")=""
+"RTN","FBAARR",44,0)
+ASKRI S DIR(0)="Y",DIR("A")=$S($G(FBERR):"",1:"Item Re-initiated.  ")_"Want to re-initiate another",DIR("B")="YES" D ^DIR K DIR G ASKRI:$D(DIRUT),DELM:Y,END
+"RTN","FBAARR",45,0)
+WRITM S QQ=QQ+1,QQ(QQ)=J_"^"_K_"^"_L_"^"_M D SET^FBAACCB Q
+"RTN","FBAARR",46,0)
+END I '$D(^FBAAC("AH",B)) S $P(^FBAA(161.7,B,0),"^",17)=""
+"RTN","FBAARR",47,0)
+ ; Assign new invoice number to moved lines if invoice was split
+"RTN","FBAARR",48,0)
+ I $$CKSPLIT(B,.FBILM) S DIR(0)="E" D ^DIR K DIR
+"RTN","FBAARR",49,0)
+ Q
+"RTN","FBAARR",50,0)
+CKSPLIT(B,FBILM) ; Check for/Update split invoice
+"RTN","FBAARR",51,0)
+ ; Input
+"RTN","FBAARR",52,0)
+ ;   B      - ien of original batch before item moved
+"RTN","FBAARR",53,0)
+ ;   FBILM( - array of invoice lines that were moved to a new batch
+"RTN","FBAARR",54,0)
+ ;     passed by reference
+"RTN","FBAARR",55,0)
+ ;     format FBILM(invoice number,iens)=""
+"RTN","FBAARR",56,0)
+ ;     where
+"RTN","FBAARR",57,0)
+ ;       invoice number = invoice number
+"RTN","FBAARR",58,0)
+ ;       iens           = iens of subfile 162.03 (a line item)
+"RTN","FBAARR",59,0)
+ ; Result (0 or 1)
+"RTN","FBAARR",60,0)
+ ;   =0 if no lines were assigned a new invoice number
+"RTN","FBAARR",61,0)
+ ;   =1 if some lines assigned a new invoice number
+"RTN","FBAARR",62,0)
+ ;   May change invoice number of line items in subfile 162.03
+"RTN","FBAARR",63,0)
+ ;   and inform user
+"RTN","FBAARR",64,0)
+ N FBAAIN,FBFDA,FBIENS,FBIN,FBINL,FBJ,FBK,FBL,FBM,FBRET,FBSPLT
+"RTN","FBAARR",65,0)
+ S FBRET=0
+"RTN","FBAARR",66,0)
+ ; loop thru invoice numbers in input array
+"RTN","FBAARR",67,0)
+ S FBIN="" F  S FBIN=$O(FBILM(FBIN)) Q:FBIN=""  D
+"RTN","FBAARR",68,0)
+ . S FBSPLT=0 ; initialize split flag to false
+"RTN","FBAARR",69,0)
+ . ; check if any unrejected invoice lines still in original batch
+"RTN","FBAARR",70,0)
+ . I $D(^FBAAC("AJ",B,FBIN)) S FBSPLT=1
+"RTN","FBAARR",71,0)
+ . ; check if any rejected invoice lines still in original batch
+"RTN","FBAARR",72,0)
+ . I 'FBSPLT S FBJ=0 F  S FBJ=$O(^FBAAC("AH",B,FBJ)) Q:'FBJ  D  Q:FBSPLT
+"RTN","FBAARR",73,0)
+ . . S FBK=0
+"RTN","FBAARR",74,0)
+ . . F  S FBK=$O(^FBAAC("AH",B,FBJ,FBK)) Q:'FBK  D  Q:FBSPLT
+"RTN","FBAARR",75,0)
+ . . . S FBL=0
+"RTN","FBAARR",76,0)
+ . . . F  S FBL=$O(^FBAAC("AH",B,FBJ,FBK,FBL)) Q:'FBL  D  Q:FBSPLT
+"RTN","FBAARR",77,0)
+ . . . . S FBM=0
+"RTN","FBAARR",78,0)
+ . . . . F  S FBM=$O(^FBAAC("AH",B,FBJ,FBK,FBL,FBM)) Q:'FBM  D  Q:FBSPLT
+"RTN","FBAARR",79,0)
+ . . . . . S FBINL=$P($G(^FBAAC(FBJ,1,FBK,1,FBL,1,FBM,0)),U,16)
+"RTN","FBAARR",80,0)
+ . . . . . I FBINL=FBIN S FBSPLT=1
+"RTN","FBAARR",81,0)
+ . Q:FBSPLT=0  ; invoice was not split
+"RTN","FBAARR",82,0)
+ . S FBRET=1
+"RTN","FBAARR",83,0)
+ . ; assign new invoice number to lines moved to the new batch
+"RTN","FBAARR",84,0)
+ . ; get a new invoice number (FBAAIN)
+"RTN","FBAARR",85,0)
+ . D GETNXI^FBAAUTL
+"RTN","FBAARR",86,0)
+ . ; loop thru the moved line items and assign the new invoice number
+"RTN","FBAARR",87,0)
+ . K FBFDA
+"RTN","FBAARR",88,0)
+ . S FBIENS="" F  S FBIENS=$O(FBILM(FBIN,FBIENS)) Q:FBIENS=""  D
+"RTN","FBAARR",89,0)
+ . . S FBFDA(162.03,FBIENS,14)=FBAAIN
+"RTN","FBAARR",90,0)
+ . W !!,"FYI: Invoice ",FBIN," was split since entire invoice did not move to the new batch."
+"RTN","FBAARR",91,0)
+ . W !,"Re-initiated lines are being assigned a new invoice number of ",FBAAIN,"."
+"RTN","FBAARR",92,0)
+ . ; update the file
+"RTN","FBAARR",93,0)
+ . I $D(FBFDA) D FILE^DIE("","FBFDA"),MSG^DIALOG()
+"RTN","FBAARR",94,0)
+ Q FBRET
+"RTN","FBAARR",95,0)
+ ;
+"RTN","FBAARR",96,0)
+ ;FBAARR
+"RTN","FBAAUTL")
+0^3^B23591801^B22355196
+"RTN","FBAAUTL",1,0)
+FBAAUTL ;AISC/GRR,SBW-Fee Basis Utility Routine ; 4/23/10 3:06pm
+"RTN","FBAAUTL",2,0)
+ ;;3.5;FEE BASIS;**101,114**;JAN 30, 1995;Build 7
+"RTN","FBAAUTL",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","FBAAUTL",4,0)
+DATE N FBDT S FBPOP=0 K BEGDATE,ENDDATE K:$G(%DT)'["A" %DT W !!,"**** Date Range Selection ****"
+"RTN","FBAAUTL",5,0)
+ S FBDT=$S($D(%DT):1,1:0) W ! S %DT=$S(FBDT:%DT,1:"APEX"),%DT("A")="   Beginning DATE : " D ^%DT S:Y<0 FBPOP=1 Q:Y<0  S (%DT(0),BEGDATE)=Y
+"RTN","FBAAUTL",6,0)
+ W ! S %DT=$S(FBDT:%DT,1:"AEX"),%DT("A")="   Ending    DATE : " D ^%DT K %DT S:Y<0 FBPOP=1 Q:Y<0  W ! S ENDDATE=Y
+"RTN","FBAAUTL",7,0)
+ Q
+"RTN","FBAAUTL",8,0)
+ ;
+"RTN","FBAAUTL",9,0)
+ZIS S ZTRTN=PGM,ZTSAVE="",FBPOP=0 F I=1:1 Q:$P(VAR,"^",I)']""  S ZTSAVE($P(VAR,"^",I))=""
+"RTN","FBAAUTL",10,0)
+ I '$D(ZTDESC) S ZTDESC=$S($D(PGM):PGM,1:"UNKNOWN OPTION")
+"RTN","FBAAUTL",11,0)
+ W ! S %ZIS="QMP" D ^%ZIS S:POP FBPOP=1 Q:POP  I $D(IO("Q")) K IO("Q"),ZTIO D ^%ZTLOAD W:$D(ZTSK) !,*7,"REQUEST QUEUED",!,"Task #: ",$G(ZTSK) K I,ZTSK,ZTIO,ZTSAVE,ZTRTN D HOME^%ZIS S FBPOP=1 Q
+"RTN","FBAAUTL",12,0)
+ Q
+"RTN","FBAAUTL",13,0)
+ ;
+"RTN","FBAAUTL",14,0)
+CLOSE I '$D(ZTQUEUED) D ^%ZISC
+"RTN","FBAAUTL",15,0)
+ K IOP,ZTDESC,ZTRTN,ZTSAVE,ZTDTH,VAR,VAL,PGM,FBPOP,POP Q
+"RTN","FBAAUTL",16,0)
+ ;
+"RTN","FBAAUTL",17,0)
+D S Y=$P("JAN^FEB^MAR^APR^MAY^JUN^JUL^AUG^SEP^OCT^NOV^DEC","^",$E(Y,4,5))_" "_$S(Y#100:$J(Y#100\1,2)_",",1:"")_(Y\10000+1700)_$S(Y#1:"  "_$E(Y_0,9,10)_":"_$E(Y_"000",11,12),1:"") Q
+"RTN","FBAAUTL",18,0)
+SITEP ;SET FBSITE(0),FBSITE(1) VARIABLE TO FEE SITE PARAMETERS
+"RTN","FBAAUTL",19,0)
+ S FBPOP=0,FBSITE(0)=$G(^FBAA(161.4,1,0)) S:FBSITE(0)']"" FBPOP=1
+"RTN","FBAAUTL",20,0)
+ S FBSITE(1)=$G(^FBAA(161.4,1,1)) S:FBSITE(1)']"" FBPOP=1
+"RTN","FBAAUTL",21,0)
+ W:FBPOP !,*7,"Fee Basis Site Parameters must be entered to proceed",!
+"RTN","FBAAUTL",22,0)
+ Q
+"RTN","FBAAUTL",23,0)
+TM S X=$E($P(X,".",2)_"0000",1,4),%=X>1159 S:X>1259 X=X-1200 S X=X\100_":"_$E(X#100+100,2,3)_" "_$E("AP",%+1)_"M" Q
+"RTN","FBAAUTL",24,0)
+PDF S:Y Y=$E(Y,4,5)_"/"_$E(Y,6,7)_"/"_$E(Y,2,3) Q
+"RTN","FBAAUTL",25,0)
+GETNXB ;GET NEXT AVAILABLE BATCH NUMBER
+"RTN","FBAAUTL",26,0)
+ L +^FBAA(161.4):$G(DILOCKTM,3) I '$T D  G GETNXB
+"RTN","FBAAUTL",27,0)
+ .W !,"Another user is opening a batch.  Trying again.",!
+"RTN","FBAAUTL",28,0)
+ I '$D(^FBAA(161.4,1,"FBNUM")) S ^FBAA(161.4,1,"FBNUM")="1^1"
+"RTN","FBAAUTL",29,0)
+ I '$P($G(^FBAA(161.4,1,"FBNUM")),"^") S $P(^("FBNUM"),"^")=1
+"RTN","FBAAUTL",30,0)
+ S FBBN=$P(^FBAA(161.4,1,"FBNUM"),"^")
+"RTN","FBAAUTL",31,0)
+ ;I FBBN>99899,$S('$D(^FBAA(161.4,1,"PURGE")):1,$P(^FBAA(161.4,1,"PURGE"),"^",1)'>0:1,1:"") D WARNBT
+"RTN","FBAAUTL",32,0)
+ I $P(^FBAA(161.7,0),U,4)>99899 D WARNBT ;*114
+"RTN","FBAAUTL",33,0)
+ S $P(^FBAA(161.4,1,"FBNUM"),"^",1)=$S(FBBN+1>99999:1,1:FBBN+1) I '$$CHKBI^FBAAUTL4(FBBN,1) L -^FBAA(161.4) G GETNXB
+"RTN","FBAAUTL",34,0)
+ L -^FBAA(161.4) Q
+"RTN","FBAAUTL",35,0)
+WARNBT W !,*7,"There are ",99999-FBBN," batches left before the BATCH PURGE routine",!,"needs to be run. Contact your IRM Service!",!!
+"RTN","FBAAUTL",36,0)
+ Q
+"RTN","FBAAUTL",37,0)
+GETNXI ;GET NEXT AVAILABLE INVOICE NUMBER 
+"RTN","FBAAUTL",38,0)
+ L +^FBAA(161.4):$G(DILOCKTM,3) I '$T D  G GETNXI
+"RTN","FBAAUTL",39,0)
+ .W !,"Another user is obtaining an invoice number.  Trying again.",!
+"RTN","FBAAUTL",40,0)
+ I '$D(^FBAA(161.4,1,"FBNUM")) S ^FBAA(161.4,1,"FBNUM")="1^1"
+"RTN","FBAAUTL",41,0)
+ I '$P($G(^FBAA(161.4,1,"FBNUM")),U,2) S $P(^("FBNUM"),U,2)=1
+"RTN","FBAAUTL",42,0)
+ S FBAAIN=$P(^FBAA(161.4,1,"FBNUM"),"^",2),$P(^("FBNUM"),"^",2)=$S(FBAAIN+1>9999999:1,1:FBAAIN+1) I '$$CHKBI^FBAAUTL4(FBAAIN) L -^FBAA(161.4) G GETNXI
+"RTN","FBAAUTL",43,0)
+ L -^FBAA(161.4) Q
+"RTN","FBAAUTL",44,0)
+PDATE S FBPDT=$P("January^February^March^April^May^June^July^August^September^October^November^December","^",$E(Y,4,5))_" "_$S(Y#100:$J(Y#100\1,2)_", ",1:"")_(Y\10000+1700)_$S(Y#1:"  "_$E(Y_0,9,10)_":"_$E(Y_"000",11,12),1:"") Q
+"RTN","FBAAUTL",45,0)
+DATCK S HOLDY=Y,HOLDY=$S($P(HOLDY,"^",2):$P(HOLDY,"^",2),1:HOLDY)
+"RTN","FBAAUTL",46,0)
+ I $D(FBAAID),Y>FBAAID W !!,*7,"Date of Service cannot be later than Invoice Date!" K X Q
+"RTN","FBAAUTL",47,0)
+ I $D(FBAABDT),$D(FBAAEDT),(Y<FBAABDT!(Y>FBAAEDT)) W !!,*7,"Date of Service ",$S(Y<FBAABDT:"prior to ",1:"later than "),"Authorization period.",! K X
+"RTN","FBAAUTL",48,0)
+ S Y=HOLDY Q
+"RTN","FBAAUTL",49,0)
+ ;
+"RTN","FBAAUTL",50,0)
+DATX(X) ;external output function for date format
+"RTN","FBAAUTL",51,0)
+ ;INPUT = FM internal date format (time optional)
+"RTN","FBAAUTL",52,0)
+ ;OUTPUT = date/time with slashes
+"RTN","FBAAUTL",53,0)
+ Q $$FMTE^XLFDT(X,2)
+"RTN","FBAAUTL",54,0)
+ ;
+"RTN","FBAAUTL",55,0)
+STATION ;GET STATION NUMBER FROM INSTITUTION FILE
+"RTN","FBAAUTL",56,0)
+ I '$D(FBSITE(1)) D SITEP
+"RTN","FBAAUTL",57,0)
+ I $S('$D(FBSITE(1)):1,$P(FBSITE(1),"^",3)="":1,'$D(^DIC(4,$P(FBSITE(1),"^",3),0)):1,'$D(^DIC(4,$P(FBSITE(1),"^",3),99)):1,'+$P(^DIC(4,$P(FBSITE(1),"^",3),99),"^"):1,1:0) G NOSTA
+"RTN","FBAAUTL",58,0)
+ S (FBSN,FBAASN)=$S($D(^DIC(4,$P(FBSITE(1),"^",3),99)):$E(^(99),1,3),1:999)
+"RTN","FBAAUTL",59,0)
+ Q
+"RTN","FBAAUTL",60,0)
+NOSTA S FB("ERROR")=1 I '$D(ZTQUEUED) W !!,*7,"Unable to determine Station Number. Check Fee Site Parameters or Station Number in the Institution File.",!!
+"RTN","FBAAUTL",61,0)
+ Q
+"RTN","FBAAUTL",62,0)
+ ;
+"RTN","FBAAUTL",63,0)
+HD ;set transmission header
+"RTN","FBAAUTL",64,0)
+ I '$D(FBSITE(1)) S FBSITE(1)=$G(^FBAA(161.4,1,1))
+"RTN","FBAAUTL",65,0)
+ S FBHD=$$HDR^FBAAUTL3() I FBHD']"" S FB("ERROR")=1 W !,"Transmission header must exist in FEE BASIS SITE PARAMETER file",!,"before you can proceed.",*7,!
+"RTN","FBAAUTL",66,0)
+ Q
+"RTN","FBAAUTL",67,0)
+ ;
+"RTN","FBAAUTL",68,0)
+SSN(PID,BID,DOD) ;
+"RTN","FBAAUTL",69,0)
+ ;PID = DFN of Patient. If this is all that is past,
+"RTN","FBAAUTL",70,0)
+ ;full Pt.ID (000-00-0000) will be returned.
+"RTN","FBAAUTL",71,0)
+ ;If BID = 1 the call will return last 4 of Pt.ID only.
+"RTN","FBAAUTL",72,0)
+ ;If DOD is defined to internal entry # of eligibility the appropriate
+"RTN","FBAAUTL",73,0)
+ ;Pt.ID will be returned.
+"RTN","FBAAUTL",74,0)
+ N DFN,FBSSN
+"RTN","FBAAUTL",75,0)
+ S DFN=PID
+"RTN","FBAAUTL",76,0)
+ I 'DFN Q "Unknown"
+"RTN","FBAAUTL",77,0)
+ S:'$D(BID) BID="" S:$D(DOD) VAPTYP=DOD
+"RTN","FBAAUTL",78,0)
+ D PID^VADPT6 I VAERR K VAERR Q "Unknown"
+"RTN","FBAAUTL",79,0)
+ S FBSSN=$S(BID:VA("BID"),1:VA("PID"))
+"RTN","FBAAUTL",80,0)
+ K VA("BID"),VA("PID"),VAERR,VAPTYP
+"RTN","FBAAUTL",81,0)
+ Q FBSSN
+"RTN","FBAAUTL",82,0)
+ ;
+"RTN","FBAAUTL",83,0)
+SSNL4(SSN) ;Convert 1st 5 digits of SSN to X (Only print last 4 digits of SSN)
+"RTN","FBAAUTL",84,0)
+ ;Input:
+"RTN","FBAAUTL",85,0)
+ ;   SSN - SSN in 9 digit or ###-##-#### format
+"RTN","FBAAUTL",86,0)
+ ;     Pseudo SSN is also allowed as input
+"RTN","FBAAUTL",87,0)
+ ;Output
+"RTN","FBAAUTL",88,0)
+ ;   SSN - SSN in XXXXX#### or XXX-XX-#### format
+"RTN","FBAAUTL",89,0)
+ ;     Pseudo SSN will be changed as above with passed "P" at end
+"RTN","FBAAUTL",90,0)
+ ; X represent actual X and # represent digit
+"RTN","FBAAUTL",91,0)
+ ;
+"RTN","FBAAUTL",92,0)
+ S SSN=$G(SSN)
+"RTN","FBAAUTL",93,0)
+ ;Change SSN ######### to XXXXX####
+"RTN","FBAAUTL",94,0)
+ S:SSN?9N0.1"P" $E(SSN,1,5)="XXXXX"
+"RTN","FBAAUTL",95,0)
+ ;Change SSN ###-##-#### to XXX-XX-####
+"RTN","FBAAUTL",96,0)
+ S:SSN?3N1"-"2N1"-"4N0.1"P" $E(SSN,1,7)="XXX-XX-"
+"RTN","FBAAUTL",97,0)
+ Q SSN
+"RTN","FBUCEN")
+0^4^B26341993^B26051535
+"RTN","FBUCEN",1,0)
+FBUCEN ;ALBISC/TET - ENTER UNAUTHORIZED CLAIM ; 4/9/10 11:25am
+"RTN","FBUCEN",2,0)
+ ;;3.5;FEE BASIS;**32,61,114**;JAN 30, 1995;Build 7
+"RTN","FBUCEN",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","FBUCEN",4,0)
+ ;FBUC - unauthorized claims site parameter node
+"RTN","FBUCEN",5,0)
+ ;FBTRACK - 1 to track incomplete claims, 0 to track complete claims only
+"RTN","FBUCEN",6,0)
+ ;FBUCP - 0 to not automatically print letters, otherwise default device
+"RTN","FBUCEN",7,0)
+ ;FBOK - 0 if claim is incomplete, 1 if claim is complete.
+"RTN","FBUCEN",8,0)
+ ;FBACT - ENT for enter (fbact represents action type)
+"RTN","FBUCEN",9,0)
+ ;FBINENT = initial entry parameter: 1 if using, 0 if not
+"RTN","FBUCEN",10,0)
+ S FBOUT=0,FBUC=$$FBUC^FBUCUTL2(1),FBTRACK=+$P(FBUC,U),FBOK=$S('FBTRACK:1,1:0),FBACT="ENT",FBINENT=+$P(FBUC,U,7)
+"RTN","FBUCEN",11,0)
+GET ;get info on new claim entry
+"RTN","FBUCEN",12,0)
+ K FBVEN,FBVET
+"RTN","FBUCEN",13,0)
+VET ;get vet info
+"RTN","FBUCEN",14,0)
+ N DIR,DA W !! S DIR(0)="162.7,2O",DIR("A")="Select VETERAN" D ^DIR K DIR,DA G END:$D(DIRUT),VET:+Y'>0 S FBVET=+Y
+"RTN","FBUCEN",15,0)
+VEN ;get vendor info
+"RTN","FBUCEN",16,0)
+ N DIR,DA S DIR(0)="162.7,1O",DIR("A")="Select FEE VENDOR" D ^DIR K DIR,DA G VET:$D(DUOUT)!($D(DTOUT)),VEN:+Y<0,VEN:+Y=0&('FBINENT) S FBVEN=+Y
+"RTN","FBUCEN",17,0)
+PROG N DIC,DA S DIC="^FBAA(161.8,",DIC(0)="AEQMZ",DIC("S")="I +$P(^(0),U,3)" D ^DIC K DIC,DA S:$D(DTOUT)!($D(DUOUT)) FBOUT=1 G END:FBOUT,GET:Y<0 S FBPR=+Y D  S:FBOUT FBOUT=0 G VET
+"RTN","FBUCEN",18,0)
+ .N FBDA,FBMASTER,FBORDER,FBTFROM,FBTTO,FB1725,FBFPPSC
+"RTN","FBUCEN",19,0)
+ .; ask if claim is an EDI claim (patch *61)
+"RTN","FBUCEN",20,0)
+ .S FBFPPSC=$$FPPSC^FBUTL5() I FBFPPSC=-1 S FBFPPSC="",FBOUT=1 Q
+"RTN","FBUCEN",21,0)
+ .; ask if claim is a mill bill emergency care claim (patch *32)
+"RTN","FBUCEN",22,0)
+ .S DIR(0)="Y"
+"RTN","FBUCEN",23,0)
+ .S DIR("A")="Is this claim being considered under Millennium Act 38 U.S.C. 1725 (Y/N)"
+"RTN","FBUCEN",24,0)
+ .D ^DIR K DIR I $D(DIRUT) S FBOUT=1 Q
+"RTN","FBUCEN",25,0)
+ .S FB1725=$S(Y:1,1:"")
+"RTN","FBUCEN",26,0)
+ .D ASKDT Q:FBOUT  I FBTRACK,'FBINENT D  Q:FBOUT
+"RTN","FBUCEN",27,0)
+ ..S DIR(0)="Y",DIR("A")="Is the unauthorized claim complete for the FEE PROGRAM" D DIRQ,^DIR K DIR S:$D(DIRUT) FBOUT=1 S:'FBOUT FBOK=Y Q:FBOUT!(FBOK)
+"RTN","FBUCEN",28,0)
+ ..D REQ^FBUCPEND Q:FBOUT  S FBORDER=10 ;display/select pending information,set status order to incomplete if selected pending items
+"RTN","FBUCEN",29,0)
+ .;check for duplicates
+"RTN","FBUCEN",30,0)
+ .I 'FBINENT W !,"Checking for potential duplicates...",! H 1 D ^FBUCDUP
+"RTN","FBUCEN",31,0)
+ .W !!,"Checking eligibility...",! H 1 S DFN=FBVET D ELIG^VADPT W:VAEL(4)'=1 !,"Patient is not a veteran.",*7 D ELIG^FBAADEM K VAEL,VAERR
+"RTN","FBUCEN",32,0)
+ .W ! S DIR("A")="Are you sure you wish to enter a new unauthorized claim",DIR(0)="Y" D ^DIR K DIR S:'Y!($D(DIRUT)) FBOUT=1 Q:FBOUT
+"RTN","FBUCEN",33,0)
+ .;file new claim
+"RTN","FBUCEN",34,0)
+ .S DIC="^FB583(",DIC(0)="Z",X=DT K DD,DO D FILE^DICN S FBOUT=$S($P(Y,U,3):0,1:1) Q:FBOUT  S FBDA=+Y D PRIOR^FBUCEVT(FBDA,FBACT) D
+"RTN","FBUCEN",35,0)
+ ..S FBMASTER=FBDA,FBORDER=$S(+$G(FBORDER)=10:10,'FBINENT:30,1:5)
+"RTN","FBUCEN",36,0)
+ ..S DIE=DIC,DIE("NO^")="BACKOUTOK",DR="[FB UNAUTHORIZED ENTER]",DA=FBDA
+"RTN","FBUCEN",37,0)
+ ..D LOCK^FBUCUTL(DIE,DA,1) S:'FBLOCK FBOUT=1 Q:FBOUT  D ^DIE L -^FB583(FBDA) K DA,DIE,DQ,DR,FBLOCK I $D(Y)!($D(DTOUT)) S DIK=DIC,DA=FBDA D ^DIK K DIK W !,"... Deleting incomplete record.",*7 S FBOUT=1 Q
+"RTN","FBUCEN",38,0)
+ ..I FBORDER=10 D FREQ^FBUCPEND ;file requested info
+"RTN","FBUCEN",39,0)
+ ..K ^TMP("FBARY",$J),^TMP("FBAR",$J)
+"RTN","FBUCEN",40,0)
+ .D AFTER^FBUCEVT(FBDA,FBACT)
+"RTN","FBUCEN",41,0)
+ .K FBARY,FBLOCK Q:FBOUT  D ENTER^FBUCLNK1(FBDA,FBUCA,1) K FBARY,^TMP("FBARY",$J),^TMP("FBAR",$J)
+"RTN","FBUCEN",42,0)
+ .I FBORDER'=10,+$G(FBVEN)>0,+$G(FBTTO)>0 D AFTER^FBUCEVT(FBDA,FBACT),EN^FBUCEN1(FBUCA,FBDA) ;if claim complete, check if group, any in group dispositioned
+"RTN","FBUCEN",43,0)
+ .;do update
+"RTN","FBUCEN",44,0)
+ .D AFTER^FBUCEVT(FBDA,FBACT),^FBUCUPD(FBUCP,FBUCPA,FBUCA,FBUCAA,FBDA,FBACT)
+"RTN","FBUCEN",45,0)
+ ;
+"RTN","FBUCEN",46,0)
+END ;kill and quit
+"RTN","FBUCEN",47,0)
+ K DA,DFN,DIC,DIE,DIR,DIRUT,DQ,DR,DTOUT,DUOUT,FBACT,FBARY,FBDA,FBDISP,FBINENT,FBLOCK,FBMASTER,FBOK,FBORDER,FBOUT,FBPEND,FBPI,FBPR,FBPROG
+"RTN","FBUCEN",48,0)
+ K FBSTATUS,FBTFROM,FBTRACK,FBTTO,FBUC,FBUCA,FBUCP,FBUCAA,FBUCP,FBUCPA,FBVEN,FBVET,X,Y,^TMP("FBAR",$J),^TMP("FBARY",$J)
+"RTN","FBUCEN",49,0)
+ Q
+"RTN","FBUCEN",50,0)
+ASKDT ;ask treatment from/to dates
+"RTN","FBUCEN",51,0)
+ S DIR(0)="162.7,3" S:FBPR=6 DIR("A")="ADMISSION DATE" D ^DIR K DIR S:'+Y DIRUT="^" S:$D(DIRUT) FBOUT=1 S:'FBOUT FBTFROM=Y
+"RTN","FBUCEN",52,0)
+ I 'FBOUT S DIR(0)="162.7,4O" S:FBPR=6 DIR("A")="DISCHARGE DATE" S:FBPR'=6&(FBPR'=7) DIR("B")=$$DATX^FBAAUTL(FBTFROM) D ^DIR K DIR S:$D(DUOUT)!($D(DTOUT)) FBOUT=1 I 'FBOUT,'FBINENT G:+Y'>0!(FBTFROM>Y) ASKDT S FBTTO=Y
+"RTN","FBUCEN",53,0)
+ I 'FBOUT S FBTTO=+Y
+"RTN","FBUCEN",54,0)
+ Q
+"RTN","FBUCEN",55,0)
+HELP ;help text for complete claim question - ??
+"RTN","FBUCEN",56,0)
+ W !?10,"An unauthorized claim is considered complete (or valid)"
+"RTN","FBUCEN",57,0)
+ W !?10,"if all the necessary information has been received."
+"RTN","FBUCEN",58,0)
+ W !?10,"A claim can never be considered complete if it is missing"
+"RTN","FBUCEN",59,0)
+ W !?10,"form 10-583 or form 10-583 is incomplete."
+"RTN","FBUCEN",60,0)
+ W !?10,"Some examples of other items which are needed are:"
+"RTN","FBUCEN",61,0)
+ W !?20,"Copies of actual bills",!?20,"Original paid receipt"
+"RTN","FBUCEN",62,0)
+ W !?20,"Itemized invoice/UB82",!?20,"Medical records or signature for release"
+"RTN","FBUCEN",63,0)
+ W !?20,"Diagnostic/Procedure code(s)",!
+"RTN","FBUCEN",64,0)
+ Q
+"RTN","FBUCEN",65,0)
+DIRQ ;set dir(?,#)
+"RTN","FBUCEN",66,0)
+ S DIR("?")="Enter Y(es) if complete, N(o) if incomplete."
+"RTN","FBUCEN",67,0)
+ S DIR("??")="^D HELP^FBUCEN"
+"RTN","FBUCEN",68,0)
+ S DIR("?",1)="Enter Y(es) if all required information has been submitted,"
+"RTN","FBUCEN",69,0)
+ S DIR("?",2)="      N(o)  if the claim is incomplete."
+"RTN","FBUCEN",70,0)
+ S DIR("?",3)=""
+"RTN","FBUCEN",71,0)
+ Q
+"RTN","FBXIP114")
+0^^B940419^n/a
+"RTN","FBXIP114",1,0)
+FBXIP114 ;ALB/RC-PATCH INSTALL ROUTINE ; 8/31/10 2:44pm
+"RTN","FBXIP114",2,0)
+ ;;3.5;FEE BASIS;**114**;JAN 30, 1995;Build 7
+"RTN","FBXIP114",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","FBXIP114",4,0)
+ Q
+"RTN","FBXIP114",5,0)
+ ;
+"RTN","FBXIP114",6,0)
+PS ; post-install entry point
+"RTN","FBXIP114",7,0)
+ ; create KIDS checkpoints with call backs
+"RTN","FBXIP114",8,0)
+ N FBX
+"RTN","FBXIP114",9,0)
+ F FBX="EN" D
+"RTN","FBXIP114",10,0)
+ .S Y=$$NEWCP^XPDUTL(FBX,FBX_"^FBXIP114")
+"RTN","FBXIP114",11,0)
+ .I 'Y D BMES^XPDUTL("ERROR Creating "_FBX_" Checkpoint.")
+"RTN","FBXIP114",12,0)
+ Q
+"RTN","FBXIP114",13,0)
+ ;
+"RTN","FBXIP114",14,0)
+EN ; Begin Post-Install
+"RTN","FBXIP114",15,0)
+ ;re-index "AF" cross reference.
+"RTN","FBXIP114",16,0)
+ N DIK
+"RTN","FBXIP114",17,0)
+ S DIK="^FBAA(161.7,",DIK(1)="13^AF"
+"RTN","FBXIP114",18,0)
+ D ENALL2^DIK ;Kill existing "AF" cross-reference.
+"RTN","FBXIP114",19,0)
+ D ENALL^DIK ;Re-create "AF" cross-reference.  
+"RTN","FBXIP114",20,0)
+ Q
+"RTN","FBXIP114",21,0)
+ ;FBXIP114
+"VER")
+8.0^22.0
+"BLD",8356,6)
+^102
+**END**
+**END**

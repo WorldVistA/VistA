@@ -1,0 +1,1311 @@
+$TXT Created by FAIRBROTHER,EILEEN at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 01/26/11 at 17:02
+=============================================================================
+Run Date: MAY 06, 2011                     Designation: DVBA*2.7*149
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #142                    Status: Released
+                  Compliance Date: MAY 20, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*19 <<= must be installed BEFORE `DVBA*2.7*149'
+                    (v)DVBA*2.7*27 <<= must be installed BEFORE `DVBA*2.7*149'
+                    (v)DVBA*2.7*35 <<= must be installed BEFORE `DVBA*2.7*149'
+                    (v)DVBA*2.7*57 <<= must be installed BEFORE `DVBA*2.7*149'
+                    (v)DVBA*2.7*65 <<= must be installed BEFORE `DVBA*2.7*149'
+                    (v)DVBA*2.7*77 <<= must be installed BEFORE `DVBA*2.7*149'
+                    (v)DVBA*2.7*108<<= must be installed BEFORE `DVBA*2.7*149'
+                    (v)DVBA*2.7*143<<= must be installed BEFORE `DVBA*2.7*149'
+                    (v)DVBA*2.7*156<<= must be installed BEFORE `DVBA*2.7*149'
+
+Subject: CAPRI Maintenance and Tactical Enhancement
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+                   *******     PLEASE NOTE    ******
+              This mandatory patch has a 14 day compliance
+              ********************************************
+  
+ I. OVERVIEW
+  
+   An accelerated installation timeframe is being established for this
+   patch (DVBA*2.7*149) due to updates to the 2507 REQUEST File (#396.3)
+   to include 5 additional PRIORITY OF EXAM codes, which can cause
+   issues as sites have the ability to transfer 2507 requests to other
+   sites, which may not have DVBA*2.7*149 installed. The 
+   PRIORITY OF EXAM code will always be written to the 2507 Request 
+   created upon transfer, but inconsistencies/irregularities in reports 
+   and other errors may occur if the 2507 Request is further processed 
+   by users without DVBA*2.7*149 first being installed at the site. 
+  
+   This patch is to announce the release of a new version of the
+   Compensation & Pension Record Interchange (CAPRI) Graphical User
+   Interface (GUI) v149. 
+     
+   Additionally, this patch (DVBA*2.7*149) contains VistA server
+   modifications that support the release of the new CAPRI GUI v149.
+   Therefore this patch (DVBA*2.7*149) should be installed on your
+   VistA system before installing and using CAPRI GUI v149.
+  
+    *********************  I M P O R T A N T  *************************
+    *                                                                 *
+    *  This patch (DVBA*2.7*149) may be installed while CAPRI users   *
+    *  are still using the previously released version of the CAPRI   *
+    *  GUI (DVBA_27_143_12.exe).                                      *
+    *                                                                 *
+    *  Once the installation of this patch has been completed, CAPRI  * 
+    *  users should be upgraded to the new released version of the    *
+    *  CAPRI GUI (CAPRI.exe [DVBA_27_P149_11.ZIP]).                    *
+    *                                                                 *
+    *  Please refer to the 'SOFTWARE AND DOCUMENTATION RETRIEVAL'     *
+    *  section (V.) of this patch message for specific instructions   *
+    *  regarding the retrieval of the CAPRI GUI v149 software and     *
+    *  user documentation.                                            *
+    *                                                                 *
+    *******************************************************************
+  
+   This patch (DVBA*2.7*149) and CAPRI GUI v149 provides defect fixes and
+   enhancements for the CAPRI GUI and the Automated Medical Information
+   Exchange (AMIE) package.  Please refer to the 'FUNCTIONAL OVERVIEW'
+   section (III.) for the specific changes and primary functionality being
+   delivered.
+   
+   Note:
+   ----- 
+   Some sites may experience problems with McAfee Host Intrusion Prevention
+   (HIPS) configuration after installing CAPRI GUI v149.
+  
+   Issue: CAPRI may shut down or hang when users attempt to connect to the
+   application. This may occur when either: the site selection list is 
+   presented during start-up and the user selects one of the sites with a 
+   HIPS configuration that prevents access (for example, sites  associated
+   with the Black Hills system); or when the enterprise search function
+   located on the patient selection screen toolbar is used to select a site
+   as part of the search parameters.
+  
+   Workaround: Most users will not experience this issue.  All instances of
+   this issue should be reported to the VA NSOC OPERATIONS (ePO) mailgroup
+   for resolution of the HIPS configuration issue.
+  
+   Known Anomalies
+   ---------------
+   The following section describes a known anomaly in this release.  This
+   anomaly will be fixed in the next CAPRI GUI and VistA patch,
+   DVBA*2.7*168, due for release by June, 2011. 
+  
+   Issue: 
+   ------
+   An erroneous message will appear if a user enters a new patient while
+   leaving all of the following fields blank: Entry Date, Separation Date,
+   Branch of Service, and Discharge Type.  The message states that the
+   attempted new patient entry did not file, when in actuality the new 
+   patient entry is created on the VistA system as expected. If a user
+   runs into this scenario they can ignore the error message.
+  
+   Risk/Impact:
+   ------------ 
+   None/Low impact to users. 
+  
+   Workaround: 
+   -----------
+   Even though the "Military Service Episode Did Not File Successfully"
+   error message is displayed, any data entered by the user is still
+   filed successfully.  No workaround is necessary.
+  
+   Comments:
+   ---------
+   Only VBA users who create a new patient via CAPRI without entering
+   the Entry Date, Separation Date, Branch of Service, and Discharge
+   Type will see this invalid error message.
+  
+ II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+   
+    The following section lists the Remedy tickets and/or New Service 
+    Requests associated with this patch.
+   
+    1. Associated Remedy Ticket(s):
+       ----------------------------
+       HD0000000321303 - CAPRI can't specify printer tray; always prints
+                         to tray specified in default settings.
+         Duplicates:     None
+   
+       HD0000000363878 - CAPRI time-out when cancelling "switch sites" from
+                         File menu. 
+         Duplicates:     None
+  
+       HD0000000360917 - ~close~ 
+       Duplicates:      HD0000000367010 - 756- The template name changed 
+                        when provider close template and is unable to open
+                        template.
+                        HD0000000374387 - ~close~!
+  
+       HD0000000380184 - Denver RO (339) CAPRI User, Gregg Linnert, 
+                         reports CAPRI locking up when attempting to run
+                         CAPRI exam report for Cheyenne.
+         Duplicates:     None
+  
+       HD0000000392970 - Waco users receive error "VABAB DATETIME could not
+                         be accessed" when printing C&P Exams
+         Duplicates:     None
+  
+       HD0000000408062 - Default on save
+         Duplicates:     HD0000000413469
+                         HD0000000432520
+                         HD0000000444090
+  
+       HD0000000433116 - HRC Users getting only ToolBox Menu
+         Duplicates:     None
+  
+   
+    2. Associated New Service Request(s):
+       ----------------------------------
+       NONE
+   
+ III. FUNCTIONAL OVERVIEW
+   
+    The following is an overview of the changes and primary functionality
+    that will be delivered in CAPRI GUI v149 and this VistA patch 
+    (DVBA*2.7*149).
+    
+    1. The following Remedy tickets are being addressed:
+   
+       a. HD0000000321303 - CAPRI can't specify printer tray; always prints
+                            to tray specified in default settings.
+   
+       Problem
+       -------
+       CAPRI users are not able to change the printer setting so that
+       reports are printed from an alternate tray.
+   
+       Solution
+       --------
+       The printer dialog was replaced with a standard dialog which allows 
+       selection and use of printer options.
+  
+       b. HD0000000363878 - CAPRI time-out when cancelling "switch sites" 
+                            from File menu.
+   
+       Problem
+       -------
+       If a user has a patient open, accidently selects the switch sites 
+       menu option, then selects cancel, CAPRI will close after two
+       minutes. 
+   
+       Solution
+       --------
+       The timer associated with the "switch sites" option has been 
+       adjusted so that it will not shut down the form after "switch sites"
+       is cancelled.
+  
+       c. HD0000000360917 - ~close~
+   
+       Problem
+       -------
+       When a provider closes a template, it will occasionally be saved
+       with the name "~CLOSE~". The user will be unable to re-open the
+       template until the FORM TITLE field of the CAPRI TEMPLATES file
+       entry for the form is changed to the correct form title using
+       FileMan.
+   
+       Solution
+       --------
+       The file name was being used as a flag to indicate the current 
+       action.  In some cases, it was not being restored to the correct
+       file name.  The code was modified to no longer use the file name
+       as a flag.  Templates will no longer be renamed as "~CLOSE~", or
+       require renaming of the CAPRI TEMPLATES entry to be reopened.  
+  
+       d. HD0000000380184 - Denver RO (339) CAPRI User, Gregg Linnert, 
+                            reports CAPRI locking up when attempting to run
+                            CAPRI exam
+   
+       Problem
+       -------
+       Print C&P Final Report (Manual) & Re-Print C&P Final Report(s) take 
+       a long time to run with a lot of data
+   
+       Solution
+       --------
+       An optimized version of a CPRS copy routine was created and used in 
+       CAPRI.
+  
+       e. HD0000000392970 - Waco users receive error "VABAB DATETIME could 
+                            not be accessed" when printing C&P Exams
+  
+       Problem
+       -------
+       This problem is believed to be associated with the same print issues
+       described in item d. above.
+   
+       Solution
+       --------
+       An optimized version of a CPRS copy routine was created and used in 
+       CAPRI.
+  
+       f. HD0000000408062 - Default on save
+  
+       Problem
+       -------
+       When editing a template, if one is editing expanded details when an 
+       auto-save kicks off, it will pop up a dialog that asks the user if
+       they want to close without saving.  "Yes" is the default button, and
+       this will cause text entered into the memo not to be saved.  So if a
+       user does not see the dialog while trying to type in the memo then
+       presses the space bar, this will trigger the default behavior and
+       cause the entered data to be lost.
+  
+       Solution
+       --------
+       The save logic and interface have been changed to eliminate this 
+       problem.
+  
+       g. HD0000000433116 - HRC Users getting only ToolBox Menu
+  
+       Problem
+       -------
+       Health Revenue Center users were losing their HRC CAPRI menus,
+       retaining access to only the Users Tool Box menu.
+  
+       Solution
+       --------
+       The CAPRI GUI application has been modified to recognize the new HRC
+       Extended Services and HRC Pharmacy Customer Care menus distributed
+       with patch DVBA*2.7*149, and assign them as the user's primary menu
+       at the remote site. The hard-coded list of HRC menu options in the
+       CAPRI executable has been replaced with database entries to allow
+       updates to be made without a new GUI build.  The 2 new HRC menus,
+       DVBA HRC MENU EXTENDED SVCS and DVBA HRC MENU PHARMACY CC, have been
+       added to the HRC menu list to allow them to appear as primary menus.
+  
+   2. The following defects/enhancements that were reported directly to
+      the CAPRI development team are being addressed:
+  
+      a. Defect - Allowing selection of future appointments
+  
+      Problem
+      -------
+      A CAPRI user has the ability to select future appointments when
+      entering notes associated with Clinical Documents.
+  
+      Solution
+      --------
+      CAPRI has been modified to prevent displaying future appointments
+      in the date/time field when signing a template on the Signature
+      Validation window.
+  
+      b. Enhancement - Foreign Address Display (AMIE Option)
+       
+      Problem
+      -------
+      The AMIE option "Enter a C&P Exam Request" [DVBA C ENTER C&P 
+      Request] displays only USA address information when prompting the
+      user to ensure they have the correct Veteran during the creation of a
+      C&P Request.  This option should display the correct address
+      information, either USA or foreign, as applicable.
+  
+      Solution
+      --------
+      AMIE has been modified to either display USA address information
+      or foreign address information when creating a C&P Request. 
+      In addition, users will also no longer have the ability to add a
+      new Patient through this option [DVBA C ENTER C&P REQUEST].
+  
+      c. Defect - Disappearing SSN field for Duplicate Pseudo SSN
+       
+      Problem
+      -------
+      SSN field disappears from the Enter New Patient screen when duplicate
+      Pseudo SSN is entered.
+  
+      Solution
+      --------
+      CAPRI has been modified to prevent SSN field from disappearing when a
+      duplicate Pseudo SSN is entered.
+  
+      d. Enhancement - Include city/state in listing of VAMCs
+       
+      Problem
+      -------
+      CAPRI is being utilized by more new staff and even Non-VA users,
+      and users are unfamiliar with the location of these sites listed.
+  
+      Solution
+      --------
+      CAPRI has been modified to include the city and state along with
+      the name of the VAMC when displaying remote site selection lists.
+      In addition, users will also be allowed to sort by state and site. 
+  
+      e. Defect - Duplex Printing Setting
+       
+      Problem
+      -------
+      The duplex printer setting in the printer properties is ignored.
+      When a printer is set to print on both sides of the paper, the
+      setting is disregarded and the printer will only print on one side
+      of the paper.
+  
+      Solution
+      --------
+      CAPRI has been modified to print in duplex mode when selected in
+      the printer properties.  The corrections introduced to allow the 
+      selection of a printer tray also allow for duplex printing to be
+      selected.
+  
+      f. Defect - CAPRI Remote Window (Facilities with space in name)
+       
+      Problem
+      -------
+      When switching facilities within the CAPRI Remote window, if the 
+      facility name contains a space, CAPRI doesn't recognize the space and
+      next word in the name. Instead, CAPRI defaults to the first facility
+      name in the list that contains the characters entered by the user.
+      For example, if the user attempts to enter the facility "New York",
+      CAPRI defaults to "NEW Jersey" since 'Jersey' precedes 'York'
+      alphabetically in the facility list.
+  
+      Solution
+      --------
+      CAPRI has been modified to handle facility names that contain a space
+      and default to the correct selection entered by the user. 
+    
+      g. Defect - 508 Non-Compliance Issues
+       
+      Problem
+      -------
+      CAPRI has outstanding 508 Non-Compliance Issues.
+  
+      Solution
+      --------
+      CAPRI has been modified to address several outstanding 508
+      Non-Compliance Issues. 
+  
+      h. Defect - Erroneous error message when cancelling all exams in CAPRI
+  
+      Problem
+      -------
+      When a user attempts to cancel all exams associated with a request in
+      CAPRI (C&P Exams tab - View/Edit Selected Requests), and one or more
+      of the exams is not in the 'open' status, an erroneous error message
+      is generated. The current message reads: 'Cannot cancel all exams
+      because of these exams has been completed or cancelled since this
+      screen was opened.'.
+  
+      Solution
+      --------
+      CAPRI has been modified to display the following error message when
+      one or more of the exams associated with a request is not in an 'open'
+      status: 'Cannot cancel all exams, because all exams do not have an
+      [OPEN] status.'.
+  
+      i. Defect - County drop down list scroll bar is hidden when adding a
+                  new C&P Exam Request in CAPRI
+  
+      Problem
+      -------
+      When a user attempts to add a new C&P Exam Request (Address 
+      Verification Screen) in CAPRI, the scroll bar on the 'County'
+      drop down list is hidden.    
+  
+      Solution
+      --------
+      CAPRI has been modified to ensure that the scroll bar on the 'County'
+      drop down list is visible, when a user adds a new C&P Exam Request.
+  
+      j. Defect - Range Check errors occur when using multiple monitors with 
+                  CAPRI
+  
+      Problem
+      -------
+      When a user, who is using multiple monitors, accesses the date 
+      selectors on the Reports screen in CAPRI, range check errors occur.
+  
+      Solution
+      --------  
+      CAPRI has been modified to prevent the range check error from occurring
+      on the Reports screen for users working with multiple monitors.
+  
+      k. Defect - CAPRI displays error message on Status Inquiry
+  
+      Problem
+      -------
+      When a user executes a Status Inquiry on a C&P exam that has a status
+      of 'TRANSFERRED OUT' in CAPRI, the following error message is 
+      displayed: 'Connection to server for DVBAB REPORT CPDETAILS could not
+      be established!'.    
+  
+      Solution
+      --------
+      CAPRI has been modified to prevent selection of the status 
+      'TRANSFERRED OUT' in the 'C&P Exam Request Report Management' dialog
+      box when the user is editing the exam request, as CAPRI does not 
+      provide the user interface to collect the data needed to complete the
+      'TRANSFERRED OUT' status.
+  
+      l. Defect - DOD date drop-down scroll bars not displaying in CAPRI
+  
+      Problem
+      -------
+      When a user fully maximizes the display for CAPRI, the day and month
+      date drop-down boxes on the DOD tab do not display their scroll bars.
+  
+      Solution
+      --------
+      CAPRI has been modified to replace the date selection controls with
+      standard Windows date selection controls that are Section 508 
+      compliant, so that they will function correctly when the application 
+      is maximized.
+  
+      m. Defect - Errors generated when the VistA button is clicked multiple
+                  times in CAPRI
+  
+      Problem
+      -------
+      When a user executes multiple clicks on the VistA button 
+      (C&P Exams tab), multiple errors can occur.   
+  
+      Solution
+      -------- 
+      CAPRI has been modified to pull the terminal window to the foreground,
+      if already opened, instead of attempting to log onto VistA again when 
+      the VistA button is clicked.
+  
+      n. Defect - Error occurs when saving a template more than once in CAPRI
+  
+      Problem
+      -------
+      When a user clicks more than once on the 'Save and Exit' button on the
+      C&P Worksheets tab in CAPRI, errors can be generated.
+  
+      Solution
+      --------
+      CAPRI has been modified to ensure that the ability to save and/or exit
+      the template is only executed once while the template closes.
+  
+      o. Defect - Cursor moves to top of Report when auto-saved while
+                  previewing in CAPRI
+  
+      Problem
+      -------
+      When a user previews a report from the C&P Worksheet tab in CAPRI, the
+      cursor is moved to the top of the report if the auto-save functionality
+      executes.    
+  
+      Solution
+      --------
+      CAPRI has been modified to prevent the cursor from moving to the top of
+      the report when the auto-save functionality executes while previewing 
+      the report.
+  
+      p. Defect - Incorrect templates being displayed during Co-Signature in 
+                  CAPRI
+  
+      Problem
+      -------
+      When a user is Co-Signing a document in CAPRI, the template list 
+      displays incorrect templates for that signature.    
+  
+      Solution
+      --------
+      CAPRI has been modified to display the correct templates in the list
+      associated with the signature when Co-Signing a document.
+  
+      q. Defect - Duplicate addendum when Co-Signer addends an exam in CAPRI
+  
+      Problem
+      -------
+      When a Co-Signer addends an exam in CAPRI, a duplicate addendum in CPRS
+      (CAPRI Clinical Documents - Notes) is produced.    
+  
+      Solution
+      --------
+      CAPRI has been modified to prevent duplicate addendums from being
+      produced when a Co-Signer addends an exam.
+  
+      r. Defect - Insufficient Reason field not displayed in CAPRI
+      
+      Problem
+      -------
+      When a user selects the Insufficient Exam Report in CAPRI, the 
+      Insufficient Reason field does not display when the dialog box 
+      initially displays if the 'Detailed' radio button (Report Type) is 
+      selected.
+  
+      Solution
+      -------- 
+      CAPRI has been modified to display the Insufficient Reason field when 
+      the dialog box for the Insufficient Exam Report initially displays and
+      the 'Detailed' radio button (Report Type) is selected.
+  
+   3. The following enhancements that were requested by Veterans Benefit
+      Administration Veterans Affairs Central Office (VBAVACO) are being
+      addressed:
+  
+      a. CAPRI - Add multiple report selection in the Report Builder
+  
+      Modifications to CAPRI were required to enhance the Report Builder
+      functionality to give users the ability to select multiple reports.
+  
+      CAPRI Clinical documents tabs were modified to allow the reports to 
+      be selected one at a time or in multiples for addition into the
+      Report Builder.
+  
+      b. CAPRI - Display Date Range on Special Report for Pension/A&A
+  
+      Modifications to CAPRI were required to display the date range at
+      the top of the Special Report for Pension / Aid and Attendance.
+  
+      CAPRI has been enhanced to display at the top of each page of the
+      Special Report for Pension/A&A, the date range used in the creation
+      of the report.
+  
+      c. CAPRI - Add delimited output for Hospital Adjustment Reports
+  
+      Modifications to CAPRI were required to present multiple output
+      options to users of the Hospital Adjustment Reports.
+  
+      CAPRI has been enhanced to give users the ability to save the
+      Hospital Adjustment Reports in an '^' delimited output for use in
+      external spreadsheet applications and/or databases.
+  
+      d. CAPRI - Add Fee Basis Community Nursing Home (FBCNH) Reports
+  
+      Modifications to CAPRI were required to display the existing
+      VistA Fee Basis Community Nursing Home Reports, to allow for more
+      timely and efficient processing of hospital adjustments.
+      
+        1. CAPRI has been enhanced to support the four (4) Fee Basis 
+           Community Nursing Home (FBCNH) Reports.
+             - FBCNH DISPLAY EPISODE OF CARE
+             - FBCNH ROSTER PRINT
+             - FBCNH REPORT OF ADMISSIONS/DISCHARGES FOR CNH
+             - FBCNH STAYS IN EXCESS OF 90 DAYS
+  
+        2. All of the reports above can also be retrieved and saved by the
+           CAPRI user in an '^' delimited format for use in external 
+           spreadsheet applications and/or databases except the 
+           FNBCH DISPLAY EPSIODE OF CARE Report.
+  
+      e. CAPRI/AMIE - New PRIORITY OF EXAM Codes
+  
+      Modifications to CAPRI and the AMIE software were required to  
+      allow selection of the following new PRIORITY OF EXAM codes when
+      entering and/or editing a 2507 request:
+    
+             - AO  : AGENT ORANGE
+             - BDD : BEN DELIV AT DISCHG 
+                     (Benefits Delivery at Discharge)
+             - DCS : DES CLAIMED COND BY SVCMBR 
+                     (Claimed Condition by ServiceMember)
+             - DFD : DES FIT-FOR-DUTY
+             - QS  : QUICK START
+  
+      f. CAPRI/AMIE - AMIS 290 Reports
+     
+      Modifications to CAPRI and the AMIE software were required to
+      support the new PRIORITY OF EXAM codes in the 2507 Request File
+      (#396.3). The report can now be generated for all valid Regional
+      Offices at one time.
+          - CAPRI RPC: DVBAB AMIS REPORT 
+            AMIS 290 and AMIS 290 by Division Reports
+          - AMIE Options: DVBA C AMIS REPORT
+                          DVBA C RO AMIS 290
+           
+        1. CAPRI/AMIE have been enhanced to allow the user to indicate the
+           PRIORITY OF EXAM the report should be generated for.
+            - AO  : Agent Orange
+            - BDD : Benefits Delivery at Discharge and Quick Start
+            - DES : DES Claimed Condition by Service Member and Fit For
+                    Duty
+            - ALL : All Others (Original Report - minus new priorities)
+        2. CAPRI/AMIE have been enhanced to modify the report to indicate 
+           the PRIORITY OF EXAM that it was generated for.
+        3. CAPRI/AMIE have been enhanced to allow for a different 
+           calculation, 45 instead of 30, for the number of days exams are
+           required to be completed in for the new PRIORITY OF EXAM codes:
+           DCS (DES CLAIMED COND BY SRCMBR) and DFD (DES FIT-FOR-DUTY).
+        4. CAPRI/AMIE have been enhanced to generate multiple reports for
+           the NEW grouped PRIORITY OF EXAMS.
+            - BDD and QS
+            - DCS and DFD
+        5. CAPRI/AMIE have been enhanced to not require Regional Office
+           selection. If no Regional Office is selected, then valid 2507
+           Requests will be retrieved for all Regional Offices.
+         
+      g. CAPRI/AMIE - Insufficient Exam Reports (Detailed and Summary)
+  
+      Modifications to CAPRI and the AMIE software were required to
+      support the new PRIORITY OF EXAM codes in the 2507 Request File
+      (#396.3).
+  
+        1. CAPRI/AMIE have been enhanced to allow the user to indicate the
+           PRIORITY OF EXAM the report should be generated for.
+            - AO  : Agent Orange
+            - BDD : Benefits Delivery at Discharge and Quick Start
+            - DES : DES Claimed Condition by Service Member and Fit For
+                    Duty
+            - ALL : All Others (Original Report - minus new priorities)
+        2. CAPRI/AMIE have been enhanced to modify the report to indicate 
+           the PRIORITY OF EXAM that it was generated for.
+  
+      h. CAPRI - Printing Reports larger than 50 pages
+  
+      Modifications to CAPRI to were required to support the printing of
+      reports larger than 50 pages.
+  
+      CAPRI has been modified to allow printing to completion for 
+      reports longer than 50 pages.
+  
+      i. CAPRI - HIA, Automating DOD Access Limitations
+  
+      Modifications to CAPRI were required to automate access limitations
+      for DOD users, to limit selection to only those patients that have
+      been seen at both the VA and DOD.
+  
+        1. CAPRI has been modified to initiate a call into the MPI 
+           Correlation API to validate whether a patient has been seen at
+           both the VA and DOD. Patients are only presented to the user if
+           they are listed in the MPI Correlation, else a message will
+           display indicating otherwise.
+  
+        2. CAPRI has been enhanced to allow a user to be identified
+           as a "DOD Only" user. If identified as a "DOD Only" user, only
+           'Active Duty' patients will be displayed.
+  
+      j. CAPRI - Patient Profile MAS Report
+  
+      Two modifications to the CAPRI Patient Profile MAS report were
+      required.
+  
+        1. CAPRI has been modified so that the Patient Profile MAS report
+        generated is based on the user's selections. Currently, if a user
+        selects "No" for a specific area (for example, team or
+        disposition), and there is no data available for that area, the
+        header and description that no values were found is still printed
+        to the report. The report has now been modified to only display
+        selections that were requested by the user.
+  
+        2. The M code which creates the CAPRI Patient Profile MAS report
+        has been modified to remove all direct appointment global
+        references. Direct appointment global references have been replaced
+        with a call to the supported Scheduling API, SDAPI^SDAMA301.
+  
+      k. AMIE/CAPRI - Military Service Episode (MSE) Information
+  
+      Modifications to CAPRI/AMIE were required to save/retrieve a
+      Veteran's Military Service Episode information to/from multiple
+      locations based on the existence of the new MSE sub-file (.3216) in
+      the PATIENT File #2 (To be exported in DG*5.3*797 at a later date).
+  
+        1. When creating a new patient, CAPRI will save the Veteran's last
+           MSE information if applicable, to either the current [LAST] 
+           Service Fields or to the new sub-file MILITARY SERVICE EPISODE
+           field #.3216 if it exists, in the PATIENT file #2 .
+          
+        2. AMIE/CAPRI will now always retrieve a Veteran's MSE information
+           using the supported API, SVC^VADPT, which will return the
+           Veteran's last military episode information regardless of the
+           data's location/source.
+   
+      l. CAPRI Remote HRC Menu Users - HRC Primary Menu Access
+    
+      Modifications were required to the CLAIMS system to allow HRC menus
+      to be accessed as primary menus.
+  
+      HRC users authenticating through the CLAIMS server have been required
+      to access the DVBA HRC MENU EXTENDED SVCS and DVBA HRC MENU PHARMACY 
+      CC menu options as secondary options on remote systems.  Changes have 
+      been made to the CLAIMS system so that users who have these menus as 
+      primary menus on CLAIMS, will also have them as primary menus on 
+      remote systems.
+  
+      m. CAPRI/AMIE - New Cancellation Reason
+  
+      Modifications were required to CAPRI and AMIE to add a new 2507
+      cancellation reason.
+  
+      Addition of a new cancellation reason, VETERAN CANCELLED EXAM FOR DBQ,
+      in the 2507 CANCELLATION REASON File #396.5, which will allow 
+      selection of a more accurate descriptive reason by the user when the 
+      request/exam is cancelled.
+  
+      n. CAPRI - Enable the display of regional office substations in the 
+                 Site List
+      
+      Modifications were required to CAPRI to enable the display of 
+      regional office substations in the Site List.
+  
+      The Site List dialog that displays for selecting regional offices 
+      currently only displays station numbers that contain 3 digits.  VBA
+      is expanding the Regional Office designation to include suffixed
+      station numbers.  The Site List dialog has been modified to not
+      filter station numbers in the 300 and 400 number range that contain
+      suffixes.
+  
+ IV. TECHNICAL COMPONENTS
+  
+   The following section describes the technical components being exported
+   with this patch. 
+  
+                                             UP    SEND  DATA
+                                             DATE  SEC.  COMES  SITE   RSLV
+   FILE #     FILE NAME                      DD    CODE  W/FILE DATA   PTS
+   ------------------------------------------------------------------------
+   396.3     2507 REQUEST                    YES   NO    NO
+    Partial DD subDD 396.3      fld: 9
+   396.5     2507 CANCELLATION REASON        NO    NO    YES    OVRWRT NO
+  
+  
+   1. The set of codes data type for the PRIORITY OF EXAM (Field #9) in 
+      the 2507 REQUEST File (#396.3) will be updated to include the 
+      following new entries:
+  
+      a. AO  : AGENT ORANGE
+      b. BDD : BEN DELIV AT DISCHG
+      c. DCS : DES CLAIMED COND BY SVCMBR
+      d. DFD : DES FIT-FOR-DUTY
+      e. QS  : QUICK START
+  
+  
+   2. 'VETERAN CANCELLED EXAM FOR DBQ' will be added as a new entry to the 
+      list of cancellation reasons in the 2507 CANCELLATION REASON File 
+      (#396.5).
+  
+  
+   3. The following Remote Procedure Calls are being added/updated to the 
+      REMOTE PROCEDURE (#8994) file:
+       
+       a. DVBAB GET SET           (NEW)
+       b. DVBAB AMIS REPORT       (Update Parameter List)
+       c. DVBAB REPORT ADMINQ     (Update Parameter List)
+       d. DVBAB REPORT ADMISSIONS (Update Parameter List)
+       e. DVBAB REPORT DISCHARGE  (Update Parameter List)
+       f. DVBAB REPORT INCOMPVET  (Update Parameter List)
+       g. DVBAB REPORT READMIT    (Update Parameter List)
+       h. DVBAB REPORT SPECIAL    (Update Parameter List)
+   
+                               
+   4. The following Option has been modified in the OPTION (#19) file:
+       
+       a.        NAME: DVBA CAPRI GUI                    
+            MENU TEXT: Capri GUI (Broker)
+                 TYPE: Broker (Client/Server)
+          DESCRIPTION: This is the 'B' type option used by CAPRI GUI client
+                       application. It contains all the RPCs used by the
+                       CAPRI GUI application.
+  
+          Description of change:
+             The following RPC has been added to the option:
+                  RPC: DVBAB GET SET
+          
+  
+   5. The following Routine(s) are being added/modified:
+  
+       a.   Modify: DVBAADRP
+            Description of change:
+            The code for Remote Procedure DVBAB REPORT ADMINQ is being 
+            modified. The existing ENBROKE2 entry point has been modified 
+            to also allow the CAPRI GUI to request and obtain the report 
+            in an '^' delimited format.
+  
+       b.   Modify: DVBAB2
+            Description of changes:
+            The code for Remote Procedure DVBAB AMIS REPORT is being 
+            modified. This routine has been modified to support the 
+            additional PRIORITY OF EXAM codes introduced in the 2507 
+            REQUEST File (#396.3). In addition, the standard for 'number
+            of days exams are required to be completed in' used in AMIS
+            Reporting will default to 45 days for the new PRIORITY OF EXAM
+            codes DCS (DES CLAIMED COND BY SRCMBR) and DFD (DES
+            FIT-FOR-DUTY).  All other priorities will continue to be
+            calculated against 30 days.
+  
+            Reports will be filtered and printed by the following PRIORITY
+            of EXAM codes:
+                 - AO  : Agent Orange
+                 - BDD : Benefits Delivery at Discharge and Quick Start
+                         *Report will be generated for each priority.
+                 - DES : DES Claimed Condition by Service Member and Fit 
+                         For Duty
+                         *Report will be generated for each priority.
+                 - ALL : All Others
+                         *Original Report with all codes except those 
+                         above.
+  
+       c.   Modify: DVBAB3
+            Description of changes:
+            The code for Remote Procedure DVBAB AMIS REPORT is being 
+            modified. In addition to the changes identified in routine
+            DVBAB2 above, the Regional Office Number parameter is now
+            optional, allowing users to report on all 2507 requests that
+            meet the other filter criteria.
+  
+       d.   Modify: DVBAB51
+            Description of change:
+            The code for Remote Procedure DVBAB REPORT INCOMPVET is being 
+            modified. The existing STRT entry point has been modified 
+            to also allow the CAPRI GUI to request and obtain the report
+            in an '^' delimited format.
+  
+       e.   Modify: DVBAB53
+            Description of change:
+            The code for Remote Procedure DVBAB REPORT DISCHARGE is being 
+            modified. The existing STRT entry point has been modified 
+            to also allow the CAPRI GUI to request and obtain the report
+            in an '^' delimited format.
+  
+       f.   Modify: DVBAB54
+            Description of change:
+            The code for Remote Procedure DVBAB REPORT ADMISSIONS is being 
+            modified. The existing STRT entry point has been modified 
+            to also allow the CAPRI GUI to request and obtain the report
+            in an '^' delimited format.  
+  
+       g.   Modify: DVBAB56
+            Description of change:
+            The code for Remote Procedure DVBAB REPORT READMIT is being 
+            modified. The existing STRT entry point has been modified 
+            to also allow the CAPRI GUI to request and obtain the report
+            in an '^' delimited format.
+  
+       h.   Modify: DVBAB68
+                    DVBAB70
+            Description of change:
+            Replaced direct global references to the SERVICE ENTRY DATE 
+            [LAST] (Field #.326) and SERVICE SEPARATION DATE [LAST] (Field
+            #.327) in the PATIENT File (#2) with a call to the supported
+            API SVC^VADPT, for the CAPRI C&P EXAM INQUIRY. Removed
+            extraneous logic for writing to the screen, which is never
+            executed as this routine is only used by an RPC for the CAPRI 
+            GUI.
+  
+       i.   Modify: DVBAB82
+            Description of changes:
+            The code for Remote Procedure DVBAB REPORTS is being modified.
+            Added logic/entry points for four (4) new Fee Basis reports
+            that can be retrieved by the CAPRI GUI.
+               - FBCNH Display Episode of Care
+            Three (3) of these new Fee Basis reports can also be obtained
+            in an '^' delimited format.
+               - FBCNH Print Roster
+               - FBCNH Report of Admissions/Discharges
+               - FBCNH Stays in Excess of 90 Days  
+            Removed direct global references to appointments, replacing 
+            with a call to the supported Appointment API SDAPI^SDAMA301.
+            Modified the existing CIRPT entry point for the Insufficient 
+            Exam Report to allow the CAPRI GUI to request and obtain the 
+            report in an '^' delimited format.
+   
+       j.   Added: DVBAB82D
+            Description of changes:
+            This new routine contains the logic for printing the new Fee 
+            Basis reports identified in DVBAB82 above in an '^' delimited 
+            format.
+  
+       k.   Modify: DVBAB98
+            Description of changes:
+            Report logic associated with DVBAB56 above, which has been
+            modified to allow for an '^' delimited report.
+  
+       l.   Added: DVBABDDU
+            Description of changes:
+            New routine associated with Remote Procedure DVBA CAPRI GUI,
+            which allows the CAPRI GUI to retrieve the internal and
+            external values for a given file and SET OF CODES field.
+  
+       m.   Modify: DVBASPD2
+            Description of changes:
+            The code for Remote Procedure DVBAB REPORT SPECIAL is being 
+            modified. The existing SPECRPT entry point has been modified 
+            to also allow the CAPRI GUI to request and obtain the report
+            in an '^' delimited format. 
+  
+       n.   Modify: DVBCAMIS
+                    DVBCAMI1
+                    DVBCAMI2
+                    DVBCAMI3
+            Description of changes:
+            The code for Option DVBA C AMIS REPORT and the Remote Procedure
+            DVBA C RO AMIS 290 is being modified. These routines have been
+            modified to support the additional PRIORITY OF EXAM codes 
+            introduced in the 2507 REQUEST File (#396.3). In addition the 
+            calculation for the number of days exams are required to be 
+            completed in will default to 45 days for the new PRIORITY OF 
+            EXAM codes DCS (DES CLAIMED COND BY SRCMBR) and DFD (DES
+            FIT-FOR-DUTY), all other priorities will continue to be
+            calculated against 30 days. Reports will be filtered and
+            printed by the following PRIORITY of EXAM codes:
+                 - AO  : Agent Orange
+                 - BDD : Benefits Delivery at Discharge and Quick Start
+                         *Report will be generated for each priority.
+                 - DES : DES Claimed Condition by Service Member and Fit 
+                         For Duty
+                         *Report will be generated for each priority.
+                 - ALL : All Others
+                         *Original Report with all codes except those 
+                         above.
+            Removed direct global references to appointments, replacing 
+            with a call to the supported Appointment API SDAPI^SDAMA301.
+  
+       o.   Modify: DVBCAMRO
+                    DVBCAMR1
+                    DVBCAMR2
+            Description of changes:
+            The code for Option DVBA C RO AMIS 290 is being modified. 
+            These routines have been modified to support the additional
+            PRIORITY OF EXAM codes introduced in the 2507 REQUEST File
+            (#396.3). In addition, the standard for 'number of days
+            exams are required to be completed in' used in AMIS Reporting 
+            will default to 45 days for the new PRIORITY OF EXAM codes DCS
+            (DES CLAIMED COND BY SRCMBR) and DFD (DES FIT-FOR-DUTY). All
+            other priorities will continue to be calculated against 30
+            days. 
+  
+            Reports will be filtered and printed by the following PRIORITY
+            of EXAM codes selected by the user:
+                 - AO  : Agent Orange
+                 - BDD : Benefits Delivery at Discharge and Quick Start
+                         *Report will be generated for each priority.
+                 - DES : DES Claimed Condition by Service Member and Fit 
+                         For Duty
+                         *Report will be generated for each priority.
+                 - ALL : All Others
+                         *Original Report with all codes except those 
+                         above.
+            In addition, the Regional Office prompt is now optional, 
+            allowing users to search for 2507 requests in all Regional
+            Offices. Removed direct global references to appointments,
+            replacing with a call to the supported Appointment API
+            SDAPI^SDAMA301. Reports will be further identified in the
+            header by the PRIORITY OF EXAM.
+  
+       p.   Modify: DVBCENQ1
+            Description of change:
+            Replaced direct global references to the SERVICE ENTRY DATE    
+            [LAST] (Field #.326) and SERVICE SEPARATION DATE [LAST] (Field
+            #.327) in the PATIENT File (#2) with a call to the supported
+            API SVC^VADPT.
+  
+       q.   Modify: DVBCHS1
+            Description of change: 
+            Updated the routine to handle the new PRIORITY OF EXAM codes
+            introduced in the 2507 REQUEST File (#396.3).
+  
+       r.   Modify: DVBCIRP1
+                    DVBCIRPT
+                    DVBCIUTL
+            Description of change: 
+            The code for Option DVBA C INSUFFICIENT EXAM RPT is being 
+            modified. These routines have been modified to support the
+            additional PRIORITY OF EXAM codes introduced in the 2507
+            REQUEST File (#396.3). Reports will be filtered and printed by
+            the following PRIORITY OF EXAM codes selected by the user:
+                 - AO  : Agent Orange
+                 - BDD : Benefits Delivery at Discharge and Quick Start
+                         *Report will be generated for each priority.
+                 - DES : DES Claimed Condition by Service Member and Fit 
+                         For Duty
+                         *Report will be generated for each priority.
+                 - ALL : All Others
+                         *Original Report with all codes except those 
+                         above. Reports will be further identified in the
+                         header by the PRIORITY OF EXAM.
+  
+       s.   Modify: DVBCPATA
+            Description of change:
+            Removed the ability for adding new patients to the PATIENT File
+            (#2) when entering a C&P request using the DVBA C ENTER C&P 
+            REQUEST option.
+  
+       t.   Modify: DVBCUTIL
+            Description of changes:
+            This routine has been modified to support the additional 
+            PRIORITY OF EXAM codes introduced in the 2507 REQUEST File
+            (#396.3), printing out of address information to the screen
+            (including a foreign address if applicable) and the addition of
+            logic to support the retrieval of a patient's last military
+            service information.
+  
+       u.   Modify: DVBCXFRB
+            Description of change:
+            The code for Option DVBA C TRANSFER C&P REQUEST is being 
+            modified. Direct global references to the SERVICE ENTRY DATE
+            [LAST] (Field #.326) and SERVICE SEPARATION DATE [LAST] (Field
+            #.327) in the PATIENT File (#2) will be replaced with a call to
+            the supported API SVC^VADPT. In addition, 2 additional fields,
+            the last Service Discharge Type and the last Service Branch,
+            retrieved from SVC^VAPDT will also be appended to the ELIG tag
+            of the transmitted message, to support the NEW Military Service
+            Episode MSE sub-file .3216 in the PATIENT File (#2) that will
+            be released in patch DG*5.3*797.
+              
+       v.   Modify: DVBCXFRC
+            Description of change:  
+            The code for Option DVBA C TRANSFER C&P REQUEST is being 
+            modified. Removed overwriting of an existing patient's address
+            with data from the sending site. Inserted conditional logic to
+            update the SERVICE ENTRY DATE [LAST] (Field #.326) and SERVICE
+            SEPARATION DATE [LAST] (Field #.327) in the PATIENT File (#2)
+            if the sub-file .3216 (MILITARY SERVICE EPSIODE) does not
+            exist, else update SERVICE ENTRY DATE (Field #.01), SERVICE
+            SEPARATION DATE (Field #.02), SERVICE BRANCH if available
+            (Field #.03) and SERVICE DISCHARGE TYPE if available (Field
+            #.06) in the MSE sub-file .3216.
+            **Note: The MSE sub-file .3216 Will be released in DG*5.3*797.
+  
+ V. SOFTWARE AND DOCUMENTATION RETRIEVAL
+     
+   1. VistA Patch DVBA*2.7*149
+    
+      a. The VistA server software is being distributed as a PackMan patch
+         message through the National Patch Module (NPM). The KIDS build
+         for this patch is DVBA*2.7*149.
+  
+   2. CAPRI GUI v149 Client Software & User Documentation
+  
+      a.  The CAPRI GUI v149 client software is being distributed as
+          executable CAPRI.exe ([DVBA_27_P149_11.ZIP]). The 
+          installed executable for this patch is client version 
+          2.7.149.11 with a size of 13.6 MB.
+  
+          The CAPRI GUI v149 client software and documentation for this
+          patch may be retrieved directly using FTP. The preferred method
+          is to FTP the files from:
+  
+             download.vista.med.va.gov
+  
+         This transmits the files from the first available FTP server.
+         Sites may also elect to retrieve software directly from a specific
+         server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+         Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+         Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+  
+        The following files will be available:
+  
+        File Name              Format    Description
+        ---------              ------    -----------
+        DVBA_27_P149_11.ZIP     BINARY   ZIP archive containing the CAPRI
+                                         GUI v149 Client Application
+                                         executable: CAPRI.exe
+  
+        DVBA_27_P149_UM.PDF    BINARY    Updated CAPRI User Manual
+  
+        DVBA_27_P149_RN.PDF    BINARY    Release Notes     
+  
+       The VistA Documentation Library (VDL) web site will also contain the
+       'Release Notes' and updated 'CAPRI User Manual'. This web site is
+       usually updated within 1-3 days of the patch release date.
+  
+       The VDL web address for CAPRI user documentation is:
+      
+          http://www.va.gov/vdl/application.asp?appid=133
+  
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES:
+  
+  1. Users On the System
+  
+     a. This patch (DVBA*2.7*149) may be installed while CAPRI users are
+        still using the previously released version of the CAPRI GUI
+        (i.e. DVBA_27_143.exe).
+  
+     b. Once the installation of this patch has been completed, CAPRI users
+        should be upgraded to the new released version of the CAPRI GUI
+        (CAPRI.exe [DVBA_27_P149_11.ZIP]).
+  
+     c. This patch modifies routines used by the CAPRI GUI application 
+        and the Automated Medical Information Exchange (AMIE) package. It
+        should be installed during non-peak hours to minimize disruption to
+        users and to reduce the possibility of errors when the routines are
+        updated.
+  
+  2. VistA Options
+         
+     a. There are no VistA options to disable while installing this patch.
+     
+     b. This patch exports the Capri GUI (Broker) [DVBA CAPRI GUI] context
+        option. When using the 'Compare Transport Global to Current System'
+        option on the 'Kernel Installation & Distribution System' menu, the
+        compare shows that it is re-adding the existing RPCs currently 
+        attached to the option. However, only the following new RPC 
+        is being added:
+           RPC: DVBAB GET SET
+  
+  3. Software Installation Time
+  
+     a. The estimated installation time for VistA patch DVBA*2.7*149 is 
+        less than 5 minutes during off peak hours.
+   
+  4. Required Builds
+  
+     a. The following is a list of REQUIRED builds for this KIDS
+        distribution (DVBA*2.7*149). KIDS will not allow the installation
+        of this patch without their prior installation.
+  
+        Required Builds:
+        ----------------
+        DVBA*2.7*19
+        DVBA*2.7*27
+        DVBA*2.7*35
+        DVBA*2.7*57
+        DVBA*2.7*65
+        DVBA*2.7*77
+        DVBA*2.7*108
+        DVBA*2.7*143
+        DVBA*2.7*156
+    
+  
+ VII. INSTALLATION INSTRUCTIONS:
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+    2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+  
+    3. From this menu, you may now elect to use the following options (when
+       prompted for INSTALL NAME, enter DVBA*2.7*149).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+    4. Use the Install Package(s) option and select package DVBA*2.7*149.
+  
+    5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//', respond NO.
+  
+    6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', it is recommended you answer NO.
+  
+    7. When prompted to 'Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//', answer NO.
+  
+    8. If CAPRI GUI users have not already been upgraded to the new 
+       version of the CAPRI GUI v149 (CAPRI.exe [DVBA_27_P149_11.ZIP]), 
+       they should be upgraded as soon as possible upon installation of 
+       this patch.
+  
+    9. NOTE: Pre-Init routine DVBA149P is a temporary routine used as part
+       of the install process and will be automatically deleted by KIDS 
+       after patch installation. However, in some cases Cache doesn't always
+       delete the routine. You may delete it manually if you discover this
+       routine on your system.
+  
+  
+ VIII. TEST SITES
+  
+   The following sites participated in the testing of the CAPRI GUI v149 
+   and DVBA*2.7*149 server software.
+  
+    Test Sites:
+    ---------- 
+     * Alexandria, LA VAMC
+     * North Florida/South Georgia
+     * Greater Los Angeles HSC
+     * Denver VA Medical Center
+     * Upstate New York HSC
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA149P
+    Before:       n/a   After:   B466083  **149**
+Routine Name: DVBAADRP
+    Before: B28538442   After: B43200914  **17,42,53,108,149**
+Routine Name: DVBAB2
+    Before: B16723785   After: B32023164  **35,42,149**
+Routine Name: DVBAB3
+    Before:  B4966234   After: B10129611  **35,42,149**
+Routine Name: DVBAB51
+    Before: B22434564   After: B44742648  **35,149**
+Routine Name: DVBAB53
+    Before: B21492687   After: B45878963  **35,99,100,149**
+Routine Name: DVBAB54
+    Before: B13667343   After: B30133216  **35,149**
+Routine Name: DVBAB56
+    Before: B20872408   After: B24628055  **35,149**
+Routine Name: DVBAB68
+    Before: B14913222   After: B11010411  **35,149**
+Routine Name: DVBAB70
+    Before: B43310973   After: B38834112  **35,42,57,136,143,149**
+Routine Name: DVBAB82
+    Before: B78772719   After:B101314855  **42,90,100,119,156,149**
+Routine Name: DVBAB82D
+    Before:       n/a   After: B37308259  **149**
+Routine Name: DVBAB98
+    Before: B16060500   After: B29136155  **35,149**
+Routine Name: DVBABDDU
+    Before:       n/a   After:  B1488997  **149**
+Routine Name: DVBABURL
+    Before:  B2354419   After:  B2397510  **104,136,143,149**
+Routine Name: DVBASPD2
+    Before: B28946150   After: B47508013  **3,57,149**
+Routine Name: DVBCAMI1
+    Before:  B9931971   After: B11579821  **17,149**
+Routine Name: DVBCAMI2
+    Before: B20502259   After: B37534460  **149**
+Routine Name: DVBCAMI3
+    Before:  B4526354   After:  B5656228  **149**
+Routine Name: DVBCAMIS
+    Before:  B7969924   After: B15380003  **17,149**
+Routine Name: DVBCAMR1
+    Before:  B3723902   After:  B5153937  **149**
+Routine Name: DVBCAMR2
+    Before: B17624882   After: B35979419  **149**
+Routine Name: DVBCAMRO
+    Before:  B7327338   After: B10861262  **17,149**
+Routine Name: DVBCENQ1
+    Before: B27476723   After: B27237652  **17,57,143,149**
+Routine Name: DVBCHS1
+    Before:  B4480992   After:  B5480980  **149**
+Routine Name: DVBCIRP1
+    Before: B26898303   After: B46484005  **13,19,27,149**
+Routine Name: DVBCIRPT
+    Before: B15932212   After: B47028205  **13,19,27,149**
+Routine Name: DVBCIUTL
+    Before: B22268963   After: B37860545  **13,17,19,149**
+Routine Name: DVBCPATA
+    Before:  B9979133   After:  B2615118  **1,23,40,42,55,77,149**
+Routine Name: DVBCUTIL
+    Before: B33092099   After: B46886926  **17,126,143,149**
+Routine Name: DVBCXFRB
+    Before: B15626255   After: B16766311  **149**
+Routine Name: DVBCXFRC
+    Before: B40353772   After: B44128395  **1,6,18,65,149**
+
+=============================================================================
+User Information:
+Entered By  : LOUCK,KEVIN                   Date Entered  : OCT 01, 2009
+Completed By: DELACRUZ,KRISTINA             Date Completed: MAY 05, 2011
+Released By : FRANCE,KATHI                  Date Released : MAY 06, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

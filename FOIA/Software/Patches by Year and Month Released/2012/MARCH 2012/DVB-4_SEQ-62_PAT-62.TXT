@@ -1,0 +1,181 @@
+
+=============================================================================
+Run Date: MAR 28, 2012                     Designation: DVB*4*62
+Package : DVB - HINQ                          Priority: Mandatory
+Version : 4        SEQ #62                      Status: Released
+                  Compliance Date: APR 28, 2012
+=============================================================================
+
+Associated patches: (v)DVB*4*57    <<= must be installed BEFORE `DVB*4*62'
+
+Subject: HINQ CHANGES FOR MSDS PROJECT
+
+Category: 
+  - Routine
+  - Input Template
+  - Print Template
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch has enhancements to the Veterans Health Information Systems 
+ and Technology Architecture (VistA) system to support technology and 
+ business changes that are occurring with the implementation of the 
+ Enrollment System Redesign (ESR) Military Service Data Sharing (MSDS) 
+ project.
+  
+ The MSDS project will introduce an MSDS Broker that will be activated in 
+ ESR. The Broker will construct a definitive military service data set 
+ including data received from the VA/DoD Identity Repository (VADIR), the
+ Beneficiary Identification and Records Locator System (BIRLS) and VistA.
+ Once the MSDS Broker is activated, ESR becomes the authoritative source
+ for Military Service Episode data. The verified data will be shared from
+ ESR to all VistA sites of record for the veteran. The ESR-verified
+ Military Service Episode data cannot be edited by VistA except to add new
+ episodes. An unlimited number of military service episodes per veteran
+ will now be supported.
+  
+ This patch is being released along with patches DG*5.3*797, EAS*1.0*92, 
+ IVM*2.0*141, and PXRM*2.0*21 in host file DG_53_P797.KID.
+     
+ This patch modifies the Hospital Inquiry (HINQ) v4.0 application as
+ described below:
+   
+  
+ 1.  Modify display of Military Service Episodes
+ -----------------------------------------------
+ The MSDS changes introduced by patch DG*5.3*797 include a new MILITARY 
+ SERVICE EPISODE sub-file (#2.3216) added to the PATIENT file (#2) to store
+ the veteran's military service episodes.  Modifications were made to the
+ HINQ options that display the veteran's military service episodes
+ (MSEs).  If the veteran has MSE data in the new MSE location in the
+ PATIENT file (#2), those MSEs will be displayed, otherwise the MSEs in the
+ old data dictionary locations will be displayed.
+  
+ 2.  Modify HINQ update option
+ -----------------------------
+ The Update HINQs to the Patient File option [DVB HUPLOAD] was modified.  
+ If authoritative military service data has already been received from ESR,
+ the filing of MSE data from the HINQ Suspense file will be blocked and a
+ message will be displayed to the user.
+  
+  
+   
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+   
+   
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ HD0000000484945 - Update HINQ Tech Manual
+   
+   
+ Components Sent With Patch
+ --------------------------
+ The following is a list of templates included in this patch:
+   
+ Template Name                 File                Type
+ ----------------------------------------------------------------
+ DVBHINQ PAT-HINQ COMP       PATIENT (#2)          Print
+ DVBHINQ UPDATE              PATIENT (#2)          Input
+  
+ Documentation Retrieval:
+ ========================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to use File Transfer Protocol (FTP) to download 
+ the files from download.vista.med.va.gov. This transmits the files from
+ the first available FTP server. Sites may also elect to retrieve software
+ directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at:  http://www.va.gov/vdl/
+  
+ The following file should be downloaded in the binary FTP mode.
+   
+ Filename                 Description
+ --------                 -----------
+ DVB_4_62_UM.PDF          Revised Hospital Inquiry (HINQ) 4.0 User Manual
+ DVB_4_62_TM.PDF          Revised Hospital Inquiry (HINQ) 4.0 Technical 
+                            Manual
+  
+  
+ Test Sites:
+ ===========
+ VA Maryland HCS, Baltimore, MD
+ Clement J. Zablocki VAMC, Milwaukee, WI
+ Central Alabama Veterans HCS, Tuskegee, AL
+  
+   
+ Software Retrieval:
+ ===================
+ The software for this patch is not being distributed through the National
+ Patch Module.  This patch is being distributed as a host file. The host 
+ file will contain five Kernel Installation & Distribution System (KIDS)
+ builds. 
+  
+                  Host File Name:  DG_53_P797.KID
+                          Builds:  DG*5.3*797
+                                   EAS*1.0*92
+                                   IVM*2.0*141
+                                   DVB*4.0*62
+                                   PXRM*2.0*21
+  
+ Sites may retrieve the software directly using FTP from the 
+ ANONYMOUS.SOFTWARE directory. The preferred method is to FTP the files 
+ from:
+   
+                     download.vista.med.va.gov
+   
+ This will transmit the files from the first available FTP server.
+ Sites may also elect to retrieve software directly from a specific
+ server as follows:
+   
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+   
+  **Note:  Use ASCII mode when downloading the .KID file
+  
+  
+   
+   
+ ================ INSTALLATION INSTRUCTIONS =================
+  
+ Please refer to the patch description for patch DG*5.3*797 
+ for installation instructions.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBHQZ6
+    Before: B24643397   After: B37429398  **28,49,57,62**
+Routine Name: DVBHS4
+    Before: B10613271   After: B19622289  **4,49,62**
+ 
+Routine list of preceding patches: 57
+
+=============================================================================
+User Information:
+Entered By  : HARTLEY,PETER                 Date Entered  : MAY 11, 2009
+Completed By: MORRIS,DARLENE V              Date Completed: MAR 20, 2012
+Released By : HEUER,CINDY                   Date Released : MAR 28, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

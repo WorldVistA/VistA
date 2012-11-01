@@ -1,0 +1,468 @@
+EMERGENCY Released PSN*4*297 SEQ #301
+Extracted from mail message
+**KIDS**:PSN*4.0*297^
+
+**INSTALL NAME**
+PSN*4.0*297
+"BLD",8352,0)
+PSN*4.0*297^NATIONAL DRUG FILE^0^3120202^y
+"BLD",8352,1,0)
+^^41^41^3120202^
+"BLD",8352,1,1,0)
+VistA Patch PSN*4*304 released November 10, 2011 created a new VA drug 
+"BLD",8352,1,2,0)
+class "AM400 QUINOLONES".  The quinolone antibiotics were previously 
+"BLD",8352,1,3,0)
+located under VA drug class "AM900 ANTI-INFECTIVES,OTHER".  Existing
+"BLD",8352,1,4,0)
+patient allergies in the PATIENT ALLERGIES file (#120.8) to antibiotics 
+"BLD",8352,1,5,0)
+in the quinolone class were not automatically updated to the new VA drug
+"BLD",8352,1,6,0)
+classification with the release of PSN*4*304. Consequently the entry of
+"BLD",8352,1,7,0)
+a new order for an antibiotic in the Quinolone VA drug class will not
+"BLD",8352,1,8,0)
+trigger a drug allergy alert.
+"BLD",8352,1,9,0)
+  
+"BLD",8352,1,10,0)
+A facility reported that the drug-allergy order check in VistA/CPRS did
+"BLD",8352,1,11,0)
+not trigger appropriately when a patient was ordered a fluroquinolone type
+"BLD",8352,1,12,0)
+antibiotic that the patient had a known allergy to.  The drug allergy was
+"BLD",8352,1,13,0)
+properly documented in the VistA Adverse Reaction Tracking (ART) System. 
+"BLD",8352,1,14,0)
+ 
+"BLD",8352,1,15,0)
+This patch contains a post-install routine that will loop through all the
+"BLD",8352,1,16,0)
+patient allergies entries for quinolones and will correctly update such 
+"BLD",8352,1,17,0)
+entries with the new class "AM400 QUINOLONES", which should trigger the
+"BLD",8352,1,18,0)
+drug-allergy order check when the patient is ordered a medication under
+"BLD",8352,1,19,0)
+this drug class. Once completed, the post-install routine will generate
+"BLD",8352,1,20,0)
+and send the Mailman message below to the person who installed the patch,
+"BLD",8352,1,21,0)
+to the mail group 'NDF DATA' and to all the 'PSNMGR' security key holders.
+"BLD",8352,1,22,0)
+ 
+"BLD",8352,1,23,0)
+    Subj: Post-install results from patch PSN*4*297  [#110557] 02/02/12
+"BLD",8352,1,24,0)
+    From: NDF MANAGER  In 'IN' basket.   Page 1
+"BLD",8352,1,25,0)
+    ---------------------------------------------------------------------
+"BLD",8352,1,26,0)
+    Number of Patient Allergy entries by class:
+"BLD",8352,1,27,0)
+  
+"BLD",8352,1,28,0)
+    Before update:
+"BLD",8352,1,29,0)
+    AM900 - ANTI-INFECTIVES,OTHER: 1601
+"BLD",8352,1,30,0)
+    AM400 - QUINOLONES           : 11
+"BLD",8352,1,31,0)
+ 
+"BLD",8352,1,32,0)
+    After update:
+"BLD",8352,1,33,0)
+    AM900 - ANTI-INFECTIVES,OTHER: 919
+"BLD",8352,1,34,0)
+    AM400 - QUINOLONES           : 693
+"BLD",8352,1,35,0)
+ 
+"BLD",8352,1,36,0)
+    Enter message action (in IN basket): Ignore//
+"BLD",8352,1,37,0)
+ 
+"BLD",8352,1,38,0)
+The results above will vary from site to site. Some sites might even have
+"BLD",8352,1,39,0)
+the exact same number 'Before' and 'After' the update, which means the
+"BLD",8352,1,40,0)
+site had not been affected by the problem in PSN*4*304 when it was 
+"BLD",8352,1,41,0)
+installed.
+"BLD",8352,4,0)
+^9.64PA^^
+"BLD",8352,6.3)
+9
+"BLD",8352,"INID")
+^n
+"BLD",8352,"INIT")
+PSN297P
+"BLD",8352,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8352,"KRN",.4,0)
+.4
+"BLD",8352,"KRN",.401,0)
+.401
+"BLD",8352,"KRN",.402,0)
+.402
+"BLD",8352,"KRN",.403,0)
+.403
+"BLD",8352,"KRN",.5,0)
+.5
+"BLD",8352,"KRN",.84,0)
+.84
+"BLD",8352,"KRN",3.6,0)
+3.6
+"BLD",8352,"KRN",3.8,0)
+3.8
+"BLD",8352,"KRN",9.2,0)
+9.2
+"BLD",8352,"KRN",9.8,0)
+9.8
+"BLD",8352,"KRN",19,0)
+19
+"BLD",8352,"KRN",19.1,0)
+19.1
+"BLD",8352,"KRN",101,0)
+101
+"BLD",8352,"KRN",409.61,0)
+409.61
+"BLD",8352,"KRN",771,0)
+771
+"BLD",8352,"KRN",779.2,0)
+779.2
+"BLD",8352,"KRN",870,0)
+870
+"BLD",8352,"KRN",8989.51,0)
+8989.51
+"BLD",8352,"KRN",8989.52,0)
+8989.52
+"BLD",8352,"KRN",8994,0)
+8994
+"BLD",8352,"KRN","B",.4,.4)
+
+"BLD",8352,"KRN","B",.401,.401)
+
+"BLD",8352,"KRN","B",.402,.402)
+
+"BLD",8352,"KRN","B",.403,.403)
+
+"BLD",8352,"KRN","B",.5,.5)
+
+"BLD",8352,"KRN","B",.84,.84)
+
+"BLD",8352,"KRN","B",3.6,3.6)
+
+"BLD",8352,"KRN","B",3.8,3.8)
+
+"BLD",8352,"KRN","B",9.2,9.2)
+
+"BLD",8352,"KRN","B",9.8,9.8)
+
+"BLD",8352,"KRN","B",19,19)
+
+"BLD",8352,"KRN","B",19.1,19.1)
+
+"BLD",8352,"KRN","B",101,101)
+
+"BLD",8352,"KRN","B",409.61,409.61)
+
+"BLD",8352,"KRN","B",771,771)
+
+"BLD",8352,"KRN","B",779.2,779.2)
+
+"BLD",8352,"KRN","B",870,870)
+
+"BLD",8352,"KRN","B",8989.51,8989.51)
+
+"BLD",8352,"KRN","B",8989.52,8989.52)
+
+"BLD",8352,"KRN","B",8994,8994)
+
+"INIT")
+PSN297P
+"MBREQ")
+0
+"PKG",136,-1)
+1^1
+"PKG",136,0)
+NATIONAL DRUG FILE^PSN^This is the National Drug File Package V 3.14
+"PKG",136,20,0)
+^9.402P^^
+"PKG",136,22,0)
+^9.49I^1^1
+"PKG",136,22,1,0)
+4.0^2981030^2981223^11595
+"PKG",136,22,1,"PAH",1,0)
+297^3120202^1776
+"PKG",136,22,1,"PAH",1,1,0)
+^^41^41^3120202
+"PKG",136,22,1,"PAH",1,1,1,0)
+VistA Patch PSN*4*304 released November 10, 2011 created a new VA drug 
+"PKG",136,22,1,"PAH",1,1,2,0)
+class "AM400 QUINOLONES".  The quinolone antibiotics were previously 
+"PKG",136,22,1,"PAH",1,1,3,0)
+located under VA drug class "AM900 ANTI-INFECTIVES,OTHER".  Existing
+"PKG",136,22,1,"PAH",1,1,4,0)
+patient allergies in the PATIENT ALLERGIES file (#120.8) to antibiotics 
+"PKG",136,22,1,"PAH",1,1,5,0)
+in the quinolone class were not automatically updated to the new VA drug
+"PKG",136,22,1,"PAH",1,1,6,0)
+classification with the release of PSN*4*304. Consequently the entry of
+"PKG",136,22,1,"PAH",1,1,7,0)
+a new order for an antibiotic in the Quinolone VA drug class will not
+"PKG",136,22,1,"PAH",1,1,8,0)
+trigger a drug allergy alert.
+"PKG",136,22,1,"PAH",1,1,9,0)
+  
+"PKG",136,22,1,"PAH",1,1,10,0)
+A facility reported that the drug-allergy order check in VistA/CPRS did
+"PKG",136,22,1,"PAH",1,1,11,0)
+not trigger appropriately when a patient was ordered a fluroquinolone type
+"PKG",136,22,1,"PAH",1,1,12,0)
+antibiotic that the patient had a known allergy to.  The drug allergy was
+"PKG",136,22,1,"PAH",1,1,13,0)
+properly documented in the VistA Adverse Reaction Tracking (ART) System. 
+"PKG",136,22,1,"PAH",1,1,14,0)
+ 
+"PKG",136,22,1,"PAH",1,1,15,0)
+This patch contains a post-install routine that will loop through all the
+"PKG",136,22,1,"PAH",1,1,16,0)
+patient allergies entries for quinolones and will correctly update such 
+"PKG",136,22,1,"PAH",1,1,17,0)
+entries with the new class "AM400 QUINOLONES", which should trigger the
+"PKG",136,22,1,"PAH",1,1,18,0)
+drug-allergy order check when the patient is ordered a medication under
+"PKG",136,22,1,"PAH",1,1,19,0)
+this drug class. Once completed, the post-install routine will generate
+"PKG",136,22,1,"PAH",1,1,20,0)
+and send the Mailman message below to the person who installed the patch,
+"PKG",136,22,1,"PAH",1,1,21,0)
+to the mail group 'NDF DATA' and to all the 'PSNMGR' security key holders.
+"PKG",136,22,1,"PAH",1,1,22,0)
+ 
+"PKG",136,22,1,"PAH",1,1,23,0)
+    Subj: Post-install results from patch PSN*4*297  [#110557] 02/02/12
+"PKG",136,22,1,"PAH",1,1,24,0)
+    From: NDF MANAGER  In 'IN' basket.   Page 1
+"PKG",136,22,1,"PAH",1,1,25,0)
+    ---------------------------------------------------------------------
+"PKG",136,22,1,"PAH",1,1,26,0)
+    Number of Patient Allergy entries by class:
+"PKG",136,22,1,"PAH",1,1,27,0)
+  
+"PKG",136,22,1,"PAH",1,1,28,0)
+    Before update:
+"PKG",136,22,1,"PAH",1,1,29,0)
+    AM900 - ANTI-INFECTIVES,OTHER: 1601
+"PKG",136,22,1,"PAH",1,1,30,0)
+    AM400 - QUINOLONES           : 11
+"PKG",136,22,1,"PAH",1,1,31,0)
+ 
+"PKG",136,22,1,"PAH",1,1,32,0)
+    After update:
+"PKG",136,22,1,"PAH",1,1,33,0)
+    AM900 - ANTI-INFECTIVES,OTHER: 919
+"PKG",136,22,1,"PAH",1,1,34,0)
+    AM400 - QUINOLONES           : 693
+"PKG",136,22,1,"PAH",1,1,35,0)
+ 
+"PKG",136,22,1,"PAH",1,1,36,0)
+    Enter message action (in IN basket): Ignore//
+"PKG",136,22,1,"PAH",1,1,37,0)
+ 
+"PKG",136,22,1,"PAH",1,1,38,0)
+The results above will vary from site to site. Some sites might even have
+"PKG",136,22,1,"PAH",1,1,39,0)
+the exact same number 'Before' and 'After' the update, which means the
+"PKG",136,22,1,"PAH",1,1,40,0)
+site had not been affected by the problem in PSN*4*304 when it was 
+"PKG",136,22,1,"PAH",1,1,41,0)
+installed.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSN297P")
+0^^B6228794^n/a
+"RTN","PSN297P",1,0)
+PSN297P ;BIR/MR-Post install routine to fix Quinolones Drug Class issue ; 17 Jan 2012  3:18 PM
+"RTN","PSN297P",2,0)
+ ;;4.0;NATIONAL DRUG FILE;**297**; 30 Oct 98;Build 9
+"RTN","PSN297P",3,0)
+ ;Reference to UPDATE^GMRAUTL2 supported by DBIA #4667
+"RTN","PSN297P",4,0)
+ ;
+"RTN","PSN297P",5,0)
+ S XPDIDTOT=17
+"RTN","PSN297P",6,0)
+ N VAPRDIEN,VAGENCNT,VAGENIEN,CLASS,X,DONOTKIL,VAPRD,MSG
+"RTN","PSN297P",7,0)
+ K ^TMP("PSNMSG",$J),^TMP("PSN297P",$J)
+"RTN","PSN297P",8,0)
+ S ^TMP("PSNMSG",$J,1,0)="Number of Patient Allergy entries by class:"
+"RTN","PSN297P",9,0)
+ S ^TMP("PSNMSG",$J,2,0)=" "
+"RTN","PSN297P",10,0)
+ S ^TMP("PSNMSG",$J,3,0)="Before update:"
+"RTN","PSN297P",11,0)
+ S ^TMP("PSNMSG",$J,4,0)="AM900 - ANTI-INFECTIVES,OTHER: "_$$CNT("AM900")
+"RTN","PSN297P",12,0)
+ S ^TMP("PSNMSG",$J,5,0)="AM400 - QUINOLONES           : "_$$CNT("AM400")
+"RTN","PSN297P",13,0)
+ ; 
+"RTN","PSN297P",14,0)
+ S (VAPRDIEN,VAGENCNT)=0
+"RTN","PSN297P",15,0)
+ F  S VAPRDIEN=$O(^PSNDF(50.68,VAPRDIEN)) Q:'VAPRDIEN  D
+"RTN","PSN297P",16,0)
+ . I +$G(^PSNDF(50.68,VAPRDIEN,3))'=640 Q
+"RTN","PSN297P",17,0)
+ . S VAGENIEN=$P(^PSNDF(50.68,VAPRDIEN,0),"^",2)
+"RTN","PSN297P",18,0)
+ . I $D(^TMP("PSN297P",$J,VAGENIEN)) Q
+"RTN","PSN297P",19,0)
+ . S CLASS("D",26)=""
+"RTN","PSN297P",20,0)
+ . S CLASS("A",640)=""
+"RTN","PSN297P",21,0)
+ . S X=VAGENIEN_";PSNDF(50.6,^"_$P(^PSNDF(50.6,VAGENIEN,0),"^")
+"RTN","PSN297P",22,0)
+ . S DONOTKIL=0,VAPRD=0
+"RTN","PSN297P",23,0)
+ . F  S VAPRD=$O(^PSNDF(50.6,"APRO",VAGENIEN,VAPRD)) Q:'VAPRD  D
+"RTN","PSN297P",24,0)
+ . . I $P(^PSNDF(50.68,VAPRD,3),"^")=26 S DONOTKIL=1
+"RTN","PSN297P",25,0)
+ . I DONOTKIL K CLASS("D")
+"RTN","PSN297P",26,0)
+ . S VAGENCNT=VAGENCNT+1
+"RTN","PSN297P",27,0)
+ . D BMES^XPDUTL("Updating Patient Allergies for "_$P(^PSNDF(50.6,VAGENIEN,0),"^")_" ("_VAGENCNT_" of 17)...")
+"RTN","PSN297P",28,0)
+ . I $T(UPDATE^GMRAUTL2)]"" D UPDATE^GMRAUTL2(X,,.CLASS)
+"RTN","PSN297P",29,0)
+ . S ^TMP("PSN297P",$J,VAGENIEN)=""
+"RTN","PSN297P",30,0)
+ . D UPDATE^XPDID(VAGENCNT)
+"RTN","PSN297P",31,0)
+ K ^TMP("PSN297P",$J)
+"RTN","PSN297P",32,0)
+ ;
+"RTN","PSN297P",33,0)
+ S ^TMP("PSNMSG",$J,6,0)=" "
+"RTN","PSN297P",34,0)
+ S ^TMP("PSNMSG",$J,7,0)="After update:"
+"RTN","PSN297P",35,0)
+ S ^TMP("PSNMSG",$J,8,0)="AM900 - ANTI-INFECTIVES,OTHER: "_$$CNT("AM900")
+"RTN","PSN297P",36,0)
+ S ^TMP("PSNMSG",$J,9,0)="AM400 - QUINOLONES           : "_$$CNT("AM400")
+"RTN","PSN297P",37,0)
+ ; 
+"RTN","PSN297P",38,0)
+ N XMY,USR,XMDUZ,XMTEXT,XMSUB,DIFROM
+"RTN","PSN297P",39,0)
+ S XMY(DUZ)="",XMY("G.NDF DATA@"_^XMB("NETNAME"))=""
+"RTN","PSN297P",40,0)
+ S USR=0 F  S USR=$O(^XUSEC("PSNMGR",USR)) Q:'USR  S XMY(USR)=""
+"RTN","PSN297P",41,0)
+ S XMDUZ="NDF MANAGER",XMSUB="Post-install results from patch PSN*4*297"
+"RTN","PSN297P",42,0)
+ S XMTEXT="^TMP(""PSNMSG"",$J,"
+"RTN","PSN297P",43,0)
+ D ^XMD
+"RTN","PSN297P",44,0)
+ Q
+"RTN","PSN297P",45,0)
+ ;
+"RTN","PSN297P",46,0)
+CNT(CLASS) ; Count the number of Patient Allergy entries for a specific class
+"RTN","PSN297P",47,0)
+ N A,B,C,CNT
+"RTN","PSN297P",48,0)
+ S (A,B,C,CNT)=0
+"RTN","PSN297P",49,0)
+ F  S A=$O(^GMR(120.8,"APC",A)) Q:'A  D
+"RTN","PSN297P",50,0)
+ . F  S B=$O(^GMR(120.8,"APC",A,CLASS,B)) Q:'B  D
+"RTN","PSN297P",51,0)
+ . . F  S C=$O(^GMR(120.8,"APC",A,CLASS,B,C)) Q:'C  D
+"RTN","PSN297P",52,0)
+ . . . S CNT=CNT+1
+"RTN","PSN297P",53,0)
+ Q CNT
+"VER")
+8.0^22.0
+"BLD",8352,6)
+^301
+**END**
+**END**

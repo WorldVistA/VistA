@@ -1,0 +1,143 @@
+Release of Patient Assessment Documentation Pkg, NUPA v.1.0  [#2480989]
+17 Apr 2012 09:30:18 -0500 (EST)  136 lines
+From: <STOKER.ELAINE@FORUM.VA.GOV>  In 'NUPA*1 PATIENT ASSESSMENT DOC' basket.
+Page 1
+-----------------------------------------------------------------------------
+Subject: Release of Patient Assessment Documentation Pkg, Version 1.0 
+(NUPA*1*0)
+ 
+RELEASE INFORMATION:
+ 
+The Patient Assessment Documentation Package (PADP) Version 1.0 is a 
+Veterans Health Information Systems and Technology Architecture (VistA) 
+software application that enables Registered Nurses (RNs) to document, in 
+a standardized format, patient care during an inpatient stay. Although 
+the content is standardized for use across the VA system, some parameters 
+can be set to support the unique processes at individual medical centers. 
+ 
+PADP interfaces directly with several VistA applications, including 
+Computerized Patient Record System (CPRS), Clinical Reminders, Consult 
+Tracking, Allergy/Adverse Reaction Tracking, Mental Health Assistant, 
+Vitals, and Patient Care Encounter (PCE). 
+ 
+
+PADP is a Delphi application, which supports RNs in documenting patient 
+care during an inpatient stay. It includes the following templates:  
+ 
+  Admission  RN Assessment allows RNs to document the status of the 
+    patient at admission.
+  Admission  Nursing Data Collection allows Licensed Practical 
+    Nurses (LPNs) and other nursing staff, including the RN, to enter
+    basic patient data, such as vitals and belongings at the time of
+    admission.
+  RN Reassessment allows RNs to document the condition of the patient on a
+    regular basis and any time during the inpatient stay. 
+  Interdisciplinary Plan of Care interfaces with admission and 
+    reassessment data, and allows additional information to be entered by
+    the RN and other health care personnel (physicians, social workers,
+    chaplain, etc.). All clinical staff can enter information into the
+    Plan of Care. The Plan of Care can be printed and given to the patient
+    when appropriate.
+
+PADP consists of a KIDS build, NUPA 1*0*1, and four (4) Delphi GUI 
+templates in three executables. 
+1.  The executable, Admassess.exe, contains the Admission - RN Assessment
+    template and the Admission - Nursing Data Collection template.
+2.  The executable, Admassess_Shift.exe, contains the RN Reassessment 
+    template.
+3.  The executable, Admassess_Careplan.exe, contains the Interdisciplinary
+    Plan of Care template.
+ 
+Each template is associated with a note. 
+The Admission - RN Assessment template is associated with the note:
+    RN Admission Assessment
+The Admission - Nursing Data Collection template is associated with the
+note: 
+    Nursing Admission Data Collection
+The RN Reassessment template  is associated with the note: 
+    RN Reassessment
+The Interdisciplinary Plan of Care template is associated with the note: 
+    Interdisciplinary Plan of Care
+ 
+PADP adds to VistA, a new namespace (NUPA), four (4) Progress Notes, five 
+(5) printouts, fourteen (14) files, thirty-six (36) parameters, and new 
+health factors. The 5 printouts are:
+1.  The Daily Plan is a health summary designed to be given to the 
+    patient and family
+2.  Plan of Care is a plan designed to guide the nursing staff
+3.  Discharge Plan is for discharge planners
+4.  Belongings is a list of patient belongings
+5.  Safe Patient Handling is designed to guide the transfer of a patient
+ 
+SOFTWARE AND DOCUMENTATION CHANGES:
+ 
+There are two files. The one that contains the kids build and the one 
+executable that contains the four (4) Delphi GUI templates and the help 
+files.
+ 
+SOFTWARE FILES:
+
+
+NUPA 1_0.KID    (KIDS build)
+NUPA.ZIP        (Executables) 
+ 
+DOCUMENTATION:
+ 
+Documentation in Adobe Acrobat format (.pdf) files
+ 
+Document File Description                File Name             FTP Mode
+----------------------------------       -------------------------------
+ 
+Admission-RN Assessment Template         Admassess.exe            Binary
+Admission RN Reassessment Template       Admassess_shift.exe      Binary
+Interdisciplinary Plan of Care Template  Admassess_careplan.exe   Binary
+ 
+Installation Guide                       nupa1_0ig.doc            Binary
+Installation Guide                       nupa1_0ig.pdf            Binary
+ 
+Technical Manual                         nupa1_0tm.doc            Binary 
+Technical Manual                         nupa1_0tm.pdf            Binary
+ 
+Admission -RN Assessment User Manual     nupa1_0_Aum.doc          Binary
+Admission -RN Assessment User Manual     nupa1_0_Aum.pdf          Binary
+ 
+RN Reassessment User Manual              nupa1_0_Rum.doc          Binary
+RN Reassessment User Manual              nupa1_0_Rum.doc          Binary
+ 
+Admission Nursing Data Collect User Manual nupa1_0_DCum.doc       Binary
+Admission Nursing Data Collect User Manual nupa1_0_DCum.pdf       Binary
+ 
+Interdisciplinary Plan of Care User Manual nupa1_0_Ium.doc        Binary
+Interdisciplinary Plan of Care User Manual nupa1_0_Ium.pdf        Binary
+ 
+The files listed above may be obtained via FTP. The preferred method is 
+to FTP the files from:  download.vista.med.va.gov
+ 
+This transmits the files from the first available FTP server. Sites may 
+also elect to retrieve the three executables, KIDS file, and manuals 
+directly from a specific server as follows:
+ 
+CIO Field Office        FTP Address              Directory
+Albany               ftp.fo-albany.med.va.gov [anonymous.software]
+Hines                ftp.fo-hines.med.va.gov  [anonymous.software]
+Salt Lake City       ftp.fo-slc.med.va.gov    [anonymous.software]
+ 
+ 
+MANDATE:
+ 
+All sites are mandated to install the application, but implementation is 
+not mandated. Nursing personnel at the sites will be mandated to use this 
+application in accordance with the VA Office of Nursing Services (ONS), 
+as well as the training schedule. 
+ 
+ 
+ADDITIONAL INFORMATION:
+ 
+If you have any questions concerning the implementation of this 
+application, please contact the VA Service Desk at 1-888-596-HELP (4357) 
+or directly log a Remedy ticket using the following:
+ 
+Category = Applications  VistA
+Type = Patient Assessment Documentation Package  PADP
+Item = Connectivity Issues, Consults, Parameters, Templates, Document 
+Definition, Other

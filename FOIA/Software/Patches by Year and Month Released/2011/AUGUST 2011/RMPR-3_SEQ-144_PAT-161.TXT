@@ -1,0 +1,193 @@
+$TXT Created by BECKWITH,RALPH at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Thursday, 01/27/11 at 10:34
+=============================================================================
+Run Date: AUG 29, 2011                     Designation: RMPR*3*161
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #144                      Status: Released
+                  Compliance Date: SEP 29, 2011
+=============================================================================
+
+Associated patches: (v)RMPR*3*55   <<= must be installed BEFORE `RMPR*3*161'
+                    (v)RMPR*3*128  <<= must be installed BEFORE `RMPR*3*161'
+
+Subject: ADD NEW FIELD TO FILE 661.1;ERROR RUNNING ISSUE FROM STOCK;NOTIFICATION LETTER
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1. Add VERSION DATE field (#1.3) to the PROSTHETIC HCPCS file (#661.1)
+    to facilitate synchronization of HCPCS (Healthcare Common Procedure
+    Coding System) codes between the VISTA Prosthetics GUI and the  
+    enterprise asset management system.
+  
+ 2. Site received a subscript error when using the Issue from Stock option
+    due to an incomplete inventory item bar code scan.
+  
+ 3. When reprinting a Purchase Order on Vista the Patient Notification
+    letter is printing the entire patient social security number.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Tickets:
+ =========================
+ 1) HD0000000412579 VERSION DATE field added to file 661.1
+  
+ 2) HD0000000456612 Subscript error when running option Issue from Stock
+  
+ 3) HD0000000451360 Patient Notification letter prints SSN
+  
+   
+ Test Sites:
+ ==========
+ VA Western NY HCS
+ Ralph H Johnson VA Medical Center - Charleston
+ Clement J Zablocki Veterans Affairs Medical Center Milwaukee
+  
+  
+ Remedy Overview:
+ ================ 
+ 1) HD0000000412579 VERSION DATE field added to file 661.1
+  
+ Problem:
+ --------
+ In order to facilitate the synchronization of HCPCS codes between the 
+ VISTA Prosthetics GUI and an enterprise asset management system the 
+ Version Date field (#1.3) needs to be added to the PROSTHETICS HCPCS file 
+ (#661.1).
+  
+   
+ Resolution:
+ -----------
+ Using Fileman option Modify File Attributes, the VERSION DATE field 
+ (#1.3) was added to the PROSTHETIC HCPCS file (#661.1).
+  
+ 661.1,1.3     VERSION DATE           5;2 DATE
+  
+               INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+               LAST EDITED:      JUL 15, 2010 
+               HELP-PROMPT:      Enter the date of the latest update to 
+                                 this HCPCS code. 
+               DESCRIPTION:      This date represents the most recent 
+                                 update to a HCPCS code in the PCM gold
+                                 copy. Version date is controlled by PCM
+                                 and is used to synchronize VistA HCPCS 
+                                 updates with the enterprise asset  
+                                 management system.
+  
+ Routines: none
+  
+  
+  
+ 2) HD0000000456612 Subscript error when running option Issue from Stock
+  
+ Problem:
+ --------         
+ A site reported that when using the Issue from Stock option they received
+ a subscript error.  There was a null HCPCS code returned as 
+ part of the scanned entry "-1L1".
+  
+  
+ Resolution:
+ -----------
+ Modified routine RMPRPIYS to insure a scanned/entered stock item has a 
+ HCPCS code that is not null.  The scanned entry should be HCPCS-date.
+  
+ Routines: RMPRPIYS
+  
+  
+ 3) HD0000000451360 Patient Notification letter prints SSN
+  
+ Problem:
+ --------
+ A site reported that the patients entire Social Security number (SSN)
+ is printing on the notification letter when reprinting a 2421 form from
+ the Purchasing Reprint menu.
+  
+  
+ Resolution:
+ -----------
+ Modified routine RMPR4P24 to remove the printing of patient Social
+ Security numbers when user request notification printing during 
+ the reprint of form 2421 (purchase order).
+  
+ Routines: RMPR4P24
+  
+  
+   
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install these routines at any time without interruption to 
+ users. It should take less than 2 minutes to install this patch. 
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*161)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       RMPR*3.0*161.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//" respond YES. When prompted to select the 
+       options you would like to place out of order, enter the following:
+                                                                  
+       RMPR ADD 2319        Issue From Stock
+       RMPR REPRINT 2421    Reprint a 2421 Form
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPR4P24
+    Before: B10145973   After: B10064106  **3,20,55,161**
+Routine Name: RMPRPIYS
+    Before: B84869709   After: B86506085  **61,108,128,161**
+ 
+Routine list of preceding patches: 55, 128
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : JUL 14, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: AUG 09, 2011
+Released By : MORRIS,DELISA                 Date Released : AUG 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

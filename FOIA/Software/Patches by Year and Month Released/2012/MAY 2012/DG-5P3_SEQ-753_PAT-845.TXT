@@ -1,0 +1,127 @@
+$TXT Created by CHANDARANA,RISHAN at MNTVUU.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 09/26/11 at 18:47
+=============================================================================
+Run Date: MAY 31, 2012                     Designation: DG*5.3*845
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #753                    Status: Released
+                  Compliance Date: JUL 01, 2012
+=============================================================================
+
+
+Subject: UPDATE FOR HOME TELEHEALTH
+
+Category: 
+  - Other
+
+Description:
+============
+
+  This patch will add two new entries to the HL LOGICAL LINK (#870)
+  file. The entries are for two new vendors, Authentidate and 
+  Cardiocom.  
+   
+  ASSOCIATED REMEDY TICKETS:
+  =========================  
+  1) HD0000000462767 - Update for Home Telehealth PIMS application
+  
+  ASSOCIATED NSR'S:
+  ================
+  N/A 
+   
+  PARTICIPATING TEST SITES:
+  ========================
+  Connecticut HCS
+  Martinsburg, WV
+  Washington, DC
+  
+  REMEDY OVERVIEW:
+  ===============
+  1) HD0000000462767 - Update for Home Telehealth PIMS application
+   
+  Problem:
+  ========
+  There are two new vendors providing Home TeleHealth services, 
+  Authentidate and Cardiocom.  The Home TeleHealth Package needs
+  to be updated to support communication with them.  
+  
+  Solution:
+  =========
+  Add two new logical links for Authentidate (DG HT AD) and 
+  Cardiocom (DG HT CC).  
+  
+  Components:
+  ===========
+  HL LOGICAL LINKS: DG HT CC, DG HT AD
+  
+  The properties for the DG HT CC Logical Link are:
+  
+  NODE: DG HT CC
+  INSTITUTION: TELEHEALTH CARDIOCOM     LLP TYPE: TCP
+  DNS DOMAIN: VAWW.HL7.CARDIOCOM.CC.MED.VA.GOV
+  QUEUE SIZE: 10                        EXCEED RE-TRANSMIT ACTION: restart
+  TCP/IP PORT: 5121                     TCP/IP SERVICE TYPE: CLIENT (SENDER)
+  PERSISTENT: NO
+  
+  The properties for the DG HT AD Logical Link are:
+  
+  NODE: DG HT AD
+  INSTITUTION: TELEHEALTH AUTHENTIDATE  LLP TYPE: TCP
+  DNS DOMAIN: VAWW.HL7.AUTHENTIDATE.CC.MED.VA.GOV
+  QUEUE SIZE: 10                        EXCEED RE-TRANSMIT ACTION: restart
+  TCP/IP PORT: 5121                     TCP/IP SERVICE TYPE: CLIENT (SENDER)
+  PERSISTENT: NO
+  
+  INSTALLATION INSTRUCTIONS:
+  ===========================
+  This patch may be run with users on the system.
+  
+  Installation will take less than 2 minutes.
+   
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+    
+       NOTE:  If the required patches are not installed, the transport 
+              global will be removed.  If the transport global is removed
+              you will need to repeat this step.
+    
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+    
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter DG*5.3*845):
+       a.  Compare Transport Global to Current System  - this option will
+           allow you to view all changes that will be made when the patch
+           is installed.  It compares all components of the patch 
+           (routines, DDs, templates, etc.).
+       b.  Verify Checksums in Transport Global - this option will
+           allow you to ensure the integrity of the routines that are in
+           the transport global.
+       c.  Print Transport Global - this option will allow you to view the
+           components of the KIDS build.
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+    
+   4.  Use the Install Package(s) option and select the package DG*5.3*845.
+    
+   5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', respond NO.
+    
+   6.  When prompted,'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : CHANDARANA,RISHAN             Date Entered  : JUN 21, 2011
+Completed By: SESSLER,APRIL                 Date Completed: MAY 24, 2012
+Released By : FRANCE,KATHI                  Date Released : MAY 31, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

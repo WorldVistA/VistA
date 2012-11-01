@@ -1,0 +1,317 @@
+
+=============================================================================
+Run Date: SEP 23, 2011                     Designation: IVM*2*147
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #126                      Status: Released
+                  Compliance Date: OCT 24, 2011
+=============================================================================
+
+Associated patches: (v)IVM*2*134   <<= must be installed BEFORE `IVM*2*147'
+                    (v)IVM*2*143   <<= must be installed BEFORE `IVM*2*147'
+
+Subject: PREVENT INCONSISTENT DATA ERRORS FOR MERGED PATIENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects a problem that is causing inconsistent data error 
+ records to be added to the INCONSISTENT DATA file (#38.5) for merged 
+ patients during the process to build HL7 Z07 messages. These merged 
+ patient records are no longer valid records in the PATIENT file (#2) and 
+ as a result the inconsistencies cannot be resolved.
+        
+ This patch will be distributed in a host file along with patch DG*5.3*829 
+ (CLEAN UP INCONSISTENT DATA FILE). Patch DG*5.3*829 will run a 
+ post-install process that will check the INCONSISTENT DATA file (#38.5) 
+ for patient records that point to merged patients in the PATIENT file 
+ (#2). These records will be deleted.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ HD0000000205864  Pointers in 301.5 not repointed in Patient Merge
+ Duplicate:
+    HD0000000370038  Unable To Clear Inconsistency
+  
+  
+ This patch addresses the following Code Change Request (CCR):
+ -------------------------------------------------------------
+ REEG_00009645    HD0000000205864 - Pointers in 301.5 not repointed
+                  in Patient Merge
+  
+  
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ HD0000000205864  Pointers in 301.5 not repointed in Patient Merge
+ Duplicate:
+    HD0000000370038  Unable To Clear Inconsistency
+  
+ Problem:
+ --------
+ The problem is inconsistent data records are being added to the 
+ INCONSISTENT DATA file (#38.5) for merged patients. This is caused by 
+ records for merged patients remaining in the IVM PATIENT file (#301.5) 
+ with the transmission flag set to transmit. During the process to build
+ Z07 HL7 messages, consistency checks are done on the merged patient
+ records and, because these records are stub records in the PATIENT file
+ (#2), a number of inconsistencies are logged in the INCONSISTENT DATA file
+ (#38.5) and cannot be resolved because the merged patient records are no
+ longer valid.
+   
+ Solution:
+ ---------
+ The following changes were made to resolve this problem:
+  
+ The IVM BACKGROUND JOB routine, IVMPTRN, was modified to check if a 
+ patient that is scheduled for a Z07 message transmission is a merged 
+ patient, and if so, the patient's record is updated in the IVM PATIENT 
+ file (#301.5) to remove it from the list of records awaiting 
+ transmission. No further Z07 message processing will be done on that 
+ record.
+    
+ Modifications were made to the IVMZ07C routine that checks patient data 
+ for inconsistencies before building a Z07 message. If the patient record 
+ belongs to a merged patient, no inconsistencies will be filed in the 
+ INCONSISTENT DATA file (#38.5).
+  
+ Patch DG*5.3*829, included in the host file with IVM*2.0*147, will run a
+ post-install process that will check the INCONSISTENT DATA file (#38.5)
+ for patient records that point to merged patients in the PATIENT file
+ (#2). These records will be deleted.
+  
+  
+ Test Sites:
+ -----------
+ Providence VAMC (Medium)
+ Dayton VAMC (Large)
+ Tennessee Valley HCS (Large/Integrated)
+  
+  
+ SOFTWARE RETRIEVAL
+ ==================
+  
+ The software for this patch is not being distributed through the National 
+ Patch Module. This patch is being distributed as a host file. The host 
+ file will contain the following two KIDS builds:
+  
+             Host file name: IVM_2_P147.KID
+  
+                     Builds: IVM*2.0*147
+                             DG*5.3*829
+  
+ Sites may retrieve the software directly using File Transfer Protocol 
+ (FTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field 
+ Offices:
+  
+                     Albany   : ftp.fo-albany.med.va.gov
+                     Hines    : ftp.fo-hines.med.va.gov
+               Salt Lake City : ftp.fo-slc.med.va.gov
+       First Available Server : download.vista.med.va.gov
+  
+ The following file will be available:
+  
+     File Name            Description
+     ---------            -----------
+     IVM_2_P147.KID       Host File containing KIDS software distribution
+  
+ Note:  Use ASCII mode when transferring the .KID file.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ The host file should NOT be installed while the IVM BACKGROUND JOB is 
+ running. If the installation is queued, it should not be queued to run at
+ the same time that the IVM BACKGROUND JOB is scheduled.
+  
+  
+ Install Time - Less than 5 minutes.
+  
+ 1.  DOWNLOAD HOST KIDS FILE
+     -----------------------
+     Download the KIDS file IVM_2_P147.KID from the ANONYMOUS.SOFTWARE
+     directory of any of the following three Office of Information Field
+     Offices (OIFOs):  Albany, Hines, or Salt Lake to the appropriate
+     directory on your system.
+  
+ 2.  LOAD DISTRIBUTION
+     -----------------
+     Use the 'LOAD A DISTRIBUTION' option on the KIDS INSTALLATION
+     menu, and enter:  the directory onto which you have downloaded the
+     host file, immediately followed by IVM_2_P147.KID.
+  
+              
+ 3.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 4.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter IVM*2.0*147):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 5.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO. 
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer NO.
+  
+ 6.  The post-install routine, DG53829P, can be deleted once the clean-up 
+     has been successfully completed.
+  
+  
+ ****************** POST-INSTALLATION INSTRUCTIONS *******************
+  
+ A post-installation routine will automatically queue a job to run after
+ the DG*5.3*829 patch installation has completed. The routine is DG53829P.
+  
+ The post-install job will 'clean up' the INCONSISTENT DATA file (#38.5) 
+ by removing records that are pointing to merged patient records in the 
+ PATIENT file (#2).
+  
+ Because this clean-up process will read through the entire INCONSISTENT 
+ DATA file (#38.5), this job may take a while to run. A completion 
+ bulletin will be sent to the mail group DGEN ELIGIBILITY ALERT when it 
+ has successfully completed. If it does not complete or is stopped, it 
+ can be restarted by running RESTART^DG53829P.
+  
+ The completion bulletin will look like this:
+  
+ Subj: DG*5.3*829 - INCONSISTENT DATA FILE CLEANUP RESULTS  [#82233724]
+ 08/29/11@07:35  15 lines
+ From: POSTMASTER  In 'PATCH BACKUP' basket.   Page 1
+ --------------------------------------------------------------------------
+  
+ This message contains the results of the job to clean up records in
+ the INCONSISTENT DATA file (#38.5).  Patient records that pointed to
+ merged patients in the PATIENT file (#2) were deleted.
+  
+ The cleanup has run to completion.  Here are the results:
+  
+   Start Date/Time: Aug 29, 2011@07:30:11
+     End Date/Time: Aug 29, 2011@07:35:20
+  
+   Total File #38.5 Records Processed: 110119
+ Total Merged Patient Records Deleted: 36
+  
+ Deleted records are referenced in the global ^XTMP("DG53829","REC_DELETED"
+  
+ --------------------------------------------------------------------------
+  
+  
+ The results of the clean-up are stored in the ^XTMP("DG53829", global.
+ NOTE:   The ^XTMP("DG53829" global at your site will be maintained for 
+ six months, after which it will be automatically purged by a background 
+ process that runs on every system.
+  
+ ^XTMP("DG53829","REC_DELETED",<Subscript 3>)=""
+        Subscript 3: IEN of deleted record in the INCONSISTENT DATA file
+                     (#38.5). It is also the DFN of the merged patient
+                     record in the PATIENT file (#2).
+        
+  
+ The rest of the global definition is:
+  
+ ^XTMP("DG53829","PARAMS")= four '^' pieces of data:
+         Piece 1: Running count of the # of INCONSISTENT DATA file 
+                  (#38.5) records that were deleted. 
+         Piece 2: Last IEN read from INCONSISTENT DATA file (#38.5). 
+         Piece 3: Running count of the # of records read in the 
+                  INCONSISTENT DATA file (#38.5).
+         Piece 4: "RUNNING", "STOPPED" or "DONE" to indicate the 
+                  current status of the update job.
+  
+ ^XTMP("DG53829","RUNNING",<date/time of job start>)=date/time of job end 
+  
+ ^XTMP("DG53829","RUNNING",<date/time of job start>,<task #>)=""
+  
+  
+ The post-install routine, DG53829P, can be deleted once the clean-up has 
+ been successfully completed.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMPTRN
+    Before: B48845730   After: B51345879  **1,9,11,12,17,28,34,74,79,89,
+                                           105,143,147**
+ Description of Changes:
+  CODE ADDED:
+  ==========
+   
+   +77        ..; - if merged patient record, then update Transmission 
+  Status to
+   +78        ..;   remove from "ATR" x-ref and do not create Z07 
+  (IVM*2*147)
+   
+            
+   +79        ..I $D(^DPT(DFN,-9)) S X=$$CLEAR^IVMPLOG(IVMDA) K X Q
+
+Routine Name: IVMZ07C
+    Before: B18065653   After: B18525978  **105,128,134,147**
+ Description of Changes:
+  CODE ADDED:
+  ==========
+   
+   +37        ; If DFN is for a merged patient, quit (IVM*2*147)
+   +38        I $D(^DPT(DFN,-9)) Q PASS
+
+ 
+Routine list of preceding patches: 134, 143
+
+=============================================================================
+User Information:
+Entered By  : DESMOND,LINDA                 Date Entered  : JUN 03, 2010
+Completed By: RUDINGER,NANCY L.             Date Completed: SEP 20, 2011
+Released By : GROOMS,ANTHONY E              Date Released : SEP 23, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

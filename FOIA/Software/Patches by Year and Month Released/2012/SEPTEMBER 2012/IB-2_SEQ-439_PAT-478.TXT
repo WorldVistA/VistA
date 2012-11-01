@@ -1,0 +1,203 @@
+$TXT Created by KOGER,RON at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 06/18/12 at 10:19
+=============================================================================
+Run Date: SEP 25, 2012                     Designation: IB*2*478
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #439                      Status: Released
+                  Compliance Date: OCT 26, 2012
+=============================================================================
+
+
+Subject: ADD TYPE OF VISIT CODES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates Evaluation and Management codes in the TYPE OF VISIT
+ file (#357.69).  These codes are a subset of the Current Procedural
+ Terminology codes published by the American Medical Association and they
+ are used to describe the level of care for an outpatient visit.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. HD0000000573535    Update TYPE OF VISIT file (#357.69)
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ UPSTATE NEW YORK HCS
+ TAMPA, FL
+    
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. HD0000000573535    Update TYPE OF VISIT file (#357.69)
+   
+   Problem: 
+   --------
+   As requested by the Health Information Governance Office, the TYPE OF
+   VISIT file (#357.69) needs to be updated to reflect current procedural
+   terminology.
+   
+   Resolution:
+   -----------
+   Add requested Type of Visit Codes as described below:
+  
+  
+ TYPE OF VISIT CODES UPDATED
+ ---------------------------
+  
+ CODE   DESCRIPTION
+ ------------------------------------------------------------------
+ 99234  Detailed Observ or Inpt hospital care
+ 99235  Comp Observ or Inpt hospital care
+ 99236  Hi Comp Observ or Inpt hospital care
+ 99239  Hospital D/C Day Mgmt->30 min
+ 99304  Initial Nursing Facility Care-Detailed
+ 99305  Initial Nursing Facility Care-Comp
+ 99306  Initial Nursing Facility Care-Hi Comp
+ 99307  Subseq Nursing Facility Care-Prob Focus
+ 99308  Subseq Nurs Facility Care-Ex Prob Focus
+ 99309  Subseq Nursing Facility Care-Detailed
+ 99310  Subseq Nursing Facility Care-Comp
+ 99315  Nursing Facility D/C Day Mgmt-30 min
+ 99316  Nursing Facility D/C Day Mgmt->30 min
+ 99318  Nursing Facility Care-Annual Assessment
+ 99377  Care Plan Oversight-Hospice
+ 99378  Care Plan Oversight-Nursing Facility
+  
+ Note: SOME SITES MAY HAVE ALREADY MANUALLY ADDED SOME OF THESE CODES IN THE
+ TYPE OF VISIT file (#357.69). IN THIS INSTANCE, THE EXISTING VALUES WILL BE 
+ REPLACED WITH THE VALUES IN THIS PATCH. 
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ You may install this patch at any time, however the Edit Tool Kit Forms
+ [IBDF EDIT TOOL KIT FORMS] option will be disabled during the patch 
+ installation.  It should take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*478)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*478.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? YES//" respond YES.
+  
+        When prompted, "Enter options you wish to mark as 'Out of Order':",
+        enter:
+               Edit Tool Kit Forms  [IBDF EDIT TOOL KIT FORMS]
+  
+        When prompted, "Enter protocols you wish to mark as 'Out of
+        Order':", press enter.
+  
+     7. You may delete routine IB20P478 after the installation.
+  
+  
+  
+ *** After the install please review the installation to verify the
+     Type of Visit Codes were added or updated.  Values that are updated
+     will depend on codes already in the table at your site.  The total,
+     of all adds and updates should equal 16.  See below for an example:
+     
+ ------------------------------------------------
+  
+ Type of Visit Codes, Post-Install Starting
+  
+    NOTE: If a Type of Visit Code already exists in file 357.69
+  
+    values approved for national release will replace current values.
+  
+  Adding or Updating type of visit codes to file 357.69
+  
+    Adding  99234  Detailed Observ or Inpt hospital care
+  
+    Adding  99235  Comp Observ or Inpt hospital care
+  
+    Adding  99236  Hi Comp Observ or Inpt hospital care
+  
+    Update  99239  Hospital D/C Day Mgmt->30 min
+  
+    Adding  99304  Initial Nursing Facility Care-Detailed
+  
+    Adding  99305  Initial Nursing Facility Care-Comp
+  
+    Adding  99306  Initial Nursing Facility Care-Hi Comp
+  
+    Adding  99307  Subseq Nursing Facility Care-Prob Focus
+  
+    Adding  99308  Subseq Nurs Facility Care-Ex Prob Focus
+  
+    Adding  99309  Subseq Nursing Facility Care-Detailed 
+  
+    Adding  99310  Subseq Nursing Facility Care-Comp
+  
+    Update  99315  Nursing Facility D/C Day Mgmt-30 min
+  
+    Update  99316  Nursing Facility D/C Day Mgmt->30 min
+  
+    Update  99318  Nursing Facility Care-Annual Assessment
+  
+    Adding  99377  Care Plan Oversight-Hospice
+  
+    Adding  99378  Care Plan Oversight-Nursing Facility
+  
+      16 entries added or updated in file 357.69
+  
+ Type of Visit Codes, Post-Install Complete
+  
+  
+ ------------------------------------------------
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P478
+    Before:       n/a   After: B18541575  **478**
+ Description of Changes:
+  
+
+
+=============================================================================
+User Information:
+Entered By  : KOGER,RON                     Date Entered  : APR 19, 2012
+Completed By: BYRD,TIERRA                   Date Completed: SEP 24, 2012
+Released By : BATIE,NADINE                  Date Released : SEP 25, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

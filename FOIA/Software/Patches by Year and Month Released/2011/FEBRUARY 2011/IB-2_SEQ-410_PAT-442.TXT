@@ -1,0 +1,298 @@
+$TXT Created by KOGER,RON at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 01/06/11 at 13:42
+=============================================================================
+Run Date: FEB 23, 2011                     Designation: IB*2*442
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #410                      Status: Released
+                  Compliance Date: MAR 10, 2011
+=============================================================================
+
+
+Subject: FY 2010 SUPPLEMENTAL AND FY 2011 MIDYEAR STOP CODE CHANGES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates Integrated Billing Clinic Stop Codes to reflect 
+ Fiscal Year 2010 Supplemental and FY 2011 Midyear changes.
+  
+ **************************************************************************
+ Note: In order to provide CORRECT billing of co-pay charges for the 
+ Decision Support System (DSS) Stop Code changes, this patch is being
+ released with a shortened compliance date.  Please install it as soon as
+ possible.
+ **************************************************************************
+   
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000406840    FY 2010 Supplemental Stop Code updates
+ 2. HD0000000438844    FY 2011 Midyear Stop Code updates
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Miami VA Healthcare System
+ VA Pittsburgh HCS
+ VA Western NY HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000406840    FY 2010 Supplemental Stop Code updates
+   
+   Problem: 
+   --------
+   As requested by the Chief Business Office (CBO), the IB CLINIC
+   STOP CODE BILLABLE TYPES (#352.5) file needs to be updated to
+   reflect supplemental changes for Fiscal Year 2010.
+   
+   Resolution:
+   -----------
+   Add and update requested Stop Codes as described below:
+  
+  
+ STOP CODES ADDED
+ ----------------
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+ 539   FEB 1,2010   BASIC CARE      MH INTGRTD CARE GRP
+ 588   FEB 1,2010   BASIC CARE      RRTP AFTERCARE IND             OVERRIDE
+ 598   FEB 1,2010   BASIC CARE      RRTP PRE-ADMIT IND             OVERRIDE
+ 599   FEB 1,2010   BASIC CARE      RRTP PRE-ADMIT GRP             OVERRIDE     
+  
+  
+ STOP CODES MODIFIED
+ -------------------
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+  
+ OLD:
+  
+ 416   DEC 6,2001   NON-BILLABLE    AMB SURG EVAL(NON-MD)
+ 432   OCT 1,2007   BASIC CARE      PRE-BED MD-SURG
+ 433   JUL 1,2002   BASIC CARE      PRE-BED RN-SURG
+ 534   OCT 1,2007   BASIC CARE      MENTAL HEALTH INTEGRATED CARE
+ 595   OCT 1,2008   NON-BILLABLE    RRTP AFTERCARE VA
+  
+  
+ NEW:
+  
+ 416   FEB 1,2010   BASIC CARE      PRE-SURG EVAL BY NON-MD        OVERRIDE
+ 432   FEB 1,2010   BASIC CARE      PRE-SURG EVAL BY MD
+ 433   FEB 1,2010   BASIC CARE      PRE-SURG EVAL BY NURSING
+ 534   FEB 1,2010   BASIC CARE      MH INTGRTD CARE IND
+ 595   FEB 1,2010   NON-BILLABLE    RRTP AFTERCARE GRP
+  
+  
+ 2. HD0000000438844    FY 2011 Midyear Stop Code updates
+  
+   Problem: 
+   --------
+   As requested by the Chief Business Office (CBO), the IB CLINIC
+   STOP CODE BILLABLE TYPES (#352.5) file needs to be updated to
+   reflect midyear changes for Fiscal Year 2011.
+   
+   Resolution:
+   -----------
+   Add and update requested Stop Codes as described below:
+  
+  
+ STOP CODES ADDED
+ ----------------
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+ 158   MAR 1,2011   SPECIALTY CARE  BRACHYTHERAPY TREATMENT        OVERRIDE
+ 511   MAR 1,2011   NON-BILLABLE    GRANT AND PER DIEM             OVERRIDE
+  
+  
+ STOP CODES MODIFIED
+ -------------------
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+  
+ OLD:
+  
+ 197   APR 1,2006   SPECIALTY CARE  POLYTRAUMA INDIVIDUAL          OVERRIDE
+ 198   APR 1,2006   SPECIALTY CARE  POLYTRAUMA GROUP               OVERRIDE
+ 199   APR 1,2006   NON-BILLABLE    TELEPHONE/POLYTRAUMA           OVERRIDE
+ 348   OCT 1,2003   BASIC CARE      PRIMARY CARE GROUP
+ 394   OCT 1,2009   BASIC CARE      MED SPECIALTY GROUP
+ 416   OCT 1,2010   BASIC CARE      AMB SURG EVAL(NON-MD)          OVERRIDE
+ 529   OCT 1,2002   NON-BILLABLE    HCHV/HMI                       OVERRIDE
+ 595   FEB 1,2010   NON-BILLABLE    RRTP AFTERCARE GRP
+ 714   OCT 1,2010   NON-BILLABLE    OTHER ED IND                   OVERRIDE
+ 716   OCT 1,2002   BASIC CARE      POST SURG ROUTINE AFTERCARE    OVERRIDE
+  
+  
+ NEW:
+  
+ 197   MAR 1,2011   SPECIALTY CARE  POLYTRAUMA/TBI IND             OVERRIDE
+ 198   MAR 1,2011   SPECIALTY CARE  POLYTRAUMA/TBI GRP             OVERRIDE
+ 199   MAR 1,2011   NON-BILLABLE    TELEPHONE POLYTRAUMA/TBI       OVERRIDE
+ 348   MAR 1,2011   BASIC CARE      PRIMARY CARE SHARED APPT
+ 394   MAR 1,2011   BASIC CARE      MED SPECIALTY SHARED APPT
+ 416   MAR 1,2011   BASIC CARE      PRE-SURG EVAL BY NON-MD        OVERRIDE
+ 529   MAR 1,2011   NON-BILLABLE    HCHV/HCMI                      OVERRIDE
+ 595   MAR 1,2011   BASIC CARE      RRTP AFTERCARE GRP
+ 714   MAR 1,2011   BASIC CARE      OTHER ED IND                   OVERRIDE
+ 716   MAR 1,2011   BASIC CARE      POST SURG ROUTINE AFTERCARE
+  
+  
+ Note: 
+ This patch has two records for 416, so the end result is the records
+ for 416 will look like the list show below when viewed in FileMan after
+ this patch has been installed.
+  
+ 416   DEC 6,2001   NON-BILLABLE    AMB SURG EVAL(NON-MD)
+ 416   OCT 1,2010   BASIC CARE      AMB SURG EVAL(NON-MD)          OVERRIDE
+ 416   FEB 1,2010   BASIC CARE      PRE-SURG EVAL BY NON-MD        OVERRIDE
+ 416   MAR 1,2011   BASIC CARE      PRE-SURG EVAL BY NON-MD        OVERRIDE
+  
+ Notice this list is not in chronological order, it is in order by when the
+ values were loaded into the table.  OCT 1,2010 has already been loaded into
+ the table by patch IB*2.0*440, which has already been released.  This patch
+ loads values for FEB 1,2010 and MAR 1,2011.
+  
+ Also note there are two records for 595, so the end result is the records
+ for 595 will look like the list shown below when viewed in FileMan after
+ this patch has been installed.
+  
+ 595   OCT 1,2008   NON-BILLABLE    RRTP AFTERCARE VA               
+ 595   FEB 1,2010   NON-BILLABLE    RRTP AFTERCARE GRP              
+ 595   MAR 1,2011   BASIC CARE      RRTP AFTERCARE GRP
+   
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*442)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*442.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//" respond NO.
+   
+ *After the install please review the installation to verify the Stop Codes
+     were added.  See below:
+   
+  
+  
+  
+  -----------------------------------------------
+  
+ DSS Clinic Stop Codes, Post-Install Starting
+  
+  Adding new codes to file 352.5
+  
+    539  MH INTGRTD CARE GRP
+  
+    588  RRTP AFTERCARE IND
+  
+    598  RRTP PRE-ADMIT IND
+  
+    599  RRTP PRE-ADMIT GRP
+  
+    158  BRACHYTHERAPY TREATMENT
+  
+    511  GRANT AND PER DIEM
+  
+      6 entries added to 352.5
+  
+  Updating Stop Code entries in file 352.5
+  
+    416  PRE-SURG EVAL BY NON-MD
+  
+    432  PRE-SURG EVAL BY MD
+  
+    433  PRE-SURG EVAL BY NURSING
+  
+    534  MH INTGRTD CARE IND
+  
+    595  RRTP AFTERCARE GRP
+  
+    197  POLYTRAUMA/TBI IND
+  
+    198  POLYTRAUMA/TBI GRP
+  
+    199  TELEPHONE POLYTRAUMA/TBI
+  
+    348  PRIMARY CARE SHARED APPT
+  
+    394  MED SPECIALTY SHARED APPT
+  
+    416  PRE-SURG EVAL BY NON-MD
+  
+    529  HCHV/HCMI
+  
+    595  RRTP AFTERCARE GRP
+  
+    714  OTHER ED IND
+  
+    716  POST SURG ROUTINE AFTERCARE
+  
+      15 updates added to file 352.5
+  
+ DSS Clinic Stop Codes, Post-Install Complete
+  
+  -----------------------------------------------
+  
+   
+      7. You may delete routine IB20P442 after the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P442
+    Before:       n/a   After: B15206821  **442**
+
+=============================================================================
+User Information:
+Entered By  : KOGER,RON                     Date Entered  : OCT 04, 2010
+Completed By: DAWSON,TIM                    Date Completed: FEB 10, 2011
+Released By : MURRAY,ANGELA                 Date Released : FEB 23, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,204 @@
+
+=============================================================================
+Run Date: AUG 11, 2011                     Designation: PSS*1*163
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: EMERGENCY
+Version : 1       SEQ #144                      Status: Released
+                  Compliance Date: SEP 15, 2011
+=============================================================================
+
+Associated patches: (v)PSS*1*136   <<= must be installed BEFORE `PSS*1*163'
+
+Subject: MEDICATION ORDER CHECK HEALTHCARE APPLICATION UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ ****************************** Note **************************************
+ This patch is a follow-up patch for Medication Order Check Healthcare 
+ Application v1.0 (MOCHA).  The MOCHA v1.0 patches are being released as a 
+ phased implementation release.  To see current status and target dates for
+ Sites/VISN/Region please refer to the following site:
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+ Sites should have received instructions and guidance on the installation 
+ of MOCHA v1.0 as it is a phased implementation. Patches PSO*7*387,
+ PSJ*5*263, PSS*1*163 and OR*3*346 need to be installed within 2 business 
+ days at all sites that have MOCHA v1.0 installed in production.  The
+ remaining sites need to install the patches included with this release
+ immediately after the installation of the MOCHA v1.0 patches.  These
+ patches may be installed in any order after the MOCHA v1.0 patches are
+ installed.   (The MOCHA v1.0 installation included patches PSS*1*136,
+ PSO*7*251, PSJ*5*181, OR*3*272, PSS*1*117, PSO*7*375)
+  
+ **************************************************************************
+  
+ This patch makes a change to the interface when order checks are sent from
+ VistA to MOCHA. When Order Checks cannot be performed for any reason, a
+ warning message is displayed to the user that order checks did not occur.
+ There was an occurrence reported in a test account where Order Checks did
+ not occur, but no message was displayed to the user. At the end of all the
+ order check processing, this patch will add an additional check to see if
+ the flag that indicates the success or failure of the order checks is set.
+ If it is not set, it will set the flag that will indicate to the calling
+ application that the message indicating order checks were not performed 
+ should be displayed to the user.
+  
+ There was also a problem reported of an error in the Interface Scheduler 
+ [PSS INTERFACE SCHEDULER] option. This is the background task that checks 
+ on a scheduled interval to see if the connection to the vendor database is
+ operational. The error occurred when this task was queued to run from the
+ identity of POSTMASTER, because the internal entry number contained a
+ decimal, and that number is sent through the interface, which caused the 
+ error. For a resolution, this patch will substitute the number 0 whenever
+ this number is not a whole number. The same logic will be applied to Job
+ Number. This same logic will also be applied to Station Number, after
+ stripping off any characters that are not numeric.
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Associated PSIs: 
+ ----------------
+ N/A 
+  
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ N/A
+  
+  
+ Components Exported With Patch: 
+ -------------------------------
+ N/A
+  
+                                                                          
+ Test Sites:
+ -----------
+ KANSAS CITY, MO
+ OKLAHOMA CITY, OK
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+                
+  
+ Documentation Retrieval:
+ ------------------------
+ Updated documentation describing the functionality introduced by this 
+ patch will be downloaded to sites from the FTP address as directed by the 
+ PRE Implementation team.
+  
+ The documentation distribution includes:
+  
+ File Description                          File Name               FTP Mode
+ --------------------------------------------------------------------------
+ PDM User Manual (Revised August 2011)     PSS_1_UM_R0811.PDF      (binary)
+ PDM User Manual Change Pages              PSS_1_P163_UM_CP.PDF    (binary)
+ Medication Order Check Healthcare Application (MOCHA) v1.0 Combined Build
+ Installation Guide (Revised August 2011)  MOCHA_CB_PSS_1_IG_R0811.PDF
+                                                                   (binary)
+ Medication Order Check Healthcare Application (MOCHA) v1.0 Combined Build
+ Installation Guide Change Pages           MOCHA_CB_PSS_1_P163_IG_CP.PDF
+                                                                   (binary)
+  
+ Once released, documentation may be retrieved from the VA Software 
+ Document Library (VDL) on the Internet at the following address,
+ http://www.va.gov/vdl
+  
+  
+ FTP Instructions:
+ -----------------
+ The file listed below may be obtained via FTP.  The preferred method is 
+ to FTP the files from:
+  
+    download.vista.med.va.gov
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+    CIO FIELD OFFICE   FTP ADDRESS                 DIRECTORY
+    ----------------   -------------------------   --------------------
+    Albany             ftp.fo-albany.med.va.gov    [anonymous.software]
+    Hines              ftp.fo-hines.med.va.gov     [anonymous.software]
+    Salt Lake City     ftp.fo-slc.med.va.gov       [anonymous.software]
+  
+  
+    File Name                      Contents           Retrieval Format
+    ---------                      --------           ----------------
+    PSS_1_163.KID                  PSS*1*163          ASCII
+    
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ Do not install this patch while Outpatient Pharmacy users, Inpatient 
+ Medication Users or Computerized Patient Record System (CPRS) users are
+ on the system, because the code being patched is invoked every time a
+ medication order is entered from any of these three applications.
+ Additionally, the PSS INTERFACE SCHEDULER background task invokes a
+ routine in this patch, so install when that task would not be running.
+  
+ Installation will take no longer than 5 minutes.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. Use FTP to download PSS_1_163.KID file.
+  
+    3. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    4. Select the Load a Distribution and enter the directory that you
+       FTP'ed the host file to and PSS_1_163.KID.  Example:
+       USER$:[ABC]PSS_1_163.KID 
+  
+    5. From the Kernel Installation & Distribution System (KIDS) menu,
+       you may select to use the following options (when prompted for
+       INSTALL NAME, enter PSS*1.0*163):
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as Data Dictionaries or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSS*1.0*163.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSHREQ
+    Before:B201153193   After:B206597862  **136,163**
+Routine Name: PSSHRQ2
+    Before:  B3729020   After:  B5074500  **136,163**
+ 
+Routine list of preceding patches: 136
+
+=============================================================================
+User Information:
+Entered By  : RUZBACKI,RON T                Date Entered  : APR 11, 2011
+Completed By: SBERRO,JACQUES                Date Completed: AUG 11, 2011
+Released By : TEAGUE,LYN                    Date Released : AUG 11, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

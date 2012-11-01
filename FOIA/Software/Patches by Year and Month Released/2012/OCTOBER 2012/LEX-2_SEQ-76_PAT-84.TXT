@@ -1,0 +1,238 @@
+$TXT Created by ROWE,KIMBALL at LEXNXT.FO-BAYPINES.MED.VA.GOV  (KIDS) on Sunday, 09/16/12 at 22:11
+=============================================================================
+Run Date: OCT 24, 2012                     Designation: LEX*2*84
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #76                      Status: Released
+                  Compliance Date: OCT 31, 2012
+=============================================================================
+
+Associated patches: (v)LEX*2*83    <<= must be installed BEFORE `LEX*2*84'
+
+Subject: Code Set FY13 1st Qtr Update
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+  This patch contains the FY13 1st Quarter Code Set distribution with 30
+  changes effective Oct 01, 2012.  This patch installs the data for the 
+  following Informational patches:
+   
+            ICD*18.0*66
+            ICPT*6.0*61
+   
+  This patch writes to the following files:
+   
+       ICD DIAGNOSIS             #80       ^ICD9(       ICR 4485
+       ICD OPERATION/PROCEDURE   #80.1     ^ICD0(       ICR 4486
+       CPT                       #81       ^ICPT(       ICR 4489
+       CPT MODIFIER              #81.3     ^DIC(81.3,   ICR 4492
+       LEXICON files          #757-757.41  ^LEX(        N/A
+   
+  ENHANCEMENTS
+  ============
+   
+    FY13 1st Quarter Update
+ 
+      HCPCS Procedure Additions
+      -------------------------
+ 
+        Effective Oct 01, 2012                                (2 Codes)
+          C9292   C9293
+ 
+      ICD Diagnosis Revisions
+      -----------------------
+ 
+        Effective Oct 01, 2012                               (27 Codes)
+          493.90  550.11  598.00  598.01  642.91  642.92  646.11  646.20
+          647.02  647.03  647.04  647.14  647.23  648.60  652.61  652.63
+          664.01  755.30  848.40  941.48  942.20  943.20  943.31  V59.71
+          V59.72  V59.73  V59.74
+ 
+      ICD Procedure Code Additions
+      ----------------------------
+  
+        Effective Oct 01, 2012                                (1 Code)
+          00.95
+ 
+ 
+  REMEDY TICKETS:
+  ===============
+ 
+    540849 - Cooley's Anemia 282.44
+    725282 - Re-activate Modifiers V8/V9
+ 
+ 
+  FTP SOFTWARE RETRIEVAL:
+  =======================
+ 
+    Global Host File:                  LEX_2_84.GBL  (ASCII)
+ 
+    The preferred method is to FTP the files from download.vista.med.va.gov,
+    which will transmit the files from the first available FTP server.
+ 
+    The files may also be downloaded directly from a particular FTP
+    location at the following locations.
+ 
+         Hines           ftp.fo-hines.med.va.gov
+         Albany          ftp.fo-albany.med.va.gov
+         Salt Lake       ftp.fo-slc.med.va.gov
+ 
+         Files are available in the ANONYMOUS.SOFTWARE directory. 
+ 
+  INSTALLATION INSTRUCTIONS
+  =========================
+ 
+     1)  Users may be on the system during the install of LEX*2.0*84.
+         It is recommended that this patch be installed during non-peak
+         hours.  This patch should take from 18 to 53 minutes to install
+         depending on the system.
+ 
+             Create a backup    16 - 44 minutes
+             Load the Global    .1 -  1 minutes
+             Kids Install        1 -  8 minutes
+             Total              18 - 53 minutes
+ 
+     2)  Create a backup of the following global files before continuing:
+ 
+             ICD Diagnosis               #80         ^ICD9(
+             ICD Operation/Procedure     #80.1       ^ICD0(
+             CPT/HCPCS Procedure         #81         ^ICPT(
+             CPT Modifier                #81.3       ^DIC(81.3,
+             Lexicon Files            #757-757.41    ^LEX(
+ 
+         These backup files may get as large as 1.2 gigabytes.  Make sure
+         space is available before proceeding.  It should take from 16 to
+         45 minutes to create the backup files.
+ 
+         Before you begin backing up the data in the ^LEX global, first 
+         clear out the UNRESOLVED NARRATIVE file 757.06.  This will 
+         prevent the backup procedure from encountering a control character
+         and aborting in error.  At the programmer prompt, issue the 
+         following MUMPS command to remove the control characters:
+ 
+            >D CLR^LEXAR7 
+ 
+         When you are creating a backup of non-subscripted globals, you are
+         saving the entire global.  You should use the utility ^%GO for
+         non-subscripted globals, and when prompted for a global, enter 
+         the global root (global name only, no open parenthesis, no file
+         number and no commas, as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICD9            ICD Diagnosis
+             ^ICD0            ICD Operation/Procedure
+             ^ICPT            CPT/HCPCS Procedure
+             ^LEX             Lexicon Files
+ 
+         When you are creating a backup of a subscripted global, you are
+         saving a partial global (a file within a global).  You should use
+         the utility ^%GOGEN, and when prompted for a global, enter the open
+         global reference (as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^DIC(81.3,       CPT Modifier
+ 
+     3)  Install the data from the global host file LEX_2_84.GBL.  This
+         file contains the Lexicon Utility's import global ^LEXM.
+ 
+         This global is approximately 4.6 megabytes in size.  Make sure
+         there is sufficient space available to load this global with
+         journaling on.  The loading of the global should take from 
+         .1 to 1 minute.
+ 
+         Thin Client Global Restore
+ 
+           Using the Cache Thin Client, right-click on the Cache 
+           cube, then select "Explorer."  Open the "Namespaces"
+           folder, then open the "VAH" folder, and right click on
+           the "Globals" folder. Select the "Import from disk" 
+           option. Click on the "Options..." button.  Select the 
+           "Globals" tab, make sure the format is VAX DSM, then 
+           click "OK." Find the file in the directory, double click
+           on LEX_2_84.GBL.  Next, select "Import All."  At the 
+           prompt "Do you wish to restore '^LEXM'," select "Yes."
+ 
+         Programmer Mode
+ 
+           From the Programmer prompt, execute the following routine:
+ 
+             >D ^%GI
+             
+             Global input
+             
+             Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_84.GBL
+             Parameters? "RS" => 
+             Globals were saved on 16 Sep 2012   9:53 PM   Cache
+             with description: LEX*2.0*84/ICD*18.0*66/ICPT*6.0*61 Data
+             
+             Input option: A
+             ^LEXM
+ 
+     4)  Set up user and IO variables (D ^XUP) for programmer access.
+ 
+     5)  Distribution Load:
+ 
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+ 
+     6)  KIDS Installation:
+ 
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LEX*2.0*84.
+ 
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+ 
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+ 
+         The KIDs install should take from 1 - 8 minutes
+ 
+     7)  Cleanup
+ 
+         a)  The Environment Check routine LEX2084 and the Post-Install 
+             routine LEX2084P should be deleted using the KERNEL option 
+             'Delete Routines' [XTRDEL] upon completion of the
+             installation.
+ 
+             NOTE:  The installation of this patch should trigger an
+                    update protocol and may spawn background tasks for 
+                    the Clinical Reminders or Consult packages.  You 
+                    do not need to wait for these background jobs to 
+                    complete to delete the Environment Check and 
+                    Post-Install routines.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2084
+    Before:       n/a   After:B124232319  **84**
+Routine Name: LEX2084P
+    Before:       n/a   After: B19188715  **84**
+
+=============================================================================
+User Information:
+Entered By  : ROWE,KIMBALL                  Date Entered  : AUG 08, 2012
+Completed By: CARTER,BRUCE C                Date Completed: OCT 22, 2012
+Released By : SCHWARTZ,VIKIE                Date Released : OCT 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

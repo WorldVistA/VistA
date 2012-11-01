@@ -1,0 +1,297 @@
+
+=============================================================================
+Run Date: FEB 25, 2011                     Designation: FB*3.5*115
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #103                    Status: Released
+                  Compliance Date: MAR 27, 2011
+=============================================================================
+
+Associated patches: (v)FB*3.5*111  <<= must be installed BEFORE `FB*3.5*115'
+                    (v)IB*2*430    <<= must be installed BEFORE `FB*3.5*115'
+
+Subject: UPDATE PLACE OF SERVICE CODES AND ADJUSTMENT REASONS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch updates the following:
+ -Place of Service Codes
+ -Adjustment Reason Codes
+  
+ ASSOCIATED REMEDY:
+ ==================
+ 1) HD0000000347537 - PLACE OF SERVICE Code Updates
+ 2) HD0000000196215 - ADJUSTMENT REASON CODES need to be adjusted
+     duplicate(s):
+     HD0000000356262 - Claim Adjustment Reason Code List Changes
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Chillicothe VA Medical Center
+ James A. Haley Veterans' Hospital - Tampa
+ VA Heartland - West 
+ VA Heartland - East
+  
+ REMEDY OVERVIEW:
+ ================
+ 1) HD0000000347537 - PLACE OF SERVICE Code Updates 
+  
+  Problem:
+  --------
+  The Place of Service codes handled by the Fee Basis software do not 
+  account for all codes published by the Centers for Medicaid and Medicare
+  Services.  
+  
+  Solution:
+  ---------
+  Routine FBAAFS will be modified to accommodate codes 05, 06, 07, 08, 
+  16, and 17.  
+  
+  As of this patch, the Place of Service codes will be classified as follows:
+  
+  Codes considered as facility setting -
+  05,06,07,08,21,22,23,24,26,31,34,41,42,51,52,53,56,61
+  
+  Codes considered as non-facility setting -
+  01,03,04,09,11,12,13,14,15,16,17,20,25,32,33,49,50,54,55,57,60,62,65,71,
+  72,81,99
+  
+ 2) HD0000000196215 - ADJUSTMENT REASON CODES need to be adjusted
+  
+  Problem:
+  --------
+  The ADJUSTMENT REASON (#161.91) file needs to be updated.  Several new
+  adjustment codes need to be added, some existing codes need to be marked 
+  inactive, and others need to be modified.  
+  
+  Solution:
+  ---------
+  The ADJUSTMENT REASON (#161.91) file will be brought into compliance
+  by adding and updating the file with all of the codes on the list 
+  published at the Washington Publishing Company (WPC).  
+  
+  The list of codes (as of this writing) can be found at: 
+  http://www.wpc-edi.com/content/view/695/1
+  
+  Not all codes published by the WPC are relevant to the Fee Basis package,
+  as such, the following changes will specifically affect Fee Basis users. 
+  
+  Activations:
+  CODE   DESCRIPTION
+  -------------------------------------------------------------------------
+  9     The diagnosis is inconsistent with the patient's age.
+  10    The diagnosis is inconsistent with the patient's gender.
+  11    The diagnosis is inconsistent with the procedure.
+  12    The diagnosis is inconsistent with the provider type.
+  14    The date of birth follows the date of service.
+  15    The authorization number is missing, invalid, or does not apply 
+        to the billed services or provider.
+  21    This injury/illness is the liability of the no-fault carrier.
+  23    The impact of prior payer(s) adjudication including payments 
+        and/or adjustments.
+  38    Services not provided or authorized by designated 
+        (network/primary care) providers.
+  60    Charges for outpatient services are not covered when performed within 
+        a period of time prior to or after inpatient services.
+  78    Non-Covered days/Room charge adjustment.
+  95    Plan procedures not followed.
+  107   The related or qualifying claim/service was not identified on this 
+        claim.
+  112   Service not furnished directly to the patient and/or not documented.
+  125   Submission/billing error(s).
+  133   The disposition of this claim/service is pending further review.
+  134   Technical fees removed from charges.
+  150   Payer deems the information submitted does not support this 
+        level of service.
+  151   Payer deems the information submitted does not support this 
+        many/frequency of services.
+  152   Payer deems the information submitted does not support this 
+        length of service.
+  153   Payer deems the information submitted does not support this 
+        dosage.
+  154   Payer deems the information submitted does not support this 
+        day's supply.
+  163   Attachment referenced on the claim was not received.
+  165   Referral absent or exceeded.
+  167   This (these) diagnosis(es) is (are) not covered.
+  170   Payment is denied when performed/billed by this type of provider.
+  171   Payment is denied when performed/billed by this type of provider 
+        in this type of facility.
+  172   Payment is adjusted when performed/billed by a provider of this 
+        specialty
+  181   Procedure code was invalid on the date of service.
+  182   Procedure modifier was invalid on the date of service.
+  188   This product/procedure is only covered when used according 
+        to FDA recommendations.
+  189   'Not otherwise classified' or 'unlisted' procedure code (CPT/HCPCS) 
+        was billed when there is a specific procedure code for this 
+        procedure/service
+  199   Revenue code and Procedure code do not match.
+  203   Discontinued or reduced service.
+  204   This service/equipment/drug is not covered under the patient's 
+        current benefit plan
+  231   Mutually exclusive procedures cannot be done in the same day/setting.
+  A8    Ungroupable DRG.
+  B22   This payment is adjusted based on the diagnosis.
+  
+  Inactivations:
+  CODE   DESCRIPTION
+  ----------------------------------------------------------------------------
+  30    Payment adjusted because the patient has not met the required 
+        eligibility, spend down, waiting, or residency requirements.
+  35    Lifetime benefit maximum has been reached.
+  42    Charges exceed our fee schedule or maximum allowable amount.
+  47    This (these) diagnosis(es) is (are) not covered, missing, or are 
+        invalid.
+  52    The referring/prescribing/rendering provider is not eligible to 
+        refer/prescribe/order/perform the service billed.
+  57    Payment denied/reduced because the payer deems the information 
+        submitted does not support this level of service, this many services, 
+        this length of service, this dosage, or this days supply.
+  59    Charges are adjusted based on multiple surgery rules or concurrent 
+        anesthesia rules.
+  62    Payment denied/reduced for absence of, or exceeded, 
+        pre-certification/authorization.
+  66    Blood Deductible.
+  85    Patient Interest Adjustment
+  88    Adjustment amount represents collection against receivable created 
+        in prior overpayment.
+  140   Patient/Insured health identification number and name do not match.
+  142   Monthly Medicaid patient liability amount.
+  143   Portion of payment deferred.
+  A2    Contractual adjustment.
+  
+ TECHNICAL:
+ ==========
+ The ADJUSTMENT REASON file (#161.91) is included in this patch.  
+  
+                                            UP    SEND  DATA                USER
+                                            DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                      DD    CODE  W/FILE  DATA  PTRS  RIDE
+ -------------------------------------------------------------------------------
+  
+ 161.91      ADJUSTMENT REASON              NO    NO    YES     OVER  NO    NO
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed during normal working hours.  However, as
+ certain Fee Basis options are going to be placed out of order, it is 
+ recommended that Fee Basis users not be on the system at the time.   
+  
+ Installation should take under fifteen minutes.
+  
+  1.  Retrieve the KIDS distribution host file. This patch will be
+      distributed in a host file due to the amount of data contained in
+      the patch.  The name of the host file is:
+  
+           FEE3_5P115.KID
+  
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+  
+           download.vista.med.va.gov
+  
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+  
+           Albany                  ftp.fo-albany.med.va.gov
+           Hines                   ftp.fo-hines.med.va.gov
+           Salt Lake City          ftp.fo-slc.med.va.gov
+  
+      The FEE3_5P115.KID host file is located in the anonymous.software
+      directory.  Use ASCII Mode when downloading the file.
+  
+  2.  Load the KIDS distribution that is contained in file FEE3_5P115.KID
+      using the Load a Distribution option on the Installation menu.
+  
+  3.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+      Select Kernel Installation & Distribution System Option:
+      Installation
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  4.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter FB*3.5*115):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+  5.  Use the Install Package(s) option and select the package FB*3.5*115.
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO.
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? YES//', answer YES.
+  
+      When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+      enter:
+  
+       Enter Payment                        [FBAA ENTER PAYMENT]
+       Multiple Payment Entry               [FBAA MULTIPLE PAYMENT ENTRY]
+       C&P/Multiple Patient Payment Entry   [FBAA C&P ENTER PAYMENT]
+       Reimbursement Payment Entry          [FBAA MEDICAL REIMBURSEMENT]
+       Edit Payment                         [FBAA EDIT PAYMENT]
+       Ancillary Contract Hosp/CNH Payment  [FBCH ANCILLARY PAYMENT]
+       Multiple Ancillary Payments          [FBCH MULTIPLE PAYMENTS]
+       Patient Reimbursement for Ancillary  [FBCH ANCILLARY REIMBURSEMENT]
+       Services
+       Edit Ancillary Payment               [FBCH EDIT ANCILLARY PAYMENT]
+       Calculate Payment Amount             [FBAA FEE SCHEDULE RATE]
+      
+      When prompted, 'Enter protocols you wish to mark as 'Out of Order':',
+      enter: <ENTER>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAAFS
+    Before: B27984557   After: B28501893  **4,53,71,92,99,111,115**
+ 
+Routine list of preceding patches: 111
+
+=============================================================================
+User Information:
+Entered By  : CHANDARANA,RISHAN             Date Entered  : MAR 23, 2010
+Completed By: DAWSON,TIM                    Date Completed: FEB 14, 2011
+Released By : MURRAY,ANGELA                 Date Released : FEB 25, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

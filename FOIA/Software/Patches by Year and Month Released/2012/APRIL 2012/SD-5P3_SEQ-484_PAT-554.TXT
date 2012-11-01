@@ -1,0 +1,205 @@
+$TXT Created by MCKENNA,ANDREW at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 07/19/11 at 11:54
+=============================================================================
+Run Date: APR 12, 2012                     Designation: SD*5.3*554
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #484                    Status: Released
+                  Compliance Date: MAY 13, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*454  <<= must be installed BEFORE `SD*5.3*554'
+                    (v)SD*5.3*491  <<= must be installed BEFORE `SD*5.3*554'
+                    (v)SD*5.3*538  <<= must be installed BEFORE `SD*5.3*554'
+
+Subject: FIXES DATE W/O YEAR, DISPLAYS EWL MESSAGE, DOESNT FILL INACTIVATED BY FIELD
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses several Electronic Wait List (EWL) related issues:
+  
+ 1. When a user attempts to place a patient on the wait list for a future 
+    appointment, the date defaults to the past date unless a year has been
+    entered.
+  
+ 2. A cancelled appointment is not displaying a warning message if there 
+    are wait list entries for a specific patient or clinic.
+  
+ 3. When a user views a clinic, the user's name is automatically populated
+    in the INACTIVATION DATE ENTERED BY field.
+  
+ 4. When a user views a clinic, the user's name is automatically populated 
+    in the ACTIVATION DATE ENTERED BY field.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1)  HD0000000368638 - Date w/o year bring up past date
+ 2)  HD0000000400404 - Cancelled appointment not prompting for EWL
+ 3)  HD0000000415225 - SD WL CLINIC LOCATION (409.32)
+ 4)  HD0000000498359 - ACTIVATION DATE ENTERED BY field (#2) being
+                       improperly filled.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Charleston, SC
+ Manchester, NH
+ Puget Sound HCS
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1)  HD0000000368638 - Date w/o year bring up past date
+  
+ Problem:
+ --------
+ When using the Enter/Edit Wait List (Sch/PCMM) [SD WAIT LIST ENTER/EDIT] 
+ option, if a user attempts to place a patient on the wait list for a 
+ future appointment, the date of the appointment defaults to the past date
+ unless a year has been entered.
+  
+ Solution:
+ ---------
+ Routine SDWLE110 has been modified to interpret the desired date, entered
+ in an incomplete format (Month/Day), to always be set as a future date 
+ as expected by the user.
+  
+  
+ 2)  HD0000000400404 - Cancelled appointment not prompting for EWL
+  
+ Problem:
+ --------
+ When an appointment is cancelled using the Cancel Appointment [SD CANCEL 
+ APPOINTMENT] option, the message warning: "There are Wait List entries 
+ waiting for an Appointment for this patient in **name of clinic**." does 
+ not appear even if there are entries in the wait list.
+  
+ Solution:
+ ---------
+ Routines SDAMC and SDCNP1 were modified to display a message that
+ there are wait list entries waiting for an appointment for a
+ patient.
+  
+  
+ 3)  HD0000000415225 - SD WL CLINIC LOCATION (409.32)
+  
+ Problem:
+ --------
+ When a user views a clinic using the Wait List (Sch/PCMM) Parameter 
+ Enter/Edit [SD WAIT LIST PAR ENTER/EDIT] option, the user's name is 
+ automatically populated in the INACTIVATION DATE ENTERED BY field (#4) of 
+ the SD WL CLINIC LOCATION file (#409.32) even if the clinic has not been
+ inactivated.
+  
+ Solution:
+ ---------
+ Routine SDWLPE was modified to put the user's name in the
+ INACTIVATION DATE ENTERED BY field (#4) of the SD WL CLINIC LOCATION
+ file (#409.32) only if the user first sets an inactivation date in the
+ DATE INACTIVATED field (#3).
+  
+  
+ 4) HD0000000498359 - ACTIVATION DATE ENTERED BY field (#2) being
+                      improperly filled.
+  
+ Problem:
+ --------
+ When a user views a clinic using the Wait List (Sch/PCMM) Parameter 
+ Enter/Edit [SD WAIT LIST PAR ENTER/EDIT] option, the user's name is 
+ automatically populated in the ACTIVATION DATE ENTERED BY field (#2) of 
+ the SD WL CLINIC LOCATION file (#409.32) even if the clinic has 
+ already been activated.
+  
+ Solution:
+ ---------
+ Routine SDWLPE was modified to put the user's name in the
+ ACTIVATION DATE ENTERED BY field (#2) of the SD WL CLINIC LOCATION
+ file (#409.32) only if the clinic was activated by the user. 
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ This patch can be loaded with users on the system, but it is
+ recommended that it be installed when user activity is low.
+ Installation time will be less than 5 minutes.
+  
+ 1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+ 2.  From the Kernel Installation and Distribution System Menu, select
+     the Installation menu.
+   
+ 3.  From this menu, you may elect to use the following options (when
+     prompted for INSTALL NAME, enter SD*5.3*554):
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+  
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch
+            is installed.
+  
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+  
+         d. Print Transport Global - this option will allow you to view 
+            the components of the KIDS build.
+           
+ 4.  Use the Install Package(s) option and select the package SD*5.3*554.
+   
+ 5.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+     respond NO.
+  
+ 6.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES//", respond YES.
+  
+     When prompted, "Enter options you wish to mark as 'Out Of Order':",
+     enter:
+   
+     Enter/Edit Wait List (Sch/PCMM)              [SD WAIT LIST ENTER/EDIT]
+     Cancel Appointment                           [SD CANCEL APPOINTMENT]
+     Appointment Management                       [SDAM APPT MGT]
+     Wait List (Sch/PCMM) Parameter Enter/Edit    [SD WAIT LIST PAR 
+                                                   ENTER/EDIT]
+     
+     When prompted, "Enter protocols you wish to mark as 'Out of Order':",
+     press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAMC
+    Before: B14033006   After: B16744986  **20,28,32,46,263,414,444,478,
+                                           538,554**
+Routine Name: SDCNP1
+    Before: B31981215   After: B33998963  **398,467,478,554**
+Routine Name: SDWLE110
+    Before: B23512324   After: B24136390  **263,273,424,454,554**
+Routine Name: SDWLPE
+    Before: B27362076   After: B33375093  **263,280,288,397,491,554**
+ 
+Routine list of preceding patches: 454, 491, 538
+
+=============================================================================
+User Information:
+Entered By  : WOLF,ED                       Date Entered  : APR 02, 2009
+Completed By: LEANORD,TATIANA               Date Completed: APR 11, 2012
+Released By : BENBOW,PHYLLIS O              Date Released : APR 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

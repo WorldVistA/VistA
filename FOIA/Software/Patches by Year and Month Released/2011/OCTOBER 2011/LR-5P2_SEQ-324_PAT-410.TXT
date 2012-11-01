@@ -1,0 +1,231 @@
+$TXT Created by CARPENTER,TERRY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 03/15/11 at 10:31
+=============================================================================
+Run Date: OCT 27, 2011                     Designation: LR*5.2*410
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #324                    Status: Released
+                  Compliance Date: NOV 10, 2011
+=============================================================================
+
+Associated patches: (v)LR*5.2*403  <<= must be installed BEFORE `LR*5.2*410'
+
+Subject: DD AND OPTION MODIFICATIONS
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will address the following 3 items:
+  
+ 1. The code contained in FileMan to delete the CANCELLED BY field (#10)
+    has faulty syntax which leads to a <SUBSCRIPT> error.
+  
+ 2. The routines which execute options Service Dictionary [LR WKLD SERVICE]
+    and Requesting Center Dictionary [LR WKLD REQUEST] are reversed.
+  
+ 3. During extraction of lab data for the Decision Support Software (DSS),
+    it was discovered that some lab test names included a tilde (~) or an
+    exclamation point (!) which caused the record parser to incorrectly
+    identify the end of the record and thus skip pertinent data.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000343282 -  Bad delete X-ref in DD
+  
+ 2. HD0000000390357 -  Option descriptions for LR WKLD SERVICE and LR
+                       WKLD REQUEST
+  
+ 3. HD0000000452779 -  Lab extract error
+    Duplicates:
+    ----------- 
+    HD0000000452796 -  Issue with extract because of lack of patch
+                       install
+    HD0000000454051 -  Lab Extract for Oct 2010 errored
+    HD0000000454097 -  Lab Extract Problem/Error Message
+    HD0000000455076 -  Extract is off by 43 records due to tilde (~) issue
+    HD0000000455775 -  Lab Extract issue like ticket 454051
+  
+     
+ Testing Sites:
+ ==============
+ Greater Los Angeles HCS
+ Edward Hines Jr. VA Hospital
+ Battle Creek VAMC
+  
+  
+ BLOOD BANK CLEARANCE:
+ =====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: 
+ Patch LR*5.2*410 does not contain any changes to the VISTA BLOOD BANK
+ Software as defined by VHA DIRECTIVE 2004-058 titled VISTA BLOOD BANK
+ SOFTWARE VERSION 5.2.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: 
+ Patch LR*5.2*410 does not alter or modify any software design safeguards
+ or safety critical elements functions.
+  
+ RISK ANALYSIS:
+ Changes made by patch LR*5.2*410 have no effect on Blood Bank software
+ functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: 
+ Because of the nature of the changes made, no specific validation
+ requirements exist as a result of installation of this patch.
+  
+  
+ SHORTENED COMPLIANCE TIME:
+ ==========================
+ DSO is requesting a shortened compliance time due to the patch's time
+ sensitivity (14 days).
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. HD0000000343282 -  Bad delete X-ref in DD
+  
+    Problem:
+    --------
+    There is some faulty code in the delete cross-reference for field
+    CANCELLED BY (#10) of the TEST multiple of the SPECIMEN subfile
+    (#69.03) of the LAB ORDERS file (#69).  This faulty code leads to a
+    <SUBSCRIPT> error when an entry in the CANCELLED BY field is
+    deleted. This error prevents the deletion of a cross-reference entry,
+    leaving the cross-reference in the file.
+  
+    Solution:
+    ---------
+    Modified the Data Dictionary [^DD(69.03,10)] to correctly delete the 
+    cross-reference.
+  
+    DD:  ^DD(69.03,10)  
+  
+  
+ 2. HD0000000390357 -  Option descriptions for LR WKLD SERVICE and LR WKLD
+                       REQUEST
+  
+    Problem:
+    --------
+    The documentation in the Lab Users Manual and the help text state
+    that option LR WKLD SERVICE lists all requesting locations by
+    treating specialty (file #45.7) for a site while option LR WKLD
+    REQUEST lists only treating specialties with abbreviations.  The 
+    routines with execute these options are reversed.
+  
+    Solution:
+    ---------
+    Modified the execution of the options to perform as described in the
+    Lab Users Manual and the help text for the options.
+  
+    Option:  LR WKLD SERVICE and LR WKLD REQUEST  
+  
+  
+ 3. HD0000000452779 -  Lab extract error
+  
+    Problem
+    ------------
+    During extraction of lab data for the Decision Support Software (DSS)
+    it was discovered that some lab test names included a tilde character
+    (~), which is used as the end of record character during parsing of
+    the lab information.  This caused the parser to incorrectly identify
+    the end of the record and skip pertinent information.  
+  
+    While researching this issue, it was noted that the DATA NAME(#20) 
+    field of the WKLD LOG FILE (#64.03) is populated with the NAME field 
+    (#.01)in the LABORATORY TEST file (#60) instead of the DATA NAME field
+    (#400) in the LABORATORY TEST file (#60).
+  
+    Solution:
+    ---------
+    Routine LRCAPDSS is being updated to obtain the data from the DATA
+    NAME field (#400) in the LABORATORY TEST file (#60) rather than
+    from the NAME field (#.01) in the LABORATORY TEST file (#60).  In
+    addition, upon retrieval of the DATA NAME field (#400)any tildes (~)
+    or exclamation points (!) are converted to pound signs (#) before
+    being stored in the WKLD LOG FILE (#64.03). The description of the
+    DATA NAME field (#20) of the WKLD LOG FILE (#64.03) is also updated
+    to show where this data is obtained from.
+  
+    Routine: LRCAPDSS
+    DD:  ^DD(64.03,20)
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+ The install time for this patch is less than 2 minutes. This patch can be
+ installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*410.
+       
+       If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+       Install? NO// , choose 'NO'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRCAPDSS
+    Before: B14056855   After: B14257746  **127,143,201,221,403,410**
+ 
+Routine list of preceding patches: 403
+
+=============================================================================
+User Information:
+Entered By  : CARPENTER,TERRY               Date Entered  : DEC 10, 2010
+Completed By: BYRD,TIERRA                   Date Completed: OCT 27, 2011
+Released By : BARKOOZIS,GREGORY             Date Released : OCT 27, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

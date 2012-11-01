@@ -1,0 +1,329 @@
+
+=============================================================================
+Run Date: DEC 15, 2011                     Designation: DG*5.3*848
+Package : DG - REGISTRATION                   Priority: EMERGENCY
+Version : 5.3       SEQ #749                    Status: Released
+                  Compliance Date: DEC 28, 2011
+=============================================================================
+
+
+Subject: 2012 MEANS TEST THRESHOLDS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Per forthcoming VHA DIRECTIVE 2011-###, new effective rates for Means 
+ Test Thresholds, GMT Thresholds, and RX Copay Thresholds will go into 
+ effect January 1, 2012. To ensure compliance with the forthcoming VHA 
+ Directive, DG*5.3*848 MUST be installed by December 28, 2011. This patch 
+ is being released as an Emergency patch together with EAS*1.0*104 (2012
+ GMT Thresholds) and IB*2.0*465 (2012 RX Copay Thresholds) and may be
+ installed out of sequence with respect to other released Registration (DG)
+ patches.
+  
+ Please Note:  We expect the VHA Directive to be titled MEANS TEST AND 
+ GEOGRAPHIC-BASED MEANS TEST THRESHOLDS FOR CALENDAR YEAR 2012. In order 
+ to provide adequate time for sites to install, Central Business Office 
+ has agreed that these patches may be released prior to availability of 
+ the actual Directive Number.
+  
+ The Means Test thresholds for Calendar Year 2012 provided in forthcoming
+ VHA DIRECTIVE 2011-###, MEANS TEST AND GEOGRAPHIC-BASED MEANS TEST
+ THRESHOLDS FOR CALENDAR YEAR 2012 are distributed with this patch. The
+ post-installation routine, DG53848P, will create a new subentry (or
+ replace an existing one) for calendar year 2012 in the MEANS TEST DATA
+ (#250) multiple field of the MAS PARAMETERS (#43) file. Six subfields
+ within the multiple will be updated with the new Means Test threshold data
+ values as follows:
+  
+        MEANS TEST DATA (#.01) - 2012
+        MT COPAY EXEMPT VET INCOME (#2) - $30,460
+        MT COPAY EXEMPT 1ST DEP INCOME (#3) - $6,094
+        MT COPAY EXEMPT INCOME PER DEP (#4) - $2,093
+        THRESHOLD PROPERTY (#8) - $80,000
+        CHILD INCOME EXCLUSION (#17) - $9,750
+  
+ In addition, this patch will update the following fields in the 
+ PARAMETERS file (#8989.5) for Income Year 2011 to:
+  
+        DGMT MAPR GLOBAL RATE         5
+        DGMT MAPR 0 DEPENDENTS        12256
+        DGMT MAPR 1 DEPENDENTS        16051
+        DGMT MAPR N DEPENDENTS        2093
+  
+ This patch, DG*5.3*848, is one of three VistA 2012 threshold patches. It 
+ updates the thresholds for the Means Tests and the Maximum Annual Pension 
+ Rate. Patch EAS*1.0*104 will address the annual updates for the GMT 
+ Thresholds and patch IB*2.0*465 will address the annual updates for the 
+ Pharmacy Copay Thresholds.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ Software Retrieval
+ ------------------
+ The software for this patch is not being distributed through the National 
+ Patch Module. This patch is being distributed as part of a host file. The
+ host file will contain the following three KIDS builds:
+  
+             Host file name:    DG_53_P848.KID
+  
+                     Builds: DG*5.3*848
+                             EAS*1.0*104
+                             IB*2.0*465
+  
+ Sites may retrieve the software directly using File Transfer Protocol 
+ (FTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field 
+ Offices:
+  
+                     Albany   : ftp.fo-albany.med.va.gov
+                     Hines    : ftp.fo-hines.med.va.gov
+               Salt Lake City : ftp.fo-slc.med.va.gov
+       First Available Server : download.vista.med.va.gov
+  
+ The following file will be available:
+  
+     File Name            Description
+     ---------            -----------
+     DG_53_P848.KID       Host File containing KIDS software distribution
+  
+ Note:  Use ASCII mode when transferring the .KID file.
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Chillicothe, OH VAMC (Medium)
+ New York Harbor HCS (Large/Integrated)
+ VISN 2 Upstate New York HCS (Large/Integrated)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ N/A
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The DG53848P post install routine will make updates to the MAS PARAMETERS
+ (#43) file and the PARAMETERS file (#8989.5). DG53848P can be deleted
+ after installation.
+  
+  
+ Installation Instructions
+ -------------------------
+ The host file (containing three patches) can be installed with users on
+ the system. The installation should not be queued to run. Installation
+ will take approximately 10 minutes. The updates to the GMT THRESHOLDS
+ file (#712.5) in patch EAS*1.0*104, are extensive. Due to the volume of
+ updates, the installation process will appear to stall and/or stop. This
+ is normal, as the file updates may take up to 10 minutes to complete.
+  
+        *****Please be patient and allow the process to complete.*****
+  
+ Also, when comparing the transport global to the current system, entries 
+ will scroll by on the screen. This is normal as there are approximately
+ 35,700 entries included in the GMT THRESHOLDS file (#712.5) distributed
+ with this patch and a comparison is done on each of these entries. It is
+ possible your session may time out before the install has completed. If
+ so, you may not be able to get a complete screen capture of the compare.
+ This will not, however, mean that there is any problem with the software.
+ To avoid a session time-out, you can designate a printer (non-queued) as
+ the device for the installation.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+   1.   DOWNLOAD HOST KIDS FILE
+        -----------------------
+        Download the KIDS file DG_53_P848.KID from the ANONYMOUS.SOFTWARE
+        directory of any of the following three Office of Information Field
+        Offices (OIFOs):  Albany, Hines, or Salt Lake to the appropriate
+        directory on your system.
+  
+  
+   2.   START UP KIDS
+        -------------
+        Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]:
+  
+             Edits and Distribution ...
+             Utilities ...
+             Installation ...
+  
+   Select Kernel Installation & Distribution System Option: INStallation
+                                                            ---
+             Load a Distribution
+             Print Transport Global
+             Compare Transport Global to Current System
+             Verify Checksums in Transport Global
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution
+             Backup a Transport Global
+  
+   Select Installation Option:
+  
+   3.   Select Installation Option:
+        --------------------------
+  
+        a.  Use the 'Load a Distribution' option and enter the directory
+            into which you downloaded the host file, followed by the host
+            file name:
+  
+            [directory]DG_53_P848.KID
+  
+        NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+               NAME, enter DG*5.3*848):
+  
+        b.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+        c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed. It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        d.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+   4.   Select Installation Option: Install Package(s)
+                                    ------------------
+        **This is the step to start the installation of this KIDS patch:
+  
+       a.  Choose the Install Package(s) option to start the patch install.
+  
+       b.  The BILLING EXEMPTIONS file (#354.1) will be checked for
+           medication co-payment exemptions based on prior thresholds, 
+           since the exemption status may change due to the new rates.
+           If -- and only if -- there are exemptions, you will be prompted
+           to UPDATE AND PRINT the exemptions report.  NOTE:  the report is
+           not new and is intended only as an FYI for billing staff.
+  
+              Select Action:  (P/U): Update & Print//
+  
+           Press <Enter> to accept the default "Update & Print"
+  
+              Select Device:
+  
+           You must enter a print device.  An entry is required and HOME,
+           SPOOLER, or P-MESSAGE are not allowed. You MUST choose a
+           valid printer or the installation will be aborted.
+  
+           NOTE: The exemption report contains full patient names and SSNs.
+           Be sure to select a device in a secure area and retrieve the
+           output immediately.
+  
+           You need not queue the report since the installation process
+           will queue it automatically.
+  
+       c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+           NO//' answer NO.
+       d.  When prompted 'Want to DISABLE Scheduled Options, Menu
+           Options, and Protocols? YES//' answer YES.
+       e.  When prompted 'Enter options you wish to mark as 'Out Of
+           Order':'  Enter the following options:
+  
+ [DG MEANS TEST EDIT]             Edit an Existing Means Test
+ [DG CO-PAY TEST EDIT]            Edit an Existing Copay Exemption Test
+ [EASEC LTC COPAY TEST EDIT]      Edit an Existing LTC Copayment Test
+ [EASEC LTC EXEMPTION TEST EDIT]  Edit an Existing LTC Copay Exemption Test
+  
+       f.  When prompted 'Enter protocols you wish to mark as 'Out Of
+           Order':' press <Enter>.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ 1.   Routines DG53848P, EAS1104P, IB20E465, and IB20P465 may be deleted
+      after successful installation of the three patches in the host
+      file.
+  
+ 2.   If the "Exemptions Based on Prior Year Thresholds" report has been
+      printed, it should be given to the MCCF/Billing Department or the
+      Integrated Billing ADPAC.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53848P
+    Before:       n/a   After:  B9129577  **848**
+
+=============================================================================
+User Information:
+Entered By  : MOORE,TERRY D                 Date Entered  : OCT 05, 2011
+Completed By: RUDINGER,NANCY L.             Date Completed: DEC 15, 2011
+Released By : GAYLER,LU ANNE                Date Released : DEC 15, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

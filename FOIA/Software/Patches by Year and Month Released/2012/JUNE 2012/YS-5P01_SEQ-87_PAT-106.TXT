@@ -1,0 +1,178 @@
+$TXT Created by TRAXLER,FRANK at TST.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Thursday, 03/15/12 at 09:13
+=============================================================================
+Run Date: JUN 07, 2012                     Designation: YS*5.01*106
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01        SEQ #87                   Status: Released
+                  Compliance Date: JUL 08, 2012
+=============================================================================
+
+Associated patches: (v)YS*5.01*55  <<= must be installed BEFORE `YS*5.01*106'
+                    (v)YS*5.01*85  <<= must be installed BEFORE `YS*5.01*106'
+                    (v)YS*5.01*97  <<= must be installed BEFORE `YS*5.01*106'
+                    (v)YS*5.01*100 <<= must be installed BEFORE `YS*5.01*106'
+
+Subject: STOP MHA3 HL7 TRANSMISSIONS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Mental Health Patch YS*5.01*106 addresses the requirements to terminate 
+ Health Level 7 data transmissions due to the imminent shutdown of the
+ Mental Health national database in Pittsburgh, PA, which was a repository
+ for the results of many Mental Health Assistant (MHA) instruments and
+ other Mental Health data.
+  
+ This patch will end the transmission of data to Pittsburgh. This activity
+ is being taken over by the Corporate Data Warehouse (CDW). Transmission of
+ data from the administration of the Addiction Severity Index (ASI) was
+ being done via MailMan; this patch will terminate this message traffic.
+  
+ The Global Assessment of Functioning (GAF) uses a Web address that will no
+ longer be available; this patch will update that address.
+  
+ This patch stops the generation of messages for the YS MHAT logical link.
+ It does not end GAF transmissions.
+  
+ The automatic generation of MailMan messages by the deletion of the
+ results of MHA instrument administrations is no longer required and will 
+ be ended by this patch.
+  
+ In addition to changed routines, four options are deleted with this patch.
+ These options supported the obsolete HL7 functionality and are no longer
+ functional.
+  
+ The options are:
+  MHA3 HL7 Utilities             [YTQ HL7 UTILITIES]
+  HL7 Check                      [YTQ HL7 CHECK]
+  Re-Send individual HL7 Message [YTQ HL7 SEND1]
+  Re-Queue ASI Roll Up           [YSAS ASI REQUE]
+  
+ This patch also corrects a misspelling in the MH ADMINISTRATIONS file
+ (#601.84) for the name of field #12. It has been changed from "TRANSMISION
+ TIME" to "TRANSMISSION TIME".
+  
+  New Service Request:
+  ====================
+    N/A
+  
+  
+  Remedy Tickets:
+  ===============
+    419610 
+    437462
+    514052 
+  
+  
+  Patient Safety Issues (PSIs)
+  ============================
+    N/A
+  
+  
+  Test Sites:
+  ===========
+    Atlanta, GA VAMC
+    Baltimore, MD VAMC
+    Durham, NC VAMC
+    Hines, IL VAMC 
+    New Jersey HCS
+    Upstate New York HCS (all locations)
+  
+  
+  Documentation Retrieval Instructions
+  ==================================== 
+  Updated documentation describing the changes introduced by this patch is
+  available.
+  
+  The preferred method is to FTP the files from 
+  ftp://download.vista.med.va.gov/.
+  This transmits the files from the first available FTP server. Sites may 
+  also elect to retrieve the files directly from a specific server as
+  follows:
+  
+  FIELD OFFICE      FTP ADDRESS                DIRECTORY
+  ---------------   -----------                --------- 
+  Albany            ftp.fo-albany.med.va.gov   [anonymous.software]
+  Hines             ftp.fo-hines.med.va.gov    [anonymous.software]
+  Salt Lake City    ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www4.va.gov/vdl/
+  
+  Title                              File Name             FTP Mode 
+  -------------------------------------------------------------------------
+  Patch YS*5.01*106 Release Notes    YS501106_RN.PDF       BINARY
+  Patch YS*5.01*106 Release Notes    YS501106_RN.DOC       BINARY  
+  
+  
+  INSTALLATION INSTRUCTIONS:
+  ==========================
+  1. This patch can be installed with users on the system. However, it 
+     should be installed when use of the software is low. Installation
+     should take less than 2 minutes.
+  
+  2. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu to move the
+     the distribution onto your system.
+   
+  3. (OPTIONAL) On the KIDS 'Installation' menu, you can run the following
+     options:
+   
+     Print Transport Global
+     Compare Transport Global to Current System
+     Verify Checksums in Transport Global
+     Backup a Transport Global
+    
+  4. From the KIDS 'Installation' menu', run the 'Install Package(s)'
+     option. Enter YS*5.01*106.
+                   ===========
+  
+  5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+     Install? NO//' answer according to your facility's policy concerning
+     the rebuilding of menu trees.
+  
+     When prompted 'Want KIDS to INHIBIT LOGONs during the install//', 
+     respond NO.
+  
+     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? YES//' respond YES.
+  
+     Enter YS BROKER1
+           ==========
+  
+ After the patch is installed, you should no longer see any message traffic
+ from your YS MHAT logical link.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YSASRU
+    Before: B22807173   After: B24470974  **24,30,32,38,55,106**
+Routine Name: YTAPI5
+    Before: B12417658   After: B12579735  **62,85,106**
+Routine Name: YTQHL7
+    Before: B40318734   After: B44857862  **85,93,97,106**
+Routine Name: YTQKIL
+    Before:  B5447693   After:  B3326075  **85,100,106**
+ 
+Routine list of preceding patches: 55, 97, 100
+
+=============================================================================
+User Information:
+Entered By  : TRAXLER,FRANK                 Date Entered  : SEP 29, 2011
+Completed By: ELIJAH,VICKEY                 Date Completed: MAY 21, 2012
+Released By : VANCAMP,E PHILIP              Date Released : JUN 07, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

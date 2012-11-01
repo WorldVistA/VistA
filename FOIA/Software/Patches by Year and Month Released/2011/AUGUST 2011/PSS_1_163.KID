@@ -1,0 +1,1374 @@
+KIDS Distribution saved on Apr 26, 2011@15:31:30
+Released PSS*1*163
+**KIDS**:PSS*1.0*163^
+
+**INSTALL NAME**
+PSS*1.0*163
+"BLD",7872,0)
+PSS*1.0*163^PHARMACY DATA MANAGEMENT^0^3110426^y
+"BLD",7872,1,0)
+^^22^22^3110426^
+"BLD",7872,1,1,0)
+This patch makes a change to the interface when order checks are sent from
+"BLD",7872,1,2,0)
+VistA to the Medication Order Check HealthCare Application (MOCHA). When
+"BLD",7872,1,3,0)
+Order Checks cannot be performed for any reason, a warning message is 
+"BLD",7872,1,4,0)
+displayed to the user that order checks did not occur. There was an 
+"BLD",7872,1,5,0)
+occurrence reported in a test account where Order Checks did not occur, 
+"BLD",7872,1,6,0)
+but no message was displayed to the user. At the end of all the order
+"BLD",7872,1,7,0)
+check processing, this patch will add an additional check to see if the
+"BLD",7872,1,8,0)
+flag that indicates the success or failure of the order checks is set. If
+"BLD",7872,1,9,0)
+it is not set, it will set the flag that will indicate to the calling
+"BLD",7872,1,10,0)
+application that the message indicating order checks were not performed be
+"BLD",7872,1,11,0)
+displayed to the user.
+"BLD",7872,1,12,0)
+ 
+"BLD",7872,1,13,0)
+Additionally, any time order checks are sent through the interface for 
+"BLD",7872,1,14,0)
+the PSS INTERFACE SCHEDULER job or as an individual user, certain fields 
+"BLD",7872,1,15,0)
+are required numeric values. Is these fields are not numeric, the 
+"BLD",7872,1,16,0)
+interface request will fail. This patch will check those fields and 
+"BLD",7872,1,17,0)
+substitute a value if necessary. These fields are as follows:
+"BLD",7872,1,18,0)
+ 
+"BLD",7872,1,19,0)
+DUZ (User's internal entry number) - the software will replace with 0.
+"BLD",7872,1,20,0)
+Job Number - the software will replace with 0.
+"BLD",7872,1,21,0)
+Station Number - the software will use the leading numerics, but if
+"BLD",7872,1,22,0)
+there are no leading numerics, the software will replace with 0.
+"BLD",7872,4,0)
+^9.64PA^^
+"BLD",7872,6.3)
+8
+"BLD",7872,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7872,"KRN",.4,0)
+.4
+"BLD",7872,"KRN",.401,0)
+.401
+"BLD",7872,"KRN",.402,0)
+.402
+"BLD",7872,"KRN",.403,0)
+.403
+"BLD",7872,"KRN",.5,0)
+.5
+"BLD",7872,"KRN",.84,0)
+.84
+"BLD",7872,"KRN",3.6,0)
+3.6
+"BLD",7872,"KRN",3.8,0)
+3.8
+"BLD",7872,"KRN",9.2,0)
+9.2
+"BLD",7872,"KRN",9.8,0)
+9.8
+"BLD",7872,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",7872,"KRN",9.8,"NM",1,0)
+PSSHRQ2^^0^B5074500
+"BLD",7872,"KRN",9.8,"NM",2,0)
+PSSHREQ^^0^B206597862
+"BLD",7872,"KRN",9.8,"NM","B","PSSHREQ",2)
+
+"BLD",7872,"KRN",9.8,"NM","B","PSSHRQ2",1)
+
+"BLD",7872,"KRN",19,0)
+19
+"BLD",7872,"KRN",19.1,0)
+19.1
+"BLD",7872,"KRN",101,0)
+101
+"BLD",7872,"KRN",409.61,0)
+409.61
+"BLD",7872,"KRN",771,0)
+771
+"BLD",7872,"KRN",779.2,0)
+779.2
+"BLD",7872,"KRN",870,0)
+870
+"BLD",7872,"KRN",8989.51,0)
+8989.51
+"BLD",7872,"KRN",8989.52,0)
+8989.52
+"BLD",7872,"KRN",8994,0)
+8994
+"BLD",7872,"KRN","B",.4,.4)
+
+"BLD",7872,"KRN","B",.401,.401)
+
+"BLD",7872,"KRN","B",.402,.402)
+
+"BLD",7872,"KRN","B",.403,.403)
+
+"BLD",7872,"KRN","B",.5,.5)
+
+"BLD",7872,"KRN","B",.84,.84)
+
+"BLD",7872,"KRN","B",3.6,3.6)
+
+"BLD",7872,"KRN","B",3.8,3.8)
+
+"BLD",7872,"KRN","B",9.2,9.2)
+
+"BLD",7872,"KRN","B",9.8,9.8)
+
+"BLD",7872,"KRN","B",19,19)
+
+"BLD",7872,"KRN","B",19.1,19.1)
+
+"BLD",7872,"KRN","B",101,101)
+
+"BLD",7872,"KRN","B",409.61,409.61)
+
+"BLD",7872,"KRN","B",771,771)
+
+"BLD",7872,"KRN","B",779.2,779.2)
+
+"BLD",7872,"KRN","B",870,870)
+
+"BLD",7872,"KRN","B",8989.51,8989.51)
+
+"BLD",7872,"KRN","B",8989.52,8989.52)
+
+"BLD",7872,"KRN","B",8994,8994)
+
+"BLD",7872,"QUES",0)
+^9.62^^
+"BLD",7872,"REQB",0)
+^9.611^1^1
+"BLD",7872,"REQB",1,0)
+PSS*1.0*136^2
+"BLD",7872,"REQB","B","PSS*1.0*136",1)
+
+"MBREQ")
+0
+"PKG",517,-1)
+1^1
+"PKG",517,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",517,20,0)
+^9.402P^^
+"PKG",517,22,0)
+^9.49I^1^1
+"PKG",517,22,1,0)
+1.0^2970930^2971014^11595
+"PKG",517,22,1,"PAH",1,0)
+163^3110426
+"PKG",517,22,1,"PAH",1,1,0)
+^^22^22^3110426
+"PKG",517,22,1,"PAH",1,1,1,0)
+This patch makes a change to the interface when order checks are sent from
+"PKG",517,22,1,"PAH",1,1,2,0)
+VistA to the Medication Order Check HealthCare Application (MOCHA). When
+"PKG",517,22,1,"PAH",1,1,3,0)
+Order Checks cannot be performed for any reason, a warning message is 
+"PKG",517,22,1,"PAH",1,1,4,0)
+displayed to the user that order checks did not occur. There was an 
+"PKG",517,22,1,"PAH",1,1,5,0)
+occurrence reported in a test account where Order Checks did not occur, 
+"PKG",517,22,1,"PAH",1,1,6,0)
+but no message was displayed to the user. At the end of all the order
+"PKG",517,22,1,"PAH",1,1,7,0)
+check processing, this patch will add an additional check to see if the
+"PKG",517,22,1,"PAH",1,1,8,0)
+flag that indicates the success or failure of the order checks is set. If
+"PKG",517,22,1,"PAH",1,1,9,0)
+it is not set, it will set the flag that will indicate to the calling
+"PKG",517,22,1,"PAH",1,1,10,0)
+application that the message indicating order checks were not performed be
+"PKG",517,22,1,"PAH",1,1,11,0)
+displayed to the user.
+"PKG",517,22,1,"PAH",1,1,12,0)
+ 
+"PKG",517,22,1,"PAH",1,1,13,0)
+Additionally, any time order checks are sent through the interface for 
+"PKG",517,22,1,"PAH",1,1,14,0)
+the PSS INTERFACE SCHEDULER job or as an individual user, certain fields 
+"PKG",517,22,1,"PAH",1,1,15,0)
+are required numeric values. Is these fields are not numeric, the 
+"PKG",517,22,1,"PAH",1,1,16,0)
+interface request will fail. This patch will check those fields and 
+"PKG",517,22,1,"PAH",1,1,17,0)
+substitute a value if necessary. These fields are as follows:
+"PKG",517,22,1,"PAH",1,1,18,0)
+ 
+"PKG",517,22,1,"PAH",1,1,19,0)
+DUZ (User's internal entry number) - the software will replace with 0.
+"PKG",517,22,1,"PAH",1,1,20,0)
+Job Number - the software will replace with 0.
+"PKG",517,22,1,"PAH",1,1,21,0)
+Station Number - the software will use the leading numerics, but if
+"PKG",517,22,1,"PAH",1,1,22,0)
+there are no leading numerics, the software will replace with 0.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSSHREQ")
+0^2^B206597862
+"RTN","PSSHREQ",1,0)
+PSSHREQ ;WOIFO/AV,TS - Creates PSSXML to send to PEPS using input global ;09/20/07
+"RTN","PSSHREQ",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**136,163**;9/30/97;Build 8
+"RTN","PSSHREQ",3,0)
+ ;
+"RTN","PSSHREQ",4,0)
+ ; @authors - Alex Vazquez, Tim Sabat, Steve Gordon
+"RTN","PSSHREQ",5,0)
+ ; @date    - September 19, 2007
+"RTN","PSSHREQ",6,0)
+ ; @version - 1.0
+"RTN","PSSHREQ",7,0)
+ ;
+"RTN","PSSHREQ",8,0)
+ QUIT
+"RTN","PSSHREQ",9,0)
+ ;;
+"RTN","PSSHREQ",10,0)
+BLDPREQ(PSSBASE) ;
+"RTN","PSSHREQ",11,0)
+ ; @DRIVER
+"RTN","PSSHREQ",12,0)
+ ;
+"RTN","PSSHREQ",13,0)
+ ; @DESC Builds the PEPSRequest PSSXML element
+"RTN","PSSHREQ",14,0)
+ ;
+"RTN","PSSHREQ",15,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",16,0)
+ ;
+"RTN","PSSHREQ",17,0)
+ ; @RETURNS An xml string representing an entire order check.
+"RTN","PSSHREQ",18,0)
+ ;
+"RTN","PSSHREQ",19,0)
+ NEW PSS,PSSXML
+"RTN","PSSHREQ",20,0)
+ ;
+"RTN","PSSHREQ",21,0)
+ SET PSS("PSSXMLHeader")=$$XMLHDR^MXMLUTL
+"RTN","PSSHREQ",22,0)
+ SET PSS("xmlns")=$$ATRIBUTE^PSSHRCOM("xmlns","gov/va/med/pharmacy/peps/external/common/preencapsulation/vo/drug/check/request")
+"RTN","PSSHREQ",23,0)
+ SET PSS("xsi")=$$ATRIBUTE^PSSHRCOM("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance")
+"RTN","PSSHREQ",24,0)
+ ;
+"RTN","PSSHREQ",25,0)
+ SET PSSXML=PSS("PSSXMLHeader")
+"RTN","PSSHREQ",26,0)
+ SET PSSXML=PSSXML_"<PEPSRequest"
+"RTN","PSSHREQ",27,0)
+ SET PSSXML=PSSXML_" "_PSS("xmlns")
+"RTN","PSSHREQ",28,0)
+ SET PSSXML=PSSXML_" "_PSS("xsi")
+"RTN","PSSHREQ",29,0)
+ SET PSSXML=PSSXML_" >"
+"RTN","PSSHREQ",30,0)
+ SET PSSXML=PSSXML_$$HEADER(PSSBASE)
+"RTN","PSSHREQ",31,0)
+ I '$D(^TMP($JOB,PSSBASE,"IN","PING")) SET PSSXML=PSSXML_$$BODY(PSSBASE)
+"RTN","PSSHREQ",32,0)
+ SET PSSXML=PSSXML_"</PEPSRequest>"
+"RTN","PSSHREQ",33,0)
+ ;
+"RTN","PSSHREQ",34,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",35,0)
+ ;;
+"RTN","PSSHREQ",36,0)
+HEADER(PSSBASE) ;
+"RTN","PSSHREQ",37,0)
+ ; @DESC Builds the Header PSSXML element. A header is the section of the PSSXML
+"RTN","PSSHREQ",38,0)
+ ; that includes time, server, and user.  This item holds no business logic, it
+"RTN","PSSHREQ",39,0)
+ ; only records debugging information.
+"RTN","PSSHREQ",40,0)
+ ;
+"RTN","PSSHREQ",41,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",42,0)
+ ;
+"RTN","PSSHREQ",43,0)
+ ; @RETURNS A the PSSXML string representing the header element.
+"RTN","PSSHREQ",44,0)
+ ;
+"RTN","PSSHREQ",45,0)
+ NEW PSSXML,PSS
+"RTN","PSSHREQ",46,0)
+ ;
+"RTN","PSSHREQ",47,0)
+ ; pingOnly is OPTIONAL. If data in global, set pingOnly to true
+"RTN","PSSHREQ",48,0)
+ IF $DATA(^TMP($JOB,PSSBASE,"IN","PING")) DO
+"RTN","PSSHREQ",49,0)
+ . SET PSS("pingOnly")=$$ATRIBUTE^PSSHRCOM("pingOnly","true")
+"RTN","PSSHREQ",50,0)
+ . QUIT
+"RTN","PSSHREQ",51,0)
+ ;
+"RTN","PSSHREQ",52,0)
+ SET PSSXML="<Header "_$GET(PSS("pingOnly"))_">"
+"RTN","PSSHREQ",53,0)
+  SET PSSXML=PSSXML_$$HDRTIME
+"RTN","PSSHREQ",54,0)
+  SET PSSXML=PSSXML_$$HDRSERVR
+"RTN","PSSHREQ",55,0)
+  SET PSSXML=PSSXML_$$HDRMUSER
+"RTN","PSSHREQ",56,0)
+ SET PSSXML=PSSXML_"</Header>"
+"RTN","PSSHREQ",57,0)
+ ;
+"RTN","PSSHREQ",58,0)
+ ; Return composed header
+"RTN","PSSHREQ",59,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",60,0)
+ ;;
+"RTN","PSSHREQ",61,0)
+HDRTIME() ;
+"RTN","PSSHREQ",62,0)
+ ; @DESC Builds the Time PSSXML element which resides in the header
+"RTN","PSSHREQ",63,0)
+ ;
+"RTN","PSSHREQ",64,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",65,0)
+ ;
+"RTN","PSSHREQ",66,0)
+ ; @RETURNS An xml string containing the time element.
+"RTN","PSSHREQ",67,0)
+ ;
+"RTN","PSSHREQ",68,0)
+ NEW PSS,PSSXML
+"RTN","PSSHREQ",69,0)
+ ;
+"RTN","PSSHREQ",70,0)
+ SET PSS("value")=$$ATRIBUTE^PSSHRCOM("value",$GET(DT))
+"RTN","PSSHREQ",71,0)
+ ;
+"RTN","PSSHREQ",72,0)
+ SET PSSXML="<Time"
+"RTN","PSSHREQ",73,0)
+ SET PSSXML=PSSXML_" "_PSS("value")
+"RTN","PSSHREQ",74,0)
+ SET PSSXML=PSSXML_" />"
+"RTN","PSSHREQ",75,0)
+ ;
+"RTN","PSSHREQ",76,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",77,0)
+ ;;
+"RTN","PSSHREQ",78,0)
+HDRSERVR() ;
+"RTN","PSSHREQ",79,0)
+ ; @DESC Builds the MServer PSSXML element
+"RTN","PSSHREQ",80,0)
+ ;
+"RTN","PSSHREQ",81,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",82,0)
+ ;
+"RTN","PSSHREQ",83,0)
+ ; @RETURNS An PSSXML string representing the server element.
+"RTN","PSSHREQ",84,0)
+ ;
+"RTN","PSSHREQ",85,0)
+ NEW PSS,PSSXML,PSSNTDS1,PSSNTDS2,PSSNTDS3,PSSNTDS4,PSSNTDS5
+"RTN","PSSHREQ",86,0)
+ ;
+"RTN","PSSHREQ",87,0)
+ SET PSS("IP")=$$ATRIBUTE^PSSHRCOM("ip",$GET(IO("IP")))
+"RTN","PSSHREQ",88,0)
+ ;
+"RTN","PSSHREQ",89,0)
+ ; Namespace will remain empty because the method call used to get it
+"RTN","PSSHREQ",90,0)
+ ; is considered non-standard mumps.
+"RTN","PSSHREQ",91,0)
+ SET PSS("nameSpace")=$$ATRIBUTE^PSSHRCOM("namespace","")
+"RTN","PSSHREQ",92,0)
+ ;
+"RTN","PSSHREQ",93,0)
+ SET PSS("serverName")=$$ATRIBUTE^PSSHRCOM("serverName",$PIECE($GET(XMV("NETNAME")),"@",2))
+"RTN","PSSHREQ",94,0)
+ ;
+"RTN","PSSHREQ",95,0)
+ ;SET PSS("stationNumberOnly")=$$IEN^XUAF4($PIECE($$SITE^VASITE(),"^",1))
+"RTN","PSSHREQ",96,0)
+ ;IF PSS("stationNumberOnly")="" SET PSS("stationNumberOnly")=1
+"RTN","PSSHREQ",97,0)
+ S PSSNTDS1=$P($$SITE^VASITE(),"^",3)
+"RTN","PSSHREQ",98,0)
+ I PSSNTDS1'?1N.N S PSSNTDS2=$L(PSSNTDS1) S PSSNTDS5="" D:PSSNTDS2>0  S PSSNTDS1=PSSNTDS5 I PSSNTDS1'?1N.N S PSSNTDS1=0
+"RTN","PSSHREQ",99,0)
+ .F PSSNTDS3=1:1:PSSNTDS2 S PSSNTDS4=$E(PSSNTDS1,PSSNTDS3) Q:PSSNTDS4'?1N  S PSSNTDS5=PSSNTDS5_PSSNTDS4
+"RTN","PSSHREQ",100,0)
+ SET PSS("stationNumber")=$$ATRIBUTE^PSSHRCOM("stationNumber",PSSNTDS1)
+"RTN","PSSHREQ",101,0)
+ ;
+"RTN","PSSHREQ",102,0)
+ ; Namespace will remain empty because the method call used to get it
+"RTN","PSSHREQ",103,0)
+ ; is considered non-standard mumps.
+"RTN","PSSHREQ",104,0)
+ SET PSS("UCI")=$$ATRIBUTE^PSSHRCOM("uci","")
+"RTN","PSSHREQ",105,0)
+ ;
+"RTN","PSSHREQ",106,0)
+ SET PSSXML="<MServer"
+"RTN","PSSHREQ",107,0)
+ SET PSSXML=PSSXML_" "_PSS("IP")
+"RTN","PSSHREQ",108,0)
+ SET PSSXML=PSSXML_" "_PSS("nameSpace")
+"RTN","PSSHREQ",109,0)
+ SET PSSXML=PSSXML_" "_PSS("serverName")
+"RTN","PSSHREQ",110,0)
+ SET PSSXML=PSSXML_" "_PSS("stationNumber")
+"RTN","PSSHREQ",111,0)
+ SET PSSXML=PSSXML_" "_PSS("UCI")
+"RTN","PSSHREQ",112,0)
+ SET PSSXML=PSSXML_" />"
+"RTN","PSSHREQ",113,0)
+ ;
+"RTN","PSSHREQ",114,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",115,0)
+ ;;
+"RTN","PSSHREQ",116,0)
+HDRMUSER() ;
+"RTN","PSSHREQ",117,0)
+ ; @DESC Builds the user element of the PSSXML
+"RTN","PSSHREQ",118,0)
+ ;
+"RTN","PSSHREQ",119,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",120,0)
+ ;
+"RTN","PSSHREQ",121,0)
+ ; @RETURNS An PSSXML string representing the M user.
+"RTN","PSSHREQ",122,0)
+ ;
+"RTN","PSSHREQ",123,0)
+ NEW PSS,PSSXML,PSSNTDZ,PSSNTDJB
+"RTN","PSSHREQ",124,0)
+ ;
+"RTN","PSSHREQ",125,0)
+ S PSSNTDZ=$G(DUZ) I PSSNTDZ'?1N.N S PSSNTDZ=0
+"RTN","PSSHREQ",126,0)
+ ;
+"RTN","PSSHREQ",127,0)
+ SET PSS("DUZ")=$$ATRIBUTE^PSSHRCOM("duz",PSSNTDZ)
+"RTN","PSSHREQ",128,0)
+ ;
+"RTN","PSSHREQ",129,0)
+ S PSSNTDJB=$J S:PSSNTDJB'?1N.N PSSNTDJB=0 SET PSS("jobNumber")=$$ATRIBUTE^PSSHRCOM("jobNumber",PSSNTDJB)
+"RTN","PSSHREQ",130,0)
+ ;
+"RTN","PSSHREQ",131,0)
+ ; FIXME need to get username
+"RTN","PSSHREQ",132,0)
+ SET PSS("userName")=$$ATRIBUTE^PSSHRCOM("userName",$$GET1^DIQ(200,DUZ_",",.01))
+"RTN","PSSHREQ",133,0)
+ ;
+"RTN","PSSHREQ",134,0)
+ SET PSSXML="<MUser"
+"RTN","PSSHREQ",135,0)
+ SET PSSXML=PSSXML_" "_PSS("DUZ")
+"RTN","PSSHREQ",136,0)
+ SET PSSXML=PSSXML_" "_PSS("jobNumber")
+"RTN","PSSHREQ",137,0)
+ SET PSSXML=PSSXML_" "_PSS("userName")
+"RTN","PSSHREQ",138,0)
+ SET PSSXML=PSSXML_" />"
+"RTN","PSSHREQ",139,0)
+ ;
+"RTN","PSSHREQ",140,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",141,0)
+ ;;
+"RTN","PSSHREQ",142,0)
+BODY(PSSBASE) ;
+"RTN","PSSHREQ",143,0)
+ ; @DESC Builds the Body PSSXML element
+"RTN","PSSHREQ",144,0)
+ ;
+"RTN","PSSHREQ",145,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",146,0)
+ ;
+"RTN","PSSHREQ",147,0)
+ ; @RETURNS An PSSXML string representing the body element.
+"RTN","PSSHREQ",148,0)
+ ;
+"RTN","PSSHREQ",149,0)
+ NEW PSSXML
+"RTN","PSSHREQ",150,0)
+ ;
+"RTN","PSSHREQ",151,0)
+ SET PSSXML="<Body>"
+"RTN","PSSHREQ",152,0)
+  SET PSSXML=PSSXML_$$DRGCHEK(PSSBASE)
+"RTN","PSSHREQ",153,0)
+ SET PSSXML=PSSXML_"</Body>"
+"RTN","PSSHREQ",154,0)
+ ;
+"RTN","PSSHREQ",155,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",156,0)
+ ;;
+"RTN","PSSHREQ",157,0)
+DRGCHEK(PSSBASE) ;
+"RTN","PSSHREQ",158,0)
+ ; @DESC Builds the DrugCheck PSSXML element
+"RTN","PSSHREQ",159,0)
+ ;
+"RTN","PSSHREQ",160,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",161,0)
+ ;
+"RTN","PSSHREQ",162,0)
+ ; @RETURNS an PSSXML string representing the drugCheck element
+"RTN","PSSHREQ",163,0)
+ ;
+"RTN","PSSHREQ",164,0)
+ NEW PSSXML
+"RTN","PSSHREQ",165,0)
+ ;
+"RTN","PSSHREQ",166,0)
+ SET PSSXML="<drugCheck>"
+"RTN","PSSHREQ",167,0)
+  SET PSSXML=PSSXML_$$CHECKS(PSSBASE)
+"RTN","PSSHREQ",168,0)
+  SET PSSXML=PSSXML_$$DRUGPROS(PSSBASE)
+"RTN","PSSHREQ",169,0)
+  SET PSSXML=PSSXML_$$MEDPROF(PSSBASE)
+"RTN","PSSHREQ",170,0)
+ SET PSSXML=PSSXML_"</drugCheck>"
+"RTN","PSSHREQ",171,0)
+ ;
+"RTN","PSSHREQ",172,0)
+ ; Return the full drugCheck element
+"RTN","PSSHREQ",173,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",174,0)
+ ;;
+"RTN","PSSHREQ",175,0)
+CHECKS(PSSBASE) ;
+"RTN","PSSHREQ",176,0)
+ ; @DESC Builds the checks PSSXML element
+"RTN","PSSHREQ",177,0)
+ ;
+"RTN","PSSHREQ",178,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",179,0)
+ ;
+"RTN","PSSHREQ",180,0)
+ ; @RETURNS An PSSXML string representing the checks element.
+"RTN","PSSHREQ",181,0)
+ ;
+"RTN","PSSHREQ",182,0)
+ NEW PSS,PSSXML
+"RTN","PSSHREQ",183,0)
+ ;
+"RTN","PSSHREQ",184,0)
+ ; If data in global, set prospective only to false
+"RTN","PSSHREQ",185,0)
+ IF $DATA(^TMP($JOB,PSSBASE,"IN","PROFILEVPROFILE")) DO
+"RTN","PSSHREQ",186,0)
+ . SET PSS("prospectiveOnly")=$$ATRIBUTE^PSSHRCOM("prospectiveOnly","false")
+"RTN","PSSHREQ",187,0)
+ . QUIT
+"RTN","PSSHREQ",188,0)
+ ;
+"RTN","PSSHREQ",189,0)
+ ; If no data in global, set prospective only to true
+"RTN","PSSHREQ",190,0)
+ IF '$DATA(^TMP($JOB,PSSBASE,"IN","PROFILEVPROFILE")) DO
+"RTN","PSSHREQ",191,0)
+ . SET PSS("prospectiveOnly")=$$ATRIBUTE^PSSHRCOM("prospectiveOnly","true")
+"RTN","PSSHREQ",192,0)
+ . QUIT
+"RTN","PSSHREQ",193,0)
+ ;
+"RTN","PSSHREQ",194,0)
+ ; OPTIONAL. TBA Right now set to false, will be used in future
+"RTN","PSSHREQ",195,0)
+ SET PSS("useCustomTables")=$$ATRIBUTE^PSSHRCOM("useCustomTables","true")
+"RTN","PSSHREQ",196,0)
+ ;
+"RTN","PSSHREQ",197,0)
+ SET PSSXML="<checks"
+"RTN","PSSHREQ",198,0)
+ SET PSSXML=PSSXML_" "_$GET(PSS("prospectiveOnly"))
+"RTN","PSSHREQ",199,0)
+ SET PSSXML=PSSXML_" "_$GET(PSS("useCustomTables"))
+"RTN","PSSHREQ",200,0)
+ SET PSSXML=PSSXML_" >"
+"RTN","PSSHREQ",201,0)
+  SET PSSXML=PSSXML_$$CHEKDOSE(PSSBASE)
+"RTN","PSSHREQ",202,0)
+  SET PSSXML=PSSXML_$$CHEKDRUG(PSSBASE)
+"RTN","PSSHREQ",203,0)
+  SET PSSXML=PSSXML_$$CHEKTHER(PSSBASE)
+"RTN","PSSHREQ",204,0)
+ SET PSSXML=PSSXML_"</checks>"
+"RTN","PSSHREQ",205,0)
+ ;
+"RTN","PSSHREQ",206,0)
+ ; Return the full drugCheck element
+"RTN","PSSHREQ",207,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",208,0)
+ ;;
+"RTN","PSSHREQ",209,0)
+CHEKDOSE(PSSBASE) ;
+"RTN","PSSHREQ",210,0)
+ ; @DESC Sets the drugDoseCheck element
+"RTN","PSSHREQ",211,0)
+ ;
+"RTN","PSSHREQ",212,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",213,0)
+ ;
+"RTN","PSSHREQ",214,0)
+ ; @RETURNS An PSSXML string representing the doseCheck element
+"RTN","PSSHREQ",215,0)
+ ;
+"RTN","PSSHREQ",216,0)
+ NEW PSSXML
+"RTN","PSSHREQ",217,0)
+ ;
+"RTN","PSSHREQ",218,0)
+ SET PSSXML=""
+"RTN","PSSHREQ",219,0)
+ ;
+"RTN","PSSHREQ",220,0)
+ IF $DATA(^TMP($JOB,PSSBASE,"IN","DOSE")) DO
+"RTN","PSSHREQ",221,0)
+ . SET PSSXML="<drugDoseCheck>"
+"RTN","PSSHREQ",222,0)
+ . ; Get the demographics PSSXML section
+"RTN","PSSHREQ",223,0)
+ . SET PSSXML=PSSXML_$$DEMOGRAF(PSSBASE)
+"RTN","PSSHREQ",224,0)
+ . SET PSSXML=PSSXML_"</drugDoseCheck>"
+"RTN","PSSHREQ",225,0)
+ . QUIT
+"RTN","PSSHREQ",226,0)
+ ;
+"RTN","PSSHREQ",227,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",228,0)
+ ;;
+"RTN","PSSHREQ",229,0)
+DEMOGRAF(PSSBASE) ;
+"RTN","PSSHREQ",230,0)
+ ; @DESC Builds the demographic element
+"RTN","PSSHREQ",231,0)
+ ;
+"RTN","PSSHREQ",232,0)
+ ; @PSSBASE Input global base
+"RTN","PSSHREQ",233,0)
+ ;
+"RTN","PSSHREQ",234,0)
+ ; @RETURNS An PSSXML string representation of the demographics element
+"RTN","PSSHREQ",235,0)
+ ;
+"RTN","PSSHREQ",236,0)
+ NEW PSSXML,PSS
+"RTN","PSSHREQ",237,0)
+ ;
+"RTN","PSSHREQ",238,0)
+ SET PSS("bsa")=$GET(^TMP($JOB,PSSBASE,"IN","DOSE","BSA"))
+"RTN","PSSHREQ",239,0)
+ SET PSS("bodySurfaceAreaInSqM")=$$ATRIBUTE^PSSHRCOM("bodySurfaceAreaInSqM",PSS("bsa"))
+"RTN","PSSHREQ",240,0)
+ ;
+"RTN","PSSHREQ",241,0)
+ SET PSS("wt")=$GET(^TMP($JOB,PSSBASE,"IN","DOSE","WT"))
+"RTN","PSSHREQ",242,0)
+ SET PSS("weightInKG")=$$ATRIBUTE^PSSHRCOM("weightInKG",PSS("wt"))
+"RTN","PSSHREQ",243,0)
+ ;
+"RTN","PSSHREQ",244,0)
+ SET PSS("age")=$GET(^TMP($JOB,PSSBASE,"IN","DOSE","AGE"))
+"RTN","PSSHREQ",245,0)
+ SET PSS("ageInDays")=$$ATRIBUTE^PSSHRCOM("ageInDays",PSS("age"))
+"RTN","PSSHREQ",246,0)
+ ;
+"RTN","PSSHREQ",247,0)
+ SET PSSXML="<demographics "_PSS("bodySurfaceAreaInSqM")_" "_PSS("weightInKG")_" "_PSS("ageInDays")_"/>"
+"RTN","PSSHREQ",248,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",249,0)
+ ;;
+"RTN","PSSHREQ",250,0)
+CHEKDRUG(PSSBASE) ;
+"RTN","PSSHREQ",251,0)
+ ; @DESC Sets the drugDrugCheck element
+"RTN","PSSHREQ",252,0)
+ ;
+"RTN","PSSHREQ",253,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",254,0)
+ ;
+"RTN","PSSHREQ",255,0)
+ ; @RETURNS An PSSXML String representing drugDoseCheck element
+"RTN","PSSHREQ",256,0)
+ ;
+"RTN","PSSHREQ",257,0)
+ NEW PSSXML
+"RTN","PSSHREQ",258,0)
+ ;
+"RTN","PSSHREQ",259,0)
+ SET PSSXML=""
+"RTN","PSSHREQ",260,0)
+ ; If drug drug global set, add drug drug check
+"RTN","PSSHREQ",261,0)
+ IF $DATA(^TMP($JOB,PSSBASE,"IN","DRUGDRUG"))=1 DO
+"RTN","PSSHREQ",262,0)
+ . SET PSSXML="<drugDrugCheck />"
+"RTN","PSSHREQ",263,0)
+ . QUIT
+"RTN","PSSHREQ",264,0)
+ ;
+"RTN","PSSHREQ",265,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",266,0)
+ ;;
+"RTN","PSSHREQ",267,0)
+CHEKTHER(PSSBASE) ;
+"RTN","PSSHREQ",268,0)
+ ; @DESC Sets the drugTherapyCheck element
+"RTN","PSSHREQ",269,0)
+ ;
+"RTN","PSSHREQ",270,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",271,0)
+ ;
+"RTN","PSSHREQ",272,0)
+ ; @RETURNS An PSSXML string representing the drugTherapyCheck element
+"RTN","PSSHREQ",273,0)
+ ;
+"RTN","PSSHREQ",274,0)
+ NEW PSSXML
+"RTN","PSSHREQ",275,0)
+ SET PSSXML=""
+"RTN","PSSHREQ",276,0)
+ ; If drug therapy set, add therapy check
+"RTN","PSSHREQ",277,0)
+ IF $DATA(^TMP($JOB,PSSBASE,"IN","THERAPY"))=1 DO
+"RTN","PSSHREQ",278,0)
+ . SET PSSXML="<drugTherapyCheck />"
+"RTN","PSSHREQ",279,0)
+ . QUIT
+"RTN","PSSHREQ",280,0)
+ ;
+"RTN","PSSHREQ",281,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",282,0)
+ ;;
+"RTN","PSSHREQ",283,0)
+MEDPROF(PSSBASE) ;
+"RTN","PSSHREQ",284,0)
+ ; @DESC Builds a medicationProfile element
+"RTN","PSSHREQ",285,0)
+ ;
+"RTN","PSSHREQ",286,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",287,0)
+ ;
+"RTN","PSSHREQ",288,0)
+ ; @RETURNS PSSXML string element of the medicationProfile
+"RTN","PSSHREQ",289,0)
+ ;
+"RTN","PSSHREQ",290,0)
+ NEW PSS,PSSXML
+"RTN","PSSHREQ",291,0)
+ ;
+"RTN","PSSHREQ",292,0)
+ SET PSSXML="<medicationProfile>"
+"RTN","PSSHREQ",293,0)
+  SET PSSXML=PSSXML_$$DRUGPROF(PSSBASE)
+"RTN","PSSHREQ",294,0)
+ SET PSSXML=PSSXML_"</medicationProfile>"
+"RTN","PSSHREQ",295,0)
+ ;
+"RTN","PSSHREQ",296,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",297,0)
+ ;;
+"RTN","PSSHREQ",298,0)
+DRUGPROS(PSSBASE) ;
+"RTN","PSSHREQ",299,0)
+ ; @DESC Builds prospectiveDrugs element
+"RTN","PSSHREQ",300,0)
+ ;
+"RTN","PSSHREQ",301,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",302,0)
+ ;
+"RTN","PSSHREQ",303,0)
+ ; @RETURNS An PSSXML string representing prospectiveDrugs
+"RTN","PSSHREQ",304,0)
+ ;
+"RTN","PSSHREQ",305,0)
+ NEW PSSXML,PSSDRUGS
+"RTN","PSSHREQ",306,0)
+ ;
+"RTN","PSSHREQ",307,0)
+ ; Read drug info from input global, store in PSSDRUGS hash
+"RTN","PSSHREQ",308,0)
+ DO READRUGS(PSSBASE,"PROSPECTIVE",.PSSDRUGS)
+"RTN","PSSHREQ",309,0)
+ D
+"RTN","PSSHREQ",310,0)
+ .I '$D(PSSDRUGS("DRUG")) S PSSXML="" Q  ;if no prospective drug just return null
+"RTN","PSSHREQ",311,0)
+ .; Write the drugs as PSSXML
+"RTN","PSSHREQ",312,0)
+ .SET PSSXML="<prospectiveDrugs>"_$$RITEDRGS(.PSSDRUGS)_"</prospectiveDrugs>"
+"RTN","PSSHREQ",313,0)
+ ;
+"RTN","PSSHREQ",314,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",315,0)
+ ;;
+"RTN","PSSHREQ",316,0)
+DRUGPROF(PSSBASE) ;
+"RTN","PSSHREQ",317,0)
+ ; @DESC Builds a prospective drug element
+"RTN","PSSHREQ",318,0)
+ ;
+"RTN","PSSHREQ",319,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",320,0)
+ ;
+"RTN","PSSHREQ",321,0)
+ ; @RETURNS An PSSXML string representing profile drugs
+"RTN","PSSHREQ",322,0)
+ ;
+"RTN","PSSHREQ",323,0)
+ NEW PSSXML,PSSDRUGS
+"RTN","PSSHREQ",324,0)
+ ;
+"RTN","PSSHREQ",325,0)
+ ; Read from the input global and put in PSSDRUGS hash
+"RTN","PSSHREQ",326,0)
+ DO READRUGS(PSSBASE,"PROFILE",.PSSDRUGS)
+"RTN","PSSHREQ",327,0)
+ ; Write the profile drugs as PSSXML
+"RTN","PSSHREQ",328,0)
+ SET PSSXML=$$RITEDRGS(.PSSDRUGS)
+"RTN","PSSHREQ",329,0)
+ ;
+"RTN","PSSHREQ",330,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",331,0)
+ ;;
+"RTN","PSSHREQ",332,0)
+READRUGS(PSSBASE,DRUGTYPE,PSSDRUGS) ;
+"RTN","PSSHREQ",333,0)
+ ; @DESC Builds either a prospective or a profile drug element.
+"RTN","PSSHREQ",334,0)
+ ; Note the "DRUGTYPE" parameter.  This param allows for re-use, so either
+"RTN","PSSHREQ",335,0)
+ ; a profile or a prospective drug can be created.
+"RTN","PSSHREQ",336,0)
+ ;
+"RTN","PSSHREQ",337,0)
+ ; @PSSBASE Base of input global
+"RTN","PSSHREQ",338,0)
+ ; @DRUGTYPE A drug type, either Prospective or Profile
+"RTN","PSSHREQ",339,0)
+ ; @PSSDRUGS ByRef, variable to store drug attributes in
+"RTN","PSSHREQ",340,0)
+ ;
+"RTN","PSSHREQ",341,0)
+ ; @RETURNS Nothing, values stored in drugs variable
+"RTN","PSSHREQ",342,0)
+ ;
+"RTN","PSSHREQ",343,0)
+ NEW PSS
+"RTN","PSSHREQ",344,0)
+ ;
+"RTN","PSSHREQ",345,0)
+ SET PSS("ien")=""
+"RTN","PSSHREQ",346,0)
+ SET PSS("count")=0
+"RTN","PSSHREQ",347,0)
+ ;
+"RTN","PSSHREQ",348,0)
+ ; Loop through the unique order numbers
+"RTN","PSSHREQ",349,0)
+ SET PSS("orderNumber")=""
+"RTN","PSSHREQ",350,0)
+ FOR  SET PSS("orderNumber")=$ORDER(^TMP($JOB,PSSBASE,"IN",DRUGTYPE,PSS("orderNumber"))) QUIT:PSS("orderNumber")=""  DO
+"RTN","PSSHREQ",351,0)
+ . SET PSS("count")=PSS("count")+1
+"RTN","PSSHREQ",352,0)
+ . SET PSS("value")=$GET(^TMP($JOB,PSSBASE,"IN",DRUGTYPE,PSS("orderNumber")))
+"RTN","PSSHREQ",353,0)
+ . ; Set the drug order number
+"RTN","PSSHREQ",354,0)
+ . SET PSSDRUGS("DRUG",PSS("count"),"orderNumber")=PSS("orderNumber")
+"RTN","PSSHREQ",355,0)
+ . ; Set the drug gcn sequence number
+"RTN","PSSHREQ",356,0)
+ . SET PSSDRUGS("DRUG",PSS("count"),"gcn")=+$PIECE(PSS("value"),"^",1)
+"RTN","PSSHREQ",357,0)
+ . ; Set the drug vuid
+"RTN","PSSHREQ",358,0)
+ . SET PSSDRUGS("DRUG",PSS("count"),"vuid")=+$PIECE(PSS("value"),"^",2)
+"RTN","PSSHREQ",359,0)
+ . ; Set the drug ien
+"RTN","PSSHREQ",360,0)
+ . SET PSSDRUGS("DRUG",PSS("count"),"ien")=+$PIECE(PSS("value"),"^",3)
+"RTN","PSSHREQ",361,0)
+ . ; Set the drug name
+"RTN","PSSHREQ",362,0)
+ . SET PSSDRUGS("DRUG",PSS("count"),"drugName")=$PIECE(PSS("value"),"^",4)
+"RTN","PSSHREQ",363,0)
+ . ; Set the cprs order number
+"RTN","PSSHREQ",364,0)
+ . SET PSSDRUGS("DRUG",PSS("count"),"cprsOrderNumber")=$PIECE(PSS("value"),"^",5)
+"RTN","PSSHREQ",365,0)
+ . ; Set the package
+"RTN","PSSHREQ",366,0)
+ . SET PSSDRUGS("DRUG",PSS("count"),"package")=$PIECE(PSS("value"),"^",6)
+"RTN","PSSHREQ",367,0)
+ . ;
+"RTN","PSSHREQ",368,0)
+ . ; Get the possible dose information for the drug
+"RTN","PSSHREQ",369,0)
+ . DO READDOSE(PSSBASE,.PSSDRUGS,PSS("count"),PSS("orderNumber"))
+"RTN","PSSHREQ",370,0)
+ . QUIT
+"RTN","PSSHREQ",371,0)
+ ;
+"RTN","PSSHREQ",372,0)
+ QUIT
+"RTN","PSSHREQ",373,0)
+ ;;
+"RTN","PSSHREQ",374,0)
+RITEDRGS(PSSDRUGS) ;
+"RTN","PSSHREQ",375,0)
+ ; @DESC Loop through the drugs and return PSSXML
+"RTN","PSSHREQ",376,0)
+ ;
+"RTN","PSSHREQ",377,0)
+ ; @PSSDRUGS Array containing the list of drugs
+"RTN","PSSHREQ",378,0)
+ ;
+"RTN","PSSHREQ",379,0)
+ ; @RETURNS PSSXML representing the drugs in array
+"RTN","PSSHREQ",380,0)
+ ;
+"RTN","PSSHREQ",381,0)
+ NEW PSSCOUNT,PSSXML
+"RTN","PSSHREQ",382,0)
+ ;
+"RTN","PSSHREQ",383,0)
+ SET PSSXML=""
+"RTN","PSSHREQ",384,0)
+ SET PSSCOUNT=""
+"RTN","PSSHREQ",385,0)
+ FOR  SET PSSCOUNT=$ORDER(PSSDRUGS("DRUG",PSSCOUNT)) QUIT:PSSCOUNT=""  DO
+"RTN","PSSHREQ",386,0)
+ . ; loop through drugs and append to PSSXML
+"RTN","PSSHREQ",387,0)
+ . SET PSSXML=PSSXML_$$RITEDRUG(.PSSDRUGS,PSSCOUNT)
+"RTN","PSSHREQ",388,0)
+ . QUIT
+"RTN","PSSHREQ",389,0)
+ ;
+"RTN","PSSHREQ",390,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",391,0)
+ ;;
+"RTN","PSSHREQ",392,0)
+RITEDRUG(PSSDRUGS,PSSCOUNT) ;
+"RTN","PSSHREQ",393,0)
+ ; @DESC Builds a single drug xml element
+"RTN","PSSHREQ",394,0)
+ ;
+"RTN","PSSHREQ",395,0)
+ ; @PSSDRUGS A handle to the drug object
+"RTN","PSSHREQ",396,0)
+ ; @PSSCOUNT The counter where the information should be taken from
+"RTN","PSSHREQ",397,0)
+ ;
+"RTN","PSSHREQ",398,0)
+ ; @RETURNS An PSSXML string representing a single drug
+"RTN","PSSHREQ",399,0)
+ ;
+"RTN","PSSHREQ",400,0)
+ NEW PSS,PSSXML,PSSORDR
+"RTN","PSSHREQ",401,0)
+ ;
+"RTN","PSSHREQ",402,0)
+ IF $DATA(PSSDRUGS("DRUG",PSSCOUNT,"drugName")) DO
+"RTN","PSSHREQ",403,0)
+ . SET PSS("drugName")=$$ATRIBUTE^PSSHRCOM("drugName",PSSDRUGS("DRUG",PSSCOUNT,"drugName"))
+"RTN","PSSHREQ",404,0)
+ ;
+"RTN","PSSHREQ",405,0)
+ SET PSS("gcnSeqNo")=$$ATRIBUTE^PSSHRCOM("gcnSeqNo",PSSDRUGS("DRUG",PSSCOUNT,"gcn"))
+"RTN","PSSHREQ",406,0)
+ ;
+"RTN","PSSHREQ",407,0)
+ SET PSS("ien")=$$ATRIBUTE^PSSHRCOM("ien",PSSDRUGS("DRUG",PSSCOUNT,"ien"))
+"RTN","PSSHREQ",408,0)
+ ;
+"RTN","PSSHREQ",409,0)
+ ; Concatenate the orderNumber, cprs order number, and package
+"RTN","PSSHREQ",410,0)
+ ; ex. orderNumber|cprsOrderNumber|package
+"RTN","PSSHREQ",411,0)
+ SET PSSORDR=PSSDRUGS("DRUG",PSSCOUNT,"orderNumber")_"|"_$GET(PSSDRUGS("DRUG",PSSCOUNT,"cprsOrderNumber"))_"|"_$GET(PSSDRUGS("DRUG",PSSCOUNT,"package"))
+"RTN","PSSHREQ",412,0)
+ ;
+"RTN","PSSHREQ",413,0)
+ SET PSS("orderNumber")=$$ATRIBUTE^PSSHRCOM("orderNumber",PSSORDR)
+"RTN","PSSHREQ",414,0)
+ ;
+"RTN","PSSHREQ",415,0)
+ ; vuid is optional
+"RTN","PSSHREQ",416,0)
+ IF $DATA(PSSDRUGS("DRUG",PSSCOUNT,"vuid")) DO
+"RTN","PSSHREQ",417,0)
+ . SET PSS("vuid")=$$ATRIBUTE^PSSHRCOM("vuid",PSSDRUGS("DRUG",PSSCOUNT,"vuid"))
+"RTN","PSSHREQ",418,0)
+ ;
+"RTN","PSSHREQ",419,0)
+ SET PSSXML="<drug "_PSS("drugName")_" "_PSS("gcnSeqNo")_" "_PSS("ien")_" "_PSS("orderNumber")_" "_PSS("vuid")_" >"
+"RTN","PSSHREQ",420,0)
+ SET PSSXML=PSSXML_$$RITEDOSE(.PSSDRUGS,PSSCOUNT)
+"RTN","PSSHREQ",421,0)
+ SET PSSXML=PSSXML_"</drug>"
+"RTN","PSSHREQ",422,0)
+ ;
+"RTN","PSSHREQ",423,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",424,0)
+ ;;
+"RTN","PSSHREQ",425,0)
+READDOSE(PSSBASE,PSSHASH,PSSCOUNT,ORDRNM) ;
+"RTN","PSSHREQ",426,0)
+ ; @DESC Sets the individual drugDose elements, including all dosing amounts,
+"RTN","PSSHREQ",427,0)
+ ; frequency, etc for an individual drug.
+"RTN","PSSHREQ",428,0)
+ ;
+"RTN","PSSHREQ",429,0)
+ ; @DOSE A handle to the drug dose you want to turn into PSSXML
+"RTN","PSSHREQ",430,0)
+ ;
+"RTN","PSSHREQ",431,0)
+ ; @RETURNS Nothing, values stored in hash
+"RTN","PSSHREQ",432,0)
+ ;
+"RTN","PSSHREQ",433,0)
+ NEW PSS
+"RTN","PSSHREQ",434,0)
+ ;
+"RTN","PSSHREQ",435,0)
+ ; If no drug dose information exist for the drug quit
+"RTN","PSSHREQ",436,0)
+ IF $DATA(^TMP($JOB,PSSBASE,"IN","DOSE",ORDRNM))=0 SET PSSHASH("DRUG",PSSCOUNT,"hasDose")=0
+"RTN","PSSHREQ",437,0)
+ IF $DATA(^TMP($JOB,PSSBASE,"IN","DOSE",ORDRNM))=0 QUIT
+"RTN","PSSHREQ",438,0)
+ IF $DATA(^TMP($JOB,PSSBASE,"IN","DOSE",ORDRNM))>0 SET PSSHASH("DRUG",PSSCOUNT,"hasDose")=1
+"RTN","PSSHREQ",439,0)
+ ;
+"RTN","PSSHREQ",440,0)
+ SET PSS("value")=$GET(^TMP($JOB,PSSBASE,"IN","DOSE",ORDRNM))
+"RTN","PSSHREQ",441,0)
+ ; If specific get values (doseAmount,doseUnit,doseRate,frequency,
+"RTN","PSSHREQ",442,0)
+ ; duration,durationRate,medicalRoute,doseType)
+"RTN","PSSHREQ",443,0)
+ SET PSSHASH("DRUG",PSSCOUNT,"doseAmount")=$PIECE(PSS("value"),"^",5)
+"RTN","PSSHREQ",444,0)
+ SET PSSHASH("DRUG",PSSCOUNT,"doseUnit")=$PIECE(PSS("value"),"^",6)
+"RTN","PSSHREQ",445,0)
+ SET PSSHASH("DRUG",PSSCOUNT,"doseRate")=$PIECE(PSS("value"),"^",7)
+"RTN","PSSHREQ",446,0)
+ SET PSSHASH("DRUG",PSSCOUNT,"frequency")=$PIECE(PSS("value"),"^",8)
+"RTN","PSSHREQ",447,0)
+ SET PSSHASH("DRUG",PSSCOUNT,"duration")=$PIECE(PSS("value"),"^",9)
+"RTN","PSSHREQ",448,0)
+ SET PSSHASH("DRUG",PSSCOUNT,"durationRate")=$PIECE(PSS("value"),"^",10)
+"RTN","PSSHREQ",449,0)
+ SET PSSHASH("DRUG",PSSCOUNT,"route")=$PIECE(PSS("value"),"^",11)
+"RTN","PSSHREQ",450,0)
+ SET PSSHASH("DRUG",PSSCOUNT,"doseType")=$PIECE(PSS("value"),"^",12)
+"RTN","PSSHREQ",451,0)
+ QUIT
+"RTN","PSSHREQ",452,0)
+ ;;
+"RTN","PSSHREQ",453,0)
+RITEDOSE(PSSHASH,I) ;
+"RTN","PSSHREQ",454,0)
+ ; @DESC Writes the doseInformation PSSXML element
+"RTN","PSSHREQ",455,0)
+ ;
+"RTN","PSSHREQ",456,0)
+ ; @PSSHASH Hash value with variables used to create element
+"RTN","PSSHREQ",457,0)
+ ;
+"RTN","PSSHREQ",458,0)
+ ; @RETURNS A valid drugDose XML element
+"RTN","PSSHREQ",459,0)
+ ;
+"RTN","PSSHREQ",460,0)
+ NEW PSSXML
+"RTN","PSSHREQ",461,0)
+ ;
+"RTN","PSSHREQ",462,0)
+ SET PSSXML=""
+"RTN","PSSHREQ",463,0)
+ IF +$GET(PSSHASH("DRUG",I,"hasDose"))=0 QUIT PSSXML
+"RTN","PSSHREQ",464,0)
+ ;
+"RTN","PSSHREQ",465,0)
+ ; Create dose information
+"RTN","PSSHREQ",466,0)
+ SET PSSXML="<doseInformation>"
+"RTN","PSSHREQ",467,0)
+ SET PSSXML=PSSXML_"<doseType>"_PSSHASH("DRUG",I,"doseType")_"</doseType>"
+"RTN","PSSHREQ",468,0)
+ SET PSSXML=PSSXML_"<doseAmount>"_PSSHASH("DRUG",I,"doseAmount")_"</doseAmount>"
+"RTN","PSSHREQ",469,0)
+ SET PSSXML=PSSXML_"<doseUnit>"_PSSHASH("DRUG",I,"doseUnit")_"</doseUnit>"
+"RTN","PSSHREQ",470,0)
+ SET PSSXML=PSSXML_"<doseRate>"_PSSHASH("DRUG",I,"doseRate")_"</doseRate>"
+"RTN","PSSHREQ",471,0)
+ I $L(PSSHASH("DRUG",I,"frequency")) SET PSSXML=PSSXML_"<frequency>"_PSSHASH("DRUG",I,"frequency")_"</frequency>"
+"RTN","PSSHREQ",472,0)
+ I $L(PSSHASH("DRUG",I,"duration")) SET PSSXML=PSSXML_"<duration>"_PSSHASH("DRUG",I,"duration")_"</duration>"
+"RTN","PSSHREQ",473,0)
+ I $L(PSSHASH("DRUG",I,"durationRate")) SET PSSXML=PSSXML_"<durationRate>"_PSSHASH("DRUG",I,"durationRate")_"</durationRate>"
+"RTN","PSSHREQ",474,0)
+ SET PSSXML=PSSXML_"<route>"_PSSHASH("DRUG",I,"route")_"</route>"
+"RTN","PSSHREQ",475,0)
+ ;
+"RTN","PSSHREQ",476,0)
+ ; Close off dose information
+"RTN","PSSHREQ",477,0)
+ SET PSSXML=PSSXML_"</doseInformation>"
+"RTN","PSSHREQ",478,0)
+ ;
+"RTN","PSSHREQ",479,0)
+ QUIT PSSXML
+"RTN","PSSHREQ",480,0)
+ ;;
+"RTN","PSSHRQ2")
+0^1^B5074500
+"RTN","PSSHRQ2",1,0)
+PSSHRQ2 ;WOIFO/AV,TS - Makes a request to PEPS and returns as Global ;09/20/07
+"RTN","PSSHRQ2",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**136,163**;9/30/97;Build 8
+"RTN","PSSHRQ2",3,0)
+ ;
+"RTN","PSSHRQ2",4,0)
+ ; @authors - Alex Vazquez, Tim Sabat
+"RTN","PSSHRQ2",5,0)
+ ; @date    - September 19, 2007
+"RTN","PSSHRQ2",6,0)
+ ; @version - 1.0
+"RTN","PSSHRQ2",7,0)
+ ;
+"RTN","PSSHRQ2",8,0)
+ QUIT
+"RTN","PSSHRQ2",9,0)
+ ;;
+"RTN","PSSHRQ2",10,0)
+IN(PSSBASE) ;
+"RTN","PSSHRQ2",11,0)
+ ; @DESC Handles request/response to PEPS
+"RTN","PSSHRQ2",12,0)
+ ;
+"RTN","PSSHRQ2",13,0)
+ ; @RETURNS Nothing. Value stored in output global.
+"RTN","PSSHRQ2",14,0)
+ ;
+"RTN","PSSHRQ2",15,0)
+ NEW PSS,PSSRESLT,PSSDOC,PSSXML,FDBFLG,PSSRBASE,PSSRBASX
+"RTN","PSSHRQ2",16,0)
+ ; Cleanup output global
+"RTN","PSSHRQ2",17,0)
+ ; KILL ^TMP($JOB,PSSBASE,"OUT")  ; PO: commented as requested by Stan Brown on 6/4/09
+"RTN","PSSHRQ2",18,0)
+ ;
+"RTN","PSSHRQ2",19,0)
+ ; save "IN" nodes
+"RTN","PSSHRQ2",20,0)
+ K ^TMP($J,"SAVE","IN")
+"RTN","PSSHRQ2",21,0)
+ M ^TMP($J,"SAVE","IN")=^TMP($J,PSSBASE,"IN") S PSSRBASE=PSSBASE
+"RTN","PSSHRQ2",22,0)
+ ;
+"RTN","PSSHRQ2",23,0)
+ ;Check FDB status if an update is occurring
+"RTN","PSSHRQ2",24,0)
+ S FDBFLG=$$CHKSTAT^PSSDSFDB()
+"RTN","PSSHRQ2",25,0)
+ ;If FDB update set global and quit
+"RTN","PSSHRQ2",26,0)
+ I FDBFLG S ^TMP($J,PSSBASE,"OUT",0)=FDBFLG GOTO END   ;QUIT
+"RTN","PSSHRQ2",27,0)
+ ;
+"RTN","PSSHRQ2",28,0)
+ ; Validate input global
+"RTN","PSSHRQ2",29,0)
+ SET PSS("validationResult")=$$DRIVER^PSSHRVAL(PSSBASE)
+"RTN","PSSHRQ2",30,0)
+ IF PSS("validationResult")=0  DO
+"RTN","PSSHRQ2",31,0)
+ . ; Check if data written to global, set to 1 if data exist
+"RTN","PSSHRQ2",32,0)
+ . IF $DATA(^TMP($JOB,PSSBASE,"OUT")) SET ^TMP($JOB,PSSBASE,"OUT",0)=1
+"RTN","PSSHRQ2",33,0)
+ . ; If no data in output global , set to 0
+"RTN","PSSHRQ2",34,0)
+ . IF '$DATA(^TMP($JOB,PSSBASE,"OUT")) SET ^TMP($JOB,PSSBASE,"OUT",0)=0
+"RTN","PSSHRQ2",35,0)
+ . QUIT
+"RTN","PSSHRQ2",36,0)
+ ; End call if no call to make
+"RTN","PSSHRQ2",37,0)
+ IF PSS("validationResult")=0 GOTO END   ;QUIT
+"RTN","PSSHRQ2",38,0)
+ ;
+"RTN","PSSHRQ2",39,0)
+ ; Create XML request
+"RTN","PSSHRQ2",40,0)
+ SET PSSXML=$$BLDPREQ^PSSHREQ(PSSBASE)
+"RTN","PSSHRQ2",41,0)
+ ; Send XML request to PEPS, receive handle to XML in return
+"RTN","PSSHRQ2",42,0)
+ SET PSSRESLT=$$PEPSPOST^PSSHTTP(.PSSDOC,PSSXML)
+"RTN","PSSHRQ2",43,0)
+ ;
+"RTN","PSSHRQ2",44,0)
+ ; If request unsuccessful go straight to error handling
+"RTN","PSSHRQ2",45,0)
+ IF +PSSRESLT=0 DO ALTERROR^PSSHRQ2O(PSSBASE)
+"RTN","PSSHRQ2",46,0)
+ ;
+"RTN","PSSHRQ2",47,0)
+ ; If request is successful parse response
+"RTN","PSSHRQ2",48,0)
+ ; and put in results global object.  Also set the last successful run time.
+"RTN","PSSHRQ2",49,0)
+ IF +PSSRESLT>0 DO OUT^PSSHRQ2O(PSSDOC,PSSBASE),SLASTRUN^PSSHRIT($$NOW^XLFDT())
+"RTN","PSSHRQ2",50,0)
+ ;
+"RTN","PSSHRQ2",51,0)
+END ; re-store "IN" nodes
+"RTN","PSSHRQ2",52,0)
+ M ^TMP($J,PSSBASE,"IN")=^TMP($J,"SAVE","IN")
+"RTN","PSSHRQ2",53,0)
+ K ^TMP($J,"SAVE","IN")
+"RTN","PSSHRQ2",54,0)
+ S PSSRBASX=$P($G(^TMP($J,PSSRBASE,"OUT",0)),"^") I PSSRBASX'=-1,PSSRBASX'=0,PSSRBASX'=1 D
+"RTN","PSSHRQ2",55,0)
+ .K ^TMP($J,PSSRBASE,"OUT")
+"RTN","PSSHRQ2",56,0)
+ .S ^TMP($J,PSSRBASE,"OUT",0)="-1^Unexpected error has occurred."
+"RTN","PSSHRQ2",57,0)
+ QUIT
+"RTN","PSSHRQ2",58,0)
+ ;;
+"VER")
+8.0^22.0
+**END**
+**END**

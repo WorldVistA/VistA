@@ -1,0 +1,116 @@
+$TXT Created by TRAN,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 05/24/12 at 07:23
+=============================================================================
+Run Date: AUG 27, 2012                     Designation: XU*8*587
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #479                      Status: Released
+                  Compliance Date: SEP 27, 2012
+=============================================================================
+
+
+Subject: SINGLE FILE ADD/DELETE FOR A USER
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Remedy tickets #: HD0000000499649
+ Patch Tracking Message# 55872345
+ Blood Bank Clearance: 11/9/2011
+ Test sites:
+ - BOSTON HCS
+ - HEARTLAND-EAST HCS
+ - HINES, IL VAMC
+  
+  
+                                 XU*8*587
+  
+ This patch addresses a problem for the option "Single File add/delete for
+ a user" [XUFILESINGLEADD]. This option does not allow the updating of an
+ active user's files if the user has a future termination date entered.
+  
+ To fix the problem, the field DIC(S) (#34) of the option has been updated
+ with the supported $$ACTIVE^XUSER API to check if a selected user is
+ active.
+  
+ The option after patch will look like:
+  
+ NAME: XUFILESINGLEADD
+   MENU TEXT: Single file add/delete for a user
+   TYPE: edit                            CREATOR: USER NAME
+   X ACTION PRESENT: YES
+  DESCRIPTION:   This option is used to add or delete the access a user 
+                 has for a single file.
+   EXIT ACTION: K V,W,C,DI,DISYS,DQ,%X,%Y,DLAYGO
+   DIC {DIC}: VA(200,                    DIC(0): AEMQ
+   DIC(S): I $P($$ACTIVE^XUSER(+Y),"^",2)'="",
+             $P($$ACTIVE^XUSER(+Y),"^",2)'="TERMINATED"
+   DIE: VA(200,
+   DR {DIE}: [XUFILESINGLE]
+   UPPERCASE MENU TEXT: SINGLE FILE ADD/DELETE FOR A U
+  
+  
+ Blood Bank Team Coordination
+  ============================
+  
+ Blood Bank Clearance: 11/9/2011
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*587 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*587 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*587
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to Rebuild Menu Trees Upon Completion of Install? No//
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : SEP 22, 2011
+Completed By: BEST,LISA                     Date Completed: AUG 22, 2012
+Released By : TILLIS,LEWIS                  Date Released : AUG 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,458 @@
+
+=============================================================================
+Run Date: APR 19, 2011                     Designation: PSJ*5*181
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #209                      Status: Released
+                  Compliance Date: SEP 15, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*60    <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*98    <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*137   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*147   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*148   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*149   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*155   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*161   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*162   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*168   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*179   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*184   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*185   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*186   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*198   <<= must be installed BEFORE `PSJ*5*181'
+                    (v)PSJ*5*221   <<= must be installed BEFORE `PSJ*5*181'
+
+Subject: MEDICATION ORDER CHECK HEALTHCARE APPLICATION v1.0
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch is part of a group of patches that make up the new Medication 
+ Order Check Healthcare Application v1.0 (MOCHA).  These patches will 
+ replace most of the current VistA medication order checking system with 
+ version 1.0 of the new Medication Order Check Healthcare Application 
+ (MOCHA) system that uses the First DataBank (FDB) Drug Information 
+ Framework (DIF) interfaces and database. The VistA Drug Interaction module
+ will be replaced by the FDB Drug-Drug Interaction Module (DDIM). The VistA
+ Duplicate Class module will be replaced by the FDB Enhanced Therapeutic
+ Classification (ETC) System. In addition, the following three order checks
+ that use VistA data have been added to Inpatient Medications and
+ Outpatient Pharmacy. These checks currently occur in Computerized Patient
+ Record System (CPRS), but will be new to Pharmacy with the installation of
+ these patches:
+  
+         Aminoglycoside Ordered
+         Dangerous Meds for Patients > 64
+         Glucophage - Lab Results
+   
+ A new Graphical User Interface (GUI) module is also being introduced 
+ called Pharmacy Enterprise Customization System (PECS), to be used only 
+ by members of Pharmacy Benefits Management (PBM).  It will allow the NDF 
+ Support Group to customize the data provided by FDB for use in VistA.
+  
+ The following three patient safety issues have also been addressed in 
+ this release:
+  
+         Order Checks on PreMix IV Solutions (PSI-06-012)
+         Order Check display sequence changes (PSI-07-080)
+         Eliminating confusion in Inpatient Medications Order Check 
+         display and processing (PSI-07-080)
+  
+ Please refer to the MOCHA v1.0 Release Notes for additional information.
+   
+ MOCHA v1.0 consists of two host files: PSS_1_136.zip, 
+ PRE_I_3_PHARMACY_BUILD.KID, and two patches PSS*1*117 and PSO*7*375.  
+ These  files and patches contain software that support MOCHA v1.0 
+ functionality.  The host files were created to simplify installation at 
+ Veterans Health Administration (VHA) facilities and to assist in the 
+ phased implementation release method for MOCHA v1.0.  To see current 
+ status and target dates for Sites/VISN/Region please refer to the 
+ following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx 
+  
+ Sites will be provided instructions and guidance on installation and 
+ implementation by the MOCHA Implementation team.  Installation 
+ information for MOCHA v1.0 is included in the VistA to MOCHA v1.0 
+ Interface Installation Guide and the MOCHA v1.0 Combined Build 
+ Installation Guide.  
+  
+  
+ Patch Information:
+ ------------------
+  
+ PSS_1_136.zip includes the components necessary for the interface that
+ will be used in MOCHA v1.0:  
+  
+ PRE_I_3_INTERFACE_BUILD.KID (contains PSS*1*136)
+  
+ PSSPRE_1_0.XML     
+  
+ PRE_I_3_PHARMACY_BUILD.KID includes the following required patches 
+ to enable the MOCHA v1.0 functionality:
+  
+         PSO*7*251
+         PSJ*5*181
+         OR*3*272
+  
+ These patches will be distributed as standalone patches via FORUM and 
+ will support MOCHA v1.0:
+  
+         PSS*1*117
+         PSO*7*375
+  
+ The software will be distributed in a controlled process due to the phased
+ implementation.  During each implementation phase, the Implementation Team
+ will provide each site the instructions and location to obtain the
+ software.
+  
+  
+ Please refer to the documentation referenced below for more information.
+  
+  
+ ******************************* WARNING **********************************
+  
+ If your facility has the Pyxis/Omnicell/McKesson interface from ILC this 
+ patch will overwrite any "local" modifications in routines PSGOEE and
+ PSJCOMR. This could affect certain orders being sent across
+ this interface.  The modifications will have to be reintroduced following
+ installation of this patch.
+  
+ **************************************************************************
+  
+  
+ If a patient has a non-VA med order without a dosage specified, the order
+ check process will loop through each of the dispense drugs tied to the
+ Pharmacy Orderable Item.  This causes multiple warning messages to display
+ for the same order.  This patch calls ^PSODDPR4 routine, a new application
+ programming interface (API), that will use the first active dispense drug
+ found for the Pharmacy Orderable Item in the order checks.  The following
+ tickets are addressed with this fix:
+ HD0000000130974
+ HD0000000143776  
+ HD0000000144157  
+ HD0000000170500 
+ HD0000000213650  
+ HD0000000295220 
+ HD0000000188980 
+  
+ When a pending unit dose order was selected for finishing, only part
+ of the CPRS order checks narrative was displayed. HD0000000313339
+  
+ This patch will include entries marked for premixes in the IV SOLUTIONS 
+ File (#52.7) in the order checks. PSI-06-012, HD0000000067588, 
+ HD0000000128116
+  
+ The display of the order checks and allergy information is causing 
+ confusion to the user when prompting to log an intervention.  It was not 
+ clear which warnings the intervention is being logged for.  This patch
+ is changing the display for the order checks and allergy warnings.
+ PSI-07-080(HD0000000188098).  
+  
+ When the additive field is edited on a pending order during the finishing 
+ process, a new order is not created.  This patch will create a new order 
+ for this situation.  HD0000000307136
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch. 
+  
+  
+ This patch addresses the following Associated PSIs:
+ ---------------------------------------------------
+ PSI-07-080
+ PSI-06-012  
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ HD0000000130974  Problems with order checks looping
+ HD0000000143776  Unable to complete Inpatient Order
+ HD0000000144157  Lots of duplicate order checks
+ HD0000000170500  Excessive order check for inpatient meds
+ HD0000000188980  Unable to finish/verify orders
+ HD0000000213650  Multiple duplicate order checks 
+ HD0000000295220  UD Rx processing repeats interaction warnings
+ HD0000000313339  Partial CPRS order checks narrative was display
+ HD0000000067588  Order Check Problem (Pre-mix)
+ HD0000000128116  E3R #19349, Order Checks for IV Fluids (RTU solutions)
+ HD0000000307136  Edit the additive while finishing an IV pending order
+ HD0000000188098  Not all order checks displayed when verifying order 
+  
+ Components Exported With Patch: 
+ -------------------------------
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name           (Number)   File Name                      (Number)
+ -----------------------------   ---------------------------------------
+ HOURS OF RECENTLY DC/EXPIRED 7  INPATIENT WARD PARAMETERS          59.6
+  
+  
+ The following is a list of templates included in this patch:
+  
+ Template Name                   File Name                      (Number)
+ -----------------------------   ---------------------------------------
+ PSJ IWP EDIT                    INPATIENT WARD PARAMETERS          59.6
+  
+ The following is a list of protocols included in this patch:
+  
+ Protocol Name                          ACTIONS
+ -------------                          ---------------------- 
+ PSJ LM ORDER VIEW HIDDEN ACTIONS       USE AS LINK FOR MENU ITEMS
+ PSJ LM PHARMACY INTERVENTION MENU      MERGE MENU ITEMS
+ PSJ LM PROFILE HIDDEN ACTIONS          USE AS LINK FOR MENU ITEMS 
+  
+  
+ Documentation Retrieval:
+ ========================
+  
+ Updated documentation describing the new functionality
+ introduced by this patch will be downloaded to sites from the
+ FTP address as directed by the PRE Implementation team.
+  
+ The documentation distribution includes:
+  
+ FILENAME                         DESCRIPTION
+ --------                         ----------- 
+  
+ PSS_1_IG_R0411.PDF               VistA to MOCHA v1.0 Interface 
+                                  Installation Guide
+  
+ PSO_7_PSJ_5_PSS_1_RN.PDF         Medication Order Check Healthcare 
+                                  Application (MOCHA) v1.0 Release Notes
+  
+ MOCHA_CB_PSS_1_P117_IG.PDF       MOCHA v1.0 Combined Build Installation
+                                  Guide
+  
+ PSJ_5_NURSE_UM_R0411.PDF         Inpatient Medications Nurse's User Manual
+  
+ PSJ_5_PHAR_UM_R0411.PDF          Inpatient Medications Pharmacist's
+                                  User Manual
+  
+ PSJ_5_SUPR_UM_R0411.PDF          Inpatient Supervisor's User Manual
+  
+ PSJ_5_TM_R0411.PDF               Inpatient Medications Technical Manual/
+                                  Security Guide
+  
+ PSJ_5_P181_NURSE_UM_CP.PDF       Inpatient Medications Nurse's User Manual
+                                  Change Pages
+  
+ PSJ_5_P181_PHAR_UM_CP.PDF        Inpatient Medications Pharmacist's
+                                  User Manual Change Pages
+  
+ PSJ_5_P181_SUPR_UM_CP.PDF        Inpatient Supervisor's User Manual 
+                                  Change Pages
+  
+ PSJ_5_P181_TM_CP.PDF             Inpatient Medications Technical Manual/
+                                  Security Guide Change Pages
+  
+ Once released, documentation may be retrieved from VISTA Documentation
+ Library (VDL) on the Internet at the following address,
+ http://www.va.gov/vdl
+  
+  
+ Test Sites:
+ ===========
+ BOISE, ID
+ CHARLESTON, SC
+ KANSAS CITY, MO
+ NORTHERN CALIFORNIA HCS, CA
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+  
+  
+ The second line of each of these routines now looks like:
+  ;;5.0; INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 190
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGFILED
+    Before: B24389200   After: B24429385  **20,50,63,119,110,111,112,154,
+                                           184,181**
+Routine Name: PSGO
+    Before: B25169824   After: B25195352  **4,58,110,181**
+Routine Name: PSGOD
+    Before: B19402686   After: B21325344  **67,58,111,133,181**
+Routine Name: PSGOE
+    Before: B25900556   After: B26201410  **22,29,56,72,95,80,133,181**
+Routine Name: PSGOE7
+    Before: B18772802   After: B19204515  **9,26,34,52,55,50,87,111,181**
+Routine Name: PSGOE82
+    Before: B20573084   After: B20946655  **2,35,50,67,58,81,127,168,181**
+Routine Name: PSGOEC
+    Before: B67210353   After: B67778509  **23,58,110,175,201,134,181**
+Routine Name: PSGOECS
+    Before: B48040655   After: B48391335  **23,29,44,58,81,110,134,181**
+Routine Name: PSGOEE
+    Before: B63399742   After: B73215103  **4,7,29,47,64,58,82,91,110,
+                                           111,112,142,179,181**
+Routine Name: PSGOEF
+    Before: B83231206   After: B92772116  **7,30,29,35,39,47,50,56,80,
+                                           116,110,111,133,153,134,222,
+                                           113,181**
+Routine Name: PSGOEF1
+    Before: B29654971   After: B29780196  **2,7,35,39,45,47,50,63,67,58,
+                                           95,110,186,181**
+Routine Name: PSGOER
+    Before: B73856519   After: B79614016  **11,30,29,35,70,58,95,110,111,
+                                           133,141,198,181**
+Routine Name: PSGOER0
+    Before: B21577841   After: B22183476  **11,45,47,50,63,64,70,69,58,
+                                           80,110,127,136,181**
+Routine Name: PSGOERI
+    Before: B16682330   After: B17021979  **17,27,31,88,110,137,181**
+Routine Name: PSGOES
+    Before: B19404808   After: B21797415  **12,22,30,34,50,58,111,181**
+Routine Name: PSGOESF
+    Before: B27646476   After: B31588811  **7,11,29,35,127,133,221,181**
+Routine Name: PSGOU
+    Before: B31137117   After: B31799973  **34,110,181**
+Routine Name: PSGP
+    Before: B11482901   After: B11885377  **10,53,111,181**
+Routine Name: PSGSETU
+    Before: B13119552   After: B13243102  **3,11,26,39,58,115,133,181**
+Routine Name: PSGSICHK
+    Before: B68358169   After: B80627011  **3,9,26,29,44,49,59,110,139,
+                                           146,160,175,201,185,181**
+Routine Name: PSIV
+    Before: B25417268   After: B24224990  **7,16,29,38,53,56,72,58,110,181**
+Routine Name: PSIVACT
+    Before: B16249645   After: B16650605  **15,38,58,110,181**
+Routine Name: PSIVEDRG
+    Before: B44029620   After: B44643985  **21,33,50,65,74,84,128,147,181**
+Routine Name: PSIVEDT
+    Before: B41996183   After: B49813774  **4,110,127,133,134,181**
+Routine Name: PSIVOC
+    Before:       n/a   After: B12227272  **181**
+Routine Name: PSIVOCDS
+    Before:       n/a   After:B112584128  **181**
+Routine Name: PSIVOD
+    Before: B13277996   After: B13557709  **110,127,181**
+Routine Name: PSIVOPT
+    Before: B56600170   After: B57204242  **17,27,58,88,104,110,155,181**
+Routine Name: PSIVOPT1
+    Before: B39564315   After: B44616556  **29,58,101,110,127,181**
+Routine Name: PSIVOPT2
+    Before: B34249546   After: B36149205  **23,29,58,110,127,133,135,157,181**
+Routine Name: PSIVORC1
+    Before: B43227243   After: B45810564  **1,37,69,110,157,134,181**
+Routine Name: PSIVORC2
+    Before: B58079429   After: B56200056  **29,49,50,65,58,85,101,110,
+                                           127,151,181**
+Routine Name: PSIVORE
+    Before: B41910420   After: B42579774  **18,29,50,56,58,81,110,127,
+                                           133,157,203,213,181**
+Routine Name: PSIVORFB
+    Before: B61354894   After: B61355252  **3,18,28,68,58,85,110,111,120,
+                                           134,213,161,181**
+Routine Name: PSIVPRO
+    Before: B34459076   After: B36988166  **38,58,85,110,181**
+Routine Name: PSIVUTL
+    Before: B27771040   After: B28169331  **69,58,81,85,110,133,181**
+Routine Name: PSJAC
+    Before: B14263824   After: B14319225  **8,10,50,127,181**
+Routine Name: PSJADT0
+    Before: B32509433   After: B33159772  **17,111,112,135,181**
+Routine Name: PSJAPIDS
+    Before:       n/a   After: B29473329  **181**
+Routine Name: PSJBLDOC
+    Before:       n/a   After: B34049037  **181**
+Routine Name: PSJCOMR
+    Before: B76543767   After: B75920625  **110,127,136,157,181**
+Routine Name: PSJGMRA
+    Before:       n/a   After: B17486425  **181**
+Routine Name: PSJHL5
+    Before: B31480184   After: B32301721  **1,28,39,40,42,84,85,95,80,
+                                           173,134,181**
+Routine Name: PSJHL6
+    Before: B30866688   After: B31795642  **1,11,27,34,40,42,51,59,88,98,181**
+Routine Name: PSJHLU
+    Before: B34501644   After: B34870321  **1,56,72,102,134,181**
+Routine Name: PSJHVARS
+    Before: B73339517   After: B74499296  **16,22,30,58,181**
+Routine Name: PSJLIACT
+    Before: B40055313   After: B42251773  **15,47,62,58,82,97,80,110,111,
+                                           134,181**
+Routine Name: PSJLIFN
+    Before: B25627091   After: B28386650  **1,29,34,37,42,47,50,56,94,
+                                           80,116,110,181**
+Routine Name: PSJLIFNI
+    Before: B11199375   After: B11257196  **1,29,34,37,50,94,116,110,111,181**
+Routine Name: PSJLIVFD
+    Before: B39296093   After: B39326819  **7,50,63,64,58,81,91,80,116,
+                                           110,111,180,134,181**
+Routine Name: PSJLMHED
+    Before: B27197793   After: B30170338  **4,58,85,110,148,181**
+Routine Name: PSJLMPRI
+    Before: B18941536   After: B19651424  **58,85,118,110,133,154,181**
+Routine Name: PSJLMPRU
+    Before: B13929235   After: B14487092  **16,58,85,110,185,181**
+Routine Name: PSJLMUDE
+    Before: B59012480   After: B62710638  **7,47,50,63,64,58,80,116,110,
+                                           111,164,175,201,181**
+Routine Name: PSJLMUT1
+    Before: B65316144   After: B67028323  **4,27,29,49,58,107,110,146,
+                                           175,201,181**
+Routine Name: PSJMISC
+    Before:       n/a   After: B44078587  **181**
+Routine Name: PSJMISC2
+    Before:       n/a   After: B11318290  **181**
+Routine Name: PSJMON
+    Before:       n/a   After: B33274000  **181**
+Routine Name: PSJO
+    Before: B21417551   After: B23069149  **31,58,110,181**
+Routine Name: PSJO1
+    Before: B30966503   After: B32562541  **3,47,56,58,109,110,127,162,181**
+Routine Name: PSJOC
+    Before:       n/a   After: B19432161  **181**
+Routine Name: PSJOCDC
+    Before:       n/a   After:  B1499223  **181**
+Routine Name: PSJOCDI
+    Before:       n/a   After: B82259996  **181**
+Routine Name: PSJOCDS
+    Before:       n/a   After: B61757941  **181**
+Routine Name: PSJOCDSD
+    Before:       n/a   After: B19852742  **181**
+Routine Name: PSJOCDT
+    Before:       n/a   After: B28304577  **181**
+Routine Name: PSJOCERR
+    Before:       n/a   After:  B3747914  **181**
+Routine Name: PSJOCOR
+    Before:       n/a   After:  B3349794  **181**
+Routine Name: PSJOCVAR
+    Before:       n/a   After: B55813758  **16,22,30,58,181**
+Routine Name: PSJOE
+    Before: B83953005   After: B83867833  **7,26,29,33,42,50,56,72,58,
+                                           85,95,80,110,111,133,140,151,
+                                           149,181**
+Routine Name: PSJOE1
+    Before: B23435460   After: B27457189  **2,7,25,30,47,56,64,179,181**
+Routine Name: PSJP
+    Before: B18154439   After: B20677558  **10,53,60,181**
+Routine Name: PSJRXI
+    Before:  B9572318   After: B11564101  **3,181**
+ 
+Routine list of preceding patches: 60, 98, 113, 137, 147, 148, 149, 155
+                           161, 162, 168, 179, 184, 185, 186, 198, 221
+
+=============================================================================
+User Information:
+Entered By  : FLEGEL,CHRIS M                Date Entered  : JUL 07, 2006
+Completed By: SAVKOVIC,DAVID                Date Completed: APR 15, 2011
+Released By : VECE,VIRGINIA                 Date Released : APR 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

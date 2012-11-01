@@ -1,0 +1,375 @@
+$TXT Created by HEIGES,JOHN at CARVDD.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 01/27/11 at 18:31
+=============================================================================
+Run Date: FEB 22, 2011                     Designation: IB*2*437
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #409                      Status: Released
+                  Compliance Date: MAR 04, 2011
+=============================================================================
+
+Associated patches: (v)IB*2*411    <<= must be installed BEFORE `IB*2*437'
+                    (v)IB*2*434    <<= must be installed BEFORE `IB*2*437'
+
+Subject: 3rd Party Pharmacy Prescription
+
+Category: 
+  - Other
+
+Description:
+============
+
+ 
+     ****    PLEASE NOTE:  the compliance date is March 4, 2011  *** 
+ 
+  This patch aids VHA to be compliant with the current structure for charges 
+  for third party pharmacy prescription claims under federal regulations 38 
+  CFR 17.101 and 38 CFR 17.102.  The software modifications in this patch 
+  will align VHA with industry methods of charging, billing and recovery of 
+  drug costs.  The patch supports the modifications to the federal 
+  regulations which change the methodology for these third party pharmacy 
+  charges to a methodology that allows VHA to charge a rate based on cost of 
+  the drugs. 
+  
+  Federal regulations have been changed to modify the methodology for billing 
+  prescription costs to third party payers for outpatient prescriptions.  
+  Based on federal regulations VHA will bill third party payers for 
+  outpatient prescriptions at VA Prescription Cost and apply an 
+  administration fee for each prescription filled.  Currently, there is a 
+  flat rate of $51.00 per prescription to third party payers for outpatient 
+  prescriptions and no administration fee is applied.
+   
+  The following Rate Types shall be updated to be billed at VA Prescription 
+  Cost plus an Administrative Fee:
+  
+  1.     Reimbursable Insurance
+  2.     No Fault Insurance
+  3.     Tort Feasor
+  4.     Workers Compensation.
+  
+  
+ Documentation and Training:
+ --------------------------- 
+ Sites may retrieve documentation in one of the following ways:
+  
+  1.  The preferred method is to FTP the files from
+      download.vista.med.va.gov, which will transmit the files from the
+      first available FTP server.
+  
+  2.  Sites may also elect to retrieve documentation directly from a
+      specific server as follows:
+  
+      Albany          ftp.fo-albany.med.va.gov
+      Hines           ftp.fo-hines.med.va.gov
+      Salt Lake City  ftp.fo-slc.med.va.gov
+  
+  3.  Documentation can also be retrieved from the VistA Documentation
+      Library (VDL) on the Internet at the following address,
+      http://www.va.gov/vdl.
+  
+  
+ The documentation distribution includes:
+  
+     FILE NAME                             DESCRIPTION
+     ---------------------------------------------------------------------
+    IB_2_P437_RN.DOC              Patch 437 Release Notes
+  
+   
+  
+ ASSOCIATED NSR(s):
+ ==================
+  20080212 FY 2009 3rd Party Pharmacy Prescription Project
+   
+  
+ PARTICIPATING TEST SITES:
+ =========================
+  Louisville
+  Loma Linda
+  Tampa
+  Heartland West
+ 
+  
+ The enhancements made by this patch are summarized below:
+ ---------------------------------------------------------
+   
+ Rate Schedules Updates
+ ----------------------
+ 
+ Definition: DISPENSING FEE. This is a flat amount or a percentage
+ of the drug cost that is paid to the pharmacist for the labor and
+ administrative effort provided.
+ 
+ This project uses the DISPENSING FEE field (# 1.01) in the Rate 
+ Schedules file (#363) to store the administrative fee of $11.40. 
+ 
+ The post-init routine, IB20P437, will inactivate rate schedules that 
+ contain TL Fill charge sets for the rate types Reimbursable Insurance, No 
+ Fault Insurance, Tort Feasor and Workers Compensation with an inactive date 
+ of March 17, 2011.  The routine adds new rate schedules for the rate types 
+ defined above, setting the activation date to March 18, 2011 and adds a 
+ dispense fee of $11.40 and includes the dispense fee in the 
+ adjustment field (#10).  When rate schedules inactivated by this procedure 
+ also contain additional charge sets other than TL Fill then a separate rate 
+ schedule is created with those additional charge sets and the original rate 
+ schedule name, fees and adjustments are maintained with an activation date 
+ of March 18, 2011.
+ 
+ Use of EPHARMACY API (# 4299)
+ --------------------------------
+  Although no change to the parameters for the e-pharmacy API 4299 are
+  being made by this patch, there is an update to the underlying code in
+  order to return VA's cost and the administrative fee for third party
+  prescriptions.  The code is modified to use the charge master to look up
+  the basis for the charge, by effective date, which is either VA Cost +
+  admin Fee or $51 flat rate. Existing parameters in the interface are used
+  to return the correct charge. 
+ 
+ Updates to Manual Billing:
+ --------------------------
+  Updates to the rate schedules described above will result in the VA cost 
+  plus admin fee being included on the bill total, which appears on the 
+  Billing - General Information Screen of the option Enter/Edit Billing 
+  Information [IB EDIT BILLING INFO].  This applies to 3rd party pharmacy 
+  prescription bills with a prescription fill or refill on or after March 18, 
+  2011.
+ 
+ Updates to Reports
+ ------------------
+  The following reports have been updated to correctly use the Charge
+  Master to look up the total charge (cost plus administrative fee) for
+  prescription claims that have a prescription with a fill or refill date
+  on or after March 18, 2011. 
+ 
+      1. Re-Generate Unbilled Amounts Report [IBT RE-GEN UNBILLED REPORT]
+      2. Reasons Not Billable Report [IBJD REASONS NOT BILLABLE]
+ 
+ Annual Updates of the Administrative Fee
+ -----------------------------------------
+  A new procedure is included with this patch that provides a callable entry 
+  point to update rate schedules in subsequent years.  It is intended that 
+  this procedure will be called by a post-install routine of future patches 
+  to update the dispensing fee field (#1.01) for the new administrative fee
+  for third party pharmacy prescriptions.  Below is the specification of the
+  procedure. 
+  
+  
+ COMPONENT: ENT^IB3PSOU (IBRATY,IBDFFDT,IBADFE,IBDISP,IBADJUST)
+ ----------
+ 
+  Procedure updates rate schedules for default rate types or types
+  specified in IBRATY by inactivating currently active rate schedules with
+  date ( IBDFFDT-1 ) that contain either RX Cost or TL Fill charge sets. 
+  Procedure adds new rate schedules for the rate types defined, setting the
+  activation date to IBDFFDT and updating any defined Fees or adjustment. 
+  When rate schedules updated by this procedure also contain additional
+  charge sets other than RX Cost or TL Fill then a separate rate schedule
+  is created with those additional charge sets and the original fees and
+  adjustments are maintained. 
+  
+ Default Rate Types:  REIMBURSABLE INS.
+                      NO FAULT INS.
+                      TORT FEASOR
+                      WORKERS' COMP.
+ 
+ Input parameters:
+ 
+   IBRATY: (optional)    Rate type names separated by ^.  If defined use these 
+                         rate types instead of default types.
+   IBDFFDT: (required)   Effective date in form mm/dd/yyyy for new rate 
+                         schedules.
+   IBADFE:  (optional)    not currently in use.
+   IBDISP:  (required)   Dispense Fee: to contain the new annual administrative
+                         fee for rate schedules.
+   IBADJUST: (optional)  If defined must be MUMPS code to define a unique 
+                         adjustment to the rate schedule.  If not defined 
+                         default is S X = X + $G(ABADFE) + $G(IBDISP).
+ 
+ EXAMPLE CALL:
+ ------------- 
+ For example, if in 2011 CBO intends to establish a new administrative fee, 
+ effective December 01, 2011, at $14.50 and the fee will be applied to the 
+ same rate types as the original patch then all that is required to update 
+ the fee is the following call:
+ 
+      D ENT^IB3PSOU(,"12/01/2011",0,11.40,)
+ 
+ 
+ 
+ 
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ To avoid disruptions, this patch should be installed when users are
+ not on the system and during non-peak hours.  Of particular concern would
+ be the items below.
+  
+    1. Do not install the patch when ECME claims are being generated
+       by the BPS Nightly Background Job option [BPS NIGHTLY
+       BACKGROUND JOB].  Wait for this job to finish or complete the
+       installation before this job starts.
+ 
+    2. Do not install the patch when prescriptions are being
+       transmitted to CMOP.  Wait for the CMOP transmission to finish
+       or complete the installation before the transmission starts.
+       Check with Pharmacy Service or your pharmacy Automated Data
+       Processing Application Coordinator (ADPAC) to find out when
+       CMOP transmissions occur.
+ 
+    3. If installed during the normal workday, it is recommended that the
+       following selection(s) in the OPTION (#19) file, and all of their
+       descendants be disabled to prevent possible conflicts while running
+       the KIDS Install. Other VISTA users will not be affected.
+  
+        Patient Prescription Processing      [PSO LM BACKDOOR ORDERS]
+  
+    4. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+ 
+    5. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.  
+ 
+    6. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter IB*2.0*437)
+   
+         a.  Verify Checksums in Transport Global - This option will
+             allow you to ensure the integrity of the routines that 
+             are in the transport global.
+         b.  Print Transport Global - This option will allow you to
+             view the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option
+             will allow you to view all changes that will be made when
+             this patch is installed.  It compares all components of
+             this patch(routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a
+             backup message of any routines exported with this patch.
+             It will not backup any other changes such as DD's or 
+             templates.
+   
+    7. Use the Install Package(s) option and select the package
+       IB*2.0*437.
+   
+    8. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    9. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//" enter YES only if installing this patch
+       during the normal workday.
+    
+    10. If prompted "Enter options you wish to mark as 'Out of Order':",
+        please enter the following options:
+  
+        Patient Prescription Processing      [PSO LM BACKDOOR ORDERS]
+  
+    11. If prompted "Enter protocols you wish to mark as 'Out of Order':",
+        please press <return>.
+  
+    12. If prompted "Delay Install (Minutes):  (0-60): 0//" please enter
+        an appropriate number of minutes to delay the installation in
+        order to give users enough time to exit the disabled options
+        before the installation starts.
+  
+    13. When prompted "DEVICE: HOME//"  respond with the correct device.
+  
+    14. Optional - Once this patch has been successfully installed you may
+       delete the post-init routine: IB20P437.
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P437
+    Before:       n/a   After:  B1253003  **437**
+ Description of Changes:
+  Patch post install routine, which calls new procedure in IB3PSOU to update
+  rate schedules.
+  
+
+Routine Name: IB3PSOU
+    Before:       n/a   After: B19316373  **437**
+ Description of Changes:
+  This new routine contains a procedure which updates rate schedules for
+  default rate types or types specified in IBRATY by inactivating currently
+  active rate schedules with date (IBDFFDT-1 ) that contain either RX Cost or
+  TL Fill charge sets.  Procedure adds new rate schedules for the rate types
+  defined, setting the activation date to IBDFFDT and updating any defined
+  Fees or adjustment.  When rate schedules updated by this procedure also
+  contain additional charge sets other than RX Cost or TL Fill then a separate
+  rate schedule is created with those additional charge sets and the original
+  fees and adjustments are maintained. It is intended that future updates to 
+  Rate Schedules for prescription fills should use this procedure by calling 
+  it with an effective date and a new fee.  See patch description and routine 
+  for additional documentation.
+  
+
+Routine Name: IBJDB21
+    Before: B54088092   After: B68099575  **123,159,185,399,437**
+ Description of Changes:
+  Update to correct Re-Generate Unbilled Amounts Report [IBT RE-GEN
+  UNBILLED REPORT].  Added code that looks up charge for prescriptions
+  after effective date of 3/18/2011.  Added call to Charge Master to
+  determine billing method in effect for the date of the prescription
+  fill.  If Charge Master says use VA Cost + fee then lookup RX info and
+  call charge master again to get the correct cost + fee, otherwise use
+  the existing lookup for charges. 
+  
+  Note: same logic added to IBTUBO2 in this patch. 
+  
+  
+
+Routine Name: IBNCPDP1
+    Before:B104112032   After:B104141348  **223,276,339,363,383,405,384,
+                                           411,434,437**
+ Description of Changes:
+  Routine updated to use VA Cost + fees for veterans third party
+  electronic Rx claims.  Updated call to $$RT^IBNCPDPU to add a date 
+  parameter (fill/refill) date.  This is needed to determine the correct 
+  rate type.
+  
+  
+
+Routine Name: IBNCPDPU
+    Before: B71731167   After: B73774762  **223,276,347,383,405,384,437**
+ Description of Changes:
+  New optional input parameter added (2nd) IBDT.  This is the service date of
+  the prescription.  Function updated to use service date and call charge
+  master to get the correct cost basis for reimbursable insurance bills.
+  
+
+Routine Name: IBTUBO2
+    Before: B26175280   After: B33667876  **19,31,32,91,123,159,192,155,
+                                           309,347,437**
+ Description of Changes:
+  Update to correct Reasons Not Billable Report [IBJD REASONS NOT
+  BILLABLE].  Added code that looks up charge for prescriptions after
+  effective date of 3/18/2011.  Added call to Charge Master to determine
+  billing method in effect for the date of the prescription fill.  If
+  Charge Master says use VA Cost + fee then lookup RX info and call charge
+  master again to get the correct cost + fee, otherwise use the existing
+  lookup for charges. 
+  
+  Note: same logic added to IBJDB21 in this patch. 
+  
+  
+
+ 
+Routine list of preceding patches: 399, 434
+
+=============================================================================
+User Information:
+Entered By  : TSAI,PEI                      Date Entered  : JUN 14, 2010
+Completed By: HEIGES,JOHN                   Date Completed: FEB 17, 2011
+Released By : GROOMS,CARMEN L               Date Released : FEB 22, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

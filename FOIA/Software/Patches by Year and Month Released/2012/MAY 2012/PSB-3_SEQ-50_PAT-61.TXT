@@ -1,0 +1,210 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 06/06/11 at 10:59
+=============================================================================
+Run Date: MAY 14, 2012                     Designation: PSB*3*61
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #50                      Status: Released
+                  Compliance Date: JUN 14, 2012
+=============================================================================
+
+Associated patches: (v)PSB*3*13    <<= must be installed BEFORE `PSB*3*61'
+                    (v)PSB*3*25    <<= must be installed BEFORE `PSB*3*61'
+                    (v)PSB*3*32    <<= must be installed BEFORE `PSB*3*61'
+
+Subject: IV BAG DETAIL, NO LEADING 0 IN PRN EFFECTIVENESS, SPACEBAR-ENTER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 4 issues:
+  
+ 1. The PSB BAG DETAIL RPC is returning duplicate entries for
+    a single action, causing the action to be displayed twice in
+    the "IV Bag Detail" section of the BCMA IV Tab.
+  
+ 2. The message "Error @ -100" is seen in the "IV Bag Detail"
+    section  on the BCMA IV Tab if a site has the optional AU05 
+    cross reference turned on.
+  
+ 3. The Units Given fields on the PRN Effectiveness Log and the
+    BCMA Medication Log forms omit the leading zero if the 
+    Units Given field value is a decimal less than one.
+  
+ 4. BCMA is accepting "Spacebar/Enter" as valid input for scanning a 
+    Drug IEN and returning the last medication the user scanned.
+  
+  
+ Associated NSR(s):
+ ------------------
+  N/A
+  
+   
+ Associated Remedy ticket(s):
+ ----------------------------
+ 1.  HD0000000423740 - PSB BAG DETAIL RPC returning 
+                       multiple entries
+  
+ 2   HD0000000353544 - Error @ -100 seen in details section
+                       for IVs.        
+     Duplicate: 
+     HD0000000388159
+  
+ 3.  HD0000000422594 - PRN Order Issue
+  
+ 4.  HD0000000478858 - BCMA is accepting a "spacebar/enter"
+                       while scanning a drug
+   
+  
+ PARTICIPATING TEST SITES:
+ -------------------------
+ Minneapolis VAMC
+ Indianapolis VAMC
+ St. Cloud VAMC
+ Syracuse VAMC
+  
+ REMEDY OVERVIEW
+ ---------------
+  
+ 1. HD00000000423740 - PSB BAG DETAIL RPC returning
+                        multiple entries
+  
+    Problem:
+    --------
+    The PSB BAG DETAIL RPC is returning duplicate entries for a 
+    single action, causing the action to be displayed twice in the
+    "IV Bag Detail" section of the BCMA IV Tab.
+  
+    Resolution:
+    -----------
+    Routine PSBRPC2 was modified to only order through the
+    AUDIT LOG (#.9) sub-file of the BCMA MED LOG (#53.79) 
+    file once, thus eliminating the possibility of duplicate entries.
+  
+ 2. HD0000000353544 - Error @ -100 seen in details 
+                      section for IVs.
+  
+    Problem:
+    --------
+    The message "Error @ -100" is seen in the "IV Bag Detail"
+    section on the BCMA IV Tab if a site has the optional AU05 cross 
+    reference turned on. This cross reference creates an additional 
+    entry in the AUDIT LOG (#.9) subfile of the BCMA MED LOG 
+    (#53.79) file.  The code is expecting an "Action Status" entry,
+    but finding an "Entered By" entry.
+  
+    Resolution:
+    -----------
+    Routine PSBRPC2 was modified to verify the first entry 
+    in the Audit Log is for an "Action Status". Otherwise,
+    the routine will continue ordering through the log until it 
+    finds the first 'Action Status" entry, thus accounting 
+    for any additional entries that are created by optional cross
+    references.
+  
+ 3. HD0000000422594 - PRN Order Issue
+  
+    Problem:
+    --------
+    The Units Given field on the PRN Effectiveness Log and BCMA
+    Medication Log omits the leading zero if the value of Units 
+    Given field is a decimal less than one.
+  
+    Resolution:
+    -----------
+    Routines PSBPRN and PSBVDLVL were modified to add a leading 
+    zero to the Units Given field if the value is a decimal less
+    than 1.
+  
+ 4. HD0000000478858 - BCMA is accepting a "spacebar/enter"
+                      while scanning a drug
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #2015
+  
+    Problem:
+    --------
+    When manually scanning a medication in the BCMA GUI, a value
+    of spacebar/enter is permitted and will return the last medication
+    the user scanned from the DRUG (#50) file.
+  
+    Resolution:
+    -----------
+    Routine PSBRPC2 was modified to return the error message
+    "Invalid Medication Lookup.  DO NOT GIVE!! " if an empty
+    string is passed into VistA from the BCMA GUI.                    
+  
+  
+ Installation Instructions:
+ ==========================
+   
+    *************************** NOTE ***********************
+    *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS *
+    *  AN EDITED ERROR WILL OCCUR.                         *                  
+    *  The patch should be installed when NO BCMA Client   * 
+    *  users are on the system.                            *                  
+    * ******************************************************
+   
+    Installation will take less than 1 minute.
+   
+    Suggested time to install: Non-peak requirement hours.
+   
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSB*3*61):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package PSB*3*61.
+   
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBPRN
+    Before: B23314092   After: B24812606  **5,3,13,61**
+Routine Name: PSBRPC2
+    Before: B45066949   After: B48539831  **6,3,16,32,61**
+Routine Name: PSBVDLVL
+    Before: B63495779   After: B65042783  **6,3,12,11,13,32,25,61**
+ 
+Routine list of preceding patches: 25
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : FEB 02, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: APR 26, 2012
+Released By : LYTTLE,KIM M                  Date Released : MAY 14, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

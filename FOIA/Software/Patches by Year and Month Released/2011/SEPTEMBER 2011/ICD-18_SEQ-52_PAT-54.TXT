@@ -1,0 +1,238 @@
+$TXT Created by BOWEN,MARY JANE at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 06/03/11 at 11:17
+=============================================================================
+Run Date: AUG 30, 2011                     Designation: ICD*18*54
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #52                     Status: Released
+                  Compliance Date: SEP 30, 2011
+=============================================================================
+
+Associated patches: (v)ICD*18*36   <<= must be installed BEFORE `ICD*18*54'
+                    (v)ICD*18*48   <<= must be installed BEFORE `ICD*18*54'
+                    (v)ICD*18*49   <<= must be installed BEFORE `ICD*18*54'
+
+Subject: DRG GROUPER FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+   The DRG (Diagnostic Related Group) Grouper is used to compute
+   and display the DRG for a patient based on that patient's diagnoses
+   and any operations/procedures performed.  It uses a mixture of 
+   formulas, Diagnosis and Operation identifiers, and tables that rely 
+   on data added to the DRG file (#80.2), the ICD DIAGNOSIS file (#80) 
+   and the ICD OPERATION/PROCEDURE file (#80.1).  
+   These files, the date and the age of the patient determine the codes 
+   and other information needed to pass into the formulas and the tables 
+   used in those formulas to calculate the DRG.  These codes and the DRG 
+   codes come from the Federal Register for Center for Medicare and 
+   Medicaid Services (CMS) and are updated and added to yearly effective
+   October 1 of the year.
+   This patch corrects various DRG calculations.
+    
+   ASSOCIATED REMEDY TICKETS:
+   ========================== 
+   1)HD0000000408859 - DRG 003/004 and 283/284 discrepancies
+   2)HD0000000423420 - INCORRECT DRG 253 (VISTA 292)
+   3)HD0000000447283 - 5 groups of codes are not coming up with correct DRG
+   4)HD0000000454115 - DRG configured in Quantim-983. Incorrect DRG crossed 
+                       into VIP workplace as 982. Incorrect DRG in VistA 982 
+                       discrepancies on a PTF
+   5)HD0000000445923 - DRG config.discrepancies on a PTF - 308 crossed over 
+                       as 310
+     DUPLICATES:
+     HD0000000454153 - DRG config.discrepancies on a PTF - 309 crossed over 
+                       as 310 
+     HD0000000462017 - Codes calculating wrong in Vista---vista 310, quantim 
+                       308
+     HD0000000476774 - Issue with DRG grouping
+     HD0000000476842 - 205.10 and 584.9 should be CC and they are showing as
+                       non CC in VistA.
+     HD0000000489708 - ICD 428.0 is showing as CC and should not be.
+  
+   ASSOCIATED NSR's:
+   =================
+   N/A
+     
+   PARTICIPATING TEST SITES:
+   =========================
+   Cheyenne, WY
+   Tampa, FL
+   Upstate New York HCS
+     
+   REMEDY OVERVIEW:
+   ================
+   1)HD0000000408859- DRG 003/004 and 283/284 discrepancies
+    
+   Problem:
+   ========
+   DRG 004 was incorrectly calculating to DRG 003 in VistA but was corrected
+   in a previous patch.
+ 
+   DRG 284 is incorrectly calculating to DRG 283 in VistA. The diagnosis codes
+   are not accounting for an "expired" patient. 
+     
+   Solution:
+   =========
+   Routines ICDTBL2B and ICDTBL2C were modified to account for an "expired"
+   patient when using diagnosis codes 427.41 and 427.5. 
+   
+   2) HD0000000423420- INCORRECT DRG 253 (VISTA 292)
+   
+   Problem:
+   ========
+   DRG 253 is incorrectly calculating to DRG 292 in VistA.
+     
+   Solution:
+   =========
+   Routines ICDTBL2B and ICDTBL2C were modified to look for identifier K.
+   
+   3) HD0000000447283- 5 groups of codes are not coming up with correct DRG
+    
+   Problem:
+   ========
+   Five different groups of codes are calculating to incorrect DRGs; however,
+   two group of codes were corrected in a previous patch.
+ 
+   The following are being corrected by this patch:
+    a. DRG 867 is incorrectly calculating to DRG 862 in VistA.
+    b. DRG 456 is incorrectly calculating to DRG 490 in VistA.
+    c. DRG 261 is incorrectly calculating to DRG 310 in VistA.
+     
+   Solution:
+   =========
+    a. Routines ICDTBL8B and ICDTBL8C were modified to group codes to the
+       correct DRG. 
+    b. Routine ICDTBL4 was modified to check for correct identifiers.
+    c. Identifier 7 was added to procedure code 37.76.
+   
+   4) HD0000000454115- DRG configured in Quantim-983. Incorrect DRG crossed 
+                       into VIP workplace as 982. Incorrect DRG in VistA 982
+                       discrepancies on a PTF
+   Problem:
+   ========
+   DRG 983 is incorrectly calculating to DRG 982 in VistA. 
+      
+   Solution:
+   =========
+   Routines ICDTBL9B and ICDTBL9C were modified to verify that diagnosis code 
+   278.01 and secondary diagnosis code v85.43 group to DRG 983. 
+  
+   5)HD0000000445923- DRG config.discrepancies on a PTF - 308 crossed 
+                      over as 310
+  
+   Problem:
+   ========
+   DRG 308 and DRG 309 are incorrectly calculating to DRG 310 in VistA. 
+  
+   Solution:
+   =========
+   Routines ICDTBL3B and ICDTBL3C were modified to check for a patient that
+   hasn't been "expired".
+  
+  
+   INSTALLATION INSTRUCTIONS:
+   ===========================
+   This patch may be run with users on the system.  However, it would
+   be preferable if Medical Records coders were off the system.
+   Installation will take less than 5 minutes.
+    
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+       NOTE:  If the required patches are not installed, the transport 
+       global will be removed.  If the transport global is removed you will
+       need to repeat this step.
+    
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+    
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter ICD*18.0*54):
+       a.  Compare Transport Global to Current System  - this option will
+           allow you to view all changes that will be made when the patch
+           is installed.  It compares all components of the patch 
+           (routines, DDs, templates, etc.).
+       b.  Verify Checksums in Transport Global - this option will
+           allow you to ensure the integrity of the routines that are in
+           the transport global.
+       c.  Print Transport Global - this option will allow you to view the
+           components of the KIDS build.
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+    
+   4.  Use the Install Package(s) option and select the package 
+       ICD*18.0*54.
+    
+   5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       YES//', respond NO.
+    
+   6.  When prompted, 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? YES//', respond Yes.
+    
+       When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+       enter:
+               PTF Menu  [DG PTF MENU] 
+       When prompted, 'Enter protocols you wish to mark as 'Out Of 
+       Order':', press enter.
+    
+   7.  Routine(s) ICD1854* can be deleted after the patch has been
+       successfully installed.
+    
+   8.  Following installation of this patch, it is necessary to run the
+       [DG PTF UPDATE TRANSFER DRGs] option in order to make the transfer
+       DRGs correspond to the appropriate grouper.  This option 
+       updates/recalculates the transfer DRGs for PTF records opened during
+       the current fiscal year.
+       The option is locked with the DG PTFSUP security key.  The Menu path
+       is PTF Menu/Update DRG Information Menu/Update Transfer DRGs for
+       current FY.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD1854P
+    Before:       n/a   After:   B200955  **54**
+Routine Name: ICDTBL2B
+    Before: B49591762   After: B50565361  **45,46,49,54**
+Routine Name: ICDTBL2C
+    Before: B49522128   After: B50565634  **50,49,54**
+Routine Name: ICDTBL3B
+    Before:  B7615490   After:  B7781787  **45,48,54**
+Routine Name: ICDTBL3C
+    Before:  B7615499   After:  B7781796  **50,54**
+Routine Name: ICDTBL4
+    Before: B22171596   After: B22694739  **31,36,54**
+Routine Name: ICDTBL4C
+    Before: B24629654   After: B24629757  **50,54**
+Routine Name: ICDTBL8B
+    Before: B24430650   After: B25187689  **45,46,49,54**
+Routine Name: ICDTBL8C
+    Before: B24430659   After: B25187698  **50,49,54**
+Routine Name: ICDTBL9B
+    Before:  B4358416   After:  B4777979  **45,54**
+Routine Name: ICDTBL9C
+    Before:  B4358425   After:  B4782468  **50,54**
+ 
+Routine list of preceding patches: 36, 48, 49
+
+=============================================================================
+User Information:
+Entered By  : BOWEN,MARY JANE               Date Entered  : JAN 31, 2011
+Completed By: LEANORD,TATIANA               Date Completed: AUG 29, 2011
+Released By : DANE,SIDNEY                   Date Released : AUG 30, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

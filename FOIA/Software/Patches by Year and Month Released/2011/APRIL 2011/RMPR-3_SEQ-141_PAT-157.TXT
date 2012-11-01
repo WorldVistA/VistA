@@ -1,0 +1,171 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 03/25/11 at 11:22
+=============================================================================
+Run Date: APR 22, 2011                     Designation: RMPR*3*157
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #141                      Status: Released
+                  Compliance Date: MAY 23, 2011
+=============================================================================
+
+Associated patches: (v)RMPR*3*90   <<= must be installed BEFORE `RMPR*3*157'
+
+Subject: PROSTHETICS GUI REQUIRED BY DATE FIELD DOES NOT TRANSFER TO PURCHASE CARD ORDER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Prosthetics GUI Required By date field does not transfer to Purchase Card
+ order.
+  
+ ***This is a combined patch with patch PRC*5.1*141.  Both patches will be 
+ loaded into your system when the combined host file RMPR_3_P157.KID
+ is loaded. The patches are combined due to the fact that the PRC 
+ application retrieves data from the RMPR application. The change that is 
+ being made in the RMPR patch will affect the PRC application.  It is 
+ imperative that both patches are installed at the same time to prevent 
+ an error. Combining these patches will ensure both patches are installed 
+ together.***
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) HD0000000369460 Prosthetics GUI Required date field does not transfer 
+                    to Purchase Card Program
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Gulf Coast Veterans Health Care System - Biloxi
+ VA Western NY HCS
+ Durham VA Medical Center 
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1) HD0000000369460 Prosthetics GUI Required date field does not transfer 
+                    to Purchase Card Program
+  
+ Problem:
+ --------
+ Users have noticed that when creating an order via the Prosthetics GUI 
+ suite, the order created in IFCAP (PROCUREMENT & ACCOUNTING TRANSACTIONS 
+ file #442) does not contain the Required By date. When viewing either
+ Display Purchase Card or reprinting Purchase Card order the date does not 
+ appear on print outs.  However, the date DOES appear when reprinting the
+ Prosthetics purchase order.
+  
+  
+ Resolution:
+ -----------
+ Modify routine RMPR121A in Prosthetics to send the Used By date (entered
+ during GUI suite order creation) to IFCAP routine PRCH7PUC to set the
+ date in the Delivery Date field (#7) in the PROCUREMENT & ACCOUNTING
+ TRANSACTIONS file (#442). 
+  
+ Routines:  RMPR121A
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+        **********************************************************
+        * Patch PRC*5.1*141 is installed in addition to this     * 
+        * patch in order for date processing logic to function   *  
+        **********************************************************       
+  
+ This patch may be installed during normal working hours with all users on
+ the system.  It should take approximately 15 minutes to install this 
+ patch.
+  
+  
+ 1.  Retrieve the KIDS distribution host file. This patch will be
+     distributed in a host file due to the link between this patch and
+     associated patch PRC*5.1*141. The name of the host file is:
+  
+           RMPR_3_P157.KID;1
+  
+     The software for this patch is being distributed in a host file.
+     The host file will contain two KIDS files.
+   
+           Host File Name:  RMPR_3_P157.KID;1
+                   Builds:  RMPR*3.0*157
+                            PRC*5.1*141
+  
+  
+     Sites can retrieve VistA software from the following FTP addresses.
+     The preferred method is to FTP the files from:
+  
+           download.vista.med.va.gov
+  
+     This will transmit the files from the first available FTP server.
+     Sites may also elect to retrieve software directly from a specific
+     server as follows:
+  
+           Albany                  ftp.fo-albany.med.va.gov
+           Hines                   ftp.fo-hines.med.va.gov
+           Salt Lake City          ftp.fo-slc.med.va.gov
+  
+     The RMPR_3_P157.KID;1 host file is located in the anonymous.software
+     directory.  Use ASCII Mode when downloading the file.
+  
+ 2.  Load the KIDS distribution contained in file RMPR_3_P157.KID;1
+     using the Load a Distribution option on the Installation menu.
+  
+ 3.  From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+  
+ 4.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter RMPR*3.0*157)
+  
+     a. Backup a Transport Global - this option will create a backup
+        message of any routines exported with the patch. It will NOT
+        backup any other changes such as DDs or templates.
+  
+     b. Compare Transport Global to Current System - this option will
+        allow you to view all changes that will be made when the patch
+        is installed. It compares all components of the patch (routines,
+        DDs, templates, etc.).
+  
+     c. Verify Checksums in Transport Global - this option will ensure
+        the integrity of the routines that are in the transport global.
+  
+ 5. Use the Install Package(s) option and select the package 
+    RMPR*3.0*157
+  
+ 6. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+    NO//" respond NO.
+  
+ 7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPR121A
+    Before:  B1667724   After:  B1782600  **90,157**
+ 
+Routine list of preceding patches: 90
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : DEC 18, 2009
+Completed By: HEFFERNAN,COREY               Date Completed: MAR 29, 2011
+Released By : LAMBERT,WENDEL R              Date Released : APR 22, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

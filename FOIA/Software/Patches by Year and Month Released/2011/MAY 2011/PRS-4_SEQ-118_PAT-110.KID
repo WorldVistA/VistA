@@ -1,0 +1,1402 @@
+Released PRS*4*110 SEQ #118
+Extracted from mail message
+**KIDS**:PRS*4.0*110^
+
+**INSTALL NAME**
+PRS*4.0*110
+"BLD",8238,0)
+PRS*4.0*110^PAID^0^3100303^y
+"BLD",8238,1,0)
+^^5^5^3100302^^^
+"BLD",8238,1,1,0)
+This patch addresses 3 issues:
+"BLD",8238,1,2,0)
+1. Undefined error in option 'Display Employee Tour Hours'
+"BLD",8238,1,3,0)
+2. Undefined error in option 'Find Mismatched Normal and Tour Hours'
+"BLD",8238,1,4,0)
+3. Overtime/Compensatory (OT/CT) requests are erroneously approved when
+"BLD",8238,1,5,0)
+   user enters '^' at selective disapproval.
+"BLD",8238,4,0)
+^9.64PA^^
+"BLD",8238,6.3)
+7
+"BLD",8238,"ABPKG")
+n
+"BLD",8238,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8238,"KRN",.4,0)
+.4
+"BLD",8238,"KRN",.401,0)
+.401
+"BLD",8238,"KRN",.402,0)
+.402
+"BLD",8238,"KRN",.403,0)
+.403
+"BLD",8238,"KRN",.5,0)
+.5
+"BLD",8238,"KRN",.84,0)
+.84
+"BLD",8238,"KRN",3.6,0)
+3.6
+"BLD",8238,"KRN",3.8,0)
+3.8
+"BLD",8238,"KRN",9.2,0)
+9.2
+"BLD",8238,"KRN",9.8,0)
+9.8
+"BLD",8238,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",8238,"KRN",9.8,"NM",1,0)
+PRSA8BNH^^0^B59447531
+"BLD",8238,"KRN",9.8,"NM",2,0)
+PRSA8BTH^^0^B20151016
+"BLD",8238,"KRN",9.8,"NM",3,0)
+PRSAOTX^^0^B12918230
+"BLD",8238,"KRN",9.8,"NM",4,0)
+PRSALDA^^0^B26300239
+"BLD",8238,"KRN",9.8,"NM","B","PRSA8BNH",1)
+
+"BLD",8238,"KRN",9.8,"NM","B","PRSA8BTH",2)
+
+"BLD",8238,"KRN",9.8,"NM","B","PRSALDA",4)
+
+"BLD",8238,"KRN",9.8,"NM","B","PRSAOTX",3)
+
+"BLD",8238,"KRN",19,0)
+19
+"BLD",8238,"KRN",19.1,0)
+19.1
+"BLD",8238,"KRN",101,0)
+101
+"BLD",8238,"KRN",409.61,0)
+409.61
+"BLD",8238,"KRN",771,0)
+771
+"BLD",8238,"KRN",779.2,0)
+779.2
+"BLD",8238,"KRN",870,0)
+870
+"BLD",8238,"KRN",8989.51,0)
+8989.51
+"BLD",8238,"KRN",8989.52,0)
+8989.52
+"BLD",8238,"KRN",8994,0)
+8994
+"BLD",8238,"KRN","B",.4,.4)
+
+"BLD",8238,"KRN","B",.401,.401)
+
+"BLD",8238,"KRN","B",.402,.402)
+
+"BLD",8238,"KRN","B",.403,.403)
+
+"BLD",8238,"KRN","B",.5,.5)
+
+"BLD",8238,"KRN","B",.84,.84)
+
+"BLD",8238,"KRN","B",3.6,3.6)
+
+"BLD",8238,"KRN","B",3.8,3.8)
+
+"BLD",8238,"KRN","B",9.2,9.2)
+
+"BLD",8238,"KRN","B",9.8,9.8)
+
+"BLD",8238,"KRN","B",19,19)
+
+"BLD",8238,"KRN","B",19.1,19.1)
+
+"BLD",8238,"KRN","B",101,101)
+
+"BLD",8238,"KRN","B",409.61,409.61)
+
+"BLD",8238,"KRN","B",771,771)
+
+"BLD",8238,"KRN","B",779.2,779.2)
+
+"BLD",8238,"KRN","B",870,870)
+
+"BLD",8238,"KRN","B",8989.51,8989.51)
+
+"BLD",8238,"KRN","B",8989.52,8989.52)
+
+"BLD",8238,"KRN","B",8994,8994)
+
+"BLD",8238,"QDEF")
+^^^^^^^^^^YES
+"BLD",8238,"QUES",0)
+^9.62^^
+"BLD",8238,"REQB",0)
+^9.611^6^4
+"BLD",8238,"REQB",3,0)
+PRS*4.0*117^1
+"BLD",8238,"REQB",4,0)
+PRS*4.0*114^1
+"BLD",8238,"REQB",5,0)
+PRS*4.0*116^1
+"BLD",8238,"REQB",6,0)
+PRS*4.0*109^1
+"BLD",8238,"REQB","B","PRS*4.0*109",6)
+
+"BLD",8238,"REQB","B","PRS*4.0*114",4)
+
+"BLD",8238,"REQB","B","PRS*4.0*116",5)
+
+"BLD",8238,"REQB","B","PRS*4.0*117",3)
+
+"MBREQ")
+0
+"PKG",408,-1)
+1^1
+"PKG",408,0)
+PAID^PRS^PAID
+"PKG",408,20,0)
+^9.402P^^
+"PKG",408,22,0)
+^9.49I^1^1
+"PKG",408,22,1,0)
+4.0^2950912^2960130
+"PKG",408,22,1,"PAH",1,0)
+110^3100303
+"PKG",408,22,1,"PAH",1,1,0)
+^^5^5^3100303
+"PKG",408,22,1,"PAH",1,1,1,0)
+This patch addresses 3 issues:
+"PKG",408,22,1,"PAH",1,1,2,0)
+1. Undefined error in option 'Display Employee Tour Hours'
+"PKG",408,22,1,"PAH",1,1,3,0)
+2. Undefined error in option 'Find Mismatched Normal and Tour Hours'
+"PKG",408,22,1,"PAH",1,1,4,0)
+3. Overtime/Compensatory (OT/CT) requests are erroneously approved when
+"PKG",408,22,1,"PAH",1,1,5,0)
+   user enters '^' at selective disapproval.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","PRSA8BNH")
+0^1^B59447531^B56986678
+"RTN","PRSA8BNH",1,0)
+PRSA8BNH ;WOIFO/JAH - Tour Hours vs 8B Norm Hrs Report ;12/28/07
+"RTN","PRSA8BNH",2,0)
+ ;;4.0;PAID;**116,110**;Sep 21, 1995;Build 7
+"RTN","PRSA8BNH",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PRSA8BNH",4,0)
+ Q
+"RTN","PRSA8BNH",5,0)
+ ; Search for 8b normal hours that don't match tours
+"RTN","PRSA8BNH",6,0)
+ ; look in timecard 8B node for normal hours otherwise use 450
+"RTN","PRSA8BNH",7,0)
+ ;
+"RTN","PRSA8BNH",8,0)
+PAYROLL ;prompt for T&L's--set's up payroll all T&L's
+"RTN","PRSA8BNH",9,0)
+ N PRSTLV,FORWHO
+"RTN","PRSA8BNH",10,0)
+ S PRSTLV=7
+"RTN","PRSA8BNH",11,0)
+ S FORWHO="for Payroll"
+"RTN","PRSA8BNH",12,0)
+ D MAIN
+"RTN","PRSA8BNH",13,0)
+ Q
+"RTN","PRSA8BNH",14,0)
+ ;
+"RTN","PRSA8BNH",15,0)
+TIMEKEEP ; entry point sets up timekeeper T&L variable for PRSAUTL call
+"RTN","PRSA8BNH",16,0)
+ N PRSTLV,FORWHO S PRSTLV=2,FORWHO="for Timekeeper"
+"RTN","PRSA8BNH",17,0)
+ D MAIN
+"RTN","PRSA8BNH",18,0)
+ Q
+"RTN","PRSA8BNH",19,0)
+ ;
+"RTN","PRSA8BNH",20,0)
+SUPERV ; sets up supervisor for T&L lookup
+"RTN","PRSA8BNH",21,0)
+ N PRSTLV,FORWHO S PRSTLV=3,FORWHO="for T&A Supervisor"
+"RTN","PRSA8BNH",22,0)
+ D MAIN
+"RTN","PRSA8BNH",23,0)
+ Q
+"RTN","PRSA8BNH",24,0)
+ ;
+"RTN","PRSA8BNH",25,0)
+MAIN ;
+"RTN","PRSA8BNH",26,0)
+ N DIR,DIRUT,TLS,Y,PPI,PPE,NOTOUR,NOTCARD,PPRANGE,DAILYHRS,EP,SP,SDT,EDT
+"RTN","PRSA8BNH",27,0)
+ S TLS=1
+"RTN","PRSA8BNH",28,0)
+ S DIR(0)="Y"
+"RTN","PRSA8BNH",29,0)
+ S DIR("B")="Y"
+"RTN","PRSA8BNH",30,0)
+ S DIR("A")="All T&L's"
+"RTN","PRSA8BNH",31,0)
+ D ^DIR
+"RTN","PRSA8BNH",32,0)
+ Q:$D(DIRUT)
+"RTN","PRSA8BNH",33,0)
+ I +Y=1 S TLS="ALL"
+"RTN","PRSA8BNH",34,0)
+ I TLS=1 D
+"RTN","PRSA8BNH",35,0)
+ .  D ^PRSAUTL
+"RTN","PRSA8BNH",36,0)
+ Q:TLS=1&($G(TLI)="")
+"RTN","PRSA8BNH",37,0)
+ ;
+"RTN","PRSA8BNH",38,0)
+ S PPI=$$GETPP^PRSA8BNI()
+"RTN","PRSA8BNH",39,0)
+ Q:PPI'>0
+"RTN","PRSA8BNH",40,0)
+ S PPE=$P($G(^PRST(458,PPI,0)),U)
+"RTN","PRSA8BNH",41,0)
+ S SDT=$P($G(^PRST(458,PPI,2)),U)
+"RTN","PRSA8BNH",42,0)
+ S EDT=$P($G(^PRST(458,PPI,2)),U,14)
+"RTN","PRSA8BNH",43,0)
+ S SP=$L(SDT," ")
+"RTN","PRSA8BNH",44,0)
+ S EP=$L(EDT," ")
+"RTN","PRSA8BNH",45,0)
+ S PPRANGE=$P(SDT," ",SP)_" thru "_$P(EDT," ",EP)
+"RTN","PRSA8BNH",46,0)
+ ;
+"RTN","PRSA8BNH",47,0)
+ ; ask user to include employees with no timecard at all.
+"RTN","PRSA8BNH",48,0)
+ S NOTCARD=$$NOTCARD^PRSA8BNI()
+"RTN","PRSA8BNH",49,0)
+ Q:NOTCARD<0
+"RTN","PRSA8BNH",50,0)
+ ;
+"RTN","PRSA8BNH",51,0)
+ ; ask user to include employees with no tour of duty entered
+"RTN","PRSA8BNH",52,0)
+ S NOTOUR=$$NOTOURS^PRSA8BNI()
+"RTN","PRSA8BNH",53,0)
+ Q:NOTOUR<0
+"RTN","PRSA8BNH",54,0)
+ ;
+"RTN","PRSA8BNH",55,0)
+ ; ask user to include employees daily tour hours
+"RTN","PRSA8BNH",56,0)
+ S DAILYHRS=$$DAILYHRS^PRSA8BNI()
+"RTN","PRSA8BNH",57,0)
+ Q:DAILYHRS<0
+"RTN","PRSA8BNH",58,0)
+ ;
+"RTN","PRSA8BNH",59,0)
+ ;
+"RTN","PRSA8BNH",60,0)
+ N %ZIS,POP,IOP
+"RTN","PRSA8BNH",61,0)
+ S %ZIS="MQ"
+"RTN","PRSA8BNH",62,0)
+ D ^%ZIS
+"RTN","PRSA8BNH",63,0)
+ Q:POP
+"RTN","PRSA8BNH",64,0)
+ I $D(IO("Q")) D
+"RTN","PRSA8BNH",65,0)
+ .  K IO("Q")
+"RTN","PRSA8BNH",66,0)
+ .  N ZTDESC,ZTRTN,ZTSAVE
+"RTN","PRSA8BNH",67,0)
+ .  S ZTDESC="PAID REPORT: TOUR HOURS DON'T MATCH 8B NORMAL"
+"RTN","PRSA8BNH",68,0)
+ .  S ZTRTN="TOUR8B^PRSA8BNH"
+"RTN","PRSA8BNH",69,0)
+ .  S ZTSAVE("PRSTLV")=""
+"RTN","PRSA8BNH",70,0)
+ .  S ZTSAVE("TLE")=""
+"RTN","PRSA8BNH",71,0)
+ .  S ZTSAVE("PPI")=""
+"RTN","PRSA8BNH",72,0)
+ .  S ZTSAVE("PPE")=""
+"RTN","PRSA8BNH",73,0)
+ .  S ZTSAVE("TLS")=""
+"RTN","PRSA8BNH",74,0)
+ .  S ZTSAVE("NOTOUR")=""
+"RTN","PRSA8BNH",75,0)
+ .  S ZTSAVE("NOTCARD")=""
+"RTN","PRSA8BNH",76,0)
+ .  S ZTSAVE("DAILYHRS")=""
+"RTN","PRSA8BNH",77,0)
+ .  S ZTSAVE("PPRANGE")=""
+"RTN","PRSA8BNH",78,0)
+ .  S ZTSAVE("FORWHO")=""
+"RTN","PRSA8BNH",79,0)
+ .  D ^%ZTLOAD
+"RTN","PRSA8BNH",80,0)
+ .  I $D(ZTSK) S ZTREQ="@"
+"RTN","PRSA8BNH",81,0)
+ E  D
+"RTN","PRSA8BNH",82,0)
+ .  D TOUR8B
+"RTN","PRSA8BNH",83,0)
+ K PRSTLV
+"RTN","PRSA8BNH",84,0)
+ D ^%ZISC K %ZIS,IOP
+"RTN","PRSA8BNH",85,0)
+ Q
+"RTN","PRSA8BNH",86,0)
+ ;
+"RTN","PRSA8BNH",87,0)
+TOUR8B ;
+"RTN","PRSA8BNH",88,0)
+ U IO
+"RTN","PRSA8BNH",89,0)
+ N OUT,TLECNT,TSTAMP,Y,%,%I,GRANDTOT,PG,ATL
+"RTN","PRSA8BNH",90,0)
+ D NOW^%DTC S Y=% D DD^%DT S TSTAMP=$P(Y,":",1,2)
+"RTN","PRSA8BNH",91,0)
+ S (TLECNT,OUT,GRANDTOT,PG)=0
+"RTN","PRSA8BNH",92,0)
+ I TLS="ALL" D
+"RTN","PRSA8BNH",93,0)
+ .  N TLI,TLE
+"RTN","PRSA8BNH",94,0)
+ .  S ATL="ATL"
+"RTN","PRSA8BNH",95,0)
+ .  F  S ATL=$O(^PRSPC(ATL)) Q:ATL>"ATLVCS"!OUT  D
+"RTN","PRSA8BNH",96,0)
+ ..    S TLE=$E(ATL,4,6)
+"RTN","PRSA8BNH",97,0)
+ ..    Q:TLE=""
+"RTN","PRSA8BNH",98,0)
+ ..    S TLI=$O(^PRST(455.5,"B",TLE,0))
+"RTN","PRSA8BNH",99,0)
+ ..    Q:TLI'>0
+"RTN","PRSA8BNH",100,0)
+ ..; skip T&L's supervisors and timekeepers don't have access too
+"RTN","PRSA8BNH",101,0)
+ ..    Q:(PRSTLV=2)&('$D(^PRST(455.5,"AT",DUZ,TLI)))
+"RTN","PRSA8BNH",102,0)
+ ..    Q:(PRSTLV=3)&('$D(^PRST(455.5,"AS",DUZ,TLI)))
+"RTN","PRSA8BNH",103,0)
+ ..     I TLECNT=0 D HDR^PRSA8BNI(.PG,TSTAMP,0,FORWHO,PPE,PPRANGE)
+"RTN","PRSA8BNH",104,0)
+ ..     D LOOPTL(.OUT,.GRANDTOT,TLE,PPI,TSTAMP)
+"RTN","PRSA8BNH",105,0)
+ ..     S TLECNT=TLECNT+1
+"RTN","PRSA8BNH",106,0)
+ E  D
+"RTN","PRSA8BNH",107,0)
+ .   D HDR^PRSA8BNI(.PG,TSTAMP,0,FORWHO,PPE,PPRANGE)
+"RTN","PRSA8BNH",108,0)
+ .   D LOOPTL(.OUT,.GRANDTOT,TLE,PPI,TSTAMP)
+"RTN","PRSA8BNH",109,0)
+ .   S TLECNT=TLECNT+1
+"RTN","PRSA8BNH",110,0)
+ D REPDONE^PRSA8BNI(OUT,TLECNT,TSTAMP,DAILYHRS,GRANDTOT)
+"RTN","PRSA8BNH",111,0)
+ Q
+"RTN","PRSA8BNH",112,0)
+ ;
+"RTN","PRSA8BNH",113,0)
+LOOPTL(OUT,TOT,TLE,PPI,TSTAMP) ; LOOP THROUGH T&L
+"RTN","PRSA8BNH",114,0)
+ N COUNT,NN,PRSIEN,EMPNODE,PRSENAME,HRS,EMPND1,SEPIND,WEEKHRS,PRSD,PRSSN
+"RTN","PRSA8BNH",115,0)
+ K ERRORS
+"RTN","PRSA8BNH",116,0)
+ S (COUNT,OUT)=0
+"RTN","PRSA8BNH",117,0)
+ S NN=""
+"RTN","PRSA8BNH",118,0)
+ F  S NN=$O(^PRSPC("ATL"_TLE,NN)) Q:NN=""  D
+"RTN","PRSA8BNH",119,0)
+ .  F PRSIEN=0:0 S PRSIEN=$O(^PRSPC("ATL"_TLE,NN,PRSIEN)) Q:PRSIEN<1!(OUT)  D
+"RTN","PRSA8BNH",120,0)
+ ..;  skip Extended LWOP or anyone without a timecard
+"RTN","PRSA8BNH",121,0)
+ ..    Q:'NOTCARD&($G(^PRST(458,PPI,"E",PRSIEN,0))="")
+"RTN","PRSA8BNH",122,0)
+ ..    Q:'NOTOUR&($P($G(^PRST(458,PPI,"E",PRSIEN,"D",1,0)),U,2)="")
+"RTN","PRSA8BNH",123,0)
+ ..    S EMPNODE=$G(^PRSPC(PRSIEN,0))
+"RTN","PRSA8BNH",124,0)
+ ..    S EMPND1=$G(^PRSPC(PRSIEN,1))
+"RTN","PRSA8BNH",125,0)
+ ..    S SEPIND=$P(EMPND1,U,33)
+"RTN","PRSA8BNH",126,0)
+ ..    Q:EMPNODE=""!(SEPIND="Y")
+"RTN","PRSA8BNH",127,0)
+ ..    I '$$HRSMATCH^PRSATPE(PPI,PRSIEN) D
+"RTN","PRSA8BNH",128,0)
+ ...     S COUNT=COUNT+1
+"RTN","PRSA8BNH",129,0)
+ ...     S GRANDTOT=GRANDTOT+1
+"RTN","PRSA8BNH",130,0)
+ ...     S ERRORS(PRSIEN)=""
+"RTN","PRSA8BNH",131,0)
+ I COUNT>0 D
+"RTN","PRSA8BNH",132,0)
+ .  I DAILYHRS,$Y>(IOSL-12) S OUT=$$RET^PRSA8BNI(TSTAMP) Q:OUT
+"RTN","PRSA8BNH",133,0)
+ .  I 'DAILYHRS,$Y>(IOSL-7) S OUT=$$RET^PRSA8BNI(TSTAMP) Q:OUT
+"RTN","PRSA8BNH",134,0)
+ .  W !!,?12,"T & L UNIT: "_TLE,"   ",COUNT," mismatches found."
+"RTN","PRSA8BNH",135,0)
+ .  S PRSIEN=""
+"RTN","PRSA8BNH",136,0)
+ .  F  S PRSIEN=$O(ERRORS(PRSIEN)) Q:PRSIEN'>0!OUT  D
+"RTN","PRSA8BNH",137,0)
+ ..   S WEEKHRS=$$GETHOURS^PRSA8BNI(PPI,PRSIEN)
+"RTN","PRSA8BNH",138,0)
+ ..   S PRSENAME=$P($G(^PRSPC(PRSIEN,0)),U)
+"RTN","PRSA8BNH",139,0)
+ ..   S PRSSN=$P($G(^PRSPC(PRSIEN,0)),U,9)
+"RTN","PRSA8BNH",140,0)
+ ..   S PRSSN=$S(PRSTLV=7:$E(PRSSN,1,3)_"-"_$E(PRSSN,4,5),PRSTLV'<2:$E(PRSSN,1)_"XX-XX",1:"XXX-XX")_"-"_$E(PRSSN,6,9)
+"RTN","PRSA8BNH",141,0)
+ ..   I DAILYHRS,$Y>(IOSL-10) S OUT=$$RET^PRSA8BNI(TSTAMP) Q:OUT
+"RTN","PRSA8BNH",142,0)
+ ..   I 'DAILYHRS,$Y>(IOSL-5) S OUT=$$RET^PRSA8BNI(TSTAMP) Q:OUT
+"RTN","PRSA8BNH",143,0)
+ ..   D EMPINFO^PRSA8BNI(PRSENAME,PRSSN,WEEKHRS)
+"RTN","PRSA8BNH",144,0)
+ ..;  show the actual tour hours for each day
+"RTN","PRSA8BNH",145,0)
+ ..   I DAILYHRS D
+"RTN","PRSA8BNH",146,0)
+ ...    N HRS,I
+"RTN","PRSA8BNH",147,0)
+ ...    D TOURHRS^PRSARC07(.HRS,PPI,PRSIEN)
+"RTN","PRSA8BNH",148,0)
+ ...    I $Y>(IOSL-8) S OUT=$$RET^PRSA8BNI(TSTAMP) Q:OUT  D EMPINFO^PRSA8BNI(PRSENAME,PRSSN,WEEKHRS)
+"RTN","PRSA8BNH",149,0)
+ ...    D TRHDR^PRSA8BNI
+"RTN","PRSA8BNH",150,0)
+ ...    F PRSD=1:1:7 D  Q:OUT
+"RTN","PRSA8BNH",151,0)
+ ....     I $Y>(IOSL-4) S OUT=$$RET^PRSA8BNI(TSTAMP) Q:OUT  D EMPINFO^PRSA8BNI(PRSENAME,PRSSN,WEEKHRS),TRHDR^PRSA8BNI
+"RTN","PRSA8BNH",152,0)
+ ....     Q:OUT
+"RTN","PRSA8BNH",153,0)
+ ....     D TOURDISP(PPI,PRSIEN,PRSD,.HRS)
+"RTN","PRSA8BNH",154,0)
+ ..   Q:OUT
+"RTN","PRSA8BNH",155,0)
+ ..   I $Y>(IOSL-5) S OUT=$$RET^PRSA8BNI(TSTAMP) Q:OUT
+"RTN","PRSA8BNH",156,0)
+ Q
+"RTN","PRSA8BNH",157,0)
+TOURDISP(PPI,PRSIEN,PRSD,HRS) ;
+"RTN","PRSA8BNH",158,0)
+ N Y1,Y2,Y4,Y5,DTE,TD1C1,TD1C2,L2,L3,TD2C1,TD2C2
+"RTN","PRSA8BNH",159,0)
+ S TD1C1=$P($G(^PRST(458,PPI,"E",PRSIEN,"D",PRSD,0)),"^",2),Y1=$G(^(1)),Y4=$G(^(4))
+"RTN","PRSA8BNH",160,0)
+ S TD2C1=$P($G(^PRST(458,PPI,"E",PRSIEN,"D",PRSD,0)),"^",13)
+"RTN","PRSA8BNH",161,0)
+ I Y1="" S Y1=$S(TD1C1=1:"Day Off",TD1C1=2:"Day Tour",TD1C1=3!(TD1C1=4):"Intermittent",1:"")
+"RTN","PRSA8BNH",162,0)
+ S TD1C2=$P($G(^PRST(458,PPI,"E",PRSIEN,"D",PRSD+7,0)),"^",2),Y2=$G(^(1)),Y5=$G(^(4))
+"RTN","PRSA8BNH",163,0)
+ S TD2C2=$P($G(^PRST(458,PPI,"E",PRSIEN,"D",PRSD+7,0)),"^",13)
+"RTN","PRSA8BNH",164,0)
+ I Y2="" S Y2=$S(TD1C2=1:"Day Off",TD1C2=2:"Day Tour",TD1C2=3!(TD1C2=4):"Intermittent",1:"")
+"RTN","PRSA8BNH",165,0)
+ S DTE=$P("Sun Mon Tue Wed Thu Fri Sat"," ",PRSD)
+"RTN","PRSA8BNH",166,0)
+ W !?7,DTE S (L2,L3)=0
+"RTN","PRSA8BNH",167,0)
+ I Y1="",Y2="" Q
+"RTN","PRSA8BNH",168,0)
+ ;
+"RTN","PRSA8BNH",169,0)
+S0 ; Set Schedule Array
+"RTN","PRSA8BNH",170,0)
+ N A1,L1,B
+"RTN","PRSA8BNH",171,0)
+ F L1=1:3:19 D
+"RTN","PRSA8BNH",172,0)
+ .  S A1=$P(Y1,"^",L1) Q:A1=""
+"RTN","PRSA8BNH",173,0)
+ .  S L2=L2+1,Y1(L2)=A1
+"RTN","PRSA8BNH",174,0)
+ .  S:$P(Y1,"^",L1+1)'="" Y1(L2)=Y1(L2)_"-"_$P(Y1,"^",L1+1)
+"RTN","PRSA8BNH",175,0)
+ .  I L1=1 D
+"RTN","PRSA8BNH",176,0)
+ ..   N DAYHRS S DAYHRS=$J($P(HRS(PRSD),U,2),5,2)
+"RTN","PRSA8BNH",177,0)
+ ..   S B=$E("               ",1,20-$L(DAYHRS)-$L(Y1(L2)))
+"RTN","PRSA8BNH",178,0)
+ ..   S Y1(L2)=$J(TD1C1,5,0)_"  "_Y1(L2)_B_DAYHRS
+"RTN","PRSA8BNH",179,0)
+ .  E  D
+"RTN","PRSA8BNH",180,0)
+ ..   S Y1(L2)="       "_Y1(L2)
+"RTN","PRSA8BNH",181,0)
+ .  I $P(Y1,"^",L1+2)'="" D
+"RTN","PRSA8BNH",182,0)
+ ..   S L2=L2+1
+"RTN","PRSA8BNH",183,0)
+ ..   S Y1(L2)="        "_$P($G(^PRST(457.2,+$P(Y1,"^",L1+2),0)),"^",1)
+"RTN","PRSA8BNH",184,0)
+ G:Y4="" S1
+"RTN","PRSA8BNH",185,0)
+ F L1=1:3:19 D
+"RTN","PRSA8BNH",186,0)
+ .  S A1=$P(Y4,"^",L1) Q:A1=""
+"RTN","PRSA8BNH",187,0)
+ .  S L2=L2+1
+"RTN","PRSA8BNH",188,0)
+ .  S Y1(L2)=A1
+"RTN","PRSA8BNH",189,0)
+ .  S:$P(Y4,"^",L1+1)'="" Y1(L2)=Y1(L2)_"-"_$P(Y4,"^",L1+1)
+"RTN","PRSA8BNH",190,0)
+ .  I L1=1 D
+"RTN","PRSA8BNH",191,0)
+ ..   S Y1(L2)=$J(TD2C1,5,0)_"  "_Y1(L2)
+"RTN","PRSA8BNH",192,0)
+ .  E  D
+"RTN","PRSA8BNH",193,0)
+ ..   S Y1(L2)="       "_Y1(L2)
+"RTN","PRSA8BNH",194,0)
+ .  I $P(Y4,"^",L1+2)'="" D
+"RTN","PRSA8BNH",195,0)
+ ..   S L2=L2+1
+"RTN","PRSA8BNH",196,0)
+ ..   S Y1(L2)="        "_$P($G(^PRST(457.2,+$P(Y4,"^",L1+2),0)),"^",1)
+"RTN","PRSA8BNH",197,0)
+ ;
+"RTN","PRSA8BNH",198,0)
+S1 ; Set Schedule Array
+"RTN","PRSA8BNH",199,0)
+ F L1=1:3:19 D
+"RTN","PRSA8BNH",200,0)
+ .  S A1=$P(Y2,"^",L1) Q:A1=""
+"RTN","PRSA8BNH",201,0)
+ .  S L3=L3+1
+"RTN","PRSA8BNH",202,0)
+ .  S Y2(L3)=A1
+"RTN","PRSA8BNH",203,0)
+ .  S:$P(Y2,"^",L1+1)'="" Y2(L3)=Y2(L3)_"-"_$P(Y2,"^",L1+1)
+"RTN","PRSA8BNH",204,0)
+ .  I L1=1 D
+"RTN","PRSA8BNH",205,0)
+ ..   N DAYHRS S DAYHRS=$J($P(HRS(PRSD+7),U,2),5,2)
+"RTN","PRSA8BNH",206,0)
+ ..   S B=$E("               ",1,20-$L(DAYHRS)-$L(Y2(L3)))
+"RTN","PRSA8BNH",207,0)
+ ..   S Y2(L3)=$J(TD1C2,5,0)_"  "_Y2(L3)_B_DAYHRS
+"RTN","PRSA8BNH",208,0)
+ .  E  D
+"RTN","PRSA8BNH",209,0)
+ ..   S Y2(L3)="       "_Y2(L3)
+"RTN","PRSA8BNH",210,0)
+ .   I $P(Y2,"^",L1+2)'="" D
+"RTN","PRSA8BNH",211,0)
+ ..    S L3=L3+1
+"RTN","PRSA8BNH",212,0)
+ ..    S Y2(L3)="        "_$P($G(^PRST(457.2,+$P(Y2,"^",L1+2),0)),"^",1)
+"RTN","PRSA8BNH",213,0)
+ ;
+"RTN","PRSA8BNH",214,0)
+ G:Y5="" S2
+"RTN","PRSA8BNH",215,0)
+ ;
+"RTN","PRSA8BNH",216,0)
+ F L1=1:3:19 D
+"RTN","PRSA8BNH",217,0)
+ .  S A1=$P(Y5,"^",L1) Q:A1=""
+"RTN","PRSA8BNH",218,0)
+ .  S L3=L3+1,Y2(L3)=A1
+"RTN","PRSA8BNH",219,0)
+ .  S:$P(Y5,"^",L1+1)'="" Y2(L3)=Y2(L3)_"-"_$P(Y5,"^",L1+1)
+"RTN","PRSA8BNH",220,0)
+ .  I L1=1 D
+"RTN","PRSA8BNH",221,0)
+ ..   S Y2(L3)=$J(TD2C2,5,0)_"  "_Y2(L3)
+"RTN","PRSA8BNH",222,0)
+ .  E  D
+"RTN","PRSA8BNH",223,0)
+ ..   S Y2(L3)="       "_Y2(L3)
+"RTN","PRSA8BNH",224,0)
+ .  I $P(Y5,"^",L1+2)'="" D
+"RTN","PRSA8BNH",225,0)
+ ..   S L3=L3+1
+"RTN","PRSA8BNH",226,0)
+ ..   S Y2(L3)="        "_$P($G(^PRST(457.2,+$P(Y5,"^",L1+2),0)),"^",1)
+"RTN","PRSA8BNH",227,0)
+ ;
+"RTN","PRSA8BNH",228,0)
+S2 ;
+"RTN","PRSA8BNH",229,0)
+ N K
+"RTN","PRSA8BNH",230,0)
+ F K=1:1 Q:'$D(Y1(K))&'$D(Y2(K))  D
+"RTN","PRSA8BNH",231,0)
+ .  W:K>1 ! W:$D(Y1(K)) ?12,Y1(K) W:$D(Y2(K)) ?47,Y2(K)
+"RTN","PRSA8BNH",232,0)
+ Q
+"RTN","PRSA8BTH")
+0^2^B20151016^B19035559
+"RTN","PRSA8BTH",1,0)
+PRSA8BTH ;WOIFO/JAH - Tour Hours Display ;7/9/08
+"RTN","PRSA8BTH",2,0)
+ ;;4.0;PAID;**117,110**;Sep 21, 1995;Build 7
+"RTN","PRSA8BTH",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PRSA8BTH",4,0)
+ Q
+"RTN","PRSA8BTH",5,0)
+ ;
+"RTN","PRSA8BTH",6,0)
+TOURHRP ;Tour Hours Display for payroll
+"RTN","PRSA8BTH",7,0)
+ N PRSTLV,FORWHO,TLS
+"RTN","PRSA8BTH",8,0)
+ S PRSTLV=7
+"RTN","PRSA8BTH",9,0)
+ S TLS=0
+"RTN","PRSA8BTH",10,0)
+ S FORWHO="for Payroll"
+"RTN","PRSA8BTH",11,0)
+ D MAIN
+"RTN","PRSA8BTH",12,0)
+ Q
+"RTN","PRSA8BTH",13,0)
+ ;
+"RTN","PRSA8BTH",14,0)
+TOURHRT ; Tour hours display for timekeeper
+"RTN","PRSA8BTH",15,0)
+ N TLS,PRSTLV,FORWHO S TLS=1,PRSTLV=2,FORWHO="for Timekeeper"
+"RTN","PRSA8BTH",16,0)
+ D MAIN
+"RTN","PRSA8BTH",17,0)
+ Q
+"RTN","PRSA8BTH",18,0)
+ ;
+"RTN","PRSA8BTH",19,0)
+TOURHRS ; Tour hours for T&L supervisor
+"RTN","PRSA8BTH",20,0)
+ N PRSTLV,TLS,FORWHO S TLS=1,PRSTLV=3,FORWHO="for T&A Supervisor"
+"RTN","PRSA8BTH",21,0)
+ D MAIN
+"RTN","PRSA8BTH",22,0)
+ Q
+"RTN","PRSA8BTH",23,0)
+ ;
+"RTN","PRSA8BTH",24,0)
+MAIN ;
+"RTN","PRSA8BTH",25,0)
+ N DIR,DIRUT,Y,PPI,PPE,NOTOUR,NOTCARD,PPRANGE,DAILYHRS,EP,SP,SDT,EDT
+"RTN","PRSA8BTH",26,0)
+ N SHONOTES,PRSIEN,TLI
+"RTN","PRSA8BTH",27,0)
+ S PRSIEN=0
+"RTN","PRSA8BTH",28,0)
+ I TLS=1 D
+"RTN","PRSA8BTH",29,0)
+ .  D ^PRSAUTL
+"RTN","PRSA8BTH",30,0)
+ .  Q:TLS=1&($G(TLI)="")
+"RTN","PRSA8BTH",31,0)
+ .  S PRSIEN=$$SELEMP(TLE)
+"RTN","PRSA8BTH",32,0)
+ E  D
+"RTN","PRSA8BTH",33,0)
+ .  S PRSIEN=$$SELEMP(0)
+"RTN","PRSA8BTH",34,0)
+ Q:TLS=1&($G(TLI)="")!(PRSIEN'>0)
+"RTN","PRSA8BTH",35,0)
+ ;
+"RTN","PRSA8BTH",36,0)
+ S PPI=$$GETPP^PRSA8BNI()
+"RTN","PRSA8BTH",37,0)
+ Q:PPI'>0
+"RTN","PRSA8BTH",38,0)
+ S PPE=$P($G(^PRST(458,PPI,0)),U)
+"RTN","PRSA8BTH",39,0)
+ S SDT=$P($G(^PRST(458,PPI,2)),U)
+"RTN","PRSA8BTH",40,0)
+ S EDT=$P($G(^PRST(458,PPI,2)),U,14)
+"RTN","PRSA8BTH",41,0)
+ S SP=$L(SDT," ")
+"RTN","PRSA8BTH",42,0)
+ S EP=$L(EDT," ")
+"RTN","PRSA8BTH",43,0)
+ S PPRANGE=$P(SDT," ",SP)_" thru "_$P(EDT," ",EP)
+"RTN","PRSA8BTH",44,0)
+ ;
+"RTN","PRSA8BTH",45,0)
+ S SHONOTES=$$SHONOTES^PRSA8BNI() ; want to see footnotes to display?
+"RTN","PRSA8BTH",46,0)
+ Q:SHONOTES<0
+"RTN","PRSA8BTH",47,0)
+ ;
+"RTN","PRSA8BTH",48,0)
+ N %ZIS,POP,IOP,ZTSK
+"RTN","PRSA8BTH",49,0)
+ S %ZIS="MQ"
+"RTN","PRSA8BTH",50,0)
+ D ^%ZIS
+"RTN","PRSA8BTH",51,0)
+ Q:POP
+"RTN","PRSA8BTH",52,0)
+ I $D(IO("Q")) D
+"RTN","PRSA8BTH",53,0)
+ .  K IO("Q")
+"RTN","PRSA8BTH",54,0)
+ .  N ZTDESC,ZTRTN,ZTSAVE
+"RTN","PRSA8BTH",55,0)
+ .  S ZTDESC="PAID REPORT: TOUR HOURS DISPLAY"
+"RTN","PRSA8BTH",56,0)
+ .  S ZTRTN="TOUR8B^PRSA8BTH(PRSIEN)"
+"RTN","PRSA8BTH",57,0)
+ .  S ZTSAVE("PRSTLV")=""
+"RTN","PRSA8BTH",58,0)
+ .  S ZTSAVE("PRSIEN")=""
+"RTN","PRSA8BTH",59,0)
+ .  S ZTSAVE("TLE")=""
+"RTN","PRSA8BTH",60,0)
+ .  S ZTSAVE("PPI")=""
+"RTN","PRSA8BTH",61,0)
+ .  S ZTSAVE("PPE")=""
+"RTN","PRSA8BTH",62,0)
+ .  S ZTSAVE("TLS")=""
+"RTN","PRSA8BTH",63,0)
+ .  S ZTSAVE("PPRANGE")=""
+"RTN","PRSA8BTH",64,0)
+ .  S ZTSAVE("FORWHO")=""
+"RTN","PRSA8BTH",65,0)
+ .  S ZTSAVE("SHONOTES")=""
+"RTN","PRSA8BTH",66,0)
+ .  D ^%ZTLOAD
+"RTN","PRSA8BTH",67,0)
+ .  I $D(ZTSK) W !,"Task ",ZTSK," Queued."
+"RTN","PRSA8BTH",68,0)
+ E  D
+"RTN","PRSA8BTH",69,0)
+ .  D TOUR8B(PRSIEN)
+"RTN","PRSA8BTH",70,0)
+ K PRSTLV
+"RTN","PRSA8BTH",71,0)
+ D ^%ZISC K %ZIS,IOP
+"RTN","PRSA8BTH",72,0)
+ W ! S OUT=$$ASK^PRSLIB00(1)
+"RTN","PRSA8BTH",73,0)
+ Q
+"RTN","PRSA8BTH",74,0)
+ ;
+"RTN","PRSA8BTH",75,0)
+SELEMP(TLE) ;Select employee by T&L or any employee if TLE = 0
+"RTN","PRSA8BTH",76,0)
+ ;
+"RTN","PRSA8BTH",77,0)
+ N DIC,EMPLOYEE,D,Y
+"RTN","PRSA8BTH",78,0)
+ S DIC("A")="Select EMPLOYEE: "
+"RTN","PRSA8BTH",79,0)
+ S DIC(0)="AEQM"
+"RTN","PRSA8BTH",80,0)
+ S DIC="^PRSPC("
+"RTN","PRSA8BTH",81,0)
+ I TLE]0 D
+"RTN","PRSA8BTH",82,0)
+ . S D="ATL"_TLE
+"RTN","PRSA8BTH",83,0)
+ . S DIC("S")="I $P(^(0),""^"",8)=TLE"
+"RTN","PRSA8BTH",84,0)
+ . D IX^DIC
+"RTN","PRSA8BTH",85,0)
+ E  D
+"RTN","PRSA8BTH",86,0)
+ . D ^DIC
+"RTN","PRSA8BTH",87,0)
+ S EMPLOYEE=+Y
+"RTN","PRSA8BTH",88,0)
+ Q EMPLOYEE
+"RTN","PRSA8BTH",89,0)
+ ;
+"RTN","PRSA8BTH",90,0)
+TOUR8B(PRSIEN) ;
+"RTN","PRSA8BTH",91,0)
+ U IO
+"RTN","PRSA8BTH",92,0)
+ N DFN,OUT,TLECNT,TSTAMP,Y,%,%I,PG,ATL,ENT
+"RTN","PRSA8BTH",93,0)
+ N EMPNODE,PRSENAME,HRS,EMPND1,SEPIND,WEEKHRS,PRSD,PRSSN
+"RTN","PRSA8BTH",94,0)
+ I $D(ZTQUEUED) S ZTREQ="@"
+"RTN","PRSA8BTH",95,0)
+ D NOW^%DTC S Y=% D DD^%DT S TSTAMP=$P(Y,":",1,2)
+"RTN","PRSA8BTH",96,0)
+ S (OUT,PG)=0
+"RTN","PRSA8BTH",97,0)
+ D HDR^PRSA8BNI(.PG,TSTAMP,0,FORWHO,PPE,PPRANGE,1)
+"RTN","PRSA8BTH",98,0)
+ ;  skip Extended LWOP or anyone without a timecard
+"RTN","PRSA8BTH",99,0)
+ I $G(^PRST(458,PPI,"E",PRSIEN,0))="" D  Q
+"RTN","PRSA8BTH",100,0)
+ .  W !,"Employee doesn't have a timecard in this pay period"
+"RTN","PRSA8BTH",101,0)
+ I $P($G(^PRST(458,PPI,"E",PRSIEN,"D",1,0)),U,2)="" D  Q
+"RTN","PRSA8BTH",102,0)
+ .  W !,"Employee doesn't have a tour of duty in this pay period" Q
+"RTN","PRSA8BTH",103,0)
+ ;
+"RTN","PRSA8BTH",104,0)
+ ; Try to get employee entitlement from the pay period being displayed
+"RTN","PRSA8BTH",105,0)
+ ; otherwise we'll have to settle for current entitlement
+"RTN","PRSA8BTH",106,0)
+ N ENTPOINT
+"RTN","PRSA8BTH",107,0)
+ S ENTPOINT=$P($G(^PRST(458,PPI,"E",PRSIEN,"D",1,0)),U,5)
+"RTN","PRSA8BTH",108,0)
+ I ENTPOINT>0 D
+"RTN","PRSA8BTH",109,0)
+ .  S ENT=$G(^PRST(457.5,ENTPOINT,0))
+"RTN","PRSA8BTH",110,0)
+ I $G(ENT)="" D
+"RTN","PRSA8BTH",111,0)
+ .  S DFN=PRSIEN D ^PRSAENT
+"RTN","PRSA8BTH",112,0)
+ I $E(ENT)="D"!($E(ENT,1,2)="0D") D  Q
+"RTN","PRSA8BTH",113,0)
+ .  W !,"This employee is on daily tours with no tour hours"
+"RTN","PRSA8BTH",114,0)
+ S EMPNODE=$G(^PRSPC(PRSIEN,0))
+"RTN","PRSA8BTH",115,0)
+ S EMPND1=$G(^PRSPC(PRSIEN,1))
+"RTN","PRSA8BTH",116,0)
+ S SEPIND=$P(EMPND1,U,33)
+"RTN","PRSA8BTH",117,0)
+ Q:EMPNODE=""!(SEPIND="Y")
+"RTN","PRSA8BTH",118,0)
+ ; call to get tour hours and 8b normal hours for the pay period, but
+"RTN","PRSA8BTH",119,0)
+ ; if no 8b string on file then normal hours are current normal hrs.
+"RTN","PRSA8BTH",120,0)
+ S WEEKHRS=$$GETHOURS^PRSA8BNI(PPI,PRSIEN)
+"RTN","PRSA8BTH",121,0)
+ S PRSENAME=$P($G(^PRSPC(PRSIEN,0)),U)
+"RTN","PRSA8BTH",122,0)
+ S PRSSN=$P($G(^PRSPC(PRSIEN,0)),U,9)
+"RTN","PRSA8BTH",123,0)
+ S PRSSN=$S(PRSTLV=7:$E(PRSSN,1,3)_"-"_$E(PRSSN,4,5),PRSTLV'<2:$E(PRSSN,1)_"XX-XX",1:"XXX-XX")_"-"_$E(PRSSN,6,9)
+"RTN","PRSA8BTH",124,0)
+ D EMPINFO^PRSA8BNI(PRSENAME,PRSSN,WEEKHRS)
+"RTN","PRSA8BTH",125,0)
+ ;  show the actual tour hours for each day
+"RTN","PRSA8BTH",126,0)
+ N HRS,I
+"RTN","PRSA8BTH",127,0)
+ D TOURHRS^PRSARC07(.HRS,PPI,PRSIEN)
+"RTN","PRSA8BTH",128,0)
+ D TRHDR^PRSA8BNI
+"RTN","PRSA8BTH",129,0)
+ F PRSD=1:1:7 D  Q:OUT
+"RTN","PRSA8BTH",130,0)
+ .  I $Y>(IOSL-4) S OUT=$$RET^PRSA8BNI(TSTAMP) Q:OUT  D EMPINFO^PRSA8BNI(PRSENAME,PRSSN,WEEKHRS),TRHDR^PRSA8BNI
+"RTN","PRSA8BTH",131,0)
+ .  Q:OUT
+"RTN","PRSA8BTH",132,0)
+ .  D TOURDISP^PRSA8BNH(PPI,PRSIEN,PRSD,.HRS)
+"RTN","PRSA8BTH",133,0)
+ I SHONOTES S OUT=$$ASK^PRSLIB00() I 'OUT W @IOF D FOOTNOTE^PRSA8BNI(1)
+"RTN","PRSA8BTH",134,0)
+ Q
+"RTN","PRSALDA")
+0^4^B26300239^B26068322
+"RTN","PRSALDA",1,0)
+PRSALDA ;HISC/MGD-Labor Distribution Audit ;02/13/2007
+"RTN","PRSALDA",2,0)
+ ;;4.0;PAID;**82,109,110**;Sep 21, 1995;Build 7
+"RTN","PRSALDA",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PRSALDA",4,0)
+ Q
+"RTN","PRSALDA",5,0)
+TL W @IOF
+"RTN","PRSALDA",6,0)
+ S PRSTLV=3 D ^PRSAUTL G:TLI<1 EX
+"RTN","PRSALDA",7,0)
+ W !
+"RTN","PRSALDA",8,0)
+ ;
+"RTN","PRSALDA",9,0)
+PP ;select pay period
+"RTN","PRSALDA",10,0)
+ K DIC S DIC="^PRST(458,",DIC(0)="AEMQZ"
+"RTN","PRSALDA",11,0)
+ D ^DIC
+"RTN","PRSALDA",12,0)
+ I Y'>0 D EX Q
+"RTN","PRSALDA",13,0)
+ S PPI=+Y,PPNAME=$P(^PRST(458,PPI,0),U,1)
+"RTN","PRSALDA",14,0)
+ ;
+"RTN","PRSALDA",15,0)
+D2 W !!,"Would you like to review the Labor Distributions "
+"RTN","PRSALDA",16,0)
+ W !,"in alphabetical order"
+"RTN","PRSALDA",17,0)
+ S %=1 D YN^DICN
+"RTN","PRSALDA",18,0)
+ Q:%=-1
+"RTN","PRSALDA",19,0)
+ I %=0 D  G D2
+"RTN","PRSALDA",20,0)
+ . W !!,"Answer YES if you want the Labor Distribution and any changes"
+"RTN","PRSALDA",21,0)
+ . W !,"that have occurred during the selected Pay Period for all"
+"RTN","PRSALDA",22,0)
+ . W !,"employees."
+"RTN","PRSALDA",23,0)
+ I %=1 D  D EX Q
+"RTN","PRSALDA",24,0)
+ . D DVC
+"RTN","PRSALDA",25,0)
+ . I POP Q
+"RTN","PRSALDA",26,0)
+ . Q
+"RTN","PRSALDA",27,0)
+ I %=2 D EMP D EX Q
+"RTN","PRSALDA",28,0)
+ D EX
+"RTN","PRSALDA",29,0)
+ Q
+"RTN","PRSALDA",30,0)
+ ;
+"RTN","PRSALDA",31,0)
+DVC N PRSALST,PRSAPGM,PRTC S PRTC=""
+"RTN","PRSALDA",32,0)
+ W ! K IOP,%ZIS S %ZIS("A")="Select Device: ",%ZIS="MQ"
+"RTN","PRSALDA",33,0)
+ D ^%ZIS K %ZIS,IOP
+"RTN","PRSALDA",34,0)
+ Q:POP
+"RTN","PRSALDA",35,0)
+ I $D(IO("Q")) D  Q
+"RTN","PRSALDA",36,0)
+ . S PRSAPGM="LOOP^PRSALDA",PRSALST="TLE^PPE^PPI^PPNAME"
+"RTN","PRSALDA",37,0)
+ . D QUE^PRSAUTL
+"RTN","PRSALDA",38,0)
+ U IO D LOOP
+"RTN","PRSALDA",39,0)
+ ; pause screen when employee to prevent scroll (other users prompted)
+"RTN","PRSALDA",40,0)
+ ; I $E(IOST,1,2)="C-",'QT,PRSTLV=1,'$D(DIRUT) S PG=PG+1 D H1
+"RTN","PRSALDA",41,0)
+ D ^%ZISC K %ZIS,IOP
+"RTN","PRSALDA",42,0)
+ Q
+"RTN","PRSALDA",43,0)
+ ;
+"RTN","PRSALDA",44,0)
+LOOP N DASH,PRTC
+"RTN","PRSALDA",45,0)
+ S LP=1,NN="",PRTC="",$P(DASH,"-",80)=""
+"RTN","PRSALDA",46,0)
+ F  S NN=$O(^PRSPC("ATL"_TLE,NN)) Q:NN=""  D  Q:PRTC=0
+"RTN","PRSALDA",47,0)
+ . F DFN=0:0 S DFN=$O(^PRSPC("ATL"_TLE,NN,DFN)) Q:DFN<1  D LD Q:PRTC=0
+"RTN","PRSALDA",48,0)
+ Q:PRTC=0
+"RTN","PRSALDA",49,0)
+ D:$E(IOST,1)="C" CHECK
+"RTN","PRSALDA",50,0)
+ D:$E(IOST,1)'="C" ^%ZISC
+"RTN","PRSALDA",51,0)
+ Q
+"RTN","PRSALDA",52,0)
+ ;
+"RTN","PRSALDA",53,0)
+EMP W @IOF
+"RTN","PRSALDA",54,0)
+ K DIC
+"RTN","PRSALDA",55,0)
+ S DIC("A")="Select EMPLOYEE: ",DIC(0)="AEQM",DIC="^PRSPC("
+"RTN","PRSALDA",56,0)
+ W ! D ^DIC S DFN=+Y K DIC G:DFN<1 EX
+"RTN","PRSALDA",57,0)
+ I DFN<1 D EX Q
+"RTN","PRSALDA",58,0)
+ W ! K IOP,%ZIS S %ZIS("A")="Select Device: ",%ZIS="MQ"
+"RTN","PRSALDA",59,0)
+ D ^%ZIS K %ZIS,IOP
+"RTN","PRSALDA",60,0)
+ I POP D EX Q
+"RTN","PRSALDA",61,0)
+ U IO
+"RTN","PRSALDA",62,0)
+ D LD
+"RTN","PRSALDA",63,0)
+ D:$E(IOST,1)'="C" ^%ZISC
+"RTN","PRSALDA",64,0)
+ G EMP
+"RTN","PRSALDA",65,0)
+ Q
+"RTN","PRSALDA",66,0)
+LD ; Display changes to the Labor Distribution Codes within the Pay
+"RTN","PRSALDA",67,0)
+ ; Period.
+"RTN","PRSALDA",68,0)
+ ;
+"RTN","PRSALDA",69,0)
+ N I,LDAUD,LDCC,LDCCB,LDCCEX,LDCODE,LDCODNUM,LDCNT,LDDATA,LDDIS
+"RTN","PRSALDA",70,0)
+ N LDDOA,LDFCP,LDHOLD,LDPCT,LDTOI,Y S PRTC=""
+"RTN","PRSALDA",71,0)
+ S NAME=$$GET1^DIQ(450,DFN,.01,"E")
+"RTN","PRSALDA",72,0)
+ I $E(IOST,1)="C" W @IOF
+"RTN","PRSALDA",73,0)
+ D LDHDR
+"RTN","PRSALDA",74,0)
+ W !!,"Current Labor Distribution Values:"
+"RTN","PRSALDA",75,0)
+ S LDDOA=$$GET1^DIQ(450,DFN,756,"E")
+"RTN","PRSALDA",76,0)
+ S LDCCB=$$GET1^DIQ(450,DFN,755,"E")
+"RTN","PRSALDA",77,0)
+ S LDTOI=$$GET1^DIQ(450,DFN,755.1,"E")
+"RTN","PRSALDA",78,0)
+ S LDTOI=$S(LDTOI="I":"INITIAL",LDTOI="E":"EDIT & UPDATE",LDTOI="T":"TRANSFER",LDTOI="P":"PAYROLL",1:"")
+"RTN","PRSALDA",79,0)
+ W !,LDDOA,?24,LDCCB,?61,LDTOI
+"RTN","PRSALDA",80,0)
+ F LDDIS=1:1:4 D  Q:PRTC=0
+"RTN","PRSALDA",81,0)
+ . S LDDATA=$G(^PRSPC(DFN,"LD",LDDIS,0))
+"RTN","PRSALDA",82,0)
+ . S LDCODE=$P(LDDATA,U,2),LDPCT=$P(LDDATA,U,3)
+"RTN","PRSALDA",83,0)
+ . S LDCC=$P(LDDATA,U,4),LDFCP=$P(LDDATA,U,5)
+"RTN","PRSALDA",84,0)
+ . S Y=LDCC,SUB454="CC" D OT^PRSDUTIL K SUB454
+"RTN","PRSALDA",85,0)
+ . S LDCCEX=$E(Y,1,30)
+"RTN","PRSALDA",86,0)
+ . W !,"Code",LDDIS,": ",LDCODE,?15
+"RTN","PRSALDA",87,0)
+ . I LDPCT>0 W $J(LDPCT,3,2)
+"RTN","PRSALDA",88,0)
+ . W ?24,LDCC
+"RTN","PRSALDA",89,0)
+ . I LDCC'="" W " - ",LDCCEX
+"RTN","PRSALDA",90,0)
+ . W ?70,LDFCP
+"RTN","PRSALDA",91,0)
+ ; Check for changes within the Pay Period.
+"RTN","PRSALDA",92,0)
+ S LDCNT="A"
+"RTN","PRSALDA",93,0)
+ S LDCNT=$O(^PRST(458,PPI,"E",DFN,"LDAUD",LDCNT),-1)
+"RTN","PRSALDA",94,0)
+ I 'LDCNT D  Q
+"RTN","PRSALDA",95,0)
+ . W !!,"There were no Labor Distribution changes for this employee"
+"RTN","PRSALDA",96,0)
+ . W !,"during the Pay Period: ",PPNAME,".",!!
+"RTN","PRSALDA",97,0)
+ . I $E(IOST,1)="C" D PRTC
+"RTN","PRSALDA",98,0)
+ F I=LDCNT:-1:1 D  Q:PRTC=0
+"RTN","PRSALDA",99,0)
+ . W !!,"Previous Change # ",I
+"RTN","PRSALDA",100,0)
+ . S IENS=I_","_DFN_","_PPI_","
+"RTN","PRSALDA",101,0)
+ . S LDDOA=$$GET1^DIQ(458.1105,IENS,1,"E")
+"RTN","PRSALDA",102,0)
+ . S LDCCB=$$GET1^DIQ(458.1105,IENS,2,"E")
+"RTN","PRSALDA",103,0)
+ . S LDTOI=$$GET1^DIQ(458.1105,IENS,3,"E")
+"RTN","PRSALDA",104,0)
+ . S LDTOI=$S(LDTOI="I":"INITIAL",LDTOI="E":"EDIT & UPDATE",LDTOI="T":"TRANSFER",LDTOI="P":"PAYROLL",1:"")
+"RTN","PRSALDA",105,0)
+ . W !,LDDOA,?24,LDCCB,?61,LDTOI
+"RTN","PRSALDA",106,0)
+ . F PRSLD=1:1:4 D  Q:PRTC=0
+"RTN","PRSALDA",107,0)
+ . . S IENS=PRSLD_","_LDCNT_","_DFN_","_PPI_","
+"RTN","PRSALDA",108,0)
+ . . S LDCODE=$$GET1^DIQ(458.11054,IENS,1)
+"RTN","PRSALDA",109,0)
+ . . S LDPCT=$$GET1^DIQ(458.11054,IENS,2)
+"RTN","PRSALDA",110,0)
+ . . S LDCC=$$GET1^DIQ(458.11054,IENS,3)
+"RTN","PRSALDA",111,0)
+ . . S Y=LDCC,SUB454="CC"
+"RTN","PRSALDA",112,0)
+ . . D OT^PRSDUTIL K SUB454
+"RTN","PRSALDA",113,0)
+ . . S LDCCEX=$E(Y,1,30)
+"RTN","PRSALDA",114,0)
+ . . S LDFCP=$$GET1^DIQ(458.11054,IENS,4)
+"RTN","PRSALDA",115,0)
+ . . W !,"Code",PRSLD,": ",LDCODE,?15
+"RTN","PRSALDA",116,0)
+ . . I LDPCT>0 W $J(LDPCT,3,2)
+"RTN","PRSALDA",117,0)
+ . . W ?24,LDCC
+"RTN","PRSALDA",118,0)
+ . . I LDCC'="" W " - ",LDCCEX
+"RTN","PRSALDA",119,0)
+ . . W ?70,LDFCP
+"RTN","PRSALDA",120,0)
+ . I I'=1 D CHECK
+"RTN","PRSALDA",121,0)
+ . Q:PRTC=0
+"RTN","PRSALDA",122,0)
+ . I PRTC&(I'=1) W @IOF D LDHDR S PRTC=""
+"RTN","PRSALDA",123,0)
+ . I I=1&($E(IOST,1)="C") D PRTC
+"RTN","PRSALDA",124,0)
+ Q
+"RTN","PRSALDA",125,0)
+ ;
+"RTN","PRSALDA",126,0)
+LDHDR ;Labor Distribution Header information
+"RTN","PRSALDA",127,0)
+ ;
+"RTN","PRSALDA",128,0)
+ N TAB,DASH
+"RTN","PRSALDA",129,0)
+ S TAB=($L(NAME)\2),$P(DASH,"-",80)=""
+"RTN","PRSALDA",130,0)
+ W $J(NAME,40+TAB)
+"RTN","PRSALDA",131,0)
+ W !?15,"Labor Distribution Changes within the Pay Period:"
+"RTN","PRSALDA",132,0)
+ W !,"Date/Time",?24,"Changed by",?61,"Type of Interface"
+"RTN","PRSALDA",133,0)
+ W !,"Code",?14,"Percent",?24,"Cost Center - Description"
+"RTN","PRSALDA",134,0)
+ W ?65,"Fund Ctrl Pt"
+"RTN","PRSALDA",135,0)
+ W !,DASH
+"RTN","PRSALDA",136,0)
+ Q
+"RTN","PRSALDA",137,0)
+ ;
+"RTN","PRSALDA",138,0)
+LDHOLD ; Pause of more LD changes that will fit on 1 screen.
+"RTN","PRSALDA",139,0)
+ ;
+"RTN","PRSALDA",140,0)
+ S LDHOLD=$$ASK^PRSLIB00(1)
+"RTN","PRSALDA",141,0)
+ S X=$G(^PRSPC(DFN,0))
+"RTN","PRSALDA",142,0)
+ W !,@IOF,?3,$P(X,"^",1)
+"RTN","PRSALDA",143,0)
+ S X=$P(X,"^",9)
+"RTN","PRSALDA",144,0)
+ I X W ?68,$E(X,1,3),"-",$E(X,4,5),"-",$E(X,6,9)
+"RTN","PRSALDA",145,0)
+ W !,DASH
+"RTN","PRSALDA",146,0)
+ D LDHDR
+"RTN","PRSALDA",147,0)
+ Q
+"RTN","PRSALDA",148,0)
+ ;
+"RTN","PRSALDA",149,0)
+CHECK I $E(IOST,1)="C",$Y>(IOSL-7) D PRTC
+"RTN","PRSALDA",150,0)
+ Q
+"RTN","PRSALDA",151,0)
+ ;
+"RTN","PRSALDA",152,0)
+PRTC W ! K DIR,DIRUT,DIROUT,DTOUT,DUOUT
+"RTN","PRSALDA",153,0)
+ S DIR(0)="E",DIR("A")="Press RETURN to continue" D ^DIR S PRTC=Y
+"RTN","PRSALDA",154,0)
+ S:$D(DIRUT) PRTC=0
+"RTN","PRSALDA",155,0)
+ Q
+"RTN","PRSALDA",156,0)
+ ;
+"RTN","PRSALDA",157,0)
+EX K DFN,DIC,IEN,IENS,IOFSAV,LP,NAME,NN,POP,PPI,PPNAME,PRSLD,PRSTLV
+"RTN","PRSALDA",158,0)
+ K TLE,TLI,X,%
+"RTN","PRSALDA",159,0)
+ Q
+"RTN","PRSAOTX")
+0^3^B12918230^B12887435
+"RTN","PRSAOTX",1,0)
+PRSAOTX ; HISC/REL-OT/CT Approvals ;5/23/95  12:55
+"RTN","PRSAOTX",2,0)
+ ;;4.0;PAID;**34,114,110**;Sep 21, 1995;Build 7
+"RTN","PRSAOTX",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PRSAOTX",4,0)
+ S (QT,NF)=0,PRSTLV=3 K ^TMP($J)
+"RTN","PRSAOTX",5,0)
+ S TLE="" F  S TLE=$O(^PRST(455.5,"B",TLE)) Q:TLE=""  S TLH=0 F TLI=0:0 S TLI=$O(^PRST(455.5,"B",TLE,TLI)) Q:TLI<1  I $D(^PRST(455.5,TLI,"A",DUZ)) D TLC I QT G ES
+"RTN","PRSAOTX",6,0)
+ES I '$D(^TMP($J)) W !!,$S('NF:"No Overtime or Comp/Credit actions to certify.",1:"No Overtime or Comp/Credit certification actions taken.") G EX
+"RTN","PRSAOTX",7,0)
+ D ^PRSAES G:'ESOK EX D NOW^%DTC S NOW=%
+"RTN","PRSAOTX",8,0)
+ F TLI=0:0 S TLI=$O(^TMP($J,TLI)) Q:TLI<1  S ACT=$G(^(TLI)) I ACT'="" F DA=0:0 S DA=$O(^TMP($J,TLI,DA)) Q:DA<1  S DFN=$G(^(DA)) D OT
+"RTN","PRSAOTX",9,0)
+ G EX
+"RTN","PRSAOTX",10,0)
+TLC ; Check T&L
+"RTN","PRSAOTX",11,0)
+ S (ECST,NUM)=0 K R
+"RTN","PRSAOTX",12,0)
+ S NN="" F  S NN=$O(^PRSPC("ATL"_TLE,NN)) Q:NN=""  F DFN=0:0 S DFN=$O(^PRSPC("ATL"_TLE,NN,DFN)) Q:DFN<1  I $D(^PRST(458.2,"AS",DFN)) D CHK I QT G T1
+"RTN","PRSAOTX",13,0)
+ Q:'$D(^TMP($J,TLI))  I ECST W !!,"Estimated Cost of Overtime: $",$J(ECST,0,2)
+"RTN","PRSAOTX",14,0)
+OK R !!,"Disposition (A=Approve, D=Disapprove, X=Dis. Line Item, RETURN to bypass): ",ACT:DTIME S:'$T!(ACT["^") QT=1 G:QT!(ACT="") T1 S ACT=$TR(ACT,"adx","ADX") I ACT'?1U!("ADX"'[ACT) W *7,!,"Enter A, D or X or Press RETURN to bypass" G OK
+"RTN","PRSAOTX",15,0)
+ I ACT="X" D CAN G:Y["^" T1 S ACT="A"
+"RTN","PRSAOTX",16,0)
+ S ^TMP($J,TLI)=ACT Q
+"RTN","PRSAOTX",17,0)
+T1 K ^TMP($J,TLI) Q
+"RTN","PRSAOTX",18,0)
+CHK ; Check for needed approvals
+"RTN","PRSAOTX",19,0)
+ F DA=0:0 S DA=$O(^PRST(458.2,"AS",DFN,DA)) Q:DA<1  D LST Q:QT  S ^TMP($J,TLI,DA)=DFN
+"RTN","PRSAOTX",20,0)
+ Q
+"RTN","PRSAOTX",21,0)
+OT ; Process action
+"RTN","PRSAOTX",22,0)
+ S X=ESNAM,X1=DUZ,X2=DA D EN^XUSHSHP
+"RTN","PRSAOTX",23,0)
+ S $P(^PRST(458.2,DA,0),"^",8)=$S($P(DFN,"^",2)="D":"D",1:ACT) K ^PRST(458.2,"AS",+DFN,DA)
+"RTN","PRSAOTX",24,0)
+ S $P(^PRST(458.2,DA,0),"^",16,18)=DUZ_"^"_NOW_"^"_X Q
+"RTN","PRSAOTX",25,0)
+LST ; Display Request
+"RTN","PRSAOTX",26,0)
+ S Z=$G(^PRST(458.2,DA,0)) Q:Z=""  D:'TLH HDR D:$Y>(IOSL-4) HDR Q:QT
+"RTN","PRSAOTX",27,0)
+ S NUM=NUM+1,X=$P(Z,"^",3) D DTP^PRSAPPU S R(NUM)=DA
+"RTN","PRSAOTX",28,0)
+ W !,$J(NUM,2)," ",Y," ",$P($G(^PRSPC(DFN,0)),"^",1),?42,$P(Z,"^",6)," Hrs. ",$S($P(Z,"^",5)="CT":"COMP TIME/CREDIT HRS",1:"OVERTIME")
+"RTN","PRSAOTX",29,0)
+ I $P(Z,"^",5)="OT",$P(Z,"^",10) S ECST=ECST+$P(Z,"^",10)
+"RTN","PRSAOTX",30,0)
+ S X=$P(Z,"^",9) I X'="" W " on T&L ",X
+"RTN","PRSAOTX",31,0)
+ S Y=$P(Z,"^",7) W:Y'="" !?10,Y S NF=NF+1 Q
+"RTN","PRSAOTX",32,0)
+HDR ; Display Header
+"RTN","PRSAOTX",33,0)
+ I TLH R !!,"Press RETURN to Continue.",X:DTIME S:'$T!(X["^") QT=1 Q:QT
+"RTN","PRSAOTX",34,0)
+ W:$E(IOST,1,2)="C-" @IOF W !?26,"VA TIME & ATTENDANCE SYSTEM",!?21,"OVERTIME & COMP TIME/CREDIT HRS APPROVAL"
+"RTN","PRSAOTX",35,0)
+ S Z0=$G(^PRST(455.5,TLI,0)),Z1=$P(Z0,"^",5),Z1=$P($G(^DIC(49,+Z1,0)),"^",1) I $P(Z0,"^",6)'="" S Z1=Z1_", "_$P(Z0,"^",6)
+"RTN","PRSAOTX",36,0)
+ S Z1=$P(Z0,"^",1)_" "_Z1 W !!?(80-$L(Z1)\2),Z1,! S TLH=1 Q
+"RTN","PRSAOTX",37,0)
+CAN ; Process selective disapproval
+"RTN","PRSAOTX",38,0)
+ R !,"Disapprove which Items: ",Y:DTIME I '$T!(Y["^") S K1=0 Q
+"RTN","PRSAOTX",39,0)
+ F K=1:1 S K1=$P(Y,",",K) Q:K1=""  S K2=$S(K1["-":$P(K1,"-",2),1:+K1),K1=+K1 D  G:'K1 CAN F K3=K1:1:K2 S DA=$G(R(K3)) I DA S $P(^TMP($J,TLI,DA),"^",2)="D"
+"RTN","PRSAOTX",40,0)
+ .I K1'<1,K1'>NUM,K1?1N.N Q
+"RTN","PRSAOTX",41,0)
+ .I K2'<1,K2'>NUM,K2?1N.N Q
+"RTN","PRSAOTX",42,0)
+ .W *7,!,"  Enter Numbers, or Range of Items (e.g., 1,3-5,7)"
+"RTN","PRSAOTX",43,0)
+ .S K1=0 Q
+"RTN","PRSAOTX",44,0)
+ Q
+"RTN","PRSAOTX",45,0)
+EX F TLI=0:0 S TLI=$O(^TMP($J,TLI)) Q:TLI<1  S TLE=$P($G(^PRST(455.5,TLI,0)),"^",1) D APP^PRSASAL
+"RTN","PRSAOTX",46,0)
+ G ^PRSAPPX
+"VER")
+8.0^22.0
+"BLD",8238,6)
+^118
+**END**
+**END**

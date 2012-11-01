@@ -1,0 +1,213 @@
+$TXT Created by ALSAHHAR,SAMI at CMNT.FO-BIRM.MED.VA.GOV  (KIDS) on Tuesday, 01/25/11 at 10:48
+=============================================================================
+Run Date: APR 27, 2011                     Designation: PSS*1*155
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #143                      Status: Released
+                  Compliance Date: MAY 28, 2011
+=============================================================================
+
+Associated patches: (v)PSS*1*110   <<= must be installed BEFORE `PSS*1*155'
+                    (v)PSS*1*144   <<= must be installed BEFORE `PSS*1*155'
+                    (v)PSS*1*147   <<= must be installed BEFORE `PSS*1*155'
+                    (v)PSN*4*262   <<= must be installed BEFORE `PSS*1*155'
+
+Subject:  SUPRA-THERAPEUTIC DOSAGES
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ This patch addresses the New Service Request (NSR) #20070434 to prevent
+ the inadvertent creation of supra-therapeutic possible dosages for high
+ risk medications during the dosage creation segment of Pharmacy Data
+ Management (PDM) and National Drug File (NDF) updates.  The Pharmacy Data
+ Management V. 1.0 and the National Drug File V. 4.0 were modified
+ to satisfy the request. The NDF portion is addressed in patch PSN*4*262.
+  
+ This patch has the following enhancements:
+  
+ 1. This enhancement utilizes three new fields that were added to the
+    VA PRODUCT file (#50.68) as part of patch PSN*4*261. These fields will
+    be used during the Match/Rematch process of the Drug Enter/Edit [PSS
+    DRUG ENTER/EDIT] and the Enter/Edit Dosages [PSS EDIT DOSAGES] options
+    to determine if possible dosages should be auto- created or not. The
+    three fields are:
+          - CREATE DEFAULT POSSIBLE DOSAGE field (#40)
+          - POSSIBLE DOSAGES TO CREATE field (#41)
+          - PACKAGE field (#42)
+  
+ When CREATE DEFAULT POSSIBLE DOSAGE field (#40) is "YES", then the
+ existing functionality of auto-creating possible dosages will be retained.
+ When this field is "NO", it will be used in combination with the value in
+ POSSIBLE DOSAGES TO CREATE field (#41) to determine the auto-creation of
+ possible dosages.
+  
+ The following conditions will apply when CREATE DEFAULT POSSIBLE DOSAGE
+ field (#40) is "NO":
+  
+    a. If POSSIBLE DOSAGES TO CREATE field (#41) is "NO", no possible
+       dosages will be auto-created and the following message will be
+       displayed:
+  
+      "Due to National Drug File settings no possible dosages were
+       auto-created."
+  
+    b. If POSSIBLE DOSAGES TO CREATE field (#41) is "O", 1x possible dosage
+       will be auto-created for the package specified by the new PACKAGE
+       field (#42) and the following message will be displayed:
+  
+       "Due to National Drug File settings only one possible dosage will be
+        auto-created.
+        If other dosages are needed, create POSSIBLE DOSAGES or LOCAL
+        POSSIBLE DOSAGES as appropriate."
+  
+    c. If POSSIBLE DOSAGES TO CREATE field (#41) is "B", 1x and 2x possible
+       dosages will be auto-created for the package specified by the new
+       PACKAGE field (#42).
+  
+ 2. This patch retires the Auto Create Dosages [PSS DOSAGE CONVERSION]
+    option. This option is retired because, if it is run inadvertently, it
+    will delete all existing "Possible Dosages" and "Local Possible
+    Dosages" and will re-set the Possible Dosages back to NDF settings. The
+    changes that were entered locally by the site for "Possible Dosages"
+    and "Local Possible Dosages" will be lost. Upon patch installation,
+    this option will be removed from the Dosages [PSS DOSAGES MANAGEMENT]
+    menu.
+  
+ Associated PSIs:
+ ===============
+ PSPO #1614
+  
+ New Service Request (NSR):
+ ==========================
+ 20070434 - Analysis to prevent creation of supra-therapeutic dosages 
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ HD0000000370002
+  
+  
+ Test Sites:
+ ===========
+ Hines, IL
+ New Jersey HCS
+ Oklahoma City, OK
+  
+  
+ Documentation Retrieval:
+ ========================
+ The documentation is available on the ANONYMOUS.SOFTWARE directory at one
+ of the following Office of Information (OI) Field Offices.
+  
+    Albany
+    Hines
+    Salt Lake City
+  
+ Sites may retrieve documentation in one of the following ways.
+  
+ (1) The preferred method is to FTP the files from
+     download.vista.med.va.gov, which will transmit the files from the
+     first available FTP server.
+  
+ (2) Sites may also elect to retrieve documentation directly from a
+     specific server listed below.
+  
+     Albany              ftp.fo-albany.med.va.gov
+     Hines               ftp.fo-hines.med.va.gov
+     Salt Lake City      ftp.fo-slc.med.va.gov
+  
+ The documentation distribution includes the following.
+  
+    FILE NAME                    DESCRIPTION
+  
+    PSS_1_UM_R0411.PDF           Pharmacy Data Management User Manual
+    PSS_1_P155_UM_CP.PDF         Pharmacy Data Management User Manual
+                                 Change Pages
+    PSS_1_TM_R0411.PDF           Pharmacy Data Management Technical
+                                 Manual/Security Guide
+    PSS_1_P155_TM_CP.PDF         Pharmacy Data Management Technical
+                                 Manual/Security Guide Change Pages
+    SUPRA_RN.PDF                 Analysis to Prevent Creation of 
+                                 Supra-therapeutic Dosages Release Notes
+  
+ (3) Documentation can also be retrieved from the VA Software Document
+     Library (VDL) on the Internet at the following address:
+     http://www.va.gov/vdl.
+  
+  
+ Install Information:
+ ====================
+ This patch can be installed with users on the system. Installation will
+ take less than 1 minute. Suggested time to install: non-peak requirement
+ hours.
+  
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+  
+  3. From this menu, you may select to use the following options
+     (when prompted for INSTALL NAME, enter PSS*1.0*155):
+    a. Backup a Transport Global - this option will create a backup
+       message of any routines exported with the patch. It will NOT
+       backup any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - this option will
+       allow you to view all changes that will be made when the patch
+       is installed. It compares all components of the patch (routines,
+       DDs, templates, etc.).
+    c. Verify Checksums in Transport Global - this option will ensure
+       the integrity of the routines that are in the transport global.
+  
+  4. Use the Install Package(s) option and select the package PSS*1.0*155.
+  
+  5. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//" respond NO. 
+  
+  6. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+     respond NO.
+  
+  7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 36
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDEE
+    Before: B91898198   After: B93197121  **3,5,15,16,20,22,28,32,34,33,
+                                           38,57,47,68,61,82,90,110,155**
+Routine Name: PSSDOS
+    Before: B61025597   After: B84561151  **38,49,50,47,129,147,155**
+Routine Name: PSSDOSCR
+    Before: B51826396   After:    Delete  
+Routine Name: PSSDOSCX
+    Before: B30691990   After:    Delete  
+Routine Name: PSSDOSER
+    Before: B56720883   After: B77903107  **34,38,50,57,47,68,82,125,129,
+                                           144,155**
+Routine Name: PSSUTIL
+    Before: B91400007   After: B98434598  **34,38,147,155**
+Routine Name: PSSUTIL3
+    Before:       n/a   After:  B6535118  **155**
+
+=============================================================================
+User Information:
+Entered By  : ALSAHHAR,SAMI                 Date Entered  : MAY 13, 2010
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: MAR 29, 2011
+Released By : TEAGUE,LYN                    Date Released : APR 27, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

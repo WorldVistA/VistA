@@ -1,0 +1,317 @@
+$TXT Created by ROCHA,MARCELO at CFDA.FO-BIRM.MED.VA.GOV  (KIDS) on Wednesday, 02/08/12 at 10:34
+=============================================================================
+Run Date: MAR 27, 2012                     Designation: PSX*2*70
+Package : PSX - CMOP                          Priority: Mandatory
+Version : 2        SEQ #64                      Status: Released
+                  Compliance Date: APR 27, 2012
+=============================================================================
+
+Associated patches: (v)PSX*2*69    <<= must be installed BEFORE `PSX*2*70'
+
+Subject: FDA MED GUIDE - INCREMENT III
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch contains software modifications to the Consolidated Mail 
+ Outpatient Pharmacy (CMOP) V. 2.0 application to support the Food and Drug
+ Administration (FDA) Medication Guides - Increment 3 project. The project
+ objective is to allow pharmacy staff to retrieve the FDA Medication Guide
+ for prescription items that contain FDA approved information that can help
+ patients avoid adverse events. The FDA requires that Medication Guides be
+ included with certain prescribed drugs and biological products when the
+ Agency determines that:
+  
+  . Certain information is necessary to prevent serious adverse effects 
+  . Patient decision-making should be advised by information about a known
+    serious side effect with a product, or 
+  . Patient adherence to directions for the use of a product is essential
+    to its effectiveness. 
+  
+ The features in the FDA Medication Guides project are being delivered in
+ incremental releases. This patch is part of the Increment 3 release, which
+ is the last planned release. The features included in this release are:
+  
+  . Ability to create and maintain a list of FDA Medication Guide printers
+    for a specific pharmacy division.
+  
+  . Automatic printing of the FDA Medication Guide along with prescription
+    labels on designated FDA Medication Guide printers without any direct
+    user interaction. 
+  
+  . Ability to enable or disable the automatic printing of the FDA
+    Medication Guide by pharmacy division.
+  
+  . Ability to reprint the FDA Medication Guide when reprinting a 
+    prescription label.
+  
+  . Ability to change the FDA Medication Guide printer at any point of the
+    dispensing process, similar to changing the label printer.
+  
+  . Ability to reprint the FDA Medication Guide for any given prescription
+    fill or the latest FDA Mediation Guide available for the medication on
+    the prescription.
+   
+  . Display on the prescription label that an FDA Medication Guide is
+    available, and if printed, needs to accompany the documentation before
+    being given to the patient.
+  
+  . Changes to the prescription label activity logs showing which specific
+    FDA Medication Guide document printed along with the label.
+  
+  . Changes to the Consolidated Mail Outpatient Pharmacy (CMOP) Event log
+    showing which specific FDA Medication Guide document was available 
+    for the medication when the prescription fill was transmitted to CMOP.
+  
+  . Introduction of a PC based Java software component to enable the
+    automatic printing of an FDA Medication Guide from within VistA. The
+    software does not require any direct user interaction. The software 
+    identifies a request from VistA for a specific FDA Medication Guide
+    and automatically sends it to the FDA Medication Guide printer
+    selected by the user within VistA when dispensing the medication.
+  
+  . Ability to update the Windows network printer name for a specific
+    device through the Kernel application. Once the pharmacist selects a
+    printer to print the FDA Medication Guide Vista will retrieve the 
+    Windows name for the printer and will pass it on to the Java
+    application responsible for printing the document.
+      
+ Below is a list of all the applications involved in this release along
+ with their patch number:
+   
+    APPLICATION/VERSION                                    PATCH
+    -----------------------------------------------------------------
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0    PSX*2*70
+    NATIONAL DRUG FILE (NDF) V. 4.0                        PSN*4*264
+    OUTPATIENT PHARMACY (OP) V. 7.0                        PSO*7*367
+    KERNEL V. 8.0                                          XU*8*566
+     
+ The following modification is included in this patch (PSX*2*70):
+  
+ The process responsible for the transmission of prescriptions from Outpatient
+ Pharmacy to CMOP will be modified to record the current FDA Medication Guide
+ document name in the CMOP Event Log in the PRESCRIPTION file (#52) if one 
+ exists for the medication in the prescription being transmitted. Such 
+ information will be displayed within Outpatient Pharmacy application when the
+ user selects to view the CMOP Event Log for a specific prescription.
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)         Field Name (#)                      New/Modified/Deleted
+ ------------------    ----------------------------------- --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #                              New/Modified/Deleted
+ ---------             ------                              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                           New/Modified/Deleted
+ ---------------                                           --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name           Type                                New/Modified/Deleted
+ -----------           ----                                --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                                             New/Modified/Deleted
+ -------------                                             --------------------
+ N/A
+   
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                New/Modified/Deleted
+ -------------      ----      ------------------           --------------------
+ N/A 
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20061203
+   
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+   
+ Test Sites:
+ -----------
+ LITTLE ROCK, AR
+ OKLAHOMA CITY, OK
+ ORLANDO, FL
+ PALO ALTO HCS
+     
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ File Description                            File Name               FTP Mode
+ ----------------------------------------------------------------------------
+ FDA Medication Guides Project         PHAR_FDA_MED_GUIDE_REL3_RN.pdf
+ Increment 3 Release Notes                                           Binary
+ FDA Medication Guides Project         PHAR_FDA_MED_GUIDE_REL3_IG_VISTA.pdf
+ Increment 3 VistA Installation Guide                                Binary
+ FDA Medication Guides Project         PHAR_FDA_MED_GUIDE_REL3_IG_JAVA.pdf
+ Increment 3 Java Installation Guide                                 Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The 4 patches released with this project should be installed in the
+ following order: 
+  
+    1. XU*8*566
+    2. PSN*4*264
+    3. PSO*7*367
+    4. PSX*2*70
+  
+ In addition to this patch, the FDA Medication Guide Increment 3 project
+ also contains a Java Application component, which is distributed in the
+ PSO_7_P367.ZIP file. This file contains an executable file that should
+ be installed on the site print server. This application will be 
+ responsible for automatically printing FDA Medication Guides. For
+ detailed installation instructions please refer to the "FDA Medication
+ Guides Project Installation Guide" document.
+  
+ FTP Instructions:
+ =================
+ The files listed below may be obtained via FTP.  The preferred method is 
+ to FTP the files from:
+  
+    download.vista.med.va.gov
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+    CIO FIELD OFFICE   FTP ADDRESS                 DIRECTORY
+    ----------------   -------------------------   --------------------
+    Albany             ftp.fo-albany.med.va.gov    [anonymous.software]
+    Hines              ftp.fo-hines.med.va.gov     [anonymous.software]
+    Salt Lake City     ftp.fo-slc.med.va.gov       [anonymous.software]
+  
+  
+    File Name                       Contents                   Format
+    --------------                  -------------------------- ---------
+    PSO_7_367.ZIP                   FDAMedGuidesPrinter folder Binary
+  
+  
+ Installation Instructions
+ -------------------------
+ DO NOT install or schedule the patch PSX*2*70 to install when prescriptions
+ are being transmitted to CMOP. Wait for the CMOP transmission to finish or
+ complete the installation before the transmission starts. The patch 
+ installation will take less than 2 minutes. It is recommended that the
+ installation be queued for off peak hours.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSX*2.0*70).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSX*2.0*70.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+   7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;CMOP;**[Patch List]**;11 Apr 97;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSXRPPL
+    Before: B61658138   After: B67417884  **3,23,33,28,40,42,41,48,62,
+                                           58,66,65,69,70**
+Routine Name: PSXRSUS
+    Before: B75856096   After: B75996121  **2,3,24,23,26,28,41,57,48,70**
+Routine Name: PSXRXU
+    Before: B28830470   After: B29946410  **3,28,41,57,48,70**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : NOV 09, 2009
+Completed By: GREER,MIKE                    Date Completed: MAR 05, 2012
+Released By : PARRIS,CHRIS                  Date Released : MAR 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

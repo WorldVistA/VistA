@@ -1,0 +1,200 @@
+
+=============================================================================
+Run Date: MAR 07, 2011                     Designation: PSS*1*151
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #138                      Status: Released
+                  Compliance Date: JUL 19, 2011
+=============================================================================
+
+Associated patches: (v)PSS*1*147   <<= must be installed BEFORE `PSS*1*151'
+
+Subject: IV COMPONENT DBIA 5504
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is being released in conjunction with CPRS GUI v28.  CPRS GUI 
+ version 28 consists of five host files: PSS_1_151.KID, PSS_1_142.KID, 
+ CPRS28_REQUIRED.KID, OR_PSJ_PXRM_28.KID and CPRS28_RELATED.KID. These 
+ five host files contain software that support CPRS GUI v28 
+ functionality.  The host files were created to simplify installation at 
+ Veterans Health Administration (VHA) facilities and to assist in the 
+ phased implementation release method for CPRS v28.  CPRS v28 will follow 
+ a phased implementation.  To see current status and target dates for 
+ Sites/VISN/Region please refer to the following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+ Please refer to the "CPRS GUI v.28 and Associated Patches Installation 
+ Guide" for installation sequence information.  This document is exported 
+ as OR_30_280IG.doc and OR_30_280IG.pdf and is included in OR_30_280.ZIP.
+  
+ Installation and set-up information specific to PSS*1*151 is included in 
+ "CPRS GUI v.28 and Associated Patches Installation Guide".   
+  
+ Patch information:
+ PSS patches exported as two host files support CPRS v28 functionality.
+ PSS_1_142.KID
+ PSS_1_151.KID
+  
+ CPRS28_REQUIRED.KID includes the required patches needed to support CPRS 
+ GUI v28 functionality.  It includes builds for the following patches:
+ OR*3.0*293
+ GMRC*3.0*66
+ GMRA*4.0*45
+  
+ OR_PSJ_PXRM_28.KID includes the CPRS, Pharmacy and Clinical Reminders 
+ patches required for CPRS GUI v28.  It includes builds for the following 
+ patches: 
+ OR*3.0*280
+ PSJ*5.0*226
+ PXRM*2.0*16
+  
+ CPRS28_RELATED.KID includes the related patches needed to support CPRS 
+ GUI v28 functionality.  It includes builds for the following patches:
+ GMRC*3.0*64
+ GMTS*2.7*90
+ OR*3.0*337
+  
+ Installation of these five host files should be coordinated among the 
+ packages affected because these host files will install the software 
+ needed to implement CPRS GUI v28.
+  
+  
+ The patch contains a new routine PSSDSAPA that will perform the following
+ function:
+  
+    The routine returns a default value for the ADDITIVE FREQUENCY field
+    (#18) of the IV ADDITIVES file (#52.6) for a specified entry in the
+    PHARMACY ORDERABLE ITEM file (#50.7).  This field may be set to One
+    Bag/Day or, All Bags. All active IV ADDITIVES file (#52.6) entries that
+    are matched to the PHARMACY ORDERABLE ITEM file (#50.7) entry are
+    evaluated. For any value other than null to be returned, all values for
+    the ADDITIVE FREQUENCY field (#18) in the matched IV ADDITIVES file
+    (#52.6) entries must be set to the same value.
+  
+ This function will be used for continuous IV orders with additives that
+ are entered by CPRS. The ability for CPRS to use this call is documented
+ in DBIA #5504. The entrypoint to call is $$IV^PSSDSAPA(pointer to the
+ PHARMACY ORDERABLE ITEM file (#50.7)).
+   
+  
+ This patch addresses the following New Service Request (NSR): 
+ -------------------------------------------------------------
+ There is no NSR associated with this patch. 
+   
+   
+ This patch addresses the following Remedy Ticket(s): 
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.  
+   
+   
+ Overview of Remedy Ticket(s): 
+ -----------------------------
+ There are no Remedy tickets associated with this patch. 
+  
+  
+ Components Exported With Patch: 
+ -------------------------------
+ There are no components other than the listed routine in this patch.
+  
+  
+ Documentation Retrieval:
+ ------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch will be downloaded to sites from the FTP address as directed by the
+ CPRS Implementation team.
+   
+ This documentation will be in the form of Adobe Acrobat files.
+  
+ Please note that the documentation is being released in conjunction with
+ Pharmacy Data Management patch PSS*1.0*142, which is why the name of the
+ Change Pages document below refers to only the PSS*1.0*142 patch. 
+   
+ The updated documentation associated with this patch is: 
+  
+ File Name               Contents                          Retrieval Format
+ --------------------------------------------------------------------------
+ PSS_1_TM_R0211.PDF PDM  Technical Manual (Revised February 2011)  (binary)
+ PSS_1_P142_TM_CP.PDF    PDM Technical Manual Change Pages         (binary)
+ OR_30_280IG.PDF         CPRS GUI v.28 and Associated Patches
+                         Installation Guide                        (binary)
+   
+ Once released, documentation may be retrieved from the VA Software
+ Document Library (VDL) on the internet at the following address,
+ http://www.va.gov/vdl
+                       
+  
+ Test Sites
+ ----------
+ BOISE, ID
+ CHARLESTON, SC
+ CLEVELAND, OH
+ HEARTLAND-EAST HCS
+ LOMA LINDA, CA
+ NORTHERN CALIFORNIA HCS
+ PALO ALTO HCS
+ PHILADELPHIA, PA
+ SAN DIEGO, CA
+ TAMPA, FL
+ TUSCALOOSA, AL
+                 
+  
+        ================INSTALLATION INSTRUCTIONS =================
+ This patch is exported as PSS_1_151.KID
+    
+   CPRS v28 and associated patches will follow a phased implementation.  
+   Software retrieval of PSS_1_151.KID will be coordinated with the 
+   phased implementation.  To see current status and target dates for 
+   Sites/VISN/Region please refer to the following site:
+   
+   http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+   
+   For more details and instructions related to CPRS 28 and its related 
+   associated patches please refer to the install guide OR_30_280IG.DOC.
+    
+   
+   This patch should be loaded during non-peak hours to minimize disruption
+   to users.  Users may be on the system during installation. Installation
+   will take less than 5 minutes.
+   
+   1. From the Kernel Installation and Distribution System Menu, select the
+      Installation menu.
+    
+   2. From this menu, you may elect to use the following options (when 
+      prompted for INSTALL NAME, enter PSS*1.0*151):
+        a.  Backup a Transport Global
+        b.  Compare Transport Global to Current System
+        c.  Verify Checksums in Transport Global
+    
+   3. Use the Install Package(s) options and select the package PSS*1.0*151
+  
+   4. When prompted 'Want KIDS to INHIBIT LOGONS during install? YES//',
+      respond "NO".
+    
+   5. When prompted 'Want to DISABLE Scheduled Options, Menu Options and 
+      Protocols? YES//', respond "NO".
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDSAPA
+    Before:       n/a   After:  B3032893  **151**
+
+=============================================================================
+User Information:
+Entered By  : KOPP,TERRY M                  Date Entered  : OCT 27, 2009
+Completed By: YARBER,KIMBERLY               Date Completed: MAR 07, 2011
+Released By : VECE,VIRGINIA                 Date Released : MAR 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

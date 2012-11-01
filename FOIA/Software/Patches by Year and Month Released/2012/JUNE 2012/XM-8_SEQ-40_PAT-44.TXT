@@ -1,0 +1,301 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 12/12/11 at 12:48
+=============================================================================
+Run Date: JUN 25, 2012                     Designation: XM*8*44
+Package : XM - MAILMAN                        Priority: Mandatory
+Version : 8        SEQ #40                      Status: Released
+                  Compliance Date: JUL 26, 2012
+=============================================================================
+
+Associated patches: (v)XM*8*27     <<= must be installed BEFORE `XM*8*44'
+
+Subject: LINUX SUPPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch provides the ability to run the VistA Mailman listeners under
+ xinetd on Cache/Linux systems.  Xinetd is software for managing incoming 
+ connections over TCP/IP ports on Linux and Unix systems similarly to 
+ VMS TCPIP Services used on VMS systems.  All sites should install this 
+ patch regardless of their operating system, but for sites using Linux 
+ there are additional installation steps for configuring the listeners. 
+  
+ Sites that use Mailman on Linux are required to configure their Mailman 
+ Listener to run under xinetd if they have not already done so.  This is VHA's 
+ standard for Linux systems and is recommended by both Engineering 
+ Services and Product Support. 
+  
+  
+ Associated NSR:
+ ===============
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ HD0000000491950 -  Linux XINETD support  
+  
+   
+ Participating Test Sites:
+ =========================
+ El Paso, TX
+ Louisville, KY
+ Upstate New York HCS
+  
+   
+ REMEDY OVERVIEW:
+ ================
+ 1)  HD0000000491950 - Linux XINETD support
+                          
+   
+ Problem: 
+ --------
+ In order to support the shift to Linux based operating systems
+ modifications are necessary to the TCPIP entry point in Mailman.
+    
+  
+ Resolution:
+ -----------
+ Modify the TCPIP entry point in Mailman so that it works for both
+ VMS and Linux based Operating Systems.
+   
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+ ***************************************************************************** 
+ Users may be on the system.  You do not need to stop TaskMan, but you 
+ should stop the background filer.  Failure to do so may result in "source 
+ routine edited" errors.
+  
+ On the Manage MailMan:Local Delivery Management menu, use the following 
+ option to stop the background filer:
+        STOP background filer
+ Are you sure you want the BACKGROUND FILERS to STOP delivering mail? NO// YES
+                                                                           ===
+ << Background filer will stop soon. >>
+ *****************************************************************************
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter XM*8.0*44)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package XM*8.0*44.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+  
+    7.  Start the background filer.
+        On the Manage MailMan:Local Delivery Management menu, use the
+        Following option to start the background filer:
+        START background filer
+ << Background filer will start soon. >>
+  
+  
+ Instructions for Configuring xinetd Mailman Listener on Linux Systems:
+ ==========================================================================
+ ***NOTE: Only Linux systems currently running MailMan would need to 
+    have changes made beyond the patch install. 
+  
+ 1)  A single user account must be established, named '<scd>tcpip' 
+ where <scd> should be replaced with the three character site code 
+ assigned by the Regional Data Center, for the use of the TCP/IP listeners 
+ that will run under xinetd.  If a user account has not yet been 
+ established for that purpose and you need assistance then please enter 
+ a Remedy ticket for Product Support.
+  
+ 2)  Each Mailman port number used will be the standard SMTP port 25.
+ **************************************************************************
+ NOTE: For steps 3) and 4), Xinetd configuration files will be 
+ distributed to all Linux sites as template files, so they should already 
+ exist. If needed, please enter a Remedy ticket to request assistance from 
+ Product Support. 
+ **************************************************************************
+    
+ 3)  An xinetd configuration file is required for the VistA Mailman 
+ listener.  The file should be located in the /etc/xinetd.d directory and 
+ should be named <scd>_xmb<x>, where <scd> is the local three letter site 
+ code assigned by the Regional Data Center, and <x> replaced with a 'p' 
+ for production systems, 't' on test systems, or 'l' on legacy systems.  
+ The file may be edited using the Linux vi editor. 
+   
+ The contents of the configuration file is as follows, except that these 
+ parameters need to be modified:
+  
+        user   - Set to the name of the user established per step 1) above.
+        port   - Set to the port number to the standard SMTP port 25
+        bind   - Set to the IP address of the interface that the VistA 
+                 configuration alias the service should be bound to.
+        env    - Modify the value of the TZ environment variable to match 
+                 your site's time zone.
+        server - In the example Cache' is shown to be installed in 
+                 the /srv/vista/lbe/cache/lber1tsvr directory.  Change
+                 it to match your system. 
+   server_args - In the example the Cache' configuration name is 
+                 'lber1tsvr' and the login namespace is shown as
+                 LBETST. Change it to match your system.
+  
+ Xinetd Configuration file for the VistA Mailman Listener
+ ======================================================== 
+ #default: on
+ #description: VA VistA Mailman Listener 
+ #
+ service lbe_ xmbt
+ {
+     type = UNLISTED
+     disable = yes
+     flags = REUSE
+     socket_type = stream
+     protocol = tcp
+     port = 25
+     bind =10.226.3.14
+     wait = no
+     user = lbetcpip
+     env += TZ=/usr/share/zoneinfo/US/Eastern
+     server = /srv/vista/lbe/cache/lber1tsvr/bin/csession
+     server_args = lber1tsvr -ci -U LBETST CACHEVMS^XMRUCX
+     instances = UNLIMITED
+     per_source = UNLIMITED
+ }
+  
+ #end
+  
+  
+ 4)  Shutdown the current Vista mailman listener. 
+  
+     1.  Stop the MailMan Listener on all nodes. You will need to 
+         perform the steps below on each Node where you run a 
+         MailMan Listener.
+  
+     1.1 Log on and enter programmer mode. Then use the Cache System 
+         Status utility to locate the PID/JOB number of the MailMan 
+         listener. The job will be tied to port 25 and will be 
+         using the %ZISTCPS routine. It should look similar to the 
+         one below. Make note of the Process Number.
+  
+     Select Systems Manager Menu Option: Programmer Options
+     Select Programmer Options Option: Programmer mode
+  
+     VAH>D ^%SS
+  
+ Process  Devices    KB Namespace Routine  CPU,Glob  Pri  UIC  
+ .
+ .
+ 204102F4 |TCP|1972  52 %SYS  %cmtP    1310,192  4   1,4  
+ 2041665C |TCP|25    41 DEV   %ZISTCPS 226,35   4 50,62  ? MailMan Listener. 
+ 204110C8 |TCP|9400  52 CML    XWBTCPL  3064,404    4 200,201
+ .
+ .
+  
+  
+     1.2 Use the %CD utility and move to the %SYS namespace. Then use 
+         the ^RESJOB utility to stop the job.
+  
+     DEV>D ^%CD
+  
+     Namespace: %SYS
+     You're in namespace %SYS
+     Default directory is _$1$DKA200:[CACHESYS.ISC3A6.MGR]
+     %SYS>D ^RESJOB
+  
+     Force a process to quit Cache
+  
+     Process ID (? for status report): 2041665C
+  
+     Process ID (? for status report): 
+  
+     %SYS>D ^%SS (Check again and make sure the XM Listener Job has stopped)
+  
+     Remember to perform the Steps above on each node that has a MailMan 
+     Listener running.
+  
+  
+ 5)  In order to have xinetd load the new configurations files, enter 
+ the following command at the Linux shell prompt:
+  
+    /sbin/service xinetd reload
+  
+ 6)  Test mail communication following instructions below.
+  
+     Telnet to the node and request a connection to a specific port
+     The format on a VMS system is TELNET <IP address> <Port#>
+  
+     ( An Example to the Birmingham OI account at port 25)
+     $ TELNET 10.4.21.1 25
+  
+     (The request is allowed and VistA MailMan Answers)
+  
+     %TELNET-I-TRYING, Trying ... 10.4.21.1
+     %TELNET-I-SESSION, Session 01, host 10.4.21.1, port 25
+     220 FO-BIRM.MED.VA.GOV MailMan 8.0 ready
+  
+     (Type QUIT to drop the connection)
+  
+     QUIT
+  
+     221 FO-BIRM.MED.VA.GOV Service closing transmission channel
+     %TELNET-S-REMCLOSED, Remote connection closed
+     -TELNET-I-SESSION, Session 01, host 10.4.21.1, port 25
+  
+  
+     If the connection test is successful you can try sending mail 
+     from another Vista system, such as FORUM, to your system to 
+     verify that the service is working.
+  
+  
+ **************************************************************************
+ NOTE: To request assistance from Product Support or for more detailed
+ instructions regarding any of the steps please enter a Remedy ticket.
+ There also may be additional documentation available online for 
+ for configuring xinetd.  
+ **************************************************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;MailMan;**[Patch List]**;Jun 28, 2002;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XMRUCX
+    Before:  B3642350   After:  B3929981  **6,19,25,27,44**
+ 
+Routine list of preceding patches: 27
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : JUN 13, 2011
+Completed By: SESSLER,APRIL                 Date Completed: JUN 13, 2012
+Released By : APOLONIO,AUGUSTO              Date Released : JUN 25, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

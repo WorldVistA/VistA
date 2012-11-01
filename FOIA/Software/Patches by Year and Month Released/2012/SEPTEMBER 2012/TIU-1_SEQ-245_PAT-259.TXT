@@ -1,0 +1,212 @@
+$TXT Created by MCCLENAHAN,MARGARET E E at DEVCUR.FO-SLC.MED.VA.GOV  (KIDS) on Wednesday, 06/29/11 at 14:08
+=============================================================================
+Run Date: SEP 07, 2012                     Designation: TIU*1*259
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #245                      Status: Released
+                  Compliance Date: OCT 08, 2012
+=============================================================================
+
+Associated patches: (v)TIU*1*113   <<= must be installed BEFORE `TIU*1*259'
+                    (v)TIU*1*227   <<= must be installed BEFORE `TIU*1*259'
+
+Subject: ADD DOCMT DATE TO OVERDUE ALERTS, CHANGE SORT ON UNSIGNED/UNCOS REPORT
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch addresses two issues.
+  
+ First, it adds the date of the document to alerts for OVERDUE signatures.
+  
+ Second, it changes TIU VISTA MRT Option 
+     Unsigned/Uncosigned Report [TIU UNSIGNED/UNCOSIGNED REPORT]
+ so that documents requiring a co-signature are listed by the expected 
+ cosigner rather than the author and appear under the service of
+ the expected cosigner.
+  
+  
+ Patch Components
+ ================
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+  
+ PSI 1005 'CPRS "Alert Date/Time" notification column for TIU alerts does 
+ not reflect when the alert originated but rather the last time the TIU 
+ NIGHLY TASK option ran'
+  
+ OVERDUE for Signature alerts are regenerated regularly by a nightly 
+ task.  The date of the alert is the date it was regenerated, with no 
+ indication to the clinician of how long a document has remained unsigned. 
+ This makes it difficult for a clinician to prioritize the order in which 
+ to respond to alerts.
+  
+ Patch TIU*1*259 makes this change by adding the Date of the Note itself to
+ the message portion of the alert for all OVERDUE for SIGNATURE alerts:
+ OVERDUE for SIGNATURE, OVERDUE for COSIGNATURE, and OVERDUE for ADDITIONAL
+ SIGNATURE alerts.
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+ 1.      HD 265128 - TIU UNSIGNED ADDITIONAL SIGNER ALERTS DO NOT RETAIN 
+ THE DATE/TIME LISTED AS ADDTIONAL SIGNER.  
+  
+ Problem:
+ -------
+ OVERDUE for Signature alerts are regenerated regularly by a nightly 
+ task.  The date of the alert is the date it was regenerated, with no 
+ indication to the clinician of how long a document has remained unsigned.
+  
+ Resolution:
+ ----------
+ The date of the note itself has been added to the message portion of the 
+ alert.  Example:
+     Unsigned PAIN NOTE Dated 10/03/08 OVERDUE for SIGNATURE
+ Patch TIU*1*259 makes this change for all OVERDUE for SIGNATURE alerts: 
+ OVERDUE for SIGNATURE, OVERDUE for COSIGNATURE, and OVERDUE for 
+ ADDITIONAL SIGNATURE alerts.
+  
+ This solution was discussed and agreed upon by the CPRS Clinical 
+ Workgroup in their 2/25/09 meeting.
+  
+ 2.      HD 405787 Unsigned/Uncosigned Report always looks at the 
+ Service/Section of the author of the note
+  
+ Problem:
+ -------
+ The problem concerns TIU VISTA Option Unsigned/Uncosigned Report [TIU 
+ UNSIGNED/UNCOSIGNED REPORT] on the menu: Text Integration Utilities (MRT) 
+ [TIU MAIN MENU MRT].
+ In the Unsigned/Uncosigned Report, an uncosigned document is listed 
+ by the author under the service of the author instead of the expected
+ cosigner.
+  
+ Resolution:
+ ----------
+ An uncosigned document is now listed by the expected cosigner under the
+ service of the expected cosigner.
+  
+  
+ Test Sites:
+ ----------
+ Large Facility:
+ Durham, NC         Sally Kellum - Assoc Chief of Staff, Clin Informatics
+  
+ Large integrated Facility:
+ Heartland East
+ Karen Janek - Program Specialist CAC
+  
+ Large integrated Facility:
+ Palo Alto
+ Mary Lou Faustina - Clinical Application Coordinator
+  
+ Not able to finish Testing: 
+ Large integrated Facility:
+ Eastern Colorado HCS - Denver/Ft Lyon   
+ Belinda Dalton - Supervisor, R01 Health Applications OI&T
+  
+ Not able to finish Testing: 
+ Medium Facility:
+ Hudson Valley HCS - Montrose/Castle Point
+ Celeste Hill - IT SPECIALIST
+  
+  
+ Documentation Retrieval Instructions 
+ ------------------------------------ 
+ N/A - No documentation changes are necessary.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Patches TIU*1*113 and TIU*1*227 are required before TIU*1*259 can be
+ installed.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? YES//', respond YES, and DISABLE the TIU* Options and
+     Protocols.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     TIU*1.0*259:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+    select patch TIU*1.0*259 to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', respond "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', respond "YES", and DISABLE the TIU* Options and
+     Protocols.
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUALRT
+    Before: B47981995   After: B52527963  **21,84,79,88,58,61,151,158,
+                                           175,221,227,259**
+Routine Name: TIURDIV
+    Before: B58639766   After: B66574914  **113,259**
+ 
+Routine list of preceding patches: 113, 227
+
+=============================================================================
+User Information:
+Entered By  : MCCLENAHAN,MARGARET           Date Entered  : APR 05, 2011
+Completed By: SERVICE,JOHN                  Date Completed: SEP 05, 2012
+Released By : DILTZ-ANDARY,TAMARA           Date Released : SEP 07, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

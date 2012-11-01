@@ -1,0 +1,245 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 05/23/11 at 13:14
+=============================================================================
+Run Date: MAR 22, 2012                     Designation: OOPS*2*23
+Package : OOPS - ASISTS                       Priority: Mandatory
+Version : 2        SEQ #22                      Status: Released
+                  Compliance Date: APR 22, 2012
+=============================================================================
+
+Associated patches: (v)OOPS*2*7    <<= must be installed BEFORE `OOPS*2*23'
+                    (v)OOPS*2*21   <<= must be installed BEFORE `OOPS*2*23'
+
+Subject: OOPS GUI FIXES
+
+Category: 
+  - Routine
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+ This patch fixes the following issues:
+  
+ 1)  Allow the OWCP (Office of Workers' Compensation Programs)
+     CHARGEBACK SUFFIX field (#.8) field to accept numeric values
+ 2)  Issues with classifying Incident Outcome
+ 3)  Death is not checked on OSHA300 Report
+ 4)  Fix misleading description on the "Reason for Controvert 
+     Report" and the "Reason for Dispute Report"
+  
+ Associated Remedy ticket(s):
+ ----------------------------
+ 1)  HD0000000194501    Changing ASISTS OWCP CHARGEBACK CODES
+ 2)  HD0000000396917    ASISTS - Cannot save Classify Incident Outcome
+ 3)  HD0000000461742    Death is not checked on OSHA Report
+ 4)  HD0000000472221    ASISTS Reports Discrepancies
+   
+  
+ Test Sites:
+ -----------
+ VA Northwest Iowa HCS
+ Sioux Falls VAMROC
+ Wilkes-Barre VAMC
+  
+   
+ REMEDY OVERVIEW:
+ ================
+  
+ 1)  HD0000000194501    Changing ASISTS OWCP CHARGEBACK CODES
+   
+ Problem: 
+ --------
+ Currently, the OWCP CHARGEBACK SUFFIX field (#.8) from the STATION
+ subfile (#2262.03) in the ASISTS (Automated Safety Incident 
+ Surveillance and Tracking System) SITE PARAMETER (#2262) file only
+ allows values of two alpha characters and for certain stations, 
+ numerics are necessary. 
+    
+  
+ Resolution:
+ -----------
+ Modify the Data Dictionary for the OWCP CHARGEBACK SUFFIX field (#.8)
+ to allow numeric characters.  Also, need to modify code in the 
+ Graphical User Interface (GUI) that restricts this field to only Alpha
+ Characters. 
+   
+ 2)  HD0000000396917    ASISTS - Cannot save Classify Incident Outcome
+   
+ Problem: 
+ --------
+ When ASISTS updates the INCIDENT OUTCOME (#2260.095) subfile in the 
+ ASISTS ACCIDENT REPORTING (#2260) file it passes the actual names for
+ the INCIDENT CREATED BY (#7) and LAST EDITED BY (#9) fields rather 
+ than the DUZs (internal values).  So when there are multiple names, 
+ Fileman does not know who to resolve the name to for those fields and 
+ the update fails. 
+    
+   
+ Resolution:
+ -----------
+ Where it can, the GUI now passes the internal value of the user.  Also,
+ prior to filing, OOPSGUIC will check if the values representing the 
+ users are in internal or external format.  If they are in external
+ format then it will set the values to the internal values to
+ uniquely identify the users.
+  
+ 3)  HD0000000461742    Death is not checked on OSHA Report
+   
+ Problem: 
+ --------
+ When an incident has an "Incident Outcome" of death on the OSHA 
+ (Occupational Safety and Health Administration) report, the incident is
+ counted on the OSHA300 log, but the box indicating there was a death
+ is not checked. 
+    
+  
+ Resolution:
+ -----------
+ Modify the code in the GUI to make sure if an incident has an "Incident
+ Outcome" of death that the box is checked.
+  
+  
+ 4)  HD0000000472221    ASISTS Reports Discrepancies
+   
+ Problem: 
+ --------
+ On the ASISTS "Reason for Controvert Report" and the "Reason for Dispute
+ Report" the description of the count representing the amount of 
+ cases with additional free text detail is misleading.
+  
+ Resolution:
+ -----------
+ Based on the current description, users would expect the count to 
+ reflect the number of cases with ANY data in Block 36, when the 
+ actual count reflects cases with "State the reason in detail" data.
+ The description will be changed from:
+  
+ Number of Cases (from above) with data in Block 36:
+  
+ To:
+  
+ Number of Cases (from above) with additional "State 
+ the reason in detail" data in Block 36: 
+  
+ COMPONENTS:
+ ===========
+  
+                                       UP    SEND  DATA                USER
+                                       DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                 DD    CODE  W/FILE  DATA  PTRS  RIDE
+ --------------------------------------------------------------------------
+  
+ 2262        ASISTS SITE PARAMETER     YES   YES   NO                  NO
+ Partial DD: subDD: 2262.03    fld: .8 
+  
+  
+ SOFTWARE AND DOCUMENTATION RETRIEVAL:
+ =====================================
+   
+ FILE NAMES         DESCRIPTION             ADDITIONAL INFO      SIZE(kb)
+ ----------         -----------             ----------------     --------
+ oops2_p23.exe      ASISTS executable       BINARY               10325
+ oops2_0um.pdf      ASISTS User Manual      BINARY                5232
+ oops2_0ig.pdf      ASISTS Install Guide    BINARY                 400
+          
+   
+ The KIDS build will be distributed in the normal fashion. All VA Medical
+ Centers are encouraged to use the TCPIP FTP functionality to obtain the
+ install guide, GUI portion, and updated user manual of the software from
+ one of the following OI Field Offices:
+  
+ ANONYMOUS.SOFTWARE directories:
+  
+         OI Field Office        FTP Address             
+         ----------------       -----------              
+         Albany                 ftp.fo-albany.med.va.gov  
+         Hines                  ftp.fo-hines.med.va.gov  
+         Salt Lake City         ftp.fo-slc.med.va.gov
+         VistA Download Site    download.vista.med.va.gov
+  
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov> 
+  
+ **************************************************************************
+ NOTE: It has been determined that the install will not work with sites 
+ using SCCM as a method of distribution.  This is not a defect of ASISTS 
+ or the install file, but rather SCCM's inability to work with the install
+ file because it requires user interaction.  Due to certain customizable 
+ options available during the interactive install and following the 
+ initial ASISTS Installation user manual, it has been determined future 
+ distributions will go out as previous versions have as an INTERACTIVE 
+ INSTALL so this install WILL NOT work at sites using SCCM. 
+ **************************************************************************
+  
+        ================ INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  You may install 
+ these routines at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter OOPS*2.0*23)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       OOPS*2.0*23.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ASISTS;**[Patch List]**;Jun 03, 2002;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OOPSGUI1
+    Before: B34501859   After: B34497365  **4,8,7,11,15,18,20,21,23**
+Routine Name: OOPSGUIC
+    Before: B58713036   After: B65085017  **8,7,23**
+ 
+Routine list of preceding patches: 21
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : MAR 31, 2011
+Completed By: LANG,MICKEY                   Date Completed: MAR 19, 2012
+Released By : MORRIS,DELISA                 Date Released : MAR 22, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

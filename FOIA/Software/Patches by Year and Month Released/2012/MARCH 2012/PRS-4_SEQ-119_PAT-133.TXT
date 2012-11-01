@@ -1,0 +1,331 @@
+$TXT Created by TSAI,PEI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 11/03/11 at 11:28
+=============================================================================
+Run Date: MAR 15, 2012                     Designation: PRS*4*133
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #119                      Status: Released
+                  Compliance Date: APR 15, 2012
+=============================================================================
+
+
+Subject: COMP TIME EXPIRATION UPDATES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch introduces the functionality changes that must be made to the
+ VistA Personnel and Accounting Integrated Data/Enhanced Time and Attendance
+ (PAID/ETA) software to implement the expansion of Comp Time/Credit Hours
+ expiration from 8 pay periods to 26 pay periods. 
+  
+  
+ Documentation and Training:
+ --------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+    
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at: 
+  
+        http://www.va.gov/vdl/
+  
+ Below is a list of the files related to this patch that will be needed and 
+ available via the FTP sites listed above.
+  
+   
+ File Description            File Name              FTP Mode
+ -----------------------------------------------------------
+ PAID User Manual            PAID_4_P133_UM_CP.PDF  (binary)
+  
+  
+ The enhancements made by this patch are summarized below:
+ ---------------------------------------------------------
+  
+  
+ Regular Comp Time/Credit Hours Expansion to Cover 26 Pay Periods
+ ---------------------------------------------------
+ The provisions for the expiration of Comp Time and Credit Hours were
+ revised effective February 18, 2007.  The time period in which an 
+ employee may use earned compensatory time was revised from 8 pay 
+ periods to 26 periods.  The time limit on the use of earned Credit 
+ Hours was eliminated.  However, the restriction on carrying no more 
+ than 24 credit hours into the next pay period continues to apply.  
+ Compensatory Time and Credit Hours will continue to be stored in the 
+ same balance and if necessary, ETA users will continue to manually 
+ track the portion of the balances that are credit hours.
+  
+ Since the revision to the expiration of comp time rules, the Austin Automation
+ Technology Center (AITC) was updated to support storing 26 pay periods of
+ comp time which is reported to the AITC each pay period from VistA PAID/ETA. 
+ AITC was also updated to maintain the total balance of an employee's
+ COMPTIME/CREDIT HOURS and transmit that to VISTA PAID ETA in the existing
+ COMPTIME download field.  The value transmitted from AITC to VistA PAID ETA
+ each pay period is the current unused balance of COMPTIME/CREDIT HRS earned
+ over the last 26 pay periods and ETA stores this balance in the PAID EMPLOYEE
+ file (#450) in the COMPTIME/CREDIT HRS BALANCE field (#496).
+  
+ This patch updates the following options in VistA PAID ETA to use the correct
+ total comp time/credit hours balance and to extend the expiration of comp time
+ from 8 to 26 pay periods from when it was earned.
+  
+  
+ Comp Time/Credit Hour Pay Period Balance Display
+ ------------------------------------------------
+ The following options that display Comp Time/Credit Hours balances and their 
+ expiration dates are modified to support the change in comp time expiration
+ rules.
+  
+    Leave Balances [PRSA LV BAL-EMP]
+    Employee Leave Balances [PRSA LV BAL-TK]
+    Employee Leave Balances [PRSA LV BAL-SUP]
+  
+ VistA PAID ETA receives only 8 individual comp time/credit hours balances for
+ up to 8 pay periods.  This patch makes the following updates to the report:
+    1.  Includes total comp time/credit hours balance from the last 26 pay
+        periods.
+    2.  Restructures report in easier to read columnar format
+    3.  Includes the pay period in which the comp time/credit hours was earned,
+        when available.
+    4.  When an employee has balances in more than 8 pay periods, the
+        additional pay period balances will be summarized in the last line of
+        the itemized comp time/credit hours listing.
+    5.  'must be used by' dates are extended from 8 to 26 pay periods.
+  
+ The before and after examples below are included to illustrate the changes to
+ the leave reports.
+  
+ Before Patch
+ ------------
+  
+   Balances are as of Sat 12-Mar-11
+  
+   Leave Group: 3
+   Annual Leave Balance:          686.000
+  
+   Sick Leave Balance:            357.500
+  
+   Comp Time/Credit Hours:    4.000 must be used by Dec 03, 2011
+   Comp Time/Credit Hours:    8.000 must be used by Dec 17, 2011
+   Comp Time/Credit Hours:    1.500 must be used by Dec 31, 2011
+   Comp Time/Credit Hours:    2.250 must be used by Jan 14, 2012
+   Comp Time/Credit Hours:    1.750 must be used by Feb 11, 2012
+   Comp Time/Credit Hours:    0.500 must be used by Feb 26, 2011
+   Comp Time/Credit Hours:    3.500 must be used by Apr 09, 2011
+   Comp Time/Credit Hours:    4.500 must be used by May 21, 2011
+  
+  
+  
+ After Patch
+ -----------
+  
+                              EMPLOYEE LEAVE BALANCES
+ 
+ PAID,EMPLOYEE A                         Leave Group: 3     nnn-nn-nnnn
+ 
+ Balances are as of Pay Period 11-17 (Sat 27-Aug-11)
+ Annual Leave Balance:          240.000
+ Sick Leave Balance:           1000.000
+ 
+           Comp Time/Credit Hours (CT/CH) Pay Period Balances
+           Pay Period Earned   # of Hours     Must be used by
+           10-18                 10.000       Sep 10, 2011
+           10-19                  8.000       Sep 24, 2011
+           10-20                  0.250       Oct 08, 2011
+           10-23                  0.500       Nov 19, 2011
+           10-25                  0.750       Dec 17, 2011
+           10-26                  4.500       Dec 31, 2011
+           11-02                  5.500       Jan 28, 2012
+           11-04                 10.000       Feb 25, 2012
+          *11-05 thru 11-17      22.750       Mar 10, 2012 thru Aug 25, 2012
+           -----------------------------------------------------------------
+ Total CT/CH Hours Balance:      62.250
+ 
+ Enter RETURN to continue or '^' to exit: 
+ 
+ 
+ PAID,EMPLOYEE A                         Leave Group: 3     nnn-nn-nnnn
+ 
+ *The CT/CH balance of 22.750 hours earned between 11-05 and 11-17 will be
+ itemized in the report at least 8 pay periods in advance.
+ 
+  Restored Leave:                24.000
+ Use by end of leave year 2012 or forfeit.
+ 
+ Military Leave in hours:          8.00
+ END OF REPORT
+ 
+ 
+  
+ Supervisory Approvals Functionality
+ -----------------------------------
+  
+ Prior to this patch, VistA PAID ETA, used the sum of the balances from the 8
+ individual pay periods that are transmitted by the AITC to determine and
+ display an employee's total available comp time/credit hours balance.  However,
+ the employee may have balances in more than 8 individual pay periods-up to 26. 
+ In these cases the employee's comp time/credit hours balance is understated to
+ the Supervisor in this option.
+  
+ The Supervisory Approvals [PRSA SUP CERT] option is updated to display the
+ correct available total balance from the COMPTIME/CREDIT HRS BALANCE field
+ (#496) in the PAID EMPLOYEE file (450) when a comp time/credit hours request is
+ displayed to the supervisor for approval.  This field contains the unused
+ balance of all comp time/credit hours earned over the past 26 pay periods.
+  
+   
+ ASSOCIATED NSR(s):
+ ------------------  
+     
+ ASSOCIATED REMEDY TICKET(S):
+  ----------------------------
+  1. HD0000000424785 - Comp Time Expiration
+  2. HD0000000183944 - C/T question
+  3. HD0000000189513 - Time Limit on Using Compensatory Time
+  4. HD0000000190765 - Comp Time date in VistA has not changed per new regs.
+  5. HD0000000195963 - Comp time
+  6. HD0000000212685 - Comp time expiration in VISTA doesn't match PAID
+  7. HD0000000214336 - Vista is not calculating comptime correctly.
+  8. HD0000000301626 - New Comp Time Expire Limits Not Reflected in Option
+  9. HD0000000345112 - Comp Time changes
+ 10. HD0000000366251 - CT Expiration Information in VistA
+ 11. HD0000000423848 - Comp Time expiration question
+  
+ 
+ Components Sent with Patch
+ ---------------------------
+  
+  
+ ROUTINES
+ --------
+    PRSALVB 
+    PRSALVS 
+  
+  
+ Test Sites:
+ -----------
+   Battle Creek
+   Central Texas
+   Cleveland
+  
+  
+  
+  ==================== INSTALLATION INSTRUCTIONS ======================
+  
+ This patch may be installed with users on the system, however, it should
+ be installed at a non-peak time to minimize disruption to the users. Other
+ VISTA users will not be affected.
+  
+   
+ Install Time - Less than 5 minutes.
+  
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PRS*4.0*133):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch.
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s)
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch:
+  
+     a.  Choose the Install Package(s) option to start the patch install.
+     b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES//'  Answer NO.
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         YES//' answer NO.
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//' answer YES.
+     e.  When prompted 'Enter options you wish to mark as 'Out Of Order':'
+         Answer:
+  
+           Leave Balances [PRSA LV BAL-EMP]
+           Employee Leave Balances [PRSA LV BAL-TK]
+           Employee Leave Balances [PRSA LV BAL-SUP]
+           Supervisory Approvals [PRSA SUP CERT]
+     f.  When prompted 'Enter protocols you wish to mark as 'Out Of
+         Order':' Press Return.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSALVB
+    Before: B15774190   After: B25561687  **22,35,34,69,114,133**
+Routine Name: PRSALVS
+    Before: B19299804   After: B19901127  **9,69,112,133**
+ 
+Routine list of preceding patches: 112, 114
+
+=============================================================================
+User Information:
+Entered By  : HEIGES,JOHN                   Date Entered  : OCT 18, 2011
+Completed By: LEONARD,KEN                   Date Completed: FEB 28, 2012
+Released By : MCCLARAN,PAM                  Date Released : MAR 15, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

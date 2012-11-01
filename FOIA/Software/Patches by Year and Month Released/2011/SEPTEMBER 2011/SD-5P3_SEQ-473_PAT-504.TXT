@@ -1,0 +1,515 @@
+$TXT Created by REESE,DARRYL at CHEY29.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 03/31/10 at 11:38
+=============================================================================
+Run Date: SEP 26, 2011                     Designation: SD*5.3*504
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #473                    Status: Released
+                  Compliance Date: OCT 27, 2011
+=============================================================================
+
+Associated patches: (v)SD*5.3*532  <<= must be installed BEFORE `SD*5.3*504'
+
+Subject: PCMM GUI Enhancements
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Print Template
+  - Sort Template
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch includes a new gui executable.
+  
+ This patch enhances PCMM (Patient Care Management Module) functionality
+ and provides the following enhancements and major modifications:
+  
+ ***********************************NOTE***********************************
+ Patch SD*5.3*504  has a post-init routine that verifies the correct 
+ setup of  OIF/OEF Teams and Roles within PCMM and will abort if the 
+ OIF/OEF Teams and Roles are not set up correctly. If the patch does 
+ abort, the PCMM Main Menu [SCMC PCMM MAIN MENU] remains OUT OF ORDER 
+ and IRM should run the Pre-Init routine PRE^SD53P504. Please review
+ patch SD*5.3*515 for additional information on the OIF/OEF functionality
+ and correct the set up of the teams and roles. The pre-init routine can
+ be run as many times as needed until all issues with the Teams and Roles
+ are resolved. Once the issues are resolved, patch SD*5.3*504 loading
+ process can continue.
+ **************************************************************************
+  
+ 1. The Primary Care Team Position Setup screen was modified to display a 
+ "Patients" tab.  The Patients tab displays a list of the patients assigned
+ the current position selected, to include Patient Name, Social Security
+ Number (SSN), Activation date, and total patients for the position.  The
+ user can search the patients by name and print the list of patients.
+  
+ 2. The Primary Care Team Position Setup screen was modified to show 
+ active/inactive team positions and display a column showing the
+ Active/Inactive status.
+  
+ 3. The Primary Care Team Position Setup screen was modified to display 
+ the following items in addition to the position name: Role, Staff Name,
+ PCP status, Preceptor status, Position status (Active or Inactive), and
+ FTEE.
+  
+ 4. The Associated Clinics tab has been widened, so the entire name of the 
+ associated clinic is displayed and not cut off.
+  
+ 5. The Associated Clinics tab has been modified so that the clinic name 
+ remains on display after saving changes.
+  
+ 6. The Primary Care Team Position Setup screen was modified to conform 
+ more to standard windows interface conventions as well as look and
+ feel.  This screen was modified to have a central Save/Cancel button
+ that's used to save all changes, regardless of which tab the user is
+ working on.  In addition several buttons have been replaced with tab
+ screens to match existing tab screens.
+  
+ 7. The Primary Care Team Position Setup screen was modified to remain on 
+ the current tab when saving information.  Previous versions always
+ returned to the General tab after saving, causing the user to have to
+ click back on the previous tab to continue entering information for that
+ tab.
+  
+ 8. The Primary Care Team Position Setup screen was modified to keep the 
+ selected team position highlighted as the user navigates through tabs.
+  
+ 9. The History tab was modified to display the history of the highlighted 
+ entry without having to double-click on the entry to see the details.
+  
+ 10. The Primary Care Team Position Setup screen was modified to display a 
+ drop down list of team names of which the user can select from and change
+ teams. This change allows the user to work on different teams without
+ closing the team position setup screen.
+  
+ 11. The software was modified to allow the user to select multiple Font 
+ values for display.
+  
+ 12. The Primary Care Team Position Setup screen was modified to allow 
+ sorting of positions on the team by the following columns:
+     a. Role
+     b. Staff Name
+     c. Primary Care Provider (PCP)
+     d. Preceptor
+     e. Status (Active/Inactive)
+     f. FTEE
+    
+ 13. A Preceptors/Preceptees tab has been added to the Primary Care Team 
+ Position Setup screen to display the Preceptor for a position, or if the 
+ position is a Preceptor, it displays a list of Preceptees.
+  
+ 14. A feature has been added to the Preceptor tab of the Primary Care 
+ Team Position Setup screen that allows a user to reassign Preceptees to 
+ another Preceptor so that a particular Preceptor may be deactivated.
+  
+ 15. The Primary Care Team Position Setup screen was modified to allow a 
+ Preceptor position to be changed to a non-preceptor position, as long as
+ the preceptor does not have preceptees assigned to him/her and no patients
+ are assigned to that position.
+  
+ 16. The patient Team - Position Assignments screen was modified to prompt
+ for a reason for un-assignment when un-assigning patients:
+ (Note: automatic reasons are set by the system during automatic 
+ discharges and are not selectable by the user):
+      a. Deceased (automatic)
+      b. Patient Relocated
+      c. Requested by Patient
+      d. No Longer Needed
+      e. Automatic Inactivation (automatic)
+      f. PCP change
+  
+ 17. The software was modified so that it does not prompt "Do you want to
+ enroll in a clinic?" throughout the software.
+  
+ 18. The Select Patient - Team Assignment screen was modified to allow the 
+ tagging (checkbox) that establishes Exception flags when a patient has
+ multiple PCPs, in which the user will follow the Business Rules for
+ allowing multiple PCPs when manually checking the box.
+  
+ 19. The patient Team - Position Assignments screen was modified to allow 
+ a patient to be assigned to more than one panel on the same day as long 
+ as the patient has been unassigned from all other primary care provider
+ (PCP) panels on the same day.
+  
+ 20. The roll-n-scroll "Report of Patient Automated Inactivation From PC 
+ Panels" has been enhanced.  This report will display patients that have 
+ been auto-inactivated.  The report may be sorted by Date, Institution, 
+ Patient, Provider, Reason, Team or Team Position. Report columns will 
+ include Patient Name, SSN, Primary Care Team, Provider Team Position, 
+ Preceptor Team Position, Date Patient Unassigned, Reason Patient 
+ Unassigned. The report may be printed to a standard Windows printer.
+  
+ 21. The Remote Procedure Call (RPC) 'SCMC PCMM CHECK FTEE' has been edited
+ to ensure the FTEE value passed in is a numeric format between .01 and 1,
+ maximum of two decimal digits. If the passed FTEE value does not match
+ this pattern, the RPC will return the value '99.1' to the PCMM GUI.
+  
+ 22. The issue with OIF/OEF (TRANSITION ASSISTANCE and CASE MANAGEMENT of
+ OPERATION IRAQI FREEDOM and OPERATION ENDURING FREEDOM) entry in the TEAM
+ PURPOSE file(#403.47), which is a pointer field TEAM PURPOSE(#.03) in the
+ TEAM file (#404.51). The purpose of OIF/OEF destination in the Team
+ Purpose file (#403.47) is to specify for OIF AND OEF transition 
+ assistance. There should be only one OIF/OEF destination per site. This
+ patch will screen the PCMM GUI application, not allowing more than one
+ OIF/OEF team.  An option is included with this patch to display all Teams
+ using the OIF/OEF destination in the TEAM file (#404.51). The option SCMC
+ PCMM TEAM PURPOSE LIST is a stand alone print option that displays all
+ TEAMS that have OIF OEF entered as a TEAM PURPOSE. The list can be used
+ for future reference when setting up or troubleshooting OIF/OEF issues.
+ The information in PCMM related to the OIF/ OEF Team shall be transmitted
+ to Austin in the same manner as Primary Care Team information is
+ transmitted. This information will be monitored and tracked by the VSSC.
+  
+ 23.  A screen has been added to allow users to only select OIF OEF roles 
+ for positions assigned to the OIF OEF team.
+  
+ 24.  Rejected entries in the PCMM HL7 TRANSMISSION LOG associated with 
+ past incorrect role assignments to OIF OEF positions are processed and 
+ the corrected data are re-transmitted to the Austin Information and 
+ Technology Center (AITC).  A summary email message is sent to the PCMM HL7
+ MESSAGES mail group.
+  
+ 25.  Staff assigned to a position must be inactivated before the position 
+ can be inactivated.
+  
+ 26.  Status reason is automatically selected when adding staff or 
+ preceptor.
+  
+ 27.  Position history record is automatically deleted if user selects 
+ Cancel in the position activation date window when creating a new 
+ position.
+  
+ 28.  Users can no longer add a new position to an inactive team.
+  
+ 29.  Users can no longer modify a role with assigned staff if the person 
+ class of the assigned staff conflicts with new role.  Users also cannot
+ change a primary care role to a non primary care role if 'provides primary
+ care' setting is selected.
+  
+ 30.  The last assignment date on the Staff tab can be deleted using a
+ right mouse click.
+  
+ 31.  It is no longer possible to assign a NP or PA as a preceptor for a 
+ resident or intern.
+  
+ 32.  The Pre-Init routine sets the 'ENABLE AUTOLINK FUNCTIONALITY(#803)' 
+ field in the SCHEDULING PARAMETER(#404.91) file to 'NO' if the field is 
+ set to 'YES'. This action will gray out the AUTOLINK FUNCTIONALITY tag in 
+ the PCMM GUI, which isn't operational at this time.
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ 178054
+ 63384 
+ 63451
+ 64392
+ 311256 (Lebanon)
+ 311946 (Houston)
+ 315284 (Sioux Falls)
+ 316803 (Charleston)
+ 319620 (N. Chicago)
+ 320190 (Detroit)
+ 328289 (Montrose)
+ 338871 (Fayetteville, NC)
+ 342467 (Amarillo)
+ 342471 (Kansas City)
+ 342475 (Tampa)
+ 342479 (White City)
+ 342608 (Northampton)
+ 351948
+ 360200
+ 445191
+  
+ Overview of Remedy Ticket 178054:
+ ---------------------------------
+  
+ Problem:
+ PCMM GUI users are not being prompted to enroll patient in clinic as 
+ described in the user manual.
+  
+ Resolution:
+ The functionality to enroll a  patient in a clinic has been removed and 
+ references in the user manual have been updated.
+  
+  
+ Overview of Remedy Ticket 63384:
+ --------------------------------
+  
+ Problem:
+ The Patient Lookup process does not highlight patient's name in the   
+ top part of the box after entering a patient's name in the search box.
+  
+ Resolution:
+ By default, the first entry on the list is highlighted.  Pressing the 
+ return key selects the highlighted entry.
+  
+  
+ Overview of Remedy Ticket 63451:
+ -------------------------------
+  
+ Problem:
+ Duplicate of 63384 and user found tab design on Team Position Setup 
+ window to be inefficient.
+  
+  
+ Resolution:       
+ Duplicate of 63384 and the Team Position Setup window has undergone 
+ significant improvement.
+  
+  
+ Overview of Remedy Ticket 64392:
+ --------------------------------
+  
+ Problem:
+ When entering Primary Care FTEE data for a team, if the "Close" button
+ is clicked instead of the "Save" button, the window closes without
+ prompting to save data.
+  
+  
+ Resolution:
+ If FTEE data values changes a confirmation dialog is invoked to determine 
+ if changes should be saved in the event the user attempts to close the 
+ windows without saving changes.
+  
+ Overview of Remedy Tickets 311256,311946,315284,316803,319620,320190
+ 328289,338871,342467,342471,342475,342479,342608,351948,360200,445191
+ ---------------------------------------------------------------------
+  
+ Problem:
+ ADT A08 HL7 messages segments are sent to the AITC with missing PID and
+ EVN segments. The AITC cannot process these messages and returns an
+ application reject to the site with error codes 001M, 104M and 113M. This
+ type of application reject occurs if a patient is assigned/unassigned to a
+ position on the OIF OEF team that does not have an OIF OEF role.
+  
+ Even if the site corrects the configuration error, the site cannot use the
+ PCMM Transmission Error Processing option to process error rejects and
+ retransmit the data to the AITC.
+  
+ Resolution:
+ This patch adds a GUI screen to prevent users from selecting incorrect
+ roles for OIF OEF positions.
+  
+ The patch also adds a pre-install check for OIF OEF configuration
+ errors. If any errors are detected the patch installation will abort.
+ Please refer to the patch description to address OIF/OEF functionality 
+ and the correct set up of the teams and roles within PCMM.
+  
+ Any past rejected entries in the PCMM HL7 TRANSMISSION LOG associated with
+ this type of error are processed during the post install.  The correct
+ data are re-sent to the AITC during the normal PCMM transmission.
+  
+ Components Included in the Patch:
+  
+ The following is a list of files included in this patch:
+  
+                                       UP    SEND  DATA                USER
+                                       DATE  SEC.  COMES  SITE   RSLV  OVER
+ FILE #      NAME                      DD    CODE  W/FILE DATA   PTS   RIDE
+ --------------------------------------------------------------------------
+  
+ 404.42      PATIENT TEAM ASSIGNMENT   YES   NO    NO                   NO
+ Partial DD: subDD: 404.42     fld: .15
+                               fld: .16
+  
+  
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name (Number)           File Name (Number)
+ -------------------           ------------------
+ STATUS         .15            PATIENT TEAM ASSIGNMENT (404.42)
+ MULTIPLE PCP   .16            PATIENT TEAM ASSIGNMENT (404.42)
+  
+  
+  
+ The following is a list of remote procedures included in this patch:
+  
+ REMOTE PROCEDURE
+ ----------------
+    SCMC AUTO INACTIVATION RPT
+    SCMC PCMM CHECK FTEE
+    SCMC PRECEPTOR MOVE - LIST
+    SCMC PRECEPTOR MOVE - MOVE
+  
+  
+ The following is a list of options included in this patch:
+  
+ OPTIONS
+ -------
+    [SCMC PCMM GUI WORKSTATION]     PCMM GUI WORKSTATION  
+    [SCMC PCMM TEAM PURPOSE LIST]   Team Purpose List
+  
+ The following is a list of templates included in this patch:
+  
+ TEMPLATES                TYPE             FILE NAME (number)
+ ------------------------------------------------------------
+    SCMCTP                PRINT              TEAM (#404.51)
+    SCMCTP                SORT               TEAM (#404.51)
+  
+ Test Sites:
+ -----------
+  
+ Milwaukee, WI
+ Richmond, VA
+ Tucson, AZ
+  
+  
+ ***********************************NOTE***********************************
+ There is one known anomaly with the installation of this  patch. This 
+ anomaly only occurs if you are running PCMM on a 64 Bit server. If the  
+ site is using a 64 bit server, PCMM labels will not be displayed on the
+ tabs in the GUI.  If this  occurs IRM should install PCMM on a 32 bit
+ server, or if using a thin client  it should be pointed to a 32 bit 
+ server.   
+ **************************************************************************
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ If installed during the normal workday, it is recommended that the 
+ following entry in the OPTION file (#19) be disabled to prevent possible 
+ conflicts while running the KIDS Install. Other VISTA users will not be 
+ affected.
+  
+ [SCMC PCMM MAIN MENU]       PCMM Main Menu
+  
+ Install Time - less than 5 minutes
+  
+       
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter SD*5.3*504):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+         Install? NO//' answer NO (unless otherwise indicated)
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO (unless otherwise indicated)
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer YES (unless otherwise
+         indicated)
+  
+             [SCMC PCMM MAIN MENU]       PCMM Main Menu
+  
+  
+     The following software file is exported as part of this patch:
+  
+     File Name               Contents                   Retrieval Format
+     ---------               --------                 ----------------
+     SD_53_P504.ZIP File(s) indented below                 BINARY
+     - PCMM.EXE             PCMM Executable
+  
+     The file listed above may be obtained via FTP.  The preferred method
+     is to FTP the files from:
+  
+     download.vista.med.va.gov
+  
+     This transmits the files from the first available FTP server.  Sites
+     may also elect to retrieve software directly from a specific server
+     as follows:
+  
+     CIO FIELD OFFICE   FTP ADDRESS                 DIRECTORY
+     ----------------   -------------------------   --------------------
+     Albany             ftp.fo-albany.med.va.gov    [anonymous.software]
+     Hines              ftp.fo-hines.med.va.gov     [anonymous.software]
+     Salt Lake City     ftp.fo-slc.med.va.gov       [anonymous.software]
+  
+     PCMM.EXE will replace the existing PCMM.EXE which is
+     usually found in the Program File/VISTA/PCMM directory of the client
+     workstation. Workstations without an existing PCMM GUI application
+     installed should first download and run SD_53_P204.EXE to install the
+     previous version of PCMM. Then the PCMM.EXE should be replaced with
+     the new version.
+  
+     The updated PCMM User Manual can be found at the following location:
+  
+               File                        Directory
+         -------------------------------------------------
+            pcmm504.doc                  anonymous.pub
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 21
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCAPU1
+    Before:  B5694042   After:  B5697016  **41,504**
+Routine Name: SCMCDDA
+    Before:  B2917179   After:  B3262760  **204,297,504**
+Routine Name: SCMCPREC
+    Before:       n/a   After:  B4146089  **504**
+Routine Name: SCMCTPUR
+    Before:       n/a   After:   B445864  **504**
+Routine Name: SCMCTSK1
+    Before: B79165926   After: B83874650  **297,498,527,499,532,504**
+Routine Name: SCMCTSK2
+    Before: B97672367   After:B103317459  **297,498,527,499,532,504**
+Routine Name: SCMCTSKG
+    Before:       n/a   After: B95917161  **504**
+Routine Name: SD53P504
+    Before:       n/a   After: B59534765  **504**
+
+=============================================================================
+User Information:
+Entered By  : OWEN,STEVEN W                 Date Entered  : JAN 31, 2007
+Completed By: SIRCO,LUCIA                   Date Completed: SEP 26, 2011
+Released By : LANDRIE,LARRY                 Date Released : SEP 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

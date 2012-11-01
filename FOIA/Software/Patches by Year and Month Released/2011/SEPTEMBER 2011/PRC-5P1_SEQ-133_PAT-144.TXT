@@ -1,0 +1,207 @@
+$TXT Created by HOLLOWAY,THOMAS at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Friday, 07/09/10 at 11:40
+=============================================================================
+Run Date: SEP 13, 2011                     Designation: PRC*5.1*144
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #133                    Status: Released
+                  Compliance Date: OCT 14, 2011
+=============================================================================
+
+Associated patches: (v)PRC*5.1*63  <<= must be installed BEFORE `PRC*5.1*144'
+
+Subject: FMS VENDOR UPDATE ERROR REPORT ; PCARD RESTRICTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issues:
+  
+ 1. When an invalid Vendor Update record is received from FMS the
+    error handling program fails.
+  
+ 2. Users are currently allowed to enter an adjustment voucher for
+    a purchase card transaction on a card which is not theirs.
+  
+ 3. An FPDS question reflects the wrong dollar amount for a contract
+  
+  
+  
+ Remedy:
+ =======
+ 1. HD0000000341117  $ZE= <UNDEFINED>PERROR+3^PRCOSRV3 *PRCOXMRG
+      Duplicate:
+      HD0000000352945  <UNDEFINED>PERROR+3^PRCOSRV3 *PRCOXMRG
+  
+ 2. HD0000000126460  Control Point Users being able to Adjust PC orders?
+  
+ 3. HD0000000249121  FPDS question reflecting wrong dollar amount for 
+                     contract
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ VA Palo Alto HCS
+ VA Pittsburgh HCS 
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000341117  $ZE= <UNDEFINED>PERROR+3^PRCOSRV3 *PRCOXMRG
+  
+ Problem:
+ --------
+ Financial records are transmitted to VistA from FMS (Austin).  When a "bad"
+ record is detected, IFCAP attempts to send an error report to the FMS mail
+ group.  For Vendor Update (VUP) records the reporting code has a bug and
+ fails with the <UNDEFINED>PERROR+3^PRCOSRV3 error. This was caused by trying
+ to use an error report that was written for a different type of record.
+  
+  
+ Resolution:
+ -----------
+ A new error report was created specifically for the VUP records.
+  
+ Routines: PRCOVUP
+  
+  
+ 2. HD0000000126460  Control Point Users being able to Adjust PC orders?
+  
+ Problem:
+ -------
+ A site reports that any Control Point User can make adjustments to any
+ Purchase Card Order even when they are not one of the authorized persons
+ for that Purchase Card.  This is happening in the menu option 
+ 'Adjustment Voucher To Purchase Card Order'.
+  
+  
+ Resolution:
+ ----------                    
+ When a Purchase Card Order is selected in the Adjustment Voucher To
+ Purchase Card Order [PRCH ADUST VOUCH TO P/C ORDER] menu option, the
+ user's identity is checked to see if they are either the CARD HOLDER,
+ SURROGATE, APPROVING OFFICIAL, or ALTERNATE APPROVING OFFICIAL.  If they
+ are not in that list then a warning message is displayed and they are not
+ allowed to enter an adjustment for that order.
+  
+  
+ Routines: PRCHE
+  
+  
+ 3. HD0000000249121 FPDS question reflecting wrong dollar amount for 
+                    contract
+  
+ Problem:
+ -------
+ When entering a new order a site found that the FPDS query portion of
+ the order would ask for responses linked to contract/dollar amount not
+ associate with the entered order. Analysis showed that processing in other
+ options would at times leave contracts/dollar amounts from other orders in
+ the array PRCH("AM").
+  
+ Resolution:
+ ----------                    
+ Modify routine PRCHE to insure the FPDS contract array is cleared when
+ entering a new order to ascertain that contracts/dollar amounts associated
+ with other orders are not brought into the new order creation.
+  
+  
+ Routines: PRCHE
+   
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install this patch at any time without interruption to users.
+ It should be installed at a time when Vendor Update records are not
+ being received from FMS.  The install time will be less than 2 minutes.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*144)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*144.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? NO//', respond YES.  When prompted to select the options
+       you would like to place out of order, enter the following:
+  
+ PRCH ADJUSTMENT TO DEL ORDER     Adjustment Voucher To Delivery Order
+ PRCH ADJUSTMENT VOUCHER          Adjustment Voucher to Receiving Report
+ PRCH ADUST VOUCH TO P/C ORDER    Adjustment Voucher To Purchase Card Order
+ PRCH COMNUM EDIT                 Establish Common Number Series
+ PRCH EDIT DELIVERY ORDER         Edit Delivery Order
+ PRCH EDIT DETAILED ORDER         Edit Detailed Purchase Card Order
+ PRCH EDIT PHARMACY ORDER         Edit Pharmaceutical PV Order
+ PRCH EDIT SIMPLIFIED ORDER       Edit Simplified Purchase Card Order
+ PRCH EMPLOYEE EDIT               Add/Edit Supply Personnel
+ PRCH ENTER DELIVERY ORDER        Enter Delivery Order
+ PRCH ENTER DETAILED ORDER        New Detailed Purchase Card Order
+ PRCH ENTER PHARMACY ORDER        Enter Pharmaceutical PV Order
+ PRCH ENTER SIMPLIFIED ORDER      New Simplified Purchase Card Order
+ PRCH PC DIRECT DELIVERY1         New Direct Delivery Order for Purchase Card
+ PRCH PC DIRECT DELIVERY2         Edit Direct Delivery Order for Purchase Card
+ PRCH SITE EDIT                   Site Parameters
+ PRCHPC ADMINCERT EDIT            Administrative Certification Add/Edit
+ PRCHPC DEL EDIT                  Change Delivery Date on P.O.
+ PRCHPC ITEM EDIT                 Item File Edit
+ PRCHPC PO ADD                    New Purchase Order
+ PRCHPC PO EDIT                   Edit an Incomplete Purchase Order
+ PRCHPM LOG DEPT.NO.EDIT    Assign LOG Department Number to Fund Control Point
+ PRCHPM PO DEL REC                Delete a Receiving Report
+ PRCHPM REQN ADJ VOUCHER          Adjustment Voucher to Requisition
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCHE
+    Before: B48972338   After: B69149403  **1,28,39,81,63,144**
+Routine Name: PRCOVUP
+    Before: B13130960   After: B23990849  **81,144**
+ 
+Routine list of preceding patches: 63
+
+=============================================================================
+User Information:
+Entered By  : HOLLOWAY,THOMAS J             Date Entered  : MAR 23, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: AUG 31, 2011
+Released By : VASSAR,CAROL                  Date Released : SEP 13, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

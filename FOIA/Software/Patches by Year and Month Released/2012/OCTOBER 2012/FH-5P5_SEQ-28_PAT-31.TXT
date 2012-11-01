@@ -1,0 +1,163 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 03/26/12 at 15:30
+=============================================================================
+Run Date: OCT 10, 2012                     Designation: FH*5.5*31
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #28                    Status: Released
+                  Compliance Date: NOV 09, 2012
+=============================================================================
+
+Associated patches: (v)FH*5.5*24   <<= must be installed BEFORE `FH*5.5*31'
+
+Subject: CORRECT ISSUES WITH PATIENT LOOKUP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+ 1. An undefined variable error in routine FHOMDPA is causing the user to
+    be forced out of VistA.
+  
+ 2. A patient with a "Death Node" (^DPT(DFN,.351)) without a date of death 
+    will cause routine FHOMDPA to fail when executing a record lookup of
+    that patient.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000597397 - <UNDEFINED>DEAD+8^FHOMDPA 
+    Duplicate(s):
+    HD0000000600862 - <UNDEFINED>DEAD+8^FHOMDPA *FHPTNM
+    HD0000000603297 - DECEASED PTS <UNDEFINED>DEAD+8^FHOMDPA
+    HD0000000606038 - <UNDEFINED>DEAD+8^FHOMDPA
+    HD0000000608080 - <UNDEFINED>DEAD+8^FHOMDPA
+    HD0000000610319 - <UNDEFINED>DEAD+8^FHOMDPA *FHPTNM
+    HD0000000613036 - <UNDEFINED>DEAD+8^FHOMDPA *FHPTNM
+    HD0000000614064 - Recurring Meals Menu
+  
+ 2. HD0000000599578 - FH*5.5*24 Issues
+    Duplicate(s):
+    HD0000000601676 - MEAL TICKET PROBLEM
+    HD0000000614382 - Special Meals menu issue
+    HD0000000620113 - Unable to order Outpatient Meal
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Puget Sound HCS
+ Tomah, WI
+ Tuscaloosa, AL
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  HD0000000597397 - <UNDEFINED>DEAD+8^FHOMDPA
+  
+     PROBLEM:
+     --------
+     A deceased patient whose internal file record number in the NUTRITION 
+     PERSON file (#115), known as the FHDFN, does not match the
+     internal file record number in the PATIENT file (#2), known as 
+     the DFN, will generate an error during the patient look up in the 
+     Nutrition and Food Service (N&FS) package. The patient lookup should 
+     alert the user that the patient has died and display the date of
+     death. When the FHDFN and the DFN do not match, the display variable
+     with the patient's name is not set. This will generate an undefined
+     variable error which causes the user to be forced out of VistA.
+     
+     RESOLUTION:
+     -----------
+     The method used to get the patient's name has been changed when 
+     displaying the status of the deceased patient message.  Routine 
+     FHOMDPA will no longer assume the patient's DFN and FHDFN will match.
+     The patient's DFN will be used to pull the patient's name from the
+     PATIENT file (#2) to display the message:
+     "This patient, XXXX,XXXX, died on MM/DD/YY."
+     
+ 2.  HD0000000599578 - FH*5.5*24 Issues
+  
+     PROBLEM:
+     --------
+     A patient in the PATIENT file (#2) can have a date of death 
+     entered in error. This will populate DATE OF DEATH field (#.351) and
+     other fields in the "Death" node, ^DPT(DFN,.35). When the
+     date of death is deleted, the node, ^DPT(DFN,.35), in the Patient 
+     file(#2) will still be present with an empty DATE OF DEATH field 
+     A patient with a ^DPT(DFN,.35) node with a null DATE OF DEATH field
+     will cause the option to fail without error and simply return
+     the user to either the lookup prompt or exit the option to return to
+     the menu.
+  
+     RESOLUTION:
+     -----------
+     The original code was for the FHOMDPA to test for the ^DPT(DFN,.35) 
+     node in the patient record. If this node existed it would then execute
+     the code to display a message that the patient has died and then quit
+     the lookup and return user to the previous menu.  
+     The code has been changed to test for a date of death in the node not
+     just for the node existence. If the patient has a date of death 
+     entered, the code will be executed to display the following message. 
+        "This patient, XXXX,XXXX, died on MM/DD/YY." 
+     If the patient does not have a date of death the code will continue
+     with the look up of the matching record in the NUTRITION PERSON file.
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter FH*5.5*31)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package FH*5.5*31
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHOMDPA
+    Before:  B8212401   After:  B8629052  **5,17,24,31**
+ 
+Routine list of preceding patches: 24
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : FEB 13, 2012
+Completed By: CRICHLOW,SHERRY               Date Completed: SEP 25, 2012
+Released By : BOSE,MARY ELLEN               Date Released : OCT 10, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

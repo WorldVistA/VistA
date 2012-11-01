@@ -1,0 +1,433 @@
+$TXT Created by DEWAYNE,BRANDON PAUL at SMA.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 10/27/11 at 07:42
+=============================================================================
+Run Date: DEC 29, 2011                     Designation: FB*3.5*122
+Package : FB - FEE BASIS                      Priority: EMERGENCY
+Version : 3.5       SEQ #110                    Status: Released
+                  Compliance Date: JAN 04, 2012
+=============================================================================
+
+Associated patches: (v)FB*3.5*121  <<= must be installed BEFORE `FB*3.5*122'
+
+Subject: HIPAA 5010 SCREENS AND MESSAGING
+
+Category: 
+  - Enhancement ()
+  - Routine
+  - Input Template
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ ************************************************************************
+ *  Please make sure FB*3.5*122 has been successfully installed before  *
+ *                   installing FB*3.5*133.                             *
+ *                                                                      *
+ *  FB*3.5*133 MUST be installed immediately after FB*3.5*122 to avoid  *
+ *                application/processing errors.                        *
+ ************************************************************************
+  
+ This patch enhances the VistA Fee Basis software for 5010 compliance.
+ It includes changes to VistA options (routines/input templates) to allow
+ sites to edit the new fields for storing Health Insurance Portability
+ and Accountability Act (HIPAA) 5010 provider information and for VistA
+ Integrated Billing (IB) to view the 5010 data on the Potential Cost
+ Recovery Report (PCRR).  These changes are necessary in order to
+ generate minimally mandated 5010 requirements for 837 and 835 claim
+ transactions prior to Jan 1, 2012.
+  
+ The patch modifies VistA Fee Basis routines and input templates for
+ creating/editing and displaying claim and invoice data for HIPAA 5010
+ provider data (name, NPI, Taxonomy code).   It also includes changes to
+ the Health Level 7 (HL7) message format sent from VistA Fee Basis to the
+ Fee Payment Processing System (FPPS) to include bank name, routing and
+ account number data for Electronic Fund Transfer (EFT) claims processed
+ by the Treasury.  The patch includes a new Fee Basis monitoring option
+ that will process in the background and alert Fee users and national
+ Fee personnel if the Transmit Invoices to FPPS [FB FPPS TRANSMIT] option
+ has not been running in a timely manner.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)    New/Modified/Deleted
+ ------------------------------------------------------------------------
+ FEE BASIS PAYMENT (162)     SERVICING FACILITY
+                               ADDRESS  (#76)                 New
+ FEE BASIS PAYMENT (162)     SERVICING FACILITY CITY (#77)    New
+ FEE BASIS PAYMENT (162)     SERVICING FACILITY STATE (#78)   New
+ FEE BASIS PAYMENT (162)     SERVICING FACILITY ZIP (#79)     New
+ FEE BASIS INVOICE (162.5)   SERVICING FACILITY
+                               ADDRESS (#80)                  New
+ FEE BASIS INVOICE (162.5)   SERVICING FACILITY CITY (#81)    New
+ FEE BASIS INVOICE (162.5)   SERVICING FACILITY STATE (#82)   New
+ FEE BASIS INVOICE (162.5)   SERVICING FACILITY ZIP (#83)     New
+  
+ Forms Associated: N/A
+ Mail Groups Associated: N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ FB FPPS MONITOR        run routine        New
+  
+ Protocols Associated: N/A
+ Security Keys Associated: N/A
+  
+ Templates Associated:
+  
+ Template Name        Type   File Name (Number)      New/Modified/Deleted
+ -------------        ----   ------------------      --------------------
+ FBCH ENTER PAYMENT   INPUT  FEE BASIS INVOICE (#162.5)     Modified
+ FBCH EDIT PAYMENT    INPUT  FEE BASIS INVOICE (#162.5)     Modified
+ FBAA SITE PARAMETERS INPUT  FEE BASIS SITE PARAMETERS (#161.4)  Modified
+ FBAA EDIT VENDOR     INPUT  FEE BASIS VENDOR (#161.2)      Modified
+ FBAA NEW VENDOR      INPUT  FEE BASIS VENDOR (#161.2)      Modified
+  
+ Additional Information: N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ NSR 20090705 VistA Fee HIPAA 5010 Implementation, Discovery and
+              Requirements
+   Note: This is the second of three patches for this NSR
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ ENHANCEMENTS TO THE VISTA FEE BASIS APPLICATION
+ =======================================================================
+ 1. Editing new 5010 fields for Claim and Invoice options
+    The following options will now display new fields to allow Fee users
+    to edit HIPAA 5010 provider name, NPI and Taxonomy codes, as well
+    as the Servicing Facility address information:
+        Enter Invoice/Payment [FBCH ENTER PAYMENT]
+        Invoice Edit [FBCH EDIT PAYMENT]
+        Invoice Display [FBCH INVOICE DISPLAY]
+        Edit Payment [FBAA EDIT PAYMENT]
+        Enter Payment [FBAA ENTER PAYMENT]
+        Invoice Display [FBAA INVOICE DISPLAY]
+  
+    The routines and input templates that were modified for these options
+    are:
+    FBCH ENTER PAYMENT - FBCHEP, (Template-FBCH ENTER PAYMENT), FBUTL8
+    FBCH EDIT PAYMENT - FBCHEP1, (Template-FBCH EDIT PAYMENT)
+    FBCH INVOICE DISPLAY - FBCHDI2, FBCHVH
+    FBAA EDIT PAYMENT - FBAAPET
+    FBAA ENTER PAYMENT - FBAACO, FBAACO2, FBAACO3
+    FBAA INVOICE DISPLAY - FBAAPIN
+  
+  
+ 2. Potential Cost Recovery Report [FB PCR]
+    The Potential Cost Recovery Report will now contain new 5010
+    provider data.  FBPCR2, FBPCR67, FBPCR671 were modified to
+    display provider name, NPI and Taxonomy codes, and Servicing
+    Facility address for the following 5010
+    provider fields:
+       Attending Name, NPI and Taxonomy Code
+       Operating Name, NPI
+       Rendering Name, NPI and Taxonomy Code
+       Servicing Name, NPI
+       Servicing Facility Address and City, State, ZIP
+       Referring Name, NPI
+  
+ 3. Transmit Invoices to FPPS [FB FPPS TRANSMIT]
+    a. Modified the HL7 processing routines that process the payment
+       response data from Central Fee to include bank routing number
+       (9 characters), account number (17 characters) and bank name
+       (30 characters) for EFT claims. The FT1 segment, field 30 will
+       contain this data in the format: routing#^^^^^^^^acct#&name
+       FT1||111999000999-1|50|20110603||FWT|1||||750.00|||||||||||
+       |12344321050|||||||001019099^^^^^^^^123456789&WELLS FARGO BANK
+    b. Routine FBFHLX was modified to save the start date/time and, when
+       finished, the end date/time of the transmit option. It was also
+       modified to record the record number being processed, and the
+       date/time the record's processing started. Routine FBFHLX1 also
+       was modified to record the record number being processed, and the
+       date/time the record's processing started
+  
+ 4. Monitor status of FB FPPS TRANSMIT option [FB FPPS MONITOR]
+    A new monitor option has been created to inform the G.FEE mail group
+    internally through vista and mail group Fee.EDI_Issues externally
+    through Outlook when issues are found with the FPPS TRANSMIT
+    function. The monitor checks the FEE BASIS SITE PARAMETERS file
+    (#161.4) fields: FPPS TRANSMIT START (#36) and FPPS TRANSMIT END
+    (#37). If the date/time in the FPPS TRANSMIT START field is older
+    than 2 days, a MailMan message will be sent informing the mail
+    groups that the FPPS TRANSMIT has not been run. If the monitor
+    determines that the last record update has been more that 1 hour
+    ago, and the FPPS TRANSMIT START date/time is more recent than
+    the FPPS TRANSMIT END, a MailMan message will be sent that the
+    FPPS TRANSMIT has stalled with an error. The option is a
+    schedulable option and will not be added to any FB menu. The
+    new routine associated with this option is FBMON.
+  
+ 5. Display, Enter, Edit Demographics [FBAA VENDOR DEMOGRAPHICS]
+    The Vendor edit option was modified to be able to view the HIPAA 5010
+    provider Taxonomy code if available.  Routine FBAAVD was modified to
+    display the Taxonomy code below the Billing Provider NPI if the
+    Taxonomy code exists. The input templates (FBAA EDIT VENDOR) and
+    (FBAA NEW VENDOR) were updated with the new taxonomy code.
+  
+  
+ Test Sites:
+ ----------
+ El Paso, TX
+ Gainesville (N FL/S GA)
+ Big Spring, TX
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov
+  
+  
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany       ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines        ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City  ftp.fo-slc.med.va.gov  <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www.va.gov/vdl/
+  
+ Title                         File Name                    FTP Mode
+ -------------------------------------------------------------------
+ Install Guide FB*3.5*122      FB_3_5_122_ig.pdf            Binary
+ Release Notes FB*3.5*122      FB_3_5_122_rn.pdf            Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The FB FPPS MONITOR queued option needs to be scheduled in order to
+ verify that the Transmit Invoices to FPPS [FB FPPS TRANSMIT] option
+ is being run in a timely manner.  This option may also be added to
+ the Fee Administrators secondary menu option list to be run
+ interactively.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than
+ 5 minutes to install.
+  
+ If installed during the normal workday, it is recommended that the
+ following selection(s) in the OPTION (#19) file, and all of their
+ descendants be disabled to prevent possible conflicts while running the
+ KIDS Install. Other VISTA users will not be affected.
+    Civil Hospital Main Menu         [FBCH MAIN MENU]
+    Medical Fee Main Menu            [FBAA MEDICAL MAIN MENU]
+    Transmit Invoices to FPPS        [FB FPPS TRANSMIT]
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch
+     FB*3.5*122
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  answer NO
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? NO//'   answer YES
+  
+ 8.  When prompted 'Enter options you wish to mark as 'Out of Order':'
+       Enter the following options:
+          Civil Hospital Main Menu    [FBCH MAIN MENU]
+          Medical Fee Main Menu       [FBAA MEDICAL MAIN MENU]
+          Transmit Invoices to FPPS   [FB FPPS TRANSMIT]
+  
+     When prompted 'Enter options you wish to mark as 'Out Of Order':'
+     press <return>
+  
+ 9.  When prompted 'Enter protocols you wish to mark as 'Out of Order':'
+     press <return>
+  
+ 10. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ 1. Ensure that the Monitor status of FB FPPS TRANSMIT option
+    [FB FPPS MONITOR] is queued to run on a nightly basis.
+  
+    **This option should be queued to run an hour AFTER the Transmit
+      Invoices to FPPS [FB FPPS TRANSMIT] has completed processing **
+  
+     In a Cache terminal session perform the
+     following:
+  
+     VAH>D ^XUP
+     Select OPTION NAME: XUTM MGR       Taskman Management
+                         --------
+     Select Taskman Management Option: SCHedule/Unschedule Options
+                                       ---
+     Select OPTION to schedule or reschedule: FB FPPS MONITOR
+                                              ---------------
+     Are you adding 'FB FPPS MONITOR' as
+     a new OPTION SCHEDULING (the 143RD)? No// YES
+  
+                             Edit Option Schedule
+        Option Name: FB FPPS MONITOR
+        Menu Text: Monitor status of FB FPPS TRANSM      TASK ID: 2944533
+    ---------------------------------------------------------------------
+      QUEUED TO RUN AT WHAT TIME: T+1@0600
+  
+    DEVICE FOR QUEUED JOB OUTPUT:
+  
+     QUEUED TO RUN ON VOLUME SET:
+  
+          RESCHEDULING FREQUENCY: 1D
+  
+                 TASK PARAMETERS:
+  
+                SPECIAL QUEUEING:
+  
+    ---------------------------------------------------------------------
+    Exit     Save     Next Page     Refresh
+  
+   COMMAND: SAVE                           Press <PF1>H for help   Insert
+  
+  2. The FB FPPS MONITOR can also be run interactively for current status
+     information.  Fee Administrators who wish to do this must have the
+     option added as a secondary menu option in VistA.
+  
+                                 Edit an Existing User
+     NAME: FEE,ADMINISTRATOR                                 Page 1 of 5
+    ---------------------------------------------------------------------
+        NAME... FEE,ADMINISTRATOR                     INITIAL: AF
+         TITLE:                                     NICK NAME:
+           SSN: 666669090                                 DOB: FEB 7,1959
+        DEGREE:                                     MAIL CODE:
+       DISUSER:                              TERMINATION DATE:
+       Termination Reason:
+  
+                PRIMARY MENU OPTION: FBAA MAIN MENU
+      Select SECONDARY MENU OPTIONS: FB FPPS MONITOR    *ADD OPTION HERE*
+     Want to edit ACCESS CODE (Y/N):       FILE MANAGER ACCESS CODE:
+     Want to edit VERIFY CODE (Y/N):
+  
+                    Select DIVISION: ALBANY
+                    SERVICE/SECTION: MEDICAL ADMINISTRATION
+    ---------------------------------------------------------------------
+       Monitor status of FB FPPS TRANSMIT option
+   Are you adding 'FB FPPS MONITOR' as
+     a new SECONDARY MENU OPTIONS (the 1ST for this NEW PERSON)? No// Y
+  
+            -------------------------------------------------------
+            |                             SECONDARY MENU OPTIONS  |
+            |                                                     |
+            | SECONDARY MENU OPTIONS:   FB FPPS MONITOR           |
+            |                SYNONYM:   FBM                       |
+            -------------------------------------------------------
+  
+ COMMAND: SAVE                            Press <PF1>H for help    Insert
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAACO
+    Before: B28424330   After: B28594326  **4,61,79,116,122**
+Routine Name: FBAACO2
+    Before: B12957977   After: B13323096  **4,55,61,77,116,122**
+Routine Name: FBAACO3
+    Before: B48295702   After: B50872609  **4,38,55,61,116,122**
+Routine Name: FBAAPET
+    Before: B33779075   After: B35557510  **4,38,55,61,77,116,122**
+Routine Name: FBAAPIN
+    Before: B23332246   After: B33397999  **4,61,122**
+Routine Name: FBAAVD
+    Before: B27538301   After: B28132185  **9,98,111,122**
+Routine Name: FBAAVD2
+    Before: B33081836   After: B33240026  **9,10,47,65,98,111,122**
+Routine Name: FBCHDI2
+    Before:  B4069030   After:  B4376803  **122**
+Routine Name: FBCHEP
+    Before: B30100976   After: B30542505  **4,61,77,82,122**
+Routine Name: FBCHEP1
+    Before: B11099974   After: B11345024  **38,61,122**
+Routine Name: FBCHVH
+    Before: B17108073   After: B25718092  **55,61,122**
+Routine Name: FBFHLD3
+    Before: B16935419   After: B18574752  **61,122**
+Routine Name: FBFHLD9
+    Before:  B9980518   After: B11448900  **61,122**
+Routine Name: FBFHLS
+    Before: B56632671   After: B61137128  **61,68,122**
+Routine Name: FBFHLX
+    Before: B55631854   After: B58317729  **61,121,122**
+Routine Name: FBFHLX1
+    Before: B30458874   After: B30972593  **61,121,122**
+Routine Name: FBFHLX2
+    Before:       n/a   After:  B5499281  **122**
+Routine Name: FBMON
+    Before:       n/a   After: B36112227  **122**
+Routine Name: FBPCR2
+    Before: B35427334   After: B61489051  **4,48,55,69,76,98,122**
+Routine Name: FBPCR67
+    Before: B22170399   After: B24858243  **4,48,55,69,98,122**
+Routine Name: FBPCR671
+    Before: B26341228   After: B40566981  **4,48,55,69,76,98,122**
+Routine Name: FBUTL8
+    Before:       n/a   After: B31445484  **122**
+ 
+Routine list of preceding patches: 68, 82, 111, 116, 121
+
+=============================================================================
+User Information:
+Entered By  : DEWAYNE,BRANDON               Date Entered  : APR 21, 2011
+Completed By: CLARK,KAREN Y                 Date Completed: DEC 28, 2011
+Released By : CAULFIELD,MARY                Date Released : DEC 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

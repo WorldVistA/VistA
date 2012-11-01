@@ -1,0 +1,988 @@
+Released PSJ*5*245 SEQ #206
+Extracted from mail message
+**KIDS**:PSJ*5.0*245^
+
+**INSTALL NAME**
+PSJ*5.0*245
+"BLD",6343,0)
+PSJ*5.0*245^INPATIENT MEDICATIONS^0^3100805^y
+"BLD",6343,1,0)
+^^44^44^3100805^
+"BLD",6343,1,1,0)
+This patch corrects the following issues that were introduced by patch
+"BLD",6343,1,2,0)
+PSJ*5*113:
+"BLD",6343,1,3,0)
+ 
+"BLD",6343,1,4,0)
+ - In Abbreviated Order Entry, the "Schedule:" prompt appears twice.
+"BLD",6343,1,5,0)
+ - Pending renewal orders incorrectly fail schedule validation in Speed
+"BLD",6343,1,6,0)
+   Finish.
+"BLD",6343,1,7,0)
+ 
+"BLD",6343,1,8,0)
+Remedy Overview
+"BLD",6343,1,9,0)
+------------------
+"BLD",6343,1,10,0)
+1. HD0000000413812
+"BLD",6343,1,11,0)
+ 
+"BLD",6343,1,12,0)
+ Problem:
+"BLD",6343,1,13,0)
+ --------
+"BLD",6343,1,14,0)
+ For users defined with an order entry process of ABBREVIATED in the
+"BLD",6343,1,15,0)
+ Inpatient User Parameters Edit [PSJ SEUP] option, the "Schedule:"
+"BLD",6343,1,16,0)
+ prompt appears twice when creating a new order via the Inpatient Order
+"BLD",6343,1,17,0)
+ Entry [PSJ OE] option.
+"BLD",6343,1,18,0)
+ 
+"BLD",6343,1,19,0)
+ Solution:
+"BLD",6343,1,20,0)
+ ---------
+"BLD",6343,1,21,0)
+ For users defined with an order entry process of ABBREVIATED in the
+"BLD",6343,1,22,0)
+ Inpatient User Parameters Edit [PSJ SEUP] option, prompt for
+"BLD",6343,1,23,0)
+ "Schedule:" only once when creating a new order via the Inpatient Order
+"BLD",6343,1,24,0)
+ Entry [PSJ OE] option.
+"BLD",6343,1,25,0)
+ 
+"BLD",6343,1,26,0)
+ 
+"BLD",6343,1,27,0)
+2. HD0000000414155
+"BLD",6343,1,28,0)
+   HD0000000415173
+"BLD",6343,1,29,0)
+ 
+"BLD",6343,1,30,0)
+ Problem:
+"BLD",6343,1,31,0)
+ --------
+"BLD",6343,1,32,0)
+ Pending Continuous Unit Dose renewal orders with valid schedule/admin
+"BLD",6343,1,33,0)
+ time combinations fail schedule validation when the SF - Speed Finish
+"BLD",6343,1,34,0)
+ action is used within the Order Entry [PSJU NE] option, but they pass
+"BLD",6343,1,35,0)
+ schedule validation, without edits, when the manual FN - Finish action
+"BLD",6343,1,36,0)
+ is used. These orders can't be finished using Speed Finish, and must be
+"BLD",6343,1,37,0)
+ finished using the manual FN - Finish action.
+"BLD",6343,1,38,0)
+ 
+"BLD",6343,1,39,0)
+ Solution:
+"BLD",6343,1,40,0)
+ ---------
+"BLD",6343,1,41,0)
+ Within the Order Entry [PSJU NE] option, allow Continuous Unit Dose
+"BLD",6343,1,42,0)
+ orders with schedule/admin time combinations that pass the manual FN -
+"BLD",6343,1,43,0)
+ Finish action's schedule validation to also pass the SF - Speed Finish
+"BLD",6343,1,44,0)
+ action's schedule validation.
+"BLD",6343,4,0)
+^9.64PA^^0
+"BLD",6343,6)
+1^
+"BLD",6343,6.3)
+3
+"BLD",6343,"KRN",0)
+^9.67PA^779.2^20
+"BLD",6343,"KRN",.4,0)
+.4
+"BLD",6343,"KRN",.401,0)
+.401
+"BLD",6343,"KRN",.402,0)
+.402
+"BLD",6343,"KRN",.403,0)
+.403
+"BLD",6343,"KRN",.5,0)
+.5
+"BLD",6343,"KRN",.84,0)
+.84
+"BLD",6343,"KRN",3.6,0)
+3.6
+"BLD",6343,"KRN",3.8,0)
+3.8
+"BLD",6343,"KRN",9.2,0)
+9.2
+"BLD",6343,"KRN",9.8,0)
+9.8
+"BLD",6343,"KRN",9.8,"NM",0)
+^9.68A^3^2
+"BLD",6343,"KRN",9.8,"NM",2,0)
+PSGOE4^^0^B31772207
+"BLD",6343,"KRN",9.8,"NM",3,0)
+PSGS0^^0^B75670987
+"BLD",6343,"KRN",9.8,"NM","B","PSGOE4",2)
+
+"BLD",6343,"KRN",9.8,"NM","B","PSGS0",3)
+
+"BLD",6343,"KRN",19,0)
+19
+"BLD",6343,"KRN",19.1,0)
+19.1
+"BLD",6343,"KRN",101,0)
+101
+"BLD",6343,"KRN",409.61,0)
+409.61
+"BLD",6343,"KRN",771,0)
+771
+"BLD",6343,"KRN",779.2,0)
+779.2
+"BLD",6343,"KRN",870,0)
+870
+"BLD",6343,"KRN",8989.51,0)
+8989.51
+"BLD",6343,"KRN",8989.52,0)
+8989.52
+"BLD",6343,"KRN",8994,0)
+8994
+"BLD",6343,"KRN","B",.4,.4)
+
+"BLD",6343,"KRN","B",.401,.401)
+
+"BLD",6343,"KRN","B",.402,.402)
+
+"BLD",6343,"KRN","B",.403,.403)
+
+"BLD",6343,"KRN","B",.5,.5)
+
+"BLD",6343,"KRN","B",.84,.84)
+
+"BLD",6343,"KRN","B",3.6,3.6)
+
+"BLD",6343,"KRN","B",3.8,3.8)
+
+"BLD",6343,"KRN","B",9.2,9.2)
+
+"BLD",6343,"KRN","B",9.8,9.8)
+
+"BLD",6343,"KRN","B",19,19)
+
+"BLD",6343,"KRN","B",19.1,19.1)
+
+"BLD",6343,"KRN","B",101,101)
+
+"BLD",6343,"KRN","B",409.61,409.61)
+
+"BLD",6343,"KRN","B",771,771)
+
+"BLD",6343,"KRN","B",779.2,779.2)
+
+"BLD",6343,"KRN","B",870,870)
+
+"BLD",6343,"KRN","B",8989.51,8989.51)
+
+"BLD",6343,"KRN","B",8989.52,8989.52)
+
+"BLD",6343,"KRN","B",8994,8994)
+
+"BLD",6343,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",6343,"QUES",0)
+^9.62^^
+"BLD",6343,"REQB",0)
+^9.611^1^1
+"BLD",6343,"REQB",1,0)
+PSJ*5.0*113^2
+"BLD",6343,"REQB","B","PSJ*5.0*113",1)
+
+"MBREQ")
+0
+"PKG",197,-1)
+1^1
+"PKG",197,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",197,20,0)
+^9.402P^^
+"PKG",197,22,0)
+^9.49I^1^1
+"PKG",197,22,1,0)
+5.0^2971215^2980917^11712
+"PKG",197,22,1,"PAH",1,0)
+245^3100805^10000000009
+"PKG",197,22,1,"PAH",1,1,0)
+^^44^44^3100805
+"PKG",197,22,1,"PAH",1,1,1,0)
+This patch corrects the following issues that were introduced by patch
+"PKG",197,22,1,"PAH",1,1,2,0)
+PSJ*5*113:
+"PKG",197,22,1,"PAH",1,1,3,0)
+ 
+"PKG",197,22,1,"PAH",1,1,4,0)
+ - In Abbreviated Order Entry, the "Schedule:" prompt appears twice.
+"PKG",197,22,1,"PAH",1,1,5,0)
+ - Pending renewal orders incorrectly fail schedule validation in Speed
+"PKG",197,22,1,"PAH",1,1,6,0)
+   Finish.
+"PKG",197,22,1,"PAH",1,1,7,0)
+ 
+"PKG",197,22,1,"PAH",1,1,8,0)
+Remedy Overview
+"PKG",197,22,1,"PAH",1,1,9,0)
+------------------
+"PKG",197,22,1,"PAH",1,1,10,0)
+1. HD0000000413812
+"PKG",197,22,1,"PAH",1,1,11,0)
+ 
+"PKG",197,22,1,"PAH",1,1,12,0)
+ Problem:
+"PKG",197,22,1,"PAH",1,1,13,0)
+ --------
+"PKG",197,22,1,"PAH",1,1,14,0)
+ For users defined with an order entry process of ABBREVIATED in the
+"PKG",197,22,1,"PAH",1,1,15,0)
+ Inpatient User Parameters Edit [PSJ SEUP] option, the "Schedule:"
+"PKG",197,22,1,"PAH",1,1,16,0)
+ prompt appears twice when creating a new order via the Inpatient Order
+"PKG",197,22,1,"PAH",1,1,17,0)
+ Entry [PSJ OE] option.
+"PKG",197,22,1,"PAH",1,1,18,0)
+ 
+"PKG",197,22,1,"PAH",1,1,19,0)
+ Solution:
+"PKG",197,22,1,"PAH",1,1,20,0)
+ ---------
+"PKG",197,22,1,"PAH",1,1,21,0)
+ For users defined with an order entry process of ABBREVIATED in the
+"PKG",197,22,1,"PAH",1,1,22,0)
+ Inpatient User Parameters Edit [PSJ SEUP] option, prompt for
+"PKG",197,22,1,"PAH",1,1,23,0)
+ "Schedule:" only once when creating a new order via the Inpatient Order
+"PKG",197,22,1,"PAH",1,1,24,0)
+ Entry [PSJ OE] option.
+"PKG",197,22,1,"PAH",1,1,25,0)
+ 
+"PKG",197,22,1,"PAH",1,1,26,0)
+ 
+"PKG",197,22,1,"PAH",1,1,27,0)
+2. HD0000000414155
+"PKG",197,22,1,"PAH",1,1,28,0)
+   HD0000000415173
+"PKG",197,22,1,"PAH",1,1,29,0)
+ 
+"PKG",197,22,1,"PAH",1,1,30,0)
+ Problem:
+"PKG",197,22,1,"PAH",1,1,31,0)
+ --------
+"PKG",197,22,1,"PAH",1,1,32,0)
+ Pending Continuous Unit Dose renewal orders with valid schedule/admin
+"PKG",197,22,1,"PAH",1,1,33,0)
+ time combinations fail schedule validation when the SF - Speed Finish
+"PKG",197,22,1,"PAH",1,1,34,0)
+ action is used within the Order Entry [PSJU NE] option, but they pass
+"PKG",197,22,1,"PAH",1,1,35,0)
+ schedule validation, without edits, when the manual FN - Finish action
+"PKG",197,22,1,"PAH",1,1,36,0)
+ is used. These orders can't be finished using Speed Finish, and must be
+"PKG",197,22,1,"PAH",1,1,37,0)
+ finished using the manual FN - Finish action.
+"PKG",197,22,1,"PAH",1,1,38,0)
+ 
+"PKG",197,22,1,"PAH",1,1,39,0)
+ Solution:
+"PKG",197,22,1,"PAH",1,1,40,0)
+ ---------
+"PKG",197,22,1,"PAH",1,1,41,0)
+ Within the Order Entry [PSJU NE] option, allow Continuous Unit Dose
+"PKG",197,22,1,"PAH",1,1,42,0)
+ orders with schedule/admin time combinations that pass the manual FN -
+"PKG",197,22,1,"PAH",1,1,43,0)
+ Finish action's schedule validation to also pass the SF - Speed Finish
+"PKG",197,22,1,"PAH",1,1,44,0)
+ action's schedule validation.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSGOE4")
+0^2^B31772207^B30952598
+"RTN","PSGOE4",1,0)
+PSGOE4 ;BIR/CML3 - REGULAR ORDER ENTRY ;02/06/01 4:31 PM
+"RTN","PSGOE4",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**2,50,64,58,111,113,245**;16 DEC, 1997;Build 3
+"RTN","PSGOE4",3,0)
+ ;
+"RTN","PSGOE4",4,0)
+ ; Reference to ^PS(51.2 is supported by DBIA 2178.
+"RTN","PSGOE4",5,0)
+ ; Reference to ^PS(51.1 is supported by DBIA 2177.
+"RTN","PSGOE4",6,0)
+ ;
+"RTN","PSGOE4",7,0)
+ K PSGOES S PSGMR=$S($P(PSGNEDFD,"^",2):$P(PSGNEDFD,"^",2),1:PSGOEDMR),PSGSCH=$P(PSGNEDFD,"^",4),PSGPR=PSGOEPR,(PSGSD,PSGFD,PSGSM,PSGHSM,PSGUD,PSGSI,PSGOROE1,PSGNEFD,PSGMRN)=""
+"RTN","PSGOE4",8,0)
+ S:PSGMR PSGMRN=$S('$P(PSGNEDFD,"^",2):"ORAL",'$D(^PS(51.2,PSGMR,0)):PSGMR,$P(^(0),"^")]"":$P(^(0),"^"),1:PSGMR) I PSGPR S PSGPRN=$P($G(^VA(200,PSGPR,0)),"^") S:PSGPRN="" PSGPRN=PSGPR
+"RTN","PSGOE4",9,0)
+ S PSGST=$S($P(PSGNEDFD,"^",3)]"":$P(PSGNEDFD,"^",3),1:"C"),PSGSTN=$$ENSTN^PSGMI(PSGST),F1=53.1 K PSGFOK S PSGFOK(2)=""
+"RTN","PSGOE4",10,0)
+ S:$P(PSJSYSU,";",4) PSGFOK(2)="" K ^PS(53.45,PSJSYSP,1),^(2) I PSGDRG S ^(2,0)="^53.4502P^"_PSGDRG_"^1",^(1,0)=PSGDRG,^PS(53.45,PSJSYSP,2,"B",PSGDRG,1)=""
+"RTN","PSGOE4",11,0)
+ ;
+"RTN","PSGOE4",12,0)
+109 ; dosage ordered
+"RTN","PSGOE4",13,0)
+ I $P(PSJSYSU,";",4) D GETDOSE^PSJDOSE(PSGDRG) G:PSGOROE1 DONE G:'$G(PSGOE3) 3
+"RTN","PSGOE4",14,0)
+ W !,"DOSAGE ORDERED: ",$S(PSGDO]"":PSGDO_"// ",1:"") R X:DTIME I X="^"!'$T W:'$T $C(7) S PSGOROE1=1 G DONE
+"RTN","PSGOE4",15,0)
+ I X="" S X=PSGDO ;I X="" W $C(7),"  (Required)" G 109
+"RTN","PSGOE4",16,0)
+ S PSGF2=109 I X="@" S PSGDO="" ;W $C(7),"  (Required)" G 109
+"RTN","PSGOE4",17,0)
+ I X="@" D DEL G:%'=1 109 S (PSGDO,PSGFOK(109),PSGUD)="" G 3
+"RTN","PSGOE4",18,0)
+ I X?1."?" D ENHLP^PSGOEM(53.1,109) G 109
+"RTN","PSGOE4",19,0)
+ I $E(X)="^" D FF G:Y>0 @Y G 109
+"RTN","PSGOE4",20,0)
+ I $E(X,$L(X))=" " F  S X=$E(X,1,$L(X)-1) Q:$E(X,$L(X))'=" "
+"RTN","PSGOE4",21,0)
+ I $S(X="":0,X?.E1C.E:1,$L(X)>20:1,X="":1,X["^":1,X?1.P:1,1:X=+X) W $C(7),"  ",$S(X?1.P!(X=""):"(Required)",1:"??") D ENHLP^PSGOEM(53.1,109) G 109
+"RTN","PSGOE4",22,0)
+ S PSGDO=X,PSGFOK(109)=""
+"RTN","PSGOE4",23,0)
+ ;
+"RTN","PSGOE4",24,0)
+13 ; units per dose
+"RTN","PSGOE4",25,0)
+ ;/** NO LONGER USE WITH POE
+"RTN","PSGOE4",26,0)
+ Q:$G(PSGOE3)
+"RTN","PSGOE4",27,0)
+ G:'$P(PSJSYSU,";",4) 3 I $D(PSGFOK(13)) S PSGFOK(13)=1 D 2^PSGOE42 S PSGFOK(13)="" G 3
+"RTN","PSGOE4",28,0)
+ ;
+"RTN","PSGOE4",29,0)
+A13 ;
+"RTN","PSGOE4",30,0)
+ W !,"UNITS PER DOSE: ",$S(PSGUD:PSGUD_"// ",1:"") R X:DTIME I X="^"!'$T S PSGOROE1=1 G DONE
+"RTN","PSGOE4",31,0)
+ I X="" W:'PSGUD "  (1)" G S13
+"RTN","PSGOE4",32,0)
+ S PSGF2=13 I X="@",'PSGUD W $C(7),"  ??" S X="?" D ENHLP^PSGOEM(53.1,13) G A13
+"RTN","PSGOE4",33,0)
+ I X="@" D DEL G:%'=1 13 S PSGUD="" G S13
+"RTN","PSGOE4",34,0)
+ I X?1."?" D ENHLP^PSGOEM(53.1,13) G A13
+"RTN","PSGOE4",35,0)
+ I $E(X)="^" D FF G:Y>0 @Y G A13
+"RTN","PSGOE4",36,0)
+ I X?1.2N1"/"1.2N S X=+$J(+X/$P(X,"/",2),0,2) W "  ("_$E("0",X<1)_X_")"
+"RTN","PSGOE4",37,0)
+ I $S($L(X)>12:1,X'=+X:1,X>50:1,X<0:1,1:X?.N1"."3.N) W $C(7),"  ??" S X="?" D ENHLP^PSGOEM(53.1,13) G 13
+"RTN","PSGOE4",38,0)
+ S PSGUD=X W:'X "  (1)"
+"RTN","PSGOE4",39,0)
+ ;
+"RTN","PSGOE4",40,0)
+S13 ;
+"RTN","PSGOE4",41,0)
+ S PSGFOK(13)="" I PSGDRG S $P(^PS(53.45,PSJSYSP,2,1,0),"^",2)=PSGUD
+"RTN","PSGOE4",42,0)
+ ;
+"RTN","PSGOE4",43,0)
+3 ; med route
+"RTN","PSGOE4",44,0)
+ W !,"MED ROUTE: ",$S(PSGMR:PSGMRN_"// ",1:"") R X:DTIME I X="^"!'$T W:'$T $C(7) S PSGOROE1=1 G DONE
+"RTN","PSGOE4",45,0)
+ I X="",PSGMR S X=PSGMRN I PSGMR'=PSGMRN,$D(^PS(51.2,PSGMR,0)) W "  "_$P(^(0),"^",3) S PSGFOK(3)=""
+"RTN","PSGOE4",46,0)
+ S PSGF2=3 I $S(X="@":1,X]"":0,1:'PSGMR) W $C(7),"  (Required)" S X="?" D ENHLP^PSGOEM(53.1,2) G 3
+"RTN","PSGOE4",47,0)
+ I X?1."?" D ENHLP^PSGOEM(53.1,3)
+"RTN","PSGOE4",48,0)
+ I $E(X)="^" D FF G:Y>0 @Y G 3
+"RTN","PSGOE4",49,0)
+ K DIC S DIC="^PS(51.2,",DIC(0)="EMQZ",DIC("S")="I $P(^(0),""^"",4)" D ^DIC K DIC I Y'>0 G 3
+"RTN","PSGOE4",50,0)
+ S PSGMR=+Y,PSGMRN=$P(Y(0),"^") S PSGFOK(3)=""
+"RTN","PSGOE4",51,0)
+ Q:$G(PSGOE3)
+"RTN","PSGOE4",52,0)
+ ;
+"RTN","PSGOE4",53,0)
+26 ; schedule
+"RTN","PSGOE4",54,0)
+ W !,"SCHEDULE: ",$S(PSGSCH]"":PSGSCH_"// ",1:"") R X:DTIME I X="^"!'$T W:'$T $C(7) S PSGOROE1=1 G DONE
+"RTN","PSGOE4",55,0)
+ S PSGF2=26 S:X="" X=PSGSCH,PSGSCH="" I "@"[X W $C(7),"  (Required)" S X="?" D ENHLP^PSGOEM(53.1,26) G 26
+"RTN","PSGOE4",56,0)
+ I X?1."?" D ENHLP^PSGOEM(53.1,26) G 26
+"RTN","PSGOE4",57,0)
+ I $E(X)="^" D FF G:Y>0 @Y G 26
+"RTN","PSGOE4",58,0)
+ S DOW=0 I $$DOW^PSIVUTL(X) S DOW=1,PSGST="C",PSGSTN=$$ENSTN^PSGMI(PSGST),PSGS0Y=$P(X,"@",2)
+"RTN","PSGOE4",59,0)
+ N PSJSLUP S PSJSLUP=1 D EN^PSGS0 I '$D(X) W $C(7),"  ??" S X="?" D ENHLP^PSGOEM(53.1,26) G 26
+"RTN","PSGOE4",60,0)
+ I PSGSCH[" PRN",$$PRNOK^PSGS0(PSGSCH) S PSGST="P",PSGSTN=$$ENSTN^PSGMI(PSGST)
+"RTN","PSGOE4",61,0)
+ S PSGSCH=X,$P(PSGNEDFD,"^",4)=X,PSGFOK(26)="" I PSGS0XT="O" S $P(PSGNEDFD,"^",3)="O",PSGST="O",PSGSTN=$$ENSTN^PSGMI(PSGST)
+"RTN","PSGOE4",62,0)
+ I $G(PSGOE3) D  Q
+"RTN","PSGOE4",63,0)
+ . S PSGSCH=X,PSGST=$S($G(DOW):"C",PSGS0XT="O":"O",PSGST="R":"R",X["PRN":"P",X="ON CALL":"OC",PSGST]"":PSGST,1:"C"),PSGFOK(26)=""
+"RTN","PSGOE4",64,0)
+ . S $P(PSGNEDFD,"^",3)=PSGST S:PSGSCH=""!(X?1." ") PSGSCH="PRN"
+"RTN","PSGOE4",65,0)
+ . S PSGSTN=$$ENSTN^PSGMI(PSGST)
+"RTN","PSGOE4",66,0)
+ ;
+"RTN","PSGOE4",67,0)
+7 ; schedule type
+"RTN","PSGOE4",68,0)
+ Q:$G(PSGOE3)
+"RTN","PSGOE4",69,0)
+ D  ;Default Schedule Type from Schedule file - PSJ*5*113 - DRF
+"RTN","PSGOE4",70,0)
+ . N XX
+"RTN","PSGOE4",71,0)
+ . I $$DOW^PSIVUTL(PSGSCH) S PSGST="C",PSGSTN=$$ENSTN^PSGMI(PSGST) Q
+"RTN","PSGOE4",72,0)
+ . I PSGSCH[" PRN",$$PRNOK^PSGS0(PSGSCH) S PSGST="P",PSGSTN=$$ENSTN^PSGMI(PSGST) Q
+"RTN","PSGOE4",73,0)
+ . I PSGSCH]"" D
+"RTN","PSGOE4",74,0)
+ .. S XX=+$O(^PS(51.1,"AC","PSJ",PSGSCH,0))
+"RTN","PSGOE4",75,0)
+ .. S PSGST=$P($G(^PS(51.1,XX,0)),"^",5) I PSGST="D" S PSGST="C"
+"RTN","PSGOE4",76,0)
+ .. S PSGSTN=$$ENSTN^PSGMI(PSGST)
+"RTN","PSGOE4",77,0)
+ W !,"SCHEDULE TYPE: "_$S(PSGSTN]"":PSGSTN_"// ",1:"") R X:DTIME S X=$TR(X,"coprocf","COPROCF") I X="^"!'$T S PSGOROE1=1 W $C(7) G DONE
+"RTN","PSGOE4",78,0)
+ I X="" S:PSGST="OC" PSGSCH=PSGSTN,(PSGS0Y,PSGS0XT)="" W "  "_PSGSTN S PSGFOK(7)="" S $P(PSGNEDFD,"^",3)=PSGST G ^PSGOE41
+"RTN","PSGOE4",79,0)
+ S PSGF2=7 I X="@"!(X?1."?") W:X="@" $C(7),"  ??  (Required)" S:X="@" X="?" D ENHLP^PSGOEM(53.1,7) G 7
+"RTN","PSGOE4",80,0)
+ I $E(X)="^" D FF G:Y>0 @Y G 7
+"RTN","PSGOE4",81,0)
+ S:X="F" X="R"
+"RTN","PSGOE4",82,0)
+ I X="OC"!(X="R")!(X="P") S PSGST=X,$P(PSGNEDFD,"^",3)=X,PSGSTN=$S(X="P":"PRN",X="R":"FILL on REQUEST",1:"ON CALL") W "  "_PSGSTN S PSGFOK(7)="" G:X="R" 8^PSGOE41 S PSGSCH=PSGSTN,(PSGS0Y,PSGS0XT)="" G 8^PSGOE41
+"RTN","PSGOE4",83,0)
+ F Y="C^CONTINUOUS","O^ONE TIME","OC^ON CALL","P^PRN","R^FILL on REQUEST" I $P($P(Y,"^",2),X)="" W $P($P(Y,"^",2),X,2) S PSGST=$P(Y,"^"),PSGSTN=$P(Y,"^",2),$P(PSGNEDFD,"^",3)=PSGST Q
+"RTN","PSGOE4",84,0)
+ E  W $C(7),"  ??" S X="?" D ENHLP^PSGOEM(53.1,7) G 7
+"RTN","PSGOE4",85,0)
+ I PSGST="OC"!(PSGST="R") S PSGFOK(7)="" G:PSGST="R" 8^PSGOE41 S PSGSCH=PSGSTN,(PSGS0Y,PSGS0XT)="" G 8^PSGOE41
+"RTN","PSGOE4",86,0)
+ S PSGFOK(7)=""
+"RTN","PSGOE4",87,0)
+ ;
+"RTN","PSGOE4",88,0)
+ G ^PSGOE41
+"RTN","PSGOE4",89,0)
+ ;
+"RTN","PSGOE4",90,0)
+DONE ;
+"RTN","PSGOE4",91,0)
+ I PSGOROE1 K Y W $C(7),"  ...order not entered..."
+"RTN","PSGOE4",92,0)
+ K F,F0,F1,PSGF2,F3,PSG,PSGSD,SDT Q
+"RTN","PSGOE4",93,0)
+ ;
+"RTN","PSGOE4",94,0)
+FF ; up-arrow to another field
+"RTN","PSGOE4",95,0)
+ D ENFF^PSGOEM I Y>0,Y'=109,Y'=13,Y'=3,Y'=7,Y'=26 S:Y=2 FB=PSGF2_"^PSGOE4" S Y=Y_"^PSGOE4"_$S("^39^8^10^25^"[("^"_Y_"^"):1,1:2)
+"RTN","PSGOE4",96,0)
+ Q
+"RTN","PSGOE4",97,0)
+ ;
+"RTN","PSGOE4",98,0)
+DEL ; delete entry
+"RTN","PSGOE4",99,0)
+ W !?3,"SURE YOU WANT TO DELETE" S %=0 D YN^DICN I %'=1 W $C(7),"  <NOTHING DELETED>"
+"RTN","PSGOE4",100,0)
+ Q
+"RTN","PSGS0")
+0^3^B75670987^B75413878
+"RTN","PSGS0",1,0)
+PSGS0 ;BIR/CML3 - SCHEDULE PROCESSOR ;06/22/09 7:12 PM
+"RTN","PSGS0",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**12,25,26,50,63,74,83,116,110,111,133,138,174,134,213,207,190,113,245**;DEC 16, 1997;Build 3
+"RTN","PSGS0",3,0)
+ ;
+"RTN","PSGS0",4,0)
+ ; Reference to ^PS(51.1 is supported by DBIA 2177.
+"RTN","PSGS0",5,0)
+ ; Reference to ^PS(55   is supported by DBIA 2191.
+"RTN","PSGS0",6,0)
+ ;
+"RTN","PSGS0",7,0)
+ENA ; entry point for train option
+"RTN","PSGS0",8,0)
+ D ENCV^PSGSETU Q:$D(XQUIT)
+"RTN","PSGS0",9,0)
+ F  S (PSGS0Y,PSGS0XT)="" R !!,"Select STANDARD SCHEDULE: ",X:DTIME W:'$T $C(7) S:'$T X="^" Q:"^"[X  D:X?1."?" ENQ^PSGSH I X'?1."?" D EN W:$D(X)[0 $C(7),"  ??" I $D(X)#2,'PSGS0Y,PSGS0XT W "  Every ",PSGS0XT," minutes"
+"RTN","PSGS0",10,0)
+ K DIC,DIE,PSGS0XT,PSGS0Y,Q,X,Y,PSGDT Q
+"RTN","PSGS0",11,0)
+ ;
+"RTN","PSGS0",12,0)
+EN3 ;
+"RTN","PSGS0",13,0)
+ S PSGST=$P($G(^PS(53.1,DA,0)),"^",7) G EN
+"RTN","PSGS0",14,0)
+ ;
+"RTN","PSGS0",15,0)
+EN5 ;
+"RTN","PSGS0",16,0)
+ S PSGST=$P($G(^PS(55,DA(1),5,DA,0)),"^",7)
+"RTN","PSGS0",17,0)
+ ;
+"RTN","PSGS0",18,0)
+EN ; validate
+"RTN","PSGS0",19,0)
+ K PSGS0Y
+"RTN","PSGS0",20,0)
+ I X[""""!($A(X)=45)!(X?.E1C.E)!($L(X)>70)!($L(X)<1) K X Q
+"RTN","PSGS0",21,0)
+ S X=$$TRIM^XLFSTR(X,"R"," ")
+"RTN","PSGS0",22,0)
+ I X?.E1L.E S X=$$ENLU^PSGMI(X) I '$D(PSGOES) D EN^DDIOL("  ("_X_")")
+"RTN","PSGS0",23,0)
+ ;
+"RTN","PSGS0",24,0)
+ENOS ; order set entry
+"RTN","PSGS0",25,0)
+ N X0,Y0,PSJXI,PSJDIC2,TMPAT
+"RTN","PSGS0",26,0)
+ I $G(X)="",$G(P(2)),$G(P(3)) S X=$G(P(9))
+"RTN","PSGS0",27,0)
+ I $G(X)="" Q
+"RTN","PSGS0",28,0)
+ S PSGXT=$G(PSGS0XT),(PSGS0XT,PSGS0Y,XT,Y,PSJNSS)=""
+"RTN","PSGS0",29,0)
+ S X0=X I X?2.4N1"-".E!(X?2.4N) D ENCHK S:$D(X) Y=X G Q
+"RTN","PSGS0",30,0)
+ ; * GUI 27 CHANGES * Check for admin times to be derived from 'base' schedule
+"RTN","PSGS0",31,0)
+ I X["@" S TMPAT=$P(X,"@",2) I TMPAT]"" D
+"RTN","PSGS0",32,0)
+ .I '$D(^PS(51.1,"AC","PSJ",TMPAT)) K TMPAT Q
+"RTN","PSGS0",33,0)
+ .I '$$DOW^PSIVUTL($P(X,"@")) K TMPAT Q
+"RTN","PSGS0",34,0)
+ .N LYN,ZZND,PSGS0XT,PSGS0Y,X S (PSGS0Y,PSGS0XT,X)=""
+"RTN","PSGS0",35,0)
+ .S X=TMPAT D DIC I $G(Y0)>0 S TMPAT=Y0
+"RTN","PSGS0",36,0)
+ I $G(TMPAT) S (PSGS0Y,$P(X,"@",2))=TMPAT,PSGS0XT="D"
+"RTN","PSGS0",37,0)
+ ; * GUI 27 CHANGES *
+"RTN","PSGS0",38,0)
+ I X["PRN",$$PRNOK(X),'$D(^PS(51.1,"AC","PSJ",X)) D  G Q
+"RTN","PSGS0",39,0)
+ .;PSJ*5*190 Check for One-time PRN
+"RTN","PSGS0",40,0)
+ .I $$ONE^PSJBCMA(DFN,$G(ON),X)="O" S XT="O" Q
+"RTN","PSGS0",41,0)
+ .I X["@"!$$DOW^PSIVUTL($P(X," PRN")) N DOW D  I $G(DOW) S (Y0,Y,PSGS0Y)=$P($P(X,"@",2)," ")
+"RTN","PSGS0",42,0)
+ ..N TMP S TMP=X N X S X=$P(TMP," PRN") D DW I $G(X)]"" S DOW=1
+"RTN","PSGS0",43,0)
+ ..I $G(DOW),$G(PSGST)]"" I ",P,R,"'[(","_PSGST_",") S (XT,PSGS0XT)="D"
+"RTN","PSGS0",44,0)
+ D DIC I $G(XT)]""!$G(Y0)!($G(X)]""&$G(PSJXI)) D  Q:'$D(X)  I $G(X)]"",PSGS0XT'="D" G:$D(^PS(51.1,"AC","PSJ",X)) Q3 I $P(X,"@")]"" G:$D(^PS(51.1,"AC","PSJ",$P(X,"@"))) Q3
+"RTN","PSGS0",45,0)
+ .S PSGS0XT=XT S:$G(Y0) (Y,PSGS0Y)=Y0 S:'PSGS0Y&((PSGS0XT)="D")&(X["@") PSGS0Y=$P(X,"@",2)
+"RTN","PSGS0",46,0)
+ .S PSGS0Y=$P(PSGS0Y," ")
+"RTN","PSGS0",47,0)
+ .; If entering from Verify action, and schedule exists in schedule file, and order's schedule is continuous,
+"RTN","PSGS0",48,0)
+ .; OR the order's schedule type is fill on request and the order's schedule is defined as continuous in schedule file,
+"RTN","PSGS0",49,0)
+ .; AND the order's schedule is not a PRN schedule, the order must have admin times.
+"RTN","PSGS0",50,0)
+ .Q:$G(PSGOES)'=2  Q:'$D(^PS(51.1,"AC","PSJ",X))
+"RTN","PSGS0",51,0)
+ .I $G(PSGST)="C"!($G(PSGST)="R"&($P($G(ZZND),"^",3))) I ($G(PSGST)'="P"),($G(PSGSCH)'[" PRN"),('$G(PSGAT)&'$G(PSGS0Y)),'$$ODD^PSGS0($G(PSGS0XT)) Q:($P($G(ZZND),"^",5)="O")  Q:$$ODD^PSGS0($P(ZZND,"^",3))  K X Q
+"RTN","PSGS0",52,0)
+ N TMPSCHX S TMPSCHX=X I $L(X,"@")<3 S TMPX=X D DW I $G(X)]"" K PSJNSS S (PSGS0XT,XT)="D" D  G Q
+"RTN","PSGS0",53,0)
+ .S Y=$S(($G(TMPSCHX)["@"):$P(TMPSCHX,"@",2),1:"")
+"RTN","PSGS0",54,0)
+ .I Y,(X'["@"),(TMPSCHX["@") S X=TMPSCHX
+"RTN","PSGS0",55,0)
+ S X=TMPSCHX
+"RTN","PSGS0",56,0)
+ I X'="" I $D(^PS(51.1,"AC","PSJ",X)) K PSJNSS G Q
+"RTN","PSGS0",57,0)
+ ;
+"RTN","PSGS0",58,0)
+NS I ($G(X)="^")!($G(X)="") K X S Y="" Q
+"RTN","PSGS0",59,0)
+ N NS S NS=0,PSJNSS=0
+"RTN","PSGS0",60,0)
+ I $G(Y)'>0 S X=X0,Y="",NS=1,PSJNSS=1
+"RTN","PSGS0",61,0)
+Q ;
+"RTN","PSGS0",62,0)
+ S PSGS0XT=$S(XT]"":XT,1:$G(PSGS0XT)),PSGS0Y=$S($G(Y):Y,$G(PSGS0Y):PSGS0Y,1:"") S:PSGS0XT<0 PSGS0XT=""
+"RTN","PSGS0",63,0)
+ I ('$G(PSGS0Y)&'$G(PSJDIC2)&$G(PSGAT))&'$G(PSJNEWOE)&$G(PSGS0XT) I PSGS0XT<1441 I ($L($G(PSGAT),"-")=PSGS0XT/1440)!($G(X)]""&($G(PSGSCH)=$G(X))) S PSGS0Y=$G(PSGAT)
+"RTN","PSGS0",64,0)
+Q2 K YY
+"RTN","PSGS0",65,0)
+ I '$G(PSJNSS),'$G(PSGS0Y),$G(YY) S PSGS0Y=YY
+"RTN","PSGS0",66,0)
+ I $G(X)]"",$$SCHREQ^PSJLIVFD(.P) D
+"RTN","PSGS0",67,0)
+ .I $$DOW^PSIVUTL(X)!$$PRNOK(X)!$D(^PS(51.1,"AC","PSJ",X)) S PSJNSS=0 Q
+"RTN","PSGS0",68,0)
+ .I $G(P(2))&$G(P(3)) D NSSCONT(X,PSGS0XT) S TMPX="" K X
+"RTN","PSGS0",69,0)
+ I ($G(PSJNSS)&($G(VALMBCK)'="Q"))!($G(PSJNSS)&$G(PSJLIFNI))!($G(PSJNSS)&$G(PSJTUD)) D
+"RTN","PSGS0",70,0)
+ .I $G(P(2))&$G(P(3)) Q
+"RTN","PSGS0",71,0)
+ .I ($G(X)]"") I ($G(PSGS0XT)'="D") D NSSCONT(X,PSGS0XT) S TMPX="" K X
+"RTN","PSGS0",72,0)
+Q3 I $G(X)]"" I $D(^PS(51.1,"AC","PSJ",X)) K PSJNSS
+"RTN","PSGS0",73,0)
+ K QX,SDW,SWD,X0,XT,Z Q
+"RTN","PSGS0",74,0)
+ ;
+"RTN","PSGS0",75,0)
+NSSCONT(SCH,FREQ) ;
+"RTN","PSGS0",76,0)
+ Q:SCH=""!($G(VALMBCK)]"")!$G(PSGMARSD)!$G(PSIVFN1)
+"RTN","PSGS0",77,0)
+ I $G(PSGOES),'$G(NSFF) Q
+"RTN","PSGS0",78,0)
+ N PSGS0XT,PSGSCH,DIR,X,Y S PSGSCH=SCH,PSGS0XT=FREQ,PSJNSS=1
+"RTN","PSGS0",79,0)
+ D NSSMSG I ($L(PSJNSS)>2),'$G(PSJXI) W !!,PSJNSS,! S PSJNSS=1
+"RTN","PSGS0",80,0)
+ S DIR(0)="EA",DIR("A")="Press Return to continue..." D ^DIR
+"RTN","PSGS0",81,0)
+ K NSFF Q
+"RTN","PSGS0",82,0)
+ ;
+"RTN","PSGS0",83,0)
+NSSMSG ;
+"RTN","PSGS0",84,0)
+ Q:$G(PSJXI)
+"RTN","PSGS0",85,0)
+ I '(",O,"[(","_$G(PSGST)_",")),$G(PSJNSS),$G(PSGSCH)]"" D
+"RTN","PSGS0",86,0)
+ .S PSJNSS=" WARNING - "_PSGSCH_" is an invalid schedule."
+"RTN","PSGS0",87,0)
+ S PSGSCH="",PSGS0XT=""
+"RTN","PSGS0",88,0)
+ Q
+"RTN","PSGS0",89,0)
+ ;
+"RTN","PSGS0",90,0)
+NSO(FQ) ;
+"RTN","PSGS0",91,0)
+ Q:'FQ!(FQ<0)!(",D,O,"[(","_$G(PSGST)_",")) ""
+"RTN","PSGS0",92,0)
+ K FRQOUT S FRQOUT=$S(FQ<60:(FQ_"minute"),(FQ<1440)&(FQ#60):(FQ_" minute"),(FQ<1440)!(FQ#1440):(FQ/60_" hour"),1:(FQ/1440_" day")) D
+"RTN","PSGS0",93,0)
+ . S:(+FRQOUT'=1) FRQOUT=FRQOUT_"s"
+"RTN","PSGS0",94,0)
+ Q FRQOUT
+"RTN","PSGS0",95,0)
+ ;
+"RTN","PSGS0",96,0)
+ENCHK ;
+"RTN","PSGS0",97,0)
+ N H,I
+"RTN","PSGS0",98,0)
+ I $S($L($P(X,"-"))>4:1,$L(X)>119:1,$L(X)<2:1,X'>0:1,1:X'?.ANP) K X Q
+"RTN","PSGS0",99,0)
+ S X(1)=$P(X,"-") I X(1)'?2N,X(1)'?4N K X Q
+"RTN","PSGS0",100,0)
+ S X(1)=$L(X(1)) I X'["-"&((X>$E(2400,1,X(1))!($E(X,3,4)>59))) K X Q
+"RTN","PSGS0",101,0)
+ F X(2)=2:1:$L(X,"-") S X(3)=$P(X,"-",X(2)) I $S($L(X(3))'=X(1):1,X(3)>$E(2400,1,X(1)):1,$E(X(3),3,4)>59:1,1:X(3)'>$P(X,"-",X(2)-1)) K X Q
+"RTN","PSGS0",102,0)
+ Q:'$D(X)
+"RTN","PSGS0",103,0)
+ F X(2)=1:1:$L(X,"-") S X(3)=$P(X,"-",X(2)) I $E(X(3),3,4)>59 K X Q
+"RTN","PSGS0",104,0)
+ Q:'$D(X)
+"RTN","PSGS0",105,0)
+ S X(1)=$L(X,"-"),X(2)=$G(PSGS0XT),PSGSCH=$S($G(PSGSCH)]"":PSGSCH,1:$G(P(9)))
+"RTN","PSGS0",106,0)
+ I $G(PSGSCH)="" Q  ;No schedule info, so just validate the numbers and quit.
+"RTN","PSGS0",107,0)
+ I $D(^PS(51.1,"AC","PSJ",PSGSCH)) S H=+$O(^PS(51.1,"AC","PSJ",PSGSCH,0)) S I=$P($G(^PS(51.1,H,0)),"^",5)
+"RTN","PSGS0",108,0)
+ I $G(I)="" S I=$S(PSGSCH["PRN":"P",1:"C")
+"RTN","PSGS0",109,0)
+ I I="D",$L(X,"-")>0 K:$D(X) X(1),X(2),X(3) S I="C" Q  ;DOW schedules require at least one admin time
+"RTN","PSGS0",110,0)
+ I $G(I)="O" D  Q  ;One Time schedules
+"RTN","PSGS0",111,0)
+ . I $L(X,"-")>1 K X Q  ;One Time schedules allow one admin time
+"RTN","PSGS0",112,0)
+ I X(2)="" Q  ;No frequency - cannot validate admin times to frequency
+"RTN","PSGS0",113,0)
+ I X(2)>1439,$L(X,"-")>1 K X Q  ;PSJ*5*113 Schedules with frequency greater than 1 day can only have one admin time.
+"RTN","PSGS0",114,0)
+ I X(2)>0,X(2)<1440,X(1)>(1440/X(2)) K X Q  ;PSJ*5*113 Admin times must match frequency or fewer
+"RTN","PSGS0",115,0)
+ I X(2)>0,X(2)<1440,1440#X(2)'=0,X(1)>0 K X Q  ;PSJ*5*113 Odd schedules cannot have admin times
+"RTN","PSGS0",116,0)
+ I X(2)>0,X(2)>1440,X(2)#1440'=0,X(1)>1 K X Q  ;PSJ*5*113 Odd schedules cannot have admin times
+"RTN","PSGS0",117,0)
+ K:$D(X) X(1),X(2),X(3)
+"RTN","PSGS0",118,0)
+ Q
+"RTN","PSGS0",119,0)
+ ;
+"RTN","PSGS0",120,0)
+DIC ; Check for schedule's existence in ADMINISTRATION SCHEDULE file (#51.1)
+"RTN","PSGS0",121,0)
+ ; Input:    
+"RTN","PSGS0",122,0)
+ ;           X = Schedule Name
+"RTN","PSGS0",123,0)
+ ;     PSJSLUP = If $G(PSJSLUP), perform interactive fileman lookup (optional).
+"RTN","PSGS0",124,0)
+ ;     PSGSFLG = If $G(PSGSFLG), return schedule IEN in PSGSCIEN variable (optional)
+"RTN","PSGS0",125,0)
+ ;    PSJLIFNI = Flag indicating a U/D order is being finished as an IV (optional).
+"RTN","PSGS0",126,0)
+ ;      PSGOES = If PSGOES=1, IX^DIC is called silently. If PSGOES=2, IX^DIC is not called (optional).
+"RTN","PSGS0",127,0)
+ ;      PSJPWD = IEN of Inpatient Ward associated with the patient/order/schedule combination (optional).
+"RTN","PSGS0",128,0)
+ ; Output:
+"RTN","PSGS0",129,0)
+ ;           X = Schedule Name if valid Input Schedule X, undefined if invalid Input Schedule X.
+"RTN","PSGS0",130,0)
+ ;     PSGS0XT = Frequency of validated schedule.
+"RTN","PSGS0",131,0)
+ ;     PSGS0Y  = Default Admin Times of validated schedule.
+"RTN","PSGS0",132,0)
+ ;    PSGSCIEN = IEN of validated schedule, if PSGSLFG is passed in and is evaluated to TRUE.
+"RTN","PSGS0",133,0)
+ ;
+"RTN","PSGS0",134,0)
+ K Y0,PSJXI N Y,PSGS0ST
+"RTN","PSGS0",135,0)
+ S Z=0 F PSJXI=0:1 S Z=$O(^PS(51.1,"AC","PSJ",X,Z)) Q:'Z
+"RTN","PSGS0",136,0)
+ I $G(X)]"",'$G(PSJSLUP) D
+"RTN","PSGS0",137,0)
+ .I $D(^PS(51.1,"AC","PSJ",X)) D  Q:$G(PSGS0Y)&($G(PSGS0XT)]"")
+"RTN","PSGS0",138,0)
+ ..I $$DOW^PSIVUTL(X) S PSGS0XT="D",PSJNSS=0 S:X["@" (Y0,PSGS0Y)=$P(X,"@",2) Q
+"RTN","PSGS0",139,0)
+ ..I $G(NSFF) S Y0=$S($G(PSGS0Y):PSGS0Y,$G(PSGAT)&'$G(PSJNEWOE):PSGAT,1:"") S:Y0 PSGS0Y=Y0
+"RTN","PSGS0",140,0)
+ .; Check for duplicate schedules - force selection
+"RTN","PSGS0",141,0)
+ .Q:PSJXI>1&('$G(PSGOES))&($G(PSGS0XT)]"")
+"RTN","PSGS0",142,0)
+ .I $D(^PS(51.1,"AC","PSJ",X)) N FREQ,ADMATCH S FREQ=$G(PSGS0XT) D
+"RTN","PSGS0",143,0)
+ ..N PSGS0XT,PSGS0Y,PSGST D ADMIN^PSJORPOE S:$G(PSGS0XT) XT=PSGS0XT S:$G(PSGS0Y) (Y0,Y)=PSGS0Y I $G(PSGST)'="" S PSGS0ST=PSGST
+"RTN","PSGS0",144,0)
+ ..;Check flag PSGSFLG to determine whether to return the schedule IEN in PSGSCIEN.
+"RTN","PSGS0",145,0)
+ .S:$G(XT)]"" PSGS0XT=XT S:$G(Y) PSGS0Y=Y
+"RTN","PSGS0",146,0)
+ .I $$DOW^PSIVUTL(X) S:PSGS0XT="" (XT,PSGS0XT)="D" S:PSGS0Y="" (Y0,PSGS0Y)=$S($P(X,"@",2):$P(X,"@",2),1:"")
+"RTN","PSGS0",147,0)
+ I $G(PSJLIFNI)!($G(P(4))]""&($G(P(2))]"")) I '$D(^PS(51.1,"AC","PSJ",X))!($G(PSJXI)>1) S PSJSLUP=1
+"RTN","PSGS0",148,0)
+ I $G(NSFF),$G(PSJXI)>1 D
+"RTN","PSGS0",149,0)
+ .I $G(PSGS0XT)="",$G(NSFF),$G(PSGXT)]"" S PSGS0XT=PSGXT Q
+"RTN","PSGS0",150,0)
+ .I $G(PSGS0XT)=""!($G(PSGS0Y)="") S PSJSLUP=1
+"RTN","PSGS0",151,0)
+ I '$G(PSJSLUP) Q:$G(PSGS0XT)]""&($G(PSGS0Y)]"")  Q:($G(PSGS0XT)="D"&('$D(^PS(51.1,"AC","PSJ",X))))
+"RTN","PSGS0",152,0)
+ Q:$G(PSGOES)=2
+"RTN","PSGS0",153,0)
+ Q:$G(PSGS0XT)]""&(PSJXI=1)
+"RTN","PSGS0",154,0)
+ I $G(PSGS0ST)="O",PSJXI=1 Q  ;one-time order,exact match (PSJ*5*207)
+"RTN","PSGS0",155,0)
+ K PSJSLUP
+"RTN","PSGS0",156,0)
+ ;
+"RTN","PSGS0",157,0)
+ K DIC S DIC="^PS(51.1,",DIC(0)=$E("E",'$D(PSGOES))_"ISZ",DIC("W")="W ""  "","_$S('$D(PSJPWD):"$P(^(0),""^"",2)",'PSJPWD:"$P(^(0),""^"",2)",1:"$S($D(^PS(51.1,+Y,1,+PSJPWD,0)):$P(^(0),""^"",2),1:$P(^PS(51.1,+Y,0),""^"",2))"),D="APPSJ"
+"RTN","PSGS0",158,0)
+ S PSJDIC2=1
+"RTN","PSGS0",159,0)
+ D IX^DIC K DIC S:$D(DIE)#2 DIC=DIE I Y'>0 D  Q
+"RTN","PSGS0",160,0)
+ .I '$$DOW^PSIVUTL(X),'$$PRNOK(X),'$$ODD($G(PSGS0XT)),'$$ODD($P($G(ZZND),"^",3)),($P($G(ZZND),"^",5)'="O") S X="",PSJNSS=1,XT="",PSJXI=""
+"RTN","PSGS0",161,0)
+ S XT=$S("C"[$P(Y(0),"^",5):$P(Y(0),"^",3),1:$P(Y(0),"^",5))
+"RTN","PSGS0",162,0)
+ S X=+Y,Y="" I $D(PSJPWD),$D(^PS(51.1,+X,1,+PSJPWD,0)) S Y=$P(^(0),"^",2)
+"RTN","PSGS0",163,0)
+ ;Check flag PSGSFLG to determine whether to return the schedule IEN in PSGSCIEN.
+"RTN","PSGS0",164,0)
+ I $G(PSGSFLG) S PSGSCIEN=X
+"RTN","PSGS0",165,0)
+ S (X,X0)=Y(0,0) S:$G(Y)="" Y=$P(Y(0),"^",2)
+"RTN","PSGS0",166,0)
+ S (PSGS0Y,Y0)=$G(Y),Y0(0)=Y(0) I $P(Y(0),"^",3) S XT=$P(Y(0),"^",3)
+"RTN","PSGS0",167,0)
+ I $G(PSGS0XT)="",$$DOW^PSIVUTL(X) S (XT,PSGS0XT)="D"
+"RTN","PSGS0",168,0)
+ Q
+"RTN","PSGS0",169,0)
+ ;
+"RTN","PSGS0",170,0)
+DW ;
+"RTN","PSGS0",171,0)
+ N Y
+"RTN","PSGS0",172,0)
+ Q:($L(X,"@")>2)
+"RTN","PSGS0",173,0)
+ N AT I X["@" S AT=$P(X,"@",2)
+"RTN","PSGS0",174,0)
+ S SWD="SUNDAYS^MONDAYS^TUESDAYS^WEDNESDAYS^THURSDAYS^FRIDAYS^SATURDAYS",SDW=X,X=$P(X,"@",2) N XABB S XABB=""
+"RTN","PSGS0",175,0)
+ I X]"" D ENCHK Q:'$D(X)
+"RTN","PSGS0",176,0)
+ S X=$P(SDW,"@"),X(1)="-" I X?.E1P.E,X'["-"  ;F QX=1:1:$L(X) I $E(X,QX)?1P S X(1)=$E(X,QX) Q
+"RTN","PSGS0",177,0)
+ F Q=1:1:$L(X,X(1)) K:SWD="" X Q:SWD=""  S Z=$P(X,X(1),Q) D DWC Q:'$D(X)
+"RTN","PSGS0",178,0)
+ I $D(X) F II=1:1:$L(X,X(1)) S XABB=$G(XABB)_$E($P(X,X(1),II),1,2)_"-"
+"RTN","PSGS0",179,0)
+ K X(1) S:$D(X) X=SDW I $G(X)]"" I $TR(XABB,"-")]"" S X=$E($G(XABB),1,$L(XABB)-1)
+"RTN","PSGS0",180,0)
+ I $G(AT) S PSGS0Y=AT
+"RTN","PSGS0",181,0)
+ Q
+"RTN","PSGS0",182,0)
+DWC I $L(Z)<2 K X Q
+"RTN","PSGS0",183,0)
+ F QX=1:1:$L(SWD,"^") S Y=$P(SWD,"^",QX) I $P(Y,Z)="" S SWD=$P(SWD,Y,2) S:$L(SWD) SWD=$E(SWD,2,50) Q
+"RTN","PSGS0",184,0)
+ E  K X
+"RTN","PSGS0",185,0)
+ Q
+"RTN","PSGS0",186,0)
+ ;
+"RTN","PSGS0",187,0)
+PRNOK(PSCH) ;
+"RTN","PSGS0",188,0)
+ Q:PSCH'["PRN" 0
+"RTN","PSGS0",189,0)
+ I $TR(PSCH," ")="PRN" Q 1
+"RTN","PSGS0",190,0)
+ N BASE,I,OK S OK=0 S I=$P(PSCH," PRN") I I]"",$D(^PS(51.1,"AC","PSJ",I)) S OK=1
+"RTN","PSGS0",191,0)
+ I 'OK D
+"RTN","PSGS0",192,0)
+ .I PSCH["@" I $D(^PS(51.1,"AC","PSJ",$P(PSCH,"@")))!$$DOW^PSIVUTL($P(PSCH,"@")) S OK=1 Q
+"RTN","PSGS0",193,0)
+ .I $$DOW^PSIVUTL($P(PSCH," PRN")) S OK=1
+"RTN","PSGS0",194,0)
+ Q OK
+"RTN","PSGS0",195,0)
+ODD(PSF) ;determine if this is an odd schedule
+"RTN","PSGS0",196,0)
+ I PSF>1439,PSF#1440 Q 1
+"RTN","PSGS0",197,0)
+ I PSF,PSF<1440,1440#PSF Q 1
+"RTN","PSGS0",198,0)
+ Q 0
+"VER")
+8.0^22.0
+"BLD",6343,6)
+^206
+**END**
+**END**

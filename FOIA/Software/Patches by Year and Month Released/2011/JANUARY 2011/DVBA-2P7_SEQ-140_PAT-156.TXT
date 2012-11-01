@@ -1,0 +1,160 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 08/31/10 at 11:09
+=============================================================================
+Run Date: JAN 13, 2011                     Designation: DVBA*2.7*156
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #140                    Status: Released
+                  Compliance Date: FEB 13, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*119<<= must be installed BEFORE `DVBA*2.7*156'
+
+Subject: CAPRI 2507 REQUEST PRINTING FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects the compilation of reports in a Linux-based 
+ environment to eliminate missing page breaks and extra pages when 
+ printing/re-printing 2507 Requests.
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ 1)  HD0000000369476     C&P Exam Results not batch printing with page breaks
+                     at Seattle VA Regional Office  
+  Duplicates: 
+     HD0000000361160    Missing page breaks in  "Print C&P Final Report
+                       (Manual)" found in the File / CAPRI Reports drop down
+                        menu.
+     HD0000000370776    Print C&P Final Report Problem.
+     HD0000000388749    printouts
+     HD0000000391860    Print Exams problem
+     HD0000000392573    page break issues with Linux 
+   
+  
+ 2)  HD0000000423218    Extra pages print between exams
+  
+  
+ Test Sites:
+ ===========
+ EASTERN COLORADO HCS
+ PUGET SOUND HCS
+ SPOKANE, WA
+  
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1)  HD0000000369476    C&P Exam Results not batch printing with page breaks
+                        at Seattle VA Regional Office
+     Duplicates: 
+     HD0000000361160    Missing page breaks in  "Print C&P Final Report
+                       (Manual)" found in the File / CAPRI Reports drop down
+                        menu.
+     HD0000000370776    Print C&P Final Report Problem.
+     HD0000000388749    printouts
+     HD0000000391860    Print Exams problem
+     HD0000000392573    page break issues with Linux    
+  
+   
+ Problem: 
+ --------
+ When certain reports are compiled to be displayed in CAPRI they are
+ temporarily written to a scratch file.  On Linux systems, when the
+ data is being retrieved/read from the scratch file the Form Feeds 
+ or page breaks are interpreted as a carriage return and the page 
+ breaks do not occur.  The standard value for a Page Break is
+ typically written as a "#" sign.
+    
+  
+ Resolution:
+ -----------
+ After the scratch file is opened, IOF, which is the code to start output
+ at the top of a page, will be modified to reset the page position and 
+ insert the page break flag.  This will ensure that page breaks occur where
+ intended.  Routine modified: DVBAB82
+  
+ 2)  HD0000000423218    Extra pages print between exams
+  
+   
+ Problem: 
+ --------
+ When multiple exams are tied to a single 2507 request an unwanted blank
+ page prints after each exam due to incorrect page formatting. 
+  
+   
+ Resolution:
+ -----------
+ Routine will be modified to correctly format the pages, preventing extra
+ pages from printing.  Routine modified: DVBCRPR1.
+   
+        ================ INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  You may install 
+ these routines at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter DVBA*2.7*156)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+   
+    4. Use the Install Package(s) option and select the package DVBA*2.7*156.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBAB82
+    Before: B72768005   After: B78772719  **42,90,100,119,156**
+Routine Name: DVBCRPR1
+    Before: B11399941   After: B11695100  **2,119,156**
+ 
+Routine list of preceding patches: 119
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : JUN 03, 2010
+Completed By: LEANORD,TATIANA               Date Completed: DEC 29, 2010
+Released By : FRANCE,KATHI                  Date Released : JAN 13, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

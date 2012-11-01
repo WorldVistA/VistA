@@ -1,0 +1,148 @@
+$TXT Created by MENDOZA,RAUL at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 10/26/10 at 16:28
+=============================================================================
+Run Date: FEB 27, 2012                     Designation: XU*8*535
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #467                      Status: Released
+                  Compliance Date: MAR 29, 2012
+=============================================================================
+
+
+Subject: ADD SUFFIXES TO XLFNAME1
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Issue:
+ This patch adds 3 name suffixes (ARNP, DO and PA) to the Kernel API 
+ STDNAME^XLFNAME(): Name Standardization Routine.  The suffixes ARNP, DO 
+ and PA are added to two locations: CHKSUF^XLFNAME1() and 
+ CHKSUF1^XLFNAME1().
+  
+ Test:
+ To test this patch call the API directly STDNAME^XLFNAME() and use each 
+ new suffix (ARNP, DO and PA) in the name.  Refer to the documentation 
+ section for detail on this API.
+  
+ Example:
+ >S NAME="MOUSE,MICKY ARNP"
+ >D STDNAME^XLFNAME(.NAME,"CP")  
+  
+ >ZW NAME
+ NAME="MOUSE,MICKY ARNP"
+ NAME("FAMILY")="MOUSE"
+ NAME("GIVEN")="MICKY"
+ NAME("MIDDLE")=""
+ NAME("SUFFIX")="ARNP"
+  
+ Flags:
+ C - returns name components in the NAME array
+ P - removes text in the parentheses (), brackets [ ], or braces { }, from 
+ the name.   
+  
+  
+ Patch Tracking Message #: 52954617
+  
+ Blood Bank Clearance: 5/7/10
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*535 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*535 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Related Remedy Tickets: 
+ ======================
+ #340713
+  
+  
+ Thanks to Test Sites:
+ ====================
+ Boston HCS
+ Maryland VA HCS (Baltimore)
+ Washington DC
+  
+  
+ Documentation:
+ =============
+  
+ The most up-to-date Kernel/Kernel Toolkit end-user documentation is 
+ available on the VA Software Document Library (VDL) at the following
+ Internet Website: http://www.va.gov/vdl/application.asp?appid=10
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ The Kernel/Kernel Toolkit APIs are also available in HTML format at the
+ following Intranet Website: 
+   http://vaww.vista.med.va.gov/kernel/apis/index.shtml
+  
+  
+  
+ Installation:
+ ============
+  
+ >>>Users may remain on the system.
+ >>>TaskMan does *not* need to be stopped.
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the Transport global.
+       On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global
+          Compare Transport Global to Current System
+          Backup a Transport Global
+  
+   3.  Users can remain on the system.
+       This patch can be queued and installed at any time.
+       TaskMan can remain running.
+  
+   4.  On the KIDS menu, under the 'Installation' menu, use the 
+       following option:
+             Select Installation Option: Install Package(s) 
+             Select INSTALL NAME:  XU*8.0*535
+                                   ==========
+         
+                                                                                         
+  Want KIDS to INHIBIT LOGONs during the install? NO// NO
+                                                        ==
+  
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// NO
+                                                                        ==
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XLFNAME1
+    Before: B51926851   After: B53319718  **134,240,535**
+ 
+Routine list of preceding patches: 240
+
+=============================================================================
+User Information:
+Entered By  : MENDOZA,RAUL E.               Date Entered  : SEP 17, 2009
+Completed By: BEST,LISA                     Date Completed: FEB 23, 2012
+Released By : TILLIS,LEWIS                  Date Released : FEB 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,319 @@
+$TXT Created by PANNELL,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 05/18/11 at 12:18
+=============================================================================
+Run Date: AUG 23, 2011                     Designation: EC*2*111
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #104                      Status: Released
+                  Compliance Date: SEP 23, 2011
+=============================================================================
+
+Associated patches: (v)EC*2*106    <<= must be installed BEFORE `EC*2*111'
+
+Subject: UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch addresses 1 issue:
+  
+ 1. Updates the EC NATIONAL PROCEDURE (#725) file: it adds 23
+    new procedure records, inactivates 16 existing procedure records, and
+    updates names and codes for 49 others.
+   
+ Associated NSR(s):
+ ------------------
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ----------------------------
+ 1. HD0000000470647 - Update needed for EC NATIONAL PROCEDURE (#725) file
+   
+  
+ Participating Test Sites:
+ -------------------------
+ Augusta VAMC
+ Central Texas Veterans HCS
+ Central Arkansas Veterans HCS
+  
+   
+ REMEDY OVERVIEW:
+ ----------------
+ 1. HD0000000470647 - Update needed for EC NATIONAL PROCEDURE (#725) file
+  
+   
+    Problem: 
+    --------
+    The Decision Support System office requested an update to the EC 
+    NATIONAL PROCEDURE (#725) file.  The request is to add, inactivate, 
+    and change some entries.  
+     
+    Resolution:
+    -----------
+    The routines included in this patch update the EC NATIONAL 
+    PROCEDURE (#725) file as requested.
+  
+    Resolution Detail: 1-4 below:
+    (1) The new entries that will be added to the EC NATIONAL PROCEDURE
+        (#725) file are:
+      Natl #      Description                           CPT Code
+      ------      -----------                           --------
+      HH144      HH DRIVE TIME (15MIN) PSO               
+      HH145      HH DRIVE TIME (15MIN) KT                
+      HH146      HH DRIVE TIME (15MIN) SPCH PTH            
+      NU187      INPT NUTR ED,IND,Q15M                   
+      NU188      STATUS - UNCLASSIFIED                   
+      NU189      DRIVE TIME-CBOC Q5M                       
+      NU190      CCHT INIT. SCREENING                    99499
+      NU191      CCHT TECH ED/INSTALL                    97762  
+      NU192      CCHT ASSESS TX PLAN                     99211  
+      NU193      CCHT PHONE TX PLAN                      98968
+      NU194      MOVE QUEST.W/PT1ST30                    99499  
+      NU195      MOV QUEST.W/PT QADL5                      
+      NU196      MV HOTLINE RVW&FU,Q5                      
+      NU197      MV QUEST.W/O PT Q10                      
+      NU198      MV QUEST.W/IP Q10M                      
+      NU199      COOK PREP/CLN2-5PT Q15                      
+      NU200      COOK PREP/CLN6-10PT Q15                      
+      NU201      COOK PREP/CLN11-20PT Q15                      
+      NU202      COOK PREP/CLN>20PT Q15                      
+      NU203      SECURE MSG CORRESPOND                   98969
+      NU204      CCHT PHONE INIT SCREEN                  98968
+      RC099      SENSORY INTEGRATION IND                 97533
+      RC100      WHEELCHAIR ASSESSMENT                   97542
+  
+  
+    (2) The entries that will be inactivated in the NATIONAL PROCEDURE
+        (#725) file are:
+  
+     Natl #   Description                                Inactive Date
+     ------   -----------                                -------------
+     RC023    97150 RECTHER SOC GRP >20                  9/1/2011
+     RC026    97150 RECTHER COG GRP >20                  9/1/2011
+     RC032    97150 RECTHER EMOTGRP >20                  9/1/2011
+     RC038    97150 ARTTHER SOC GRP >20                  9/1/2011
+     RC041    97150 ARTTHER COG GRP >20                  9/1/2011
+     RC044    97150 ARTTHER EMOTGRP >20                  9/1/2011
+     RC048    97530 DANCETHER GRP >20                    9/1/2011
+     RC052    97530 DRAMA THER GRP >20                   9/1/2011
+     RC059    97150 MUSTHER SOCGRP >20                   9/1/2011
+     RC062    97150 MUSTHER COGGRP >20                   9/1/2011
+     RC068    97150 MUSTHER EMOTGRP >20                  9/1/2011
+     RC084    S9446 LEIS EDUCGRP >20 60M                 9/1/2011
+     RC095    97112 ARTTHER PHYIND 15M                   9/1/2011
+     RC096    97150 ARTTHER PHY GRP 2-4                  9/1/2011
+     RC097    97150 ARTTHER PHY GRP 5-20                 9/1/2011
+     RC098    97150 ARTTHER PHY >20                      9/1/2011
+  
+    (3) The following description names updates will be made in NATIONAL
+        PROCEDURE (#725) file:
+     
+     Natl #      Old Description                 New Description
+     Code
+     ------      ---------------                 ----------------
+     NU007       INP/NH NUT CARE-BASIC/10M       IN/CLC NUT CARE-BASIC,10M
+     NU008       INP/NH NUT CARE-INTRM,10M       IN/CLC NUT CARE-INTRM,10M
+     NU009       INP/NH NUT CARE-CMPLX,10M       IN/CLC NUT CARE-CMPLX,10M
+     NU060       DSMT GP,2-5PT,30M               DSMT ACCR GP,2-5PT,30M
+     NU061       DSMT GP,6-10PT,30M              DSMT ACCR GP,6-10PT,30M
+     NU062       DSMT GP,11-20PT,30M             DSMT ACCR GP,11-20PT,30M
+     NU063       DSMT GP,>20PT,30M               DSMT ACCR GP,>20PT,30M
+     NU077       NUTR ED, 2-5 PT 1st 30M         NUTR GP, 2-5 PT 1ST 30M
+     NU078       NUTR ED, 6-10 PT 1st 30M        NUTR GP, 6-10 PT 1ST 30M
+     NU079       NUTR ED, 11-20 PT 1st 30M       NUTR GP, 11-20 PT 1ST 30M
+     NU080       NUTR ED, >20 PT 1st 30M         NUTR GP, >20 PT 1ST 30M
+     NU156       NUTR HBPC DRIVE TIME,EA 15M     HBPC NUTR DRIVE TIME,EA 15M
+     NU162       NU162/MNT F/U EA 15M            MNT F/U EA 15M
+     NU163       NU163/MNT SUBSEQ EA 15M         MNT SUBSEQ EA 15M
+     NU164       NU164/NUT CNSG IND,1ST15M       NUT CNSG IND,1ST15M
+     NU165       NU165/CASE MGT,W/PT EA15M       CASE MGT,W/PT EA15M
+     NU166       NU166/NUT SCREENING 10M         NUT SCREENING 10M
+     NU167       NU167/OTHER OPT VISIT           OTHER OPT VISIT
+     NU168       NU168/PT EDUC 1ST 15M           PT EDUC 1ST 15M
+     NU169       NU169/INSLN PMP ED 1ST15M       INSLN PMP ED 1ST15M
+     NU170       NU170/GLUC FINGER STICK         GLUC FINGER STICK
+     NU171       NU171/PHONE 5-10 MIN            PHONE 5-10 MIN
+     NU172       NU172/PHONE 11-20 MIN           PHONE 11-20 MIN
+     NU173       NU173/PHONE 21-30 MIN           PHONE 21-30 MIN
+     NU174       NU174/DSMT ACCRED IND 30M       DSMT ACCRED IND Q30M
+     NU175       NU175/DSMT NONACD 1ST15M        DIABMGT NONACRD1ST15
+     NU176       NU176/DSMT NONACD FU1ST15       DIAB MGT  F/U 1ST15M
+     NU177       95250/CGMS-GLUC MNTR            CGM-CONT.GLUC MNTR
+     NU178       NU178/SELF-MGT ED IND,30M       SELF-MGT ED IND,EA 30M
+     NU179       NU179/SELF MGT GP2-4,30M        SELF MGT GP2-4,EA 30M
+     NU180       NU180/SELF MGT GP5-8,30M        SELF MGT GP5-8,EA 30M
+     NU181       NU181/COLL RVW ELEC DATA        CCHT MONTHLY MONITOR
+     NU182       NU182/MNT INIT EA 15M           MNT INIT EA 15M
+     NU185       HBPC INPT 1ST 10M               HBPC-NUTR INPT 1ST 10M
+     NU186       HBPC INPT EA ADDL 10M           HBPC-NUTR IP QADL10M
+     RC001       97001 REFER/CONS/SCREEN         REFER/CONS/SCREEN
+     RC002       97001 RECORD REVIEW             RECORD REVIEW
+     RC003       97001 ASMNT INIT 30M            ASMNT INIT 30M
+     RC004       97002 ASMNT UPREVDISC 30M       ASMNT UPREVDISC 30M
+     RC005       97001 ASMNT PROG NOTE           ASMNT PROG NOTE
+     RC006       97001 ASMNT PROG NOTE 15M       ASMNT PROG NOTE 15M
+     RC007       97001 DISCH/COMM REF 15M        DISCH/COMM REF 15M
+     RC008       97001 DISCH/COMM REF 30M        DISCH/COMM REF 30M
+     RC010       99366 TEAMEETCAREPLANFF 15M     TEAMEETCAREPLAN 30M
+     RC014       99499 REC CREATARTGRP 2-4       REC CREATARTGRP 2-4
+     RC015       99499 REC CREATARTGRP 5-20      REC CREATARTGRP 5-20
+     RC016       99499 REC CREATARTGRP >20       REC CREATARTGRP >20
+     RC053       92506 MUSTHER SOC IND 15M       MUSTHER SOC IND 15M
+     RC054       92507 MUSTHER COG IND 15M       MUSTHER COG IND 15M
+  
+  
+    (4) The following description CPT/HCPCs codes updates will be made in  
+        NATIONAL PROCEDURE (#725) file:
+     
+     Natl #            Old code                        New code
+     Code                                          
+     ------         ---------------                 ----------------
+     RC001              97001                           97750
+     RC002              97001                           97750
+     RC003              97001                           97750
+     RC004              97002                           97750
+     RC005              97001                           97750
+     RC006              97001                           97750
+     RC007              97001                           97750
+     RC008              97001                           97750
+     RC010              99366                           98961
+     RC014              99499                           97150
+     RC015              99499                           97150
+     RC016              99499                           97150
+     RC053              92506                           96152
+     RC054              92507                           96152
+  
+  
+    (5) After the updates to the EC NATIONAL PROCEDURE (#725) file are
+        made, the patch performs an inspection of the EC EVENT CODE SCREENS
+        (#720.3) file. Any active EC EVENT CODE SCREENS (#720.3) file
+        record which points to an inactive EC NATIONAL PROCEDURE (#725)
+        file record or to an inactive CPT (#81) file record will be
+        identified. The results of the inspection are placed in a MailMan
+        message and sent to the user that performed the patch installation.
+  
+ Example of the MailMan message:
+ -------------------------------
+     Please forward this message to your local DSS Site Manager or
+     Event Capture ADPAC.
+   
+     A review of the EC EVENT CODE SCREENS file (#720.3) was done
+     after installation of patch EC*2*111 which updated the EC NATIONAL
+     PROCEDURE file (#725).  This message provides the results of that
+     review.
+   
+     The EC EVENT CODE SCREENS file (#720.3) records indicated below
+     point to an inactive record in the EC NATIONAL PROCEDURE file
+     (#725) or to an inactive record in the CPT file (#81).
+     The user should use the Inactivate Event Code Screens [ECNACT]
+     option to inactivate the Event Code Screen.  If necessary, a new
+     Event Code Screen can be created using a currently active CPT code
+     or National Procedure.
+   
+     The National Procedure for the following Event Code
+     Screen (500-3-4-245) is inactive or will soon be inactive --
+     Location:  ALBANY
+     Category:  JAP EVALUATE
+     DSS Unit:  JAP TEST UNIT
+     Procedure: FOCUSED COGNITIVE EVALUATION, LEVEL 1 (SP019)
+     Inactivation Date: JUL 01, 2008
+     The CPT procedure for the following Event
+     Code Screen (500-3-4-90844) is inactive --
+     Location:  ALBANY
+  
+  
+ ===========================================================================
+ Note: The new EC NATIONAL PROCEDURE Numbers could exist in some site's
+ environment. If the EC NATIONAL PROCEDURE Numbers exist, then the system
+ will add the new numbers and it will keep what the sites have on file. In
+ addition, a message similar to the one below will be printed during
+ installation: 
+   
+ "Entry #3457 for 97001 REFER/CONS/SCREEN [CPT: 97001] (RC001)  ...
+ successfully added. Your site has a local procedure 90002 in
+ File #725" which uses "RC001" as its National Number. Please inactivate
+ this local procedure."
+   
+ Please review the installed message.
+ ==========================================================================
+  
+   
+  
+  
+ Installation Instructions:
+ ==========================
+  
+    ***************************NOTE****************************  
+    * It is not necessary to disable any options.  You may    *
+    * install these routines at any time without interruption *
+    * to users.                                               *
+    ***********************************************************
+  
+   Installation will take less than 2 minutes.
+  
+   Suggested time to install: Non-peak requirement hours.
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter EC*2.0*111)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package EC*2.0*111.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+  
+    7. You may delete the routines ECP111PT, EC725U60 and EC725U61
+       from your production system after the patch has been successfully
+       tested.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0; EVENT CAPTURE ;**[Patch List]**;8 May 96;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC725U60
+    Before:       n/a   After: B30485790  **111**
+Routine Name: EC725U61
+    Before:       n/a   After: B18370155  **111**
+Routine Name: ECP111PT
+    Before:       n/a   After: B31484480  **111**
+
+=============================================================================
+User Information:
+Entered By  : PANNELL,BRIAN                 Date Entered  : MAR 15, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: AUG 18, 2011
+Released By : HATTER,JACKIE L               Date Released : AUG 23, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

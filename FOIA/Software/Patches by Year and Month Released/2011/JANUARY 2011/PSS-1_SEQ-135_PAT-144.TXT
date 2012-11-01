@@ -1,0 +1,465 @@
+$TXT Created by SMITH,ROBERT at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 11/15/10 at 12:04
+=============================================================================
+Run Date: JAN 26, 2011                     Designation: PSS*1*144
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #135                      Status: Released
+                  Compliance Date: FEB 26, 2011
+=============================================================================
+
+Associated patches: (v)PSS*1*98    <<= must be installed BEFORE `PSS*1*144'
+                    (v)PSS*1*129   <<= must be installed BEFORE `PSS*1*144'
+
+Subject: DRUG SYNONYM TRIGGER, ENTER/EDIT DOSAGE AND PSS WARNING BUILDER FIXES
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will correct the issues reported in:
+  
+ 1) HD0000000111095 - PSS WARNING BUILDER option fails to respond properly
+    When using the VistA "Warning Builder" [PSS WARNING BUILDER] option
+    and the user enters a ? or ?? for additional help information,
+    the program returns very little help information.
+  
+ 2) HD0000000133036 - Drug Synonym triggers are inconsistent
+    Drug Synonym triggers are inconsistent with those on the drug level.
+  
+ 3) HD0000000324175 - 6 Enter/Edit Dosages
+    In the "Enter/Edit Dosages" option in Pharmacy Data Management, there
+    is a problem with the BCMA UNITS PER DOSE prompt when editing a
+    Possible Dosage. The BCMA UNITS PER DOSE prompt should only be given
+    if the Possible Dosage Package field  is marked for Inpatient ("I"),
+    and the Application Packages Use field for the drug contains a "I" or
+    "U".  Currently the prompt appears twice if the Possible Dosage Package
+    and Drug is marked for Inpatient, (and it should only appear once).
+    When the drug is not marked Inpatient, the prompt appears only once
+    when it should not appear at all.
+  
+ 4) HD0000000157266 - Synonym DUOU field does not allow for input of decimal
+    The input template for DISPENSE UNITS PER ORDER UNIT (^DD(50,15))
+    allows for the input of decimal values (e.g. 2.5).
+  
+ Associated Remedy Ticket(s)
+ ===========================
+ HD0000000111095 - PSS WARNING BUILDER option fails to respond properly
+ HD0000000133036 - Drug Synonym triggers are inconsistent
+ HD0000000157266 - Synonym DUOU field does not allow for input of decimal
+ HD0000000324175 - 6 Enter/Edit Dosages
+  
+ Test Sites:
+ ===========
+ VA Puget Sound HCS
+ VA Gulf Coast Veterans Health Care System - Biloxi
+ Salisbury - W.G. (Bill) Hefner VA Medical Center
+  
+ Overview of Remedy Ticket(s)
+ ============================
+ 1)HD0000000111095 - PSS WARNING BUILDER option fails to respond properly
+  
+ Problem:
+ --------
+ When using the VistA "Warning Builder" [PSS WARNING BUILDER] option there
+ are two options that return very little help information when entering
+ ? or ??. 
+  
+ The 1st option is "3. Select by range of drug names".  At the "Enter
+ starting drug name:" prompt the ? or ?? only returns
+  
+ "This response can be free text."
+  
+ for the help information.
+  
+ The 2nd option "7. Drugs containing specific new data source warning
+ number" at the "Select drugs containing New warning number:" prompt and
+ the user enters ? or ?? it returns
+  
+  "Answer using format # or #N"
+  "Example: 15 or 15N"
+  
+ for the help information.
+  
+ Resolution:
+ -----------
+ To correct this problem, the simple input logic will be replaced with the
+ more complex  FileMan routines.
+ 1. "3. Select by range of drug names" option input:
+ The input for the "3. Select by range of drug names" option will be
+ modified to use the ^DIC routine which will display the standard lookup
+ for the DRUG file.
+  
+ a. If the user enters ? at the "Enter starting drug name: " prompt,
+    they will be prompted to enter a DRUG NUMBER or GENERIC NAME.
+  
+ ? Example:
+ ------------
+ Enter starting drug name: ?
+ Answer with DRUG NUMBER, or GENERIC NAME, or VA PRODUCT NAME, or
+     NATIONAL DRUG CLASS, or NDC, or APPLICATION PACKAGES' USE, or
+     ATC MNEMONIC, or DRUG TEXT ENTRY, or SYNONYM
+ Do you want the entire 1740-Entry DRUG List?  Y  (Yes)
+  
+  Choose from:
+   1      AZATHIOPRINE 50MG TAB      IM600       02-02-94
+   2      BATH PROB. DRUG #3      AA000     N/F
+   .
+   .
+   17     FLUOROURACIL CREAM 1% 30GM       DE600
+   18     FLUOROURACIL 2% TOP.SOL.       DE600         DERM CLINIC ONLY
+      
+   '^' TO STOP:
+  
+ b. If the user enters ?? at the "Enter starting drug name:" prompt,
+    they will see a list of the drugs in the numerical order in which they
+    were entered.
+  
+ ?? Example:
+ --------------
+ Enter starting drug name: ??
+     
+   Choose from:
+   1     AZATHIOPRINE 50MG TAB      IM600       02-02-94
+   2     BATH PROB. DRUG #3      AA000     N/F
+   .
+   .
+   17    FLUOROURACIL CREAM 1% 30GM       DE600
+   18    FLUOROURACIL 2% TOP.SOL.       DE600         DERM CLINIC ONLY
+      
+    '^' TO STOP:
+  
+ c. If the user enters 1 or more of the beginning letter of the drug,
+    they see an alphabetical listing of the drug that begin with the
+    letters that were entered.
+  
+  Partial Drug name entry Example:
+  Enter starting drug name: ACET
+    1   ACETAMINOPHEN 1000MG TABLET    PH000
+    2   ACETAMINOPHEN 325MG C.T.     CN103      ** OK 90 DAY SUPPLY **
+    3   ACETAMINOPHEN 325MG TABLET    CN103  INFECTIOUS DISEASE RESTRICTED TO
+    4   ACETAMINOPHEN 650MG SUPPOS.   CN103
+    5   ACETAMINOPHEN AND CODEINE 30MG   CN101
+  Press <RETURN> to see more, '^' to exit this list, OR
+  CHOOSE 1-5:
+  
+ The user will then be required to select which drug item they want to
+ start with. This type  lookup will also be used for the Ending Drug Name.
+ Once the user has selected their starting and ending drug names, the
+ program will check to ensure that the ending drug name falls alphabetically
+ after the starting drug name.  If the ending drug name comes alphabetically
+ before the starting drug name, the program will return to "Enter starting
+ drug name:" prompt.
+  
+ 2. "7. Drugs containing specific new data source warning number"
+ The ? & ?? help text will be modified to:
+ a. If the user enters ? at the "Select drugs containing New warning number:"
+    prompt the help text displayed will be changed to;
+       "Answer with WARNING LABEL-ENGLISH NUMBER using the format #N."
+       "Where # is the numeric number of the warning label desired."
+       "Example:  for the warning label number 15 entry 15N."
+  
+ b.If the user enters ?? at the "Select drugs containing New warning number:"
+   prompt, the program will display the list of choices available to the user
+   to choose from.
+  
+   ?? Example:
+   -------------
+     Select drugs containing New warning number: ??
+  
+     Choose from:
+     1N
+     2N
+     .
+     .
+     20N
+     22N
+    '^' to STOP:
+  
+     Choose from:
+     24N
+     27N
+     .
+     .
+     47N
+     48N
+    '^' to STOP: ^
+  
+   Select drugs containing New warning number:
+  
+ 2)HD0000000133036 - Drug Synonym triggers are inconsistent
+  
+ Problem:
+ --------
+ Drug Synonym triggers are inconsistent with those on the drug level.
+ The Drug Synonyms PRICE PER ORDER UNIT field 402 & DISPENSE UNITS PER 
+ ORDER UNIT field 403 do not have triggers to update the PRICE PER DISPENSE
+ UNIT field 404.  Where as their Drug file counter parts PRICE PER ORDER
+ UNIT field 13 & DISPENSE UNITS PER ORDER UNIT filed 15 do have triggers to
+ update the PRICE PER DISPENSE UNIT field 16 whenever they are changed.
+  
+ Resolution:
+ -----------
+ Triggers will be added to the Data Dictionaries for the PRICE PER ORDER
+ UNIT field 402 and DISPENSE UNITS PER ORDER UNIT field 403 of the SYNONYM
+ sub-file 50.1 of the DRUG file 50 to update the PRICE PER DISPENSE UNIT
+ field 404 of the SYNONYM sub-file 50.1 of the DRUG file 50.
+ These changes will ensure that the drug's PRICE PER DISPENSE UNIT field will
+ be properly updated when any edits that are done the PRICE PER ORDER UNIT
+ field or the DISPENSE UNITS PER ORDER UNIT field.
+  
+ 3)HD0000000324175 - 6 Enter/Edit Dosages
+  
+ Problem:
+ --------
+ In the "Enter/Edit Dosages" option in Pharmacy Data Management, there is a
+ problem with the BCMA UNITS PER DOSE prompt when editing a Possible Dosage.
+ The BCMA UNITS PER DOSE prompt should only be given if the Possible Dosage
+ Package field  is marked for Inpatient ("I"), and the Application Packages
+ Use field for the drug contains a "I" or "U".  Currently the prompt appears
+ twice if the Possible Dosage Package and Drug is marked for Inpatient, (and
+ it should only appear once). When the drug is not marked for Inpatient, the
+ prompt appears only once when it should not appear at all.
+  
+ Resolution:
+ -----------
+ The routine that controls the prompts for editing the drug's DISPENSE UNITS
+ PER DOSE will be modified to only prompt the user for the BCMA UNITS PER
+ DOSE if the Possible Dosage Package field  is marked for Inpatient ("I"),
+ and the Application Packages Use field for the drug contains a "I" or "U".
+ If the Possible Dosage Package field is ONLY marked Outpatient ("O"), the
+ prompt will not be displayed.
+  
+ 4)HD0000000157266 - Synonym DUOU field does not allow for input of decimal
+  
+ Problem:
+ --------
+ The input template for DISPENSE UNITS PER ORDER UNIT (^DD(50,15))
+ allows for the input of decimal values (e.g. 2.5).  The input template
+ for the DISPENSE UNITS PER ORDER UNIT (^DD(50.1,403)) of the synonym
+ multiple does not.
+  
+ Resolution:
+ -----------
+ Modified the input transform for ^DD(50.1,403) to allow decimal values.
+  
+ DATA DICTIONARY CHANGES:
+ =========================
+  
+ Before:
+ -------
+ DATA DICTIONARY #50 -- DRUG FILE
+ STANDARD DATA DICTIONARY #50.1 -- SYNONYM SUB-FILE
+  
+ DATA       NAME                 GLOBAL    DATA
+ ELEMENT    TITLE                LOCATION  TYPE
+ ----------------------------------------------------------------------------
+ 50.1,402   PRICE PER ORDER UNIT   0;6 NUMBER
+  
+            Price per Order Unit
+            INPUT TRANSFORM:  K:+X'=X!(X>999999)!(X<0)!(X?.E1"."4N.N) X
+            LAST EDITED:      MAY 03, 1996 
+            HELP-PROMPT:      Enter the cost to purchase one order unit. 
+            DESCRIPTION:      This is the price for one unit of order.
+  
+ 50.1,403    DISPENSE UNITS PER ORDER UNIT 0;7 NUMBER
+  
+             Dispense Units per Order Unit
+             INPUT TRANSFORM:  K:+X'=X!(X>999999)!(X<1)!(X?.E1"."1N.N) X
+             LAST EDITED:      MAY 03, 1996 
+             HELP-PROMPT:      Enter the number of dispense units in one order
+                               unit. 
+             DESCRIPTION:      This is the number of dispense units in one
+                               order unit.
+  
+ 50.1,404   PRICE PER DISPENSE UNIT 0;8 NUMBER
+  
+            Price per Dispense Unit
+            INPUT TRANSFORM:  K:+X'=X!(X>999999)!(X<0)!(X?.E1"."4N.N) X
+            LAST EDITED:      MAY 03, 1996 
+            HELP-PROMPT:      Enter the cost of one dispense unit. 
+            DESCRIPTION:      This is the cost of one dispense unit.
+  
+  
+ After:
+ ------
+ DATA DICTIONARY #50 -- DRUG FILE
+ STANDARD DATA DICTIONARY #50.1 -- SYNONYM SUB-FILE
+  
+ DATA       NAME                 GLOBAL    DATA
+ ELEMENT    TITLE                LOCATION  TYPE
+ ----------------------------------------------------------------------------
+ 50.1,402   PRICE PER ORDER UNIT   0;6 NUMBER
+  
+            Price per Order Unit
+            INPUT TRANSFORM:  S:X["$" X=$P(X,"$",2) K:X'?.N.1".".2N!(X>99999)
+                              !(X<0)!(X?.E1"."3.N) X
+            LAST EDITED:      AUG 30, 2010
+            HELP-PROMPT:      Type a Dollar Amount between 0 and 99999, 2
+                              Decimal Digits.
+            DESCRIPTION:
+                              This is the price for one unit of order.
+  
+            NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+            CROSS-REFERENCE:  ^^TRIGGER^50.1^404 
+                              1)= K DIV S DIV=X,D0=DA(1),DIV(0)=D0,D1=DA,DIV(
+                              1)=D1 S Y(0)=X S X=Y(0)>0 I X S X=DIV S Y(1)=$S
+                              ($D(^PSDRUG(D0,1,D1,0)):^(0),1:"") S X=$P(Y(1),
+                              U,8),X=X S DIU=X K Y X ^DD(50.1,402,1,1,1.1) X 
+                              ^DD(50.1,402,1,1,1.4)
+  
+                              1.1)= S X=DIV S Y(1)=$S($D(^PSDRUG(D0,1,D1,0)):
+                              ^(0),1:"") S X=DIV,X=$S($P(Y(1),U,7):X/$P(Y(1),
+                              U,7),1:"*******"),Y(2)=$G(X) S X=1,Y(3)=$G(X) S
+                              X=4,X=$J(Y(2),Y(3),X)
+  
+                              1.4)= S DIH=$G(^PSDRUG(DIV(0),1,DIV(1),0)),DIV=
+                              X S $P(^(0),U,8)=DIV,DIH=50.1,DIG=404 D ^DICR
+  
+                              2)= K DIV S DIV=X,D0=DA(1),DIV(0)=D0,D1=DA,DIV(
+                              1)=D1 S Y(1)=$S($D(^PSDRUG(D0,1,D1,0)):^(0),1:"
+                              ") S X=$P(Y(1),U,8),X=X S DIU=X K Y S X="" S DI
+                              H=$G(^PSDRUG(DIV(0),1,DIV(1),0)),DIV=X S $P(^(0
+                              ),U,8)=DIV,DIH=50.1,DIG=404 D ^DICR
+  
+                              CREATE CONDITION)= #402>0
+                              CREATE VALUE)= $J(#402/#403,1,4)
+                              DELETE VALUE)= @
+                              FIELD)= #404
+                              TRIGGERS the calculation PRICE PER DISPENSE
+                              UNIT field of the SYNONYM sub-field of the DRUG
+                              File by DIVIDING the PRICE PER ORDER UNIT field
+                              of the SYNONYM sub-field of the DRUG File BY
+                              the DISPENSE UNITS PER ORDER UNIT field of the
+                              SYNONYM sub-field of the DRUG File 
+  
+ 50.1,403   DISPENSE UNITS PER ORDER UNIT 0;7 NUMBER
+  
+            Dispense Units per Order Unit   
+            INPUT TRANSFORM:  K:+X'=X!(X>999999)!(X<1)!(X?.E1"."5.N) X
+            LAST EDITED:      AUG 30, 2010 
+            HELP-PROMPT:      Type a number between 1 and 999999, 4 Decimal
+                              Digits 
+            DESCRIPTION:      This is the number of dispense units in one
+                              order unit.  
+  
+            NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+            CROSS-REFERENCE:  ^^TRIGGER^50.1^404 
+                              1)= K DIV S DIV=X,D0=DA(1),DIV(0)=D0,D1=DA,DIV(
+                              1)=D1 S Y(0)=X S X=Y(0)>0 I X S X=DIV S Y(1)=$S
+                              ($D(^PSDRUG(D0,1,D1,0)):^(0),1:"") S X=$P(Y(1),
+                              U,8),X=X S DIU=X K Y X ^DD(50.1,403,1,1,1.1) X 
+                              ^DD(50.1,403,1,1,1.4)
+  
+                              1.1)= S X=DIV S Y(1)=$S($D(^PSDRUG(D0,1,D1,0)):
+                              ^(0),1:"") S X=$P(Y(1),U,6),X=$S(DIV:X/DIV,1:"*
+                              ******"),Y(2)=$G(X) S X=1,Y(3)=$G(X) S X=4,X=$J
+                              (Y(2),Y(3),X)
+  
+                              1.4)= S DIH=$G(^PSDRUG(DIV(0),1,DIV(1),0)),DIV=
+                              X S $P(^(0),U,8)=DIV,DIH=50.1,DIG=404 D ^DICR
+  
+                              2)= K DIV S DIV=X,D0=DA(1),DIV(0)=D0,D1=DA,DIV(
+                              1)=D1 S Y(1)=$S($D(^PSDRUG(D0,1,D1,0)):^(0),1:"
+                              ") S X=$P(Y(1),U,8),X=X S DIU=X K Y S X="" S DI
+                              H=$G(^PSDRUG(DIV(0),1,DIV(1),0)),DIV=X S $P(^(0
+                              ),U,8)=DIV,DIH=50.1,DIG=404 D ^DICR
+  
+                              CREATE CONDITION)= #403>0
+                              CREATE VALUE)= $J(#402/#403,1,4)
+                              DELETE VALUE)= @
+                              FIELD)= #404
+                              TRIGGERS the calculation PRICE PER DISPENSE
+                              UNIT field of the SYNONYM sub-field of the DRUG
+                              File by DIVIDING the PRICE PER ORDER UNIT field
+                              of the SYNONYM sub-field of the DRUG File BY
+                              the DISPENSE UNITS PER ORDER UNIT field of the
+                              SYNONYM sub-field of the DRUG File 
+  
+ 50.1,404   PRICE PER DISPENSE UNIT 0;8 NUMBER
+  
+            Price per Dispense Unit   
+            INPUT TRANSFORM:  K:+X'=X!(X>999999)!(X<0)!(X?.E1"."5N.N) X
+            LAST EDITED:      AUG 30, 2010 
+            HELP-PROMPT:      Type a Number between 0 and 999999, 4 Decimal
+                              Digits. 
+            DESCRIPTION:
+                              This is the cost of one dispense unit.  
+  
+            NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+                              TRIGGERED by the PRICE PER ORDER UNIT field of
+                              the SYNONYM sub-field of the DRUG File 
+                              TRIGGERED by the DISPENSE UNITS PER ORDER UNIT 
+                              field of the SYNONYM sub-field of the DRUG File
+  
+  
+ Installation Instructions
+ =========================
+ Suggested time to install: non-peak requirement hours. The patch should be
+ installed when NO Drug Accountability users are on the system.
+  
+ Install Time - less than 5 minutes
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+  
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSS*1.0*144)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+         b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+        PSS*1.0*144.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDOSER
+    Before: B56570784   After: B56720883  **34,38,50,57,47,68,82,125,129,144**
+Routine Name: PSSWRNB
+    Before: B44691265   After: B45263511  **87,98,144**
+Routine Name: PSSWRNC
+    Before: B22115721   After: B32864614  **98,144**
+ 
+Routine list of preceding patches: 98, 129
+
+=============================================================================
+User Information:
+Entered By  : SMITH,ROBERT J                Date Entered  : FEB 03, 2009
+Completed By: HEFFERNAN,COREY               Date Completed: JAN 04, 2011
+Released By : CAMPBELL,THOMAS               Date Released : JAN 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

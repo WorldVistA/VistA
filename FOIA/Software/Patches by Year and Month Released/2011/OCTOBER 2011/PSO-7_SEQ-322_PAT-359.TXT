@@ -1,0 +1,474 @@
+
+=============================================================================
+Run Date: OCT 31, 2011                     Designation: PSO*7*359
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #322                      Status: Released
+                  Compliance Date: NOV 30, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*358   <<= must be installed BEFORE `PSO*7*359'
+
+Subject: ePharmacy Phase 5 - NCPDP D.0
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans
+ Health Information Systems and Technology Architecture (VistA) electronic
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                  PATCH
+    --------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*359
+    INTEGRATED BILLING (IB) V. 2.0                       IB*2*435
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0    BPS*1*10
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5                    PRCA*4.5*271
+  
+ The four patches (PSO*7*359, IB*2*435, BPS*1*10, and PRCA*4.5*271) are
+ being released in the Kernel Installation and Distribution System (KIDS)
+ multi-build distribution BPS PSO IB PRCA BUNDLE 6.0.  For more specific
+ instructions please refer to the installation steps provided in each of
+ the patches.
+  
+ For the pharmacy claims that are processed electronically, the ePharmacy 
+ module is currently compliant with the National Council for Prescription 
+ Drug Programs (NCPDP) industry standards for version 5.1. NCPDP version 
+ D.0 Level 1 compliance (completion of internal testing) must be in place 
+ by January 1, 2011, and it must have completed external testing with 
+ payers and be in production as of January 1, 2012. Meeting the deliverable
+ dates is essential to VHA meeting this legislative mandate and for
+ continued business with pharmacy payers. As part of these changes, VHA
+ should also have backwards compatibility to the NCPDP version 5.1 to allow
+ for continued revenue and processing of VHA pharmacy claims.
+  
+ This combined build will allow the processing and release of prescriptions
+ for patients with Insurance payers that use the new NCPDP version D.0 
+ format for electronic claims processing as well as the current NCPDP
+ version 5.1 format.
+  
+ This specific patch contains functionality for the following:
+  
+   1. Added a new hidden action to the Reject Information screen to
+      display additional reject information returned by the third-party
+      payer.  The data includes payer messages and DUR reject information.
+      A plus (+) sign in front of the DUR Text label in the REJECT
+      Information section will indicate to the user that there is 
+      additional reject information available to view using the ARI
+      (View Addtnl Rej Info) hidden action.
+  
+   2. To support the latest NCPDP standard vD.0, the values that can
+      be entered at the Prior Authorization Type prompt for the PA (Submit
+      Prior Auth.) hidden action have been updated.
+  
+      The previous values allowed for selection were as follows:
+        0       NOT SPECIFIED
+        1       PRIOR AUTHORIZATION
+        2       MEDICAL CERTIFICATION
+        3       EPSDT
+        4       EXEMPTION FROM COPAY
+        5       EXEMPTION FROM RX LIMITS
+        6       FAMILY PLANNING INDICATOR
+        7       AFDC
+   
+      The new values are as follows:
+        0       NOT SPECIFIED
+        1       PRIOR AUTHORIZATION
+        2       MEDICAL CERTIFICATION
+        3       EPSDT
+        4       EXEMPT FROM COPAY/COINSURANCE
+        5       EXEMPT FROM RX
+        6       FAMILY PLANNING INDICATOR
+        7       TANF
+        8       PAYER DEFINED EXEMPTION
+        9       EMERGENCY PREPAREDNESS
+  
+   3. The data displayed on the Reject Information screens has
+      been synchronized to be consistent for both TRICARE and 
+      Veteran patients.  In addition, this screen was updated to
+      synchronize the display more closely with the Print Claim Log
+      action of the ECME User Screen [BPS USER SCREEN] option.
+  
+   4. To support the latest NCPDP standard vD.0, the ECME number
+      associated with electronic claims was updated from a length
+      of 7 digits to 12 digits.  The old ECME number of 7 digit
+      length will still be supported but in all Outpatient Pharmacy
+      screens where the ECME number is either displayed or prompted
+      the 12 digit length is now supported.
+  
+   5. To support the latest NCPDP standard vD.0, the Reject
+      Information screen will allow the submission of up to three
+      Submission Clarification codes using the hidden CLA (Submit
+      Clarif. Code) action. Version 5.1 claims will continue to allow
+      only one code per claim.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ Request Name: e-Pharmacy Phase 5:  FY09
+   Request ID: 20080103
+  
+  
+ This patch addresses the following Remedy Tickets:
+ ----------------------------------------------------
+ 1. HD375552  <UNDEFINED>ALLERGY+3^PSOORUT2
+    HD396518  (Duplicate)
+    HD332758  (Duplicate)
+ 2. HD477916  (BPS Not Processing)
+ 3. HD447910  (Screen changes to odd characters when labels are
+               queued to print) 
+    HD477989  (Duplicate)
+    HD469629  (Duplicate)
+    HD469098  (Duplicate)
+    HD465856  (Duplicate)
+    HD484445  (Duplicate)
+    HD489478  (Duplicate)
+  
+ Overview of Remedy Tickets:
+ ---------------------------
+ 1. HD375552  <UNDEFINED>ALLERGY+3^PSOORUT2
+  
+ Problem:
+ --------
+ An undefined error occurs when viewing a prescription using the View  
+ Prescriptions [PSO VIEW] option and then jumping to the Rx Verification
+ by Clerk [PSO VR] option. Variable PS is not killed when View 
+ Prescriptions has finished processing. This ultimately leads to the 
+ killing of the patient DFN variable.
+  
+ Resolution:
+ -----------
+ Modify View Prescriptions to clean up variable PS when this option has 
+ finished processing. In routine PSORXVW kill variable PS upon exit from 
+ this routine.
+  
+  
+ 2. HD477916  BPS NOT PROCESSING
+  
+ Problem:
+ --------
+ An endless loop occurred at Salisbury when processing an NCPDP response.
+ As a result, other NCPDP responses could not be processed.
+  
+ Resolution:
+ -----------
+ Modified procedure HOSTREJ^PSOREJU2 so that it properly initializes all 
+ variables.
+  
+  
+ 3. HD447910  Screen changes to odd characters when labels are queued to
+              print
+  
+ Problem:
+ --------
+ Printing labels from the Third Party Payer Rejects - View/Process
+ [PSO REJECTS VIEW/PROCESS] or the Third Party Payer Rejects - 
+ Worklist [PSO REJECTS WORKLIST] options did not always work
+ properly.  At times, the labels would print to the screen instead
+ of the selected printer device.  Not only would the labels not 
+ print, but depending on the escape sequences defined for the 
+ printer device, the terminal screens would end up garbled and
+ impossible to read.
+  
+ Resolution:
+ -----------
+ The label printing functionality was modified to queue the label 
+ print if the printer device is set to forced queuing.  For 
+ devices not set up with forced queuing, the code validates that the
+ selected printer device is available to use.  If not, the message
+ 'Printer is busy' is displayed instead of trying to print the label.
+  
+  
+ Components Sent With Patch
+ --------------------------
+ The following is a list of files included in this patch:
+  
+                                            UP    SEND  DATA
+                                            DATE  SEC.  COMES   SITE  RSLV
+ FILE #      FILE NAME                      DD    CODE  W/FILE  DATA  PTRS
+ -------------------------------------------------------------------------
+ 52          PRESCRIPTION                   YES   YES   NO
+  
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name (Number)           File Name (Number)
+                               Subfile Name (Number)
+ -------------------           ------------------
+ PRIOR AUTHORIZATION TYPE (25) PRESCRIPTION (52)/
+                                REJECT INFO (sub-file) (52.25)
+ DUR ADD MSG TEXT (28)         PRESCRIPTION (52)/
+                                REJECT INFO (sub-file) (52.25)
+ CLARIFICATION CODE (24)       PRESCRIPTION (52)/
+                                REJECT INFO (sub-file) (52.25)
+  
+ The following is a list of protocols included in this patch:
+ PROTOCOL:
+ ---------
+ PSO HIDDEN ACTIONS #1
+ PSO REJECT DISPLAY ADDITIONAL INFO
+ PSO REJECT DISPLAY HIDDEN MENU
+  
+ The following is a list of list templates included in this patch:
+ LIST TEMPLATE:
+ --------------
+ PSO REJECT DISPLAY ADDTNL INFO
+  
+  
+ Documentation Retrieval:
+ ------------------------
+ Sites may retrieve documentation in one of the following ways:
+  
+  1.  The preferred method is to FTP the files from
+      download.vista.med.va.gov, which will transmit the files from the
+      first available FTP server.
+  
+  2.  Sites may also elect to retrieve documentation directly from a
+      specific server as follows:
+  
+      Albany          ftp.fo-albany.med.va.gov
+      Hines           ftp.fo-hines.med.va.gov
+      Salt Lake City  ftp.fo-slc.med.va.gov
+  
+  3.  Documentation can also be retrieved from the VistA Documentation
+      Library (VDL) on the Internet at the following address,
+      http://www.va.gov/vdl.
+  
+ The documentation distribution includes:
+  
+     FILE NAME                          DESCRIPTION
+     ---------------------------------------------------------------------
+     PSO_7_P359_RN.PDF                  Release Notes 
+     PSO_7_MAN_UM_R1011.PDF             Manager User Manual
+     PSO_7_P359_MAN_UM_CP.PDF           Manager User Manual change pages
+     PSO_7_PHAR_UM_R1011.PDF            Pharmacist User Manual
+     PSO_7_P359_PHAR_UM_CP.PDF          Pharmacist User Manual change pages
+  
+  
+ Test Sites:
+ -----------
+ VA Heartland East - St. Louis
+ Birmingham
+ Louisville
+ Loma Linda
+ Richmond
+ Phoenix 
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post-installation routine is POST^PSO7P359.  The purpose of the 
+ post-installation routine is to reset the temporary cache of hidden 
+ actions associated with the Reject Information Screen hidden menus. This
+ will allow the new ARI hidden action to display when the user enters a
+ double question (??) at the "Select:" prompt.
+  
+ The post-installation routine is automatically deleted by KIDS if
+ allowed by your local Kernel parameters configuration.  You may delete 
+ the PSO7P359 routine if the installation was successful and it is not 
+ automatically deleted by KIDS.
+          
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ Do not queue the installation of this patch.
+  
+ To avoid disruptions, these patches should be installed during non-peak
+ hours when there is minimal activity on the system.  Avoid times when ECME
+ claims are being transmitted.  Of particular concern would be the options
+ below.
+  
+     1. [BPS NIGHTLY BACKGROUND JOB]
+        Do not install the patch when ECME claims are being generated
+        by the BPS Nightly Background Job option.  Wait for this job to
+        finish or complete the installation before this job starts.
+  
+     2. [PSXR SCHEDULED CS TRANS] and
+        [PSXR SCHEDULED NON-CS TRANS]
+        Do not install the patch when prescriptions are being
+        transmitted to CMOP.  Wait for the CMOP transmissions to finish
+        or complete the installation before the transmissions start. Both
+        the CS (Controlled Substances) and the non-CS CMOP transmission
+        options should be checked.  Check with Pharmacy Service or your
+        Pharmacy ADPAC to find out when CMOP transmissions occur.
+  
+  
+ Install Time
+ ------------
+ The installation will take between 10 and 90 minutes depending upon how
+ many entries your site has in the BPS CLAIMS file (9002313.02) and in the
+ BPS RESPONSES file (9002313.03).  Data conversions will be run in both
+ files and all entries will be checked during the installation of BPS*1*10.
+  
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file BPS_1_10_PSO_IB_PRCA.KID, which contains the
+     following patches:
+  
+         BPS*1.0*10
+         PSO*7.0*359
+         IB*2.0*435
+         PRCA*4.5*271
+  
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+  
+                     download.vista.med.va.gov
+  
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+  
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+  
+      The BPS_1_10_PSO_IB_PRCA.KID host file is located in the 
+      anonymous.software directory. Use ASCII Mode when downloading the
+      file.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file BPS_1_10_PSO_IB_PRCA.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]BPS_1_10_PSO_IB_PRCA.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         BPS PSO IB PRCA BUNDLE 6.0
+         BPS*1.0*10
+         PSO*7.0*359
+         IB*2.0*435
+         PRCA*4.5*271
+       Use INSTALL NAME: BPS PSO IB PRCA BUNDLE 6.0 to install this
+       Distribution.
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     BPS PSO IB PRCA BUNDLE 6.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the BPS PSO IB PRCA BUNDLE 6.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter BPS PSO IB
+         PRCA BUNDLE 6.0.
+     c.  For the PSO*7.0*359 patch, when prompted "Want KIDS to Rebuild 
+         Menu Trees Upon Completion of Install? YES//"  enter YES unless
+         your system does this in a nightly TaskMan process.
+     d.  When prompted "Want KIDS to INHIBIT LOGONs during the
+         install? YES//"  enter NO.
+     e.  When prompted " Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//" enter NO.
+     f.  When prompted "Device: Home//"  respond with the correct device 
+         but do not queue this install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO7P359
+    Before:       n/a   After:  B1514691  **359**
+Routine Name: PSOBORP3
+    Before:B186304557   After:B185906920  **358,359**
+Routine Name: PSOBPSU1
+    Before: B53851823   After: B53744697  **148,260,281,287,303,289,290,
+                                           358,359**
+Routine Name: PSOBPSU2
+    Before: B48423091   After: B55533133  **260,287,289,341,290,358,359**
+Routine Name: PSOLSET
+    Before: B29903046   After: B30029461  **10,22,32,40,120,247,359**
+Routine Name: PSOREJP1
+    Before: B82556492   After: B78046825  **148,247,260,281,287,289,290,
+                                           358,359**
+Routine Name: PSOREJP3
+    Before: B79304493   After:B107041706  **260,287,289,290,358,359**
+Routine Name: PSOREJP5
+    Before:       n/a   After: B31405315  **359**
+Routine Name: PSOREJU1
+    Before: B72644745   After: B77096006  **148,247,260,287,289,358,359**
+Routine Name: PSOREJU2
+    Before: B49455422   After: B49130506  **148,260,287,341,290,358,359**
+Routine Name: PSOREJU3
+    Before: B68089605   After: B68707597  **287,290,358,359**
+Routine Name: PSOREJU4
+    Before: B31223921   After: B31952299  **289,290,358,359**
+Routine Name: PSOREJUT
+    Before: B48633596   After: B53275324  **148,247,260,287,289,290,358,359**
+Routine Name: PSORXVW
+    Before: B67370961   After: B67653959  **14,35,46,96,103,88,117,131,
+                                           146,156,185,210,148,233,260,
+                                           264,281,359**
+Routine Name: PSORXVW1
+    Before: B66558221   After: B67070082  **35,47,46,71,99,117,156,193,
+                                           210,148,258,260,240,281,359**
+ 
+Routine list of preceding patches: 358
+
+=============================================================================
+User Information:
+Entered By  : BLAESER,DAVID                 Date Entered  : MAY 28, 2010
+Completed By: CONQUEST,KENNETH              Date Completed: SEP 21, 2011
+Released By : VECE,VIRGINIA                 Date Released : OCT 31, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

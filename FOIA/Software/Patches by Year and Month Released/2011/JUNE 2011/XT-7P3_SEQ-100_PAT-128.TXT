@@ -1,0 +1,123 @@
+$TXT Created by DIMICELI,RON at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 11/03/10 at 13:32
+=============================================================================
+Run Date: JUN 13, 2011                     Designation: XT*7.3*128
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3       SEQ #100                    Status: Released
+                  Compliance Date: JUL 14, 2011
+=============================================================================
+
+Associated patches: (v)XT*7.3*121  <<= must be installed BEFORE `XT*7.3*128'
+
+Subject: Fix XINDEX bugs
+
+Category: 
+  - Routine
+
+Description:
+============
+
+      Patch XT*7.3*128 fixes five issues with Kernel XINDEX utility:
+  
+  1. XINDEX will now check that the first and second lines conform to the
+     Standards And Conventions (SAC).
+  
+  2. XINDEX incorrectly marked a call to $STACK as an error.
+  
+  3. XINDEX doesn't report an error for the following code:
+      F  S X=0 Q:X Q:Y
+  
+  4. XINDEX doesn't report an error when the code tries to do a GOTO to a
+     tag^routine from within a DO dot structure.
+  
+  5. XINDEX incorrectly reports an error when a function is called to NEW
+     variables. i.e. N @$$TEST().
+  
+  This patch corrects all of these bugs.
+  
+  
+ Remedy Tickets
+ =============
+  407211
+  063673
+  063123
+  063504
+  063362
+  
+ Thanks to Test Sites:
+ =====================
+ James J. Peters VAMC - Bronx, NY
+ VA Montana HCS, MT 
+  
+ Blood Bank Clearance
+ ====================
+  Clearance - 11/4/2010
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*128 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+  not alter or modify any VistA Blood Bank software design safeguards or
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XT*7.3*128 have no effect on Blood Bank
+   software functionality, therefore RISK is none.
+   
+ Installation Instructions
+ =========================
+ This patch may be installed with VISTA users online. However, it is
+ recommended that it be Queued for a time of generally least activity.  
+  
+ TaskMan does not need to be STOPPED or placed in a WAIT state, no
+  background jobs need to be stopped and installation should take less
+  than a minute.
+  
+     1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+        This option will load the KIDS package onto your system.  
+  
+     2. The patch has now been loaded into a transport global on your 
+        system. You now need to use KIDS to install the transport global.  
+   
+     3. On the KIDS menu, under the 'Installation' menu, use the 
+        following options: 
+            Print Transport Global 
+            Compare Transport Global to Current System 
+            Verify Checksums in Transport Global
+            Backup a Transport Global 
+  
+     4. On the KIDS menu, under the 'Installation' menu, use the 
+        following option: 
+            Select Installation Option: Install Package(s) 
+            Select INSTALL NAME: XT*7.3*128
+                                 ==========
+        Want KIDS to INHIBIT LOGONs during the install? NO//
+        Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XINDEX
+    Before: B27883860   After: B30427549  **20,27,48,61,66,68,110,121,128**
+Routine Name: XINDX1
+    Before: B17282098   After: B18451520  **20,61,66,68,110,121,128**
+Routine Name: XINDX3
+    Before: B12135035   After: B12749285  **20,27,61,68,110,121,128**
+Routine Name: XINDX4
+    Before: B13130963   After: B13667786  **20,61,68,110,128**
+ 
+Routine list of preceding patches: 121
+
+=============================================================================
+User Information:
+Entered By  : DIMICELI,RON                  Date Entered  : SEP 01, 2010
+Completed By: SINGH,GURBIR                  Date Completed: JUN 13, 2011
+Released By : HARROD,PAUL                   Date Released : JUN 13, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

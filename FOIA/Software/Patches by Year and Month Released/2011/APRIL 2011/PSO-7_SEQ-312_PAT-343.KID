@@ -1,0 +1,788 @@
+Released PSO*7*343 SEQ #312
+Extracted from mail message
+**KIDS**:PSO*7.0*343^
+
+**INSTALL NAME**
+PSO*7.0*343
+"BLD",7477,0)
+PSO*7.0*343^OUTPATIENT PHARMACY^0^3101012^y
+"BLD",7477,1,0)
+^^127^127^3101012^^^^
+"BLD",7477,1,1,0)
+This patch contains software modifications to the Outpatient Pharmacy (OP)
+"BLD",7477,1,2,0)
+V. 7.0 application to support the FDA Medication Guides project. The 
+"BLD",7477,1,3,0)
+project objective is to allow pharmacy staff to retrieve the FDA Medication 
+"BLD",7477,1,4,0)
+Guide for prescriptions that contain FDA approved information that can help
+"BLD",7477,1,5,0)
+patients avoid serious adverse events. The FDA requires that Medication
+"BLD",7477,1,6,0)
+Guides be included with certain prescribed drugs and biological products 
+"BLD",7477,1,7,0)
+when the Agency determines that: 
+"BLD",7477,1,8,0)
+ 
+"BLD",7477,1,9,0)
+ . Certain information is necessary to prevent serious adverse effects 
+"BLD",7477,1,10,0)
+ . Patient decision-making should be advised by information about a known
+"BLD",7477,1,11,0)
+   serious side effect with a product, or 
+"BLD",7477,1,12,0)
+ . Patient adherence to directions for the use of a product is essential
+"BLD",7477,1,13,0)
+   to its effectiveness. 
+"BLD",7477,1,14,0)
+ 
+"BLD",7477,1,15,0)
+The features in the FDA Medication Guides project are being delivered in
+"BLD",7477,1,16,0)
+incremental releases. This patch is part of the Increment 2 release. The 
+"BLD",7477,1,17,0)
+features included in this release are:
+"BLD",7477,1,18,0)
+ 
+"BLD",7477,1,19,0)
+ . Establishment of a Server Repository for FDA Medication Guides within 
+"BLD",7477,1,20,0)
+   the VA network.
+"BLD",7477,1,21,0)
+ 
+"BLD",7477,1,22,0)
+ . Updates to 900+ entries in the VA PRODUCT file (#50.68) to store the 
+"BLD",7477,1,23,0)
+   corresponding FDA Medication Guide document name will be provided via
+"BLD",7477,1,24,0)
+   the NDF Monthly Data Update patches.
+"BLD",7477,1,25,0)
+ 
+"BLD",7477,1,26,0)
+ . Introduction of a PC based Java software component to enable the
+"BLD",7477,1,27,0)
+   automatic retrieval of an FDA Medication Guide from within VistA. The
+"BLD",7477,1,28,0)
+   software does not require any direct user interaction. It works as a 
+"BLD",7477,1,29,0)
+   bridge between VistA and the PC where it is installed. The software 
+"BLD",7477,1,30,0)
+   identifies a request from VistA for a specific FDA Medication Guide and
+"BLD",7477,1,31,0)
+   automatically retrieves it from the Server Repository and displays to the
+"BLD",7477,1,32,0)
+   user via the Internet Explorer browser. 
+"BLD",7477,1,33,0)
+  
+"BLD",7477,1,34,0)
+ . Introduction of a new option called Display FDA Medication Guide [PSN MED
+"BLD",7477,1,35,0)
+   GUIDE] to the National Drug File V. 4.0 application for retrieving and 
+"BLD",7477,1,36,0)
+   displaying the FDA Medication Guide for a specific VA Product.
+"BLD",7477,1,37,0)
+ 
+"BLD",7477,1,38,0)
+ . Introduction of new functionality to the Patient Prescription Processing
+"BLD",7477,1,39,0)
+   [PSO LM BACKDOOR] option in the Outpatient Pharmacy V. 7.0 application
+"BLD",7477,1,40,0)
+   for retrieving and displaying the FDA Medication Guide for a specific 
+"BLD",7477,1,41,0)
+   prescription.
+"BLD",7477,1,42,0)
+   
+"BLD",7477,1,43,0)
+Below is a list of all the applications involved in this release along
+"BLD",7477,1,44,0)
+with their patch number:
+"BLD",7477,1,45,0)
+  
+"BLD",7477,1,46,0)
+   APPLICATION/VERSION                                  PATCH
+"BLD",7477,1,47,0)
+   -----------------------------------------------------------------
+"BLD",7477,1,48,0)
+   OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*343
+"BLD",7477,1,49,0)
+   NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*263
+"BLD",7477,1,50,0)
+   PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*158
+"BLD",7477,1,51,0)
+   
+"BLD",7477,1,52,0)
+The FDA Medication Guides project is expected to complete in three 
+"BLD",7477,1,53,0)
+increments. Among other features, the next Increment will automate the 
+"BLD",7477,1,54,0)
+printing of FDA Medication Guides for prescriptions dispensed by the VA
+"BLD",7477,1,55,0)
+via Outpatient Pharmacy application when the prescription label is printed.
+"BLD",7477,1,56,0)
+   
+"BLD",7477,1,57,0)
+The following modification is inclued in this patch (PSO*7*343):
+"BLD",7477,1,58,0)
+  
+"BLD",7477,1,59,0)
+Patient Prescription Processing [PSO LM BACKDOOR ORDERS] option
+"BLD",7477,1,60,0)
+ 
+"BLD",7477,1,61,0)
+  Pharmacists will be able to retrieve an FDA Medication Guide for a 
+"BLD",7477,1,62,0)
+  specific prescription by selecting the prescription and invoking the OTH
+"BLD",7477,1,63,0)
+  (Other OP Actions) hidden action and choosing the new item MG Display FDA
+"BLD",7477,1,64,0)
+  Medication Guide. A Java software component running at the user's PC will 
+"BLD",7477,1,65,0)
+  then display the FDA Medication Guide Adobe Acrobat document (.pdf) by 
+"BLD",7477,1,66,0)
+  automatically opening it via the user's default web browser, which will
+"BLD",7477,1,67,0)
+  allow the users to print it to any printer available to them, as seen 
+"BLD",7477,1,68,0)
+  below:
+"BLD",7477,1,69,0)
+       
+"BLD",7477,1,70,0)
+                       --- Other OP Actions ---
+"BLD",7477,1,71,0)
+      PN   Progress Note (OP)
+"BLD",7477,1,72,0)
+      AP   Action Profile (OP)
+"BLD",7477,1,73,0)
+      MI   Print Medication Instructions
+"BLD",7477,1,74,0)
+      DO   Display Orders' Statuses
+"BLD",7477,1,75,0)
+      MG   Display FDA Medication Guide
+"BLD",7477,1,76,0)
+ 
+"BLD",7477,1,77,0)
+      Select Item(s): MG   Display FDA Medication Guide  
+"BLD",7477,1,78,0)
+  
+"BLD",7477,1,79,0)
+      The following URL provides the link to the FDA Medication Guide 
+"BLD",7477,1,80,0)
+      associated with this medication.
+"BLD",7477,1,81,0)
+ 
+"BLD",7477,1,82,0)
+      vaww.national.cmop.va.gov/FDAMedGuides/Lindane_(Generic)_(2008).pdf
+"BLD",7477,1,83,0)
+ 
+"BLD",7477,1,84,0)
+      Please wait... 
+"BLD",7477,1,85,0)
+ 
+"BLD",7477,1,86,0)
+        [FDA Medication Guide .pdf document opens on the web browser]
+"BLD",7477,1,87,0)
+ 
+"BLD",7477,1,88,0)
+      Enter RETURN to continue, '?' for HELP, or '^' to exit:    
+"BLD",7477,1,89,0)
+ 
+"BLD",7477,1,90,0)
+ If a user tries to use this option from a computer which does not have the 
+"BLD",7477,1,91,0)
+ required Java software component installed, the following message will 
+"BLD",7477,1,92,0)
+ display:
+"BLD",7477,1,93,0)
+ 
+"BLD",7477,1,94,0)
+      Select Item(s): MG   Display FDA Medication Guide  
+"BLD",7477,1,95,0)
+ 
+"BLD",7477,1,96,0)
+      The following URL provides the link to the FDA Medication Guide 
+"BLD",7477,1,97,0)
+      associated with this medication.
+"BLD",7477,1,98,0)
+ 
+"BLD",7477,1,99,0)
+      vaww.national.cmop.va.gov/FDAMedGuides/Lindane_(Generic)_(2008).pdf
+"BLD",7477,1,100,0)
+ 
+"BLD",7477,1,101,0)
+      Please wait... 
+"BLD",7477,1,102,0)
+    
+"BLD",7477,1,103,0)
+      The system is unable to display FDA Med Guide automatically.
+"BLD",7477,1,104,0)
+  
+"BLD",7477,1,105,0)
+      Please, contact your local technical support for assistance to
+"BLD",7477,1,106,0)
+      resolve this problem. In the meantime, you can copy/paste the
+"BLD",7477,1,107,0)
+      link above into your browser's address bar to retrieve the
+"BLD",7477,1,108,0)
+      FDA Medication Guide.
+"BLD",7477,1,109,0)
+ 
+"BLD",7477,1,110,0)
+      Enter RETURN to continue, '?' for HELP, or '^' to exit:    
+"BLD",7477,1,111,0)
+ 
+"BLD",7477,1,112,0)
+  
+"BLD",7477,1,113,0)
+  If a user tries to use this option for a medication that does not have
+"BLD",7477,1,114,0)
+  an FDA Medication Guide on file, the following message will display:
+"BLD",7477,1,115,0)
+ 
+"BLD",7477,1,116,0)
+ 
+"BLD",7477,1,117,0)
+      Select Item(s): MG   Display FDA Medication Guide  
+"BLD",7477,1,118,0)
+     
+"BLD",7477,1,119,0)
+      There is no FDA Medication Guide associated with this medication.
+"BLD",7477,1,120,0)
+ 
+"BLD",7477,1,121,0)
+      Press RETURN to continue
+"BLD",7477,1,122,0)
+  
+"BLD",7477,1,123,0)
+  
+"BLD",7477,1,124,0)
+  Note: This option requires a Java software component to be installed on
+"BLD",7477,1,125,0)
+  ----  the user's computer. This software will be released as part of this
+"BLD",7477,1,126,0)
+        project. Please, refer to the project Release Notes and Installation
+"BLD",7477,1,127,0)
+        Guide documentation for further information.
+"BLD",7477,4,0)
+^9.64PA^^0
+"BLD",7477,6.3)
+17
+"BLD",7477,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7477,"KRN",.4,0)
+.4
+"BLD",7477,"KRN",.401,0)
+.401
+"BLD",7477,"KRN",.402,0)
+.402
+"BLD",7477,"KRN",.402,"NM",0)
+^9.68A^^0
+"BLD",7477,"KRN",.403,0)
+.403
+"BLD",7477,"KRN",.5,0)
+.5
+"BLD",7477,"KRN",.84,0)
+.84
+"BLD",7477,"KRN",3.6,0)
+3.6
+"BLD",7477,"KRN",3.8,0)
+3.8
+"BLD",7477,"KRN",9.2,0)
+9.2
+"BLD",7477,"KRN",9.8,0)
+9.8
+"BLD",7477,"KRN",9.8,"NM",0)
+^9.68A^8^1
+"BLD",7477,"KRN",9.8,"NM",8,0)
+PSOFDAMG^^0^B1007173
+"BLD",7477,"KRN",9.8,"NM","B","PSOFDAMG",8)
+
+"BLD",7477,"KRN",19,0)
+19
+"BLD",7477,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",7477,"KRN",19.1,0)
+19.1
+"BLD",7477,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",7477,"KRN",101,0)
+101
+"BLD",7477,"KRN",101,"NM",0)
+^9.68A^4^2
+"BLD",7477,"KRN",101,"NM",3,0)
+PSO LM HIDDEN OTHER #2^^2
+"BLD",7477,"KRN",101,"NM",4,0)
+PSO LM DISPLAY FDA MED GUIDE^^0
+"BLD",7477,"KRN",101,"NM","B","PSO LM DISPLAY FDA MED GUIDE",4)
+
+"BLD",7477,"KRN",101,"NM","B","PSO LM HIDDEN OTHER #2",3)
+
+"BLD",7477,"KRN",409.61,0)
+409.61
+"BLD",7477,"KRN",771,0)
+771
+"BLD",7477,"KRN",779.2,0)
+779.2
+"BLD",7477,"KRN",870,0)
+870
+"BLD",7477,"KRN",8989.51,0)
+8989.51
+"BLD",7477,"KRN",8989.52,0)
+8989.52
+"BLD",7477,"KRN",8994,0)
+8994
+"BLD",7477,"KRN",8994,"NM",0)
+^9.68A^^0
+"BLD",7477,"KRN","B",.4,.4)
+
+"BLD",7477,"KRN","B",.401,.401)
+
+"BLD",7477,"KRN","B",.402,.402)
+
+"BLD",7477,"KRN","B",.403,.403)
+
+"BLD",7477,"KRN","B",.5,.5)
+
+"BLD",7477,"KRN","B",.84,.84)
+
+"BLD",7477,"KRN","B",3.6,3.6)
+
+"BLD",7477,"KRN","B",3.8,3.8)
+
+"BLD",7477,"KRN","B",9.2,9.2)
+
+"BLD",7477,"KRN","B",9.8,9.8)
+
+"BLD",7477,"KRN","B",19,19)
+
+"BLD",7477,"KRN","B",19.1,19.1)
+
+"BLD",7477,"KRN","B",101,101)
+
+"BLD",7477,"KRN","B",409.61,409.61)
+
+"BLD",7477,"KRN","B",771,771)
+
+"BLD",7477,"KRN","B",779.2,779.2)
+
+"BLD",7477,"KRN","B",870,870)
+
+"BLD",7477,"KRN","B",8989.51,8989.51)
+
+"BLD",7477,"KRN","B",8989.52,8989.52)
+
+"BLD",7477,"KRN","B",8994,8994)
+
+"BLD",7477,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",7477,"QUES",0)
+^9.62^^
+"BLD",7477,"REQB",0)
+^9.611^1^1
+"BLD",7477,"REQB",1,0)
+PSN*4.0*263^2
+"BLD",7477,"REQB","B","PSN*4.0*263",1)
+
+"KRN",101,3844,-1)
+2^3
+"KRN",101,3844,0)
+PSO LM HIDDEN OTHER #2^Other OP Actions^^M^11856^^^^^^^141
+"KRN",101,3844,10,0)
+^101.01PA^5^5
+"KRN",101,3844,10,5,0)
+5770^MG^^
+"KRN",101,3844,10,5,"^")
+PSO LM DISPLAY FDA MED GUIDE
+"KRN",101,5770,-1)
+0^4
+"KRN",101,5770,0)
+PSO LM DISPLAY FDA MED GUIDE^Display FDA Medication Guide^^A^^^^^^^^OUTPATIENT PHARMACY
+"KRN",101,5770,15)
+Q
+"KRN",101,5770,20)
+D DISPLAY^PSOFDAMG
+"KRN",101,5770,99)
+61705,57399
+"MBREQ")
+0
+"ORD",15,101)
+101;15;;;PRO^XPDTA;PROF1^XPDIA;PROE1^XPDIA;PROF2^XPDIA;;PRODEL^XPDIA
+"ORD",15,101,0)
+PROTOCOL
+"PKG",141,-1)
+1^1
+"PKG",141,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",141,20,0)
+^9.402P^^
+"PKG",141,22,0)
+^9.49I^1^1
+"PKG",141,22,1,0)
+7.0^2971216^2980917^11712
+"PKG",141,22,1,"PAH",1,0)
+343^3101012^10000000021
+"PKG",141,22,1,"PAH",1,1,0)
+^^127^127^3101012
+"PKG",141,22,1,"PAH",1,1,1,0)
+This patch contains software modifications to the Outpatient Pharmacy (OP)
+"PKG",141,22,1,"PAH",1,1,2,0)
+V. 7.0 application to support the FDA Medication Guides project. The 
+"PKG",141,22,1,"PAH",1,1,3,0)
+project objective is to allow pharmacy staff to retrieve the FDA Medication 
+"PKG",141,22,1,"PAH",1,1,4,0)
+Guide for prescriptions that contain FDA approved information that can help
+"PKG",141,22,1,"PAH",1,1,5,0)
+patients avoid serious adverse events. The FDA requires that Medication
+"PKG",141,22,1,"PAH",1,1,6,0)
+Guides be included with certain prescribed drugs and biological products 
+"PKG",141,22,1,"PAH",1,1,7,0)
+when the Agency determines that: 
+"PKG",141,22,1,"PAH",1,1,8,0)
+ 
+"PKG",141,22,1,"PAH",1,1,9,0)
+ . Certain information is necessary to prevent serious adverse effects 
+"PKG",141,22,1,"PAH",1,1,10,0)
+ . Patient decision-making should be advised by information about a known
+"PKG",141,22,1,"PAH",1,1,11,0)
+   serious side effect with a product, or 
+"PKG",141,22,1,"PAH",1,1,12,0)
+ . Patient adherence to directions for the use of a product is essential
+"PKG",141,22,1,"PAH",1,1,13,0)
+   to its effectiveness. 
+"PKG",141,22,1,"PAH",1,1,14,0)
+ 
+"PKG",141,22,1,"PAH",1,1,15,0)
+The features in the FDA Medication Guides project are being delivered in
+"PKG",141,22,1,"PAH",1,1,16,0)
+incremental releases. This patch is part of the Increment 2 release. The 
+"PKG",141,22,1,"PAH",1,1,17,0)
+features included in this release are:
+"PKG",141,22,1,"PAH",1,1,18,0)
+ 
+"PKG",141,22,1,"PAH",1,1,19,0)
+ . Establishment of a Server Repository for FDA Medication Guides within 
+"PKG",141,22,1,"PAH",1,1,20,0)
+   the VA network.
+"PKG",141,22,1,"PAH",1,1,21,0)
+ 
+"PKG",141,22,1,"PAH",1,1,22,0)
+ . Updates to 900+ entries in the VA PRODUCT file (#50.68) to store the 
+"PKG",141,22,1,"PAH",1,1,23,0)
+   corresponding FDA Medication Guide document name will be provided via
+"PKG",141,22,1,"PAH",1,1,24,0)
+   the NDF Monthly Data Update patches.
+"PKG",141,22,1,"PAH",1,1,25,0)
+ 
+"PKG",141,22,1,"PAH",1,1,26,0)
+ . Introduction of a PC based Java software component to enable the
+"PKG",141,22,1,"PAH",1,1,27,0)
+   automatic retrieval of an FDA Medication Guide from within VistA. The
+"PKG",141,22,1,"PAH",1,1,28,0)
+   software does not require any direct user interaction. It works as a 
+"PKG",141,22,1,"PAH",1,1,29,0)
+   bridge between VistA and the PC where it is installed. The software 
+"PKG",141,22,1,"PAH",1,1,30,0)
+   identifies a request from VistA for a specific FDA Medication Guide and
+"PKG",141,22,1,"PAH",1,1,31,0)
+   automatically retrieves it from the Server Repository and displays to the
+"PKG",141,22,1,"PAH",1,1,32,0)
+   user via the Internet Explorer browser. 
+"PKG",141,22,1,"PAH",1,1,33,0)
+  
+"PKG",141,22,1,"PAH",1,1,34,0)
+ . Introduction of a new option called Display FDA Medication Guide [PSN MED
+"PKG",141,22,1,"PAH",1,1,35,0)
+   GUIDE] to the National Drug File V. 4.0 application for retrieving and 
+"PKG",141,22,1,"PAH",1,1,36,0)
+   displaying the FDA Medication Guide for a specific VA Product.
+"PKG",141,22,1,"PAH",1,1,37,0)
+ 
+"PKG",141,22,1,"PAH",1,1,38,0)
+ . Introduction of new functionality to the Patient Prescription Processing
+"PKG",141,22,1,"PAH",1,1,39,0)
+   [PSO LM BACKDOOR] option in the Outpatient Pharmacy V. 7.0 application
+"PKG",141,22,1,"PAH",1,1,40,0)
+   for retrieving and displaying the FDA Medication Guide for a specific 
+"PKG",141,22,1,"PAH",1,1,41,0)
+   prescription.
+"PKG",141,22,1,"PAH",1,1,42,0)
+   
+"PKG",141,22,1,"PAH",1,1,43,0)
+Below is a list of all the applications involved in this release along
+"PKG",141,22,1,"PAH",1,1,44,0)
+with their patch number:
+"PKG",141,22,1,"PAH",1,1,45,0)
+  
+"PKG",141,22,1,"PAH",1,1,46,0)
+   APPLICATION/VERSION                                  PATCH
+"PKG",141,22,1,"PAH",1,1,47,0)
+   -----------------------------------------------------------------
+"PKG",141,22,1,"PAH",1,1,48,0)
+   OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*343
+"PKG",141,22,1,"PAH",1,1,49,0)
+   NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*263
+"PKG",141,22,1,"PAH",1,1,50,0)
+   PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*158
+"PKG",141,22,1,"PAH",1,1,51,0)
+   
+"PKG",141,22,1,"PAH",1,1,52,0)
+The FDA Medication Guides project is expected to complete in three 
+"PKG",141,22,1,"PAH",1,1,53,0)
+increments. Among other features, the next Increment will automate the 
+"PKG",141,22,1,"PAH",1,1,54,0)
+printing of FDA Medication Guides for prescriptions dispensed by the VA
+"PKG",141,22,1,"PAH",1,1,55,0)
+via Outpatient Pharmacy application when the prescription label is printed.
+"PKG",141,22,1,"PAH",1,1,56,0)
+   
+"PKG",141,22,1,"PAH",1,1,57,0)
+The following modification is inclued in this patch (PSO*7*343):
+"PKG",141,22,1,"PAH",1,1,58,0)
+  
+"PKG",141,22,1,"PAH",1,1,59,0)
+Patient Prescription Processing [PSO LM BACKDOOR ORDERS] option
+"PKG",141,22,1,"PAH",1,1,60,0)
+ 
+"PKG",141,22,1,"PAH",1,1,61,0)
+  Pharmacists will be able to retrieve an FDA Medication Guide for a 
+"PKG",141,22,1,"PAH",1,1,62,0)
+  specific prescription by selecting the prescription and invoking the OTH
+"PKG",141,22,1,"PAH",1,1,63,0)
+  (Other OP Actions) hidden action and choosing the new item MG Display FDA
+"PKG",141,22,1,"PAH",1,1,64,0)
+  Medication Guide. A Java software component running at the user's PC will 
+"PKG",141,22,1,"PAH",1,1,65,0)
+  then display the FDA Medication Guide Adobe Acrobat document (.pdf) by 
+"PKG",141,22,1,"PAH",1,1,66,0)
+  automatically opening it via the user's default web browser, which will
+"PKG",141,22,1,"PAH",1,1,67,0)
+  allow the users to print it to any printer available to them, as seen 
+"PKG",141,22,1,"PAH",1,1,68,0)
+  below:
+"PKG",141,22,1,"PAH",1,1,69,0)
+       
+"PKG",141,22,1,"PAH",1,1,70,0)
+                       --- Other OP Actions ---
+"PKG",141,22,1,"PAH",1,1,71,0)
+      PN   Progress Note (OP)
+"PKG",141,22,1,"PAH",1,1,72,0)
+      AP   Action Profile (OP)
+"PKG",141,22,1,"PAH",1,1,73,0)
+      MI   Print Medication Instructions
+"PKG",141,22,1,"PAH",1,1,74,0)
+      DO   Display Orders' Statuses
+"PKG",141,22,1,"PAH",1,1,75,0)
+      MG   Display FDA Medication Guide
+"PKG",141,22,1,"PAH",1,1,76,0)
+ 
+"PKG",141,22,1,"PAH",1,1,77,0)
+      Select Item(s): MG   Display FDA Medication Guide  
+"PKG",141,22,1,"PAH",1,1,78,0)
+  
+"PKG",141,22,1,"PAH",1,1,79,0)
+      The following URL provides the link to the FDA Medication Guide 
+"PKG",141,22,1,"PAH",1,1,80,0)
+      associated with this medication.
+"PKG",141,22,1,"PAH",1,1,81,0)
+ 
+"PKG",141,22,1,"PAH",1,1,82,0)
+      vaww.national.cmop.va.gov/FDAMedGuides/Lindane_(Generic)_(2008).pdf
+"PKG",141,22,1,"PAH",1,1,83,0)
+ 
+"PKG",141,22,1,"PAH",1,1,84,0)
+      Please wait... 
+"PKG",141,22,1,"PAH",1,1,85,0)
+ 
+"PKG",141,22,1,"PAH",1,1,86,0)
+        [FDA Medication Guide .pdf document opens on the web browser]
+"PKG",141,22,1,"PAH",1,1,87,0)
+ 
+"PKG",141,22,1,"PAH",1,1,88,0)
+      Enter RETURN to continue, '?' for HELP, or '^' to exit:    
+"PKG",141,22,1,"PAH",1,1,89,0)
+ 
+"PKG",141,22,1,"PAH",1,1,90,0)
+ If a user tries to use this option from a computer which does not have the 
+"PKG",141,22,1,"PAH",1,1,91,0)
+ required Java software component installed, the following message will 
+"PKG",141,22,1,"PAH",1,1,92,0)
+ display:
+"PKG",141,22,1,"PAH",1,1,93,0)
+ 
+"PKG",141,22,1,"PAH",1,1,94,0)
+      Select Item(s): MG   Display FDA Medication Guide  
+"PKG",141,22,1,"PAH",1,1,95,0)
+ 
+"PKG",141,22,1,"PAH",1,1,96,0)
+      The following URL provides the link to the FDA Medication Guide 
+"PKG",141,22,1,"PAH",1,1,97,0)
+      associated with this medication.
+"PKG",141,22,1,"PAH",1,1,98,0)
+ 
+"PKG",141,22,1,"PAH",1,1,99,0)
+      vaww.national.cmop.va.gov/FDAMedGuides/Lindane_(Generic)_(2008).pdf
+"PKG",141,22,1,"PAH",1,1,100,0)
+ 
+"PKG",141,22,1,"PAH",1,1,101,0)
+      Please wait... 
+"PKG",141,22,1,"PAH",1,1,102,0)
+    
+"PKG",141,22,1,"PAH",1,1,103,0)
+      The system is unable to display FDA Med Guide automatically.
+"PKG",141,22,1,"PAH",1,1,104,0)
+  
+"PKG",141,22,1,"PAH",1,1,105,0)
+      Please, contact your local technical support for assistance to
+"PKG",141,22,1,"PAH",1,1,106,0)
+      resolve this problem. In the meantime, you can copy/paste the
+"PKG",141,22,1,"PAH",1,1,107,0)
+      link above into your browser's address bar to retrieve the
+"PKG",141,22,1,"PAH",1,1,108,0)
+      FDA Medication Guide.
+"PKG",141,22,1,"PAH",1,1,109,0)
+ 
+"PKG",141,22,1,"PAH",1,1,110,0)
+      Enter RETURN to continue, '?' for HELP, or '^' to exit:    
+"PKG",141,22,1,"PAH",1,1,111,0)
+ 
+"PKG",141,22,1,"PAH",1,1,112,0)
+  
+"PKG",141,22,1,"PAH",1,1,113,0)
+  If a user tries to use this option for a medication that does not have
+"PKG",141,22,1,"PAH",1,1,114,0)
+  an FDA Medication Guide on file, the following message will display:
+"PKG",141,22,1,"PAH",1,1,115,0)
+ 
+"PKG",141,22,1,"PAH",1,1,116,0)
+ 
+"PKG",141,22,1,"PAH",1,1,117,0)
+      Select Item(s): MG   Display FDA Medication Guide  
+"PKG",141,22,1,"PAH",1,1,118,0)
+     
+"PKG",141,22,1,"PAH",1,1,119,0)
+      There is no FDA Medication Guide associated with this medication.
+"PKG",141,22,1,"PAH",1,1,120,0)
+ 
+"PKG",141,22,1,"PAH",1,1,121,0)
+      Press RETURN to continue
+"PKG",141,22,1,"PAH",1,1,122,0)
+  
+"PKG",141,22,1,"PAH",1,1,123,0)
+  
+"PKG",141,22,1,"PAH",1,1,124,0)
+  Note: This option requires a Java software component to be installed on
+"PKG",141,22,1,"PAH",1,1,125,0)
+  ----  the user's computer. This software will be released as part of this
+"PKG",141,22,1,"PAH",1,1,126,0)
+        project. Please, refer to the project Release Notes and Installation
+"PKG",141,22,1,"PAH",1,1,127,0)
+        Guide documentation for further information.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSOFDAMG")
+0^8^B1007173^n/a
+"RTN","PSOFDAMG",1,0)
+PSOFDAMG ;BHAM ISC/MR - FDA Medication Guide ;11/10/09 3:44pm
+"RTN","PSOFDAMG",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**343**;DEC 1997;Build 17
+"RTN","PSOFDAMG",3,0)
+ ;External reference EN^PSNFDAMG supported by DBIA 5517
+"RTN","PSOFDAMG",4,0)
+ ;External reference ^PSDRUG supported by DBIA 221
+"RTN","PSOFDAMG",5,0)
+ ;
+"RTN","PSOFDAMG",6,0)
+DISPLAY ; Display the FDA Medication Guide
+"RTN","PSOFDAMG",7,0)
+ ; Note: RX0 is a global variable (assumed as such by most hidden actions)
+"RTN","PSOFDAMG",8,0)
+ N DRGIEN,VAPRDIEN
+"RTN","PSOFDAMG",9,0)
+ S DRGIEN=+$P($G(RX0),"^",6)
+"RTN","PSOFDAMG",10,0)
+ I '$D(^PSDRUG(DRGIEN,0)) W $C(7),!,"Invalid Drug" D PAUSE^VALM1 Q
+"RTN","PSOFDAMG",11,0)
+ S VAPRDIEN=+$P($G(^PSDRUG(DRGIEN,"ND")),"^",3)
+"RTN","PSOFDAMG",12,0)
+ I 'VAPRDIEN W $C(7),!!,$$GET1^DIQ(50,DRGIEN,.01)_" not matched to the National Drug File (NDF)" D PAUSE^VALM1 Q
+"RTN","PSOFDAMG",13,0)
+ ;
+"RTN","PSOFDAMG",14,0)
+ D FULL^VALM1 D EN^PSNFDAMG(VAPRDIEN)
+"RTN","PSOFDAMG",15,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",7477,6)
+^312
+**END**
+**END**

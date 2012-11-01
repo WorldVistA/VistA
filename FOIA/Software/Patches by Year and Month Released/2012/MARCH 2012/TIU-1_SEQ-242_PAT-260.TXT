@@ -1,0 +1,253 @@
+
+=============================================================================
+Run Date: MAR 21, 2012                     Designation: TIU*1*260
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #242                      Status: Released
+                  Compliance Date: APR 21, 2012
+=============================================================================
+
+Associated patches: (v)TIU*1*47    <<= must be installed BEFORE `TIU*1*260'
+                    (v)GMTS*2.7*99 <<= must be installed BEFORE `TIU*1*260'
+
+Subject: High Risk Mental Health Patient - National Reminder & Flag
+
+Category: 
+  - Routine
+  - Other
+  - Informational
+
+Description:
+============
+
+ This patch is in support of the Improve Veteran Mental Health (IVMH) 
+ initiative, High Risk Mental Health (HRMH) - National Reminder & Flag.
+  
+ This patch will install one new Object into the TIU DOCUMENT DEFINITION 
+ file (8925.1): MH MISSED APPOINTMENTS 10D.
+  
+ MH MISSED APPOINTMENTS 10D is used by the VA-MH HIGH RISK NO SHOW 
+ FOLLOW-UP reminder dialog to display any No-Show or No-Show & Rescheduled 
+ mental health clinic appointments for the past 10 days.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20070589 - High Risk Mental Health Patient - National Reminder and Flag
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ UPSTATE NEW YORK HCS BUFFALO
+ PORTLAND VAMC
+ NORTHPORT VAMC
+ NORTHERN CALIFORNIA HCS
+ MILWAUKEE VAMC
+ MARYLAND HCS
+ INDIANAPOLIS VAMC
+ CHICAGO VAMC
+  
+  
+ Software & Documentation Retrieval Instructions
+ ------------------------------------ 
+ The software for this set of patches is not being distributed through the 
+ National Patch Module. There is a multi-package build named HIGH RISK MH 
+ 1.0 which contains the following KIDS builds: DG*5.3*836, SD*5.3*578, 
+ TIU*1.0*260, GMTS*2.7*99, and PXRM*2.0*18.The associated host file is 
+ named HIGH_RISK_MH_1_0.KID.
+  
+ The set of documentation has been bundled into a single zip file named: 
+ HRMHP_DOCS.ZIP.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from: 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve the files directly from a specific 
+ server as follows:
+  
+ Albany      ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines       ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov  <ftp://ftp.fo-slc.med.va.gov>
+  
+ HRMHP_DOCS.ZIP contains the following files:
+  
+ PXRM_2_18_IG.PDF
+ PXRM_2_UM.PDF
+ PXRM_2_TM.PDF
+ PXRM_2_MM.PDF
+ PXRM_2_18_RN.PDF
+ HSUM_2_7_99_UM.PDF
+ HSUM_2_7_99_TM.PDF
+ DG_5_3_836_IG.PDF
+ SD_5_3_578_IG.PDF
+  
+ Documentation can also be found on the VistA Documentation Library (VDL)
+ at:
+ http://www.va.gov/vdl/
+  
+ Title                         File Name                      FTP Mode
+ ----------------------------------------------------------------------- 
+ High Risk Mental Health Patient Project Installation and Setup Guide 
+                                PXRM_2_18_IG.PDF               Binary
+ PXRM User Manual               PXRM_2_UM.PDF                  Binary
+ PXRM Tech Manual               PXRM_2_TM.PDF                  Binary
+ High Risk Mental Health Patient Project Release Notes
+                                PXRM_2_18_RN.PDF               Binary
+ Clinical Reminders Manager's Manual
+                                PXRM_2_MM.PDF                  Binary
+ GMTS User Manual               HSUM_2_7_99_UM.pdf             Binary
+ GMTS Tech Manual               HSUM_2_7_99_TM.pdf             Binary
+ DG Install Guide               DG_5_3_836_IG.PDF              Binary
+ SD Install Guide               SD_5_3_578_IG.PDF              Binary 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ TIU*1.0*260 contains a post-install routine that will install the
+ object into the TIU Document Definition file (#8925.1). The routine 
+ will first delete (if found) the object if it contains the same name "MH 
+ MISSED APPOINTMENTS 10D from 8925.1, and then attempt to create the MH
+ MISSED APPOINTMENTS 10D object via FileMan's UPDATE^DIE. A message will be
+ written to the screen and also captured in the install log as to whether
+ or not the object was successfully created.
+  
+ The routine TIUPI260 contains the PRE and POST install actions for this 
+ build. TIUPI260 can be deleted after successful installation.
+  
+  
+ Installation Instructions
+ -------------------------
+ The following install steps are only a high level overview, please follow 
+ the PXRM install guide for more detailed instructions and guidance.
+  
+ 1.  Download the HIGH_RISK_MH_1_0.KID file from the appropriate  
+     FTP Server to the directory on your system.
+  
+ 2.  Use LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and 
+     enter: [DIR]:HIGH_RISK_MH_1_0.KID, where [DIR] is the local
+     directory where you have stored the host file.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use any of
+     the following options. When prompted for the INSTALL enter the build 
+     HIGH RISK MH 1.0:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this build. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this build
+         is installed. It compares all components of this build
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and 
+     choose the build to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Answer 'NO'
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Answer 'NO'
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no post-installation instructions for the TIU portion of this 
+ multipackage installation.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIULO1
+    Before:  B2657399   After: B20992898  **47,260**
+Routine Name: TIUPI260
+    Before:       n/a   After:  B4988159  **260**
+ 
+Routine list of preceding patches: 47
+
+=============================================================================
+User Information:                          Hold Date     : FEB 23, 2012
+Entered By  : THOMPSON,WILLIAM ANTHONY      Date Entered  : APR 05, 2011
+Completed By: OLSEN,JAMES                   Date Completed: FEB 14, 2012
+Released By : SCHMIT,BECKY                  Date Released : MAR 21, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,131 @@
+$TXT Created by CLARKE,KYLE E at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 10/12/11 at 14:58
+=============================================================================
+Run Date: MAR 01, 2012                     Designation: XU*8*573
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #468                      Status: Released
+                  Compliance Date: APR 01, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*523    <<= must be installed BEFORE `XU*8*573'
+
+Subject: LENGTHEN TIME FOR TOKEN SIGNON
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Some Graphical User Interface (GUI) applications, such as Computerized
+ Patient Record System (CPRS), launch another application and, so that the
+ user does not have to re-authenticate for the new application, it requests
+ a sign-on token from the VistA server, provides the new application with
+ this token on the command line and the new application uses this to
+ authenticate the current user.  This sign-on token is only good for a
+ limited time (prior to this patch the period was 20 seconds).  However,
+ there have been instances where due to slower networks, the token expires
+ prior to authenticating the user.
+  
+ This patch contains 1 routine (XUSRB4) and (other than adding the patch 
+ number on the second line) has only one change - the default value for 
+ the token expiration is changed from 20 seconds to 90 seconds.
+  
+ List of Test Sites:
+ ===================
+ Central Plains Health Care System
+ Montana Health Care System
+ Tampa VAMC
+  
+ Remedy Tickets:
+ ===============
+ HD473565
+ HD447420
+ HD432723
+ HD430833
+ HD426725
+ HD425543
+ HD399321
+ HD363527
+  
+ Blood Bank Clearance:
+ =====================
+ Clearance Date: 8/25/2011
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*573 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of VISTA
+ Patches for Effects on VISTA Blood Bank Software. This patch does not
+ alter or modify any VistA Blood Bank software design safeguards or safety
+ critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*573 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+  
+ Installation Instructions:
+ ==========================
+  
+ Caution: the routine XUSRB4, which is modified in this patch, is 
+ called in various instances which set up or use a token for
+ authentication.  These include, but may not be limited to, tokens
+ for the Broker Security Enhancement, Clinical Context Object 
+ Workgroup (CCOW) User Context, and tokens for an auto sign-on
+ process.  If this routine is modified (by installing this patch
+ while a user is involved in one of these processes), it may
+ result in an "EDITED" error which could end the user's session.  
+ This can be prevented completely by only installing with no users
+ on the system.  Otherwise there should be minimal users on the
+ system during the installation and they should be requested to
+ refrain from launching applications which may use a silent
+ sign-on (e.g., an application from within CPRS, or an application
+ which will make another sign-on with CCOW User Context, etc.)
+ around the time period that the installation is scheduled.
+       
+ 1.   Users ARE allowed to be on the system during the installation.
+  
+ 2.   Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+ option will load the KIDS (Kernel Installation and Distribution System)
+ package onto your system.
+  
+ 3.   You DO NOT need to stop TaskMan or the background filers.
+  
+ 4.   The patch has now been loaded into a transport global on your
+ system.  On the KIDS menu, select the 'Installation' menu and use the
+ following options:
+  
+    Verify Checksums in Transport Global
+    Print Transport Global
+    Compare Transport Global to Current System
+    Backup a Transport Global
+  
+ 5. Installation of the patch will take less than one minute.
+        Install Package(s)  'XU*8.0*573'
+                             ==========
+    Accept the following defaults.
+  
+    Want KIDS to INHIBIT LOGONs during the install? NO//
+  
+    Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUSRB4
+    Before: B16820466   After: B17078784  **150,337,395,419,437,499,523,573**
+ 
+Routine list of preceding patches: 523
+
+=============================================================================
+User Information:
+Entered By  : IVEY,JOEL                     Date Entered  : MAY 05, 2011
+Completed By: SINGH,GURBIR                  Date Completed: FEB 29, 2012
+Released By : TILLIS,LEWIS                  Date Released : MAR 01, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

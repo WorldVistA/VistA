@@ -1,0 +1,142 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Friday, 02/03/12 at 15:18
+=============================================================================
+Run Date: FEB 27, 2012                     Designation: PRC*5.1*166
+Package : PRC - IFCAP                         Priority: EMERGENCY
+Version : 5.1       SEQ #137                    Status: Released
+                  Compliance Date: FEB 28, 2012
+=============================================================================
+
+
+Subject: CLRS SERVER BEING RELOCATED AS OF 03/01/2012
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address one issue:
+  
+ 1. Clinical Logistics Report Server (CLRS) being relocated effective
+    03/01/2012.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ Remedy:
+ =======
+ 1. HD0000000597072 CLRS - URGENT ISSUE - SERVER BEING RELOCATED
+  
+  
+ Test Sites:
+ ===========
+ St. Cloud VAMC
+ Bronx VAMC
+ North Florida/South Georgia HCS
+  
+  
+  
+ Remedy Overview:
+ ================ 
+  1. HD0000000597072 CLRS - URGENT ISSUE - SERVER BEING RELOCATED
+  
+    Problem:
+    --------
+    The CLRS Report server will be relocated effective 3-1-2012 requiring 
+    an update of the system parameters:
+     
+     CLRS Address
+     Password for CLRS Report Server Login
+  
+    ** The User Name for the CLRS Report Server Login will remain the same
+                                                          
+  
+    Resolution:
+    -----------
+    Created a post install routine to set the two system parameters to the 
+    new values.
+  
+  
+    Routines: PRCP166P
+  
+   
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+   ***********************************************************************
+   PLEASE NOTE: Post install routine PRCP166P will be deleted once the
+   install is complete.  If you wish to check the checksum of this routine 
+   please use the 'Verify Checksums in Transport Global' under the 
+   Installation Menu.
+   ***********************************************************************
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*166)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*166.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond YES 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+           CLO System Parameters (CLRS)    [PRCPLO CLO SYSTEM PARAM]
+           CLO Procurement Reports (CLRS)  [PRCHLO CLO PROCUREMENT]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCP166P
+    Before:       n/a   After:  B3745559  **166**
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : FEB 03, 2012
+Completed By: PODLEY,CHRIS                  Date Completed: FEB 22, 2012
+Released By : NELSON,VICKI M                Date Released : FEB 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

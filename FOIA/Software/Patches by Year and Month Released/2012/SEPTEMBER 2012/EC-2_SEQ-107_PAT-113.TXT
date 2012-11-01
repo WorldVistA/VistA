@@ -1,0 +1,295 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 12/14/11 at 12:31
+=============================================================================
+Run Date: SEP 18, 2012                     Designation: EC*2*113
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #107                      Status: Released
+                  Compliance Date: OCT 18, 2012
+=============================================================================
+
+Associated patches: (v)EC*2*111    <<= must be installed BEFORE `EC*2*113'
+
+Subject: UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 1 issue:
+  
+ 1. Updates the EC NATIONAL PROCEDURE (#725) file by
+    inactivating 112 existing procedure records
+  
+   
+ Associated NSR(s):
+ ------------------
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ----------------------------
+ 1. HD0000000555332 - Update needed for EC NATIONAL PROCEDURE (#725) file
+   
+  
+ Participating Test Sites:
+ -------------------------
+ Tennessee Valley HCS
+ Battle Creek VAMC
+ Memphis VAMC 
+  
+   
+ REMEDY OVERVIEW:
+ ----------------
+ 1. HD0000000555332 - Update needed for EC NATIONAL PROCEDURE (#725) file
+  
+   
+    Problem: 
+    --------
+    The Decision Support System office requested an update to the EC 
+    NATIONAL PROCEDURE (#725) file.  The request is inactivate 112 entries.  
+     
+    Resolution:
+    -----------
+    The routines included in this patch update the EC NATIONAL 
+    PROCEDURE (#725) file by inactivating the 112 entries requested.
+  
+     
+    The entries that will be inactivated in the NATIONAL PROCEDURE
+    (#725) file are:
+  
+     Natl #      Description                             Inactive Date
+     ------      -----------                             -------------
+     MH066      MH CWT/TWE <4 HR NFF                    10/17/2011
+     MH067      MH CWT/TWE 4<8 HR NFF                   10/17/2011
+     MH068      MH CWT/TWE 8 HRS/MORE NFF               10/17/2011
+     MH069      MH CWT/SE <4 HR NFF                     10/17/2011
+     MH070      MH CWT/SE 4 <8 HR NFF                   10/17/2011
+     MH071      MH CWT/SE 8 HRS/MORE NFF                10/17/2011
+     PM504      PM CWT/TWE <4 HR NFF                    10/17/2011
+     PM505      PM CWT/TWE 4 <8 HR NFF                  10/17/2011
+     PM506      PM CWT/TWE =>8 HRS NFF                  10/17/2011
+     PM507      PM CWT/SE <4 HR NFF                     10/17/2011
+     PM508      PM CWT/SE 4 <8 HR NFF                   10/17/2011
+     PM509      PM CWT/SE 8 HRS/MORE NFF                10/17/2011
+     FE100      FEE100                                  10/31/2011
+     FE101      FEE PHARM COST<.01                      10/31/2011
+     FE102      FEE PHARM COST.01-.02                   10/31/2011
+     FE103      FEE PHARM COST.021-.10                  10/31/2011
+     FE104      FEE PHARM COST.11-1.00                  10/31/2011
+     FE105      FEE PHARM COST1.01-2.00                 10/31/2011
+     FE106      FEE PHARM COST2.01-5.00                 10/31/2011
+     FE107      FEE PHARM COST5.01-10.00                10/31/2011
+     FE108      FEE PHARM COST10.01-25.00               10/31/2011
+     FE109      FEE PHARM COST25.01-50.00               10/31/2011
+     FE110      FEE PHARM COST>50.00                    10/31/2011
+     FE111      FEE111                                  10/31/2011
+     FE112      FEE112                                  10/31/2011
+     FE113      FEE113                                  10/31/2011
+     FE114      FEE114                                  10/31/2011
+     FE115      FEE115                                  10/31/2011
+     FE116      FEE116                                  10/31/2011
+     FE117      FEE117                                  10/31/2011
+     FE118      FEE118                                  10/31/2011
+     FE119      FEE119                                  10/31/2011
+     FE120      FEE120                                  10/31/2011
+     FE121      FEE121                                  10/31/2011
+     FE122      FEE122                                  10/31/2011
+     FE123      FEE123                                  10/31/2011
+     FE124      FEE124                                  10/31/2011
+     FE125      FEE125                                  10/31/2011
+     FE126      FEE126                                  10/31/2011
+     FE127      FEE127                                  10/31/2011
+     FE128      FEE128                                  10/31/2011
+     FE129      FEE129                                  10/31/2011
+     FE130      FEE130                                  10/31/2011
+     FE131      FEE131                                  10/31/2011
+     FE132      FEE132                                  10/31/2011
+     FE133      FEE133                                  10/31/2011
+     FE134      FEE134                                  10/31/2011
+     FE135      FEE135                                  10/31/2011
+     FE136      FEE136                                  10/31/2011
+     FE137      FEE137                                  10/31/2011
+     FE138      FEE138                                  10/31/2011
+     FE139      FEE139                                  10/31/2011
+     FE140      FEE140                                  10/31/2011
+     FE141      FEE141                                  10/31/2011
+     FE142      FEE142                                  10/31/2011
+     FE143      FEE143                                  10/31/2011
+     FE144      FEE144                                  10/31/2011
+     FE145      FEE145                                  10/31/2011
+     FE146      FEE146                                  10/31/2011
+     FE147      FEE147                                  10/31/2011
+     FE148      FEE148                                  10/31/2011
+     FE149      FEE149                                  10/31/2011
+     FE150      FEE150                                  10/31/2011
+     FE151      FEE151                                  10/31/2011
+     FE152      FEE152                                  10/31/2011
+     FE153      FEE153                                  10/31/2011
+     FE154      FEE154                                  10/31/2011
+     FE155      FEE155                                  10/31/2011
+     FE156      FEE156                                  10/31/2011
+     FE157      FEE157                                  10/31/2011
+     FE158      FEE158                                  10/31/2011
+     FE159      FEE159                                  10/31/2011
+     FE160      FEE160                                  10/31/2011
+     FE161      FEE161                                  10/31/2011
+     FE162      FEE162                                  10/31/2011
+     FE163      FEE163                                  10/31/2011
+     FE164      FEE164                                  10/31/2011
+     FE165      FEE165                                  10/31/2011
+     FE166      FEE166                                  10/31/2011
+     FE167      FEE167                                  10/31/2011
+     FE168      FEE168                                  10/31/2011
+     FE169      FEE169                                  10/31/2011
+     FE170      FEE170                                  10/31/2011
+     FE171      FEE171                                  10/31/2011
+     FE172      FEE172                                  10/31/2011
+     FE173      FEE173                                  10/31/2011
+     FE174      FEE174                                  10/31/2011
+     FE175      FEE175                                  10/31/2011
+     FE176      FEE176                                  10/31/2011
+     FE177      FEE177                                  10/31/2011
+     FE178      FEE178                                  10/31/2011
+     FE179      FEE179                                  10/31/2011
+     FE180      FEE180                                  10/31/2011
+     FE181      FEE181                                  10/31/2011
+     FE182      FEE182                                  10/31/2011
+     FE183      FEE183                                  10/31/2011
+     FE184      FEE184                                  10/31/2011
+     FE185      FEE185                                  10/31/2011
+     FE186      FEE186                                  10/31/2011
+     FE187      FEE187                                  10/31/2011
+     FE188      FEE188                                  10/31/2011
+     FE189      FEE189                                  10/31/2011
+     FE190      FEE190                                  10/31/2011
+     FE191      FEE191                                  10/31/2011
+     FE192      FEE192                                  10/31/2011
+     FE193      FEE193                                  10/31/2011
+     FE194      FEE194                                  10/31/2011
+     FE195      FEE195                                  10/31/2011
+     FE196      FEE196                                  10/31/2011
+     FE197      FEE197                                  10/31/2011
+     FE198      FEE198                                  10/31/2011
+     FE199      FEE199                                  10/31/2011
+  
+   
+  
+  
+    (2) After the updates to the EC NATIONAL PROCEDURE (#725) file are
+        made, the patch performs an inspection of the EC EVENT CODE SCREENS
+        (#720.3) file. Any active EC EVENT CODE SCREENS (#720.3) file
+        record which points to an inactive EC NATIONAL PROCEDURE (#725)
+        file record will be identified. The results of the inspection are
+        placed in a MailMan message and sent to the user that performed
+        the patch installation.
+  
+  
+ Example of the MailMan message:
+ -------------------------------
+     Please forward this message to your local DSS Site Manager or
+     Event Capture ADPAC.
+   
+     A review of the EC EVENT CODE SCREENS file (#720.3) was done
+     after installation of patch EC*2*113 which updated the EC NATIONAL
+     PROCEDURE file (#725).  This message provides the results of that
+     review.
+   
+     The EC EVENT CODE SCREENS file (#720.3) records indicated below
+     point to an inactive record in the EC NATIONAL PROCEDURE file
+     (#725).
+     The user should use the Event Code Screen option in the Event Capture
+     GUI to inactivate the Event Code Screen.  If necessary, a new
+     Event Code Screen can be created using a currently active CPT code
+     or National Procedure.
+   
+  
+  
+ ===========================================================================
+ Note: The new EC NATIONAL PROCEDURE Numbers could exist in some site's
+ environment. If the EC NATIONAL PROCEDURE Numbers exist, then the system
+ will add the new numbers and it will keep what the sites have on file. In
+ addition, a message similar to the one below will be printed during
+ installation: 
+   
+ "Entry #3457 for 97001 REFER/CONS/SCREEN [CPT: 97001] (RC001)  ...
+ successfully added. Your site has a local procedure 90002 in
+ File #725" which uses "RC001" as its National Number. Please inactivate
+ this local procedure."
+   
+ Please review the installed message.
+ ==========================================================================
+  
+   
+  
+  
+ Installation Instructions:
+ ==========================
+  
+    ***************************NOTE****************************  
+    * It is not necessary to disable any options.  You may    *
+    * install these routines at any time without interruption *
+    * to users.                                               *
+    ***********************************************************
+  
+  
+   Installation will take less than 2 minutes.
+  
+   Suggested time to install: Non-peak requirement hours.
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter EC*2.0*113)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package EC*2.0*113.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+    
+    7. You may delete the routine ECP113PT from your production system 
+    after the patch has been successfully tested.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECP113PT
+    Before:       n/a   After: B54142272  **113**
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : NOV 08, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: AUG 31, 2012
+Released By : MORRIS,THERESA                Date Released : SEP 18, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

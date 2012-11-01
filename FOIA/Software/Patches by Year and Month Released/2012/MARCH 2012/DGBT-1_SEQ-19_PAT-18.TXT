@@ -1,0 +1,206 @@
+$TXT Created by MCKENNA,ANDREW at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 11/18/11 at 10:53
+=============================================================================
+Run Date: MAR 26, 2012                     Designation: DGBT*1*18
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #19                      Status: Released
+                  Compliance Date: APR 26, 2012
+=============================================================================
+
+
+Subject: UPDATE FILE 392.3 FOR SACC, FIXES FORM VA 7-3542D
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses these issues:
+ 1) Updates the DD in the Beneficiary Travel Claim File (#392) to meet
+    VA SACC in regard to replacing the prohibited $NEXT commands.
+ 2) Prints the second line of an address in the VA 70-3542d form.
+ 3) Allows a lowercase "p" to print the VA 70-3542d form.
+  
+  
+ ASSOCIATED REMEDY TICKETS: 
+ ========================== 
+ 1) HD0000000085719 -  File 392 - $N in trigger fields
+ 2) HD0000000389804 -  2nd line of address not printing.
+    Duplicates:
+    HD0000000397797 -  Full address not printing on Voucher.
+    HD0000000524613 -  When printing letters or any item with the patient
+                       address, only the first street address line prints.
+ 3) HD0000000416933 -  User problems with getting to finish and print form.
+  
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A 
+  
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Wilmington VA Medical Center
+ VA North Florida/South Georgia VA HCS
+  
+   
+ REMEDY OVERVIEW: 
+ ================
+ 1) HD0000000085719 -  File 392 - $N in trigger fields 
+  
+ Problem: 
+ --------
+ Found $NEXT commands which are no longer acceptable under the VA SACC.
+ These fields are located in The Beneficiary Travel Claim File (#392).
+  
+ Field Field Name                  Field changed Field Triggered Name
+   21  PLACE OF DEPARTURE [LINE 1] 22            PLACE OF DEPARTURE [LINE 2]
+   22  PLACE OF DEPARTURE [LINE 2] 23            PLACE OF DEPARTURE [LINE 3]
+   25  DESTINATION [LINE 1]        26            DESTINATION [LINE 2]
+   26  DESTINATION [LINE 2]        27            DESTINATION [LINE 3]
+  
+ Here is an example of the use of $NEXT command in the
+ PLACE OF DEPARTURE [LINE 1] field (#21)
+  
+            CROSS-REFERENCE:  ^^TRIGGER^392^22 
+                              1)= Q
+                              2)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(
+                              ^DGBT(392,D0,"D")):^("D"),1:"") S X=$P(Y(1),U,2
+                              ),X=X S DIU=X K Y S X="" X ^DD(392,21,1,1,2.4)
+  
+                              2.4)= S DIH=$S($D(^DGBT(392,DIV(0),"D")):^("D")
+                              ,1:""),DIV=X S %=$P(DIH,U,3,999),DIU=$P(DIH,U,2
+                              ),^("D")=$P(DIH,U,1,1)_U_DIV_$S(%]"":U_%,1:""),
+                              DIH=392,DIG=22 D ^DICR:$N(^DD(DIH,DIG,1,0))>0
+  
+                              CREATE VALUE)= NO EFFECT
+                              DELETE VALUE)= @
+                              FIELD)= PLACE OF DEPARTURE [LINE 2] 
+  
+ Resolution:
+ -----------
+ Deletion of all the invalid cross reference triggers for mentioned fields
+ and recreation of the triggers under the new Fileman compilation schema
+ using $ORDER instead of $NEXT. Here is what field 21 trigger to field 22
+ looks like now.
+  
+            CROSS-REFERENCE:  ^^TRIGGER^392^22 
+                              1)= Q
+                              2)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(
+                              ^DGBT(392,D0,"D")):^("D"),1:"") S X=$P(Y(1),U,2
+                              ),X=X S DIU=X K Y S X="" S DIH=$G(^DGBT(392,DIV
+                              (0),"D")),DIV=X S $P(^("D"),U,2)=DIV,DIH=392,DI
+                              G=22 D ^DICR
+  
+                              CREATE VALUE)= NO EFFECT
+                              DELETE VALUE)= @
+                              FIELD)= PLACE OF DEPARTURE [LINE 2]
+  
+ 2) HD0000000389804 -  2nd line of address not printing.
+  
+ Problem: 
+ --------
+ DGBTCR1 does not print the second address line for the patient on the VA
+ form 70-3542d.  A check is cut in Austin based on the information that is
+ on this form.  The check is then mailed to the patient, but is
+ undeliverable because the second line is missing.
+  
+ Resolution: 
+ -----------
+ The solution is to add a couple lines of code in the routine named DGBTCR1
+ that would print up to three lines of a patient's address.  Three lines
+ is the maximum length that a patient's address can be.  A check can now
+ be cut from this information and mailed successfully to the patient.  
+  
+ 3) HD0000000416933 -  User problems with getting to finish and print 
+  
+ Problem: 
+ --------
+ A lowercase "p" does not print the claim form VA 70-3542d.
+  
+ Resolution: 
+ -----------
+ The solution is to add a line of code in the routine named DGBTEND
+ that would allow a lowercase "p" to print the claim form VA 70-3542d
+  
+  
+ COMPONENT:
+ ==========
+ The BENEFICIARY TRAVEL CLAIM file (#392) is included in this patch. 
+  
+                                        UP    SEND  DATA                USER
+                                        DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                  DD    CODE  W/FILE  DATA  PTRS  RIDE
+ ---------------------------------------------------------------------------
+  
+ 392         BENEFICIARY TRAVEL CLAIM   YES   YES   NO     
+  
+  
+ TECHNICAL:
+ ==========
+ DGBT18PR is used to delete the triggers associated with fields 21,22,23,25,
+ 26, and 27.
+ DGBT18PT is used to recompile the templates after the patch is installed.
+  
+               
+ INSTALLATION:
+ =============
+ This patch can be loaded with users in the system, but it is recommended 
+ that it be installed when user activity is low. Installation time will be
+ less than five minutes.
+   
+ 1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+ 2.  From the Kernel Installation and Distribution System Menu, select the
+     Installation menu.
+   
+ 3.  From this menu, you may elect to use the following options (when
+     prompted for INSTALL NAME, enter DGBT*1.0*18):
+         a.  Backup a Transport Global
+         b.  Compare Transport Global to Current System
+         c.  Verify Checksums in Transport Global
+   
+ 4.  Use the Install Package(s) option and select the package DGBT*1.0*18.
+   
+ 5.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//" respond NO.
+  
+ 6.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES//" respond YES.
+    
+     Enter options you wish to mark as 'Out Of Order':
+     Claim Enter/Edit               [DGBT BENE TRAVEL SCREEN]
+     Reprint of 70-3542d form       [DGBT BENE TRAVEL REPRINT]
+  
+ 7.  You can delete the routines DGBT18PT and DGBT18PR after installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;Beneficiary Travel;**[Patch List]**;September 25, 2001;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGBT18PR
+    Before:       n/a   After:   B534607  **18**
+Routine Name: DGBT18PT
+    Before:       n/a   After:  B8322768  **18**
+Routine Name: DGBTCR1
+    Before: B10584894   After: B11557361  **18**
+Routine Name: DGBTEND
+    Before: B15041844   After: B15041979  **18**
+
+=============================================================================
+User Information:
+Entered By  : CHANDARANA,RISHAN             Date Entered  : MAY 18, 2009
+Completed By: MALDONADO,URIEL               Date Completed: MAR 08, 2012
+Released By : TAYLOR,KENNETH                Date Released : MAR 26, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

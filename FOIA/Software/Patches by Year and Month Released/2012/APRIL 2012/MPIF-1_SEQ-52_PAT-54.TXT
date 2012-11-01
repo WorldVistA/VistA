@@ -1,0 +1,274 @@
+$TXT Created by DAVIS,PAULETTE T at DEVCRN.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 03/16/12 at 15:38
+=============================================================================
+Run Date: APR 20, 2012                     Designation: MPIF*1*54
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #52                      Status: Released
+                  Compliance Date: MAY 11, 2012
+=============================================================================
+
+Associated patches: (v)MPIF*1*21   <<= must be installed BEFORE `MPIF*1*54'
+                    (v)MPIF*1*46   <<= must be installed BEFORE `MPIF*1*54'
+                    (v)MPIF*1*52   <<= must be installed BEFORE `MPIF*1*54'
+                    (v)DG*5.3*837  <<= must be installed BEFORE `MPIF*1*54'
+                    (v)RG*1*59     <<= must be installed BEFORE `MPIF*1*54'
+
+Subject: MESSAGING ENHANCEMENTS FOR NEW FIELDS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  NOTE:  RG* and MPIF* patches should NOT be installed on legacy
+  systems to avoid issues with the legacy systems ending up as
+  Treating Facilities.
+   
+  MPIF*1.0*21, MPIF*1.0*46, MPIF*1.0*52, RG*1.0*59, and DG*5.3*837
+  are required builds for patch MPIF*1*54.
+   
+  The messaging enhancements for new fields are being distributed in
+  three VistA namespaces.  The patches should be installed in this
+  order: DG*5.3*837, RG*1.0*59, and MPIF*1.0*54.  After installing
+  DG*5.3*837, it is not necessary to wait for the data conversion
+  completion bulletin to move on with installing RG*1.0*59.  It is
+  recommended that these three patches be installed within a short
+  time window.
+   
+  Issue #1: Prevent Logging of "Can't Create VTQ" Exceptions
+  When the Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN
+  RES] job found a dangling cross reference, it has been logging a "Can't
+  Create VTQ" exception on the MPI.  A code change will now clean up the
+  dangling ^DPT("AMPIMIS" cross reference, and therefore prevent the
+  logging of the exception each time the job runs.
+   
+  Issue #2: Stub Record for Patient Entry
+  Remedy ticket HD0000000149289 reported that if the patient entry is a
+  stub record, then a undefined error can occur at VTQ1+31^MPIFVTQ.
+  When an ICN exists for a patient, the MPIZICN variable is set.  In
+  the case of a stub record, no ICN exists and the MPIZICN variable
+  does not get set.  Variables MPIARR(992) and MPIARR(993) were being
+  set by a trigger cross reference, but should not have existed for a
+  stub record.  Enhancements were made in routines MPIFRES and MPIFVTQ
+  to clean-up dangling data and cross references related to MPI data
+  for a stub record.
+    
+  Issue #3: Remote Procedure Calls for Remote Enumeration
+  There are a number of patients at each facility that have not been
+  assigned an ICN for a number of reasons, including the fact that they
+  are not active patients.  In an effort to support an automated
+  enumeration of these remaining patients, two new Remote Procedures
+  (RPCs) have been created.
+   
+  The MPIF REMOTE LOCAL ICN ASSIGN RPC allows local integration
+  control numbers (ICNs) to be assigned to a number of patient records.
+  This allows them to get a national ICN thru the normal resolution of
+  local ICNs via the MPIF LOCAL/MISSING ICN RESOLUTION background job.
+   
+  The MPIF REMOTE FULL ICN STATS RPC allows the remote MPI user to know
+  when the last run of the MPIF REMOTE LOCAL ICN ASSIGN RPC took place,
+  the total number of patients with national ICNs, local ICNs, merged
+  patients (-9 node in PATIENT (#2) file), and no ICNs.
+    
+  NOTE:  There is currently no schedule for enumerating the remaining
+  records with ICNs.  However, before such a process would begin at
+  any facility, an e-mail message will be sent to coordinate the effort.
+     
+  Issue #4: Prevent Non-Enumerated Record from Updating a More Recent
+  Record during the Linking to the New Record
+  When an "old" (non-enumerated) record was edited on VistA, it could
+  potentially influence Primary View for that record on the MPI, and
+  thus update a more recent patient record.  Healthcare Identity
+  Management (HC IdM) requests that this scenario be prevented.
+    
+  When facilities were originally enumerated and records in the PATIENT
+  (#2) file were seeded with Integration Control Numbers (ICN), all
+  records in the file were not enumerated - only records that were active
+  during a three-year time span were enumerated.  Patients added/edited
+  after the original seeding also get ICNs, but there are still old,
+  inactive records in the PATIENT (#2) file without ICNs.
+    
+  To prevent an old non-enumerated record from updating a more recent
+  record, two VistA patches (RG*1.0*59 and MPIF*1.0*54) and one Master
+  Veteran Index patch (MPI*1.0*90) will be issued.  These three patches
+  make the following changes:
+    
+  MPIF*1.0*54 (this patch)
+  ------------------------
+  - The enumeration builder, remote procedure MPIF REMOTE LOCAL ICN
+    ASSIGN, has been enhanced to set the ^XTMP("MPIF OLD RECORDS",dfn)
+    global, if the record with that DFN has no ICN assigned and is not in
+    the ^DPT("AMPIMIS",dfn) index indicating it is in the process of being
+    assigned an ICN.
+    
+  - The A31 message builder has been enhanced to check whether ^XTMP("MPIF
+    OLD RECORDS",dfn) is defined.  If it is, the record is considered old,
+    and the A31 message builder includes an OBX segment in the message:
+           OBX^^CE^OLDER RECORD^^Y
+          
+  - The A31 application acknowledgment processor has been enhanced to kill
+    the "old" record designator, ^XTMP("MPIF OLD RECORDS",dfn), since if
+    the traits happen to be the same on the Primary View, no subsequent
+    A31 synchronization message will be sent.  Since the Primary View and
+    the patient record are in sync, the "old" record designation can be
+    removed, and subsequent updates to this record are allowed to update
+    the Primary View.
+     
+  RG*1.0*59
+  ---------
+  - The A08 message builder has been enhanced to check whether ^XTMP("MPIF
+    OLD RECORDS",dfn) is defined.  If it is, the record is considered old,
+    and the A08 message builder includes an OBX segment in the message:
+           OBX^^CE^OLDER RECORD^^Y
+    
+  - The A08 application acknowledgment processor has been enhanced to kill
+    the "old" record designator, ^XTMP("MPIF OLD RECORDS",dfn), since if
+    the traits happen to be the same on the Primary View, no subsequent A31
+    synchronization message will be sent.  Since the Primary View and the
+    patient record are in sync, the "old" record designation can be 
+    removed, and subsequent updates to this record are allowed to update
+    the Primary View.
+      
+  - The A31 message processor has been enhanced to kill the "old" record
+    designator, ^XTMP("MPIF OLD RECORDS",dfn).  If the MPI sends an update
+    message, the VistA record and the Primary View are in sync, and the
+    "old" record designation can be removed.
+      
+  MPI*1.0*90 (patch is ONLY installed on the MPI)
+  -----------------------------------------------
+  - The patch will check whether the incoming A31 or A08 message contains
+    an OBX segment marking the record as "old".  If it does, then the
+    authority score for the patient will be considered -1, and thus not
+    influence the Primary View.
+   
+  Issue #5: Correction for a Subscript Error
+  When a patient is added and the real-time connection to the MPI returns
+  an ICN without a CMOR, then a subscript error occurs at NS+1^XUAF4.
+  A call is made at RDT+13^MPIFQ0 to get the internal entry number of
+  the CMOR, and the error occurs because of the null CMOR value.  Because
+  a CMOR value might not be passed from the MPI, this error is corrected in
+  routine MPIFQ0 by checking that the CMOR has a value before making the
+  call to get the internal entry number.
+   
+  Issue #6: Obsolete Code
+  Unused and unnecessary code in routines MPIFA31I and MPIFA43 was commented
+  out.  The obsolete code was related to checks in the TREATING FACILITY LIST
+  (#391.91) file.
+     
+  Remote Procedure:
+  =================
+  MPIF REMOTE LOCAL ICN ASSIGN
+  MPIF REMOTE FULL ICN STATS
+    
+  Associated Remedy Ticket(s):
+  ============================
+  HD0000000149289
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  Alexandria VAMC
+  Altoona VAMC
+  New Mexico HCS (Albuquerque)
+  South Texas HCS
+        
+  Post-Install Routine:
+  =====================
+  There is only one entry in the MPI ICN BUILD MANAGEMENT (#984.8) file,
+  and the file is used to store the start date, end date, last record
+  processed, etc.  Post install routine, MPIFP54, resets the one node
+  of the MPI ICN BUILD MANAGEMENT (#984.8) file to remove the data from
+  previous usage, in order to store data related to the running of the
+  MPIF REMOTE LOCAL ICN ASSIGN RPC.  The MPIFP54 routine is automatically
+  deleted after the post-init runs.
+   
+  Installation Instructions:
+  ==========================
+  This patch takes less than 2 minutes to install.  This patch should
+  be loaded during non-peak hours to minimize disruption to the users.
+   
+  1.  Users are allowed on the system during patch installation.
+   
+  2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+      Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+      Link Management Options [HL MENU FILER LINK MGT] menu on the
+      HL7 Main Menu [HL MAIN MENU].
+   
+  3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  6.  Use the Install Package(s) option and select the package MPIF*1.0*54.
+   
+  7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//',
+      respond NO.
+   
+  8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond YES.  The following OPTIONS should be
+      disabled during the installation.
+      Register a Patient              [DG REGISTER PATIENT]
+      Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+      Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+      Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+      UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+     
+  9.  After patch installation has completed, restart the HL7 incoming
+      filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+      option on the Filer and Link Management Options [HL MENU FILER 
+      LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+          
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MASTER PATIENT INDEX VISTA;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFA31B
+    Before: B15257551   After: B18454677  **22,24,27,28,31,25,44,46,54**
+Routine Name: MPIFA31I
+    Before: B20970139   After: B18209474  **1,21,54**
+Routine Name: MPIFA43
+    Before: B27108950   After: B27559789  **22,41,46,54**
+Routine Name: MPIFFULL
+    Before:       n/a   After:  B8003985  **54**
+Routine Name: MPIFP54
+    Before:       n/a   After:    B92299  **54**
+Routine Name: MPIFQ0
+    Before: B71703643   After: B72427777  **1,3,8,14,13,16,17,21,20,24,
+                                           26,28,31,33,35,38,43,52,54**
+Routine Name: MPIFRES
+    Before: B25044617   After: B25967604  **1,7,10,15,17,21,26,28,33,35,
+                                           43,39,52,54**
+Routine Name: MPIFVTQ
+    Before: B42786955   After: B43904634  **1,9,17,21,23,28,33,35,52,54**
+ 
+Routine list of preceding patches: 46, 52
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,PAULETTE                Date Entered  : JAN 08, 2010
+Completed By: ULRICH,CYNTHIA                Date Completed: APR 04, 2012
+Released By : HEUER,CINDY                   Date Released : APR 20, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

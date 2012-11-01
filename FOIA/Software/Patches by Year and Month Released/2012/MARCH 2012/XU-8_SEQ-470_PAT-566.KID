@@ -1,0 +1,806 @@
+Released XU*8*566 SEQ #470
+Extracted from mail message
+**KIDS**:XU*8.0*566^
+
+**INSTALL NAME**
+XU*8.0*566
+"BLD",7498,0)
+XU*8.0*566^KERNEL^0^3111209^y
+"BLD",7498,1,0)
+^^48^48^3111208^^^
+"BLD",7498,1,1,0)
+This patch was created to support Outpatient Pharmacy in printing Food
+"BLD",7498,1,2,0)
+and Drug Administration (FDA) Medication Guide documents using a Java
+"BLD",7498,1,3,0)
+application. These documents are in Adobe Portable Document Format (.pdf),
+"BLD",7498,1,4,0)
+which is a file format not supported by VistA.
+"BLD",7498,1,5,0)
+ 
+"BLD",7498,1,6,0)
+A new field, WINDOWS NETWORK PRINTER NAME (#75), is being added to the
+"BLD",7498,1,7,0)
+DEVICE file (#3.5). This field will be used to store the Windows network
+"BLD",7498,1,8,0)
+printer name, which VistA passes on to a Java Application responsible
+"BLD",7498,1,9,0)
+for printing FDA Medication Guide documents.
+"BLD",7498,1,10,0)
+ 
+"BLD",7498,1,11,0)
+New field in the DEVICE file (#3.5) - WINDOWS NETWORK PRINTER NAME (#75)
+"BLD",7498,1,12,0)
+------------------------------------------------------------------------
+"BLD",7498,1,13,0)
+3.5,75        WINDOWS NETWORK PRINTER NAME WIN;1 FREE TEXT
+"BLD",7498,1,14,0)
+ 
+"BLD",7498,1,15,0)
+              INPUT TRANSFORM: K:$L(X)>50!($L(X)<5) X
+"BLD",7498,1,16,0)
+              LAST EDITED:     AUG 23, 2011 
+"BLD",7498,1,17,0)
+              HELP-PROMPT:     Answer must be 5-50 characters in length. 
+"BLD",7498,1,18,0)
+              DESCRIPTION:     This is the Windows network name for the
+"BLD",7498,1,19,0)
+                               printer (e.g., '\\vhaistfpc4\IST-HP4525-1').
+"BLD",7498,1,20,0)
+                               It is used by Windows applications that
+"BLD",7498,1,21,0)
+                               interact with VistA and need a printer 
+"BLD",7498,1,22,0)
+                               identified for output purposes. 
+"BLD",7498,1,23,0)
+ 
+"BLD",7498,1,24,0)
+The new field can be edited via the Edit All Device Fields [XUDEVEDITALL] 
+"BLD",7498,1,25,0)
+option under the Kernel Device Management options as seen below:
+"BLD",7498,1,26,0)
+ 
+"BLD",7498,1,27,0)
+   Select Device Edit Option:  Edit All Device Fields
+"BLD",7498,1,28,0)
+ 
+"BLD",7498,1,29,0)
+   Select DEVICE NAME: FDAMGPRT      FDA MG Printer       _TNA1316:     
+"BLD",7498,1,30,0)
+   NAME: FDAMGPRT// 
+"BLD",7498,1,31,0)
+   LOCATION OF TERMINAL: Pharmacy// 
+"BLD",7498,1,32,0)
+   Select MNEMONIC: 
+"BLD",7498,1,33,0)
+   ...
+"BLD",7498,1,34,0)
+   TELNET PORT: 
+"BLD",7498,1,35,0)
+   REMOTE PRINTER NAME: 
+"BLD",7498,1,36,0)
+   WINDOWS NETWORK PRINTER NAME: ??
+"BLD",7498,1,37,0)
+     This is the Windows network name for the printer (e.g., 
+"BLD",7498,1,38,0)
+     '\\vhaistfpc4\IST-HP4525-1'). It is used by Windows applications that 
+"BLD",7498,1,39,0)
+     interact with VistA and need a printer identified for output purposes.
+"BLD",7498,1,40,0)
+   
+"BLD",7498,1,41,0)
+   WINDOWS NETWORK PRINTER NAME: \\vhaistfpc4\IST-HP4525-9
+"BLD",7498,1,42,0)
+   LAB LABEL PRINTER:
+"BLD",7498,1,43,0)
+   ...
+"BLD",7498,1,44,0)
+   
+"BLD",7498,1,45,0)
+There was a problem with the HTTP Toolkit API $$GETURL^XTHC10. It was
+"BLD",7498,1,46,0)
+modifying the array variable IO, which could cause issues for the calling
+"BLD",7498,1,47,0)
+routine. The NEW command was placed for the IO variable inside the XTHC10
+"BLD",7498,1,48,0)
+routine to resolve this problem.
+"BLD",7498,4,0)
+^9.64PA^3.5^1
+"BLD",7498,4,3.5,0)
+3.5
+"BLD",7498,4,3.5,2,0)
+^9.641^3.5^1
+"BLD",7498,4,3.5,2,3.5,0)
+DEVICE  (File-top level)
+"BLD",7498,4,3.5,2,3.5,1,0)
+^9.6411^75^1
+"BLD",7498,4,3.5,2,3.5,1,75,0)
+WINDOWS NETWORK PRINTER NAME
+"BLD",7498,4,3.5,222)
+y^y^p^^^^n^^n
+"BLD",7498,4,3.5,224)
+
+"BLD",7498,4,"APDD",3.5,3.5)
+
+"BLD",7498,4,"APDD",3.5,3.5,75)
+
+"BLD",7498,4,"B",3.5,3.5)
+
+"BLD",7498,6.3)
+6
+"BLD",7498,"ABPKG")
+n
+"BLD",7498,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7498,"KRN",.4,0)
+.4
+"BLD",7498,"KRN",.401,0)
+.401
+"BLD",7498,"KRN",.402,0)
+.402
+"BLD",7498,"KRN",.403,0)
+.403
+"BLD",7498,"KRN",.5,0)
+.5
+"BLD",7498,"KRN",.84,0)
+.84
+"BLD",7498,"KRN",3.6,0)
+3.6
+"BLD",7498,"KRN",3.8,0)
+3.8
+"BLD",7498,"KRN",9.2,0)
+9.2
+"BLD",7498,"KRN",9.8,0)
+9.8
+"BLD",7498,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",7498,"KRN",9.8,"NM",1,0)
+XTHC10^^0^B19933013
+"BLD",7498,"KRN",9.8,"NM","B","XTHC10",1)
+
+"BLD",7498,"KRN",19,0)
+19
+"BLD",7498,"KRN",19.1,0)
+19.1
+"BLD",7498,"KRN",101,0)
+101
+"BLD",7498,"KRN",409.61,0)
+409.61
+"BLD",7498,"KRN",771,0)
+771
+"BLD",7498,"KRN",779.2,0)
+779.2
+"BLD",7498,"KRN",870,0)
+870
+"BLD",7498,"KRN",8989.51,0)
+8989.51
+"BLD",7498,"KRN",8989.52,0)
+8989.52
+"BLD",7498,"KRN",8994,0)
+8994
+"BLD",7498,"KRN","B",.4,.4)
+
+"BLD",7498,"KRN","B",.401,.401)
+
+"BLD",7498,"KRN","B",.402,.402)
+
+"BLD",7498,"KRN","B",.403,.403)
+
+"BLD",7498,"KRN","B",.5,.5)
+
+"BLD",7498,"KRN","B",.84,.84)
+
+"BLD",7498,"KRN","B",3.6,3.6)
+
+"BLD",7498,"KRN","B",3.8,3.8)
+
+"BLD",7498,"KRN","B",9.2,9.2)
+
+"BLD",7498,"KRN","B",9.8,9.8)
+
+"BLD",7498,"KRN","B",19,19)
+
+"BLD",7498,"KRN","B",19.1,19.1)
+
+"BLD",7498,"KRN","B",101,101)
+
+"BLD",7498,"KRN","B",409.61,409.61)
+
+"BLD",7498,"KRN","B",771,771)
+
+"BLD",7498,"KRN","B",779.2,779.2)
+
+"BLD",7498,"KRN","B",870,870)
+
+"BLD",7498,"KRN","B",8989.51,8989.51)
+
+"BLD",7498,"KRN","B",8989.52,8989.52)
+
+"BLD",7498,"KRN","B",8994,8994)
+
+"BLD",7498,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",7498,"QUES",0)
+^9.62^^
+"BLD",7498,"REQB",0)
+^9.611^1^1
+"BLD",7498,"REQB",1,0)
+XT*7.3*123^2
+"BLD",7498,"REQB","B","XT*7.3*123",1)
+
+"FIA",3.5)
+DEVICE
+"FIA",3.5,0)
+^%ZIS(1,
+"FIA",3.5,0,0)
+3.5Is
+"FIA",3.5,0,1)
+y^y^p^^^^n^^n
+"FIA",3.5,0,10)
+
+"FIA",3.5,0,11)
+
+"FIA",3.5,0,"RLRO")
+
+"FIA",3.5,0,"VR")
+8.0^XU
+"FIA",3.5,3.5)
+1
+"FIA",3.5,3.5,75)
+
+"MBREQ")
+0
+"PKG",163,-1)
+1^1
+"PKG",163,0)
+KERNEL^XU^SIGN-ON, SECURITY, MENU DRIVER, DEVICES, TASKMAN^
+"PKG",163,20,0)
+^9.402P^^
+"PKG",163,22,0)
+^9.49I^1^1
+"PKG",163,22,1,0)
+8.0^2950703^2951019^1039
+"PKG",163,22,1,"PAH",1,0)
+566^3111209
+"PKG",163,22,1,"PAH",1,1,0)
+^^48^48^3111209
+"PKG",163,22,1,"PAH",1,1,1,0)
+This patch was created to support Outpatient Pharmacy in printing Food
+"PKG",163,22,1,"PAH",1,1,2,0)
+and Drug Administration (FDA) Medication Guide documents using a Java
+"PKG",163,22,1,"PAH",1,1,3,0)
+application. These documents are in Adobe Portable Document Format (.pdf),
+"PKG",163,22,1,"PAH",1,1,4,0)
+which is a file format not supported by VistA.
+"PKG",163,22,1,"PAH",1,1,5,0)
+ 
+"PKG",163,22,1,"PAH",1,1,6,0)
+A new field, WINDOWS NETWORK PRINTER NAME (#75), is being added to the
+"PKG",163,22,1,"PAH",1,1,7,0)
+DEVICE file (#3.5). This field will be used to store the Windows network
+"PKG",163,22,1,"PAH",1,1,8,0)
+printer name, which VistA passes on to a Java Application responsible
+"PKG",163,22,1,"PAH",1,1,9,0)
+for printing FDA Medication Guide documents.
+"PKG",163,22,1,"PAH",1,1,10,0)
+ 
+"PKG",163,22,1,"PAH",1,1,11,0)
+New field in the DEVICE file (#3.5) - WINDOWS NETWORK PRINTER NAME (#75)
+"PKG",163,22,1,"PAH",1,1,12,0)
+------------------------------------------------------------------------
+"PKG",163,22,1,"PAH",1,1,13,0)
+3.5,75        WINDOWS NETWORK PRINTER NAME WIN;1 FREE TEXT
+"PKG",163,22,1,"PAH",1,1,14,0)
+ 
+"PKG",163,22,1,"PAH",1,1,15,0)
+              INPUT TRANSFORM: K:$L(X)>50!($L(X)<5) X
+"PKG",163,22,1,"PAH",1,1,16,0)
+              LAST EDITED:     AUG 23, 2011 
+"PKG",163,22,1,"PAH",1,1,17,0)
+              HELP-PROMPT:     Answer must be 5-50 characters in length. 
+"PKG",163,22,1,"PAH",1,1,18,0)
+              DESCRIPTION:     This is the Windows network name for the
+"PKG",163,22,1,"PAH",1,1,19,0)
+                               printer (e.g., '\\vhaistfpc4\IST-HP4525-1').
+"PKG",163,22,1,"PAH",1,1,20,0)
+                               It is used by Windows applications that
+"PKG",163,22,1,"PAH",1,1,21,0)
+                               interact with VistA and need a printer 
+"PKG",163,22,1,"PAH",1,1,22,0)
+                               identified for output purposes. 
+"PKG",163,22,1,"PAH",1,1,23,0)
+ 
+"PKG",163,22,1,"PAH",1,1,24,0)
+The new field can be edited via the Edit All Device Fields [XUDEVEDITALL] 
+"PKG",163,22,1,"PAH",1,1,25,0)
+option under the Kernel Device Management options as seen below:
+"PKG",163,22,1,"PAH",1,1,26,0)
+ 
+"PKG",163,22,1,"PAH",1,1,27,0)
+   Select Device Edit Option:  Edit All Device Fields
+"PKG",163,22,1,"PAH",1,1,28,0)
+ 
+"PKG",163,22,1,"PAH",1,1,29,0)
+   Select DEVICE NAME: FDAMGPRT      FDA MG Printer       _TNA1316:     
+"PKG",163,22,1,"PAH",1,1,30,0)
+   NAME: FDAMGPRT// 
+"PKG",163,22,1,"PAH",1,1,31,0)
+   LOCATION OF TERMINAL: Pharmacy// 
+"PKG",163,22,1,"PAH",1,1,32,0)
+   Select MNEMONIC: 
+"PKG",163,22,1,"PAH",1,1,33,0)
+   ...
+"PKG",163,22,1,"PAH",1,1,34,0)
+   TELNET PORT: 
+"PKG",163,22,1,"PAH",1,1,35,0)
+   REMOTE PRINTER NAME: 
+"PKG",163,22,1,"PAH",1,1,36,0)
+   WINDOWS NETWORK PRINTER NAME: ??
+"PKG",163,22,1,"PAH",1,1,37,0)
+     This is the Windows network name for the printer (e.g., 
+"PKG",163,22,1,"PAH",1,1,38,0)
+     '\\vhaistfpc4\IST-HP4525-1'). It is used by Windows applications that 
+"PKG",163,22,1,"PAH",1,1,39,0)
+     interact with VistA and need a printer identified for output purposes.
+"PKG",163,22,1,"PAH",1,1,40,0)
+   
+"PKG",163,22,1,"PAH",1,1,41,0)
+   WINDOWS NETWORK PRINTER NAME: \\vhaistfpc4\IST-HP4525-9
+"PKG",163,22,1,"PAH",1,1,42,0)
+   LAB LABEL PRINTER:
+"PKG",163,22,1,"PAH",1,1,43,0)
+   ...
+"PKG",163,22,1,"PAH",1,1,44,0)
+   
+"PKG",163,22,1,"PAH",1,1,45,0)
+There was a problem with the HTTP Toolkit API $$GETURL^XTHC10. It was
+"PKG",163,22,1,"PAH",1,1,46,0)
+modifying the array variable IO, which could cause issues for the calling
+"PKG",163,22,1,"PAH",1,1,47,0)
+routine. The NEW command was placed for the IO variable inside the XTHC10
+"PKG",163,22,1,"PAH",1,1,48,0)
+routine to resolve this problem.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","XTHC10")
+0^1^B19933013^B19523775
+"RTN","XTHC10",1,0)
+XTHC10 ;HCIOFO/SG - HTTP 1.0 CLIENT ;12/07/2011
+"RTN","XTHC10",2,0)
+ ;;7.3;TOOLKIT;**123,566**;Apr 25, 1995;Build 6
+"RTN","XTHC10",3,0)
+ ;
+"RTN","XTHC10",4,0)
+ Q
+"RTN","XTHC10",5,0)
+ ;
+"RTN","XTHC10",6,0)
+ ;##### GETS THE DATA FROM THE PROVIDED URL USING HTTP 1.0
+"RTN","XTHC10",7,0)
+ ;
+"RTN","XTHC10",8,0)
+ ; URL           URL (http://host:port/path)
+"RTN","XTHC10",9,0)
+ ;
+"RTN","XTHC10",10,0)
+ ; [XT8FLG]      Timeout and flags to control processing.
+"RTN","XTHC10",11,0)
+ ;               If a value of  this parameter starts from a number
+"RTN","XTHC10",12,0)
+ ;               then this number is used as a value of the timeout
+"RTN","XTHC10",13,0)
+ ;               (in seconds). Otherwise, the default value of 5
+"RTN","XTHC10",14,0)
+ ;               seconds is used.
+"RTN","XTHC10",15,0)
+ ;
+"RTN","XTHC10",16,0)
+ ; [XT8RDAT]     Closed root of the variable where the message
+"RTN","XTHC10",17,0)
+ ;               body is returned. Data is stored in consecutive
+"RTN","XTHC10",18,0)
+ ;               nodes (numbers starting from 1). If a line is
+"RTN","XTHC10",19,0)
+ ;               longer than 245 characters, only 245 characters
+"RTN","XTHC10",20,0)
+ ;               are stored in the corresponding node. After that,
+"RTN","XTHC10",21,0)
+ ;               overflow sub-nodes are created. For example:
+"RTN","XTHC10",22,0)
+ ;
+"RTN","XTHC10",23,0)
+ ;                 @XT8DATA@(1)="<html>"
+"RTN","XTHC10",24,0)
+ ;                 @XT8DATA@(2)="<head><title>VistA</title></head>"
+"RTN","XTHC10",25,0)
+ ;                 @XT8DATA@(3)="<body>"
+"RTN","XTHC10",26,0)
+ ;                 @XT8DATA@(4)="<p>"
+"RTN","XTHC10",27,0)
+ ;                 @XT8DATA@(5)="Beginning of a very long line"
+"RTN","XTHC10",28,0)
+ ;                 @XT8DATA@(5,1)="Continuation #1 of the long line"
+"RTN","XTHC10",29,0)
+ ;                 @XT8DATA@(5,2)="Continuation #2 of the long line"
+"RTN","XTHC10",30,0)
+ ;                 @XT8DATA@(5,...)=...
+"RTN","XTHC10",31,0)
+ ;                 @XT8DATA@(6)="</p>"
+"RTN","XTHC10",32,0)
+ ;                 ...
+"RTN","XTHC10",33,0)
+ ;
+"RTN","XTHC10",34,0)
+ ; [.XT8RHDR]    Reference to a local variable where the parsed
+"RTN","XTHC10",35,0)
+ ;               headers are returned. Header names are converted to
+"RTN","XTHC10",36,0)
+ ;               upper case; the values are left "as is". The root
+"RTN","XTHC10",37,0)
+ ;               node contains the status line. For example:
+"RTN","XTHC10",38,0)
+ ;
+"RTN","XTHC10",39,0)
+ ;                 XT8HDR="HTTP/1.0 200 OK"
+"RTN","XTHC10",40,0)
+ ;                 XT8HDR("CACHE-CONTROL")="private"
+"RTN","XTHC10",41,0)
+ ;                 XT8HDR("CONNECTION")="Keep-Alive"
+"RTN","XTHC10",42,0)
+ ;                 XT8HDR("CONTENT-LENGTH")="2690"
+"RTN","XTHC10",43,0)
+ ;                 XT8HDR("CONTENT-TYPE")="text/html"
+"RTN","XTHC10",44,0)
+ ;                 XT8HDR("DATE")="Fri, 26 Sep 2003 16:04:10 GMT"
+"RTN","XTHC10",45,0)
+ ;                 XT8HDR("SERVER")="GWS/2.1"
+"RTN","XTHC10",46,0)
+ ;
+"RTN","XTHC10",47,0)
+ ; [XT8SDAT]     Closed root of a variable containing body of the
+"RTN","XTHC10",48,0)
+ ;               request message. Data should be formatted as
+"RTN","XTHC10",49,0)
+ ;               described earlier (see the XT8RDAT parameter).
+"RTN","XTHC10",50,0)
+ ;
+"RTN","XTHC10",51,0)
+ ;               NOTE: If this parameter is defined, not empty, and
+"RTN","XTHC10",52,0)
+ ;                     the referenced array contains data then the
+"RTN","XTHC10",53,0)
+ ;                     POST request is generated. Otherwise, the GET
+"RTN","XTHC10",54,0)
+ ;                     request is sent.
+"RTN","XTHC10",55,0)
+ ;
+"RTN","XTHC10",56,0)
+ ; [.XT8SHDR]    Reference to a local variable containing header
+"RTN","XTHC10",57,0)
+ ;               values, which will be added to the request.
+"RTN","XTHC10",58,0)
+ ;
+"RTN","XTHC10",59,0)
+ ; [REDIR]       This IS NOT a published parameter. It is used
+"RTN","XTHC10",60,0)
+ ;               internally to limit number of redirections.
+"RTN","XTHC10",61,0)
+ ;
+"RTN","XTHC10",62,0)
+ ; Return values:
+"RTN","XTHC10",63,0)
+ ;
+"RTN","XTHC10",64,0)
+ ;           <0  Error Descriptor (see the $$ERROR^XTERROR)
+"RTN","XTHC10",65,0)
+ ;           >0  HTTP Status Code^Description
+"RTN","XTHC10",66,0)
+ ;
+"RTN","XTHC10",67,0)
+ ;    Most common HTTP status codes:
+"RTN","XTHC10",68,0)
+ ;
+"RTN","XTHC10",69,0)
+ ;          200  Ok
+"RTN","XTHC10",70,0)
+ ;
+"RTN","XTHC10",71,0)
+ ;          301  Moved Permanently (The application should either
+"RTN","XTHC10",72,0)
+ ;               automatically update the URL with the new one from
+"RTN","XTHC10",73,0)
+ ;               the Location response header or instruct the user
+"RTN","XTHC10",74,0)
+ ;               how to do this).
+"RTN","XTHC10",75,0)
+ ;
+"RTN","XTHC10",76,0)
+ ;          302  Moved Temporarily (The application should continue
+"RTN","XTHC10",77,0)
+ ;               using the original URL).
+"RTN","XTHC10",78,0)
+ ;
+"RTN","XTHC10",79,0)
+ ;               NOTE: You will not see this code for GET requests.
+"RTN","XTHC10",80,0)
+ ;                     They are redirected automatically.
+"RTN","XTHC10",81,0)
+ ;
+"RTN","XTHC10",82,0)
+ ;          303  See Other (The resource has moved to another URL
+"RTN","XTHC10",83,0)
+ ;               given by the Location response header, and should
+"RTN","XTHC10",84,0)
+ ;               be automatically retrieved by the client using the
+"RTN","XTHC10",85,0)
+ ;               GET method. This is often used by a CGI script to
+"RTN","XTHC10",86,0)
+ ;               redirect the client to an existing file).
+"RTN","XTHC10",87,0)
+ ;
+"RTN","XTHC10",88,0)
+ ;               NOTE: You will not see this status code because it
+"RTN","XTHC10",89,0)
+ ;                     is handled automatically inside the function.
+"RTN","XTHC10",90,0)
+ ;
+"RTN","XTHC10",91,0)
+ ;          400  Bad Request
+"RTN","XTHC10",92,0)
+ ;
+"RTN","XTHC10",93,0)
+ ;          404  Not Found
+"RTN","XTHC10",94,0)
+ ;
+"RTN","XTHC10",95,0)
+ ;          500  Server Error (An unexpected server error. The most
+"RTN","XTHC10",96,0)
+ ;               common cause is a server-side script that has bad
+"RTN","XTHC10",97,0)
+ ;               syntax, fails, or otherwise can't run correctly).
+"RTN","XTHC10",98,0)
+ ;
+"RTN","XTHC10",99,0)
+ ; See the http://www.faqs.org/rfcs/rfc1945.html for more details.
+"RTN","XTHC10",100,0)
+ ;
+"RTN","XTHC10",101,0)
+GETURL(URL,XT8FLG,XT8RDAT,XT8RHDR,XT8SDAT,XT8SHDR,REDIR) ;
+"RTN","XTHC10",102,0)
+ N HOST,I,IP,IPADDR,PATH,PORT,RQS,STATUS,X
+"RTN","XTHC10",103,0)
+ ;**P566 START CJM
+"RTN","XTHC10",104,0)
+ N IO,POP
+"RTN","XTHC10",105,0)
+ ;**P566 END CJM
+"RTN","XTHC10",106,0)
+ S XT8FLG=$G(XT8FLG)  S:XT8FLG'?1.N.E XT8FLG="5"_XT8FLG
+"RTN","XTHC10",107,0)
+ ;
+"RTN","XTHC10",108,0)
+ ;Check IO
+"RTN","XTHC10",109,0)
+ I '$D(IO(0)) D HOME^%ZIS
+"RTN","XTHC10",110,0)
+ ;=== Parse the URL
+"RTN","XTHC10",111,0)
+ S I=$$PARSEURL^XTHCURL(URL,.HOST,.PORT,.PATH)  Q:I<0 I
+"RTN","XTHC10",112,0)
+ ;
+"RTN","XTHC10",113,0)
+ ;=== Check the host name/address
+"RTN","XTHC10",114,0)
+ I HOST'?1.3N3(1"."1.3N)  D  Q:IPADDR="" $$ERROR(2,HOST)
+"RTN","XTHC10",115,0)
+ . ;--- Resolve the host name into the IP address(es)
+"RTN","XTHC10",116,0)
+ . S IPADDR=$$ADDRESS^XLFNSLK(HOST)  Q:IPADDR=""
+"RTN","XTHC10",117,0)
+ . ;--- Check for the Host header value
+"RTN","XTHC10",118,0)
+ . S I=""
+"RTN","XTHC10",119,0)
+ . F  S I=$O(XT8SHDR(I))  Q:(I="")!($$UP^XLFSTR(I)="HOST")
+"RTN","XTHC10",120,0)
+ . S:I="" XT8SHDR("Host")=HOST
+"RTN","XTHC10",121,0)
+ E  S IPADDR=HOST
+"RTN","XTHC10",122,0)
+ ;
+"RTN","XTHC10",123,0)
+ ;=== Connect to the host
+"RTN","XTHC10",124,0)
+ F I=1:1  S IP=$P(IPADDR,",",I)  Q:IP=""  D  Q:'$G(POP)
+"RTN","XTHC10",125,0)
+ . D CALL^%ZISTCP(IP,PORT,+XT8FLG)
+"RTN","XTHC10",126,0)
+ Q:$G(POP) $$ERROR(3,IPADDR)
+"RTN","XTHC10",127,0)
+ ;
+"RTN","XTHC10",128,0)
+ ;=== Perform the transaction
+"RTN","XTHC10",129,0)
+ D
+"RTN","XTHC10",130,0)
+ . N $ESTACK,$ETRAP
+"RTN","XTHC10",131,0)
+ . ;--- Setup the error processing
+"RTN","XTHC10",132,0)
+ . ;D SETDEFEH^XTERROR("STATUS")
+"RTN","XTHC10",133,0)
+ . S $ET="D ETRAP^XTHC10"
+"RTN","XTHC10",134,0)
+ . ;--- Send the request and get the response
+"RTN","XTHC10",135,0)
+ . S RQS=$$REQUEST^XTHC10A(PATH,$G(XT8SDAT),.XT8SHDR)
+"RTN","XTHC10",136,0)
+ . I RQS<0  S STATUS=RQS  Q
+"RTN","XTHC10",137,0)
+ . S STATUS=$$RECEIVE^XTHC10A(+XT8FLG,$G(XT8RDAT),.XT8RHDR)
+"RTN","XTHC10",138,0)
+ ;
+"RTN","XTHC10",139,0)
+ ;=== Close the socket
+"RTN","XTHC10",140,0)
+ D CLOSE^%ZISTCP
+"RTN","XTHC10",141,0)
+ ;
+"RTN","XTHC10",142,0)
+ ;=== Redirect if requested by the server
+"RTN","XTHC10",143,0)
+ S I=+STATUS
+"RTN","XTHC10",144,0)
+ I (I\100)=3  D:$S(I=303:1,I=301:0,1:RQS="GET")
+"RTN","XTHC10",145,0)
+ . I $G(REDIR)>5  S STATUS=$$ERROR(5)  Q
+"RTN","XTHC10",146,0)
+ . S URL=$G(XT8RHDR("LOCATION"))
+"RTN","XTHC10",147,0)
+ . ;I URL=""  S STATUS=$$ERROR^XTERROR(-150000.024)  Q
+"RTN","XTHC10",148,0)
+ . I URL=""  S STATUS=$$ERROR(4)  Q
+"RTN","XTHC10",149,0)
+ . I RQS="POST"  N XT8SDAT  ; Force the GET request
+"RTN","XTHC10",150,0)
+ . S STATUS=$$GETURL(URL,XT8FLG,$G(XT8RDAT),.XT8RHDR,$G(XT8SDAT),.XT8SHDR,$G(REDIR)+1)
+"RTN","XTHC10",151,0)
+ ;
+"RTN","XTHC10",152,0)
+ ;=== Return the status
+"RTN","XTHC10",153,0)
+ ;I +STATUS=-150000.004  S X=$$LASTERR^XTERROR1()  S:X STATUS=X
+"RTN","XTHC10",154,0)
+ I +STATUS=-6 S STATUS=STATUS("ERROR")
+"RTN","XTHC10",155,0)
+ Q STATUS
+"RTN","XTHC10",156,0)
+ ;
+"RTN","XTHC10",157,0)
+ETRAP ;Catch a runtime error
+"RTN","XTHC10",158,0)
+ N EC
+"RTN","XTHC10",159,0)
+ S STATUS("ERROR")=$$EC^%ZOSV D ^%ZTER
+"RTN","XTHC10",160,0)
+ S STATUS=-6
+"RTN","XTHC10",161,0)
+ I $L($EC) S $ECODE="" S $ETRAP="D UNW^%ZTER Q:$QUIT STATUS Q  " S $ECODE=",U1,"
+"RTN","XTHC10",162,0)
+ Q
+"RTN","XTHC10",163,0)
+ ;
+"RTN","XTHC10",164,0)
+ERROR(ENUM,PARAM) ;Expand error
+"RTN","XTHC10",165,0)
+ N MSG
+"RTN","XTHC10",166,0)
+ S MSG=$P($T(@ENUM),";;",2) S:MSG["|" MSG=$P(MSG,"|")_$G(PARAM)_$P(MSG,"|",2)
+"RTN","XTHC10",167,0)
+ Q MSG
+"RTN","XTHC10",168,0)
+ ;
+"RTN","XTHC10",169,0)
+1 ;;-1^Missing host name.
+"RTN","XTHC10",170,0)
+2 ;;-1^Cannot resolve the host name: |.
+"RTN","XTHC10",171,0)
+3 ;;-1^Cannot connect to host.
+"RTN","XTHC10",172,0)
+4 ;;-1^Missing redirection URL.
+"RTN","XTHC10",173,0)
+5 ;;-1^Too many redirections.
+"RTN","XTHC10",174,0)
+6 ;;-6^Run Time Error.
+"RTN","XTHC10",175,0)
+7 ;;-1^Time Out.
+"VER")
+8.0^22.0
+"^DD",3.5,3.5,75,0)
+WINDOWS NETWORK PRINTER NAME^F^^WIN;1^K:$L(X)>50!($L(X)<5) X
+"^DD",3.5,3.5,75,3)
+Answer must be 5-50 characters in length.
+"^DD",3.5,3.5,75,21,0)
+^^3^3^3110823^
+"^DD",3.5,3.5,75,21,1,0)
+This is the Windows network name for the printer (e.g., 
+"^DD",3.5,3.5,75,21,2,0)
+'\\vhaistfpc4\IST-HP4525-1'). It is used by Windows applications that 
+"^DD",3.5,3.5,75,21,3,0)
+interact with VistA and need a printer identified for output purposes.
+"^DD",3.5,3.5,75,"DT")
+3110823
+"BLD",7498,6)
+^470
+**END**
+**END**

@@ -1,0 +1,124 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 05/09/12 at 15:16
+=============================================================================
+Run Date: OCT 31, 2012                     Designation: OR*3*362
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #309                      Status: Released
+                  Compliance Date: DEC 01, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*327    <<= must be installed BEFORE `OR*3*362'
+
+Subject: SCHEDULE CHANGE ERROR FOR IMO ORDERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects an issue within the ORDER ENTRY/RESULTS REPORTING 
+ (OERR) package. When renewing an inpatient medication for Inpatient 
+ Medications for Outpatients (IMO) Clinic the system is not checking that
+ the administration schedule name is valid.
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ HD0000000622440 - No schedule change warning for IMO orders
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+ Participating Test Sites:
+ =================
+ Cleveland VAMC, OH
+ VA Connecticut HCS (West Haven), CT
+ Miami VA HCS, FL
+ Orlando VAMC, FL
+  
+ Remedy Overview:
+ ===============
+ HD0000000622440 - No schedule change warning for IMO orders
+  
+ Problem:
+ -------
+ When renewing an inpatient medication order in CPRS (Computerized Patient 
+ Record System) GUI (Graphical User Interface) after the NAME (#.01) field 
+ in the ADMINISTRATION SCHEDULE FILE (#51.1) file has been changed, the 
+ user should be presented with a warning message telling them that the 
+ schedule for this order is not valid and the renewal process is cancelled.
+ However, if the order was entered for an IMO Clinic location, this warning
+ does not occur and the user is allowed to renew the order, despite the
+ fact that the schedule name of the original order is no longer valid.
+  
+ Resolution:
+ ----------
+ Changed routine ORWNSS so that the system checks for the Clinic Orders 
+ (IMO) display group during the renew action. If the NAME (#.01) field in 
+ the ADMINISTRATION SCHEDULE FILE (#51.1) file does not match the schedule 
+ name of the order being renewed, display the warning message to the user 
+ and cancel the renewal process.
+  
+  
+ INSTALLATION INSTRUCTIONS 
+ =========================
+ This patch can be installed with users in the system but it is recommended
+ that it be installed when user activity in low. Install time will be less
+ than 2 minutes.
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2. From the Kernel Installation & Distribution System menu [XPD MAIN]
+    select the Installation menu.
+   
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter OR*3.0*362)
+   
+    a. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+    b. Print Transport Global - This option will allow you to view the
+       components of the KIDS build.
+    c. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is
+       installed.  It compares all components of this patch (routines,
+       DD's, templates, etc.).
+    d. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any
+       other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package OR*3.0*362.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORWNSS
+    Before:  B4949733   After:  B5780919  **195,243,327,362**
+ 
+Routine list of preceding patches: 327
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : APR 30, 2012
+Completed By: HULET,LEE ANN                 Date Completed: OCT 29, 2012
+Released By : KREUZ,SHERI B                 Date Released : OCT 31, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

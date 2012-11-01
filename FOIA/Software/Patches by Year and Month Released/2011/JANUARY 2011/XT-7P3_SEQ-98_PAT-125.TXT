@@ -1,0 +1,153 @@
+$TXT Created by LAM,ESTELLA at DEVCRN.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 10/04/10 at 12:14
+=============================================================================
+Run Date: JAN 25, 2011                     Designation: XT*7.3*125
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3        SEQ #98                    Status: Released
+                  Compliance Date: FEB 08, 2011
+=============================================================================
+
+Associated patches: (v)XT*7.3*124  <<= must be installed BEFORE `XT*7.3*125'
+
+Subject: CHECK MPI DO NOT LINK FILE BEFORE ADDING TO FILE #15
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  XT*7.3*124 is a required build for patch XT*7.3*125.
+  
+  Issue #1:
+  Health Care Identity Management (HC IdM) requested that when the Add
+  Verified Duplicate Pair [XDR ADD VERIFIED DUPS] option in the Kernel
+  Toolkit's Duplicate Record Merge software is used, that a check be made
+  to the MPI DO NOT LINK (#985.28) file on the Master Patient Index (MPI)
+  to ensure that the records have not already been identified as a DO NOT
+  LINK pairing. If the pair is identified as Not A Duplicate, the user
+  will be prevented from adding it to the DUPLICATE RECORD (#15) file.
+  
+  In order to accomplish this, when records from the PATIENT (#2) file
+  are selected for merging, the XDRMADD routine has been modified to
+  check for the existence of an MPI extrinsic function introduced in
+  patch MPIF*1.0*55.  The MPI extrinsic function uses the DIRECT^XWB2HL7
+  API (IA #3144) to call an MPI Remote Procedure that returns the list
+  of patients that are marked as not a duplicate with one of the selected
+  patients.
+  
+  Documentation Update:
+  =====================
+  The following KERNEL Duplicate Resolution System VISTA documentation is
+  available, updated for patch XT*7.3*125.  Facilities should download the
+  revised documentation listed as follows:
+  
+       Technical Manual                    xt_73_p125_tm.pdf
+       User Manual                         xt_73_p125_um.pdf
+    
+  The preferred retrieval method is to FTP from the ANONYMOUS.SOFTWARE
+  directory at: DOWNLOAD.VISTA.MED.VA.GOV
+  This transmits the file from the first available FTP server.
+  Sites may also elect to retrieve software directly from one
+  of the following servers.
+   
+  OI Field Office         FTP Address                  Directory
+  ------------------------------------------------------------------
+  Albany             ftp.fo-albany.med.va.gov     ANONYMOUS.SOFTWARE
+  Hines              ftp.fo-hines.med.va.gov      ANONYMOUS.SOFTWARE
+  Salt Lake City     ftp.fo-slc.med.va.gov        ANONYMOUS.SOFTWARE
+    
+  Note:  These files must be transferred in binary or IMAGE,
+         not ASCII, mode.
+    
+  The documents can also be downloaded from the VistA Documentation
+  Library (VDL) Web page in both Acrobat PDF and MS-Word DOC formats:
+    
+       http://www4.va.gov/vdl/application.asp?appid=2
+   
+  Associated Remedy Ticket:
+  =========================
+  There are no associated Remedy Tickets.
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+   
+  Test Sites:
+  ===========
+  Bay Pines VA HCS
+  Huntington VAMC
+  VA Montana HCS
+   
+  Blood Bank Team Coordination
+  ============================
+  Clearance: 12/16/10 (from Randy Morton)
+   
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*125 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of VISTA
+  Patches for Effects on VISTA Blood Bank Software. This patch does not
+  alter or modify any VistA Blood Bank software design safeguards or safety
+  critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XT*7.3*125 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions:
+  ==========================
+  This patch should be loaded during non-peak hours when most users are off
+  the system.  Installation will take less than 2 minutes.
+   
+  1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+      the KIDS distribution included with this message.
+   
+  2.  From the Kernel Installation and Distribution System Menu, select 
+      the Installation menu.  
+   
+  3.  From this menu, you may elect to use the following options
+      (when prompted for INSTALL NAME, enter XT*7.3*125):
+      a.  Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch.  It will NOT
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System  - this option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch 
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - this option will
+          allow you to ensure the integrity of the routines that are in
+          the transport global.
+      d.  Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+   
+  4.  Use the Install Package(s) option and select the package 
+      XT*7.3*125.
+   
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+      NO//', respond NO.
+   
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XDRMADD
+    Before: B43074040   After: B51242598  **23,113,124,125**
+ 
+Routine list of preceding patches: 124
+
+=============================================================================
+User Information:                          Hold Date     : JAN 01, 2011
+Entered By  : OGI,MICHAEL                   Date Entered  : JUL 27, 2010
+Completed By: CHESNEY,CHRISTINE M           Date Completed: DEC 22, 2010
+Released By : HEUER,CINDY                   Date Released : JAN 25, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,862 @@
+Released DG*5.3*824 SEQ #742
+Extracted from mail message
+**KIDS**:DG*5.3*824^
+
+**INSTALL NAME**
+DG*5.3*824
+"BLD",7638,0)
+DG*5.3*824^REGISTRATION^0^3100617^y
+"BLD",7638,1,0)
+^^2^2^3100304^
+"BLD",7638,1,1,0)
+This patch fixes the listing of a patient on the call list when the patient
+"BLD",7638,1,2,0)
+is scheduled for an appointment in a non-count clinic.
+"BLD",7638,4,0)
+^9.64PA^^
+"BLD",7638,6.3)
+2
+"BLD",7638,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7638,"KRN",.4,0)
+.4
+"BLD",7638,"KRN",.401,0)
+.401
+"BLD",7638,"KRN",.402,0)
+.402
+"BLD",7638,"KRN",.403,0)
+.403
+"BLD",7638,"KRN",.5,0)
+.5
+"BLD",7638,"KRN",.84,0)
+.84
+"BLD",7638,"KRN",3.6,0)
+3.6
+"BLD",7638,"KRN",3.8,0)
+3.8
+"BLD",7638,"KRN",9.2,0)
+9.2
+"BLD",7638,"KRN",9.8,0)
+9.8
+"BLD",7638,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",7638,"KRN",9.8,"NM",1,0)
+DGENA2^^0^B47383662
+"BLD",7638,"KRN",9.8,"NM",2,0)
+DGENACL^^0^B18482166
+"BLD",7638,"KRN",9.8,"NM","B","DGENA2",1)
+
+"BLD",7638,"KRN",9.8,"NM","B","DGENACL",2)
+
+"BLD",7638,"KRN",19,0)
+19
+"BLD",7638,"KRN",19.1,0)
+19.1
+"BLD",7638,"KRN",101,0)
+101
+"BLD",7638,"KRN",409.61,0)
+409.61
+"BLD",7638,"KRN",771,0)
+771
+"BLD",7638,"KRN",779.2,0)
+779.2
+"BLD",7638,"KRN",870,0)
+870
+"BLD",7638,"KRN",8989.51,0)
+8989.51
+"BLD",7638,"KRN",8989.52,0)
+8989.52
+"BLD",7638,"KRN",8994,0)
+8994
+"BLD",7638,"KRN","B",.4,.4)
+
+"BLD",7638,"KRN","B",.401,.401)
+
+"BLD",7638,"KRN","B",.402,.402)
+
+"BLD",7638,"KRN","B",.403,.403)
+
+"BLD",7638,"KRN","B",.5,.5)
+
+"BLD",7638,"KRN","B",.84,.84)
+
+"BLD",7638,"KRN","B",3.6,3.6)
+
+"BLD",7638,"KRN","B",3.8,3.8)
+
+"BLD",7638,"KRN","B",9.2,9.2)
+
+"BLD",7638,"KRN","B",9.8,9.8)
+
+"BLD",7638,"KRN","B",19,19)
+
+"BLD",7638,"KRN","B",19.1,19.1)
+
+"BLD",7638,"KRN","B",101,101)
+
+"BLD",7638,"KRN","B",409.61,409.61)
+
+"BLD",7638,"KRN","B",771,771)
+
+"BLD",7638,"KRN","B",779.2,779.2)
+
+"BLD",7638,"KRN","B",870,870)
+
+"BLD",7638,"KRN","B",8989.51,8989.51)
+
+"BLD",7638,"KRN","B",8989.52,8989.52)
+
+"BLD",7638,"KRN","B",8994,8994)
+
+"BLD",7638,"QUES",0)
+^9.62^^
+"BLD",7638,"REQB",0)
+^9.611^1^1
+"BLD",7638,"REQB",1,0)
+DG*5.3*788^1
+"BLD",7638,"REQB","B","DG*5.3*788",1)
+
+"MBREQ")
+0
+"PKG",5,-1)
+1^1
+"PKG",5,0)
+REGISTRATION^DG^PATIENT REGISTRATION, ADMISSION, DISCHARGE, EMBOSSER 
+"PKG",5,20,0)
+^9.402P^^
+"PKG",5,22,0)
+^9.49I^1^1
+"PKG",5,22,1,0)
+5.3^2930813
+"PKG",5,22,1,"PAH",1,0)
+824^3100617
+"PKG",5,22,1,"PAH",1,1,0)
+^^2^2^3100617
+"PKG",5,22,1,"PAH",1,1,1,0)
+This patch fixes the listing of a patient on the call list when the patient
+"PKG",5,22,1,"PAH",1,1,2,0)
+is scheduled for an appointment in a non-count clinic.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","DGENA2")
+0^1^B47383662^B45947101
+"RTN","DGENA2",1,0)
+DGENA2 ;ALB/CJM,RTK,TDM - Enrollment API - Automatic Update; 9/19/2002 ; 1/31/03 11:54am
+"RTN","DGENA2",2,0)
+ ;;5.3;Registration;**121,122,147,232,327,469,491,779,788,824**;Aug 13,1993;Build 2
+"RTN","DGENA2",3,0)
+ ;
+"RTN","DGENA2",4,0)
+AUTOUPD(DFN,EVENT) ;
+"RTN","DGENA2",5,0)
+ ;Description: If the patient meets the criteria for transmission to HEC,
+"RTN","DGENA2",6,0)
+ ;   he is entered to the IVM PATIENT file for future transmission.
+"RTN","DGENA2",7,0)
+ ;   This procedure checks for changes in enrollment priority,
+"RTN","DGENA2",8,0)
+ ;   status and fields in the eligibility sub-record. If any changes are
+"RTN","DGENA2",9,0)
+ ;   found, the current enrollment record is automatically updated.
+"RTN","DGENA2",10,0)
+ ;Input:
+"RTN","DGENA2",11,0)
+ ;  DFN - Patient IEN
+"RTN","DGENA2",12,0)
+ ;  EVENT - Event Type (optional)
+"RTN","DGENA2",13,0)
+ ;          EVENT 1 : Date of Death Deleted
+"RTN","DGENA2",14,0)
+ ;          EVENT 2 : Ineligible Date Deleted
+"RTN","DGENA2",15,0)
+ ;Output: None
+"RTN","DGENA2",16,0)
+ ;
+"RTN","DGENA2",17,0)
+ ;if the eligibility/enrollment upload is in progess, do not do anything
+"RTN","DGENA2",18,0)
+ Q:($G(DGENUPLD)="ENROLLMENT/ELIGIBILITY UPLOAD IN PROGRESS")
+"RTN","DGENA2",19,0)
+ ;
+"RTN","DGENA2",20,0)
+ ; If the INCOME TEST DATA (Z10) upload is in progess, do not do anything
+"RTN","DGENA2",21,0)
+ Q:($G(IVMZ10)="UPLOAD IN PROGRESS")
+"RTN","DGENA2",22,0)
+ ;
+"RTN","DGENA2",23,0)
+ N DGENRIEN,DGENR1,DGENR2,STATUS,EFFDATE,OK,DEATH
+"RTN","DGENA2",24,0)
+ ;
+"RTN","DGENA2",25,0)
+ ;try to prevent problems rsulting from calling FM within FM
+"RTN","DGENA2",26,0)
+ N DS,D0,DO,D1,DA,DD,DS,DG,DIC,DICR,DIE,DIG,DIH,DIV,DIW,DIX,DQ,DR
+"RTN","DGENA2",27,0)
+ ;
+"RTN","DGENA2",28,0)
+ S EVENT=+$G(EVENT)
+"RTN","DGENA2",29,0)
+ ;
+"RTN","DGENA2",30,0)
+ D EVENT^IVMPLOG(DFN)
+"RTN","DGENA2",31,0)
+ ;
+"RTN","DGENA2",32,0)
+ D:$$LOCK^DGENA1($G(DFN))  ;may drop out of block
+"RTN","DGENA2",33,0)
+ .S DGENRIEN=$$FINDCUR^DGENA(DFN)
+"RTN","DGENA2",34,0)
+ .Q:'DGENRIEN
+"RTN","DGENA2",35,0)
+ .Q:'$$GET^DGENA(DGENRIEN,.DGENR1)
+"RTN","DGENA2",36,0)
+ .S STATUS=$$EXT^DGENU("STATUS",DGENR1("STATUS"))
+"RTN","DGENA2",37,0)
+ .S (DEATH,EFFDATE)=$$DEATH^DGENPTA(DFN)
+"RTN","DGENA2",38,0)
+ .I STATUS'="VERIFIED",STATUS'="UNVERIFIED",STATUS'="DECEASED",STATUS'["NOT ELIGIBLE",STATUS'["PENDING",STATUS'["REJECTED" Q
+"RTN","DGENA2",39,0)
+ .I STATUS="DECEASED",((EVENT'=1)!(DEATH)) Q
+"RTN","DGENA2",40,0)
+ .I STATUS["NOT ELIGIBLE",((EVENT'=2)!('$$VET^DGENPTA(DFN))) Q
+"RTN","DGENA2",41,0)
+ .S:'EFFDATE EFFDATE=DT
+"RTN","DGENA2",42,0)
+ .Q:'$$CREATE^DGENA6(DFN,DGENR1("APP"),EFFDATE,DGENR1("REASON"),DGENR1("REMARKS"),.DGENR2,DGENR1("DATE"),DGENR1("END"))
+"RTN","DGENA2",43,0)
+ .S OK=1
+"RTN","DGENA2",44,0)
+ .S:(DGENR1("PRIORITY")'=DGENR2("PRIORITY"))!(DGENR2("STATUS")'=DGENR1("STATUS")) OK=0
+"RTN","DGENA2",45,0)
+ .I OK D
+"RTN","DGENA2",46,0)
+ ..N SUB
+"RTN","DGENA2",47,0)
+ ..S SUB=""
+"RTN","DGENA2",48,0)
+ ..F  S SUB=$O(DGENR2("ELIG",SUB)) Q:SUB=""  S:(DGENR1("ELIG",SUB)'=DGENR2("ELIG",SUB)) OK=0
+"RTN","DGENA2",49,0)
+ .I 'OK D
+"RTN","DGENA2",50,0)
+ ..I (DGENR1("EFFDATE")=DGENR2("EFFDATE")),(DGENR1("SOURCE")=DGENR2("SOURCE")),(DGENR1("USER")=DGENR2("USER")),(DGENR1("DATETIME")\1)=(DGENR2("DATETIME")\1) D
+"RTN","DGENA2",51,0)
+ ...;in this case it's an overlay
+"RTN","DGENA2",52,0)
+ ...S DGENR2("PRIORREC")=DGENR1("PRIORREC")
+"RTN","DGENA2",53,0)
+ ...I $$EDITCUR^DGENA1(.DGENR2)
+"RTN","DGENA2",54,0)
+ ..E  D
+"RTN","DGENA2",55,0)
+ ...;in this case create a new record, to preserve the audit trail
+"RTN","DGENA2",56,0)
+ ...I $$STORECUR^DGENA1(.DGENR2)
+"RTN","DGENA2",57,0)
+ D UNLOCK^DGENA1($G(DFN))
+"RTN","DGENA2",58,0)
+ Q
+"RTN","DGENA2",59,0)
+MTUPD ;
+"RTN","DGENA2",60,0)
+ ;Description - entry point for Means Test Event Driver for Enrollment
+"RTN","DGENA2",61,0)
+ ;
+"RTN","DGENA2",62,0)
+ D AUTOUPD($G(DFN))
+"RTN","DGENA2",63,0)
+ Q
+"RTN","DGENA2",64,0)
+ ;
+"RTN","DGENA2",65,0)
+SDDIS ;Entry point for the DGEN SD DISPLAY CURRENT ENROLLMENT protocol,
+"RTN","DGENA2",66,0)
+ ;which hangs of the Scheduling Event Driver
+"RTN","DGENA2",67,0)
+ ;
+"RTN","DGENA2",68,0)
+ N DFN S DFN=$P($G(SDATA),"^",2)
+"RTN","DGENA2",69,0)
+ ;
+"RTN","DGENA2",70,0)
+ ;don't display if running in the background
+"RTN","DGENA2",71,0)
+ Q:$D(ZTQUEUED)
+"RTN","DGENA2",72,0)
+ ;
+"RTN","DGENA2",73,0)
+ ;don't want to display enrollment for non-vets with no enrollment status
+"RTN","DGENA2",74,0)
+ Q:('$$VET^DGENPTA(DFN))&('$$STATUS^DGENA(DFN))
+"RTN","DGENA2",75,0)
+ ;
+"RTN","DGENA2",76,0)
+ ;if making an appt., & in interactive mode, display enrollment status
+"RTN","DGENA2",77,0)
+ I ($G(SDAMEVT)=1),$G(SDMODE)=0 D
+"RTN","DGENA2",78,0)
+ .D DISPLAY^DGENU($P($G(SDATA),"^",2))
+"RTN","DGENA2",79,0)
+ .D PAUSE^VALM1
+"RTN","DGENA2",80,0)
+ ;
+"RTN","DGENA2",81,0)
+ ;want to do the same thing for check-in, unless appt just made
+"RTN","DGENA2",82,0)
+ I ($G(SDAMEVT)=4),$G(SDMODE)=0 D
+"RTN","DGENA2",83,0)
+ .;want to try avoiding giving display if it was done already
+"RTN","DGENA2",84,0)
+ .;so, if it is an unscheduled appt made today, skip
+"RTN","DGENA2",85,0)
+ .N PTNODE,SCNODE
+"RTN","DGENA2",86,0)
+ .S SCNODE=$G(^TMP("SDAMEVT",$J,"AFTER","SC"))
+"RTN","DGENA2",87,0)
+ .S PTNODE=$G(^TMP("SDAMEVT",$J,"AFTER","DPT"))
+"RTN","DGENA2",88,0)
+ .I +$P(SCNODE,"^",7)=$G(DT),$P(PTNODE,"^",7)=4 Q  ;unscheduled appt made today
+"RTN","DGENA2",89,0)
+ .D DISPLAY^DGENU($P($G(SDATA),"^",2))
+"RTN","DGENA2",90,0)
+ .D PAUSE^VALM1
+"RTN","DGENA2",91,0)
+ Q
+"RTN","DGENA2",92,0)
+ ;
+"RTN","DGENA2",93,0)
+ENROLL ;Entry point for the DGEN SD ENROLL PATIENT protocol, which hangs of
+"RTN","DGENA2",94,0)
+ ;the Scheduling Event Driver. This event enrolls patients upon check-out
+"RTN","DGENA2",95,0)
+ ;if there is no prior enrollment record.
+"RTN","DGENA2",96,0)
+ ;
+"RTN","DGENA2",97,0)
+ ; Input  -- SDATA & SDAMEVT defined by the scheduling event driver
+"RTN","DGENA2",98,0)
+ ; Output -- none
+"RTN","DGENA2",99,0)
+ ;
+"RTN","DGENA2",100,0)
+ N DGENR,DFN
+"RTN","DGENA2",101,0)
+ ;
+"RTN","DGENA2",102,0)
+ ;NOTE - it appears from testing that means test status REQUIRED is set
+"RTN","DGENA2",103,0)
+ ;within scheduling, obviating the need to do it here.  This is why
+"RTN","DGENA2",104,0)
+ ;several lines are commented out.
+"RTN","DGENA2",105,0)
+ ;
+"RTN","DGENA2",106,0)
+ ;N DGENR,DGOKF,DGREQF,DFN,DGMSGF,DG,DGMT,DGMTCOR,DGMTE,DGRGAUTO,DGWRT,XMZ,DIG,DIH
+"RTN","DGENA2",107,0)
+ ;
+"RTN","DGENA2",108,0)
+ ;appointment made, check if enrollment appointment request needs reset.
+"RTN","DGENA2",109,0)
+ ;if appointment cancelled, or no-show put back on call list if no appts.
+"RTN","DGENA2",110,0)
+ I ($G(SDAMEVT)=1)!($G(SDAMEVT)=2)!($G(SDAMEVT)=3) D REQUST(SDAMEVT,SDATA)
+"RTN","DGENA2",111,0)
+ ;check-out?
+"RTN","DGENA2",112,0)
+ Q:($G(SDAMEVT)'=5)
+"RTN","DGENA2",113,0)
+ ;
+"RTN","DGENA2",114,0)
+ S DFN=$P($G(SDATA),"^",2)
+"RTN","DGENA2",115,0)
+ ;
+"RTN","DGENA2",116,0)
+ ;don't enroll if the patient has an enrollment record
+"RTN","DGENA2",117,0)
+ I $$FINDCUR^DGENA(DFN) Q
+"RTN","DGENA2",118,0)
+ ;
+"RTN","DGENA2",119,0)
+ ;non-vet?
+"RTN","DGENA2",120,0)
+ Q:'$$VET^DGENPTA(DFN)
+"RTN","DGENA2",121,0)
+ ;
+"RTN","DGENA2",122,0)
+ ;dead?
+"RTN","DGENA2",123,0)
+ Q:$$DEATH^DGENPTA(DFN)
+"RTN","DGENA2",124,0)
+ ;
+"RTN","DGENA2",125,0)
+ ;Does patient require a Means Test?
+"RTN","DGENA2",126,0)
+ ;S DGMSGF=1
+"RTN","DGENA2",127,0)
+ ;D EN^DGMTR
+"RTN","DGENA2",128,0)
+ ;
+"RTN","DGENA2",129,0)
+ ;Create local enrollment array
+"RTN","DGENA2",130,0)
+ I $$CREATE^DGENA6(DFN,DT,,,,.DGENR) D
+"RTN","DGENA2",131,0)
+ . ;
+"RTN","DGENA2",132,0)
+ . ;Store local enrollment as current
+"RTN","DGENA2",133,0)
+ . I $$STORECUR^DGENA1(.DGENR) D
+"RTN","DGENA2",134,0)
+ . . ;
+"RTN","DGENA2",135,0)
+ . . ;If patient's means test status is required, send bulletin
+"RTN","DGENA2",136,0)
+ . . ;I $$MTREQ^DGEN(DFN) D MTBULL^DGEN(DFN,.DGENR)
+"RTN","DGENA2",137,0)
+ Q
+"RTN","DGENA2",138,0)
+ ;
+"RTN","DGENA2",139,0)
+REQUST(SDAMEVT,SDATA) ;
+"RTN","DGENA2",140,0)
+ ;1. Check if cancelled appt. If no appts found put back on call list.
+"RTN","DGENA2",141,0)
+ ;2. Automatic collection of Appointment Request Date and Appointment
+"RTN","DGENA2",142,0)
+ ;Request Response
+"RTN","DGENA2",143,0)
+ ;- Set when Enrollment Application Date >= 8/1/2005 AND
+"RTN","DGENA2",144,0)
+ ;-     Appointment Request Date is null. 
+"RTN","DGENA2",145,0)
+ ;
+"RTN","DGENA2",146,0)
+ ; Input  -- SDATA and SDAMEVT defined by scheduling event driver
+"RTN","DGENA2",147,0)
+ ; Output -- none
+"RTN","DGENA2",148,0)
+ ;
+"RTN","DGENA2",149,0)
+ N DGENRIEN,DGENR,DPTERR,DGCOM,DGADT,DFN,DGCLN
+"RTN","DGENA2",150,0)
+ I ($G(SDAMEVT)=2)!($G(SDAMEVT)=3) G CANNS
+"RTN","DGENA2",151,0)
+ ;apointment made?
+"RTN","DGENA2",152,0)
+ Q:($G(SDAMEVT)'=1)
+"RTN","DGENA2",153,0)
+ ;
+"RTN","DGENA2",154,0)
+ S DFN=$P($G(SDATA),"^",2)
+"RTN","DGENA2",155,0)
+ S DGADT=$P($G(SDATA),"^",3)
+"RTN","DGENA2",156,0)
+ S DGCLN=$P($G(SDATA),"^",4)
+"RTN","DGENA2",157,0)
+ ;get enrollment ien
+"RTN","DGENA2",158,0)
+ S DGENRIEN=$$FINDCUR^DGENA(DFN)
+"RTN","DGENA2",159,0)
+ I DGENRIEN,$$GET^DGENA(DGENRIEN,.DGENR) ;set-up enrollment array
+"RTN","DGENA2",160,0)
+ I $G(DGENR("APP"))>3050731 D
+"RTN","DGENA2",161,0)
+ . ;and, no appointment request date. Set request="yes", request date 
+"RTN","DGENA2",162,0)
+ . I '$$GET1^DIQ(2,DFN,1010.1511,"I") D
+"RTN","DGENA2",163,0)
+ . . ;quit if 'no-count' clinic
+"RTN","DGENA2",164,0)
+ . . I ($$GET1^DIQ(44,DGCLN,2502,"I")="Y") Q
+"RTN","DGENA2",165,0)
+ . . ;quit if appt. date/time < date notified of request for appointment
+"RTN","DGENA2",166,0)
+ . . I DGADT<DT Q
+"RTN","DGENA2",167,0)
+ . . ;set fields
+"RTN","DGENA2",168,0)
+ . . N FDATA
+"RTN","DGENA2",169,0)
+ . . S FDATA(2,DFN_",",1010.159)=1
+"RTN","DGENA2",170,0)
+ . . S FDATA(2,DFN_",",1010.1511)=DT
+"RTN","DGENA2",171,0)
+ . . D FILE^DIE("","FDATA","DPTERR")
+"RTN","DGENA2",172,0)
+ . ;if appointment made, appt. request="yes", request status'="filled"
+"RTN","DGENA2",173,0)
+ . ;- set request status='filled' w comment
+"RTN","DGENA2",174,0)
+ . ; also, if non count clinic, do not file data.
+"RTN","DGENA2",175,0)
+ . I ($$GET1^DIQ(44,DGCLN,2502,"I")="Y") Q
+"RTN","DGENA2",176,0)
+ . I ($$GET1^DIQ(2,DFN,1010.159,"I")),($$GET1^DIQ(2,DFN,1010.161,"I")'="F") D
+"RTN","DGENA2",177,0)
+ . . ;set fields
+"RTN","DGENA2",178,0)
+ . . N FDATA
+"RTN","DGENA2",179,0)
+ . . S FDATA(2,DFN_",",1010.161)="F"
+"RTN","DGENA2",180,0)
+ . . S DGCOM=$$GET1^DIQ(2,DFN,1010.163)
+"RTN","DGENA2",181,0)
+ . . S DGCOM=DGCOM_$S(DGCOM'="":"<>",1:"")_"AutoComm:"_$S($$GET1^DIQ(2,DFN,1010.161,"I")="":"null",1:$S($$GET1^DIQ(2,DFN,1010.161,"I")="I":"IN PROGRESS",1:$$GET1^DIQ(2,DFN,1010.161)))_"|FILLED by Scheduling"
+"RTN","DGENA2",182,0)
+ . . S FDATA(2,DFN_",",1010.163)=DGCOM
+"RTN","DGENA2",183,0)
+ . . D FILE^DIE("","FDATA","DPTERR")
+"RTN","DGENA2",184,0)
+ Q
+"RTN","DGENA2",185,0)
+ ;
+"RTN","DGENA2",186,0)
+CANNS ;If appointment cancelled or no-show, no appts made, put back on call list
+"RTN","DGENA2",187,0)
+ N DGRDTI,SDARRY,SDCNT,FDATA
+"RTN","DGENA2",188,0)
+ ;
+"RTN","DGENA2",189,0)
+ S DFN=$P($G(SDATA),"^",2)
+"RTN","DGENA2",190,0)
+ ;
+"RTN","DGENA2",191,0)
+ S DGRDTI=$$GET1^DIQ(2,DFN,1010.1511,"I")
+"RTN","DGENA2",192,0)
+ I 'DGRDTI Q
+"RTN","DGENA2",193,0)
+ S SDARRY(1)=DGRDTI_";" ;Look out from 'notify of request date' to future.
+"RTN","DGENA2",194,0)
+ S SDARRY(3)="R;I;NT" ;appointments made
+"RTN","DGENA2",195,0)
+ S SDARRY(4)=DFN
+"RTN","DGENA2",196,0)
+ S SDARRY("FLDS")=1
+"RTN","DGENA2",197,0)
+ S SDCNT=$$SDAPI^SDAMA301(.SDARRY)
+"RTN","DGENA2",198,0)
+ I SDCNT>0 D  ;If only no-count clinic appts. put on call list
+"RTN","DGENA2",199,0)
+ . N SDCOUNT,SDCL
+"RTN","DGENA2",200,0)
+ . S SDCOUNT=0 ; count clinic
+"RTN","DGENA2",201,0)
+ . S SDCL=0 F  S SDCL=$O(^TMP($J,"SDAMA301",DFN,SDCL)) Q:'SDCL  D  Q:SDCOUNT
+"RTN","DGENA2",202,0)
+ .. I $$GET1^DIQ(44,SDCL,2502,"I")="Y" Q
+"RTN","DGENA2",203,0)
+ .. S SDCOUNT=SDCOUNT+1
+"RTN","DGENA2",204,0)
+ . I SDCOUNT=0 S SDCNT=0  ;if only no-count clinic appts., put on call list
+"RTN","DGENA2",205,0)
+ I SDCNT=0 D
+"RTN","DGENA2",206,0)
+ . S FDATA(2,DFN_",",1010.161)="@" ;delete status
+"RTN","DGENA2",207,0)
+ . S FDATA(2,DFN_",",1010.163)="@" ;delete comment
+"RTN","DGENA2",208,0)
+ . D FILE^DIE("","FDATA","DPTERR")
+"RTN","DGENA2",209,0)
+ Q
+"RTN","DGENACL")
+0^2^B18482166^B18382293
+"RTN","DGENACL",1,0)
+DGENACL ;ALB/MRY,LBD - NEW ENROLLEE APPOINTMENT CALL LIST - UPDATE ; 6/9/10 2:09pm
+"RTN","DGENACL",2,0)
+ ;;5.3;Registration;**779,788,824**;08/13/93;Build 2
+"RTN","DGENACL",3,0)
+ ;
+"RTN","DGENACL",4,0)
+EDIT ;-Entry point - Edit Appointment Request Status and Comment option
+"RTN","DGENACL",5,0)
+ N DIC,DIE,DA,DR,Y,DFN
+"RTN","DGENACL",6,0)
+ S DIC="^DPT(",DIC(0)="AEQMZ" D ^DIC G Q:Y'>0 S DFN=+Y
+"RTN","DGENACL",7,0)
+ S DIE=DIC,DA=+Y,DR="[DGEN NEACL]" D ^DIE W !!
+"RTN","DGENACL",8,0)
+ G EDIT
+"RTN","DGENACL",9,0)
+Q Q
+"RTN","DGENACL",10,0)
+ ;
+"RTN","DGENACL",11,0)
+REPORT(DGRPT) ;-Entry point - Call List/Tracking reports
+"RTN","DGENACL",12,0)
+ ;
+"RTN","DGENACL",13,0)
+ ; DGRPT: 1 = Call List: New enrollee appt. request/no appt. assigned.
+"RTN","DGENACL",14,0)
+ ;        2 = Tracking Report: New enrollee appt. request/by date range
+"RTN","DGENACL",15,0)
+ ;
+"RTN","DGENACL",16,0)
+ N DGBEG,DGEND,DTOUT,DUOUT,DIRUT,DGFMT1,DGFMT2,DGERROR,DGPFTF,DGPFTFLG,DGSITE
+"RTN","DGENACL",17,0)
+ S (DGBEG,DGEND,DGERROR)="",DGSITE=+$P($$SITE^VASITE(),U,3)
+"RTN","DGENACL",18,0)
+ I $G(DGRPT)'=1&($G(DGRPT)'=2) G Q
+"RTN","DGENACL",19,0)
+ I DGRPT=1 D FMT1 I $D(DTOUT)!($D(DUOUT)) G Q
+"RTN","DGENACL",20,0)
+ I DGRPT=2 D FMT2 I $D(DTOUT)!($D(DUOUT)) G Q
+"RTN","DGENACL",21,0)
+ D PFTF I $D(DTOUT)!($D(DUOUT)) G Q
+"RTN","DGENACL",22,0)
+ I DGPFTFLG,'$O(DGPFTF("")) G Q
+"RTN","DGENACL",23,0)
+ N ZTDESC,ZTRTN,ZTSAVE,ZTSK,ZUSR,ZTDTH,POP,X,ERR,V
+"RTN","DGENACL",24,0)
+ K IOP,%ZIS
+"RTN","DGENACL",25,0)
+ S %ZIS="Q" D ^%ZIS G:POP EXIT
+"RTN","DGENACL",26,0)
+ I $D(IO("Q")) D  Q
+"RTN","DGENACL",27,0)
+ . F V="DGSITE","DGRPT","DGFMT1","DGFMT2","DGBEG","DGEND","DGPFTF(","DGERROR","DGPFTFLG" S ZTSAVE(V)=""
+"RTN","DGENACL",28,0)
+ . S ZTRTN="BUILD^DGENACL",ZTDESC="NEW ENROLLEE APPT. CALL LIST REPORT",ZTDTH=$H
+"RTN","DGENACL",29,0)
+ . D ^%ZTLOAD
+"RTN","DGENACL",30,0)
+ . D ^%ZISC,HOME^%ZIS
+"RTN","DGENACL",31,0)
+ . W !,$S($D(ZTSK):"REQUEST QUEUED!",1:"REQUEST CANCELLED!")
+"RTN","DGENACL",32,0)
+ D BUILD
+"RTN","DGENACL",33,0)
+EXIT D ^%ZISC,HOME^%ZIS
+"RTN","DGENACL",34,0)
+ Q
+"RTN","DGENACL",35,0)
+ ;
+"RTN","DGENACL",36,0)
+BUILD ;-Build temp global
+"RTN","DGENACL",37,0)
+ K ^TMP($J,"DGEN NEACL")
+"RTN","DGENACL",38,0)
+ N DFNIEN,DGDT,DGEDT
+"RTN","DGENACL",39,0)
+ I DGRPT=1 S DFNIEN=0 F  S DFNIEN=$O(^DPT("AEAR",1,DFNIEN)) Q:'DFNIEN  D  Q:+DGERROR
+"RTN","DGENACL",40,0)
+ . I $$GET1^DIQ(2,DFNIEN,1010.159,"I") D EXTRACT
+"RTN","DGENACL",41,0)
+ I DGRPT=2 D
+"RTN","DGENACL",42,0)
+ . S DGDT=DGBEG-.01,DGEDT=DGEND_.999
+"RTN","DGENACL",43,0)
+ . F  S DGDT=$O(^DPT("AEACL",DGDT)) Q:'DGDT!(DGDT>DGEDT)  D  Q:+DGERROR
+"RTN","DGENACL",44,0)
+ .. S DFNIEN=0 F  S DFNIEN=$O(^DPT("AEACL",DGDT,DFNIEN)) Q:'DFNIEN  D  Q:+DGERROR
+"RTN","DGENACL",45,0)
+ ... I $$GET1^DIQ(2,DFNIEN,1010.159,"I") D EXTRACT
+"RTN","DGENACL",46,0)
+ D PRINT^DGENACL1
+"RTN","DGENACL",47,0)
+ Q
+"RTN","DGENACL",48,0)
+ ;
+"RTN","DGENACL",49,0)
+EXTRACT ;
+"RTN","DGENACL",50,0)
+ D EXTRACT^DGENACL2
+"RTN","DGENACL",51,0)
+ Q
+"RTN","DGENACL",52,0)
+ ;
+"RTN","DGENACL",53,0)
+DATE N X1,X2
+"RTN","DGENACL",54,0)
+ S DIR(0)="DAO^,"_DT_",::EX"
+"RTN","DGENACL",55,0)
+ S X1=DT,X2=-7 D C^%DTC
+"RTN","DGENACL",56,0)
+ S Y=X D DD^%DT
+"RTN","DGENACL",57,0)
+ S DIR("A")="APPOINTMENT REQUEST ON 1010EZ START DATE: "
+"RTN","DGENACL",58,0)
+ S DIR("B")=Y
+"RTN","DGENACL",59,0)
+ S DIR("?")="Enter a date that an enrollee was asked question."
+"RTN","DGENACL",60,0)
+ D ^DIR K DIR
+"RTN","DGENACL",61,0)
+ I $D(DIRUT) S DTOUT=1
+"RTN","DGENACL",62,0)
+ I $D(DTOUT)!($D(DUOUT)) Q
+"RTN","DGENACL",63,0)
+ S DGBEG=Y
+"RTN","DGENACL",64,0)
+ S DIR(0)="DAO^"_DGBEG_","_DT_"::EX"
+"RTN","DGENACL",65,0)
+ S Y=DT D DD^%DT S DGDT=Y
+"RTN","DGENACL",66,0)
+ S DIR("B")=DGDT
+"RTN","DGENACL",67,0)
+ S DIR("A")="APPOINTMENT REQUEST ON 1010EZ END DATE: "
+"RTN","DGENACL",68,0)
+ S DIR("?")="Enter a date that an enrollee was asked question."
+"RTN","DGENACL",69,0)
+ D ^DIR K DIR
+"RTN","DGENACL",70,0)
+ I $D(DIRUT) S DTOUT=1
+"RTN","DGENACL",71,0)
+ I $D(DTOUT)!($D(DUOUT)) Q
+"RTN","DGENACL",72,0)
+ S DGEND=Y
+"RTN","DGENACL",73,0)
+ I $G(DGBEG)']""!($G(DGEND)']"") W !!,"DATE RANGE NOT SET.  EXITING"  S DUOUT=1
+"RTN","DGENACL",74,0)
+ Q
+"RTN","DGENACL",75,0)
+FMT1 ;Call List D/S
+"RTN","DGENACL",76,0)
+ N DIR
+"RTN","DGENACL",77,0)
+ K DIR S DIR("A")="Select report format",DIR(0)="S^D:DETAILED;S:SHORT"
+"RTN","DGENACL",78,0)
+ S DIR("?",1)="SHORT format lists enrollee appointment requests w/o an appointment."
+"RTN","DGENACL",79,0)
+ S DIR("?")="DETAILED format, in addition, lists patient lookup information."
+"RTN","DGENACL",80,0)
+ S DIR("B")="SHORT" D ^DIR K DIR
+"RTN","DGENACL",81,0)
+ I $D(DTOUT)!($D(DUOUT)) Q
+"RTN","DGENACL",82,0)
+ S DGFMT1=Y
+"RTN","DGENACL",83,0)
+ Q
+"RTN","DGENACL",84,0)
+FMT2 ;Tracking Report D/S
+"RTN","DGENACL",85,0)
+ N DIR
+"RTN","DGENACL",86,0)
+ K DIR S DIR("A")="Select report format",DIR(0)="S^D:DETAILED;S:SUMMARY"
+"RTN","DGENACL",87,0)
+ S DIR("?",1)="SUMMARY format lists totals of enrollee appointment requests."
+"RTN","DGENACL",88,0)
+ S DIR("?")="DETAILED format, lists individual enrollee appointment requests."
+"RTN","DGENACL",89,0)
+ S DIR("B")="SUMMARY" D ^DIR K DIR
+"RTN","DGENACL",90,0)
+ I $D(DTOUT)!($D(DUOUT)) Q
+"RTN","DGENACL",91,0)
+ S DGFMT2=Y
+"RTN","DGENACL",92,0)
+ D DATE
+"RTN","DGENACL",93,0)
+ Q
+"RTN","DGENACL",94,0)
+PFTF ;Ask Preferred Facility?
+"RTN","DGENACL",95,0)
+ S DGPFTFLG=0
+"RTN","DGENACL",96,0)
+ S DIR("A")="Select individual Preferred Facilities",DIR(0)="Y",DIR("B")="NO"
+"RTN","DGENACL",97,0)
+ D ^DIR K DIR
+"RTN","DGENACL",98,0)
+ I $D(DTOUT)!($D(DUOUT)) Q
+"RTN","DGENACL",99,0)
+ I Y=1 S DGPFTFLG=1
+"RTN","DGENACL",100,0)
+ I DGPFTFLG D
+"RTN","DGENACL",101,0)
+ . K DGPFTF
+"RTN","DGENACL",102,0)
+ . S DIR("A")="Preferred Facility",DIR(0)="PO^4:EMZ",DIR("S")="I $$PFTF^DGREGDD(Y),(+DGSITE=+$$GET1^DIQ(4,Y,99))"
+"RTN","DGENACL",103,0)
+ . F  D ^DIR Q:(+Y<0)!($D(DTOUT))!($D(DUOUT))  S DGPFTF(+Y)=""
+"RTN","DGENACL",104,0)
+ Q
+"RTN","DGENACL",105,0)
+BCKJOB(DGRPT) ;Queued entry point
+"RTN","DGENACL",106,0)
+ N DGERROR,DGPFTFLG,DGFMT1,DGSITE
+"RTN","DGENACL",107,0)
+ S DGRPT=$G(DGRPT) I DGRPT'=1 Q
+"RTN","DGENACL",108,0)
+ S DGFMT1="D"
+"RTN","DGENACL",109,0)
+ S (DGERROR,DGPFTFLG)="",DGSITE=+$P($$SITE^VASITE(),U,3)
+"RTN","DGENACL",110,0)
+ D BUILD
+"RTN","DGENACL",111,0)
+ Q
+"RTN","DGENACL",112,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",7638,6)
+^742
+**END**
+**END**

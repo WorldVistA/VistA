@@ -1,0 +1,131 @@
+$TXT Created by HERRING,VENESSA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 02/23/12 at 09:54
+=============================================================================
+Run Date: AUG 15, 2012                     Designation: PSO*7*404
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #338                      Status: Released
+                  Compliance Date: SEP 15, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*225   <<= must be installed BEFORE `PSO*7*404'
+
+Subject: ICD API CALLS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ With International Classification of Diseases (ICD)-10 processing, the 
+ MAJOR DIAGNOSTIC CATEGORY field (#5) of the ICD DIAGNOSIS file (#80) is 
+ meaningless. Any direct global reads need to be changed to use the API, 
+ $$ICDDX^ICDCODE, created with the ICD-10 project.
+  
+ Associated Remedy ticket(s):
+ ===========================
+ HD0000000513189 - ICD 9 
+ Duplicates:
+ HD0000000605346(d) - PSO routines were found to contain unsupported 
+                      Fileman reads to the ICD DIAGNOSIS file (# 80).
+   
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Hampton VA Medical Center
+ VA Central Plains HCS
+  
+ Remedy Overview:
+ ================
+  
+ HD0000000513189 - ICD 9
+ Duplicate: HD0000000605346(d) 
+  
+ Problem:
+ --------
+ With ICD-10 processing, the MAJOR DIAGNOSTIC CATEGORY field (#5) (node 0, 
+ piece 5) of the ICD DIAGNOSIS file (#80) is meaningless.
+  
+ Any direct global reads need to be changed to use the new API, 
+ $$ICDDX^ICDCODE, created with the ICD-10 project.
+  
+  
+ Resolution:
+ -----------
+ Modify processing to use the API $$ICDDX^ICDCODE to retrieve the Major 
+ Diagnostic Category. Technical resolution is to modify routines PSODIAG, 
+ PSOHLSN2 and PSOHLSNC
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended that 
+ installation be queued for off peak hours. Outpatient Pharmacy staff are 
+ advised not to process prescriptions at the time the patch is being 
+ installed.
+  
+   It should take less than 2 minutes to  install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*404)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*404.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODIAG
+    Before: B63590551   After: B63818227  **143,219,239,268,225,404**
+Routine Name: PSOHLSN2
+    Before:  B7919233   After:  B9232532  **143,226,239,225,404**
+Routine Name: PSOHLSNC
+    Before: B54704997   After: B56662298  **111,157,143,225,404**
+ 
+Routine list of preceding patches: 225
+
+=============================================================================
+User Information:
+Entered By  : HERRING,VENESSA               Date Entered  : JAN 20, 2012
+Completed By: HEFFERNAN,COREY               Date Completed: AUG 14, 2012
+Released By : MIAN,NAEEM                    Date Released : AUG 15, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

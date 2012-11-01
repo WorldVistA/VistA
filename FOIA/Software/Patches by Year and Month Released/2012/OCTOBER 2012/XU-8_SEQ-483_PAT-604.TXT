@@ -1,0 +1,172 @@
+$TXT Created by TRAN,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Monday, 08/20/12 at 17:06
+=============================================================================
+Run Date: OCT 03, 2012                     Designation: XU*8*604
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #483                      Status: Released
+                  Compliance Date: NOV 03, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*601    <<= must be installed BEFORE `XU*8*604'
+
+Subject: NEW TAXONOMIES FOR 10/2012
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket#:HD728945
+ FORUM Tracking Message#:58121871
+ Blood Bank Clearance:8/21/2012
+ Test sites:
+ - HAMPTON, VA VAMC
+ - MONTANA HCS
+ - SALISBURY, NC VAMC
+  
+            
+                 XU*8*604
+ This patch updates the Person Class file with the following entries:
+  
+ NUMBER: 1210                           PROVIDER TYPE: Dental Providers
+  CLASSIFICATION: Dental Therapist      STATUS: Active
+  VA CODE: V030101                      X12 CODE: 125J00000X
+  DEFINITION:   A Dental Therapist is an individual who has completed an
+  accredited or non-accredited dental therapy program and who has been
+  authorized by the relevant state board or a tribal entity to provide 
+  services within the scope of their practice under the supervision of a
+  dentist. Functions that may be delegated to the dental therapist vary
+  based on the needs of the dentist, the educational preparation of the
+  dental therapist and state dental practice acts and regulations.
+   
+  Source: Summarized from Minnesota Statute 150A.105 
+  
+  PROVIDER TYPE CODE (c): 12           CLASSIFICATION CODE (c): 5J
+  AREA OF SPECIALIZATION CODE (c): 00000
+  
+ NUMBER: 1211                           PROVIDER TYPE: Dental Providers
+  CLASSIFICATION: Advanced Practice Dental Therapist
+  STATUS: Active                        VA CODE: V030102
+  X12 CODE: 125K00000X
+  DEFINITION:   An Advanced Practice Dental Therapist is: 
+  (1) A dental therapist who has completed additional training beyond basic
+  dental therapy education and provides dental services in accordance with
+  state advanced practice dental therapist laws or statutes; or 
+  (2) A dental hygienist with a graduate degree in advanced dental therapy
+  prepared for independent and interdependent decision making and direct
+  accountability for clinical judgment across the dental health care
+  continuum.  
+   
+  The individual has been authorized by the relevant state board or a 
+  tribal entity to provide services under the remote supervision of a
+  dentist. The functions of the advanced practice dental therapist vary
+  based on the needs of the dentist, the educational preparation of the
+  advanced practice dental therapist and state dental practice acts and
+  regulations. 
+   
+  Source: Summarized from Minnesota Statute 150A.105 
+   
+  PROVIDER TYPE CODE (c): 12           CLASSIFICATION CODE (c): 5K
+  AREA OF SPECIALIZATION CODE (c): 00000
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*604 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*604 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*604
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ The routine XU8P604 will be deleted at the end of this patch
+ installation. If you wish to get the checksum value, you can 'Verify
+ Checksums in Transport Global' prior to patch install:
+  
+ Select Kernel Installation & Distribution System Option: INstallation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 2  Verify Checksums in Transport Global
+ Select INSTALL NAME:    XU*8.0*604     Loaded from Distribution    
+ 8/7/12@08:08:39
+      => XU*8*604
+  
+ This Distribution was loaded on Aug 7, 2012@08:08:39 with header of 
+    XU*8*604
+    It consisted of the following Install(s):
+      XU*8.0*604
+  
+ Want each Routine Listed with Checksums: Yes//   YES
+ DEVICE: HOME//   Telnet terminal
+  
+ PACKAGE: XU*8.0*604     Aug 7, 2012 8:09 am                          
+ PAGE 1
+ --------------------------------------------------------------------------
+ XU8P604   Calculated  B25536329  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**; July 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P604
+    Before:       n/a   After: B25536329  **604**
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : JUL 23, 2012
+Completed By: BEST,LISA                     Date Completed: SEP 26, 2012
+Released By : TILLIS,LEWIS                  Date Released : OCT 03, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

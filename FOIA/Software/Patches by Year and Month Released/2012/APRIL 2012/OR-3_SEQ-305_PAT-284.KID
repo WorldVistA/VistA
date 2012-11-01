@@ -1,0 +1,660 @@
+Released OR*3*284 SEQ #305
+Extracted from mail message
+**KIDS**:OR*3.0*284^
+
+**INSTALL NAME**
+OR*3.0*284
+"BLD",7608,0)
+OR*3.0*284^ORDER ENTRY/RESULTS REPORTING^0^3110330^y
+"BLD",7608,1,0)
+^^14^14^3110318^
+"BLD",7608,1,1,0)
+1. The Display Patient Alerts and Alert Recipeients [ORB3 ALERT
+"BLD",7608,1,2,0)
+RECIPIENTS] option always uses the default action of 'Close' - even when 
+"BLD",7608,1,3,0)
+there is more than one screen of alerts. This patch modifies this 
+"BLD",7608,1,4,0)
+behavior so that if a screen is not the last screen of the display, the 
+"BLD",7608,1,5,0)
+default action is 'Next Screen'. HD0000000069366
+"BLD",7608,1,6,0)
+2. The Orders tab detailed display shows the order along with the most
+"BLD",7608,1,7,0)
+recent Chart Review information. However, when there is a change to the
+"BLD",7608,1,8,0)
+original order, and that change has a chart review performed, the detail
+"BLD",7608,1,9,0)
+information is incorrect. The problem is that the current chart review 
+"BLD",7608,1,10,0)
+information is written over the previous information. This patch corrects 
+"BLD",7608,1,11,0)
+this problem by having the chart review information behave the same as the
+"BLD",7608,1,12,0)
+other verify actions. If an action is chart reviewed, and the previous
+"BLD",7608,1,13,0)
+action was not chart reviewed, the current chart review information is
+"BLD",7608,1,14,0)
+used for the previous action. HD0000000268742
+"BLD",7608,4,0)
+^9.64PA^^
+"BLD",7608,6.3)
+2
+"BLD",7608,"ABPKG")
+n
+"BLD",7608,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7608,"KRN",.4,0)
+.4
+"BLD",7608,"KRN",.401,0)
+.401
+"BLD",7608,"KRN",.402,0)
+.402
+"BLD",7608,"KRN",.403,0)
+.403
+"BLD",7608,"KRN",.5,0)
+.5
+"BLD",7608,"KRN",.84,0)
+.84
+"BLD",7608,"KRN",3.6,0)
+3.6
+"BLD",7608,"KRN",3.8,0)
+3.8
+"BLD",7608,"KRN",9.2,0)
+9.2
+"BLD",7608,"KRN",9.8,0)
+9.8
+"BLD",7608,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",7608,"KRN",9.8,"NM",1,0)
+ORCACT1^^0^B49420108
+"BLD",7608,"KRN",9.8,"NM","B","ORCACT1",1)
+
+"BLD",7608,"KRN",19,0)
+19
+"BLD",7608,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",7608,"KRN",19.1,0)
+19.1
+"BLD",7608,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",7608,"KRN",101,0)
+101
+"BLD",7608,"KRN",101,"NM",0)
+^9.68A^1^1
+"BLD",7608,"KRN",101,"NM",1,0)
+OR PATIENT ALERTS^^3
+"BLD",7608,"KRN",101,"NM","B","OR PATIENT ALERTS",1)
+
+"BLD",7608,"KRN",409.61,0)
+409.61
+"BLD",7608,"KRN",409.61,"NM",0)
+^9.68A^^
+"BLD",7608,"KRN",771,0)
+771
+"BLD",7608,"KRN",771,"NM",0)
+^9.68A^^
+"BLD",7608,"KRN",779.2,0)
+779.2
+"BLD",7608,"KRN",779.2,"NM",0)
+^9.68A^^
+"BLD",7608,"KRN",870,0)
+870
+"BLD",7608,"KRN",8989.51,0)
+8989.51
+"BLD",7608,"KRN",8989.52,0)
+8989.52
+"BLD",7608,"KRN",8994,0)
+8994
+"BLD",7608,"KRN","B",.4,.4)
+
+"BLD",7608,"KRN","B",.401,.401)
+
+"BLD",7608,"KRN","B",.402,.402)
+
+"BLD",7608,"KRN","B",.403,.403)
+
+"BLD",7608,"KRN","B",.5,.5)
+
+"BLD",7608,"KRN","B",.84,.84)
+
+"BLD",7608,"KRN","B",3.6,3.6)
+
+"BLD",7608,"KRN","B",3.8,3.8)
+
+"BLD",7608,"KRN","B",9.2,9.2)
+
+"BLD",7608,"KRN","B",9.8,9.8)
+
+"BLD",7608,"KRN","B",19,19)
+
+"BLD",7608,"KRN","B",19.1,19.1)
+
+"BLD",7608,"KRN","B",101,101)
+
+"BLD",7608,"KRN","B",409.61,409.61)
+
+"BLD",7608,"KRN","B",771,771)
+
+"BLD",7608,"KRN","B",779.2,779.2)
+
+"BLD",7608,"KRN","B",870,870)
+
+"BLD",7608,"KRN","B",8989.51,8989.51)
+
+"BLD",7608,"KRN","B",8989.52,8989.52)
+
+"BLD",7608,"KRN","B",8994,8994)
+
+"BLD",7608,"QUES",0)
+^9.62^^
+"BLD",7608,"REQB",0)
+^9.611^1^1
+"BLD",7608,"REQB",1,0)
+OR*3.0*215^2
+"BLD",7608,"REQB","B","OR*3.0*215",1)
+
+"KRN",101,6139,-1)
+3^1
+"KRN",101,6139,0)
+OR PATIENT ALERTS^Patient Alerts^^M^^^^^^^^ORDER ENTRY/RESULTS REPORTING
+"KRN",101,6139,1,0)
+^101.06^2^2^3081203^^^^
+"KRN",101,6139,1,1,0)
+Display a patient's CPRS alerts and allow detailed display of alert
+"KRN",101,6139,1,2,0)
+recipients.
+"KRN",101,6139,4)
+26^4
+"KRN",101,6139,10,0)
+^101.01PA^6^6
+"KRN",101,6139,20)
+
+"KRN",101,6139,26)
+S XQORM("#")=$G(^TMP("OR",$J,"ALERTS","#")),XQORM("ALT")="D LMALT^ORB3U1",VALMSG="Enter numbers of the alerts to display recipients" D SHOW^VALM
+"KRN",101,6139,28)
+Select Alert(s):
+"KRN",101,6139,29)
+
+"KRN",101,6139,99)
+62146,58025
+"MBREQ")
+0
+"ORD",15,101)
+101;15;;;PRO^XPDTA;PROF1^XPDIA;PROE1^XPDIA;PROF2^XPDIA;;PRODEL^XPDIA
+"ORD",15,101,0)
+PROTOCOL
+"PKG",188,-1)
+1^1
+"PKG",188,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",188,20,0)
+^9.402P^^
+"PKG",188,22,0)
+^9.49I^1^1
+"PKG",188,22,1,0)
+3.0^2971217^2981113^1
+"PKG",188,22,1,"PAH",1,0)
+284^3110330
+"PKG",188,22,1,"PAH",1,1,0)
+^^14^14^3110330
+"PKG",188,22,1,"PAH",1,1,1,0)
+1. The Display Patient Alerts and Alert Recipeients [ORB3 ALERT
+"PKG",188,22,1,"PAH",1,1,2,0)
+RECIPIENTS] option always uses the default action of 'Close' - even when 
+"PKG",188,22,1,"PAH",1,1,3,0)
+there is more than one screen of alerts. This patch modifies this 
+"PKG",188,22,1,"PAH",1,1,4,0)
+behavior so that if a screen is not the last screen of the display, the 
+"PKG",188,22,1,"PAH",1,1,5,0)
+default action is 'Next Screen'. HD0000000069366
+"PKG",188,22,1,"PAH",1,1,6,0)
+2. The Orders tab detailed display shows the order along with the most
+"PKG",188,22,1,"PAH",1,1,7,0)
+recent Chart Review information. However, when there is a change to the
+"PKG",188,22,1,"PAH",1,1,8,0)
+original order, and that change has a chart review performed, the detail
+"PKG",188,22,1,"PAH",1,1,9,0)
+information is incorrect. The problem is that the current chart review 
+"PKG",188,22,1,"PAH",1,1,10,0)
+information is written over the previous information. This patch corrects 
+"PKG",188,22,1,"PAH",1,1,11,0)
+this problem by having the chart review information behave the same as the
+"PKG",188,22,1,"PAH",1,1,12,0)
+other verify actions. If an action is chart reviewed, and the previous
+"PKG",188,22,1,"PAH",1,1,13,0)
+action was not chart reviewed, the current chart review information is
+"PKG",188,22,1,"PAH",1,1,14,0)
+used for the previous action. HD0000000268742
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","ORCACT1")
+0^1^B49420108^B49260936
+"RTN","ORCACT1",1,0)
+ORCACT1 ;SLC/MKB-Act on orders cont ;7/29/97  08:26
+"RTN","ORCACT1",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**7,27,56,48,86,92,116,149,215,284**;Dec 17, 1997;Build 2
+"RTN","ORCACT1",3,0)
+ ;
+"RTN","ORCACT1",4,0)
+FLAG ; -- flag orders
+"RTN","ORCACT1",5,0)
+ D EN("FL") Q
+"RTN","ORCACT1",6,0)
+ ;
+"RTN","ORCACT1",7,0)
+UNFLAG ; -- unflag orders
+"RTN","ORCACT1",8,0)
+ D EN("UF") Q
+"RTN","ORCACT1",9,0)
+ ;
+"RTN","ORCACT1",10,0)
+COMMENT ; -- add ward comments to orders
+"RTN","ORCACT1",11,0)
+ D EN("CM") Q
+"RTN","ORCACT1",12,0)
+ ;
+"RTN","ORCACT1",13,0)
+ALERT ; -- alert provider when results available
+"RTN","ORCACT1",14,0)
+ D EN("AL") Q
+"RTN","ORCACT1",15,0)
+ ;
+"RTN","ORCACT1",16,0)
+UNHOLD ; -- release hold on orders - no longer in use
+"RTN","ORCACT1",17,0)
+ Q  ; see UNHOLD^ORCACT instead
+"RTN","ORCACT1",18,0)
+ ;
+"RTN","ORCACT1",19,0)
+EN(ORACT) ; -- Actions that don't create orders
+"RTN","ORCACT1",20,0)
+ ;    ORNMBR = #,#,...,# of selected orders
+"RTN","ORCACT1",21,0)
+ ;    ORACT  = action to be taken
+"RTN","ORCACT1",22,0)
+ ;
+"RTN","ORCACT1",23,0)
+ ;    OREBUILD defined on return if Orders tab needs to be rebuilt
+"RTN","ORCACT1",24,0)
+ ;
+"RTN","ORCACT1",25,0)
+ N ORLK,ORI,NMBR,IDX,ORIFN,ORDITM,ORERR,ORQUIT
+"RTN","ORCACT1",26,0)
+ I '$G(ORNMBR) S ORNMBR=$$ORDERS^ORCHART("") Q:'ORNMBR
+"RTN","ORCACT1",27,0)
+ D FREEZE^ORCMENU S VALMBCK="R" K OREBUILD
+"RTN","ORCACT1",28,0)
+ F ORI=1:1:$L(ORNMBR,",") S NMBR=$P(ORNMBR,",",ORI) D:NMBR  Q:$D(ORQUIT)
+"RTN","ORCACT1",29,0)
+ . S IDX=$G(^TMP("OR",$J,ORTAB,"IDX",NMBR)),ORIFN=$P(IDX,U)
+"RTN","ORCACT1",30,0)
+ . Q:'ORIFN  S:'$P(ORIFN,";",2) ORIFN=+ORIFN_";1"
+"RTN","ORCACT1",31,0)
+ . I '$D(^OR(100,+ORIFN,0)) W !,"This order has been deleted!" H 1 Q
+"RTN","ORCACT1",32,0)
+ . S ORDITM=$$ORDITEM^ORCACT(ORIFN) D SUBHDR^ORCACT(ORDITM)
+"RTN","ORCACT1",33,0)
+ . I '$$VALID^ORCACT0(ORIFN,ORACT,.ORERR) W !,ORERR H 1 Q
+"RTN","ORCACT1",34,0)
+ . S ORLK=$$LOCK1^ORX2(+ORIFN) I 'ORLK W !,$P(ORLK,U,2) H 1 Q
+"RTN","ORCACT1",35,0)
+ . D @ORACT,UNLK1^ORX2(+ORIFN)
+"RTN","ORCACT1",36,0)
+ENQ Q
+"RTN","ORCACT1",37,0)
+ ;
+"RTN","ORCACT1",38,0)
+FL ; -- Flag order ORIFN
+"RTN","ORCACT1",39,0)
+ D EN^ORCFLAG
+"RTN","ORCACT1",40,0)
+ Q
+"RTN","ORCACT1",41,0)
+ ;
+"RTN","ORCACT1",42,0)
+UF ; -- Unflag order ORIFN
+"RTN","ORCACT1",43,0)
+ D UN^ORCFLAG
+"RTN","ORCACT1",44,0)
+ Q
+"RTN","ORCACT1",45,0)
+ ;
+"RTN","ORCACT1",46,0)
+CM ; -- Ward Comments on order ORIFN
+"RTN","ORCACT1",47,0)
+ N DIC,DWPK,DIWEPSE,DIWESUB,DDWRW
+"RTN","ORCACT1",48,0)
+ S DIC="^OR(100,"_+ORIFN_",8,"_+$P(ORIFN,";",2)_",5,",(DWPK,DIWEPSE)=1
+"RTN","ORCACT1",49,0)
+ S DIWESUB=ORDITM,DDWRW="B" ;go to bottom of text
+"RTN","ORCACT1",50,0)
+ D EN^DIWE
+"RTN","ORCACT1",51,0)
+ Q
+"RTN","ORCACT1",52,0)
+ ;
+"RTN","ORCACT1",53,0)
+AL ; -- Alert when results are available for order ORIFN
+"RTN","ORCACT1",54,0)
+ S $P(^OR(100,+ORIFN,3),U,10)=1
+"RTN","ORCACT1",55,0)
+ W !?10,"... done." H 1
+"RTN","ORCACT1",56,0)
+ Q
+"RTN","ORCACT1",57,0)
+ ;
+"RTN","ORCACT1",58,0)
+RL ; -- Release hold on order ORIFN [No longer used]
+"RTN","ORCACT1",59,0)
+ D EN^ORCSEND(+ORIFN,ORACT,3,1,,,.ORERR)
+"RTN","ORCACT1",60,0)
+ W !,"... order "_$S($G(ORERR):"not ",1:"")_"released from hold."
+"RTN","ORCACT1",61,0)
+ W:$L($P($G(ORERR),U,2)) !,"  >> "_$P(ORERR,U,2) H 1
+"RTN","ORCACT1",62,0)
+ S OREBUILD=1 ; print?
+"RTN","ORCACT1",63,0)
+ Q
+"RTN","ORCACT1",64,0)
+ ;
+"RTN","ORCACT1",65,0)
+VERIFY(ORVER) ; -- Verify orders
+"RTN","ORCACT1",66,0)
+ N ORLK,ORI,NMBR,IDX,ORIFN,ORDITM,ORES,ORERR,ORSIG,OROLDSTS,ORNEW,ORWAIT
+"RTN","ORCACT1",67,0)
+ I "^"[$G(ORVER) W $C(7),!!,"You must be a nurse or clerk to verify these orders!" S VALMBCK="" H 2 Q
+"RTN","ORCACT1",68,0)
+ I '$G(ORNMBR) S ORNMBR=$$ORDERS^ORCHART("") Q:'ORNMBR
+"RTN","ORCACT1",69,0)
+ D FREEZE^ORCMENU S VALMBCK="R" K OREBUILD
+"RTN","ORCACT1",70,0)
+ F ORI=1:1:$L(ORNMBR,",") S NMBR=$P(ORNMBR,",",ORI) D:NMBR  Q:$D(ORQUIT)
+"RTN","ORCACT1",71,0)
+ . S IDX=$G(^TMP("OR",$J,ORTAB,"IDX",NMBR)),ORIFN=$P(IDX,U)
+"RTN","ORCACT1",72,0)
+ . Q:'ORIFN  S:'$P(ORIFN,";",2) ORIFN=+ORIFN_";1" Q:$D(ORES(ORIFN))
+"RTN","ORCACT1",73,0)
+ . I '$$VALID^ORCACT0(ORIFN,"VR",.ORERR) W !!,$$ORDITEM^ORCACT(ORIFN)_" invalid.",!,"  >> "_ORERR H 1 Q
+"RTN","ORCACT1",74,0)
+ . S ORLK=$$LOCK1^ORX2(+ORIFN) I 'ORLK W !!,$$ORDITEM^ORCACT(ORIFN)_" invalid.",!,"  >> "_$P(ORLK,U,2) H 1 Q
+"RTN","ORCACT1",75,0)
+ . S ORES(ORIFN)="" D REPLCD
+"RTN","ORCACT1",76,0)
+VR1 Q:'$O(ORES(0))  D COMPLX S ORSIG=$S($$ESIG^ORCSIGN:1,1:0)
+"RTN","ORCACT1",77,0)
+ I 'ORSIG W !,"Nothing verified!" D UNLOCK H 1 Q
+"RTN","ORCACT1",78,0)
+ W !!,"Verifying orders ..."
+"RTN","ORCACT1",79,0)
+ S ORIFN=0 F  S ORIFN=$O(ORES(ORIFN)) Q:ORIFN'>0  D
+"RTN","ORCACT1",80,0)
+ . S OROLDSTS=+$P($G(^OR(100,+ORIFN,3)),U,3)
+"RTN","ORCACT1",81,0)
+ . D EN^ORCSEND(ORIFN,"VR","","",,,.ORERR),UNLK1^ORX2(+ORIFN)
+"RTN","ORCACT1",82,0)
+ . I $G(ORERR) D  Q
+"RTN","ORCACT1",83,0)
+ . . W !,$$ORDITEM^ORCACT(ORIFN)_" not verified."
+"RTN","ORCACT1",84,0)
+ . . W:$L($P($G(ORERR),U,2)) !,"  >> "_$P(ORERR,U,2) H 1
+"RTN","ORCACT1",85,0)
+ . S ORNEW=+$P($G(^OR(100,+ORIFN,3)),U,3) I ORNEW'=OROLDSTS W !,$$ORDITEM^ORCACT(ORIFN)_" is now "_$$STS(ORNEW)_"." S ORWAIT=1
+"RTN","ORCACT1",86,0)
+ S OREBUILD=1 D:'$D(XQAID) CKALERT I $G(ORWAIT) H 2
+"RTN","ORCACT1",87,0)
+VRQ Q
+"RTN","ORCACT1",88,0)
+ ;
+"RTN","ORCACT1",89,0)
+STS(X) ; -- Return name of status X
+"RTN","ORCACT1",90,0)
+ N Y S Y=$P($G(^ORD(100.01,+$G(X),0)),U)
+"RTN","ORCACT1",91,0)
+ Q Y
+"RTN","ORCACT1",92,0)
+ ;
+"RTN","ORCACT1",93,0)
+REPLCD ; -- Ck for unverified replaced orders for ORIFN, add to ORES(order#)
+"RTN","ORCACT1",94,0)
+ ;    [Expects ORVER; also called from VERIFY^ORWDXA,VERIFY^ORRCOR]
+"RTN","ORCACT1",95,0)
+ N OR3,ORIG,ORFLD,ORDA,ORI,ORLK
+"RTN","ORCACT1",96,0)
+ S ORFLD=$S($G(ORVER)="N":8,$G(ORVER)="R":18,1:10),ORDA=+$P(ORIFN,";",2)
+"RTN","ORCACT1",97,0)
+ I ORDA>1 D  Q  ;ck for prior unverified actions
+"RTN","ORCACT1",98,0)
+ . ;Q:$P($G(^OR(100,+ORIFN,8,ORDA,0)),U,2)'="XX"
+"RTN","ORCACT1",99,0)
+ . S ORI=0 F  S ORI=$O(^OR(100,+ORIFN,8,ORI)) Q:ORI<1  Q:ORI'<ORDA  D
+"RTN","ORCACT1",100,0)
+ .. Q:$P($G(^OR(100,+ORIFN,8,ORI,0)),U,ORFLD)  ;already verified
+"RTN","ORCACT1",101,0)
+ .. S ORLK=$$LOCK1^ORX2(+ORIFN) Q:'ORLK
+"RTN","ORCACT1",102,0)
+ .. S ORES(+ORIFN_";"_ORI)=""
+"RTN","ORCACT1",103,0)
+ S OR3=$G(^OR(100,+ORIFN,3)) Q:$P(OR3,U,11)'=1
+"RTN","ORCACT1",104,0)
+ S ORIG=+$P(OR3,U,5) Q:'ORIG  Q:$P($G(^OR(100,ORIG,3)),U,3)'=12
+"RTN","ORCACT1",105,0)
+ S ORDA=0 F  S ORDA=$O(^OR(100,ORIG,8,ORDA)) Q:ORDA'>0  I '$P($G(^(ORDA,0)),U,ORFLD) D
+"RTN","ORCACT1",106,0)
+ . S ORLK=$$LOCK1^ORX2(ORIG) Q:'ORLK
+"RTN","ORCACT1",107,0)
+ . S ORES(ORIG_";"_ORDA)=""
+"RTN","ORCACT1",108,0)
+ Q
+"RTN","ORCACT1",109,0)
+ ;
+"RTN","ORCACT1",110,0)
+COMPLX ; -- Ck for other child orders to be verified at same time
+"RTN","ORCACT1",111,0)
+ N IFN,DAD,CHLD,ALL,P,X,I
+"RTN","ORCACT1",112,0)
+ S P=$S(ORVER="N":9,ORVER="C":11,ORVER="R":19,1:0) Q:P<1
+"RTN","ORCACT1",113,0)
+ S IFN=0 F  S IFN=$O(ORES(IFN)) Q:IFN<1  D
+"RTN","ORCACT1",114,0)
+ . S X=+$P($G(^OR(100,+IFN,0)),U,14) Q:$$NMSP^ORCD(X)'["PS"
+"RTN","ORCACT1",115,0)
+ . S X=$P($G(^OR(100,+IFN,8,+$P(IFN,";",2),0)),U,2) Q:X'="NW"&(X'="XX")
+"RTN","ORCACT1",116,0)
+ . I $P($G(^OR(100,+IFN,3)),U,9) S DAD(+$P(^(3),U,9))=""
+"RTN","ORCACT1",117,0)
+ Q:'$O(DAD(0))  S IFN=0 F  S IFN=+$O(DAD(IFN)) Q:IFN<1  D
+"RTN","ORCACT1",118,0)
+ . S CHLD=0,ALL=1
+"RTN","ORCACT1",119,0)
+ . F  S CHLD=+$O(^OR(100,IFN,2,CHLD)) Q:CHLD<1  F X="NW","XX" D
+"RTN","ORCACT1",120,0)
+ .. S I=+$O(^OR(100,CHLD,8,"C",X,0)) Q:I<1
+"RTN","ORCACT1",121,0)
+ .. Q:$P($G(^OR(100,CHLD,8,I,0)),U,P)  Q:$D(ORES(CHLD_";"_I))
+"RTN","ORCACT1",122,0)
+ .. S ORES(CHLD_";"_I)="",ALL=0
+"RTN","ORCACT1",123,0)
+ . Q:ALL  S X=$$ORDITEM^ORCACT(IFN) D SUBHDR^ORCACT(X)
+"RTN","ORCACT1",124,0)
+ . W !,"All doses of this complex order must be verified together;"
+"RTN","ORCACT1",125,0)
+ . W !,"adding remaining doses to signature list..."
+"RTN","ORCACT1",126,0)
+ Q
+"RTN","ORCACT1",127,0)
+ ;
+"RTN","ORCACT1",128,0)
+CKALERT ; -- Ck if Unverified Orders alerts can be deleted
+"RTN","ORCACT1",129,0)
+ N ORNOW,ORBEG,ORLIST,ORALL,ORMEDS S ORNOW=$$NOW^XLFDT
+"RTN","ORCACT1",130,0)
+ S:'$G(ORWARD) ORBEG=$$FMADD^XLFDT(ORNOW,"-30") I $G(ORWARD) D
+"RTN","ORCACT1",131,0)
+ . N DFN,VAIN,VAERR S DFN=+ORVP D INP^VADPT
+"RTN","ORCACT1",132,0)
+ . S ORBEG=$S($G(VAIN(7)):$P(VAIN(7),U),1:$$FMADD^XLFDT(ORNOW,-30))
+"RTN","ORCACT1",133,0)
+ D EN^ORQ1(ORVP,,9,,ORBEG,ORNOW) ;see if any unverified orders remain
+"RTN","ORCACT1",134,0)
+ I $G(ORLIST),$G(^TMP("ORR",$J,ORLIST,"TOT")) D  ;see if any are meds
+"RTN","ORCACT1",135,0)
+ . N ORRX,ORGRP,I,IFN,DG S ORALL=1
+"RTN","ORCACT1",136,0)
+ . S ORRX=+$O(^ORD(100.98,"B","RX",0)) D GRP^ORQ1(ORRX)
+"RTN","ORCACT1",137,0)
+ . S I=0 F  S I=$O(^TMP("ORR",$J,ORLIST,I)) Q:I'>0  S IFN=+^(I),DG=+$P($G(^OR(100,IFN,0)),U,11) I $D(ORGRP(DG)) S ORMEDS=1 Q
+"RTN","ORCACT1",138,0)
+ D:'$G(ORALL) DELALRT("UNVERIFIED ORDER")
+"RTN","ORCACT1",139,0)
+ D:'$G(ORMEDS) DELALRT("UNVERIFIED MEDICATION ORDER")
+"RTN","ORCACT1",140,0)
+ Q
+"RTN","ORCACT1",141,0)
+ ;
+"RTN","ORCACT1",142,0)
+DELALRT(X) ; -- delete alert X
+"RTN","ORCACT1",143,0)
+ N ORNIFN,XQAKILL,XQAID
+"RTN","ORCACT1",144,0)
+ S ORNIFN=+$O(^ORD(100.9,"B",X,0)) Q:ORNIFN'>0
+"RTN","ORCACT1",145,0)
+ S XQAKILL=$$XQAKILL^ORB3F1(ORNIFN)
+"RTN","ORCACT1",146,0)
+ S XQAID=$P($G(^ORD(100.9,ORNIFN,0)),U,2)_","_+ORVP_","_ORNIFN
+"RTN","ORCACT1",147,0)
+ D DELETEA^XQALERT
+"RTN","ORCACT1",148,0)
+ Q
+"RTN","ORCACT1",149,0)
+ ;
+"RTN","ORCACT1",150,0)
+UNLOCK ; -- Unlock orders in ORES(ORIFN) [from VR1]
+"RTN","ORCACT1",151,0)
+ F  S ORIFN=$O(ORES(ORIFN)) Q:ORIFN'>0  D UNLK1^ORX2(+ORIFN)
+"RTN","ORCACT1",152,0)
+ Q
+"RTN","ORCACT1",153,0)
+ ;
+"RTN","ORCACT1",154,0)
+SIGNREQD(IFN) ; -- Returns 2, 1, or 0, if order/actions need ES
+"RTN","ORCACT1",155,0)
+ Q +$P($G(^OR(100,IFN,0)),U,16)
+"RTN","ORCACT1",156,0)
+ ;
+"RTN","ORCACT1",157,0)
+SIGN ; -- Sign orders [no longer used]
+"RTN","ORCACT1",158,0)
+ D EN^ORCSIGN
+"RTN","ORCACT1",159,0)
+ Q
+"RTN","ORCACT1",160,0)
+ ;
+"RTN","ORCACT1",161,0)
+COMPLETE ; -- complete orders
+"RTN","ORCACT1",162,0)
+ N ORLK,ORI,NMBR,IDX,ORIFN,ORDITM,ORES,ORERR,ORSIG,ORSTOP
+"RTN","ORCACT1",163,0)
+ I '$G(ORNMBR) S ORNMBR=$$ORDERS^ORCHART("complete") Q:'ORNMBR
+"RTN","ORCACT1",164,0)
+ D FREEZE^ORCMENU S VALMBCK="R" K OREBUILD
+"RTN","ORCACT1",165,0)
+ F ORI=1:1:$L(ORNMBR) S NMBR=$P(ORNMBR,",",ORI) D:NMBR  Q:$D(ORQUIT)
+"RTN","ORCACT1",166,0)
+ . S IDX=$G(^TMP("OR",$J,ORTAB,"IDX",NMBR)),ORIFN=$P(IDX,U)
+"RTN","ORCACT1",167,0)
+ . Q:'ORIFN  S:'$P(ORIFN,";",2) ORIFN=+ORIFN_";1"
+"RTN","ORCACT1",168,0)
+ . I '$$VALID^ORCACT0(ORIFN,"CP",.ORERR) W !!,$$ORDITEM^ORCACT(ORIFN)_" invalid.",!,"  >> "_ORERR H 1 Q
+"RTN","ORCACT1",169,0)
+ . S ORLK=$$LOCK1^ORX2(+ORIFN) I 'ORLK W !!,$$ORDITEM^ORCACT(ORIFN)_" invalid.",!,"  >> "_$P(ORLK,U,2) H 1 Q
+"RTN","ORCACT1",170,0)
+ . S ORES(ORIFN)=""
+"RTN","ORCACT1",171,0)
+CP1 Q:'$O(ORES(0))  S ORSIG=$S($$ESIG^ORCSIGN:1,1:0)
+"RTN","ORCACT1",172,0)
+ I 'ORSIG W !,"Nothing completed!" D UNLOCK H 1 Q
+"RTN","ORCACT1",173,0)
+ W !!,"Completing orders ..." S ORSTOP=+$E($$NOW^XLFDT,1,12),ORIFN=0
+"RTN","ORCACT1",174,0)
+ F  S ORIFN=$O(ORES(ORIFN)) Q:ORIFN'>0  D COMP^ORCSAVE2(ORIFN,DUZ,ORSTOP),UNLK1^ORX2(+ORIFN)
+"RTN","ORCACT1",175,0)
+ S OREBUILD=1
+"RTN","ORCACT1",176,0)
+CPQ Q
+"VER")
+8.0^22.0
+"BLD",7608,6)
+^305
+**END**
+**END**

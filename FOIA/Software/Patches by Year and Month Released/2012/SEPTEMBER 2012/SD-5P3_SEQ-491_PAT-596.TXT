@@ -1,0 +1,408 @@
+$TXT Created by CURTIS,RICHARD L at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 06/05/12 at 14:16
+=============================================================================
+Run Date: SEP 24, 2012                     Designation: SD*5.3*596
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #491                    Status: Released
+                  Compliance Date: OCT 01, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*587  <<= must be installed BEFORE `SD*5.3*596'
+
+Subject: FY2013 TABLE MAINTENANCE CLINIC STOP FILE (#40.7)
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch provides Fiscal Year 2013 updates to the CLINIC STOP (#40.7) 
+ file as requested by the Decision Support Office (DSO).
+  
+                         ***IMPORTANT NOTE: ***
+ **************************************************************************
+ ** This patch should be installed as close to COB on September 30, 2012 **
+ ** as possible, but not after the start of business on October 1, 2012. **
+ ** Early installation of this patch could result in transmission of     **
+ ** incorrect stop codes that will result in errors from Austin.         **
+ ** Coordination with theMAS (Medical Administration Service) PAS        **
+ ** (Program Application Specialist)/ADPAC is imperative, as the patch   **
+ ** will cause changes to the CLINIC STOP file (#40.7).  Testing can be  **
+ ** done in a site's mirror account before installation in production to **
+ ** verify changes.                                                      **
+ **                                                                      **
+ ** This patch inactivates, creates and modifies descriptions of stop    **
+ ** codes effective October 1, 2012, therefore, installing early may     **
+ ** modify certain stop codes that may currently be in use at your site. **
+ ** It is advised that clinics with stop codes assigned that will        **
+ ** incur restriction date/type changes should be corrected as soon as   **
+ ** possible after installation.  Please keep in mind that new stop      **
+ ** code corrections cannot be assigned until October 1, 2012.           **
+ ** All other stop code corrections should be made as early as possible  **
+ ** on October 1, 2012.  Sites need to coordinate their DSS CLINICS AND  **
+ ** STOP CODES file (#728.44) worksheet maintenance to save the latest   **
+ ** FY2012 values (as of Sep 30, 2012), and then not change the work-    **
+ ** sheet to have FY2013 values until after the DSS Clinic (CLI)         **
+ ** extract for September data has run successfully.                     **
+ **************************************************************************
+  
+ DSS Instructions for FY13 Stop Code Patch (SD*5.3*596):
+ =======================================================
+ This patch makes additions and changes to the CLINIC STOP file (#40.7) as 
+ of October 1, 2012.
+  
+    - No clinic can be created using any of the new or reactivated Stop 
+      Codes contained in the patch until after this patch is implemented.
+    - Any clinics using a Stop Code inactivated by the patch should have an
+      active Stop Code assigned.  Assigning appropriate active Stop Codes 
+      to clinics can be accomplished prior to patch implementation if
+      desired (as long as an active appropriate Stop Code to use already
+      exists in the file).
+  
+ DSS Site Teams and Scheduling and IRM should coordinate to perform the
+ following sequence:
+  
+ 1)  Before IRM installs patch SD*5.3*596, toward the end of September,
+     DSS should run the DSS worksheet option CREATE DSS CLINIC STOP FILE 
+     [ECXSCLOAD]. Then right at the end of September, but before the patch
+     is installed, make any necessary adjustments before approval so all
+     clinics on the worksheet have setups applicable for the month of
+     September 2012.
+  
+ 2)  IRM installs the patch late on September 30, or very early on 
+     October 1, 2012.
+  
+ 3)  Run the Non-Conforming Clinics Stop Code Report [SD CLN STOP CODE REP]
+     option to list those clinics that need changes in the HOSPITAL
+     LOCATION file (#44) for FY13.  Work with Scheduling staff to make
+     changes in HOSPICTAL LOCATION file (#44) so that the clinics
+     will have the correct stop codes in place for FY13 clinic 
+     appointments.  Do not make changes using Enter/Edit DSS Stop Codes for
+     CLINICS AND STOP CODES file (#728.44) at this time.
+  
+ 4)  Follow normal procedures to run the DSS CLI Extract for September 
+     2012.  Updates should not be made for October stop code changes with
+     the Enter/Edit DSS Stop Codes for Clinics [ECXSCEDIT] option prior to
+     running the September CLI Extract.  Perform normal Audits for the CLI
+     Extract.
+  
+ 5)  After auditing the September CLI Extract, and after making any 
+     necessary changes and transmitting the CLI Extract, proceed with FY13
+     Stop Code changes to the DSS Clinics and Stop Codes Worksheet clinics:
+  
+     a) Use the Create DSS Clinic Stop Code File [ECXSCLOAD] option to run
+        the Print "Unreviewed Clinics".
+     b) Update the FY13 as needed using the Enter/Edit DSS Stop Codes for 
+        Clinics [ECXSCEDIT] option.
+     c) Approve changes using the Approve Reviewed DSS Clinic Worksheet 
+        [ECXSCAPPROV] option. Finalize all Stop Code changes on the
+        worksheet to be ready to run the monthly FY13 DSS CLI Extracts.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ HD0000000622154 - FY2013 Table Maintenance Clinic Stop file (#40.7)
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Connecticut HCS
+ Louisville, KY
+ Upstate New York HCS 
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ HD0000000622154 - FY2013 Table Maintenance Clinic Stop file (#40.7)
+  
+ Problem:
+ --------
+ The Stop Code Council, through the Decision Support Office (DSO), has 
+ requested Fiscal Year 2013 updates to the CLINIC STOP file (#40.7).
+  
+ Resolution:
+ -----------
+ The requested Fiscal Year 2013 updates were submitted by the DSO to be 
+ implemented effective October 1, 2012.  Post-init routine SD53FY13 
+ updates the CLINIC STOP file (#40.7) by adding eight (8) new stop codes, 
+ inactivating eight (8) existing stop codes, reactivating and changing
+ the names of four (4) stop codes (plus changing the restriction data for
+ 3 of these), changing the names for two (2) stop codes and changing the
+ restriction data for one (1) stop code.  A total of 23 stop codes are
+ being updated with this patch.
+  
+  
+ Listed below are the applicable stop code updates:
+  
+ Stop Codes Being Inactivated:  (Inactivate Date: 10/1/2012)
+  
+ 152   ANGIOGRAM CATHETERIZATION
+ 223   PMRS CWT/SE NON-F TO F (MAS NO
+ 228   PMRS CWT/TWE NON-F TO F (MAS N
+ 532   PSYCHOSOCIAL REHAB - IND
+ 559   PSYCHOSOCIAL REHAB - GROUP
+ 569   MH CWT/SE NON-F TO F (MAS NONC
+ 570   MH CWT/TWE NON-F TO F (MAS NON
+ 691   PRE-EMP PHYS MILITARY PERSONNEL
+  
+ New Stop Codes Being Added:  (effective 10/1/2012)
+  
+ 224   TELEPHONE SCI
+       Restriction Type:  P   Restriction Date:  10/1/2012
+  
+ 225   SCI TELEHEALTH
+       Restriction Type:  E   Restriction Date:  N/A
+  
+ 231   CARDIO-PULM REHAB
+       Restriction Type:  E   Restriction Date:  N/A
+  
+ 440   TELE FIT & ADJUST PROV SITE
+       Restriction Type:  S   Restriction Date:  10/1/2012
+  
+ 444   C&P VIA CVT PT SITE
+       Restriction Type:  S   Restriction Date:  10/1/2012
+  
+ 445   C&P VIA CVT PROV SITE
+       Restriction Type:  S   Restriction Date:  10/1/2012
+  
+ 446   IDES VIA CVT PT SITE
+       Restriction Type:  S   Restriction Date:  10/1/2012
+  
+ 447   IDES VIA CVT PROV SITE
+       Restriction Type:  S   Restriction Date:  10/1/2012
+  
+ Stop Code being Reactivated (10/1/2012) with Name Change only:
+  
+ 111   Old Name:  ONCOLOGICAL NUCLEAR MED
+       New Name:  TELE-PATHOLOGY
+  
+ Stop Codes being Reactivated (10/1/2012) with changes to Name, 
+ Restriction type and Restriction date:
+  
+ 136   Old Name:  FOBT - GUIAC SCREENING
+       New Name:  TELE-POST DEPLOY PT SITE
+  
+       Old Restriction Type:  E    New Restriction Type:  S
+       Old Restriction Date:  N/A  New Restriction Date:  10/1/2012
+  
+ 137   Old Name:  ALCOHOL COUNSELING - MED CARE
+       New Name:  TELE-POST DEPOY PROV SITE
+  
+       Old Restriction Type:  E    New Restriction Type:  S
+       Old Restriction Date:  N/A  New Restriction Date:  10/1/2012
+  
+ 708   Old Name:  NUTRITION
+       New Name:  TELE SMOKE CESS PROV SITE
+  
+       Restriction Type:  S  (not changing)
+       Old Restriction Date:  10/1/2003    New Restriction Date:  10/1/2012
+  
+ Stop Codes with Name Change only:  (effective 10/1/2012)
+  
+ 371   Old Name:  CCHT SCREENING
+       New Name:  HT SCREENING
+  
+ 404   Old Name:  GYNECOLOGY
+       New Name:  OB/GYN
+  
+ Stop Code with Restriction Type and Restriction Date changed:
+  
+ 250   REHAB SRVCS GROUP
+       Old Restriction Type:  S   New Restriction Type:  E
+       Old Restriction Date:  3/31/2012   New Restriction Date:  deleted
+  
+ TECHNICAL SUMMARY:
+ ==================
+  
+ The following Fileman Search may be helpful:
+ ============================================
+ A search to identify all clinics which have any of the 8 stop codes that 
+ are being inactivated as either the Primary Stop Code or the Credit Stop 
+ Code.  The results can be placed in a Sort Template or printed to the 
+ screen:
+  
+ VA FileMan 22.0
+  
+  
+ Select OPTION: 3  SEARCH FILE ENTRIES
+  
+ OUTPUT FROM WHAT FILE: HOSPITAL LOCATION// 
+  
+   -A- SEARCH FOR HOSPITAL LOCATION FIELD: STOP CODE NUMBER  
+   -A- CONDITION: EQUALS  
+   -A- EQUALS CLINIC STOP: 152  ANGIOGRAM CATHETERIZATION     152     
+  
+   -B- SEARCH FOR HOSPITAL LOCATION FIELD: STOP CODE NUMBER  
+   -B- CONDITION: EQUALS  
+   -B- EQUALS CLINIC STOP: 223  PMRS CWT/SE NON-F TO F (MAS NO     223     
+  
+   -C- SEARCH FOR HOSPITAL LOCATION FIELD: STOP CODE NUMBER  
+   -C- CONDITION: EQUALS  
+   -C- EQUALS CLINIC STOP: 228  PMRS CWT/TWE NON-F TO F (MAS N     228     
+  
+   -D- SEARCH FOR HOSPITAL LOCATION FIELD: STOP CODE NUMBER  
+   -D- CONDITION: EQUALS  
+   -D- EQUALS CLINIC STOP: 532  PSYCHOSOCIAL REHAB - IND     532     
+  
+   -E- SEARCH FOR HOSPITAL LOCATION FIELD: STOP CODE NUMBER  
+   -E- CONDITION: EQUALS  
+   -E- EQUALS CLINIC STOP: 559  PSYCHOSOCIAL REHAB - GROUP     559     
+  
+   -F- SEARCH FOR HOSPITAL LOCATION FIELD: STOP CODE NUMBER  
+   -F- CONDITION: EQUALS  
+   -F- EQUALS CLINIC STOP: 569  MH CWT/SE NON-F TO F (MAS NONC     569     
+  
+   -G- SEARCH FOR HOSPITAL LOCATION FIELD: STOP CODE NUMBER  
+   -G- CONDITION: EQUALS  
+   -G- EQUALS CLINIC STOP: 570  MH CWT/TWE NON-F TO F (MAS NON     570     
+  
+   -H- SEARCH FOR HOSPITAL LOCATION FIELD: STOP CODE NUMBER  
+   -H- CONDITION: EQUALS  
+   -H- EQUALS CLINIC STOP: 691  PRE-EMP PHYS MILITRY PERSONNEL     691     
+  
+   -I- SEARCH FOR HOSPITAL LOCATION FIELD: CREDIT STOP CODE  
+   -I- CONDITION: EQUALS  
+   -I- EQUALS CLINIC STOP: 152  ANGIOGRAM CATHETERIZATION     152     
+  
+   -J- SEARCH FOR HOSPITAL LOCATION FIELD: CREDIT STOP CODE  
+   -J- CONDITION: EQUALS  
+   -J- EQUALS CLINIC STOP: 223  PMRS CWT/SE NON-F TO F (MAS NO     223     
+  
+   -K- SEARCH FOR HOSPITAL LOCATION FIELD: CREDIT STOP CODE  
+   -K- CONDITION: EQUALS  
+   -K- EQUALS CLINIC STOP: 228  PMRS CWT/TWE NON-F TO F (MAS N     228     
+  
+   -L- SEARCH FOR HOSPITAL LOCATION FIELD: CREDIT STOP CODE  
+   -L- CONDITION: EQUALS  
+   -L- EQUALS CLINIC STOP: 532  PSYCHOSOCIAL REHAB - IND     532     
+  
+   -M- SEARCH FOR HOSPITAL LOCATION FIELD: CREDIT STOP CODE  
+   -M- CONDITION: EQUALS  
+   -M- EQUALS CLINIC STOP: 559  PSYCHOSOCIAL REHAB - GROUP     559     
+  
+   -N- SEARCH FOR HOSPITAL LOCATION FIELD: CREDIT STOP CODE  
+   -N- CONDITION: EQUALS  
+   -N- EQUALS CLINIC STOP: 569  MH CWT/SE NON-F TO F (MAS NONC     569     
+  
+   -O- SEARCH FOR HOSPITAL LOCATION FIELD: CREDIT STOP CODE  
+   -O- CONDITION: EQUALS  
+   -O- EQUALS CLINIC STOP: 570  MH CWT/TWE NON-F TO F (MAS NON     570     
+  
+   -P- SEARCH FOR HOSPITAL LOCATION FIELD: CREDIT STOP CODE  
+   -P- CONDITION: EQUALS  
+   -P- EQUALS CLINIC STOP: 691  PRE-EMP PHYS MILITRY PERSONNEL     691     
+  
+   -Q- SEARCH FOR HOSPITAL LOCATION FIELD: 
+  
+ IF: A    STOP CODE NUMBER EQUALS 338 (ANGIOGRAM CATHETERIZATION)
+ OR: B     Or STOP CODE NUMBER EQUALS 460 (PMRS CWT/SE NON-F TO F (MAS NO)
+ OR: C     Or STOP CODE NUMBER EQUALS 461 (PMRS CWT/TWE NON-F TO F (MAS N)
+ OR: D     Or STOP CODE NUMBER EQUALS 363 (PSYCHOSOCIAL REHAB - IND)
+ OR: E     Or STOP CODE NUMBER EQUALS 207 (PSYCHOSOCIAL REHAB - GROUP)
+ OR: F     Or STOP CODE NUMBER EQUALS 496 (MH CWT/SE NON-F TO F (MAS NONC)
+ OR: G     Or STOP CODE NUMBER EQUALS 497 (MH CWT/TWE NON-F TO F (MAS NON)
+ OR: H     Or STOP CODE NUMBER EQUALS 412 (PRE-EMP PHYS MILITRY PERSONNEL)
+ OR: I     Or CREDIT STOP CODE EQUALS 338 (ANGIOGRAM CATHETERIZATION)
+ OR: J     Or CREDIT STOP CODE EQUALS 460 (PMRS CWT/SE NON-F TO F (MAS NO)
+ OR: K     Or CREDIT STOP CODE EQUALS 461 (PMRS CWT/TWE NON-F TO F (MAS N)
+ OR: L     Or CREDIT STOP CODE EQUALS 363 (PSYCHOSOCIAL REHAB - IND)
+ OR: M     Or CREDIT STOP CODE EQUALS 207 (PSYCHOSOCIAL REHAB - GROUP)
+ OR: N     Or CREDIT STOP CODE EQUALS 496 (MH CWT/SE NON-F TO F (MAS NONC)
+ OR: O     Or CREDIT STOP CODE EQUALS 497 (MH CWT/TWE NON-F TO F (MAS NON)
+ OR: P     Or CREDIT STOP CODE EQUALS 412 (PRE-EMP PHYS MILITRY PERSONNEL)
+ OR: 
+  
+ STORE RESULTS OF SEARCH IN TEMPLATE: 
+  
+ SORT BY: NAME// 
+ START WITH NAME: FIRST// 
+ FIRST PRINT FIELD: NAME  
+ THEN PRINT FIELD: STOP CODE NUMBER  
+ THEN PRINT FIELD: CREDIT STOP CODE  
+ THEN PRINT FIELD: 
+ Heading (S/C): HOSPITAL LOCATION SEARCH  Replace 
+ DEVICE:   UCX/TELNET    Right Margin: 80//
+  
+  
+ ******************************PLEASE NOTE*********************************
+ The 3 digit numbers noted after the name of the Stop Codes above are the
+ IEN for the Stop Codes and are NOT the AMIS reporting Stop Code
+ number. For example, Angiogram Catheterization is Stop Code 152 and its
+ Internal Entry Number is 338.  Also, please note that IENs differ from 
+ site to site.
+ **************************************************************************
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+  
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+ ***Routine SD53FY13 can be manually deleted after patch is installed***
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+  
+   3. From this menu, you may select the following options:
+      (when prompted for INSTALL NAME, enter SD*5.3*596)
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package SD*5.3*596.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO//" respond NO.
+  
+ NOTE: Details of the changes applied by this patch are provided
+       during the installation and may also be reviewed with the Install
+       File Print option on the Utilities menu on the Kernel Installation
+       and Distribution System menu.
+  
+       It is important to check the CLINIC STOP (#40.7) file post
+       installation to make sure that all of the updates are correctly
+       reflected in the CLINIC STOP file (#40.7). If any discrepancies
+       are found you should enter a Remedy Ticket.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53FY13
+    Before:       n/a   After: B85494996  **596**
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : APR 18, 2012
+Completed By: SESSLER,APRIL                 Date Completed: SEP 18, 2012
+Released By : BARFIELD,RICHARD              Date Released : SEP 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

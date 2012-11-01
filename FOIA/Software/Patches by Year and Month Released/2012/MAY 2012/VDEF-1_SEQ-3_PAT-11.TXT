@@ -1,0 +1,153 @@
+$TXT Created by MOORE,JIM at NXT.FO-OAKLAND.MED.VA.GOV  (KIDS) on Friday, 05/11/12 at 11:46
+=============================================================================
+Run Date: MAY 15, 2012                     Designation: VDEF*1*11
+Package : VDEF - VDEF                         Priority: Mandatory
+Version : 1         SEQ #3                      Status: Released
+                  Compliance Date: JUN 14, 2012
+=============================================================================
+
+Associated patches: (v)VDEF*1*10   <<= must be installed BEFORE `VDEF*1*11'
+
+Subject: FIX FOR ENDLESS MESSAGE RETRANSMISSIONS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+  
+ This patch will fix two issues.
+  
+ Issue 1
+ =======
+ There have been several instances of VDEF events remaining in a queued
+ status on the out-going VDEF event queue even after transmission occurs,
+ resulting in the same event being endlessly transmitted over and over 
+ again to the HDR. 
+ 
+ To prevent this from happening, the KILL logic of the "C" cross-reference
+ of the REQUEST ENTRY STATUS field (#.02) of the QUEUE ENTRIES multiple
+ (#579.31) of the VDEF REQUEST QUEUE file (#579.3) is being modified to insure
+ that HL7 events that are queued for transmission are removed from the queue
+ once the event status is changed to PROCESSED. 
+ 
+ Issue 2
+ =========
+ Product Support has recommended that all sites set the ARCHIVAL PARAMETER
+ field (#.04) of the VDEF REQUEST QUEUE file (#579.3) to a minimum of 30 days
+ for all the VDEF queues.  The recommendation was prompted by several
+ instances where VDEF HL7 events needed to be recovered for re-transmission
+ to the HDR.  Retaining the VDEF HL7 events for a minimum of 30 days before
+ purging will allow that to be done with much less effort in the event of
+ future cases.
+ 
+ In order to insure compliance with this recommendation, the post-install
+ routine will automatically reset the ARCHIVAL PARAMETER field (#.04)
+ for all the VDEF REQUEST QEUEUE entries to 30 days. In addition, the input
+ transform for the field has been modified to require a minimum of 30 days.   
+ 
+ *IMPORTANT* 
+ As a result, the VDEFHL7 global will grow as much as 260%, and should
+ be monitored to insure that it has sufficient disk space allocated. 
+ However, it will remain a relatively small global. 
+ 
+ 
+  
+ 
+ Test Sites:
+ ===========
+  TENNESSEE VALLEY HCS
+  PROVIDENCE, RI VAMC
+  WALLA WALLA VAMC
+  ANCHORAGE, AK OPC
+  COLUMBUS, OH OPC
+  ORLANDO, FL VAMC
+  TEXAS VALLEY COASTAL BEND HCS
+  
+ Remedy:
+ =======
+ HD0000000587243
+ 
+  
+ Installation Instructions:
+ ==========================
+   1.  Users are allowed to remain on the system during the installation. 
+       The installation will complete in less than four minutes.
+  
+   2.  It is not necessary to stop VDEF background processes in order
+       to install the patch. 
+  
+   3.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   4.  This patch is now loaded into a transport global on your system.
+       The next step is to use KIDS to install the Transport global.  On
+       the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Backup a Transport Global
+          Install Package(s) 
+  
+       When using the Install Package(s) menu option to install the 
+       patch build, you will be asked several questions.  The questions,
+       and the answers you should supply, are shown below.
+  
+        INSTALL NAME: <VDEF*1.0*11>
+  
+        Want KIDS to Rebuild Menu Trees Upon Completion of Install? <NO>
+  
+        Want KIDS to INHIBIT LOGONS during the install? NO// <NO>
+  
+        Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO// <NO>
+   
+  
+    5.  The post-installation routine, POST^VDEFP11, will automatically increase
+        the retention time for VDEF events to 30 days to prevent premature
+        purging.  The post-install routine should not be deleted.
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VDEF;**[Patch List]**;Dec 28, 2004;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VDEFP11
+    Before:       n/a   After:   B772097  **11**
+Routine Name: VDEFUTIL
+    Before: B20586077   After: B20903183  **3,10,11**
+ 
+Routine list of preceding patches: 10
+
+=============================================================================
+User Information:
+Entered By  : MOORE,CHARLES J               Date Entered  : JAN 26, 2012
+Completed By: BEST,LISA                     Date Completed: MAY 14, 2012
+Released By : WHELAN,ROBERT E               Date Released : MAY 15, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

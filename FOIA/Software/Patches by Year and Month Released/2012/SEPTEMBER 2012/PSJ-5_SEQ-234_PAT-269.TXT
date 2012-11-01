@@ -1,0 +1,212 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 11/21/11 at 16:39
+=============================================================================
+Run Date: SEP 24, 2012                     Designation: PSJ*5*269
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #234                      Status: Released
+                  Compliance Date: OCT 25, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*223   <<= must be installed BEFORE `PSJ*5*269'
+
+Subject: PREVENT SCHEDULE TYPE CHANGE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Inpatient Medications 
+ package:
+  
+ 1. Schedule Type change causes problems
+ 2. Start Time not re-calculated when editing Schedule
+ 3. Leaving Orderable Item unchanged creates new order
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. HD0000000538447 - Schedule type change causes problems
+  
+ 2. HD0000000474864 - Start date/time issue.  Ordered entered for bid, 
+                      edit before
+  
+ 3. HD0000000475079 - Dispensing Drug Problem
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ PSPO #2010
+  
+       
+ PARTICIPATING TEST SITES:
+ =========================
+ Bronx VA Medical Center
+ Coatesville VA Medical Center
+ Durham VA Medical Center 
+ Upstate NY VA Health Care System (Albany)
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================
+ 1. HD0000000538447 - Schedule type change causes problems
+  
+   Problem:
+   -------
+   This patch fixes an issue with Inpatient Order Entry [PSJ OE] in which 
+   it is possible to change the Schedule Type of an order from One-Time to 
+   Continuous, even if the Schedule itself is a One-Time Schedule.  This 
+   results in confusion when an order which appears to be One-Time does 
+   not expire after being given.
+  
+   Resolution:
+   ----------
+   Changed routines PSGOE8 and PSGOE9 so that changing the Schedule Type 
+   to Continuous is not allowed if the Schedule's Type in the 
+   ADMINISTRATION SCHEDULE File is One-Time.
+  
+ 2. HD0000000474864 - Start date/time issue.  Ordered entered for bid, 
+                      edit before
+  
+   Patient Safety Issue:
+   ---------------------
+   PSPO #2010
+  
+   Problem:
+   -------
+   In Inpatient Order Entry [PSJ OE], when editing the Schedule field on a 
+   new Unit Dose order before it has been accepted, the Start Time of the
+   order is not re-calculated to coincide with the new admin times.  This
+   is because the Schedule field is not a starred field before the order is
+   accepted.
+  
+   Resolution:
+   ----------
+   This patch adds a warning message in Inpatient Order Entry [PSJ OE] at 
+   the request of the Inpatient Medications Workgroup.  The message
+   displays when editing the Schedule field on a new order before it has
+   been accepted.  The message reads, "This may cause the Admin Times and
+   the Start Time to be out of sync."  This message will only display if
+   the Inpatient Ward Parameter DEFAULT START DATE CALCULATION is not set
+   to USE NOW AS DEFAULT.
+  
+ 3. HD0000000475079 - Dispensing Drug Problem
+  
+   Problem:
+   -------
+   This patch corrects an error in Inpatient Order Entry [PSJ OE] in which 
+   it is possible to trigger the creation of a new order by editing the 
+   Orderable Item of an order, and simply keeping it the same.
+  
+   Resolution:
+   ----------
+   Changed the routine PSGOE9 so that changing the Orderable Item to 
+   itself will not trigger the creation of a new order.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS WHEN THE PATCH IS  
+ INSTALLED, AN EDITED ERROR WILL OCCUR.
+  
+ The patch should be installed when NO Inpatient Pharmacy users are on the
+ system.  This patch will take less than 5 minutes to install.
+  
+ 1.  Load Transport Global 
+     ---------------------------
+  
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+  
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*269):
+                                 
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d.  Print Transport Global - This option will allow you to view the 
+         components of the KIDS build.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO. 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer YES.
+  
+           1) When prompted "Enter options you wish to mark as "Out
+              of Order":" enter the following options:
+              
+                 Inpatient Order Entry [PSJ OE]
+  
+           2) When prompted "Enter protocols you wish to mark as "Out of
+              Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE8
+    Before: B45273468   After: B48117152  **47,50,65,72,110,111,188,192,
+                                           113,223,269**
+Routine Name: PSGOE9
+    Before: B39101657   After: B40776926  **11,47,50,72,110,111,188,192,
+                                           207,113,223,269**
+ 
+Routine list of preceding patches: 223
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : NOV 04, 2011
+Completed By: SHERMAN,BILL                  Date Completed: SEP 18, 2012
+Released By : LYTTLE,KIM M                  Date Released : SEP 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

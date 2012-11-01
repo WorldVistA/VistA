@@ -1,0 +1,246 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Thursday, 10/13/11 at 18:29
+=============================================================================
+Run Date: APR 20, 2012                     Designation: PRC*5.1*159
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #139                    Status: Released
+                  Compliance Date: MAY 18, 2012
+=============================================================================
+
+Associated patches: (v)PRC*5.1*113 <<= must be installed BEFORE `PRC*5.1*159'
+                    (v)PRC*5.1*142 <<= must be installed BEFORE `PRC*5.1*159'
+
+Subject: FILE 442 X-REF;KEY PRCSCPO SETTING;MONTHLY ACCRUAL ISSUE
+
+Category: 
+  - Routine
+  - Input Template
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. Duplicate 'AB' cross references exist in file PROCUREMENT & 
+    ACCOUNTING TRANSACTIONS (#442).
+  
+ 2. Modify IFCAP security key PRCSCPO 'Keep at Terminate' setting to 'NO'.
+  
+ 3. Option Accrual (Monthly) [PRCB MONTHLY ACCRUAL] creating multiple
+    monthly accrual nodes in file MONTHLY ACCRUAL (#440.7).
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ Remedy:
+ =======
+ 1. HD0000000519387 Duplicate 'AB' cross references exist on file 442
+  
+ 2. HD0000000413791 Key PRCSCPO keep at terminate setting
+  
+ 3. HD0000000514167 Accrual (Monthly) [PRCB MONTHLY ACCRUAL] **Lagging**
+     
+      Duplicates:  HD0000000518882, HD0000000521187, HD0000000524920, 
+                   HD0000000525999, HD0000000526877, HD0000000527286
+  
+  
+ Test Sites:
+ ===========
+ St. Cloud VAMC
+ Little Rock VAMC
+ Oklahoma City VAMC
+  
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000519387 Duplicate 'AB' cross references exist on file 442
+  
+  
+    Problem:
+    --------
+    When editing the Purchase Card P.O. Date on a subsequent date the 
+    previous file PROCUREMENT & ACCOUNTING TRANSACTIONS (#442) 'AB' cross
+    reference for old date will not be deleted when modified to current
+    date.
+  
+  
+    Resolution:
+    -----------                    
+    Modify routine PRCHNPO5 and input template [PRCH DETAILED PURCHASE
+    CARD] to insure older date is removed from 'AB' cross reference when
+    updated with more current date.
+  
+ A pre-install process will remove any extraneous 'AB' cross references 
+ from prior Detailed Purchase Card editing. 
+  
+  
+ Routines: PRCHNPO5, PRC159P1 (pre-install)
+ Input Template:  PRCH DETAILED PURCHASE CARD
+  
+  
+ 2. HD0000000413791 Key PRCSCPO keep at terminate setting
+  
+    Problem:
+    --------
+    Security key PRCSCPO terminate setting is currently set to 'YES' to 
+    insure key is kept when user is terminated.
+  
+  
+    Resolution:
+    -----------
+    A post install routine will set security key PRCSCPO found in file 
+    SECURITY KEY (#19.1) to 'NO'. Also, the post install routine runs an 
+    audit against file NEW PERSON (#200) to remove key from any terminated 
+    employee. 
+  
+ The install will show this:
+                             PRC*5.1*159                                   
+ --------------------------------------------------------------------------
+  Running Post-Install Routine: START^PRC159P
+  
+ Number of TERMINATED employees with key PRCSCPO still assigned: 116
+  
+ Number of ACTIVE employees with key PRCSCPO still assigned: 209
+  
+ Number of employees with *NO* node 0 information: 1
+  
+  
+ This will satisfy any future government audit that may be done in
+ relation to the current holders of key.  
+  
+ The IFCAP Package Security Guide for IFCAP has been modified August/2011
+ for the PRCSCPO key setting under Chapter 3 - IFCAP Security Keys &
+ Other Features.
+  
+ The IFCAP Technical Manual p. 127 is being modified with this release.
+  
+ Routines: PRC159P (post install)
+  
+  
+ 3. HD0000000514167 Accrual (Monthly) [PRCB MONTHLY ACCRUAL] **Lagging**
+  
+    Problem:
+    --------
+    The option Accrual (Monthly) [PRCB MONTHLY ACCRUAL] will create
+    multiple month accrual nodes in file MONTHLY ACCRUAL (#440.7)
+    when the month is recompiled and printing is queued.
+  
+  
+    Resolution:
+    -----------
+    Modify routine PRCB1F to prevent locking contention when monthly 
+    recompile is queued to a printer.
+  
+ Routines: PRCB1F
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ------------------------ 
+  Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.med.va.gov, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany          ftp.fo-albany.med.va.gov
+      Hines           ftp.fo-hines.med.va.gov
+      Salt Lake City  ftp.fo-slc.med.va.gov
+  
+      The documentation distribution includes: 
+  
+      File Name                   Description              Retrieval Format
+      =========                   ===========              ================
+      IFCP5_1TECH_MANUAL.PDF      Technical Manual              BINARY
+      IFCP5_1SECURITY_GUIDE.PDF   Package Security Guide        BINARY
+  
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following address:
+      http://www.va.gov/vdl
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is recommended that the install be done during non-peak hours. 
+ It should take between 30 to 40 minutes to install this patch.
+  
+   ***********************************************************************
+   PLEASE NOTE: Post install routine PRC159P and pre install routine 
+   PRC159P1 will be deleted once the install is complete.  If you wish
+   to check the checksum of this routine please use the 'Verify Checksums
+   in Transport Global' under the Installation Menu.
+   ***********************************************************************
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*159)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*159.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       YES//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? NO//', respond YES 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+       Accrual (Monthly)                  [PRCB MONTHLY ACCRUAL]           
+       Edit Detailed Purchase Card Order  [PRCH EDIT DETAILED ORDER]  
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Aug 1, 2011;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRC159P
+    Before:       n/a   After:  B4980889  **159**
+Routine Name: PRC159P1
+    Before:       n/a   After:  B6863193  **159**
+Routine Name: PRCB1F
+    Before: B39550550   After: B41135411  **64,72,142,159**
+Routine Name: PRCHNPO5
+    Before: B37990669   After: B38701458  **113,159**
+ 
+Routine list of preceding patches: 113, 142
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : JUL 20, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: APR 18, 2012
+Released By : NELSON,VICKI M                Date Released : APR 20, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

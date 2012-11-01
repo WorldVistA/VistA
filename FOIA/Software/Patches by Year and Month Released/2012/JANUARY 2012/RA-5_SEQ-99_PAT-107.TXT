@@ -1,0 +1,205 @@
+$TXT Created by CEBELINSKI,GREGORY at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Tuesday, 11/22/11 at 12:18
+=============================================================================
+Run Date: JAN 12, 2012                     Designation: RA*5*107
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5        SEQ #99                      Status: Released
+                  Compliance Date: FEB 12, 2012
+=============================================================================
+
+Associated patches: (v)RA*5*47     <<= must be installed BEFORE `RA*5*107'
+                    (v)MAG*3*49    <<= must be installed BEFORE `RA*5*107'
+                    (v)RA*5*78     <<= must be installed BEFORE `RA*5*107'
+
+Subject: NTP II: HL7 upgrade; VISN configuration enhancements
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ RA*5.0*107 has two purposes: the first is to correct a design issue with 
+ RA*5.0*78 (v2.3 query/response) and the second is to build the 
+ query/response messaging interface to work with v2.4 of HL7.
+  
+ The first issue is that the original NTP Query/Response software
+ (RA*5.0*78) was not designed to accommodate multiple legacy facilities,
+ each with their own NTP gateway, referencing a single VistA production
+ system or VistA instance.
+  
+ A single VistA instance knows of only one NTP Gateway: the gateway tied 
+ to the RA-SCIMAGE logical link. What happens is that query responses
+ are being broadcast to the incorrect NTP gateway.
+  
+ RA*5.0*107 will address the issue by:
+ * receiving the NTP gateway query
+ * identify the NTP gateway which receives the query responses
+ * build the responses to that query
+ * broadcast the responses to the correct NTP gateway
+  
+ In order to implement this business rule, all relevant NTP gateways must
+ be identified and logical link records created specifically for those NTP
+ gateways.
+  
+ Note: The number of NTP gateways can differ from VISN to VISN. It 
+ is up the NTP technical team and the IRM staff responsible for
+ supporting the NTP interface to create the correct logical link
+ records.
+  
+ The historical information included in the responses to a query serves
+ as a reference for the teleradiologists working for the National
+ Teleradiology Project (NTP).
+  
+ *** ATTENTION - for present NTP sites (only), when installing RA*5.0*107
+ it is critical this vendor be contacted to turn off the NTP Query
+ component of the interface. Contact the Outlook mail group VHA NTP
+ SUPPORT to coordinate VA facility and vendor implementation and
+ configuration. ***
+  
+ The client (ScImage) requests results based on the following query 
+ parameters:
+  
+ * A patient, within a patient care event date/time window, & 
+   maximum number of results to be returned.
+  
+ Note: ScImage is a specific vendor. The query was developed to be vendor 
+ independent, however ScImage is the vendor currently contracted by the 
+ NTP. 
+  
+ In order to operate properly, the following conditions must be met:
+ 1) Determine the IP address of the HLO multi-threaded listener. The 
+    listener is setup as a TCP/IP service and is defined to 'listen' on
+    port 5001. This information is necessary for ScImage to properly
+    communicate with the VistA Radiology/Nuclear Medicine application.
+  
+ 2) If your VistA instance is to broadcast HL7 responses to more than one
+    dedicated NTP Gateway, new logical links must created. The following
+    steps must be taken:
+       a) The TCP/IP ADDRESS field of these newly created logical links
+          must be entered as the TCP/IP address of the specific NTP
+          Gateway.
+       b) The DNS DOMAIN field of these newly created logical links must be
+          entered, in lowercase, as the DNS DOMAIN of the specific NTP
+          Gateway.
+  
+ 3) Newly created NTP Gateway logical links must have the TCP/IP PORT
+    (OPTIMIZED) field set to a port value of: 21998.
+      
+    Note: VA facility support staff are responsibility for creating or
+    editing NTP Gateway logical links.
+  
+       * Contact the NTP troubleshooting staff via Outlook at mail group: 
+         VHA NTP SUPPORT or call: 877-780-5559 (please select option #1).
+  
+  
+ The following components are exported with RA*5.0*107
+ =====================================================
+  
+ ROUTINES
+ --------
+ RAHL23Q
+ RAHL24Q
+ RAHL24U
+  
+ HLO APPLICATION REGISTRY
+ ------------------------
+ RA-NTP-QRY-CLIENT
+ RA-NTP-QRY-SERVER
+  
+ Associated NSR(s)
+ =================
+ 20080510
+  
+ Associated Remedy Ticket(s)
+ ===========================
+ 469328
+  
+ Documentation
+ =============
+ These are the documentation changes associated with this patch:
+ HL7 Interface Specification: RA5_0HL7spec.doc & RA5_0HL7spec.pdf
+ Release Notes for RA*5*107 : RA5_0RN_P107.doc & RA5_0RN_P107.pdf
+   
+   The software and the documentation can be found in the following
+   [ANONYMOUS.SOFTWARE] directories:
+      
+                                PREFERRED ADDRESS
+                                -------------------------
+   First available ftp server   download.vista.med.va.gov
+   
+   SPECIFIC FIELD OFFICE        FTP ADDRESS
+   ---------------------        ------------------------
+   Albany                       ftp.fo-albany.med.va.gov
+   Hines                        ftp.fo-hines.med.va.gov
+   Salt Lake City               ftp.fo-slc.med.va.gov
+  
+ Test Sites
+ ==========
+ Bath, NY
+ Iowa City, IA
+ Muskogee, OK
+  
+  
+ Installation Instructions
+ =========================
+ *** ATTENTION - for present NTP sites (only), when installing RA*5.0*107
+ it is critical this vendor be contacted to turn off the NTP Query
+ component of the interface. Contact the Outlook mail group VHA NTP
+ SUPPORT to coordinate VA facility and vendor implementation and
+ configuration. ***
+  
+ This patch must be installed with VistA Radiology users off-line. The 
+ estimated installation time for this patch is three minutes.
+  
+     1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+        This option will load the KIDS package onto your system.  
+  
+     2. The patch has now been loaded into a transport global on your 
+        system. You now need to use KIDS to install the transport global.  
+   
+     3. On the KIDS menu, under the 'Installation' menu, use the 
+        following options: 
+            Print Transport Global 
+            Compare Transport Global to Current System 
+            Verify Checksums in Transport Global
+            Backup a Transport Global 
+  
+     4. On the KIDS menu, under the 'Installation' menu, use the 
+        following option: 
+            Select Installation Option: Install Package(s) 
+            Select INSTALL NAME: RA*5.0*107
+                                 ==========
+        Want KIDS to INHIBIT LOGONs during the install? NO//
+        Want to DISABLE Scheduled Options, Menu Options, and Protocols? 
+ NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAHL23Q
+    Before:B131709576   After:B135675772  **78,107**
+Routine Name: RAHL24Q
+    Before:       n/a   After: B17508754  **107**
+Routine Name: RAHL24U
+    Before:       n/a   After:B179243251  **107**
+ 
+Routine list of preceding patches: 78
+
+=============================================================================
+User Information:
+Entered By  : CEBELINSKI,GREGORY            Date Entered  : NOV 16, 2010
+Completed By: HA,THANH-HUONG HUU            Date Completed: JAN 12, 2012
+Released By : MILLIGAN,KERRY                Date Released : JAN 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

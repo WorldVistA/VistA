@@ -1,0 +1,171 @@
+$TXT Created by HSI,TUAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 07/19/12 at 15:18
+=============================================================================
+Run Date: SEP 11, 2012                     Designation: PRCA*4.5*266
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #256                    Status: Released
+                  Compliance Date: SEP 30, 2012
+=============================================================================
+
+
+Subject: COMPENSATED WORK THERAPY (CWT) REVENUE RESOURCE CODES UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+ Note: the Compliance Date is September 30, 2012.
+  
+ This is a high priority patch that needs to be implemented before 
+ October 1, 2012 (for FY 2013).
+ **************************************************************************
+  
+ This patch will disable one Revenue Source Code on the REVENUE SOURCE CODE
+ (#347.3) file, and add five new codes.
+  
+ Associated Remedy tickets:
+ ==========================
+ 1. HD0000000714329 - Revenue source codes - Non-health care debt
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Providence VA Medical Center
+ Salem VA Medical Center
+ White River Junction VA Medical Center
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000714329 - Revenue source codes - Non-health care debt
+   
+ Problem:
+ --------
+ The office of VHA Chief Financial Officer (10A3) - Office Resources
+ Management (10A3B) has requested that this change take place:
+ inactivate one (1) existing revenue source code and add five (5) new CWT
+ related revenue source codes to the REVENUE SOURCE CODE (#347.3) file.
+  
+ Resolution:
+ -----------
+ This patch updates the REVENUE SOURCE CODE (#347.3) file for the following
+ 5 codes, as indicated:
+  
+ CODE    NAME
+  
+ 8CW1    CWT SHELTERED WORKSHOPS
+ 8CW2    CWT/TRANS WORK EXP (VAMC)
+ 8CW3    CWT/TWE (FED NOT VAMC)
+ 8CW4    CWT/TRANS WORK EXP (NON FEDERAL)
+ 8CW5    CWT/VETERANS CONSTRUCTION TEAM
+  
+ In addition, revenue source code 8023 (COMPENSATED WORK THERAPY) needs to 
+ be inactivated in the same file. (The use of Compensated Work Therapy as a
+ revenue source is being disaggregated into the above five new codes.)
+  
+ The previous use of the 8023 code already on the ACCOUNTS 
+ RECEIVABLE (#430) file needs to stay that way.
+  
+ A post-init routine PRCAP266 is created to add the above referenced five
+ revenue source codes to the REVENUE SOURCE CODE (#347.3) file and
+ inactivate code 8023 on that table file.
+  
+ Installation Instructions:
+ ==========================
+ This patch should be installed after normal business hours, when all 
+ Accounts Receivable users are logged off the system.
+  
+ Ensure that the PRCA NIGHTLY PROCESS is NOT running while installing this 
+ patch.
+  
+ The post-init routine PRCAP266 can be deleted after installation.
+  
+ Install Time - less than 3 minutes
+  
+ 1.  Load Transport Global 
+     ---------------------
+  
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PRCA*4.5*266):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO.
+  
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer YES.
+  
+         CALCULATE REVENUE SOURCE CODE     [PRCA FMS RSC CALCULATE]
+         ENTER/EDIT REVENUE SOURCE CODE    [PRCA FMS RSC ENTER/EDIT]
+         REVENUE SOURCE CODE REPORT        [PRCA FMS RSC REPORT]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAP266
+    Before:       n/a   After: B10836909  **266**
+
+=============================================================================
+User Information:
+Entered By  : HSI,TUAN                      Date Entered  : JAN 19, 2010
+Completed By: DAWSON,TIM                    Date Completed: AUG 30, 2012
+Released By : CAULFIELD,MARY                Date Released : SEP 11, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

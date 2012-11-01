@@ -1,0 +1,251 @@
+$TXT Created by VO,MAI at DOSE.FO-BIRM.MED.VA.GOV  (KIDS) on Tuesday, 07/26/11 at 11:31
+=============================================================================
+Run Date: AUG 11, 2011                     Designation: PSJ*5*263
+Package : PSJ - INPATIENT MEDICATIONS         Priority: EMERGENCY
+Version : 5       SEQ #213                      Status: Released
+                  Compliance Date: SEP 15, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*263'
+                    (v)PSJ*5*226   <<= must be installed BEFORE `PSJ*5*263'
+
+Subject: MOCHA 1.0 - Incorrect status displays on patient profile
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ ****************************** Note **************************************
+  
+ This patch is a follow-up defect patch for Medication Order Check 
+ Healthcare Application v1.0 (MOCHA).  The MOCHA v1.0 patches are being 
+ released as a phased implementation release.  To see current status and 
+ target dates for Sites/VISN/Region please refer to the following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+ Sites should have received instructions and guidance on the installation 
+ of MOCHA v1.0 as it is a phased implementation. Patches PSO*7*387,
+ PSJ*5*263, PSS*1*163 and OR*3*346 need to be installed within 2 business
+ days at all sites that have MOCHA v1.0 installed in production.  The
+ remaining sites need to install the patches included with this release
+ immediately after the installation of the MOCHA v1.0 patches.  These
+ patches may be installed in any order after the MOCHA v1.0 patches are
+ installed.  (The MOCHA v1.0 installation included patches PSS*1*136,
+ PSO*7*251, PSJ*5*181, OR*3*272, PSS*1*117, PSO*7*375)  
+  
+ **************************************************************************
+  
+  
+ 1. When the provider placed an IV order on hold, the code "HP" was 
+ displayed for the order on the Inpatient Meds profile.  "HP" was still 
+ displayed on the patient profile on the pharmacy side when the provider 
+ released the order from hold.  The order status was correctly changed 
+ back to active.   Bar Code Medication Administration (BCMA) was working 
+ with an active order even though the display code was indicating hold by 
+ provider.  This patch is removing the "HP" so the appropriate status is 
+ displaying on the profile. HD0000000503309 (Code Change Request (CCR) 
+ #4466)
+  
+ 2. When no active dispense drug was found for an active unit dose order, 
+ the order was not included in the Drug Interaction and Duplicate 
+ Therapeutic checks for Computerized Patient Record System (CPRS).  This 
+ patch will ensure a dispense drug is included for the order checks.  (CCR 
+ #4465)
+  
+ 3. An undefined error occurred when using an order set with more than one 
+ order.  This happened when one of the orders was edited and the variable 
+ PSJNOO was killed.  This lead to an undefined when continued entering a 
+ subsequence order from the order set. HD0000000505659 (CCR #4503)
+  
+ 4. The Computerized Patient Record System (CPRS) Workgroup and Patient 
+ Safety requested Inpatient Medications shows the bottle/bag number in 
+ parenthesis on the finishing screen for an IV order.  This change will 
+ display the bottle number within the parenthesis for IV orders on the 
+ profiles and the order view. (Change Request (CR) #2535, CCR #3815)
+  
+ 5. The Computerized Patient Record System (CPRS) Workgroup and Patient 
+ Safety requested Inpatient Medications show the 'See Comments' next to 
+ the IV additive name if applicable on the finishing screen for an IV 
+ order.  This change will display 'See Comment' within the parenthesis for 
+ IV orders on the profiles and the order view.  The user must enter the 
+ appropriate bottle/bag number before completing the order. (CR #2534, CCR 
+ #2990)
+  
+ 6. This patch also fixes an issue in the IV Profile where additive data 
+ is not wrapped appropriately.
+  
+ 7. When a provider edits the IVPB type order in CPRS, the IV TYPE is set 
+ as Admixture and that caused the Stop date to calculate incorrectly. 
+ HD0000000281238 (CCR4143)
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ -------------------------- -------------------  --------------------
+ NON-VERIFIED ORDERS (53.1) BOTTLE (53.157,2)    Modified
+ PHARMACY PATIENT (55)      BOTTLE (55.02,.03)   Modified
+  
+  
+ Components exported with this patch:
+ ====================================
+ N/A   (Only routines exported)
+  
+  
+ New Service Requests (NSRs):
+ ============================
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ============================
+ 1. HD0000000503309 - Incorrect med order status displaying on Inpatient 
+ med profile
+  
+ Problem:
+ -------
+ The "HP" display code was not removed on the Inpatient Medication side 
+ after the provider released the order from hold.
+  
+ Resolution:
+ ----------
+ Modified ^PSJHL6 to remove "HP" from displaying on the patient profile.
+                                                                                 
+                         
+ 2. HD0000000505659 - <UNDEFINED>PSGOETO+25^PSGOETO *PSJNOO
+  
+ Problem:
+ -------
+ The Variable PSJNOO was killed after one of the orders in the order set 
+ was edited.
+  
+ Resolution:
+ ----------
+ Modified ^PSGOES to reset PSJNOO if this variable is not defined.
+  
+ 3. HD0000000281238 (CCR4143) - Incorrect IV Type when provider edited a 
+ pending IV piggy back order
+         
+ Problem:
+ --------
+ If a signed IV order is edited to change the duration. Upon finishing the 
+ order, before it is accepted, the IV Limit is dropped and the stop date 
+ is not calculated correctly. The system is storing Piggyback type orders 
+ as Admixture type orders when they are edited through CPRS. 
+  
+ Resolution:
+ -----------
+ Routine PSJHL4A has been modified to prevent the type from changing to 
+ admixture if this is an edit of a new order.
+  
+  
+ Test Sites:
+ ===========
+ KANSAS CITY, MO
+ OKLAHOMA CITY, OK
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+  
+  
+ Documentation Retrieval Instructions:
+ ===================================== 
+ N/A
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ This patch should not be installed while Inpatient Medication options are 
+ in use. It is also recommended that it be installed when Computerized
+ Patient Record System (CPRS) usage is at a minimum, particularly for
+ Inpatient Medication ordering. This patch should take less than 5 minutes
+ to install.
+  
+    1.  Choose the PackMan message containing this patch.
+  
+    2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+    3. From the Kernel Installation & Distribution System (KIDS) menu,
+       you may select to use the following options (when prompted for
+       INSTALL NAME, enter PSJ*5.0*263):
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as Data Dictionaries or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSJ*5.0*263.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 51
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOES
+    Before: B21797415   After: B22369472  **12,22,30,34,50,58,111,181,263**
+Routine Name: PSIVEDRG
+    Before: B44643985   After: B50075850  **21,33,50,65,74,84,128,147,181,263**
+Routine Name: PSIVORC1
+    Before: B45810564   After: B48694299  **1,37,69,110,157,134,181,263**
+Routine Name: PSIVPRO
+    Before: B36988166   After: B37380332  **38,58,85,110,181,263**
+Routine Name: PSIVUTL
+    Before: B28169331   After: B28212020  **69,58,81,85,110,133,181,263**
+Routine Name: PSJBLDOC
+    Before: B34049037   After: B26846197  **181,263**
+Routine Name: PSJHL4A
+    Before: B58072219   After: B59459040  **105,111,154,170,159,134,197,
+                                           226,263**
+Routine Name: PSJHL6
+    Before: B31795642   After: B31807802  **1,11,27,34,40,42,51,59,88,
+                                           98,181,263**
+Routine Name: PSJLIUTL
+    Before: B51802823   After: B53236065  **39,50,58,81,85,110,180,263**
+ 
+Routine list of preceding patches: 180, 181, 226
+
+=============================================================================
+User Information:
+Entered By  : VO,MAI                        Date Entered  : JUL 13, 2011
+Completed By: SBERRO,JACQUES                Date Completed: AUG 11, 2011
+Released By : TEAGUE,LYN                    Date Released : AUG 11, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

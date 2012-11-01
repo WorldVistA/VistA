@@ -1,0 +1,582 @@
+Released PRC*5.1*152 SEQ #128
+Extracted from mail message
+**KIDS**:PRC*5.1*152^
+
+**INSTALL NAME**
+PRC*5.1*152
+"BLD",6591,0)
+PRC*5.1*152^IFCAP^0^3101214^y
+"BLD",6591,1,0)
+^^5^5^3101027^
+"BLD",6591,1,1,0)
+This enhancement patch provides new APIs to enable the Fee Basis
+"BLD",6591,1,2,0)
+application to enforce and report on segregation of duties for the
+"BLD",6591,1,3,0)
+Certifier of a Fee payment batch. Per segregation of duties a Certifier
+"BLD",6591,1,4,0)
+cannot have previously acted in the role of Requestor, Approver or
+"BLD",6591,1,5,0)
+Obligator on the 1358 that is linked to the payment batch.
+"BLD",6591,4,0)
+^9.64PA^^
+"BLD",6591,6.3)
+3
+"BLD",6591,"KRN",0)
+^9.67PA^779.2^20
+"BLD",6591,"KRN",.4,0)
+.4
+"BLD",6591,"KRN",.401,0)
+.401
+"BLD",6591,"KRN",.402,0)
+.402
+"BLD",6591,"KRN",.403,0)
+.403
+"BLD",6591,"KRN",.5,0)
+.5
+"BLD",6591,"KRN",.84,0)
+.84
+"BLD",6591,"KRN",3.6,0)
+3.6
+"BLD",6591,"KRN",3.8,0)
+3.8
+"BLD",6591,"KRN",9.2,0)
+9.2
+"BLD",6591,"KRN",9.8,0)
+9.8
+"BLD",6591,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",6591,"KRN",9.8,"NM",1,0)
+PRCEMOA^^0^B37610580
+"BLD",6591,"KRN",9.8,"NM","B","PRCEMOA",1)
+
+"BLD",6591,"KRN",19,0)
+19
+"BLD",6591,"KRN",19.1,0)
+19.1
+"BLD",6591,"KRN",19.1,"NM",0)
+^9.68A^^0
+"BLD",6591,"KRN",101,0)
+101
+"BLD",6591,"KRN",409.61,0)
+409.61
+"BLD",6591,"KRN",771,0)
+771
+"BLD",6591,"KRN",779.2,0)
+779.2
+"BLD",6591,"KRN",870,0)
+870
+"BLD",6591,"KRN",8989.51,0)
+8989.51
+"BLD",6591,"KRN",8989.52,0)
+8989.52
+"BLD",6591,"KRN",8994,0)
+8994
+"BLD",6591,"KRN","B",.4,.4)
+
+"BLD",6591,"KRN","B",.401,.401)
+
+"BLD",6591,"KRN","B",.402,.402)
+
+"BLD",6591,"KRN","B",.403,.403)
+
+"BLD",6591,"KRN","B",.5,.5)
+
+"BLD",6591,"KRN","B",.84,.84)
+
+"BLD",6591,"KRN","B",3.6,3.6)
+
+"BLD",6591,"KRN","B",3.8,3.8)
+
+"BLD",6591,"KRN","B",9.2,9.2)
+
+"BLD",6591,"KRN","B",9.8,9.8)
+
+"BLD",6591,"KRN","B",19,19)
+
+"BLD",6591,"KRN","B",19.1,19.1)
+
+"BLD",6591,"KRN","B",101,101)
+
+"BLD",6591,"KRN","B",409.61,409.61)
+
+"BLD",6591,"KRN","B",771,771)
+
+"BLD",6591,"KRN","B",779.2,779.2)
+
+"BLD",6591,"KRN","B",870,870)
+
+"BLD",6591,"KRN","B",8989.51,8989.51)
+
+"BLD",6591,"KRN","B",8989.52,8989.52)
+
+"BLD",6591,"KRN","B",8994,8994)
+
+"BLD",6591,"QUES",0)
+^9.62^^
+"MBREQ")
+0
+"PKG",455,-1)
+1^1
+"PKG",455,0)
+IFCAP^PRC^IFCAP System Files
+"PKG",455,20,0)
+^9.402P^^
+"PKG",455,22,0)
+^9.49I^1^1
+"PKG",455,22,1,0)
+5.1^3001012^3001019^68
+"PKG",455,22,1,"PAH",1,0)
+152^3101214
+"PKG",455,22,1,"PAH",1,1,0)
+^^5^5^3101214
+"PKG",455,22,1,"PAH",1,1,1,0)
+This enhancement patch provides new APIs to enable the Fee Basis
+"PKG",455,22,1,"PAH",1,1,2,0)
+application to enforce and report on segregation of duties for the
+"PKG",455,22,1,"PAH",1,1,3,0)
+Certifier of a Fee payment batch. Per segregation of duties a Certifier
+"PKG",455,22,1,"PAH",1,1,4,0)
+cannot have previously acted in the role of Requestor, Approver or
+"PKG",455,22,1,"PAH",1,1,5,0)
+Obligator on the 1358 that is linked to the payment batch.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PRCEMOA")
+0^1^B37610580^n/a
+"RTN","PRCEMOA",1,0)
+PRCEMOA ;WOIFO/SAB - MISCELLANEOUS OBLIGATION APIS ;12/14/2010
+"RTN","PRCEMOA",2,0)
+V ;;5.1;IFCAP;**152**;Oct 20, 2000;Build 3
+"RTN","PRCEMOA",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PRCEMOA",4,0)
+ Q
+"RTN","PRCEMOA",5,0)
+ ;
+"RTN","PRCEMOA",6,0)
+UOKCERT(PRCOUT,PRC1358,PRCPER) ; User OK as Certifier for a 1358
+"RTN","PRCEMOA",7,0)
+ ; This API verifies that the person would not violate segregation of
+"RTN","PRCEMOA",8,0)
+ ; duty when certifying an invoice associated with a 1358 miscellaneous
+"RTN","PRCEMOA",9,0)
+ ; obligation by ensuring that they have not previously acted as a
+"RTN","PRCEMOA",10,0)
+ ; requestor, approver, or obligator on that 1358.
+"RTN","PRCEMOA",11,0)
+ ;
+"RTN","PRCEMOA",12,0)
+ ; inputs
+"RTN","PRCEMOA",13,0)
+ ;   PRCOUT  - output variable, passed by reference
+"RTN","PRCEMOA",14,0)
+ ;   PRC1358 - 1358 obligation number (e.g. 688-C15001)
+"RTN","PRCEMOA",15,0)
+ ;   PRCPER  - User, NEW PERSON (#200) file IEN
+"RTN","PRCEMOA",16,0)
+ ; output
+"RTN","PRCEMOA",17,0)
+ ;   PRCOUT will be set equal to one of the following values
+"RTN","PRCEMOA",18,0)
+ ;   =1  if person can certify an invoice associated with the 1358
+"RTN","PRCEMOA",19,0)
+ ;   =0^text  if person not OK as certifier due to segregation of duties
+"RTN","PRCEMOA",20,0)
+ ;     where text is of the form
+"RTN","PRCEMOA",21,0)
+ ;       You are the 'role' of 'an event'.
+"RTN","PRCEMOA",22,0)
+ ;       e.g. "You are the Requestor of an Adjustment to the 1358."
+"RTN","PRCEMOA",23,0)
+ ;   =E^text  if problem with inputs or the 1358 data
+"RTN","PRCEMOA",24,0)
+ ;     where list of possible error text is:
+"RTN","PRCEMOA",25,0)
+ ;       The 1358 number was not specified.
+"RTN","PRCEMOA",26,0)
+ ;       The Person was not specified.
+"RTN","PRCEMOA",27,0)
+ ;       The 1358 was not found in file 442.
+"RTN","PRCEMOA",28,0)
+ ;       The document is not a 1358.
+"RTN","PRCEMOA",29,0)
+ ;       The PRIMARY 2237 value is missing.
+"RTN","PRCEMOA",30,0)
+ ;
+"RTN","PRCEMOA",31,0)
+ N PRC410P,PRC442,PRCLIST,PRCODI
+"RTN","PRCEMOA",32,0)
+ S PRCOUT=1 ; init output value
+"RTN","PRCEMOA",33,0)
+ ;
+"RTN","PRCEMOA",34,0)
+ ; verify inputs
+"RTN","PRCEMOA",35,0)
+ D
+"RTN","PRCEMOA",36,0)
+ . N PRCY0
+"RTN","PRCEMOA",37,0)
+ . ; check for required inputs
+"RTN","PRCEMOA",38,0)
+ . I $G(PRC1358)="" S PRCOUT="E^The 1358 number was not specified." Q
+"RTN","PRCEMOA",39,0)
+ . I $G(PRCPER)="" S PRCOUT="E^The Person was not specified." Q
+"RTN","PRCEMOA",40,0)
+ . ;
+"RTN","PRCEMOA",41,0)
+ . ; find 1358 in file 442
+"RTN","PRCEMOA",42,0)
+ . S PRC442=$O(^PRC(442,"B",PRC1358,0))
+"RTN","PRCEMOA",43,0)
+ . I PRC442'>0 S PRCOUT="E^The 1358 was not found in file 442." Q
+"RTN","PRCEMOA",44,0)
+ . ;
+"RTN","PRCEMOA",45,0)
+ . S PRCY0=$G(^PRC(442,PRC442,0))
+"RTN","PRCEMOA",46,0)
+ . ;
+"RTN","PRCEMOA",47,0)
+ . ; Verify METHOD OF PROCESSING = 21 MISC. OBLIGATION (1358)
+"RTN","PRCEMOA",48,0)
+ . I $P(PRCY0,U,2)'=21 S PRCOUT="E^The document is not a 1358." Q
+"RTN","PRCEMOA",49,0)
+ . ;
+"RTN","PRCEMOA",50,0)
+ . ; get PRIMARY 2237
+"RTN","PRCEMOA",51,0)
+ . S PRC410P=$P(PRCY0,U,12)
+"RTN","PRCEMOA",52,0)
+ . I PRC410P="" S PRCOUT="E^The PRIMARY 2237 value is missing." Q
+"RTN","PRCEMOA",53,0)
+ ;
+"RTN","PRCEMOA",54,0)
+ ; loop thru OBLIGATION DATA multiple
+"RTN","PRCEMOA",55,0)
+ I PRCOUT D
+"RTN","PRCEMOA",56,0)
+ . S PRCODI=0
+"RTN","PRCEMOA",57,0)
+ . F  S PRCODI=$O(^PRC(442,PRC442,10,PRCODI)) Q:'PRCODI  D  Q:'PRCOUT
+"RTN","PRCEMOA",58,0)
+ . . N PRC410,PRC410A,PRC7Y,PRCACT,PRCEVENT,PRCODY0,PRCROLE
+"RTN","PRCEMOA",59,0)
+ . . S PRCODY0=$G(^PRC(442,PRC442,10,PRCODI,0))
+"RTN","PRCEMOA",60,0)
+ . . ;
+"RTN","PRCEMOA",61,0)
+ . . ; skip entries that are not SO or AR code sheet (excludes PV)
+"RTN","PRCEMOA",62,0)
+ . . Q:"^SO^AR^"'[(U_$E(PRCODY0,1,2)_U)
+"RTN","PRCEMOA",63,0)
+ . . ;
+"RTN","PRCEMOA",64,0)
+ . . S PRC410A=$P(PRCODY0,U,11) ; 1358 ADJUSTMENT
+"RTN","PRCEMOA",65,0)
+ . . S PRC410=$S(PRC410A]"":PRC410A,1:PRC410P) ; associated 410 entry
+"RTN","PRCEMOA",66,0)
+ . . ;
+"RTN","PRCEMOA",67,0)
+ . . ; determine event type and if not rebuild add 410 entry to list
+"RTN","PRCEMOA",68,0)
+ . . I $D(PRCLIST(PRC410)) S PRCEVENT="R"  ; rebuild
+"RTN","PRCEMOA",69,0)
+ . . E  S PRCEVENT=$S(PRC410A]"":"A",1:"O"),PRCLIST(PRC410)=""
+"RTN","PRCEMOA",70,0)
+ . . ;
+"RTN","PRCEMOA",71,0)
+ . . ; quit if rebuild since that does not impact certifier role
+"RTN","PRCEMOA",72,0)
+ . . Q:PRCEVENT="R"
+"RTN","PRCEMOA",73,0)
+ . . ;
+"RTN","PRCEMOA",74,0)
+ . . I $P(PRCODY0,U,2) S PRCACT($P(PRCODY0,U,2))="O" ; OBLIGATED BY
+"RTN","PRCEMOA",75,0)
+ . . ; get REQUESTOR and APPROVER from file 410
+"RTN","PRCEMOA",76,0)
+ . . S PRC7Y=$G(^PRCS(410,PRC410,7))
+"RTN","PRCEMOA",77,0)
+ . . I $P(PRC7Y,U,1) S PRCACT($P(PRC7Y,U,1))="R" ; REQUESTOR
+"RTN","PRCEMOA",78,0)
+ . . I $P(PRC7Y,U,3) S PRCACT($P(PRC7Y,U,3))="A" ; APPROVING OFFICIAL
+"RTN","PRCEMOA",79,0)
+ . . ;
+"RTN","PRCEMOA",80,0)
+ . . ; check if person acted on this 1358 event in IFCAP 
+"RTN","PRCEMOA",81,0)
+ . . S PRCROLE=$G(PRCACT(PRCPER))
+"RTN","PRCEMOA",82,0)
+ . . I PRCROLE]"" D
+"RTN","PRCEMOA",83,0)
+ . . . S PRCOUT="0^You are the "
+"RTN","PRCEMOA",84,0)
+ . . . S PRCOUT=PRCOUT_$S(PRCROLE="R":"Requestor",PRCROLE="A":"Approving Official",1:"Obligator")
+"RTN","PRCEMOA",85,0)
+ . . . S PRCOUT=PRCOUT_" "_$S(PRCEVENT="O":"of the 1358",1:"of an Adjustment to the 1358")_"."
+"RTN","PRCEMOA",86,0)
+ ;
+"RTN","PRCEMOA",87,0)
+ Q
+"RTN","PRCEMOA",88,0)
+ ;
+"RTN","PRCEMOA",89,0)
+EV1358(PRC1358,PRCARR) ; Events (and Actors) for a 1358
+"RTN","PRCEMOA",90,0)
+ ; input
+"RTN","PRCEMOA",91,0)
+ ;   PRC1358 - 1358 number (e.g. 688-C15001)
+"RTN","PRCEMOA",92,0)
+ ;   PRCARR  - (optional) results array name, passed by value,
+"RTN","PRCEMOA",93,0)
+ ;             closed root, default value is "^TMP(""PRC1358"",$J)"
+"RTN","PRCEMOA",94,0)
+ ;             The root must NOT be a variable name newed by this API
+"RTN","PRCEMOA",95,0)
+ ;              (PRC1358,PRCARR,PRC410P,PRC442,PRCLIST,PRCODI,PRCRET)
+"RTN","PRCEMOA",96,0)
+ ; return value = 1 or E^text
+"RTN","PRCEMOA",97,0)
+ ;   = 1 if no problems
+"RTN","PRCEMOA",98,0)
+ ;   = E^text if problem with inputs or 1358 data
+"RTN","PRCEMOA",99,0)
+ ;     List of possible errors
+"RTN","PRCEMOA",100,0)
+ ;       The array name is invalid.
+"RTN","PRCEMOA",101,0)
+ ;       The 1358 number was not specified.
+"RTN","PRCEMOA",102,0)
+ ;       The 1358 was not found in file 442.
+"RTN","PRCEMOA",103,0)
+ ;       The document is not a 1358.
+"RTN","PRCEMOA",104,0)
+ ;       The PRIMARY 2237 value is missing.
+"RTN","PRCEMOA",105,0)
+ ; output
+"RTN","PRCEMOA",106,0)
+ ;   PRCARR - array is initialized and populated
+"RTN","PRCEMOA",107,0)
+ ;      PRCARR(DATE/TIME,EVENT)=REQUESTOR^APPROVER^OBLIGATOR
+"RTN","PRCEMOA",108,0)
+ ;      where
+"RTN","PRCEMOA",109,0)
+ ;        DATE/TIME is a FileMan Date/Time (internal format) when
+"RTN","PRCEMOA",110,0)
+ ;          the transaction was obligated
+"RTN","PRCEMOA",111,0)
+ ;        EVENT is O (OBLIGATE), or A (ADJUST)
+"RTN","PRCEMOA",112,0)
+ ;        REQUESTOR is a NEW PERSON ien or null value
+"RTN","PRCEMOA",113,0)
+ ;        APPROVER is a NEW PERSON ien or null value
+"RTN","PRCEMOA",114,0)
+ ;        OBLIGATOR is a NEW PERSON ien or null value
+"RTN","PRCEMOA",115,0)
+ ;      e.g. ^TMP("PRCS1358",$J,3101005.091223,"O")=134^5432^43
+"RTN","PRCEMOA",116,0)
+ ;           ^TMP("PRCS1358",$J,3101007.101501,"A")=134^9473^4677
+"RTN","PRCEMOA",117,0)
+ ;
+"RTN","PRCEMOA",118,0)
+ N PRC410P,PRC442,PRCLIST,PRCODI,PRCRET
+"RTN","PRCEMOA",119,0)
+ K ^TMP("PRC1358",$J) ; init results
+"RTN","PRCEMOA",120,0)
+ S PRCRET=1 ; init return value
+"RTN","PRCEMOA",121,0)
+ ;
+"RTN","PRCEMOA",122,0)
+ ; verify inputs
+"RTN","PRCEMOA",123,0)
+ D
+"RTN","PRCEMOA",124,0)
+ . N PRCY0
+"RTN","PRCEMOA",125,0)
+ . ; check optional array root name
+"RTN","PRCEMOA",126,0)
+ . I "^PRC1358^PRCARR^PRC410P^PRC442^PRCLIST^PRCODI^PRCRET^"[(U_$P($G(PRCARR),"(")_U) S PRCRET="E^The array name is invalid." Q
+"RTN","PRCEMOA",127,0)
+ . ;
+"RTN","PRCEMOA",128,0)
+ . ; check for required inputs
+"RTN","PRCEMOA",129,0)
+ . I $G(PRC1358)="" S PRCRET="E^The 1358 number was not specified." Q
+"RTN","PRCEMOA",130,0)
+ . ;
+"RTN","PRCEMOA",131,0)
+ . ; find 1358 in file 442
+"RTN","PRCEMOA",132,0)
+ . S PRC442=$O(^PRC(442,"B",PRC1358,0))
+"RTN","PRCEMOA",133,0)
+ . I PRC442'>0 S PRCRET="E^The 1358 was not found in file 442." Q
+"RTN","PRCEMOA",134,0)
+ . ;
+"RTN","PRCEMOA",135,0)
+ . S PRCY0=$G(^PRC(442,PRC442,0))
+"RTN","PRCEMOA",136,0)
+ . ;
+"RTN","PRCEMOA",137,0)
+ . ; Verify METHOD OF PROCESSING = 21 MISC. OBLIGATION (1358)
+"RTN","PRCEMOA",138,0)
+ . I $P(PRCY0,U,2)'=21 S PRCRET="E^The document is not a 1358." Q
+"RTN","PRCEMOA",139,0)
+ . ;
+"RTN","PRCEMOA",140,0)
+ . ; get PRIMARY 2237
+"RTN","PRCEMOA",141,0)
+ . S PRC410P=$P(PRCY0,U,12)
+"RTN","PRCEMOA",142,0)
+ . I PRC410P="" S PRCRET="E^The PRIMARY 2237 value is missing." Q
+"RTN","PRCEMOA",143,0)
+ ;
+"RTN","PRCEMOA",144,0)
+ ; loop thru OBLIGATION DATA multiple
+"RTN","PRCEMOA",145,0)
+ I PRCRET D
+"RTN","PRCEMOA",146,0)
+ . S PRCODI=0 F  S PRCODI=$O(^PRC(442,PRC442,10,PRCODI)) Q:'PRCODI  D
+"RTN","PRCEMOA",147,0)
+ . . N PRC410,PRC410A,PRC7Y,PRCDT,PRCODY0,PRCEVENT,PRCRA,PRCRO,PRCRR
+"RTN","PRCEMOA",148,0)
+ . . S PRCODY0=$G(^PRC(442,PRC442,10,PRCODI,0))
+"RTN","PRCEMOA",149,0)
+ . . ;
+"RTN","PRCEMOA",150,0)
+ . . ; skip entries that are not SO or AR code sheet (excludes PV)
+"RTN","PRCEMOA",151,0)
+ . . Q:"^SO^AR^"'[(U_$E(PRCODY0,1,2)_U)
+"RTN","PRCEMOA",152,0)
+ . . ;
+"RTN","PRCEMOA",153,0)
+ . . S PRCDT=$P(PRCODY0,U,6) ; DATE SIGNED
+"RTN","PRCEMOA",154,0)
+ . . S PRC410A=$P(PRCODY0,U,11) ; 1358 ADJUSTMENT
+"RTN","PRCEMOA",155,0)
+ . . S PRC410=$S(PRC410A]"":PRC410A,1:PRC410P) ; associated 410 entry
+"RTN","PRCEMOA",156,0)
+ . . ;
+"RTN","PRCEMOA",157,0)
+ . . ; determine event type and if not rebuild add 410 entry to list
+"RTN","PRCEMOA",158,0)
+ . . I $D(PRCLIST(PRC410)) S PRCEVENT="R" ; REBUILD
+"RTN","PRCEMOA",159,0)
+ . . E  S PRCEVENT=$S(PRC410A]"":"A",1:"O"),PRCLIST(PRC410)=""
+"RTN","PRCEMOA",160,0)
+ . . ;
+"RTN","PRCEMOA",161,0)
+ . . ; quit if rebuild since that does not impact certifier role
+"RTN","PRCEMOA",162,0)
+ . . Q:PRCEVENT="R"
+"RTN","PRCEMOA",163,0)
+ . . ;
+"RTN","PRCEMOA",164,0)
+ . . S PRCRO=$P(PRCODY0,U,2) ; OBLIGATED BY
+"RTN","PRCEMOA",165,0)
+ . . ; get REQUESTOR and APPROVER from file 410
+"RTN","PRCEMOA",166,0)
+ . . S PRC7Y=$G(^PRCS(410,PRC410,7))
+"RTN","PRCEMOA",167,0)
+ . . S PRCRR=$P(PRC7Y,U,1) ; REQUESTOR
+"RTN","PRCEMOA",168,0)
+ . . S PRCRA=$P(PRC7Y,U,3) ; APPROVING OFFICIAL
+"RTN","PRCEMOA",169,0)
+ . . ;
+"RTN","PRCEMOA",170,0)
+ . . ; save data to ^TMP
+"RTN","PRCEMOA",171,0)
+ . . S ^TMP("PRC1358",$J,PRCDT,PRCEVENT)=$G(PRCRR)_U_$G(PRCRA)_U_$G(PRCRO)
+"RTN","PRCEMOA",172,0)
+ ;
+"RTN","PRCEMOA",173,0)
+ ; if an output array was specified, move the data to it
+"RTN","PRCEMOA",174,0)
+ I PRCRET,$G(PRCARR)]"",$D(^TMP("PRC1358",$J)) D
+"RTN","PRCEMOA",175,0)
+ . Q:($NA(@PRCARR,2))=("^TMP(""PRC1358"","_$J_")")  ; same as default
+"RTN","PRCEMOA",176,0)
+ . K @PRCARR
+"RTN","PRCEMOA",177,0)
+ . M @PRCARR=^TMP("PRC1358",$J)
+"RTN","PRCEMOA",178,0)
+ . K ^TMP("PRC1358",$J)
+"RTN","PRCEMOA",179,0)
+ ;
+"RTN","PRCEMOA",180,0)
+ Q PRCRET
+"VER")
+8.0^22.0
+"BLD",6591,6)
+^128
+**END**
+**END**

@@ -1,0 +1,310 @@
+
+=============================================================================
+Run Date: JUN 29, 2012                     Designation: DG*5.3*841
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #755                    Status: Released
+                  Compliance Date: JUL 29, 2012
+=============================================================================
+
+Associated patches: (v)DG*5.3*688  <<= must be installed BEFORE `DG*5.3*841'
+                    (v)DG*5.3*754  <<= must be installed BEFORE `DG*5.3*841'
+                    (v)DG*5.3*797  <<= must be installed BEFORE `DG*5.3*841'
+                    (v)DG*5.3*838  <<= must be installed BEFORE `DG*5.3*841'
+                    (v)DG*5.3*840  <<= must be installed BEFORE `DG*5.3*841'
+
+Subject: ESR 3.6 Medal of Honor
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ **************************************************************************
+ Note:  This patch is being released in support of the Enrollment System
+        Re-design (ESR) 3.6 Public Law 111-163 project.  DG*5.3*841 is 
+        being released along with IB*2*454 (Integrated Billing) in host
+        file DG_53_P841.KID.
+   
+        It is important that these patches be installed no later than the
+        compliance date.  Your understanding and support is appreciated.
+ **************************************************************************
+  
+ The Health Eligibility Center (HEC) requested modifications to the 
+ Enrollment System Redesign (ESR) and VistA Registration, Enrollment and
+ Eligibility (Vista REE) software to support the requirements of Public Law
+ 111-163. On May 5, 2010, the President signed into law, Public Law (PL)
+ 111-163. the Caregivers and Veterans Omnibus Health Services Act of
+ 2010.  This law provides assistance to caregivers of Veterans and improves
+ the provision of health care services to Veterans.  Section 511 prohibits
+ collection of copayments from Veterans who are Catastrophically Disabled.
+ Section 512 provides for a higher priority status for certain Veterans who
+ are medal of honor recipients.  These changes were effective on the date
+ of passage, May 5, 2010.  These patches are being issued in support of
+ some of these provisions.
+  
+ This patch modifies the Registration v5.3 application as described below:
+  
+ 1.  Receive Medal of Honor indicator from ESR
+ ----------------------------------------------
+ The Medal of Honor (MOH) indicator will now be sent to VistA from ESR in 
+ the Z11 HL7 message.  The Z11 receivers were modified to upload the MOH
+ indicator from the ZMH segment.
+  
+ 2.  Assign Medal of Honor recipients to Priority Group 3
+ --------------------------------------------------------
+ Modifications were made to the Priority Group algorithm to assign a MOH 
+ recipient to Priority Group 3, unless other eligibility factors exist 
+ that would place the Veteran in a higher group.
+  
+ 3.  Display the new Medal of Honor indicator
+ --------------------------------------------
+ The new Medal of Honor indicator will be displayed on Registration and 
+ Enrollment screens, but only if the value of the indicator is "YES".  The 
+ MOH indicator was added to the Military Service Data, Screen 6 of the 
+ Registration options.  It is a display-only field and cannot be modified 
+ by the user.  The MOH indicator was also added to the Priority Factors 
+ screen of the Patient Enrollment option.
+  
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Components Sent With Patch
+ --------------------------
+ N/A
+  
+  
+ Documentation Retrieval:
+ ========================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to use File Transfer Protocol (FTP) to download 
+ the files from download.vista.med.va.gov. This transmits the files from
+ the first available FTP server. Sites may also elect to retrieve software
+ directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at:  http://www.va.gov/vdl/
+  
+ The following file should be downloaded in the binary FTP mode.
+   
+ Filename                 Description
+ --------                 -----------
+ DG_5_3_P841_REG_UM.PDF   Revised PIMS V. 5.3 Registration Menu User Manual
+  
+  
+ Test Sites:
+ ===========
+ VA Health Care Upstate New York, NY
+ Chillicothe VAMC, OH
+ VA Puget Sound HCS, WA
+  
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be run with users on the system, however, because the
+ Registration options need to be placed out of order, we suggest it be
+ installed after business hours.
+  
+ If installed during the normal workday, it is recommended that the
+ following menu options be disabled to prevent possible conflicts while
+ running the KIDS Install. Other VISTA users will not be affected.
+   
+      Admit a Patient                              [DG ADMIT PATIENT]
+      Discharge a Patient                      [DG DISCHARGE PATIENT]
+      Extended Bed Control                  [DG BED CONTROL EXTENDED]
+      Provider Change                          [DGPM PROVIDER CHANGE]
+      Transfer a Patient                        [DG TRANSFER PATIENT]
+      Treating Specialty Transfer              [DG TREATING TRANSFER]
+      Register a Patient                        [DG REGISTER PATIENT]
+      Load/Edit Patient Data                   [DG LOAD PATIENT DATA]
+      Appointment Management                          [SDAM APPT MGT]
+      Appointment Check-in/Check-out         [SDAM APPT CHECK IN/OUT]
+      Add/Edit Stop Codes                                 [SDADDEDIT]
+      Make Appointment                                          [SDM]
+      Cancel/Edit/Add Patient Charges    [IB CANCEL/EDIT/ADD CHARGES]
+      Catastrophically Disabled Copay Report    [IB CD CHARGE REPORT] 
+   
+  
+ Installation will take less than 2 minutes.
+   
+  1.  OBTAIN PATCHES
+      ==============
+   
+      Obtain the host file DG_53_P841.KID, which contains the following
+      two patches:
+   
+         DG*5.3*841
+         IB*2.0*454
+   
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+   
+         download.vista.med.va.gov
+   
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+   
+         Albany                  ftp.fo-albany.med.va.gov
+         Hines                   ftp.fo-hines.med.va.gov
+         Salt Lake City          ftp.fo-slc.med.va.gov
+   
+      The DG_53_P841.KID host file is located in the anonymous.software
+      directory.  Use ASCII Mode when downloading the file.
+   
+  2.  From the Installation menu, select the LOAD A DISTRIBUTION option.
+   
+      When prompted for "Enter a Host File:", enter the full directory path
+      where you saved the host file DG_53_P841.KID (e.g.,
+      SYS$SYSDEVICE:[ANONYMOUS]DG_53_P841.KID).
+   
+      When prompted for "OK to continue with Load? NO//", enter "YES."
+   
+      The following will display:
+   
+         Loading Distribution...
+   
+         DG*5.3*841
+         IB*2.0*454
+   
+      Use INSTALL NAME: DG*5.3*841 to install this
+      distribution.
+   
+  3.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD:
+      ==================================================
+      From the Installation menu, you may select to use the following
+      options (when prompted for the INSTALL NAME, enter
+      DG*5.3*841):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch.  It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+  4.  INSTALL MULTI-BUILD:
+      ====================
+      This is the step to start the installation of this KIDS build.  This
+      will need to be run for DG*5.3*841 multi-build.
+   
+      a.  Choose the Install Package(s) option to start the install.
+      b.  When prompted for the "Select INSTALL NAME:", enter DG*5.3*841.
+      c.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion
+          of Install? NO//"  enter NO.
+      d.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? YES//"  enter NO.
+      e.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? YES//"  enter YES.
+      f.  When prompted "Enter options you wish to mark as 'Out Of
+          Order':"  enter the following options:
+  
+          Admit a Patient                              [DG ADMIT PATIENT]
+          Discharge a Patient                      [DG DISCHARGE PATIENT]
+          Extended Bed Control                  [DG BED CONTROL EXTENDED]
+          Provider Change                          [DGPM PROVIDER CHANGE]
+          Transfer a Patient                        [DG TRANSFER PATIENT]
+          Treating Specialty Transfer              [DG TREATING TRANSFER]
+          Register a Patient                        [DG REGISTER PATIENT]
+          Load/Edit Patient Data                   [DG LOAD PATIENT DATA]
+          Appointment Management                          [SDAM APPT MGT]
+          Appointment Check-in/Check-out         [SDAM APPT CHECK IN/OUT]
+          Add/Edit Stop Codes                                 [SDADDEDIT]
+          Make Appointment                                          [SDM]
+          Cancel/Edit/Add Patient Charges    [IB CANCEL/EDIT/ADD CHARGES]
+          Catastrophically Disabled Copay Report    [IB CD CHARGE REPORT] 
+          
+      g.  When prompted "Enter protocols you wish to mark as 'Out Of
+          Order':"  enter <return>.
+      h.  When prompted "Delay Install (Minutes):  (0-60): 0//"  enter an
+          appropriate number of minutes to delay the installation in 
+          order to give users enough time to exit the disabled options
+          before the installation starts.
+      i.  When prompted "Device: Home//"  respond with the correct device.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENA
+    Before: B20066908   After: B20613434  **121,122,147,232,314,564,672,
+                                           659,653,688,841**
+Routine Name: DGENA1A
+    Before: B14794142   After: B15415989  **121,147,232,314,564,672,659,
+                                           653,688,841**
+Routine Name: DGENELA
+    Before: B26888074   After: B27857025  **121,147,232,314,451,564,631,
+                                           672,659,583,653,688,841**
+Routine Name: DGENELA1
+    Before: B77796991   After: B78071004  **147,327,314,367,497,451,564,
+                                           631,672,659,583,746,653,688,
+                                           841**
+Routine Name: DGENELA4
+    Before: B68278282   After: B69534652  **232,275,306,327,314,367,417,
+                                           437,456,491,451,564,672,659,
+                                           653,688,803,754,841**
+Routine Name: DGENL1
+    Before: B67706574   After: B69443276  **121,147,232,266,343,564,672,
+                                           659,653,688,838,841**
+Routine Name: DGENPTA
+    Before: B40338921   After: B40976431  **121,122,147,688,754,838,841**
+Routine Name: DGENPTA1
+    Before: B21823541   After: B22181053  **121,147,314,677,659,653,688,
+                                           810,754,838,841**
+Routine Name: DGENU
+    Before: B43981146   After: B44311306  **121,122,147,232,314,564,624,
+                                           672,659,653,688,536,838,841**
+Routine Name: DGENUPL3
+    Before: B71805311   After: B75053019  **147,230,232,377,404,451,653,
+                                           688,793,797,841**
+Routine Name: DGENUPL4
+    Before: B64586357   After: B67002910  **147,177,232,253,327,367,377,
+                                           514,451,625,673,708,688,841**
+Routine Name: DGMTR
+    Before: B68425673   After: B68219377  **45,93,114,137,141,147,177,
+                                           182,146,305,326,314,344,402,
+                                           426,456,495,672,688,773,840,
+                                           841**
+Routine Name: DGRP6
+    Before: B15573608   After: B15906836  **161,247,343,397,342,451,672,
+                                           689,797,841**
+ 
+Routine list of preceding patches: 797, 838, 840
+
+=============================================================================
+User Information:
+Entered By  : MOORE,TERRY D                 Date Entered  : MAR 02, 2011
+Completed By: MORRIS,DARLENE V              Date Completed: JUN 05, 2012
+Released By : GROOMS,ANTHONY E              Date Released : JUN 29, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

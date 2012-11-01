@@ -1,0 +1,186 @@
+$TXT Created by TRAN-TEST,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Monday, 03/28/11 at 07:20
+=============================================================================
+Run Date: JUL 19, 2011                     Designation: XT*7.3*130
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3       SEQ #101                    Status: Released
+                  Compliance Date: AUG 19, 2011
+=============================================================================
+
+Associated patches: (v)XT*7.3*106  <<= must be installed BEFORE `XT*7.3*130'
+
+Subject: Patch Statistics by Compliance Date Option
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy tickets #:
+ - HD0000000468089
+ - HD0000000470216
+  
+ Test sites:
+ - CENTRAL TEXAS HCS
+ - MARYLAND HCS
+ - WHITE RIVER JUNCTION, VT
+  
+ Thanks to all the test sites; Special thanks to Judy E. Vance for
+ providing the fix and code for the new option.
+  
+                             Patch XT*7.3*130
+  
+ This patch does the following things:
+  
+ 1) Fixes Report 'Patch Statistics by Compliance Date'[XTPM PATCH STATS BY
+    COMPLIANCE]. The report is inaccurate as it does not show '# Days
+    Delinquent' for patches that were not installed on time.
+  
+    For example:
+    -----------
+  
+  Report before this patch:
+  
+  Compliance   Patch      Release   Install                   # Days
+  Date         Number     Date      Date        Priority    Delinquent
+  --------------------------------------------------------------------
+  FEB 5,2011   MAG*3*105 JAN 5,2011 FEB 11,2011 Mandatory   
+                                                           =========
+                                                            
+              ('# Days Delinquent' should be 6 days.)
+  
+  
+  Report after this patch:
+  
+  Compliance   Patch      Release   Install                   # Days
+  Date         Number     Date      Date        Priority    Delinquent
+  --------------------------------------------------------------------
+  FEB 5,2011   MAG*3*105 JAN 5,2011 FEB 11,2011 Mandatory     6 days
+                                                              ======
+  
+ 2) Corrects problem of missing number two "2" of the year on the 'Patch 
+    Statistics by Compliance Date' report. This happens for NON-KIDS 
+    patches.
+  
+    For example:
+    -----------
+  
+  Report before this patch:
+  
+  Compliance   Patch      Release   Install                   # Days
+  Date         Number     Date      Date        Priority    Delinquent
+  --------------------------------------------------------------------  
+  MAR 9,2011  WEBV*1*20  MAR 9,2011  MAR 9,011  Mandatory  
+                                     =========
+  
+    (2 for the year of 2011 is missing for Install Date.)
+  
+   
+  Report after this patch:
+  
+  Compliance   Patch      Release   Install                   # Days
+  Date         Number     Date      Date        Priority    Delinquent
+  --------------------------------------------------------------------  
+  MAR 9,2011 WEBV*1*20 MAR 9,2011  MAR 9,2011   Mandatory
+                                   ==========
+  
+ 3) Adds a new option 'Patch Statistics by Released Date' [XTPM PATCH 
+    STATS BY RELEASED] for 'Patch Reports' menu [XTPM PATCH REPORTS].
+  
+         NAME: XTPM PATCH STATS BY RELEASED
+         MENU TEXT: Patch Statistics by Released Date
+         TYPE: run routine                     CREATOR: TRAN-TEST,BA
+         PACKAGE: TOOLKIT
+         DESCRIPTION:   This prints statistics by released date.  
+         ROUTINE: XTPMSTA3
+         UPPERCASE MENU TEXT: PATCH STATISTICS BY RELEASED D
+  
+    
+    Select OPTION NAME:    XTPM PATCH REPORTS     Patch Reports
+  
+    1      Complete Patch Installation History
+    2      Uninstalled Patches by Compliance Date
+    3      Uninstalled Patch Listing - Alphabetical
+    4      Patches Due in the Next Seven Days
+    5      Past Due Patch Report
+    6      Patch Statistics by Reporting Group
+    7      Patch Statistics by Compliance Date
+    8      Patch Statistics by Released Date
+  
+  
+ Blood Bank Team Coordination
+   ============================
+   Clearance:  3/28/2011
+  
+   EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*130 contains 
+   changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+   VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+   not alter or modify any VistA Blood Bank software design safeguards or 
+   safety critical elements functions.
+    
+   RISK ANALYSIS: Changes made by patch XT*7.3*130 have no effect on Blood 
+   Bank software functionality, therefore RISK is none.
+    
+   Installation Instructions
+   =========================
+    
+   1. Users ARE allowed to be on the system during the installation. 
+      However, it is recommended that the patch be installed during
+      non-peak time. It will take about one minute to install the
+      the patch, but it can be queued if you wish.
+    
+   2. You DO NOT need to stop TaskMan or the background filers.
+    
+   3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+      This option will load the KIDS package onto your system.
+    
+   4. The patch has now been loaded into a Transport global on your 
+      system. You now need to use KIDS to install the Transport global. On
+      the KIDS menu, under the 'Installation' menu, use the following
+      options:
+    
+                   Verify Checksums in Transport Global
+                   Print Transport Global
+                   Compare Transport Global to Current System
+                   Backup a Transport Global
+    
+      On the KIDS menu, under the 'Installation' menu, use the following
+      option:
+                   Install Package(s)  
+                   Select INSTALL NAME:XT*7.3*130
+                                       ========== 
+   
+     Accept the defaults for the following install questions:
+     Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+     Want KIDS to INHIBIT LOGONs during the install? NO//
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**; Apr 25, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XTPMKPCF
+    Before: B11607575   After: B11677015  **98,106,130**
+Routine Name: XTPMSTA2
+    Before: B21078592   After: B20937437  **98,100,106,130**
+Routine Name: XTPMSTA3
+    Before:       n/a   After: B22224376  **130**
+ 
+Routine list of preceding patches: 106
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : MAR 09, 2011
+Completed By: SINGH,GURBIR                  Date Completed: JUL 18, 2011
+Released By : HARROD,PAUL                   Date Released : JUL 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

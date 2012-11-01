@@ -1,0 +1,372 @@
+$TXT Created by CLARK,KAREN at SMA.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 05/26/11 at 09:33
+=============================================================================
+Run Date: AUG 18, 2011                     Designation: FB*3.5*121
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #109                    Status: Released
+                  Compliance Date: AUG 24, 2011
+=============================================================================
+
+Associated patches: (v)FB*3.5*61   <<= must be installed BEFORE `FB*3.5*121'
+                    (v)FB*3.5*107  <<= must be installed BEFORE `FB*3.5*121'
+
+Subject: HIPAA 5010 PROVIDER AND BANK INFORMATION
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ General Description:
+ --------------------
+ This patch enhances the VistA Fee Basis software for the Health
+ Insurance Portability and Accountability Act (HIPAA) 5010
+ compliance mandated prior to Jan 1, 2012. It includes new fields
+ for storing HIPAA 5010 provider and bank information in order to
+ generate minimally mandated 5010 requirements for 837 and 835 claims.
+  
+ The patch creates fields for HIPAA 5010 provider and bank data and
+ allows VistA Fee Basis to receive and process both the current 82
+ character message and new 138 character message from Central Fee
+ (AITC) containing bank name, routing and account information. Central
+ Fee (AITC) transmits the payment confirmation message to VistA. This
+ patch must be released nationally prior to the change in message
+ length from Central Fee.
+  
+  
+ Patch Components
+ ================
+ Files and Fields Associated:
+  
+ File Name (Number)          Field Name (Number)    New/Modified/Deleted
+ ------------------------------------------------------------------------
+ FEE BASIS PAYMENT (162)     ROUTING NUMBER (#55)                  New
+ FEE BASIS PAYMENT (162)     ACCOUNT NUMBER (#56)                  New
+ FEE BASIS PAYMENT (162)     FINANCIAL INSTITUTION (#57)           New
+ FEE BASIS PAYMENT (162)     ATTENDING PROV NAME (#58)             New
+ FEE BASIS PAYMENT (162)     ATTENDING PROV NPI (#59)              New
+ FEE BASIS PAYMENT (162)     ATTENDING PROV TAXONOMY CODE (#60)    New
+ FEE BASIS PAYMENT (162)     OPERATING PROV NAME (#61)             New
+ FEE BASIS PAYMENT (162)     OPERATING PROV NPI (#62)              New
+ FEE BASIS PAYMENT (162)     RENDERING PROV NAME (#63)             New
+ FEE BASIS PAYMENT (162)     RENDERING PROV NPI (#64)              New
+ FEE BASIS PAYMENT (162)     RENDERING PROV TAXONOMY CODE (#65)    New
+ FEE BASIS PAYMENT (162)     SERVICING PROV NAME (#66)             New
+ FEE BASIS PAYMENT (162)     SERVICING PROV NPI (#67)              New
+ FEE BASIS PAYMENT (162)     REFERRING PROV NAME (#68)             New
+ FEE BASIS PAYMENT (162)     REFERRING PROV NPI (#69)              New
+ FEE BASIS PAYMENT (162)     LI RENDERING PROV NAME (#73)          New
+ FEE BASIS PAYMENT (162)     LI RENDERING PROV NPI (#74)           New
+ FEE BASIS PAYMENT (162)     LI RENDERING PROV TAXONOMY (#75)      New
+ FEE BASIS INVOICE (162.5)   ROUTING NUMBER (#61)                  New
+ FEE BASIS INVOICE (162.5)   ACCOUNT NUMBER (#62)                  New
+ FEE BASIS INVOICE (162.5)   FINANCIAL INSTITUTION (#63)           New
+ FEE BASIS INVOICE (162.5)   ATTENDING PROV NAME (#64)             New
+ FEE BASIS INVOICE (162.5)   ATTENDING PROV NPI (#65)              New
+ FEE BASIS INVOICE (162.5)   ATTENDING PROV TAXONOMY CODE (#66)    New
+ FEE BASIS INVOICE (162.5)   OPERATING PROV NAME (#67)             New
+ FEE BASIS INVOICE (162.5)   OPERATING PROV NPI (#68)              New
+ FEE BASIS INVOICE (162.5)   RENDERING PROV NAME (#69)             New
+ FEE BASIS INVOICE (162.5)   RENDERING PROV NPI (#70)              New
+ FEE BASIS INVOICE (162.5)   RENDERING PROV TAXONOMY CODE (#71)    New
+ FEE BASIS INVOICE (162.5)   SERVICING PROV NAME (#72)             New
+ FEE BASIS INVOICE (162.5)   SERVICING PROV NPI (#73)              New
+ FEE BASIS INVOICE (162.5)   REFERRING PROV NAME (#74)             New
+ FEE BASIS INVOICE (162.5)   REFERRING PROV NPI (#75)              New
+ FEE BASIS INVOICE (162.5)   LINE ITEM RENDERING PROV DETAIL (#79) New
+ FEE BASIS INVOICE (162.579) LINE ITEM NUMBER (#.01)               New
+ FEE BASIS INVOICE (162.579) RENDERING PROV NAME (#.02)            New
+ FEE BASIS INVOICE (162.579) RENDERING PROV NPI (#.03)             New
+ FEE BASIS INVOICE (162.579) RENDERING PROV TAXONOMY CODE (#.04)   New
+ FEE BASIS VENDOR (161.2)    TAXONOMY CODE (#42)                   New
+ FEE BASIS SITE
+     PARAMETERS (161.4)      FPPS TRANSMIT START (#36)             New
+ FEE BASIS SITE
+     PARAMETERS (161.4)     FPPS TRANSMIT END (#37)                New
+  
+  
+ New Service Request (NSRs):
+ ------------------------------------------------------------------------
+ 20090705 VistA Fee HIPAA 5010 Implementation, Discovery and Requirements
+          To meet the expanding needs of Electronic Data Interchange
+          (EDI) processes and address the system and data changes
+          required with the 5010 version, the Fee Basis package will need
+          to collect, store and report additional elements from the claim
+          data.  National Provider Identifiers (NPI) and physical service
+          locations are needed to better inform downstream or dependent
+          processes.  Much of the additional data collection is needed to
+          support (1) revenue functions, where a third party insurance
+          has a financial obligation surrounding payments made for
+          non-service connected episodes of care and (2) pricing
+          functions, where the service location impacts the allowed
+          amount for a healthcare service.
+  
+   Note: This is the first of three patches for this NSR
+  
+ The enhancements made by this patch are described below:
+  
+ 1. ADD HIPPA 5010 FIELDS TO VISTA FEE BASIS
+  
+  Problem:
+  --------
+  VistA Fee Basis needs additional fields to store minimally required
+  HIPAA 5010 claim and payment information
+  
+  Resolution:
+  -----------
+  Created HIPAA 5010 provider name, NPI, Taxonomy code and bank fields in
+  the following files: FEE BASIS PAYMENT (#162), and FEE BASIS INVOICE
+  (#162.5). Created HIPAA 5010 Taxonomy code field in FEE BASIS VENDOR
+  (#161.2) file. Created FPPS transmit start and stop dates in the FEE
+  BASIS SITE PARAMETERS (#161.4) file.
+  
+ 2. ENSURE FB FPPS TRANSMIT OPTION CAN BE RUN BY ANY USER
+  
+  Problem:
+  --------
+  The FB FPPS TRANSMIT option contains the security key FBAASUPERVISOR,
+  but not all users who queue this report have the key so the option
+  does not run.  This affects payment data being sent to the Fee Payment
+  Processing System (FPPS) in a timely manner.  If a site has not
+  transmitted the data regularly, there may be network issues (rare).
+  
+  Resolution:
+  -----------
+  The post-installation routine removes the FBAASUPERVISOR key from the
+  FB FPPS TRANSMIT option and requests that IRM set this queuable option
+  up to run on a nightly basis.  FBHLX and FBHLX1 were modified to limit
+  the number of records sent to FPPS to 10K.  The 10K limit was imposed
+  to ensure the network is not overburdened by sites that have not run
+  the FB FPPS TRANSMIT option on a regular cycle (daily).  If the process
+  stops due to the 10K limit then the message sent to G.FEE will contain
+  a note "Process (task) stopped due reaching 10K message limit." to the
+  users.
+  
+ 3. ALLOW FEE BASIS TO PROCESS 82 AND 138 CHARACTER PAYMENT PROCESSING
+    MESSAGES FROM CENTRAL FEE.
+  
+  Problem:
+  --------
+  Modification of the Central Fee Payment Processing message (DHCPOUT)
+  to include bank information will allow Health Administration Center
+  (HAC) personnel to receive this information automatically rather than
+  performing a manual lookup to enter this data into the 835 payment
+  message.
+  
+  Solution:
+  ---------
+  Modified the FBPAID and FBPAID1 routines that process the DHCPOUT
+  file from Central Fee to accept either 82 or 138 characters.  The
+  longer message will contain bank routing number (9 characters),
+  account number (17 characters) and bank name (30 characters).  This
+  data will be filed to the FEE BASIS PAYMENT (#162) or FEE BASIS
+  INVOICE (#162.5) file depending on the fee program.  This change is
+  dependent on modifications from Central Fee and the new data will
+  not be available until Central Fee releases their production
+  changes.
+  
+  
+  TEST SITES                       Size/Type
+  ===================================================
+  El Paso, TX                      Medium
+  Milwaukee, WI                    Large
+  Gainesville (N FL/S GA)          Large/Integrated
+  Big Spring, TX                   Small
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ Documentation can be found on the VA Software Documentation Library
+ at: http://www4.va.gov/vdl/
+  
+  Title                            File Name
+  -----------------------------------------------------------
+  Installation Guide FB*3.5*121    FB_3_5_121_ig.pdf
+  Release Notes FB*3.5*121         FB_3_5_121_rn.pdf
+  Technical Manual (.doc)          fb3_5tm.doc
+  Technical Manual (.pdf)          fb3_5tm.pdf
+  
+  Sites may wish to FTP the files from download.vista.med.va.gov.
+  This transmits the files from the first available FTP server. Sites may
+  also elect to retrieve software directly from a specific server as
+  follows:
+  
+   Albany      ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+   Hines        ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+   Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  The documentation will be in the form of Adobe Acrobat files.
+  
+  Below is a list of the files related to this patch that will be needed
+  and available via the FTP sites listed above.
+  
+  File Description            File Name                  FTP Mode
+ -----------------------------------------------------------------
+  Installation Guide FB*3.5*121    FB_3_5_121_ig.pdf     Binary
+  Release Notes FB*3.5*121         FB_3_5_121_rn.pdf     Binary
+  Technical Manual (.pdf)          fb3_5tm.pdf           Binary
+  
+  
+  Patch Installation:
+  
+  Pre/Post-Installation Overview
+  ------------------------------
+  The post-install routine FBXIP121 will remove the security key
+  FBAASUPERVISOR from the FB FPPS TRANSMIT option.  Users queuing this
+  report do not always have the key which prevents the data from being
+  transmitted in a regular manner to FPPS.
+  
+  The FB FPPS TRANSMIT option should be queued to run nightly.  See the
+  installation steps for details about timing of the nightly job.  The FB
+  FPPS TRANSMIT option should be queued to reduce the dependence on the
+  interactive menu option.  This ensures that payment records are sent from
+  all facilities on a nightly basis.
+  
+  
+  
+ Installation Instructions
+ -------------------------
+ Users may be on the system during installation.  If installed during the
+ normal workday, it is recommended that the following selections in the
+ OPTION (#19) file, and all of their descendants be disabled to prevent
+ possible conflicts while running the KIDS Install. Other VistA users
+ will not be affected.
+  
+   Fee Basis Payment Message Server [FBAA PAID SERVER]
+  
+  Install Time - less than 5 minutes
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, you may elect to use the
+    following option. When prompted for the INSTALL enter the patch
+    FB*3.5*121.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD.s or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD.s, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//'
+     answer NO
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES//' answer YES
+  
+ 7. When prompted 'Enter options you wish to mark as 'Out Of Order':'
+     Enter the following option:  FBAA PAID SERVER
+              Fee Basis Payment Message Server
+    When prompted 'Enter options you wish to mark as 'Out Of Order':'
+     press <return>
+  
+ 8. When prompted 'Enter protocols you wish to mark as 'Out Of Order':'
+     press <return>.
+  
+ 9. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  Post-Installation Instructions:
+  -------------------------------
+  The post-install routine FBXIP121 will remove the security key
+  FBAASUPERVISOR from the FB FPPS TRANSMIT option.  Users queuing
+  this report do not always have the key which prevents the data
+  from being transmitted in a regular manner to FPPS.
+  
+  Once the patch has been successfully installed you may delete the
+  post install routine: FBXIP121
+  
+  1. Ensure that the FB FPPS TRANSMIT option is queued to run on
+     a nightly basis.
+  
+    **NOTE** If your site is already running this task nightly,
+    then no action is needed.
+  
+    **Otherwise, schedule FB FPPS TRANMIT per FB*3.5*61 SEQ # 58: **
+    The Transmit Invoices to FPPS [FB FPPS TRANSMIT] option should be
+    scheduled to run on a daily basis at a local time that is equivalent
+    to 23:00 Central Time.  This timing will transmit payment
+    confirmations to FPPS shortly after they have  been received from the
+    AAC, but before FPPS runs its daily job to generate HIPAA 835
+    remittance advice transactions.
+  
+     In a Cache terminal session perform the
+     following:
+  
+     VAH>D ^XUP
+     Select OPTION NAME: XUTM MGR       Taskman Management
+                         --------
+     Select Taskman Management Option: SCHedule/Unschedule Options
+                                       ---
+     Select OPTION to schedule or reschedule: FB FPPS TRANSMIT
+                                              ----------------
+  
+                             Edit Option Schedule
+        Option Name: FB FPPS TRANSMIT
+        Menu Text: Transmit Invoices to FPPS            TASK ID: 2944531
+    ---------------------------------------------------------------------
+      QUEUED TO RUN AT WHAT TIME: APR 30,2011@23:00
+  
+    DEVICE FOR QUEUED JOB OUTPUT:
+  
+     QUEUED TO RUN ON VOLUME SET:
+  
+          RESCHEDULING FREQUENCY: 1D
+  
+                 TASK PARAMETERS:
+  
+                SPECIAL QUEUEING:
+  
+    ---------------------------------------------------------------------
+    Exit     Save     Next Page     Refresh
+  
+   COMMAND: SAVE                           Press <PF1>H for help   Insert
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JULY 18, 2003;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBFHLX
+    Before: B54858004   After: B55631854  **61,121**
+Routine Name: FBFHLX1
+    Before: B29142920   After: B30458874  **61,121**
+Routine Name: FBPAID
+    Before: B27015212   After: B29740896  **5,61,107,121**
+Routine Name: FBPAID1
+    Before: B16159022   After: B14897492  **19,107,121**
+Routine Name: FBXIP121
+    Before:       n/a   After:   B655280  **121**
+ 
+Routine list of preceding patches: 107
+
+=============================================================================
+User Information:
+Entered By  : DEWAYNE,BRANDON               Date Entered  : APR 21, 2011
+Completed By: CLARK,KAREN Y                 Date Completed: AUG 05, 2011
+Released By : KUBIAK,PHILLIP A              Date Released : AUG 18, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

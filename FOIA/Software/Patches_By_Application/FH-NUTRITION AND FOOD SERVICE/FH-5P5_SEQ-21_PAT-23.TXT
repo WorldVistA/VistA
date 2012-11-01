@@ -1,0 +1,187 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 10/21/09 at 10:49
+=============================================================================
+Run Date: APR 06, 2010                     Designation: FH*5.5*23
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #21                    Status: Released
+                  Compliance Date: MAY 07, 2010
+=============================================================================
+
+Associated patches: (v)FH*5.5*13   <<= must be installed BEFORE `FH*5.5*23'
+
+Subject: FOOD ALLERGIES UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ When mapping food preferences to food allergies, recent additions to the 
+ GMR ALLERGIES file (#120.82) are not being presented for mapping.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ PATIENT SAFETY ISSUES:
+ ======================
+ PSPO #1380 - Remedy ticket HD0000000317642
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000317642 - patient food allergy not mapping to N&FS food 
+    preferences
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ North Florida/South Georgia
+ Minneapolis, MN
+ Dublin, GA
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000317642 - patient food allergy not mapping to N&FS food 
+    preferences
+  
+   Problem:
+   --------
+   
+ The Create/Map Food Preferences to Allergies [FHSELA] option 
+ displays a list of all available food allergies that have not been 
+ previously mapped.  The available list of food allergies can be 
+ displayed using the GMR ALLERGIES file (#120.82) but the list of food 
+ allergies displayed in the Create/Map Food Preference to Allergies is
+ presented using the hard coded list contained within routine FHSELA2.
+ The twelve new food allergies listed below were previously added
+ to the GMR ALLERGIES file (#120.82) but the hard coded list was not
+ updated with the same food allergies.  Therefore, an incomplete list of 
+ food allergies is presented to the user.  
+  
+ The following food allergies were previously added to the GMR ALLERGIES
+ file (#120.82) using the New Term Rapid Turnaround (NTRT) push:
+   1.    Arugula
+   2.    Capers
+   3.    Curry
+   4.    Gooseberries
+   5.    Meat Tenderizer
+   6.    Olestra
+   7.    Orange Dye
+   8.    Pomegranates
+   9.    Pudding
+   10.   Saffron
+   11.   Stevia
+   12.   Water Chestnuts
+  
+   
+ Resolution:
+ -----------
+ Routine FHSELA2 will be modified to display the twelve new food
+ allergies that were added to the GMR ALLERGIES file (#120.82)
+ so that the user can select the food allergies for mapping. To complete 
+ this process upon installation, sites must manually "map" the food 
+ allergy to the Food Preference file in the N&FS package.
+  
+ TECHNICAL SUMMARY:
+ ==================
+ The option Create/Map Food Preferences to Allergies [FHSELA] calls 
+ routines FHSELA1 and FHSELA2 to map the allergies. FHSELA2 creates a 
+ worklist of all food allergies.  FHSELA1 takes that work list and removes 
+ foods that have been previously mapped to allergies and presents the 
+ unmapped allergies to the user.  FHSELA1 handles the user's input and 
+ performs the mapping of the food preference to allergy.
+  
+ Routine FHSELA2 does not read the GMR ALLERGIES file (#120.82) and
+ dynamically create a work list of all food allergies. It uses the hard
+ coded allergies listed in the routine FHSELA2.    
+ The additions to the new GMR ALLERGIES file (#120.82) are not carried
+ over in the work list routine.  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Nutrition and Food Service users are off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes 
+  
+  
+ 1.  Load Transport Global 
+     ---------------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter FH*5.5*23):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSELA2
+    Before: B97809412   After:B108524765  **8,13,23**
+ 
+Routine list of preceding patches: 13
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : OCT 09, 2009
+Completed By: CRICHLOW,SHERRY               Date Completed: MAR 22, 2010
+Released By : KREUZ,SHERI B                 Date Released : APR 06, 2010
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

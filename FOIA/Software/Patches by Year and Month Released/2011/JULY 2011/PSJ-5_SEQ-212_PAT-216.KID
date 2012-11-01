@@ -1,0 +1,888 @@
+Released PSJ*5*216 SEQ #212
+Extracted from mail message
+**KIDS**:PSJ*5.0*216^
+
+**INSTALL NAME**
+PSJ*5.0*216
+"BLD",8033,0)
+PSJ*5.0*216^INPATIENT MEDICATIONS^0^3110317^y
+"BLD",8033,1,0)
+^^17^17^3110317^
+"BLD",8033,1,1,0)
+This patch will resolve the following issues in the Inpatient 
+"BLD",8033,1,2,0)
+Medications package:
+"BLD",8033,1,3,0)
+ 
+"BLD",8033,1,4,0)
+- When a user is prompted for dosage in Inpatient Order Entry [PSJ OE], a 
+"BLD",8033,1,5,0)
+response of null will no longer be allowed.
+"BLD",8033,1,6,0)
+ 
+"BLD",8033,1,7,0)
+-When a user edits the dispense drug or units per dose on a unit dose 
+"BLD",8033,1,8,0)
+order, the following message will not be displayed if the dispense drug 
+"BLD",8033,1,9,0)
+times the unit per dose matches with the dosage ordered.
+"BLD",8033,1,10,0)
+ 
+"BLD",8033,1,11,0)
+ WARNING: Dosage Ordered and Dispense Units do not match.
+"BLD",8033,1,12,0)
+        Please verify Dosage
+"BLD",8033,1,13,0)
+ 
+"BLD",8033,1,14,0)
+The fix in this patch will display the warning message only when the 
+"BLD",8033,1,15,0)
+dosage ordered is NOT equal to the dispense drug times (X) the units 
+"BLD",8033,1,16,0)
+per dose.  Also, when the warning message displays, the Dosage Ordered 
+"BLD",8033,1,17,0)
+and Dispense Drug items will display in reverse video.
+"BLD",8033,4,0)
+^9.64PA^^
+"BLD",8033,6)
+2^
+"BLD",8033,6.3)
+10
+"BLD",8033,"ABPKG")
+n
+"BLD",8033,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8033,"KRN",.4,0)
+.4
+"BLD",8033,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",.401,0)
+.401
+"BLD",8033,"KRN",.401,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",.402,0)
+.402
+"BLD",8033,"KRN",.402,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",.403,0)
+.403
+"BLD",8033,"KRN",.403,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",.5,0)
+.5
+"BLD",8033,"KRN",.5,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",.84,0)
+.84
+"BLD",8033,"KRN",.84,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",3.6,0)
+3.6
+"BLD",8033,"KRN",3.6,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",3.8,0)
+3.8
+"BLD",8033,"KRN",3.8,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",9.2,0)
+9.2
+"BLD",8033,"KRN",9.2,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",9.8,0)
+9.8
+"BLD",8033,"KRN",9.8,"NM",0)
+^9.68A^4^2
+"BLD",8033,"KRN",9.8,"NM",1,0)
+PSJDOSE^^0^B47956224
+"BLD",8033,"KRN",9.8,"NM",4,0)
+PSGOEE0^^0^B28840533
+"BLD",8033,"KRN",9.8,"NM","B","PSGOEE0",4)
+
+"BLD",8033,"KRN",9.8,"NM","B","PSJDOSE",1)
+
+"BLD",8033,"KRN",19,0)
+19
+"BLD",8033,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",19.1,0)
+19.1
+"BLD",8033,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",101,0)
+101
+"BLD",8033,"KRN",101,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",409.61,0)
+409.61
+"BLD",8033,"KRN",409.61,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",771,0)
+771
+"BLD",8033,"KRN",771,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",779.2,0)
+779.2
+"BLD",8033,"KRN",779.2,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",870,0)
+870
+"BLD",8033,"KRN",870,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",8989.51,0)
+8989.51
+"BLD",8033,"KRN",8989.51,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",8989.52,0)
+8989.52
+"BLD",8033,"KRN",8989.52,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN",8994,0)
+8994
+"BLD",8033,"KRN",8994,"NM",0)
+^9.68A^^
+"BLD",8033,"KRN","B",.4,.4)
+
+"BLD",8033,"KRN","B",.401,.401)
+
+"BLD",8033,"KRN","B",.402,.402)
+
+"BLD",8033,"KRN","B",.403,.403)
+
+"BLD",8033,"KRN","B",.5,.5)
+
+"BLD",8033,"KRN","B",.84,.84)
+
+"BLD",8033,"KRN","B",3.6,3.6)
+
+"BLD",8033,"KRN","B",3.8,3.8)
+
+"BLD",8033,"KRN","B",9.2,9.2)
+
+"BLD",8033,"KRN","B",9.8,9.8)
+
+"BLD",8033,"KRN","B",19,19)
+
+"BLD",8033,"KRN","B",19.1,19.1)
+
+"BLD",8033,"KRN","B",101,101)
+
+"BLD",8033,"KRN","B",409.61,409.61)
+
+"BLD",8033,"KRN","B",771,771)
+
+"BLD",8033,"KRN","B",779.2,779.2)
+
+"BLD",8033,"KRN","B",870,870)
+
+"BLD",8033,"KRN","B",8989.51,8989.51)
+
+"BLD",8033,"KRN","B",8989.52,8989.52)
+
+"BLD",8033,"KRN","B",8994,8994)
+
+"BLD",8033,"QUES",0)
+^9.62^^
+"BLD",8033,"REQB",0)
+^9.611^3^2
+"BLD",8033,"REQB",2,0)
+PSJ*5.0*179^2
+"BLD",8033,"REQB",3,0)
+PSJ*5.0*111^2
+"BLD",8033,"REQB","B","PSJ*5.0*111",3)
+
+"BLD",8033,"REQB","B","PSJ*5.0*179",2)
+
+"MBREQ")
+0
+"PKG",203,-1)
+1^1
+"PKG",203,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",203,20,0)
+^9.402P^^
+"PKG",203,22,0)
+^9.49I^1^1
+"PKG",203,22,1,0)
+5.0^2971215^2980417^1271
+"PKG",203,22,1,"PAH",1,0)
+216^3110317^33288
+"PKG",203,22,1,"PAH",1,1,0)
+^^17^17^3110317
+"PKG",203,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issues in the Inpatient 
+"PKG",203,22,1,"PAH",1,1,2,0)
+Medications package:
+"PKG",203,22,1,"PAH",1,1,3,0)
+ 
+"PKG",203,22,1,"PAH",1,1,4,0)
+- When a user is prompted for dosage in Inpatient Order Entry [PSJ OE], a 
+"PKG",203,22,1,"PAH",1,1,5,0)
+response of null will no longer be allowed.
+"PKG",203,22,1,"PAH",1,1,6,0)
+ 
+"PKG",203,22,1,"PAH",1,1,7,0)
+-When a user edits the dispense drug or units per dose on a unit dose 
+"PKG",203,22,1,"PAH",1,1,8,0)
+order, the following message will not be displayed if the dispense drug 
+"PKG",203,22,1,"PAH",1,1,9,0)
+times the unit per dose matches with the dosage ordered.
+"PKG",203,22,1,"PAH",1,1,10,0)
+ 
+"PKG",203,22,1,"PAH",1,1,11,0)
+ WARNING: Dosage Ordered and Dispense Units do not match.
+"PKG",203,22,1,"PAH",1,1,12,0)
+        Please verify Dosage
+"PKG",203,22,1,"PAH",1,1,13,0)
+ 
+"PKG",203,22,1,"PAH",1,1,14,0)
+The fix in this patch will display the warning message only when the 
+"PKG",203,22,1,"PAH",1,1,15,0)
+dosage ordered is NOT equal to the dispense drug times (X) the units 
+"PKG",203,22,1,"PAH",1,1,16,0)
+per dose.  Also, when the warning message displays, the Dosage Ordered 
+"PKG",203,22,1,"PAH",1,1,17,0)
+and Dispense Drug items will display in reverse video.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSGOEE0")
+0^4^B28840533^B27327541
+"RTN","PSGOEE0",1,0)
+PSGOEE0 ;BIR/CML3-ORDER EDIT UTILITIES ; 10/7/08 11:08am
+"RTN","PSGOEE0",2,0)
+ ;;5.0; INPATIENT MEDICATIONS ;**58,95,179,216**;16 DEC 97;Build 10
+"RTN","PSGOEE0",3,0)
+ ;
+"RTN","PSGOEE0",4,0)
+ ; Reference to ^DICN is supported by DBIA 10009.
+"RTN","PSGOEE0",5,0)
+ ; Reference to ^DIR is supported by DBIA 10026.
+"RTN","PSGOEE0",6,0)
+ ;
+"RTN","PSGOEE0",7,0)
+ENSFE(PSGP,PSGORD) ; Determine editable fields, and fields that cause new order.
+"RTN","PSGOEE0",8,0)
+ D @$S(PSGORD["P":"ENSFE3^PSGOEE0",1:"ENSFE5^PSGOEE0")
+"RTN","PSGOEE0",9,0)
+ Q
+"RTN","PSGOEE0",10,0)
+ENSFE3 ; set-up fields to edit for 53.1
+"RTN","PSGOEE0",11,0)
+ I PSGSTAT="PENDING" S PSGEFN="1:13" F X=1:1:13 S PSGEFN(+X)=$P($T(@(3_X)),";",7),PSGOEEF(+$P($T(@(3_X)),";",3))="",PSGOEEF=PSGOEEF+1
+"RTN","PSGOEE0",12,0)
+ E  S PSGEFN="1:13" F X=1,2,3,4,5,6,7,8,9,10,11,12 S Y=$T(@(3_X)),@("PSGEFN("_+X_")="_$S($D(PSGOETOF):0,1:$P(Y,";",7))),PSGOEEF(+$P(Y,";",3))="",PSGOEEF=PSGOEEF+1
+"RTN","PSGOEE0",13,0)
+ E  S:$P(PSJSYSU,";",3)>1 PSGEFN(9)=0,PSGOEEF(+$P($T(39),";",3))="",PSGOEEF=PSGOEEF+1
+"RTN","PSGOEE0",14,0)
+ E  I PSGEB'=PSGOPR F X=10,13 S Y=$T(@(3_X)),@("PSGEFN("_X_")="_$S($D(PSGOETOF):0,1:$P(Y,";",7))),PSGOEEF(+$P(Y,";",3))="",PSGOEEF=PSGOEEF+1
+"RTN","PSGOEE0",15,0)
+ ;*216 highlight if DOSECHK fails
+"RTN","PSGOEE0",16,0)
+ N PSJDOSE D DOSECHK^PSJDOSE I +$G(PSJDSFLG),'$G(PSGOEEF(109)) S PSGOEEF(109)=1
+"RTN","PSGOEE0",17,0)
+ K PSGOEEND S PSGOEEG=3,PSGPDRG=PSGOPD,PSGPDRGN=PSGOPDN Q
+"RTN","PSGOEE0",18,0)
+ ;
+"RTN","PSGOEE0",19,0)
+ENSFE5 ; set-up fields to edit for 55
+"RTN","PSGOEE0",20,0)
+ S PSGEFN="1:13"
+"RTN","PSGOEE0",21,0)
+ F X=1:1:13 S Y=$T(@(5_X)),@("PSGEFN("_+X_")="_$S($D(PSGOETO):0,1:$P(Y,";",7))),PSGOEEF(+$P(Y,";",3))="",PSGOEEF=PSGOEEF+1
+"RTN","PSGOEE0",22,0)
+ I $P(PSJSYSU,";",3)>1 S PSGEFN(9)=0,PSGOEEF(+$P($T(59),";",3))="",PSGOEEF=PSGOEEF+1
+"RTN","PSGOEE0",23,0)
+ S PSGPDRG=PSGPD,PSGPDRGN=PSGPDN,PSGOEEND=1,PSGOEEG=5
+"RTN","PSGOEE0",24,0)
+ ;*216 highlight if DOSECHK fails
+"RTN","PSGOEE0",25,0)
+ N PSJDOSE D DOSECHK^PSJDOSE I +$G(PSJDSFLG),'$G(PSGOEEF(109)) S PSGOEEF(109)=1
+"RTN","PSGOEE0",26,0)
+ Q
+"RTN","PSGOEE0",27,0)
+ ;
+"RTN","PSGOEE0",28,0)
+ENOK ;
+"RTN","PSGOEE0",29,0)
+ I $P($G(PSJSYSP0),U,2),'$O(^PS(53.45,+PSJSYSP,2,0)) D
+"RTN","PSGOEE0",30,0)
+ .W !!,"No dispense drugs found for this order." D ENDRG^PSGOEF1(PSGPD,0) I '$O(^PS(53.45,+PSJSYSP,2,0)) S PSGOEENO=0,DR=""
+"RTN","PSGOEE0",31,0)
+ W ! I DR="",'PSGOEENO D ABORT^PSGOEE S %=1 Q
+"RTN","PSGOEE0",32,0)
+ W:PSGOEENO !,"(Accepting these changes will cause a new order to be created.)"
+"RTN","PSGOEE0",33,0)
+ F  W !!,"ACCEPT THESE CHANGES" S %=1 D YN^DICN Q:%  D  ;
+"RTN","PSGOEE0",34,0)
+ .W !!?2,"Answer 'YES' (or press RETURN) if you have completed editing this order." W:PSGOEENO !,"Accepting this changes will cause a new order to be created, and this order",!,"will be discontinued."
+"RTN","PSGOEE0",35,0)
+ .W:$D(PSGOEF) !,"Accepting these changes will convert this order to a non-verifed, Unit Dose",!,"order."
+"RTN","PSGOEE0",36,0)
+ .W !!,"Answer 'NO' to re-edit this order.  Enter an '^' to abort this edit."
+"RTN","PSGOEE0",37,0)
+ ;I %=1,PSGOEENO,'$D(PSJOERR),PSGOEORF S PSJNOO=$S(PSGPR=DUZ:"E",1:"W"),PSJNOON=$S(PSJNOO="E":"PROVIDER ENTERED",1:"WRITTEN") I PSGPR'=DUZ S F1=53.1,PSGF2=106 K PSGFOK D A106^PSGOER0 S %='$D(PSGFOK)+1 K PSGFOK
+"RTN","PSGOEE0",38,0)
+ ;S:%<0 PSGOEENO=0
+"RTN","PSGOEE0",39,0)
+ S PSJNOO=$$ENNOO^PSJUTL5("E")
+"RTN","PSGOEE0",40,0)
+ K F,F0,F1,F3,PSGDL,PSGDLS,PSGF2,PSGFOK,ND2,PSGOROE1,PSGRO,SDT
+"RTN","PSGOEE0",41,0)
+ S:PSJNOO<0 (PSGOROE1,PSGOEENO)=0
+"RTN","PSGOEE0",42,0)
+ Q
+"RTN","PSGOEE0",43,0)
+ ;
+"RTN","PSGOEE0",44,0)
+ENNOU ; create new order or update old order
+"RTN","PSGOEE0",45,0)
+ I $G(MSG) K DIR S DIR(0)="E" W !! D ^DIR
+"RTN","PSGOEE0",46,0)
+ K DR S DR="",(PSGOEENO,Q)=0
+"RTN","PSGOEE0",47,0)
+ F  S Q=$O(PSGEFN(Q)) Q:'Q  S Y=$T(@(PSGOEEG_Q)) I $P(Y,";",4)]"",@$P(Y,";",4)'=@$P(Y,";",5) S:PSGEFN(Q) PSGOEENO=1 Q:PSGOEENO  S DR=DR_$P(Y,";",6)_$S(@$P(Y,";",5)]"":"////^S X="_$P(Y,";",5),1:"////@")_";W ""."";"
+"RTN","PSGOEE0",48,0)
+ I PSGSI="",PSGOSI]"" S DR=DR_"122////@;W ""."";"
+"RTN","PSGOEE0",49,0)
+ I '$P(PSGSI,"^",2),$P(PSGOSI,"^",2)=1 S DR=DR_"122////@;W ""."";"
+"RTN","PSGOEE0",50,0)
+ ; PSJ*5*95 quick fix to prevent long string error; true fix in PSJ*5*91 (upd^psgoee)
+"RTN","PSGOEE0",51,0)
+ I PSGSI]"" S DR=DR_122_"////^S X="_+$P(PSGSI,"^",2)_";" I '$G(PSJLMFIN),'$G(PSGOEENO),$L($G(PSGOSI),"^")>20 S PSGSI=$P(PSGSI,"^")
+"RTN","PSGOEE0",52,0)
+ I PSGSM,PSGOHSM'=PSGHSM S DR=DR_"6////"_PSGHSM_";W ""."";"
+"RTN","PSGOEE0",53,0)
+ ;PSJ*5.0*179
+"RTN","PSGOEE0",54,0)
+ N P I 'PSGOEENO F P="1^3^10" I $D(PSGEFN($P(P,U,3))) S (Q,QQ)=0 F  S Q=$O(@("^PS(53.45,"_PSJSYSP_","_+P_","_Q_")")) Q:'Q  S QQ=Q,X=$G(^(Q,0)),Y=$G(@(PSGOEEWF_$P(P,U,2)_","_Q_",0)")) I X'=Y S:+P=1 DR=DR_"*" Q
+"RTN","PSGOEE0",55,0)
+ I 'PSGOEENO F P="1^3^10" I $D(PSGEFN($P(P,U,3))) S (Q,QQ)=0 F  S Q=$O(@(PSGOEEWF_$P(P,U,2)_","_Q_")")) Q:'Q  S QQ=Q,X=$G(^(Q,0)),Y=$G(^PS(53.45,PSJSYSP,+P,Q,0)) I X'=Y S:+P=1 DR=DR_"*" Q
+"RTN","PSGOEE0",56,0)
+ Q:$S(DR]"":1,1:PSGOEENO)  S (Q,QQ)=0 F  S Q=$O(^PS(53.45,PSJSYSP,2,Q)) Q:'Q  S QQ=Q,X=$G(^(Q,0)),Y=$G(@(PSGOEEWF_"1,"_Q_",0)")) I X'=Y S DR=DR_"*" Q
+"RTN","PSGOEE0",57,0)
+ Q:$S(DR]"":1,1:PSGOEENO)  S (Q,QQ)=0 F  S Q=$O(@(PSGOEEWF_"1,"_Q_")")) Q:'Q  S QQ=Q,X=$G(^(Q,0)),Y=$G(^PS(53.45,PSJSYSP,2,Q,0)) I X'=Y S DR=DR_"*" Q
+"RTN","PSGOEE0",58,0)
+ Q
+"RTN","PSGOEE0",59,0)
+ ;
+"RTN","PSGOEE0",60,0)
+ENF ; finish order from edit
+"RTN","PSGOEE0",61,0)
+ F  S %=1 W !!,"Finish this order now" D YN^DICN Q:%  D  ;
+"RTN","PSGOEE0",62,0)
+ .W !!,"Answer 'YES' to finish this order now.  Finishing the order converts it to a",!,"non-verified Unit Dose order.  Enter 'NO' (or an '^') if you do not want to",!,"finish this order now."
+"RTN","PSGOEE0",63,0)
+ I %=1 S PSGOEFF=0 D UPD^PSGOEF1 K PSGOEFF,PSGND,PSGSD
+"RTN","PSGOEE0",64,0)
+ Q
+"RTN","PSGOEE0",65,0)
+ ;
+"RTN","PSGOEE0",66,0)
+FIELDS ;
+"RTN","PSGOEE0",67,0)
+31 ;;108^PSGOE8;PSGOPD;PSGPD;108;1
+"RTN","PSGOEE0",68,0)
+32 ;;109^PSGOE8;PSGODO;PSGDO;109;1
+"RTN","PSGOEE0",69,0)
+33 ;;10^PSGOE81;PSGOSD;PSGSD;10;0
+"RTN","PSGOEE0",70,0)
+34 ;;3^PSGOE8;PSGOMR;PSGMR;3;1
+"RTN","PSGOEE0",71,0)
+35 ;;25^PSGOE81;PSGOFD;PSGFD;25;0
+"RTN","PSGOEE0",72,0)
+36 ;;7^PSGOE8;PSGOST;PSGST;7;0
+"RTN","PSGOEE0",73,0)
+37 ;;5^PSGOE82;PSGOSM;PSGSM;5;0
+"RTN","PSGOEE0",74,0)
+38 ;;26^PSGOE8;PSGOSCH;PSGSCH;26;1
+"RTN","PSGOEE0",75,0)
+39 ;;39^PSGOE81;PSGOAT;PSGAT;39;0
+"RTN","PSGOEE0",76,0)
+310 ;;1^PSGOE82;PSGOPR;PSGPR;1;1
+"RTN","PSGOEE0",77,0)
+311 ;;8^PSGOE81;PSGOSI;PSGSI;8;0
+"RTN","PSGOEE0",78,0)
+312 ;;2^PSGOE82;;;2;0
+"RTN","PSGOEE0",79,0)
+313 ;;66^PSGOE82;;;66;0
+"RTN","PSGOEE0",80,0)
+314 ;;40^PSGOE82;;;40;0
+"RTN","PSGOEE0",81,0)
+51 ;;108^PSGOE9;PSGOPD;PSGPD;108;1
+"RTN","PSGOEE0",82,0)
+52 ;;109^PSGOE9;PSGODO;PSGDO;109;1
+"RTN","PSGOEE0",83,0)
+53 ;;10^PSGOE91;PSGOSD;PSGSD;10;1
+"RTN","PSGOEE0",84,0)
+54 ;;3^PSGOE9;PSGOMR;PSGMR;3;1
+"RTN","PSGOEE0",85,0)
+55 ;;34^PSGOE91;PSGOFD;PSGFD;34;1
+"RTN","PSGOEE0",86,0)
+56 ;;7^PSGOE9;PSGOST;PSGST;7;0
+"RTN","PSGOEE0",87,0)
+57 ;;5^PSGOE82;PSGOSM;PSGSM;5;0
+"RTN","PSGOEE0",88,0)
+58 ;;26^PSGOE9;PSGOSCH;PSGSCH;26;1
+"RTN","PSGOEE0",89,0)
+59 ;;41^PSGOE91;PSGOAT;PSGAT;41;0
+"RTN","PSGOEE0",90,0)
+510 ;;1^PSGOE92;PSGOPR;PSGPR;1;1
+"RTN","PSGOEE0",91,0)
+511 ;;8^PSGOE92;PSGOSI;PSGSI;8;0
+"RTN","PSGOEE0",92,0)
+512 ;;2^PSGOE92;;;2;0
+"RTN","PSGOEE0",93,0)
+513 ;;15^PSGOE92;;;15;0
+"RTN","PSGOEE0",94,0)
+514 ;;72^PSGOE92;;;72;1
+"RTN","PSJDOSE")
+0^1^B47956224^B45005446
+"RTN","PSJDOSE",1,0)
+PSJDOSE ;BIR/MV-POSSIBLE DOSES UTILITY ; 1/28/10 8:21am
+"RTN","PSJDOSE",2,0)
+ ;;5.0; INPATIENT MEDICATIONS ;**50,65,106,111,216**;16 DEC 97;Build 10
+"RTN","PSJDOSE",3,0)
+ ;
+"RTN","PSJDOSE",4,0)
+ ; Reference to ^PSSORPH is supported by DBIA #3234.
+"RTN","PSJDOSE",5,0)
+ ;
+"RTN","PSJDOSE",6,0)
+ ;PSJDSFLG: Set to 1 if Dose and DD are not compatible
+"RTN","PSJDOSE",7,0)
+ ;PSJDSSEL: The selected dose in format:
+"RTN","PSJDOSE",8,0)
+ ;          Dosage Order^DD IEN^DUPD/BCMA DUPD^1(if BCMA DUPD exist
+"RTN","PSJDOSE",9,0)
+ ;PSJDSUPD: Set to 1 if need to prompt for the Units Per Dose
+"RTN","PSJDOSE",10,0)
+ ;
+"RTN","PSJDOSE",11,0)
+EDITDOSE ;Editing Dosage Ordered for active order
+"RTN","PSJDOSE",12,0)
+ ;*Need to set PSJDSFLG to null when call EDITDOSE.
+"RTN","PSJDOSE",13,0)
+ NEW PSGOER1,PSJDD,PSJDSUPD,PSJDSSEL,PSJX,Y
+"RTN","PSJDOSE",14,0)
+ ;Offer the possible doses from the only one or 1st DD
+"RTN","PSJDOSE",15,0)
+ S PSJX=$O(^PS(53.45,PSJSYSP,2,0)) S PSJDD=+$G(^(+PSJX,0))
+"RTN","PSJDOSE",16,0)
+ D DOSE(PSJDD)
+"RTN","PSJDOSE",17,0)
+ D DOSECHK
+"RTN","PSJDOSE",18,0)
+ I +PSJDSFLG D
+"RTN","PSJDOSE",19,0)
+ . W !!,PSJDOSE("WARN"),!,PSJDOSE("WARN1"),!
+"RTN","PSJDOSE",20,0)
+ . D PAUSE^VALM1
+"RTN","PSJDOSE",21,0)
+ S PSGOEE=2
+"RTN","PSJDOSE",22,0)
+ Q
+"RTN","PSJDOSE",23,0)
+GETDOSE(PSJDD) ;Dosage Order
+"RTN","PSJDOSE",24,0)
+ NEW PSJDSSEL,PSJDSUPD
+"RTN","PSJDOSE",25,0)
+ D DOSE(PSJDD)
+"RTN","PSJDOSE",26,0)
+ Q:'$D(PSJDSSEL)
+"RTN","PSJDOSE",27,0)
+ D:+$G(PSJDSUPD) DUPD
+"RTN","PSJDOSE",28,0)
+ D:'+$G(PSJDSUPD) SETDUPD($P(PSJDSSEL,U,3))
+"RTN","PSJDOSE",29,0)
+ D DOSECHK
+"RTN","PSJDOSE",30,0)
+ I +$G(PSJDSFLG) D
+"RTN","PSJDOSE",31,0)
+ . W !!,PSJDOSE("WARN"),!,PSJDOSE("WARN1"),!
+"RTN","PSJDOSE",32,0)
+ Q
+"RTN","PSJDOSE",33,0)
+ ;
+"RTN","PSJDOSE",34,0)
+SETVAR ;
+"RTN","PSJDOSE",35,0)
+ S PSJDOSE("WARN")="WARNING: Dosage Ordered and Dispense Units do not match."
+"RTN","PSJDOSE",36,0)
+ S PSJDOSE("WARN1")="         Please verify Dosage."
+"RTN","PSJDOSE",37,0)
+ Q
+"RTN","PSJDOSE",38,0)
+ ;
+"RTN","PSJDOSE",39,0)
+DOSE(PSJDD) ;Prompt for Dosage Ordered
+"RTN","PSJDOSE",40,0)
+ ;PSJDD: Dispense drug IEN
+"RTN","PSJDOSE",41,0)
+ ;
+"RTN","PSJDOSE",42,0)
+ NEW DA,DR,DIR,DTOUT,DUOUT,DIRUT,PSJDL,PSJX,PSJPIECE,PSJCONT
+"RTN","PSJDOSE",43,0)
+ D SETVAR
+"RTN","PSJDOSE",44,0)
+ D DOSE^PSSORPH(.PSJDOX,+PSJDD,"U")
+"RTN","PSJDOSE",45,0)
+ I '$D(PSJDOX) S PSJDOX(1)=-1
+"RTN","PSJDOSE",46,0)
+ S PSJPIECE=$S($P(PSJDOX(1),U,11)]"":11,1:3)
+"RTN","PSJDOSE",47,0)
+ I PSJPIECE=3 S:$S($P(PSJDOX(1),U,3)="":1,1:$P(PSJDOX(1),U)=-1) $P(PSJDOX(1),U)=-1
+"RTN","PSJDOSE",48,0)
+AGAIN ;Prompt for dosage order again
+"RTN","PSJDOSE",49,0)
+ S PSJX=0
+"RTN","PSJDOSE",50,0)
+ NEW DIR
+"RTN","PSJDOSE",51,0)
+ W:($P(PSJDOX(1),U)'=-1) !!,"Available Dosage(s)"
+"RTN","PSJDOSE",52,0)
+ F PSJDL=0:0 S PSJDL=$O(PSJDOX(PSJDL)) Q:$S('PSJDL:1,$G(DUOUT):1,1:+PSJDOX(PSJDL)=-1)  D
+"RTN","PSJDOSE",53,0)
+ . S PSJX=PSJX+1
+"RTN","PSJDOSE",54,0)
+ . W !?4,$J(PSJX,3),".    ",$P(PSJDOX(PSJDL),U,PSJPIECE)
+"RTN","PSJDOSE",55,0)
+ . I '(PSJX#16) S DIR(0)="E" D ^DIR
+"RTN","PSJDOSE",56,0)
+ W !
+"RTN","PSJDOSE",57,0)
+ K DIR S DIR(0)="F^1:60"  ;*216 - No null dosage
+"RTN","PSJDOSE",58,0)
+ S DIR("A")=$S(+PSJX:"Select from list of Available Dosages or Enter Free Text Dose",1:"DOSAGE ORDERED")
+"RTN","PSJDOSE",59,0)
+ S:$G(PSGDO)]"" DIR("B")=PSGDO
+"RTN","PSJDOSE",60,0)
+ S DIR("?")="^D ENHLP^PSGOEM(53.1,109)" D ^DIR
+"RTN","PSJDOSE",61,0)
+ S PSJY=Y
+"RTN","PSJDOSE",62,0)
+ ;
+"RTN","PSJDOSE",63,0)
+ I $S($D(DTOUT):1,$D(DUOUT):1,$D(DIRUT):1,1:0) S PSGOROE1=1 Q
+"RTN","PSJDOSE",64,0)
+ ;
+"RTN","PSJDOSE",65,0)
+ ;* If select for the presented list (possible and local doses)
+"RTN","PSJDOSE",66,0)
+ I $D(PSJDOX(PSJY)) D  G:'PSJCONT AGAIN Q
+"RTN","PSJDOSE",67,0)
+ . NEW X S X=$P(PSJDOX(PSJY),U,PSJPIECE)
+"RTN","PSJDOSE",68,0)
+ . W "  ",X
+"RTN","PSJDOSE",69,0)
+ . S PSJCONT=$$CONT(X)
+"RTN","PSJDOSE",70,0)
+ . Q:'PSJCONT
+"RTN","PSJDOSE",71,0)
+ . D SELDOSE(PSJY,PSJDD)
+"RTN","PSJDOSE",72,0)
+ ;
+"RTN","PSJDOSE",73,0)
+ ;* Entered a numeric and choices are not local pos dose
+"RTN","PSJDOSE",74,0)
+ I PSJY?.N!(PSJY?.N1".".N),(PSJPIECE'=3) D  G:'PSJCONT AGAIN  Q
+"RTN","PSJDOSE",75,0)
+ . Q:$L(PSJY)>15
+"RTN","PSJDOSE",76,0)
+ . D DOSE^PSSORPH(.PSJDOX,+PSJDD,"U",,PSJY/+$P(PSJDOX(1),U,5))
+"RTN","PSJDOSE",77,0)
+ . S PSJCONT=$$CONT($P(PSJDOX(1),U,11))
+"RTN","PSJDOSE",78,0)
+ . I 'PSJCONT D DOSE^PSSORPH(.PSJDOX,+PSJDD,"U") Q
+"RTN","PSJDOSE",79,0)
+ . D SELDOSE(1,PSJDD)
+"RTN","PSJDOSE",80,0)
+ ;
+"RTN","PSJDOSE",81,0)
+ ;* Can't accept just a numeric value
+"RTN","PSJDOSE",82,0)
+ I PSJY?.N!(PSJY?.N1".".N) D ENHLP^PSGOEM(53.1,109) G AGAIN
+"RTN","PSJDOSE",83,0)
+ ;
+"RTN","PSJDOSE",84,0)
+ ;* Free text
+"RTN","PSJDOSE",85,0)
+ G:'$$CONT(PSJY) AGAIN
+"RTN","PSJDOSE",86,0)
+ K PSJDSSEL
+"RTN","PSJDOSE",87,0)
+ F X=0:0 S X=$O(PSJDOX(X)) Q:'X  S PSJXDOSE=$P(PSJDOX(X),U,PSJPIECE) I PSJY=PSJXDOSE D SELDOSE(X,PSJDD) Q
+"RTN","PSJDOSE",88,0)
+ I '$D(PSJDSSEL),($G(PSJY)]"") S PSJDSSEL=PSJY_U_+PSJDD_U_1,PSGDO=PSJY,PSJDSUPD=1
+"RTN","PSJDOSE",89,0)
+ Q
+"RTN","PSJDOSE",90,0)
+ ;
+"RTN","PSJDOSE",91,0)
+SELDOSE(X,PSJDD) ;
+"RTN","PSJDOSE",92,0)
+ S X=PSJDOX(X)
+"RTN","PSJDOSE",93,0)
+ S PSGDO=$P(X,U,PSJPIECE)
+"RTN","PSJDOSE",94,0)
+ S:$P(X,U)'=-1 PSJDOSE("DO")=$P(X,U,1,2)
+"RTN","PSJDOSE",95,0)
+ S PSJDSSEL=$P(X,U,PSJPIECE)_U_PSJDD
+"RTN","PSJDOSE",96,0)
+ I +$P(X,U,12) S $P(PSJDSSEL,U,3)=$P(X,U,12)_U_1 Q
+"RTN","PSJDOSE",97,0)
+ S $P(PSJDSSEL,U,3)=$S(PSJPIECE=11:$P(X,U,3),1:1)
+"RTN","PSJDOSE",98,0)
+ Q
+"RTN","PSJDOSE",99,0)
+CONT(X) ;Ask if user accepting the dose
+"RTN","PSJDOSE",100,0)
+ NEW DIR,DIRUT,Y
+"RTN","PSJDOSE",101,0)
+ W ! K DIR,DIRUT,DUOUT
+"RTN","PSJDOSE",102,0)
+ S DIR(0)="Y",DIR("A")="You entered "_X_" is this correct",DIR("B")="Yes"
+"RTN","PSJDOSE",103,0)
+ D ^DIR
+"RTN","PSJDOSE",104,0)
+ K DUOUT
+"RTN","PSJDOSE",105,0)
+ Q +Y
+"RTN","PSJDOSE",106,0)
+ ;
+"RTN","PSJDOSE",107,0)
+DUPD ;
+"RTN","PSJDOSE",108,0)
+ NEW PSJX,X
+"RTN","PSJDOSE",109,0)
+ S PSGUD=1
+"RTN","PSJDOSE",110,0)
+ W !,"UNITS PER DOSE: "_PSGUD_"// " R X:DTIME W "  ",X I X="^"!'$T S PSGOROE1=1 Q
+"RTN","PSJDOSE",111,0)
+ S:X="" X=1
+"RTN","PSJDOSE",112,0)
+ I X="@",'PSGUD W $C(7),"  ??" S X="?" D ENHLP^PSGOEM(53.11,.02) G DUPD
+"RTN","PSJDOSE",113,0)
+ I X?1."?" D ENHLP^PSGOEM(53.11,.02) G DUPD
+"RTN","PSJDOSE",114,0)
+ I X?1.2N1"/"1.2N S X=+$J(+X/$P(X,"/",2),0,2) W "  ("_$E("0",X<1)_X_")"
+"RTN","PSJDOSE",115,0)
+ I $S($L(X)>12:1,X'=+X:1,X>50:1,X<0:1,1:X?.N1"."5.N) W $C(7),"  ??" S X="?" D ENHLP^PSGOEM(53.11,.02) G DUPD
+"RTN","PSJDOSE",116,0)
+ S $P(PSJDSSEL,U,3)=X
+"RTN","PSJDOSE",117,0)
+ D SETDUPD(X)
+"RTN","PSJDOSE",118,0)
+ Q
+"RTN","PSJDOSE",119,0)
+SETDUPD(X) ;
+"RTN","PSJDOSE",120,0)
+ S PSGUD=X,X=$S(PSJDSSEL]"":$P(PSJDSSEL,U,2),1:0)
+"RTN","PSJDOSE",121,0)
+ S PSJX=$O(^PS(53.45,PSJSYSP,2,"B",X,0))
+"RTN","PSJDOSE",122,0)
+ S PSGUD=+$FN(PSGUD,"",4) S:$E(PSGUD)="." PSGUD="0"_PSGUD
+"RTN","PSJDOSE",123,0)
+ S $P(^PS(53.45,PSJSYSP,2,+PSJX,0),U,2)=PSGUD
+"RTN","PSJDOSE",124,0)
+ Q
+"RTN","PSJDOSE",125,0)
+EDITDD ;Editing DDs
+"RTN","PSJDOSE",126,0)
+ NEW DA,DR,DIE
+"RTN","PSJDOSE",127,0)
+ S DIE="^PS(53.45,",DA=PSJSYSP,DR=2,DR(2,53.4502)=".02//1" D ^DIE
+"RTN","PSJDOSE",128,0)
+ I '$O(^PS(53.45,PSJSYSP,2,0)) W $C(7),!!,"WARNING:      This order must have at least one dispense drug before pharmacy can",!?9,"verify it!"
+"RTN","PSJDOSE",129,0)
+ Q
+"RTN","PSJDOSE",130,0)
+DOSECHK ;
+"RTN","PSJDOSE",131,0)
+ K PSJDSFLG S PSJDSFLG=0
+"RTN","PSJDOSE",132,0)
+ Q:'$P(PSJSYSU,";",4)
+"RTN","PSJDOSE",133,0)
+ Q:$G(PSGDO)=""
+"RTN","PSJDOSE",134,0)
+ NEW PSJX,PSJXDD,PSJCNT S PSJCNT=0
+"RTN","PSJDOSE",135,0)
+ ;*216 Be sure PSJDT is set
+"RTN","PSJDOSE",136,0)
+ I '$G(PSJDT) N X,% D NOW^%DTC S PSJDT=X
+"RTN","PSJDOSE",137,0)
+ F PSJX=0:0 S PSJX=$O(^PS(53.45,PSJSYSP,2,PSJX)) Q:'PSJX  D
+"RTN","PSJDOSE",138,0)
+ . S PSJXDD=$G(^PS(53.45,PSJSYSP,2,PSJX,0)) Q:PSJXDD=""
+"RTN","PSJDOSE",139,0)
+ . S:$P(PSJXDD,U,2)="" $P(^PS(53.45,PSJSYSP,2,PSJX,0),U,2)=1
+"RTN","PSJDOSE",140,0)
+ . ;*216 Don't count inactive Disp. Drug
+"RTN","PSJDOSE",141,0)
+ . I $P(PSJXDD,U,3)'="",$P(PSJXDD,U,3)'>PSJDT Q
+"RTN","PSJDOSE",142,0)
+ . S PSJCNT=PSJCNT+1
+"RTN","PSJDOSE",143,0)
+ D DOSECHK1
+"RTN","PSJDOSE",144,0)
+ Q
+"RTN","PSJDOSE",145,0)
+DOSECHK1 ;
+"RTN","PSJDOSE",146,0)
+ NEW PSJX,PSJXDD,PSJXUNIT,PSJUNIT,PSJXFLG,PSJTOT
+"RTN","PSJDOSE",147,0)
+ ;*216 Be sure PSJDT is set
+"RTN","PSJDOSE",148,0)
+ I '$G(PSJDT) N X,% D NOW^%DTC S PSJDT=X
+"RTN","PSJDOSE",149,0)
+ S PSJUNIT=$P(PSGDO,+PSGDO,2,$L(PSGDO,+PSGDO))
+"RTN","PSJDOSE",150,0)
+ S (PSJDSFLG,PSJXFLG,PSJTOT)=0
+"RTN","PSJDOSE",151,0)
+ S PSJX=0 F  S PSJX=$O(^PS(53.45,PSJSYSP,2,PSJX)) Q:'PSJX!PSJDSFLG!PSJXFLG  D
+"RTN","PSJDOSE",152,0)
+ . S PSJXDD=$G(^PS(53.45,PSJSYSP,2,PSJX,0))
+"RTN","PSJDOSE",153,0)
+ . S PSJXDUP=$S(+$P(PSJXDD,U,2):$P(PSJXDD,U,2),1:1)
+"RTN","PSJDOSE",154,0)
+ . ;*216 Don't count inactive Disp. Drug
+"RTN","PSJDOSE",155,0)
+ . I $P(PSJXDD,U,3)'="",$P(PSJXDD,U,3)'>PSJDT Q
+"RTN","PSJDOSE",156,0)
+ . D DOSE^PSSORPH(.PSJXDOX,+PSJXDD,"U")
+"RTN","PSJDOSE",157,0)
+ . I $S('$D(PSJXDOX):1,$P(PSJXDOX(1),U)="":1,1:+PSJXDOX(1)=-1) S PSJXFLG=1 Q
+"RTN","PSJDOSE",158,0)
+ . S PSJXUNIT=""
+"RTN","PSJDOSE",159,0)
+ . S:PSJUNIT["/" PSJXUNIT=PSJUNIT
+"RTN","PSJDOSE",160,0)
+ . I PSJUNIT'["/" F X=1:1:$L(PSJUNIT)  I $E(PSJUNIT,X)'?.N&($E(PSJUNIT,X)'?1" ") S PSJXUNIT=PSJXUNIT_$E(PSJUNIT,X)
+"RTN","PSJDOSE",161,0)
+ . I PSJCNT=1 D ONEDD Q:'PSJDSFLG
+"RTN","PSJDOSE",162,0)
+ . D BCMAUPD(PSJXDD),DOSE^PSSORPH(.PSJXDOX,+PSJXDD,"U",,PSJXDUP)
+"RTN","PSJDOSE",163,0)
+ . I PSJCNT=1 D ONEDD Q
+"RTN","PSJDOSE",164,0)
+ . S PSJTOT=+PSJXDOX(1)+$G(PSJTOT)
+"RTN","PSJDOSE",165,0)
+ I PSJCNT>1,(PSJTOT'=+PSGDO) S PSJDSFLG=1
+"RTN","PSJDOSE",166,0)
+ Q
+"RTN","PSJDOSE",167,0)
+ONEDD ;
+"RTN","PSJDOSE",168,0)
+ NEW X S PSJDSFLG=1
+"RTN","PSJDOSE",169,0)
+ F X=0:0 S X=$O(PSJXDOX(X)) Q:'X!'PSJDSFLG  D
+"RTN","PSJDOSE",170,0)
+ . I +PSJXDOX(X)'=+PSGDO,(PSJXUNIT=$P(PSJXDOX(X),U,2)),$S(PSJXDUP=$P(PSJXDOX(X),U,3):1,1:PSJXDUP=$P(PSJXDOX(X),U,12)) D  Q:PSJDSFLG
+"RTN","PSJDOSE",171,0)
+ .. N CHK S CHK=+PSGDO/$P(PSJXDOX(X),U,5) S CHK=+$FN(CHK,"",4) S:$E(CHK)="." CHK="0"_CHK I CHK=PSJXDUP S PSJDSFLG=0
+"RTN","PSJDOSE",172,0)
+ . I +PSJXDOX(X)=+PSGDO,$TR($P(PSJXDOX(X),U,11)," ")=$TR(PSGDO," "),$S(PSJXDUP=$P(PSJXDOX(X),U,3):1,1:PSJXDUP=$P(PSJXDOX(X),U,12)) S PSJDSFLG=0
+"RTN","PSJDOSE",173,0)
+ Q
+"RTN","PSJDOSE",174,0)
+BCMAUPD(PSJDD) ;
+"RTN","PSJDOSE",175,0)
+ NEW PSJCNT
+"RTN","PSJDOSE",176,0)
+ K PSJBCMA
+"RTN","PSJDOSE",177,0)
+ F X=0:0 S X=$O(PSJXDOX(X)) Q:'X  D
+"RTN","PSJDOSE",178,0)
+ . Q:'+$P(PSJXDOX(X),U,12)
+"RTN","PSJDOSE",179,0)
+ . S PSJCNT=+$G(PSJCNT)+1
+"RTN","PSJDOSE",180,0)
+ . S PSJBCMA(+PSJDD,$P(PSJXDOX(X),U,12),PSJCNT)=$P(PSJXDOX(X),U,1,2)
+"RTN","PSJDOSE",181,0)
+ Q
+"RTN","PSJDOSE",182,0)
+DSPWARN ;
+"RTN","PSJDOSE",183,0)
+ NEW PSJDOSE
+"RTN","PSJDOSE",184,0)
+ D SETVAR
+"RTN","PSJDOSE",185,0)
+ W !!,PSJDOSE("WARN"),!,PSJDOSE("WARN1"),!
+"RTN","PSJDOSE",186,0)
+ D PAUSE^VALM1
+"RTN","PSJDOSE",187,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8033,6)
+^212
+**END**
+**END**

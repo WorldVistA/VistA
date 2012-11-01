@@ -1,0 +1,160 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 07/28/11 at 07:09
+=============================================================================
+Run Date: OCT 04, 2011                     Designation: PSB*3*63
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #46                      Status: Released
+                  Compliance Date: NOV 04, 2011
+=============================================================================
+
+Associated patches: (v)PSB*3*25    <<= must be installed BEFORE `PSB*3*63'
+                    (v)PSB*3*46    <<= must be installed BEFORE `PSB*3*63'
+
+Subject: CORRECT BCMA SERVER TIME, DUE LIST ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch Addresses 2 issues:
+  
+ 1. When a user logs into BCMA and their device time is exactly 
+    midnight, VistA will add the value of $H to the current time to 
+    get the BCMA server time.  This server time will be greater than 
+    the highest allowable Fileman date, which is October 15, 2114.  
+    If the BCMA Due List Report is run with the invalid default server 
+    time, an infinite loop will be created, eventually causing a "Disk
+    Full" error.
+  
+ 2. A schedule with a frequency of greater than 1440 minutes 
+    (24 hours) and a start date after today does not display as a Future
+    Order on the BCMA Due List Report.  
+  
+ Associated NSR(s):
+ ------------------
+ N/A
+   
+ Associated Remedy ticket(s):
+ ----------------------------
+ 1. HD0000000475862 - <DSKFUL>PRINT+33^PSBODL
+    Duplicate: 
+    HD0000000485429
+    HD0000000490046
+  
+ 2. HD0000000352228 - QOD schedule not included in future order report
+   
+ PARTICIPATING TEST SITES:
+ -------------------------
+ Louis Stokes VAMC - Cleveland
+ VA Western NY HCS - Syracuse
+ VA Long Beach HCS
+  
+ REMEDY OVERVIEW
+ ---------------
+   
+ 1. HD0000000475862 - <DSKFUL>PRINT+33^PSBODL
+    
+    Problem:
+    --------
+    When a user logs into BCMA and their device time is exactly 
+    midnight, VistA will add the value of $H to the current time to 
+    get the BCMA server time.  This server time will be greater than 
+    the highest allowable Fileman date, which is October 15, 2114.  
+    If the BCMA Due List Report is run with the invalid default server 
+    time, an infinite loop will be created, eventually causing a "Disk
+    Full" error.
+  
+    Resolution:
+    -----------
+    The error occurred because Delphi reads midnight as 0000 where Vista 
+    reads midnight as 2400.  Routine PSBUTL was modified to use a time of 
+    2400 for the Fileman call when a time 0000 is passed into Vista.  Also,
+    routine PSBODL was modified to quit if an invalid Fileman date is 
+    passed into VistA (a date before 12/31/1840 or after 10/15/2114).
+  
+  
+ 2. HD00000000352228 - QOD schedule not included in future order report
+  
+    Problem:
+    --------
+    A schedule with a Frequency of greater than 1440 minutes (24 hours), a
+    start date of today, and a first scheduled administration of a future
+    date will not display on the BCMA Due List report as a Future Order.
+  
+    Resolution:
+    -----------
+    Routine PSBODL was modified to check if the Start Date of the order is
+    greater than the Start Date of the Report, and if so, include it as a
+    future order. 
+  
+  
+ Installation Instructions:
+ ==========================
+   
+    *************************** NOTE ********************* *
+    *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS *
+    *  AN EDITED ERROR WILL OCCUR.                         *                 
+    *  The patch should be installed when NO BCMA Client   * 
+    *  users are on the system.                            *                    
+    * **************************************************** *
+   
+    Installation will take less than 1 minute.
+   
+    Suggested time to install: Non-peak requirement hours.
+   
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSB*3.0*63):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package PSB*3*63.
+   
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBODL
+    Before: B74741447   After: B80947318  **5,9,38,32,25,63**
+Routine Name: PSBUTL
+    Before: B83685306   After: B87531522  **3,9,13,38,45,46,63**
+ 
+Routine list of preceding patches: 25, 46
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : MAY 09, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: SEP 07, 2011
+Released By : LYTTLE,KIM M                  Date Released : OCT 04, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

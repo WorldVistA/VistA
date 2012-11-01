@@ -1,0 +1,87 @@
+
+=============================================================================
+Run Date: APR 14, 2011                     Designation: XOBW*1*2
+Package : XOBW - WEB SERVICES CLIENT          Priority: Mandatory
+Version : 1         SEQ #2                      Status: Released
+                  Compliance Date: MAY 15, 2011
+=============================================================================
+
+
+Subject: <FUNCTION> errors in %Net.HttpRequest
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Remedy tickets
+ ===============
+ HD0000000466096
+ HD0000000475607
+ HD0000000475629
+ HD0000000475637
+ HD0000000475654
+ HD0000000475656
+ HD0000000475817
+ HD0000000476900
+  
+ When a task using HealtheVet Web Services Client (HWSC) 1.0 is queued to
+ run without a device, on many systems the task will fail and place errors
+ into the Kernel error log with a $ZE containing:
+  
+   $ZE= <FUNCTION>zSend+2^%Net.HttpRequest.1
+  
+ According to InterSystems, the cause of this error is that internally, the
+ %Net.HttpRequest class used by HWSC may attempt to USE the current device.
+ If there is no current device, the hard error above is seen. The
+ workaround they've recommended is to always queue background processes
+ using HWSC to a device, e.g., the NULL device.
+  
+ Site Impact and Mitigation 
+ ==========================
+ The first two applications released that use HWSC are Remote Data 
+ Interoperability (RDI) v2 and Pharmacy Re-Engineering (PRE). For both,
+ tasks are only employed to check for outages of the remote web service
+ used by the applications. Therefore these errors are not interfering with
+ normal user application functions.
+  
+ RDI is working on a patch, and PRE is updating its documentation, to
+ ensure that, in the future, tasks calling HWSC will be queued to a device.
+  
+ In the meantime, sites may add an error screen to filter out these errors,
+ if desired, using the Add Error Screens [XUTM ERROR SCREEN ADD] option. 
+ Recommend using the error screen's Alternative Screening Text field, set
+ to: <FUNCTION>zSend+2^%Net.HttpRequest
+  
+ Developer Requirement
+ ===================== 
+ Always queue tasks calling HWSC to a device. VistA systems are guaranteed
+ to have a DEVICE file entry named NULL. This device name should be used
+ with the input variable ZTIO when scheduling tasks from application code.
+ This will ensure the task will not fail with the error above.
+  
+ Note 
+ ====
+ This issue was first reported after Remote Data Interoperability (RDI) v2
+ and Pharmacy Re-Engineering (PRE) test sites upgraded from Cache v5.2.3 to
+ v2008.2.5. In the HWSC 1.0 Install Guide, the issue was described in the
+ Known Issues section, "<FUNCTION> Errors for RDI Outage Tasks". This patch
+ is an update to that known issue.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : CLARKE,KYLE E                 Date Entered  : APR 12, 2011
+Completed By: SINGH,GURBIR                  Date Completed: APR 14, 2011
+Released By : TILLIS,LEWIS                  Date Released : APR 14, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

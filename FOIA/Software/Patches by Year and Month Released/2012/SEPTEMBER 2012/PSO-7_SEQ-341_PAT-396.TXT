@@ -1,0 +1,209 @@
+$TXT Created by NIXON,TONY at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 02/21/12 at 13:02
+=============================================================================
+Run Date: SEP 13, 2012                     Designation: PSO*7*396
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #341                      Status: Released
+                  Compliance Date: OCT 14, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*379   <<= must be installed BEFORE `PSO*7*396'
+
+Subject: INCORRECT LAST FILL DATE RESTORED/PRINT ISSUES WITH TRICARE PRESCRIPTIONS 
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following 3 issues: 
+  
+ 1. The last fill date for the prescription was not restored to the correct
+    date after the "date of death" status was reversed.
+  
+ 2. When reinstating a TRICARE prescription from the Discontinue
+    Prescription(s) [PSO C] option, labels were not printing for a
+    rejected TRICARE claim if the users ignored the reject via the reject
+    notification screen.  
+  
+ 3. Ensure that users understand how to set Pharmacy parameters so that CPRS
+    refills can process automatically.  
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1) HD0000000498138 - Date of Death cancelled prescriptions reinstated does
+                      not show correct Last Fill dates.
+  
+ 2) HD0000000601013 - Print issues with TRICARE prescriptions
+  
+ 3) HD0000000586028 - Refills are clogging CPRS
+                      (CPRS refills were not processing automatically)
+  
+  
+ Associated NSRs:
+ ================
+ N/A
+  
+  
+  
+ Participating Test Sites:
+ =========================
+ Hunter Holmes McGuire VA Medical Center - Richmond
+ VA Heartland West HCS
+ Alexandria VA Medical Center
+  
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000498138 - Date of Death cancelled prescriptions reinstated do not
+    show correct Last Fill dates. (PSPO#2049)
+  
+  
+ Patient Safety Issue:
+ ===================== 
+ PSPO#2049 
+  
+  
+ Problem:
+ --------
+ The "last fill date" for the prescription was being set to the date users
+ entered a "date of death" for a patient.
+  
+  
+ Resolution:
+ ----------- 
+ Modify routine PSOCAN2 so that the "last fill date" does not get reset to
+ when "date of death" was entered.
+  
+  
+ 2. HD0000000601013 - Print issues with TRICARE prescriptions
+  
+ Problem:
+ --------
+ When reinstating a TRICARE prescription from the Discontinue Prescription(s)
+ option [PSO C], users are not getting the appropriate label prompts and
+ messages if the rejected TRICARE claim was ignored via the TRICARE reject
+ notification screen.
+  
+ Resolution:
+ -----------
+ If a rejected TRICARE claim is ignored via the TRICARE reject notification
+ screen and the fill date is in the past, users will be asked whether they
+ want to print a label.  In the same scenario except if the fill date is
+ equal to the current date, the user will get a message to use the reprint
+ option to print a label.  
+  
+  
+ 3. HD0000000586028 - Refills are clogging CPRS
+  
+ Problem:
+ --------
+ Not all VAMC(s) are aware of how to get CPRS refills to process automatically.
+ In order to implement this functionality, a site must do the following:
+  
+ a. Set the AUTOMATE CPRS REFILL flag to "YES".
+ b. Give the PSOAUTRF security key to at least one user.
+  
+ The data dictionary description for the flag in the AUTOMATE CPRS REFILL 
+ field (40.16) of the PHARMACY SYSTEM file (#59.7) is missing important 
+ information. It should also state that at least one user must have the 
+ PSOAUTRF security key to ensure that CPRS refills process automatically. 
+ Having just the flag set to "YES" is not enough.
+  
+  
+ Resolution:
+ -----------
+ Updated the data dictionary description for the AUTOMATE CPRS REFILL flag.
+ The description now states that if the site wants CPRS refills to process
+ automatically, the flag must be set to "YES", and at least one user must
+ have the PSOAUTRF security key. The required security key was not previously
+ part of the data dictionary description.  It is now. 
+  
+ 59.7,40.16    AUTOMATE CPRS REFILL   40.1;7 SET
+  
+                                 '0' FOR NO; 
+                                 '1' FOR YES; 
+               LAST EDITED:      FEB 13, 2012 
+               HELP-PROMPT:      Enter Y to process CPRS refill automatically or 
+                                 N to process it manually. 
+               DESCRIPTION:      Answer YES if refill requests from CPRS are to
+                                 be processed automatically and filed in the
+                                 PRESCRIPTION file (#52) and placed on Suspense. 
+                                                                                 
+                                 Answer NO if refill requests from CPRS are to
+                                 be filed in the PENDING OUTPATIENT ORDERS file
+                                 (#52.41) for manual processing.  
+                                                                                 
+                                 NOTE: This functionality is partnered with the
+                                 PSOAUTRF security key.  When this field is set
+                                 to YES and the PSOAUTRF security key has been
+                                 assigned to at least one user, all refills
+                                 placed in CPRS by the provider are processed
+                                 and suspended with the next fill date and all
+                                 routing is set to Mail automatically.  
+                                                                                 
+                                 When this field is set to NO or if the PSOAUTRF
+                                 security key is not assigned, the manual refill
+                                 process is required.
+  
+  
+   =================== INSTALLATION INSTRUCTIONS =====================
+     
+   Installation will take less than 2 minutes.  Users may be on the system.
+     
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+   2. From the Kernel Installation & Distribution System menu, select
+          the Installation menu.
+     
+   3. From this menu, you may select to use the following options
+          (when prompted for INSTALL NAME, enter PSO*7.0*396)
+     
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+     
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch
+          is installed. It compares all components of the patch (routines,
+          DDs, templates, etc.).
+     
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+     
+    4. Use the Install Package(s) option and select the package PSO*7.0*396
+     
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.
+     
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCAN2
+    Before: B77487451   After: B82356240  **8,18,62,46,88,164,235,148,
+                                           259,281,287,251,375,379,396**
+ 
+Routine list of preceding patches: 379
+
+=============================================================================
+User Information:
+Entered By  : NIXON,ANTOINE                 Date Entered  : JUL 08, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: SEP 13, 2012
+Released By : SEBURN,CINDY L                Date Released : SEP 13, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

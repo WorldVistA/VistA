@@ -1,0 +1,420 @@
+$TXT Created by LOUCK,KEVIN C at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Wednesday, 06/01/11 at 08:57
+=============================================================================
+Run Date: JUL 15, 2011                     Designation: PRC*5.1*153
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #131                    Status: Released
+                  Compliance Date: JUL 29, 2011
+=============================================================================
+
+Associated patches: (v)PRC*5.1*148 <<= must be installed BEFORE `PRC*5.1*153'
+
+Subject: IFCAP/OLCS INTERFACE-1358 TRANSACTIONS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+  
+ Patch Overview
+ ==================================================
+  
+ This patch introduces changes and enhancements to the Integrated Funds
+ Distribution, Control Point Activity, Accounting and Procurement (IFCAP)
+ V. 5.1 package in support of the Miscellaneous Obligations Enhancements
+ project. 
+  
+ A new interface is being established between the IFCAP application and
+ the Online Certification System (OLCS) located at the Financial Services
+ Center (FSC) in Austin, Texas.  The interface will support the validation
+ of the Certifier of Payment role in the OLCS.
+  
+ The interface will be a one-way data exchange of Miscellaneous Obligations
+ 1358 data from the IFCAP application to the OLCS.  The electronic exchange
+ of 1358 data between the IFCAP application and OLCS will use VistA MailMan
+ messages. The mail messages will provide OLCS with the requestor,
+ approver, and obligator for each 1358 obligated or adjusted in IFCAP to
+ enforce segregation of duties in OLCS.  Segregation of duties prevents a
+ user from functioning in more than one role on a 1358.  The OLCS will
+ verify that a certifier processing an invoice for a 1358 in OLCS is not
+ the requestor, approver, or obligator on that 1358 in IFCAP.
+  
+ The following IFCAP events will trigger a MailMan message from the local
+ site to the Online Certification System:
+  
+   * OBLIGATION event - when a new 1358 transaction is obligated in IFCAP
+   * ADJUSTMENT event - when an increase/decrease adjustment transaction is
+                        obligated in IFCAP
+  
+ During the installation of this patch, a job will be automatically queued 
+ to perform an initial data extract of 1358 transactions for Fiscal Year
+ 2010 and Fiscal Year 2011.  These 1358 transaction records will be
+ transmitted to the OLCS via VistA MailMan batch messages (100 transaction 
+ records per batch) and be used to seed their database.
+  
+ The exchange of Miscellaneous Obligations 1358 data from the IFCAP 
+ application to the Online Certification System will occur in the
+ background and be transparent to IFCAP end-users.
+  
+ This patch addresses the following New Service Request (NSR):
+  
+   * 20080801 - Enhancing Internal Controls and Reporting Capabilities   
+                for 1358 Misc Obligations
+  
+          Enhancing Internal Controls and Reporting Capabilities for 1358 
+          Misc Obligations: Implements adequate controls with respect to 
+          segregation of duties and oversight by contracting officials,
+          improving documentation requirements, and enhancing 1358
+          reporting capabilities within Integrated Funds Distribution,
+          Control Point Activity, Accounting and Procurement (IFCAP) that
+          will be used at the station, Veterans Integrated Service Network
+          (VISN), and enterprise levels.  A Government Accountability
+          Office (GAO) review questioned VHA's internal control standards
+          governing the authorization and use of miscellaneous obligations
+          as well as oversight abilities. Direction by the Congressional
+          Oversight Committee of the House.  GAO Report - GAO-08-1056T
+          Improvements Needed in Design of Controls over Miscellaneous 
+          Obligations, July 31, 2008. Department of Veterans Affairs
+          Memorandum, Interim Memos (Interim Guidance on Miscellaneous
+          Obligations, VA Form 4-1358, dated January 30, 2008 AND
+          Department of Veterans Affairs Memorandum, Revised Guidance for
+          Processing of Miscellaneous Obligations, VA Form 4-1358, dated
+          May 18, 2008.
+  
+  
+  
+ Patch Components
+ ==================================================
+  
+ Files & Fields Associated:
+  
+  File Name (Number)   Field Name (Number)   New/Modified/Deleted
+  ------------------   -------------------   --------------------
+  N/A
+  
+  
+ Forms Associated:
+  
+  Form Name   File #   New/Modified/Deleted
+  ---------   ------   --------------------
+  N/A
+  
+  
+ Kernel Parameter Definitions (#8989.51) Associated:
+  
+  Parameter Definition Name   New/Modified/Deleted   
+  -------------------------   --------------------
+  PRC OLCS 1358 EXTRACT       New
+  
+  
+ Mail Groups Associated:
+  
+  Mail Group Name   New/Modified/Deleted
+  ---------------   --------------------
+  OLP               New
+  
+  Description
+  -----------
+  This mail group will receive confirmation mail messages from the Austin
+  Information Technology Center (AITC) postmaster for 1358 transaction
+  messages sent by the IFCAP package to Domain Q-OLP.MED.VA.GOV. This mail
+  group supports the interface between IFCAP and the Online Certification
+  System (PRC*5.1*153).
+  
+  
+ Options Associated:
+  
+  Option Name   Type   New/Modified/Deleted
+  -----------   ----   -------------------- 
+  N/A            
+  
+  
+ Protocols Associated:
+  
+  Protocol Name   New/Modified/Deleted
+  -------------   -------------------- 
+  N/A
+  
+  
+ Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  N/A
+  
+  
+ Templates Associated:
+  
+  Template Name   Type   File Name (Number)   New/Modified/Deleted 
+  -------------   ----   ------------------   --------------------
+  N/A
+  
+  
+  
+ Additional Information
+ ==================================================
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ 1. 20080801 - Enhancing Internal Controls and Reporting Capabilities for
+               1358 Misc Obligations
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ The following sites participated in testing and signed-off on the 
+ PRC*5.1*153 patch.
+  
+  1. VA Heartland-West  (Kansas City, MO)
+  2. St. Cloud VAMC     (St. Cloud, MN)
+  3. Tomah VAMC         (Tomah, WI)
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from:
+  
+  ftp://download.vista.med.va.gov/
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany          ftp.fo-albany.med.va.gov <ftp://ftp.fo-albany.med.va.gov>
+  Hines           ftp.fo-hines.med.va.gov  <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City  ftp.fo-slc.med.va.gov    <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+                                        File                         FTP
+ Title                                  Name                         Mode
+ ------------------------------------------------------------------------
+ Accounting Technician User's Guide    IFCP5_1ACCOUNTING_TECH.PDF    bin
+ Application Coordinator User's Guide  IFCP5_1APPLICATION_COORD.PDF  bin
+ Package Security Guide                IFCP5_1SECURITY_GUIDE.PDF     bin
+ Technical Manual                      IFCP5_1TECH_MANUAL.PDF        bin
+  
+  
+  
+ Patch Installation
+ ==================================================
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  This patch includes an environment check (ENV^PRC153P) that will ensure 
+  the following requirements are satisfied prior to patch installation:
+  
+   1. Programmer access is required for installing this patch.  Prior to
+      installation, the installer must ensure the DUZ(0) node of the DUZ 
+      array is set to the "@" symbol.
+  
+   2. The DOMAIN (#4.2) file entry "Q-OLP.MED.VA.GOV" is required for 
+      installing this patch. Prior to installation, the installer must
+      ensure the DOMAIN (#4.2) file entry "Q-OLP.MED.VA.GOV" was added per
+      instructions provided by MailMan patch XM*999*175.  The installation
+      of the software distribution will be aborted if the domain entry is 
+      not found.
+  
+  
+  This patch has no pre-installation items.
+  
+  
+  This patch includes a post-installation (POST^PRC153P) that will perform
+  the following actions:
+  
+   1. Automatically add the installer as a member of the new 'OLP' mail
+      group in the Mail Group (#3.8) file.
+  
+   2. Automatically queue a job that will perform an initial data extract
+      of 1358 transactions for Fiscal Year 2010 and Fiscal Year 2011.
+      These 1358 transaction records will be transmitted to the Online
+      Certification System via MailMan messages. The following 1358
+      transaction types will be extracted and sent to OLCS:
+  
+       a. Initial Obligation (when a 1358 is obligated in IFCAP)
+       b. Adjustment (increase/decrease to the 1358 obligated in IFCAP)
+  
+   3. Once the job responsible for performing an initial data extract of 
+      1358 transactions for Fiscal Year 2010 and Fiscal Year 2011
+      completes, a MailMan message will be sent to the installer containing
+      results for the extract.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+  * Users On the System
+  
+    This patch may be installed with users on the system, but should be
+    loaded during non-peak hours to minimize disruption to IFCAP users.
+    The following IFCAP options should be placed out of order to reduce the
+    possibility of errors when the routines are updated.
+  
+        [PRCEF OBLIGATE]   Obligate 1358     
+        [PRCEF ADJUST]     Adjust (Increase/Decrease) 1358
+    
+  * Software Installation Time
+  
+    The estimated installation time for this patch is less than 5 minutes 
+    during off peak hours.
+  
+    The job to perform an initial data extract of 1358 transactions for 
+    Fiscal Year 2010 and Fiscal Year 2011 will be automatically queued
+    during the post installation process.  It will not impact the software 
+    installation time or IFCAP end-users.
+  
+  * Required Builds
+  
+    The following is a list of REQUIRED builds for this KIDS distribution. 
+    KIDS will not allow the installation of this patch without their prior
+    installation.
+  
+      Required Build(s):
+      ------------------
+      PRC*5.1*148
+  
+  * Required Domain
+  
+    The DOMAIN (#4.2) file entry "Q-OLP.MED.VA.GOV" is required for
+    installing this patch. Prior to installation, the installer must ensure
+    the DOMAIN (#4.2) file entry "Q-OLP.MED.VA.GOV" was added per
+    instructions provided by MailMan patch XM*999*175.  The installation of
+    the software distribution will be aborted if the domain entry is not
+    found.
+  
+  * Installation Steps
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+    3. From the Kernel Installation and Distribution System Menu, select
+       the Installation Menu.  From this menu, you may elect to use the
+       following option. When prompted for the INSTALL enter the patch 
+       PRC*5.1*153:
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+    4. From the Installation Menu, select the Install Package(s) option and
+       choose the patch to install.
+  
+    5. When prompted 'Enter the Coordinator for Mail Group 'OLP':  //' 
+       answer with the OLP Mail Group Coordinator's name.
+    
+    6. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//'  Answer NO unless your system does not do this in a
+       nightly TaskMan process.
+  
+    7. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//'  answer NO
+  
+    8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//  answer YES
+  
+       The following IFCAP Options should be placed out of order:
+  
+        [PRCEF OBLIGATE]   Obligate 1358     
+        [PRCEF ADJUST]     Adjust (Increase/Decrease) 1358
+  
+    9. If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+  1. Once the job responsible for performing an initial data extract of
+     1358 transactions for Fiscal Year 2010 and Fiscal Year 2011 completes,
+     a MailMan message will be sent to the installer containing results for
+     the extract.
+  
+     a. Example Extract Results Message
+   
+      The following extract results message was generated after the 
+      initial data extract completed on Heartland-West's (Station #589)
+      production system.
+  
+        Subj: PRC*5.1*153-Extract Results-Station #589 [#9999999] 
+        06/08/11@07:10 13 lines
+        From: IFCAP/OLCS INTERFACE  In 'IN' basket.   Page 1  *New*
+        ------------------------------------------------------------------
+  
+        >>>>>>>>>> Patch PRC*5.1*153-Extract 1358s Results <<<<<<<<<<
+  
+           Date/Time extract job started: Jun 08, 2011 7:09:24 am
+           Date/Time extract job stopped: Jun 08, 2011 7:10:47 am
+  
+             Batch messages sent to OLCS:    144
+          1358 transactions sent to OLCS:  14315
+                     Initial Obligations:   4796
+                             Adjustments:   9519
+  
+        PARAMETERS (#8989.5) file update: Successful
+                               Parameter: PRC OLCS 1358 EXTRACT
+   
+  
+  2. During the installation process, a new mail group 'OLP' will be 
+     created in the Mail Group (#3.8) file.  This mail group will receive
+     confirmation mail messages from the Austin Information Technology
+     Center (AITC) postmaster for 1358 transaction messages sent by the
+     IFCAP package to Domain "Q-OLP.MED.VA.GOV".  The installer is added as
+     the sole member of the new mail group.  Please enter other members to
+     this mail group as appropriate.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRC153P
+    Before:       n/a   After: B99516363  **153**
+Routine Name: PRCESOE
+    Before: B45274590   After: B49918115  **148,153**
+Routine Name: PRCESOM
+    Before: B59523571   After: B60435984  **148,153**
+Routine Name: PRCFDO
+    Before:       n/a   After:B111106540  **153**
+Routine Name: PRCFDO1
+    Before:       n/a   After:B104213486  **153**
+ 
+Routine list of preceding patches: 148
+
+=============================================================================
+User Information:
+Entered By  : MCGAUGH,MAVIS L               Date Entered  : OCT 28, 2010
+Completed By: ZEIGLER,EDWARD L              Date Completed: JUL 06, 2011
+Released By : NELSON,VICKI M                Date Released : JUL 15, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

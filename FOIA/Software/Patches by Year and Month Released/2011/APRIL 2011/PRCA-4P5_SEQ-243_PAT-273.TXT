@@ -1,0 +1,312 @@
+$TXT Created by CLARK,MICHELLE at CARVDD.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 11/02/10 at 11:02
+=============================================================================
+Run Date: APR 01, 2011                     Designation: PRCA*4.5*273
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #243                    Status: Released
+                  Compliance Date: APR 26, 2011
+=============================================================================
+
+
+Subject: THIRD PARTY PHARMACY ENHANCEMENT
+
+Category: 
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ 
+ 
+     ****    PLEASE NOTE:  the compliance date is April 26, 2011  ***
+ 
+ 
+ Currently, the VHA bills a $51 flat rate per prescription to third party
+ payers for outpatient prescriptions. This rate does not vary based on the
+ number of days for the prescription or the drug provided.
+ VHA requested a modification to the federal regulations to change the
+ methodology for third party pharmacy charges to allow VHA to charge a rate
+ based on the cost of the drugs plus administrative fee instead of a flat
+ rate for rate types No Fault Auto Acc, Reimburs Health Ins, Tort Feasor, and
+ Workman's Comp. In addition, a new fund account and four new Revenue Source
+ Codes were created to specifically capture the third party pharmacy billing
+ and accounts receivable in VistA.
+  
+ This patch contains functionality for the new fund account (528711) and
+ Revenue Source Codes. Patch IB*2*437 addresses the rate change and must be 
+ installed prior to loading this patch.
+ 
+ ASSOCIATED NSR(S):
+ =================
+ 20080212 FY 2009 3rd Party Pharmacy Prescription Project
+ 
+ ASSOCIATED REMEDY:
+ ==================
+ N/A
+ 
+ PARTICIPATING TEST SITES:
+ =========================
+   Louisville
+   Loma Linda
+   Tampa
+   VISN 15 West
+               
+ DOCUMENTATION DISTRIBUTION:
+ ===========================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+ 
+ The preferred method is to FTP the files from download.vista.med.va.gov. This 
+ transmits the files from the first available FTP server. Sites may also elect 
+ to retrieve software directly from a specific server as follows:
+ 
+ Albany          ftp.fo-albany.med.va.gov     ftp://ftp.fo-albany.med.va.gov
+ Hines           ftp.fo-hines.med.med.va.gov  ftp://ftp.fo-hines.med.va.gov
+ Salt Lake City  ftp.fo-slc.med.va.gov        ftp://ftp.fo-slc.med.va.gov 
+ 
+ The documentation will be in the form of Adobe Acrobat files.
+ 
+ Documentation can also be found on the System Design and Development Web page 
+ at:
+        http://www.va.gov/vdl
+ 
+  
+ The documentation distribution includes:
+  
+     FILE NAME                             DESCRIPTION
+     ---------------------------------------------------------------------
+     prca_4_5_p273_rn.pdf              Patch PRCA*4.5*273 Release Notes
+  
+ 
+  
+ The following is a list of all software changes contained in this patch:
+ ------------------------------------------------------------------------ 
+  
+ 1.  The Revenue Source Code Report [PRCA FMS RSC REPORT] prints a detailed
+ list of all available Revenue Source Codes sent from the AR package to FMS
+ for accrued bills. 
+  
+ The four new Revenue Source Codes created for Third Party Pharmacy will be
+ added to this report. The new Revenue Source Codes are: 
+  
+    Pharmacy No Fault Auto Acc - 8QZZ
+    Pharmacy Reimburs Health Ins - 8RZZ
+    Pharmacy Tort Feasor - 8SZZ
+    Pharmacy Workman's Comp - 8TZZ 
+  
+ A mock-up of the new Revenue Source Code Report is shown below:
+  
+ REVENUE SOURCE CODE REPORT (VISTA TO FMS)       JUN 14, 2010@12:04:16  PAGE 1
+ RSC   Description
+ -----------------------------------------------------------------------------
+ ARRV  Miscellaneous
+ 81ZZ  Hospital Care (NSC)
+ 82ZZ  Outpatient Care (NSC)
+ 83ZZ  Nursing Home Care (NSC)
+ 84ZZ  Ineligible Hospitalization
+ 85*Z  Reimbursable Health Insurance
+ 86ZZ  Tort Feasor
+ 87ZZ  Workmans Compensation (Non-Federal)
+ 88ZZ  C (Means Test)
+ 89ZZ  Emergency/Humanitarian
+ 8AZZ  No Fault Auto Accident
+ 8BZZ  Pharmacy Co-Pay (SC Vet)
+ 8CZZ  Pharmacy Co-Pay (NSC Vet)
+ 8DZZ  Nursing Home Care Per Diem
+ 8EZZ  Hospital Care Per Diem
+ 8FZZ  Medicare
+ 8GZZ  Adult Day Health Care (LTC)
+ 8HZZ  Domiciliary (LTC)
+ 8IZZ  Respite Care-Institutional (LTC)
+ 8JZZ  Respite Care-Non-Institutional (LTC)
+ 8KZZ  Geriatric Eval-Institutional (LTC)
+ 8LZZ  Geriatric Eval-Non-Institutional (LTC)
+ 8MZZ  Nursing Home Care-Long Term Care (LTC)
+ 8QZZ Pharmacy No Fault Auto Acc
+ 8RZZ Pharmacy Reimburs Health Ins
+ 8SZZ Pharmacy Tort Feasor
+ 8TZZ Pharmacy Workman's Comp
+ 
+ 
+ 2. The Deposit Reconciliation Report [PRCA DEPOSIT RECON REPORT] will print a
+ report showing the cash receipt documents sent to FMS.  The user can print a
+ summary or detailed report. The summary report will show the total cash
+ receipt dollars sent to FMS. The detail report will show the individual
+ lines in the cash receipt document sent to FMS. 
+  
+ The report has been modified to display the new fund for Third Party
+ Pharmacy and the four new Revenue Source Codes.
+  
+ 3.  The option to calculate the Revenue Source Code for a Bill is [PRCA FMS
+ RSC CALCULATE]. This option will calculate the Revenue Source Code for a
+ MCCF (fund 5287) bill and display it on the screen.  The code will be
+ modified so the four new Revenue Source Codes will calculate and display. 
+ 
+ 4. The new fund account information and Revenue Source Codes will be added to 
+ Standard Voucher (SV) Document for the Summary Receivable Balance and the 
+ Write-off (WR) Document.  Existing transaction types will remain in effect for 
+ the new fund. 
+  
+ 5.  The Cash Receipt (CR) Document is used for check payments made directly to 
+ facilities and applied directly to e-pharmacy receivables. E-pharmacy
+ reimbursements received electronically through the EDI Lockbox process will
+ immediately be set aside in FMS (fund account 528704/RSC 8NZZ) and then
+ transferred via the Transfer (TR) Document to the appropriate fund and
+ revenue source code when the dollars received are matched with the
+ e-pharmacy receivable. The new fund account information and Revenue Source
+ Codes will be added to the TR Document. 
+ 
+ 6.  The Bad Debt Report [PRCA NR BAD DEBT ACCR. REPORT], located under the
+ Supervisor's Menu [PRCAF SUPERVISOR MENU], is used to print the Bad Debt
+ Allowance Estimates that AR stores for one month. The report has been
+ modified to display the new fund for Third Party Pharmacy. Existing
+ Standard General Ledger (SGL) account numbers will remain in effect for the
+ new fund. 
+ 
+ INSTALLATION INSTRUCTIONS:
+ If installed during the normal workday, the AR users do not need to be off
+ the system. Other VISTA users will not be affected.
+  
+ Install Time - less than 2 minutes.
+  
+  1.   Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.   Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+           Patch Monitor Main Menu ...
+  
+ 
+       Select Kernel Installation & Distribution System Option: INStallation
+                           ---
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+            Select Installation Option:
+  
+ 
+  3.   From this menu, you may elect to use the following options
+ 
+       (When prompted for the INSTALL NAME, enter PRCA*4.5*273):
+  
+       a.  Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed. It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+ 
+  4.   Use the Install Package(s) option and select the package
+       PRCA*4.5*273.
+  
+       a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+           NO//', answer NO
+       b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+           Options, and Protocols? YES//', answer YES.
+       c.  When prompted 'Enter options you wish to mark as 'Out Of
+           Order':', enter the following option:
+  
+           Revenue Source Code Report[PRCA FMS RSC REPORT]
+           Calculate Revenue Source Code for a Bill[PRCA FMS RSC CALCULATE]
+           Bad Debt Report[PRCA NR BAD DEBT ACCR. REPORT]
+           Deposit Reconciliation Report[PRCA DEPOSIT RECON REPORT]
+ 
+       d.  When prompted 'Enter protocols you wish to mark as 'Out Of
+           Order':', press <return>.
+ 
+  
+ 
+ 
+ Routine Information:
+ ====================
+ The following is a list of the routines included in this patch.  The second 
+ line of each of these routines will look like:
+ 
+ ;;4.5;Accounts Receivable;**[patch list]**;Mar 20, 1995
+ 
+ The checksums are new checksums, and can be checked with CHECK1^XTSUMBLD
+ 
+ 
+ 
+ 
+ Routine Name: PRCAACC
+ Routine Name: RCRJRBD
+ Routine Name: RCRJRBDT
+ Routine Name: RCRJRCOC
+ Routine Name: RCRJRDEP
+ Routine Name: RCXFMSPR
+ Routine Name: RCXFMSSV
+ Routine Name: RCXFMSUF
+ Routine Name: RCXFMSUR
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAACC
+    Before:  B8809868   After:  B8846859  **60,74,90,101,157,203,220,273**
+ Description of Changes:
+  Press RETURN to continue or '^' to stop 
+
+Routine Name: RCRJRBD
+    Before: B64259374   After: B70045536  **101,139,170,193,203,215,220,
+                                           138,239,273**
+Routine Name: RCRJRBDT
+    Before: B54449549   After: B55944684  **101,170,191,138,239,273**
+Routine Name: RCRJRCOC
+    Before: B57003461   After: B57425018  **156,170,182,203,220,138,239,
+                                           272,273**
+Routine Name: RCRJRDEP
+    Before: B57461822   After: B57617465  **101,114,203,220,273**
+Routine Name: RCXFMSPR
+    Before: B23643768   After: B25382600  **90,96,101,156,170,203,273**
+Routine Name: RCXFMSSV
+    Before: B57335503   After: B61841858  **96,101,135,139,98,156,170,
+                                           191,203,220,138,184,239,273**
+Routine Name: RCXFMSUF
+    Before: B31990259   After: B36597164  **90,101,135,157,160,165,170,
+                                           203,207,173,211,192,220,235,
+                                           273**
+Routine Name: RCXFMSUR
+    Before: B53268142   After: B58588015  **90,101,170,203,173,220,231,273**
+ 
+Routine list of preceding patches: 231, 235, 272
+
+=============================================================================
+User Information:
+Entered By  : CLARK,MICHELLE E              Date Entered  : JUN 17, 2010
+Completed By: HEIGES,JOHN                   Date Completed: APR 01, 2011
+Released By : GROOMS,CARMEN L               Date Released : APR 01, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

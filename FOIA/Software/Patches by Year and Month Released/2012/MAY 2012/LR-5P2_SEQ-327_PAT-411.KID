@@ -1,0 +1,1316 @@
+Released LR*5.2*411 SEQ #327
+Extracted from mail message
+**KIDS**:LR*5.2*411^
+
+**INSTALL NAME**
+LR*5.2*411
+"BLD",8845,0)
+LR*5.2*411^LAB SERVICE^0^3120327^y
+"BLD",8845,1,0)
+^^11^11^3110826^^^^
+"BLD",8845,1,1,0)
+This patch is a VM patch that addresses 3 issues in the Lab package.
+"BLD",8845,1,2,0)
+ 
+"BLD",8845,1,3,0)
+1.       When trying to accession an order user gets the message "TEST 
+"BLD",8845,1,4,0)
+NAME does not have an appropriate accession area. Order xxxxx IS 
+"BLD",8845,1,5,0)
+NOT ACCESSIONED."
+"BLD",8845,1,6,0)
+ 
+"BLD",8845,1,7,0)
+2.       The option GROUP DATA REVIEW (LRGVP) does not always show the
+"BLD",8845,1,8,0)
+proper report routing location.
+"BLD",8845,1,9,0)
+ 
+"BLD",8845,1,10,0)
+3.       <UNDEFINED> error occurs when trying to delete old user-defined
+"BLD",8845,1,11,0)
+patient/test lists. 
+"BLD",8845,4,0)
+^9.64PA^^
+"BLD",8845,6.3)
+2
+"BLD",8845,"ABPKG")
+n
+"BLD",8845,"INIT")
+POST^LR411PST
+"BLD",8845,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8845,"KRN",.4,0)
+.4
+"BLD",8845,"KRN",.401,0)
+.401
+"BLD",8845,"KRN",.402,0)
+.402
+"BLD",8845,"KRN",.403,0)
+.403
+"BLD",8845,"KRN",.5,0)
+.5
+"BLD",8845,"KRN",.84,0)
+.84
+"BLD",8845,"KRN",3.6,0)
+3.6
+"BLD",8845,"KRN",3.8,0)
+3.8
+"BLD",8845,"KRN",9.2,0)
+9.2
+"BLD",8845,"KRN",9.8,0)
+9.8
+"BLD",8845,"KRN",9.8,"NM",0)
+^9.68A^5^5
+"BLD",8845,"KRN",9.8,"NM",1,0)
+LR7OGO^^0^B20823962
+"BLD",8845,"KRN",9.8,"NM",2,0)
+LRUMD^^0^B18337665
+"BLD",8845,"KRN",9.8,"NM",3,0)
+LRGV^^0^B42006074
+"BLD",8845,"KRN",9.8,"NM",4,0)
+LRGVP^^0^B5578309
+"BLD",8845,"KRN",9.8,"NM",5,0)
+LR411PST^^0^B11951303
+"BLD",8845,"KRN",9.8,"NM","B","LR411PST",5)
+
+"BLD",8845,"KRN",9.8,"NM","B","LR7OGO",1)
+
+"BLD",8845,"KRN",9.8,"NM","B","LRGV",3)
+
+"BLD",8845,"KRN",9.8,"NM","B","LRGVP",4)
+
+"BLD",8845,"KRN",9.8,"NM","B","LRUMD",2)
+
+"BLD",8845,"KRN",19,0)
+19
+"BLD",8845,"KRN",19.1,0)
+19.1
+"BLD",8845,"KRN",101,0)
+101
+"BLD",8845,"KRN",409.61,0)
+409.61
+"BLD",8845,"KRN",771,0)
+771
+"BLD",8845,"KRN",779.2,0)
+779.2
+"BLD",8845,"KRN",870,0)
+870
+"BLD",8845,"KRN",8989.51,0)
+8989.51
+"BLD",8845,"KRN",8989.52,0)
+8989.52
+"BLD",8845,"KRN",8994,0)
+8994
+"BLD",8845,"KRN","B",.4,.4)
+
+"BLD",8845,"KRN","B",.401,.401)
+
+"BLD",8845,"KRN","B",.402,.402)
+
+"BLD",8845,"KRN","B",.403,.403)
+
+"BLD",8845,"KRN","B",.5,.5)
+
+"BLD",8845,"KRN","B",.84,.84)
+
+"BLD",8845,"KRN","B",3.6,3.6)
+
+"BLD",8845,"KRN","B",3.8,3.8)
+
+"BLD",8845,"KRN","B",9.2,9.2)
+
+"BLD",8845,"KRN","B",9.8,9.8)
+
+"BLD",8845,"KRN","B",19,19)
+
+"BLD",8845,"KRN","B",19.1,19.1)
+
+"BLD",8845,"KRN","B",101,101)
+
+"BLD",8845,"KRN","B",409.61,409.61)
+
+"BLD",8845,"KRN","B",771,771)
+
+"BLD",8845,"KRN","B",779.2,779.2)
+
+"BLD",8845,"KRN","B",870,870)
+
+"BLD",8845,"KRN","B",8989.51,8989.51)
+
+"BLD",8845,"KRN","B",8989.52,8989.52)
+
+"BLD",8845,"KRN","B",8994,8994)
+
+"BLD",8845,"QUES",0)
+^9.62^^
+"BLD",8845,"REQB",0)
+^9.611^3^3
+"BLD",8845,"REQB",1,0)
+LR*5.2*187^2
+"BLD",8845,"REQB",2,0)
+LR*5.2*269^2
+"BLD",8845,"REQB",3,0)
+LR*5.2*341^2
+"BLD",8845,"REQB","B","LR*5.2*187",1)
+
+"BLD",8845,"REQB","B","LR*5.2*269",2)
+
+"BLD",8845,"REQB","B","LR*5.2*341",3)
+
+"INIT")
+POST^LR411PST
+"MBREQ")
+0
+"PKG",26,-1)
+1^1
+"PKG",26,0)
+LAB SERVICE^LR^CORE LAB SYSTEM
+"PKG",26,20,0)
+^9.402P^1^1
+"PKG",26,20,1,0)
+2^^LRXDRPT
+"PKG",26,20,1,1)
+
+"PKG",26,20,"B",2,1)
+
+"PKG",26,22,0)
+^9.49I^1^1
+"PKG",26,22,1,0)
+5.2^2940927^2950304
+"PKG",26,22,1,"PAH",1,0)
+411^3120327^33274
+"PKG",26,22,1,"PAH",1,1,0)
+^^11^11^3120327
+"PKG",26,22,1,"PAH",1,1,1,0)
+This patch is a VM patch that addresses 3 issues in the Lab package.
+"PKG",26,22,1,"PAH",1,1,2,0)
+ 
+"PKG",26,22,1,"PAH",1,1,3,0)
+1.       When trying to accession an order user gets the message "TEST 
+"PKG",26,22,1,"PAH",1,1,4,0)
+NAME does not have an appropriate accession area. Order xxxxx IS 
+"PKG",26,22,1,"PAH",1,1,5,0)
+NOT ACCESSIONED."
+"PKG",26,22,1,"PAH",1,1,6,0)
+ 
+"PKG",26,22,1,"PAH",1,1,7,0)
+2.       The option GROUP DATA REVIEW (LRGVP) does not always show the
+"PKG",26,22,1,"PAH",1,1,8,0)
+proper report routing location.
+"PKG",26,22,1,"PAH",1,1,9,0)
+ 
+"PKG",26,22,1,"PAH",1,1,10,0)
+3.       <UNDEFINED> error occurs when trying to delete old user-defined
+"PKG",26,22,1,"PAH",1,1,11,0)
+patient/test lists. 
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+5
+"RTN","LR411PST")
+0^5^B11951303^n/a
+"RTN","LR411PST",1,0)
+LR411PST ;Post-init Routine for LR*5.2*411 ; 2/18/04 9:29am
+"RTN","LR411PST",2,0)
+ ;;5.2;LAB SERVICE;**411**;Dec 30, 1994;Build 2
+"RTN","LR411PST",3,0)
+ ;
+"RTN","LR411PST",4,0)
+PRE ; initiate pre-init process
+"RTN","LR411PST",5,0)
+ Q
+"RTN","LR411PST",6,0)
+ ;
+"RTN","LR411PST",7,0)
+POST ; initiate post-init process
+"RTN","LR411PST",8,0)
+ D 389262
+"RTN","LR411PST",9,0)
+ D MAIL
+"RTN","LR411PST",10,0)
+ ;
+"RTN","LR411PST",11,0)
+ K ^TMP($J)
+"RTN","LR411PST",12,0)
+ Q
+"RTN","LR411PST",13,0)
+ ;
+"RTN","LR411PST",14,0)
+389262 ; check file 69.2 for missing global level containing last update date
+"RTN","LR411PST",15,0)
+ ;
+"RTN","LR411PST",16,0)
+ K ^TMP($J)
+"RTN","LR411PST",17,0)
+ ;
+"RTN","LR411PST",18,0)
+ D EN^DDIOL("Checking file # 69.2 (User defined patient/test lists...",,"!!!!")
+"RTN","LR411PST",19,0)
+ D EN^DDIOL("",,"!")
+"RTN","LR411PST",20,0)
+ ;
+"RTN","LR411PST",21,0)
+ N AA,DZ,DT
+"RTN","LR411PST",22,0)
+ S AA=$O(^LRO(68,"B","CHEMISTRY",0))
+"RTN","LR411PST",23,0)
+ I 'AA D EN^DDIOL("No entries to correct in file # 69.2.",,"!!!") Q
+"RTN","LR411PST",24,0)
+ ;
+"RTN","LR411PST",25,0)
+ S DT=$$HTFM^XLFDT(+$H)
+"RTN","LR411PST",26,0)
+ S DZ=0
+"RTN","LR411PST",27,0)
+ F  S DZ=$O(^LRO(69.2,AA,7,DZ)) Q:DZ=""  D
+"RTN","LR411PST",28,0)
+ . I '$D(^LRO(69.2,AA,7,DZ,1,0)) S ^LRO(69.2,AA,7,DZ,1,0)="^69.3PA^0^0"
+"RTN","LR411PST",29,0)
+ . I '$D(^LRO(69.2,AA,7,DZ,0)) S ^LRO(69.2,AA,7,DZ,0)=DZ_"^"_DT,^TMP($J,"DUZ",DZ)=""
+"RTN","LR411PST",30,0)
+ ;
+"RTN","LR411PST",31,0)
+ D EN^DDIOL("Review/Repair of file 69.2 complete.",,"!!!!")
+"RTN","LR411PST",32,0)
+ ;
+"RTN","LR411PST",33,0)
+ Q
+"RTN","LR411PST",34,0)
+ ;
+"RTN","LR411PST",35,0)
+MAIL ;
+"RTN","LR411PST",36,0)
+ ; setup, create, and send MAILMAN message listing DFNs from the NEW PERSON file 
+"RTN","LR411PST",37,0)
+ ; that were set with today's date as the last date used for the patient/test lists
+"RTN","LR411PST",38,0)
+ ; in file 69.2
+"RTN","LR411PST",39,0)
+ ;
+"RTN","LR411PST",40,0)
+ N DIFROM,XMSUB,XMTEXT,XMDUZ,XMY,XMZ,XMMG,I,DZ
+"RTN","LR411PST",41,0)
+ ;
+"RTN","LR411PST",42,0)
+ S XMDUZ="PATCH LR*5.2*411 POST-INIT"
+"RTN","LR411PST",43,0)
+ S XMTEXT="^TMP($J,""TXT"","
+"RTN","LR411PST",44,0)
+ S XMSUB="PATCH LR*5.2*411 POST-INIT RESULTS"
+"RTN","LR411PST",45,0)
+ S:$G(DUZ) XMY(DUZ)=""
+"RTN","LR411PST",46,0)
+ S I=1,^TMP($J,"TXT",I)=""
+"RTN","LR411PST",47,0)
+ S I=I+1,^TMP($J,"TXT",I)=""
+"RTN","LR411PST",48,0)
+ S I=I+1,^TMP($J,"TXT",I)="User-defined test lists and patient lists are stored in file 69.2."
+"RTN","LR411PST",49,0)
+ S I=I+1,^TMP($J,"TXT",I)=""
+"RTN","LR411PST",50,0)
+ S I=I+1,^TMP($J,"TXT",I)="The last date used is a data item in this file that allows for"
+"RTN","LR411PST",51,0)
+ S I=I+1,^TMP($J,"TXT",I)="the deletion of lists that have not been used in a prescribed amount"
+"RTN","LR411PST",52,0)
+ S I=I+1,^TMP($J,"TXT",I)="of time."
+"RTN","LR411PST",53,0)
+ S I=I+1,^TMP($J,"TXT",I)=""
+"RTN","LR411PST",54,0)
+ S I=I+1,^TMP($J,"TXT",I)="In some cases the global level holding this date is missing for a user."
+"RTN","LR411PST",55,0)
+ S I=I+1,^TMP($J,"TXT",I)=""
+"RTN","LR411PST",56,0)
+ S I=I+1,^TMP($J,"TXT",I)="This post-init routine will insert this global level into file 69.2 for"
+"RTN","LR411PST",57,0)
+ S I=I+1,^TMP($J,"TXT",I)="those users where this level is missing. Today's date will be inserted"
+"RTN","LR411PST",58,0)
+ S I=I+1,^TMP($J,"TXT",I)="as the last used date so that these lists may ultimately be deleted."
+"RTN","LR411PST",59,0)
+ S I=I+1,^TMP($J,"TXT",I)=""
+"RTN","LR411PST",60,0)
+ S I=I+1,^TMP($J,"TXT",I)="The following users had today's date added as the last used date:"
+"RTN","LR411PST",61,0)
+ S I=I+1,^TMP($J,"TXT",I)="(These are DFNs - IENs for the NEW PERSON file.)"
+"RTN","LR411PST",62,0)
+ S I=I+1,^TMP($J,"TXT",I)=""
+"RTN","LR411PST",63,0)
+ S I=I+1,^TMP($J,"TXT",I)=""
+"RTN","LR411PST",64,0)
+ I $O(^TMP($J,"DUZ",0))="" D  Q
+"RTN","LR411PST",65,0)
+ . S I=I+1,^TMP($J,"TXT",I)="NO USERS WERE IN NEED OF UPDATES."
+"RTN","LR411PST",66,0)
+ . D ^XMD
+"RTN","LR411PST",67,0)
+ S DZ=0 F  S DZ=$O(^TMP($J,"DUZ",DZ)) Q:DZ=""  S I=I+1,^TMP($J,"TXT",I)="   "_DZ
+"RTN","LR411PST",68,0)
+ D ^XMD
+"RTN","LR411PST",69,0)
+ ;
+"RTN","LR411PST",70,0)
+ Q
+"RTN","LR7OGO")
+0^1^B20823962^B19431022
+"RTN","LR7OGO",1,0)
+LR7OGO ;SLC/STAFF- Interim report rpc other ;12/12/97  14:22
+"RTN","LR7OGO",2,0)
+ ;;5.2;LAB SERVICE;**187,411**;Sep 27, 1994;Build 2
+"RTN","LR7OGO",3,0)
+ ;
+"RTN","LR7OGO",4,0)
+ALLTESTS(Y,FROM,DIR) ; from ORWLRR
+"RTN","LR7OGO",5,0)
+ N I,IEN,CNT S I=0,CNT=44
+"RTN","LR7OGO",6,0)
+ F  Q:I'<CNT  S FROM=$O(^LAB(60,"B",FROM),DIR) Q:FROM=""  D
+"RTN","LR7OGO",7,0)
+ .S IEN=0 F  S IEN=$O(^LAB(60,"B",FROM,IEN)) Q:'IEN  D
+"RTN","LR7OGO",8,0)
+ ..Q:"BO"'[$P($G(^LAB(60,IEN,0)),U,3)
+"RTN","LR7OGO",9,0)
+ ..S I=I+1,Y(I)=IEN_U_FROM
+"RTN","LR7OGO",10,0)
+ Q
+"RTN","LR7OGO",11,0)
+ ;
+"RTN","LR7OGO",12,0)
+ATESTS(Y,TEST) ; from ORWLRR
+"RTN","LR7OGO",13,0)
+ N CNT,NUM,PANEL K PANEL
+"RTN","LR7OGO",14,0)
+ S CNT=0
+"RTN","LR7OGO",15,0)
+ I 'TEST Q
+"RTN","LR7OGO",16,0)
+ D TEST^LR7OGU(TEST,.PANEL)
+"RTN","LR7OGO",17,0)
+ S NUM=0 F  S NUM=$O(PANEL(NUM)) Q:NUM<1  D
+"RTN","LR7OGO",18,0)
+ .S TEST=+PANEL(NUM)_U_$P($G(^LAB(60,+PANEL(NUM),0)),U)
+"RTN","LR7OGO",19,0)
+ .S CNT=CNT+1,Y(CNT)=TEST
+"RTN","LR7OGO",20,0)
+ Q
+"RTN","LR7OGO",21,0)
+ ;
+"RTN","LR7OGO",22,0)
+ATG(Y,TESTGRP,USER) ; from ORWLRR
+"RTN","LR7OGO",23,0)
+ N AA,CNT,NUM,TEST
+"RTN","LR7OGO",24,0)
+ S AA=+$O(^LRO(68,"B","CHEMISTRY",0))
+"RTN","LR7OGO",25,0)
+ Q:'TESTGRP  Q:'USER  Q:'AA
+"RTN","LR7OGO",26,0)
+ S CNT=0
+"RTN","LR7OGO",27,0)
+ S NUM=0 F  S NUM=$O(^LRO(69.2,AA,7,USER,60,TESTGRP,1,NUM)) Q:NUM<1  S TEST=+$G(^(NUM,0)) I TEST D
+"RTN","LR7OGO",28,0)
+ .S TEST=TEST_U_$P(^LAB(60,TEST,0),U)
+"RTN","LR7OGO",29,0)
+ .S CNT=CNT+1,Y(CNT)=TEST
+"RTN","LR7OGO",30,0)
+ Q
+"RTN","LR7OGO",31,0)
+ ;
+"RTN","LR7OGO",32,0)
+ATOMICS(Y,FROM,DIR) ; from ORWLRR
+"RTN","LR7OGO",33,0)
+ N I,IEN,CNT S I=0,CNT=44
+"RTN","LR7OGO",34,0)
+ F  Q:I'<CNT  S FROM=$O(^LAB(60,"B",FROM),DIR) Q:FROM=""  D
+"RTN","LR7OGO",35,0)
+ .S IEN=0 F  S IEN=$O(^LAB(60,"B",FROM,IEN)) Q:'IEN  D
+"RTN","LR7OGO",36,0)
+ ..Q:'$L($P($G(^LAB(60,IEN,0)),U,5))  Q:"BO"'[$P($G(^(0)),U,3)
+"RTN","LR7OGO",37,0)
+ ..S I=I+1,Y(I)=IEN_U_FROM
+"RTN","LR7OGO",38,0)
+ Q
+"RTN","LR7OGO",39,0)
+ ;
+"RTN","LR7OGO",40,0)
+CHEMTEST(Y,FROM,DIR) ; from ORWLRR
+"RTN","LR7OGO",41,0)
+ N I,IEN,CNT S I=0,CNT=44
+"RTN","LR7OGO",42,0)
+ F  Q:I'<CNT  S FROM=$O(^LAB(60,"B",FROM),DIR) Q:FROM=""  D
+"RTN","LR7OGO",43,0)
+ .S IEN=0 F  S IEN=$O(^LAB(60,"B",FROM,IEN)) Q:'IEN  D
+"RTN","LR7OGO",44,0)
+ ..Q:"BO"'[$P($G(^LAB(60,IEN,0)),U,3)
+"RTN","LR7OGO",45,0)
+ ..Q:$P($G(^LAB(60,IEN,0)),U,4)'="CH"
+"RTN","LR7OGO",46,0)
+ ..S I=I+1,Y(I)=IEN_U_FROM
+"RTN","LR7OGO",47,0)
+ Q
+"RTN","LR7OGO",48,0)
+ ;
+"RTN","LR7OGO",49,0)
+PARAM(Y) ; from ORWLRR
+"RTN","LR7OGO",50,0)
+ S Y=$G(^LAB(69.9,1,1))
+"RTN","LR7OGO",51,0)
+ Q
+"RTN","LR7OGO",52,0)
+ ;
+"RTN","LR7OGO",53,0)
+SPEC(Y,FROM,DIR) ; from ORWLRR
+"RTN","LR7OGO",54,0)
+ N I,IEN,CNT S I=0,CNT=44
+"RTN","LR7OGO",55,0)
+ F  Q:I'<CNT  S FROM=$O(^LAB(61,"B",FROM),DIR) Q:FROM=""  D
+"RTN","LR7OGO",56,0)
+ .S IEN=0 F  S IEN=$O(^LAB(61,"B",FROM,IEN)) Q:'IEN  D
+"RTN","LR7OGO",57,0)
+ ..S I=I+1,Y(I)=IEN_U_FROM
+"RTN","LR7OGO",58,0)
+ Q
+"RTN","LR7OGO",59,0)
+ ;
+"RTN","LR7OGO",60,0)
+TG(Y,USER) ; from ORWLRR
+"RTN","LR7OGO",61,0)
+ N AA,CNT,LINE,NAME,NUM,TEST,TESTGRP,TNUM
+"RTN","LR7OGO",62,0)
+ S AA=+$O(^LRO(68,"B","CHEMISTRY",0))
+"RTN","LR7OGO",63,0)
+ Q:'USER  Q:'AA
+"RTN","LR7OGO",64,0)
+ S CNT=0
+"RTN","LR7OGO",65,0)
+ S NUM=0 F  S NUM=$O(^LRO(69.2,AA,7,USER,60,NUM)) Q:NUM<1  S TESTGRP=+$G(^(NUM,0)) I TESTGRP D
+"RTN","LR7OGO",66,0)
+ .S LINE=TESTGRP_") "
+"RTN","LR7OGO",67,0)
+ .S TNUM=0 F  S TNUM=$O(^LRO(69.2,AA,7,USER,60,NUM,1,TNUM)) Q:TNUM<1  S TEST=+$G(^(TNUM,0)) I TEST D
+"RTN","LR7OGO",68,0)
+ ..S NAME=$P($G(^LAB(60,TEST,.1)),U)
+"RTN","LR7OGO",69,0)
+ ..I '$L(NAME) S NAME=$P($G(^LAB(60,TEST,0)),U)
+"RTN","LR7OGO",70,0)
+ ..I $L(NAME) S LINE=LINE_NAME_", "
+"RTN","LR7OGO",71,0)
+ .I $E(LINE,$L(LINE)-1,$L(LINE))=", " S LINE=$E(LINE,1,$L(LINE)-2)
+"RTN","LR7OGO",72,0)
+ .S CNT=CNT+1,Y(CNT)=NUM_U_LINE
+"RTN","LR7OGO",73,0)
+ Q
+"RTN","LR7OGO",74,0)
+ ;
+"RTN","LR7OGO",75,0)
+USERS(Y,FROM,DIR) ; from ORWLRR
+"RTN","LR7OGO",76,0)
+ N AA,CNT,I,IEN
+"RTN","LR7OGO",77,0)
+ S AA=+$O(^LRO(68,"B","CHEMISTRY",0))
+"RTN","LR7OGO",78,0)
+ Q:'AA
+"RTN","LR7OGO",79,0)
+ S I=0,CNT=17
+"RTN","LR7OGO",80,0)
+ F  Q:I'<CNT  S FROM=$O(^VA(200,"B",FROM),DIR) Q:FROM=""  D
+"RTN","LR7OGO",81,0)
+ .S IEN=0 F  S IEN=$O(^VA(200,"B",FROM,IEN)) Q:'IEN  D
+"RTN","LR7OGO",82,0)
+ ..I '$O(^LRO(69.2,AA,7,IEN,60,0)) Q
+"RTN","LR7OGO",83,0)
+ ..S I=I+1,Y(I)=IEN_U_FROM
+"RTN","LR7OGO",84,0)
+ Q
+"RTN","LR7OGO",85,0)
+ ;
+"RTN","LR7OGO",86,0)
+UTGA(Y,TESTS) ; from ORWLRR
+"RTN","LR7OGO",87,0)
+ N AA,CNT,NEWNUM,NUM,TEST
+"RTN","LR7OGO",88,0)
+ S AA=$O(^LRO(68,"B","CHEMISTRY",0))
+"RTN","LR7OGO",89,0)
+ I 'AA Q
+"RTN","LR7OGO",90,0)
+ I '$D(^LRO(69.2,AA,7,DUZ,60,0)) D
+"RTN","LR7OGO",91,0)
+ .S ^LRO(69.2,AA,7,DUZ,60,0)="^69.35A^1^1"
+"RTN","LR7OGO",92,0)
+ .S NEWNUM=1
+"RTN","LR7OGO",93,0)
+ E  D
+"RTN","LR7OGO",94,0)
+ .S NEWNUM=$P(^LRO(69.2,AA,7,DUZ,60,0),U,3)+1
+"RTN","LR7OGO",95,0)
+ .F  Q:'$D(^LRO(69.2,AA,7,DUZ,60,NEWNUM))  S NEWNUM=NEWNUM+1
+"RTN","LR7OGO",96,0)
+ .S $P(^LRO(69.2,AA,7,DUZ,60,0),U,3,4)=NEWNUM_U_NEWNUM
+"RTN","LR7OGO",97,0)
+ S ^LRO(69.2,AA,7,DUZ,60,NEWNUM,0)=NEWNUM
+"RTN","LR7OGO",98,0)
+ S NUM=0
+"RTN","LR7OGO",99,0)
+ S CNT=0 F  S CNT=$O(TESTS(CNT)) Q:CNT<1  S TEST=+TESTS(CNT) I TEST D
+"RTN","LR7OGO",100,0)
+ .S NUM=NUM+1
+"RTN","LR7OGO",101,0)
+ .S ^LRO(69.2,AA,7,DUZ,60,NEWNUM,1,NUM,0)=TEST
+"RTN","LR7OGO",102,0)
+ S ^LRO(69.2,AA,7,DUZ,60,NEWNUM,1,0)="^69.36PA^"_NUM_U_NUM
+"RTN","LR7OGO",103,0)
+ S:'$D(^LRO(69.2,AA,7,DUZ,1,0)) ^(0)="^69.3PA^0^0"
+"RTN","LR7OGO",104,0)
+ S ^LRO(69.2,AA,7,DUZ,0)=DUZ_"^"_DT
+"RTN","LR7OGO",105,0)
+ Q
+"RTN","LR7OGO",106,0)
+ ;
+"RTN","LR7OGO",107,0)
+UTGD(Y,TGRP) ; from ORWLRR
+"RTN","LR7OGO",108,0)
+ N AA,CNT,NEWNUM,NUM,TEST
+"RTN","LR7OGO",109,0)
+ S AA=$O(^LRO(68,"B","CHEMISTRY",0))
+"RTN","LR7OGO",110,0)
+ I 'AA Q
+"RTN","LR7OGO",111,0)
+ S NEWNUM=TGRP
+"RTN","LR7OGO",112,0)
+ I '$D(^LRO(69.2,AA,7,DUZ,60,NEWNUM,0)) Q
+"RTN","LR7OGO",113,0)
+ K ^LRO(69.2,AA,7,DUZ,60,NEWNUM)
+"RTN","LR7OGO",114,0)
+ S NUM=0
+"RTN","LR7OGO",115,0)
+ S CNT=0 F  S CNT=$O(^LRO(69.2,AA,7,DUZ,60,CNT)) Q:CNT<1  D
+"RTN","LR7OGO",116,0)
+ .S NUM=NUM+1
+"RTN","LR7OGO",117,0)
+ S ^LRO(69.2,AA,7,DUZ,60,0)="^69.35A^"_NUM_U_NUM
+"RTN","LR7OGO",118,0)
+ S ^LRO(69.2,AA,7,DUZ,0)=DUZ_"^"_DT
+"RTN","LR7OGO",119,0)
+ Q
+"RTN","LR7OGO",120,0)
+ ;
+"RTN","LR7OGO",121,0)
+UTGR(Y,TESTS,TGRP) ; from ORWLRR
+"RTN","LR7OGO",122,0)
+ N AA,CNT,NEWNUM,NUM,TEST
+"RTN","LR7OGO",123,0)
+ S AA=$O(^LRO(68,"B","CHEMISTRY",0))
+"RTN","LR7OGO",124,0)
+ I 'AA Q
+"RTN","LR7OGO",125,0)
+ S NEWNUM=TGRP
+"RTN","LR7OGO",126,0)
+ I '$D(^LRO(69.2,AA,7,DUZ,60,NEWNUM,0)) Q
+"RTN","LR7OGO",127,0)
+ K ^LRO(69.2,AA,7,DUZ,60,NEWNUM,1)
+"RTN","LR7OGO",128,0)
+ S NUM=0
+"RTN","LR7OGO",129,0)
+ S CNT=0 F  S CNT=$O(TESTS(CNT)) Q:CNT<1  S TEST=+TESTS(CNT) I TEST D
+"RTN","LR7OGO",130,0)
+ .S NUM=NUM+1
+"RTN","LR7OGO",131,0)
+ .S ^LRO(69.2,AA,7,DUZ,60,NEWNUM,1,NUM,0)=TEST
+"RTN","LR7OGO",132,0)
+ S ^LRO(69.2,AA,7,DUZ,60,NEWNUM,1,0)="^69.36PA^"_NUM_U_NUM
+"RTN","LR7OGO",133,0)
+ S ^LRO(69.2,AA,7,DUZ,0)=DUZ_"^"_DT
+"RTN","LR7OGO",134,0)
+ Q
+"RTN","LRGV")
+0^3^B42006074^B41992939
+"RTN","LRGV",1,0)
+LRGV ;DALIO/RWF - INSTRUMENT GROUP VERIFY DATA ;2/5/91  13:26
+"RTN","LRGV",2,0)
+ ;;5.2;LAB SERVICE;**269,411**;Sep 27, 1994;Build 2
+"RTN","LRGV",3,0)
+ ;
+"RTN","LRGV",4,0)
+ N LRANYAA,LRDUZ,LRUID,LRVBY
+"RTN","LRGV",5,0)
+ ;
+"RTN","LRGV",6,0)
+ D ^LRGVK,^LRPARAM
+"RTN","LRGV",7,0)
+ I $G(LREND) D END Q
+"RTN","LRGV",8,0)
+ ;
+"RTN","LRGV",9,0)
+ S U="^",LRSS="CH",LROUTINE=$P(^LAB(69.9,1,3),U,2),(LRANYAA,LRUID,LRVBY)=""
+"RTN","LRGV",10,0)
+ ;
+"RTN","LRGV",11,0)
+ ; Get user's initials to use to verify results
+"RTN","LRGV",12,0)
+ S X=DUZ D DUZ^LRX
+"RTN","LRGV",13,0)
+ X ^%ZOSF("EOFF")
+"RTN","LRGV",14,0)
+ N DIR
+"RTN","LRGV",15,0)
+ S DIR(0)="FAO^1:10",DIR("A")="Please enter your initials to verify: "
+"RTN","LRGV",16,0)
+ D ^DIR K DIR
+"RTN","LRGV",17,0)
+ X ^%ZOSF("EON")
+"RTN","LRGV",18,0)
+ I $D(DIRUT)!(Y'=LRUSI) D END Q
+"RTN","LRGV",19,0)
+ ;
+"RTN","LRGV",20,0)
+ D ^LRGP1
+"RTN","LRGV",21,0)
+ I LREND D END Q
+"RTN","LRGV",22,0)
+ ;
+"RTN","LRGV",23,0)
+ D COM
+"RTN","LRGV",24,0)
+ I LREND D NOP,END Q
+"RTN","LRGV",25,0)
+ ;
+"RTN","LRGV",26,0)
+ S %ZIS="Q" D ^%ZIS
+"RTN","LRGV",27,0)
+ I POP D END Q
+"RTN","LRGV",28,0)
+ ;
+"RTN","LRGV",29,0)
+ I $D(IO("Q")) D  Q
+"RTN","LRGV",30,0)
+ . N ZTDTH,ZTRTN,ZTSAVE,ZTDESC
+"RTN","LRGV",31,0)
+ . K IO("Q")
+"RTN","LRGV",32,0)
+ . S ZTRTN="DQ^LRGV",ZTSAVE("LR*")="",ZTSAVE("^TMP(""LR"",$J,")="",ZTDESC="Group verify (EA, EL, EW)"
+"RTN","LRGV",33,0)
+ . D ^%ZTLOAD
+"RTN","LRGV",34,0)
+ . U IO(0) W !,"Task ",$S($G(ZTSK):ZTSK,1:"NOT")," Queued"
+"RTN","LRGV",35,0)
+ . D END
+"RTN","LRGV",36,0)
+ ;
+"RTN","LRGV",37,0)
+DQ ;
+"RTN","LRGV",38,0)
+ U IO
+"RTN","LRGV",39,0)
+ S LRNOW=$$NOW^XLFDT,LRDT=$$FMTE^XLFDT(LRNOW,"1M"),(LREND,LRPAGE)=0
+"RTN","LRGV",40,0)
+ S LRLLNM=$P(^LRO(68.2,LRLL,0),"^")
+"RTN","LRGV",41,0)
+ D HDR
+"RTN","LRGV",42,0)
+ D LRTRAY:LRWT="T",ACCLST:LRWT="A",SEQ:LRWT="M",WRKLST:LRWT="W"
+"RTN","LRGV",43,0)
+ I $E(IOST,1,2)="P-" W @IOF
+"RTN","LRGV",44,0)
+ ;
+"RTN","LRGV",45,0)
+END ;
+"RTN","LRGV",46,0)
+ I $D(ZTQUEUED) S ZTREQ="@"
+"RTN","LRGV",47,0)
+ E  D ^%ZISC
+"RTN","LRGV",48,0)
+ D ^LRGVK
+"RTN","LRGV",49,0)
+ K LRCSQQ,LRLLNM,LRNGS,LRPAGE
+"RTN","LRGV",50,0)
+ Q
+"RTN","LRGV",51,0)
+ ;
+"RTN","LRGV",52,0)
+ ;
+"RTN","LRGV",53,0)
+ACCLST ; Verify by accession number/UID
+"RTN","LRGV",54,0)
+ ;
+"RTN","LRGV",55,0)
+ S LRVWLE=""
+"RTN","LRGV",56,0)
+ ;
+"RTN","LRGV",57,0)
+ ; Verify by accession number
+"RTN","LRGV",58,0)
+ I LRVBY=1 D
+"RTN","LRGV",59,0)
+ . S LRAN=LRFAN
+"RTN","LRGV",60,0)
+ . F  S LRAN=$O(^LRO(68,LRAA,1,LRAD,1,LRAN)) Q:LRAN<1!(LRAN>LRLIX)  D ACC2  Q:LREND
+"RTN","LRGV",61,0)
+ . I $L(LRVWLE) D
+"RTN","LRGV",62,0)
+ . . S $P(^LRO(68,LRAA,1,LRAD,2),"^")=LRUSI
+"RTN","LRGV",63,0)
+ . . S $P(^LRO(68,LRAA,1,LRAD,2),"^",4)=LRVWLE
+"RTN","LRGV",64,0)
+ ;
+"RTN","LRGV",65,0)
+ ; Verify by UID
+"RTN","LRGV",66,0)
+ I LRVBY=2 D
+"RTN","LRGV",67,0)
+ . S LRANYAA=+$P($G(^LRO(68.2,LRLL,10,LRPROF,0)),"^",3),LRUID=""
+"RTN","LRGV",68,0)
+ . F  D NEXT^LRVRA Q:LRUID=""  D ACC2  Q:LREND
+"RTN","LRGV",69,0)
+ ;
+"RTN","LRGV",70,0)
+ Q
+"RTN","LRGV",71,0)
+ ;
+"RTN","LRGV",72,0)
+ ;
+"RTN","LRGV",73,0)
+ACC2 ; Only select those entries in ^LAH that match the accession area and
+"RTN","LRGV",74,0)
+ ; date selected by the user.
+"RTN","LRGV",75,0)
+ ;
+"RTN","LRGV",76,0)
+ I $Y>(IOSL-10) D HDR Q:LREND
+"RTN","LRGV",77,0)
+ W ! D DASH^LRX
+"RTN","LRGV",78,0)
+ W !,"Accession #: ",LRAN
+"RTN","LRGV",79,0)
+ I LRVBY=2 D
+"RTN","LRGV",80,0)
+ . W " [UID: ",LRUID,"]"
+"RTN","LRGV",81,0)
+ . I '$D(^LRO(68,LRAA,1,LRAD,1,LRAN,0)) D  Q
+"RTN","LRGV",82,0)
+ . . W " No accession on file for this UID."
+"RTN","LRGV",83,0)
+ . W " <",$P($G(^LRO(68,LRAA,1,LRAD,1,LRAN,.2)),"^"),">"
+"RTN","LRGV",84,0)
+ ;
+"RTN","LRGV",85,0)
+ I '$P($G(^LRO(68,LRAA,1,LRAD,1,LRAN,3)),"^",3) D  Q
+"RTN","LRGV",86,0)
+ . W " Has not been received. Unable to verify."
+"RTN","LRGV",87,0)
+ ;
+"RTN","LRGV",88,0)
+ I +^LRO(68,LRAA,1,LRAD,1,LRAN,3)>$$NOW^XLFDT D  Q
+"RTN","LRGV",89,0)
+ . W " Has a collection time in the future. Unable to verify."
+"RTN","LRGV",90,0)
+ ;
+"RTN","LRGV",91,0)
+ I $O(^LAH(LRLL,1,"C",LRAN,0))<1 D  Q
+"RTN","LRGV",92,0)
+ . W " NO Instrument Data Found."
+"RTN","LRGV",93,0)
+ ;
+"RTN","LRGV",94,0)
+ S LRSQ=0
+"RTN","LRGV",95,0)
+ F  S LRSQ=$O(^LAH(LRLL,1,"C",LRAN,LRSQ)) Q:LRSQ<1  D  Q:LREND
+"RTN","LRGV",96,0)
+ . S X=^LAH(LRLL,1,LRSQ,0)
+"RTN","LRGV",97,0)
+ . I LRAA'=$P(X,"^",3)!(LRAD'=$P(X,"^",4)) Q
+"RTN","LRGV",98,0)
+ . S LRAN=$P(X,"^",5)
+"RTN","LRGV",99,0)
+ . I LRAN D STUFF^LRGV1
+"RTN","LRGV",100,0)
+ Q
+"RTN","LRGV",101,0)
+ ;
+"RTN","LRGV",102,0)
+ ;
+"RTN","LRGV",103,0)
+LRTRAY ; Verify by tray/cup
+"RTN","LRGV",104,0)
+ ;
+"RTN","LRGV",105,0)
+ F LRTRAY=LRFTRAY:1:LRLTRAY D  Q:LREND
+"RTN","LRGV",106,0)
+ . I $Y>(IOSL-10) D HDR Q:LREND
+"RTN","LRGV",107,0)
+ . W ! D DASH^LRX
+"RTN","LRGV",108,0)
+ . W !!,"Start TRAY: ",LRTRAY
+"RTN","LRGV",109,0)
+ . D TR2
+"RTN","LRGV",110,0)
+ Q
+"RTN","LRGV",111,0)
+ ;
+"RTN","LRGV",112,0)
+ ;
+"RTN","LRGV",113,0)
+TR2 ; Verify by tray/cup
+"RTN","LRGV",114,0)
+ ; Only select those entries in ^LAH that match the accession area and date
+"RTN","LRGV",115,0)
+ ; selected by the user.
+"RTN","LRGV",116,0)
+ N LRSC,LREC,X
+"RTN","LRGV",117,0)
+ ;
+"RTN","LRGV",118,0)
+ ; Figure out starting and ending cups for this tray
+"RTN","LRGV",119,0)
+ S LRSC=$S(LRTRAY=LRFTRAY:LRFCUP,1:1)
+"RTN","LRGV",120,0)
+ S LREC=$S(LRTRAY=LRLTRAY:LRLCUP,1:LRMAXCUP)
+"RTN","LRGV",121,0)
+ ;
+"RTN","LRGV",122,0)
+ F LRCUP=LRSC:1:LREC D  Q:LREND
+"RTN","LRGV",123,0)
+ . S LRITC=LRTRAY_";"_LRCUP
+"RTN","LRGV",124,0)
+ . I $Y>(IOSL-10) D HDR Q:LREND
+"RTN","LRGV",125,0)
+ . W ! D DASH^LRX
+"RTN","LRGV",126,0)
+ . W !,"Tray ",$J(LRTRAY,3)," Cup ",$J(LRCUP,3)
+"RTN","LRGV",127,0)
+ . I $O(^LAH(LRLL,1,"B",LRITC,0))<1 W ?35,"No Instrument Data Found" Q
+"RTN","LRGV",128,0)
+ . ;
+"RTN","LRGV",129,0)
+ . S LRSQ=0
+"RTN","LRGV",130,0)
+ . F  S LRSQ=$O(^LAH(LRLL,1,"B",LRITC,LRSQ)) Q:LRSQ<1  D  Q:LREND
+"RTN","LRGV",131,0)
+ . . I '$D(^LAH(LRLL,1,+LRSQ,0)) D  Q
+"RTN","LRGV",132,0)
+ . . . K ^LAH(LRLL,1,"B",LRTIC,LRSQ)
+"RTN","LRGV",133,0)
+ . . . W ?35,"No Instrument Data Found"
+"RTN","LRGV",134,0)
+ . . S X=^LAH(LRLL,1,LRSQ,0)
+"RTN","LRGV",135,0)
+ . . I LRAA'=$P(X,"^",3)!(LRAD'=$P(X,"^",4)) Q
+"RTN","LRGV",136,0)
+ . . S LRAN=$P(X,"^",5)
+"RTN","LRGV",137,0)
+ . . I LRAN D STUFF^LRGV1 Q
+"RTN","LRGV",138,0)
+ . . W ?35," Does not have a link to an Accession."
+"RTN","LRGV",139,0)
+ Q
+"RTN","LRGV",140,0)
+ ;
+"RTN","LRGV",141,0)
+ ;
+"RTN","LRGV",142,0)
+SEQ ; Verify by sequence number
+"RTN","LRGV",143,0)
+ ; Only select those entries in ^LAH that match the accession area and date
+"RTN","LRGV",144,0)
+ ; selected by the user.
+"RTN","LRGV",145,0)
+ ;
+"RTN","LRGV",146,0)
+ N X
+"RTN","LRGV",147,0)
+ ;
+"RTN","LRGV",148,0)
+ S LRSQ=LRSQ-1
+"RTN","LRGV",149,0)
+ F  S LRSQ=$O(^LAH(LRLL,1,LRSQ)) Q:LRSQ<1!(LRSQ>LRESEQ)  D  Q:LREND
+"RTN","LRGV",150,0)
+ . I $Y>(IOSL-10) D HDR Q:LREND
+"RTN","LRGV",151,0)
+ . W ! D DASH^LRX
+"RTN","LRGV",152,0)
+ . S X=^LAH(LRLL,1,LRSQ,0)
+"RTN","LRGV",153,0)
+ . I LRAA'=$P(X,"^",3)!(LRAD'=$P(X,"^",4)) Q
+"RTN","LRGV",154,0)
+ . S LRAN=$P(X,"^",5)
+"RTN","LRGV",155,0)
+ . I LRAN D STUFF^LRGV1 Q
+"RTN","LRGV",156,0)
+ . W !!,"SEQ: ",LRSQ,". Does not have a link to an Accession."
+"RTN","LRGV",157,0)
+ Q
+"RTN","LRGV",158,0)
+ ;
+"RTN","LRGV",159,0)
+ ;
+"RTN","LRGV",160,0)
+WRKLST ; Verify by worklist
+"RTN","LRGV",161,0)
+ ; Only select those entries in file #68.2 that match the profile selected
+"RTN","LRGV",162,0)
+ ; by the user.
+"RTN","LRGV",163,0)
+ ;
+"RTN","LRGV",164,0)
+ N X
+"RTN","LRGV",165,0)
+ ;
+"RTN","LRGV",166,0)
+ S LRCUP=LRCUP-1
+"RTN","LRGV",167,0)
+ F  S LRCUP=$O(^LRO(68.2,LRLL,1,1,1,LRCUP)) Q:'LRCUP!(LRCUP>LRECUP)  D  Q:LREND
+"RTN","LRGV",168,0)
+ . I $Y>(IOSL-10) D HDR Q:LREND
+"RTN","LRGV",169,0)
+ . W ! D DASH^LRX
+"RTN","LRGV",170,0)
+ . S X=^LRO(68.2,LRLL,1,1,1,LRCUP,0)
+"RTN","LRGV",171,0)
+ . I $P(X,"^",4),$P(X,"^",4)'=LRPROF Q
+"RTN","LRGV",172,0)
+ . S LRAA=$P(X,"^"),LRAD=$P(X,"^",2),LRAN=$P(X,"^",3)
+"RTN","LRGV",173,0)
+ . W !,"Sequence #",$J(LRCUP,4)
+"RTN","LRGV",174,0)
+ . I $O(^LAH(LRLL,1,"C",+LRAN,0))<1 W ?35,"No Instrument Data Found" Q
+"RTN","LRGV",175,0)
+ . ;
+"RTN","LRGV",176,0)
+ . S LRSQ=0
+"RTN","LRGV",177,0)
+ . F  S LRSQ=$O(^LAH(LRLL,1,"C",LRAN,LRSQ)) Q:LRSQ<1  D STUFF^LRGV1  Q:LREND
+"RTN","LRGV",178,0)
+ Q
+"RTN","LRGV",179,0)
+ ;
+"RTN","LRGV",180,0)
+ ;
+"RTN","LRGV",181,0)
+COM ; Ask common questions
+"RTN","LRGV",182,0)
+ ;
+"RTN","LRGV",183,0)
+ N DIR,DIRUT,DTOUT,DUOUT,X,Y
+"RTN","LRGV",184,0)
+ ;
+"RTN","LRGV",185,0)
+ S LRVRFYAL=0
+"RTN","LRGV",186,0)
+ I $D(^XUSEC("LRSUPER",DUZ))!1 D
+"RTN","LRGV",187,0)
+ . S DIR(0)="YAO",DIR("B")="NO"
+"RTN","LRGV",188,0)
+ . S DIR("A",1)="Verify accessions specified, even if"
+"RTN","LRGV",189,0)
+ . S DIR("A")=" DELTA check or CRITICAL range flag? "
+"RTN","LRGV",190,0)
+ . D ^DIR
+"RTN","LRGV",191,0)
+ . I $D(DIRUT) S LREND=1 Q
+"RTN","LRGV",192,0)
+ . S LRVRFYAL=Y
+"RTN","LRGV",193,0)
+ ;
+"RTN","LRGV",194,0)
+ I LREND Q
+"RTN","LRGV",195,0)
+ ;
+"RTN","LRGV",196,0)
+ K DIR
+"RTN","LRGV",197,0)
+ S DIR(0)="YO",DIR("A")="Everything OK",DIR("B")="YES"
+"RTN","LRGV",198,0)
+ D ^DIR
+"RTN","LRGV",199,0)
+ I $D(DIRUT)!(Y'=1) S LREND=1
+"RTN","LRGV",200,0)
+ Q
+"RTN","LRGV",201,0)
+ ;
+"RTN","LRGV",202,0)
+ ;
+"RTN","LRGV",203,0)
+NOP ;
+"RTN","LRGV",204,0)
+ W !!,"NOTHING VERIFIED"
+"RTN","LRGV",205,0)
+ Q
+"RTN","LRGV",206,0)
+ ;
+"RTN","LRGV",207,0)
+ ;
+"RTN","LRGV",208,0)
+HDR ;
+"RTN","LRGV",209,0)
+ ;
+"RTN","LRGV",210,0)
+ N DIR,DIRUT,DTOUT,DUOUT,X,Y
+"RTN","LRGV",211,0)
+ ;
+"RTN","LRGV",212,0)
+ I $E(IOST,1,2)="C-",'$D(ZTQUEUED),LRPAGE D
+"RTN","LRGV",213,0)
+ . S DIR(0)="E" D ^DIR
+"RTN","LRGV",214,0)
+ . I $D(DIRUT) S LREND=1
+"RTN","LRGV",215,0)
+ I LREND Q
+"RTN","LRGV",216,0)
+ ;
+"RTN","LRGV",217,0)
+ I LRPAGE!($E(IOST,1,2)="C-") W @IOF
+"RTN","LRGV",218,0)
+ S LRPAGE=LRPAGE+1
+"RTN","LRGV",219,0)
+ W "Group verification report - Verify with",$S(LRVRFYAL:"",1:"out")," flags"
+"RTN","LRGV",220,0)
+ W ?(IOM-27)," Date: ",LRDT
+"RTN","LRGV",221,0)
+ W !,"Load/Work list: ",LRLLNM,"  Panel: ",LRPANEL,?(IOM-27)," Page: ",LRPAGE
+"RTN","LRGV",222,0)
+ ;
+"RTN","LRGV",223,0)
+ ; Check if task has been asked to stop.
+"RTN","LRGV",224,0)
+ I $D(ZTQUEUED),$$S^%ZTLOAD D  Q
+"RTN","LRGV",225,0)
+ . S (LREND,ZTSTOP)=1
+"RTN","LRGV",226,0)
+ . W !!,"*** Report requested to stop by TaskMan ***"
+"RTN","LRGV",227,0)
+ . W !,"*** Task #",$G(ZTQUEUED,"UNKNOWN")," stopped at ",$$HTE^XLFDT($H)," ***"
+"RTN","LRGV",228,0)
+ Q
+"RTN","LRGVP")
+0^4^B5578309^B5498903
+"RTN","LRGVP",1,0)
+LRGVP ;SLC/CJS - GROUP DATA REVIEW DISPLAY ;2/5/91  13:29 ;
+"RTN","LRGVP",2,0)
+ ;;5.2;LAB SERVICE;**112,411**;Sep 27, 1994;Build 2
+"RTN","LRGVP",3,0)
+ I '$D(LRPARAM) D ^LRPARAM
+"RTN","LRGVP",4,0)
+ K LRORD S LRGVP="",LRPANEL="ALL" W !,"Print manually entered data by accession",!
+"RTN","LRGVP",5,0)
+ S DIC="^LRO(68,",DIC(0)="AEFOMQ" D ^DIC S LRAA=+Y,LRNAME=$P(Y,U,2) Q:LRAA<1  D PHD Q:LREND
+"RTN","LRGVP",6,0)
+ Q:'$D(^LRO(68,LRAA,1,LRAD,1,0))  S:'$D(LRNAME) LRNAME=$P(^LRO(68,LRAA,0),U,1)
+"RTN","LRGVP",7,0)
+ S %ZIS="Q" D ^%ZIS Q:POP
+"RTN","LRGVP",8,0)
+ I $D(IO("Q")) K IO("Q") S ZTRTN="DQ^LRGVP",ZTSAVE("LR*")="",ZTSAVE("^TMP(""LR"",$J,")="" D ^%ZTLOAD G END
+"RTN","LRGVP",9,0)
+DQ U IO D HED S LRAN=LRFAN-.01 F  S LRAN=$O(^LRO(68,LRAA,1,LRAD,1,LRAN)) Q:LRAN<1!(LRAN>LRLAN)  D PRINT  Q:$D(DUOUT)!$D(DTOUT)
+"RTN","LRGVP",10,0)
+ W:'$D(LRORD) !,"No data to review.",! D ^%ZISC
+"RTN","LRGVP",11,0)
+END K LRGFLPG G ^LRGVK
+"RTN","LRGVP",12,0)
+PRINT Q:'$D(^LRO(68,LRAA,1,LRAD,1,LRAN,0))  S LRDFN=+^(0),LRORD=$S($D(^(.1)):^(.1),1:0),LRODT=$S($P(^(0),U,4):$P(^(0),U,4),1:$P(^(0),U,3)),LRLLOC=$P(^(0),U,7),LRSN=$P(^(0),U,5) Q:LRSN<1
+"RTN","LRGVP",13,0)
+ S LRDPF=$P(^LR(LRDFN,0),U,2) W:'$L($S($D(^LRO(68,LRAA,1,LRAD,1,LRAN,3)):$P(^(3),U,3),1:""))&(LRDPF=2) !,"NOT COLLECTED"
+"RTN","LRGVP",14,0)
+ S DFN=$P(^LR(LRDFN,0),U,3) D PT^LRX W:$E(IOST,1,2)'="C-"&(IOSL\3*2<$Y) @IOF
+"RTN","LRGVP",15,0)
+ D:$E(IOST,1,2)="C-"&$D(LRGFLPG) PG Q:$D(DUOUT)!$D(DTOUT)  S LRGFLPG=""
+"RTN","LRGVP",16,0)
+ W !!,PNM,?30,"SSN: ",SSN,?50,"WARD: ",$S(LRDPF=2&($L(LRWRD)):LRWRD,1:LRLLOC) W:LRORD !,"ORDER NUMBER: ",LRORD
+"RTN","LRGVP",17,0)
+ S LRPANEL="ALL" D VER^LRVER1
+"RTN","LRGVP",18,0)
+ W !,"----" F I=1:5:IOM-6 W "-----"
+"RTN","LRGVP",19,0)
+ Q
+"RTN","LRGVP",20,0)
+PHD ;
+"RTN","LRGVP",21,0)
+ S X="N",%DT="T" D ^%DT D DD^LRX S LRDT=Y,%H=$H-$P(^LAB(69.9,1,0),"^",7) D YMD^LRX S LRTM60=9999999-X
+"RTN","LRGVP",22,0)
+ D ADATE^LRWU S LRAD=Y Q:LREND  D LRAN^LRWU3
+"RTN","LRGVP",23,0)
+ Q
+"RTN","LRGVP",24,0)
+PG K DTOUT,DUOUT
+"RTN","LRGVP",25,0)
+ S DIR(0)="E" D ^DIR K DIR
+"RTN","LRGVP",26,0)
+ W @IOF
+"RTN","LRGVP",27,0)
+ Q
+"RTN","LRGVP",28,0)
+HED W @IOF,!,"WorkList Name: ",LRNAME,?40,LRDT,!!
+"RTN","LRGVP",29,0)
+ Q
+"RTN","LRUMD")
+0^2^B18337665^B18103037
+"RTN","LRUMD",1,0)
+LRUMD ;AVAMC/REG/CYM - MD SELECTED LAB RESULTS ;2/19/98  09:13 ;
+"RTN","LRUMD",2,0)
+ ;;5.2;LAB SERVICE;**201,341,411**;Sep 27, 1994;Build 2
+"RTN","LRUMD",3,0)
+ D L G:Y=-1 END K LRDPAF D LR^LRUMD2 S LRDFN(1)=0,(LRA,LRE,LRG,LRV)=""
+"RTN","LRUMD",4,0)
+ W !!,"Print/display tests for a single patient or group " S %=2 D YN^LRU I %=1 D ^LRUMDS G END:'$D(X),MI
+"RTN","LRUMD",5,0)
+ D ^LRUMD1 G END:LRV=1,D^LRUMD2:LRV=2 I '$O(^LRO(69.2,LRAA,7,DUZ,1,0)) G END
+"RTN","LRUMD",6,0)
+MI W !!?11,"Print/display microbiology results (excluding antibiotics)",!?26,"instead of defined lab tests" S %=2 D YN^LRU G END:%<1 I %=1 S LRM=1 G DT
+"RTN","LRUMD",7,0)
+A W !!,"Print by (T)est list  (P)atient list",! R "Enter T or P: ",Z:DTIME Q:Z=""!(Z[U)  S X=$A(Z) S:X>84 X=X-32,Z=$C(X) I X'=80,X'=84 W $C(7),"  Enter 'T' for Test List or 'P' for Patient list" G A
+"RTN","LRUMD",8,0)
+ D EN^LRUMDS G:%<1 END
+"RTN","LRUMD",9,0)
+DT D B^LRU G:Y<0 END S LRLDT=9999998-LRLDT,LRSDT=9999999-LRSDT G:$D(LRM) ^LRUMDM
+"RTN","LRUMD",10,0)
+ G ^LRUMDP:$A(Z)=80 S ZTRTN="QUE^LRUMD" D BEG^LRUTL G:POP!($D(ZTSK)) END
+"RTN","LRUMD",11,0)
+QUE U IO K ^TMP($J) S Z(2)=$O(^LAB(61,"B","SERUM",0)),Z(3)=$O(^LAB(61,"B","BLOOD",0)),Z(5)=$O(^LAB(61,"B","PLASMA",0))
+"RTN","LRUMD",12,0)
+ D L^LRU,L1^LRU,S^LRU,EN^LRUMD1 S LR=0 F F=0:1 S LR=$O(^TMP($J,"N",LR)) Q:'LR!(LR("Q"))  D P
+"RTN","LRUMD",13,0)
+ W:$E(IOST)="P" @IOF D END^LRUTL,END Q
+"RTN","LRUMD",14,0)
+P S LRR=0 I LRDFN(1) D I Q
+"RTN","LRUMD",15,0)
+ I LRG]""!(LRE) D EN^LRUMDP:LRG]"",EN1^LRUMDP:LRE S P=0 F R=0:0 S P=$O(^TMP($J,P)) Q:P=""!(LR("Q"))  F LRDFN=0:0 S LRDFN=$O(^TMP($J,P,LRDFN)) Q:'LRDFN!(LR("Q"))  D I
+"RTN","LRUMD",16,0)
+ Q:LRG]""!(LRE)  S P=0 F R=0:0 S P=$O(^LRO(69.2,LRAA,7,DUZ,1,"C",P)) Q:P=""!(LR("Q"))  F LRDFN=0:0 S LRDFN=$O(^LRO(69.2,LRAA,7,DUZ,1,"C",P,LRDFN)) Q:'LRDFN!(LR("Q"))  Q:'$$GRP  D I
+"RTN","LRUMD",17,0)
+ Q
+"RTN","LRUMD",18,0)
+I S LRI=LRLDT,W(1)=0 F E=0:0 S LRI=$O(^LR(LRDFN,"CH",LRI)) Q:'LRI!(LRI>LRSDT)!(LR("Q"))  I $P(^(LRI,0),"^",4) F B=0:0 S B=$O(^TMP($J,"L",LR,B)) Q:'B!(LR("Q"))  S LRT=^(B) I $D(^LR(LRDFN,"CH",LRI,LRT)) D W Q
+"RTN","LRUMD",19,0)
+ Q:LR("Q")  W:W(1) !,LR("%") Q
+"RTN","LRUMD",20,0)
+ ;
+"RTN","LRUMD",21,0)
+W S LRR=LRR+1 I LRR=1 D H Q:LR("Q")  S LR("F")=1
+"RTN","LRUMD",22,0)
+ S W(1)=W(1)+1,X=^LR(LRDFN,"CH",LRI,0),T=$P(X,"^",5),LRDATE=$TR($$Y2K^LRX(+X,"5M"),"@"," ")
+"RTN","LRUMD",23,0)
+ I W(1)=1 S X=^LR(LRDFN,0),Y=$P(X,"^",3),(LRDPF,X)=$P(X,"^",2),X=^DIC(X,0,"GL"),V=@(X_Y_",0)"),LRP=$P(V,"^"),SSN=$P(V,"^",9),LRL=$S($D(@(X_Y_".1)")):^(.1),$D(^LR(LRDFN,.1)):^(.1),1:"") D SSN^LRU
+"RTN","LRUMD",24,0)
+ D:$Y>(IOSL-6) H1 Q:LR("Q")  W:W(1)=1 !,SSN,?18,$E(LRL,1,5),?39,LRP W !,LRDATE W:T'=Z(2)&(T'=Z(3))&(T'=Z(5)) ?17,$E($P(^LAB(61,T,0),"^"),1,7)
+"RTN","LRUMD",25,0)
+ F X=0:0 S X=$O(^TMP($J,"L",LR,X)) Q:'X  S LRT=^(X) I $D(^LR(LRDFN,"CH",LRI,LRT)) S Y=^(LRT) W ?(16+(X*8)),$J($P(Y,"^"),6),$P(Y,"^",2)
+"RTN","LRUMD",26,0)
+ Q
+"RTN","LRUMD",27,0)
+H I $D(LR("F")),IOST?1"C".E D M^LRU Q:LR("Q")
+"RTN","LRUMD",28,0)
+ D F^LRU W !,"List for: ",$P(^VA(200,DUZ,0),"^") W:LRE ?40,LRE(1) W:IOST'?1"C".E !,"Work copy- DO NOT PUT IN PATIENT'S CHART"
+"RTN","LRUMD",29,0)
+ W !?3,"SSN",?18,"Location",?39,"Patient",! F X=0:0 S X=$O(^TMP($J,"N",LR,X)) Q:'X  W ?(16+(X*8)),$J(^TMP($J,"N",LR,X),7)
+"RTN","LRUMD",30,0)
+ W !,LR("%1") Q
+"RTN","LRUMD",31,0)
+H1 D H Q:LR("Q")  I W(1)>1 W !,SSN,?18,$E(LRL,1,5),?39,LRP
+"RTN","LRUMD",32,0)
+ Q
+"RTN","LRUMD",33,0)
+L ;from LRUMDU
+"RTN","LRUMD",34,0)
+ D END S X="CHEMISTRY" D ^LRUTL Q
+"RTN","LRUMD",35,0)
+EN D L Q:Y=-1  S DA=LRAA,DR=60,DIE=69.2 D ^DIE G END
+"RTN","LRUMD",36,0)
+END D V^LRU Q
+"RTN","LRUMD",37,0)
+EN2 D L Q:Y=-1  W !?10,"Delete users' lab test/patient lists" R !?10,"if they haven't used the lists since: T-6 MONTHS// ",X:DTIME Q:X[U!'$T  S:X="" X="T-6M"
+"RTN","LRUMD",38,0)
+ S %DT="E",%DT(0)="-N" D ^%DT K %DT I Y<1 W !?10,"Enter a date in the past",! G EN2
+"RTN","LRUMD",39,0)
+ W !!?10,"OK to delete " S %=1 D YN^LRU Q:%'=1
+"RTN","LRUMD",40,0)
+ S Y=Y+.99,A(1)=0 F A=0:0 S A=$O(^LRO(69.2,LRAA,7,A)) Q:'A  S X=$G(^(A,0)) I $P(X,"^",2)'="",$P(X,"^",2)<Y K ^LRO(69.2,LRAA,7,A) W "." S A(1)=A(1)+1
+"RTN","LRUMD",41,0)
+ S X(1)=$O(^LRO(69.2,LRAA,7,0)) S:'X(1) X(1)=0 L +^LRO(69.2,LRAA,7):999 S X=^LRO(69.2,LRAA,7,0),^(0)=$P(X,"^",1,2)_"^"_X(1)_"^"_$S(X(1)=0:X(1),1:($P(X,"^",4)-1)) L -^LRO(69.2,LRAA,7) W !!,"DONE" Q
+"RTN","LRUMD",42,0)
+ W !!?10,$C(7),"DONE" D V^LRU Q
+"RTN","LRUMD",43,0)
+GRP() ; function to determine if patient is in selected patient group list when printing by test list
+"RTN","LRUMD",44,0)
+ ; returns 1 if patient is ok to print, 0 if patient is not in selected patient group list
+"RTN","LRUMD",45,0)
+ N X,Y
+"RTN","LRUMD",46,0)
+ S X=1
+"RTN","LRUMD",47,0)
+ I $G(LRA)]"" D
+"RTN","LRUMD",48,0)
+ . S Y=$G(^LRO(69.2,LRAA,7,DUZ,1,LRDFN,1))
+"RTN","LRUMD",49,0)
+ . I Y'=LRA S X=0
+"RTN","LRUMD",50,0)
+ Q X
+"VER")
+8.0^22.0
+"BLD",8845,6)
+^327
+**END**
+**END**

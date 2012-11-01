@@ -1,0 +1,460 @@
+$TXT Created by WINTERTON,STEVEN at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 06/20/11 at 16:02
+=============================================================================
+Run Date: JUN 29, 2011                     Designation: DVBA*2.7*166
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #145                    Status: Released
+                  Compliance Date: JUL 02, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*143<<= must be installed BEFORE `DVBA*2.7*166'
+                    (v)DVBA*2.7*163<<= must be installed BEFORE `DVBA*2.7*166'
+
+Subject: CAPRI CPWM TEMPLATES AND AMIE WORKSHEET DBQS
+
+Category: 
+  - Other
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+                      *******     PLEASE NOTE     *******
+                  This mandatory patch has a 3 day compliance
+                  *******************************************
+  
+ I.  OVERVIEW
+  
+   This patch introduces enhancements to the AUTOMATED MED INFO EXCHANGE
+   (AMIE) V 2.7 package and the Compensation & Pension Record Interchange
+   (CAPRI) application, Compensation & Pension Worksheet Module (CPWM)
+   in support of new, modified and deactivated Compensation and Pension 
+   (C&P) Disability Benefit Questionnaires (DBQs).
+   
+   The following provides a high level overview of patch DVBA*2.7*166.
+  
+   1. CAPRI - Template Additions
+  
+      Veterans Benefits Administration Veterans Affairs Central Office
+      (VBAVACO) has approved content for the following new CAPRI Disability
+      Benefits Questionnaires:
+  
+        * DBQ HEARING LOSS AND TINNITUS
+        * DBQ MEDICAL OPINION
+        * DBQ PERSIAN GULF AND AFGHANISTAN INFECTIOUS DISEASES
+        * DBQ TUBERCULOSIS
+  
+   2. CAPRI - Template Modifications/Deactivations
+  
+      VBAVACO has approved modifications for the following CAPRI Disability
+      Benefit Questionnaires:
+  
+        * DBQ EATING DISORDERS
+        * DBQ HEMATOLOGIC AND LYMPHATIC CONDITIONS, INCLUDING LEUKEMIA
+  
+      VBAVACO has requested deactivation for the following CAPRI Disability
+      Benefit Questionnaires:
+        * DBQ INITIAL PTSD
+        * DBQ MENTAL DISORDERS (OTHER THAN PTSD AND EATING DISORDERS)
+        * DBQ REVIEW PTSD
+  
+   3. AMIE - C&P Examination Worksheet Additions
+  
+      VBAVACO has approved content for the following new AMIE C&P
+      questionnaire worksheets:
+  
+        * DBQ HEARING LOSS AND TINNITUS
+        * DBQ MEDICAL OPINION
+        * DBQ PERSIAN GULF AND AFGHANISTAN INFECTIOUS DISEASES
+        * DBQ TUBERCULOSIS
+  
+   4. AMIE - C&P Examination Worksheet Modifications/Deactivations
+  
+      VBAVACO has approved modifications for the following AMIE C&P
+      questionnaire  worksheet:
+  
+        * DBQ EATING DISORDERS
+        * DBQ HEMIC AND LYMPHATIC CONDITIONS INCLUDING LEUKEMIA
+  
+      VBAVACO has requested deactivation for the following AMIE 
+      C&P questionnaire  worksheet:
+        * DBQ INITIAL PTSD
+        * DBQ MENTAL DISORDERS (EXCEPT PTSD AND EATING DISORDERS)
+        * DBQ REVIEW PTSD
+  
+   5. CAPRI - Template Defects
+  
+      a. Defects have been addressed in the following CAPRI templates:
+  
+         No CAPRI Template defects are being addressed.
+  
+   6. AMIE - C&P Examination Worksheet Defects
+  
+      a. Defects have been addressed within the following AMIE worksheets:
+  
+         No AMIE worksheet defects are being addressed.
+  
+  II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+  
+    The following section lists the Remedy tickets and/or New Service
+    Requests associated with this patch.
+  
+   1. Associated Remedy Ticket(s):
+      ----------------------------------
+  
+      There are no Remedy Tickets associated with this patch.
+  
+   2. Associated New Service Request(s):
+      ----------------------------------
+      There are no New Service Requests associated with this patch.
+  
+  III. FUNCTIONAL OVERVIEW
+  
+    The following section contains an overview of the changes and primary
+    functionality that is being delivered in this patch.
+  
+   1. CAPRI - Template Additions
+  
+      a. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved the following new CAPRI Disability Benefit
+         Questionnaire templates based on new C&P questionnaire worksheets.
+  
+        * DBQ HEARING LOSS AND TINNITUS
+        * DBQ MEDICAL OPINION
+        * DBQ PERSIAN GULF AND AFGHANISTAN INFECTIOUS DISEASES
+        * DBQ TUBERCULOSIS
+  
+         This patch implements these new templates, which are accessible
+         through the Compensation & Pension Worksheet Module (CPWM) of the
+         CAPRI GUI.
+  
+   2. CAPRI - Template Modifications/Deactivation
+  
+      a. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved modifications to the following CAPRI Disability
+         Benefits Questionnaire template based on a new C&P questionnaire
+         worksheet.
+  
+        * DBQ EATING DISORDERS
+        * DBQ HEMATOLOGIC AND LYMPHATIC CONDITIONS, INCLUDING LEUKEMIA
+  
+      b. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved deactivation of the following CAPRI Disability
+         Benefits Questionnaire template based on a new C&P questionnaire
+         worksheet.
+  
+        * DBQ INITIAL PTSD
+        * DBQ MENTAL DISORDERS (OTHER THAN PTSD AND EATING DISORDERS)
+        * DBQ REVIEW PTSD
+  
+   3. AMIE - C&P Examination Worksheet Additions
+  
+       a. Veterans Benefits Administration Veterans Affairs Central Office
+          has approved the following new Automated Medical Information
+          Exchange (AMIE) C&P Questionnaire worksheets.
+  
+        * DBQ HEARING LOSS AND TINNITUS
+        * DBQ MEDICAL OPINION
+        * DBQ PERSIAN GULF AND AFGHANISTAN INFECTIOUS DISEASES
+        * DBQ TUBERCULOSIS
+  
+         This patch implements the new content for the AMIE C&P Disability
+         Benefit Questionnaire worksheets, which are accessible through the
+         VISTA AMIE software package.
+  
+   4. AMIE - C&P Examination Worksheet Modifications/Deactivation
+  
+      a. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved modifications to the following new Automated Medical
+         Information Exchange (AMIE) C&P Questionnaire worksheet.
+  
+        * DBQ EATING DISORDERS
+        * DBQ HEMIC AND LYMPHATIC CONDITIONS INCLUDING LEUKEMIA
+  
+      b. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved deactivation to the following new Automated Medical
+         Information Exchange (AMIE) C&P Questionnaire worksheet.
+        * DBQ INITIAL PTSD
+        * DBQ MENTAL DISORDERS (EXCEPT PTSD AND EATING DISORDERS)
+        * DBQ REVIEW PTSD
+  
+   5. CAPRI - Template Defects
+  
+      There are no CAPRI Template defects associated with this patch.
+  
+   6. AMIE - C&P Examination Worksheet Defects
+  
+      There are no AMIE Examination worksheet defects associated with
+      this patch.
+  
+ IV. TECHNICAL COMPONENTS
+  
+   The following section describes the technical components being exported
+   with this patch.
+  
+   1. The following FILE will be included.
+  
+                                       UP    SEND  DATA               USER
+                                       DATE  SEC.  COMES  SITE  RSLV  OVER
+    FILE#   NAME                       DD    CODE  W/FILE DATA  PTS   RIDE
+    ----------------------------------------------------------------------
+    396.18 CAPRI TEMPLATE DEFINITIONS  NO    YES   YES    OVER  NO    NO
+  
+    2. The following Template Definition updates will be added to the CAPRI
+      TEMPLATE DEFINITIONS (#396.18) file:
+  
+        * DBQ EATING DISORDERS~166
+        * DBQ HEARING LOSS AND TINNITUS~166
+        * DBQ HEMATOLOGIC AND LYMPHATIC CONDITIONS, INCLUDING LEUKEMIA~166
+        * DBQ MEDICAL OPINION~166
+        * DBQ PERSIAN GULF AND AFGHANISTAN INFECTIOUS DISEASES~166
+        * DBQ TUBERCULOSIS~166
+  
+   3. The following new entries with the following C&P questionnaire 
+      worksheet(s) will be created and STATUS field made "ACTIVE" in the
+      AMIE EXAM (#396.6) file:
+  
+                                                     Access     Text 
+        IEN  Exam Name                               Routine    Routine
+        ---  -------------------------------------   --------   --------
+        306  DBQ MEDICAL OPINION                     DVBCQMO1   DVBCQMO2
+        315  DBQ HEARING LOSS AND TINNITUS           DVBCQHL1   DVBCQHL2
+                                                                DVBCQHL3
+        320  DBQ PERSIAN GULF AND AFGHANISTAN 
+             INFECTIOUS DISEASES                     DVBCQPG1   DVBCQPG2
+        321  DBQ TUBERCULOSIS                        DVBCQTB1   DVBCQTB2
+        325  DBQ HEMIC AND LYMPHATIC CONDITIONS 
+             INCLUDING LEUKEMIA                      DVBCQHA5   DVBCQHA6
+        326  DBQ EATING DISORDERS                    DVBCQEA3   DVBCQEA4
+  
+  
+      The following C&P questionnaire worksheet(s), which are being 
+      replaced with a newer version, will be set to "INACTIVE":
+  
+        IEN  Exam Name                               
+        ---  ------------------------------------- 
+        303  DBQ EATING DISORDERS
+        324  DBQ HEMIC AND LYMPHATIC CONDITIONS INCLUDING LEUKEMIA
+  
+      The following C&P questionnaire worksheet(s), which are to be 
+      deactivated will be set to "INACTIVE":
+  
+        IEN  Exam Name                               
+        ---  ------------------------------------- 
+        305  DBQ INITIAL PTSD
+        307  DBQ MENTAL DISORDERS (EXCEPT PTSD AND EATING DISORDERS)
+        309  DBQ REVIEW PTSD
+  
+   5. The following new routines will be added with this patch:
+         *DVBAUTLP - New utility program to be used by the pre/post init
+         *DVBCQEA3 - Used for DBQ EATING DISORDERS
+         *DVBCQEA4 - Used for DBQ EATING DISORDERS
+         *DVBCQHA5 - Used for DBQ HEMIC AND LYMPHATIC CONDITIONS 
+                     INCLUDING LEUKEMIA 
+         *DVBCQHA6 - Used for DBQ HEMIC AND LYMPHATIC CONDITIONS 
+                     INCLUDING LEUKEMIA 
+         *DVBCQHL1 - Used for DBQ HEARING LOSS AND TINNITUS
+         *DVBCQHL2 - Used for DBQ HEARING LOSS AND TINNITUS
+         *DVBCQHL3 - Used for DBQ HEARING LOSS AND TINNITUS
+         *DVBCQMO1 - Used for DBQ MEDICAL OPINION 
+         *DVBCQMO2 - Used for DBQ MEDICAL OPINION 
+         *DVBCQPG1 - Used for DBQ PERSIAN GULF AND AFGHANISTAN 
+                     INFECTIOUS DISEASES 
+         *DVBCQPG2 - Used for DBQ PERSIAN GULF AND AFGHANISTAN
+                     INFECTIOUS DISEASES 
+         *DVBCQTB1 - Used for DBQ TUBERCULOSIS
+         *DVBCQTB2 - Used for DBQ TUBERCULOSIS
+  
+ V. SOFTWARE & DOCUMENTATION RETRIEVAL
+  
+    The following section provides information regarding the retrieval of
+    the software and related user documentation.
+  
+   1. VistA Patch DVBA*2.7*166
+  
+      a. This patch is being distributed as a PackMan patch message through
+         the National Patch Module (NPM). The KIDS build for this patch is
+         DVBA*2.7*166.
+  
+   2. User Documentation
+  
+      a. The user documentation for this patch may be retrieved directly
+         using FTP. The preferred method is to FTP the files from:
+  
+             download.vista.med.va.gov
+  
+         This transmits the files from the first available FTP server.
+  
+         Sites may also elect to retrieve documentation directly from a
+         specific server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+         Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+         Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+         The following files will be available:
+  
+      File Name                                   Format  Description
+      ------------------------------------        ------  -----------------
+      DVBA_27_P166_RN.PDF                         Binary  Release Notes
+      DVBA_27_P166_DBQ_EATINGDISORDERS_WF.DOC     Binary  Workflow Document
+      DVBA_27_P166_DBQ_HEARINGLOSS_WF.DOC         Binary  Workflow Document
+      DVBA_27_P166_DBQ_HEMICANDLYMPHATIC_WF.DOC   Binary  Workflow Document
+      DVBA_27_P166_DBQ_MEDICALOPINION_WF.DOC      Binary  Workflow Document
+      DVBA_27_P166_DBQ_PGINFECTDISEASES_WF.DOC    Binary  Workflow Document
+      DVBA_27_P166_DBQ_TUBERCULOSIS_WF.DOC        Binary  Workflow Document
+  
+       b. Documentation may also be retrieved from the VistA Documentation
+          Library (VDL) on the Internet at the following address. This web
+          site is usually updated within 1-3 days of the patch release
+          date.
+  
+                http://www4.va.gov/vdl/application.asp?appid=133
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES
+  
+   The following section provides pre-installation notes and requirements
+   for installing the software.
+  
+   1. Users On the System
+  
+    a. CAPRI GUI Users - This patch may be installed while users are
+       running the CAPRI GUI.
+  
+    b. VistA Users - This patch may be installed with users on the
+       system, but should be loaded during non-peak hours to minimize
+       disruption to users and to reduce the possibility of errors when
+       the routines and file entries are updated.
+  
+    c. VistA Options - There are no VistA options to disable while
+       installing this patch.
+  
+   2. Software Installation Time
+  
+    a. The estimated installation time is less than 5 minutes during off
+       peak hours.
+  
+   3. Required Builds
+  
+    a. The following is a list of REQUIRED builds for this KIDS software
+       distribution.  KIDS will not allow the installation of this patch
+       without their prior installation.
+  
+        Required Build(s):
+        ------------------
+        DVBA*2.7*163
+  
+ VII. INSTALLATION INSTRUCTIONS
+  
+    The following section provides the steps for installing the software.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+      the KIDS distribution included with this message.
+  
+   2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+  
+   3. From this menu, you may now elect to use the following options (when
+      prompted for INSTALL NAME, enter DVBA*2.7*166).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed.
+  
+          CAUTION: Do not use the KIDS "Full Comparison" option. Due to
+          the length of some CAPRI Template names, the "Full Comparison"
+          option can go into a loop.  This problem has been reported to
+          the Kernel developers and will be fixed with XU*8*559. The
+          "Second line of Routines Only", "Routines only", and "Old style
+          Routine compare" options may be used.
+  
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+  
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select package DVBA*2.7*166.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', answer NO.
+  
+   6. When prompted to 'Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO//', answer NO.
+  
+   7. NOTE: Pre/Post-init routine DVBA166P is a temporary routine used as
+      part of the pre/post-install process and will be automatically
+      deleted by KIDS after patch installation. However, in some cases
+      Cache doesn't always delete the routine. You may delete it manually
+      if you discover this at your site.
+  
+ VIII. TEST SITES
+  
+    The following sites participated in the testing of the DVBA*2.7*166
+    software.
+  
+    Test Sites
+    -----------
+    Alexandria
+    North Florida/South Georgia
+    Upstate New York
+    Miami
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA166P
+    Before:       n/a   After: B40726810  **166**
+Routine Name: DVBAUTLP
+    Before:       n/a   After: B90363349  **166**
+Routine Name: DVBCQEA3
+    Before:       n/a   After:  B3133499  **166**
+Routine Name: DVBCQEA4
+    Before:       n/a   After: B49618644  **166**
+Routine Name: DVBCQHA5
+    Before:       n/a   After:  B3797802  **166**
+Routine Name: DVBCQHA6
+    Before:       n/a   After:B193890096  **166**
+Routine Name: DVBCQHL1
+    Before:       n/a   After:  B3157324  **166**
+Routine Name: DVBCQHL2
+    Before:       n/a   After:B183298634  **166**
+Routine Name: DVBCQHL3
+    Before:       n/a   After: B32091957  **166**
+Routine Name: DVBCQMO1
+    Before:       n/a   After:  B3110411  **166**
+Routine Name: DVBCQMO2
+    Before:       n/a   After: B79890188  **166**
+Routine Name: DVBCQPG1
+    Before:       n/a   After:  B3525888  **166**
+Routine Name: DVBCQPG2
+    Before:       n/a   After: B67689632  **166**
+Routine Name: DVBCQTB1
+    Before:       n/a   After:  B3004277  **166**
+Routine Name: DVBCQTB2
+    Before:       n/a   After:B148061526  **166**
+
+=============================================================================
+User Information:
+Entered By  : FAIRBROTHER,EILEEN            Date Entered  : MAR 02, 2011
+Completed By: DAWSON,JEREMIAH               Date Completed: JUN 28, 2011
+Released By : FRANCE,KATHI                  Date Released : JUN 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

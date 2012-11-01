@@ -1,0 +1,225 @@
+$TXT Created by CURTIS,RICHARD L at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 10/17/11 at 15:31
+=============================================================================
+Run Date: JAN 17, 2012                     Designation: SD*5.3*572
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #478                    Status: Released
+                  Compliance Date: FEB 17, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*491  <<= must be installed BEFORE `SD*5.3*572'
+                    (v)SD*5.3*523  <<= must be installed BEFORE `SD*5.3*572'
+
+Subject: FIX NO-SHOW/CANX DT/TIME, NO SHOW RPT AND APPT LIST ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will fix the following issues:
+  
+ - A problem occasionally occurs when an appointment is cancelled,
+   where the date/time being filed for this action is incorrect.
+ - The No Show report [SD NOSHOW REPORT], is calculating 'No Action
+   Taken' appointments in the total number of no shows for the selected
+   date range.
+ - Report headings are not printing on the Appointment List [SDLIST]. In 
+   addition, if a clinic is Inactive, the report displays 'No activity,
+   which can be viewed as misleading.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) HD0000000425348 - No-Show/Cancel time minutes occasionally incorrect
+ 2) HD0000000479224 - Is there a coding error in routine SDNOS0
+ 3) HD0000000498727 - Appointment List not showing clinic name
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Heartland West (Topeka, KA)
+ Salisbury, NC
+ Tampa, FL
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) HD0000000425348 - No-Show/Cancel time minutes occasionally incorrect
+  
+    Problem:
+    --------
+    Occasionally, when an appointment is cancelled, the date/time filed in
+    the NO-SHOW/CANCEL DATE/TIME field (#15) of the APPOINTMENT sub-file
+    (#2.98) in the PATIENT file (#2) will be incorrect. This occurs because
+    the existing code for rounding off the time is wrong.  Thus, if the
+    time happens to be the 59th minute and half a second of an hour, the
+    time is getting rounded off and filed wrong. For example, if the time
+    is 105950, it is getting filed as 1060, instead of 11.  The date/time
+    filed for no-shows is not rounded off, so this issue only occurs with
+    appointment cancellations.
+  
+    Resolution:
+    -----------
+    The $JUSTIFY function being used to set and file the date/time in
+    routine SDCNP0, will be corrected so that the time is correctly rounded
+    and filed.
+  
+ 2) HD0000000479224 - Is there a coding error in routine SDNOS0
+  
+    Problem:
+    --------
+    When a user runs the No Show report [SD NOSHOW REPORT], they are given
+    the option to include appointment information for appointments that 
+    have No Action Taken.  Although the report does correctly include these
+    appointments in the report, the total number of no shows at the end of
+    the report includes the total number of 'No Action Taken' appointments
+    for the selected date range.  The total should be for 'No Shows' only.
+  
+    Resolution:
+    -----------
+    Routine SDNOS0 will be modified so that the 'No Show' total at the end
+    of the report only counts appointments that have actually been 'No
+    Showed' and does not include "No Action Taken' appointments in that
+    total.
+  
+ 3) HD0000000498727 - Appointment List not showing clinic name
+  
+    Problem:
+    --------
+    When running the Appointment List [SDLIST] for one clinic, the clinic
+    name does not print in the report header when the selected date is a
+    date for which the clinic has not been set up with availability or the
+    clinic was Inactive on the selected date.  In either case, the clinic
+    name does not print in the report header and the output statement
+    indicates: "No activity found for this date!".
+    Additionally, if you run the report for All clinics or a list of
+    clinics, and none of the clinics happen to have any appointments
+    scheduled for the selected date, the report header just prints:
+  
+    Appointments for DAY OF THE WEEK, date
+  
+    Resolution:
+    -----------
+    Routines SDAL and SDAL0 will be modified so that when you run the
+    Appointment List [SDLIST] for a single clinic and the clinic does
+    not have availability or was Inactive on the selected date, the
+    clinic name will print in the report header.  Additionally, the
+    output statement will be changed to be more explicit, so it will
+    read either "No Clinic Availability for this date!" or "Clinic
+    Inactive on this date!", whichever applies.
+    Additionally, if the report if run for All clinics or a list of
+    clinics, and none of the clinics happen to have any appointments
+    scheduled for the selected date, the report header will be changed
+    to read whichever applies:
+  
+    Appointments for ALL clinics for DAY OF THE WEEK, date
+  
+    <or>
+  
+    Appointments for Selected clinics for DAY OF THE WEEK, date
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Users can be on the system during the installation of this patch.
+  
+ Installation should take less than 5 minutes.
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+     Select Kernel Installation & Distribution System Option:  INStallation
+                                                               ---
+  
+     1     Load a Distribution
+     2     Verify Checksums in Transport Global
+     3     Print Transport Global
+     4     Compare Transport Global to Current System
+     5     Backup a Transport Global
+     6     Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter SD*5.3*572):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will NOT
+         backup any other changes such as DDs or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed.  It compares all components of the patch
+         (routines, DDs, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+  
+     d.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+  
+ 4.  Use the Install Package(s) option and select the package SD*5.3*572.
+  
+     a.  When prompted "Want KIDS to INHIBIT LOGONS during the
+         install? NO//", respond NO.
+  
+     b.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", respond YES.
+  
+         1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+            Appointment Management  [SDAM APPT MGT]
+            Cancel Appointment      [SD CANCEL APPOINTMENT]
+            No-Show Report          [SD NOSHOW REPORT]
+            Appointment List        [SDLIST]
+  
+         2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAL
+    Before: B25084907   After: B31245513  **37,46,106,171,177,80,266,491,572**
+Routine Name: SDAL0
+    Before: B40643176   After: B36699440  **28,37,106,149,171,177,193,
+                                           305,373,266,572**
+Routine Name: SDCNP0
+    Before: B34170117   After: B34578981  **132,167,478,517,572**
+Routine Name: SDNOS0
+    Before: B28179889   After: B28515965  **20,194,410,517,523,572**
+ 
+Routine list of preceding patches: 491, 523
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : SEP 21, 2010
+Completed By: SESSLER,APRIL                 Date Completed: JAN 09, 2012
+Released By : KRILEY,MARSHA                 Date Released : JAN 17, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

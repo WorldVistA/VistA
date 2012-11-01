@@ -1,0 +1,204 @@
+$TXT Created by BECKWITH,RALPH at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Thursday, 09/09/10 at 06:41
+=============================================================================
+Run Date: AUG 17, 2011                     Designation: RMPR*3*162
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #142                      Status: Released
+                  Compliance Date: SEP 17, 2011
+=============================================================================
+
+Associated patches: (v)RMPR*3*62   <<= must be installed BEFORE `RMPR*3*162'
+                    (v)RMPR*3*77   <<= must be installed BEFORE `RMPR*3*162'
+                    (v)RMPR*3*146  <<= must be installed BEFORE `RMPR*3*162'
+
+Subject: SUSPENSE PROCESSING, 2319 VIEW;HCPCS CALC FLAG - DISPLAY 2319
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1. When using the "23 Display 2319" option, if a user decides to exit 
+    using the up caret (^) symbol at the Enter 10-2319 screen to VIEW
+    prompt, they will receive a system error.
+  
+ 2. When a user in the Prosthetics application views the Display/Print 
+    Display 2319 menu option, HCPCS items and shipping charges are not
+    being displayed correctly.
+  
+  
+ Associated Remedy Tickets:
+ ==================
+ 1) HD0000000343250 - Error - <UNDEFINED>WRI+1^RMPRPAT
+  
+ 2) HD0000000349208 - HCPCS calc flag and shipping charge added together 
+                      on 2319 display
+  
+ Associated NSR(s):
+ ============
+ N/A
+  
+ Test Sites:
+ ==========
+ Oklahoma City VA Medical Center
+ VA Western NY HCS
+ Salisbury - W.G Hefner VA Medical Center
+  
+  
+ Remedy Overview:
+ ============ 
+ 1) HD0000000343250 Error - <UNDEFINED>WRI+1^RMPRPAT
+  
+  
+ Problem:
+ --------
+ An Error is being received in Suspense processing when using template
+ action 23 Display 2319 and attempting to use the up caret (^) function
+ at the MAS Disability Codes prompt and then again at view type causes an
+ undefined error to occur.
+  
+ Also, found that view types (1-8) are not listed when entering action the 
+ first time, but only on subsequent return to view types.
+  
+ In addition, found that view types (1-8) should be (1-7) when only 
+ listing 7 view types (HOME OXYGEN ITEMS only for Display/Print Patient 
+ 2319).
+  
+   
+ Resolution:
+ -----------
+ Modify routine RMPRPAT to list view types (1-8) on the initial entry into 
+ action [23 Display 2319] and RMPRPAT1 to handle up arrow entry when 
+ listing MAS Disability Codes in FOR loop.
+  
+ Routines: RMPRPAT, RMPRPAT1
+  
+  
+ 2) HD0000000349208 - HCPCS calc flag and shipping charge added together 
+                      on 2319 display.                 
+          
+  
+ Problem:
+ --------
+ A site discovered a problem when displaying a 2319 for a Prosthetics order
+ with an item having a calc flag HCPCS code and a shipping charge. The item
+ summary (due to the calc flag) will roll up the shipping charge.
+  
+ Analysis found that calc flag rollup will not function properly when 
+ multiple calc flag items are included in order.  Sites were previously 
+ advised to create a separate order for each calc flagged item, but code 
+ should be able to handle item rollup for order with multiple calc flagged 
+ items.
+  
+ Display of shipping charge does not show any description at all.
+  
+ Detail view of rolled up calc flagged item displays entire order, not 
+ just the detail of item and components within rollup.
+  
+  
+ Resolution:
+ -----------
+ Corrected the problem when displaying a 2319 Prosthetics order with an
+ item having a calc flag HCPCS code.  The system will no longer roll up
+ shipping charge into the item summary (due to the calc flag).
+  
+ Modified the system so the calc flag rollup will now function properly 
+ when multiple calc flag items are included in an order.   Sites were 
+ previously advised to create a separate order for each calc flagged item, 
+ but logic was modified to handle order for site that include multiple 
+ calc flagged items in same order.
+  
+  
+ Modified display logic for shipping charge detail to show description of 
+ 'SHIPPING CHARGE'.
+  
+ Also, modified detail view of rolled up calc flagged item to ONLY display 
+ components of rollup, NOT entire order.
+  
+ Routines: RMPRPAT2, RMPRPAT3, RMPRPAT7, RMPR9S4
+  
+  
+   
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install these routines at any time without interruption to 
+ users. It should take less than 2 minutes to install this patch. 
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*162)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       RMPR*3.0*162.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//" respond YES. When prompted to select the 
+       options you would like to place out of order, enter the following:
+                                                                  
+       RMPR SUSP MENU               Suspense Processing
+       RMPR PRINT 2319              Display/Print Patient 2319
+       RMPR 2914 - EYEGLASS         2914 Eyeglass Record
+       RMPR HIS DATA                Add Historical Data
+       RMPR 2421                    2421 Form
+       RMPR 2520                    2520 Transaction without printing 10-55
+       RMPR ADD OTHER DAILY REC     Create a No-Form Daily Record
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPR9S4
+    Before: B30605994   After: B29629049  **59,99,90,75,162**
+Routine Name: RMPRPAT
+    Before: B38003429   After: B41372880  **29,62,162**
+Routine Name: RMPRPAT1
+    Before: B22912789   After: B23123419  **29,162**
+Routine Name: RMPRPAT2
+    Before: B29516719   After: B31418296  **32,34,29,44,99,75,137,146,162**
+Routine Name: RMPRPAT3
+    Before: B39519148   After: B40605335  **3,12,25,28,32,41,69,92,99,90,162**
+Routine Name: RMPRPAT7
+    Before:  B1666656   After:  B2616702  **32,34,35,77,162**
+ 
+Routine list of preceding patches: 62, 77, 146
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : JUL 19, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: AUG 01, 2011
+Released By : MORRIS,DELISA                 Date Released : AUG 17, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

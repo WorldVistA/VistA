@@ -1,0 +1,211 @@
+$TXT Created by WESTRA,HERLAN at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 01/18/12 at 08:23
+=============================================================================
+Run Date: MAY 01, 2012                     Designation: XU*8*590
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #475                      Status: Released
+                  Compliance Date: JUN 01, 2012
+=============================================================================
+
+
+Subject: USER INQUIRY FIXES FOR MIXED-OS VISTA
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes problems on a mixed-OS VistA system where the option 
+ "User Inquiry" [XUSERINQ] does not display active sessions on all nodes.
+  
+ The option is intended to display the user's job and device numbers, 
+ the sign-on time, and the menu path of the option being executed.  
+ On a mixed-OS system, some of this data is no longer available.  If 
+ an active session is on a different VistA node than the one on which 
+ the "User Inquiry" [XUSERINQ] is executed, then VistA does not 
+ display the menu path and marks the session in the SIGN-ON LOG (file 
+ #3.081) as forced closed.
+  
+ This patch changes the "User Inquiry" [XUSERINQ] to display a message 
+ "You must sign-on to node <node name> to see this menu path." and does 
+ not mark the session as forced closed if the user's session is on a 
+ different VistA node than the one on which the "User Inquiry" [XUSERINQ] 
+ is executed.
+  
+ This patch also fixes the "Find a User" [XU FINDUSER] option, as it uses 
+ the same routine as the "User Inquiry" [XUSERINQ].
+  
+ Blood Bank Team Coordination
+ ============================
+   
+ Clearance - 01/24/12
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*590 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8*590 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ User Inquiry           Inquire            Modified output Routine,
+ [XUSERINQ]                                no modification to Option
+  
+ Find a user            Run routine        Modified output Routine,
+ [XU FINDUSER]                             no modification to Option
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ XUSERINQ           Print     NEW PERSON (#200)   Modified output Routine,
+                                                  no modifications to 
+                                                  Template
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+ 1. HD0000000584600 User Inquiry causes dropped connections
+  
+ Problem:
+ -------
+ On a mixed-OS VistA system, doing a "User Inquiry" [XUSERINQ] on a user
+ with multiple sessions on more than one VistA node displays the user's
+ current jobs on each node, and the menu path on the node where the "User
+ Inquiry" was executed. A subsequent "User Inquiry" shows only the jobs on
+ the current node.  The user's jobs on other nodes are marked forced
+ closed in the sign-on log, although they continue to be active.
+  
+ Historically, the user's job identification ($J) is unique to the system, 
+ but on a mixed-OS VistA, it is only unique to a specific node.  Also, the 
+ user's menu path is stored in global ^XUTL("XQ",$J), which historically 
+ was unique to the system.  However, on a mixed-OS environment, the 
+ global ^XUTL("XQ",$J) is also unique only to the current node.  VistA can 
+ no longer identify the session as active, and cannot display the menu 
+ path if the active session is on a different node than the one on which 
+ the "User Inquiry" [XUSERINQ] is being executed.
+  
+ Resolution:
+ ----------
+ Modified routine ^XUS9 to check current node id and compare with node id 
+ in the sign-on log.  If user is not on the same node as the entry in the 
+ sign-on log, then the log will not be edited, and a message "You must 
+ sign-on to node <node name> to see this menu path." will be displayed.
+  
+ Test Sites: (Patch Tracking Message #56284202)
+ ----------
+ Central Arkansas Veterans Healthcare System, Little Rock, AR (L)
+ Northport VA Medical Center, Northport, NY (L)
+ Tennessee Valley Healthcare System, Nashville, TN (I)
+ W.G. (Bill) Hefner VA Medical Center, Salisbury, NC (L) 
+  
+ Documentation
+ -------------
+ No documentation changes were necessary for this patch.  The most 
+ up-to-date VA Kernel end-user documentation is available on the VHA 
+ Software Document Library (VDL) at the following Internet Website:
+      http://www.va.gov/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+   
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system. TaskMan and HL7 
+ filers do NOT need to be stopped. There is no potential for disruption to 
+ users.  This patch should take less than 1 minute to install.
+  
+ If installed during the normal workday, it is recommended that the 
+ following selections in the OPTION (#19) file be disabled to prevent 
+ possible conflicts while running the KIDS Install.  Other VistA users 
+ will not be affected.
+  
+                 User Inquiry [XUSERINQ]
+                 Find a User  [XU FINDUSER] 
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*590):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+         Install Package(s)  'XU*8.0*590'
+                              ==========
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".  There are no menu options included in 
+     this patch.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "YES".
+  
+     a.  When prompted 'Enter options you wish to mark as 'Out Of Order':'
+         enter the following option:
+  
+             User Inquiry [XUSERINQ]
+             Find a User  [XU FINDUSER]
+  
+     b.  When prompted 'Enter protocols you wish to mark as 'Out Of 
+         Order':' press <Enter>.
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUS9
+    Before:  B4951888   After:  B7422541  **258,590**
+ 
+Routine list of preceding patches: 258
+
+=============================================================================
+User Information:
+Entered By  : WESTRA,HERLAN G               Date Entered  : DEC 27, 2011
+Completed By: BEST,LISA                     Date Completed: APR 23, 2012
+Released By : TILLIS,LEWIS                  Date Released : MAY 01, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

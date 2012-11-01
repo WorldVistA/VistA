@@ -1,0 +1,198 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Wednesday, 09/29/10 at 09:55
+=============================================================================
+Run Date: MAR 15, 2011                     Designation: PRC*5.1*147
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #125                    Status: Released
+                  Compliance Date: APR 15, 2011
+=============================================================================
+
+Associated patches: (v)PRC*5.1*81  <<= must be installed BEFORE `PRC*5.1*147'
+
+Subject: SPD - SPECIAL INV POINT TYPE;ARCHIVING PROBLEM;INVALID GLOBAL REFERENCED
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. Integrated sites cannot have two primary SPD (Supply Processing & 
+    Distribution) inventory points as system currently allows only one
+    flagged SPD primary at a time. This prevents use of the 
+    Case Cart/Instrument kit system at more than one site.
+  
+ 2. The end of year IFCAP Archive/Purging process will archive all selected
+    orders for the prior fiscal years to a document file.  However, it was
+    discovered that 1358 orders for a certain year would copy totally  
+    different order information for a different order and a different year.
+  
+ 3. When editing a request and modifying the Inventory Point the new 
+    Inventory Point would be stored in global ^PRC(410) (does not exist) 
+    instead of ^PRCS(410). 
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ Remedy:
+ =======
+ 1. HD0000000056867 SPD - Special Inventory Point Type
+                           
+ 2. HD0000000422778 Problem with IFCAP Archive option
+  
+ 3. HD0000000414834 Routine references ^PRC(410 rather than ^PRCS(410
+  
+          
+  
+ Test Sites:
+ ===========
+ Northport VAMC
+ VA Northwest Iowa HCS
+ VA Nebraska Western Iowa HCS
+ Hunter Holmes McGuire VAMC - Richmond 
+  
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000056867 SPD - Special Inventory Point Type
+  
+ Problem:
+ --------
+ Integrated site is not allowed to setup more than one Primary Inventory 
+ Point as a Special Inventory Point Type of SPD.  This prevents site from 
+ using more than one Case Cart/Instrument Kit where they would need
+ 2 or more SPD primaries.
+  
+  
+ Resolution:
+ -----------
+ The resolution to this site problem was to open up the Special Inventory
+ Point Type to allow more than one SPD entry for multiple Primary 
+ Inventory Points.  This has been done by modifying field SPECIAL INVENTORY
+ POINT TYPE (#15) in file GENERIC INVENTORY (#445) .
+  
+  
+ Routines: none
+  
+  
+  
+ 2. HD0000000422778 Problem with IFCAP Archive option
+  
+  
+ Problem:
+ --------
+ Site noticed that when using option [Archive Selectable Records] built 
+ from finding archivable records, that at times records being archived
+ reflect current years data when they were only archiving year 2003 and
+ older.
+  
+   
+ Resolution:
+ -----------
+ Found that the coding in routine PRCGARC1 had too many uses of variable
+ DA which eventually caused confusion when archiving 1358s where an 
+ entirely different 410 - CONTROL POINT ACTIVITY record would be used for
+ the basis of the selected 1358 to print.
+  
+  
+ Routines:  PRCGARC1
+  
+  
+  
+ 3. HD0000000414834 Routine references ^PRC(410 rather than ^PRCS(410
+  
+  
+ Problem:
+ --------
+ Found that an undefined file ^PRC(410,ien... was being set at site when
+ field Inventory Point was modified in option Edit a Request (Section).
+  
+   
+ Resolution:
+ ----------- 
+ Modified routine PRCSEA to set the new Inventory Point into correct file
+ ^PRCS(410,ien...
+  
+ A post-install routine is included (PRCG147P) that will save the invalid 
+ file to ^XTMP("PRCG147P") for 120 days and kill invalid file ^PRC(410,...
+  
+  
+ Routines:  PRCSEA,PRCG147P 
+  
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install these routines at any time without interruption to
+ users.  It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*147)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*147.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? NO//', respond YES.  When prompted to select the options
+       you would like to place out of order, enter the following:
+  
+       Archive Selected IFCAP Records   [PRCG ARCHIVE IFCAP RECORDS]
+       Edit a Request (Section)         [PRCSEDRS]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Sept 22, 2010;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCG147P
+    Before:       n/a   After:  B1132554  **147**
+Routine Name: PRCGARC1
+    Before:  B6061790   After:  B6843063  **147**
+Routine Name: PRCSEA
+    Before: B66774225   After: B67471937  **81,147**
+ 
+Routine list of preceding patches: 81
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : APR 29, 2010
+Completed By: PODLEY,CHRIS                  Date Completed: MAR 15, 2011
+Released By : NELSON,VICKI M                Date Released : MAR 15, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

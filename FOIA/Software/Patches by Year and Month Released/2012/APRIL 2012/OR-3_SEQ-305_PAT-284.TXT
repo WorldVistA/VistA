@@ -1,0 +1,163 @@
+$TXT Created by ESCALERA,DIEGO at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 03/30/11 at 11:13
+=============================================================================
+Run Date: APR 18, 2012                     Designation: OR*3*284
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #305                      Status: Released
+                  Compliance Date: MAY 19, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*215    <<= must be installed BEFORE `OR*3*284'
+
+Subject: ORDERS TAB DISPLAY ISSUES/DEFAULT ACTION IN DISPLAY ALERT RECIPIENTS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch corrects 2 issues within the ORDER ENTRY/RESULTS REPORTING 
+ package:
+  
+ 1. Display Patient Alerts and Alert Recipients [ORB3 ALERT RECIPIENTS]
+ option has a non-standard default of 'Close' even if there are multiple
+ screens.
+  
+ 2. The CPRS Orders Tab detailed display overwrites the previous chart
+ review information with the latest chart review data.
+  
+  
+ Associated Remedy:
+ ==================
+ 1. HD0000000069366    Non-std default action (Close) in Notif Mgt option
+  
+ 2. HD0000000268742    Orders Tab confusion
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ VA Maryland HCS 
+ VA Upstate NY HCS 
+ Atlanta VA Medical Center 
+  
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000069366    Non-std default action (Close) in Notif Mgt option
+    
+    Problem:
+    ========
+    In the Display Patient Alerts and Alert Recipients [ORB3 ALERT
+    RECIPIENTS] option, the default action is 'Close'. This is non-standard
+    and frequently causes users to close the window even though they really
+    wanted to continue processing.
+  
+    Resolution:
+    ===========
+    The OR PATIENT ALERTS protocol has been modified to remove the default 
+    of 'Close'. This causes the ListMan interface to use the standard
+    default of 'Next Screen', if there is additional data to process. In
+    the event there is no additional data, the standard default of 'Quit'
+    is used.
+  
+ 2. HD0000000268742    Orders Tab confusion
+  
+    Problem:
+    ========
+    The Orders tab detailed display shows the order along with the most
+    recent Chart Review date and time. However, when there is a change to
+    the original order, and that change has a chart review performed, the
+    detail information is incorrect.
+    If an earlier chart review was performed and recorded and a new chart
+    review is performed, the earlier chart review is marked as reviewed
+    using the newest chart review data (overwriting existing data).
+  
+    Resolution:
+    ===========
+    Routine ORCACT1 was modified to correctly file the Chart Review 
+    information each time a chart review is performed. 
+    Now, when an earlier chart review was performed and recorded and a 
+    new chart review is also performed, the earlier existing chart review
+    data is NOT modified (protecting existing data).
+  
+ Installation Instructions
+ =========================
+ This patch can be loaded with users in the system. Installation time is 
+ less than five minutes.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+  1.  Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*284
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      OR*3.0*284
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO. 
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu Options
+          and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCACT1
+    Before: B49260936   After: B49420108  **7,27,56,48,86,92,116,149,215,284**
+ 
+Routine list of preceding patches: 215
+
+=============================================================================
+User Information:
+Entered By  : CRUMLEY,JAMIE                 Date Entered  : DEC 04, 2007
+Completed By: SHERMAN,BILL                  Date Completed: APR 12, 2012
+Released By : DILTZ-ANDARY,TAMARA           Date Released : APR 18, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

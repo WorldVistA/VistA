@@ -1,0 +1,305 @@
+
+=============================================================================
+Run Date: AUG 31, 2011                     Designation: IB*2*431
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #418                      Status: Released
+                  Compliance Date: SEP 30, 2011
+=============================================================================
+
+Associated patches: (v)IB*2*400    <<= must be installed BEFORE `IB*2*431'
+                    (v)IB*2*407    <<= must be installed BEFORE `IB*2*431'
+                    (v)IB*2*417    <<= must be installed BEFORE `IB*2*431'
+
+Subject: IB - 5010 ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Chief Business Office (CBO) requested enhancements to the Veterans 
+ Health Administration (VHA)'s Veterans Health Integrated Systems 
+ Technology Architecture (VistA) Third Party Electronic Data Interchange 
+ (EDI) Lockbox module ePayments Enhancement project. These enhancements
+ will increase timely and accurate processing of payments in compliance 
+ with Healthcare Insurance Portability and Accountability Act (HIPAA) and 
+ VHA fiscal accounting policies. 
+  
+ Currently to perform the Accounts Receivable (AR) functions, Veterans 
+ Administration Medical Center (VAMC) staff is performing manual 
+ workarounds to address limitations of the existing software tools. 
+ Addressing ePayments software issues will enable compliance with HIPAA 
+ security and administrative regulations as well as VHA Fiscal Accounting 
+ policy. 
+  
+ The project has two patches (PRCA*4.5*269 and IB*2*431) which are being
+ released in the Kernel Installation and Distribution System (KIDS) multi
+ build distribution EPAYMENTS_5010.KID.   
+  
+    APPLICATION/VERSION                               PATCH
+    --------------------------------------------------------------
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5                 PRCA*4.5*269
+    INTEGRATED BILLING (IB) V. 2.0                    IB*2*431
+  
+  
+ Changes made to the INTEGRATED BILLING (IB) application are described
+ below. See PRCA*2*269 for changes made to ACCOUNTS RECEIVABLE application
+ and installation instructions.
+  
+ IB Package changes
+ ------------------
+ Modifications are made to allow VistA to receive, process and display 
+ ERA/EEOB and MRA EOB data from FSC in HIPAA 5010 compatible format.
+  
+ Backward compatibility is supported to allow VistA to also receive
+ messages in the existing HIPAA 4010 format.
+  
+ The data content of EEOB messages is modified to meet HIPAA 5010 standard.
+  
+ Existing EOB Trace #, ICN and Contact Number fields are extended in length
+ and new fields are added for:
+  
+         Claim Received Date
+         Coverage Expiration Date
+         Corrected Priority Payer Name and ID
+         Other Subscriber Name
+         Adjustment/Payer Policy Reference
+  
+ The expanded fields in the 835 messages are also stored in VistA and this
+ requires that the database is reorganized. The Crossed Over Name field is
+ unchanged but is moved to new locations in the VistA database to make
+ space for the extended fields:
+  
+ This data reorganization is performed as part of the post install routine
+ for this patch.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+   Request Name: ePayments FY09
+     Request ID: 20070913
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Components Sent With Patch
+ --------------------------
+  
+ Data Dictionary Field Definitions:
+  
+  Field Name (Number)                  File Name (Number)
+  -------------------                  ------------------
+  TRACE NUMBER (#.07)                  EXPLANATION OF BENEFITS (#361.1)
+  CROSSED OVER NAME (#.08)             EXPLANATION OF BENEFITS (#361.1)
+  ICN (#.14)                           EXPLANATION OF BENEFITS (#361.1)  
+  CLAIM RECEIVED DATE (#1.12)          EXPLANATION OF BENEFITS (#361.1)  
+  COVERAGE EXPIRATION DATE (#1.13)     EXPLANATION OF BENEFITS (#361.1)
+  CORRECTED PRIORITY PAYER NAM (#1.14) EXPLANATION OF BENEFITS (#361.1)
+  CORRECTED PRIORITY PAYER TYP(#1.15)  EXPLANATION OF BENEFITS (#361.1)
+  CORRECTED PRIORITY PAYER ID (#1.16)  EXPLANATION OF BENEFITS (#361.1)
+  CONTACT NUMBER 1 (#25.02)            EXPLANATION OF BENEFITS (#361.1)
+  CONTACT NUMBER 2 (#25.04)            EXPLANATION OF BENEFITS (#361.1)
+  CONTACT NUMBER 3 (#25.06)            EXPLANATION OF BENEFITS (#361.1)
+  OTHER SUBSCRIBER NAME (#1.17)        EXPLANATION OF BENEFITS (#361.1)
+  PAYER POLICY REFERENCE (#.01)        EXPLANATION OF BENEFITS (#361.11512)
+  
+  
+ Test Sites:
+ -----------
+ Central Plains
+ New Jersey HCS
+ VISN 2
+ Walla Walla
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is a post-install routine associated with this patch named 
+ IBP431. The purpose of the post install routine is to move data 
+ in the EXPLANATION OF BENEFITS file (361.1) to new locations within
+ the file specified in the released data dictionary changes. This 
+ process runs in foreground and will take several minutes to run on
+ larger sites.
+  
+ On completion a bulletin is sent to the installer with the number of
+ entries moved.
+  
+ The post-install routine is not deleted.
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ THIS PATCH MUST BE LOADED AFTER NORMAL WORKING HOURS. Extensive 
+ changes are made to Accounts Receivable so it should not be in use 
+ during the install. 
+  
+ The install should take approximately 10 minutes.
+  
+ It is important to make sure that all Accounts Receivable users are logged
+ off the system BEFORE INSTALLATION of this patch. You must also disable the 
+ following menu options BEFORE INSTALLATION of this patch:
+  
+    Clerk's AR Menu                     [PRCA CLERK MENU]
+    Supervisor's AR Menu                [PRCAF SUPERVISOR MENU]
+    EDI Lockbox                         [RCDPE EDI LOCKBOX MENU]
+    MRA Management                      [IBCE MRA MANAGEMENT]
+    Return Message Filing Exceptions    [IBCE RETURN MSG PROCESSING] 
+  
+ Be sure that the following background task is not running when
+ you install this patch:
+    
+   Accounts Receivable Nightly Process Background Job
+       [PRCA NIGHTLY PROCESS]
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file EPAYMENTS_5010.KID, which contains the following
+     two patch installs:
+   
+         PRCA*4.5*269
+         IB*2.0*431
+   
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+   
+                     download.vista.med.va.gov
+   
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+   
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+   
+      The EPAYMENTS_5010.KID host file is located in the anonymous.software
+      directory.  Use ASCII Mode when downloading the file.
+   
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+   
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+   
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+   
+     Select Installation Option:
+   
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+   
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file EPAYMENTS_5010.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]EPAYMENTS_5010.KID).
+   
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+   
+     The following will display:
+   
+       Loading Distribution...
+   
+         PRCA IB BUNDLE 1.0
+         PRCA*4.5*269
+         IB*2.0*431
+       Use INSTALL NAME: PRCA IB BUNDLE 1.0 to install this
+       Distribution.
+   
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options:
+  
+     (when prompted for the INSTALL NAME, enter PRCA IB BUNDLE 1.0)
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+   
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of the KIDS patches.
+     
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", 
+         enter PRCA IB BUNDLE 1.0
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         YES//', respond NO.
+     d.  When prompted to DISABLE Scheduled Options, Menu Options, and
+         Protocols YES//', respond NO.
+  
+ 6.  Post-Installation Instructions
+     ----------------------------------------
+     Enable the options disabled at the beginning of the INSTALLATION
+     INSTRUCTIONS. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 106
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCE835
+    Before: B38860252   After: B40332409  **137,135,155,377,431**
+Routine Name: IBCE835A
+    Before:  B6339242   After:  B9804553  **135,431**
+Routine Name: IBCECSA6
+    Before: B88419993   After:B133569108  **137,135,155,417,431**
+Routine Name: IBCEMRAA
+    Before: B59796110   After: B59972826  **155,323,349,400,431**
+Routine Name: IBCEMRAB
+    Before: B48715323   After: B49859211  **155,323,349,400,431**
+Routine Name: IBCEOB
+    Before: B58398383   After: B81821331  **137,135,265,155,377,407,431**
+Routine Name: IBCEOB0
+    Before: B60096537   After: B83008311  **135,280,155,431**
+Routine Name: IBCEOB00
+    Before: B75423000   After: B76540225  **155,349,377,431**
+Routine Name: IBCEOB1
+    Before: B69169596   After: B69809131  **137,135,155,296,356,349,431**
+Routine Name: IBJTTC
+    Before: B21337725   After: B51819511  **39,377,431**
+Routine Name: IBP431
+    Before:       n/a   After:  B8517081  **431**
+ 
+Routine list of preceding patches: 400, 407, 417
+
+=============================================================================
+User Information:
+Entered By  : ANDERSON,DOUGLAS W            Date Entered  : MAY 17, 2010
+Completed By: ROBBINS,BRADLEY               Date Completed: AUG 03, 2011
+Released By : BATIE,NADINE                  Date Released : AUG 31, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

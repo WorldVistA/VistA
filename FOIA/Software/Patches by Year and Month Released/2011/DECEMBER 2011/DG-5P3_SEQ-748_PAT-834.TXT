@@ -1,0 +1,366 @@
+$TXT Created by KOPECKY,STEVE at DEVEVC.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 09/14/11 at 10:06
+=============================================================================
+Run Date: DEC 09, 2011                     Designation: DG*5.3*834
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #748                    Status: Released
+                  Compliance Date: JAN 09, 2012
+=============================================================================
+
+Associated patches: (v)DG*5.3*799  <<= must be installed BEFORE `DG*5.3*834'
+                    (v)DG*5.3*805  <<= must be installed BEFORE `DG*5.3*834'
+
+Subject: ADJUST DEP EFF DT/SPONSOR DOB; SITE OWNING MT CHK
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes two issues.  First, it introduces an additional check on
+ the Dependent's Effective Date when entering a new Dependent using the
+ Spouse/Dependent Add ("DA") protocol on the Family Demographic Data,
+ Screen <8> in the Load/Edit Patient Data (DG LOAD PATIENT DATA) option on
+ the Registration Menu.  This check will prevent the Effective Date from
+ being prior to the Veteran's Date of Birth.
+  
+ Second, this patch will adjust a check introduced by DG*5.3*799 which was
+ to prevent sites who are registering a patient from receiving the prompt
+ to edit/complete a Means Test (through the Registration option) that was
+ entered (owned) by another facility.  This check inadvertently prevented a
+ division (such as a CBOC) and its parent site from being able to edit or
+ complete each other's Means Tests.  This patch will adjust the check to
+ account for divisions of the parent site, allowing more appropriate
+ display of the Means Test prompt through the Registration options.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ None
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ None
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ None
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ None
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ None
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ None
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ None
+  
+ Additional Information:
+ None
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ None
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ None
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+ 1. HD0000000426181 - Dependent Effective Date allows a date prior to the 
+ Veteran's Date of Birth when adding a new Dependent in VistA. 
+  
+ Problem:
+ -------
+ 1.  VistA currently allows the user to enter a Dependent's Effective Date 
+ prior to the Veteran's Date of Birth when adding a Dependent.  It 
+ prevents the user from editing the Dependent's Effective Date to prior to 
+ the Veteran's Date of Birth using the Edit Effective Date ("EE") protocol 
+ under the Expand Dependent ("ED").  This is inconsistent logic processing.
+  
+ 2.  If a Dependent's Effective Date prior to the Veteran's Date of Birth 
+ is transmitted on the ORU-Z07 message, ESR processes the message and files
+ the date.  If a user tries to edit the Dependent's information in ESR, an
+ error message is received stating that: "The Dependent Effective Date must
+ fall on or after the Veteran's Date of Birth."
+  
+ Resolution:
+ ----------
+ Logic is added to the Spouse/Dependent Add protocol that checks the 
+ entered Effective Date for the Dependent.  If the Effective Date is prior 
+ to the Veteran's Date of Birth, a warning message is displayed and the 
+ Dependent is not added.
+  
+ 2.  HD0000000453397 - Registration options are not prompting user to ask 
+ if they want to complete Means Test at the end.
+     HD0000000433027 - Users not being prompted to edit 'REQUIRED' means 
+ tests in some situations where it would be appropriate.
+  
+ Problem:
+ --------  
+ 1. Patch DG*5.3*799 released a modification to the Registration options 
+ to prevent a site from editing or completing a Means Test which they do 
+ not own.  After release, an additional set of circumstances were uncovered
+ where if a CBOC (or division) is using the Registration options and the
+ Means Test is owned by the parent site, the CBOC is not being presented
+ the Means Test editing option. 
+  
+  
+ Resolution:
+ -----------  
+ Currently, the search for a match between site owning the MT and the 
+ current site is a direct free text compare.  If the owning site, for 
+ example is '581' (parent site) and the current site is '581GB' (a CBOC of 
+ 581), or if the owning site is the suffixed division and the current site 
+ the parent, the match fails and the 'Means Test co-owner' relationship is 
+ not recognized.  The code has been modified to strip out any division
+ reference beginning with a letter when making the comparisons, so that
+ only facility number to facility number is compared.
+  
+  
+ ClearQuest Issue
+ -------------------
+ Maint_CodeCR10407 - VistA: Dependent Effective Date allows a date prior 
+ to the Veteran's Date of Birth when adding a new dependent
+  
+ Problem:
+ ---------
+ See Remedy Ticket #HD0000000426181
+  
+  
+ Test Sites:
+ ----------
+ Hines VAMC (Large)
+ Tampa VAMC (Large)
+ Puget Sound HCS (Integrated) 
+  
+  
+ Patch Installation:
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ The following options will need to be disabled:
+  
+    Register a Patient       [DG REGISTER PATIENT]
+    Load/Edit Patient Data   [DG LOAD PATIENT DATA]
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     DG*5.3*834:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' Enter "NO".    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  Enter "No".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// Enter "Yes".
+  
+      Enter the following options:
+  
+               Register a Patient       [DG REGISTER PATIENT]
+               Load/Edit Patient Data   [DG LOAD PATIENT DATA]
+     
+  8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ Note:  In the Routine Information section below, where the routines'
+ second line is listed, please disregard the Build number, as it has been
+ generated by the National Patch Module and is irrelevant to VistA sites'
+ installations.  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGMTU
+    Before: B56504667   After: B56759132  **4,33,182,277,290,374,358,420,
+                                           426,411,332,433,456,476,519,
+                                           451,630,783,799,834**
+ Description of Changes:
+  Before
+  =======
+   
+   69 EDT(DFN,DGDT) --
+              ;Display patients current MT information and provide
+   70        ;        the user with the option of proceeding with a required
+   71        ;        MT or editing an existing means test
+   72        ;         Input  -- DFN    Patient IEN
+   73        ;                   DGDT   Date/Time
+   74        ;         Output -- None
+   75        ;
+   76        ; obtain lock used to synchronize local MT/CT options with income te
+              st upload
+   77        N VSITE
+   78        I $$LOCK^DGMTUTL(DFN)
+   79        ;
+   80        D DIS(DFN)
+   81        S DGMTI=+$$LST(DFN,DGDT),VSITE=+$P($$SITE^VASITE(),U,3)
+   82        G EDTQ:'DGMTI!(DGMTI'=+$$LST^DGMTU(DFN))
+   83        I $P($G(^DGMT(408.31,DGMTI,2)),U,5)'=VSITE G EDTQ ; Test doesn't bel
+              ong to site
+   84        S DGMT0=$G(^DGMT(408.31,DGMTI,0)),DGMTDT=+DGMT0,DGMTS=$P(DGMT0,"^",3
+              )
+   
+   
+  After
+  =======
+   
+   69 EDT(DFN,DGDT) --
+              ;Display patients current MT information and provide
+   70        ;        the user with the option of proceeding with a required
+   71        ;        MT or editing an existing means test
+   72        ;         Input  -- DFN    Patient IEN
+   73        ;                   DGDT   Date/Time
+   74        ;         Output -- None
+   75        ;
+   76        ; obtain lock used to synchronize local MT/CT options with income te
+              st upload
+  >77        ; '+' added to VSITE check to allow divisions to edit parent owned t
+              ests
+   78        N VSITE
+   79        I $$LOCK^DGMTUTL(DFN)
+   80        ;
+   81        D DIS(DFN)
+   82        S DGMTI=+$$LST(DFN,DGDT),VSITE=+$P($$SITE^VASITE(),U,3)
+   83        G EDTQ:'DGMTI!(DGMTI'=+$$LST^DGMTU(DFN))
+  >84        I +$P($G(^DGMT(408.31,DGMTI,2)),U,5)'=VSITE G EDTQ ; Test doesn't be
+              long to site
+   85        S DGMT0=$G(^DGMT(408.31,DGMTI,0)),DGMTDT=+DGMT0,DGMTS=$P(DGMT0,"^",3
+              )
+
+Routine Name: DGRPEIS1
+    Before: B29345023   After: B31978163  **10,45,108,624,688,805,834**
+ Description of Changes:
+  Before
+  ======
+   
+   39 DIC    ;* GTS - DG*6.3*688 restructured the IF code and DIC("S") that follo
+              ws
+   40        N DGDEPCNT
+   41        S DGDEPCNT=$$CNTDEPS^DGMTU11(DFN)
+   42        I $P(DGRP0ND,"^",2)']"" DO
+   43        .S DIC="^DG(408.11,"
+   44        .S DIC(0)="AEQMZ"
+   45        .S DIC("A")="RELATIONSHIP: "
+   46        .S DIC("S")="I Y>2,""E""_DGSEX[$P(^(0),""^"",3),$S((DGTYPE=""D"")&(+
+              DGDEPCNT<19):1,(DGTYPE=""D"")&(+DGDEPCNT>18)&(Y>6):1,(DGTYPE=""C"")
+              &(Y<7):1,1:0)"
+   47        I $P(DGRP0ND,"^",2)']"" D ^DIC I '$D(DTOUT),(Y'>0) W *7,"   Required
+              !!" G DIC
+   48        I $D(DTOUT) K DTOUT S DGFL=-2 G NEWPRQ
+   49        I $P(DGRP0ND,"^",2)']"" S $P(DGRP0ND,"^",2)=+Y
+   50        D ACT^DGRPEIS2 I DGFL<0 D  G NEWPRQ
+   51        .W !?3,*7,"Entry incomplete...deleted",!
+   52        .Q:'$G(DA)!($G(DIK)'="^DGPR(408.13,")  ;defined for deps in newip
+   53        .D ^DIK
+   54        S DIC("DR")=".02////"_$P(DGRP0ND,U,2)
+   
+   
+   
+   
+  After
+  =====
+   
+   39 DIC    ;* GTS - DG*6.3*688 restructured the IF code and DIC("S") that follo
+              ws
+   40        N DGDEPCNT
+   41        S DGDEPCNT=$$CNTDEPS^DGMTU11(DFN)
+   42        I $P(DGRP0ND,"^",2)']"" DO
+   43        .S DIC="^DG(408.11,"
+   44        .S DIC(0)="AEQMZ"
+   45        .S DIC("A")="RELATIONSHIP: "
+   46        .S DIC("S")="I Y>2,""E""_DGSEX[$P(^(0),""^"",3),$S((DGTYPE=""D"")&(+
+              DGDEPCNT<19):1,(DGTYPE=""D"")&(+DGDEPCNT>18)&(Y>6):1,(DGTYPE=""C"")
+              &(Y<7):1,1:0)"
+   47        I $P(DGRP0ND,"^",2)']"" D ^DIC I '$D(DTOUT),(Y'>0) W *7,"   Required
+              !!" G DIC
+   48        I $D(DTOUT) K DTOUT S DGFL=-2 G NEWPRQ
+   49        I $P(DGRP0ND,"^",2)']"" S $P(DGRP0ND,"^",2)=+Y
+   50        D ACT^DGRPEIS2 I DGFL<0 D  G NEWPRQ
+   51        .W !?3,*7,"Entry incomplete...deleted",!
+   52        .Q:'$G(DA)!($G(DIK)'="^DGPR(408.13,")  ;defined for deps in newip
+   53        .D ^DIK
+  *54        ; ADDED FOR 834
+  *55        I $G(DFN),$$GET1^DIQ(2,DFN,.03,"I")>DGACT D  G NEWPRQ
+  *56        . W !?3,*7,"Effective date is prior to veteran's DOB (",$$GET1^DIQ(2
+              ,DFN,.03),")...deleted",!
+  *57        . Q:'$G(DA)!($G(DIK)'="^DGPR(408.13,")
+  *58        . D ^DIK
+  *59        . N DIR S DIR(0)="FAO",DIR("A")="Enter RETURN to Continue" D ^DIR K 
+              DIR
+   60        S DIC("DR")=".02////"_$P(DGRP0ND,U,2)
+
+ 
+Routine list of preceding patches: 799, 805
+
+=============================================================================
+User Information:
+Entered By  : KOPECKY,STEPHEN C.            Date Entered  : OCT 29, 2010
+Completed By: RUDINGER,NANCY L.             Date Completed: DEC 01, 2011
+Released By : GROOMS,ANTHONY E              Date Released : DEC 09, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

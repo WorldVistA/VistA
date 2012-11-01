@@ -1,0 +1,300 @@
+$TXT Created by ROCHA,MARCELO at INOCACHE.ISC-BIRM.VA.GOV  (KIDS) on Tuesday, 05/01/12 at 11:31
+=============================================================================
+Run Date: JUN 07, 2012                     Designation: PSS*1*146
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #150                      Status: Released
+                  Compliance Date: JUL 07, 2012
+=============================================================================
+
+Associated patches: (v)PSS*1*125   <<= must be installed BEFORE `PSS*1*146'
+                    (v)PSS*1*149   <<= must be installed BEFORE `PSS*1*146'
+
+Subject: DRUG ENTER/EDIT IV MISMATCH
+
+Category: 
+  - Routine
+  - Input Template
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ This patch corrects a patient safety issue in which editing the IV 
+ ADDITIVES file (#52.6) and/or IV SOLUTIONS file (#52.7) using the Drug
+ Enter/Edit [PSS DRUG ENTER/EDIT] option is problematic. The current
+ functionality needs to be changed to prevent erroneous matching with
+ Dispense Drugs. It is very easy to select the wrong item and incorrectly
+ change the PRINT NAME field (#.01) of the the IV ADDITIVES file (#52.6)
+ and/or IV SOLUTIONS file (#52.7). Also, once an additive or solution is
+ selected, it is unclear as to whether or not the user is still selecting
+ or editing.
+  
+ This process has been enhanced by displaying the previously entered Print
+ Name as the default if only one is entered.
+   Example:
+     +------------------------------------------------------------+
+     |    Select IV ADDITIVES PRINT NAME: ADDITIVE1//             |
+     +------------------------------------------------------------+
+  
+ If more than one Print Name were previously entered, the software will
+ display the list of all linked Additives and/or Solutions to select from
+ so an edit may be made. Example:
+  
+   Example:
+     +------------------------------------------------------------+     
+     | <DRUG NAME> currently linked to the following IV Additives:|
+     |                                                            |
+     |       1. ADDITIVE1                                         |
+     |       2. ADDITIVE2                                         |
+     |                                                            |
+     |    Select 1-2 from list above or type 'NEW' to link        |
+     |    to a new IV Additive:                                   |
+     +------------------------------------------------------------+
+  
+ The new enhancement will also allow the user to enter a new Additive or
+ Solution and link it to the dispense drug. The software will give the user
+ the choice to enter and link the dispense drug to a new Additive or
+ Solution as well as require a confirmation of the selected dispense drug
+ that will be linked to the selected Additive/Solution. 
+  
+   Example (Create new IV Additive and link to drug):
+   +--------------------------------------------------------------------+
+   | <DRUG NAME> currently linked to the following IV Additives:        |
+   |                                                                    |
+   |    1. ADDITIVE1                                                    |
+   |    2. ADDITIVE2                                                    |
+   |                                                                    |
+   |    Select 1-2 from list above or type 'NEW' to link                |
+   |    to a new IV Additive: NEW                                       |
+   |                                                                    |
+   | Select IV ADDITIVES PRINT NAME: TEST                               |
+   |   Are you adding 'TEST' as a new IV ADDITIVES (the 33RD)? No// Yes |
+   | IV ADDITIVES DRUG UNIT: GM  GM                                     |
+   | PRINT NAME: TEST//                                                 |
+   | Select DRUG GENERIC NAME: CEFAMANDOLE 1GM INJ//  AM116             |
+   | ARE YOU SURE YOU WANT TO SELECT CEFAMANDOLE 1GM INJ? No// Y  (Yes) |
+   | ...                                                                |
+   |                                                                    |
+   | <DRUG NAME> currently linked to the following IV Additives:        |
+   |                                                                    |
+   |    1. ADDITIVE1                                                    |
+   |    2. ADDITIVE2                                                    |
+   |    3. TEST                                                         |
+   |                                                                    |
+   |    Select 1-3 from list above or type 'NEW' to link                |
+   |    to a new IV Additive: NEW                                       |
+   +--------------------------------------------------------------------+
+  
+ The new enhancement will also create the new sub-menu Inpatient Drug 
+ Management [PSS INP MGR]. This sub-menu will be located under the 
+ Pharmacy Data Management [PSS MGR] menu and will include the following 
+ options:
+  - ADditives File [PSSJI DRUG]
+  - Dispense Drug Fields [PSSJU DRG]
+  - Dispense Drug/ATC Set Up [PSSJU DRUG/ATC SET UP]
+  - Edit Cost Data [PSSJU DCC]
+  - EDit Drug Cost (IV) [PSSJI EDIT DRUG COST]
+  - MARk/Unmark Dispense Drugs For Unit Dose [PSSJU MARK UD ITEMS]
+  - PRimary Solution File (IV) [PSSJI SOLN]
+  
+  
+ In addition to these enhancements, an unrelated defect that was discovered
+ with the PSSIV ADD Input Template during testing was corrected in this 
+ patch. The error prevented valid input for the ADMINISTRATION TIMES field 
+ (#5) during IV Additive entry. The same issue occurred for the 
+ ADMINISTRATION TIMES field (#5) under the QUICK CODES sub-file (#52.61).
+ associated with the IV Additive. The error was addressed by correctly 
+ validating the ADMINISTRATION TIMES field (#5) using the same validation
+ that is used in the  ADMINISTRATION SCHEDULE file (#51.1).
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ PSS MGR                      MENU               Modified
+ PSS INP MGR                  MENU               New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)     New/Modified/Deleted 
+ -------------      ----      ------------------     --------------------
+ PSSIV ADD          INPUT     IV ADDITIVES (#52.6)   Modified
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A 
+  
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO #1306
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ HD0000000364284 - Need to fix issue of changing IV Additive/Solution with 
+                   Drug Enter/Edit option
+ HD0000000465939 - Adding a new drug changed previous meds
+  
+  
+ Test Sites:
+ -----------
+ DURHAM, NC 
+ OKLAHOMA CITY, OK
+ PUGET SOUND HCS
+ TAMPA, FL 
+ UPSTATE NEW YORK HCS
+   
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.va.gov/vdl/
+  
+ File Description                        File Name             FTP Mode
+ --------------------------------------------------------------------------
+ Pharmacy Data Management User Manual    PSS_1_UM_R0612.PDF    (binary)
+ Pharmacy Data Management User Manual    PSS_1_P146_UM_CP.PDF  (binary)
+ Change Pages
+ Pharmacy Data Management Technical      PSS_1_TM_R0612.PDF   (binary)
+ Manual Security Guide
+  
+     
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+    
+  
+ Installation Instructions
+ -------------------------
+ This patch can be installed with users on the system. Installation will
+ take less than 1 minute. Suggested time to install: non-peak requirement
+ hours.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSS*1.0*146):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSS*1.0*146.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 34
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSJSV
+    Before: B74597072   After: B76380727  **20,38,56,59,110,121,143,149,146**
+Routine Name: PSSVIDRG
+    Before: B28763212   After: B70076783  **2,10,32,38,125,146**
+ 
+Routine list of preceding patches: 125, 149
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : MAR 17, 2009
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: MAY 22, 2012
+Released By : VECE,VIRGINIA                 Date Released : JUN 07, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

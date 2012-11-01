@@ -1,0 +1,1116 @@
+Released SD*5.3*567 SEQ #475
+Extracted from mail message
+**KIDS**:SD*5.3*567^
+
+**INSTALL NAME**
+SD*5.3*567
+"BLD",8439,0)
+SD*5.3*567^SCHEDULING^0^3110624^y
+"BLD",8439,1,0)
+^^6^6^3100726^^
+"BLD",8439,1,1,0)
+Fixes to kill some variables that are not killed after exiting Expand 
+"BLD",8439,1,2,0)
+Entry, correct incorrect appointment status that displays after running 
+"BLD",8439,1,3,0)
+the Purge Scheduling Data option, fix Data Dictionary discrepancy for the 
+"BLD",8439,1,4,0)
+Special Availability Flag field (#3) of the sub-file #44.005 in the 
+"BLD",8439,1,5,0)
+Hospital Location file (#44) and fix undefined error that occasionally 
+"BLD",8439,1,6,0)
+occurs in routine SDM2A when attempting to make an appointment.
+"BLD",8439,4,0)
+^9.64PA^^
+"BLD",8439,6.3)
+7
+"BLD",8439,"ABPKG")
+n
+"BLD",8439,"INID")
+^y
+"BLD",8439,"INIT")
+EN^SD53P567
+"BLD",8439,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8439,"KRN",.4,0)
+.4
+"BLD",8439,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",8439,"KRN",.401,0)
+.401
+"BLD",8439,"KRN",.402,0)
+.402
+"BLD",8439,"KRN",.403,0)
+.403
+"BLD",8439,"KRN",.5,0)
+.5
+"BLD",8439,"KRN",.84,0)
+.84
+"BLD",8439,"KRN",3.6,0)
+3.6
+"BLD",8439,"KRN",3.8,0)
+3.8
+"BLD",8439,"KRN",9.2,0)
+9.2
+"BLD",8439,"KRN",9.8,0)
+9.8
+"BLD",8439,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",8439,"KRN",9.8,"NM",1,0)
+SDAMEP^^0^B7085204
+"BLD",8439,"KRN",9.8,"NM",2,0)
+SDAM1^^0^B33476298
+"BLD",8439,"KRN",9.8,"NM",3,0)
+SDB1^^0^B23427765
+"BLD",8439,"KRN",9.8,"NM",4,0)
+SDM2A^^0^B19430225
+"BLD",8439,"KRN",9.8,"NM","B","SDAM1",2)
+
+"BLD",8439,"KRN",9.8,"NM","B","SDAMEP",1)
+
+"BLD",8439,"KRN",9.8,"NM","B","SDB1",3)
+
+"BLD",8439,"KRN",9.8,"NM","B","SDM2A",4)
+
+"BLD",8439,"KRN",19,0)
+19
+"BLD",8439,"KRN",19.1,0)
+19.1
+"BLD",8439,"KRN",101,0)
+101
+"BLD",8439,"KRN",409.61,0)
+409.61
+"BLD",8439,"KRN",771,0)
+771
+"BLD",8439,"KRN",779.2,0)
+779.2
+"BLD",8439,"KRN",870,0)
+870
+"BLD",8439,"KRN",8989.51,0)
+8989.51
+"BLD",8439,"KRN",8989.52,0)
+8989.52
+"BLD",8439,"KRN",8994,0)
+8994
+"BLD",8439,"KRN","B",.4,.4)
+
+"BLD",8439,"KRN","B",.401,.401)
+
+"BLD",8439,"KRN","B",.402,.402)
+
+"BLD",8439,"KRN","B",.403,.403)
+
+"BLD",8439,"KRN","B",.5,.5)
+
+"BLD",8439,"KRN","B",.84,.84)
+
+"BLD",8439,"KRN","B",3.6,3.6)
+
+"BLD",8439,"KRN","B",3.8,3.8)
+
+"BLD",8439,"KRN","B",9.2,9.2)
+
+"BLD",8439,"KRN","B",9.8,9.8)
+
+"BLD",8439,"KRN","B",19,19)
+
+"BLD",8439,"KRN","B",19.1,19.1)
+
+"BLD",8439,"KRN","B",101,101)
+
+"BLD",8439,"KRN","B",409.61,409.61)
+
+"BLD",8439,"KRN","B",771,771)
+
+"BLD",8439,"KRN","B",779.2,779.2)
+
+"BLD",8439,"KRN","B",870,870)
+
+"BLD",8439,"KRN","B",8989.51,8989.51)
+
+"BLD",8439,"KRN","B",8989.52,8989.52)
+
+"BLD",8439,"KRN","B",8994,8994)
+
+"BLD",8439,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8439,"QUES",0)
+^9.62^^
+"BLD",8439,"REQB",0)
+^9.611^5^4
+"BLD",8439,"REQB",1,0)
+SD*5.3*221^2
+"BLD",8439,"REQB",3,0)
+SD*5.3*466^2
+"BLD",8439,"REQB",4,0)
+SD*5.3*528^2
+"BLD",8439,"REQB",5,0)
+SD*5.3*480^2
+"BLD",8439,"REQB","B","SD*5.3*221",1)
+
+"BLD",8439,"REQB","B","SD*5.3*466",3)
+
+"BLD",8439,"REQB","B","SD*5.3*480",5)
+
+"BLD",8439,"REQB","B","SD*5.3*528",4)
+
+"INIT")
+EN^SD53P567
+"MBREQ")
+0
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,20,0)
+^9.402P^^
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813
+"PKG",16,22,1,"PAH",1,0)
+567^3110624
+"PKG",16,22,1,"PAH",1,1,0)
+^^6^6^3110624
+"PKG",16,22,1,"PAH",1,1,1,0)
+Fixes to kill some variables that are not killed after exiting Expand 
+"PKG",16,22,1,"PAH",1,1,2,0)
+Entry, correct incorrect appointment status that displays after running 
+"PKG",16,22,1,"PAH",1,1,3,0)
+the Purge Scheduling Data option, fix Data Dictionary discrepancy for the 
+"PKG",16,22,1,"PAH",1,1,4,0)
+Special Availability Flag field (#3) of the sub-file #44.005 in the 
+"PKG",16,22,1,"PAH",1,1,5,0)
+Hospital Location file (#44) and fix undefined error that occasionally 
+"PKG",16,22,1,"PAH",1,1,6,0)
+occurs in routine SDM2A when attempting to make an appointment.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+5
+"RTN","SD53P567")
+0^^B1255136^n/a
+"RTN","SD53P567",1,0)
+SD53P567 ;ALB/RLC - POST-INIT TO CLEAN UP SPECIAL AVAIL FLAG FIELD; 7/27/07
+"RTN","SD53P567",2,0)
+ ;;5.3;SCHEDULING;**567**;21-MAR-94;Build 7
+"RTN","SD53P567",3,0)
+ ;
+"RTN","SD53P567",4,0)
+ ; THIS POST-INIT ROUTINE WILL READ THROUGH THE HOSPITAL LOCATION FILE
+"RTN","SD53P567",5,0)
+ ; #44 AND FOR EVERY CLINIC SET UP WITH A SPECIAL PATTERN IT WILL
+"RTN","SD53P567",6,0)
+ ; UPDATE THE SPECIAL AVAILABILITY FLAG TO THE APPROPRIATE DATE VERSUS
+"RTN","SD53P567",7,0)
+ ; THE RECORD INTERNAL ENTRY NUMBER AS THE DATA DICTIONARY INDICATES
+"RTN","SD53P567",8,0)
+ ; THIS IS SUPPOSE TO BE A DATE FIELD.
+"RTN","SD53P567",9,0)
+ ;
+"RTN","SD53P567",10,0)
+ Q  ; must call at entry point
+"RTN","SD53P567",11,0)
+ ;
+"RTN","SD53P567",12,0)
+EN ; entry point
+"RTN","SD53P567",13,0)
+ S SCIEN=0
+"RTN","SD53P567",14,0)
+ F  S SCIEN=$O(^SC(SCIEN)) Q:'SCIEN  D
+"RTN","SD53P567",15,0)
+ .S SCDATE=3091000  ;start file read from start of FY2009, Oct 1, 2010
+"RTN","SD53P567",16,0)
+ .F  S SCDATE=$O(^SC(SCIEN,"ST",SCDATE)) Q:'SCDATE  D
+"RTN","SD53P567",17,0)
+ ..I $D(^SC(SCIEN,"ST",SCDATE,9)) I '$D(^(0)) D DELETE
+"RTN","SD53P567",18,0)
+ ..Q:'$D(^SC(SCIEN,"ST",SCDATE,9))
+"RTN","SD53P567",19,0)
+ ..S DA=SCDATE,DA(1)=SCIEN
+"RTN","SD53P567",20,0)
+ ..S DIE="^SC("_DA(1)_",""ST"","
+"RTN","SD53P567",21,0)
+ ..S DR="3///^S X=SCDATE" D ^DIE
+"RTN","SD53P567",22,0)
+ ..K DA,DR,DIE
+"RTN","SD53P567",23,0)
+ K SCIEN,SCDATE,X,DA,DR,DIE,X1,X2
+"RTN","SD53P567",24,0)
+ Q
+"RTN","SD53P567",25,0)
+ ;
+"RTN","SD53P567",26,0)
+DELETE ; kill bad record
+"RTN","SD53P567",27,0)
+ S DA=SCDATE,DA(1)=SCIEN
+"RTN","SD53P567",28,0)
+ S DIK="^SC("_DA(1)_",""ST"","
+"RTN","SD53P567",29,0)
+ D ^DIK
+"RTN","SD53P567",30,0)
+ K DA,DIK
+"RTN","SD53P567",31,0)
+ Q
+"RTN","SD53P567",32,0)
+ ;
+"RTN","SDAM1")
+0^2^B33476298^B29444378
+"RTN","SDAM1",1,0)
+SDAM1 ;MJK/ALB - Appt Mgt (Patient);Apr 23 1999
+"RTN","SDAM1",2,0)
+ ;;5.3;Scheduling;**149,155,193,189,445,478,466,567**;Aug 13, 1993;Build 7
+"RTN","SDAM1",3,0)
+ ;
+"RTN","SDAM1",4,0)
+INIT ; -- get init pat appt data
+"RTN","SDAM1",5,0)
+ ;  input:          DFN := ifn of pat
+"RTN","SDAM1",6,0)
+ ; output:  ^TMP("SDAM" := appt array
+"RTN","SDAM1",7,0)
+ S X=$P($G(^DG(43,1,"SCLR")),U,12),SDPRD=$S(X:X,1:2)
+"RTN","SDAM1",8,0)
+ S X1=DT,X2=-SDPRD D C^%DTC S SDBEG=X
+"RTN","SDAM1",9,0)
+ S X1=DT,X2=999 D C^%DTC S SDEND=X
+"RTN","SDAM1",10,0)
+ D CHGCAP^VALM("NAME","Clinic")
+"RTN","SDAM1",11,0)
+ S X="ALL" D LIST^SDAM
+"RTN","SDAM1",12,0)
+ Q
+"RTN","SDAM1",13,0)
+ ;
+"RTN","SDAM1",14,0)
+BLD ; -- scan apts
+"RTN","SDAM1",15,0)
+ N SDAMDD,SDNAME,SDMAX,SDLARGE,DFN,SDCL,BL,XC,XW,AC,AW,TC,TW,NC,NW,SC,SW,SDT,CC,CW,CN,CNPAT,CNSTLNK,CSTAT ; done for speed see INIT
+"RTN","SDAM1",16,0)
+ D INIT^SDAM10
+"RTN","SDAM1",17,0)
+ S DFN=SDFN
+"RTN","SDAM1",18,0)
+ F SDT=SDBEG:0 S SDT=$O(^DPT(DFN,"S",SDT)) Q:'SDT!($P(SDT,".",1)>SDEND)  I $D(^(SDT,0)) S SDATA=^(0),SDCL=+SDATA,SDNAME=$P($G(^SC(SDCL,0)),U) D  K:CNSTLNK="" CNSTLNK D BLD1  ;SD/478
+"RTN","SDAM1",19,0)
+ .S CNSTLNK="",CN=0 F  S CN=$O(^SC(SDCL,"S",SDT,1,CN)) Q:'+CN  S CNPAT=$P($G(^SC(SDCL,"S",SDT,1,CN,0)),U) I CNPAT=DFN S CNSTLNK=$P($G(^SC(SDCL,"S",SDT,1,CN,"CONS")),U),CSTAT="" S:CNSTLNK'="" CSTAT=$P($G(^GMR(123,CNSTLNK,0)),U,12) Q  ;SD/478
+"RTN","SDAM1",20,0)
+ D NUL^SDAM10,LARGE^SDAM10:$D(SDLARGE)
+"RTN","SDAM1",21,0)
+ S $P(^TMP("SDAM",$J,0),U,4)=VALMCNT
+"RTN","SDAM1",22,0)
+ Q
+"RTN","SDAM1",23,0)
+ ;
+"RTN","SDAM1",24,0)
+BLD1 ; -- build array
+"RTN","SDAM1",25,0)
+ N SDX,X,Y,Y1,SDSTAT,SDELIG
+"RTN","SDAM1",26,0)
+ S SDSTAT=$$STATUS(DFN,SDT,SDCL,SDATA,$S($D(SDDA):SDDA,1:""))
+"RTN","SDAM1",27,0)
+ G BLD1Q:'$$CHK(DFN,SDT,SDCL,SDATA,.SDAMLIST,SDSTAT)
+"RTN","SDAM1",28,0)
+ ;; Changes for GAF enhancement
+"RTN","SDAM1",29,0)
+ S SDGAFREQ=" "
+"RTN","SDAM1",30,0)
+ S SDELIG=$$ELSTAT^SDUTL2(DFN)
+"RTN","SDAM1",31,0)
+ I $$MHCLIN^SDUTL2(SDCL),'($$COLLAT^SDUTL2(SDELIG)!$P(SDATA,U,11)) D
+"RTN","SDAM1",32,0)
+ .S SDGAF=$$NEWGAF^SDUTL2(DFN),SDGAFST=$P(SDGAF,"^")
+"RTN","SDAM1",33,0)
+ .S:SDGAFST SDGAFREQ="*"
+"RTN","SDAM1",34,0)
+ S SDACNT=SDACNT+1,X="",$P(X," ",VALMWD+1)=""
+"RTN","SDAM1",35,0)
+ W:(SDACNT#10)=0 "."
+"RTN","SDAM1",36,0)
+ I SDACNT=SDMAX,$P(SDT,".")'=SDEND S SDEND=$P(SDT,"."),SDLARGE=""
+"RTN","SDAM1",37,0)
+ S X=SDGAFREQ_$E(X,2,AC-1)_$E(SDACNT_BL,1,AW)_$E(X,AC+AW+1,VALMWD)
+"RTN","SDAM1",38,0)
+ S X=$E(X,1,NC-1)_$E($$LOWER(SDNAME)_BL,1,NW)_$E(X,NC+NW+1,VALMWD)
+"RTN","SDAM1",39,0)
+ S X=$E(X,1,XC-1)_$E($$FMTE^XLFDT(SDT,"5Z")_BL,1,XW)_$E(X,XC+XW+1,VALMWD)  ;to make date field work for SD*5.3*189 - uses FM List Template
+"RTN","SDAM1",40,0)
+ S:'$D(CSTAT) CSTAT="" ;SD/478
+"RTN","SDAM1",41,0)
+ S X=$E(X,1,CC-1)_$E($S((CSTAT=1!(CSTAT=2)!(CSTAT=13)):" ",$G(CNSTLNK):"Consult",1:"        ")_BL,1,CW)_$E(X,CC+CW+1,VALMWD) K CNSTLNK,CSTAT ;SD/478
+"RTN","SDAM1",42,0)
+ S Y=$P(SDSTAT,";",3)
+"RTN","SDAM1",43,0)
+ I Y'["FUTURE" S X=$E(X,1,SC-1)_$E($$LOWER(Y)_BL,1,SW)_$E(X,SC+SW+1,VALMWD)
+"RTN","SDAM1",44,0)
+ I Y["FUTURE" S X=$E(X,1,SC-1)_$E($$LOWER(Y)_$$ANC_BL,1,SW+TW+1)
+"RTN","SDAM1",45,0)
+ S Y1=$S($P(SDSTAT,";",5):$P(SDSTAT,";",5),1:$P(SDSTAT,";",4)),Y1=$S($P(Y1,".")=DT:$$TIME($P(Y1,".",2)),1:"")
+"RTN","SDAM1",46,0)
+ S:Y1]"" X=$E(X,1,TC-1)_$E(Y1_BL,1,TW)_$E(X,TC+TW+1,VALMWD)
+"RTN","SDAM1",47,0)
+ D SET(X)
+"RTN","SDAM1",48,0)
+ I $D(SDAMBOLD(DFN,SDT,SDCL)) D FLDCTRL^VALM10(VALMCNT,"STAT",IOINHI,IOINORM),FLDCTRL^VALM10(VALMCNT,"TIME",IOINHI,IOINORM)
+"RTN","SDAM1",49,0)
+ S ^TMP("SDAMIDX",$J,SDACNT)=VALMCNT_U_DFN_U_SDT_U_SDCL_U_$S($D(SDDA):SDDA,1:"")
+"RTN","SDAM1",50,0)
+BLD1Q Q
+"RTN","SDAM1",51,0)
+ ;
+"RTN","SDAM1",52,0)
+ANC() ; -- set ancillary info
+"RTN","SDAM1",53,0)
+ N I,Y,C
+"RTN","SDAM1",54,0)
+ S Y="",C=0
+"RTN","SDAM1",55,0)
+ F I=3:1:5 I $P(SDATA,U,I)]"" S Y=Y_" "_$P("^^Lab^XRay^EKG",U,I)_"@"_$$TIME($P($P(SDATA,U,I),".",2)),C=C+1 Q:C=2
+"RTN","SDAM1",56,0)
+ I Y]"" S Y="/"_$E(Y,2,99)
+"RTN","SDAM1",57,0)
+ Q Y
+"RTN","SDAM1",58,0)
+ ;  
+"RTN","SDAM1",59,0)
+SET(X) ;
+"RTN","SDAM1",60,0)
+ S VALMCNT=VALMCNT+1,^TMP("SDAM",$J,VALMCNT,0)=X
+"RTN","SDAM1",61,0)
+ S:SDACNT ^TMP("SDAM",$J,"IDX",VALMCNT,SDACNT)=""
+"RTN","SDAM1",62,0)
+ Q
+"RTN","SDAM1",63,0)
+ ;
+"RTN","SDAM1",64,0)
+CHK(DFN,SDT,SDCL,SDATA,SDAMLIST,SDSTAT,SDDA) ; -- does appt meet criteria
+"RTN","SDAM1",65,0)
+ ;   input:        DFN := ifn of pat.
+"RTN","SDAM1",66,0)
+ ;                 SDT := appt d/t
+"RTN","SDAM1",67,0)
+ ;                SDCL := ifn of clinic
+"RTN","SDAM1",68,0)
+ ;               SDATA := 0th node of pat appt entry
+"RTN","SDAM1",69,0)
+ ;            SDAMLIST := list definition
+"RTN","SDAM1",70,0)
+ ;              SDSTAT := appt status data from $$STATUS call
+"RTN","SDAM1",71,0)
+ ;                SDDA := ifn for ^SC(clinic,"S",date,1,ifn) {optional}
+"RTN","SDAM1",72,0)
+ ;  output: [returned] := meets criteria for list [0 - no | 1 - yes ]
+"RTN","SDAM1",73,0)
+ ;
+"RTN","SDAM1",74,0)
+ S Y=0
+"RTN","SDAM1",75,0)
+ I $D(SDAMLIST(+SDSTAT)) S Y=1 G CHKQ
+"RTN","SDAM1",76,0)
+ I $P(SDAMLIST,U)="ALL" S Y=1
+"RTN","SDAM1",77,0)
+ I $P(SDAMLIST,U)="CHECKED IN" I $P(SDSTAT,";",3)="ACT REQ/CHECKED IN" S Y=1  ; - SD*5.3*445
+"RTN","SDAM1",78,0)
+CHKQ I Y,$D(SDAMLIST("SCR")) X SDAMLIST("SCR") S Y=$T
+"RTN","SDAM1",79,0)
+ Q Y
+"RTN","SDAM1",80,0)
+ ;
+"RTN","SDAM1",81,0)
+STATUS(DFN,SDT,SDCL,SDATA,SDDA) ; -- return appt status
+"RTN","SDAM1",82,0)
+ ;   input:        DFN := ifn of pat.
+"RTN","SDAM1",83,0)
+ ;                 SDT := appt d/t
+"RTN","SDAM1",84,0)
+ ;                SDCL := ifn of clinic
+"RTN","SDAM1",85,0)
+ ;               SDATA := 0th node of pat appt entry
+"RTN","SDAM1",86,0)
+ ;                SDDA := ifn for ^SC(clinic,"S",date,1,ifn) {optional}
+"RTN","SDAM1",87,0)
+ ;  output: [returned] := appt status ifn ^ status name ^ print status ^
+"RTN","SDAM1",88,0)
+ ;                        check in d/t ^ check out d/t ^ adm mvt ifn
+"RTN","SDAM1",89,0)
+ ;
+"RTN","SDAM1",90,0)
+ ;S = status ; C = ci/co indicator ; Y = 'C' node ; P = print status
+"RTN","SDAM1",91,0)
+ N S,C,Y,P,VADMVT,VAINDT
+"RTN","SDAM1",92,0)
+ ;
+"RTN","SDAM1",93,0)
+ ; -- get data for evaluation
+"RTN","SDAM1",94,0)
+ S:'$G(SDDA) SDDA=+$$FIND^SDAM2(DFN,SDT,SDCL)
+"RTN","SDAM1",95,0)
+ S Y=$G(^SC(SDCL,"S",SDT,1,SDDA,"C"))
+"RTN","SDAM1",96,0)
+ ;
+"RTN","SDAM1",97,0)
+ ; -- set initial status value ; non-count clinic?
+"RTN","SDAM1",98,0)
+ S S=$S($P(SDATA,"^",2)]"":$P($P($P(^DD(2.98,3,0),"^",3),$P(SDATA,"^",2)_":",2),";"),$P($G(^SC(SDCL,0)),U,17)="Y":"NON-COUNT",1:"")
+"RTN","SDAM1",99,0)
+ ;
+"RTN","SDAM1",100,0)
+ ; -- inpatient?
+"RTN","SDAM1",101,0)
+ S VAINDT=SDT D ADM^VADPT2
+"RTN","SDAM1",102,0)
+ I S["INPATIENT",$S('VADMVT:1,'$P(^DG(43,1,0),U,21):0,1:$P($G(^DIC(42,+$P($G(^DGPM(VADMVT,0)),U,6),0)),U,3)="D") S S=""
+"RTN","SDAM1",103,0)
+ ;
+"RTN","SDAM1",104,0)
+ ; -- determine ci/co indicator
+"RTN","SDAM1",105,0)
+ I Y="",SDT<DT,$D(^SCE("ADFN",DFN,SDT)) S POP=0 D CHKENC G:POP STAT1  ;SD*567
+"RTN","SDAM1",106,0)
+ K POP
+"RTN","SDAM1",107,0)
+ S C=$S($P(Y,"^",3):"CHECKED OUT",Y:"CHECKED IN",S]"":"",SDT>(DT+.2359):"FUTURE",1:"NO ACTION TAKEN") S:S="" S=C
+"RTN","SDAM1",108,0)
+ I S="NO ACTION TAKEN",$P(SDT,".")=DT,C'["CHECKED" S C="TODAY"
+"RTN","SDAM1",109,0)
+STAT1 ; -- $$REQ & $$COCMP in SDM1A not used for speed
+"RTN","SDAM1",110,0)
+ K POP
+"RTN","SDAM1",111,0)
+ I S="CHECKED OUT"!(S="CHECKED IN"),SDT'<$P(^DG(43,1,"SCLR"),U,23),'$P($G(^SCE(+$P(SDATA,U,20),0)),U,7) S S="NO ACTION TAKEN"
+"RTN","SDAM1",112,0)
+ ;
+"RTN","SDAM1",113,0)
+ ; -- determine print status
+"RTN","SDAM1",114,0)
+ S P=$S(S=C!(C=""):S,1:"")
+"RTN","SDAM1",115,0)
+ I P="" D
+"RTN","SDAM1",116,0)
+ .I S["INPATIENT",$P($G(^SC(SDCL,0)),U,17)'="Y",$P($G(^SCE(+$P(SDATA,U,20),0)),U,7)="" S P=$P(S," ")_"/ACT REQ" Q
+"RTN","SDAM1",117,0)
+ .I S="NO ACTION TAKEN",C="CHECKED OUT"!(C="CHECKED IN") S P="ACT REQ/"_C Q
+"RTN","SDAM1",118,0)
+ .;next line for testing
+"RTN","SDAM1",119,0)
+ .;I S="CANCELLED BY CLINIC" I $P(Y,U,1)'="" I $P(Y,U,3)="" S P=S Q
+"RTN","SDAM1",120,0)
+ .S P=$S(S="NO ACTION TAKEN":S,1:$P(S," "))_"/"_C
+"RTN","SDAM1",121,0)
+ I S["INPATIENT",C="" D
+"RTN","SDAM1",122,0)
+ .I SDT>(DT+.2359) S P=$P(S," ")_"/FUTURE" Q
+"RTN","SDAM1",123,0)
+ .S P=$P(S," ")_"/NO ACT TAKN"
+"RTN","SDAM1",124,0)
+ ;
+"RTN","SDAM1",125,0)
+STATUSQ Q +$O(^SD(409.63,"AC",S,0))_";"_S_";"_P_";"_$P(Y,"^")_";"_$P(Y,"^",3)_";"_+VADMVT
+"RTN","SDAM1",126,0)
+ ;
+"RTN","SDAM1",127,0)
+CHKENC ;SD*567 grab status from outpatient encounter for purged appts
+"RTN","SDAM1",128,0)
+ N SNODE,SDIEN
+"RTN","SDAM1",129,0)
+ S SDIEN=""
+"RTN","SDAM1",130,0)
+ S SDIEN=$O(^SCE("ADFN",DFN,SDT,SDIEN)) Q:'SDIEN
+"RTN","SDAM1",131,0)
+ S SNODE=$G(^SCE(SDIEN,0))
+"RTN","SDAM1",132,0)
+ Q:SNODE=""
+"RTN","SDAM1",133,0)
+ Q:'$D(^SD(409.63,$P(SNODE,U,12),0))
+"RTN","SDAM1",134,0)
+ S C=$P(^SD(409.63,$P(SNODE,U,12),0),U,1),POP=1
+"RTN","SDAM1",135,0)
+ S:S="" S=C
+"RTN","SDAM1",136,0)
+ Q
+"RTN","SDAM1",137,0)
+ ;
+"RTN","SDAM1",138,0)
+LOWER(X) ; convert to lowercase ; same as LOWER^VALM1 ; here for speed
+"RTN","SDAM1",139,0)
+ N Y,C,I
+"RTN","SDAM1",140,0)
+ S Y=$E(X)_$TR($E(X,2,999),"ABCDEFGHIJKLMNOPQRSTUVWXYZ@","abcdefghijklmnopqrstuvwxyz ")
+"RTN","SDAM1",141,0)
+ F C=" ",",","/" S I=0 F  S I=$F(Y,C,I) Q:'I  S Y=$E(Y,1,I-1)_$TR($E(Y,I),"abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")_$E(Y,I+1,999)
+"RTN","SDAM1",142,0)
+ Q Y
+"RTN","SDAM1",143,0)
+ ;
+"RTN","SDAM1",144,0)
+TIME(X) ; -- format time only :=   hr:min
+"RTN","SDAM1",145,0)
+ Q $E(X_"0000",1,2)_":"_$E(X_"0000",3,4)
+"RTN","SDAMEP")
+0^1^B7085204^B6822994
+"RTN","SDAMEP",1,0)
+SDAMEP ;ALB/CAW - Extended Display ; 16 May 2001  1:46 PM  ; Compiled August 4, 2010 10:18:29
+"RTN","SDAMEP",2,0)
+ ;;5.3;Scheduling;**241,334,480,567**;Aug 13, 1993;Build 7
+"RTN","SDAMEP",3,0)
+ ;
+"RTN","SDAMEP",4,0)
+EN ; Selection of appointment
+"RTN","SDAMEP",5,0)
+ K ^TMP("SDAMEP",$J)
+"RTN","SDAMEP",6,0)
+ S VALMBCK=""
+"RTN","SDAMEP",7,0)
+ D SEL G ENQ:'$D(SDW)!(SDERR)
+"RTN","SDAMEP",8,0)
+ N SDWIDTH,SDPT,SDSC,SDPTI,SDAMEP
+"RTN","SDAMEP",9,0)
+ W ! D WAIT^DICD
+"RTN","SDAMEP",10,0)
+ S DFN=$P(^TMP("SDAMIDX",$J,SDW),U,2)
+"RTN","SDAMEP",11,0)
+ D FULL^VALM1 S DIC=2,DIC(0)="EM",X="`"_DFN  ;,SDAMEP=1
+"RTN","SDAMEP",12,0)
+ D ^DIC I Y<0 S VALMBCK="R" Q
+"RTN","SDAMEP",13,0)
+ D EN^VALM("SDAM APPT PROFILE")
+"RTN","SDAMEP",14,0)
+ S VALMBCK="R"
+"RTN","SDAMEP",15,0)
+ENQ Q
+"RTN","SDAMEP",16,0)
+ ;
+"RTN","SDAMEP",17,0)
+HDR ; Header
+"RTN","SDAMEP",18,0)
+ N VA,VAERR
+"RTN","SDAMEP",19,0)
+ D PID^VADPT
+"RTN","SDAMEP",20,0)
+ S VALMHDR(1)=$E($P("Patient: "_$G(^DPT(DFN,0)),"^",1),1,30)_" ("_VA("BID")_")"
+"RTN","SDAMEP",21,0)
+ S X=$S($D(^DPT(DFN,.1)):"Ward: "_^(.1),1:"Outpatient")
+"RTN","SDAMEP",22,0)
+ S VALMHDR(1)=$$SETSTR^VALM1(X,VALMHDR(1),81-$L(X),$L(X))
+"RTN","SDAMEP",23,0)
+ S X="Clinic: "_$P(^SC(SDCL,0),U)
+"RTN","SDAMEP",24,0)
+ S VALMHDR(2)=$$SETSTR^VALM1(X,"Appointment #: "_SDW,81-$L(X),$L(X))
+"RTN","SDAMEP",25,0)
+ Q
+"RTN","SDAMEP",26,0)
+ ;
+"RTN","SDAMEP",27,0)
+INIT ;
+"RTN","SDAMEP",28,0)
+ N VA,VAERR,SDFSTCOL,SDSECCOL
+"RTN","SDAMEP",29,0)
+ D PID^VADPT
+"RTN","SDAMEP",30,0)
+ S SDT=$P(^TMP("SDAMIDX",$J,SDW),U,3),DFN=$P(^(SDW),U,2),SDCL=$P(^(SDW),U,4),SDDA=$P(^(SDW),U,5),SDLN=0  ;added DFN SD*5.3*480
+"RTN","SDAMEP",31,0)
+ D INIT^SDAMEP1
+"RTN","SDAMEP",32,0)
+ D APDATA^SDAMEP1 ;        Appointment Data
+"RTN","SDAMEP",33,0)
+ D APLOG^SDAMEP3 ;         Appointment Event Log
+"RTN","SDAMEP",34,0)
+ D PDATA^SDAMEP2 ;         Patient Data
+"RTN","SDAMEP",35,0)
+ D APCO^SDAMEP4 ;          Appointment Check Out Data
+"RTN","SDAMEP",36,0)
+ S VALMCNT=SDLN
+"RTN","SDAMEP",37,0)
+ Q
+"RTN","SDAMEP",38,0)
+ ;
+"RTN","SDAMEP",39,0)
+FNL ;
+"RTN","SDAMEP",40,0)
+ K SD,SDOE,SDSC,SDPT,SDLN,VALMCNT,SDEIC,SDI,SDX,SDW,SDEN,SDSTATE,SDERR,SDFLG,SDMT,SDT,DGPMVI,SDDISCH,SDPV,SDPOV,SDST,SDSTA,DIC  ;SD*567 added DIC
+"RTN","SDAMEP",41,0)
+ D CLEAN^VALM10
+"RTN","SDAMEP",42,0)
+ Q
+"RTN","SDAMEP",43,0)
+ ;
+"RTN","SDAMEP",44,0)
+SEL ; -- select processing
+"RTN","SDAMEP",45,0)
+ N BG,LST,Y
+"RTN","SDAMEP",46,0)
+ S BG=+$O(@VALMAR@("IDX",VALMBG,0))
+"RTN","SDAMEP",47,0)
+ S LST=+$O(@VALMAR@("IDX",VALMLST,0))
+"RTN","SDAMEP",48,0)
+ I 'BG W !!,*7,"There are no '",VALM("ENTITY"),"s' to select.",! S DIR(0)="E" D ^DIR K DIR D OUT G SELQ
+"RTN","SDAMEP",49,0)
+ S Y=+$P($P(XQORNOD(0),U,4),"=",2)
+"RTN","SDAMEP",50,0)
+ I 'Y S DIR(0)="N^"_BG_":"_LST,DIR("A")="Select "_VALM("ENTITY")_"(s)" D ^DIR K DIR I $D(DIRUT) D OUT G SELQ
+"RTN","SDAMEP",51,0)
+ ;
+"RTN","SDAMEP",52,0)
+ ; -- check was valid entries
+"RTN","SDAMEP",53,0)
+ S SDERR=0,SDW=Y
+"RTN","SDAMEP",54,0)
+ I SDW<BG!(SDW>LST) D
+"RTN","SDAMEP",55,0)
+ .W !,*7,"Selection '",SDW,"' is not a valid choice."
+"RTN","SDAMEP",56,0)
+ .D OUT,PAUSE^VALM1
+"RTN","SDAMEP",57,0)
+ ;
+"RTN","SDAMEP",58,0)
+SELQ K DIRUT,DTOUT,DUOUT,DIROUT Q
+"RTN","SDAMEP",59,0)
+ ;
+"RTN","SDAMEP",60,0)
+OUT ; 
+"RTN","SDAMEP",61,0)
+ S SDERR=1
+"RTN","SDAMEP",62,0)
+ Q
+"RTN","SDB1")
+0^3^B23427765^B22788131
+"RTN","SDB1",1,0)
+SDB1 ;ALB/GRR - SET UP A CLINIC ; 8/30/00 9:27am
+"RTN","SDB1",2,0)
+ ;;5.3;Scheduling;**20,183,221,567**;Aug 13, 1993;Build 7
+"RTN","SDB1",3,0)
+ ;DH=PATTERN  DO=EXPIRATION DATE  X=START DATE
+"RTN","SDB1",4,0)
+B1 S DR=0,SB=STARTDAY-1/100,STR="{}&%?#@!$* XXWVUTSRQPONMLKJIHGFEDCBA0123456789jklmnopqrstuvwxyz",SDONE=1
+"RTN","SDB1",5,0)
+ N SDX,SDSL,SL,SI,SDSI,SDSOH,STARTDAY,HSI
+"RTN","SDB1",6,0)
+SETX Q:'$D(^SC(DA,"SL"))  S SDSL=^("SL"),SL=+^("SL"),SDX=$P(SDSL,U,3),STARTDAY=$S($L(SDX):SDX,1:8),SDX=$P(SDSL,U,6),HSI=$S('SDX:4,SDX<3:8/SDX,1:2),SI=$S(SDX:SDX,1:4),SDSI=SI S:SI=1 SI=4 S:SI=2 SI=4 S SDSOH=$S($P(SDSL,U,8)']"":0,1:1)
+"RTN","SDB1",7,0)
+X I X'>DO,$G(^SC(DA,"ST",X,1))["**CANCELLED**"!($G(^SC(DA,"ST",X,1))["X") S ^TMP("SDAVAIL",$J,X)=^(1)
+"RTN","SDB1",8,0)
+ Q:(X'<DO)!(X'<(DT+50000))  I $D(^SC(DA,"ST",X,9)) S DR=X,SDSAV=0 G SM
+"RTN","SDB1",9,0)
+ K ^SC(DA,"ST",X) I DR<0,'$O(^(X)) Q
+"RTN","SDB1",10,0)
+ G X2:X+1<DR
+"RTN","SDB1",11,0)
+ S DR=+$O(^SC(DA,"S",X)),SDSAV=0 G X2:DR\1-X
+"RTN","SDB1",12,0)
+SM S SM=$P("SU^MO^TU^WE^TH^FR^SA",U,DOW+1)_" "_$E(X,6,7)_$J("",SI+SI-6)_DH_$J("",64-$L(DH)) S:'SDSAV SDSAV=1,SDPAT=SM
+"RTN","SDB1",13,0)
+I S I=DR#1-SB*100,I=I#1*SI\.6+(I\1*SI)*2,S=$E(SM,I,999),SM=$E(SM,1,I-1)
+"RTN","SDB1",14,0)
+ F Y=0:0 S Y=$O(^SC(DA,"S",DR,1,Y)) Q:Y'>0  I $P(^(Y,0),"^",9)'["C" S SDSL=$P(^(0),U,2)/SL*(SL\(60/SDSI))*HSI-HSI F I=0:HSI:SDSL S ST=$E(S,I+2) S:ST="" ST=" " S S=$E(S,1,I+2-1)_$E(STR,$F(STR,ST)-2)_$E(S,I+3,999) D OB
+"RTN","SDB1",15,0)
+ S SM=SM_S,DR=+$O(^SC(DA,"S",DR)) I DR\1=X G I
+"RTN","SDB1",16,0)
+ I $L(SM)>SM S ^SC(DA,"ST",X,0)=X,^(1)=SM S:'$D(^SC(DA,"ST",0)) ^(0)="^44.005DA^^" I $D(^SC(DA,"ST",X,9)) S ^SC(DA,"OST",X,1)=SDPAT,^(0)=X S:'$D(^SC(DA,"OST",0)) ^(0)="^44.0002DA^^"
+"RTN","SDB1",17,0)
+ F SDCAN=X:0 S SDCAN=$O(^SC(DA,"SDCAN",SDCAN)) Q:(SDCAN\1-(X\1))!'SDCAN  K ^(SDCAN)
+"RTN","SDB1",18,0)
+X2 I X#100<22 S X=X+7
+"RTN","SDB1",19,0)
+ E  S X1=X,X2=7 D C^%DTC
+"RTN","SDB1",20,0)
+ G X
+"RTN","SDB1",21,0)
+ ;
+"RTN","SDB1",22,0)
+DEL1 S (DH,DO,X)="" W !,*7,*7,"DELETE " S SDEL=1
+"RTN","SDB1",23,0)
+D I $D(SDIN),SDIN>D0 S SDRE1=$S(SDRE:SDRE,1:9999999)
+"RTN","SDB1",24,0)
+ W $P("SUN^MON^TUES^WEDNES^THURS^FRI^SATUR",U,DOW+1),"DAYS " S DH=X,OK=0,CTR=0
+"RTN","SDB1",25,0)
+ S SDSOH=$S('$D(^SC(DA,"SL")):0,$P(^("SL"),"^",8)']"":0,1:1)
+"RTN","SDB1",26,0)
+ F X=D0:0 S X=+$O(^SC(DA,"T",X)) Q:X'>0  D DOW^SDM0 I Y=DOW S Y=X,DO=Y W "UNTIL " D DT^DIO2 G R
+"RTN","SDB1",27,0)
+ I X'>0,$D(SDIN),SDIN>D0 S SDRE1=$S(SDRE=0:9999999,1:SDRE) S X=SDIN F I=0:1:6 D DOW^SDM0 S:Y=DOW OK=1 Q:OK  S X1=X,X2=1 D C^%DTC Q:X>SDRE1
+"RTN","SDB1",28,0)
+ I OK S Y=X,DO=D0 W " UNTIL " D DT^DIO2 G R
+"RTN","SDB1",29,0)
+ S DO=9999999 W "INDEFINITELY"
+"RTN","SDB1",30,0)
+R K OK S %="" D YN^DICN I '% W !,"REPLY YES (Y) OR NO (N)" G R
+"RTN","SDB1",31,0)
+EN1 S D=D0 G 1:((%-1)>0),G1^SDB:%<0
+"RTN","SDB1",32,0)
+ S Y="" I '$D(^SC(DA,"T"_DOW,D0,1)) S Y=+$O(^SC(DA,"T"_DOW,D0)) I Y>D0 S X=^(Y,1),POP=0 D CHK1 K:'POP ^SC(DA,"T"_DOW,Y) S ^SC(DA,"T"_DOW,D0,1)=X,^(0)=D0 D TX
+"RTN","SDB1",33,0)
+ I Y<0,'$D(^SC(DA,"T"_DOW,D0)) S ^(D0,1)="",^(0)=D0 D TX
+"RTN","SDB1",34,0)
+ S ^SC(DA,"T"_DOW,DO,1)=DH,^(0)=DO D TX
+"RTN","SDB1",35,0)
+ S X=D0 D B1 S MAX=30,SC=DA,SDSTRTDT=SD G:'CNT G1^SDB D WAIT^DICD,OVR^SDAUT1 W !,"PATTERN FILED!",! Q:'SDZQ  G G1^SDB
+"RTN","SDB1",36,0)
+ ;
+"RTN","SDB1",37,0)
+1 I SDEL S POP=0 D APPCK I POP D DELERR G OVR
+"RTN","SDB1",38,0)
+11 G:$D(^HOLIDAY(D,0))&('SDSOH) OVR S POP=0 D:$D(SDIN) CHK2 G:POP OVR W !,"...FOR " S Y=D D DT^DIO2 S %=2 D YN^DICN I '% W !,"REPLY YES (Y) OR NO (N)" G 11
+"RTN","SDB1",39,0)
+ G G1^SDB:(%<0) I (%-1) G OVR
+"RTN","SDB1",40,0)
+ S (POP,SDREB)=0 D APPCK I POP D APPERR G:(%-1) OVR S SDREB=1
+"RTN","SDB1",41,0)
+ W " ...OK" S X=D,DO=X+1,^SC(DA,"ST",X,9)=D,SDREACT=1 S:'$D(^SC(DA,"ST",0)) ^(0)="^44.005DA^^" D B1   ;SD*567 change set of 9 node to selected date
+"RTN","SDB1",42,0)
+OVR I D#100<22 S D=D+7 S POP=0 D:$D(SDIN) CHK2 G G1^SDB:POP=1,1
+"RTN","SDB1",43,0)
+ S X1=D,X2=7 D C^%DTC S D=X S POP=0 D:$D(SDIN) CHK2 G G1^SDB:POP=1,1
+"RTN","SDB1",44,0)
+ ;
+"RTN","SDB1",45,0)
+APPCK F A=D:0 S A=+$O(^SC(DA,"S",A)) Q:A'>0!(A\1-D)  F SDA1=0:0 S SDA1=+$O(^SC(DA,"S",A,1,SDA1)) Q:SDA1'>0  I $P(^SC(DA,"S",A,1,SDA1,0),"^",9)'["C" S POP=1 Q
+"RTN","SDB1",46,0)
+ Q
+"RTN","SDB1",47,0)
+APPERR W *7,!,"THERE ARE ALREADY APPOINTMENTS PENDING ON THIS DATE",!,"ARE YOU SURE YOU WANT TO CHANGE THE EXISTING AVAILABILITY" S %=2 D YN^DICN
+"RTN","SDB1",48,0)
+ I '% W !,"IF YOU SAY YES, THE EXISTING APPOINTMENTS MAY BECOME OVERBOOKS WHEN THE NEW AVAILABILITY IS APPLIED",!,"ANSWER YES OR NO" G APPERR
+"RTN","SDB1",49,0)
+ Q
+"RTN","SDB1",50,0)
+DELERR S Y=D W !,"... " D DT^DIQ W " HAS PENDING APPTS - DELETE AVAILABILITY NOT ALLOWED" Q
+"RTN","SDB1",51,0)
+CHK1 Q:'$D(SDIN)
+"RTN","SDB1",52,0)
+ I Y=SDIN S POP=1
+"RTN","SDB1",53,0)
+ Q
+"RTN","SDB1",54,0)
+ ;
+"RTN","SDB1",55,0)
+CHK2 I SDIN<D,SDRE,SDRE'>D K SDIN Q
+"RTN","SDB1",56,0)
+ I SDIN<D,SDRE=0 S POP=1 Q
+"RTN","SDB1",57,0)
+ I SDIN<D,SDRE>D S POP=2,D=SDRE,X=D F I=0:1:6 D DOW^SDM0 Q:Y=DOW  S X1=D,X2=1 D C^%DTC S D=X
+"RTN","SDB1",58,0)
+ S Y=SDIN D DTS^SDUTL S Y1=Y,Y=SDRE1 D DTS^SDUTL W:POP=2&('CTR) !!,"    Clinic is inactive from ",Y1," to ",Y,! S:POP=2 CTR=1
+"RTN","SDB1",59,0)
+ Q
+"RTN","SDB1",60,0)
+OB S SDSLOT=$E(STR,$F(STR,ST)-2) I SDSLOT?1P,SDSLOT'?1" " S ^SC(DA,"S",DR,1,Y,"OB")="O" K SDSLOT Q
+"RTN","SDB1",61,0)
+ K ^SC(DA,"S",DR,1,Y,"OB"),SDSLOT Q
+"RTN","SDB1",62,0)
+HLPD W !,"ENTER THE DATE THIS CLINIC BECOMES AVAILABLE TO SEE PATIENTS"
+"RTN","SDB1",63,0)
+ W !,"THE DATE ENTERED WILL BE THE FIRST DATE THAT APPOINTMENTS CAN",!,"BE MADE FOR THIS CLINIC" G G1^SDB
+"RTN","SDB1",64,0)
+TX S:'$D(^SC(DA,"T"_DOW,0)) ^(0)="^44.0"_$S(DOW<4:DOW+6,DOW<6:"0"_DOW+4,1:"001")_"A^^" Q
+"RTN","SDM2A")
+0^4^B19430225^B17573653
+"RTN","SDM2A",1,0)
+SDM2A ;ALB/OG - MAKE APPOINTMENT - overflow routine  ;24 Jun 2008 11:57 AM
+"RTN","SDM2A",2,0)
+ ;;5.3;Scheduling;**446,528,567**;Aug 13 1993;Build 7
+"RTN","SDM2A",3,0)
+WL(SC) ;Wait List Hook/teh patch 263 ;SD/327 passed 'SC'
+"RTN","SDM2A",4,0)
+ N DA,DIE,DR,SBEG,SCSR,SDDIV,SDINST,SDPAR,SDWLDA,SDWLDFN,SDWLSCL
+"RTN","SDM2A",5,0)
+ Q:$G(SC)'>0
+"RTN","SDM2A",6,0)
+ I '$D(^SC(SC)) Q
+"RTN","SDM2A",7,0)
+ S SDINST=""
+"RTN","SDM2A",8,0)
+ ;S SDINST=$$GET1^DIQ(44,SC_",",3,"I")  ; get Inst BEFORE
+"RTN","SDM2A",9,0)
+ S SDDIV=$$GET1^DIQ(44,SC_",",3.5,"I") S:SDDIV'="" SDINST=$$GET1^DIQ(40.8,SDDIV_",",.07,"I")
+"RTN","SDM2A",10,0)
+ I SDINST="" D  Q  ; sd/446
+"RTN","SDM2A",11,0)
+ .N DIR
+"RTN","SDM2A",12,0)
+ .D MESS2^SDWL120(SC)
+"RTN","SDM2A",13,0)
+ .W !,"No Institution/Division is associated with this Clinic."
+"RTN","SDM2A",14,0)
+ .W !,"Unable to create a Wait List Entry. Abandoning request."
+"RTN","SDM2A",15,0)
+ .W !!,"A message is being sent to the administrators mail group"
+"RTN","SDM2A",16,0)
+ .W !,"alerting them to the situation."
+"RTN","SDM2A",17,0)
+ .S DIR(0)="E" D ^DIR
+"RTN","SDM2A",18,0)
+ .Q
+"RTN","SDM2A",19,0)
+ S SDPAR=0
+"RTN","SDM2A",20,0)
+ ;create 409.32 entry
+"RTN","SDM2A",21,0)
+ I $D(^SDWL(409.32,"B",SC)) S SDWLSCL=$O(^SDWL(409.32,"B",SC,""))
+"RTN","SDM2A",22,0)
+ E  D
+"RTN","SDM2A",23,0)
+ .N DA,DIC,X,DIE,DR
+"RTN","SDM2A",24,0)
+ .S DIC(0)="LX",X=SC,DIC="^SDWL(409.32," D FILE^DICN
+"RTN","SDM2A",25,0)
+ .S SDWLSCL=DA
+"RTN","SDM2A",26,0)
+ .S DIE="^SDWL(409.32,"
+"RTN","SDM2A",27,0)
+ .S DR=".02////^S X=SDINST" D ^DIE
+"RTN","SDM2A",28,0)
+ .S DR="1////^S X=DT"
+"RTN","SDM2A",29,0)
+ .S DR=DR_";2////^S X=DUZ"
+"RTN","SDM2A",30,0)
+ .D ^DIE S SDPAR=1 ; flag indicating clinic parameter entry
+"RTN","SDM2A",31,0)
+ .; CREATE 409.3 with 120 flag
+"RTN","SDM2A",32,0)
+ S DIC(0)="LX",(X,SDWLDFN)=DFN,DIC="^SDWL(409.3," D FILE^DICN
+"RTN","SDM2A",33,0)
+ ; File just created so lock should never fail.
+"RTN","SDM2A",34,0)
+ F  L +^SDWL(409.3,DA):5 Q:$T  W !,"Unable to acquire a lock on the Wait List file" Q
+"RTN","SDM2A",35,0)
+ ; Update EWL variables.
+"RTN","SDM2A",36,0)
+ S SDWLDA=DA D EN^SDWLE11 ; get enrollee both SDWLDA and SDWLDFN have to be defined
+"RTN","SDM2A",37,0)
+ S DIE="^SDWL(409.3,"
+"RTN","SDM2A",38,0)
+ S DR="1////^S X=DT"
+"RTN","SDM2A",39,0)
+ S DR=DR_";2////^S X=SDINST"
+"RTN","SDM2A",40,0)
+ S DR=DR_";4////^S X=4"
+"RTN","SDM2A",41,0)
+ S DR=DR_";8////^S X=SDWLSCL"
+"RTN","SDM2A",42,0)
+ S DR=DR_";9////^S X=DUZ"
+"RTN","SDM2A",43,0)
+ S DR=DR_";10////^S X=""A"""
+"RTN","SDM2A",44,0)
+ S DR=DR_";11////^S X=2" ; by patient for this entry to avoid asking for provider
+"RTN","SDM2A",45,0)
+ S DR=DR_";14////^S X="""_$S($P($G(^DPT(SDWLDFN,.3)),U,1)="Y":$P(^DPT(SDWLDFN,.3),U,2),1:"")_""""
+"RTN","SDM2A",46,0)
+ S DR=DR_";15////^S X="_$S($P($G(^DPT(SDWLDFN,.3)),U,1)="Y":1,1:0)
+"RTN","SDM2A",47,0)
+ S DR=DR_";22////^S X=SDDATE"
+"RTN","SDM2A",48,0)
+ S DR=DR_";23////^S X=""O"""
+"RTN","SDM2A",49,0)
+ S DR=DR_";25////^S X="" > 120 days"""
+"RTN","SDM2A",50,0)
+ S DR=DR_";36////^S X=1"
+"RTN","SDM2A",51,0)
+ D ^DIE
+"RTN","SDM2A",52,0)
+ L -^SDWL(409.3,DA)
+"RTN","SDM2A",53,0)
+ S SDWLFLG=0 D MESS^SDWL120(SDWLDFN,SDWLDA,SDPAR)
+"RTN","SDM2A",54,0)
+ Q
+"RTN","SDM2A",55,0)
+ ;
+"RTN","SDM2A",56,0)
+WLCL120(SC,DESDT) ; Is there clinic availability within 120 days of desired date ; sd/446
+"RTN","SDM2A",57,0)
+ N SBEG,SD120
+"RTN","SDM2A",58,0)
+ Q:$$GET1^DIQ(44,SC,2502,"I")="Y" 1  ; Non-count clinic. Allow > 120 days.
+"RTN","SDM2A",59,0)
+ S SD120=0,SBEG=DESDT-1   ;SD*567 added Go next line
+"RTN","SDM2A",60,0)
+ F  S SBEG=$O(^SC(SC,"ST",SBEG)) Q:SBEG=""  G:'$D(^(1)) WL1 I $$HASAVSL(^SC(SC,"ST",SBEG,1)) D  Q
+"RTN","SDM2A",61,0)
+ .N X,DESDTH
+"RTN","SDM2A",62,0)
+ .S X=SBEG D H^%DTC S SBEG=%H
+"RTN","SDM2A",63,0)
+ .S X=DESDT D H^%DTC S DESDTH=%H
+"RTN","SDM2A",64,0)
+ .S SD120=(SBEG-DESDTH>120)
+"RTN","SDM2A",65,0)
+ .Q
+"RTN","SDM2A",66,0)
+ Q 'SD120
+"RTN","SDM2A",67,0)
+ ;
+"RTN","SDM2A",68,0)
+WL1 ; SD*567 check for bad record and delete if applicable
+"RTN","SDM2A",69,0)
+ I '$D(^SC(SC,"ST",SBEG,1)) I $D(^(9)) D DELETE
+"RTN","SDM2A",70,0)
+ Q 'SD120
+"RTN","SDM2A",71,0)
+ ;
+"RTN","SDM2A",72,0)
+DELETE ; SD*567 delete bad record
+"RTN","SDM2A",73,0)
+ S DA=SBEG,DA(1)=SC
+"RTN","SDM2A",74,0)
+ S DIK="^SC("_DA(1)_",""ST"","
+"RTN","SDM2A",75,0)
+ D ^DIK
+"RTN","SDM2A",76,0)
+ K DA,DIK
+"RTN","SDM2A",77,0)
+ Q
+"RTN","SDM2A",78,0)
+ ;
+"RTN","SDM2A",79,0)
+WLCL120A(SDWLAPDT,SDDATE1,SC) ;
+"RTN","SDM2A",80,0)
+ N %DT,DIR,X,X1,X2,Y
+"RTN","SDM2A",81,0)
+ Q:$$GET1^DIQ(44,SC,2502,"I")="Y" 1  ; Non-count clinic. Allow > 120 days.
+"RTN","SDM2A",82,0)
+ S X=SDWLAPDT,%DT="TXF" D ^%DT
+"RTN","SDM2A",83,0)
+ Q:Y=-1 1
+"RTN","SDM2A",84,0)
+ S X1=Y,X2=SDDATE1 D ^%DTC
+"RTN","SDM2A",85,0)
+ I X'>120 Q 1
+"RTN","SDM2A",86,0)
+ S DIR(0)="Y",DIR("B")="YES"
+"RTN","SDM2A",87,0)
+ S DIR("A")="Add to EWL",DIR("A",1)="The date is more than 120 days beyond the Desired Date"
+"RTN","SDM2A",88,0)
+ W ! D ^DIR
+"RTN","SDM2A",89,0)
+ I Y=1 D WL(SC)
+"RTN","SDM2A",90,0)
+ Q 0
+"RTN","SDM2A",91,0)
+ ;
+"RTN","SDM2A",92,0)
+WLCLASK() ; No appointment availability warning. ; sd/446
+"RTN","SDM2A",93,0)
+ N DIR
+"RTN","SDM2A",94,0)
+ S DIR(0)="Y"
+"RTN","SDM2A",95,0)
+ S DIR("A",1)="No appointments are available within 120 days of the Desired Date."
+"RTN","SDM2A",96,0)
+ S DIR("A",2)="Do you want to place this patient on the Electronic Wait List"
+"RTN","SDM2A",97,0)
+ S DIR("A",3)="or change the desired date?"
+"RTN","SDM2A",98,0)
+ S DIR("A",4)=""
+"RTN","SDM2A",99,0)
+ S DIR("A",5)="Enter ""Y"" to place on EWL, ""N"" to go back"
+"RTN","SDM2A",100,0)
+ S DIR("A")="or ""^"" to return to the CLINIC: prompt. "
+"RTN","SDM2A",101,0)
+ W ! D ^DIR
+"RTN","SDM2A",102,0)
+ Q Y
+"RTN","SDM2A",103,0)
+ ;
+"RTN","SDM2A",104,0)
+HASAVSL(SCSR) ; Has available slots ; sd/446
+"RTN","SDM2A",105,0)
+ ; Look at CLINIC PATTERN CURRENT AVAILABILITY string (44.005/1)
+"RTN","SDM2A",106,0)
+ ; If there is 1-9,j-z within the [ ... ], there is availability for that day.
+"RTN","SDM2A",107,0)
+ N DIC,F,SDOK,X,Y
+"RTN","SDM2A",108,0)
+ ; Allow whatever if user has a key to overbook.
+"RTN","SDM2A",109,0)
+ S DIC="^VA(200,"_DUZ_",51,",X="SDOB" D ^DIC Q:Y'=-1 1
+"RTN","SDM2A",110,0)
+ S X="SDMOB" D ^DIC Q:Y'=-1 1
+"RTN","SDM2A",111,0)
+ Q:SCSR'["[" 0  ; No slots.
+"RTN","SDM2A",112,0)
+ S SCSR=$TR($E(SCSR,$F(SCSR,"[")-1,$L(SCSR))," |"),(SDOK,F)=0
+"RTN","SDM2A",113,0)
+ F  S F=$F(SCSR,"[",F) Q:'F  D  Q:SDOK
+"RTN","SDM2A",114,0)
+ .N I,SCSR0,SL
+"RTN","SDM2A",115,0)
+ .S SCSR0=$E(SCSR,F,$F(SCSR,"]",F)-2)
+"RTN","SDM2A",116,0)
+ .F I=1:1:$L(SCSR0) S SL=$E(SCSR0,I) I $A(SL)>105&($A(SL)<123)!SL S SDOK=1 Q  ; If SL=1-9,j-z slots are available
+"RTN","SDM2A",117,0)
+ .Q
+"RTN","SDM2A",118,0)
+ Q SDOK
+"VER")
+8.0^22.0
+"BLD",8439,6)
+^475
+**END**
+**END**

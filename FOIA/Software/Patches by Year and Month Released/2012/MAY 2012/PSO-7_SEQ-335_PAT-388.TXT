@@ -1,0 +1,165 @@
+$TXT Created by NIXON,TONY at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 06/20/11 at 12:59
+=============================================================================
+Run Date: MAY 15, 2012                     Designation: PSO*7*388
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #335                      Status: Released
+                  Compliance Date: JUN 15, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*206   <<= must be installed BEFORE `PSO*7*388'
+                    (v)PSO*7*305   <<= must be installed BEFORE `PSO*7*388'
+                    (v)PSO*7*322   <<= must be installed BEFORE `PSO*7*388'
+                    (v)PSO*7*382   <<= must be installed BEFORE `PSO*7*388'
+
+Subject: MESSEGE MODIFICATION FOR RESTRICTED REFILLS/CORRECT MISSPELLED WORD
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch resolves the following two issues:
+  
+    1) Provide users a more accurate description as to why a refill is not
+       allowed.
+  
+    2) Correct the misspelling of "prescription" in a CPRS pop-up box.
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1) HD0000000420136 - Getting message preventing refills due to "This drug
+                      has been changed, No refills allowed"
+  
+  
+ 2) HD0000000475366 - Misspelled word in CPRS pop-up box
+  
+  
+ Associated NSRs:
+ ================
+ N/A
+    
+    
+ Participating Test Sites:
+ =========================
+ VA Maryland HCS
+ Oklahoma City VA Medical Center
+ Ralph H. Johnson VA Medical Center - Charleston
+   
+  
+  
+ Remedy Overview:
+ ================
+ 1) HD0000000420136 - Getting message preventing refills due to "This drug
+                      has been changed, No refills allowed"
+  
+  
+ Problem:
+ --------
+ Users receive a warning message stating the following: "This drug has been
+ changed no refills allowed."  This message is too broad and needs to provide
+ a more detailed description as to why a refill is being denied.
+  
+ The functionality that generates this message restricts refills based two
+ different criteria. They are the "DEA Special Handling code" and the number
+ of refills allowed based on the "days supply".
+  
+  
+ Resolution:
+ ----------- 
+ The current message will be replaced with two new messages. One based on the
+ "DEA Special Handling code", and the other based on refills allowed per days
+ supply.
+  
+ The following new messages have been approved by the PLE User Group:
+   1 - Current drug DEA/SPECIAL HANDLING code does not allow refills
+   2 - Requested refill exceeds maximum allowable days supply for Rx
+  
+ The following routines will be modified: PSOATRF,PSOATFRC,PSOREF0 and PSOUTLA1
+  
+ 2) HD0000000475366 - Misspelled word in cprs pop-up box
+  
+ Problem:
+ --------
+ When attempting to renew a prescription, in CPRS, users receive a warning
+ message in which the word "prescription" is misspelled.  This occurs when
+ users try to renew a prescription that is NOT renewable.
+                                          
+  
+ Resolution:
+ -----------
+ Modify routine PSORENW to correct the spelling error for the following warning
+ messaged displayed in CPRS: "Prescription is in a Non-Renewable Status."
+  
+ ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  It should take less than 2
+ minutes to install this patch. Users may be on the system while the patch 
+ is installed.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*388)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSO*7.0*388.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOATRF
+    Before: B77200307   After: B79340036  **264,322,388**
+Routine Name: PSOATRFC
+    Before: B44210974   After: B45655839  **305,388**
+Routine Name: PSOREF0
+    Before: B37449897   After: B38701454  **14,152,180,186,204,306,382,388**
+Routine Name: PSORENW
+    Before: B35245784   After: B35245788  **11,27,30,46,71,96,100,130,
+                                           148,206,388**
+Routine Name: PSOUTLA1
+    Before: B59314173   After: B59550372  **35,186,218,259,206,388**
+ 
+Routine list of preceding patches: 206, 305, 322, 382
+
+=============================================================================
+User Information:
+Entered By  : NIXON,ANTOINE                 Date Entered  : APR 25, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: MAY 09, 2012
+Released By : CONNOLLY,BARBARA              Date Released : MAY 15, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

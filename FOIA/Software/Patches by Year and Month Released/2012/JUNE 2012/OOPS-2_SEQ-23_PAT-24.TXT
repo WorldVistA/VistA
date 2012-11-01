@@ -1,0 +1,137 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 05/01/12 at 13:22
+=============================================================================
+Run Date: JUN 22, 2012                     Designation: OOPS*2*24
+Package : OOPS - ASISTS                       Priority: Mandatory
+Version : 2        SEQ #23                      Status: Released
+                  Compliance Date: JUL 23, 2012
+=============================================================================
+
+Associated patches: (v)OOPS*2*23   <<= must be installed BEFORE `OOPS*2*24'
+
+Subject: CLASSIFY INCIDENT REPORT ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses an issue where a user with a 4 digit DUZ (internal
+ entry number for the NEW PERSON (#200) file) causes an error when saving a
+ Classify Incident Outcome in ASISTS (Automated Safety Incident
+ Surveillance and Tracking System).
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ HD0000000620373    User cannot classify Incident Outcome
+   Duplicates:
+   HD0000000617598  Unable to Save Ticket
+   HD0000000625061  When Safety Officer tries to classify 
+                    incident outcome, an error pops up
+   HD0000000625356  Unable to save Incident information, please 
+                    contact your IRM
+   HD0000000622771  Unable to save incident information please 
+                    contact your IRM
+   HD0000000705991  ASISTS: Safety Officer unable to save incident
+                    Information
+   HD0000000706613  Can't input LOST TIME
+   HD0000000707823  Problem Classify Incident Outcome Report
+  
+  
+ Participating Test Sites:
+ =========================
+ Washington VAMC
+ VA New York Harbor HCS
+ Oklahoma City VAMC
+  
+   
+ Remedy Overview:
+ ================
+  
+ HD0000000620373    User cannot classify Incident Outcome
+  
+ Problem: 
+ --------
+ When ASISTS updates the INCIDENT OUTCOME (#2260.095) subfile in the ASISTS
+ ACCIDENT REPORTING (#2260) file it uses a FILEMAN Application Package
+ Interface (API) to complete the update that will look for partial matches
+ on the data. In cases where the user has a four digit DUZ it does not know
+ if the value is a DUZ or the last four digits of the social security
+ number so it quits without completing the file update.
+   
+ Resolution:
+ -----------
+ Modify the filing code to update the INCIDENT CREATED BY (#7) and LAST 
+ EDITED BY (#9) fields in the INCIDENT OUTCOME (#95) sub-file and update 
+ the entries as internal values.
+  
+  
+        ================ INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  You may install 
+ these routines at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter OOPS*2.0*24)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       OOPS*2.0*24.
+ .
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ASISTS;**[Patch List]**;Jun 03, 2002;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OOPSGUIC
+    Before: B65085017   After: B66128626  **8,7,23,24**
+ 
+Routine list of preceding patches: 23
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : APR 30, 2012
+Completed By: LANG,MICKEY                   Date Completed: JUN 18, 2012
+Released By : MORRIS,DELISA                 Date Released : JUN 22, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

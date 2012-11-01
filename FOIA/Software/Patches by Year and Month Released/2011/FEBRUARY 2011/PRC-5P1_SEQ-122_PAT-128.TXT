@@ -1,0 +1,155 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Thursday, 12/23/10 at 07:21
+=============================================================================
+Run Date: FEB 01, 2011                     Designation: PRC*5.1*128
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #122                    Status: Released
+                  Compliance Date: MAR 04, 2011
+=============================================================================
+
+
+Subject: AMENDMENT TO DECREASE LINE ITEM QTY ERR
+
+Category: 
+  - Other
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will address a problem occurring when amendments to an order 
+ involving the order quantity is done. This process does not allow any
+ changes to the corresponding Delivery Schedule.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ Remedy:
+ =======
+ HD0000000236529 Amendment to decrease line item quantity to less than
+                 delivery schedule
+      Duplicate: HD0000000179167 Amendment Delivery Schedule problem
+                 HD0000000189670 Unable to edit Purchase Order line items
+                                 with Delivery Schedules attached
+                 HD0000000202263 Enter/Edit Delivery Schedule for item
+                 HD0000000203357 Can't edit a Delivery Schedule
+                 HD0000000257963 User needs to decrease quantity on
+                                 Delivery Schedule
+  
+   
+ Test Sites:
+ ===========
+ Lexington VA Medical Center
+ VA Puget Sound HCS
+ Oklahoma City VA Medical Center
+  
+  
+ Remedy Overview:
+ ================ 
+ HD0000000236529  Amendment to decrease line item quantity to less than
+                  Delivery Schedule
+  
+ Problem:
+ --------
+ Whenever an amendment to an order involving the delivery schedule is done,
+ if the order quantity is changed the system will not allow any changes to
+ the Delivery Schedule when required.  It scrolls repeated notations to
+ edit Delivery Schedule, but the user is never given edit capabilities.
+  
+  
+ Resolution:
+ -----------
+ Modify template [PRCHLINE] (after DD change to remove the
+ write access block to the Federal Supply Classification field (#8)),
+ in the ITEM SUB-FILE (#443.61) of the AMENDMENTS file (#443.6).
+  
+ And, corrections for uncovered problems when Delivery Schedule could be
+ accessed once repetitive error message was corrected:
+  
+ A. Modify template [PRCHLINE] to allow for valid checking (after a 
+    Delivery Schedule is updated for decreased quantity) when there has
+    been a prior receipt against item.
+  
+ B. Modify template [PRCHLINE] for option [AMENDMENT TO PURCHASE ORDER]
+    option [PRCHLINE] and template [PRCH2138] for option [NEW PURCHASE
+    ORDER] option to allow NEW delivery schedules to be added per the
+    displayed instructions.
+  
+ C. Modify templates [PRCHNREQ] and [PRCHRQITEM] for Delivery Schedule 
+    processing corrections.
+  
+ D. DD change to remove the write access block to the Federal Supply
+    Classification field (#8)), in the ITEM SUB-FILE (#442.01) of the
+    PROCUREMENT & ACCOUNTING TRANSACTIONS file (#442).
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install these routines at any time without interruption to
+ users.  It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*128)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*128.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond YES.  When prompted to select the options
+       you would like to place out of order, enter the following:
+  
+       'PRCHPC PO'          Purchase Orders Menu
+       'PRCH PROCESS PC'    Process Purchase Card Menu
+  
+ **After the patch is installed post-init routine PRCH128P will be 
+   automatically deleted.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;03/31/10;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCH128P
+    Before:       n/a   After:   B296227  **128**
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : NOV 05, 2008
+Completed By: HEFFERNAN,COREY               Date Completed: JAN 20, 2011
+Released By : VASSAR,CAROL                  Date Released : FEB 01, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

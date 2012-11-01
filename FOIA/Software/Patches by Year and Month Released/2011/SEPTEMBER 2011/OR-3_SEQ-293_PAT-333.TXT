@@ -1,0 +1,116 @@
+
+=============================================================================
+Run Date: SEP 08, 2011                     Designation: OR*3*333
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #293                      Status: Released
+                  Compliance Date: OCT 09, 2011
+=============================================================================
+
+Associated patches: (v)OR*3*323    <<= must be installed BEFORE `OR*3*333'
+
+Subject: COMPLEX THEN ORDERS NOT CALCULATING CORRECT START TIME
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ When a complex Unit Dose order is entered in CPRS, and the complex order
+ uses a THEN conjunction, and the Administration time of the first section
+ of the order is before the current time, the Administration time for the
+ subsequent section(s) is incorrect.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ HD0000000282528 - Complex Order using conjunction of THEN skips the first
+                   dose of the second part when the first part has a
+                   duration of 1 day.
+ Duplicates:
+ HD0000000228645 - Complex delayed orders - copy and transfer problems
+ HD0000000236194 - PSPO#848 4 Complex Dates Overlap on StepUp dosing
+ HD0000000391656 - PSPO#1691 6 Known Complex Order Issue
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Lebanon VAMC
+ Milwaukee VAMC
+ San Diego VAMC
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ HD0000000282528 - Complex Order using conjuction of THEN skips the first
+                   dose of the second part when the first part has a
+                   duration of 1 day.
+  
+ Patient Safety Issue:
+ ---------------------
+ PSPO #1136
+  
+ Problem:
+ --------
+ The system currently calculates the start time of each section of a 
+ complex order independently and the calculations are erroneously based
+ on NOW. This is causing the subsequent sections in a complex order to
+ have an incorrect start time.
+  
+  
+ Example:
+    
+ If it is 1000 and the second part of a complex order using the THEN
+ conjunction has Administration times of 0900 and 1700, this order would
+ start on that day at 1700 because 0900 today has already passed. This
+ is incorrect.
+  
+ Resolution:
+ -----------
+ Routine PSJORPOE has been modified so that tag STARTSTP now accepts 
+ another parameter and allows the start date calculation to be based on
+ an initial date. Previously all calculations were based on NOW. After
+ this correction, calculations will be based on the date/time passed in.
+  
+ **NOTE** 
+ This change modifies Integration Agreement #3167 
+  
+  
+ Installation Instructions:
+ ==========================
+ PSJ*5.0*235 is being released in conjunction with ORDER ENTRY/RESULTS 
+ REPORTING patch, OR*3.0*333.  Installing PSJ*5.0*235 will also install
+ OR*3.0*333.
+  
+ PLEASE SEE PATCH PSJ*5.0*235 FOR INSTALLATION INSTRUCTIONS.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCSEND1
+    Before: B65475435   After: B67360308  **4,29,45,61,79,94,116,138,158,
+                                           149,187,215,243,282,323,333**
+ 
+Routine list of preceding patches: 323
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : MAY 17, 2010
+Completed By: WERNER,GARY                   Date Completed: AUG 22, 2011
+Released By : PIERSON,YVONNE E              Date Released : SEP 08, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,234 @@
+$TXT Created by ROWE,KIMBALL at LEXNXT.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 06/26/12 at 14:43
+=============================================================================
+Run Date: AUG 08, 2012                     Designation: LEX*2*83
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #75                      Status: Released
+                  Compliance Date: AUG 15, 2012
+=============================================================================
+
+Associated patches: (v)LEX*2*82    <<= must be installed BEFORE `LEX*2*83'
+
+Subject: Code Set FY12 4th Qtr Update
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+  This patch contains the FY12 4th Quarter Code Set distribution with 19
+  changes effective Jul 01, 2012.  This patch also contains 11 changes from
+  FY12 2nd Qtr (effective Jan 01, 2012) and 12 changes from FY12 3rd Qtr
+  (effective Apr 01, 2012).  This patch installs the data for the following
+  Informational patch:
+    
+            ICPT*6.0*60
+    
+  This patch writes to the following files:
+    
+       CPT                       #81       ^ICPT(       ICR 4489
+       CPT CATEGORY              #81.1     ^DIC(81.1,   ICR 4490
+       CPT MODIFIER              #81.3     ^DIC(81.3,   ICR 4492
+       LEXICON files          #757-757.41  ^LEX(        N/A
+    
+  ENHANCEMENTS
+  ============
+    
+    FY12 4th Quarter Update
+ 
+      CPT Procedure Additions  (18 Codes)
+      -----------------------
+ 
+        Effective Jan 01, 2012 (FY12 2nd Qtr)                (11 Codes)
+          0291T   0292T   0293T   0294T   0295T   0296T   0297T   0298T
+          0299T   0300T   0301T
+ 
+        Effective Jul 01, 2012                                (7 Codes)
+          0302T   0303T   0304T   0305T   0306T   0307T   0308T
+ 
+      CPT Procedure Revisions
+      -----------------------
+ 
+        Effective Jul 01, 2012                                 (1 Code)
+          0206T
+ 
+      HCPCS Procedure Additions  (21 Codes)
+      -------------------------
+ 
+        Effective Apr 01, 2012 (FY12 3rd Qtr)                (12 Codes)
+          G8907   G8908   G8909   G8910   G8911   G8912   G8913   G8914
+          G8915   G8916   G8917   G8918
+ 
+        Effective Jul 01, 2012                                (9 Codes)
+          C9368   C9369   Q2034   Q2045   Q2046   Q2047   Q2048   Q2049
+          S1090
+ 
+      HCPCS Procedure Inactivations
+      -----------------------------
+ 
+        Effective Jul 01, 2012                                (2 Codes)
+          C9291   C9732
+ 
+  
+  REMEDY TICKETS:
+  ==============
+  
+    721632 - Re-Activate synonyms for ICD 294.9
+    713913 - Lookup for Transesophageal (TEE)
+    611136 - Modifier RT/LT/50 with CPT codes 31295, 31296 and 31297
+    610051 - Modifier AH/AJ with CPT codes 96150-96155
+    520047 - Modifier PT with CPT codes 10000 to 69999
+    622147 - Modifier 50 with CPT codes 64635 and 64636
+  
+  
+  FTP SOFTWARE RETRIEVAL:
+  =======================
+  
+    Global Host File:                  LEX_2_83.GBL  (ASCII)
+  
+    The preferred method is to FTP the files from download.vista.med.va.gov,
+    which will transmit the files from the first available FTP server.
+  
+    The files may also be downloaded directly from a particular FTP
+    location at the following locations.
+  
+         Hines           ftp.fo-hines.med.va.gov
+         Albany          ftp.fo-albany.med.va.gov
+         Salt Lake       ftp.fo-slc.med.va.gov
+  
+         Files are available in the ANONYMOUS.SOFTWARE directory. 
+  
+  INSTALLATION INSTRUCTIONS
+  =========================
+  
+    1)  Users may be on the system during the install of LEX*2.0*83.
+        It is recommended that this patch be installed during non-peak
+        hours.  This patch should take from 18 to 51 minutes to install
+        depending on the system.
+  
+            Create a backup    12-40 minutes
+            Load the Global    00-01 minutes
+            Kids Install       03-10 minutes
+  
+    2)  Create a backup of the following global files before continuing:
+  
+            CPT/HCPCS Procedure         #81         ^ICPT(
+            CPT Category                #81.1       ^DIC(81.1,
+            CPT Modifier                #81.3       ^DIC(81.3,
+            Lexicon Files            #757-757.41    ^LEX(
+  
+        These backup files may get as large as 1.1 gigabytes.  Make sure
+        space is available before proceeding.  It should take from 12 to
+        40 minutes to create the backup files.
+  
+        When you are creating a backup of non-subscripted globals, you are
+        saving the entire global.  You should use the utility ^%GO for
+        non-subscripted globals, and when prompted for a global, enter 
+        the global root (global name only, no open parenthesis, no file
+        number and no commas, as shown below).  Examples:
+  
+            Enter            To create a Backup copy of:
+            ------           --------------------------
+            ^ICPT            CPT/HCPCS Procedure
+            ^LEX             Lexicon Files
+  
+        When you are creating a backup of a subscripted global, you are
+        saving a partial global (a file within a global).  You should use
+        the utility ^%GOGEN, and when prompted for a global, enter the open
+        global reference (as shown below).  Examples:
+  
+            Enter            To create a Backup copy of:
+            ------           --------------------------
+            ^DIC(81.1,       CPT Category
+            ^DIC(81.3,       CPT Modifier
+  
+    3)  Install the data from the global host file LEX_2_83.GBL.  This
+        file contains the Lexicon Utility's import global ^LEXM.
+  
+        This global is approximately 341 kilobytes in size.  Make sure
+        there is sufficient space available to load this global with
+        journaling on.  The loading of the global should take less 
+        than a minute.
+  
+        Programmer Mode
+  
+          From the Programmer prompt, execute the following routine:
+             
+            >D ^%GI
+            
+            Global input
+            
+            Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_83.GBL
+            Parameters? "RS" => 
+            Globals were saved on 26 Jun 2012  11:50 AM   Cache
+            with description: LEX*2.0*83/ICPT*6.0*60 Data
+            
+            Input option: A
+            ^LEXM
+ 
+  
+    4)  Set up user and IO variables (D ^XUP) for programmer access.
+ 
+    5)  Distribution Load:
+  
+        Load the KIDS Distribution from the Packman Message using the
+        Packman function "Install/Check Message."
+  
+    6)  KIDS Installation:
+  
+        Install the patch using the KIDS Installation Menu action
+        "Install Package(s)" and the install name LEX*2.0*83.
+  
+          Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+          the install?" prompt.
+  
+          Respond "NO" at the "Want to DISABLE Scheduled Options,
+          Menu Options, and Protocols?" prompt.
+  
+        The KIDs install should take from 3-10 minutes
+  
+    7)  Cleanup
+  
+        a)  The Environment Check routine LEX2083 and the Post-Install 
+            routine LEX2083P should be deleted using the KERNEL option 
+            'Delete Routines' [XTRDEL] upon completion of the
+            installation.
+  
+            NOTE:  The installation of this patch should trigger an
+                   update protocol and may spawn background tasks for 
+                   the Clinical Reminders or Consult packages.  You 
+                   do not need to wait for these background jobs to 
+                   complete to delete the Environment Check and 
+                   Post-Install routines.
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2083
+    Before:       n/a   After:B124224785  **83**
+Routine Name: LEX2083P
+    Before:       n/a   After: B19290083  **83**
+
+=============================================================================
+User Information:
+Entered By  : ROWE,KIMBALL                  Date Entered  : JUN 20, 2012
+Completed By: PETRUSKA,BETH                 Date Completed: AUG 07, 2012
+Released By : SCHWARTZ,VIKIE                Date Released : AUG 08, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

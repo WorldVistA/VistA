@@ -1,0 +1,206 @@
+$TXT Created by ESCALERA,DIEGO at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 02/10/11 at 16:31
+=============================================================================
+Run Date: OCT 20, 2011                     Designation: OR*3*329
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #295                      Status: Released
+                  Compliance Date: NOV 20, 2011
+=============================================================================
+
+Associated patches: (v)OR*3*296    <<= must be installed BEFORE `OR*3*329'
+
+Subject: PROBLEM WITH ORPF AUTO UNFLAG PARAMETER AND FLAG ORDER NOTIFICATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects 2 issues within the ORDER ENTRY/RESULTS REPORTING 
+ package:
+  
+ 1. When the ORPF AUTO UNFLAG parameter is set to YES and a Provider 
+    processes the FLAG ORDER FOR CLARIFICATION notification, in certain 
+    situations other flagged orders for the patient are erroneously
+    unflagged.
+  
+ 2. A flagged order recipient doesn't receive the FLAG ORDER FOR 
+    CLARIFICATION notification if another order for the same patient has 
+    just been flagged to a different Provider.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ 1. HD0000000378709 - CPRS - Medication Errors  PSPO #1656
+  
+ 2. HD0000000447412 - Flagged order recipient doesn't see alert
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate NY HCS (Albany), NY
+ Edward Hines Jr. VA Hospital, IL
+ Atlanta VAMC, GA
+ Coatesville VAMC, PA
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000378709 - CPRS - Medication Errors
+  
+ Problem:
+ --------
+ When the ORPF AUTO UNFLAG parameter is set to YES and a Provider 
+ processes a single FLAG ORDER FOR CLARIFICATION notification, other 
+ flagged orders for the patient are erroneously unflagged. When a patient 
+ has multiple orders flagged to different Providers and one of the 
+ Providers processes his displayed FLAG ORDER FOR CLARIFICATION 
+ notification, the orders tab opens to the Orders View 'All Services, 
+ Flagged'. Only the orders flagged to this Provider are displayed. When 
+ the Provider refreshed the patient information or selects a new patient, 
+ the flagged orders that were displayed are automatically unflagged. The 
+ problem is that ALL of the patient's flagged orders are being unflagged, 
+ not just the ones assigned to this Provider. The other Providers that had 
+ this patient's orders flagged to them still have the FLAG ORDER FOR 
+ CLARIFICATION notification, but when they select and process the 
+ notification no orders display in the Orders View "All Services, 
+ Flagged", since none of the patient's orders are still flagged. 
+                                    
+ Resolution:
+ -----------
+ When the ORPF AUTO UNFLAG parameter is set to YES and a Provider 
+ processes a FLAG ORDER FOR CLARIFICATION notification, only the orders 
+ that displayed in the Orders View 'All Services, Flagged' for that 
+ provider will be auto unflagged.
+  
+ 2. HD0000000447412 - Flagged order recipient doesn't see alert
+  
+ Background:
+ -----------
+ When the MESSGAGE TYPE (#.04) field in the OE/RR NOTIFICATION 
+ (#100.9) FILE contains the value 'NOT', notifications are not 
+ generated if the same notification has already been generated for the
+ patient in the same minute. The rationale is that we do not want to
+ display two notifications with same date, time and message. The exception
+ to this rule is that two orders with different ordering providers will
+ generate separate notifications because the notifications potentially have
+ different recipients.
+  
+ Problem:
+ --------
+ The OE/RR Notification "FLAG ORDER FOR CLARIFICATION" differs from
+ other 'NOT' message types in that the user can select a recipient in
+ addition to the Primary Care Provider (PCP) or Ordering provider.
+  
+ If the user flags two orders for different recipients within the same 
+ minute and both orders have the same ordering provider, then the second
+ notification (meant for recipient B) will not be generated; and 
+ recipient B will not receive the expected "FLAG ORDER FOR CLARIFICATION" 
+ notification.
+      
+ Resolution:
+ -----------
+ A flagged order notification will now be generated if the successive
+ recipient is different from the recipient flagged for the prior order
+ that was just flagged.
+  
+ The Informatics Patient Safety office has recognized that patch OR*3*329 
+ corrects the unflagging problem warned about with Patient Safety 
+ Alert (PSA) AL10-12 distributed June 30, 2010. PSA AL10-12 instructed VA
+ facilities to set the ORPF AUTO UNFLAG parameter value to NO. After
+ installing patch OR*3*329, PSA AL10-12 is no longer effective and
+ sites can set parameter ORPF AUTO UNFLAG to YES if so desired.
+  
+ -  If the ORPF AUTO UNFLAG = YES: When a user processes a flagged order(s)
+ alert, all the orders flagged for that provider (for the specified 
+ patient) will be automatically unflagged. Orders flagged to other 
+ providers (for the same patient) will not be unflagged. 
+  
+ -  If the ORPF AUTO UNFLAG = NO: When a user processes a flagged order(s) 
+ alert, no orders are unflagged.  The alert remains until the user 
+ manually unflags all orders belonging to him or her (for the specified 
+ patient).
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will be
+ less than 2 minutes.
+  
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter OR*3.0*329):
+      
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+  
+ 4.  Use the Install Package(s) option and select the package
+     OR*3.0*329.
+  
+     a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+         install? NO//", answer NO.
+     b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+         Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORB31
+    Before: B31957768   After: B34930090  **6,31,88,105,139,173,220,215,329**
+Routine Name: ORWORB
+    Before: B69468448   After: B72691529  **10,85,116,148,173,190,215,
+                                           243,296,329**
+ 
+Routine list of preceding patches: 296
+
+=============================================================================
+User Information:
+Entered By  : ESCALERA,DIEGO                Date Entered  : MAR 17, 2010
+Completed By: HULET,LEE ANN                 Date Completed: OCT 17, 2011
+Released By : SCHMIT,BECKY                  Date Released : OCT 20, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

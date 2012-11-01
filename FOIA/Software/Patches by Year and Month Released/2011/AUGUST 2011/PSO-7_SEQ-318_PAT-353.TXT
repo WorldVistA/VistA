@@ -1,0 +1,124 @@
+$TXT Created by CREMEANS,TERRY at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 02/15/11 at 13:37
+=============================================================================
+Run Date: AUG 22, 2011                     Designation: PSO*7*353
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #318                      Status: Released
+                  Compliance Date: SEP 22, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*358   <<= must be installed BEFORE `PSO*7*353'
+
+Subject: REFILL DATE DISPLAY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the issue where the REFILL DATE shows a past date 
+ when the Rx is taken off hold.
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ HD0000000369734    Rx was taken off hold and last fill date showed a date 
+ in the past.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Chillicothe VAMC
+ VA Heartland - East (Marion)
+ VA Southern Nevada HCS  - Las Vegas
+ Sioux Falls VAMROC
+   
+ Remedy Overview:
+ ================
+ HD0000000369734    Rx was taken off hold and last fill date showed a date 
+ in the past.
+   
+ Problem: 
+ ========
+ A refill is suspended to CMOP (Consolidated Mail Outpatient Pharmacy) for
+ a future date and a HOLD is then placed on the refill prior to the CMOP
+ date.  When the pharmacy releases the hold after the original CMOP date
+ the REFILL DATE defaults to that original CMOP date, which is now a past
+ date.
+  
+ Resolution:
+ ===========
+ Need to modify the code to check to see if the REFILL DATE is in the past 
+ and if it is to use the current date as the default.
+  
+ Technical Resolution:
+ =====================
+ Modify routine PSOHLD at  EN+4.  Added additional lines of code.
+  
+        ================ INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  It is recommended that the 
+ Outpatient Pharmacy Vista users not be on the system  when this patch is
+ installed.  It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*353)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSO*7.0*353.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOHLD
+    Before: B50785311   After: B56416497  **1,16,21,24,27,32,55,82,114,
+                                           130,166,148,268,281,298,358,
+                                           353**
+ 
+Routine list of preceding patches: 358
+
+=============================================================================
+User Information:
+Entered By  : CREMEANS,THERESA              Date Entered  : APR 14, 2010
+Completed By: LANG,MICKEY                   Date Completed: JUL 27, 2011
+Released By : FOX,KIRK                      Date Released : AUG 22, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

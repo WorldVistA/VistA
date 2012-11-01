@@ -1,0 +1,207 @@
+$TXT Created by SESSLER,APRIL at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 05/26/11 at 09:41
+=============================================================================
+Run Date: AUG 10, 2011                     Designation: WEBV*1*22
+Package : WEBV - VISTA WEB                    Priority: Mandatory
+Version : 1        SEQ #18                      Status: Released
+                  Compliance Date: SEP 10, 2011
+=============================================================================
+
+
+Subject: NEW ADDITIONS TO THE REMOTE APPLICATION FILE (#8994.5)
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will add four new DNS domain entries to the REMOTE APPLICATION
+ file (#8994.5). The REMOTE APPLICATION file (#8994.5) was introduced as
+ part of the Broker Security Enhancement (BSE) to secure access via the
+ remote user or visitor approach by GUI applications.  The remote visitor
+ access permits applications where users need to access a large number of
+ sites, without requiring a separate access code and verify code at each
+ site.
+  
+ ************************************************************************
+ ** PLEASE NOTE: After patch installation, there will be 4 new entries **
+ ** for VISTAWEB in the REMOTE APPLICATION file (#8994.5).             **
+ ** PLEASE DO NOT remove the old VISTAWEB entries from this file. The  **
+ ** old entries will be dealt with nation-wide by the VistAWeb team    **
+ ** following the retirement of the VistAWeb servers.                  **
+ ************************************************************************
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ HD0000000465709 - New DNS entries added to the REMOTE APPLICATION file
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ HAMPTON, VA
+ PUGET SOUND HCS
+ SAN DIEGO, CA
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000465709 - New DNS entries added to the REMOTE APPLICATION file
+  
+ Problem:
+ ========
+ Four new DNS entries need to be added to the REMOTE APPLICATION file 
+ (#8994.5), for the BSE entry for VistAWeb servers.
+  
+  
+ Resolution:
+ ===========
+ Routine WEBVY22 will update the REMOTE APPLICATION file (#8994.5) to
+ include the following DNS domain names:
+  
+ Name:               DNS Name:
+ --------------      -------------------
+ VISTAWEB-PROD       vaww.context.vistaweb.med.va.gov
+ VISTAWEB-PROD2      vaww.context2.vistaweb.med.va.gov
+ VISTAWEB-UAT        vaww.context.uat.med.va.gov
+ VISTAWEB-UAT2       vaww.context.uat2.med.va.gov
+  
+ The routine will be deleted immediately after installation.
+  
+ ******************************ATTENTION:*********************************
+ It has come to our attention that some sites may or may not have the 
+ Current Version field (#13) of the Package file (#9.4) for the VistAWeb 
+ package set.  Please note, if you see the following warning please 
+ respond with Yes:
+  
+ This Patch is for Version 1, you are running Version 0
+  
+ Want to continue installing this build? NO// YES
+  
+ After installation of this patch, the field will be set to a value of 
+ '1'; so when future VistAWeb patches are released, this question will 
+ no longer appear.
+  
+ If you receive an error while installation, please log a remedy ticket.
+ *************************************************************************
+  
+ Installation Instructions:
+ ==========================
+ This patch can be installed at any time with users on the system.  
+ Installation should take less than two minutes.
+  
+  
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+    the KIDS distribution included with this message.
+    
+ 2. Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]: 
+    
+            Edits and Distribution ...  
+            Utilities ...  
+            Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+            1      Load a Distribution
+            2      Verify Checksums in Transport Global
+            3      Print Transport Global
+            4      Compare Transport Global to Current System
+            5      Backup a Transport Global
+            6      Install Package(s)
+                   Restart Install of Package(s)
+                   Unload a Distribution
+    
+ 3. From this menu, you may elect to use the following options
+    (when prompted for INSTALL NAME, enter WEBV*1.0*22):
+    
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+      b. Compare Transport Global to Current System  - this option will
+         allow you to view all changes that will be made when the patch
+         is installed.  It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will
+         allow you to ensure the integrity of the routines that are in
+         the transport global.
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+    
+ 4. Use the Install Package(s) option and select the package WEBV*1.0*22.
+  
+ 5. IF prompted 'This Patch is for Version 1, you are running Version 0
+    Want to continue installing this build? NO//', respond YES
+    
+ 6. When prompted ' Want KIDS to INHIBIT LOGONs during the install?
+    NO//', respond NO.
+    
+ 7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond NO.
+  
+ POST-INSTALL INSTRUCTIONS:
+ ==========================
+ After patch installation, please verify that the following entries have 
+ been added to the REMOTE APPLICATION file (#8994.5):
+  
+ From FileMan, select OPTION: INQUIRE TO FILE ENTRIES  
+ OUTPUT FROM WHAT FILE: REMOTE APPLICATION
+ Select REMOTE APPLICATION NAME: VISTAWEB-PROD
+ ANOTHER ONE: VISTAWEB-PROD2  
+ ANOTHER ONE: VISTAWEB-UAT
+ ANOTHER ONE: VISTAWEB-UAT2  
+ ANOTHER ONE: 
+ STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO// BOTH Computed Fields and Record
+  
+ NAME: VISTAWEB-PROD
+ CONTEXTOPTION: OR CPRS GUI CHART   APPLICATIONCODE: U'J+:[nVLM3sM<0'JAyI
+ CALLBACKTYPE: HTTP                 CALLBACKPORT: 19989
+ CALLBACKSERVER: vaww.context.vistaweb.med.va.gov
+ URLSTRING: /resolve.do
+  
+ NAME: VISTAWEB-PROD2
+ CONTEXTOPTION: OR CPRS GUI CHART   APPLICATIONCODE: B3oxJ;%PB+Rga-[5W0AX
+ CALLBACKTYPE: HTTP                 CALLBACKPORT: 19985
+ CALLBACKSERVER: vaww.context2.vistaweb.med.va.gov
+ URLSTRING: /resolve.do
+  
+ NAME: VISTAWEB-UAT
+ CONTEXTOPTION: OR CPRS GUI CHART   APPLICATIONCODE: #ak5D;`EYI[ZOLtUQ[%J
+ CALLBACKTYPE: HTTP                 CALLBACKPORT: 12173
+ CALLBACKSERVER: vaww.context.uat.med.va.gov
+ URLSTRING: /resolve.do
+  
+ NAME: VISTAWEB-UAT2
+ CONTEXTOPTION: OR CPRS GUI CHART   APPLICATIONCODE: DlYc;3Wjyths_],1|[d$
+ CALLBACKTYPE: HTTP                 CALLBACKPORT: 12181
+ CALLBACKSERVER: vaww.context.uat2.med.va.gov
+ URLSTRING: /resolve.do
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VISTAWEB;**[Patch List]**;;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: WEBVY22
+    Before:       n/a   After:  B4905836  **22**
+
+=============================================================================
+User Information:
+Entered By  : SESSLER,APRIL                 Date Entered  : FEB 24, 2011
+Completed By: SHERMAN,BILL                  Date Completed: JUL 26, 2011
+Released By : HINES,RICK                    Date Released : AUG 10, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

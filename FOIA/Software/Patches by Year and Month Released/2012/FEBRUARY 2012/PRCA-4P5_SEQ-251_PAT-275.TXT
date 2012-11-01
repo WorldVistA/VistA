@@ -1,0 +1,338 @@
+
+=============================================================================
+Run Date: FEB 17, 2012                     Designation: PRCA*4.5*275
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #251                    Status: Released
+                  Compliance Date: MAR 19, 2012
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*270<<= must be installed BEFORE `PRCA*4.5*275'
+                    (v)PRCA*4.5*276<<= must be installed BEFORE `PRCA*4.5*275'
+
+Subject: E-CLAIMS ITERATION 5
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+ This combined Integrated Billing (IB) and Accounts Receivable (AR) patch 
+ expands the HIPAA 5010 enhancements introduced in patch IB*2.0*432.
+  
+ The intent of this patch is to:
+  
+ 1. Modify the Third Party Joint Inquiry option [IBJ THIRD PARTY JOINT
+    INQUIRY] to allow up to 10 characters of an inactive claim number to
+    display.
+  
+ 2. Modify the Full Account Profile option [PRCAY FULL ACCOUNT PROFILE] to
+    allow up to 10 characters of an inactive claim number to display.
+  
+ 3. Create the processes to support the receipt, storage and display of
+    Medicare deductible information from Trailblazer Health care
+    Enterprise.
+  
+ 4. Create a new option called the Medicare Deductible Alert Worklist [PRCA
+    MDA WORKLIST] from which users can view Medicare deductible 
+    information.
+  
+ 5. Create a new MDA Mail Group that will receive the incoming MDA data 
+    and initiate a server process to store the data. A mail group
+    coordinator will need to be assigned.  This is usually the Accounts
+    Receivable Supervisor.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)   New/Modified/Deleted
+ ------------------         -------------------   --------------------
+ AR MEDICAL DEDUCTIBLE      All                   New
+ ALERTS PART A (436.1)
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                  New/Modified/Deleted
+ ---------------                                  --------------------
+ MDA                                              New
+  
+  
+ Options Associated:
+  
+ Option Name            Type                      New/Modified/Deleted
+ -----------            ----                      --------------------
+ PRCA MDA WORKLIST      run routine               New
+ PRCAL LIST MENU        menu                      Modified
+ PRCA MDA SERVER        server                    New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                    New/Modified/Deleted
+ -------------                                    --------------------
+ PRCA MDA COMMENT EXIT                            New
+ PRCA MDA COMMENT MENU                            New
+ PRCA MDA ENTER COMMENT                           New 
+ PRCA MDA ENTER/VIEW COMMENTS                     New
+ PRCA MDA EXIT                                    New
+ PRCA MDA MANAGEMENT                              New
+ PRCA MDA REVIEW STATUS                           New
+ PRCA MDA TPJI                                    New
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ PRCA MDA COMMENTS  List      AR MEDICAL           New
+                              DEDUCTIBLE ALERTS    
+                              PART A (436.1)
+  
+ PRCA MDA WORKLIST  List      AR MEDICAL           New
+                              DEDUCTIBLE ALERTS 
+                              PART A (436.1)
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20090216 - eClaims Phase 5
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Altoona
+ North Florida/South Georgia
+ Palo Alto
+ VISN 2 
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ Title                         File Name                FTP Mode
+ ---------------------------------------------------------------
+ AR Release Notes/           PRCA_4_5_P275_RN.PDF       Binary
+ Installation Guide 
+ (PRCA*4.5*P275)                   
+  
+ AR Technical Manual/
+ Security Guide              PRCA_4_5_P275_TM.PDF       Binary
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post-install routine will set up the server process to move the
+ mail message from FSC into the file AR MEDICAL DEDUCTIBLE ALERTS PART 
+ A (#436.1).  
+  
+ Note: The Post-Install routine will be removed at the end of the
+       installation.
+  
+  
+ **** Please note, if you select the option below, Compare Transport Global
+      to Current System, and select #1 Full Comparison, you will get a
+      system error:  <UNDEFINED>S+1^DIQ ^IBA(364.6,2209,0) due to a known
+      issue with the KIDS Full Compare option (see Remedy Ticket
+      HD0000000449218). You can run any of the other 3 compare options
+      without issue.
+  
+  
+ Installation Instructions
+ -------------------------
+ You should install this patch during non-peak hours, when no Integrated 
+ Billing or Accounts Receivable users are on the system. This patch should 
+ take less than 5 minutes to install.
+  
+  
+ There are no options to disable.
+  
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file ECLAIMS_5_5010.KID, which contains the following
+     two patch installs:
+   
+         PRCA*4.5*275
+         IB*2.0*447
+   
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+   
+                     download.vista.med.va.gov
+   
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+   
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+   
+      The ECLAIMS_5_5010.KID host file is located in the anonymous.software
+      directory.  Use ASCII Mode when downloading the file.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+   
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+   
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+   
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+   
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file ECLAIMS_5_5010.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]ECLAIMS_5_5010.KID).
+   
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+   
+     The following will display:
+   
+       Loading Distribution...
+   
+         ECLAIMS 5 BUNDLE 1.0
+         PRCA*4.5*275
+         IB*2.0*447
+  
+       Use INSTALL NAME: ECLAIMS 5 BUNDLE 1.0 to install this Distribution.
+   
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options:
+  
+     (when prompted for the INSTALL NAME, enter ECLAIMS 5 BUNDLE 1.0)
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+         **** Please note, if you select the option below, Compare 
+              Transport Globalto Current System, and select #1 Full 
+              Comparison, you will get a system error:  
+              <UNDEFINED>S+1^DIQ ^IBA(364.6,2209,0) due to a known
+              issue with the KIDS Full Compare option (see Remedy Ticket
+              HD0000000449218). You can run any of the other 3 compare 
+              options without issue.
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of the KIDS patches.
+     **** Note: The install questions will be displayed twice, first for
+     PRCA*4.5*275 and then for IB*2.0*447.
+     
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", 
+         enter ECLAIMS 5 BUNDLE 1.0
+     c.  When prompted for 'Enter the Coordinator for Mail Group 'MDA':",
+         respond with the name of the Mail Group Coordinator for the 
+         Accounts Receivable package or a facility Mail Group Coordinator.
+     d.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+         of Install? NO//', respond NO
+     e.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+         of Install? YES//', respond YES
+         *** Please Note:  It is important that you respond to these 
+         prompts in the proper order or else the IB menus will not be
+         rebuilt.    
+     f.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         YES//', respond NO.
+     g.  When prompted to DISABLE Scheduled Options, Menu Options, and
+         Protocols YES//', respond NO.
+  
+ 6.  Routine ^RCY275PO will be deleted upon completion of installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;4.5;Accounts Receivable;**[PATCH LIST]**;Mar 20, 1995;Build 72
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAAPR1
+    Before: B43343192   After: B43589285  **34,45,108,143,141,206,192,
+                                           218,276,275**
+Routine Name: PRCAFBD
+    Before: B15657675   After: B17368357  **16,48,86,90,119,165,204,203,
+                                           173,220,184,270,275**
+Routine Name: PRCAFBDM
+    Before:  B9939431   After:  B9939431  **60,90,204,203,220,270,275**
+Routine Name: PRCAMDA1
+    Before:       n/a   After: B25439881  **275**
+Routine Name: PRCAMDA2
+    Before:       n/a   After: B34581746  **275**
+Routine Name: PRCAMDA3
+    Before:       n/a   After:  B5974782  **275**
+Routine Name: PRCAMDS
+    Before:       n/a   After: B11777483  **275**
+Routine Name: RCY275PO
+    Before:       n/a   After:  B1227458  **275**
+
+=============================================================================
+User Information:
+Entered By  : JUTZI,WILLIAM CHRISTOPHER     Date Entered  : FEB 01, 2011
+Completed By: ROBBINS,BRADLEY               Date Completed: FEB 09, 2012
+Released By : CAULFIELD,MARY                Date Released : FEB 17, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

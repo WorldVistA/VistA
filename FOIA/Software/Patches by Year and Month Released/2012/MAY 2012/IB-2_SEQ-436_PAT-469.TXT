@@ -1,0 +1,210 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 01/26/12 at 13:39
+=============================================================================
+Run Date: MAY 10, 2012                     Designation: IB*2*469
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #436                      Status: Released
+                  Compliance Date: JUN 10, 2012
+=============================================================================
+
+
+Subject: FY2012 OCCURRENCE/VALUE/CONDITION/REVENUE CODE UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains updates to the MCCR Utility (#399.1) file and the
+ Revenue Code (#399.2) file for FY2012.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000584459 Need FY2012 Occurrence/Value/Condition/Revenue code
+ updates
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ James A. Haley Veterans' Hospital - Tampa
+ Lebanon VA Medical Center - Lebanon
+ Baltimore MD VAMC
+ Upstate New York HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000584459 Need FY2012 Occurrence/Value/Condition/Revenue code
+ updates
+  
+  Problem:
+  --------
+  The Chief Business Office has requested the following updates to the
+  the MCCR Utility (#399.1) file and the Revenue Code (#399.2) file.
+  
+  Resolution:
+  -----------
+  Created a post-init routine IB20P469 to contain updates for the following
+  codes in these two files:
+  
+  The MCCR Utility (#399.1) file will have the following updates made to
+  15 Value Codes, 22 Occurrence Codes, and 18 Condition Codes.
+  
+     Value Codes:
+     01  MOST COMMON SEMI-PRIVATE ROOM RATE (name updated)
+     32  MULTIPLE PATIENT AMBULANCE TRANSPORT (new)
+     43  DISABLED BENEFICIARY UNDER AGE OF 65 WITH LGHP (name update)
+     44  AMT AGRED FRM PRIME<CHGS&>PYMT > THN PYMT REC, MSP CLMS (name updated)
+     52  SPEECH-LANGUAGE THERAPY VISITS (name updated)
+     54  NEWBORN BIRTH WEIGHT IN GRAMS (new)
+     55  ELIGIBILITY THRESHOLD FOR CHARITY CARE (new)
+     66  MEDICAID SPEND DOWN AMOUNT (new)
+     69  STATE CHARITY CARE PERCENT (new)
+     83  LIFETIIME RESERVE DAYS (new)
+     A7  CO-PAYMENT PAYER A (new)
+     B7  CO-PAYMENT PAYER B (new)
+     C7  CO-PAYMENT PAYER C (new)
+     D4  CLINICAL TRIAL NUMBER ASSIGNED BY THE NLM/NIH (new)
+     G8  FACILITY WHERE INPATIENT HOSPICE SERVICE IS DELIVERED (new)
+  
+     Occurrence Codes:
+     01  ACCIDENT/MEDICAL COVERAGE (name updated)
+     02  NO FAULT INSURANCE INVOLVED INCLUDING AUTO ACCIDENT/OTHER (name updated)
+     05  ACCIDENT/NO MEDICAL OR LIABILITY COVERAGE (name updated)
+     26  DATE SNF BED BECAME AVAILABLE (name updated)
+     27  DATE OF HOSPICE CERTIFICATION OR RECERTIFICATION (name updated)
+     30  DATE OF OP SPEECH-LANGUAGE PATH PLAN EST/LAST REVWD (name updated)
+     33  FIRST DAY THE COORD PD FOR ESRD BENEFICIARIES CVRD BY EGHP (name updated)
+     34  DATE OF ELECTION OF EXTENDED CARE SERVICES (name updated)
+     36  DATE OF IP HOSP DISCHG FOR COVERED TRANSPLANT PATIENT (name updated)
+     37  DATE OF IP HOSP DISCHG FOR NON-COVERED TRANSPLANT PATIENT (name updated)
+     45  DATE TREATMENT STARTED FOR SPEECH-LANGUAGE THERAPY (name updated)
+     A4  SPLIT BILL DATE (name updated)
+     E1  RZD FOR NATIONAL ASSIGNMENT (name updated)
+     E2  RZD FOR NATIONAL ASSIGNMENT (name updated)
+     E3  RZD FOR NATIONAL ASSIGNMENT (name updated)
+     F1  RZD FOR NATIONAL ASSIGNMENT (name updated)
+     F2  RZD FOR NATIONAL ASSIGNMENT (name updated)
+     F3  RZD FOR NATIONAL ASSIGNMENT (name updated)
+     G1  RZD FOR NATIONAL ASSIGNMENT (name updated)
+     G2  RZD FOR NATIONAL ASSIGNMENT (name updated)
+     G3  RZD FOR NATIONAL ASSIGNMENT (name updated)
+     DR  DISASTER RELATED OCCURRENCE CODE (new)
+     
+     Condition Codes:
+     04  INFORMATION ONLY BILL (name updated)
+     06  ESRD PATIENT IN FIRST 30 MONTHS OF ENTITLE CVRD BY EGHP (name updated)
+     51  ATTESTATION OF UNRELATED OUTPATIENT NONDIAGNOSTIC SERVICES (new)
+     58  TERMINATED MEDICARE ADVANTAGE ENROLLEE (name updated)
+     69  IME/DGME/N&AH PAYMENT ONLY (name updated)
+     78  NEW COVERAGE NOT IMPLEMENTED BY MANAGED CARE PLAN (name updated)
+     79  CORF SERVICES PROVIDED OFFSITE (name updated)
+     BO  MEDICARE COORDINATED CARE DEMONSTRATION CLAIM (new)
+     B1  BENEFICIARY INELIGIBLE FOR DEMONSTRATION PROGRAM (new)
+     B2  CRITICAL ACCESS HOSPITAL AMBULANCE ATTESTATION (new)
+     B3  PREGNANCY INDICATOR (new)
+     BP  GULF OIL SPILL OF 2010 (new)
+     EO  CHANGE IN PATIENT STATUS (new)
+     H3  REOCCURRENCE OF GI BLEED (MA) CATEGORY (name updated)
+     H4  REOCCURRENCE OF PNEUMONIA (MB) CATEGORY (name updated)
+     H5  REOCCURRENCE OF PERICARDITIS (MC) CATEGORY (name updated)
+     P1  DO NOT RESUCITATE (DNR) FOR PUBLIC HEALTH REPORTING ONLY (new)
+     WO  UNITED MINE WORKERS OF AMERICA (UMWA) DEMO INDICATOR (new)
+  
+  The Revenue Code (#399.2) file will have these 7 codes reserved for
+  future use: 184, 709, 719, 749, 759, 799, 910, and have these 61 codes
+  activated if they are not active: 173, 174, 191, 192, 193, 194, 199, 241,
+  242, 243, 344, 392, 451, 452, 456, 479, 489, 499, 524, 525, 526, 527,
+  528, 547, 548, 583, 609, 615, 616, 623, 658, 663, 669, 670, 671, 672,
+  679, 681, 682, 683, 684, 689, 770, 780, 860, 861, 882, 905, 906, 907,
+  930, 931, 947, 948, 951, 952, 971, 973, 976, 978, 979. This file will also
+  be updated with the following 3 changes:
+  
+     970  PROFESSIONAL SERVICES - EXTENSION OF 096X (new)
+     521  RURAL/FQHC - HEALTH CLINIC (description updated)
+     522  HOME VISIT BY RHC/FQHC PRACTITIONER (description updated)
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*469):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P469.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P469
+    Before:       n/a   After: B52239866  **469**
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : JAN 09, 2012
+Completed By: DAWSON,TIM                    Date Completed: MAY 03, 2012
+Released By : BROWN,GAYLE F                 Date Released : MAY 10, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,202 @@
+$TXT Created by ROCHA,MARCELO at CFDA.FO-BIRM.MED.VA.GOV  (KIDS) on Tuesday, 11/08/11 at 13:06
+=============================================================================
+Run Date: MAR 27, 2012                     Designation: PSN*4*264
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #305                      Status: Released
+                  Compliance Date: APR 27, 2012
+=============================================================================
+
+Associated patches: (v)PSN*4*263   <<= must be installed BEFORE `PSN*4*264'
+
+Subject: FDA MED GUIDE III - FIELD DESCR. CHANGES
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch performs the following data dictionary update in the VA PRODUCT
+ file (#50.68). The HELP-PROMPT and TECHNICAL DESCR for the FDA MED GUIDE
+ field (#100) is being modified as show below:
+  
+    Current: 
+     
+    HELP PROMPT    : Answer must be 1-100 characters in length
+    TECHNICAL DESCR: This field is used for storing the FDA Medication
+                     Guide file name associated with this VA Product.
+  
+    Requested changes:
+  
+    HELP-PROMPT    : Answer must be 1-100 characters in length.
+    TECHNICAL DESCR: This field is used for storing the FDA Medication
+                     Guide filename associated with this VA Product. The 
+                     file is physically stored in the repository indicated
+                     in the FDA MED GUIDE SERVER URL field (#100) in the
+                     PHARMACY SYSTEM file (#59.7).  
+  
+ This patch also resolves an issue with running the FDA Medication Guide
+ On-Demand functionality on a stand-alone PC, which was identified during 
+ internal testing.
+  
+ Below is a list of all the applications involved in this release along
+ with their patch number:
+   
+    APPLICATION/VERSION                                    PATCH
+    -----------------------------------------------------------------
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0    PSX*2*70
+    NATIONAL DRUG FILE (NDF) V. 4.0                        PSN*4*264
+    OUTPATIENT PHARMACY (OP) V. 7.0                        PSO*7*367
+    KERNEL V. 8.0                                          XU*8*566
+  
+   
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                  New/Modified/Deleted
+ -------------------    ------------------------------  --------------------
+ VA PRODUCT (#50.68)    FDA MED GUIDE (#100)            Modified
+  
+ Forms Associated:
+  
+ Form Name              File #                          New/Modified/Deleted
+ ---------              ------                          --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                        New/Modified/Deleted
+ ---------------                                        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type                            New/Modified/Deleted
+ -----------            ----                            --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                                          New/Modified/Deleted
+ -------------                                          --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)             New/Modified/Deleted
+ -------------      ----      ------------------        --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20061203
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ LITTLE ROCK, AR
+ OKLAHOMA CITY, OK
+ ORLANDO, FL
+ PALO ALTO HCS
+   
+   
+ Patch Installation:
+   
+ Pre/Post Installation Overview
+ ------------------------------
+ The 4 patches released with this project should be installed in the
+ following order: 
+  
+    1. XU*8*566
+    2. PSN*4*264
+    3. PSO*7*367
+    4. PSX*2*70
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+   
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSN*4.0*264):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSN*4.0*264.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSNFDAMG
+    Before: B30999461   After: B31156358  **108,263,264**
+
+=============================================================================
+User Information:
+Entered By  : ROCHA,MARCELO                 Date Entered  : AUG 18, 2010
+Completed By: GREER,MIKE                    Date Completed: MAR 01, 2012
+Released By : BLOCH,JACULYN                 Date Released : MAR 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

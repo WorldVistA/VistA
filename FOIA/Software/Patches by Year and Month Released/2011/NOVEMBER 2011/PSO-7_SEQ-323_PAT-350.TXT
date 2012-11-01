@@ -1,0 +1,149 @@
+$TXT Created by HERRING,VENESSA at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 04/05/10 at 14:20
+=============================================================================
+Run Date: NOV 08, 2011                     Designation: PSO*7*350
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #323                      Status: Released
+                  Compliance Date: NOV 27, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*321   <<= must be installed BEFORE `PSO*7*350'
+
+Subject: PSO SIGLOG REPRINT - NO OUTPUT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1. When using the Signature Log Reprint option or the Speed option RS 
+ Reprint Sig Log, there is nothing being generated.
+  
+ 2. When using the Edit Prescriptions option there is a problem where 
+ labels that should be produced are not printed while a label that 
+ shouldn't be produced is printed.
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1) HD0000000377223 - Option PSO SIGLOG REPRINT is not working
+          DUPLICATES:  HD0000000378064
+ 2) HD0000000382024 - missing label
+                  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ North Chicago VA Medical Center
+ VA Puget Sound HCS
+ Oklahoma City VA Medical Center
+  
+ Remedy Overview:
+ ================
+ 1) HD0000000377223 - Option PSO SIGLOG REPRINT is not working
+         DUPLICATES:  HD0000000378064
+   
+ Problem: 
+ ========
+ When running menu option Signature Log Reprint [PSO SIGLOG REPRINT] or the 
+ Speed option RS Reprint Sig Log no output is printed.
+  
+ Resolution:
+ ===========
+ Modify the code so when running the Signature Log Reprint [PSO SIGLOG REPRINT] 
+ option and the speed option RS  Reprint Sig Log the signature log reprints.
+  
+ Technical Resolution:
+ =====================
+ Modify Q1+5^PSOLLLH and QUEUE+1^PSOLLLHN to set variable DFN into ZTSAVE 
+ prior to tasking the background process.
+  
+ 2) HD0000000382024 - missing label
+  
+ Problem: 
+ ========
+ When using menu option Edit Prescriptions [PSO RXEDIT] and the edit causes
+ a label to be printed, if the patient for one of the prescriptions prior to
+ the last one in the list has other prescriptions on suspense, a label prints
+ for the suspended prescription but not the next prescription on the 
+ list.
+  
+ Resolution:
+ ===========
+ Modify the code so when checking for suspended prescriptions for the patient
+ a label does not print for the last suspended prescription for that patient.
+  
+ Technical Resolution:
+ =====================
+ Modify routine PSOLLL5 at SUSP1+6^PSOLLL5 to new variable RX.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  Users should not be
+ printing labels or processing CMOP prescriptions when this patch is installed.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*350)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*350.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOLLL5
+    Before: B37231330   After: B37326499  **120,161,230,200,326,350**
+Routine Name: PSOLLLH
+    Before: B33683705   After: B33757537  **161,148,244,200,326,321,350**
+Routine Name: PSOLLLHN
+    Before:  B9141187   After:  B9196323  **200,268,326,350**
+ 
+Routine list of preceding patches: 321
+
+=============================================================================
+User Information:
+Entered By  : HERRING,VENESSA               Date Entered  : FEB 04, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: OCT 26, 2011
+Released By : CONSENTINO,ALBERT             Date Released : NOV 08, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

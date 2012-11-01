@@ -1,0 +1,243 @@
+$TXT Created by GURTOVOY,YAN at CARVDD.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 12/23/11 at 14:11
+=============================================================================
+Run Date: JAN 10, 2012                     Designation: IB*2*467
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #427                      Status: Released
+                  Compliance Date: FEB 09, 2012
+=============================================================================
+
+Associated patches: (v)IB*2*416    <<= must be installed BEFORE `IB*2*467'
+                    (v)IB*2*435    <<= must be installed BEFORE `IB*2*467'
+                    (v)IB*2*438    <<= must be installed BEFORE `IB*2*467'
+
+Subject: FIX FOR EIV INQUIRIES
+
+Category: 
+  - Routine
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+ This patch contains the fix for the issue with the eIV interface where it
+ is possible for an inquiry to go out without a value in segment IN1, field
+ 2 when either the patient is a dependent, or patient relationship is left
+ blank, and patient id is left blank in the insurance buffer entry.
+  
+ New logic will add an extra check to PROCESS INSURANCE BUFFER [IBCN 
+ INSURANCE BUFFER PROCESS] option, real-time inquiry, and buffer extract
+ that will ensure that entries are placed into the transmission queue only
+ if either of the following conditions is met:
+  
+   - If subscriber inquiry (patient relationship is set to "self" or is
+     blank) AND subscriber id is not blank
+   - If dependent inquiry (patient relationship is not set to "self" and
+     is not blank) AND patient id is not blank
+  
+ If neither condition is met, the buffer entry will not trigger an eIV
+ transmission (either via real-time inquiry or via buffer extract) until
+ the necessary data is entered into the insurance buffer file. The buffer
+ entry in question will display a "!" (unable to transmit) symbol and when 
+ expanded will contain a message specifying the reason - either missing
+ subscriber id or missing patient id.
+  
+ The following error message is being added:
+  
+ eIV could not create an inquiry for this entry. This dependant inquiry 
+ requires the Patient ID field to be populated before an inquiry can be 
+ transmitted electronically.
+  
+ Action to take:  Update the inquiry with the missing Patient ID or 
+ contact the insurance company to manually verify this insurance 
+ information.
+  
+ The following error message has been modified:
+  
+ eIV could not create an inquiry for this entry. This inquiry requires the 
+ Subscriber ID field to be populated before an inquiry can be transmitted 
+ electronically.
+  
+ Action to take: Update the inquiry with the missing Subscriber ID or 
+ contact the insurance company to manually verify this insurance 
+ information.
+  
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)  New/Modified/Deleted
+ ------------------------- -------------------  --------------------
+ INSURANCE BUFFER (355.33) PATIENT ID (62.01)       Modified
+ IIV STATUS TABLE (365.15)                          Modified (data)
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ N/A 
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ White River Junction
+ Wilmington
+ Madison
+ Tennessee Valley HCS
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from
+ ftp://download.vista.med.va.gov/, ANONYMOUS.SOFTWARE directory.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.va.gov/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Electronic Insurance          IB_2_0_P467_UM_R1211.PDF        Binary
+ Verification User Guide
+  
+  
+ Patch Installation:
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch should take less than 5 minutes to install.
+  
+ It is recommended that this patch be installed outside of normal working
+ hours when no Integrated Billing users are on the system. However, if
+ installed during the normal workday, it is recommended that the following
+ selections in the OPTION (#19) file, and all of their descendants be
+ disabled to prevent possible conflicts while running the KIDS Install.
+ Other VISTA users will not be affected.
+  
+     Request Electronic Insurance Inquiry  [IBCNE REQUEST INQUIRY]
+     Process Insurance Buffer              [IBCN INSURANCE BUFFER PROCESS]
+     eIV Menu                              [IBCNE IIV MENU]
+      
+ **** Do not install this patch when the EIV NIGHTLY PROCESS [IBCNE
+ IIV BATCH PROCESS] nightly eIV background job is running or scheduled to
+ run. ****
+  
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+  
+ Select Kernel Installation & Distribution System Option: Installation
+                                                          ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+ Select Installation Option:
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter IB*2.0*467):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s)
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch:
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//' answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu
+         Options, and Protocols? NO//' answer YES if installing during
+         working hours
+     d.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':'  Enter the following options:
+  
+       Request Electronic Insurance Inquiry [IBCNE REQUEST INQUIRY]
+       Process Insurance Buffer             [IBCN INSURANCE BUFFER PROCESS]
+       eIV Menu                             [IBCNE IIV MENU]
+  
+     e.  When prompted 'Enter protocols you wish to mark as 'Out Of
+         Order':' press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNBLE1
+    Before: B30221340   After: B32174406  **184,271,416,435,467**
+Routine Name: IBCNEDE1
+    Before: B40267278   After: B43189276  **184,271,416,438,435,467**
+Routine Name: IBCNEHLQ
+    Before: B43538189   After: B43557440  **184,271,300,361,416,438,467**
+Routine Name: IBCNERTQ
+    Before: B44031881   After: B45372080  **438,467**
+ 
+Routine list of preceding patches: 435
+
+=============================================================================
+User Information:
+Entered By  : GURTOVOY,YAN                  Date Entered  : NOV 03, 2011
+Completed By: ROBBINS,BRADLEY               Date Completed: DEC 23, 2011
+Released By : POST,HELEN                    Date Released : JAN 10, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

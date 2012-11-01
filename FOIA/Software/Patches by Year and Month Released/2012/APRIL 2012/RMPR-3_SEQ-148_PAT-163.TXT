@@ -1,0 +1,228 @@
+$TXT Created by BECKWITH,RALPH at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Tuesday, 11/15/11 at 10:34
+=============================================================================
+Run Date: APR 25, 2012                     Designation: RMPR*3*163
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #148                      Status: Released
+                  Compliance Date: MAY 26, 2012
+=============================================================================
+
+Associated patches: (v)RMPR*3*135  <<= must be installed BEFORE `RMPR*3*163'
+                    (v)RMPR*3*139  <<= must be installed BEFORE `RMPR*3*163'
+                    (v)RMPR*3*140  <<= must be installed BEFORE `RMPR*3*163'
+                    (v)RMPR*3*146  <<= must be installed BEFORE `RMPR*3*163'
+                    (v)RMPR*3*162  <<= must be installed BEFORE `RMPR*3*163'
+
+Subject: SUSPENSE LINKING PROBLEMS;ITEM USAGE BY LOCATION REPORT;GUI DOR ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 3 issues:
+  
+ 1. Cannot link patient record to Suspense:
+    a. When select patients appearing on the GUI Delayed Order
+       Report.
+  
+    b. After selecting patient, current issue item does not display.
+  
+ 2. Report 'Print Item Usage By Location' fails to print due to a missing 
+    HCPCS item reference.
+  
+ 3. Prosthetics GUI error when displaying Delayed Order Report (DOR)
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Tickets:
+ =========================
+ 1) HD0000000428697 Cannot link patient record to Suspense
+  
+ 2) HD0000000476648 Unable to complete report, 'error in API RMPRPI07'
+       Duplicate: HD0000000519635 ERROR NUMBER = 99 ***Error in API
+                                  RMPRPI07 !!!!
+  
+ 3) HD0000000518673 Prosthetics GUI error when displaying Delayed Order 
+                    Report (DOR), <UNDEFINED>DTFWD+18^RMPR9DO
+  
+   
+ Test Sites:
+ ==========
+ VA Western NY HCS
+ Dayton VA Medical Center
+ Carl Vinson VA Medical Center - Dublin
+  
+  
+ Remedy Overview:
+ ================ 
+ 1) HD0000000428697 Cannot link patient record to Suspense
+  
+  
+ Problem:
+ --------
+ User may get confusing errors when using the option "Link Patient Record
+ to Suspense":
+  
+ a. Cannot select patient name that appears on GUI DOR report
+ b. When select patient name, current issued item does not display 
+    whether or not the item was linked to suspense record
+  
+   
+ Resolution:
+ -----------
+ Modifications have been made to the system to improve the suspense
+ linking process:
+  
+ a. Warn the user when the patient has no unlinked charges
+ b. Display the suspense link for an issued item when displaying 
+    Appliance Transaction
+  
+  
+ Routines: RMPRPAT3, RMPRPCE1
+  
+  
+  
+ 2) HD0000000476648 Unable to complete report,'error in API RMPRPI07'
+  
+ Problem:
+ --------         
+ A user is able to delete a previously issued item against a HCPCS item 
+ that has been removed from the system, causing inventory and reporting
+ error conditions.
+  
+  
+ Resolution:
+ -----------
+ A modification has been made to the system to prevent a user from 
+ deleting a stock issue on a patient if the item was removed from the 
+ system after being issued to a patient.  
+  
+  
+ Routines: RMPRPIFD
+  
+  
+  
+ 3) HD0000000518673 Prosthetics GUI error when displaying Delayed Order 
+                    Report (DOR), <UNDEFINED>DTFWD+18^RMPR9DO
+  
+ Problem:
+ -------
+ User have tried to display the DOR report via the GUI Prosthetics package 
+ and received the following error, <UNDEFINED>DTFWD+18^RMPR9DO.
+  
+  
+ Resolution:
+ ----------
+ There are extraneous 'L' and 'L1' cross references remaining in the 
+ PROSTHETIC SUSPENSE file (#668) that typically occur. When the patient
+ Social Security number is modified in the patient record and not handled
+ through any interface to correct the same patient Suspense Records cross
+ references.
+  
+ Modified routine RMPR9DO to bypass any 'L' or 'L1' cross references that 
+ are no longer linked to defined the master suspense record.
+  
+ Modified routine RMPR8PG to call new routine RMPR8PG1 that will provide 
+ an audit/cleanup of the 'L' and 'L1' cross references at the end of the 
+ option Purge Suspense Records. 
+  
+ Also, wrote post install routine to remove the extraneous 'L' and 'L1' 
+ cross references due to not matching linked master record or linked 
+ master record no longer exists.
+  
+ Routines:  RMPR9DO, RMPR8PG, RMPR8PG1, RMPR163P (post install)
+  
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ It is recommended that this patch be installed during off-peak hours 
+ since  4 options will need to be marked out of order and the patch may 
+ run up to 90 minutes.  The amount of time to install is based on the
+ number of 'L' and 'L1' that need to be examined in the post install.
+  
+    <<< NOTE: The post install run could take up to 1.5 hours to run >>>
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*163)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       RMPR*3.0*163.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//hit enter. When prompted to select the 
+       options you would like to place out of order, enter the following:
+                                                                  
+       RMPR LINK 2319 TO SUSPENSE     Link Patient Record to Suspense
+       RMPR INV PRINT ITEM USAGE      Print Item Usage By Location
+       EDIT/DELETE ISSUE FROM STOCK   Edit/Delete Issue From Stock
+       RMPR PURGE SUS                 Purge Suspense Records
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Prosthetics;**[Patch List]**;13/27/08;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPR163P
+    Before:       n/a   After: B11748560  **163**
+Routine Name: RMPR8PG
+    Before:  B6676473   After:  B7739853  **5,75,140,163**
+Routine Name: RMPR8PG1
+    Before:       n/a   After: B12913194  **163**
+Routine Name: RMPR9DO
+    Before: B90495875   After: B94727310  **59,77,90,60,135,163**
+Routine Name: RMPRPAT3
+    Before: B40605335   After: B41816871  **3,12,25,28,32,41,69,92,99,
+                                           90,162,163**
+Routine Name: RMPRPCE1
+    Before: B30024794   After: B35212918  **62,69,77,78,146,163**
+Routine Name: RMPRPIFD
+    Before:  B6492459   After:  B7240804  **139,163**
+ 
+Routine list of preceding patches: 135, 139, 140, 146, 162
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : SEP 14, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: APR 19, 2012
+Released By : MORRIS,DELISA                 Date Released : APR 25, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

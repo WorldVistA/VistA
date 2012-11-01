@@ -1,0 +1,126 @@
+$TXT Created by LAM,ESTELLA at DEVCRN.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 09/24/10 at 09:54
+=============================================================================
+Run Date: JAN 25, 2011                     Designation: PRS*4*128
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #115                      Status: Released
+                  Compliance Date: FEB 08, 2011
+=============================================================================
+
+
+Subject: SUPPORT FOR NON-PATIENT IDENTITY MANAGEMENT
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+  Issue #1
+  In preparation to support non-patient identity management, the Master
+  Patient Index (MPI) has added new fields and several new cross-references
+  to the PAID EMPLOYEE (#450) file.
+   
+  Trigger cross-references have been added to the following PAID EMPLOYEE
+  (#450) file fields.  These cross-references will support the enumeration
+  or correlation of records within the PAID EMPLOYEE (#450) file.
+  EMPLOYEE NAME (#.01)
+  SSN (#8)
+  SEX (#31)
+  DATE OF BIRTH (#32)
+  RESIDENCE STATE (#186)
+  RESIDENCE ADDRESS LINE 1 (#186.1)
+  RESIDENCE ADDRESS LINE 2 (#186.2)
+  RESIDENCE ADDRESS LINE 3 (#186.3)
+  RESIDENCE ADDRESS ZIP CODE (#186.4)
+   
+  The following new fields have been added to the PAID EMPLOYEE (#450) file.
+  ==========================================================================
+  Enumeration Initiated (#900)
+  Enumeration Completed (#901)
+  Requires Transmission (#902)
+   
+  Issue #2
+  A Health Level Seven (HL7) PMU segment builder has been created to
+  support the enumeration or correlation of records within the PAID
+  EMPLOYEE (#450) file.  This functionality is distributed in routines
+  PRSHL7B and PRSMPI.
+  
+  The following new entries have been added to the PROTOCOL (#101) file.
+  ======================================================================
+  PRS B01 CLIENT
+  PRS B01 CLIENT HLO MPI
+  PRS B01 SERVER
+  PRS B01 SERVER HLO MPI
+  PRS B02 CLIENT
+  PRS B02 CLIENT HLO MPI
+  PRS B02 SERVER
+  PRS B02 SERVER HLO MPI
+   
+  Associated Remedy Ticket(s):
+  ============================
+  There are no associated Remedy Tickets.
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  Bay Pines VA HCS
+  Huntington VAMC
+  VA Montana HCS
+      
+  Installation Instructions:
+  ==========================
+  This patch takes less than 2 minutes to install.  This patch should
+  be loaded during non-peak hours to minimize disruption to the users.
+   
+  1.  Users are allowed on the system during patch installation.
+     
+  2.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  4.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  5.  Use the Install Package(s) option and select the package PRS*4.0*128.
+   
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+   
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSHL7B
+    Before:       n/a   After:  B2954424  **128**
+Routine Name: PRSMPI
+    Before:       n/a   After: B34484715  **128**
+
+=============================================================================
+User Information:
+Entered By  : CHESNEY,CHRISTINE M           Date Entered  : AUG 05, 2010
+Completed By: LINK,CHRISTINE                Date Completed: DEC 22, 2010
+Released By : MCCLARAN,PAM                  Date Released : JAN 25, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

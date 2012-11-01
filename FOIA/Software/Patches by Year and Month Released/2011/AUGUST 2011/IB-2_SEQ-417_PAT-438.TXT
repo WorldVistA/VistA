@@ -1,0 +1,418 @@
+$TXT Created by CARPENTER,KEVIN at CARVDD.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 07/08/11 at 10:18
+=============================================================================
+Run Date: AUG 26, 2011                     Designation: IB*2*438
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #417                      Status: Released
+                  Compliance Date: SEP 26, 2011
+=============================================================================
+
+Associated patches: (v)IB*2*399    <<= must be installed BEFORE `IB*2*438'
+                    (v)IB*2*416    <<= must be installed BEFORE `IB*2*438'
+                    (v)IB*2*444    <<= must be installed BEFORE `IB*2*438'
+
+Subject: E-IV ENHANCEMENTS - PHASE 3 ITERATION 2
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ This patch contains electronic insurance verification (eIV) enhancements,
+ which allows VistA to fully comply with Health Insurance Portability and
+ Accountability Act (HIPAA) guidelines by allowing the generation of
+ service type specific transactions. It will also further enhance the eIV
+ process by modifying existing reports and providing new notification for
+ tracking payer links. This patch also includes real-time insurance
+ verification functionality and changes to eIV inquiries and responses
+ designed to accommodate for transmission of extra information and improved
+ error handling.
+  
+  
+ Complete list of patch items:
+  
+ 1. Eligibility inquiry and response messages are now compliant with
+    HIPAA 5010 X12 electronic transaction standards.
+  
+ 2. Inquiries may now be sent for multiple service codes, specified by
+    user. Responses also include multiple service codes. The selection
+    of service codes is now available in the following options:
+  
+    MCCR Site Parameter Display/Edit  [IBJ MCCR SITE PARAMETERS]
+    Request Electronic Insurance Inquiry  [IBCNE REQUEST INQUIRY]
+  
+ 3. More detailed error information and information about insurance
+    related dates are now available in the eIV Response Report 
+    [IBCNE IIV RESPONSE REPORT] option.
+  
+ 4. Address information now includes country code and country
+    sub-division code for all addresses received in the
+    eligibility/benefit response message.
+  
+ 5. Additional qualifiers for various pieces of data have been added.
+  
+ 6. Automatic periodic check for unlinked/locally inactive payers has
+    been added that sends reminders via Mailman messages to make
+    necessary changes to payer maintenance.
+  
+ 7. Real-time insurance verification functionality is now available.
+    Verification inquiries will be generated and transmitted right
+    after the creation of insurance buffer entry.
+  
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ 20080221 - eIV Phase 3 Iteration 2
+  
+  
+ This patch addresses the following Remedy Tickets:
+ --------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Components Sent With Patch
+ --------------------------
+ The following is a list of files included in this patch:
+  
+  
+                                      UP    SEND  DATA
+                                      DATE  SEC.  COMES  SITE   RSLV
+ FILE #  NAME                         DD    CODE  W/FILE DATA   PTS
+ -------------------------------------------------------------------
+ 2       PATIENT                      YES    YES   NO
+ 350.9   IB SITE PARAMETERS           YES    YES   NO
+ 353.1   PLACE OF SERVICE             YES    YES   YES   OVER   NO
+ 355.33  INSURANCE BUFFER             YES    YES   NO
+ 365     IIV RESPONSE                 YES    YES   NO
+ 365.1   IIV TRANSMISSION QUEUE       YES    YES   NO
+ 365.013 X12 271 SERVICE TYPE         YES    YES   YES   OVER   NO
+ 365.016 X12 271 QUANTITY QUALIFIER   YES    YES   YES   OVER   NO
+ 365.021 X12 271 CONTACT QUALIFIER    YES    YES   YES   OVER   NO
+ 365.026 X12 271 DATE QUALIFIER       YES    YES   YES   OVER   NO
+ 365.027 X12 271 LOOP ID              YES    YES   YES   OVER   NO
+ 365.028 X12 271 REF IDENTIFICATION   YES    YES   YES   OVER   NO
+  
+  
+ The following is a list of fields included in this patch:
+ (Some of the names are abbreviated)
+  
+ Field Name (Number)                  File Name (Number)
+ -------------------                  ------------------
+ INSURED'S COUNTRY (3.13)         INSURANCE TYPE  (sub-file) (2.312)
+ INSURED'S COUNTRY SUBDIV (3.14)  INSURANCE TYPE  (sub-file) (2.312)
+ *SERVICE TYPE (.04)              ELIGIBIL/BENEFIT  (sub-file) (2.322)
+ SUBDIVISION CODE (4.09)          ELIGIBIL/BENEFIT  (sub-file) (2.322)
+ ***ALL SUBFIELDS***              SERVICE TYPES (sub-file) (2.32292) 
+ DEF SERVICE TYPE CODE 1 (60.01)  IB SITE PARAMETERS (350.9)
+ DEF SERVICE TYPE CODE 2 (60.02)  IB SITE PARAMETERS (350.9)
+ DEF SERVICE TYPE CODE 3 (60.03)  IB SITE PARAMETERS (350.9)
+ DEF SERVICE TYPE CODE 4 (60.04)  IB SITE PARAMETERS (350.9)
+ DEF SERVICE TYPE CODE 5 (60.05)  IB SITE PARAMETERS (350.9)
+ DEF SERVICE TYPE CODE 6 (60.06)  IB SITE PARAMETERS (350.9)
+ DEF SERVICE TYPE CODE 7 (60.07)  IB SITE PARAMETERS (350.9)
+ DEF SERVICE TYPE CODE 8 (60.08)  IB SITE PARAMETERS (350.9)
+ DEF SERVICE TYPE CODE 9 (60.09)  IB SITE PARAMETERS (350.9)
+ DEF SERVICE TYPE CODE 10 (60.1)  IB SITE PARAMETERS (350.9)
+ DEF SERVICE TYPE CODE 11 (60.11) IB SITE PARAMETERS (350.9)
+ SITE SEL SERVICE CODE 1 (61.01)  IB SITE PARAMETERS (350.9)
+ SITE SEL SERVICE CODE 2 (61.02)  IB SITE PARAMETERS (350.9)
+ SITE SEL SERVICE CODE 3 (61.03)  IB SITE PARAMETERS (350.9)
+ SITE SEL SERVICE CODE 4 (61.04)  IB SITE PARAMETERS (350.9)
+ SITE SEL SERVICE CODE 5 (61.05)  IB SITE PARAMETERS (350.9)
+ SITE SEL SERVICE CODE 6 (61.06)  IB SITE PARAMETERS (350.9)
+ SITE SEL SERVICE CODE 7 (61.07)  IB SITE PARAMETERS (350.9)
+ SITE SEL SERVICE CODE 8 (61.08)  IB SITE PARAMETERS (350.9)
+ SITE SEL SERVICE CODE 9 (61.09)  IB SITE PARAMETERS (350.9)
+ ***FULL DD BEING SENT***         PLACE OF SERVICE (353.1)
+ SUBSCR ADDRESS COUNTRY (62.07)   INSURANCE BUFFER (355.33)
+ SUBSCR ADDRESS SUBDIV (62.08)    INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 1 (80.01)  INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 2 (80.02)  INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 3 (80.03)  INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 4 (80.04)  INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 5 (80.05)  INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 6 (80.06)  INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 7 (80.07)  INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 8 (80.08)  INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 9 (80.09)  INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 10 (80.1)  INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 11 (80.11) INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 12 (80.12) INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 13 (80.13) INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 14 (80.14) INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 15 (80.15) INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 16 (80.16) INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 17 (80.17) INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 18 (80.18) INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 19 (80.19) INSURANCE BUFFER (355.33)
+ INQ SERVICE TYPE CODE 20 (80.2)  INSURANCE BUFFER (355.33)
+ SUBSCRIBER ADDRESS CNTRY (5.06)  IIV RESPONSE (365)
+ SUBSCRIBER ADDRESS SUBDIV (5.07) IIV RESPONSE (365)
+ PT. RELATIONSHIP - HIPAA (8.01)  IIV RESPONSE (365)
+ *SERVICE TYPE (.04)              ELIGIBLT/BENEFIT (sub-file) (365.02)
+ SUBDIVISION CODE (4.09)          ELIGIBLT/BENEFIT (sub-file) (365.02)
+ ***ALL SUBFIELDS***              REJECT REASONS (sub-file) (365.06)
+ ***ALL SUBFIELDS***              SUBSCRIBER DATES (sub-file) (365.07)
+ ***ALL SUBFIELDS***              SERVICE TYPES (sub-file) (365.292)
+ MANUAL REQUEST DATE/TIME (3.01)  IIV TRANSMISSION QUEUE (365.1)
+ ***FULL DD BEING SENT***         X12 271 SERVICE TYPE (365.013)
+ ***FULL DD BEING SENT***         X12 271 QUANTITY QUALIFIER (365.016)
+ ***FULL DD BEING SENT***         X12 271 CONTACT QUALIFIER (365.021)
+ ***FULL DD BEING SENT***         X12 271 DATE QUALIFIER (365.026)
+ ***FULL DD BEING SENT***         X12 271 LOOP ID (365.027)
+ ***FULL DD BEING SENT***         X12 271 REF IDENTIFICATION (365.028)
+  
+  
+ The following is a list of protocols included in this patch:
+  
+ IBJ EXIT                                        SEND TO SITE
+ IBJP IB SITE SELECTED SERVICE CODES             SEND TO SITE
+ IBJP IIV BATCH EXTRACT EDIT                     DELETE AT SITE
+ IBJP IIV GENERAL EDIT                           SEND TO SITE 
+ IBJP INS VER MENU                               SEND TO SITE
+  
+  
+ The following is a list of List Templates included in this patch:
+  
+ IBJP IIV SITE PARAMETERS                       SEND TO SITE
+ IBJP MCCR PARAMETERS                           SEND TO SITE
+  
+  
+ The following is a list of Options included in this patch:
+  
+ IBCNE EIV PAYER LINK NOTIFY                     SEND TO SITE
+ ZTMQUEUABLE OPTIONS                             USE AS LINK
+  
+  
+ Documentation Retrieval
+ -----------------------
+ Sites may elect to retrieve documentation, using the appropriate FTP
+ capability, and in Binary format, directly from a specific
+ server as follows:
+   
+      Albany          ftp.fo-albany.med.va.gov
+      Hines           ftp.fo-hines.med.va.gov
+      Salt Lake City  ftp.fo-slc.med.va.gov
+      First available server  download.vista.med.va.gov  
+  
+ File Name
+ ---------
+ IB_2_P438_UM_R0811.pdf 
+ IB_2_P438_TM.pdf
+ IB_2_P438_RN.pdf
+  
+ Documentation can also be retrieved from the VistA Documentation Library
+ (VDL) on the Internet at the following address:
+  
+      http://www.va.gov/vdl.
+  
+  
+ Test Sites:
+ -----------
+ Amarillo
+ Madison
+ Heartland East HCS
+ Tennessee Valley HCS
+ White River Junction
+ Wilmington DE 
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The Post-Install routine is automatically deleted after this patch is
+ installed.
+  
+ The Post-Install routine sends a site registration message to the
+ Financial Services Center (FSC), and schedules the payer link notification
+ option to be run weekly.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is recommended that this patch be installed outside of normal working
+ hours when no Integrated Billing users are on the system. However, if
+ installed during the normal workday, it is recommended that the following
+ selections in the OPTION (#19) file, and all of their descendants be
+ disabled to prevent possible conflicts while running the KIDS Install.
+ Other VISTA users will not be affected.
+  
+     MCCR Site Parameter Display/Edit      [IBJ MCCR SITE PARAMETERS]
+     Request Electronic Insurance Inquiry  [IBCNE REQUEST INQUIRY]
+     Process Insurance Buffer              [IBCN INSURANCE BUFFER PROCESS]
+     eIV Menu                              [IBCNE IIV MENU]
+      
+ **** Do not install this patch when the [IBCNE IIV BATCH PROCESS] nightly 
+ eIV background job is running or scheduled to run. ****
+  
+  
+ Install Time - less than 5 minutes
+  
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+  
+ Select Kernel Installation & Distribution System Option: Installation
+                                                          ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+ Select Installation Option:
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter IB*2.0*438):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s)
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch:
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//'  Answer YES, unless your system does this in a
+         nightly TaskMan process.
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//' answer NO
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu
+         Options, and Protocols? NO//' answer YES if installing during
+         working hours
+     e.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':'  Enter the following options:
+  
+       MCCR Site Parameter Display/Edit     [IBJ MCCR SITE PARAMETERS]
+       Request Electronic Insurance Inquiry [IBCNE REQUEST INQUIRY]
+       Process Insurance Buffer             [IBCN INSURANCE BUFFER PROCESS]
+       eIV Menu                             [IBCNE IIV MENU]
+  
+     f.  When prompted 'Enter protocols you wish to mark as 'Out Of
+         Order':' press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 52
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNBCD
+    Before: B84472806   After: B85841141  **82,251,361,371,416,438**
+Routine Name: IBCNBEE
+    Before: B45989984   After: B46140166  **82,184,252,251,356,361,371,
+                                           377,416,438**
+Routine Name: IBCNBES
+    Before:  B5872961   After:  B7989957  **82,184,345,438**
+Routine Name: IBCNBLA1
+    Before: B77705604   After: B83105620  **82,133,149,184,252,271,416,438**
+Routine Name: IBCNBLL
+    Before: B90593913   After: B91467926  **82,149,153,183,184,271,345,
+                                           416,438**
+Routine Name: IBCNBMI
+    Before: B85358524   After: B88135696  **82,184,246,251,299,345,361,
+                                           371,413,416,438**
+Routine Name: IBCNBU1
+    Before: B27592089   After: B33733092  **82,184,263,438**
+Routine Name: IBCNEBF
+    Before: B36248866   After: B46987961  **184,271,361,371,416,438**
+Routine Name: IBCNEDE
+    Before: B20320433   After: B19636990  **184,271,300,416,438**
+Routine Name: IBCNEDE1
+    Before: B37016330   After: B38997890  **184,271,416,438**
+Routine Name: IBCNEDE2
+    Before: B58601408   After: B60928994  **184,271,249,345,416,438**
+Routine Name: IBCNEDE3
+    Before: B57677467   After: B56996333  **184,271,416,438**
+Routine Name: IBCNEDE7
+    Before: B24335491   After: B24645310  **271,416,438**
+Routine Name: IBCNEDEP
+    Before: B83667847   After: B86075479  **184,271,300,416,438**
+Routine Name: IBCNEDEQ
+    Before: B27902088   After: B28120431  **184,271,300,416,438**
+Routine Name: IBCNEHL1
+    Before:B227587441   After:B244020766  **300,345,416,444,438**
+Routine Name: IBCNEHL2
+    Before: B53025337   After: B62824990  **300,345,416,438**
+Routine Name: IBCNEHL4
+    Before: B96805218   After:B136544352  **300,416,438**
+Routine Name: IBCNEHLM
+    Before: B21127175   After: B21127231  **184,251,300,416,438**
+Routine Name: IBCNEHLQ
+    Before: B38577924   After: B43538189  **184,271,300,361,416,438**
+Routine Name: IBCNEHLT
+    Before: B77352947   After: B77895122  **184,251,271,300,416,438**
+Routine Name: IBCNEHLU
+    Before: B30725766   After: B53561238  **184,300,416,438**
+Routine Name: IBCNEML
+    Before:       n/a   After: B14674015  **438**
+Routine Name: IBCNEQU
+    Before: B82573317   After:B109122026  **184,271,416,438**
+Routine Name: IBCNERPE
+    Before: B36361133   After: B42391865  **271,300,416,438**
+Routine Name: IBCNERTQ
+    Before:       n/a   After: B44031881  **438**
+Routine Name: IBCNES
+    Before: B24997316   After: B25439392  **416,438**
+Routine Name: IBCNES1
+    Before:B103884237   After:B120790247  **416,438**
+Routine Name: IBCNSP0
+    Before: B33094001   After: B33972429  **28,43,52,85,93,103,137,229,
+                                           251,363,371,399,438**
+Routine Name: IBJPI
+    Before: B20701382   After: B22090434  **184,271,316,416,438**
+Routine Name: IBJPI2
+    Before:  B5452535   After:  B2442412  **184,271,316,416,438**
+Routine Name: IBJPI5
+    Before:       n/a   After: B37149088  **438**
+Routine Name: IBJPM
+    Before: B10531686   After: B10881232  **39,137,184,271,316,416,438**
+Routine Name: IBY438PO
+    Before:       n/a   After: B16573994  **438**
+ 
+Routine list of preceding patches: 263, 399, 444
+
+=============================================================================
+User Information:
+Entered By  : GURTOVOY,YAN                  Date Entered  : AUG 02, 2010
+Completed By: ROBBINS,BRADLEY               Date Completed: AUG 23, 2011
+Released By : POST,HELEN                    Date Released : AUG 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

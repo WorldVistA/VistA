@@ -1,0 +1,124 @@
+$TXT Created by GRIMES,NANCY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 09/22/11 at 14:59
+=============================================================================
+Run Date: NOV 28, 2011                     Designation: GMRC*3*72
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #65                      Status: Released
+                  Compliance Date: DEC 29, 2011
+=============================================================================
+
+Associated patches: (v)GMRC*3*64   <<= must be installed BEFORE `GMRC*3*72'
+
+Subject: FORWARDED FROM MISSING IN AUDIT INFORMATION OF CONSULT DETAIL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Sites reported that the FORWARDING FROM service is missing from 
+ the consult activity detail in Computerized Patient Record System (CPRS).
+        
+                   
+ ASSOCIATE NSR(S):
+ =================
+ N/A
+  
+ ASSOCIATED REMEDY:
+ =================
+ HD0000000481079 - Tracking Issue. PSPO #2020
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Maryland HCS (Baltimore), MD
+ Oklahoma City VAMC, KS
+ Louisville VAMC, KY
+ VA Greater Los Angeles (West LA), CA
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ Problem:
+ --------
+ When a consult is forwarded from one service to another the FORWARDED FROM
+ service name is missing from the activity section of the consult detail in
+ CPRS.
+  
+  
+ Resolution:
+ -----------
+ Modify routine GMRCSLM4 so that the FORWARDED FROM service name displays
+ in the consult detail of CPRS. 
+  
+           
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system.  Installation time
+ will be less than 2 minutes.
+         
+ 1.  Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+        
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+           Edit and Distribution ...
+           Utilities ...
+           Installation ...
+  
+     Select Kernel Installation & Distribution System Option: Installation
+           1  Load a Distribution
+           2  Verify Checksums in Transport Global
+           3  Print Transport Global
+           4  Compare Transport Global to Current System
+           5  Backup a Transport Global
+           6  Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+        
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for the INSTALL NAME, enter GMRC*3.0*72):
+  
+        a.  Backup a Transport global - This option will create a backup
+            message of any routines exported with this patch.  It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify checksums in transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+  4.  Use the Install Package(s) option and select the package GMRC*3*72.
+  
+       a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install?  NO//", answer NO.
+       b.  When prompted "Want to DISABLE Scheduled Options and Menu
+            Options and Protocols?  NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27,1997;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCSLM4
+    Before: B39443452   After: B39009534  **4,12,15,22,50,64,72**
+ 
+Routine list of preceding patches: 64
+
+=============================================================================
+User Information:
+Entered By  : GRIMES,NANCY                  Date Entered  : MAY 02, 2011
+Completed By: HULET,LEE ANN                 Date Completed: NOV 15, 2011
+Released By : BOSE,MARY ELLEN               Date Released : NOV 28, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

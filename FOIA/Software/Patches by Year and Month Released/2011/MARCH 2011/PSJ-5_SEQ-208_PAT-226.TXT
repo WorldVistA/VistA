@@ -1,0 +1,145 @@
+
+=============================================================================
+Run Date: MAR 07, 2011                     Designation: PSJ*5*226
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #208                      Status: Released
+                  Compliance Date: JUL 19, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*197   <<= must be installed BEFORE `PSJ*5*226'
+
+Subject: Intravenous Bags
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is being released in conjunction with CPRS GUI v28.  CPRS GUI 
+ version 28 consists of five host files: PSS_1_151.KID, PSS_1_142.KID, 
+ CPRS28_REQUIRED.KID, OR_PSJ_PXRM_28.KID and CPRS28_RELATED.KID. These 
+ five host files contain software that support CPRS GUI v28 
+ functionality.  The host files were created to simplify installation at 
+ Veterans Health Administration (VHA) facilities and to assist in the 
+ phased implementation release method for CPRS v28.  CPRS v28 will follow 
+ a phased implementation.  To see current status and target dates for 
+ Sites/VISN/Region please refer to the following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+  
+ Please refer to the "CPRS GUI v.28 and Associated Patches Installation 
+ Guide" for installation sequence information.  This document is exported 
+ as OR_30_280IG.doc and OR_30_280IG.pdf and is included in OR_30_280.ZIP.
+  
+ Installation and set-up information specific to OR*3*280 is included in 
+ "CPRS GUI v.28 and Associated Patches Installation Guide".   
+  
+ Patch information:
+ PSS patches exported as two host files support CPRS v28 functionality.
+ PSS_1_142.KID
+ PSS_1_151.KID
+  
+ CPRS28_REQUIRED.KID includes the required patches needed to support CPRS 
+ GUI v28 functionality.  It includes builds for the following patches:
+ OR*3.0*293
+ GMRC*3.0*66
+ GMRA*4.0*45
+  
+ OR_PSJ_PXRM_28.KID includes the CPRS, Pharmacy and Clinical Reminders 
+ patches required for CPRS GUI v28.  It includes builds for the following 
+ patches: 
+ OR*3.0*280
+ PSJ*5.0*226
+ PXRM*2.0*16
+  
+ CPRS28_RELATED.KID includes the related patches needed to support CPRS 
+ GUI v28 functionality.  It includes builds for the following patches:
+ GMRC*3.0*64
+ GMTS*2.7*90
+ OR*3.0*337
+  
+ Installation of these five host files should be coordinated among the 
+ packages affected because these host files will install the software 
+ needed to implement CPRS GUI v28.
+  
+ -------------------------------------------------------------------------
+  
+ This patch sends and receives Intravenous (IV) bags information between
+ Inpatient Medications and Computerized Patient Record System (CPRS) for an
+ IV order.  The data is being stored in the Additive Frequency field of 
+ the RXC segment.
+  
+ The Reminder Order Checks messages coming from CPRS can be quite long and 
+ this patch has modified a routine (PSJHL4) to store all the data correctly
+ in the NON-VERIFIED ORDERS file (#53.1).
+  
+  
+ Test Sites:
+ -----------
+ BOISE, ID
+ CHARLESTON, SC
+ CLEVELAND, OH
+ HEARTLAND-EAST HCS
+ LOMA LINDA, CA
+ NORTHERN CALIFORNIA HCS
+ PALO ALTO HCS
+ PHILADELPHIA, PA
+ SAN DIEGO, CA
+ TAMPA, FL
+ TUSCALOOSA, AL
+   
+  
+ Documentation Retrieval:
+ ========================
+  
+ Updated documentation describing the new functionality introduced by this
+ patch will be downloaded to sites from the FTP address as directed by the
+ CPRS Implementation team.
+  
+ This documentation will be in the form of Adobe Acrobat files. The updated
+ documentation associated with this patch is:
+  
+ FILE NAME                     DESCRIPTION
+ --------------------------    ----------------------------
+ PSJ_5_TM_R0211.PDF            Inpatient Medications V. 5.0 Technical
+                               Manual/Security Guide
+  
+ PSJ_5_P226_TM_CP.PDF          Inpatient Medications V. 5.0 Technical
+                               Manual/Security Guide Change Pages
+  
+ Once released, documentation may be retrieved from VISTA Documentation
+ Library (VDL) on the Internet at the following address,
+ http://www.va.gov/vdl
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJHL3
+    Before: B65300768   After: B66158358  **1,11,14,40,42,47,50,56,58,
+                                           92,101,102,123,110,111,152,134,
+                                           226**
+Routine Name: PSJHL4
+    Before: B74448907   After: B75570898  **1,12,27,34,40,42,55,47,50,
+                                           56,58,98,85,105,107,110,111,
+                                           154,134,197,226**
+Routine Name: PSJHL4A
+    Before: B57752880   After: B58072219  **105,111,154,170,159,134,197,226**
+ 
+Routine list of preceding patches: 197
+
+=============================================================================
+User Information:
+Entered By  : VO,MAI                        Date Entered  : MAY 19, 2009
+Completed By: YARBER,KIMBERLY               Date Completed: MAR 07, 2011
+Released By : CAMPBELL,THOMAS               Date Released : MAR 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
