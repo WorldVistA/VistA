@@ -152,8 +152,20 @@ VistA.write('1')
 VistA.wait('INPUT TO WHAT FILE')
 VistA.write('KERNEL SYSTEM PARAMETERS\rVOLUME SET\r\r')
 VistA.wait('Select KERNEL SYSTEM PARAMETERS DOMAIN NAME:')
-VistA.write('${VISTA_SITE_NAME}\r\r${VOLUME_SET}\rY\r500\rN\r\r\r')
-
+VistA.write('${VISTA_SITE_NAME}\r')
+VistA.wait('VOLUME SET')
+VistA.write('${VOLUME_SET}')
+index = VistA.multiwait(['Are you adding','VOLUME SET'])
+if index==0:
+  VistA.write('Y')
+elif index==1:
+  VistA.write('')
+VistA.wait('MAX SIGNON ALLOWED')
+VistA.write('500')
+VistA.wait('LOG SYSTEM RT')
+VistA.write('N')
+VistA.wait('VOLUME SET')
+VistA.write('\r\r')
 
 # Start TaskMan
 VistA.wait(PROMPT,60)
