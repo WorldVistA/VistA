@@ -233,7 +233,7 @@ endforeach()
 
 IF(CLEAN_DATABASE)
   set(VISTA_SITE_NAME "DEMO.OSEHRA.ORG" CACHE STRING "Name to set for the site address when initializing VistA instance.  Default is 'DEMO.OSEHRA.ORG'")
-  set(RoutineImportFile "${OSEHRA_PATH}/routines.ro")
+  set(RoutineImportFile "${VISTA_BINARY_DIR}/routines.ro")
   configure_file(${VISTA_SOURCE_DIR}/ImportRG.cmake.in ${VISTA_BINARY_DIR}/ImportRG.cmake @ONLY)
   set(logfile "${VISTA_BINARY_DIR}/Testing/Log/RoutineImport.log")
   configure_file(${VISTA_SOURCE_DIR}/RoutineImport.py.in ${VISTA_BINARY_DIR}/RoutineImport.py)
