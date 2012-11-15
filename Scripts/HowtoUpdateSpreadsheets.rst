@@ -4,6 +4,20 @@ Howto Update Spreadsheets
 This document describes how to update the ``Packages/Uncategorized/*.csv`` FOIA
 patch spreadsheets using the latest ``.xls`` files from the VA VistA FOIA site.
 
+Branch
+------
+
+Create a branch, say ``upstream-spreadsheets``, starting from the last commit
+that updated the ``.csv`` files from the FOIA site::
+
+ base=$(git rev-list master -n 1 --author='va.gov' -- 'Packages/Uncategorized/*.csv') &&
+ git checkout -b upstream-spreadsheets $base
+
+It is important to base the update branch on a version that has no other
+modifications since the last update from the FOIA site.  This way the branch
+represents only the upstream changes and can be merged with changes made in
+other branches instead of overwriting them.
+
 Download
 --------
 
@@ -46,3 +60,15 @@ Add the changes and commit them with the VA as author::
 
 Mention in the commit message this instructions file and the URL of the
 ``.xls`` file downloaded.
+
+Merge
+-----
+
+Create a branch, say ``update-spreadsheets``, and merge the upstream changes::
+
+ git checkout -b update-spreadsheets master
+ git merge upstream-spreadsheets
+
+If there are conflicts resolve them and commit with a message describing how.
+
+Finally, push this topic for review like any other change.
