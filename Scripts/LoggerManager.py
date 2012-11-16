@@ -26,3 +26,12 @@ def initConsoleLogging(defaultLevel=logging.INFO,
   consoleHandler.setLevel(defaultLevel)
   consoleHandler.setFormatter(formatter)
   logger.addHandler(consoleHandler)
+
+def initFileLogging(outputFileName, defaultLevel=logging.INFO,
+                    formatStr = '%(asctime)s %(levelname)s %(message)s'):
+  logger.setLevel(defaultLevel)
+  fileHandle = logging.FileHandler(outputFileName, 'w')
+  formatter = logging.Formatter(formatStr)
+  fileHandle.setLevel(defaultLevel)
+  fileHandle.setFormatter(formatter)
+  logger.addHandler(fileHandle)

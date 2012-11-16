@@ -104,6 +104,8 @@ class KIDSPatchInfo(object):
     """ related to custom intaller """
     self.hasCustomInstaller = False
     self.customInstallerPath = None
+    """ related to FOIA dependency """
+    self.csvDepPatch = None
   def __str__(self):
     return ("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,"
             " %s, %s, %s, %s\n%s" %
