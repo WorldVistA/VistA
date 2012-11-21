@@ -167,11 +167,11 @@ class ConnectWinCache(ConnectMUMPS):
     newpath, filename = os.path.split(path)
     self.write('D ^%SYS.MONLBL')
     self.wait('choice')
-    self.write('5')
-    self.wait('summary')
-    self.write('Y')
+    self.write('6')
+    self.wait('Routine number')
+    self.write('*')
     self.wait('FileName')
-    self.write(newpath + '/' + filename.replace('.log', '.cmcov'))
+    self.write(newpath + '/Coverage/' + filename.replace('.log', '.cmcov').replace('.txt','.cmcov'))
     self.wait('continue')
     self.write('')
     self.wait('choice')
@@ -212,6 +212,43 @@ class ConnectLinuxCache(ConnectMUMPS):
     else:
       raise IndexError('Input to multiwait function is not a list')
 
+  def startCoverage(self, routines=['*']):
+    self.write('D ^%SYS.MONLBL')
+    rval = self.multiwait(['Stop Monitor', 'Start Monitor'])
+    if rval == 0:
+        self.write('1')
+        self.wait('Start Monitor')
+        self.write('1')
+    elif rval == 1:
+        self.write('1')
+    else:
+        raise TestHelper.TestError('ERROR starting monitor, rbuf: ' + rval)
+    for routine in routines:
+        self.wait('Routine Name')
+        self.write(routine)
+    self.wait('Routine Name', tout=60)
+    self.write('')
+    self.wait('choice')
+    self.write('2')
+    self.wait('choice')
+    self.write('1')
+    self.wait('continue')
+    self.write('\r')
+
+  def stopCoverage(self, path):
+    newpath, filename = os.path.split(path)
+    self.write('D ^%SYS.MONLBL')
+    self.wait('choice')
+    self.write('6')
+    self.wait('Routine number')
+    self.write('*')
+    self.wait('FileName')
+    self.write(newpath + '/Coverage/' + filename.replace('.log', '.cmcov').replace('.txt','.cmcov'))
+    self.wait('continue')
+    self.write('')
+    self.wait('choice')
+    self.write('1\r')
+
 class ConnectLinuxGTM(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
     super(ConnectMUMPS, self).__init__()
@@ -249,7 +286,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
     else:
       raise IndexError('Input to multiwait function is not a list')
 
-  def startCoverage(self, routines):
+  def startCoverage(self, routines=['*']):
     self.write('K ^ZZCOVERAGE VIEW "TRACE":1:"^ZZCOVERAGE"')
 
   def stopCoverage(self, path):
@@ -266,7 +303,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
     self.wait('Format')
     self.write('ZWR')
     self.wait('device')
-    self.write(path + '/' + filename.replace('.log', '.mcov'))
+    self.write(path + '/Coverage/' + filename.replace('.log', '.mcov').replace('.txt','.mcov'))
 
 def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA', location='127.0.0.1'):
 

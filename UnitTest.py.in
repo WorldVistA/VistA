@@ -15,7 +15,7 @@
 #---------------------------------------------------------------------------
 
 ### set up the IO that is need by unit test
-import sys
+import sys,os
 sys.path = ['${VISTA_SOURCE_DIR}/lib/vista'] + sys.path
 
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
@@ -27,6 +27,10 @@ if VistA.type=='cache':
     VistA.ZN('${NAMESPACE}')
   except IndexError,no_namechange:
     pass
+
+if '${USE_COVERAGE}'=='ON':
+  VistA.wait(PROMPT)
+  VistA.startCoverage()
 VistA.wait(PROMPT)
 VistA.write('S DUZ=1 D Q^DI')
 VistA.wait('Select OPTION:')
@@ -37,4 +41,6 @@ VistA.wait('DEVICE:')
 VistA.write('HOME;300;999')
 VistA.wait(PROMPT)
 ${send_commands}
+if '${USE_COVERAGE}'=='ON':
+  VistA.stopCoverage(os.path.normpath('${VISTA_BINARY_DIR}/Testing/Temporary/UnitTest${package_file_name}.log'))
 VistA.write('HALT')
