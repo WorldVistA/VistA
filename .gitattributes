@@ -4,6 +4,8 @@
 
 # No whitespace or size checks in third-party content
 *.csv           -whitespace
+*.GBLs          -whitespace  hooks.MaxObjectKiB=0
+*.GBL           -whitespace  hooks.MaxObjectKiB=0
 *.KIDs          -whitespace  hooks.MaxObjectKiB=0
 *.KID           -whitespace  hooks.MaxObjectKiB=0
 *.txt           -whitespace  hooks.MaxObjectKiB=0

@@ -26,7 +26,7 @@ invocation as shown here::
  } |
  wget --continue --input-file=- --recursive --wait=10 --random-wait \
       --user-agent= --execute robots=off --reject 'index.html*' --level=10 \
-      --accept '*.KID,*.KIDs,*.TXT,*.txt' \
+      --accept '*.GBL,*.GBLs,*.KID,*.KIDs,*.TXT,*.txt' \
       --no-parent --force-directories --no-host-directories --cut-dirs=1
 
 Use exactly the ``wget`` command-line shown.  Vary only the list of URLs.
@@ -38,7 +38,8 @@ Cleanup
 
 Convert text files to LF-only newlines::
 
- find FOIA -regex '.*\.\(KID\|KIDs\|TXT\|txt\)$' -print0 |xargs -0 fromdos
+ find FOIA -regex '.*\.\(GBL\|GBLs\|KID\|KIDs\|TXT\|txt\)$' -print0 |
+ xargs -0 fromdos
 
 Commit
 ------
