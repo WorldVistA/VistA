@@ -20,9 +20,11 @@ import re
 import tempfile
 import shutil
 import argparse
+import glob
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
 from LoggerManager import logger
 from VistAPackageInfoFetcher import VistAPackageInfoFetcher
+from VistAGlobalImport import VistAGlobalImport
 
 DEFAULT_INSTALL_DUZ = 17 # VistA-FOIA user, "USER,SEVENTEEN"
 """ Default Installer for KIDS Patches """
@@ -97,6 +99,7 @@ class DefaultKIDSPatchInstaller(object):
   def __init__(self, kidsFile, kidsInstallName, seqNo=None, logFile=None,
                multiBuildList = None, duz = DEFAULT_INSTALL_DUZ, extra=None):
     assert os.path.exists(kidsFile), ("kids file does not exist %s" % kidsFile)
+    self._origKidsFile = kidsFile
     if len(kidsFile) >= self.KIDS_FILE_PATH_MAX_LEN:
       dest = os.path.join(tempfile.gettempdir(), os.path.basename(kidsFile))
       shutil.copy(kidsFile, dest)
@@ -330,14 +333,16 @@ class DefaultKIDSPatchInstaller(object):
     infoFetcher = VistAPackageInfoFetcher(vistATestClient)
     installStatus = infoFetcher.getInstallationStatus(self._kidsInstallName)
     """ select KIDS installation workflow based on install status """
+    if infoFetcher.isInstallCompleted(installStatus):
+      logger.warn("install %s is already completed!" %
+                   self._kidsInstallName)
+      return True
+    # run pre-installation preparation
+    self.preInstallationWork(vistATestClient)
     if infoFetcher.isNotInstalled(installStatus):
       return self.normalInstallation(vistATestClient, reinst)
     elif infoFetcher.isInstallStarted(installStatus):
       return self.restartInstallation(vistATestClient)
-    elif infoFetcher.isInstallCompleted(installStatus):
-      logger.error("install %s is already completed!" %
-                   self._kidsInstallName)
-      return False
     return True
   #---------------------------------------------------------------------------#
   #  Public override methods sections
@@ -397,10 +402,35 @@ class DefaultKIDSPatchInstaller(object):
     logger.error("Installation failed for %s" % self._kidsInstallName)
     connection.send("\r")
 
+  """ default action for pre-installation preperation.
+    right now it is just to import the globals file under
+    the same directory as the KIDs directory
+    please override or enhance it if more action is needed
+  """
+  def preInstallationWork(self, vistATestClient, extra=None):
+    """ ignore the multi-build patch for now """
+    if self._multiBuildList is not None:
+      return
+    globalFiles = getGlobalFileList(os.path.dirname(self._origKidsFile))
+    if globalFiles is None or len(globalFiles) == 0:
+      return
+    globalImport = VistAGlobalImport()
+    for glbFile in globalFiles:
+      logger.info("Import global file %s" % (glbFile))
+      globalImport.importGlobal(vistATestClient, glbFile)
 
 #---------------------------------------------------------------------------#
 #  Utilities Functions
 #---------------------------------------------------------------------------#
+
+""" utility function to find the all global files ends with GLB/s """
+def getGlobalFileList(inputDir):
+  if not os.path.exists(inputDir):
+    return None
+  globalFiles = glob.glob(os.path.join(inputDir, "*.GBLs"))
+  globalFiles.extend(glob.glob(os.path.join(inputDir, "*.GBL")))
+  return globalFiles
+
 """ utility function to find the name associated the DUZ """
 def getPersonNameByDuz(inputDuz, vistAClient):
   logger.info ("inputDuz is %s" % inputDuz)
