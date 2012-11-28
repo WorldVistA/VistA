@@ -37,13 +37,13 @@ Windows Platform
 
 * `winpexpect`_: A version of pexpect that works under Windows.  The easiest way to install winpexpect package is to use python easy_install script::
 
-  <path_to_python_install_dir>\Scripts\easy_install winpexpect
+   <path_to_python_install_dir>\Scripts\easy_install winpexpect
 
- You can also download source code directly from source section of `winpexpect`_ and install
- it using setup tools::
+  You can also download source code directly from source section of `winpexpect`_ and install
+  it using setup tools::
 
-  cd <winpexpect_source_dir>
-  <path_to_python_install_dir>\python setup.py install
+   cd <winpexpect_source_dir>
+   <path_to_python_install_dir>\python setup.py install
 
 * `pwin32 extension`_: A python windows extension used by winpexpect.
   To install python windows extension, please go to `pwin32 extension files`_ section
