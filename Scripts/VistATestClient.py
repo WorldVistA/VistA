@@ -80,14 +80,21 @@ class VistATestClient(object):
     return self
   def __exit__(self, exc_type, exc_value, traceback):
     connection = self._connection
-    if connection is not None:
+    if connection is not None and connection.isalive():
+    # try to close the connection gracefully
       try:
-        self.waitForPrompt(3)
-        connection.send("H\r")
+        for i in range(0,3):
+          connection.send("^\r") # get out of the MENU prompt by sending ^
+          connection.send("\r") # get out of the MENU prompt by sendng \r
+        connection.send("Q\r") # clean up any stack
+        self.waitForPrompt(2) # wait for VistA prompt for 2 seconds
+        connection.send("H\r") # Halt VistA connection
       except TIMEOUT as ex:
         pass
-      self._connection.close()
-      self._connection.terminate()
+      if isLinuxSystem():
+        """ pexpect close() will close all open handlers and is non-blocking """
+        self._connection.close()
+    self._connection.terminate()
     return
   def __del__(self):
     if self._connection is not None:
