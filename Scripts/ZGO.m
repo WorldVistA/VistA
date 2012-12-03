@@ -1,4 +1,4 @@
-ZGO ; Save globals to ZWR files organized by FileMan
+ZGO ; Save globals to ZWR files organized by FileMan ; 12/3/12 4:06P
  ;---------------------------------------------------------------------------
  ; Copyright 2011 The Open Source Electronic Health Record Agent
  ;
@@ -84,7 +84,7 @@ FILE(N)
 GLOBALS
  N G
  X CONFIG("GLOBALS")
- F G="^ROUTINE","^TMP","^UTILITY","^XUTL","^%ZOSF","^XTMP" K GLOBALS(G)
+ F G="^ROUTINE","^TMP","^UTILITY","^XUTL","^%ZOSF","^XTMP","^DISV" K GLOBALS(G)
  Q
 GLOBAL(G) ; Dump global G
  N IO S IO=$$OPENGBL(G)
