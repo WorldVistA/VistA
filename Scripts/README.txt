@@ -4,16 +4,29 @@ full VistA instance in a fresh Linux installation.
 The scripts must be run in the following order
 
 
-      0) bootstrapREHLserver.sh
-      1) installREHLPackages.sh
-      2) setupREHLTimeZone.sh
-      3) installGTM.sh
-      4) installCMakeinUserAccount.sh
-      5) installVistAinUserAccount.sh
-      6) installVistAFOIARepository.sh
-      7) installOSEHRATesting.sh
-      8) installMUnit.sh
-      9) installBashConfiguration.sh
+      1) bootstrapREHLserver.sh
+      2) installREHLPackages.sh
+      3) setupREHLTimeZone.sh
+
+if using GTM:
+
+      1) installGTM.sh
+      2) GTM/installVistAinUserAccountForGTM.sh
+      3) GTM/installBashConfigurationForGTM.sh
+
+if using Cache:
+
+      1) Cache/configureCache.sh
+      2) Cache/createCacheUser.sh
+
+continue for any case (GTM or Cache):
+
+      1) installCMakeinUserAccount.sh
+      2) installVistAinUserAccount.sh
+      3) installVistAFOIARepository.sh
+      4) installOSEHRATesting.sh
+      5) installMUnit.sh
+      6) installBashConfiguration.sh
 
 Once all this environment is setup
 a Dashboar build can be triggered by calling:
