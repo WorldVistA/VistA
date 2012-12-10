@@ -31,13 +31,3 @@ apt-get -y upgrade
 # Install baseline packages
 # TODO: detect virtualbox and install additions?
 apt-get install -y git xinetd
-
-# Create the user.
-useradd $1
-
-# Change the user's password.
-passwd $1
-
-# Add the user to the list of sudoers
-echo "$1  ALL=(ALL)   ALL" > /etc/sudoers.d/customsudoers
-chmod 0440 /etc/sudoers.d/customsudoers
