@@ -18,12 +18,6 @@
 # Install GT.M using gtminstall script
 # This utility requires root privliges
 
-# Required utilities:
-# TODO: add these to bootstrap scripts, doesn't hurt if utilities are already
-#       installed
-# wget
-# sha1sum
-
 # Make sure we are root
 if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root" 1>&2
@@ -38,19 +32,34 @@ wget -c --trust-server-names=on http://downloads.sourceforge.net/project/fis-gtm
 
 # Verify hash as we are going to make it executable
 # TODO: get hash and compare
-# sha1sum gtminstall
+sha1sum -c --status gtminstall_SHA1
+if [ $? -gt 0 ]; then
+    echo "Something went wrong downloading gtminstall"
+    exit $?
+fi
+
+# Get kernel.shmmax to determine if we can use 32k strings
+shmmax=$(sysctl -n kernel.shmmax)
+
+if [ $shmmax -ge 67108864 ]; then
+    echo "Current shared memory maximum is equal to or greater than 64MB"
+    echo "Current shmmax is: " $shmmax
+else
+    echo "Current shared memory maximum is less than 64MB"
+    echo "Current shmmax is: " $shmmax
+    echo "Setting shared memory maximum to 64MB"
+    echo "kernel.shmmax = 67108864" >> /etc/sysctl.conf
+    sysctl -w kernel.shmmax=67108864
+fi
 
 # Make it executable
 chmod +x gtminstall
-
-# Create a group for gtm users
-groupadd gtm
 
 # Accept most defaults for gtminstall
 # --group=gtm - override default to use gtm group
 # --ucaseonly-utils - override default to install only uppercase utilities
 #                     this follows VistA convention of uppercase only routines
-./gtminstall --group=gtm --ucaseonly-utils
+./gtminstall --ucaseonly-utils
 
 # remove installgtm script as it is unnecessary
 rm ./gtminstall
