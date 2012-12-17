@@ -30,4 +30,4 @@ apt-get -y upgrade
 
 # Install baseline packages
 # TODO: detect virtualbox and install additions?
-apt-get install -y git xinetd
+apt-get install -y git xinetd perl wget ssh
