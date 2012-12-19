@@ -1,6 +1,5 @@
-import sys
+import sys,os
 sys.path = [sys.argv[7] + '/lib/vista'] + sys.path
-
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
 
 VistA=ConnectToMUMPS(sys.argv[1],sys.argv[3],sys.argv[4])
@@ -11,6 +10,10 @@ if VistA.type=='cache':
     VistA.ZN(sys.argv[4])
   except IndexError,no_namechange:
     pass
+
+if sys.argv[8]=='ON':
+  VistA.wait(PROMPT)
+  VistA.startCoverage()
 VistA.wait(PROMPT)
 VistA.write('K ^XUTL("XQ",$J)')
 VistA.write('D ^XINDEX')
@@ -44,4 +47,6 @@ VistA.write('')
 VistA.wait('continue:',60)
 VistA.write('')
 VistA.wait('--- END ---',60)
+if sys.argv[8]=='ON':
+  VistA.stopCoverage(os.path.normpath(sys.argv[1]))
 VistA.write('h')
