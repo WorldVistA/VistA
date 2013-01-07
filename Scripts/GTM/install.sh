@@ -56,7 +56,6 @@ fi
 chmod +x gtminstall
 
 # Accept most defaults for gtminstall
-# --group=gtm - override default to use gtm group
 # --ucaseonly-utils - override default to install only uppercase utilities
 #                     this follows VistA convention of uppercase only routines
 ./gtminstall --ucaseonly-utils
