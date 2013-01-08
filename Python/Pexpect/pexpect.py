@@ -950,7 +950,7 @@ class spawn (object):
         if self.logfile_send is not None:
             self.logfile_send.write (s)
             self.logfile_send.flush()
-        c = os.write(self.child_fd, s.encode('ascii'))
+        c = os.write(self.child_fd, s.encode("utf-8"))
         return c
 
     def sendline(self, s=''):
@@ -1499,7 +1499,7 @@ class spawn (object):
         """
 
         while data != '' and self.isalive():
-            n = os.write(fd, data.encode('ascii'))
+            n = os.write(fd, data.encode("utf-8"))
             data = data[n:]
 
     def __interact_read(self, fd):
@@ -1522,7 +1522,7 @@ class spawn (object):
                 if self.logfile is not None:
                     self.logfile.write (data)
                     self.logfile.flush()
-                os.write(self.STDOUT_FILENO, data.encode('ascii'))
+                os.write(self.STDOUT_FILENO, data.encode("utf-8"))
             if self.STDIN_FILENO in r:
                 data = self.__interact_read(self.STDIN_FILENO)
                 if input_filter: data = input_filter(data)
