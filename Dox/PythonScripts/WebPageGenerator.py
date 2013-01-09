@@ -38,8 +38,12 @@ from CrossReference import *
 
 MAX_DEPENDENCY_LIST_SIZE = 20 # Do not generate the graph if have more than 20 nodes
 PROGRESS_METER = 1000
-LOCAL_VARIABLE_SECTION_HEADER_LIST = ["Name &nbsp;(>>&nbsp;not killed explicitly)", '''Line Occurrences &nbsp;(* Changed, &nbsp;! Killed, &nbsp;~ Newed)''']
-GLOBAL_VARIABLE_SECTION_HEADER_LIST = ["Name", '''Line Occurrences &nbsp;(* Changed, &nbsp;! Killed)''']
+LOCAL_VARIABLE_SECTION_HEADER_LIST = [
+      "Name &nbsp;(>>&nbsp;not killed explicitly)",
+      '''Line Occurrences &nbsp;(* Changed, &nbsp;! Killed, &nbsp;~ Newed)''']
+GLOBAL_VARIABLE_SECTION_HEADER_LIST = [
+     "Name",
+      '''Line Occurrences &nbsp;(* Changed, &nbsp;! Killed)''']
 DEFAULT_VARIABLE_SECTION_HEADER_LIST = ["Name", "Line Occurrences"]
 LINE_TAG_PER_LINE = 10
 # constants for html page
@@ -63,7 +67,8 @@ TOP_INDEX_BAR_PART = """
 <a href="routines.html" class="qindex">Routine Alphabetical List</a>&nbsp;&nbsp;
 <a href="globals.html" class="qindex">Global Alphabetical List</a>&nbsp;&nbsp;
 <a href="filemanfiles.html" class="qindex">FileMan Files List</a>&nbsp;&nbsp;
-<a href="Packages_Namespace_Mapping.html" class="qindex">Package-Namespace Mapping</a>&nbsp;&nbsp;
+<a href="Packages_Namespace_Mapping.html" class="qindex">
+Package-Namespace Mapping</a>&nbsp;&nbsp;
 <BR>
 </center>
 """
@@ -84,7 +89,7 @@ SOURCE_CODE_BODY_PART = """
 <body bgcolor="#ffffff" onload="prettyPrint()">
 """
 CODE_PRETTY_JS_CODE = """
-<link href="code_pretty_scripts/prettify.css" type="text/css" rel="stylesheet" />
+<link href="code_pretty_scripts/prettify.css" type="text/css" rel="stylesheet"/>
 <script type="text/javascript" src="code_pretty_scripts/prettify.js"></script>
 <script type="text/javascript" src="code_pretty_scripts/lang-mumps.js"></script>
 """
@@ -92,24 +97,50 @@ INDEX_HTML_PAGE_HEADER = """
 <div class="header">
   <div class="headertitle">
   </div>
- <h1>VistA Cross Reference Documentation (Beta)</h1>
+ <h1>VistA Cross Reference Documentation</h1>
 </div>
 """
 INDEX_HTML_PAGE_OSEHRA_IMAGE_PART = """
 <br/>
-<center>
+<left>
 <div class="content">
-<a href="http://www.osehra.org"><img src="http://www.osehra.org/sites/default/files/commons_osehra_logo.png" style="border-width:0" alt="OSEHRA" /></a>
+<a href="http://www.osehra.org">
+<img src="http://www.osehra.org/profiles/drupal_commons/themes/commons_osehra_earth/logo.png"
+style="border-width:0" alt="OSEHRA" /></a>
 </div>
-</center>
+</left>
 <br/>
 """
 INDEX_HTML_PAGE_INTRODUCTION_PART = """
 <h2><a class ="anchor" id="intro"></a>Introduction</h2>
-<p>Welcome to VistA Cross Reference Documentation Page. This documentation is generated with the results of XINDEX utility running against the VistA code base pulled from the <a href="http://code.osehra.org"/>repository</a>. This documentation provides direct dependency information among packages, as well as direct call graph information and source code for individual routines.
+<p>
+Welcome to VistA Cross Reference Documentation Page.
+This documentation is generated with the results of XINDEX and
+ FileMan Data Dictionary utility running against the VistA code base pulled
+ from the <a href="http://code.osehra.org/gitweb?p=VistA-FOIA.git;a=summary"/>
+repository</a>.
+This documentation provides direct dependency information among packages,
+ among FileMan files,  between globals and routines,
+ as well as direct call/caller graphs and source code for individual routine.
 <br/>
 <h2><a class ="anchor" id="howto"></a>How to use this documentation</h2>
-To view information related to a specified package like dependency graph and list, please click "Package List" link at the top of this page and click the package you are interested in. To view information related to a specified routine/global, you can either find the routine/global via "Routine Alphabetical List"/"Global Alphabetical List" link or under the individual package page.
+<ul><li>
+To view information related to a specified package like dependency graph,
+assigned namespaces, FileMan files, globals and routines list, please click
+ "<a href="packages.html" class="qindex">Package List</a>" link at the top
+ and select the package that you are interested in.
+</li><li>
+To view information related to a specified FileMan file like fields,
+ direct access routines and FileMan pointer dependency list, please click
+ "<a href="filemanfiles.html" class="qindex">FileMan Files List</a>" link at
+ the top and select the FileMan file that you are interested in.
+</li><li>
+To view information related to a specified routine/global, you can either
+find the routine/global via
+ "<a href="routines.html" class="qindex">Routine Alphabetical List</a>"/
+"<a href="globals.html" class="qindex">Global Alphabetical List</a>" link or
+ under the individual package page.
+</li></ul>
 <br/>
 <br/>
 """
@@ -168,7 +199,6 @@ def normalizePackageName(packageName):
 def normalizeGlobalName(globalName):
     import base64
     return base64.urlsafe_b64encode(globalName)
-    #return globalName.replace('^', '').replace('%', '_').replace('.', '_').replace("(", '_').replace('"', '_').replace(' ', '_').replace('/','_').replace('\\','_').replace('$','_').replace('?','_')
 
 def getRoutineSourceCodeFileByName(routineName,
                                    packageName,
@@ -245,14 +275,16 @@ def getPackageDependencyHtmlFile(packageName, depPackageName):
 def getPackagePackageDependencyHyperLink(packageName,
                                          depPackageName,
                                          name,
+                                         tooltip,
                                          dependency=True):
     if dependency:
         edgeLinkArch = packageName
     else:
         edgeLinkArch = depPackageName
-    return "<a href=\"%s#%s\">%s</a>" % (getPackageDependencyHtmlFile(packageName,
+    return "<a href=\"%s#%s\", title=\"%s\">%s</a>" % (getPackageDependencyHtmlFile(packageName,
                                                                       depPackageName),
                                          edgeLinkArch,
+                                         tooltip,
                                          name)
 def writeTableHeader(headerList, outputFile):
     outputFile.write("<tr>\n")
@@ -367,9 +399,9 @@ class WebPageGenerator:
         outputFile.write(GOOGLE_ANALYTICS_JS_CODE)
         outputFile.write(HEADER_END)
         outputFile.write(DEFAULT_BODY_PART)
+        outputFile.write(INDEX_HTML_PAGE_OSEHRA_IMAGE_PART)
         outputFile.write(INDEX_HTML_PAGE_HEADER)
         outputFile.write(TOP_INDEX_BAR_PART)
-        outputFile.write(INDEX_HTML_PAGE_OSEHRA_IMAGE_PART)
         outputFile.write(INDEX_HTML_PAGE_INTRODUCTION_PART)
         self.__generateGitRepositoryKey__(outputFile)
         self.__includeFooter__(outputFile)
@@ -1036,12 +1068,25 @@ class WebPageGenerator:
             packageDepDict[package][4] = len(depTuple[0])
             packageDepDict[package][5] = len(depTuple[1])
         return packageDepDict
+
+    #===============================================================================
+    ## Method to generate merge and sorted Dependeny list by Package
+    #===============================================================================
+    def __mergeAndSortDependencyListByPackage__(self, package, isDependencyList):
+        depPackageMerged = self.__mergePackageDependenciesList__(package, isDependencyList)
+        # sort by the sum of the total # of routines
+        depPackages = sorted(depPackageMerged.keys(),
+                           key=lambda item: sum(depPackageMerged[item][0:5:2]),
+                           reverse=True)
+        return (depPackages, depPackageMerged)
     #===============================================================================
     ## Method to generate the package dependency/dependent graph
     #===============================================================================
     def generatePackageDependencyGraph(self, package, dependencyList=True):
         # merge the routine and package list
-        depPackageMerged = self.__mergePackageDependenciesList__(package, dependencyList)
+        depPackages, depPackageMerged = self.__mergeAndSortDependencyListByPackage__(
+                                                                      package,
+                                                                      dependencyList)
         if dependencyList:
             packageSuffix = "_dependency"
         else:
@@ -1068,10 +1113,6 @@ class WebPageGenerator:
         output.write("\tedge [fontsize=12];\n") # set the edge label and size props
         output.write("\t%s [style=filled fillcolor=orange label=\"%s\"];\n" % (normalizedName,
                                                                                packageName))
-        # sort by the sum of the total # of routines
-        depPackages = sorted(depPackageMerged.keys(),
-                           key=lambda item: sum(depPackageMerged[item][0:5:2]),
-                           reverse=True)
         for depPackage in depPackages:
             depPackageName = depPackage.getName()
             normalizedDepPackName = normalizePackageName(depPackageName)
@@ -1124,18 +1165,21 @@ class WebPageGenerator:
 #===============================================================================
 #  return a tuple of Edge Label, Edge ToolTip, Edge Style
 #===============================================================================
-    def __getPackageGraphEdgePropsByMetrics__(self, depMetricsList, toolTipStartPackage, toolTipEndPackage):
+    def __getPackageGraphEdgePropsByMetrics__(self, depMetricsList,
+                                              toolTipStartPackage,
+                                              toolTipEndPackage,
+                                              isEdgeLabel=True):
         assert(len(depMetricsList) >= 6)
         # default for routine only
-        toolTip =("Total %d routines in %s called total %d routines in %s" % (depMetricsList[0],
+        toolTip =("Total %d routine(s) in %s called total %d routine(s) in %s" % (depMetricsList[0],
                                                                      toolTipStartPackage,
                                                                      depMetricsList[1],
                                                                      toolTipEndPackage),
-                  "Total %d routines in %s accessed total %d globals in %s" % (depMetricsList[2],
+                  "Total %d routine(s) in %s accessed total %d global(s) in %s" % (depMetricsList[2],
                                                                      toolTipStartPackage,
                                                                      depMetricsList[3],
                                                                      toolTipEndPackage),
-                  "Total %d fileman files in %s pointed to total %d fileman file in %s" % (depMetricsList[4],
+                  "Total %d fileman file(s) in %s pointed to total %d fileman file(s) in %s" % (depMetricsList[4],
                                                                      toolTipStartPackage,
                                                                      depMetricsList[5],
                                                                      toolTipEndPackage))
@@ -1148,7 +1192,12 @@ class WebPageGenerator:
         metricValue = 0
         for i in range(0,3):
             if depMetricsList[i*2] > 0:
-                edgeLabel = "%s\\n%s" % (edgeLabel, labelText[i])
+                if len(edgeLabel) == 0:
+                  edgeLabel = labelText[i]
+                elif isEdgeLabel:
+                  edgeLabel = "%s\\n%s" % (edgeLabel, labelText[i])
+                else:
+                  edgeLabel = "%s:%s" % (edgeLabel, labelText[i])
                 if len(edgeToolTip) > 0:
                   edgeToolTip = "%s. %s" % (edgeToolTip, toolTip[i])
                 else:
@@ -1354,12 +1403,9 @@ class WebPageGenerator:
             pass
         # write the list of the package dependency list
         package = self._allPackages[packageName]
-        #sort the packages by total # of routines
-        depPackagesMerged = self.__mergePackageDependenciesList__(package,
-                                                            isDependencyList)
-        depPackages = sorted(depPackagesMerged.keys(),
-                           key=lambda item: sum(depPackagesMerged[item][0:5:2]),
-                           reverse=True)
+        depPackages, depPackagesMerged = self.__mergeAndSortDependencyListByPackage__(
+                                                                    package,
+                                                                    isDependencyList)
         totalPackages = 0
         if depPackages:
             totalPackages = len(depPackages)
@@ -1380,11 +1426,22 @@ class WebPageGenerator:
                     if (index * numOfCol + j) < totalPackages:
                         depPackage = depPackages[index * numOfCol + j]
                         depPackageName = depPackage.getName()
+                        toolTipStartPackage = packageName
+                        toolTipEndPackage = depPackageName
+                        if not isDependencyList:
+                          toolTipStartPackage = depPackageName
+                          toolTipEndPackage = packageName
                         depMetricsList = depPackagesMerged[depPackage]
-                        linkName = "%d(R):%d(G):%d(F)" % (depMetricsList[0], depMetricsList[2], depMetricsList[4])
+                        linkName, tooltip, edgeStyle = self.__getPackageGraphEdgePropsByMetrics__(
+                                                         depMetricsList,
+                                                         toolTipStartPackage,
+                                                         toolTipEndPackage,
+                                                         False)
+
                         depHyperLink = getPackagePackageDependencyHyperLink(packageName,
                                                                           depPackageName,
                                                                           linkName,
+                                                                          tooltip,
                                                                           isDependencyList)
                         outputFile.write("<td class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a> [%s]&nbsp;&nbsp;&nbsp</td>"
                                    % (getPackageHtmlFileName(depPackageName), depPackageName, depHyperLink))
@@ -1417,7 +1474,10 @@ class WebPageGenerator:
 # method to generate individual package page
 #===============================================================================
     def generateIndividualPackagePage(self):
-        indexList = ["Namespace", "Doc", "Dependency Graph", "Package Dependency List", "Dependent Graph", "Package Dependent List", "FileMan Files", "Non-FileMan Globals", "All Routines"]
+        indexList = ["Namespace", "Doc", "Dependency Graph",
+                     "Package Dependency List", "Dependent Graph",
+                     "Package Dependent List", "FileMan Files",
+                     "Non-FileMan Globals", "All Routines"]
         for packageName in self._allPackages.iterkeys():
             package = self._allPackages[packageName]
             outputFile = open(os.path.join(self._outDir, getPackageHtmlFileName(packageName)), 'w')
