@@ -948,7 +948,7 @@ class WebPageGenerator:
             outputFile.write("<div><h1>%s.m</h1></div>\n" % sourceCodeName)
             outputFile.write("<a href=\"%s\">Go to the documentation of this file.</a>" %
                              getRoutineHtmlFileName(routineName))
-            outputFile.write("<xmp class=\"prettyprint lang-mumps linenums:1\">\n")
+            outputFile.write("<xmp class=\"prettyprint lang-mumps linenums:1\">")
         lineNo = 0
         for line in sourceFile:
             if lineNo <= 1:
