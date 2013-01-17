@@ -201,7 +201,7 @@ class KIDSPatchSequenceApply(object):
     for installName in installNameList:
       (namespace,ver,patch) = extractInfoFromInstallName(installName)
       if not patchHistInfo.hasNamespace(namespace):
-        packageHistInfo.createAllPackageMapping()
+        patchHistInfo.createAllPackageMapping()
       assert patchHistInfo.hasNamespace(namespace)
       packageName = patchHistInfo.getPackageName(namespace)
       patchHistInfo.getPackagePatchHistory(packageName, namespace)
