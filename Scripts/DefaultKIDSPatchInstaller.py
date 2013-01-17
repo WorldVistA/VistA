@@ -43,6 +43,7 @@ class DefaultKIDSPatchInstaller(object):
     it is a general question
   """
   KIDS_MENU_OPTION_ACTION_LIST = [
+      ("Want to continue installing this build\?","YES", False),
       ("Incoming Mail Groups:", "", False),
       ("Want KIDS to Rebuild Menu Trees Upon Completion of Install\?",
        "", False),
@@ -67,8 +68,9 @@ class DefaultKIDSPatchInstaller(object):
   """
   KIDS_LOAD_QUESTION_ACTION_LIST = [
       ("OK to continue with Load","YES", False),
-      ("Want to Continue with Load?","YES", False),
+      ("Want to Continue with Load\?","YES", False),
       ("Select Installation ","Install", True),
+      ("Want to continue installing this build\?","YES", False),
       ("Want to RUN the Environment Check Routine\? YES//","YES",False)
   ]
 
@@ -339,11 +341,9 @@ class DefaultKIDSPatchInstaller(object):
       return True
     # run pre-installation preparation
     self.preInstallationWork(vistATestClient)
-    if infoFetcher.isNotInstalled(installStatus):
-      return self.normalInstallation(vistATestClient, reinst)
-    elif infoFetcher.isInstallStarted(installStatus):
+    if infoFetcher.isInstallStarted(installStatus):
       return self.restartInstallation(vistATestClient)
-    return True
+    return self.normalInstallation(vistATestClient, reinst)
   #---------------------------------------------------------------------------#
   #  Public override methods sections
   #---------------------------------------------------------------------------#
