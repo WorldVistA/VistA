@@ -1,0 +1,157 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 10/15/12 at 13:46
+=============================================================================
+Run Date: NOV 29, 2012                     Designation: IB*2*486
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #442                      Status: Released
+                  Compliance Date: NOV 30, 2012
+=============================================================================
+
+
+Subject: ADD CAMP LEJEUNE TREATMENT AS A NON-BILLABLE REASON
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Add CAMP LEJEUNE TREATMENT as a new entry in the CLAIMS TRACKING NON-BILLABLE
+ REASONS file (#356.8).
+  
+ ================================================================================
+  
+ Congress has authorized VA (Veterans Administration) to provide hospital
+ care and medical services to certain Veterans who served in special
+ service conditions per 38 U.S.C. ' 1710(e). A newly added category of
+ Veterans are those who were stationed at Camp Lejeune, North Carolina for
+ not fewer than 30 days between the period of January 1, 1957 and December
+ 31, 1987. This special authority is limited by statute to treatment for 15
+ specific conditions or illnesses listed in 1710(e)(1)(F) for all eligible
+ Camp Lejeune Veterans and their Family Members.
+  
+ From years 1957 through 1987, people living or working at the U.S. Marine
+ Corps Base Camp Lejeune, North Carolina, were potentially exposed to drinking
+ water contaminated with industrial solvents, benzene, and other chemicals. 
+ President Obama signed into law the Honoring America's Veterans and Caring for
+ Camp Lejeune Families Act of 2012, on August 6, 2012. This law (H.R. 1627, 
+ now Public Law 112-154) requires VA to provide health care to Veterans who 
+ served on active duty at Camp Lejeune (North Carolina) and to eligible Family
+ Members for one or more of 15 specified illnesses or conditions:
+  
+  Esophageal cancer; Lung cancer; Breast cancer; Bladder cancer; Kidney cancer;
+  Leukemia; Multiple myeloma; Myelodysplastic syndromes; Renal toxicity; 
+  Hepatic steatosis; Female infertility; Miscarriage; Scleroderma; 
+  Neurobehavioral effects; and Non-Hodgkin's lymphoma. 
+  
+ NOTE:  At this time, treatment cannot be provided to Family Members until
+ ~~~~~  Congress has appropriated funds for family care and regulations 
+        are published.
+  
+ This patch adds a new Reason Not Billable (RNB) to the CLAIMS TRACKING 
+ NON-BILLABLE REASONS (# 356.8) file. Revenue personnel shall use this new RNB
+ to document why a potential claim isn't billable for an eligible Camp Lejeune
+ Veteran who has been treated for one or more of the 15 specified illnesses
+ or conditions.
+  
+ ================================================================================
+  
+    
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. HD0000000761661    VistA Maintenance: Add Camp Lejeune RNB in # 356.8
+  
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Nebraska Western Iowa HCS
+ Iron Mountain VAMC
+ William S. Middleton Memorial Veterans Hospital - Madison
+ Clement J. Zablocki VAMC - Milwaukee
+ Tomah VAMC
+  
+     
+ REMEDY OVERVIEW:
+ ================
+ HD0000000761661    VistA Maintenance: Add Camp Lejeune RNB in # 356.8
+  
+   
+   Problem: 
+   --------
+   A request has been made to add "CAMP LEJEUNE TREATMENT" as a new CLAIMS 
+   TRACKING NON-BILLABLE REASON. 
+   
+   Resolution:
+   -----------
+   Add CAMP LEJEUNE TREATMENT to the CLAIMS TRACKING NON-BILLABLE REASONS
+   file (#356.8)
+  
+  
+ NON-BILLABLE REASONS ADDED
+ --------------------------
+                                           ECME
+ NAME                       ECME FLAG    PAPER FLAG     CODE       INACTIVE
+ ---------------------------------------------------------------------------
+ CAMP LEJEUNE TREATMENT       Yes         No            VA11        NULL
+  
+   
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*486)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+    
+     4. Use the Install Package(s) option and select the package IB*2.0*486.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+        Protocols? NO//" respond NO.
+   
+     7. You may delete routine IB20P486 after the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P486
+    Before:       n/a   After:  B3684882  **486**
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : OCT 09, 2012
+Completed By: LANG,MICKEY                   Date Completed: NOV 26, 2012
+Released By : MURRAY,ANGELA                 Date Released : NOV 29, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

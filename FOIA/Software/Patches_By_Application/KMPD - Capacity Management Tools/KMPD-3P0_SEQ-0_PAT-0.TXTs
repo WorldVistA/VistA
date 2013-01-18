@@ -1,0 +1,362 @@
+$TXT Created by KAMAROWSKI,ROBERT at FO-ALBANY.domain.ext  (KIDS) on Friday, 10/26/12 at 08:07
+=============================================================================
+Run Date: NOV 18, 2012                     Designation: KMPD 3
+Package : KMPD - CAPACITY MANAGEMENT TOOLS    Priority: Mandatory
+Version : 3.0                                   Status: Released
+                  Compliance Date: JAN 15, 2013
+=============================================================================
+
+
+Subject: CM TOOLS v3.0
+
+Category: 
+  - Informational
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+                              KMPD 3.0
+  
+ The Veterans Health Information Systems and Technology Architecture 
+ (VistA) Capacity Management (CM) Tools Version 3.0 software is being 
+ distributed to all sites.  Please note that KMPR*2.0*2 (RUM) and 
+ KMPS*1.8*3 (SAGG) software are required before KMPD 3.0 can be loaded.
+  
+ KIDS build (KMPD 3) containing M side of software (routines, files,
+ Options etc.) is being distributed from National patch module.
+ Please obtain Capacity Management (CM) Tools 3.0 GUI software distribution
+ file (i.e., CM_TOOLS_3_0.ZIP) and documentation from the Product Support
+ (PS) ANONYMOUS.SOFTWARE directory located at the followings ftp servers.
+ Users who wish to learn more about the Capacity Management Tools have
+ additional documentation available.
+  
+ Preferred Method download is to connect to vista.domain.ext This method
+ transmits the files from the first available FTP server. Sites can also 
+ connect directly to the ftp servers:
+  
+  
+        Albany OIFO             ftp.fo-albany.domain.ext
+        Hines OIFO              ftp.fo-hines.domain.ext
+        Salt Lake City OIFO     ftp.fo-slc.domain.ext
+  
+ File Name: 
+  
+ Kmpd3_0ig.doc                Release Notes and Install guide
+ Kmpd3_0tm.doc                Technical manual
+ Kmpd3_0um.doc                User manual
+ CM_Tools_3_0.chm             GUI Online Help
+  
+ The CM_TOOLS_3_0.zip file contains the following files:
+  
+ 0x0409.ini
+ CM Tools 2.0.msi
+ CMToolsSetup.exe
+ Data1.cab
+ Setup.ini
+  
+ These files are required by the CMToolsSetup.exe file, but can be deleted 
+ after a successful install.
+  
+ Version 3.0 is the enhanced software has the following features:
+  
+ A Delphi-based Graphical User Interface (GUI) front-end has been added to 
+ provide access to the various functions available with the following 
+ Capacity Planning (CP) Services software:
+        Capacity Management (CM) Tools 3.0
+        Resource Usage Monitor (RUM) 2.0
+        Statistical Analysis of global Growth (SAGG) 2.0
+  
+ The GUI front-end specifically provides access to the following 
+ functionality via tab selection:
+        Timing Monitor
+        Environment Check
+        CM Tools Parameters
+        Code Evaluator
+        Code Stats
+        Error Lister
+        Global Lister
+        Routine Search
+        Reports:
+         TMG-Timing Reports
+         RUM-Resource Utilization Monitor
+         SAGG-Statistical analysis of global Growth
+  
+  
+ M (server) side distribution KMPD 3.0 contains, 57 routines (please 
+ check the Routine Information section of the patch) and other components 
+ as list below:
+  
+                                            UP    SEND  
+ DATA                USER
+                                            DATE  SEC.  COMES   SITE  
+ RSLV  OVER
+ FILE #      FILE NAME                      DD    CODE  W/FILE  DATA  
+ PTRS  RIDE
+ --------------------------------------------------------------------------
+  
+ 8972.1      CP CODE EVALUATOR              YES   YES   NO
+  
+ 8972.3      CP DATA ELEMENTS               YES   YES   YES    OVER    
+ NO    NO
+  
+ 8973        CP PARAMETERS                  YES   YES   NO
+  
+ 8973.1      CM HL7 DATA                    YES   YES   NO
+  
+ 8973.2      CP TIMING                      YES   YES   NO
+  
+ 8973.3      CP REPORTS                     YES   YES   YES     OVER  
+ NO    NO
+  
+ FORM:                                          ACTION:
+    KMPD PARAMETERS EDIT    FILE #8973             SEND TO SITE
+  
+ BULLETIN:                                      ACTION:
+    KMPD ECHO                                      SEND TO SITE
+  
+ OPTION:                                        ACTION:
+    KMP MAIL GROUP EDIT                            SEND TO SITE
+    KMPD BACKGROUND DRIVER                         SEND TO SITE
+    KMPD CM DEVELOPER TOOLS                        SEND TO SITE
+    KMPD CM TOOLS MANAGER MENU                     SEND TO SITE
+    KMPD CM TOOLS REPORTS                          SEND TO SITE
+    KMPD ECHO                                      SEND TO SITE
+    KMPD PARAM EDIT                                SEND TO SITE
+    KMPD STATUS                                    SEND TO SITE
+    KMPD TMG AVG HR TTL                            SEND TO SITE
+    KMPD TMG AVG TTL                               SEND TO SITE
+    KMPD TMG DLY TTL DETAIL                        SEND TO SITE
+    KMPD TMG HRLY TTL DETAIL                       SEND TO SITE
+    KMPD TMG HRLY TTL RT                           SEND TO SITE
+    KMPD TMG MONITOR                               SEND TO SITE
+    KMPD TMG REPORTS                               SEND TO SITE
+    KMPD TMG START/STOP                            SEND TO SITE
+    KMPD TMG TTL ALERT                             SEND TO SITE
+    KMPD TMG TTL ALERT RT                          SEND TO SITE
+    XTCM MAIN                                      SEND TO SITE
+  
+ LIST TEMPLATE:                                 ACTION:
+    KMPD STATUS                                    SEND TO SITE
+  
+ PARAMETER DEFINITION:                          ACTION:
+    KMPD GUI OPTION CODE EVALUATOR                 SEND TO SITE
+    KMPD GUI OPTION CODE STATS                     SEND TO SITE
+    KMPD GUI OPTION ENVIRON CHECK                  SEND TO SITE
+    KMPD GUI OPTION ENVIRON SELECT                 SEND TO SITE
+    KMPD GUI OPTION ERROR LIST                     SEND TO SITE
+    KMPD GUI OPTION GLOBAL LIST                    SEND TO SITE
+    KMPD GUI OPTION LOOKUPS                        SEND TO SITE
+    KMPD GUI OPTION ROUTINE SEARCH                 SEND TO SITE
+    KMPD GUI OPTION RPT                            SEND TO SITE
+    KMPD GUI OPTION TIMING MONITOR                 SEND TO SITE
+    KMPD GUI OPTION TOOLS PARAMS                   SEND TO SITE
+  
+ REMOTE PROCEDURE:                              ACTION:
+    KMPD APPL STATUS                               SEND TO SITE
+    KMPD ASSOC ROUTINE ADD/DEL                     SEND TO SITE
+    KMPD DATA ELEMENTS                             SEND TO SITE
+    KMPD ENVIRONMENT                               SEND TO SITE
+    KMPD ERROR LOG DATA                            SEND TO SITE
+    KMPD ERROR LOG DATE                            SEND TO SITE
+    KMPD ERROR LOG LIST                            SEND TO SITE
+    KMPD FILE INQUIRY                              SEND TO SITE
+    KMPD FILE SEARCH                               SEND TO SITE
+    KMPD FM DATE                                   SEND TO SITE
+    KMPD GLOBAL LIST                               SEND TO SITE
+    KMPD NODES                                     SEND TO SITE
+    KMPD REPORT DEFINITION                         SEND TO SITE
+    KMPD REPORT LIST                               DELETE AT SITE
+    KMPD ROUTINE FIND                              SEND TO SITE
+    KMPD ROUTINE INQ                               SEND TO SITE
+    KMPD ROUTINE LINE SRCH                         SEND TO SITE
+    KMPD ROUTINE SAVE                              SEND TO SITE
+    KMPD ROUTINE STATS                             SEND TO SITE
+    KMPD RUM ENV                                   SEND TO SITE
+    KMPD RUM START/STOP                            SEND TO SITE
+    KMPD SEARCH BY LIST                            SEND TO SITE
+    KMPD TMG DATES                                 SEND TO SITE
+    KMPD TMG MON DATA                              SEND TO SITE
+    KMPD TMG REPORTS                               SEND TO SITE
+    KMPD TMG START/STOP                            SEND TO SITE
+    KMPD TMG STATUS                                SEND TO SITE
+    KMPD USER PARAMETERS                           SEND TO SITE
+    KMPD VERSION                                   SEND TO SITE
+  
+ Install Instructions:
+  
+ Please refer to Installation Guide for VistA M Server
+ Requirements and detailed instructions.
+  
+  M server Installation:
+    (Please note that Installation of this software is not complete 
+     without installation of the GUI files.)
+   
+  >>>Users may remain on the system.
+  >>>TaskMan does *not* need to be stopped.
+   
+    1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+        option will load the KIDS package onto your system.
+   
+    2.  The patch has now been loaded into a Transport global on your
+        system. You now need to use KIDS to install the Transport global.
+        On the KIDS menu, under the 'Installation' menu, use the following
+        options:
+   
+           Verify Checksums in Transport Global
+           Print Transport Global
+           Compare Transport Global to Current System
+           Backup a Transport Global
+   
+    3.  Users can remain on the system. 
+        This patch can be loaded any non-peak time.
+        TaskMan can remain running.
+   
+    4.  Installation will take less than 2 minutes.
+           Install Package(s)  KMPD 3.0
+                               =========
+        Accept the following defaults.
+   
+        Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+        Want KIDS to INHIBIT LOGONs during the install? NO//
+   
+        Want to DISABLE Scheduled Options, Menu Options, and Protocols? 
+        NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;KMPD;**[Patch List]**;Jan 22, 2009;Build 42
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: KMPDBD01
+    Before:  B1585127   After:  B1585127  
+Routine Name: KMPDECH
+    Before:  B1037928   After:  B1037928  
+Routine Name: KMPDENV
+    Before:   B706424   After:   B706424  
+Routine Name: KMPDHU01
+    Before: B37420269   After: B37420269  
+Routine Name: KMPDHU02
+    Before: B55231717   After: B55231717  
+Routine Name: KMPDHU03
+    Before: B28509534   After: B28509534  
+Routine Name: KMPDHUA
+    Before: B41047112   After: B41047112  
+Routine Name: KMPDPOST
+    Before:  B2606774   After:  B3093931  
+Routine Name: KMPDSS
+    Before:  B5601421   After:  B5601421  
+Routine Name: KMPDSS1
+    Before:  B4453794   After:  B4453794  
+Routine Name: KMPDSSD
+    Before: B78192650   After: B70757970  
+Routine Name: KMPDSSD1
+    Before: B11459921   After: B11459921  
+Routine Name: KMPDSSR
+    Before: B16217057   After: B16217057  
+Routine Name: KMPDSSS
+    Before: B33896326   After: B33896326  
+Routine Name: KMPDTM
+    Before: B22150434   After: B22150434  
+Routine Name: KMPDTP1
+    Before: B15743524   After: B21923015  
+Routine Name: KMPDTP2
+    Before: B21316448   After: B21316448  
+Routine Name: KMPDTP3
+    Before: B20017179   After: B20017179  
+Routine Name: KMPDTP4
+    Before: B27036478   After: B27036478  
+Routine Name: KMPDTP5
+    Before: B27612696   After: B28201133  
+Routine Name: KMPDTP6
+    Before: B26949846   After: B26949846  
+Routine Name: KMPDTP7
+    Before: B23266885   After: B23266885  
+Routine Name: KMPDTU01
+    Before: B21700186   After: B21700186  
+Routine Name: KMPDTU02
+    Before:  B7805759   After:  B7805759  
+Routine Name: KMPDTU10
+    Before: B33222642   After: B33247279  
+Routine Name: KMPDTU11
+    Before:  B4686971   After:  B4686971  
+Routine Name: KMPDU
+    Before:  B5625168   After:  B5625168  
+Routine Name: KMPDU1
+    Before:  B8912878   After:  B9907864  
+Routine Name: KMPDU11
+    Before: B16579136   After: B16579136  
+Routine Name: KMPDU2
+    Before: B37794798   After: B53972904  
+Routine Name: KMPDU3
+    Before: B21362306   After: B33101038  
+Routine Name: KMPDU4
+    Before:  B1414998   After:  B3246525  
+Routine Name: KMPDU5
+    Before: B24376205   After: B24680982  
+Routine Name: KMPDU6
+    Before:       n/a   After: B47907009  
+Routine Name: KMPDU7
+    Before:       n/a   After: B19662686  
+Routine Name: KMPDU7A
+    Before:       n/a   After: B23825216  
+Routine Name: KMPDUG
+    Before: B12065844   After: B12065844  
+Routine Name: KMPDUG1
+    Before: B12183145   After: B12183145  
+Routine Name: KMPDUG2
+    Before: B22783994   After: B22783994  
+Routine Name: KMPDUGV
+    Before:  B6896463   After:  B6896463  
+Routine Name: KMPDUT
+    Before:    B82480   After:    B82480  
+Routine Name: KMPDUT1
+    Before:  B4718329   After:  B4718329  
+Routine Name: KMPDUT2
+    Before: B30234427   After: B29831433  
+Routine Name: KMPDUT4
+    Before:  B6870660   After:  B6870660  
+Routine Name: KMPDUT4A
+    Before:  B2846593   After:  B2846593  
+Routine Name: KMPDUT4B
+    Before:  B6574044   After:  B6574044  
+Routine Name: KMPDUT4C
+    Before:  B8778533   After:  B8778533  
+Routine Name: KMPDUT5
+    Before: B34870565   After: B34870565  
+Routine Name: KMPDUTL
+    Before: B12190816   After: B11442645  
+Routine Name: KMPDUTL1
+    Before: B28456598   After: B28878792  
+Routine Name: KMPDUTL2
+    Before: B10409339   After: B10409339  
+Routine Name: KMPDUTL3
+    Before:  B2493669   After:  B2642844  
+Routine Name: KMPDUTL4
+    Before:  B7857389   After:  B7857389  
+Routine Name: KMPDUTL5
+    Before: B53756551   After: B56596424  
+Routine Name: KMPDUTL6
+    Before:  B2454565   After:  B2454565  
+Routine Name: KMPDUTL7
+    Before: B10006436   After: B10006436  
+Routine Name: KMPDUTL8
+    Before: B12208078   After: B12208078  
+
+=============================================================================
+User Information:
+Entered By  : KAMAROWSKI,ROBERT             Date Entered  : OCT 03, 2007
+Completed By: BEST,LISA                     Date Completed: OCT 30, 2012
+Released By : HARROD,PAUL                   Date Released : NOV 18, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

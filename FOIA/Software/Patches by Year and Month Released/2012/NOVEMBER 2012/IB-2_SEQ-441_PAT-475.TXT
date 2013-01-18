@@ -1,0 +1,142 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 10/15/12 at 15:15
+=============================================================================
+Run Date: NOV 15, 2012                     Designation: IB*2*475
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #441                      Status: Released
+                  Compliance Date: DEC 16, 2012
+=============================================================================
+
+
+Subject: TCP/IP ADDRESS UPDATE FOR THE HL7 LOGICAL LINK 'IIV EC'
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains the update for the TCP/IP address of the HL7 Logical
+ Link 'IIV EC' record in the HL Logical Link (#870) file, and this change 
+ is being made to connect to the new National Healthcare Insurance Cache
+ server that is located at the FSC (Financial Services Center) in Austin,
+ Texas.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD000000600402 Testing of VistA Logical Links
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Asheville VA Medical Center
+ Louis Stokes VA Medical Center - Cleveland
+ Phoenix VA Health Care System
+ VA Tennessee  Valley HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD000000600402 Testing of VistA Logical Links
+  
+  Problem:
+  --------
+  Site POC reported that the FSC facility is in the process of moving their
+  current interface connection from their old server to a new refresh server
+  and they will need to change the logical link after the procedure has been
+  performed. Site POC requests assistance testing the logical link.
+  
+  Resolution:
+  -----------
+  A post-init routine IB20P475 was created to check for the test account
+  vs. the production account and populate the TCP/IP address connected to
+  the new server at the FSC accordingly.
+     
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ **** Do not install this patch when the background job  eIV NIGHTLY
+ PROCESS [IBCNE IIV BATCH PROCESS] is running or will run during the 
+ install. ****
+  
+ Other than that, the patch can be installed at any time.
+ (Coordination with the FSC in Austin is not necessary.)
+  
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*475):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P475.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 31
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P475
+    Before:       n/a   After:  B2350117  **475**
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : FEB 23, 2012
+Completed By: DAWSON,TIM                    Date Completed: NOV 01, 2012
+Released By : GARRETT,WILLIAM               Date Released : NOV 15, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

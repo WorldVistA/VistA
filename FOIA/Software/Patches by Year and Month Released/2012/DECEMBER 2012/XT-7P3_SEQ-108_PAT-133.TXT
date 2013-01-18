@@ -1,0 +1,135 @@
+$TXT Created by DIMICELI,RON at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 09/18/12 at 14:13
+=============================================================================
+Run Date: DEC 04, 2012                     Designation: XT*7.3*133
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3       SEQ #108                    Status: Released
+                  Compliance Date: JAN 04, 2013
+=============================================================================
+
+
+Subject: XINDEX doesn't support Cache Objects
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch allows the XINDEX utility to correctly handle Cache Objects.
+ XINDEX will no longer consider Cache Objects an error. It will track the
+ objects and list them in the summary, similar to the way it track routine
+ tags. This patch also screens Kernel and FileMan routines from errors that
+ they have a SAC exemption.
+  
+  Remedy Tickets
+  ==============
+  607778 Noted that the XINDEX programmer utility doesn't handle Cache Objects
+    correctly.
+  
+  Thanks to Test Sites
+  ====================
+  OSEHRA  
+    
+  Blood Bank Clearance
+  ====================
+ Clearance - 5/29/2012
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*133 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+  not alter or modify any VistA Blood Bank software design safeguards or
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XT*7.3*133 have no effect on Blood
+  Bank software functionality, therefore RISK is none.
+ 
+  Documentation
+  ============= 
+  The most up-to-date Kernel/Kernel Toolkit end-user documentation is available
+  on the VA Software Document Library (VDL) at the following Internet Website:
+  http://www.va.gov/vdl/application.asp?appid=10
+  
+  NOTE: VistA documentation is made available online in Microsoft Word format
+  (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  The Kernel/Kernel Toolkit APIs are also available in HTML format at the
+  following Intranet Website:
+  http://vaww.vista.med.va.gov/kernel/apis/index.shtml   
+ 
+  The Kernel Toolkit XINDEX pages are available in HTML format at the following
+  Intranet Website:
+  http://vaww.vista.med.va.gov/kernel/xindex/index.shtml
+ 
+  Installation Instructions
+  =========================
+  This patch may be installed with VISTA users online. However, it is
+  recommended that it be Queued for a time of generally least activity.  
+    
+  TaskMan or any background jobs does not need to be STOPPED or placed
+  in a WAIT state, and installation should take less than a minute.
+   
+  1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+     This option will load the KIDS package onto your system.  
+    
+  2. The patch has now been loaded into a transport global on your 
+     system. You now need to use KIDS to install the transport global.  
+     
+  3. On the KIDS menu, under the 'Installation' menu, use the 
+     following options: 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global
+          Backup a Transport Global 
+    
+  4. On the KIDS menu, in the 'Installation' menu, use the following option: 
+          Select Installation Option: Install Package(s) 
+          Select INSTALL NAME: XT*7.3*133
+                               ==========
+  
+       Want KIDS to INHIBIT LOGONs during the install? NO//
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XINDEX
+    Before: B30540711   After: B30708729  **20,27,48,61,66,68,110,121,
+                                           128,132,133**
+Routine Name: XINDX1
+    Before: B18451520   After: B20704192  **20,61,66,68,110,121,128,133**
+Routine Name: XINDX2
+    Before: B18776883   After: B28042462  **20,27,48,110,121,133**
+Routine Name: XINDX3
+    Before: B14051168   After: B15082410  **20,27,61,68,110,121,128,132,133**
+Routine Name: XINDX4
+    Before: B13667786   After: B14273659  **20,61,68,110,128,133**
+Routine Name: XINDX5
+    Before: B11265539   After: B11294544  **20,27,61,121,133**
+Routine Name: XINDX51
+    Before: B25548431   After: B26771263  **20,48,61,110,133**
+Routine Name: XINDX9
+    Before: B17326619   After: B32506175  **20,27,48,61,66,68,110,121,132,133**
+Routine Name: XT73P133
+    Before:       n/a   After:   B650871  **133**
+ 
+Routine list of preceding patches: 132
+
+=============================================================================
+User Information:
+Entered By  : DIMICELI,RON                  Date Entered  : MAR 05, 2012
+Completed By: BEST,LISA                     Date Completed: NOV 09, 2012
+Released By : TILLIS,LEWIS                  Date Released : DEC 04, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

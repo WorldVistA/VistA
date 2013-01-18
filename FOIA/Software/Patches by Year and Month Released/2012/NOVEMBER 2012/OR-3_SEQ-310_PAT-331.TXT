@@ -1,0 +1,227 @@
+$TXT Created by ESCALERA,DIEGO at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 06/08/12 at 16:46
+=============================================================================
+Run Date: NOV 13, 2012                     Designation: OR*3*331
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #310                      Status: Released
+                  Compliance Date: DEC 14, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*280    <<= must be installed BEFORE `OR*3*331'
+
+Subject: COPYING OR RENEWING ORDERS W/STATIC DATES MAY CREATE AN ORDER WITH INVALID DATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects 4 issues within the ORDER ENTRY/RESULTS REPORTING 
+ package:
+  
+ 1. Copying an order that used static dates (e.g. Jul 9, 2010) instead of  
+    relative dates (e.g. T+3) may result in a new order with invalid dates.
+  
+ 2. Renewing a generic order with static dates may result in a new order 
+    with invalid dates.
+  
+ 3. Copying a lab order with a static date results in a new order with a 
+    blank date.
+  
+ 4. Copying a lab order will not generate a duplicate check against the
+    original order.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ 1. HD0000000296934 - Generic orders past stop date still active
+                      PSPO #1223  
+ 2. HD0000000163366 - Order contains stop date/time prior to start 
+                      date/time
+ 3. HD0000000069987 - Copy Lab orders with specific date
+         Duplicates:
+         HD0000000376445
+         HD0000000356293
+         HD0000000069976
+         HD0000000477001
+         HD0000000137139
+         HD0000000137225
+         HD0000000618613
+ 4. HD0000000592195 - Copying a Lab order misses dup check on original 
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate NY HCS, NY (Buffalo)
+ Shreveport VAMC, LA
+ Martinsburg VAMC, WV
+ VA Central Iowa HCS (Des Moines)
+ VA N. California HCS, Mather, CA
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000296934 - Generic orders past stop date still active
+  
+ Patient Safety Issue:
+ --------------------
+ PSPO #1223
+  
+ Problem:
+ -------
+ When copying an order, CPRS checks to see if all required fields are
+ filled. If all data is filled then it will display an acknowledge form but
+ does no additional checks on the fields. So, copying an order with a
+ static date can result in a new order with an invalid start or stop date.
+  
+ Resolution:
+ -----------
+ Routine ORWDXM1 has been modified to check for valid start and stop dates.
+ If the dates are not valid then they are replaced with the order dialog's
+ default dates and the user will see the regular form instead of the 
+ acknowledge form. This is the same behavior as if the date fields were not
+ filled.
+  
+ 2. HD0000000163366 - Order contains stop date/time prior to start 
+                      date/time
+  
+ Problem:
+ --------
+ When renewing an order with static dates, CPRS does not check to see if
+ the dates are valid. 
+  
+ Resolution:
+ -----------
+ Originally, routine ORWDXR replaced static dates with a NOW start date and
+ a blank stop date. At some point, a change to the CPRS date format broke
+ this functionality. This patch fixes this functionality but now loads the
+ order dialog's default dates.
+  
+ 3. HD0000000069987 - Copy Lab orders with specific date 
+  
+ Problem:
+ -------
+ Copying a lab order with a static date results in a new order with no
+ collection date even though the order verification from shows the date.
+  
+ Resolution:
+ -----------
+ Routine ORWDX2 has a line of old code that became obsolete with the 
+ introduction of the order verification form. Since it's older code, it 
+ only affects static dates with an internal format now only used by lab 
+ orders. This code has been removed and the static date is kept as shown
+ by the order verification form.
+  
+ 4. HD0000000592195 - Copying a Lab order misses dup check on original  
+  
+ Problem:
+ -------
+ When copying a lab order, the new order does not do a duplicate check on 
+ the original order. 
+  
+ Resolution:
+ ----------
+ Routine ORKLR is treating copying an order the same as renewing an order 
+ and skips a duplicate check against the original order. Now the routine 
+ will not skip duplicate checks when copying orders.
+  
+  
+ PLEASE NOTE:
+ ============
+ Routine ORWDX2, distributed in this patch, references tag DOSE^PSSORUTE.
+ This reference was released by patch OR*3*246 in anticipation of
+ PSS*1.0*78.
+  
+ If OR*3*331 is installed in an account before PSS*1.0*78, XINDEX may
+ display these messages:
+      F - Call to this MISSING LABEL $$DOSE^PSSORUTE
+      F - Call to this MISSING LABEL DOSE^PSSORUTE
+ These messages can be ignored.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will be
+ less than 2 minutes.
+  
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+     Select Kernel Installation & Distribution System Option: Installation
+     ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter OR*3.0*331):
+      
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  It compares all components of this patch (routines,
+        DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+  
+ 4.  Use the Install Package(s) option and select the package OR*3.0*331.
+  
+      a. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//", answer NO.
+      b. When prompted "Want to DISABLE Scheduled Options and Menu Options
+         and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 30
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORKLR
+    Before: B31162442   After: B32383308  **6,32,51,92,105,243,331**
+Routine Name: ORWDX2
+    Before: B17614403   After: B18156659  **246,243,280,331**
+Routine Name: ORWDXM1
+    Before: B71014486   After: B96832603  **10,85,131,132,141,178,185,
+                                           187,215,243,280,331**
+Routine Name: ORWDXR
+    Before: B48540055   After: B54764735  **10,85,125,131,134,141,149,
+                                           187,190,213,243,331**
+ 
+Routine list of preceding patches: 280
+
+=============================================================================
+User Information:
+Entered By  : ESCALERA,DIEGO                Date Entered  : APR 29, 2010
+Completed By: HULET,LEE ANN                 Date Completed: AUG 30, 2012
+Released By : PERSCHON,ANDREA               Date Released : NOV 13, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

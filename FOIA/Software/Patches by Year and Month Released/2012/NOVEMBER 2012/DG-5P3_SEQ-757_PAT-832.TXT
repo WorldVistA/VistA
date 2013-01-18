@@ -1,0 +1,229 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 01/04/12 at 12:19
+=============================================================================
+Run Date: NOV 15, 2012                     Designation: DG*5.3*832
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #757                    Status: Released
+                  Compliance Date: DEC 16, 2012
+=============================================================================
+
+Associated patches: (v)DG*5.3*744  <<= must be installed BEFORE `DG*5.3*832'
+
+Subject: DIAGNOSTIC CODE PTF SEARCH;SACC VIOLATION FOR $N IN PATIENT MOVEMENT FILE #405
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following issues: 
+  
+ 1. Modify search to insure that Secondary Diagnosis Codes 10-13 
+    in Patient Treatment File (PTF) will be searched when running option
+    'Diagnostic Code PTF Record Search'.
+  
+ 2. XINDEX errors caused by $N(ext) command in cross reference triggers in
+    PATIENT MOVEMENT file (#405) which are in violation of SACC
+    (Standards & Conventions Committee) standards.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1) HD0000000293603 - Diagnostic Code PTF Record Search
+  
+ 2) HD0000000271353 - XINDEX error caused by $N in x-ref in Patient 
+                      Movement File (#405)
+  
+   
+ Participating Test Sites:
+ =========================
+ Charleston, SC
+ Martinsburg, WV
+ New York Harbor HCS
+  
+  
+ Remedy Overview:
+ ================ 
+ 1) HD0000000293603 - Diagnostic Code PTF Record Search
+  
+ Problem:
+ --------
+ Site cannot view all patients with selected diagnosis when running option 
+ 'Diagnostic Code PTF Record Search'. Secondary diagnosis codes 10-13 are 
+ not searched.
+  
+  
+ Resolution:
+ -----------
+ Routine DGPTFIC was modified to include PTF file (#45) patient record, 
+ node 71 (Secondary Diagnosis 10 - 13) in diagnosis search criteria. 
+  
+         
+ Routine: DGPTFIC
+  
+  
+ 2) HD0000000271353 - XINDEX error caused by $N in x-ref in Patient
+                      Movement File (#405)
+  
+ Problem:
+ --------
+ While developing patch DG*5.3*786, it was discovered that the following 
+ cross reference triggers cause XINDEX errors because the nodes contain a 
+ $NEXT command. The $N(ext) command violated the SACC reference 
+ 2.5.1.1 (Use of the $NEXT function is prohibited). These fields are
+ located in PATIENT MOVEMENT file (#405).
+  
+ Field    Field name                      Field Triggered
+  .01     DATE/TIME                       RELATED PHYSICAL MOVEMENT
+  .04     TYPE OF MOVEMENT                MAS MOVEMENT TYPE
+  .06     WARD LOCATION                   ROOM-BED
+  .14     ADMISSION/CHECK-IN MOVEMENT     DISCHARGE/CHECK-OUT MOVEMENT
+  .18     MAS MOVEMENT TYPE               TRANSFER FACILITY
+  
+ Here is an example of the use of $Next in TYPE OF MOVEMENT field (#.04): 
+  
+    CROSS-REFERENCE:  ^^TRIGGER^405^.18 
+           1)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(
+           ^DGPM(D0,0)):^(0),1:"") S X=$P(Y(1),U,18),X=X S
+           DIU=X K Y X ^DD(405,.04,1,1,1.1) X ^DD(405,.04
+           ,1,1,1.4)
+  
+           1.1)= S X=DIV S X=$S($D(^DG(405.1,X,0)):$P(^(0)
+           ,"^",3),1:"")
+  
+           1.4)= S DIH=$S($D(^DGPM(DIV(0),0)):^(0),1:""),D
+           IV=X S $P(^(0),U,18)=DIV,DIH=405,DIG=.18 D ^DIC
+           R:$N(^DD(DIH,DIG,1,0))>0
+                   
+           2)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(
+           ^DGPM(D0,0)):^(0),1:"") S X=$P(Y(1),U,18),X=X S
+           DIU=X K Y S X="" S DIH=$S($D(^DGPM(DIV(0),0)):
+           ^(0),1:""),DIV=X S $P(^(0),U,18)=DIV,DIH=405,DI
+           G=.18 D ^DICR:$N(^DD(DIH,DIG,1,0))>0
+                         /\
+           CREATE VALUE)= S X=$S($D(^DG(405.1,X,0)):$P(^(0
+           ),"^",3),1:"")
+           DELETE VALUE)= @
+           FIELD)= MAS MOVEMENT
+  
+  
+ Resolution:
+ -----------
+ All invalid cross reference triggers were deleted for mentioned fields 
+ and the triggers under the new FileMan compilation schema were recreated 
+ using $Order instead of $Next.  Here is what the TYPE OF MOVEMENT field 
+ (#.04) trigger to the MAS MOVEMENT TYPE field (#.18) looks like. 
+  
+    CROSS-REFERENCE:  ^^TRIGGER^405^.18 
+              1)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(
+              ^DGPM(D0,0)):^(0),1:"") S X=$P(Y(1),U,18),X=X S
+              DIU=X K Y S X=DIV S X=$S($D(^DG(405.1,X,0)):$P
+              (^(0),"^",3),1:"") X ^DD(405,.04,1,1,1.4)
+  
+              1.4)= S DIH=$G(^DGPM(DIV(0),0)),DIV=X S $P(^(0)
+              ,U,18)=DIV,DIH=405,DIG=.18 D ^DICR
+                                                /\
+              2)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(
+              ^DGPM(D0,0)):^(0),1:"") S X=$P(Y(1),U,18),X=X S
+              DIU=X K Y S X="" S DIH=$G(^DGPM(DIV(0),0)),DIV
+              =X S $P(^(0),U,18)=DIV,DIH=405,DIG=.18 D ^DICR
+  
+              CREATE VALUE)= S X=$S($D(^DG(405.1,X,0)):$P(^(0
+              ),"^",3),1:"")
+              DELETE VALUE)= @
+                  FIELD)= MAS MOVEMENT TYPE
+  
+ Pre install routine runs to insure all affected cross reference 
+ structure data within FileMan is thoroughly deleted.
+  
+ Post install routine runs to compile all Input/Print templates  
+ linked to modified field cross references. 
+  
+  
+ Routines:  DG832P1, DG832P2 
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install this patch at any time without interruption to 
+ users. It should take less than 2 minutes to install. 
+  
+   ***********************************************************************
+   PLEASE NOTE: Post install routines DG832P1 & DG832P2 will be deleted
+   once the install is complete.  If you wish to check the checksum of
+   these routines please use the 'Verify Checksums in Transport Global'
+   under the Installation Menu.
+   ***********************************************************************
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter DG*5.3*832)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       DG*5.3*832.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//" respond YES. When prompted to select the 
+       options you would like to place out of order, enter the following:
+  
+       DG PTF MENU           PTF Menu
+       DG BED CONTROL        Bed Control Menu
+       DG PTF SCREEN         Load/Edit PTF Data
+       DG PTF ICD DIAGNOSTIC SEARCH    Diagnostic Code PTF Record Search
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG832P1
+    Before:       n/a   After:   B612614  **832**
+Routine Name: DG832P2
+    Before:       n/a   After:  B7011833  **832**
+Routine Name: DGPTFIC
+    Before: B23609839   After: B27049239  **510,559,599,669,704,744,832**
+ 
+Routine list of preceding patches: 744
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : JUL 12, 2010
+Completed By: LEANORD,TATIANA               Date Completed: OCT 29, 2012
+Released By : FLANAGAN,PATTY                Date Released : NOV 15, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
