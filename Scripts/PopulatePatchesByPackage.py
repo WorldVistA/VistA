@@ -4,7 +4,7 @@
 #   python PopulatePatchesByPackage.py < ../Packages.csv
 #
 # This script reads all the KIDS patch files(*.KID/*.KIDs)
-# and info file (*.TXT/*,txt) under the current directory recursively
+# and info file (*.TXT(s)/*,txt) under the current directory recursively
 # and populate them by Package Name according to input Packages.csv file.
 #
 #---------------------------------------------------------------------------

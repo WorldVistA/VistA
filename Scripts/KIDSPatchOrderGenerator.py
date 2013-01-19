@@ -4,7 +4,7 @@
 #   python KIDSPatchOrderGenerator.py <path_to_kids_patch_dir>
 #
 # This script reads all the KIDS patch files(*.KID/*.KIDs)
-# and info file (*.TXT/*,txt) under the input directory recursively
+# and info file (*.TXT(s)/*,txt) under the input directory recursively
 # and generate the KIDS patch order via patch dependency
 #
 #---------------------------------------------------------------------------
@@ -122,6 +122,7 @@ class KIDSPatchOrderGenerator(object):
           continue
         """ Handle KIDS Info files """
         if (fileName.endswith(".TXT") or
+            fileName.endswith(".TXTs") or
             fileName.endswith(".txt")):
           self._kidsInfoFileList.append(os.path.join(root, fileName))
           continue
