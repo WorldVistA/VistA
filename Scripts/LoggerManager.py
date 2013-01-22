@@ -16,8 +16,10 @@
 
 import sys
 import logging
+from logging.handlers import TimedRotatingFileHandler
 logger = logging.getLogger()
 
+MAX_BACKUP_COUNT = 10
 def initConsoleLogging(defaultLevel=logging.INFO,
                        formatStr = '%(asctime)s %(levelname)s %(message)s'):
   logger.setLevel(defaultLevel)
@@ -30,7 +32,10 @@ def initConsoleLogging(defaultLevel=logging.INFO,
 def initFileLogging(outputFileName, defaultLevel=logging.INFO,
                     formatStr = '%(asctime)s %(levelname)s %(message)s'):
   logger.setLevel(defaultLevel)
-  fileHandle = logging.FileHandler(outputFileName, 'w')
+  fileHandle = TimedRotatingFileHandler(outputFileName,
+                                        when='H',
+                                        interval=1,
+                                        backupCount=MAX_BACKUP_COUNT)
   formatter = logging.Formatter(formatStr)
   fileHandle.setLevel(defaultLevel)
   fileHandle.setFormatter(formatter)
