@@ -1,6 +1,10 @@
 import sys
+addImagePath("${sikuli}")
 wait(30)
-doubleClick("1326480962420.png")
+if exists("1326480962420.png"):
+  doubleClick("1326480962420.png")
+else:
+  openApp(r'${VITALS_MANAGER_EXECUTABLE} /port=${CPRS_PORT} /server=${CPRS_SERVER} /ccow=disable')
 wait("AcccssCcndc.png",30)
 type("AccessCcndc.png","fakedoc1")
 type("VerifyCcndc.png","1Doc!@#$")
@@ -19,7 +23,10 @@ click("1320870326408.png")
 click("1320870337758.png")
 click("File-2.png")
 click("Exit-2.png")
-doubleClick("1333398109508.png")
+if exists("1333398109508.png"):
+  doubleClick("1333398109508.png")
+else:
+  openApp(r'${CPRS_EXECUTABLE} P=${CPRS_PORT} S=${CPRS_SERVER} ccow=disable')
 wait("AcccssCcndc.png",30)
 type("AccessCcndc-4.png","fakenurse1")
 type("VerifyCcndc-4.png","1Nur!@#$")
@@ -113,7 +120,10 @@ click("Histprical-3.png")
 click("EK-3.png")
 click(Pattern("FileEditIART.png").targetOffset(-22,-12))
 click("Exit-3.png")
-doubleClick("1333398109508.png")
+if exists("1333398109508.png"):
+  doubleClick("1333398109508.png")
+else:
+  openApp(r'${CPRS_EXECUTABLE} P=${CPRS_PORT} S=${CPRS_SERVER} ccow=disable')
 wait("AcccssCcndc.png",30)
 type("AccessCcndc-4.png","fakedoc1")
 type("VerifyCcndc-4.png","1Doc!@#$")

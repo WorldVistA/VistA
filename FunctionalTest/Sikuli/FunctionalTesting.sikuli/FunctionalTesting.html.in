@@ -71,8 +71,13 @@
 </div>
 <pre class="sikuli-code">
 <span class="kw">import</span> sys
+</span>addImagePath(<span class="str">"${sikuli}"</span>)
 <span class="skw">wait</span>(<span class="dig">30</span>)
 <span class="skw">doubleClick</span>(<img src="1326480962420.png" />)
+  <span class="skw">doubleClick</span>(<img src="1326480962420.png" />)
+<span class="kw">else</span>:
+  openApp(<span class="str">r'${VITALS_MANAGER_EXECUTABLE} /port=${CPRS_PORT} /server=${CPRS_SERVER}
+  /ccow=disable'</span>)
 <span class="skw">wait</span>(<img src="AcccssCcndc.png" />,<span class="dig">30</span>)
 <span class="skw">type</span>(<img src="AccessCcndc.png" />,<span class="str">"fakedoc1"</span>)
 <span class="skw">type</span>(<img src="VerifyCcndc.png" />,<span class="str">"1Doc!@#$"</span>)
@@ -91,7 +96,10 @@
 <span class="skw">click</span>(<img src="1320870337758.png" />)
 <span class="skw">click</span>(<img src="File-2.png" />)
 <span class="skw">click</span>(<img src="Exit-2.png" />)
-<span class="skw">doubleClick</span>(<img src="1333398109508.png" />)
+<span class="kw">if</span> exists(<img src="1333398109508.png" />):
+  <span class="skw">doubleClick</span>(<img src="1333398109508.png" />)
+<span class="kw">else</span>:
+  openApp(<span class="str">r'${CPRS_EXECUTABLE} P=${CPRS_PORT} S=${CPRS_SERVER} ccow=disable'</span>)
 <span class="skw">wait</span>(<img src="AcccssCcndc.png" />,<span class="dig">30</span>)
 <span class="skw">type</span>(<img src="AccessCcndc-4.png" />,<span class="str">"fakenurse1"</span>)
 <span class="skw">type</span>(<img src="VerifyCcndc-4.png" />,<span class="str">"1Nur!@#$"</span>)
@@ -185,7 +193,10 @@
 <span class="skw">click</span>(<img src="EK-3.png" />)
 <span class="skw">click</span>(Pattern(<img src="FileEditIART.png" />).targetOffset(-<span class="dig">22</span>,-<span class="dig">12</span>))
 <span class="skw">click</span>(<img src="Exit-3.png" />)
-<span class="skw">doubleClick</span>(<img src="1333398109508.png" />)
+<span class="kw">if</span> exists(<img src="1333398109508.png" />):
+  <span class="skw">doubleClick</span>(<img src="1333398109508.png" />)
+<span class="kw">else</span>:
+  openApp(<span class="str">r'${CPRS_EXECUTABLE} P=${CPRS_PORT} S=${CPRS_SERVER} ccow=disable'</span>)
 <span class="skw">wait</span>(<img src="AcccssCcndc.png" />,<span class="dig">30</span>)
 <span class="skw">type</span>(<img src="AccessCcndc-4.png" />,<span class="str">"fakedoc1"</span>)
 <span class="skw">type</span>(<img src="VerifyCcndc-4.png" />,<span class="str">"1Doc!@#$"</span>)
