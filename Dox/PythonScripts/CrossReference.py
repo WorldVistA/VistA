@@ -613,7 +613,10 @@ class FileManVariablePointerTypeField(FileManField):
         FileManField.__init__(self, fieldNo, name, fType ,location)
         self._pointedToFiles = []
     def setPointedToFiles(self, pointedToFiles):
+      if pointedToFiles:
         self._pointedToFiles = pointedToFiles
+      else:
+        self._pointedToFiles = []
     def getPointedToFiles(self):
         return self._pointedToFiles
     def __repr__(self):
