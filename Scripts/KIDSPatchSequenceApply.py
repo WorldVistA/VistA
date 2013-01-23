@@ -52,13 +52,20 @@ def generateSha1Sum(inputFilename):
   return sha1sum.hexdigest()
 """ Class to find and store patch history for each package
 """
+def getCurrentTimestamp():
+  from datetime import datetime
+  return datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
 class KIDSPatchSequenceApply(object):
-  DEFAULT_VISTA_LOG_FILENAME = "VISTA.log"
+  DEFAULT_VISTA_LOG_FILENAME = "VistAInteraction.log"
   DEFAULT_OUTPUT_FILE_LOG = "PatchAnalyzer.log"
   def __init__(self, testClient, logFileDir):
     self._testClient = testClient
+    curTimestamp = getCurrentTimestamp()
+    logFileName = "%s.%s" % (self.DEFAULT_VISTA_LOG_FILENAME, curTimestamp)
     self._logFileName = os.path.join(logFileDir,
-                             self.DEFAULT_VISTA_LOG_FILENAME)
+                             logFileName)
+    self._testClient.setLogFile(self._logFileName)
     self._kidsOrderGen = KIDSPatchOrderGenerator()
     self._vistaPatchInfo = VistAPackageInfoFetcher(testClient)
     self._outPatchList = []
