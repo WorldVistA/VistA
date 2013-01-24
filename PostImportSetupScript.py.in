@@ -14,6 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 import sys
+import os
 import time
 sys.path = ['${VISTA_SOURCE_DIR}/lib/vista'] + sys.path
 
@@ -53,6 +54,28 @@ VistA.wait('Rename')
 VistA.write('Yes')
 VistA.wait(PROMPT,60)
 VistA.write('S DUZ=1 D Q^DI')
+
+# Remove the primary HFS directory from the
+# Kernel System Parameters file
+
+VistA.wait('Select OPTION:')
+VistA.write('1')
+VistA.wait('INPUT TO WHAT FILE')
+VistA.write('KERNEL SYSTEM PARAMETERS')
+VistA.wait('EDIT WHICH FIELD')
+VistA.write('PRIMARY HFS DIRECTORY')
+VistA.wait('THEN EDIT FIELD')
+VistA.write('')
+VistA.wait('DOMAIN NAME')
+VistA.write('`1')
+VistA.wait('PRIMARY HFS DIRECTORY')
+VistA.write(os.path.normpath('${SYSTEM_TEMP_DIR}'))
+index = VistA.multiwait(['SURE YOU WANT TO DELETE','DOMAIN NAME'])
+if index == 0:
+  VistA.write('Y')
+  VistA.wait('DOMAIN NAME')
+VistA.write('')
+
 
 #Ensure that the null device is correctly configured.
 

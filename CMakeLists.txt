@@ -262,6 +262,7 @@ endforeach()
 
 IF(CLEAN_DATABASE)
   set(VISTA_SITE_NAME "DEMO.OSEHRA.ORG" CACHE STRING "Name to set for the site address when initializing VistA instance.  Default is 'DEMO.OSEHRA.ORG'")
+  set(SYSTEM_TEMP_DIR "@" CACHE PATH "Absolute path to the system temp directory.  The default of '@' will cause the system to use the working directory of the process as the temp directory.  This path has a limit of 50 characters.  Avoid Windows paths with a '~' ")
   set(RoutineImportFile "${VISTA_BINARY_DIR}/routines.ro")
   configure_file(${VISTA_SOURCE_DIR}/ImportRG.cmake.in ${VISTA_BINARY_DIR}/ImportRG.cmake @ONLY)
   set(logfile "${VISTA_BINARY_DIR}/Testing/Log/RoutineImport.log")
