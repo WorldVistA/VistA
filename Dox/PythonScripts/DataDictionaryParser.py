@@ -98,6 +98,50 @@ class FileManFieldSectionParser(IDDSectionParser):
                           ["""(Key field)""", "_isKeyField"],
                           ["""(NOWRAP)""", "_isNoWrap"],
                           ['''(IGNORE "|")''', "_ignorePipe"]]
+
+#'''Short Descr:''',
+#'''Estimated Case Length (HOURS:''',
+#'''Uniqueness Index:''')
+#'''Description:''',
+    FileFieldCaptionList = ('''LAST EDITED BY:''',
+                            '''LOSSES:''',
+                            '''GROUP:''',
+                            '''TOTAL DIALYSIS PATIENT REMAINING:''',
+                            '''NOTES:''',
+                            '''PATIENTS COMPLETING INITIAL TRAINING:''',
+                            '''HELP-PROMPT:''',
+                            '''SCREEN ON FILE:''',
+                            '''EXECUTABLE HELP:''',
+                            '''COMPLICATIONS WITHIN 24 HOURS:''',
+                            '''REQUEST ENTERED BY:''',
+                            '''IDENTIFIED BY:''',
+                            '''DESIGNATED BEDS IN GENERAL PURPOSE UNITS:''',
+                            '''DIALYSIS CENTER TREATMENTS:''',
+                            '''TECHNICAL DESCR:''',
+                            '''CROSS-REFERENCE:''',
+                            '''RECORD INDEXES:''',
+                            '''AUDIT CONDITION:''',
+                            '''SECONDARY KEY:''',
+                            '''DIALYSIS/BEDS/FACILITIES:''',
+                            '''SUM:''',
+                            '''AUDIT:''',
+                            '''HOME (SELF) DIALYSIS TRAINING:''',
+                            '''ALGORITHM:''',
+                            '''DELETE TEST:''',
+                            '''LAST EDITED:''',
+                            '''SCREEN:''',
+                            '''INDEXED BY:''',
+                            '''HOME DIALYSIS:''',
+                            '''MUMPS CODE:''',
+                            '''DESCRIPTION:''',
+                            '''ADDITIONS DURING REPORTING PERIOD:''',
+                            '''EXPLANATION:''',
+                            '''FIELD INDEX:''',
+                            '''PRE-LOOKUP:''',
+                            '''PRIMARY KEY:''',
+                            '''OUTPUT TRANSFORM:''',
+                            '''LAYGO TEST:''',
+                            '''INPUT TRANSFORM:''')
     def __init__(self):
         self._lines=None
         self._section = IDataDictionaryListFileLogParser.FILEMAN_FIELD_SECTION
@@ -184,13 +228,42 @@ class FileManFieldSectionParser(IDDSectionParser):
             self.__parsingVariablePointer__(Global, CrossReference)
         elif self._field.isSetType():
             self.__parsingSetTypeDetails__(Global)
+        # this is to parse the field details part
+        self.__parseFieldDetails__()
         # this is to find out how many subfileds in the schema file
-        self.__findTotalSubFileds__()
+        #self.__findTotalSubFileds__()
         self.__resetVar__()
     def parseLine(self, line, Global, CrossReference):
         if not self._lines:
             self._lines=[]
         self._lines.append(line)
+    def __parseFieldDetails__(self):
+        if not self._lines or len(self._lines) <= 0:
+            return
+        curCaption = None
+        curValues = None
+        for line in self._lines:
+            found = False
+            for caption in self.FileFieldCaptionList:
+                result = re.search(" +%s ?(?P<Value>.*)" % caption, line)
+                if result:
+                    if curCaption:
+                        self._field.addProp(curCaption, curValues)
+                        logger.debug("Add Prop: %s value: [%s]" % (curCaption, curValues))
+                    curCaption = caption
+                    curValues = []
+                    if result.group('Value'):
+                        curValues.append(result.group('Value').strip())
+                    else:
+                        curValues.append("")
+                    found = True
+                    break
+            if not found and curCaption:
+                if not curValues: curValues = []
+                curValues.append(line.strip())
+        if curCaption:
+            self._field.addProp(curCaption, curValues)
+            logger.debug("Add Prop: %s value: [%s]" % (curCaption, curValues))
     def __findTotalSubFileds__(self):
         if not self._lines or len(self._lines) == 0:
             pass
@@ -396,22 +469,23 @@ class IDataDictionaryListFileLogParser:
     WR_ACCESS_SECTION = 8
     DEL_ACCESS_SECTION = 9
     LAYGO_ACCESS_SECTION = 10
-    IDENTIFIED_BY_SECTION = 11
-    POINTED_TO_BY_SECTION = 12
-    A_FIELD_IS_SECTION = 13
-    TRIGGERED_BY_SECTION = 14
-    CROSS_SECTION = 15
-    REFERENCED_BY_SECTION = 16
-    INDEXED_BY_SECTION = 17
-    PRIMARY_KEY_SECTION = 18
-    FILEMAN_FIELD_SECTION = 19
-    FILES_POINTED_TO_SECTION = 20
-    FILE_RECORD_INDEXED_SECTION = 21
-    SUBFILE_RECORD_INDEXED_SECTION = 22
-    INPUT_TEMPLATE_SECTION = 23
-    PRINT_TEMPLATE_SECTION = 24
-    SORT_TEMPLATE_SECTION = 25
-    FORM_BLOCKS_SECTION = 26
+    AUDIT_ACCESS_SECTION = 11
+    IDENTIFIED_BY_SECTION = 12
+    POINTED_TO_BY_SECTION = 13
+    A_FIELD_IS_SECTION = 14
+    TRIGGERED_BY_SECTION = 15
+    CROSS_SECTION = 16
+    REFERENCED_BY_SECTION = 17
+    INDEXED_BY_SECTION = 18
+    PRIMARY_KEY_SECTION = 19
+    FILEMAN_FIELD_SECTION = 20
+    FILES_POINTED_TO_SECTION = 21
+    FILE_RECORD_INDEXED_SECTION = 22
+    SUBFILE_RECORD_INDEXED_SECTION = 23
+    INPUT_TEMPLATE_SECTION = 24
+    PRINT_TEMPLATE_SECTION = 25
+    SORT_TEMPLATE_SECTION = 26
+    FORM_BLOCKS_SECTION = 27
 #===============================================================================
 # A class to parse Data Dictionary log file output and generate Global/Package dependencies
 #===============================================================================
@@ -427,6 +501,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
     WR_ACCESS_START = re.compile("^ +WR ACCESS:")
     DEL_ACCESS_START = re.compile("^ +DEL ACCESS:")
     LAYGO_ACCESS_START = re.compile("^ +LAYGO ACCESS:")
+    AUDIT_ACCESS_START = re.compile("^ +AUDIT ACCESS:")
     IDENTIFIED_BY_START = re.compile("^IDENTIFIED BY:")
     POINTED_TO_BY_START = re.compile("^POINTED TO BY: ")
     A_FIELD_IS_START = re.compile("^A FIELD IS$")
@@ -439,10 +514,10 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
     FILES_POINTED_TO_START = re.compile("^ +FILES POINTED TO +FIELDS$")
     FILE_RECORD_INDEXED_START = re.compile("^File #[.0-9]+$")
     SUBFILE_RECORD_INDEXED_START = re.compile("^Subfile #[.0-9]+$")
-    INPUT_TEMPLATE_START = re.compile(r"^INPUT TEMPLATE(S):$")
-    PRINT_TEMPLATE_START = re.compile(r"^PRINT TEMPLATE(S):$")
-    SORT_TEMPLATE_START = re.compile(r"^SORT TEMPLATE(S):$")
-    FORM_BLOCKS_START = re.compile(r"^FORM(S)/BLOCK(S):$")
+    INPUT_TEMPLATE_START = re.compile("^INPUT TEMPLATE\(S\):$")
+    PRINT_TEMPLATE_START = re.compile("^PRINT TEMPLATE\(S\):$")
+    SORT_TEMPLATE_START = re.compile("^SORT TEMPLATE\(S\):$")
+    FORM_BLOCKS_START = re.compile("^FORM\(S\)/BLOCK\(S\):$")
 
     def __init__(self, CrossReference):
         assert CrossReference
@@ -465,6 +540,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         self._sectionHeaderRegEx[self.WR_ACCESS_START] = self.WR_ACCESS_SECTION
         self._sectionHeaderRegEx[self.DEL_ACCESS_START] = self.DEL_ACCESS_SECTION
         self._sectionHeaderRegEx[self.LAYGO_ACCESS_START] = self.LAYGO_ACCESS_SECTION
+        self._sectionHeaderRegEx[self.AUDIT_ACCESS_START] = self.AUDIT_ACCESS_SECTION
         self._sectionHeaderRegEx[self.IDENTIFIED_BY_START] = self.IDENTIFIED_BY_SECTION
         self._sectionHeaderRegEx[self.POINTED_TO_BY_START] = self.POINTED_TO_BY_SECTION
         self._sectionHeaderRegEx[self.A_FIELD_IS_START] = self.A_FIELD_IS_SECTION
@@ -545,13 +621,13 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         return None
 
 def testOutput(DDFileParser):
-  DDFileParser.printGlobal("^DIBT")
+  #DDFileParser.printGlobal("^DIBT")
   DDFileParser.printGlobal("^DPT")
-  DDFileParser.printGlobal("^GECS(2100")
-  DDFileParser.printGlobal("^ONCO(165.5")
-  DDFileParser.printGlobal("^ORD(100.99")
-  DDFileParser.printGlobal("^ICD9")
-  DDFileParser.printGlobal("^YSD(627.8")
+  #DDFileParser.printGlobal("^GECS(2100")
+  #DDFileParser.printGlobal("^ONCO(165.5")
+  #DDFileParser.printGlobal("^ORD(100.99")
+  #DDFileParser.printGlobal("^ICD9")
+  #DDFileParser.printGlobal("^YSD(627.8")
   logger.info("Total FileMan Field Note Title is %d" % len(FileManFieldSectionParser.totalFieldNotes))
   for item in FileManFieldSectionParser.totalFieldNotes:
       logger.info(item)
@@ -577,3 +653,4 @@ if __name__ == '__main__':
     DDFileParser = DataDictionaryListFileLogParser(logFileParser.getCrossReference())
     DDFileParser.parseAllDataDictionaryListLog(result['logFileDir'], "*.schema")
     DDFileParser.parseAllDataDictionaryListLog(result['logFileDir'], ".*.schema")
+    testOutput(DDFileParser)

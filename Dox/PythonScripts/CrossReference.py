@@ -485,27 +485,33 @@ class FileManField(object):
         return self._isMultiplyAsked
     def isKeyField(self):
         return self._isKeyField
-    def addProp(propName, propValue):
+    def addProp(self, propName, propValue):
         if not self._propList: self._propList = []
-        value = self.getProp(propName)
-        if not value:
-            self.append((propName, [propValue]))
-        else:
-            value.append(propValue)
-    def hasProp(propName):
+        self._propList.append((propName, propValue))
+    def hasProp(self, propName):
         if not self._propList: return False
         for item in self._propList:
             if item[0] == propName:
                 return True
         return False
-    def getProp(propName):
+    def getProp(self, propName):
         if not self._propList: return None
         for item in self._propList:
             if item[0] == propName:
                 return item[1]
         return None
+    def getPropList(self):
+        return self._propList
     def printResult(self):
-        return write("%r\n" % self)
+        write("%r\n" % self)
+        self.printPropList()
+    def printPropList(self):
+        if not self._propList or len(self._propList) <= 0:
+            return
+        for (name, values) in self._propList:
+            write("%s:  " % name)
+            for value in values:
+                write("%s\n" % value)
     # type checking method
     def isFilePointerType(self):
         return self._type == self.FIELD_TYPE_FILE_POINTER
