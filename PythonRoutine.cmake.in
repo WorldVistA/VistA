@@ -21,7 +21,7 @@ endif()
 
 
 #define a variable to store the final log file name & path
-set(LOGFILENAME "@VISTA_BINARY_DIR@/Testing/Temporary/@package_file_name@Test.log")
+set(LOGFILENAME "@TEST_RESULTS_DIR@/@package_file_name@Test.log")
 #Execute the python script
 execute_process(COMMAND "@PYTHON_EXECUTABLE@"  "@VISTA_SOURCE_DIR@/XINDEXScript.py" ${LOGFILENAME} "@send_commands@" "@INSTANCE@" "@NAMESPACE@" "@USERNAME@" "@PASSWORD@" "@VISTA_SOURCE_DIR@" "@USE_COVERAGE@" RESULT_VARIABLE return ERROR_VARIABLE ERROR)
 

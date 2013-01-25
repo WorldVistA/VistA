@@ -35,7 +35,6 @@ endif()
 
 if(RAS_SYSTEM_TESTING)
   file(GLOB packages ${CMAKE_CURRENT_SOURCE_DIR}/RAS/VistA-FOIA/Packages/*)
-  find_path(TEST_RESULTS_DIR NAMES DOC "Path to results directory")
   foreach(package ${packages})
     file(GLOB rastests ${package}/*test*.py)
     foreach(rastest ${rastests})
