@@ -40,3 +40,4 @@ def initFileLogging(outputFileName, defaultLevel=logging.INFO,
   fileHandle.setLevel(defaultLevel)
   fileHandle.setFormatter(formatter)
   logger.addHandler(fileHandle)
+  fileHandle.doRollover()
