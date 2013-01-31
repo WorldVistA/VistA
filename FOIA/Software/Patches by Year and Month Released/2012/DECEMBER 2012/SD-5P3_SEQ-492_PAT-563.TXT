@@ -1,0 +1,226 @@
+$TXT Created by SPILLER,RICHARD at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 07/17/12 at 15:22
+=============================================================================
+Run Date: DEC 26, 2012                     Designation: SD*5.3*563
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #492                    Status: Released
+                  Compliance Date: JAN 26, 2013
+=============================================================================
+
+Associated patches: (v)SD*5.3*535  <<= must be installed BEFORE `SD*5.3*563'
+
+Subject: PCMM - DEATH NOTIFICATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses several Primary Care Management Module (PCMM) issues:
+  
+ 1. An error that occurs when un-assigning a patient with a future dated
+    assignment.
+  
+ 2. No warning message is displayed when Assigning/Re-assigning a deceased
+    patient.
+  
+ 3. The user has the ability to assign/unassign a deceased patient to a
+    team or position after their date of death.
+  
+ 4. An error that occurs when a user enters, "^^", at the prompt "Enter
+    response: 1//" using the PCMM Assign or Unassign protocol.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1.  HD0000000516051 - Future Assignments
+ 2.  HD0000000254727 - The users does not receive a warning message stating
+                       the patient is deceased.
+ 3.  HD0000000591991 - User can assign a patient to a team after the date 
+                       of death of the patient.
+ 4.  HD0000000716546 - <UNDEFINED>READ+2^SCMCQK2 *DATA(0)
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Charleston, SC
+ Louisville, KY
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================= 
+ 1.  HD0000000516051 - Future Assignments.
+  
+ Problem:
+ --------
+ When using the Mass Team/Position Unassignment [SCMC MU MASS TEAM
+ UNASSIGNMENT], if a user unassigns a patient that has a future date
+ assignment, the following undefined error occurs:"<UNDEFINED>DIK+3^DIK".
+  
+ Resolution:
+ -----------
+ Routine SCMCMU2 has been modified so when unassigning a patient using the
+ Mass Team/Position Unassignment [SCMC MU MASS TEAM UNASSIGNMENT] option,
+ an error will no longer occur.
+  
+  
+ 2.  HD0000000254727 - The users does not receive a warning message stating
+                       the patient is deceased.
+  
+ Problem:
+ --------
+ When selecting a deceased patient using the Team/Position 
+ Assignment/Re-Assignment [SCMC PATIENT ASSIGN/UNASSIGN] option, a warning
+ message is not displayed notifying the user that the patient is deceased
+ nor questions the user if they would like to continue.
+  
+ Resolution:
+ -----------
+ Routine SCMCQK has been modified to check if the patient is deceased.
+ If the patient is deceased a message will display, warning the user that
+ the patient is deceased and asks if they would like to continue. PCMM
+ allows users to assign a deceased patient to a team with the assignment
+ date prior to patient's date of death for historical purposes.
+  
+  
+ 3.  HD0000000591991 - User can assign a patient to a team after the date
+                       of death of the patient.
+  
+ Problem:
+ --------
+ Users are allowed to assign deceased patients to teams after or equal to 
+ their date of death when using the Team/Position Assignment/Re-Assignment 
+ [SCMC PATIENT ASSIGN/UNASSIGN] option.  A patient should only be assigned
+ to a team if the assignment date is prior to their date of death.
+  
+ Resolution:
+ -----------
+ Routines SCMCQK1 and SCMCQK2 have been modified so that a patient can
+ only be assigned to a team if the assignment date is before but not 
+ equal to their date of death.
+   
+ 4.  HD0000000716546 - <UNDEFINED>READ+2^SCMCQK2 *DATA(0)
+  
+ Problem:
+ --------
+ When using the PCMM Assign or Unassign protocol via the Appointment
+ Management Module [SDAM APPT MGT] option, if a user answers "No", at the
+ prompt, "Do you want to make a primary care assignment/unassignment?
+ Yes//", and then enters a "^^", at the following prompt requesting the 
+ user to enter a response, the following undefined error occurs
+ <UNDEFINED>READ+2^SCMCQK2 *DATA(0).
+  
+ Resolution:
+ -----------
+ Routine SCMCQK2 has been modified to handle the input of a, "^^", at the 
+ response prompt and the error no longer occurs.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system, but it is recommended
+ that it be installed when user activity is low.
+  
+ Installation time will be less than five minutes.
+  
+   1. Load Transport Global 
+      ----------------------
+      Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+              
+   2. Start Up KIDS 
+      -------------
+      Start up the Kernel Installation and Distribution System Menu [XPD
+      MAIN]: 
+      
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: INStallation
+                                                               ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+   3. Select Installation Option: 
+      ---------------------------
+      NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+      NAME, enter SD*5.3*563):
+       
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+   4. Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+      **This is the step to start the installation of this KIDS patch: 
+  
+      a. Choose the Install Package(s) option to start the patch install.
+  
+      b. When prompted, "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO. 
+  
+      c. When prompted, "Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//", respond YES.
+  
+         Enter options you wish to mark as 'Out Of Order':
+  
+         Team/Position Assignment...
+         /Re-Assignment                    [SCMC PATIENT ASSIGN/UNASSIGN]
+         Mass Team/Position Unassignment   [SCMC MU MASS TEAM UNASSIGNMENT]
+         Appointment Management            [SDAM APPT MGT]
+         PCMM MAIN MENU                    [SCMC PCMM MAIN MENU]
+  
+         Enter protocols you wish to mark as 'Out Of Order':
+  
+         PCMM Assign or Unassign           [SC PC PATIENT ASSIGN/UNASSIGN]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 45
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCMCMU2
+    Before: B69562260   After: B72023784  **148,177,524,563**
+Routine Name: SCMCQK
+    Before: B16433135   After: B21155109  **148,177,297,563**
+Routine Name: SCMCQK1
+    Before: B92256420   After:B106090791  **148,177,231,264,436,297,446,
+                                           524,535,563**
+Routine Name: SCMCQK2
+    Before: B56192341   After: B59731461  **297,563**
+ 
+Routine list of preceding patches: 535
+
+=============================================================================
+User Information:
+Entered By  : WOLF,ED                       Date Entered  : OCT 08, 2009
+Completed By: SESSLER,APRIL                 Date Completed: DEC 06, 2012
+Released By : DANE,SIDNEY                   Date Released : DEC 26, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,125 @@
+$TXT Created by HUFFMAN,Dan at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 07/03/12 at 09:07
+=============================================================================
+Run Date: JAN 31, 2013                     Designation: TIU*1*269
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #247                      Status: Released
+                  Compliance Date: MAR 03, 2013
+=============================================================================
+
+Associated patches: (v)TIU*1*182   <<= must be installed BEFORE `TIU*1*269'
+
+Subject: PRINTING DELETED PROGRESS NOTE CAUSES UNDEFINED ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue: 
+ 1. Avoid error <UNDEFINED>PRNTSCRN+5^TIURA2 
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. HD0000000195419     <UNDEFINED>PRNTSCRN+5^TIURA2
+  
+  
+ Participating Test Sites:
+ =========================
+ Orlando VAMC
+ Central Iowa VAMC
+ W.G. (Bill) Hefner VAMC - Salisbury
+  
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000195419     <UNDEFINED>PRNTSCRN+5^TIURA2
+   
+    Problem: 
+    --------
+    A hard error can occur when running the Review Progress Notes option 
+    [TIU OE/RR REVIEW PROG NOTES]. When the option is run and Progress
+    Notes are listed to the screen it is possible that notes can be deleted
+    from another session after they have been displayed.  If a note that's
+    been deleted is selected to print a hard error occurs.
+  
+    Resolution:
+    -----------
+    If a note selected for print from the Review Progress Notes option 
+    [TIU OE/RR REVIEW PROG NOTES] has been deleted, allow processing to
+    continue which causes the message: 
+        "Item # no longer exists, RETURN to continue..." 
+    to be displayed.  An error no longer occurs.
+  
+    Technical Resolution:
+    ---------------------
+    Modify routine TIURA2, skip selection when the TIU DOCUMENT file 
+    (#8925) does not exist.
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch can be loaded with users on the system but it is recommended
+ that it be scheduled for off-hours. The installation time should be less
+ than 2 minutes.
+  
+  1.  Start up the Kernel Installation and Distribution System Menu
+  
+  2.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter TIU*1.0*269):
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  3.  Use the Install Package(s) option and select the package
+      TIU*1.0*269.
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+          install? NO//', answer NO.
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? NO//', answer YES.
+      c.  When prompted to select the options you would like to place out 
+          of order, enter the following:
+               TIU OE/RR REVIEW PROG NOTES       Review Progress Notes 
+      d.  When prompted 'Enter protocols you wish to mark as 'Out Of 
+          Order', press <ENTER>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIURA2
+    Before: B33326183   After: B34038320  **88,58,100,123,112,182,269**
+ 
+Routine list of preceding patches: 182
+
+=============================================================================
+User Information:
+Entered By  : HUFFMAN,DANIEL                Date Entered  : MAY 03, 2012
+Completed By: SHERMAN,BILL                  Date Completed: JAN 24, 2013
+Released By : SCHMIT,BECKY                  Date Released : JAN 31, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

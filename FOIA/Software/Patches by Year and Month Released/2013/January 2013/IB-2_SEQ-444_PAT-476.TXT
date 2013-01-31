@@ -1,0 +1,288 @@
+$TXT Created by CLARK,KAREN at SMA.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 07/12/12 at 12:35
+=============================================================================
+Run Date: JAN 22, 2013                     Designation: IB*2*476
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #444                      Status: Released
+                  Compliance Date: FEB 22, 2013
+=============================================================================
+
+Associated patches: (v)IB*2*400    <<= must be installed BEFORE `IB*2*476'
+                    (v)IB*2*432    <<= must be installed BEFORE `IB*2*476'
+
+Subject: FEE PROVIDER AUTOMATION TO IB NON/OTHER VA BILLING PROVIDER (#355.93) File
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ This patch begins the process of automating Fee Basis (FB) claims to
+ Integrating Billing (IB) bills.  It includes a new API that is called
+ by Fee Basis code to update the IB NON/OTHER VA BILLING PROVIDER
+ #355.93) file with provider information from Fee Basis files. It also
+ includes modifications to two IB screens where Non-VA Provider 
+ information is entered to allow a user to allow/disallow record updates
+ by the Fee Basis Payment to IB [FB PAID TO IB] nightly job which is 
+ introduced in FB*3.5*135.
+  
+ This patch requires IB*2.0*400 and IB*2.0*432.
+  
+ *** IMPORTANT NOTE ***
+ Associated patch FB*3.5*135 requires IB*2.0*476 to be installed first.
+ Once installed, FB*3.5*135 must be installed immediately after.
+  
+ FB*3.5*135 and this patch (IB*2.0*476) have enhancements to FB and IB
+ that represent partial automation of Fee vendors and 5010 providers 
+ (For Future Use). These enhancements were tested at the test sites and
+ will be rolled out nationally, but not "turned on" (no post install).
+ Future patches will build upon the baseline functionality established 
+ in these patches.
+  
+  
+ Enhancements to Integrated Billing v2.0
+ ---------------------------------------
+ *** All of the below are for future use.***
+  
+ 1. The input transforms on two fields in the IB NON/OTHER VA BILLING
+    PROVIDER (#355.93) file were modified to allow the Fee Basis
+    Payment to IB [FB PAID TO IB] background job make updates to the 
+    fields:
+      PRVFMT^IBCEP8 was modified for the NAME (#.01) field
+      NPIUSED^IBCEP81 was modified for the NPI (#41.01) field
+  
+ 2. A new routine IBCEP8C contains the API EPFBAPI that is called by the
+    Fee Basis Payment to IB [FB PAID TO IB] background job to add/edit IB
+    providers. Supporting functions include a lookup of existing records
+    in the IB NON/OTHER VA BILLING PROVIDER (#355.93) file using the
+    NPI provided by Fee Basis records. Other functions include the
+    ability to compare and update a matched record when required, and
+    functions to create a new entry.  The new field (#50) DATE/TIME LAST
+    FB UPDATE is edited during the automated process to allow tracking
+    and reporting of IB providers edited by Fee Basis.
+  
+ 3. Routines IBCEP8 and IBCEP8B have been modified to display and update a
+    new multiple valued field, DATE/TIME ALLOW FB UPDATE (#51) in the
+    IB NON/OTHER VA BILLING PROVIDER (#355.93) file. A new routine,
+    IBCEP8C1 provides supporting code for this functionality. The new
+    field allows an IB user to 'allow' or 'disallow' automated updates
+    from Fee Basis.  The modified routines are accessed by the Provider ID 
+    Maintenance [IBCE PROVIDER MAINT] option under the Non-VA Provider
+    screens in IB.
+  
+ 4. A new menu option, IB Provider From FB Reports Menu [IB PROVIDER FROM
+    FB RPTS MENU] has been created that contain two new reporting options
+    that provide tools to locate and display information about records
+    modified or created by the Fee Basis Payment to IB  [FB PAID TO IB]
+    interface for a date range. This menu is not available on any existing
+    IB menus, but could be added to a menu or secondary menu for an IB user
+    or supervisor.
+    The report options available on this menu are:
+     Non-VA Provider From FB Summary Report [IB PROVIDER FROM FB SUMMARY]
+     Non-VA Provider From FB Detail Report [IB PROVIDER FROM FB DETAIL]
+  
+  
+ Patch Components
+ ================
+ Files and Fields Associated:
+  
+ File Name (Number)          Field Name (Number)    New/Modified/Deleted
+ ------------------------------------------------------------------------
+ IB NON/OTHER VA BILLING PROVIDER (355.93)                     Modified
+               (355.935)    (#50) DATE/TIME LAST FB UPDATE       New
+                              (#.01) DATE/TIME LAST FB UPDATE    New
+                              (#.02) FB SUPERVISOR               New
+                              (#.03) CREATED BY FB PAID TO IB    New
+  
+               (355.9351)   (#51) DATE/TIME ALLOW FB UPDATE      New
+                              (#.01) DATE/TIME ALLOW FB UPDATE   New
+                              (#.02) ALLOW UPDATES               New
+                              (#.03) IB USER WHO CHANGED         New
+  
+ Forms Associated: N/A
+ Mail Groups Associated: N/A
+  
+ Options Associated:
+  
+ Option Name                               Type      New/Modified/Deleted
+ -----------                               ----      --------------------
+ IB Provider From FB Reports Menu          Menu            New
+       [IB PROVIDER FROM FB RPTS MENU]
+ Non-VA Provider From FB Detail Report     run routine     New
+       [IB PROVIDER FROM FB DETAIL]
+ Non-VA Provider From FB Summary Report    print           New
+       [IB PROVIDER FROM FB SUMMARY]
+  
+ Protocols Associated: N/A
+ Security Keys Associated: N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)    New/Modified/Deleted
+ -------------         ----    ------------------    --------------------
+ IB PROVIDERS FROM FB  Sort    IB NON/OTHER VA BILLING        New
+                               PROVIDER (#335.93)
+  
+ Routines modified for this patch
+ --------------------------------
+ IBCEP8          Modified
+ IBCEP81         Modified
+ IBCEP8B         Modified
+ IBCEP8C         New
+ IBCEP8C1        New
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ 20090705 VistA Fee HIPAA 5010 Implementation, Discovery and Requirements
+          To meet the expanding needs of Electronic Data Interchange
+          (EDI) processes and address the system and data changes
+          required with the 5010 version, the Fee Basis package will need
+          to collect, store and report additional elements from the claim
+          data.  National Provider Identifiers (NPI) and physical service
+          locations are needed to better inform downstream or dependent
+          processes.  Much of the additional data collection is needed to
+          support (1) revenue functions, where a third party insurance
+          has a financial obligation surrounding payments made for
+          non-service connected episodes of care and (2) pricing
+          functions, where the service location impacts the allowed
+          amount for a healthcare service.
+  
+ Patient Safety Issues (PSIs): N/A
+ Remedy Ticket(s) & Overview: N/A
+  
+  
+ Test Sites:
+ ----------
+ Minneapolis, MN
+ Fargo, ND
+ Sioux Falls, SD
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by
+ this patch is available. 
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/. This transmits the files from the 
+ first available FTP server. Sites may also elect to retrieve software 
+ directly from a specific server as follows:
+  
+ Albany         ftp.fo-albany.med.va.gov <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov  <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov    <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ Title                              File Name                FTP Mode
+ --------------------------------------------------------------------
+ Release Notes IB*2.0*476           IB_2_0_P476_rn.pdf       Binary
+ Install Guide IB*2.0*476           IB_2_0_P476_ig.pdf       Binary
+ IB Technical Manual/Security Guide IB_2_0_R0712_tm.pdf      Binary
+ EDI User Guide                     edi_user_guide_R0712.pdf Binary
+  
+ Patch Installation:
+  
+ Prerequisites
+ -------------
+ IB*2.0*400 and IB*2.0*432.
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.
+  
+  This patch should take less than 5 minutes to install.
+  It is recommended that one option be disabled during installation.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options:
+     (When prompted for the INSTALL NAME enter the patch IB*2.0*476)
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install, IB*2.0*476
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  answer NO
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? Yes//'  answer YES
+  
+ 8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'
+     answer 'IBCE PROVIDER MAINT'
+  
+ 9.  When prompted 'Enter options you wish to mark as 'Out Of Order':'
+     enter <RETURN>
+  
+ 10. When prompted 'Enter protocols you wish to mark as 'Out Of Order':'
+     enter <RETURN>
+  
+ 11. If prompted with 'Delay Install (Minutes):  (0-60): 0//' answer 0
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCEP8
+    Before:B124149510   After:B129710257  **51,137,232,288,320,343,374,
+                                           377,391,400,436,432,476**
+Routine Name: IBCEP81
+    Before: B63919738   After: B65647537  **343,391,400,476**
+Routine Name: IBCEP8B
+    Before: B12352923   After: B20063767  **391,432,476**
+Routine Name: IBCEP8C
+    Before:       n/a   After:B149217224  **476**
+Routine Name: IBCEP8C1
+    Before:       n/a   After: B49680718  **476**
+ 
+Routine list of preceding patches: 432
+
+=============================================================================
+User Information:
+Entered By  : CLARK,KAREN Y                 Date Entered  : FEB 27, 2012
+Completed By: DEWAYNE,BRANDON               Date Completed: DEC 13, 2012
+Released By : CAULFIELD,MARY                Date Released : JAN 22, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

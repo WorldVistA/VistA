@@ -1,0 +1,193 @@
+$TXT Created by REESE,DARRYL at CHEY181.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 11/21/12 at 07:13
+=============================================================================
+Run Date: JAN 10, 2013                     Designation: SD*5.3*589
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #493                    Status: Released
+                  Compliance Date: FEB 10, 2013
+=============================================================================
+
+Associated patches: (v)SD*5.3*575  <<= must be installed BEFORE `SD*5.3*589'
+                    (v)SD*5.3*596  <<= must be installed BEFORE `SD*5.3*589'
+
+Subject: PCMM Mental Health Reports
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch was developed in support of the Improve Veterans Mental 
+ Health (IVMH), Identification of Principal Mental Health Provider 
+ (IPMHP) project. In support of new Primary Care Management Module (PCMM) 
+ functionality introduced in patch SD*5.3*575, this patch provides 
+ reporting capability to Mental Health Service within PCMM software. Four 
+ new Mental Health PCMM reports were created along with a Mental Health 
+ PCMM Reports Menu. These reports will assist Mental Health Service in 
+ implementing and maintaining Mental Health patients within the PCMM 
+ software. Also, a new file is included in this patch; this file will 
+ contain Stop Codes used by Mental Health Service. The Stop Codes listed 
+ in the MH PCMM STOP CODES file (#404.61) are needed by one report to 
+ produce output. This patch will include release notes with detail
+ descriptions of the new reports and output.
+  
+ This patch addresses new NSR20080514.
+ =====================================
+  
+ There are no Remedy Tickets associated with this patch.
+ ========================================================
+  
+ Components Sent With Patch:
+ ===========================
+  
+ DATA DICTIONARY:
+ ================
+                                       UP    SEND  DATA                USER
+                                       DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #     FILE NAME                  DD    CODE  W/FILE  DATA  PTRS  RIDE
+  
+ 404.61     MH PCMM STOP CODES         YES    NO    NO      YES   NO    NO
+  
+  
+ OPTIONS:
+ ========
+ SCMC MH PCMM CLINICIAN PAT RPT   ACTION: SEND TO SITE
+ SCMC MH PCMM ENCOUNTER RPT       ACTION: SEND TO SITE
+ SCMC MH PCMM HIST TEAM SUMMARY   ACTION: SEND TO SITE
+ SCMC MH PCMM HIST PAT RPT        ACTION: SEND TO SITE
+ SCMC MH PCMM RPT MENU            ACTION: SEND TO SITE
+  
+ TEST SITES:
+ ===========
+ Upstate NY HCS
+ Maryland HCS
+ West Palm Beach
+ Phoenix
+  
+ ====================INSTALLATION INSTRUCTIONS===========================
+  
+  You can install this patch during the normal workday with
+  NO ACTIVITY in PCMM GUI.
+  
+  The post init routine SD53589P populates the MH PCMM STOP CODES file 
+  (#404.61) and can be deleted after install.
+  
+  Install Time - less than 5 minutes
+  
+   1. LOAD TRANSPORT GLOBAL
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.  START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+  Select Kernel Installation & Distribution System Option: INStallation
+                                                           ------------
+           Load a Distribution
+           Print Transport Global
+           Compare Transport Global to Current System
+           Verify Checksums in Transport Global
+           Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+           Backup a Transport Global
+  
+  Select Installation Option:
+  
+  3.  Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter SD*5.3*589):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+  4.  Select Installation Option: Install Package(s)
+                                  -----------------
+      a.  Choose the Install Package(s) option to start the patch
+          install.
+      b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//' answer NO (unless otherwise indicated)
+      c.  When prompted 'Want to DISABLE Scheduled Options, Menu
+          Options, and Protocols? NO//' answer 'YES'.
+  
+              [SCMC PCMM MAIN MENU]       PCMM Main Menu
+  
+  5.  The following documents are exported as part of this patch:
+  
+      File Name Contents              Retrieval Format
+      ------------------              ----------------
+      PCMMMHTCUG.DOC                  User Manual Binary
+      PCMMMHTCUG.PDF                  User Manual Binary
+      PIMSTM.DOC                      PIMS Technical Manual Binary
+      PIMSTM.PDF                      PIMS Technical Manual Binary
+      Release Notes SD_5 3_589.PDF    Release Notes Binary
+  
+      The files listed above may be obtained via FTP. The preferred method
+      is to FTP the files from:
+  
+      download.vista.med.va.gov
+  
+      This transmits the files from the first available FTP server. Sites
+      may also elect to retrieve software documents directly from a
+      specific server as follows:
+  
+      CIO FIELD OFFICE    FTP ADDRESS                DIRECTORY
+      --------------------------------------------------------------------
+      Albany              ftp.fo-albany.med.va.gov   [anonymous.software]
+      Hines               ftp.fo-hines.med.va.gov    [anonymous.software]
+      Salt Lake City      ftp.fo-slc.med.va.gov      [anonymous.software]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 41
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCMCMHE
+    Before:       n/a   After: B26498569  **589**
+Routine Name: SCMCMHHP
+    Before:       n/a   After: B30383570  **589**
+Routine Name: SCMCMHHT
+    Before:       n/a   After: B70999794  **589**
+Routine Name: SCMCMHO7
+    Before:       n/a   After: B50655147  **589**
+Routine Name: SCMCMHP2
+    Before:       n/a   After: B72814610  **589**
+Routine Name: SCMCMHPP
+    Before:       n/a   After: B88195737  **589**
+Routine Name: SCMCMHU1
+    Before:       n/a   After: B29225057  **589**
+Routine Name: SD53589P
+    Before:       n/a   After: B14073216  **589**
+
+=============================================================================
+User Information:
+Entered By  : REESE,DARRYL M                Date Entered  : OCT 19, 2011
+Completed By: DASYLVA,ANTHONY               Date Completed: JAN 09, 2013
+Released By : ADAMS,RITA W                  Date Released : JAN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,490 @@
+$TXT Created by CLARK,KAREN at SMA.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 09/19/12 at 13:03
+=============================================================================
+Run Date: JAN 22, 2013                     Designation: FB*3.5*135
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #118                    Status: Released
+                  Compliance Date: FEB 22, 2013
+=============================================================================
+
+Associated patches: (v)FB*3.5*108  <<= must be installed BEFORE `FB*3.5*135'
+                    (v)FB*3.5*124  <<= must be installed BEFORE `FB*3.5*135'
+                    (v)IB*2*476    <<= must be installed BEFORE `FB*3.5*135'
+
+Subject: FEE 5010 Phase 2 Enhancements
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Input Template
+  - Other
+
+Description:
+============
+
+ This patch continues to enhance the VistA Fee Basis software for
+ Health Insurance Portability and Accountability Act (HIPAA) 5010
+ compliance. It includes new fields and logic for storing and creating
+ a VistA Unique Claim ID for entries in the Fee Basis Payment (#162)
+ and Fee Basis Invoice (#162.5) files and addresses 5010 deficiencies
+ in the Civil Hospital Invoice Display option.
+  
+  
+ ***IMPORTANT NOTE***
+ Associated patch FB*3.5*135 requires IB*2.0*476 to be installed first.
+ Once installed, FB*3.5*135 must be installed immediately after.
+  
+  
+ FB*3.5*135 and IB*2.0*476 have enhancements to FB and IB that represent
+ partial automation of Fee vendors and 5010 providers.  These
+ enhancements were tested at the test sites and will be rolled out
+ nationally, but not "turned on" (no post install).  Future patches will
+ build upon the baseline functionality established in these patches.
+ See item #4 listed in the enhancements below.
+  
+ Enhancements to VistA Fee Basis
+ -------------------------------
+ 1. FBAAPIN and FBCHVH have been modified for both Civil Hospital and
+    Medical claims Invoice Display to display the Line Item Rendering
+    Provider, Line Item NPI and Line Item Taxonomy codes when available.
+  
+ 2. FBPCR has been modified to include an optional prompt so that users
+    may exclude selected Insurance types (Type of Plan) from the
+    Potential Cost Recovery report [FB PCR] option.  FBPCR4 was modified
+    to exclude patients that have only the selected insurance type(s) and
+    no other third party insurance.  The paid claims for these patients
+    will not display or print on the report.
+  
+ 3. A new Unique Claim Identifier (UCID) will be generated for all
+    Civil Hospital and Medical claims manually entered in VistA Fee
+    Basis.  The UCID will be used by the Purchased Care business office
+    in systems downstream from VistA (Central Fee, VHA Support Service
+    Center, etc) to enable the VA to recreate claims as they were
+    submitted by a vendor.  The UCID will be comprised of the following:
+  
+       5 digit Station#, left justified, zero filled
+       1 digit Source (1=FB, 2=FBCS, 3=VAPM)
+       1 digit Initiation Type (S=Scanned, E=EDI, M=Manual)
+       1 digit Claim Type (I=Institutional, P=Professional, D=Dental,
+                           N=Non Standard)
+       4 digit Calendar year
+       '-' to separate the year and sequence#
+       15 digit Sequence number
+  
+    Note: the "4 digit year-Seq#" will be known as the Claim Number. For
+    "E" (EDI) Claims, VistA Fee Basis forces the Sequence number portion
+    of the Claim Number to be the FPPS Claim ID.
+  
+    Two APIs have been created for Fee and COTS applications to
+    set the UCID value when filing data to Fee Basis Payment (#162) or
+    Fee Basis Invoice (#162.5) files.  These APIs are:
+  
+  
+    $$PAYUCID^FBUTL135(VET,VEN,TDIEN,SVCIEN,STN,SRCE,INITTYP,CLTYP,CLNUM)
+     Inputs: (all inputs are required)
+             VET     = veteran DFN
+             VEN     = Vendor IEN
+             TDIEN   = Treatment Date IEN
+             SVCIEN  = Service Provided IEN
+             STN     = Station
+             SRCE    = Source           (1=FB, 2=FBCS, 3=VAPM)
+             INITTYP = Initiation Type  (S=Scanned, E=EDI, M=Manual)
+             CLTYP   = Claim Type       (P=Professional, D=Dental,
+                                         N=Non Standard)
+             CLNUM   = Claim Number - in format YYYY-nnnn
+  
+     Output: "-1^" with an error message
+             or
+             Populates the Unique Claim ID field (#81) in file FEE BASIS
+             PAYMENT (#162) (Outpatient) and, Returns the Unique Claim ID
+  
+  
+    $$INVUCID^FBUTL135(INVIEN,STN,SRCE,INITTYP,CLNUM)
+     Inputs: (all inputs are required)
+             INVIEN  = Invoice IEN
+             STN     = Station
+             SRCE    = Source             (1=FB, 2=FBCS, 3=VAPM)
+             INITTYP = Initiation Type    (S=Scanned, E=EDI, M=Manual)
+             CLNUM   = Claim Number - in YYYY-nnnn format
+  
+     Output: "-1^" with an error message
+             or
+             Populates the Unique Claim ID field (#85) in file FEE BASIS
+             INVOICE (#162.5) (Inpatient)
+             and Returns the Unique Claim ID
+  
+  
+    In order to create the UCID, the following Fee components were
+    created or modified:
+  
+    Five new APIs were created:
+  
+    $$ENTINPAT^FBUTL136(FBSTA,FBSRC,FBINT,FBCLT,FBCLAIMS,FBVEND)
+      This API is used by Input Template "FBCH ENTER PAYMENT"
+      Inputs: FBSTA    = Station
+              FBSRC    = Source
+              FBINT    = Initiation Type
+              FBCLT    = Claim Type
+              FBCLAIMS = Claim Number
+              FBVEND   = Vendor IEN
+      Output: Returns a Unique Claim ID that is used by FileMan to
+              populate the Unique Claim ID field (#85) in file
+              FEE BASIS INVOICE (#162.5) (Inpatient)
+  
+    EDINPAT^FBUTL136(FBXSTR,FBI)
+      This API is used by Input Template "FBCH EDIT PAYMENT"
+      Inputs: FBXSTR = FPPS value entered by user for FPPS
+              FBI    = IEN of Invoice record
+      Output: UCID is saved in file 162.5 via FileMan
+  
+    $$ENTROUTP^FBUTL136(DFN,FBV,FBAAVID,FBCLAIMS)
+     This API is used by routine FBAACO
+     Inputs: DFN     = Patient ID
+             FBV = Vendor IEN
+             FBAAVID = Vendor Invoice Date
+             FBCLAIMS = FPPS claim id
+     Output: UCID that is save in file 162
+  
+    EDITOUTP^FBUTL136(FBXSTR,FBDA)
+     This API is used by routine FBUTL5.
+     Inputs: FBXSTR = FPPS CLAIM ID entered by user
+             FBDA = DA variable containing SERVICE PROVIDED,
+                   INITIAL TREATMENT DATE, VENDOR, PATIENT
+     Output: UCID that is saved in file 162
+  
+    $$UCLAIMNO^FBUTIL135(FBSTA,FBSRC,FBINT,FBCLT,FBCLAIMS)
+      This API is used by all the other API's
+      Inputs: All inputs are optional.
+              FBSTA    = Station - Default is the station ID returned by
+                         routine STATION^FBAAUTL
+              FBSRC    = Source - Default is "1" - FB
+              FBINT    = Initiation Type - Default is "M" - Manual
+              FBCLT    = Claim Type - Default is "N" - Non Standard
+              FBCLAIMS = Claim Number - in YYYY-nnnn format
+                        Default is <Current Year>-<Next Sequential Number
+                        from file FEE BASIS SITE PARAMETERS (#161.4),
+                        field UNIQUE CLAIM IDENTIFIER SEQ (#39)
+      Output: Returns a Unique Claim ID
+  
+    Created field for Unique Claim Identifier Sequence in the FEE BASIS
+    SITE PARAMETERS (#161.4) file.
+  
+    For Civil Hospital claims: added field for Unique Claim Identifier
+    to the FEE BASIS INVOICE (#162.5), modified routine FBCHEP and
+    input template [FBCH ENTER PAYMENT] (file 162.5) to call new API:
+    ENTINPAT^FBUTL136, and [FBCH EDIT PAYMENT] (file 162.5) to call new
+    API: EDINPAT^FBUTL136 prompt for the Claim Number.
+  
+    For Medical claims: added field for Unique Claim Identifier to the
+    FEE BASIS PAYMENT (#162) file, modified routine FBAACO to prompt for
+    CLAIM NUMBER and a claim type by calling new API: ENTROUTP^FBUTL136,
+    modified routine FBAACO2 and FBUTL5 to prompt for Claim Number and a
+    claim type by calling new API: EDITOUTP^FBUTL136
+  
+    Three options were added to verify Unique Claim Identifier (UCID)
+    entries for testing. Unique Claim Identifier Utility Menu
+    [FB UCID UTILITY MENU] has been created to display information about
+    the Unique Claim Identifier field for entries in files
+    FEE BASIS INVOICE (#162.5),FEE BASIS PAYMENT (#162). This menu
+    option is not available on any existing FB menus, but could be added
+    to a secondary menu. The new menu contains the Fee Basis Unique Claim
+    Identifier Display [FB UCID DISPLAY] option and the FB OUTPATIENT
+    UCID REPORT [FB UCID PAYMENT RPT] option.
+  
+ 4. The following changes represent partial automation of Fee vendors and
+    5010 providers from FB to IB.  These enhancements were tested at the
+    test sites and will be rolled out nationally, but not "turned on"
+    (no post install).  Future patches will build upon the baseline
+    functionality established for this item in the patch.
+  
+    Paid inpatient and outpatient claims that are potentially cost
+    recoverable from Integrated Billing (IB) will now have an automated
+    process (For Future Use) to copy valid Fee Basis Vendor and 5010 
+    Providers within a paid claim to the IB NON/OTHER VA PROVIDER 
+    (#355.93) file. Routine FBPAID was modified and new routines FBPAID3
+    and FBPAID3A were created to capture the paid claims into the new file
+    FEE BASIS PAID TO IB (#161.9) during the nightly mailman processing of
+    the PAID message from Central Fee.
+  
+    A new field ALLOW FB PAID TO IB (#40) was created in the FEE BASIS
+    SITE PARAMETERS (#161.4) file (For Future Use), and included in the 
+    Input Template [FBAA SITE PARAMETERS] Fee Basis Supervisor to allow/
+    disallow the automated process. The interface will not run unless this
+    field is set to YES (allow).
+  
+    A new queued option (For Future Use) Fee Basis Payment to IB
+    [FB PAID TO IB] calling new routine FBPAID3 will read through the 
+    paid entries saved to the FEE BASIS PAID TO IB (#161.9) file and 
+    determine claims that are potential cost recovery claims using the same
+    business rules as the existing Potential Cost Recovery Report.  Vendor
+    and 5010 providers for entries that pass the potential cost recovery
+    rules will be sent to the new IB API $$EPFBAPI^IBCEP8C1, introduced in
+    IB*2.0*476, for additional IB checks and to save to file 355.93.  Data
+    will be captured for reporting on entries filed to IB and those that
+    failed to file for a variety of reasons (invalid provider name format,
+    etc). ICR 5806: FB PROVIDER TO IB AUTOMATION was approved for this
+    call.
+  
+    A new option Provider to IB Report [FB PROVIDER TO IB] was created 
+    (For Future Use) which calls the new routine FBPAID3B to display data
+    from file 161.9 for entries that were filed to IB and those that failed
+    to file.  The data in file 161.9 will be retained for six months after
+    which it will be purged by the nightly process Fee Basis Payment to
+    IB [FB PAID TO IB].
+  
+  
+ Patch Components
+ ================
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ FEE BASIS PAYMENT (162)   UNIQUE CLAIM IDENTIFIER (#81)      New
+ FEE BASIS INVOICE (162.5) UNIQUE CLAIM IDENTIFIER (#85)      New
+ FEE BASIS SITE
+     PARAMETERS (161.4)    UNIQUE CLAIM IDENTIFIER SEQ (#39)  New
+                           ALLOW FB PAID TO IB (#40)          New
+ FEE BASIS PAID TO IB (161.9)                                 New
+                           PATIENT (#.01)                     New
+                           PROGRAM (#.02)                     New
+                           FB INTERNAL CONTROL NUMBER (#.03)  New
+                           PROCESS DATE (#.04)                New
+                           LI NUMBER  (#.05)                  New
+                           PROVIDER TYPE (.06)                New
+                           IB NON/OTHER PROVIDER(#.07)        New
+                           NPI ADDED (#.08)                   New
+                           TAXONOMY ADDED (#.09)              New
+  
+ Forms Associated: N/A
+ Mail Groups Associated: N/A
+  
+ Options Associated:
+  
+ Option Name                               Type      New/Modified/Deleted
+ -----------                               ----      --------------------
+ Fee Basis Payment to IB                   run routine      New
+    [FB PAID TO IB]
+ Provider to IB Report                     run routine      New
+    [FB PROVIDER TO IB]
+ Fee Basis Unique Claim Identifier Display run routine      New
+    [FB UCID DISPLAY]
+ FB OUTPATIENT UCID REPORT                 inquire          New
+    [FB UCID PAYMENT RPT]
+ Unique Claim Identifier Utility Menu      menu             New
+    [FB UCID UTILITY MENU]
+  
+ Protocols Associated: N/A
+ Security Keys Associated: N/A
+  
+ Templates Associated:
+  
+ Template Name        Type  File Name (Number)       New/Modified/Deleted
+ -------------        ----  ------------------       --------------------
+ FBCH ENTER PAYMENT   Input FEE BASIS INVOICE (162.5)        Modified
+ FBCH EDIT PAYMENT    Input FEE BASIS INVOICE (162.5)        Modified
+ FBAA SITE PARAMETERS Input FEE BASIS SITE PARAMETERS(161.4) Modified
+ FB UCID PAYMENT      Print FEE BASIS PAYMENT (162)          New
+  
+ Routines Associated:
+  
+ Routine Name                      New/Modified/Deleted
+ -----------                       --------------------
+ FBAACO                                Modified
+ FBAACO2                               Modified
+ FBAAPIN                               Modified
+ FBCHEP                                Modified
+ FBCHVH                                Modified
+ FBPAID                                Modified
+ FBPAID3                               New
+ FBPAID3A                              New
+ FBPAID3B                              New
+ FBPCR                                 Modified
+ FBPCR4                                Modified
+ FBUTL135                              New
+ FBUTL136                              New
+ FBUTL5                                Modified
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ 20090705 VistA Fee HIPAA 5010 Implementation, Discovery and Requirements
+          To meet the expanding needs of Electronic Data Interchange
+          (EDI) processes and address the system and data changes
+          required with the 5010 version, the Fee Basis package will need
+          to collect, store and report additional elements from the claim
+          data.  National Provider Identifiers (NPI) and physical service
+          locations are needed to better inform downstream or dependent
+          processes.  Much of the additional data collection is needed to
+          support (1) revenue functions, where a third party insurance
+          has a financial obligation surrounding payments made for
+          non-service connected episodes of care and (2) pricing
+          functions, where the service location impacts the allowed
+          amount for a healthcare service.
+  
+ Patient Safety Issues (PSIs): N/A
+ Remedy Ticket(s) & Overview: N/A
+  
+  
+ Test Sites:
+ ----------
+ Minneapolis, MN
+ Fargo, ND
+ Sioux Falls, SD
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by
+ this patch is available. 
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/. This transmits the files from the 
+ first available FTP server. 
+  
+ Sites may also elect to retrieve software directly from a specific 
+ server as follows:
+  
+ Albany         ftp.fo-albany.med.va.gov <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov  <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov    <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ Title                              File Name                FTP Mode
+ --------------------------------------------------------------------
+ Release Notes FB*3.5*135           FB_3_5_P135_rn.pdf       Binary
+ Install Guide FB*3.5*135           FB_3_5_P135_ig.pdf       Binary
+ FB Technical Manual/Security Guide FB_3_5_R1212_tm.pdf      Binary
+ Fee Basis User Manual              FB_3_5_R1212_um.pdf      Binary
+  
+ Patch Installation:
+  
+ Prerequisites
+ -------------
+ The following patches must be installed prior to FB*3.5*135:
+ FB*3.5*108
+ FB*3.5*124
+ IB*2.0*476
+     *** IMPORTANT NOTE ***
+     Associated patch FB*3.5*135 requires IB*2.0*476 to be installed first.
+     Once installed, FB*3.5*135 must be installed immediately after.
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Installation Instructions
+ -------------------------
+ VistA Fee Basis and Fee Basis Claims System (FBCS) users should not be on 
+ the system during installation due to the changes to the data dictionary
+ for the FEE BASIS PAYMENT file.
+  
+ It is recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install. If installed during the normal workday, it is
+ recommended that the following selection(s) in the OPTION (#19) file, and
+ all of their descendants be disabled to prevent possible conflicts while
+ running the KIDS Install. Other VISTA users will not be affected.
+    Civil Hospital Main Menu         [FBCH MAIN MENU]
+    Medical Fee Main Menu            [FBAA MEDICAL MAIN MENU]
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options:
+     (When prompted for the INSTALL NAME enter the patch FB*3.5*135):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install, FB*3.5*135
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  answer NO
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? NO//'  answer Yes
+  
+ 8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'
+       answer FBCH MAIN MENU
+  
+ 9.  When prompted 'Enter options you wish to mark as 'Out Of Order':'
+       answer FBAA MEDICAL MAIN MENU
+  
+ 10. When prompted 'Enter options you wish to mark as 'Out Of Order':'
+       hit Enter
+  
+ 11. When prompted 'Enter protocols you wish to mark as 'Out Of Order':'
+       hit Enter
+  
+ 12. If prompted 'Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAACO
+    Before: B29088561   After: B30906889  **4,61,79,116,122,133,108,135**
+Routine Name: FBAACO2
+    Before: B14357578   After: B14623021  **4,55,61,77,116,122,133,108,135**
+Routine Name: FBAAPIN
+    Before: B34775282   After: B36889806  **4,61,122,133,108,135**
+Routine Name: FBCHEP
+    Before: B33379064   After: B34203582  **4,61,77,82,122,108,124,135**
+Routine Name: FBCHVH
+    Before: B31027719   After: B37280892  **4,61,122,133,108,135**
+Routine Name: FBPAID
+    Before: B29740896   After: B34000309  **5,61,107,121,135**
+Routine Name: FBPAID3
+    Before:       n/a   After:B190545666  **135**
+Routine Name: FBPAID3A
+    Before:       n/a   After:B117117622  **135**
+Routine Name: FBPAID3B
+    Before:       n/a   After: B52284307  **135**
+Routine Name: FBPCR
+    Before: B63936182   After: B73151731  **12,48,76,98,103,135**
+Routine Name: FBPCR4
+    Before: B10705492   After: B14245640  **48,76,135**
+Routine Name: FBUTL135
+    Before:       n/a   After:B139327633  **135**
+Routine Name: FBUTL136
+    Before:       n/a   After:B203178014  **135**
+Routine Name: FBUTL5
+    Before: B18887718   After: B19998374  **61,135**
+ 
+Routine list of preceding patches: 103, 121, 124
+
+=============================================================================
+User Information:
+Entered By  : CLARK,KAREN Y                 Date Entered  : NOV 04, 2011
+Completed By: DEWAYNE,BRANDON               Date Completed: DEC 13, 2012
+Released By : CARP,CHERYL                   Date Released : JAN 22, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

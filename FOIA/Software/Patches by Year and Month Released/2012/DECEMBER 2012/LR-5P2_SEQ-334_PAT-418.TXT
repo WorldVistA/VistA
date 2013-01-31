@@ -1,0 +1,202 @@
+$TXT Created by CARPENTER,TERRY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 03/01/12 at 13:53
+=============================================================================
+Run Date: DEC 13, 2012                     Designation: LR*5.2*418
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #334                    Status: Released
+                  Compliance Date: JAN 13, 2013
+=============================================================================
+
+Associated patches: (v)LR*5.2*278  <<= must be installed BEFORE `LR*5.2*418'
+
+Subject: VM patch to address some LOINC-related problems
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 3 LOINC-related issues in the Lab package.
+  
+ 1.  The LR LOINC LOOKUP [Find LOINC for Vista Lab Test] option won't
+     accept default.
+  
+ 2.  The LR LOINC PRINT RESULT NLT [Lab Tests With/Without Result NLT 
+     Codes Print] option prints MI (Microbiology) and BB (Blood Bank) tests
+     when it should only print CH (Chemistry) tests.
+  
+ 3.  The LR LOINC PRINT RESULT NLT [Lab Tests With/Without Result NLT 
+     Codes Print] option prints profiles (cosmic tests) when it should only
+     print individual tests (atomic tests).
+  
+  
+ BLOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*418 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*418 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. HD0000000519573  -  LR LOINC LOOKUP won't accept default
+  
+ 2. HD0000000591734  -  Result NLT report prints MI and BB tests
+  
+ 3. HD0000000084781  -  LOINC option issue, result NLT report print problem
+      
+  
+ Testing Sites:
+ ==============
+ HEARTLAND-EAST HCS
+ BRONX, NY
+ WASHINGTON, DC
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1.  HD0000000519573     -  LR LOINC LOOKUP won't accept default
+  
+  
+     Problem:
+     --------
+     The LR LOINC LOOKUP [Find LOINC for Vista Lab Test] option asks you to
+     enter a lab test and a specimen. The option should then return the
+     LOINC code associated with the entered lab test and specimen along
+     with the related LOINC code information from the LAB LOINC file
+     (#95.3). It fails to do this, returning a "??" instead. The "??"
+     should only be returned when there is no LOINC code for the entered
+     test/specimen. This problem is caused by a poorly constructed FileMan
+     lookup into the LAB LOINC file (#95.3).
+  
+     Solution:
+     ---------
+     Modify routine LRLNC1 to get the LOINC code from LABORATORY TEST file
+     (#6O) and then use that LOINC code for the lookup into the LAB LOINC
+     file (#95.3).
+  
+     Routine:    LRLNC1
+  
+  
+  
+  
+ 2:  HD0000000591734   -   Result NLT report prints MI and BB tests
+  
+    Problem:
+    --------
+    The report that is printed from the LR LOINC PRINT RESULT NLT [Lab 
+    Tests With/Without Result NLT Codes Print] option should only print
+    CH subscripted tests, but the report is pulling MI and BB subscripted
+    tests into the report. MI and BB subscripted tests do not get LOINC
+    coded.
+  
+    Solution:
+    ---------
+    Modify routine LRLNCNLT to not print any MI or BB subscripted tests
+    on the report.
+  
+    Routine:  LRLNCNLT  
+  
+  
+ 3.  HD0000000084781 - LOINC option issue, result NLT report print problem
+  
+  
+    Problem:
+    --------
+    The LR LOINC PRINT RESULT NLT [Lab Tests With/Without Result NLT Codes 
+    Print] option allows you to print a list of lab tests with or without
+    Result NLT Codes. Only atomic (stand-alone) tests should have Result
+    NLT Codes but the option prints atomic and cosmic (panel of tests)
+    tests, making it difficult to find the tests that you need to
+    concentrate your attention on.
+    
+    Solution:
+    ---------
+    Modify routine LRLNCNLT to omit cosmic tests (panels).
+  
+    Routine:    LRLNCNLT
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+  
+ The install time for this patch is less than 2 minutes. This patch
+ can be installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*418.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27,1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRLNC1
+    Before:  B4506781   After:  B5120406  **215,278,418**
+Routine Name: LRLNCNLT
+    Before: B11740304   After: B12524711  **215,278,418**
+ 
+Routine list of preceding patches: 278
+
+=============================================================================
+User Information:
+Entered By  : CARPENTER,TERRY               Date Entered  : FEB 09, 2012
+Completed By: BYRD,TIERRA                   Date Completed: DEC 12, 2012
+Released By : CONLIN,TERESA                 Date Released : DEC 13, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

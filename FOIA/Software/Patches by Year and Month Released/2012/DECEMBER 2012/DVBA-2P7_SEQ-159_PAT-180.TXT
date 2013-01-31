@@ -1,0 +1,250 @@
+
+=============================================================================
+Run Date: DEC 13, 2012                     Designation: DVBA*2.7*180
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #159                    Status: Released
+                  Compliance Date: JAN 13, 2013
+=============================================================================
+
+
+Subject: CAPRI REFLECTION SSH WINDOWS 7 REMEDIATION
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ I.  OVERVIEW
+  
+   This patch is an informational patch that provides instructions that
+   must be followed to prevent interruption of CAPRI services for certain
+   types of users (Health Revenue Center (HRC)) after user workstations 
+   are migrated from Windows XP to Windows 7.
+  
+  
+  
+   ************************************************************************
+   *  IMPORTANT NOTE - PLEASE READ:                                       *
+   *                                                                      *
+   *  The procedure described in this patch should NOT be performed for   *
+   *  CAPRI users running on Windows XP workstations.                     *
+   *                                                                      *
+   *  This patch is required only for Windows 7 workstation users that    *
+   *  login to the CLAIMS system for initial CAPRI remote access and use  *
+   *  the VistA button on the main CAPRI screen to access remote VistA    *
+   *  systems with Attachmate Reflection secure shell (SSH) terminal      *
+   *  sessions.                                                           *
+   *                                                                      *
+   *  This patch is NOT required for CAPRI users that login locally to a  *
+   *  VAMC VistA system, since CAPRI disables the VistA button for these  *
+   *  users.                                                              *
+   ************************************************************************
+  
+  
+ II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+   
+   The following section lists the Remedy tickets and/or New Service 
+   Requests associated with this patch.
+   
+   1. Associated Remedy Ticket(s):
+      ----------------------------
+      NONE 
+  
+   2. Associated New Service Request(s):
+      ----------------------------------
+      NONE 
+  
+  
+ III. FUNCTIONAL OVERVIEW
+  
+   BACKGROUND:
+   ----------
+     CAPRI implements Attachmate Reflection to provide roll-and-scroll
+     secure shell terminal sessions for select users who perform initial
+     login through the CLAIMS system.
+  
+     Prior to launching Reflection, CAPRI searches the directory path that
+     contains the CAPRI executable (CAPRI.exe) for an optional plain text 
+     configuration file named "CapriTerminalEmulators.ini".  The purpose of
+     the configuration file is to specify an alternate path that contains
+     the Reflection executable (R2win.exe). If CAPRI does not detect the
+     configuration file, then CAPRI assumes that the Reflection executable
+     exists in the default Windows XP Reflection installation path:
+     "C:\Program Files\Attachmate\Reflection".
+  
+  
+   PROBLEM DESCRIPTION:
+   -------------------
+     The default installation path for the Reflection executable on
+     Windows 7 workstations is "C:\Program Files (x86)\Attachmate\Reflection".
+     When a user clicks the VistA button while running CAPRI on a Windows 7
+     workstation, CAPRI generates an error dialog message: 
+      "Windows cannot find 'C:\Program Files\Attachmate\Reflection\R2win.exe'.
+       Make sure you typed the name correctly, and try again."
+  
+  
+   SOLUTION:
+   --------
+     Create a "CapriTerminalEmulators.ini" configuration file and enter
+     the path used by the Attachmate Reflection installation into the file.
+     Place the newly created configuration file in the directory that contains
+     the CAPRI executable (CAPRI.exe).  
+  
+  
+ IV. TECHNICAL COMPONENTS
+  
+   There are no technical components being exported with this patch. 
+  
+  
+ V. SOFTWARE AND DOCUMENTATION RETRIEVAL
+     
+   1. CAPRI Software & User Documentation
+  
+      a.  The example configuration file and documentation for this
+          patch may be retrieved directly using FTP. The preferred method
+          is to FTP the files from:
+  
+             download.vista.med.va.gov
+  
+         This transmits the files from the first available FTP server.
+         Sites may also elect to retrieve software directly from a specific
+         server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+         Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+         Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+  
+        The following files will be available:
+  
+        File Name             Contents                     Retrieval format
+        ---------             --------                     ----------------
+        DVBA_27_P180.ZIP      File(s) indented below:      BINARY
+         - CAPRI_GUI_ISG.doc      CAPRI GUI Installation Supplemental Guide
+         - ssh_config             Secure Shell configuration
+         - CAPRISession.r2w       Reflections session configuration
+         - CapriTerminalEmulators.ini  Example "ini" configuration file
+  
+       The VistA Documentation Library (VDL) web site will contain the
+       updated 'CAPRI GUI Installation Supplemental Guide'. This web site is
+       usually updated within 1-3 days of the patch release date.
+  
+       The VDL web address for CAPRI user documentation is:
+      
+          http://www.va.gov/vdl/application.asp?appid=133
+  
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES:
+   
+  1. Required Builds
+  
+     a. The following is a list of REQUIRED builds for this
+        distribution.
+  
+        Required Builds:
+        ----------------
+        DVBA*2.7*168
+  
+  
+ VII. INSTALLATION INSTRUCTIONS:
+  
+   ************************************************************************
+   *                                                                      *
+   *  WARNING:                                                            *
+   *  DO NOT PERFORM THE PATCH INSTALLATION STEPS FOR CAPRI USERS THAT    *
+   *  ARE RUNNING ON THE WINDOWS XP OPERATING SYSTEM.                     *
+   *  .                                                                   *
+   ************************************************************************
+  
+   ************************************************************************
+   *  NOTE:                                                               *
+   *  Sites that run a mixture of Windows XP and Windows 7 workstations   *
+   *  and access the CAPRI executable from a central location, such as    *
+   *  a share drive or terminal server, must create a new directory on    *
+   *  the share to contain the CAPRI executable and the configuration     *
+   *  file.  Windows 7 users should access the CAPRI executable from the  *
+   *  new directory, while Windows XP users should continue to access     *
+   *  the CAPRI executable from the original directory.                   *
+   ************************************************************************
+  
+   1. The example "CapriTerminalEmulators.ini" configuration file provided
+      with this patch is configured to provide support for the default
+      installation path of Attachmate Reflection on a Windows 7 workstation.
+      Place the configuration file in the same folder that contains the
+      CAPRI executable.
+  
+      Alternatively, use the following procedure to create the configuration
+      file:
+  
+      a. Create the configuration file named "CapriTerminalEmulators.ini"
+         using a plain text editor, such as Notepad.
+  
+      b. Populate the configuration file with the following two lines:
+         [Config]
+         Application=C:\Program Files (x86)\Attachmate\Reflection\R2win.exe
+  
+      c. Save the file to the Desktop and copy it to the same folder
+         that contains the CAPRI executable.
+  
+   2. Verify that the C:\ProgramData\Attachmate\Reflection folder contains
+      a file named ssh_config.  If the file is missing, then copy the 
+      ssh_config file provided with this patch to the workstation's
+      C:\ProgramData\Attachmate\Reflection folder.  
+  
+      NOTE: The ProgramData folder is hidden by default in Windows 7.
+  
+      Use the following procedure to view hidden folders:
+      a. Open Folder Options by clicking the Start button, clicking
+         Control Panel, clicking Appearance and Personalization, and
+         then clicking Folder Options. 
+  
+      b. Click the View tab.
+  
+      c. Under Advanced settings, click Show hidden files and folders,
+         and then click OK.
+  
+   3. Verify that the folder that contains the CAPRI executable (CAPRI.exe)
+      contains a file named CAPRISession.r2w file.  If the file is missing,
+      then copy the CAPRISession.r2w file provided with this patch to the
+      same folder that contains the CAPRI executable.
+  
+  
+ VIII.  TROUBLESHOOTING
+  
+    Problem:  If this patch has been installed by mistake on a Windows XP
+              system, then CAPRI will not be able to find the Reflections
+              executable.
+  
+   Solution:  Delete the "CapriTerminalEmulators.ini" configuration file
+              that was added in Step 1 of the installation instructions.
+              The files from Step 2 and Step 3 may be left in place.
+  
+  
+ IX. TEST SITES
+  
+   The following sites participated in the testing of this patch.
+  
+    Test Sites:
+    ---------- 
+     N/A - Informational patch only
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : MCGINNIS,RONALD P             Date Entered  : DEC 22, 2011
+Completed By: DELACRUZ,KRISTINA             Date Completed: DEC 03, 2012
+Released By : BARKER,MARK D                 Date Released : DEC 13, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

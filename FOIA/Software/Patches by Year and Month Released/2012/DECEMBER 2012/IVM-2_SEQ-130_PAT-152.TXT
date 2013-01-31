@@ -1,0 +1,233 @@
+
+=============================================================================
+Run Date: DEC 13, 2012                     Designation: IVM*2*152
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #130                      Status: Released
+                  Compliance Date: JAN 13, 2013
+=============================================================================
+
+Associated patches: (v)IVM*2*133   <<= must be installed BEFORE `IVM*2*152'
+                    (v)IVM*2*151   <<= must be installed BEFORE `IVM*2*152'
+
+Subject: Permanent Address Verification
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+  **************************************************************************
+   Note:  This patch is being released in support of the Enrollment System
+          Re-design (ESR) Permanent Address Verification project.
+          IVM*2.0*152 (Income Verification Match) is being released along
+          with DG*5.3*851 (Registration) in host file: DG_53_P851.KID
+    
+          It is imperative that these patches be installed no later than the
+          compliance date.  Your understanding and support is appreciated.
+  **************************************************************************
+    
+  The Health Eligibility Center (HEC) requested modifications to the 
+  Enrollment System Redesign (ESR) and VistA Registration, Enrollment and
+  Eligibility (Vista REE) software to support the requirements of the
+  Permanent Address Verification project.
+   
+  This patch modifies the Income Verification Match (IVM) v2.0 application
+  as described below:
+   
+  1.  Modify the Z07 HL7 message builder
+  --------------------------------------
+  The process to construct the Z07 HL7 message that transmits patient data 
+  to ESR was modified to support the transmission of change date/time, 
+  change site and change source data for the patient's home phone number.  
+  This information will be transmitted in the RF1 segment with the new PHH 
+  referral type.
+   
+  2.  Modify the Z05 HL7 message upload
+  -------------------------------------
+  The process to upload data from the Z05 HL7 message sent from ESR was 
+  modified to handle the new PHH referral type in the RF1 segment which 
+  transmits the change date/time, change site and change source data for 
+  the patient's home phone number.  The home phone number will not be 
+  uploaded unless the incoming phone number is different than the one in 
+  the patient's record and the change date/time in the incoming Z05 message
+  is more recent than the change date/time in the patient's record.
+   
+  3.  Modify the Demographic Upload option
+  ----------------------------------------
+  The Demographic Upload [IVM UPLOAD DEM] option was modified to include 
+  the new date/time stamp fields associated with the patient's PHONE NUMBER 
+  [RESIDENCE] field #.131 in the PATIENT file (#2).  The new fields being 
+  added are:
+   
+      RESIDENCE NUMBER CHANGE DT/TM field #.1321
+      RESIDENCE NUMBER CHANGE SOURCE field #.1322
+      RESIDENCE NUMBER CHANGE SITE field #.1323
+   
+   
+  Patch Components:
+  =================
+    
+  Files & Fields Associated:
+  --------------------------
+  N/A
+    
+  Forms Associated:
+  -----------------
+  N/A
+    
+  Mail Groups Associated:
+  -----------------------
+  N/A
+    
+  Options Associated:
+  -------------------
+  N/A
+    
+  Protocols Associated:
+  ---------------------
+  N/A
+    
+  Security Keys Associated:
+  -------------------------
+  N/A
+    
+  Templates Associated:
+  ---------------------
+  N/A
+      
+  New Service Request (NSRs):
+  ---------------------------
+  N/A
+    
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+    
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+    
+    
+  Test Sites:
+  -----------
+  Coatesville VAMC, PA
+  Oklahoma City VAMC, OK
+  San Francisco VAMC, CA
+  VA Health Care Upstate New York, NY
+     
+     
+  Documentation Retrieval Instructions:
+  =====================================
+  Updated documentation describing the new functionality introduced by this 
+  patch is available.
+    
+  The preferred method is to FTP the files from: 
+        download.vista.med.va.gov
+  This transmits the files from the first available FTP server. Sites may 
+  also elect to retrieve software directly from a specific server as 
+  follows:
+   
+      OIFO              FTP Address                   Directory   
+   Albany         ftp.fo-albany.med.va.gov       anonymous.software
+   Hines          ftp.fo-hines.med.va.gov        anonymous.software
+   Salt Lake City ftp.fo-slc.med.va.gov          anonymous.software
+    
+  The documentation will be in the form of Adobe Acrobat files.
+    
+  The following files should be downloaded in the binary FTP mode.
+    
+  Filename                    Description
+  --------                    -----------
+  IVM_2_P152_TM.PDF           Revised IVM 2.0 Technical Manual
+  IVM_2_P152_UM.PDF           Revised IVM 2.0 User Manual
+    
+  Documentation can also be found on the VA Software Documentation
+  Library at: http://www.va.gov/vdl/
+    
+  Patch Installation:
+  ===================
+    
+  Installation Instructions:
+  --------------------------
+  Please refer to the patch description for patch DG*5.3*851 for the 
+  installation instructions.
+   
+   
+  Post-Install Process
+  --------------------
+  The post-install routine, IVM2152P, delivered with this patch, will 
+  add three new records to the IVM DEMOGRAPHIC UPLOAD FIELDS file 
+  (#301.92). The new records will contain the following data at the 
+  completion of the post-install process:
+   
+  DHCP FIELD NAME: RESIDENCE NUMBER CHANGE DT/TM
+    HL7 LOCATION: RF171P                  UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1321
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: YES
+    DHCP LOCATION LOGIC: S DR=.1321 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.1321 D LOOK^IVMPREC9
+   
+  DHCP FIELD NAME: RESIDENCE NUMBER CHANGE SOURCE
+    HL7 LOCATION: RF162P                  UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1322
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: YES
+    DHCP LOCATION LOGIC: S DR=.1322 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.1322 D LOOK^IVMPREC9
+   
+  DHCP FIELD NAME: RESIDENCE NUMBER CHANGE SITE
+    HL7 LOCATION: RF161P                  UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1323
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: YES
+    DHCP LOCATION LOGIC: S DR=.1323 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.1323 D LOOK^IVMPREC9
+   
+  The post-install routine, IVM2152P, can be deleted when the installation 
+  is completed.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVM2152P
+    Before:       n/a   After:  B8144502  **152**
+Routine Name: IVMLDEM4
+    Before: B35742511   After: B36894677  **5,10,56,102,152**
+Routine Name: IVMLDEM6
+    Before: B62944324   After: B88291633  **10,58,73,79,108,106,105,124,
+                                           115,152**
+Routine Name: IVMLDEM7
+    Before: B15075195   After: B19787743  **10,79,152**
+Routine Name: IVMLDEM9
+    Before: B53228713   After: B62902959  **79,93,119,126,133,152**
+Routine Name: IVMPREC6
+    Before:B142485762   After:B147269412  **3,4,12,17,34,58,79,102,115,
+                                           140,144,121,151,152**
+Routine Name: IVMPREC8
+    Before:B213937231   After:B230918624  **5,6,12,58,73,79,102,115,121,
+                                           148,151,152**
+Routine Name: IVMPTRN9
+    Before: B53274295   After: B53346875  **9,11,19,12,21,17,46,50,53,
+                                           34,49,58,79,99,116,105,115,152**
+Routine Name: IVMPTRNA
+    Before: B15122403   After: B15638011  **46,58,76,105,152**
+ 
+Routine list of preceding patches: 133, 151
+
+=============================================================================
+User Information:
+Entered By  : DESMOND,LINDA                 Date Entered  : FEB 07, 2012
+Completed By: MORRIS,DARLENE V              Date Completed: DEC 13, 2012
+Released By : GAYLER,LU ANNE                Date Released : DEC 13, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

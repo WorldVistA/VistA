@@ -1,0 +1,75 @@
+
+=============================================================================
+Run Date: JAN 10, 2013                     Designation: MAG*3*139
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #84                      Status: Released
+                  Compliance Date: FEB 10, 2013
+=============================================================================
+
+
+Subject: ANNOTATIONS INSTALLER
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This informational patch is to inform sites that the following new 
+ Display/Capture/Telereader client installers have been created and placed 
+ into the ftp.imaging.med.va.gov/Software/Released_Software/Mag3_0P122 
+ folder:
+  
+ MAG3_0P122_Install_Rev1.msi 
+ MAG3_0P122_Setup_Rev1.exe
+  
+ Note:  There is no change to the VIX installer. If you have already 
+ installed the VIX there is no need to reinstall the VIX.
+  
+ Problem the new installers are addressing:
+ ==========================================
+  
+ The original Imaging patch MAG*3.0*122 msi and exe installers 
+ inadvertently removed the whdata, whgdata, and whxdata folders and their 
+ contents from the C:\ProgramFiles\VistA\Imaging\Help\Telereader folder 
+ when the Patch MAG*3.0*122 client was installed on a previous version of 
+ the Clinical Imaging applications.
+  
+ If the MAG*3.0*122 client was installed on a virgin system (without any 
+ prior versions of the Clinical Imaging applications), the whdata, whgdata 
+ and whxdata folders were installed as they should have been.  Also, if 
+ sites installed MAG*3.0*122 on top of a previous MAG*3.0*122 installation 
+ and selected the repair option, the folders would also have been 
+ installed properly.  
+  
+ The impact of the folders being inadvertently removed was evident when 
+ users attempted to use any of the Clinical applications (Capture,Display, 
+ or Telereader). The application detected that important files were 
+ missing and it attempted to repair itself by running the installer.  
+ Since the client installer must be run by the admin user, if the user was 
+ not the admin user, they received a message to that effect.
+  
+ Conditions for Use:
+ ===================
+ Use the new installers if you have not already installed patch 
+ MAG*3.0*122 or if you have already installed the patch MAG*3.0*122 client 
+ and are currently experiencing the issues describe above.
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : SHOVESTUL,MARYANN             Date Entered  : DEC 20, 2012
+Completed By: CASUGAY,ELSIE G               Date Completed: JAN 10, 2013
+Released By : FUGETT,BRENT                  Date Released : JAN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,596 @@
+$TXT Created by GREENE,LYFORD K. at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Tuesday, 11/13/12 at 22:10
+=============================================================================
+Run Date: DEC 19, 2012                     Designation: PRC*5.1*167
+Package : PRC - IFCAP                         Priority: EMERGENCY
+Version : 5.1       SEQ #142                    Status: Released
+                  Compliance Date: DEC 20, 2012
+=============================================================================
+
+Associated patches: (v)PRC*5.1*81  <<= must be installed BEFORE `PRC*5.1*167'
+
+Subject: IFCAP/eCMS Interface, Phase 1
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement ()
+
+Description:
+============
+
+ Patch Overview
+ ==================================================
+  
+ This patch will establish bi-directional communication between Integrated 
+ Funds Distribution, Control Point Activity, Accounting and Procurement 
+ (IFCAP) and the commercial Electronic Contracting Management System (eCMS)
+ located at the Austin Information Technology Center (AITC) in Austin 
+ Texas.
+  
+ This enhancement will capitalize on the abilities of eCMS to consolidate
+ multiple requests, electronically prepare and issue solicitation
+ documents, receive electronic offers, automate contract administration,
+ and provide interfaces to the Integrated Acquisition Environment
+ initiatives.
+  
+ The eCMS is capable of aggregating solicitations from multiple sites and
+ funding sources and can create a single solicitation that will be posted
+ on the eCMS Vendor Portal, a secure web-based system that allows vendors
+ to view solicitations and submit price quotes.  Thus, the price quote
+ from the vendor will be based on greater quantities.  The contracting
+ officer will log on to eCMS to view the price quotes and determine the
+ winning bid.  Users will then log on to their local IFCAP application and
+ create the Purchase Order and obligate the funds just as they do now.
+  
+ Implementation of this patch will allow 2237 data to be transmitted
+ between the IFCAP application and eCMS using Health Level 7 (HL7) 
+ messaging.
+  
+ The Accountable Officer in IFCAP will be able to:
+  
+  * Use the existing IFCAP option: Process a Request in PPM [PRCHPM REQST]
+    to transmit a 2237 directly from IFCAP to eCMS.
+  * Use new option: Retransmit a 2237 to eCMS [PRCHJ RETRANS 2237] to
+    resend 2237, if needed.
+  
+ The eCMS User will be able to:
+  
+  * Return 2237 to Accountable Officer for review and processing within
+    IFCAP. 
+  * Return 2237 to Control Point User for edit and resubmission to eCMS.
+  * Cancel a 2237 in IFCAP directly from eCMS.
+  
+  
+  
+ Patch Components
+ ==================================================
+  
+ Files & Fields Associated:
+  
+  File Name (#)                     Field Name (#)  New/Modified/Deleted
+  -------------                     --------------  --------------------
+  IFCAP/ECMS TRANSACTION (#414.06)  N/A             New
+  
+  CONTROL POINT ACTIVITY (#410) Partial DD:
+     Field Name (#)                       New/Modified/Deleted
+     --------------                       --------------------
+     ECMS ACTIONUID (#103)                New
+     ECMS ITEMUID (subDD: #410.02/#100)   New
+  
+  
+ Forms Associated:
+  
+  Form Name   File #   New/Modified/Deleted
+  ---------   ------   --------------------
+  N/A
+  
+  
+ HL Logical Link Associated:
+  
+  HL Logical Link Name      New/Modified/Deleted
+  --------------------      --------------------
+  PRCHJ_ECMS                New
+  
+  
+ HLO Application Registry Associated:
+  
+  Application Name          New/Modified/Deleted
+  ----------------          --------------------
+  PRCHJ_IFCAP_2237_RETURN   New
+  PRCHJ_IFCAP_2237_SEND     New
+  
+  
+ Mail Groups Associated:
+  
+  Mail Group Name   New/Modified/Deleted
+  ---------------   --------------------
+  N/A
+  
+  
+ Options Associated:
+  
+  Option Name                        Type          New/Modified/Deleted
+  -----------                        -----------   --------------------
+  Retransmit a 2237 to eCMS 
+  [PRCHJ RETRANS 2237]               Run Routine   New
+  Transaction Report - eCMS/IFCAP
+  [PRCHJ TRANS REPORT]               Run Routine   New
+  Transaction Report - eCMS/IFCAP
+  [PRCHJ TRANS REPORT2]              Run Routine   New
+  
+  
+ Protocols Associated:
+  
+  Protocol Name   New/Modified/Deleted
+  -------------   -------------------- 
+  N/A
+  
+  
+ Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  N/A
+  
+  
+ Templates Associated:
+  
+  Template Name   Type   File Name (Number)   New/Modified/Deleted 
+  -------------   ----   ------------------   --------------------
+  N/A
+  
+  
+  
+ Additional Information
+ ==================================================
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ The following sites participated in testing and signed-off on the 
+ PRC*5.1*167 patch.
+  
+  1. Augusta, GA 
+  2. Grand Junction VAMC 
+  3. Southern AZ HCS
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from:
+  
+  ftp://download.vista.med.va.gov/
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+  Albany          ftp.fo-albany.med.va.gov <ftp://ftp.fo-albany.med.va.gov>
+  Hines           ftp.fo-hines.med.va.gov  <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City  ftp.fo-slc.med.va.gov    <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/.
+  
+                                       File                        
+ Title                                 Name                          
+ ------------------------------------------------------------------------
+ Accounting Technician User's Guide    IFCP5_1ACCOUNTING_TECH.PDF
+ Application Coordinator User's Guide  IFCP5_1APPLICATION_COORD.PDF
+ Control Point Clerk User's Guide      IFCP5_1CP_CLERK.PDF
+ Control Point Official User's Guide   IFCP5_1CP_OFFICIAL.PDF
+ PPM Accountable Officer               IFCP5_1PPM_ACCOUNTABLE_OFFICER.PDF
+ Technical Manual                      IFCP5_1TECH_MANUAL.PDF
+ Purchasing Agent User's Guide         IFCP5_1PURCHASING_AGENT.PDF
+ Package Security Guide                IFCP5_1SECURITY_GUIDE.PDF
+  
+                         ***** Note *****
+         Use Binary mode when transferring the .PDF files. 
+  
+  
+ Patch Installation
+ ==================================================
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ * This patch has no environment check items. 
+  
+  
+ * This patch has no pre-installation items.
+  
+  
+ * This patch includes a post-installation (POST^PRC5167P) that will
+   perform the actions listed below.  Note: The post install routine will
+   be automatically deleted by KIDS once the patch installation is
+   complete.
+  
+   1. Add the following (2) new 'Status Codes' to the PURCHASE ORDER STATUS
+      (#442.3) file.
+        69 - Sent to eCMS (P&C)
+        77 - Returned to Service by eCMS (P&C)
+  
+   2. Modify the NAME (#.01) field for Status Code 70 in the PURCHASE  
+      ORDER STATUS (#442.3) file.
+        70 - Change 'Sent to Purchasing & Contracting' to 'To IFCAP
+             Ordering Officer'
+      
+   3. Set the ID nodes for the CONTROL POINT ACTIVITY (#410) and ITEM 
+      (#410.02) subfile.
+  
+   
+  
+ Installation Instructions:
+ --------------------------
+  
+ * Users On the System
+  
+    This patch may be installed with users on the system, but should be
+    loaded during non-peak hours to minimize disruption to IFCAP users.
+    The following IFCAP options should be placed out of order to reduce the
+    possibility of errors when the routines are updated.
+  
+     Accountable Officer Menu [PRCHUSER PPM]
+     Control Point Clerk's Menu [PRCSCP CLERK]
+     Control Point Official's Menu [PRCSCP OFFICIAL] 
+  
+ * Software Installation Time
+  
+    The estimated installation time for this patch is less than 5 minutes 
+    during off-peak hours.
+  
+ * Required Builds
+  
+    The following is a list of REQUIRED builds for this KIDS distribution. 
+    KIDS will not allow the installation of this patch without their prior
+    installation.
+  
+    Required Build(s):
+    ------------------
+    PRC*5.1*81
+  
+  
+ * Installation Steps
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+    3. From the Kernel Installation and Distribution System Menu, select
+       the Installation Menu.  From this menu, you may elect to use the
+       following options.  When prompted for the INSTALL enter the patch 
+       PRC*5.1*167:
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+    4. From the Installation Menu, select the Install Package(s) option and
+       choose the patch to install.
+    
+    5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//'  Answer NO unless your system does not do this in a
+       nightly TaskMan process.
+  
+    6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//'  answer NO.
+  
+    7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//  answer YES.
+  
+       The following IFCAP Options should be placed out of order:
+  
+       a. Accountable Officer Menu [PRCHUSER PPM]
+       b. Control Point Clerk's Menu [PRCSCP CLERK]
+       c. Control Point Official's Menu [PRCSCP OFFICIAL]
+  
+    8. When prompted 'Enter protocols you wish to mark as 'Out Of Order':' 
+       press <Return>.
+  
+    9. If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+    ************* POST-INSTALLATION INSTRUCTIONS **************
+  
+  1. From Programmer mode, invoke the HL7 Main menu to set up the
+     following fields for the HL7 Logical Link PRCHJ_ECMS.
+  >D ^XUP
+  
+  Setting up programmer environment
+  Terminal Type set to: C-VT100
+  
+  Select OPTION NAME: HL MENU FILER LINK MGT       Filer and Link 
+  Management Options
+  
+  
+    SM     Systems Link Monitor
+    FL     Monitor, Start, Stop Filers
+    LM     TCP Link Manager Start/Stop
+    SA     Stop All Messaging Background Processes
+    RA     Restart/Start All Links and Filers
+    DF     Default Filers Startup
+    SL     Start/Stop Links
+    PI     Ping (TCP Only)
+    ED     Link Edit     <===
+    ER     Link Errors ...
+  
+  Select Filer and Link Management Options <TEST ACCOUNT> Option: ED  Link 
+  Edit
+  
+  
+  Select HL LOGICAL LINK NODE: PRCHJ_ECMS  
+  
+                           HL7 LOGICAL LINK
+  ------------------------------------------------------------------------
+  
+  
+  
+                 NODE: PRCHJ_ECMS                     DESCRIPTION:
+                 ----
+          INSTITUTION:
+  
+       MAILMAN DOMAIN:
+  
+            AUTOSTART:
+  
+           QUEUE SIZE: 10    
+  
+             LLP TYPE: TCP  <=== Highlight this field and hit <ENTER>.
+             --------            The TCP LOWER LEVEL PARAMETERS window
+                                 will open up  ... shown below
+           DNS DOMAIN: XXXX <=== Set this field to the value for your
+                                 local VistA Interface Engine (VIE)
+                                 system.
+  _________________________________________________________________________
+  
+  
+  COMMAND:                              Press <PF1>H for help    Insert
+  
+  
+                           HL7 LOGICAL LINK
+  -----------------------------------------------------------------------
+  
+   |------------------TCP LOWER LEVEL PARAMETERS---------------------|
+   |                  PRCHJ_ECMS                                     |
+   |                                                                 |
+   |  TCP/IP SERVICE TYPE: CLIENT (SENDER)                           |
+   |       TCP/IP ADDRESS: XXXXXX  <=== Enter the appropriate TCP/IP |
+   |                                    Address value for your local |
+   |                                    VIE system. (See NOTE below) |
+   |         TCP/IP PORT:                                            |
+   |         TCP/IP PORT (OPTIMIZED): 8090                           | 
+   |                                                                 |
+   |   ACK TIMEOUT:                   RE-TRANSMISION ATTEMPTS:       |
+   |  READ TIMEOUT:                 EXCEED RE-TRANSMIT ACTION:       |
+   |    BLOCK SIZE:                                  SAY HELO:       |
+   |                                  TCP/IP OPENFAIL TIMEOUT:       |
+   |STARTUP NODE:                                  PERSISTENT:       |
+   |   RETENTION:                        UNI-DIRECTIONAL WAIT:       |
+   |_________________________________________________________________|
+  
+   ______________________________________________________________________
+  
+  
+  COMMAND:                             Press <PF1>H for help    Insert
+  
+  NOTE: If you don't know the appropriate values and the IFCAP/FPDS
+        interface is active at your site, you might look at the HL Logical
+        Link entry IFCAP_FPDS for values as it has been sending HL7
+        messages through VIE.
+  
+           *********** IMPORTANT NOTE ************
+  Any time you re-install this patch, logical link entry PRCHJ_ECMS will
+  get overwritten and need to be re-configured. 
+  
+  2. After you have edited the above fields, it is also advisable to test
+     the functionality of the PRCHJ_ECMS link in option HLO SYSTEM MONITOR
+     [HLO SYSTEM MONITOR] using Action TL TEST TCP LINK. A successful test
+     should return the result "PRCHJ_ECMS:8090 IS operational...".  To use
+     this option you need to have been assigned two security keys: HLOMGR
+     and HLOMAIN.
+  
+  3. This interface uses the standard HLO listener for your VistA instance.
+     It should already be operational.  You can determine the name of that
+     listener by either stepping through option EDIT HLO SYSTEM PARAMETERS
+     [HLO EDIT SYSTEM PARAMETERS] to see the name listed by the HLO
+     STANDARD LISTENER prompt, or by doing a VA FileMan inquiry on the
+     single entry in the HLO SYSTEM PARAMETERS file (#779.1) for the value
+     of the HLO STANDARD LISTENER field (#.1).  One can also test the
+     functionality of that link using the TL TEST TCP LINK Action in
+     option HLO SYSTEM MONITOR.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRC5167P
+    Before:       n/a   After:  B2880344  **167**
+ Description of Changes:
+  Post install routine for patch PRC*5.1*167.
+
+Routine Name: PRCHG
+    Before: B23118352   After: B45716254  **81,167**
+ Description of Changes:
+  Added a hook in this routine at ES1^PRCHG. If the Accountable Officer 
+  changes the 2237 status to 'Sent to eCMS(P&C)', the 2237 transaction will
+  be transmitted to eCMS via an HL7 message (OMN^O07).
+
+Routine Name: PRCHJMSG
+    Before:       n/a   After: B10009804  **167**
+ Description of Changes:
+  This routine builds a MailMan message upon receipt of 2237 Returns or 
+  Cancel and sends it to any combination of Accountable Officer, Control 
+  Point Official or requestor.
+
+Routine Name: PRCHJR01
+    Before:       n/a   After:B143518446  **167**
+ Description of Changes:
+  This new routine does most of the processing of the incoming OMN^O07 
+  message for 2237 Return/Cancel and filing the requested changes
+  to the IFCAP database.
+
+Routine Name: PRCHJR02
+    Before:       n/a   After:B119665258  **167**
+ Description of Changes:
+  This routine is responsible for receiving and processing application 
+  acknowledgment (ORN^O08) messages returned from eCMS. The application 
+  acknowledgment is being returned in response to a (OMN^O07) message that 
+  was sent from IFCAP to eCMS containing a 2237 transaction. 
+
+Routine Name: PRCHJR03
+    Before:       n/a   After:  B7485505  **167**
+ Description of Changes:
+  This new routine is invoked by routine PRCHJR01 and contains additional 
+  logic for processing the incoming 2237 Return/Cancel message.
+
+Routine Name: PRCHJRP1
+    Before:       n/a   After:B201702299  **167**
+ Description of Changes:
+  This routine starts the building of a report of the Transactions between 
+  IFCAP and eCMS that relate to 2237 Returns and Cancels.  It is linked to 
+  routine PRCHJRP2.
+
+Routine Name: PRCHJRP2
+    Before:       n/a   After: B35489110  **167**
+ Description of Changes:
+  This routine is a continuation of ^PRCHJRP1.  It builds the ^XTMP global 
+  from which the report is produced and contains the HELP messages.
+
+Routine Name: PRCHJS01
+    Before:       n/a   After: B32931088  **167**
+ Description of Changes:
+  This routine is the main driver to retrieve 2237 data elements, 
+  pre-validate 2237 data elements, and send a 2237 (OMN^O07) from IFCAP to 
+  eCMS via HL7 messaging.
+
+Routine Name: PRCHJS02
+    Before:       n/a   After:B160738440  **167**
+ Description of Changes:
+  The routine is responsible for retrieving 2237 data elements from a 
+  record in the CONTROL POINT ACTIVITY (#410) file.
+
+Routine Name: PRCHJS03
+    Before:       n/a   After: B38615416  **167**
+ Description of Changes:
+  This routine responsible for retrieving 2237 data elements from records 
+  in the VENDOR (#440) file, REQUEST WORKSHEET (#443) file, and GENERIC 
+  INVENTORY (#445) file.
+
+Routine Name: PRCHJS04
+    Before:       n/a   After: B12824408  **167**
+ Description of Changes:
+  This routine is responsible for building a single HL7 (OMN^O07) message
+  containing a 2237 transaction and queuing it for transmission to eCMS
+  using HLO APIs.
+
+Routine Name: PRCHJS05
+    Before:       n/a   After:B105876352  **167**
+ Description of Changes:
+  The routine contains functions that are responsible for building the HL7 
+  segments for the 2237 Send (OMN^O07) message.
+
+Routine Name: PRCHJS06
+    Before:       n/a   After: B47333456  **167**
+ Description of Changes:
+  The routine contains functions that are responsible for building the HL7 
+  segments for the 2237 Send (OMN^O07) message.
+
+Routine Name: PRCHJS07
+    Before:       n/a   After: B47804786  **167**
+ Description of Changes:
+  This routine contains the entry action and run routine for the [PRCHJ 
+  RETRANS 2237] option. The option allows an IFCAP user having the 
+  Accountable Officer role to retransmit a 2237 to the Electronic 
+  Contracting Management System (eCMS) via HL7 messaging.
+
+Routine Name: PRCHJTA
+    Before:       n/a   After: B48621585  **167**
+ Description of Changes:
+  This routine contains three internal to IFCAP utility APIs.  LOG^PRCHJTA 
+  stores data from transaction event activities into the IFCAP/ECMS 
+  TRANSACTION (#414.06) file.  DATA^PRCHJTA retrieves a single record of 
+  data from the IFCAP/ECMS TRANSACTION FILE (#414.06) for reporting 
+  purposes.  CONTACT^PRCHJTA contains code that transforms data for the 
+  "ACONTACT" cross-reference on the ECMS EMAIL data field of the EVENT 
+  multiple (#414.061,6).
+
+Routine Name: PRCHJUTL
+    Before:       n/a   After:  B5808246  **167**
+ Description of Changes:
+  This routine contains utility functions for the eCMS/IFCAP HL7 
+  interface. These include extrinsic function $$ECMS2237^PRCHJUTL(DA) which
+  returns '1' if the 2237 contains an eCMS ActionUID value.  It also
+  contains extrinsic functions $$UPD443^PRCHJUTL() and $$UPD410^PRCHJUTL() 
+  which roll back the 2237 from 'Send to eCMS (P&C)' to  'Pending 
+  Accountable Officer Sig.', if eCMS sends an Application Reject (AR) in 
+  response to the OMN^O07 message for Send 2237.
+
+Routine Name: PRCSD12
+    Before:  B5174849   After:  B5330398  **167**
+ Description of Changes:
+  This existing routine was modified to call function $$ECMS2237^PRCHJUTL() 
+  to determine if the 2237 is being processed in eCMS.  If so then "Sent to 
+  eCMS" is displayed towards the top of the first screen displaying the 
+  2237.
+
+Routine Name: PRCSD121
+    Before: B22790968   After: B23682488  **70,81,167**
+ Description of Changes:
+  This routine was modified to display the eCMS item line identifier if the 
+  ECMS ITEMUID field (#100) is populated for that line item.
+
+Routine Name: PRCSP12
+    Before:  B7847680   After:  B8040343  **167**
+ Description of Changes:
+  This existing routine was modified to call function $$ECMS2237^PRCHJUTL() 
+  to determine if the 2237 is being processed in eCMS.  If so then "Sent to 
+  eCMS" is written towards the top of the first page of the 2237 printout.
+
+Routine Name: PRCSP121
+    Before: B21901481   After: B22416757  **81,167**
+ Description of Changes:
+  This routine was modified to print the eCMS item line identifier if the 
+  ECMS ITEMUID field (#100) is populated for that line item.
+
+ 
+Routine list of preceding patches: 81
+
+=============================================================================
+User Information:
+Entered By  : MCGAUGH,MAVIS L               Date Entered  : MAR 05, 2012
+Completed By: RUDINGER,NANCY L.             Date Completed: DEC 10, 2012
+Released By : NELSON,VICKI M                Date Released : DEC 19, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

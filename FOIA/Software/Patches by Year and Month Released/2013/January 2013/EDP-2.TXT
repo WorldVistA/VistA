@@ -1,0 +1,911 @@
+Subj: RELEASE of Emergency Department Integ. Software (EDIS) V2  [#56983]
+18 Jan 2013 12:40:15 -0500 (EST)  908 lines
+-----------------------------------------------------------------------------The Emergency Department Integration Software (EDIS) team is pleased to
+announce the release of EDIS version 2.0.  EDIS offers an open-view 
+digital log of critical activities in the Emergency Department. It 
+produces a display of all active patients in the department as well as 
+their location, status, and provider. The information may be displayed on 
+any computer with server access via a web browser and/or on a big screen 
+display centrally located in the emergency department. This updates and 
+replaces the manual white board still found in many emergency departments.
+ 
+EDIS incorporates several web-based views that extend the current 
+Computerized Patient Record System (CPRS) to help staff track and manage 
+patient flow and patient care. EDIS offers a team-view of department 
+status instead of the first-person view (one patient at a time for one 
+user) common to CPRS.
+ 
+The features and functionality included in this release are:
+ 
+  -  Add emergency-department patients to the applications display board
+ 
+  -  View information about patients on the display board 
+ 
+  -  Edit patient information 
+ 
+  -  Remove patients from the display board 
+ 
+  -  Views for entering patients dispositions 
+ 
+  -  Configuring the display board
+ 
+  -  Create administrative and operational reports 
+ 
+  -  Supports assistive reading technologies such as Job Access with 
+     Speech (JAWS) for accessibility
+ 
+ 
+EDIS V2.0 corrects defects found in the optional Convert local ER data
+to EDIS 1.0 files [EDP CONVERSION] option.  This option allows a site to
+copy the data from the class 3 Syracuse Emergency Department files 
+#172000-172012 into the new Emergency Department application if they so
+desire. Late in the testing cycle of the new Emergency Department 
+application, a couple of small defects were identified which are being
+addressed in this version as well as a small adjustment to insure closed
+historical patient data is added as closed and not active.
+ 
+EDP2_0.KID also modifies some internal timeout settings related to 
+server communication and it modifies several of the reports to correct
+undefined errors related to dispositions and enhances several of the
+reports to better identify VA Admissions and Missed Opportunities.
+It also modifies the shift report to display more than 4 shifts worth
+of data in a 24 hour period as well as correcting the shifts that
+occur after midnight when the start of shifts is not midnight (0:00).
+The shift reports header and data are also being modified as well as
+the exported version of the report.  
+ 
+The following is a list of NEW features being released in the Emergency
+Department Integration Software (Version 2.0):
+ 
+ - Improve lab status column display
+ - Re-add patient to the board who was removed in error
+ - Display record of patients removed in error
+ - Restore all timestamps of patients removed in error
+ - Edit all timestamps associated and non-identifier values
+ - Provide ability to View and Update outpatient demographics
+ - Update Outpatient Demographics
+ - View Outpatient Demographics
+ - Search 'Edit Closed Record'
+ - Add Vitals directly into EDIS 
+ - Remove new entries prior to saving
+ - Provide task based lab access view
+ - Provide a direct admission status
+ - Scroll vertically and horizontally to view all content
+ - View and print med list at time of arrival and discharge
+ - Print med list at time of arrival and discharge
+ - View med list at time of arrival and discharge
+ - Ability to view lab results
+ - Acknowledgement of lab results notifications
+ - Provide identification and notification of critical lab results
+ - Enable identification of critical lab results
+ - Enable notification of critical lab results
+ - Ability to enter date/time in a simple text box
+ - Ability to work directly from a status display list
+ 
+**********************************************************************
+NOTE:
+ 
+The EDP .ear file for the Graphical User Interface will display a version 
+of EDIS v2.1, while the VistA Host File will show a version of 2.0 (As 
+seen in the SOFTWARE RETIVEAL). This is okay and should not be a reason 
+for concern.
+ 
+The application guides will appear with version 2.1
+**********************************************************************
+ 
+This software will be a phased release.  The EDIS Implementation Team will
+contact sites prior to installation so they can complete several
+pre-install steps.  Sites should not install the EDIS 2.0 software until 
+the checklist has been completed and verified by the EDIS Implementation 
+Team.
+ 
+Description:
+===========
+ 
+Associated patches: EDP1_0       <<= must be installed BEFORE 'EDP 2.0'
+                    XOBV*1.6*0   <<= must be installed BEFORE 'EDP 2.0'
+ 
+ 
+Host File Components
+================
+ 
+Files & Fields Associated:
+ 
+File Name (Number)         Field Name (Number)  New/Modified/Deleted
+------------------         -------------------  --------------------
+ 
+ED LOG (#230)              CLOSED DATE/TIME (.071)     NEW
+                           CLOSED BY (.072)            NEW
+                           REMOVED IN ERROR (.073)     NEW
+                           RESTORED BY (.074)          NEW
+                           RESTORED DATE/TIME (.075)   NEW
+                           DELAY REASON START
+                           TIME (1.51)                 NEW
+                           DELAY REASON END
+                           TIME (1.52)                 NEW
+                           HELD LOC (3.9)              NEW
+                           FREQUENCY (7.1)             NEW
+                           TIMER ON (7.2)              NEW
+ 
+ED LOG HISTORY (#230.1)    CLOSED (.0701)              NEW
+                           CLOSED DATE/TIME (.071)     NEW
+                           CLOSED BY (.072)            NEW
+                           REMOVED IN ERROR (.073)     NEW
+                           RESTORED BY (.074)          NEW
+                           RESTORED DATE/TIME (.075)   NEW
+ 
+TRACKING BOARD (#231.6)    NAME (.01)                  NEW
+                           INSTITUTION (.02)           NEW
+                           AREA (.03)                  NEW
+                           TYPE (.04)                  NEW
+                           XML SPEC (1)                NEW
+                           ROOM CONSTRAINTS (231.6,2)  NEW
+                           ROOM CONSTRAINTS 
+                           (231.62,.01)                NEW
+ 
+TRACKING ROOM-BED (#231.8) PRIMARY (.13)               NEW
+ 
+CPE ROLE (#232.5)          ROLE (.01)                  NEW
+                           ABBREVIATION (.02)          NEW
+                           XML ABBREVIATION (.03)      NEW
+                           DEFAULT WORKSHEET (.04)     NEW
+                           DEFAULT BOARD (.05)         NEW
+                           ALLOW ACUITY EDIT (.06)     NEW
+ 
+WORKSHEET
+SPECIFICATION (#232.6)     NAME (232.6,.01)            NEW
+                           INSTITUTION (232.6,.02)     NEW
+                           AREA (232.6,.03)            NEW
+                           TYPE (232.6,.04)            NEW
+                           ROLE (232.6,.05)            NEW
+                           DISABLED (232.6,.06)        NEW
+                           SPEC (232.6,1)              NEW
+                           SECTIONS (232.6,2)          NEW
+                           SEQUENCE (232.62,.01)       NEW
+                           SECTION (232.62,.02)        NEW
+                           CONFIGURATION (232.62,1)    NEW
+ 
+WORKSHEET SECTION          DETAIL PLUGIN (232.71,.01)  NEW
+(#232.71)                  PACKAGE (232.71,.02)        NEW
+                           SUMMARY PLUGIN (232.71,.03) NEW
+                           DEFAULT DISPLAY
+                           NAME (232.71,.04)           NEW
+                           TASK TYPE (232.71,.05)      NEW
+                           INITIALLY OPEN (232.71,.06) NEW
+                           MODELS (232.71,1)           NEW
+                           MODELS (232.711,.01)        NEW
+ 
+WORKSHEET MODEL (#232.72)  CLASS (.01)                 NEW
+                           PACKAGE (.02)               NEW
+                           FULLY QUALIFIED
+                           NAME (.03)                  NEW
+                           TYPE (.04)                  NEW
+                           MONIKER.05)                 NEW
+                           LOAD TAG (1.1)              NEW
+                           LOAD ROUTINE (1.2)          NEW
+                           LOAD TYPE (1.3)             NEW
+                           SAVE TAG (2.0)              NEW
+                           SAVE ROUTINE (2.2)          NEW
+                           SAVE TYPE (2.3)             NEW
+                           PREVIEW TAG (3.1)           NEW
+                           PREVIEW ROUTINE (3.2)       NEW
+                           SAMEPLE XML (5)             NEW
+ 
+NHAMCS REASON FOR          NAME (.01)                  NEW
+VISIT (#233.8)             CODE (2)                    NEW
+                           PARENT CODE (3)             NEW
+ 
+NHAMCS REASON FOR          NAME (.01)                  NEW
+VISIT DISPLAY (#233.81)    NHAMCS CODE (2)             NEW
+ 
+ED COMPLAINT (#233.82)     NAME (233.82,.01)           NEW
+                           NHAMCS CODE (233.82,2)      NEW
+                           ATTRIBUTE (233.82,10)       NEW
+                           NAME (233.821,.01)          NEW
+                           POSSIBLE VALUE (233.82,1)   NEW
+                           SEQUENCE (233.8211,.01)     NEW
+                           DISPLAY TEXT (233.8211,2)   NEW
+                           NHAMCS CODE (233.8211,3)    NEW
+                           ASSOCIATED SYMPTOM 
+                           (233.82,20)                 NEW
+                           SEQUENCE (233.822,.01)      NEW
+                           NAME (233.822,2)            NEW
+ 
+CLINICAL EVENTS (#234)     DATE/TIME (.01)             NEW
+                           TITLE (1)                   NEW
+                           PATIENT (2)                 NEW
+                           USER (3)                    NEW
+                           TREATMENT (4)               NEW
+                           LAB TEST (5)                NEW
+                           VITAL SIGN (6)              NEW
+                           DESCRIPTION (10)            NEW
+ 
+ 
+Forms Associated:
+N/A
+ 
+Mail Groups Associated:
+ 
+Mail Group Name          New/Modified/Deleted
+---------------          --------------------
+EDP                             NEW
+ 
+Options Associated:
+N/A
+ 
+Protocols Associated:
+N/A
+ 
+Security Keys Associated:
+ 
+Security Key Name
+-----------------
+EDPF KIOSKS
+EDPR EXPORT
+EDPR PROVIDER
+EDPR XREF
+ 
+Templates Associated:
+---------------------
+N/A
+ 
+Additional Information:
+-----------------------
+N/A 
+ 
+New Service Requests (NSRs)
+----------------------------  
+N/A
+ 
+Patient Safety Issues (PSIs)
+-----------------------------
+N/A
+ 
+Remedy Ticket(s) & Overview
+---------------------------
+ 
+1. HD0000000468015   Display board times out too quickly
+   
+    Problem #1:
+    -----------
+    EDIS v1.0 was released with the ability to set a timeout and a
+    timeout countdown value in VistA.  These values control how long
+    the EDIS application can remain inactive before the application
+    will timeout and then display a countdown timer before eventually
+    logging out of the application.  Unfortunately, EDIS used the
+    ORWOR TIMEOUT CHART and ORWOR TIMEOUT COUNTDOWN parameters within
+    VistA to accomplish this.  These parameters also control the
+    timeout and countdown values for the CPRS GUI application and
+    belong to CPRS (OERR).  Because of this, the ability to modify them
+    is limited by the fact the CPRS GUI must be considered first and
+    sites may not wish for their CPRS timeout values to be adjusted.
+    A solution was needed that would allow the EDIS timeout and
+    countdown values to be adjusted independently of CPRS.
+  
+    Resolution #1:
+    --------------
+    Routine EDPFAA was modified to use two new EDIS parameters to
+    determine the timeout and countdown values for the EDIS application.
+    The two new parameters have been created in the PARAMETER DEFINITION
+    (#8989.51) file.  The two new parameters are:
+  
+    NAME: EDP APP COUNTDOWN
+       DISPLAY TEXT: Countdown Seconds upon Timeout
+       VALUE TERM: Countdown Seconds         VALUE DATA TYPE: numeric
+       VALUE DOMAIN: 0:999
+       VALUE HELP: Enter the number of seconds (0 to 999) for the
+                   countdown before closing EDIS.
+       DESCRIPTION: This value is the number of seconds used for the
+                    countdown when the timeout notification appears.
+       PRECEDENCE: 1                           ENTITY FILE: USER
+       PRECEDENCE: 5                           ENTITY FILE: SYSTEM
+       PRECEDENCE: 9                           ENTITY FILE: PACKAGE
+     
+    NAME: EDP APP TIMEOUT
+       DISPLAY TEXT: Timeout for EDIS application
+       MULTIPLE VALUED: No                   VALUE TERM: Timeout (EDIS)
+       VALUE DATA TYPE: numeric              VALUE DOMAIN: 30:999999
+       VALUE HELP: Enter the number of seconds (30-999999) that should
+                   pass before EDIS times out.
+       DESCRIPTION: This value overrides the user's DTIME only in the
+                    case of the EDIS application.
+       PRECEDENCE: 1                           ENTITY FILE: USER
+       PRECEDENCE: 3                           ENTITY FILE: DIVISION
+       PRECEDENCE: 5                           ENTITY FILE: SYSTEM
+  
+    A post-init routine, EDPYP2, has been created to move existing
+    ORWOR TIMEOUT CHART and ORWOR TIMEOUT COUNTDOWN parameter values
+    into the corresponding EDP APP COUNTDOWN and EDP APP TIMEOUT
+    parameters. A default system level setting will be entered as
+    2 minutes for the EDP APP COUNTDOWN parameter and 20 minutes for
+    the EDP APP TIMEOUT parameter.  User parameter values will only
+    be copied over if the user exists in the TRACKING STAFF (#231.7)
+    file.
+ 
+ 2. HD0000000466332   Excess WEB Error Logic Display
+ 
+    Problem #2:
+    -----------
+    Many sites have experienced an <UNDEFINED>ACT+22^EDPRPT1 error when
+    attempting to run the EDIS Activity report.  This error is caused
+    by a flaw in the way the Activity report initialized its counter
+    variables.  Specifically, those related to dispositions.  The
+    report was using the abbreviation index (^EDPB(233.1,"AB")) for
+    the TRACKING CODE (#233.1) file to compile the list of potential
+    dispositions.  However, the abbreviation is not required and file
+    233.1 is only updated once at the time of creation of the
+    disposition.  All future updates to the disposition appear in the
+    TRACKING CODE SET (#233.2) file.  This allows for a disposition to
+    be created without an abbreviation (no entry in ^EDPB(233.1,"AB")
+    index and then later have an abbreviation added which is stored in
+    the 233.2 file.  Since the Activity report uses the 233.2 file to
+    determine if a disposition abbreviation exists, this causes a
+    situation where a counter variable had not been initialized and
+    thus an <UNDEFINED> error occurs.
+ 
+    Resolution #2:
+    --------------
+    Routine EDPRPT1 was modified to compile the list of potential
+    disposition abbreviations using both the TRACKING CODE (233.1)
+    file and the TRACKING CODE SET (#233.2) file.  This will prevent
+    dispositions originally created without an abbreviation from
+    causing an <UNDEFINED>ACT+22^EDPRPT1 error if later an
+    abbreviation is added.
+ 
+ 3. Report issues discovered while researching problem 2 (HD0000000466332)
+ 
+    Problem #3:
+    -----------
+    1. Some reports failed to count dispositions that were originally
+       created without abbreviations or never had an abbreviation.
+    2. If no abbreviation and the disposition was counted, the entry
+       would display no value in the Disposition column and/or would
+       lump them together under "none".
+    3. Missed Opportunities and VA Admissions were being under counted
+       as only dispositions containing abbreviations in the TRACKING
+       CODE (#233.1) file were being counted.
+ 
+    Resolution #3:
+    --------------
+    Routines EDPRPT, EDPRPT1, EDPRPT10, EDPRPT2, EDPRPT3, EDPRPT4,
+    EDPRPT5, EDPRPT7, EDPRPT7C and EDPRPT8 were modified to address the
+    three identified issues.  These changes effect the Activity Report,
+    the Admissions Report, the Delay Report, the Missed Opportunity
+    Report, the Delay Summary Report, the Shift Report, the Exposure
+    Report and the Acuity Report.  If a report displays the disposition
+    (abbreviation) and the disposition does not have an abbreviation,
+    the report will display the first 30 characters of the Display Name
+    for the disposition.  Spaces in these Display Names will be
+    replaced with underscores.  For example, a Display Name of "Patient
+    Left ED Without Treatment" would display as
+    "Patient_Left_ED_Without_Treatm".
+ 
+ 4. HD0000000489402   Getting EDIS Server Error
+ 
+    Problem #4:
+    -----------
+    The Server Unavailable error message is displayed in many different
+    instances.  It can be an indicator that communications between the
+    web browser (EDIS front-end), the EDIS server, and VistA has
+    encountered a problem or it can occur because the messaging between
+    these three entities has exceeded the maximum time allowed for the
+    communication to occur.  The maximum time allowed for EDIS
+    communications has been hard coded into the EDIS server software.
+    It has been determined that sites have been experiencing a high
+    number of Server Unavailable error messages due to the communication
+    timeout values being too low.  This has caused sites to experience
+    the Server Unavailable error message when attempting to run reports
+    as well as when just attempting to use the EDIS application.  As
+    these errors can be caused by large data retrieval taking too long
+    or be due to general slowness in the network, it has been determined
+    that the server software should be modified to allow for longer
+    communication timeout periods.
+ 
+    Resolution #4:
+    --------------
+    It was determined that two separate timeout variables were being
+    encountered and causing the Server Unavailable error messages.
+    The first timeout variable was the HttpService requestTimeOut
+    variable.  This variable determines how long the HttpService would
+    wait for a response from the server.  It was initially set at 20
+    seconds, which has shown to be too short of a time period to wait
+    for a response from the server.  Especially, if running a report
+    over a longer time interval that may require more time to compile
+    the data in VistA.  This value is being changed to a -1, which will
+    effectively set the requestTimeOut to "unlimited".  Thus, the
+    HttpService will no longer timeout or cause Server Unavailable
+    error messages.  The second timeout variable effects the VistALink
+    timeout.  A value of 30 seconds was being used to limit the amount
+    of time VistA had to respond to a request from the server.  If
+    VistA required more than 30 seconds to compile the data and respond,
+    VistALink would throw a timeout error.  As this is also hard coded
+    on the EDIS server, this value is also being modified to reduce the
+    number of Server Unavailable error messages caused by this timeout.
+    The new value for the VistALink timeout is being set at 90 seconds
+    which should reduce the number of Server Unavailable error messages
+    currently being thrown due to the 30 second timeout.
+  
+    As these two timeout changes reside on the server, sites will not
+    need to install anything on their systems to see these fixes.
+    When EDP 2.0 is released, the EDIS servers will
+    simultaneously be updated to include the solutions for problem #4.
+ 
+ 5. HD0000000500768   Report times are wrong
+ 
+    Problem #5:
+    -----------
+    The Shift Report covers a period of 24 hours.  However, if you set
+    the first shift to start at a time other than midnight (0:00), then
+    the report fails to calculate shifts past midnight up to the start
+    shift time.  What displays is a shift starting before midnight and
+    then going until the start time of the first shift.  For example,
+    if the start time is 8:00 and the shift durations are 8 hours the
+    report column headers will look like:
+ 
+       8:00 to 16:00          16:00 to 8:00
+ 
+    As the column headers show, there are only two shifts identified
+    instead of the three as you would expect with the second shift
+    displaying as 16 hours in duration. 
+ 
+    Resolution #5:
+    --------------
+    Routine EDPRPT5 was modified to correctly handle shifts that extend
+    past midnight when the first shift start time is something other
+    than midnight (0:00).  Using the example from the problem
+    description the column headers will now display three columns of
+    data:
+ 
+       8:00 to 16:00          16:00 to 0:00          0:00 to 8:00
+ 
+ 6. HD0000000498267   EDIS Reports has 4 columns instead of 12 columns
+ 
+    Problem #6:
+    -----------
+    It was discovered the Shift report would only display 4 columns
+    (shifts) worth of data, even if there were more shifts than this.
+    The additional shifts would display the columns in the report,
+    but they would be blank.  The exported version of the Shift
+    report would display all shifts properly.  It was also discovered
+    the data being returned from VistA could only handle 13 unique
+    columns worth of data.  More than 13 shifts in a day could produce
+    duplicate data in every column after column 12 in the exported
+    Shift report and in the display if it was showing data in all the
+    columns.
+  
+    Resolution #6:
+    --------------
+    Routine EDPRPT5 was modified to return up to 24 unique data columns
+    in order to handle a one hour shift duration setting.  The server
+    EAR file is also being modified to limit the shift duration
+    parameter setting to a minimum of one hour and a maximum of 24
+    hours.  The Shift report will now properly show up to 24 columns
+    worth of data when displayed to the screen or exported to a file.
+ 
+ 7. Shift report issues
+  
+    Problem #7:
+    -----------
+    While testing changes related to the shift report, issues 5 and 6
+    above, it was discovered there were three additional items which
+    required attention.  First, it was noticed the exported shift report
+    was shifting the last shift displayed on the shift report to the
+    first column making it the first shift on the report.  Second, the
+    date/time indicated in the header is not always accurate.  If the
+    "First shift begins at" parameter is set to 00:00, then the header
+    is accurate.  However, if the "First shift begins at" parameter is
+    set to any other value, the report actually runs from the
+    previous day at the time of the start of the last shift.  For
+    example, if the shift duration is set for 12 hours and the "First
+    shift begins at" parameter is set to 07:00, and the shift report
+    is run for 7/25/2011 then the report will run from 7/24/2011@19:00
+    to 7/25/2011@19:00.  This makes the current header display
+    inaccurate.  Thirdly, we noticed some problems with the way the
+    report was calculating some of the data to display.  Most notably
+    the "Carried over at Report Start" and the "Carry over to Next
+    Shift" fields.
+ 
+    Resolution #7:
+    --------------
+    Routine EDPRPT5 is being modified to correct the "Carried over at
+    Report Start" and the "Carry over to Next Shift" fields in the
+    Shift report.  It is also adjusting the way the report determines
+    the start date/time for the report to run.  Currently, when the
+    "First shift begins at" parameter is greater than 00:00, then the
+    report starts one day earlier and at the start time of the last
+    calculated shift of the day.  The new start time will be modified
+    to be the same as the "First shift begins at" time of the previous
+    day.  The server, EAR file, will be modified to display an
+    appropriate header and report from/to date times to match the new
+    report start time so the users will see the correct report range
+    being displayed.  The server modifications will also address the
+    moving of the last shift to the first column when exported.
+ 
+Test Sites:
+----------
+  VA HealthCare Upstate NY (Syracuse)     (large [integrated)
+  VA New York Harbor HCS (Manhattan)      (large [integrated)
+  Lebanon VA Medical Center               (medium)
+  VA Maryland Health Care (Perry Point)   (large [integrated])
+ 
+ 
+SOFTWARE RETRIEVAL:
+===================
+ 
+The EDP2_0.KID file contains all the files necessary to install the EDIS 
+in VistA.
+ 
+If a new or additional Big Board is being installed, please refer to the 
+EDIS 1.0 Installation Guide for details.
+ 
+********************************************************************** 
+Note:
+ 
+The EDP .ear file for the Graphical User Interface will show a version of 
+2.1, while the Host File for VistA will show a version of 2.0. This is 
+okay and should not be a reason for concern.
+ 
+The application guides will appear with version 2.1 (see DOCUMENTATION 
+RETRIEVAL instructions below).
+**********************************************************************
+ 
+These files are available in the Office of Information Field Office 
+(OIFO) ANONYMOUS.SOFTWARE directories listed below:
+ 
+   File Name         Contents         Retrieval Format
+--------------     ----------       ------------------
+   EDP2_0.KID       KIDS Build             ASCII
+   
+The file listed above may be obtained via FTP.  The preferred method is 
+to FTP the files from:
+ 
+   download.vista.med.va.gov 
+ 
+This transmits the files from the first available FTP server.  Sites may 
+also elect to retrieve software directly from a specific server as 
+follows: 
+ 
+  OIFO                    FTP Address                 Directory
+-------                  -------------              ------------
+Albany               ftp.fo-albany.med.va.gov        anonymous.software 
+Hines                ftp.fo-hines.med.va.gov         anonymous.software 
+Salt Lake City       ftp.fo-slc.med.va.gov           anonymous.software 
+VistA Download Site  download.vista.med.va.gov       anonymous.software
+ 
+If a new or additional Big Board is being installed, please refer to the 
+EDIS 1.0 Installation Guide for details. No additional changes need to be 
+made to the current Big Board(s).
+ 
+ 
+DOCUMENTATION RETRIEVAL:
+========================
+ 
+Updated documentation describing the new functionality introduced by this 
+Version Release is available.
+ 
+The preferred method is to FTP the files from 
+ftp://download.vista.med.va.gov/.
+ 
+This transmits the files from the first available FTP server. Sites may 
+also elect to retrieve software directly from a specific server as 
+follows:
+ 
+ Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+ 
+Documentation can also be found on the VA Software Documentation Library 
+at:
+http://www4.va.gov/vdl/
+ 
+Title                         File Name                       FTP Mode
+-----------------------------------------------------------------------
+EDP_2.1_SrvrIG.PDF 
+             Emergency Department Integration Software       BINARY 
+             Version 2.0 Server Installation Guide
+ 
+EDP_2.1_TM.PDF 
+             Emergency Department Integration Software       BINARY 
+             Version 2.0 Technical Manual
+ 
+EDP_2.1_UM.PDF 
+             Emergency Department Integration Software       BINARY 
+             Version 2.0 User Guide       
+ 
+EDP_2.1_ClientIG.PDF
+             Emergency Department Integration Software       BINARY 
+             Version 2.0 Client Installation Guide       
+ 
+EDP_2.1_Glossary.PDF
+             Emergency Department Integration Software       BINARY 
+             Version 2.0 Glossary       
+ 
+ 
+INSTALLATION:
+==============
+ 
+Pre - Installation Instructions:
+--------------------------------
+**************************************************************************
+ 
+This software will be a phased release.  The EDIS Implementation Team    
+will contact sites prior to installation so they can complete several
+pre-install steps.  Sites should not install the EDIS 2.0 software until
+the checklist has been completed and verified by the EDIS Implementation 
+Team.
+**************************************************************************
+ 
+The software will be available for installation/ implementation upon 
+completion and verification of the pre-install checklist that will be 
+distributed in phases by the Implementation Team. Sites will be set up on 
+the National Server for EDIS access based on the implementation 
+schedule.  Upon setup and access to the National Server, sites will be 
+able to test and then move into production.
+ 
+The Implementation Team information can be found at:
+ 
+http://vaww.oed.portal.va.gov/projects/edis_v2/default.aspx
+ 
+Mail Group:
+EDISIMPLEMENTATIONGROUP@va.gov
+ 
+Installation Instructions:
+--------------------------
+This Host File may be installed with users on the system although it is 
+recommended that it be installed during non-peak hours and that all EDIS 
+users log out of the system to minimize potential disruption to users and 
+data.  This Host File Build should take less than 5 minutes to install.
+ 
+No menu options need to be disabled for this installation.
+Time to configure the application parameters will vary by site depending 
+on site preparation. Due to configurations being completed for EDIS 
+v1.0,setup should be minimal. The Version 2.0 build is backwards 
+compatible with EDIS version 1.0, but do not install version 2.0 until 
+your IM team has contacted you.
+ 
+ 
+Installation should take less than 5 minutes.  
+ 
+1.      From the Kernel Installation and Distribution System Menu, select
+the Installation Menu and Locate the EDIS V2.0 Host File (EDP2_0.KID) 
+within
+your VISTA system.
+ 
+    Select Installation Option: Load a Distribution 
+    Enter a Host File: (e.g.,"SYS$USER:[XXX]EDP2_0.KID)
+ 
+2.  From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, you may elect to use the
+    following options. When prompted for the INSTALL NAME enter the Build
+    of EDP 2.0.
+   
+     a. Backup a Transport Global - This option creates a MailMan message
+     that will back up all current routines on your system that would
+     be replaced by the Packages in this Transport Global. Those
+     components that are not routines must be backed up separately if they
+     need to be preserved.
+ 
+      b. Compare Transport Global to Current System - This option lets you
+      compare the components of a Transport Global, that is currently
+      loaded in the XTMP global, to your current system.(routines, DDs,
+      templates, etc.). 
+ 
+      c. Verify Checksums in Transport Global - This option will verify
+      checksums for the components of a Transport Global and will report
+      any checksums that are incorrect.
+ 
+3.  Use the Install Package(s) option and select the package
+    of EDP 2.0'.
+ 
+       a. EDP 2.0 will import a MailMan Mail Group.  When prompted 
+       "Enter the Coordinator for Mail Group 'EDP': COORDINATOR,NAME//",
+        answer with the appropriate mail group coordinator. 
+ 
+       b. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+       of Install? NO//', answer NO. 
+ 
+       c. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO. 
+ 
+       d.  When prompted 'Want to DISABLE Scheduled Options and Menu
+       Options and Protocols? NO//', answer NO.
+ 
+4.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+ 
+ 
+ 
+ 
+Post-Installation Instructions:
+------------------------------
+ 
+The post installation will run after the install and will create the new 
+timeout parameters in file 8989.51.
+ 
+ 
+Routine Information:
+====================
+ 
+ 
+The second line of each of these routines now looks like:
+;;2.0;EMERGENCY DEPARTMENT;;May 2, 2012;Build 101
+ 
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+ 
+Routine Name: EDP2ENV
+    Before:       n/a   After:   B653636
+Routine Name: EDPBCF
+    Before: B25096927   After: B25433175
+Routine Name: EDPBCM
+    Before: B17076528   After: B17332251
+Routine Name: EDPBDL
+    Before: B11063047   After: B11063047 
+Routine Name: EDPBKS
+    Before: B15371728   After: B15371728 
+Routine Name: EDPBLK
+    Before:  B7330093   After:  B7330093 
+Routine Name: EDPBPM
+    Before:  B6216911   After:  B6261242 
+Routine Name: EDPBRM
+    Before: B24385375   After: B25575594 
+Routine Name: EDPBRS
+    Before: B19077772   After: B19233483 
+Routine Name: EDPBSL
+    Before: B20029785   After: B20029785 
+Routine Name: EDPBST
+    Before:  B8664749   After:  B8664749 
+Routine Name: EDPBWS
+    Before:       n/a   After: B52550125 
+Routine Name: EDPCBRD
+    Before:  B4350223   After:  B4768831 
+Routine Name: EDPCDBG
+    Before:  B4038807   After:  B4038807 
+Routine Name: EDPCONV
+    Before: B47887788   After: B69787121 
+Routine Name: EDPCONV1
+    Before: B10237522   After: B10237522 
+Routine Name: EDPCSV
+    Before:   B906612   After:   B906612 
+Routine Name: EDPCTRL
+    Before: B33410398   After: B73485587 
+Routine Name: EDPDD
+    Before:  B1560959   After:  B1577854 
+Routine Name: EDPDTL
+    Before:       n/a   After: B80102068 
+Routine Name: EDPFAA
+    Before:  B5372812   After: B24518510 
+Routine Name: EDPFLEX
+    Before:  B1745474   After:  B1745474 
+Routine Name: EDPFMON
+    Before: B27211876   After: B26481799 
+Routine Name: EDPFMOVE
+    Before: B43728958   After: B44917407 
+Routine Name: EDPFPER
+    Before:  B3427509   After:  B3427509 
+Routine Name: EDPFPTC
+    Before: B14885802   After: B14885802 
+Routine Name: EDPFPTL
+    Before:  B4915038   After:  B4915038 
+Routine Name: EDPFX233
+    Before:       n/a   After:  B2082229 
+Routine Name: EDPGLOB
+    Before:       n/a   After:  B2277682 
+Routine Name: EDPHIST
+    Before:       n/a   After: B59451957 
+Routine Name: EDPLAB
+    Before:       n/a   After: B49753454 
+Routine Name: EDPLOG
+    Before: B42149061   After: B56585715 
+Routine Name: EDPLOG1
+    Before:  B2583250   After:  B2583250 
+Routine Name: EDPLOGA
+    Before: B10789313   After: B11867179 
+Routine Name: EDPLOGH
+    Before:  B9457380   After: B12449970 
+Routine Name: EDPLPCE
+    Before: B32802123   After: B32808524 
+Routine Name: EDPMAIL
+    Before:  B7335309   After:  B7450955 
+Routine Name: EDPMED
+    Before:       n/a   After:  B4429388 
+Routine Name: EDPQAR
+    Before:  B6639632   After:  B6897621 
+Routine Name: EDPQDB
+    Before: B37231235   After: B55055961 
+Routine Name: EDPQDBS
+    Before:  B3113182   After:  B3118586 
+Routine Name: EDPQLE
+    Before: B40300302   After: B41785417 
+Routine Name: EDPQLE1
+    Before:  B9736825   After: B10666213 
+Routine Name: EDPQLP
+    Before: B12368052   After: B12368052 
+Routine Name: EDPQLW
+    Before:       n/a   After:  B6750208 
+Routine Name: EDPQPCE
+    Before:  B2442064   After:  B2442064 
+Routine Name: EDPQPP
+    Before:       n/a   After: B92368102 
+Routine Name: EDPQPPS
+    Before:       n/a   After:  B3126500 
+Routine Name: EDPRPT
+    Before: B17619722   After: B25243776 
+Routine Name: EDPRPT1
+    Before: B33605254   After: B44256046 
+Routine Name: EDPRPT10
+    Before: B19172294   After: B26044910 
+Routine Name: EDPRPT11
+    Before:  B8054102   After:  B8059237 
+Routine Name: EDPRPT12
+    Before:  B7797789   After:  B7802924 
+Routine Name: EDPRPT13
+    Before:       n/a   After:  B7380759 
+Routine Name: EDPRPT2
+    Before: B15843773   After: B22188672 
+Routine Name: EDPRPT3
+    Before:  B8721424   After: B14278258 
+Routine Name: EDPRPT4
+    Before: B24084771   After: B25030915 
+Routine Name: EDPRPT5
+    Before: B35383693   After: B52072453 
+Routine Name: EDPRPT6
+    Before:  B9613057   After:  B9636184 
+Routine Name: EDPRPT7
+    Before: B19582712   After: B20666458 
+Routine Name: EDPRPT7C
+    Before: B19611509   After: B20628134 
+Routine Name: EDPRPT8
+    Before: B14454195   After: B15247059 
+Routine Name: EDPRPT9
+    Before:  B1592058   After:  B1597193 
+Routine Name: EDPRPTBV
+    Before: B21129991   After: B21134846 
+Routine Name: EDPUPD
+    Before:       n/a   After:  B6705060 
+Routine Name: EDPVIT
+    Before:       n/a   After: B32884634 
+Routine Name: EDPWS
+    Before:       n/a   After: B17524272 
+Routine Name: EDPWSL
+    Before:       n/a   After:  B7192929 
+Routine Name: EDPWSLM
+    Before:       n/a   After:  B3855274 
+Routine Name: EDPWSP
+    Before:       n/a   After:  B7526722 
+Routine Name: EDPX
+    Before:  B9797287   After: B10778850 
+Routine Name: EDPXML
+    Before:       n/a   After: B13678293 
+Routine Name: EDPYCHK
+    Before:       n/a   After:  B1074868 
+Routine Name: EDPYP2
+    Before:       n/a   After:  B8435306 
+Routine Name: EDPYPRE
+    Before:  B8226400   After: B13981628 
+Routine Name: EDPYPST
+    Before: B35872203   After: B35872203
+ 
+ 
+NOTES:
+ 
+ - Use ASCII when transferring the .KID file.
+ - Use Binary mode when transferring .PDF files.
+ - EDIS uses VistA software packages that must be installed first and
+   fully patched in your accounts. See the installation guide for complete
+   instructions. 
+ - EDIS runs in Adobe Flash Player, which runs in a Web browser. EDIS has 
+been tested with Explorer 7 and 9, as well as Firefox 8 and 9. 
+ - Users who rely on Job Access with Speech (JAWS) for Windows must 
+   download and install scripts to enable Adobe Flex accessibility
+   features. See the technical manual for the complete instructions.
+ 
+ 
+ADDITIONAL INFORMATION:
+ 
+If you have any questions concerning the installation or implementation 
+of this package, please contact the Implementation Team Member who 
+is working with your site or contact the OI National Help Desk at
+1-888-596-4357, or enter a Remedy ticket.
+ 
+The Compliance Date for EDIS V2.1 Phased Implementation is March 8 2013.
+

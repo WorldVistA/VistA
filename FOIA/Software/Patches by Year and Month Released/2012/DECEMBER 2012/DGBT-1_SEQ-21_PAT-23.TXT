@@ -1,0 +1,118 @@
+
+=============================================================================
+Run Date: DEC 28, 2012                     Designation: DGBT*1*23
+Package : DGBT - BENEFICIARY TRAVEL           Priority: EMERGENCY
+Version : 1        SEQ #21                      Status: Released
+                  Compliance Date: DEC 31, 2012
+=============================================================================
+
+Associated patches: (v)DGBT*1*19   <<= must be installed BEFORE `DGBT*1*23'
+
+Subject: BT DASHBOARD BING MAPS API KEY UPDATE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+    This patch addresses 1 issue:
+  
+    1. The Dashboard application is displaying '0' for all sites in the Mileage
+       column.
+  
+      
+    Associated NSR(s):
+    ------------------
+    N/A
+     
+     
+    Associated Remedy ticket(s):
+    ----------------------------
+    1. INC000000789900 - Bene Travel - General:  Mileage not showing
+        DUP: INC000000790548 - Bene Travel - General:  0 displays 
+      
+     
+    Participating Test Sites:
+    -------------------------
+    TBD
+     
+      
+    REMEDY OVERVIEW:
+    ----------------
+   
+    1. INC000000789900 - Bene Travel - General:  Mileage not showing 
+   
+     Problem:
+     --------
+     The Microsoft Bing Maps API Key used by the Dashboard application has 
+     expired.
+  
+     Resolution:
+     -----------
+     The Dashboard application has been updated to use a VA Enterprise, Bing
+     Maps API key, with no expiration date.
+  
+ SOFTWARE DISTRIBUTION:
+ ====================== 
+  Sites may retrieve the new XML directly via FTP. The preferred method is to 
+  FTP the files from:
+   
+         download.vista.med.va.gov
+   
+  This transmits the files from the first available FTP server.  
+   
+  Sites may also elect to retrieve the file directly from the
+  ANONYMOUS.SOFTWARE directory from a specific server as follows:
+   
+  Albany:             ftp.fo-albany.med.va.gov
+  Hines:              ftp.fo-hines.med.va.gov
+  Salt Lake City:     ftp.fo-slc.med.va.gov
+   
+  Filename                    Description
+  ========                    ===========
+  DGBT_1_23.XML               Dashboard XML 
+   
+  NOTE: These files must be transferred using the binary (BIN) file 
+  transfer mode.  The size of the file once downloaded will be 7.26 KB
+  
+     
+ Installation Instructions:
+ ==========================
+  Users may be on the system. Installation should take less than 5 minutes.
+  Use Cache Studio to import the source code XML. 
+    Note: Cache Studio should be connected to your VistA server in your
+          station's namespace.
+  
+  1.    Click the Tools menu and select Import Local.
+  
+  2.    Browse to the XML source code file retrieved from 
+        download.vista.med.va.gov.
+  
+  3.    Click the Open button.
+  
+  4.    Ensure the Add Imported Items to Project checkbox is not selected.
+  
+  5.    Click the OK button to import the Beneficiary Travel Dashboard .csp
+        project file. 
+  
+  6.    To assure the file is recompiled with change to the key navigate 
+        to the install location and right click on the dgbtDashboard.csp
+        file and choose compile 'dgbtDashboard.csp'
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : ELWELL,DAVID                  Date Entered  : DEC 19, 2012
+Completed By: BOWEN,MARY JANE               Date Completed: DEC 28, 2012
+Released By : ALEXANDER,DIANNE              Date Released : DEC 28, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

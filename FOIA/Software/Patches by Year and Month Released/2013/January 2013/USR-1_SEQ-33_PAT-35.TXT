@@ -1,0 +1,209 @@
+
+=============================================================================
+Run Date: JAN 29, 2013                     Designation: USR*1*35
+Package : USR - AUTHORIZATION/SUBSCRIPTION    Priority: Mandatory
+Version : 1        SEQ #33                      Status: Released
+                  Compliance Date: MAR 01, 2013
+=============================================================================
+
+
+Subject: NOT ALLOW CHANGE TITLE ON A RESCINDED ADVANCE DIRECTIVE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This informational patch addresses the issue of not allowing Change Title
+ on a Rescinded Advance Directive.
+  
+ Associated NSR:
+ ===============
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Connecticut HCS
+ Albany VAMC
+  
+ Patient Safety Issues:
+ ======================
+ Patient Safety Program Office (PSPO) #2323
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. HD0000000754278 - Not allow Change Title on a Rescinded Advance
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000754278 - Not allow Change Title on a Rescinded Advance
+  
+ Problem:
+ --------
+ Patches MAG*3.0*121 and TIU*1*261 work together so that when an Advance
+ Directive is rescinded, through the Change Title action in TIU, the MAG 
+ patch puts the watermark of "RESCINDED" on the attached image(s). The
+ problem is that a Rescinded Advance Directive can have its title changed
+ back to Advance Directive but the "RESCINDED" watermark stays on the
+ attached image(s). This has the potential for causing confusing
+ instructions to providers and may place a patient in jeopardy of
+ receiving/not receiving actions based on the confusion caused by an
+ Advance Directive with RESCINDED images attached.
+  
+ Resolution:
+ -----------
+ Add a new business rule to prevent any user but the Chief of Management 
+ Information Systems (MIS) from changing the title of a Rescinded Advance
+ Directive back to Advance.
+  
+ This is the business rule that needs to be added:
+    1    A COMPLETED (TITLE) RESCINDED ADVANCE DIRECTIVE may 
+         HAVE ITS TITLE CHANGED by a CHIEF, MIS Directive.
+  
+ Note:
+ =====
+ This pertains to sites who have the [DOCUMENT DEFINITION] option  with 
+ the [RESCINDED ADVANCE DIRECTIVE] option. The preferred fix for this issue
+ would be functionality added to the code to prevent the Change Title for
+ Rescinded Advance Directive. This would be a new service request. Until
+ such time as a patch is created, tested, and released for this possible
+ service request; the addition of this new business rule is the suggested
+ work around. Please ensure that this is the sole business rule for the 
+ title RESCINDED ADVANCE DIRECTIVE as this will prevent all users except
+ for the Chief, MIS from changing the title of this note.
+  
+  
+ Instructions on adding a new business rule:
+ ===========================================
+ D ^XUP
+  
+ At the Select OPTION NAME: select the [USR CLASS MANAGEMENT MENU] option.
+  
+ From the menu select 5 Manage Business Rules.
+  
+ At the Select SEARCH CATEGORY: select the [DOCUMENT DEFINITION] option.
+  
+ At the Select DOCUMENT DEFINITION: select the [RESCINDED ADVANCE 
+ DIRECTIVE] option.
+  
+ At the Select Action: enter Add Rule.
+  
+ At the Select DOCUMENT DEFINITION: select the [RESCINDED ADVANCE
+ DIRECTIVE] option.
+  
+ At the DOCUMENT DEFINITION: the default will have the [RESCINDED ADVANCE
+ DIRECTIVE] option. Press the Enter Key.
+  
+ At the STATUS: enter COMPLETED.
+  
+ At the ACTION: enter CHANGE TITLE.
+  
+ At the USER CLASS: enter CHIEF, MIS.
+  
+ Enter through the AND FLAG: prompt.
+  
+ Enter through the USER ROLE: prompt.
+  
+ The user may wish to enter a brief description at the DESCRIPTION prompt. 
+ This is optional. To add a description, enter Y for yes at the Edit?
+ prompt and add a description. To not add a description, press the enter
+ key to accept the default of N for NO.
+  
+ Screen Capture of Adding Business Rule:
+ ---------------------------------------
+                       --- User Class Management Menu ---
+  
+  
+    1      User Class Definition
+    2      List Membership by User
+    3      List Membership by Class
+    5      Manage Business Rules
+  
+ Select User Class Management <TEST ACCOUNT> Option: 5  Manage Business 
+ Rules
+ Select SEARCH CATEGORY: DOCUMENT DEFINITION//   
+ Select DOCUMENT DEFINITION: RESCINDED ADVANCE DIRECTIVE       TITLE  
+ ASU Rule Browser              Oct 26, 2012@12:00:33          Page: 1 of  1
+ --------------------------------------------------------------------------
+                   List Business Rules by DOCUMENT DEFINITION       0 Rules
+                     for TITLE RESCINDED ADVANCE DIRECTIVE
+ --------------------------------------------------------------------------
+                                                                                 
+                                                                                 
+ No Business Rules currently exist for TITLE RESCINDED ADVANCE 
+ DIRECTIVE         
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ --------------------------------------------------------------------------
+           + Next Screen  - Prev Screen  ?? More Actions
+ --------------------------------------------------------------------------
+      Find                      Edit Rule                 Change View
+      Add Rule                  Delete Rule               Quit
+ Select Action: Quit// ADD   Add Rule  
+ Please Enter a New Business Rule:
+  
+ Select DOCUMENT DEFINITION: RESCINDED ADVANCE DIRECTIVE       TITLE  
+       Std Title: RESCINDED ADVANCE DIRECTIVE
+ DOCUMENT DEFINITION: RESCINDED ADVANCE DIRECTIVE// 
+ STATUS: COMPLETED  
+ ACTION: CHANGE TITLE       
+ USER CLASS: CHIEF,MIS  CHIEF, MIS
+ AND FLAG: 
+ USER ROLE: 
+ DESCRIPTION:
+   No existing text
+   Edit? NO// 
+   
+ ASU Rule Browser              Oct 26, 2012@12:01:31     Page:      1 of  1
+ --------------------------------------------------------------------------
+                   List Business Rules by DOCUMENT DEFINITION        1 Rule
+                     for TITLE RESCINDED ADVANCE DIRECTIVE
+ --------------------------------------------------------------------------
+           
+                                                                                 
+ 1    A COMPLETED (TITLE) RESCINDED ADVANCE DIRECTIVE may HAVE ITS TITLE 
+      CHANGED by a CHIEF, MIS
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ --------------------------------------------------------------------------
+           ** Item 1 Added **
+ --------------------------------------------------------------------------
+      Find                      Edit Rule                 Change View
+      Add Rule                  Delete Rule               Quit
+ Select Action: Quit// 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : OCT 17, 2012
+Completed By: DUCKWORTH,TIM                 Date Completed: JAN 09, 2013
+Released By : PIERSON,YVONNE E              Date Released : JAN 29, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,179 @@
+$TXT Created by THOMPSON,Seth at CHEY204.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 07/25/12 at 14:19
+=============================================================================
+Run Date: DEC 28, 2012                     Designation: OR*3*351
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #312                      Status: Released
+                  Compliance Date: JAN 28, 2013
+=============================================================================
+
+Associated patches: (v)OR*3*339    <<= must be installed BEFORE `OR*3*351'
+
+Subject: ANTICOAGULATOR TEAM LIST
+
+Category: 
+  - Routine
+  - Sort Template
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ 1. When a patient has changed clinics, they remain on the old clinic and
+    are displayed as a patient on both the old and new clinic team lists.
+  
+ 2. When listing all patients on a clinic team list, using the All
+    Anticoagulation Patients [ORAM PATIENT LIST ALL] menu option,
+    patients whose name begins with the letter "Z" are not displayed.
+   
+   
+  ASSOCIATED REMEDY:
+  ==================
+  1. HD0000000484871 - Anticoagulation Issue 
+     Duplicate:
+     HD0000000597043 - Walla Walla (Region 1 site) Problems with 
+                       Anticoagulation 
+  2. HD0000000497460 - Problem is Anticoagulator Report -- VISTA
+  
+  
+  ASSOCIATED NSR(s):
+  ==================
+  N/A
+   
+  
+  PARTICIPATING TEST SITES:
+  =========================
+  Cleveland, OH
+  Los Angeles HCS
+  Upstate New York HCS 
+   
+  REMEDY OVERVIEW:
+  ================
+  1. HD0000000484871 - Anticoagulation Issue
+     
+     Problem:
+     --------
+     When a patient changes clinics, they are not being removed from 
+     the old clinic or team list. Instead, they are displayed on
+     both clinics when using the All Anticoagulation Patients [ORAM PATIENT
+     LIST ALL] menu option.
+  
+     Resolution:
+     -----------
+     Routine ORAM1 has been modified to correctly update the cross 
+     reference when the clinic listed for a patient in the ORAM 
+     FLOWSHEET file (#103) changes. Previously, the old cross 
+     reference was being left behind, leaving the patient associated 
+     with the old clinic. The team lists will be corrected the 
+     next time Anticoagulation Background Job [ORAM SET TEAMLISTS]
+     background job is ran.
+  
+  
+  2. HD0000000497460 - Problem is Anticoagulator Report -- VISTA
+     
+     Problem:
+     --------
+     When listing all patients on a clinic team list using All
+     Anticoagulation Patients [ORAM PATIENT LIST ALL] menu option,
+     patients whose last name begins with the letter "Z" are not displayed.
+     The current ORAM TEAM LIST sort template is sorting patient names from
+     A to Z. This is problematic because ending at "Z" will not include
+     names after "Z" (ex. patient "Z" will show up, but patient "ZA" will
+     not).
+   
+     Resolution:
+     -----------
+     The ORAM TEAM LIST sort template has been modified to remove the
+     limits on names for sorting. Now when listing all patients on a 
+     clinic team list, using the All Anticoagulation Patients [ORAM
+     PATIENT LIST ALL] menu option, patient whose last names begin with
+     "Z", will now be displayed. The team lists will be corrected the 
+     next time Anticoagulation Background Job [ORAM SET TEAMLISTS]
+     background job is ran.
+  
+  TECHNICAL SECTION:
+  ==================
+  Post-init routine ORP351 was created with this patch to rebuild the "CL"
+  cross-reference of the ORAM FLOWSHEET file (#103). This will correct the
+  associated team lists the next time Anticoagulation Background Job [ORAM 
+  SET TEAMS] runs.
+  
+  INSTALLATION INSTRUCTIONS:
+  ==========================
+  This patch can be loaded with users in the system but it is recommended 
+  that it be installed when user activity is low.  Installation time will 
+  be less than 2 minutes.
+  
+  Post-init routine ORP351 will be deleted after patch installation.
+   
+  1. Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+   
+  2. Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+   
+         Edits and Distribution ...  
+         Utilities ...  
+         Installation ...  
+   
+     Select Kernel Installation & Distribution System Option: Installation
+                                                              ---
+        1  Load a Distribution
+        2  Verify Checksums in Transport Global
+        3  Print Transport Global
+        4  Compare Transport Global to Current System
+        5  Backup a Transport Global
+        6  Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+   
+  3. From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter OR*3.0*351):
+   
+   
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will
+           not backup any other changes such as DD's or templates.
+       b.  Compare Transport Global to Current System - This option
+           will allow you to view all changes that will be made when
+           this patch is installed.  It compares all components of this
+           patch (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will
+           allow you to ensure the integrity of the routines that are
+           in the transport global.
+   
+  4. Use the Install Package(s) option and select the package
+     OR*3.0*351.
+   
+       a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+           install? NO//", answer NO.
+       b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+           Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORAM1
+    Before:B161086526   After:B162237541  **307,339,351**
+Routine Name: ORP351
+    Before:       n/a   After:   B707059  **351**
+ 
+Routine list of preceding patches: 339
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : JUL 05, 2011
+Completed By: SESSLER,APRIL                 Date Completed: DEC 14, 2012
+Released By : STOKER,ELAINE                 Date Released : DEC 28, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

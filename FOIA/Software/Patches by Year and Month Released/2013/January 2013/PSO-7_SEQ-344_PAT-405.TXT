@@ -1,0 +1,163 @@
+$TXT Created by CREMEANS,THERESA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 04/02/12 at 10:23
+=============================================================================
+Run Date: JAN 31, 2013                     Designation: PSO*7*405
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #344                      Status: Released
+                  Compliance Date: MAR 03, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*251   <<= must be installed BEFORE `PSO*7*405'
+                    (v)PSO*7*326   <<= must be installed BEFORE `PSO*7*405'
+
+Subject: POLY PHARMACY REPORT/CMOP SUSPENSE DATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch address the following 3 issues:
+ 1. When running the Poly Pharmacy Report, the same last 4 digits of the 
+ SSN prints for all patients that have Non-VA meds and no prescriptions. 
+  
+ 2. An undefined error occurs when running the Poly Pharmacy Report for 
+ one patient that has Non-VA Meds and no prescriptions.
+  
+ 3. The display of the CMOP suspense date is truncated on a reinstate.
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. HD0000000284472 - Poly Pharmacy Report carrying over a variable 
+ 2. HD0000000616602 - <UNDEFINED>BEG+4^PSOPOLY
+ 3. HD0000000474930 - CMOP suspense date truncated on Med Profile Screen
+  
+  
+ Associated NSRs:
+ ================
+ N/A  
+  
+ Test Sites:
+ ===========
+ Oklahoma City VA Medical Center
+ Louisville VA Medical Center
+ Erie VA Medical Center
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000284472 - Poly Pharmacy Report carrying over a variable 
+  
+ Problem:
+ --------
+ The same last 4 digits of the SSN prints for every patient with Non-VA meds
+ and no prescriptions on the Poly Pharmacy Report.
+  
+ Resolution:
+ -----------
+ Modify the report so as each patient is processed, the correct last 4 digits 
+ of their SSN prints correctly.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSOPOLY to call KVA^VADPT then PID^VADPT for each patient with 
+ non-VA meds and no prescriptions.
+  
+  
+ 2. HD0000000616602 - <UNDEFINED>BEG+4^PSOPOLY
+  
+ Problem:
+ --------
+ An Undefined error occurs when running the Poly Pharmacy Report for one 
+ patient that only has Non-VA Meds and no Prescriptions.
+  
+ Resolution:
+ -----------
+ Modify the report so it can be run for one patient with only Non-VA Meds and 
+ no prescriptions without erroring out.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSOPOLY to define variable P prior to looping down the 
+ patient's prescriptions and Non-VA meds at BEG+4^PSOPOLY.
+  
+ 3. HD0000000474930 - Display of CMOP Suspense Date truncated on reinstate on
+                   Medication Profile Screen
+  
+ Problem:
+ --------
+ The display for the CMOP suspense date is being truncated on the Medication
+ Profile Screen due to the length restrictions.
+  
+ Resolution:
+ -----------
+ Shorten the message by removing the words "HAS BEEN" from the display.  
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSOCMOP to shorten the display message.  This was approved
+ by the PLE on April 4, 2011 via e-mail.
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install this 
+ patch when users are not running the Poly Pharmacy Report.  It should take 
+ less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*405)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*405.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCMOP
+    Before: B39239270   After: B38920299  **2,16,21,27,43,61,126,148,274,
+                                           347,251,405**
+Routine Name: PSOPOLY
+    Before: B40529966   After: B41119787  **19,28,132,326,405**
+ 
+Routine list of preceding patches: 251, 326
+
+=============================================================================
+User Information:
+Entered By  : HERRING,VENESSA               Date Entered  : MAR 29, 2012
+Completed By: HEFFERNAN,COREY               Date Completed: JAN 09, 2013
+Released By : PARRIS,CHRIS                  Date Released : JAN 31, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

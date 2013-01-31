@@ -1,0 +1,1078 @@
+Released OR*3*313 SEQ #311
+Extracted from mail message
+**KIDS**:OR*3.0*313^
+
+**INSTALL NAME**
+OR*3.0*313
+"BLD",8750,0)
+OR*3.0*313^ORDER ENTRY/RESULTS REPORTING^0^3121017^y
+"BLD",8750,1,0)
+^^6^6^3120201^
+"BLD",8750,1,1,0)
+This patch updates the OE/RR NOTIFICATION (#100.9) alert CONSULT/REQUEST
+"BLD",8750,1,2,0)
+UPDATED to inform the user of all actions that triggers the alert. The 
+"BLD",8750,1,3,0)
+patch also updates the ORDER DIALOG (#101.41) entry GMRCOR REQUEST to 
+"BLD",8750,1,4,0)
+always prompt the user with the RELATED SERVICES saved on the Quick Order 
+"BLD",8750,1,5,0)
+and allow them to change it, if needed.  The help text when creating a 
+"BLD",8750,1,6,0)
+new prompt has been updated to remove the "subfile" wording.
+"BLD",8750,4,0)
+^9.64PA^100.9^1
+"BLD",8750,4,100.9,0)
+100.9
+"BLD",8750,4,100.9,222)
+n^n^f^^n^ORY313^y^o^n
+"BLD",8750,4,"B",100.9,100.9)
+
+"BLD",8750,6)
+5^
+"BLD",8750,6.3)
+12
+"BLD",8750,"ABPKG")
+n
+"BLD",8750,"INI")
+
+"BLD",8750,"INID")
+^y
+"BLD",8750,"INIT")
+DLG^ORY313
+"BLD",8750,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8750,"KRN",.4,0)
+.4
+"BLD",8750,"KRN",.401,0)
+.401
+"BLD",8750,"KRN",.401,"NM",0)
+^9.68A^1^1
+"BLD",8750,"KRN",.401,"NM",1,0)
+ORY313    FILE #100.9^100.9^0
+"BLD",8750,"KRN",.401,"NM","B","ORY313    FILE #100.9",1)
+
+"BLD",8750,"KRN",.402,0)
+.402
+"BLD",8750,"KRN",.403,0)
+.403
+"BLD",8750,"KRN",.5,0)
+.5
+"BLD",8750,"KRN",.84,0)
+.84
+"BLD",8750,"KRN",.84,"NM",0)
+^9.68A^^
+"BLD",8750,"KRN",3.6,0)
+3.6
+"BLD",8750,"KRN",3.8,0)
+3.8
+"BLD",8750,"KRN",9.2,0)
+9.2
+"BLD",8750,"KRN",9.8,0)
+9.8
+"BLD",8750,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",8750,"KRN",9.8,"NM",1,0)
+ORCMEDT4^^0^B65485434
+"BLD",8750,"KRN",9.8,"NM","B","ORCMEDT4",1)
+
+"BLD",8750,"KRN",19,0)
+19
+"BLD",8750,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",8750,"KRN",19.1,0)
+19.1
+"BLD",8750,"KRN",101,0)
+101
+"BLD",8750,"KRN",409.61,0)
+409.61
+"BLD",8750,"KRN",771,0)
+771
+"BLD",8750,"KRN",779.2,0)
+779.2
+"BLD",8750,"KRN",870,0)
+870
+"BLD",8750,"KRN",8989.51,0)
+8989.51
+"BLD",8750,"KRN",8989.52,0)
+8989.52
+"BLD",8750,"KRN",8994,0)
+8994
+"BLD",8750,"KRN","B",.4,.4)
+
+"BLD",8750,"KRN","B",.401,.401)
+
+"BLD",8750,"KRN","B",.402,.402)
+
+"BLD",8750,"KRN","B",.403,.403)
+
+"BLD",8750,"KRN","B",.5,.5)
+
+"BLD",8750,"KRN","B",.84,.84)
+
+"BLD",8750,"KRN","B",3.6,3.6)
+
+"BLD",8750,"KRN","B",3.8,3.8)
+
+"BLD",8750,"KRN","B",9.2,9.2)
+
+"BLD",8750,"KRN","B",9.8,9.8)
+
+"BLD",8750,"KRN","B",19,19)
+
+"BLD",8750,"KRN","B",19.1,19.1)
+
+"BLD",8750,"KRN","B",101,101)
+
+"BLD",8750,"KRN","B",409.61,409.61)
+
+"BLD",8750,"KRN","B",771,771)
+
+"BLD",8750,"KRN","B",779.2,779.2)
+
+"BLD",8750,"KRN","B",870,870)
+
+"BLD",8750,"KRN","B",8989.51,8989.51)
+
+"BLD",8750,"KRN","B",8989.52,8989.52)
+
+"BLD",8750,"KRN","B",8994,8994)
+
+"BLD",8750,"QUES",0)
+^9.62^^
+"BLD",8750,"REQB",0)
+^9.611^1^1
+"BLD",8750,"REQB",1,0)
+OR*3.0*245^2
+"BLD",8750,"REQB","B","OR*3.0*245",1)
+
+"DATA",100.9,30,0)
+CONSULT/REQUEST CANCEL/HOLD^OR^Consult/Request canceled/held.^PKG^R^DCCON^ORB3FUP2^
+"DATA",100.9,30,1)
+^GMRC
+"DATA",100.9,30,3)
+
+"DATA",100.9,30,4)
+Triggered when a consult/request is canceled or held by by the consulting service.  Recipient is the ordering/requesting provider.  It is deleted upon completion of the follow-up action.
+"DATA",100.9,63,0)
+CONSULT/REQUEST UPDATED^OR^Consult/request updated.^PKG^R^UPCON^ORB3FUP2^
+"DATA",100.9,63,1)
+^OR
+"DATA",100.9,63,3)
+
+"DATA",100.9,63,4)
+Triggered within the Consult/Request package when a comment is added to the consult or the consult is scheduled.  Typical recipients are determined by the Consult/Request package.  It is deleted upon completion of the follow-up action.
+"FIA",100.9)
+OE/RR NOTIFICATIONS
+"FIA",100.9,0)
+^ORD(100.9,
+"FIA",100.9,0,0)
+100.9
+"FIA",100.9,0,1)
+n^n^f^^n^ORY313^y^o^n
+"FIA",100.9,0,10)
+
+"FIA",100.9,0,11)
+
+"FIA",100.9,0,"RLRO")
+^DIBT(449986,1)
+"FIA",100.9,0,"VR")
+3.0^OR
+"FIA",100.9,100.9)
+0
+"INIT")
+DLG^ORY313
+"KRN",.401,449986,-1)
+0^1
+"KRN",.401,449986,0)
+ORY313^3120202.114^@^100.9^^@^3120202
+"KRN",.401,449986,"DC",1)
+.01^="CONSULT/REQUEST UPDATED"
+"KRN",.401,449986,"DC",2)
+.01^="CONSULT/REQUEST CANCEL/HOLD"
+"KRN",.401,449986,"DIS",1)
+I $$UP^DILIBF($P($G(^ORD(100.9,D0,0)),U,1))="CONSULT/REQUEST UPDATED"
+"KRN",.401,449986,"DIS",2)
+I $$UP^DILIBF($P($G(^ORD(100.9,D0,0)),U,1))="CONSULT/REQUEST CANCEL/HOLD"
+"KRN",.401,449986,"DIS","XFORM",1)
+$$UP^DILIBF(;)
+"KRN",.401,449986,"DIS","XFORM",2)
+$$UP^DILIBF(;)
+"KRN",.401,449986,"DL")
+2
+"KRN",.401,449986,"DL",0)
+
+"KRN",.401,449986,"DL",1)
+^1^
+"KRN",.401,449986,"DL",2)
+^2^
+"KRN",.401,449986,"O",0)
+^
+"KRN",.401,449986,"O",1,0)
+NAME EQUALS (case-insensitive) "CONSULT/REQUEST UPDATED"
+"KRN",.401,449986,"O",2,0)
+ Or NAME EQUALS (case-insensitive) "CONSULT/REQUEST CANCEL/HOLD"
+"KRN",.401,449986,"QR")
+3120202.114019^2
+"MBREQ")
+0
+"ORD",6,.401)
+.401;6;;;EDEOUT^DIFROMSO(.401,DA,"",XPDA);FPRE^DIFROMSI(.401,"",XPDA);EPRE^DIFROMSI(.401,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.401,DA,"",XPDA);DEL^DIFROMSK(.401,"",%)
+"ORD",6,.401,0)
+SORT TEMPLATE
+"PKG",188,-1)
+1^1
+"PKG",188,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",188,22,0)
+^9.49I^1^1
+"PKG",188,22,1,0)
+3.0^2971217^2981113^1
+"PKG",188,22,1,"PAH",1,0)
+313^3121017^520736428
+"PKG",188,22,1,"PAH",1,1,0)
+^^6^6^3121017
+"PKG",188,22,1,"PAH",1,1,1,0)
+This patch updates the OE/RR NOTIFICATION (#100.9) alert CONSULT/REQUEST
+"PKG",188,22,1,"PAH",1,1,2,0)
+UPDATED to inform the user of all actions that triggers the alert. The 
+"PKG",188,22,1,"PAH",1,1,3,0)
+patch also updates the ORDER DIALOG (#101.41) entry GMRCOR REQUEST to 
+"PKG",188,22,1,"PAH",1,1,4,0)
+always prompt the user with the RELATED SERVICES saved on the Quick Order 
+"PKG",188,22,1,"PAH",1,1,5,0)
+and allow them to change it, if needed.  The help text when creating a 
+"PKG",188,22,1,"PAH",1,1,6,0)
+new prompt has been updated to remove the "subfile" wording.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","ORCMEDT4")
+0^1^B65485434^B65048297
+"RTN","ORCMEDT4",1,0)
+ORCMEDT4 ;SLC/MKB-Prompt Editor ;6/19/01  15:05
+"RTN","ORCMEDT4",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**8,46,95,245,313**;Dec 17, 1997;Build 12
+"RTN","ORCMEDT4",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORCMEDT4",4,0)
+EN ; -- Enter/edit prompts
+"RTN","ORCMEDT4",5,0)
+ N PRMT F  S PRMT=+$$PROMPT Q:PRMT'>0  D  W !
+"RTN","ORCMEDT4",6,0)
+ . I $P($G(^ORD(101.41,PRMT,0)),U,7)=$O(^DIC(9.4,"C","OR",0)) D  Q
+"RTN","ORCMEDT4",7,0)
+ . . N DIC,DA S DIC="^ORD(101.41,",DA=PRMT D EN^DIQ
+"RTN","ORCMEDT4",8,0)
+ . . W !,"This prompt is not editable!"
+"RTN","ORCMEDT4",9,0)
+ . D EDIT(PRMT)
+"RTN","ORCMEDT4",10,0)
+ Q
+"RTN","ORCMEDT4",11,0)
+ ;
+"RTN","ORCMEDT4",12,0)
+EDIT(DA) ; -- Edit prompt DA
+"RTN","ORCMEDT4",13,0)
+ N DR,DIE,NAME,TEXT,TYPE,DOMAIN,OR0,OR1,ORP
+"RTN","ORCMEDT4",14,0)
+ Q:'$G(DA)  S OR0=$G(^ORD(101.41,DA,0)),OR1=$G(^(1)),ORP=DA
+"RTN","ORCMEDT4",15,0)
+ S NAME=$$NAME(DA) Q:(NAME="@")!(NAME="^")  ;deleted or quit
+"RTN","ORCMEDT4",16,0)
+ S TEXT=$$DTEXT($P(OR0,U,2)) Q:TEXT="^"
+"RTN","ORCMEDT4",17,0)
+ S TYPE=$$DATATYPE($P(OR1,U)) Q:TYPE="^"  S DOMAIN=$P(OR1,U,2)
+"RTN","ORCMEDT4",18,0)
+ D @$S(TYPE="D"!(TYPE="R"):"DATE",TYPE="F":"TEXT",TYPE="N":"NMBR",TYPE="P":"PTR",TYPE="S":"SET",1:"OTHER") Q:DOMAIN="^"
+"RTN","ORCMEDT4",19,0)
+ S $P(^ORD(101.41,DA,1),U,1,2)=TYPE_U_DOMAIN,DIE="^ORD(101.41,"
+"RTN","ORCMEDT4",20,0)
+ S DR=$S(NAME'=$P(OR0,U):".01///^S X=NAME;",1:"")_$S(TEXT'=$P(OR0,U,2):"2///^S X=TEXT;",1:"")_"20"_";13" D ^DIE ;95
+"RTN","ORCMEDT4",21,0)
+ Q
+"RTN","ORCMEDT4",22,0)
+ ;
+"RTN","ORCMEDT4",23,0)
+PROMPT() ; -- Find prompt in #101.41
+"RTN","ORCMEDT4",24,0)
+ N X,Y,DIC,DLAYGO
+"RTN","ORCMEDT4",25,0)
+ S DIC="^ORD(101.41,",DIC(0)="AEQLM",DLAYGO=101.41
+"RTN","ORCMEDT4",26,0)
+ S DIC("A")="Select PROMPT: ",DIC("S")="I $P(^(0),U,4)=""P"""
+"RTN","ORCMEDT4",27,0)
+ S DIC("DR")="4////P" D ^DIC
+"RTN","ORCMEDT4",28,0)
+ Q Y
+"RTN","ORCMEDT4",29,0)
+ ;
+"RTN","ORCMEDT4",30,0)
+NAME(IFN) ; -- Edit .01 name of dialog IFN
+"RTN","ORCMEDT4",31,0)
+ N X,Y,DIR,OLDNAME,ISPQO,NODELETE,DA,DIK,TYPE
+"RTN","ORCMEDT4",32,0)
+ S DIR(0)="FAO^3:63",DIR("A")="NAME: "
+"RTN","ORCMEDT4",33,0)
+ S OLDNAME=$P($G(^ORD(101.41,IFN,0)),U),ISPQO=0,NODELETE=1
+"RTN","ORCMEDT4",34,0)
+ S TYPE=$P($G(^ORD(101.41,IFN,0)),U,4)
+"RTN","ORCMEDT4",35,0)
+ I TYPE="Q",$E(OLDNAME,1,6)="ORWDQ " S ISPQO=1
+"RTN","ORCMEDT4",36,0)
+ I ISPQO!(TYPE="P") S NODELETE=0 ; OK to delete personal quick orders and prompts
+"RTN","ORCMEDT4",37,0)
+ S DIR("B")=OLDNAME
+"RTN","ORCMEDT4",38,0)
+ S DIR("?")="Enter a unique name, up to 63 characters in length."
+"RTN","ORCMEDT4",39,0)
+NM I $L($P($G(^ORD(101.41,IFN,0)),U,3))>0 W !,!,"(This "_$$GETITM(IFN)_" has been disabled)"
+"RTN","ORCMEDT4",40,0)
+ D ^DIR S:$D(DTOUT)!(X["^") Y="^"
+"RTN","ORCMEDT4",41,0)
+ I X="@" D  G NM:X=""
+"RTN","ORCMEDT4",42,0)
+ . I $D(^ORD(101.41,"AD",IFN)) W $C(7),!,"Cannot delete - currently in use!",! S X="" Q
+"RTN","ORCMEDT4",43,0)
+ . I $$INUSE^ORCMEDT5(IFN) W $C(7),!,"Cannot delete - currently an Add Orders Menu!",! S X="" Q
+"RTN","ORCMEDT4",44,0)
+ . I NODELETE D DISABLE(IFN) S X="" Q
+"RTN","ORCMEDT4",45,0)
+ . I '$$SURE(IFN) S X="" Q  ;reask       
+"RTN","ORCMEDT4",46,0)
+ . N IDX1,IDX2 S IDX1=0
+"RTN","ORCMEDT4",47,0)
+ . F  S IDX1=$O(^ORD(101.44,"C",IFN,IDX1)) Q:'IDX1  D
+"RTN","ORCMEDT4",48,0)
+ . . S IDX2=0
+"RTN","ORCMEDT4",49,0)
+ . . F  S IDX2=$O(^ORD(101.44,"C",IFN,IDX1,IDX2)) Q:'IDX2  D
+"RTN","ORCMEDT4",50,0)
+ . . . S DA=IDX2,DA(1)=IDX1,DIK="^ORD(101.44,"_IDX1_",10," D ^DIK
+"RTN","ORCMEDT4",51,0)
+ . K DA S DA=IFN,DIK="^ORD(101.41," D ^DIK W "  ...deleted." S (X,Y)="@"
+"RTN","ORCMEDT4",52,0)
+ I ISPQO,Y'="^",X'="@",Y'=OLDNAME D  G NM
+"RTN","ORCMEDT4",53,0)
+ . W $C(7),!,"Cannot rename a personal quick order",!
+"RTN","ORCMEDT4",54,0)
+ Q Y
+"RTN","ORCMEDT4",55,0)
+ ;
+"RTN","ORCMEDT4",56,0)
+GETITM(DLG) ;
+"RTN","ORCMEDT4",57,0)
+ N ITM
+"RTN","ORCMEDT4",58,0)
+ S ITM=$P($G(^ORD(101.41,DLG,0)),U,4)
+"RTN","ORCMEDT4",59,0)
+ I ITM="Q",$E($P($G(^ORD(101.41,IFN,0)),U),1,6)="ORWDQ " Q "personal quick order"
+"RTN","ORCMEDT4",60,0)
+ S ITM=$S(ITM="P":"prompt",ITM="D":"dialog",ITM="Q":"quick order",ITM="O":"order set",ITM="A":"action",ITM="M":"menu",1:"item")
+"RTN","ORCMEDT4",61,0)
+ Q ITM
+"RTN","ORCMEDT4",62,0)
+ ;
+"RTN","ORCMEDT4",63,0)
+SURE(DLG) ; -- Are you sure?
+"RTN","ORCMEDT4",64,0)
+ N X,Y,DIR,ITM,DA
+"RTN","ORCMEDT4",65,0)
+ S ITM=$$GETITM(DLG)
+"RTN","ORCMEDT4",66,0)
+ S DIR(0)="YA",DIR("A")="Are you sure you want to delete this "_ITM_"? "
+"RTN","ORCMEDT4",67,0)
+ S DIR("?")="Enter YES if you want to delete this "_ITM_" from the file, or NO to quit."
+"RTN","ORCMEDT4",68,0)
+ D ^DIR
+"RTN","ORCMEDT4",69,0)
+ Q +Y
+"RTN","ORCMEDT4",70,0)
+ ;
+"RTN","ORCMEDT4",71,0)
+DISABLE(DLG) ; Disable item - return true if disabled
+"RTN","ORCMEDT4",72,0)
+ N DIR,X,Y,ITM,DA,DR,DIE,DIDEL,DISABLED
+"RTN","ORCMEDT4",73,0)
+ W $C(7),!,!,"Deletion not allowed outside of FileMan."
+"RTN","ORCMEDT4",74,0)
+ S ITM=$$GETITM(DLG)
+"RTN","ORCMEDT4",75,0)
+ S DISABLED=$L($P($G(^ORD(101.41,IFN,0)),U,3))>0
+"RTN","ORCMEDT4",76,0)
+ S DIR(0)="YA"
+"RTN","ORCMEDT4",77,0)
+ I DISABLED D  I 1
+"RTN","ORCMEDT4",78,0)
+ . S DIR("A",1)="This "_ITM_" is already disabled."
+"RTN","ORCMEDT4",79,0)
+ . S DIR("A")="Would you like to edit the disable message? "
+"RTN","ORCMEDT4",80,0)
+ . S DIR("?")="Enter YES if you want to edit the disabled message, or NO to quit."
+"RTN","ORCMEDT4",81,0)
+ . S DIR("B")="NO"
+"RTN","ORCMEDT4",82,0)
+ E  D
+"RTN","ORCMEDT4",83,0)
+ . S DIR("A")="Would you like to disable this "_ITM_"? "
+"RTN","ORCMEDT4",84,0)
+ . S DIR("?")="Enter YES if you want to disable this "_ITM_", or NO to quit."
+"RTN","ORCMEDT4",85,0)
+ . S DIR("B")="YES"
+"RTN","ORCMEDT4",86,0)
+ D ^DIR
+"RTN","ORCMEDT4",87,0)
+ I '+Y Q
+"RTN","ORCMEDT4",88,0)
+ W !,"Enter disable message:"
+"RTN","ORCMEDT4",89,0)
+ S DA=DLG,DR="3",DIE="^ORD(101.41,"
+"RTN","ORCMEDT4",90,0)
+ D ^DIE
+"RTN","ORCMEDT4",91,0)
+ Q
+"RTN","ORCMEDT4",92,0)
+ ;
+"RTN","ORCMEDT4",93,0)
+DTEXT(X) ; -- Enter/edit display text of prompt
+"RTN","ORCMEDT4",94,0)
+ N Y,DIR
+"RTN","ORCMEDT4",95,0)
+ S DIR(0)="FA^3:63",DIR("A")="TEXT OF PROMPT: " S:$L($G(X)) DIR("B")=X
+"RTN","ORCMEDT4",96,0)
+ S DIR("?")="Enter the text of this prompt, including any punctuation and spaces"
+"RTN","ORCMEDT4",97,0)
+ D ^DIR S:$D(DTOUT) Y="^"
+"RTN","ORCMEDT4",98,0)
+ Q Y
+"RTN","ORCMEDT4",99,0)
+ ;
+"RTN","ORCMEDT4",100,0)
+DATATYPE(X) ; -- Returns desired datatype for prompt
+"RTN","ORCMEDT4",101,0)
+ N DIR,Y S DIR("A")="TYPE OF PROMPT: "
+"RTN","ORCMEDT4",102,0)
+ S DIR(0)="SAM^D:date/time;R:relative date/time;F:free text;N:numeric;S:set of codes;P:pointer to a file;Y:yes/no;W:word processing;"
+"RTN","ORCMEDT4",103,0)
+ S:$L($G(X)) DIR("B")=$P($P(DIR(0),X_":",2),";")
+"RTN","ORCMEDT4",104,0)
+ S DIR("?")="Select the type of data to be entered at this prompt"
+"RTN","ORCMEDT4",105,0)
+ D ^DIR S:$D(DTOUT) Y="^"
+"RTN","ORCMEDT4",106,0)
+ Q Y
+"RTN","ORCMEDT4",107,0)
+ ;
+"RTN","ORCMEDT4",108,0)
+DATE ; -- date parameters
+"RTN","ORCMEDT4",109,0)
+ N X,Y,DIR,ORX,ORT,ORS,ORR
+"RTN","ORCMEDT4",110,0)
+ S X=$P(DOMAIN,":",3),ORX=X["X",ORT=X["T",ORS=X["S",ORR=X["R",DIR(0)="YA"
+"RTN","ORCMEDT4",111,0)
+ ; Still need to handle Earliest and Latest dates allowed
+"RTN","ORCMEDT4",112,0)
+ S DIR("A")="CAN DATE BE IMPRECISE? ",DIR("B")=$S(ORX:"NO",1:"YES")
+"RTN","ORCMEDT4",113,0)
+ D ^DIR S ORX='Y I $D(DUOUT)!($D(DTOUT)) S DOMAIN="^" Q
+"RTN","ORCMEDT4",114,0)
+ S DIR("A")="CAN TIME OF DAY BE ENTERED? ",DIR("B")=$S(ORT:"YES",1:"NO")
+"RTN","ORCMEDT4",115,0)
+ D ^DIR I $D(DUOUT)!($D(DTOUT)) S DOMAIN="^" Q
+"RTN","ORCMEDT4",116,0)
+ S ORT=Y I 'Y S (ORS,ORR)=0 G DQ
+"RTN","ORCMEDT4",117,0)
+ S DIR("A")="CAN SECONDS BE ENTERED? ",DIR("B")=$S(ORS:"YES",1:"NO")
+"RTN","ORCMEDT4",118,0)
+ D ^DIR S ORS=Y I $D(DUOUT)!($D(DTOUT)) S DOMAIN="^" Q
+"RTN","ORCMEDT4",119,0)
+ S DIR("A")="IS TIME REQUIRED? ",DIR("B")=$S(ORR:"YES",1:"NO")
+"RTN","ORCMEDT4",120,0)
+ D ^DIR S ORR=Y I $D(DUOUT)!($D(DTOUT)) S DOMAIN="^" Q
+"RTN","ORCMEDT4",121,0)
+DQ S DOMAIN="::E"_$S(ORX:"X",1:"")_$S(ORT:"T",1:"")_$S(ORS:"S",1:"")_$S(ORR:"R",1:"")
+"RTN","ORCMEDT4",122,0)
+ Q
+"RTN","ORCMEDT4",123,0)
+ ;
+"RTN","ORCMEDT4",124,0)
+TEXT ; -- free text
+"RTN","ORCMEDT4",125,0)
+ N X,Y,DIR
+"RTN","ORCMEDT4",126,0)
+ S DIR(0)="NAO^1:245",DIR("A")="MINIMUM LENGTH: "
+"RTN","ORCMEDT4",127,0)
+ S:+DOMAIN DIR("B")=+DOMAIN
+"RTN","ORCMEDT4",128,0)
+ D ^DIR I $D(DTOUT)!($D(DUOUT)) S DOMAIN="^" Q
+"RTN","ORCMEDT4",129,0)
+ S $P(DOMAIN,":")=Y,DIR("A")="MAXIMUM LENGTH: " K DIR("B")
+"RTN","ORCMEDT4",130,0)
+ S:$P(DOMAIN,":",2) DIR("B")=$P(DOMAIN,":",2)
+"RTN","ORCMEDT4",131,0)
+ D ^DIR I $D(DUOUT)!($D(DTOUT)) S DOMAIN="^" Q
+"RTN","ORCMEDT4",132,0)
+ S $P(DOMAIN,":",2)=Y
+"RTN","ORCMEDT4",133,0)
+ ; Opt pattern match ??
+"RTN","ORCMEDT4",134,0)
+ Q
+"RTN","ORCMEDT4",135,0)
+ ;
+"RTN","ORCMEDT4",136,0)
+NMBR ; -- numeric
+"RTN","ORCMEDT4",137,0)
+ N X,Y,DIR,STR
+"RTN","ORCMEDT4",138,0)
+ S DIR(0)="NAO^::"_+$P(DOMAIN,":",3),DIR("A")="INCLUSIVE LOWER BOUND: ",DIR("B")=+DOMAIN ;95
+"RTN","ORCMEDT4",139,0)
+ D ^DIR I $D(DTOUT)!($D(DUOUT)) S DOMAIN="^" Q
+"RTN","ORCMEDT4",140,0)
+ S STR=Y,DIR(0)="NAO^"_Y_"::"_+$P(DOMAIN,":",3),DIR("A")="INCLUSIVE UPPER BOUND: ",DIR("B")=+$P(DOMAIN,":",2) ;95
+"RTN","ORCMEDT4",141,0)
+ D ^DIR I $D(DTOUT)!($D(DUOUT)) S DOMAIN="^" Q
+"RTN","ORCMEDT4",142,0)
+ S STR=STR_":"_Y,DIR(0)="NAO",DIR("A")="MAXIMUM NUMBER OF FRACTIONAL DIGITS: ",DIR("B")=+$P(DOMAIN,":",3) ;95
+"RTN","ORCMEDT4",143,0)
+ D ^DIR I $D(DUOUT)!($D(DTOUT)) S DOMAIN="^" Q
+"RTN","ORCMEDT4",144,0)
+ S DOMAIN=STR_":"_Y
+"RTN","ORCMEDT4",145,0)
+ Q
+"RTN","ORCMEDT4",146,0)
+ ;
+"RTN","ORCMEDT4",147,0)
+PTR ; -- pointer
+"RTN","ORCMEDT4",148,0)
+ I DUZ(0)="@"!($L(DOMAIN)&'DOMAIN) D ROOT Q  ; allow file root
+"RTN","ORCMEDT4",149,0)
+ N X,Y,DIR,DIE,DR,FILE,STR,SCR
+"RTN","ORCMEDT4",150,0)
+ S DIR(0)="PA^1:AEQM",DIR("A")="POINT TO WHICH FILE: "
+"RTN","ORCMEDT4",151,0)
+ S:$L(DOMAIN) DIR("B")=$$FILENAME(+DOMAIN)
+"RTN","ORCMEDT4",152,0)
+ D ^DIR I $D(DUOUT)!($D(DTOUT)) S DOMAIN="^" Q
+"RTN","ORCMEDT4",153,0)
+ S FILE=+Y,STR=$P(DOMAIN,":",2) S:'$L(STR) STR="EQ"
+"RTN","ORCMEDT4",154,0)
+ S DOMAIN=FILE_":"_STR
+"RTN","ORCMEDT4",155,0)
+ Q
+"RTN","ORCMEDT4",156,0)
+ ;
+"RTN","ORCMEDT4",157,0)
+ROOT ; -- pointer via file root
+"RTN","ORCMEDT4",158,0)
+ N X,Y,DIR,STR
+"RTN","ORCMEDT4",159,0)
+ S DIR(0)="FA^1:100",DIR("A")="POINT TO WHICH FILE: "
+"RTN","ORCMEDT4",160,0)
+ S DIR("?")="Enter the file by name, file number, or global root (without the leading '^')."
+"RTN","ORCMEDT4",161,0)
+ S:$L(DOMAIN) DIR("B")=$S(+DOMAIN:$$FILENAME(+DOMAIN),1:$P(DOMAIN,":"))
+"RTN","ORCMEDT4",162,0)
+RT1 D ^DIR I $D(DTOUT)!$D(DUOUT) S DOMAIN="^" Q
+"RTN","ORCMEDT4",163,0)
+ I $L(DOMAIN),$L(X),X=$G(DIR("B")) S Y=$P(DOMAIN,":") G RTQ ; default
+"RTN","ORCMEDT4",164,0)
+ I +Y=Y S X=$$FILENAME(+Y) I $L(X) W "   "_X G RTQ ; valid file number
+"RTN","ORCMEDT4",165,0)
+ I $L(Y),+Y'=Y D  G:$D(Y) RTQ ; valid root or name
+"RTN","ORCMEDT4",166,0)
+ . I "(,"[$E(Y,$L(Y)) Q:$D(@(U_Y_"0)"))  ; valid file root
+"RTN","ORCMEDT4",167,0)
+ . S DIC=1,DIC(0)="EQ",X=Y D ^DIC S:Y>0 Y=+Y K:Y'>0 Y
+"RTN","ORCMEDT4",168,0)
+ W $C(7),!,"Invalid file!" G RT1
+"RTN","ORCMEDT4",169,0)
+RTQ S STR=$P(DOMAIN,":",2),DOMAIN=Y_":"_$S($L(STR):STR,1:"EQ")
+"RTN","ORCMEDT4",170,0)
+ Q
+"RTN","ORCMEDT4",171,0)
+ ;
+"RTN","ORCMEDT4",172,0)
+SET ; -- set of codes
+"RTN","ORCMEDT4",173,0)
+ N I,ORI,ORJ,ITEM,X,Y,ORQUIT,NEWLNG S ORJ=0
+"RTN","ORCMEDT4",174,0)
+ F I=1:1:$L(DOMAIN,";") S:$P(DOMAIN,";",I)'="" ITEM(I)=$P(DOMAIN,";",I)
+"RTN","ORCMEDT4",175,0)
+ S ORI=0 F  S ORI=$O(ITEM(ORI)) Q:ORI'>0  D SETEDIT Q:$G(ORQUIT)!(Y="")
+"RTN","ORCMEDT4",176,0)
+ I $G(ORQUIT) S DOMAIN="^" Q
+"RTN","ORCMEDT4",177,0)
+ S ORI=ORJ F  S ORI=ORI+1 D SETEDIT Q:$G(ORQUIT)!(Y="")  ; new codes
+"RTN","ORCMEDT4",178,0)
+ I $G(ORQUIT) S DOMAIN="^" Q
+"RTN","ORCMEDT4",179,0)
+ ; now done editing, rebuild DOMAIN
+"RTN","ORCMEDT4",180,0)
+ S I=0,DOMAIN="" F  S I=$O(ITEM(I)) Q:I'>0  S NEWLNG=$L(DOMAIN)+$L(ITEM(I))+1 S:NEWLNG'>235 DOMAIN=DOMAIN_ITEM(I)_";" I NEWLNG>235 W $C(7),!,"Domain too long - unable to store all codes."  H 2 Q
+"RTN","ORCMEDT4",181,0)
+ Q
+"RTN","ORCMEDT4",182,0)
+SETEDIT ; -- edit each item in DOMAIN
+"RTN","ORCMEDT4",183,0)
+ N DIR,TEXT,CODE S DIR(0)="FAO^1:5",DIR("A")="INTERNALLY-STORED CODE: "
+"RTN","ORCMEDT4",184,0)
+ S CODE=$P($G(ITEM(ORI)),":"),TEXT=$P($G(ITEM(ORI)),":",2),ORJ=ORI
+"RTN","ORCMEDT4",185,0)
+ S:$L(CODE) DIR("B")=CODE
+"RTN","ORCMEDT4",186,0)
+ D ^DIR S:$D(DUOUT)!($D(DTOUT)) ORQUIT=1 Q:$G(ORQUIT)!(X="")
+"RTN","ORCMEDT4",187,0)
+ I X="@" K ITEM(ORI) Q
+"RTN","ORCMEDT4",188,0)
+ S CODE=X W "  WILL STAND FOR: " W:$L(TEXT) TEXT_"// "
+"RTN","ORCMEDT4",189,0)
+SE1 R Y:DTIME I '$T!(Y["^") S ORQUIT=1 Q
+"RTN","ORCMEDT4",190,0)
+ S:Y="" Y=TEXT I "@"[Y W $C(7),!,"  Required value!",!,"'"_CODE_"' WILL STAND FOR: " W:$L(TEXT) TEXT_"// " G SE1
+"RTN","ORCMEDT4",191,0)
+ S TEXT=Y,ITEM(ORI)=CODE_":"_TEXT
+"RTN","ORCMEDT4",192,0)
+ Q
+"RTN","ORCMEDT4",193,0)
+ ;
+"RTN","ORCMEDT4",194,0)
+OTHER ; -- no parameters needed
+"RTN","ORCMEDT4",195,0)
+ S DOMAIN=""
+"RTN","ORCMEDT4",196,0)
+ Q
+"RTN","ORCMEDT4",197,0)
+ ;
+"RTN","ORCMEDT4",198,0)
+FILENAME(FNUM) ; -- Returns name of file FNUM
+"RTN","ORCMEDT4",199,0)
+ N ORY,Y D:$G(FNUM) FILE^DID(+FNUM,,"NAME","ORY")
+"RTN","ORCMEDT4",200,0)
+ S Y=$G(ORY("NAME"))
+"RTN","ORCMEDT4",201,0)
+ Q Y
+"RTN","ORY313")
+0^^B597938^n/a
+"RTN","ORY313",1,0)
+ORY313 ;BP/SBR - Pre -init for patch OR*3*313 ; 11/4/10 2:00pm
+"RTN","ORY313",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**313**;Dec 17, 1997;Build 12
+"RTN","ORY313",3,0)
+ ;
+"RTN","ORY313",4,0)
+DLG ; update GMRCOR REQUEST order dialog
+"RTN","ORY313",5,0)
+ N DLG,PRMT,DA
+"RTN","ORY313",6,0)
+ S DLG=$$PTR("GMRCOR REQUEST")
+"RTN","ORY313",7,0)
+ S PRMT=$$PTR("OR GTX REQUEST SERVICE")
+"RTN","ORY313",8,0)
+ S DA=+$O(^ORD(101.41,DLG,10,"D",PRMT,0))
+"RTN","ORY313",9,0)
+ I DA,^ORD(101.41,DLG,10,DA,3)="I $G(ORDIALOG(PROMPT,""LIST""))>1" D  ;
+"RTN","ORY313",10,0)
+ . S ^ORD(101.41,DLG,10,DA,3)="I $G(ORDIALOG(PROMPT,""LIST""))>0"
+"RTN","ORY313",11,0)
+ Q
+"RTN","ORY313",12,0)
+ ;
+"RTN","ORY313",13,0)
+PTR(X) Q +$O(^ORD(101.41,"B",X,0))
+"VER")
+8.0^22.0
+"^DD",100.9,100.9,0)
+FIELD^^5^12
+"^DD",100.9,100.9,0,"DDA")
+N
+"^DD",100.9,100.9,0,"DT")
+2990412
+"^DD",100.9,100.9,0,"IX","B",100.9,.01)
+
+"^DD",100.9,100.9,0,"IX","C",100.9,.02)
+
+"^DD",100.9,100.9,0,"IX","D",100.9,.03)
+
+"^DD",100.9,100.9,0,"NM","OE/RR NOTIFICATIONS")
+
+"^DD",100.9,100.9,0,"PT",100.21019,.01)
+
+"^DD",100.9,100.9,0,"PT",860.22,3)
+
+"^DD",100.9,100.9,0,"VRPK")
+OR
+"^DD",100.9,100.9,.001,0)
+NUMBER^NJ5,0^^ ^K:+X'=X!(X>99999)!(X<1)!(X?.E1"."1N.N) X
+"^DD",100.9,100.9,.001,3)
+Type a Number between 1 and 99999, 0 Decimal Digits
+"^DD",100.9,100.9,.001,21,0)
+5^^2^2^2970719^^
+"^DD",100.9,100.9,.001,21,1,0)
+This is the internal entry number assigned to a notification.  Entries
+"^DD",100.9,100.9,.001,21,2,0)
+1 through 999 are reserved for the releasing package, OE/RR Notifications.
+"^DD",100.9,100.9,.001,21,3,0)
+To add site specific notifications, prefix the Notification Number with
+"^DD",100.9,100.9,.001,21,4,0)
+your site number (e.g., Site specific Nuclear Medicine Results Notification
+"^DD",100.9,100.9,.001,21,5,0)
+at Salt Lake might be assigned "66001").
+"^DD",100.9,100.9,.001,23,0)
+^^3^3^2970719^^^
+"^DD",100.9,100.9,.001,23,1,0)
+This field is used by DHCP packages triggering notifications (Lab, MAS, etc)
+"^DD",100.9,100.9,.001,23,2,0)
+to send the correct message and parameters to OE/RR.  These numbers must not
+"^DD",100.9,100.9,.001,23,3,0)
+be altered in any fashion.
+"^DD",100.9,100.9,.001,"DT")
+2910520
+"^DD",100.9,100.9,.01,0)
+NAME^RF^^0;1^K:$L(X)>30!($L(X)<3)!'(X'?1P.E) X
+"^DD",100.9,100.9,.01,1,0)
+^.1
+"^DD",100.9,100.9,.01,1,1,0)
+100.9^B
+"^DD",100.9,100.9,.01,1,1,1)
+S ^ORD(100.9,"B",$E(X,1,30),DA)=""
+"^DD",100.9,100.9,.01,1,1,2)
+K ^ORD(100.9,"B",$E(X,1,30),DA)
+"^DD",100.9,100.9,.01,1,2,0)
+^^TRIGGER^100.9^.02
+"^DD",100.9,100.9,.01,1,2,1)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ORD(100.9,D0,0)):^(0),1:"") S X=$P(Y(1),U,2),X=X S DIU=X K Y S X=DIV S X="OR" X ^DD(100.9,.01,1,2,1.4)
+"^DD",100.9,100.9,.01,1,2,1.4)
+S DIH=$S($D(^ORD(100.9,DIV(0),0)):^(0),1:""),DIV=X S $P(^(0),U,2)=DIV,DIH=100.9,DIG=.02 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",100.9,100.9,.01,1,2,2)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ORD(100.9,D0,0)):^(0),1:"") S X=$P(Y(1),U,2),X=X S DIU=X K Y S X=DIV S X=X X ^DD(100.9,.01,1,2,2.4)
+"^DD",100.9,100.9,.01,1,2,2.4)
+S DIH=$S($D(^ORD(100.9,DIV(0),0)):^(0),1:""),DIV=X S $P(^(0),U,2)=DIV,DIH=100.9,DIG=.02 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",100.9,100.9,.01,1,2,"%D",0)
+^^2^2^2920505^
+"^DD",100.9,100.9,.01,1,2,"%D",1,0)
+Automatically trigger the setting of the PACKAGE ID field with "OR"
+"^DD",100.9,100.9,.01,1,2,"%D",2,0)
+to indicate ORder entry when a notification is created.
+"^DD",100.9,100.9,.01,1,2,"CREATE VALUE")
+"OR"
+"^DD",100.9,100.9,.01,1,2,"DELETE VALUE")
+OLD NAME
+"^DD",100.9,100.9,.01,1,2,"DT")
+2920505
+"^DD",100.9,100.9,.01,1,2,"FIELD")
+PACKAGE ID
+"^DD",100.9,100.9,.01,3)
+Answer must be 3-30 characters in length. Enter the name of the notification.  The name should match the entry in the MESSAGE TEXT field as closely as possible.
+"^DD",100.9,100.9,.01,21,0)
+^^4^4^2990416^^^^
+"^DD",100.9,100.9,.01,21,1,0)
+This is the name of the notification.  It should match the text in the
+"^DD",100.9,100.9,.01,21,2,0)
+MESSAGE TEXT field as closely as possible (it may be an abbreviated version
+"^DD",100.9,100.9,.01,21,3,0)
+of the entry in MESSAGE TEXT.)  This field is displayed to users when
+"^DD",100.9,100.9,.01,21,4,0)
+selecting or reviewing entries in this file (100.9).
+"^DD",100.9,100.9,.01,"DT")
+2920505
+"^DD",100.9,100.9,.02,0)
+PACKAGE ID^RFX^^0;2^S X="OR" ;K:X[""""!($A(X)=^ X I $D(X) K:$L(X)>20!($L(X)<2) X
+"^DD",100.9,100.9,.02,1,0)
+^.1
+"^DD",100.9,100.9,.02,1,1,0)
+100.9^C
+"^DD",100.9,100.9,.02,1,1,1)
+S ^ORD(100.9,"C",$E(X,1,30),DA)=""
+"^DD",100.9,100.9,.02,1,1,2)
+K ^ORD(100.9,"C",$E(X,1,30),DA)
+"^DD",100.9,100.9,.02,1,1,"%D",0)
+^^2^2^2920427^^
+"^DD",100.9,100.9,.02,1,1,"%D",1,0)
+This cross-reference provides a way to group notifications by package or 
+"^DD",100.9,100.9,.02,1,1,"%D",2,0)
+other category.
+"^DD",100.9,100.9,.02,1,1,"DT")
+2910429
+"^DD",100.9,100.9,.02,3)
+Always enter "OR" in this field.  This field is used to create the XQAID field passed to the XQALERT entry points.  It will typically be the Package ID. 
+"^DD",100.9,100.9,.02,5,1,0)
+100.9^.01^2
+"^DD",100.9,100.9,.02,9)
+^
+"^DD",100.9,100.9,.02,21,0)
+^^10^10^2990416^^^^
+"^DD",100.9,100.9,.02,21,1,0)
+This entry should always be "OR" to indicate the alert (notification) is 
+"^DD",100.9,100.9,.02,21,2,0)
+processed by OE/RR.  "OR" is stuffed via a trigger x-ref in field .01.
+"^DD",100.9,100.9,.02,21,3,0)
+This Package ID will have ";DFN;NIEN" concatenated to the end of it, to
+"^DD",100.9,100.9,.02,21,4,0)
+make the XQAID variable which is used by the XQALERT routine to provide a
+"^DD",100.9,100.9,.02,21,5,0)
+unique cross-reference.  The order entry notification system will check
+"^DD",100.9,100.9,.02,21,6,0)
+the New person file to determine if this message is already pending for
+"^DD",100.9,100.9,.02,21,7,0)
+the user.  If it already exists, the user will not receive a second message.
+"^DD",100.9,100.9,.02,21,8,0)
+ 
+"^DD",100.9,100.9,.02,21,9,0)
+DFN is the Patient File internal entry number.
+"^DD",100.9,100.9,.02,21,10,0)
+NIEN is the Notification File internal entry number.
+"^DD",100.9,100.9,.02,"DT")
+2911008
+"^DD",100.9,100.9,.03,0)
+MESSAGE TEXT^RF^^0;3^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>51!($L(X)<3) X
+"^DD",100.9,100.9,.03,1,0)
+^.1
+"^DD",100.9,100.9,.03,1,1,0)
+100.9^D
+"^DD",100.9,100.9,.03,1,1,1)
+S ^ORD(100.9,"D",$E(X,1,30),DA)=""
+"^DD",100.9,100.9,.03,1,1,2)
+K ^ORD(100.9,"D",$E(X,1,30),DA)
+"^DD",100.9,100.9,.03,1,1,"%D",0)
+^^1^1^2910429^
+"^DD",100.9,100.9,.03,1,1,"%D",1,0)
+This cross reference provides a look-up based on the Message Text.
+"^DD",100.9,100.9,.03,1,1,"DT")
+2910429
+"^DD",100.9,100.9,.03,3)
+Answer must be 3-51 characters in length.  This entry is used as the actual text of the notification (MESSAGE TYPE = 'NOT') or the default text (MESSAGE TEXT = 'PKG').
+"^DD",100.9,100.9,.03,21,0)
+^^6^6^2920224^^^^
+"^DD",100.9,100.9,.03,21,1,0)
+This text will be appended to the Patient last name and last 4 characters of
+"^DD",100.9,100.9,.03,21,2,0)
+the social security number to create the order notification text.
+"^DD",100.9,100.9,.03,21,3,0)
+(e.g., SMITH (4356): Unsigned orders. - Where "Unsigned orders." is the 
+"^DD",100.9,100.9,.03,21,4,0)
+content of MESSAGE TEXT.)  Text entered into this field is the default text
+"^DD",100.9,100.9,.03,21,5,0)
+for notifications where the text message usually comes from the package
+"^DD",100.9,100.9,.03,21,6,0)
+(MESSAGE TYPE = PKG).
+"^DD",100.9,100.9,.03,"DT")
+2911008
+"^DD",100.9,100.9,.04,0)
+MESSAGE TYPE^RS^PKG:PACKAGE PROVIDES A VARIABLE MESSAGE;NOT:NOTIFICATION FILE PROVIDES MESSAGE;^0;4^Q
+"^DD",100.9,100.9,.04,3)
+Messages can be provided by the NOTIFICATION file where they are defined with the notification 'NOT' or they can be variable messages supplied by the package 'PKG' when the notification is triggered.
+"^DD",100.9,100.9,.04,21,0)
+^^1^1^2960503^^^^
+"^DD",100.9,100.9,.04,21,1,0)
+MESSAGE TYPE field is used as a flag to determine where the message text originates.  If from the NOTIFICATION file, MESSAGE TYPE is 'NOT.'  If the message comes from the package, MESSAGE TYPE is 'PKG.'
+"^DD",100.9,100.9,.04,"DT")
+2910627
+"^DD",100.9,100.9,.05,0)
+ACTION FLAG^RS^I:INFORMATION ONLY;R:RUN ROUTINE;^0;5^Q
+"^DD",100.9,100.9,.05,3)
+Enter 'I' if the user is to take no follow-up action for this notification.  Enter 'R' if the user is to take a follow-up action after viewing this notification (e.g. Sign an unsigned order.)
+"^DD",100.9,100.9,.05,21,0)
+^^7^7^2920417^^^^
+"^DD",100.9,100.9,.05,21,1,0)
+This a mandatory flag used to regulate processing in XQALERT processing.
+"^DD",100.9,100.9,.05,21,2,0)
+The flag is set to I to indicate the notification is for INFORMATION ONLY - 
+"^DD",100.9,100.9,.05,21,3,0)
+no follow-up action is to be taken.  'I' notifications are deleted as each
+"^DD",100.9,100.9,.05,21,4,0)
+user reviews them.  'R' notifications have a follow-up action associated
+"^DD",100.9,100.9,.05,21,5,0)
+with them.  The user will be taken to another routine or option when they
+"^DD",100.9,100.9,.05,21,6,0)
+select a notification with ACTION FLAG = R and a follow-up routine/option
+"^DD",100.9,100.9,.05,21,7,0)
+is defined.
+"^DD",100.9,100.9,.05,"DT")
+2910627
+"^DD",100.9,100.9,.06,0)
+ENTRY POINT^F^^0;6^K:$L(X)>8!($L(X)<1) X
+"^DD",100.9,100.9,.06,3)
+Answer must be 1-8 characters in length.  This should be the tag to be concatenated with the ROUTINE NAME (.07) field.  It is the entry point for follow-up action in that routine.
+"^DD",100.9,100.9,.06,21,0)
+^^2^2^2920224^^^
+"^DD",100.9,100.9,.06,21,1,0)
+This is an optional field used to create the XQAROU variable to be used by
+"^DD",100.9,100.9,.06,21,2,0)
+the XQALERT routine.  This field represents the TAG in tag^routine. 
+"^DD",100.9,100.9,.06,"DT")
+2910429
+"^DD",100.9,100.9,.07,0)
+ROUTINE NAME^F^^0;7^K:$L(X)>8!($L(X)<2) X
+"^DD",100.9,100.9,.07,3)
+Answer must be 2-8 characters in length.  This is concatenated with the ENTRY POINT (.06) to create XQAROU.  It is the routine where the follow-up action (if any) for this notification is initiated.
+"^DD",100.9,100.9,.07,21,0)
+^^2^2^2920224^^^
+"^DD",100.9,100.9,.07,21,1,0)
+This is an optional variable identifying a routine or tag(field .06)^routine
+"^DD",100.9,100.9,.07,21,2,0)
+used to create XQAROU for processing by XQALERT.
+"^DD",100.9,100.9,.07,"DT")
+2910429
+"^DD",100.9,100.9,1,0)
+NON-MENU TYPE OPTION ACTION^P19'^DIC(19,^1;1^Q
+"^DD",100.9,100.9,1,3)
+This field is for future enhancements.  It is currently (5/92) unused.
+"^DD",100.9,100.9,1,21,0)
+^^5^5^2920506^^^^
+"^DD",100.9,100.9,1,21,1,0)
+This is an optional field used to create the variable XQAOPT for use
+"^DD",100.9,100.9,1,21,2,0)
+by XQALERT.  It should indicate a non-menu type option on the user's
+"^DD",100.9,100.9,1,21,3,0)
+primary or secondary menu, not on the Common menu.  The phantom jump 
+"^DD",100.9,100.9,1,21,4,0)
+is used to navigate to the destination option and will check pathway
+"^DD",100.9,100.9,1,21,5,0)
+restrictions in doing so.
+"^DD",100.9,100.9,1,"DT")
+2910429
+"^DD",100.9,100.9,1.5,0)
+RELATED PACKAGE^F^^1;2^K:$L(X)>30!($L(X)<2) X
+"^DD",100.9,100.9,1.5,3)
+Answer must be 2-30 characters in length.  Enter the appropriate name of the package where the notification originates (e.g., LAB, MAS, Pharmacy.)
+"^DD",100.9,100.9,1.5,21,0)
+^^1^1^2920224^^^
+"^DD",100.9,100.9,1.5,21,1,0)
+This field contains the name of the package where the notification originates or is triggered (e.g., LAB, MAS, Pharmacy.)
+"^DD",100.9,100.9,1.5,"DT")
+2910627
+"^DD",100.9,100.9,4,0)
+DESCRIPTION^RF^^4;1^K:$L(X)>250!($L(X)<3) X
+"^DD",100.9,100.9,4,3)
+Answer must be 3-250 characters in length.  Enter a description of the notification with emphasis on what triggers the notification and what actions delete it.
+"^DD",100.9,100.9,4,21,0)
+^^2^2^2950711^^^
+"^DD",100.9,100.9,4,21,1,0)
+This field contains free text describing the notification, how it is trig-
+"^DD",100.9,100.9,4,21,2,0)
+gered and what action(s) delete it.
+"^DD",100.9,100.9,4,"DT")
+2950424
+"^DD",100.9,100.9,5,0)
+FOLLOW-UP TYPE^S^0:REPORT;1:COSIGN_PN;2:EXPIRING_ORDER;3:FLAGGED_ORDER;4:ORDER;5:UNLINKED;6:NEW_CONSULT;7:NEW_ORDER;8:COSIGN_ORDER;9:ES_ORDER;10:UNSIGN_PN;11:UNVERIFIED_MED;^3;2^Q
+"^DD",100.9,100.9,5,3)
+Enter the follow-up code correspond to the notification's follow-up action.  If unsure, leave blank.
+"^DD",100.9,100.9,5,21,0)
+^^5^5^2990412^^^^
+"^DD",100.9,100.9,5,21,1,0)
+This field contains the type of follow-up action to be taken.  It is used 
+"^DD",100.9,100.9,5,21,2,0)
+by the application managing the follow-up action  (e.g. GUI interface) to
+"^DD",100.9,100.9,5,21,3,0)
+initiate the proper follow-up action separate from the underlying data 
+"^DD",100.9,100.9,5,21,4,0)
+base and application layers.  Example follow-up types include: report,
+"^DD",100.9,100.9,5,21,5,0)
+e/s, flag.
+"^DD",100.9,100.9,5,23,0)
+^^6^6^2990412^^^^
+"^DD",100.9,100.9,5,23,1,0)
+This field is basically a flag for the environment (e.g. GUI - Delphi)
+"^DD",100.9,100.9,5,23,2,0)
+handling notification follow-up to initiate the appropriate action.  For
+"^DD",100.9,100.9,5,23,3,0)
+example if the type was report, the data returned in the API call would be
+"^DD",100.9,100.9,5,23,4,0)
+stuffed into a generic text box for display; whereas if the type was
+"^DD",100.9,100.9,5,23,5,0)
+flag, the follow-up action would be to find and display all flagged orders
+"^DD",100.9,100.9,5,23,6,0)
+for the patient and allow unflagging.
+"^DD",100.9,100.9,5,"DT")
+2990412
+"^DIC",100.9,100.9,0)
+OE/RR NOTIFICATIONS^100.9
+"^DIC",100.9,100.9,0,"GL")
+^ORD(100.9,
+"^DIC",100.9,100.9,"%D",0)
+^^5^5^2970731^^^
+"^DIC",100.9,100.9,"%D",1,0)
+This file contains data used to generate notifications.  Packages
+"^DIC",100.9,100.9,"%D",2,0)
+determine if a notification should be sent then send the patient ID and
+"^DIC",100.9,100.9,"%D",3,0)
+notification ID (IEN in this file) to order entry routines.  Based on the
+"^DIC",100.9,100.9,"%D",4,0)
+notification IEN, data from this file is used to generate the notification
+"^DIC",100.9,100.9,"%D",5,0)
+and help determine its recipients.
+"^DIC",100.9,"B","OE/RR NOTIFICATIONS",100.9)
+
+"BLD",8750,6)
+^311
+**END**
+**END**

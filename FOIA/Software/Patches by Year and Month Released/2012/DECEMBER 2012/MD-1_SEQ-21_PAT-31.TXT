@@ -1,0 +1,246 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Wednesday, 08/15/12 at 13:20
+=============================================================================
+Run Date: DEC 19, 2012                     Designation: MD*1*31
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #21                      Status: Released
+                  Compliance Date: JAN 19, 2013
+=============================================================================
+
+
+Subject: TERMINOLOGY UPDATES TO TERM (#704.101) FILE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will correct the following two groups of issues:
+      
+ 1) The TERM file (#704.101) in Clinical Procedures (CP) contains
+    terminology used during data entry/display in CP Flowsheet.  Several
+    terms allow only one selection from a list when multiple selections
+    need to be available for selection. The affected terms are:
+      
+    SIDE RAILS
+    PCA - LINE CARE
+    IV SITE CONDITION
+    ADL - EMOTIONAL SUPPORT
+    ADL - AMBULATION ASSISTANCE
+    ISOLATION PRECAUTIONS
+       
+ 2) The term PAINAD FACIAL EXPRESSION contains a list of selectable
+    responses.  Text in one of the responses needs to be modified to better
+    describe the response. 
+  
+       
+ Associated Remedy tickets:
+ ==========================
+ 1) HD0000000711579 Term: PCA Line Care - Change Observations
+                          to "Select Many"
+ 2) HD0000000711671 Term: Side Rails - Observations need to be set 
+                          to "Select Many"
+ 3) HD0000000713724 Term: IV Site Condition - Change to "Select Many"
+ 4) HD0000000713729 Term: Emotional Support - Change to "Select Many"
+ 5) HD0000000717379 Approved CP Terminology.
+ 6) HD0000000717387 Approved CP Terminology.
+ 7) HD0000000713734 Term: PAINAD Facial Expression - Observation Change
+  
+      
+ Associated NSR(s):
+ ==================
+ N/A
+       
+  
+ Participating Test Sites:
+ =========================
+ Huntington VA Medical Center                    
+ VA Heartland - East (St. Louis,  Marion)        
+ VA New York Harbor HCS (New York)  
+  
+  
+ Overview of Remedy ticket(s):
+ =============================
+        
+ 1) HD0000000711579 Term: PCA Line Care - Change Observations 
+                          to "Select Many"
+    Problem 1:
+    ----------
+    The term PCA - LINE CARE allows only one selection from a list when 
+    multiple selections need to be available for selection.
+  
+ 2) HD0000000711671 Term: Side Rails - Observations need to be set 
+                          to "Select Many"
+    Problem 2:
+    ----------
+    The term SIDE RAILS allows only one selection from a list when 
+    multiple selections need to be available for selection.
+  
+ 3) HD0000000713724 Term: IV Site Condition - Change to "Select Many"
+    Problem 3:
+    ----------
+    The term IV SITE CONDITION allows only one selection from a list when 
+    multiple selections need to be available for selection.
+  
+ 4) HD0000000713729 TERM: Emotional Support - Change to "Select Many"
+    Problem 4:
+    ----------
+    The term ADL - EMOTIONAL SUPPORT allows only one selection from 
+    a list when multiple selections need to be available for selection.
+  
+ 5) HD0000000717379 Approved CP Terminology.
+    Problem 5:
+    ----------
+    The term ADL - AMBULATION ASSISTANCE allows only one selection from 
+    a list when multiple selections need to be available for selection.
+  
+ 6) HD0000000717387 Approved CP Terminology.
+    Problem 6:
+    ----------
+    The term ISOLATION PRECAUTIONS allows only one selection from a list 
+    when multiple selections need to be available for selection.
+  
+    Resolution 1 - 6:
+   ------------------     
+    Post-Init routine MDTERMX will make a modification to the TERM file
+    (#704.101) to change the presentation of responses for each term from
+    one selection to many selections for each term.
+      
+ 7) HD0000000713734 TERM: PAINAD Facial Expression - Observation Change
+    Problem 7:
+    ----------     
+    The term PAINAD FACIAL EXPRESSION in Clinical Procedures Flowsheet
+    currently displays the following for selection (one only)
+      
+    0 = Smiling or Inexpressive
+    1 = Sad, Frightened, Frown
+    Facial Grimacing
+      
+    This needs to display as
+      
+    0 = Smiling or Inexpressive
+    1 = Sad, Frightened, Frown
+    2 = Facial Grimacing
+      
+    Resolution 7:
+    ------------     
+    Post-Init routine MDTERMX will make a modification to the TERM file
+    (#704.101) to display the selection correctly.
+  
+  
+ Additional Information:
+ =======================
+ This patch also includes changes to the 4 high and low boundaries in the
+ TERM file (#704.101) listed in the table below.
+  
+ Terminology high and low boundary changes
+ -------------------------------------------------------
+ Name          | Type  | Mask |  Normal Range  | Abbrev |
+ -------------------------------------------------------
+ Pulse           Num.    ###       60 - 100        HR
+ Temperature C   Num.    ###.#     35.0 - 39.0    Temp
+ SpO2%           Num.    ###       92 - 100       SpO2%
+ SvO2%           Num.    ###       60 - 75        SvO2%
+  
+ These new ranges were approved by Elizabeth Mims from Applied Informatics 
+ Services (AIS).
+  
+ NOTE: After the recommendation above for Temperature C was developed, a
+ new recommendation went out on Remedy Ticket HD0000000769788 to ask the
+ temp high cut off to be 100.9 F (38.3 C) in order to work around the 
+ problem with Vitals Manager not allowing a decimal to be included in high 
+ low ranges (which would allow sites to set Vitals Manager high to 101). 
+ This will be addressed in patch MD*1.0*33.
+  
+  
+ Installation Instructions:
+ ==========================
+      
+ If installed during the normal workday, it is recommended that the 
+ the Clinical Procedures users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+     
+ 1.  Load Transport Global 
+     ---------------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter MD*1.0*31):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+  a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+   b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+   c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer NO 
+  
+ NOTE: Post-Init routine MDTERMX will be automatically deleted after 
+       it has made the file modifications.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Aug 2, 2012;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDTERMX
+    Before:       n/a   After:  B4314808  31
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : JUN 01, 2012
+Completed By: SHERMAN,BILL                  Date Completed: DEC 17, 2012
+Released By : BLACK,KATHLEEN                Date Released : DEC 19, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
