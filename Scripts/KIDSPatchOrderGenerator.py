@@ -114,6 +114,7 @@ class KIDSPatchOrderGenerator(object):
     assert os.path.exists(patchDir)
     absPatchDir = os.path.abspath(patchDir)
     for (root, dirs, files) in os.walk(absPatchDir):
+      lastDir = os.path.split(root)[-1]
       for fileName in files:
         """ Handle KIDS build files """
         if (fileName.endswith(".KIDs") or
@@ -129,7 +130,6 @@ class KIDSPatchOrderGenerator(object):
         """ Handle KIDS.py files """
         if (fileName.endswith('KIDS.py')):
           """ ignore the file directly under PATCH_IGNORED_DIRS """
-          lastDir = os.path.split(root)[-1]
           if lastDir in PATCH_IGNORED_DIRS:
               continue
           installName = dirNameToInstallName(lastDir)

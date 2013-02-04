@@ -32,10 +32,10 @@ The source tree is organized as follows:
   the ``Packages/`` directory layout, analyze dependencies, and compute
   an order for patch installation.
 
-* ``Packages/<package>/<patch>/``: Holds distribution files for one patch.
+* ``Packages/<package>/Patches/<patch>/``: Holds distribution files for one patch.
   The ``<package>`` directory name matches that in ``Packages.csv``.
   The ``<patch>`` directory name is derived from the patch build name.
-  For example, directory ``Packages/Kernel/XU_8.0_431`` holds files for
+  For example, directory ``Packages/Kernel/Patches/XU_8.0_431`` holds files for
   KERNEL patch ``XU*8.0*431``.
 
 * ``Packages/MultiBuilds/``: Holds distribution files for multi-build patches.
