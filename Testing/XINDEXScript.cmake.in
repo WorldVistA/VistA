@@ -1,0 +1,37 @@
+#---------------------------------------------------------------------------
+# Copyright 2011 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+include(@VISTA_SOURCE_DIR@/CMake/CommonFunctions.cmake)
+if(@NumberRoutines@ EQUAL 0)
+  message("No routines to test in @package_name@, XINDEX test passes.")
+  return()
+endif()
+
+
+#define a variable to store the final log file name & path
+set(LOGFILENAME "@TEST_RESULTS_DIR@/@package_file_name@Test.log")
+#Execute the python script
+message("@CMAKE_CURRENT_SOURCE_DIR@")
+execute_process(COMMAND "@PYTHON_EXECUTABLE@"  "@CMAKE_CURRENT_SOURCE_DIR@/XINDEXScript.py" ${LOGFILENAME} "@send_commands@" "@INSTANCE@" "@NAMESPACE@" "@USERNAME@" "@PASSWORD@" "@VISTA_SOURCE_DIR@" "@USE_COVERAGE@" RESULT_VARIABLE return ERROR_VARIABLE ERROR)
+
+
+if(NOT return EQUAL 0)
+  file(READ ${LOGFILENAME} contents)
+  message(FATAL_ERROR "Error running Python:\nReturn Value = ${return}\n${contents}\n${ERROR}")
+endif()
+file(STRINGS "${LOGFILENAME}" OUTPUT)
+string(REPLACE "[" "{" OUTPUT "${OUTPUT}" )
+string(REPLACE "]" "}" OUTPUT "${OUTPUT}" )
+ReportXINDEXResult(@package_file_name@ @VISTA_SOURCE_DIR@/Packages/ @VENDER_NAME@ "@GREP_EXEC@" "${OUTPUT}" @USE_XINDEX_WARNINGS_AS_FAILURES@ @OSEHRA_PATH@)
