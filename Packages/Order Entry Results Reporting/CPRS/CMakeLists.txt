@@ -16,3 +16,6 @@
 add_subdirectory(VA)
 add_subdirectory(CPRS-Lib)
 add_subdirectory(CPRS-Chart)
+if(BUILD_TESTING)
+  add_subdirectory("Testing")
+endif()

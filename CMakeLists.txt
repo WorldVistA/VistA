@@ -44,6 +44,8 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Build Configuration (Debug,Release)" FORCE)
 endif()
 
+include(CTest)
+
 function(add_delphi_build p t)
   file(TO_NATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" SOURCE)
   configure_file(${p}.dproj.in ${p}.dproj @ONLY)
@@ -61,8 +63,3 @@ endfunction()
 
 add_subdirectory("Packages/RPC Broker/BDK" BDK)
 add_subdirectory("Packages/Order Entry Results Reporting/CPRS" CPRS)
-
-include(CTest)
-if(BUILD_TESTING)
-  add_subdirectory("Testing/CPRS" CPRSTesting)
-endif()
