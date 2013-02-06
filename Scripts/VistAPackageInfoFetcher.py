@@ -21,6 +21,7 @@ import argparse
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
 from datetime import datetime
 from LoggerManager import logger, initConsoleLogging, initFileLogging
+from VistAMenuUtil import VistAMenuUtil
 
 """ class to fetch package related information from a running vista instance """
 class VistAPackageInfoFetcher(object):
@@ -42,12 +43,9 @@ class VistAPackageInfoFetcher(object):
     self._packageMapping.clear()
     connection = self._testClient.getConnection()
     result = None
-    self._testClient.waitForPrompt()
-    connection.send("S DUZ=1 D Q^DI\r")
-    connection.expect("Select OPTION:")
+    menuUtil = VistAMenuUtil(duz=1) # set duz as 1
+    menuUtil.gotoFileManPrintFileEntryMenu(self._testClient)
     # print file entry
-    connection.send("2\r" )
-    connection.expect("OUTPUT FROM WHAT FILE:")
     connection.send("9.4\r") # Package file with fileman #9.4
     connection.expect("SORT BY:")
     connection.send("\r")
@@ -63,9 +61,9 @@ class VistAPackageInfoFetcher(object):
     connection.send("\r")
     connection.expect("DEVICE:")
     connection.send(";132;99999\r")
-    connection.expect("Select OPTION:")
+    connection.expect("Select OPTION: ")
     self.__parseAllPackages__(connection.before)
-    connection.send("\r")
+    menuUtil.exitFileManMenu(self._testClient, waitOption=False)
 
   def __parseAllPackages__(self, allPackageString):
     allLines = allPackageString.split('\r\n')
@@ -87,19 +85,8 @@ class VistAPackageInfoFetcher(object):
       self.createAllPackageMapping()
     connection = self._testClient.getConnection()
     result = None
-    self._testClient.waitForPrompt()
-    connection.send("S DUZ=1 D ^XUP\r")
-    connection.expect("Select OPTION NAME:")
-    connection.send("EVE\r" )
-    connection.expect("CHOOSE 1-")
-    connection.send("1\r")
-    connection.expect("Select Systems Manager Menu ")
-    connection.send("Programmer\r")
-    connection.expect("Select Programmer Options ")
-    connection.send("KIDS\r")
-    connection.expect("Select Kernel Installation \& Distribution System ")
-    connection.send("Utilities\r")
-    connection.expect("Select Utilities ")
+    menuUtil = VistAMenuUtil(duz=1) # set duz as 1
+    menuUtil.gotoKidsUtilMenu(self._testClient)
     connection.send("Display\r")
     connection.expect("Select PACKAGE NAME:")
     connection.send("%s\r" % packageName)
@@ -130,15 +117,7 @@ class VistAPackageInfoFetcher(object):
         break
       else:
         break
-    connection.send("\r")
-    connection.expect("Select Kernel Installation \& Distribution System")
-    connection.send("\r")
-    connection.expect("Select Programmer Options ")
-    connection.send("\r")
-    connection.expect("Select Systems Manager Menu ")
-    connection.send("\r")
-    connection.expect("Do you really want to halt\?")
-    connection.send("\r")
+    menuUtil.exitKidsUtilMenu(self._testClient)
     self._packagePatchHist[packageName] = result
     return result
 
@@ -249,12 +228,8 @@ class VistAPackageInfoFetcher(object):
   def getInstallationStatus(self, installName):
     connection = self._testClient.getConnection()
     result = -1 # default is not installed
-    self._testClient.waitForPrompt()
-    connection.send("S DUZ=1 D Q^DI\r")
-    connection.expect("Select OPTION:")
-    # inquiry file entry
-    connection.send("5\r" )
-    connection.expect("OUTPUT FROM WHAT FILE:")
+    menuUtil = VistAMenuUtil(duz=1)
+    menuUtil.gotoFileManInquireFileEntryMenu(self._testClient)
     connection.send("9.7\r") # Package file with fileman #9.7
     connection.expect("Select INSTALL NAME:")
     connection.send("%s\r" % installName)
@@ -281,10 +256,7 @@ class VistAPackageInfoFetcher(object):
           break
         connection.send("^\r")
         continue
-    connection.expect("Select OPTION: ")
-    connection.send("\r")
-    self._testClient.waitForPrompt()
-    connection.send("\r")
+    menuUtil.exitFileManMenu(self._testClient)
     return result
 
   def printPackagePatchHist(self, packageName):

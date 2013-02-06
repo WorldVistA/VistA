@@ -33,6 +33,7 @@ from ConvertToExternalData import getSha1HashFromExternalDataFileName
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_CACHE_DIR = os.path.normpath(os.path.join(SCRIPT_DIR, "../"))
+from VistAMenuUtil import VistAMenuUtil
 
 DEFAULT_INSTALL_DUZ = 17 # VistA-FOIA user, "USER,SEVENTEEN"
 CHECK_INSTALLATION_PROGRESS_TIMEOUT = 1200 # 1200 seconds or 20 minutes
@@ -150,23 +151,13 @@ class DefaultKIDSPatchInstaller(object):
     Always start with ready state (wait for promp)
   """
   def __gotoKIDSMainMenu__(self, vistATestClient):
-    connection = vistATestClient.getConnection()
-    vistATestClient.waitForPrompt()
-    connection.send("S DUZ=%s D ^XUP\r" % self._duz)
-    connection.expect("Select OPTION NAME: ")
-    connection.send("EVE\r")
-    connection.expect("CHOOSE 1-")
-    connection.send("1\r")
-    connection.expect("Select Systems Manager Menu ")
-    connection.send("Programmer Options\r")
-    connection.expect("Select Programmer Options ")
-    connection.send("KIDS\r")
+    menuUtil = VistAMenuUtil(self._duz)
+    menuUtil.gotoKidsMainMenu(vistATestClient)
 
   """ load the KIDS build distribution file via menu
     must be called while in KIDS Main Menu
   """
   def __loadKIDSPatch__(self, connection):
-    connection.expect("Select Kernel Installation & Distribution System ")
     connection.send("Installation\r")
     connection.expect("Select Installation ")
     connection.send("1\r") # load the distribution
@@ -494,13 +485,10 @@ class DefaultKIDSPatchInstaller(object):
 """ utility function to find the name associated the DUZ """
 def getPersonNameByDuz(inputDuz, vistAClient):
   logger.info ("inputDuz is %s" % inputDuz)
-  vistAClient.waitForPrompt()
   """ go to fileman options """
   connection = vistAClient.getConnection()
-  connection.send("S DUZ=1 D Q^DI\r")
-  connection.expect("Select OPTION: ")
-  connection.send("3\r") # search file entry
-  connection.expect("OUTPUT FROM WHAT FILE: ")
+  menuUtil = VistAMenuUtil(duz=1)
+  menuUtil.gotoFileManSearchFileEntryMenu(vistAClient)
   connection.send("200\r")
   connection.expect("-A- SEARCH FOR NEW PERSON FIELD: ")
   connection.send("NUMBER\r")
@@ -530,9 +518,7 @@ def getPersonNameByDuz(inputDuz, vistAClient):
   connection.send("\r")
   connection.expect("Select OPTION: ")
   matchList = connection.before.split("\r\n")
-  connection.send("\r")
-  vistAClient.waitForPrompt()
-  connection.send("\r")
+  menuUtil.exitFileManMenu(vistAClient, waitOption=False)
   for line in matchList:
     if len(line.strip()) == 0:
       continue
@@ -545,13 +531,9 @@ def addPackagePatchHistory(packageName, version, seqNo,
   logger.info("Adding %s, %s, %s, %s to Package Patch history" %
               (packageName, version, seqNo, patchNo))
   appliedUser = getPersonNameByDuz(inputDuz, vistAClient)
-  vistAClient.waitForPrompt()
-  """ go to fileman options """
   connection = vistAClient.getConnection()
-  connection.send("S DUZ=1 D Q^DI\r")
-  connection.expect("Select OPTION: ")
-  connection.send("1\r") # enter or edit entry
-  connection.expect("INPUT TO WHAT FILE: ")
+  menuUtil = VistAMenuUtil(duz=1)
+  menuUtil.gotoFileManEditEnterEntryMenu(vistAClient)
   connection.send("9.4\r") # package file
   connection.expect("EDIT WHICH FIELD: ")
   connection.send("VERSION\r")
@@ -581,10 +563,7 @@ def addPackagePatchHistory(packageName, version, seqNo,
   connection.send("\r")
   connection.expect("Select PACKAGE NAME: ")
   connection.send("\r")
-  connection.expect("Select OPTION: ")
-  connection.send("\r")
-  vistAClient.waitForPrompt()
-  connection.send("\r")
+  menuUtil.exitFileManMenu(vistAClient)
 
 """ class KIDSInstallerFactory
   create KIDS installer via Factory methods
