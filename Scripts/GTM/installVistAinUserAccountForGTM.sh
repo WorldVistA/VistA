@@ -84,11 +84,9 @@ echo "export gtmgbldir=/opt/$instance/$gtmver/g/$instance.gld"  >> /opt/$instanc
 
 # 64bit GT.M can use a shared library instead of $gtm_dist
 if [ $gtm_arch == "x86_64" ]; then
-    echo "export gtmroutines=\"/opt/$instance/$gtmver/o(/opt/$instance/$gtmver/r /opt/$instance/r)
-                            \$gtm_dist/libgtmutil.so\""                         >> /opt/$instance/etc/env
+    echo "export gtmroutines=\"/opt/$instance/$gtmver/o(/opt/$instance/$gtmver/r /opt/$instance/r) \$gtm_dist/libgtmutil.so\""  >> /opt/$instance/etc/env
 else
-    echo "export gtmroutines=\"/opt/$instance/$gtmver/o(/opt/$instance/$gtmver/r /opt/$instance/r)
-                            \$gtm_dist\""                                       >> /opt/$instance/etc/env
+    echo "export gtmroutines=\"/opt/$instance/$gtmver/o(/opt/$instance/$gtmver/r /opt/$instance/r) \$gtm_dist\""                >> /opt/$instance/etc/env
 fi
 
 # prog.sh - priviliged (programmer) user access
