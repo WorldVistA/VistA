@@ -75,7 +75,7 @@ sudo mkdir -p /opt/$instance/$gtmver/{g,j,o,r}
 
 # Create profile for instance
 # Required GT.M variables
-echo "export gtm_dist=$gtmdist"                                 >> /opt/$instance/etc/env
+echo "export gtm_dist=$gtm_dist"                                 >> /opt/$instance/etc/env
 echo "export gtm_log=/opt/$instance/log"                        >> /opt/$instance/etc/env
 echo "export gtm_tmp=/opt/$instance/tmp"                        >> /opt/$instance/etc/env
 echo "export gtm_prompt=\"${instance^^}>\""                     >> /opt/$instance/etc/env
