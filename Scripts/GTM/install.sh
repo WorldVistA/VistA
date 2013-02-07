@@ -53,13 +53,12 @@ else
 fi
 
 # Make it executable
-# Hard code V6.0-000 due to gtminstall bug
-chmod +x gtminstall V6.0-000
+chmod +x gtminstall
 
 # Accept most defaults for gtminstall
 # --ucaseonly-utils - override default to install only uppercase utilities
 #                     this follows VistA convention of uppercase only routines
-./gtminstall --ucaseonly-utils
+./gtminstall --ucaseonly-utils V6.0-000
 
 # remove installgtm script as it is unnecessary
 rm ./gtminstall
