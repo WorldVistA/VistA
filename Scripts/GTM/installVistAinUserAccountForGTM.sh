@@ -53,6 +53,7 @@ fi
 
 # Only one GT.M version found
 export gtm_dist=/usr/lib/fis-gtm/$(ls -1 /usr/lib/fis-gtm/)
+export gtmver=$(ls -1 /usr/lib/fis-gtm/)
 
 # TODO: implement arguments to allow multiple instances, script can probably
 #       handle it
