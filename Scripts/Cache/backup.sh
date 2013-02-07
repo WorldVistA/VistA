@@ -16,19 +16,29 @@
 #---------------------------------------------------------------------------
 
 # Perform a copy of a CACHE.DAT to another directory
+# THIS SCRIPT IS NOT DESIGNED FOR PRODUCTION USAGE!
+# THIS WILL BRING DOWN THE CACHE INSTANCE!
 # This utility requires root privliges
 
 # Process flow:
+# 0. Ensure $1 & $2 arguments specified and valid
 # 1. Stop Cache
 # 2. Copy CACHE.DAT to directory
 # 3. Start Cache
+
+if [ ! -e $1 ]; then
+    echo "Specified CACHE.DAT doesn't exist"
+fi
+
+if [ ! -d $2 ]; then
+    echo "Specified backup directory doesn't exist"
+fi
 
 # Stop Cache
 service cache stop
 
 # Copy CACHE.DAT to directory
-mkdir -p /opt/backup
-cp /opt/cachesys/mgr/VISTA/CACHE.DAT /opt/backup/CACHE-`date +%m%d%Y`.DAT
+cp $1 $2/CACHE-`date +%m%d%Y`.DAT
 
 # Start Cache
-service cace start
+service cache start
