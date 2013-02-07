@@ -30,7 +30,7 @@ def isWindowsSystem():
 """ import right pexpect package """
 if isLinuxSystem():
   import pexpect
-  from pexpect import TIMEOUT
+  from pexpect import TIMEOUT, ExceptionPexpect
 else:
   from pexpect import TIMEOUT
   from winpexpect import winspawn
@@ -92,8 +92,12 @@ class VistATestClient(object):
       except TIMEOUT as ex:
         pass
       if isLinuxSystem():
-        """ pexpect close() will close all open handlers and is non-blocking """
-        self._connection.close()
+        if connection.isalive():
+          """ pexpect close() will close all open handlers and is non-blocking """
+          try:
+            self._connection.close()
+          except ExceptionPexpect as ose:
+            logger.error(ose)
     self._connection.terminate()
     return
   def __del__(self):
