@@ -17,12 +17,12 @@ import sys
 sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
 
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
-VistA=ConnectToMUMPS("${UNITTEST_LOG_DIR}/InstallMUnit.log","${INSTANCE}","${NAMESPACE}")
-if ('${USERNAME}' and '${PASSWORD}'):
-  VistA.login('${USERNAME}','${PASSWORD}')
+VistA=ConnectToMUMPS("${UNITTEST_LOG_DIR}/InstallMUnit.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
 if VistA.type=='cache':
   try:
-    VistA.ZN('${NAMESPACE}')
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
   except IndexError,no_namechange:
     pass
 VistA.wait(PROMPT)
@@ -43,7 +43,7 @@ VistA.write('Installation')
 VistA.wait('Select Installation Option:')
 VistA.write('1')
 VistA.wait('Enter a Host File:')
-VistA.write('${MUNIT_KIDS_FILE}')
+VistA.write('${TEST_VISTA_SETUP_MUNIT_PATCH_FILE}')
 options=['OK to continue with Load?','Want to Continue with Load?','Select Installation Option:']
 while True:
   index=VistA.multiwait(options)
@@ -53,7 +53,7 @@ while True:
     VistA.write('INSTALL')
     break
 VistA.wait('Select INSTALL NAME:')
-VistA.write('${MUNIT_PACKAGE_INSTALL_NAME}')
+VistA.write('${TEST_VISTA_SETUP_MUNIT_PATCH_NAME}')
 VistA.wait('Want KIDS to Rebuild Menu Trees Upon Completion of Install?')
 VistA.write('NO')
 VistA.wait('Want KIDS to INHIBIT LOGONs during the install?')

@@ -14,7 +14,7 @@ import time
 sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
 from OSEHRAHelper import ConnectToMUMPS, PROMPT
 
-VistA = ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/ClinicSetup.log","${INSTANCE}","${NAMESPACE}")
+VistA = ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/ClinicSetup.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
 if ('' and ''):
   VistA.login('', '')
 if VistA.type == 'cache':

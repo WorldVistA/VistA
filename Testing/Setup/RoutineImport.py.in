@@ -18,12 +18,12 @@ sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
 
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
 
-VistA=ConnectToMUMPS("${logfile}","${INSTANCE}","${NAMESPACE}")
-if ('${USERNAME}' and '${PASSWORD}'):
-  VistA.login('${USERNAME}','${PASSWORD}')
+VistA=ConnectToMUMPS("${logfile}","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
 if VistA.type=='cache':
   try:
-    VistA.ZN('${NAMESPACE}')
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
   except IndexError,no_namechange:
     pass
 VistA.wait(PROMPT)
@@ -34,7 +34,7 @@ if VistA.type=='GTM':
   VistA.wait('Input device: <terminal>:')
   VistA.write('${RoutineImportFile}')
   VistA.wait('Output directory :')
-  VistA.write('${VISTA_ROUTINE_DIR}/')
+  VistA.write('${TEST_VISTA_FRESH_GTM_ROUTINE_DIR}/')
   VistA.wait(PROMPT, 1500)
   VistA.write('H')
 else:

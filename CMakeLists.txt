@@ -23,12 +23,15 @@ include(CTest)
 #-----------------------------------------------------------------------------#
 ##### SECTION TO CONFIGURE OSEHRA AUTOMATED TESTING HARNESS #####
 #-----------------------------------------------------------------------------#
+option(TEST_VISTA "Use this option to create and use the OSEHRA Automated Testing harness" OFF)
+if(TEST_VISTA)
   add_subdirectory(Testing)
 
-#-----------------------------------------------------------------------------#
-##### SECTION TO GENERATE VISUAL CROSS REFERENCE DOCUMENTATION #####
-#-----------------------------------------------------------------------------#
-OPTION(ROUTINE_CALL_GRAPH "Build Rouine Call Graph." OFF)
-if(ROUTINE_CALL_GRAPH)
-  add_subdirectory(Utilities/Dox)
+  #-----------------------------------------------------------------------------#
+  ##### SECTION TO GENERATE VISUAL CROSS REFERENCE DOCUMENTATION #####
+  #-----------------------------------------------------------------------------#
+  OPTION(TEST_VISTA_DOX_CALLERGRAPH "Enables callergraph tests to create output to generate Dox pages." OFF)
+  if(TEST_VISTA_DOX_CALLERGRAPH)
+    add_subdirectory(Utilities/Dox)
+  endif()
 endif()

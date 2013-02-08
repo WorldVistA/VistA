@@ -18,17 +18,17 @@ sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
 
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
 
-VistA=ConnectToMUMPS("${logfile}","${INSTANCE}","${NAMESPACE}")
-if ('${USERNAME}' and '${PASSWORD}'):
-  VistA.login('${USERNAME}','${PASSWORD}')
+VistA=ConnectToMUMPS("${logfile}","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
 if VistA.type=='cache':
   try:
-    VistA.ZN('${NAMESPACE}')
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
   except IndexError,no_namechange:
     pass
 VistA.wait(PROMPT)
-VistA.write('D LIST^ZGI("${VISTA_BINARY_DIR}/globals.lst","${OSEHRA_PATH}/")')
-VistA.wait(PROMPT, ${GLOBALS_IMPORT_TIMEOUT})
+VistA.write('D LIST^ZGI("${VISTA_BINARY_DIR}/globals.lst","${TEST_VISTA_FRESH_M_DIR}/")')
+VistA.wait(PROMPT, ${TEST_VISTA_FRESH_GLOBALS_IMPORT_TIMEOUT})
 VistA.write('D ^ZTMGRSET')
 while True:
   index = VistA.multiwait(['Should I continue?', 'System:'])
@@ -40,19 +40,19 @@ while True:
 if VistA.type =='cache':
   VistA.write('3')
   VistA.wait('NAME OF')
-  VistA.write('${NAMESPACE}')
+  VistA.write('${VISTA_CACHE_NAMESPACE}')
   VistA.wait('PRODUCTION')
-  VistA.write('${NAMESPACE}')
+  VistA.write('${VISTA_CACHE_NAMESPACE}')
   VistA.wait('NAME OF')
-  VistA.write('${NAMESPACE}')
+  VistA.write('${VISTA_CACHE_NAMESPACE}')
 else:
   VistA.write('8')
   VistA.wait('NAME OF')
-  VistA.write('${UCI_NAME},${VOLUME_SET}')
+  VistA.write('${TEST_VISTA_SETUP_UCI_NAME},${TEST_VISTA_SETUP_VOLUME_SET}')
   VistA.wait('PRODUCTION')
-  VistA.write('${UCI_NAME},${VOLUME_SET}')
+  VistA.write('${TEST_VISTA_SETUP_UCI_NAME},${TEST_VISTA_SETUP_VOLUME_SET}')
   VistA.wait('NAME OF')
-  VistA.write('${VOLUME_SET}')
+  VistA.write('${TEST_VISTA_SETUP_VOLUME_SET}')
   VistA.wait('The temp directory for the system')
   VistA.write('')
 VistA.wait('Want to rename the FileMan routines: No//')

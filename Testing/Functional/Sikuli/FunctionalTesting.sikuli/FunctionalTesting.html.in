@@ -76,7 +76,7 @@
 <span class="skw">doubleClick</span>(<img src="1326480962420.png" />)
   <span class="skw">doubleClick</span>(<img src="1326480962420.png" />)
 <span class="kw">else</span>:
-  openApp(<span class="str">r'${VITALS_MANAGER_EXECUTABLE} /port=${CPRS_PORT} /server=${CPRS_SERVER}
+  openApp(<span class="str">r'${VITALS_MANAGER_EXECUTABLE} /port=${VISTA_TCP_PORT} /server=${VISTA_TCP_HOST}
   /ccow=disable'</span>)
 <span class="skw">wait</span>(<img src="AcccssCcndc.png" />,<span class="dig">30</span>)
 <span class="skw">type</span>(<img src="AccessCcndc.png" />,<span class="str">"fakedoc1"</span>)
@@ -99,7 +99,7 @@
 <span class="kw">if</span> exists(<img src="1333398109508.png" />):
   <span class="skw">doubleClick</span>(<img src="1333398109508.png" />)
 <span class="kw">else</span>:
-  openApp(<span class="str">r'${CPRS_EXECUTABLE} P=${CPRS_PORT} S=${CPRS_SERVER} ccow=disable'</span>)
+  openApp(<span class="str">r'${CPRS_EXECUTABLE} P=${VISTA_TCP_PORT} S=${VISTA_TCP_HOST} ccow=disable'</span>)
 <span class="skw">wait</span>(<img src="AcccssCcndc.png" />,<span class="dig">30</span>)
 <span class="skw">type</span>(<img src="AccessCcndc-4.png" />,<span class="str">"fakenurse1"</span>)
 <span class="skw">type</span>(<img src="VerifyCcndc-4.png" />,<span class="str">"1Nur!@#$"</span>)
@@ -196,7 +196,7 @@
 <span class="kw">if</span> exists(<img src="1333398109508.png" />):
   <span class="skw">doubleClick</span>(<img src="1333398109508.png" />)
 <span class="kw">else</span>:
-  openApp(<span class="str">r'${CPRS_EXECUTABLE} P=${CPRS_PORT} S=${CPRS_SERVER} ccow=disable'</span>)
+  openApp(<span class="str">r'${CPRS_EXECUTABLE} P=${VISTA_TCP_PORT} S=${VISTA_TCP_HOST} ccow=disable'</span>)
 <span class="skw">wait</span>(<img src="AcccssCcndc.png" />,<span class="dig">30</span>)
 <span class="skw">type</span>(<img src="AccessCcndc-4.png" />,<span class="str">"fakedoc1"</span>)
 <span class="skw">type</span>(<img src="VerifyCcndc-4.png" />,<span class="str">"1Doc!@#$"</span>)

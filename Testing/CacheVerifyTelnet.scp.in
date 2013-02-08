@@ -20,8 +20,8 @@ case match: off
 title: VistA Cache Telnet Setup Verification
 logfile:<P1>
 ;switch to the right namespace
-send: znspace "${NAMESPACE}"<CR>
-wait for:${NAMESPACE}>
+send: znspace "${VISTA_CACHE_NAMESPACE}"<CR>
+wait for:${VISTA_CACHE_NAMESPACE}>
 ; close the log file
 closelog
 ; exit the terminal

@@ -65,12 +65,12 @@ def runXindexForRoutine(connection, routineName):
       print ("Caught IndexError %s" % error)
       continue
 
-VistA=ConnectToMUMPS("${logfile}","${INSTANCE}","${NAMESPACE}")
-if ('${USERNAME}' and '${PASSWORD}'):
-  VistA.login('${USERNAME}','${PASSWORD}')
+VistA=ConnectToMUMPS("${logfile}","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
 if VistA.type=='cache':
   try:
-    VistA.ZN('${NAMESPACE}')
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
   except IndexError,no_namechange:
     pass
 AllRoutines = []

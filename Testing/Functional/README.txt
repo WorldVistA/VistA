@@ -16,7 +16,7 @@ To run the Roll and Scroll tests do the following:
 
 NOTES:
 -- The cmake -P ImportRG.cmake must be run before every ctest -R RAS_ since these functional tests have database state pre-requisits. Once we establish a means to restore the database to it original test more quickly, this procedure can be incorporated into the python test scripts eliminating the need to rebuild the database for each run.
--- Functional test result logs are located in the @TEST_RESULTS_DIR@ directory specified within cmake-gui
+-- Functional test result logs are located in the @TEST_VISTA_OUTPUT_DIR@ directory specified within cmake-gui
 
 --------------------------
 ***CPRS and Vitals GUI***

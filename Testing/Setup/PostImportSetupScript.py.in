@@ -19,12 +19,12 @@ import time
 sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
 
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
-VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImport1.log","${INSTANCE}","${NAMESPACE}")
-if ('${USERNAME}' and '${PASSWORD}'):
-  VistA.login('${USERNAME}','${PASSWORD}')
+VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImport1.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
 if VistA.type=='cache':
   try:
-    VistA.ZN('${NAMESPACE}')
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
   except IndexError,no_namechange:
     pass
 VistA.wait(PROMPT,60)
@@ -37,7 +37,7 @@ VistA.write('D ^DINIT')
 VistA.wait('Initialize VA FileMan now?')
 VistA.write('Yes')
 VistA.wait('SITE NAME:')
-VistA.write('${VISTA_SITE_NAME}')
+VistA.write('${TEST_VISTA_SETUP_SITE_NAME}')
 VistA.wait('SITE NUMBER')
 VistA.write('6161')
 VistA.wait('Do you want to change the MUMPS OPERATING SYSTEM File?')
@@ -99,13 +99,13 @@ VistA.write('1')
 VistA.wait('INPUT TO WHAT FILE')
 VistA.write('DOMAIN\r')
 VistA.wait('Select DOMAIN NAME')
-VistA.write('${VISTA_SITE_NAME}\rY\r^\r\r')
+VistA.write('${TEST_VISTA_SETUP_SITE_NAME}\rY\r^\r\r')
 VistA.wait(PROMPT,60)
 VistA.write('D CHRISTEN^XMUDCHR')
 VistA.wait('Are you sure you want to change the name of this facility?')
 VistA.write('Yes')
 VistA.wait('Select DOMAIN NAME')
-VistA.write('${VISTA_SITE_NAME}')
+VistA.write('${TEST_VISTA_SETUP_SITE_NAME}')
 VistA.wait('PARENT')
 VistA.write('')
 VistA.wait('TIME ZONE')
@@ -114,11 +114,11 @@ index = VistA.multiwait([VistA.prompt,'TIME ZONE'])
 if index==1:
   VistA.write('EST')
   VistA.wait(PROMPT,60)
-VistA.IEN('DOMAIN','${VISTA_SITE_NAME}')
+VistA.IEN('DOMAIN','${TEST_VISTA_SETUP_SITE_NAME}')
 VistA.wait(PROMPT,60)
 VistA.write('S $P(^XWB(8994.1,1,0),"^")=' + VistA.IENumber)
 VistA.write('S $P(^XTV(8989.3,1,0),"^")=' + VistA.IENumber)
-VistA.getenv('${VOLUME_SET}')
+VistA.getenv('${TEST_VISTA_SETUP_VOLUME_SET}')
 VistA.wait(PROMPT,60)
 VistA.write('S DUZ=1 D Q^DI')
 VistA.wait('Select OPTION')
@@ -140,12 +140,12 @@ VistA.write('14.5\r')
 VistA.wait('Select VOLUME SET')
 VistA.write('`1')
 VistA.wait('VOLUME SET:')
-VistA.write('${VOLUME_SET}\r\r\r\r\r')
+VistA.write('${TEST_VISTA_SETUP_VOLUME_SET}\r\r\r\r\r')
 VistA.wait('TASKMAN FILES UCI')
 if VistA.type=='cache':
-  VistA.write('${NAMESPACE}\r\r\r\r\r\r')
+  VistA.write('${VISTA_CACHE_NAMESPACE}\r\r\r\r\r\r')
 else:
-  VistA.write('${VOLUME_SET}\r\r\r\r\r\r')
+  VistA.write('${TEST_VISTA_SETUP_VOLUME_SET}\r\r\r\r\r\r')
 VistA.wait('Select OPTION:')
 VistA.write('1')
 VistA.wait('INPUT TO WHAT FILE')
@@ -164,7 +164,7 @@ VistA.write('1')
 VistA.wait('INPUT TO WHAT FILE')
 VistA.write('8994.1\r')
 VistA.wait('Select RPC BROKER SITE PARAMETERS DOMAIN NAME')
-VistA.write('${VISTA_SITE_NAME}\r\r\r\r' + VistA.boxvol + '\rY\r\r9210\rY')
+VistA.write('${TEST_VISTA_SETUP_SITE_NAME}\r\r\r\r' + VistA.boxvol + '\rY\r\r${VISTA_TCP_PORT}\rY')
 if VistA.type=='cache':
   VistA.write('1\r\r1\r')
 else:
@@ -175,9 +175,9 @@ VistA.write('1')
 VistA.wait('INPUT TO WHAT FILE')
 VistA.write('KERNEL SYSTEM PARAMETERS\rVOLUME SET\r\r')
 VistA.wait('Select KERNEL SYSTEM PARAMETERS DOMAIN NAME:')
-VistA.write('${VISTA_SITE_NAME}\r')
+VistA.write('${TEST_VISTA_SETUP_SITE_NAME}\r')
 VistA.wait('VOLUME SET')
-VistA.write('${VOLUME_SET}')
+VistA.write('${TEST_VISTA_SETUP_VOLUME_SET}')
 index = VistA.multiwait(['Are you adding','VOLUME SET'])
 if index==0:
   VistA.write('Y')
@@ -549,7 +549,7 @@ else:
   Fileman-based Joe Clerk User Setup
   -- Workaround: Can't use Select User Management Option at this point as it causes unexpected exit from menu
   '''
-  VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImport1A.log","${INSTANCE}","${NAMESPACE}")
+  VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImport1A.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
 VistA.wait(PROMPT,60)
 VistA.write('S DUZ=1 D Q^DI')
 VistA.wait('Select OPTION:')
@@ -736,12 +736,12 @@ VistA.write('Y')
 
 time.sleep(10)
 #Set up the Doctors electronic signature
-VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImportSignature.log","${INSTANCE}","${NAMESPACE}")
-if ('${USERNAME}' and '${PASSWORD}'):
-  VistA.login('${USERNAME}','${PASSWORD}')
+VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImportSignature.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
 if VistA.type=='cache':
   try:
-    VistA.ZN('${NAMESPACE}')
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
   except IndexError,no_namechange:
     pass
 VistA.wait(PROMPT,60)
@@ -776,12 +776,12 @@ VistA.wait('Toolbox Option')
 VistA.write('\r\r\r')
 
 #Set up the Nurse electronic signature
-VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImport4.log","${INSTANCE}","${NAMESPACE}")
-if ('${USERNAME}' and '${PASSWORD}'):
-  VistA.login('${USERNAME}','${PASSWORD}')
+VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImport4.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
 if VistA.type=='cache':
   try:
-    VistA.ZN('${NAMESPACE}')
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
   except IndexError,no_namechange:
     pass
 VistA.wait(PROMPT,60)
@@ -816,12 +816,12 @@ VistA.wait('Toolbox Option')
 VistA.write('^\r\r\r\r\r\r')
 
 #Set up the Clerk verification code
-VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImport5.log","${INSTANCE}","${NAMESPACE}")
-if ('${USERNAME}' and '${PASSWORD}'):
-  VistA.login('${USERNAME}','${PASSWORD}')
+VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImport5.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
 if VistA.type=='cache':
   try:
-    VistA.ZN('${NAMESPACE}')
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
   except IndexError,no_namechange:
     pass
 VistA.wait(PROMPT,60)

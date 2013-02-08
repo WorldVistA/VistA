@@ -14,14 +14,29 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-if(SIK_SYSTEM_TESTING)
+if(TEST_VISTA_FUNCTIONAL_SIK)
   # CPRS only runs on Windows, Thus the Sikuli and GUI test will be added only for those types of machines
   if(WIN32)
     file(GLOB SIKULI_FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Sikuli/*.sikuli)
     find_program(SIKULI_EXECUTABLE Sikuli-IDE.bat DOC "Path to the Sikul-IDE.bat file" HINTS "C:/Program Files/Sikuli X/" "C:/Program Files (x86)/Sikuli X/" )
-    find_program(CPRS_EXECUTABLE CPRSChart.exe DOC "Path to the CPRSChart.exe file")
-    find_program(VITALS_MANAGER_EXECUTABLE VitalsManager.exe DOC "Path to the VitalsManager.exe file")
+    mark_as_advanced(SIKULI_EXECUTABLE)
+    if(NOT SIKULI_EXECUTABLE)
+      mark_as_advanced(CLEAR SIKULI_EXECUTABLE)
+    endif()
 
+    find_program(CPRS_EXECUTABLE CPRSChart.exe DOC "Path to the CPRSChart.exe file")
+    mark_as_advanced(CPRS_EXECUTABLE)
+
+    if(NOT CPRS_EXECUTABLE)
+      mark_as_advanced(CLEAR CPRS_EXECUTABLE)
+    endif()
+
+    find_program(VITALS_MANAGER_EXECUTABLE VitalsManager.exe DOC "Path to the VitalsManager.exe file")
+    mark_as_advanced(VITALS_MANAGER_EXECUTABLE)
+
+    if(NOT VITALS_MANAGER_EXECUTABLE)
+      mark_as_advanced(CLEAR VITALS_MANAGER_EXECUTABLE)
+    endif()
     foreach(sikuli ${SIKULI_FOLDERS})
       get_filename_component(sikuli_name "${sikuli}" NAME_WE)
       #  Configure the Sikuli files to contain the paths found above
@@ -33,7 +48,7 @@ if(SIK_SYSTEM_TESTING)
   endif()
 endif()
 
-if(RAS_SYSTEM_TESTING)
+if(TEST_VISTA_FUNCTIONAL_RAS)
   file(GLOB packages ${VISTA_SOURCE_DIR}/Packages/*)
   foreach(package ${packages})
     if(IS_DIRECTORY ${package}/Testing/RAS/)

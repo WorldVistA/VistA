@@ -15,10 +15,10 @@
 #---------------------------------------------------------------------------
 message(STATUS "Gathering FileMan information...")
 
-if(NOT EXISTS "@OSEHRA_PATH@/globals.lst")
-  execute_process(COMMAND "@GIT_EXECUTABLE@" ls-files "*.zwr" WORKING_DIRECTORY @OSEHRA_PATH@ OUTPUT_FILE globals.lst RESULT_VARIABLE return )
+if(NOT EXISTS "@VISTA_BINARY_DIR@/globals.lst")
+  execute_process(COMMAND "@GIT_EXECUTABLE@" ls-files "*.zwr" WORKING_DIRECTORY @VISTA_BINARY_DIR@ OUTPUT_FILE globals.lst RESULT_VARIABLE return )
 endif()
-file(STRINGS "@OSEHRA_PATH@/globals.lst" FilemanFileList)
+file(STRINGS "@VISTA_BINARY_DIR@/globals.lst" FilemanFileList)
 set(masterfilelist "")
 foreach(files ${FilemanFileList})
   get_filename_component(filename ${files} NAME)

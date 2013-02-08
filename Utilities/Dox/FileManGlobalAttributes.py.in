@@ -21,12 +21,12 @@ sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
 
 def listFileManFileAttributes(FileManNo, outputFile, logFile):
-  VistA=ConnectToMUMPS(sys.argv[3],'${INSTANCE}','${NAMESPACE}')
-  if ('' and ''):
-    VistA.login('','')
+  VistA=ConnectToMUMPS(sys.argv[3],'${VISTA_CACHE_INSTANCE}','${VISTA_CACHE_NAMESPACE}')
+  if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+    VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
   if VistA.type=='cache':
     try:
-      VistA.ZN('${NAMESPACE}')
+      VistA.ZN('${VISTA_CACHE_NAMESPACE}')
     except IndexError,no_namechange:
       pass
   VistA.wait(PROMPT)
