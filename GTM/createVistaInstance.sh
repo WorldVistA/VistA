@@ -99,7 +99,8 @@ echo "alias gde=\"\$gtm_dist/mumps -run GDE\""                  >> /opt/$instanc
 echo "alias lke=\"\$gtm_dist/mumps -run LKE\""                  >> /opt/$instance/bin/prog.sh
 echo "alias dse=\"\$gtm_dist/mumps -run DSE\""                  >> /opt/$instance/bin/prog.sh
 echo "alias mupip=\"\$gtm_dist/mupip\""                         >> /opt/$instance/bin/prog.sh
-echo "alias rundown=\"\$gtm_dist/mupip rundown -region \"*\"\"" >> /opt/$instance/bin/prog.sh
+echo "alias recover=\"\$gtm_dist/mupip -recover -backward $instance.mjl" >> /opt/$instance/bin/prog.sh
+echo "alias backup=\"\$gtm_dist/mupip backup -online \"*\""             >> /opt/$instance/bin/prog.sh
 
 # tied.sh - unpriviliged user access
 # $instance is their shell - no access to ZSY
@@ -131,3 +132,10 @@ sudo chmod -R g+rw /opt/$instance
 # have to source the environment first to have GTM env vars available
 source /opt/$instance/etc/env
 $gtm_dist/mumps -run GDE < /opt/$instance/etc/db.gde
+
+# Create the database
+$gtm_dist/mupip create
+
+# Enable journaling
+$gtm_dist/mupip set -journal="enable,on,before" -file $instance.dat -jnlfile  /opt/$instance/$gtmver/j/$instance.mjl
+
