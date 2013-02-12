@@ -137,5 +137,5 @@ $gtm_dist/mumps -run GDE < /opt/$instance/etc/db.gde
 $gtm_dist/mupip create
 
 # Enable journaling
-$gtm_dist/mupip set -journal="enable,on,before,file=/opt/$instance/$gtmver/j/$instance.mjl" -file $instance.dat
+$gtm_dist/mupip set -journal="enable,on,before,file=/opt/$instance/$gtmver/j/$instance.mjl" -file /opt/$instance/$gtmver/g/$instance.dat
 
