@@ -27,4 +27,4 @@ gtmver="V6.0-000_x86_64"
 daystokeep="5"
 
 # TODO: logging
-find /opt/$instance/$gtmver/j/*.mjl_* -ctime +$daystokeep | xargs /bin/rm -v
+find /opt/$instance/$gtmver/j/ -name "*.mjl_*" -type f -ctime +$daystokeep -exec rm -v {} \;
