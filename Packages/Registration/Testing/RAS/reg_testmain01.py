@@ -1,13 +1,13 @@
 '''
-Created on Mar 1, 2012
+Created on November, 2012
 @author: pbradley
-This is the main test script that calls the underlying PL functional tests
-located in PL_Suite001.
+This is the main test script that calls the underlying REG functional tests
+located in REG_Suite001.
 '''
 import sys
 import logging
 sys.path = ['./RAS/lib'] + ['./dataFiles'] + ['../Python/vista'] + sys.path
-import PL_Suite001
+import REG_Suite001
 import os, errno
 import argparse
 import datetime
@@ -21,7 +21,6 @@ LOGGING_LEVELS = {'critical': logging.CRITICAL,
 
 def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):
     return datetime.datetime.now().strftime(fmt).format(fname=fname)
-
 
 def main():
     usage = "usage: %prog [options] arg"
@@ -47,31 +46,23 @@ def main():
     try:
         logging.debug('RESULTDIR: ' + args.resultdir)
         logging.debug('LOGGING:   ' + args.logging_level)
-        resfile = args.resultdir + '/' + timeStamped('ProblemList_results.txt')
+        resfile = args.resultdir + '/' + timeStamped('Registration_results.txt')
         if not os.path.isabs(args.resultdir):
             logging.error('EXCEPTION: Absolute Path Required for Result Directory')
             raise
         resultlog = file(resfile, 'w')
-        PL_Suite001.startmon(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test001(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test002(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test003(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test010(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test011(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test004(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test005(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test006(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test007(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test008(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test009(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test012(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test013(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test014(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.pl_test015(resultlog, args.resultdir, args.namespace)
-        PL_Suite001.stopmon(resultlog, args.resultdir, args.coveragetype, args.namespace)
+        REG_Suite001.startmon(resultlog, args.resultdir, args.namespace)
+        REG_Suite001.setup_ward(resultlog, args.resultdir, args.namespace)
+        REG_Suite001.reg_test001(resultlog, args.resultdir, args.namespace)
+        REG_Suite001.reg_test002(resultlog, args.resultdir, args.namespace)
+        REG_Suite001.reg_test003(resultlog, args.resultdir, args.namespace)
+        REG_Suite001.reg_test004(resultlog, args.resultdir, args.namespace)
+        REG_Suite001.reg_test005(resultlog, args.resultdir, args.namespace)
+        REG_Suite001.reg_logflow(resultlog, args.resultdir, args.namespace)
+        REG_Suite001.stopmon(resultlog, args.resultdir, args.coveragetype, args.namespace)
     except Exception, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
+        resultlog.write('\nREGISTRATION TEST EXCEPTION ERROR:' + str(e))
+        logging.error('*****Registration test exception*********' + str(e))
     finally:
         resultlog.write('finished')
 

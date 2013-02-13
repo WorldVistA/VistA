@@ -32,10 +32,10 @@ except ImportError, no_pexpect:
   pass
 
 #---------------------------------------------------------------------------
-#Initial Global Variables to use over the course of connecting
+# Initial Global Variables to use over the course of connecting
 
-#connection=False
-#log =False
+# connection=False
+# log =False
 
 #---------------------------------------------------------------------------
 class PROMPT(object):
@@ -128,10 +128,10 @@ class ConnectWinCache(ConnectMUMPS):
         logging.debug(rbuf)
         return 1
 
-  def wait_re(self,command,timeout=30):
+  def wait_re(self, command, timeout=30):
     if command is PROMPT:
       command = self.prompt
-    output = self.connection.expect(command,None)
+    output = self.connection.expect(command, None)
     self.match = output[1]
     self.before = output[2]
     if output[0] == -1 and output[1] == None:
@@ -143,7 +143,7 @@ class ConnectWinCache(ConnectMUMPS):
 
   def multiwait(self, options, tout=15):
     if isinstance(options, list):
-      index = self.connection.expect(options)
+      index = self.connection.expect(options, tout)
       if index == -1:
         logging.debug('ERROR: expected: ' + options)
         raise TestHelper.TestError('ERROR: expected: ' + options)
@@ -175,15 +175,20 @@ class ConnectWinCache(ConnectMUMPS):
     self.wait('continue')
     self.write('\r')
 
-  def stopCoverage(self, path):
+  def stopCoverage(self, path, humanreadable='OFF'):
     newpath, filename = os.path.split(path)
     self.write('D ^%SYS.MONLBL')
     self.wait('choice')
-    self.write('6')
-    self.wait('Routine number')
-    self.write('*')
+    if humanreadable == 'ON':
+      self.write('5')
+      self.wait('summary')
+      self.write('Y')
+    else:
+      self.write('6')
+      self.wait('Routine number')
+      self.write('*')
     self.wait('FileName')
-    self.write(newpath + '/Coverage/' + filename.replace('.log', '.cmcov').replace('.txt','.cmcov'))
+    self.write(newpath + '/Coverage/' + filename.replace('.log', '.cmcov').replace('.txt', '.cmcov'))
     self.wait('continue')
     self.write('')
     self.wait('choice')
@@ -213,13 +218,13 @@ class ConnectLinuxCache(ConnectMUMPS):
     else:
         return 1
 
-  def wait_re(self,command,timeout=15):
+  def wait_re(self, command, timeout=15):
     if not timeout: timeout = -1
     self.connection.expect(command, timeout)
 
   def multiwait(self, options, tout=15):
     if isinstance(options, list):
-      index = self.connection.expect(options)
+      index = self.connection.expect(options, tout)
       if index == -1:
         logging.debug('ERROR: expected: ' + options)
         raise TestHelper.TestError('ERROR: expected: ' + options)
@@ -251,15 +256,20 @@ class ConnectLinuxCache(ConnectMUMPS):
     self.wait('continue')
     self.write('\r')
 
-  def stopCoverage(self, path):
+  def stopCoverage(self, path, humanreadable='OFF'):
     newpath, filename = os.path.split(path)
     self.write('D ^%SYS.MONLBL')
     self.wait('choice')
-    self.write('6')
-    self.wait('Routine number')
-    self.write('*')
+    if humanreadable == 'ON':
+      self.write('5')
+      self.wait('summary')
+      self.write('Y')
+    else:
+      self.write('6')
+      self.wait('Routine number')
+      self.write('*')
     self.wait('FileName')
-    self.write(newpath + '/Coverage/' + filename.replace('.log', '.cmcov').replace('.txt','.cmcov'))
+    self.write(newpath + '/Coverage/' + filename.replace('.log', '.cmcov').replace('.txt', '.cmcov'))
     self.wait('continue')
     self.write('')
     self.wait('choice')
@@ -291,13 +301,13 @@ class ConnectLinuxGTM(ConnectMUMPS):
     else:
         return 1
 
-  def wait_re(self,command,timeout=None):
+  def wait_re(self, command, timeout=None):
     if not timeout: timeout = -1
     self.connection.expect(command, timeout)
 
   def multiwait(self, options, tout=15):
     if isinstance(options, list):
-      index = self.connection.expect(options)
+      index = self.connection.expect(options, tout)
       if index == -1:
         logging.debug('ERROR: expected: ' + options)
         raise TestHelper.TestError('ERROR: expected: ' + options)
@@ -309,7 +319,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
   def startCoverage(self, routines=['*']):
     self.write('K ^ZZCOVERAGE VIEW "TRACE":1:"^ZZCOVERAGE"')
 
-  def stopCoverage(self, path):
+  def stopCoverage(self, path, humanreadable='OFF'):
     path, filename = os.path.split(path)
     self.write('VIEW "TRACE":0:"^ZZCOVERAGE"')
     self.wait(PROMPT)
@@ -323,13 +333,13 @@ class ConnectLinuxGTM(ConnectMUMPS):
     self.wait('Format')
     self.write('ZWR')
     self.wait('device')
-    self.write(path + '/Coverage/' + filename.replace('.log', '.mcov').replace('.txt','.mcov'))
+    self.write(path + '/Coverage/' + filename.replace('.log', '.mcov').replace('.txt', '.mcov'))
 
 def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA', location='127.0.0.1'):
 
-    #self.namespace = namespace
-    #self.location = location
-    #print "You are using " + sys.platform
+    # self.namespace = namespace
+    # self.location = location
+    # print "You are using " + sys.platform
     if sys.platform == 'win32':
       return ConnectWinCache(logfile, instance, namespace, location)
     elif sys.platform == 'linux2':

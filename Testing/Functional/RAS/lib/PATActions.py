@@ -89,6 +89,9 @@ class PATActions (Actions):
             self.VistA.write(prec[pitem]['service'].rstrip().lstrip())
             self.VistA.wait('MULTIPLE BIRTH INDICATOR');
             self.VistA.write(prec[pitem]['twin'].rstrip().lstrip())
+            if str(prec[pitem]['pdup'].rstrip().lstrip()) is '1':
+                self.VistA.wait('as a new patient')
+                self.VistA.write('Yes')
             self.VistA.wait('//');
             self.VistA.write('^\r')
             self.VistA.wait('MAIDEN NAME');

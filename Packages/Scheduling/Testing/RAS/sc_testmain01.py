@@ -11,6 +11,7 @@ import os
 sys.path = ['./RAS/lib'] + ['./dataFiles'] + ['../Python/vista'] + sys.path
 import SC_Suite001
 import argparse
+import datetime
 
 LOGGING_LEVELS = {'critical': logging.CRITICAL,
                   'error': logging.ERROR,
@@ -18,10 +19,15 @@ LOGGING_LEVELS = {'critical': logging.CRITICAL,
                   'info': logging.INFO,
                   'debug': logging.DEBUG}
 
+def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):
+    return datetime.datetime.now().strftime(fmt).format(fname=fname)
+
 def main():
     usage = "usage: %prog [options] arg"
     parser = argparse.ArgumentParser()
     parser.add_argument('resultdir', help='Result Directory')
+    parser.add_argument('namespace', help='Namespace')
+    parser.add_argument('coveragetype', help='Human readable coverage on/off')
     parser.add_argument('-l', '--logging-level', help='Logging level')
     parser.add_argument('-f', '--logging-file', help='Logging file name')
     args = parser.parse_args()
@@ -40,19 +46,23 @@ def main():
     try:
         logging.debug('RESULTDIR: ' + args.resultdir)
         logging.debug('LOGGING:   ' + args.logging_level)
-        resfile = args.resultdir + '/Scheduling_results.txt'
+        resfile = args.resultdir + '/' + timeStamped('Scheduling_results.txt')
         if not os.path.isabs(args.resultdir):
             logging.error('EXCEPTION: Absolute Path Required for Result Directory')
             raise
         resultlog = file(resfile, 'w')
-        SC_Suite001.startmon(resultlog, args.resultdir)
-        SC_Suite001.sc_test001(resultlog, args.resultdir)
-        SC_Suite001.sc_test002(resultlog, args.resultdir)
-        SC_Suite001.sc_test003(resultlog, args.resultdir)
-        SC_Suite001.sc_test004(resultlog, args.resultdir)
-        SC_Suite001.sc_test005(resultlog, args.resultdir)
-        SC_Suite001.sc_test006(resultlog, args.resultdir)
-        SC_Suite001.stopmon(resultlog, args.resultdir)
+        SC_Suite001.startmon(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.sc_test001(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.sc_test002(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.sc_test003(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.sc_test004(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.sc_test005(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.sc_test006(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.sc_test007(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.sc_test008(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.sc_test009(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.sc_test010(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.stopmon(resultlog, args.resultdir, args.coveragetype, args.namespace)
         resultlog.write('finished')
     except Exception, e:
         resultlog.write('\nEXCEPTION ERROR:' + str(e))

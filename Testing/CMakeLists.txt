@@ -204,8 +204,6 @@ foreach(package ${PACKAGES})
   endif()
 endforeach()
 
-
-
 #-----------------------------------------------------------------------------#
 ##### SECTION TO SETUP THE REFRESH OF THE DATABASE #####
 #-----------------------------------------------------------------------------#
@@ -301,11 +299,14 @@ option(TEST_VISTA_SETUP "Prepopulate the database with sample data including use
 if(TEST_VISTA_SETUP)
   set(logfile "${VISTA_BINARY_DIR}/Testing/Log/PostImport.log")
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/PostImportSetupScript.py.in" "${VISTA_BINARY_DIR}/PostImportSetupScript.py")
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/importUsers.py.in" "${VISTA_BINARY_DIR}/importUsers.py")
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/importPats.py.in" "${VISTA_BINARY_DIR}/importPats.py")
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/ClinicSetup.py.in" "${VISTA_BINARY_DIR}/ClinicSetup.py")
 endif()
 if((TEST_VISTA_FUNCTIONAL_SIK OR TEST_VISTA_FUNCTIONAL_RAS) AND TEST_VISTA_SETUP)
   add_subdirectory(Functional)
+  # Coverage reports will be in human readable form for functional tests, by default
+  option(TEST_VISTA_COVERAGE_READABLE "On Cache, output the coverage report in a summary table" ON)
+  file(MAKE_DIRECTORY "${TEST_VISTA_OUTPUT_DIR}/Coverage")
 endif()
 
 #---------------------------------------------------------------------------------#
@@ -324,18 +325,16 @@ if(${CMAKE_VERSION} VERSION_GREATER 2.8.8)
   if(TEST_VISTA_COVERAGE)
     message(WARNING "Selecting the coverage option may cause the tests to run slower as there are more tasks to perform during a given test.
     This will also create new text files during the run.")
+
     file(MAKE_DIRECTORY "${TEST_VISTA_OUTPUT_DIR}/Coverage")
-    if (CCONTROL_EXECUTABLE)
-      message(WARNING "
-      Before running, check that gmHeap ( Configuration -> Advanced Memory Settings) is set to a proper value.
-      The 'Memory Check' option from the main menu of ^%SYS.MONLBL will tell you if enough memory has allocated.  The value used during testing was 85000")
+
+    if(NOT TEST_VISTA_COVERAGE_READABLE AND CCONTROL_EXECUTABLE)
       file(WRITE ${VISTA_BINARY_DIR}/cache_coverage.cmcov "packages:${TEST_VISTA_FRESH_M_DIR}/Packages\r\ncoverage_dir:${TEST_VISTA_OUTPUT_DIR}/Coverage")
-    elseif(GTM_DIST)
+    elseif(NOT TEST_VISTA_COVERAGE_READABLE AND GTM_DIST)
       file(WRITE ${VISTA_BINARY_DIR}/gtm_coverage.mcov "packages:${TEST_VISTA_FRESH_M_DIR}/Packages\r\ncoverage_dir:${TEST_VISTA_OUTPUT_DIR}/Coverage")
     endif()
   endif()
 endif()
-
 
 #-----------------------------------------------------------------------------#
 ##### SECTION TO RUN UNIT TESTING #####

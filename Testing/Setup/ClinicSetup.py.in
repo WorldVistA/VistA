@@ -1,13 +1,13 @@
 '''
 Created on Jun 19, 2012
 
-@author: bcaine
+@author: bcaine, pbradley
 
 This script sets up three clinics that allow scheduling.
 The clinics created here are open 7 days a week and each one is open for 8 hours a day
 Clinic1: 0000-0800
 Clinic2: 0800-1600
-Clinic3: 1600-2400
+CLINICX: 1600-2400
 '''
 import sys
 import time
@@ -15,20 +15,20 @@ sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
 from OSEHRAHelper import ConnectToMUMPS, PROMPT
 
 VistA = ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/ClinicSetup.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
-if ('' and ''):
-  VistA.login('', '')
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}', '${VISTA_CACHE_PASSWORD}')
 if VistA.type == 'cache':
   try:
-    VistA.ZN('VISTA')
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
   except IndexError, no_namechange:
     pass
 VistA.wait(PROMPT, 60)
 
-clinic = ['Clinic1', 'Clinic2', 'Clinic3']
-clinic_abr = ['C1', 'C2', 'C3']
-start_time = ['0', '8', '16']
-time = ['0000-0800', '0800-1600', '1600-2400']
-for x in range(0,3):
+clinic = ['Clinic1', 'Clinic2', 'CLINICX', 'CLInicA']
+clinic_abr = ['C1', 'C2', 'CX', 'CA']
+start_time = ['0', '8', '16', '0']
+time = ['0000-0800', '0800-1600', '1600-2400', '0000-0800']
+for x in range(0,4):
     VistA.write('W $$NOSEND^VAFHUTL')
     VistA.wait('0')
     VistA.write('S DUZ=1 D ^XUP')
@@ -105,8 +105,12 @@ for x in range(0,3):
     VistA.write('')
     VistA.wait('LENGTH')
     VistA.write('30')
-    VistA.wait('LENGTH')
-    VistA.write('')
+    if clinic[x] == 'CLInicA':
+        VistA.wait('LENGTH')
+        VistA.write('YES')
+    else:
+        VistA.wait('LENGTH')
+        VistA.write('')
     VistA.wait('HOUR')
     VistA.write('2')
     VistA.wait('DATE:')

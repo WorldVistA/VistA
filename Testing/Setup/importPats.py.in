@@ -5,7 +5,7 @@ Created on Apr 4, 2012
 '''
 import sys
 import logging
-sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + ['${VISTA_SOURCE_DIR}/Testing/Functional/dataFiles'] + ['${VISTA_SOURCE_DIR}/Testing/Functional/RAS/lib'] + sys.path
+sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + ['${VISTA_SOURCE_DIR}/Testing/Functional/RAS/lib'] + sys.path
 from PATActions import PATActions
 import datetime
 import TestHelper
@@ -18,14 +18,16 @@ logging.basicConfig(level=logging.INFO,
                     datefmt='%Y-%m-%d %H:%M:%S')
 try:
     from OSEHRAHelper import ConnectToMUMPS,PROMPT
-    VistA1=ConnectToMUMPS(logfile='./importUsers_A.txt',instance='',namespace='')
-    if VistA1.type=='cache':
+    VistA=ConnectToMUMPS('${VISTA_BINARY_DIR}/Testing/Log/importPats_details.txt','${VISTA_CACHE_INSTANCE}','${VISTA_CACHE_NAMESPACE}')
+    if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+        VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
+    if VistA.type=='cache':
         try:
-            VistA1.ZN('VISTA')
+            VistA.ZN('${VISTA_CACHE_NAMESPACE}')
         except IndexError,no_namechange:
             pass
-    VistA1.wait(PROMPT)
-    pat=PATActions(VistA1)
+    VistA.wait(PROMPT)
+    pat=PATActions(VistA)
     pat.signon()
     pat.patientaddallcsv('${VISTA_SOURCE_DIR}/Testing/Functional/dataFiles/patdata0.csv')
 except TestHelper.TestError, e:
