@@ -20,4 +20,9 @@
 # TODO: accept journal file argument
 # TODO: accept database location
 
+# Source VistA environment variables
+source /opt/FOIA/etc/env
+instance="FOIA"
+gtmver="V6.0-000_x86_64"
+
 $gtm_dist/mupip set -journal="enable,on,before,file=/opt/$instance/$gtmver/j/$instance.mjl" -file /opt/$instance/$gtmver/g/$instance.dat
