@@ -1,12 +1,12 @@
-.. title: OSEHRA VistA-Patches
+.. title: OSEHRA VistA
 
-====================
-OSEHRA VistA-Patches
-====================
+============
+OSEHRA VistA
+============
 
-This source tree contains patches for VistA, the Veterans Health Information
-Systems and Technology Architecture.  It is maintained by OSEHRA, the Open
-Source Electronic Health Record Agent.
+This source tree contains patches, tests, and tools for VistA, the Veterans
+Health Information Systems and Technology Architecture.  It is maintained by
+OSEHRA, the Open Source Electronic Health Record Agent.
 
 -------
 Purpose
