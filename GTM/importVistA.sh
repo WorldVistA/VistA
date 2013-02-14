@@ -18,18 +18,25 @@
 # Import VistA Globals and Routines into GT.M
 
 # Ensure env vars are setup for GT.M
-if [[ ! -d $gtm_dist) || ! $gtm_dist ]]; then
+if [[ ! -d "$gtm_dist" || ! $gtm_dist ]]; then
     echo "gtm_dist doesn't exist"
+    exit 1
 fi
-if [[ ! -d $gtmgbldir) || ! $gtmgbldir ]]; then
+if [[ ! -f "$gtmgbldir" || ! $gtmgbldir ]]; then
     echo "gtmgbldir doesn't exist"
+    exit 1
 fi
-if [ ! $gtmroutines ]; then
+if [ ! "$gtmroutines" ]; then
     echo "gtmroutines doesn't exist"
+    exit 1
 fi
 
 # Import routines
-$gtm_dist/mumps -run ^%RI <"\r\n$vistaro\r\n$vistar/\r\n"
+$gtm_dist/mumps -run ^%RI << EOF
+
+$vistaro
+$vistar/
+EOF
 
 # Import globals
 $gtm_dist/mumps -run %XCMD "W \$\$LIST^ZGI(\"$globallst\",\"$vistasourcedir/\")"
