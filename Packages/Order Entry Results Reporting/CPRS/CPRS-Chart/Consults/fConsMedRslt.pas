@@ -1,0 +1,221 @@
+unit fConsMedRslt;
+
+interface
+
+uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
+  Buttons, ORCtrls, ORfn, ExtCtrls, fAutoSz, ORDtTm, fConsultAlertTo, fRptBox,
+  VA508AccessibilityManager;
+
+type
+  TMedResultRec = record
+    Action: string;
+    ResultPtr: string;
+    DateTimeofAction: TFMDateTime;
+    ResponsiblePerson: Int64;
+    AlertsTo: TRecipientList;
+  end;
+
+  TfrmConsMedRslt = class(TfrmAutoSz)
+    cmdOK: TButton;
+    cmdCancel: TButton;
+    lstMedResults: TORListBox;
+    SrcLabel: TLabel;
+    pnlBase: TORAutoPanel;
+    cmdDetails: TButton;
+    ckAlert: TCheckBox;
+    lblDateofAction: TOROffsetLabel;
+    calDateofAction: TORDateBox;
+    lblActionBy: TOROffsetLabel;
+    cboPerson: TORComboBox;
+    lblResultName: TOROffsetLabel;
+    lblResultDate: TOROffsetLabel;
+    lblSummary: TOROffsetLabel;
+    procedure cmdOKClick(Sender: TObject);
+    procedure cmdCancelClick(Sender: TObject);
+    procedure cmdDetailsClick(Sender: TObject);
+    procedure ckAlertClick(Sender: TObject);
+    procedure NewPersonNeedData(Sender: TObject; const StartFrom: String;
+      Direction, InsertAt: Integer);
+    procedure FormDestroy(Sender: TObject);
+    procedure lstMedResultsDrawItem(Control: TWinControl; Index: Integer;
+      Rect: TRect; State: TOwnerDrawState);
+  protected
+    procedure ShowDetailsDestroyed(Sender: TObject);
+  private
+    FShowDetails: TfrmReportBox;
+    FOldShowDetailsOnDestroy: TNotifyEvent;
+    FMedResult: TMedResultRec ;
+    FChanged: Boolean;
+  end;
+
+function SelectMedicineResult(ConsultIEN: integer; FormTitle: string; var MedResult: TMedResultRec): boolean ;
+
+implementation
+
+{$R *.DFM}
+
+uses rConsults, rCore, uCore, uConst;
+
+const
+  TX_MEDRSLT_TEXT = 'Select medicine result or press Cancel.';
+  TX_MEDRSLT_CAP  = 'No Result Selected';
+
+var
+  RecipientList: TRecipientList ;
+
+function SelectMedicineResult(ConsultIEN: integer; FormTitle: string; var MedResult: TMedResultRec): boolean ;
+{ displays Medicine Result selection form and returns a record of the selection }
+var
+  frmConsMedRslt: TfrmConsMedRslt;
+begin
+  frmConsMedRslt := TfrmConsMedRslt.Create(Application);
+  try
+    with frmConsMedRslt do
+    begin
+      FChanged := False;
+      FillChar(RecipientList, SizeOf(RecipientList), 0);
+      FillChar(FMedResult, SizeOf(FMedResult), 0);
+      Caption := FormTitle;
+      cboPerson.InitLongList(User.Name);
+      cboPerson.SelectByIEN(User.DUZ);
+      ResizeFormToFont(TForm(frmConsMedRslt));
+
+      if MedResult.Action = 'ATTACH' then
+        begin
+          FastAssign(GetAssignableMedResults(ConsultIEN), lstMedResults.Items);
+          ckAlert.Visible := True;
+        end
+      else if MedResult.Action = 'REMOVE' then
+        begin
+          FastAssign(GetRemovableMedResults(ConsultIEN), lstMedResults.Items);
+          ckAlert.Visible := False;
+        end;
+      if lstMedResults.Items.Count > 0 then
+        ShowModal
+      else
+        FChanged := True;
+      Result := FChanged;
+      MedResult := FMedResult;
+    end; {with frmODConsMedRslt}
+  finally
+    frmConsMedRslt.Release;
+  end;
+end;
+
+procedure TfrmConsMedRslt.cmdCancelClick(Sender: TObject);
+begin
+  FillChar(FMedResult, SizeOf(FMedResult), 0);
+  FChanged := False;
+  Close;
+end;
+
+procedure TfrmConsMedRslt.cmdOKClick(Sender: TObject);
+begin
+  FillChar(FMedResult, SizeOf(FMedResult), 0);
+  if lstMedResults.ItemIndex = -1 then
+  begin
+    InfoBox(TX_MEDRSLT_TEXT, TX_MEDRSLT_CAP, MB_OK or MB_ICONWARNING);
+    FChanged := False ;
+    Exit;
+  end;
+  FChanged := True;
+  with FMedResult do
+    begin
+      ResultPtr := lstMedResults.ItemID ;
+      DateTimeofAction := calDateOfAction.FMDateTime;
+      ResponsiblePerson := cboPerson.ItemIEN;
+      AlertsTo := RecipientList;
+    end;
+  Close;
+end;
+
+procedure TfrmConsMedRslt.cmdDetailsClick(Sender: TObject);
+const
+  TX_RESULTS_CAP = 'Detailed Results Display';
+var
+  x: string;
+  //MsgString, HasImages: string;
+begin
+  inherited;
+  if lstMedResults.ItemIndex = -1 then exit;
+  x := Piece(Piece(Piece(lstMedResults.ItemID, ';', 2), '(', 2), ',', 1) + ';' + Piece(lstMedResults.ItemID, ';', 1);
+  // ---------------------------------------------------------------
+  // Don't do this until MED API is changed for new/unassigned results, or false '0' will be broadcast
+(*  MsgString := 'MED^' + x;
+  HasImages := BOOLCHAR[StrToIntDef(Piece(x, U, 5), 0) > 0];
+  SetPiece(HasImages, U, 10, HasImages);
+  NotifyOtherApps(NAE_REPORT, MsgString);*)
+  // ---------------------------------------------------------------
+  NotifyOtherApps(NAE_REPORT, 'MED^' + x);
+  if(not assigned(FShowDetails)) then
+  begin
+    FShowDetails := ModelessReportBox(GetDetailedMedicineResults(lstMedResults.ItemID), TX_RESULTS_CAP, True);
+    FOldShowDetailsOnDestroy := FShowDetails.OnDestroy;
+    FShowDetails.OnDestroy := ShowDetailsDestroyed;
+    cmdDetails.Enabled := (not assigned(FShowDetails));
+    lstMedResults.Enabled := (not assigned(FShowDetails));
+  end;
+end;
+
+procedure TfrmConsMedRslt.ShowDetailsDestroyed(Sender: TObject);
+begin
+  if(assigned(FOldShowDetailsOnDestroy)) then
+    FOldShowDetailsOnDestroy(Sender);
+  FShowDetails := nil;
+  cmdDetails.Enabled := (not assigned(FShowDetails));
+  lstMedResults.Enabled := (not assigned(FShowDetails));
+end;
+
+
+procedure TfrmConsMedRslt.ckAlertClick(Sender: TObject);
+begin
+  FillChar(RecipientList, SizeOf(RecipientList), 0);
+  if ckAlert.Checked then SelectRecipients(Font.Size, 0, RecipientList) ;
+end;
+
+procedure TfrmConsMedRslt.NewPersonNeedData(Sender: TObject; const StartFrom: string;
+  Direction, InsertAt: Integer);
+begin
+  inherited;
+  (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
+end;
+
+procedure TfrmConsMedRslt.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  KillObj(@FShowDetails);
+end;
+
+procedure TfrmConsMedRslt.lstMedResultsDrawItem(Control: TWinControl;
+  Index: Integer; Rect: TRect; State: TOwnerDrawState);
+var
+  x: string;
+  AnImage: TBitMap;
+const
+  STD_PROC_TEXT = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+  STD_DATE = 'MMM DD,YY@HH:NNXX';
+begin
+  inherited;
+  AnImage := TBitMap.Create;
+  try
+    with (Control as TORListBox).Canvas do  { draw on control canvas, not on the form }
+      begin
+        x := (Control as TORListBox).Items[Index];
+        FillRect(Rect);       { clear the rectangle }
+        AnImage.LoadFromResourceName(hInstance, 'BMP_IMAGEFLAG_1');
+        (Control as TORListBox).ItemHeight := HigherOf(TextHeight(x), AnImage.Height);
+        if StrToIntDef(Piece(x, U, 5), 0) > 0 then
+          begin
+            BrushCopy(Bounds(Rect.Left, Rect.Top, AnImage.Width, AnImage.Height),
+              AnImage, Bounds(0, 0, AnImage.Width, AnImage.Height), clRed); {render ImageFlag}
+          end;
+        TextOut(Rect.Left + AnImage.Width, Rect.Top, Piece(x, U, 2));
+        TextOut(Rect.Left + AnImage.Width + TextWidth(STD_PROC_TEXT), Rect.Top, Piece(x, U, 3));
+        TextOut(Rect.Left + AnImage.Width + TextWidth(STD_PROC_TEXT) + TextWidth(STD_DATE), Rect.Top, Piece(x, U, 4));
+      end;
+  finally
+    AnImage.Free;
+  end;
+end;
+
+end.
