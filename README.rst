@@ -18,16 +18,14 @@ There are scripts for Intersystems Caché and Fidelity Information Systems GT.M 
 
 Since each M implementation requires different steps to prepare the environment the steps will vary slightly.
 
-GT.M
-====
+GT.M:
 You must change into the GTM directory before running the scripts.
 
     #. sudo install.sh
     #. sudo createVistaInstance.sh
     #. (Optional) sudo importVista.sh
 
-Caché
-=====
+Caché:
 This is currently a work in progress. The basic structure is there, but untested.
     #. configureCache.sh
     #. createCacheUser.sh
@@ -52,8 +50,7 @@ Ubuntu - Contains all scripts specific to Ubuntu based Linux distros
 VistA Directory Layout
 ======================
 
-GT.M
-====
+GT.M:
 $instance is the name of the VistA environment being installed. Currently hard coded to FOIA
 
 /opt/$instance - Root directory for VistA environment
@@ -74,8 +71,7 @@ $instance is the name of the VistA environment being installed. Currently hard c
         o - contains the objects for the VistA environment
         r - contains any GT.M version specific routines for the VistA environment
 
-Caché
-=====
+Caché:
 This is a work in progress. The goal is to use similar structures for GT.M and Caché where appropriate.
 
 /opt/$namespace - Root directory for the VistA environment $namespace is equivalent to GT.M $instance
