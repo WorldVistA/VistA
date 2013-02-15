@@ -30,8 +30,17 @@ import glob
 import argparse
 from datetime import datetime
 import time
-import hashlib
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_CACHE_DIR = os.path.normpath(os.path.join(SCRIPT_DIR, "../"))
+sys.path.append(SCRIPT_DIR)
+
+""" Class to find and store patch history for each package
+"""
+def getCurrentTimestamp():
+  from datetime import datetime
+  return datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
 from VistATestClient import stopCache, forceDownCache, startCache
 from DefaultKIDSPatchInstaller import KIDSInstallerFactory
@@ -39,22 +48,9 @@ from LoggerManager import logger, initConsoleLogging, initFileLogging
 from KIDSPatchInfoParser import extractInfoFromInstallName
 from KIDSPatchOrderGenerator import KIDSPatchOrderGenerator
 from VistAPackageInfoFetcher import VistAPackageInfoFetcher
+from ExternalDownloader import obtainKIDSPatchFileBySha1
+from ConvertToExternalData import generateSha1Sum
 
-""" utility method to generate sha1 hash key for input file """
-
-def generateSha1Sum(inputFilename):
-  assert os.path.exists(inputFilename)
-  sha1sum = hashlib.sha1()
-  inputFile = open(inputFilename, "rb")
-  for line in inputFile:
-    sha1sum.update(line)
-  inputFile.close()
-  return sha1sum.hexdigest()
-""" Class to find and store patch history for each package
-"""
-def getCurrentTimestamp():
-  from datetime import datetime
-  return datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 class KIDSPatchSequenceApply(object):
   DEFAULT_VISTA_LOG_FILENAME = "VistAInteraction.log"
@@ -137,7 +133,8 @@ class KIDSPatchSequenceApply(object):
 
   @staticmethod
   def generateSha1SumForPatchInfo(patchInfo):
-    patchInfo.kidsSha1 = generateSha1Sum(patchInfo.kidsFilePath)
+    if patchInfo.kidsSha1 is None:
+      patchInfo.kidsSha1 = generateSha1Sum(patchInfo.kidsFilePath)
     if patchInfo.kidsInfoPath:
       patchInfo.kidsInfoSha1 = generateSha1Sum(patchInfo.kidsInfoPath)
     if patchInfo.otherKidsInfoList:
@@ -224,7 +221,19 @@ class KIDSPatchSequenceApply(object):
     logFileName = self._logFileName
     multiBuildsList = patchInfo.multiBuildsList
     kidsInstaller = None
-    print "kids Path len is %d " % len(kidsPath)
+    """ handle patch stored as external link """
+    if patchInfo.kidsSha1Path != None:
+      kidsSha1 = patchInfo.kidsSha1
+      (result, resultPath) = obtainKIDSPatchFileBySha1(kidsPath,
+                                                       kidsSha1,
+                                                       DEFAULT_CACHE_DIR)
+      if not result:
+        logger.error("Could not obtain external KIDS patch for %s" % kidsPath)
+        return result
+      kidsPath = resultPath # set the KIDS Path
+    """ get the right KIDS installer """
+    associateFiles = patchInfo.associatedInfoFiles
+    associatedGlobals = patchInfo.associatedGlobalFiles
     if patchInfo.hasCustomInstaller:
       """ use python imp module to load the source """
       logger.info("using custom installer %s" % patchInfo.customInstallerPath)
@@ -234,13 +243,18 @@ class KIDSPatchSequenceApply(object):
       from KIDS import CustomInstaller
       kidsInstaller = CustomInstaller(kidsPath, installName,
                                       seqNo, logFileName,
-                                      multiBuildsList)
+                                      multiBuildsList,
+                                      files=associateFiles,
+                                      globals=associatedGlobals)
 
     else:
       kidsInstaller = KIDSInstallerFactory.createKIDSInstaller(
                             kidsPath, installName, seqNo, logFileName,
-                            multiBuildsList)
+                            multiBuildsList,
+                            files=associateFiles,
+                            globals=associatedGlobals)
     logger.info("Applying KIDS Patch %s" % patchInfo)
+    assert kidsInstaller
     return kidsInstaller.runInstallation(self._testClient)
 
   """ restart the cache instance """

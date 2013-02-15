@@ -41,6 +41,13 @@ Convert text files to LF-only newlines::
  find FOIA -regex '.*\.\(GBL\|GBLs\|KID\|KIDs\|TXT\|TXTs\|txt\)$' -print0 |
  xargs -0 fromdos
 
+Convert large files to content links referencing external data::
+
+ python Scripts/ConvertToExternalData.py -i FOIA
+
+Files 1 MiB or larger will be renamed to a ".ExternalData_" staging
+file.
+
 Commit
 ------
 

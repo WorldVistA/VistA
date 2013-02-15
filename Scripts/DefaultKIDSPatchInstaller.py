@@ -25,6 +25,14 @@ from VistATestClient import VistATestClientFactory, createTestClientArgParser
 from LoggerManager import logger
 from VistAPackageInfoFetcher import VistAPackageInfoFetcher
 from VistAGlobalImport import VistAGlobalImport
+from ExternalDownloader import obtainKIDSPatchFileBySha1
+from ConvertToExternalData import readSha1SumFromSha1File
+from ConvertToExternalData import isValidExternalDataFileName
+from ConvertToExternalData import isValidGlobalFileSuffix, isValidGlobalSha1Suffix
+from ConvertToExternalData import getSha1HashFromExternalDataFileName
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_CACHE_DIR = os.path.normpath(os.path.join(SCRIPT_DIR, "../"))
 
 DEFAULT_INSTALL_DUZ = 17 # VistA-FOIA user, "USER,SEVENTEEN"
 """ Default Installer for KIDS Patches """
@@ -96,14 +104,21 @@ class DefaultKIDSPatchInstaller(object):
                      a multibuilds KIDS patch
     @duz: the applier's VistA DUZ, default is set to 17, in VistA FOIA
           it is USER SEVENTEEN
-    @extra: any extra information that might be needed
+    @**kargs: any extra information that might be needed
   """
   def __init__(self, kidsFile, kidsInstallName, seqNo=None, logFile=None,
-               multiBuildList = None, duz = DEFAULT_INSTALL_DUZ, extra=None):
+               multiBuildList = None, duz = DEFAULT_INSTALL_DUZ, **kargs):
     assert os.path.exists(kidsFile), ("kids file does not exist %s" % kidsFile)
     self._origKidsFile = kidsFile
     if len(kidsFile) >= self.KIDS_FILE_PATH_MAX_LEN:
-      dest = os.path.join(tempfile.gettempdir(), os.path.basename(kidsFile))
+      destFilename = os.path.basename(kidsFile)
+      tempDir = tempfile.gettempdir()
+      if isValidExternalDataFileName(kidsFile):
+        # if read directly from inplace, need to replace the name with hash
+        destFilename = getSha1HashFromExternalDataFileName(kidsFile)
+      while (len(tempDir)+len(destFilename)+1) >= self.KIDS_FILE_PATH_MAX_LEN:
+        tempDir = os.path.split(tempDir)[0]
+      dest = os.path.join(tempDir, destFilename)
       shutil.copy(kidsFile, dest)
       self._kidsFile = os.path.normpath(dest)
       logger.info("new kids file is %s" % self._kidsFile)
@@ -114,6 +129,10 @@ class DefaultKIDSPatchInstaller(object):
     self._duz = duz
     self._updatePackageLink = False
     self._multiBuildList = multiBuildList
+    # store all the globals files associated with KIDS"
+    self._globalFiles = None
+    if "globals" in kargs:
+      self._globalFiles = kargs['globals']
 
   """ set up the log for VistA connection
     @connection: a connection from a VistATestClient
@@ -157,7 +176,9 @@ class DefaultKIDSPatchInstaller(object):
     connection.expect("Select INSTALL NAME:")
     connection.send(self._kidsInstallName+"\r")
     """ handle any questions before general KIDS installation questions"""
-    self.handleKIDSInstallQuestions(connection)
+    result = self.handleKIDSInstallQuestions(connection)
+    if not result:
+      return False
     kidsMenuActionLst = self.KIDS_MENU_OPTION_ACTION_LIST
     while True:
       index = connection.expect([x[0] for x in kidsMenuActionLst])
@@ -166,6 +187,7 @@ class DefaultKIDSPatchInstaller(object):
         connection.send("%s\r" % sendCmd)
       if kidsMenuActionLst[index][2]:
         break
+    return True
   """ restart the previous installation
   """
   def restartInstallation(self, vistATestClient):
@@ -237,7 +259,13 @@ class DefaultKIDSPatchInstaller(object):
       logger.error("Error handling KIDS Load Options %s, %s" %
                    (self._kidsInstallName, self._kidsFile))
       return False
-    self.__handleKIDSInstallQuestions__(connection)
+    result = self.__handleKIDSInstallQuestions__(connection)
+    if not result:
+      result = self.unloadDistribution(vistATestClient, False)
+      if not result:
+        logger.error("Unload %s failed" % self._kidsInstallName)
+        return False
+      return self.normalInstallation(vistATestClient, reinst)
     self.__installationCommon__(vistATestClient)
     return True
 
@@ -256,7 +284,7 @@ class DefaultKIDSPatchInstaller(object):
     loadOptionActionList.append(
                (self._kidsInstallName + "   Install Completed", None))
     while True:
-      index = connection.expect([x[0] for x in loadOptionActionList])
+      index = connection.expect([x[0] for x in loadOptionActionList], 120)
       if index == len(loadOptionActionList) - 1:
         if not reinst:
           return False
@@ -319,7 +347,7 @@ class DefaultKIDSPatchInstaller(object):
       logger.info(status)
       callback = statusActionList[index][1]
       if callback:
-        callback(connection, status)
+        callback(connection, status=status)
       if statusActionList[index][2]:
         break
       else:
@@ -357,18 +385,27 @@ class DefaultKIDSPatchInstaller(object):
   """ intended to be implemented by subclass
     this is to handle any build related questions that
     comes up before the general KIDS questions
+    default implementation is to check the error condition
   """
-  def handleKIDSInstallQuestions(self, connection, extra=None):
-    pass
+  def handleKIDSInstallQuestions(self, connection, **kargs):
+    try:
+      connection.expect("\*\*INSTALL FILE IS CORRUPTED\*\*",5)
+      logger.error("%s:INSTALL FILE IS CORRUPTED" % self._kidsInstallName)
+      connection.expect("Select Installation ", 5)
+      connection.send('\r')
+      return False
+    except Exception as ex:
+      return True
+
   """ intended to be implemented by subclass
     answer question related to pre install routine
   """
-  def runPreInstallationRoutine(self, connection, extra=None):
+  def runPreInstallationRoutine(self, connection, **kargs):
     pass
   """ intended to be implemented by subclass
     answer question related to post install routine
   """
-  def runPostInstallationRoutine(self, connection, extra=None):
+  def runPostInstallationRoutine(self, connection, **kargs):
     pass
   """ intended to be implemented by subclass """
   def extraFixWork(self, vistATestClient):
@@ -376,7 +413,7 @@ class DefaultKIDSPatchInstaller(object):
   """ default action for Send Mail To option
     please override or enhance it if more action is needed
   """
-  def handleSendMailToOptions(self, connection, extra=None):
+  def handleSendMailToOptions(self, connection, **kargs):
     connection.send("\r")
     connection.expect("Select basket to send to: ")
     connection.send("\r")
@@ -386,7 +423,7 @@ class DefaultKIDSPatchInstaller(object):
   """ default action for install completed
     please override or enhance it if more action is needed
   """
-  def installCompleted(self, connection, extra=None):
+  def installCompleted(self, connection, **kargs):
     extraInfo = connection.before
     logger.debug(extraInfo)
     if re.search("No link to PACKAGE file", extraInfo):
@@ -398,7 +435,7 @@ class DefaultKIDSPatchInstaller(object):
   """ default action for installation error
     please override or enhance it if more action is needed
   """
-  def handleInstallError(self, connection, extra=None):
+  def handleInstallError(self, connection, **kargs):
     logger.error("Installation failed for %s" % self._kidsInstallName)
     connection.send("\r")
 
@@ -407,11 +444,11 @@ class DefaultKIDSPatchInstaller(object):
     the same directory as the KIDs directory
     please override or enhance it if more action is needed
   """
-  def preInstallationWork(self, vistATestClient, extra=None):
+  def preInstallationWork(self, vistATestClient, **kargs):
     """ ignore the multi-build patch for now """
     if self._multiBuildList is not None:
       return
-    globalFiles = getGlobalFileList(os.path.dirname(self._origKidsFile))
+    globalFiles = self.__getGlobalFileList__()
     if globalFiles is None or len(globalFiles) == 0:
       return
     globalImport = VistAGlobalImport()
@@ -419,17 +456,32 @@ class DefaultKIDSPatchInstaller(object):
       logger.info("Import global file %s" % (glbFile))
       globalImport.importGlobal(vistATestClient, glbFile)
 
-#---------------------------------------------------------------------------#
-#  Utilities Functions
-#---------------------------------------------------------------------------#
+  #---------------------------------------------------------------------------#
+  #  Utilities Functions
+  #---------------------------------------------------------------------------#
 
-""" utility function to find the all global files ends with GLB/s """
-def getGlobalFileList(inputDir):
-  if not os.path.exists(inputDir):
-    return None
-  globalFiles = glob.glob(os.path.join(inputDir, "*.GBLs"))
-  globalFiles.extend(glob.glob(os.path.join(inputDir, "*.GBL")))
-  return globalFiles
+  """ utility function to find the all global files ends with GLB/s """
+  def __getGlobalFileList__(self):
+    globalFiles = []
+    if self._globalFiles is None or len(self._globalFiles) == 0:
+      return globalFiles
+    for gFile in self._globalFiles:
+      if isValidGlobalFileSuffix(gFile):
+        globalFiles.append(gFile)
+        continue
+      if isValidGlobalSha1Suffix(gFile): # external file
+        sha1Sum = readSha1SumFromSha1File(gFile)
+        (result, path) = obtainKIDSPatchFileBySha1(gFile,
+                                                   sha1Sum,
+                                                   DEFAULT_CACHE_DIR)
+        if not result:
+          logger.error("Could not obtain global file for %s" % gFile)
+          raise Exception("Error getting global file for %s" % gFile)
+        globalFiles.append(path)
+
+    if len(globalFiles) > 0:
+      logger.info("global file lists %s" % globalFiles)
+    return globalFiles
 
 """ utility function to find the name associated the DUZ """
 def getPersonNameByDuz(inputDuz, vistAClient):
@@ -534,13 +586,15 @@ class KIDSInstallerFactory(object):
   @staticmethod
   def createKIDSInstaller(kidsFile, kidsInstallName,
                           seqNo=None, logFile=None,
-                          multiBuildList=None):
+                          multiBuildList=None, duz=DEFAULT_INSTALL_DUZ,
+                          **kargs):
     return KIDSInstallerFactory.installerDict.get(
                   kidsInstallName,
                   DefaultKIDSPatchInstaller)(kidsFile,
                                              kidsInstallName,
                                              seqNo, logFile,
-                                             multiBuildList)
+                                             multiBuildList, duz,
+                                             **kargs)
 
   @staticmethod
   def registerKidsInstaller(kidsInstallName, kidsInstaller):

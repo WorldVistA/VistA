@@ -34,6 +34,8 @@ if curDir not in sys.path:
 from LoggerManager import logger, initConsoleLogging
 from KIDSPatchOrderGenerator import KIDSPatchOrderGenerator
 from KIDSPatchInfoParser import installNameToDirName
+from ConvertToExternalData import addToGitIgnoreList, isValidKIDSPatchHeaderSuffix
+from ConvertToExternalData import isValidSha1Suffix
 
 class Package:
     def __init__(self, name, path):
@@ -81,42 +83,41 @@ def place(src,dst):
         logger.error( "%s => %s" % (src, dst))
         pass
 
-def placePatchInfo(patchInfo, curDir, path, associatedTxtSet=None):
+def placeToDir(infoSrc, destDir, addToGitIgnore=True):
+  if not infoSrc or not os.path.exists(infoSrc):
+    return
+  infoSrcName = os.path.basename(infoSrc)
+  infoDest = os.path.join(destDir, infoSrcName)
+  if os.path.normpath(infoDest) != os.path.normpath(infoSrc):
+    place(infoSrc, infoDest)
+    if addToGitIgnore and isValidSha1Suffix(infoSrcName):
+      addToGitIgnoreList(infoDest[:infoDest.rfind('.')])
+
+def placeAssociatedFiles(associatedFileList, destDir):
+  if associatedFileList:
+    for infoSrc in associatedFileList:
+      placeToDir(infoSrc, destDir)
+
+def placePatchInfo(patchInfo, curDir, path):
   """ place the KIDS info file first if present """
   logger.debug("place patch info %s" % patchInfo)
+  destDir = os.path.join(curDir, path)
   infoSrc = patchInfo.kidsInfoPath
   if infoSrc:
-    infoSrcName = os.path.basename(infoSrc)
-    infoDestDir = os.path.join(curDir, path)
-    infoDest = os.path.join(infoDestDir, infoSrcName)
-    if infoDest != infoSrc:
-      place(infoSrc, infoDest)
-    # handle the associated txt file
-    if associatedTxtSet:
-      outList = getAssociatedInfoFile(infoSrcName, associatedTxtSet)
-      if outList:
-        for file in outList:
-          fileDest = os.path.join(infoDestDir, os.path.basename(file))
-          place(file, fileDest)
-          associatedTxtSet.remove(file)
+    placeToDir(infoSrc, destDir)
+  """ place the associated files """
+  placeAssociatedFiles(patchInfo.associatedInfoFiles, destDir)
+  """ place the global files """
+  placeAssociatedFiles(patchInfo.associatedGlobalFiles, destDir)
+  """ place the custom installer file """
+  placeToDir(patchInfo.customInstallerPath, destDir)
+
   """ ignore the multiBuilds kids file """
   if patchInfo.isMultiBuilds: return
-  kidsSrc = patchInfo.kidsFilePath
-  if not kidsSrc: return
-  kidsDest = os.path.normpath(os.path.join(curDir, path,
-                              os.path.basename(kidsSrc)))
-  if kidsSrc != kidsDest:
-    place(kidsSrc, kidsDest)
+  placeToDir(patchInfo.kidsFilePath, destDir)
+  """ check the KIDS Sha1 path """
+  placeToDir(patchInfo.kidsSha1Path, destDir)
 
-def getAssociatedInfoFile(infoFileName, associatedTxtSet):
-  fileList = None
-  for file in associatedTxtSet:
-    fileName = os.path.basename(file)
-    if fileName.startswith(infoFileName[:infoFileName.rfind('.')]):
-      if not fileList:
-        fileList = []
-      fileList.append(file)
-  return fileList
 #-----------------------------------------------------------------------------
 
 def populate(input):
@@ -148,7 +149,6 @@ def populate(input):
   curDir = os.getcwd()
   kidsOrderGen = KIDSPatchOrderGenerator()
   patchOrder = kidsOrderGen.generatePatchOrder(curDir)
-  patchOrderList = [x.installName for x in patchOrder]
   patchInfoDict = kidsOrderGen.getPatchInfoDict()
   patchInfoSet = set(patchInfoDict.keys())
   patchList = patchInfoDict.values()
@@ -161,8 +161,18 @@ def populate(input):
   #---------------------------------------------------------------------------
   multiBuildSet = set([x.installName for x in patchList if x.isMultiBuilds])
   for info in multiBuildSet:
+    logger.info("Handling Multibuilds Kids %s" % info)
     patchInfo = patchInfoDict[info]
     src = patchInfo.kidsFilePath
+    dest = os.path.normpath(os.path.join(curDir, "MultiBuilds",
+                                         os.path.basename(src)))
+    if src != dest:
+      place(src,dest)
+    if isValidKIDSPatchHeaderSuffix(dest):
+      " add to ignore list if not there"
+      addToGitIgnoreList(dest[0:dest.rfind('.')])
+    src = patchInfo.kidsSha1Path
+    if not src: continue
     dest = os.path.normpath(os.path.join(curDir, "MultiBuilds",
                                          os.path.basename(src)))
     if src != dest:
@@ -176,14 +186,14 @@ def populate(input):
       logger.info("Handling Kids %s" % patch)
       patchInfo = patchInfoDict[patch]
       patchDir = os.path.join(path, "Patches", installNameToDirName(patch))
-      placePatchInfo(patchInfo, curDir, patchDir, leftoverTxtFiles)
+      placePatchInfo(patchInfo, curDir, patchDir)
     # Map KIDS Info Files that do not have associated KIDS Build Files
     nsNoKidsList = [x.installName for x in noKidsPatchList if x.namespace==ns]
     for patch in nsNoKidsList:
       logger.info("Handling No Kids info File %s" % patch)
       patchInfo = noKidsInfoDict[patch]
       patchDir = os.path.join(path, "Patches", installNameToDirName(patch))
-      placePatchInfo(patchInfo, curDir, patchDir, leftoverTxtFiles)
+      placePatchInfo(patchInfo, curDir, patchDir)
     patchInfoSet.difference_update(nsPatchList)
     noKidsInfoSet.difference_update(nsNoKidsList)
 
@@ -201,6 +211,14 @@ def populate(input):
   # Put invalid kids info files in Uncategorized package.
   for src in leftoverTxtFiles:
     logger.info("Handling left over files: %s" % src)
+    from KIDSAssociatedFilesMapping import getAssociatedInstallName
+    installName = getAssociatedInstallName(src)
+    if installName == "MultiBuilds": # put in Multibuilds directory
+      dest = os.path.normpath(os.path.join(curDir, "MultiBuilds",
+                                           os.path.basename(src)))
+      if src != dest:
+        place(src,dest)
+      continue
     dirName = os.path.dirname(src)
     if not dirName.endswith("Packages"):
       logger.debug("Do not move %s" % src)
@@ -211,7 +229,8 @@ def populate(input):
       place(src,dest)
 
 def main():
-  initConsoleLogging()
+  import logging
+  initConsoleLogging(logging.INFO)
   populate(sys.stdin)
 
 if __name__ == '__main__':

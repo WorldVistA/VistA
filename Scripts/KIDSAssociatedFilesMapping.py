@@ -1,0 +1,62 @@
+#---------------------------------------------------------------------------
+# Copyright 2013 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+
+"""
+  single file name => kids install name
+"""
+KIDS_SINGLE_FILE_ASSOCIATION_DICT = {
+  ### Info Files Section
+  "CPRS GUI VERSION 28 NOTES.txt" : "MultiBuilds",
+  "MAG3_0P121.ReadMe.txt" : "MAG*3.0*121",
+  "MOCHA_1.txt" : "PSJ*5.0*261",
+  "Release of Patient Assessment Documentation Pkg_NUPA_1.txt" : "NUPA 1.0",
+  "Release of VA NATIONAL HEALTH INFO NETWORK NHIN_1.txt" : "NHIN 1.0",
+  "Update to NUPA_1.txt" : "NUPA 1.0",
+  "XOBU_1-6 Security Suite Utility Pack.txt" : "XOBU 1.6",
+  #### Global Files Section
+  "LEX_2_74.GBL": "LEX*2.0*74",
+  "LEX_2_76.GBL": "LEX*2.0*76",
+  "LEX_2_77.GBL": "LEX*2.0*77",
+  "LEX_2_78.GBL": "LEX*2.0*78",
+  "LEX_2_79.GBL": "LEX*2.0*79",
+  "LEX_2_82.GBLs": "LEX*2.0*82",
+  "LEX_2_83.GBLs": "LEX*2.0*83",
+  "LEX_2_84.GBLs": "LEX*2.0*84"
+}
+
+"""
+  regular expression match => kids install name
+"""
+KIDS_GROUP_FILES_ASSOCIATION_DICT = {
+  "IBRC1101[A-F].TXT" : "IB*2.0*445",
+  "IBRC1110[A-F].TXT" : "IB*2.0*462",
+  "IBRC1201[A-F].TXT" : "IB*2.0*468",
+  "IBRC1210[A-F].TXT" : "IB*2.0*484"
+}
+
+def getAssociatedInstallName(fileName):
+  import os
+  import re
+  from ConvertToExternalData import isValidSha1Suffix
+  basename = os.path.basename(fileName)
+  if isValidSha1Suffix(basename):
+    basename = basename[:basename.rfind('.')]
+  if basename in KIDS_SINGLE_FILE_ASSOCIATION_DICT:
+    return KIDS_SINGLE_FILE_ASSOCIATION_DICT[basename]
+  for regExp in KIDS_GROUP_FILES_ASSOCIATION_DICT:
+    if re.search(regExp, basename):
+      return KIDS_GROUP_FILES_ASSOCIATION_DICT[regExp]
+  return None

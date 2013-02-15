@@ -32,17 +32,35 @@ from datetime import datetime
 curDir = os.path.dirname(os.path.abspath(__file__))
 if curDir not in sys.path:
   sys.path.append(curDir)
-from LoggerManager import logger, initConsoleLogging
-from KIDSPatchInfoParser import KIDSPatchInfoParser
-from KIDSPatchInfoParser import convertToInstallName
-from KIDSPatchInfoParser import dirNameToInstallName, KIDSPatchInfo
-from KIDSPatchInfoParser import setPatchInfoFromInstallName
 
 PATCH_IGNORED_DIRS = ('Packages', 'Uncategorized', 'MultiBuilds')
 VALID_CSV_ORDER_FILE_FIELDS = [
     'INSTALLED', 'VERIFY_DT', 'STATUS', 'SEQ#',
     'LABELED_AS', 'CATEGORY', 'PRODUCT_NAME'
     ]
+
+""" enums """
+KIDS_BUILD_FILE_TYPE_KIDS = 0
+KIDS_BUILD_FILE_TYPE_HEADER = 1
+KIDS_BUILD_FILE_TYPE_SHA1 = 2
+
+from LoggerManager import logger, initConsoleLogging
+from KIDSPatchInfoParser import KIDSPatchInfoParser
+from KIDSPatchInfoParser import convertToInstallName
+from KIDSPatchInfoParser import dirNameToInstallName, KIDSPatchInfo
+from KIDSPatchInfoParser import setPatchInfoFromInstallName
+from ConvertToExternalData import readSha1SumFromSha1File
+from ConvertToExternalData import isValidKIDSPatchSuffix
+from ConvertToExternalData import isValidKIDSPatchHeaderSuffix
+from ConvertToExternalData import isValidKIDSPatchSha1Suffix
+from ConvertToExternalData import isValidKIDSInfoSuffix
+from ConvertToExternalData import isValidKIDSInfoSha1Suffix
+from ConvertToExternalData import isValidCSVSuffix
+from ConvertToExternalData import isValidPatchRelatedFiles
+from ConvertToExternalData import isValidGlobalFileSuffix
+from ConvertToExternalData import isValidGlobalSha1Suffix
+from ConvertToExternalData import isValidPythonSuffix
+from KIDSAssociatedFilesMapping import getAssociatedInstallName
 
 """
 This class will generate a KIDS Patch order based on input
@@ -51,10 +69,12 @@ patch directory
 class KIDSPatchOrderGenerator(object):
   def __init__(self):
     self._kidsInstallNameDict = dict() # the install name -> kids files
-    self._multiBuildDict = dict() # kids file -> install name
-    self._kidsBuildFileList = [] # all the kids file under vista patches dir
+    self._multiBuildDict = dict() # kids file -> [install names]
+    self._kidsBuildFileDict = dict() # all the kids files name->[path,sha1path]
+    self._kidsInstallNameSha1Dict = dict() # install name -> sha1
     self._kidsInfoFileList = [] # all kids info file under vista patches dir
     self._csvOrderFileList = [] # all csv order file under vista patches dir
+    self._globalFilesSet = set() # all global file under vista patches dir
     self._patchInfoDict = dict() #install name -> patchInfo
     self._missKidsBuildDict = dict() # install name -> patchInfo without Kids
     self._missKidsInfoSet = set() # kids build without info file
@@ -66,7 +86,7 @@ class KIDSPatchOrderGenerator(object):
     self._invalidInfoFileSet = set() # invalid txt file
     self._csvDepDict = dict() # installName => installName based on csvFile
     self._installNameSeqMap = dict() # installName => seqNo, patch in order
-    self._customInstallerMap = dict() # installName => KIDS customInstaller
+    self._pythonScriptList = [] # all the python script files
 
   def generatePatchOrder(self, patchReposDir):
       return self.generatePatchOrderTopologic(patchReposDir)
@@ -89,6 +109,7 @@ class KIDSPatchOrderGenerator(object):
     self.__parseAllKIDSInfoFilesList__()
     self.__generateMissKIDSInfoSet__()
     self.__addMissKIDSInfoPatch__()
+    self.__handlePatchAssociatedFiles__()
     self.__updateCustomInstaller__()
     self.__getPatchOrderDependencyByCSVFiles__()
 
@@ -107,7 +128,26 @@ class KIDSPatchOrderGenerator(object):
   def printPatchOrderList(self):
     for x in self._patchOrder:
       print((x.installName, x.package, x.namespace,
-             x.version, x.patchNo, x.seqNo, x.csvDepPatch))
+             x.version, x.patchNo, x.seqNo, x.csvDepPatch,
+             x.isMultiBuilds, x.kidsFilePath, x.hasCustomInstaller))
+
+  def __addKidsBuildFileToDict__(self, fileName, absPath, fileType):
+    if fileName not in self._kidsBuildFileDict:
+      self._kidsBuildFileDict[fileName] = [None, None]
+    if ( fileType == KIDS_BUILD_FILE_TYPE_KIDS or
+         fileType == KIDS_BUILD_FILE_TYPE_HEADER ):
+      filePath = self._kidsBuildFileDict[fileName][0]
+      if self._kidsBuildFileDict[fileName][0] != None:
+        logger.error("Duplicated KIDS file path %s : %s" % (filePath, absPath))
+      else:
+        self._kidsBuildFileDict[fileName][0] = absPath
+      return
+    if fileType == KIDS_BUILD_FILE_TYPE_SHA1:
+      sha1File = self._kidsBuildFileDict[fileName][1]
+      if self._kidsBuildFileDict[fileName][1] != None:
+        logger.error("Duplicated KIDS Sha1 File %s : %s" % (sha1File, absPath))
+      else:
+        self._kidsBuildFileDict[fileName][1] = absPath
 
   """ walk through the dir to find all KIDS build and info file and others """
   def __getAllKIDSBuildInfoAndOtherFileList__(self, patchDir):
@@ -116,39 +156,64 @@ class KIDSPatchOrderGenerator(object):
     for (root, dirs, files) in os.walk(absPatchDir):
       lastDir = os.path.split(root)[-1]
       for fileName in files:
+        absFilename = os.path.join(root, fileName)
+        if not isValidPatchRelatedFiles(absFilename, True):
+          continue
         """ Handle KIDS build files """
-        if (fileName.endswith(".KIDs") or
-            fileName.endswith(".KID")):
-          self._kidsBuildFileList.append(os.path.join(root, fileName))
+        if isValidKIDSPatchSuffix(fileName):
+          logger.debug("Adding %s KIDS file to dict" % absFilename)
+          self.__addKidsBuildFileToDict__(fileName, absFilename,
+                                          KIDS_BUILD_FILE_TYPE_KIDS)
           continue
-        """ Handle KIDS Info files """
-        if (fileName.endswith(".TXT") or
-            fileName.endswith(".TXTs") or
-            fileName.endswith(".txt")):
-          self._kidsInfoFileList.append(os.path.join(root, fileName))
+        """ Handle KIDS build HEADER files """
+        if isValidKIDSPatchHeaderSuffix(fileName):
+          logger.debug("Adding %s KIDS header to dict" % absFilename)
+          kidsFileName = fileName[0:fileName.rfind('.')]
+          self.__addKidsBuildFileToDict__(kidsFileName, absFilename,
+                                          KIDS_BUILD_FILE_TYPE_HEADER)
           continue
-        """ Handle KIDS.py files """
-        if (fileName.endswith('KIDS.py')):
-          """ ignore the file directly under PATCH_IGNORED_DIRS """
-          if lastDir in PATCH_IGNORED_DIRS:
-              continue
-          installName = dirNameToInstallName(lastDir)
-          self._customInstallerMap[installName] = os.path.join(root, fileName)
+        """ Handle KIDS build Sha1 files """
+        if isValidKIDSPatchSha1Suffix(fileName):
+          logger.debug("Adding %s KIDS info to dict" % absFilename)
+          kidsFileName = fileName[0:fileName.rfind('.')]
+          self.__addKidsBuildFileToDict__(kidsFileName, absFilename,
+                                          KIDS_BUILD_FILE_TYPE_SHA1)
+          continue
+        """ Handle KIDS Info/Sha1 files """
+        if ( isValidKIDSInfoSuffix(fileName) or
+             isValidKIDSInfoSha1Suffix(fileName) ):
+          self._kidsInfoFileList.append(absFilename)
+          continue
+        """ Handle Global/Sha1 Files """
+        if ( isValidGlobalFileSuffix(fileName) or
+             isValidGlobalSha1Suffix(fileName) ):
+          logger.debug("Adding %s Global files to list" % absFilename)
+          self._globalFilesSet.add(absFilename)
+          continue
         """ handle all csv files """
-        if (fileName.endswith('.csv')):
-          csvFilePath = os.path.join(root, fileName)
-          if isValidOrderCSVFile(csvFilePath):
-            self._csvOrderFileList.append(csvFilePath)
+        if isValidCSVSuffix(fileName):
+          if isValidOrderCSVFile(absFilename):
+            self._csvOrderFileList.append(absFilename)
+            continue
+        """ Handle .py files """
+        if isValidPythonSuffix(fileName):
+          logger.debug("Adding %s python script to list" % absFilename)
+          self._pythonScriptList.append(absFilename)
+          continue
 
-    logger.info("Total # of KIDS Builds are %d" % len(self._kidsBuildFileList))
+    logger.info("Total # of KIDS Builds are %d" % len(self._kidsBuildFileDict))
     logger.info("Total # of KIDS Info are %d" % len(self._kidsInfoFileList))
+    logger.info("Total # of Global files are %d" % len(self._globalFilesSet))
+    logger.info("Total # of Python files are %d" % len(self._pythonScriptList))
     logger.info("Total # of CSV files are %d" % len(self._csvOrderFileList))
 
   """ parse all the KIDS files, update kidsInstallNameDict, multibuildDict """
   def __parseAllKIDSBuildFilesList__(self):
     kidsParser = KIDSPatchInfoParser()
-    for kidsFile in self._kidsBuildFileList:
-      logger.debug("%s" % kidsFile)
+    for basename in self._kidsBuildFileDict.iterkeys():
+      kidsFile, sha1Path = self._kidsBuildFileDict[basename]
+      if kidsFile == None:
+        logger.error("No KIDS file available for name %s" % basename)
       installNameList,seqNo = kidsParser.getKIDSBuildInstallNameSeqNo(kidsFile)
       if len(installNameList) > 1:
         if not self._multiBuildDict.get(kidsFile):
@@ -165,6 +230,12 @@ class KIDSPatchOrderGenerator(object):
           logger.warn("%s is already in the dict %s" % (installName, kidsFile))
         logger.debug("Added installName %s, file %s" % (installName, kidsFile))
         self._kidsInstallNameDict[installName] = os.path.normpath(kidsFile)
+        """ handle KIDS sha1 file Path """
+        if sha1Path:
+          if installName in self._kidsInstallNameSha1Dict:
+            logger.warn("%s is already in the dict %s" % (installName, sha1Path))
+          self._kidsInstallNameSha1Dict[installName] = sha1Path
+
     logger.debug("%s" % sorted(self._kidsInstallNameDict.keys()))
     logger.info("Total # of install name %d" % len(self._kidsInstallNameDict))
 
@@ -190,6 +261,11 @@ class KIDSPatchOrderGenerator(object):
         continue
       patchInfo.kidsFilePath = self._kidsInstallNameDict[installName]
       assert patchInfo.kidsFilePath
+      """ update PatchInfo kidsSha1 and kidsSha1Path """
+      if installName in self._kidsInstallNameSha1Dict:
+        sha1Path = self._kidsInstallNameSha1Dict[installName]
+        patchInfo.kidsSha1Path = sha1Path
+        patchInfo.kidsSha1 = readSha1SumFromSha1File(sha1Path)
       if installName in self._patchInfoDict:
         logger.warn("duplicated installName %s, %s, %s" %
                      (installName, self._patchInfoDict[installName],
@@ -298,13 +374,69 @@ class KIDSPatchOrderGenerator(object):
         kidsPatchInfo.seqNo = self._installNameSeqMap[kidsInstallName]
       kidsPatchInfo.kidsFilePath = self._kidsInstallNameDict[kidsInstallName]
       self._patchInfoDict[kidsInstallName] = kidsPatchInfo
+  """ update the associated files for patchInfo """
+  def __handlePatchAssociatedFiles__(self):
+    """ handle the info files first """
+    """ first by name assiciation """
+    for patchInfo in self._patchInfoDict.itervalues():
+      infoPath = patchInfo.kidsInfoPath
+      if infoPath:
+        infoName = os.path.basename(infoPath)
+        associateSet = set()
+        for infoFile in self._invalidInfoFileSet:
+          infoFileName = os.path.basename(infoFile)
+          if infoFileName.startswith(infoName[:infoName.rfind('.')]):
+            if not patchInfo.associatedInfoFiles:
+              patchInfo.associatedInfoFiles = []
+            patchInfo.associatedInfoFiles.append(infoFile)
+            associateSet.add(infoFile)
+            continue
+        self._invalidInfoFileSet.difference_update(associateSet)
+    """ second by mapping association """
+    associateSet = set()
+    for infoFile in self._invalidInfoFileSet:
+      installName = getAssociatedInstallName(infoFile)
+      if installName and installName in self._patchInfoDict:
+        patchInfo = self._patchInfoDict[installName]
+        if not patchInfo.associatedInfoFiles:
+          patchInfo.associatedInfoFiles = []
+        patchInfo.associatedInfoFiles.append(infoFile)
+        associateSet.add(infoFile)
+    self._invalidInfoFileSet.difference_update(associateSet)
+
+    """ handle global files """
+    associateSet = set()
+    for globalFile in self._globalFilesSet:
+      installName = getAssociatedInstallName(globalFile)
+      if installName and installName in self._patchInfoDict:
+        patchInfo = self._patchInfoDict[installName]
+        if not patchInfo.associatedGlobalFiles:
+          patchInfo.associatedGlobalFiles = []
+        patchInfo.associatedGlobalFiles.append(globalFile)
+        associateSet.add(globalFile)
+    self._globalFilesSet.difference_update(associateSet)
+
+    logger.info("Total # of leftover info files: %s" %
+                len(self._invalidInfoFileSet))
+    logger.debug(self._invalidInfoFileSet)
+    logger.info("Total # of leftover global files: %s" %
+                len(self._globalFilesSet))
+    logger.debug(self._globalFilesSet)
   """ update KIDSPatchInfo custom installer """
   def __updateCustomInstaller__(self):
-    logger.debug(self._customInstallerMap)
-    for installName in self._customInstallerMap:
-      customInstaller = self._customInstallerMap[installName]
-      self._patchInfoDict[installName].hasCustomInstaller = True
-      self._patchInfoDict[installName].customInstallerPath = customInstaller
+    for pythonScript in self._pythonScriptList:
+      installName = os.path.basename(pythonScript)
+      installName = dirNameToInstallName(installName[:installName.rfind('.')])
+      if installName in self._patchInfoDict:
+        patchInfo = self._patchInfoDict[installName]
+        patchInfo.hasCustomInstaller = True
+        if patchInfo.customInstallerPath:
+          logger.warning("Duplicated installer for %s: [%s:%s]" %
+                         installName, patchInfo.customInstallerPath,
+                         pythonScript)
+
+        logger.info("%s: custom installer %s" % (pythonScript, installName))
+        self._patchInfoDict[installName].customInstallerPath = pythonScript
 
   """ get all the patch order dependency by csv files """
   def __getPatchOrderDependencyByCSVFiles__(self):
@@ -467,7 +599,8 @@ def isValidOrderCSVFile(patchesCSV):
 ####### """ Testing code section """
 ###########################################################################
 def testGeneratePatchOrder():
-  initConsoleLogging()
+  import logging
+  initConsoleLogging(logging.INFO)
   kidsInfoGen = KIDSPatchOrderGenerator()
   if len(sys.argv) <= 1:
     sys.stderr.write("Specify patch directory")

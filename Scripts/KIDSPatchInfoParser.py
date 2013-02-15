@@ -91,6 +91,7 @@ class KIDSPatchInfo(object):
     self.installName = None
     self.kidsFilePath = None
     self.kidsSha1 = None
+    self.kidsSha1Path = None
     self.kidsInfoPath = None
     self.kidsInfoSha1 = None
     self.rundate = None
@@ -106,16 +107,21 @@ class KIDSPatchInfo(object):
     self.customInstallerPath = None
     """ related to FOIA dependency """
     self.csvDepPatch = None
+    """ Associated Files """
+    self.associatedInfoFiles = None
+    self.associatedGlobalFiles = None
   def __str__(self):
     return ("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,"
-            " %s, %s, %s, %s\n%s" %
+            " %s, %s, %s, %s, %s\n%s, \n%s\n%s, %s, %s" %
              (self.package, self.namespace, self.version,
               self.patchNo, self.seqNo, self.installName,
-              self.kidsFilePath, self.kidsSha1,
+              self.kidsFilePath, self.kidsSha1, self.kidsSha1Path,
               self.kidsInfoPath, self.kidsInfoSha1,
               self.rundate, self.status,
               self.isMultiBuilds, self.multiBuildsList, self.otherKidsInfoList,
-              self.priority, self.depKIDSPatch) )
+              self.priority, self.depKIDSPatch,
+              self.associatedInfoFiles, self.associatedGlobalFiles,
+              self.hasCustomInstaller, self.customInstallerPath) )
   def __repr__(self):
     return self.__str__()
 
