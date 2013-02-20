@@ -1,0 +1,5 @@
+message(STATUS "Basic build with no native build tool...")
+set(cmake_build_scripts "@cmake_build_scripts@")
+foreach(script ${cmake_build_scripts})
+  include(${script})
+endforeach()

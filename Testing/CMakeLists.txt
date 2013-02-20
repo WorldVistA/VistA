@@ -14,9 +14,6 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-set(CMAKE_MAKE_PROGRAM "/" CACHE INTERNAL "This does not build")
-set(CMAKE_INSTALL_PREFIX "/" CACHE INTERNAL "This does not install")
-
 find_program(GREP_EXECUTABLE NAMES grep DOC "Path to the grep executable for finding the line number of the found errors")
 mark_as_advanced(GREP_EXECUTABLE)
 if(NOT GREP_EXECUTABLE)
@@ -264,9 +261,11 @@ IF(TEST_VISTA_FRESH)
   if(TEST_VISTA_SETUP_MUNIT_PATCH_FILE AND TEST_VISTA_SETUP_MUNIT_PATCH_NAME)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/${MUNIT_INSTALLATION_SCRIPT}.in ${VISTA_BINARY_DIR}/${MUNIT_INSTALLATION_SCRIPT})
   endif()
-  set(MAKECOMMAND " ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/ImportRG.cmake" CACHE STRING "Import Routines and Globals into CACHE as Build Step" FORCE)
-ELSE()
-  set(MAKECOMMAND " ${CMAKE_COMMAND} -E echo No_Build_Required" CACHE STRING "No build process is required when CLEAN_CACHE if OFF" FORCE)
+  if(VISTA_HAVE_BUILD_TOOL)
+    add_custom_target(FreshVistA COMMAND ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/ImportRG.cmake)
+  else()
+    set_property(GLOBAL APPEND PROPERTY VISTA_BUILD_SCRIPTS ${VISTA_BINARY_DIR}/ImportRG.cmake)
+  endif()
 ENDIF()
 
 configure_file(CTestCustom.cmake.in ${VISTA_BINARY_DIR}/CTestCustom.cmake)
