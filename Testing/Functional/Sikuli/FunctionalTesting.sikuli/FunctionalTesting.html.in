@@ -1,0 +1,298 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+        .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>FunctionalTesting.sikuli\FunctionalTesting.sikuli</h2> <a href="FunctionalTesting.sikuli\FunctionalTesting.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">import</span> sys
+</span>addImagePath(<span class="str">"${sikuli}"</span>)
+<span class="skw">wait</span>(<span class="dig">30</span>)
+<span class="skw">doubleClick</span>(<img src="1326480962420.png" />)
+  <span class="skw">doubleClick</span>(<img src="1326480962420.png" />)
+<span class="kw">else</span>:
+  openApp(<span class="str">r'${VITALS_MANAGER_EXECUTABLE} /port=${VISTA_TCP_PORT} /server=${VISTA_TCP_HOST}
+  /ccow=disable'</span>)
+<span class="skw">wait</span>(<img src="AcccssCcndc.png" />,<span class="dig">30</span>)
+<span class="skw">type</span>(<img src="AccessCcndc.png" />,<span class="str">"fakedoc1"</span>)
+<span class="skw">type</span>(<img src="VerifyCcndc.png" />,<span class="str">"1Doc!@#$"</span>)
+<span class="skw">click</span>(<img src="1320870115117.png" />)
+<span class="skw">wait</span>(Pattern(<img src="Templates1Va.png" />).targetOffset(<span class="dig">0</span>,-<span class="dig">14</span>),<span class="dig">10</span>)
+<span class="skw">click</span>(Pattern(<img src="Templates1Va.png" />).targetOffset(<span class="dig">0</span>,-<span class="dig">14</span>))
+<span class="skw">wait</span>(<img src="NewTemplate-3.png" />)
+<span class="skw">click</span>(<img src="NewTemplate-3.png" />)
+<span class="skw">wait</span>(<img src="TemplateName-4.png" />,<span class="dig">30</span>)
+<span class="skw">type</span>(<img src="TemplateName-4.png" />,<span class="str">"ALLVITALS"</span>)
+<span class="skw">click</span>(<img src="1320870205151.png" />)
+<span class="skw">click</span>(<img src="dd.png" />)
+<span class="skw">dragDrop</span>(<img src="BLUUDPRESSUR-2.png" />,<img src="WEIGHT.png" />)
+<span class="skw">click</span>(<img src="1320870205151.png" />)
+<span class="skw">click</span>(<img src="1320870326408.png" />)
+<span class="skw">click</span>(<img src="1320870337758.png" />)
+<span class="skw">click</span>(<img src="File-2.png" />)
+<span class="skw">click</span>(<img src="Exit-2.png" />)
+<span class="kw">if</span> exists(<img src="1333398109508.png" />):
+  <span class="skw">doubleClick</span>(<img src="1333398109508.png" />)
+<span class="kw">else</span>:
+  openApp(<span class="str">r'${CPRS_EXECUTABLE} P=${VISTA_TCP_PORT} S=${VISTA_TCP_HOST} ccow=disable'</span>)
+<span class="skw">wait</span>(<img src="AcccssCcndc.png" />,<span class="dig">30</span>)
+<span class="skw">type</span>(<img src="AccessCcndc-4.png" />,<span class="str">"fakenurse1"</span>)
+<span class="skw">type</span>(<img src="VerifyCcndc-4.png" />,<span class="str">"1Nur!@#$"</span>)
+<span class="skw">click</span>(<img src="1320860138742-2.png" />)
+<span class="skw">wait</span>(<img src="PatientsAllP.png" />,<span class="dig">20</span>)
+<span class="skw">click</span>(<img src="EarterDavidJ-1.png" />)
+<span class="skw">click</span>(<img src="1320860179799-2.png" />)
+<span class="skw">click</span>(<img src="VisitNutSele-2.png" />)
+<span class="skw">click</span>(<img src="VISTAHEALTHC.png" />)
+<span class="skw">click</span>(<img src="1320860240255-1.png" />)
+<span class="skw">click</span>(<img src="Notes-1.png" />)
+<span class="skw">click</span>(<img src="Templates-1.png" />)
+<span class="skw">click</span>(Pattern(<img src="OptionsATIEN.png" />).targetOffset(<span class="dig">0</span>,-<span class="dig">11</span>))
+<span class="skw">click</span>(<img src="CreateNewSha.png" />)
+<span class="skw">wait</span>(<img src="lAllowLungLi.png" />,<span class="dig">10</span>)
+<span class="skw">type</span>(<span class="str">"OfficeVisit"</span>)
+<span class="skw">type</span>(Pattern(<img src="lemplateQuil-1.png" />).targetOffset(-<span class="dig">49</span>,<span class="dig">9</span>),<span class="str">"|PATIENT NAME|\n|PATIENT DATE OF BIRTH|,|PATIENT AGE|\n|PATIENT HEIGHT|\n|PATIENT WEIGHT|\n|PULSE|\n|BLOOD PRESSURE|\n|TEMPERATURE|\n|RESPIRATION|\n|RECENT MEDICATIONS|\n|ALLERGIES/ADR|\n|VA-WRIISC ACTIVE PROBLEMS|"</span>)
+<span class="skw">click</span>(<img src="Apply-1.png" />)
+<span class="skw">click</span>(<img src="1320939708563-1.png" />)
+<span class="skw">click</span>(<img src="EuverSheet.png" />)
+<span class="skw">click</span>(Pattern(<img src="Vntals-1.png" />).targetOffset(<span class="dig">0</span>,<span class="dig">10</span>))
+<span class="skw">wait</span>(Pattern(<img src="EWtalsLite.png" />).similar(<span class="dig">0.40</span>),<span class="dig">10</span>)
+<span class="skw">click</span>(<img src="Enteritals-1.png" />)
+<span class="skw">wait</span>(<img src="Pressure-1.png" />,<span class="dig">5</span>)
+<span class="skw">type</span>(<img src="Pressure-1.png" />,<span class="str">"120/75"</span>)
+<span class="skw">type</span>(<img src="lnHeight-1.png" />,<span class="str">"58"</span>)
+<span class="skw">click</span>(<img src="El-1.png" />)
+<span class="skw">click</span>(<img src="Unepain-1.png" />)
+<span class="skw">type</span>(<img src="Pulse-1.png" />,<span class="str">"124"</span>)
+<span class="skw">type</span>(<img src="Respiratipn-1.png" />,<span class="str">"25"</span>)
+<span class="skw">type</span>(<img src="TemperatureF-1.png" />,<span class="str">"98.5"</span>)
+<span class="skw">type</span>(<img src="rbWeight-1.png" />,<span class="str">"85"</span>)
+<span class="skw">click</span>(<img src="SaveAndExit-1.png" />)
+<span class="skw">click</span>(Pattern(<img src="X5-1.png" />).similar(<span class="dig">0.73</span>))
+<span class="skw">click</span>(Pattern(<img src="X5-1.png" />).similar(<span class="dig">0.75</span>))
+<span class="skw">click</span>(Pattern(<img src="FileHelpCART.png" />).targetOffset(-<span class="dig">20</span>,-<span class="dig">24</span>))
+<span class="skw">click</span>(<img src="Exit-4.png" />)
+<span class="skw">click</span>(<img src="itas985F124.png" />)
+<span class="skw">wait</span>(<img src="EnteredinErr.png" />,<span class="dig">30</span>)
+<span class="skw">click</span>(<img src="EnteredinErr.png" />)
+<span class="skw">click</span>(<img src="RxP19H.png" />)
+<span class="skw">click</span>(<img src="lncurrectEea.png" />)
+<span class="skw">click</span>(<img src="MarkasEntere.png" />)
+<span class="skw">click</span>(<img src="Keg.png" />)
+<span class="skw">click</span>(<img src="Enteritals.png" />)
+<span class="skw">wait</span>(<img src="Pressure-2.png" />,<span class="dig">5</span>)
+<span class="skw">type</span>(<img src="Pressure-2.png" />,<span class="str">"120/60"</span>)
+<span class="skw">click</span>(<img src="SaveAndExit.png" />)
+<span class="skw">click</span>(Pattern(<img src="FileHelpCART.png" />).targetOffset(-<span class="dig">20</span>,-<span class="dig">24</span>))
+<span class="skw">click</span>(<img src="Exit-4.png" />)
+<span class="skw">click</span>(Pattern(<img src="Prdblems-2.png" />).exact())
+<span class="skw">click</span>(Pattern(<img src="Newprdblem-2.png" />).similar(<span class="dig">0.60</span>))
+<span class="skw">type</span>(<img src="EnterTermtdS-2.png" />, <span class="str">"SORE THROAT"</span>)
+<span class="skw">click</span>(Pattern(<img src="1321021526660-2.png" />).similar(<span class="dig">0.60</span>))
+<span class="skw">click</span>(<img src="1324567405141-1.png" />)
+<span class="skw">click</span>(<img src="1321021526660-2.png" />)
+<span class="skw">click</span>(Pattern(<img src="Newprdblem-2.png" />).similar(<span class="dig">0.60</span>))
+<span class="skw">type</span>(<img src="EnterTermtdS-2.png" />, <span class="str">"EAR PAIN"</span>)
+<span class="skw">click</span>(Pattern(<img src="1321021526660-2.png" />).similar(<span class="dig">0.60</span>))
+<span class="skw">click</span>(<img src="1324567405141-1.png" />)
+<span class="skw">click</span>(<img src="1321021526660-2.png" />)
+<span class="skw">click</span>(Pattern(<img src="Newprdblem-2.png" />).similar(<span class="dig">0.60</span>))
+<span class="skw">type</span>(<img src="EnterTermtdS-2.png" />, <span class="str">"MILD DIFFICULTY BREATHING"</span>)
+<span class="skw">click</span>(Pattern(<img src="1321021526660-2.png" />).similar(<span class="dig">0.60</span>))
+<span class="skw">click</span>(<img src="1324567405141-1.png" />)
+<span class="skw">click</span>(<img src="1321021526660-2.png" />)
+<span class="skw">click</span>(Pattern(<img src="CoverSheet-1.png" />).similar(<span class="dig">0.80</span>))
+<span class="skw">rightClick</span>(Pattern(<img src="AllergnesAdv-1.png" />).targetOffset(<span class="dig">0</span>,<span class="dig">11</span>))
+<span class="skw">click</span>(<img src="Enternewalle-4.png" />)
+<span class="skw">type</span>(<img src="Searchfur-3.png" />,<span class="str">"penicillin"</span>)
+<span class="skw">click</span>(<img src="1320869034238-3.png" />)
+<span class="skw">wait</span>(Pattern(<img src="PENIEILLIN-3.png" />).similar(<span class="dig">0.90</span>),<span class="dig">5</span>)
+<span class="skw">click</span>(Pattern(<img src="PENIEILLIN-3.png" />).similar(<span class="dig">0.90</span>))
+<span class="skw">click</span>(<img src="EK-3.png" />)
+<span class="skw">type</span>(<img src="SidnsSvmptdm.png" />,<span class="str">"SWELLING\r"</span>)
+<span class="skw">click</span>(<img src="Tl-3.png" />)
+<span class="skw">click</span>(<img src="Pharmacplpgi-3.png" />)
+<span class="skw">click</span>(<img src="Histprical-3.png" />)
+<span class="skw">click</span>(<img src="EK-3.png" />)
+<span class="skw">rightClick</span>(Pattern(<img src="AllergnesAdv-1.png" />).targetOffset(<span class="dig">0</span>,<span class="dig">11</span>))
+<span class="skw">click</span>(<img src="Enternewalle-4.png" />)
+<span class="skw">type</span>(<img src="Searchfur-3.png" />,<span class="str">"peanuts"</span>)
+<span class="skw">click</span>(<img src="1320869034238-3.png" />)
+<span class="skw">wait</span>(Pattern(<img src="VPEANUTS-1.png" />).similar(<span class="dig">0.90</span>),<span class="dig">5</span>)
+<span class="skw">click</span>(Pattern(<img src="VPEANUTS-1.png" />).similar(<span class="dig">0.90</span>))
+<span class="skw">click</span>(<img src="EK-3.png" />)
+<span class="skw">type</span>(<img src="SidnsSvmptdm.png" />,<span class="str">"HIVES\r"</span>)
+<span class="skw">click</span>(<img src="Tl-3.png" />)
+<span class="skw">click</span>(<img src="Allergy.png" />)
+<span class="skw">click</span>(<img src="Histprical-3.png" />)
+<span class="skw">click</span>(<img src="EK-3.png" />)
+<span class="skw">click</span>(Pattern(<img src="FileEditIART.png" />).targetOffset(-<span class="dig">22</span>,-<span class="dig">12</span>))
+<span class="skw">click</span>(<img src="Exit-3.png" />)
+<span class="kw">if</span> exists(<img src="1333398109508.png" />):
+  <span class="skw">doubleClick</span>(<img src="1333398109508.png" />)
+<span class="kw">else</span>:
+  openApp(<span class="str">r'${CPRS_EXECUTABLE} P=${VISTA_TCP_PORT} S=${VISTA_TCP_HOST} ccow=disable'</span>)
+<span class="skw">wait</span>(<img src="AcccssCcndc.png" />,<span class="dig">30</span>)
+<span class="skw">type</span>(<img src="AccessCcndc-4.png" />,<span class="str">"fakedoc1"</span>)
+<span class="skw">type</span>(<img src="VerifyCcndc-4.png" />,<span class="str">"1Doc!@#$"</span>)
+<span class="skw">click</span>(<img src="1320860138742-2.png" />)
+<span class="skw">wait</span>(<img src="PatientsAllP.png" />,<span class="dig">10</span>)
+<span class="skw">click</span>(<img src="EarterDavidJ-1.png" />)
+<span class="skw">click</span>(<img src="1320860179799-2.png" />)
+<span class="skw">click</span>(<img src="VisitNutSele-2.png" />)
+<span class="skw">click</span>(<img src="VISTAHEALTHC.png" />)
+<span class="skw">click</span>(<img src="1320860240255-1.png" />)
+<span class="skw">click</span>(Pattern(<img src="Prdblems.png" />).exact())
+<span class="skw">click</span>(Pattern(<img src="Newprdblem.png" />).similar(<span class="dig">0.60</span>))
+<span class="skw">type</span>(<img src="EnterTermtdS.png" />, <span class="str">"OTITIS MEDIA"</span>)
+<span class="skw">click</span>(<img src="Search.png" />)
+<span class="skw">wait</span>(<img src="IInsnenilier.png" />,<span class="dig">30</span>)
+<span class="skw">click</span>(<img src="IInsnenilier.png" />)
+<span class="skw">click</span>(<img src="1321021526660.png" />)
+<span class="skw">click</span>(<img src="Newprdblem.png" />)
+<span class="skw">type</span>(<img src="EnterTermtdS.png" />, <span class="str">"bronchitis"</span>)
+<span class="skw">click</span>(<img src="Search.png" />)
+<span class="skw">wait</span>(<img src="Acutebrcnchi.png" />,<span class="dig">10</span>)
+<span class="skw">click</span>(<img src="Acutebrcnchi.png" />)
+<span class="skw">click</span>(<img src="1321021526660.png" />)
+<span class="skw">click</span>(Pattern(<img src="Unspecifiedc.png" />).targetOffset(-<span class="dig">104</span>,<span class="dig">0</span>))
+<span class="skw">wait</span>(<img src="1323098707432.png" />,<span class="dig">2</span>)
+<span class="skw">rightClick</span>(<img src="1323098707432.png" />)
+<span class="skw">click</span>(<img src="Remcve.png" />)
+<span class="skw">click</span>(<img src="Addccmment.png" />)
+<span class="skw">type</span>(<img src="Enteranew.png" />,<span class="str">"Entered In Error"</span>)
+<span class="skw">click</span>(<img src="1323095823892.png" />)
+<span class="skw">click</span>(<img src="1323095846238.png" />)
+<span class="skw">click</span>(<img src="EuverSheet.png" />)
+<span class="skw">rightClick</span>(<img src="Peanuts.png" />)
+<span class="skw">click</span>(<img src="Markselected.png" />)
+<span class="skw">click</span>(<img src="QK.png" />)
+<span class="skw">click</span>(<img src="1321045230364.png" />)
+<span class="skw">rightClick</span>(<img src="Denicillin.png" />)
+<span class="skw">click</span>(<img src="Markselected.png" />)
+<span class="skw">click</span>(<img src="QK.png" />)
+<span class="skw">click</span>(<img src="1321045230364.png" />)
+<span class="skw">rightClick</span>(Pattern(<img src="AllergnesAdv-2.png" />).targetOffset(<span class="dig">0</span>,<span class="dig">11</span>))
+<span class="skw">click</span>(<img src="Enternewalle-5.png" />)
+<span class="skw">type</span>(<img src="Searchfur-4.png" />,<span class="str">"peanuts"</span>)
+<span class="skw">click</span>(<img src="1320869034238-4.png" />)
+<span class="skw">click</span>(Pattern(<img src="VPEANUTS-2.png" />).similar(<span class="dig">0.90</span>))
+<span class="skw">click</span>(<img src="EK-4.png" />)
+<span class="skw">type</span>(<img src="SidnsSvmptdm-1.png" />,<span class="str">"ANAPHYLAXIS\r"</span>)
+<span class="skw">click</span>(<img src="Tl-4.png" />)
+<span class="skw">click</span>(<img src="Allergy-1.png" />)
+<span class="skw">click</span>(<img src="Histprical-4.png" />)
+<span class="skw">click</span>(<img src="EK-4.png" />)
+<span class="skw">click</span>(<img src="Orders.png" />)
+<span class="skw">wait</span>(Pattern(<img src="AmeUrderFGTR.png" />).targetOffset(<span class="dig">0</span>,<span class="dig">8</span>))
+<span class="skw">click</span>(Pattern(<img src="AmeUrderFGTR.png" />).targetOffset(<span class="dig">0</span>,<span class="dig">8</span>))
+<span class="skw">click</span>(<img src="SpecimenUthe.png" />)
+<span class="skw">wait</span>(<img src="24HHUHINE1U1.png" />,<span class="dig">30</span>)
+<span class="skw">type</span>(<img src="24HHUHINE1U1.png" />,<span class="str">"SPUTUM"</span>)
+<span class="skw">click</span>(Pattern(<img src="1321021526660.png" />).similar(<span class="dig">0.60</span>))
+<span class="skw">click</span>(<img src="AcceptUrder.png" />)
+<span class="skw">rightClick</span>(<img src="LabSTHEPTDZY.png" />)
+<span class="skw">click</span>(<img src="Sign.png" />)
+<span class="skw">type</span>(Pattern(<img src="ElectronicSi.png" />).similar(<span class="dig">0.60</span>),<span class="str">"ROBA123"</span>)
+<span class="skw">click</span>(<img src="1322846497936.png" />)
+<span class="skw">click</span>(<img src="Labs.png" />)
+<span class="skw">wait</span>(<span class="dig">5</span>)
+<span class="skw">click</span>(Pattern(<img src="Notes-1.png" />).similar(<span class="dig">0.80</span>))
+<span class="skw">click</span>(<img src="NewNate.png" />)
+<span class="skw">wait</span>(<img src="ProgressNate.png" />,<span class="dig">5</span>)
+<span class="skw">type</span>(<img src="ProgressNate.png" />,<span class="str">"GENERAL  &lt;SCI GENERAL NOTE&gt;"</span>)
+<span class="skw">click</span>(<img src="1321292529827.png" />)
+<span class="skw">click</span>(<img src="Templates-1.png" />)
+<span class="skw">click</span>(Pattern(<img src="ESharedTempl.png" />).targetOffset(-<span class="dig">63</span>,-<span class="dig">2</span>))
+<span class="skw">doubleClick</span>(<img src="EUfficeisit.png" />)
+<span class="skw">type</span>(<img src="l660Acutebzn.png" />,<span class="str">"\nUpper repiratory viral infection with mild bronchitis\nAvoid strenuous activity until lungs clear.  Use inhaler as needed.\n\n"</span>)
+<span class="skw">rightClick</span>(<img src="untillungscl.png" />)
+<span class="skw">click</span>(<img src="SavewithoutS.png" />)
+<span class="skw">rightClick</span>(<img src="untillungscl.png" />)
+<span class="skw">click</span>(Pattern(<img src="EditProgress-1.png" />).targetOffset(<span class="dig">0</span>,-<span class="dig">12</span>))
+<span class="skw">type</span>(<img src="untillungscl.png" />,<span class="str">"Strep Test performed to rule out.\n"</span>)
+<span class="skw">rightClick</span>(<img src="untillungscl.png" />)
+<span class="skw">click</span>(<img src="SignNoteNow.png" />)
+<span class="skw">click</span>(<img src="1321996381368.png" />)
+<span class="skw">click</span>(<img src="1321996412868.png" />)
+<span class="skw">type</span>(<img src="SignatureCod.png" />, <span class="str">"ROBA123"</span>)
+<span class="skw">click</span>(<img src="1322855781138.png" />)
+<span class="skw">rightClick</span>(<img src="esROBERTALEX.png" />)
+<span class="skw">click</span>(<img src="Makelddendum.png" />)
+<span class="skw">type</span>(<span class="str">"Strep Test Negative"</span>)
+<span class="skw">click</span>(Pattern(<img src="FileEditIART.png" />).targetOffset(-<span class="dig">22</span>,-<span class="dig">12</span>))
+<span class="skw">click</span>(<img src="Exit-3.png" />)
+<span class="skw">wait</span>(<img src="ReviewSiqnCh.png" />,<span class="dig">10</span>)
+<span class="skw">type</span>(<img src="ElectronicSi.png" />,<span class="str">"ROBA123"</span>)
+<span class="skw">click</span>(<img src="1321292798423.png" />)
+<span class="skw">click</span>(<img src="1321996381368.png" />)
+<span class="skw">click</span>(<img src="1321996412868.png" />)
+sys.exit(<span class="dig">0</span>)
+</pre>
+</body>
+</html>

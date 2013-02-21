@@ -1,0 +1,46 @@
+#---------------------------------------------------------------------------
+# Copyright 2011-2012 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+
+### set up the IO that is need by unit test
+import sys,os
+sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
+
+from OSEHRAHelper import ConnectToMUMPS,PROMPT
+VistA=ConnectToMUMPS("${UNITTEST_LOG_DIR}/${package_file_name}.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
+if VistA.type=='cache':
+  try:
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
+  except IndexError,no_namechange:
+    pass
+
+if '${TEST_VISTA_COVERAGE}'=='ON':
+  VistA.wait(PROMPT)
+  VistA.startCoverage()
+VistA.wait(PROMPT)
+VistA.write('S DUZ=1 D Q^DI')
+VistA.wait('Select OPTION:')
+VistA.write('')
+VistA.wait(PROMPT)
+VistA.write('D ^%ZIS')
+VistA.wait('DEVICE:')
+VistA.write('HOME;300;999')
+VistA.wait(PROMPT)
+${send_commands}
+if '${TEST_VISTA_COVERAGE}'=='ON':
+  VistA.stopCoverage(os.path.normpath('${TEST_VISTA_OUTPUT_DIR}/UnitTest${package_file_name}.log'))
+VistA.write('HALT')

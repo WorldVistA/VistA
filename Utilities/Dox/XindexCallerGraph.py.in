@@ -1,0 +1,82 @@
+#---------------------------------------------------------------------------
+# Copyright 2011 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+import sys
+sys.path.append('${VISTA_SOURCE_DIR}/Python/vista')
+
+from OSEHRAHelper import ConnectToMUMPS,PROMPT
+
+def runXindexForRoutine(connection, routineName):
+  VistA.write('K ^XUTL("XQ",$J)')
+  connection.write("D ^XINDEX")
+  while True:
+    index = connection.multiwait(["All Routines?",
+                                  "Routine"])
+    if index == 0:
+      connection.write("NO")
+      continue
+    else:
+      connection.write(routineName)
+      break
+  connection.wait("Routine")
+  connection.write("")
+  selectionList = ['Select BUILD NAME:',
+                   'Select INSTALL NAME:',
+                   'Select PACKAGE NAME:']
+  while True:
+    index = VistA.multiwait(selectionList)
+    VistA.write('')
+    if index == len(selectionList) - 1:
+      break
+  connection.wait("Print more than compiled errors and warnings?")
+  connection.write("YES")
+  connection.wait("Print summary only?")
+  connection.write("NO")
+  connection.wait("Print routines?")
+  connection.write("NO")
+  connection.wait("Print errors and warnings with each routine?")
+  connection.write("YES")
+  connection.wait("Index all called routines?")
+  connection.write("NO")
+  connection.wait("DEVICE")
+  connection.write(";132;99999")
+  while True:
+    try:
+      index = connection.multiwait(["Press return to continue:",
+                                    "--- END ---"])
+      if index == 0:
+        connection.write("")
+        continue
+      else:
+        break
+    except IndexError, error:
+      print ("Caught IndexError %s" % error)
+      continue
+
+VistA=ConnectToMUMPS("${logfile}","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
+if VistA.type=='cache':
+  try:
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
+  except IndexError,no_namechange:
+    pass
+AllRoutines = []
+${AllRoutines} # this is the line that will replace by cmake config file
+VistA.wait(PROMPT)
+for routineName in AllRoutines:
+  runXindexForRoutine(VistA, routineName)
+  VistA.wait(PROMPT)
+VistA.write("halt")

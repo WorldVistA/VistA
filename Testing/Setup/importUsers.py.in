@@ -1,0 +1,40 @@
+'''
+Created on Apr 4, 2012
+
+@author: pbradley
+'''
+import sys
+import logging
+sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + ['${VISTA_SOURCE_DIR}/Testing/Functional/dataFiles'] + ['${VISTA_SOURCE_DIR}/Testing/Functional/RAS/lib'] + sys.path
+from PATActions import PATActions
+import datetime
+import TestHelper
+import sys
+resfile = '${VISTA_BINARY_DIR}/Testing/Log/importPAT_results.txt'
+resultlog=file(resfile,'w')
+logging.basicConfig(level=logging.INFO,
+                    #filename='debug.log',
+                    #format='%(asctime)s %(levelname)s: %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S')
+try:
+    from OSEHRAHelper import ConnectToMUMPS,PROMPT
+    VistA1=ConnectToMUMPS(logfile='./importUsers_A.txt',instance='',namespace='')
+    if VistA1.type=='cache':
+        try:
+            VistA1.ZN('VISTA')
+        except IndexError,no_namechange:
+            pass
+    VistA1.wait(PROMPT)
+    pat=PATActions(VistA1)
+    pat.signon()
+    pat.patientaddallcsv('${VISTA_SOURCE_DIR}/Testing/Functional/dataFiles/patdata0.csv')
+except TestHelper.TestError, e:
+    resultlog.write(e.value)
+    logging.error('*****exception*********')
+else:
+    resultlog.write('Pass\n')
+finally:
+    '''
+    Close Vista
+    '''
+    pat.signoff()
