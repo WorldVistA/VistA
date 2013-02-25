@@ -67,12 +67,12 @@ instance="FOIA"
 # Make VistA Directories
 # TODO: Move to new script?
 # Routines are GT.M version independant
-sudo mkdir -p /opt/$instance/{r,etc,log,tmp,bin}
+mkdir -p /opt/$instance/{r,etc,log,tmp,bin}
 # xinetd scripts
-sudo mkdir -p /opt/$instance/etc/xinetd.d
+mkdir -p /opt/$instance/etc/xinetd.d
 # Globals, Objects, Journals, and GT.M version specific Routines are
 # Version Specific
-sudo mkdir -p /opt/$instance/$gtmver/{g,j,o,r}
+mkdir -p /opt/$instance/$gtmver/{g,j,o,r}
 
 # Create profile for instance
 # Required GT.M variables
@@ -124,8 +124,8 @@ echo "a -n CacheTemp* -r=TEMP"                                                  
 echo "sh -a"                                                                        >> /opt/$instance/etc/db.gde
 
 # Set permissions
-sudo chown -R root:$instance /opt/$instance
-sudo chmod -R g+rw /opt/$instance
+chown -R root:$instance /opt/$instance
+chmod -R g+rw /opt/$instance
 
 # create the global directory
 # TODO redirect output to file
