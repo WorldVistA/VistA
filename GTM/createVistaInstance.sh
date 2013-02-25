@@ -28,7 +28,7 @@ fi
 #                                    Shared Libraries
 # Default to x86 (32bit) - algorithm similar to gtminstall script
 arch=$(uname -m | tr -d _)
-if [ $arch == "i686" ]; then
+if [ $arch == "x8664" ]; then
     gtm_arch="x86_64"
 else
     gtm_arch="x86"
