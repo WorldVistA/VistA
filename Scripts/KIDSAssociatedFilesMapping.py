@@ -27,6 +27,7 @@ KIDS_SINGLE_FILE_ASSOCIATION_DICT = {
   "Update to NUPA_1.txt" : "NUPA 1.0",
   "XOBU_1-6 Security Suite Utility Pack.txt" : "XOBU 1.6",
   #### Global Files Section
+  "LEX_2_51.GBL": "LEX*2.0*51",
   "LEX_2_74.GBL": "LEX*2.0*74",
   "LEX_2_76.GBL": "LEX*2.0*76",
   "LEX_2_77.GBL": "LEX*2.0*77",
