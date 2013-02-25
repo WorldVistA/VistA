@@ -1,0 +1,99 @@
+$TXT Created by CRUMLEY,JAMIE at DEVVLD.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 10/30/12 at 15:24
+=============================================================================
+Run Date: FEB 12, 2013                     Designation: GMTS*2.7*96
+Package : GMTS - HEALTH SUMMARY               Priority: EMERGENCY
+Version : 2.7        SEQ #94                    Status: Released
+                  Compliance Date: FEB 20, 2013
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*47 <<= must be installed BEFORE `GMTS*2.7*96'
+
+Subject: HEALTH SUMMARY SUPPORT FOR LAB RE-ENGINEERING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ 1. As a part of the Lab Re-engineering project, displays are being
+ modified to show the Cerner COTS (Commercial Off-The-Shelf) accession
+ number for those orders that are being performed on Cerner.
+  
+ One of these displays is controlled by the Health Summary v2.7 package. 
+ The purpose of this patch is to modify the display on the Reports Tab - 
+ Clinical Reports - Laboratory - Lab Orders to show the COTS accession 
+ number if it is available. This was just a change to a Health Summary 
+ routine, no components were involved.
+  
+ 2. In some cases, the status of a test displays as 'COMPLETED' on the 
+ Computerized Patient Record System (CPRS) Reports Tab and Lab Tab 
+ displays, rather than the appropriate status of 'CANCELED'. This patch 
+ corrects this problem.
+  
+ 3. In support of New Service Request 20070438, a change is required in 
+ the Health Summary package. This patch makes this change to the Lab 
+ Display Status. The change will be dormant until CPRS v30 is installed.
+  
+ Associated Remedy:
+ ==================
+ N/A
+  
+ Associated NSR(s):
+ ==================
+ 20070438
+  
+ Test Sites:
+ ===========
+ Huntington, WV
+ Lexington, KY
+ Salisbury, NC
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  This patch should be loaded during non-peak hours to minimize disruption
+  to users.  Installation will take less than 1 minute.  Users may remain
+  on the system.
+  
+  1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+  2.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+  
+  3.  From this menu, you may elect to use the following options
+      (when prompted for INSTALL NAME, enter GMTS*2.7*96):
+          a.  Backup a Transport Global
+          b.  Compare Transport Global to Current System
+          c.  Verify Checksums in Transport Global
+  
+  4.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+      respond NO.
+  
+  5.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSLROE
+    Before: B11334514   After: B12396519  **9,28,47,96**
+ 
+Routine list of preceding patches: 47
+
+=============================================================================
+User Information:
+Entered By  : CRUMLEY,JAMIE                 Date Entered  : AUG 31, 2010
+Completed By: NADEAU,MARCY MARCONI          Date Completed: FEB 12, 2013
+Released By : SCHWARTZ,VIKIE                Date Released : FEB 12, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

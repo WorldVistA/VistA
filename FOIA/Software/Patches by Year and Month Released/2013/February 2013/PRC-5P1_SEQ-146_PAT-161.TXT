@@ -1,0 +1,181 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Monday, 03/12/12 at 14:54
+=============================================================================
+Run Date: FEB 19, 2013                     Designation: PRC*5.1*161
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #146                    Status: Released
+                  Compliance Date: MAR 22, 2013
+=============================================================================
+
+Associated patches: (v)PRC*5.1*153 <<= must be installed BEFORE `PRC*5.1*161'
+                    (v)PRC*5.1*158 <<= must be installed BEFORE `PRC*5.1*161'
+
+Subject: 1358 DISPLAY/PRINT;PRCEF PRINT FROM LIST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+ 1. Add the ability to review a 1358 during Obligating process.
+ 2. Option PRCF PRINT FROM LIST causing disk free space warning 
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. HD0000000335262 Ability to review 1358 during Obligation process
+ 2. HD0000000532391 Option PRCF PRINT FROM LIST causing disk free space 
+                    warning            
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ VA Central Plains HCS
+ Hunter Holmes McGuire VA Medical Center - Richmond 
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000335262 Ability to review 1358 during Obligation process
+  
+    Problem:
+    --------
+    When obligating a 1358 using option Obligate 1358 [PRCEF OBLIGATE]
+    users have no way to verify the content  or to review 1358 for 
+    full compliance prior to approving.
+  
+    Resolution:
+    -----------
+    Modify routine PRCESOE to invoke a query asking user if they wish to 
+    view the 1358 details:
+       Would you like to review this request?? No// Y  (Yes)  
+  
+    Responding (Y)es will display the 1358 details.
+  
+    If the 1358 is viewed, the user will then be asked to continue with
+    the 1358 Obligation:
+       Would you like continue obligating this 1358?? Yes// N  (No)
+  
+    ** The VDL documentation will be updated for section 4.3 (Obligate the 
+       1358) of the Accounting Technician User's Guide.
+  
+ Routines: PRCESOE, PRCE58P0
+  
+  
+ 2. HD0000000532391 Option PRCF PRINT FROM LIST causing disk free space 
+                    warning
+  
+    Problem:
+    --------
+    The option Print/Reprint 1358s from list [PRCF PRINT FROM LIST] is 
+    causing a disk free space warning due to infinite print loop caused by
+    excessive Justification Text on 1358.
+  
+    Resolution:
+    -----------
+    Modify line spacing logic to prevent lengthy Justification Text 
+    from causing infinite print loop.
+  
+ Routines: PRCSP11
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ------------------------ 
+ Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.med.va.gov, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany          ftp.fo-albany.med.va.gov
+      Hines           ftp.fo-hines.med.va.gov
+      Salt Lake City  ftp.fo-slc.med.va.gov
+  
+      The documentation distribution includes: 
+  
+      File Name                   Description          Retrieval Format
+      =========                   ===========          ================
+      IFCP5_1ACCOUNTING_TECH.PDF  Accounting Tech's UG      BINARY
+  
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following address:
+      http://www.va.gov/vdl
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*161)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*161.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit enter.  When prompted to select the options
+       you would like to place out of order, enter the following:
+  
+       PRCEF OBLIGATE               Obligate 1358
+       PRCEF PRINT FROM LIST        Print/Reprint 1358s from List
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCE58P0
+    Before: B17204092   After: B17279492  **148,158,161**
+Routine Name: PRCESOE
+    Before: B49918115   After: B55601870  **148,153,161**
+Routine Name: PRCSP11
+    Before: B15814288   After: B16902050  **158,161**
+ 
+Routine list of preceding patches: 153, 158
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : JUL 27, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: FEB 07, 2013
+Released By : NELSON,VICKI M                Date Released : FEB 19, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

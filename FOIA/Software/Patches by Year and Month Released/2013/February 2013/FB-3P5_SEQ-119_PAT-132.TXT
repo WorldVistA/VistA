@@ -1,0 +1,803 @@
+$TXT Created by BAUMANN,SCOTT A at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 11/07/12 at 12:32
+=============================================================================
+Run Date: FEB 04, 2013                     Designation: FB*3.5*132
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #119                    Status: Released
+                  Compliance Date: MAR 07, 2013
+=============================================================================
+
+Associated patches: (v)FB*3.5*9    <<= must be installed BEFORE `FB*3.5*132'
+                    (v)FB*3.5*114  <<= must be installed BEFORE `FB*3.5*132'
+                    (v)FB*3.5*117  <<= must be installed BEFORE `FB*3.5*132'
+                    (v)FB*3.5*121  <<= must be installed BEFORE `FB*3.5*132'
+                    (v)FB*3.5*124  <<= must be installed BEFORE `FB*3.5*132'
+                    (v)PRC*5.1*162 <<= must be installed BEFORE `FB*3.5*132'
+                    (v)FB*3.5*131  <<= must be installed BEFORE `FB*3.5*132'
+
+Subject: FEE AUTOMATION ENHANCEMENT PHASE 2
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch is part of the VistA Fee and IFCAP Automation Enhancements
+ project (aka Duplicate Payments).
+  
+  ************************************************************************
+  *  Four different patches are related and must be installed at the     *
+  *  same time to avoid application/processing errors.                   *
+  *  The recommended patch install order is:                             *
+  *    PRC*5.1*162                                                       *
+  *    FB*3.5*132                                                        *
+  *    GEC*2*35                                                          *
+  *    DSIF*3.2*34                                                       *
+  *                                                                      *
+  *  If the IFCAP package is not installed at a site then there is no    *
+  *  need to install patch PRC*5.1*162.                                  *
+  *  If the FEE BASIS package is not installed at a site then there is   *
+  *  no need to install patch FB*3.5*132.                                *
+  *  If the FEE BASIS CLAIMS SYSTEM (FBCS) is not installed at a site    *
+  *  then there is no need to install patch DSIF*3.2*34                  *
+  *                                                                      *
+  *  Please review the installation instructions of all the applicable   *
+  *  patches before installing any of these patches to ensure all        *
+  *  applicable patches can be installed at the same time.               *
+  *                                                                      *
+  *  The National Non-VA Care Program Office has issued the VistA Fee    *
+  *  and IFCAP Automation Enhancement Implementation Procedure Guide.    *
+  *  This procedure guide contains information about preparing for and   *
+  *  implementing this enhancement.  The procedure guide can be obtained *
+  *  from the following website:                                         *
+  * http://nonvacare.hac.med.va.gov/policy-programs/procedure-guides.asp *
+  ************************************************************************
+  
+ The changes made by patch FB*3.5*132 are described below:
+  
+ This patch will enhance the interface between VistA Fee Basis and Central
+ Fee to improve the consistency of payment line item data between the
+ systems.  This will prevent duplicate ICN payments by ensuring that a 
+ payment line cannot be reprocessed in VistA Fee Basis unless it has been 
+ removed from Central Fee.  The primary interface enhancements consist of 
+ the following:
+  o Rejection of payment line items by Central Fee will be transmitted to
+    VistA Fee Basis via new transactions that update the VistA database.  
+    Users will no longer manually record such rejects in VistA.
+  o Completion of a payment batch using the Finalize a Batch option in
+    VistA Fee Basis will automatically generate a new transaction that is
+    sent to Central Fee.  This new transaction will instruct Central Fee of
+    any payment line items that must be deleted (i.e. local rejects) and
+    instruct Central Fee to release the remainder of the batch to
+    downstream payment systems such as FMS.  This new transaction will
+    replace all use of 994 code sheets in IFCAP.
+ This patch also resolves three existing software faults that were 
+ discovered during analysis and design of the patch.
+  
+ A detailed description of the enhancements follow:
+  
+  1. AUTOMATE PAYMENT BATCH RESULTS
+  
+     A new interface transaction will be sent from Central Fee to VistA Fee
+     Basis.  This transaction will contain the results from processing a 
+     payment batch that was sent from VistA to Central Fee.  The new
+     interface is intended to replace the current manual identification,
+     using the Finalize a Batch option of payment lines that were rejected
+     due to Central Fee edit checks.
+  
+     This patch adds a new value (CENTRAL FEE ACCEPTED) to the STATUS field
+     of the FEE BASIS BATCH file.  This new value chronologically falls
+     between the existing TRANSMITTED and VOUCHERED status values.
+  
+     The system will update the batch status upon successful processing of
+     a Payment Batch Results message.  The status shall be set to CENTRAL
+     FEE ACCEPTED (F) unless all payment lines in the batch have been
+     flagged as rejected.  The status shall be set to VOUCHERED (V) if all
+     payment lines in the batch have been flagged as rejected.
+  
+  
+  2. ENHANCE FINALIZE A BATCH OPTION
+  
+     The Finalize a Batch [FBAA FINALIZE BATCH] option is currently used to
+     inform VistA Fee Basis of what happened to the payments that were
+     transmitted to Central Fee.  The option is used to tell the system
+     which payments have been rejected.  The option is also used to
+     complete a batch which changes its status to VOUCHERED and populates
+     the DATE FINALIZED field in the FEE BASIS PAYMENT and FEE BASIS
+     INVOICE files for applicable payments.  However, the current Finalize
+     a Batch option does not have any direct impact on the payment process
+     since that is managed by 994 code sheets.
+  
+     The Finalize a Batch option will be modified so users just specify any
+     local rejects instead of identifying all rejects.  Payment lines that
+     are rejected by Central Fee will be reported to VistA by the new
+     interface transactions instead of being manually identified using the
+     Finalize a Batch option.  The Finalize a Batch option will be modified
+     to replace the use of the 994 code sheets, thereby making the 994 code
+     sheet process totally obsolete. When a batch is completed with the
+     Finalize a Batch option, a new transaction will be automatically
+     transmitted to Central Fee.  This new transaction will list any
+     payment lines that were locally rejected and instruct Central Fee to
+     release the remainder of the batch for payment.  Central Fee will
+     delete payment lines that were identified in this transaction as
+     locally rejected. 
+  
+     The Finalize a Batch option should no longer be locked by security key
+     FBAASUPERVISOR.  The installer must manually delete the lock from this
+     option per installation step 13.
+  
+     Two new security keys are used to control access to functions within
+     the Finalize a Batch option.  The FBAAREJECT key allows the holder
+     to flag payment line items as locally rejected.  The FBAAFINANCE
+     security key allows the holder to complete a batch.  These new keys
+     must be assigned to applicable users per installation step 11.
+  
+     The Finalize a Batch option has been modified so only batches with a 
+     status of CENTRAL FEE ACCEPTED can be selected.
+  
+  3. MODIFY DELETE REJECT FLAG OPTION
+  
+     The Delete Reject Flag [FBAA VOUCHER DELETE REJECT] option is used to
+     delete reject flags that were entered in error using the Finalize a
+     Batch option.  Reject flags that are set by the new Central Fee
+     transactions must not be locally deleted since those payment lines
+     were not accepted by Central Fee or have been dropped from Central
+     Fee.  Locally specified reject flags can only be deleted before the
+     batch is completed (vouchered) since completion of the batch triggers
+     the new transaction which results in the removal of any locally
+     rejected payment lines from Central Fee and releases the remainder of
+     the payment lines.
+  
+     The Delete Reject Flag option is no longer locked by security key 
+     FBAASUPERVISOR.  It is instead locked by the new FBAAREJECT security
+     key.
+  
+     The Delete Reject Flag option has been modified so only batches with a
+     status of CENTRAL FEE ACCEPTED can be selected.
+  
+  4. Automate Post Release Rejects
+  
+     A new interface transaction will be sent from Central Fee to VistA Fee
+     Basis.  This transaction will list any rejects that occurred after 
+     Central Fee was instructed to release the batch for payment.  The new 
+     interface is intended to replace the current manual identification,
+     using the Finalize a Batch option, of payment lines that were
+     initially accepted by Central Fee and then later rejected.  This
+     transaction will only be sent if rejects occur.
+  
+  5. Modify Print Rejected Payment Items Option
+  
+     The Print Rejected Payment Items [FBAA REJECT PRINT] option is used to
+     print a list of payment items that have been flagged as rejected.  The
+     option has been modified as follows:
+  
+     5A.  The report can be generated for batches with a status of
+          CENTRAL FEE ACCEPTED or VOUCHERED or both.
+  
+     5B.  The report will print Central Fee Reject for lines that were
+          flagged as rejected by the interface.  It will print Local Reject
+          for lines that were locally flagged as rejected by a user.
+  
+     5C.  The report will display reject codes and descriptions (maximum 
+          of 5) for lines that were flagged as rejected by the interface.
+  
+  6. Modify Re-Initiate Rejected Payment Items Option
+  
+     The Re-Initiate Rejected Payment Items [FBAA REINITIATE REJECTS]
+     option is used to re-initiate rejected payment items into a new open
+     batch.
+  
+     The option has been modified to prevent selection of a batch when the
+     application acknowledgement from Central Fee reported an application
+     error or has not yet been received.  Central Fee generates an
+     application acknowledgement in response to the new transaction sent by
+     VistA when the batch is completed using the Finalize a Batch option.
+  
+  7. Modify Existing Options for New Batch Status
+  
+     A number of existing options used to edit invoices and payments 
+     restrict what can be done to invoices and payments that are in batches
+     which have a status of TRANSMITTED or VOUCHERED.  These options must
+     be modified to apply the same restriction to a batch that has the new
+     status value of CENTRAL FEE ACCEPTED since the new status
+     chronologically falls between the TRANSMITTED status and the VOUCHERED
+     status. Additionally, batches with the new status should be treated as
+     an active batch.
+  
+     7A. The following options have been modified to prevent selection of a
+         batch that has a status of CENTRAL FEE ACCEPTED.
+           Invoice Edit [FBCH EDIT PAYMENT]    
+           Edit CNH Payment [FBCNH EDIT PAYMENT]
+           Edit Pharmacy Invoice [FBAA EDIT PHARMACY INVOICE]
+           Delete Inpatient Invoice [FBCH DELETE INVOICE]
+  
+     7B. The following options have been modified to prevent selection of a
+         batch that has a status of TRANSMITTED or CENTRAL FEE ACCEPTED.
+           Edit Payment [FBAA EDIT PAYMENT]
+           Edit Ancillary Payment [FBCH EDIT ANCILLARY PAYMENT]
+  
+     7C. The Active Batch Listing by Status [FBAA ACTIVE BATCH LISTING]
+         option has been modified to include the new CENTRAL FEE ACCEPTED
+         (F) status.
+  
+  8. Create New Option to Reprocess Overdue Batch
+  
+     This patch adds a new Reprocess Overdue Batch [FBAA REPROCESS BATCH]
+     option. This option is used to reprocess a transmitted payment batch
+     that was not received by Central Fee.  
+   
+     If VistA Fee Basis does not receive a Payment Batch Result message by 
+     the third weekday after transmission of the Payment Batch message, the
+     software will consider the result message as overdue.  A list of
+     overdue batches can be obtained by entering a ? at the select batch
+     prompt of this option.  
+   
+     The site should contact the National Service Desk Austin to determine
+     if Central Fee contains the overdue batch. If so, the site should
+     request that the Payment Batch Results message be resent to VistA.  If
+     Central Fee does not have the batch, the site can use this option to
+     either change the batch status so the batch will be resent or to
+     reject the entire batch so the line items can be re-initiated into a
+     new batch, edited, and then resent with the new batch.
+  
+  9. Create New Option to Resend Completed Batch
+  
+     This patch adds a new Resend Completed Batch [FBAA RESEND VOUCHER MSG]
+     option. This option can be used to resend a Voucher Batch message to
+     Central Fee.  
+  
+     If VistA Fee Basis does not receive a Voucher Batch Acknowledgement 
+     message by the third weekday after finalization of the batch, the
+     software will consider the acknowledgement message as overdue. A list
+     of batches with an overdue acknowledgement can be obtained by entering
+     a ? at the select batch prompt of this option.
+  
+     The site should contact the National Service Desk Austin to determine
+     if Central Fee received the Voucher Batch message.  If Central Fee
+     received the Voucher Batch message, the site should request that the
+     Voucher Batch Acknowledgement message be resent to VistA.  If Central
+     Fee did not receive the Voucher Batch message, the site can use the
+     Resend Completed Batch option in VistA to generate a new Voucher Batch
+     message and send that to Central Fee.
+  
+ 10. New Payment Aging Report 
+  
+     This patch adds a new Payment Aging Report [FB PAYMENT AGING RPT] 
+     option.  This option generates a report of payments that have been
+     transmitted to Central Fee and are still awaiting payment confirmation
+     or cancellation in VistA.  The purpose of the new report is to
+     identify payments in VistA Fee Basis that appear to have a problem
+     because payment confirmation has not been received within an expected
+     period.  
+   
+     Payment line items finalized within a user-specified period will be 
+     listed on this report if payment confirmation has not been received
+     from Austin and the payment is not cancelled, flagged as rejected, or
+     voided.
+  
+     Note: If the report is run for user-specified facilities instead of
+     all facilities then any finalized payments with a blank value for the
+     primary service facility are included in the results.
+  
+ 11. Restrict Edit of Batch Status Field
+  
+     Several sites have edited the STATUS field of the FEE BASIS BATCH file
+     using a VA FileMan option to assign an earlier status to a transmitted
+     batch so the batch could be resent to Central Fee.  This action
+     resulted in duplicate payments.
+  
+     This patch sets the WRITE ACCESS of the STATUS field to prevent users
+     from changing the batch status using the FileMan Enter/Edit option.
+  
+ 12. Modify ICN on Payment Batch
+  
+     This patch will make a minor modification to the content of the 
+     payment batch message for batch type B3 (outpatient or ancillary) and
+     batch type BT (travel).  If a payment line item has been moved by the
+     patient merge process, the original internal entry numbers will be
+     used to construct the ICN value that is sent to Central Fee.
+  
+     The purpose for this change is to ensure that the ICN value sent
+     by the new Voucher Batch transaction for a given payment line item is
+     consistent with the value previously sent for that line item by the
+     Payment Batch transaction.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+  File Name (Number)          Field Name (Number)     New/Modified/Deleted
+  ------------------          -------------------     --------------------
+  FEE BASIS PAYMENT           FILE # (#.01)           Modified
+   MOVES (#161.45)            NEW IENS (#2)           Modified
+  
+  FEE BASIS BATCH (#161.7)    STATUS (#11)            Modified
+                              FINALIZED WITH VISTA    New
+                               (#20)               
+                              VOUCHER MSG DATE        New
+                               (#21)               
+                              VOUCHER MSG ACK         New
+                               STATUS (#22)
+                              STATUS SET TO           New
+                               RETRANSMIT BY (#23)
+                              STATUS SET TO           New
+                               RETRANSMIT DATE (#24)
+                              TRANSMITTED BATCH       New
+                               WAS REJECTED (#25)
+  
+  FEE BASIS PAYMENT REJECT    All                     New
+   CODE (#161.99)
+   
+  FEE BASIS PAYMENT (#162)
+   SERVICE PROVIDED (#162.03) BATCH NUMBER (#7)      Modified
+                              INVOICE NUMBER (#14)   Modified
+                              INTERFACE REJECT       New
+                               (#21.3)
+                              REJECT CODE (#21.6)    New
+   REJECT CODE (#162.031)     All                    New
+   TRAVEL PAYMENT DATE        INTERFACE REJECT       New
+    (#162.04)                 (#6.3)
+                              REJECT CODE (#6.6)     New
+   REJECT CODE (#162.041)     All                    New
+  
+  FEE BASIS PHARMACY INVOICE
+   (#162.1)
+   PRESCRIPTION NUMBER        INTERFACE REJECT       New
+    (#162.11)                  (#19.3)
+                              REJECT CODE (#19.6)    New
+   REJECT CODE (#162.111)     All                    New
+  
+  FEE BASIS INVOICE (#162.5)  INTERFACE REJECT       New
+                               (#15.3)
+                              REJECT CODE (#15.6)    New
+   REJECT CODE (#162.515)     All                    New
+  
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: 
+  
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------     
+  FEE FINANCE              New
+  
+  
+ Options Associated:
+  
+  Option Name                 Type             New/Modified/Deleted
+  -----------                 ----             -------------------- 
+  FB PAYMENT AGING RPT        run routine      New
+  FBAA FINALIZE BATCH         run routine      Modified
+  FBAA OUTPUTS MENU           menu             Modified
+  FBAA REPROCESS BATCH        run routine      New
+  FBAA RESEND VOUCHER MSG     run routine      New
+  FBAA SUPERVISOR OPTIONS     menu             Modified
+  FBAA VOUCHER DELETE REJECT  run routine      Modified
+  FBCH OUTPUT MENU            menu             Modified
+  
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  FBAAFINANCE
+  FBAAREJECT
+  
+ Templates Associated: N/A
+  
+ Bulletins Associated:
+  
+  Bulletin Name   comment
+  -------------   -------
+  FBAA SERVER     new
+  
+ Additional Information:
+  The FEE BASIS PAYMENT REJECT CODE (#161.99) file will be exported with 
+  data.
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ VistA Fee and IFCAP automation enhancement (#20110212)
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A 
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+  1. HD585796
+   
+     Problem:
+     --------
+     The Delete reject flag [FBAA VOUCHER DELETE REJECT] option double
+     posts the amount paid to the 1358 when the reject flag is deleted
+     from a selected travel payment line item.
+  
+     Resolution:
+     -----------
+     The option has been corrected to just post the amount paid once.
+  
+  
+  2. HD585831
+  
+     Problem:
+     --------
+     The Re-initiate Rejected Payment Items [FBAA REINITIATE REJECTS] 
+     option inappropriately updates the DATE FINALIZED (#13) and PERSON
+     WHO COMPLETED (#14) fields of the old batch in the FEE BASIS BATCH
+     (#161.7) file when a rejected line item is re-initiated into a new
+     batch.
+  
+     Resolution:
+     ----------- 
+     The option has been corrected to stop updating inappropriate data
+     fields for the old batch.
+  
+  
+  3. HD585843
+  
+     Problem:
+     --------
+     The Release a Batch [FBAA SUPERVISOR RELEASE] option creates a
+     separate IFCAP authorization with an identical description for
+     each inpatient invoice in the batch that is associated with an
+     unauthorized claim.
+  
+     This may cause a problem if any inpatient invoices associated
+     with an unauthorized claim are later flagged as rejected using
+     the Finalize a Batch [FBAA FINALIZE BATCH] option.  The system
+     attempts to post a credit amount to the 1358 obligation but the
+     wrong IFCAP authorization may be credited resulting in the error 
+     "Credit bill amount will exceed total bill amount".
+  
+     Resolution:
+     -----------
+     The Release a Batch option will be modified to create a single IFCAP 
+     authorization for all the inpatient invoices in the batch that are
+     associated with unauthorized claims. 
+  
+  
+ Test Sites:
+ ----------
+  MINNEAPOLIS VA HCS
+  VA NWIHS, OMAHA DIVISION
+  SIOUX FALLS VA HCS
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+  Updated documentation describing the new functionality introduced by this
+  patch is available.
+  
+  The preferred method is to FTP the files from 
+  ftp://download.vista.med.va.gov/.
+  This transmits the files from the first available FTP server. Sites may 
+  also elect to retrieve software directly from a specific server as 
+  follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  The documentation will be in the form of Adobe Acrobat files.
+  
+  Documentation can also be found on the VA Software Documentation Library 
+  at:
+  http://www4.va.gov/vdl/
+  
+  File Description                File Name                     FTP Mode
+  ----------------------------------------------------------------------
+  Fee Basis User Manual           FEE3_5_UM_R0113.PDF           (binary)
+  Fee Basis Technical Manual      FEE3_5_TM_R0113.PDF           (binary)
+  Release Notes FB*3.5*132        FEE3_5_P132_RN.PDF            (binary) 
+  Installation Guide FB*3.5*132   FEE3_5_P132_IG.PDF            (binary)
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  An environmental check routine will verify that no entries in the FEE 
+  BASIS BATCH (#161.7) file have a STATUS of TRANSMITTED.  In addition,
+  the installer will be asked if the Chief Fiscal Officer has given 
+  approval for installation of the patch.  These actions will only be
+  performed in a production account.
+  
+  A pre-install routine will delete the existing traditional-style "AJ" 
+  mumps cross-reference definition from the INVOICE NUMBER field in the FEE
+  BASIS PAYMENT (#162) file. This cross-reference is being replaced by a
+  new-style regular "AJ" cross-reference definition during the install. 
+  
+  A post-install routine will execute the set logic of the new "AN" 
+  cross-reference for existing entries in the FEE BASIS PAYMENT MOVES 
+  (#161.45) file.
+  
+  
+ Installation Instructions
+ -------------------------
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+   Fee Basis Main Menu [FBAA MAIN MENU]
+    
+ This patch should take less than 5 minutes to install.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ Ensure that all patches listed at the beginning of the patch description
+ that are applicable to the site can be installed at the same time.
+  
+ The VistA Fee and IFCAP Automation Enhancement Implementation Procedure
+ Guide referenced at the beginning of the patch description contains 
+ information on preparing for and implementing this enhancement.
+  
+ If the patch is being installed in a production account, there must 
+ not be any batches that have been transmitted to Central Fee and 
+ are currently awaiting release by a 994 code sheet. The Chief 
+ Financial Officer or a representative will verify this step and then 
+ provide approval for the patch to be installed.
+  
+ a. There must not be any payment batches with a status of TRANSMITTED.  
+    The environmental check routine will enforce this step.
+  
+ b. There must not be any pending payments in Central Fee that are awaiting
+    release by an IFCAP 994 code sheet.  Central Fee report 12007 provides
+    this information.  Normally finance staff have access to this report.
+  
+    Note: Central Fee will automatically drop all pending payments when
+    a site implements the new process by installing this patch.  Central
+    Fee will send a transaction to VistA for any dropped payments to flag
+    the payment line items as rejected in VistA.  The site would then need
+    to re-initiate and re-process these payments.
+  
+ c. The output from the Print Rejected Payment Line Items option should be
+    reviewed for inappropriate reject flags.  Line items that have check
+    confirmation data (check number, date paid) were released for payment
+    by a 994 code sheet and therefore should not be flagged as rejected in
+    VistA.
+    
+    Inappropriate reject flags must be deleted using the Delete Reject
+    Flag option in Vista before the patch is installed because it will no 
+    longer be possible to delete reject flags from a batch that has a
+    status of VOUCHERED after the patch is installed.
+    Note: The Delete Reject Flag option automatically posts the payment
+    amount to the 1358 obligation.  Therefore, the software will not allow
+    deletion of old inappropriate reject flags where the obligation is
+    unavailable for posting or has been purged.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (FB*3.5*132):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Has the Chief Fiscal Officer approved installation of 
+     this patch' Answer either YES or NO as applicable.  A NO response
+     will prevent installation of the patch.  Refer to the pre-installation
+     instructions for more information.
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' Answer NO unless your system does not do this in a
+     nightly TaskMan process.
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer NO.
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer YES.
+  
+     When prompted 'Enter options you wish to mark as 'Out Of
+     Order':'  Enter the following options:
+        Fee Basis Main Menu [FBAA MAIN MENU]
+  
+     When prompted 'Enter protocols you wish to mark as 'Out Of
+     Order':' press <return>.
+  
+ 9.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ 10.  DELETE INSTALL ROUTINE FROM SYSTEM
+     -----------------------------------
+     (Optional) Delete the FBXIP132 install routine.
+  
+     Routine FBXIP132 contains the environmental check, pre-init, and
+     post-init for the patch.  The environmental check verifies that
+     no batches have a status of TRANSMITTED.  The pre-init deletes
+     a traditional-style cross-reference definition that is being replaced
+     by a new-style definition.  The post-init sets the new "AN" 
+     cross-reference for existing entries in the FEE BASIS PAYMENT MOVES 
+     (#161.45) file. Routine FBXIP132 can be deleted after a successful
+     installation.
+  
+ 11. ASSIGN NEW SECURITY KEYS TO APPROPRIATE USERS
+     ---------------------------------------------
+     Assign security key FBAAREJECT to users that should have the ability
+     to flag payment line items as locally rejected within the Finalize a
+     Batch option.
+  
+     Assign security key FBAAFINANCE to users that should have the ability
+     to complete a batch and transmit the voucher batch message to Central
+     Fee within the Finalize a Batch option.  Normally finance staff will
+     perform this task.
+  
+ 12. ADD APPROPRIATE MEMBERS TO THE NEW MAIL GROUP
+     ---------------------------------------------
+     (OPTIONAL) Add appropriate members to the new FEE FINANCE mail group.
+  
+     This mail group receives messages from the Fee Basis software when
+     exceptions occur during processing of messages sent by Central Fee 
+     that are related to payment batches previously transmitted to Central
+     Fee.  
+   
+     This mail group was created for finance staff.  The messages sent to 
+     this mail group are also sent to another mail group (FEE).  Since the
+     FEE mail group also receives messages that may not be of interest to
+     finance staff, the separate FEE FINANCE mail group was created.
+   
+     The FBAA BATCH SERVER, FBAA VOUCHER SERVER, and FBAA REJECT SERVER 
+     options may send a message to this mail group.
+  
+ 13. DELETE THE LOCK ON THE FINALIZE A BATCH OPTION
+     ----------------------------------------------
+     Delete the FBAASUPERVISOR security key from the LOCK field of
+     the Finalize a Batch [FBAA FINALIZE BATCH] option.
+  
+     An example follows:
+  
+     Select Menu Management Option: EDIT options
+     
+     Select OPTION to edit: FBAA FINALIZE BATCH
+     NAME: FBAA FINALIZE BATCH// 
+     MENU TEXT: Finalize a Batch// 
+     PACKAGE: 
+     OUT OF ORDER MESSAGE: 
+     LOCK: FBAASUPERVISOR// @
+        SURE YOU WANT TO DELETE? Y  (Yes)
+     REVERSE/NEGATIVE LOCK: ^
+  
+     Select OPTION to edit:
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FB1358
+    Before:       n/a   After: B28348622  **132**
+Routine Name: FBAABDL
+    Before:  B6967271   After:  B8137938  **132**
+Routine Name: FBAABS
+    Before:  B1198122   After:  B1208762  **132**
+Routine Name: FBAABT
+    Before: B11887938   After: B11583784  **132**
+Routine Name: FBAADD
+    Before: B11873445   After:  B6478201  **132**
+Routine Name: FBAADD1
+    Before:       n/a   After: B29573874  **132**
+Routine Name: FBAAEPI
+    Before: B20301979   After: B20120074  **38,61,124,132**
+Routine Name: FBAAPAR
+    Before:       n/a   After: B93982366  **132**
+Routine Name: FBAAPET
+    Before: B43544171   After: B42847501  **4,38,55,61,77,116,122,133,
+                                           108,124,132**
+Routine Name: FBAARD
+    Before: B20514488   After: B22001848  **114,132**
+Routine Name: FBAARD0
+    Before:  B7658071   After:  B6586917  **132**
+Routine Name: FBAARD1
+    Before: B14194007   After:  B9198257  **132**
+Routine Name: FBAARD2
+    Before: B17028231   After: B16756936  **132**
+Routine Name: FBAARD3
+    Before:  B3642205   After:  B1840852  **132**
+Routine Name: FBAARJP
+    Before: B20577819   After: B44159952  **132**
+Routine Name: FBAARR
+    Before: B32870767   After: B31401239  **61,114,132**
+Routine Name: FBAARR0
+    Before: B10007343   After:  B7588254  **132**
+Routine Name: FBAARR1
+    Before: B21041788   After: B19022226  **61,132**
+Routine Name: FBAARR2
+    Before: B12046671   After:  B8520138  **132**
+Routine Name: FBAARR3
+    Before:       n/a   After: B24328371  **132**
+Routine Name: FBAASCB
+    Before: B26810368   After: B27212930  **38,61,116,117,132**
+Routine Name: FBAASCB0
+    Before: B19526441   After: B19510216  **116,132**
+Routine Name: FBAAUTL1
+    Before: B21242092   After: B22206482  **3,12,13,108,132**
+Routine Name: FBAAUTL3
+    Before:  B4051592   After:  B4132421  **132**
+Routine Name: FBAAV0
+    Before: B43916106   After: B44344317  **3,4,55,89,98,116,108,132**
+Routine Name: FBAAV3
+    Before:  B3282866   After:  B3409907  **3,89,116,132**
+Routine Name: FBAAVR
+    Before: B17172017   After: B27838493  **132**
+Routine Name: FBAAVR0
+    Before: B13722764   After: B11021288  **132**
+Routine Name: FBAAVR1
+    Before: B19735859   After: B14166230  **132**
+Routine Name: FBAAVR2
+    Before:  B7056912   After:  B7234769  **132**
+Routine Name: FBAAVR3
+    Before:       n/a   After: B14888732  **132**
+Routine Name: FBAAVR4
+    Before:       n/a   After: B24607302  **132**
+Routine Name: FBAAVR5
+    Before:       n/a   After: B40211184  **132**
+Routine Name: FBAAVR6
+    Before:       n/a   After: B12051113  **132**
+Routine Name: FBCHDIN
+    Before:  B4594745   After:  B5017257  **132**
+Routine Name: FBCHEP1
+    Before: B39779983   After: B39885067  **38,61,122,133,108,124,132**
+Routine Name: FBCHPET
+    Before: B40446570   After: B40150841  **4,38,61,77,116,108,124,132**
+Routine Name: FBMRASV2
+    Before: B19213426   After: B20185478  **9,132**
+Routine Name: FBNHEDPA
+    Before: B15541684   After: B15639852  **61,124,132**
+Routine Name: FBPAID1
+    Before: B14897492   After: B17574969  **19,107,121,132**
+Routine Name: FBSVBR
+    Before:   B370540   After: B72554273  **131,132**
+Routine Name: FBSVPR
+    Before:   B370624   After: B35954279  **131,132**
+Routine Name: FBSVVA
+    Before:   B370541   After: B19365869  **131,132**
+Routine Name: FBXIP132
+    Before:       n/a   After:  B8043750  **132**
+ 
+Routine list of preceding patches: 9, 114, 117, 121, 124, 131
+
+=============================================================================
+User Information:
+Entered By  : BAUMANN,SCOTT A               Date Entered  : AUG 29, 2011
+Completed By: SERVICE,JOHN                  Date Completed: FEB 01, 2013
+Released By : CAULFIELD,MARY                Date Released : FEB 04, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

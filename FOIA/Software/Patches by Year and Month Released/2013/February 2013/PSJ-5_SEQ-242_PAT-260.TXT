@@ -1,0 +1,424 @@
+$TXT Created by ENFINGER,MARK J at MDEVCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Monday, 10/29/12 at 13:59
+=============================================================================
+Run Date: FEB 11, 2013                     Designation: PSJ*5*260
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #242                      Status: Released
+                  Compliance Date: MAR 13, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*390   <<= must be installed BEFORE `PSJ*5*260'
+                    (v)OR*3*352    <<= must be installed BEFORE `PSJ*5*260'
+                    (v)PSS*1*169   <<= must be installed BEFORE `PSJ*5*260'
+                    (v)PSJ*5*268   <<= must be installed BEFORE `PSJ*5*260'
+
+Subject: MOCHA v1 Enhancements 1 Inpatient Medications
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ ***************************Attention*************************
+  
+ This patch is part of the Medication Order Check Healthcare Application 
+ (MOCHA)v1.0 Enhancements 1 group of patches. There are a total of eight 
+ patches and one .kid (host) file that must be installed as a group.  The
+ patches must be installed in the following order:
+  
+ OR*3*352
+ PSS*1*164
+ PSS*1*169
+ PSO*7*390
+ PSO*7*417
+ PSJ*5*268
+ <xxx>_1_0_P23.kid
+ PSJ*5*260
+ PSJ*5*288
+  
+ For the ".kid" file, value of <xxx> will be determined by the ward 
+ automated dispensing equipment in use at your facility.  If no ward 
+ automated dispensing equipment is in use at your site, this file will
+ not be needed. For those sites using Pyxis, xxx=PPU, for Omnicell sites,
+ xxx=OPU, and for McKesson sites, xxx=MPU.  To obtain this file or if 
+ additional information is required regarding this ".kid" file, please 
+ contact your site's Informatix contact.
+  
+ Patch PSJ*5*260 will provide the following enhancements:
+  
+  1. Add menu option Check Drug Interaction [PSJ CHECK DRUG INTERACTION]
+     to the Unit Dose Medications [PSJU MGR] menu and the IV [PSJI MGR] 
+     menu.
+  
+  2. The ListMan hidden action [CK Check Interactions] will be added 
+     to the Inpatient Medication profile template [PSJ LM OE].
+  
+  3. Sign/symptoms will be added to Allergy/ADR order check display
+     (remote/local). The Observed/Historical and Severity will be added
+     to allergy/ADR warning display info.
+  
+  4. There are several changes to the discontinuation prompts for 
+     Inpatient Therapeutic Duplication messages.
+  
+  5. The Inpatient Medications Profile view will now display the 
+     Creatinine Clearance (CrCl) and the Body Surface Area (BSA (m2))
+      if available.
+  
+  6. Display all order checks (dosing and non-dosing) once an inpatient 
+     non-verified order is selected from the medication profile for 
+     verification except in the case of the process flow where a newly
+     entered order continues directly into verification.
+  
+  7. Include recently discontinued and recently expired IMO/Clinic Med 
+     orders in Drug-Drug Interaction order checks currently being 
+     performed in the Backdoor Pharmacy Inpatient Medications package.
+  
+  8. Correct the missing Critical Drug-Drug Interaction against Clinic 
+     Order. 
+  
+  9. Correct inactive Unit Dose order that cannot be accepted.
+  
+  10. Patch OR*3*352, which is included in this project release, created the
+      Drug Allergies sub-file in the Order Check Instances file (#100.05).
+      After installation of the MOCHA V1.0 Enhancement 1 patches,
+      Drug-Allergy order checks that occur in back door pharmacy will be
+      stored in the Order Check Instances file.
+  
+ ****************************************************************
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Options Associated:
+ --------------------
+  
+  Option Name                 Type       Action
+  -----------                 ----       ------
+  PSJ CHECK DRUG INTERACTION  Run        SEND TO SITE
+  PSJI MGR                    Menu       USE AS LINK FOR MENU ITEM
+  PSJU MGR                    Menu       USE AS LINK FOR MENU ITEM
+  
+ Protocols Associated:
+ ---------------------
+  
+  Protocol Name                          Action
+  -------------                          ------
+  PSJ DISPLAY DRUG ALLERGIES             SEND TO SITE                
+  PSJ LM 14D MAR                         SEND TO SITE                
+  PSJ LM 24H MAR                         SEND TO SITE                
+  PSJ LM 7D MAR                          SEND TO SITE                
+  PSJ LM AP1                             SEND TO SITE                
+  PSJ LM AP2                             SEND TO SITE                
+  PSJ LM BRIEF PATIENT INFO MENU         SEND TO SITE 
+  PSJ LM CWAD                            SEND TO SITE                
+  PSJ LM DETAILED ALLERGY                SEND TO SITE                
+  PSJ LM DRUG CHECK                      SEND TO SITE                
+  PSJ LM EXTP                            SEND TO SITE                
+  PSJ LM INTERVENTION DELETE             SEND TO SITE                
+  PSJ LM INTERVENTION EDIT               SEND TO SITE                
+  PSJ LM INTERVENTION NEW ENTRY          SEND TO SITE                
+  PSJ LM INTERVENTION PRINTOUT           SEND TO SITE                
+  PSJ LM INTERVENTION VIEW               SEND TO SITE 
+  PSJ LM LABEL PRINT/REPRINT MENU        SEND TO SITE                
+  PSJ LM MAR MENU                        SEND TO SITE                
+  PSJ LM MDWS                            SEND TO SITE                
+  PSJ LM NEW ORDER                       SEND TO SITE                
+  PSJ LM NEW ORDER FROM PROFILE          SEND TO SITE                
+  PSJ LM OE MENU                         USE AS LINK FOR MENU/ITEM/  
+  PSJ LM ORDER VIEW HIDDEN ACTIONS       USE AS LINK FOR MENU/ITEM/  
+  PSJ LM OTHER PHARMACY OPTIONS          USE AS LINK FOR MENU/ITEM/  
+  PSJ LM PAT PR                          SEND TO SITE 
+  PSJ LM PATIENT DATA                    SEND TO SITE                
+  PSJ LM PATIENT INFO                    SEND TO SITE                
+  PSJ LM PHARMACY INTERVENTION MENU      SEND TO SITE                
+  PSJ LM PNV JUMP                        SEND TO SITE                
+  PSJ LM PRINT OUTPATIENT PROFILE        SEND TO SITE                
+  PSJ LM PROFILE HIDDEN ACTIONS          USE AS LINK FOR MENU/ITEM/  
+  PSJ LM PROFILE MENU                    SEND TO SITE                
+  PSJ LM RETURNS/DESTROYED MENU          SEND TO SITE                
+  PSJ LM SELECT ORDER                    SEND TO SITE   
+  PSJ LM SHOW PROFILE                    SEND TO SITE                
+  PSJI LM ALIGNMENT                      SEND TO SITE                
+  PSJI LM LBLI                           SEND TO SITE                
+  PSJI LM LBLR                           SEND TO SITE                
+  PSJI LM LBLS                           SEND TO SITE                
+  PSJI LM PAT PR                         SEND TO SITE                
+  PSJI LM RETURNS                        SEND TO SITE                
+  PSJU LM AL                             SEND TO SITE                
+  PSJU LM LABEL                          SEND TO SITE  
+  PSJU LM PAT PR                         SEND TO SITE                
+  PSJU LM PL                             SEND TO SITE                
+  PSJU LM PL MENU                        SEND TO SITE                
+  PSJU LM PLDP                           SEND TO SITE                
+  PSJU LM PLEUD                          SEND TO SITE                
+  PSJU LM PLRP                           SEND TO SITE                
+  PSJU LM PLUP                           SEND TO SITE                
+  PSJU LM RET                            SEND TO SITE                
+  PSJU LM SPEED DISCONTINUE              SEND TO SITE 
+  PSJU LM SPEED FINISH                   SEND TO SITE                
+  PSJU LM SPEED RENEW                    SEND TO SITE                
+  PSJU LM SPEED VERIFY                   SEND TO SITE                
+  PSJU PLATCS                            SEND TO SITE                
+  VALM DOWN A LINE                       SEND TO SITE                
+  VALM FIRST SCREEN                      SEND TO SITE                
+  VALM GOTO PAGE                         SEND TO SITE                
+  VALM LAST SCREEN                       SEND TO SITE                
+  VALM NEXT SCREEN                       SEND TO SITE 
+  VALM PREVIOUS SCREEN                   SEND TO SITE                
+  VALM PRINT LIST                        SEND TO SITE                
+  VALM PRINT SCREEN                      SEND TO SITE                
+  VALM QUIT                              SEND TO SITE                
+  VALM REFRESH                           SEND TO SITE                
+  VALM SEARCH LIST                       SEND TO SITE                
+  VALM TURN ON/OFF MENUS                 SEND TO SITE                
+  VALM UP ONE LINE                       SEND TO SITE  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+  
+  Template Name                          Action
+  -------------                          ------
+  PSJ LM DETAILED ALLERGY                SEND TO SITE
+  PSJ LM IV OE                           SEND TO SITE
+  PSJ LM OE                              SEND TO SITE
+  PSJ LM OE DISPLAY                      SEND TO SITE
+  PSJ LM PNV                             SEND TO SITE
+  PSJU LM ACCEPT                         SEND TO SITE
+  PSJU LM OE                             SEND TO SITE
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Associated Change Requests: 
+ ---------------------------
+ CR1005/CCR4538
+ CR1007/CCR5145
+ CR789/CR793/CCR4410
+ CR2734/CCR5218
+ CR4924/CR4521/CCR3499
+ CR1113/CCR4414
+ CR1114/CCR4415
+ CR2803/CCR2986/CCR5882/CCR5891/CCR5894/5896/5907
+ CR5037/CCR5333/CCR5344
+ CR2577/CCR5217/CCR5350
+ CCR5836
+ CCR5827
+  
+ Test Sites:
+ -----------
+ Boston, MA
+ Fresno, CA
+ West Palm Beach, FL
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+  
+ Updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+ Albany         ftp.fo-albany.med.va.gov <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov  <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov    <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www.va.gov/vdl/
+  
+    FILE NAME                    DESCRIPTION
+    =========                    ===========
+  
+ PSJ_5_NURSE_UM_R0113.PDF         Inpatient Medications v5.0 Nurse's
+                                 User Manual
+  
+ PSJ_5_P260_P268_NURSE_UM_CP.PDF Inpatient Medications v5.0 Nurse's
+                                 User Manual Change Pages
+  
+ PSJ_5_PHAR_UM_R0113.PDF         Inpatient Medications v5.0 Pharmacist's
+                                 User Manual
+  
+ PSJ_5_P260_P268_PHAR_UM_CP.PDF  Inpatient Medications v5.0 Pharmacist's
+                                 User Manual Change Pages
+  
+ PSJ_5_SUPR_UM_R0113.PDF         Inpatient Medications v5.0 Supervisor's
+                                 User Manual
+  
+ PSJ_5_P260_P268_SUPR_UM_CP.PDF  Inpatient Medications v5.0 Supervisor's
+                                 User Manual Change Pages
+  
+ PSJ_5_TM_R0113.PDF              Inpatient Medications v5.0 Technical
+                                 Manual/Security Guide
+  
+ PSJ_5_P260_P268_TM_CP.PDF       Inpatient Medications v5.0 Technical
+                                 Manual/Security Guide Change Pages
+  
+ M1E1_PSO_7_PSJ_5_PSS_1_RN.PDF   Medication Order Check Healthcare
+                                 Application (MOCHA) v1 Enhancements
+                                 1 Release Notes
+  
+ Installation Instructions:
+ --------------------------
+  
+ This patch should not be installed when Inpatient Medications options
+ are being used. If this is not possible, we recommend it should be 
+ installed during Non-Peak hours.
+  
+  
+ Install Time - less than 5 minutes
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option to unload the build.  
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*260):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter "PSJ*5.0*260" at the INSTALL NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//'  answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 94
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE7
+    Before: B19281966   After: B28193796  **9,26,34,52,55,50,87,111,181,
+                                           254,267,260**
+Routine Name: PSGOEC
+    Before: B67778509   After: B74688532  **23,58,110,175,201,134,181,260**
+Routine Name: PSGOEF
+    Before: B92772116   After: B99775279  **7,30,29,35,39,47,50,56,80,
+                                           116,110,111,133,153,134,222,
+                                           113,181,260**
+Routine Name: PSGOEM
+    Before: B31226298   After: B32911590  **81,260**
+Routine Name: PSGOEV
+    Before: B70528939   After: B73577896  **5,7,15,28,33,50,64,58,77,78,
+                                           80,110,111,133,171,207,241,267,
+                                           268,260**
+Routine Name: PSJ53P1
+    Before:  B5710218   After:  B8746775  **172,260**
+Routine Name: PSJBLDOC
+    Before: B26846197   After: B43930447  **181,263,260**
+Routine Name: PSJCLNOC
+    Before:       n/a   After: B82441248  **260**
+Routine Name: PSJDGAL2
+    Before:       n/a   After: B21809934  **260**
+Routine Name: PSJDGCK
+    Before:       n/a   After:  B7861600  **260**
+Routine Name: PSJGMRA
+    Before: B22172498   After: B26285552  **181,270,260**
+Routine Name: PSJHEAD
+    Before: B27612125   After: B30136774  **8,20,85,95,203,260**
+Routine Name: PSJHL3
+    Before: B90089505   After:B111350623  **1,11,14,40,42,47,50,56,58,
+                                           92,101,102,123,110,111,152,134,
+                                           226,267,260**
+Routine Name: PSJLIACT
+    Before: B42921851   After: B49301561  **15,47,62,58,82,97,80,110,111,
+                                           134,181,247,260**
+Routine Name: PSJLMHED
+    Before: B30170338   After: B50472528  **4,58,85,110,148,181,260**
+Routine Name: PSJOC
+    Before: B19432161   After: B27066758  **181,260**
+Routine Name: PSJOCDC
+    Before:  B1499223   After:  B2536866  **181,260**
+Routine Name: PSJOCDI
+    Before: B82259996   After: B91203881  **181,260**
+Routine Name: PSJOCDT
+    Before: B28304577   After: B48494609  **181,260**
+Routine Name: PSJUTL1
+    Before: B55397965   After: B56131679  **15,50,58,260**
+Routine Name: PSJUTL5
+    Before: B20944683   After: B22923563  **40,218,260**
+ 
+Routine list of preceding patches: 81, 172, 203, 218, 247, 263, 268, 270
+
+=============================================================================
+User Information:
+Entered By  : BLOCKER,DAVE                  Date Entered  : MAR 22, 2011
+Completed By: YARBER,KIMBERLY               Date Completed: FEB 11, 2013
+Released By : TEAGUE,LYN                    Date Released : FEB 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,212 @@
+$TXT Created by GRIMES,NANCY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 02/02/12 at 09:22
+=============================================================================
+Run Date: FEB 06, 2013                     Designation: GMRC*3*46
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #67                      Status: Released
+                  Compliance Date: MAR 09, 2013
+=============================================================================
+
+Associated patches: (v)GMRC*3*34   <<= must be installed BEFORE `GMRC*3*46'
+                    (v)GMRC*3*52   <<= must be installed BEFORE `GMRC*3*46'
+                    (v)GMRC*3*64   <<= must be installed BEFORE `GMRC*3*46'
+                    (v)GMRC*3*66   <<= must be installed BEFORE `GMRC*3*46'
+
+Subject: USER RECEIVING ALERT INAPPROPRIATELY, LOCK ISSUE & TYPO
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch prevents alerts being sent to the user performing the action 
+ that generated the alert.  It also corrects a missing timeout on a Lock
+ command and a typographical error in a message displayed to the user.
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ 1. HD0000000188126 - Some alerts still being sent to user taking action.
+ 2. HD0000000305723 - Lock missing Timeout.
+ 3. HD0000000312729 - Message contains typo.
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Atlanta, GA
+ Detroit, MI
+ South Texas HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000188126 - Some alerts still being sent to user taking action
+  
+    Problem:
+    --------
+    Consult alerts are being sent back to the user taking the action in
+    some situations.  Since the user is aware of the action taken, he/she
+    should not receive an alert.
+  
+    Resolution:
+    -----------
+    The recipients of consult alerts, which are directly determined by the
+    CONSULT/REQUEST TRACKING package, will not include the user taking the
+    action.  This will not, however, prevent the user from receiving an
+    alert due to settings in the Notifications system which are outside the
+    control of the CONSULT/REQUEST TRACKING software.
+  
+ 2. HD0000000305723 - Lock missing Timeout
+  
+    Problem:
+    --------
+    It was determined that two of the routines involved in the solution to
+    issue number one (above) contained Lock commands without a time out value
+    set. Since missing locks are a violation of the SAC standards, this 
+    change has to be implemented.
+  
+    Resolution:
+    -----------
+    Routines GMRCR and GMRCHL7B have been modified to add a time out to the
+    Lock commands within them that did not already contain a time out value.
+  
+ 3. HD0000000312729 - Message contains typo.
+  
+    Problem:
+    --------
+    The option Determine users' update authority [GMRC UPDATE AUTHORITY],
+    generates the following message if the user is an administrative and an
+    update user: "This user is both and administrative and update user for:"
+    The first "and" should be "an" in that message.
+  
+    Resolution:
+    -----------
+    Routine GMRCAU was modified to correct this issue.  The message will now
+    read: "This user is both an administrative and update user"
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ Due to some options and protocols being marked out of service, it is
+ recommended it be installed when users are off the system or when user
+ activity is low.  Installation time will be less than 2 minutes.
+  
+  
+   1.  Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.  
+  
+   2.  Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+       Select Kernel Installation & Distribution System Option: Install
+                                                                ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+   3.  From this menu, you may elect to use the following options
+       (When prompted for the INSTALL NAME, enter GMRC*3.0*46):
+      
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will
+           not backup any other changes such as DD's or templates.
+       b.  Compare Transport Global to Current System - This option
+           will allow you to view all changes that will be made when
+           this patch is installed.  It compares all components of this
+           patch (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will
+           allow you to ensure the integrity of the routines that are
+           in the transport global.
+  
+   4.  Use the Install Package(s) option and select the package
+       GMRC*3.0*46.
+  
+       a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+           install? NO//", answer NO.
+  
+       b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+           Options and Protocols? NO//", answer YES.
+  
+       c.  When prompted "Enter options you wish to mark as 
+           'Out Of Order':", enter the following:
+  
+             CPRSChart version X.x.xx.xx   [OR CPRS GUI CHART]
+             Consult Service Tracking      [GMRC SERVICE TRACKING]
+  
+       d.  When prompted "Enter protocols you wish to mark as 
+           'Out Of Order':", enter the following:
+  
+             Access to Consult actions     [ORC CONSULT ACTIONS]
+             Consult Service action menu   [ORC CONSULT SERVICE MENU]
+             Consult action menu           [ORC CONSULT USER MENU]
+             Consults                      [ORCHART CONSULTS]
+             Consults Tab menu             [ORCHART CONSULTS MENU]
+             Protocol to process actions 
+             from alert menu's             [GMRCACTM ALERT SERVICE ACTIONS]
+             Service Action Menu           [GMRCACTM SERVICE ACTION MENU]
+  
+       e.  When prompted "Delay Install (Minutes):  (0-60): 0//", press
+           <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCAAC
+    Before:  B7900333   After:  B8144345  **4,12,53,46**
+Routine Name: GMRCAFRD
+    Before: B53980720   After: B54228479  **1,4,10,12,15,22,35,39,64,46**
+Routine Name: GMRCASF
+    Before: B15424703   After: B16287661  **4,10,14,22,29,35,46**
+Routine Name: GMRCAU
+    Before: B65632107   After: B65603840  **1,4,11,14,12,15,17,22,55,46**
+Routine Name: GMRCEDT2
+    Before: B18295173   After: B18295173  **1,5,12,15,22,33,66,46**
+Routine Name: GMRCGUIB
+    Before: B44471877   After: B50120851  **4,12,18,20,17,22,29,30,35,
+                                           45,53,55,64,46**
+Routine Name: GMRCGUIS
+    Before:  B3928168   After:  B4164134  **52,46**
+Routine Name: GMRCHL7B
+    Before: B26577242   After: B26928400  **1,5,12,21,17,22,33,66,46**
+Routine Name: GMRCP
+    Before: B20265103   After: B19973660  **1,4,17,22,27,53,55,46**
+Routine Name: GMRCR
+    Before: B16413390   After: B17225074  **1,5,46**
+Routine Name: GMRCT
+    Before: B22357159   After: B26237233  **1,5,11,18,46**
+Routine Name: GMRCTIU1
+    Before: B33817325   After: B34204010  **1,4,21,17,34,46**
+ 
+Routine list of preceding patches: 34, 52, 64, 66
+
+=============================================================================
+User Information:
+Entered By  : PHELPS,TY                     Date Entered  : JUN 03, 2005
+Completed By: SESSLER,APRIL                 Date Completed: FEB 04, 2013
+Released By : KREUZ,SHERI B                 Date Released : FEB 06, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

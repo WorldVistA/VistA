@@ -1,0 +1,216 @@
+
+=============================================================================
+Run Date: FEB 11, 2013                     Designation: IB*2*459
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #445                      Status: Released
+                  Compliance Date: MAR 14, 2013
+=============================================================================
+
+Associated patches: (v)IB*2*347    <<= must be installed BEFORE `IB*2*459'
+
+Subject: CORRECTING CLAIMS MATCHING REPORT and IB ACTION TYPE FILE ENTRIES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two issues. The first change is to fix the Claims
+ Matching Report [RCDP CLAIMS MATCH] regarding sometimes missing
+ corresponding first party debts for third party claims. The second issue
+ is that an incorrect charge type of NURSING HOME (NSC) is showing on 
+ some patient's bills.
+  
+ This patch contains a combined package Kernel Installation and Distribution
+ System (KIDS) host file. The following are included in the host file:
+  
+       IB*2.0*459     Contained in KIDS Host File IB_20_459.KID
+       PRCA*4.5*280   Contained in KIDS Host File IB_20_459.KID
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000264756 Claims Matching Report will not pull e-pharmacy CMOP
+    dup HD0000000494286 claims matching report missing e-pharmacy info
+ 2. HD0000000473968 Incorrect charge type
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Asheville VA Medical Center                                           
+ Martinsburg VA Medical Center                                      
+ West Palm Beach VAMC      
+  
+ OVERVIEW OF REMEDY TICKETS(s):
+ ==============================
+ 1. HD0000000264756 Claims Matching Report will not pull e-pharmacy CMOP
+  
+    Problem:
+    --------
+    Site user reported that the Claims Matching Report [RCDP CLAIMS MATCH]
+    didn't pull corresponding first party e-pharmacy CMOP claims.
+  
+    Resolution:
+    -----------
+    Modified routines IBEFUR and IBEFURF to use the FILL NUMBER (#.1) field
+    in the IB BILL/CLAIMS PRESCRIPTION REFILL (#362.4) file to find the
+    associated first party debts for the third party claims when they have
+    the matching copays in the system.
+  
+ 2. HD0000000473968 Incorrect charge type
+  
+    Problem:
+    --------
+    The sites and patients are seeing NURSING HOME CARE (NSC) instead of
+    HOSPITAL CARE (NSC) for when the patient charges are:
+       DG FEE SERVICE (INPT) CANCEL   
+       DG FEE SERVICE (INPT) NEW       
+       DG FEE SERVICE (INPT) UPDATE. 
+  
+    Resolution:
+    -----------
+    The post-init routine IB20P459 will apply a correction to the IB ACTION
+    TYPE (#350.1) file CHARGE CATEGORY (#.03) field to change three
+    records. After that an Accounts Receivable routine will correct the
+    necessary associated ACCOUNTS RECEIVABLE (#430) file records in the
+    TYPE OF CARE (#15.1) field to correspond.
+  
+    Shown here are all six of the DG Fee Service records, and the three 
+    changes:
+  
+ From:
+  
+ DG FEE SERVICE (INPT) CANCEL    NURSING HOME CARE(NSC)
+ DG FEE SERVICE (INPT) NEW       NURSING HOME CARE(NSC)
+ DG FEE SERVICE (INPT) UPDATE    NURSING HOME CARE(NSC)
+ DG FEE SERVICE (OPT) CANCEL     OUTPATIENT CARE(NSC)
+ DG FEE SERVICE (OPT) NEW        OUTPATIENT CARE(NSC)
+ DG FEE SERVICE (OPT) UPDATE     OUTPATIENT CARE(NSC)
+  
+ To:
+  
+ DG FEE SERVICE (INPT) CANCEL    HOSPITAL CARE (NSC)
+ DG FEE SERVICE (INPT) NEW       HOSPITAL CARE (NSC)
+ DG FEE SERVICE (INPT) UPDATE    HOSPITAL CARE (NSC)
+ DG FEE SERVICE (OPT) CANCEL     OUTPATIENT CARE(NSC)
+ DG FEE SERVICE (OPT) NEW        OUTPATIENT CARE(NSC)
+ DG FEE SERVICE (OPT) UPDATE     OUTPATIENT CARE(NSC)
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+  
+ Install Time - less than 30 minutes - but will vary from site to site
+ depending on the size of two files: the INTEGRATED BILLING ACTION (#350)
+ file which is searched for AR bills, and then the ACCOUNTS RECEIVABLE
+ (#430) file.
+  
+  
+  1.  Retrieve the KIDS distribution host file. This patch will be
+      distributed in a host file due to the amount of data contained in
+      the patch.  The name of the host file is:
+  
+      IB_20_459.KID
+  
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+  
+           download.vista.med.va.gov
+  
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+  
+           Albany                  ftp.fo-albany.med.va.gov
+           Hines                   ftp.fo-hines.med.va.gov
+           Salt Lake City          ftp.fo-slc.med.va.gov
+  
+      The IB_20_459.KID host file is located in the anonymous.software
+      directory.  Use ASCII Mode when downloading the file.
+  
+  2.  Load the KIDS distribution that is contained in file IB_20_459.KID
+      using the Load a Distribution option on the Installation menu.
+  
+  3.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+      Select Kernel Installation & Distribution System Option:
+      Installation
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  4.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter IB*2.0*459):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+  5.  Use the Install Package(s) option and select the package IB*2.0*459
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO.
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? NO//', answer NO.
+  
+  6.  Send a copy of this patch description, the patch description for 
+      PRCA*4.5*280, and the listing from the following option to the AR
+      Supervisor (just so they know what was corrected):
+  
+          Select OPTION NAME: Install File Print  XPD PRINT INSTALL FILE
+          Select INSTALL NAME: PRCA*4.5*280 
+  
+  7.  CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P459 (and also the PRCA280 
+      routine that is associated with PRCA*4.5*280).
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P459
+    Before:       n/a   After:  B2470984  **459**
+Routine Name: IBEFUR
+    Before: B20071108   After: B20510496  **130,459**
+Routine Name: IBEFURF
+    Before: B18456992   After: B18754511  **130,347,459**
+ 
+Routine list of preceding patches: 347
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : JUN 30, 2011
+Completed By: DAWSON,TIM                    Date Completed: JAN 29, 2013
+Released By : GARRETT,WILLIAM               Date Released : FEB 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

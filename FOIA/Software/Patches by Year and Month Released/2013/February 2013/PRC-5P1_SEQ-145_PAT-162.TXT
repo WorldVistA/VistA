@@ -1,0 +1,265 @@
+$TXT Created by BAUMANN,SCOTT A at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Wednesday, 04/04/12 at 09:54
+=============================================================================
+Run Date: FEB 04, 2013                     Designation: PRC*5.1*162
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #145                    Status: Released
+                  Compliance Date: MAR 07, 2013
+=============================================================================
+
+
+Subject: FEE AUTOMATION ENHANCEMENT
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch is part of the VistA Fee and IFCAP Automation Enhancements
+ project (aka Duplicate Payments).
+  
+  ************************************************************************
+  *  Four different patches are related and must be installed at the     *
+  *  same time to avoid application/processing errors.                   *
+  *  The recommended patch install order is:                             *
+  *    PRC*5.1*162                                                       *
+  *    FB*3.5*132                                                        *
+  *    GEC*2*35                                                          *
+  *    DSIF*3.2*34                                                       *
+  *                                                                      *
+  *  If the IFCAP package is not installed at a site then there is no    *
+  *  need to install patch PRC*5.1*162.                                  *
+  *  If the FEE BASIS package is not installed at a site then there is   *
+  *  no need to install patch FB*3.5*132.                                *
+  *  If the FEE BASIS CLAIMS SYSTEM (FBCS) is not installed at a site    *
+  *  then there is no need to install patch DSIF*3.2*34.                 *
+  *                                                                      *
+  *  Please review the installation instructions of all the applicable   *
+  *  patches before installing any of these patches to ensure all        *
+  *  applicable patches can be installed at the same time.               *
+  *                                                                      *
+  *  The National Non-VA Care Program Office has issued the VistA Fee    *
+  *  and IFCAP Automation Enhancement Implementation Procedure Guide.    *
+  *  This procedure guide contains information about preparing for and   *
+  *  implementing this enhancement.  The procedure guide can be obtained *
+  *  from the following website:                                         *
+  * http://nonvacare.hac.med.va.gov/policy-programs/procedure-guides.asp * 
+  ************************************************************************
+  
+ The changes made by patch PRC*5.1*162 are described below:
+  
+ 1.  ALLOW FEE BASIS TO SKIP FUND CONTROL POINT ACCESS CHECK
+     -------------------------------------------------------
+     The Fee Basis software calls IFCAP routine PRCS58CC to post a credit
+     amount to a 1358 authorization when a fee payment line item is flagged
+     as rejected.  This is permitted by Integration Control Registration
+     (ICR) #831.
+  
+     IFCAP currently requires the user account to have access (as clerk or
+     official) to the fund control point associated with the 1358
+     obligation.
+  
+     This patch modifies IFCAP routine PRCS58CC and ICR #831 to support an
+     additional input parameter. If this optional input parameter is set
+     IFCAP will skip the fund control point access check.
+  
+     Fee Basis will set the new parameter for payment line items that are
+     flagged as rejected by Central Fee (Austin) using a new interface 
+     transaction.  These transactions are processed by a background job
+     where the user account is POSTMASTER.
+  
+  
+ 2.  DELETE OBSOLETE OPTIONS
+     -----------------------
+     The 994 type code sheets will become obsolete when patch FB*3.5*132
+     is implemented by a site.
+  
+     Patch PRC*5.1*162 will remove the Fee Basis - IFCAP Code Sheet Menu
+     [PRC FEE GECS MAIN MENU] from the Accounting Technician Menu [PRCFA
+     ACCTG TECH].
+     
+     The Fee Basis - IFCAP Code Sheet Menu and attached options (18 total)
+     will be deleted by this patch.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated:
+  
+  Option Name                     Type               New/Modified/Deleted
+  -----------                     ------             -------------------- 
+  PRC FEE GECS BATCH              action             Deleted
+  PRC FEE GECS BATCH EDIT         action             Deleted
+  PRC FEE GECS BATCHES STATUS     action             Deleted
+  PRC FEE GECS BATCHES WAITING T  action             Deleted
+  PRC FEE GECS CODE EDIT          action             Deleted
+  PRC FEE GECS CREATE             action             Deleted
+  PRC FEE GECS DELETE             action             Deleted
+  PRC FEE GECS KEYPUNCH           action             Deleted
+  PRC FEE GECS MAIN MENU          menu               Deleted
+  PRC FEE GECS MAINTENANCE USER   menu               Deleted
+  PRC FEE GECS PURGE              action             Deleted
+  PRC FEE GECS READY FOR BATCHIN  action             Deleted
+  PRC FEE GECS REBATCH            action             Deleted
+  PRC FEE GECS REPORTS MENU       menu               Deleted
+  PRC FEE GECS RETRANSMIT         action             Deleted
+  PRC FEE GECS REVIEW CODE SHEET  action             Deleted
+  PRC FEE GECS TRANSMIT           action             Deleted
+  PRC FEE GECS TRANSMIT USER      menu               Deleted
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+ Additional Information: N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ VistA Fee and IFCAP automation enhancement (#20110212)
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A 
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+  MINNEAPOLIS VA HCS
+  VA NWIHS, OMAHA DIVISION
+  SIOUX FALLS VA HCS
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+  Updated documentation describing the new functionality introduced by this
+  patch is available.
+  
+  The preferred method is to FTP the files from 
+  ftp://download.vista.med.va.gov/.
+  This transmits the files from the first available FTP server. Sites may 
+  also elect to retrieve software directly from a specific server as 
+  follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  The documentation will be in the form of Adobe Acrobat files.
+  
+  Documentation can also be found on the VA Software Documentation Library 
+  at:
+  http://www4.va.gov/vdl/
+  
+  File Description                File Name                     FTP Mode
+  ----------------------------------------------------------------------
+  Accounting Technician User's    ifcp5_1accounting_tech.pdf     (binary)
+    Guide
+  Application Coordinator User's  ifcp5_1application_coord.pdf   (binary)
+    Guide
+  Technical Manual                ifcp5_1tech_manual.pdf         (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ No options need to be disabled during installation of this patch.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ Ensure that all patches listed at the beginning of the patch description
+ that are applicable to the site can be installed at the same time.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PRC*5.1*162):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer NO.
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCS58CC
+    Before: B10360132   After: B10643800  **162**
+
+=============================================================================
+User Information:
+Entered By  : BAUMANN,SCOTT A               Date Entered  : AUG 29, 2011
+Completed By: SERVICE,JOHN                  Date Completed: DEC 26, 2012
+Released By : VASSAR,CAROL                  Date Released : FEB 04, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

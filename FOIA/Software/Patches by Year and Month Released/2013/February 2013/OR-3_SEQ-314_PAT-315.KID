@@ -1,0 +1,2196 @@
+EMERGENCY Released OR*3*315 SEQ #314
+Extracted from mail message
+**KIDS**:OR*3.0*315^
+
+**INSTALL NAME**
+OR*3.0*315
+"BLD",7475,0)
+OR*3.0*315^ORDER ENTRY/RESULTS REPORTING^0^3121030^y
+"BLD",7475,1,0)
+^9.61A^58^58^3121029^^
+"BLD",7475,1,1,0)
+1. In the Computerized Patient Record System (CPRS), on the Labs tab,
+"BLD",7475,1,2,0)
+under Anatomic Pathology, the accession number display should be changed
+"BLD",7475,1,3,0)
+to show the Commercial-Off-The-Shelf (COTS) accession number. This patch
+"BLD",7475,1,4,0)
+makes this change by looking for the presence of the Application
+"BLD",7475,1,5,0)
+Programming Interface (API) GETACC^LRJWLST. If that API exists, CPRS will
+"BLD",7475,1,6,0)
+use it to retrieve the COTS accession number from the LAB DATA file 
+"BLD",7475,1,7,0)
+(#63). If no COTS accession number is available, the legacy accession 
+"BLD",7475,1,8,0)
+number will display.
+"BLD",7475,1,9,0)
+ 
+"BLD",7475,1,10,0)
+2. In CPRS, on the Labs tab, under Microbiology, the accession number
+"BLD",7475,1,11,0)
+display should be changed to show the COTS accession number. This patch
+"BLD",7475,1,12,0)
+makes this change by looking for the presence of the API GETACC^LRJWLST
+"BLD",7475,1,13,0)
+and, if present, uses the API to retrieve the COTS accession number from
+"BLD",7475,1,14,0)
+the LAB DATA file (#63). If no COTS accession number is available, the 
+"BLD",7475,1,15,0)
+legacy accession number will display.
+"BLD",7475,1,16,0)
+ 
+"BLD",7475,1,17,0)
+3. Laboratory V5.2 patch LR*5.2*425 is adding the ability to inactivate a
+"BLD",7475,1,18,0)
+collection sample. CPRS will now honor the INACTIVE DATE (#64.9101) field
+"BLD",7475,1,19,0)
+in the COLLECTION SAMPLE (#62) file.
+"BLD",7475,1,20,0)
+ 
+"BLD",7475,1,21,0)
+4. An error was occurring in CPRS when attempting to display the Anatomic 
+"BLD",7475,1,22,0)
+Pathology supplemental report. The error was caused by a modification 
+"BLD",7475,1,23,0)
+done in support of the LEDI v4 release. In order to eliminate the error, 
+"BLD",7475,1,24,0)
+a modification was done to CPRS to support the LEDI v4 change.
+"BLD",7475,1,25,0)
+ 
+"BLD",7475,1,26,0)
+5. There are two new order reasons being used by Laboratory V5.2. They 
+"BLD",7475,1,27,0)
+are Obsolete Order and Purged Order. A request was made that these two 
+"BLD",7475,1,28,0)
+reasons be added to the ORDER REASON file (#100.03). The post install of 
+"BLD",7475,1,29,0)
+this patch will automatically add these reasons.
+"BLD",7475,1,30,0)
+ 
+"BLD",7475,1,31,0)
+6. The Lab users have requested that when certain fields are updated in 
+"BLD",7475,1,32,0)
+the LABORATORY TEST (#60) file, there should be a CPRS call made to search
+"BLD",7475,1,33,0)
+for quick orders that contain the test that was updated. If any are found,
+"BLD",7475,1,34,0)
+the appropriate personnel will be notified. This patch addresses this
+"BLD",7475,1,35,0)
+issue by creating a new routine ORLRQO that will search for the specified
+"BLD",7475,1,36,0)
+test and notify the members of the OR CACS mail group. They will be told
+"BLD",7475,1,37,0)
+the quick order name and whether it is active or inactive.
+"BLD",7475,1,38,0)
+ 
+"BLD",7475,1,39,0)
+7. Since the COTS system, when present, will now be considered the Lab
+"BLD",7475,1,40,0)
+system of record, the date/time completed from the COTS system should be
+"BLD",7475,1,41,0)
+what is stored in the Lab system as the date/time completed. However, this
+"BLD",7475,1,42,0)
+might cause some concern on the CPRS side since there may be a delay if
+"BLD",7475,1,43,0)
+the interface from VistA to the COTS system is down for any reason. In
+"BLD",7475,1,44,0)
+order to help mitigate this issue, this patch will modify the information
+"BLD",7475,1,45,0)
+stored in the RESULTS DATE/TIME field (#71) of the ORDER file (#100) to
+"BLD",7475,1,46,0)
+contain the date/time the results information was sent to CPRS, rather
+"BLD",7475,1,47,0)
+than the date/time completed from the COTS system.
+"BLD",7475,1,48,0)
+ 
+"BLD",7475,1,49,0)
+8. Laboratory V5.2 patch LR*5.2*425 is adding the ability to inactivate a
+"BLD",7475,1,50,0)
+topography. CPRS will now honor the INACTIVE DATE (#64.9103) field
+"BLD",7475,1,51,0)
+in the TOPOGRAPHY FIELD (#61) file.
+"BLD",7475,1,52,0)
+ 
+"BLD",7475,1,53,0)
+9. The Laboratory Lab System Re-engineering project (LSRP) has requested
+"BLD",7475,1,54,0)
+an API to allow Lab to unveil an order in CPRS. This patch adds that new
+"BLD",7475,1,55,0)
+API.
+"BLD",7475,1,56,0)
+ 
+"BLD",7475,1,57,0)
+10. LSRP has requested an API to update the PACKAGE REFERENCE field (#33) 
+"BLD",7475,1,58,0)
+of the ORDER file (#100). This patch adds that new API.
+"BLD",7475,4,0)
+^9.64PA^^
+"BLD",7475,6.3)
+20
+"BLD",7475,"ABPKG")
+n
+"BLD",7475,"INID")
+n^n^n
+"BLD",7475,"INIT")
+POST^ORY315
+"BLD",7475,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7475,"KRN",.4,0)
+.4
+"BLD",7475,"KRN",.401,0)
+.401
+"BLD",7475,"KRN",.402,0)
+.402
+"BLD",7475,"KRN",.403,0)
+.403
+"BLD",7475,"KRN",.5,0)
+.5
+"BLD",7475,"KRN",.84,0)
+.84
+"BLD",7475,"KRN",3.6,0)
+3.6
+"BLD",7475,"KRN",3.8,0)
+3.8
+"BLD",7475,"KRN",9.2,0)
+9.2
+"BLD",7475,"KRN",9.8,0)
+9.8
+"BLD",7475,"KRN",9.8,"NM",0)
+^9.68A^11^10
+"BLD",7475,"KRN",9.8,"NM",1,0)
+ORDVX1^^0^B5908194
+"BLD",7475,"KRN",9.8,"NM",1,99999999)
+2989975^3090619.131609
+"BLD",7475,"KRN",9.8,"NM",2,0)
+ORDV05E^^0^B23354517
+"BLD",7475,"KRN",9.8,"NM",2,99999999)
+2989975^3090701.092156
+"BLD",7475,"KRN",9.8,"NM",3,0)
+ORWDLR32^^0^B65150188
+"BLD",7475,"KRN",9.8,"NM",3,99999999)
+2989975^3090915.101911
+"BLD",7475,"KRN",9.8,"NM",4,0)
+ORWDLR33^^0^B23049267
+"BLD",7475,"KRN",9.8,"NM",4,99999999)
+2989975^3100112.160411
+"BLD",7475,"KRN",9.8,"NM",5,0)
+ORB3LAB^^0^B4298367
+"BLD",7475,"KRN",9.8,"NM",5,99999999)
+2989975^3101130.160958
+"BLD",7475,"KRN",9.8,"NM",6,0)
+ORY315^^0^B8296998
+"BLD",7475,"KRN",9.8,"NM",6,99999999)
+6687^3110414.131459
+"BLD",7475,"KRN",9.8,"NM",7,0)
+ORUTL2^^0^B513377
+"BLD",7475,"KRN",9.8,"NM",7,99999999)
+6687^3111207.190615
+"BLD",7475,"KRN",9.8,"NM",9,0)
+ORMLR^^0^B55099277
+"BLD",7475,"KRN",9.8,"NM",9,99999999)
+2989975^3120522.190713
+"BLD",7475,"KRN",9.8,"NM",10,0)
+ORMLR4^^0^B85588
+"BLD",7475,"KRN",9.8,"NM",10,99999999)
+2989975^3120522.190713
+"BLD",7475,"KRN",9.8,"NM",11,0)
+ORUQO^^0^B15426804
+"BLD",7475,"KRN",9.8,"NM",11,99999999)
+2989975^3121022.01223
+"BLD",7475,"KRN",9.8,"NM","B","ORB3LAB",5)
+
+"BLD",7475,"KRN",9.8,"NM","B","ORDV05E",2)
+
+"BLD",7475,"KRN",9.8,"NM","B","ORDVX1",1)
+
+"BLD",7475,"KRN",9.8,"NM","B","ORMLR",9)
+
+"BLD",7475,"KRN",9.8,"NM","B","ORMLR4",10)
+
+"BLD",7475,"KRN",9.8,"NM","B","ORUQO",11)
+
+"BLD",7475,"KRN",9.8,"NM","B","ORUTL2",7)
+
+"BLD",7475,"KRN",9.8,"NM","B","ORWDLR32",3)
+
+"BLD",7475,"KRN",9.8,"NM","B","ORWDLR33",4)
+
+"BLD",7475,"KRN",9.8,"NM","B","ORY315",6)
+
+"BLD",7475,"KRN",19,0)
+19
+"BLD",7475,"KRN",19.1,0)
+19.1
+"BLD",7475,"KRN",101,0)
+101
+"BLD",7475,"KRN",409.61,0)
+409.61
+"BLD",7475,"KRN",771,0)
+771
+"BLD",7475,"KRN",779.2,0)
+779.2
+"BLD",7475,"KRN",870,0)
+870
+"BLD",7475,"KRN",8989.51,0)
+8989.51
+"BLD",7475,"KRN",8989.52,0)
+8989.52
+"BLD",7475,"KRN",8994,0)
+8994
+"BLD",7475,"KRN","B",.4,.4)
+
+"BLD",7475,"KRN","B",.401,.401)
+
+"BLD",7475,"KRN","B",.402,.402)
+
+"BLD",7475,"KRN","B",.403,.403)
+
+"BLD",7475,"KRN","B",.5,.5)
+
+"BLD",7475,"KRN","B",.84,.84)
+
+"BLD",7475,"KRN","B",3.6,3.6)
+
+"BLD",7475,"KRN","B",3.8,3.8)
+
+"BLD",7475,"KRN","B",9.2,9.2)
+
+"BLD",7475,"KRN","B",9.8,9.8)
+
+"BLD",7475,"KRN","B",19,19)
+
+"BLD",7475,"KRN","B",19.1,19.1)
+
+"BLD",7475,"KRN","B",101,101)
+
+"BLD",7475,"KRN","B",409.61,409.61)
+
+"BLD",7475,"KRN","B",771,771)
+
+"BLD",7475,"KRN","B",779.2,779.2)
+
+"BLD",7475,"KRN","B",870,870)
+
+"BLD",7475,"KRN","B",8989.51,8989.51)
+
+"BLD",7475,"KRN","B",8989.52,8989.52)
+
+"BLD",7475,"KRN","B",8994,8994)
+
+"BLD",7475,"QUES",0)
+^9.62^^
+"BLD",7475,"REQB",0)
+^9.611^1^1
+"BLD",7475,"REQB",1,0)
+OR*3.0*243^2
+"BLD",7475,"REQB","B","OR*3.0*243",1)
+
+"INIT")
+POST^ORY315
+"MBREQ")
+0
+"PKG",170,-1)
+1^1
+"PKG",170,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",170,20,0)
+^9.402P^^
+"PKG",170,22,0)
+^9.49I^1^1
+"PKG",170,22,1,0)
+3.0^2971217^2980917^11712
+"PKG",170,22,1,"PAH",1,0)
+315^3121030^2989975
+"PKG",170,22,1,"PAH",1,1,0)
+^^58^58^3121030
+"PKG",170,22,1,"PAH",1,1,1,0)
+1. In the Computerized Patient Record System (CPRS), on the Labs tab,
+"PKG",170,22,1,"PAH",1,1,2,0)
+under Anatomic Pathology, the accession number display should be changed
+"PKG",170,22,1,"PAH",1,1,3,0)
+to show the Commercial-Off-The-Shelf (COTS) accession number. This patch
+"PKG",170,22,1,"PAH",1,1,4,0)
+makes this change by looking for the presence of the Application
+"PKG",170,22,1,"PAH",1,1,5,0)
+Programming Interface (API) GETACC^LRJWLST. If that API exists, CPRS will
+"PKG",170,22,1,"PAH",1,1,6,0)
+use it to retrieve the COTS accession number from the LAB DATA file 
+"PKG",170,22,1,"PAH",1,1,7,0)
+(#63). If no COTS accession number is available, the legacy accession 
+"PKG",170,22,1,"PAH",1,1,8,0)
+number will display.
+"PKG",170,22,1,"PAH",1,1,9,0)
+ 
+"PKG",170,22,1,"PAH",1,1,10,0)
+2. In CPRS, on the Labs tab, under Microbiology, the accession number
+"PKG",170,22,1,"PAH",1,1,11,0)
+display should be changed to show the COTS accession number. This patch
+"PKG",170,22,1,"PAH",1,1,12,0)
+makes this change by looking for the presence of the API GETACC^LRJWLST
+"PKG",170,22,1,"PAH",1,1,13,0)
+and, if present, uses the API to retrieve the COTS accession number from
+"PKG",170,22,1,"PAH",1,1,14,0)
+the LAB DATA file (#63). If no COTS accession number is available, the 
+"PKG",170,22,1,"PAH",1,1,15,0)
+legacy accession number will display.
+"PKG",170,22,1,"PAH",1,1,16,0)
+ 
+"PKG",170,22,1,"PAH",1,1,17,0)
+3. Laboratory V5.2 patch LR*5.2*425 is adding the ability to inactivate a
+"PKG",170,22,1,"PAH",1,1,18,0)
+collection sample. CPRS will now honor the INACTIVE DATE (#64.9101) field
+"PKG",170,22,1,"PAH",1,1,19,0)
+in the COLLECTION SAMPLE (#62) file.
+"PKG",170,22,1,"PAH",1,1,20,0)
+ 
+"PKG",170,22,1,"PAH",1,1,21,0)
+4. An error was occurring in CPRS when attempting to display the Anatomic 
+"PKG",170,22,1,"PAH",1,1,22,0)
+Pathology supplemental report. The error was caused by a modification 
+"PKG",170,22,1,"PAH",1,1,23,0)
+done in support of the LEDI v4 release. In order to eliminate the error, 
+"PKG",170,22,1,"PAH",1,1,24,0)
+a modification was done to CPRS to support the LEDI v4 change.
+"PKG",170,22,1,"PAH",1,1,25,0)
+ 
+"PKG",170,22,1,"PAH",1,1,26,0)
+5. There are two new order reasons being used by Laboratory V5.2. They 
+"PKG",170,22,1,"PAH",1,1,27,0)
+are Obsolete Order and Purged Order. A request was made that these two 
+"PKG",170,22,1,"PAH",1,1,28,0)
+reasons be added to the ORDER REASON file (#100.03). The post install of 
+"PKG",170,22,1,"PAH",1,1,29,0)
+this patch will automatically add these reasons.
+"PKG",170,22,1,"PAH",1,1,30,0)
+ 
+"PKG",170,22,1,"PAH",1,1,31,0)
+6. The Lab users have requested that when certain fields are updated in 
+"PKG",170,22,1,"PAH",1,1,32,0)
+the LABORATORY TEST (#60) file, there should be a CPRS call made to search
+"PKG",170,22,1,"PAH",1,1,33,0)
+for quick orders that contain the test that was updated. If any are found,
+"PKG",170,22,1,"PAH",1,1,34,0)
+the appropriate personnel will be notified. This patch addresses this
+"PKG",170,22,1,"PAH",1,1,35,0)
+issue by creating a new routine ORLRQO that will search for the specified
+"PKG",170,22,1,"PAH",1,1,36,0)
+test and notify the members of the OR CACS mail group. They will be told
+"PKG",170,22,1,"PAH",1,1,37,0)
+the quick order name and whether it is active or inactive.
+"PKG",170,22,1,"PAH",1,1,38,0)
+ 
+"PKG",170,22,1,"PAH",1,1,39,0)
+7. Since the COTS system, when present, will now be considered the Lab
+"PKG",170,22,1,"PAH",1,1,40,0)
+system of record, the date/time completed from the COTS system should be
+"PKG",170,22,1,"PAH",1,1,41,0)
+what is stored in the Lab system as the date/time completed. However, this
+"PKG",170,22,1,"PAH",1,1,42,0)
+might cause some concern on the CPRS side since there may be a delay if
+"PKG",170,22,1,"PAH",1,1,43,0)
+the interface from VistA to the COTS system is down for any reason. In
+"PKG",170,22,1,"PAH",1,1,44,0)
+order to help mitigate this issue, this patch will modify the information
+"PKG",170,22,1,"PAH",1,1,45,0)
+stored in the RESULTS DATE/TIME field (#71) of the ORDER file (#100) to
+"PKG",170,22,1,"PAH",1,1,46,0)
+contain the date/time the results information was sent to CPRS, rather
+"PKG",170,22,1,"PAH",1,1,47,0)
+than the date/time completed from the COTS system.
+"PKG",170,22,1,"PAH",1,1,48,0)
+ 
+"PKG",170,22,1,"PAH",1,1,49,0)
+8. Laboratory V5.2 patch LR*5.2*425 is adding the ability to inactivate a
+"PKG",170,22,1,"PAH",1,1,50,0)
+topography. CPRS will now honor the INACTIVE DATE (#64.9103) field
+"PKG",170,22,1,"PAH",1,1,51,0)
+in the TOPOGRAPHY FIELD (#61) file.
+"PKG",170,22,1,"PAH",1,1,52,0)
+ 
+"PKG",170,22,1,"PAH",1,1,53,0)
+9. The Laboratory Lab System Re-engineering project (LSRP) has requested
+"PKG",170,22,1,"PAH",1,1,54,0)
+an API to allow Lab to unveil an order in CPRS. This patch adds that new
+"PKG",170,22,1,"PAH",1,1,55,0)
+API.
+"PKG",170,22,1,"PAH",1,1,56,0)
+ 
+"PKG",170,22,1,"PAH",1,1,57,0)
+10. LSRP has requested an API to update the PACKAGE REFERENCE field (#33) 
+"PKG",170,22,1,"PAH",1,1,58,0)
+of the ORDER file (#100). This patch adds that new API.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+10
+"RTN","ORB3LAB")
+0^5^B4298367^B3813832
+"RTN","ORB3LAB",1,0)
+ORB3LAB ; slc/CLA/TC - Routine to trigger Lab-related notifications ;10/14/03
+"RTN","ORB3LAB",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**210,243,315**;Dec 17, 1997;Build 20
+"RTN","ORB3LAB",3,0)
+ ;
+"RTN","ORB3LAB",4,0)
+LAB(ORDFN,ORLRDFN,ORLRI,ORLRA,ORLRSS,ORXQA) ;trigger Lab Anatomic Path notifs
+"RTN","ORB3LAB",5,0)
+ ; called by SEND^LRAPRES1 (DBIA #4287)
+"RTN","ORB3LAB",6,0)
+ ;
+"RTN","ORB3LAB",7,0)
+ N ORBMSG,ORAPMD,ORBADUZ,ORSRPT,ORACCNO
+"RTN","ORB3LAB",8,0)
+ I '$D(ORXQA) D
+"RTN","ORB3LAB",9,0)
+ . S ORAPMD=$S(ORLRSS="AU":$P(ORLRA,U,12),1:$P(ORLRA,U,7))  ;provider/physician "ordering" the ap test
+"RTN","ORB3LAB",10,0)
+ . I $L(ORAPMD) S ORBADUZ(ORAPMD)=""
+"RTN","ORB3LAB",11,0)
+ I $D(ORXQA) M ORBADUZ=ORXQA
+"RTN","ORB3LAB",12,0)
+ S ORSRPT=""
+"RTN","ORB3LAB",13,0)
+ I ORLRSS="AU",$O(^LR(ORLRDFN,84,0)) S ORSRPT=" supplmntl rpt" ;AP supplmntl rpt - DBIA #5157
+"RTN","ORB3LAB",14,0)
+ I ORLRSS'="AU",$G(ORLRI)]"",$O(^LR(ORLRDFN,ORLRSS,ORLRI,1.2,0)) S ORSRPT=" supplmntl rpt" ; AP supplmntl rpt - DBIA #5157
+"RTN","ORB3LAB",15,0)
+ S ORBMSG=$S(ORLRSS="AU":"Autopsy",ORLRSS="CY":"Cytology",ORLRSS="SP":"Surgical Pathology",ORLRSS="EM":"Electron Microscopy",1:"Anatomic Pathology")
+"RTN","ORB3LAB",16,0)
+ S ORBMSG=ORBMSG_ORSRPT_" results available."
+"RTN","ORB3LAB",17,0)
+ S ORACCNO=$P(ORLRA,U,6)  ;accession # of lab section
+"RTN","ORB3LAB",18,0)
+ D EN^ORB3(71,ORDFN,"",.ORBADUZ,ORBMSG,ORLRSS_U_ORACCNO_U_ORLRI)  ;XQADATA="Lab section^Accession#^DT specimen taken (inverse format)"
+"RTN","ORB3LAB",19,0)
+ Q
+"RTN","ORDV05E")
+0^2^B23354517^B20923407
+"RTN","ORDV05E",1,0)
+ORDV05E ; slc/jdl - Microbiology Extract Routine ;6/13/01  11:49
+"RTN","ORDV05E",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**109,208,315**;Dec 17, 1997;Build 20
+"RTN","ORDV05E",3,0)
+ ;
+"RTN","ORDV05E",4,0)
+ ;   DBIA   531  ^LRO(68
+"RTN","ORDV05E",5,0)
+ ;   DBIA   684  ^LR(
+"RTN","ORDV05E",6,0)
+ ;   DBIA  2387  ^LAB(60
+"RTN","ORDV05E",7,0)
+ ;   DBIA  5466  GETACC^LRJWLST
+"RTN","ORDV05E",8,0)
+ ;
+"RTN","ORDV05E",9,0)
+ ;;Called from ORDV05, return ^TMP("ORM",$J in GCPR format
+"RTN","ORDV05E",10,0)
+ ;;For Bacteriology,Sterility,Gram stain
+"RTN","ORDV05E",11,0)
+GET ;Extract data from LR global
+"RTN","ORDV05E",12,0)
+ N I,IX,IXO,PNM,AGE,SEX,LRDFN,ALL,FORMAT,DONE,OUTCNT
+"RTN","ORDV05E",13,0)
+ S LRDFN="",ALL=1,FORMAT=0,DONE=0,OUTCNT=1 ;Parameters required by MI^LR7OGMM
+"RTN","ORDV05E",14,0)
+ D DEMO^LR7OGU(DFN,.LRDFN,.PNM,.AGE,.SEX) ;Demograph required by LR7OGMM
+"RTN","ORDV05E",15,0)
+ I '$G(LRDFN) Q
+"RTN","ORDV05E",16,0)
+ S ^TMP("OR7OG",$J,"G")=DFN_U_PNM_U_LRDFN_U_AGE_U_SEX_"^8"
+"RTN","ORDV05E",17,0)
+ S IX=GMTS1
+"RTN","ORDV05E",18,0)
+ F IXO=1:1:GMTSNDM S IX=$O(^LR(LRDFN,"MI",IX)) Q:'IX!(IX>GMTS2)  D XTRCT
+"RTN","ORDV05E",19,0)
+ Q
+"RTN","ORDV05E",20,0)
+XTRCT N ACC,CDT,SS,CS,X,X0,DIC,DIQ,DA,DR,MICRO,LOC,RDT,MICCOM,RPT,OACC
+"RTN","ORDV05E",21,0)
+ S RPT=IX,X0=^LR(LRDFN,"MI",IX,0),X=$P(X0,U),RDT=$P(X0,U,3),ACC=$P(X0,U,6),LOC=$P(X0,U,8)
+"RTN","ORDV05E",22,0)
+ Q:'X  Q:'$P(X0,"^",5)
+"RTN","ORDV05E",23,0)
+ S CDT=$$REGDTM4^ORDVU(X)
+"RTN","ORDV05E",24,0)
+ D LABTEST(X,ACC)
+"RTN","ORDV05E",25,0)
+ I $T(GETACC^LRJWLST)]"" D
+"RTN","ORDV05E",26,0)
+ . N X,OACC
+"RTN","ORDV05E",27,0)
+ . S OACC=$$GETACC^LRJWLST(LRDFN,"MI",IX) I OACC]"" S ACC=OACC
+"RTN","ORDV05E",28,0)
+ ; External format of site/specimen, collection sample, and comment
+"RTN","ORDV05E",29,0)
+ S DIC=63,DIQ="MICRO",DIQ(0)="E",DA=LRDFN,DA(63.05)=IX,DR=5,DR(63.05)=".05;.055;.99"
+"RTN","ORDV05E",30,0)
+ D EN^DIQ1
+"RTN","ORDV05E",31,0)
+ S SS=MICRO(63.05,IX,.05,"E"),CS=MICRO(63.05,IX,.055,"E"),MICCOM=MICRO(63.05,IX,.99,"E")
+"RTN","ORDV05E",32,0)
+ S ^TMP("ORM",$J,RPT,SS)=CDT_U_ACC_U_CS_U_SS_U_LRTSTS
+"RTN","ORDV05E",33,0)
+ S ^TMP("ORM",$J,RPT,SS,"IMP")=MICCOM
+"RTN","ORDV05E",34,0)
+ D ABXLEV,BACT,GRAM,STER,PARA^ORDV05X,MYCO^ORDV05X,TB^ORDV05X,VIRO^ORDV05X
+"RTN","ORDV05E",35,0)
+ D MI^ORDV05T(LRDFN,IX,ALL,.OUTCNT,FORMAT,.DONE)
+"RTN","ORDV05E",36,0)
+ I $D(^TMP("OR7OGX",$J,"OUTPUT"))>0 M ^TMP("ORM",$J,RPT,SS,"REPORT")=^TMP("OR7OGX",$J,"OUTPUT")
+"RTN","ORDV05E",37,0)
+ K ^TMP("OR7OGX",$J,"OUTPUT")
+"RTN","ORDV05E",38,0)
+ K LRTSTS
+"RTN","ORDV05E",39,0)
+ Q
+"RTN","ORDV05E",40,0)
+BACT ; Get Bacteriology Work-up
+"RTN","ORDV05E",41,0)
+ N DA,DIC,DIQ,DR,STATUS,ISO,ORG,RMK,COM,SMEAR,ORGIEN
+"RTN","ORDV05E",42,0)
+ I $D(^LR(LRDFN,"MI",IX,1)) D
+"RTN","ORDV05E",43,0)
+ . S DIC=63,DA=LRDFN,DA(63.05)=IX,DR=5,DR(63.05)="11.5",DIQ="STATUS"
+"RTN","ORDV05E",44,0)
+ . S DIQ(0)="E" D EN^DIQ1
+"RTN","ORDV05E",45,0)
+ . S ^TMP("ORM",$J,RPT,SS)=^TMP("ORM",$J,RPT,SS)_U_STATUS(63.05,IX,11.5,"E")
+"RTN","ORDV05E",46,0)
+ S ISO=0 F  S ISO=$O(^LR(LRDFN,"MI",IX,3,ISO)) Q:+ISO'>0  D
+"RTN","ORDV05E",47,0)
+ . S ORGIEN=+^LR(LRDFN,"MI",IX,3,ISO,0)
+"RTN","ORDV05E",48,0)
+ . D ORGNSM
+"RTN","ORDV05E",49,0)
+ . S ^TMP("ORM",$J,RPT,SS,"RPT",ORGIEN)="B"_U_$S($D(EXPAND):ISO_";"_ORG,1:ORG)
+"RTN","ORDV05E",50,0)
+ . I $O(^LR(LRDFN,"MI",IX,3,ISO,1)) D ANTIBX
+"RTN","ORDV05E",51,0)
+ ; Bacteriology smear/prep
+"RTN","ORDV05E",52,0)
+ S SMEAR=0
+"RTN","ORDV05E",53,0)
+ F  S SMEAR=$O(^LR(LRDFN,"MI",IX,25,SMEAR)) Q:SMEAR'>0  S ^TMP("ORM",$J,RPT,SS,"IMP","BACT","SMEAR",SMEAR)=^(SMEAR,0)
+"RTN","ORDV05E",54,0)
+ ; remark
+"RTN","ORDV05E",55,0)
+ S RMK=0
+"RTN","ORDV05E",56,0)
+ F  S RMK=$O(^LR(LRDFN,"MI",IX,4,RMK)) Q:RMK=""  S ^TMP("ORM",$J,RPT,SS,"IMP","BACT","RMK",RMK)=^(RMK,0)
+"RTN","ORDV05E",57,0)
+ Q
+"RTN","ORDV05E",58,0)
+ORGNSM N QTY
+"RTN","ORDV05E",59,0)
+ S QTY=$P(^(0),U,2)
+"RTN","ORDV05E",60,0)
+ S ORG=$$GET1^DIQ(61.2,ORGIEN,.01,"I")
+"RTN","ORDV05E",61,0)
+ S ORG=ORG_U_QTY
+"RTN","ORDV05E",62,0)
+ Q
+"RTN","ORDV05E",63,0)
+ANTIBX ; Get Antibitiotic susceptibility results on demand
+"RTN","ORDV05E",64,0)
+ N ABX S ABX=1
+"RTN","ORDV05E",65,0)
+ F  S ABX=$O(^LR(LRDFN,"MI",IX,3,ISO,ABX)) Q:ABX=""!(ABX'<3)  D ABXSET
+"RTN","ORDV05E",66,0)
+ Q
+"RTN","ORDV05E",67,0)
+ABXSET ; Set Antibiotic Susceptability data, when appropriate
+"RTN","ORDV05E",68,0)
+ ; Separate out by Susceptable, Intermediate, and Resistant
+"RTN","ORDV05E",69,0)
+ N FOUND,GMTSR,GMABX,ABXI,ABXNM,ABXN
+"RTN","ORDV05E",70,0)
+ S ABXI=$$ABXI(ABX),ABXNM=$$ABXNM(ABXI),ABXN=ABX_";"_ABXNM
+"RTN","ORDV05E",71,0)
+ I $P(ABXN,";",2)']"" S $P(ABXN,";",2)="UNKNOWN"
+"RTN","ORDV05E",72,0)
+ I ("A"[$P(^LR(LRDFN,"MI",IX,3,ISO,ABX),U,3)) D
+"RTN","ORDV05E",73,0)
+ . S GMABX=$G(^LR(LRDFN,"MI",IX,3,ISO,ABX))
+"RTN","ORDV05E",74,0)
+ . ;Check for interpreted result being S, I, or R first
+"RTN","ORDV05E",75,0)
+ . S FOUND=0
+"RTN","ORDV05E",76,0)
+ . S GMTSR=$P(GMABX,U,2) D SAVE Q:FOUND
+"RTN","ORDV05E",77,0)
+ . ;If not found then check reported result for S, I, or R
+"RTN","ORDV05E",78,0)
+ . S GMTSR=$P(GMABX,U) D SAVE Q:FOUND
+"RTN","ORDV05E",79,0)
+ Q
+"RTN","ORDV05E",80,0)
+ABXI(X) ; Antibiotic Susceptability IEN
+"RTN","ORDV05E",81,0)
+ S X=$G(X) Q:'$L(X) 0 N D,DIC,DTOUT,DUOUT,Y S DIC="^LAB(62.06,",D="AD",DIC(0)="" D MIX^DIC1 S X=+($G(Y)) S:X'>0 X=0 Q X
+"RTN","ORDV05E",82,0)
+ABXNM(X) ; Antibiotic Susceptability Name
+"RTN","ORDV05E",83,0)
+ S X=$G(X) Q:+X'>0 "" S X=$$GET1^DIQ(62.06,+X,.01) Q X
+"RTN","ORDV05E",84,0)
+ABXLEV ; Get Serum antibiotic level
+"RTN","ORDV05E",85,0)
+ Q:'$D(^LR(LRDFN,"MI",IX,14))  N GMI S GMI=0
+"RTN","ORDV05E",86,0)
+ F  S GMI=$O(^LR(LRDFN,"MI",IX,14,GMI)) Q:GMI'>0  S ^TMP("ORM",$J,"CABXL",GMI)=$G(^(GMI,0))
+"RTN","ORDV05E",87,0)
+ Q
+"RTN","ORDV05E",88,0)
+STER ; Get sterility results if they exist
+"RTN","ORDV05E",89,0)
+ N RESULT,STER
+"RTN","ORDV05E",90,0)
+ S STER=0
+"RTN","ORDV05E",91,0)
+ F  S STER=$O(^LR(LRDFN,"MI",IX,31,STER)) Q:STER'>0  D
+"RTN","ORDV05E",92,0)
+ . S DIQ(0)="E",DIC=63,DA=LRDFN,DA(63.05)=IX,DR=5,DR(63.05)=11.52
+"RTN","ORDV05E",93,0)
+ . S DR(63.292)=.01,DIQ="RESULT"
+"RTN","ORDV05E",94,0)
+ . S DA(63.292)=STER
+"RTN","ORDV05E",95,0)
+ . D EN^DIQ1
+"RTN","ORDV05E",96,0)
+ . S ^TMP("ORM",$J,RPT,SS,"IMP","BSTER",STER)=RESULT(63.292,STER,.01,"E")
+"RTN","ORDV05E",97,0)
+ Q
+"RTN","ORDV05E",98,0)
+GRAM ; Get Gram Stain Results
+"RTN","ORDV05E",99,0)
+ N ISO
+"RTN","ORDV05E",100,0)
+ Q:'$D(^LR(LRDFN,"MI",IX,2))
+"RTN","ORDV05E",101,0)
+ S ISO=0
+"RTN","ORDV05E",102,0)
+ F  S ISO=$O(^LR(LRDFN,"MI",IX,2,ISO)) Q:ISO=""  S ^TMP("ORM",$J,RPT,SS,"IMP","GRAM",ISO)=^(ISO,0)
+"RTN","ORDV05E",103,0)
+ Q
+"RTN","ORDV05E",104,0)
+LABTEST(SDT,LRACC) ;Get lab test names and results
+"RTN","ORDV05E",105,0)
+ N X,Y,LRAA,LRAN,LRAD,LRBRR,LRTS
+"RTN","ORDV05E",106,0)
+ K LRTSTS
+"RTN","ORDV05E",107,0)
+ S LRTSTS="UNKNOWN"
+"RTN","ORDV05E",108,0)
+ S LRAD=+$E(SDT)_$P(LRACC," ",2)_"0000",X=$P(LRACC," "),DIC=68,DIC(0)="M"
+"RTN","ORDV05E",109,0)
+ Q:'$L(X)  D ^DIC S LRAA=+Y,LRAN=+$P(LRACC," ",3)
+"RTN","ORDV05E",110,0)
+ S LRBRR=0
+"RTN","ORDV05E",111,0)
+ F  S LRBRR=+$O(^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRBRR)) Q:LRBRR'>0  D
+"RTN","ORDV05E",112,0)
+ . S LRTS=+^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRBRR,0),LRTS(1)=$P(^(0),U,5)
+"RTN","ORDV05E",113,0)
+ . Q:"BO"'[$P($G(^LAB(60,LRTS,0)),U,3)
+"RTN","ORDV05E",114,0)
+ . S LRTSTS=$S($D(^LAB(60,LRTS,0)):$P(^(0),U),1:"deleted test")
+"RTN","ORDV05E",115,0)
+ Q
+"RTN","ORDV05E",116,0)
+SAVE ;If result = S, I, or R then save
+"RTN","ORDV05E",117,0)
+ I $S(GMTSR="I":1,GMTSR="R":1,GMTSR="S":1,1:0) S ^TMP("ORM",$J,RPT,SS,"RPT",ORGIEN,ABX)=ABXNM_U_GMABX S FOUND=1
+"RTN","ORDV05E",118,0)
+ Q
+"RTN","ORDVX1")
+0^1^B5908194^B5290851
+"RTN","ORDVX1",1,0)
+ORDVX1 ; slc/dcm - OE/RR Extract Lab AP Reports ;3/22/03  9:34
+"RTN","ORDVX1",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**243,315**;Dec 17, 199;Build 20
+"RTN","ORDVX1",3,0)
+ ;
+"RTN","ORDVX1",4,0)
+ ; Modified from Health Summary Extract ^GMTSLREE
+"RTN","ORDVX1",5,0)
+ ; External References
+"RTN","ORDVX1",6,0)
+ ;   DBIA   525  ^LR(
+"RTN","ORDVX1",7,0)
+ ;   DBIA  5466  GETACC^LRJWLST
+"RTN","ORDVX1",8,0)
+ ;   DBIA 10011  ^DIWP
+"RTN","ORDVX1",9,0)
+ ;                    
+"RTN","ORDVX1",10,0)
+XEM ; Extract EM Data
+"RTN","ORDVX1",11,0)
+ N IX0,IX K ^TMP("OROOT",$J) S IX=OROMEGA
+"RTN","ORDVX1",12,0)
+ F IX0=1:0:ORMAX S IX=$O(^LR(LRDFN,"EM",IX)) Q:IX'>0!(IX>ORALPHA)  D APSET("EM")
+"RTN","ORDVX1",13,0)
+ Q
+"RTN","ORDVX1",14,0)
+XSP ; Extract SP Data
+"RTN","ORDVX1",15,0)
+ N IX0,IX K ^TMP("OROOT",$J) S IX=OROMEGA
+"RTN","ORDVX1",16,0)
+ F IX0=1:0:ORMAX S IX=$O(^LR(LRDFN,"SP",IX)) Q:IX'>0!(IX>ORALPHA)  D APSET("SP")
+"RTN","ORDVX1",17,0)
+ Q
+"RTN","ORDVX1",18,0)
+XCY ; Extract CY Data
+"RTN","ORDVX1",19,0)
+ N IX0,IX K ^TMP("OROOT",$J) S IX=OROMEGA
+"RTN","ORDVX1",20,0)
+ F IX0=1:0:ORMAX S IX=$O(^LR(LRDFN,"CY",IX)) Q:IX'>0!(IX>ORALPHA)  D APSET("CY")
+"RTN","ORDVX1",21,0)
+ Q
+"RTN","ORDVX1",22,0)
+APSET(LRSS)   ; Sets ^TMP("OROOT",$J
+"RTN","ORDVX1",23,0)
+ N ACC,CDT,DA,DIC,DIQ,DR,GMW,SN,X,YR,OACC
+"RTN","ORDVX1",24,0)
+ S CDT=$P(^LR(LRDFN,LRSS,IX,0),U),ACC=$P(^(0),U,6)
+"RTN","ORDVX1",25,0)
+ I $T(GETACC^LRJWLST)]"" S OACC=$$GETACC^LRJWLST(LRDFN,LRSS,IX) I OACC]"" S ACC=OACC
+"RTN","ORDVX1",26,0)
+ ;I $S(+$P(^LR(LRDFN,LRSS,IX,0),U)'>0:1,+$P(^(0),U,11)'>0:1,1:0) Q
+"RTN","ORDVX1",27,0)
+ I $D(ACC) S IX0=IX0+1
+"RTN","ORDVX1",28,0)
+ S X=CDT D DTM4 S CDT=X K X
+"RTN","ORDVX1",29,0)
+ S ^TMP("OROOT",$J,IX,LRSS,0)=CDT_U_ACC
+"RTN","ORDVX1",30,0)
+ I $D(^LR(LRDFN,LRSS,IX,.1)) S ^TMP("OROOT",$J,IX,LRSS,.1)="Site/Specimen"
+"RTN","ORDVX1",31,0)
+ S SN=0 F  S SN=$O(^LR(LRDFN,LRSS,IX,.1,SN)) Q:SN'>0  S ^TMP("OROOT",$J,IX,LRSS,.1,SN)=$P(^LR(LRDFN,LRSS,IX,.1,SN,0),U)
+"RTN","ORDVX1",32,0)
+ K ^TMP("ORC",$J)
+"RTN","ORDVX1",33,0)
+ D EN^LR7OSAP4("^TMP(""ORC"",$J)",LRDFN,LRSS,IX)
+"RTN","ORDVX1",34,0)
+ S J=0,CNT=$O(^TMP("OROOT",$J,IX,LRSS,.2,999999),-1)-1
+"RTN","ORDVX1",35,0)
+ F  S J=$O(^TMP("ORC",$J,J)) Q:'J  S CNT=CNT+1,^TMP("OROOT",$J,IX,LRSS,.2,CNT)=^TMP("ORC",$J,J,0)
+"RTN","ORDVX1",36,0)
+ K ^TMP("ORC",$J)
+"RTN","ORDVX1",37,0)
+ Q
+"RTN","ORDVX1",38,0)
+DTM4 ;   Receives X FM date and returns X in MM/DD/YYYY TT:TT
+"RTN","ORDVX1",39,0)
+ S X=$TR($$FMTE^XLFDT(X,"5ZM"),"@"," ")
+"RTN","ORDVX1",40,0)
+ Q
+"RTN","ORDVX1",41,0)
+ALL ; Get all AP data in one swell foop
+"RTN","ORDVX1",42,0)
+ N IX0,IX K ^TMP("OROOT",$J) S IX=OROMEGA
+"RTN","ORDVX1",43,0)
+ F IX0=1:0:ORMAX S IX=$O(^LR(LRDFN,"SP",IX)) Q:IX'>0!(IX>ORALPHA)  D APSET("SP")
+"RTN","ORDVX1",44,0)
+ S IX=OROMEGA F IX0=1:0:ORMAX S IX=$O(^LR(LRDFN,"CY",IX)) Q:IX'>0!(IX>ORALPHA)  D APSET("CY")
+"RTN","ORDVX1",45,0)
+ S IX=OROMEGA F IX0=1:0:ORMAX S IX=$O(^LR(LRDFN,"EM",IX)) Q:IX'>0!(IX>ORALPHA)  D APSET("EM")
+"RTN","ORDVX1",46,0)
+ Q
+"RTN","ORMLR")
+0^9^B55099277^B55346176
+"RTN","ORMLR",1,0)
+ORMLR ; SLC/MKB - Process Lab ORM msgs ;11:59 AM  26 Jul 2000
+"RTN","ORMLR",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**3,92,153,174,195,243,315**;Dec 17, 1997;Build 20
+"RTN","ORMLR",3,0)
+EN ; -- entry point for LR messages
+"RTN","ORMLR",4,0)
+ I '$L($T(@ORDCNTRL)) Q  ;S ORERR="Invalid order control code" Q
+"RTN","ORMLR",5,0)
+ I ORDCNTRL'="SN",ORDCNTRL'="ZC",ORDCNTRL'="ZP" D  Q:$L($G(ORERR))
+"RTN","ORMLR",6,0)
+ . I 'ORIFN!('$D(^OR(100,+ORIFN,0))) S ORERR="Invalid OE/RR order number" Q
+"RTN","ORMLR",7,0)
+ . S ORDUZ=DUZ,ORLOG=+$E($$NOW^XLFDT,1,12)
+"RTN","ORMLR",8,0)
+ S OREASON=$$REASON I 'ORNATR,OREASON S ORNATR=+$P($G(^ORD(100.03,+OREASON,0)),U,7)
+"RTN","ORMLR",9,0)
+ D @ORDCNTRL
+"RTN","ORMLR",10,0)
+ Q
+"RTN","ORMLR",11,0)
+ ;
+"RTN","ORMLR",12,0)
+STATUS(X) ; -- Returns Order Status for HL7 code X
+"RTN","ORMLR",13,0)
+ N Y S Y=$S(X="DC":1,X="CM":2,X="IP":5,X="SC":6,X="ZS":9,X="CA":13,1:"")
+"RTN","ORMLR",14,0)
+ Q Y
+"RTN","ORMLR",15,0)
+ ;
+"RTN","ORMLR",16,0)
+OK ; -- Order accepted, LR order # assigned [ack]
+"RTN","ORMLR",17,0)
+ S ^OR(100,+ORIFN,4)=PKGIFN ; LR identifier
+"RTN","ORMLR",18,0)
+ D STATUS^ORCSAVE2(+ORIFN,5) ; pending
+"RTN","ORMLR",19,0)
+ Q
+"RTN","ORMLR",20,0)
+ ;
+"RTN","ORMLR",21,0)
+ZC ; -- Convert existing 2.5 orders to 3.0 format
+"RTN","ORMLR",22,0)
+ S ORNATR="" I 'ORIFN!('$D(^OR(100,+ORIFN,0))) D  Q  ;create
+"RTN","ORMLR",23,0)
+ . K ORIFN D SN Q:'$G(ORIFN)  S ORDCNTRL="SN"
+"RTN","ORMLR",24,0)
+ . I ORSTOP,ORSTOP<$$NOW^XLFDT S $P(^OR(100,+ORIFN,3),U)=ORSTOP
+"RTN","ORMLR",25,0)
+ N ORDIALOG,I,X,OBR,NTE S ORIFN=+ORIFN
+"RTN","ORMLR",26,0)
+ S I=+ORC F  S I=$O(@ORMSG@(I)) Q:'I  S SEG=$E(@ORMSG@(I),1,3) Q:SEG="ORC"  Q:SEG="MSH"  I SEG="OBR" S OBR=I Q
+"RTN","ORMLR",27,0)
+ I '$G(OBR) S ORERR="Missing OBR segment" Q
+"RTN","ORMLR",28,0)
+ S ORDIALOG=+$O(^ORD(101.41,"AB","LR OTHER LAB TESTS",0))
+"RTN","ORMLR",29,0)
+ D GETDLG1^ORCD(ORDIALOG)
+"RTN","ORMLR",30,0)
+ S X=$$FIND^ORM(OBR,5),X=$$ORDITEM^ORM(X) I 'X S ORERR="Invalid test" Q
+"RTN","ORMLR",31,0)
+ S ORDIALOG($$PTR("ORDERABLE ITEM"),1)=X,X=$$FIND^ORM(OBR,16)
+"RTN","ORMLR",32,0)
+ S ORDIALOG($$PTR("COLLECTION SAMPLE"),1)=$P(X,";",4)
+"RTN","ORMLR",33,0)
+ S ORDIALOG($$PTR("SPECIMEN"),1)=$S($L($P(X,";")):+$O(^LAB(61,"C",$P(X,";"),0)),1:+$P(X,U,4))
+"RTN","ORMLR",34,0)
+ S X=$$FIND^ORM(OBR,28),ORDIALOG($$PTR("LAB URGENCY"),1)=+$P($P(X,U,6),";",2)
+"RTN","ORMLR",35,0)
+ S X=$$FIND^ORM(OBR,12),ORDIALOG($$PTR("COLLECTION TYPE"),1)=$S(X="L":"LC",X="O":"WC",X=2:"I",1:"SP")
+"RTN","ORMLR",36,0)
+ZC1 S NTE=$O(@ORMSG@(OBR)) I NTE,$E(@ORMSG@(NTE),1,3)="NTE" D
+"RTN","ORMLR",37,0)
+ . N LCNT,WP S WP=$$PTR("WORD PROCESSING 1") K ^TMP("ORWORD",$J)
+"RTN","ORMLR",38,0)
+ . S LCNT=1,^TMP("ORWORD",$J,WP,1,LCNT,0)=$P(@ORMSG@(NTE),"|",4)
+"RTN","ORMLR",39,0)
+ . S I=0 F  S I=$O(@ORMSG@(NTE,I)) Q:I'>0  S LCNT=LCNT+1,^TMP("ORWORD",$J,WP,1,LCNT,0)=@ORMSG@(NTE,I)
+"RTN","ORMLR",40,0)
+ . S ^TMP("ORWORD",$J,WP,1,0)="^^"_LCNT_U_LCNT_U_DT_U
+"RTN","ORMLR",41,0)
+ . S ORDIALOG(WP,1)="^TMP(""ORWORD"","_$J_","_WP_",1)"
+"RTN","ORMLR",42,0)
+ S ORDIALOG($$PTR("START DATE/TIME"),1)=ORSTRT
+"RTN","ORMLR",43,0)
+ S ^OR(100,ORIFN,4)=PKGIFN,$P(^(0),U,5)=+ORDIALOG_";ORD(101.41,"
+"RTN","ORMLR",44,0)
+ D RESPONSE^ORCSAVE ; save ORDIALOG() into ^(4.5)
+"RTN","ORMLR",45,0)
+ K ^TMP("ORWORD",$J)
+"RTN","ORMLR",46,0)
+ Q
+"RTN","ORMLR",47,0)
+ ;
+"RTN","ORMLR",48,0)
+SN ; -- New backdoor order: return NA msg w/ORIFN, or DE msg
+"RTN","ORMLR",49,0)
+ N X,ORDIALOG,ORDG,OBR,NTE,CMMT,OI,LCNT,I,ORSTS,LRSUB,ORNEW,ORP
+"RTN","ORMLR",50,0)
+ I ORDUZ,'$D(^VA(200,+ORDUZ,0)) S ORERR="Invalid entering person" Q
+"RTN","ORMLR",51,0)
+ ; I '$G(ORL) S ORERR="Missing or invalid patient location" Q
+"RTN","ORMLR",52,0)
+ ;S LRSUB=$E($P($P(@ORMSG@(+ORC),"|",4),U,2),3,4),ORDG=$$DGRP(LRSUB)
+"RTN","ORMLR",53,0)
+ S ORDIALOG="LR OTHER LAB TESTS" ; $S(LRSUB="AP",LRSUB="BB")
+"RTN","ORMLR",54,0)
+ S ORDIALOG=$O(^ORD(101.41,"AB",ORDIALOG,0)) D GETDLG1^ORCD(ORDIALOG)
+"RTN","ORMLR",55,0)
+ S ORDIALOG($$PTR("START DATE/TIME"),1)=ORSTRT
+"RTN","ORMLR",56,0)
+ S CMMT=$$PTR("WORD PROCESSING 1") K ^TMP("ORWORD",$J)
+"RTN","ORMLR",57,0)
+SN1 S OBR=$O(@ORMSG@(+ORC)) I 'OBR!($E($G(@ORMSG@(OBR)),1,3)'="OBR") S ORERR="Missing OBR segment" Q
+"RTN","ORMLR",58,0)
+ S X=$$FIND^ORM(OBR,5),OI=$$ORDITEM^ORM(X) I 'OI S ORERR="Invalid test" Q
+"RTN","ORMLR",59,0)
+ S LRSUB=$P(^ORD(101.43,OI,"LR"),U,6),ORDG=$$DGRP(LRSUB)
+"RTN","ORMLR",60,0)
+ S ORDIALOG($$PTR("ORDERABLE ITEM"),1)=OI
+"RTN","ORMLR",61,0)
+ I LRSUB="BB" S ORDIALOG($$PTR("QUANTITY"),1)=+ORQT G SN2
+"RTN","ORMLR",62,0)
+ S X=$$FIND^ORM(OBR,16),ORDIALOG($$PTR("COLLECTION SAMPLE"),1)=$P(X,";",4)
+"RTN","ORMLR",63,0)
+ S ORDIALOG($$PTR("SPECIMEN"),1)=$S($L($P(X,";")):$O(^LAB(61,"C",$P(X,";"),0)),1:+$P(X,U,4))
+"RTN","ORMLR",64,0)
+ S X=+$P($P($$FIND^ORM(OBR,28),U,6),";",2),ORDIALOG($$PTR("LAB URGENCY"),1)=$S(X:X,1:9)
+"RTN","ORMLR",65,0)
+ S X=$$FIND^ORM(OBR,12),ORDIALOG($$PTR("COLLECTION TYPE"),1)=$S(X="L":"LC",X="O":"WC",X=2:"I",1:"SP")
+"RTN","ORMLR",66,0)
+SN2 S NTE=$O(@ORMSG@(+OBR)) I NTE,$E(@ORMSG@(NTE),1,3)="NTE" D
+"RTN","ORMLR",67,0)
+ . S LCNT=1,^TMP("ORWORD",$J,CMMT,1,LCNT,0)=$P(@ORMSG@(NTE),"|",4)
+"RTN","ORMLR",68,0)
+ . I $O(@ORMSG@(NTE,0)) S I=0 F  S I=$O(@ORMSG@(NTE,I)) Q:I'>0  S LCNT=LCNT+1,^TMP("ORWORD",$J,CMMT,1,LCNT,0)=@ORMSG@(NTE,I)
+"RTN","ORMLR",69,0)
+ . S ^TMP("ORWORD",$J,CMMT,1,0)="^^"_LCNT_U_LCNT_U_DT_U,ORDIALOG(CMMT,1)="^TMP(""ORWORD"",$J,"_CMMT_",1)"
+"RTN","ORMLR",70,0)
+SNQ D EN^ORCSAVE K ^TMP("ORWORD",$J)
+"RTN","ORMLR",71,0)
+ I '$G(ORIFN) S ORERR="Cannot create new order" Q
+"RTN","ORMLR",72,0)
+ ;Save DG1 and ZCL segments of HL7 message from backdoor orders
+"RTN","ORMLR",73,0)
+ D BDOSTR^ORWDBA3
+"RTN","ORMLR",74,0)
+ D RELEASE^ORCSAVE2(ORIFN,1,ORLOG,ORDUZ,ORNATR),SIGSTS^ORCSAVE2(ORIFN,1)
+"RTN","ORMLR",75,0)
+ D:ORSTOP DATES^ORCSAVE2(ORIFN,,ORSTOP) ;Start date in order itself
+"RTN","ORMLR",76,0)
+ S ORSTS=$$STATUS(ORDSTS) D:ORSTS STATUS^ORCSAVE2(ORIFN,ORSTS)
+"RTN","ORMLR",77,0)
+ I ORDCNTRL="SN",$G(ORL) S ORP(1)=ORIFN_";1^1" D PRINTS^ORWD1(.ORP,+ORL)
+"RTN","ORMLR",78,0)
+ S ^OR(100,ORIFN,4)=PKGIFN
+"RTN","ORMLR",79,0)
+ Q
+"RTN","ORMLR",80,0)
+ ;
+"RTN","ORMLR",81,0)
+PTR(NAME) ; -- Returns ien of prompt NAME in Order Dialog file #101.41
+"RTN","ORMLR",82,0)
+ Q $O(^ORD(101.41,"AB",$E("OR GTX "_NAME,1,63),0))
+"RTN","ORMLR",83,0)
+ ;
+"RTN","ORMLR",84,0)
+DGRP(DG) ; -- Returns Display Group ptr based on Lab section
+"RTN","ORMLR",85,0)
+ N Y S:'$L($G(DG)) DG="CH" S Y=$O(^ORD(100.98,"B",DG,0))
+"RTN","ORMLR",86,0)
+ S:'Y Y=$O(^ORD(100.98,"B","LAB",0))
+"RTN","ORMLR",87,0)
+ Q Y
+"RTN","ORMLR",88,0)
+ ;
+"RTN","ORMLR",89,0)
+XX ; -- Changed: NOT IN USE
+"RTN","ORMLR",90,0)
+ D XX^ORMLR1
+"RTN","ORMLR",91,0)
+ Q
+"RTN","ORMLR",92,0)
+ ;
+"RTN","ORMLR",93,0)
+XR ; -- Changed [ack]: NOT IN USE
+"RTN","ORMLR",94,0)
+ N ORIG
+"RTN","ORMLR",95,0)
+ S ^OR(100,+ORIFN,4)=PKGIFN,ORIG=$P(^(3),U,5)
+"RTN","ORMLR",96,0)
+ D:ORIG STATUS^ORCSAVE2(ORIG,12)
+"RTN","ORMLR",97,0)
+ D STATUS^ORCSAVE2(+ORIFN,5) ; pending
+"RTN","ORMLR",98,0)
+ Q
+"RTN","ORMLR",99,0)
+ ;
+"RTN","ORMLR",100,0)
+ZP ; -- Purged
+"RTN","ORMLR",101,0)
+ Q:'ORIFN  Q:'$D(^OR(100,+ORIFN,0))
+"RTN","ORMLR",102,0)
+ S $P(^OR(100,+ORIFN,4),";",1,3)=";;" I "^5^6^"[(U_$P($G(^(3)),U,3)_U) D STATUS^ORCSAVE2(+ORIFN,$S($P(^(4),";",5):2,1:14)) ; Remove pkg reference, sts=lapsed if still active
+"RTN","ORMLR",103,0)
+ Q
+"RTN","ORMLR",104,0)
+ ;
+"RTN","ORMLR",105,0)
+ZR ; -- Purged as requested [ack]
+"RTN","ORMLR",106,0)
+ D DELETE^ORCSAVE2(+ORIFN)
+"RTN","ORMLR",107,0)
+ Q
+"RTN","ORMLR",108,0)
+ ;
+"RTN","ORMLR",109,0)
+ZU ; -- Unable to purge [ack]
+"RTN","ORMLR",110,0)
+ S $P(^OR(100,+ORIFN,3),U)=$$NOW^XLFDT ; update Last Activity
+"RTN","ORMLR",111,0)
+ Q
+"RTN","ORMLR",112,0)
+ ;
+"RTN","ORMLR",113,0)
+SC ; -- Status changed (collected)
+"RTN","ORMLR",114,0)
+ N ORSTS D DATES^ORCSAVE2(+ORIFN,ORSTRT,ORSTOP)
+"RTN","ORMLR",115,0)
+ S ORSTS=$$STATUS(ORDSTS) D:ORSTS STATUS^ORCSAVE2(+ORIFN,ORSTS)
+"RTN","ORMLR",116,0)
+ S:$L($P(OREASON,U,2)) ^OR(100,+ORIFN,8,1,1)=$P(OREASON,U,2)
+"RTN","ORMLR",117,0)
+ Q
+"RTN","ORMLR",118,0)
+ ;
+"RTN","ORMLR",119,0)
+RE ; -- Completed, w/results
+"RTN","ORMLR",120,0)
+ N ORSTS,ORX,I,SEG,DONE,X,Y,ORABN,ORFIND,LRSA,LRSB
+"RTN","ORMLR",121,0)
+ S ORSTS=$$STATUS(ORDSTS) D:ORSTS STATUS^ORCSAVE2(+ORIFN,ORSTS)
+"RTN","ORMLR",122,0)
+ S ^OR(100,+ORIFN,4)=PKGIFN,ORX="" D  ;get Results D/T [from OBR]
+"RTN","ORMLR",123,0)
+ . N OBR S OBR=+$O(@ORMSG@(+ORC)),X=""
+"RTN","ORMLR",124,0)
+ . I OBR,$E($G(@ORMSG@(OBR)),1,3)="OBR" S X=$P(@ORMSG@(OBR),"|",23)
+"RTN","ORMLR",125,0)
+ . S X=+$E($$NOW^XLFDT,1,12)
+"RTN","ORMLR",126,0)
+ . S $P(^OR(100,+ORIFN,7),U)=X,^OR(100,"ARS",ORVP,9999999-X,+ORIFN)=""
+"RTN","ORMLR",127,0)
+ D RR^LR7OR1(DFN,PKGIFN)
+"RTN","ORMLR",128,0)
+ S ORABN="",ORFIND=""
+"RTN","ORMLR",129,0)
+ I $D(^TMP("LRRR",$J)) D
+"RTN","ORMLR",130,0)
+ . N IDT,DNAM,ORSLT
+"RTN","ORMLR",131,0)
+ . S IDT=0 F  S IDT=$O(^TMP("LRRR",$J,DFN,"CH",IDT)) Q:'IDT  D
+"RTN","ORMLR",132,0)
+ .. S DNAM=0 F  S DNAM=$O(^TMP("LRRR",$J,DFN,"CH",IDT,DNAM)) Q:'DNAM  D
+"RTN","ORMLR",133,0)
+ ... S ORSLT=$G(^TMP("LRRR",$J,DFN,"CH",IDT,DNAM))
+"RTN","ORMLR",134,0)
+ ... I '$L($P(ORSLT,U,3)) Q
+"RTN","ORMLR",135,0)
+ ... S ORABN=1,ORFIND=$S($L(ORFIND):(ORFIND_", "),1:"")
+"RTN","ORMLR",136,0)
+ ... S ORFIND=ORFIND_$P(ORSLT,U,15)_"="_$P(ORSLT,U,2)
+"RTN","ORMLR",137,0)
+ . Q
+"RTN","ORMLR",138,0)
+ K ^TMP("LRRR",$J),^TMP("LRX",$J)
+"RTN","ORMLR",139,0)
+ S $P(^OR(100,+ORIFN,7),U,2,3)=ORABN_U_ORFIND
+"RTN","ORMLR",140,0)
+ S:'$G(ORNP) ORNP=+$P($G(^OR(100,+ORIFN,0)),U,4)
+"RTN","ORMLR",141,0)
+ I $L($T(ADD^ORRCACK)) D ADD^ORRCACK(+ORIFN,ORNP) ;Ack stub for prov
+"RTN","ORMLR",142,0)
+ Q
+"RTN","ORMLR",143,0)
+ ;
+"RTN","ORMLR",144,0)
+OC ; -- Cancelled
+"RTN","ORMLR",145,0)
+ G:ORTYPE="ORR" UA S:ORNATR=+$O(^ORD(100.02,"C","A",0)) ORDUZ=""
+"RTN","ORMLR",146,0)
+ S ^OR(100,+ORIFN,6)=ORNATR_U_ORDUZ_U_ORLOG_U_$P(OREASON,U)_U_$E($P(OREASON,U,2),1,80)
+"RTN","ORMLR",147,0)
+ D UPDATE(1,"DC")
+"RTN","ORMLR",148,0)
+ Q
+"RTN","ORMLR",149,0)
+ ;
+"RTN","ORMLR",150,0)
+CR ; -- Cancelled [ack]
+"RTN","ORMLR",151,0)
+ D STATUS^ORCSAVE2(+ORIFN,1)
+"RTN","ORMLR",152,0)
+ Q
+"RTN","ORMLR",153,0)
+ ;
+"RTN","ORMLR",154,0)
+UA ; -- Unable to accept [ack]
+"RTN","ORMLR",155,0)
+UX ; -- Unable to change [ack]: NOT IN USE
+"RTN","ORMLR",156,0)
+ S:'ORNATR ORNATR=$O(^ORD(100.02,"C","X",0)) ;rejected
+"RTN","ORMLR",157,0)
+ S ^OR(100,+ORIFN,6)=ORNATR_U_U_ORLOG_U_$P(OREASON,U)_U_$E($P(OREASON,U,2),1,80)
+"RTN","ORMLR",158,0)
+ D STATUS^ORCSAVE2(+ORIFN,13)
+"RTN","ORMLR",159,0)
+UC ; -- Unable to cancel [ack]
+"RTN","ORMLR",160,0)
+DE ; -- Data Error [ack]
+"RTN","ORMLR",161,0)
+ N DA S DA=$P(ORIFN,";",2) Q:'DA
+"RTN","ORMLR",162,0)
+ S $P(^OR(100,+ORIFN,8,DA,0),U,15)=13 ;request rejected
+"RTN","ORMLR",163,0)
+ S:$L($P(OREASON,U,2)) ^OR(100,+ORIFN,8,DA,1)=$E($P(OREASON,U,2),1,240)
+"RTN","ORMLR",164,0)
+ Q
+"RTN","ORMLR",165,0)
+ ;
+"RTN","ORMLR",166,0)
+UPDATE(ORSTS,ORACT) ; -- continue processing
+"RTN","ORMLR",167,0)
+ N DA,ORX,ORCMMT,ORP
+"RTN","ORMLR",168,0)
+ D DATES^ORCSAVE2(+ORIFN,ORSTRT,ORSTOP)
+"RTN","ORMLR",169,0)
+ D:$G(ORSTS) STATUS^ORCSAVE2(+ORIFN,ORSTS)
+"RTN","ORMLR",170,0)
+ S ORCMMT=$E($P(OREASON,U,2),1,240),ORX=$$CREATE^ORX1(ORNATR) D:ORX
+"RTN","ORMLR",171,0)
+ . S DA=$$ACTION^ORCSAVE(ORACT,+ORIFN,ORNP,ORCMMT,ORLOG,ORDUZ)
+"RTN","ORMLR",172,0)
+ . I DA'>0 S ORERR="Cannot create new order action" Q
+"RTN","ORMLR",173,0)
+ . D RELEASE^ORCSAVE2(+ORIFN,DA,ORLOG,ORDUZ,ORNATR)
+"RTN","ORMLR",174,0)
+ . D SIGSTS^ORCSAVE2(+ORIFN,DA)
+"RTN","ORMLR",175,0)
+ . I $G(ORL) S ORP(1)=+ORIFN_";"_DA_"^1" D PRINTS^ORWD1(.ORP,+ORL)
+"RTN","ORMLR",176,0)
+ . S $P(^OR(100,+ORIFN,3),U,7)=DA
+"RTN","ORMLR",177,0)
+ I '$$ACTV^ORX1(ORNATR) S $P(^OR(100,+ORIFN,3),U,7)=0
+"RTN","ORMLR",178,0)
+ D:ORACT="DC" CANCEL^ORCSEND(+ORIFN)
+"RTN","ORMLR",179,0)
+ Q
+"RTN","ORMLR",180,0)
+ ;
+"RTN","ORMLR",181,0)
+REASON() ; -- Get reason from OREASON or NTE segments
+"RTN","ORMLR",182,0)
+ N NTE,CMMT,X,Y,I,L
+"RTN","ORMLR",183,0)
+ S NTE=+$O(@ORMSG@(+ORC)),CMMT=$P(OREASON,U,4,5)
+"RTN","ORMLR",184,0)
+ G:'NTE RQ G:$E(@ORMSG@(NTE),1,3)'="NTE" RQ ; no add'l comments
+"RTN","ORMLR",185,0)
+ S Y=$P(@ORMSG@(NTE),"|",4),I=0
+"RTN","ORMLR",186,0)
+ F  S I=$O(@ORMSG@(NTE,I)) Q:I'>0  S X=$G(@ORMSG@(NTE,I)),L=$L(Y)+1+$L(X) S:L'>240 Y=Y_" "_X I L>240 S Y=Y_" "_$E(X,1,239-$L(Y)) Q
+"RTN","ORMLR",187,0)
+ S $P(CMMT,U,2)=Y
+"RTN","ORMLR",188,0)
+RQ Q CMMT
+"RTN","ORMLR4")
+0^10^B85588^n/a
+"RTN","ORMLR4",1,0)
+ORMLR4 ; SLC/JLC - Update Package Reference;5/21/2012
+"RTN","ORMLR4",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**315**;Dec 17, 1997;Build 20
+"RTN","ORMLR4",3,0)
+ ;
+"RTN","ORMLR4",4,0)
+ ;
+"RTN","ORMLR4",5,0)
+ ;
+"RTN","ORMLR4",6,0)
+ Q
+"RTN","ORMLR4",7,0)
+PKG(ORIFN,NEW) ;update package reference
+"RTN","ORMLR4",8,0)
+ Q:$G(ORIFN)=""  Q:$G(NEW)=""
+"RTN","ORMLR4",9,0)
+ S ^OR(100,ORIFN,4)=NEW
+"RTN","ORMLR4",10,0)
+ Q
+"RTN","ORUQO")
+0^11^B15426804^n/a
+"RTN","ORUQO",1,0)
+ORUQO ;SLC/JLC - SEARCH QOS FOR  ;4/12/2011
+"RTN","ORUQO",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**315**;Dec 17,1997;Build 20
+"RTN","ORUQO",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORUQO",4,0)
+ ;
+"RTN","ORUQO",5,0)
+ ; Reference to PXRMD(801.41 is supported by IA #4097
+"RTN","ORUQO",6,0)
+ ; Reference to DIC(9.4 is supported by IA #2058
+"RTN","ORUQO",7,0)
+ Q
+"RTN","ORUQO",8,0)
+ ;
+"RTN","ORUQO",9,0)
+EN(PKG,OINU,OINA) ; check for quick orders
+"RTN","ORUQO",10,0)
+ N CREAT,EXPR,OROIP,ORDUO,S1,S2,A,B,%
+"RTN","ORUQO",11,0)
+ D NOW^%DTC S CREAT=$E(%,1,7),EXPR=$$FMADD^XLFDT(CREAT,30,0,0,0) K ^XTMP("ORUQO",$J),^TMP($J)
+"RTN","ORUQO",12,0)
+ N DIEN,AFIND,TEXT,TYPE
+"RTN","ORUQO",13,0)
+ S PKG=$G(PKG)
+"RTN","ORUQO",14,0)
+ F TYPE="G","E" D
+"RTN","ORUQO",15,0)
+ . S DIEN="" F  S DIEN=$O(^PXRMD(801.41,"TYPE",TYPE,DIEN)) Q:DIEN'>0  D
+"RTN","ORUQO",16,0)
+ .. S TEXT=$P($G(^PXRMD(801.41,DIEN,1)),"^",5)
+"RTN","ORUQO",17,0)
+ .. I TEXT[101.41 S ^TMP($J,$P(TEXT,";"))=""
+"RTN","ORUQO",18,0)
+ .. S AFIND="" F  S AFIND=$O(^PXRMD(801.41,DIEN,3,"B",AFIND)) Q:AFIND=""  D
+"RTN","ORUQO",19,0)
+ ... I AFIND'[101.41 Q
+"RTN","ORUQO",20,0)
+ ... S ^TMP($J,$P(AFIND,";"))=""
+"RTN","ORUQO",21,0)
+ S OROIP=$O(^ORD(101.41,"B","OR GTX ORDERABLE ITEM",""))
+"RTN","ORUQO",22,0)
+ S ORD=0
+"RTN","ORUQO",23,0)
+ F  S ORD=$O(^ORD(101.41,ORD)) Q:'ORD  S A=$G(^(ORD,0)) I $P(A,"^",4)="Q" S B=$P(A,"^",7) D
+"RTN","ORUQO",24,0)
+ . I PKG]"",B'=PKG Q
+"RTN","ORUQO",25,0)
+ . S ORDUO=""
+"RTN","ORUQO",26,0)
+ . S S1=$O(^ORD(101.41,ORD,6,"D",OROIP,"")) Q:'S1
+"RTN","ORUQO",27,0)
+ . I $G(^ORD(101.41,ORD,6,S1,1))=OROI S ^XTMP("ORUQO",$J,ORD,S1)=$P(A,"^")_"^"_$P(A,"^",3)
+"RTN","ORUQO",28,0)
+ I $D(^XTMP("ORUQO",$J)) S ^XTMP("ORUQO",$J,0)=EXPR_"^"_CREAT D SEND
+"RTN","ORUQO",29,0)
+ Q
+"RTN","ORUQO",30,0)
+SEND ;Send message
+"RTN","ORUQO",31,0)
+ K ORMSG,XMY N OCNT,ORD,A,S1,XMDUZ,XMSUB,XMTEXT,H1,H2,H3
+"RTN","ORUQO",32,0)
+ S XMDUZ="CPRS, SEARCH",XMSUB="QUICK ORDER SEARCH",XMTEXT="ORMSG(",XMY(DUZ)="",XMY("G.OR CACS")=""
+"RTN","ORUQO",33,0)
+ S ORMSG(1,0)="  The check of Lab Quick Orders that contain Lab Test IEN: "_OINU_" ("_$G(OINA)_") is complete.",OCNT=1
+"RTN","ORUQO",34,0)
+ S OCNT=OCNT+1,ORMSG(OCNT,0)=" ",ORMSG(OCNT+1,0)="  Here is the list of all quick orders that should be reviewed by your "
+"RTN","ORUQO",35,0)
+ S OCNT=OCNT+2,ORMSG(OCNT,0)="Clinical Applications Coordinator or whoever manages CPRS Quick Orders"
+"RTN","ORUQO",36,0)
+ S OCNT=OCNT+1,ORMSG(OCNT,0)="at your site.",ORMSG(OCNT+1,0)=" "
+"RTN","ORUQO",37,0)
+ S ORD=0,OCNT=OCNT+2,ORMSG(OCNT,0)="Quick Order Name                       Disable Text     Text or Start Date/Time                 Ancestors/Menus or Reminders"
+"RTN","ORUQO",38,0)
+ S OCNT=OCNT+1,ORMSG(OCNT,0)="  "
+"RTN","ORUQO",39,0)
+ F  S ORD=$O(^XTMP("ORUQO",$J,ORD)) Q:ORD=""  S S1=$O(^XTMP("ORUQO",$J,ORD,0)) Q:S1=""  S A=^(S1) D
+"RTN","ORUQO",40,0)
+ . S OCNT=OCNT+1,ORMSG(OCNT,0)=$E($P(A,"^")_$J(" ",38),1,37)_"  "_$E($P(A,"^",2)_$J(" ",38),1,15)_"  ",(H1,H2,H3)=""
+"RTN","ORUQO",41,0)
+ . I $D(^TMP($J,ORD)) S H2="Used in Clinical Reminders Dialog"
+"RTN","ORUQO",42,0)
+ . I $D(^ORD(101.41,"AD",ORD)) S H3="On a menu or in an order set"
+"RTN","ORUQO",43,0)
+ . S S1=0 F  S S1=$O(^XTMP("ORUQO",$J,ORD,S1)) Q:S1=""  S A=^(S1) D
+"RTN","ORUQO",44,0)
+ .. S S2=0 F  S S2=$O(^XTMP("ORUQO",$J,ORD,S1,S2)) Q:S2=""  S A=^(S2) I $TR(A," ")]"" D
+"RTN","ORUQO",45,0)
+ ... I H1 S OCNT=OCNT+1,ORMSG(OCNT,0)=$J(" ",56)
+"RTN","ORUQO",46,0)
+ ... S ORMSG(OCNT,0)=ORMSG(OCNT,0)_$E($P(A,"^")_$J(" ",39),1,38)_"  ",H1=1
+"RTN","ORUQO",47,0)
+ ... I H2]"" S ORMSG(OCNT,0)=ORMSG(OCNT,0)_H2 S H2="" Q
+"RTN","ORUQO",48,0)
+ ... I H3]"" S ORMSG(OCNT,0)=ORMSG(OCNT,0)_H3 S H3=""
+"RTN","ORUQO",49,0)
+ . I H2]"" S ORMSG(OCNT,0)=ORMSG(OCNT,0)_H2
+"RTN","ORUQO",50,0)
+ . I H3]"" S:$L(ORMSG(OCNT,0))>97 OCNT=OCNT+1,ORMSG(OCNT,0)=$J(" ",97) S ORMSG(OCNT,0)=ORMSG(OCNT,0)_H3
+"RTN","ORUQO",51,0)
+ . S OCNT=OCNT+1,ORMSG(OCNT,0)=" "
+"RTN","ORUQO",52,0)
+ D ^XMD
+"RTN","ORUQO",53,0)
+ Q
+"RTN","ORUQO",54,0)
+CHECKLR(OR60,OR60N) ;
+"RTN","ORUQO",55,0)
+ ;OR60 is the file 60 IEN that needs to be checked
+"RTN","ORUQO",56,0)
+ N ORPT,OROI,ORLR
+"RTN","ORUQO",57,0)
+ S ORLR=$O(^DIC(9.4,"B","LAB SERVICE",""))
+"RTN","ORUQO",58,0)
+ S OR60=$G(OR60) Q:OR60=""
+"RTN","ORUQO",59,0)
+ S ORPT=OR60_";99LRT" I '$D(^ORD(101.43,"ID",ORPT)) Q  ;test is not in a CPRS orderable item
+"RTN","ORUQO",60,0)
+ S OROI=$O(^ORD(101.43,"ID",ORPT,"")) Q:OROI=""
+"RTN","ORUQO",61,0)
+ D EN(ORLR,OR60,OR60N) Q
+"RTN","ORUQO",62,0)
+CHECKPS(OR507,OR507N) ;
+"RTN","ORUQO",63,0)
+ ;OR507 is the file 50.7 IEN that needs to be checked
+"RTN","ORUQO",64,0)
+ N ORPT,OROI
+"RTN","ORUQO",65,0)
+ S OR507=$G(OR507) Q:OR507=""
+"RTN","ORUQO",66,0)
+ S ORPT=OR507_";99PSP" I '$D(^ORD(101.43,"ID",ORPT)) Q  ;drug is not in a CPRS orderable item
+"RTN","ORUQO",67,0)
+ S OROI=$O(^ORD(101.43,"ID",ORPT,"")) Q:OROI=""
+"RTN","ORUQO",68,0)
+ D EN(,OR507,OR507N) Q
+"RTN","ORUTL2")
+0^7^B513377^n/a
+"RTN","ORUTL2",1,0)
+ORUTL2 ;ALB/DRI - OE/RR Utilities ;6/30/11  17:54
+"RTN","ORUTL2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**315**;Dec 17, 1997;Build 20
+"RTN","ORUTL2",3,0)
+ ;
+"RTN","ORUTL2",4,0)
+VEIL(ORIEN,STATUS) ;veil, unveil or delete veiled field
+"RTN","ORUTL2",5,0)
+ N FDA
+"RTN","ORUTL2",6,0)
+ I '$D(^OR(100,ORIEN,0)) Q  ;not a valid order
+"RTN","ORUTL2",7,0)
+ I $S(STATUS="@":0,STATUS=0:0,STATUS=1:0,1:1) Q  ;veiled=1, unveiled=0 or delete it
+"RTN","ORUTL2",8,0)
+ S FDA(100,ORIEN_",",8)=STATUS
+"RTN","ORUTL2",9,0)
+ D FILE^DIE("E","FDA")
+"RTN","ORUTL2",10,0)
+ Q
+"RTN","ORUTL2",11,0)
+ ;
+"RTN","ORWDLR32")
+0^3^B65150188^B60083103
+"RTN","ORWDLR32",1,0)
+ORWDLR32 ; SLC/KCM/REV/JDL - Lab Calls; 6/28/2002
+"RTN","ORWDLR32",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**10,85,141,215,250,243,315**;Dec 17, 1997;Build 20
+"RTN","ORWDLR32",3,0)
+ ;
+"RTN","ORWDLR32",4,0)
+ ; DBIA   91   ^LAB(60
+"RTN","ORWDLR32",5,0)
+ ; DBIA 2263   GETLST^XPAR  ^TMP($J,"WC")
+"RTN","ORWDLR32",6,0)
+ ; DBIA 2388   ^LAB(61
+"RTN","ORWDLR32",7,0)
+ ; DBIA 2389   ^LAB(62
+"RTN","ORWDLR32",8,0)
+ ; DBIA 2390   ^LAB(62.05
+"RTN","ORWDLR32",9,0)
+ ; DBIA 2428   DEFURG^LR7OR3
+"RTN","ORWDLR32",10,0)
+ ; DBIA 2428   TEST^LR7OR3
+"RTN","ORWDLR32",11,0)
+ ; DBIA 2429   ON^LR7OV4
+"RTN","ORWDLR32",12,0)
+ ;
+"RTN","ORWDLR32",13,0)
+DEF(LST,ALOC,ADIV) ; procedure
+"RTN","ORWDLR32",14,0)
+ ; For Event Delay Order
+"RTN","ORWDLR32",15,0)
+ ;  ALOC: Delay Event's default location
+"RTN","ORWDLR32",16,0)
+ ;  ADIV: Delay Event's default division
+"RTN","ORWDLR32",17,0)
+ ; get dialog definition specific to lab
+"RTN","ORWDLR32",18,0)
+ S ILST=0
+"RTN","ORWDLR32",19,0)
+ S LST($$NXT)="~ShortList" D SHORT
+"RTN","ORWDLR32",20,0)
+ S LST($$NXT)="~Lab Collection Times" D LCOLLTM
+"RTN","ORWDLR32",21,0)
+ S LST($$NXT)="~Ward Collection Times" D WCOLLTM
+"RTN","ORWDLR32",22,0)
+ S LST($$NXT)="~Send Patient Times" D SENDTM
+"RTN","ORWDLR32",23,0)
+ S LST($$NXT)="~Collection Types" D COLLTYP
+"RTN","ORWDLR32",24,0)
+ S LST($$NXT)="~Default Urgency" D URGENCY
+"RTN","ORWDLR32",25,0)
+ S LST($$NXT)="~Schedules" D SCHED
+"RTN","ORWDLR32",26,0)
+ S LST($$NXT)="~Common" D COMMON
+"RTN","ORWDLR32",27,0)
+ Q
+"RTN","ORWDLR32",28,0)
+SHORT ; from DEF, get short list of lab quick orders
+"RTN","ORWDLR32",29,0)
+ N I,ORTMP,ORDG,A
+"RTN","ORWDLR32",30,0)
+ S I=$O(^ORD(100.98,"B","LAB",0))  ; get IEN of parent lab
+"RTN","ORWDLR32",31,0)
+ D DG^ORCHANG1(I,"BILD",.ORDG)   ; find members groups for parent lab
+"RTN","ORWDLR32",32,0)
+ S I=0
+"RTN","ORWDLR32",33,0)
+ F  S I=$O(ORDG(I)) Q:'I  D   ; loop through list of members groups
+"RTN","ORWDLR32",34,0)
+ . I $E($P($G(^ORD(100.98,I,0)),"^",3),1,2)="VB" Q
+"RTN","ORWDLR32",35,0)
+ . D GETQLST^ORWDXQ(.ORTMP,I,"Q")   ;get quick order of each members groups
+"RTN","ORWDLR32",36,0)
+ . S A=0 F  S A=$O(ORTMP(A)) Q:'A  D   ; loop through returned quick orders and
+"RTN","ORWDLR32",37,0)
+ . . S LST($$NXT)="i"_ORTMP(A)  ; move quick orders to display list
+"RTN","ORWDLR32",38,0)
+ . K ORTMP   ; clean up for next members groups of quick orders
+"RTN","ORWDLR32",39,0)
+ Q
+"RTN","ORWDLR32",40,0)
+LCOLLTM ; get collection times
+"RTN","ORWDLR32",41,0)
+ N TDAY,TMRW,IGNOR,CNT,ICTM,ORCTM,DOW,AMPM,DAY,TIME,TXDT
+"RTN","ORWDLR32",42,0)
+ S TDAY=DT,TDAY("DOW")=$H#7,TDAY("H")=$H,TDAY("TX")="T"
+"RTN","ORWDLR32",43,0)
+ M TMRW=TDAY D INCDATE(.TMRW)
+"RTN","ORWDLR32",44,0)
+ I $G(ALOC),'$$GET^XPAR(ALOC_";SC(","LR EXCEPTED LOCATIONS",1,"Q") D
+"RTN","ORWDLR32",45,0)
+ . S IGNOR=$$GET^XPAR("ALL","LR IGNORE HOLIDAYS",1,"Q")
+"RTN","ORWDLR32",46,0)
+ . S DOW(0)=$$GET^XPAR("ALL","LR COLLECT THURSDAY",1,"Q")
+"RTN","ORWDLR32",47,0)
+ . S DOW(1)=$$GET^XPAR("ALL","LR COLLECT FRIDAY",1,"Q")
+"RTN","ORWDLR32",48,0)
+ . S DOW(2)=$$GET^XPAR("ALL","LR COLLECT SATURDAY",1,"Q")
+"RTN","ORWDLR32",49,0)
+ . S DOW(3)=$$GET^XPAR("ALL","LR COLLECT SUNDAY",1,"Q")
+"RTN","ORWDLR32",50,0)
+ . S DOW(4)=$$GET^XPAR("ALL","LR COLLECT MONDAY",1,"Q")
+"RTN","ORWDLR32",51,0)
+ . S DOW(5)=$$GET^XPAR("ALL","LR COLLECT TUESDAY",1,"Q")
+"RTN","ORWDLR32",52,0)
+ . S DOW(6)=$$GET^XPAR("ALL","LR COLLECT WEDNESDAY",1,"Q")
+"RTN","ORWDLR32",53,0)
+ . S CNT=0 F  Q:(DOW(TDAY("DOW"))=1)&((IGNOR=1)!('$D(^HOLIDAY(TDAY,0))))  D  Q:CNT>6
+"RTN","ORWDLR32",54,0)
+ . . D INCDATE(.TDAY) S CNT=CNT+1
+"RTN","ORWDLR32",55,0)
+ . S CNT=0 F  Q:(DOW(TMRW("DOW"))=1)&((IGNOR=1)!('$D(^HOLIDAY(TMRW,0))))  D  Q:CNT>6
+"RTN","ORWDLR32",56,0)
+ . . D INCDATE(.TMRW) S CNT=CNT+1
+"RTN","ORWDLR32",57,0)
+ I $G(ADIV) D GETLST^XPAR(.ORCTM,ADIV_";DIC(4,^SYS","LR PHLEBOTOMY COLLECTION","Q")
+"RTN","ORWDLR32",58,0)
+ E  D GETLST^XPAR(.ORCTM,"ALL","LR PHLEBOTOMY COLLECTION","Q")
+"RTN","ORWDLR32",59,0)
+ ;S DUZ(2)=TMPDIV
+"RTN","ORWDLR32",60,0)
+ S LST($$NXT)="iLNEXT^Next scheduled lab collection"
+"RTN","ORWDLR32",61,0)
+ S ICTM=0 F  S ICTM=$O(ORCTM(ICTM)) Q:'ICTM  D
+"RTN","ORWDLR32",62,0)
+ . I $P(ORCTM(ICTM),U)>$P($H,",",2) D
+"RTN","ORWDLR32",63,0)
+ . . S TXDT=TDAY("TX")
+"RTN","ORWDLR32",64,0)
+ . . I +TDAY("H")=+$H S DAY="Today"
+"RTN","ORWDLR32",65,0)
+ . . I TDAY("H")-$H=1 S DAY="Tomorrow"
+"RTN","ORWDLR32",66,0)
+ . . I TDAY("H")-$H>1 S DAY=$$DOWNAME(TDAY("DOW"))
+"RTN","ORWDLR32",67,0)
+ . E  D
+"RTN","ORWDLR32",68,0)
+ . . S TXDT=TMRW("TX")
+"RTN","ORWDLR32",69,0)
+ . . S DAY=$S(TMRW("H")-$H>1:$$DOWNAME(TMRW("DOW")),1:"Tomorrow")
+"RTN","ORWDLR32",70,0)
+ . S AMPM=$S($P(ORCTM(ICTM),U,2)>1159:"PM",1:"AM")
+"RTN","ORWDLR32",71,0)
+ . S TXDT=TXDT_"@"_$P(ORCTM(ICTM),"^",2)
+"RTN","ORWDLR32",72,0)
+ . S TIME=$P(ORCTM(ICTM),U,2),TIME=$E(TIME,1,2)_":"_$E(TIME,3,4)
+"RTN","ORWDLR32",73,0)
+ . S LST($$NXT)="iL"_TXDT_U_AMPM_" Collection: "_TIME_" ("_DAY_")"
+"RTN","ORWDLR32",74,0)
+ . S ^TMP($J,"WC",ILST)="iW"_TXDT_U_TIME_" "_AMPM_" ("_DAY_") Ward collect"  ;DBIA 2263
+"RTN","ORWDLR32",75,0)
+ ; D NOW^%DTC
+"RTN","ORWDLR32",76,0)
+ ;S LST($$NXT)="iWNOW^Now (Collect on ward)"
+"RTN","ORWDLR32",77,0)
+ S LST($$NXT)="iLO^Future"
+"RTN","ORWDLR32",78,0)
+ Q
+"RTN","ORWDLR32",79,0)
+WCOLLTM ; get Ward Collect times
+"RTN","ORWDLR32",80,0)
+ S I=""
+"RTN","ORWDLR32",81,0)
+ F  S I=$O(^TMP($J,"WC",I)) Q:I=""  D
+"RTN","ORWDLR32",82,0)
+ . S LST($$NXT)=^TMP($J,"WC",I)
+"RTN","ORWDLR32",83,0)
+ S LST($$NXT)="iWNOW^Now (Collect on ward)"
+"RTN","ORWDLR32",84,0)
+ ;S LST($$NXT)="iWO^Other"
+"RTN","ORWDLR32",85,0)
+ K ^TMP($J,"WC")
+"RTN","ORWDLR32",86,0)
+ Q
+"RTN","ORWDLR32",87,0)
+SENDTM ; get send patient times
+"RTN","ORWDLR32",88,0)
+ ;N X,X1,X2
+"RTN","ORWDLR32",89,0)
+ S LST($$NXT)="iLT^Today"
+"RTN","ORWDLR32",90,0)
+ ;S X1=DT,X2=1 D C^%DTC
+"RTN","ORWDLR32",91,0)
+ S LST($$NXT)="iLT+1^Tomorrow"
+"RTN","ORWDLR32",92,0)
+ ;S LST($$NXT)="iLO^Other"
+"RTN","ORWDLR32",93,0)
+ Q
+"RTN","ORWDLR32",94,0)
+COLLTYP ; Collection Types in effect for this division
+"RTN","ORWDLR32",95,0)
+ N Y S Y=""
+"RTN","ORWDLR32",96,0)
+ S LST($$NXT)="iLC^Lab Collect"
+"RTN","ORWDLR32",97,0)
+ S LST($$NXT)="iWC^Ward Collect"
+"RTN","ORWDLR32",98,0)
+ S LST($$NXT)="iSP^Send Patient to Lab"
+"RTN","ORWDLR32",99,0)
+ I +$$ON^LR7OV4(DUZ(2)) S LST($$NXT)="iI^Immediate Collect"
+"RTN","ORWDLR32",100,0)
+ S:$G(ALOC) Y=$$GET^XPAR("ALL^"_ALOC_";SC(","LR DEFAULT TYPE QUICK")
+"RTN","ORWDLR32",101,0)
+ I $L(Y) S LST($$NXT)="d"_Y
+"RTN","ORWDLR32",102,0)
+ Q
+"RTN","ORWDLR32",103,0)
+INCDATE(ADATE) ; called from COLLTM, increments date nodes in .ADATE
+"RTN","ORWDLR32",104,0)
+ N X,X1,X2,%H
+"RTN","ORWDLR32",105,0)
+ S X1=ADATE,X2=1 D C^%DTC S ADATE=X
+"RTN","ORWDLR32",106,0)
+ S ADATE("H")=ADATE("H")+1
+"RTN","ORWDLR32",107,0)
+ S ADATE("DOW")=ADATE("H")#7
+"RTN","ORWDLR32",108,0)
+ S ADATE("TX")="T+"_($P(ADATE("TX"),"+",2)+1)
+"RTN","ORWDLR32",109,0)
+ Q
+"RTN","ORWDLR32",110,0)
+DOWNAME(DOW) ; function
+"RTN","ORWDLR32",111,0)
+ ; Returns Day of Week name (DOW should be $H#7)
+"RTN","ORWDLR32",112,0)
+ I DOW=0 Q "Thursday"
+"RTN","ORWDLR32",113,0)
+ I DOW=1 Q "Friday"
+"RTN","ORWDLR32",114,0)
+ I DOW=2 Q "Saturday"
+"RTN","ORWDLR32",115,0)
+ I DOW=3 Q "Sunday"
+"RTN","ORWDLR32",116,0)
+ I DOW=4 Q "Monday"
+"RTN","ORWDLR32",117,0)
+ I DOW=5 Q "Tuesday"
+"RTN","ORWDLR32",118,0)
+ I DOW=6 Q "Wednesday"
+"RTN","ORWDLR32",119,0)
+ Q ""
+"RTN","ORWDLR32",120,0)
+URGENCY ; return default urgency for lab
+"RTN","ORWDLR32",121,0)
+ N URG
+"RTN","ORWDLR32",122,0)
+ S URG=$$DEFURG^LR7OR3
+"RTN","ORWDLR32",123,0)
+ S LST($$NXT)="i"_URG_U_$P(^LAB(62.05,URG,0),U,1)
+"RTN","ORWDLR32",124,0)
+ S LST($$NXT)="d"_URG_U_$P(^LAB(62.05,URG,0),U,1)
+"RTN","ORWDLR32",125,0)
+ Q
+"RTN","ORWDLR32",126,0)
+SCHED ; return list of schedules available for lab tests
+"RTN","ORWDLR32",127,0)
+ N X,X0,IEN,TYPE,FREQ
+"RTN","ORWDLR32",128,0)
+ K ^TMP($J,"ORWDLR32 APLR")
+"RTN","ORWDLR32",129,0)
+ D AP^PSS51P1("LR",,,,"ORWDLR32 APLR")
+"RTN","ORWDLR32",130,0)
+ S X="" F  S X=$O(^TMP($J,"ORWDLR32 APLR","APLR",X)) Q:X=""  D
+"RTN","ORWDLR32",131,0)
+ .S IEN=$O(^TMP($J,"ORWDLR32 APLR","APLR",X,"")) I IEN'>0 Q
+"RTN","ORWDLR32",132,0)
+ .S TYPE=$P($G(^TMP($J,"ORWDLR32 APLR",IEN,5)),U)
+"RTN","ORWDLR32",133,0)
+ .S FREQ=+$G(^TMP($J,"ORWDLR32 APLR",IEN,2))
+"RTN","ORWDLR32",134,0)
+ .I ((TYPE="C")!(TYPE="D")),FREQ=0 Q
+"RTN","ORWDLR32",135,0)
+ .S LST($$NXT)="i"_IEN_U_X_U_TYPE_U_FREQ
+"RTN","ORWDLR32",136,0)
+ .I X="ONE TIME" S LST($$NXT)="d"_IEN_U_X
+"RTN","ORWDLR32",137,0)
+ K ^TMP($J,"ORWDLR32 APLR")
+"RTN","ORWDLR32",138,0)
+ Q
+"RTN","ORWDLR32",139,0)
+COMMON ; return list of commonly ordered lab tests
+"RTN","ORWDLR32",140,0)
+ N ORLST,IEN,I
+"RTN","ORWDLR32",141,0)
+ D GETLST^XPAR(.ORLST,"ALL","ORWD COMMON LAB INPT")  ;DBIA 2263
+"RTN","ORWDLR32",142,0)
+ S I=0 F  S I=$O(ORLST(I)) Q:'I  D
+"RTN","ORWDLR32",143,0)
+ . S IEN=$P(ORLST(I),U,2)
+"RTN","ORWDLR32",144,0)
+ . S LST($$NXT)="i"_IEN_U_$P(^ORD(101.43,IEN,0),U,1)
+"RTN","ORWDLR32",145,0)
+ Q
+"RTN","ORWDLR32",146,0)
+LOAD(LST,TESTID) ; procedure
+"RTN","ORWDLR32",147,0)
+ ; Return sample, specimen, & urgency info about a lab test
+"RTN","ORWDLR32",148,0)
+ N I,J,X,X1,X4,ORY,ORLABID,ILST,PARAM
+"RTN","ORWDLR32",149,0)
+ S ILST=0,X=$P(^ORD(101.43,TESTID,0),"^"),ORLABID=$P(^(0),U,2)
+"RTN","ORWDLR32",150,0)
+ S LST($$NXT)="~Test Name"
+"RTN","ORWDLR32",151,0)
+ S LST($$NXT)="d"_X
+"RTN","ORWDLR32",152,0)
+ S LST($$NXT)="~Item ID"
+"RTN","ORWDLR32",153,0)
+ S LST($$NXT)="d"_+ORLABID
+"RTN","ORWDLR32",154,0)
+ S X1=$S($P($P(^ORD(101.43,TESTID,0),U,2),";",2)="99VBC":$O(^LAB(60,"B",$P(^ORD(101.43,TESTID,0),"^")_" - LAB",0)),1:$P($P(^ORD(101.43,TESTID,0),U,2),";",1)) Q:'X1
+"RTN","ORWDLR32",155,0)
+ S X4=$P($G(^LAB(60,X1,0)),U,4)
+"RTN","ORWDLR32",156,0)
+ S LST(ILST)=LST(ILST)_U_X4
+"RTN","ORWDLR32",157,0)
+ I $D(^ORD(101.43,TESTID,8))>1 S LST($$NXT)="~OIMessage"
+"RTN","ORWDLR32",158,0)
+ S I=0 F  S I=$O(^ORD(101.43,TESTID,8,I)) Q:'I  S LST($$NXT)="t"_^(I,0)
+"RTN","ORWDLR32",159,0)
+ S TESTID=+$P(^ORD(101.43,TESTID,0),U,2)
+"RTN","ORWDLR32",160,0)
+ D TEST^LR7OR3(X1,.ORY)
+"RTN","ORWDLR32",161,0)
+ S PARAM="" F  S PARAM=$O(ORY(PARAM)) Q:PARAM=""  D
+"RTN","ORWDLR32",162,0)
+ . S LST($$NXT)="~"_PARAM
+"RTN","ORWDLR32",163,0)
+ . I PARAM="ReqCom" D
+"RTN","ORWDLR32",164,0)
+ . . S LST($$NXT)="d"_$G(ORY("ReqCom")) Q
+"RTN","ORWDLR32",165,0)
+ . I PARAM="Default CollSamp" D
+"RTN","ORWDLR32",166,0)
+ . . S LST($$NXT)="d"_$G(ORY("Default CollSamp")) Q
+"RTN","ORWDLR32",167,0)
+ . I PARAM="Unique CollSamp" D
+"RTN","ORWDLR32",168,0)
+ . . S LST($$NXT)="d"_$G(ORY("Unique CollSamp")) Q
+"RTN","ORWDLR32",169,0)
+ . I PARAM="Default Urgency" D
+"RTN","ORWDLR32",170,0)
+ . . S LST($$NXT)="d"_$G(ORY("Default Urgency")) Q
+"RTN","ORWDLR32",171,0)
+ . I PARAM="Lab CollSamp" D
+"RTN","ORWDLR32",172,0)
+ . . S LST($$NXT)="d"_$G(ORY("Lab CollSamp")) Q
+"RTN","ORWDLR32",173,0)
+ . I $D(ORY(PARAM))>1 S I=0 F  S I=$O(ORY(PARAM,I)) Q:'I  D
+"RTN","ORWDLR32",174,0)
+ . . I PARAM="Specimens" S LST($$NXT)="i"_ORY(PARAM,I) Q
+"RTN","ORWDLR32",175,0)
+ . . I PARAM="Urgencies" S LST($$NXT)="i"_ORY(PARAM,I) Q
+"RTN","ORWDLR32",176,0)
+ . . I PARAM="GenWardInstructions" S LST($$NXT)="t"_ORY(PARAM,I,0) Q
+"RTN","ORWDLR32",177,0)
+ . . S LST($$NXT)="i"_I_U_ORY(PARAM,I)
+"RTN","ORWDLR32",178,0)
+ . . I PARAM="CollSamp" D
+"RTN","ORWDLR32",179,0)
+ . . . I $G(ORY("Lab CollSamp")) S $P(LST(ILST),U,8)=1
+"RTN","ORWDLR32",180,0)
+ . . . S X=+$P(ORY(PARAM,I),U,3)
+"RTN","ORWDLR32",181,0)
+ . . . I X S $P(LST(ILST),U,10)=$P($G(^LAB(61,X,0)),U,1)
+"RTN","ORWDLR32",182,0)
+ . . I $D(ORY(PARAM,I,"WP")) S J=0 F  S J=$O(ORY(PARAM,I,"WP",J)) Q:'J  D
+"RTN","ORWDLR32",183,0)
+ . . . S LST($$NXT)="t"_ORY(PARAM,I,"WP",J,0)
+"RTN","ORWDLR32",184,0)
+ Q
+"RTN","ORWDLR32",185,0)
+ALLSAMP(LST) ; procedure
+"RTN","ORWDLR32",186,0)
+ ; returns all collection samples
+"RTN","ORWDLR32",187,0)
+ ; n^SampIEN^SampName^SpecPtr^TubeTop^^^LabCollect^^SpecName
+"RTN","ORWDLR32",188,0)
+ N SMP,SPC,ILST,IEN,X,X0,A,%,INC
+"RTN","ORWDLR32",189,0)
+ S ILST=0,LST($$NXT)="~CollSamp"
+"RTN","ORWDLR32",190,0)
+ S SMP="" F  S SMP=$O(^LAB(62,"B",SMP)) Q:SMP=""  D
+"RTN","ORWDLR32",191,0)
+ . S IEN=0 F  S IEN=$O(^LAB(62,"B",SMP,IEN)) Q:'IEN  D
+"RTN","ORWDLR32",192,0)
+ . . S INC=1 I $D(^LAB(62,IEN,64.91)) D  I 'INC Q
+"RTN","ORWDLR32",193,0)
+ . . . S A=^LAB(62,IEN,64.91)
+"RTN","ORWDLR32",194,0)
+ . . . S B=$P(A,"^") D NOW^%DTC I B]"",B'>$P(%,".") S INC=0 Q
+"RTN","ORWDLR32",195,0)
+ . . S X0=^LAB(62,IEN,0)
+"RTN","ORWDLR32",196,0)
+ . . S X="i"_U_IEN_U_SMP_U_$P(X0,U,2)_U_$P(X0,U,3)_U_U_U_$P(X0,U,7)
+"RTN","ORWDLR32",197,0)
+ . . I $P(X0,U,2) D
+"RTN","ORWDLR32",198,0)
+ . . . S $P(X,U,10)=$P(^LAB(61,+$P(X0,U,2),0),U,1)
+"RTN","ORWDLR32",199,0)
+ . . . S SPC($P(X,U,4))=$P(X,U,10)
+"RTN","ORWDLR32",200,0)
+ . . S LST($$NXT)=X
+"RTN","ORWDLR32",201,0)
+ S LST($$NXT)="~Specimens"
+"RTN","ORWDLR32",202,0)
+ S SPC=0 F  S SPC=$O(SPC(SPC)) Q:'SPC  S LST($$NXT)=SPC_U_SPC(SPC)
+"RTN","ORWDLR32",203,0)
+ Q
+"RTN","ORWDLR32",204,0)
+ONESAMP(LST,IEN) ;Return data for one colelction sample
+"RTN","ORWDLR32",205,0)
+ ; n^SampIEN^SampName^SpecPtr^TubeTop^^^LabCollect^^SpecName
+"RTN","ORWDLR32",206,0)
+ N SPC,ILST,X,X0
+"RTN","ORWDLR32",207,0)
+ Q:+$G(IEN)=0
+"RTN","ORWDLR32",208,0)
+ S ILST=0,LST($$NXT)="~CollSamp"
+"RTN","ORWDLR32",209,0)
+ S X0=^LAB(62,IEN,0)
+"RTN","ORWDLR32",210,0)
+ S X="i1"_U_IEN_U_$P(X0,U,1)_U_$P(X0,U,2)_U_$P(X0,U,3)_U_U_U_$P(X0,U,7)
+"RTN","ORWDLR32",211,0)
+ I $P(X0,U,2) D
+"RTN","ORWDLR32",212,0)
+ . S $P(X,U,10)=$P(^LAB(61,+$P(X0,U,2),0),U,1)
+"RTN","ORWDLR32",213,0)
+ . S SPC($P(X,U,4))=$P(X,U,10)
+"RTN","ORWDLR32",214,0)
+ S LST($$NXT)=X
+"RTN","ORWDLR32",215,0)
+ S LST($$NXT)="~Specimens"
+"RTN","ORWDLR32",216,0)
+ S SPC=0 F  S SPC=$O(SPC(SPC)) Q:'SPC  S LST($$NXT)=SPC_U_SPC(SPC)
+"RTN","ORWDLR32",217,0)
+ Q
+"RTN","ORWDLR32",218,0)
+ONESPEC(LST,IEN) ;return one specimen
+"RTN","ORWDLR32",219,0)
+ Q:(+$G(IEN)=0)!('$D(^LAB(61,IEN,0)))
+"RTN","ORWDLR32",220,0)
+ S LST=IEN_U_$P(^LAB(61,IEN,0),U,1)
+"RTN","ORWDLR32",221,0)
+ Q
+"RTN","ORWDLR32",222,0)
+ABBSPEC(LST) ; procedure
+"RTN","ORWDLR32",223,0)
+ ; returns specimens with abbreviation (uses 'E' xref)
+"RTN","ORWDLR32",224,0)
+ N X,IEN,ILST S ILST=0
+"RTN","ORWDLR32",225,0)
+ S X="" F  S X=$O(^LAB(61,"E",X)) Q:X=""  S IEN=$O(^(X,0)) D
+"RTN","ORWDLR32",226,0)
+ . S LST($$NXT)=IEN_U_$P(^LAB(61,IEN,0),U,1)
+"RTN","ORWDLR32",227,0)
+ Q
+"RTN","ORWDLR32",228,0)
+NXT() ; called by TESTINFO, increments ILST
+"RTN","ORWDLR32",229,0)
+ S ILST=ILST+1
+"RTN","ORWDLR32",230,0)
+ Q ILST
+"RTN","ORWDLR32",231,0)
+ ;
+"RTN","ORWDLR33")
+0^4^B23049267^B20970855
+"RTN","ORWDLR33",1,0)
+ORWDLR33 ; SLC/KCM/REV/JDL - Lab Calls ;7/1/2002 11AM
+"RTN","ORWDLR33",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**10,85,141,243,315**;Dec 17, 1997;Build 20
+"RTN","ORWDLR33",3,0)
+ ;
+"RTN","ORWDLR33",4,0)
+ ;
+"RTN","ORWDLR33",5,0)
+ ; DBIA 2388   ^LAB(61
+"RTN","ORWDLR33",6,0)
+ ; DBIA 2429   ^LR7OV4
+"RTN","ORWDLR33",7,0)
+ ; DBIA 2992   ^XTV(8989.51
+"RTN","ORWDLR33",8,0)
+ ;
+"RTN","ORWDLR33",9,0)
+STOP(VAL,X2)       ; return a calculated stop date
+"RTN","ORWDLR33",10,0)
+ N X1,X
+"RTN","ORWDLR33",11,0)
+ S X1=DT D C^%DTC S VAL=X
+"RTN","ORWDLR33",12,0)
+ Q
+"RTN","ORWDLR33",13,0)
+MAXDAYS(Y,LOC,SCHED) ; Return max number of days for a continuing order
+"RTN","ORWDLR33",14,0)
+ N TMP1,TMP2
+"RTN","ORWDLR33",15,0)
+ K ^TMP($J,"ORWDLR33 MAXDAYS")
+"RTN","ORWDLR33",16,0)
+ S TMP1=$$GET^XPAR("ALL^LOC.`"_+LOC,"LR MAX DAYS CONTINUOUS",1,"Q")
+"RTN","ORWDLR33",17,0)
+ I +TMP1=0 S Y="-1" Q
+"RTN","ORWDLR33",18,0)
+ I +$G(SCHED)>0 D ZERO^PSS51P1(SCHED,,,,"ORWDLR33 MAXDAYS") S TMP2=$G(^TMP($J,"ORWDLR33 MAXDAYS",SCHED,2.5)) K ^TMP($J,"ORWDLR33 MAXDAYS")
+"RTN","ORWDLR33",19,0)
+ E  S TMP2=0
+"RTN","ORWDLR33",20,0)
+ I +TMP1=0,+TMP2>0 S Y=TMP2 Q
+"RTN","ORWDLR33",21,0)
+ I +TMP2=0,+TMP1>0 S Y=TMP1 Q
+"RTN","ORWDLR33",22,0)
+ S Y=$S(+TMP1>+TMP2:+TMP2,+TMP2>+TMP1:+TMP1,+TMP1=+TMP2:+TMP1,1:0)
+"RTN","ORWDLR33",23,0)
+ K ^TMP($J,"ORWDLR33 MAXDAYS")
+"RTN","ORWDLR33",24,0)
+ Q
+"RTN","ORWDLR33",25,0)
+ALLSPEC(Y,FROM,DIR) ; Return a set of specimens from topography file
+"RTN","ORWDLR33",26,0)
+ N I,IEN,CNT,A,%,NOW,B
+"RTN","ORWDLR33",27,0)
+ D NOW^%DTC S NOW=$P(%,".")
+"RTN","ORWDLR33",28,0)
+ S I=0,CNT=44
+"RTN","ORWDLR33",29,0)
+ F  Q:I'<CNT  S FROM=$O(^LAB(61,"B",FROM),DIR) Q:FROM=""  D
+"RTN","ORWDLR33",30,0)
+ . S IEN=0 F  S IEN=$O(^LAB(61,"B",FROM,IEN)) Q:'IEN  D
+"RTN","ORWDLR33",31,0)
+ . . S A=$G(^LAB(61,IEN,64.91)) S B=$P(A,"^",3) I B]"",B'>NOW Q
+"RTN","ORWDLR33",32,0)
+ . . S I=I+1,Y(I)=IEN_U_FROM_"  ("_$P($G(^LAB(61,IEN,0)),U,2)_")"
+"RTN","ORWDLR33",33,0)
+ Q
+"RTN","ORWDLR33",34,0)
+LABCOLTM(ORYN,ORDATE,ORLOC) ; Is this a routine lab collect time for this location?
+"RTN","ORWDLR33",35,0)
+ N ORDA,ORTI,ORDOW,ORCTM,I,X,Y
+"RTN","ORWDLR33",36,0)
+ S ORYN=0 Q:'$G(ORDATE)!($G(ORDATE)<0)!('$G(ORLOC))
+"RTN","ORWDLR33",37,0)
+ S ORDA=$P(ORDATE,".",1),ORTI=$P(ORDATE,".",2)
+"RTN","ORWDLR33",38,0)
+ S I=0 F  S I=$L(ORTI) Q:I>3  S ORTI=ORTI_"0"
+"RTN","ORWDLR33",39,0)
+ S X=ORDA D DW^%DTC S ORDOW=X
+"RTN","ORWDLR33",40,0)
+ D GETLST^XPAR(.ORCTM,"ALL","LR PHLEBOTOMY COLLECTION","Q")
+"RTN","ORWDLR33",41,0)
+ S I=0 F  S I=$O(ORCTM(I)) Q:'I  D
+"RTN","ORWDLR33",42,0)
+ . S:$P(ORCTM(I),U,2)=ORTI ORYN=1
+"RTN","ORWDLR33",43,0)
+ Q:ORYN=0
+"RTN","ORWDLR33",44,0)
+ I $G(ORLOC),$$GET^XPAR(ORLOC_";SC(","LR EXCEPTED LOCATIONS",1,"Q") S ORYN=1 Q
+"RTN","ORWDLR33",45,0)
+ I '$$GET^XPAR("ALL","LR IGNORE HOLIDAYS",1,"Q"),$D(^HOLIDAY(ORDA,0)) S ORYN=0 Q
+"RTN","ORWDLR33",46,0)
+ I $$GET^XPAR("ALL","LR COLLECT "_ORDOW,1,"Q") S ORYN=1 Q
+"RTN","ORWDLR33",47,0)
+ S ORYN=0
+"RTN","ORWDLR33",48,0)
+ Q
+"RTN","ORWDLR33",49,0)
+IMMCOLL(ORY) ; Return help screen showing immediate collect times
+"RTN","ORWDLR33",50,0)
+ D SHOW^LR7OV4(DUZ(2),.ORY)
+"RTN","ORWDLR33",51,0)
+ Q
+"RTN","ORWDLR33",52,0)
+ICDEFLT(ORY) ;Return default immediate collect time
+"RTN","ORWDLR33",53,0)
+ S ORY=$$DEFTIME^LR7OV4(DUZ(2))
+"RTN","ORWDLR33",54,0)
+ Q
+"RTN","ORWDLR33",55,0)
+ICVALID(ORY,ORTIME) ;Is the time a valid immediate collect time?
+"RTN","ORWDLR33",56,0)
+ S ORTIME=$P(ORTIME,".",1)_"."_$E($P(ORTIME,".",2),1,4)
+"RTN","ORWDLR33",57,0)
+ S ORY=$$VALID^LR7OV4(DUZ(2),ORTIME)
+"RTN","ORWDLR33",58,0)
+ Q
+"RTN","ORWDLR33",59,0)
+GETLABTM(ORY,ORDATE,ORLOC) ;Return list of lab collect times for a date and location
+"RTN","ORWDLR33",60,0)
+ N ORDA,ORTI,ORNOW,ORDOW,ORCTM,ORTI,X,%,%H
+"RTN","ORWDLR33",61,0)
+ S ORY(0)=0 Q:'$G(ORDATE)!($G(ORDATE)<0)!('$G(ORLOC))
+"RTN","ORWDLR33",62,0)
+ S ORDA=$P(ORDATE,".",1)
+"RTN","ORWDLR33",63,0)
+ S ORNOW=$$NOW^XLFDT,ORTI=$P(ORNOW,".",2)
+"RTN","ORWDLR33",64,0)
+ I ORDA<$P(ORNOW,".",1) S ORY(0)="-1^Dates in the past are not allowed." Q
+"RTN","ORWDLR33",65,0)
+ I '+$$GET^XPAR(ORLOC_";SC(","LR EXCEPTED LOCATIONS",1,"Q") D
+"RTN","ORWDLR33",66,0)
+ . S X=ORDA D DW^%DTC S ORDOW=X
+"RTN","ORWDLR33",67,0)
+ . I '+$$GET^XPAR("ALL","LR COLLECT "_ORDOW,1,"Q") S ORY(0)="-1^No collections on "_ORDOW Q
+"RTN","ORWDLR33",68,0)
+ . I '+$$GET^XPAR("ALL","LR IGNORE HOLIDAYS",1,"Q"),$D(^HOLIDAY(ORDA,0)) S ORY(0)="-1^No holiday collections" Q
+"RTN","ORWDLR33",69,0)
+ I +ORY(0)>-1 D 
+"RTN","ORWDLR33",70,0)
+ . D GETLST^XPAR(.ORY,"ALL","LR PHLEBOTOMY COLLECTION","Q")
+"RTN","ORWDLR33",71,0)
+ . I +$G(ORY)=0 S ORY(0)="-1^No lab collect times defined for this division" Q
+"RTN","ORWDLR33",72,0)
+ S I=0 F  S I=$O(ORY(I)) Q:'I  D
+"RTN","ORWDLR33",73,0)
+ . D NOW^%DTC S ORTI=%,%H=+%H_","_+ORY(I) D YMD^%DTC
+"RTN","ORWDLR33",74,0)
+ . I (ORDA=$P(ORTI,".",1)),(+(ORDA+%)<+ORTI) K ORY(I) S ORY=ORY-1 Q   ; cutoff time has passed for this collect time
+"RTN","ORWDLR33",75,0)
+ . S ORY(I)=$P(ORY(I),U,2)
+"RTN","ORWDLR33",76,0)
+ I +$G(ORY)=0,('$D(ORY(0))) S ORY(0)="-1^All of today's collection times have passed."
+"RTN","ORWDLR33",77,0)
+ Q
+"RTN","ORWDLR33",78,0)
+LCFUTR(ORDY,ORLOC,ORDIV)  ;Get # of days for future Lab Collects
+"RTN","ORWDLR33",79,0)
+ ; For Event Delay Order
+"RTN","ORWDLR33",80,0)
+ ;  --ORLOC Event default location
+"RTN","ORWDLR33",81,0)
+ ;  --ORDIV Event default division
+"RTN","ORWDLR33",82,0)
+ S ORDY=0
+"RTN","ORWDLR33",83,0)
+ Q:'$D(^XTV(8989.51,"B","LR LAB COLLECT FUTURE"))
+"RTN","ORWDLR33",84,0)
+ I $G(ORDIV) S ORDY=+$$GET^XPAR(+$G(ORLOC)_";SC("_"^"_+$G(ORDIV)_";DIC(4,^SYS^PKG","LR LAB COLLECT FUTURE",1,"I")
+"RTN","ORWDLR33",85,0)
+ E  S ORDY=+$$GET^XPAR(+$G(ORLOC)_";SC("_"^DIV^SYS^PKG","LR LAB COLLECT FUTURE",1,"I")
+"RTN","ORWDLR33",86,0)
+ ;S DUZ(2)=TMPDIV
+"RTN","ORWDLR33",87,0)
+ Q
+"RTN","ORWDLR33",88,0)
+LASTTIME(ORY)   ; Get last collection time used from ^TMP("ORECALL",$J) array
+"RTN","ORWDLR33",89,0)
+ N ORDIALOG,ORTYPE,ORTIME
+"RTN","ORWDLR33",90,0)
+ S ORDIALOG=$O(^ORD(101.41,"B","LR OTHER LAB TESTS",0))
+"RTN","ORWDLR33",91,0)
+ S ORTYPE=$O(^ORD(101.41,"B","OR GTX COLLECTION TYPE",0))
+"RTN","ORWDLR33",92,0)
+ S ORTIME=$O(^ORD(101.41,"B","OR GTX START DATE/TIME",0))
+"RTN","ORWDLR33",93,0)
+ S ORY=$$RECALL^ORCD(ORTYPE,1)_U_$$RECALL^ORCD(ORTIME,1)
+"RTN","ORWDLR33",94,0)
+ Q
+"RTN","ORWDLR33",95,0)
+LCTOWC(ORTXT,ORLOC)     ; return text instructing user when LC changed to WC on accept/release
+"RTN","ORWDLR33",96,0)
+ N ORDIV,ORSVC
+"RTN","ORWDLR33",97,0)
+ S ORDIV=DUZ(2)
+"RTN","ORWDLR33",98,0)
+ S ORSVC=+$G(^VA(200,DUZ,5))
+"RTN","ORWDLR33",99,0)
+ I ORSVC S ORTXT=$$GET^XPAR(+$G(ORLOC)_";SC("_"^"_+$G(ORSVC)_";DIC(49,^"_+$G(ORDIV)_";DIC(4,^SYS^PKG","ORWLR LC CHANGED TO WC",1,"I")
+"RTN","ORWDLR33",100,0)
+ E  S ORTXT=$$GET^XPAR(+$G(ORLOC)_";SC("_"^SVC^"_+$G(ORDIV)_";DIC(4,^SYS^PKG","ORWLR LC CHANGED TO WC",1,"I")
+"RTN","ORWDLR33",101,0)
+ Q
+"RTN","ORY315")
+0^6^B8296998^n/a
+"RTN","ORY315",1,0)
+ORY315 ;SLC/JLC - POST INSTALL FOR OR 315 ;4/12/2011
+"RTN","ORY315",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**315**;Dec 17,1997;Build 20
+"RTN","ORY315",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORY315",4,0)
+ ;
+"RTN","ORY315",5,0)
+ ;
+"RTN","ORY315",6,0)
+ Q
+"RTN","ORY315",7,0)
+ ;
+"RTN","ORY315",8,0)
+POST ;
+"RTN","ORY315",9,0)
+ ;
+"RTN","ORY315",10,0)
+ N A,MCNT,DIC,X,Y,LPKG
+"RTN","ORY315",11,0)
+ K ^TMP($J,"ORY315")
+"RTN","ORY315",12,0)
+ S ^TMP($J,"ORY315",1,0)="Attempting to add the two new order reasons of Obsolete Order"
+"RTN","ORY315",13,0)
+ S ^TMP($J,"ORY315",2,0)="and purged order."
+"RTN","ORY315",14,0)
+ S ^TMP($J,"ORY315",3,0)=" "
+"RTN","ORY315",15,0)
+ S MCNT=3
+"RTN","ORY315",16,0)
+ S DIC=9.4,DIC(0)="BO",X="LAB SERVICE" D ^DIC
+"RTN","ORY315",17,0)
+ I Y=-1 S MCNT=MCNT+1,^TMP($J,"ORY315",MCNT,0)="Cannot determine the Lab package from file 9.4.",MCNT=MCNT+1,^TMP($J,"ORY315",MCNT,0)="Cannot add new reasons." D SEND Q
+"RTN","ORY315",18,0)
+ S LPKG=$P(Y,"^")
+"RTN","ORY315",19,0)
+ D CHECK("Obsolete Order",LPKG,.MCNT),CHECK("Purged Order",LPKG,.MCNT)
+"RTN","ORY315",20,0)
+ D SEND Q
+"RTN","ORY315",21,0)
+CHECK(ORREASON,ALPKG,CNT) ;
+"RTN","ORY315",22,0)
+ N B,C,DIC,Y,ADD
+"RTN","ORY315",23,0)
+ S ADD=1,B=0 F  S B=$O(^ORD(100.03,"B",ORREASON,B)) Q:'B  D
+"RTN","ORY315",24,0)
+ . S C=$G(^ORD(100.03,B,0)) I C="" Q
+"RTN","ORY315",25,0)
+ . I $P(C,"^",5)=ALPKG D
+"RTN","ORY315",26,0)
+ .. S ADD=0,CNT=CNT+1,^TMP($J,"ORY315",CNT,0)=ORREASON_" is already on file for Lab"
+"RTN","ORY315",27,0)
+ .. I $P(C,"^",4)=1 S CNT=CNT+1,^TMP($J,"ORY315",CNT,0)="but currently inactive."
+"RTN","ORY315",28,0)
+ .. S CNT=CNT+1,^TMP($J,"ORY315",CNT,0)=" "
+"RTN","ORY315",29,0)
+ I ADD D ADD(ORREASON,ALPKG,.CNT)
+"RTN","ORY315",30,0)
+ Q
+"RTN","ORY315",31,0)
+ADD(REASON,LP,ACNT) ;
+"RTN","ORY315",32,0)
+ N A,A1,A2,ORNAT,ORC,ORS
+"RTN","ORY315",33,0)
+ S ORNAT=$O(^ORD(100.02,"B","MAINTENANCE","")),ORC=$S(REASON["Obsolete":"LROBS",1:"LRPO"),ORS=$S(REASON["Obsolete":"LROBS",1:"POR")
+"RTN","ORY315",34,0)
+ F  L +^ORD(100.03):$G(DILOCKTM,5) Q:$T  H 5
+"RTN","ORY315",35,0)
+ S A=^ORD(100.03,0),A1=$P(A,"^",3)+1,A2=$P(A,"^",4)+1
+"RTN","ORY315",36,0)
+ S ^ORD(100.03,A1,0)=REASON_"^^"_ORS_"^^"_LP_"^"_ORC_"^"_ORNAT_"^14^"
+"RTN","ORY315",37,0)
+ S ^ORD(100.03,"B",REASON,A1)="",^ORD(100.03,"C",ORC,A1)=""
+"RTN","ORY315",38,0)
+ S ^ORD(100.03,"D",$$UP^XLFSTR(REASON),A1)="",^ORD(100.03,"S",ORS,A1)=""
+"RTN","ORY315",39,0)
+ S $P(^ORD(100.03,0),"^",3)=A1,$P(^(0),"^",4)=A2
+"RTN","ORY315",40,0)
+ S ACNT=ACNT+1,^TMP($J,"ORY315",ACNT,0)=REASON_" successfully added.",ACNT=ACNT+1,^TMP($J,"ORY315",ACNT,0)=" "
+"RTN","ORY315",41,0)
+ Q
+"RTN","ORY315",42,0)
+SEND ;
+"RTN","ORY315",43,0)
+ Q:'$D(^TMP($J,"ORY315"))
+"RTN","ORY315",44,0)
+ N XMY,XMDUZ,XMSUB,XMTEXT
+"RTN","ORY315",45,0)
+ S XMDUZ="CPRS REASON,ADD",XMY("G.LRJ LSRP TRACKING")="",XMSUB="RESULTS OF ATTEMPT TO ADD NEW REASONS",XMTEXT="^TMP("_$J_",""ORY315"","
+"RTN","ORY315",46,0)
+ D ^XMD Q
+"VER")
+8.0^22.0
+"BLD",7475,6)
+^314
+**END**
+**END**

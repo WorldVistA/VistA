@@ -1,0 +1,123 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 04/05/12 at 18:04
+=============================================================================
+Run Date: FEB 04, 2013                     Designation: FH*5.5*32
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #31                    Status: Released
+                  Compliance Date: MAR 07, 2013
+=============================================================================
+
+Associated patches: (v)FH*5.5*24   <<= must be installed BEFORE `FH*5.5*32'
+
+Subject: DATA DISPLAY ISSUES IN N&FS PACKAGE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue(s):
+ 1. When printing the Patient Profile option [FHORD9] for an inpatient the 
+    patient's sex will not print or it will print part of the raw global
+    data stored for the patient in the PATIENT file (#2).
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ PATIENT SAFETY ISSUES:
+ ======================
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000608148 - printing patient profile, shows global reference 
+                      before age.
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Madison, WI.
+ Salisbury, NC.
+ Lake City, FL.
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000608148 - printing patient profile, shows global reference 
+                      before age.
+  
+     Problem:
+     --------
+     When printing the Patient Profile option [FHORD9] for an inpatient the
+     patient's sex will either print part of the raw global data stored for
+     the patient in the PATIENT file (#2) or print a null value for the
+     patient's sex.
+  
+  
+     Resolution:
+     -----------
+     The Patient Profile option [FHORD9] calls routine FHORD6. Routine
+     FHORD6 has a bug in it that tells it to pull data that follows this
+     set of characters "GH^". If it does not find anything that matches it
+     will print a null value for the patient's sex. If it does, then it
+     will print whatever it finds after that string of characters. Routine
+     FHORD6 will corrected to pull the patient's sex from the SEX field
+     (#.02) from the PATIENT file (#2) when the Patient Profile option
+     [FHORD9] is run for an inpatient.
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter FH*5.5*32)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package FH*5.5*32
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHORD6
+    Before: B21098876   After: B21089489  **1,5,24,32**
+ 
+Routine list of preceding patches: 24
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : MAR 14, 2012
+Completed By: DUCKWORTH,TIM                 Date Completed: JAN 31, 2013
+Released By : KREUZ,SHERI B                 Date Released : FEB 04, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

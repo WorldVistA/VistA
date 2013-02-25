@@ -1,0 +1,84 @@
+
+=============================================================================
+Run Date: FEB 21, 2013                     Designation: XU*8*623
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #492                      Status: Released
+                  Compliance Date: MAR 24, 2013
+=============================================================================
+
+
+Subject: Change Write access in Device file
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Patch XU*8*546 made changes to the DEVICE(#3.5) file access codes.  
+ It changed the WRITE ACCESS on several fields to "@".  Several sites
+ complained because not all users who support the DEVICE file has "@"
+ access.  They specifically mention the ability to change the TYPE(#2) field.
+ This patch gives instructions for changing the WRITE ACCESS of the
+ TYPE field to "#".
+ 
+ Remedy Ticket: 807348
+ 
+ You must have Programmer access to edit the TYPE field in the DEVICE file.
+ 
+ From the programmer prompt do FileMan:
+ 
+ >D P^DI   <<== Enter D P^DI
+ 
+ VA FileMan 22.0
+ 
+     Answer with OPTION NUMBER, or NAME
+    Choose from:
+    1            ENTER OR EDIT FILE ENTRIES
+    2            PRINT FILE ENTRIES
+    3            SEARCH FILE ENTRIES
+    4            MODIFY FILE ATTRIBUTES
+    5            INQUIRE TO FILE ENTRIES
+    6            UTILITY FUNCTIONS
+    7            OTHER OPTIONS
+    8            DATA DICTIONARY UTILITIES
+    9            TRANSFER ENTRIES
+     
+ Select OPTION: 4  MODIFY FILE ATTRIBUTES   <<== Enter 4
+ Do you want to use the screen-mode version? YES// NO   <<== Enter NO
+ 
+ MODIFY WHAT FILE: 3.5  DEVICE  (124 entries)   <<== Enter 3.5
+ 
+ Select FIELD: 2  TYPE   <<== Enter 2
+ LABEL: TYPE// 
+ TITLE: 
+ AUDIT: 
+ AUDIT CONDITION: 
+ READ ACCESS (OPTIONAL): 
+ DELETE ACCESS (OPTIONAL): 
+ WRITE ACCESS (OPTIONAL): @// #   <<== Enter #
+ SOURCE: ^   <<== enter ^
+ 
+ DATA TYPE OF TYPE: SET OF CODES// ^   <<== Enter ^
+ 
+ Select FIELD: 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : DIMICELI,RON                  Date Entered  : FEB 05, 2013
+Completed By: BEST,LISA                     Date Completed: FEB 15, 2013
+Released By : TILLIS,LEWIS                  Date Released : FEB 21, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

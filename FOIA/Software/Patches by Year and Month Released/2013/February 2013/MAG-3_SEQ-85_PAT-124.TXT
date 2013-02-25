@@ -1,0 +1,281 @@
+
+=============================================================================
+Run Date: FEB 19, 2013                     Designation: MAG*3*124
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #85                      Status: Released
+                  Compliance Date: MAR 19, 2013
+=============================================================================
+
+
+Subject: AWIV INDEPENDENT OF VISTA WEB
+
+Category: 
+  - Enhancement (Mandatory)
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+ This patch provides users with the ability to access patient images using 
+ VA approved versions of Internet Explorer using the AWIV Web Application. 
+ When implemented, the VistA Imaging Advanced Web Image Viewer (AWIV) Web 
+ Application, will let users locate and display any patient images stored 
+ in VistA Imaging or available to the VA from the DoD. Currently, VistAWeb 
+ only allows users to view images associated with a VA progress note or a 
+ radiology report. 
+  
+ The AWIV is not intended for the primary interpretation of radiology 
+ exams. When the AWIV is installed on approved and properly maintained 
+ hardware, primary interpretation of other image types is permissible by 
+ licensed practitioners at their discretion.
+  
+ The AWIV will continue to be available via the VistAWeb.
+  
+ Patch Contents:
+ ===============
+ This patch includes the following files:
+  
+ MAG3_0P124.KID - MAG*3.0*124 (Kernel Installation and Distribution 
+ System) package to be installed on the VistA System.
+  
+ VistA_Imaging_AWIV.msi - The AWIV Web Application installation file.
+  
+ MAG3_0P124_Patch_Desc.pdf - This document
+  
+ MAG3_0P124_Technical_Manual_Changes.pdf - Technical Manual change pages 
+ for this patch
+  
+ MAG3_0P124_Security_Guide_Changes.pdf - Security Guide change pages for 
+ this patch
+  
+ MAG3_0P124_Install_Guide_changes.pdf - Installation Guide change pages 
+ for this patch
+  
+ MAG_AWIV_user_guide.pdf - The AWIV User guide
+  
+ MAG_AWIV_Web_Application_user_guide.pdf - The AWIV Web Application User 
+ Guide
+  
+ Associated Patches:
+ ===================
+ There are no associated patches.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:  
+  
+ Orlando, FL (Small) 
+ VBA
+ VISN 15 Kansas City, MO (Integrated)
+ VISN 15 Marian, IL (Integrated)
+ VISN 15 St. Louis, MO (Integrated)
+ West Palm Beach, FL (Large)
+  
+ Remedy Calls:
+ =============
+ Ticket 586246
+ Problem: Duplicating page controls on the bottom of the transaction log 
+ page
+ Solution: The existing page navigation controls (at the top of the page) 
+ were duplicated and located at the bottom of the page.  The behavior and 
+ appearance of the new controls are identical to the existing controls.
+  
+ New Service Requests:
+ =====================
+ There are no New Service Requests (NSRs) addressed in this patch.
+  
+ Patient Safety Issues:
+ ======================
+ There are no Patient Safety Issue (PSI) reports associated with  this 
+ patch.
+  
+ Routines:
+ =========
+ This patch has no new or modified  routines. 
+  
+ Files and Fields:
+ =================
+ There are no new or modified files or fields in this patch.
+  
+ The Veterans Benefits Administration (VBA) requested a reason be added 
+ for their use.  The reason "For use in Veterans Benefits Administration 
+ claims processing" was added to the MAG REASON FILE (#2005.88).
+  
+ Mail Groups:
+ ============
+ This patch contains no new or modified mail groups.
+  
+ Forms:
+ ======
+ This patch contains no new or modified forms.
+  
+ Security Keys:
+ ==============
+ This patch contains no new or modified security keys.
+  
+ Remote Procedures:
+ ==================
+ This patch contains no new or modified remote procedure calls.
+  
+ Menu Options:
+ =============
+ This patch contains no new or modified menu options.
+  
+ Protocols:
+ ==========
+ This patch contains no new or modified protocols.
+  
+ Templates:
+ ==========
+ This patch contains no new or modified templates.
+  
+ Installation:
+ =============
+  
+ This patch must be installed by the compliance date to conform with VHA 
+ Directive 2001-023.
+  
+ This patch may be loaded while VistA Imaging System is active. 
+ Installation will take less than one minute.  
+  
+ Installation Prerequisites
+  
+ Before installing this patch, you will need to download the MAG*3.0*124 
+ files from the Imaging FTP site to a local storage location.
+  
+  
+ Installing the KIDS Package
+  
+ 1  Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2  Run the Installation option [XPD INSTALLATION MENU].
+ 3  Load the KIDS file by performing the following steps.
+     a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to
+        load the KIDS distribution.
+     b. When prompted, enter the path and file name (MAG3_0P124.KID) of
+        the Patch 124 KIDS file that you downloaded from the Imaging FTP
+        server.  
+     c. When prompted to continue with the load, enter YES.  A 
+        Distribution OK! message will be displayed when the load is
+        complete.
+ 4  After loading the KIDS file, use the following options to verify 
+    the contents of the patch and to back up any affected routines.
+         
+     Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- run 
+      this option to verify the integrity of the routines in the patch. 
+     Compare Transport Global to Current System [XPD COMPARE TO 
+     SYSTEM] - run this option to view all changes that will be made when  
+      the patch is installed.  All components (routines, options, and so
+      on) in the patch will be compared.
+     Backup a Transport Global [XPD BACKUP] - run this option to create a 
+      backup message of any routines exported with the patch.  It will NOT
+      back up any of the other changes.
+ 5  After performing the load and any optional verification steps, perform
+    the following steps to install the KIDS file:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter MAG*3.0*124.
+    c. Answer NO to the following prompts:
+  
+  Want KIDS to INHIBIT LOGONs during the install? No//NO
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//NO
+  
+ 6  When installation is finished, an Install Complete message will 
+ be displayed.
+  
+ Sample KIDS Installation
+ The sample installation below illustrates the installation of the 
+ MAG*3.0*124 KIDS. 
+  
+ Select Installation Option: INstall Package(s)
+ Select INSTALL NAME:    MAG*3.0*124    11/16/12@09:09:57
+      => VistA Imaging V3.0 - Patch 124 - 11/14/2012 09:29AM  ;Created o
+  
+ This Distribution was loaded on Nov 16, 2012@09:09:57 with header of 
+    VistA Imaging V3.0 - Patch 124 - 11/14/2012 09:29AM  ;Created on Nov 1
+ 4, 2012@09:29:01
+    It consisted of the following Install(s):
+     MAG*3.0*124
+ Checking Install for Package MAG*3.0*124
+  
+ Install Questions for MAG*3.0*124
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+ Complete                                MAG*3.0*124                 
+  
+  Install Started for MAG*3.0*124 : 
+                Nov 16, 2012@09:13:31
+  
+ Build Distribution Date: Nov 14, 2012
+  
+  Installing Routines: 
+                Nov 16, 2012@09:13:31
+  
+  Running Post-Install Routine: POS^MAGIP124 
+  
+ Post Install Mail Message: Nov 16, 2012@09:13:31
+  Updating Routine file...
+  
+  Updating KIDS files... 
+  
+  MAG*3.0*124 Installed. 
+                Nov 16, 2012@09:13:32
+  
+ Install Completed
+  
+  
+  
+ AWIV Installation
+ When the AWIV is installed, be aware that the software will be installed
+ in C:\Program Files\Vista\Imaging\Lib on the local workstation. There are
+ no configurable installation options.
+  
+ Automated Installation
+ The AWIV installation file can be pushed to individual workstations using 
+ applications such as PSexec or Microsoft Systems Management Server (SMS). 
+ Specifics will vary depending on the automated installation tool used.
+  
+ Manual Installation
+ Use the following steps to install the VistA Imaging AWIV software. 
+ 1. On the workstation where the AWIV will be installed, log into an 
+ administrator-level account.
+ 2. Double-click VistA_Imaging_AWIV.msi to start the installation wizard.
+ There will be a brief delay as the installation files are extracted.
+ 3. When the Welcome page appears, click Next.
+ 4. When the Ready to Install page displays, click Install.
+ 5. After installation is complete, click Finish to exit the wizard.
+  
+ Verifying Installation
+ To verify that the AWIV has been installed, use the AWIV Web Application 
+ to select a study. Double-clicking on the study will trigger the launch 
+ of the AWIV.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 143;Nov 14, 2012
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGIP124
+    Before:       n/a   After:  B9909025  **124**
+
+=============================================================================
+User Information:
+Entered By  : TROMBETTA,KATHY               Date Entered  : OCT 25, 2011
+Completed By: SHOVESTUL,MARYANN             Date Completed: FEB 15, 2013
+Released By : FUGETT,BRENT                  Date Released : FEB 19, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

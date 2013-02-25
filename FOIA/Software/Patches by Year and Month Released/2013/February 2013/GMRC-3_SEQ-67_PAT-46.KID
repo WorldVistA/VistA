@@ -1,0 +1,3194 @@
+Released GMRC*3*46 SEQ #67
+Extracted from mail message
+**KIDS**:GMRC*3.0*46^
+
+**INSTALL NAME**
+GMRC*3.0*46
+"BLD",6339,0)
+GMRC*3.0*46^CONSULT/REQUEST TRACKING^0^3120202^y
+"BLD",6339,1,0)
+^^5^5^3120202^^^^
+"BLD",6339,1,1,0)
+This patch prevents alerts being sent to the user performing the
+"BLD",6339,1,2,0)
+action that generated the alert and makes sure the persons receiving
+"BLD",6339,1,3,0)
+alerts is similar between VistA and CPRS GUI.  It also corrects a
+"BLD",6339,1,4,0)
+word used inappropriately when returning a user's update authority
+"BLD",6339,1,5,0)
+and adds a file lock timeout value where needed.
+"BLD",6339,4,0)
+^9.64PA^^
+"BLD",6339,6)
+12^
+"BLD",6339,6.3)
+23
+"BLD",6339,"KRN",0)
+^9.67PA^8989.52^19
+"BLD",6339,"KRN",.4,0)
+.4
+"BLD",6339,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",6339,"KRN",.401,0)
+.401
+"BLD",6339,"KRN",.401,"NM",0)
+^9.68A^^
+"BLD",6339,"KRN",.402,0)
+.402
+"BLD",6339,"KRN",.402,"NM",0)
+^9.68A^^
+"BLD",6339,"KRN",.403,0)
+.403
+"BLD",6339,"KRN",.5,0)
+.5
+"BLD",6339,"KRN",.84,0)
+.84
+"BLD",6339,"KRN",3.6,0)
+3.6
+"BLD",6339,"KRN",3.8,0)
+3.8
+"BLD",6339,"KRN",9.2,0)
+9.2
+"BLD",6339,"KRN",9.8,0)
+9.8
+"BLD",6339,"KRN",9.8,"NM",0)
+^9.68A^12^12
+"BLD",6339,"KRN",9.8,"NM",1,0)
+GMRCAAC^^0^B8144345
+"BLD",6339,"KRN",9.8,"NM",2,0)
+GMRCAFRD^^0^B54228479
+"BLD",6339,"KRN",9.8,"NM",3,0)
+GMRCASF^^0^B16287661
+"BLD",6339,"KRN",9.8,"NM",4,0)
+GMRCEDT2^^0^B18295173
+"BLD",6339,"KRN",9.8,"NM",5,0)
+GMRCGUIB^^0^B50120851
+"BLD",6339,"KRN",9.8,"NM",6,0)
+GMRCGUIS^^0^B4164134
+"BLD",6339,"KRN",9.8,"NM",7,0)
+GMRCHL7B^^0^B26928400
+"BLD",6339,"KRN",9.8,"NM",8,0)
+GMRCP^^0^B19973660
+"BLD",6339,"KRN",9.8,"NM",9,0)
+GMRCR^^0^B17225074
+"BLD",6339,"KRN",9.8,"NM",10,0)
+GMRCT^^0^B26237233
+"BLD",6339,"KRN",9.8,"NM",11,0)
+GMRCTIU1^^0^B34204010
+"BLD",6339,"KRN",9.8,"NM",12,0)
+GMRCAU^^0^B65603840
+"BLD",6339,"KRN",9.8,"NM","B","GMRCAAC",1)
+
+"BLD",6339,"KRN",9.8,"NM","B","GMRCAFRD",2)
+
+"BLD",6339,"KRN",9.8,"NM","B","GMRCASF",3)
+
+"BLD",6339,"KRN",9.8,"NM","B","GMRCAU",12)
+
+"BLD",6339,"KRN",9.8,"NM","B","GMRCEDT2",4)
+
+"BLD",6339,"KRN",9.8,"NM","B","GMRCGUIB",5)
+
+"BLD",6339,"KRN",9.8,"NM","B","GMRCGUIS",6)
+
+"BLD",6339,"KRN",9.8,"NM","B","GMRCHL7B",7)
+
+"BLD",6339,"KRN",9.8,"NM","B","GMRCP",8)
+
+"BLD",6339,"KRN",9.8,"NM","B","GMRCR",9)
+
+"BLD",6339,"KRN",9.8,"NM","B","GMRCT",10)
+
+"BLD",6339,"KRN",9.8,"NM","B","GMRCTIU1",11)
+
+"BLD",6339,"KRN",19,0)
+19
+"BLD",6339,"KRN",19.1,0)
+19.1
+"BLD",6339,"KRN",101,0)
+101
+"BLD",6339,"KRN",409.61,0)
+409.61
+"BLD",6339,"KRN",771,0)
+771
+"BLD",6339,"KRN",870,0)
+870
+"BLD",6339,"KRN",8989.51,0)
+8989.51
+"BLD",6339,"KRN",8989.52,0)
+8989.52
+"BLD",6339,"KRN",8994,0)
+8994
+"BLD",6339,"KRN","B",.4,.4)
+
+"BLD",6339,"KRN","B",.401,.401)
+
+"BLD",6339,"KRN","B",.402,.402)
+
+"BLD",6339,"KRN","B",.403,.403)
+
+"BLD",6339,"KRN","B",.5,.5)
+
+"BLD",6339,"KRN","B",.84,.84)
+
+"BLD",6339,"KRN","B",3.6,3.6)
+
+"BLD",6339,"KRN","B",3.8,3.8)
+
+"BLD",6339,"KRN","B",9.2,9.2)
+
+"BLD",6339,"KRN","B",9.8,9.8)
+
+"BLD",6339,"KRN","B",19,19)
+
+"BLD",6339,"KRN","B",19.1,19.1)
+
+"BLD",6339,"KRN","B",101,101)
+
+"BLD",6339,"KRN","B",409.61,409.61)
+
+"BLD",6339,"KRN","B",771,771)
+
+"BLD",6339,"KRN","B",870,870)
+
+"BLD",6339,"KRN","B",8989.51,8989.51)
+
+"BLD",6339,"KRN","B",8989.52,8989.52)
+
+"BLD",6339,"KRN","B",8994,8994)
+
+"BLD",6339,"QUES",0)
+^9.62^^
+"BLD",6339,"REQB",0)
+^9.611^7^4
+"BLD",6339,"REQB",2,0)
+GMRC*3.0*34^1
+"BLD",6339,"REQB",4,0)
+GMRC*3.0*52^1
+"BLD",6339,"REQB",6,0)
+GMRC*3.0*64^1
+"BLD",6339,"REQB",7,0)
+GMRC*3.0*66^1
+"BLD",6339,"REQB","B","GMRC*3.0*34",2)
+
+"BLD",6339,"REQB","B","GMRC*3.0*52",4)
+
+"BLD",6339,"REQB","B","GMRC*3.0*64",6)
+
+"BLD",6339,"REQB","B","GMRC*3.0*66",7)
+
+"MBREQ")
+0
+"PKG",300,-1)
+1^1
+"PKG",300,0)
+CONSULT/REQUEST TRACKING^GMRC^CONSULTS/REQUESTS
+"PKG",300,20,0)
+^9.402P^^
+"PKG",300,22,0)
+^9.49I^1^1
+"PKG",300,22,1,0)
+3.0^2980101^2980417^1271
+"PKG",300,22,1,"PAH",1,0)
+46^3120202^33274
+"PKG",300,22,1,"PAH",1,1,0)
+^^5^5^3120202
+"PKG",300,22,1,"PAH",1,1,1,0)
+This patch prevents alerts being sent to the user performing the
+"PKG",300,22,1,"PAH",1,1,2,0)
+action that generated the alert and makes sure the persons receiving
+"PKG",300,22,1,"PAH",1,1,3,0)
+alerts is similar between VistA and CPRS GUI.  It also corrects a
+"PKG",300,22,1,"PAH",1,1,4,0)
+word used inappropriately when returning a user's update authority
+"PKG",300,22,1,"PAH",1,1,5,0)
+and adds a file lock timeout value where needed.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+12
+"RTN","GMRCAAC")
+0^1^B8144345^B7900333
+"RTN","GMRCAAC",1,0)
+GMRCAAC ;SLC/DLT - Administrative Complete action consult logic ;7/16/98  01:47
+"RTN","GMRCAAC",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**4,12,53,46**;DEC 27, 1997;Build 23
+"RTN","GMRCAAC",3,0)
+COMP(GMRCO) ;Clerk action to Complete an order
+"RTN","GMRCAAC",4,0)
+ ;GMRCO is the selected consult
+"RTN","GMRCAAC",5,0)
+ K GMRCQUT,GMRCQIT
+"RTN","GMRCAAC",6,0)
+ I '+$G(GMRCO) D SELECT^GMRCA2(.GMRCO) I $D(GMRCQUT) D END Q
+"RTN","GMRCAAC",7,0)
+ I '+$G(GMRCO) D END S GMRCQUT=1 Q
+"RTN","GMRCAAC",8,0)
+ ;
+"RTN","GMRCAAC",9,0)
+ N GMRC,GMRCSTS,GMRCQUT
+"RTN","GMRCAAC",10,0)
+ S GMRC(0)=$G(^GMR(123,+GMRCO,0)) Q:GMRC(0)=""
+"RTN","GMRCAAC",11,0)
+ ;
+"RTN","GMRCAAC",12,0)
+ ;Completion action restricted if status is 1,2,or 13
+"RTN","GMRCAAC",13,0)
+ S GMRCSTS=$P(GMRC(0),"^",12)
+"RTN","GMRCAAC",14,0)
+ I $S(GMRCSTS<3:1,GMRCSTS=13:1,1:0) D  Q
+"RTN","GMRCAAC",15,0)
+ . N GMRCMSG
+"RTN","GMRCAAC",16,0)
+ . S GMRCMSG="This order has already been "_$S(GMRCSTS=1:"discontinued",GMRCSTS=2:"completed",1:"cancelled")_"!"
+"RTN","GMRCAAC",17,0)
+ . D EXAC^GMRCADC(GMRCMSG)
+"RTN","GMRCAAC",18,0)
+ . S GMRCQUT=1
+"RTN","GMRCAAC",19,0)
+ . D END
+"RTN","GMRCAAC",20,0)
+ ;
+"RTN","GMRCAAC",21,0)
+ ;Get the provider, activity date, and significant findings
+"RTN","GMRCAAC",22,0)
+ N DFN,ORIFN,ORGY,GMRCSF,GMRCSTS,GMRCA,GMRCDR,GMRCORNP,GMRCAD,GMRCADUZ
+"RTN","GMRCAAC",23,0)
+ S ORGY="",(GMRCIFN,ORIFN)=$P(GMRC(0),"^",3),GMRCORVP=$P(GMRC(0),"^",2)_";DPT("
+"RTN","GMRCAAC",24,0)
+ S DFN=+GMRCORVP
+"RTN","GMRCAAC",25,0)
+ N GETPROV D GETPROV^GMRCAU I $G(GMRCQIT)="Q" D END Q
+"RTN","GMRCAAC",26,0)
+ S GMRCAD=$$GETDT^GMRCUTL1 I GMRCAD="^" S GMRCQIT="Q" D END Q
+"RTN","GMRCAAC",27,0)
+ S GMRCSFO=$P(GMRC(0),"^",19)
+"RTN","GMRCAAC",28,0)
+ S GMRCSF=$$GETSIGF^GMRCASF(GMRCSFO) I GMRCSF=0 D END Q
+"RTN","GMRCAAC",29,0)
+ ;
+"RTN","GMRCAAC",30,0)
+ ;Update the Activity Log for an audit trail
+"RTN","GMRCAAC",31,0)
+ S GMRCSTS=2,GMRCA=10
+"RTN","GMRCAAC",32,0)
+ N GMRCQUIT S GMRCOM=1 D AUDIT^GMRCP I +$G(GMRCQUIT)=1 Q
+"RTN","GMRCAAC",33,0)
+ I $G(GMRCERR)=1 S GMRCMSG=GMRCERMS D EXAC^GMRCADC(GMRCMSG) Q
+"RTN","GMRCAAC",34,0)
+ ;Update status, last action and significant findings
+"RTN","GMRCAAC",35,0)
+ S GMRCDR="8////^S X=GMRCSTS;9////^S X=GMRCA;15////^S X=GMRCSF"
+"RTN","GMRCAAC",36,0)
+ D STATUS^GMRCP
+"RTN","GMRCAAC",37,0)
+ I $G(GMRCERR)=1 S GMRCMSG=GMRCERMS D  Q
+"RTN","GMRCAAC",38,0)
+ . N DA,DIK
+"RTN","GMRCAAC",39,0)
+ . D EXAC^GMRCADC(GMRCMSG)
+"RTN","GMRCAAC",40,0)
+ . S DA=$O(^GMR(123,+GMRCO,40,"A"),-1),DA(1)=+GMRCO,DIK="^GMR(123,"_DA(1)_",40," D ^DIK K DIK
+"RTN","GMRCAAC",41,0)
+ ;
+"RTN","GMRCAAC",42,0)
+ D EN^GMRCHL7(DFN,GMRCO,$G(GMRCTYPE),$G(GMRCRB),"RE",GMRCORNP,$G(GMRCVSIT),.GMRCOM,,$G(GMRCAD))
+"RTN","GMRCAAC",43,0)
+ S GMRCADUZ=""
+"RTN","GMRCAAC",44,0)
+ I $P(^GMR(123,GMRCO,0),"^",14),$P(^GMR(123,GMRCO,0),"^",14)'=DUZ S GMRCADUZ($P(^(0),"^",14))=""
+"RTN","GMRCAAC",45,0)
+ S GMRCORTX="Completed Consult "_$$ORTX^GMRCAU(GMRCO)_$S(GMRCSF="Y":" with Sig Findings",GMRCSF="N":" with no Sig Findings",1:"")
+"RTN","GMRCAAC",46,0)
+ D MSG^GMRCP($P(^GMR(123,GMRCO,0),"^",2),GMRCORTX,+GMRCO,23,.GMRCADUZ,0)
+"RTN","GMRCAAC",47,0)
+ Q
+"RTN","GMRCAAC",48,0)
+ ;
+"RTN","GMRCAAC",49,0)
+NOUPD ;Exit without making an update
+"RTN","GMRCAAC",50,0)
+ S GMRCMSG="Completion activity ignored."
+"RTN","GMRCAAC",51,0)
+ D EXAC^GMRCADC(GMRCMSG)
+"RTN","GMRCAAC",52,0)
+ Q
+"RTN","GMRCAAC",53,0)
+END K DUOUT,X,Y,GMRCPL,GMRCPLI,GMRCURG,GMRCURGI,GMRCPRI,XQORM
+"RTN","GMRCAAC",54,0)
+ I '$D(GMRCNM) K GMRCVP
+"RTN","GMRCAAC",55,0)
+ K GMRCDT,GMRCAD,GMRCL,GMRCTYPE
+"RTN","GMRCAAC",56,0)
+ I '$D(GMRCO) S (GMRCO,ORIFN)=""
+"RTN","GMRCAAC",57,0)
+ K GMRCIFN,GMRCMSG,GMRCORTX,GMRCSA,GMRCSTS,GMRCADUZ,STS
+"RTN","GMRCAAC",58,0)
+ Q
+"RTN","GMRCAFRD")
+0^2^B54228479^B53980720
+"RTN","GMRCAFRD",1,0)
+GMRCAFRD ;SLC/DLT,DCM,JFR - LM FORWARD ACTION ;7/11/03 14:02
+"RTN","GMRCAFRD",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**1,4,10,12,15,22,35,39,64,46**;DEC 27, 1997;Build 23
+"RTN","GMRCAFRD",3,0)
+ ;
+"RTN","GMRCAFRD",4,0)
+ ; This routine invokes IA #2395
+"RTN","GMRCAFRD",5,0)
+ ;
+"RTN","GMRCAFRD",6,0)
+FR(GMRCO) ;Forward Request to a new service
+"RTN","GMRCAFRD",7,0)
+ N ORVP,GMRCLCK,DFN,GMRCACT,GMRCSEQ,GMRCDOC
+"RTN","GMRCAFRD",8,0)
+ W !!,"Forward Request To Another Service For Action."
+"RTN","GMRCAFRD",9,0)
+ W !,"Select the service to send the consult to.",!
+"RTN","GMRCAFRD",10,0)
+ S:$D(GMRCSS) GMRCSSS=GMRCSS
+"RTN","GMRCAFRD",11,0)
+ N GMRCPL,GMRCPR,GMRCURG,GMRCDG,GMRCFF,GMRCORNP,GMRCAD,GMRCTO,GMRCADUZ,GMRCATTN,NEWATTN,GMRCPA
+"RTN","GMRCAFRD",12,0)
+ K GMRCQUT,GMRCSEL,GMRCSSS
+"RTN","GMRCAFRD",13,0)
+ I '$L($G(GMRCO)) D SELECT^GMRCA2(.GMRCO) I $D(GMRCQUT) D END Q
+"RTN","GMRCAFRD",14,0)
+ I '+$G(GMRCO) D END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",15,0)
+ I $P($G(^GMR(123,GMRCO,12)),U,5)="P" D  Q
+"RTN","GMRCAFRD",16,0)
+ . N DIR
+"RTN","GMRCAFRD",17,0)
+ . W !,"The requesting facility may not take this action on an "
+"RTN","GMRCAFRD",18,0)
+ . W "inter-facility consult."
+"RTN","GMRCAFRD",19,0)
+ . S DIR(0)="E" D ^DIR
+"RTN","GMRCAFRD",20,0)
+ . D END
+"RTN","GMRCAFRD",21,0)
+ . S GMRCQUT=1
+"RTN","GMRCAFRD",22,0)
+ I '$$LOCK^GMRCA1(GMRCO) D END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",23,0)
+ S GMRCLCK=1
+"RTN","GMRCAFRD",24,0)
+ ;
+"RTN","GMRCAFRD",25,0)
+ I $P(^GMR(123,GMRCO,0),"^",12)<3 S GMRCMSG="NO ACTION POSSIBLE. This Consult Has Already Been Completed Or Discontinued." D EXAC^GMRCADC(GMRCMSG),END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",26,0)
+ I $P(^GMR(123,GMRCO,0),"^",12)=13 S GMRCMSG="NO ACTION POSSIBLE. This Consult Has Already Been Cancelled." D EXAC^GMRCADC(GMRCMSG),END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",27,0)
+ I $P(^GMR(123,GMRCO,0),"^",12)=9 D  Q:+$G(GMRCQUT)
+"RTN","GMRCAFRD",28,0)
+ .S GMRCMSG="Invalid action. This consult has partial results."
+"RTN","GMRCAFRD",29,0)
+ .S GMRCMSG(1)="Remove the associated results before forwarding."
+"RTN","GMRCAFRD",30,0)
+ .D EXAC^GMRCADC(.GMRCMSG),END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",31,0)
+ S GMRCSEQ=0,GMRCDOC="" F  S GMRCSEQ=$O(^GMR(123,+GMRCO,50,GMRCSEQ)) Q:GMRCSEQ=""  D  Q:+$G(GMRCQUT)
+"RTN","GMRCAFRD",32,0)
+ . I $P($G(^GMR(123,+GMRCO,50,GMRCSEQ,0)),";",2)="TIU(8925," S GMRCDOC=$P(^GMR(123,+GMRCO,50,GMRCSEQ,0),";",1)
+"RTN","GMRCAFRD",33,0)
+ . I $G(GMRCDOC)="" Q
+"RTN","GMRCAFRD",34,0)
+ . I $P($G(^TIU(8925,GMRCDOC,0)),U,5)=5 D
+"RTN","GMRCAFRD",35,0)
+ . . S GMRCMSG="Invalid Action. This consult has an unsigned note."
+"RTN","GMRCAFRD",36,0)
+ . . D EXAC^GMRCADC(.GMRCMSG),END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",37,0)
+ . I $P($G(^TIU(8925,GMRCDOC,0)),U,5)=6 D
+"RTN","GMRCAFRD",38,0)
+ . . S GMRCMSG="Invalid Action. This consult has an uncosigned note."
+"RTN","GMRCAFRD",39,0)
+ . . D EXAC^GMRCADC(.GMRCMSG),END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",40,0)
+ Q:+$G(GMRCQUT)  S GMRCSEQ=0,GMRCDOC="" F  S GMRCSEQ=$O(^GMR(123,+GMRCO,40,GMRCSEQ)) Q:GMRCSEQ=""  D  Q:+$G(GMRCQUT)
+"RTN","GMRCAFRD",41,0)
+ . I $P($P($G(^GMR(123,+GMRCO,40,GMRCSEQ,0)),U,9),";",2)="TIU(8925," S GMRCDOC=$P($P($G(^GMR(123,+GMRCO,40,GMRCSEQ,0)),U,9),";",1)
+"RTN","GMRCAFRD",42,0)
+ . I $G(GMRCDOC)="" Q
+"RTN","GMRCAFRD",43,0)
+ . I $P($G(^TIU(8925,GMRCDOC,0)),U,5)=5 D
+"RTN","GMRCAFRD",44,0)
+ . . S GMRCMSG="Invalid Action. This consult has an unsigned note."
+"RTN","GMRCAFRD",45,0)
+ . . D EXAC^GMRCADC(.GMRCMSG),END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",46,0)
+ . I $P($G(^TIU(8925,GMRCDOC,0)),U,5)=6 D
+"RTN","GMRCAFRD",47,0)
+ . . S GMRCMSG="Invalid Action. This consult has an uncosigned note."
+"RTN","GMRCAFRD",48,0)
+ . . D EXAC^GMRCADC(.GMRCMSG),END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",49,0)
+ Q:+$G(GMRCQUT)
+"RTN","GMRCAFRD",50,0)
+ ;
+"RTN","GMRCAFRD",51,0)
+ I $D(IOBM),$D(IOTM),$D(IOSTBM) D FULL^VALM1
+"RTN","GMRCAFRD",52,0)
+ I $P(^GMR(123,GMRCO,0),"^",16) W !!,"This is a SERVICE ENTERED order stub.  Please send the written consult to the",!,"Service, in addition to the automated forwarding!"
+"RTN","GMRCAFRD",53,0)
+ S DFN=+$P(^GMR(123,GMRCO,0),"^",2)
+"RTN","GMRCAFRD",54,0)
+ S GMRCTO=1,GMRCASV="Forward Consult To Which Service/Specialty: "
+"RTN","GMRCAFRD",55,0)
+ D ASRV^GMRCASV K GMRCASV I $S($D(DTOUT):1,$D(DIROUT):1,$D(GMRCQUT):1,1:0) D END Q
+"RTN","GMRCAFRD",56,0)
+ I 'GMRCDG S GMRCMSG="No Service Was Selected. Consult Was Not Forwarded To Any Service!" D EXAC^GMRCADC(GMRCMSG),END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",57,0)
+ S GMRCFF=$P(^GMR(123,GMRCO,0),"^",5) I GMRCFF=+GMRCDG S GMRCMSG="The Forwarding Service Cannot Forward A Consult To Itself!" D EXAC^GMRCADC(GMRCMSG),END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",58,0)
+ S GMRCATTN=$P($G(^GMR(123,GMRCO,0)),"^",11)
+"RTN","GMRCAFRD",59,0)
+ N DIE,DR
+"RTN","GMRCAFRD",60,0)
+ S DIE="^GMR(123,",DA=GMRCO,DR="7//"_$S($G(GMRCATTN)'="":GMRCATTN,1:"")
+"RTN","GMRCAFRD",61,0)
+ D ^DIE
+"RTN","GMRCAFRD",62,0)
+ S NEWATTN=$P($G(^GMR(123,+GMRCO,0)),"^",11)
+"RTN","GMRCAFRD",63,0)
+ I NEWATTN'=GMRCATTN S GMRCPA=$G(GMRCATTN)
+"RTN","GMRCAFRD",64,0)
+ S GETPROV="Who is responsible for Forwarding the Consult?"
+"RTN","GMRCAFRD",65,0)
+FRGTPRV D GETPROV^GMRCAU I '$D(GMRCORNP) D END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",66,0)
+ S GMRCACT=$$PROVIDER^XUSER(GMRCORNP) I $P(GMRCACT,U)'=1 D  G FRGTPRV
+"RTN","GMRCAFRD",67,0)
+ .W !!,"***User account is TERMINATED please choose another responsible user.***"
+"RTN","GMRCAFRD",68,0)
+ S GMRCAD=$$GETDT^GMRCUTL1 I GMRCAD="^" D END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",69,0)
+ I '$G(GMRCAD) S GMRCAD=$$NOW^XLFDT
+"RTN","GMRCAFRD",70,0)
+ N GMRCSS,GMRCSSNM,GMRCA,GMRCMSG,GMRCIROL,GMRCINM,GMRCIROU,ORSTS
+"RTN","GMRCAFRD",71,0)
+ D DEFAULT
+"RTN","GMRCAFRD",72,0)
+ S GMRCSS=+GMRCDG
+"RTN","GMRCAFRD",73,0)
+ I +GMRCSS,'$D(^GMR(123.5,+GMRCSS,0)) S GMRCMSG="Error in Service Chosen - SERVICE Does Not Exist!" D EXAC^GMRCADC(GMRCMSG),END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",74,0)
+ S GMRCSSNM=$S($L($G(^GMR(123.5,+GMRCSS,.1))):^(.1),1:$P($G(^GMR(123.5,+GMRCSS,0)),U,1))
+"RTN","GMRCAFRD",75,0)
+ D URG I $D(GMRCEND),GMRCEND D END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",76,0)
+ S GMRCA=17,DR=""
+"RTN","GMRCAFRD",77,0)
+ I $D(^GMR(123.5,+GMRCSS,"IFC")) D  ; if fwd to IFC serv, get extra flds
+"RTN","GMRCAFRD",78,0)
+ . S GMRCIROU=$P(^GMR(123.5,+GMRCSS,"IFC"),U) Q:GMRCIROU=""  ;no rout fac
+"RTN","GMRCAFRD",79,0)
+ . S GMRCINM=$P(^GMR(123.5,+GMRCSS,"IFC"),U,2) Q:GMRCINM=""  ;no serv nm
+"RTN","GMRCAFRD",80,0)
+ . S GMRCA=25,GMRCIROL="P"
+"RTN","GMRCAFRD",81,0)
+ . S DR=".07////^S X=GMRCIROU;.125////^S X=GMRCIROL;.131///^S X=GMRCINM;"
+"RTN","GMRCAFRD",82,0)
+ S DIE="^GMR(123,",DA=GMRCO,ORSTS=5
+"RTN","GMRCAFRD",83,0)
+ S DR=DR_"1////^S X=GMRCSS;5////^S X=GMRCURGI;8////^S X=ORSTS;9////^S X=GMRCA;.1///@"
+"RTN","GMRCAFRD",84,0)
+ L +^GMR(123,GMRCO):2 I '$T K DIE,DA,DR S GMRCMSG="Another User Is Accessing This Record. UPDATE WAS UNSUCCESSFUL.",GMRCMSG(1)="Try Again Later." D EXAC^GMRCADC(.GMRCMSG),END S GMRCQUT=1 Q
+"RTN","GMRCAFRD",85,0)
+ D ^DIE L -^GMR(123,GMRCO) K DIE,DA,DR
+"RTN","GMRCAFRD",86,0)
+ S GMRCOM=1 D AUDIT^GMRCP ;GMRCORNP is the responsible provider here
+"RTN","GMRCAFRD",87,0)
+ ;
+"RTN","GMRCAFRD",88,0)
+ I $G(GMRCLCK) D UNLOCK^GMRCA1(GMRCO) ;unlk before FWD changes order #
+"RTN","GMRCAFRD",89,0)
+ ;
+"RTN","GMRCAFRD",90,0)
+FRMSG ; Common logic used by GUI and List Manager to process the HL7 message
+"RTN","GMRCAFRD",91,0)
+ ; to update the order in OE/RR and then forward an alert to recipients
+"RTN","GMRCAFRD",92,0)
+ ; is passed in as the DUZ instead of the responsible provider
+"RTN","GMRCAFRD",93,0)
+ D EN^GMRCHL7(DFN,GMRCO,$G(GMRCTYPE),$G(GMRCRB),"XX^FORWARD",$G(DUZ),$G(VISIT),.GMRCOM,,$G(GMRCAD))
+"RTN","GMRCAFRD",94,0)
+ S GMRCADUZ=""
+"RTN","GMRCAFRD",95,0)
+ S GMRCORNP=$P(^GMR(123,GMRCO,0),"^",14) ;This is the original provider that ordered the consult
+"RTN","GMRCAFRD",96,0)
+ I +$G(GMRCORNP),+$G(GMRCORNP)'=DUZ S GMRCADUZ(+GMRCORNP)="" ;alert original provider of forward
+"RTN","GMRCAFRD",97,0)
+ S GMRCORTX="Forwarded consult "_$$ORTX^GMRCAU(+GMRCO)_" ("_GMRCURG_")"
+"RTN","GMRCAFRD",98,0)
+ D MSG^GMRCP(DFN,GMRCORTX,+GMRCO,27,.GMRCADUZ,1) ;GMRCO=IEN of consult from file 123; 27 is notification entry from file ORD(100.9
+"RTN","GMRCAFRD",99,0)
+ K GMRCOM
+"RTN","GMRCAFRD",100,0)
+ S GMRCDEV=$P($G(^GMR(123.5,GMRCSS,123)),"^",9)
+"RTN","GMRCAFRD",101,0)
+ I GMRCDEV D PRNT^GMRCUTL1(GMRCSS,+GMRCO)
+"RTN","GMRCAFRD",102,0)
+ D END
+"RTN","GMRCAFRD",103,0)
+ Q
+"RTN","GMRCAFRD",104,0)
+URG ;Get the default urgency
+"RTN","GMRCAFRD",105,0)
+ N X,Y,XQORM,DIROUT,DTOUT,DIRUT,DUOUT
+"RTN","GMRCAFRD",106,0)
+ I $P(^GMR(123,+GMRCO,0),"^",18)["I" D
+"RTN","GMRCAFRD",107,0)
+ .I GMRCTYPE="GMRCOR CONSULT" S X="GMRCURGENCYM CSLT - INPATIENT"
+"RTN","GMRCAFRD",108,0)
+ .S X="GMRCURGENCYM REQ - INPATIENT"
+"RTN","GMRCAFRD",109,0)
+ E  S X="GMRCURGENCYM - OUTPATIENT"
+"RTN","GMRCAFRD",110,0)
+ I '$D(GMRCURG) S GMRCURGI=$O(^ORD(101,"B","GMRCURGENCY - ROUTINE","")) S:+GMRCURGI GMRCURG=$P($G(^ORD(101,+GMRCURGI,0)),"^",2)
+"RTN","GMRCAFRD",111,0)
+ S Y=$O(^ORD(101,"B",X,""))
+"RTN","GMRCAFRD",112,0)
+ S XQORM=+Y_";ORD(101,",XQORM(0)="1A\",XQORM("A")="Urgency: ",XQORM("NO^^")=""
+"RTN","GMRCAFRD",113,0)
+ S:$L(GMRCURG) XQORM("B")=GMRCURG D EN^XQORM I X="^"!($D(DIROUT)) K XQORM S GMRCEND=1 Q
+"RTN","GMRCAFRD",114,0)
+ K XQORM(0),XQORM("A"),XQORM("B"),XQORM("NO^^") S XQORM=""
+"RTN","GMRCAFRD",115,0)
+ I '$D(Y) S GMRCEND=1 Q
+"RTN","GMRCAFRD",116,0)
+ I $D(Y(1)) S GMRCURG=$P(Y(1),"^",3),GMRCURGI=$P(Y(1),"^",2)
+"RTN","GMRCAFRD",117,0)
+ Q
+"RTN","GMRCAFRD",118,0)
+DEFAULT ;Set up defaults for editing to be equal to the existing data.
+"RTN","GMRCAFRD",119,0)
+ D DEM^GMRCU
+"RTN","GMRCAFRD",120,0)
+ N GMRC,GMRCDIC,GMRCPLI,GMRCPRI
+"RTN","GMRCAFRD",121,0)
+ Q:'$D(GMRCO)  S (GMRCSS,GMRCSSNM,GMRCPL,GMRCPR,GMRCPRI,GMRCURG)=""
+"RTN","GMRCAFRD",122,0)
+ S GMRCOM=0,GMRC(0)=$S($D(^GMR(123,+GMRCO,0)):^(0),1:"")
+"RTN","GMRCAFRD",123,0)
+ S GMRCSS=$P(GMRC(0),"^",5) I +GMRCSS,$D(^GMR(123.5,+GMRCSS,0)) S GMRCSSNM=$S($L($P($G(^GMR(123.5,+GMRCSS,0)),U,1)):$P(^(0),U,1),1:"")
+"RTN","GMRCAFRD",124,0)
+ S GMRCPLI=$P(GMRC(0),"^",10) I GMRCPLI S GMRCPL=$P($G(^ORD(101,GMRCPLI,0)),"^",2)
+"RTN","GMRCAFRD",125,0)
+ S GMRCURGI=$P(GMRC(0),"^",9) I GMRCURGI S GMRCURG=$P($G(^ORD(101,GMRCURGI,0)),"^",2)
+"RTN","GMRCAFRD",126,0)
+ S GMRCPRI=$P(GMRC(0),"^",8) I GMRCPRI["ORD(101" D
+"RTN","GMRCAFRD",127,0)
+ . S GMRCPR=$$GET1^DIQ(101,+GMRCPRI,1)
+"RTN","GMRCAFRD",128,0)
+ I $L(GMRCPRI),GMRCPRI'["ORD(101" D  ;ZPROC
+"RTN","GMRCAFRD",129,0)
+ . S GMRCPR=$$GET1^DIQ(123.3,+GMRCPRI,.01)
+"RTN","GMRCAFRD",130,0)
+TYPE ;This entry point is used when the only default needed is the GMRCTYPE
+"RTN","GMRCAFRD",131,0)
+ ;Called by GMRCGUIA to get variables ready for FRMSG call.
+"RTN","GMRCAFRD",132,0)
+ S GMRCTYPE=$$GET1^DIQ(123,+GMRCO,13,"I") ;ZPROC (P or C)
+"RTN","GMRCAFRD",133,0)
+ Q
+"RTN","GMRCAFRD",134,0)
+END ;Kill off variables and exit
+"RTN","GMRCAFRD",135,0)
+ I $G(GMRCLCK) D UNLOCK^GMRCA1(GMRCO)
+"RTN","GMRCAFRD",136,0)
+ K GETPROV,GMRCDG,GMRCDEV,GMRCEND,GMRCFF,GMRCOM,GMRCIFN,GMRCO,GMRCORNP
+"RTN","GMRCAFRD",137,0)
+ K GMRCTYPE,GMRCORTX,GMRCPL,GMRCPR,GMRCSEL,GMRCURG,GMRCADUZ,Y
+"RTN","GMRCAFRD",138,0)
+ K DTOUT,DIROUT,DUOUT,GMRCURGI
+"RTN","GMRCAFRD",139,0)
+ S:$D(^TMP("GMRC",$J,"CURRENT","MENU")) XQORM("HIJACK")=^("MENU")
+"RTN","GMRCAFRD",140,0)
+ Q
+"RTN","GMRCASF")
+0^3^B16287661^B15424703
+"RTN","GMRCASF",1,0)
+GMRCASF ;SLC/DLT - Significant Findings Action ;7/11/03 13:28
+"RTN","GMRCASF",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**4,10,14,22,29,35,46**;DEC 27, 1997;Build 23
+"RTN","GMRCASF",3,0)
+SF(GMRCO) ;Evaluate Significant Findings and update accordingly
+"RTN","GMRCASF",4,0)
+ ;GMRCO is the selected consult
+"RTN","GMRCASF",5,0)
+ N GMRCQIT,GMRCLCK
+"RTN","GMRCASF",6,0)
+ I '$L($G(GMRCO)) D SELECT^GMRCA2(.GMRCO)  I $D(GMRCQUT) D END Q
+"RTN","GMRCASF",7,0)
+ I '+($G(GMRCO)) D END Q
+"RTN","GMRCASF",8,0)
+ I $P($G(^GMR(123,GMRCO,12)),U,5)="P" D  Q
+"RTN","GMRCASF",9,0)
+ . N DIR
+"RTN","GMRCASF",10,0)
+ . W !,"The requesting facility may not take this action on an "
+"RTN","GMRCASF",11,0)
+ . W "inter-facility consult."
+"RTN","GMRCASF",12,0)
+ . S DIR(0)="E" D ^DIR
+"RTN","GMRCASF",13,0)
+ . D END
+"RTN","GMRCASF",14,0)
+ I '$$LOCK^GMRCA1(GMRCO) D END Q
+"RTN","GMRCASF",15,0)
+ S GMRCLCK=1
+"RTN","GMRCASF",16,0)
+ ;
+"RTN","GMRCASF",17,0)
+ I $D(IOTM),$D(IOBM),$D(IOSTBM) D FULL^VALM1
+"RTN","GMRCASF",18,0)
+ N GMRC,GMRCSTS,GMRCSF,GMRCSFO,GMRCORTX,GMRCDR
+"RTN","GMRCASF",19,0)
+ S GMRC(0)=$G(^GMR(123,+GMRCO,0)) Q:GMRC(0)=""
+"RTN","GMRCASF",20,0)
+ ;
+"RTN","GMRCASF",21,0)
+ S GMRCSFO=$P(GMRC(0),"^",19)
+"RTN","GMRCASF",22,0)
+ W !!,"Current Significant Findings = "_$S(GMRCSFO="U":"Unknown",GMRCSFO="Y":"Yes",GMRCSFO="N":"No",1:"not entered yet"),!!
+"RTN","GMRCASF",23,0)
+ S GMRCSF=$$GETSIGF(GMRCSFO)
+"RTN","GMRCASF",24,0)
+ I GMRCSF=0 D END Q
+"RTN","GMRCASF",25,0)
+ ; If no change in old and new value ask if should continue
+"RTN","GMRCASF",26,0)
+ I GMRCSF=GMRCSFO D  I 'Y D END Q
+"RTN","GMRCASF",27,0)
+ . W !,"The old and new Significant Findings are the same."
+"RTN","GMRCASF",28,0)
+ . N DIR,DA,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","GMRCASF",29,0)
+ . S DIR("A")="Do you want to proceed with this action"
+"RTN","GMRCASF",30,0)
+ . S DIR(0)="Y"
+"RTN","GMRCASF",31,0)
+ . S DIR("B")="NO"
+"RTN","GMRCASF",32,0)
+ . D ^DIR
+"RTN","GMRCASF",33,0)
+ . I $D(DTOUT)!$D(DUOUT)!$D(DIRUT)!$D(DIROUT) S Y=0 Q
+"RTN","GMRCASF",34,0)
+ . I Y=0 Q
+"RTN","GMRCASF",35,0)
+ ;
+"RTN","GMRCASF",36,0)
+ ;Update last action and sig findings but don't change the status
+"RTN","GMRCASF",37,0)
+ S GMRCSTS=$P(GMRC(0),"^",12),GMRCA=4
+"RTN","GMRCASF",38,0)
+ S GMRCDR="8////^S X=GMRCSTS;9////^S X=GMRCA;15////^S X=GMRCSF"
+"RTN","GMRCASF",39,0)
+ D STATUS^GMRCP
+"RTN","GMRCASF",40,0)
+ I $G(GMRCERR)=1 S GMRCMSG=GMRCERMS D EXAC^GMRCADC(GMRCMSG),END Q
+"RTN","GMRCASF",41,0)
+ ;
+"RTN","GMRCASF",42,0)
+ ;GMRCOM=1 tells AUDIT^GMRCP to do the word-processing logic
+"RTN","GMRCASF",43,0)
+ ;If an actual comment is added, $P(GMRCOM,"^",2)=1 (send alert),
+"RTN","GMRCASF",44,0)
+ ; if not GMRCOM=1 and no '^' exists (do not send alert)
+"RTN","GMRCASF",45,0)
+ S GMRCOM=1 D AUDIT^GMRCP
+"RTN","GMRCASF",46,0)
+ I $G(GMRCERR)=1 S GMRCMSG=GMRCERMS D EXAC^GMRCADC(GMRCMSG),END Q
+"RTN","GMRCASF",47,0)
+ ;
+"RTN","GMRCASF",48,0)
+ I GMRCSTS=2 D EN^GMRCHL7($P(^GMR(123,GMRCO,0),U,2),GMRCO,$G(GMRCTYPE),$G(GMRCRB),"RE",GMRCORNP,$G(GMRCVSIT),,,$G(GMRCAD))
+"RTN","GMRCASF",49,0)
+ D SETORTX
+"RTN","GMRCASF",50,0)
+ I GMRCSTS=2 D SENDALRT(GMRCORTX) Q
+"RTN","GMRCASF",51,0)
+ I +$P(GMRCOM,"^",2) D
+"RTN","GMRCASF",52,0)
+ . W !,"An alert with the following text will be sent if recipients are selected: "
+"RTN","GMRCASF",53,0)
+ . W !,"     "_GMRCORTX_$$ORTX^GMRCAU(+GMRCO)
+"RTN","GMRCASF",54,0)
+ . W !
+"RTN","GMRCASF",55,0)
+ . I GMRCSTS'=2 W !,"or the alert will be sent when the order is completed.",!
+"RTN","GMRCASF",56,0)
+ . I $P($G(^GMR(123,GMRCO,12)),U,5)="F" D
+"RTN","GMRCASF",57,0)
+ . W !!,"The ordering provider for this inter-facility consult will "
+"RTN","GMRCASF",58,0)
+ . W "automatically be ",!,"notified.",!
+"RTN","GMRCASF",59,0)
+ . D PROCALRT^GMRCACMT(GMRCORTX,1,4,GMRCO)
+"RTN","GMRCASF",60,0)
+ . ;For consults not completed, the original provider may be deleted from
+"RTN","GMRCASF",61,0)
+ . ;the recipient list for the alert.
+"RTN","GMRCASF",62,0)
+ D END
+"RTN","GMRCASF",63,0)
+ Q
+"RTN","GMRCASF",64,0)
+ ;
+"RTN","GMRCASF",65,0)
+SETORTX ;Set prefix text for the alert
+"RTN","GMRCASF",66,0)
+ S GMRCORTX=$S(GMRCSF="N":"No ",GMRCSF="Y":"",1:"Unknown ")
+"RTN","GMRCASF",67,0)
+ S GMRCORTX=GMRCORTX_"Sig Findings for "_$P($G(^ORD(100.01,+GMRCSTS,0)),"^",2)_" consult " Q
+"RTN","GMRCASF",68,0)
+ Q
+"RTN","GMRCASF",69,0)
+ ;
+"RTN","GMRCASF",70,0)
+SENDALRT(GMRCORTX) ;Send to the requesting provider
+"RTN","GMRCASF",71,0)
+ N GMRCRP,GMRCADUZ,GMRCDELR
+"RTN","GMRCASF",72,0)
+ S GMRCRP=$P($G(^GMR(123,+GMRCO,0)),U,14) ;requesting clinician
+"RTN","GMRCASF",73,0)
+ I +GMRCRP,GMRCRP'=DUZ D
+"RTN","GMRCASF",74,0)
+ . S GMRCADUZ(+GMRCRP)=""
+"RTN","GMRCASF",75,0)
+ . W !,"Alert will be sent to Requesting Provider: "_$P($G(^VA(200,+GMRCRP,0)),U,1)
+"RTN","GMRCASF",76,0)
+ E  W !,"No automatic alerts will be sent to the Requesting Provider."
+"RTN","GMRCASF",77,0)
+ S GMRCDELR=0
+"RTN","GMRCASF",78,0)
+ D ANDTO^GMRCACMT
+"RTN","GMRCASF",79,0)
+ D SENDMSG^GMRCACMT(23,+GMRCO)
+"RTN","GMRCASF",80,0)
+ ;Sig Findings uses the CONSULT/REQUEST RESOLUTION (23) notification
+"RTN","GMRCASF",81,0)
+ Q
+"RTN","GMRCASF",82,0)
+ ;
+"RTN","GMRCASF",83,0)
+GETSIGF(GMRCSFO) ;Get the significant findings
+"RTN","GMRCASF",84,0)
+ ;GMRCSFO is the old significant findings value
+"RTN","GMRCASF",85,0)
+ N DIR,DA,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","GMRCASF",86,0)
+ S DIR(0)="123,15"
+"RTN","GMRCASF",87,0)
+ S DIR("B")=GMRCSFO
+"RTN","GMRCASF",88,0)
+ S:DIR("B")="" DIR("B")="unknown"
+"RTN","GMRCASF",89,0)
+ S DIR("A")="Are there significant findings? (Y/N/U)"
+"RTN","GMRCASF",90,0)
+ D ^DIR
+"RTN","GMRCASF",91,0)
+ I $D(DTOUT)!$D(DUOUT)!$D(DIRUT)!$D(DIROUT) Q 0
+"RTN","GMRCASF",92,0)
+ Q Y
+"RTN","GMRCASF",93,0)
+ ;
+"RTN","GMRCASF",94,0)
+END ;cleanup variables
+"RTN","GMRCASF",95,0)
+ I $G(GMRCLCK) D UNLOCK^GMRCA1(GMRCO)
+"RTN","GMRCASF",96,0)
+ K GMRCO,GMRCA,GMRCMSG,GMRCOM,GMRCSEL,GMRCERR,GMRCERMS
+"RTN","GMRCASF",97,0)
+ I $D(DTOUT)!$D(DIROUT) S GMRCQIT=""
+"RTN","GMRCASF",98,0)
+ S:$D(^TMP("GMRC",$J,"CURRENT","MENU")) XQORM("HIJACK")=^("MENU")
+"RTN","GMRCASF",99,0)
+ Q
+"RTN","GMRCAU")
+0^12^B65603840^B65632107
+"RTN","GMRCAU",1,0)
+GMRCAU ;SLC/DLT,JFR - Action Utilities  ;10/17/01 18:31
+"RTN","GMRCAU",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**1,4,11,14,12,15,17,22,55,46**;DEC 27, 1997;Build 23
+"RTN","GMRCAU",3,0)
+ ;
+"RTN","GMRCAU",4,0)
+ ; This routine invokes IA #2324,#2692
+"RTN","GMRCAU",5,0)
+ ;
+"RTN","GMRCAU",6,0)
+GETPROV K GMRCORNP N DIR S DIR(0)="123.02,3"
+"RTN","GMRCAU",7,0)
+ S DIR("A")=$S($D(GETPROV):GETPROV,1:"Responsible Clinician")
+"RTN","GMRCAU",8,0)
+ D ^DIR K DIR I $D(DTOUT)!$D(DIROUT)!(X="^") S GMRCQIT="Q" Q
+"RTN","GMRCAU",9,0)
+ G:Y<1 GETPROV S GMRCORNP=+Y
+"RTN","GMRCAU",10,0)
+ Q
+"RTN","GMRCAU",11,0)
+GETDT ;Get actual activity date
+"RTN","GMRCAU",12,0)
+ K GMRCQIT,%
+"RTN","GMRCAU",13,0)
+ D NOW^%DTC S (X,GMRCDT)=% D REGDTM^GMRCU S GMRCAD=X
+"RTN","GMRCAU",14,0)
+ S DIR(0)="123.02,2",DIR("A")=$S($D(GETDT):GETDT,1:"Date/Time of Actual Activity"),DIR("B")="NOW" D ^DIR K DIR I $D(DIRUT) S GMRCQIT="Q" Q
+"RTN","GMRCAU",15,0)
+ I X="NOW" K GMRCAD,Y Q
+"RTN","GMRCAU",16,0)
+ S GMRCAD=Y K X,Y,DIRUT,DUOUT
+"RTN","GMRCAU",17,0)
+ Q
+"RTN","GMRCAU",18,0)
+ORTX(GMRCO) ;Get the abbreviated text for alert displays
+"RTN","GMRCAU",19,0)
+ ;GMRCO is the consult entry from 123
+"RTN","GMRCAU",20,0)
+ N GMRCSVC,GMRCSSNM,GMRCPROC,GMRCORTX
+"RTN","GMRCAU",21,0)
+ S GMRCSSNM=$$SVC(GMRCO)
+"RTN","GMRCAU",22,0)
+ S GMRCPROC=$$PROC(GMRCO)
+"RTN","GMRCAU",23,0)
+ S GMRCORTX=$S($L(GMRCPROC):($E(GMRCSSNM,1,10)_" "_$E(GMRCPROC,1,10)),1:$E(GMRCSSNM,1,20))
+"RTN","GMRCAU",24,0)
+ Q GMRCORTX
+"RTN","GMRCAU",25,0)
+ ;
+"RTN","GMRCAU",26,0)
+SVC(GMRCO) ;Get abbreviated service text
+"RTN","GMRCAU",27,0)
+ N GMRCSSNM,GMRCSVC
+"RTN","GMRCAU",28,0)
+ S GMRCSVC=$P(^GMR(123,+GMRCO,0),"^",5),GMRCSSNM=""
+"RTN","GMRCAU",29,0)
+ I +GMRCSVC S GMRCSSNM=$S($L($G(^GMR(123.5,+GMRCSVC,.1))):^(.1),1:$P($G(^GMR(123.5,+GMRCSVC,0)),U,1))
+"RTN","GMRCAU",30,0)
+ Q GMRCSSNM
+"RTN","GMRCAU",31,0)
+PROC(GMRCO) ;Get abbreviated procedure text
+"RTN","GMRCAU",32,0)
+ N GMRCPROC
+"RTN","GMRCAU",33,0)
+ S GMRCPROC=$P(^GMR(123,+GMRCO,0),"^",8)
+"RTN","GMRCAU",34,0)
+ I +GMRCPROC S GMRCPROC=$$GET1^DIQ(123.3,+GMRCPROC,.01)
+"RTN","GMRCAU",35,0)
+ Q GMRCPROC
+"RTN","GMRCAU",36,0)
+ ;
+"RTN","GMRCAU",37,0)
+LMTX(GMRCO) ;Get the text for list manager displays
+"RTN","GMRCAU",38,0)
+ ;GMRCO is the consult entry from 123
+"RTN","GMRCAU",39,0)
+ N GMRCSVC,GMRCSSNM,GMRCREQ,GMRCORTX
+"RTN","GMRCAU",40,0)
+ S GMRCSSNM=$$SVC(GMRCO)
+"RTN","GMRCAU",41,0)
+ S GMRCREQ=$$PROC(GMRCO)
+"RTN","GMRCAU",42,0)
+ S GMRCORTX=$S($L(GMRCREQ):($E(GMRCSSNM,1,10)_" "_$E(GMRCREQ,1,10)),1:$E(GMRCSSNM,1,20))
+"RTN","GMRCAU",43,0)
+ Q GMRCORTX
+"RTN","GMRCAU",44,0)
+ ;
+"RTN","GMRCAU",45,0)
+ ;
+"RTN","GMRCAU",46,0)
+VALID(GMRCSER,GMRCO,GMRCUSER,GMRCTST,GMRCIFC) ;Get users update authority
+"RTN","GMRCAU",47,0)
+ ; check GMRCSS and all parents for authority
+"RTN","GMRCAU",48,0)
+ ; codes returned are same as $$VALIDU
+"RTN","GMRCAU",49,0)
+ N GMRCUPDL,GMRCLIS,GMRCHKD,GMRCNT,GMRCLP,GMRCQUIT
+"RTN","GMRCAU",50,0)
+ I '$G(GMRCUSER) S GMRCUSER=DUZ
+"RTN","GMRCAU",51,0)
+ ; check initial service first
+"RTN","GMRCAU",52,0)
+ S GMRCUPDL=$$VALIDU(GMRCSER,GMRCUSER,$G(GMRCIFC)) I +GMRCUPDL D  G VALEX
+"RTN","GMRCAU",53,0)
+ . I $G(GMRCTST) S $P(GMRCUPDL,U,3)=$P($G(^GMR(123.5,+GMRCSER,0)),U)
+"RTN","GMRCAU",54,0)
+ S GMRCHKD(+GMRCSER)="",GMRCNT=1
+"RTN","GMRCAU",55,0)
+ ; find parents if set to process, quit if none
+"RTN","GMRCAU",56,0)
+ I '$P($G(^GMR(123.5,+GMRCSER,0)),U,7) G VALEX ;process parents = 0
+"RTN","GMRCAU",57,0)
+ D FINDPAR(GMRCSER,.GMRCNT) I '$D(GMRCLIS) S GMRCUPDL=0 G VALEX
+"RTN","GMRCAU",58,0)
+ S GMRCLP=0
+"RTN","GMRCAU",59,0)
+ F  S GMRCLP=$O(GMRCLIS(GMRCLP)) Q:'GMRCLP!($D(GMRCQUIT))  D  I +GMRCUPDL G VALEX
+"RTN","GMRCAU",60,0)
+ . I +$P(GMRCLIS(GMRCLP),U,2) K GMRCLIS(GMRCLP) Q  ;been checked
+"RTN","GMRCAU",61,0)
+ . I '$D(GMRCHKD(+GMRCLIS(GMRCLP))) D
+"RTN","GMRCAU",62,0)
+ .. ; check parent 
+"RTN","GMRCAU",63,0)
+ .. S GMRCUPDL=$$VALIDU(+GMRCLIS(GMRCLP),GMRCUSER,$G(GMRCIFC))
+"RTN","GMRCAU",64,0)
+ .. S GMRCHKD(+GMRCLIS(GMRCLP))=""
+"RTN","GMRCAU",65,0)
+ . S $P(GMRCLIS(GMRCLP),U,2)=1
+"RTN","GMRCAU",66,0)
+ . I +GMRCUPDL D  Q  ;got one
+"RTN","GMRCAU",67,0)
+ .. S:$G(GMRCTST) $P(GMRCUPDL,U,3)=$P($G(^GMR(123.5,+GMRCLIS(GMRCLP),0)),U)
+"RTN","GMRCAU",68,0)
+ . I $P(^GMR(123.5,+GMRCLIS(GMRCLP),0),U,7) D  ;process parents
+"RTN","GMRCAU",69,0)
+ .. D FINDPAR(+GMRCLIS(GMRCLP),.GMRCNT)
+"RTN","GMRCAU",70,0)
+ . S GMRCLP=0 ;start back at top and don't miss any
+"RTN","GMRCAU",71,0)
+VALEX Q GMRCUPDL
+"RTN","GMRCAU",72,0)
+FINDPAR(SERV,ARCNT)     ;find parents of SERV
+"RTN","GMRCAU",73,0)
+ ; SERV = service to find parents of
+"RTN","GMRCAU",74,0)
+ ; ARCNT = next array element
+"RTN","GMRCAU",75,0)
+ N PARENT
+"RTN","GMRCAU",76,0)
+ S PARENT=0
+"RTN","GMRCAU",77,0)
+ F  S PARENT=$O(^GMR(123.5,"APC",SERV,PARENT)) Q:'PARENT  D
+"RTN","GMRCAU",78,0)
+ . S GMRCLIS(ARCNT)=PARENT
+"RTN","GMRCAU",79,0)
+ . S ARCNT=ARCNT+1
+"RTN","GMRCAU",80,0)
+ Q
+"RTN","GMRCAU",81,0)
+ ;
+"RTN","GMRCAU",82,0)
+VALIDU(GMRCSS,GMRCUSR,GMRCIFC) ;Check to see if user is an update user
+"RTN","GMRCAU",83,0)
+ ;The value returned is the equivalent of this set of codes:
+"RTN","GMRCAU",84,0)
+ ;    0 = not an update user
+"RTN","GMRCAU",85,0)
+ ;    1 = unrestricted access user
+"RTN","GMRCAU",86,0)
+ ;    2 = update user
+"RTN","GMRCAU",87,0)
+ ;    3 = administrative update user
+"RTN","GMRCAU",88,0)
+ ;    4 = admin AND update user
+"RTN","GMRCAU",89,0)
+ ;    5 = IFC coordinator
+"RTN","GMRCAU",90,0)
+ ;
+"RTN","GMRCAU",91,0)
+ N GMRCUPD,GMRCAD,GMRCUP
+"RTN","GMRCAU",92,0)
+ I '$G(GMRCUSR) S GMRCUSR=DUZ
+"RTN","GMRCAU",93,0)
+ I '+$G(GMRCSS) Q 0
+"RTN","GMRCAU",94,0)
+ S GMRCAD=0,GMRCUP=0
+"RTN","GMRCAU",95,0)
+ I $G(GMRCIFC),$P($G(^GMR(123.5,GMRCSS,"IFC")),U,3) Q 5
+"RTN","GMRCAU",96,0)
+ I 'GMRCUP,$D(^GMR(123.5,+GMRCSS,123.3,"B",GMRCUSR)) D
+"RTN","GMRCAU",97,0)
+ . S GMRCUP=2_$$FIELD(123.3)
+"RTN","GMRCAU",98,0)
+ I 'GMRCUP,GMRCUSR=$P($G(^GMR(123.5,+GMRCSS,123)),"^",8) D
+"RTN","GMRCAU",99,0)
+ . S GMRCUP=2_$$FIELD(123.08)
+"RTN","GMRCAU",100,0)
+ I 'GMRCUP,+$P($G(^GMR(123.5,GMRCSS,0)),U,6) S GMRCUP=1_$$FIELD(.06)
+"RTN","GMRCAU",101,0)
+ I $D(^GMR(123.5,+GMRCSS,123.33,"B",GMRCUSR)) S GMRCAD=3_$$FIELD(123.33)
+"RTN","GMRCAU",102,0)
+ ;
+"RTN","GMRCAU",103,0)
+ I GMRCAD,GMRCUP Q $$BOTH(GMRCAD,GMRCUP) ;admin and upd user
+"RTN","GMRCAU",104,0)
+ ;
+"RTN","GMRCAU",105,0)
+ S GMRCUPD=0
+"RTN","GMRCAU",106,0)
+ ; check service teams to notify, update teams w/o
+"RTN","GMRCAU",107,0)
+ I 'GMRCUP N NODE F NODE=123.1,123.31 D  I +GMRCUP Q
+"RTN","GMRCAU",108,0)
+ . I '$D(^GMR(123.5,+GMRCSS,NODE)) Q
+"RTN","GMRCAU",109,0)
+ . D TEAM(.GMRCUP,NODE,GMRCUSR)
+"RTN","GMRCAU",110,0)
+ ;
+"RTN","GMRCAU",111,0)
+ I GMRCAD,GMRCUP Q $$BOTH(GMRCUP,GMRCAD) ;admin and upd user
+"RTN","GMRCAU",112,0)
+ ;
+"RTN","GMRCAU",113,0)
+ I 'GMRCAD D  ;check adm teams w/o
+"RTN","GMRCAU",114,0)
+ . I '$D(^GMR(123.5,+GMRCSS,123.34)) Q
+"RTN","GMRCAU",115,0)
+ . D TEAM(.GMRCAD,123.34,GMRCUSR)
+"RTN","GMRCAU",116,0)
+ ; 
+"RTN","GMRCAU",117,0)
+ I GMRCAD,GMRCUP Q $$BOTH(GMRCUP,GMRCAD) ;admin and upd user
+"RTN","GMRCAU",118,0)
+ ;
+"RTN","GMRCAU",119,0)
+ ; check ASU user classes in field 123.35
+"RTN","GMRCAU",120,0)
+ I 'GMRCUP S GMRCUP=$$USR(GMRCSS,GMRCUSR)
+"RTN","GMRCAU",121,0)
+ ;
+"RTN","GMRCAU",122,0)
+ I GMRCAD,GMRCUP Q $$BOTH(GMRCUP,GMRCAD) ;admin and upd
+"RTN","GMRCAU",123,0)
+ ;
+"RTN","GMRCAU",124,0)
+ I 'GMRCUP I $D(^GMR(123.5,+GMRCSS,123.2)) D LOC(.GMRCUP)
+"RTN","GMRCAU",125,0)
+ ;
+"RTN","GMRCAU",126,0)
+ I GMRCAD,GMRCUP Q $$BOTH(GMRCUP,GMRCAD) ;admin and upd
+"RTN","GMRCAU",127,0)
+ I GMRCUP,'GMRCAD Q GMRCUP ;update user only
+"RTN","GMRCAU",128,0)
+ I GMRCAD,'GMRCUP Q GMRCAD ;admin user only
+"RTN","GMRCAU",129,0)
+ Q 0
+"RTN","GMRCAU",130,0)
+ ;
+"RTN","GMRCAU",131,0)
+BOTH(ADMN,UPD) ;return string with fields if testing
+"RTN","GMRCAU",132,0)
+ I $G(GMRCTST) Q "4^"_$P(ADMN,U,2)_" and "_$P(UPD,U,2)
+"RTN","GMRCAU",133,0)
+ Q 4
+"RTN","GMRCAU",134,0)
+ ;
+"RTN","GMRCAU",135,0)
+LOC(GMRCUPD) ;Check for the DUZ in the NOTIFICATION BY PT LOCATION multiple
+"RTN","GMRCAU",136,0)
+ N GMRCL,GMRCTM
+"RTN","GMRCAU",137,0)
+ S GMRCL=0 ;Check if DUZ is associated with any location/ward
+"RTN","GMRCAU",138,0)
+ F  S GMRCL=$O(^GMR(123.5,+GMRCSS,123.2,GMRCL))  Q:'GMRCL!+GMRCUPD  D  Q:+GMRCUPD
+"RTN","GMRCAU",139,0)
+ . ;Get user and/or team assigned to location
+"RTN","GMRCAU",140,0)
+ . S GMRCL(0)=$G(^GMR(123.5,+GMRCSS,123.2,+GMRCL,0))
+"RTN","GMRCAU",141,0)
+ . I $P(GMRCL(0),"^",2)=DUZ S GMRCUPD=2 Q
+"RTN","GMRCAU",142,0)
+ . I $P(GMRCL(0),"^",3) S GMRCTM=$P(GMRCL(0),"^",3) ;D CHKTM
+"RTN","GMRCAU",143,0)
+ Q
+"RTN","GMRCAU",144,0)
+ ;
+"RTN","GMRCAU",145,0)
+TEAM(TYPE,SUBSC,USER) ;Check for the DUZ in the multiple of SUBSC
+"RTN","GMRCAU",146,0)
+ N GMRCTM,GMRCHIT
+"RTN","GMRCAU",147,0)
+ S GMRCTM=""
+"RTN","GMRCAU",148,0)
+ I '$G(USER) S USER=DUZ
+"RTN","GMRCAU",149,0)
+ F  S GMRCTM=$O(^GMR(123.5,GMRCSS,SUBSC,"B",GMRCTM)) Q:'GMRCTM!+TYPE  D
+"RTN","GMRCAU",150,0)
+ . S GMRCHIT=$$CHKTM(GMRCTM,USER) Q:'GMRCHIT
+"RTN","GMRCAU",151,0)
+ . S TYPE=$S(SUBSC=123.34:3,1:2)_$$FIELD(SUBSC)
+"RTN","GMRCAU",152,0)
+ Q
+"RTN","GMRCAU",153,0)
+ ;
+"RTN","GMRCAU",154,0)
+CHKTM(TEAM,PERS) ;checks for PERS in list of users on TEAM
+"RTN","GMRCAU",155,0)
+ ;Input:  TEAM must be set to the Order Team entry number
+"RTN","GMRCAU",156,0)
+ ;Output: 1 will be returned PERS is on TEAM
+"RTN","GMRCAU",157,0)
+ N ND,GMRCLST,FOUND
+"RTN","GMRCAU",158,0)
+ S GMRCLST=""
+"RTN","GMRCAU",159,0)
+ D TEAMPROV^ORQPTQ1(.GMRCLST,TEAM)
+"RTN","GMRCAU",160,0)
+ I $P(GMRCLST(1),"^",2)="No providers found." Q 0
+"RTN","GMRCAU",161,0)
+ S ND=0
+"RTN","GMRCAU",162,0)
+ F  S ND=$O(GMRCLST(ND)) Q:ND=""  I +GMRCLST(ND)=PERS S FOUND=1 Q
+"RTN","GMRCAU",163,0)
+ Q $S($G(FOUND):1,1:0)
+"RTN","GMRCAU",164,0)
+ ;
+"RTN","GMRCAU",165,0)
+USR(SERV,USER) ; check USR classes for user
+"RTN","GMRCAU",166,0)
+ N UCLS,UPD
+"RTN","GMRCAU",167,0)
+ I '$O(^GMR(123.5,+SERV,123.35,0)) Q 0
+"RTN","GMRCAU",168,0)
+ S UCLS=0,UPD=0
+"RTN","GMRCAU",169,0)
+ F  S UCLS=$O(^GMR(123.5,+SERV,123.35,"B",UCLS)) Q:'UCLS!(+UPD)  D
+"RTN","GMRCAU",170,0)
+ . Q:'UCLS
+"RTN","GMRCAU",171,0)
+ . S UPD=$$ISA^USRLM(USER,UCLS)
+"RTN","GMRCAU",172,0)
+ . I +UPD S UPD=2_$$FIELD(123.35)
+"RTN","GMRCAU",173,0)
+ . Q
+"RTN","GMRCAU",174,0)
+ Q UPD
+"RTN","GMRCAU",175,0)
+FIELD(GMRCFLD) ;return field name where became update user
+"RTN","GMRCAU",176,0)
+ I '$G(GMRCTST) Q ""
+"RTN","GMRCAU",177,0)
+ D FIELD^DID(123.5,GMRCFLD,,"LABEL","GMRCFLD")
+"RTN","GMRCAU",178,0)
+ Q "^"_$G(GMRCFLD("LABEL"))
+"RTN","GMRCAU",179,0)
+COMPLETE(GMRCA) ;Determine if the action is a complete action (10,13,14)
+"RTN","GMRCAU",180,0)
+ S GMRCA=$G(GMRCA)
+"RTN","GMRCAU",181,0)
+ Q $S(GMRCA=13:1,GMRCA=14:1,GMRCA=10:1,1:0)
+"RTN","GMRCAU",182,0)
+ ;   10=administrative complete, 13=ADDENDUM ADDED, 14=New Note
+"RTN","GMRCAU",183,0)
+ ;
+"RTN","GMRCAU",184,0)
+RESOLUA(GMRCA) ;Determine if action has resolution info for clinician
+"RTN","GMRCAU",185,0)
+ ;Action value is based on value in ^ORD(100.01,"
+"RTN","GMRCAU",186,0)
+ ;Returns 1 for consult resolution, 0 for pending resolution
+"RTN","GMRCAU",187,0)
+ S GMRCA=$G(GMRCA)
+"RTN","GMRCAU",188,0)
+ Q $S(GMRCA=4:1,GMRCA=6:1,GMRCA=10:1,GMRCA=11:1,GMRCA=12:1,GMRCA=13:1,GMRCA=14:1,GMRCA=19:1,1:0)
+"RTN","GMRCAU",189,0)
+ ;    4=Sig Findings, 6=discontinued, 10=administrative complete
+"RTN","GMRCAU",190,0)
+ ;    11=Edit/resubmit
+"RTN","GMRCAU",191,0)
+ ;    12=Disassociate result, 13=Addendum Added, 14=New Note
+"RTN","GMRCAU",192,0)
+ ;    19=cancelled
+"RTN","GMRCAU",193,0)
+ ;
+"RTN","GMRCAU",194,0)
+RESOLUS(GMRCSTS) ;Determine status indicates the consult has a resolution
+"RTN","GMRCAU",195,0)
+ ;Status value is based on values in ^ORD(100.01,"
+"RTN","GMRCAU",196,0)
+ ;Returns 1 for consult resolution, 0 for pending resolution
+"RTN","GMRCAU",197,0)
+ S GMRCSTS=$G(GMRCSTS)
+"RTN","GMRCAU",198,0)
+ Q $S(GMRCSTS:1,GMRCSTS=2:1,GMRCSTS=13:1,1:0)
+"RTN","GMRCAU",199,0)
+ ;    1=dc,2=comp,13=canc
+"RTN","GMRCAU",200,0)
+ ;
+"RTN","GMRCAU",201,0)
+TEST ;called from GMRC UPDATE AUTHORITY
+"RTN","GMRCAU",202,0)
+ ; determines how a user gets update authority for a service 
+"RTN","GMRCAU",203,0)
+ W !
+"RTN","GMRCAU",204,0)
+ N GMRCSRV,GMRCUSR,UPD,GMRCDG,GMRC1
+"RTN","GMRCAU",205,0)
+ N DIR,DIROUT,DIRUT,DUOUT,DTOUT,X,Y
+"RTN","GMRCAU",206,0)
+ S DIR(0)="PO^123.5:EM",DIR("A")="Select Consult Service"
+"RTN","GMRCAU",207,0)
+ S DIR("?")="Choose the consult service to check update status of user"
+"RTN","GMRCAU",208,0)
+ S DIR("??")="^D TESTHELP^GMRCAU(""ALL SERVICES"")" D ^DIR
+"RTN","GMRCAU",209,0)
+ I $D(DIRUT) Q
+"RTN","GMRCAU",210,0)
+ S GMRCSRV=+Y
+"RTN","GMRCAU",211,0)
+ N DIR
+"RTN","GMRCAU",212,0)
+ S DIR(0)="PO^200:EM",DIR("A")="Choose user to check for update status"
+"RTN","GMRCAU",213,0)
+ D ^DIR I $D(DIRUT) Q
+"RTN","GMRCAU",214,0)
+ S GMRCUSR=+Y
+"RTN","GMRCAU",215,0)
+ S UPD=$$VALID(GMRCSRV,,GMRCUSR,1)
+"RTN","GMRCAU",216,0)
+ I +UPD=0 W !!,"This user has no update authority"
+"RTN","GMRCAU",217,0)
+ I +UPD D
+"RTN","GMRCAU",218,0)
+ . I +UPD=2 W !!,"This user is an update user for: ",$P(UPD,U,3)
+"RTN","GMRCAU",219,0)
+ . I +UPD=3 W !!,"This user is an administrative user for: ",$P(UPD,U,3)
+"RTN","GMRCAU",220,0)
+ . I +UPD=4 D
+"RTN","GMRCAU",221,0)
+ .. W !!,"This user is both an administrative and update user"
+"RTN","GMRCAU",222,0)
+ .. W " for: ",!,$P(UPD,U,3)
+"RTN","GMRCAU",223,0)
+ . W !,"via the ",$P(UPD,U,2)," field",$S(+UPD=4:"(s).",1:".")
+"RTN","GMRCAU",224,0)
+ . W ! I $L($P(UPD,U,3)) D
+"RTN","GMRCAU",225,0)
+ .. I $P(UPD,U,3)'=$P(^GMR(123.5,+GMRCSRV,0),U) D HIER^GMRCT($P(UPD,U,3))
+"RTN","GMRCAU",226,0)
+ W !!
+"RTN","GMRCAU",227,0)
+ K GMRCSRV,GMRCUSR,UPD
+"RTN","GMRCAU",228,0)
+ K DIR,DIROUT,DIRUT,DUOUT,DTOUT,X,Y
+"RTN","GMRCAU",229,0)
+ G TEST
+"RTN","GMRCAU",230,0)
+TESTHELP(GMRCSVNM) ;wrapper for LISTSRV^GMRCASV
+"RTN","GMRCAU",231,0)
+ N DIR,GMRC1,GMRCDG
+"RTN","GMRCAU",232,0)
+ D LISTSRV^GMRCASV
+"RTN","GMRCAU",233,0)
+ Q
+"RTN","GMRCAU",234,0)
+TSTINTRO ;entry action of GMRC UPDATE AUTHORITY option
+"RTN","GMRCAU",235,0)
+ W !!,"This option will allow you to check a user's update authority for any given"
+"RTN","GMRCAU",236,0)
+ W !,"service in the consults hierarchy.  If the PROCESS PARENTS FOR UPDATES field"
+"RTN","GMRCAU",237,0)
+ W !,"is set to YES, all ancestors of the selected service will be checked."
+"RTN","GMRCAU",238,0)
+ W !,"The type of update authority and the service to which they are assigned will"
+"RTN","GMRCAU",239,0)
+ W !,"be displayed.",!!
+"RTN","GMRCAU",240,0)
+ Q
+"RTN","GMRCEDT2")
+0^4^B18295173^B18295173
+"RTN","GMRCEDT2",1,0)
+GMRCEDT2 ;SLC/JFR,DCM - RESUBMIT A CANCELLED CONSULT ;4/23/09  12:09
+"RTN","GMRCEDT2",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**1,5,12,15,22,33,66,46**;DEC 27, 1997;Build 23
+"RTN","GMRCEDT2",3,0)
+ ;
+"RTN","GMRCEDT2",4,0)
+ ;ICRs in use: #2053 (DIE), #2056 (GET1^DIQ), #872 (ORD(101))
+"RTN","GMRCEDT2",5,0)
+ ;
+"RTN","GMRCEDT2",6,0)
+EN(GMRCO,COMNO) ;entry point into the routine
+"RTN","GMRCEDT2",7,0)
+ ;COMNO=CMDA from ^GMRCEDT2=comments array IEN from ^GMR(123,IEN,40,
+"RTN","GMRCEDT2",8,0)
+ ;GMRCO=IEN of the consult from file 123
+"RTN","GMRCEDT2",9,0)
+ I $S($P(^GMR(123,GMRCO,0),"^",12)'=13:1,$D(GMRCRSUB):1,1:0) D  Q
+"RTN","GMRCEDT2",10,0)
+ .S GMRCMSG="***     Consult Has Already Been Resubmitted   ***"
+"RTN","GMRCEDT2",11,0)
+ .S GMRCMSG(1)="***  No Further Action Is Required Or Allowed ***"
+"RTN","GMRCEDT2",12,0)
+ .D EXAC^GMRCADC(.GMRCMSG)
+"RTN","GMRCEDT2",13,0)
+ .S:'$D(GMRCRSUB) GMRCRSUB=1
+"RTN","GMRCEDT2",14,0)
+ .Q
+"RTN","GMRCEDT2",15,0)
+ N MSG S MSG=$$EDRESOK(GMRCO)
+"RTN","GMRCEDT2",16,0)
+ I '+MSG D EXAC^GMRCADC($P(MSG,U,2)) Q
+"RTN","GMRCEDT2",17,0)
+ I '$$PDOK^GMRCEDT4(GMRCO) D  Q
+"RTN","GMRCEDT2",18,0)
+ . D EXAC^GMRCADC("Can't resubmit!")
+"RTN","GMRCEDT2",19,0)
+ . S GMRCRSUB=1
+"RTN","GMRCEDT2",20,0)
+ . Q
+"RTN","GMRCEDT2",21,0)
+ I '$D(GMRCGUIF) W !,"Resubmitting Consult ... One moment please ..."
+"RTN","GMRCEDT2",22,0)
+ K ^TMP("GMRCSUB",$J) S ^TMP("GMRCSUB",$J)=0
+"RTN","GMRCEDT2",23,0)
+ I $D(GMRCEDT(1)) S ^TMP("GMRCSUB",$J,1)="GMRCSS^"_+GMRCEDT(1)
+"RTN","GMRCEDT2",24,0)
+ I $D(GMRCED(1)) D
+"RTN","GMRCEDT2",25,0)
+ . I $P(GMRCED(1),U)=$P(^GMR(123,+GMRCO,0),U,8) K GMRCED(1) Q
+"RTN","GMRCEDT2",26,0)
+ . S ^TMP("GMRCSUB",$J,2)="GMRCPROC^"_+GMRCED(1)_";GMR(123.3,"
+"RTN","GMRCEDT2",27,0)
+ I $D(GMRCED(2)) D
+"RTN","GMRCEDT2",28,0)
+ . I $P(GMRCED(2),U)=$P(^GMR(123,+GMRCO,0),U,18) K GMRCED(2) Q
+"RTN","GMRCEDT2",29,0)
+ . S ^TMP("GMRCSUB",$J,3)="GMRCION^"_$P(GMRCED(2),U)
+"RTN","GMRCEDT2",30,0)
+ I $D(GMRCED(3)) D
+"RTN","GMRCEDT2",31,0)
+ . I $P(GMRCED(3),U)=$P(^GMR(123,+GMRCO,0),U,9) K GMRCED(3) Q
+"RTN","GMRCEDT2",32,0)
+ . S ^TMP("GMRCSUB",$J,4)="GMRCURG^"_$P(GMRCED(3),U)
+"RTN","GMRCEDT2",33,0)
+ I $D(GMRCED(4)) D
+"RTN","GMRCEDT2",34,0)
+ . I $P(GMRCED(4),U)=$P(^GMR(123,+GMRCO,0),U,10) K GMRCED(4) Q
+"RTN","GMRCEDT2",35,0)
+ . S ^TMP("GMRCSUB",$J,5)="GMRCPL^"_$P(GMRCED(4),U)
+"RTN","GMRCEDT2",36,0)
+ I $D(GMRCED(5)) D  ;wat/66 add early date
+"RTN","GMRCEDT2",37,0)
+ . I $P(GMRCED(5),U)=$P(^GMR(123,+GMRCO,0),U,24) K GMRCED(5) Q
+"RTN","GMRCEDT2",38,0)
+ . S ^TMP("GMRCSUB",$J,6)="GMRCERDT^"_$P(GMRCED(5),U)
+"RTN","GMRCEDT2",39,0)
+ I $D(GMRCED(6)) D
+"RTN","GMRCEDT2",40,0)
+ . I $P(GMRCED(6),U)=$P(^GMR(123,+GMRCO,0),U,11) K GMRCED(6) Q
+"RTN","GMRCEDT2",41,0)
+ . I '$L($P(GMRCED(6),U)) S $P(GMRCED(6),U)="@"
+"RTN","GMRCEDT2",42,0)
+ . S ^TMP("GMRCSUB",$J,7)="GMRCATN^"_$P(GMRCED(6),U)
+"RTN","GMRCEDT2",43,0)
+ I $D(GMRCED(7)) D
+"RTN","GMRCEDT2",44,0)
+ . I GMRCED(7)=$G(^GMR(123,+GMRCO,30)) K GMRCED(7) Q
+"RTN","GMRCEDT2",45,0)
+ . I $P(GMRCED(7),U)_" ("_$P(GMRCED(7),U,2)_")"=$G(^GMR(123,GMRCO,30)) K GMRCED(7) Q
+"RTN","GMRCEDT2",46,0)
+ . I '$L($P(GMRCED(7),U)) S $P(GMRCED(7),U,1,2)="@"
+"RTN","GMRCEDT2",47,0)
+ . I $L($P(GMRCED(7),U,2)),$P(GMRCED(7),U,2)'="@" D
+"RTN","GMRCEDT2",48,0)
+ .. S $P(GMRCED(7),U)=$P(GMRCED(7),U)_" ("_$P(GMRCED(7),U,2)_")"
+"RTN","GMRCEDT2",49,0)
+ . S ^TMP("GMRCSUB",$J,8)="GMRCDIAG^"_GMRCED(7)
+"RTN","GMRCEDT2",50,0)
+ I $D(^TMP("GMRCED",$J,20)) S ^TMP("GMRCSUB",$J,20)="GMRCRFQ^" D
+"RTN","GMRCEDT2",51,0)
+ . N ND S ND=0
+"RTN","GMRCEDT2",52,0)
+ . F  S ND=$O(^TMP("GMRCED",$J,20,ND)) Q:'ND  D
+"RTN","GMRCEDT2",53,0)
+ .. S ^TMP("GMRCSUB",$J,20,ND)=^TMP("GMRCED",$J,20,ND,0)
+"RTN","GMRCEDT2",54,0)
+ I $D(^TMP("GMRCED",$J,40)) S ^TMP("GMRCSUB",$J,40)="COMMENT^" D
+"RTN","GMRCEDT2",55,0)
+ . N ND S ND=0
+"RTN","GMRCEDT2",56,0)
+ . F  S ND=$O(^TMP("GMRCED",$J,40,ND)) Q:'ND  D
+"RTN","GMRCEDT2",57,0)
+ .. S ^TMP("GMRCSUB",$J,40,ND)=^TMP("GMRCED",$J,40,ND,0)
+"RTN","GMRCEDT2",58,0)
+ D FILE^GMRCGUIC(+GMRCO,$NAME(^TMP("GMRCSUB",$J)),1)
+"RTN","GMRCEDT2",59,0)
+ N GMRCADUZ S GMRCADUZ=""
+"RTN","GMRCEDT2",60,0)
+ S DFN=$P(^GMR(123,+GMRCO,0),"^",2),GMRCPROV=$P(^(0),"^",14)
+"RTN","GMRCEDT2",61,0)
+ S GMRCTYPE=$P(^GMR(123,+GMRCO,0),U,17),GMRCTRLC="XX",VISIT="",RMBED=""
+"RTN","GMRCEDT2",62,0)
+ S DIE="^GMR(123,",DA=+GMRCO,DR="8////^S X=5;9////^S X=11" D ^DIE
+"RTN","GMRCEDT2",63,0)
+ K DIE,DA,DR
+"RTN","GMRCEDT2",64,0)
+ S GMRCRSUB=1
+"RTN","GMRCEDT2",65,0)
+ S GMRCURG=$P(^GMR(123,+GMRCO,0),"^",9)
+"RTN","GMRCEDT2",66,0)
+ I +$P(^GMR(123,+GMRCO,0),"^",11) S GMRCADUZ($P(^(0),"^",11))=""
+"RTN","GMRCEDT2",67,0)
+ S GMRCSVC=$P(^GMR(123,+GMRCO,0),"^",5)
+"RTN","GMRCEDT2",68,0)
+ I +GMRCSVC D
+"RTN","GMRCEDT2",69,0)
+ . D EN^GMRCT(GMRCSVC)
+"RTN","GMRCEDT2",70,0)
+ S GMRCORTX="Resubmitted consult "_$$ORTX^GMRCAU(+GMRCO)_$S(+GMRCURG:" ("_$P(^ORD(101,+GMRCURG,0),"^",2)_")",1:"")
+"RTN","GMRCEDT2",71,0)
+ K GMRCFL,GMRCPROV,GMRCTYPE,GMRCTRLC,VISIT,RMBED,GMRCOM,GMRCURG
+"RTN","GMRCEDT2",72,0)
+ K GMRCSVC,GMRCORTX
+"RTN","GMRCEDT2",73,0)
+ Q
+"RTN","GMRCEDT2",74,0)
+EDRESOK(GMRCDA) ;check cslt or proc to see if still resubmittable
+"RTN","GMRCEDT2",75,0)
+ ; if procedure is inactive or no services, not resubmittable
+"RTN","GMRCEDT2",76,0)
+ ; if service is grouper or disabled, not resubmittable
+"RTN","GMRCEDT2",77,0)
+ N MSG,GMRC
+"RTN","GMRCEDT2",78,0)
+ Q:'$D(^GMR(123,+$G(GMRCDA),0)) "0^Invalid Consult Number"
+"RTN","GMRCEDT2",79,0)
+ I $P($G(^GMR(123,+GMRCDA,12)),U,5)="F" D  Q MSG
+"RTN","GMRCEDT2",80,0)
+ . S MSG="0^This inter-facility cconsult may only be resubmitted by the"
+"RTN","GMRCEDT2",81,0)
+ . S MSG=MSG_" ordering facility."
+"RTN","GMRCEDT2",82,0)
+ S GMRC(0)=^GMR(123,+GMRCDA,0)
+"RTN","GMRCEDT2",83,0)
+ I '$P(GMRC(0),U,8) D  Q MSG
+"RTN","GMRCEDT2",84,0)
+ . I "19"[+$P(^GMR(123.5,+$P(GMRC(0),U,5),0),U,2) D  Q
+"RTN","GMRCEDT2",85,0)
+ .. S MSG="0^The service for this Consult is no longer orderable."
+"RTN","GMRCEDT2",86,0)
+ . S MSG=1
+"RTN","GMRCEDT2",87,0)
+ S MSG=1
+"RTN","GMRCEDT2",88,0)
+ I "19"[+$P(^GMR(123.5,+$P(GMRC(0),U,5),0),U,2) S MSG=0
+"RTN","GMRCEDT2",89,0)
+ I '$L($$GET1^DIQ(123.3,+$P(GMRC(0),U,8),.01)) S MSG=0
+"RTN","GMRCEDT2",90,0)
+ I +$$GET1^DIQ(123.3,+$P(GMRC(0),U,8),.02) S MSG=0
+"RTN","GMRCEDT2",91,0)
+ I '$D(^GMR(123.3,+$P(GMRC(0),U,8),2,"B",+$P(GMRC(0),U,5))) S MSG=0
+"RTN","GMRCEDT2",92,0)
+ I MSG=0 D
+"RTN","GMRCEDT2",93,0)
+ . S MSG=MSG_"^This procedure may no longer be ordered or the service "
+"RTN","GMRCEDT2",94,0)
+ . S MSG=MSG_"may no longer perform it."
+"RTN","GMRCEDT2",95,0)
+ Q MSG
+"RTN","GMRCGUIB")
+0^5^B50120851^B44471877
+"RTN","GMRCGUIB",1,0)
+GMRCGUIB ;SLC/DCM,JFR,MA - GUI actions for consults ;8/19/03 07:31
+"RTN","GMRCGUIB",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**4,12,18,20,17,22,29,30,35,45,53,55,64,46**;DEC 27, 1997;Build 23
+"RTN","GMRCGUIB",3,0)
+ ; This routine invokes IA #2980
+"RTN","GMRCGUIB",4,0)
+ ;
+"RTN","GMRCGUIB",5,0)
+SETDA() ;set DA of where audit actions are to be filed
+"RTN","GMRCGUIB",6,0)
+ S:'$D(^GMR(123,+GMRCO,40,0)) ^GMR(123,GMRCO,40,0)="^123.02DA^^"
+"RTN","GMRCGUIB",7,0)
+ S DA=$S($P(^GMR(123,+GMRCO,40,0),"^",3):$P(^(0),"^",3)+1,1:1)
+"RTN","GMRCGUIB",8,0)
+ S $P(^GMR(123,+GMRCO,40,0),"^",3,4)=DA_"^"_DA
+"RTN","GMRCGUIB",9,0)
+ Q DA
+"RTN","GMRCGUIB",10,0)
+REASON(GMRCFN,GMRCRQ,GMRCDT) ;Load the reason for the request into ^GMR(123,GMRCO,20
+"RTN","GMRCGUIB",11,0)
+ ;GMRCFN=File 123 IFN; GMRCRQ=Array containing Reason For Request
+"RTN","GMRCGUIB",12,0)
+ ;GMRCDT=Date time of entry
+"RTN","GMRCGUIB",13,0)
+ S ^GMR(123,GMRCFN,20,0)="^^^"_GMRCDT_"^"
+"RTN","GMRCGUIB",14,0)
+ S L=0,LN=1 F  S L=$O(GMRCRQ(L)) Q:L=""  S ^GMR(123,GMRCFN,20,LN,0)=GMRCRQ(L),LN=LN+1
+"RTN","GMRCGUIB",15,0)
+ S LN=LN-1,$P(^GMR(123,GMRCFN,20,0),"^",3)=LN
+"RTN","GMRCGUIB",16,0)
+ K LN,L
+"RTN","GMRCGUIB",17,0)
+ Q
+"RTN","GMRCGUIB",18,0)
+SETCOM(COMMENT,WHO) ;Set comment array into tracking actions
+"RTN","GMRCGUIB",19,0)
+ N GMRCNOW,DR,DIE
+"RTN","GMRCGUIB",20,0)
+ S GMRCNOW=$$NOW^XLFDT
+"RTN","GMRCGUIB",21,0)
+ I $P($G(^GMR(123,+GMRCO,0)),"^",11)=$G(GMRCPA) S GMRCPA=""
+"RTN","GMRCGUIB",22,0)
+ S DIE="^GMR(123,GMRCO,40,",DA(1)=GMRCO,DR=".01////^S X=GMRCNOW;1////^S X=GMRCA;2////^S X=GMRCAD;3////^S X=$G(GMRCORNP);4////^S X=$S($G(WHO):WHO,1:DUZ);6////^S X=$G(GMRCFR);8////^S X=$G(GMRCFF);7////^S X=$G(GMRCPA)"
+"RTN","GMRCGUIB",23,0)
+ D ^DIE
+"RTN","GMRCGUIB",24,0)
+ S ^GMR(123,GMRCO,40,DA,1,0)="^^^^"_GMRCAD_"^"
+"RTN","GMRCGUIB",25,0)
+ S (GMRCND,GMRCND1)=0 F  S GMRCND1=$O(COMMENT(GMRCND1)) Q:GMRCND1=""  S GMRCND=GMRCND+1,^GMR(123,GMRCO,40,DA,1,GMRCND,0)=COMMENT(GMRCND)
+"RTN","GMRCGUIB",26,0)
+ S $P(^GMR(123,GMRCO,40,DA,1,0),"^",3)=GMRCND,$P(^(0),"^",4)=GMRCND,^GMR(123,GMRCO,40,"B",GMRCNOW,DA)=""
+"RTN","GMRCGUIB",27,0)
+ ;
+"RTN","GMRCGUIB",28,0)
+ ; if an IFC, call event handler to generate a msg to remote site
+"RTN","GMRCGUIB",29,0)
+ I $D(^GMR(123,+GMRCO,12)),$D(^(40,DA)) D TRIGR^GMRCIEVT(GMRCO,DA)
+"RTN","GMRCGUIB",30,0)
+ ;
+"RTN","GMRCGUIB",31,0)
+ K GMRCND,GMRCND1
+"RTN","GMRCGUIB",32,0)
+ Q
+"RTN","GMRCGUIB",33,0)
+CMT(GMRCO,GMRCOM,GMRCADUZ,GMRCWHN,GMRCWHO) ;add comment to consult 
+"RTN","GMRCGUIB",34,0)
+ ; GMRCO = IEN from file 123
+"RTN","GMRCGUIB",35,0)
+ ; GMRCOM = array of comments in format GMRCOM(1)="xxxx", GMRCOM(2)="xxx"
+"RTN","GMRCGUIB",36,0)
+ ; GMRCADUZ = array of alert recipients as GMRCADUZ(DUZ)="" (optional)
+"RTN","GMRCGUIB",37,0)
+ ; GMRCWHO = IEN from file 200 who's responsible activity (optional)
+"RTN","GMRCGUIB",38,0)
+ ; GMRCWHN = date time of activity in FM format
+"RTN","GMRCGUIB",39,0)
+ ;
+"RTN","GMRCGUIB",40,0)
+ N DA,GMRCA,GMRCAD,GMRCORTX,GMRCDFN,GMRCTM,GMRCRP,GMRCUPD
+"RTN","GMRCGUIB",41,0)
+ S DA=$$SETDA ; get next activity tracking entry
+"RTN","GMRCGUIB",42,0)
+ S GMRCA=20,GMRCAD=GMRCWHN S:$G(GMRCWHO) GMRCORNP=GMRCWHO
+"RTN","GMRCGUIB",43,0)
+ D SETCOM(.GMRCOM,$G(GMRCWHO))
+"RTN","GMRCGUIB",44,0)
+ D  ;update LAST ACTION field even though no status change
+"RTN","GMRCGUIB",45,0)
+ . N GMRCDR,GMRCSTS
+"RTN","GMRCGUIB",46,0)
+ . S GMRCSTS="",GMRCDR="9////20"
+"RTN","GMRCGUIB",47,0)
+ . D STATUS^GMRCP
+"RTN","GMRCGUIB",48,0)
+ S GMRCDFN=$P(^GMR(123,+GMRCO,0),"^",2)
+"RTN","GMRCGUIB",49,0)
+ S GMRCORTX="Comment Added to Consult "
+"RTN","GMRCGUIB",50,0)
+ I $P($G(^GMR(123,GMRCO,12)),U,5)="P" D
+"RTN","GMRCGUIB",51,0)
+ . S GMRCORTX="Comment Added to remote consult "
+"RTN","GMRCGUIB",52,0)
+ S GMRCORTX=GMRCORTX_$$ORTX^GMRCAU(+GMRCO)
+"RTN","GMRCGUIB",53,0)
+ S GMRCRP=+$P(^GMR(123,GMRCO,0),U,14)
+"RTN","GMRCGUIB",54,0)
+ S GMRCUPD=$$VALID^GMRCAU($P(^GMR(123,+GMRCO,0),U,5),GMRCO,DUZ)
+"RTN","GMRCGUIB",55,0)
+ I GMRCRP=DUZ D  ;alert team if ord. prov. takes the action
+"RTN","GMRCGUIB",56,0)
+ . S GMRCTM=1
+"RTN","GMRCGUIB",57,0)
+ I GMRCUPD>1,GMRCRP'=DUZ D  ; alert ord. prov if update users takes action
+"RTN","GMRCGUIB",58,0)
+ . S GMRCADUZ(GMRCRP)=""
+"RTN","GMRCGUIB",59,0)
+ I '$G(GMRCTM),GMRCUPD<2 D  ;alert both if not ord. prov or update user
+"RTN","GMRCGUIB",60,0)
+ . S GMRCTM=1,GMRCADUZ(GMRCRP)=""
+"RTN","GMRCGUIB",61,0)
+ D MSG^GMRCP(GMRCDFN,GMRCORTX,+GMRCO,63,.GMRCADUZ,$G(GMRCTM))
+"RTN","GMRCGUIB",62,0)
+ Q
+"RTN","GMRCGUIB",63,0)
+SFILE(GMRCO,GMRCA,GMRCSF,GMRCORNP,GMRCDUZ,GMRCOM,GMRCALF,GMRCATO,GMRCAD) ;Process various file update functions from the GUI for a consult
+"RTN","GMRCGUIB",64,0)
+ ; ADMIN COMPLETE or SIGNIFICANT FINDINGS
+"RTN","GMRCGUIB",65,0)
+ ;Input variables:
+"RTN","GMRCGUIB",66,0)
+ ;GMRCO=File 123 IEN of the consult record
+"RTN","GMRCGUIB",67,0)
+ ;GMRCA=pointer to REQUEST ACTION TYPES (#123.1) 10=complete, 4=Sig find.
+"RTN","GMRCGUIB",68,0)
+ ;GMRCSF=Significant Findings flag: 'Y'= significant finding
+"RTN","GMRCGUIB",69,0)
+ ;                                : 'N'= no significant finding
+"RTN","GMRCGUIB",70,0)
+ ;                                : 'U'=unknown significant finding
+"RTN","GMRCGUIB",71,0)
+ ;GMRCORNP=Provider Responsible for action
+"RTN","GMRCGUIB",72,0)
+ ;GMRCDUZ=Person actually doing the action
+"RTN","GMRCGUIB",73,0)
+ ;GMRCOM=An array of comments by reference ARRAY(1)="xxx",ARRAY(2)="xxx"
+"RTN","GMRCGUIB",74,0)
+ ;GMRCALF=Flag to signal that alerts are to be sent; 'N'=NO, 'Y'=YES
+"RTN","GMRCGUIB",75,0)
+ ;GMRCATO=Who alerts are to be sent to; a comma delimited string of DUZ's
+"RTN","GMRCGUIB",76,0)
+ ;GMRCAD =FM date/time of activity
+"RTN","GMRCGUIB",77,0)
+ ;
+"RTN","GMRCGUIB",78,0)
+ ;Output:
+"RTN","GMRCGUIB",79,0)
+ ; GMRCERR=Error Flag: 0 if no error, 1 if error occurred
+"RTN","GMRCGUIB",80,0)
+ ; GMRCERMS - Error message or null
+"RTN","GMRCGUIB",81,0)
+ ;    returned as GMRCERR^GMRCERMS
+"RTN","GMRCGUIB",82,0)
+ ;
+"RTN","GMRCGUIB",83,0)
+ N GMRCERR,GMRCERMS,GMRCTM
+"RTN","GMRCGUIB",84,0)
+ L +^GMR(123,GMRCO):5 I '$T S GMRCERR=1,GMRCERMS="Record Locked. File Update Not Accomplished." Q GMRCERR_"^"_GMRCERMS
+"RTN","GMRCGUIB",85,0)
+ S GMRCERR=0,GMRCTM=0,GMRCERMS="",DR="",GMRCORTX=""
+"RTN","GMRCGUIB",86,0)
+ N GMRCADUZ S GMRCADUZ=""
+"RTN","GMRCGUIB",87,0)
+ S GMRCNOW=$$NOW^XLFDT,GMRCSTS=$P(^GMR(123,+GMRCO,0),"^",12),GMRCDFN=$P(^(0),"^",2)
+"RTN","GMRCGUIB",88,0)
+ I '$G(GMRCDUZ) S GMRCDUZ=DUZ
+"RTN","GMRCGUIB",89,0)
+ I '$G(GMRCAD) S GMRCAD=GMRCNOW
+"RTN","GMRCGUIB",90,0)
+ ;Insure comment array contains text for Complete action.
+"RTN","GMRCGUIB",91,0)
+ I GMRCA=10 D  I GMRCERR=1 S GMRCERMS="Comment field must contain a text value!" Q GMRCERR_"^"_GMRCERMS
+"RTN","GMRCGUIB",92,0)
+ . S GMRCERR=1
+"RTN","GMRCGUIB",93,0)
+ . I '$D(GMRCOM) Q
+"RTN","GMRCGUIB",94,0)
+ . N GMRCOM1 S GMRCOM1=""
+"RTN","GMRCGUIB",95,0)
+ . F  S GMRCOM1=$O(GMRCOM(GMRCOM1)) Q:(GMRCOM1=""!(GMRCERR=0))  D
+"RTN","GMRCGUIB",96,0)
+ .. I $TR($G(GMRCOM(GMRCOM1))," ","")'="" S GMRCERR=0 Q
+"RTN","GMRCGUIB",97,0)
+ I +$G(GMRCA),GMRCA=10 D
+"RTN","GMRCGUIB",98,0)
+ .S GMRCSF=$G(GMRCSF,"")
+"RTN","GMRCGUIB",99,0)
+ .S GMRCSTS=2
+"RTN","GMRCGUIB",100,0)
+ .S DR="8////^S X=GMRCSTS;9////^S X=GMRCA;15////^S X=GMRCSF"
+"RTN","GMRCGUIB",101,0)
+ .S GMRCORTX="Completed Consult "_$$ORTX^GMRCAU(+GMRCO)_$S(GMRCSF="Y":" with Sig Findings",GMRCSF="N":" with no Sig Findings",1:"")
+"RTN","GMRCGUIB",102,0)
+ .I $P($G(^GMR(123,+GMRCO,0)),U,14),$P($G(^GMR(123,+GMRCO,0)),U,14)'=DUZ S GMRCADUZ($P($G(^(0)),U,14))=""
+"RTN","GMRCGUIB",103,0)
+ .Q
+"RTN","GMRCGUIB",104,0)
+ I $G(GMRCALF)=1 D
+"RTN","GMRCGUIB",105,0)
+ .N I
+"RTN","GMRCGUIB",106,0)
+ .F I=1:1  S X=$P(GMRCATO,";",I) Q:X=""  S GMRCADUZ(X)=""
+"RTN","GMRCGUIB",107,0)
+ .Q
+"RTN","GMRCGUIB",108,0)
+ I $L(GMRCA),GMRCA=4 S DR=DR_$S($L(DR):";",1:"")_"9////^S X=GMRCA;15////^S X=GMRCSF" D
+"RTN","GMRCGUIB",109,0)
+ .S GMRCORTX=$S(GMRCSF="Y":"Sig Findings ",GMRCSF="N":"No Sig Findings ",1:"Unknown Sig Findings ")_"for consult "_$$ORTX^GMRCAU(GMRCO)
+"RTN","GMRCGUIB",110,0)
+ .I $P($G(^GMR(123,+GMRCO,0)),U,14),$P($G(^GMR(123,+GMRCO,0)),U,14)'=DUZ S GMRCADUZ($P($G(^(0)),U,14))=""
+"RTN","GMRCGUIB",111,0)
+ .S GMRCUPD=$$VALID^GMRCAU($P(^GMR(123,+GMRCO,0),U,5),GMRCO,DUZ)
+"RTN","GMRCGUIB",112,0)
+ .I +GMRCUPD<2 S GMRCTM=1
+"RTN","GMRCGUIB",113,0)
+ .I +GMRCUPD>1,+$P($G(^GMR(123,+GMRCO,0)),U,14)=DUZ S GMRCTM=1
+"RTN","GMRCGUIB",114,0)
+ .Q
+"RTN","GMRCGUIB",115,0)
+ I $L(DR) S DIE="^GMR(123,",DA=GMRCO D ^DIE K DIE,DR
+"RTN","GMRCGUIB",116,0)
+ I '$O(GMRCOM(0)) D AUDIT^GMRCP
+"RTN","GMRCGUIB",117,0)
+ I $D(GMRCOM),$O(GMRCOM(0)) D
+"RTN","GMRCGUIB",118,0)
+ .N DA
+"RTN","GMRCGUIB",119,0)
+ .S DA=$$SETDA()
+"RTN","GMRCGUIB",120,0)
+ .D SETCOM(.GMRCOM,GMRCDUZ)
+"RTN","GMRCGUIB",121,0)
+ .Q
+"RTN","GMRCGUIB",122,0)
+ L -^GMR(123,GMRCO)
+"RTN","GMRCGUIB",123,0)
+ ;
+"RTN","GMRCGUIB",124,0)
+ D MSG^GMRCP(GMRCDFN,GMRCORTX,+GMRCO,$S(GMRCA=20:63,1:23),.GMRCADUZ,GMRCTM)
+"RTN","GMRCGUIB",125,0)
+ ;
+"RTN","GMRCGUIB",126,0)
+ I $S(GMRCA=10:1,(GMRCA=4&($P(^GMR(123,GMRCO,0),U,12)=2)):1,1:0) D
+"RTN","GMRCGUIB",127,0)
+ . D EN^GMRCHL7($P(^GMR(123,GMRCO,0),"^",2),GMRCO,$G(GMRCTYPE),$G(GMRCRB),"RE",GMRCORNP,$G(GMRCVSIT),.GMRCOM,,GMRCAD)
+"RTN","GMRCGUIB",128,0)
+ K DIE,DR,DA,GMRCDT,GMRCNOW,GMRCAD,GMRCORNP,GMRCDUZ,GMRCRSLT,GMRCSTS,GMRCADUZ,GMRCORTX,GMRCDFN
+"RTN","GMRCGUIB",129,0)
+ Q GMRCERR_"^"_GMRCERMS
+"RTN","GMRCGUIB",130,0)
+ ;
+"RTN","GMRCGUIB",131,0)
+SCH(GMRCO,GMRCORNP,GMRCAD,GMRCADUZ,GMRCMT) ;schedule a consult API
+"RTN","GMRCGUIB",132,0)
+ ; Input variables:
+"RTN","GMRCGUIB",133,0)
+ ;GMRCO - The internal file number of the consult from File 123
+"RTN","GMRCGUIB",134,0)
+ ;GMRCORNP - Name of the person who actually 'Received' the consult 
+"RTN","GMRCGUIB",135,0)
+ ;GMRCAD - Actual date time that consult was received into the service.
+"RTN","GMRCGUIB",136,0)
+ ;GMRCADUZ - array of alert recipients as chosen by user (by reference)
+"RTN","GMRCGUIB",137,0)
+ ;   ARRAY(DUZ)="" 
+"RTN","GMRCGUIB",138,0)
+ ;GMRCMT - array of comments if entered (by reference)
+"RTN","GMRCGUIB",139,0)
+ ;   ARRAY(1)="FIRST LINE OF COMMENT"
+"RTN","GMRCGUIB",140,0)
+ ;   ARRAY(2)="SECOND LINE OF COMMENT"
+"RTN","GMRCGUIB",141,0)
+ ;
+"RTN","GMRCGUIB",142,0)
+ ;Output:
+"RTN","GMRCGUIB",143,0)
+ ;GMRCERR - Error Condition Code: 0 = NO error, 1=error
+"RTN","GMRCGUIB",144,0)
+ ;GMRCERMS - Error message or null
+"RTN","GMRCGUIB",145,0)
+ ;  returned as GMRCERR^GMRCERMS
+"RTN","GMRCGUIB",146,0)
+        ;
+"RTN","GMRCGUIB",147,0)
+ N DFN,GMRCSTS,GMRCNOW,GMRCERR,GMRCERMS
+"RTN","GMRCGUIB",148,0)
+ S GMRCERR=0,GMRCERMS="",GMRCNOW=$$NOW^XLFDT
+"RTN","GMRCGUIB",149,0)
+ S:$G(GMRCAD)="" GMRCAD=GMRCNOW
+"RTN","GMRCGUIB",150,0)
+ S:'$G(GMRCDUZ) GMRCDUZ=DUZ
+"RTN","GMRCGUIB",151,0)
+ S DFN=$P($G(^GMR(123,GMRCO,0)),"^",2) I DFN="" D  Q GMRCERR_"^"_GMRCERMS
+"RTN","GMRCGUIB",152,0)
+ . S GMRCERR="1",GMRCERMS="Not A Valid Consult - File Not Found."
+"RTN","GMRCGUIB",153,0)
+ . D EXIT^GMRCGUIA
+"RTN","GMRCGUIB",154,0)
+ S GMRCSTS=8,GMRCA=8
+"RTN","GMRCGUIB",155,0)
+ D STATUS^GMRCP I $D(GMRCQUT) D EXIT^GMRCGUIA Q GMRCERR_"^"_GMRCERMS
+"RTN","GMRCGUIB",156,0)
+ I '$O(GMRCMT(0)) D AUDIT^GMRCP
+"RTN","GMRCGUIB",157,0)
+ I $O(GMRCMT(0)) D
+"RTN","GMRCGUIB",158,0)
+ . S DA=$$SETDA
+"RTN","GMRCGUIB",159,0)
+ . D SETCOM(.GMRCMT,GMRCDUZ)
+"RTN","GMRCGUIB",160,0)
+ D EN^GMRCHL7(DFN,GMRCO,"","","SC",GMRCORNP,"","","",GMRCAD)
+"RTN","GMRCGUIB",161,0)
+ D  ;send alerts
+"RTN","GMRCGUIB",162,0)
+ . N GMRCUPD,GMRCTM,TXT
+"RTN","GMRCGUIB",163,0)
+ . S TXT="Scheduled Consult: "_$$ORTX^GMRCAU(GMRCO)
+"RTN","GMRCGUIB",164,0)
+ . S GMRCTM=0
+"RTN","GMRCGUIB",165,0)
+ . I $P(^GMR(123,+GMRCO,0),U,14),$P(^GMR(123,+GMRCO,0),U,14)'=DUZ S GMRCADUZ($P(^(0),U,14))=""
+"RTN","GMRCGUIB",166,0)
+ . S GMRCUPD=$$VALID^GMRCAU($P(^GMR(123,+GMRCO,0),U,5),GMRCO,DUZ)
+"RTN","GMRCGUIB",167,0)
+ . I +GMRCUPD<2 S GMRCTM=1
+"RTN","GMRCGUIB",168,0)
+ . I +GMRCUPD>1,+$P($G(^GMR(123,+GMRCO,0)),U,14)=DUZ S GMRCTM=1
+"RTN","GMRCGUIB",169,0)
+ . D MSG^GMRCP(DFN,TXT,GMRCO,63,.GMRCADUZ,GMRCTM)
+"RTN","GMRCGUIB",170,0)
+ D EXIT^GMRCGUIA
+"RTN","GMRCGUIB",171,0)
+ Q GMRCERR_"^"_GMRCERMS
+"RTN","GMRCGUIB",172,0)
+DOCLIST(GMRCAR,GMRCDA,GMRCMED)  ;return list of linked results
+"RTN","GMRCGUIB",173,0)
+ ; Input:
+"RTN","GMRCGUIB",174,0)
+ ;  GMRCAR - array to return list, passed by reference
+"RTN","GMRCGUIB",175,0)
+ ;  GMRCDA - ien from file 123
+"RTN","GMRCGUIB",176,0)
+ ;  GMRCMED- 1 = include med results; 0 = only TIU docs
+"RTN","GMRCGUIB",177,0)
+ ;
+"RTN","GMRCGUIB",178,0)
+ ; Output:
+"RTN","GMRCGUIB",179,0)
+ ;  GMRCAR - array in format
+"RTN","GMRCGUIB",180,0)
+ ;       GMRCAR(0)=zero node of record
+"RTN","GMRCGUIB",181,0)
+ ;       GMRCAR(50,1)="ien;global ref," e.g. 5;TIU(8925, or 3;MCAR(691,
+"RTN","GMRCGUIB",182,0)
+ ;       GMRCAR(50,2)="ien;global ref,"
+"RTN","GMRCGUIB",183,0)
+ ;
+"RTN","GMRCGUIB",184,0)
+ I '$D(^GMR(123,GMRCDA,0)) Q
+"RTN","GMRCGUIB",185,0)
+ S GMRCAR(0)=^GMR(123,GMRCDA,0),$P(GMRCAR(0),U,20)=""
+"RTN","GMRCGUIB",186,0)
+ N RES,CNT S RES="",CNT=1
+"RTN","GMRCGUIB",187,0)
+ F  S RES=$O(^GMR(123,GMRCDA,50,"B",RES)) Q:RES=""  D
+"RTN","GMRCGUIB",188,0)
+ . I '$G(GMRCMED) Q:RES'["TIU(8925"
+"RTN","GMRCGUIB",189,0)
+ . S GMRCAR(50,CNT)=RES
+"RTN","GMRCGUIB",190,0)
+ . I RES["MCAR" D
+"RTN","GMRCGUIB",191,0)
+ .. N ARR,STR
+"RTN","GMRCGUIB",192,0)
+ .. D MEDLKUP^MCARUTL3(.ARR,+$P(RES,"MCAR(",2),+RES)
+"RTN","GMRCGUIB",193,0)
+ .. I '+ARR K GMRCAR(50,CNT) Q
+"RTN","GMRCGUIB",194,0)
+ .. S STR=$P(ARR,U,9)_U_$P(ARR,U,6)_$S($P(ARR,U,10):"^^^^^^^^1",1:"")
+"RTN","GMRCGUIB",195,0)
+ .. S GMRCAR(50,CNT)=GMRCAR(50,CNT)_U_STR
+"RTN","GMRCGUIB",196,0)
+ . S CNT=CNT+1
+"RTN","GMRCGUIB",197,0)
+ Q
+"RTN","GMRCGUIS")
+0^6^B4164134^B3928168
+"RTN","GMRCGUIS",1,0)
+GMRCGUIS ;ALB/TDP - update Consult Status ;4/26/2006
+"RTN","GMRCGUIS",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**52,46**;DEC 27, 1997;Build 23
+"RTN","GMRCGUIS",3,0)
+ ;
+"RTN","GMRCGUIS",4,0)
+ ;Called by SDCNSLT for Scheduling Consult Appointment Linkage
+"RTN","GMRCGUIS",5,0)
+STATUS(GMRCO,GMRCSTS,GMRCA,GMRCORNP,GMRCAD,GMRCADUZ,GMRCMT) ;Change status/last action/add comment consult API
+"RTN","GMRCGUIS",6,0)
+ ; Input variables:
+"RTN","GMRCGUIS",7,0)
+ ;GMRCO - The internal file number of the consult from File 123
+"RTN","GMRCGUIS",8,0)
+ ;GMRCSTS - Status of the consult
+"RTN","GMRCGUIS",9,0)
+ ;GMRCA - Last Action to be added to the consult
+"RTN","GMRCGUIS",10,0)
+ ;GMRCORNP - Name of the person who actually 'Received' the consult 
+"RTN","GMRCGUIS",11,0)
+ ;GMRCAD - Actual date time that consult was received into the service.
+"RTN","GMRCGUIS",12,0)
+ ;GMRCADUZ - array of alert recipients as chosen by user (by reference)
+"RTN","GMRCGUIS",13,0)
+ ;   ARRAY(DUZ)="" 
+"RTN","GMRCGUIS",14,0)
+ ;GMRCMT - array of comments if entered (by reference)
+"RTN","GMRCGUIS",15,0)
+ ;   ARRAY(1)="FIRST LINE OF COMMENT"
+"RTN","GMRCGUIS",16,0)
+ ;   ARRAY(2)="SECOND LINE OF COMMENT"
+"RTN","GMRCGUIS",17,0)
+ ;
+"RTN","GMRCGUIS",18,0)
+ ;Output:
+"RTN","GMRCGUIS",19,0)
+ ;GMRCERR - Error Condition Code: 0 = NO error, 1=error
+"RTN","GMRCGUIS",20,0)
+ ;GMRCERMS - Error message or null
+"RTN","GMRCGUIS",21,0)
+ ;  returned as GMRCERR^GMRCERMS
+"RTN","GMRCGUIS",22,0)
+ ;
+"RTN","GMRCGUIS",23,0)
+ N DFN,GMRCNOW,GMRCERR,GMRCERMS
+"RTN","GMRCGUIS",24,0)
+ S GMRCERR=0,GMRCERMS="",GMRCNOW=$$NOW^XLFDT,GMRCMT=0
+"RTN","GMRCGUIS",25,0)
+ I 'GMRCSTS!('GMRCA) D  Q GMRCERR_"^"_GMRCERMS
+"RTN","GMRCGUIS",26,0)
+ . S GMRCERR="1",GMRCERMS="Status/last action update is missing or wrong."
+"RTN","GMRCGUIS",27,0)
+ . D EXIT^GMRCGUIA
+"RTN","GMRCGUIS",28,0)
+ S:$G(GMRCAD)="" GMRCAD=GMRCNOW
+"RTN","GMRCGUIS",29,0)
+ S:'$G(GMRCDUZ) GMRCDUZ=DUZ
+"RTN","GMRCGUIS",30,0)
+ S DFN=$P($G(^GMR(123,GMRCO,0)),"^",2) I DFN="" D  Q GMRCERR_"^"_GMRCERMS
+"RTN","GMRCGUIS",31,0)
+ . S GMRCERR="1",GMRCERMS="Not A Valid Consult - File Not Found."
+"RTN","GMRCGUIS",32,0)
+ . D EXIT^GMRCGUIA
+"RTN","GMRCGUIS",33,0)
+ D STATUS^GMRCP I $D(GMRCQUT) D EXIT^GMRCGUIA Q GMRCERR_"^"_GMRCERMS
+"RTN","GMRCGUIS",34,0)
+ I '$O(GMRCMT(0)) D AUDIT^GMRCP
+"RTN","GMRCGUIS",35,0)
+ I $O(GMRCMT(0)) D
+"RTN","GMRCGUIS",36,0)
+ . S DA=$$SETDA^GMRCGUIB
+"RTN","GMRCGUIS",37,0)
+ . S GMRCMT(0)=DA,GMRCMT=1
+"RTN","GMRCGUIS",38,0)
+ . D SETCOM^GMRCGUIB(.GMRCMT,GMRCDUZ)
+"RTN","GMRCGUIS",39,0)
+ D EN^GMRCHL7(DFN,GMRCO,"","","SC",GMRCORNP,"",.GMRCMT,"",GMRCAD)
+"RTN","GMRCGUIS",40,0)
+ D  ;send alerts
+"RTN","GMRCGUIS",41,0)
+ . N TXT
+"RTN","GMRCGUIS",42,0)
+ . S TXT="Comment Added to Consult "_$$ORTX^GMRCAU(GMRCO)
+"RTN","GMRCGUIS",43,0)
+ . I $P(^GMR(123,+GMRCO,0),U,14),$P(^GMR(123,+GMRCO,0),U,14)'=DUZ S GMRCADUZ($P(^(0),U,14))=""
+"RTN","GMRCGUIS",44,0)
+ . D MSG^GMRCP(DFN,TXT,GMRCO,63,.GMRCADUZ,0)
+"RTN","GMRCGUIS",45,0)
+ D EXIT^GMRCGUIA
+"RTN","GMRCGUIS",46,0)
+ Q GMRCERR_"^"_GMRCERMS
+"RTN","GMRCHL7B")
+0^7^B26928400^B26577242
+"RTN","GMRCHL7B",1,0)
+GMRCHL7B ;SLC/DCM,MA,JFR - Process data from GMRCHL7A ; 4/29/09 8:53
+"RTN","GMRCHL7B",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**1,5,12,21,17,22,33,66,46**;DEC 27, 1997;Build 23
+"RTN","GMRCHL7B",3,0)
+ ;
+"RTN","GMRCHL7B",4,0)
+ ; This routine invokes IA #3991(ICDAPIU), #2053(DIE), #10006(DIC), #2056(GET1^DIQ)
+"RTN","GMRCHL7B",5,0)
+ ;
+"RTN","GMRCHL7B",6,0)
+NEW(MESSAGE) ;Add new order
+"RTN","GMRCHL7B",7,0)
+ ;GMRCO=^GMR(123,IFN, the new file number in file ^GMR(123,
+"RTN","GMRCHL7B",8,0)
+ ;GMRCORFN=OE/RR file number       GMRCWARD=ward patient is on
+"RTN","GMRCHL7B",9,0)
+ ;GMRCSS=service consult sent to   GMRCAD=date/time of request
+"RTN","GMRCHL7B",10,0)
+ ;GMRCPRI=procedure/request        GMRCURGI=urgency
+"RTN","GMRCHL7B",11,0)
+ ;GMRCERDT=earliest desired date
+"RTN","GMRCHL7B",12,0)
+ ;GMRCATN=attention                GMRCSTS=OE/RR order status
+"RTN","GMRCHL7B",13,0)
+ ;GMRCORNP=patient's provider      GMRCTYPE=request type (request or consult)
+"RTN","GMRCHL7B",14,0)
+ ;GMRCSBR=service rendered on what basis (Inpatient, or Outpatient)
+"RTN","GMRCHL7B",15,0)
+ ;GMRCRFQ=reason for request array - word processing fields
+"RTN","GMRCHL7B",16,0)
+ ;GMRCOTXT=order display text from dialog or orderable item
+"RTN","GMRCHL7B",17,0)
+ ;GMRCPRDG=provisional DX
+"RTN","GMRCHL7B",18,0)
+ ;GMRCPRCD=provisional DX code 
+"RTN","GMRCHL7B",19,0)
+ ;
+"RTN","GMRCHL7B",20,0)
+ ; Output:
+"RTN","GMRCHL7B",21,0)
+ ;    MESSAGE = rejection message if problems encountered while filing
+"RTN","GMRCHL7B",22,0)
+ ;
+"RTN","GMRCHL7B",23,0)
+ ;    check for inactive ICD-9 code in Prov. DX
+"RTN","GMRCHL7B",24,0)
+ I $L($G(GMRCPRCD)) D  I $D(MESSAGE) Q  ; rejected due to inactive code
+"RTN","GMRCHL7B",25,0)
+ . I +$$STATCHK^ICDAPIU(GMRCPRCD,DT) Q  ;code is OK
+"RTN","GMRCHL7B",26,0)
+ . S MESSAGE="Provisional DX code is inactive. Unable to file request."
+"RTN","GMRCHL7B",27,0)
+ ;
+"RTN","GMRCHL7B",28,0)
+ N DIC,DLAYGO,X,Y,DR,DIE,GMRCADUZ,GMRCCP
+"RTN","GMRCHL7B",29,0)
+ S DIC="^GMR(123,",DIC(0)="L",X="""N""",DLAYGO=123 D ^DIC K DLAYGO Q:Y<1
+"RTN","GMRCHL7B",30,0)
+ ; Patch #21 changed GMRCA=1 to GMRCA=2
+"RTN","GMRCHL7B",31,0)
+ S (DA,GMRCO)=+Y,GMRCSTS=5,GMRCA=2,DIE=DIC
+"RTN","GMRCHL7B",32,0)
+ L +^GMR(123,GMRCO):$S($G(DILOCKTM)>0:DILOCKTM,1:5)
+"RTN","GMRCHL7B",33,0)
+ S DR=".02////^S X=DFN;.03////^S X=GMRCORFN;.04////^S X=GMRCWARD;.05////^S X=GMRCFAC;.06////^S X=$G(GMRCOFN);1////^S X=GMRCSS;2////^S X=$G(GMRCWARD);3////^S X=GMRCAD;4////^S X=GMRCPRI;5////^S X=GMRCURGI;7////^S X=$G(GMRCATN)"
+"RTN","GMRCHL7B",34,0)
+ D ^DIE
+"RTN","GMRCHL7B",35,0)
+ ;L -^GMR(123,GMRCO) ;add lock timeout
+"RTN","GMRCHL7B",36,0)
+ I GMRCOTXT=$$GET1^DIQ(123.5,+GMRCSS,.01) S GMRCOTXT=""
+"RTN","GMRCHL7B",37,0)
+ ;Added new field .1 to DR on 7/11/98 to save the order text
+"RTN","GMRCHL7B",38,0)
+ S DR="6////^S X=GMRCPLI;8////^S X=GMRCSTS;9////^S X=GMRCA;10////^S X=GMRCORNP;13////^S X=GMRCTYPE;14////^S X=$G(GMRCSBR);17////^S X=$G(GMRCERDT);30////^S X=$G(GMRCPRDG);.1////^S X=$G(GMRCOTXT)" ;wat/66
+"RTN","GMRCHL7B",39,0)
+ I $D(GMRCPRCD) S DR=DR_";30.1///^S X=GMRCPRCD"
+"RTN","GMRCHL7B",40,0)
+ S GMRCCP=$P($G(^GMR(123.3,+GMRCPRI,0)),U,4) I GMRCCP D   ;file CP 
+"RTN","GMRCHL7B",41,0)
+ . S DR=DR_";1.01///^S X=GMRCCP"
+"RTN","GMRCHL7B",42,0)
+ D  ;check to see if an IFC and add .07 ROUTING FACILITY
+"RTN","GMRCHL7B",43,0)
+ . I $G(GMRCPRI) D  Q  ;see if procedure is mapped
+"RTN","GMRCHL7B",44,0)
+ .. I '$D(^GMR(123.3,+GMRCPRI,"IFC")) Q
+"RTN","GMRCHL7B",45,0)
+ .. N IFC S IFC=$G(^GMR(123.3,+GMRCPRI,"IFC"))
+"RTN","GMRCHL7B",46,0)
+ .. I '+IFC Q  ; no ifc routing site
+"RTN","GMRCHL7B",47,0)
+ .. I '$L($P(^GMR(123.3,+GMRCPRI,"IFC"),U,2)) Q  ;no remote proc name
+"RTN","GMRCHL7B",48,0)
+ .. S DR=DR_";.07////"_+IFC_";.125////P"
+"RTN","GMRCHL7B",49,0)
+ . I '$G(GMRCPRI) D  Q  ;see if service is mapped
+"RTN","GMRCHL7B",50,0)
+ .. I '$D(^GMR(123.5,+GMRCSS,"IFC")) Q
+"RTN","GMRCHL7B",51,0)
+ .. N IFC S IFC=$G(^GMR(123.5,+GMRCSS,"IFC"))
+"RTN","GMRCHL7B",52,0)
+ .. I '+IFC Q  ; no ifc routing site
+"RTN","GMRCHL7B",53,0)
+ .. I '$L($P(IFC,U,2)) Q  ;no remote service name
+"RTN","GMRCHL7B",54,0)
+ .. S DR=DR_";.07////"_+IFC_";.125////P;.131////"_$P(IFC,U,2)
+"RTN","GMRCHL7B",55,0)
+ . Q
+"RTN","GMRCHL7B",56,0)
+ D ^DIE
+"RTN","GMRCHL7B",57,0)
+ I $O(GMRCRFQ(0)) D REASON
+"RTN","GMRCHL7B",58,0)
+ L -^GMR(123,GMRCO)
+"RTN","GMRCHL7B",59,0)
+ S GMRCA=1 D AUDIT0^GMRCHL7U
+"RTN","GMRCHL7B",60,0)
+ I $D(GMRCXMF),$D(GMRCOFN) S $P(^GMR(123,GMRCO,0),"^",21)=GMRCOFN
+"RTN","GMRCHL7B",61,0)
+ I $D(GMRCACTN) S GMRCADUZ(GMRCACTN)=""
+"RTN","GMRCHL7B",62,0)
+ D ALERT^GMRCHL7U(DFN,GMRCSS,GMRCPRI,GMRCO,GMRCURGI,"")
+"RTN","GMRCHL7B",63,0)
+ D PRNT^GMRCUTL1(GMRCSS,GMRCO) ;contains print audit update
+"RTN","GMRCHL7B",64,0)
+ D EXIT
+"RTN","GMRCHL7B",65,0)
+ Q
+"RTN","GMRCHL7B",66,0)
+DC(GMRCO,ACTRL) ;Discontinue request from OERR
+"RTN","GMRCHL7B",67,0)
+ ;Denied request also gets this action. Deny request updates status to dc
+"RTN","GMRCHL7B",68,0)
+ ;GMRCO=IEN of record in file ^GMR(123, i.e., ^GMR(123,DA,
+"RTN","GMRCHL7B",69,0)
+ ;ACTRL=GMRCCTRL=control code defining action -
+"RTN","GMRCHL7B",70,0)
+ ;         DC control code = action DC for discontinued 
+"RTN","GMRCHL7B",71,0)
+ ;         CA control code = action DY for denied
+"RTN","GMRCHL7B",72,0)
+ ;Update the last action taken, order status, and processing activity
+"RTN","GMRCHL7B",73,0)
+ Q:'$L(GMRCO)
+"RTN","GMRCHL7B",74,0)
+ Q:'$D(^GMR(123,+GMRCO,0))
+"RTN","GMRCHL7B",75,0)
+ N GMRCACT,GMRCSVC,GMRCDFN,GMRCFL,GMRCADUZ,GMRCRQR,DA
+"RTN","GMRCHL7B",76,0)
+ S GMRCACT=$O(^GMR(123.1,"D",ACTRL,0))
+"RTN","GMRCHL7B",77,0)
+ S GMRCSTS=$P(^GMR(123.1,GMRCACT,0),"^",2)
+"RTN","GMRCHL7B",78,0)
+ S DIE="^GMR(123,",DA=GMRCO
+"RTN","GMRCHL7B",79,0)
+ S DR="8////^S X=GMRCSTS;9////^S X=GMRCACT" ; upd status + last action
+"RTN","GMRCHL7B",80,0)
+ D ^DIE
+"RTN","GMRCHL7B",81,0)
+ D AUDIT0^GMRCHL7U
+"RTN","GMRCHL7B",82,0)
+ ; send 513 back through service printer if order DC'd
+"RTN","GMRCHL7B",83,0)
+ I $G(ACTRL)="DC",$$DCPRNT^GMRCUTL1(GMRCO,DUZ) D
+"RTN","GMRCHL7B",84,0)
+ . D PRNT^GMRCUTL1(+$P(^GMR(123,GMRCO,0),U,5),GMRCO)
+"RTN","GMRCHL7B",85,0)
+ S GMRCDFN=$P(^GMR(123,+GMRCO,0),"^",2)
+"RTN","GMRCHL7B",86,0)
+ S GMRCFL=$$DCNOTE^GMRCADC(GMRCO,DUZ),GMRCADUZ=""
+"RTN","GMRCHL7B",87,0)
+ S GMRCRQR=+$P($G(^GMR(123,+GMRCO,0)),"^",14)
+"RTN","GMRCHL7B",88,0)
+ I +GMRCRQR,GMRCRQR'=DUZ S GMRCADUZ(GMRCRQR)=""
+"RTN","GMRCHL7B",89,0)
+ S GMRCSVC=$P($G(^GMR(123,+GMRCO,0)),"^",5)
+"RTN","GMRCHL7B",90,0)
+ I +GMRCSVC S GMRCSVC=$S($D(^GMR(123.5,GMRCSVC,.1)):^(.1),1:$P(^GMR(123.5,GMRCSVC,0),"^",1))
+"RTN","GMRCHL7B",91,0)
+ E  S GMRCSVC="Unknown Service: Consult # "_GMRCO
+"RTN","GMRCHL7B",92,0)
+ S GMRCORTX=$S(ACTRL="DC":"Discontinued",1:"Cancelled")
+"RTN","GMRCHL7B",93,0)
+ S GMRCORTX=GMRCORTX_" Consult "_$$ORTX^GMRCAU(GMRCO)
+"RTN","GMRCHL7B",94,0)
+ N NOTYPE S NOTYPE=$S(ACTRL="DC":23,1:30)
+"RTN","GMRCHL7B",95,0)
+ D MSG^GMRCP(GMRCDFN,GMRCORTX,+GMRCO,NOTYPE,.GMRCADUZ,GMRCFL)
+"RTN","GMRCHL7B",96,0)
+ D EXIT
+"RTN","GMRCHL7B",97,0)
+ Q
+"RTN","GMRCHL7B",98,0)
+MODIFY ;Change an order/request when an HL7 'XX' code is received
+"RTN","GMRCHL7B",99,0)
+ ;This is currently not used.
+"RTN","GMRCHL7B",100,0)
+ ;    When Consults sends an XX, CPRS returns NA with a new order ien.
+"RTN","GMRCHL7B",101,0)
+ ;GMRCACT=processing activity - from file ^GMR(123.1,
+"RTN","GMRCHL7B",102,0)
+ S DIE="^GMR(123,",DA=+GMRCO
+"RTN","GMRCHL7B",103,0)
+ S GMRCWARD=$G(GMRCWARD),GMRCPRI=$G(GMRCPRI),GMRCURGI=$G(GMRCURGI),GMRCSTS=$G(GMRCSTS),GMRCTYPE=$G(GMRCTYPE),GMRCSS=$G(GMRCSS)
+"RTN","GMRCHL7B",104,0)
+ S GMRCACT=$O(^GMR(123.1,"D",GMRCTRLC,0))
+"RTN","GMRCHL7B",105,0)
+ S GMRCSTS=$P(^GMR(123.1,GMRCACT,0),"^",2)
+"RTN","GMRCHL7B",106,0)
+ S DIE=123,DR=".04////^S X=$G(GMRCWARD);1////^S X=$G(GMRCSS);4////^S X=$G(GMRCPRI);5////^S X=$G(GMRCURGI);8////^S X=$G(GMRCSTS);9////^S X=GMRCACT"
+"RTN","GMRCHL7B",107,0)
+ D ^DIE
+"RTN","GMRCHL7B",108,0)
+ D AUDIT0^GMRCHL7U
+"RTN","GMRCHL7B",109,0)
+ D EXIT Q
+"RTN","GMRCHL7B",110,0)
+REASON ;load the reason for request into ^GMR(123,IFN,20
+"RTN","GMRCHL7B",111,0)
+ S ^GMR(123,GMRCO,20,0)="^^^"_$S($D(GMRCDA):GMRCDA,1:DT)_"^"
+"RTN","GMRCHL7B",112,0)
+ S L=0,LN=1 F  S L=$O(GMRCRFQ(L)) Q:L=""  S ^GMR(123,GMRCO,20,LN,0)=GMRCRFQ(L),LN=LN+1
+"RTN","GMRCHL7B",113,0)
+ S LN=LN-1,$P(^GMR(123,GMRCO,20,0),"^",3)=LN
+"RTN","GMRCHL7B",114,0)
+ K L,LN
+"RTN","GMRCHL7B",115,0)
+ Q
+"RTN","GMRCHL7B",116,0)
+COMMENT(GMRCARY) ;add comments to the record.  Add the comment header, then the comment lines, and lastly, the number of comment lines to the header
+"RTN","GMRCHL7B",117,0)
+ ;GMRCARY= GMRCNTC array
+"RTN","GMRCHL7B",118,0)
+ S LN=0,^GMR(123,GMRCO,40,DA,1,0)="^^^^"_$P(GMRCDA,".",1)_"^"
+"RTN","GMRCHL7B",119,0)
+ F  S LN=$O(GMRCARY(LN)) Q:LN=""  S ^GMR(123,+GMRCO,40,DA,1,LN,0)=GMRCARY(LN),LN1=LN
+"RTN","GMRCHL7B",120,0)
+ S $P(^GMR(123,+GMRCO,40,DA,1,0),"^",3,4)=LN1_"^"_LN1
+"RTN","GMRCHL7B",121,0)
+ K LN,LN1 Q
+"RTN","GMRCHL7B",122,0)
+ Q
+"RTN","GMRCHL7B",123,0)
+EXIT ;kill off all variables
+"RTN","GMRCHL7B",124,0)
+ K DA,DIC,DIE,DR,GMRCORTX,GMRCADUZ
+"RTN","GMRCHL7B",125,0)
+ Q
+"RTN","GMRCP")
+0^8^B19973660^B20265103
+"RTN","GMRCP",1,0)
+GMRCP ;SLC/DLT,DCM - Message audit and status process ;4/19/01  11:52
+"RTN","GMRCP",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**1,4,17,22,27,53,55,46**;DEC 27, 1997;Build 23
+"RTN","GMRCP",3,0)
+ ;Processing action on Generic Requests/Consults from OE/RR
+"RTN","GMRCP",4,0)
+MSG(GMRCDFN,GMRCALRM,GMRCIFN,ORN,GMRCADUZ,FLG) ;send alert notification information to OERR for notification or update
+"RTN","GMRCP",5,0)
+ ;GMRCDFN=patient's DFN           GMRCORFN=OR file # ^OR(100,GMRCORFN
+"RTN","GMRCP",6,0)
+ ;GMRCALRM=alert message to be displayed with alert
+"RTN","GMRCP",7,0)
+ ;GMRCIFN=internal file number of consult in file 123
+"RTN","GMRCP",8,0)
+ ;GMRCADUZ=set in call to EN^GMRCT=array of providers who will be alerted
+"RTN","GMRCP",9,0)
+ ;FLG=1 if need to get list of service's providers, 0 if service dc'd.
+"RTN","GMRCP",10,0)
+ ;ORN=IFN from file ^ORD(100.9, for consult notification action
+"RTN","GMRCP",11,0)
+ N GMRCSS,GMRCORFN
+"RTN","GMRCP",12,0)
+ S GMRCORFN=$P(^GMR(123,+GMRCIFN,0),"^",3)
+"RTN","GMRCP",13,0)
+ S GMRCSS=$P($G(^GMR(123,+GMRCIFN,0)),"^",5)
+"RTN","GMRCP",14,0)
+ I FLG,GMRCSS D EN^GMRCT(GMRCSS)
+"RTN","GMRCP",15,0)
+ I $P($G(^GMR(123,+GMRCIFN,12)),U,5)="P" D
+"RTN","GMRCP",16,0)
+ . Q:ORN=27  ; don't notify requestor if a new order they placed, duh...
+"RTN","GMRCP",17,0)
+ . I DUZ=+$P(^GMR(123,+GMRCIFN,0),U,14) Q  ; don;t alert on own actions
+"RTN","GMRCP",18,0)
+ . S GMRCADUZ(+$P(^GMR(123,+GMRCIFN,0),U,14))=""
+"RTN","GMRCP",19,0)
+ I FLG,$P(^GMR(123,+GMRCIFN,0),"^",11) S GMRCADUZ($P(^(0),"^",11))=""
+"RTN","GMRCP",20,0)
+ S:'$D(GMRCADUZ) GMRCADUZ=""
+"RTN","GMRCP",21,0)
+ ;N X S X="" F  S X=$O(GMRCADUZ(X)) Q:(X="")  I +X=DUZ,X'=DUZ K GMRCADUZ(X) ;Don't send alert to user generating alert
+"RTN","GMRCP",22,0)
+ K GMRCADUZ(DUZ) ;Don't send alert to user generating alert
+"RTN","GMRCP",23,0)
+ D EN^ORB3(ORN,GMRCDFN,GMRCORFN,.GMRCADUZ,GMRCALRM,GMRCIFN)
+"RTN","GMRCP",24,0)
+ Q
+"RTN","GMRCP",25,0)
+AUDIT ;Build processing activity audit trail multiple.
+"RTN","GMRCP",26,0)
+ S GMRCDT=$$NOW^XLFDT
+"RTN","GMRCP",27,0)
+AUDIT0 ;alternate entry with date already defined
+"RTN","GMRCP",28,0)
+ L +^GMR(123,+GMRCO,40):5 I '$T S GMRCUT=1,GMRCERR=1,GMRCERMS="Activity Trail Not filed - Consult In Use By Another User." L -^GMR(123,+GMRCO,40)  Q
+"RTN","GMRCP",29,0)
+ S:'$D(^GMR(123,+GMRCO,40,0)) ^(0)="^123.02DA^^"
+"RTN","GMRCP",30,0)
+ S DA=$S($P(^GMR(123,+GMRCO,40,0),"^",3):$P(^(0),"^",3)+1,1:1)
+"RTN","GMRCP",31,0)
+ S $P(^GMR(123,+GMRCO,40,0),"^",3,4)=DA_"^"_DA
+"RTN","GMRCP",32,0)
+AUDIT1 ;entry when the DA is not incremented (INCOMPLETE RPT writeovers)
+"RTN","GMRCP",33,0)
+ S GMRCORNP=$G(GMRCORNP) S:'$D(GMRCOM) GMRCOM=0
+"RTN","GMRCP",34,0)
+ S GMRCDEV=$G(GMRCDEV),GMRCFF=$G(GMRCFF),GMRCPA=$G(GMRCPA)
+"RTN","GMRCP",35,0)
+ S GMRCAD=$S('$D(GMRCAD):GMRCDT,1:GMRCAD)
+"RTN","GMRCP",36,0)
+ S GMRCRSLT=$G(GMRCRSLT) ;Added result with GMRC*3.0*4
+"RTN","GMRCP",37,0)
+ S DIE="^GMR(123,"_+GMRCO_",40,",DA(1)=+GMRCO
+"RTN","GMRCP",38,0)
+ I '$D(^GMR(123,DA(1),40,DA,0)) D
+"RTN","GMRCP",39,0)
+ . S DR=".01////^S X=GMRCDT;1////^S X=GMRCA;2////^S X=GMRCAD;3////^S X=GMRCORNP"
+"RTN","GMRCP",40,0)
+ . I GMRCA'=22 S DR=DR_";4////^S X=DUZ" ;if it's a print, pkg did it
+"RTN","GMRCP",41,0)
+ . S DR=DR_";6////^S X=GMRCFF;7////^S X=GMRCPA;9////^S X=GMRCRSLT;8///^S X=GMRCDEV"
+"RTN","GMRCP",42,0)
+ E  D
+"RTN","GMRCP",43,0)
+ . ;DR string on .01 allows write over, rather than forced new entry
+"RTN","GMRCP",44,0)
+ . S DR=".01///^S X=GMRCDT;1////^S X=GMRCA;2////^S X=GMRCAD;3////^S X=GMRCORNP;4////^S X=DUZ;6////^S X=GMRCFF;7////^S X=GMRCPA;9////^S X=GMRCRSLT;8///^S X=GMRCDEV"
+"RTN","GMRCP",45,0)
+ ;Added result to the DR string
+"RTN","GMRCP",46,0)
+ D ^DIE
+"RTN","GMRCP",47,0)
+COMMENT ;Enter comment
+"RTN","GMRCP",48,0)
+ I +$G(GMRCOM) S GMRCOM(0)=DA D
+"RTN","GMRCP",49,0)
+ . W !,"Enter COMMENT..."
+"RTN","GMRCP",50,0)
+ . N DIC,DWPK,DWLW,DIWESUB
+"RTN","GMRCP",51,0)
+ . S DIC=DIE_DA_",1,",DWPK=1,DWLW=74
+"RTN","GMRCP",52,0)
+ . S DIWESUB="COMMENTS" D EN^DIWE
+"RTN","GMRCP",53,0)
+ . I $P($G(^GMR(123.1,+$P(^GMR(123,+GMRCO,40,DA,0),U,2),0)),U)="ADDED COMMENT",'$O(^GMR(123,+GMRCO,40,DA,0)) D  Q
+"RTN","GMRCP",54,0)
+ .. S DA(1)=+GMRCO,DIK="^GMR(123,"_DA(1)_",40," D ^DIK K DIK
+"RTN","GMRCP",55,0)
+ .. Q
+"RTN","GMRCP",56,0)
+ . I $P($G(^GMR(123.1,+$P(^GMR(123,+GMRCO,40,DA,0),U,2),0)),U)="COMPLETE/UPDATE",$P($G(^GMR(123,+GMRCO,40,DA,0)),U,9)="" D
+"RTN","GMRCP",57,0)
+ .. N GMRCMT,GMRCMT1
+"RTN","GMRCP",58,0)
+ .. S (GMRCMT,GMRCMT1)=0
+"RTN","GMRCP",59,0)
+ .. F  S GMRCMT=$O(^GMR(123,+GMRCO,40,DA,1,GMRCMT)) Q:GMRCMT=""  D  Q:GMRCMT1=1
+"RTN","GMRCP",60,0)
+ ... I $TR($G(^GMR(123,+GMRCO,40,DA,1,GMRCMT,0))," ","")'="" S GMRCMT1=1
+"RTN","GMRCP",61,0)
+ .. I 'GMRCMT1 D  G:'GMRCQUIT COMMENT Q
+"RTN","GMRCP",62,0)
+ ... S GMRCQUIT=0
+"RTN","GMRCP",63,0)
+ ... W !!,"A comment is required to complete this request!",!
+"RTN","GMRCP",64,0)
+ ... D WP^DIE(123.02,DA_","_+GMRCO_",",5,,"@")
+"RTN","GMRCP",65,0)
+ ... K DIR
+"RTN","GMRCP",66,0)
+ ... S DIR("A")="Type 'Q' to quit or 'C' to continue entering a comment:"
+"RTN","GMRCP",67,0)
+ ... S DIR("B")="C"
+"RTN","GMRCP",68,0)
+ ... S DIR(0)="S^C:CONTINUE;Q:QUIT"
+"RTN","GMRCP",69,0)
+ ... S DIR("?")="Type 'Q' if you would like to abort completion of this Consult/Procedure."
+"RTN","GMRCP",70,0)
+ ... S DIR("?",1)="Type 'C' or press <RETURN> to re-enter your comments."
+"RTN","GMRCP",71,0)
+ ... D ^DIR K DIR I Y'="C" S GMRCQUIT=1,DA(1)=+GMRCO,DIK="^GMR(123,"_DA(1)_",40," D ^DIK K DIK
+"RTN","GMRCP",72,0)
+ . I '$G(DA) S DA=D0
+"RTN","GMRCP",73,0)
+ . I $D(^GMR(123,+GMRCO,40,DA,0)),$O(^GMR(123,+GMRCO,40,DA,0)) S $P(GMRCOM,"^",2)=1
+"RTN","GMRCP",74,0)
+ . Q
+"RTN","GMRCP",75,0)
+ L -^GMR(123,+GMRCO,40)
+"RTN","GMRCP",76,0)
+ ; if an IFC, call event handler to generate a msg to remote site
+"RTN","GMRCP",77,0)
+ I $D(^GMR(123,GMRCO,12)),$L($P(^(12),U,5)) D
+"RTN","GMRCP",78,0)
+ . Q:'$D(^GMR(123,GMRCO,40,DA)) 
+"RTN","GMRCP",79,0)
+ . D TRIGR^GMRCIEVT(GMRCO,DA)
+"RTN","GMRCP",80,0)
+ ;
+"RTN","GMRCP",81,0)
+ K DIE,DA,DR,GMRCDEV,GMRCFF,GMRCPA,X,% Q
+"RTN","GMRCP",82,0)
+ ;
+"RTN","GMRCP",83,0)
+STATUS ;Update the status for the Request/Consultation File
+"RTN","GMRCP",84,0)
+ K GMRCQUT
+"RTN","GMRCP",85,0)
+ Q:'$D(GMRCSTS)!('$D(GMRCA))
+"RTN","GMRCP",86,0)
+ S DIE=123,DA=+GMRCO
+"RTN","GMRCP",87,0)
+ I $D(GMRCDR),$L(GMRCDR) S DR=GMRCDR
+"RTN","GMRCP",88,0)
+ E  S DR="8////^S X=GMRCSTS;9////^S X=GMRCA"
+"RTN","GMRCP",89,0)
+ L +^GMR(123,GMRCO):2 I '$T S GMRCQUT=1,GMRCERR=1,GMRCERMS="Unable to update status and last action - Consult In Use By Another User." Q
+"RTN","GMRCP",90,0)
+ D ^DIE
+"RTN","GMRCP",91,0)
+ L -^GMR(123,+GMRCO)
+"RTN","GMRCP",92,0)
+ K DIE,DA,DR,GMRCDR
+"RTN","GMRCP",93,0)
+ Q
+"RTN","GMRCR")
+0^9^B17225074^B16413390
+"RTN","GMRCR",1,0)
+GMRCR ;SLC/DLT - Driver for reviewing patient consult/requests - Used by Medicine Package to link Consults to Medicine results ;9/18/98  16:26
+"RTN","GMRCR",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**1,5,46**;DEC 27, 1997;Build 23
+"RTN","GMRCR",3,0)
+EN ;Entry point for medicine results entry by procedure or consult type
+"RTN","GMRCR",4,0)
+ ;Required variables:
+"RTN","GMRCR",5,0)
+ ;  GMRCPRNM = name of procedure file with results.
+"RTN","GMRCR",6,0)
+ ;  DFN = patient file (2) ien
+"RTN","GMRCR",7,0)
+ ;Optional variables:
+"RTN","GMRCR",8,0)
+ ;  GMRCSR = variable pointer for results
+"RTN","GMRCR",9,0)
+ ;  ORSTS = order status
+"RTN","GMRCR",10,0)
+ ;  GMRCI = 0 or undefined, assume interactive
+"RTN","GMRCR",11,0)
+ ;          1, assume non-interactive - not operational currently
+"RTN","GMRCR",12,0)
+ ;Returned variables:
+"RTN","GMRCR",13,0)
+ ;  ORIFN = Pointer to the consult order in file 100
+"RTN","GMRCR",14,0)
+ ;  GMRCO = Pointer to the Request/Consultation entry in file 123.5
+"RTN","GMRCR",15,0)
+ ;
+"RTN","GMRCR",16,0)
+ K DTOUT,DUOUT,ORIFN,GMRCO,GMRCX
+"RTN","GMRCR",17,0)
+ I '$D(GMRCPNM) D DEM^GMRCU
+"RTN","GMRCR",18,0)
+ I $D(GMRCPRNM) S GMRC=$O(^ORD(101,"B","GMRCR "_GMRCPRNM,0)),GMRCTYPE="GMRCOR REQUEST"
+"RTN","GMRCR",19,0)
+ E  I $D(GMRCPR) S GMRC=GMRCPR,GMRCTYPE="GMRCOR REQUEST"
+"RTN","GMRCR",20,0)
+ I $D(GMRCCT) S GMRC=GMRCCT,GMRCTYPE="GMRCOR CONSULT"
+"RTN","GMRCR",21,0)
+ I $D(GMRC)=1!($D(GMRC)=11),+GMRC D
+"RTN","GMRCR",22,0)
+ .S GMRCVP=GMRC_";ORD(101,",GMRCNM=$S($D(^ORD(101,GMRC,0)):$P(^(0),"^",2),1:"")
+"RTN","GMRCR",23,0)
+ .S GMRCSS=$P($G(^ORD(101,+GMRCVP,5)),"^"),GMRCSS=+GMRCSS
+"RTN","GMRCR",24,0)
+EN1 ;Entry point for
+"RTN","GMRCR",25,0)
+ Q  I 'GMRCSS D ASRV^GMRCASV D  Q:GMRCEND  S GMRCSS=+GMRCDG I 'GMRCDG S GMRCEND=1 K GMRCSS Q
+"RTN","GMRCR",26,0)
+ .I $D(DTOUT)!($D(DIROUT)) S GMRCEND=1 K DTOUT,DIROUT,DIRUT,DUOUT Q
+"RTN","GMRCR",27,0)
+ .Q
+"RTN","GMRCR",28,0)
+ E  S GMRCDG=GMRCSS D SERV1^GMRCASV
+"RTN","GMRCR",29,0)
+ I '$D(ORTKG) S ORTKG=$$PACKAGE I ORTKG="" S GMRCMSG="Missing package entry for CONSULT/REQUEST TRACKING" D EXAC^GMRCADC(GMRCMSG) K GMRCMSG S GMRCEND=1 Q
+"RTN","GMRCR",30,0)
+ ;old code? D TEAM^GMRCASV
+"RTN","GMRCR",31,0)
+ S GMRCSSNM=$P(^GMR(123.5,GMRCSS,0),"^",1)
+"RTN","GMRCR",32,0)
+ ;old codeN GMRCQIT
+"RTN","GMRCR",33,0)
+ ;old code? S ORVP=DFN_";DPT(",GMRCGRP=0
+"RTN","GMRCR",34,0)
+ ;old code? K ^TMP("GMRCR",$J)
+"RTN","GMRCR",35,0)
+ K GMRCOER,GMRCQUT
+"RTN","GMRCR",36,0)
+ S GMRCEN=1
+"RTN","GMRCR",37,0)
+ D EN^GMRCMENU ; used to be D EN^GMRCACTM
+"RTN","GMRCR",38,0)
+ S GMRCOER=0
+"RTN","GMRCR",39,0)
+ D AD^GMRCSLM1 ; used to be D AD^GMRCRA
+"RTN","GMRCR",40,0)
+ D EN^VALM("GMRC CONSULT TRACKING")
+"RTN","GMRCR",41,0)
+ D KILL
+"RTN","GMRCR",42,0)
+ Q
+"RTN","GMRCR",43,0)
+KILL ; Kill variables, but don't kill GMRCO and ORIFN if from MC option
+"RTN","GMRCR",44,0)
+ ;K VALMCNT,VALMBCK,VALMPGE
+"RTN","GMRCR",45,0)
+ ;K ^TMP("GMRCR",$J,"CS"),^TMP("GMRCS",$J)
+"RTN","GMRCR",46,0)
+ K X,Y,Z,DTOUT,DUOUT,DIROUT
+"RTN","GMRCR",47,0)
+ K GMRC,GMRCA,GMRCACT,GMRCACTM,GMRCAGE,GMRCCT,GMRCCTX,GMRCDG,GMRCDGT
+"RTN","GMRCR",48,0)
+ K GMRCDOB,GMRCDTM,GMRCGRP,GMRCH,GMRCHDR,GMRCIFN,GMRCLFG,GMRCNM,GMRCNPG
+"RTN","GMRCR",49,0)
+ K GMRCPNM,GMRCRB,GMRCWARD,GMRCSN,GMRCRPG,GMRCNPG,GMRCTITL,GMRCX,GMRCHDR,GMRCH,GMRCDTM
+"RTN","GMRCR",50,0)
+ K GMRCSTS,GMRCTYPE,GMRCVP,GMRCEND,GMRCTO,GMRCURG,GMRCL,GMRCDT,GMRCDIC
+"RTN","GMRCR",51,0)
+ K VA,VAIN,VAINDT,VADM,VAEL,VAPA,VAERR,VAROOT
+"RTN","GMRCR",52,0)
+ K O,OREND,ORINDX,ORNS,POP,SEX,W,XQORSPEW
+"RTN","GMRCR",53,0)
+ I $D(XQY0),$E(XQY0,1,2)="MC" S:'$D(GMRCO) (ORIFN,GMRCO)="" Q
+"RTN","GMRCR",54,0)
+ K ORIFN,GMRCO,GMRCSR
+"RTN","GMRCR",55,0)
+ Q
+"RTN","GMRCR",56,0)
+RESULT ;Entry point to set up variable pointer to results and update OE/RR status
+"RTN","GMRCR",57,0)
+ Q
+"RTN","GMRCR",58,0)
+ Q:'$D(GMRCSR)  Q:'$D(GMRCO)  S (GMRCSS,GMRCSSNM,GMRCNM,GMRC,GMRCVP)=""
+"RTN","GMRCR",59,0)
+ S GMRCOM=0,GMR(0)=$S($D(^GMR(123,+GMRCO,0)):^(0),1:""),GMRCSS=$P(GMR(0),"^",5) I GMRCSS,$D(^GMR(123.5,GMRCSS,0)) S GMRCSSNM=$S($L($P(^GMR(123.5,GMRCSS,0),"^",9)):$P(^(0),"^",9),1:$P(^(0),"^"))
+"RTN","GMRCR",60,0)
+ S GMRCVP=$P(GMR(0),"^",8) I +GMRCVP S DIC="^"_$P(GMRCVP,";",2)_$P(GMRCVP,";")_",0)" I $L(DIC),$D(@DIC) S GMRCNM=@(DIC),GMRCNM=$P(GMRCNM,"^",2)
+"RTN","GMRCR",61,0)
+ I '$D(ORSTS) S ORSTS=6 ;Assume order entry status of active
+"RTN","GMRCR",62,0)
+ S GMRCA=$O(^GMR(123.1,"AC",+ORSTS,"")) I 'GMRCA S GMRCA=9
+"RTN","GMRCR",63,0)
+ S DIE=123,DA=GMRCO,DR="11////^S X=GMRCSR;8////^S X=ORSTS;9////^S X=GMRCA"
+"RTN","GMRCR",64,0)
+ L +^GMR(123,GMRCO):$S($G(DILOCKTM)>0:DILOCKTM,1:5) I '$T S GMRCMSG="Consult/Request Is Being Used By Another User.",GMRCMSG(1)="RESULT UPDATE WAS UNSUCCESSFUL!  Try Again Later" D EXAC^GMRCADC(.GMRCMSG) K GMRCO,ORIFN,GMRCMSG D KILL Q
+"RTN","GMRCR",65,0)
+ D ^DIE K DIE,DA,DR
+"RTN","GMRCR",66,0)
+ L -^GMR(123,GMRCO) D AUDIT^GMRCP
+"RTN","GMRCR",67,0)
+ S:'$D(ORIFN) ORIFN=$P(^GMR(123,+GMRCO,0),"^",3)
+"RTN","GMRCR",68,0)
+ S GMRCORNP=$P(GMR(0),"^",14),GMRCTYPE=$P(GMR(0),"^",17)
+"RTN","GMRCR",69,0)
+ I $L($P(GMR(0),"^",14)),$P(GMR(0),"^",14)'=DUZ S GMRCADUZ($P(GMR(0),"^",14))=""
+"RTN","GMRCR",70,0)
+ I ORIFN D EN^GMRCHL7(DFN,GMRCO,$G(GMRCTYPE),$G(GMRCRB),"RE",GMRCORNP,$G(GMRCVSIT),.GMRCOM)
+"RTN","GMRCR",71,0)
+ K GMR,GMRCSS,GMRCORVP,GMRCVP,GMRCNM,DIC,GMRCPR
+"RTN","GMRCR",72,0)
+ Q
+"RTN","GMRCR",73,0)
+ ;
+"RTN","GMRCR",74,0)
+PACKAGE() ;  Returns the package entry number for 'CONSULT/REQUEST TRACKING"
+"RTN","GMRCR",75,0)
+ Q $$FIND1^DIC(9.4,,"QX","CONSULT/REQUEST TRACKING")
+"RTN","GMRCR",76,0)
+ ;
+"RTN","GMRCT")
+0^10^B26237233^B22357159
+"RTN","GMRCT",1,0)
+GMRCT ; SLC/DLT\JFR - Get DUZ's of users for notification to service ; 11/25/2000
+"RTN","GMRCT",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**1,5,11,18,46**;Dec 27, 1997;Build 23
+"RTN","GMRCT",3,0)
+EN(GMRCSRV,USER,TEST) ;Get who is to be notified for alert action
+"RTN","GMRCT",4,0)
+ ; return them in array GMRCADUZ(DUZ)=""
+"RTN","GMRCT",5,0)
+ N GMRCLIS,GMRCHKD,GMRCNT,GMRCLP,GMRCQUIT
+"RTN","GMRCT",6,0)
+ D RECIP(GMRCSRV,$G(TEST)) I $D(TEST),$G(USER),$D(GMRCADUZ(USER)) Q
+"RTN","GMRCT",7,0)
+ I '$P(^GMR(123.5,+GMRCSRV,0),U,8) Q  ; don't check parents
+"RTN","GMRCT",8,0)
+ S GMRCHKD(GMRCSRV)="",GMRCNT=1
+"RTN","GMRCT",9,0)
+ D FINDPAR^GMRCAU(GMRCSRV,.GMRCNT) I '$D(GMRCLIS) Q
+"RTN","GMRCT",10,0)
+ S GMRCLP=0
+"RTN","GMRCT",11,0)
+ F  S GMRCLP=$O(GMRCLIS(GMRCLP)) Q:'GMRCLP  D  I $D(GMRCQUIT) Q
+"RTN","GMRCT",12,0)
+ . I +$P(GMRCLIS(GMRCLP),U,2) K GMRCLIS(GMRCLP) Q  ;been checked
+"RTN","GMRCT",13,0)
+ . I '$D(GMRCHKD(+GMRCLIS(GMRCLP))) D
+"RTN","GMRCT",14,0)
+ .. ; check parent 
+"RTN","GMRCT",15,0)
+ .. D RECIP(+GMRCLIS(GMRCLP),$G(TEST)) I $G(USER),$D(GMRCADUZ(USER)) D  Q
+"RTN","GMRCT",16,0)
+ ... S GMRCQUIT=1
+"RTN","GMRCT",17,0)
+ .. S GMRCHKD(+GMRCLIS(GMRCLP))=""
+"RTN","GMRCT",18,0)
+ . S $P(GMRCLIS(GMRCLP),U,2)=1
+"RTN","GMRCT",19,0)
+ . I $P(^GMR(123.5,+GMRCLIS(GMRCLP),0),U,8) D  ;check parents, fld .08 =1
+"RTN","GMRCT",20,0)
+ .. D FINDPAR^GMRCAU(+GMRCLIS(GMRCLP),.GMRCNT)
+"RTN","GMRCT",21,0)
+ . S GMRCLP=0 ;start back at top and don't miss any
+"RTN","GMRCT",22,0)
+ Q
+"RTN","GMRCT",23,0)
+RECIP(GMRCSS,NOTNULL) ;gather recipients for GMRCSS
+"RTN","GMRCT",24,0)
+ N GMRCTM,GMRCTMI,GMRCLST,GMRCER,GMRCHL,GMRCSSI,GMRCU,GMRCWL
+"RTN","GMRCT",25,0)
+ ;I $D(^GMR(123.5,GMRCSS,123)),$P(^GMR(123.5,GMRCSS,123),"^",8),(('$G(NOTNULL))&($P(^GMR(123.5,GMRCSS,123),"^",8)'=DUZ)!($G(NOTNULL))) S GMRCADUZ($P(^(123),"^",8))=$S($G(NOTNULL):$$NOTSERV($P(^(123),"^",8)),1:"")
+"RTN","GMRCT",26,0)
+ I $D(^GMR(123.5,GMRCSS,123)),$P(^GMR(123.5,GMRCSS,123),"^",8),($P(^GMR(123.5,GMRCSS,123),"^",8)'=DUZ)!$G(NOTNULL) S GMRCADUZ($P(^(123),"^",8))=$S($G(NOTNULL):$$NOTSERV($P(^(123),"^",8)),1:"")
+"RTN","GMRCT",27,0)
+ I $D(^GMR(123.5,GMRCSS,123.1)) D TEAM
+"RTN","GMRCT",28,0)
+ I $D(^GMR(123.5,GMRCSS,123.2)),+$G(GMRCO) D LOC
+"RTN","GMRCT",29,0)
+ I $D(^GMR(123.5,GMRCSS,123.33)) D ADMU
+"RTN","GMRCT",30,0)
+ I $D(^GMR(123.5,GMRCSS,123.34)) D ADMT
+"RTN","GMRCT",31,0)
+ Q
+"RTN","GMRCT",32,0)
+LOC ;Find the patients location and match to location assignments
+"RTN","GMRCT",33,0)
+ S GMRCWL="",GMRCHL=""
+"RTN","GMRCT",34,0)
+ I +$G(GMRCO) S GMRCHL=$P(^GMR(123,+GMRCO,0),"^",4) I GMRCHL S GMRCWL=$G(^SC(GMRCHL,42)) S:GMRCWL GMRCWL=GMRCWL_";DIC(42," S GMRCHL=GMRCHL_";SC("
+"RTN","GMRCT",35,0)
+ E  S:+$G(GMRCWLI) GMRCWL=GMRCWLI_";DIC(42," S:+$G(GMRCHLI) GMRCHL=GMRCHLI_";SC("
+"RTN","GMRCT",36,0)
+ I +GMRCWL S GMRCSSI=$O(^GMR(123.5,GMRCSS,123.2,"B",GMRCWL,"")) I GMRCSSI D LOC1
+"RTN","GMRCT",37,0)
+ I +GMRCHL S GMRCSSI=$O(^GMR(123.5,GMRCSS,123.2,"B",GMRCHL,"")) I GMRCSSI D LOC1
+"RTN","GMRCT",38,0)
+ Q
+"RTN","GMRCT",39,0)
+LOC1 ;Get user and/or team assigned to location
+"RTN","GMRCT",40,0)
+ N GMRCUSER
+"RTN","GMRCT",41,0)
+ S GMRCUSER=$P($G(^GMR(123.5,GMRCSS,123.2,GMRCSSI,0)),"^",2)
+"RTN","GMRCT",42,0)
+ ;I GMRCUSER,(('$G(NOTNULL))&(GMRCUSER'=DUZ)!($G(NOTNULL))) S GMRCADUZ(GMRCUSER)=$S($G(NOTNULL):$$NOTSERV(GMRCUSER),1:"") ;If not user taking action, then add to notification list
+"RTN","GMRCT",43,0)
+ I GMRCUSER,(GMRCUSER'=DUZ)!($G(NOTNULL)) S GMRCADUZ(GMRCUSER)=$S($G(NOTNULL):$$NOTSERV(GMRCUSER),1:"") ;If not user taking action, then add to notification list
+"RTN","GMRCT",44,0)
+ I $P(^GMR(123.5,GMRCSS,123.2,GMRCSSI,0),"^",3) S GMRCTMI=$P(^(0),"^",3) D TEAM1
+"RTN","GMRCT",45,0)
+ Q
+"RTN","GMRCT",46,0)
+ADMU ;Get notification recips from admin users field (123.33)
+"RTN","GMRCT",47,0)
+ ;Loop "AC" x-ref to get those admin users marked as notif recipients
+"RTN","GMRCT",48,0)
+ N RECIP
+"RTN","GMRCT",49,0)
+ S RECIP=0
+"RTN","GMRCT",50,0)
+ F  S RECIP=$O(^GMR(123.5,GMRCSS,123.33,"AC",1,RECIP)) Q:'RECIP  D
+"RTN","GMRCT",51,0)
+ . I '$G(NOTNULL),RECIP=DUZ Q  ;Don't notify user taking action
+"RTN","GMRCT",52,0)
+ . S GMRCADUZ(RECIP)=$S($G(NOTNULL):$$NOTSERV(RECIP),1:"")
+"RTN","GMRCT",53,0)
+ Q
+"RTN","GMRCT",54,0)
+ADMT ;Get notification recips from admin teams field (123.34)
+"RTN","GMRCT",55,0)
+ ;Loop "AC" x-ref to get those admin teams marked as notif recipients
+"RTN","GMRCT",56,0)
+ ;call TEAM1 to get list of users and add to recip list
+"RTN","GMRCT",57,0)
+ N GMRCTMI S GMRCTMI=0
+"RTN","GMRCT",58,0)
+ F  S GMRCTMI=$O(^GMR(123.5,GMRCSS,123.34,"AC",1,GMRCTMI)) Q:'GMRCTMI  D
+"RTN","GMRCT",59,0)
+ . D TEAM1
+"RTN","GMRCT",60,0)
+TEAM ;Loop through Teams to send all users notifications
+"RTN","GMRCT",61,0)
+ S GMRCTM=0 F  S GMRCTM=$O(^GMR(123.5,GMRCSS,123.1,GMRCTM)) Q:'+GMRCTM  S GMRCTMI=$P($G(^GMR(123.5,GMRCSS,123.1,GMRCTM,0)),"^") I GMRCTMI D TEAM1
+"RTN","GMRCT",62,0)
+ Q
+"RTN","GMRCT",63,0)
+TEAM1 ;Get user DUZ's from Team pointed to in File
+"RTN","GMRCT",64,0)
+ S GMRCLST="" D TEAMPROV^ORQPTQ1(.GMRCLST,GMRCTMI)
+"RTN","GMRCT",65,0)
+ Q:$S('$O(GMRCLST(0)):1,$P(GMRCLST(1),"^",2)="No providers found.":1,1:0)
+"RTN","GMRCT",66,0)
+ S GMRCU=0 F  S GMRCU=$O(GMRCLST(GMRCU)) Q:GMRCU=""  D
+"RTN","GMRCT",67,0)
+ . I $P($G(GMRCLST(GMRCU)),"^",1)=DUZ Q  ;Don't notify user taking action
+"RTN","GMRCT",68,0)
+ . I '$G(NOTNULL),$P($G(GMRCLST(GMRCU)),"^",1)'=DUZ D  Q
+"RTN","GMRCT",69,0)
+ .. S GMRCADUZ($P(GMRCLST(GMRCU),"^",1)_U_GMRCTMI)=""
+"RTN","GMRCT",70,0)
+ . S GMRCADUZ($P(GMRCLST(GMRCU),"^",1))=$S($G(NOTNULL):$$NOTSERV(GMRCU),1:"")
+"RTN","GMRCT",71,0)
+ K GMRCLST
+"RTN","GMRCT",72,0)
+ Q
+"RTN","GMRCT",73,0)
+NOTSERV(RECIP) ;set GMRCADUZ(RECIP)=all services they receive for
+"RTN","GMRCT",74,0)
+ I '$D(GMRCADUZ(RECIP)) Q $P(^GMR(123.5,+GMRCSS,0),U)
+"RTN","GMRCT",75,0)
+ Q GMRCADUZ(RECIP)_"~"_$P(^GMR(123.5,+GMRCSS,0),U)
+"RTN","GMRCT",76,0)
+TEST ; called from GMRC NOTIF RECIPIENTS
+"RTN","GMRCT",77,0)
+ N GMRCSRV,GMRCUSR,GMRCADUZ
+"RTN","GMRCT",78,0)
+ N DIR,DIROUT,DIRUT,DUOUT,DTOUT,X,Y
+"RTN","GMRCT",79,0)
+ S DIR(0)="PO^123.5:EM",DIR("A")="Select Consult Service"
+"RTN","GMRCT",80,0)
+ S DIR("?")="Choose the consult service to check update status of user"
+"RTN","GMRCT",81,0)
+ S DIR("??")="^D TESTHELP^GMRCAU(""ALL SERVICES"")" D ^DIR
+"RTN","GMRCT",82,0)
+ I $D(DIRUT) Q
+"RTN","GMRCT",83,0)
+ S GMRCSRV=+Y
+"RTN","GMRCT",84,0)
+ N DIR
+"RTN","GMRCT",85,0)
+ S DIR(0)="PO^200:EM",DIR("A")="Choose notification recipient"
+"RTN","GMRCT",86,0)
+ D ^DIR I $D(DIRUT) Q
+"RTN","GMRCT",87,0)
+ S GMRCUSR=+Y
+"RTN","GMRCT",88,0)
+ D EN(GMRCSRV,GMRCUSR,1)
+"RTN","GMRCT",89,0)
+ I $D(GMRCADUZ(GMRCUSR)) D
+"RTN","GMRCT",90,0)
+ . W !!,"This user is a notification recipients for "_GMRCADUZ(GMRCUSR),!
+"RTN","GMRCT",91,0)
+ . I GMRCADUZ(GMRCUSR)'=$P(^GMR(123.5,GMRCSRV,0),U) D
+"RTN","GMRCT",92,0)
+ .. D HIER(GMRCADUZ(GMRCUSR))
+"RTN","GMRCT",93,0)
+ . W !!
+"RTN","GMRCT",94,0)
+ I '$D(GMRCADUZ(GMRCUSR)) W !!,"This user is not a notification recipient.",!!
+"RTN","GMRCT",95,0)
+ G TEST
+"RTN","GMRCT",96,0)
+HIER(SERV) ;ask to see the hierarchy
+"RTN","GMRCT",97,0)
+ N DIR,DIRUT,DUOUT,DTOUT
+"RTN","GMRCT",98,0)
+ S DIR(0)="Y"
+"RTN","GMRCT",99,0)
+ S DIR("A")="View hierarchy from this service to the selected service"
+"RTN","GMRCT",100,0)
+ S DIR("B")="NO"
+"RTN","GMRCT",101,0)
+ D ^DIR
+"RTN","GMRCT",102,0)
+ I Y>0 D TESTHELP^GMRCAU(SERV)
+"RTN","GMRCT",103,0)
+ Q
+"RTN","GMRCT",104,0)
+TSTINTRO ; entry action for GMRC USER NOTIFICATION
+"RTN","GMRCT",105,0)
+ W !,"This option will list how a given user became a notification recipient"
+"RTN","GMRCT",106,0)
+ W !,"for a selected consult service. If the PROCESS PARENTS FOR NOTIFS field is"
+"RTN","GMRCT",107,0)
+ W !,"set to YES, all the parents of the service will also be processed to"
+"RTN","GMRCT",108,0)
+ W !,"determine if the user is a recipient via that service.",!!
+"RTN","GMRCT",109,0)
+ Q
+"RTN","GMRCTIU1")
+0^11^B34204010^B33817325
+"RTN","GMRCTIU1",1,0)
+GMRCTIU1 ;SLC/JER - More CT/TIU interface modules ;7/9/2003 [7/9/03 1:51pm]
+"RTN","GMRCTIU1",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**1,4,21,17,34,46**;DEC 27, 1997;Build 23
+"RTN","GMRCTIU1",3,0)
+ ;
+"RTN","GMRCTIU1",4,0)
+ ;This routine invokes IA #2693
+"RTN","GMRCTIU1",5,0)
+ROLLBACK(DA,TIUDA) ; Roll-back a CT record when result is deleted or
+"RTN","GMRCTIU1",6,0)
+ ;reassigned
+"RTN","GMRCTIU1",7,0)
+ ;Disassociate Note logic
+"RTN","GMRCTIU1",8,0)
+ ;The action removes the association of a TIU note with a consult.
+"RTN","GMRCTIU1",9,0)
+ ;The new CPRS status will change to "ACTIVE", unless one of the
+"RTN","GMRCTIU1",10,0)
+ ;remaining notes has a completed status. 
+"RTN","GMRCTIU1",11,0)
+ ;This action should send an alert to the service notification users.
+"RTN","GMRCTIU1",12,0)
+ N DIE,DR,GMRCSTS,GMRCA,GMRCO,GMRCOM,GMRCORNP,GMRCDFN,GMRCNODE,GMRCLIST,GMRCD0,GMRCD1,GMRCSF,GMRCADUZ,MSGTOSRV,GMRCATX,GMRCORTX,GMRCSTAR,GMRCERR,ACTDA,ACTREC,GMRCLSCH,GMRCLER,GMRCRBDA,GMRCTDA,GMRCRSLT
+"RTN","GMRCTIU1",13,0)
+ S GMRCNODE=$G(^GMR(123,+DA,0))
+"RTN","GMRCTIU1",14,0)
+ ; If current result has never been posted, no need to roll back
+"RTN","GMRCTIU1",15,0)
+ ; Patch GMRC*1*21
+"RTN","GMRCTIU1",16,0)
+ I '+$O(^GMR(123,+DA,50,"B",+TIUDA_";TIU(8925,",0)) Q
+"RTN","GMRCTIU1",17,0)
+ I ($P(GMRCNODE,U,20)=TIUDA) S DIE="^GMR(123,",DR="16///@" D ^DIE
+"RTN","GMRCTIU1",18,0)
+ S GMRCD0=DA,GMRCD1=0 F  S GMRCD1=$O(^GMR(123,GMRCD0,50,GMRCD1)) Q:'GMRCD1  D
+"RTN","GMRCTIU1",19,0)
+ .N DA,DIK
+"RTN","GMRCTIU1",20,0)
+ .Q:'(TIUDA=+$G(^GMR(123,GMRCD0,50,GMRCD1,0)))
+"RTN","GMRCTIU1",21,0)
+ .S DA(1)=GMRCD0,DA=GMRCD1
+"RTN","GMRCTIU1",22,0)
+ .S DIK="^GMR(123,"_DA(1)_",50,"
+"RTN","GMRCTIU1",23,0)
+ .D ^DIK
+"RTN","GMRCTIU1",24,0)
+ ;
+"RTN","GMRCTIU1",25,0)
+ S GMRCA=12,GMRCO=DA
+"RTN","GMRCTIU1",26,0)
+ D GETLIST^GMRCTIUL(DA,2,1,.GMRCLIST)
+"RTN","GMRCTIU1",27,0)
+ S GMRCSTS=9
+"RTN","GMRCTIU1",28,0)
+ ;Following if statement and DO block accomplish the following
+"RTN","GMRCTIU1",29,0)
+ ;If there are no other associated TIU Docs then
+"RTN","GMRCTIU1",30,0)
+ ;Set status to scheduled if it was last status before the TIU doc
+"RTN","GMRCTIU1",31,0)
+ ;Set status to pending if it was the last status before the TIU doc
+"RTN","GMRCTIU1",32,0)
+ ;Set status to active otherwise
+"RTN","GMRCTIU1",33,0)
+ I '$G(GMRCLIST(0)) S GMRCSTS=6 D
+"RTN","GMRCTIU1",34,0)
+ .S ACTDA=0,ACTREC=0,GMRCRBDA=0,GMRCLER=-1,GMRCLSCH=-1
+"RTN","GMRCTIU1",35,0)
+ .F  S ACTDA=$O(^GMR(123,DA,40,ACTDA)) Q:-ACTDA=0  D
+"RTN","GMRCTIU1",36,0)
+ ..S ACTREC=$G(^GMR(123,DA,40,ACTDA,0))
+"RTN","GMRCTIU1",37,0)
+ ..I $P(ACTREC,U,2)=9,$P($P(ACTREC,U,9),";",1)=TIUDA S GMRCRBDA=ACTDA
+"RTN","GMRCTIU1",38,0)
+ ..I $P(ACTREC,U,2)=8 S GMRCLSCH=ACTDA
+"RTN","GMRCTIU1",39,0)
+ ..I $P(ACTREC,U,2)=11 S GMRCLER=ACTDA
+"RTN","GMRCTIU1",40,0)
+ .I GMRCLER'=-1,GMRCLER>GMRCLSCH S GMRCSTS=5
+"RTN","GMRCTIU1",41,0)
+ .I GMRCLSCH'=-1,GMRCLSCH>GMRCLER S GMRCSTS=8
+"RTN","GMRCTIU1",42,0)
+ E  S GMRCD0="" F  S GMRCD0=$O(^TMP("GMRC50",$J,GMRCD0)) Q:'$L(GMRCD0)  D
+"RTN","GMRCTIU1",43,0)
+ .Q:(+GMRCD0=TIUDA)
+"RTN","GMRCTIU1",44,0)
+ .S GMRCD1=0 F  S GMRCD1=$O(^TMP("GMRC50",$J,GMRCD0,GMRCD1)) Q:'GMRCD1  D
+"RTN","GMRCTIU1",45,0)
+ ..S:($P($G(^TMP("GMRC50",$J,GMRCD0,GMRCD1)),U,6)="completed") GMRCSTS=2
+"RTN","GMRCTIU1",46,0)
+ Q:$G(NOSAVE)
+"RTN","GMRCTIU1",47,0)
+ ;Make status completed if the Consult was Admin. Completed
+"RTN","GMRCTIU1",48,0)
+ S ACTDA=0,ACTREC=0
+"RTN","GMRCTIU1",49,0)
+ F  S ACTDA=$O(^GMR(123,DA,40,ACTDA)) Q:-ACTDA=0  D
+"RTN","GMRCTIU1",50,0)
+ .S ACTREC=$G(^GMR(123,DA,40,ACTDA,0))
+"RTN","GMRCTIU1",51,0)
+ .I $P(ACTREC,U,2)=10,$P(ACTREC,U,9)="" S GMRCSTS=2
+"RTN","GMRCTIU1",52,0)
+ D STATUS^GMRCP
+"RTN","GMRCTIU1",53,0)
+ K ^TMP("GMRC50",$J),^TMP("GMRC50R",$J)
+"RTN","GMRCTIU1",54,0)
+ ;
+"RTN","GMRCTIU1",55,0)
+ S GMRCOM=0,MSGTOSRV=0,GMRCRSLT=TIUDA_";TIU(8925," D AUDIT^GMRCP
+"RTN","GMRCTIU1",56,0)
+ ;
+"RTN","GMRCTIU1",57,0)
+ ;Build message information if status has changed or sig finding="Y"
+"RTN","GMRCTIU1",58,0)
+ S GMRCSF=$P(GMRCNODE,U,19)
+"RTN","GMRCTIU1",59,0)
+ I ($P(GMRCNODE,U,12)=$P($G(^GMR(123,GMRCO,0)),U,12)) D  Q:GMRCATX=""
+"RTN","GMRCTIU1",60,0)
+ . S GMRCATX="" Q:GMRCSF'="Y"
+"RTN","GMRCTIU1",61,0)
+ . S GMRCATX="*Removed consult note for "
+"RTN","GMRCTIU1",62,0)
+ E  S GMRCATX=$S((GMRCSF="Y"):"*",1:"")_"Reactivated consult, removed note for ",MSGTOSRV=1
+"RTN","GMRCTIU1",63,0)
+ S GMRCORNP=$P(GMRCNODE,U,14),GMRCDFN=$P(GMRCNODE,U,2)
+"RTN","GMRCTIU1",64,0)
+ S GMRCORTX=$$ORTX^GMRCAU(GMRCO)
+"RTN","GMRCTIU1",65,0)
+ S GMRCORTX=GMRCATX_GMRCORTX
+"RTN","GMRCTIU1",66,0)
+ S:((GMRCORNP)&(GMRCORNP'=DUZ)) GMRCADUZ(GMRCORNP)=""
+"RTN","GMRCTIU1",67,0)
+ S GMRCTDA=TIUDA
+"RTN","GMRCTIU1",68,0)
+ D EXTRACT^TIULQ(GMRCTDA,"GMRCSTAR",.GMRCERR,.05)
+"RTN","GMRCTIU1",69,0)
+ I '$G(GMRCERR) D
+"RTN","GMRCTIU1",70,0)
+ .I $G(GMRCSTAR(GMRCTDA,.05,"I"))'=5 D
+"RTN","GMRCTIU1",71,0)
+ ..D MSG^GMRCP(GMRCDFN,GMRCORTX,+GMRCO,23,.GMRCADUZ,MSGTOSRV)
+"RTN","GMRCTIU1",72,0)
+ Q:($P(GMRCNODE,U,12)=$P($G(^GMR(123,+GMRCO,0)),U,12))
+"RTN","GMRCTIU1",73,0)
+ ;
+"RTN","GMRCTIU1",74,0)
+ ;On status change, send "SC" (status change) HL7 msg to update order
+"RTN","GMRCTIU1",75,0)
+ D EN^GMRCHL7(GMRCDFN,+GMRCO,$G(GMRCTYPE),$G(GMRCRB),"SC",GMRCORNP,$G(GMRCVSIT),.GMRCOM)
+"RTN","GMRCTIU1",76,0)
+ Q
+"RTN","GMRCTIU1",77,0)
+ ;
+"RTN","GMRCTIU1",78,0)
+STATUS ;Update the status of a consult that has a TIU result
+"RTN","GMRCTIU1",79,0)
+ N GMRCAD,GMRCATX,GMRCOA,GMRCOSTS,GMRCOTFN,GMRC,GMRCSF,GMRCLAE,GMRCRSLT,GMRCADUZ,GMRCOADT
+"RTN","GMRCTIU1",80,0)
+ D GETOLD
+"RTN","GMRCTIU1",81,0)
+ S GMRCORNP=$G(GMRCAUTH) ;author
+"RTN","GMRCTIU1",82,0)
+ S GMRCRSLT=GMRCTUFN_";TIU(8925,"
+"RTN","GMRCTIU1",83,0)
+ ;
+"RTN","GMRCTIU1",84,0)
+ ;Evaluate whether a complete action is actually an addendum or New note
+"RTN","GMRCTIU1",85,0)
+ I GMRCA=10 S GMRCA=$$EVALACT(GMRCOSTS,+GMRCO,GMRCRSLT)
+"RTN","GMRCTIU1",86,0)
+ ;
+"RTN","GMRCTIU1",87,0)
+ ;Update the status and last activity field
+"RTN","GMRCTIU1",88,0)
+ ;Do not change the status if already completed
+"RTN","GMRCTIU1",89,0)
+ I GMRCOSTS=2,GMRCSTS=9 S GMRCSTS=2
+"RTN","GMRCTIU1",90,0)
+ D STATUS^GMRCP
+"RTN","GMRCTIU1",91,0)
+ ;
+"RTN","GMRCTIU1",92,0)
+ ;Update activity log
+"RTN","GMRCTIU1",93,0)
+ D AUDIT
+"RTN","GMRCTIU1",94,0)
+ ;
+"RTN","GMRCTIU1",95,0)
+ ;Update the last TIU entry modified and add result to result multiple
+"RTN","GMRCTIU1",96,0)
+ D ADD^GMRCTIUA(GMRCTUFN,GMRCO)
+"RTN","GMRCTIU1",97,0)
+ ;
+"RTN","GMRCTIU1",98,0)
+ ;Update order
+"RTN","GMRCTIU1",99,0)
+ S GMRCORNP=$P(^GMR(123,+GMRCO,0),"^",14)
+"RTN","GMRCTIU1",100,0)
+ D EN^GMRCHL7(GMRCDFN,+GMRCO,$G(GMRCTYPE),$G(GMRCRB),"RE",GMRCORNP,$G(GMRCVSIT),.GMRCOM)
+"RTN","GMRCTIU1",101,0)
+ ;
+"RTN","GMRCTIU1",102,0)
+ ;Send a message
+"RTN","GMRCTIU1",103,0)
+ I $$COMPLETE(GMRCA) D
+"RTN","GMRCTIU1",104,0)
+ . N GMRCDATA
+"RTN","GMRCTIU1",105,0)
+ . S GMRCATX=""
+"RTN","GMRCTIU1",106,0)
+ . I GMRCA=14 S GMRCATX="New Note for "
+"RTN","GMRCTIU1",107,0)
+ . I GMRCA=13 S GMRCATX="Addendum Added for "
+"RTN","GMRCTIU1",108,0)
+ . S GMRCATX=$S((GMRCSF="Y"):"*",1:"")_GMRCATX
+"RTN","GMRCTIU1",109,0)
+ . S GMRCORTX=GMRCATX_"Completed Consult "_$$ORTX^GMRCAU(+GMRCO)
+"RTN","GMRCTIU1",110,0)
+ . S GMRCDATA=+GMRCO
+"RTN","GMRCTIU1",111,0)
+ . S GMRCDATA=GMRCDATA_"|"_$G(GMRCRSLT)
+"RTN","GMRCTIU1",112,0)
+ . I $P(GMRC(0),"^",14),$P(GMRC(0),"^",14)'=DUZ S GMRCADUZ($P(GMRC(0),"^",14))=""
+"RTN","GMRCTIU1",113,0)
+ . D MSG^GMRCP(GMRCDFN,GMRCORTX,GMRCDATA,23,.GMRCADUZ,0)
+"RTN","GMRCTIU1",114,0)
+ . Q
+"RTN","GMRCTIU1",115,0)
+ Q
+"RTN","GMRCTIU1",116,0)
+ ;
+"RTN","GMRCTIU1",117,0)
+GETOLD ;save the old values of status, and the last activity data
+"RTN","GMRCTIU1",118,0)
+ ;to determine how to update status and TIU activity log
+"RTN","GMRCTIU1",119,0)
+ S GMRC(0)=$G(^GMR(123,+GMRCO,0))
+"RTN","GMRCTIU1",120,0)
+ S GMRCDFN=$P(GMRC(0),"^",2)
+"RTN","GMRCTIU1",121,0)
+ S GMRCSF=$P(GMRC(0),U,19)
+"RTN","GMRCTIU1",122,0)
+ S GMRCOSTS=$P(GMRC(0),"^",12) ;status before activity
+"RTN","GMRCTIU1",123,0)
+ S GMRCLAE=+$P($G(^GMR(123,+GMRCO,40,0)),U,3) ;last activity entry
+"RTN","GMRCTIU1",124,0)
+ S GMRC(40)=$G(^GMR(123,+GMRCO,40,+GMRCLAE,0))
+"RTN","GMRCTIU1",125,0)
+ S GMRCOADT=+$P(GMRC(40),U,1) ;last activity entry date
+"RTN","GMRCTIU1",126,0)
+ S GMRCOA=$P(GMRC(40),"^",2) ;last activity
+"RTN","GMRCTIU1",127,0)
+ S GMRCOTFN=$P(GMRC(40),"^",9) ;last result
+"RTN","GMRCTIU1",128,0)
+ Q
+"RTN","GMRCTIU1",129,0)
+ ;
+"RTN","GMRCTIU1",130,0)
+AUDIT ;Determine appropriate update activity.
+"RTN","GMRCTIU1",131,0)
+ ;Quit if new activity is same as previous "Incomplete Rpt" activity
+"RTN","GMRCTIU1",132,0)
+ I GMRCOTFN=GMRCRSLT,GMRCOA=9,GMRCOA=GMRCA,GMRCOSTS=GMRCSTS Q
+"RTN","GMRCTIU1",133,0)
+ ;
+"RTN","GMRCTIU1",134,0)
+ S GMRCOM=0
+"RTN","GMRCTIU1",135,0)
+ S GMRCDT=$$NOW^XLFDT
+"RTN","GMRCTIU1",136,0)
+ ;Check for overwrite of incomplete rpt activity if the new
+"RTN","GMRCTIU1",137,0)
+ ;activity occurs within 15 minutes of the last.
+"RTN","GMRCTIU1",138,0)
+ S GMRCOADT=$$FMADD^XLFDT(GMRCOADT,0,0,15)
+"RTN","GMRCTIU1",139,0)
+ I GMRCOTFN=GMRCRSLT,GMRCOA=9,$$COMPLETE(GMRCA),GMRCDT<GMRCOADT D AUDIT1 Q
+"RTN","GMRCTIU1",140,0)
+ D AUDIT^GMRCP Q
+"RTN","GMRCTIU1",141,0)
+ Q
+"RTN","GMRCTIU1",142,0)
+ ;
+"RTN","GMRCTIU1",143,0)
+AUDIT1 ;overwrite last activity
+"RTN","GMRCTIU1",144,0)
+ L +^GMR(123,+GMRCO,40):5 I '$T S GMRCUT=1,GMRCERR=1,GMRCERMS="Activity Trail Not filed - Consult In Use By Another User." L -^GMR(123,+GMRCO,40)  Q
+"RTN","GMRCTIU1",145,0)
+ S DA=$P(^GMR(123,+GMRCO,40,0),"^",3)
+"RTN","GMRCTIU1",146,0)
+ D AUDIT1^GMRCP
+"RTN","GMRCTIU1",147,0)
+ Q
+"RTN","GMRCTIU1",148,0)
+ ;
+"RTN","GMRCTIU1",149,0)
+COMPLETE(GMRCA) ;Determine if the action is a complete action (10,13,14)
+"RTN","GMRCTIU1",150,0)
+ Q $S(GMRCA=13:1,GMRCA=14:1,GMRCA=10:1,1:0)
+"RTN","GMRCTIU1",151,0)
+ ;
+"RTN","GMRCTIU1",152,0)
+EVALACT(GMRCOSTS,GMRCO,GMRCRSLT) ;Evaluate complete action based on prev results and sts
+"RTN","GMRCTIU1",153,0)
+ N EVALA,GMRCLAE
+"RTN","GMRCTIU1",154,0)
+ I '$D(^GMR(123,+GMRCO,50)) Q 10
+"RTN","GMRCTIU1",155,0)
+ I GMRCOSTS'=2 Q 10
+"RTN","GMRCTIU1",156,0)
+ I '$D(^GMR(123,+GMRCO,50,"B",GMRCRSLT)) Q 14
+"RTN","GMRCTIU1",157,0)
+ S EVALA=0,GMRCLAE=+$P($G(^GMR(123,+GMRCO,40,0)),U,3)+1
+"RTN","GMRCTIU1",158,0)
+ F  S GMRCLAE=$O(^GMR(123,+GMRCO,40,GMRCLAE),-1) Q:'GMRCLAE  D  Q:+EVALA
+"RTN","GMRCTIU1",159,0)
+ . S GMRCLAE(40)=^GMR(123,+GMRCO,40,GMRCLAE,0)
+"RTN","GMRCTIU1",160,0)
+ . I $P(GMRCLAE(40),U,9)=GMRCRSLT D
+"RTN","GMRCTIU1",161,0)
+ .. I $P(GMRCLAE(40),U,2)=9 S EVALA=14 Q
+"RTN","GMRCTIU1",162,0)
+ .. I $$COMPLETE($P(GMRCLAE(40),U,2)) S EVALA=13 Q
+"RTN","GMRCTIU1",163,0)
+ I +EVALA Q EVALA
+"RTN","GMRCTIU1",164,0)
+ Q 10
+"RTN","GMRCTIU1",165,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",6339,6)
+^67
+**END**
+**END**
