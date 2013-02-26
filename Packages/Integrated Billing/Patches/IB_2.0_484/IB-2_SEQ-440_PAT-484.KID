@@ -726,36 +726,3 @@ MSG(X) ;
 ^440
 **END**
 **END**
-tivated " D MES^XPDUTL(.IBA) K IBA
-"RTN","IBYP484",53,0)
- Q
-"RTN","IBYP484",54,0)
- ;
-"RTN","IBYP484",55,0)
- ;
-"RTN","IBYP484",56,0)
- ;
-"RTN","IBYP484",57,0)
-MCCRUTL(X,P) ; returns IFN of item in 399.1 if Name is found and piece P is true
-"RTN","IBYP484",58,0)
- N IBX,IBY S IBY=""
-"RTN","IBYP484",59,0)
- I $G(X)'="" S IBX=0 F  S IBX=$O(^DGCR(399.1,"B",X,IBX)) Q:'IBX  I $P($G(^DGCR(399.1,IBX,0)),U,+$G(P)) S IBY=IBX
-"RTN","IBYP484",60,0)
- Q IBY
-"RTN","IBYP484",61,0)
- ;
-"RTN","IBYP484",62,0)
-MSG(X) ;
-"RTN","IBYP484",63,0)
- N IBX S IBX=$O(IBA(999999),-1) S:'IBX IBX=1 S IBX=IBX+1
-"RTN","IBYP484",64,0)
- S IBA(IBX)=$G(X)
-"RTN","IBYP484",65,0)
- Q
-"VER")
-8.0^22.0
-"BLD",9145,6)
-^440
-**END**
-**END**
