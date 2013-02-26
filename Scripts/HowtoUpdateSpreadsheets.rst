@@ -27,7 +27,7 @@ Run ``xlsx2csv`` to convert the ``.xls`` files to ``.csv`` format::
 
  mkdir -p Packages/Uncategorized &&
  for xls in *.xls; do
-   csv="Packages/Uncategorized/${f/xls/csv}" &&
+   csv="Packages/Uncategorized/${xls/xls/csv}" &&
    python xlsx2csv/xlsx2csv.py --ignoreempty --dateformat='%Y-%m-%d' "${xls}" "${csv}" &&
    fromdos "${csv}"
  done &&
