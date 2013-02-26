@@ -36,6 +36,9 @@ Run ``xlsx2csv`` to convert the ``.xls`` files to ``.csv`` format::
 
 Remove extra rows from end of files by hand if desired.
 
+If xlsx2csv complains about the format, use MS Excel to convert the
+.xls files to .xlsx and adjust the above command accordingly.
+
 Commit
 ------
 
