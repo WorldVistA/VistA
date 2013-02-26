@@ -1,0 +1,60 @@
+#---------------------------------------------------------------------------
+# Copyright 2011 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+import sys
+sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
+
+from OSEHRAHelper import ConnectToMUMPS,PROMPT
+
+VistA=ConnectToMUMPS("${logfile}","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
+if VistA.type=='cache':
+  try:
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
+  except IndexError,no_namechange:
+    pass
+VistA.wait(PROMPT)
+VistA.write('D LIST^ZGI("${VISTA_BINARY_DIR}/globals.lst","${TEST_VISTA_FRESH_M_DIR}/")')
+VistA.wait(PROMPT, ${TEST_VISTA_FRESH_GLOBALS_IMPORT_TIMEOUT})
+VistA.write('D ^ZTMGRSET')
+while True:
+  index = VistA.multiwait(['Should I continue?', 'System:'])
+  if index == 0:
+    VistA.write('YES')
+    continue
+  elif index == 1:
+    break
+if VistA.type =='cache':
+  VistA.write('3')
+  VistA.wait('NAME OF')
+  VistA.write('${VISTA_CACHE_NAMESPACE}')
+  VistA.wait('PRODUCTION')
+  VistA.write('${VISTA_CACHE_NAMESPACE}')
+  VistA.wait('NAME OF')
+  VistA.write('${VISTA_CACHE_NAMESPACE}')
+else:
+  VistA.write('8')
+  VistA.wait('NAME OF')
+  VistA.write('${TEST_VISTA_SETUP_UCI_NAME},${TEST_VISTA_SETUP_VOLUME_SET}')
+  VistA.wait('PRODUCTION')
+  VistA.write('${TEST_VISTA_SETUP_UCI_NAME},${TEST_VISTA_SETUP_VOLUME_SET}')
+  VistA.wait('NAME OF')
+  VistA.write('${TEST_VISTA_SETUP_VOLUME_SET}')
+  VistA.wait('The temp directory for the system')
+  VistA.write('')
+VistA.wait('Want to rename the FileMan routines: No//')
+VistA.write('YES')
+VistA.wait(PROMPT, 200)

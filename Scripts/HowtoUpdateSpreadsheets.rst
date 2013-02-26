@@ -41,7 +41,7 @@ Run ``xlsx2csv`` to convert the ``.xls`` files to ``.csv`` format::
 
  mkdir -p Packages/Uncategorized &&
  for xls in *.xls; do
-   csv="Packages/Uncategorized/${f/xls/csv}" &&
+   csv="Packages/Uncategorized/${xls/xls/csv}" &&
    python xlsx2csv/xlsx2csv.py --ignoreempty --dateformat='%Y-%m-%d' "${xls}" "${csv}" &&
    fromdos "${csv}"
  done &&
@@ -49,6 +49,9 @@ Run ``xlsx2csv`` to convert the ``.xls`` files to ``.csv`` format::
  rm -rf xlsx2csv
 
 Remove extra rows from end of files by hand if desired.
+
+If xlsx2csv complains about the format, use MS Excel to convert the
+.xls files to .xlsx and adjust the above command accordingly.
 
 Commit
 ------

@@ -1,0 +1,131 @@
+#---------------------------------------------------------------------------
+# Copyright 2012 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the 'License');
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an 'AS IS' BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+from __future__ import with_statement
+import sys
+import os
+sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
+
+from OSEHRAHelper import ConnectToMUMPS,PROMPT
+
+def listFileManFileAttributes(FileManNo, outputFile, logFile):
+  VistA=ConnectToMUMPS(sys.argv[3],'${VISTA_CACHE_INSTANCE}','${VISTA_CACHE_NAMESPACE}')
+  if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+    VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
+  if VistA.type=='cache':
+    try:
+      VistA.ZN('${VISTA_CACHE_NAMESPACE}')
+    except IndexError,no_namechange:
+      pass
+  VistA.wait(PROMPT)
+  VistA.write('D ^%ZIS')
+  VistA.wait('DEVICE:')
+  VistA.write('HOME;300;999')
+  VistA.wait(PROMPT)
+  try:
+    duz = 1
+    VistA.write('S DUZ=%d D Q^DI' % duz)
+    VistA.wait('Select OPTION:')
+    # data dictionary utilities
+    VistA.write('8' )
+    VistA.wait('Select DATA DICTIONARY UTILITY OPTION:')
+    VistA.write('1') # list file attributes
+    VistA.wait('START WITH WHAT FILE:')
+    VistA.write(FileManNo)
+    VistA.wait('GO TO WHAT FILE:')
+    VistA.write(FileManNo)
+    while True:
+      index = VistA.multiwait(['Select SUB-FILE:',
+                            'Select LISTING FORMAT:'])
+      if index == 0:
+        VistA.write('')
+        continue
+      else:
+        # brief format 2, condensed 7, standard 1
+        VistA.write('1')
+        break
+    firstStartWithField = True
+    while True:
+      index = VistA.multiwait(['ALPHABETICALLY BY LABEL?',
+                            'Start with field:',
+                            'DEVICE:',
+                            'HOST FILE NAME:',
+                            'PARAMETERS'])
+      if index == 0:
+        VistA.write('No')
+        continue
+      elif index == 1:
+        if not firstStartWithField:
+           VistA.write('?')
+           continue
+        firstStartWithField = False
+        VistA.write('?')
+        # print out all fields to mitigate some of the parsing problem with the schema file output
+        while True:
+          idx = VistA.multiwait(['Start with field:',
+                              'Do you want the entire [0-9-Entry ]*FIELD[S ]* List?',
+                              'Do you want the entire [0-9]*-Entry ATTRIBUTE List?',
+                              '\'\^\' TO STOP:'])
+          if idx == 0:
+            # using default
+            VistA.write('')
+            break
+          elif idx == 1 or idx == 2:
+            VistA.write('Y')
+            continue
+          elif idx == 3:
+            VistA.write('')
+            continue
+          else:
+            print ('Unexpected index value %d, send \'\\r\'' % idx)
+            VistA.write('')
+            continue
+        continue
+      elif index == 2:
+        VistA.write('HFS;999;99999')
+        continue
+      elif index == 3:
+        VistA.write(outputFile)
+        continue
+      elif index ==4:
+        if VistA.type == 'cache':
+          VistA.write('')
+        else:
+          VistA.write('NEWVERSION:NOREADONLY:VARIABLE')
+        break
+    while True:
+      index = VistA.multiwait(['Select DATA DICTIONARY UTILITY OPTION:',
+                            'FORM\(S\)\/BLOCK\(S\):',
+                            '\a'])
+      if index == 0:
+        VistA.write('')
+        break
+      if index == 1 or index == 2:
+        VistA.write('')
+        continue
+    VistA.wait('Select OPTION:')
+    VistA.write('')
+    VistA.wait(PROMPT)
+    VistA.write('HALT')
+  except EOFError:
+    print 'Error'
+
+if __name__ == '__main__':
+  print ('sys.argv is %s' % sys.argv)
+  if len(sys.argv) <= 1:
+    print ('Need at least two arguments')
+    sys.exit()
+  listFileManFileAttributes(sys.argv[1],
+                            sys.argv[2], sys.argv[3])
