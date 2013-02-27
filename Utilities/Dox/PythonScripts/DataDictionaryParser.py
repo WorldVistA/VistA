@@ -595,7 +595,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         fileNo = baseName[:-len(".schema")]
         self._curGlobal = self._crossRef.getGlobalByFileNo(fileNo)
         if not self._curGlobal:
-            logger.error("Could not find global based on file# %d" % fileNo)
+            logger.error("Could not find global based on file# %s" % fileNo)
             return
         for line in logFileHandle:
             # handle the empty line
@@ -633,24 +633,30 @@ def testOutput(DDFileParser):
       logger.info(item)
 
 import logging
-from CallerGraphParser import CallerGraphLogFileParser
+from CallerGraphParser import createCallGraphLogAugumentParser
+from CallerGraphParser import parseAllCallGraphLogWithArg
+
+def parseDataDictionaryLogFile(crossRef, fileSchemaDir):
+    DDFileParser = DataDictionaryListFileLogParser(crossRef)
+    DDFileParser.parseAllDataDictionaryListLog(fileSchemaDir, "*.schema")
+    DDFileParser.parseAllDataDictionaryListLog(fileSchemaDir, ".*.schema")
+    return DDFileParser
+
+def createDataDictionaryAugumentParser():
+    parser = argparse.ArgumentParser(add_help=False) # no help page
+    argGroup = parser.add_argument_group("Data Dictionary Parser Auguments")
+    argGroup.add_argument('-f', '--fileSchemaDir', required=True,
+                          help='VistA File Man Schema log Directory')
+    return parser
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='VistA Cross-Reference Data Dictionary Log Files Parser')
-    parser.add_argument('-l', required=True, dest='logFileDir',
-                        help='Input Data Dictionary log files directory')
-    parser.add_argument('-r', required=True, dest='repositDir',
-                        help='VistA Git Repository Directory')
-    parser.add_argument('-d', required=True, dest='docRepositDir',
-                        help='VistA Cross-Reference Git Repository Directory')
-    result = vars(parser.parse_args());
+    callLogArgParser = createCallGraphLogAugumentParser()
+    dataDictArgParser = createDataDictionaryAugumentParser()
+    parser = argparse.ArgumentParser(
+          description='VistA Cross-Reference Data Dictionary Log Files Parser',
+          parents=[callLogArgParser, dataDictArgParser])
+    result = parser.parse_args();
     initConsoleLogging()
-    logFileParser = CallerGraphLogFileParser()
-    logFileParser.parsePackagesFile(os.path.join(result['repositDir'],
-                                                 "Packages.csv"))
-    logFileParser.findGlobalsBySourceV2(os.path.join(result['repositDir'],
-                                                     "Packages"),
-                                        "*/Globals/*.zwr")
-    DDFileParser = DataDictionaryListFileLogParser(logFileParser.getCrossReference())
-    DDFileParser.parseAllDataDictionaryListLog(result['logFileDir'], "*.schema")
-    DDFileParser.parseAllDataDictionaryListLog(result['logFileDir'], ".*.schema")
+    logFileParser = parseAllCallGraphLogWithArg(result)
+    DDFileParser = parseDataDictionaryLogFile(logFileParser.getCrossReference(),
+                                              result.fileSchemaDir)
     testOutput(DDFileParser)

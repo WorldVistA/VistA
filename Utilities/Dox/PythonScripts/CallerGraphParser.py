@@ -844,64 +844,35 @@ class CallerGraphLogFileParser(object):
 #                                   globalVar.getName(),
 #                                   globalVar.getPackage().getOriginalName()])
     def parsePackagesFile(self, packageFilename):
-        packageFile = open(packageFilename, 'rb')
-        sniffer = csv.Sniffer()
-        dialect = sniffer.sniff(packageFile.read(1024))
-        packageFile.seek(0)
-        hasHeader = sniffer.has_header(packageFile.read(1024))
-        packageFile.seek(0)
-        result = csv.reader(packageFile, dialect)
+        result = csv.DictReader(open(packageFilename, 'rb'))
         crossRef = self._crossRef
-        # in the format of original name, primary namespace, additional namespace, addition globals, directory name
         currentPackage = None
         index = 0
-        for line in result:
-            if index == 0 and hasHeader:
-                index += 1
-                continue
-            if len(line[1].strip()) > 0:
-                currentPackage = crossRef.getPackageByName(line[1])
+        for row in result:
+            packageName = row['Directory Name']
+            if len(packageName) > 0:
+                currentPackage = crossRef.getPackageByName(packageName)
                 if not currentPackage:
-                    logger.debug ("Package [%s] not found" % line[1])
-                    crossRef.addPackageByName(line[1])
-                currentPackage = crossRef.getPackageByName(line[1])
-                currentPackage.setOriginalName(line[0])
+                    logger.debug ("Package [%s] not found" % packageName)
+                    crossRef.addPackageByName(packageName)
+                currentPackage = crossRef.getPackageByName(packageName)
+                currentPackage.setOriginalName(row['Package Name'])
+                vdlId = row['VDL ID']
+                if vdlId and len(vdlId):
+                    currentPackage.setDocLink(getVDLHttpLinkByID(vdlId))
             else:
                 if not currentPackage:
-                    logger.warn ("line is not under any package: %s" % line)
+                    logger.warn ("row is not under any package: %s" % row)
                     continue
-            if len(line[2]):
-                currentPackage.addNamespace(line[2])
-            if len(line[-1]):
-                currentPackage.addGlobalNamespace(line[-1])
+            if len(row['Prefixes']):
+                currentPackage.addNamespace(row['Prefixes'])
+            if len(row['Globals']):
+                currentPackage.addGlobalNamespace(row['Globals'])
         logger.info ("Total # of Packages is %d" % (len(crossRef.getAllPackages())))
     def parsePercentRoutineMappingFile(self, mappingFile):
         csvReader = csv.reader(open(mappingFile, "rb"))
         for line in csvReader:
             self._crossRef.addPercentRoutineMapping(line[0], line[1], line[2])
-    def parsePackageDocumentationLink(self, linkFile):
-        packageFile = open(linkFile, 'rb')
-        sniffer = csv.Sniffer()
-        dialect = sniffer.sniff(packageFile.read(1024))
-        packageFile.seek(0)
-        hasHeader = sniffer.has_header(packageFile.read(1024))
-        packageFile.seek(0)
-        result = csv.reader(packageFile, dialect)
-        index = 0
-        crossRef = self._crossRef
-        for line in result:
-            if hasHeader and index == 0:
-                index += 1
-                continue
-            packageName = line[0].strip()
-            package = crossRef.getPackageByName(packageName)
-            if not package:
-                logger.error("Error: package: %s not found!" % packageName)
-            else:
-                if len(line) >= 5:
-                    package.setDocLink(line[4].strip())
-                if len(line) >= 6:
-                    package.setMirrorLink(line[5].strip())
     def parsePlatformDependentRoutineFile(self, routineCSVFile):
         routineFile = open(routineCSVFile, "rb")
         sniffer = csv.Sniffer()
@@ -954,6 +925,8 @@ class CallerGraphLogFileParser(object):
         return self._crossRef.categorizeGlobalByNamespace(globalName)
 # end of class CallerGraphLogFileParser
 
+def getVDLHttpLinkByID(vdlId):
+  return "http://www.va.gov/vdl/application.asp?appid=%s" % vdlId
 #===============================================================================
 # Section for unit/regression testing routines
 #===============================================================================
@@ -968,7 +941,7 @@ RoutineNamespaceMappingTestDict = {"%ZTLOAD": ("%Z", Package("Kernel")),
 
 def testingRoutineNamespaceMapping(loggerParser, testMapping):
     for (routineName, expectedValue) in testMapping.iteritems():
-        result = logFileParser.getRoutinePackageNameSpace(routineName)
+        result = loggerParser.getRoutinePackageNameSpace(routineName)
         assert result == expectedValue, "result: %s, expect: %s" % (result, expectedValue)
 
 # regression testing functions
@@ -1056,39 +1029,60 @@ def regressionTestingMarkedItemParsing(markedItemDict, crossRef):
                 assert item in markedItems, "Marked Items: %s not found in routine %s" % (item, routineName)
                 assert len(markedItems[item].getLineOffsets()[0]) > 0
 
-def runRegressionTestingCases():
+def runRegressionTestingCases(logFileParser):
     testingRoutineNamespaceMapping(logFileParser, RoutineNamespaceMappingTestDict)
     regressionTestingLocalVarParsing(localVarRegressionTest, logFileParser.getCrossReference())
     regressionTestingGlobalVarParsing(globalVarRegressionTest, logFileParser.getCrossReference())
     regressionTestingNakedGLobalParsing(nakedGlobalsRegressionTest, logFileParser.getCrossReference())
     regressionTestingMarkedItemParsing(markedItemRegressionTest, logFileParser.getCrossReference())
 
-import logging
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='VistA Cross-Reference Log Files Parser')
-    parser.add_argument('-l', required=True, dest='logFileDir',
-                        help='Input XINDEX log files directory generated by CTest, nomally under'
-                             'CMAKE_BUILD_DIR/Docs/CallerGraph/')
-    parser.add_argument('-r', required=True, dest='repositDir',
-                        help='VistA Git Repository Directory')
-    parser.add_argument('-d', required=True, dest='docRepositDir',
-                        help='VistA Cross-Reference Git Repository Directory')
-    result = vars(parser.parse_args());
-    initConsoleLogging()
+""" generate argument parse for Parsing log related parameters """
+def createCallGraphLogAugumentParser():
+    parser = argparse.ArgumentParser(add_help=False) # no help page
+    argGroup = parser.add_argument_group(
+                              'Call Graph Log Parser Releated Arguments',
+                              "Argument for Parsing Call Graph and Schema logs")
+    argGroup.add_argument('-l', '--xindexLogDir', required=True,
+                          help='Input XINDEX log files directory, nomally under'
+                             '${CMAKE_BUILD_DIR}/Docs/CallerGraph/')
+    argGroup.add_argument('-r', '--MRepositDir', required=True,
+                          help='VistA M Component Git Repository Directory')
+    argGroup.add_argument('-b', '--patchRepositDir', required=True,
+                          help="VistA Git Repository Directory")
+    return parser
+
+def parseAllCallGraphLogWithArg(arguments):
+    return parseAllCallGraphLog(arguments.xindexLogDir,
+                                arguments.MRepositDir,
+                                arguments.patchRepositDir)
+
+def parseAllCallGraphLog(xindexLogDir, MRepositDir, patchRepositDir):
     logFileParser = CallerGraphLogFileParser()
-    logFileParser.parsePercentRoutineMappingFile(os.path.join(result['docRepositDir'],
-                                                              "PercentRoutineMapping.csv"))
-    logFileParser.parsePackagesFile(os.path.join(result['repositDir'],
+    DoxDir = 'Utilities/Dox'
+    percentMapFile = os.path.join(patchRepositDir, DoxDir,
+                                  "PercentRoutineMapping.csv")
+    logFileParser.parsePercentRoutineMappingFile(percentMapFile)
+    logFileParser.parsePackagesFile(os.path.join(patchRepositDir,
                                                  "Packages.csv"))
-    logFileParser.parsePackageDocumentationLink(os.path.join(result['docRepositDir'],
-                                                             "PackageToVDL.csv"))
-    logFileParser.parsePlatformDependentRoutineFile(os.path.join(result['docRepositDir'],
-                                                                 "PlatformDependentRoutine.csv"))
-    logFileParser.findGlobalsBySourceV2(os.path.join(result['repositDir'],
+    platformDepRtnFile = os.path.join(patchRepositDir, DoxDir,
+                                  "PlatformDependentRoutine.csv")
+    logFileParser.parsePlatformDependentRoutineFile(platformDepRtnFile)
+    logFileParser.findGlobalsBySourceV2(os.path.join(MRepositDir,
                                                      "Packages"),
                                         "*/Globals/*.zwr")
-    logFileParser.findPackagesAndRoutinesBySource(os.path.join(result['repositDir'],
+    logFileParser.findPackagesAndRoutinesBySource(os.path.join(MRepositDir,
                                                                "Packages"),
                                                   "*/Routines/*.m")
-    logFileParser.parseAllCallerGraphLog(result['logFileDir'], "*.log")
-    runRegressionTestingCases()
+    logFileParser.parseAllCallerGraphLog(xindexLogDir, "*.log")
+    return logFileParser
+
+import logging
+if __name__ == '__main__':
+    logFileParser = createCallGraphLogAugumentParser()
+    parser = argparse.ArgumentParser(
+                description='VistA Cross-Reference Call Graph Log Files Parser',
+                parents=[logFileParser])
+    initConsoleLogging()
+    result = parser.parse_args();
+    logParser = parseAllCallGraphLogWithArg(result)
+    runRegressionTestingCases(logParser)

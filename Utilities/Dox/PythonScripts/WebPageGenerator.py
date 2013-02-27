@@ -34,6 +34,7 @@ from LogManager import logger
 import logging
 from operator import itemgetter, attrgetter
 from CrossReferenceBuilder import CrossReferenceBuilder
+from CrossReferenceBuilder import createCrossReferenceLogArgumentParser
 from CrossReference import *
 
 MAX_DEPENDENCY_LIST_SIZE = 20 # Do not generate the graph if have more than 20 nodes
@@ -1875,44 +1876,36 @@ def initLogging(outputFileName):
 # main
 #===============================================================================
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='VistA Visual Cross-Reference Documentation Generator')
-    parser.add_argument('-l', required=True, dest='logFileDir',
-                        help='Input XINDEX log files directory, nomally under'
-                             '${CMAKE_BUILD_DIR}/Docs/CallerGraph/')
-    parser.add_argument('-r', required=True, dest='repositDir',
-                        help='VistA Git Repository Directory')
-    parser.add_argument('-b', required=True, dest="docRepositDir",
-                        help="doc Repository directory contains code generating the documentation")
-    parser.add_argument('-o', required=True, dest='outputDir',
+    crossRefArgParse = createCrossReferenceLogArgumentParser()
+    parser = argparse.ArgumentParser(
+        description='VistA Visual Cross-Reference Documentation Generator',
+        parents=[crossRefArgParse])
+    parser.add_argument('-o', '--outputDir', required=True,
                         help='Output Web Page dirctory')
-    parser.add_argument('-git', required=True, dest='gitPath',
+    parser.add_argument('-git', '--gitPath', required=True,
                         help='Path to the folder containing git excecutable')
-    parser.add_argument('-dot', required=False, dest='hasDot', default="False", action='store_true',
-                        help='is Dot installed')
-    parser.add_argument('-dotpath', required=False, dest='dotPath',
+    parser.add_argument('-dot', '--hasDot', required=False, default="False",
+                        action='store_true', help='is Dot installed')
+    parser.add_argument('-dotpath', '--dotPath', required=False,
                         help='path to the folder containing dot excecutable')
-    parser.add_argument('-Log', required=False, dest='outputLogFileName',
+    parser.add_argument('-Log', '--outputLogFileName', required=False,
                         help='the output Logging file')
-    parser.add_argument('-f', dest='fileSchemaDir',
-                        help='VistA File Man Schema log Directory')
-    result = vars(parser.parse_args());
-    if not result['outputLogFileName']:
+    result = parser.parse_args();
+    if not result.outputLogFileName:
         outputLogFile = getTempLogFile()
     else:
-        outputLogFile = result['outputLogFileName']
+        outputLogFile = result.outputLogFileName
     initLogging(outputLogFile)
     logger.debug (result)
-    crossRef = CrossReferenceBuilder().buildCrossReference(result['logFileDir'],
-                                                           result['repositDir'],
-                                                           result['docRepositDir'],
-                                                           result['fileSchemaDir'])
+    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(result)
     logger.info ("Starting generating web pages....")
+    doxDir = os.path.join(result.patchRepositDir, 'Utilities/Dox')
     webPageGen = WebPageGenerator(crossRef,
-                                result['outputDir'],
-                                result['repositDir'],
-                                result['docRepositDir'],
-                                result['gitPath'])
-    if result['hasDot'] and result['dotPath']:
-        webPageGen.setDotPath(result['dotPath'])
+                                  result.outputDir,
+                                  result.MRepositDir,
+                                  doxDir,
+                                  result.gitPath)
+    if result.hasDot and result.dotPath:
+        webPageGen.setDotPath(result.dotPath)
     webPageGen.generateWebPage()
     logger.info ("End of generating web pages....")

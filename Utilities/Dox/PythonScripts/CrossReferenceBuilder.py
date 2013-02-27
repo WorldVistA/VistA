@@ -16,36 +16,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from CallerGraphParser import CallerGraphLogFileParser
-from DataDictionaryParser import DataDictionaryListFileLogParser
 import os
+import argparse
+from CallerGraphParser import parseAllCallGraphLog
+from CallerGraphParser import createCallGraphLogAugumentParser
+from DataDictionaryParser import parseDataDictionaryLogFile
+from DataDictionaryParser import createDataDictionaryAugumentParser
 
+def createCrossReferenceLogArgumentParser():
+    callLogArgParser = createCallGraphLogAugumentParser()
+    dataDictLogArgParser = createDataDictionaryAugumentParser()
+    parser = argparse.ArgumentParser(add_help=False,
+                                     parents=[callLogArgParser,
+                                              dataDictLogArgParser])
+    return parser
 class CrossReferenceBuilder(object):
     def __init__(self):
         pass
-    def buildCrossReference(self, xindexLogDir, codeRepositDir,
-                            docRepositDir, filemanSchemaDir=None):
-        logParser = CallerGraphLogFileParser()
-        packagesDir = os.path.join(codeRepositDir, "Packages")
-        logParser.parsePercentRoutineMappingFile(os.path.join(docRepositDir,
-                                                "PercentRoutineMapping.csv"))
-        logParser.parsePackagesFile(os.path.join(codeRepositDir,
-                                                 "Packages.csv"))
-        logParser.parsePlatformDependentRoutineFile(os.path.join(docRepositDir,
-                                                    "PlatformDependentRoutine.csv"))
-        logParser.findGlobalsBySourceV2(packagesDir, "*/Globals/*.zwr")
-        routineFilePattern = "*/Routines/*.m"
-        logParser.findPackagesAndRoutinesBySource(packagesDir, routineFilePattern)
-        logParser.parsePackageDocumentationLink(os.path.join(docRepositDir,
-                                                "PackageToVDL.csv"))
-        callLogPattern = "*.log"
-        logParser.parseAllCallerGraphLog(xindexLogDir, callLogPattern)
-        if filemanSchemaDir:
-            dataDictLogParser = DataDictionaryListFileLogParser(logParser.getCrossReference())
-            dataDictLogParser.parseAllDataDictionaryListLog(filemanSchemaDir,"*.schema")
-            dataDictLogParser.parseAllDataDictionaryListLog(filemanSchemaDir,".*.schema")
+    def buildCrossReferenceWithArgs(self, arguments):
+        return self.buildCrossReference(arguments.xindexLogDir,
+                                        arguments.MRepositDir,
+                                        arguments.patchRepositDir,
+                                        arguments.fileSchemaDir)
+    def buildCrossReference(self, xindexLogDir, MRepositDir,
+                            patchRepositDir, fileSchemaDir=None):
+        logParser = parseAllCallGraphLog(xindexLogDir,
+                                         MRepositDir,
+                                         patchRepositDir)
+        if fileSchemaDir:
+            parseDataDictionaryLogFile(logParser.getCrossReference(),
+                                       fileSchemaDir)
         logParser.getCrossReference().generateAllPackageDependencies()
         return logParser.getCrossReference()
-
     def buildCrossReferenceFromMongoDB(self):
         pass
