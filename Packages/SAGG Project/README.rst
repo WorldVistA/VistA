@@ -20,3 +20,22 @@ Patches
 
 The `<Patches>`__ directory contains patch host files for the package
 organized into subdirectories named for each patch.
+
+------------
+VA Gold Disk
+------------
+
+US DVA sites standardize this package on
+patches through `KMPS*2.0*2 <Patches/KMPS_2.0_2>`__
+and on the following routine checksums.
+
+.. table::
+
+ ============  ==========
+ Routine Name   Checksum
+ ============  ==========
+ KMPSGE          45420632
+ KMPSLK          24144588
+ KMPSUTL         14249417
+ KMPSUTL1         5705138
+ ============  ==========
