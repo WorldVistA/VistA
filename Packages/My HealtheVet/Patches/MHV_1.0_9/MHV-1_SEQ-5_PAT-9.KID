@@ -1,0 +1,1098 @@
+EMERGENCY Released MHV*1*9 SEQ #5
+Extracted from mail message
+**KIDS**:MHV*1.0*9^
+
+**INSTALL NAME**
+MHV*1.0*9
+"BLD",7949,0)
+MHV*1.0*9^My HealtheVet^0^3111114^y
+"BLD",7949,1,0)
+^^41^41^3111114^^^^
+"BLD",7949,1,1,0)
+  
+"BLD",7949,1,2,0)
+MHV*1*9 Secure Messaging
+"BLD",7949,1,3,0)
+  
+"BLD",7949,1,4,0)
+Summary
+"BLD",7949,1,5,0)
+-------
+"BLD",7949,1,6,0)
+When My HealtheVet (MHV) Secure Messaging (SM) patients are assigned to
+"BLD",7949,1,7,0)
+Primary Care Management Module (PCMM) teams other than their Primary Care
+"BLD",7949,1,8,0)
+provider team, their MHV SM PCMM Primary Care provider association is broken.
+"BLD",7949,1,9,0)
+This results in MHV SM users not able to send messages to/from their
+"BLD",7949,1,10,0)
+SM Primary Care team.
+"BLD",7949,1,11,0)
+     
+"BLD",7949,1,12,0)
+MHV*1*9 uses a different support PCMM call to always return the patient's
+"BLD",7949,1,13,0)
+ currently assigned, Primary Care provider.
+"BLD",7949,1,14,0)
+  
+"BLD",7949,1,15,0)
+  
+"BLD",7949,1,16,0)
+Detailed Description
+"BLD",7949,1,17,0)
+--------------------
+"BLD",7949,1,18,0)
+Secure Messaging allows patients and clinicians to email each other securely
+"BLD",7949,1,19,0)
+and confidentially, and allows clinicians to post those email threads to the
+"BLD",7949,1,20,0)
+medical record as progress notes.
+"BLD",7949,1,21,0)
+     
+"BLD",7949,1,22,0)
+Relationships between patients and clinicians are established based on
+"BLD",7949,1,23,0)
+PCMM providers, clinic appointments and Order Entry/Results Reporting (OE/RR)
+"BLD",7949,1,24,0)
+teams.  Secure Messaging uses triage groups based on these relationships to
+"BLD",7949,1,25,0)
+manage which patients are able to email which providers.  More information
+"BLD",7949,1,26,0)
+on Secure Messaging can be found on the MHV product web site
+"BLD",7949,1,27,0)
+     
+"BLD",7949,1,28,0)
+http://vaww1.va.gov/MyHealtheVet/, and MHV web site www.myhealth.va.gov.
+"BLD",7949,1,29,0)
+     
+"BLD",7949,1,30,0)
+When patients are assigned to other PCMM teams their MHV SM PCMM provider
+"BLD",7949,1,31,0)
+association is broken.  This results in MHV SM users not able to send messages
+"BLD",7949,1,32,0)
+to/from their SM Primary Care team.
+"BLD",7949,1,33,0)
+             
+"BLD",7949,1,34,0)
+Before this patch, MHV application routines (MHVXPAT and MHVXDEMS) call,
+"BLD",7949,1,35,0)
+IA#1916 SCAPMC - SUPPORTED PCMM CALLS, application programmer interface (API)
+"BLD",7949,1,36,0)
+call to $$PRPT^SCAPMC() to return a patient's Primary Care provider to MHV SM.
+"BLD",7949,1,37,0)
+This API does not always return the current Primary Care provider.
+"BLD",7949,1,38,0)
+     
+"BLD",7949,1,39,0)
+MHV*1*9 patch resolves the issue by always returning the SM patient's Primary Care
+"BLD",7949,1,40,0)
+provider using the support call, IA#1252 PRIMARY CARE INPUT AND OUTPUT API CALLS,
+"BLD",7949,1,41,0)
+API $$OUTPTPR^SDUTL3().
+"BLD",7949,4,0)
+^9.64PA^^
+"BLD",7949,6.3)
+24
+"BLD",7949,"ABNS",0)
+^9.66A^^
+"BLD",7949,"ABPKG")
+^n
+"BLD",7949,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7949,"KRN",.4,0)
+.4
+"BLD",7949,"KRN",.401,0)
+.401
+"BLD",7949,"KRN",.402,0)
+.402
+"BLD",7949,"KRN",.403,0)
+.403
+"BLD",7949,"KRN",.5,0)
+.5
+"BLD",7949,"KRN",.84,0)
+.84
+"BLD",7949,"KRN",3.6,0)
+3.6
+"BLD",7949,"KRN",3.8,0)
+3.8
+"BLD",7949,"KRN",9.2,0)
+9.2
+"BLD",7949,"KRN",9.8,0)
+9.8
+"BLD",7949,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",7949,"KRN",9.8,"NM",1,0)
+MHVXPAT^^0^B62269575
+"BLD",7949,"KRN",9.8,"NM",2,0)
+MHVXDEMS^^0^B6047250
+"BLD",7949,"KRN",9.8,"NM","B","MHVXDEMS",2)
+
+"BLD",7949,"KRN",9.8,"NM","B","MHVXPAT",1)
+
+"BLD",7949,"KRN",19,0)
+19
+"BLD",7949,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",7949,"KRN",19.1,0)
+19.1
+"BLD",7949,"KRN",101,0)
+101
+"BLD",7949,"KRN",101,"NM",0)
+^9.68A^^0
+"BLD",7949,"KRN",409.61,0)
+409.61
+"BLD",7949,"KRN",409.61,"NM",0)
+^9.68A^^
+"BLD",7949,"KRN",771,0)
+771
+"BLD",7949,"KRN",771,"NM",0)
+^9.68A^^0
+"BLD",7949,"KRN",779.2,0)
+779.2
+"BLD",7949,"KRN",870,0)
+870
+"BLD",7949,"KRN",870,"NM",0)
+^9.68A^^0
+"BLD",7949,"KRN",8989.51,0)
+8989.51
+"BLD",7949,"KRN",8989.52,0)
+8989.52
+"BLD",7949,"KRN",8994,0)
+8994
+"BLD",7949,"KRN",8994,"NM",0)
+^9.68A^^0
+"BLD",7949,"KRN","B",.4,.4)
+
+"BLD",7949,"KRN","B",.401,.401)
+
+"BLD",7949,"KRN","B",.402,.402)
+
+"BLD",7949,"KRN","B",.403,.403)
+
+"BLD",7949,"KRN","B",.5,.5)
+
+"BLD",7949,"KRN","B",.84,.84)
+
+"BLD",7949,"KRN","B",3.6,3.6)
+
+"BLD",7949,"KRN","B",3.8,3.8)
+
+"BLD",7949,"KRN","B",9.2,9.2)
+
+"BLD",7949,"KRN","B",9.8,9.8)
+
+"BLD",7949,"KRN","B",19,19)
+
+"BLD",7949,"KRN","B",19.1,19.1)
+
+"BLD",7949,"KRN","B",101,101)
+
+"BLD",7949,"KRN","B",409.61,409.61)
+
+"BLD",7949,"KRN","B",771,771)
+
+"BLD",7949,"KRN","B",779.2,779.2)
+
+"BLD",7949,"KRN","B",870,870)
+
+"BLD",7949,"KRN","B",8989.51,8989.51)
+
+"BLD",7949,"KRN","B",8989.52,8989.52)
+
+"BLD",7949,"KRN","B",8994,8994)
+
+"BLD",7949,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",7949,"QUES",0)
+^9.62^^
+"BLD",7949,"REQB",0)
+^9.611^2^2
+"BLD",7949,"REQB",1,0)
+MHV*1.0*6^2
+"BLD",7949,"REQB",2,0)
+MHV*1.0*5^2
+"BLD",7949,"REQB","B","MHV*1.0*5",2)
+
+"BLD",7949,"REQB","B","MHV*1.0*6",1)
+
+"MBREQ")
+0
+"PKG",575,-1)
+1^1
+"PKG",575,0)
+My HealtheVet^MHV^Support for My HealtheVet web site.
+"PKG",575,20,0)
+^9.402P^^
+"PKG",575,22,0)
+^9.49I^1^1
+"PKG",575,22,1,0)
+1.0^3050823^3070511^35220
+"PKG",575,22,1,"PAH",1,0)
+9^3111114^35270
+"PKG",575,22,1,"PAH",1,1,0)
+^^41^41^3111114
+"PKG",575,22,1,"PAH",1,1,1,0)
+  
+"PKG",575,22,1,"PAH",1,1,2,0)
+MHV*1*9 Secure Messaging
+"PKG",575,22,1,"PAH",1,1,3,0)
+  
+"PKG",575,22,1,"PAH",1,1,4,0)
+Summary
+"PKG",575,22,1,"PAH",1,1,5,0)
+-------
+"PKG",575,22,1,"PAH",1,1,6,0)
+When My HealtheVet (MHV) Secure Messaging (SM) patients are assigned to
+"PKG",575,22,1,"PAH",1,1,7,0)
+Primary Care Management Module (PCMM) teams other than their Primary Care
+"PKG",575,22,1,"PAH",1,1,8,0)
+provider team, their MHV SM PCMM Primary Care provider association is broken.
+"PKG",575,22,1,"PAH",1,1,9,0)
+This results in MHV SM users not able to send messages to/from their
+"PKG",575,22,1,"PAH",1,1,10,0)
+SM Primary Care team.
+"PKG",575,22,1,"PAH",1,1,11,0)
+     
+"PKG",575,22,1,"PAH",1,1,12,0)
+MHV*1*9 uses a different support PCMM call to always return the patient's
+"PKG",575,22,1,"PAH",1,1,13,0)
+ currently assigned, Primary Care provider.
+"PKG",575,22,1,"PAH",1,1,14,0)
+  
+"PKG",575,22,1,"PAH",1,1,15,0)
+  
+"PKG",575,22,1,"PAH",1,1,16,0)
+Detailed Description
+"PKG",575,22,1,"PAH",1,1,17,0)
+--------------------
+"PKG",575,22,1,"PAH",1,1,18,0)
+Secure Messaging allows patients and clinicians to email each other securely
+"PKG",575,22,1,"PAH",1,1,19,0)
+and confidentially, and allows clinicians to post those email threads to the
+"PKG",575,22,1,"PAH",1,1,20,0)
+medical record as progress notes.
+"PKG",575,22,1,"PAH",1,1,21,0)
+     
+"PKG",575,22,1,"PAH",1,1,22,0)
+Relationships between patients and clinicians are established based on
+"PKG",575,22,1,"PAH",1,1,23,0)
+PCMM providers, clinic appointments and Order Entry/Results Reporting (OE/RR)
+"PKG",575,22,1,"PAH",1,1,24,0)
+teams.  Secure Messaging uses triage groups based on these relationships to
+"PKG",575,22,1,"PAH",1,1,25,0)
+manage which patients are able to email which providers.  More information
+"PKG",575,22,1,"PAH",1,1,26,0)
+on Secure Messaging can be found on the MHV product web site
+"PKG",575,22,1,"PAH",1,1,27,0)
+     
+"PKG",575,22,1,"PAH",1,1,28,0)
+http://vaww1.va.gov/MyHealtheVet/, and MHV web site www.myhealth.va.gov.
+"PKG",575,22,1,"PAH",1,1,29,0)
+     
+"PKG",575,22,1,"PAH",1,1,30,0)
+When patients are assigned to other PCMM teams their MHV SM PCMM provider
+"PKG",575,22,1,"PAH",1,1,31,0)
+association is broken.  This results in MHV SM users not able to send messages
+"PKG",575,22,1,"PAH",1,1,32,0)
+to/from their SM Primary Care team.
+"PKG",575,22,1,"PAH",1,1,33,0)
+             
+"PKG",575,22,1,"PAH",1,1,34,0)
+Before this patch, MHV application routines (MHVXPAT and MHVXDEMS) call,
+"PKG",575,22,1,"PAH",1,1,35,0)
+IA#1916 SCAPMC - SUPPORTED PCMM CALLS, application programmer interface (API)
+"PKG",575,22,1,"PAH",1,1,36,0)
+call to $$PRPT^SCAPMC() to return a patient's Primary Care provider to MHV SM.
+"PKG",575,22,1,"PAH",1,1,37,0)
+This API does not always return the current Primary Care provider.
+"PKG",575,22,1,"PAH",1,1,38,0)
+     
+"PKG",575,22,1,"PAH",1,1,39,0)
+MHV*1*9 patch resolves the issue by always returning the SM patient's Primary Care
+"PKG",575,22,1,"PAH",1,1,40,0)
+provider using the support call, IA#1252 PRIMARY CARE INPUT AND OUTPUT API CALLS,
+"PKG",575,22,1,"PAH",1,1,41,0)
+API $$OUTPTPR^SDUTL3().
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","MHVXDEMS")
+0^2^B6047250^B6081300
+"RTN","MHVXDEMS",1,0)
+MHVXDEMS ;WAS/GPM - Secure Messaging Demographics extract ; 12/1/05 6:58pm [3/23/08 8:17pm]
+"RTN","MHVXDEMS",2,0)
+ ;;1.0;My HealtheVet;**5,9**;Aug 23, 2005;Build 24
+"RTN","MHVXDEMS",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MHVXDEMS",4,0)
+ ;
+"RTN","MHVXDEMS",5,0)
+ Q
+"RTN","MHVXDEMS",6,0)
+ ;
+"RTN","MHVXDEMS",7,0)
+EXTRACT(QRY,ERR,DATAROOT) ; Entry point to extract demographics data
+"RTN","MHVXDEMS",8,0)
+ ; Retrieves requested demographics data and returns it in DATAROOT
+"RTN","MHVXDEMS",9,0)
+ ;
+"RTN","MHVXDEMS",10,0)
+ ;  Integration Agreements:
+"RTN","MHVXDEMS",11,0)
+ ;                       10061 : DEM^VADPT
+"RTN","MHVXDEMS",12,0)
+ ;                             : ADD^VADPT
+"RTN","MHVXDEMS",13,0)
+ ;                             : ELIG^VADPT
+"RTN","MHVXDEMS",14,0)
+ ;                             : OPD^VADPT
+"RTN","MHVXDEMS",15,0)
+ ;                             : OAD^VADPT
+"RTN","MHVXDEMS",16,0)
+ ;                             : KVAR^VADPT
+"RTN","MHVXDEMS",17,0)
+ ;                        1252 : OUTPTPR^SDUTL3
+"RTN","MHVXDEMS",18,0)
+ ;                        1916 : PRPT^SCAPMC
+"RTN","MHVXDEMS",19,0)
+ ;                       10035 : 2,.1041
+"RTN","MHVXDEMS",20,0)
+ ;                        4459 : 2,.133
+"RTN","MHVXDEMS",21,0)
+ ;
+"RTN","MHVXDEMS",22,0)
+ ;  Input:
+"RTN","MHVXDEMS",23,0)
+ ;       QRY - Query array
+"RTN","MHVXDEMS",24,0)
+ ;          QRY(DFN) - (required) Pointer to PATIENT (#2) file
+"RTN","MHVXDEMS",25,0)
+ ;  DATAROOT - Root of array to hold extract data
+"RTN","MHVXDEMS",26,0)
+ ;
+"RTN","MHVXDEMS",27,0)
+ ;  Output:
+"RTN","MHVXDEMS",28,0)
+ ;  DATAROOT - Populated data array
+"RTN","MHVXDEMS",29,0)
+ ;       ERR - Errors during extraction
+"RTN","MHVXDEMS",30,0)
+ ;
+"RTN","MHVXDEMS",31,0)
+ N DFN,U,X,MHVPCP,MHVERR,EXTIME,VADM,VAPA,VAPD,VAOA
+"RTN","MHVXDEMS",32,0)
+ D LOG^MHVUL2("MHVXDEMS","BEGIN","S","TRACE")
+"RTN","MHVXDEMS",33,0)
+ S U="^"
+"RTN","MHVXDEMS",34,0)
+ S ERR=0
+"RTN","MHVXDEMS",35,0)
+ S EXTIME=$$NOW^XLFDT
+"RTN","MHVXDEMS",36,0)
+ K @DATAROOT
+"RTN","MHVXDEMS",37,0)
+ S DFN=$G(QRY("DFN"))
+"RTN","MHVXDEMS",38,0)
+ ;
+"RTN","MHVXDEMS",39,0)
+ K VADM
+"RTN","MHVXDEMS",40,0)
+ D DEM^VADPT
+"RTN","MHVXDEMS",41,0)
+ S @DATAROOT@("DOB")=$P($G(VADM(3)),U)
+"RTN","MHVXDEMS",42,0)
+ S @DATAROOT@("SEX")=$P($G(VADM(5)),U)
+"RTN","MHVXDEMS",43,0)
+ S @DATAROOT@("MARITAL-STATUS")=$P($G(VADM(10)),U,2)
+"RTN","MHVXDEMS",44,0)
+ S @DATAROOT@("RELIGION")=$P($G(VADM(9)),U,2)
+"RTN","MHVXDEMS",45,0)
+ S @DATAROOT@("DOD")=$P($G(VADM(6)),U)
+"RTN","MHVXDEMS",46,0)
+ ;
+"RTN","MHVXDEMS",47,0)
+ K VAPA
+"RTN","MHVXDEMS",48,0)
+ D ADD^VADPT
+"RTN","MHVXDEMS",49,0)
+ S @DATAROOT@("ADD1")=$G(VAPA(1))
+"RTN","MHVXDEMS",50,0)
+ S @DATAROOT@("ADD2")=$G(VAPA(2))
+"RTN","MHVXDEMS",51,0)
+ S @DATAROOT@("ADD3")=$G(VAPA(3))
+"RTN","MHVXDEMS",52,0)
+ S @DATAROOT@("CITY")=$G(VAPA(4))
+"RTN","MHVXDEMS",53,0)
+ S @DATAROOT@("STATE")=$P($G(VAPA(5)),U,2)
+"RTN","MHVXDEMS",54,0)
+ S @DATAROOT@("ZIP")=$P($G(VAPA(11)),U)
+"RTN","MHVXDEMS",55,0)
+ S @DATAROOT@("COUNTY")=$P($G(VAPA(7)),U,2)
+"RTN","MHVXDEMS",56,0)
+ S @DATAROOT@("PHONE")=$G(VAPA(8))
+"RTN","MHVXDEMS",57,0)
+ ;
+"RTN","MHVXDEMS",58,0)
+ K VAPD
+"RTN","MHVXDEMS",59,0)
+ D OPD^VADPT
+"RTN","MHVXDEMS",60,0)
+ S @DATAROOT@("BIRTH-CITY")=$G(VAPD(1))
+"RTN","MHVXDEMS",61,0)
+ S @DATAROOT@("BIRTH-STATE")=$P($G(VAPD(2)),U,2)
+"RTN","MHVXDEMS",62,0)
+ ;
+"RTN","MHVXDEMS",63,0)
+ K VAOA
+"RTN","MHVXDEMS",64,0)
+ S VAOA("A")=5
+"RTN","MHVXDEMS",65,0)
+ D OAD^VADPT
+"RTN","MHVXDEMS",66,0)
+ S @DATAROOT@("BUS-PHONE")=$G(VAOA(8))
+"RTN","MHVXDEMS",67,0)
+ ;
+"RTN","MHVXDEMS",68,0)
+ S @DATAROOT@("E-MAIL")=$$GET1^DIQ(2,DFN_",",.133)
+"RTN","MHVXDEMS",69,0)
+ S @DATAROOT@("ATTENDING-PHYSICIAN")=$$GET1^DIQ(2,DFN_",",.1041)
+"RTN","MHVXDEMS",70,0)
+ ;
+"RTN","MHVXDEMS",71,0)
+ S X=""
+"RTN","MHVXDEMS",72,0)
+ ;I $$PRPT^SCAPMC(DFN,,,,,,.MHVPCP,.MHVERR) I MHVPCP'="" S X=$P($G(@MHVPCP@(1)),U,2) K @MHVPCP
+"RTN","MHVXDEMS",73,0)
+ S X=$$OUTPTPR^SDUTL3(DFN) ;MHV*1*9 always return Primary Care Provider
+"RTN","MHVXDEMS",74,0)
+ ;I $G(MHVERR)'="" K @MHVERR
+"RTN","MHVXDEMS",75,0)
+ S @DATAROOT@("PRIMARY-CARE-PHYSICIAN")=$P(X,"^",2)
+"RTN","MHVXDEMS",76,0)
+ ;
+"RTN","MHVXDEMS",77,0)
+ D KVAR^VADPT
+"RTN","MHVXDEMS",78,0)
+ S @DATAROOT=1_"^"_EXTIME
+"RTN","MHVXDEMS",79,0)
+ D LOG^MHVUL2("MHVXDEMS","END","S","TRACE")
+"RTN","MHVXDEMS",80,0)
+ Q
+"RTN","MHVXDEMS",81,0)
+ ;
+"RTN","MHVXPAT")
+0^1^B62269575^B60657479
+"RTN","MHVXPAT",1,0)
+MHVXPAT ;WAS/DLF - Patient extract ; 9/25/08 4:11pm
+"RTN","MHVXPAT",2,0)
+ ;;1.0;My HealtheVet;**6,9**;Aug 23, 2005;Build 24
+"RTN","MHVXPAT",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MHVXPAT",4,0)
+ ;
+"RTN","MHVXPAT",5,0)
+ Q
+"RTN","MHVXPAT",6,0)
+ ;
+"RTN","MHVXPAT",7,0)
+ ;  Integration Agreements:
+"RTN","MHVXPAT",8,0)
+ ;
+"RTN","MHVXPAT",9,0)
+ ;               10060 : New Person file #200
+"RTN","MHVXPAT",10,0)
+ ;                1252 : OUTPTPR^SDUTL3
+"RTN","MHVXPAT",11,0)
+ ;                1916 : PTPR^SCAPMC
+"RTN","MHVXPAT",12,0)
+ ;                       PRPT^SCAPMC
+"RTN","MHVXPAT",13,0)
+ ;                3859 : GETAPPT^SDAMA201
+"RTN","MHVXPAT",14,0)
+ ;                5250 : PTCL^SCAPMC
+"RTN","MHVXPAT",15,0)
+ ;                2692 : TEAMPTS^ORQPTQ1
+"RTN","MHVXPAT",16,0)
+ ;                       TEAMSPT^ORQPTQ1
+"RTN","MHVXPAT",17,0)
+ ;               10103 : $$DT^XLFDT
+"RTN","MHVXPAT",18,0)
+ ;                       $$NOW^XLFDT
+"RTN","MHVXPAT",19,0)
+ ;                       $$HL7TFM$XLFDT
+"RTN","MHVXPAT",20,0)
+ ;                       
+"RTN","MHVXPAT",21,0)
+PATCL(QRY,ERR,DATAROOT)             ;Patients for clinic
+"RTN","MHVXPAT",22,0)
+ ;
+"RTN","MHVXPAT",23,0)
+ ; Primary Care Management Module interface
+"RTN","MHVXPAT",24,0)
+ ; return patient list in dataroot
+"RTN","MHVXPAT",25,0)
+ ; QRY, ERR passed by ref.
+"RTN","MHVXPAT",26,0)
+ ;
+"RTN","MHVXPAT",27,0)
+ ;    Input:
+"RTN","MHVXPAT",28,0)
+ ;       QRY - Query array
+"RTN","MHVXPAT",29,0)
+ ;       QRY(CLIN IEN) - ien of Hospital location file (#44)
+"RTN","MHVXPAT",30,0)
+ ;       DATAROOT - Root of array to hold extract data
+"RTN","MHVXPAT",31,0)
+ ;
+"RTN","MHVXPAT",32,0)
+ ;    Output:
+"RTN","MHVXPAT",33,0)
+ ;       DATAROOT - Populated data array
+"RTN","MHVXPAT",34,0)
+ ;             includes number of hits and timestamp
+"RTN","MHVXPAT",35,0)
+ ;       ERR - Errors during extraction, zero on success
+"RTN","MHVXPAT",36,0)
+ ;
+"RTN","MHVXPAT",37,0)
+ N DT,EXTIME,HIT,LOGND,FROMDT,TODT,RTN,U,X,ICN,SSN,CLINIEN
+"RTN","MHVXPAT",38,0)
+ ;
+"RTN","MHVXPAT",39,0)
+ S RTN=$T(+0),LOGND=RTN_"^PTPCMP"  ; node for logging
+"RTN","MHVXPAT",40,0)
+ D LOG^MHVUL2(LOGND,"BEGIN","S","TRACE")
+"RTN","MHVXPAT",41,0)
+ ; needed vars.
+"RTN","MHVXPAT",42,0)
+ S U="^",DT=$$DT^XLFDT,ERR=0,EXTIME=$$NOW^XLFDT,HIT=0
+"RTN","MHVXPAT",43,0)
+ ;
+"RTN","MHVXPAT",44,0)
+ K @DATAROOT,^TMP(RTN,$J)  ; clean up residue
+"RTN","MHVXPAT",45,0)
+ ;
+"RTN","MHVXPAT",46,0)
+ I '$G(QRY("FROMDT")) S QRY("FROMDT")=2920101
+"RTN","MHVXPAT",47,0)
+ I '$G(QRY("TODT")) S QRY("TODT")=DT
+"RTN","MHVXPAT",48,0)
+ S FROMDT=QRY("FROMDT")
+"RTN","MHVXPAT",49,0)
+ S TODT=QRY("TODT")
+"RTN","MHVXPAT",50,0)
+ S CLINIEN=$G(QRY("IEN"))
+"RTN","MHVXPAT",51,0)
+ I '(CLINIEN>0) S ERR="1^Clinic IEN missing" Q
+"RTN","MHVXPAT",52,0)
+ ;
+"RTN","MHVXPAT",53,0)
+ ;
+"RTN","MHVXPAT",54,0)
+ ; get all PCM patients for CLinic
+"RTN","MHVXPAT",55,0)
+ D:'ERR
+"RTN","MHVXPAT",56,0)
+ .N MHVDATES,J,RSLT,RSLTLST,SCER,TM,ICN,PTIEN
+"RTN","MHVXPAT",57,0)
+ .S RSLTLST=$NA(^TMP(RTN,$J,"CLINIC"))
+"RTN","MHVXPAT",58,0)
+ .S MHVDATES("BEGIN")=$$HL7TFM^XLFDT(FROMDT)
+"RTN","MHVXPAT",59,0)
+ .S MHVDATES("END")=$$HL7TFM^XLFDT(TODT)
+"RTN","MHVXPAT",60,0)
+ .S MHVDATES("INCL")=0
+"RTN","MHVXPAT",61,0)
+ .S RSLT=$$PTCL^SCAPMC(CLINIEN,.MHVDATES,RSLTLST,"SCER")
+"RTN","MHVXPAT",62,0)
+ .I $G(SCER(0)) D  Q
+"RTN","MHVXPAT",63,0)
+ ..S ERR="1^errors ("_SCER(0)_") returned by PTCL^SCAPMC"
+"RTN","MHVXPAT",64,0)
+ .; now save results
+"RTN","MHVXPAT",65,0)
+ .S J=0
+"RTN","MHVXPAT",66,0)
+ .F  S J=$O(^TMP(RTN,$J,"CLINIC",J))  Q:'J  S TM=$G(^(J))  D
+"RTN","MHVXPAT",67,0)
+ ..S PTIEN=$P(TM,U,1)
+"RTN","MHVXPAT",68,0)
+ ..S ICN=$$GET1^DIQ(2,PTIEN_",",991.01)
+"RTN","MHVXPAT",69,0)
+ ..S SSN=$$GET1^DIQ(2,PTIEN_",",.09)
+"RTN","MHVXPAT",70,0)
+ ..S HIT=HIT+1,@DATAROOT@(HIT)=PTIEN_U_""_U_$P(TM,U,2)_U_ICN_U_SSN
+"RTN","MHVXPAT",71,0)
+ ;
+"RTN","MHVXPAT",72,0)
+ S @DATAROOT=HIT_U_EXTIME  ; hits ^ time
+"RTN","MHVXPAT",73,0)
+ D XITLOG(LOGND,HIT)
+"RTN","MHVXPAT",74,0)
+ ;
+"RTN","MHVXPAT",75,0)
+ Q
+"RTN","MHVXPAT",76,0)
+PATTM(QRY,ERR,DATAROOT)             ;Patients for team
+"RTN","MHVXPAT",77,0)
+ ;
+"RTN","MHVXPAT",78,0)
+ ; Primary Care Management Module interface
+"RTN","MHVXPAT",79,0)
+ ; return patient list in dataroot
+"RTN","MHVXPAT",80,0)
+ ; QRY, ERR passed by ref.
+"RTN","MHVXPAT",81,0)
+ ;
+"RTN","MHVXPAT",82,0)
+ ;    Input:
+"RTN","MHVXPAT",83,0)
+ ;       QRY     - Query array
+"RTN","MHVXPAT",84,0)
+ ;       QRY(P1) - ien of OE/RR list file (#100.21)
+"RTN","MHVXPAT",85,0)
+ ;       DATAROOT - Root of array to hold extract data
+"RTN","MHVXPAT",86,0)
+ ;
+"RTN","MHVXPAT",87,0)
+ ;    Output:
+"RTN","MHVXPAT",88,0)
+ ;       DATAROOT - Populated data array
+"RTN","MHVXPAT",89,0)
+ ;             includes number of hits and timestamp
+"RTN","MHVXPAT",90,0)
+ ;       ERR - Errors during extraction, zero on success
+"RTN","MHVXPAT",91,0)
+ ;
+"RTN","MHVXPAT",92,0)
+ N DT,EXTIME,HIT,LOGND,TEAMIEN,RTN,U,X,ICN,SSN
+"RTN","MHVXPAT",93,0)
+ ;
+"RTN","MHVXPAT",94,0)
+ S RTN=$T(+0),LOGND=RTN_"^PATTM"  ; node for logging
+"RTN","MHVXPAT",95,0)
+ D LOG^MHVUL2(LOGND,"BEGIN","S","TRACE")
+"RTN","MHVXPAT",96,0)
+ ; needed vars.
+"RTN","MHVXPAT",97,0)
+ S U="^",DT=$$DT^XLFDT,ERR=0,EXTIME=$$NOW^XLFDT,HIT=0
+"RTN","MHVXPAT",98,0)
+ ;
+"RTN","MHVXPAT",99,0)
+ K @DATAROOT,^TMP(RTN,$J)  ; clean up residue
+"RTN","MHVXPAT",100,0)
+ ;
+"RTN","MHVXPAT",101,0)
+ S TEAMIEN=$G(QRY("IEN"))
+"RTN","MHVXPAT",102,0)
+ I '(TEAMIEN>0) S ERR="1^Team IEN missing" Q
+"RTN","MHVXPAT",103,0)
+ ; get all patients for Team
+"RTN","MHVXPAT",104,0)
+ N MHVDATES,J,RSLT,RSLTLST,TM,PTIEN,ICN
+"RTN","MHVXPAT",105,0)
+ S RSLTLST=$NA(^TMP(RTN,$J,"PTTM"))
+"RTN","MHVXPAT",106,0)
+ S RSLTLST=$E(RSLTLST,1,$L(RSLTLST)-1)_","
+"RTN","MHVXPAT",107,0)
+ D TEAMPTS^ORQPTQ1(RSLTLST,TEAMIEN,1)
+"RTN","MHVXPAT",108,0)
+ Q:^TMP(RTN,$J,"PTTM",1)["No patients"
+"RTN","MHVXPAT",109,0)
+ ; now save results
+"RTN","MHVXPAT",110,0)
+ S J=0
+"RTN","MHVXPAT",111,0)
+ F  S J=$O(^TMP(RTN,$J,"PTTM",J))  Q:'J  S TM=$G(^(J))  D
+"RTN","MHVXPAT",112,0)
+ .S PTIEN=$P(TM,U,1)
+"RTN","MHVXPAT",113,0)
+ .S ICN=$$GET1^DIQ(2,PTIEN_",",991.01)
+"RTN","MHVXPAT",114,0)
+ .S SSN=$$GET1^DIQ(2,PTIEN_",",.09)
+"RTN","MHVXPAT",115,0)
+ .S HIT=HIT+1,@DATAROOT@(HIT)=PTIEN_U_""_U_$P(TM,U,2)_U_ICN_U_SSN
+"RTN","MHVXPAT",116,0)
+ ;
+"RTN","MHVXPAT",117,0)
+ S @DATAROOT=HIT_U_EXTIME  ; hits ^ time
+"RTN","MHVXPAT",118,0)
+ D XITLOG(LOGND,HIT)
+"RTN","MHVXPAT",119,0)
+ ;
+"RTN","MHVXPAT",120,0)
+ Q
+"RTN","MHVXPAT",121,0)
+PTPCMP(QRY,ERR,DATAROOT)           ; patients for PCMM provider
+"RTN","MHVXPAT",122,0)
+ ; Primary Care Management Module interface
+"RTN","MHVXPAT",123,0)
+ ; return patient data in DATAROOT
+"RTN","MHVXPAT",124,0)
+ ; QRY, ERR passed by ref.
+"RTN","MHVXPAT",125,0)
+ ;
+"RTN","MHVXPAT",126,0)
+ ;  Input:
+"RTN","MHVXPAT",127,0)
+ ;       QRY - Query array
+"RTN","MHVXPAT",128,0)
+ ;       QRY("PRVDR IEN") - ien NEW PERSON file (#200)
+"RTN","MHVXPAT",129,0)
+ ;  DATAROOT - Root of array to hold extract data
+"RTN","MHVXPAT",130,0)
+ ;
+"RTN","MHVXPAT",131,0)
+ ;  Output:
+"RTN","MHVXPAT",132,0)
+ ;  DATAROOT - Populated data array
+"RTN","MHVXPAT",133,0)
+ ;             includes number of hits and timestamp
+"RTN","MHVXPAT",134,0)
+ ;       ERR - Errors during extraction, zero on success
+"RTN","MHVXPAT",135,0)
+ ;
+"RTN","MHVXPAT",136,0)
+ N DT,EXTIME,HIT,LOGND,PRVIEN,RTN,U,X,ICN,SSN
+"RTN","MHVXPAT",137,0)
+ ;
+"RTN","MHVXPAT",138,0)
+ S RTN=$T(+0),LOGND=RTN_"^PTPCMP"  ; node for logging
+"RTN","MHVXPAT",139,0)
+ D LOG^MHVUL2(LOGND,"BEGIN","S","TRACE")
+"RTN","MHVXPAT",140,0)
+ ; needed vars.
+"RTN","MHVXPAT",141,0)
+ S U="^",DT=$$DT^XLFDT,ERR=0,EXTIME=$$NOW^XLFDT,HIT=0
+"RTN","MHVXPAT",142,0)
+ ;
+"RTN","MHVXPAT",143,0)
+ K @DATAROOT,^TMP(RTN,$J)  ; clean up residue
+"RTN","MHVXPAT",144,0)
+ ;
+"RTN","MHVXPAT",145,0)
+ S PRVIEN=$G(QRY("IEN"))
+"RTN","MHVXPAT",146,0)
+ I '(PRVIEN>0) S ERR="1^provider IEN missing" Q
+"RTN","MHVXPAT",147,0)
+ ;
+"RTN","MHVXPAT",148,0)
+ ;
+"RTN","MHVXPAT",149,0)
+ ; get all PCM patients for provider
+"RTN","MHVXPAT",150,0)
+ D:'ERR
+"RTN","MHVXPAT",151,0)
+ .N MHVDATES,J,RSLT,RSLTLST,SCER,TM,PTIEN,ICN
+"RTN","MHVXPAT",152,0)
+ .S RSLTLST=$NA(^TMP(RTN,$J,"PRVDR"))
+"RTN","MHVXPAT",153,0)
+ .S MHVDATES("BEGIN")="",MHVDATES("END")=DT  ; only for today
+"RTN","MHVXPAT",154,0)
+ .S MHVDATES("INCL")=1  ; include all
+"RTN","MHVXPAT",155,0)
+ .S RSLT=$$PTPR^SCAPMC(PRVIEN,.MHVDATES,"","",RSLTLST,"SCER","")
+"RTN","MHVXPAT",156,0)
+ .I $G(SCER(0)) D  Q
+"RTN","MHVXPAT",157,0)
+ ..S ERR="1^errors ("_SCER(0)_") returned by PTPR^SCAPMC"
+"RTN","MHVXPAT",158,0)
+ .; now save results
+"RTN","MHVXPAT",159,0)
+ .S J=0
+"RTN","MHVXPAT",160,0)
+ .F  S J=$O(^TMP(RTN,$J,"PRVDR",J))  Q:'J  S TM=$G(^(J))  D
+"RTN","MHVXPAT",161,0)
+ ..S PTIEN=$P(TM,U,1)
+"RTN","MHVXPAT",162,0)
+ ..S ICN=$$GET1^DIQ(2,PTIEN_",",991.01)
+"RTN","MHVXPAT",163,0)
+ ..S SSN=$$GET1^DIQ(2,PTIEN_",",.09)
+"RTN","MHVXPAT",164,0)
+ ..S HIT=HIT+1,@DATAROOT@(HIT)=PTIEN_U_""_U_$P(TM,U,2)_U_ICN_U_SSN
+"RTN","MHVXPAT",165,0)
+ ;
+"RTN","MHVXPAT",166,0)
+ S @DATAROOT=HIT_U_EXTIME  ; hits ^ time
+"RTN","MHVXPAT",167,0)
+ D XITLOG(LOGND,HIT)
+"RTN","MHVXPAT",168,0)
+ ;
+"RTN","MHVXPAT",169,0)
+ Q
+"RTN","MHVXPAT",170,0)
+PTREL(QRY,ERR,DATAROOT)                       ; patient relationships
+"RTN","MHVXPAT",171,0)
+ ; Primary Care Management Module interface
+"RTN","MHVXPAT",172,0)
+ ; return patient data in DATAROOT
+"RTN","MHVXPAT",173,0)
+ ; QRY, ERR passed by ref.
+"RTN","MHVXPAT",174,0)
+ ;
+"RTN","MHVXPAT",175,0)
+ ;  Input:
+"RTN","MHVXPAT",176,0)
+ ;       QRY - Query array
+"RTN","MHVXPAT",177,0)
+ ;       QRY("IEN") - Patient
+"RTN","MHVXPAT",178,0)
+ ;       QRY("FROMDT") - Begin date
+"RTN","MHVXPAT",179,0)
+ ;       QRY("TODT") - End Date
+"RTN","MHVXPAT",180,0)
+ ;
+"RTN","MHVXPAT",181,0)
+ ;  DATAROOT - Root of array to hold extract data
+"RTN","MHVXPAT",182,0)
+ ;
+"RTN","MHVXPAT",183,0)
+ ;  Output:
+"RTN","MHVXPAT",184,0)
+ ;  DATAROOT - Populated data array
+"RTN","MHVXPAT",185,0)
+ ;             includes number of hits and timestamp
+"RTN","MHVXPAT",186,0)
+ ;       ERR - Errors during extraction, zero on success
+"RTN","MHVXPAT",187,0)
+ ;
+"RTN","MHVXPAT",188,0)
+ N DT,EXTIME,HIT,THIT,LOGND,PRVIEN,RTN,U,X,MHVTEAMS,PATIEN,SCTEAMA
+"RTN","MHVXPAT",189,0)
+ N SCPOSA,SCUSRA,SCROLEA,SCPURPA,SCER,FROMDT,TODT
+"RTN","MHVXPAT",190,0)
+ N PPHONE,SSECTION,PTYPE,TYPE,REC
+"RTN","MHVXPAT",191,0)
+ ;
+"RTN","MHVXPAT",192,0)
+ S RTN=$T(+0),LOGND=RTN_"^PTREL"  ; node for logging
+"RTN","MHVXPAT",193,0)
+ D LOG^MHVUL2(LOGND,"BEGIN","S","TRACE")
+"RTN","MHVXPAT",194,0)
+ ; needed vars.
+"RTN","MHVXPAT",195,0)
+ S U="^",DT=$$DT^XLFDT,ERR=0,EXTIME=$$NOW^XLFDT,HIT=0
+"RTN","MHVXPAT",196,0)
+ ;
+"RTN","MHVXPAT",197,0)
+ K @DATAROOT,^TMP(RTN,$J)  ; clean up residue
+"RTN","MHVXPAT",198,0)
+ ;
+"RTN","MHVXPAT",199,0)
+ S PATIEN=$G(QRY("IEN"))
+"RTN","MHVXPAT",200,0)
+ I '(PATIEN>0) S ERR="1^patient IEN missing" Q
+"RTN","MHVXPAT",201,0)
+ ;
+"RTN","MHVXPAT",202,0)
+ ;
+"RTN","MHVXPAT",203,0)
+ ; get all clinics, providers and PCMM TEAMS for the patient
+"RTN","MHVXPAT",204,0)
+ ; in the date range
+"RTN","MHVXPAT",205,0)
+ ;
+"RTN","MHVXPAT",206,0)
+ Q:ERR
+"RTN","MHVXPAT",207,0)
+ ;
+"RTN","MHVXPAT",208,0)
+ N MHVDATES,CLID,J,RSLT,RSLTLST,SCER,TM,PATIEN
+"RTN","MHVXPAT",209,0)
+ S RSLTLST=$NA(^TMP(RTN,$J,"CLINICS"))
+"RTN","MHVXPAT",210,0)
+ I '$G(QRY("FROMDT")) S QRY("FROMDT")=2920101
+"RTN","MHVXPAT",211,0)
+ I '$G(QRY("TODT")) S QRY("TODT")=DT
+"RTN","MHVXPAT",212,0)
+ S MHVDATES("BEGIN")=QRY("FROMDT")
+"RTN","MHVXPAT",213,0)
+ S MHVDATES("END")=QRY("TODT")
+"RTN","MHVXPAT",214,0)
+ S PATIEN=QRY("IEN")
+"RTN","MHVXPAT",215,0)
+ ;
+"RTN","MHVXPAT",216,0)
+ ;Load Clinics
+"RTN","MHVXPAT",217,0)
+ ;
+"RTN","MHVXPAT",218,0)
+ D GETAPPT^SDAMA201(PATIEN,"1;2","R;NT",QRY("FROMDT"),QRY("TODT"),"")
+"RTN","MHVXPAT",219,0)
+ I $D(^TMP($J,"SDAMA201","GETAPPT","ERROR")) D  Q
+"RTN","MHVXPAT",220,0)
+ .S ERR="",ERR=$O(^TMP($J,"SDAMA201","GETAPPT","ERROR",ERR))
+"RTN","MHVXPAT",221,0)
+ .S ERR="1^"_^TMP($J,"SDAMA201","GETAPPT","ERROR",ERR)
+"RTN","MHVXPAT",222,0)
+ S REC=""
+"RTN","MHVXPAT",223,0)
+ F  S REC=$O(^TMP($J,"SDAMA201","GETAPPT",REC)) Q:REC=""  D
+"RTN","MHVXPAT",224,0)
+ .S CLID=$P(^TMP($J,"SDAMA201","GETAPPT",REC,2),"^",1)
+"RTN","MHVXPAT",225,0)
+ .Q:$D(^TMP($J,"CLFND",CLID))
+"RTN","MHVXPAT",226,0)
+ .S @RSLTLST@(REC)=$P(^TMP($J,"SDAMA201","GETAPPT",REC,2),"^",1,2)
+"RTN","MHVXPAT",227,0)
+ .S ^TMP($J,"CLFND",CLID)=""
+"RTN","MHVXPAT",228,0)
+ S @RSLTLST@(0)=REC
+"RTN","MHVXPAT",229,0)
+ K ^TMP($J,"SDAMA201"),^TMP($J,"CLFND")
+"RTN","MHVXPAT",230,0)
+ ;
+"RTN","MHVXPAT",231,0)
+ ;Load MHVTEAMS
+"RTN","MHVXPAT",232,0)
+ ;
+"RTN","MHVXPAT",233,0)
+ D TMSPT^ORQPTQ1(.MHVTEAMS,PATIEN)
+"RTN","MHVXPAT",234,0)
+ I MHVTEAMS(1)["No teams" K MHVTEAMS(1)
+"RTN","MHVXPAT",235,0)
+ M ^TMP("MHVXPAT",$J,"TEAMS")=MHVTEAMS
+"RTN","MHVXPAT",236,0)
+ ;
+"RTN","MHVXPAT",237,0)
+ ;Load Providers
+"RTN","MHVXPAT",238,0)
+ S RSLTLST=$NA(^TMP(RTN,$J,"PROVIDERS"))
+"RTN","MHVXPAT",239,0)
+ ;S (SCPOSA,SCUSRA,SCROLEA,SCPURPA,SCER)=""
+"RTN","MHVXPAT",240,0)
+ ;S X=$$PRPT^SCAPMC(PATIEN,.MHVDATES,SCPOSA,SCUSRA,SCROLEA,SCPURPA,RSLTLST,SCER)
+"RTN","MHVXPAT",241,0)
+ ;
+"RTN","MHVXPAT",242,0)
+ S X=$$OUTPTPR^SDUTL3(PATIEN) ;MHV*1*9 Always return PC
+"RTN","MHVXPAT",243,0)
+ I +X  D
+"RTN","MHVXPAT",244,0)
+ .S ^TMP(RTN,$J,"PROVIDERS",0)=""
+"RTN","MHVXPAT",245,0)
+ .S ^TMP(RTN,$J,"PROVIDERS",1)=X
+"RTN","MHVXPAT",246,0)
+ .S $P(^TMP(RTN,$J,"PROVIDERS",1),U,8)="PHYSICIAN-PRIMARY CARE"
+"RTN","MHVXPAT",247,0)
+ ; now save results
+"RTN","MHVXPAT",248,0)
+ ;
+"RTN","MHVXPAT",249,0)
+ N MHVHDAT
+"RTN","MHVXPAT",250,0)
+ S MHVHDAT=DATAROOT
+"RTN","MHVXPAT",251,0)
+ S THIT=0
+"RTN","MHVXPAT",252,0)
+ F TYPE="CLINICS","PROVIDERS","TEAMS"  D
+"RTN","MHVXPAT",253,0)
+ .S J=0
+"RTN","MHVXPAT",254,0)
+ .S HIT=0
+"RTN","MHVXPAT",255,0)
+ .F  S J=$O(^TMP(RTN,$J,TYPE,J))  Q:'J  S TM=$G(^(J))  D
+"RTN","MHVXPAT",256,0)
+ ..S HIT=HIT+1,THIT=THIT+1,@DATAROOT@(TYPE,HIT)=$P(TM,U)_"^"_$P(TM,U,2)
+"RTN","MHVXPAT",257,0)
+ ..I TYPE="PROVIDERS"  D
+"RTN","MHVXPAT",258,0)
+ ...S PPHONE=$$GET1^DIQ(200,$P(TM,U)_",",.132)
+"RTN","MHVXPAT",259,0)
+ ...S SSECTION=$$GET1^DIQ(200,$P(TM,U)_",",29)
+"RTN","MHVXPAT",260,0)
+ ...S PTYPE=$P(TM,U,8)
+"RTN","MHVXPAT",261,0)
+ ...S @DATAROOT@(TYPE,HIT)=@DATAROOT@(TYPE,HIT)_"^"_PTYPE
+"RTN","MHVXPAT",262,0)
+ ...S @DATAROOT@(TYPE,HIT)=@DATAROOT@(TYPE,HIT)_"^^^^"_PPHONE_"^"_SSECTION
+"RTN","MHVXPAT",263,0)
+ S @DATAROOT=THIT_U_EXTIME  ; hits ^ time
+"RTN","MHVXPAT",264,0)
+ D XITLOG(LOGND,HIT)
+"RTN","MHVXPAT",265,0)
+ Q
+"RTN","MHVXPAT",266,0)
+ ;
+"RTN","MHVXPAT",267,0)
+XITLOG(ND,HT)     ; exit log
+"RTN","MHVXPAT",268,0)
+ D LOG^MHVUL2(ND,HT_" HITS","S","TRACE")
+"RTN","MHVXPAT",269,0)
+ D LOG^MHVUL2(ND,"END","S","TRACE") Q
+"VER")
+8.0^22.0
+"BLD",7949,6)
+^5
+**END**
+**END**

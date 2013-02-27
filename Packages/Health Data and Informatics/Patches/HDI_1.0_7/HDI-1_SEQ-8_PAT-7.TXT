@@ -1,0 +1,327 @@
+
+=============================================================================
+Run Date: SEP 24, 2012                     Designation: HDI*1*7
+Package : HDI - HEALTH DATA & INFORMATICS     Priority: Mandatory
+Version : 1         SEQ #8                      Status: Released
+                  Compliance Date: JUL 13, 2013
+=============================================================================
+
+Associated patches: (v)HDI*1*6     <<= must be installed BEFORE `HDI*1*7'
+
+Subject: API FOR SNOMED CT EXCEPTIONS IN LAB
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+  This patch is one of the patches in the Laboratory Electronic Data
+  Interchange (LEDI) IV project. The other patches are: LR*5.2*350 and
+  LA*5.2*74. Because this is a multi-package project, there is a
+  multi-package host build that installs the following builds: HDI*1.0*7,
+  LR*5.2*350, and LA*5.2*74.
+  
+  This patch distributes an Application Programming Interface (API) that
+  the Lab package will use to report Systemized Nomenclature of Medicine -
+  Clinical Terms (SNOMED CT or SCT) exceptions to the Standards and
+  Terminology Services (STS) team for resolution. There are three
+  exceptions/events that result in the Lab package using the API. They are:
+  
+     1) Error encountered while loading STS mapped SCT code into
+        the target database
+     2) Loading new/additional terms received from another system
+        via Health Level 7 (HL7) messaging
+     3) New terms are entered locally
+  
+  Use of this API by the Lab package is covered by Integration Control
+  Registration (ICR) #5026.
+  
+  This patch installs a new mail group.  The mail group HDIS LAB
+  EXCEPTIONS is used for routing of the exception data to the STS team.
+  Users do not need to be added to this mail group since it is only
+  referenced on the FORUM system.
+  
+  This patch installs a new server option.  The server option
+  HDIS-LAB-EXCEPTION-SERVER [HDIS LAB EXCEPTION SERVER] is used to
+  unbundle the exception data from the generated exception message.
+  This unbundling of data is only done on the FORUM system.
+  
+  The post-init routine for this patch will delete Veterans Health
+  Administration Unique Identifier(s) (VUIDs) from the XTID VUID FOR SET OF
+  CODES file (#8985.1) for some Lab sets of codes that were not assigned
+  consistently (possibly erroneously) and will never be messaged to the
+  Health Data Repository (HDR).
+  
+  
+  API Description
+  ===============
+  
+  D LABXCPT^HDISVAP1(ARRAY,TASKIT)
+  
+  Input: ARRAY - Array containing information about the exception
+               (FULL GLOBAL REFERENCE)
+           @ARRAY@(ETC, n) = Transaction number ^ Time stamp
+           @ARRAY@(ETC, n, [x, y, ...]) = Exception specific nodes
+  
+             ETC is a code denoting the type of exception to report
+               1 = Load Exception
+               2 = Reference Lab
+               3 = Add/Edit by Site
+  
+             Time Stamp is in FileMan format
+         TASKIT - Flag denoting if the work this API does should
+                  be queued to run
+                    1 = Queue to run
+                    0 = Run now (DEFAULT)
+  
+ Output: None
+       : The node @ARRAY@("XMZ") will be set equal to the message
+         number of the generated message.  A value of zero (0) will
+         be used when the message could not be generated.
+       : The node @ARRAY@("ZTSK") will be set equal to the task number
+         assigned if the TASKIT variable is set to one (1).  A value
+         of zero (0) will be used if queuing of this API's work was
+         not requested.
+       : The node @ARRAY@("ERROR", ETC) will be set equal to NULL
+         for input exception type codes that are not supported.
+       : The node @ARRAY@("ERROR", ETC, n) will be set equal to NULL
+         if the exception could not be handled.  This is typically
+         set because of a missing input node.  This node will not be
+         set for unsupported exception type codes.
+  
+  Notes: If this is not a production system the generated message
+         will be sent to the currently defined user (i.e. DUZ)
+       : The node @ARRAY@("ERROR") will be KILLed on input
+       : A pipe (|) is used as the delimiter for the "SA" and "SB"
+         nodes.  This is because they mirror the layout of the SNOMED
+         CT extract already implemented by the Lab package.
+       : A pipe (|) is used as the delimiter for the "RD" node.  This
+         is because it mirrors the layout of the resolution data being
+         transmitted by Enterprise Reference Terminology (ERT) to the Lab
+         package for loading.
+       : The following text lists the nodes for each exception type
+  
+    Exception Type Code 1: Load Exception
+    =====================================
+    @ARRAY@(1, n) = Transaction number ^ Time stamp
+    @ARRAY@(1, n, "TXT") = Text to describe why the exception was
+                           generated.  Contents is up to the
+                           discretion of the Lab package.
+    @ARRAY@(1, n, "SA") = The pipe delimited row of data for the
+                          entry that would be generated by the LR
+                          LAB SERVER when fulfilling a SNOMED extract
+                          report
+    @ARRAY@(1, n, "RD") = The pipe delimited row of data received
+                          from STS that the Lab package attempted
+                          to load
+  
+    Exception Type Code 2: Reference Lab
+    ====================================
+    @ARRAY@(2, n) = Transaction number ^ Time stamp
+    @ARRAY@(2, n, "TXT") = Text to describe why the exception was
+                           generated.  Contents is up to the
+                           discretion of the Lab package.
+    @ARRAY@(2, n, "SA") = The pipe delimited row of data for the
+                          entry that would be generated by the LR
+                          LAB SERVER when fulfilling a SNOMED extract
+                          report
+    @ARRAY@(2, n, "RL") = Location type code ^ Location number ^
+                          Location name
+    @ARRAY@(2, n, "EC") = Encoding characters from HL-7 message
+    @ARRAY@(2, n, "OBX", 3) = Sequence 3 of received OBX segment
+    @ARRAY@(2, n, "OBX", 5) = Sequence 5 of received OBX segment
+  
+      Location Type Code:
+        1 = DoD              4 = IHS
+        2 = VA               5 = Other
+        3 = Non-government   6 = Unknown
+  
+    Exception Type Code 3: Add/Edit by Site
+    =======================================
+    @ARRAY@(3, n) = Transaction number ^ Time stamp
+    @ARRAY@(3, n, "TXT") = Text to describe why the exception was
+                           generated.  Contents is up to the
+                           discretion of the Lab package.
+    @ARRAY@(3, n, "SA") = The pipe delimited row of data for the
+                          entry that would be generated by the LR
+                          LAB SERVER when fulfilling a SNOMED extract
+                          report
+    @ARRAY@(3, n, "SB") = Same definition as the SA node except the
+                          values prior to the add/edit are used.
+                          Node not present for additions.
+  
+  
+    Alternate Array Format
+    ======================
+    Array nodes that are delimited pieces of data can also be broken
+    out into their individual pieces of data.  The only node that
+    CAN NOT be broken out in this manner is the main node for the
+    exception.
+    
+    Using exception type code 1 (Load Exception) as an example, the
+    alternate array format would be:
+  
+      @ARRAY@(1, n) = Transaction number ^ Time stamp
+      @ARRAY@(1, n, "TXT") = Some kind of text
+      @ARRAY@(1, n, "SA", 1..N) = Piece N of the SA node
+      @ARRAY@(1, n, "RD", 1..N) = Piece N of the RD node
+  
+    Note that the primary and alternate formats can not be used at
+    the same time for the same node.  If this is done, the data will
+    be ignored and the error node for the exception will be set.
+  
+  
+  
+  Patch Components
+  ================
+  
+  Options Associated:
+  
+  Option Name                  Type             New/Modified/Deleted
+  -----------                  ----             --------------------
+  HDIS LAB EXCEPTION SERVER
+  [HDIS-LAB-EXCEPTION-SERVER]  server                New
+  
+  
+  Mail Groups Associated:
+  
+  Mail Group Name                               New/Modified/Deleted
+  ---------------                               --------------------
+  HDIS LAB EXCEPTIONS                                  New
+  
+  
+  
+  Test Sites
+  ==========
+  
+   BILOXI VAMC
+   BOSTON HCS
+   LEXINGTON VAMC
+   MILWAUKEE VAMC
+   NEW MEXICO HCS
+   NORTHERN ARIZONA HCS
+   NORTHAMPTON VAMC
+   PALO ALTO HCS
+   PHOENIX VAMC
+   SOUTH TEXAS HCS (large)(integrated)
+   SOUTHERN ARIZONA VA HCS
+  
+  We would also like to thank the following sites who participated in the
+  testing of the LEDI IV patch:
+  
+   CAPTN JAMES LOVELL FED HLT CTR (NORTH CHICAGO VAMC)
+   EL PASO VA HCS
+   HUNTINGTON VAMC
+   TAMPA VAMC
+  
+  
+  
+  Software and Documentation Retrieval Information
+  ================================================
+  
+  The LEDI IV patch will be controlled by a phased release. To control the
+  implementation of the LEDI IV patch and related SNOMED CT files, a
+  secured File Transfer Protocol (FTP) server with passwords will be used.
+  A member of the Product Development team will contact your site with the
+  FTP server, username, and password prior to your scheduled installation
+  date.
+  
+  Although this is a controlled, phased released, the user and installation
+  documentation will be available to all sites when the patch is officially
+  released and the phased implementations start. This will give sites the
+  opportunity to retrieve the documents before their phased installation
+  date.
+  
+  
+  Documentation is available for LEDI IV on the ANONYMOUS.SOFTWARE 
+  directory at one of the following Office of Information (OI) Field
+  Offices.
+  
+  The preferred method is to FTP the files from:
+    download.vista.med.va.gov
+  
+  This transmits files from the first available FTP server. Sites may also
+  elect to retrieve documentation directly from a specific server as
+  follows:
+         Albany                  ftp.fo-albany.med.va.gov
+         Hines                   ftp.fo-hines.med.va.gov
+         Salt Lake City          ftp.fo-slc.med.va.gov
+  
+  NOTE: The files listed below will be listed in each of the LEDI IV
+        patches that are part of the LEDI IV bundle; they only need to be
+        downloaded once.
+  
+  File Name               Contents                       Retrieval Format
+  ------------------      ---------------------          ----------------
+  LAB_LEDI_IV_IG.PDF      LEDI IV Installation Guide     binary
+  LAB_LEDI_IV_UM.PDF      LEDI IV User Manual            binary
+  
+  
+  
+  Patch Installation
+  ==================
+  
+  HDI*1.0*7 is part of a combined build exported as a Kernel Installation
+  and Distribution System (KIDS) host file named:
+  
+      LAB_LEDI_IV.KID
+  
+  This bundle contains the following builds:
+  
+      HDI*1.0*7
+      LR*5.2*350
+      LA*5.2*74
+  
+  
+  Installation Instructions
+  -------------------------
+  The install time for this patch is approximately sixty (60) minutes.
+  Suggested time to install: non-peak requirement hours.
+  
+  This patch MUST BE installed when Laboratory users are NOT on the system.
+  
+  Refer to the LDSI/LEDI IV Installation Guide for installation
+  instructions.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HDI1007A
+    Before:       n/a   After:  B6928908  **7**
+Routine Name: HDI1007B
+    Before:       n/a   After: B21051816  **7**
+Routine Name: HDISVAP1
+    Before:       n/a   After: B15807756  **7**
+Routine Name: HDISVAP2
+    Before:       n/a   After:B100092820  **7**
+Routine Name: HDISVAP3
+    Before:       n/a   After: B39464123  **7**
+Routine Name: HDISVM00
+    Before:  B4708917   After:  B9620498  **6,7**
+Routine Name: HDISVM03
+    Before:       n/a   After: B37279918  **7**
+Routine Name: HDISVM04
+    Before:       n/a   After: B38623461  **7**
+Routine Name: HDISVM05
+    Before:       n/a   After: B13220707  **7**
+Routine Name: HDISVS04
+    Before:       n/a   After:  B1565418  **7**
+ 
+Routine list of preceding patches: 6
+
+=============================================================================
+User Information:
+Entered By  : PETERSON,JAMES R              Date Entered  : JUL 20, 2007
+Completed By: HARMON,LUCILLE                Date Completed: SEP 13, 2012
+Released By : BELSCHWINDER,MICHAEL          Date Released : SEP 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

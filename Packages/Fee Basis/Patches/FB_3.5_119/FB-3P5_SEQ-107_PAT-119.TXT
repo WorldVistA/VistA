@@ -1,0 +1,347 @@
+
+=============================================================================
+Run Date: JUN 21, 2011                     Designation: FB*3.5*119
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #107                    Status: Released
+                  Compliance Date: JUL 22, 2011
+=============================================================================
+
+
+Subject: Project ARCH Eligibility
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ This build is a multi-package build that contains FB*3.5*119 and
+ PXRM*2.0*20.  See the Clinical Reminders patch PXRM*2.0*20 for a complete
+ patch description.
+  
+ The Access Received Closer to Home (ARCH) Automated Eligibility 
+ Determination project is an interface between Veterans Health Information 
+ Systems and Technology Architecture (VistA)/Computerized Patient Record 
+ System (CPRS), and a data set containing geo-spatial information on 
+ eligible Veterans.  The Veterans' Mental Health And Other Care 
+ Improvements Act Of 2008, Section 403, Public Law 110-387 mandates that
+ the Department of Veterans Affairs (VA) conduct a pilot program over
+ three years for contract care of eligible Veterans in selected Veterans
+ Integrated Service Networks (VISNs).  The Office of Policy Analysis within
+ the Office of the Assistant Deputy Under Secretary for Health for Policy
+ and Planning (ADUSH/PP) requested the capability to automatically identify
+ all Veterans who are eligible for a high visibility Congressionally
+ mandated contract care pilot program (named Project ARCH, Access to Care
+ Received Closer to Home) in five VISNs (1, 6, 15, 18, and 19).
+  
+ Automated notification of ARCH eligibility is accomplished using 
+ clinical reminders.  Patient eligibility information comes from an 
+ ADUSH/PP database which has been imported into the VistA FEE BASIS 
+ PATIENT file (#161). A clinical reminders computed finding uses a Fee 
+ Basis API to get patient eligibility information. For eligible patients, 
+ there is a reminder dialog the provider can use to record that the 
+ patient does not need any of the covered services, or if the patient does 
+ need one of the covered services whether the patient declines or 
+ consents. If the patient consents, then a locally developed consult will 
+ be opened.
+  
+ When veterans come to one of the pilot sites, they are informed that they 
+ may be eligible for Project ARCH.  Services covered under the pilot are 
+ listed in the reminder dialog (list of clinical services varies by VISN), 
+ and the Care Coordinator will record one of the following:  
+  
+     Veteran does not need a covered service
+     Veteran needs covered service, was informed of pilot and consents 
+           to participate
+     Veteran needs covered service, was informed of pilot, and does 
+           not consent to participate
+  
+ Note:  The Fee Basis patch FB*3.5*119 will only import the eligibility 
+        data and there are no additional or modified Fee Basis options.
+  
+  
+   
+ ASSOCIATED REMEDY:
+ ==================
+ N/A
+  
+ ASSOCIATED NSR(s):
+ ==================
+ 20100719
+  
+ DATA DICTIONARY INFORMATION:
+ ============================
+ File  Sub-File/Field    Name
+ ----- --------------    ----
+ 161    161.011,.01      ARCH ELIGIBILITY DATE 0;1 DATE   
+ 161    161.011,2        ARCH ELIGIBILITY      0;2 SET
+  
+  
+ APIs for Clinical Reminders:
+ ============================
+ $$ELIG^FBARCH0(DFN,DT1,DT2,DATA) - returns if pt is ARCH eligible or NOT.
+ $$LIST^FBARCH0(DT1,DT2) - returns a list of ARCH patients w/in the date 
+                           range.
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Togus
+ Prescott
+ Wichita
+  
+  
+ TECHNICAL MANUAL:
+ =================
+ FB_35_TM_REVISED_JUNE11.PDF 
+  
+  
+ DATA STORAGE ESTIMATES:
+ =======================
+ Once the ARCH Eligibility is imported, the global growth is very 
+ minimal.  Eligibility updates will take place only through a patch.
+ The initial size of the ARCH Eligibility from Cheyenne's system is
+ 4 megabytes.  And, for integrated sites, the size could be tripled.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed during normal working hours with all users on
+ the system. It is not necessary to disable any menu options or protocols
+ when installing this patch. However, it is recommended that the install
+ be done during non-peak hours to lessen the impact on system performance.
+  
+  
+ *************************************************************************
+ * Install Time:                                                         *
+ *    The installation time of this patch will take less than 10 minutes.*
+ *                                                                       *
+ *************************************************************************
+  
+ 1.  Retrieve the multi-build KIDS distribution host file. This patch
+     will be distributed in a host file due to the amount of data
+     contained in the patch.  The name of the host file is:
+  
+          ARCH_PILOT_PROJECT_1_0.KID
+  
+     Sites can retrieve VistA software from the following FTP addresses.
+     The preferred method is to FTP the files from:
+  
+          download.vista.med.va.gov
+  
+     This will transmit the files from the first available FTP server.
+     Sites may also elect to retrieve software directly from a specific
+     server as follows:
+  
+          Albany                  ftp.fo-albany.med.va.gov
+          Hines                   ftp.fo-hines.med.va.gov
+          Salt Lake City          ftp.fo-slc.med.va.gov
+  
+     The ARCH_PILOT_PROJECT_1_0.KID host file is located in the
+     anonymous.software directory. Use ASCII Mode when downloading the
+     file.
+  
+ 2.  Load the KIDS distribution that is contained in file
+     ARCH_PILOT_PROJECT_1_0.KID using the Load a Distribution option on the
+     Installation menu.
+  
+ 3.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option:
+     Installation
+          1      Load a Distribution
+          2      Verify Checksums in Transport Global
+          3      Print Transport Global
+          4      Compare Transport Global to Current System
+          5      Backup a Transport Global
+          6      Install Package(s)
+                 Restart Install of Package(s)
+                 Unload a Distribution
+  
+ 4.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter ARCH PILOT PROJECT 1.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  Use the Install Package(s) option and select the package ARCH PILOT
+         PROJECT 1.0.
+  
+     a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         YES//', answer NO.
+     b.  When prompted 'Want to DISABLE Scheduled Options and Menu
+        Options and Protocols? YES//', answer NO.
+     c.  A post install will import the project ARCH eligibility data to
+         test sites in FEE BASIS PATIENT file (#161).
+          
+  
+ SAMPLE INSTALLATION:
+ ====================
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: ARCH PILOT PROJECT 1.0      3/25/11@06:31:32
+      => PROJECT ARCH  ;Created on Mar 24, 2011@11:19:03
+  
+ This Distribution was loaded on Mar 25, 2011@06:31:32 with header of 
+    PROJECT ARCH  ;Created on Mar 24, 2011@11:19:03
+    It consisted of the following Install(s):
+ ARCH PILOT PROJECT 1.0     FB*3.5*119    PXRM*2.0*20
+ Checking Install for Package ARCH PILOT PROJECT 1.0
+  
+ Install Questions for ARCH PILOT PROJECT 1.0
+  
+  
+ Checking Install for Package FB*3.5*119
+  
+ Install Questions for FB*3.5*119
+  
+ Incoming Files:
+  
+  
+    161       FEE BASIS PATIENT
+ Note:  You already have the 'FEE BASIS PATIENT' File.
+  
+ Checking Install for Package PXRM*2.0*20
+  
+ Install Questions for PXRM*2.0*20
+  
+ Incoming Files:
+  
+  
+    811.4     REMINDER COMPUTED FINDINGS  (including data)
+ Note:  You already have the 'REMINDER COMPUTED FINDINGS' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    811.8     REMINDER EXCHANGE  (including data)
+ Note:  You already have the 'REMINDER EXCHANGE' File.
+ I will OVERWRITE your data with mine.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//
+  
+  
+                                    
+                               FB*3.5*119
+  
+ -------------------------------------------------------------------------
+  
+  
+  Installing Routines:
+                Mar 25, 2011@06:33:36
+  
+  Install Started for FB*3.5*119 : 
+                Mar 25, 2011@06:33:36
+  
+ Build Distribution Date: Mar 24, 2011
+  
+  Installing Routines:
+                Mar 25, 2011@06:33:36
+  
+  Installing Data Dictionaries: 
+                Mar 25, 2011@06:33:36
+  
+  Running Post-Install Routine: POST^FBARCH0
+  
+ Populating ARCH ELIGIBILITY in file (#161).....
+  
+           --------------------------------------------------------------
+   100%    -             25             50             75               -
+ Complete  --------------------------------------------------------------
+  
+ -------------------------------------------------------------------------
+  
+  
+                            PXRM*2.0*20                                   
+ --------------------------------------------------------------------------
+  
+  
+ DISABLE protocols.
+  
+  Installing Data Dictionaries: 
+                Mar 25, 2011@06:34:29
+  
+  Installing Data: 
+                Mar 25, 2011@06:34:29
+  
+  Running Post-Install Routine: POST^PXRMP20I
+  
+ ENABLE options.
+  
+ ENABLE protocols.
+  
+ There are 1 Reminder Exchange entries to be installed.
+ 1. Installing Reminder Exchange entry VA-PROJECT ARCH VISN CONTRACT 
+ CARE PILOT ELIGIBILITY      
+  
+                                                
+ ------------------------------------------------------------------------
+  
+           --------------------------------------------------------------
+   100%    -             25             50             75               -
+ Complete  --------------------------------------------------------------
+  
+  
+ Install Completed
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+
+Routine Information:
+====================
+Routine Name: FBARCH0
+
+=============================================================================
+User Information:
+Entered By  : DAYON,RUFINO                  Date Entered  : MAR 10, 2011
+Completed By: LEONARD,KEN                   Date Completed: JUN 07, 2011
+Released By : MARSHALL,FALENCIA B.          Date Released : JUN 21, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

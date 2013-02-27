@@ -1,0 +1,208 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Wednesday, 02/06/13 at 12:10
+=============================================================================
+Run Date: FEB 21, 2013                     Designation: PRC*5.1*120
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #147                    Status: Released
+                  Compliance Date: MAR 24, 2013
+=============================================================================
+
+Associated patches: (v)PRC*5.1*37  <<= must be installed BEFORE `PRC*5.1*120'
+                    (v)PRC*5.1*81  <<= must be installed BEFORE `PRC*5.1*120'
+
+Subject: FCP EDI/DELIVERY ORDERS NOT ON UNOBL RUNNING BALANCE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following 2 issues:
+  
+ 1. When Fund Control Points are set to Electronic Data Interchange Auto
+    Send, delivery orders automatically get obligated which affect the 
+    Running Balance Report
+  
+ 2. When Fund Control Point flag 'FCP ALL/DELIVERY ORDER SWITCH' is set to
+    (A)ll Orders or (D)elivery orders, orders automatically get obligated
+    which affect the Running Balance Report. 
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ Remedy:
+ =======
+ 1. HD0000000055355  Delivery Orders not on UNOBL Running Balance when
+                     not passed thru Fiscal
+      Duplicates:  HD0000000055221, HD0000000055381
+  
+ 2. HD0000000586999  Balances not matching
+  
+      
+  
+ Test Sites:
+ ===========
+ St Cloud VA Medical Center
+ VA Tennessee Valley HCS
+  
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000055355 Delivery Orders not on UNOBL Running Balance when not
+                    passed through Fiscal
+  
+ Problem:
+ --------
+ Problem with the functionality that automatically obligates delivery
+ orders when the FCP (Fund Control Point) is set to EDI (Electronic Data 
+ Interchange) Auto Send. This shows up having incorrect Fiscal balances on
+ the Running Balance report.
+  
+ When users run the Running Balance Report the Fiscal UNOBL Running
+ Balance (RB) was not affected by transactions that were not passed
+ through Fiscal. These transactions were Auto sent to fiscal via
+ EDI. The problem is not with the report, but with the processing of
+ the transactions that are to be EDI Auto sent.
+  
+ Also, analysis found that an EDI oriented Delivery Order when cancelled 
+ via an amendment DID NOT credit the obligated dollars on the Running 
+ Balance report.
+  
+ Resolution:
+ -----------
+ Changed the processing of delivery orders whose Fund Control Point is set 
+ to EDI Auto Send 'Yes'.  If the FCP is set to EDI Auto Send and the user 
+ has authorization to Sign orders, when they enter their Electronic 
+ Signature the order will now automatically be obligated. The obligating 
+ of the order will cause the Fiscal UNOBL RB to be affected on the Running 
+ Balance report.
+  
+ Also, these same orders when cancelled through amendment processing 
+ will now credit the FCP properly.
+  
+  
+ Routines: PRCSC1, PRCSC3, PRCHSWCH, PRCFFM2M, PRCHSF1
+  
+  
+ 2. HD0000000586999  Balances not matching
+  
+ Problem:
+ --------
+ Problem with the functionality that automatically obligates orders when 
+ the FCP (Fund Control Point) or FCP site parameter 'FCP ALL/DELIVERY 
+ ORDER SWITCH' is set to "A" or "D". This shows up as having incorrect 
+ Fiscal balances on the Running Balance report.
+  
+ When users run the Running Balance Report the Fiscal UNOBL Running
+ Balance (RB) was not affected by transactions that were not passed
+ through Fiscal. These transactions were Auto sent to fiscal via logic 
+ that drives auto obligation when parameter is set. The problem is not with
+ the report, but with the processing of the orders that are to be auto 
+ obligated based on the parameter setting.
+  
+ Also, analysis found that that these same orders when cancelled via an
+ amendment DID NOT credit the obligated dollars on the Running 
+ Balance report.
+  
+ Resolution:
+ -----------
+ Changed the processing of orders whose Fund Control Point is set to
+ 'FCP ALL/DELIVERY ORDER SWITCH'.  If the FCP or FCP site has the 
+ switch set to "A" or "D" and the user has authorization to Sign orders, 
+ when they enter their Electronic Signature the order will now 
+ automatically be obligated. The obligating of the order will cause the
+ Fiscal UNOBL RB to be affected on the Running Balance report.
+  
+ Also, these same orders when cancelled through amendment processing 
+ will now credit the FCP properly.
+  
+  
+ Routines: PRCSC1, PRCSC3, PRCHSWCH, PRCFFM2M, PRCHSF1
+  
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is necessary that you disable options. You may install these routines
+ at any time without interruption to users. It should take less than 2
+ minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*120)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*120.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO. 
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond YES.  When prompted to select the options
+       you would like to place out of order, enter the following:
+  
+       NEW DETAILED PURCHASE CARD ORD  New Detailed Purchase Card Order
+       NEW SIMPLIFIED PURCHASE CARD    New Simplified Purchase Card Order
+       PRCH ENTER DELIVERY ORDER       Enter Delivery Order            
+       PRCH AMENDMENT TO P/C ORDER     Amendment To Purchase Card Order
+       PRCHPC AMEND                    Amendment to Purchase Order 
+       PRCHPC PO ADD                   New Purchase Order
+       PRCH CREATE DEL ORDER           Create Delivery Order From 
+                                       Repetitive Item List
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCFFM2M
+    Before: B10213072   After: B10513103  **81,120**
+Routine Name: PRCHSF1
+    Before: B14964931   After: B15185876  **120**
+Routine Name: PRCHSWCH
+    Before:  B6532981   After:  B8466970  **37,120**
+Routine Name: PRCSC1
+    Before: B19453305   After: B23428273  **120**
+Routine Name: PRCSC3
+    Before: B10726630   After: B14708529  **120**
+ 
+Routine list of preceding patches: 37, 81
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : MAY 07, 2008
+Completed By: HEFFERNAN,COREY               Date Completed: FEB 06, 2013
+Released By : VASSAR,CAROL                  Date Released : FEB 21, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

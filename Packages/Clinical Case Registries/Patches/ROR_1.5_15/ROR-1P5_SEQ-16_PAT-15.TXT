@@ -1,0 +1,372 @@
+$TXT Created by RAY,Constance at CHEY132.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 09/08/11 at 08:57
+=============================================================================
+Run Date: JAN 09, 2012                     Designation: ROR*1.5*15
+Package : ROR - CLINICAL CASE REGISTRIES      Priority: Mandatory
+Version : 1.5        SEQ #16                    Status: Released
+                  Compliance Date: FEB 09, 2012
+=============================================================================
+
+Associated patches: (v)PSN*4*284   <<= must be installed BEFORE `ROR*1.5*15'
+                    (v)ROR*1.5*14  <<= must be installed BEFORE `ROR*1.5*15'
+
+Subject: Report modifications, CDC form updates and 508 compliance
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The following is a list of changes included in this patch:
+  
+ 1. Two new HCV generic drugs, Telaprevir and Boceprevir, and one new HIV
+ drug, Rilpivirine, were approved by the Food and Drug Administration (FDA)
+ in May, 2011.  These three medications have been added to the ROR GENERIC
+ DRUG (#799.51) file and can now be selected on reports to provide
+ information about the patients who are taking the new medications.
+  
+ 2. The Renal Function by Range Report has been enhanced to include a new
+ option for calculating the eGFR called the CKD-EPI equation. The CKD-EPI
+ GFR is an estimate of glomerular filtration (GFR) using serum creatinine
+ and demographic factors.  It is a relatively new equation that is believed
+ to be superior to the MDRD GFR equation. If selected, the CKD-EPI scores
+ are summarized on the report by chronic kidney disease stage.
+  
+ 3. The result ranges panel on the "Renal Function by Range" report will 
+ include a note that reads, "Lab tests used to calculate renal function 
+ are identified by LOINC code.  Your local lab ADPAC should be contacted 
+ regarding errors in LOINC codes." 
+  
+ 4. The header on the "Renal Function by Range" report currently reads, 
+ "Lab tests used to calculate Cockcroft-Gault and/or eGFR by MDRD scores 
+ are identified by LOINC code."  This text will be updated to read, "Lab 
+ tests used in calculations are identified by LOINC code."  
+  
+ 5. The cover sheet text of the "Renal Function by Range" report will be 
+ amended to include the list of LOINC codes that are used.  The new text 
+ on the "Renal Function by Range" report will read, "Your local lab ADPAC
+ should be contacted regarding errors in LOINC codes."  
+  
+ 6. Currently, the "Liver Score by Range" report includes rows for tests 
+ that are not related to the test(s) selected by the user.  Test rows 
+ should no longer appear if they are not used in the report calculations.  
+ If the user selects the APRI and/or FIB4 tests, then the Bili, Cr, INR, 
+ and Na rows should not appear on the report.  If the user selects the 
+ MELD and/or MELDNA tests, then the AST, Platelet, and ALT rows should not 
+ appear on the report.  
+  
+ 7. The result ranges panel on the "Liver Score by Range" report will 
+ include a note that reads, "Lab tests used in calculations are identified 
+ by LOINC code.  Your local lab ADPAC should be contacted regarding errors 
+ in LOINC codes."  
+  
+ 8. Users may now use 'Diagnosed at this VA' as a local field.  The field
+ is based on the answer to the Patient Data Editor question - 'Was your VA
+ facility/station the first healthcare setting (VA or non-VA) to diagnose
+ HIV?'.  If Include is selected, only patients with this question answered
+ Yes will be included on the report.  If Exclude is selected, only patients
+ with this question answered No or Unknown will appear on the report.
+  
+ 9. Users may now use the Select All Divisions button to display all
+ divisions in the left hand pick box.
+  
+ 10. The CDC Form has been modified to correct the transposition of check
+ box values for the "Bisexual male" and "Intravenous/injection drug user"
+ questions.
+  
+ 11. The CDC Form has been modified to check the appropriate checkbox if
+ the user selects 'yes' to the question "Received Clotting Factor for
+ Hemophilia/Coagulation disorder".
+  
+ 12. An invalid date check and error message have been added for the
+ question, "Received transfusion of blood/blood components (other than
+ clotting factor)" on the Risk Factors Tab in the Patient Editor.
+  
+ 13. A future date check and error message have been added for the
+ question, "Received transfusion of blood/blood components (other than
+ clotting factor)" on the Risk Factors Tab in the Patient Editor.
+  
+ 14. A future date check and error message have been added for the
+ question, "Did the patient ever have an AIDS OI?" on the Clinical Status
+ Tab in the Patient Editor.
+  
+ 15. The Non-VA Medication back pull will run during the nightly task 
+ after the patch is installed.
+  
+ 16. The Date Range panels (Date Range, Medications Date Range, Lab Tests 
+ Date Range and Utilization Date Range) were re-designed for easier use 
+ with Assistive Technology. 
+  
+  
+ Patch Components
+ ================
+  
+ Data updates associated:
+  
+ File Name (Number)            Record Name        New/Modified/Deleted
+ ------------------            -----------        --------------------
+ ROR LIST ITEM (#799.1)        eGFR by CKD-EPI    New
+                                 Registry:VA HEPC
+                               eGFR by CKD-EPI    New
+                                 Registry:VA HIV
+ ROR XML ITEM (#799.31)        HIV_DX             New 
+                               MDRD               New
+                               CKD                New
+                               NPMDRD             New
+                               NPCKD              New
+ ROR GENERIC DRUG (#799.51)    BOCEPREVIR         New
+                               TELAPREVIR         New
+                               RILPIVIRINE        New
+  
+  
+ Dialogs associated:
+  
+ Dialog Name                                      New/Modified/Deleted
+ -----------             
+ 7981020.001 Renal Function by Range (HTML)       Modified
+ 7981020.002 Renal Function by Range (CSV)        Modified
+ 7981999.001 Common XSL templates (HTML)          Modified
+  
+  
+ Test Sites:
+ ----------
+ PALO ALTO HCS
+ San Antonio, TX
+ Coatsville, PA 
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.va.gov/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ ROR1_5P15DOC1.ZIP            ROR User Manual                    BINARY
+                     
+  
+ ROR1_5P15DOC2.ZIP            Release Notes,                     BINARY
+                              Technical Manual/Security Guide,
+                              Installation/Implementation 
+                              Guide
+  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ -------------------------------
+   1. IMPORTANT NOTE:  Before installing the patch, please verify that
+      errors in non-VA medications have been corrected. If these errors are
+      not corrected, the CCR backpull of NON-VA medications will error out
+      with the error <SUBSCRIPT>EN+7^PSOHCSUM.  See Instructions below.
+  
+   2. The pre-installation routine in the build deletes an invalid entry
+      from the ROR HISTORICAL DATA EXTRACTION (#799.6) file.
+  
+   
+ Installation Instructions
+ -------------------------
+ This patch includes an M patch and a revised Graphical User Interface
+ (GUI) executeable.
+  
+ Installation of the patch will not take more than 5 minutes. This patch
+ can be installed with VistA users online, but Registry users should be
+ logged out of the CCR Registry Application, as a new GUI is to be
+ installed.
+  
+ NOTE: The nightly task (the [ROR TASK] option) must not be running
+       during the installation.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ M INSTALLATION INSTRUCTIONS
+ =========================== 
+  
+ 1. IMPORTANT:  Before installing the patch, use the Pharmacy Patient
+    Erroneous Non-VA Meds Report [PSO NON-VA MEDS REPORT] to verify that 
+    the Non-VA medication records at your site have no data integrity 
+    errors.  CONTINUE TO THE NEXT STEP IF THIS OPTION DOES NOT EXIST.
+  
+    This report will check non-VA medications for bad data and send an
+    email with the results. If errors are reported in the email, contact
+    the site Pharmacy staff to use the options on the menu, Pharmacy
+    Patient Non-VA Meds Report/Clean-up [PSOZ NON-VA MEDS REP/CLEAN] to
+    clean up the errors. Further information is available in patch,
+    PSO*7*288.
+  
+ 2. Make sure you have the ROR VA IRM security key.
+  
+ 3. Use the "INSTALL/CHECK MESSAGE" option on the PackMan menu. This
+    option loads the patch into a Transport Global on your system.
+  
+ 4. From the Kernel Installation and Distribution System (KIDS)
+    menu, select the Installation menu.
+  
+ 5. From this menu, you may elect to use the following options:
+    (when prompted for INSTALL NAME, enter ROR*1.5*15)
+  
+   a.  Verify Checksums in Transport Global - This option will allow
+       you to ensure the integrity of the routines that are in the
+       transport global.
+   b.  Print Transport Global - This option will allow you to view
+       the components of the KIDS build.
+   c.  Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this
+       patch is installed.  It compares all components of this patch
+       (routines, Data Dictionaries (DD's), templates, etc.).
+   d.  Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch. It will not
+       backup any other changes such as DD's or templates.
+  
+ 6. Use the Install Package(s) option and select the package
+     ROR*1.5*15.
+  
+    The following messages display:
+  
+ Incoming Files:
+  
+ Select INSTALL NAME:    ROR*1.5*15    7/6/11@10:19:21
+      => ROR*1.5*15
+  
+ This Distribution was loaded on Jul 06, 2011@10:19:21 with header of 
+    ROR*1.5*15   
+    It consisted of the following Install(s):
+      ROR*1.5*15
+ Checking Install for Package ROR*1.5*15
+  
+ Install Questions for ROR*1.5*15
+  
+    799.1     ROR LIST ITEM  (including data)
+ Note:  You already have the 'ROR LIST ITEM' File.
+ I will MERGE your data with mine.
+  
+  
+    799.31    ROR XML ITEM  (including data)
+ Note:  You already have the 'ROR XML ITEM' File.
+ I will MERGE your data with mine.
+  
+  
+    799.51    ROR GENERIC DRUG  (including data)
+ Note:  You already have the 'ROR GENERIC DRUG' File.
+ I will OVERWRITE your data with mine.
+  
+    799.6     ROR HISTORICAL DATA EXTRACTION  (including data)
+ Note:  You already have the 'ROR HISTORICAL DATA EXTRACTION' File.
+ I will MERGE your data with mine.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+    NO//', respond "NO".
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+  Protocols? NO//', respond "NO".
+  
+ 8. Enter the Device you want to print the Install message.  
+    You can queue the install by enter a 'Q' at the device prompt. 
+    Enter a '^' to abort the install.  
+  
+ 9. Pre and Post-Init routine RORP015 can be deleted if desired. 
+  
+  
+ GUI INSTALLATION INSTRUCTIONS
+ =============================
+  
+ IMPORTANT NOTE:  This patch includes a revised Graphical User Interface
+ (GUI) application which must be distributed to the appropriate 
+ workstations.  After the patch is installed correctly, and the GUI is 
+ updated, the version of the GUI will be 1.5.15.
+  
+  
+ File Name         Contents      Transfer Mode  
+ ---------         -----------   -------------
+ ROR1_5P15GUI.ZIP  Zipped GUI    BINARY
+  
+  
+     
+ 1. Unzip the ROR1_5P15GUI.ZIP into a temporary folder.
+       
+ 2. Open the temporary folder and double click the file CCRSetup.exe to
+    begin the install.
+       
+ 3. Wait until the setup Wizard prepares the installation 
+    procedure. A welcome message displays.
+   
+ 4. Click Next to continue the installation.
+       
+ 5. Select the directory in which to install the CCR GUI. 
+    We recommend that you accept the default directory: 
+    C:\Program Files\VistA\Clinical Case Registries. To 
+    select a different location, click Change and select 
+    the directory. Click Next to proceed with installation.
+   
+ 6. Review the installation settings and click Install to 
+    proceed. The setup Wizard finishes the installation
+    and a confirmation screen displays.
+       
+ 7. Click Finish.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;CLINICAL CASE REGISTRIES;**[Patch List]**;Feb 17, 2006;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RORP015
+    Before:       n/a   After:   B962707  **15**
+Routine Name: RORRP015
+    Before: B22232247   After: B22836599  **1,15**
+Routine Name: RORUTL11
+    Before:  B3195130   After:  B3286551  **13,14,15**
+Routine Name: RORX019
+    Before:B148477652   After:B164858937  **10,13,14,15**
+Routine Name: RORX020
+    Before:B216151292   After: B68556557  **10,13,14,15**
+Routine Name: RORX020A
+    Before: B42700433   After: B53998936  **10,14,15**
+Routine Name: RORX020B
+    Before:       n/a   After: B63829872  **15**
+Routine Name: RORXU002
+    Before:B111065586   After:B116207704  **1,10,13,15**
+Routine Name: RORXU005
+    Before: B18041693   After: B19990482  **1,15**
+ 
+Routine list of preceding patches: 14
+
+=============================================================================
+User Information:
+Entered By  : RAY,CONSTANCE                 Date Entered  : APR 14, 2011
+Completed By: BERRY,LINDA                   Date Completed: JAN 09, 2012
+Released By : VANCAMP,E PHILIP              Date Released : JAN 09, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

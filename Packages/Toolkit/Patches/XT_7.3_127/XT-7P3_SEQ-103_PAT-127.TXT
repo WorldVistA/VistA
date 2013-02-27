@@ -1,0 +1,119 @@
+$TXT Created by TRAN,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 10/27/10 at 06:32
+=============================================================================
+Run Date: SEP 06, 2011                     Designation: XT*7.3*127
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3       SEQ #103                    Status: Released
+                  Compliance Date: OCT 07, 2011
+=============================================================================
+
+Associated patches: (v)XT*7.3*100  <<= must be installed BEFORE `XT*7.3*127'
+
+Subject: FIX OPTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy tickets: 
+  - HD0000000285748
+  - HD0000000411815
+  - HD0000000387921
+  
+ Patch Tracking Message#: 52627854
+  
+ Test sites:
+  - LITTLE ROCK, AR VAMC
+  - MONTANA HCS
+  - PALO ALTO HCS
+   
+                          XT*7.3*127
+  
+ This patch fixes the followings:
+  
+ - Fixes an error <SYNTAX>LOOP+1^XTVRC1 for option 'Last Routine Change'
+   [XTVR MOST RECENT CHANGE DATE], and a problem that users aren't able to
+   use '^' to jump out of this option.
+  
+ - Fixes a problem that only the first page of the report is 
+   queued to a printer for option 'Patches Due in the Next Seven Days'
+   [XTPM PATCHES DUE NEXT 7 DAYS]. 
+  
+ - Removes the line tag SITESK from the routine XTPMNEX7.
+  
+   Blood Bank Review  
+   ============================
+   Clearance: 8/19/2010
+  
+   EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*127 contains 
+   changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+   VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+   not alter or modify any VistA Blood Bank software design safeguards or 
+   safety critical elements functions.
+    
+   RISK ANALYSIS: Changes made by patch XT*7.3*127 have no effect on Blood 
+   Bank software functionality, therefore RISK is none.
+    
+   Installation Instructions
+   =========================
+    
+   1. Users ARE allowed to be on the system during the installation. 
+      However, it is recommended that the patch be installed during
+      non-peak time. It will take about one minute to install the
+      the patch, but it can be queued if you wish.
+    
+   2. You DO NOT need to stop TaskMan or the background filers.
+    
+   3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+      This option will load the KIDS package onto your system.
+    
+   4. The patch has now been loaded into a Transport global on your 
+      system. You now need to use KIDS to install the Transport global. On
+      the KIDS menu, under the 'Installation' menu, use the following
+      options:
+    
+                   Verify Checksums in Transport Global
+                   Print Transport Global
+                   Compare Transport Global to Current System
+                   Backup a Transport Global
+    
+      On the KIDS menu, under the 'Installation' menu, use the following
+      option:
+                   Install Package(s)  
+                   Select INSTALL NAME:XT*7.3*127
+                                       ========== 
+   
+     Accept the defaults for the following install questions:
+     Want KIDS to INHIBIT LOGONs during the install? NO//
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**; Apr 25, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XTPMNEX7
+    Before: B12616723   After: B12091523  **98,100,127**
+Routine Name: XTVRC1
+    Before: B15785750   After: B16389293  **127**
+Routine Name: XTVRC1A
+    Before: B27065348   After: B27969042  **127**
+ 
+Routine list of preceding patches: 100
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : AUG 02, 2010
+Completed By: SINGH,GURBIR                  Date Completed: SEP 01, 2011
+Released By : HARROD,PAUL                   Date Released : SEP 06, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

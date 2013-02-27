@@ -1,0 +1,216 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 10/26/11 at 10:51
+=============================================================================
+Run Date: OCT 31, 2011                     Designation: PSJ*5*237
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #217                      Status: Released
+                  Compliance Date: DEC 01, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*189   <<= must be installed BEFORE `PSJ*5*237'
+                    (v)PSJ*5*215   <<= must be installed BEFORE `PSJ*5*237'
+
+Subject: CORRECT LABEL PRINTING ERROR
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses the following 4 issues in the Inpatient Medications 
+ package:
+  
+ 1. Comments in the "Other Print Info" field of an IV label are getting 
+    cut off after 42 characters.
+  
+ 2. Option PSJU SFEA points to a tag that no longer exists, causing a hard 
+    crash if it is selected.
+  
+ 3. When editing an order in Inpatient Order Entry [PSJ OE], when prompted
+    "Select Item(s)", entering a response of "12,2" (to edit the Dispense
+    Drug field and then the Dosage field) would lead to an infinite loop.
+  
+ 4. When renewing an order in Inpatient Order Entry [PSJ OE], the "Expected
+    First Dose" is calculated counting forward from the expected start date
+    instead of the original start date of the order being renewed.
+  
+  
+ Associated NSR(s):
+ =================
+ N/A 
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. HD0000000385700 - Print label missing data
+  
+ 2. HD0000000361730 - Option PSJU SFEA Doesn't exist
+  
+ 3. HD0000000375104 - Inpatient unit dose issue
+  
+ 4. HD0000000168649 - Default Summary
+    Duplicate:
+    HD0000000373473 
+  
+  
+ Participating Test Sites:
+ =========================
+ Altoona - James E. Van Zandt VAMC
+ Minneapolis VAMC
+ VA Palo Alto HSC 
+  
+  
+ Remedy Overview:
+ ===============
+ 1. HD0000000385700:
+  
+ Problem:
+ --------
+ When printing pharmacy IV labels in CPRS, with a "Other Print Info" field 
+ containing more than 42 characters, the Other Print Info is getting cut
+ off. This problem was not seen when printing labels from the VistA option
+ PSJU LABEL [Label Print/Reprint].
+  
+  
+ Resolution:
+ -----------
+ Changed routine PSJORMA2 so that the system prevents the last word from 
+ being cut off when "Other Print Info" exceeds 42 characters.
+  
+  
+ 2. HD0000000361730:
+  
+ Problem:
+ --------
+ Option PSJU SFEA points to a tag that no longer exists, causing a hard 
+ crash if it is selected.
+  
+ Resolution:
+ -----------
+ Removed option PSJU SFEA from available options.
+  
+  
+ 3. HD0000000375104:
+  
+ Problem:
+ --------
+ When editing an order in Inpatient Order Entry [PSJ OE] and prompted
+ "Select Item(s)", entering a response of "12,2" (to edit the Dispense Drug
+ field and then the Dosage field) would lead to an infinite loop.
+ No other combination would result in this issue (not even "2,12").
+  
+ Resolution:
+ -----------
+ Changed routine PSGOE92 so that entering "12,2" does not cause an infinite
+ loop.
+  
+  
+ 4. HD0000000168649:
+  
+ Problem:
+ --------
+ When renewing an order in Inpatient Order Entry [PSJ OE], the "Expected 
+ First Dose" is calculated counting forward from the expected start date
+ instead of the original start date of the order being renewed.
+  
+ Resolution:
+ -----------
+ Changed routine PSJORP2 so that the date calculation for the "Expected
+ First Dose" begins at the original start date of the order being renewed,
+ and preserves the same frequency between doses.
+  
+  
+ Installation Instructions:
+ =========================
+ If installed during the normal workday, it is recommended that the 
+ INPATIENT MEDICATIONS users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+  
+ 1.  Load Transport Global 
+     ---------------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*237):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+         of Install? NO//', answer NO.
+  
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//' answer NO. 
+  
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE92
+    Before: B29332123   After: B30178235  **2,35,50,58,81,110,215,237**
+Routine Name: PSJORMA2
+    Before: B18381910   After: B19470230  **2,15,21,26,58,237**
+Routine Name: PSJORP2
+    Before: B18899712   After: B23776619  **80,110,111,133,189,237**
+ 
+Routine list of preceding patches: 189, 215
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : DEC 29, 2009
+Completed By: WERNER,GARY                   Date Completed: OCT 26, 2011
+Released By : HARDY,STACY                   Date Released : OCT 31, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

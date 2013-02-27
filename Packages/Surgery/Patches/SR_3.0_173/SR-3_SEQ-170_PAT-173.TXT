@@ -1,0 +1,149 @@
+$TXT Created by GILMORE,JEREMY at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 06/26/12 at 10:28
+=============================================================================
+Run Date: JUL 16, 2012                     Designation: SR*3*173
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #170                      Status: Released
+                  Compliance Date: AUG 16, 2012
+=============================================================================
+
+Associated patches: (v)SR*3*41     <<= must be installed BEFORE `SR*3*173'
+                    (v)SR*3*100    <<= must be installed BEFORE `SR*3*173'
+
+Subject: RECEIVING ERROR WHEN EXECUTING SRTASK-NIGHT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1.  Users are receiving an error when their system runs the nightly task
+ SRTASK-NIGHT option.
+ 2.  A user reported that addendums created in VistA are not always being
+ transmitted to CPRS. It appears that TIU BUSINESS RULES for certain
+ document types or user classes are being created which can cause
+ unforeseen issues.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000210945 System error running SRTASK-NIGHT
+    Duplicate:  
+    HD0000000339909 $ZE= <UNDEFINED>SRHLXTMP+7^SRHLXTMP (duplicate)
+       
+ 2. HD0000000286261 Info entered in surgery through VISTA is not always
+                    showing on nurse intraoperative report in CPRS, 
+                    especially with addendums.
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ N/A                                                     
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000210945 System error running SRTASK-NIGHT 
+    
+    Problem:   
+    --------
+    Users are receiving an UNDEFINED error when executing the nightly task
+    SRTASK-NIGHT option in VistA. This daily task should be run every
+    night to purge outstanding requests that have not been acted upon.
+  
+    Resolution:
+    -----------
+    Modified routine SRHLXTMP to function properly if the expected global is
+    not present.
+  
+  
+ 2. HD0000000286261 Info entered in surgery through VISTA is not always
+                    showing on nurse intraoperative report in CPRS, 
+                    especially with addendums. 
+    
+    Problem:   
+    --------
+    A user reported that addendums created in VistA are not always being 
+    transmitted to CPRS. It appears that TIU BUSINESS RULES for certain
+    document types or user classes are being created which can cause
+    unforeseen processing issues.
+  
+    Resolution:
+    -----------
+    Made changes to the routine SROESAD which now accesses existing
+    functionality and alerts users of their inability to create
+    addendums because they lack a particular USR CLASS that is associated
+    with a BUSINESS RULE their site created. 
+     
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ The installation time will rely on the size of the global in the database.
+  
+ Install time - less than 5 minutes
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter SR*3.0*173)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       SR*3.0*173.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0; Surgery ;**[Patch List]**;24 Jun 93;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SRHLXTMP
+    Before:   B639857   After:   B708492  **41,173**
+Routine Name: SROESAD
+    Before: B31263685   After: B32374327  **100,173**
+ 
+Routine list of preceding patches: 41, 100
+
+=============================================================================
+User Information:
+Entered By  : GILMORE,JEREMY                Date Entered  : FEB 09, 2010
+Completed By: CRICHLOW,SHERRY               Date Completed: JUL 03, 2012
+Released By : CONSENTINO,ALBERT             Date Released : JUL 16, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,89 @@
+$TXT Created by CRUMLEY,JAMIE at CPRS28.FO-SLC.MED.VA.GOV  (KIDS) on Thursday, 06/24/10 at 12:23
+=============================================================================
+Run Date: JUL 05, 2011                     Designation: GMTS*2.7*95
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7        SEQ #89                    Status: Released
+                  Compliance Date: AUG 05, 2011
+=============================================================================
+
+
+Subject: CORRECT B CROSS-REFERENCE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ Currently, the NAME field (.01) of the HEALTH SUMMARY OBJECTS file 
+ (#142.5) had a 'B' cross-reference that only stored the first 30 
+ characters of the name. When attempting to install a TIU/HS Object in 
+ Clinical Reminder Exchange, a FileMan error: "The update failed, 
+ UPDATE^DIE returned the following error message" would occur when the 
+ receiving site has multiple Health Summary Object entries that are not 
+ unique until after the 30 character length.
+  
+ This patch corrects this problem by modifying the 'B' cross-reference to 
+ store the full 60 characters.
+  
+ Associated Remedy:
+ ==================
+ HD0000000410473 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  This patch should be loaded during non-peak hours to minimize disruption
+  to users.  Installation will take less than 1 minute.  Users may remain
+  on the system.
+  
+  1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+  2.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+  
+  3.  From this menu, you may elect to use the following options
+      (when prompted for INSTALL NAME, enter GMTS*2.7*95):
+          a.  Backup a Transport Global
+          b.  Compare Transport Global to Current System
+          c.  Verify Checksums in Transport Global
+  
+  4.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+      respond NO.
+  
+  5.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond NO.
+  
+  6.  After the patch has successfully installed, the post-install routine,
+      GMTSY95, may be deleted.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSY95
+    Before:       n/a   After:   B109244  **95**
+
+=============================================================================
+User Information:
+Entered By  : CRUMLEY,JAMIE                 Date Entered  : JUN 22, 2010
+Completed By: SERVICE,JOHN                  Date Completed: JUL 05, 2011
+Released By : SCHMIT,BECKY                  Date Released : JUL 05, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

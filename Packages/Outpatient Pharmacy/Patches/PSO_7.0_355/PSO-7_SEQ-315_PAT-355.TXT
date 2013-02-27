@@ -1,0 +1,119 @@
+$TXT Created by NIXON,TONY at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 05/03/10 at 18:00
+=============================================================================
+Run Date: MAY 19, 2011                     Designation: PSO*7*355
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #315                      Status: Released
+                  Compliance Date: JUN 19, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*326   <<= must be installed BEFORE `PSO*7*355'
+
+Subject: ERROR OCCURS WHEN ACCESSING NON VA MEDS REPORT USING HIDDEN ACTION 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+ ----------------------------------------
+ An undefined error occurs when attempting to access the Non VA Meds Report.
+ This error occurs while trying to access the report from the Medication
+ Profile screen using hidden action functionality.  
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ HD0000000315102 - Error when accessing hidden action NV - Non VA Meds Report
+                   action in the medication profile screen.
+  
+  
+ Associated NSRs:
+ ================
+  N/A
+   
+   
+ Participating Test Sites:
+ =========================
+ Oklahoma City VA Medical Center
+ VA CENTRAL PLAINS HCS     
+ Carl Vinson VA Medical Center - Dublin  
+  
+   
+ Remedy Overview:
+ ================
+ HD0000000315102 - Error when accessing hidden action Non VA Meds Report action
+                   in the medication profile screen.
+  
+  
+ Problem:
+ --------
+ The error occurs because the variable DFN is not defined.  This happens when
+ the user accesses the 'Action Profile' option before accessing the 'Non VA Meds
+ Report'.
+  
+  
+ Resolution:
+ -----------
+ Modify routine PSONVARP to define DFN from PSODFN when the DFN variable
+ is not defined.
+  
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter PSO*7.0*355)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package PSO*7.0*355
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;13 Feb 97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSONVARP
+    Before: B23669597   After: B23942845  **132,118,326,355**
+ 
+Routine list of preceding patches: 326
+
+=============================================================================
+User Information:
+Entered By  : NIXON,ANTOINE                 Date Entered  : MAY 03, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: APR 26, 2011
+Released By : BAYLIS,RANDALL S              Date Released : MAY 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

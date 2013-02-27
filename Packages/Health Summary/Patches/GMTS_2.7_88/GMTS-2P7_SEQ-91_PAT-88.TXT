@@ -1,0 +1,352 @@
+$TXT Created by SESSLER,APRIL at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 08/17/11 at 11:28
+=============================================================================
+Run Date: OCT 31, 2011                     Designation: GMTS*2.7*88
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7        SEQ #91                    Status: Released
+                  Compliance Date: NOV 30, 2011
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*56 <<= must be installed BEFORE `GMTS*2.7*88'
+                    (v)GMTS*2.7*58 <<= must be installed BEFORE `GMTS*2.7*88'
+                    (v)GMTS*2.7*70 <<= must be installed BEFORE `GMTS*2.7*88'
+                    (v)LR*5.2*372  <<= must be installed BEFORE `GMTS*2.7*88'
+
+Subject: LAB REFORMAT/142.1 UPDATE/SII COMP/HS BY LOC REPORT
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ This patch makes four changes to package GMTS - HEALTH SUMMARY:
+  
+ 1. Display column headers of TIU-Health Summary(HS) Object components 
+    when pulled up in succession.
+ 2. Update Lab references range displays on HS reports. 
+ 3. Update default value of fields TIME LIMITS and MAXIMUM OCCURRENCES for 
+    HS components MHA Admin List [MHAL] and MHA Score [MHAS] HS components.
+ 4. Add new field, SHORT HS BY LOCATION COVER to the HEALTH SUMMARY 
+    PARAMETERS FILE (#142.99) to allow the number of times each location 
+    prints on the cover sheet to be changed from 6 times to 1 time. 
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+      
+     
+ ASSOCIATED REMEDY:
+ ================
+ 1. HD0000000070142 - TIU-HS Object (SII) not pulling column header
+ 2. HD0000000231399 - Health Summary changes to coincide with LR*5.2*356  
+ 3. HD0000000230879 - Mental Health Components
+         Duplicates: 
+         HD0000000233063 - Cannot enter time and occurrence limits
+         HD0000000266699 - MHA Admin List ADHOC Report
+         HD0000000265571 - MHAS does allow occurrence limit
+ 4. HD0000000336184 - MENU OPTION GMTS HS BY LOC wasting many sheets 
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ WASHINGTON DC VAMC, DC
+ WHITE CITY VAMC, OR  
+ VA NORTHWEST IOWA HCS, IA (MINNEAPOLIS)
+ MIAMI VAMC, FL
+  
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1. HD0000000070142 - TIU-HS Object (SII) not pulling column header
+  
+  
+ Problem:
+ --------
+ Column headers are not displaying for the Imaging Impression Selected
+ component (SII) when it is pulled up in succession.  For example, if you 
+ create a progress note that contains a TIU-HS object that has the SII 
+ component as boilerplate text, then create another note in the same 
+ session, the headers will not display on any but the first note.  This 
+ problem also manifests itself in the Health Summary Objects Menu [GMTS 
+ OBJ MENU] in option Test a Health Summary Object [GMTS OBJ TEST].
+  
+ Resolution:
+ -----------
+ The variable GMTSPC needed to be newed in the tag MAIN for routine 
+ GMTSRASP.
+  
+ Routine: GMTSRASP
+  
+  
+ 2. HD0000000231399 - Health Summary changes to coincide with LR*5.2*356
+  
+ Problem:
+ --------
+ Two Health Summary routines need to be modified to coincide with changes
+ brought about by Lab patch LR*5.2*372, which includes changes to the way
+ certain reference ranges are displayed (the changes were originally 
+ supposed to take place in LR*5.2*356). All Health Summary reports that
+ display Lab references ranges are affected by this, which includes any
+ report(s) that use(s) the components HEMATOLOGY [HEM], Lab Tests Selected
+ [SLT], and/or Chem & Hematology [CH]. 
+  
+ Resolution:
+ -----------
+ The following changes were made with regard to the following rules:
+  
+   1.  If neither low or high reference value is defined, nothing prints.
+   2.  If the low only is defined and it is equal to 0 it prints: Ref:>=0
+   3.  If the low only is defined and the first character is "<" or ">" it
+       prints: Ref: low_value
+   4.  If the low only is defined and it is numeric it prints: Ref: >=10
+   5.  If the low only is defined and it is alphanumeric it prints: 
+       Ref: RVLow
+   6.  If the high only is defined and it is equal to 0 it prints: Ref: 0
+   7.  If the high only is defined and the first character is "<" or ">" 
+       it prints: Ref: high_value
+   8.  If the high only is defined and it is numeric it prints: Ref: <=20
+   9.  If the high only is defined and it is alphanumeric it prints: 
+       Ref: RVHIGH
+   10. If both low and high are defined it prints: RVLOW - RVHIGH or 10 -
+       20.
+  
+  Routines: GMTSLRC, GMTSLRS
+  
+  
+ 3. HD0000000230879 - Mental Health Components
+  
+ Problem:
+ --------
+ With the release of patch GMTS*2.7*77 two new Health Summary components
+ were added to the HEALTH SUMMARY COMPONENT (#142.1) file, MHA 
+ Administration List [MHAL] and MHA Score [MHAS].  The defaults for the
+ TIME LIMITS APPLICABLE (#2) field and MAXIMUM OCCURRENCES APPLICABLE (#4)
+ field were intended to be set to 'yes', but three of the fields were
+ incorrectly set to a value of 1 (which is invalid), while one field was
+ left blank.  Users, therefore, are not prompted for TIME LIMITS and MAX
+ OCCURRENCES when adding these components to Health Summary types.
+  
+ Resolution:
+ -----------
+ Any of these entries that have a value of '1' will be set to 'yes'. If
+ the value of the fields were null upon installation of this patch, the 
+ value will remain the same; however, users will be able to make edits to 
+ the field if need be.
+  
+ Routine: GMTSP88
+  
+  
+ 4. HD0000000336184 - MENU OPTION GMTS HS BY LOC wasting many sheets 
+  
+ Problem:
+ --------
+ Two issues were identified when printing the Hospital Location Health
+ Summary [GMTS HS BY LOC].  First, when printing in standard Letter
+ (8.5 x 11) format the name of each hospital location is printed six times
+ on the cover page, resulting in an overflow onto the next page and a waste
+ of paper.  Secondly, hospital locations that did not have any patients
+ seen during the specified date range were printing this information on a
+ new page, which results in two pages being used where one page would be
+ sufficient. 
+  
+ Resolution:
+ -----------
+ A new field, SHORT HS BY LOCATION COVER (#.07), has been added to the
+ HEALTH SUMMARY PARAMETERS FILE (#142.99) which will be checked upon
+ printing the Hospital Location Health Summary [GMTS HS BY LOC]. If
+ set to 'Y'(Yes), the cover page for each hospital location will print the
+ name of the location one time instead of six times. This will reduce paper
+ consumption when printing in standard Letter (8.5 x 11) format.
+  
+ After patch installation, the value of SHORT HS BY LOCATION will be null.
+ To take advantage of the paper reduction, the new field must be set to 
+ YES. The option Edit Health Summary Site Parameters [GMTS IRM/ADPAC
+ PARAMETER EDIT] has been modified to allow users to edit/display this
+ field. This option is selectable from the Health Summary Maintenance Menu
+ [GMTS IRM/ADPAC MAINT MENU].
+  
+ EXAMPLE:
+ --------
+ Select Health Summary Maintenance Menu Option: 7  Edit Health Summary 
+ Site Parameters
+  
+ Select HEALTH SUMMARY PARAMETERS: HOSPITAL  
+ PROMPT FOR ACTION PROFILE: yes// 
+ INCLUDE BAR CODES ON ACTION PROFILES: yes// 
+ INCLUDE COMMENTS FOR LABS: no// 
+ SPOOL DEVICE: PDX// 
+ ERROR MESSAGE RECIPIENT: HS ERRORS// 
+ SHORT HS BY LOC COVERS: Yes//  <-- Edit new field
+  
+  
+ *Note: There should be only ONE entry in the HEALTH SUMMARY PARAMETERS
+ file (#142.99) named 'HOSPITAL'. Also, if this parameter is set to 'N'(No)
+ or left null, the name of each location will continue to print six times
+ on the cover page(s).
+  
+ Routines: GMTSPL, GMTSLTR
+  
+  
+ DOCUMENTATION INFORMATION:
+ ==========================
+ The Health Summary Technical Manual and Health Summary User Manual 
+ have been updated to support information about this patch. The 
+ manuals are provided in Microsoft Word and Adobe PDF formats on the web at
+ the following address:
+     
+           http://www.va.gov/vdl 
+  
+ The Adobe PDF files are also available for FTP transfer.
+ The preferred method is to FTP the files from:
+  
+         - download.vista.med.va.gov.
+  
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve documents directly from a specific 
+ server, as shown below. These files MUST be obtained in BINARY mode.
+  
+ CIO FIELD OFFICE FTP ADDRESS DIRECTORY:
+ Albany               ftp.fo-albany.med.va.gov [anonymous.software]
+ Hines                ftp.fo-hines.med.va.gov  [anonymous.software]
+ Salt Lake City       ftp.fo-slc.med.va.gov    [anonymous.software]
+  
+ Username is "anonymous" without the quotes. You must FTP in BINARY mode.
+ Once in the FTP server, change directory into the software directory 
+ (i.e., cd software).  The names of the files are as shown below:
+  
+ FILE NAME               DESCRIPTION
+ hsum_2_7_88_tm.PDF      Health Summary Technical Manual
+ hsum_2_7_88_um.PDF      Health Summary User Manual
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be run with users on the system. Installation will take
+ less than 5 minutes.
+     
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+    the KIDS distribution included with this message.
+    
+ 2. Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]: 
+    
+            Edits and Distribution ...  
+            Utilities ...  
+            Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+            1      Load a Distribution
+            2      Verify Checksums in Transport Global
+            3      Print Transport Global
+            4      Compare Transport Global to Current System
+            5      Backup a Transport Global
+            6      Install Package(s)
+                   Restart Install of Package(s)
+                   Unload a Distribution
+    
+ 3. From this menu, you may elect to use the following options
+    (when prompted for INSTALL NAME, enter GMTS*2.7*88):
+    
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+      b. Compare Transport Global to Current System  - this option will
+         allow you to view all changes that will be made when the patch
+         is installed.  It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will
+         allow you to ensure the integrity of the routines that are in
+         the transport global.
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+    
+ 4. Use the Install Package(s) option and select the package GMTS*2.7*88.
+    
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? NO//', respond NO.
+  
+ 6. When prompted ' Want KIDS to INHIBIT LOGONs during the install?
+    NO//', respond NO.
+    
+ 7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond NO.
+  
+  
+ POST-INSTALL
+ ============
+ Patch GMTS*2.7*77 left the MAXIMUM OCCURRENCES APPLICABLE (#4) field blank
+ for the MHAS component in the HEALTH SUMMARY COMPONENT (#142.1) file. If
+ your site wants this limit to apply it may have to be manually changed to
+ 'yes' in Fileman if not already done so.
+  
+ The HEALTH SUMMARY COMPONENT (#142.1) file will be updated with the
+ post-install routine GMTSP88, which can be manually deleted upon 
+ successful installation. If any part of the update is unsuccessful you
+ should be notified by alert or Mailman message.  The alert will tell you
+ which part(s) of the update failed and that the file should be manually
+ updated, with instructions on how to do this below via Fileman.
+ Alternatively, you could re-run the post-install routine from a
+ programmer's prompt with the following command:  D EN^GMTSP88
+  
+ ---------------------------------------------------------------
+  
+ Select VA FileMan Option: ENter or Edit File Entries
+  
+  
+ INPUT TO WHAT FILE: PATIENT// 142.1  HEALTH SUMMARY COMPONENT
+                                           (108 entries)
+ EDIT WHICH FIELD: ALL// TIME LIMITS APPLICABLE  
+ THEN EDIT FIELD: MAXIMUM OCCURRENCES APPLICABLE  
+ THEN EDIT FIELD: 
+  
+ Select HEALTH SUMMARY COMPONENT NAME: MHAL  MHA Administration List
+  
+ TIME LIMITS APPLICABLE: 1// YES  yes
+ MAXIMUM OCCURRENCES APPLICABLE: 1// YES  yes
+  
+ Select HEALTH SUMMARY COMPONENT NAME: MHAS  MHA Score
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSLRC
+    Before:  B5417657   After:  B6625875  **28,47,58,88**
+Routine Name: GMTSLRS
+    Before:  B7319960   After:  B9223777  **16,28,47,58,88**
+Routine Name: GMTSLTR
+    Before:  B4398379   After:  B4881328  **28,56,88**
+Routine Name: GMTSP88
+    Before:       n/a   After: B19084863  **88**
+Routine Name: GMTSPL
+    Before: B49944430   After: B53451337  **7,27,28,30,47,49,70,88**
+ Description of Changes:
+  changed documentation names.
+
+Routine Name: GMTSRASP
+    Before: B13016689   After: B13211752  **28,37,58,88**
+ 
+Routine list of preceding patches: 56, 58, 70
+
+=============================================================================
+User Information:
+Entered By  : TROHA,ROBERT                  Date Entered  : FEB 11, 2008
+Completed By: HULET,LEE ANN                 Date Completed: OCT 27, 2011
+Released By : SCHWARTZ,VIKIE                Date Released : OCT 31, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

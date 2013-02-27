@@ -1,0 +1,255 @@
+$TXT Created by ENELOW,JASON at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Friday, 10/08/10 at 10:08
+=============================================================================
+Run Date: JAN 11, 2011                     Designation: PSJ*5*241
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #205                      Status: Released
+                  Compliance Date: FEB 11, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*155   <<= must be installed BEFORE `PSJ*5*241'
+                    (v)PSJ*5*162   <<= must be installed BEFORE `PSJ*5*241'
+                    (v)PSJ*5*196   <<= must be installed BEFORE `PSJ*5*241'
+                    (v)PSJ*5*207   <<= must be installed BEFORE `PSJ*5*241'
+
+Subject: WARD GROUP DISPLAYS EXTRA ENTRIES, ORDER WARNINGS, ORDER SUMMARY ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to provide software bug fixes for Inpatient 
+ Medications to correct the display of various warning messages.  Also the
+ patch correct the order count of the Non-Verified/Pending Orders Report, as
+ well as correct patient list displays and prevents a software error. 
+ 
+ This patch addresses the following issues:
+  
+ 1. Category "^Other" can't be retrieved
+ 2. Warning for Complex Orders is being displayed twice.
+ 3. While in Inpatient Order Entry if the user received the warning message
+    "Dosage Ordered and Dispense Units do not match", the first line of the 
+    message in not visible to the user.
+ 4. Error in Order Summary of Non-Verified/Pending Orders Report
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. HD0000000245854 (Original) - Category "^Other" can't be retrieved.
+      HD0000000253359 (Duplicate) - Two non-verified orders not accessible
+                                    to verify
+      HD0000000363518 (Duplicate) - Ward Group ^Other Displays Extra
+                                    Entries
+ 2. HD0000000392288 (Original) - Warning for complex orders
+ 3. HD0000000392879 (Original) - Dosage Ordered and Dispense Units do not 
+                                 match warning
+ 4. HD0000000402743 (Original) - Error while running Non-Verified/Pending 
+                                 Orders report
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ TBD
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000245854 - Category "^Other" can't be retrieved
+  
+ Problem:
+ -------
+ This patch addresses the following inaccuracies in the Non-Verified/Pending 
+ Orders report option [PSJU VBW].  When displaying results, the "^OTHER"
+ ward group should contain all inpatient orders which are in a ward that
+ do not belong to a ward group.  However, there are discrepancies between
+ the number of orders that prints on the Order Summary screen and the
+ number of patients displayed after a user chooses the parameters for the
+ report.
+  
+ In the first scenario of this issue, patients with non-verified or pending 
+ orders in a clinic were being included in "^OTHER" ward group in the patient 
+ list.  This is incorrect since they had no ward.  This could cause 
+ significantly more patients to appear on the patient list than there were 
+ orders on the Order Summary screen.
+  
+ In the second scenario of this issue, orders which had a status of "Active" 
+ but were not verified by a pharmacist were displaying on the Order Summary 
+ screen for the ward group "^OTHER", but these patients were not being 
+ displayed in the patient list when the user selected the ward group "^OTHER". 
+ No other ward groups were affected by this problem.  This could cause 
+ significantly fewer patients to display on the patient list than there 
+ should have been.
+  
+ In the third scenario of this issue, IV orders with a schedule type of 
+ "One-Time" were not being counted correctly on the Order Summary screen and 
+ the Patient List.  This could cause patients with non-verified orders to not 
+ show up on the report.
+  
+ Also, the help text concerning the "^OTHER" ward group is out of date and 
+ does not coincide with current functionality or the most recent user 
+ manual documentation.
+  
+ Resolution:
+ ----------
+ Routines PSGVBW, PSGVBW1, and PSGVBWU were modified so that orders in clinics 
+ do not qualify a patient for the "^OTHER" ward group on the patient list and 
+ that Active orders which have not been verified by a pharmacist still display 
+ in the "^OTHER" ward group.  These modifications also include changes such
+ that IV orders whose schedule type is "One-Time" are counted on the Order 
+ Summary screen even though they are expired.
+  
+ Also, to reflect the current functionality of the Non-Verified/Pending 
+ Orders report, the help text concerning the "^OTHER" ward group has been 
+ changed so that it only mentions the inclusion of orders in wards which are 
+ not associated with a ward group, and orders which are not in wards which 
+ do not have clinics associated with them.
+  
+  
+ 2. HD0000000392288 - Warning for complex orders
+  
+ Problem:
+ -------
+ When entering a single-line complex order with a duration in CPRS, if the 
+ order is then finished in Inpatient Order Entry [PSJ OE], the user
+ receives a warning stating: "The following order contains a Requested
+ Duration and may be part of a complex dose!  Review the entire profile to
+ determine appropriate action(s)." However, the user will receive this
+ warning twice in succession.
+  
+ Resolution:
+ ----------
+ Removed the second error message by deleting the redundant code in routine 
+ PSJOE0.
+  
+  
+ 3. HD0000000392879 - Dosage Ordered and Dispense Units do not match warning
+  
+ Problem:
+ -------
+ When accepting an order in Inpatient Order Entry [PSJ OE] with 
+ auto-verify turned on, if the user receives the "Dosage Ordered and
+ Dispense Units do not match" warning, then the first line of the warning
+ (""Dosage Ordered and Dispense Units do not match") will be immediately
+ scrolled off the screen and the user must scroll up to read it.  Only the
+ second line of the warning ("Please verify Dosage") is visible.
+  
+ Resolution:
+ ----------
+ Changed code in PSGOEV to allow the screen to scroll down so that the
+ entire warning can be read.
+  
+  
+ 4. HD0000000402743 - Error running Non-Verified/Pending Orders report
+                      CNTORDRS+23^PSGVBWU
+  
+ Problem:
+ -------
+ When running the Order Summary section of the Non-Verified/Pending Orders 
+ report [PSJU VBW], an error can occur which exits the user from the system. 
+ Several calls to the tag CGNM^PSGVBWU were incorrectly written, causing an 
+ error if accessed.  The error occurs when there is a non-verified Inpatient 
+ order with "active" status which originally took place in a clinic, but the 
+ patient is currently checked into a ward.
+  
+ Resolution:
+ ----------
+ Changed the calls to CGNM^PSGVBWU so that they are no longer called as 
+ functions, and will no longer cause an error.
+  
+  
+  
+ Installation Instructions:
+ ==========================
+ 
+   ******************************  WARNING  *******************************
+   Prior to installing this patch, please check for local Class III
+   modifications that may be overwritten upon installation. Failure to
+   reinstall Class III modifications after installation of this patch may
+   prevent the Class III changes from functioning properly.
+   ************************************************************************
+ 
+   ******************************* WARNING ********************************
+   If your facility has the Pyxis/Omnicell/McKesson interface from ILC this
+   patch will overwrite any "local" modifications in routine PSGOEV. This 
+   could affect certain orders being sent across this interface.  The 
+   modifications will have to be reintroduced following installation of 
+   this patch.
+   ************************************************************************
+  
+   ******************************* NOTE ***********************************
+   IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS AN EDITED ERROR WILL
+   OCCUR. The patch should be installed when NO Inpatient Pharmacy users
+   are on the system.
+   ************************************************************************
+   
+  Installation will take less than 1 minute.
+  
+  Suggested time to install: non-peak requirement hours.
+  
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+  
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSJ*5.0*241):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+   4. Use the Install Package(s) option and select the package PSJ*5.0*241.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO. 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0; INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOEV
+    Before: B64035774   After: B64524901  **5,7,15,28,33,50,64,58,77,78,
+                                           80,110,111,133,171,207,241**
+Routine Name: PSGVBW
+    Before: B60599815   After: B65649356  **5,16,39,59,62,67,58,81,80,
+                                           110,111,133,139,155,241**
+Routine Name: PSGVBW1
+    Before:  B3427001   After:  B4852503  **5,111,241**
+Routine Name: PSGVBWU
+    Before: B62025597   After: B77076603  **3,44,47,67,58,110,111,196,241**
+Routine Name: PSJOE0
+    Before: B27948190   After: B25720453  **47,56,110,133,162,241**
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : APR 14, 2010
+Completed By: GOLDSMITH,JAMES H             Date Completed: DEC 24, 2010
+Released By : FOX,KIRK                      Date Released : JAN 11, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

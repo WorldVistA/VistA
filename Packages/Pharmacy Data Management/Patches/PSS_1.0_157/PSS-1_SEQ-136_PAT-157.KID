@@ -1,0 +1,398 @@
+Released PSS*1*157 SEQ #136
+Extracted from mail message
+**KIDS**:PSS*1.0*157^
+
+**INSTALL NAME**
+PSS*1.0*157
+"BLD",6385,0)
+PSS*1.0*157^PHARMACY DATA MANAGEMENT^0^3100827^y
+"BLD",6385,1,0)
+^^41^41^3100825^
+"BLD",6385,1,1,0)
+This patch corrects a defect introduced by patch PSS*1*143 in the
+"BLD",6385,1,2,0)
+Standard Schedule Edit [PSS SCHEDULE EDIT] option.
+"BLD",6385,1,3,0)
+ 
+"BLD",6385,1,4,0)
+ 
+"BLD",6385,1,5,0)
+HD0000000419996 -  Admin times cannot be deleted from PRN schedules
+"BLD",6385,1,6,0)
+via the Schedule Enter/Edit [PSS SCHEDULE EDIT] option.
+"BLD",6385,1,7,0)
+ 
+"BLD",6385,1,8,0)
+Remedy Overview
+"BLD",6385,1,9,0)
+---------------
+"BLD",6385,1,10,0)
+HD0000000419996
+"BLD",6385,1,11,0)
+ 
+"BLD",6385,1,12,0)
+Problem:
+"BLD",6385,1,13,0)
+---------
+"BLD",6385,1,14,0)
+Patch PSS*1*143 changed the Standard Schedule Edit [PSS SCHEDULE EDIT]
+"BLD",6385,1,15,0)
+option to prevent the prompt for Admin Time from displaying when the
+"BLD",6385,1,16,0)
+schedule's Type is PRN, making it difficult to remove the admin times
+"BLD",6385,1,17,0)
+from existing PRN schedules. When the schedule type of an existing
+"BLD",6385,1,18,0)
+schedule is changed from Continuous to PRN, the admin times are removed,
+"BLD",6385,1,19,0)
+however, when an existing schedule with a schedule type of PRN is edited,
+"BLD",6385,1,20,0)
+the admin times are not removed.
+"BLD",6385,1,21,0)
+ 
+"BLD",6385,1,22,0)
+In addition, an inconsistency exists within the same option: at the
+"BLD",6385,1,23,0)
+initial prompt for Schedule Type, entering or accepting a default of
+"BLD",6385,1,24,0)
+"PRN", has no affect on the value of admin times.
+"BLD",6385,1,25,0)
+However, after pressing Enter or Return to exit the Schedule Type
+"BLD",6385,1,26,0)
+prompt, if an up-arrow, or caret "^", is used to return to the Schedule
+"BLD",6385,1,27,0)
+Type field, then entering "PRN" or accepting the default of "PRN" the
+"BLD",6385,1,28,0)
+second time the prompt is displayed does delete the admin times from the
+"BLD",6385,1,29,0)
+schedule.
+"BLD",6385,1,30,0)
+ 
+"BLD",6385,1,31,0)
+Solution:
+"BLD",6385,1,32,0)
+----------
+"BLD",6385,1,33,0)
+Change the Standard Schedule Edit [PSS SCHEDULE EDIT] option to delete
+"BLD",6385,1,34,0)
+admin times from the schedule anytime "PRN" is entered, or accepted as a
+"BLD",6385,1,35,0)
+default, at the Schedule Type field. For existing PRN schedules, admin
+"BLD",6385,1,36,0)
+times may be deleted by re-entering "PRN", or accepting the default value
+"BLD",6385,1,37,0)
+"PRN", at the prompt for Schedule Type.
+"BLD",6385,1,38,0)
+ 
+"BLD",6385,1,39,0)
+Change the same option to make the Schedule Type prompt to have the same
+"BLD",6385,1,40,0)
+effect on the schedule's admin times for the initial and all subsequent
+"BLD",6385,1,41,0)
+prompts.
+"BLD",6385,4,0)
+^9.64PA^^
+"BLD",6385,6.3)
+4
+"BLD",6385,"KRN",0)
+^9.67PA^779.2^20
+"BLD",6385,"KRN",.4,0)
+.4
+"BLD",6385,"KRN",.401,0)
+.401
+"BLD",6385,"KRN",.402,0)
+.402
+"BLD",6385,"KRN",.402,"NM",0)
+^9.68A^1^1
+"BLD",6385,"KRN",.402,"NM",1,0)
+PSSJ SCHEDULE EDIT    FILE #51.1^51.1^0
+"BLD",6385,"KRN",.402,"NM","B","PSSJ SCHEDULE EDIT    FILE #51.1",1)
+
+"BLD",6385,"KRN",.403,0)
+.403
+"BLD",6385,"KRN",.5,0)
+.5
+"BLD",6385,"KRN",.84,0)
+.84
+"BLD",6385,"KRN",3.6,0)
+3.6
+"BLD",6385,"KRN",3.8,0)
+3.8
+"BLD",6385,"KRN",9.2,0)
+9.2
+"BLD",6385,"KRN",9.8,0)
+9.8
+"BLD",6385,"KRN",19,0)
+19
+"BLD",6385,"KRN",19.1,0)
+19.1
+"BLD",6385,"KRN",101,0)
+101
+"BLD",6385,"KRN",409.61,0)
+409.61
+"BLD",6385,"KRN",771,0)
+771
+"BLD",6385,"KRN",779.2,0)
+779.2
+"BLD",6385,"KRN",870,0)
+870
+"BLD",6385,"KRN",8989.51,0)
+8989.51
+"BLD",6385,"KRN",8989.52,0)
+8989.52
+"BLD",6385,"KRN",8994,0)
+8994
+"BLD",6385,"KRN","B",.4,.4)
+
+"BLD",6385,"KRN","B",.401,.401)
+
+"BLD",6385,"KRN","B",.402,.402)
+
+"BLD",6385,"KRN","B",.403,.403)
+
+"BLD",6385,"KRN","B",.5,.5)
+
+"BLD",6385,"KRN","B",.84,.84)
+
+"BLD",6385,"KRN","B",3.6,3.6)
+
+"BLD",6385,"KRN","B",3.8,3.8)
+
+"BLD",6385,"KRN","B",9.2,9.2)
+
+"BLD",6385,"KRN","B",9.8,9.8)
+
+"BLD",6385,"KRN","B",19,19)
+
+"BLD",6385,"KRN","B",19.1,19.1)
+
+"BLD",6385,"KRN","B",101,101)
+
+"BLD",6385,"KRN","B",409.61,409.61)
+
+"BLD",6385,"KRN","B",771,771)
+
+"BLD",6385,"KRN","B",779.2,779.2)
+
+"BLD",6385,"KRN","B",870,870)
+
+"BLD",6385,"KRN","B",8989.51,8989.51)
+
+"BLD",6385,"KRN","B",8989.52,8989.52)
+
+"BLD",6385,"KRN","B",8994,8994)
+
+"BLD",6385,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",6385,"QUES",0)
+^9.62^^
+"BLD",6385,"REQB",0)
+^9.611^1^1
+"BLD",6385,"REQB",1,0)
+PSS*1.0*143^2
+"BLD",6385,"REQB","B","PSS*1.0*143",1)
+
+"KRN",.402,2003,-1)
+0^1
+"KRN",.402,2003,0)
+PSSJ SCHEDULE EDIT^3100804.1016^@^51.1^^@^3100823
+"KRN",.402,2003,"DIAB",3,1,51.11,0)
+WARD ADMINISTRATION TIMES;REQ
+"KRN",.402,2003,"DIAB",7,0,51.1,5)
+STANDARD ADMINISTRATION TIMES;REQ
+"KRN",.402,2003,"DIAB",11,0,51.1,0)
+TYPE OF SCHEDULE//CONTINUOUS;REQ
+"KRN",.402,2003,"DR",1,51.1)
+S PSSJSE=1;S ZPSJS=$$GET1^DIQ(51.1,DA,5,"I");.01;8;8.1;S:'$D(PSJIVSEF) Y="@2";5////C//;S PSSSCT=X;S Y=1,PSJS="C";@2;5R~//CONTINUOUS;S PSSSCT=X;S XPSJS=0;I ZPSJS'="",ZPSJS'=X,X'="C" S XPSJS=1;I PSSSCT="P" S XPSJS=1;
+"KRN",.402,2003,"DR",1,51.1,1)
+I XPSJS=0 S Y="@3";2////@;1////@;D RMTIME^PSSJSV;W !,"The Type of Schedule has changed, the frequency will be removed",!;I PSSSCT="P" S Y="@999";@3;I PSSSCT="O" S Y="";S (ZPSJS,PSJS)=X;I ",O,D,"[(","_PSSSCT_",") S Y="@5" Q;@4;
+"KRN",.402,2003,"DR",1,51.1,2)
+S ZZZ=$$GET1^DIQ(51.1,DA,2,"I");2//^D ENFQD^PSSJSV;S PSSFRQ=$G(X);I PSSSCT="OC" S Y="@60" Q;I X="" W " Must enter a frequency." K X S Y="@4" Q;I PSSSCT="P" S Y="@999";I PSSFRQ=""!(PSSFRQ=ZZZ) S Y="@60";1////@;D RMTIME^PSSJSV;
+"KRN",.402,2003,"DR",1,51.1,3)
+W !,"The Frequency has changed, the Admin Times will be removed",!;@60;S PSJS=$$NSO^PSGS0($G(PSSFRQ)),OFLG=0;I PSJS'="" W !?10,"The schedule entered equals ",PSJS,".",!;I PSSFRQ>1439,PSSFRQ#1440 S OFLG=1;
+"KRN",.402,2003,"DR",1,51.1,4)
+I PSSFRQ,PSSFRQ<1440,1440#PSSFRQ S OFLG=1;I PSSSCT="OC" S OFLG=1;I 'OFLG S Y="@5";W !?10,"This is an odd schedule that does not require administration times.",!;W ?10,"BCMA will determine the administration times based off the",!;
+"KRN",.402,2003,"DR",1,51.1,5)
+W ?10,"start date/time of the medication order.";1////@;D RMTIME^PSSJSV;S Y="@999";@5;I PSSSCT'="D",PSSSCT'="C",PSSSCT'="O" S Y="@6" Q;1R~;I X="",PSSSCT="C" W "Must enter administration times. " K X S Y="@5" Q;S Y="@7";@6;1;@7;3;
+"KRN",.402,2003,"DR",1,51.1,6)
+@999;K PSSSCT,PSSFRQ,PSSJSE,ZPSJS;
+"KRN",.402,2003,"DR",2,51.11)
+.01;I X="" S Y="@999" Q;1R~;
+"MBREQ")
+0
+"ORD",7,.402)
+.402;7;;;EDEOUT^DIFROMSO(.402,DA,"",XPDA);FPRE^DIFROMSI(.402,"",XPDA);EPRE^DIFROMSI(.402,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.402,DA,"",XPDA);DEL^DIFROMSK(.402,"",%)
+"ORD",7,.402,0)
+INPUT TEMPLATE
+"PKG",517,-1)
+1^1
+"PKG",517,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",517,20,0)
+^9.402P^^
+"PKG",517,22,0)
+^9.49I^1^1
+"PKG",517,22,1,0)
+1.0^2970930^2971014^11595
+"PKG",517,22,1,"PAH",1,0)
+157^3100827
+"PKG",517,22,1,"PAH",1,1,0)
+^^41^41^3100827
+"PKG",517,22,1,"PAH",1,1,1,0)
+This patch corrects a defect introduced by patch PSS*1*143 in the
+"PKG",517,22,1,"PAH",1,1,2,0)
+Standard Schedule Edit [PSS SCHEDULE EDIT] option.
+"PKG",517,22,1,"PAH",1,1,3,0)
+ 
+"PKG",517,22,1,"PAH",1,1,4,0)
+ 
+"PKG",517,22,1,"PAH",1,1,5,0)
+HD0000000419996 -  Admin times cannot be deleted from PRN schedules
+"PKG",517,22,1,"PAH",1,1,6,0)
+via the Schedule Enter/Edit [PSS SCHEDULE EDIT] option.
+"PKG",517,22,1,"PAH",1,1,7,0)
+ 
+"PKG",517,22,1,"PAH",1,1,8,0)
+Remedy Overview
+"PKG",517,22,1,"PAH",1,1,9,0)
+---------------
+"PKG",517,22,1,"PAH",1,1,10,0)
+HD0000000419996
+"PKG",517,22,1,"PAH",1,1,11,0)
+ 
+"PKG",517,22,1,"PAH",1,1,12,0)
+Problem:
+"PKG",517,22,1,"PAH",1,1,13,0)
+---------
+"PKG",517,22,1,"PAH",1,1,14,0)
+Patch PSS*1*143 changed the Standard Schedule Edit [PSS SCHEDULE EDIT]
+"PKG",517,22,1,"PAH",1,1,15,0)
+option to prevent the prompt for Admin Time from displaying when the
+"PKG",517,22,1,"PAH",1,1,16,0)
+schedule's Type is PRN, making it difficult to remove the admin times
+"PKG",517,22,1,"PAH",1,1,17,0)
+from existing PRN schedules. When the schedule type of an existing
+"PKG",517,22,1,"PAH",1,1,18,0)
+schedule is changed from Continuous to PRN, the admin times are removed,
+"PKG",517,22,1,"PAH",1,1,19,0)
+however, when an existing schedule with a schedule type of PRN is edited,
+"PKG",517,22,1,"PAH",1,1,20,0)
+the admin times are not removed.
+"PKG",517,22,1,"PAH",1,1,21,0)
+ 
+"PKG",517,22,1,"PAH",1,1,22,0)
+In addition, an inconsistency exists within the same option: at the
+"PKG",517,22,1,"PAH",1,1,23,0)
+initial prompt for Schedule Type, entering or accepting a default of
+"PKG",517,22,1,"PAH",1,1,24,0)
+"PRN", has no affect on the value of admin times.
+"PKG",517,22,1,"PAH",1,1,25,0)
+However, after pressing Enter or Return to exit the Schedule Type
+"PKG",517,22,1,"PAH",1,1,26,0)
+prompt, if an up-arrow, or caret "^", is used to return to the Schedule
+"PKG",517,22,1,"PAH",1,1,27,0)
+Type field, then entering "PRN" or accepting the default of "PRN" the
+"PKG",517,22,1,"PAH",1,1,28,0)
+second time the prompt is displayed does delete the admin times from the
+"PKG",517,22,1,"PAH",1,1,29,0)
+schedule.
+"PKG",517,22,1,"PAH",1,1,30,0)
+ 
+"PKG",517,22,1,"PAH",1,1,31,0)
+Solution:
+"PKG",517,22,1,"PAH",1,1,32,0)
+----------
+"PKG",517,22,1,"PAH",1,1,33,0)
+Change the Standard Schedule Edit [PSS SCHEDULE EDIT] option to delete
+"PKG",517,22,1,"PAH",1,1,34,0)
+admin times from the schedule anytime "PRN" is entered, or accepted as a
+"PKG",517,22,1,"PAH",1,1,35,0)
+default, at the Schedule Type field. For existing PRN schedules, admin
+"PKG",517,22,1,"PAH",1,1,36,0)
+times may be deleted by re-entering "PRN", or accepting the default value
+"PKG",517,22,1,"PAH",1,1,37,0)
+"PRN", at the prompt for Schedule Type.
+"PKG",517,22,1,"PAH",1,1,38,0)
+ 
+"PKG",517,22,1,"PAH",1,1,39,0)
+Change the same option to make the Schedule Type prompt to have the same
+"PKG",517,22,1,"PAH",1,1,40,0)
+effect on the schedule's admin times for the initial and all subsequent
+"PKG",517,22,1,"PAH",1,1,41,0)
+prompts.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"VER")
+8.0^22.0
+"BLD",6385,6)
+^136
+**END**
+**END**

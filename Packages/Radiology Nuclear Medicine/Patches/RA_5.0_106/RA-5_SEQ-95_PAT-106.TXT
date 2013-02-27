@@ -1,0 +1,348 @@
+$TXT Created by CEBELINSKI,GREG at CHEY125.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 02/09/11 at 07:39
+=============================================================================
+Run Date: MAR 08, 2011                     Designation: RA*5*106
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5        SEQ #95                      Status: Released
+                  Compliance Date: APR 08, 2011
+=============================================================================
+
+Associated patches: (v)RA*5*90     <<= must be installed BEFORE `RA*5*106'
+                    (v)RA*5*94     <<= must be installed BEFORE `RA*5*106'
+
+Subject: Release a study to the local VAMC for interpretation
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The objective of this project is to provide support for the national 
+ implementation of the National Teleradiology Program (NTP) as Veterans 
+ Affairs Central Office (VACO) has requested.
+  
+ This release will include:
+ 1.  Accepting a new Request Status (HL7 Table 0123) indicating that the
+     teleradiology center is releasing the study back to the local Veterans
+     Administration Medical Center (VAMC) for interpretation.
+  
+ 2.  Enhancing the VistA Radiology/Nuclear Medicine (VistA RIS) application
+     to process the new request status. For studies without images the
+     existing preliminary report is to be deleted. For studies with images
+     the report is to inherit the traits of an Imaging Stub report.
+  
+ 3.  Notifying the users in the RAD HL7 MESSAGES mail group that a study has
+     been released back to the local VAMC.
+       a. Postmaster will appear as sender of the message. RAD HL7 
+          MESSAGES was intended to be a private mail group. To ensure mail
+          delivery please make sure that POSTMASTER is added as a MEMBER of
+          the RAD HL7 MESSAGES mail group.
+  
+ 4.  Calculates the correct examination status of the study and updates   
+     the study to that correct exam status. Properly defined examination
+     status parameters improve workflow. The emphasis on examination
+     status parameter setup for patch RA*5.0*106 is because it is the
+     study's examination status which defines VistaRad's unread worklist.
+       a. Commercial PACS systems will require their unread worklist to be
+          updated manually based on verbal communication between personnel
+          at the teleradiology center and the local VAMC's radiology
+          department.
+       b. Please check the EXAMINATION STATUS parameter definitions, within
+          imaging type, to see that they're setup properly. 
+  
+ 5.  There is a modification to the ACTIVITY LOG (#74.01) sub-file of 
+     RAD/NUC MED REPORTS file (#74). The TYPE OF ACTION (#2) field has
+     been modified to accept a new set of codes value of 'Q' for Quit. 'Q'
+     indicates that the National Tele-radiology center has released the
+     study back to the local facility for interpretation.
+  
+  
+ Documentation Retrieval
+ =======================
+ Updated documentation describing the functionality introduced by this 
+ patch is available in the [ANONYMOUS.SOFTWARE] directories at the 
+ following Internet addresses:
+  
+ Preferred or Specific Server     Internet address
+ ----------------------------     -------------------------
+ First available ftp server       download.vista.med.va.gov  <-- preferred
+ Albany                           ftp.fo-albany.med.va.gov
+ Hines                            ftp.fo-hines.med.va.gov
+ Salt Lake City                   ftp.fo-slc.med.va.gov
+  
+ Below is a list of the documentation files related to this patch and 
+ available via the FTP sites listed above.
+  
+ Document File Description          File Name            FTP Mode
+ -------------------------------    -------------        --------------
+ Radiology/Nuclear Medicine 5.0     RA5_0RN_P106.PDF      binary
+ National Teleradiology Program
+ Phase 2/Iteration 1 Release
+ Notes
+  
+ Radiology/Nuclear Medicine V. 5    RA5_0HL7IS_P106.PDF   binary
+ Health Level 7 (HL7) Interface
+ Specifications for Voice
+ Recognition Dictation Systems
+  
+  
+ After this patch is released, the updated manuals may also be retrieved 
+ from the Internet at http://www.va.gov/vdl
+  
+  
+ New Service Request
+ ===================
+ 20080510
+  
+  
+ Remedy Tickets
+ ==============
+ N/A 
+  
+  
+ Test Sites
+ ==========
+ 1. Muskogee, OK
+ 2. Ann Arbor, MI
+ 3. Providence, RI
+ 4. VA Greater Los Angeles HCS
+  
+  
+  
+ Pre-Patch Installation Instructions
+ ===================================
+  
+ 1) Commercial Off the Shelf products broadcasting to the VistA RIS must 
+    be shutdown before the installation of this patch.
+  
+ 2) Please identify the VistA RIS logical links. The VistA RIS logical 
+    links must be shutdown before the installation of this patch. If there
+    are questions regarding the identification of VistA RIS specific
+    logical links please direct your questions to the national development
+    staff responsible for the VistA RIS.
+  
+    Once the correct logical links are identified shutting down the logical
+    links can be accomplished by exercising the following option:
+  
+    Select OPTION NAME: HL7 MAIN MENU  HL MAIN MENU     HL7 Main Menu
+  
+  
+           Event monitoring menu ...
+           Systems Link Monitor
+           Filer and Link Management Options ...
+           Message Management Options ...
+           Interface Developer Options ...
+           Site Parameter Edit
+    HLO    HL7 (Optimized) MAIN MENU ...
+  
+  
+    Select HL7 Main Menu Option: FILER and Link Management Options
+  
+  
+    SM     Systems Link Monitor
+    FL     Monitor, Start, Stop Filers
+    LM     TCP Link Manager Start/Stop
+    SA     Stop All Messaging Background Processes
+    RA     Restart/Start All Links and Filers
+    DF     Default Filers Startup
+    SL     Start/Stop Links <-- This is the option to exercise.
+    PI     Ping (TCP Only)
+    ED     Link Edit
+    ER     Link Errors ...
+  
+  
+ Installation Instructions
+ ========================= 
+  
+ The installation time for this patch will be less than three minutes. 
+ Please notify the Radiology department that to install this patch the
+ VistA RIS options must be set out of order; the protocols disabled.
+  
+ Note: The ordering, registering, case editing and interpretation of
+ radiology studies will be prohibited during the installation of this
+ patch.
+  
+  1.  Use the 'INSTALL/CHECK MESSAGE' option of your PackMan menu to load
+      the KIDS distribution onto your system. 
+  
+  2.  From the Kernel Installation & Distribution System menu, select 
+      the 'Installation' menu.
+  
+      From this menu you may select the following options prior to 
+      installing the patch:
+  
+    a.  Backup a Transport Global - this option will create a backup
+        message of any routines exported with the patch.
+    
+    b.  Compare Transport Global to Current System - this option will
+        allow you to view all changes that will be made when the patch
+        is installed.
+    
+    c.  Verify Checksums in Transport Global - this option will ensure
+        the integrity of the routines that are in the transport global.
+  
+  3.  Use the 'Install Package(s)' option under the 'Installation' menu.
+      When prompted for INSTALL NAME, enter: RA*5.0*106
+   
+       When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       YES//", respond NO.
+   
+       When prompted "Want to DISABLE Scheduled Options and Menu Options?
+       YES//", respond YES
+  
+         When prompted "Enter options you wish to mark as 'Out of Order':",
+         enter the following to disable all Rad/Nuc Med options:
+      
+         RA*
+   
+         When prompted "Enter protocols you wish to mark as 'Out of 
+         Order':", enter the following to disable all Rad/Nuc Med
+         protocols:
+   
+         RA*
+   
+  4.  After installation verify that the patch installation completed
+      correctly by using the KIDS 'Utilities...' [XPD UTILITY] option
+      'Install File Print' [XPD PRINT INSTALL FILE] and selecting this
+      patch (RA*5.0*106).
+  
+  5. Commercial Off the Shelf products broadcasting to the VistA RIS are 
+     to be restarted after the installation of this patch.
+  
+  6. The VistA RIS logical links must be restarted. Use the 'Start/Stop 
+     Links' option to restart the correct logical links. 
+  
+  7.  All radiology users are cleared to resume their normal activities.
+  
+  
+ Post-Installation Instructions
+ ==============================
+ Please note XINDEX will generate errors and warnings when run for this 
+ build. The errors reflect the reference to the RAHLTCPX routine that is a
+ component of unreleased patch (RA*5.0*47). RA*5.0*47 will not be released
+ in the near term (within three months). The references to this routine
+ checks if RAHLTCPX resides in a Cache instance. If RAHLTCPX does not
+ reside in the Cache instance, RAHLTCPX will not execute.
+  
+ The following is an example of adding POSTMASTER to the RAD HL7 MESSAGES
+ mail group. (Please note that the data displayed in this example need not
+ be the same data displayed on your screen when follow through on this 
+ activity. The Mail Group MEMBER name used in this example is fictitious.)
+  
+ DEVISC4A1:DEV>D ^XUP
+  
+ Setting up programmer environment
+ This is a TEST account.
+  
+ Terminal Type set to: C-VT320
+  
+ You have 6 new messages.
+ Select OPTION NAME: MANAGE MAILMAN  XMMGR     Manage Mailman
+  
+  
+           Check MailMan Files for Errors
+           Create a Mailbox for a user
+           Disk Space Management ...
+           Group/Distribution Management ...  <-- Select this option
+           Local Delivery Management ...
+           MailMan Site Parameters
+           Network Management ...
+           New Features for Managing MailMan
+           Remote MailLink Directory Menu ...
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ Select Manage Mailman Option: GROUP/Distribution Management
+  
+  
+           Bulletin edit
+           Edit Distribution List
+           Enroll in (or Disenroll from) a Mail Group
+           Mail Group Coordinator's Edit
+           Mail Group Coordinator's Edit W/Remotes
+           Mail Group Edit  <-- Select this option
+  
+  
+ Select Group/Distribution Management Option: MAIL GROUP EDIT
+  
+ Select MAIL GROUP NAME:    RAD HL7 MESSAGES
+ MAIL GROUP NAME: RAD HL7 MESSAGES// 
+ Select MEMBER: RADPERSONNEL,ONE// ?
+     Answer with MEMBER
+    Choose from:
+    POSTMASTER  <-- if POSTMASTER is listed here you can exit the option.
+    RADPERSONNEL,ONE    
+    RADPERSONNEL,TWO    
+           
+         You may enter a new MEMBER, if you wish
+         Enter a local user who should receive mail addressed to this 
+         group. User must have an access code and a mailbox.
+    
+  Answer with NEW PERSON NAME, or INITIAL, or SSN, or VERIFY CODE, or
+      NICK NAME, or SERVICE/SECTION, or DEA#, or VA#, or ALIAS, or NPI
+  Do you want the entire NEW PERSON List? N  (No)
+ Select MEMBER: RADPERSONNEL,ONE// 
+   MEMBER: RADPERSONNEL,ONE// 
+   TYPE: 
+ Select MEMBER: postmaster  POSTMASTER              
+   Are you adding 'POSTMASTER' as a new MEMBER (the 3RD for this MAIL 
+ GROUP)? No// y  (Yes)  <-- answer 'Yes'
+   TYPE: 
+ Select MEMBER: 
+ DESCRIPTION:
+ This mail group is used to inform radiology users about issues regarding 
+ the HL7 interface between the VistA Radiology/Nuclear Medicine application
+ and Commercial Off The Shelf (COTS) applications.
+  
+   Edit? NO// 
+ TYPE: private// 
+ RESTRICTIONS: 
+ ORGANIZER: 
+ COORDINATOR: 
+ Select AUTHORIZED SENDER: 
+ Select MEMBER GROUP NAME: 
+ Select REMOTE MEMBER: 
+ Select DISTRIBUTION LIST: 
+  
+ Do you wish to forward past mail group messages
+ to the user(s) you just added to the mail group(s)? No//   NO <-- answer 
+ 'No'
+  
+ Select MAIL GROUP NAME:
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAEDCN1
+    Before: B14134766   After: B15204171  **18,45,93,106**
+Routine Name: RAHLO
+    Before: B46090166   After: B50036551  **4,8,27,55,66,84,94,106**
+Routine Name: RAHLTCPB
+    Before: B70765098   After: B71900626  **12,17,25,51,71,81,84,106**
+Routine Name: RARPTUT
+    Before:       n/a   After:B110205349  **106**
+ 
+Routine list of preceding patches: 93, 94
+
+=============================================================================
+User Information:
+Entered By  : CEBELINSKI,GREGORY            Date Entered  : MAY 11, 2010
+Completed By: ELIJAH,VICKEY                 Date Completed: FEB 10, 2011
+Released By : NAIL,WANDA S                  Date Released : MAR 08, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

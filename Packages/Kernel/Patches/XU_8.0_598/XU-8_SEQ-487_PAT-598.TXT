@@ -1,0 +1,126 @@
+$TXT Created by TRAN,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 04/18/12 at 10:05
+=============================================================================
+Run Date: NOV 01, 2012                     Designation: XU*8*598
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #487                      Status: Released
+                  Compliance Date: DEC 02, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*437    <<= must be installed BEFORE `XU*8*598'
+
+Subject: FIX $$TRIM API
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket#         : HD 600253
+ FORUM Tracking Message#: 57236589
+ Blood Bank Clearance on: 4/26/2012 
+ Test sites:
+  -  BAY PINES, FL VAMC/HCS
+  -  HINES, IL VAMC
+  
+                 XU*8*598
+  
+ This patch fixes the problem on the API $$TRIM^XLFSTR that does not 
+ always behave as expected when 'R'(right), or 'L'(left) is passed as the 
+ 2nd parameter. If a string with more than one space is passed with 'R', 
+ or 'L' as the 2nd parameter, a single space is returned. It should return 
+ the null value.
+  
+ For example:
+  
+ Before patch:     
+  
+ ISC>W $L($$TRIM^XLFSTR("    ","R"))
+ 1              <<<< It should be zero "0"
+  
+ After patch:
+  
+ ISC>W $L($$TRIM^XLFSTR("    ","R"))
+ 0
+  
+ This patch also includes the Post-Routine XU8P598 to clear bogus nodes 
+ on the sub-file Affects Record Merge (#9.402) in the Package File (9.4) 
+ for Kernel. The bogus nodes causes a problem on the PATIENT merge process.
+ When doing a PATIENT merge in VistA, the MPI(MASTER PATIENT INDEX) is 
+ being sent two HL7 ADT-A40 Patient Merge messages, but we should only get 
+ one.
+  
+ Blood Bank Team Coordination
+  ============================
+ Blood Bank Clearance: 4/26/2012
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*598 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*598 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*598
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ The routine XU8P598 will be deleted after the installation completes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XLFSTR
+    Before:  B7051089   After:  B7275578  **112,120,400,437,598**
+Routine Name: XU8P598
+    Before:       n/a   After:   B632462  **598**
+ 
+Routine list of preceding patches: 437
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : APR 17, 2012
+Completed By: BEST,LISA                     Date Completed: OCT 10, 2012
+Released By : TILLIS,LEWIS                  Date Released : NOV 01, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,364 @@
+Released FH*5.5*32 SEQ #31
+Extracted from mail message
+**KIDS**:FH*5.5*32^
+
+**INSTALL NAME**
+FH*5.5*32
+"BLD",9020,0)
+FH*5.5*32^DIETETICS^0^3120405^y
+"BLD",9020,1,0)
+^^4^4^3120328^
+"BLD",9020,1,1,0)
+This patch will address the following issues:
+"BLD",9020,1,2,0)
+1. When printing the Patient Profile [FHORD9] for an inpatient the 
+"BLD",9020,1,3,0)
+patient's sex will not print or it will print what looks to be part of 
+"BLD",9020,1,4,0)
+the raw global data stored for the patient in the PATIENT file (#2).
+"BLD",9020,4,0)
+^9.64PA^^
+"BLD",9020,6.3)
+3
+"BLD",9020,"ABPKG")
+n
+"BLD",9020,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9020,"KRN",.4,0)
+.4
+"BLD",9020,"KRN",.401,0)
+.401
+"BLD",9020,"KRN",.402,0)
+.402
+"BLD",9020,"KRN",.403,0)
+.403
+"BLD",9020,"KRN",.5,0)
+.5
+"BLD",9020,"KRN",.84,0)
+.84
+"BLD",9020,"KRN",3.6,0)
+3.6
+"BLD",9020,"KRN",3.8,0)
+3.8
+"BLD",9020,"KRN",9.2,0)
+9.2
+"BLD",9020,"KRN",9.8,0)
+9.8
+"BLD",9020,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9020,"KRN",9.8,"NM",1,0)
+FHORD6^^0^B21089489
+"BLD",9020,"KRN",9.8,"NM","B","FHORD6",1)
+
+"BLD",9020,"KRN",19,0)
+19
+"BLD",9020,"KRN",19.1,0)
+19.1
+"BLD",9020,"KRN",101,0)
+101
+"BLD",9020,"KRN",409.61,0)
+409.61
+"BLD",9020,"KRN",771,0)
+771
+"BLD",9020,"KRN",779.2,0)
+779.2
+"BLD",9020,"KRN",870,0)
+870
+"BLD",9020,"KRN",8989.51,0)
+8989.51
+"BLD",9020,"KRN",8989.52,0)
+8989.52
+"BLD",9020,"KRN",8994,0)
+8994
+"BLD",9020,"KRN","B",.4,.4)
+
+"BLD",9020,"KRN","B",.401,.401)
+
+"BLD",9020,"KRN","B",.402,.402)
+
+"BLD",9020,"KRN","B",.403,.403)
+
+"BLD",9020,"KRN","B",.5,.5)
+
+"BLD",9020,"KRN","B",.84,.84)
+
+"BLD",9020,"KRN","B",3.6,3.6)
+
+"BLD",9020,"KRN","B",3.8,3.8)
+
+"BLD",9020,"KRN","B",9.2,9.2)
+
+"BLD",9020,"KRN","B",9.8,9.8)
+
+"BLD",9020,"KRN","B",19,19)
+
+"BLD",9020,"KRN","B",19.1,19.1)
+
+"BLD",9020,"KRN","B",101,101)
+
+"BLD",9020,"KRN","B",409.61,409.61)
+
+"BLD",9020,"KRN","B",771,771)
+
+"BLD",9020,"KRN","B",779.2,779.2)
+
+"BLD",9020,"KRN","B",870,870)
+
+"BLD",9020,"KRN","B",8989.51,8989.51)
+
+"BLD",9020,"KRN","B",8989.52,8989.52)
+
+"BLD",9020,"KRN","B",8994,8994)
+
+"BLD",9020,"QUES",0)
+^9.62^^
+"BLD",9020,"REQB",0)
+^9.611^1^1
+"BLD",9020,"REQB",1,0)
+FH*5.5*24^2
+"BLD",9020,"REQB","B","FH*5.5*24",1)
+
+"MBREQ")
+0
+"PKG",122,-1)
+1^1
+"PKG",122,0)
+DIETETICS^FH^Dietetics System
+"PKG",122,20,0)
+^9.402P^^
+"PKG",122,22,0)
+^9.49I^1^1
+"PKG",122,22,1,0)
+5.5^3050202^3050308^33227
+"PKG",122,22,1,"PAH",1,0)
+32^3120405
+"PKG",122,22,1,"PAH",1,1,0)
+^^4^4^3120405
+"PKG",122,22,1,"PAH",1,1,1,0)
+This patch will address the following issues:
+"PKG",122,22,1,"PAH",1,1,2,0)
+1. When printing the Patient Profile [FHORD9] for an inpatient the 
+"PKG",122,22,1,"PAH",1,1,3,0)
+patient's sex will not print or it will print what looks to be part of 
+"PKG",122,22,1,"PAH",1,1,4,0)
+the raw global data stored for the patient in the PATIENT file (#2).
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","FHORD6")
+0^1^B21089489^B21098876
+"RTN","FHORD6",1,0)
+FHORD6 ; HISC/REL/NCA/JH/RTK - Diet Inquiry ;5/3/01  11:04
+"RTN","FHORD6",2,0)
+ ;;5.5;DIETETICS;**1,5,24,32**;Jan 28, 2005;Build 3
+"RTN","FHORD6",3,0)
+ S FHALL=1 D ^FHOMDPA I 'FHDFN G KIL
+"RTN","FHORD6",4,0)
+ D MONUM^FHOMUTL I FHNUM="" Q
+"RTN","FHORD6",5,0)
+ I FHDFN,DFN="" D ^FHOMPP Q  ;profile for file #200 outpatients
+"RTN","FHORD6",6,0)
+ I FHDFN,$G(^DPT(DFN,.1))="" D ^FHOMPP Q  ;profile for file #2 outpts
+"RTN","FHORD6",7,0)
+ K IOP S %ZIS="MQ",%ZIS("B")="HOME" W ! D ^%ZIS K %ZIS,IOP G:POP KIL
+"RTN","FHORD6",8,0)
+ I $D(IO("Q")) S FHPGM="F0^FHORD6",FHLST="FHDFN^DFN^PID^ADM^FHNUM" D EN2^FH G KIL
+"RTN","FHORD6",9,0)
+ U IO D F0 D ^%ZISC K %ZIS,IOP G FHORD6
+"RTN","FHORD6",10,0)
+F0 ; Display Diet
+"RTN","FHORD6",11,0)
+ D NOW^%DTC S NOW=%,DT=NOW\1,QT=""
+"RTN","FHORD6",12,0)
+ S WARD=$P($G(^FHPT(FHDFN,"A",ADM,0)),"^",8) S:WARD WARD=$P($G(^FH(119.6,WARD,0)),"^",1)
+"RTN","FHORD6",13,0)
+ S Y(0)=^DPT(DFN,0),SEX=$P(Y(0),"^",2),DOB=$P(Y(0),"^",3)
+"RTN","FHORD6",14,0)
+ S AGE=$E(NOW,1,3)-$E(DOB,1,3)-($E(NOW,4,7)<$E(DOB,4,7)),X=$P($G(^DPT(DFN,.101)),"^",1),RM=$E(WARD,1,15) S:X'="" RM=RM_"/"_X
+"RTN","FHORD6",15,0)
+ S QT="",PG=0 D HDR
+"RTN","FHORD6",16,0)
+ D ALG^FHCLN I ALG'="" W !!,"Allergies: ",ALG
+"RTN","FHORD6",17,0)
+ K N S P1=1 F K=0:0 S K=$O(^FHPT(FHDFN,"P",K)) Q:K<1  S X=^(K,0),M=$P(X,"^",2) S:M="A"!(M="") M="BNE" D SP
+"RTN","FHORD6",18,0)
+ I $O(N(""))="" W !!,"No Food Preferences on file",! G A0
+"RTN","FHORD6",19,0)
+ W !!,"Food Preferences Currently on file",!!?23,"Likes",?57,"Dislikes",!
+"RTN","FHORD6",20,0)
+ W ! S (M,MM)="" F  S M=$O(N(M)) Q:M=""  I $D(N(M)) W $P(M,"~",2) D  Q:QT="^"  S MM=M ;P32
+"RTN","FHORD6",21,0)
+ .  S (P1,P2)=0 F  S:P1'="" P1=$O(N(M,"L",P1)) S X1=$S(P1>0:N(M,"L",P1),1:"") S:P2'="" P2=$O(N(M,"D",P2)) S X2=$S(P2>0:N(M,"D",P2),1:"") Q:P1=""&(P2="")  D W0 Q:QT="^"  W:MM'=M ! ;P32
+"RTN","FHORD6",22,0)
+ .  Q
+"RTN","FHORD6",23,0)
+ W ! K L,N,M,M1,M2
+"RTN","FHORD6",24,0)
+ G:QT="^" KIL ;P32
+"RTN","FHORD6",25,0)
+A0 S X(0)=^FHPT(FHDFN,"A",ADM,0),X=$P(X(0),"^",10) G:X="" F1
+"RTN","FHORD6",26,0)
+ D:$Y>(IOSL-3) HDR G:QT="^" KIL W !!,"Isolation/Precaution Type is ",$P($G(^FH(119.4,X,0)),"^",1)
+"RTN","FHORD6",27,0)
+F1 D CUR^FHORD7 D:$Y>(IOSL-6) HDR G:QT="^" KIL W !!,"Current Diet: ",$S(Y'="":Y,1:"No current order")
+"RTN","FHORD6",28,0)
+ I Y'="",FHORD>0 I $D(^FHPT(FHDFN,"A",ADM,"DI",FHORD,1)) S COM=^(1) W:COM'="" !,"Comment: ",COM
+"RTN","FHORD6",29,0)
+ S TYP=$P(X,"^",8) I TYP'="" W !,"Service: ",$S(TYP="T":"Tray",TYP="D":"Dining Room",1:"Cafeteria")
+"RTN","FHORD6",30,0)
+ S DTP=$P(X(0),"^",3) I DTP D DTP^FH W !,"Expires: ",DTP
+"RTN","FHORD6",31,0)
+ S TF=$P(X(0),"^",4) G:TF<1 F2
+"RTN","FHORD6",32,0)
+ S Y=^FHPT(FHDFN,"A",ADM,"TF",TF,0)
+"RTN","FHORD6",33,0)
+ S DTP=$P(Y,"^",1),COM=$P(Y,"^",5),TQU=$P(Y,"^",6),CAL=$P(Y,"^",7)
+"RTN","FHORD6",34,0)
+ D DTP^FH W !!,"Tubefeed Ordered: ",DTP
+"RTN","FHORD6",35,0)
+ F TF2=0:0 S TF2=$O(^FHPT(FHDFN,"A",ADM,"TF",TF,"P",TF2)) Q:TF2<1  S XY=^(TF2,0) D LP
+"RTN","FHORD6",36,0)
+ W !,"Total Quantity: ",TQU," ml",?42,"Total KCAL: ",CAL
+"RTN","FHORD6",37,0)
+ W:COM'="" !,"Comment: ",COM
+"RTN","FHORD6",38,0)
+F2 S NO=$P(X(0),"^",7),Y=$S('NO:"",1:^FHPT(FHDFN,"A",ADM,"SF",NO,0)) D:$Y>(IOSL-3) HDR G:QT="^" KIL
+"RTN","FHORD6",39,0)
+ S L=$P(Y,"^",4) W !!,"Supplemental Feeding: ",$S('L:"No Order",1:$P(^FH(118.1,L,0),"^",1)) G:'NO F3
+"RTN","FHORD6",40,0)
+ S DTP=$P(Y,"^",30) D DTP^FH W ?50,"Reviewed: ",DTP
+"RTN","FHORD6",41,0)
+ S L=4 F K1=1:1:3 S K=0,N(K1)="" F K2=1:1:4 S Z=$P(Y,U,L+1),Q=$P(Y,U,L+2),L=L+2 I Z'="" S:'Q Q=1 S:N(K1)'="" N(K1)=N(K1)_"; " S N(K1)=N(K1)_Q_" "_$P(^FH(118,Z,0),"^",1)
+"RTN","FHORD6",42,0)
+ D:$Y>(IOSL-4) HDR G:QT="^" KIL F K1=1:1:3 I N(K1)'="" W !?5,$P("10am; 2pm; 8pm",";",K1),":",?13,N(K1)
+"RTN","FHORD6",43,0)
+F3 G ^FHORD61
+"RTN","FHORD6",44,0)
+LP S TUN=$P(XY,"^",1),STR=$P(XY,"^",2),QUA=$P(XY,"^",3)
+"RTN","FHORD6",45,0)
+ I QUA["CC" S QUAFI=$P(QUA,"CC",1),QUASE=$P(QUA,"CC",2),QUA=QUAFI_"ML"_QUASE
+"RTN","FHORD6",46,0)
+ W !,"Product: ",$P($G(^FH(118.2,TUN,0)),"^",1),", ",$S(STR=4:"Full",STR=1:"1/4",STR=2:"1/2",1:"3/4")," Str., ",QUA Q
+"RTN","FHORD6",47,0)
+SP S Z=$G(^FH(115.2,+X,0)),L1=$P(Z,"^",1),KK=$P(Z,"^",2),M1="",DAS=$P(X,"^",4)
+"RTN","FHORD6",48,0)
+ I KK="L" S Q=$P(X,"^",3),L1=$S(Q:Q,1:1)_" "_L1
+"RTN","FHORD6",49,0)
+ I M="BNE" S M1="1~All Meals" G SP1
+"RTN","FHORD6",50,0)
+ S Z1=$E(M,1) I Z1'="" S M1=$S(Z1="B":"2~Break",Z1="N":"3~Noon",1:"4~Even")
+"RTN","FHORD6",51,0)
+ S Z1=$E(M,2) I Z1'="" S M1=M1_","_$S(Z1="B":"Break",Z1="N":"Noon",1:"Even")
+"RTN","FHORD6",52,0)
+SP1 S:'$D(N(M1,KK,P1)) N(M1,KK,P1)="" I $L(N(M1,KK,P1))+$L(L1)<255 S N(M1,KK,P1)=N(M1,KK,P1)_$S(N(M1,KK,P1)="":"",1:", ")_L1_$S(DAS="Y":" (D)",1:"")
+"RTN","FHORD6",53,0)
+ E  S:'$D(N(M1,KK,K)) N(M1,KK,K)="" S N(M1,KK,K)=L1_$S(DAS="Y":" (D)",1:"") S P1=K
+"RTN","FHORD6",54,0)
+ Q
+"RTN","FHORD6",55,0)
+W0 I X1'="" W ?12 S X=X1 D W1 S X1=X
+"RTN","FHORD6",56,0)
+ I X2'="" W ?46 S X=X2 D W1 S X2=X
+"RTN","FHORD6",57,0)
+ Q:X1=""&(X2="")  D:$Y'<(IOSL-2) HDR Q:QT="^"  W ! G W0 ;P32
+"RTN","FHORD6",58,0)
+W1 I $L(X)<34 W X S X="" Q
+"RTN","FHORD6",59,0)
+ F KK=35:-1:1 Q:$E(X,KK-1,KK)=", "
+"RTN","FHORD6",60,0)
+ W $E(X,1,KK-2) S X=$E(X,KK+1,999) Q
+"RTN","FHORD6",61,0)
+PAUSE ; Pause For Scroll
+"RTN","FHORD6",62,0)
+ I $E(IOST,1,2)="C-",PG R !!,"Press return to continue  ",YN:DTIME S:'$T!(YN["^") QT="^" Q:QT="^"  I "^"'[YN W !,"Enter a RETURN to Continue." G PAUSE
+"RTN","FHORD6",63,0)
+ Q
+"RTN","FHORD6",64,0)
+HDR ; Print Header
+"RTN","FHORD6",65,0)
+ D PAUSE Q:QT="^"
+"RTN","FHORD6",66,0)
+ W:'($E(IOST,1,2)'="C-"&'PG) @IOF S PG=PG+1
+"RTN","FHORD6",67,0)
+ W !,PID,?16,$P(Y(0),"^",1),?48,SEX," Age ",AGE,?(79-$L(RM)),RM Q
+"RTN","FHORD6",68,0)
+KIL ; Final variable kill
+"RTN","FHORD6",69,0)
+ K %,%H,%I,%T,%ZIS,A1,ADM,AGE,ALG,ALL,BAG,C,CAL,COM,CON,CT,D3,DA,DAS,FHDU,FHDFN,DFN,DOB,DTP,FHOR,FHLD,I,IOP,K,K1,K2,KK,L,L1,LST,MEAL,N,NO,NOW,FHORD,FHWF,FHPV
+"RTN","FHORD6",70,0)
+ K POP,Q,QUA,QT,QTY,RM,SEX,PID,BID,STR,TYP,TF,TF2,TIM,TQU,TUN,WARD,X,X1,X2,XY,Y,YN,Z,Z1 Q
+"VER")
+8.0^22.0
+"BLD",9020,6)
+^31
+**END**
+**END**

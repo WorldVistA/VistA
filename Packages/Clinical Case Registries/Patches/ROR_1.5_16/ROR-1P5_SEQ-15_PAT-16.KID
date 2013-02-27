@@ -1,0 +1,1482 @@
+Released ROR*1.5*16 SEQ #15
+Extracted from mail message
+**KIDS**:ROR*1.5*16^
+
+**INSTALL NAME**
+ROR*1.5*16
+"BLD",8006,0)
+ROR*1.5*16^CLINICAL CASE REGISTRIES^0^3110824^y
+"BLD",8006,1,0)
+^^1^1^3110818^
+"BLD",8006,1,1,0)
+CORRECTION TO FIB-4 CALCULATION (LIVER SCORE)
+"BLD",8006,4,0)
+^9.64PA^^
+"BLD",8006,6.3)
+3
+"BLD",8006,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8006,"KRN",.4,0)
+.4
+"BLD",8006,"KRN",.401,0)
+.401
+"BLD",8006,"KRN",.402,0)
+.402
+"BLD",8006,"KRN",.403,0)
+.403
+"BLD",8006,"KRN",.5,0)
+.5
+"BLD",8006,"KRN",.84,0)
+.84
+"BLD",8006,"KRN",.84,"NM",0)
+^9.68A^1^1
+"BLD",8006,"KRN",.84,"NM",1,0)
+7981019.001^^0
+"BLD",8006,"KRN",.84,"NM","B",7981019.001,1)
+
+"BLD",8006,"KRN",3.6,0)
+3.6
+"BLD",8006,"KRN",3.8,0)
+3.8
+"BLD",8006,"KRN",9.2,0)
+9.2
+"BLD",8006,"KRN",9.8,0)
+9.8
+"BLD",8006,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",8006,"KRN",9.8,"NM",1,0)
+RORX019A^^0^B216855357
+"BLD",8006,"KRN",9.8,"NM","B","RORX019A",1)
+
+"BLD",8006,"KRN",19,0)
+19
+"BLD",8006,"KRN",19.1,0)
+19.1
+"BLD",8006,"KRN",101,0)
+101
+"BLD",8006,"KRN",409.61,0)
+409.61
+"BLD",8006,"KRN",771,0)
+771
+"BLD",8006,"KRN",779.2,0)
+779.2
+"BLD",8006,"KRN",870,0)
+870
+"BLD",8006,"KRN",8989.51,0)
+8989.51
+"BLD",8006,"KRN",8989.52,0)
+8989.52
+"BLD",8006,"KRN",8994,0)
+8994
+"BLD",8006,"KRN","B",.4,.4)
+
+"BLD",8006,"KRN","B",.401,.401)
+
+"BLD",8006,"KRN","B",.402,.402)
+
+"BLD",8006,"KRN","B",.403,.403)
+
+"BLD",8006,"KRN","B",.5,.5)
+
+"BLD",8006,"KRN","B",.84,.84)
+
+"BLD",8006,"KRN","B",3.6,3.6)
+
+"BLD",8006,"KRN","B",3.8,3.8)
+
+"BLD",8006,"KRN","B",9.2,9.2)
+
+"BLD",8006,"KRN","B",9.8,9.8)
+
+"BLD",8006,"KRN","B",19,19)
+
+"BLD",8006,"KRN","B",19.1,19.1)
+
+"BLD",8006,"KRN","B",101,101)
+
+"BLD",8006,"KRN","B",409.61,409.61)
+
+"BLD",8006,"KRN","B",771,771)
+
+"BLD",8006,"KRN","B",779.2,779.2)
+
+"BLD",8006,"KRN","B",870,870)
+
+"BLD",8006,"KRN","B",8989.51,8989.51)
+
+"BLD",8006,"KRN","B",8989.52,8989.52)
+
+"BLD",8006,"KRN","B",8994,8994)
+
+"BLD",8006,"QUES",0)
+^9.62^^
+"BLD",8006,"REQB",0)
+^9.611^1^1
+"BLD",8006,"REQB",1,0)
+ROR*1.5*14^1
+"BLD",8006,"REQB","B","ROR*1.5*14",1)
+
+"KRN",.84,7981019.001,-1)
+0^1
+"KRN",.84,7981019.001,0)
+7981019.001^2^^CLINICAL CASE REGISTRIES^Liver Report by Range (HTML)
+"KRN",.84,7981019.001,2,0)
+^^229^229^3110822^
+"KRN",.84,7981019.001,2,1,0)
+<?xml version="1.0"?>
+"KRN",.84,7981019.001,2,2,0)
+ <xsl:stylesheet version="1.0"
+"KRN",.84,7981019.001,2,3,0)
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+"KRN",.84,7981019.001,2,4,0)
+ >
+"KRN",.84,7981019.001,2,5,0)
+ 
+"KRN",.84,7981019.001,2,6,0)
+<xsl:import  href="template://report/998/1"/>  <!-- Styles   -->
+"KRN",.84,7981019.001,2,7,0)
+<xsl:import  href="template://report/999/1"/>  <!-- Common   -->
+"KRN",.84,7981019.001,2,8,0)
+<xsl:include href="template://report/997/1"/>  <!-- Patients -->
+"KRN",.84,7981019.001,2,9,0)
+<xsl:include href="template://report/995/1"/>  <!-- Lab Data -->
+"KRN",.84,7981019.001,2,10,0)
+ 
+"KRN",.84,7981019.001,2,11,0)
+<xsl:variable name="meldcnt" 
+"KRN",.84,7981019.001,2,12,0)
+select="count(/REPORT/HEADER/TBLDEF[@NAME='PATIENTS']/COLUMN[@NAME='MELD']
+"KRN",.84,7981019.001,2,13,0)
+)"/>
+"KRN",.84,7981019.001,2,14,0)
+<xsl:variable name="nacnt" 
+"KRN",.84,7981019.001,2,15,0)
+select="count(/REPORT/HEADER/TBLDEF[@NAME='PATIENTS']/COLUMN[@NAME='NA'])"
+"KRN",.84,7981019.001,2,16,0)
+/>
+"KRN",.84,7981019.001,2,17,0)
+<xsl:variable name="apricnt" 
+"KRN",.84,7981019.001,2,18,0)
+select="count(/REPORT/HEADER/TBLDEF[@NAME='PATIENTS']/COLUMN[@NAME='APRI']
+"KRN",.84,7981019.001,2,19,0)
+)"/>
+"KRN",.84,7981019.001,2,20,0)
+<xsl:variable name="fib4cnt" 
+"KRN",.84,7981019.001,2,21,0)
+select="count(/REPORT/HEADER/TBLDEF[@NAME='PATIENTS']/COLUMN[@NAME='FIB4']
+"KRN",.84,7981019.001,2,22,0)
+)"/>
+"KRN",.84,7981019.001,2,23,0)
+ 
+"KRN",.84,7981019.001,2,24,0)
+ 
+"KRN",.84,7981019.001,2,25,0)
+<xsl:template match="/">
+"KRN",.84,7981019.001,2,26,0)
+ <html>
+"KRN",.84,7981019.001,2,27,0)
+  <head>
+"KRN",.84,7981019.001,2,28,0)
+   <title>Liver Score by Range</title>
+"KRN",.84,7981019.001,2,29,0)
+   <xsl:call-template name="StyleSheet"/>
+"KRN",.84,7981019.001,2,30,0)
+  </head>
+"KRN",.84,7981019.001,2,31,0)
+  <body>
+"KRN",.84,7981019.001,2,32,0)
+   <h1>Liver Score by Range</h1>
+"KRN",.84,7981019.001,2,33,0)
+   <xsl:call-template name="ReportHeader"/>
+"KRN",.84,7981019.001,2,34,0)
+   <xsl:if test="count(/REPORT/PATIENTS/*) > 0">
+"KRN",.84,7981019.001,2,35,0)
+     <div style="margin:10; color: red; font-weight: bold">
+"KRN",.84,7981019.001,2,36,0)
+       Lab tests used to calculate scores are identified by LOINC code. 
+"KRN",.84,7981019.001,2,37,0)
+       Your local lab ADPAC should be contacted regarding errors in LOINC 
+"KRN",.84,7981019.001,2,38,0)
+codes. The LOINC codes that are used are:<br />
+"KRN",.84,7981019.001,2,39,0)
+       <br />
+"KRN",.84,7981019.001,2,40,0)
+       <xsl:call-template name="ShowLOINCCodes"/>
+"KRN",.84,7981019.001,2,41,0)
+     </div>
+"KRN",.84,7981019.001,2,42,0)
+     <xsl:if test="$apricnt &gt; 0">
+"KRN",.84,7981019.001,2,43,0)
+       <div style="margin:10; color: red; font-weight: bold">
+"KRN",.84,7981019.001,2,44,0)
+         *For this report, the ULN AST entered by the user and used for 
+"KRN",.84,7981019.001,2,45,0)
+the APRI calculation is
+"KRN",.84,7981019.001,2,46,0)
+         <xsl:value-of select="/REPORT/PARAMETERS/ULNAST/@VALUES"/>
+"KRN",.84,7981019.001,2,47,0)
+       </div>
+"KRN",.84,7981019.001,2,48,0)
+     </xsl:if>
+"KRN",.84,7981019.001,2,49,0)
+     <xsl:if test="$meldcnt &gt; 0 or $nacnt &gt; 0">
+"KRN",.84,7981019.001,2,50,0)
+       <div style="margin:10; color: red; font-weight: bold">
+"KRN",.84,7981019.001,2,51,0)
+         *For this report, creatinine values &gt;12 mg/dL are assumed to 
+"KRN",.84,7981019.001,2,52,0)
+be 
+"KRN",.84,7981019.001,2,53,0)
+         erroneous and are ignored.  Sodium values &lt;100 or &gt;180 
+"KRN",.84,7981019.001,2,54,0)
+meq/L are also assumed to be erroneous and are ignored.
+"KRN",.84,7981019.001,2,55,0)
+       </div>
+"KRN",.84,7981019.001,2,56,0)
+     </xsl:if>
+"KRN",.84,7981019.001,2,57,0)
+     <br />
+"KRN",.84,7981019.001,2,58,0)
+     <!-- The following line changed to fix page break issue in IE 7 -->
+"KRN",.84,7981019.001,2,59,0)
+     <div style="page-break-after:always; font-size:1; margin:0; 
+"KRN",.84,7981019.001,2,60,0)
+border:0"><span style="visibility: hidden">-</span></div>
+"KRN",.84,7981019.001,2,61,0)
+     <div>
+"KRN",.84,7981019.001,2,62,0)
+       <xsl:call-template name="MakeScrollable">
+"KRN",.84,7981019.001,2,63,0)
+         <xsl:with-param name="condition" select="*[31]"/>
+"KRN",.84,7981019.001,2,64,0)
+       </xsl:call-template>
+"KRN",.84,7981019.001,2,65,0)
+       <xsl:apply-templates select="/REPORT/PATIENTS"/>
+"KRN",.84,7981019.001,2,66,0)
+     </div>
+"KRN",.84,7981019.001,2,67,0)
+     <xsl:call-template name="ExplainFormula"/>
+"KRN",.84,7981019.001,2,68,0)
+   </xsl:if>
+"KRN",.84,7981019.001,2,69,0)
+  </body>
+"KRN",.84,7981019.001,2,70,0)
+ </html>
+"KRN",.84,7981019.001,2,71,0)
+</xsl:template>
+"KRN",.84,7981019.001,2,72,0)
+ 
+"KRN",.84,7981019.001,2,73,0)
+<xsl:template name="ShowLOINCCodes">
+"KRN",.84,7981019.001,2,74,0)
+ <xsl:param name="summary" select="/REPORT/LOINC_CODES"/>
+"KRN",.84,7981019.001,2,75,0)
+ <table cellpadding="5" cellspacing="0">
+"KRN",.84,7981019.001,2,76,0)
+  <thead>
+"KRN",.84,7981019.001,2,77,0)
+   <tr>
+"KRN",.84,7981019.001,2,78,0)
+    <th>LOINC Codes</th>
+"KRN",.84,7981019.001,2,79,0)
+   </tr>
+"KRN",.84,7981019.001,2,80,0)
+  </thead>
+"KRN",.84,7981019.001,2,81,0)
+  <tbody>
+"KRN",.84,7981019.001,2,82,0)
+    <xsl:for-each select="/REPORT/LOINC_CODES/CODE">
+"KRN",.84,7981019.001,2,83,0)
+    <tr>
+"KRN",.84,7981019.001,2,84,0)
+      <td class="aLeft"><xsl:value-of select="@CODE"/></td>
+"KRN",.84,7981019.001,2,85,0)
+    </tr>
+"KRN",.84,7981019.001,2,86,0)
+   </xsl:for-each>
+"KRN",.84,7981019.001,2,87,0)
+  </tbody>
+"KRN",.84,7981019.001,2,88,0)
+ </table>
+"KRN",.84,7981019.001,2,89,0)
+</xsl:template>
+"KRN",.84,7981019.001,2,90,0)
+ 
+"KRN",.84,7981019.001,2,91,0)
+<xsl:template name="ExplainFormula">
+"KRN",.84,7981019.001,2,92,0)
+ <br/>
+"KRN",.84,7981019.001,2,93,0)
+ <div class="reportSummary">
+"KRN",.84,7981019.001,2,94,0)
+  <div style="float:left">
+"KRN",.84,7981019.001,2,95,0)
+   <table cellpadding="3" cellspacing="0">
+"KRN",.84,7981019.001,2,96,0)
+    <caption>Calculation Formulas</caption>
+"KRN",.84,7981019.001,2,97,0)
+    <thead>
+"KRN",.84,7981019.001,2,98,0)
+     <tr>
+"KRN",.84,7981019.001,2,99,0)
+      <th width="30">Description</th>
+"KRN",.84,7981019.001,2,100,0)
+      <th>Formula</th>
+"KRN",.84,7981019.001,2,101,0)
+     </tr>
+"KRN",.84,7981019.001,2,102,0)
+    </thead>
+"KRN",.84,7981019.001,2,103,0)
+    <tbody>
+"KRN",.84,7981019.001,2,104,0)
+     <xsl:if test="$apricnt &gt; 0">
+"KRN",.84,7981019.001,2,105,0)
+      <tr>
+"KRN",.84,7981019.001,2,106,0)
+       <td align="center">APRI (AST-to-Platelet ratio Index)</td>
+"KRN",.84,7981019.001,2,107,0)
+       <td class="aLeft"> ((AST/ULN AST)/Platelet) * 100
+"KRN",.84,7981019.001,2,108,0)
+       </td>
+"KRN",.84,7981019.001,2,109,0)
+      </tr>
+"KRN",.84,7981019.001,2,110,0)
+     </xsl:if>
+"KRN",.84,7981019.001,2,111,0)
+     <xsl:if test="$fib4cnt &gt; 0">
+"KRN",.84,7981019.001,2,112,0)
+      <tr>
+"KRN",.84,7981019.001,2,113,0)
+       <td align="center">FIB-4</td>
+"KRN",.84,7981019.001,2,114,0)
+       <td class="aLeft"> Age(in years) * AST/(Platelets * 
+"KRN",.84,7981019.001,2,115,0)
+ALT<sup>1/2</sup>)
+"KRN",.84,7981019.001,2,116,0)
+       </td>
+"KRN",.84,7981019.001,2,117,0)
+      </tr>
+"KRN",.84,7981019.001,2,118,0)
+     </xsl:if>
+"KRN",.84,7981019.001,2,119,0)
+     <xsl:if test="$nacnt &gt; 0 or $meldcnt &gt; 0">
+"KRN",.84,7981019.001,2,120,0)
+      <tr>
+"KRN",.84,7981019.001,2,121,0)
+       <td align="center">MELD</td>
+"KRN",.84,7981019.001,2,122,0)
+       <td class="aLeft"> (0.957*Ln(Serum Cr) + 0.378*Ln(Serum Bilirubin) 
+"KRN",.84,7981019.001,2,123,0)
++ 1.120*Ln(INR) + 0.643) * 10<br/><br/>
+"KRN",.84,7981019.001,2,124,0)
+        <b>NOTES:</b>  Ln is 'natural log'<br/>
+"KRN",.84,7981019.001,2,125,0)
+      Lower limit of 1 for all variables with creatinine capped at 4
+"KRN",.84,7981019.001,2,126,0)
+       </td>
+"KRN",.84,7981019.001,2,127,0)
+      </tr>
+"KRN",.84,7981019.001,2,128,0)
+     </xsl:if>
+"KRN",.84,7981019.001,2,129,0)
+     <xsl:if test="$nacnt &gt; 0">
+"KRN",.84,7981019.001,2,130,0)
+    <tr>
+"KRN",.84,7981019.001,2,131,0)
+      <td align="center">MELD-Na</td>
+"KRN",.84,7981019.001,2,132,0)
+      <td class="aLeft">MELD calculation + 1.59 *(135 - Serum 
+"KRN",.84,7981019.001,2,133,0)
+Na)<br/><br/>
+"KRN",.84,7981019.001,2,134,0)
+       <b>NOTE:</b>  Mininum value for Serum Na is 120 mmol/L and the 
+"KRN",.84,7981019.001,2,135,0)
+maximum is 135 mmol/L      
+"KRN",.84,7981019.001,2,136,0)
+      </td>
+"KRN",.84,7981019.001,2,137,0)
+     </tr>
+"KRN",.84,7981019.001,2,138,0)
+     </xsl:if>
+"KRN",.84,7981019.001,2,139,0)
+    </tbody>
+"KRN",.84,7981019.001,2,140,0)
+   </table>
+"KRN",.84,7981019.001,2,141,0)
+  </div>
+"KRN",.84,7981019.001,2,142,0)
+ </div>
+"KRN",.84,7981019.001,2,143,0)
+</xsl:template>
+"KRN",.84,7981019.001,2,144,0)
+ 
+"KRN",.84,7981019.001,2,145,0)
+ 
+"KRN",.84,7981019.001,2,146,0)
+<!--[ TABLE HEADERS ]-->
+"KRN",.84,7981019.001,2,147,0)
+ 
+"KRN",.84,7981019.001,2,148,0)
+<xsl:template match="COLUMN[@NAME='TEST']">
+"KRN",.84,7981019.001,2,149,0)
+ <xsl:call-template name="ColumnHeader">
+"KRN",.84,7981019.001,2,150,0)
+  <xsl:with-param name="title" select="'Test'"/>
+"KRN",.84,7981019.001,2,151,0)
+  <xsl:with-param name="sort" select="''"/>
+"KRN",.84,7981019.001,2,152,0)
+  <xsl:with-param name="width" select="'6%'"/>
+"KRN",.84,7981019.001,2,153,0)
+ </xsl:call-template>
+"KRN",.84,7981019.001,2,154,0)
+</xsl:template>
+"KRN",.84,7981019.001,2,155,0)
+ 
+"KRN",.84,7981019.001,2,156,0)
+<xsl:template match="COLUMN[@NAME='DATE']">
+"KRN",.84,7981019.001,2,157,0)
+ <xsl:call-template name="ColumnHeader">
+"KRN",.84,7981019.001,2,158,0)
+  <xsl:with-param name="title" select="'Date'"/>
+"KRN",.84,7981019.001,2,159,0)
+  <xsl:with-param name="sort" select="''"/>
+"KRN",.84,7981019.001,2,160,0)
+  <xsl:with-param name="width" select="'8%'"/>
+"KRN",.84,7981019.001,2,161,0)
+ </xsl:call-template>
+"KRN",.84,7981019.001,2,162,0)
+</xsl:template>
+"KRN",.84,7981019.001,2,163,0)
+ 
+"KRN",.84,7981019.001,2,164,0)
+<xsl:template match="COLUMN[@NAME='RESULT']">
+"KRN",.84,7981019.001,2,165,0)
+ <xsl:call-template name="ColumnHeader">
+"KRN",.84,7981019.001,2,166,0)
+  <xsl:with-param name="title" select="'Result'"/>
+"KRN",.84,7981019.001,2,167,0)
+  <xsl:with-param name="sort" select="''"/>
+"KRN",.84,7981019.001,2,168,0)
+  <xsl:with-param name="width" select="'4%'"/>
+"KRN",.84,7981019.001,2,169,0)
+ </xsl:call-template>
+"KRN",.84,7981019.001,2,170,0)
+</xsl:template>
+"KRN",.84,7981019.001,2,171,0)
+ 
+"KRN",.84,7981019.001,2,172,0)
+<xsl:template match="COLUMN[@NAME='MELD']">
+"KRN",.84,7981019.001,2,173,0)
+ <xsl:call-template name="ColumnHeader">
+"KRN",.84,7981019.001,2,174,0)
+  <xsl:with-param name="sort" select="'PATIENTS=MELD'"/> 
+"KRN",.84,7981019.001,2,175,0)
+  <xsl:with-param name="width" select="'6%'"/>
+"KRN",.84,7981019.001,2,176,0)
+ </xsl:call-template>
+"KRN",.84,7981019.001,2,177,0)
+</xsl:template>
+"KRN",.84,7981019.001,2,178,0)
+ 
+"KRN",.84,7981019.001,2,179,0)
+<xsl:template match="COLUMN[@NAME='NA']">
+"KRN",.84,7981019.001,2,180,0)
+ <xsl:call-template name="ColumnHeader">
+"KRN",.84,7981019.001,2,181,0)
+  <xsl:with-param name="title" select="'MELD-Na'"/>
+"KRN",.84,7981019.001,2,182,0)
+  <xsl:with-param name="sort" select="'PATIENTS=MELDNA'"/>
+"KRN",.84,7981019.001,2,183,0)
+  <xsl:with-param name="width" select="'8%'"/>
+"KRN",.84,7981019.001,2,184,0)
+ </xsl:call-template>
+"KRN",.84,7981019.001,2,185,0)
+</xsl:template>
+"KRN",.84,7981019.001,2,186,0)
+ 
+"KRN",.84,7981019.001,2,187,0)
+<!--[ TABLE CELLS ]-->
+"KRN",.84,7981019.001,2,188,0)
+ 
+"KRN",.84,7981019.001,2,189,0)
+<xsl:template match="PATIENT/MELD">
+"KRN",.84,7981019.001,2,190,0)
+ <xsl:param name="rowspan" select="0"/>
+"KRN",.84,7981019.001,2,191,0)
+ <xsl:call-template name="TableCell">
+"KRN",.84,7981019.001,2,192,0)
+  <xsl:with-param name="rowspan" select="$rowspan"/>
+"KRN",.84,7981019.001,2,193,0)
+ </xsl:call-template>
+"KRN",.84,7981019.001,2,194,0)
+</xsl:template>
+"KRN",.84,7981019.001,2,195,0)
+ 
+"KRN",.84,7981019.001,2,196,0)
+<xsl:template match="PATIENT/MELDNA">
+"KRN",.84,7981019.001,2,197,0)
+ <xsl:param name="rowspan" select="0"/>
+"KRN",.84,7981019.001,2,198,0)
+ <xsl:call-template name="TableCell">
+"KRN",.84,7981019.001,2,199,0)
+  <xsl:with-param name="rowspan" select="$rowspan"/>
+"KRN",.84,7981019.001,2,200,0)
+ </xsl:call-template>
+"KRN",.84,7981019.001,2,201,0)
+</xsl:template>
+"KRN",.84,7981019.001,2,202,0)
+ 
+"KRN",.84,7981019.001,2,203,0)
+<xsl:template match="PATIENT/MELDDATA">
+"KRN",.84,7981019.001,2,204,0)
+ <td class="aLeft">
+"KRN",.84,7981019.001,2,205,0)
+   <xsl:for-each select="TEST/TNAME">
+"KRN",.84,7981019.001,2,206,0)
+    <xsl:value-of select="."/><br/>
+"KRN",.84,7981019.001,2,207,0)
+   </xsl:for-each>
+"KRN",.84,7981019.001,2,208,0)
+ </td>
+"KRN",.84,7981019.001,2,209,0)
+ <td>
+"KRN",.84,7981019.001,2,210,0)
+   <xsl:for-each select="TEST/DATE">
+"KRN",.84,7981019.001,2,211,0)
+     <xsl:call-template name="CellValue">
+"KRN",.84,7981019.001,2,212,0)
+       <xsl:with-param name="fmdt" select="1"/>
+"KRN",.84,7981019.001,2,213,0)
+       <xsl:with-param name="value" select="."/>
+"KRN",.84,7981019.001,2,214,0)
+       <xsl:with-param name="width" select="'6%'"/>
+"KRN",.84,7981019.001,2,215,0)
+     </xsl:call-template><br/>
+"KRN",.84,7981019.001,2,216,0)
+   </xsl:for-each>
+"KRN",.84,7981019.001,2,217,0)
+ </td>
+"KRN",.84,7981019.001,2,218,0)
+ <td class="aRight">
+"KRN",.84,7981019.001,2,219,0)
+   <xsl:for-each select="TEST/RESULT">
+"KRN",.84,7981019.001,2,220,0)
+     <xsl:call-template name="CellValue">
+"KRN",.84,7981019.001,2,221,0)
+       <xsl:with-param name="value" select="."/>
+"KRN",.84,7981019.001,2,222,0)
+       <xsl:with-param name="width" select="'6%'"/>
+"KRN",.84,7981019.001,2,223,0)
+     </xsl:call-template><br/>
+"KRN",.84,7981019.001,2,224,0)
+   </xsl:for-each>
+"KRN",.84,7981019.001,2,225,0)
+ </td>
+"KRN",.84,7981019.001,2,226,0)
+ 
+"KRN",.84,7981019.001,2,227,0)
+</xsl:template> 
+"KRN",.84,7981019.001,2,228,0)
+ 
+"KRN",.84,7981019.001,2,229,0)
+</xsl:stylesheet>
+"MBREQ")
+0
+"ORD",9,.84)
+.84;9;;;EDEOUT^DIFROMSO(.84,DA,"",XPDA);FPRE^DIFROMSI(.84,"",XPDA);EPRE^DIFROMSI(.84,DA,"",XPDA,"",OLDA);;EPOST^DIFROMSI(.84,DA,"",XPDA);DEL^DIFROMSK(.84,"",%)
+"ORD",9,.84,0)
+DIALOG
+"PKG",389,-1)
+1^1
+"PKG",389,0)
+CLINICAL CASE REGISTRIES^ROR^CLINICAL CASE REGISTRIES
+"PKG",389,20,0)
+^9.402P^^
+"PKG",389,22,0)
+^9.49I^1^1
+"PKG",389,22,1,0)
+1.5^3060208^3060221^222222227
+"PKG",389,22,1,"PAH",1,0)
+16^3110824
+"PKG",389,22,1,"PAH",1,1,0)
+^^1^1^3110824
+"PKG",389,22,1,"PAH",1,1,1,0)
+CORRECTION TO FIB-4 CALCULATION (LIVER SCORE)
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","RORX019A")
+0^1^B216855357^B208916635
+"RTN","RORX019A",1,0)
+RORX019A ;BPOIFO/ACS - LIVER SCORE BY RANGE (CONT.) ; 8/23/11 8:38am
+"RTN","RORX019A",2,0)
+ ;;1.5;CLINICAL CASE REGISTRIES;**10,13,14,16**;Feb 17, 2006;Build 3
+"RTN","RORX019A",3,0)
+ ;
+"RTN","RORX019A",4,0)
+ ;08/23/2011 BP/KAM ROR*1.5*16 Remedy Call 512757 Correct the Liver
+"RTN","RORX019A",5,0)
+ ;                             Score Calculation
+"RTN","RORX019A",6,0)
+ ;
+"RTN","RORX019A",7,0)
+ ; This routine uses the following IAs:
+"RTN","RORX019A",8,0)
+ ;
+"RTN","RORX019A",9,0)
+ ; #10105 $$LN^XLFMTH (supported)
+"RTN","RORX019A",10,0)
+ ; #3556  GCPR^LA7QRY (supported)
+"RTN","RORX019A",11,0)
+ ; #10061 DEM^VADPT   (supported)
+"RTN","RORX019A",12,0)
+ ;
+"RTN","RORX019A",13,0)
+ ;******************************************************************************
+"RTN","RORX019A",14,0)
+ ;******************************************************************************
+"RTN","RORX019A",15,0)
+ ;                 --- ROUTINE MODIFICATION LOG ---
+"RTN","RORX019A",16,0)
+ ;        
+"RTN","RORX019A",17,0)
+ ;PKG/PATCH    DATE        DEVELOPER    MODIFICATION
+"RTN","RORX019A",18,0)
+ ;-----------  ----------  -----------  ----------------------------------------
+"RTN","RORX019A",19,0)
+ ;ROR*1.5*10   MAR  2010   A SAUNDERS   Routine created
+"RTN","RORX019A",20,0)
+ ;ROR*1.5*13   DEC  2010   A SAUNDERS   Moved tag CALCMLD to this routine
+"RTN","RORX019A",21,0)
+ ;ROR*1.5*14   APR  2011   A SAUNDERS   Added logic to calculate the APRI and
+"RTN","RORX019A",22,0)
+ ;                                      FIB4 scores.
+"RTN","RORX019A",23,0)
+ ;                                      
+"RTN","RORX019A",24,0)
+ ;******************************************************************************
+"RTN","RORX019A",25,0)
+ ;******************************************************************************
+"RTN","RORX019A",26,0)
+ Q
+"RTN","RORX019A",27,0)
+ ;
+"RTN","RORX019A",28,0)
+ ;*****************************************************************************
+"RTN","RORX019A",29,0)
+ ;OUTPUT REPORT 'RANGE' PARAMETERS, SET UP REPORT ID LIST (EXTRINISIC FUNCTION)
+"RTN","RORX019A",30,0)
+ ;
+"RTN","RORX019A",31,0)
+ ; PARTAG        Reference (IEN) to the parent tag
+"RTN","RORX019A",32,0)
+ ;
+"RTN","RORX019A",33,0)
+ ; Return Values:
+"RTN","RORX019A",34,0)
+ ;        RORDATA("IDLST") - list of IDs for tests requested
+"RTN","RORX019A",35,0)
+ ;       <0  Error code
+"RTN","RORX019A",36,0)
+ ;        0  Ok
+"RTN","RORX019A",37,0)
+ ;*****************************************************************************
+"RTN","RORX019A",38,0)
+PARAMS(PARTAG,RORDATA,RORTSK) ;
+"RTN","RORX019A",39,0)
+ N PARAMS,DESC,TMP,RC S RC=0
+"RTN","RORX019A",40,0)
+ ;--- Lab test ranges
+"RTN","RORX019A",41,0)
+ S RORDATA("RANGE",1)=0 ;initialize MELD to 'no range passed in'
+"RTN","RORX019A",42,0)
+ S RORDATA("RANGE",2)=0 ;initialize MELD Na to 'no range passed in'
+"RTN","RORX019A",43,0)
+ S RORDATA("RANGE",3)=0 ;initialize APRI to 'no range passed in'
+"RTN","RORX019A",44,0)
+ S RORDATA("RANGE",4)=0 ;initialize FIB4 to 'no range passed in'
+"RTN","RORX019A",45,0)
+ I $D(RORTSK("PARAMS","LRGRANGES","C"))>1  D  Q:RC<0 RC
+"RTN","RORX019A",46,0)
+ . N GRC,ELEMENT,NODE,RTAG,RANGE
+"RTN","RORX019A",47,0)
+ . S NODE=$NA(RORTSK("PARAMS","LRGRANGES","C"))
+"RTN","RORX019A",48,0)
+ . S RTAG=$$ADDVAL^RORTSK11(RORTSK,"LRGRANGES",,PARTAG)
+"RTN","RORX019A",49,0)
+ . S (GRC,RC)=0
+"RTN","RORX019A",50,0)
+ . F  S GRC=$O(@NODE@(GRC))  Q:GRC'>0  D  Q:RC<0
+"RTN","RORX019A",51,0)
+ .. S RANGE=0,DESC=$$RTEXT(GRC,.RORDATA,.RORTSK) ;get range description
+"RTN","RORX019A",52,0)
+ .. S ELEMENT=$$ADDVAL^RORTSK11(RORTSK,"LRGRANGE",DESC,RTAG) ;add desc to output
+"RTN","RORX019A",53,0)
+ .. I ELEMENT<0 S RC=ELEMENT Q
+"RTN","RORX019A",54,0)
+ .. D ADDATTR^RORTSK11(RORTSK,ELEMENT,"ID",GRC)
+"RTN","RORX019A",55,0)
+ .. ;add test ID to the test ID 'list'
+"RTN","RORX019A",56,0)
+ .. S RORDATA("IDLST")=$G(RORDATA("IDLST"))_$S($G(RORDATA("IDLST"))'="":","_GRC,1:GRC)
+"RTN","RORX019A",57,0)
+ .. ;--- Process the range values
+"RTN","RORX019A",58,0)
+ .. S TMP=$G(@NODE@(GRC,"L"))
+"RTN","RORX019A",59,0)
+ .. I TMP'="" D  S RANGE=1
+"RTN","RORX019A",60,0)
+ ... D ADDATTR^RORTSK11(RORTSK,ELEMENT,"LOW",TMP) S RORDATA("RANGE",GRC)=1
+"RTN","RORX019A",61,0)
+ .. S TMP=$G(@NODE@(GRC,"H"))
+"RTN","RORX019A",62,0)
+ .. I TMP'="" D  S RANGE=1
+"RTN","RORX019A",63,0)
+ ... D ADDATTR^RORTSK11(RORTSK,ELEMENT,"HIGH",TMP) S RORDATA("RANGE",GRC)=1
+"RTN","RORX019A",64,0)
+ .. I RANGE D ADDATTR^RORTSK11(RORTSK,ELEMENT,"RANGE",1)
+"RTN","RORX019A",65,0)
+ ;if user didn't select any tests, default to both tests
+"RTN","RORX019A",66,0)
+ ;I $G(RORDATA("IDLST"))="" S RORDATA("IDLST")="1,2" ;user must select a report in PATCH 12
+"RTN","RORX019A",67,0)
+ ;--- Success
+"RTN","RORX019A",68,0)
+ Q RC
+"RTN","RORX019A",69,0)
+ ;
+"RTN","RORX019A",70,0)
+ ;*****************************************************************************
+"RTN","RORX019A",71,0)
+ ;RETURN RANGE TEXT, ADD RANGE VALUES TO RORDATA (EXTRINISIC FUNCTION)
+"RTN","RORX019A",72,0)
+ ;
+"RTN","RORX019A",73,0)
+ ;INPUT:
+"RTN","RORX019A",74,0)
+ ;  GRC   Test ID number
+"RTN","RORX019A",75,0)
+ ;        ID=1: MELD
+"RTN","RORX019A",76,0)
+ ;        ID=2: MELD-Na
+"RTN","RORX019A",77,0)
+ ;        ID=3: APRI
+"RTN","RORX019A",78,0)
+ ;        ID=4: FIB4
+"RTN","RORX019A",79,0)
+ ;  RORDATA - Array with ROR data
+"RTN","RORX019A",80,0)
+ ;  RORTSK  - Task parameters
+"RTN","RORX019A",81,0)
+ ;
+"RTN","RORX019A",82,0)
+ ;OUTPUT:
+"RTN","RORX019A",83,0)
+ ;  RORDATA(ID,"L") - test ID low range
+"RTN","RORX019A",84,0)
+ ;  RORDATA(ID,"H") - test ID high range
+"RTN","RORX019A",85,0)
+ ;  Description - <range>
+"RTN","RORX019A",86,0)
+ ;*****************************************************************************
+"RTN","RORX019A",87,0)
+RTEXT(GRC,RORDATA,RORTSK) ;
+"RTN","RORX019A",88,0)
+ N RANGE,TMP
+"RTN","RORX019A",89,0)
+ S RANGE=""
+"RTN","RORX019A",90,0)
+ ;--- Range
+"RTN","RORX019A",91,0)
+ I $D(RORTSK("PARAMS","LRGRANGES","C",GRC))>1 D
+"RTN","RORX019A",92,0)
+ . ;--- Low
+"RTN","RORX019A",93,0)
+ . S TMP=$G(RORTSK("PARAMS","LRGRANGES","C",GRC,"L"))
+"RTN","RORX019A",94,0)
+ . S RORDATA(GRC,"L")=$G(TMP)
+"RTN","RORX019A",95,0)
+ . S:TMP'="" RANGE=RANGE_" not less than "_TMP
+"RTN","RORX019A",96,0)
+ . ;--- High
+"RTN","RORX019A",97,0)
+ . S TMP=$G(RORTSK("PARAMS","LRGRANGES","C",GRC,"H"))
+"RTN","RORX019A",98,0)
+ . S RORDATA(GRC,"H")=$G(TMP)
+"RTN","RORX019A",99,0)
+ . I TMP'=""  D:RANGE'=""  S RANGE=RANGE_" not greater than "_TMP
+"RTN","RORX019A",100,0)
+ . . S RANGE=RANGE_" and"
+"RTN","RORX019A",101,0)
+ ;--- Description
+"RTN","RORX019A",102,0)
+ S TMP=$G(RORTSK("PARAMS","LRGRANGES","C",GRC))
+"RTN","RORX019A",103,0)
+ S:TMP="" TMP="Unknown ("_GRC_")"
+"RTN","RORX019A",104,0)
+ Q TMP_" - "_$S(RANGE'="":"numeric results"_RANGE,1:"all results")
+"RTN","RORX019A",105,0)
+ ;
+"RTN","RORX019A",106,0)
+ ;************************************************************************
+"RTN","RORX019A",107,0)
+ ;CALCULATE THE MELD SCORE(S) - MELD AND MELD-NA
+"RTN","RORX019A",108,0)
+ ;
+"RTN","RORX019A",109,0)
+ ;INPUT
+"RTN","RORX019A",110,0)
+ ;  DFN      Patient DFN in LAB DATA file (#63)
+"RTN","RORX019A",111,0)
+ ;  PTAG     Reference IEN to the 'body' parent XML tag
+"RTN","RORX019A",112,0)
+ ;  RORDATA  Array with ROR data
+"RTN","RORX019A",113,0)
+ ;           RORDATA("FIELDS") - Field list for retrieving the test results
+"RTN","RORX019A",114,0)
+ ;  RORPTIEN Patient IEN in the ROR registry
+"RTN","RORX019A",115,0)
+ ;  RORLC    sub-file and LOINC codes to search for
+"RTN","RORX019A",116,0)
+ ;           
+"RTN","RORX019A",117,0)
+ ;OUTPUT
+"RTN","RORX019A",118,0)
+ ;  RORDATA  Array with ROR data
+"RTN","RORX019A",119,0)
+ ;           RORDATA("BILI")=RESULT^DATE   - Bilirubin result and date
+"RTN","RORX019A",120,0)
+ ;           RORDATA("CR")=RESULT^DATE     - Creatinine result and date
+"RTN","RORX019A",121,0)
+ ;           RORDATA("INR")=RESULT^DATE    - INR result and date
+"RTN","RORX019A",122,0)
+ ;           RORDATA("NA")=RESULT^DATE     - Sodium result and date
+"RTN","RORX019A",123,0)
+ ;           RORDATA("SCORE",1)            - MELD score
+"RTN","RORX019A",124,0)
+ ;           RORDATA("SCORE",2)            - MELD-Na score
+"RTN","RORX019A",125,0)
+ ;
+"RTN","RORX019A",126,0)
+ ;    1      Patient should appear on report
+"RTN","RORX019A",127,0)
+ ;   -1      Patient should NOT appear on report
+"RTN","RORX019A",128,0)
+ ;   
+"RTN","RORX019A",129,0)
+ ;   NOTE: the 'invalid' results will be stored as 'backup' results, in
+"RTN","RORX019A",130,0)
+ ;   case no valid result is found for Creatinine or Sodium.  An invalid
+"RTN","RORX019A",131,0)
+ ;   creatinine result is >12.  An invalid Sodium result is <100 or >180.
+"RTN","RORX019A",132,0)
+ ;   These results will be displayed on the report if no MELD range was 
+"RTN","RORX019A",133,0)
+ ;   specifically requested by the user, but the score will not be calculated.
+"RTN","RORX019A",134,0)
+ ;   They will not be displayed on the report if the user requested a MELD
+"RTN","RORX019A",135,0)
+ ;   range.
+"RTN","RORX019A",136,0)
+ ;************************************************************************
+"RTN","RORX019A",137,0)
+CALCMLD(DFN,PTAG,RORDATA,RORPTIEN,RORLC) ;
+"RTN","RORX019A",138,0)
+ N RORID,RORST,ROREND,RORLAB,RORMSG,RC
+"RTN","RORX019A",139,0)
+ S RORDATA("CALC")=0,RORDATA("CALCNA")=0 ;don't automatically calculate scores
+"RTN","RORX019A",140,0)
+ K RORDATA("SCORE",1),RORDATA("SCORE",2) ;calculated test scores
+"RTN","RORX019A",141,0)
+ K RORDATA("BVAL"),RORDATA("CVAL"),RORDATA("IVAL"),RORDATA("SVAL") ;test results
+"RTN","RORX019A",142,0)
+ K RORDATA("CINV"),RORDATA("SINV") ;test results
+"RTN","RORX019A",143,0)
+ K RORDATA("BILI"),RORDATA("CR"),RORDATA("INR"),RORDATA("NA") ;test result&date
+"RTN","RORX019A",144,0)
+ ;get patient ICN or SSN
+"RTN","RORX019A",145,0)
+ S RORID=$$PTID^RORUTL02(DFN)
+"RTN","RORX019A",146,0)
+ Q:'$G(RORID) -1
+"RTN","RORX019A",147,0)
+ ;---SET UP LAB API INPUT/OUTPUT PARMS---
+"RTN","RORX019A",148,0)
+ S RORST="2000101^CD" ;start date 1/1/1900
+"RTN","RORX019A",149,0)
+ S ROREND=$G(RORDATA("DATE"))\1 ;end date
+"RTN","RORX019A",150,0)
+ ;add 1 to the end date so the Lab API INCLUDES the end date correctly
+"RTN","RORX019A",151,0)
+ N X1,X2,X3 S X1=ROREND,X2=1 D C^%DTC S ROREND=X K X,X1,X2
+"RTN","RORX019A",152,0)
+ S ROREND=ROREND_"^CD"
+"RTN","RORX019A",153,0)
+ S RORLAB=$NA(^TMP("ROROUT",$J)) ;lab API output global
+"RTN","RORX019A",154,0)
+ K RORMSG,@RORLAB ;initialize prior to call
+"RTN","RORX019A",155,0)
+ ;---CALL LAB API---
+"RTN","RORX019A",156,0)
+ S RC=$$GCPR^LA7QRY(RORID,RORST,ROREND,.RORLC,"*",.RORMSG,RORLAB)
+"RTN","RORX019A",157,0)
+ I RC="",$D(RORMSG)>1  D  ;quit if error returned
+"RTN","RORX019A",158,0)
+ . N ERR,I,LST,TMP
+"RTN","RORX019A",159,0)
+ . S (ERR,LST)=""
+"RTN","RORX019A",160,0)
+ . F I=1:1  S ERR=$O(RORMSG(ERR))  Q:ERR=""  D
+"RTN","RORX019A",161,0)
+ . . S LST=LST_","_ERR,TMP=RORMSG(ERR)
+"RTN","RORX019A",162,0)
+ . . K RORMSG(ERR)  S RORMSG(I)=TMP
+"RTN","RORX019A",163,0)
+ . S LST=$P(LST,",",2,999)  Q:(LST=3)!(LST=99)
+"RTN","RORX019A",164,0)
+ . S RC=$$ERROR^RORERR(-27,,.RORMSG,RORPTIEN)
+"RTN","RORX019A",165,0)
+ I RC<0 Q -1
+"RTN","RORX019A",166,0)
+ ;Note: the Lab API returns data in the form of HL7 segments
+"RTN","RORX019A",167,0)
+ N TMP,RORSPEC,RORVAL,RORNODE,RORSEG,SEGTYPE,RORLOINC,RORDONE,RORDATE,RORTEST
+"RTN","RORX019A",168,0)
+ N RORCR,RORBIL,RORSOD,RORINR,FS
+"RTN","RORX019A",169,0)
+ S FS="|" ;HL7 field separator for lab data
+"RTN","RORX019A",170,0)
+ S (RORCR,RORBIL,RORSOD,RORINR,RORDONE,RORNODE)=0
+"RTN","RORX019A",171,0)
+ F  S RORNODE=$O(^TMP("ROROUT",$J,RORNODE)) Q:((RORNODE="")!(RORDONE))  D
+"RTN","RORX019A",172,0)
+ . S RORSEG=$G(^TMP("ROROUT",$J,RORNODE)) ;get entire HL7 segment
+"RTN","RORX019A",173,0)
+ . S SEGTYPE=$P(RORSEG,FS,1) ;get segment type (PID,OBR,OBX,etc.)
+"RTN","RORX019A",174,0)
+ . Q:SEGTYPE'="OBX"  ;we want OBX segments only
+"RTN","RORX019A",175,0)
+ . S RORSPEC=$P($P(RORSEG,FS,4),U,2) ;specimen type string (urine, serum, etc.)
+"RTN","RORX019A",176,0)
+ . S RORSPEC=":"_RORSPEC_":" ;append ":" as prefix and suffix
+"RTN","RORX019A",177,0)
+ . I ((RORSPEC[":UA:")!(RORSPEC[":UR:")) Q  ;quit if specimen type is urine
+"RTN","RORX019A",178,0)
+ . S RORLOINC=$P($P(RORSEG,FS,4),U,1) ;get LOINC code for test
+"RTN","RORX019A",179,0)
+ . S RORVAL=$P(RORSEG,FS,6) ;test result value
+"RTN","RORX019A",180,0)
+ . S RORVAL=$TR(RORVAL,"""","") ;get rid of double quotes around values
+"RTN","RORX019A",181,0)
+ . Q:($G(RORVAL)'>0)  ;quit if no value
+"RTN","RORX019A",182,0)
+ . S RORDATE=$$HL7TFM^XLFDT($P(RORSEG,FS,15)) ;get date collected
+"RTN","RORX019A",183,0)
+ . S RORDATE=RORDATE\1
+"RTN","RORX019A",184,0)
+ . ;---check for Creatinine match on LOINC---
+"RTN","RORX019A",185,0)
+ . I 'RORCR,RORDATA("CR_LOINC")[(";"_RORLOINC_";") D  Q
+"RTN","RORX019A",186,0)
+ .. ;store 'valid' value (12 or less) if no 'valid' value has been stored yet
+"RTN","RORX019A",187,0)
+ .. I RORVAL'>12,$O(RORDATA("CVAL",0))="" S RORDATA("CVAL",RORDATE)=RORVAL,RORCR=1 Q
+"RTN","RORX019A",188,0)
+ .. ;store 'invalid' value (>12) if no other value has been stored
+"RTN","RORX019A",189,0)
+ .. I RORVAL>12,$O(RORDATA("CVAL",0))="",$O(RORDATA("CINV",0))="" D
+"RTN","RORX019A",190,0)
+ ... S RORDATA("CINV",RORDATE)=$G(RORVAL)_"*" ;mark as 'invalid' value
+"RTN","RORX019A",191,0)
+ . ;---check for Sodium match on LOINC---
+"RTN","RORX019A",192,0)
+ . I 'RORSOD,RORDATA("SOD_LOINC")[(";"_RORLOINC_";") D  Q
+"RTN","RORX019A",193,0)
+ .. ;store 'valid' value (100 to 180) if no other 'valid' value has been stored
+"RTN","RORX019A",194,0)
+ .. I RORVAL'<100,RORVAL'>180,$O(RORDATA("SVAL",0))="" D  Q
+"RTN","RORX019A",195,0)
+ ... S RORDATA("SVAL",RORDATE)=$G(RORVAL),RORSOD=1
+"RTN","RORX019A",196,0)
+ .. ;store 'invalid' value (<100 or >180) if no other value has been stored yet
+"RTN","RORX019A",197,0)
+ .. I ((RORVAL<100)!(RORVAL>180)),$O(RORDATA("SVAL",0))="",$O(RORDATA("SINV",0))="" D  Q
+"RTN","RORX019A",198,0)
+ ... S RORDATA("SINV",RORDATE)=RORVAL_"*" Q   ;mark as 'invalid' value
+"RTN","RORX019A",199,0)
+ . ;---check for Bilirubin match on LOINC---
+"RTN","RORX019A",200,0)
+ . I 'RORBIL,RORDATA("BIL_LOINC")[(";"_RORLOINC_";") D  Q
+"RTN","RORX019A",201,0)
+ .. ;store first Bilirubin value
+"RTN","RORX019A",202,0)
+ .. I $O(RORDATA("BVAL",0))="" S RORDATA("BVAL",RORDATE)=RORVAL,RORBIL=1
+"RTN","RORX019A",203,0)
+ . ;---check for INR match on LOINC---
+"RTN","RORX019A",204,0)
+ . I 'RORINR,RORDATA("INR_LOINC")[(";"_RORLOINC_";") D  Q
+"RTN","RORX019A",205,0)
+ .. ;store first INR value
+"RTN","RORX019A",206,0)
+ .. I $O(RORDATA("IVAL",0))="" S RORDATA("IVAL",RORDATE)=RORVAL,RORINR=1
+"RTN","RORX019A",207,0)
+ . ;set flags to indicate if MELD/MELD-NA scores are ready to be calculated for this patient
+"RTN","RORX019A",208,0)
+ . I RORCR,RORBIL,RORINR S RORDATA("CALC")=1 D
+"RTN","RORX019A",209,0)
+ .. I RORDATA("IDLST")=1 S RORDONE=1 Q
+"RTN","RORX019A",210,0)
+ .. I RORSOD S RORDATA("CALCNA")=1,RORDONE=1
+"RTN","RORX019A",211,0)
+ ;
+"RTN","RORX019A",212,0)
+ ;if patient doesn't have data for either score, don't put them on report
+"RTN","RORX019A",213,0)
+ I '$G(RORDATA("CALC")),'$G(RORDATA("CALCNA")) Q -1
+"RTN","RORX019A",214,0)
+ ;--- put test result and test date into RORDATA(<test_name>)=result^date
+"RTN","RORX019A",215,0)
+ N DATE
+"RTN","RORX019A",216,0)
+ S DATE=$O(RORDATA("BVAL",0)) ;Bilirubin
+"RTN","RORX019A",217,0)
+ S RORDATA("BILI")=$S($G(DATE)="":U,1:$G(RORDATA("BVAL",DATE))_U_$G(DATE))
+"RTN","RORX019A",218,0)
+ S DATE=$O(RORDATA("CVAL",0)) ;Creatinine
+"RTN","RORX019A",219,0)
+ I $G(DATE)="" D  ;if regular Creatinine value is null, take invalid value
+"RTN","RORX019A",220,0)
+ . S DATE=$O(RORDATA("CINV",0)) I $G(DATE)>0 S RORDATA("CVAL",DATE)=$G(RORDATA("CINV",DATE))
+"RTN","RORX019A",221,0)
+ S RORDATA("CR")=$S($G(DATE)="":U,1:$G(RORDATA("CVAL",DATE))_U_$G(DATE))
+"RTN","RORX019A",222,0)
+ S DATE=$O(RORDATA("IVAL",0)) ;INR
+"RTN","RORX019A",223,0)
+ S RORDATA("INR")=$S($G(DATE)="":U,1:$G(RORDATA("IVAL",DATE))_U_$G(DATE))
+"RTN","RORX019A",224,0)
+ S DATE=$O(RORDATA("SVAL",0)) ;Sodium
+"RTN","RORX019A",225,0)
+ I $G(DATE)="" D  ;if regular Sodium value is null, take invalid value
+"RTN","RORX019A",226,0)
+ . S DATE=$O(RORDATA("SINV",0)) I $G(DATE)>0 S RORDATA("SVAL",DATE)=$G(RORDATA("SINV",DATE))
+"RTN","RORX019A",227,0)
+ S RORDATA("NA")=$S($G(DATE)="":U,1:$G(RORDATA("SVAL",DATE))_U_$G(DATE))
+"RTN","RORX019A",228,0)
+ ;
+"RTN","RORX019A",229,0)
+ N TEST,BILI,CR,INR,NA
+"RTN","RORX019A",230,0)
+ ;set lower limits for Bili, Cr, and INR to 1 if there's a value in there
+"RTN","RORX019A",231,0)
+ F TEST="BILI","CR","INR" D
+"RTN","RORX019A",232,0)
+ . S @TEST=$P($G(RORDATA(TEST)),U,1) Q:$G(@TEST)["*"  I $G(@TEST),@TEST<1 S @TEST=1
+"RTN","RORX019A",233,0)
+ ;for valid creatinine, use max=4 for calculations
+"RTN","RORX019A",234,0)
+ I $G(CR)'["*" D
+"RTN","RORX019A",235,0)
+ . I $G(CR)>4 S CR=4
+"RTN","RORX019A",236,0)
+ S NA=$P($G(RORDATA("NA")),U,1)
+"RTN","RORX019A",237,0)
+ ;for valid sodium, use min=120, max=135 for calculations
+"RTN","RORX019A",238,0)
+ I $G(NA)'["*" D
+"RTN","RORX019A",239,0)
+ . I $G(NA)>135 S NA=135 Q
+"RTN","RORX019A",240,0)
+ . I $G(NA)'="" I NA<120 S NA=120
+"RTN","RORX019A",241,0)
+ ;
+"RTN","RORX019A",242,0)
+ N TMP1,TMP2
+"RTN","RORX019A",243,0)
+ ;RORDATA("SCORE",1) will hold the calculated MELD score
+"RTN","RORX019A",244,0)
+ ;RORDATA("SCORE",2) will hold the calculated MELD Na score
+"RTN","RORX019A",245,0)
+ S (RORDATA("SCORE",1),RORDATA("SCORE",2))="" ;init calculated scores to null
+"RTN","RORX019A",246,0)
+ D
+"RTN","RORX019A",247,0)
+ . Q:($G(CR)["*")  ;quit if no calculation should occur
+"RTN","RORX019A",248,0)
+ . I $G(BILI),$G(CR),$G(INR) D
+"RTN","RORX019A",249,0)
+ .. ;MELD forumula: (.957*lne(Cr) + .378*lne(Bili) + 1.120*lne(Inr) + .643) * 10
+"RTN","RORX019A",250,0)
+ .. S TMP1=(.957*($$LN^XLFMTH(CR))+(.378*($$LN^XLFMTH(BILI)))+(1.120*($$LN^XLFMTH(INR)))+.643)*10
+"RTN","RORX019A",251,0)
+ .. S RORDATA("SCORE",1)=$J($G(TMP1),0,0) ;round MELD to whole number
+"RTN","RORX019A",252,0)
+ .. Q:($G(NA)["*")  ;quit if no calculation should occur
+"RTN","RORX019A",253,0)
+ .. ;if meld NA requested, sodium test must have a valid value
+"RTN","RORX019A",254,0)
+ .. I $G(NA),RORDATA("SCORE",1),RORDATA("IDLST")[2 D
+"RTN","RORX019A",255,0)
+ ... ;MELD-Na forumula: MELD + (1.59 *(135-Na))
+"RTN","RORX019A",256,0)
+ ... S TMP2=$G(RORDATA("SCORE",1))+(1.59*(135-NA))
+"RTN","RORX019A",257,0)
+ ... S RORDATA("SCORE",2)=$J($G(TMP2),0,0)
+"RTN","RORX019A",258,0)
+ Q 1
+"RTN","RORX019A",259,0)
+ ;************************************************************************
+"RTN","RORX019A",260,0)
+ ;CALCULATE THE FIBROSIS SCORE(S) - APRI and FIB4
+"RTN","RORX019A",261,0)
+ ;
+"RTN","RORX019A",262,0)
+ ;INPUT
+"RTN","RORX019A",263,0)
+ ;  DFN      Patient DFN in LAB DATA file (#63)
+"RTN","RORX019A",264,0)
+ ;  PTAG     Reference IEN to the 'body' parent XML tag
+"RTN","RORX019A",265,0)
+ ;  RORDATA  Array with ROR data
+"RTN","RORX019A",266,0)
+ ;           RORDATA("FIELDS") - Field list for retrieving the test results
+"RTN","RORX019A",267,0)
+ ;  RORPTIEN Patient IEN in the ROR registry
+"RTN","RORX019A",268,0)
+ ;  RORLC    sub-file and LOINC codes to search for
+"RTN","RORX019A",269,0)
+ ;           
+"RTN","RORX019A",270,0)
+ ;OUTPUT
+"RTN","RORX019A",271,0)
+ ;  RORDATA  Array with ROR data
+"RTN","RORX019A",272,0)
+ ;           RORDATA("AST")=RESULT^DATE   - AST result and date
+"RTN","RORX019A",273,0)
+ ;           RORDATA("PLAT")=RESULT^DATE  - Platelet result and date
+"RTN","RORX019A",274,0)
+ ;           RORDATA("ALT")=RESULT^DATE   - ALT result and date
+"RTN","RORX019A",275,0)
+ ;           RORDATA("SCORE",3)           - calculated APRI score
+"RTN","RORX019A",276,0)
+ ;           RORDATA("SCORE",4)           - calculated FIB4 score
+"RTN","RORX019A",277,0)
+ ;    1      Patient should appear on report
+"RTN","RORX019A",278,0)
+ ;   -1      Patient should NOT appear on report
+"RTN","RORX019A",279,0)
+ ;   
+"RTN","RORX019A",280,0)
+ ;************************************************************************
+"RTN","RORX019A",281,0)
+CALCFIB(DFN,PTAG,RORDATA,RORPTIEN,RORLC) ;
+"RTN","RORX019A",282,0)
+ N RORID,RORST,ROREND,RORLAB,RORMSG,RC
+"RTN","RORX019A",283,0)
+ S RORDATA("CALCAPRI")=0,RORDATA("CALCFIB4")=0 ;don't automatically calculate scores
+"RTN","RORX019A",284,0)
+ K RORDATA("SCORE",3),RORDATA("SCORE",4) ;calculated test scores
+"RTN","RORX019A",285,0)
+ K RORDATA("SVAL"),RORDATA("PVAL"),RORDATA("LVAL") ;test results
+"RTN","RORX019A",286,0)
+ K RORDATA("ALT"),RORDATA("PLAT"),RORDATA("AST") ; tes result and date
+"RTN","RORX019A",287,0)
+ ;get patient ICN or SSN
+"RTN","RORX019A",288,0)
+ S RORID=$$PTID^RORUTL02(DFN)
+"RTN","RORX019A",289,0)
+ Q:'$G(RORID) -1
+"RTN","RORX019A",290,0)
+ ;---SET UP LAB API INPUT/OUTPUT PARMS---
+"RTN","RORX019A",291,0)
+ S RORST="2000101^CD" ;start date 1/1/1900
+"RTN","RORX019A",292,0)
+ S ROREND=$G(RORDATA("DATE"))\1 ;end date
+"RTN","RORX019A",293,0)
+ ;add 1 to the end date so the Lab API INCLUDES the end date correctly
+"RTN","RORX019A",294,0)
+ N X1,X2,X3 S X1=ROREND,X2=1 D C^%DTC S ROREND=X K X,X1,X2
+"RTN","RORX019A",295,0)
+ S ROREND=ROREND_"^CD"
+"RTN","RORX019A",296,0)
+ S RORLAB=$NA(^TMP("ROROUT",$J)) ;lab API output global
+"RTN","RORX019A",297,0)
+ K RORMSG,@RORLAB ;initialize prior to call
+"RTN","RORX019A",298,0)
+ ;---CALL LAB API TO GET TEST RESULTS---
+"RTN","RORX019A",299,0)
+ S RC=$$GCPR^LA7QRY(RORID,RORST,ROREND,.RORLC,"*",.RORMSG,RORLAB)
+"RTN","RORX019A",300,0)
+ I RC="",$D(RORMSG)>1  D  Q -1 ;quit if error returned
+"RTN","RORX019A",301,0)
+ . N ERR,I,LST,TMP
+"RTN","RORX019A",302,0)
+ . S (ERR,LST)=""
+"RTN","RORX019A",303,0)
+ . F I=1:1  S ERR=$O(RORMSG(ERR))  Q:ERR=""  D
+"RTN","RORX019A",304,0)
+ . . S LST=LST_","_ERR,TMP=RORMSG(ERR)
+"RTN","RORX019A",305,0)
+ . . K RORMSG(ERR)  S RORMSG(I)=TMP
+"RTN","RORX019A",306,0)
+ . S LST=$P(LST,",",2,999)  Q:(LST=3)!(LST=99)
+"RTN","RORX019A",307,0)
+ . S RC=$$ERROR^RORERR(-27,,.RORMSG,RORPTIEN)
+"RTN","RORX019A",308,0)
+ I RC<0 Q -1
+"RTN","RORX019A",309,0)
+ ;Note: the Lab API returns data in the form of HL7 segments
+"RTN","RORX019A",310,0)
+ N TMP,RORSPEC,RORVAL,RORNODE,RORSEG,SEGTYPE,RORLOINC,RORDONE,RORDATE,RORTEST
+"RTN","RORX019A",311,0)
+ N RORAST,RORPLAT,RORALT,FS
+"RTN","RORX019A",312,0)
+ S FS="|" ;HL7 field separator for lab data
+"RTN","RORX019A",313,0)
+ S (RORAST,RORPLAT,RORALT,RORDONE,RORNODE)=0
+"RTN","RORX019A",314,0)
+ F  S RORNODE=$O(^TMP("ROROUT",$J,RORNODE)) Q:((RORNODE="")!(RORDONE))  D
+"RTN","RORX019A",315,0)
+ . S RORSEG=$G(^TMP("ROROUT",$J,RORNODE)) ;entire HL7 segment
+"RTN","RORX019A",316,0)
+ . S SEGTYPE=$P(RORSEG,FS,1) ;segment type (PID,OBR,OBX,etc.)
+"RTN","RORX019A",317,0)
+ . Q:SEGTYPE'="OBX"  ;test results are in the OBX segment
+"RTN","RORX019A",318,0)
+ . S RORSPEC=$P($P(RORSEG,FS,4),U,2) ;specimen type (urine, serum, etc.)
+"RTN","RORX019A",319,0)
+ . S RORSPEC=":"_RORSPEC_":" ;append ":" as prefix and suffix
+"RTN","RORX019A",320,0)
+ . I ((RORSPEC[":UA:")!(RORSPEC[":UR:")) Q  ;quit if specimen type is urine
+"RTN","RORX019A",321,0)
+ . S RORLOINC=$P($P(RORSEG,FS,4),U,1) ;LOINC code for test
+"RTN","RORX019A",322,0)
+ . S RORVAL=$P(RORSEG,FS,6) ;test result value
+"RTN","RORX019A",323,0)
+ . S RORVAL=$TR(RORVAL,"""","") ;get rid of double quotes around values
+"RTN","RORX019A",324,0)
+ . Q:($G(RORVAL)'>0)  ;quit if no value
+"RTN","RORX019A",325,0)
+ . S RORDATE=$$HL7TFM^XLFDT($P(RORSEG,FS,15)) ;get date collected
+"RTN","RORX019A",326,0)
+ . S RORDATE=RORDATE\1
+"RTN","RORX019A",327,0)
+ . ;test results will be stored in RORDATA("SVAL"),RORDATA("PVAL"), and RORDATA("LVAL")
+"RTN","RORX019A",328,0)
+ . ;---check for AST match on LOINC if not yet found and store it---
+"RTN","RORX019A",329,0)
+ . I 'RORAST,RORDATA("AST_LOINC")[(";"_RORLOINC_";") D  Q
+"RTN","RORX019A",330,0)
+ .. S RORDATA("SVAL",RORDATE)=RORVAL,RORAST=1 Q
+"RTN","RORX019A",331,0)
+ . ;---check for Platelet match on LOINC if not yet found and store it---
+"RTN","RORX019A",332,0)
+ . I 'RORPLAT,RORDATA("PLAT_LOINC")[(";"_RORLOINC_";") D  Q
+"RTN","RORX019A",333,0)
+ .. S RORDATA("PVAL",RORDATE)=$G(RORVAL),RORPLAT=1
+"RTN","RORX019A",334,0)
+ . ;---check for ALT match on LOINC if not yet found and store it---
+"RTN","RORX019A",335,0)
+ . I 'RORALT,RORDATA("ALT_LOINC")[(";"_RORLOINC_";") D  Q
+"RTN","RORX019A",336,0)
+ .. S RORDATA("LVAL",RORDATE)=RORVAL,RORALT=1
+"RTN","RORX019A",337,0)
+ . ;set flags to indicate if APRI/FIB4 scores are ready to be calculated for this patient
+"RTN","RORX019A",338,0)
+ . I RORAST,RORPLAT S RORDATA("CALCAPRI")=1 D
+"RTN","RORX019A",339,0)
+ .. I RORDATA("IDLST")=3 S RORDONE=1 ;done if APRI is the only score requested
+"RTN","RORX019A",340,0)
+ .. I RORALT S RORDATA("CALCFIB4")=1,RORDONE=1
+"RTN","RORX019A",341,0)
+ ;
+"RTN","RORX019A",342,0)
+ ;if patient doesn't have data for either score, then they shouldn't show up on report
+"RTN","RORX019A",343,0)
+ I '$G(RORDATA("CALCAPRI")),'$G(RORDATA("CALCFIB4")) Q -1
+"RTN","RORX019A",344,0)
+ ;--- put test result and test date into RORDATA(<test_name>)=result^date
+"RTN","RORX019A",345,0)
+ N DATE
+"RTN","RORX019A",346,0)
+ S DATE=$O(RORDATA("SVAL",0)) ;AST
+"RTN","RORX019A",347,0)
+ S RORDATA("AST")=$S($G(DATE)="":U,1:$G(RORDATA("SVAL",DATE))_U_$G(DATE))
+"RTN","RORX019A",348,0)
+ S DATE=$O(RORDATA("PVAL",0)) ;Platelet
+"RTN","RORX019A",349,0)
+ S RORDATA("PLAT")=$S($G(DATE)="":U,1:$G(RORDATA("PVAL",DATE))_U_$G(DATE))
+"RTN","RORX019A",350,0)
+ S DATE=$O(RORDATA("LVAL",0)) ;ALT
+"RTN","RORX019A",351,0)
+ S RORDATA("ALT")=$S($G(DATE)="":U,1:$G(RORDATA("LVAL",DATE))_U_$G(DATE))
+"RTN","RORX019A",352,0)
+ ;--- get just the test result values from array
+"RTN","RORX019A",353,0)
+ N TEST,AST,PLAT,ALT
+"RTN","RORX019A",354,0)
+ F TEST="AST","PLAT","ALT" S @TEST=$P($G(RORDATA(TEST)),U,1)
+"RTN","RORX019A",355,0)
+ ;--- calculate APRI/FIB4 scores
+"RTN","RORX019A",356,0)
+ N TMP1,TMP2
+"RTN","RORX019A",357,0)
+ ;RORDATA("SCORE",3) will hold the calculated APRI score
+"RTN","RORX019A",358,0)
+ ;RORDATA("SCORE",4) will hold the calculated FIB4 score
+"RTN","RORX019A",359,0)
+ S (RORDATA("SCORE",3),RORDATA("SCORE",4))="" ;init calculated scores to null
+"RTN","RORX019A",360,0)
+ S RC=1
+"RTN","RORX019A",361,0)
+ I $G(AST),$G(PLAT) D
+"RTN","RORX019A",362,0)
+ . I RORDATA("IDLST")[3 D  ;calculate APRI score: [AST/ULNAST/PLAT] * 100
+"RTN","RORX019A",363,0)
+ .. S TMP1=(AST/RORDATA("ULNAST")/PLAT)*100
+"RTN","RORX019A",364,0)
+ .. S RORDATA("SCORE",3)=$J($G(TMP1),0,2) ;round to 2 decimal points
+"RTN","RORX019A",365,0)
+ . I $G(ALT),RORDATA("IDLST")[4 D  ;calculate FIB4 score: (AGE*AST)/[(PLAT*ALT) to 1/2 power]
+"RTN","RORX019A",366,0)
+ .. N AGE S AGE=$$AGE(DFN,RORDATA("DATE")) ;get patient age
+"RTN","RORX019A",367,0)
+ .. I '$G(AGE) S RC=-1 Q  ;quit if age can't be calculated
+"RTN","RORX019A",368,0)
+ .. ;
+"RTN","RORX019A",369,0)
+ .. ; ROR*1.5*16 remedy ticket 512757 changed next two lines
+"RTN","RORX019A",370,0)
+ .. ;S TMP2=(AGE*AST)/$$PWR^XLFMTH((PLAT*ALT),.5)
+"RTN","RORX019A",371,0)
+ .. ;S RORDATA("SCORE",4)=$J($G(TMP2),0,0) ;round to whole number
+"RTN","RORX019A",372,0)
+ .. S TMP2=(AGE*AST)/(PLAT*($$PWR^XLFMTH((ALT),.5)))
+"RTN","RORX019A",373,0)
+ .. S RORDATA("SCORE",4)=$J($G(TMP2),0,2) ;round to 2 decimal places
+"RTN","RORX019A",374,0)
+ .. ;
+"RTN","RORX019A",375,0)
+ Q RC
+"RTN","RORX019A",376,0)
+ ;
+"RTN","RORX019A",377,0)
+ ;************************************************************************
+"RTN","RORX019A",378,0)
+ ;CALCULATE PATIENT AGE - EXTRINSIC FUNCTION
+"RTN","RORX019A",379,0)
+ ;
+"RTN","RORX019A",380,0)
+ ;INPUT
+"RTN","RORX019A",381,0)
+ ;  DFN      Patient DFN in PATIENT file (#2)
+"RTN","RORX019A",382,0)
+ ;  DATE     user-selected date for report calculations
+"RTN","RORX019A",383,0)
+ ;
+"RTN","RORX019A",384,0)
+ ;OUTPUT
+"RTN","RORX019A",385,0)
+ ;  Patient age is returned
+"RTN","RORX019A",386,0)
+ ;************************************************************************
+"RTN","RORX019A",387,0)
+AGE(DFN,DATE) ;
+"RTN","RORX019A",388,0)
+ ;--- get patient dob and dod using DEM^VADPT
+"RTN","RORX019A",389,0)
+ N RORDEM,RORDOB,RORDOD,RORAGE,VAROOT
+"RTN","RORX019A",390,0)
+ S VAROOT="RORDEM" D DEM^VADPT
+"RTN","RORX019A",391,0)
+ S RORDOB=$P($G(RORDEM(3)),U,1) ;date of birth
+"RTN","RORX019A",392,0)
+ S RORAGE=$P($G(RORDEM(4)),U,1) ;age as of today (DT)
+"RTN","RORX019A",393,0)
+ S RORDOD=$P($G(RORDEM(6)),U,1) ;date of death
+"RTN","RORX019A",394,0)
+ I DATE=DT Q $G(RORAGE)  ;if 'most recent' date, return age in API results
+"RTN","RORX019A",395,0)
+ ;compare DOD and user-selected 'as of' DATE
+"RTN","RORX019A",396,0)
+ I $G(RORDOD),$G(RORDOD)<DATE S DATE=RORDOD\1 ;use DOD if earlier than DATE
+"RTN","RORX019A",397,0)
+ S RORAGE=DATE-RORDOB ;calculate age
+"RTN","RORX019A",398,0)
+ S RORAGE=$S($L(RORAGE)=6:$E($G(RORAGE),1,2),1:$E($G(RORAGE),1,3))
+"RTN","RORX019A",399,0)
+ Q $G(RORAGE)
+"VER")
+8.0^22.0
+"BLD",8006,6)
+^15
+**END**
+**END**

@@ -1,0 +1,181 @@
+$TXT Created by METELLUS,ANAJA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 06/13/11 at 12:42
+=============================================================================
+Run Date: AUG 17, 2011                     Designation: GMTS*2.7*100
+Package : GMTS - HEALTH SUMMARY               Priority: EMERGENCY
+Version : 2.7        SEQ #90                    Status: Released
+                  Compliance Date: AUG 19, 2011
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*92 <<= must be installed BEFORE `GMTS*2.7*100'
+
+Subject:  PROBLEM WITH NEW MED WORKSHEET REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issue:
+  
+ The Medication Worksheet report in CPRS, displays the previous 
+ prescription Patient Instruction Signature comments in succeeding 
+ prescriptions.
+  
+  
+ Associated NSR(S):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Tickets:
+ =========================
+ HD0000000490844 - Problem Displaying Medi Worksheet after GMTS*2.7*92
+  
+ Duplicate(s):
+ HD0000000492149 - Health Summary issue after install of GMTS*2.7*92
+       
+  
+ Participating Test Sites:
+ =========================
+ Charleston, SC
+ North Chicago, IL
+ Pittsburgh, PA
+  
+  
+ Remedy Ticket Overview:
+ =======================
+ HD0000000490844 - Problem Displaying Medi Worksheet after GMTS*2.7*92
+  
+   Patient Safety Issue:
+   ---------------------
+   PSPO #2041 
+  
+   Problem:
+   --------
+   The Medication Worksheet report in CPRS, displays a patients previous
+   prescription Patient Instruction Signature comments in subsequent
+   prescriptions, displaying incorrect Patient Instruction Signature
+   comments for that prescription.
+  
+   Resolution:
+   -----------
+   Routine GMTSPST2 has been modified to clear a prescription's signature
+   lines before displaying a subsequent prescription.
+  
+  
+ ====================INSTALLATION INSTRUCTIONS==========================
+  
+  Users are allowed on the system during installation, however it
+  is best that this patch be installed after normal business hours.
+  Installation time will take less than 2 minutes.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter GMTS*2.7*100)
+   
+         a.  Verify Checksums in Transport Global - This option will
+             allow you to ensure the integrity of the routines that 
+             are in the transport global.
+         b.  Print Transport Global - This option will allow you to
+             view the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option
+             will allow you to view all changes that will be made when
+             this patch is installed.  It compares all components of
+             this patch(routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a
+             backup message of any routines exported with this patch.
+             It will not backup any other changes such as DD's or 
+             templates.
+   
+    4. Use the Install Package(s) option and select the package
+       GMTS*2.7*100
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//" respond NO.
+  
+  
+ POST INSTALLATION:
+ ================== 
+ Please make sure that you have the MRT2 Health Summary Component 
+ installed. If your site has changed the Health Summary Type named 
+ "Medication Worksheet" to display a different component instead of MRT2 
+ set the component back to MRT2. Review other local Health Summary types 
+ if they were also changed from the MRT2 Health Summary Component. 
+  
+  
+ 1.  Select OPTION: INQUIRE TO FILE ENTRIES  
+  
+ OUTPUT FROM WHAT FILE: HEALTH SUMMARY TYPE// HEALTH SUMMARY COMPONENT  
+                                           (216 entries)
+ Select HEALTH SUMMARY COMPONENT NAME: MRT2  Medication Worksheet (Tool #2)
+ ANOTHER ONE: 
+ STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO//  - No record number (IEN), no 
+ Computed Fields
+  
+ NUMBER: 252                           NAME: Medication Worksheet (Tool #2)
+   PRINT ROUTINE: TOOL2;GMTSPST2       ABBREVIATION: MRT2
+   DEFAULT HEADER NAME: Medication Worksheet
+  DESCRIPTION:   This component displays a list of the patient's active and
+  pending outpatient prescriptions in a patient-friendly worksheet format 
+  with space intended for written notes by the patient, provider or
+  caregiver.  
+  
+  
+ 2.  OUTPUT FROM WHAT FILE: HEALTH SUMMARY COMPONENT// HEALTH SUMMARY TYPE
+                                           (72 entries)
+ Select HEALTH SUMMARY TYPE NAME: Medication Worksheet
+ STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO//  - No record number (IEN), no 
+ Computed Fields
+  
+ NAME: Medication Worksheet              OWNER: RITCHIE,ROXANNE
+   SUPPRESS COMP WITHOUT DATA: yes
+ SUMMARY ORDER: 5
+   COMPONENT NAME: Medication Worksheet (Tool #2) <==
+   HEADER NAME: Medication Worksheet
+   SUPPRESS SENSITIVE PRINT DATA: NO SSN
+   TIMESTAMP: 62192,41783                TITLE: Medication Worksheet
+  
+ 3. If the COMPONENT NAME: does not show Medication Worksheet (Tool #2). 
+ Please update it using the Create/Modify Health Summary Type [GMTS TYPE 
+ ENTER/EDIT] option.
+  
+ You can also review the post installation consideration section of  
+ GMTS_2_7_P92_PSO_7_P316_IG.PDF, which is from GMTS*2.7*92 patch. File can 
+ be downloaded from the FTP server: download.vista.med.va.gov
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSPST2
+    Before: B66239035   After: B66514696  **92,100**
+ 
+Routine list of preceding patches: 92
+
+=============================================================================
+User Information:
+Entered By  : METELLUS,ANAJA                Date Entered  : JUN 03, 2011
+Completed By: WERNER,GARY                   Date Completed: AUG 05, 2011
+Released By : DILTZ-ANDARY,TAMARA           Date Released : AUG 17, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,367 @@
+$TXT Created by MOORE,JIM at NXT.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 08/16/11 at 06:43
+=============================================================================
+Run Date: SEP 12, 2012                     Designation: HL*1.6*157
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #125                    Status: Released
+                  Compliance Date: OCT 13, 2012
+=============================================================================
+
+Associated patches: (v)HL*1.6*142  <<= must be installed BEFORE `HL*1.6*157'
+                    (v)HL*1.6*153  <<= must be installed BEFORE `HL*1.6*157'
+
+Subject: HL7 Listeners Under Linux
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch provides the ability to run the HL7 1.6 and HL7 Optimized (HLO)
+ listeners under xinetd on Cache/Linux systems.  Xinetd is software for
+ managing incoming connections over TCP/IP ports on Linux and Unix systems
+ similarly to VMS TCPIP Services used on VMS systems.  All sites should
+ install this patch regardless of their operating system, but for sites
+ using Linux there are additional installation steps for configuring the
+ listeners. 
+  
+ Sites that use Linux as their VistA platform, not just as the backend but also
+ on the frontend, are required to configure their HL7 1.6 and HLO
+ listeners to run under xinetd if they have not already done so.  This is
+ VHA's standard for Linux systems and is recommended by both Engineering
+ Services and Product Support. 
+   
+ Test Sites:
+ ===========
+ El Paso VAMC
+ Oklahoma City, OK
+ Tennessee Valley HCS
+  
+  
+ Remedy:
+ =======
+  None
+  
+  
+ Installation Instructions:
+ ==========================
+   1.  Users are allowed to be on the system during the installation. It 
+       is highly recommended to install the patch during off-hours. The
+       installation will complete in less than one minute.
+        
+   2.  Use the STOP HLO action of the HLO SYSTEM MONITOR screen to temporarily
+       stop the transmission of HLO messages.
+   
+   3.  On VMS systems, disable the HL7 TCPIP services for the HLO
+       multi-listener running on all nodes in the cluster.
+   
+   4.  On VMS systems, disable the HL7 TCPIP services for the HL7 1.6
+       multi-listener running on all nodes in the cluster.
+  
+   5.  Shutdown all Logical Links, incoming and outgoing filers using
+       the Filer and Link Management option listed below:
+  
+         Stop All Messaging Background Processes [HL STOP ALL]
+  
+   6.  Shutdown the Link Manager using the Filer and Link Management
+       option listed below:
+  
+         TCP Link Manager Start/Stop [HL START/STOP LINK MANAGER]
+  
+   7.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+  
+   8.  This patch is now loaded into a transport global on your system.
+       The next step is to use KIDS to install the Transport global.  On
+       the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Backup a Transport Global
+          Install Package(s) 
+  
+       When using the Install Package(s) menu option to install the 
+       patch build, you will be asked several questions.  The questions,
+       and the answers you should supply, are shown below.
+  
+        INSTALL NAME: <HL*1.6*157>
+  
+        Want KIDS to Rebuild Menu Trees Upon Completion of Install? <NO>
+  
+        Want KIDS to INHIBIT LOGONS during the install? NO// <NO>
+  
+        Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO// <NO>
+  
+  
+   9.  Start up all Logical Links and incoming and outgoing filers using
+       the Filer and Link Management Option's 'Restart/Start All Links
+       and Filers [HL TASK RESTART]' menu option.
+       (Note those links that do not have "autostart" enabled will need
+       to be restarted manually.)
+    
+   10. Restart the Link Manager using the Filer and Link Management option
+       listed below:
+   
+         TCP Link Manager Start/Stop [HL START/STOP LINK MANAGER]
+   
+   11. Use the START HLO action of the HLO SYSTEM MONITOR screen to
+       resume the transmission of HLO messages.
+  
+   12. On VMS systems, enable the HL7 TCPIP services for the HLO
+       multi-listeners.
+    
+   13. On VMS systems, enable the HL7 TCPIP services for the HL7 1.6
+       multi-listeners.
+  
+ Instructions for Configuring HL7 Listeners on Linux Sites:
+ ==========================================================
+ ***************************************************************** 
+ *  These instructions do  ** NOT ** apply to sites that use     *
+ *  Linux only for their backend database server.                *
+ *****************************************************************
+ 
+ 1) A single user Linux account must be established, named 'scdtcpip'
+    where 'scd' should be replaced with the three character site code
+    assigned by the Regional Data Center, for the use of the TCP/IP
+    listeners that will run under xinetd.  The scdtcpip user that you create
+    MUST be in the 'cacheusr' group in /etc/group.  If a user account has not
+    yet been established for that purpose and you need assistance then please
+    enter a Remedy ticket for Product Support.
+  
+ 2) Each listener must have a port number assigned to it for its exclusive
+    use.  For VHA systems the following standard applies:
+  
+     HL7 1.6    Production         Port# 5000
+     HL7 1.6    Test/Development   Port# 5025
+     HLO        Production         Port# 5001
+     HLO        Test/Development   Port# 5026
+  
+ 3) Create a single entry in the HL LOGICAL LINK file (#870) for the
+    listeners, using the LINK EDIT [HL EDIT LOGICAL LINKS] option. 
+    Instructions for using the option may be found in the VISTA HEALTH LEVEL
+    SEVEN (HL7) SITE MANAGER & DEVELOPER MANUAL.  One entry will suffice
+    for both the HL7 1.6 and HLO listeners.  Enter the ports selected in
+    step 2) when completing the TCP/IP PORT (OPTIMIZED) (#400.08) field and
+    the TCP/IP PORT(#400.02) field. Also, be sure to enter the DNS DOMAIN (#.08)
+    and TCP/IP ADDRESS (#400.01) fields.
+  
+ 4) There should be exactly one entry in the HLO SYSTEM PARAMETERS file
+    (#779.1).  Please review that entry to insure that the field 
+    HLO STANDARD LISTENER (#.1) points to the entry created in the HL LOGICAL
+    LINK file (#870) created in step 3) above. 
+  
+   ***************************************************************************
+   NOTE: For steps 5) and 6), Xinetd configuration is scripted and done during
+   server creation for standard Linux VistA systems (Commodity Front End, VistA 
+   Read-Only, etc.), so they should already exist. If needed, please enter a 
+   Remedy ticket to request assistance from Product Support.  
+   ***************************************************************************
+    
+  5) An xinetd configuration file is required for the HL7 1.6 listener.  The 
+    file should be located in the /etc/xinetd.d directory and should be named
+    scd_hlsx, where 'scd' is the local three letter site code assigned by the
+    Regional Data Center, and the last letter 'x' should be changed to 'p' on
+    production systems, 't' on test systems, or 'l' on legacy systems. 
+ 
+    The file may be edited using the vi editor.  
+ 
+    The contents of the configuration file is as follows, except that these
+    parameters need to be modified:
+  
+     user  - Set to the name of the user established per step 1) above.
+     port  - Set to the port number selected in step 2) above.
+     bind  - Set to the IP address of the interface that the service should
+             be bound to.
+     env   - Set the value of the HLOLINK environment variable to the 
+             name of the HL LOGICIAL LINK entry created in step 4) above. 
+     env   - Modify the value of the TZ environment variable to match
+             your site's time zone.
+     server -  In the example cache is shown to be installed in the
+               /usr/local/cachesys/devfey directory.  Change it to match
+               your system. 
+     server_args - In the example the Cache' configuration name is
+                   'devfey'and the login namespace is shown as FEY. 
+                   Change it to match your system.  
+  
+          
+ Xinetd Configuration file for the HL7 1.6 Listener
+ ================================================== 
+ #default: on
+ #description: VA HL7 Listener for FEY - port 5000
+ #
+ service scd_hlst
+ {
+     type = UNLISTED
+     disable = no
+     flags = REUSE
+     socket_type = stream
+     protocol = tcp
+     port = 5000
+     bind = xx.xx.xx.xx
+     wait = no
+     user = scdtcpip
+     env = TZ=/usr/share/zoneinfo/US/Eastern
+     env += port=5000
+     server = /usr/local/cachesys/devfey/bin/csession
+     server_args = devfey -ci -U FEY PORT^HLCSTCPA
+     instances = UNLIMITED
+     per_source = UNLIMITED
+ }
+ #end
+  
+  
+ 6) An xinetd configuration file is required for the HLO listener.  The file
+    should be located in the /etc/xinetd.d directory and should be named
+    scd_hlox, where 'scd' is the local three letter site code assigned by
+    the Regional Data Center and the last letter 'x' should be changed to 'p'
+    on production systems, 't' on test systems, or 'l' on legacy systems. 
+ 
+    The file may be edited using the vi editor.  
+  
+    The contents of the configuration file is as follows, except that these
+    parameters need to be modified:
+  
+     user  -   Set to the name of the user established per step 1) above.       
+     port  -   Set it to the port number selected in step 2) above.
+     Bind  -   Set to the IP address of the interface that the service should
+               be bound to.
+ 
+     env   -   Modify the value of the TZ environment variable to match
+               your site's time zone.
+     server -  In the example cache is shown to be installed in the
+               /usr/local/cachesys/devfey directory.  Change it to match
+               your system. 
+     server_args - In the example the Cache' configuration name is 'devfey'
+                   and the login namespace is shown as FEY. 
+                   Change it to match your system.  
+  
+  
+ Xinetd Configuration file for the HLO Listener
+ ==============================================
+      
+ #default: on
+ #description: VA HLO Listener for FEY - port 5001
+ #
+ service scd_hlot
+ {
+     type = UNLISTED
+     disable = no
+     flags = REUSE
+     socket_type = stream
+     protocol = tcp
+     port = 5001
+     bind = xx.xx.xx.xx
+     wait = no
+     user = scdtcpip
+     env += TZ=/usr/share/zoneinfo/US/Eastern
+     server = /usr/local/cachesys/devfey/bin/csession
+     server_args = devfey -ci -U FEY LINUX1^HLOSRVR 
+     instances = UNLIMITED
+     per_source = UNLIMITED
+ }
+ #end
+  
+  
+ 7) In order to have xinetd load the new configurations files, enter the
+    following command at the Linux shell prompt:
+  
+    /sbin/service xinetd reload
+  
+ 8) Verify that the new configurations were completed correctly and the
+    listeners are running by using the HL7 PING option.  The example below
+    shows that the HLO listener is running.  It should be repeated for the
+    HL7 1.6 listener, which runs on a different port number.
+  
+    Example of using the HL PING option to test the new listener:
+    =============================================================
+  
+ Select Filer and Link Management Options Option: PI  Ping (TCP Only)
+ What HL Logical Link do you want to test?
+ Select a TCP link:LISTENER 
+ Do you want to PING the port used by HLO or the one used by HL7 1.6?
+  
+      Select one of the following:
+  
+           1         HLO     --> Port #5001
+           2         HL7 1.6 --> Port #5000
+  
+ Enter response: 1//   HLO     --> Port #5001
+ Trying to connect...
+ Connected!
+ Sending PING ...
+ PING sent!
+ Reading acknowledgment....
+ Acknowledgment received!
+  
+  
+  
+ **********************************************************************
+ NOTE: To request assistance from Product Support or for more detailed
+ instructions regarding any of the steps please enter a Remedy ticket.
+ There also may be additional documentation available online for 
+ for configuring xinetd  
+ **********************************************************************
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13, 1995;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLCS2
+    Before: B49434182   After: B53158802  **14,40,43,49,57,58,82,84,109,
+                                           122,157**
+Routine Name: HLCSLNCH
+    Before: B46750262   After: B50153575  **6,19,43,49,57,75,84,109,122,157**
+Routine Name: HLCSTCP
+    Before: B47334373   After: B50599894  **19,43,49,57,58,64,84,109,133,
+                                           122,140,157**
+Routine Name: HLCSTCP2
+    Before: B83851505   After: B87468876  **19,43,49,57,63,64,66,67,76,
+                                           77,87,109,133,122,140,142,145,
+                                           153,157**
+Routine Name: HLCSTCP3
+    Before: B14207498   After: B15347449  **76,77,133,122,153,157**
+Routine Name: HLCSTCP4
+    Before: B45823270   After: B51177330  **109,122,140,157**
+Routine Name: HLCSTCPA
+    Before:  B6096093   After: B13412536  **84,122,157**
+Routine Name: HLOSRVR
+    Before: B84093197   After: B95024776  **126,130,131,134,137,138,139,
+                                           143,147,157**
+Routine Name: HLOSRVR3
+    Before:  B1081356   After:  B1207898  **138,147,157**
+Routine Name: HLTF
+    Before: B24387774   After: B26864166  **1,19,43,55,109,120,122,142,157**
+ 
+Routine list of preceding patches: 147, 153
+
+=============================================================================
+User Information:
+Entered By  : HSU,RAYMOND JL                Date Entered  : JUN 13, 2011
+Completed By: BEST,LISA                     Date Completed: AUG 28, 2012
+Released By : APOLONIO,AUGUSTO              Date Released : SEP 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

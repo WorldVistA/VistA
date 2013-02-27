@@ -1,0 +1,229 @@
+
+=============================================================================
+Run Date: DEC 15, 2011                     Designation: IB*2*465
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #426                      Status: Released
+                  Compliance Date: DEC 28, 2011
+=============================================================================
+
+
+Subject: 2012 RX COPAY THRESHOLDS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Per forthcoming VHA DIRECTIVE 2011-###, new effective rates for Means 
+ Test Thresholds, GMT Thresholds, and RX Copay Thresholds will go into 
+ effect January 1, 2012. To ensure compliance with the forthcoming VHA 
+ Directive, IB*2.0*465 MUST be installed by December 28, 2011. This patch 
+ is being released as an Emergency patch together with DG*5.3*848 (2012
+ Means Test Thresholds) and EAS*1.0*104 (2012 GMT Thresholds) and may be
+ installed out of sequence with respect to other released IB patches.
+  
+ Please Note:  We expect the VHA Directive to be titled MEANS TEST AND 
+ GEOGRAPHIC-BASED MEANS TEST THRESHOLDS FOR CALENDAR YEAR 2012. In order 
+ to provide adequate time for sites to install, Central Business Office 
+ has agreed that these patches may be released prior to availability of 
+ the actual Directive Number.
+   
+ Every year, the government sets new values for the Medicare deductible 
+ and for the pension threshold rates. These values need to be updated in 
+ the associated billing files for accurate and legal billing. The purpose 
+ of this patch is to assist sites in the entry of the Basic Pension 
+ Threshold rates and the Medicare Deductible value for Calendar Year 2012.
+  
+ A post-init routine is included in this patch, which will automate the 
+ update of the new Medicare and pension threshold values. The Technical 
+ section below contains a list of the new rates, which may also be found 
+ in forthcoming VHA DIRECTIVE 2011-###. If a site has already entered the
+ values manually, the record will be overwritten with the national update.
+   
+ The new pension rates for Calendar Year 2012 (with an effective date 
+ of 12/1/11) are defined in forthcoming VHA DIRECTIVE 2011-### as:
+   
+ *   $ 12,256 for a single veteran without dependents
+ *   $ 16,051 for a veteran with 1 dependent
+ *   An additional $ 2,093 for each additional dependent beyond 1 dependent
+   
+ And the Medicare deductible rate effective 01/01/2012 is shown as:
+   
+ *   The Medicare deductible:  $ 1,156.
+   
+ This patch, IB*2.0*465, is one of three VistA 2012 threshold patches. It 
+ addresses the annual updates for the Pharmacy Copay Thresholds. Patch 
+ DG*5.3*848 will update the thresholds for the Means Tests and the Maximum 
+ Annual Pension Rate. Patch EAS*1.0*104 will address the annual updates for 
+ the GMT Thresholds.
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ File #350.2 -- IB ACTION CHARGE is updated with a new record.  The values 
+ are as follows:
+  .01  KEY                 = "MEDICARE DEDUCTIBLE"
+  .02  EFFECTIVE DATE      = 3120101 (internal form for January 01, 2012)
+  .03  IB TRANSACTION TYPE = pointer to "MEDICARE DEDUCTIBLE" in file #350.1
+  .04  UNIT CHARGE, FIXED  = 1156
+  ==========
+   
+ File #354.3 -- BILLING THRESHOLDS is updated with a new record.  The 
+ values are as follows:
+  .01  DATE                        = 3111201 (internal form for 12/01/2011)
+  .02  TYPE                        = 1       (for BASIC PENSION)
+  .03  BASE RATE FOR VETERAN       = 12256
+  .04  BASE RATE WITH 1 DEPENDENT  = 16051
+  .05  BASE RATE WITH 2 DEPENDENTS = 18144
+  .06  BASE RATE WITH 3 DEPENDENTS = 20237
+  .07  BASE RATE WITH 4 DEPENDENTS = 22330
+  .08  BASE RATE WITH 5 DEPENDENTS = 24423
+  .09  BASE RATE WITH 6 DEPENDENTS = 26516
+  .1   BASE RATE WITH 7 DEPENDENTS = 28609
+  .11  BASE RATE WITH 8 DEPENDENTS = 30702
+  .12  ADDITIONAL DEPENDENT AMOUNT = 2093
+  
+ SOFTWARE RETRIEVAL
+ ------------------
+ The software for this patch is not being distributed through the National
+ Patch Module. This patch is being distributed as part of a host file. The
+ host file will contain the following three KIDS builds:
+   
+             Host file name:    DG_53_P848.KID
+   
+                     Builds: DG*5.3*848
+                             EAS*1.0*104
+                             IB*2.0*465
+  
+ Sites may retrieve the software directly using File Transfer Protocol
+ (FTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field
+ Offices:
+   
+                     Albany   : ftp.fo-albany.med.va.gov
+                     Hines    : ftp.fo-hines.med.va.gov
+               Salt Lake City : ftp.fo-slc.med.va.gov
+       First Available Server : download.vista.med.va.gov
+   
+ The following file will be available:
+   
+     File Name            Description
+     ---------            -----------
+     DG_53_P848.KID       Host File containing KIDS software distribution
+   
+ Note:  Use ASCII mode when transferring the .KID file.
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Chillicothe, OH VAMC (Medium)
+ New York Harbor HCS (Large/Integrated)
+ VISN 2 Upstate New York HCS (Large/Integrated)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ N/A
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The IB20E465 pre-init routine will provide prompting during the patch
+ install and may be deleted after installation.
+  
+ The IB20P465 post-install routine will update the following files. IB20P465
+ may be deleted after installation.
+      IB ACTION CHARGE (#350.2)
+      BILLING EXEMPTIONS (#354.1)
+      BILLING THRESHOLDS (#354.3)
+  
+  
+  
+  
+ Installation Instructions
+ -------------------------
+ The components sent with this patch IB*2.0*465 have been included in the 
+ HOST File DG_53_P848.KID. Please follow the instructions listed in the 
+ INSTALLATION INSTRUCTIONS section of the patch description for patch 
+ DG*5.3*848. In the DG patch description, please make special note of 
+ installation instruction #4b and post-installation instruction #2. They 
+ concern a report that the installer may need to print in order for the 
+ patches to install.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20E465
+    Before:       n/a   After:  B2238582  **465**
+Routine Name: IB20P465
+    Before:       n/a   After: B34798017  **465**
+
+=============================================================================
+User Information:
+Entered By  : MOORE,TERRY D                 Date Entered  : OCT 06, 2011
+Completed By: RUDINGER,NANCY L.             Date Completed: DEC 15, 2011
+Released By : POST,HELEN                    Date Released : DEC 15, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

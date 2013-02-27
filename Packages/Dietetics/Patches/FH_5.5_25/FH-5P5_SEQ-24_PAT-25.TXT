@@ -1,0 +1,211 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 04/14/10 at 15:28
+=============================================================================
+Run Date: SEP 12, 2011                     Designation: FH*5.5*25
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #24                    Status: Released
+                  Compliance Date: OCT 13, 2011
+=============================================================================
+
+Associated patches: (v)FH*5.5*23   <<= must be installed BEFORE `FH*5.5*25'
+
+Subject: FIX MAPPING FOR 2 FOOD ALLERGIES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+ 1. The Barbeque Sauce allergy dislike food preference is not mapping
+    to the Barbecue Sauce food allergy in the GMR Allergies file.
+ 2. The Eggs, Substitutes allergy dislike food preference is not 
+    mapping to the EGG SUBSTITUTES food allergy in the GMR Allergies file.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000376181 - FGH - Allergy not showing for pt food preferences
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Tomah, WI
+ N.Florida/S.Georgia
+ Puget Sound HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000376181 - FGH - Allergy not showing for pt food preferences
+  
+   Problem 1:
+   --------
+   The BARBEQUE SAUCE allergy dislike food preference will not map to the
+   BARBECUE SAUCE food allergy in the GMR ALLERGIES file.
+   
+   Resolution 1:
+   -------------
+   Modify routine FHSELA2 to map the BARBEQUE SAUCE allergy dislike food
+   preference to the BARBECUE SAUCE food allergy in the GMR Allergy file.
+  
+   Problem 2:
+   ----------
+   The EGGS, SUBSTITUTES allergy dislike food preference will not map to 
+   the EGG SUBSTITUTES food allergy in the GMR ALLERGIES file.
+   
+   Resolution 2:
+   -------------
+   Modify routine FHSELA2 to map the EGGS, SUBSTITUTES allergy dislike food
+   preference to the EGG SUBSTITUTES food allergy in the GMR Allergy file.
+  
+ TECHNICAL SUMMARY:
+ ==================
+ 1. HD0000000376181 - FGH - Allergy not showing for pt food preferences
+  
+ Problem 1 and 2:
+ ----------------
+ In the routine FHSELA2 the hard coded list of food items are structured in
+ this manner:
+   ;;food item name;allergy name
+   
+ With additional food allergy names seperated by semi-colons each food item
+ can be mapped to several GMR Allergies. 
+  
+ Any time routine, FHSELA2, is run, upon exiting, each hard coded food item
+ is processed and the allergy mapping is checked. 
+ If new allergies are added to an existing food item, the new allergies get
+ mapped. If a new allergy is added to the GMR ALLERGIES file (#120.82)
+ and it has an existing match in FHSELA2, it will be mapped to the matching
+ allergy food preference dislike. If not, then routine FHSELA2 will be
+ updated by a patch to map to new allergies.
+  
+ For the existing food items to be mapped to an existing GMR food 
+ allergy, the allergy name must be an exact match to the allergy name in
+ the B index of the GMR ALLERGIES file (file #120.82). This is the issue
+ with barbeque sauce and the eggs substitute. In routine, FHSELA2, the
+ allergy name is spelled BARBEQUE SAUCE, in the GMR ALLERGIES file it is
+ spelled BARBECUE SAUCE. In the routine FHSELA2 the allergy name is spelled
+ EGGS, 
+ SUBSTITUTES and in the GMR ALLERGIES file it is spelled EGG SUBSTITUTES.
+  
+ These are the code changes required to fix these issues:
+ BEFORE: FPS+21^FHSELA2
+          ;;BARBEQUE SAUCE;BARBEQUE SAUCE
+  
+ AFTER: FPS+21^FHSELA2
+          ;;BARBEQUE SAUCE;BARBEQUE SAUCE;BARBECUE SAUCE
+  
+ BEFORE: FPS+98^FHSELA2
+          ;;EGGS, SUBSTITUTES;EGG, SUBSTITUTES
+  
+ AFTER: FPS+98^FHSELA2
+          ;;EGGS, SUBSTITUTES;EGG, SUBSTITUTES;EGG SUBSTITUTES
+  
+ It is important to note that there are hard coded food items in FHSELA2 
+ that do not have matches in the current version the GMR ALLERGIES file.
+ These food items are:
+ (In alphabetical order, formatted: item name;allergy name)
+  ;;ALCOHOL, BEER;HOPS
+  ;;CHILI;CHILI
+  ;;GOOSEBERRIES;GOOSEBERRIES;GOOSE BERRIES;GOOSE BERRY;GOOSEBERRY
+  ;;OLESTRA;OLESTRA;OLEAN
+  ;;ORANGE;ORANGE;ORANGES;ORANGE JUICE;ORANGE OIL
+  ;;PEAS, ENGLISH;ENGLISH PEAS
+  ;;STRAWBERRIES;STRAWBERRIES;STRAWBERRIES PLUS
+  
+ These food items can be added to the FOOD PREFERENCES file as allergies,
+ but can not be mapped to the GMR ALLERGIES file at this time. That may
+ change with future updates to the GMR ALLERGIES file.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Nutrition users be off the system.  Other VISTA users will not be
+ affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+ 1.  Load Transport Global 
+     ---------------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter FH*5.5*25):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? YES//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSELA2
+    Before:B108524765   After:B108792933  **8,13,23,25**
+ 
+Routine list of preceding patches: 23
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : JAN 29, 2010
+Completed By: CRICHLOW,SHERRY               Date Completed: AUG 24, 2011
+Released By : KREUZ,SHERI B                 Date Released : SEP 12, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

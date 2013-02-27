@@ -1,0 +1,188 @@
+$TXT Created by WOLF,ED at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 05/18/11 at 09:12
+=============================================================================
+Run Date: AUG 23, 2011                     Designation: PX*1*197
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #151                      Status: Released
+                  Compliance Date: SEP 23, 2011
+=============================================================================
+
+Associated patches: (v)PX*1*166    <<= must be installed BEFORE `PX*1*197'
+                    (v)PX*1*168    <<= must be installed BEFORE `PX*1*197'
+
+Subject: KEEP CREDIT STOP VISIT FOR WORKLOAD CREDIT IF APPLICABLE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will prevent the arbitrary loss of an encounter's associated 
+ credit stop/secondary stop code. The credit stop/secondary stop code is 
+ assigned in the clinic setup of the HOSPITAL LOCATION file (#44). The 
+ loss of the credit stop/secondary code has been evident in the station's 
+ outpatient encounter file and has resulted in loss of workload credit for 
+ those clinics with secondary credit stops.
+  
+   ASSOCIATED REMEDY TICKETS:
+   ========================= 
+   1) HD0000000386336 - Missing secondary stop code credit
+       
+      Duplication:
+     
+        HD0000000399845 - credit stop code disappearing
+        HD0000000397316 - Credit Stop Code Doesn't Always Pull In for
+                          Telemed-MH Clinic
+        HD0000000396040 - Encounter missing credit stop code
+        HD0000000355785 - encounters not having credit stop code - 
+                          effecting workload credit
+        HD0000000449598 - Problem with some stop codes..
+        HD0000000452762 - Clinic has no credit stop code.
+        HD0000000479140 - Secondary Stop Code not passing to PCE
+        HD0000000481196 - encounters for Telehealth clinics are NOT 
+                          passing the credit stop at check-out
+        HD0000000480962 - VSSC/Pro-Clarity TeleDerm workload
+        HD0000000490315 - stop codes problems
+        HD0000000498505 - REQUEST FOR TESTING OF PATCH PX*1*197  
+   
+  
+   PARTICIPATING TEST SITES:
+   ========================
+   Black Hills HCS
+   Honolulu, HI (VA Pacific Islands HCS)
+   Palo Alto HCS
+   Reno, NV
+  
+      
+   REMEDY OVERVIEW:
+   ===============
+   1) HD0000000386336 - Missing secondary stop code credit
+    
+   Problem:
+   ========
+   On occasion, randomly, the Credit stop code is dropped from a 
+   visit/encounter while originally is included, if applicable.
+  
+   Technical:
+   ----------
+   If a clinic entry in the HOSPITAL LOCATION file (#44) is set up with 
+   both the STOP CODE NUMBER field (#8) and the CREDIT STOP CODE field
+   (#2503) then two entries in the VISIT file (#9000010) are created, and
+   the second one is the credit stop visit. Usually those entries are
+   associated with the related entries in the OUTPATIENT ENCOUNTER file
+   (#409.68). Many packages subscribe to DBIA1889-B #1890 -
+   $$DELVFILE^PXAPI(WHICH,VISIT,PKG,SOURCE,ASK,ECHO,USER)which is a 
+   function used to delete data from the VISIT file (#9000010). If the
+   indicated DBIA calls Patient Care Encounter (PCE) with passed parameter
+   WHICH="ALL", all PCE entries are deleted, including the credit stop
+   visit entry with its associated entry in the OUTPATIENT ENCOUNTER file
+   (#409.68), with exception of any entry from files belonging to
+   subscribing packages. The primary entry in the OUTPATIENT ENCOUNTER file
+   (#409.68) pointing to the primary entry in the VISIT file (#9000010) is
+   not deleted if this visit/encounter is associated with an entry in the
+   Appointment multiple sub file(#2.98) of the PATIENT file (#2). If the
+   primary visit entry is left with its associated entry in the OUTPATIENT
+   ENCOUNTER file (#409.68) and then this visit/encounter is updated with
+   new clinical entries, the previously deleted credit stop visit is not
+   recreated. The current functionality assumes that if the primary entry
+   in the OUTPATIENT ENCOUNTER file (#409.68) exists then the credit stop
+   visit with its entry in OUTPATIENT ENCOUNTER file (#409.68) would exist
+   as well, if applicable. This visit/encounter, if checked out, is
+   evaluated and transmitted without the expected credit stop code.
+   
+   Solution:
+   =========
+   Corrected routines PXAPIDEL and PXUTLSTP to prevent deleting the credit 
+   stop visit entries with associated entries in the OUTPATIENT ENCOUNTER 
+   file (#409.68) if the primary visit is associated with the patient's
+   Appointment multiple sub file (#2.98) of the PATIENT file (#2).
+  
+    
+    INSTALLATION INSTRUCTIONS:
+    ===========================
+    This patch may be run with users on the system. However, because 
+    certain PCE and Scheduling options need to be placed out of order,
+    we strongly suggest it be installed after business hours when any front
+    end Graphical User Interface (GUI) applications such as Computerized 
+    Patient Record System (CPRS), Event Capture (EC) etc. are not in use.
+  
+    Install Time - Less than 5 minutes
+     
+    1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+        the KIDS distribution included with this message.
+     
+        NOTE:  If the required patches are not installed, the transport 
+               global will be removed.  If the transport global is removed
+               you will need to repeat this step.
+     
+    2.  From the Kernel Installation and Distribution System Menu, select
+        the Installation menu.
+     
+    3.  From this menu, you may elect to use the following options
+        (when prompted for INSTALL NAME, enter PX*1.0*197):
+        a.  Compare Transport Global to Current System  - this option will
+            allow you to view all changes that will be made when the patch
+            is installed.  It compares all components of the patch 
+            (routines, DDs, templates, etc.).
+        b.  Verify Checksums in Transport Global - this option will
+            allow you to ensure the integrity of the routines that are in
+            the transport global.
+        c.  Print Transport Global - this option will allow you to view the
+            components of the KIDS build.
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+     
+    4.  Use the Install Package(s) option and select the package PX*1.0*197.
+     
+    5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', respond NO.
+     
+    6.  When prompted,'Want to DISABLE Scheduled Options, Menu Options, and 
+        Protocols? YES//', respond Yes.
+        When prompted,'Enter options you wish to mark as 'Out Of Order':',
+        enter:
+        
+        SDAM APPT MGT                   Appointment Management
+        PXCE ENCOUNTER DATA ENTRY       PCE Encounter Data Entry
+        PXCE ENCOUNTER ENTRY & DELETE   PCE Encounter Data Entry and Delete
+        PXCE ENCOUNTER ENTRY NO DELETE  PCE Encounter Data Entry without Delete
+        PXCE ENCOUNTER ENTRY SUPER      PCE Encounter Data Entry - Supervisor
+       
+    7. When prompted, 'Enter protocols you wish to mark as 'Out of Order':',
+        enter:
+  
+          PXCE ADD/EDIT                  Update Encounter  UE
+          PXCE ADD/EDIT DISPLAY BRIEF    Display Brief     DB
+          PXCE ADD/EDIT DISPLAY DETAIL   Display Detail    DD
+          PXCE ADD/EDIT HIDDEN           Hidden actions of Update Encounter     
+          PXCE ADD/EDIT INTERVIEW        Check Out Interview
+          PXCE ADD/EDIT KNOWN ENCOUNTER  Add/Edit Known Encounter  
+          PXCE ADD/EDIT MENU             Add/Edit Menu
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXAPIDEL
+    Before: B29773660   After: B56745766  **1,9,22,130,168,197**
+Routine Name: PXUTLSTP
+    Before: B14644426   After: B15812153  **1,96,166,197**
+
+=============================================================================
+User Information:
+Entered By  : WOLF,ED                       Date Entered  : JUL 08, 2010
+Completed By: LEANORD,TATIANA               Date Completed: AUG 23, 2011
+Released By : SCHMITT,MARSHA                Date Released : AUG 23, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

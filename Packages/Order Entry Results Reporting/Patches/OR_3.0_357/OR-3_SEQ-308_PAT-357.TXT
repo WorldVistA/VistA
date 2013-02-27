@@ -1,0 +1,85 @@
+
+=============================================================================
+Run Date: JUL 31, 2012                     Designation: OR*3*357
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #308                      Status: Released
+                  Compliance Date: AUG 31, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*280    <<= must be installed BEFORE `OR*3*357'
+
+Subject: SUPPORT FOR REMINDER ORDER CHECKS CHANGES
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ General Overview:
+ =================
+ The build for this patch is distributed as part of a multi-package build that
+ contains PXRM*2.0*22 and OR*3.0*357. The multi-package build name is
+ TERATOGENIC MEDICATIONS ORDER CHECKS 1.0. 
+  
+ This patch contains changes to support the modifications to the Reminder Order
+ Check System release. To support these changes ORKCHK5 has been updated to
+ support the new API format for PXRMORCH. While testing this patch, a bug was
+ found in the Order Check System, it was possible for the medium severity
+ reminder order check to not show in CPRS if the order check system could not
+ connect to First DataBank. ORCHECK, has been updated to fix this problem.
+  
+ Remedy Ticket
+ =============
+ none
+ 
+ Host File
+ ==========
+ This is a multi-package build; consequently it will be available only as a host
+ file. The name of the file is TERATOGENIC_MEDICATIONS_ORDER_CHECKS.KID.
+  
+ Sites will retrieve VistA software from the following FTP addresses.  The
+ preferred method is to FTP the files from download.vista.med.va.gov.  This
+ transmits the files from the first available FTP server. Sites may also elect
+ to retrieve software directly from a specific server as follows:
+  
+ Albany          ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines           ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City  ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Installation:
+ =============
+ For installation instructions see the Installation Guide, PXRM_2_22_IG.PDF.
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCHECK
+    Before:B109156050   After:B109458729  **7,56,70,94,141,215,243,293,
+                                           280,346,357**
+Routine Name: ORKCHK5
+    Before: B45867526   After: B43550798  **6,32,74,94,123,190,280,357**
+ 
+Routine list of preceding patches: 346
+
+=============================================================================
+User Information:
+Entered By  : PULEO,ANTHONY G               Date Entered  : OCT 28, 2011
+Completed By: OLSEN,JAMES                   Date Completed: JUL 30, 2012
+Released By : SCHMIT,BECKY                  Date Released : JUL 31, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

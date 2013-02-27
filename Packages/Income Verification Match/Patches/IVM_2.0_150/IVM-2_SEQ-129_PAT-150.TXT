@@ -1,0 +1,108 @@
+
+=============================================================================
+Run Date: JUN 29, 2012                     Designation: IVM*2*150
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #129                      Status: Released
+                  Compliance Date: JUL 29, 2012
+=============================================================================
+
+Associated patches: (v)IVM*2*141   <<= must be installed BEFORE `IVM*2*150'
+
+Subject: ESR 3.6 Pension Data Sharing
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  *****************************************************************************
+  Note:  This patch is being released in support of the Enrollment System
+         Re-design (ESR) 3.6 Pension Data Sharing project.  IVM*2*150 is being
+         released along with DG*5.3*842 (Registration) in host file:
+         DG_53_P842.KID.
+  
+         It is imperative that these patches be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  *****************************************************************************
+  
+  The Health Eligibility Center (HEC) requested modifications to the Enrollment
+  System Redesign (ESR) and Veterans Health Information Systems and Technology
+  Architecture Registration, Enrollment and Eligibility (Vista REE) software to
+  support the requirements of the Pension Data Sharing project.
+  
+  Please refer to the patch description for DG*5.3*842 for complete details.
+  
+  Features of this project are as follows:
+  
+  Modifications
+  -------------
+  1. Enhance Data Sharing between VistA and ESR
+  
+    - The following fields will be added to the HL7 Z07 message builder:
+  
+        HL7 Segment
+         -Sequence  File          Field
+        ------------------------------------------------------------------------
+        ZE2-1.1     PATIENT (#2)  PENSION AWARD EFFECTIVE DATE field (#.3851)
+        ZE2-2       PATIENT (#2)  PENSION AWARD REASON field (#.3852)
+  
+ 2. Enhance Data Sharing between ESR and VistA.
+  
+    - The following fields will be added to the HL7 Z11 message receiver:
+  
+        HL7 Segment
+         -Sequence  File          Field
+        ------------------------------------------------------------------------
+        ZE2-1.1     PATIENT (#2)  PENSION AWARD EFFECTIVE DATE field (#.3851)
+        ZE2-1.2     PATIENT (#2)  PENSION TERMINATED DATE field (#.3853)
+        ZE2-2       PATIENT (#2)  PENSION AWARD REASON field (#.3852)
+        ZE2-3.1     PATIENT (#2)  PENSION TERMINATED REASON field (#.3854)
+        ZE2-3.2     PATIENT (#2)  PENSION TERMINATED REASON field (#.3855)
+        ZE2-3.3     PATIENT (#2)  PENSION TERMINATED REASON field (#.3856)
+        ZE2-3.4     PATIENT (#2)  PENSION TERMINATED REASON field (#.3857)
+  
+  
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+  
+  
+  Test Sites:
+  -----------
+  VA PUGET SOUND HCS, WA
+  CHILLICOTHE VAMC, OH
+  VA HEALTH CARE UPSTATE NEW YORK,NY
+  
+  
+  Installation Instructions:
+  --------------------------
+  Please see the Patch Description for patch DG*5.3*842 for installation
+  instructions. 
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMPTRN8
+    Before: B75232806   After: B76977340  **9,11,19,12,21,17,24,36,37,
+                                           47,48,42,34,77,76,75,79,85,89,
+                                           98,56,97,104,113,109,114,105,
+                                           115,121,151,141,150**
+ 
+Routine list of preceding patches: 141
+
+=============================================================================
+User Information:
+Entered By  : MOORE,TERRY D                 Date Entered  : APR 19, 2011
+Completed By: MORRIS,DARLENE V              Date Completed: JUN 05, 2012
+Released By : GROOMS,ANTHONY E              Date Released : JUN 29, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

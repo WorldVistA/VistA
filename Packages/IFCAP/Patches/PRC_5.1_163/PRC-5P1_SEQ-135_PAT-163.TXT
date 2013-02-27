@@ -1,0 +1,141 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Thursday, 10/13/11 at 19:30
+=============================================================================
+Run Date: NOV 03, 2011                     Designation: PRC*5.1*163
+Package : PRC - IFCAP                         Priority: EMERGENCY
+Version : 5.1       SEQ #135                    Status: Released
+                  Compliance Date: NOV 07, 2011
+=============================================================================
+
+Associated patches: (v)PRC*5.1*144 <<= must be installed BEFORE `PRC*5.1*163'
+
+Subject: PCARD UNAUTHORIZED USER INTEGRITY ERROR DISPLAY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ 1. PRCH Purchase Card Adjustment Security Error in display 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy(s):
+ =====================
+ 1. HD0000000530107 PRCH Purchase Card Adjustment Security Error in display
+  
+  
+ Test Sites:
+ ===========
+ Alexandria VAMC
+ Shreveport VAMC
+ Muskogee VAMC
+ Central Plains
+  
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000530107 PRCH Purchase Card Adjustment Security Error in display
+  
+    Problem:
+    --------
+    The option Adjustment Voucher To Purchase Card Order [PRCH ADUST VOUCH 
+    TO P/C ORDER] should not display the actual credit card number when an
+    unauthorized user attempts to adjust another user's purchase card
+    order. Example of current erroneous access error:
+  
+ PURCHASE ORDER: E90001  688-E90001  10-08-08  PC   Transaction Complete  
+              FCP: 020     $ 25.00
+ You are not authorized to make adjustments on P-Card 4486123456789821
+                                                                 
+  
+  
+    Resolution:
+    -----------
+    Modify routine PRCHE to display Purchase Card name and card holder when
+    an unauthorized user tries to access an adjustment option. Example of
+    new erroneous access error:
+  
+ PURCHASE ORDER: E90001  688-E90001  10-08-08  PC   Transaction Complete  
+              FCP: 020     $ 25.00
+ You are not authorized to make adjustments on P-Card:
+          GAIL 020, belonging to BUSH,GAIL
+  
+  
+ Routines: PRCHE
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*163)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*163.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit enter.  When prompted to select the options
+       you would like to place out of order, enter the following:
+  
+  Adjustment Voucher To Purchase Card Order [PRCH ADUST VOUCH TO P/C ORDER]
+  Adjustment Voucher To Delivery Order      [PRCH ADJUSTMENT TO DEL ORDER]
+  Adjustment Voucher to Receiving Report    [PRCH ADJUSTMENT VOUCHER]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCHE
+    Before: B69149403   After: B72223463  **1,28,39,81,63,144,163**
+ 
+Routine list of preceding patches: 144
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : OCT 13, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: NOV 01, 2011
+Released By : VASSAR,CAROL                  Date Released : NOV 03, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

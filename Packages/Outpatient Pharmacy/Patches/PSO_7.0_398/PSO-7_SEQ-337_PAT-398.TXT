@@ -1,0 +1,171 @@
+$TXT Created by NIXON,TONY at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 02/16/12 at 12:54
+=============================================================================
+Run Date: JUL 12, 2012                     Designation: PSO*7*398
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #337                      Status: Released
+                  Compliance Date: AUG 12, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*264   <<= must be installed BEFORE `PSO*7*398'
+                    (v)PSO*7*331   <<= must be installed BEFORE `PSO*7*398'
+                    (v)PSO*7*387   <<= must be installed BEFORE `PSO*7*398'
+
+Subject: DC'd RX REINSTATED IN ERROR/EXCLUSIONARY CHECK/PSO HI COST REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+     This patch addresses the following issues:
+  
+   1) While reinstating a prescription previously discontinued by entering
+      a "date of death" for a patient, the user is prompted as to whether
+      or not they wish to continue. This question occurs for patients that
+      do NOT have an allergy assessment. If the user accepts the default of
+      "NO" or enters an up-arrow (caret), the DISCONTINUED prescription is
+      reinstated anyway.
+  
+   2) When an EXCLUSIONARY CHECK is updated/modified, the CHECKED BY field
+      is not getting updated.
+  
+   3) The PSO HI COST REPORT does not honor the "^" to exit.
+  
+   Associated Remedy Ticket(s):
+   ============================
+   1)  HD0000000234287 - Reinstating an order and generating a critical drug 
+                         interaction
+  
+   2)  HD0000000520980 - Exclusionary Check
+  
+   3)  HD0000000513921 - PSO HI COST report does not honor "^" to exit
+  
+   Associated NSRs:
+   ================
+   N/A
+     
+     
+   Participating Test Sites:
+   =========================
+   Edward Hines Jr VA Hospital - Hines
+   Erie VA Medical Center
+   Salem VA Medical Center 
+  
+   Remedy Overview:
+   ================
+   1)  HD0000000234287 - Reinstating an order and generating a critical drug
+                         interaction.
+  
+   Problem:
+   --------
+   When a DOD (date of death) is entered for patients with active prescriptions,
+   their status changes from ACTIVE to DISCONTINUED. When the user attempts to
+   reinstate them, they have to respond to the following question:
+  
+   "There is no allergy assessment on file for this patient."
+   "You will be prompted to intervene if you continue with this prescription"
+   "Do you want to Continue?: N//"
+  
+   Before the user responds to the stated question, the prescription status
+   is already set to ACTIVE.
+  
+   Resolution:
+   -----------
+   Modify routine PSODRG. If the user accepts the default of "NO" or enters an
+   up-arrow (caret), re-set the status of the prescription to DISCONTINUE. 
+  
+  
+  
+   2)   HD0000000520980 - Exclusionary Check
+  
+   Problem:
+   --------
+   In the New Person file (#200), when the DATE EXCLUSIONARY LIST CHECKED 
+   field (#53.94) and the ON EXCLUSIONARY LIST field (#53.95) are updated
+   the EXCLUSIONARY CHECKED BY field (#53.96) is not getting updated with
+   the editing users name.
+  
+   Resolution:
+   -----------
+   Made a modification to routine PSOPRVW to check for updates on either of
+   these two fields.  If there is an update, then the EXCLUSIONARY CHECK BY 
+   field (#53.96) will be updated with the user's name.
+  
+   3)   HD0000000513921 - PSO HI COST report does not honor "^" to exit
+  
+   Problem:
+   --------
+   When printing the PSO HI COST REPORT to the screen at the end of each page
+   the prompt "Press Return to Continue or ^ to Exit:" is displayed.  When
+   entering the "^" the prompt repeats it's self and does not exit the report.
+  
+   Resolution:
+   -----------
+   Made a modification to PSOCST10 so that when the "^" is used to exit the
+   report, that it actually will exit.
+  
+  
+   =================== INSTALLATION INSTRUCTIONS =====================
+     
+   Installation will take less than 2 minutes.  Users may be on the system.
+     
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+   2. From the Kernel Installation & Distribution System menu, select
+          the Installation menu.
+     
+   3. From this menu, you may select to use the following options
+          (when prompted for INSTALL NAME, enter PSO*7.0*398)
+     
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+     
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch
+          is installed. It compares all components of the patch (routines,
+          DDs, templates, etc.).
+     
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+     
+    4. Use the Install Package(s) option and select the package PSO*7.0*398
+     
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.
+     
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCST10
+    Before: B13725207   After: B13881983  **31,56,331,398**
+Routine Name: PSODRG
+    Before: B64923938   After: B71911727  **20,23,36,53,54,46,112,139,
+                                           207,148,243,268,324,251,375,
+                                           387,398**
+Routine Name: PSOPRVW
+    Before: B36660908   After: B37841346  **11,146,153,263,268,264,398**
+ 
+Routine list of preceding patches: 264, 331, 387
+
+=============================================================================
+User Information:
+Entered By  : NIXON,ANTOINE                 Date Entered  : SEP 19, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: JUN 20, 2012
+Released By : FOX,KIRK                      Date Released : JUL 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

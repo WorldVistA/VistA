@@ -1,0 +1,1440 @@
+Released OR*3*322 SEQ #307
+Extracted from mail message
+**KIDS**:OR*3.0*322^
+
+**INSTALL NAME**
+OR*3.0*322
+"BLD",8802,0)
+OR*3.0*322^ORDER ENTRY/RESULTS REPORTING^0^3120320^y
+"BLD",8802,1,0)
+^^23^23^3120320^
+"BLD",8802,1,1,0)
+This patch corrects 4 issues within the ORDER ENTRY/RESULTS REPORTING 
+"BLD",8802,1,2,0)
+package:
+"BLD",8802,1,3,0)
+ 
+"BLD",8802,1,4,0)
+1. Cancelling orders from a Delayed Orders list in CPRS (Computerized 
+"BLD",8802,1,5,0)
+   Patient Record System) GUI (Graphical User Interface) causes them 
+"BLD",8802,1,6,0)
+   to appear in the Active Orders list. They should be filtered out 
+"BLD",8802,1,7,0)
+   until the release event happens.
+"BLD",8802,1,8,0)
+ 
+"BLD",8802,1,9,0)
+2. Patch OR*3*296 added the prompt 'Do you wish to continue?' to Vista
+"BLD",8802,1,10,0)
+   option Medication Quick Order Report [OR MEDICATION QO CHECKER]. If 
+"BLD",8802,1,11,0)
+   the user enters a lower case letter 'n' the report runs anyway.
+"BLD",8802,1,12,0)
+ 
+"BLD",8802,1,13,0)
+3. When using the remove function for VistA option Team List Mgmt Menu
+"BLD",8802,1,14,0)
+   [ORLP TEAM MENU] the special number '999' is used to display more 
+"BLD",8802,1,15,0)
+   patients. When the list contains more than 998 patients, the entry
+"BLD",8802,1,16,0)
+   '999' removes the patient in position 999 instead of displaying more
+"BLD",8802,1,17,0)
+   patients.
+"BLD",8802,1,18,0)
+ 
+"BLD",8802,1,19,0)
+4. When using the remove function for VistA option Team List Mgmt Menu
+"BLD",8802,1,20,0)
+   [ORLP TEAM MENU] the special number '999' is used to display more 
+"BLD",8802,1,21,0)
+   patients. When the list contains more than 39 patients and one of the 
+"BLD",8802,1,22,0)
+   patients has an IEN of 999, the entry '999' has you select between the 
+"BLD",8802,1,23,0)
+   patient and the more option.
+"BLD",8802,4,0)
+^9.64PA^^
+"BLD",8802,6)
+5^
+"BLD",8802,6.3)
+15
+"BLD",8802,"ABPKG")
+n
+"BLD",8802,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8802,"KRN",.4,0)
+.4
+"BLD",8802,"KRN",.401,0)
+.401
+"BLD",8802,"KRN",.402,0)
+.402
+"BLD",8802,"KRN",.403,0)
+.403
+"BLD",8802,"KRN",.5,0)
+.5
+"BLD",8802,"KRN",.84,0)
+.84
+"BLD",8802,"KRN",3.6,0)
+3.6
+"BLD",8802,"KRN",3.8,0)
+3.8
+"BLD",8802,"KRN",9.2,0)
+9.2
+"BLD",8802,"KRN",9.8,0)
+9.8
+"BLD",8802,"KRN",9.8,"NM",0)
+^9.68A^7^5
+"BLD",8802,"KRN",9.8,"NM",2,0)
+ORWOD^^0^B75952495
+"BLD",8802,"KRN",9.8,"NM",3,0)
+ORUS^^0^B9751289
+"BLD",8802,"KRN",9.8,"NM",4,0)
+ORUS1^^0^B13629174
+"BLD",8802,"KRN",9.8,"NM",6,0)
+ORUS5^^0^B13207739
+"BLD",8802,"KRN",9.8,"NM",7,0)
+ORQ11^^0^B66045788
+"BLD",8802,"KRN",9.8,"NM","B","ORQ11",7)
+
+"BLD",8802,"KRN",9.8,"NM","B","ORUS",3)
+
+"BLD",8802,"KRN",9.8,"NM","B","ORUS1",4)
+
+"BLD",8802,"KRN",9.8,"NM","B","ORUS5",6)
+
+"BLD",8802,"KRN",9.8,"NM","B","ORWOD",2)
+
+"BLD",8802,"KRN",19,0)
+19
+"BLD",8802,"KRN",19.1,0)
+19.1
+"BLD",8802,"KRN",101,0)
+101
+"BLD",8802,"KRN",409.61,0)
+409.61
+"BLD",8802,"KRN",771,0)
+771
+"BLD",8802,"KRN",779.2,0)
+779.2
+"BLD",8802,"KRN",870,0)
+870
+"BLD",8802,"KRN",8989.51,0)
+8989.51
+"BLD",8802,"KRN",8989.52,0)
+8989.52
+"BLD",8802,"KRN",8994,0)
+8994
+"BLD",8802,"KRN","B",.4,.4)
+
+"BLD",8802,"KRN","B",.401,.401)
+
+"BLD",8802,"KRN","B",.402,.402)
+
+"BLD",8802,"KRN","B",.403,.403)
+
+"BLD",8802,"KRN","B",.5,.5)
+
+"BLD",8802,"KRN","B",.84,.84)
+
+"BLD",8802,"KRN","B",3.6,3.6)
+
+"BLD",8802,"KRN","B",3.8,3.8)
+
+"BLD",8802,"KRN","B",9.2,9.2)
+
+"BLD",8802,"KRN","B",9.8,9.8)
+
+"BLD",8802,"KRN","B",19,19)
+
+"BLD",8802,"KRN","B",19.1,19.1)
+
+"BLD",8802,"KRN","B",101,101)
+
+"BLD",8802,"KRN","B",409.61,409.61)
+
+"BLD",8802,"KRN","B",771,771)
+
+"BLD",8802,"KRN","B",779.2,779.2)
+
+"BLD",8802,"KRN","B",870,870)
+
+"BLD",8802,"KRN","B",8989.51,8989.51)
+
+"BLD",8802,"KRN","B",8989.52,8989.52)
+
+"BLD",8802,"KRN","B",8994,8994)
+
+"BLD",8802,"QUES",0)
+^9.62^^
+"BLD",8802,"REQB",0)
+^9.611^3^3
+"BLD",8802,"REQB",1,0)
+OR*3.0*295^1
+"BLD",8802,"REQB",2,0)
+OR*3.0*280^1
+"BLD",8802,"REQB",3,0)
+OR*3.0*91^1
+"BLD",8802,"REQB","B","OR*3.0*280",2)
+
+"BLD",8802,"REQB","B","OR*3.0*295",1)
+
+"BLD",8802,"REQB","B","OR*3.0*91",3)
+
+"MBREQ")
+0
+"PKG",188,-1)
+1^1
+"PKG",188,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",188,22,0)
+^9.49I^1^1
+"PKG",188,22,1,0)
+3.0^2971217^2981113^1
+"PKG",188,22,1,"PAH",1,0)
+322^3120320^520736428
+"PKG",188,22,1,"PAH",1,1,0)
+^^23^23^3120320
+"PKG",188,22,1,"PAH",1,1,1,0)
+This patch corrects 4 issues within the ORDER ENTRY/RESULTS REPORTING 
+"PKG",188,22,1,"PAH",1,1,2,0)
+package:
+"PKG",188,22,1,"PAH",1,1,3,0)
+ 
+"PKG",188,22,1,"PAH",1,1,4,0)
+1. Cancelling orders from a Delayed Orders list in CPRS (Computerized 
+"PKG",188,22,1,"PAH",1,1,5,0)
+   Patient Record System) GUI (Graphical User Interface) causes them 
+"PKG",188,22,1,"PAH",1,1,6,0)
+   to appear in the Active Orders list. They should be filtered out 
+"PKG",188,22,1,"PAH",1,1,7,0)
+   until the release event happens.
+"PKG",188,22,1,"PAH",1,1,8,0)
+ 
+"PKG",188,22,1,"PAH",1,1,9,0)
+2. Patch OR*3*296 added the prompt 'Do you wish to continue?' to Vista
+"PKG",188,22,1,"PAH",1,1,10,0)
+   option Medication Quick Order Report [OR MEDICATION QO CHECKER]. If 
+"PKG",188,22,1,"PAH",1,1,11,0)
+   the user enters a lower case letter 'n' the report runs anyway.
+"PKG",188,22,1,"PAH",1,1,12,0)
+ 
+"PKG",188,22,1,"PAH",1,1,13,0)
+3. When using the remove function for VistA option Team List Mgmt Menu
+"PKG",188,22,1,"PAH",1,1,14,0)
+   [ORLP TEAM MENU] the special number '999' is used to display more 
+"PKG",188,22,1,"PAH",1,1,15,0)
+   patients. When the list contains more than 998 patients, the entry
+"PKG",188,22,1,"PAH",1,1,16,0)
+   '999' removes the patient in position 999 instead of displaying more
+"PKG",188,22,1,"PAH",1,1,17,0)
+   patients.
+"PKG",188,22,1,"PAH",1,1,18,0)
+ 
+"PKG",188,22,1,"PAH",1,1,19,0)
+4. When using the remove function for VistA option Team List Mgmt Menu
+"PKG",188,22,1,"PAH",1,1,20,0)
+   [ORLP TEAM MENU] the special number '999' is used to display more 
+"PKG",188,22,1,"PAH",1,1,21,0)
+   patients. When the list contains more than 39 patients and one of the 
+"PKG",188,22,1,"PAH",1,1,22,0)
+   patients has an IEN of 999, the entry '999' has you select between the 
+"PKG",188,22,1,"PAH",1,1,23,0)
+   patient and the more option.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+5
+"RTN","ORQ11")
+0^7^B66045788^B64450310
+"RTN","ORQ11",1,0)
+ORQ11 ;slc/dcm-Get patient orders in context ;3/31/04  09:57
+"RTN","ORQ11",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**7,27,48,72,78,99,94,148,141,177,186,190,195,215,243,295,322**;Dec 17, 1997;Build 15
+"RTN","ORQ11",3,0)
+LOOP ; -- main loop through "ACT" x-ref
+"RTN","ORQ11",4,0)
+ I $G(XREF)="AW" D AW Q
+"RTN","ORQ11",5,0)
+ I $G(FLG)=27 D EXPD^ORQ12 Q
+"RTN","ORQ11",6,0)
+ K ^TMP("ORGOTIT",$J)
+"RTN","ORQ11",7,0)
+AWIN ;Jump in here to add active orders to AW context
+"RTN","ORQ11",8,0)
+ N TM,TO,IFN,X0,X3,X7,X8,USTS,NOW,ACTOR,X ;195
+"RTN","ORQ11",9,0)
+ S NOW=+$E($$NOW^XLFDT,1,12),TM=SDATE
+"RTN","ORQ11",10,0)
+ F  S TM=$O(^OR(100,"ACT",PAT,TM)) Q:'TM!(TM>EDATE)  S TO=0 F  S TO=$O(^OR(100,"ACT",PAT,TM,TO)) Q:'TO  I $D(ORGRP(TO)) D
+"RTN","ORQ11",11,0)
+ . S IFN=0 F  S IFN=$O(^OR(100,"ACT",PAT,TM,TO,IFN)) Q:'IFN  I ('$D(^TMP("ORGOTIT",$J,IFN))!MULT),$D(^OR(100,IFN,0)),$D(^(3)) S X0=^(0),X3=^(3) D
+"RTN","ORQ11",12,0)
+ .. S ACTOR=0 F  S ACTOR=$O(^OR(100,"ACT",PAT,TM,TO,IFN,ACTOR)) Q:ACTOR<1  I '$D(^TMP("ORGOTIT",$J,IFN,ACTOR)),$D(^OR(100,IFN,8,ACTOR,0)),$P(^(0),U,15)'=13!(FLG=1) S X8=^(0),X7=$G(^(7)) D LP1
+"RTN","ORQ11",13,0)
+ S ^TMP("ORR",$J,ORLIST,"TOT")=ORLST
+"RTN","ORQ11",14,0)
+ Q
+"RTN","ORQ11",15,0)
+AW ; -- loop through "AW" x-ref
+"RTN","ORQ11",16,0)
+ K ^TMP("ORGOTIT",$J),^TMP("ORSORT",$J)
+"RTN","ORQ11",17,0)
+ N TM,TO,IFN,X0,X3,X7,X8,USTS,NOW,ACTOR,X ;195
+"RTN","ORQ11",18,0)
+ S NOW=+$E($$NOW^XLFDT,1,12),TO=0,SDATE=9999999-SDATE,EDATE=9999999-EDATE
+"RTN","ORQ11",19,0)
+ F  S TO=$O(^OR(100,"AW",PAT,TO)) Q:'TO  I $D(ORGRP(TO)) S TM=EDATE F  S TM=$O(^OR(100,"AW",PAT,TO,TM)) Q:'TM!(TM>SDATE)!(+TM<EDATE)  D
+"RTN","ORQ11",20,0)
+ . S IFN=0 F  S IFN=$O(^OR(100,"AW",PAT,TO,TM,IFN)) Q:'IFN  I ('$D(^TMP("ORGOTIT",$J,IFN))!MULT) D
+"RTN","ORQ11",21,0)
+ .. S ^TMP("ORSORT",$J,9999999-TM,TO,IFN)=""
+"RTN","ORQ11",22,0)
+ S TM=0 F  S TM=$O(^TMP("ORSORT",$J,TM)) Q:'TM  S TO=0 F  S TO=$O(^TMP("ORSORT",$J,TM,TO)) Q:'TO  D
+"RTN","ORQ11",23,0)
+ . S IFN=0 F  S IFN=$O(^TMP("ORSORT",$J,TM,TO,IFN)) Q:'IFN  I $D(^OR(100,IFN,0)),$D(^(3)) S X0=^(0),X3=^(3) D 
+"RTN","ORQ11",24,0)
+ .. S ACTOR=0 F  S ACTOR=$O(^OR(100,"ACT",PAT,9999999-$P(X0,U,7),TO,IFN,ACTOR)) Q:ACTOR<1  I '$D(^TMP("ORGOTIT",$J,IFN,ACTOR)),$D(^OR(100,IFN,8,ACTOR,0)),$P(^(0),U,15)'=13 S X8=^(0),X7=$G(^(7)) D LP1
+"RTN","ORQ11",25,0)
+ S ^TMP("ORR",$J,ORLIST,"TOT")=ORLST
+"RTN","ORQ11",26,0)
+ I +$$GET^XPAR("SYS","OR ORDER SUMMARY CONTEXT",1,"I")=2 S SDATE=9999999-SDATE,EDATE=9999999-EDATE D AWIN
+"RTN","ORQ11",27,0)
+ K ^TMP("ORSORT",$J),^TMP("ORGOTIT",$J)
+"RTN","ORQ11",28,0)
+ Q
+"RTN","ORQ11",29,0)
+LP1 ; -- main secondary loop
+"RTN","ORQ11",30,0)
+ N STS ;195
+"RTN","ORQ11",31,0)
+ N TAG
+"RTN","ORQ11",32,0)
+ Q:$P(X3,U,8)  Q:$P(X3,U,3)=99  S STS=$P(X3,U,3)
+"RTN","ORQ11",33,0)
+ I '$G(GETKID),$P(X3,U,9),'$P($G(^OR(100,$P(X3,U,9),3)),U,8),FLG'=11 Q
+"RTN","ORQ11",34,0)
+ I $L($P(X0,U,17)),"^10^11^"[(U_STS_U) S X=$$LAPSED^OREVNTX($P(X0,U,17))
+"RTN","ORQ11",35,0)
+ S TAG=$S(FLG=2:"CUR1",FLG=4:"COM1",FLG=5:"EXG1",FLG=7:"PEN1",FLG=8:"UVR1",FLG=9:"UVN1",FLG=10:"UVC1",FLG=12:"FLG1",FLG=13:"VP1",FLG=14:"VPU1",FLG=18:"HLD1",FLG=20:"CHT1",FLG=21:"CHTSUM",FLG=22:"LPS1",FLG=23:"AVT1",1:"ALL1")
+"RTN","ORQ11",36,0)
+ I TAG="ALL1" S TAG=$S(FLG=3:"DC1",FLG=28:"DC1",1:"ALL1")
+"RTN","ORQ11",37,0)
+ D @TAG
+"RTN","ORQ11",38,0)
+ Q
+"RTN","ORQ11",39,0)
+ ; ** FLG context specific loops:
+"RTN","ORQ11",40,0)
+ ;
+"RTN","ORQ11",41,0)
+ALL1 ; 1 -- secondary pass for All, Recent Orders, Unsigned
+"RTN","ORQ11",42,0)
+ D GET^ORQ12(IFN,ORLIST,DETAIL,$G(ACTOR))
+"RTN","ORQ11",43,0)
+ Q
+"RTN","ORQ11",44,0)
+ ;
+"RTN","ORQ11",45,0)
+CUR ; 2 -- Active/Current
+"RTN","ORQ11",46,0)
+ N X,X0,X1,X2,X3,X8,%H,YD,%,TM,IFN,ACTOR,NORX,OIEN,OACT
+"RTN","ORQ11",47,0)
+ I $G(GROUP)=$O(^ORD(100.98,"B","ALL SERVICES",0)),$G(ORWARD),$G(DGPMT)'=1 S NORX=$O(^ORD(100.98,"B","O RX",0)) ;K:X ORGRP(X) ; 177 screen out Outpt Meds if inpt
+"RTN","ORQ11",48,0)
+ S X2=+$$GET^XPAR("SYS","ORPF ACTIVE ORDERS CONTEXT HRS",1,"I"),X=$H,X=+X*24+($P(X,",",2)/3600),X1=X-X2,X3=X1#24,X1=X1\24,X2=$J(X3*3600,0,0),%H=X1_","_X2 D YMD^%DTC S YD=+(X_%)
+"RTN","ORQ11",49,0)
+ S TM=SDATE F  S TM=$O(^OR(100,"AC",PAT,TM)) Q:TM<1!(TM>EDATE)  S IFN=0 F  S IFN=$O(^OR(100,"AC",PAT,TM,IFN)) Q:IFN<1  I $D(^OR(100,IFN,0)),$D(^(3)) S X0=^(0),X3=^(3) D
+"RTN","ORQ11",50,0)
+ . Q:'$D(ORGRP($P(X0,U,11)))  S ACTOR=0
+"RTN","ORQ11",51,0)
+ . F  S ACTOR=$O(^OR(100,"AC",PAT,TM,IFN,ACTOR)) Q:ACTOR<1  I $D(^OR(100,IFN,8,ACTOR,0)) S X8=^(0) D
+"RTN","ORQ11",52,0)
+ .. I "^10^12^"[(U_$P(X8,U,15)_U) K ^OR(100,"AC",PAT,TM,IFN,ACTOR) Q
+"RTN","ORQ11",53,0)
+ .. I $P(X8,U,15)=13,$P(X8,U)<YD K ^OR(100,"AC",PAT,TM,IFN,ACTOR) Q
+"RTN","ORQ11",54,0)
+ .. I $P(X8,U,15)="",ACTOR'=$P(X3,U,7) K ^OR(100,"AC",PAT,TM,IFN,ACTOR) Q
+"RTN","ORQ11",55,0)
+ .. ;AGP waiting for approval change to remove duplicate orders for DC reason
+"RTN","ORQ11",56,0)
+ .. ;I ACTOR>0,$P($G(^OR(100,IFN,8,ACTOR,0)),U,2)="DC" S OIEN=IFN,OACT=ACTOR
+"RTN","ORQ11",57,0)
+ .. ;I OIEN=IFN,OACT>ACTOR K ^OR(100,"AC",PAT,TM,IFN,ACTOR) Q 
+"RTN","ORQ11",58,0)
+ .. D LP1
+"RTN","ORQ11",59,0)
+ S ^TMP("ORR",$J,ORLIST,"TOT")=ORLST
+"RTN","ORQ11",60,0)
+ Q
+"RTN","ORQ11",61,0)
+CUR1 ; 2 -- secondary pass for Active/Current
+"RTN","ORQ11",62,0)
+ N STOP S STOP=$P(X0,U,9)
+"RTN","ORQ11",63,0)
+ I STS=10 K ^OR(100,"AC",PAT,TM,IFN) Q  ;no delayed orders
+"RTN","ORQ11",64,0)
+ N EVNT S EVNT=$P(X0,U,17)
+"RTN","ORQ11",65,0)
+ I STS=13,EVNT,'$D(^ORE(100.2,EVNT,1)) Q  ;DJE/VM *322 no cancelled orders linked to unreleased delay
+"RTN","ORQ11",66,0)
+ I $P(X8,U,4)=2,$P(X8,U,15)=11 G CURX ;incl all unsig/unrel actions
+"RTN","ORQ11",67,0)
+ I '$D(YD),"^1^2^7^12^13^14^"[(U_STS_U) K ^OR(100,"AC",PAT,TM,IFN) Q
+"RTN","ORQ11",68,0)
+ I $D(YD),"^1^2^7^12^13^14^"[(U_STS_U),STOP<YD K ^OR(100,"AC",PAT,TM,IFN) Q
+"RTN","ORQ11",69,0)
+ I $G(NORX),NORX=$P(X0,U,11) Q  ;skip Rx for inpatients
+"RTN","ORQ11",70,0)
+CURX D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",71,0)
+ Q
+"RTN","ORQ11",72,0)
+ ;
+"RTN","ORQ11",73,0)
+DC1 ; 3 -- secondary pass for DC
+"RTN","ORQ11",74,0)
+ I FLG=28 D GETEIE^ORQ12(IFN,ORLIST,DETAIL,ACTOR) Q
+"RTN","ORQ11",75,0)
+ I STS=1!(STS=13)!(STS=12) D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",76,0)
+ Q
+"RTN","ORQ11",77,0)
+ ;
+"RTN","ORQ11",78,0)
+COM1 ; 4 -- secondary pass for Completed/Expired
+"RTN","ORQ11",79,0)
+ N STOP S STOP=$P(X0,U,9)
+"RTN","ORQ11",80,0)
+ I STS=2!(STS=7)!($L(STOP)&(STOP<NOW)&(STS'=1)&(STS'=13)&(STS'=12)) D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",81,0)
+ Q
+"RTN","ORQ11",82,0)
+ ;
+"RTN","ORQ11",83,0)
+EXG ; 5 -- Expiring
+"RTN","ORQ11",84,0)
+ N ORNG,ORDT,ORDW,ORHOL,X,Y,%DT,DIC,TMW,NOW ;195
+"RTN","ORQ11",85,0)
+ F ORNG=1:1 D  I ORHOL=0,ORDW=0 Q
+"RTN","ORQ11",86,0)
+ . S ORDT=$$FMADD^XLFDT(DT,ORNG),ORDW=$S($H-4+ORNG#7>4:1,1:0)
+"RTN","ORQ11",87,0)
+ . S DIC="^HOLIDAY(",X=$P(ORDT,".")
+"RTN","ORQ11",88,0)
+ . D ^DIC S ORHOL=$S(+$G(Y)>0:1,1:0)
+"RTN","ORQ11",89,0)
+ S %DT="",X="T+"_ORNG D ^%DT
+"RTN","ORQ11",90,0)
+ S TMW=Y_".9999",NOW=+$E($$NOW^XLFDT,1,12)
+"RTN","ORQ11",91,0)
+ D CUR ;D LOOP
+"RTN","ORQ11",92,0)
+ Q
+"RTN","ORQ11",93,0)
+EXG1 ; 5 -- secondary pass for Expiring
+"RTN","ORQ11",94,0)
+ N STOP S STOP=$P(X0,U,9)
+"RTN","ORQ11",95,0)
+ I STS'=1,STS'=2,STS'=7,STS'>9,STOP>NOW,STOP'>TMW D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",96,0)
+ Q
+"RTN","ORQ11",97,0)
+ ;
+"RTN","ORQ11",98,0)
+ACT ; 6 -- Recent Activity (Order Summary)
+"RTN","ORQ11",99,0)
+ ;N ORLSIGN S ORLSIGN=$$GET^XPAR("ALL","OR ORDER REVIEW DT","`"_+PAT,"Q")
+"RTN","ORQ11",100,0)
+ N TM,IFN,X0,X3,ACTOR,X8
+"RTN","ORQ11",101,0)
+ S TM=SDATE F  S TM=$O(^OR(100,"AR",PAT,TM)) Q:TM<1!(TM>EDATE)  D
+"RTN","ORQ11",102,0)
+ . S IFN=0 F  S IFN=$O(^OR(100,"AR",PAT,TM,IFN)) Q:IFN<1  S X0=$G(^OR(100,IFN,0)),X3=$G(^(3)) I $D(ORGRP(+$P(X0,U,11))) D
+"RTN","ORQ11",103,0)
+ .. S ACTOR=0 F  S ACTOR=$O(^OR(100,"AR",PAT,TM,IFN,ACTOR)) Q:ACTOR<1  I $D(^OR(100,IFN,8,ACTOR,0)),$P(^(0),U,15)'=13 S X8=^(0) D LP1
+"RTN","ORQ11",104,0)
+ S ^TMP("ORR",$J,ORLIST,"TOT")=ORLST
+"RTN","ORQ11",105,0)
+ Q
+"RTN","ORQ11",106,0)
+ ;
+"RTN","ORQ11",107,0)
+PEN1 ; 7 -- secondary pass for Pending
+"RTN","ORQ11",108,0)
+ I STS=5 D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",109,0)
+ Q
+"RTN","ORQ11",110,0)
+ ;
+"RTN","ORQ11",111,0)
+UVR1 ; 8 -- secondary pass for Unverified
+"RTN","ORQ11",112,0)
+ ;      Include if: unverified, released, inpt, not repl/canc/lapsed
+"RTN","ORQ11",113,0)
+ I '$P(X8,U,9),'$P(X8,U,11),$P(X8,U,15)="",$$INPT,"^12^13^14^"'[(U_STS_U) D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",114,0)
+ Q
+"RTN","ORQ11",115,0)
+ ;
+"RTN","ORQ11",116,0)
+UVN1 ; 9 -- secondary pass for Unverified/Nurse
+"RTN","ORQ11",117,0)
+ ;      Include if: unverified, released, inpt, not repl/canc/lapsed
+"RTN","ORQ11",118,0)
+ I '$P(X8,U,9),$P(X8,U,15)="",$$INPT,"^12^13^14^"'[(U_STS_U) D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",119,0)
+ Q
+"RTN","ORQ11",120,0)
+ ;
+"RTN","ORQ11",121,0)
+UVC1 ; 10 -- secondary pass for Unverified/Clerk
+"RTN","ORQ11",122,0)
+ ;       Include if: unverified, released, inpt, not repl/canc/lapsed
+"RTN","ORQ11",123,0)
+ I '$P(X8,U,11),$P(X8,U,15)="",$$INPT,"^12^13^14^"'[(U_STS_U) D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",124,0)
+ Q
+"RTN","ORQ11",125,0)
+ ;
+"RTN","ORQ11",126,0)
+INPT() ; -- Returns 1 or 0, if inpt order using X0=^OR(100,IFN,0)
+"RTN","ORQ11",127,0)
+ I ($P(X0,U,12)="I")!($$TYPE^OREVNTX($P(X0,U,17))="D") Q 1
+"RTN","ORQ11",128,0)
+ I $P($G(^SC(+$P(X0,U,10),0)),U,3)="W" Q 1 ;UNCOMMENTED IN *295
+"RTN","ORQ11",129,0)
+ Q 0
+"RTN","ORQ11",130,0)
+ ;
+"RTN","ORQ11",131,0)
+SIG ; 11 -- Unsigned
+"RTN","ORQ11",132,0)
+ N TM,IFN,X0,X3,ACTOR S TM=SDATE
+"RTN","ORQ11",133,0)
+ F  S TM=$O(^OR(100,"AS",PAT,TM)) Q:TM<1!(TM>EDATE)  S IFN=0 F  S IFN=$O(^OR(100,"AS",PAT,TM,IFN)) Q:IFN<1  D
+"RTN","ORQ11",134,0)
+ . S X0=$G(^OR(100,IFN,0)),X3=$G(^(3))
+"RTN","ORQ11",135,0)
+ . I X0="" K ^OR(100,"AS",PAT,TM,IFN) Q  ;deleted
+"RTN","ORQ11",136,0)
+ . Q:'$D(ORGRP(+$P(X0,U,11)))  ;not a selected DispGrp
+"RTN","ORQ11",137,0)
+ . S ACTOR=0 F  S ACTOR=$O(^OR(100,"AS",PAT,TM,IFN,ACTOR)) Q:ACTOR<1  D
+"RTN","ORQ11",138,0)
+ .. I $P($G(^OR(100,IFN,8,ACTOR,0)),U,4)'=2 K ^OR(100,"AS",PAT,TM,IFN,ACTOR) Q  ;signed or deleted
+"RTN","ORQ11",139,0)
+ .. D LP1
+"RTN","ORQ11",140,0)
+ S ^TMP("ORR",$J,ORLIST,"TOT")=ORLST
+"RTN","ORQ11",141,0)
+ Q
+"RTN","ORQ11",142,0)
+ ;
+"RTN","ORQ11",143,0)
+FLG1 ; 12 -- secondary pass for Flagged
+"RTN","ORQ11",144,0)
+ I +$G(^OR(100,IFN,8,ACTOR,3)) D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",145,0)
+ Q
+"RTN","ORQ11",146,0)
+ ;
+"RTN","ORQ11",147,0)
+VP1 ; 13 -- secondary pass for Verbal/Phone
+"RTN","ORQ11",148,0)
+ N ORNATR S ORNATR=$P(X8,U,12)
+"RTN","ORQ11",149,0)
+ I ORNATR,"PV"[$P($G(^ORD(100.02,+ORNATR,0)),U,2) D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR) ;STS'=12
+"RTN","ORQ11",150,0)
+ Q
+"RTN","ORQ11",151,0)
+ ;
+"RTN","ORQ11",152,0)
+VPU1 ; 14 -- secondary pass for Verbal/Phone Unsigned
+"RTN","ORQ11",153,0)
+ N ORNATR S ORNATR=$P(X8,U,12)
+"RTN","ORQ11",154,0)
+ I ORNATR,"PV"[$P($G(^ORD(100.02,+ORNATR,0)),U,2),'$P(X8,U,5),$P(X8,U,4)=2 D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR) ;STS'=12
+"RTN","ORQ11",155,0)
+ Q
+"RTN","ORQ11",156,0)
+ ;
+"RTN","ORQ11",157,0)
+HLD1 ; 18 -- secondary pass for On Hold
+"RTN","ORQ11",158,0)
+ I STS=3 D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",159,0)
+ Q
+"RTN","ORQ11",160,0)
+ ;
+"RTN","ORQ11",161,0)
+NEW ; 19 -- New Orders, plus other unsigned orders by current provider
+"RTN","ORQ11",162,0)
+ N IFN,ACTOR,TM,X0,X3,X8,ORENT,ORPAR
+"RTN","ORQ11",163,0)
+ S IFN=0 F  S IFN=$O(^TMP("ORNEW",$J,IFN)) Q:IFN'>0  D  ;New orders
+"RTN","ORQ11",164,0)
+ . S ACTOR=0 F  S ACTOR=$O(^TMP("ORNEW",$J,IFN,ACTOR)) Q:ACTOR'>0  D
+"RTN","ORQ11",165,0)
+ .. Q:'$D(^OR(100,IFN,0))  Q:'$D(^(8,ACTOR,0))  ;deleted
+"RTN","ORQ11",166,0)
+ .. D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",167,0)
+ G:'$D(^XUSEC("ORES",DUZ)) NW1 ;ck parameter for add'l orders
+"RTN","ORQ11",168,0)
+ S ORENT="ALL"_$S($G(^VA(200,DUZ,5)):"^SRV.`"_+^(5),1:"")
+"RTN","ORQ11",169,0)
+ S ORPAR=$$GET^XPAR(ORENT,"OR UNSIGNED ORDERS ON EXIT")
+"RTN","ORQ11",170,0)
+ I ORPAR S TM=SDATE F  S TM=$O(^OR(100,"AS",PAT,TM)) Q:TM<1!(TM>EDATE)  D
+"RTN","ORQ11",171,0)
+ . S IFN=0 F  S IFN=$O(^OR(100,"AS",PAT,TM,IFN)) Q:IFN<1  D
+"RTN","ORQ11",172,0)
+ .. S ACTOR=0 F  S ACTOR=$O(^OR(100,"AS",PAT,TM,IFN,ACTOR)) Q:ACTOR<1  D
+"RTN","ORQ11",173,0)
+ ... Q:$D(^TMP("ORNEW",$J,IFN,ACTOR))  ;already included
+"RTN","ORQ11",174,0)
+ ... S X0=$G(^OR(100,IFN,0)),X3=$G(^(3)),X8=$G(^(8,ACTOR,0))
+"RTN","ORQ11",175,0)
+ ... I $S(ORPAR=1&($P(X8,U,3)=DUZ):1,ORPAR=2:1,1:0) D LP1
+"RTN","ORQ11",176,0)
+NW1 S ^TMP("ORR",$J,ORLIST,"TOT")=ORLST
+"RTN","ORQ11",177,0)
+ Q
+"RTN","ORQ11",178,0)
+ ;
+"RTN","ORQ11",179,0)
+CHT1 ; 20 -- secondary pass for Chart Review
+"RTN","ORQ11",180,0)
+ ;       Include if: unverified, released, inpt, not repl/canc/lapsed
+"RTN","ORQ11",181,0)
+ I '$P(X8,U,19),$P(X8,U,15)="",$$INPT,"^12^13^14^"'[(U_STS_U) D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",182,0)
+ Q
+"RTN","ORQ11",183,0)
+ ;
+"RTN","ORQ11",184,0)
+CHTSUM ; 21 -- secondary pass for Chart copy summary
+"RTN","ORQ11",185,0)
+ ;       Included based on Nature of Order
+"RTN","ORQ11",186,0)
+ N XP,NAT
+"RTN","ORQ11",187,0)
+ S XP=+$$GET^XPAR("SYS","OR PRINT ALL ORDERS CHART SUM",1,"I")
+"RTN","ORQ11",188,0)
+ I XP=2 D  Q  ;depends on Nature of Order
+"RTN","ORQ11",189,0)
+ . S NAT=$P($G(^OR(100,IFN,6)),U)
+"RTN","ORQ11",190,0)
+ . I 'NAT S NAT=$P(X8,U,12)
+"RTN","ORQ11",191,0)
+ . I NAT,$$CHART^ORX1(NAT) D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",192,0)
+ I XP=0 D  Q  ;If original printed, print on sum
+"RTN","ORQ11",193,0)
+ . I X7 D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",194,0)
+ D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR) ;XP=1 gets All orders
+"RTN","ORQ11",195,0)
+ Q
+"RTN","ORQ11",196,0)
+ ;
+"RTN","ORQ11",197,0)
+LPS1 ; 22 -- secondary pass for Lapsed
+"RTN","ORQ11",198,0)
+ I STS=14 D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",199,0)
+ Q
+"RTN","ORQ11",200,0)
+ ;
+"RTN","ORQ11",201,0)
+AVT1 ; 23 -- secondary pass for Active/Pending sts only
+"RTN","ORQ11",202,0)
+ I (STS=6)!(STS=5) D GET^ORQ12(IFN,ORLIST,DETAIL,ACTOR)
+"RTN","ORQ11",203,0)
+ Q
+"RTN","ORQ11",204,0)
+ ;
+"RTN","ORQ11",205,0)
+QUIT ; -- stop
+"RTN","ORQ11",206,0)
+ Q
+"RTN","ORUS")
+0^3^B9751289^B9541231
+"RTN","ORUS",1,0)
+ORUS ; slc/KCM - Display List of Items ; 12/4/09 5:03pm
+"RTN","ORUS",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**91,322**;Dec 17, 1997;Build 15
+"RTN","ORUS",3,0)
+ ;
+"RTN","ORUS",4,0)
+EN S Y=-1 Q:'$D(ORUS)!('$D(ORUS(0)))  S:'($D(IO)#2) IO="HOME" I 'IO S IOP=$S($D(ORIO):ORIO,1:"") D ^%ZIS
+"RTN","ORUS",5,0)
+ D INIT^ORUS5
+"RTN","ORUS",6,0)
+ I ORUS(0)["M" F I=0:0 D HDR,MOVE^ORUS5,SHOW,EN^ORUS1 I 'ORBACK Q:'ORMOR  Q:ORQUIT
+"RTN","ORUS",7,0)
+ I ORUS(0)'["M" D:ORUS(0)["N" SORB D SORB1,EN^ORUS1
+"RTN","ORUS",8,0)
+END K %,A,B,J,K,L,M,N,O,OR9,OR9Y,ORBACK,ORBUF,ORCO,ORCW,ORDA,ORDFLT,OREN,ORENL,ORENLA,ORERR,ORFLG,ORFN,ORFND,ORFNM,ORHL,ORITM,ORLK,ORMOR,ORNC,ORND,ORNE,ORNOSEL,OROD,ORPC,ORPRMT,ORPTR,ORQUIT,ORSC
+"RTN","ORUS",9,0)
+ K ORUS,ORSEL,ORSEQ,ORSEQL,ORSUB,ORT9,ORTTAB,ORTB,ORTOT,ORWR,ORWRK,P,S,W,X,^XUTL("OR",$J,"ORU"),^("ORV"),^("ORW")
+"RTN","ORUS",10,0)
+ Q
+"RTN","ORUS",11,0)
+SHOW S L=0  ;changed 9/18/00 by CLA for OR*3*91:
+"RTN","ORUS",12,0)
+ N ORTXT
+"RTN","ORUS",13,0)
+ F  S L=$O(^XUTL("OR",$J,"ORV",P,L)) Q:L>ORCO!(L="")  D
+"RTN","ORUS",14,0)
+ . W ! F J=0:1:ORNC-1 S X=L+(J*ORCO) I $D(^XUTL("OR",$J,"ORV",P,X)) D
+"RTN","ORUS",15,0)
+ .. W ?(J*ORTB),$P(^XUTL("OR",$J,"ORV",P,X),"^",2),?(J*ORTB+5)
+"RTN","ORUS",16,0)
+ .. S ORTXT=$E($P(^XUTL("OR",$J,"ORV",P,X),"^"),1,ORTB-5)
+"RTN","ORUS",17,0)
+ .. F  Q:'(ORTXT["|SP")  S ORTXT=$P(ORTXT,"|",1)_$$SPACE(+$P($P(ORTXT,"|",2),"SP",2))_$P(ORTXT,"|",3,999)
+"RTN","ORUS",18,0)
+ .. W ORTXT
+"RTN","ORUS",19,0)
+ .. I ^(X)="MORE...^+",'$D(OR9("+")) S I="+",OR9(I)=^(X) D S91  ;DJE/VM *322 replace 999 with +
+"RTN","ORUS",20,0)
+ Q
+"RTN","ORUS",21,0)
+HDR S (DX,DY)=0 X ^%ZOSF("XY") X:$D(ORUS("T")) ORUS("T") S ORHL=$Y K DX,DY Q
+"RTN","ORUS",22,0)
+S9 S OR9(I)=ORUS(900,I) S:'$L($P(OR9(I),"^",2)) $P(OR9(I),"^",2)=900+I
+"RTN","ORUS",23,0)
+S91 S:$L($P(OR9(I),"^",1)) OR9("B",$P(OR9(I),"^",1),I)="" S:$L($P(OR9(I),"^",2)) OR9("B",$P(OR9(I),"^",2),I)=""
+"RTN","ORUS",24,0)
+ Q
+"RTN","ORUS",25,0)
+SORB I 'OREN S O=OROD,A="",S=0 F I=0:0 S A=$O(@(O_"A)")) Q:A=""  S B="" F  S B=$O(@(O_"A,B)")) Q:B=""  I $D(@(ORUS_"B,0)")) S ORDA=B X ORSC I $T,$D(@(ORUS_"B,0)")) X ORWR I $L(X) S S=S+1,^XUTL("OR",$J,"ORW",S)=B
+"RTN","ORUS",26,0)
+ I OREN S O=OROD,(B,S)=0 F I=0:0 S B=$O(@(O_"B)")) Q:B=""  I $D(@(ORUS_"B,0)")) S ORDA=B X ORSC I $T,$D(@(ORUS_"B,0)")) X ORWR I $L(X) S S=S+1,^XUTL("OR",$J,"ORW",S)=B
+"RTN","ORUS",27,0)
+ Q
+"RTN","ORUS",28,0)
+SORB1 F I=0:0 S I=$O(ORUS(900,I)) Q:I'>0  D S9
+"RTN","ORUS",29,0)
+ I ORUS(0)["Q" S I=998,OR9(I)="OTHER "_ORFNM_"^998" D S91
+"RTN","ORUS",30,0)
+ Q
+"RTN","ORUS",31,0)
+SPACE(NUMSP) ; added by CLA 9/18/00 for OR*3*91 - return NUMSP blank spaces
+"RTN","ORUS",32,0)
+ Q:+$G(NUMSP)<1 ""
+"RTN","ORUS",33,0)
+ N SPACES
+"RTN","ORUS",34,0)
+ S SPACES=""
+"RTN","ORUS",35,0)
+ S $P(SPACES," ",NUMSP)=" "
+"RTN","ORUS",36,0)
+ Q SPACES
+"RTN","ORUS",37,0)
+EN1 ;Display but not prompt (accept RETURN only)
+"RTN","ORUS",38,0)
+ Q:'$D(ORUS)!('$D(ORUS(0)))  S ORUS("A")="Press RETURN to continue ",ORUS(0)=ORUS(0)_"M",ORNOSEL=1,ORUS("H")="W !,""Press RETURN key to continue.""" G EN
+"RTN","ORUS1")
+0^4^B13629174^B13048652
+"RTN","ORUS1",1,0)
+ORUS1 ; slc/KCM - Select Items from List ; 12/4/09 4:59pm
+"RTN","ORUS1",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**322**;Dec 17, 1997 ;Build 15
+"RTN","ORUS1",3,0)
+ ;
+"RTN","ORUS1",4,0)
+ ;DJE/VM *322 added Q:ORMOR to avoid processing of "+" index
+"RTN","ORUS1",5,0)
+ ;EN F I=0:0 D INIT R X:DTIME S:'$T X="^" S:X["^"&(X'="^^") DUOUT=1 S:'$L(X) X=ORDFLT S:X["^^" DIROUT=1 S:X["^" Y=-1 Q:'$L(X)!(X["^")!(+$G(ORNOSEL)=1&(X'["?")&(ORUS(0)'["O"))  D CHK Q:ORQUIT  Q:ORBACK  Q:(ORTOT+ORT9)>0  W:ORSEL'["?" $C(7)," ??"
+"RTN","ORUS1",6,0)
+EN F I=0:0 D  Q:'$L(X)!(X["^")!(+$G(ORNOSEL)=1&(X'["?")&(ORUS(0)'["O"))  D CHK Q:ORQUIT  Q:ORBACK  Q:ORMOR  Q:(ORTOT+ORT9)>0  W:ORSEL'["?" $C(7)," ??"
+"RTN","ORUS1",7,0)
+ . D INIT R X:DTIME S:'$T X="^" S:X["^"&(X'="^^") DUOUT=1 S:'$L(X) X=ORDFLT S:X["^^" DIROUT=1 S:X["^" Y=-1
+"RTN","ORUS1",8,0)
+ Q:ORQUIT  Q:ORBACK  K Y("B"),OR9Y("B") Q:'$L(X)!(X["^")
+"RTN","ORUS1",9,0)
+ S:Y>0 (Y,Y(0))=ORTOT
+"RTN","ORUS1",10,0)
+ W "    " S ORTTAB=$X,J=1 I Y>0 K ^DISV(DUZ,ORUS) D SDISV S ^DISV(DUZ,ORUS,0)=X,I=0 F J=1:1 S I=$O(Y(I)) Q:I=""  S X=$P(Y(I),"^",3),^DISV(DUZ,ORUS)=+Y(I),^DISV(DUZ,ORUS,J)=X W:($X+$L(X))>(IOM-4) !?ORTTAB W X,"   "
+"RTN","ORUS1",11,0)
+ I OR9Y S I=0 F J=J:1 S I=$O(OR9Y(I)) Q:I=""  S X=$P(OR9Y(I),"^"),^DISV(DUZ,ORUS,J)=X W:($X+$L(X))>(IOM-4) !?ORTTAB W X,"   "
+"RTN","ORUS1",12,0)
+ Q
+"RTN","ORUS1",13,0)
+CHK ;
+"RTN","ORUS1",14,0)
+ I X="+",'$D(OR9("+")) W !,"   THIS IS THE END OF THE LIST" S ORSEL="?" Q  ;DJE/VM *322 replace 999 with +
+"RTN","ORUS1",15,0)
+ S ORSEL=X,Y=0 ;DJE/VM *322 removed S:X="+" X=999
+"RTN","ORUS1",16,0)
+ I X["?" D EN^ORUS3 Q
+"RTN","ORUS1",17,0)
+ I X="-" S ORBACK=1,P=$S(P=0:0,1:P-1) Q
+"RTN","ORUS1",18,0)
+ I X="+" S ORMOR=1,P=P+1 Q  ;DJE/VM *322 avoid processing just go to the next page.
+"RTN","ORUS1",19,0)
+ I X=" " D SPAC Q:+$G(ORTOT)>0
+"RTN","ORUS1",20,0)
+ S X=$$UPPER^ORU(X)
+"RTN","ORUS1",21,0)
+ I ORUS(0)["S",X[",",$D(ORUS("ALT")),ORTOT+ORT9'>0,$L(ORSEL) X ORUS("ALT") S:$T ORQUIT=1 Q
+"RTN","ORUS1",22,0)
+ I ORUS(0)["S",X[","!(X["-")!(X["'") D SING Q
+"RTN","ORUS1",23,0)
+ F ORSEQ=1:1:$L(ORSEL,",") Q:ORERR  S X=$P(ORSEL,",",ORSEQ) D SET D:X["-" RNG Q:ORERR  S W=X F K=1:1:$L(W,",") S ORWRK=$P(W,",",K) D EAT I $L(ORWRK) D LOOK^ORUS4 Q:ORERR  D PROC^ORUS2 Q:ORERR
+"RTN","ORUS1",24,0)
+ I $L(ORUS(0),"^")=2,(ORTOT>+$P(ORUS(0),"^",2)) S ORERR=1 W "  ONLY "_+$P(ORUS(0),"^",2)_" ITEMS ALLOWED"
+"RTN","ORUS1",25,0)
+ S:ORERR (ORTOT,ORT9)=0
+"RTN","ORUS1",26,0)
+ I $D(ORUS("ALT")),ORTOT+ORT9'>0,$L(ORSEL) X ORUS("ALT") S:$T ORQUIT=1 Q
+"RTN","ORUS1",27,0)
+ Q
+"RTN","ORUS1",28,0)
+SET S (ORERR,ORSUB)=0 S:$E(X)["'" ORSUB=1,X=$P(X,"'",2) S:$E(X)["*" X=$P(X,"*",2),X=$S(X["=":X_"*",1:X_"=*") S ORPC=X,ORFLG=$P(X,"=",2),X=$P(X,"=") S:$L(ORFLG) ORFLG="="_ORFLG
+"RTN","ORUS1",29,0)
+ Q
+"RTN","ORUS1",30,0)
+SPAC S ORERR=1 Q:'$D(^DISV(DUZ,ORUS,0))  D SDISV Q:^DISV(DUZ,ORUS,0)'=X
+"RTN","ORUS1",31,0)
+ S ORSEQ=0 F I=0:0 S ORSEQ=$O(^DISV(DUZ,ORUS,ORSEQ)) Q:ORSEQ'>0  S (X,ORWRK)=^(ORSEQ) D SET,LOOK^ORUS4,PROC^ORUS2
+"RTN","ORUS1",32,0)
+ S ORERR=0 Q
+"RTN","ORUS1",33,0)
+SDISV S X=$S($D(ORUS("L")):ORUS("L"),1:"")_"^"_$S($D(ORUS("S")):ORUS("S"),1:"")_"^"_$S(ORUS(0)["S":1,1:0) ;_"^"_$S(ORUS(0)["A":1,1:0)
+"RTN","ORUS1",34,0)
+ Q
+"RTN","ORUS1",35,0)
+RNG Q:X["E"  I X'?.N1"-".N!($P(X,"-",1)'<$P(X,"-",2)) S ORERR=1 Q
+"RTN","ORUS1",36,0)
+ S W="" F J=$P(X,"-",1):1:$P(X,"-",2) S W=W_J_"," I $L(W)>245 W $C(7),"   RANGE OF NUMBERS TOO LARGE." S ORERR=1,ORSEL="?" Q
+"RTN","ORUS1",37,0)
+ S X=W
+"RTN","ORUS1",38,0)
+ Q
+"RTN","ORUS1",39,0)
+SING W $C(7)," -- ONLY ONE SELECTION ALLOWED." S ORSEL="?" Q
+"RTN","ORUS1",40,0)
+EAT F I=0:0 Q:$E(ORWRK)]" "  Q:'$L(ORWRK)  S ORWRK=$E(ORWRK,2,999)
+"RTN","ORUS1",41,0)
+ F I=0:0 Q:$E(ORWRK,$L(ORWRK))]" "  Q:'$L(ORWRK)  S ORWRK=$E(ORWRK,1,$L(ORWRK)-1)
+"RTN","ORUS1",42,0)
+ F J=1:1:$L(ORWRK) I $A(ORWRK,J)'>31 S ORWRK="" Q
+"RTN","ORUS1",43,0)
+ Q
+"RTN","ORUS1",44,0)
+INIT K Y,OR9Y,ORSEL S (Y,OR9Y,ORBACK,ORERR,ORQUIT,ORTOT,ORT9)=0
+"RTN","ORUS1",45,0)
+ S ORPRMT=$S($D(ORUS("A")):ORUS("A"),+ORFN:"Select "_ORFNM_": ",1:"Select Item: ")
+"RTN","ORUS1",46,0)
+ S ORDFLT=$S($D(ORUS("B")):ORUS("B"),1:""),ORMOR=0
+"RTN","ORUS1",47,0)
+ W !!,ORPRMT,$S($L(ORDFLT):ORDFLT_"// ",1:"")
+"RTN","ORUS1",48,0)
+ Q
+"RTN","ORUS5")
+0^6^B13207739^B12973913
+"RTN","ORUS5",1,0)
+ORUS5 ; slc/KCM - Display List of Items ;1/3/91  10:01 ; 12/4/09 5:15pm
+"RTN","ORUS5",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**322**;Dec 17, 1997;Build 15
+"RTN","ORUS5",3,0)
+ ;
+"RTN","ORUS5",4,0)
+MOVE K OR9 I $D(^XUTL("OR",$J,"ORV",P,0)),$D(^(0)) S X=^(0),ORCO=$S($P(X,"^"):$P(X,"^"),1:+$G(ORCO)),ORSEQL=$S($P(X,"^",4):$P(X,"^",4),1:""),ORENL=$P(X,"^",2),ORENLA=$P(X,"^",3) Q
+"RTN","ORUS5",5,0)
+ ;I ORMOR,$D(^XUTL("OR",$J,"ORV",P,0)),$D(^(0)) S ORCO=$S(^(0):^(0),1:ORCO) Q
+"RTN","ORUS5",6,0)
+ S OR9=0 I $D(ORUS("900")) F I=0:0 S I=$O(ORUS("900",I)) Q:I=""  S OR9=OR9+1
+"RTN","ORUS5",7,0)
+ S ORCO=IOSL-ORHL-3,ORNE=(ORCO*ORNC)-OR9-2
+"RTN","ORUS5",8,0)
+ S A="",(B,L,S)=0,O=$S(OREN:ORUS,1:OROD),C=ORUS,N=(ORUS(0)["N"),M=$D(ORUS("M")) S:ORMOR S=$S($D(ORSEQL):ORSEQL,1:ORCO),B=ORENL,A=$S($D(ORENLA):$S($L(ORENLA):$E(ORENLA,1,($L(ORENLA)-1))_$C($A($E(ORENLA,$L(ORENLA)))-1),1:""),1:"")
+"RTN","ORUS5",9,0)
+ I 'OREN F  Q:L'<ORNE  S A=$O(@(O_"A)")) Q:A=""  F  Q:L'<ORNE  S B=$O(@(O_"A,B)")) Q:B=""  I ^(B)'=1,$D(@(C_"B,0)")) D M1
+"RTN","ORUS5",10,0)
+ I OREN F  Q:L'<ORNE  S B=$O(@(O_"B)")) Q:B=""  I $D(@(O_"B,0)")) S ORDA=B X ORSC I $T,$D(@(O_"B,0)")) S L=L+1 X ORWR I $L(X) S ^XUTL("OR",$J,"ORV",P,L)=X S:N S=S+1,$P(^(L),"^",2)=S,^XUTL("OR",$J,"ORW",S)=B D:M MNE
+"RTN","ORUS5",11,0)
+ S ORMOR=0 S:($L(A)&('OREN))!($L(B)&OREN) ORMOR=1,ORENL=B,ORENLA=$S(OREN:"",1:A),ORSEQL=S
+"RTN","ORUS5",12,0)
+ F I=0:0 S I=$O(ORUS(900,I)) Q:I'>0  S L=L+1,^XUTL("OR",$J,"ORV",P,L)=ORUS(900,I) S:'$L($P(ORUS(900,I),"^",2)) $P(^(L),"^",2)=900+I I '$D(OR9(I)) S OR9(I)=^(L) D S91
+"RTN","ORUS5",13,0)
+ I ORUS(0)["Q" S L=L+1,^XUTL("OR",$J,"ORV",P,L)=$S($D(ORUS("O")):ORUS("O"),1:"OTHER "_ORFNM)_"^998",I=998,OR9(I)=^(L) D S91
+"RTN","ORUS5",14,0)
+ I ORMOR S L=L+1,^XUTL("OR",$J,"ORV",P,L)="MORE...^+",I="+",OR9(I)=^(L) D S91  ;DJE/VM *322 replace 999 with +
+"RTN","ORUS5",15,0)
+ I L'>ORNE S ORCO=L\ORNC S:L#ORNC ORCO=ORCO+1
+"RTN","ORUS5",16,0)
+ S ^XUTL("OR",$J,"ORV",P,0)=ORCO_"^"_$S($D(ORENL):ORENL,1:"")_"^"_$S($D(ORENLA):ORENLA,1:"")_"^"_$S($D(ORSEQL):ORSEQL,1:"")
+"RTN","ORUS5",17,0)
+ Q
+"RTN","ORUS5",18,0)
+INIT K OROTHER ;^XUTL("OR",$J,"ORV"),^("ORW")
+"RTN","ORUS5",19,0)
+ S (ORBACK,ORFN,ORMOR,ORQUIT,P)=0,ORFNM="" I +ORUS S:$D(^DIC(+ORUS,0,"GL")) ORUS=^("GL")
+"RTN","ORUS5",20,0)
+ I $D(@(ORUS_"0)")) S ORFNM=$P(^(0),"^"),ORFN=+$P(^(0),"^",2)
+"RTN","ORUS5",21,0)
+ S ORPTR=0 I ORFN S X=$P(^DD(+ORFN,.01,0),"^",2) S:'$L(ORFNM) ORFNM=$P(^(0),"^") I X["V"!(X["P"),'$D(ORUS("W")) S ORPTR=1
+"RTN","ORUS5",22,0)
+ S:'$L(ORFNM) ORFNM="ITEM(s)"
+"RTN","ORUS5",23,0)
+ S ORCW=80 S:ORUS(0) ORCW=+ORUS(0) S ORNC=IOM\$S(IOM>79:ORCW,1:IOM),ORTB=IOM\ORNC
+"RTN","ORUS5",24,0)
+ S ORSC="I 1" S:$D(ORUS("S")) ORSC=ORUS("S")
+"RTN","ORUS5",25,0)
+ S ORWR="S X=$P(^(0),""^"")" S:$D(ORUS("W")) ORWR=ORUS("W")
+"RTN","ORUS5",26,0)
+ I ORPTR S ORWR="N Y S Y=$P(^(0),""^""),C=$P(^DD(ORFN,.01,0),""^"",2) D Y^DIQ S X=Y Q"
+"RTN","ORUS5",27,0)
+ I '$D(ORUS("L"))!('$D(ORUS("F"))&(ORUS(0)["A")) D EN^ORUS2
+"RTN","ORUS5",28,0)
+ S (OROD,ORLK)="^XUTL(""OR"",$J,""ORU""," S:ORUS(0)'["A" OROD=ORUS
+"RTN","ORUS5",29,0)
+ S OREN=0 I '$D(ORUS("F")),ORUS(0)'["A" S OREN=1
+"RTN","ORUS5",30,0)
+ S:$D(ORUS("F")) OROD=ORUS("F") S:$D(ORUS("L")) ORLK=ORUS("L")
+"RTN","ORUS5",31,0)
+ Q
+"RTN","ORUS5",32,0)
+M1 S ORDA=B X ORSC
+"RTN","ORUS5",33,0)
+ I $T,$D(@(C_"B,0)")) S L=L+1 X ORWR I $L(X) S ^XUTL("OR",$J,"ORV",P,L)=X S:N S=S+1,$P(^(L),"^",2)=S,^XUTL("OR",$J,"ORW",S)=B D:M MNE
+"RTN","ORUS5",34,0)
+ Q
+"RTN","ORUS5",35,0)
+MNE S X=ORUS("M") I X?.AN1";".N S Y=$P(X,";",2),X=$P(X,";") Q:'$D(@(ORUS_"B,X)"))  S X=$P(^(X),"^",Y) S:$L(X) $P(^XUTL("OR",$J,"ORV",P,L),"^",2)=X Q
+"RTN","ORUS5",36,0)
+ ;I X'?.AN1";".N,$L(ORUS("M")) X ORUS("M") S:$L(X) $P(^XUTL("OR",$J,"ORV",P,L),"^",2)=X Q
+"RTN","ORUS5",37,0)
+ Q
+"RTN","ORUS5",38,0)
+S91 S:$L($P(OR9(I),"^",1)) OR9("B",$P(OR9(I),"^",1),I)="" S:$L($P(OR9(I),"^",2)) OR9("B",$P(OR9(I),"^",2),I)=""
+"RTN","ORUS5",39,0)
+ Q
+"RTN","ORWOD")
+0^2^B75952495^B75747824
+"RTN","ORWOD",1,0)
+ORWOD ; SLC/GSS - Utility for Order Dialogs ; 7/24/09 9:55am
+"RTN","ORWOD",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**243,296,280,322**;DEC 17, 1997;Build 15
+"RTN","ORWOD",3,0)
+ ;
+"RTN","ORWOD",4,0)
+ ; DBIA 5133: reading ^PXRMD file #801.41
+"RTN","ORWOD",5,0)
+ ; 
+"RTN","ORWOD",6,0)
+ Q
+"RTN","ORWOD",7,0)
+ ;
+"RTN","ORWOD",8,0)
+INSTALL ;Post-install entry point for OR*3*243
+"RTN","ORWOD",9,0)
+ D MAIN
+"RTN","ORWOD",10,0)
+ Q
+"RTN","ORWOD",11,0)
+ ;
+"RTN","ORWOD",12,0)
+ATWILL ;Entry point for ORDER MENU MANAGEMENT menu - ORCM MGMT opt MR
+"RTN","ORWOD",13,0)
+ W !,"This option generates two Quick Order (QO) reports to assist in the"
+"RTN","ORWOD",14,0)
+ W !,"evaluation of Med QOs that may need to be updated to accommodate the"
+"RTN","ORWOD",15,0)
+ W !,"three new fields exported in CPRS GUI v27:  Route, IV Type and Schedule."
+"RTN","ORWOD",16,0)
+ W !,"One report lists Med QOs that are contained in another entry such as an"
+"RTN","ORWOD",17,0)
+ W !,"order menu, order set or reminder dialog. The other report lists Med QOs"
+"RTN","ORWOD",18,0)
+ W !,"that are stand alone and are not included in another entry. These reports"
+"RTN","ORWOD",19,0)
+ W !,"will be sent to you via Mailman.",!
+"RTN","ORWOD",20,0)
+ S DIR(0)="FAO",DIR("A")="Do you wish to continue? " D ^DIR Q:X=""!(X="^")
+"RTN","ORWOD",21,0)
+ S ORCDD=$TR(X,"yn","YN") I ORCDD'="Y",ORCDD'="N" W "  Enter Y or N",! G ATWILL
+"RTN","ORWOD",22,0)
+ I ORCDD="N" W "...report not compiled" Q  ;DJE/VM *322 X changed to ORCDD
+"RTN","ORWOD",23,0)
+ W !,"Compiling Med Quick Order check report..."
+"RTN","ORWOD",24,0)
+ D MAIN
+"RTN","ORWOD",25,0)
+ W !,"...QO check report compiled and mailed to ",$P(^VA(200,DUZ,0),U)
+"RTN","ORWOD",26,0)
+ Q
+"RTN","ORWOD",27,0)
+ ;
+"RTN","ORWOD",28,0)
+MAIN ;Main calls for QO Reports
+"RTN","ORWOD",29,0)
+ N ANCSTR,I,PSJNOPC,XMDUN,XMSUB
+"RTN","ORWOD",30,0)
+ D NTRY
+"RTN","ORWOD",31,0)
+ ; ANCSTR='ancestors', i.e., QO being used on a menu/Reminder Dialogs
+"RTN","ORWOD",32,0)
+ F ANCSTR="Y","N" D
+"RTN","ORWOD",33,0)
+ . D MAILSU
+"RTN","ORWOD",34,0)
+ . D SEND(XMSUB,DUZ)
+"RTN","ORWOD",35,0)
+ D CLEANUP
+"RTN","ORWOD",36,0)
+ Q
+"RTN","ORWOD",37,0)
+ ;
+"RTN","ORWOD",38,0)
+ANCSTR ;Determine QO usage - called by XSET and MM
+"RTN","ORWOD",39,0)
+ S ANCSTR="N"
+"RTN","ORWOD",40,0)
+ I $O(^ORD(101.41,"AD",ODIENXT,0))!($D(^TMP("OR",$J,"RD",ODIENXT))=0) S ANCSTR="Y"
+"RTN","ORWOD",41,0)
+ Q
+"RTN","ORWOD",42,0)
+ ;
+"RTN","ORWOD",43,0)
+XSET ;Set QO record for display
+"RTN","ORWOD",44,0)
+ D ANCSTR
+"RTN","ORWOD",45,0)
+ S RC=ODIENXT_U_$P(REC,U)_U_$P(REC,U,2)_U_$G(ODATYPE)_U_$G(ODAROUTE)_U_$G(ODASCHD)_U_$G(ODARATE)_U_$G(ODALIMIT)
+"RTN","ORWOD",46,0)
+ Q
+"RTN","ORWOD",47,0)
+ ;
+"RTN","ORWOD",48,0)
+NTRY ;Compiling report
+"RTN","ORWOD",49,0)
+ N AFIND,DIEN,DOSE,DSPLGRP,DSPLGPTR,GETXT,HIT,NODE3,ODALIMIT,ODARATE,ODAROUTE,ODASCHD,ODATYPE,ODIEN,ODIENXT,ORDIALOG,PTEXT,PTYPE,RC,REC,TYPE,XSET
+"RTN","ORWOD",50,0)
+ K ^TMP("OR",$J)
+"RTN","ORWOD",51,0)
+ S (DSPLGRP,DSPLGPTR,ODIEN,ODIENXT,TYPE)=""
+"RTN","ORWOD",52,0)
+ S XSET="S RC=ODIENXT_U_$P(REC,U)_U_$P(REC,U,2)_U_$G(ODATYPE)_U_$G(ODAROUTE)_U_$G(ODASCHD)_U_$G(ODARATE)_U_$G(ODALIMIT)"
+"RTN","ORWOD",53,0)
+ S DOSE=+$O(^ORD(101.41,"B","OR GTX INSTRUCTIONS",0))  ;use for MM tag
+"RTN","ORWOD",54,0)
+ ;
+"RTN","ORWOD",55,0)
+ ; Order Dialogs Structure, Menus - orig code by A.Puleo
+"RTN","ORWOD",56,0)
+ ; Reminder Dialog Type: (PTYPE) E=Dialog Element, G=Dialog Group
+"RTN","ORWOD",57,0)
+ F PTYPE="G","E" S DIEN="" D
+"RTN","ORWOD",58,0)
+ . F  S DIEN=$O(^PXRMD(801.41,"TYPE",PTYPE,DIEN)) Q:DIEN'>0  D  ;DBIA 5133
+"RTN","ORWOD",59,0)
+ .. ; PTEXT is 'FINDING ITEM' where 101.41 refers to ^ORD(101.41)
+"RTN","ORWOD",60,0)
+ .. ; Example: ^PXRMD(801.41,2515,1)="^^3^^51;ORD(101.41,"
+"RTN","ORWOD",61,0)
+ .. S PTEXT=$P($G(^PXRMD(801.41,DIEN,1)),U,5),AFIND=""
+"RTN","ORWOD",62,0)
+ .. I PTEXT[101.41 S ^TMP("OR",$J,"RD",$P(PTEXT,";"))=DIEN
+"RTN","ORWOD",63,0)
+ .. F  S AFIND=$O(^PXRMD(801.41,DIEN,3,"B",AFIND)) Q:AFIND=""  D
+"RTN","ORWOD",64,0)
+ ... I AFIND[101.41 S ^TMP("OR",$J,"RD",$P(AFIND,";"))=DIEN
+"RTN","ORWOD",65,0)
+ ;
+"RTN","ORWOD",66,0)
+ ; find IEN for the 'PSJI OR PAT FLUID OE' entry in Order Dialog File
+"RTN","ORWOD",67,0)
+ S ODIEN=$O(^ORD(101.41,"AB","PSJI OR PAT FLUID OE",0))
+"RTN","ORWOD",68,0)
+ ; 
+"RTN","ORWOD",69,0)
+ ; loop thru Display Group File, file # 100.98 & store all
+"RTN","ORWOD",70,0)
+ ; Display Group entries that have a pointer to 'PSJI OR PAT FLUID OE'
+"RTN","ORWOD",71,0)
+ ; in field # 4 or Default Dialog field
+"RTN","ORWOD",72,0)
+ F  S DSPLGRP=$O(^ORD(100.98,DSPLGRP)) Q:DSPLGRP'?1N.N  D
+"RTN","ORWOD",73,0)
+ . I ODIEN=$P($G(^ORD(100.98,DSPLGRP,0)),U,4) S ^TMP("OR",$J,"DG",DSPLGRP)=ODIEN
+"RTN","ORWOD",74,0)
+ ;
+"RTN","ORWOD",75,0)
+ ; loop though Order Dialog file to
+"RTN","ORWOD",76,0)
+ ; find each entry that is an IV Quick Order. Do this by checking
+"RTN","ORWOD",77,0)
+ ; field #4 or TYPE field for a 'Q' & then check field #5 or
+"RTN","ORWOD",78,0)
+ ; DISPLAY GROUP field for a pointer to one of the display groups found
+"RTN","ORWOD",79,0)
+ ; above. If both conditions are true then continue to next step,
+"RTN","ORWOD",80,0)
+ ; if not, continue looping.
+"RTN","ORWOD",81,0)
+ F  S ODIENXT=$O(^ORD(101.41,ODIENXT)) Q:ODIENXT'?1N.N  D
+"RTN","ORWOD",82,0)
+ . D MM
+"RTN","ORWOD",83,0)
+ . S TYPE=$P($G(^ORD(101.41,ODIENXT,0)),U,4) Q:TYPE'="Q"
+"RTN","ORWOD",84,0)
+ . S DSPLGPTR=$P($G(^ORD(101.41,ODIENXT,0)),U,5) Q:$G(DSPLGPTR)=""  ;no display group pointer in QO
+"RTN","ORWOD",85,0)
+ . Q:'$G(^TMP("OR",$J,"DG",DSPLGPTR))  ;no such display group in compiled data
+"RTN","ORWOD",86,0)
+ . S REC=^ORD(101.41,ODIENXT,0)
+"RTN","ORWOD",87,0)
+ . ;
+"RTN","ORWOD",88,0)
+ . K ORDIALOG
+"RTN","ORWOD",89,0)
+ . ; call GETQDLG^ORCD to build the Order dialog array (ORDIALOG())
+"RTN","ORWOD",90,0)
+ . D GETQDLG^ORCD(ODIENXT) S (HIT)=0
+"RTN","ORWOD",91,0)
+ . ;
+"RTN","ORWOD",92,0)
+ . ;ZW ORDIALOG("B")  ;ORDIALOG() listing
+"RTN","ORWOD",93,0)
+ . ; set variables for 'TYPE' (IV TYPE), 'ROUTE', 'SCHEDULE', 'RATE', 'LIMITATION'
+"RTN","ORWOD",94,0)
+ . F I=1:1:5 S @($P("ODATYPE,ODAROUTE,ODASCHD,ODARATE,ODALIMIT",",",I))=$G(ORDIALOG($P($G(ORDIALOG("B",$P("TYPE,ROUTE,SCHEDULE,INFUSION RATE,LIMITATION",",",I))),U,2),1))
+"RTN","ORWOD",95,0)
+ . ;
+"RTN","ORWOD",96,0)
+ . ; Quick Orders to be displayed to end user in First List Message follow:
+"RTN","ORWOD",97,0)
+ . ;
+"RTN","ORWOD",98,0)
+ . ; IV TYPE is null or ROUTE is null
+"RTN","ORWOD",99,0)
+ . I (ODATYPE=""!(ODAROUTE="")) D XSET S ^TMP("OR",$J,"QO",ANCSTR,$P(REC,U),1,1,0)=RC,HIT=1
+"RTN","ORWOD",100,0)
+ . ;
+"RTN","ORWOD",101,0)
+ . ; IV TYPE is 'I' and SCHEDULE is null
+"RTN","ORWOD",102,0)
+ . I ODATYPE="I"&(ODASCHD="") D XSET S ^TMP("OR",$J,"QO",ANCSTR,$P(REC,U),2,1,0)=RC,HIT=1
+"RTN","ORWOD",103,0)
+ . ;
+"RTN","ORWOD",104,0)
+ . ; IV TYPE is not 'C' or null or RATE is not 1-4#.1#, integer or '@'
+"RTN","ORWOD",105,0)
+ . I ODATYPE="C"!(ODATYPE="") D
+"RTN","ORWOD",106,0)
+ .. Q:ODARATE["@"
+"RTN","ORWOD",107,0)
+ .. Q:ODARATE?1.4N!(ODARATE?1.4N1".".1N)  ;integers alone OK
+"RTN","ORWOD",108,0)
+ .. S GETXT=$$GETXT(ODARATE," ml/hr")
+"RTN","ORWOD",109,0)
+ .. Q:GETXT?1.4N!(GETXT?1.4N1".".1N)  ;# ml/hr & #.# ml/hr Rate OK
+"RTN","ORWOD",110,0)
+ .. D XSET S ^TMP("OR",$J,"QO",ANCSTR,$P(REC,U),3,1,0)=RC,HIT=1
+"RTN","ORWOD",111,0)
+ . ;
+"RTN","ORWOD",112,0)
+ . ; IV TYPE is 'I' but RATE not an integer minute or hour or null
+"RTN","ORWOD",113,0)
+ . I ODATYPE="I"&(ODARATE'?1.N)&(ODARATE'="") D  ;integer alone OK
+"RTN","ORWOD",114,0)
+ .. S GETXT=$$GETXT(ODARATE," Minutes| Hours")
+"RTN","ORWOD",115,0)
+ .. Q:GETXT?1.3N  ;integer # Minutes & # Hours Rate OK
+"RTN","ORWOD",116,0)
+ .. D XSET S ^TMP("OR",$J,"QO",ANCSTR,$P(REC,U),4,1,0)=RC,HIT=1
+"RTN","ORWOD",117,0)
+ . ;
+"RTN","ORWOD",118,0)
+ . ; IV LIMIT or Duration (LIMITATION) was not integer or null
+"RTN","ORWOD",119,0)
+ . I ODALIMIT'?.N,ODALIMIT'="" D
+"RTN","ORWOD",120,0)
+ .. Q:ODALIMIT?1.2N1"D"!(ODALIMIT?1.3N1"H")!(ODALIMIT?1.4N1"ML")!(ODALIMIT?1.4N1" ML")!(ODALIMIT?1.2N1"L")!(ODALIMIT?1.4N1"CC")!(ODALIMIT?1.4N1" CC")  ;#D, #H, #ML, #L, #CC Limit OK
+"RTN","ORWOD",121,0)
+ .. Q:ODALIMIT?1.2N1"d"!(ODALIMIT?1.3N1"h")!(ODALIMIT?1.4N1"ml")!(ODALIMIT?1.4n1" ml")!(ODALIMIT?1.2N1"l")!(ODALIMIT?1.4N1"cc")!(ODALIMIT?1.4N1" cc")  ;#d, #h, #ml, #l, #cc Limit OK
+"RTN","ORWOD",122,0)
+ .. Q:ODALIMIT?1"for "1.2N1" days"  ;for # days OK
+"RTN","ORWOD",123,0)
+ .. Q:ODALIMIT?1.5N1"DOSES"!(ODALIMIT?1"for a total of "1.5N1" doses")  ;for a total of # doses OK
+"RTN","ORWOD",124,0)
+ .. Q:ODALIMIT?1"with total volume "1.2N1"L"!(ODALIMIT?1"with total volume "1.4N1"ml")
+"RTN","ORWOD",125,0)
+ .. Q:ODALIMIT?1"for "1.2N1" hours"
+"RTN","ORWOD",126,0)
+ .. D XSET S ^TMP("OR",$J,"QO",ANCSTR,$P(REC,U),5,1,0)=RC,HIT=1
+"RTN","ORWOD",127,0)
+ . ;
+"RTN","ORWOD",128,0)
+ . ;AGP If IV TYPE="C" and the numbers Additive Frequency do not match the number
+"RTN","ORWOD",129,0)
+ . ;of additives
+"RTN","ORWOD",130,0)
+ . I ODATYPE="C",$$IVADFCHK^ORWDXM3(.ORDIALOG)=0 D
+"RTN","ORWOD",131,0)
+ ..D XSET S ^TMP("OR",$J,"QO",ANCSTR,$P(REC,U),8,1,0)=RC,HIT=1
+"RTN","ORWOD",132,0)
+ . ;
+"RTN","ORWOD",133,0)
+ . ; Go get next Order Dialog entry if no problems
+"RTN","ORWOD",134,0)
+ . I 'HIT Q
+"RTN","ORWOD",135,0)
+ . ;
+"RTN","ORWOD",136,0)
+ . ; If Quick Order is in First List message then check
+"RTN","ORWOD",137,0)
+ . ; the Order Dialog file #101.41, field #58 or AUTO-ACCEPT QUICK ORDER
+"RTN","ORWOD",138,0)
+ . ; field.  If field #58 is set to 'Y'es then set the field to 'N'o and
+"RTN","ORWOD",139,0)
+ . ; then display this Quick Order in the Second List.
+"RTN","ORWOD",140,0)
+ . I +$P($G(^ORD(101.41,ODIENXT,5)),U,8) D
+"RTN","ORWOD",141,0)
+ .. S $P(^ORD(101.41,ODIENXT,5),U,8)=""  ;uncommented, sets AUTO-ACCEPT QUICK ORDER field
+"RTN","ORWOD",142,0)
+ .. D XSET S ^TMP("OR",$J,"QO",ANCSTR,$P(REC,U),7,1,0)=RC
+"RTN","ORWOD",143,0)
+ Q
+"RTN","ORWOD",144,0)
+ ;
+"RTN","ORWOD",145,0)
+GETXT(LOOKIN,SUFFIX) ;Return text occuring prior to suffix
+"RTN","ORWOD",146,0)
+ ; e.g. LOOKIN="INFUSE OVER 30 MINUTES",SUFFIX=" MINUTES" returns '30'
+"RTN","ORWOD",147,0)
+ N I,ISUFFIX,RSTRG,RTXT,STRG
+"RTN","ORWOD",148,0)
+ S I=0,RTXT=""
+"RTN","ORWOD",149,0)
+ F  S I=I+1,ISUFFIX=$P(SUFFIX,"|",I) Q:ISUFFIX=""  D:$F(LOOKIN,ISUFFIX)  Q:$G(RTXT)'=""
+"RTN","ORWOD",150,0)
+ . S RSTRG=$RE($E(LOOKIN,1,$F(LOOKIN,ISUFFIX)-$L(ISUFFIX)-1))
+"RTN","ORWOD",151,0)
+ . S RTXT=$P(RSTRG," ")
+"RTN","ORWOD",152,0)
+ Q $RE(RTXT)
+"RTN","ORWOD",153,0)
+ ;
+"RTN","ORWOD",154,0)
+MM ;Looks for 'MM' in Order Dialog / original code logic by James Hartin
+"RTN","ORWOD",155,0)
+ N ANCSTR,MMREC,NEXT,NODE3,PROMPT,VALUE
+"RTN","ORWOD",156,0)
+ S NEXT=1,VALUE=""
+"RTN","ORWOD",157,0)
+ F  S NEXT=$O(^ORD(101.41,ODIENXT,6,NEXT))  Q:NEXT'?1N.N  D
+"RTN","ORWOD",158,0)
+ . S VALUE=$G(^ORD(101.41,ODIENXT,6,NEXT,1)),PROMPT=+$P($G(^(0)),U,2)
+"RTN","ORWOD",159,0)
+ . S MMREC=^ORD(101.41,ODIENXT,0)
+"RTN","ORWOD",160,0)
+ . ; ODIEN^NAME^DISPLAY TEXT^VALUE
+"RTN","ORWOD",161,0)
+ . I PROMPT=DOSE,(VALUE["MM ") D
+"RTN","ORWOD",162,0)
+ .. D ANCSTR
+"RTN","ORWOD",163,0)
+ .. S ^TMP("OR",$J,"QO",ANCSTR,$P(MMREC,U),6,1,0)=ODIENXT_U_$P(MMREC,U)_U_$P(MMREC,U,2)_U_VALUE
+"RTN","ORWOD",164,0)
+ Q
+"RTN","ORWOD",165,0)
+ ;
+"RTN","ORWOD",166,0)
+MAILSU ;Set-up MAILMAN variables and format ^TMP("OR",$J,"MAIL")
+"RTN","ORWOD",167,0)
+ N DASH,DISPNAME,HDRLINE,LEGEND,LEGENDS,NEXT,NUM,NXTLINE,ODIENXT,ODQONAME,ORLEGEND,OROUT,QONAM,QOTOT,QORECORD,SPC
+"RTN","ORWOD",168,0)
+ K ^TMP("OR",$J,"MAIL")
+"RTN","ORWOD",169,0)
+ ;
+"RTN","ORWOD",170,0)
+ ;Title of emails
+"RTN","ORWOD",171,0)
+ S:ANCSTR="Y" XMSUB="QOs ON ORDER MENUS/SETS OR REMINDER DIALOGS: "
+"RTN","ORWOD",172,0)
+ S:ANCSTR="N" XMSUB="QOs NOT ON ORDER MENUS/SETS OR REMINDER DIALOGS: "
+"RTN","ORWOD",173,0)
+ S XMSUB=XMSUB_$$HTE^XLFDT($H)
+"RTN","ORWOD",174,0)
+ ;
+"RTN","ORWOD",175,0)
+ ;Group 1/A="IV TYPE IS NULL OR ROUTE IS NULL"
+"RTN","ORWOD",176,0)
+ ;Group 2/B="IV TYPE IS 'I' AND SCHEDULE IS NULL"
+"RTN","ORWOD",177,0)
+ ;Group 3/C="IV TYPE IS NOT 'C' OR NULL OR RATE IS NOT 1-4#.1#, INTERGER OR '@'"
+"RTN","ORWOD",178,0)
+ ;Group 4/D="IV TYPE IS 'I' BUT RATE NOT AN INTEGER MINUTE OR HOUR"
+"RTN","ORWOD",179,0)
+ ;Group 5/E="IV LIMIT OR DURATION (LIMITATION) WAS NOT NULL OR INTEGER"
+"RTN","ORWOD",180,0)
+ ;Group 6/F="ORDER DIALOGS WITH 'MM' IN THE DISPLAY TEXT"
+"RTN","ORWOD",181,0)
+ ;Group 7/G="AUTO-ACCEPT QUICK ORDER WAS 'Y'es, NOW SET TO 'N'o"
+"RTN","ORWOD",182,0)
+ ;Group 8/H="Number of IV Bags and additives do not matches"
+"RTN","ORWOD",183,0)
+ ;
+"RTN","ORWOD",184,0)
+ D NTRY^ORWOD1
+"RTN","ORWOD",185,0)
+ S ODQONAME="@",SPC="                            ",QOTOT=0
+"RTN","ORWOD",186,0)
+ F  S ODQONAME=$O(^TMP("OR",$J,"QO",ANCSTR,ODQONAME)) Q:ODQONAME=""  D
+"RTN","ORWOD",187,0)
+ . S (LEGENDS,ORLEGEND,QORECORD)=""
+"RTN","ORWOD",188,0)
+ . F  S ORLEGEND=$O(^TMP("OR",$J,"QO",ANCSTR,ODQONAME,ORLEGEND)) D  Q:ORLEGEND=""
+"RTN","ORWOD",189,0)
+ .. I ORLEGEND'="" S LEGENDS=LEGENDS_$C(ORLEGEND+64) S:$G(QORECORD)="" QORECORD=^TMP("OR",$J,"QO",ANCSTR,ODQONAME,ORLEGEND,1,0) Q
+"RTN","ORWOD",190,0)
+ .. S NXTLINE=NXTLINE+1,QONAM=$P(QORECORD,U,2),DISPNAME=$P(QORECORD,U,3) S:DISPNAME="" DISPNAME=SPC
+"RTN","ORWOD",191,0)
+ .. S OROUT=$J($P(QORECORD,U,1),5)_" "_$E(QONAM,1,30)_$E(SPC,1,30-$L(QONAM))_" "_$E(DISPNAME,1,30)_$E(SPC,1,30-$L(DISPNAME))_" "_$J(LEGENDS,6)
+"RTN","ORWOD",192,0)
+ .. S ^TMP("OR",$J,"MAIL",NXTLINE,0)=OROUT,QOTOT=QOTOT+1
+"RTN","ORWOD",193,0)
+ S NXTLINE=NXTLINE+1,^TMP("OR",$J,"MAIL",NXTLINE,0)=""
+"RTN","ORWOD",194,0)
+ S NXTLINE=NXTLINE+1,^TMP("OR",$J,"MAIL",NXTLINE,0)=QOTOT_" = Med Quick Orders"
+"RTN","ORWOD",195,0)
+ Q
+"RTN","ORWOD",196,0)
+ ;
+"RTN","ORWOD",197,0)
+SEND(XMSUB,USER) ;Send MailMan message to USER
+"RTN","ORWOD",198,0)
+ ; Text of message is located in ^TMP("OR",$J,"MAIL",LineNumbers0-n)
+"RTN","ORWOD",199,0)
+ ; Subject is the string XMSUB.
+"RTN","ORWOD",200,0)
+ N MGIEN,MGROUP,NL,REF,XMDUZ,XMY,XMZ
+"RTN","ORWOD",201,0)
+ ;
+"RTN","ORWOD",202,0)
+ ;Subject '> 64 characters.
+"RTN","ORWOD",203,0)
+ S XMSUB=$E(XMSUB,1,64)
+"RTN","ORWOD",204,0)
+ ;Sender is Postmaster.
+"RTN","ORWOD",205,0)
+ S XMDUZ=0.5
+"RTN","ORWOD",206,0)
+ ;
+"RTN","ORWOD",207,0)
+RETRY ;Get message number.
+"RTN","ORWOD",208,0)
+ D XMZ^XMA2
+"RTN","ORWOD",209,0)
+ I XMZ<1 G RETRY
+"RTN","ORWOD",210,0)
+ ;
+"RTN","ORWOD",211,0)
+ ;Load message
+"RTN","ORWOD",212,0)
+ M ^XMB(3.9,XMZ,2)=^TMP("OR",$J,"MAIL")
+"RTN","ORWOD",213,0)
+ S NL=$O(^XMB(3.9,XMZ,2,""),-1)
+"RTN","ORWOD",214,0)
+ S ^XMB(3.9,XMZ,2,0)="^3.92^"_+NL_U_+NL_U_DT
+"RTN","ORWOD",215,0)
+ ;
+"RTN","ORWOD",216,0)
+ ;Send message to USER
+"RTN","ORWOD",217,0)
+ I $G(USER)'="" S XMY(DUZ)="" D ENT1^XMD Q
+"RTN","ORWOD",218,0)
+ W !,"Error: No USER defined..message not sent!"
+"RTN","ORWOD",219,0)
+ Q
+"RTN","ORWOD",220,0)
+ ;
+"RTN","ORWOD",221,0)
+CLEANUP ; Clean-up
+"RTN","ORWOD",222,0)
+ K ^TMP("OR",$J)
+"RTN","ORWOD",223,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8802,6)
+^307
+**END**
+**END**

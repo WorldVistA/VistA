@@ -1,0 +1,151 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 02/15/12 at 10:01
+=============================================================================
+Run Date: SEP 17, 2012                     Designation: PSJ*5*274
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #233                      Status: Released
+                  Compliance Date: OCT 18, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*274'
+
+Subject: ERROR WHEN AUTO-DISCONTINUING IV ORDERS FROM SURGERY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue in the Inpatient Medications 
+ package:
+  
+ -Undefined error from surgery package auto-discontinue
+  
+ Associated Remedy Ticket(s):
+ ===========================
+  
+ HD0000000592533 - order dc'd by surgery package still listed as active
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+ Participating Test Sites:
+ ========================
+ VA Boston HCS
+ VA Gulf Coast Veterans HCS - Biloxi
+ Oklahoma City VAMC
+  
+ Remedy Ticket Overview:
+ ======================
+ HD0000000592533 - order dc'd by surgery package still listed as active
+  
+   Patient Safety Issue:
+   ---------------------
+   PSPO #2177
+  
+   Problem:
+   -------
+   If a patient has active IV orders at the time that they have a 
+   surgical procedure done, and they later enter Anesthesia care, the user 
+   will be asked whether the patient's IV orders should be 
+   auto-discontinued.  If the user answers "yes", the orders are not 
+   auto-discontinued, and an UNDEFINED error occurs.
+  
+   Resolution:
+   ----------
+   Changed PSJADT0 so that the UNDEFINED error does not occur, and the IV 
+   orders will be auto-discontinued as intended.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS WHEN THE PATCH IS  
+ INSTALLED, AN EDITED ERROR WILL OCCUR.
+  
+ The patch should be installed when NO Inpatient Pharmacy users are on the
+ system.
+  
+  
+ 1.  Load Transport Global 
+     ---------------------------
+  
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+  
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*274):
+                                 
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d.  Print Transport Global - This option will allow you to view the 
+         components of the KIDS build.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJADT0
+    Before: B33159772   After: B33182966  **17,111,112,135,181,274**
+ 
+Routine list of preceding patches: 181
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : JAN 24, 2012
+Completed By: WERNER,GARY                   Date Completed: SEP 07, 2012
+Released By : MIAN,NAEEM                    Date Released : SEP 17, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

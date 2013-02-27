@@ -1,0 +1,719 @@
+$TXT Created by TRAN-TEST,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 03/10/11 at 18:44
+=============================================================================
+Run Date: APR 19, 2011                     Designation: XU*8*431
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #453                      Status: Released
+                  Compliance Date: MAY 20, 2011
+=============================================================================
+
+Associated patches: (v)XU*8*120    <<= must be installed BEFORE `XU*8*431'
+                    (v)XU*8*243    <<= must be installed BEFORE `XU*8*431'
+                    (v)XU*8*455    <<= must be installed BEFORE `XU*8*431'
+
+Subject: ErrorTrap Fixes and Summary
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+  - Print Template
+
+Description:
+============
+
+ Patch Tracking #: 47075861
+ Test sites:
+ - LITTLE ROCK, AR VAMC
+ - MONTANA HCS 
+ - SAN DIEGO, CA VAMC
+ - TAMPA, FL VAMC
+ Blood Bank Clearance: 03/04/2008
+  
+         Patch XU*8*431
+  
+ 1. For Developers: New API APPERROR^%ZTER("Application error")
+ will put the text passed in as the error name in the error trap.
+  
+ 2. To address the situation at Ann Arbor where the error trap was called 
+ until a disk full issue brought the site down. The error trap routine
+ ^%ZTER now will check a count in the error trap summary file (#3.077) and
+ stop recording errors once this limit has been reached. This limit is
+ initialized to 10 but can be changed by the sites by using FileMan to edit
+ the KERNEL SYSTEM PARAMETERS file (#8989.3) field ERROR LIMIT (#520.1).
+  
+ 3. Changed the UCI,VOL field (#4.04) in the Error Number Multiple (#1) of 
+ the Error Log file (#3.075) to hold the output from GETENV^%ZOSV.
+  
+ 4. Error Trap Summary.  When run it reads the current ERROR LOG file(#3.075), 
+ and builds an entry in file 3.077 for each error found in a 
+ specific routine and a specific location in that routine.  Various parts of 
+ the error are captured in this file and kept over the long term so that the 
+ first and the most recent occurrences are recorded and can be tracked. 
+ Differences in the access option and the stack are captured if different 
+ from the first captured error.  This file serves as the first stage of a 
+ Regional/National monitoring program which will help us find the systemic 
+ software problems and solve them.  This will result in a stronger and more 
+ resilient application environment while allowing us to focus our efforts 
+ where they will do the most good.
+ The loading of this file is done by scheduling option "Update Error Trap 
+ Summary" [XUER UPDATE DEMAND/BATCH] to run each day. After loading any new
+ errors to the file if the KSP (#8989.3) field SEND ERROR SUMMARY (#520.2) is
+ set to Yes it will scan the file and send a message for any error that has
+ not been sent before to the mail group XTER SUMMARY LOAD.  One member of the
+ mail group is S.XTER SUMMARY LOAD@FORUM.VA.GOV.
+  
+ 5. Remedy ticket HD278949.
+ Using the option REMOVE A TYPE OF ERROR [XUERTRP TYPE]
+ would cause following errors to overwrite errors that had not been removed.
+ In investigating this, XINDEX reported that XTERPUR had locks without
+ timeouts.  This has been corrected.  The main issue is fixed in %ZTER.
+  
+ 6. E-mail
+ Made a change so printing an error to the screen included the header
+ information. 
+  
+ 7. Added a Option Error Trap Param Edit [XUER EDIT PARAMS] to the Kernel 
+ Management Menu [XUKERNEL].
+  
+ The DD changes are listed after the install instructions.
+  
+ Also included in the Build are:
+  
+ PRINT TEMPLATE:                                ACTION:
+    XTER ERROR SUMMARY    FILE #3.077              SEND TO SITE
+    XTER SUMMARY MOVE    FILE #3.077               SEND TO SITE
+  
+ MAIL GROUP:                                    ACTION:
+    XTER SUMMARY ERROR                             SEND TO SITE
+    XTER SUMMARY LOAD                              SEND TO SITE
+  
+ OPTION:                                        ACTION:
+    XUER NOTE                                      SEND TO SITE
+    XUER PURGE ERROR SUMMARY                       SEND TO SITE
+    XUER SUMMARY                                   SEND TO SITE
+    XUER SUMMARY INQUIRE                           SEND TO SITE
+    XUER SUMMARY MOST RECENT                       SEND TO SITE
+    XUER UPDATE DEMAND/BATCH                       SEND TO SITE
+    XUERRS                                         USE AS LINK FOR 
+                                                MENU/ITEM/SUBS CRIBERS
+  
+ ===================================================================
+ Installation Instructions:
+  
+ >>>Users may remain on the system.
+ >>>TaskMan does *not* need to be stopped.
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the Transport global.
+       On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global
+          Compare Transport Global to Current System
+          Backup a Transport Global
+  
+   3.  Users can remain on the system. 
+       This patch can be loaded any non-peak time.
+       TaskMan can remain running.
+  
+   4.  Installation will take less than 2 minutes.
+          Install Package(s)  'XU*8.0*431'
+                               ==========
+    3.075     ERROR LOG  (Partial Definition)
+  
+    3.077     ERROR TRAP SUMMARY
+  
+    8989.3    KERNEL SYSTEM PARAMETERS  (Partial Definition)
+  
+  
+       Incoming Mail Groups:
+  
+       Enter the Coordinator for Mail Group 'XTER SUMMARY LOAD': 
+       (For sending to FORUM)
+       
+       Enter the Coordinator for Mail Group 'XTER SUMMARY ERROR':
+       (Only used to report errors on FORUM)
+     
+       Want KIDS to Rebuild Menu Trees Upon Completion of Install? No//
+  
+       Want KIDS to INHIBIT LOGONs during the install? No//
+  
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//
+  
+       The post-init routine will automatically rename ZTER to %ZTER.
+  
+   5.  Schedule the option Update Error Trap Summary [XUER UPDATE DEMAND/BATCH]
+       to run each day to move date from the Error Trap to the Error trap
+       Summary and to FORUM if the SEND ERROR SUMMARY flag is set.
+       
+   6.  Review your Error Trap Screens.  You will still want to use them
+       to limit the number of errors you recorded.
+  
+ ===================================================================
+ STANDARD DATA DICTIONARY #3.077 -- ERROR TRAP SUMMARY FILE   
+                                             NOV 5,2007@14:24:46  PAGE 1
+ STORED IN ^%ZTER(3.077,  (2 ENTRIES)   SITE: SF CIOFO, KERNEL PATCH ACCOUNT 
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ ------------------------------------------------------------------------------
+ This is a tool for capturing the VistA errors at each site.  These 
+ findings can be used locally and pushed to a central repository to help to
+ prioritize the efforts to seal up the hot spots in the applications.
+  
+  
+ CROSS
+ REFERENCED BY: ERROR TEXT(B), ERROR TEXT(C), DATE/TIME OF ERROR(D), 
+                USER NAME(USER)
+  
+ 3.077,.01     ERROR TEXT             0;1 FREE TEXT (Required)
+  
+               ERR TXT                   
+               INPUT TRANSFORM:  K:$L(X)>60!($L(X)<3)!'(X'[U) X
+               LAST EDITED:      OCT 31, 2007 
+               HELP-PROMPT:      Answer must be 3-60 characters in length 
+               DESCRIPTION:      This is the text captured with the 
+                                 error. It is a means of providing a common
+                                 key for the errors to be clustered
+                                 under.  Each one will has a series of
+                                 characteristics which will be captured for
+                                 later analysis even after the error has
+                                 been purged off of the ^%ZTER global. 
+                                 The first date and time is stored as will be
+                                 the most recent occurrence.  
+  
+               TECHNICAL DESCR:  This string will be parsed off of the $ZE
+                                 sting.  If the string is not there, then an
+                                 "[Unknown Xecute]" will be created to store
+                                 these cases.  
+  
+               CROSS-REFERENCE:  3.077^B 
+                                 1)= S ^%ZTER(3.077,"B",$E(X,1,30),DA)=""
+                                 2)= K ^%ZTER(3.077,"B",$E(X,1,30),DA)
+  
+               CROSS-REFERENCE:  3.077^C^KWIC 
+                                1)= S %1=1 F %=1:1:$L(X)+1 S I=$E(X,%) I ",~<>(
+                                ):;"[I S I=$E($E(X,%1,%-1),1,30),%1=%+1 I $L(I)
+                                >2,^DD("KWIC")'[I S ^%ZTER(3.077,"C",I,DA)=""
+  
+                                2)= S %1=1 F %=1:1:$L(X)+1 S I=$E(X,%) I ",~<>(
+                                ):;"[I S I=$E($E(X,%1,%-1),1,30),%1=%+1 I $L(I)
+                                >2 K ^%ZTER(3.077,"C",I,DA)
+  
+                                3)= Used to make lookup easy
+  
+  
+ 3.077,1       FIRST DATE/TIME        0;2 DATE
+  
+               INPUT TRANSFORM:  S %DT="EST" D ^%DT S X=Y K:Y<1 X
+               LAST EDITED:      DEC 17, 1999 
+               DESCRIPTION:     This is the first date and time that the error
+                                has occurred.  It is of historic importance and
+                                can be used to find the causative event of the 
+                                error that is being reported.  
+  
+  
+ 3.077,2       MOST RECENT DATE/TIME  0;3 DATE
+  
+               INPUT TRANSFORM:  S %DT="EST" D ^%DT S X=Y K:Y<1 X
+               LAST EDITED:      DEC 17, 1999 
+               DESCRIPTION:     This is the most recent time that the situation
+                                has happened.  It is important in that it is
+                                the most likely to still be in the error trap 
+                                global, ^%ZTER.  
+  
+              TECHNICAL DESCR:  As this gets updated, the date is compared with
+                                the date/time stored here.  This will help to
+                                identify any items which may need to be
+                                accessioned into this summary.  It may also be
+                                used to help purge any errors which have not 
+                                been active in a long time (and perhaps is now
+                                obsolete code).  
+  
+  
+ 3.077,3       ROUTINE NAME           0;4 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>20!($L(X)<2) X
+               LAST EDITED:      OCT 31, 2007 
+               HELP-PROMPT:      Answer must be 2-20 characters in length. 
+               DESCRIPTION:     This is the name of the routine in question. 
+                                It will be parsed out of the error string in
+                                .01.  This will make the errors much easier to
+                                cluster around the causative routine.  This may
+                                actually be amended from the error string
+                                presentation if the causative program is found
+                                to be different.  
+  
+  
+ 3.077,3.1     APPLICATION            0;5 POINTER TO PACKAGE FILE (#9.4)
+  
+               LAST EDITED:      AUG 10, 2006 
+               DESCRIPTION:      This field will help to identify who are the
+                                 responsible parties for this problem. 
+                                 Eventually, as a package is identified, the
+                                 primaries and secondaries will be notified of
+                                 the problem automatically as the problem 
+                                 happens.  
+  
+             TECHNICAL DESCR:  This is a pointer to the Package File.  Each
+                               package should indicate a mail group that
+                               tracks the responsible parties for this
+                               specific package.  This should include any IRM
+                               primary and secondary folks as well as any ADPAC
+                               personnel in the specific area of concern with
+                               this package.  The groups should be
+                               self-enrolling and be able to receive the 
+                               generated email that will be batched for the
+                               errors of the day.  
+  
+  
+ 3.077,4       FREQUENCY              0;6 NUMBER
+  
+               INPUT TRANSFORM:  K:+X'=X!(X>99999999)!(X<1)!(X?.E1"."1N.N) X
+               LAST EDITED:      OCT 23, 2007 
+               HELP-PROMPT:      Type a Number between 1 and 99999999, 0 
+                                 Decimal Digits 
+               DESCRIPTION:      This is the number of times that the error has
+                                 been encountered, ever.  See FREQUENCY
+                                 DISTRIBUTION below for how the error is
+                                 occurring during the run of the day.  
+  
+  
+ 3.077,5       FREQUENCY DISTRIBUTION 4;0 Multiple #3.0775
+                                  (Add New Entry without Asking)
+  
+               LAST EDITED:      OCT 23, 2007 
+  
+ 3.0775,.001     HOROLOG DATE             NUMBER
+  
+                 INPUT TRANSFORM:  K:+X'=X!(X>999999)!(X<10000)!(X?.E1"."1.N) X
+                 OUTPUT TRANSFORM: S Y=$$HTE^XLFDT(Y)
+                 LAST EDITED:      NOV 01, 2007 
+                 HELP-PROMPT:      Type a number between 10000 and 999999, 0 
+                                   Decimal Digits 
+  
+ 3.0775,.01      FREQUENCY DISTRIBUTION 0;1 FREE TEXT
+  
+                 INPUT TRANSFORM:  K X
+                 LAST EDITED:      OCT 23, 2007 
+                 HELP-PROMPT:      Type a Frequency Distribution, 3 to 100 
+                                   characters 
+                 NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+  
+  
+  
+ 3.077,6       LAST GLOBAL            3;1 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>240!($L(X)<2) X
+               LAST EDITED:      DEC 17, 1999 
+               HELP-PROMPT:      Answer must be 2-240 characters in length. 
+               DESCRIPTION:      This is the last global referenced with the
+                                 first such error recorded.  If subsequent
+                                 errors are recorded, and have different
+                                 globals listed, they will be recorded in
+                                 the following detail under ERROR EVENTS.
+  
+  
+ 3.077,7       STACK LIST             6;E1,245 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>245!($L(X)<3) X
+               LAST EDITED:      OCT 31, 2007 
+               HELP-PROMPT:      Answer must be 3-245 characters in length 
+               DESCRIPTION:      This is generated from the GETSTK^XTERSUM
+                                 function call.  It is the chain of calling
+                                 levels which were accessed to bring about the
+                                 error.  
+  
+  
+ 3.077,8       UPLOADED DATE/TIME     0;7 DATE
+  
+               INPUT TRANSFORM:  S %DT="ESTX" D ^%DT S X=Y K:X<1 X
+               LAST EDITED:      APR 03, 2008 
+               HELP-PROMPT:      (No range limit on date) 
+               DESCRIPTION:      This field holds the date/time that the Error
+                                 Summary was set to a consolidation site.  A
+                                 message will be sent if this field in empty or
+                                 less than the "Last seen" field.
+  
+ 3.077,10      ERROR EVENTS           1;0 Multiple #3.07701
+  
+               DESCRIPTION:      This is the $H date and the Sequence number of
+                                 this error on that $H date.  It provides an
+                                 easy way to scan quickly historic occurrences
+                                 of these errors.  Long period failures
+                                 will become more evident when they start
+                                 showing up as reoccurring situations which
+                                 will need to be dealt with.
+  
+               TECHNICAL DESCR:  This will be pulled from the $H day subscript
+                                 in ^%ZTER( and the sequence number which
+                                 provides the error profile.
+                                 It will look like;58054:3 
+  
+  
+ 3.07701,.01     ERROR EVENTS           0;1 FREE TEXT (Multiply asked)
+  
+                 INPUT TRANSFORM:  K:$L(X)>30!($L(X)<2)!'(X?5.6N1":"1.E) X
+                 LAST EDITED:      OCT 31, 2007 
+                 HELP-PROMPT:      Answer must be 2-30 characters in length 
+                 DESCRIPTION:      This is the list of captured errors of this
+                                   type in the form of +$H:NN where $H is the
+                                   +$Horolog day count, and NN is the sequence
+                                   number that records the nn'th error for that
+                                   day.  So if the error is still available,
+                                   then, the details can be collected.  This
+                                   scheme will ensure that each occurrence is
+                                   unique.  
+  
+               CROSS-REFERENCE:  3.07701^B 
+                                 1)= S 
+                                 ^%ZTER(3.077,DA(1),1,"B",$E(X,1,30),DA)=""
+  
+                                 2)= K ^%ZTER(3.077,DA(1),1,"B",$E(X,1,30),DA)
+  
+  
+ 3.07701,1       DATE/TIME OF ERROR   0;2 DATE
+  
+                 INPUT TRANSFORM:S %DT="EST" D ^%DT S X=Y K:Y<1 X
+                 LAST EDITED:    DEC 31, 1999 
+                 DESCRIPTION:    This is the date and time as described in the
+                                 error report, but converted to FileMan format.  
+  
+                 CROSS-REFERENCE:3.077^D 
+                                1)= S ^%ZTER(3.077,"D",$E(X,1,30),DA(1),DA)=""
+                                2)= K ^%ZTER(3.077,"D",$E(X,1,30),DA(1),DA)
+                                This cross reference gives the time frames of
+                                these events and makes it easier to reconstruct
+                                the chain of events.  
+  
+  
+  
+ 3.07701,2       LINE IF DIFFERENT    1;E1,245 FREE TEXT
+  
+                 INPUT TRANSFORM:K:$L(X)>245!($L(X)<3) X
+                 LAST EDITED:    OCT 31, 2007 
+                 HELP-PROMPT:    Answer must be 3-245 characters in length 
+                 DESCRIPTION:    This is the offending line of code as captured
+                                 by the interpreter.  
+  
+  
+ 3.07701,3       LAST GLOBAL IF DIFFERENT 2;1 FREE TEXT
+  
+                 INPUT TRANSFORM:K:$L(X)>240!($L(X)<2) X
+                 LAST EDITED:    DEC 17, 1999 
+                 HELP-PROMPT:    Answer must be 2-240 characters in length. 
+  
+ 3.07701,4       $ZHOROLOG DETAIL     0;3 FREE TEXT
+  
+                 INPUT TRANSFORM:K:$L(X)>40!($L(X)<1) X
+                 LAST EDITED:    OCT 31, 2007 
+                 HELP-PROMPT:    Answer must be 1-40 characters in length 
+  
+ 3.07701,5       USER DUZ             0;4 FREE TEXT
+  
+                 INPUT TRANSFORM:K:$L(X)>12!($L(X)<1)!'(X!(X?1.12N)) X
+                 LAST EDITED:    DEC 30, 1999 
+                 HELP-PROMPT:    Answer must be 1-12 characters in length. 
+                 DESCRIPTION:    This is the user who experienced the problem. 
+                                 This will make it easier for us to check if
+                                 this is a needs problem or a training problem.  
+  
+               TECHNICAL DESCR:  This and the rest of this record are
+                                 loaded from the Error Trap, ^%ZTER(1,.  
+                                 The routine to do this transformation and
+                                 consolidation is XTERSUM.  It is in the
+                                 name space reserved by Chris Richardson
+                                 and was built during his time
+                                 at the San Diego  VA in La Jolla.  
+  
+  
+ 3.07701,6       STACK PATH           6;1 FREE TEXT
+  
+                 INPUT TRANSFORM:K:$L(X)>250!($L(X)<2) X
+                 LAST EDITED:    DEC 22, 1999 
+                 HELP-PROMPT:    Answer must be 2-250 characters in length. 
+                 DESCRIPTION:   This is the path by which the error level of
+                                execution was accessed.  It is a series of
+                                segments, each representing a level of
+                                execution in the model as it was being
+                                performed.  Occasionally this list of segments 
+                                will exceed the string length so some judicious
+                                exiting has been done to keep the stack list
+                                manageable.  Should the list need to be
+                                trimmed, segments will be taken out of the
+                                middle of the stack to accommodate the string
+                                limits.  These omissions are marked with an
+                                ellipsis "..." where a segment or segments have
+                                been deleted.  
+                                A segment looks like this; 
+                                   LABEL[+offset]^RTN:command step 
+                                  The set of segments is wrapped in square
+                                brackets and stored in its entirety in the
+                                event node for comparison with other
+                                events.
+  
+  
+ 3.07701,11      USER NAME            3;1 POINTER TO NEW PERSON FILE (#200)
+  
+                 LAST EDITED:    MAR 29, 2000 
+                 DESCRIPTION: User Pointer who was on when the error
+                              occurred. 
+  
+  
+               CROSS-REFERENCE:3.077^USER 
+                              1)= S 
+                              ^%ZTER(3.077,"USER",$E(X,1,30),DA(1),DA)=""
+  
+                              2)= K ^%ZTER(3.077,"USER",$E(X,1,30),DA(1),DA)
+                              This allows the lookup by Users.  
+  
+  
+  
+ 3.07701,12      OPTION USED          3;2 POINTER TO OPTION FILE (#19)
+  
+                 LAST EDITED:    DEC 23, 1999 
+                 DESCRIPTION:    This is the POINTER to the Option File that
+                                 was being used at the time of the error.  
+  
+  
+ 3.07701,13      OPTION NAME          3;3 FREE TEXT
+  
+                 INPUT TRANSFORM:K:$L(X)>30!($L(X)<2) X
+                 LAST EDITED:    DEC 23, 1999 
+                 HELP-PROMPT:    Answer must be 2-30 characters in length. 
+                 DESCRIPTION:    This is the name of the option pointed to in
+                                 field 2.  
+  
+  
+ 3.07701,14      TASK REFERENCED      3;4 POINTER TO TASK'S FILE (#14.4)
+  
+                 LAST EDITED:    DEC 23, 1999 
+                 DESCRIPTION:    This is the task being performed (if it was a
+                                 task).  
+  
+  
+ 3.07701,15      GLOBAL VOLUME        3;5 FREE TEXT
+  
+                 INPUT TRANSFORM:K:$L(X)>8!($L(X)<2) X
+                 LAST EDITED:    OCT 31, 2007 
+                 HELP-PROMPT:    Answer must be 2-8 characters in length 
+                 DESCRIPTION:    This is the Global Volumes being accessed when
+                                 the task started.  
+  
+  
+ 3.07701,16      ROUTINE VOLUME       3;6 FREE TEXT
+  
+                 INPUT TRANSFORM:K:$L(X)>8!($L(X)<2) X
+                 LAST EDITED:    OCT 31, 2007 
+                 HELP-PROMPT:    Answer must be 2-8 characters in length 
+                 DESCRIPTION:    This is the Routine Set being used when the
+                                 Error Occurred.  
+  
+                TECHNICAL DESCR: This and the surrounding variables came
+                                 from the Error Trap and XUENV.
+  
+  
+ 3.07701,17      HOST CPU             3;7 FREE TEXT
+  
+                 INPUT TRANSFORM:K:$L(X)>8!($L(X)<2) X
+                 LAST EDITED:    OCT 31, 2007 
+                 HELP-PROMPT:    Answer must be 2-8 characters in length 
+                 DESCRIPTION:    This is the Name of the CPU the program was
+                                 running on. 
+  
+  
+ 3.07701,18      RPC BROKER STATE     3;8 FREE TEXT
+  
+                 INPUT TRANSFORM:K:$L(X)>40!($L(X)<2) X
+                 LAST EDITED:    DEC 23, 1999 
+                 HELP-PROMPT:    Answer must be 2-40 characters in length. 
+                 DESCRIPTION:    This is the description of the Broker Task
+                                 being performed.  
+  
+  
+ 3.07701,19      UPLOADED             0;5 SET
+  
+                                 '0' FOR No; 
+                                 '1' FOR Yes; 
+                 LAST EDITED:    OCT 30, 2007 
+                 DESCRIPTION:    This field tells if this error has been
+                                 reported to a central repository.  
+  
+  
+  
+ 3.077,20      LINE OF CODE           2;E1,245 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>245!($L(X)<3) X
+               LAST EDITED:      OCT 31, 2007 
+               HELP-PROMPT:      Answer must be 3-245 characters in length 
+               DESCRIPTION:      This is the original line of code which caused
+                                 this problem.  It should be the same for all
+                                 occurrences, but may reflect other failures on
+                                 the same line.  
+  
+  
+ 3.077,30      DISCUSSION             30;0   WORD-PROCESSING #3.07702
+  
+  
+ 3.077,31      SUPPORT PERSONNEL      31;0 POINTER Multiple #3.077031
+                                  (Add New Entry without Asking)
+  
+  
+ 3.077031,.01    SUPPORT PERSONNEL      0;1 POINTER TO NEW PERSON FILE (#200)
+  
+                 LAST EDITED:      MAR 29, 2000 
+                 DESCRIPTION:      This is the person assigned to deal with the
+                                   problem.  The date assigned will be a
+                                   companion data item to this information.  
+  
+                TECHNICAL DESCR:  The chain of support folks should be easy to
+                                  follow and track who is working on a specific
+                                  problem.  
+  
+                 CROSS-REFERENCE:  3.077031^B 
+                                 1)= S ^%ZTER(3.077,DA(1),31,"B",$E(X,1,30),DA)
+                                   =""
+  
+                                 2)= K ^%ZTER(3.077,DA(1),31,"B",$E(X,1,30),DA)
+  
+  
+ 3.077031,1      WHEN ASSIGNED        0;2 DATE
+  
+                 INPUT TRANSFORM:S %DT="EST" D ^%DT S X=Y K:Y<1 X
+                 LAST EDITED:    MAR 29, 2000 
+                 DESCRIPTION:    This is the date that the SW Engineer was
+                                 assigned the problem.  
+  
+  
+ 3.077031,2      LAST ACTIVITY DATE   0;3 DATE
+  
+                 INPUT TRANSFORM:S %DT="EST" D ^%DT S X=Y K:Y<1 X
+                 LAST EDITED:    MAR 29, 2000 
+                 DESCRIPTION:    This is the date and time of the last
+                                 operation on this problem.  
+  
+  
+  
+ STANDARD DATA DICTIONARY #8989.3 -- KERNEL SYSTEM PARAMETERS FILE   
+                                                OCT 23,2007@15:43:38  PAGE 1
+ STORED IN ^XTV(8989.3,  (1 ENTRY)   SITE: KERNEL PATCH ACCOUNT  
+  
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ -----------------------------------------------------------------------------
+  
+ 8989.3,520.1  ERROR LIMIT            ZTER;1 NUMBER
+  
+               Error Limit               
+               INPUT TRANSFORM:  K:+X'=X!(X>1000)!(X<1)!(X?.E1"."1.N) X
+               LAST EDITED:      OCT 23, 2007 
+               HELP-PROMPT:      Type a number between 1 and 1000, 0 Decimal 
+                                 Digits 
+               DESCRIPTION:      This field holds the maximum number of a
+                                 particular error to be recorded on one 
+                                 day. The count will continue in the ERROR
+                                 SUMMARY file (#3.077) field FREQUENCY (#4)
+                                 even though the error is not recorded in
+                                 the error trap.  It is used in the
+                                 $$SCREEN^%ZTER logic to tell the
+                                 error trap to skip recording the error.
+                                 
+  
+ 8989.3,520.2  SEND ERROR SUMMARY     ZTER;2 SET
+  
+                                 '0' FOR No; 
+                                 '1' FOR Yes; 
+               LAST EDITED:      DEC 18, 2007 
+               DESCRIPTION:      This field controls if the error summary
+                                 routine sends a record to a consolidating
+                                 facility when it has finished running.  The
+                                 mail message is sent to the mail group XTER
+                                 SUMMARY LOAD.  In the VA this will include the
+                                 remote entry G.XTER SUMMARY LOAD@FORUM.VA.GOV.
+                                 
+  
+ 8989.3,520.3  KEEP ERROR TRAP        ZTER;3 NUMBER
+  
+               INPUT TRANSFORM:  K:+X'=X!(X>99999)!(X<1)!(X?.E1"."1N.N) X
+               LAST EDITED:      MAY 27, 2010 
+               HELP-PROMPT:      Type a number between 1 and 99999. Days to 
+                                 keep detail Error Trap.
+               DESCRIPTION:      This field holds the number of days to keep
+                                 the entries in the Detail Error Trap.  
+                                 Defaults to 7 if left blank.
+  
+  
+ 8989.3,520.4  KEEP ERROR SUMMARY     ZTER;4 NUMBER
+  
+               INPUT TRANSFORM:  K:+X'=X!(X>99999)!(X<7)!(X?.E1"."1N.N) X
+               LAST EDITED:      MAY 27, 2010 
+               HELP-PROMPT:      Type a number between 7 and 99999. Days to
+                                 keep the Error Summary.
+               DESCRIPTION:      This field holds the number of days to keep 
+                                 the entries in the Error Trap Summary
+                                 since they were last seen. Defaults to 90
+                                 if left blank.
+  
+ STANDARD DATA DICTIONARY #3.075 -- ERROR LOG FILE   
+                                                     
+ STORED IN ^%ZTER(1, (167 ENTRIES)  SITE: SF CIOFO, KERNEL PATCH ACCOUNT   UCI:
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ -----------------------------------------------------------------------------
+ 3.0751,4.04     UCI~VOL~NODE~BOX       J;4 FREE TEXT
+  
+                 INPUT TRANSFORM:  K:$L(X)>30!($L(X)<1) X
+                 LAST EDITED:      NOV 19, 2007 
+                 HELP-PROMPT:      This is the value from GETENV^%ZOSV. 
+                 DESCRIPTION:     This field contains the UCI and VOL in which
+                                  the job was running at the time the error was
+                                  generated.                                 
+ ============================================================================
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 35
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XTER1
+    Before: B27359936   After: B28754239  **8,392,431**
+Routine Name: XTER1A
+    Before: B25511369   After: B27283149  **63,112,120,431**
+Routine Name: XTERPUR
+    Before: B10460045   After: B10067761  **243,431**
+Routine Name: XTERSUM
+    Before:       n/a   After: B48040361  **431**
+Routine Name: XTERSUM1
+    Before:       n/a   After: B11333211  **431**
+Routine Name: XTERSUM3
+    Before:       n/a   After: B11921916  **431**
+Routine Name: XTERSUM4
+    Before:       n/a   After:  B4445199  **431**
+Routine Name: ZTER
+    Before: B38379004   After: B51850002  **8,18,32,24,36,63,73,79,86,
+                                           112,118,162,275,392,455,431**
+ 
+Routine list of preceding patches: 120, 243, 455
+
+=============================================================================
+User Information:
+Entered By  : FORT,WALLY                    Date Entered  : SEP 05, 2006
+Completed By: SINGH,GURBIR                  Date Completed: APR 13, 2011
+Released By : TILLIS,LEWIS                  Date Released : APR 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

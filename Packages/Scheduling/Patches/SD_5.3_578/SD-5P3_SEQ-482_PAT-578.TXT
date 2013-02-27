@@ -1,0 +1,350 @@
+ 
+=============================================================================
+Run Date: MAR 21, 2012                     Designation: SD*5.3*578
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #482                    Status: Released
+                  Compliance Date: APR 21, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*153  <<= must be installed BEFORE `SD*5.3*578'
+
+Subject: HIGH RISK MENTAL HEALTH NO SHOW REPORT
+
+Category: 
+  - Informational
+  - Other
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+ This patch, SD*5.3*578, is being released in a single 
+ Kernel Installation and Distribution System (KIDS) software
+ distribution (host file).  This patch message contains the informational
+ portion of SD*5.3*578 and provides field personnel with instructions on
+ how to acquire, install, and implement the patch software.
+ *************************************************************************
+  
+  
+ This patch is in support of the Improve Veteran Mental
+ Health (IVMH) initiative, High Risk Mental Health (HRMH)
+ - Reminder Patient List Reporting. This patch implements
+ two new Scheduling No Show reports to display 
+ information in support of the HRMH initiatives.  
+ This list of patients will support Reminder Patient List
+ reporting needs for how many of the 
+ High Risk for Suicide PRF patients of record
+ had a NO-SHOW during a reporting period.
+  
+  
+ The new High Risk MH No-Show Adhoc Report [SD MH NO SHOW AD HOC REPORT]
+ option will display all patients that no showed for their scheduled 
+ appointment for a Mental Health clinic.  The user is asked for the date 
+ range and divisions to display and the report is sorted by Clinic, Mental 
+ Health only clinics or Stop Codes. The report will display patient contact
+ information, Next of Kin, emergency contact, clinic default
+ provider, Mental Health Team Coordinator(MHTC)(future release),
+ future scheduled appointments and results of attempts
+ to contact the no showed patients (future release).
+  
+ The High Risk MH No-Show Nightly Report [SD MH NO SHOW NIGHTLY BGJ]
+ is called by the scheduling nightly background job
+ Appointment Status Update (Background)[SDAM BACKGROUND JOB].
+ This report will display all patients that no showed
+ for their scheduled appointment for a Mental Health clinic.  
+ This will be an abbreviated report, listing only
+ Patient appointment information and future scheduled
+ appointments for the patient. As this is a background
+ job, the report will display for the day before, for all the
+ divisions and mental health clinics in the facility. 
+ The report will be sent via email to members of the
+ SD MH NO SHOW NOTIFICATION mail group.
+ This report can also be run by calling the option
+ No Show Nightly Background Job [SD MH NO SHOW NIGHTLY BGJ].
+  
+ Access to these two new options should be assigned to the appropriate
+ personnel.
+  
+ Patch Components
+ ================
+ SDMHAD - this routine sets up variables for the
+ Mental Health High Risk Ad Hoc No Show report.
+ SDMHAD1 - this routine prints the data
+ for the Mental Health High Risk Ad Hoc No Show report
+ SDMHNS - this routine sets up variables for the
+ High Risk Mental Health Nightly Background Job No Show report.
+ SDMHNS1 - this routine prints the data
+ for the High Risk Mental Health Nightly Background Job No Show report
+ SDAMQ - this is the routine for the scheduling background job that
+ Calls the Mental Health Nightly Background Job No Show report.
+  
+ Files & Fields Associated:
+  
+ N/A
+ Forms Associated:
+ N/A
+    
+ Mail Groups Associated:
+ SD MH NO SHOW NOTIFICATION - Members added to this mail group will receive the High Risk Mental Health Nightly Background Job No Show report. 
+  
+ Options Associated: 
+ [SD MH NO SHOW AD HOC REPORT] - High Risk MH No-Show Adhoc Report
+ [SD MH NO SHOW NIGHTLY BGJ] - High Risk MH No-Show Nightly Report
+  
+ Protocols Associated:
+ N/A
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A
+  
+ Additional Information:
+   
+ Integration Control Registrations: 
+ Requested subscription to ICR's :
+  
+ ICR #4903 PATIENT RECORD FLAG DATA RETRIEVAL
+  
+ This call, checks if the patient had the
+ High Risk for Suicide patient record flag (PRF)
+ at the time of the no showed appointment. 
+  
+  
+  Component            Routine
+  ----------           ----------
+  GETINF               DGPFAPIH
+  
+  
+  
+ ICR #5599 from clinical reminders to access File (#810.9) 
+  
+ The inquiry to this file will check only Mental
+ Health clinics that should be checked for a patient
+ No show.
+  
+  
+ GLOBAL REFERENCE: 
+      ^PXRMD(810.9,D0,0)
+        .01      NAME                 0;1      Direct Global Read & w/Fileman
+         This is the name of the Reminder Location List.  
+          
+    GLOBAL REFERENCE: 
+      ^PXRMD(810.9,D0,40.7,D1,0)
+  
+        .01      CLINIC STOP          810.9001 Direct Global Read & w/Fileman
+         Pointer to file #40.7.  
+          
+        .02      AMIS REPORTING STOP  810.9001 Direct Global Read & w/Fileman
+         AMIS reporting stop code.  
+          
+    GLOBAL REFERENCE: 
+      ^PXRMD(810.9,'B',
+       "B" index for looking up a Reminder Location List.  
+        
+    GLOBAL REFERENCE: 
+      ^PXRMD(810.9,D0,40.7,'B',
+       "B" index for looking up Clinic Stops.  
+        
+  
+  
+ ICR #5597 from Registration to access File (#2) 
+  
+ The code calls GETS^DIQ a supported API which
+ retrieves the following data from file 2 PATIENT file.
+ The supported VADPT API does not retrieve this data.
+  
+  
+ GLOBAL REFERENCE: 
+ ^DPT(D0,.13)= 
+        .134     PHONE NUMBER [CELLUL 0;4      Read w/Fileman
+          
+ GLOBAL REFERENCE: 
+ ^DPT(D0,.21
+        .21011   K-WORK PHONE NUMBER  .21;11   Read w/Fileman
+  
+  
+  
+ GLOBAL REFERENCE: 
+ ^DPT(D0,.211
+        .211011  K2-WORK PHONE NUMBER .211;9   Read w/Fileman
+ GLOBAL REFERENCE: 
+ ^DPT(D0,.33
+        .33011   E-WORK PHONE NUMBER  .33;11   Read w/Fileman
+ GLOBAL REFERENCE: 
+ ^DPT(D0,.331
+        .331011  E2-WORK PHONE NUMBER .331;11  Read w/Fileman
+          
+  
+  
+ New Service Requests (NSR's)
+ ----------------------------  
+ High Risk Mental Health Patient Appointment Cancellation (#20100408)
+    
+    
+ Patient Safety Issues (PSI's)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+   
+   
+   
+  Test Sites:
+  ----------
+   
+ UPSTATE NEW YORK HCS BUFFALO
+ PORTLAND VAMC
+ NORTHPORT VAMC
+ NORTHERN CALIFORNIA HCS
+ MILWAUKEE VAMC
+ MARYLAND HCS
+ INDIANAPOLIS VAMC
+ CHICAGO VAMC
+  
+  
+  
+  
+ Software & Documentation Retrieval Instructions
+ ------------------------------------ 
+ The software for this set of patches is not being distributed through 
+ the National Patch Module. There is a multi-package build named 
+ HIGH RISK MH 1.0 which contains the following KIDS builds: 
+ DG*5.3*836, SD*5.3*578, TIU*1.0*260, GMTS*2.7*99, and
+ PXRM*2.0*18.The associated host file is named HIGH_RISK_MH_1_0.KID.
+  
+ The set of documentation has been bundled into a single zip file named: 
+ HRMHP_DOCS.ZIP.
+  
+ The preferred method for obtaining these files is to use 
+ File Transfer Protocol (FTP) to download them from: 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve the files directly from a specific server 
+ as follows:
+  
+ Albany      ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines       ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov  <ftp://ftp.fo-slc.med.va.gov>
+  
+ HRMHP_DOCS.ZIP contains the following files:
+  
+ PXRM_2_18_IG.PDF
+ PXRM_2_UM.PDF
+ PXRM_2_TM.PDF
+ PXRM_2_MM.PDF
+ PXRM_2_18_RN.PDF
+ HSUM_2_7_99_UM.PDF
+ HSUM_2_7_99_TM.PDF
+ DG_5_3_836_IG.PDF
+ SD_5_3_578_IG.PDF
+  
+ Documentation can also be found on the VistA Documentation Library (VDL) 
+ at:
+ http://www.va.gov/vdl/
+  
+ Title                         File Name                      FTP Mode
+ ----------------------------------------------------------------------- 
+ High Risk Mental Health Patient Project Installation and Setup Guide 
+                                PXRM_2_18_IG.PDF               Binary
+ PXRM User Manual               PXRM_2_UM.PDF                  Binary
+ PXRM Tech Manual               PXRM_2_TM.PDF                  Binary
+ High Risk Mental Health Patient Project Release Notes
+                                PXRM_2_18_RN.PDF               Binary
+ Clinical Reminders Manager's Manual
+                                PXRM_2_MM.PDF                  Binary
+ GMTS User Manual               HSUM_2_7_99_UM.pdf             Binary
+ GMTS Tech Manual               HSUM_2_7_99_TM.pdf             Binary
+ DG Install Guide               DG_5_3_836_IG.PDF              Binary
+ SD Install Guide               SD_5_3_578_IG.PDF              Binary 
+  
+  Patch Installation:
+    
+  Installation Instructions
+  -----------------------------
+ The following install steps are only a high level overview, please follow 
+ the PXRM install guide for more detailed instructions and guidance.
+  
+ 1.  Download the HIGH_RISK_MH_1_0.KID file from the appropriate  
+     FTP Server to the directory on your system.
+  
+ 2.  Use LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and 
+     enter: [DIR]:HIGH_RISK_MH_1_0.KID, where [DIR] is the local
+     directory where you have stored the host file.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use any of
+     the following options. When prompted for the INSTALL enter the build 
+     HIGH RISK MH 1.0:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this build. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this build
+         is installed. It compares all components of this build
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and 
+     choose the build to install.
+  
+ 5.  When prompted 'Enter the Coordinator for Mail Group 
+     'SD MH NO SHOW NOTIFICATION': enter the name of the  staff person
+     from Mental Health who will be responsible for adding people to this 
+     mail group.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'   Answer 'NO'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//'  Answer 'NO' 
+  
+  
+ Routine Information:
+ ====================
+  
+  
+ The second line of each of these routines now looks like:
+  ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 18
+  
+ The checksums below are new checksums, and
+  can be checked with CHECK1^XTSUMBLD.
+  
+  
+ Routine Name: SDAMQ
+     Before:  B9325297   After:  B9692546  **44,132,153,578**
+ Routine Name: SDMHAD
+     Before:       n/a   After: B116553024  **578**
+ Routine Name: SDMHAD1
+     Before:       n/a   After: B85354679  **578**
+ Routine Name: SDMHNS
+     Before:       n/a   After:  B24321441  **578**
+ Routine Name: SDMHNS1
+     Before:       n/a   After: B98089996  **578**
+    
+  
+ Routine list of preceding patches: 153
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : FERRARESE,MARY ANN            Date Entered  : JAN 04, 2011
+Completed By: KIRBY,ROSE                    Date Completed: FEB 24, 2012
+Released By : ADAMS,RITA W                  Date Released : MAR 21, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

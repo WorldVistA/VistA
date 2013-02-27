@@ -1,0 +1,374 @@
+$TXT Created by KOPECKY,STEVE at MNTVLL.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 02/24/11 at 09:16
+=============================================================================
+Run Date: MAR 14, 2011                     Designation: DG*5.3*773
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #739                    Status: Released
+                  Compliance Date: APR 14, 2011
+=============================================================================
+
+Associated patches: (v)DG*5.3*564  <<= must be installed BEFORE `DG*5.3*773'
+                    (v)DG*5.3*658  <<= must be installed BEFORE `DG*5.3*773'
+                    (v)DG*5.3*688  <<= must be installed BEFORE `DG*5.3*773'
+
+Subject: MEANS TEST EVENT DRIVER UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following problem: 
+   
+ Income Verification Match (IVM) sometimes converts a veteran's Copay 
+ Exemption (or Means) Test, even though the VistA rules determine that the 
+ veteran is not subject to this test based on his or her eligibility.  
+ Whenever VistA's Means Test event driver is triggered for such a veteran, 
+ it resets the Status of the test to No Longer Applicable (or No Longer 
+ Required) and displays a message announcing the test's new Status.  This 
+ is problematical, because no VistA function should be altering IVM tests
+ and thus overriding IVM decisions.
+  
+ Under the described scenario, VistA's Means Test event driver should be
+ limited to never update the Status of an IVM-converted test.
+  
+ Change Request referenced is: CR6887  
+   
+ This patch addresses the following New Service Request (NSR): 
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.  
+   
+ This patch addresses the following Remedy Ticket(s): 
+ ----------------------------------------------------
+ HD0000000202487  Means Test Conversion problem
+      DUPLICATE:  HD0000000261838  Facility overrode IVM RX Copay Required
+                                    Entry
+   
+   
+ Overview of Remedy Ticket(s): 
+ -----------------------------
+ HD0000000202487, HD0000000261838 
+    Problem: IVM uses criteria that differs from VistA to determine if a
+             Means Test or Copay Test is required for a patient.  This can 
+             result in the upload of a converted test for a patient with a 
+             status that is other than No Longer Required or No Longer
+             Applicable.  Whenever the Means Test event driver is run for
+             that patient, the VistA system will update that IVM test's
+             status to be one of these two statuses.  This results in the
+             site overriding the IVM decision, which should not be allowed.
+             
+    Resolution: Add a flag in the Means Test event driver to NOT update the
+             Status of a Copay Exemption Test or Means Test if the test has
+             been converted by IVM.
+  
+ For the purposes of this fix, the following rules will be used:
+   
+ 1)  If the SOURCE OF INCOME TEST field, #.23, in the ANNUAL MEANS TEST
+ file (#408.31) is equal to "IVM"
+ OR
+ 2)  the DATE IVM VERIFIED MT COMPLETED field, #.25, in the ANNUAL MEANS 
+ TEST file (#408.31) is populated, 
+  
+ then the test will be considered an IVM-converted test and will not be 
+ touched.
+  
+  
+ Test Sites: 
+ -----------
+ Miami VAMC (Large)
+ Tampa VAMC (Large)
+ Heartland East (Integrated)
+  
+   
+         ================INSTALLATION INSTRUCTIONS ================= 
+   
+ Patch DG*5.3*773 may be installed during the normal workday.  Other VistA
+ users will not be affected.  
+   
+  Install Time - less than 5 minutes 
+   
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+               
+ 2.  START UP KIDS 
+      -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+     
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+     
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                           ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+     
+ Select Installation Option: 
+     
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL 
+            NAME, enter DG*5.3*773): 
+        
+     a.  Backup a Transport Global - This option will create a backup 
+         message of any routines exported with this patch. It will not 
+         backup any other changes such as DD's or templates.  
+     b.  Compare Transport Global to Current System - This option will 
+         allow you to view all changes that will be made when this patch 
+         is installed.  It compares all components of this patch 
+         (routines, DD's, templates, etc.).  
+     c.  Verify Checksums in Transport Global - This option will allow 
+         you to ensure the integrity of the routines that are in the 
+         transport global.  
+       
+ 4.  Select Installation Option: Install Package(s) 
+                                  ------------------
+     **This is the step to start the installation of this KIDS patch: 
+     
+     a.  Choose the Install Package(s) option to start the patch 
+          install.  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+          YES//' answer NO.
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+          Options, and Protocols? YES//' answer YES.
+     d.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':'  enter the following options:
+   
+           Load/Edit Patient Data        [DG LOAD PATIENT DATA]
+           Register a Patient            [DG REGISTER PATIENT]
+  
+     e.  When prompted 'Enter protocols you wish to mark as 'Out Of
+         Order':' press the <Enter> key.
+  
+ Note:  In the Routine Information section below, where routines' second 
+ lines are listed, please disregard the Build numbers, as these have been
+ generated by the National Patch Module and are irrelevant to VistA sites'
+ installations.  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG10
+    Before: B18522762   After: B19403722  **32,109,139,149,182,326,513,
+                                           425,574,642,658,773**
+ Description of Changes:
+   Description of Changes:
+    Before:
+    =======
+      1 DG10   ;ALB/MRL,DAK,AEG,PHH-LOAD/EDIT PATIENT DATA ; 8/24/05 1:47pm
+      2        ;;5.3;Registration;**32,109,139,149,182,326,513,425,574,642,658**;A
+  ug 13, 1993
+     
+     20        K MPIFRTN
+     21        ;
+     22        I +$G(DGNEW) D
+     23        . ; query CMOR for Patient Record Flag Assignments if NEW patient and
+     
+     
+    After:
+    ======
+     
+      1 DG10   ;ALB/MRL,DAK,AEG,PHH,TMK-LOAD/EDIT PATIENT DATA ; 08/26/08
+      2        ;;5.3;Registration;**32,109,139,149,182,326,513,425,574,642,658,773**;Aug 
+  13, 1993;Build 4
+     
+     20        K MPIFRTN
+     21        ;
+     22        N DGNOIVMUPD
+     23        S DGNOIVMUPD=1 ; Set flag to prevent MT Event Driver from updating 
+  converted IVM test   
+     24        I +$G(DGNEW) D   
+     25        . ; query CMOR for Patient Record Flag Assignments if NEW patient an              d
+
+Routine Name: DGMTCOR
+    Before: B28396316   After: B34865295  **21,45,182,290,305,330,344,
+                                           495,564,773**
+ Description of Changes:
+   Description of Changes:
+    Before:
+    =======
+     
+      1 DGMTCOR ;ALB/CAW,SCG,LBD - Check Copay Test Requirements ; 03/03/03 8:15am
+      2        ;;5.3;Registration;**21,45,182,290,305,330,344,495,564**;Aug 13, 19
+  9
+                3
+     
+     26        ; Input  -- DFN     Patient IEN
+     27        ;           DGADDF  Means Test Add Flag (optional)
+     28        ; Output -- DGMTCOR  Copay Test Flag
+     
+     
+     83        N DGCS,DGMTI,DGMT0,DGINI,DGINR,DGVAL,DGFL,DGFLD,DGIEN,DGMTACT,TDATE
+     84        S DGMTI=+$$LST^DGMTU(DFN,"",2) Q:'DGMTI!($P($G(^DGMT(408.31,DGMTI,0
+  )
+                ),U,3)=10)
+     85        S DGMT0=$G(^DGMT(408.31,DGMTI,0)) Q:'DGMT0
+     86        S DGCS=$P(DGMT0,U,3)
+     
+     
+     
+     
+    After:
+    ======
+     
+      1 DGMTCOR ;ALB/CAW,SCG,LBD,TMK - Check Copay Test Requirements ; 07/28/08
+      2        ;;5.3;Registration;**21,45,182,290,305,330,344,495,564,773**;Aug 13
+  ,
+                 1993;Build 4
+     
+     26        ; Input  -- DFN     Patient IEN
+     27        ;           DGADDF  Means Test Add Flag (optional)
+     28        ;           DGNOIVMUPD Do Not Update IVM Copay Test Flag (optional)
+     29        ; Output -- DGMTCOR  Copay Test Flag
+     
+     
+     84        N DGCS,DGMTI,DGMT0,DGINI,DGINR,DGVAL,DGFL,DGFLD,DGIEN,DGMTACT,TDATE
+     85        S DGMTI=+$$LST^DGMTU(DFN,"",2) Q:'DGMTI!($P($G(^DGMT(408.31,DGMTI,0
+  )
+                ),U,3)=10)
+     86        ; Do not allow update of IVM test by site
+     87        I $G(DGNOIVMUPD),$$IVMCVT^DGMTCOR(DGMTI) D  Q  ;Check if converted 
+  I
+                VM MT
+     88        . ;I '$G(DGMSGF),$G(DGNOIVMUPD)<2 W !,"IVM RX COPAY TEST EXISTS, BUT J VISTA CALCULATES 'NO LONGER APPLICABLE'",!,"CONTACT IVM TO CLEAR UP
+                 THE DISCREPANCY - YOU CANNOT UPDATE AN IVM TEST"
+     89        . S DGNOIVMUPD=2 ; Prevent double printing of the message
+     90        S DGMT0=$G(^DGMT(408.31,DGMTI,0)) Q:'DGMT0
+     
+    137 IVMCVT(IVMTIEN) --
+                ; Check for a converted IVM Means Test
+    138        ;  Input  IVMTIEN - MT IEN to check
+    139        ;  Return 1 - if converted MT
+    140        ;         0 - if not a converted MT
+    141        ;
+    142        N FLAG,IVMAR
+    143        S FLAG=0
+    144        I '$G(IVMTIEN) G IVMQ
+    145        D GETS^DIQ(408.31,IVMTIEN,".23;.25","E","IVMAR")
+    146        ; To identify an IVM converted test in the ANNUAL MEANS TEST, #408.
+  3
+                1, if the Source of Test (#.23)
+    147        ; is equal to 'IVM' OR the Date IVM Verified MT Completed (#.25) is
+   
+                populated, then the test should
+    148        ; be considered a converted test. 
+    149        I IVMAR(408.31,IVMTIEN_",",.23,"E")="IVM" S FLAG=1 G IVMQ
+    150        I IVMAR(408.31,IVMTIEN_",",.25,"E")]"" S FLAG=1 G IVMQ
+    151 IVMQ   ;
+    152        Q FLAG
+
+Routine Name: DGMTR
+    Before: B58184426   After: B65909433  **45,93,114,137,141,147,177,
+                                           182,146,305,326,314,344,402,
+                                           426,456,495,672,688,773**
+ Description of Changes:
+     
+      1 DGMTR  ;ALB/RMO,CAW,SCG,AEG,SCG,AEG,LBD - Check Means Test Requirements ; 
+  1
+                0/15/08 4:08pm
+      2        ;;5.3;Registration;**45,93,114,137,141,147,177,182,146,305,326,314,
+  3
+                44,402,426,456,495,672,688**;Aug 13, 1993;Build 29
+     
+     
+     10        ; Input  -- DFN     Patient IEN
+     11        ;           DGADDF  Means Test Add Flag  (Optional- default none)
+     12        ;                   (1 if using the 'Add a New Means Test' option)
+     13        ;           DGMSGF  Means Test Msg Flag  (Optional- default none)
+     14        ;                   (1 to suppress messages)
+     15        ; Output -- DGREQF  Means Test Require Flag
+     
+     24        ;           If a means test is required and the current
+     25        ;           status is NO LONGER REQUIRED, the last date of
+     26        ;           test and current means test status will be
+     27        ;           updated to REQUIRED.
+     28        ;           If a means test is no longer required the
+     29        ;           last date of test and the current means test
+     30        ;           status will also be updated to NO LONGER REQUIRED.
+     
+     
+    182 NOL    ;Update means test status to NO LONGER REQUIRED
+    183        N DGMTA,DGINI,DGINR,DGMTDT,DATA
+    184        W:'$G(DGMSGF) !,"MEANS TEST NO LONGER REQUIRED"
+    185        ;may have set prior MT for means test upload
+     
+     
+    After:
+    ======
+     
+      1 DGMTR  ;ALB/RMO,CAW,SCG,AEG,SCG,AEG,LBD - Check Means Test Requirements ; 
+  7
+                /8/05 2:30pm
+      2        ;;5.3;Registration;**45,93,114,137,141,147,177,182,146,305,326,314,
+  3
+                44,402,426,456,495,672,688,773**;Aug 13, 1993;Build 4
+     
+     
+     10        ; Input  -- DFN     Patient IEN
+     11        ;           DGADDF  Means Test Add Flag  (Optional- default none)
+     12        ;                   (1 if using the 'Add a New Means Test' option)
+     13        ;           DGMSGF  Means Test Msg Flag  (Optional- default none)
+     14        ;                   (1 to suppress messages)
+     15        ;           DGNOIVMUPD No IVM Update Flag (Optional - default allow
+  )
+     16        ;                   (1 if updating of an IVM test is not allowed)
+     
+     
+     26        ;           If a means test is required and the current
+     27        ;           status is NO LONGER REQUIRED, the last date of
+     28        ;           test and current means test status will be
+     29        ;           updated to REQUIRED unless the DGNOIVMUPD flag is set t
+  o
+                 1
+     30        ;           and the current primary means test is an IVM test. 
+     31        ;           If a means test is no longer required the
+     32        ;           last date of test and the current means test
+     33        ;           status will also be updated to NO LONGER REQUIRED unles
+  s
+     34        ;           the DGNOIVMUPD flag is set to 1 and the current primary
+     35        ;           means test is an IVM test.
+     
+     
+    187 NOL    ;Update means test status to NO LONGER REQUIRED
+    188        N DGMTA,DGINI,DGINR,DGMTDT,DATA
+    189        I $G(DGNOIVMUPD),$$IVMCVT^DGMTCOR(DGMTI) D  G NOLQ ; Check for conv
+  e
+                rted IVM MT
+    190        . ;I '$G(DGMSGF),$G(DGNOIVMUPD)<2 W !,"IVM MEANS TEST EXISTS, BUT VI
+  S
+                TA CALCULATES 'NO LONGER REQUIRED'",!,"CONTACT IVM TO CLEAR UP THE
+   
+                DISCREPANCY - YOU CANNOT UPDATE AN IVM TEST"
+    191        . S DGNOIVMUPD=2 ; Prevent double printing of the message
+    192        W:'$G(DGMSGF) !,"MEANS TEST NO LONGER REQUIRED"
+    193        ;may have set prior MT for means test upload
+
+ 
+Routine list of preceding patches: 564, 658, 688
+
+=============================================================================
+User Information:
+Entered By  : KOPP,TERRY M                  Date Entered  : NOV 29, 2007
+Completed By: RUDINGER,NANCY L.             Date Completed: MAR 14, 2011
+Released By : GROOMS,ANTHONY E              Date Released : MAR 14, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

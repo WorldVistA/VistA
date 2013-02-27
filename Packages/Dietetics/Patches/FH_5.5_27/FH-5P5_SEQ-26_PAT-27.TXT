@@ -1,0 +1,252 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 01/13/11 at 11:45
+=============================================================================
+Run Date: MAR 06, 2012                     Designation: FH*5.5*27
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #26                    Status: Released
+                  Compliance Date: APR 06, 2012
+=============================================================================
+
+Associated patches: (v)FH*5.5*4    <<= must be installed BEFORE `FH*5.5*27'
+                    (v)FH*5.5*20   <<= must be installed BEFORE `FH*5.5*27'
+
+Subject: CORRECT ISSUE WITH TICKLERS & ALERTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+ 1. Ticklers are not displaying correctly for Nursing Home patients with an
+ (ASIH) "Absent Sick in Hospital" episode. 
+  
+ 2. When the List Inpats By Nutrition Status Level [FHASNR4] report option
+ is executed and the sorting is done by CLINICIAN, it is using the old
+ CLINICIAN field (#1) rather than the new CLINICIAN(S) field (#112).
+ This causes the report to produce incorrect information.
+  
+ 3. When a patient is transferred to another ward, routine FHWTRN is 
+ invoked to determine if monitors and related ticklers should be filed 
+ for the patient.  Currently, alerts are being issued to the incorrect 
+ Clinician.  
+  
+ 4. XINDEX error is being generated for routine FHWTRN, which is a SACC 
+ VIOLATION.  
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000242092 - FGH - Tickler doesn't seem to be working on one 
+    patient.
+  
+    Duplicate(s)
+    ------------
+    HD0000000267509 - Albumin level of 2.5 did not trigger in the 
+    tickler file
+    HD0000000370763 - Tickler File not Showing Monitor Alerts
+    HD0000000417986 - Low Albumin did not trigger a monitor alert
+    HD0000000481429 - Possible problem with NPO+Clr Liq alerts
+  
+ 2. HD0000000426656 - List Inpats By Nutrition Status Level [FHASNR4]
+  
+    Duplicate(s)
+    ------------
+    HD0000000288389 - FHASNR4 report doesn't list all patients when sorted
+    by CLINICIAN
+  
+ 3. HD0000000430806 - clinician receiving alert
+  
+    Duplicate(s)
+    ------------
+    HD0000000539500 - Tickler File will not Follow Patient
+    HD0000000555429 - <SUBSCRIPT>FIL+13^FHWTRN
+  
+ 4. HD0000000441565 - XINDEX returned no time out on LOCK command error 
+    for routine FHWTRN
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ South Texas HCS
+ Dayton, OH
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  HD0000000242092 - FGH - Tickler doesn't seem to be working on one 
+     patient.
+  
+     Problem:
+     --------
+     Nursing home patients who get very ill are admitted to the hospital
+     using the "Absent Sick In Hospital" (ASIH) transfer method. Once
+     the nursing home patient is well, he is discharged from hospital and
+     is re-admitted to the nursing home using the original nursing home
+     admission record. This becomes the patient's current admission. This
+     will cause any monitor and its related tickler to be associated to the
+     wrong admission when filed. The Display Tickler [FHCTF1] option will
+     check the admission associated with the tickler with the patient's
+     current admission. If they do not match, the tickler record is deleted
+     before the report is displayed to the clinician. For the nursing
+     home patients who have been ASIH, the tickler will appear to have 
+     stopped working for them.
+  
+     Resolution:
+     -----------
+     Modify routine to maintain the correct admission.
+  
+ 2.  HD0000000426656 - List Inpats By Nutrition Status Level [FHASNR4]
+  
+     Problem:
+     --------
+     The List Inpats By Nutrition Status Level [FHASNR4] option creates
+     a report for a selected nutrition status level. The user is 
+     prompted to select sorting the results by either ward or clinician.
+     When the user selects to sort the results by clinician, the
+     results are being sorted by the depreciated CLINICIAN field (#1)
+     rather than the new CLINICIAN(S) field (#112) of the NUTRITION
+     LOCATION file (#119.6). The report is incorrect and incomplete.
+  
+     Resolution:
+     -----------
+     Modify the report to use the CLINICIAN(S) field (#112) for sorting.
+  
+ 3.  HD0000000430806 - clinician receiving alert
+    
+     Problem:
+     --------
+     When a patient is transferred from one nutrition location to another,
+     the monitors will be checked. If needed, a monitor and tickler will be
+     filed for the patient during the transfer. If the options to issue
+     alerts for the monitors are turned on the alerts will be issued to the
+     clinician. This process is using the depreciated CLINICIAN field (#1)
+     rather than the new CLINICIAN(S) field (#112) of the NUTRITION
+     LOCATION file (#119.6). This is causing ticklers to be filed to the
+     wrong clinician. Alerts are being sent to the wrong clinician and to
+     the correct clinicians with the wrong clinician name. 
+     Also, for sites adding new nutrition locations this will cause a
+     error and force the user out of VistA.
+  
+     Resolution:
+     -----------
+     Modify the process to use the new CLINICIAN(S) field (#112).
+   
+ 4.  HD0000000441565 - XINDEX returned no time out on LOCK command error 
+     for routine FHWTRN
+  
+     Problem:
+     --------
+     Running the XINDEX for routine FHWTRN returned the following error:
+     Compiled list of Errors and Warnings     Nov 03, 2010@17:13:49 page 1
+  
+     FHWTRN   * *  142 Lines,  6349 Bytes, Checksum: B35702761
+          L +^FHPT(FHDFN,"A",ADM,"MO",0)
+     TFIL+1       S - Lock missing Timeout.
+  
+     --- Routine Detail ---
+     *****   ERRORS & WARNINGS IN FHWTRN   *****
+     TFIL+1       S - Lock missing Timeout.
+  
+     The missing time out violates the SACC section 2.4.6.1 which states 
+     that all incremental locks must have a timeout. 
+  
+     Resolution:
+     -----------
+     Modification of routine FHWTRN at TFIL+1 to include a time out on the 
+     LOCK command.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Nutrition and Food Service users are off the system.  Other VISTA 
+ users will not be affected.
+  
+ Install Time - less than 2 minutes 
+  
+ 1.  Load Transport Global 
+     ---------------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter FH*5.5*27):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHASM2A
+    Before: B16913100   After: B16654897  **8,20,27**
+Routine Name: FHASN6
+    Before: B11586994   After: B12229276  **27**
+Routine Name: FHWTRN
+    Before: B35702761   After: B37260983  **4,27**
+ 
+Routine list of preceding patches: 4, 20
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : AUG 27, 2010
+Completed By: CRICHLOW,SHERRY               Date Completed: FEB 21, 2012
+Released By : BOSE,MARY ELLEN               Date Released : MAR 06, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

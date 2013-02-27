@@ -1,0 +1,320 @@
+$TXT Created by MALMROSE,CARY at ROX-DCM.FO-SLC.MED.VA.GOV  (KIDS) on Thursday, 05/19/11 at 15:12
+=============================================================================
+Run Date: NOV 29, 2011                     Designation: OR*3*332
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #296                      Status: Released
+                  Compliance Date: DEC 30, 2011
+=============================================================================
+
+Associated patches: (v)OR*3*109    <<= must be installed BEFORE `OR*3*332'
+                    (v)OR*3*309    <<= must be installed BEFORE `OR*3*332'
+
+Subject: VBECS FOLLOW-UP FIXES PART DEUX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch contains several modifications to CPRS relating to VBECS
+  Blood Bank functionality.
+  
+  BLOOD BANK REPORT
+  
+  CQ 18708 - There are two places that display an error message
+  when the VBECS VistALink port is down.
+    a. Patient Info Screen on the VBECS order dialog - When this
+       link error is displayed it is formatted and can use a
+       user-defined error message.
+       Parameter: OR VBECS ERROR MESSAGE
+    b. The Blood Bank report also displays an error message when
+       the link is down. This message will also use the parameter
+       OR VBECS ERROR MESSAGE when VistALink is down.
+  
+  CQ 18634 - Blood Bank Reports displays warning:
+  "ABO Rh: 1^Not able to open port".  This warning message comes
+  back from VBECS when the VistALink is down. This has been fixed
+  so that the error message that will be displayed comes from the
+  parameter: OR VBECS ERROR MESSAGE.
+  
+  CQ 19330, 19467, 20038 Remedy Ticket 366911, 461972 -
+  The AVAILABLE/ISSUED UNITS section of the Blood Bank
+  report has been reformatted to make room for larger data fields and
+  more columns.  A new column "Product ID" has been added to fix a
+  problem with missing data when a patient had more than one
+  Product with the same Unit ID. The OR VBECS AVAIL UNITS FORMAT
+  Parameter was created to address issues found when printing the
+  Blood Bank report in the horizontal format.
+  
+  This parameter determines the format that AVAILABLE/ISSUED UNITS are
+  displayed on the Blood Bank Report and the Patient Information screen
+  on the Blood Bank Order Dialog.
+  
+  OR VBECS AVAIL UNITS FORMAT values:
+   0:HORIZONTAL Displays fields across the page, one line per date/time
+                Printed reports line wraps if longer than 79 characters
+   1:VERTICAL   Displays fields down the page in sections per date/time
+                Printed report looks the same
+   2:SPLIT HORIZONTAL -
+                Patient Information Screen - Same as HORIZONTAL format
+                Report - Line wraps if longer than 79 characters
+                Printed Report - Line wraps if longer than 79 characters
+  
+  As more fields are added to the AVAILABLE/ISSUED UNITS section of
+  the report, the length of the line may go beyond the 80
+  character limit for printing. This is not an issue for
+  the Windows display. The Patient Information Screen cannot be
+  printed, so no attempt has been made to wrap the line when it
+  goes beyond 79 characters. It functions the same when either
+  HORIZONTAL or SPLIT HORIZONTAL is selected.
+  
+  For both HORIZONTAL display formats the length of the line
+  expands or contracts depending on the column width of each field
+  and the length of the longest line. Because of this it is
+  possible, though not likely, that the line will not wrap even
+  if SPLIT HORIZONTAL is selected.
+  
+  Each site can further customize the Blood Bank Report and Patient
+  information display by shortening the length of each line by using
+  the Location abbreviation instead of the Location Name. To do this,
+  edit the parameter:
+    OR VBECS LOC ABBREV BB REPORT
+  This parameter is new with this patch and only affects the display
+  of the report. The printed report will display the Location
+  abbreviation due to space Limitations.
+  
+  CQ 19246 - Blood Bank report DAT comment is missing the last line.
+  Previously, the comment for a Direct Antiglobulin Test (DAT) was
+  missing the last line of the comment.
+  
+  Resolution: This has been fixed so the entire comment is visible. 
+  
+  CQ 18632 - The Blood Bank report has been changed to display the
+  Division name instead of the number in the last column of the
+  AVAILABLE/ISSUED UNITS section. This change was made to the display
+  only. The printed version of the report will continue to print
+  the Division number due to limited space on the line.
+  
+  BLOOD ORDER DIALOG
+  
+  CQ 19070 - With the VBECS 1.6.1.0 update, VBECS will be sending CPRS a
+  'no blood required' flag for surgical procedures.  This patch adds the
+  CPRS logic to recognize this value and will no longer require a
+  specimen for those orders.
+  
+  Resolution: This patch adds the CPRS logic to recognize this value and
+  will no longer require a specimen for those orders.
+  
+  NOTE: You won't see this functionality until both patch OR*3.0*332
+  and VBECS 1.6.1.0 are installed.
+  
+  CQ 19259, 19139 Remedy Tickets 382825, 383708, 408643, 464652 -
+  - Previously, CPRS saved the specimen unique identifier (UID) with the
+  order and transmitted it to VBECS even if the Date/Time Wanted was past
+  the specimen's expiration date or if the order was delayed, which could
+  cause confusion. 
+  
+  Resolution: If the order's Date/Time Wanted is past the specimen's
+  expiration date or if the order is a delayed order, CPRS will no
+  longer save the specimen UID with the order nor transmit the specimen
+  UID.
+  
+  CQ 19265 Remedy Ticket 366886 - 
+  The Reason for Request had previously only been saved with component
+  orders.
+  
+  Resolution: The Reason for Request will now be saved with
+  all VBECS child orders, so it can be transmitted to VBECS;
+  The Reason for Request displays on the "VBECS - Order
+  Details" screen.
+  
+  CQ 18512 - The field requested the ability to alphabetically sort
+  the items in  the Reason for Request field. 
+  
+  Resolution: Developers added the new parameter OR VBECS REASON SORT
+  ALPHA to enable sites to alphabetically sort the list of reasons in
+  the Reason for Request field on the Blood Component and Diagnostic
+  Test Order Form dialog.
+  
+  CQ 20073 Remedy 457551 -
+  The definition of the parameter OR VBECS REASON FOR REQUEST
+  has been modified to include DIVISION level settings so that entries
+  in this parameter can be setup by division
+  
+  CQ 19696 Remedy Tickets 429909, 471985, 424381 -
+  The Component Request section of the Blood Bank
+  Report was missing data. We found that component requests with
+  the same date/time, were overwriting each other and ended up
+  missing on the report.
+  
+  Resolution: Developers corrected the problem and all of the data
+  should now display.
+  
+  CQ 19845 - The Item Ordered field of the lab child order was
+  inadvertently being stuffed with the Orderable Item pointer; as these
+  fields are defined to point to different files, when doing a
+  FileMan Inquiry of the order appeared to be incorrect.
+  Item Ordered was meant to be used by developers to troubleshoot
+  problems, not to build the order. Item Ordered stored which item
+  was selected off the Write Orders menu. For child orders, the
+  Item Ordered field should be empty because the child orders came
+  from the parent order, not from a selection on the Write Orders menu.
+  
+  Resolution: Developers added some code to ensure the Item Ordered
+  field is empty for child orders, which is correct. 
+  
+  MISCELLANEOUS FIXES
+  
+  Unnecessary code removed from the routine [ORWLR] that displays the
+  Lab Cumulative in CPRS Reports.  This change may improve the
+  speed that the report displays.
+  
+  HL7 Review - New codes have been added to STATUS^ORMVBEC for
+  compliance with HL7 standards; pre-existing codes will continue to
+  be respected for backwards compatibility.
+  
+  Remedy Ticket Summary
+  ---------------------
+  366911
+  408643
+  382825
+  383708
+  429909
+  457551
+  366886
+  461972
+  464652
+  424381
+  471985
+  
+  TEST SITES:
+  ===========
+  Puget Sound
+  Milwaukee
+  San Diego
+  
+  FTP Instructions:
+  =================
+  The OR*3.0*332 documents, listed below may be obtained 
+  via FTP.  The preferred method is to FTP the files from:
+  
+   download.vista.med.va.gov
+  
+  This transmits the files from the first available FTP server.
+  Sites may also elect to retrieve software directly from a
+  specific server as follows:
+  
+    CIO FIELD OFFICE   FTP ADDRESS                 DIRECTORY
+    ----------------   -------------------------   --------------------
+    Albany             ftp.fo-albany.med.va.gov    [anonymous.software]
+    Hines              ftp.fo-hines.med.va.gov     [anonymous.software]
+    Salt Lake City     ftp.fo-slc.med.va.gov       [anonymous.software]
+  
+    File Name                      Contents           Retrieval Format
+    ---------                      --------           ----------------
+    OR_30_332_DOCS.ZIP             Zip file of        BINARY
+                                   User Documents
+  
+  DOCUMENTATION:
+  ==============
+  Updated documentation describing the new functionality
+  introduced by this patch is being made available.
+  
+  This documentation will be in the form of Adobe Acrobat
+  and MS Word files and made available in the zip file:
+    OR_30_332_DOCS.ZIP
+  
+  The updated documentation associated with this patch are:
+    CPRSLMTM.DOC
+    CPRSLMTM.PDF
+    CPRSGUITM.DOC
+    CPRSGUITM.PDF
+    OR_3_332RN.DOC
+    OR_3_332RN.PDF
+  
+  These documents can also be found on the VA Software
+  Document Library:
+    http://www.va.gov/vdl
+  
+  INSTALLATION INSTRUCTIONS:
+  ==========================
+  This patch should be loaded during non-peak hours to minimize disruption
+  to users.  Installation will take less than 1 minute.  Users may remain
+  on the system.
+  
+  1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+  2.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+  
+  3.  From this menu, you may elect to use the following options
+          a.  Backup a Transport Global
+          b.  Compare Transport Global to Current System
+          c.  Verify Checksums in Transport Global
+  
+  4.  Use the Install Package(s) options and select the package OR*3*332.
+  
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+      respond NO.
+  
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond NO.
+  
+  7.  Once the patch has been installed the routine ORY332 can be 
+      deleted.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 44
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCDVBEC
+    Before: B70656296   After: B78567106  **212,309,332**
+Routine Name: ORCSEND2
+    Before: B33504777   After: B33762828  **212,332**
+Routine Name: ORMVBEC
+    Before: B25262194   After: B25556094  **212,309,332**
+Routine Name: ORWDXVB
+    Before: B44657724   After: B45633676  **215,243,212,309,332**
+Routine Name: ORWDXVB1
+    Before: B33294455   After: B62395957  **215,243,309,332**
+Routine Name: ORWDXVB2
+    Before: B17319895   After: B13660185  **215,243,212,309,332**
+Routine Name: ORWLR
+    Before:  B9469804   After:  B9107402  **10,85,332**
+Routine Name: ORWLR1
+    Before: B37372130   After: B40020805  **172,212,309,332**
+Routine Name: ORWLR3
+    Before: B46485364   After:B130594951  **212,309,332**
+Routine Name: ORWLR4
+    Before: B61036559   After: B35348336  **309,332**
+Routine Name: ORWRP2
+    Before: B11410581   After: B30528782  **10,109,212,309,332**Dec 17, 1997
+Routine Name: ORWRPL
+    Before: B48063470   After: B49132980  **10,85,109,332**
+Routine Name: ORWRPP
+    Before: B42317280   After: B42549274  **10,85,109,192,332**
+Routine Name: ORY332
+    Before:       n/a   After:   B212213  **332**
+ Description of Changes:
+   
+
+ 
+Routine list of preceding patches: 192, 309
+
+=============================================================================
+User Information:
+Entered By  : MALMROSE,CARY                 Date Entered  : MAY 05, 2010
+Completed By: SERVICE,JOHN                  Date Completed: NOV 28, 2011
+Released By : SCHMIT,BECKY                  Date Released : NOV 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

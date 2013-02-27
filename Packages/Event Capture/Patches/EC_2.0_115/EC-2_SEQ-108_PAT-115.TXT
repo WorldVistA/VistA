@@ -1,0 +1,288 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 06/07/12 at 07:56
+=============================================================================
+Run Date: NOV 29, 2012                     Designation: EC*2*115
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #108                      Status: Released
+                  Compliance Date: DEC 30, 2012
+=============================================================================
+
+Associated patches: (v)EC*2*113    <<= must be installed BEFORE `EC*2*115'
+
+Subject: UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 1 issue:
+  
+ 1. This patch will update the EC NATIONAL PROCEDURES (#725) file by
+    adding 4 new procedures, inactivating 46 existing procedures,
+    changing 27 procedure names, and changing 4 CPT codes in the file.
+  
+   
+ Associated NSR(s):
+ ------------------
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ----------------------------
+ 1. HD0000000602841 - Update needed for EC NATIONAL PROCEDURE (#725) file
+   
+  
+ Participating Test Sites:
+ -------------------------
+ Battle Creek VAMC
+ Louisville VAMC
+ Central Texas VHCS 
+  
+   
+ REMEDY OVERVIEW:
+ ----------------
+ 1. HD0000000602841 - Update needed for EC NATIONAL PROCEDURE (#725) file
+  
+   
+    Problem: 
+    --------
+    The Decision Support System office requested an update to the EC 
+    NATIONAL PROCEDURE (#725) file.  The request is to add 4 new 
+    procedures, inactivate 46 existing procedures, change 27 procedure 
+    names, change 4 CPT codes in the file.
+  
+    Resolution:
+    -----------
+    The routines included in this patch update the EC NATIONAL 
+    PROCEDURE (#725) file by adding 4 new procedures, inactivating 46
+    existing procedures, changing 27 procedure names, and changing 4 CPT
+    codes in the file.
+  
+    The 4 entries that will be added in the NATIONAL PROCEDURE
+    (#725) file are:
+  
+     Natl #      Description                           CPT CODE
+     ------      -----------                           --------
+     SP557      NONSGD EV,ADDL 30M                      92618
+     SP558      OAE, SCREENING                          92558
+     RC101      ASSTV TECH ASMNT IND                    97755
+     RC102      BIOFEEDBACK IND                         90901
+  
+    The 46 entries that will be inactivated from the NATIONAL PROCEDURE
+    (#725) file are:
+  
+     Natl #      Description                    Inactivation Date
+     ------      -----------                    -----------------
+     RC002      RECORD REVIEW                       9/1/2012
+     RC003      ASMNT INIT 30M                      9/1/2012
+     RC005      ASMNT PROG NOTE                     9/1/2012
+     RC006      ASMNT PROG NOTE 15M                 9/1/2012
+     RC007      DISCH/COMM REF 15M                  9/1/2012
+     RC008      DISCH/COMM REF 30M                  9/1/2012
+     RC015      REC CREATARTGRP 5-20                9/1/2012
+     RC016      REC CREATARTGRP >20                 9/1/2012
+     RC022      97150 RECTHER SOC GRP 5-20          9/1/2012
+     RC024      97150 RECTHER COG GRP 2-4           9/1/2012
+     RC025      97150 RECTHER COG GRP 5-20          9/1/2012
+     RC027      97150 RECTHER PHY GRP 2-4           9/1/2012
+     RC028      97150 RECTHER PHY GRP 5-20          9/1/2012
+     RC029      97150 RECTHER PHY GRP >20           9/1/2012
+     RC030      97150 RECTHER EMOT GRP 2-4          9/1/2012
+     RC031      97150 RECTHER EMOTGRP 5-20          9/1/2012
+     RC035      97533 ARTTHER EMOTIND 15M           9/1/2012
+     RC036      97150 ARTTHER SOC GRP 2-4           9/1/2012
+     RC037      97150 ARTTHER SOC GRP 5-20          9/1/2012
+     RC039      97150 ARTTHER COG GRP 2-4           9/1/2012
+     RC040      97150 ARTTHER COG GRP 5-20          9/1/2012
+     RC042      97150 ARTTHER EMOTGRP 2-4           9/1/2012
+     RC043      97150 ARTTHER EMOTGRP 5-20          9/1/2012
+     RC045      97530 DANCETHER IND15M              9/1/2012
+     RC046      97150 DANCETHER GRP 2-4             9/1/2012
+     RC047      97150 DANCETHER GRP 5-20            9/1/2012
+     RC049      97530 DRAMA THER IND                9/1/2012
+     RC050      97150 DRAMA THER GRP 2-4            9/1/2012
+     RC051      97150 DRAMA THER GRP 5-20           9/1/2012
+     RC058      97150 MUSTHER SOCGRP 5-20           9/1/2012
+     RC060      97150 MUSTHER COGGRP 2-4            9/1/2012
+     RC061      97150 MUSTHER COGGRP 5-20           9/1/2012
+     RC063      97150 MUSTHER PHYGRP 2-4            9/1/2012
+     RC064      97150 MUSTHER PHYGRP 5-20           9/1/2012
+     RC065      97150 MUSTHER PHYGRP >20            9/1/2012
+     RC066      97150 MUSTHER EMOTGRP 2-4           9/1/2012
+     RC067      97150 MUSTHER EMOTGRP 5-20          9/1/2012
+     RC071      S9454 AQUATIC ACT GRP 5-20          9/1/2012
+     RC072      S9454 AQUATIC ACT GRP >20           9/1/2012
+     RC075      97150 AQUATICTHER GRP5-20           9/1/2012
+     RC076      97150 AQUATICTHER GRP >20           9/1/2012
+     RC079      97537 COMM INTEGRTGRP 5-20          9/1/2012
+     RC080      97537 COMM INTEGRTGRP >20           9/1/2012
+     RC083      S9446 LEIS EDUCGRP 5-20 60M         9/1/2012
+     RC088      T2001 PAT ESCORT GRP 2-4            9/1/2012
+     RC090      T2001 PAT ESCORT GRP >20            9/1/2012
+  
+  
+    The 27 entries whose procedure names will be changed in the NATIONAL
+    PROCEDURE (#725) file are:
+  
+     Natl #      Description                    
+     ------      -----------                 
+     RC004      ASMNT UPREVDISC
+     RC009      TEAMEET CAREPLAN
+     RC010      TEAMEET CAREPLAN FF
+     RC012      IDT GRP
+     RC013      REC CREAT ART IND
+     RC014      REC CREAT ART GRP
+     RC017      RECTHER EMOT IND
+     RC018      RECTHER COG IND
+     RC019      RECTHER PHY IND
+     RC020      RECTHER SOC IND
+     RC021      RECTHER SOC GRP
+     RC033      CREAT ARTS SOC IND
+     RC034      CREAT ARTS COG IND
+     RC055      CREAT ARTS PHY IND 
+     RC056      CREAT ARTS EMOT IND
+     RC057      CREAT ARTS GRP
+     RC069      AQUATIC ACT IND
+     RC070      AQUATIC ACT GRP
+     RC073      AQUATIC THER IND 
+     RC074      AQUATIC THER GRP 
+     RC077      COMM INTEGRT IND
+     RC078      COMM INTEGRT GRP 
+     RC081      LEIS EDUC IND
+     RC082      LEIS EDUC GRP
+     RC085      TELEPHONE SHORT
+     RC089      PAT ESCORT GRP
+     RC091      PAT ESCORT IND
+     
+     
+    The 4 entries whose CPT Codes will be changed in the NATIONAL
+    PROCEDURE (#725) file are:
+  
+     Natl #      Description                           CPT CODE
+     ------      -----------                           --------
+     RC001      REFER/CONS/SCREEN                       96150
+     RC004      ASMNT UPREVDISC                         96151
+     RC017      RECTHER EMOT IND                        97530
+     RC021      RECTHER SOC GRP                         97530
+  
+  
+ ===========================================================================
+ Note: The new EC NATIONAL PROCEDURE Numbers could exist in some site's
+ environment. If the EC NATIONAL PROCEDURE Numbers exist, then the system
+ will add the new numbers and it will keep what the sites have on file. In
+ addition, a message similar to the one below will be printed during
+ installation: 
+   
+ " Please forward this message to your local DSS Site Manager or
+  Event Capture ADPAC.
+  
+  A review of the EC EVENT CODE SCREENS file (#720.3) was done
+  after installation of patch EC*2*115 which updated the EC NATIONAL
+  PROCEDURE file (#725).  This message provides the results of that
+  review.
+  
+  The EC EVENT CODE SCREENS file (#720.3) records indicated below
+  point to an inactive record in the EC NATIONAL PROCEDURE file
+  (#725) or to an inactive record in the CPT file (#81).
+  
+  The user should use the Inactivate Event Code Screens [ECNACT]
+  option to inactivate the Event Code Screen.  If necessary, a new
+  Event Code Screen can be created using a currently active CPT code
+  or National Procedure."
+  
+  Example:
+  The CPT procedure for the following Event
+  Code Screen (418-30-0-97770) is inactive --
+    Location:  
+    Category:  None
+    DSS Unit:  R9V1 I/P THER REC ACTIVITIES
+    Procedure: DEVELOPMT COGNITIVE SKILLS 1 (97770) 
+  
+   
+ Please review the installed message.
+ ==========================================================================                                
+  
+  
+ Installation Instructions:
+ ==========================
+  
+    ***************************NOTE****************************  
+    * It is not necessary to disable any options.  You may    *
+    * install these routines at any time without interruption *
+    * to users.                                               *
+    ***********************************************************
+  
+ NOTE: If you would like to use Identify/Inactivate Multiple Event Code
+ Screens option in the Event Capture GUI to inactivate Event Code Screens
+ for the National Procedures which are being inactiavted, you MUST do so
+ BEFORE the patch is installed!  The option does not work for Procedures 
+ which are already inactive.  Otherwise, the Add or Update Event Code
+ Screens option can be used to inactivate the EC Screens.
+        
+  
+   Installation will take less than 2 minutes.
+  
+   Suggested time to install: Non-peak requirement hours.
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter EC*2.0*115)
+   
+  
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package EC*2.0*115.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+    
+    7. You may delete the routines ECP115PT, EC725U62 and EC725U63 from
+       your production system after the patch has been successfully tested.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC725U62
+    Before:       n/a   After: B17787173  **115**
+Routine Name: EC725U63
+    Before:       n/a   After: B23938540  **115**
+Routine Name: ECP115PT
+    Before:       n/a   After: B31351669  **115**
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : FEB 23, 2012
+Completed By: PODLEY,CHRIS                  Date Completed: NOV 20, 2012
+Released By : MORRIS,THERESA                Date Released : NOV 29, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

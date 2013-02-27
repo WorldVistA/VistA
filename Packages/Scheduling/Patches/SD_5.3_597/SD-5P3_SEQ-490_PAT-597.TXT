@@ -1,0 +1,207 @@
+$TXT Created by SPILLER,RICHARD at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 05/25/12 at 12:42
+=============================================================================
+Run Date: SEP 10, 2012                     Designation: SD*5.3*597
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #490                    Status: Released
+                  Compliance Date: OCT 11, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*554  <<= must be installed BEFORE `SD*5.3*597'
+
+Subject: SCHEDULING ERRORS IN APPT MGT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues as they relate to the 
+ Scheduling package:
+  
+ 1. When cancelling an appointment within the Appointment Management [SDAM
+    APPT MGT] option, if another user cancels the same appointment an 
+    undefined error occurs.
+  
+ 2. If an appointment is cancelled using the clinic selection within the         
+    Appointment Management [SDAM APPT MGT] option, the Appointment 
+    Management option, reverts to patient view instead of clinic view.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1)  HD0000000624666 - CAN+4^SDAMC *SDCLN
+     Duplicates: 
+     HD0000000626583 - <UNDEFINED>CAN+4^SDAMC *SDCLN
+     HD0000000708628 - <UNDEFINED>LET+1^SDCNP1 *SC
+     HD0000000709468 - stl-<UNDEFINED>LET+1^SDCNP1 *SC
+     HD0000000710766 - <UNDEFINED>LET+1^SDCNP1 *SC
+     HD0000000716410 - <UNDEFINED>LET+1^SDCNP1 *SC
+     HD0000000716416 - <UNDEFINED>BLD+3^SDAM1 *SDFN
+     HD0000000721943 - Receiving 2 errors:  <UNDEFINED>CAN+4^SDAMC &  
+                       <UNDEFINED>LET+1^SDCNP1
+  
+ 2)  HD0000000710820 - Scheduling application operating differently
+     Duplicates:
+     HD0000000713120 - Issue noted when cancelling appointments that software
+                       will revert to the patient rather than staying in the    
+                       clinic
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Altoona, PA
+ Connecticut HCS
+ Louisville, KY
+ Salisbury, NC
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================= 
+ 1)  HD0000000624666 - CAN+4^SDAMC *SDCLN
+  
+ Problem:
+ --------
+ There are 3 different scenarios to produce this issue.
+  
+ Scenario 1:
+ If a user cancels an appointment within the Appointment Management [SDAM
+ APPT MGT] option, using the patient selection, at the same time another 
+ user on a separate session cancels the same appointment, the user receives
+ the following error: <UNDEFINED>CAN+4^SDAMC*SDCLN.
+  
+ Scenario 2: 
+ If a user cancels an appointment within the Appointment Management [SDAM
+ APPT MGT] option, using the clinic selection, at the same time another    
+ user on a separate session cancels the same appointment, the user receives
+ the following error: <UNDEFINED>BLD+3^SDAM1 *SDFN.
+  
+ Scenario 3:
+ If a user cancels an appointment within the Appointment Management [SDAM
+ APPT MGT] option and inputs any characters other than (Y)ES or (N)O at the
+ prompt requesting to print letters for cancelled appointments the user
+ receives the following error: <UNDEFINED>LET+1^SDCNP1 *SC.
+  
+ Resolution:
+ -----------
+ Routines SDAMC and SDCNP1 have been modified by calling the Electronic 
+ Wait List Notification for verification of any related entries for the 
+ patient.
+  
+  
+ 2)  HD0000000710820 - Scheduling application operating differently
+  
+ Problem:
+ --------
+ If an appointment is cancelled using the clinic selection within the           
+ Appointment Management [SDAM APPT MGT] menu option, the Appointment
+ Management reverts to Patient View instead of Clinic View.
+  
+ Resolution:
+ -----------
+ Routine SDAMC has been modified and will now return to Clinic View when 
+ using Appointment Management [SDAM APPT MGT] menu option, if the patient
+ was updated using the clinic selection option.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system, but it is recommended
+ that it be installed when user activity is very low.
+  
+ Installation time will be less than five minutes.
+  
+   1. Load Transport Global 
+      ----------------------
+      Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+              
+   2. Start Up KIDS 
+      -------------
+      Start up the Kernel Installation and Distribution System Menu [XPD
+      MAIN]: 
+      
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: INStallation
+                                                               ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+   3. Select Installation Option: 
+      ---------------------------
+      NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+      NAME, enter SD*5.3*597):
+       
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+   4. Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+      **This is the step to start the installation of this KIDS patch: 
+  
+      a. Choose the Install Package(s) option to start the patch install.
+  
+      b. When prompted, "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO. 
+  
+      c. When prompted, "Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//", respond YES.
+  
+         Enter options you wish to mark as 'Out Of Order':
+  
+         Appointment Management            [SDAM APPT MGT]
+  
+         Cancel Appointment                [SD CANCEL APPOINTMENT]
+  
+         Enter protocols you wish to mark as 'Out Of Order':
+  
+         Cancel Appointment                [SDAM APPT CANCEL]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAMC
+    Before: B16744986   After: B14510209  **20,28,32,46,263,414,444,478,
+                                           538,554,597**
+Routine Name: SDCNP1
+    Before: B33998963   After: B33156446  **398,467,478,554,597**
+ 
+Routine list of preceding patches: 554
+
+=============================================================================
+User Information:
+Entered By  : SPILLER,RICHARD               Date Entered  : MAY 24, 2012
+Completed By: SESSLER,APRIL                 Date Completed: SEP 06, 2012
+Released By : KRILEY,MARSHA                 Date Released : SEP 10, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

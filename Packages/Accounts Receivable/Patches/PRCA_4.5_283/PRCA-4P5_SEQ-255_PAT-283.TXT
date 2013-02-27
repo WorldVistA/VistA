@@ -1,0 +1,301 @@
+$TXT Created by HSI,TUAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 05/16/12 at 12:16
+=============================================================================
+Run Date: JUL 24, 2012                     Designation: PRCA*4.5*283
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #255                    Status: Released
+                  Compliance Date: JUL 30, 2012
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*257<<= must be installed BEFORE `PRCA*4.5*283'
+                    (v)PRCA*4.5*284<<= must be installed BEFORE `PRCA*4.5*283'
+
+Subject: CHANGES FOR DEPOSIT TICKET NUMBER
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ **************************************************************************
+ Note: the Compliance Date is July 30, 2012.
+  
+ This is a high priority patch to prevent reconciliation issues and loss 
+ in revenue from deposits. The VA must comply with the Treasury mandate and
+ be able to accept the new deposit number schema from the Treasury 
+ contracted bank. 
+ **************************************************************************
+  
+ This patch will resolve the following three issues:
+  
+ 1. For manual creation of deposits, VistA Accounts Receivable (AR)
+    must be changed to allow users to create a deposit record with a
+    Deposit Ticket Number that is six digits long, with no restrictions on
+    the first three digits.  
+  
+ 2. For the Third Party EDI Lockbox process, AR must be changed to accept
+    any nine-digit deposit number.
+  
+ 3. The following four AR reports are being adjusted to display all of the 
+    nine-digit deposit number field (not just six of the digits).
+  
+    EFT Deposit Reconciliation Report [RCDPE DEPOSIT RECON REPORT]
+    Daily Activity Report [RCDPE EDI LOCKBOX ACT REPORT]
+    EFT Unmatched Aging Report [RCDPE EFT AGING REPORT]
+    Unapplied EFT Deposits Report [RCDPE UNAPPLIED EFT DEP REPORT] 
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1. HD0000000536657 Emergency changes to AR to accommodate OTCnet/Treasury
+ 2. HD0000000623959 Repair 5 reports affected by PRCA*4.5*283 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ VA Central California HCS - Fresno
+ VA Nebraska Western Iowa Health Care System
+ West Texas VA HCS - Big Spring
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000536657 Emergency changes to AR to accommodate OTCnet/Treasury
+  
+ Problem:
+ --------
+ Recently, a problem was encountered with OTCnet deposits rejecting in 
+ the Accounts Receivable (AR) system. The deposits had to be canceled 
+ and re-deposited by using other processing methods. 
+  
+ The CBO has requested the following changes for the Deposit Ticket
+ Number in the AR system:
+  
+    1. For manual creation of deposits, AR must be changed to allow users
+       to create a deposit record with a Deposit Ticket Number that is six
+       digits long, with no restrictions on the first three digits.
+  
+    2. For the Third Party EDI Lockbox process, AR must be changed to
+       accept any nine-digit deposit number.
+  
+ Resolution:
+ -----------
+    1. The limitation on the TICKET # (#.01) field definition of the AR
+       DEPOSIT (#344.1) file that prevents users from entering Deposit
+       Ticket Number beginning with the numbers 269, 369, 469, 569, or 669
+       is being removed.
+  
+       In addition, the TICKET # (#.01) field PRE-LOOKUP 
+       (D LOOKUP^RCDPUDEP) will be updated to allow users to use 269, 369, 
+       469, 569, or 669 prefix for Deposit Ticket Number when using the
+       RCDP Deposit Processing option. Manual entering will continue to be
+       limited to six digits.
+    
+    2. Routines RCDPEM and RCDPESR3 are modified to remove the restrictions
+       for accepting only series numbers starting with '469' and '569' for
+       the Third Party EDI Lockbox process. It now accepts any sequence.
+       A Deposit Ticket Number of nine digits is still limited to the
+       Lockbox automated deposit process.
+  
+       The restrictions for only accepting the '469' and '569' series 
+       numbers is being removed in the AR DEPOSIT RECORD (#.03) field
+       definition of the EDI LOCKBOX DEPOSIT (#344.3) file.
+  
+ 2. HD0000000623959 - Repair 5 reports affected by PRCA*4.5*283
+  
+ Problem:
+ --------
+ The following four reports (not five as previously thought) require
+ modification to display the full 9-digit deposit number.
+  
+    EFT Deposit Reconciliation Report [RCDPE DEPOSIT RECON REPORT]
+    Daily Activity Report [RCDPE EDI LOCKBOX ACT REPORT]
+    EFT Unmatched Aging Report [RCDPE EFT AGING REPORT]
+    Unapplied EFT Deposits Report [RCDPE UNAPPLIED EFT DEP REPORT]
+  
+ Resolution:
+ -----------
+ Modified routine RCDPEREC, RCDPEDAR, RCDPEDA1, RCDPEAR2, and RCDPE8NZ to
+ display the full 9-digit deposit number.
+  
+  
+ Components Sent with Patch:
+ ===========================
+ The following is a list of updated fields included in this patch:
+  
+         Field Name (Number)             File Name (Number)
+         ------------------------        ----------------------------
+         TICKET # (#.01)                 AR DEPOSIT (#344.1)
+         AR DEPOSIT RECORD (#.03)        EDI LOCKBOX DEPOSIT (#344.3)
+  
+ Technical:
+ ==========
+ A pre-installation routine (RCDPP283) is included. The purpose of it is 
+ to delete the AR DEPOSIT RECORD (#.03) field in the EDI LOCKBOX DEPOSIT
+ (#344.3) file so that the field definition for the field can be replaced
+ with the partial DD included in the patch. No data is deleted, only the 
+ field definition will be deleted.
+  
+  
+ Documentation Retrieval:
+ ======================== 
+ Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.med.va.gov, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany          ftp.fo-albany.med.va.gov
+      Hines           ftp.fo-hines.med.va.gov
+      Salt Lake City  ftp.fo-slc.med.va.gov
+  
+      The documentation distribution includes: 
+  
+  File Name                             Description            Retrieval
+  ====================================  ===========            =========
+  EPAYMENTS_USER_MANUAL_R0712.PDF       ePayments USER MANUAL  BINARY 
+  
+  (3) Once the patch is released, the new version of the document will be 
+      posted to the VISTA Documentation Library (VDL), and may be retrieved
+      from the on the Internet at the following address:
+      http://www.va.gov/vdl
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ If installed during the normal workday, please install before 2:00pm 
+ CST since deposits are transmitted to the sites after 2:00pm CST. The 
+ patch can also be installed on the weekend.
+  
+ It is recommended that the following selection(s) in the OPTION (#19) 
+ file and all of their descendants be disabled to prevent possible 
+ conflicts while running the KIDS install.
+  
+         Deposit Processing [RCDP DEPOSIT PROCESSING]
+         Agent Cashier Menu [RCDP AGENT CASHIER MENU]
+         EFT Deposit Reconciliation Report [RCDPE DEPOSIT RECON REPORT]
+         Daily Activity Report [RCDPE EDI LOCKBOX ACT REPORT]
+         EFT Unmatched Aging Report [RCDPE EFT AGING REPORT]
+         Unapplied EFT Deposits Report [RCDPE UNAPPLIED EFT DEP REPORT]
+  
+ Other VistA users will not be affected.
+  
+ Install Time - less than 5 minutes.
+  
+ 1. Load Transport Global
+    ---------------------
+  
+    Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Start up KIDS
+    -------------
+  
+    Start up the Kernel Installation and Distribution System Menu 
+    [XPD MAIN]:
+         Edits and Distribution...
+         Utilities...
+         Installation...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+         Load a Distribution 
+         Print Transport Global 
+         Compare Transport Global to Current System 
+         Verify Checksums in Transport Global 
+         Install Package(s) 
+         Restart Install of Package(s) 
+         Unload a Distribution 
+         Backup a Transport Global 
+  
+ 3. Select Installation Option: 
+    ---------------------------
+    NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+          NAME, enter PRCA*4.5*283):
+       
+    a. Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch. It will not
+       backup any other changes such as DD's or templates.
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed.  It compares all components of this patch
+       (routines, DD's, templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow
+       you to ensure the integrity of the routines that are in the
+       transport global.
+  
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch:
+  
+    a. Choose the Install Package(s) option to start the patch
+       install.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//' answer NO 
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+       Options, and Protocols? YES//' answer YES 
+  
+    d. When prompted 'Enter options you wish to mark as 'Out Of
+       Order':' Enter the following options:
+  
+              Agent Cashier Menu [RCDP AGENT CASHIER MENU]
+              Deposit Processing [RCDP DEPOSIT PROCESSING]
+              EFT Deposit Reconciliation Report [RCDPE DEPOSIT RECON 
+                  REPORT]
+              Daily Activity Report [RCDPE EDI LOCKBOX ACT REPORT]
+              EFT Unmatched Aging Report [RCDPE EFT AGING REPORT]
+              Unapplied EFT Deposits Report [RCDPE UNAPPLIED EFT DEP 
+                  REPORT]
+  
+    e. When prompted 'Enter protocols you wish to mark as 'Out Of
+       Order':' press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCDPE8NZ
+    Before: B54377716   After: B55534071  **173,212,208,269,276,283**
+Routine Name: RCDPEAR2
+    Before: B61283482   After: B62672024  **173,269,276,284,283**
+Routine Name: RCDPEDA1
+    Before: B23249063   After: B24558059  **173,269,276,284,283**
+Routine Name: RCDPEDAR
+    Before:B111611189   After:B115536602  **173,276,284,283**
+Routine Name: RCDPEM
+    Before: B59208170   After: B58755837  **173,255,269,276,283**
+Routine Name: RCDPEREC
+    Before: B39701184   After: B39834899  **208,244,269,283**
+Routine Name: RCDPESR3
+    Before: B60020580   After: B55776988  **173,214,208,255,269,283**
+Routine Name: RCDPP283
+    Before:       n/a   After:    B86247  **283**
+Routine Name: RCDPUDEP
+    Before: B15452883   After: B14082361  **114,173,257,283**
+ 
+Routine list of preceding patches: 257, 284
+
+=============================================================================
+User Information:
+Entered By  : HSI,TUAN                      Date Entered  : NOV 18, 2011
+Completed By: DAWSON,TIM                    Date Completed: JUL 24, 2012
+Released By : MARSHALL,FALENCIA B.          Date Released : JUL 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

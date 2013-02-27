@@ -1,0 +1,138 @@
+$TXT Created by CHANDARANA,RISHAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 03/07/11 at 18:48
+=============================================================================
+Run Date: SEP 06, 2011                     Designation: DG*5.3*787
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #744                    Status: Released
+                  Compliance Date: OCT 07, 2011
+=============================================================================
+
+Associated patches: (v)DG*5.3*645  <<= must be installed BEFORE `DG*5.3*787'
+                    (v)DG*5.3*729  <<= must be installed BEFORE `DG*5.3*787'
+
+Subject: FIX LOCKING ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects two SAC (Standards and Conventions) violations.  
+  
+  ASSOCIATED REMEDY TICKETS:
+  ==========================
+  1) HD0000000170842 - Cannot access patient records
+  2) HD0000000064699 - ISB-0105-31063  SAC compliance issues - DGPTFTR
+  
+  ASSOCIATED NSRs:
+  =================
+  N/A
+    
+  PARTICIPATING TEST SITES:
+  =========================
+  Big Spring, TX (West Texas HCS)
+  Charleston, SC
+  Manchester, NH
+  Upstate New York HCS
+    
+  REMEDY OVERVIEW:
+  ================
+   1) HD0000000170842 - Cannot access patient records
+     
+   Problem:
+   ========
+   There is an untimed lock in DGPTTS3.  This violates SAC requirements.   
+   When accessing a record that is currently being edited, this causes
+   the VistA system to appear as though it has hung.   
+  
+   Solution:
+   =========
+   Modify DGPTTS3 to have a timed lock.  If a lock cannot be obtained, the 
+   user will be notified that the record is in use.  The process will 
+   continue to attempt to access the record until it becomes available.  
+  
+   2) HD0000000064699 - ISB-0105-31063  SAC compliance issues - DGPTFTR
+     
+   Problem:
+   ========
+   There is a lock in DGPTFTR which is using the wrong time out and is not
+   incremental.  Both are in violation of the SAC.  
+  
+   Solution:
+   =========
+   Modify DGPTFTR to have a timed lock.  If a lock cannot be obtained, the 
+   user will be notified that the record is in use.
+    
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+  This patch may be run with users on the system. As several options are 
+  going to be out of order, it is recommended that this patch be installed 
+  during off-peak hours.   
+  Installation will take less than 5 minutes.
+   
+    
+  1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+      the KIDS distribution included with this message.
+    
+  2.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+    
+  3.  From this menu, you may elect to use the following options
+      (when prompted for INSTALL NAME, enter DG*5.3*787):
+      a.  Compare Transport Global to Current System  - this option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+      b.  Verify Checksums in Transport Global - this option will
+          allow you to ensure the integrity of the routines that are in
+          the transport global.
+      c.  Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+      d.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+    
+  4.  Use the Install Package(s) option and select the package DG*5.3*787.
+    
+  5.  When prompted, 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', respond NO.
+    
+  6.  When prompted, 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES.
+  
+      When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+      enter:
+  
+      PTF Menu       [DG PTF MENU]
+  
+      When prompted, 'Enter protocols you wish to mark as 'Out of Order':',
+      enter: <ENTER>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGPTFTR
+    Before: B19046836   After: B20387661  **37,415,530,601,614,645,787**
+Routine Name: DGPTTS3
+    Before: B22744602   After: B23553405  **26,61,549,729,787**
+ 
+Routine list of preceding patches: 645, 729
+
+=============================================================================
+User Information:
+Entered By  : CHANDARANA,RISHAN             Date Entered  : JUL 21, 2008
+Completed By: LEANORD,TATIANA               Date Completed: SEP 06, 2011
+Released By : FLANAGAN,PATTY                Date Released : SEP 06, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

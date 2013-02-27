@@ -1,0 +1,1022 @@
+Released OR*3*336 SEQ #284
+Extracted from mail message
+**KIDS**:OR*3.0*336^
+
+**INSTALL NAME**
+OR*3.0*336
+"BLD",8514,0)
+OR*3.0*336^ORDER ENTRY/RESULTS REPORTING^0^3101102^y
+"BLD",8514,1,0)
+^^24^24^3100727^
+"BLD",8514,1,1,0)
+A site reported a problem where a narcotic order replaced an audiology 
+"BLD",8514,1,2,0)
+consult order.
+"BLD",8514,1,3,0)
+ 
+"BLD",8514,1,4,0)
+Overview:
+"BLD",8514,1,5,0)
+=========
+"BLD",8514,1,6,0)
+HD0000000296920    Unexpected narcotic order found in OERR for a patient
+"BLD",8514,1,7,0)
+ 
+"BLD",8514,1,8,0)
+   Problem:
+"BLD",8514,1,9,0)
+   --------
+"BLD",8514,1,10,0)
+   Upon examining the order affected in the ORDERS file (#100), it was 
+"BLD",8514,1,11,0)
+   discovered that an Outpatient Pharmacy prescription had over-written
+"BLD",8514,1,12,0)
+   the audiology consult.
+"BLD",8514,1,13,0)
+ 
+"BLD",8514,1,14,0)
+   Resolution:
+"BLD",8514,1,15,0)
+   -----------
+"BLD",8514,1,16,0)
+   An issue was found in the Class III code which performs the AudioCare 
+"BLD",8514,1,17,0)
+   renewal process. The issue was in the difference between how the 
+"BLD",8514,1,18,0)
+   Computerized Patient Records System (CPRS) assigns a new order number
+"BLD",8514,1,19,0)
+   and the process AudioCare renewal was using.
+"BLD",8514,1,20,0)
+ 
+"BLD",8514,1,21,0)
+   The decision was to create a Class I interface from the AudioCare 
+"BLD",8514,1,22,0)
+   refill/renewal system. The refill portion will not be affected. The 
+"BLD",8514,1,23,0)
+   renewal process will now use a standard CPRS Application Programming 
+"BLD",8514,1,24,0)
+   Interface (API) to perform the renewal.
+"BLD",8514,4,0)
+^9.64PA^100.9^1
+"BLD",8514,4,100.9,0)
+100.9
+"BLD",8514,4,100.9,222)
+n^n^f^^y^^y^o^n
+"BLD",8514,4,100.9,223)
+
+"BLD",8514,4,100.9,224)
+I +Y=73
+"BLD",8514,4,"B",100.9,100.9)
+
+"BLD",8514,6)
+3^
+"BLD",8514,6.3)
+24
+"BLD",8514,"ABPKG")
+n
+"BLD",8514,"INI")
+PRE^ORY290
+"BLD",8514,"INID")
+^n
+"BLD",8514,"INIT")
+POST^ORY290
+"BLD",8514,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8514,"KRN",.4,0)
+.4
+"BLD",8514,"KRN",.401,0)
+.401
+"BLD",8514,"KRN",.402,0)
+.402
+"BLD",8514,"KRN",.403,0)
+.403
+"BLD",8514,"KRN",.5,0)
+.5
+"BLD",8514,"KRN",.84,0)
+.84
+"BLD",8514,"KRN",3.6,0)
+3.6
+"BLD",8514,"KRN",3.8,0)
+3.8
+"BLD",8514,"KRN",3.8,"NM",0)
+^9.68A^1^1
+"BLD",8514,"KRN",3.8,"NM",1,0)
+AUTORENEWAL^^0
+"BLD",8514,"KRN",3.8,"NM","B","AUTORENEWAL",1)
+
+"BLD",8514,"KRN",9.2,0)
+9.2
+"BLD",8514,"KRN",9.8,0)
+9.8
+"BLD",8514,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",8514,"KRN",9.8,"NM",1,0)
+ORAREN^^0^B23956192
+"BLD",8514,"KRN",9.8,"NM","B","ORAREN",1)
+
+"BLD",8514,"KRN",19,0)
+19
+"BLD",8514,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",8514,"KRN",19.1,0)
+19.1
+"BLD",8514,"KRN",101,0)
+101
+"BLD",8514,"KRN",409.61,0)
+409.61
+"BLD",8514,"KRN",771,0)
+771
+"BLD",8514,"KRN",779.2,0)
+779.2
+"BLD",8514,"KRN",870,0)
+870
+"BLD",8514,"KRN",8989.51,0)
+8989.51
+"BLD",8514,"KRN",8989.51,"NM",0)
+^9.68A^1^1
+"BLD",8514,"KRN",8989.51,"NM",1,0)
+OR AUTORENEWAL USER^^0
+"BLD",8514,"KRN",8989.51,"NM","B","OR AUTORENEWAL USER",1)
+
+"BLD",8514,"KRN",8989.52,0)
+8989.52
+"BLD",8514,"KRN",8994,0)
+8994
+"BLD",8514,"KRN","B",.4,.4)
+
+"BLD",8514,"KRN","B",.401,.401)
+
+"BLD",8514,"KRN","B",.402,.402)
+
+"BLD",8514,"KRN","B",.403,.403)
+
+"BLD",8514,"KRN","B",.5,.5)
+
+"BLD",8514,"KRN","B",.84,.84)
+
+"BLD",8514,"KRN","B",3.6,3.6)
+
+"BLD",8514,"KRN","B",3.8,3.8)
+
+"BLD",8514,"KRN","B",9.2,9.2)
+
+"BLD",8514,"KRN","B",9.8,9.8)
+
+"BLD",8514,"KRN","B",19,19)
+
+"BLD",8514,"KRN","B",19.1,19.1)
+
+"BLD",8514,"KRN","B",101,101)
+
+"BLD",8514,"KRN","B",409.61,409.61)
+
+"BLD",8514,"KRN","B",771,771)
+
+"BLD",8514,"KRN","B",779.2,779.2)
+
+"BLD",8514,"KRN","B",870,870)
+
+"BLD",8514,"KRN","B",8989.51,8989.51)
+
+"BLD",8514,"KRN","B",8989.52,8989.52)
+
+"BLD",8514,"KRN","B",8994,8994)
+
+"BLD",8514,"QUES",0)
+^9.62^^
+"BLD",8514,"REQB",0)
+^9.611^1^1
+"BLD",8514,"REQB",1,0)
+OR*3.0*243^2
+"BLD",8514,"REQB","B","OR*3.0*243",1)
+
+"DATA",100.9,73,0)
+OP RX RENEWAL REQUEST^OR^Rx Renewal Request^PKG^R^INFODEL^ORB3FUP2
+"DATA",100.9,73,4)
+Triggered when an automated process (for example, AudioCARE) submits a request to renew an Outpatient prescription for a non-renewable drug.
+"FIA",100.9)
+OE/RR NOTIFICATIONS
+"FIA",100.9,0)
+^ORD(100.9,
+"FIA",100.9,0,0)
+100.9
+"FIA",100.9,0,1)
+n^n^f^^y^^y^o^n
+"FIA",100.9,0,10)
+
+"FIA",100.9,0,11)
+I +Y=73
+"FIA",100.9,0,"RLRO")
+
+"FIA",100.9,0,"VR")
+3.0^OR
+"FIA",100.9,100.9)
+0
+"INI")
+PRE^ORY290
+"INIT")
+POST^ORY290
+"KRN",3.8,3870,-1)
+0^1
+"KRN",3.8,3870,0)
+AUTORENEWAL^PU^y^^^^
+"KRN",3.8,3870,2,0)
+^^4^4^3090713^
+"KRN",3.8,3870,2,1,0)
+This mail group contains the list of users that will received messages 
+"KRN",3.8,3870,2,2,0)
+related to the auto-renewal process. The auto-renewal process is 
+"KRN",3.8,3870,2,3,0)
+performed by the Computerized Patient Record System (CPRS), but is 
+"KRN",3.8,3870,2,4,0)
+initiated by Outpatient Pharmacy.
+"KRN",3.8,3870,3)
+
+"KRN",8989.51,521,-1)
+0^1
+"KRN",8989.51,521,0)
+OR AUTORENEWAL USER^CPRS AUTO-RENEWAL USER DUZ^0^USER ID^CPRS AUTO-RENEWAL USER ID
+"KRN",8989.51,521,1)
+P^200^Enter the DUZ of the ID to be used for auto-renewals.
+"KRN",8989.51,521,6)
+P
+"KRN",8989.51,521,30,0)
+^8989.513I^1^1
+"KRN",8989.51,521,30,1,0)
+1^4.2
+"MBREQ")
+0
+"ORD",11,3.8)
+3.8;11;;;MAILG^XPDTA1;MAILGF1^XPDIA1;MAILGE1^XPDIA1;MAILGF2^XPDIA1;;MAILGDEL^XPDIA1(%)
+"ORD",11,3.8,0)
+MAIL GROUP
+"ORD",20,8989.51)
+8989.51;20;;;PAR1E1^XPDTA2;PAR1F1^XPDIA3;PAR1E1^XPDIA3;PAR1F2^XPDIA3;;PAR1DEL^XPDIA3(%)
+"ORD",20,8989.51,0)
+PARAMETER DEFINITION
+"PGL",100.9,1,1,1)
+NON-MENU TYPE OPTION ACTION^P19'^DIC(19,^1;1^Q
+"PKG",167,-1)
+1^1
+"PKG",167,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",167,20,0)
+^9.402P^^
+"PKG",167,22,0)
+^9.49I^1^1
+"PKG",167,22,1,0)
+3.0^2971217^2980417^1271
+"PKG",167,22,1,"PAH",1,0)
+336^3101102^33288
+"PKG",167,22,1,"PAH",1,1,0)
+^^24^24^3101102
+"PKG",167,22,1,"PAH",1,1,1,0)
+A site reported a problem where a narcotic order replaced an audiology 
+"PKG",167,22,1,"PAH",1,1,2,0)
+consult order.
+"PKG",167,22,1,"PAH",1,1,3,0)
+ 
+"PKG",167,22,1,"PAH",1,1,4,0)
+Overview:
+"PKG",167,22,1,"PAH",1,1,5,0)
+=========
+"PKG",167,22,1,"PAH",1,1,6,0)
+HD0000000296920    Unexpected narcotic order found in OERR for a patient
+"PKG",167,22,1,"PAH",1,1,7,0)
+ 
+"PKG",167,22,1,"PAH",1,1,8,0)
+   Problem:
+"PKG",167,22,1,"PAH",1,1,9,0)
+   --------
+"PKG",167,22,1,"PAH",1,1,10,0)
+   Upon examining the order affected in the ORDERS file (#100), it was 
+"PKG",167,22,1,"PAH",1,1,11,0)
+   discovered that an Outpatient Pharmacy prescription had over-written
+"PKG",167,22,1,"PAH",1,1,12,0)
+   the audiology consult.
+"PKG",167,22,1,"PAH",1,1,13,0)
+ 
+"PKG",167,22,1,"PAH",1,1,14,0)
+   Resolution:
+"PKG",167,22,1,"PAH",1,1,15,0)
+   -----------
+"PKG",167,22,1,"PAH",1,1,16,0)
+   An issue was found in the Class III code which performs the AudioCare 
+"PKG",167,22,1,"PAH",1,1,17,0)
+   renewal process. The issue was in the difference between how the 
+"PKG",167,22,1,"PAH",1,1,18,0)
+   Computerized Patient Records System (CPRS) assigns a new order number
+"PKG",167,22,1,"PAH",1,1,19,0)
+   and the process AudioCare renewal was using.
+"PKG",167,22,1,"PAH",1,1,20,0)
+ 
+"PKG",167,22,1,"PAH",1,1,21,0)
+   The decision was to create a Class I interface from the AudioCare 
+"PKG",167,22,1,"PAH",1,1,22,0)
+   refill/renewal system. The refill portion will not be affected. The 
+"PKG",167,22,1,"PAH",1,1,23,0)
+   renewal process will now use a standard CPRS Application Programming 
+"PKG",167,22,1,"PAH",1,1,24,0)
+   Interface (API) to perform the renewal.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","ORAREN")
+0^1^B23956192^B24271399
+"RTN","ORAREN",1,0)
+ORAREN ;;SLC/JLC - Process Renewal Request from Non-CPRS System ; 11/2/10 11:39am
+"RTN","ORAREN",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**336**;Dec 17, 1997;Build 24
+"RTN","ORAREN",3,0)
+ ;
+"RTN","ORAREN",4,0)
+ ;The purpose of this API is to process a request to renew an
+"RTN","ORAREN",5,0)
+ ;Outpatient Prescription
+"RTN","ORAREN",6,0)
+ ;
+"RTN","ORAREN",7,0)
+ Q
+"RTN","ORAREN",8,0)
+RENEW(ORRESULT,DFN,RX,PROVP,RENEWF) ;
+"RTN","ORAREN",9,0)
+ ;Input - DFN of the patient
+"RTN","ORAREN",10,0)
+ ;        RX to be renewed
+"RTN","ORAREN",11,0)
+ ;
+"RTN","ORAREN",12,0)
+ ; One assumption is made for now and that is that the TMP globals and the message counters are
+"RTN","ORAREN",13,0)
+ ; initialized by the calling routine. Not a perfect scenario, but in order to batch the mail
+"RTN","ORAREN",14,0)
+ ; messages that is what was done.
+"RTN","ORAREN",15,0)
+ N X,OK,ORY,ORPKG,ORITM,ORIFN,PSOSTAT,A,PDET,ORFLDS,DRUG,DISPLAY,FAIL,LIST,OCHKS,OCO,OCLIST,ORCPLX,ORINFO,ORPVSTS
+"RTN","ORAREN",16,0)
+ N ORL,ORPROV,PCP,PCPN,RNWFLDS,SPACES,Y,ORUSR,NEWIFN,PNM,RXE
+"RTN","ORAREN",17,0)
+ K ^TMP("SC",$J) S SPACES=$J(" ",25),RENEWF=$G(RENEWF)
+"RTN","ORAREN",18,0)
+ I $G(PROVP)="" S PROVP="A"
+"RTN","ORAREN",19,0)
+ S PNM=$P($G(^DPT(DFN,0)),"^"),ORUSR=$$GET^XPAR("SYS","OR AUTORENEWAL USER") I ORUSR="" D AE("No auto-renewal user defined") S ORRESULT=0 G END
+"RTN","ORAREN",20,0)
+ D EN^PSOORDER(DFN,RX)
+"RTN","ORAREN",21,0)
+ S DRUG=$P($G(^TMP("PSOR",$J,RX,"DRUG",0)),"^",2)
+"RTN","ORAREN",22,0)
+ S PSOSTAT=$P($P($G(^TMP("PSOR",$J,RX,0)),"^",4),";") I PSOSTAT'="A",PSOSTAT'="E" D AE("RX Status Not Active or Expired") S ORRESULT=0 G END
+"RTN","ORAREN",23,0)
+ D LOCK^ORWDX(.OK,DFN) I 'OK D AE("Chart Lock Failed") S ORRESULT=0 G END
+"RTN","ORAREN",24,0)
+ S ORIFN=$P($G(^TMP("PSOR",$J,RX,1)),"^",8) I ORIFN="" D AE("No CPRS Order Number") S ORRESULT=0 G UNLOCK
+"RTN","ORAREN",25,0)
+ D LOCKORD^ORWDX(.OK,ORIFN) I 'OK D AE("Order Lock Failed") S ORRESULT=0 G UNLOCK
+"RTN","ORAREN",26,0)
+ S A=$G(^OR(100,ORIFN,0)) I A="" D AE("Order missing from ORDERS file") S ORRESULT=0 G UNO
+"RTN","ORAREN",27,0)
+ I RENEWF="N" D AE("Drug not renewable"),EN^ORB3(73,DFN,ORIFN,"","Rx Renewal Request for "_DRUG) S ORRESULT=0 G UNLOCK
+"RTN","ORAREN",28,0)
+ S ORPROV=+$P(A,"^",4),ORL=+$P(A,"^",10)
+"RTN","ORAREN",29,0)
+ S PCPN=$$GETALL^SCAPMCA(DFN),PCP=+$G(^TMP("SC",$J,DFN,"PCPR",1))
+"RTN","ORAREN",30,0)
+ I PROVP="P",ORPROV'=PCP D AE("Ordering Provider not Primary Care") S ORRESULT=3 G UNO
+"RTN","ORAREN",31,0)
+ D ALLWORD^ORALWORD(.ORY,DFN,ORIFN,"E",ORPROV) I $G(ORY)>0 D AE("Clozapine Failed - details below",.ORY) S ORRESULT=0 G UNO
+"RTN","ORAREN",32,0)
+ S ORPVSTS=$$ACTIVE^XUSER(ORPROV) I '$G(ORPVSTS) D AE("Provider "_$S(ORPVSTS="":"NOT FOUND",1:"flagged as "_$P(ORPVSTS,"^",2))) S ORRESULT=0 G UNO
+"RTN","ORAREN",33,0)
+ D VALID^ORWDXA(.ORY,ORIFN,"RN",ORPROV) I $G(ORY)]"" D AE("Invalid Action - details below",.ORY) S ORRESULT=0 G UNO
+"RTN","ORAREN",34,0)
+ D GETPKG^ORWDXR(.ORPKG,ORIFN) I '$D(ORPKG) D AE("Invalid Order Number") S ORRESULT=0 G UNO
+"RTN","ORAREN",35,0)
+ I ORPKG'="PSO" D AE("Problem with package in ORDERS file") S ORRESULT=0 G UNO
+"RTN","ORAREN",36,0)
+ D GTORITM^ORWDXR(.ORITM,ORIFN)
+"RTN","ORAREN",37,0)
+ D FAILDEA^ORWDPS1(.FAIL,ORITM,ORPROV,"O") I FAIL D AE("Failed DEA Check") S ORRESULT=0 G UNO
+"RTN","ORAREN",38,0)
+ D RNWFLDS^ORWDXR(.RNWFLDS,ORIFN) S ORFLDS(1)=RNWFLDS(0)
+"RTN","ORAREN",39,0)
+ D CHKGRP^ORWDPS2(.DISPLAY,ORIFN) I DISPLAY'=2 D AE("Package Problem on Order") S ORRESULT=0 G UNO
+"RTN","ORAREN",40,0)
+ D ON^ORWDXC(.OCO)
+"RTN","ORAREN",41,0)
+ D DISPLAY^ORWDXC(.OCLIST,DFN,ORPKG) I $D(OCLIST) D INFO
+"RTN","ORAREN",42,0)
+ D OXDATA^ORWDXR01(.ORINFO,ORIFN)
+"RTN","ORAREN",43,0)
+ D ACCEPT^ORWDXC(.OCHKS,DFN,"PSO","",ORL,ORINFO,ORIFN)
+"RTN","ORAREN",44,0)
+ D ISCPLX^ORWDXR(.ORCPLX,ORIFN) S ORCPLX=+$G(ORCPLX)
+"RTN","ORAREN",45,0)
+ D RENEW^ORWDXR(.LIST,ORIFN,DFN,ORPROV,ORL,.ORFLDS,ORCPLX,0) S ORRESULT=1
+"RTN","ORAREN",46,0)
+ S NEWIFN=$P(^OR(100,ORIFN,3),"^",6)
+"RTN","ORAREN",47,0)
+ S $P(^OR(100,NEWIFN,8,1,0),"^",13)=ORUSR
+"RTN","ORAREN",48,0)
+ D UNSIGNED(NEWIFN)
+"RTN","ORAREN",49,0)
+ D KILUNSNO^ORWORB(.Y,DFN)
+"RTN","ORAREN",50,0)
+ D KILEXMED^ORWORB(.Y,DFN)
+"RTN","ORAREN",51,0)
+UNO D UNLKORD^ORWDX(.OK,ORIFN)
+"RTN","ORAREN",52,0)
+UNLOCK D UNLOCK^ORWDX(.OK,DFN)
+"RTN","ORAREN",53,0)
+END I EMCNT>5 D
+"RTN","ORAREN",54,0)
+ . I '$G(ORRESULT) S ORRESULT=0
+"RTN","ORAREN",55,0)
+ . S ^TMP($J,"ORAREN E",1,0)="Renewal Requests Not Sent to Provider"
+"RTN","ORAREN",56,0)
+ . S ^TMP($J,"ORAREN E",2,0)=" "
+"RTN","ORAREN",57,0)
+ . S ^TMP($J,"ORAREN E",3,0)="PATIENT                    PRESCRIPTION  PROBLEM"
+"RTN","ORAREN",58,0)
+ . S ^TMP($J,"ORAREN E",4,0)="=============================================================================="
+"RTN","ORAREN",59,0)
+ . S ^TMP($J,"ORAREN E",5,0)=" "
+"RTN","ORAREN",60,0)
+ I INCNT>5 D
+"RTN","ORAREN",61,0)
+ . S ^TMP($J,"ORAREN OC",1,0)="Renewal Requests with Order Checks"
+"RTN","ORAREN",62,0)
+ . S ^TMP($J,"ORAREN OC",2,0)=" "
+"RTN","ORAREN",63,0)
+ . S ^TMP($J,"ORAREN OC",3,0)="PATIENT                    PRESCRIPTION"
+"RTN","ORAREN",64,0)
+ . S ^TMP($J,"ORAREN OC",4,0)="=============================================================================="
+"RTN","ORAREN",65,0)
+ . S ^TMP($J,"ORAREN OC",5,0)=" "
+"RTN","ORAREN",66,0)
+ Q
+"RTN","ORAREN",67,0)
+AE(TEXT,PDET) ;
+"RTN","ORAREN",68,0)
+ N S1
+"RTN","ORAREN",69,0)
+ S EMCNT=EMCNT+1,RXE=$P($G(^TMP("PSOR",$J,RX,0)),"^",5),^TMP($J,"ORAREN E",EMCNT,0)=$E(PNM,1,25)_$E(SPACES,1,27-$L(PNM))_RXE_$E(SPACES,1,14-$L(RXE))_TEXT
+"RTN","ORAREN",70,0)
+ I '(EMCNT#20) S EMCNT=EMCNT+1,^TMP($J,"ORAREN E",EMCNT,0)=" "
+"RTN","ORAREN",71,0)
+ I $D(PDET),$O(PDET(0))="" S EMCNT=EMCNT+1,^TMP($J,"ORAREN E",EMCNT,0)="     "_PDET Q
+"RTN","ORAREN",72,0)
+ I $D(PDET) S S1=0 F  S S1=$O(PDET(S1)) Q:'S1  S EMCNT=EMCNT+1,^TMP($J,"ORAREN E",EMCNT,0)="     "_PDET(S1)
+"RTN","ORAREN",73,0)
+ Q
+"RTN","ORAREN",74,0)
+INFO ;file informational items in mail message
+"RTN","ORAREN",75,0)
+ N I
+"RTN","ORAREN",76,0)
+ S INCNT=INCNT+1,^TMP($J,"ORAREN OC",INCNT,0)=$E(PNM,1,25)_$E(SPACES,1,27-$L(PNM))_$P($G(^TMP("PSOR",$J,RX,0)),"^",5)
+"RTN","ORAREN",77,0)
+ F I=1:1 Q:'$D(OCLIST(I))  S INCNT=INCNT+1,^TMP($J,"ORAREN OC",INCNT,0)="     "_OCLIST(I)
+"RTN","ORAREN",78,0)
+ Q
+"RTN","ORAREN",79,0)
+UNSIGNED(UIFN) ;queue unsigned order alert
+"RTN","ORAREN",80,0)
+ N ORVP,ORIFN,ORNP,A
+"RTN","ORAREN",81,0)
+ Q:$G(UIFN)=""  S A=$G(^OR(100,UIFN,0)),ORVP=$P(A,"^",2),ORNP=$P(A,"^",4),ORIFN=UIFN_";1"
+"RTN","ORAREN",82,0)
+ D NOTIF^ORCSIGN
+"RTN","ORAREN",83,0)
+ Q
+"RTN","ORY290")
+0^^B5259457^B5117347
+"RTN","ORY290",1,0)
+ORY290 ;SLCOIFO - Post-init for patch OR*3*336 ; 8/3/10 1:41pm
+"RTN","ORY290",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**336**;Dec 17, 1997;Build 24
+"RTN","ORY290",3,0)
+ ;
+"RTN","ORY290",4,0)
+ ; DBIA 2336   EN^XPAR   ^TMP($J,"XPARRSTR")
+"RTN","ORY290",5,0)
+ ;
+"RTN","ORY290",6,0)
+PRE ; initiate pre-init environment check
+"RTN","ORY290",7,0)
+ N A,I,X
+"RTN","ORY290",8,0)
+ S X="VEXRX" X ^%ZOSF("TEST") E  Q
+"RTN","ORY290",9,0)
+ X "ZL VEXRX F I=1:1 S A=$T(+I) Q:A=""""  I A[""^APU"" W !!,""Wrong version of VEXRX is installed."" S XPDABORT=1 Q"
+"RTN","ORY290",10,0)
+ Q
+"RTN","ORY290",11,0)
+POST ; initiate post-init processes
+"RTN","ORY290",12,0)
+ ;
+"RTN","ORY290",13,0)
+ D PARAM
+"RTN","ORY290",14,0)
+ Q
+"RTN","ORY290",15,0)
+ ;
+"RTN","ORY290",16,0)
+PARAM ; parameter transport routine
+"RTN","ORY290",17,0)
+ K ^TMP($J,"XPARRSTR")
+"RTN","ORY290",18,0)
+ N ENT,IDX,ROOT,REF,VAL,I
+"RTN","ORY290",19,0)
+ S ROOT=$NAME(^TMP($J,"XPARRSTR")),ROOT=$E(ROOT,1,$L(ROOT)-1)_","  ;DBIA 2336
+"RTN","ORY290",20,0)
+ D LOAD
+"RTN","ORY290",21,0)
+XX2 S IDX=0,ENT="PKG."_"ORDER ENTRY/RESULTS REPORTING"
+"RTN","ORY290",22,0)
+ F  S IDX=$O(^TMP($J,"XPARRSTR",IDX)) Q:'IDX  D
+"RTN","ORY290",23,0)
+ . N PAR,INST,ORVAL,ORERR K ORVAL
+"RTN","ORY290",24,0)
+ . S PAR=$P(^TMP($J,"XPARRSTR",IDX,"KEY"),U),INST=$P(^("KEY"),U,2)
+"RTN","ORY290",25,0)
+ . M ORVAL=^TMP($J,"XPARRSTR",IDX,"VAL")
+"RTN","ORY290",26,0)
+ . D EN^XPAR(ENT,PAR,INST,.ORVAL,.ORERR)  ;DBIA 2336
+"RTN","ORY290",27,0)
+ K ^TMP($J,"XPARRSTR")
+"RTN","ORY290",28,0)
+ Q
+"RTN","ORY290",29,0)
+LOAD ; load data into ^TMP (expects ROOT to be defined)
+"RTN","ORY290",30,0)
+ S I=1 F  S REF=$T(DATA+I) Q:REF=""  S VAL=$T(DATA+I+1) D
+"RTN","ORY290",31,0)
+ . S I=I+2,REF=$P(REF,";",3,999),VAL=$P(VAL,";",3,999)
+"RTN","ORY290",32,0)
+ . S @(ROOT_REF)=VAL
+"RTN","ORY290",33,0)
+ Q
+"RTN","ORY290",34,0)
+DATA ; parameter data
+"RTN","ORY290",35,0)
+ ;;7340,"KEY")
+"RTN","ORY290",36,0)
+ ;;ORB ARCHIVE PERIOD^OP RX RENEWAL REQUEST
+"RTN","ORY290",37,0)
+ ;;7340,"VAL")
+"RTN","ORY290",38,0)
+ ;;30
+"RTN","ORY290",39,0)
+ ;;7341,"KEY")
+"RTN","ORY290",40,0)
+ ;;ORB DELETE MECHANISM^OP RX RENEWAL REQUEST
+"RTN","ORY290",41,0)
+ ;;7341,"VAL")
+"RTN","ORY290",42,0)
+ ;;All Recipients
+"RTN","ORY290",43,0)
+ ;;7342,"KEY")
+"RTN","ORY290",44,0)
+ ;;ORB FORWARD BACKUP REVIEWER^OP RX RENEWAL REQUEST
+"RTN","ORY290",45,0)
+ ;;7342,"VAL")
+"RTN","ORY290",46,0)
+ ;;0
+"RTN","ORY290",47,0)
+ ;;7343,"KEY")
+"RTN","ORY290",48,0)
+ ;;ORB FORWARD SUPERVISOR^OP RX RENEWAL REQUEST
+"RTN","ORY290",49,0)
+ ;;7343,"VAL")
+"RTN","ORY290",50,0)
+ ;;0
+"RTN","ORY290",51,0)
+ ;;7344,"KEY")
+"RTN","ORY290",52,0)
+ ;;ORB FORWARD SURROGATES^OP RX RENEWAL REQUEST
+"RTN","ORY290",53,0)
+ ;;7344,"VAL")
+"RTN","ORY290",54,0)
+ ;;0
+"RTN","ORY290",55,0)
+ ;;7345,"KEY")
+"RTN","ORY290",56,0)
+ ;;ORB PROCESSING FLAG^OP RX RENEWAL REQUEST
+"RTN","ORY290",57,0)
+ ;;7345,"VAL")
+"RTN","ORY290",58,0)
+ ;;Disabled
+"RTN","ORY290",59,0)
+ ;;7346,"KEY")
+"RTN","ORY290",60,0)
+ ;;ORB PROVIDER RECIPIENTS^OP RX RENEWAL REQUEST
+"RTN","ORY290",61,0)
+ ;;7346,"VAL")
+"RTN","ORY290",62,0)
+ ;;OAPT
+"RTN","ORY290",63,0)
+ ;;7347,"KEY")
+"RTN","ORY290",64,0)
+ ;;ORB URGENCY^OP RX RENEWAL REQUEST
+"RTN","ORY290",65,0)
+ ;;7347,"VAL")
+"RTN","ORY290",66,0)
+ ;;High
+"VER")
+8.0^22.0
+"^DD",100.9,100.9,0)
+FIELD^^5^12
+"^DD",100.9,100.9,0,"DDA")
+N
+"^DD",100.9,100.9,0,"DT")
+2990412
+"^DD",100.9,100.9,0,"IX","B",100.9,.01)
+
+"^DD",100.9,100.9,0,"IX","C",100.9,.02)
+
+"^DD",100.9,100.9,0,"IX","D",100.9,.03)
+
+"^DD",100.9,100.9,0,"NM","OE/RR NOTIFICATIONS")
+
+"^DD",100.9,100.9,0,"PT",100.21019,.01)
+
+"^DD",100.9,100.9,0,"PT",860.22,3)
+
+"^DD",100.9,100.9,0,"VRPK")
+OR
+"^DD",100.9,100.9,.001,0)
+NUMBER^NJ5,0^^ ^K:+X'=X!(X>99999)!(X<1)!(X?.E1"."1N.N) X
+"^DD",100.9,100.9,.001,3)
+Type a Number between 1 and 99999, 0 Decimal Digits
+"^DD",100.9,100.9,.001,21,0)
+5^^2^2^2970719^^
+"^DD",100.9,100.9,.001,21,1,0)
+This is the internal entry number assigned to a notification.  Entries
+"^DD",100.9,100.9,.001,21,2,0)
+1 through 999 are reserved for the releasing package, OE/RR Notifications.
+"^DD",100.9,100.9,.001,21,3,0)
+To add site specific notifications, prefix the Notification Number with
+"^DD",100.9,100.9,.001,21,4,0)
+your site number (e.g., Site specific Nuclear Medicine Results Notification
+"^DD",100.9,100.9,.001,21,5,0)
+at Salt Lake might be assigned "66001").
+"^DD",100.9,100.9,.001,23,0)
+^^3^3^2970719^^^
+"^DD",100.9,100.9,.001,23,1,0)
+This field is used by DHCP packages triggering notifications (Lab, MAS, etc)
+"^DD",100.9,100.9,.001,23,2,0)
+to send the correct message and parameters to OE/RR.  These numbers must not
+"^DD",100.9,100.9,.001,23,3,0)
+be altered in any fashion.
+"^DD",100.9,100.9,.001,"DT")
+2910520
+"^DD",100.9,100.9,.01,0)
+NAME^RF^^0;1^K:$L(X)>30!($L(X)<3)!'(X'?1P.E) X
+"^DD",100.9,100.9,.01,1,0)
+^.1
+"^DD",100.9,100.9,.01,1,1,0)
+100.9^B
+"^DD",100.9,100.9,.01,1,1,1)
+S ^ORD(100.9,"B",$E(X,1,30),DA)=""
+"^DD",100.9,100.9,.01,1,1,2)
+K ^ORD(100.9,"B",$E(X,1,30),DA)
+"^DD",100.9,100.9,.01,1,2,0)
+^^TRIGGER^100.9^.02
+"^DD",100.9,100.9,.01,1,2,1)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ORD(100.9,D0,0)):^(0),1:"") S X=$P(Y(1),U,2),X=X S DIU=X K Y S X=DIV S X="OR" X ^DD(100.9,.01,1,2,1.4)
+"^DD",100.9,100.9,.01,1,2,1.4)
+S DIH=$S($D(^ORD(100.9,DIV(0),0)):^(0),1:""),DIV=X S $P(^(0),U,2)=DIV,DIH=100.9,DIG=.02 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",100.9,100.9,.01,1,2,2)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ORD(100.9,D0,0)):^(0),1:"") S X=$P(Y(1),U,2),X=X S DIU=X K Y S X=DIV S X=X X ^DD(100.9,.01,1,2,2.4)
+"^DD",100.9,100.9,.01,1,2,2.4)
+S DIH=$S($D(^ORD(100.9,DIV(0),0)):^(0),1:""),DIV=X S $P(^(0),U,2)=DIV,DIH=100.9,DIG=.02 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",100.9,100.9,.01,1,2,"%D",0)
+^^2^2^2920505^
+"^DD",100.9,100.9,.01,1,2,"%D",1,0)
+Automatically trigger the setting of the PACKAGE ID field with "OR"
+"^DD",100.9,100.9,.01,1,2,"%D",2,0)
+to indicate ORder entry when a notification is created.
+"^DD",100.9,100.9,.01,1,2,"CREATE VALUE")
+"OR"
+"^DD",100.9,100.9,.01,1,2,"DELETE VALUE")
+OLD NAME
+"^DD",100.9,100.9,.01,1,2,"DT")
+2920505
+"^DD",100.9,100.9,.01,1,2,"FIELD")
+PACKAGE ID
+"^DD",100.9,100.9,.01,3)
+Answer must be 3-30 characters in length. Enter the name of the notification.  The name should match the entry in the MESSAGE TEXT field as closely as possible.
+"^DD",100.9,100.9,.01,21,0)
+^^4^4^2990416^^^^
+"^DD",100.9,100.9,.01,21,1,0)
+This is the name of the notification.  It should match the text in the
+"^DD",100.9,100.9,.01,21,2,0)
+MESSAGE TEXT field as closely as possible (it may be an abbreviated version
+"^DD",100.9,100.9,.01,21,3,0)
+of the entry in MESSAGE TEXT.)  This field is displayed to users when
+"^DD",100.9,100.9,.01,21,4,0)
+selecting or reviewing entries in this file (100.9).
+"^DD",100.9,100.9,.01,"DT")
+2920505
+"^DD",100.9,100.9,.02,0)
+PACKAGE ID^RFX^^0;2^S X="OR" ;K:X[""""!($A(X)=^ X I $D(X) K:$L(X)>20!($L(X)<2) X
+"^DD",100.9,100.9,.02,1,0)
+^.1
+"^DD",100.9,100.9,.02,1,1,0)
+100.9^C
+"^DD",100.9,100.9,.02,1,1,1)
+S ^ORD(100.9,"C",$E(X,1,30),DA)=""
+"^DD",100.9,100.9,.02,1,1,2)
+K ^ORD(100.9,"C",$E(X,1,30),DA)
+"^DD",100.9,100.9,.02,1,1,"%D",0)
+^^2^2^2920427^^
+"^DD",100.9,100.9,.02,1,1,"%D",1,0)
+This cross-reference provides a way to group notifications by package or 
+"^DD",100.9,100.9,.02,1,1,"%D",2,0)
+other category.
+"^DD",100.9,100.9,.02,1,1,"DT")
+2910429
+"^DD",100.9,100.9,.02,3)
+Always enter "OR" in this field.  This field is used to create the XQAID field passed to the XQALERT entry points.  It will typically be the Package ID. 
+"^DD",100.9,100.9,.02,5,1,0)
+100.9^.01^2
+"^DD",100.9,100.9,.02,9)
+^
+"^DD",100.9,100.9,.02,21,0)
+^^10^10^2990416^^^^
+"^DD",100.9,100.9,.02,21,1,0)
+This entry should always be "OR" to indicate the alert (notification) is 
+"^DD",100.9,100.9,.02,21,2,0)
+processed by OE/RR.  "OR" is stuffed via a trigger x-ref in field .01.
+"^DD",100.9,100.9,.02,21,3,0)
+This Package ID will have ";DFN;NIEN" concatenated to the end of it, to
+"^DD",100.9,100.9,.02,21,4,0)
+make the XQAID variable which is used by the XQALERT routine to provide a
+"^DD",100.9,100.9,.02,21,5,0)
+unique cross-reference.  The order entry notification system will check
+"^DD",100.9,100.9,.02,21,6,0)
+the New person file to determine if this message is already pending for
+"^DD",100.9,100.9,.02,21,7,0)
+the user.  If it already exists, the user will not receive a second message.
+"^DD",100.9,100.9,.02,21,8,0)
+ 
+"^DD",100.9,100.9,.02,21,9,0)
+DFN is the Patient File internal entry number.
+"^DD",100.9,100.9,.02,21,10,0)
+NIEN is the Notification File internal entry number.
+"^DD",100.9,100.9,.02,"DT")
+2911008
+"^DD",100.9,100.9,.03,0)
+MESSAGE TEXT^RF^^0;3^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>51!($L(X)<3) X
+"^DD",100.9,100.9,.03,1,0)
+^.1
+"^DD",100.9,100.9,.03,1,1,0)
+100.9^D
+"^DD",100.9,100.9,.03,1,1,1)
+S ^ORD(100.9,"D",$E(X,1,30),DA)=""
+"^DD",100.9,100.9,.03,1,1,2)
+K ^ORD(100.9,"D",$E(X,1,30),DA)
+"^DD",100.9,100.9,.03,1,1,"%D",0)
+^^1^1^2910429^
+"^DD",100.9,100.9,.03,1,1,"%D",1,0)
+This cross reference provides a look-up based on the Message Text.
+"^DD",100.9,100.9,.03,1,1,"DT")
+2910429
+"^DD",100.9,100.9,.03,3)
+Answer must be 3-51 characters in length.  This entry is used as the actual text of the notification (MESSAGE TYPE = 'NOT') or the default text (MESSAGE TEXT = 'PKG').
+"^DD",100.9,100.9,.03,21,0)
+^^6^6^2920224^^^^
+"^DD",100.9,100.9,.03,21,1,0)
+This text will be appended to the Patient last name and last 4 characters of
+"^DD",100.9,100.9,.03,21,2,0)
+the social security number to create the order notification text.
+"^DD",100.9,100.9,.03,21,3,0)
+(e.g., SMITH (4356): Unsigned orders. - Where "Unsigned orders." is the 
+"^DD",100.9,100.9,.03,21,4,0)
+content of MESSAGE TEXT.)  Text entered into this field is the default text
+"^DD",100.9,100.9,.03,21,5,0)
+for notifications where the text message usually comes from the package
+"^DD",100.9,100.9,.03,21,6,0)
+(MESSAGE TYPE = PKG).
+"^DD",100.9,100.9,.03,"DT")
+2911008
+"^DD",100.9,100.9,.04,0)
+MESSAGE TYPE^RS^PKG:PACKAGE PROVIDES A VARIABLE MESSAGE;NOT:NOTIFICATION FILE PROVIDES MESSAGE;^0;4^Q
+"^DD",100.9,100.9,.04,3)
+Messages can be provided by the NOTIFICATION file where they are defined with the notification 'NOT' or they can be variable messages supplied by the package 'PKG' when the notification is triggered.
+"^DD",100.9,100.9,.04,21,0)
+^^1^1^2960503^^^^
+"^DD",100.9,100.9,.04,21,1,0)
+MESSAGE TYPE field is used as a flag to determine where the message text originates.  If from the NOTIFICATION file, MESSAGE TYPE is 'NOT.'  If the message comes from the package, MESSAGE TYPE is 'PKG.'
+"^DD",100.9,100.9,.04,"DT")
+2910627
+"^DD",100.9,100.9,.05,0)
+ACTION FLAG^RS^I:INFORMATION ONLY;R:RUN ROUTINE;^0;5^Q
+"^DD",100.9,100.9,.05,3)
+Enter 'I' if the user is to take no follow-up action for this notification.  Enter 'R' if the user is to take a follow-up action after viewing this notification (e.g. Sign an unsigned order.)
+"^DD",100.9,100.9,.05,21,0)
+^^7^7^2920417^^^^
+"^DD",100.9,100.9,.05,21,1,0)
+This a mandatory flag used to regulate processing in XQALERT processing.
+"^DD",100.9,100.9,.05,21,2,0)
+The flag is set to I to indicate the notification is for INFORMATION ONLY - 
+"^DD",100.9,100.9,.05,21,3,0)
+no follow-up action is to be taken.  'I' notifications are deleted as each
+"^DD",100.9,100.9,.05,21,4,0)
+user reviews them.  'R' notifications have a follow-up action associated
+"^DD",100.9,100.9,.05,21,5,0)
+with them.  The user will be taken to another routine or option when they
+"^DD",100.9,100.9,.05,21,6,0)
+select a notification with ACTION FLAG = R and a follow-up routine/option
+"^DD",100.9,100.9,.05,21,7,0)
+is defined.
+"^DD",100.9,100.9,.05,"DT")
+2910627
+"^DD",100.9,100.9,.06,0)
+ENTRY POINT^F^^0;6^K:$L(X)>8!($L(X)<1) X
+"^DD",100.9,100.9,.06,3)
+Answer must be 1-8 characters in length.  This should be the tag to be concatenated with the ROUTINE NAME (.07) field.  It is the entry point for follow-up action in that routine.
+"^DD",100.9,100.9,.06,21,0)
+^^2^2^2920224^^^
+"^DD",100.9,100.9,.06,21,1,0)
+This is an optional field used to create the XQAROU variable to be used by
+"^DD",100.9,100.9,.06,21,2,0)
+the XQALERT routine.  This field represents the TAG in tag^routine. 
+"^DD",100.9,100.9,.06,"DT")
+2910429
+"^DD",100.9,100.9,.07,0)
+ROUTINE NAME^F^^0;7^K:$L(X)>8!($L(X)<2) X
+"^DD",100.9,100.9,.07,3)
+Answer must be 2-8 characters in length.  This is concatenated with the ENTRY POINT (.06) to create XQAROU.  It is the routine where the follow-up action (if any) for this notification is initiated.
+"^DD",100.9,100.9,.07,21,0)
+^^2^2^2920224^^^
+"^DD",100.9,100.9,.07,21,1,0)
+This is an optional variable identifying a routine or tag(field .06)^routine
+"^DD",100.9,100.9,.07,21,2,0)
+used to create XQAROU for processing by XQALERT.
+"^DD",100.9,100.9,.07,"DT")
+2910429
+"^DD",100.9,100.9,1,0)
+NON-MENU TYPE OPTION ACTION^P19'^DIC(19,^1;1^Q
+"^DD",100.9,100.9,1,3)
+This field is for future enhancements.  It is currently (5/92) unused.
+"^DD",100.9,100.9,1,21,0)
+^^5^5^2920506^^^^
+"^DD",100.9,100.9,1,21,1,0)
+This is an optional field used to create the variable XQAOPT for use
+"^DD",100.9,100.9,1,21,2,0)
+by XQALERT.  It should indicate a non-menu type option on the user's
+"^DD",100.9,100.9,1,21,3,0)
+primary or secondary menu, not on the Common menu.  The phantom jump 
+"^DD",100.9,100.9,1,21,4,0)
+is used to navigate to the destination option and will check pathway
+"^DD",100.9,100.9,1,21,5,0)
+restrictions in doing so.
+"^DD",100.9,100.9,1,"DT")
+2910429
+"^DD",100.9,100.9,1.5,0)
+RELATED PACKAGE^F^^1;2^K:$L(X)>30!($L(X)<2) X
+"^DD",100.9,100.9,1.5,3)
+Answer must be 2-30 characters in length.  Enter the appropriate name of the package where the notification originates (e.g., LAB, MAS, Pharmacy.)
+"^DD",100.9,100.9,1.5,21,0)
+^^1^1^2920224^^^
+"^DD",100.9,100.9,1.5,21,1,0)
+This field contains the name of the package where the notification originates or is triggered (e.g., LAB, MAS, Pharmacy.)
+"^DD",100.9,100.9,1.5,"DT")
+2910627
+"^DD",100.9,100.9,4,0)
+DESCRIPTION^RF^^4;1^K:$L(X)>250!($L(X)<3) X
+"^DD",100.9,100.9,4,3)
+Answer must be 3-250 characters in length.  Enter a description of the notification with emphasis on what triggers the notification and what actions delete it.
+"^DD",100.9,100.9,4,21,0)
+^^2^2^2950711^^^
+"^DD",100.9,100.9,4,21,1,0)
+This field contains free text describing the notification, how it is trig-
+"^DD",100.9,100.9,4,21,2,0)
+gered and what action(s) delete it.
+"^DD",100.9,100.9,4,"DT")
+2950424
+"^DD",100.9,100.9,5,0)
+FOLLOW-UP TYPE^S^0:REPORT;1:COSIGN_PN;2:EXPIRING_ORDER;3:FLAGGED_ORDER;4:ORDER;5:UNLINKED;6:NEW_CONSULT;7:NEW_ORDER;8:COSIGN_ORDER;9:ES_ORDER;10:UNSIGN_PN;11:UNVERIFIED_MED;^3;2^Q
+"^DD",100.9,100.9,5,3)
+Enter the follow-up code correspond to the notification's follow-up action.  If unsure, leave blank.
+"^DD",100.9,100.9,5,21,0)
+^^5^5^2990412^^^^
+"^DD",100.9,100.9,5,21,1,0)
+This field contains the type of follow-up action to be taken.  It is used 
+"^DD",100.9,100.9,5,21,2,0)
+by the application managing the follow-up action  (e.g. GUI interface) to
+"^DD",100.9,100.9,5,21,3,0)
+initiate the proper follow-up action separate from the underlying data 
+"^DD",100.9,100.9,5,21,4,0)
+base and application layers.  Example follow-up types include: report,
+"^DD",100.9,100.9,5,21,5,0)
+e/s, flag.
+"^DD",100.9,100.9,5,23,0)
+^^6^6^2990412^^^^
+"^DD",100.9,100.9,5,23,1,0)
+This field is basically a flag for the environment (e.g. GUI - Delphi)
+"^DD",100.9,100.9,5,23,2,0)
+handling notification follow-up to initiate the appropriate action.  For
+"^DD",100.9,100.9,5,23,3,0)
+example if the type was report, the data returned in the API call would be
+"^DD",100.9,100.9,5,23,4,0)
+stuffed into a generic text box for display; whereas if the type was
+"^DD",100.9,100.9,5,23,5,0)
+flag, the follow-up action would be to find and display all flagged orders
+"^DD",100.9,100.9,5,23,6,0)
+for the patient and allow unflagging.
+"^DD",100.9,100.9,5,"DT")
+2990412
+"^DIC",100.9,100.9,0)
+OE/RR NOTIFICATIONS^100.9
+"^DIC",100.9,100.9,0,"GL")
+^ORD(100.9,
+"^DIC",100.9,100.9,"%D",0)
+^^5^5^2970731^^^
+"^DIC",100.9,100.9,"%D",1,0)
+This file contains data used to generate notifications.  Packages
+"^DIC",100.9,100.9,"%D",2,0)
+determine if a notification should be sent then send the patient ID and
+"^DIC",100.9,100.9,"%D",3,0)
+notification ID (IEN in this file) to order entry routines.  Based on the
+"^DIC",100.9,100.9,"%D",4,0)
+notification IEN, data from this file is used to generate the notification
+"^DIC",100.9,100.9,"%D",5,0)
+and help determine its recipients.
+"^DIC",100.9,"B","OE/RR NOTIFICATIONS",100.9)
+
+"BLD",8514,6)
+^284
+**END**
+**END**

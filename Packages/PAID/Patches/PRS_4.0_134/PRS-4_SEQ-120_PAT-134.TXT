@@ -1,0 +1,201 @@
+$TXT Created by GOLDSMITH,RHONDA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 03/09/12 at 17:20
+=============================================================================
+Run Date: MAR 19, 2012                     Designation: PRS*4*134
+Package : PRS - PAID                          Priority: EMERGENCY
+Version : 4       SEQ #120                      Status: Released
+                  Compliance Date: MAR 21, 2012
+=============================================================================
+
+
+Subject: NNU CT SETTLEMENT REPORT
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch contains a report for sites to identify Comp Time to
+ be reinstated to RN's covered by the National Nursing Union (NNU)
+ as dictated by the NNU/VA Settlement ruling.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. HD0000000589219  LEX - NNU vs VA = Compensatory Time Lookup
+    duplicates: HD0000000589152  Request for Fileman Routine
+                HD0000000589165  VAMHCS - Nat'l Nrs Settlement
+                                 Agreement
+                HD0000000590820  Fileman for NNU Settlement Agreement
+                HD0000000590939  NNU Union Settlement Agreement
+                HD0000000598488  Need report showing comp time lost
+  
+  
+ Participating Test Sites:
+ =========================
+ VA North Florida/South Georgia VA HCS
+ Lexington VAMC
+ Miami VAMC
+  
+  
+ Remedy Overview:
+ ================
+  
+ 1. HD0000000589219  LEX - NNU vs VA = Compensatory Time Lookup
+  
+  
+ Problem:
+ --------
+ In May 2011, National Nurses United (NNU) filed a National Grievance
+ against the Department of Veterans Affairs.  The National Grievance
+ alleged that Nurses (NNU RN's) were being negatively affected because 
+ changes to VA's Time and Attendance System (ETA) that would allow 
+ accrued compensatory time (CT) to expire in 26 pay periods had not
+ been made.  In some instances, this resulted in NNU RNs losing their
+ accrued CT before having the opportunity to use it or to be 
+ compensated for it, if they were eligible.
+   
+ On November 17, 2011, NNU and the VA entered into a settlement 
+ agreement that provided for the restoration of NNU RNs' lost CT
+ between the periods of November 11, 2007 through November 17, 2011.
+ Any restored CT time must be available for the NNU RNs' use
+ within 26 pay periods from the effective date of its restoration.
+   
+  
+ Resolution:
+ -----------
+ The Payroll office staffs were tasked with having their IT personnel
+ create a Fileman routine that would capture all the CT earned for the
+ period of November 11, 2007 through November 17, 2011.
+  
+ Because FileMan is limited to searching through one file at a time,
+ a comprehensive report could not be produced using only FileMan.
+ A routine has been written that identifies those employees with a
+ Occupation/Series Code of 061050 and displays the CT Earned and 
+ CT Used for pay periods 07-23 through 11-23.The routine is PRSXP134.
+  
+ *** Report Instructions (after patch install) ***
+ -------------------------------------------------
+ This report resides in the Payroll Main Menu [PRSA PAY MENU] as
+ option number 50 - NNU CT SETTLEMENT REPORT [PRSX NNU SETTLEMENT REPORT].
+ It will only ask for an output device and it can be queued (recommended).
+  
+ The size of this report will vary by site.  It is recommended to run the
+ report after hours for optimum processing speed. The report may be run as
+ many times as needed.  
+  
+ This report contains all Comp Time Earned and Comp Time Used for 
+ employees with Occupation/Series code of 061050 for pay periods
+ 07-23 through 11-23.  The official effective dates for this 
+ settlement are November 11, 2007 through November 17, 2011.  
+ November 11, 2007 is the first day of pay period 07-23 and 
+ November 17, 2011 is the 12th day of pay period 11-23.
+ If a nurse identified on the report has CT activity for pay 
+ period 11-23, the timecard for that nurse will need to be viewed
+ manually and any CT activity subtracted from the report if that 
+ CT activity falls on the 13th or 14th day of pay period 11-23.
+  
+  
+ Technical
+ =========
+  
+ Two entries to the OPTION file will be added with this patch:
+   
+ NNU CT SETTLEMENT REPORT [PRSX NNU SETTLEMENT REPORT] - New option added
+ Payroll Main Menu [PRSA PAY MENU] - Updated to add PRSX NNU SETTLEMENT
+                                     REPORT as option number 50 on the menu
+  
+  
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, the ETA users do not need to 
+ be off the system. Other VISTA users will not be affected.
+  
+ Install Time - less than 2 minutes.
+  
+  1.   Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.   Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+           Patch Monitor Main Menu ...
+  
+       Select Kernel Installation & Distribution System Option: INStallation
+                           ---
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+            Select Installation Option:
+  
+  3.   From this menu, you may elect to use the following options
+       (When prompted for the INSTALL NAME, enter PRS*4.0*134):
+  
+       a.  Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed. It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+  
+  4.   Use the Install Package(s) option and select the package
+       PRS*4.0*134.
+       
+       a.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+           of Install? NO//', answer NO.
+       b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+           NO//', answer NO.
+       c.  When prompted 'Want to DISABLE Scheduled Options, Menu
+           Options, and Protocols? YES//', answer YES.
+       d.  When prompted 'Enter options you wish to mark as 'Out Of
+           Order':', enter the following options:
+  
+           PAYROLL MAIN MENU  [PRSA PAY MENU]
+   
+       e.  When prompted 'Enter protocols you wish to mark as 'Out Of
+           Order':', press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSXP134
+    Before:       n/a   After:  B7812632  **134**
+
+=============================================================================
+User Information:
+Entered By  : GOLDSMITH,RHONDA              Date Entered  : JAN 26, 2012
+Completed By: BOWEN,MARY JANE               Date Completed: MAR 19, 2012
+Released By : MCCLARAN,PAM                  Date Released : MAR 19, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

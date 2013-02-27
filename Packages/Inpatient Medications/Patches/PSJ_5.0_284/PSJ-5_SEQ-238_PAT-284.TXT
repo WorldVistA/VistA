@@ -1,0 +1,162 @@
+$TXT Created by ENELOW,JASON at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 09/24/12 at 11:57
+=============================================================================
+Run Date: DEC 12, 2012                     Designation: PSJ*5*284
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #238                      Status: Released
+                  Compliance Date: JAN 12, 2013
+=============================================================================
+
+Associated patches: (v)PSJ*5*119   <<= must be installed BEFORE `PSJ*5*284'
+
+Subject: ATC NETWORK CHANNEL COMPLIANCE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue in the Inpatient Medications 
+ package:
+  
+ In anticipation of the VA health centers conversion to Linux platforms,
+ it will be necessary to make a coding change in order to prevent the Pick 
+ List data from erroring off when sending to ATC.
+  
+  
+ ASSOCIATED NSR(S):
+ =================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ HD0000000707579 - Cannot send data to Automed
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Oklahoma City VAMC
+ Wilkes Barre VAMC
+ Upstate NY HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================
+ HD0000000707579 - Cannot send data to Automed
+  
+   Problem:
+   -------
+   Due to the conversion to Linux Backend servers in the VA, sending a 
+   Pick List to ATC does not function properly when using a Network 
+   Channel device to send data.
+  
+   Resolution:
+   ----------
+   Changed routines PSGTAP1 and PSGTAP0 so that sending a Pick List to ATC 
+   functions properly when using a Network Channel device.
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ The revised Inpatient Medications TECHNICAL MANUAL / SECURITY GUIDE is
+ available on the ANONYMOUS.SOFTWARE directory at one of the following
+ Office of Information (OI) Field Offices. This file should be retrieved in
+ binary format.
+     
+ Sites may retrieve documentation in one of the following ways:
+    
+  (1) The preferred method is to FTP the files from 
+      download.vista.med.va.gov, which will transmit the files from 
+      the first available FTP server.
+     
+  (2) Sites may also elect to retrieve documentation directly from a
+      specific server as follows:
+     
+      Albany                ftp.fo-albany.med.va.gov
+      Hines                 ftp.fo-hines.med.va.gov
+      Salt Lake City        ftp.fo-slc.med.va.gov
+     
+ The documentation distribution includes:
+  
+ File Name             Description                                 Protocol
+ ---------             -----------                                 --------
+ psj_5_tm_r1212.pdf    Technical Manual/Security Guide (full doc)    Binary
+  
+ psj_5_p284_tm_cp.pdf  Technical Manual/Security Guide (change pgs)  Binary
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+ ****************************** N O T E **********************************
+   
+   Please Verify Pre Checksums for Routines PSGTAPO, PSGTAP1 for Class III 
+   medications.
+  
+   PSJ*5*284 may contains routines that may overwrite Class III 
+   modifications for the ATC Devices at your site. Class III changes must
+   be reinstated after installing PSJ*5*284.
+  
+ *************************************************************************
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2. From the Kernel Installation & Distribution System menu, select 
+    the Installation menu.  
+  
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSJ*5.0*284)
+   
+    a.  Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+    b.  Print Transport Global - This option will allow you to view the
+        components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package PSJ*5.0*284.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+    respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGTAP0
+    Before: B12574819   After: B14152005  **119,284**
+Routine Name: PSGTAP1
+    Before: B17389584   After: B19383245  **10,119,284**
+ 
+Routine list of preceding patches: 119
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : SEP 17, 2012
+Completed By: WERNER,GARY                   Date Completed: DEC 11, 2012
+Released By : FOX,KIRK                      Date Released : DEC 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

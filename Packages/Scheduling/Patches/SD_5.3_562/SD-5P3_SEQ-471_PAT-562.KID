@@ -1,0 +1,1950 @@
+Released SD*5.3*562 SEQ #471
+Extracted from mail message
+**KIDS**:SD*5.3*562^
+
+**INSTALL NAME**
+SD*5.3*562
+"BLD",8244,0)
+SD*5.3*562^SCHEDULING^0^3110421^y
+"BLD",8244,1,0)
+^^12^12^3100420^
+"BLD",8244,1,1,0)
+Fix issue with ACRP CUSS report involving whole days that have been
+"BLD",8244,1,2,0)
+cancelled.  Report erroneously calculates clinic capacity using a zero for
+"BLD",8244,1,3,0)
+whole days that have been cancelled.  The normal number of available slots
+"BLD",8244,1,4,0)
+should be used for the clinic capacity and only the number of open slots
+"BLD",8244,1,5,0)
+should reflect zero for that day.  Also, the patch fixes an erroneous
+"BLD",8244,1,6,0)
+column heading for the ACRP Ad Hoc report when run for a delimited
+"BLD",8244,1,7,0)
+format for export to a spreadsheet, also the use of a single character
+"BLD",8244,1,8,0)
+variable name, an error that causes the Ambcare nightly transmission to
+"BLD",8244,1,9,0)
+fail due to an invalid eligibility code, an error that occurs with the
+"BLD",8244,1,10,0)
+ACRP Ad Hoc report when data is missing in the Patient Enrollment file
+"BLD",8244,1,11,0)
+and an error that occurs with the Patient Activity by Appointment
+"BLD",8244,1,12,0)
+Frequency report.
+"BLD",8244,4,0)
+^9.64PA^^
+"BLD",8244,6.3)
+7
+"BLD",8244,"ABPKG")
+n
+"BLD",8244,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8244,"KRN",.4,0)
+.4
+"BLD",8244,"KRN",.401,0)
+.401
+"BLD",8244,"KRN",.402,0)
+.402
+"BLD",8244,"KRN",.403,0)
+.403
+"BLD",8244,"KRN",.5,0)
+.5
+"BLD",8244,"KRN",.84,0)
+.84
+"BLD",8244,"KRN",3.6,0)
+3.6
+"BLD",8244,"KRN",3.8,0)
+3.8
+"BLD",8244,"KRN",9.2,0)
+9.2
+"BLD",8244,"KRN",9.8,0)
+9.8
+"BLD",8244,"KRN",9.8,"NM",0)
+^9.68A^6^5
+"BLD",8244,"KRN",9.8,"NM",1,0)
+SCDXUTL0^^0^B36068306
+"BLD",8244,"KRN",9.8,"NM",2,0)
+SCRPW11^^0^B67978916
+"BLD",8244,"KRN",9.8,"NM",4,0)
+SCRPW24^^0^B79121310
+"BLD",8244,"KRN",9.8,"NM",5,0)
+SCRPW28^^0^B54896570
+"BLD",8244,"KRN",9.8,"NM",6,0)
+SCRPW3^^0^B55550828
+"BLD",8244,"KRN",9.8,"NM","B","SCDXUTL0",1)
+
+"BLD",8244,"KRN",9.8,"NM","B","SCRPW11",2)
+
+"BLD",8244,"KRN",9.8,"NM","B","SCRPW24",4)
+
+"BLD",8244,"KRN",9.8,"NM","B","SCRPW28",5)
+
+"BLD",8244,"KRN",9.8,"NM","B","SCRPW3",6)
+
+"BLD",8244,"KRN",19,0)
+19
+"BLD",8244,"KRN",19.1,0)
+19.1
+"BLD",8244,"KRN",101,0)
+101
+"BLD",8244,"KRN",409.61,0)
+409.61
+"BLD",8244,"KRN",771,0)
+771
+"BLD",8244,"KRN",779.2,0)
+779.2
+"BLD",8244,"KRN",870,0)
+870
+"BLD",8244,"KRN",8989.51,0)
+8989.51
+"BLD",8244,"KRN",8989.52,0)
+8989.52
+"BLD",8244,"KRN",8994,0)
+8994
+"BLD",8244,"KRN","B",.4,.4)
+
+"BLD",8244,"KRN","B",.401,.401)
+
+"BLD",8244,"KRN","B",.402,.402)
+
+"BLD",8244,"KRN","B",.403,.403)
+
+"BLD",8244,"KRN","B",.5,.5)
+
+"BLD",8244,"KRN","B",.84,.84)
+
+"BLD",8244,"KRN","B",3.6,3.6)
+
+"BLD",8244,"KRN","B",3.8,3.8)
+
+"BLD",8244,"KRN","B",9.2,9.2)
+
+"BLD",8244,"KRN","B",9.8,9.8)
+
+"BLD",8244,"KRN","B",19,19)
+
+"BLD",8244,"KRN","B",19.1,19.1)
+
+"BLD",8244,"KRN","B",101,101)
+
+"BLD",8244,"KRN","B",409.61,409.61)
+
+"BLD",8244,"KRN","B",771,771)
+
+"BLD",8244,"KRN","B",779.2,779.2)
+
+"BLD",8244,"KRN","B",870,870)
+
+"BLD",8244,"KRN","B",8989.51,8989.51)
+
+"BLD",8244,"KRN","B",8989.52,8989.52)
+
+"BLD",8244,"KRN","B",8994,8994)
+
+"BLD",8244,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8244,"QUES",0)
+^9.62^^
+"BLD",8244,"REQB",0)
+^9.611^5^4
+"BLD",8244,"REQB",1,0)
+SD*5.3*232^2
+"BLD",8244,"REQB",2,0)
+SD*5.3*441^2
+"BLD",8244,"REQB",4,0)
+SD*5.3*530^2
+"BLD",8244,"REQB",5,0)
+SD*5.3*540^2
+"BLD",8244,"REQB","B","SD*5.3*232",1)
+
+"BLD",8244,"REQB","B","SD*5.3*441",2)
+
+"BLD",8244,"REQB","B","SD*5.3*530",4)
+
+"BLD",8244,"REQB","B","SD*5.3*540",5)
+
+"MBREQ")
+0
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,20,0)
+^9.402P^^
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813
+"PKG",16,22,1,"PAH",1,0)
+562^3110421
+"PKG",16,22,1,"PAH",1,1,0)
+^^12^12^3110421
+"PKG",16,22,1,"PAH",1,1,1,0)
+Fix issue with ACRP CUSS report involving whole days that have been
+"PKG",16,22,1,"PAH",1,1,2,0)
+cancelled.  Report erroneously calculates clinic capacity using a zero for
+"PKG",16,22,1,"PAH",1,1,3,0)
+whole days that have been cancelled.  The normal number of available slots
+"PKG",16,22,1,"PAH",1,1,4,0)
+should be used for the clinic capacity and only the number of open slots
+"PKG",16,22,1,"PAH",1,1,5,0)
+should reflect zero for that day.  Also, the patch fixes an erroneous
+"PKG",16,22,1,"PAH",1,1,6,0)
+column heading for the ACRP Ad Hoc report when run for a delimited
+"PKG",16,22,1,"PAH",1,1,7,0)
+format for export to a spreadsheet, also the use of a single character
+"PKG",16,22,1,"PAH",1,1,8,0)
+variable name, an error that causes the Ambcare nightly transmission to
+"PKG",16,22,1,"PAH",1,1,9,0)
+fail due to an invalid eligibility code, an error that occurs with the
+"PKG",16,22,1,"PAH",1,1,10,0)
+ACRP Ad Hoc report when data is missing in the Patient Enrollment file
+"PKG",16,22,1,"PAH",1,1,11,0)
+and an error that occurs with the Patient Activity by Appointment
+"PKG",16,22,1,"PAH",1,1,12,0)
+Frequency report.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+5
+"RTN","SCDXUTL0")
+0^1^B36068306^B35211807
+"RTN","SCDXUTL0",1,0)
+SCDXUTL0 ;ALB/ESD - Generic functions for Amb Care HL7 Interface ; 5/31/05 11:23am
+"RTN","SCDXUTL0",2,0)
+ ;;5.3;Scheduling;**44,55,69,77,85,110,122,94,66,132,180,235,256,258,325,451,441,562**;Aug 13, 1993;Build 7
+"RTN","SCDXUTL0",3,0)
+ ;
+"RTN","SCDXUTL0",4,0)
+ ; This routine contains functions used with the Ambulatory Care
+"RTN","SCDXUTL0",5,0)
+ ; Reporting Project (ACRP).
+"RTN","SCDXUTL0",6,0)
+ ;
+"RTN","SCDXUTL0",7,0)
+MTI(DFN,DATE,EC,AT,SDOE) ;Calculate Means Test Indicator
+"RTN","SCDXUTL0",8,0)
+ ;
+"RTN","SCDXUTL0",9,0)
+ ;    Input:     DFN   =  Patient IEN
+"RTN","SCDXUTL0",10,0)
+ ;               Date  =  Encounter Date/Time
+"RTN","SCDXUTL0",11,0)
+ ;               EC    =  Eligibility (Code) of Encounter
+"RTN","SCDXUTL0",12,0)
+ ;               AT    =  Appointment Type of Encounter
+"RTN","SCDXUTL0",13,0)
+ ;               SDOE  =  Outpatient Encounter IEN
+"RTN","SCDXUTL0",14,0)
+ ;
+"RTN","SCDXUTL0",15,0)
+ ;   Output:     MTI   =  Means Test Indicator
+"RTN","SCDXUTL0",16,0)
+ ;
+"RTN","SCDXUTL0",17,0)
+ N MT,MTI,SDVD1,SDINPT,SDANS,SDANS1,SDINPT,SDMT,VET,X
+"RTN","SCDXUTL0",18,0)
+ S MTI=""
+"RTN","SCDXUTL0",19,0)
+ S DFN=$G(DFN),DATE=$G(DATE),EC=$G(EC),AT=$G(AT),SDOE=$G(SDOE)
+"RTN","SCDXUTL0",20,0)
+ I (DFN="")!(DATE="")!(EC="")!(EC=0)!(AT="")!(SDOE="") G MTQ
+"RTN","SCDXUTL0",21,0)
+ ;
+"RTN","SCDXUTL0",22,0)
+ ;SD*562 check for other possible invalid Eligibility codes
+"RTN","SCDXUTL0",23,0)
+ I $L(EC)>2!(EC="-1") G MTQ
+"RTN","SCDXUTL0",24,0)
+ ;
+"RTN","SCDXUTL0",25,0)
+ ;- VA Code (get from MAS Eligibility Code IEN)
+"RTN","SCDXUTL0",26,0)
+ S X=$G(^DIC(8.1,$P($G(^DIC(8,+EC,0)),"^",9),0))
+"RTN","SCDXUTL0",27,0)
+ S EC=$P(X,"^",4),VET=$P(X,"^",5)
+"RTN","SCDXUTL0",28,0)
+ ;- Non-Veteran
+"RTN","SCDXUTL0",29,0)
+ I $P($G(^DPT(DFN,"VET")),"^")="N"!(VET="N") S MTI="N" G MTQ
+"RTN","SCDXUTL0",30,0)
+ ;- Dom patient
+"RTN","SCDXUTL0",31,0)
+ I EC=6 S MTI="X" G MTQ
+"RTN","SCDXUTL0",32,0)
+ ;- Inpatient status
+"RTN","SCDXUTL0",33,0)
+ S SDVD1=DATE D INPT^SDOPC1 I SDMT="X0" S MTI="X" G MTQ
+"RTN","SCDXUTL0",34,0)
+ ;- Service Connected > 50 %
+"RTN","SCDXUTL0",35,0)
+ I EC=1 S MTI="AS" G MTQ
+"RTN","SCDXUTL0",36,0)
+ ;-- Service Connected < 50 %
+"RTN","SCDXUTL0",37,0)
+ I EC=3,$$SC^DGMTR(DFN) D  I MTI'="" G MTQ
+"RTN","SCDXUTL0",38,0)
+ .; 'AS' if seen for SC condition
+"RTN","SCDXUTL0",39,0)
+ .I $P($G(^SDD(409.42,+$O(^SDD(409.42,"AO",+SDOE,3,0)),0)),U,3) S MTI="AS"
+"RTN","SCDXUTL0",40,0)
+ ;-Military Disability Retiree
+"RTN","SCDXUTL0",41,0)
+ ;S X=$P($G(^DPT(DFN,.36)),"^",2) I X,(X<3) S MTI="AS" G MTQ
+"RTN","SCDXUTL0",42,0)
+ ;-Military Disability Retirement OR Discharge Due To Disability
+"RTN","SCDXUTL0",43,0)
+ I $P($G(^DPT(DFN,.36)),"^",12)!($P($G(^DPT(DFN,.36)),"^",13)) S MTI="AS" G MTQ
+"RTN","SCDXUTL0",44,0)
+ ;
+"RTN","SCDXUTL0",45,0)
+ I EC=2 D  I MTI'="" G MTQ
+"RTN","SCDXUTL0",46,0)
+ .;- Mexican Border Period or World War I
+"RTN","SCDXUTL0",47,0)
+ .I $P($G(^DIC(21,+$P($G(^DPT(DFN,.32)),"^",3),0)),"^",3)=1!($P($G(^DIC(21,+$P($G(^DPT(DFN,.32)),"^",3),0)),"^",3)=3) S MTI="AS" Q
+"RTN","SCDXUTL0",48,0)
+ .;- Prisoner of War (POW)
+"RTN","SCDXUTL0",49,0)
+ .I $P($G(^DPT(DFN,.52)),"^",5)="Y" S MTI="AS" Q
+"RTN","SCDXUTL0",50,0)
+ .;- Purple Heart Recipient
+"RTN","SCDXUTL0",51,0)
+ .I $P($G(^DPT(DFN,.53)),"^")="Y" S MTI="AS" Q
+"RTN","SCDXUTL0",52,0)
+ .;- Aid and Attendance
+"RTN","SCDXUTL0",53,0)
+ .I $P($G(^DPT(DFN,.362)),"^",12)="Y" S MTI="AN" Q
+"RTN","SCDXUTL0",54,0)
+ .;- Housebound
+"RTN","SCDXUTL0",55,0)
+ .I $P($G(^DPT(DFN,.362)),"^",13)="Y" S MTI="AN" Q
+"RTN","SCDXUTL0",56,0)
+ ;- Receiving VA Pension
+"RTN","SCDXUTL0",57,0)
+ I EC=4,$P($G(^DPT(DFN,.362)),"^",14)="Y" S MTI="AN" G MTQ
+"RTN","SCDXUTL0",58,0)
+ ;
+"RTN","SCDXUTL0",59,0)
+ I EC=5!(EC=3) D  I MTI'="" G MTQ
+"RTN","SCDXUTL0",60,0)
+ .;- Eligible for Medicaid
+"RTN","SCDXUTL0",61,0)
+ .I $P($G(^DPT(DFN,.38)),"^")=1 S MTI="AN" Q
+"RTN","SCDXUTL0",62,0)
+ .;- Appt types with ignore billing set to 1 (except comp gen)
+"RTN","SCDXUTL0",63,0)
+ .I AT'=10,$P($G(^SD(409.1,+AT,0)),"^",2) S MTI="X" Q
+"RTN","SCDXUTL0",64,0)
+ .;- Treatment for AO, IR, EC, MST, HNC
+"RTN","SCDXUTL0",65,0)
+ .F SDANS1=1,2,4,5,6 S SDANS=$S('$D(^SDD(409.42,"AO",+SDOE,SDANS1)):"",$P($G(^SDD(409.42,$O(^(SDANS1,0)),0)),"^",3):1,1:0) I SDANS=1 S MTI="AS" Q
+"RTN","SCDXUTL0",66,0)
+ .I MTI]"" Q
+"RTN","SCDXUTL0",67,0)
+ .;- Means Test Code A, C, or G  (also Pending Adj = Code C or Code G)
+"RTN","SCDXUTL0",68,0)
+ .S MT=$$LST^DGMTU(DFN,DATE)
+"RTN","SCDXUTL0",69,0)
+ .I $P(MT,"^",4)="A" S MTI="AN" Q
+"RTN","SCDXUTL0",70,0)
+ .I $P(MT,"^",4)="C" S MTI="C" Q
+"RTN","SCDXUTL0",71,0)
+ .I $P(MT,"^",4)="G" S MTI="G" Q
+"RTN","SCDXUTL0",72,0)
+ .I $P(MT,"^",4)="P" D  Q
+"RTN","SCDXUTL0",73,0)
+ . .S MTI=$$PA^DGMTUTL($P(MT,"^")),MTI=$S('$D(MTI):"U",MTI="MT":"C",MTI="GMT":"G",1:"U")
+"RTN","SCDXUTL0",74,0)
+ .;- no means test status or no longer required...check current eligibility data
+"RTN","SCDXUTL0",75,0)
+ .S X=+$G(^DPT(DFN,.36)),X=+$P($G(^DIC(8,X,0)),U,9) ; get MAS eligibility
+"RTN","SCDXUTL0",76,0)
+ .;- Service connected > 50 %
+"RTN","SCDXUTL0",77,0)
+ .I X=1 S MTI="AS" Q
+"RTN","SCDXUTL0",78,0)
+ .;- Service connected < 50 %
+"RTN","SCDXUTL0",79,0)
+ .I EC=3,'$$SC^DGMTR(DFN) S MTI="AS" Q
+"RTN","SCDXUTL0",80,0)
+ .;- mex border or WWI or POW
+"RTN","SCDXUTL0",81,0)
+ .I X=16!(X=17)!(X=18)!(X=22) S MTI="AS" Q
+"RTN","SCDXUTL0",82,0)
+ .;- A&A or Pension or HB
+"RTN","SCDXUTL0",83,0)
+ .I X=2!(X=4)!(X=15) S MTI="AN" Q
+"RTN","SCDXUTL0",84,0)
+ ;- Means Test required and not done/completed
+"RTN","SCDXUTL0",85,0)
+ S MTI="U"
+"RTN","SCDXUTL0",86,0)
+MTQ Q MTI
+"RTN","SCDXUTL0",87,0)
+ ;
+"RTN","SCDXUTL0",88,0)
+ ;
+"RTN","SCDXUTL0",89,0)
+PATCLASS(DFN,SDOE) ; - Return classification questions from PATIENT (#2) file
+"RTN","SCDXUTL0",90,0)
+ ;           (Agent Orange, Radiation Exposure, Service Connected,
+"RTN","SCDXUTL0",91,0)
+ ;            Environmental Contaminants, Military Sexual Trauma and
+"RTN","SCDXUTL0",92,0)
+ ;            Head/Neck Cancer questions)
+"RTN","SCDXUTL0",93,0)
+ ;
+"RTN","SCDXUTL0",94,0)
+ ;   Input:  DFN  = Patient IEN (from file #2)
+"RTN","SCDXUTL0",95,0)
+ ;           SDOE = Outpatient Encounter File IEN [Optional]
+"RTN","SCDXUTL0",96,0)
+ ;
+"RTN","SCDXUTL0",97,0)
+ ;  Output:  String containing Y if classification question = YES, N if 
+"RTN","SCDXUTL0",98,0)
+ ;           = NO, null otherwise (classifications separated by "^")
+"RTN","SCDXUTL0",99,0)
+ ;
+"RTN","SCDXUTL0",100,0)
+ N NODE,PATCLASS,SDTEMP,X
+"RTN","SCDXUTL0",101,0)
+ S SDTEMP(1)=$$AO^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",102,0)
+ S SDTEMP(2)=$$IR^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",103,0)
+ S SDTEMP(3)=$$SC^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",104,0)
+ S SDTEMP(4)=$$EC^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",105,0)
+ S SDTEMP(5)=$$MST^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",106,0)
+ S SDTEMP(6)=$$HNC^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",107,0)
+ S SDTEMP(7)=$$CV^SDCO22(DFN,$G(SDOE))
+"RTN","SCDXUTL0",108,0)
+ S SDTEMP(8)=$$SHAD^SDCO22(DFN)
+"RTN","SCDXUTL0",109,0)
+ F X=1:1:8 S $P(PATCLASS,U,X)=$S(SDTEMP(X)=1:"Y",1:"N")
+"RTN","SCDXUTL0",110,0)
+ Q PATCLASS
+"RTN","SCDXUTL0",111,0)
+ ;
+"RTN","SCDXUTL0",112,0)
+ ;
+"RTN","SCDXUTL0",113,0)
+CLASS(SDOE,SCDXARRY) ; - Return array of classification types for encounter
+"RTN","SCDXUTL0",114,0)
+ ;
+"RTN","SCDXUTL0",115,0)
+ ;   Input:  SDOE = Outpatient Encounter IEN (from file #409.68)
+"RTN","SCDXUTL0",116,0)
+ ;
+"RTN","SCDXUTL0",117,0)
+ ;  Output:  Array (pass desired name as parameter) containing
+"RTN","SCDXUTL0",118,0)
+ ;           Classification Type^Value
+"RTN","SCDXUTL0",119,0)
+ ;
+"RTN","SCDXUTL0",120,0)
+ N CLASS,I,X
+"RTN","SCDXUTL0",121,0)
+ S CLASS="",(I,X)=0
+"RTN","SCDXUTL0",122,0)
+ S SDOE=+$G(SDOE)
+"RTN","SCDXUTL0",123,0)
+ F  S CLASS=+$O(^SDD(409.42,"OE",SDOE,CLASS)) Q:'CLASS  D
+"RTN","SCDXUTL0",124,0)
+ . S I=$P($G(^SDD(409.42,CLASS,0)),"^"),X=X+1
+"RTN","SCDXUTL0",125,0)
+ . S @SCDXARRY@(I)=$P($G(^SDD(409.42,CLASS,0)),"^")_"^"_$P($G(^SDD(409.42,CLASS,0)),"^",3)
+"RTN","SCDXUTL0",126,0)
+CLASSQ S @SCDXARRY@(0)=X
+"RTN","SCDXUTL0",127,0)
+ Q
+"RTN","SCDXUTL0",128,0)
+ ;
+"RTN","SCDXUTL0",129,0)
+ ;
+"RTN","SCDXUTL0",130,0)
+CHKCLASS(DFN,SDOE) ; - Get classification data for HL7 VAFHLZCL segment
+"RTN","SCDXUTL0",131,0)
+ ;
+"RTN","SCDXUTL0",132,0)
+ ;   Input:  DFN = Patient IEN (from file #2)
+"RTN","SCDXUTL0",133,0)
+ ;          SDOE = Outpatient Encounter IEN (from file #409.68)
+"RTN","SCDXUTL0",134,0)
+ ;
+"RTN","SCDXUTL0",135,0)
+ ;  Output:  String separated by "^" containing: 
+"RTN","SCDXUTL0",136,0)
+ ;           1 (patient class = YES and encounter class = YES)
+"RTN","SCDXUTL0",137,0)
+ ;           0 (patient class = YES and encounter class = NO)
+"RTN","SCDXUTL0",138,0)
+ ;           HLQ ("""""") otherwise
+"RTN","SCDXUTL0",139,0)
+ ;
+"RTN","SCDXUTL0",140,0)
+EN N OECLASS,OUT,PATCLASS,TYPE,ENCVAL,CLCNT,PATVAL
+"RTN","SCDXUTL0",141,0)
+ S PATCLASS=$$PATCLASS(DFN,SDOE)
+"RTN","SCDXUTL0",142,0)
+ D CLASS(SDOE,"OECLASS")
+"RTN","SCDXUTL0",143,0)
+ S CLCNT=$L(PATCLASS,"^")
+"RTN","SCDXUTL0",144,0)
+ F TYPE=1:1:CLCNT D
+"RTN","SCDXUTL0",145,0)
+ .S ENCVAL=$P($G(OECLASS(TYPE)),"^",2)
+"RTN","SCDXUTL0",146,0)
+ .S PATVAL=$P(PATCLASS,"^",TYPE)
+"RTN","SCDXUTL0",147,0)
+ .S $P(OUT,"^",TYPE)=""""""
+"RTN","SCDXUTL0",148,0)
+ .I PATVAL="Y" S $P(OUT,"^",TYPE)=ENCVAL
+"RTN","SCDXUTL0",149,0)
+ENQ Q OUT
+"RTN","SCDXUTL0",150,0)
+ ;
+"RTN","SCDXUTL0",151,0)
+ ;
+"RTN","SCDXUTL0",152,0)
+POV(DFN,DATE,CLINIC,APTYP) ; - Determine Purpose of Visit for encounter
+"RTN","SCDXUTL0",153,0)
+ ;
+"RTN","SCDXUTL0",154,0)
+ ;   Input:  DFN = Patient IEN
+"RTN","SCDXUTL0",155,0)
+ ;          DATE = Appointment Date/Time
+"RTN","SCDXUTL0",156,0)
+ ;        CLINIC = Clinic
+"RTN","SCDXUTL0",157,0)
+ ;         APTYP = Appointment Type
+"RTN","SCDXUTL0",158,0)
+ ;
+"RTN","SCDXUTL0",159,0)
+ ;  Output:  Purpose of Visit value (combination of Purpose of Visit
+"RTN","SCDXUTL0",160,0)
+ ;           and Appointment Type)
+"RTN","SCDXUTL0",161,0)
+ ;
+"RTN","SCDXUTL0",162,0)
+ N POV,SCDXPOV
+"RTN","SCDXUTL0",163,0)
+ I (DFN=""!(DATE="")!(CLINIC="")!(APTYP="")) G POVQ
+"RTN","SCDXUTL0",164,0)
+ I $P($G(^DPT(DFN,"S",+DATE,0)),"^")'=CLINIC G POVQ
+"RTN","SCDXUTL0",165,0)
+ S POV=$P($G(^DPT(DFN,"S",+DATE,0)),"^",7),POV=$S($L(POV)=1:"0"_POV,1:POV)
+"RTN","SCDXUTL0",166,0)
+ S APTYP=$S($L(APTYP)=1:"0"_APTYP,1:APTYP)
+"RTN","SCDXUTL0",167,0)
+ S SCDXPOV=POV_APTYP
+"RTN","SCDXUTL0",168,0)
+POVQ Q $G(SCDXPOV)
+"RTN","SCDXUTL0",169,0)
+ ;
+"RTN","SCDXUTL0",170,0)
+ ;
+"RTN","SCDXUTL0",171,0)
+SCODE(SDOE,SCDXARRY) ; Return array of stop codes for encounter
+"RTN","SCDXUTL0",172,0)
+ ;
+"RTN","SCDXUTL0",173,0)
+ ;   Input:  SDOE = Outpatient Encounter IEN (from file #409.68)
+"RTN","SCDXUTL0",174,0)
+ ;
+"RTN","SCDXUTL0",175,0)
+ ;  Output:  Array (pass desired name as parameter) containing
+"RTN","SCDXUTL0",176,0)
+ ;           stop codes
+"RTN","SCDXUTL0",177,0)
+ ;
+"RTN","SCDXUTL0",178,0)
+ ;
+"RTN","SCDXUTL0",179,0)
+ N CNT,I,SDOE0,SDOEC,SDOEC0
+"RTN","SCDXUTL0",180,0)
+ S CNT=1,(I,SDOEC)=0
+"RTN","SCDXUTL0",181,0)
+ S SDOE=+$G(SDOE)
+"RTN","SCDXUTL0",182,0)
+ I '$D(^SCE(SDOE,0)) G SCODEQ
+"RTN","SCDXUTL0",183,0)
+ I '$P($G(^SCE(SDOE,0)),"^",3) G SCODEQ
+"RTN","SCDXUTL0",184,0)
+ S SDOE0=$G(^SCE(SDOE,0))
+"RTN","SCDXUTL0",185,0)
+ ;
+"RTN","SCDXUTL0",186,0)
+ ;- Get stop code from parent encounter
+"RTN","SCDXUTL0",187,0)
+ I $P(SDOE0,"^",3) S @SCDXARRY@(CNT)=$P(SDOE0,"^",3),I=CNT
+"RTN","SCDXUTL0",188,0)
+ ;
+"RTN","SCDXUTL0",189,0)
+ ;- Get stop code from child encounter (credit stop)
+"RTN","SCDXUTL0",190,0)
+ F  S SDOEC=+$O(^SCE("APAR",SDOE,SDOEC)) Q:('SDOEC)!(CNT=2)  D
+"RTN","SCDXUTL0",191,0)
+ . S SDOEC0=$G(^SCE(SDOEC,0))
+"RTN","SCDXUTL0",192,0)
+ . I $P(SDOEC0,"^",3),($P(SDOEC0,"^",8)=4) D
+"RTN","SCDXUTL0",193,0)
+ .. S CNT=CNT+1,I=CNT
+"RTN","SCDXUTL0",194,0)
+ .. S @SCDXARRY@(CNT)=$P(SDOEC0,"^",3)
+"RTN","SCDXUTL0",195,0)
+SCODEQ S @SCDXARRY@(0)=I
+"RTN","SCDXUTL0",196,0)
+ Q
+"RTN","SCDXUTL0",197,0)
+ ;
+"RTN","SCDXUTL0",198,0)
+ ;
+"RTN","SCDXUTL0",199,0)
+PROC(SDOE,SCDXARRY) ; Return array of procedures for encounter
+"RTN","SCDXUTL0",200,0)
+ ;
+"RTN","SCDXUTL0",201,0)
+ ;
+"RTN","SCDXUTL0",202,0)
+ ;   Input:  SDOE = Outpatient Encounter IEN (from file #409.68)
+"RTN","SCDXUTL0",203,0)
+ ;
+"RTN","SCDXUTL0",204,0)
+ ;  Output:  Array (pass desired name as parameter) containing
+"RTN","SCDXUTL0",205,0)
+ ;           procedures
+"RTN","SCDXUTL0",206,0)
+ ;
+"RTN","SCDXUTL0",207,0)
+ N CNT
+"RTN","SCDXUTL0",208,0)
+ S CNT=0,SDOE=+$G(SDOE)
+"RTN","SCDXUTL0",209,0)
+ I '$D(^SCE(SDOE,0)) G PROCQ
+"RTN","SCDXUTL0",210,0)
+ ;
+"RTN","SCDXUTL0",211,0)
+ D GETPROC(.CNT,SDOE,SCDXARRY) G PROCQ
+"RTN","SCDXUTL0",212,0)
+ ;
+"RTN","SCDXUTL0",213,0)
+ ;- Array of procedures
+"RTN","SCDXUTL0",214,0)
+PROCQ S @SCDXARRY@(0)=CNT
+"RTN","SCDXUTL0",215,0)
+ Q
+"RTN","SCDXUTL0",216,0)
+ ;
+"RTN","SCDXUTL0",217,0)
+ ;
+"RTN","SCDXUTL0",218,0)
+GETPROC(CNT,ENC,SCDXARRY) ;Get procedures from Scheduling Visits file
+"RTN","SCDXUTL0",219,0)
+ ;
+"RTN","SCDXUTL0",220,0)
+ N CPTS,VCPT
+"RTN","SCDXUTL0",221,0)
+ D GETCPT^SDOE(ENC,"CPTS")
+"RTN","SCDXUTL0",222,0)
+ N CPT,QTY,I
+"RTN","SCDXUTL0",223,0)
+ S VCPT=0
+"RTN","SCDXUTL0",224,0)
+ F  S VCPT=$O(CPTS(VCPT)) Q:'VCPT  D
+"RTN","SCDXUTL0",225,0)
+ . S CPT=$G(CPTS(VCPT))
+"RTN","SCDXUTL0",226,0)
+ . S QTY=+$P(CPT,U,16)
+"RTN","SCDXUTL0",227,0)
+ . F I=1:1:QTY S CNT=CNT+1,@SCDXARRY@(CNT)=+CPT
+"RTN","SCDXUTL0",228,0)
+ Q
+"RTN","SCRPW11")
+0^2^B67978916^B66433093
+"RTN","SCRPW11",1,0)
+SCRPW11 ;RENO/KEITH - Patient Activity by Appointment Frequency ; 15 Jul 98  02:38PM
+"RTN","SCRPW11",2,0)
+ ;;5.3;Scheduling;**139,144,562**;AUG 13, 1993;Build 7
+"RTN","SCRPW11",3,0)
+ D TITL^SCRPW50("Patient Activity by Appointment Frequency") N SDDIV Q:'$$DIVA^SCRPW17(.SDDIV)
+"RTN","SCRPW11",4,0)
+DTR D SUBT^SCRPW50("*** Date Range Selection ***")
+"RTN","SCRPW11",5,0)
+FDT W ! S %DT="AEPX",%DT("A")="Beginning date: ",%DT(0)="-TODAY" D ^%DT G:X=U!($D(DTOUT)) EXIT G:X="" EXIT
+"RTN","SCRPW11",6,0)
+ G:Y<1 FDT S SDBDAY=Y X ^DD("DD") S SDPBDA=Y
+"RTN","SCRPW11",7,0)
+LDT W ! S %DT("A")="   Ending date: " D ^%DT G:X=U!($D(DTOUT)) EXIT G:X="" EXIT
+"RTN","SCRPW11",8,0)
+ I Y<SDBDAY W !!,$C(7),"Ending date must be after beginning date!" G LDT
+"RTN","SCRPW11",9,0)
+ G:Y<1 LDT S SDEDAY=Y X ^DD("DD") S SDPEDA=Y
+"RTN","SCRPW11",10,0)
+ D SUBT^SCRPW50("*** Report Format Selection ***")
+"RTN","SCRPW11",11,0)
+ W ! S DIR(0)="N^1:999:0",DIR("?")="Enter the minimum number of appointments for a patient to be included in this report",DIR("A")="Minimum appointment frequency" D ^DIR G:Y'>0 EXIT S SDMIN=Y
+"RTN","SCRPW11",12,0)
+ K DIR S DIR(0)="S^R:RANGE OF STOP CODES;S:SELECTED STOP CODES;C:CLINIC GROUP",DIR("A")="Limit clinics by",DIR("?")="Output will be limited to primary stop codes or clinic group as specified."
+"RTN","SCRPW11",13,0)
+ D ^DIR G:$D(DTOUT)!$D(DUOUT) EXIT S SDFMT=Y,SDOUT=0 D @(SDFMT) G:SDOUT EXIT
+"RTN","SCRPW11",14,0)
+ D SUBT^SCRPW50("*** Output Order Selection ***")
+"RTN","SCRPW11",15,0)
+ K DIR S DIR(0)="S^A:ALPHABETIC;V:VISIT FREQUENCY",DIR("A")="Specify output order" D ^DIR G:$D(DTOUT)!$D(DUOUT) EXIT S SDORD=Y
+"RTN","SCRPW11",16,0)
+ N ZTSAVE F V="SD(","SDDIV","SDDIV(","SDFMT","SDMIN","SDBDAY","SDEDAY","SDPBDA","SDPEDA","SDBCS","SDECS","SDORD","SDMC","SDMD" S ZTSAVE(V)=""
+"RTN","SCRPW11",17,0)
+ W !!,"This report requires 132 column output.",! D EN^XUTMDEVQ("START^SCRPW11","PT. ACTIVITY BY APPT. FREQUENCY",.ZTSAVE) G EXIT
+"RTN","SCRPW11",18,0)
+ ;
+"RTN","SCRPW11",19,0)
+START K ^TMP("SCRPW",$J) S (SDOUT,SDSTOP)=0,SDMD=$O(SDDIV(0)),SDMD=$O(SDDIV(SDMD)) S:$P(SDDIV,U,2)="ALL DIVISIONS" SDMD=1
+"RTN","SCRPW11",20,0)
+ I SDFMT="C" S SDCG=$O(SD(0)),SDCL=0 F  S SDCL=$O(^SC("ASCRPW",SDCG,SDCL)) Q:'SDCL  S SDCL0=$G(^SC(SDCL,0)) I $$DIV() D LOOP Q:SDOUT
+"RTN","SCRPW11",21,0)
+ G:SDOUT EXIT
+"RTN","SCRPW11",22,0)
+ I SDFMT'="C" S SDCL=0 F  S SDCL=$O(^SC(SDCL)) Q:SDCL'>0  S SDCL0=$G(^SC(SDCL,0)) I $$DIV() D LOOP Q:SDOUT
+"RTN","SCRPW11",23,0)
+ G:SDOUT EXIT
+"RTN","SCRPW11",24,0)
+ S SDIV="" F  S SDIV=$O(^TMP("SCRPW",$J,SDIV)) Q:SDIV=""!SDOUT  S DFN=0 F  S DFN=$O(^TMP("SCRPW",$J,SDIV,0,DFN)) Q:DFN'>0  S SDSTOP=SDSTOP+1 D:SDSTOP#1000=0 STOP Q:SDOUT  D FAPP,ORDR
+"RTN","SCRPW11",25,0)
+ S SDII=1,SDT(SDII)="<*>  PATIENT ACTIVITY BY APPOINTMENT FREQUENCY  <*>" S:SDFMT="R" SDII=SDII+1,SDT(SDII)="IN CLINICS WITH PRIMARY STOP CODES "_SDBCS_" TO "_SDECS
+"RTN","SCRPW11",26,0)
+ I SDFMT="S" S SDI=0 F  S SDI=$O(SD(SDI)) Q:'SDI  S SDII=SDII+1,SDT(SDII)="IN CLINICS WITH PRIMARY STOP CODE: "_SDI
+"RTN","SCRPW11",27,0)
+ I SDFMT="C" S SDII=SDII+1,SDT(SDII)="IN CLINIC GROUP: "_SD(SDCG)
+"RTN","SCRPW11",28,0)
+ S SDII=SDII+1,SDT(SDII)="FOR PATIENTS WITH AT LEAST "_SDMIN_" APPOINTMENTS TO THESE CLINICS",SDII=SDII+1
+"RTN","SCRPW11",29,0)
+ D NOW^%DTC S Y=% X ^DD("DD") S SDPNOW=$P(Y,":",1,2),SDPAGE=1,SDLINE="",$P(SDLINE,"-",133)=""
+"RTN","SCRPW11",30,0)
+ S SDIV="" F  S SDIV=$O(SDDIV(SDIV)) Q:'SDIV  S SDIV(SDDIV(SDIV))=SDIV
+"RTN","SCRPW11",31,0)
+ I 'SDDIV,$P(SDDIV,U,2)'="ALL DIVISIONS" S SDIV($P(SDDIV,U,2))=$$PRIM^VASITE()
+"RTN","SCRPW11",32,0)
+ I $P(SDDIV,U,2)="ALL DIVISIONS" S SDI=0 F  S SDI=$O(^TMP("SCRPW",$J,SDI)) Q:'SDI  S SDX=$P($G(^DG(40.8,SDI,0)),U) S:$L(SDX) SDIV(SDX)=SDI
+"RTN","SCRPW11",33,0)
+ D:$E(IOST)="C" DISP0^SCRPW23 S (SDI,SDIV)="" F  S SDIV=$O(^TMP("SCRPW",$J,SDIV)) Q:SDI!(SDIV="")  S:$O(^TMP("SCRPW",$J,SDIV,2,(SDMIN-1))) SDI=1
+"RTN","SCRPW11",34,0)
+ I 'SDI S SDIV=0 D DHDR^SCRPW40(SDII,.SDT),HDR G:SDOUT EXIT S SDX="No activity found that meets report criteria!" W !!?(IOM-$L(SDX)\2),SDX G EXIT
+"RTN","SCRPW11",35,0)
+ S SDIVN="" F  S SDIVN=$O(SDIV(SDIVN)) Q:SDIVN=""!SDOUT  S SDIV=SDIV(SDIVN) D DPRT(.SDIV)
+"RTN","SCRPW11",36,0)
+ S SDI=0,SDI=$O(^TMP("SCRPW",$J,SDI)),SDMD=$O(^TMP("SCRPW",$J,SDI))
+"RTN","SCRPW11",37,0)
+ G:SDOUT EXIT I SDMD S SDIV=0 D DPRT(.SDIV)
+"RTN","SCRPW11",38,0)
+ I $E(IOST)="C",'SDOUT N DIR S DIR(0)="E" D ^DIR
+"RTN","SCRPW11",39,0)
+ G EXIT
+"RTN","SCRPW11",40,0)
+ ;
+"RTN","SCRPW11",41,0)
+DPRT(SDIV) ;Print report for a division
+"RTN","SCRPW11",42,0)
+ D DHDR^SCRPW40(SDII,.SDT) I '$O(^TMP("SCRPW",$J,SDIV,2,(SDMIN-1))) S SDX="No activity found for this division within report parameters!" D HDR Q:SDOUT  W !!?(IOM-$L(SDX)\2),SDX Q
+"RTN","SCRPW11",43,0)
+ D HDR Q:SDOUT
+"RTN","SCRPW11",44,0)
+ S SDFREQ=999999999 F  S SDFREQ=$O(^TMP("SCRPW",$J,SDIV,2,SDFREQ),-1) Q:SDFREQ'>0!(SDFREQ<SDMIN)!SDOUT  S DFN=0 F  S DFN=$O(^TMP("SCRPW",$J,SDIV,2,SDFREQ,DFN)) Q:DFN'>0!SDOUT  D:SDORD="V" PRT D:SDORD="A" ALPH
+"RTN","SCRPW11",45,0)
+ I SDORD="A" S SDNAM="" F  S SDNAM=$O(^TMP("SCRPW",$J,SDIV,3,SDNAM)) Q:SDNAM=""!SDOUT  S DFN=0 F  S DFN=$O(^TMP("SCRPW",$J,SDIV,3,SDNAM,DFN)) Q:'DFN!SDOUT  S SDFREQ=^TMP("SCRPW",$J,SDIV,3,SDNAM,DFN) D PRT
+"RTN","SCRPW11",46,0)
+ Q
+"RTN","SCRPW11",47,0)
+ ;
+"RTN","SCRPW11",48,0)
+EXIT D END^SCRPW50 K SD,SDFMT,SDBCS,SDBDAY,SDCL,SDCL0,SDCLCS,SDCLPT,SDCS,SDDAY,DFN,SDECS,SDEDAY,SDFREQ,SDMIN,SDPTAP0,SDPTCLT,SDPTCSF,SDI,SDOUT,DIC,DTOUT,DUOUT,%,%H,%I,%DT,SDDIV,SDII,SDMC,SDMD,X,SDIVN,SDSTOP,SDX
+"RTN","SCRPW11",49,0)
+ D KVA^VADPT K SDCG,SDORD,SDNAM,SDCLNA,SDPTCS,SDT,SDBDAY,SDEDAY,SDRBDA,SDREDA,SDPBDA,SDPEDA,SDPNOW,SDLINE,SDPAGE,DGPGM,DGVAR,DIR,POP,Y,V,ZTSAVE,^TMP("SCRPW",$J) Q
+"RTN","SCRPW11",50,0)
+ ;
+"RTN","SCRPW11",51,0)
+STOP ;Check for stop task request
+"RTN","SCRPW11",52,0)
+ S:$G(ZTQUEUED) (SDOUT,ZTSTOP)=$S($$S^%ZTLOAD:1,1:0) Q
+"RTN","SCRPW11",53,0)
+ ;
+"RTN","SCRPW11",54,0)
+R K DIR S DIR(0)="N^101:999:0",DIR("?")="Specify a range of Clinic Stop codes defined for clinics to be returned in this report",DIR("A")="Start with CLINIC STOP"
+"RTN","SCRPW11",55,0)
+ W ! D ^DIR S:$D(DTOUT)!$D(DUOUT)!($G(Y)<1) SDOUT=1 Q:SDOUT  S SDBCS=Y,DIR(0)="N^"_Y_":999:0",DIR("A")="End with CLINIC STOP" D ^DIR S:$D(DTOUT)!$D(DUOUT)!($G(Y)<1) SDOUT=1 Q:SDOUT  S SDECS=Y Q
+"RTN","SCRPW11",56,0)
+ ;
+"RTN","SCRPW11",57,0)
+S K SD,DIC S DIC="^DIC(40.7,",DIC(0)="AEMQZ" F  D S1 Q:$G(Y)<1
+"RTN","SCRPW11",58,0)
+ S:$D(DTOUT)!$D(DUOUT)!'$D(SD) SDOUT=1 Q
+"RTN","SCRPW11",59,0)
+ ;
+"RTN","SCRPW11",60,0)
+S1 D ^DIC I Y>0 S SD($P(Y(0),U,2))=""
+"RTN","SCRPW11",61,0)
+ Q
+"RTN","SCRPW11",62,0)
+ ;
+"RTN","SCRPW11",63,0)
+C K SD,DIC S DIC="^SD(409.67,",DIC(0)="AEMQ" W ! D ^DIC I $D(DTOUT)!$D(DUOUT)!($G(Y)<1) S SDOUT=1 Q
+"RTN","SCRPW11",64,0)
+ S SD(+Y)=$P(Y,U,2) Q
+"RTN","SCRPW11",65,0)
+ ;
+"RTN","SCRPW11",66,0)
+DIV() ;Check division
+"RTN","SCRPW11",67,0)
+ Q:'SDDIV 1  Q $D(SDDIV(+$P(SDCL0,U,15)))
+"RTN","SCRPW11",68,0)
+ ;
+"RTN","SCRPW11",69,0)
+LOOP S SDCLCS=$P(SDCL0,U,7),SDCLCS=$P($G(^DIC(40.7,+SDCLCS,0)),U,2),SDIV=$P(SDCL0,U,15) S:'SDIV SDIV=$$PRIM^VASITE()
+"RTN","SCRPW11",70,0)
+ I SDFMT="R" Q:SDCLCS<SDBCS!(SDCLCS>SDECS)
+"RTN","SCRPW11",71,0)
+ I SDFMT="S" Q:'$D(SD(+SDCLCS))
+"RTN","SCRPW11",72,0)
+L1 S SDDAY=SDBDAY F  S SDDAY=$O(^SC(SDCL,"S",SDDAY)) Q:(SDDAY'>0!(SDDAY>SDEDAY))!SDOUT  S SDCLPT=0 F  S SDCLPT=$O(^SC(SDCL,"S",SDDAY,1,SDCLPT)) Q:SDCLPT'>0!SDOUT  S DFN=+^SC(SDCL,"S",SDDAY,1,SDCLPT,0) D EVAL
+"RTN","SCRPW11",73,0)
+ Q
+"RTN","SCRPW11",74,0)
+ ;
+"RTN","SCRPW11",75,0)
+EVAL S SDSTOP=SDSTOP+1 I SDSTOP#1000=0 D STOP Q:SDOUT
+"RTN","SCRPW11",76,0)
+ ;SD*562 if DFN missing in appt sub-file of file #44 delete record
+"RTN","SCRPW11",77,0)
+ I '$D(DFN)!(DFN="")!(DFN=0) D  Q
+"RTN","SCRPW11",78,0)
+ .S DA(2)=SDCL,DA(1)=SDDAY,DA=SDCLPT
+"RTN","SCRPW11",79,0)
+ .S DIK="^SC("_DA(2)_",""S"","_DA(1)_",1," D ^DIK
+"RTN","SCRPW11",80,0)
+ .K DA,DIK
+"RTN","SCRPW11",81,0)
+ S SDPTAP0=^DPT(DFN,"S",SDDAY,0) Q:$P(SDPTAP0,U,2)["C"!($P(SDPTAP0,U,2)["N")  D EV1(SDIV) D:SDMD EV1(0)
+"RTN","SCRPW11",82,0)
+ Q
+"RTN","SCRPW11",83,0)
+ ;
+"RTN","SCRPW11",84,0)
+EV1(SDIV) S ^TMP("SCRPW",$J,SDIV,0,DFN)=$G(^TMP("SCRPW",$J,SDIV,0,DFN))+1,^TMP("SCRPW",$J,SDIV,0,DFN,SDCLCS,$P(SDCL0,U))=$G(^TMP("SCRPW",$J,SDIV,0,DFN,SDCLCS,$P(SDCL0,U)))+1
+"RTN","SCRPW11",85,0)
+ S ^TMP("SCRPW",$J,SDIV,0,DFN,SDCLCS)=$G(^TMP("SCRPW",$J,SDIV,0,DFN,SDCLCS))+1 Q
+"RTN","SCRPW11",86,0)
+ ;
+"RTN","SCRPW11",87,0)
+FAPP S SDDAY=DT F  S SDDAY=$O(^DPT(DFN,"S",SDDAY)) Q:SDDAY'>0  S SDPTAP0=^DPT(DFN,"S",SDDAY,0),SDCL=+SDPTAP0,SDCL0=^SC(SDCL,0),SDCLCS=$P(SDCL0,U,7),SDCLCS=$P(^DIC(40.7,SDCLCS,0),U,2) D FAP1
+"RTN","SCRPW11",88,0)
+ Q
+"RTN","SCRPW11",89,0)
+ ;
+"RTN","SCRPW11",90,0)
+FAP1 I SDFMT="R",$P(SDPTAP0,U,2)'["C",SDCLCS'<SDBCS,SDCLCS'>SDECS S ^TMP("SCRPW",$J,SDIV,1,DFN,SDDAY,$P(SDCL0,U))=SDCLCS
+"RTN","SCRPW11",91,0)
+ I SDFMT="S",$P(SDPTAP0,U,2)'["C",$D(SD(+SDCLCS)) S ^TMP("SCRPW",$J,SDIV,1,DFN,SDDAY,$P(SDCL0,U))=SDCLCS
+"RTN","SCRPW11",92,0)
+ Q
+"RTN","SCRPW11",93,0)
+ ;
+"RTN","SCRPW11",94,0)
+ORDR S SDFREQ=^TMP("SCRPW",$J,SDIV,0,DFN),^TMP("SCRPW",$J,SDIV,2,SDFREQ,DFN)="",SDPTCS=0
+"RTN","SCRPW11",95,0)
+ F  S SDPTCS=$O(^TMP("SCRPW",$J,SDIV,0,DFN,SDPTCS)) Q:SDPTCS'>0  S SDPTCSF=^TMP("SCRPW",$J,SDIV,0,DFN,SDPTCS),^TMP("SCRPW",$J,SDIV,2,SDFREQ,DFN,SDPTCSF,SDPTCS)=""
+"RTN","SCRPW11",96,0)
+ Q
+"RTN","SCRPW11",97,0)
+ ;
+"RTN","SCRPW11",98,0)
+HDR ;Print report header
+"RTN","SCRPW11",99,0)
+ D STOP Q:SDOUT
+"RTN","SCRPW11",100,0)
+ I $E(IOST)="C",SDPAGE>1 N DIR S DIR(0)="E" D ^DIR S SDOUT=Y'=1 Q:SDOUT
+"RTN","SCRPW11",101,0)
+ W:SDPAGE>1!($E(IOST)="C") $$XY^SCRPW50(IOF,1,0) W:$X $$XY^SCRPW50("",0,0) W SDLINE S SDI=0 F  S SDI=$O(SDT(SDI)) Q:'SDI  W !?(132-$L(SDT(SDI))\2),SDT(SDI)
+"RTN","SCRPW11",102,0)
+ W !,SDLINE,!,"For date range: ",SDPBDA," to ",SDPEDA,!,"Date printed: ",SDPNOW,?(126-$L(SDPAGE)),"Page: ",SDPAGE,!,SDLINE S SDPAGE=SDPAGE+1 Q
+"RTN","SCRPW11",103,0)
+ ;
+"RTN","SCRPW11",104,0)
+PRT D:$Y>(IOSL-7) HDR Q:SDOUT  D ^VADPT W !!,"Number of appts.: ",SDFREQ,?24,"Patient: ",$E(VADM(1),1,30),?65,"SSN: ",$P(VADM(2),U,2)
+"RTN","SCRPW11",105,0)
+ S SDPTCSF=99999999 F  S SDPTCSF=$O(^TMP("SCRPW",$J,SDIV,2,SDFREQ,DFN,SDPTCSF),-1) Q:SDPTCSF'>0!SDOUT  S SDCLCS=0 F  S SDCLCS=$O(^TMP("SCRPW",$J,SDIV,2,SDFREQ,DFN,SDPTCSF,SDCLCS)) Q:SDCLCS'>0!SDOUT  D PRT1
+"RTN","SCRPW11",106,0)
+ I $D(^TMP("SCRPW",$J,SDIV,1,DFN)) D:$Y>(IOSL-5) HDR Q:SDOUT  W !?44,"FUTURE APPOINTMENTS:" S SDDAY=0 F  S SDDAY=$O(^TMP("SCRPW",$J,SDIV,1,DFN,SDDAY)) Q:SDDAY'>0!SDOUT  D PRT2
+"RTN","SCRPW11",107,0)
+ Q
+"RTN","SCRPW11",108,0)
+ ;
+"RTN","SCRPW11",109,0)
+PRT1 D:$Y>(IOSL-6) HDR Q:SDOUT  S SDCS=0,SDCS=$O(^DIC(40.7,"C",SDCLCS,SDCS)),SDCS=$P(^DIC(40.7,SDCS,0),U) W !?29,SDPTCSF," appointments to ",SDCS,"  (",SDCLCS,")"
+"RTN","SCRPW11",110,0)
+ S SDCLNA="" F  S SDCLNA=$O(^TMP("SCRPW",$J,SDIV,0,DFN,SDCLCS,SDCLNA)) Q:SDCLNA']""  D:$Y>(IOSL-5) HDR Q:SDOUT  S SDPTCLT=^TMP("SCRPW",$J,SDIV,0,DFN,SDCLCS,SDCLNA) W !?34,SDPTCLT,"  ",SDCLNA," appointment",$S(SDPTCLT=1:"",1:"s")
+"RTN","SCRPW11",111,0)
+ Q
+"RTN","SCRPW11",112,0)
+ ;
+"RTN","SCRPW11",113,0)
+PRT2 S SDCLNA="" F  S SDCLNA=$O(^TMP("SCRPW",$J,SDIV,1,DFN,SDDAY,SDCLNA)) Q:SDCLNA']""  D:$Y>(IOSL-4) HDR Q:SDOUT  S SDCLCS=^TMP("SCRPW",$J,SDIV,1,DFN,SDDAY,SDCLNA),Y=SDDAY X ^DD("DD") W !?44,Y,"  ",SDCLNA,"  (",SDCLCS,")"
+"RTN","SCRPW11",114,0)
+ Q
+"RTN","SCRPW11",115,0)
+ ;
+"RTN","SCRPW11",116,0)
+ALPH D ^VADPT S SDNAM=VADM(1),^TMP("SCRPW",$J,SDIV,3,SDNAM,DFN)=SDFREQ Q
+"RTN","SCRPW24")
+0^4^B79121310^B77970254
+"RTN","SCRPW24",1,0)
+SCRPW24 ;RENO/KEITH - ACRP Ad Hoc Report (cont.) ;06/19/99
+"RTN","SCRPW24",2,0)
+ ;;5.3;Scheduling;**144,163,180,254,243,295,329,351,510,530,562**;AUG 13, 1993;Build 7
+"RTN","SCRPW24",3,0)
+ ;06/19/99 ACS - Added CPT modifier API calls
+"RTN","SCRPW24",4,0)
+ ;11/26/03 RLC - 329 fixes primary/secondary dx problem with report
+"RTN","SCRPW24",5,0)
+ ;
+"RTN","SCRPW24",6,0)
+APAC(SDX) ;Get all procedure codes
+"RTN","SCRPW24",7,0)
+ D APAC^SCRPW241(.SDX)
+"RTN","SCRPW24",8,0)
+ D NX Q
+"RTN","SCRPW24",9,0)
+ ;
+"RTN","SCRPW24",10,0)
+APOTR ;Transform procedure external value
+"RTN","SCRPW24",11,0)
+ D APOTR^SCRPW241(.SDX)
+"RTN","SCRPW24",12,0)
+ Q
+"RTN","SCRPW24",13,0)
+ ;
+"RTN","SCRPW24",14,0)
+APAP(SDX) ;Get ambulatory procedures (no E&M codes)
+"RTN","SCRPW24",15,0)
+ D APAP^SCRPW241(.SDX)
+"RTN","SCRPW24",16,0)
+ D NX Q
+"RTN","SCRPW24",17,0)
+ ;
+"RTN","SCRPW24",18,0)
+APEM(SDX) ;Get evaluation and management codes
+"RTN","SCRPW24",19,0)
+ D APEM^SCRPW241(.SDX)
+"RTN","SCRPW24",20,0)
+ D NX Q
+"RTN","SCRPW24",21,0)
+ ;
+"RTN","SCRPW24",22,0)
+CLCG(SDX) ;Get clinic group
+"RTN","SCRPW24",23,0)
+ K SDX S SDX=$P(SDOE0,U,4) I SDX S SDX=$P($G(^SC(SDX,0)),U,31) I SDX,$D(^SD(409.67,SDX)) S SDX=SDX_U_$P(^SD(409.67,SDX,0),U) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",24,0)
+ D NX Q
+"RTN","SCRPW24",25,0)
+ ;
+"RTN","SCRPW24",26,0)
+CLCN(SDX) ;Get clinic name
+"RTN","SCRPW24",27,0)
+ K SDX S SDX=$P(SDOE0,U,4) I SDX S SDX=SDX_U_$P($G(^SC(SDX,0)),U) I $L($P(SDX,U,2)) S SDX(1)=SDX
+"RTN","SCRPW24",28,0)
+ D NX Q
+"RTN","SCRPW24",29,0)
+ ;
+"RTN","SCRPW24",30,0)
+CLCS(SDX) ;Get clinic service
+"RTN","SCRPW24",31,0)
+ K SDX S SDX=$P(SDOE0,U,4) I SDX S SDX=$P($G(^SC(SDX,0)),U,8) D FST(.SDX,44,9) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",32,0)
+ D NX Q
+"RTN","SCRPW24",33,0)
+ ;
+"RTN","SCRPW24",34,0)
+DXAD(SDX) ;Get all diagnoses
+"RTN","SCRPW24",35,0)
+ K SDX N SDY,SDI D GETDX^SDOE(SDOE,"SDY") S SDI=0 F  S SDI=$O(SDY(SDI)) Q:'SDI  S SDX=$P(SDY(SDI),U) I SDX S SDX=SDX_U_$P($$ICDDX^ICDCODE(+SDX,+SDOE0),U,2) I $L($P(SDX,U,2)) D DXOTR S SDX(SDI)=SDX
+"RTN","SCRPW24",36,0)
+ D NX Q
+"RTN","SCRPW24",37,0)
+ ;
+"RTN","SCRPW24",38,0)
+DXOTR ;Transform diagnosis external value
+"RTN","SCRPW24",39,0)
+ N ENCDT
+"RTN","SCRPW24",40,0)
+ S ENCDT=+$G(SDOE0)
+"RTN","SCRPW24",41,0)
+ I 'ENCDT D
+"RTN","SCRPW24",42,0)
+ .I '$G(SDOE) S ENCDT=$$NOW^XLFDT() Q
+"RTN","SCRPW24",43,0)
+ .N SDY
+"RTN","SCRPW24",44,0)
+ .D GETGEN^SDOE(SDOE,"SDY")
+"RTN","SCRPW24",45,0)
+ .S ENCDT=+$G(SDY(0))
+"RTN","SCRPW24",46,0)
+ .K SDY
+"RTN","SCRPW24",47,0)
+ S SDX=SDX_" "_$P($$ICDDX^ICDCODE(+SDX,ENCDT),U,4) Q
+"RTN","SCRPW24",48,0)
+ ;
+"RTN","SCRPW24",49,0)
+DXGS(SDX,SDZ) ;Get GAF score
+"RTN","SCRPW24",50,0)
+ K SDX N SDI,SDY S SDY=$S(SDZ="H":$P($P(SDOE0,U),"."),1:DT)_.9999,SDY=9999999-SDY,SDY=$O(^YSD(627.8,"AX5",$P(SDOE0,U,2),SDY))
+"RTN","SCRPW24",51,0)
+ I SDY S SDI=$O(^YSD(627.8,"AX5",$P(SDOE0,U,2),SDY,""),-1) I SDI S SDX=+$P($G(^YSD(627.8,SDI,60)),U,3) I SDX S SDX(1)=SDX_U_SDX
+"RTN","SCRPW24",52,0)
+ D NX Q
+"RTN","SCRPW24",53,0)
+ ;
+"RTN","SCRPW24",54,0)
+DXGSQ(SDI) ;Set up GAF help text
+"RTN","SCRPW24",55,0)
+ S SDIRQ("?",1)="Specify a value representing the Global Assessment of Functioning (GAF) score."
+"RTN","SCRPW24",56,0)
+ I SDI="H" S SDIRQ("?")="Status as of the encounter date/time is used to determine 'historical' values."
+"RTN","SCRPW24",57,0)
+ I SDI="C" S SDIRQ("?")="Status as of the report run date is used to determine 'current' values."
+"RTN","SCRPW24",58,0)
+ Q
+"RTN","SCRPW24",59,0)
+ ;
+"RTN","SCRPW24",60,0)
+DXPD(SDX) ;Get primary diagnosis
+"RTN","SCRPW24",61,0)
+ ;SD*5.3*329 fixes problem of report not working for primary dx
+"RTN","SCRPW24",62,0)
+ K SDX N SDY,SDI D GETDX^SDOE(SDOE,"SDY") S SDI=0 F  S SDI=$O(SDY(SDI)) Q:'SDI  S SDX=$P(SDY(SDI),U) I SDX,$P(SDY(SDI),U,12)="P" S SDX=SDX_U_$P($$ICDDX^ICDCODE(+SDX,+SDOE0),U,2) I $L($P(SDX,U,2)) D DXOTR S SDX(SDI)=SDX
+"RTN","SCRPW24",63,0)
+ D NX Q
+"RTN","SCRPW24",64,0)
+ ;
+"RTN","SCRPW24",65,0)
+DXSD(SDX) ;Get secondary diagnoses
+"RTN","SCRPW24",66,0)
+ ;SD*5.3*329 fixes problem of report not working for secondary dx
+"RTN","SCRPW24",67,0)
+ K SDX N SDY,SDI D GETDX^SDOE(SDOE,"SDY") S SDI=0 F  S SDI=$O(SDY(SDI)) Q:'SDI  S SDX=$P(SDY(SDI),U) I SDX,$P(SDY(SDI),U,12)'="P" S SDX=SDX_U_$P($$ICDDX^ICDCODE(+SDX,+SDOE0),U,2) I $L($P(SDX,U,2)) D DXOTR S SDX(SDI)=SDX
+"RTN","SCRPW24",68,0)
+ D NX Q
+"RTN","SCRPW24",69,0)
+ ;
+"RTN","SCRPW24",70,0)
+ENED(SDX,SDZ) ;Get enrollment date
+"RTN","SCRPW24",71,0)
+ K SDX N SDY S SDY=$$ENROL($S(SDZ="H":+SDOE0,1:DT)) I SDY S (SDX,Y)=$P(SDY,U) X ^DD("DD") S SDX(1)=SDX_U_Y
+"RTN","SCRPW24",72,0)
+ D NX Q
+"RTN","SCRPW24",73,0)
+ ;
+"RTN","SCRPW24",74,0)
+ENEF(SDX,SDZ) ;Get enrollment effective date
+"RTN","SCRPW24",75,0)
+ K SDX N SDY S SDY=$$ENROL($S(SDZ="H":+SDOE0,1:DT)) I SDY S (SDX,Y)=$P(SDY,U,8) X ^DD("DD") S SDX(1)=SDX_U_Y
+"RTN","SCRPW24",76,0)
+ D NX Q
+"RTN","SCRPW24",77,0)
+ ;
+"RTN","SCRPW24",78,0)
+ENEP(SDX,SDZ) ;Get enrollment priority
+"RTN","SCRPW24",79,0)
+ K SDX N SDY S SDY=$$ENROL($S(SDZ="H":+SDOE0,1:DT)) I SDY S SDX=$P(SDY,U,7) D FST(.SDX,27.11,.07) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",80,0)
+ D NX Q
+"RTN","SCRPW24",81,0)
+ ;
+"RTN","SCRPW24",82,0)
+ENES(SDX,SDZ) ;Get enrollment status
+"RTN","SCRPW24",83,0)
+ K SDX N SDY S SDY=$$ENROL($S(SDZ="H":+SDOE0,1:DT)) I SDY S SDX=$P(SDY,U,4),SDX=SDX_U_$$EXTERNAL^DILFD(27.11,.04,"F",SDX) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",84,0)
+ D NX Q
+"RTN","SCRPW24",85,0)
+ ;
+"RTN","SCRPW24",86,0)
+ENFR(SDX,SDZ) ;Get enrollment facility received
+"RTN","SCRPW24",87,0)
+ K SDX N SDY S SDY=$$ENROL($S(SDZ="H":+SDOE0,1:DT)) I SDY S SDX=$P(SDY,U,6) I SDX S SDX=SDX_U_$P($G(^DIC(4,SDX,0)),U) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",88,0)
+ D NX Q
+"RTN","SCRPW24",89,0)
+ ;
+"RTN","SCRPW24",90,0)
+ENSE(SDX,SDZ) ;Get enrollment source of enrollment
+"RTN","SCRPW24",91,0)
+ K SDX N SDY S SDY=$$ENROL($S(SDZ="H":+SDOE0,1:DT)) I SDY S SDX=$P(SDY,U,3) D FST(.SDX,27.11,.03) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",92,0)
+ D NX Q
+"RTN","SCRPW24",93,0)
+ ;
+"RTN","SCRPW24",94,0)
+ENQ(SDZ) ;Set up help text for enrollment
+"RTN","SCRPW24",95,0)
+ I SDZ="H" S SDIRQ("?")="Enrollment status as of the encounter date/time is used for 'historical' values."
+"RTN","SCRPW24",96,0)
+ I SDZ="C" S SDIRQ("?")="Enrollment status as of the report run date is used for 'current' values."
+"RTN","SCRPW24",97,0)
+ Q
+"RTN","SCRPW24",98,0)
+ ;
+"RTN","SCRPW24",99,0)
+OEAT(SDX) ;Get encounter appointment type
+"RTN","SCRPW24",100,0)
+ K SDX S SDX=$P(SDOE0,U,10) I SDX S SDX=SDX_U_$P($G(^SD(409.1,SDX,0)),U) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",101,0)
+ D NX Q
+"RTN","SCRPW24",102,0)
+ ;
+"RTN","SCRPW24",103,0)
+OEDV(SDX) ;Get encounter division
+"RTN","SCRPW24",104,0)
+ K SDX S SDX=$P(SDOE0,U,11) I SDX S SDX=SDX_U_$P($G(^DG(40.8,SDX,0)),U) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",105,0)
+ D NX Q
+"RTN","SCRPW24",106,0)
+ ;
+"RTN","SCRPW24",107,0)
+OEEE(SDX) ;Get encounter eligibility
+"RTN","SCRPW24",108,0)
+ K SDX S SDX=$P(SDOE0,U,13) I SDX S SDX=SDX_U_$P($G(^DIC(8,SDX,0)),U) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",109,0)
+ D NX Q
+"RTN","SCRPW24",110,0)
+ ;
+"RTN","SCRPW24",111,0)
+OEOP(SDX) ;Get encounter originating process type
+"RTN","SCRPW24",112,0)
+ K SDX S SDX=$P(SDOE0,U,8) D FST(.SDX,409.68,.08) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",113,0)
+ D NX Q
+"RTN","SCRPW24",114,0)
+ ;
+"RTN","SCRPW24",115,0)
+OEPA(SDX) ;Get encounter patient
+"RTN","SCRPW24",116,0)
+ K SDX S DFN=$P(SDOE0,U,2) I DFN D DEM^VADPT I $L(VADM(1)) S SDX(1)=DFN_U_VADM(1)
+"RTN","SCRPW24",117,0)
+ D NX Q
+"RTN","SCRPW24",118,0)
+ ;
+"RTN","SCRPW24",119,0)
+OEES(SDX) ;Get encounter status
+"RTN","SCRPW24",120,0)
+ K SDX S SDX=$P(SDOE0,U,12) I SDX S SDX=SDX_U_$P($G(^SD(409.63,SDX,0)),U) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",121,0)
+ D NX Q
+"RTN","SCRPW24",122,0)
+ ;
+"RTN","SCRPW24",123,0)
+OETS(SDX) ;Get transmission status
+"RTN","SCRPW24",124,0)
+ K SDX S SDX(1)=$$STX^SCRPW8(SDOE,SDOE0) Q
+"RTN","SCRPW24",125,0)
+ ;
+"RTN","SCRPW24",126,0)
+TSQ(DIR) ;Set up DIR array for transmission status question
+"RTN","SCRPW24",127,0)
+ K DIR S DIR("A")="Select transmission status",DIR("?")="This value represents the transmission status of the encounter record."
+"RTN","SCRPW24",128,0)
+ S DIR(0)="SO^0:Not checked-out;1:No transmission record;2:Not required, not transmitted;3:Rejected for transmission;4:Awaiting transmission;5:Transmitted, no acknowledgment;6:Transmitted, rejected;7:Transmitted, error;8:Transmitted, accepted"
+"RTN","SCRPW24",129,0)
+ Q
+"RTN","SCRPW24",130,0)
+ ;
+"RTN","SCRPW24",131,0)
+CLQ(DIR,SDZ) ;Set up DIR array for classification questions
+"RTN","SCRPW24",132,0)
+ K DIR S SDZ=$S(SDZ="A":"Agent Orange exposure",SDZ="I":"ionizing radiation exposure",SDZ="S":"service connected condition",1:"environmental contaminants exposure")
+"RTN","SCRPW24",133,0)
+ S DIR(0)="SO^1:YES;0:NO",DIR("A")="Treatment related to "_SDZ,DIR("?")="Indicates if treatment was related to "_SDZ Q
+"RTN","SCRPW24",134,0)
+ ;
+"RTN","SCRPW24",135,0)
+OECL(SDX,SDZ) ;Get classification values
+"RTN","SCRPW24",136,0)
+ K SDX N SDY S SDZ=$S(SDZ="A":1,SDZ="I":2,SDZ="S":3,SDZ="E":4,1:"") I SDZ D CLASK^SDCO2(SDOE,.SDY) S SDX=$P($G(SDY(SDZ)),U,2) I $L(SDX) S SDX(1)=$S(SDX=1:"1^YES",1:"0^NO")
+"RTN","SCRPW24",137,0)
+ D NX Q
+"RTN","SCRPW24",138,0)
+ ;
+"RTN","SCRPW24",139,0)
+OEOU(SDX) ;Get option used to create
+"RTN","SCRPW24",140,0)
+ K SDX S SDX=+$P(SDOE0,U,5),SDX=+$P($G(^AUPNVSIT(SDX,0)),U,24)
+"RTN","SCRPW24",141,0)
+ N SDY D GETS^DIQ(19,SDX,.01,"","SDY")
+"RTN","SCRPW24",142,0)
+ S SDX=SDX_U_SDY(19,SDX_",",.01) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",143,0)
+ D NX Q
+"RTN","SCRPW24",144,0)
+ ;
+"RTN","SCRPW24",145,0)
+SUQ(DIR) ;Set up DIR() array for Scheduled/unscheduled question
+"RTN","SCRPW24",146,0)
+ K DIR S DIR("A")="Select outpatient activity type",DIR("?",1)="Only pre-scheduled appointments will be reflected as SCHEDULED.  All other",DIR("?",2)="types of activity (add/edits, registrations, walkins or unscheduled activity)"
+"RTN","SCRPW24",147,0)
+ S DIR("?")="will be reflected as UNSCHEDULED.",DIR(0)="SO^S:SCHEDULED;U:UNSCHEDULED" Q
+"RTN","SCRPW24",148,0)
+ ;
+"RTN","SCRPW24",149,0)
+OESU(SDX) ;Get scheduled/unscheduled status
+"RTN","SCRPW24",150,0)
+ N SDAP0 K SDX S SDX(1)=""
+"RTN","SCRPW24",151,0)
+ I $P(SDOE0,U,8)=1 D  Q:$L(SDX(1))
+"RTN","SCRPW24",152,0)
+ .S SDAP0=$G(^DPT(+$P(SDOE0,U,2),"S",+SDOE0,0))
+"RTN","SCRPW24",153,0)
+ .Q:$P(SDAP0,U,20)'=SDOE  Q:$P(SDAP0,U,7)=4
+"RTN","SCRPW24",154,0)
+ .S SDX(1)="S^SCHEDULED" Q
+"RTN","SCRPW24",155,0)
+ S SDX(1)="U^UNSCHEDULED" Q
+"RTN","SCRPW24",156,0)
+ ;
+"RTN","SCRPW24",157,0)
+PCPR(SDX,SDZ) ;Get primary care provider
+"RTN","SCRPW24",158,0)
+ ;Required input: SDZ="C" for current, "H" for historical
+"RTN","SCRPW24",159,0)
+ K SDX S SDX=$S(SDZ="C":$$OUTPTPR^SDUTL3(+$P(SDOE0,U,2)),1:$$OUTPTPR^SDUTL3(+$P(SDOE0,U,2),+$P(SDOE0,U))) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",160,0)
+ D NX Q
+"RTN","SCRPW24",161,0)
+ ;
+"RTN","SCRPW24",162,0)
+PCTM(SDX,SDZ) ;Get priamry care team
+"RTN","SCRPW24",163,0)
+ ;Required input: SDZ="C" for current, "H" for historical
+"RTN","SCRPW24",164,0)
+ K SDX S SDX=$S(SDZ="C":$$OUTPTTM^SDUTL3(+$P(SDOE0,U,2)),1:$$OUTPTTM^SDUTL3(+$P(SDOE0,U,2),+$P(SDOE0,U))) S:$L($P(SDX,U,2)) SDX(1)=SDX
+"RTN","SCRPW24",165,0)
+ D NX Q
+"RTN","SCRPW24",166,0)
+ ;
+"RTN","SCRPW24",167,0)
+PDPA(SDX) ;Get patient age
+"RTN","SCRPW24",168,0)
+ K SDX S DFN=$P(SDOE0,U,2) I DFN D DEM^VADPT I VADM(4)=+VADM(4) S SDX(1)=VADM(4)_U_VADM(4)
+"RTN","SCRPW24",169,0)
+ D NX Q
+"RTN","SCRPW24",170,0)
+ ;
+"RTN","SCRPW24",171,0)
+PDPS(SDX) ;Get patient sex
+"RTN","SCRPW24",172,0)
+ K SDX S DFN=$P(SDOE0,U,2) I DFN D DEM^VADPT I $L($P(VADM(5),U,2)) S SDX(1)=VADM(5)
+"RTN","SCRPW24",173,0)
+ D NX Q
+"RTN","SCRPW24",174,0)
+ ;
+"RTN","SCRPW24",175,0)
+PDSC(SDX) ;Get patient state/county
+"RTN","SCRPW24",176,0)
+ K SDX S DFN=$P(SDOE0,U,2) I DFN D ADD^VADPT I $L($P(VAPA(7),U,2)) S SDX(1)=$P(VAPA(5),U)_";"_$P(VAPA(7),U)_U_$P(VAPA(5),U,2)_" / "_$P(VAPA(7),U,2)
+"RTN","SCRPW24",177,0)
+ D NX Q
+"RTN","SCRPW24",178,0)
+ ;
+"RTN","SCRPW24",179,0)
+PDZC(SDX) ;Get patient zip code
+"RTN","SCRPW24",180,0)
+ K SDX S DFN=$P(SDOE0,U,2) I DFN D ADD^VADPT I $L(VAPA(6)) S SDX(1)=VAPA(6)_U_VAPA(6)
+"RTN","SCRPW24",181,0)
+ D NX Q
+"RTN","SCRPW24",182,0)
+ ;
+"RTN","SCRPW24",183,0)
+ENROL(SDATE)  ;Get enrollment record (most recent to encounter date)
+"RTN","SCRPW24",184,0)
+ ;SD/530 changed For loop and added check for zero node to eliminate undefined error
+"RTN","SCRPW24",185,0)
+ N SDY,SDI,X1,X2,X,%Y
+"RTN","SCRPW24",186,0)
+ S:SDATE#1=0 SDATE=SDATE+.9999 S SDI=0 F  S SDI=$O(^DGEN(27.11,"C",+$P(SDOE0,U,2),SDI)) Q:'SDI  D
+"RTN","SCRPW24",187,0)
+ .Q:'$D(^DGEN(27.11,SDI,0))
+"RTN","SCRPW24",188,0)
+ .I '$D(^DGEN(27.11,SDI,"U")) S SDY=$G(^DGEN(27.11,SDI,0)),SDY(+SDY)=SDY Q   ;SD*562
+"RTN","SCRPW24",189,0)
+ .S SDY=$G(^DGEN(27.11,SDI,0)),SDY($P($P(^DGEN(27.11,SDI,"U"),U,1),".",1))=SDY  ;SD/510 changed logic to use date/time entered
+"RTN","SCRPW24",190,0)
+ S SDI=$O(SDY(SDATE),-1) Q:'SDI ""  S X1=$P($P(SDOE0,U),"."),X2=SDI D ^%DTC Q SDY(SDI)
+"RTN","SCRPW24",191,0)
+ ;
+"RTN","SCRPW24",192,0)
+NX S:$D(SDX)<10 SDX(1)="~~~NONE~~~^~~~NONE~~~" Q
+"RTN","SCRPW24",193,0)
+ ;
+"RTN","SCRPW24",194,0)
+FST(SDX,SDFI,SDFE) ;Field set transform
+"RTN","SCRPW24",195,0)
+ Q:'$L(SDX)  N SDY,SDI D FIELD^DID(SDFI,SDFE,"","POINTER","SDY") S SDY=SDY("POINTER") F SDI=1:1:$L(SDY,";") I SDX=$P($P(SDY,";",SDI),":") S SDX=SDX_U_$P($P(SDY,";",SDI),":",2) Q
+"RTN","SCRPW24",196,0)
+ Q
+"RTN","SCRPW28")
+0^5^B54896570^B53986877
+"RTN","SCRPW28",1,0)
+SCRPW28 ;RENO/KEITH - ACRP Ad Hoc Report (cont.) ; 12/5/00 4:44pm
+"RTN","SCRPW28",2,0)
+ ;;5.3;Scheduling;**144,232,562**;AUG 13, 1993;Build 7
+"RTN","SCRPW28",3,0)
+PDF ;Print delimited format
+"RTN","SCRPW28",4,0)
+ S (SDOUT,SDSTOP)=0 D RPAR,RSUM,RDET G EXIT^SCRPW27
+"RTN","SCRPW28",5,0)
+ ;
+"RTN","SCRPW28",6,0)
+RPAR W !,$$BRK("Report Parameters") Q:SDOUT
+"RTN","SCRPW28",7,0)
+ W !,"TYPE^CATEGORY^SUB-CATEGORY^VALUE^METHOD^INCLUDE/EXCLUDE"
+"RTN","SCRPW28",8,0)
+ S SDI=0 F  S SDI=$O(SDPAR("F",SDI)) Q:'SDI  W !,"FORMAT^",$P($T(F+SDI^SCRPW22),";;",2),"^(none)^",$P(SDPAR("F",SDI),U,2),"^^"
+"RTN","SCRPW28",9,0)
+ D ITEM("P",1) F SDI=1,2 W !,"LIMITATION^",$P($T(L+SDI^SCRPW22),";;",2),"^(none)^",$P(SDPAR("L",SDI),U,2),"^^"
+"RTN","SCRPW28",10,0)
+ S SDI=2 F  S SDI=$O(SDPAR("L",SDI)) Q:'SDI  D ITEM("L",SDI)
+"RTN","SCRPW28",11,0)
+ F SDI=1,2 W !,"ORDER^",$P($T(O+SDI^SCRPW22),";;",2),"^(none)^",$P($G(SDPAR("O",SDI)),U,2),"^^"
+"RTN","SCRPW28",12,0)
+ F SDI=2,1 S SDII=0 F  S SDII=$O(SDPAR("PF",SDI,SDII)) Q:'SDII  S SDX=SDPAR("PF",SDI,SDII) W !,"ADDL. PRINT FIELD^",$P(SDX,U,2),U,$P(SDX,U,3)
+"RTN","SCRPW28",13,0)
+ Q
+"RTN","SCRPW28",14,0)
+ ;
+"RTN","SCRPW28",15,0)
+ITEM(SDS1,SDS2) ;Print parameter item
+"RTN","SCRPW28",16,0)
+ K SD S SD(1)=$S(SDS1="P":"PERSPECTIVE",1:"LIMITATION"),SD(2)=$P(SDPAR(SDS1,SDS2),U,2),SD(3)=$P(SDPAR(SDS1,SDS2,1),U,2) I '$D(SDPAR(SDS1,SDS2,4)) D IPRT Q
+"RTN","SCRPW28",17,0)
+ S SD(5)=$P(SDPAR(SDS1,SDS2,2),U,2),SD(6)=$S($P($G(SDPAR(SDS1,SDS2,3)),U)="E":"EXCLUDE",1:"INCLUDE")
+"RTN","SCRPW28",18,0)
+ I $G(SDPAR(SDS1,SDS2,6))="D" S SDS3=0 D  Q
+"RTN","SCRPW28",19,0)
+ .F  S SDS3=$O(SDPAR(SDS1,SDS2,5,SDS3)) Q:'SDS3  S SD(4)=SDPAR(SDS1,SDS2,5,SDS3) D IPRT
+"RTN","SCRPW28",20,0)
+ .Q
+"RTN","SCRPW28",21,0)
+ S SDS3="" F  S SDS3=$O(SDPAR(SDS1,SDS2,4,SDS3)) Q:SDS3=""  S SD(4)=SDS3 D IPRT
+"RTN","SCRPW28",22,0)
+ Q
+"RTN","SCRPW28",23,0)
+ ;
+"RTN","SCRPW28",24,0)
+IPRT N SDI W ! F SDI=1:1:6 W $G(SD(SDI)) W:SDI'=6 U ;SD*5.3*232 TEJ- N SDI
+"RTN","SCRPW28",25,0)
+ Q
+"RTN","SCRPW28",26,0)
+ ;
+"RTN","SCRPW28",27,0)
+BRK(SDX) ;Print table break
+"RTN","SCRPW28",28,0)
+ D STOP^SCRPW26 Q:SDOUT
+"RTN","SCRPW28",29,0)
+ N SDY S SDY="",$P(SDY,"-",(132-$L(SDX)\2))=SDX F  S SDY=SDY_"-" Q:$L(SDY)>131
+"RTN","SCRPW28",30,0)
+ Q SDY
+"RTN","SCRPW28",31,0)
+ ;
+"RTN","SCRPW28",32,0)
+EXT() ;Return external value
+"RTN","SCRPW28",33,0)
+ Q $S($G(SDPAR("P",1,6))="D":SDS2,1:SDS1)
+"RTN","SCRPW28",34,0)
+ ;
+"RTN","SCRPW28",35,0)
+RSUM ;Print report summary
+"RTN","SCRPW28",36,0)
+ W !,$$BRK("Report Summary") Q:SDOUT
+"RTN","SCRPW28",37,0)
+ W !,$P(SDPAR("P",1,1),U,2),U,"ENCOUNTERS",U,"VISITS",U,"UNIQUES"
+"RTN","SCRPW28",38,0)
+ I SDF(2) W U,"PRIOR YEAR ENCOUNTERS",U,"PRIOR YEAR VISITS",U,"PRIOR YEAR UNIQUES",U,"% CHANGE ENCOUNTERS",U,"% CHANGE VISITS",U,"% CHANGE UNIQUES"  ;SD*562 correct heading to % change encounters
+"RTN","SCRPW28",39,0)
+ I '$D(^TMP("SCRPW",$J,"RPT",1)) W !,"No data found within selected parameters." Q
+"RTN","SCRPW28",40,0)
+ S SDORDV="" F  S SDORDV=$O(^TMP("SCRPW",$J,"MASTER",SDORDV),$S(SDORD="ALP":1,1:-1)) Q:SDORDV=""!SDOUT  D RSUM0
+"RTN","SCRPW28",41,0)
+ Q:SDOUT  D RSUM1("TOT",1,1) Q
+"RTN","SCRPW28",42,0)
+ ;
+"RTN","SCRPW28",43,0)
+RSUM0 S SDS1="" F  S SDS1=$O(^TMP("SCRPW",$J,"MASTER",SDORDV,SDS1)) Q:SDS1=""!SDOUT  S SDS2="" F  S SDS2=$O(^TMP("SCRPW",$J,"MASTER",SDORDV,SDS1,SDS2)) Q:SDS2=""!SDOUT  D RSUM1("RPT",SDS1,SDS2)
+"RTN","SCRPW28",44,0)
+ Q
+"RTN","SCRPW28",45,0)
+ ;
+"RTN","SCRPW28",46,0)
+RSUM1(SDRPT,SDS1,SDS2) D STOP Q:SDOUT
+"RTN","SCRPW28",47,0)
+ K SDX S SDX=$S(SDRPT="TOT":"REPORT TOTAL",$G(SDPAR("P",1,6))="D":SDS2,1:SDS1)
+"RTN","SCRPW28",48,0)
+ S SDX(0)=+$G(^TMP("SCRPW",$J,SDRPT,1,SDS1,SDS2,"ENC")),SDX(1)=+$G(^TMP("SCRPW",$J,SDRPT,1,SDS1,SDS2,"VIS")),SDX(2)=+$G(^TMP("SCRPW",$J,SDRPT,1,SDS1,SDS2,"UNI"))
+"RTN","SCRPW28",49,0)
+ I SDF(2) S SDX(3)=+$G(^TMP("SCRPW",$J,SDRPT,2,SDS1,SDS2,"ENC")),SDX(4)=+$G(^TMP("SCRPW",$J,SDRPT,2,SDS1,SDS2,"VIS")),SDX(5)=+$G(^TMP("SCRPW",$J,SDRPT,2,SDS1,SDS2,"UNI"))
+"RTN","SCRPW28",50,0)
+ I SDF(2) F SDI=6,7,8 D CALC(SDI)
+"RTN","SCRPW28",51,0)
+ W !,SDX S SDI="" F  S SDI=$O(SDX(SDI)) Q:SDI=""  W U,$S(SDX(SDI)="N/A":$J(SDX(SDI),8),1:$J(SDX(SDI),8,$S(SDI<6:0,SDX(SDI)'<100000:0,SDX(SDI)'<10000:1,1:2)))
+"RTN","SCRPW28",52,0)
+ Q
+"RTN","SCRPW28",53,0)
+ ;
+"RTN","SCRPW28",54,0)
+CALC(SDI) ;Calculate % change
+"RTN","SCRPW28",55,0)
+ S SDX(SDI)=$S(SDX(SDI-3)<1:"N/A",1:SDX(SDI-6)-SDX(SDI-3)*100/SDX(SDI-3))
+"RTN","SCRPW28",56,0)
+ ;
+"RTN","SCRPW28",57,0)
+RDET Q:SDF(1)="S"  S SDS1="" F  S SDS1=$O(^TMP("SCRPW",$J,"RPT",1,SDS1)) Q:SDS1=""!SDOUT  S SDS2="" F  S SDS2=$O(^TMP("SCRPW",$J,"RPT",1,SDS1,SDS2)) Q:SDS2=""!SDOUT  D RDET1
+"RTN","SCRPW28",58,0)
+ Q
+"RTN","SCRPW28",59,0)
+ ;
+"RTN","SCRPW28",60,0)
+RDET1 S SDENC=^TMP("SCRPW",$J,"RPT",1,SDS1,SDS2,"ENC"),SDVIS=^TMP("SCRPW",$J,"RPT",1,SDS1,SDS2,"VIS"),SDUNI=^TMP("SCRPW",$J,"RPT",1,SDS1,SDS2,"UNI")
+"RTN","SCRPW28",61,0)
+ D:"EB"[SDF(3) DPTL Q:SDOUT  D:"DB"[SDF(3) DDXP Q
+"RTN","SCRPW28",62,0)
+ ;
+"RTN","SCRPW28",63,0)
+DSV(SDPER) ;Encrypt detail sort values
+"RTN","SCRPW28",64,0)
+ N SDX S SDX=$G(^TMP("SCRPW",$J,"DSV",$P(SDPER,U,2),$P(SDPER,U))) Q:SDX SDX
+"RTN","SCRPW28",65,0)
+ S (SDX,^TMP("SCRPW",$J,"DSV",0))=$G(^TMP("SCRPW",$J,"DSV",0))+1
+"RTN","SCRPW28",66,0)
+ S ^TMP("SCRPW",$J,"DSV",$P(SDPER,U,2),$P(SDPER,U))=SDX Q SDX
+"RTN","SCRPW28",67,0)
+ ;
+"RTN","SCRPW28",68,0)
+DPTL ;Detail patient list
+"RTN","SCRPW28",69,0)
+ N SDX1,SDDSV S SDDSV=$$DSV(SDS2_"^"_SDS1)
+"RTN","SCRPW28",70,0)
+ S SDX1=$P(SDPAR("P",1,1),U,2)_": "_$$EXT()_" - "_$S(SDF(4)="E":"Encounter",SDF(4)="V":"Visit",1:"Unique patient")_" list" W !,$$BRK(SDX1) Q:SDOUT
+"RTN","SCRPW28",71,0)
+ W !,"PATIENT",U,"SSN" I "VE"[SDF(4) W U,"DATE" I SDF(4)="E" W U,"LOCATION"
+"RTN","SCRPW28",72,0)
+ K ^TMP("SCRPW",$J,"APFM") S SDAPFM=0 D:$D(SDPAR("PF")) APFH
+"RTN","SCRPW28",73,0)
+ S SDPNAM="" F  S SDPNAM=$O(^TMP("SCRPW",$J,"DET",SDDSV,SDPNAM)) Q:SDPNAM=""!SDOUT  S DFN=0 F  S DFN=$O(^TMP("SCRPW",$J,"DET",SDDSV,SDPNAM,DFN)) Q:'DFN!SDOUT  D DPTL1
+"RTN","SCRPW28",74,0)
+ Q:'$D(^TMP("SCRPW",$J,"APFM"))
+"RTN","SCRPW28",75,0)
+ W !,$$BRK(SDX1_" (LINKED SUB-TABLE)") Q:SDOUT  W !,"LINK^DATA VALUE"
+"RTN","SCRPW28",76,0)
+ S SDAPFM=0 F  S SDAPFM=$O(^TMP("SCRPW",$J,"APFM",SDAPFM)) Q:'SDAPFM!SDOUT  S SDX="" F  S SDX=$O(^TMP("SCRPW",$J,"APFM",SDAPFM,SDX)) Q:SDX=""!SDOUT  W !,SDAPFM,U,^TMP("SCRPW",$J,"APFM",SDAPFM,SDX) D STOP
+"RTN","SCRPW28",77,0)
+ Q
+"RTN","SCRPW28",78,0)
+ ;
+"RTN","SCRPW28",79,0)
+STOP S SDSTOP=SDSTOP+1 D:SDSTOP#100=0 STOP^SCRPW26 Q
+"RTN","SCRPW28",80,0)
+ ;
+"RTN","SCRPW28",81,0)
+DPTL1 I SDF(4)="U" W !,SDPNAM,U,$P($G(^DPT(DFN,0)),U,9) D APFP,STOP Q
+"RTN","SCRPW28",82,0)
+ S SDT=0 F  S SDT=$O(^TMP("SCRPW",$J,"DET",SDDSV,SDPNAM,DFN,SDT)) Q:'SDT!SDOUT  D DPTL2
+"RTN","SCRPW28",83,0)
+ Q
+"RTN","SCRPW28",84,0)
+ ;
+"RTN","SCRPW28",85,0)
+DPTL2 I SDF(4)="V" W !,SDPNAM,U,$P($G(^DPT(DFN,0)),U,9) S Y=SDT X ^DD("DD") W U,Y D APFP,STOP Q
+"RTN","SCRPW28",86,0)
+ S SDDT=0 F  S SDDT=$O(^TMP("SCRPW",$J,"DET",SDDSV,SDPNAM,DFN,SDT,SDDT)) Q:'SDDT!SDOUT  S SDOE=0 F  S SDOE=$O(^TMP("SCRPW",$J,"DET",SDDSV,SDPNAM,DFN,SDT,SDDT,SDOE)) Q:'SDOE!SDOUT  D DPTL3
+"RTN","SCRPW28",87,0)
+ Q
+"RTN","SCRPW28",88,0)
+ ;
+"RTN","SCRPW28",89,0)
+DPTL3 D STOP Q:SDOUT  S SDCL=^TMP("SCRPW",$J,"DET",SDDSV,SDPNAM,DFN,SDT,SDDT,SDOE),SDCL=$P($G(^SC(SDCL,0)),U),Y=SDDT X ^DD("DD")
+"RTN","SCRPW28",90,0)
+ W !,SDPNAM,U,$P($G(^DPT(DFN,0)),U,9),U,Y,U,SDCL D APFP Q
+"RTN","SCRPW28",91,0)
+ ;
+"RTN","SCRPW28",92,0)
+DDXP ;Detail dx/procedure lists
+"RTN","SCRPW28",93,0)
+ W !,$$BRK($P(SDPAR("P",1,1),U,2)_": "_$$EXT()_" - Diagnosis ranking") Q:SDOUT
+"RTN","SCRPW28",94,0)
+ W !,"DIAGNOSIS",U,"PRIMARY",U,"SECONDARY",U,"TOTAL"
+"RTN","SCRPW28",95,0)
+ I '$D(^TMP("SCRPW",$J,"RPTTDX",1,SDS1,SDS2)) W !,"No diagnoses found for this detail item." G DAPP
+"RTN","SCRPW28",96,0)
+ K SDTCT S SDQT="",SDCT=0 F  S SDQT=$O(^TMP("SCRPW",$J,"RPTTDX",1,SDS1,SDS2,SDQT),-1) Q:SDQT=""!(SDCT>SDF(5))!SDOUT  S SDS3="" F  S SDS3=$O(^TMP("SCRPW",$J,"RPTTDX",1,SDS1,SDS2,SDQT,SDS3)) Q:SDS3=""!(SDCT>SDF(5))!SDOUT  D DDXP1
+"RTN","SCRPW28",97,0)
+ Q:SDOUT  W !,"TOTAL",U,$J(SDTCT(1),10),U,$J(SDTCT(2),10),U,$J(SDTCT(3),10)
+"RTN","SCRPW28",98,0)
+ ;
+"RTN","SCRPW28",99,0)
+DAPP W !,$$BRK($P(SDPAR("P",1,1),U,2)_": "_$$EXT()_" - Ambulatory procedure ranking") Q:SDOUT  W !,"PROCEDURES",U,"TOTAL"
+"RTN","SCRPW28",100,0)
+ I '$D(^TMP("SCRPW",$J,"RPTTAP",1,SDS1,SDS2)) W !,"No procedures found for this detail item." Q
+"RTN","SCRPW28",101,0)
+ K SDTCT S SDQT="",SDCT=0 F  S SDQT=$O(^TMP("SCRPW",$J,"RPTTAP",1,SDS1,SDS2,SDQT),-1) Q:SDQT=""!(SDCT>SDF(5))!SDOUT  S SDS3="" F  S SDS3=$O(^TMP("SCRPW",$J,"RPTTAP",1,SDS1,SDS2,SDQT,SDS3)) Q:SDS3=""!(SDCT>SDF(5))!SDOUT  D DAPP1
+"RTN","SCRPW28",102,0)
+ Q:SDOUT  W !,"TOTAL",U,$J(SDTCT(1),10)
+"RTN","SCRPW28",103,0)
+ Q
+"RTN","SCRPW28",104,0)
+ ;
+"RTN","SCRPW28",105,0)
+DDXP1 F SDI=1,2,3 S SDICT(SDI)=+$P(^TMP("SCRPW",$J,"RPTDX",1,SDS1,SDS2,SDS3),U,SDI),SDTCT(SDI)=$G(SDTCT(SDI))+SDICT(SDI)
+"RTN","SCRPW28",106,0)
+ W !,SDS3,U,$J(SDICT(1),10),U,$J(SDICT(2),10),U,$J(SDICT(3),10) S SDCT=SDCT+1 D STOP Q
+"RTN","SCRPW28",107,0)
+ ;
+"RTN","SCRPW28",108,0)
+DAPP1 S SDICT(1)=^TMP("SCRPW",$J,"RPTAP",1,SDS1,SDS2,SDS3),SDTCT(1)=$G(SDTCT(1))+SDICT(1)
+"RTN","SCRPW28",109,0)
+ W !,SDS3,U,$J(SDICT(1),10) S SDCT=SDCT+1 D STOP Q
+"RTN","SCRPW28",110,0)
+ ;
+"RTN","SCRPW28",111,0)
+APFH ;Addl. print fields header
+"RTN","SCRPW28",112,0)
+ N S1,S2,SDX
+"RTN","SCRPW28",113,0)
+ F S1=2,1 S S2=0 F  S S2=$O(SDPAR("PF",S1,S2)) Q:'S2  S SDX=SDPAR("PF",S1,S2) W U,$P(^TMP("SCRPW",$J,"ACT",$P(SDX,U)),T) W:$P(^TMP("SCRPW",$J,"ACT",$P(SDX,U)),T,12) " (LINK)"
+"RTN","SCRPW28",114,0)
+ Q
+"RTN","SCRPW28",115,0)
+ ;
+"RTN","SCRPW28",116,0)
+APFP ;Addl. print fields print
+"RTN","SCRPW28",117,0)
+ N S1,S2,SDX,SDACT,SDY,SDOE0
+"RTN","SCRPW28",118,0)
+ F S1=2,1 S S2=0 F  S S2=$O(SDPAR("PF",S1,S2)) Q:'S2  S SDY=SDPAR("PF",S1,S2),SDACT=^TMP("SCRPW",$J,"ACT",$P(SDY,U)),SDOE0=$$OE0() K SDX X $P(SDACT,T,7) W U,$$APF()
+"RTN","SCRPW28",119,0)
+ Q
+"RTN","SCRPW28",120,0)
+ ;
+"RTN","SCRPW28",121,0)
+APF() N SDZ S (SDZ,SDX)="" S SDX=$O(SDX(SDX)) Q:'$P(SDACT,T,12) $P(SDX(SDX),U,2)
+"RTN","SCRPW28",122,0)
+ S SDAPFM=SDAPFM+1,SDX="" F  S SDX=$O(SDX(SDX)) Q:SDX=""  S ^TMP("SCRPW",$J,"APFM",SDAPFM,SDX)=$P(SDX(SDX),U,2)
+"RTN","SCRPW28",123,0)
+ Q SDAPFM
+"RTN","SCRPW28",124,0)
+ ;
+"RTN","SCRPW28",125,0)
+OE0() ;Get encounter node
+"RTN","SCRPW28",126,0)
+ Q:"UV"[SDF(4) U_DFN_U
+"RTN","SCRPW28",127,0)
+ Q $$GETOE^SDOE(SDOE)
+"RTN","SCRPW3")
+0^6^B55550828^B47829254
+"RTN","SCRPW3",1,0)
+SCRPW3 ;RENO/KEITH - Clinic Utilization Statistical Summary (cont.) ; 14 May 99 10:45 PM
+"RTN","SCRPW3",2,0)
+ ;;5.3;Scheduling;**139,144,184,194,540,562**;AUG 13, 1993;Build 7
+"RTN","SCRPW3",3,0)
+START ;Print statistics
+"RTN","SCRPW3",4,0)
+ F  S SDCLN=$O(^TMP("SCRPW",$J,SDIV,1,SDCLN)) Q:SDCLN=""!SDOUT  S SDCL=0 F  S SDCL=$O(^TMP("SCRPW",$J,SDIV,1,SDCLN,SDCL)) Q:'SDCL!SDOUT  D CLINE
+"RTN","SCRPW3",5,0)
+ Q:SDOUT  D:$Y>(IOSL-12) FOOT^SCRPW2,HDR^SCRPW2 Q:SDOUT  W ! F SDI=1:1:8 W ?(22+(SDI*10)),"--------"
+"RTN","SCRPW3",6,0)
+ W ?112,"---------  ---------",!,"*** CLINIC TOTALS ***" S SDCT=SDTAP_U_SDTOB_U_SDTSL_U_SDTNS_U_SDTVSL_U_SDTNSVS_U_SDTOS
+"RTN","SCRPW3",7,0)
+ D F1 D FOOT^SCRPW2 Q:'$D(^TMP("SCRPW",$J,SDIV,2))
+"RTN","SCRPW3",8,0)
+ D HDR^SCRPW2 Q:SDOUT  W !!,"*** PROVIDER SUMMARY (based on clinic default provider definition) ***"
+"RTN","SCRPW3",9,0)
+ S SDPRN="" F  S SDPRN=$O(^TMP("SCRPW",$J,SDIV,2,SDPRN)) Q:SDPRN=""!SDOUT  S SDPR=0 F  S SDPR=$O(^TMP("SCRPW",$J,SDIV,2,SDPRN,SDPR)) Q:'SDPR!SDOUT  D PLINE
+"RTN","SCRPW3",10,0)
+ Q:SDOUT  D FOOT^SCRPW2
+"RTN","SCRPW3",11,0)
+ Q
+"RTN","SCRPW3",12,0)
+ ;
+"RTN","SCRPW3",13,0)
+STOP ;Check for stop task request
+"RTN","SCRPW3",14,0)
+ S:$G(ZTQUEUED) (SDOUT,ZTSTOP)=$S($$S^%ZTLOAD:1,1:0)
+"RTN","SCRPW3",15,0)
+ Q
+"RTN","SCRPW3",16,0)
+ ;
+"RTN","SCRPW3",17,0)
+AC ;Evaluate all clinics
+"RTN","SCRPW3",18,0)
+ S SDCL=0 F  S SDCL=$O(^SC(SDCL)) Q:'SDCL  S SDCL0=^SC(SDCL,0),SDIV=$P(SDCL0,U,15),SDAC=0 I $$DIV() D STOP Q:SDOUT  D A1 D:SDAC CNT,SET
+"RTN","SCRPW3",19,0)
+ Q
+"RTN","SCRPW3",20,0)
+ ;
+"RTN","SCRPW3",21,0)
+A1 Q:$P(SDCL0,U,3)'="C"  S SDCLI=$G(^SC(SDCL,"I")) Q:(($P(SDCLI,U)>0)&($P(SDCLI,U)<SDBDAY)&($P(SDCLI,U,2)=""!($P(SDCLI,U,2)>SDEDAY)))  S SDAC=1
+"RTN","SCRPW3",22,0)
+ Q
+"RTN","SCRPW3",23,0)
+ ;
+"RTN","SCRPW3",24,0)
+SC ;Evaluate selected clinics
+"RTN","SCRPW3",25,0)
+ S SDCL=0 F  S SDCL=$O(SDCL(SDCL)) Q:'SDCL  S SDCL0=^SC(SDCL,0),SDIV=$P(SDCL0,U,15),SDAC=0 I $$DIV() D STOP Q:SDOUT  D A1 D:SDAC CNT,SET
+"RTN","SCRPW3",26,0)
+ Q
+"RTN","SCRPW3",27,0)
+ ;
+"RTN","SCRPW3",28,0)
+RC ;Evaluate a range of clinics
+"RTN","SCRPW3",29,0)
+ S SDCLN=$O(SDCL("")),SDECL=$O(SDCL(SDCLN)),SDCL=SDCL(SDCLN),SDCL0=^SC(SDCL,0),SDIV=$P(SDCL0,U,15),SDAC=0 I $$DIV() D STOP Q:SDOUT  D A1 D:SDAC CNT,SET
+"RTN","SCRPW3",30,0)
+ F  S SDCLN=$O(^SC("B",SDCLN)) Q:(SDCLN=""!(SDCLN]SDECL))  S SDCL=0 F  S SDCL=$O(^SC("B",SDCLN,SDCL)) Q:'SDCL  S SDCL0=^SC(SDCL,0),SDIV=$P(SDCL0,U,15),SDAC=0 I $$DIV() D STOP Q:SDOUT  D A1 D:SDAC CNT,SET
+"RTN","SCRPW3",31,0)
+ Q
+"RTN","SCRPW3",32,0)
+ ;
+"RTN","SCRPW3",33,0)
+RS ;Evaluate a range of stop codes
+"RTN","SCRPW3",34,0)
+ S SDBCS=$O(SDCL("")),SDECS=$O(SDCL(SDBCS)),SDCL=0 S:'SDECS SDECS=SDBCS F  S SDCL=$O(^SC(SDCL)) Q:'SDCL  S SDCL0=^SC(SDCL,0),SDIV=$P(SDCL0,U,15),SDAC=0 I $$DIV() D STOP Q:SDOUT  D A1 D:SDAC RC1
+"RTN","SCRPW3",35,0)
+ Q
+"RTN","SCRPW3",36,0)
+ ;
+"RTN","SCRPW3",37,0)
+RC1 S SDCSC=$P(SDCL0,U,7),SDCSC=$P($G(^DIC(40.7,+SDCSC,0)),U,2) Q:('SDCSC!(SDCSC<SDBCS!(SDCSC>SDECS)))  D CNT,SET
+"RTN","SCRPW3",38,0)
+ Q
+"RTN","SCRPW3",39,0)
+ ;
+"RTN","SCRPW3",40,0)
+CG ;Evaluate by clinic group
+"RTN","SCRPW3",41,0)
+ S SDCG=$O(SDCL(0)),SDCL=0 F  S SDCL=$O(^SC("ASCRPW",SDCG,SDCL)) Q:'SDCL  S SDCL0=^SC(SDCL,0),SDIV=$P(SDCL0,U,15),SDAC=0 I $$DIV() D STOP Q:SDOUT  D A1 D:SDAC CNT,SET
+"RTN","SCRPW3",42,0)
+ Q
+"RTN","SCRPW3",43,0)
+ ;
+"RTN","SCRPW3",44,0)
+DIV() ;Check division
+"RTN","SCRPW3",45,0)
+ S:'$L(SDIV) SDIV=$$PRIM^VASITE()
+"RTN","SCRPW3",46,0)
+ Q:'SDDIV 1  Q $D(SDDIV(+SDIV))
+"RTN","SCRPW3",47,0)
+ ;
+"RTN","SCRPW3",48,0)
+CNT ;Evaluate a clinic
+"RTN","SCRPW3",49,0)
+ S SDDAY=SDBDAY-1,(SDVSL,SDAP,SDF1,SDOB,SDSL,SDNS,SDNSVS,SDOS)=0,SDLAP=$P($G(^SC(SDCL,"SL")),U)
+"RTN","SCRPW3",50,0)
+ D SPAT(SDCL,SDBDAY,SDMAX),CCPAT S SDOB=SDAP-SDSL S:SDOB<0 SDOB=0
+"RTN","SCRPW3",51,0)
+ Q
+"RTN","SCRPW3",52,0)
+ ;
+"RTN","SCRPW3",53,0)
+CCPAT ;Count clinic patterns and patients
+"RTN","SCRPW3",54,0)
+ F  S SDDAY=$O(^TMP(SDSUB,$J,SDCL,"ST",SDDAY)) Q:('SDDAY!(SDDAY>SDEDAY))  D CTPAT(SDDAY)
+"RTN","SCRPW3",55,0)
+ S SDDAY=SDBDAY F  S SDDAY=$O(^SC(SDCL,"S",SDDAY)) Q:('SDDAY!(SDDAY>SDEDAY))  S SDI=0 F  S SDI=$O(^SC(SDCL,"S",SDDAY,1,SDI)) Q:'SDI  S SDCP0=$G(^SC(SDCL,"S",SDDAY,1,SDI,0)) D:$L(SDCP0) ACT
+"RTN","SCRPW3",56,0)
+ Q
+"RTN","SCRPW3",57,0)
+ ;
+"RTN","SCRPW3",58,0)
+CTPAT(SDDAY) ;Count slots in availability pattern and master pattern
+"RTN","SCRPW3",59,0)
+ ;Input: SDDAY=date to evaluate
+"RTN","SCRPW3",60,0)
+ N SDPATT,SDPCT,SDFLAG,SDHLDPAT  ;SD*562 added last 2 variables
+"RTN","SCRPW3",61,0)
+ S SDPATT=$E($G(^TMP(SDSUB,$J,SDCL,"ST",SDDAY,1)),6,999) Q:SDPATT'["["
+"RTN","SCRPW3",62,0)
+ S SDFLAG=0 I SDPATT["X" S SDFLAG=1,SDHLDPAT=SDPATT  ;SD*562 check for partial canx
+"RTN","SCRPW3",63,0)
+ S SDF1=1,SDOS=SDOS+$$PCT(SDPATT)
+"RTN","SCRPW3",64,0)
+ S SDPATT=$E($G(^SC(SDCL,"OST",SDDAY,1)),6,999) I $L(SDPATT) S:SDPATT["X" SDFLAG=1,SDHLDPAT=SDPATT D:SDFLAG ADJUST S SDSL=SDSL+$$PCT(SDPATT) Q   ;SD*562 check for partially cancelled day
+"RTN","SCRPW3",65,0)
+ N X,%H,%T,%Y,SDDW,SDMPDT
+"RTN","SCRPW3",66,0)
+ S X=SDDAY D H^%DTC S SDDW="T"_%Y,SDMPDT=$O(^SC(SDCL,SDDW,SDDAY))
+"RTN","SCRPW3",67,0)
+ I SDMPDT S SDPATT=$G(^SC(SDCL,SDDW,SDMPDT,1)) D:SDFLAG ADJUST S SDPCT=$$PCT(SDPATT) I SDPCT S SDSL=SDSL+SDPCT  ;SD*562 added API ADJUST to calculate clinic capacity for partially cancelled day
+"RTN","SCRPW3",68,0)
+ Q
+"RTN","SCRPW3",69,0)
+ ;
+"RTN","SCRPW3",70,0)
+PCT(SDPATT) ;Pattern count
+"RTN","SCRPW3",71,0)
+ ;Input: SDPATT=pattern to evaluate
+"RTN","SCRPW3",72,0)
+ N X,I S X=0
+"RTN","SCRPW3",73,0)
+ S SDPATT=$TR(SDPATT," |[]","")
+"RTN","SCRPW3",74,0)
+ F I=1:1:$L(SDPATT) S X=X+$G(SD($E(SDPATT,I)))
+"RTN","SCRPW3",75,0)
+ Q X
+"RTN","SCRPW3",76,0)
+ ;
+"RTN","SCRPW3",77,0)
+ADJUST ;SD*562 calculate clinic capacity for partially cancelled day
+"RTN","SCRPW3",78,0)
+ ;SDHLDPAT equals updated pattern from "ST" node
+"RTN","SCRPW3",79,0)
+ ;SDPATT equals Master Pattern for day
+"RTN","SCRPW3",80,0)
+ S SDUP="",SDUP=SDHLDPAT,CT=0
+"RTN","SCRPW3",81,0)
+ S SDUP=$TR(SDUP," |[]","")
+"RTN","SCRPW3",82,0)
+ F I=1:1:$L(SDUP) I $E(SDUP,I)'="X" S CT=CT+1
+"RTN","SCRPW3",83,0)
+ S SDPATT=$TR(SDPATT," |[]","")
+"RTN","SCRPW3",84,0)
+ S SDPATT=$E(SDPATT,1,CT)
+"RTN","SCRPW3",85,0)
+ K CT,SDUP,I
+"RTN","SCRPW3",86,0)
+ Q
+"RTN","SCRPW3",87,0)
+ ;
+"RTN","SCRPW3",88,0)
+SET ;Set stats into ^TMP global
+"RTN","SCRPW3",89,0)
+ S SDPR=0 I SDF1 S SDPR=$O(^SC("ADPR",SDCL,SDPR)),SDPR=$P($G(^SC(SDCL,"PR",+SDPR,0)),U) I SDPR S SDPRN=$P($G(^VA(200,SDPR,0)),U) S:'$L(SDPRN) SDPR=0
+"RTN","SCRPW3",90,0)
+ D SET1(SDIV) D:SDMD SET1(0)
+"RTN","SCRPW3",91,0)
+ Q
+"RTN","SCRPW3",92,0)
+ ;
+"RTN","SCRPW3",93,0)
+SET1(SDIV) S ^TMP("SCRPW",$J,SDIV,1,$P(SDCL0,U),SDCL)=$S('SDF1:"",1:SDAP_U_SDOB_U_SDSL_U_SDNS_U_SDVSL_U_SDNSVS_U_SDOS)
+"RTN","SCRPW3",94,0)
+ Q:'SDPR  S SDPCT=$G(^TMP("SCRPW",$J,SDIV,2,SDPRN,SDPR))
+"RTN","SCRPW3",95,0)
+ S ^TMP("SCRPW",$J,SDIV,2,SDPRN,SDPR)=($P(SDPCT,U)+SDAP)_U_($P(SDPCT,U,2)+SDOB)_U_($P(SDPCT,U,3)+SDSL)_U_($P(SDPCT,U,4)+SDNS)_U_($P(SDPCT,U,5)+SDVSL)_U_($P(SDPCT,U,6)+SDNSVS)_U_($P(SDPCT,U,7)+SDOS)
+"RTN","SCRPW3",96,0)
+ Q
+"RTN","SCRPW3",97,0)
+ ;
+"RTN","SCRPW3",98,0)
+CLINE ;Print a clinic statistics line
+"RTN","SCRPW3",99,0)
+ D:$Y>(IOSL-12) FOOT^SCRPW2,HDR^SCRPW2 Q:SDOUT  S SDCT=^TMP("SCRPW",$J,SDIV,1,SDCLN,SDCL) W !!,SDCLN I '$L(SDCT) W "  (No ava. found)" Q
+"RTN","SCRPW3",100,0)
+ D F1 S SDTAP=SDTAP+SDAP,SDTOB=SDTOB+SDOB,SDTSL=SDTSL+SDSL,SDTNS=SDTNS+SDNS,SDTVSL=SDTVSL+SDVSL,SDTNSVS=SDTNSVS+SDNSVS,SDTOS=SDTOS+SDOS
+"RTN","SCRPW3",101,0)
+ Q
+"RTN","SCRPW3",102,0)
+ ;
+"RTN","SCRPW3",103,0)
+F1 S SDAP=$P(SDCT,U),SDOB=$P(SDCT,U,2),SDSL=$P(SDCT,U,3),SDNS=$P(SDCT,U,4),SDVSL=$P(SDCT,U,5),SDNSVS=$P(SDCT,U,6),SDOS=$P(SDCT,U,7)
+"RTN","SCRPW3",104,0)
+ W ?32,$J(SDAP,8),?42,$J(SDVSL,8),?52,$J(SDNS,8),?62,$J(SDNSVS,8),?72,$J(SDOB,8),?82,$J(SDOS,8),?92,$J((SDSL-SDAP-SDVSL),8)
+"RTN","SCRPW3",105,0)
+ S SDCAP=SDSL W ?102,$J(SDCAP,8),?112,$J($S(SDCAP=0:0,1:(SDAP+SDVSL*100)/SDCAP),8,2),"%"
+"RTN","SCRPW3",106,0)
+ W ?123,$J($S(SDCAP=0:0,1:((SDAP+SDVSL-SDNS-SDNSVS)*100)/SDCAP),8,2),"%"
+"RTN","SCRPW3",107,0)
+ Q
+"RTN","SCRPW3",108,0)
+ ;
+"RTN","SCRPW3",109,0)
+PLINE ;Print a provider statistics line
+"RTN","SCRPW3",110,0)
+ D:$Y>(IOSL-12) FOOT^SCRPW2,HDR^SCRPW2 Q:SDOUT  S SDCT=^TMP("SCRPW",$J,SDIV,2,SDPRN,SDPR) W !!,SDPRN,"  (",SDPR,")" D F1
+"RTN","SCRPW3",111,0)
+ Q
+"RTN","SCRPW3",112,0)
+ ;
+"RTN","SCRPW3",113,0)
+ACT ;Count appointments, addl. variable appt. slots and no-shows
+"RTN","SCRPW3",114,0)
+ Q:$P(SDCP0,U,9)="C"  ;Quit if cancelled
+"RTN","SCRPW3",115,0)
+ S SDPLAP=$P(SDCP0,U,2),SDPESL=0 I SDLAP,SDPLAP>SDLAP S SDPESL=SDPLAP\SDLAP-1,SDVSL=SDVSL+SDPESL
+"RTN","SCRPW3",116,0)
+ Q:'SDCP0  ;SD*5.3*540
+"RTN","SCRPW3",117,0)
+ S SDAP=SDAP+1,SDF1=1
+"RTN","SCRPW3",118,0)
+ S SDPAS=^DPT($P(SDCP0,U),"S",SDDAY,0),SDPAS=$P(SDPAS,U,2) Q:SDPAS=""  S:"NA"[SDPAS SDNS=SDNS+1,SDNSVS=SDNSVS+SDPESL
+"RTN","SCRPW3",119,0)
+ Q
+"RTN","SCRPW3",120,0)
+ ;
+"RTN","SCRPW3",121,0)
+SPAT(SC,SDSTRTDT,MAX,SDS) ;Set patterns into ^TMP (modified clone of OVR^SDAUT1)
+"RTN","SCRPW3",122,0)
+ ;Input: SC=clinic ifn
+"RTN","SCRPW3",123,0)
+ ;Input: SDSTRTDT=start date for gathering patterns
+"RTN","SCRPW3",124,0)
+ ;Input: MAX=number of days beyond start date to gather patterns
+"RTN","SCRPW3",125,0)
+ ;Input: SDS=array namespace subscript value (optional)
+"RTN","SCRPW3",126,0)
+ ;Output: array of clinic current availability patterns in
+"RTN","SCRPW3",127,0)
+ ;        ^TMP(SDS,$J,clinic_ifn,"ST",date,1)
+"RTN","SCRPW3",128,0)
+ ;
+"RTN","SCRPW3",129,0)
+ S SDS=$G(SDS) S:'$L(SDS) SDS="SDTMP" K ^TMP(SDS,$J)
+"RTN","SCRPW3",130,0)
+ N SI,SDIN,SDRE,SDSOH,ENDATE,X,X1,X2,SM,I,D,J,Y,SS,DAY
+"RTN","SCRPW3",131,0)
+ S SDIN=$G(^SC(SC,"I")),SDRE=$P(SDIN,U,2),SDIN=$P(SDIN,U)
+"RTN","SCRPW3",132,0)
+ S DAY="SU^MO^TU^WE^TH^FR^SA"
+"RTN","SCRPW3",133,0)
+ S SI=$P($G(^SC(SC,"SL")),U,6),SI=$S(SI<3:4,1:SI)
+"RTN","SCRPW3",134,0)
+ S SDSOH=$S('$D(^SC(SC,"SL")):0,$P(^SC(SC,"SL"),"^",8)']"":0,1:1)
+"RTN","SCRPW3",135,0)
+ S X1=SDSTRTDT,X2=MAX,SDIN=$G(SDIN) D C^%DTC S ENDATE=X,X=SDSTRTDT
+"RTN","SCRPW3",136,0)
+EN1 S:$O(^SC(SC,"T",0))>X X=$O(^SC(SC,"T",0))
+"RTN","SCRPW3",137,0)
+ S Y=$$DOW^XLFDT(X,1),I=Y+32,SM=X,D=Y D WM
+"RTN","SCRPW3",138,0)
+ K J F Y=0:1:6 I $D(^SC(+SC,"T"_Y)) S J(Y)=""
+"RTN","SCRPW3",139,0)
+ I '$D(J) D  Q
+"RTN","SCRPW3",140,0)
+ .S D=SDSTRTDT-1 F  S D=$O(^SC(SC,"ST",D)) Q:'D!(D>ENDATE)  D
+"RTN","SCRPW3",141,0)
+ ..S X=$G(^SC(SC,"ST",D,1)) S:$L(X) ^TMP(SDS,$J,SC,"ST",D,1)=X Q
+"RTN","SCRPW3",142,0)
+ .Q
+"RTN","SCRPW3",143,0)
+X1 Q:X>ENDATE  S X1=X\100_28
+"RTN","SCRPW3",144,0)
+ I '$$ACTIVE(X,SDIN,SDRE) S X1=X,X2=1 D C^%DTC G X1
+"RTN","SCRPW3",145,0)
+W S X=X\1
+"RTN","SCRPW3",146,0)
+ I $D(^SC(+SC,"ST",X,1)) S ^TMP(SDS,$J,SC,"ST",X,1)=^SC(+SC,"ST",X,1) G W1
+"RTN","SCRPW3",147,0)
+ I '$D(^SC(SC,"ST",X,1)) S Y=D#7 G L:'$D(J(Y)),H:$D(^HOLIDAY(X))&('SDSOH) S SS=$O(^SC(SC,"T"_Y,X)) G L:SS<1,L:^SC(SC,"T"_Y,SS,1)="" D
+"RTN","SCRPW3",148,0)
+ .S ^TMP(SDS,$J,SC,"ST",X\1,1)=$P(DAY,U,Y+1)_" "_$E(X,6,7)_$J("",SI+SI-6)_^SC(SC,"T"_Y,SS,1) Q
+"RTN","SCRPW3",149,0)
+W1 D WM:X>SM
+"RTN","SCRPW3",150,0)
+L Q:X>ENDATE  S X=X+1,D=D+1 G W:X'>X1 S X2=X-X1 D C^%DTC G X1
+"RTN","SCRPW3",151,0)
+ ;
+"RTN","SCRPW3",152,0)
+H S ^TMP(SDS,$J,SC,"ST",X,1)="   "_$E(X,6,7)_"    "_$P(^(X,0),U,2) G W1
+"RTN","SCRPW3",153,0)
+ ;
+"RTN","SCRPW3",154,0)
+WM S SM=$S($E(X,4,5)[12:$E(X,1,3)+1_"01",1:$E(X,1,3)_$E(X,4,5)+1)_"00" Q
+"RTN","SCRPW3",155,0)
+ ;
+"RTN","SCRPW3",156,0)
+ACTIVE(X,SDIN,SDRE) ;Determine if the clinic is active on a given date
+"RTN","SCRPW3",157,0)
+ ;Input: X=date to be examined
+"RTN","SCRPW3",158,0)
+ ;Input: SDIN=clinic inactive date
+"RTN","SCRPW3",159,0)
+ ;Input: SDRE=clinic reactivate date
+"RTN","SCRPW3",160,0)
+ ;Output: '1'=active, '0'=inactive
+"RTN","SCRPW3",161,0)
+ Q:'SDIN 1  Q:X<SDIN 1  Q:'SDRE 0  Q:X<SDRE 0  Q 1
+"VER")
+8.0^22.0
+"BLD",8244,6)
+^471
+**END**
+**END**

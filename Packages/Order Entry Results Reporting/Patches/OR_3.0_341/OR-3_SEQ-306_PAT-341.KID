@@ -1,0 +1,1034 @@
+Released OR*3*341 SEQ #306
+Extracted from mail message
+**KIDS**:OR*3.0*341^
+
+**INSTALL NAME**
+OR*3.0*341
+"BLD",8602,0)
+OR*3.0*341^ORDER ENTRY/RESULTS REPORTING^0^3110718^y
+"BLD",8602,1,0)
+^^11^11^3110718^
+"BLD",8602,1,1,0)
+This patch will correct the following issues:
+"BLD",8602,1,2,0)
+1)An undefined error when a patient in observation is discharged.
+"BLD",8602,1,3,0)
+ 
+"BLD",8602,1,4,0)
+2)When using the Manage orderable items [ORCM ORDERABLES MENU] for 
+"BLD",8602,1,5,0)
+editing orderable items, orderable items are selectable for edit by 
+"BLD",8602,1,6,0)
+internalentry number (IEN) even if they are not in the appropriate 
+"BLD",8602,1,7,0)
+display group.
+"BLD",8602,1,8,0)
+ 
+"BLD",8602,1,9,0)
+ 
+"BLD",8602,1,10,0)
+3)A subscript error when an ordernumber of 0 is sent back to the ORWDX1 
+"BLD",8602,1,11,0)
+ORDMATCH Remote procedure call.
+"BLD",8602,4,0)
+^9.64PA^^0
+"BLD",8602,6)
+2^
+"BLD",8602,6.3)
+3
+"BLD",8602,"INID")
+ 
+"BLD",8602,"INIT")
+
+"BLD",8602,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8602,"KRN",.4,0)
+.4
+"BLD",8602,"KRN",.401,0)
+.401
+"BLD",8602,"KRN",.402,0)
+.402
+"BLD",8602,"KRN",.403,0)
+.403
+"BLD",8602,"KRN",.5,0)
+.5
+"BLD",8602,"KRN",.84,0)
+.84
+"BLD",8602,"KRN",3.6,0)
+3.6
+"BLD",8602,"KRN",3.8,0)
+3.8
+"BLD",8602,"KRN",9.2,0)
+9.2
+"BLD",8602,"KRN",9.8,0)
+9.8
+"BLD",8602,"KRN",9.8,"NM",0)
+^9.68A^14^3
+"BLD",8602,"KRN",9.8,"NM",12,0)
+ORWDX1^^0^B52703503
+"BLD",8602,"KRN",9.8,"NM",13,0)
+ORMEVNT2^^0^B20421582
+"BLD",8602,"KRN",9.8,"NM",14,0)
+ORCMEDT1^^0^B45769509
+"BLD",8602,"KRN",9.8,"NM","B","ORCMEDT1",14)
+
+"BLD",8602,"KRN",9.8,"NM","B","ORMEVNT2",13)
+ 
+"BLD",8602,"KRN",9.8,"NM","B","ORWDX1",12)
+ 
+"BLD",8602,"KRN",19,0)
+19
+"BLD",8602,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",8602,"KRN",19.1,0)
+19.1
+"BLD",8602,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",8602,"KRN",101,0)
+101
+"BLD",8602,"KRN",409.61,0)
+409.61
+"BLD",8602,"KRN",771,0)
+771
+"BLD",8602,"KRN",779.2,0)
+779.2
+"BLD",8602,"KRN",870,0)
+870
+"BLD",8602,"KRN",8989.51,0)
+8989.51
+"BLD",8602,"KRN",8989.52,0)
+8989.52
+"BLD",8602,"KRN",8994,0)
+8994
+"BLD",8602,"KRN","B",.4,.4)
+ 
+"BLD",8602,"KRN","B",.401,.401)
+ 
+"BLD",8602,"KRN","B",.402,.402)
+ 
+"BLD",8602,"KRN","B",.403,.403)
+ 
+"BLD",8602,"KRN","B",.5,.5)
+ 
+"BLD",8602,"KRN","B",.84,.84)
+ 
+"BLD",8602,"KRN","B",3.6,3.6)
+ 
+"BLD",8602,"KRN","B",3.8,3.8)
+ 
+"BLD",8602,"KRN","B",9.2,9.2)
+ 
+"BLD",8602,"KRN","B",9.8,9.8)
+ 
+"BLD",8602,"KRN","B",19,19)
+ 
+"BLD",8602,"KRN","B",19.1,19.1)
+ 
+"BLD",8602,"KRN","B",101,101)
+ 
+"BLD",8602,"KRN","B",409.61,409.61)
+ 
+"BLD",8602,"KRN","B",771,771)
+ 
+"BLD",8602,"KRN","B",779.2,779.2)
+ 
+"BLD",8602,"KRN","B",870,870)
+ 
+"BLD",8602,"KRN","B",8989.51,8989.51)
+ 
+"BLD",8602,"KRN","B",8989.52,8989.52)
+ 
+"BLD",8602,"KRN","B",8994,8994)
+ 
+"BLD",8602,"QUES",0)
+^9.62^^
+"BLD",8602,"REQB",0)
+^9.611^2^2
+"BLD",8602,"REQB",1,0)
+OR*3.0*195^2
+"BLD",8602,"REQB",2,0)
+OR*3.0*296^2
+"BLD",8602,"REQB","B","OR*3.0*195",1)
+ 
+"BLD",8602,"REQB","B","OR*3.0*296",2)
+ 
+"MBREQ")
+0
+"PKG",167,-1)
+1^1
+"PKG",167,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",167,20,0)
+^9.402P^^
+"PKG",167,22,0)
+^9.49I^1^1
+"PKG",167,22,1,0)
+3.0^2971217^2980417^1271
+"PKG",167,22,1,"PAH",1,0)
+341^3110718^33288
+"PKG",167,22,1,"PAH",1,1,0)
+^^11^11^3110718
+"PKG",167,22,1,"PAH",1,1,1,0)
+This patch will correct the following issues:
+"PKG",167,22,1,"PAH",1,1,2,0)
+1)An undefined error when a patient in observation is discharged.
+"PKG",167,22,1,"PAH",1,1,3,0)
+ 
+"PKG",167,22,1,"PAH",1,1,4,0)
+2)When using the Manage orderable items [ORCM ORDERABLES MENU] for 
+"PKG",167,22,1,"PAH",1,1,5,0)
+editing orderable items, orderable items are selectable for edit by 
+"PKG",167,22,1,"PAH",1,1,6,0)
+internalentry number (IEN) even if they are not in the appropriate 
+"PKG",167,22,1,"PAH",1,1,7,0)
+display group.
+"PKG",167,22,1,"PAH",1,1,8,0)
+ 
+"PKG",167,22,1,"PAH",1,1,9,0)
+ 
+"PKG",167,22,1,"PAH",1,1,10,0)
+3)A subscript error when an ordernumber of 0 is sent back to the ORWDX1 
+"PKG",167,22,1,"PAH",1,1,11,0)
+ORDMATCH Remote procedure call.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","ORCMEDT1")
+0^14^B45769509^B45036674
+"RTN","ORCMEDT1",1,0)
+ORCMEDT1 ;SLC/MKB-QO,Set editor ; 7/18/11 10:46am
+"RTN","ORCMEDT1",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**8,46,57,95,110,245,243,296,341**;Dec 17, 1997;Build 3
+"RTN","ORCMEDT1",3,0)
+OI ; -- Enter/edit generic orderable items
+"RTN","ORCMEDT1",4,0)
+ N X,Y,DA,DR,DIE,DIC,ID,DLAYGO,ORDG
+"RTN","ORCMEDT1",5,0)
+ F  S ORDG=$$DGRP Q:ORDG'>0  D  W !!
+"RTN","ORCMEDT1",6,0)
+ . F  S D="S."_$P(ORDG,U,4) D   Q:Y'>0  S DA=+Y,ID=DA_";99ORD",DR=".01"_$S($P(Y,U,3):";2///^S X=ID;5////"_+ORDG,1:"") D ^DIE W ! ;110
+"RTN","ORCMEDT1",7,0)
+ .. ;*341 Screen OI from editing if it isn't in the DG.
+"RTN","ORCMEDT1",8,0)
+ .. S DIC("S")="I $P(^(0),U,5)="_+ORDG,DIC="^ORD(101.43,",DIC(0)="AEQL",DLAYGO=101.43,DIE=DIC D IX^DIC ;110
+"RTN","ORCMEDT1",9,0)
+ Q
+"RTN","ORCMEDT1",10,0)
+ ;
+"RTN","ORCMEDT1",11,0)
+DGRP() ; -- Returns sub-display group of Nursing or Other for generic OI
+"RTN","ORCMEDT1",12,0)
+ N X,Y,DIC,ORGRP,ORDG,ORI
+"RTN","ORCMEDT1",13,0)
+ F ORI="NURS","OTHER" S ORDG=+$O(^ORD(100.98,"B",ORI,0)) D DG^ORCHANG1(ORDG,"BILD",.ORGRP)
+"RTN","ORCMEDT1",14,0)
+ S DIC="^ORD(100.98,",DIC(0)="AEQ",DIC("S")="I $D(ORGRP(+Y))"
+"RTN","ORCMEDT1",15,0)
+ S DIC("A")="Type of Orderable: " D ^DIC
+"RTN","ORCMEDT1",16,0)
+ S:Y>0 Y=+Y_U_$G(^ORD(100.98,+Y,0))
+"RTN","ORCMEDT1",17,0)
+ Q Y
+"RTN","ORCMEDT1",18,0)
+ ;
+"RTN","ORCMEDT1",19,0)
+QUICK ; -- Enter/edit quick order dialogs
+"RTN","ORCMEDT1",20,0)
+ N ORQDLG,ORDG
+"RTN","ORCMEDT1",21,0)
+ F  S ORQDLG=$$DIALOG^ORCMEDT0("Q") Q:ORQDLG="^"  D QCK0(ORQDLG) W !
+"RTN","ORCMEDT1",22,0)
+ Q
+"RTN","ORCMEDT1",23,0)
+QCK0(ORQDLG) ; -- edit quick order ORQDLG
+"RTN","ORCMEDT1",24,0)
+ N ORDIALOG,DA,DR,DIE,DIDEL,ORQUIT,ORVP,ORL,ACTION,FIRST,ORTYPE,ORNAME,X,Y,BEFORCRC,AFTERCRC
+"RTN","ORCMEDT1",25,0)
+ Q:'$G(ORQDLG)  S DA=ORQDLG,(ORVP,ORL)=0,FIRST=1,ORTYPE="Z"
+"RTN","ORCMEDT1",26,0)
+ S ORNAME=$$NAME^ORCMEDT4(ORQDLG) Q:(ORNAME="@")!(ORNAME="^")  ;deleted,^
+"RTN","ORCMEDT1",27,0)
+ S BEFORCRC=$$RAWCRC^ORCMEDT8(ORQDLG)
+"RTN","ORCMEDT1",28,0)
+ S DR=".01///^S X=ORNAME;2;8;20"_$S(DUZ(0)="@":";30",1:""),DIE="^ORD(101.41,"
+"RTN","ORCMEDT1",29,0)
+ D ^DIE G:$D(Y)!$D(DTOUT) QR  D GETQDLG^ORCD(ORQDLG) G:'$G(ORDIALOG) QR
+"RTN","ORCMEDT1",30,0)
+ I '$P($G(^ORD(101.41,ORQDLG,0)),U,7) S X=+$P($G(^ORD(101.41,+ORDIALOG,0)),U,7) S:X $P(^ORD(101.41,ORQDLG,0),U,7)=X,^ORD(101.41,"APKG",X,ORQDLG)=""
+"RTN","ORCMEDT1",31,0)
+ W ! I $D(^ORD(101.41,+ORDIALOG,3.1)) X ^(3.1) G:$G(ORQUIT) QQ
+"RTN","ORCMEDT1",32,0)
+Q1 D DIALOG^ORCDLG G:$G(ORQUIT) QQ
+"RTN","ORCMEDT1",33,0)
+ D DISPLAY^ORCDLG S ACTION=$$OK G:ACTION="^" QQ
+"RTN","ORCMEDT1",34,0)
+ D:ACTION="P" SAVE^ORCMEDT0,AUTO(ORQDLG) I ACTION="E" S FIRST=0 G Q1 ;fall thru if "C"
+"RTN","ORCMEDT1",35,0)
+QQ X:$D(^ORD(101.41,+ORDIALOG,4)) ^(4)
+"RTN","ORCMEDT1",36,0)
+QR S AFTERCRC=$$RAWCRC^ORCMEDT8(ORQDLG)
+"RTN","ORCMEDT1",37,0)
+ I BEFORCRC'=AFTERCRC D UPDQNAME^ORCMEDT8(ORQDLG) ; Rename personal quick order if modified
+"RTN","ORCMEDT1",38,0)
+ Q
+"RTN","ORCMEDT1",39,0)
+ ;
+"RTN","ORCMEDT1",40,0)
+OK() ; -- Ready to save?
+"RTN","ORCMEDT1",41,0)
+ N X,Y,DIR S DIR(0)="SAM^P:PLACE;E:EDIT;C:CANCEL;",DIR("B")="PLACE"
+"RTN","ORCMEDT1",42,0)
+ S DIR("A")="(P)lace, (E)dit, or (C)ancel this quick order? "
+"RTN","ORCMEDT1",43,0)
+ S DIR("?")="Enter P to save this quick order, or E to change any of the displayed values; enter C to quit without saving these responses"
+"RTN","ORCMEDT1",44,0)
+ D ^DIR S:$D(DTOUT) Y="^"
+"RTN","ORCMEDT1",45,0)
+ Q Y
+"RTN","ORCMEDT1",46,0)
+ ;
+"RTN","ORCMEDT1",47,0)
+SAVE G SAVE^ORCMEDT0
+"RTN","ORCMEDT1",48,0)
+ ;
+"RTN","ORCMEDT1",49,0)
+AUTO(DLG) ; -- set AutoAccept flag for GUI
+"RTN","ORCMEDT1",50,0)
+ N X,Y,DIR
+"RTN","ORCMEDT1",51,0)
+ I $$VBQO^ORWDXM4(+DLG)=0 S $P(^ORD(101.41,+DLG,5),U,8)="" Q
+"RTN","ORCMEDT1",52,0)
+ I $$VALQO^ORWDXM3(+DLG)=0 S $P(^ORD(101.41,+DLG,5),U,8)="" Q
+"RTN","ORCMEDT1",53,0)
+ S DIR(0)="YA",DIR("A")="Auto-accept this order? "
+"RTN","ORCMEDT1",54,0)
+ S DIR("B")=$S($P($G(^ORD(101.41,+DLG,5)),U,8):"YES",1:"NO")
+"RTN","ORCMEDT1",55,0)
+ S DIR("?")="Enter YES if this order can be placed simply by selecting it, or NO if the dialog should be presented to complete the order."
+"RTN","ORCMEDT1",56,0)
+ D ^DIR S:Y=1!(Y=0) $P(^ORD(101.41,+DLG,5),U,8)=$S(Y:1,1:"")
+"RTN","ORCMEDT1",57,0)
+ I $P($G(^ORD(101.41,+DLG,0)),"^",8)'=1&($P($G(^(0)),"^",9)=2)&(Y) D EXPLAIN S $P(^ORD(101.41,+DLG,5),"^",8)="" ;Reset auto-accept to no if explanation required. 
+"RTN","ORCMEDT1",58,0)
+ Q
+"RTN","ORCMEDT1",59,0)
+ ;
+"RTN","ORCMEDT1",60,0)
+SET ; -- Order Sets
+"RTN","ORCMEDT1",61,0)
+ N ORSET,ORDG
+"RTN","ORCMEDT1",62,0)
+ F  S ORSET=$$DIALOG^ORCMEDT0("O") Q:ORSET="^"  D SET0(ORSET) W !
+"RTN","ORCMEDT1",63,0)
+ Q
+"RTN","ORCMEDT1",64,0)
+SET0(ORSET) ; -- edit order set ORSET
+"RTN","ORCMEDT1",65,0)
+ N DA,DR,DIE,DIC,DIK,X,Y,SEQ,ITM,LCNT,QUIT,ORNAME Q:'$G(ORSET)
+"RTN","ORCMEDT1",66,0)
+ S ORNAME=$$NAME^ORCMEDT4(ORSET) Q:(ORNAME="@")!(ORNAME="^")  ;deleted,^
+"RTN","ORCMEDT1",67,0)
+ S DR=".01///^S X=ORNAME;2;20"_$S(DUZ(0)="@":";30;40",1:""),DA=ORSET
+"RTN","ORCMEDT1",68,0)
+ S DIE="^ORD(101.41," D ^DIE Q:$D(Y)  Q:'$G(DA)
+"RTN","ORCMEDT1",69,0)
+S1 I $O(^ORD(101.41,+ORSET,10,0)) D  Q:QUIT  ;Show existing components
+"RTN","ORCMEDT1",70,0)
+ . W !,"ORDER SET COMPONENTS:" S (SEQ,LCNT,QUIT)=0
+"RTN","ORCMEDT1",71,0)
+ . S DIK="^ORD(101.41,"_+ORSET_",10,",DA(1)=+ORSET ;just in case
+"RTN","ORCMEDT1",72,0)
+ . F  S SEQ=$O(^ORD(101.41,+ORSET,10,"B",SEQ)) Q:SEQ'>0  D
+"RTN","ORCMEDT1",73,0)
+ . . S DA=0 F  S DA=$O(^ORD(101.41,+ORSET,10,"B",SEQ,DA)) Q:DA'>0  D
+"RTN","ORCMEDT1",74,0)
+ . . . S ITM=$P($G(^ORD(101.41,+ORSET,10,DA,0)),U,2) I ITM'>0 D ^DIK Q
+"RTN","ORCMEDT1",75,0)
+ . . . S LCNT=LCNT+1 I LCNT>(IOSL-3) R !,"Press <return> to continue ...",X:DTIME S LCNT=0 I X["^" S QUIT=1 Q
+"RTN","ORCMEDT1",76,0)
+ . . . W !?3,SEQ,?10,$P(^ORD(101.41,ITM,0),U)
+"RTN","ORCMEDT1",77,0)
+S2 S QUIT=0 F  D  Q:QUIT  W ! ;Enter/edit components
+"RTN","ORCMEDT1",78,0)
+ . S DIC="^ORD(101.41,"_+ORSET_",10,",DIC(0)="AEQLM",D="B^D"
+"RTN","ORCMEDT1",79,0)
+ . S DIC("A")="Select COMPONENT SEQUENCE#: ",DIC("P")=$P(^DD(101.41,10,0),U,2)
+"RTN","ORCMEDT1",80,0)
+ . K DA S DA(1)=+ORSET D MIX^DIC1 I Y'>0 S QUIT=1 Q
+"RTN","ORCMEDT1",81,0)
+ . S DA=+Y,DIE=DIC,DR=".01;2R" D ^DIE Q:'$G(DA)
+"RTN","ORCMEDT1",82,0)
+ . I $D(^ORD(101.41,+ORSET,10,DA,0)),'$P(^(0),U,2) S DIK=DIE D ^DIK
+"RTN","ORCMEDT1",83,0)
+ Q
+"RTN","ORCMEDT1",84,0)
+ ;
+"RTN","ORCMEDT1",85,0)
+PROTOCOL ; -- Convert additional protocols to dialogs
+"RTN","ORCMEDT1",86,0)
+ N X,Y,DIC,ORERR
+"RTN","ORCMEDT1",87,0)
+ F  S DIC="^ORD(101,",DIC(0)="AEQM" D ^DIC Q:Y'>0  D  W !
+"RTN","ORCMEDT1",88,0)
+ . S ORP=+Y,ORM=$$MENU Q:ORM="^"  ; What about "^^"-jumping? (ORWARD)
+"RTN","ORCMEDT1",89,0)
+ . W !,"Converting ..." D ONE(ORP,ORM,.ORERR) I '$G(ORERR) W " done." Q
+"RTN","ORCMEDT1",90,0)
+ . W " unable to convert.",!,">> "_$P(ORERR,U,2) K ORERR
+"RTN","ORCMEDT1",91,0)
+ Q
+"RTN","ORCMEDT1",92,0)
+ONE(PITEM,ORADD,ERROR) ; -- Convert single item protocol, add to menu(s)
+"RTN","ORCMEDT1",93,0)
+ N PMENU,DMENU,NAME,ORPOS,POS,XUTL,DA,DIK
+"RTN","ORCMEDT1",94,0)
+ I $D(^ORD(100.99,1,101.41,PITEM,0)) S DA=PITEM,DA(1)=1,DIK="^ORD(100.99,1,101.41," D ^DIK ; delete error entry
+"RTN","ORCMEDT1",95,0)
+ S NAME=$P($G(^ORD(101,PITEM,0)),U),DITEM=$$ITEM^ORCONVRT(PITEM)
+"RTN","ORCMEDT1",96,0)
+ I 'DITEM!$D(^ORD(100.99,1,101.41,PITEM,0)) S ERROR=$G(^(0)) Q
+"RTN","ORCMEDT1",97,0)
+ Q:'$G(ORADD)  ;to add, may enter here with PITEM & DITEM defined
+"RTN","ORCMEDT1",98,0)
+ADD S PMENU=0 F  S PMENU=$O(^ORD(101,"AD",PITEM,PMENU)) Q:PMENU'>0  D  W "."
+"RTN","ORCMEDT1",99,0)
+ . S DMENU=$O(^ORD(101.41,"AB",$P(^ORD(101,PMENU,0),U),0)) Q:'DMENU
+"RTN","ORCMEDT1",100,0)
+ . S ORPOS=$$FINDXUTL(PMENU,PITEM) Q:'ORPOS
+"RTN","ORCMEDT1",101,0)
+ . S XUTL=$G(^XUTL("XQORM",PMENU_";ORD(101,",ORPOS,0))
+"RTN","ORCMEDT1",102,0)
+ . S DA=$O(^ORD(101.41,DMENU,10,"B",ORPOS,0)) I DA Q:$P(^ORD(101.41,DMENU,10,DA,0),U,2)=DITEM  S POS=$O(^ORD(101.41,DMENU,10,"B",""),-1),ORPOS=($P(POS,".")+1)_".1",DA="" ; move to end, if collision
+"RTN","ORCMEDT1",103,0)
+ . S DA=$$NEXT^ORCONVRT(DMENU)
+"RTN","ORCMEDT1",104,0)
+ . S ^ORD(101.41,DMENU,10,DA,0)=ORPOS_U_DITEM_U_$P(XUTL,U,4)_U_$S($P(XUTL,U,3)'=$P(^ORD(101.41,DITEM,0),U,2):$P(XUTL,U,3),1:"")
+"RTN","ORCMEDT1",105,0)
+ . S ^ORD(101.41,DMENU,10,"B",ORPOS,DA)="",^ORD(101.41,DMENU,10,"D",DITEM,DA)=""
+"RTN","ORCMEDT1",106,0)
+ . S ^ORD(101.41,"AD",DITEM,DMENU,DA)="",^ORD(101.41,DMENU,99)=$H
+"RTN","ORCMEDT1",107,0)
+ Q
+"RTN","ORCMEDT1",108,0)
+ ;
+"RTN","ORCMEDT1",109,0)
+FINDXUTL(MENU,ITEM) ; -- Returns position of ITEM in MENU
+"RTN","ORCMEDT1",110,0)
+ N XQORM,POS
+"RTN","ORCMEDT1",111,0)
+ S XQORM=MENU_";ORD(101," D XREF^XQORM
+"RTN","ORCMEDT1",112,0)
+ S POS=0 F  S POS=$O(^XUTL("XQORM",XQORM,POS)) Q:POS'>0  I $P(^(POS,0),U,2)=ITEM Q
+"RTN","ORCMEDT1",113,0)
+ Q POS
+"RTN","ORCMEDT1",114,0)
+ ;
+"RTN","ORCMEDT1",115,0)
+MENU() ; -- Add converted item to menus?
+"RTN","ORCMEDT1",116,0)
+ N X,Y,DIR S DIR(0)="YA"
+"RTN","ORCMEDT1",117,0)
+ S DIR("A")="Add this item to the same menus again? ",DIR("B")="YES"
+"RTN","ORCMEDT1",118,0)
+ S DIR("?")="Enter YES to have this item placed on the same menus in the Order Dialog file as it was in the Protocol file"
+"RTN","ORCMEDT1",119,0)
+ D ^DIR S:$D(DTOUT) Y="^"
+"RTN","ORCMEDT1",120,0)
+ Q Y
+"RTN","ORCMEDT1",121,0)
+EXPLAIN ;Give reason why user can't set auto-accept to yes
+"RTN","ORCMEDT1",122,0)
+ W !!,"The combination of VERIFY set to NO and ASK FOR ANOTHER ORDER set to",!,"YES, DON'T ASK and AUTO-ACCEPT set to YES is not allowed."
+"RTN","ORCMEDT1",123,0)
+ W !!,"This combination of settings could cause CPRS to enter into an infinite loop",!,"creating the same order over and over.  If you wish to have"
+"RTN","ORCMEDT1",124,0)
+ W !,"AUTO-ACCEPT set to YES you must change one of the other two fields",!,"to a different value.",!!,"AUTO-ACCEPT is being set to NO for you."
+"RTN","ORCMEDT1",125,0)
+ Q
+"RTN","ORMEVNT2")
+0^13^B20421582^B20345613
+"RTN","ORMEVNT2",1,0)
+ORMEVNT2 ;SLC/DAN Additional event delayed order utilities ; 11/15/10 12:53pm
+"RTN","ORMEVNT2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**177,186,195,341**;Dec 17, 1997;Build 3
+"RTN","ORMEVNT2",3,0)
+ ;
+"RTN","ORMEVNT2",4,0)
+ ;DBIA SECTION
+"RTN","ORMEVNT2",5,0)
+ ;10063 - %ZTLOAD
+"RTN","ORMEVNT2",6,0)
+ ;17    - DGPM("ATID3"
+"RTN","ORMEVNT2",7,0)
+ ;
+"RTN","ORMEVNT2",8,0)
+DCGEN ;Auto-dc admission generic order for observation episode of
+"RTN","ORMEVNT2",9,0)
+ ;care, if it exists and other orders are being carried over
+"RTN","ORMEVNT2",10,0)
+ ;
+"RTN","ORMEVNT2",11,0)
+ N ORLIST,ORADM,OREASON,ORNATR,X,ORCREATE,ORPRNT,ORSIG,ORI,ORPKG,ORDC,ORDT,ORN
+"RTN","ORMEVNT2",12,0)
+ S ORLIST=$H
+"RTN","ORMEVNT2",13,0)
+ S ORADM=$G(VAIP(13,1)) ;Admission date/time for this episode of care
+"RTN","ORMEVNT2",14,0)
+ D ADMORD^ORMEVNT1 ;See if admission order exists
+"RTN","ORMEVNT2",15,0)
+ Q:'$D(^TMP("ORR",$J,ORLIST))  ;no order found
+"RTN","ORMEVNT2",16,0)
+ S OREASON=$P($G(^ORD(100.6,TORY,0)),U,4) I OREASON<1 S OREASON=+$O(^ORD(100.3,"C","ORDIS",0)) ;If no reason assigned to rule, use discharge
+"RTN","ORMEVNT2",17,0)
+ S ORNATR=+$P($G(^ORD(100.03,+$G(OREASON),0)),U,7) I ORNATR<1 S ORNATR=+$O(^ORD(100.02,"C","A",0)) ;Get nature from reason, if none then use auto-dc
+"RTN","ORMEVNT2",18,0)
+ S X=$G(^ORD(100.02,ORNATR,1)),ORCREATE=+$P(X,U),ORPRNT=+$P(X,U,2) ;create order action, print?
+"RTN","ORMEVNT2",19,0)
+ S ORSIG=$S('ORCREATE:"",1:$P(X,U,4)) ;Signature required?
+"RTN","ORMEVNT2",20,0)
+ S ORI=0 F  S ORI=$O(^ORD(100.6,TORY,7,"B",ORI)) Q:ORI<1  S ORPKG(ORI)=1 ;Identify packages to be auto-dcd for the rule
+"RTN","ORMEVNT2",21,0)
+ S ORDT=$P($G(DGPMA),U),ORDC=TORY,ORN=""
+"RTN","ORMEVNT2",22,0)
+ D DC1^ORMEVNT1 ;Code to auto-dc order
+"RTN","ORMEVNT2",23,0)
+ Q
+"RTN","ORMEVNT2",24,0)
+ ;
+"RTN","ORMEVNT2",25,0)
+TIMER ;Start background job to make sure that patient was readmitted
+"RTN","ORMEVNT2",26,0)
+ ;following the discharge from observation.  Readmission must
+"RTN","ORMEVNT2",27,0)
+ ;occur within 1 hour
+"RTN","ORMEVNT2",28,0)
+ N ZTSK,ZTRTN,ZTDESC,ZTDTH,ZTIO,ZTSAVE
+"RTN","ORMEVNT2",29,0)
+ S ZTRTN="TIMERDQ^ORMEVNT2",ZTIO="",ZTDESC="Observation readmit"
+"RTN","ORMEVNT2",30,0)
+ S ZTDTH=$P($G(^XTMP("ORDCOBS-"_+$G(ORVP),0)),U) ;If inpatient med orders will be reinstated, match timing
+"RTN","ORMEVNT2",31,0)
+ I ZTDTH="" S ZTDTH=$$FMADD^XLFDT($$NOW^XLFDT,,1) ;One hour from now
+"RTN","ORMEVNT2",32,0)
+ S ZTSAVE("*")="" ;Save everything for possible use in auto-dcing
+"RTN","ORMEVNT2",33,0)
+ D ^%ZTLOAD
+"RTN","ORMEVNT2",34,0)
+ Q
+"RTN","ORMEVNT2",35,0)
+ ;
+"RTN","ORMEVNT2",36,0)
+TIMERDQ ;Check if patient readmitted, if not, auto-dc orders that should have auto-dcd on discharge
+"RTN","ORMEVNT2",37,0)
+ N CVAIP
+"RTN","ORMEVNT2",38,0)
+ K VAIP("E") S VAIP("V")="CVAIP" D IN5^VADPT ;Is patient an inpatient?
+"RTN","ORMEVNT2",39,0)
+ I $G(^XTMP("ORDCOBS-"_$G(DFN),"READMIT")) G DEL ;186 If readmit from ASIH OBS hasn't happened then auto-dc orders
+"RTN","ORMEVNT2",40,0)
+ I CVAIP(13)'="",CVAIP(13)'=VAIP(13) Q  ;Check to see that patient is currently an inpatient and that they are in a different episode of care than the observation episode
+"RTN","ORMEVNT2",41,0)
+ I +$P($Q(^DGPM("ATID3",DFN)),",",4)'=VAIP(1) Q  ;Stop if there's been another discharge since the discharge from observation.
+"RTN","ORMEVNT2",42,0)
+DEL K ^XTMP("ORDCOBS-"_$G(DFN)) ;Inpatient meds waiting for reinstatement are no longer needed so XTMP can be deleted
+"RTN","ORMEVNT2",43,0)
+ D AUTODC^ORMEVNT1(TORY,$P($G(DGPMA),U)) ;Auto-dc orders from observation
+"RTN","ORMEVNT2",44,0)
+ ;*341 Check $G(OREVENT) first.
+"RTN","ORMEVNT2",45,0)
+ I $G(OREVENT),'$D(^ORE(100.2,$G(OREVENT),10)) D ACTLOG^OREVNTX(OREVENT,"NW","D",1),DONE^OREVNTX(OREVENT,,DGPMDA) ;186 Log event in 100.2 if not previously done
+"RTN","ORMEVNT2",46,0)
+ Q
+"RTN","ORMEVNT2",47,0)
+ ;
+"RTN","ORMEVNT2",48,0)
+DISCH ; -- Lapse/cancel outstanding events on discharge ;Section moved with 195
+"RTN","ORMEVNT2",49,0)
+ N X,ADM,EVT,ORP,X0,IFN,STS,X8,ORNOW,J,ORX,ORCH,DAD S ORNOW=+$E($$NOW^XLFDT,1,12) ;195
+"RTN","ORMEVNT2",50,0)
+ S X=$P(DGPMA,U,18),ADM=$S(X=12!(X=38):"",1:+$G(VAIP(13))),EVT=0
+"RTN","ORMEVNT2",51,0)
+ F  S EVT=+$O(^ORE(100.2,"AE",+ORVP,EVT)) Q:EVT<1  S ORP=+$O(^(EVT,0)) D
+"RTN","ORMEVNT2",52,0)
+ . I $G(^ORE(100.2,ORP,1)) K ^ORE(100.2,"AE",+ORVP,EVT,ORP) Q
+"RTN","ORMEVNT2",53,0)
+ . Q:$$LAPSED^OREVNTX(ORP)  I $$EMPTY^OREVNTX(ORP) D CANCEL^OREVNTX(ORP) Q
+"RTN","ORMEVNT2",54,0)
+ . I ADM,$P($G(^ORE(100.2,ORP,0)),U,3)'=ADM Q  ;ck adm if not death
+"RTN","ORMEVNT2",55,0)
+ . S X0=$G(^ORE(100.2,ORP,0)),ORX=ORP ;195
+"RTN","ORMEVNT2",56,0)
+ . S DAD=0 I $D(^ORE(100.2,"DAD",ORP)) S ORCH=0,DAD=ORP F  S ORCH=$O(^ORE(100.2,"DAD",ORP,ORCH)) Q:'+ORCH  S ORX=ORX_","_ORCH ;195
+"RTN","ORMEVNT2",57,0)
+ . F J=1:1:$L(ORX,",") S ORP=$P(ORX,",",J) S IFN=0 F  S IFN=$O(^OR(100,"AEVNT",ORVP,ORP,IFN)) Q:IFN<1  D  ;195
+"RTN","ORMEVNT2",58,0)
+ .. S STS=$P($G(^OR(100,IFN,3)),U,3) I (STS=10)!(IFN=+$P(X0,U,4)) D
+"RTN","ORMEVNT2",59,0)
+ ... D STATUS^ORCSAVE2(IFN,13) S X8=$G(^OR(100,IFN,8,1,0))
+"RTN","ORMEVNT2",60,0)
+ ... S:$P(X8,U,15) $P(^OR(100,IFN,8,1,0),U,15)=13
+"RTN","ORMEVNT2",61,0)
+ ... D:$P(X8,U,4)=2 SIGN^ORCSAVE2(IFN,"","",5,1)
+"RTN","ORMEVNT2",62,0)
+ ... S ^OR(100,IFN,6)=+$O(^ORD(100.02,"C","A",0))_U_U_ORNOW_U_+$O(^ORD(100.03,"C","ORDIS",0))_U_U_U_U_$G(OREVENT)
+"RTN","ORMEVNT2",63,0)
+ . S:$G(DAD) ORP=DAD D DONE^OREVNTX(ORP),ACTLOG^OREVNTX(ORP,"CA") ;195
+"RTN","ORMEVNT2",64,0)
+ Q
+"RTN","ORWDX1")
+0^12^B52703503^B52053311
+"RTN","ORWDX1",1,0)
+ORWDX1 ; SLC/KCM/REV - Utilities for Order Dialogs ; 11/15/10 12:56pm
+"RTN","ORWDX1",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**85,187,195,215,243,296,341**;Dec 17, 1997;Build 3
+"RTN","ORWDX1",3,0)
+ ;
+"RTN","ORWDX1",4,0)
+WRLST(LST,LOC) ; Return list of dialogs for writing orders
+"RTN","ORWDX1",5,0)
+ ; .Y(n): DlgName^ListBox Text
+"RTN","ORWDX1",6,0)
+WRLST1 N ANENT
+"RTN","ORWDX1",7,0)
+ S LOC=+$G(LOC)_";SC(" I 'LOC S LOC=""
+"RTN","ORWDX1",8,0)
+ S ANENT="ALL^"_LOC_$S($G(^VA(200,DUZ,5)):"^SRV.`"_+$G(^(5)),1:"")
+"RTN","ORWDX1",9,0)
+ D WRLSTB(.LST) Q:$D(LST)>1  ; check ORWDX WRITE ORDERS first
+"RTN","ORWDX1",10,0)
+ N ORX,X0,X5,ORERR,I,SEQ,IEN,DGRP,FID,TXT,TYP
+"RTN","ORWDX1",11,0)
+ D GETLST^XPAR(.ORX,ANENT,"ORWOR WRITE ORDERS LIST","Q",.ORERR) Q:ORERR
+"RTN","ORWDX1",12,0)
+ S I=0 F  S I=$O(ORX(I)) Q:'I  D
+"RTN","ORWDX1",13,0)
+ . S SEQ=+ORX(I),IEN=$P(ORX(I),U,2),X0=$G(^ORD(101.41,+IEN,0)),X5=$G(^(5))
+"RTN","ORWDX1",14,0)
+ . S DGRP=+$P(X0,U,5),FID=+$P(X5,U,5),TXT=$P(X5,U,4),TYP=$P(X0,U,4)
+"RTN","ORWDX1",15,0)
+ . S:'$L(TXT) TXT=$P(X0,U,2)
+"RTN","ORWDX1",16,0)
+ . I $P(X0,U,4)="M" S:'FID FID=1001
+"RTN","ORWDX1",17,0)
+ . S LST(SEQ)=IEN_";"_FID_";"_DGRP_";"_TYP_U_TXT
+"RTN","ORWDX1",18,0)
+ Q
+"RTN","ORWDX1",19,0)
+WRLSTB(LST)     ; return menu from which Write Orders list is built
+"RTN","ORWDX1",20,0)
+ N MNU,SEQ,IEN,ITM,TXT,FID,DGRP,X,TYP
+"RTN","ORWDX1",21,0)
+ S MNU=$$GET^XPAR(ANENT,"ORWDX WRITE ORDERS LIST",1,"I") Q:'MNU
+"RTN","ORWDX1",22,0)
+ S SEQ=0 F  S SEQ=$O(^ORD(101.41,MNU,10,"B",SEQ)) Q:'SEQ  D
+"RTN","ORWDX1",23,0)
+ . S IEN=0 F  S IEN=$O(^ORD(101.41,MNU,10,"B",SEQ,IEN)) Q:'IEN  D
+"RTN","ORWDX1",24,0)
+ . . S X=$G(^ORD(101.41,MNU,10,IEN,0)),ITM=+$P(X,U,2),TXT=$P(X,U,4)
+"RTN","ORWDX1",25,0)
+ . . S X=$G(^ORD(101.41,ITM,5)),FID=+$P(X,U,5)
+"RTN","ORWDX1",26,0)
+ . . S X=$G(^ORD(101.41,ITM,0)),TYP=$P(X,U,4),DGRP=+$P(X,U,5)
+"RTN","ORWDX1",27,0)
+ . . S:'$L(TXT) TXT=$P(X,U,2)
+"RTN","ORWDX1",28,0)
+ . . I TYP="M" S:'FID FID=1001
+"RTN","ORWDX1",29,0)
+ . . S LST(SEQ)=ITM_";"_FID_";"_DGRP_";"_TYP_U_TXT
+"RTN","ORWDX1",30,0)
+ Q
+"RTN","ORWDX1",31,0)
+DELPI ; delete PI from ORDIALOG if PI = ""
+"RTN","ORWDX1",32,0)
+ ;Called from SAVE^ORWDX
+"RTN","ORWDX1",33,0)
+ N ORPI S ORPI=0
+"RTN","ORWDX1",34,0)
+ S ORPI=$O(^ORD(101.41,"B","OR GTX PATIENT INSTRUCTIONS",ORPI))
+"RTN","ORWDX1",35,0)
+ Q:'$D(ORDIALOG(ORPI))
+"RTN","ORWDX1",36,0)
+ I '$D(ORDIALOG(ORPI,1)) K ORDIALOG(ORPI),ORDIALOG("WP",ORPI) Q
+"RTN","ORWDX1",37,0)
+ N PINODE,PITX
+"RTN","ORWDX1",38,0)
+ S PITX="",PINODE=$G(ORDIALOG(ORPI,1))
+"RTN","ORWDX1",39,0)
+ S PITX=$G(@PINODE@(1,0))
+"RTN","ORWDX1",40,0)
+ S PITX=$TR(PITX," ","")
+"RTN","ORWDX1",41,0)
+ I '$L(PITX) K ORDIALOG(ORPI),ORDIALOG("WP",ORPI) Q
+"RTN","ORWDX1",42,0)
+ N ORSIG S ORSIG=+$O(^ORD(101.41,"B","OR GTX SIG",0))
+"RTN","ORWDX1",43,0)
+ I $$STR^ORWDXR(ORSIG)[$$STR^ORWDXR(ORPI) S ORDIALOG(ORPI,"FORMAT")="@"
+"RTN","ORWDX1",44,0)
+ Q
+"RTN","ORWDX1",45,0)
+FNDINFO(Y,ODIEN) ;
+"RTN","ORWDX1",46,0)
+ N ODI,CRTM,FRM,XX
+"RTN","ORWDX1",47,0)
+ S FRM="",CRTM=$$NOW^XLFDT
+"RTN","ORWDX1",48,0)
+ F  S FRM=$O(^ORD(101.43,XRF,FRM)) Q:FRM=""  D
+"RTN","ORWDX1",49,0)
+ . S ODI=0 F  S ODI=$O(^ORD(101.43,XRF,FRM,ODI)) Q:'ODI  D
+"RTN","ORWDX1",50,0)
+ .. S XX=^ORD(101.43,XRF,FRM,ODI)
+"RTN","ORWDX1",51,0)
+ .. I +$P(XX,U,3),$P(XX,U,3)<CRTM Q
+"RTN","ORWDX1",52,0)
+ .. I ODI=ODIEN D
+"RTN","ORWDX1",53,0)
+ ... S NM=NM+1
+"RTN","ORWDX1",54,0)
+ ... I 'XX S Y(NM)=ODIEN_U_$P(XX,U,2)_U_$P(XX,U,2)
+"RTN","ORWDX1",55,0)
+ ... E  S Y(NM)=ODIEN_U_$P(XX,U,2)_$C(9)_"<"_$P(XX,U,4)_">"_U_$P(XX,U,4)
+"RTN","ORWDX1",56,0)
+ Q
+"RTN","ORWDX1",57,0)
+DLGDEF(LST,DLG) ; Format mapping for a dlg
+"RTN","ORWDX1",58,0)
+ N I,IEN,ILST,X0,X2,XW  S ILST=0
+"RTN","ORWDX1",59,0)
+ I $O(^ORD(101.41,"AB",DLG,0))>0 S DLG=$O(^ORD(101.41,"AB",DLG,0))
+"RTN","ORWDX1",60,0)
+ E  S DLG=$O(^ORD(101.41,"B",DLG,0))
+"RTN","ORWDX1",61,0)
+ Q:'DLG
+"RTN","ORWDX1",62,0)
+ S I=0 F  S I=$O(^ORD(101.41,DLG,10,I)) Q:I'>0  D
+"RTN","ORWDX1",63,0)
+ . S X0=$G(^ORD(101.41,DLG,10,I,0)),X2=$G(^(2)),IEN=+$P(X0,U,2)
+"RTN","ORWDX1",64,0)
+ . S ILST=ILST+1,LST(ILST)=U_IEN_U_$P(X2,U,1,7)
+"RTN","ORWDX1",65,0)
+ . I $P(X0,U,11) S $P(LST(ILST),U,11)=1
+"RTN","ORWDX1",66,0)
+ . S $P(LST(ILST),U)=$P($G(^ORD(101.41,IEN,1)),U,3)
+"RTN","ORWDX1",67,0)
+ . I $P($G(^ORD(101.41,IEN,0)),U)="OR GTX ADDITIVE" S $P(LST(ILST),U)="ADDITIVE"
+"RTN","ORWDX1",68,0)
+ . I $P($G(^ORD(101.41,IEN,0)),U)="OR GTX ADDL DIETS" S $P(LST(ILST),U)="ADDLDIETS"
+"RTN","ORWDX1",69,0)
+ . I $L($P(LST(ILST),U))=0 S $P(LST(ILST),U)="ID"_IEN
+"RTN","ORWDX1",70,0)
+ . I $D(^ORD(101.41,DLG,10,"DAD",IEN)) D
+"RTN","ORWDX1",71,0)
+ .. N SEQ,DA,CHILD S CHILD=""
+"RTN","ORWDX1",72,0)
+ .. S SEQ=0 F  S SEQ=$O(^ORD(101.41,DLG,10,"DAD",IEN,SEQ)) Q:'SEQ  D
+"RTN","ORWDX1",73,0)
+ ... S DA=0 F  S DA=$O(^ORD(101.41,DLG,10,"DAD",IEN,SEQ,DA)) Q:'DA  D
+"RTN","ORWDX1",74,0)
+ .... S CHILD=CHILD_+$P($G(^ORD(101.41,DLG,10,DA,0)),U,2)_"~"
+"RTN","ORWDX1",75,0)
+ .. S $P(LST(ILST),U,10)=CHILD
+"RTN","ORWDX1",76,0)
+ Q
+"RTN","ORWDX1",77,0)
+ ;
+"RTN","ORWDX1",78,0)
+CHANGE(ORLST,ORCLST,DFN,ISIMO) ;
+"RTN","ORWDX1",79,0)
+ N CATCH,CHANGE,CNT,INP,INPDIEN,IVM,IVMDIEN,ORIEN,ORLOC,OR3,ORDG
+"RTN","ORWDX1",80,0)
+ N CIEN,DIAL,TDIAL,TDIEN,UDIEN,QORDDG,PACKIEN
+"RTN","ORWDX1",81,0)
+ S (INP,IVM,INPDIEN,IVMDIEN,UDIEN)=0
+"RTN","ORWDX1",82,0)
+ S (TDIAL,TDIEN)=0
+"RTN","ORWDX1",83,0)
+ S INP=$O(^ORD(101.41,"B","PSJ OR PAT OE","")) Q:INP'>0
+"RTN","ORWDX1",84,0)
+ S IVM=$O(^ORD(101.41,"B","PSJI OR PAT FLUID OE","")) Q:IVM'>0
+"RTN","ORWDX1",85,0)
+ S TDIAL=$O(^ORD(101.41,"B","OR GXTEXT WORD PROCESSING ORDER","")) Q:TDIAL'>0
+"RTN","ORWDX1",86,0)
+ S INPDIEN=$O(^ORD(100.98,"B","INPATIENT MEDICATIONS","")) Q:INPDIEN'>0
+"RTN","ORWDX1",87,0)
+ S IVMDIEN=$O(^ORD(100.98,"B","IV MEDICATIONS","")) Q:IVMDIEN'>0
+"RTN","ORWDX1",88,0)
+ S UDIEN=$O(^ORD(100.98,"B","UNIT DOSE MEDICATIONS","")) Q:UDIEN'>0
+"RTN","ORWDX1",89,0)
+ S TIEN=$O(^ORD(100.98,"B","NURSING","")) Q:TIEN'>0
+"RTN","ORWDX1",90,0)
+ S CIEN=$O(^ORD(100.98,"B","CLINIC ORDERS","")) Q:CIEN'>0
+"RTN","ORWDX1",91,0)
+ S CNT=0 F  S CNT=$O(ORCLST(CNT)) Q:CNT'>0  D
+"RTN","ORWDX1",92,0)
+ .S CHANGE=0
+"RTN","ORWDX1",93,0)
+ .S ORIEN=$P($G(ORCLST(CNT)),U),ORIEN=$P(ORIEN,";")
+"RTN","ORWDX1",94,0)
+ .S ORDG=$P($G(^OR(100,ORIEN,0)),U,11)
+"RTN","ORWDX1",95,0)
+ .S ORLOC=$P($G(ORCLST(CNT)),U,2)
+"RTN","ORWDX1",96,0)
+ .S OR3=$G(^OR(100,ORIEN,3))
+"RTN","ORWDX1",97,0)
+ .S DIAL=$P(OR3,U,4)
+"RTN","ORWDX1",98,0)
+ .;Remove Treating Speciality if the order location is the clinic
+"RTN","ORWDX1",99,0)
+ .I $P($G(^OR(100,ORIEN,0)),U,10)=(ORLOC_";SC("),$P($G(^SC(ORLOC,0)),U,3)="C" D  Q
+"RTN","ORWDX1",100,0)
+ ..S $P(^OR(100,ORIEN,0),U,13)=""
+"RTN","ORWDX1",101,0)
+ .;
+"RTN","ORWDX1",102,0)
+ .;CHANGE PATIENT LOCATION AND PATIENT STATUS.
+"RTN","ORWDX1",103,0)
+ .S $P(^OR(100,ORIEN,0),U,10)=ORLOC_";SC("
+"RTN","ORWDX1",104,0)
+ .S PACKIEN=$P(^OR(100,ORIEN,0),U,14)
+"RTN","ORWDX1",105,0)
+ .I $$GET1^DIQ(9.4,PACKIEN_",",1)'="PSO" S $P(^OR(100,ORIEN,0),U,12)="I"
+"RTN","ORWDX1",106,0)
+ .;
+"RTN","ORWDX1",107,0)
+ .;Check for IMO orders Nursing Dialog problem
+"RTN","ORWDX1",108,0)
+ .S CATCH=$P($G(^OR(100,ORIEN,0)),U,11)
+"RTN","ORWDX1",109,0)
+ .;
+"RTN","ORWDX1",110,0)
+ .S $P(^OR(100,ORIEN,0),U,11)=$S(DIAL=(IVM_";ORD(101.41,"):IVMDIEN,DIAL=(INP_";ORD(101.41,"):INPDIEN,DIAL=(TDIAL_";ORD(101.41,"):TIEN,1:CATCH)
+"RTN","ORWDX1",111,0)
+ .;
+"RTN","ORWDX1",112,0)
+ .;Check for Quick Order Dialog
+"RTN","ORWDX1",113,0)
+ .I CATCH=$P($G(^OR(100,ORIEN,0)),U,11),ISIMO=1 D
+"RTN","ORWDX1",114,0)
+ ..S QORDDG=$P($G(^ORD(101.41,+DIAL,0)),U,5)
+"RTN","ORWDX1",115,0)
+ ..I QORDDG=UDIEN!(QORDDG=INPDIEN) S $P(^OR(100,ORIEN,0),U,11)=INPDIEN,DIAL=(INP_";ORD(101.41,") Q
+"RTN","ORWDX1",116,0)
+ ..I QORDDG=IVMDIEN S $P(^OR(100,ORIEN,0),U,11)=IVMDIEN,DIAL=(IVM_";ORD(101.41,") Q
+"RTN","ORWDX1",117,0)
+ ..I QORDDG=TIEN S $P(^OR(100,ORIEN,0),U,11)=TIEN,DIAL=(TDIAL_";ORD(101.41,") Q
+"RTN","ORWDX1",118,0)
+ .;
+"RTN","ORWDX1",119,0)
+ .;Add treating spec if Inpatient order
+"RTN","ORWDX1",120,0)
+ .;I (ISIMO=1)&(DIAL=(IVM_";ORD(101.41,"))!(DIAL=(INP_";ORD(101.41,")) D
+"RTN","ORWDX1",121,0)
+ .;.S $P(^OR(100,ORIEN,0),U,13)=+$G(^DPT(DFN,.103))
+"RTN","ORWDX1",122,0)
+ .I ISIMO=0 S $P(^OR(100,ORIEN,0),U,13)=+$G(^DPT(DFN,.103))
+"RTN","ORWDX1",123,0)
+ Q
+"RTN","ORWDX1",124,0)
+ ;
+"RTN","ORWDX1",125,0)
+STCHANGE(ORY,DFN,ORYARR) ;
+"RTN","ORWDX1",126,0)
+ N CNT,DONE,NODE,PHARMID,STR,STATUS
+"RTN","ORWDX1",127,0)
+ S ORY=0,DONE=0
+"RTN","ORWDX1",128,0)
+ I '$$PATCH^XPDUTL("PSS*1.0*93") Q
+"RTN","ORWDX1",129,0)
+ S CNT=0 F  S CNT=$O(ORYARR(CNT)) Q:CNT'>0!(DONE>0)  D
+"RTN","ORWDX1",130,0)
+ . S NODE=$G(ORYARR(CNT))
+"RTN","ORWDX1",131,0)
+ . S PHARMID=$P(NODE,U),STATUS=$P(NODE,U,2)
+"RTN","ORWDX1",132,0)
+ . I $$UP^XLFSTR(STATUS)'=$$STATUS^PSSORUTE(DFN,PHARMID) S ORY=1,DONE=1
+"RTN","ORWDX1",133,0)
+ Q
+"RTN","ORWDX1",134,0)
+ORDMATCH(ORY,DFN,ORYARR) ;
+"RTN","ORWDX1",135,0)
+ N ACTION,CNT,IEN,MATCH,ORDERID,STATUS
+"RTN","ORWDX1",136,0)
+ S CNT=0,MATCH=1
+"RTN","ORWDX1",137,0)
+ F  S CNT=$O(ORYARR(CNT)) Q:CNT'>0!(MATCH=0)  D
+"RTN","ORWDX1",138,0)
+ . S ORDERID=$P(ORYARR(CNT),U),STATUS=$P(ORYARR(CNT),U,2)
+"RTN","ORWDX1",139,0)
+ . ;*341 Set up Action before validation.
+"RTN","ORWDX1",140,0)
+ . S IEN=$P(ORDERID,";"),ACTION=$P(ORDERID,";",2)
+"RTN","ORWDX1",141,0)
+ . I ORDERID=0,$G(ACTION)="" Q 
+"RTN","ORWDX1",142,0)
+ . I STATUS=$P($G(^OR(100,IEN,3)),U,3) Q
+"RTN","ORWDX1",143,0)
+ . I $P($G(^ORD(100.01,STATUS,0)),U)="DISCONTINUED/EDIT" Q
+"RTN","ORWDX1",144,0)
+ . ;S MATCH=0
+"RTN","ORWDX1",145,0)
+ . I $P($G(^OR(100,IEN,8,ACTION,0)),U,15)'=STATUS S MATCH=0
+"RTN","ORWDX1",146,0)
+ S ORY=MATCH
+"RTN","ORWDX1",147,0)
+ Q
+"RTN","ORWDX1",148,0)
+ ;
+"RTN","ORWDX1",149,0)
+DCREN(ORY,ORYARR) ;
+"RTN","ORWDX1",150,0)
+ N ACT,CNT,CNT1,I,OR3,ORG,ORGID,ORID,TEXT,STATUS
+"RTN","ORWDX1",151,0)
+ S CNT1=0
+"RTN","ORWDX1",152,0)
+ S CNT=0 F  S CNT=$O(ORYARR(CNT)) Q:CNT'>0  D
+"RTN","ORWDX1",153,0)
+ .S ORGID=ORYARR(CNT)
+"RTN","ORWDX1",154,0)
+ .S ORID=+ORGID,ACT=$P(ORGID,";",2),TEXT=""
+"RTN","ORWDX1",155,0)
+ .S OR3=$G(^OR(100,ORID,3))
+"RTN","ORWDX1",156,0)
+ .;Make sure current order status is pending
+"RTN","ORWDX1",157,0)
+ .I $P($G(^ORD(100.01,$P(OR3,U,3),0)),U)'="PENDING" Q
+"RTN","ORWDX1",158,0)
+ .S ORG=$P($G(OR3),U,5) Q:ORG'>0
+"RTN","ORWDX1",159,0)
+ .;do not add original order if it is expired
+"RTN","ORWDX1",160,0)
+ .S STATUS=$P(^OR(100,ORG,3),U,3)
+"RTN","ORWDX1",161,0)
+ .I $P($G(^ORD(100.01,STATUS,0)),U)="EXPIRED" Q
+"RTN","ORWDX1",162,0)
+ .;Do not add original order if Stop date has pass
+"RTN","ORWDX1",163,0)
+ .I $P(^OR(100,ORG,0),U,9)'>$$NOW^XLFDT Q
+"RTN","ORWDX1",164,0)
+ .;make sure current order is a renewed order
+"RTN","ORWDX1",165,0)
+ .I $P(OR3,U,11)'=2 Q
+"RTN","ORWDX1",166,0)
+ .S ACT=+$P($G(^OR(100,ORG,3)),U,7)
+"RTN","ORWDX1",167,0)
+ .S CNT1=CNT1+1,ORY(CNT1)=ORGID_U_$P(OR3,U,5)_";"_ACT_U_TEXT
+"RTN","ORWDX1",168,0)
+ Q
+"RTN","ORWDX1",169,0)
+DCORIG(ORY,ORIEN) ;
+"RTN","ORWDX1",170,0)
+ S $P(^OR(100,+ORIEN,6),U,9)=1
+"RTN","ORWDX1",171,0)
+ Q
+"RTN","ORWDX1",172,0)
+UNDCORIG(ORY,ORYARR) ;
+"RTN","ORWDX1",173,0)
+ N CNT
+"RTN","ORWDX1",174,0)
+ S CNT=0 F  S CNT=$O(ORYARR(CNT)) Q:CNT'>0  S $P(^OR(100,+ORYARR(CNT),6),U,9)=0
+"RTN","ORWDX1",175,0)
+ Q
+"RTN","ORWDX1",176,0)
+PATWARD(ORY,DFN) ;
+"RTN","ORWDX1",177,0)
+ N TEMP
+"RTN","ORWDX1",178,0)
+ S ORY=""
+"RTN","ORWDX1",179,0)
+ I $G(^DPT(DFN,.1))="" Q
+"RTN","ORWDX1",180,0)
+ S TEMP=^DPT(DFN,.1)
+"RTN","ORWDX1",181,0)
+ S ORY=TEMP_U_+$G(^DIC(42,+$O(^DIC(42,"B",TEMP,0)),44))
+"RTN","ORWDX1",182,0)
+ Q
+"RTN","ORWDX1",183,0)
+ ;
+"RTN","ORWDX1",184,0)
+ISPEND(ORIFN) ;Is the order's status pending?
+"RTN","ORWDX1",185,0)
+ N ISPEND,PENDST,N3 S ISPEND=0
+"RTN","ORWDX1",186,0)
+ Q:'$D(^OR(100,+ORIFN,3))
+"RTN","ORWDX1",187,0)
+ S PENDST=$O(^ORD(100.01,"B","PENDING",0))
+"RTN","ORWDX1",188,0)
+ S N3=$G(^OR(100,+ORIFN,3))
+"RTN","ORWDX1",189,0)
+ I $P(N3,U,3)=PENDST S ISPEND=1
+"RTN","ORWDX1",190,0)
+ Q ISPEND
+"VER")
+8.0^22.0
+"BLD",8602,6)
+^306
+**END**
+**END**

@@ -1,0 +1,105 @@
+
+=============================================================================
+Run Date: SEP 19, 2011                     Designation: IVM*2*149
+Package : IVM - INCOME VERIFICATION MATCH     Priority: EMERGENCY
+Version : 2       SEQ #125                      Status: Released
+                  Compliance Date: SEP 21, 2011
+=============================================================================
+
+Associated patches: (v)IVM*2*109   <<= must be installed BEFORE `IVM*2*149'
+
+Subject: ESR 3.5 PUBLIC LAW 111-163
+
+Category: 
+  - Routine
+  - Enhancement ()
+
+Description:
+============
+
+  *********************************ATTENTION***********************************
+  Note:  This patch is an emergency released with a 48-hour compliance.
+   
+         This patch is being released in support of the Enrollment System
+         Re-design (ESR) 3.5 Public Law 111-163 project.  IVM*2.0*149 is being
+         released along with DG*5.3*840 (Registration) and IB*2*449
+         (Integrated Billing) in host file: DG_53_P840.KID.
+   
+         It is imperative that these patches be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  *****************************************************************************
+   
+  The Health Eligibility Center (HEC) requested modifications to the Enrollment
+  System Redesign (ESR) and VistA Registration, Enrollment and Eligibility
+  (Vista REE) software to support the requirements of Public Law 111-163.
+  On May 5, 2010, the President signed into law, Public Law (PL) 111-163, 
+  the Caregivers and Veterans Omnibus Health Services Act of 2010.  This law
+  provides assistance to caregivers of Veterans and improves the provisions
+  of health care services to Veterans.  Section 511, Prohibitions on
+  collections of copayments from Veterans who are Catastrophically
+  Disabled.  This patch is being issued in support of some of these
+  provisions.
+   
+  With the installation of this patch and the other related patches,
+  DG*5.3*840 and IB*2*449, Veterans who are identified as being
+  Catastrophically Disabled will no longer be charged copayments for Means
+  Test/Geographic Means Test related Outpatient Visits, Inpatient Visits
+  and Outpatient Medications from the effective date of their
+  Catastrophically Disabled determination and installation forward.  This
+  does not affect Extended Care/Long Term Care Copayments.  These patches
+  do not cancel charges created prior to the installation.  Sites should
+  continue to use the Chief Business Office guidance they have been
+  provided to cancel those previously billed charges where necessary.
+   
+  Associated Remedy Ticket(s):
+  ============================
+  None
+   
+  Associated New Service Request (NSR):
+  =====================================
+  None
+   
+  Test Sites:
+  ===========
+  Charleston VAMC, SC
+  Northport VAMC, NY
+  Upstate New York HCS, NY
+    
+  Item #1
+  -------
+  Vista shall no longer load HL7 Z10 messages for veterans who are
+  catastrophically disabled.  Catastrophically disabled veterans are
+  identified by a 'YES' in the VETERAN CATASTROPHICALLY DISABLED?
+  field (#.39) of the PATIENT file (#2).
+   
+  Components Sent With Patch:
+  ===========================
+  There are no files included in this patch.
+   
+  Installation Instructions:
+  ==========================
+  Please see the Patch Description for patch DG*5.3*840 for installation
+  instructions.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMUFNC5
+    Before:  B8215758   After:  B8601879  **55,109,149**
+ 
+Routine list of preceding patches: 109
+
+=============================================================================
+User Information:
+Entered By  : BRICKER,DENNIS                Date Entered  : APR 04, 2011
+Completed By: MORRIS,DARLENE V              Date Completed: AUG 17, 2011
+Released By : GAYLER,LU ANNE                Date Released : SEP 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

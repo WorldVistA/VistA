@@ -1,0 +1,130 @@
+$TXT Created by HARRIS,JAMES at IVBCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Friday, 08/27/10 at 10:11
+=============================================================================
+Run Date: FEB 10, 2011                     Designation: PSS*1*157
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #136                      Status: Released
+                  Compliance Date: MAR 13, 2011
+=============================================================================
+
+Associated patches: (v)PSS*1*143   <<= must be installed BEFORE `PSS*1*157'
+
+Subject: Defect fix patch for PSS*1*143
+
+Category: 
+  - Input Template
+
+Description:
+============
+
+ This patch corrects a defect introduced by patch PSS*1*143 in the 
+ Standard Schedule Edit [PSS SCHEDULE EDIT] option. 
+  
+  
+ HD0000000419996 -  Admin times cannot be deleted from PRN schedules 
+ via the Schedule Enter/Edit [PSS SCHEDULE EDIT] option.
+  
+ Remedy Overview
+ ---------------
+ HD0000000419996
+  
+ Problem:
+ ---------
+ Patch PSS*1*143 changed the Standard Schedule Edit [PSS SCHEDULE EDIT]
+ option to prevent the prompt for Admin Time from displaying when the
+ schedule's Type is PRN, making it difficult to remove the admin times
+ from existing PRN schedules. When the schedule type of an existing
+ schedule is changed from Continuous to PRN, the admin times are removed,
+ however, when an existing schedule with a schedule type of PRN is edited,
+ the admin times are not removed.
+  
+ In addition, an inconsistency exists within the same option: at the 
+ initial prompt for Schedule Type, entering or accepting a default of 
+ "PRN", has no affect on the value of admin times. 
+ However, after pressing Enter or Return to exit the Schedule Type 
+ prompt, if an up-arrow, or caret "^", is used to return to the Schedule
+ Type field, then entering "PRN" or accepting the default of "PRN" the 
+ second time the prompt is displayed does delete the admin times from the 
+ schedule.
+  
+ Solution: 
+ ----------
+ Change the Standard Schedule Edit [PSS SCHEDULE EDIT] option to delete
+ admin times from the schedule anytime "PRN" is entered, or accepted as a 
+ default, at the Schedule Type field. For existing PRN schedules, admin 
+ times may be deleted by re-entering "PRN", or accepting the default value 
+ "PRN", at the prompt for Schedule Type. 
+  
+ Change the same option to make the Schedule Type prompt to have the same 
+ effect on the schedule's admin times for the initial and all subsequent 
+ prompts.
+  
+  
+ Input Template:
+ ===============
+ PSSJ SCHEDULE EDIT
+  
+  
+ Associated Patient Safety Issues:
+ =================================
+ N/A 
+  
+ Associated Remedy Tickets:
+ ==========================
+ HD0000000419996
+  
+ Test Sites:
+ ==========
+ Central Texas HCS
+ Fayetteville, AR
+ New Jersey HCS
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch can be loaded with users on the system. Installation will
+ take less than 1 minute. 
+  
+ Suggested time to install: non-peak requirement hours.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+  
+   3. From this menu, you may select to use the following options
+     (when prompted for INSTALL NAME, enter patch PSS*1.0*157)
+     a. Backup a Transport Global - this option will create a backup
+        message of any routines exported with the patch. It will NOT
+        backup any other changes such as DDs or templates.
+     b. Compare Transport Global to Current System - this option will
+        allow you to view all changes that will be made when the patch
+        is installed. It compares all components of the patch (routines,
+        DDs, templates, etc.).
+     c. Verify Checksums in Transport Global - this option will ensure
+        the integrity of the routines that are in the transport global.
+  
+   4. Use the Install Package(s) option and select the package patch
+      PSS*1.0*157.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : HARRIS,JAMES C                Date Entered  : AUG 04, 2010
+Completed By: PAYNE,RONALD                  Date Completed: JAN 25, 2011
+Released By : CAMPBELL,THOMAS               Date Released : FEB 10, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

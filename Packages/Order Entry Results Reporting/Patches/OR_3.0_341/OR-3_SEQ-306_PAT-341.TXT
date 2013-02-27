@@ -1,0 +1,179 @@
+$TXT Created by THOMPSON,SETH at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 07/18/11 at 10:55
+=============================================================================
+Run Date: JUL 19, 2012                     Designation: OR*3*341
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #306                      Status: Released
+                  Compliance Date: AUG 19, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*195    <<= must be installed BEFORE `OR*3*341'
+                    (v)OR*3*296    <<= must be installed BEFORE `OR*3*341'
+
+Subject: PREVENTING ERRORS IN DISCHARGES/LAB RESULTS/ORDER ENTRY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will prevent the following errors from occurring.
+ 1) An undefined error when a patient in observation is discharged.
+  
+ 2) When using the Manage orderable items [ORCM ORDERABLES MENU] for
+    editing orderable items, orderable items are selectable for edit by
+    internal entry number (IEN) even if they are not in the appropriate
+    display group.
+  
+ 3) A subscript error when an order number of 0 is sent back to the ORWDX1 
+    ORDMATCH Remote procedure call.
+  
+   
+  ASSOCIATED NSR(s):
+  ==================
+  N/A
+   
+   
+  ASSOCIATED REMEDY:
+  ==================
+  1) HD0000000306571 - UNDEF OREVENT2
+  2) HD0000000321291 - 6 New Display Group
+  3) HD0000000286219 - Error -- <SUBSCRIPT>ORDMATCH+10^ORWDX1
+     Duplicates:
+     HD0000000293355 - 5 ORDMATCH+10^ORWDX1
+     HD0000000408722 - $ZE= <SUBSCRIPT>ORDMATCH+10^ORWDX1 ^OR(100,0,8,"")
+  
+  
+  PARTICIPATING TEST SITES:
+  =========================
+  Central Plains HCS (Iowa City)
+  Miami VA HCS 
+  Salisbury - WG Hefner VAMC
+   
+   
+  REMEDY OVERVIEW:
+  ================
+  1. HD0000000306571 - UNDEF OREVENT2
+     Problem:
+     --------
+     When Discharging a patient that is currently in observation and 
+     answering YES to the "Will the patient be re-admitted immediately?"
+     question will result in an <UNDEFINED> error, if the patient is not
+     admitted within an hour.
+   
+     Resolution:
+     -----------
+     Routine ORMEVNT2 has been modified so that the check for the existing
+     movement is before the check of the action within the event. This will
+     prevent an <UNDEFINED> error.
+  
+  
+  2. HD0000000321291 - 6 New Display Group
+     Problem:
+     --------
+     When using the Manage orderable items [ORCM ORDERABLES MENU] for 
+     editing orderable items, orderable items are selectable for edit by 
+     internalentry number (IEN) even if they are not in the appropriate 
+     display group.
+   
+     Resolution:
+     -----------
+     Routine ORCMEDT1 has been modified to screen out orderable items
+     that are not related to the selected display group.
+  
+  
+  3. HD0000000286219 - Error -- <SUBSCRIPT>ORDMATCH+10^ORWDX1
+     Problem:
+     --------
+     In the case in which an order number is zero and is sent through 
+     the ORWDX1 ORDMATCH remote procedure call a <SUBSCRIPT> error will
+     occur.
+   
+     Resolution:
+     -----------
+     Modify routine ORWDX1 to correctly reset the ACTION variable for each
+     order number sent into the RPC call. This will prevent the error if an
+     order number of 0 is sent back.
+  
+   
+  INSTALLATION INSTRUCTIONS:
+  ==========================
+  This patch can be loaded with users in the system but it is recommended 
+  that it be installed when user activity is low.  Installation time will 
+  be less than 2 minutes.
+   
+   1.  Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+   2.  Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]: 
+   
+            Edits and Distribution ...  
+            Utilities ...  
+            Installation ...  
+   
+       Select Kernel Installation & Distribution System Option:   
+                                                                
+ Installation
+                                                                ---
+            1      Load a Distribution
+            2      Verify Checksums in Transport Global
+            3      Print Transport Global
+            4      Compare Transport Global to Current System
+            5      Backup a Transport Global
+            6      Install Package(s)
+                   Restart Install of Package(s)
+                   Unload a Distribution
+   
+   3.  From this menu, you may elect to use the following options
+       (When prompted for the INSTALL NAME, enter OR*3.0*341):
+   
+   
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will
+           not backup any other changes such as DD's or templates.
+       b.  Compare Transport Global to Current System - This option
+           will allow you to view all changes that will be made when
+           this patch is installed.  It compares all components of this
+           patch (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will
+           allow you to ensure the integrity of the routines that are
+           in the transport global.
+   
+   4.  Use the Install Package(s) option and select the package
+       OR*3.0*341.
+   
+       a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+           install? NO//", answer NO.
+       b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+           Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCMEDT1
+    Before: B45036674   After: B45769509  **8,46,57,95,110,245,243,296,341**
+Routine Name: ORMEVNT2
+    Before: B20345613   After: B20421582  **177,186,195,341**
+Routine Name: ORWDX1
+    Before: B52053311   After: B52703503  **85,187,195,215,243,296,341**
+ 
+Routine list of preceding patches: 296
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : OCT 25, 2010
+Completed By: SHERMAN,BILL                  Date Completed: JUL 13, 2012
+Released By : KREUZ,SHERI B                 Date Released : JUL 19, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

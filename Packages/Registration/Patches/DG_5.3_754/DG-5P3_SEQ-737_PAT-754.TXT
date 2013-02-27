@@ -1,0 +1,656 @@
+
+=============================================================================
+Run Date: MAR 04, 2011                     Designation: DG*5.3*754
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #737                    Status: Released
+                  Compliance Date: MAR 10, 2011
+=============================================================================
+
+Associated patches: (v)DG*5.3*68   <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*144  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*572  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*653  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*688  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*707  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*733  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*740  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*749  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*759  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*786  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)IB*2*404    <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*803  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*804  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*809  <<= must be installed BEFORE `DG*5.3*754'
+                    (v)DG*5.3*810  <<= must be installed BEFORE `DG*5.3*754'
+
+Subject: ESR 3.1/VOA
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ ******************************************************************************
+ Note:  This patch is being released as part of the Enrollment System Re-design
+        (ESR) 3.1 VistA Changes Project.  Patches for this project include
+        IB*2*404, DG*5.3*754 and  IVM*2*121.  The compliance date has been
+        shortened to March 10, 2011 due to dependencies that exist with the
+        ESR 3.3 Project.
+  
+             The installation order follows:
+                * Integrated Billing (IB*2*404)
+                * DG host file DG_53_P754.KID  (DG*5.3*754, IVM*2*121)
+  
+        It is imperative that these patches be installed no later than the
+        compliance date.  Your understanding and support is appreciated.
+ ******************************************************************************
+  
+ The Health Eligibility Center (HEC) requested modifications to the Enrollment
+ System Redesign (ESR) and VistA Registration, Enrollment and Eligibility
+ (Vista REE) software to support the ESR 3.1/Veterans' Online Application
+ (VOA) initiative.  The ESR system changes were deployed April 3, 2010. This
+ patch supports the VistA REE changes.
+  
+ This patch is being released along with IVM*2.0*121 (Income Verification
+ Match) in host file: DG_53_P754.KID
+  
+ The installation order for all ESR 3.1/VOA patches are as follows:
+ ------------------------------------------------------------------
+ Integrated Billing (IB*2*404)
+ DG host file DG_53_P754.KID  (DG*5.3*754, IVM*2*121)
+ ------------------------------------------------------------------
+  
+ Features of this project are as follows:
+  
+ Modifications
+ -------------
+ 1. Modifications to the MAS PARAMETERS file (#43)
+  
+   - New Special Treatment Authority Expiration date fields for both Agent
+     Orange (AO) and Southwest Asia Conditions (SWAC) will be added to the
+     MAS PARAMETERS file (#43).  The initial value of these fields will be null
+     or empty.  A subsequent patch will be released to populate the date fields
+     once the expiration of the Special Treatment Authority is scheduled to
+     expire.
+  
+        - Allow a date to be entered for AO STA EXP DATE field (#1301) in the
+          MAS PARAMETERS file (#43).  Note: Date will not be editable to the
+          end user.
+  
+        - Allow a date to be entered for SWAC STA EXP DATE field (#1302) in the
+          MAS PARAMETERS file (#43).  Note: Date will not be editable to the
+          end user.
+  
+   - The following rules will be applied to veterans who would normally be
+     placed in lower priority groups 7 or 8 without the AO or SWAC Special
+     Treatment Authority.
+  
+        - VistA currently assigns newly enrolled veterans to Priority Group 6
+          if the AO Indicator is "Y" and AO Location is Vietnam.  This Priority
+          Group determination rule for AO shall be ignored if the Special
+          Treatment Authority Expiration Date field for Agent Orange is not
+          null.
+  
+        - VistA currently assigns newly enrolled veterans to Priority Group 6
+          if the SWAC exposure is "Y".  This Priority Group determination rule
+          for SWAC shall be ignored if the Special Treatment Authority
+          Expiration Date field for SWAC is not null.
+  
+        - A new rule will be added to the Continuous Enrollment determination
+          for AO.  The Veteran shall be continuously enrolled if AO indicator
+          is currently = Yes and AO Location is currently = Vietnam and the AO
+          Special Treatment Expiration Date is not null and the Veteran's
+          Enrollment Date is prior to the AO Special Treatment Authority
+          Expiration Date.
+  
+        - A new rule will be added to the Continuous Enrollment determination
+          for SWAC.  The Veteran shall be continuously enrolled if SWAC is
+          currently = Yes and the SWAC Expiration Date is not null and the
+          Veteran's Enrollment Date is prior to the SWAC Special Treatment
+          Authority Expiration Date.
+  
+ 2. Modifications to the PATIENT file (#2)
+  
+   - Prevent entering the following for the P&T EFFECTIVE DATE field (#.3013)
+     in the PATIENT file (#2):
+     - Date after the Date of Death.
+  
+   - Prevent entering the following for the DATE OF DEATH field (#.351) in the
+     PATIENT file (#2):
+     - An Imprecise date
+     - Date prior to the P&T Effective Date
+     - Date prior to the Date Ruled Incompetent (VA)
+     - Date prior to the Date Ruled Incompetent (Civil)
+  
+   - Modifications to prevent entering the following for the DATE OF BIRTH
+     field (#.03) in the PATIENT file (#2):
+     - Date after the Ineligible Date
+     - Date after the Enrollment Application Date
+  
+     A new, temporary Integration Agreement, DBIA 4139 has been created
+     that enables the post-install routine DG53754B to restore the following
+     global entry that was inadvertently removed by the DG53754P pre-init
+     routine:
+     ^DD(2,0,"ID",.03)="D EN^DDIOL($TR($$DOB^DPTLK1(Y,1),""/"",""-""),,""?$X+2"")"
+  
+   - Modifications to prevent entering the following for the INELIGIBLE DATE
+     field (#.152) in the PATIENT file (#2):
+     - Date prior to the Date of Birth
+  
+   - Modifications to prevent entering the following for the DATE RULED
+     INCOMPETENT (VA) field (#.291) in the PATIENT file (#2):
+     - Date after the Date of Death
+  
+   - Modifications to prevent entering the following for the DATE RULED
+     INCOMPETENT (CIVIL) field (#.292) in the PATIENT file (#2):
+     - Date after the Date of Death
+  
+ 3. Modifications to the PATIENT ENROLLMENT file (#27.11)
+  
+   - Prevent entering the following for the ENROLLMENT APPLICATION DATE
+     field (#.01) in the PATIENT ENROLLMENT file (#27.11):
+     - Date after Date of Death
+     - An Imprecise date
+     - Date prior to the Date of Birth
+     - A Future date
+     - A Date prior to (10/1/1996)
+  
+ 4. The following Z07 inconsistency checks will be performed at the end of
+    Register a Patient or Load/Edit Patient Data options and displayed to
+    the users PRIOR to trying to send the Z07 message.
+  
+     - 301 (PERSON LASTNAME REQUIRED)
+     - 303 (GENDER REQUIRED)
+     - 304 (GENDER INVALID)
+     - 306 (VALID SSN/PSEUDO SSN REQUIRED)
+     - 307 (PSEUDO SSN REASON REQUIRED)
+     - 308 (DATE OF DEATH BEFORE DOB)
+     - 402 (ELIGIBLE FOR MEDICAID INVALID)
+     - 403 (DT MEDICAID LAST ASKED INVALID)
+     - 406 (CLAIM FOLDER NUMBER INVALID)
+     - 407 (ELIGIBILITY STATUS INVALID)
+     - 501 (POW STATUS INVALID)
+     - 502 (MIL DIS RETIREMENT INVALID)
+     - 503 (DISCHARGE DUE TO DISAB INVALID)
+     - 504 (AGENT ORANGE EXPOSURE INVALID)
+     - 505 (RADIATION EXPOSURE INVALID)
+     - 506 (VALUE FOR SW ASIA COND INVALID)
+     - 507 (RAD EXPOSURE METHOD INVALID)
+     - 516 (DOB INVALID-MEXICAN BORDER WAR)
+     - 517 (DOB INVALID-WORLD WAR I)
+  
+ 5. Register Once functionality
+  
+   - The following records will be added to the DG REGISTER ONCE FIELD
+     DEFINITION file (#391.23):
+  
+     - 2ND MOST RECENT DATE OF CARE
+     - 2ND MOST RECENT LOCATION
+     - AMOUNT OF GI INSURANCE
+     - CONFIDENTIAL ADDR CHANGE DT/TM
+     - CONFIDENTIAL ADDR CHANGE SITE
+     - CONFIDENTIAL COUNTRY
+     - CONFIDENTIAL POSTAL CODE
+     - CONFIDENTIAL PROVINCE
+     - CONFIDENTIAL PHONE NUMBER
+     - DATE OF DENTAL TREATMENT
+     - DATE OF RETIREMENT
+     - DATE RULED INCOMPETENT (CIVIL)
+     - DENTAL CONDITION
+     - DENTAL CONDITION FIRST NOTICED
+     - ETHNICITY COLLECTION METHOD
+     - ETHNICITY INFORMATION
+     - FATHER'S NAME
+     - FILIPINO VETERAN PROOF
+     - GI INSURANCE POLICY?
+     - INELIGIBLE DATE
+     - INELIGIBLE REASON
+     - INELIGIBLE TWX CITY
+     - INELIGIBLE TWX SOURCE
+     - INELIGIBLE TWX STATE
+     - INELIGIBLE VARO DECISION
+     - MOST RECENT DATE OF CARE
+     - MOST RECENT LOCATION OF CARE
+     - MOTHER'S MAIDEN NAME
+     - MOTHER'S NAME
+     - PLACE OF BIRTH [CITY]
+     - PLACE OF BIRTH [STATE] 
+     - RACE COLLECTION METHOD
+     - RACE INFORMATION
+     - RATED INCOMPETENT (Y/N)
+     - RECEIVED VA CARE PREVIOUSLY?
+     - RELIGIOUS PREFERENCE
+     - SC AWARD DATE
+     - SERVICE COMPONENT [LAST]
+     - SERVICE COMPONENT [NNTL]
+     - SERVICE COMPONENT [NTL]
+     - SERVICE DENTAL INJURY?
+     - SERVICE TEETH EXTRACTED?
+     - SOUTHWEST ASIA CONDITIONS
+     - SPINAL CORD INJURY
+     - SPOUSE'S RETIREMENT DATE
+     - SW ASIA COND EXAM DATE
+     - SW ASIA COND REGISTRATION DATE
+     - TEMPORARY ADDRESS CHANGE DT/TM
+     - TEMPORARY ADDR CHANGE SITE
+     - TEMPORARY COUNTRY
+     - TEMPORARY POSTAL CODE
+     - TEMPORARY PROVINCE 
+  
+   - The following records will be marked as disabled in the DG REGISTER ONCE
+     FIELD DEFINITION file (#391.23).
+  
+     - ADDRESS CHANGE DT/TM
+     - ADDRESS CHANGE SITE
+     - ADDRESS CHANGE SOURCE
+     - AGENT ORANGE EXPOSURE LOCATION
+     - ALIAS
+     - ALIAS SSN
+     - BAD ADDRESS INDICATOR
+     - CITY
+     - COUNTY
+     - PHONE NUMBER [RESIDENCE]
+     - POW CONFINEMENT LOCATION
+     - POW FROM DATE
+     - POW STATUS INDICATED?
+     - POW TO DATE
+     - RADIATION EXPOSURE METHOD
+     - STATE
+     - STREET ADDRESS [LINE 1]
+     - STREET ADDRESS [LINE 2]
+     - STREET ADDRESS [LINE 3]
+     - ZIP CODE
+     - ZIP+4 
+  
+ 6. Add new RF1 source field of VOA
+  
+   - The following fields in the PATIENT file (#2) will be modified to
+     accept a value of 'VOA'.
+  
+     - ADDRESS CHANGE SOURCE (#.119) in the PATIENT file (#2)
+     - CELLULAR NUMBER CHANGE SOURCE (#.1311) in the PATIENT file (#2)
+     - PAGER NUMBER CHANGE SOURCE (#.1313) in the PATIENT file (#2)
+     - EMAIL ADDRESS CHANGE SOURCE (#.137) in the PATIENT file (#2)
+  
+ 7. The following new fields will be added:
+  
+   - PATIENT File (#2)
+     - CONFIDENTIAL PHONE NUMBER (#.1315) in the PATIENT file (#2)
+  
+   - INCOME PERSON File (#408.13)
+     - SPOUSE ADDR LAST DT/TM UPDATED (#1.9) in the INCOME PERSON file (#408.13)
+  
+ 8. The API ADD^VADPT has been modified.
+  
+   Integration Agreement, DBIA 10061, may be affected by this change.
+  
+   The new nodes for the address array (VAPA()) are as follows.
+   VAPA(29) - CONFIDENTIAL PHONE NUMBER
+  
+ 9. The API OPD^VADPT has been modified.
+  
+   Integration Agreement, DBIA 10061, may be affected by this change.
+  
+   The new nodes for the other patient data array (VAPD()) are as follows.
+   VAPD(8) - PHONE NUMBER [WORK]
+  
+ 10. Enhance Data Sharing between VistA and ESR
+  
+   - Routine VAFCQRY3 has been enhanced to update the HL7 PID-13.  The PID now
+     includes the CONFIDENTIAL PHONE NUMBER.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+  There is no NSR associated with this patch.
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+  There are no Remedy tickets associated with this patch.
+  
+  
+ Components Sent With Patch
+ --------------------------
+  
+ The following is a list of files included in this patch:
+  
+                                      UP    SEND  DATA                
+                                      DATE  SEC.  COMES  SITE   RSLV  
+ FILE #  NAME                         DD    CODE  W/FILE DATA   PTS 
+ --------------------------------------------------------------------
+ 2       PATIENT                      YES   YES   NO     N/A    N/A
+ 27.11   PATIENT ENROLLMENT           YES   NO    N0     N/A    N/A
+ 43      MAS PARAMETERS               YES   YES   NO     N/A    N/A
+ 391.23  DG REGISTER ONCE FIELD DEFI  YES   YES   YES    OVER   NO
+  
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name (Number)                        File Name (Number)
+ -------------------                        ------------------
+ DATE OF BIRTH (#.03)                       PATIENT (#2)
+ ADDRESS CHANGE SOURCE (#.119)              PATIENT (#2)
+ CELLULAR NUMBER CHANGE SOURCE (#.1311)     PATIENT (#2)
+ PAGER NUMBER CHANGE SOURCE (#.1313)        PATIENT (#2)
+ EMAIL ADDRESS CHANGE SOURCE (#.137)        PATIENT (#2)
+ DATE OF DEATH (#.351)                      PATIENT (#2)
+ INELIGIBLE DATE (#.152)                    PATIENT (#2)
+ DATE RULED INCOMPETENT (VA) (#.291)        PATIENT (#2)
+ DATE RULED INCOMPETENT (CIVIL) (#.292)     PATIENT (#2)
+ P&T EFFECTIVE DATE (#.3013)                PATIENT (#2)
+ SECONDARY NOK CHANGE DATE/TIME (#.211012)  PATIENT (#2)
+ E-CONTACT CHANGE DATE/TIME (#.33012)       PATIENT (#2)
+ E2-CONTACT CHANGE DATE/TIME (#.33112)      PATIENT (#2)
+ DESIGNEE CHANGE DATE/TIME (#.3412)         PATIENT (#2)
+ CONFIDENTIAL PHONE NUMBER (#.1315)         PATIENT (#2)
+ CONFIDENTIAL ADDR CHANGE DT/TM (.14112)    PATIENT (#2)
+ K-PHONE NUMBER (#.219)                     PATIENT (#2)
+ K-WORK PHONE NUMBER (#.21011)              PATIENT (#2)
+ K2-PHONE NUMBER (#.2199)                   PATIENT (#2)
+ K2-WORK PHONE NUMBER (#.211011)            PATIENT (#2)
+ E-PHONE NUMBER (#.339)                     PATIENT (#2)
+ E-WORK PHONE NUMBER (#.33011)              PATIENT (#2)
+ E2-PHONE NUMBER (#.3319)                   PATIENT (#2)
+ E2-WORK PHONE NUMBER (#.331011)            PATIENT (#2)
+ D-PHONE NUMBER (#.349)                     PATIENT (#2)
+ D-WORK PHONE NUMBER (#.34011)              PATIENT (#2)
+ ENROLLMENT APPLICATION DATE (#.01)         PATIENT ENROLLMENT (#27.11)
+ AO STA EXP DATE (#1301)                    MAS PARAMETERS (#43)
+ SWAC STA EXP DATE (#1302)                  MAS PARAMETERS (#43)
+  
+   
+ Documentation Retrieval:
+ ------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at:  http://www.va.gov/vdl/
+  
+ Below is a list of the files related to this patch that will be needed and 
+ available via the FTP sites listed above.
+  
+ File Description                        File Name                 FTP Mode
+ --------------------------------------------------------------------------
+ Revised PIMS V.5.3 Registration Menu    DG_5_3_P754_REG_UM.PDF    Binary
+ User Manual
+ Revised PIMS V.5.3 Means Test User      DG_5_3_P754_MTS_UM.PDF    Binary
+ Menu User Manual
+ Revised PIMS V.5.3 Menus, Intro,        DG_5_3_P754_ADTBE_UM.PDF  Binary
+ Orientation, etc. User Manual
+ Revised PIMS V.5.3 ADT Module User      DG_5_3_P754_SADT_UM.PDF   Binary
+ Manual
+ Revised IVM V2.0 User Manual            IVM_2_P121_UM.PDF         Binary
+ Revised PIMS V5.3 Technical Manual      DG_5_3_P754_TM.PDF        Binary
+ Revised IVM V2.0 Technical Manual       IVM_2_P121_TM.PDF         Binary
+  
+  
+ Test Sites:
+ -----------
+ Chillicothe VAMC, OH
+ Heartland-West HCS
+ Upstate New York HCS, NY
+  
+  
+ SOFTWARE RETRIEVAL
+ ====================================
+ The software for this patch is not being distributed through the National
+ Patch Module.  This patch is being distributed as a host file. The host file
+ will contain two (2) KIDS builds.
+  
+                  Host File Name:  DG_53_P754.KID
+                          Builds:  DG*5.3*754
+                                   IVM*2.0*121
+  
+ Sites may retrieve the software directly using FTP from the
+ ANONYMOUS.SOFTWARE directory at the following Office of Information (OI)
+ Field Offices:
+  
+                  Albany:         ftp.fo-albany.med.va.gov
+                  Hines:          ftp.fo-hines.med.va.gov
+                  Salt Lake City: ftp.fo-slc.med.va.gov
+  
+  First available download:  download.vista.med.va.gov
+  **Note:  Use ASCII mode when transferring the .KID file
+  
+  
+ Pre/Post Installation Overview
+ ==============================
+ The pre installation routine associated with this patch will perform the
+ following:
+  - Field definition cleanup for the following fields in the PATIENT file (#2):
+    - DATE OF BIRTH field (#.03)
+    - INELIGIBLE DATE field (#.152)
+    - DATE OF DEATH field (#.351)
+  - Add new entries to the IVM DEMOGRAPHIC UPLOAD FIELDS file (#301.92)
+  
+ The post installation routine associated with this patch will perform the
+ following:
+  - Recompile the DG LOAD EDIT SCREEN 7 input template
+  
+ The following pre/post install routine(s) may be deleted after the
+ installation is complete:
+  
+           DG53754A
+           DG53754B
+           DG53754C
+           DG53754P
+           
+  
+       ================INSTALLATION INSTRUCTIONS =================
+  
+ If installed during the normal workday, it is recommended that the following
+ selection(s) in the OPTION (#19) file, and all of their descendants be
+ disabled to prevent possible conflicts while running the KIDS Install. Other
+ VISTA users will not be affected.
+  
+     Register a Patient                   [DG REGISTER PATIENT]
+     Load/Edit Patient Data               [DG LOAD PATIENT DATA]
+     UPDATE BATCH JOB FOR HL7 v2.3        [VAFC BATCH UPDATE]
+  
+  
+ Install Time - less than 5 minutes (unless otherwise indicated)
+  
+ ************** PRE-INSTALLATION INSTRUCTIONS ************************
+  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+  Use the Schedule/Unschedule Options [XUTM SCHEDULE]option on the 
+  Taskman Management [XUTM MGR] menu.
+  
+  The HL7 incoming filers should be stopped.  Use the Monitor, Start,
+  Stop Filers [HL FILER MONITOR] option on the Filer and Link
+  Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+  Menu [HL MAIN MENU].
+ *********************************************************************
+        
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Download the KIDS file DG_53_P754.KID from the ANONYMOUS.SOFTWARE
+     directory of the Albany OIFO to the appropriate directory on your system.
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+         Edits and Distribution ...  
+         Utilities ...  
+         Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+         Load a Distribution 
+         Print Transport Global 
+         Compare Transport Global to Current System 
+         Verify Checksums in Transport Global 
+         Install Package(s) 
+         Restart Install of Package(s) 
+         Unload a Distribution 
+         Backup a Transport Global 
+    
+      Select Installation Option: LOAD A DISTRIBUTION
+                                   -------------------
+  
+ 3.  Select the LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and
+     enter: DG_53_P754.KID
+    
+ 4.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter DG*5.3*754):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 5.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.  DG*5.3*754
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer YES
+     d.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':'  Enter the following options:
+  
+           Register a Patient             [DG REGISTER PATIENT]
+           Load/Edit Patient Data         [DG LOAD PATIENT DATA]
+           UPDATE BATCH JOB FOR HL7 v2.3  [VAFC BATCH UPDATE]
+  
+ ************** POST-INSTALLATION INSTRUCTIONS ************************
+  After patch installation has completed, restart the HL7 incoming
+  filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+  option on the Filer and Link Management Options [HL MENU FILER LINK
+  MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+  
+  Reschedule the IVM Background Job.  Use the Schedule/Unschedule 
+  Options [XUTM SCHEDULE]option on the Taskman Management [XUTM MGR] 
+  Menu.
+ *********************************************************************
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53754A
+    Before:       n/a   After:  B1497395  **754**
+Routine Name: DG53754B
+    Before:       n/a   After:  B1383730  **754**
+Routine Name: DG53754C
+    Before:       n/a   After: B14090704  **754**
+Routine Name: DG53754P
+    Before:       n/a   After:B126007468  **754**
+Routine Name: DGCLEAR
+    Before:  B6866608   After:  B7082785  **653,688,754**
+Routine Name: DGDDDTTM
+    Before:  B4416608   After:  B5522558  **665,653,688,754**
+Routine Name: DGENDD
+    Before:  B7066164   After: B10373132  **121,351,503,733,754**
+Routine Name: DGENEGT1
+    Before: B62318221   After: B67955645  **232,417,454,491,513,451,564,
+                                           672,717,688,803,754**
+Routine Name: DGENELA4
+    Before: B63509989   After: B68278282  **232,275,306,327,314,367,417,
+                                           437,456,491,451,564,672,659,
+                                           653,688,803,754**
+Routine Name: DGENPTA
+    Before: B39002320   After: B39663736  **121,122,147,688,754**
+Routine Name: DGENPTA1
+    Before: B20979980   After: B21277182  **121,147,314,677,659,653,688,
+                                           810,754**
+Routine Name: DGENUPLA
+    Before: B62008132   After: B65304654  **397,379,497,451,564,672,659,
+                                           583,653,688,754**
+Routine Name: DGLOCK
+    Before: B32786252   After: B51327037  **108,161,247,485,672,673,688,754**
+Routine Name: DGREGTE2
+    Before: B21750712   After: B21234416  **688,754**
+Routine Name: DGRODEBR
+    Before: B32880624   After: B51758161  **533,572,754**
+Routine Name: DGROHLR
+    Before: B16649538   After: B17894920  **533,572,754**
+Routine Name: DGROHLR1
+    Before: B30908131   After: B36915578  **572,622,647,809,754**
+Routine Name: DGROHLU
+    Before: B21646553   After: B26960116  **533,572,754**
+Routine Name: DGRPC
+    Before: B26505581   After: B27065601  **108,121,314,301,470,489,505,
+                                           451,568,585,641,653,688,754**
+Routine Name: DGRPC3
+    Before: B23485665   After: B27710641  **451,632,673,657,688,754**
+Routine Name: DGRPCADD
+    Before: B13015027   After: B13888843  **489,624,688,754**
+Routine Name: DGRPCE
+    Before: B31050795   After: B36086453  **121,122,175,297,342,451,626,
+                                           689,653,754**
+Routine Name: DGRPCE1
+    Before: B59713574   After: B61785296  **108,226,470,454,489,505,522,
+                                           451,632,689,657,688,804,754**
+Routine Name: DGRPCF
+    Before: B22746154   After: B24182202  **250,653,786,754**
+Routine Name: DGRPEIS3
+    Before: B88249878   After: B91146674  **45,624,659,653,688,754**
+Routine Name: VADPT
+    Before: B16796333   After: B16796389  **193,343,389,415,489,498,688,754**
+Routine Name: VADPT0
+    Before: B13477796   After: B13592370  **343,342,415,489,498,528,689,
+                                           789,688,759,754**
+Routine Name: VADPT1
+    Before: B42511929   After: B44162439  **415,489,516,614,688,754**
+Routine Name: VAFCQRY3
+    Before: B54545905   After: B59042687  **575,707,754**
+Routine Name: VAFHLIN1
+    Before: B24342773   After: B26305328  **122,190,670,740,754**
+Routine Name: VAFHLZCT
+    Before:  B8791571   After:  B9453735  **68,653,754**
+Routine Name: VAFHLZDP
+    Before:  B6500029   After:  B8641835  **33,653,688,754**
+Routine Name: VAFHLZEM
+    Before:  B8411448   After:  B9782974  **68,754**
+Routine Name: VAFHLZIR
+    Before: B13611124   After: B14809010  **33,94,151,466,653,754**
+Routine Name: VAFHLZRD
+    Before:  B6524797   After: B10015130  **122,144,754**
+Routine Name: VAFHLZSP
+    Before:  B4401981   After:  B5338744  **94,106,122,220,653,754**
+ 
+Routine list of preceding patches: 144, 707, 733, 740, 759, 786, 803, 804
+                           809, 810
+
+=============================================================================
+User Information:
+Entered By  : CURTIN,EDNA                   Date Entered  : MAY 08, 2007
+Completed By: MOORE,TERRY D                 Date Completed: MAR 04, 2011
+Released By : GROOMS,ANTHONY E              Date Released : MAR 04, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

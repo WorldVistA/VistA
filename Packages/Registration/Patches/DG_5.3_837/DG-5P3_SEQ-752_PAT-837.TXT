@@ -1,0 +1,365 @@
+$TXT Created by DAVIS,PAULETTE T at DEVCRN.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 03/16/12 at 15:39
+=============================================================================
+Run Date: APR 20, 2012                     Designation: DG*5.3*837
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #752                    Status: Released
+                  Compliance Date: MAY 11, 2012
+=============================================================================
+
+Associated patches: (v)DG*5.3*707  <<= must be installed BEFORE `DG*5.3*837'
+                    (v)DG*5.3*712  <<= must be installed BEFORE `DG*5.3*837'
+                    (v)DG*5.3*756  <<= must be installed BEFORE `DG*5.3*837'
+                    (v)DG*5.3*821  <<= must be installed BEFORE `DG*5.3*837'
+
+Subject: MESSAGING ENHANCEMENTS FOR NEW FIELDS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  DG*5.3*707, DG*5.3*712, DG*5.3*756, and DG*5.3*821 are required builds
+  for patch DG*5.3*837.
+   
+  The messaging enhancements for new fields are being distributed in
+  three VistA namespaces.  The patches should be installed in this
+  order: DG*5.3*837, RG*1.0*59, and MPIF*1.0*54.  After installing
+  DG*5.3*837, it is not necessary to wait for the data conversion
+  completion bulletin to move on with installing RG*1.0*59.  It is
+  recommended that these three patches be installed within a short
+  time window.
+   
+  Issue #1
+  The following Data Dictionary changes have been made to the TREATING
+  FACILITY LIST (#391.91) file.
+    
+  The *ASSIGNING AUTHORITY (#1) field, which was a pointer to the
+  VAFC ASSIGNING AUTHORITY (#391.92) file will be removed.  That field
+  will be replaced by the ASSIGNING AUTHORITY (#10) field, a free text
+  field, containing identifier information for either the Health Level
+  Seven v2.4 or v3.0 standard.
+    
+  The *SOURCE ID (#20) multiple, containing the *SOURCE ID (#.01) and
+  *IDENTIFIER STATUS (#1) fields will be removed.  These fields will be
+  replaced by identical fields at the file level: SOURCE ID (#11) and
+  IDENTIFIER STATUS (#12).
+    
+  DDs for the IN-PERSON PROOFED (#.08) field will be replaced by the
+  ROI SIGNED INDICATOR (#.08) field.  The field name and description
+  has changed, but the data remains the same.  The ROI (Release of
+  Information) SIGNED INDICATOR is a flag indicating that the proofing
+  process has been finalized with the MyHealtheVet application and
+  thus allows the electronic medical record to be viewed using the
+  on-line MyHealtheVet web portal.
+    
+  Cross-references on the obsolete fields will be replaced by new cross-
+  references on the new fields.
+   
+  Due to a processing logic change on the Master Patient Index (MPI), the
+  VAFC ASSIGNING AUTHORITY (#391.92) file is no longer needed and will be
+  deleted at the conclusion of a data conversion routine.  This file was
+  distributed by the MPI team via DG*5.3*825 on 1/25/11, has no authorized
+  Integration Agreements, and is being deleted with DBA approval.
+   
+  Issue #2
+  A conversion routine will run as part of the post-initialization.  The
+  conversion routine will examine each entry in the TREATING FACILITY LIST
+  (#391.91) file.  Data from the obsolete *ASSIGNING AUTHORITY (#1) field
+  will be used to populate the new ASSIGNING AUTHORITY (#10) field.  The
+  obsolete *SOURCE ID (#20) multiple, will be reviewed.  If there is only
+  one entry in the multiple, that data will be moved to the new SOURCE ID
+  (#11) and IDENTIFIER STATUS (#12) fields.  If more than one entry exists
+  in the multiple, then a new record at the file level will be created for
+  each of these.  Data in each of the obsolete fields will be deleted after
+  it has been moved to the corresponding new field.
+       
+  At the conclusion of the conversion routine, the following obsolete fields
+  and file will be removed from the system.
+  In the TREATING FACILITY LIST (#391.91) file, remove the following fields:
+      *ASSIGNING AUTHORITY (#1) field
+      *SOURCE ID (#20) multiple
+           *SOURCE ID (#.01) field and
+           *IDENTIFIER STATUS (#1) field
+  The VAFC ASSIGNING AUTHORITY (#391.92) file will be removed.
+    
+  Issue #3
+  Changes have been made to the Health Level Seven (HL7) MFN~M05 Treating
+  Facility List Update processor code to handle parsing of the MFE segment
+  that could be more than 245 characters long.  Assigning Authority and Id
+  Type are parsed from the MFE segment of the message for both HL7 2.4 and
+  3.0 versions.  Also, the existing deletion logic for removing Treating
+  Facility entries in the TREATING FACILITY LIST (#391.91) file while
+  processing the MFN~M05 processor has been modified.
+    
+  We will no longer update the VAFC ASSIGNING AUTHORITY (#391.92) file. 
+  That data will be stored directly into the new ASSIGNING AUTHORITY (#10)
+  field in the TREATING FACILITY LIST (#391.91) file.
+    
+  Issue #4
+  It has been identified that duplicate entries are being added to the
+  PATIENT (#2) file, ALIAS (#2.01) multiple where both the ALIAS (#.01)
+  field and ALIAS SSN (#1) field match other ALIAS multiple entries.  The
+  post-install routine DG837PST will loop through and delete the duplicate
+  entries when both fields match exactly.  To avoid future duplicate
+  entries, routine VAFCPTED is being updated to look for duplicate entries,
+  and if they are found, the duplicates will be removed.  Null SSN values are
+  considered unique only to other null SSN values.  This is also being
+  tracked in Remedy ticket HD0000000391167.
+        
+  Issue #5
+  This patch adds the TEMPORARY ID NUMBER (#991.08) and FOREIGN ID NUMBER
+  (#991.09) fields to the PATIENT (#2) file.  These fields are Department
+  of Defense (DoD) identifiers used for individuals who do not have a
+  Social Security Number.  This data is used by the Master Veteran Index
+  to support the linking of patient records across VA and DoD.  Post-init
+  routine DG837PST ensures that auditing is turned on for these fields.
+        
+  Issue #6
+  This patch enhances the HL7 v2.4 PID builder routine to include the
+  values of TEMPORARY ID NUMBER (#991.08) and FOREIGN ID NUMBER (#991.09)
+  fields from the PATIENT (#2) file.  These values will be placed in PID-3,
+  Patient Identifier List, each as one of the repeating fields.  If the
+  value is null in the PATIENT (#2) file, then the value sent will be two
+  double quote marks ("").
+        
+  Issue #7
+  Modifications have been made to routine VAFCPTED to enhance the VistA
+  HL7 v2.4 patient update API to include the TEMPORARY ID NUMBER (#991.08)
+  and FOREIGN ID NUMBER (#991.09) field data.
+        
+  Issue #8
+  The TEMPORARY ID NUMBER (#991.08) and FOREIGN ID NUMBER (#991.09) fields
+  have been added to the VistA Patient MPI/PD Data Inquiry [RG EXCEPTION
+  TF INQUIRY] option.  The fields are displayed if they are populated for
+  the selected patient record.  The fields are also shown on the Display
+  Remote Patient Data Query [RG REMOTE PDAT DISPLAY] option if populated.
+        
+  Issue #9
+  The obsolete CMOR and CMOR History sections of the Patient MPI/PD Data
+  Inquiry [RG EXCEPTION TF INQUIRY] option have been removed.  These
+  fields were also removed from the Display Remote Patient Data Query
+  [RG REMOTE PDAT DISPLAY] option.
+      
+  Data Dictionary Changes:
+  ========================
+  - The following new fields have been added to the PATIENT (#2) file.
+      (#991.08) TEMPORARY ID NUMBER 
+      (#991.09) FOREIGN ID NUMBER
+      
+  - The following changes have been made to the TREATING FACILITY LIST
+    (#391.91) file.
+      - The IN-PERSON PROOFED (#.08) field is now the ROI SIGNED 
+        INDICATOR (#.08) field.
+      - Three new fields have been added.
+         (#10) ASSIGNING AUTHORITY
+         (#11) SOURCE ID 
+         (#12) IDENTIFIER STATUS
+      - The following obsolete fields are removed at the conclusion of
+        the conversion routine.
+         (#1) *ASSIGNING AUTHORITY
+         (#20) *SOURCE ID multiple
+            (#.01) *SOURCE ID
+            (#1) *IDENTIFIER STATUS
+  - The VAFC ASSIGNING AUTHORITY (#391.92) file is deleted at the
+    conclusion of the conversion routine.
+     
+  Documentation Update:
+  =====================
+  The following MASTER PATIENT INDEX/PATIENT DEMOGRAPHICS (MPI/PD)
+  VISTA documentation is available, updated for patch DG*5.3*837.
+  Facilities should download the revised documentation listed as
+  follows:
+   
+      User Manual                         RG_1_0_P59UM.PDF
+      Technical Manual                    RG_1_0_P59TM.PDF
+   
+  The preferred retrieval method is to FTP from the ANONYMOUS.SOFTWARE
+  directory at: DOWNLOAD.VISTA.MED.VA.GOV
+  This transmits the file from the first available FTP server.
+  Sites may also elect to retrieve software directly from one
+  of the following servers.
+  
+  OI Field Office         FTP Address                  Directory
+  ------------------------------------------------------------------
+  Albany             ftp.fo-albany.med.va.gov     ANONYMOUS.SOFTWARE
+  Hines              ftp.fo-hines.med.va.gov      ANONYMOUS.SOFTWARE
+  Salt Lake City     ftp.fo-slc.med.va.gov        ANONYMOUS.SOFTWARE
+  
+  Note:  This file must be transferred in binary or IMAGE,
+         not ASCII, mode.
+   
+  The document can also be downloaded from the VistA Documentation
+  Library (VDL) Web page in both Acrobat PDF and MS-Word DOC formats:
+   
+      http://www.va.gov/vdl/application.asp?appid=16
+   
+  Associated Remedy Ticket(s):
+  ============================
+  HD0000000391167
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  Alexandria VAMC
+  Altoona VAMC
+  New Mexico HCS (Albuquerque)
+  South Texas HCS
+      
+  Pre-Install Routine:
+  ====================
+  Pre-init routine DG837PRE deletes the DD definition for the IN-PERSON
+  PROOFED (#.08) field in the TREATING FACILITY LIST (#391.91) file.
+  KIDS brings in the DDs for the new ROI SIGNED INDICATOR (#.08) field.
+  Existing data remains for the ROI SIGNED INDICATOR (#.08) field.
+  The DG837PRE routine is automatically deleted at the end of the
+  installation.
+   
+  Post-Install Routine:
+  =====================
+  Post-init routine DG837PST does a number of things.
+  1) Turn AUDITING on for the TEMPORARY ID NUMBER (#991.08) and FOREIGN
+     ID NUMBER (#991.09) fields to the PATIENT (#2) file.
+  2) Clean up duplicate entries in the ALIAS (#2.01) multiple of the
+     PATIENT (#2) file.
+     NOTE: Please be aware that for large sites or those with a large
+     number of alias entries in the PATIENT (#2) file, this portion of
+     the install may take a few minutes to complete.  That is the reason
+     we have advised that the patch could take 15 minutes to install.
+     The ALIAS clean up will finish before the conversion process (see
+     below) is queued to begin.
+  3) The conversion routine is queued to run in the background.  It will
+     move the values from the existing SOURCE ID (#20) multiple to the new
+     fields for all entries in TREATING FACILITY LIST (#391.91) file.
+     The routine will also move the data from the old pointer ASSIGNING
+     AUTHORITY (#1) field to the new free text ASSIGNING AUTHORITY (#10)
+     field.  Data in the obsolete fields will be deleted after it has
+     been moved.
+  4) When the conversion process finishes, the patch installer will be
+     notified with an e-mail message.  This message provides the task
+     number, begin time, and end time for the process.  In the event that
+     you wish to stop the process after it has started, you can use the
+     STOP^DG837PST line tag.  The process can be restarted by using the
+     STRTAGN^DG837PST line tag.
+  5) Delete old fields from the TREATING FACILITY LIST #391.91 file:
+        ASSIGNING AUTHORITY (#1) field, and
+        SOURCE ID (#20) subfile 391.9101, which includes the
+           SOURCE ID(#.01) and IDENTIFIER STATUS (#1) fields
+     and delete the obsolete VAFC ASSIGNING AUTHORITY (#391.92) file.
+     
+  The time required for the conversion process is site specific,
+  dependent upon the size of your TREATING FACILITY LIST (#391.91) file.
+  The following information from our test sites can be used as a guide.
+     
+   Test Site:               # File Entries:         Conversion Time:
+   Alexandria VAMC              673,003             1 hour, 15 minutes
+   Altoona VAMC                 373,664                     53 minutes
+   New Mexico HCS             1,757,593            4 hours,  0 minutes
+   South Texas HCS            2,078,417            5 hours, 18 minutes
+    
+  Installation Instructions:
+  ==========================
+  This patch takes less than 15 minutes to install.  The patch should
+  be loaded during non-peak hours to minimize disruption to the users.
+   
+  NOTE: The conversion process which is tasked to run in the
+  background at the end of the install may take a number of hours to
+  complete and therefore the installation should be scheduled to begin
+  during the off hours.  For all facilities, evening hours are
+  recommended.  Extremely large sites may prefer to install on a Friday
+  or Saturday evening.  This will minimize the amount of new data
+  coming into the TREATING FACILITY LIST (#391.91) file while the
+  conversion process is taking place.
+   
+  NOTE: The conversion process moves the values from the existing
+  SOURCE ID (#20) multiple to the new fields for all entries in TREATING
+  FACILITY LIST (#391.91) file.  If you choose to do so, you can make
+  a backup of this file using global save prior to installing the patch.
+   
+  1.  Users are allowed on the system during patch installation.
+   
+  2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+      Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+      Link Management Options [HL MENU FILER LINK MGT] menu on the
+      HL7 Main Menu [HL MAIN MENU].
+   
+  3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  6.  Use the Install Package(s) option and select the package DG*5.3*837.
+     
+  7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//',
+      respond NO.
+   
+  8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES.  The following OPTIONS should be
+      disabled during the installation.
+      Register a Patient              [DG REGISTER PATIENT]
+      Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+      Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+      Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+      UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+   
+  9.  After patch installation has completed, restart the HL7 incoming
+      filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+      option on the Filer and Link Management Options [HL MENU FILER 
+      LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+   
+  10. Routine DG837PST can be deleted from your system after the patch
+      installer has been notified via e-mail that the conversion task 
+      has run to completion.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG837PRE
+    Before:       n/a   After:   B900068  **837**
+Routine Name: DG837PST
+    Before:       n/a   After: B63071273  **837**
+Routine Name: VAFCPDAT
+    Before: B39036052   After: B40842331  **333,414,474,505,707,712,837**
+Routine Name: VAFCPTED
+    Before: B12372310   After: B15564397  **149,333,756,837**
+Routine Name: VAFCQRY1
+    Before: B65006931   After: B75122287  **428,474,477,575,627,648,698,
+                                           711,707,837**
+Routine Name: VAFCTFIN
+    Before: B33860243   After: B87975194  **428,474,520,639,707,800,821,837**
+Routine Name: VAFCTFU
+    Before: B52095428   After: B65013803  **149,240,261,255,316,392,440,
+                                           428,474,520,697,800,821,837**
+ 
+Routine list of preceding patches: 712, 756, 821
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,PAULETTE                Date Entered  : JAN 19, 2011
+Completed By: ULRICH,CYNTHIA                Date Completed: APR 04, 2012
+Released By : HEUER,CINDY                   Date Released : APR 20, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,165 @@
+$TXT Created by PANNELL,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 03/18/11 at 08:39
+=============================================================================
+Run Date: SEP 01, 2011                     Designation: EC*2*110
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #105                      Status: Released
+                  Compliance Date: OCT 02, 2011
+=============================================================================
+
+Associated patches: (v)EC*2*76     <<= must be installed BEFORE `EC*2*110'
+                    (v)EC*2*107    <<= must be installed BEFORE `EC*2*110'
+
+Subject: ECOB SYNTAX ERROR, ASSOC CLINIC INACT/REACT, AND INPATIENT CLASSIFICATIONS FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 3 issues:
+  
+ 1.  In Event Capture, a clinic could not be selected for a date
+     previous to the reactivated date, even if that date was before the
+     inactivated date.
+  
+ 2.  A syntax error, GET+2^ECOB, keeps appearing error trap.
+  
+ 3.  In Event Capture, the user cannot answer the classification questions
+     for inpatients procedures, even if the patient is Service Connected.
+  
+  
+ ASSOCIATED REMEDY: 
+ ==================
+ 1)  HD0000000460319  FGH - Clinic not available 
+  
+ 2)  HD0000000441911  GET+2^ECOB
+     Duplicate:
+     HD0000000464107  <SYNTAX>GET+2^ECOB
+  
+ 3)  HD0000000470626  SC/NSC classification not passing to PCE
+  
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A 
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Central Plains HCS
+ North Florida/South Georgia VHS 
+  
+   
+ REMEDY TICKET OVERVIEW: 
+ =====================
+ 1. HD0000000460319  FGH - Clinic not available 
+   
+    Problem: 
+    --------
+    A site had inactivated a clinic for a future date due to lack of 
+    resources for the clinic.  They then were able to find the resources to
+    keep the clinic running, so they reactivated the clinic.  In Event
+    Capture, this clinic could not be selected for a date previous to the 
+    reactivated date, even if that date was before the inactivated date.
+  
+    Resolution: 
+    -----------
+    Allow user to select the clinic if the clinic's inactivation date is
+    a future date and the clinic has been given a reactivation date. 
+    Changes have been made to routine ECUMRPC1 to fix the issue.
+    
+ 2) HD0000000441911  GET+2^ECOB
+   
+    Problem: 
+    --------
+    Sites are reporting a syntax error, GET+2^ECOB, that keeps appearing
+    in the site's error trap.  The routine is trying to use a variable that
+    may not exist.
+  
+    Resolution: 
+    -----------
+    Modify code to handle missing variable to eliminate the syntax errors
+    from occurring.
+  
+ 3) HD0000000470626  SC/NSC classification not passing to PCE 
+   
+    Problem: 
+    --------
+    In Event Capture, the user cannot answer the classification questions
+    for inpatients procedures, even if the patient is Service Connected.
+  
+    Resolution: 
+    -----------
+    Allow user to answer these questions so that the inpatient data is then
+    able to be transmitted to Austin per the VHA Directive 2009-002.
+  
+  
+ Installation Instructions:
+ ==========================
+   
+    Installation will take less than 1 minute.
+   
+    Suggested time to install: Non-peak requirement hours.
+  
+    1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2.  Users ARE allowed to be on the system during the 
+        installation, but you should select a time when minimal number
+        of users are on.  
+      
+    3.  From the Kernel Installation and Distribution System (KIDS) 
+        Menu, select the Installation menu.
+   
+    4.  From this menu, you may elect to use the following options
+        (when prompted for INSTALL NAME, enter EC*2.0*110):
+                 a.  Backup a Transport Global.
+                 b.  Compare Transport Global to Current System.
+                 c.  Verify Checksums in Transport Global
+  
+    5.  Use the Install Packages option (when prompted for the 
+        INSTALL NAME, enter EC*2.0*110).
+  
+    6.  When prompted 'Want KIDS to INHIBIT LOGONs during the 
+        INSTALL? NO//', respond "NO".
+  
+    7.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? YES//', respond "YES".
+  
+          Enter options you wish to mark as 'Out Of Order':
+           EC GUI Context version 2.1.3.3    [EC GUI CONTEXT]
+  
+          Enter protocols you wish to mark as 'Out Of Order':
+  
+   
+    8.  If prompted 'Delay Install (Minutes):  (0-60): 0//; 
+        respond "0".
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECOB
+    Before: B22194703   After: B22576998  **100,107,110**
+Routine Name: ECUERPC1
+    Before: B53314567   After: B52697567  **25,33,42,46,47,54,72,76,110**
+Routine Name: ECUMRPC1
+    Before: B78546073   After: B78953323  **25,30,33,72,94,95,105,100,107,110**
+ 
+Routine list of preceding patches: 76, 107
+
+=============================================================================
+User Information:
+Entered By  : PANNELL,BRIAN                 Date Entered  : FEB 22, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: AUG 22, 2011
+Released By : HATTER,JACKIE L               Date Released : SEP 01, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

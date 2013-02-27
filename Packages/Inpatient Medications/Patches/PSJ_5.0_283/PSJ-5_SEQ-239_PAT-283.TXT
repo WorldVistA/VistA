@@ -1,0 +1,154 @@
+$TXT Created by ENELOW,JASON at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 10/16/12 at 11:12
+=============================================================================
+Run Date: DEC 26, 2012                     Designation: PSJ*5*283
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #239                      Status: Released
+                  Compliance Date: JAN 26, 2013
+=============================================================================
+
+Associated patches: (v)PSJ*5*232   <<= must be installed BEFORE `PSJ*5*283'
+                    (v)PSJ*5*243   <<= must be installed BEFORE `PSJ*5*283'
+
+Subject: FIX INVALID START TIME FOR LAB ORDERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Inpatient Medications 
+ package:
+  
+ 1. Invalid start time for lab orders
+  
+ 2. NOLINE> error when running Total Cost to Date report
+  
+  
+ ASSOCIATED NSR(S):
+ =================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. HD0000000424107 - QWeek lab orders display time of 16:80
+  
+    Duplicates:
+    -----------
+    HD0000000439838 - Wrong start time for lab orders
+    HD0000000453439 - QUICK ORDER DATE/TIME PROBLEMS
+    HD0000000458214 - Qmonthly orders are calculating time of 67:20
+  
+  
+ 2. HD0000000733738 - ATTEMPT TO USE OPTION PSJU TCTD AND SORT BY CLINIC 
+                      GROUP; YOU GET A STACK ERROR
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Northern CA HCS
+ Oklahoma City VAMC
+ Upstate NY HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================
+ 1. HD0000000424107
+  
+   Problem:
+   -------
+   On the Orders tab of CPRS, if a lab test is ordered with a Collection
+   Date/Time that has no explicit time indicated (e.g. "T" or "T+1"),
+   and the "How Often?" field is set to a schedule with a frequency greater
+   than 24 hours, the calculated Start Time of the order after signing it
+   will be set to 16:80.
+  
+   Resolution:
+   ----------
+   Changed routine PSJEEU so that the Start Time of the order is calculated
+   to be NOW (current time) if the date is today (e.g. "T"), or midnight 
+   (00:00) if the date is in the future (e.g. "T+1").
+  
+  
+ 2. HD0000000733738
+  
+   Problem:
+   -------
+   When running the Total Cost to Date (Current Patients) report [PSJU 
+   TCTD], if a user chooses to sort by Clinic or Clinic Group, a <NOLINE> 
+   error occurs.
+  
+   Resolution:
+   ----------
+   Changed routines PSGTCTD and PSGSEL to remove sort by Clinic or Clinic 
+   Group.  Users may still sort by Ward Group, Ward, or Patient.
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2. From the Kernel Installation & Distribution System menu, select 
+    the Installation menu.  
+   
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSJ*5.0*283)
+   
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+    b.  Print Transport Global - This option will allow you to view the
+        components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch is
+        installed.  It compares all components of this patch (routines,
+        DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package PSJ*5.0*283.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+    respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;DEC 16, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGSEL
+    Before: B41117725   After: B43909026  **3,111,145,243,283**
+Routine Name: PSGTCTD
+    Before:  B9120987   After:  B9165440  **3,283**
+Routine Name: PSJEEU
+    Before: B11888100   After: B11721485  **3,208,232,283**
+ 
+Routine list of preceding patches: 232, 243
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : JUL 27, 2012
+Completed By: WERNER,GARY                   Date Completed: DEC 19, 2012
+Released By : TEAGUE,LYN                    Date Released : DEC 26, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,263 @@
+$TXT Created by DAVIS,PAULETTE T at DEVCRN.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 09/07/10 at 20:44
+=============================================================================
+Run Date: JAN 25, 2011                     Designation: DG*5.3*825
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #736                    Status: Released
+                  Compliance Date: FEB 08, 2011
+=============================================================================
+
+Associated patches: (v)DG*5.3*479  <<= must be installed BEFORE `DG*5.3*825'
+                    (v)DG*5.3*756  <<= must be installed BEFORE `DG*5.3*825'
+
+Subject: SUPPORT FOR NATIONAL HEALTH INFORMATION EXCHANGE
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+  Patch DG*5.3*825 contains elements to support and enhance VA IdM
+  (Identity Management) service communication with the National Health
+  Information Network (NHIN).  The NHIN can be thought of as the 'parent'
+  gateway that communicates with the Master Patient Index (MPI) on behalf
+  of its National Health Information Exchange (NHIE) 'children'.  The
+  NHIN project has systems that interact with the VA NHIN adapter to
+  search for patients.  On behalf of these systems, NHIN will communicate
+  with the MPI and serve as an interpreter for the NHIE.  Some of NHINS
+  facilities include Kaiser Permanente, the Department of Defense,
+  MedVirginia, and the Consumer Preference and Policy System (CPP).
+   
+  Patch DG*5.3*825 will enhance the capability of VA IdM to support the
+  HL7v3.0 formatted Fully Qualified IDs.  This effort will align the
+  data perspective to support all four elements of the HL7 v2.4 standard
+  PID-3 Identifier sequence as well as the larger HL7 v3.0 formatted
+  unique Source IDs.
+   
+  Extensive information for the PID-3 Identifier sequence can be
+  found in the Master Patient Index/Patient Demographics (MPI/PD),
+  HL7 Interface Specifications document, available on the VistA
+  Documentation Library (VDL).
+   
+  DG*5.3*479 and DG*5.3*756 are required builds for patch DG*5.3*825.
+   
+  Issue #1
+  When patient data is edited in VistA, an A04 or A08 Health Level Seven
+  (HL7) message is generated to the Master Patient Index (MPI).  When
+  that record has an entry in the PATIENT MOVEMENT (#405) file and the
+  TRANSACTION (#.02) field equals 1 (ADMISSION) the data is passed in
+  the PV2-14 field of the PV2 segment.  This data was incorrectly
+  transmitted in the wrong piece of the PV2 segment.  Routine VAFCSB has
+  been modified to send the data in the 15th piece of the PV2 segment.
+   
+  Issue #2
+  A new file is created by patch DG*5.3*825.  The VAFC ASSIGNING
+  AUTHORITY (#391.92) file stores information used to assemble fully
+  qualified identifiers used for either the Health Level Seven v2.4 or
+  v3.0 standard.  This data will support future initiatives, (i.e.,
+  National Health Information Network (NHIN) and non-Patient Identity
+  Management).  The VAFC ASSIGNING AUTHORITY (#391.92) file is exported
+  with five entries and new data will be added as needed for HL7 messaging.
+   
+  The length of the SOURCE ID (#.01) field in the SOURCE ID (#20) multiple
+  of the TREATING FACILITY LIST (#391.91) file has been changed from 40
+  to 150 characters.  This will accommodate identifiers for National
+  Health Information Network (NHIN) facilities.
+   
+  Two new fields have also been added.  SOURCE ID TYPE (#.09) defines the
+  data source and comes from the HL7 Table 0203, Identifier Type.  The
+  ASSIGNING AUTHORITY (#1) field is a pointer to the VAFC ASSIGNING
+  AUTHORITY (#391.92) file.  It identifies the entity that established
+  the identification number for the patient.  Cross-references have also
+  been added for these new fields.
+   
+  Issue #3
+  Routine VAFCAAUT contains two new Application Programmer Interfaces
+  (APIs).  These APIs will be used for the upcoming NATIONAL HEALTH
+  INFORMATION EXCHANGE project.
+   
+  The first API will retrieve data from the VAFC ASSIGNING AUTHORITY
+  (#391.92) file.  When either the HL7V2_4 or HL7V3_0 value is passed in,
+  the Internal Entry Number (IEN) for that entry in the file is returned.
+   
+  The second API will create a new entry in the VAFC ASSIGNING AUTHORITY
+  (#391.92) file.  The data fields that make up the new entry, most
+  likely the HL7V3_0 (#.03) and DEFAULT SOURCE ID TYPE (#.04) fields,
+  are passed into the API.  If the entry is successfully created, the API
+  returns the IEN.  If the entry cannot be created, an error message
+  is returned.
+   
+  Issue #4
+  DG Field Monitor [DG FIELD MONITOR] is a PROTOCOL (#101) that observes
+  the editing of fields during the Register a Patient [DG REGISTER
+  PATIENT] option.  Under specific conditions, an update could be
+  unsuccessful in creating an entry in the ADT/HL7 PIVOT (#391.71) file,
+  and thus fail to broadcast an update message to the MPI.
+   
+  This scenario occurs when a field that uses the DG Field Monitor
+  PROTOCOL is edited via the Register a Patient [DG REGISTER PATIENT]
+  option.  No other fields are edited and the user exits without
+  completing the registration process.  Under these conditions, an entry
+  is not created in the ADT/HL7 PIVOT (#391.71) file.  Routine DGFCPROT
+  has been changed to correct this.
+   
+  Issue #5
+  When a new entry is added to the MPI ASSIGNING AUTHORITY (#985.55) file
+  on the MPI, the VAFC AA UPDATE REMOTE PROCEDURE is called.  The RPC
+  triggers an update message to those Treating Facilities where the
+  patient's Integration Control Number (ICN) is known and creates an
+  identical entry in the VistA VAFC ASSIGNING AUTHORITY (#391.92) file.
+  The VAFCRPC routine is called to make this update.
+     
+  Data Dictionary Changes:
+  ========================
+  - The VAFC ASSIGNING AUTHORITY (#391.92) file is a new file that
+    contains the following fields.
+      (#.01) IDENTIFIER
+      (#.02) HL7V2_4
+      (#.03) HL7V3_0
+      (#.04) DEFAULT SOURCE ID TYPE
+  The file is exported with data and will receive updates from the MPI.
+   
+  - The following changes have been made to the TREATING FACILITY LIST
+    (#391.91) file.
+      - The length of the SOURCE ID (#.01) field in the SOURCE ID (#20)
+        multiple has been expanded.
+      - Two new fields have been added.
+           (#.09) SOURCE ID TYPE
+           (#1) ASSIGNING AUTHORITY
+     
+  Documentation Update:
+  =====================
+  The following MASTER PATIENT INDEX/PATIENT DEMOGRAPHICS (MPI/PD)
+  VISTA documentation is available, updated for patch DG*5.3*825.
+  Facilities should download the revised documentation listed as
+  follows:
+  
+      Technical Manual                    DG5_3_P825RG_TM.PDF
+      User Manual                         DG5_3_P825RG_UM.PDF
+   
+  The preferred retrieval method is to FTP from the ANONYMOUS.SOFTWARE
+  directory at: DOWNLOAD.VISTA.MED.VA.GOV
+  This transmits the file from the first available FTP server.
+  Sites may also elect to retrieve software directly from one
+  of the following servers.
+  
+  OI Field Office         FTP Address                  Directory
+  ------------------------------------------------------------------
+  Albany             ftp.fo-albany.med.va.gov     ANONYMOUS.SOFTWARE
+  Hines              ftp.fo-hines.med.va.gov      ANONYMOUS.SOFTWARE
+  Salt Lake City     ftp.fo-slc.med.va.gov        ANONYMOUS.SOFTWARE
+  
+  Note:  These files must be transferred in binary or IMAGE,
+         not ASCII, mode.
+   
+  The documents can also be downloaded from the VistA Documentation
+  Library (VDL) Web page in both Acrobat PDF and MS-Word DOC formats:
+   
+      http://www.va.gov/vdl/application.asp?appid=16
+   
+  Associated Remedy Ticket(s):
+  ============================
+  There are no associated Remedy Tickets.
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  Bay Pines VA HCS
+  Huntington VAMC
+  VA Montana HCS
+        
+  PLEASE NOTE:
+  ============
+  Routine VAFCSB, distributed in this patch, references routines
+  LRPXAPI, PSO52API, and RAO7UTL1.  In the event that DG*5.3*825
+  is installed in an account where those routines are not present,
+  XINDEX may display either of these messages:
+  "Reference to routine (one of the above). That isn't in this UCI."
+  "Call to this MISSING LABEL (one of the above)"
+    
+  VAFCSB contains conditional $$PATCH^XPDUTL checks for the existence
+  of the routine and quits if it is not there.  So, the code will work
+  with or without the routine being present.
+      
+  Installation Instructions:
+  ==========================
+  This patch takes less than 2 minutes to install.  This patch should
+  be loaded during non-peak hours to minimize disruption to the users.
+   
+  1.  Users are allowed on the system during patch installation.
+     
+  2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+      Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+      Link Management Options [HL MENU FILER LINK MGT] menu on the
+      HL7 Main Menu [HL MAIN MENU].
+     
+  3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  6.  Use the Install Package(s) option and select the package DG*5.3*825.
+   
+  7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+   
+  8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES.  The following OPTIONS should be
+      disabled during the installation.
+      Register a Patient              [DG REGISTER PATIENT]
+      Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+      Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+      Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+      UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+     
+  9.  After patch installation has completed, restart the HL7 incoming
+      filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+      option on the Filer and Link Management Options [HL MENU FILER 
+      LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;AUG 13, 1993;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGFCPROT
+    Before:  B4864093   After:  B7131954  **273,526,707,825**
+Routine Name: VAFCAAUT
+    Before:       n/a   After: B27332848  **825**
+Routine Name: VAFCRPC
+    Before:  B7443211   After:  B7679300  **414,440,474,477,479,825**
+Routine Name: VAFCSB
+    Before:  B8457410   After:  B8780845  **707,756,825**
+ 
+Routine list of preceding patches: 479, 756
+
+=============================================================================
+User Information:                          Hold Date     : JAN 01, 2011
+Entered By  : DAVIS,PAULETTE                Date Entered  : FEB 22, 2010
+Completed By: CHESNEY,CHRISTINE M           Date Completed: DEC 22, 2010
+Released By : HEUER,CINDY                   Date Released : JAN 25, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

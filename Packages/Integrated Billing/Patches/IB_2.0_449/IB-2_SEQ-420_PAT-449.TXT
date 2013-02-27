@@ -1,0 +1,372 @@
+
+=============================================================================
+Run Date: SEP 19, 2011                     Designation: IB*2*449
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #420                      Status: Released
+                  Compliance Date: SEP 21, 2011
+=============================================================================
+
+Associated patches: (v)IB*2*367    <<= must be installed BEFORE `IB*2*449'
+
+Subject: CD PATIENT COPAY EXEMPTION
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement ()
+
+Description:
+============
+
+ *********************************ATTENTION***********************************
+ Note:  This patch is an emergency released with a 48-hour compliance.
+   
+        This patch is being released in support of the Enrollment System
+        Re-design (ESR) 3.5 Public Law 111-163 project.  IB*2*449 is being
+        released along with DG*5.3*840 (Registration) and IVM*2*149 (Income
+        Verification Match) in host file: DG_53_P840.KID.
+   
+        It is imperative that these patches be installed no later than the
+        compliance date.  Your understanding and support is appreciated.
+ **************************************************************************
+  
+ On May 5, 2010, the President signed into law, Public Law (PL) 111-163, 
+ the Caregivers and Veterans Omnibus Health Services Act of 2010.  This law
+ provides assistance to caregivers of Veterans and improves the provisions
+ of health care services to Veterans.  Section 511, Prohibitions on
+ collections of copayments from Veterans who are Catastrophically
+ Disabled.  This patch is being issued in support of some of these
+ provisions.
+  
+ With the install of this patch and the other related patches (DG*5.3*840 
+ and IVM*2*149), Veterans who are identified as being Catastrophically
+ Disabled will no longer be charged copayments for Means Test/Geographic
+ Means Test related Outpatient Visits, Inpatient Visits and Outpatient
+ Medications from the effective date of their Catastrophically Disabled
+ determination and installation forward.  This does not affect Extended
+ Care/Long Term Care Copayments.  These patches do not cancel charges
+ created prior to the install, sites should continue to use the CBO
+ guidance they have been provided to cancel those previously billed charges
+ where necessary.
+  
+ To provide support for the cancellation of charges that have occurred 
+ since the effective date of May 5, 2010 for Catastrophically Disabled, a
+ new Reasons Not Billable is being added to the IB CHARGE REMOVE REASONS
+ (#350.3) for selection during all types of cancellations of copayments:
+  
+       CATASTROPHICALLY DISABLED
+  
+ To assist in identifying charges already created for Catastrophically 
+ Disabled patients, a new report Catastrophically Disabled Copay Report [IB
+ CD CHARGE REPORT] is being added to the Patient Billing Reports Menu [IB
+ OUTPUT PATIENT REPORT MENU].  During installation of this patch the report
+ will be produced automatically for charges that were created since May 5,
+ 2010 and the patient's Catastrophically Disability effective date.  This
+ report needs a printer of at least 132 columns.  It is important this
+ report is shared with the site's revenue department.  If needed the report
+ can be re-run by the new menu option.
+  
+ Report Option Details:
+  - The report is based on the Date of Decision date stored in the Patient
+    (#2) file.
+  - Even though charges may be cancelled, the report may continue to show
+    $0 charges.  If the charge in IB is cancelled but there are still 
+    charges on the AR side on the same bill number they will continue to 
+    appear on the report.  This is because there is no way of determining 
+    which charges on an AR bill are actually cancelled vs not cancelled.  
+    Sites should not expect to see a clean report, the report is for 
+    informational purposes for review.  After review of a specified
+    timeframe is completed it is recommended sites use subsequent
+    timeframes for review.
+  
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1. HD0000000469489 - add a new cancellation reason Catastrophically 
+ Disabled 
+  
+ Problem:
+ -------
+ Patients who were designated as catastrophically disabled no longer have 
+ to pay copayments and are going to be reimbursed for co-payments back to
+ May of 2010.  Site is requesting to add this as a cancellation reason for
+ selection when cancellation occurs.
+  
+ Resolution:
+ ----------
+ With the install of this patch all a new cancellation reason will be made
+ available for selection.
+  
+  
+ Associated New Service Request (NSR):
+ =====================================
+ TBD 
+    
+   
+ Test Sites:
+ ===========
+ Charleston VAMC, SC
+ Northport VAMC, NY
+ Upstate New York HCS, NY
+  
+  
+   
+ The enhancements made by this patch are summarized below:
+ ---------------------------------------------------------
+    
+ Exemption Reason
+ ----------------
+ A new Exemption Reason (#354.2) file entry is being added by the 
+ post-install of this patch (IB20P449) of CATASTROPHICALLY DISABLED.
+  
+  
+ Exemption Update
+ ----------------
+ The exemption processing routine (IBARXEU1) is being updated to include 
+ an additional data element for evaluation of Outpatient Medication 
+ Copayment exemption.  The associated DG*5.3*840 patch will include an 
+ indicator for Catastrophically Disabled in the $$AUTOINFO^DGMTCOU1 API.  
+ IB will use that additional data element to automatically exempt 
+ Catastrophically Disabled patients using the new Exemption Reason.
+  
+  
+ Charge Removal Reason
+ ---------------------
+ A new IB Charge Removal Reasons (#350.3) file entry is being added by the
+ post-install of this patch (IB20P449):
+  
+       CATASTROPHICALLY DISABLED
+  
+  
+ Components Sent With Patch:
+ ===========================
+ The following is a list of options included in this patch:
+    IB CD CHARGE REPORT               SEND TO SITE
+    IB OUTPUT PATIENT REPORT MENU     USE AS LINK FOR MENU/ITEM/SUBSCRIBERS
+  
+  
+ SOFTWARE DOCUMENTATION AND RETRIEVAL:
+ =====================================
+ The user documentation is available on the Office of Information
+ Field Office (OIFO) ANONYMOUS.SOFTWARE directories listed below:
+   
+   OIFO                  FTP address                      Directory
+ Albany               ftp.fo-albany.med.va.gov        anonymous.software
+ Hines                ftp.fo-hines.med.va.gov         anonymous.software
+ Salt Lake City       ftp.fo-slc.med.va.gov           anonymous.software
+ VistA download site  download.vista.med.va.gov       anonymous.software
+   
+ The user documentation files listed below may be obtained via FTP.
+   
+ The preferred method is to download the files from:
+      download.vista.med.va.gov
+   
+ This method transmits the files from the first available FTP server.
+   
+ Sites may also select to retrieve documentation from a specific server
+ as shown in the above table.
+   
+ The following files should be downloaded in the binary FTP mode.
+   
+  Filename                    Description
+  --------                    -----------
+ IB_2_0_TM.PDF      Revised Integrated Billing (IB) V. 2.0 Technical Manual
+ IB_2_0_UM.PDF      Revised Integrated Billing (IB) V. 2.0 User Manual
+   
+ Note:    Use Binary mode when transferring the .PDF file(s).  The .PDF
+          files can be read on a PC using the Adobe Acrobat Reader program.
+          The VistA Documentation Library [VDL] contains all end-user
+          manuals.
+  
+  
+  
+ SOFTWARE RETRIEVAL
+ ==================
+ The software for this patch is not being distributed through the National
+ Patch Module.  This patch is being distributed as a host file. The host
+ file will contain two (2) KIDS builds.
+   
+                   Host File Name:  DG_53_P840.KID
+                           Builds:  DG*5.3*840
+                                    IB*2.0*449
+                                    IVM*2.0*149
+   
+ Sites may retrieve the software directly using FTP from the
+ ANONYMOUS.SOFTWARE directory at the following Office of Information (OI)
+ Field Offices:
+   
+                   Albany:         ftp.fo-albany.med.va.gov
+                   Hines:          ftp.fo-hines.med.va.gov
+                   Salt Lake City: ftp.fo-slc.med.va.gov
+   
+   First available download:  download.vista.med.va.gov
+   **Note:  Use ASCII mode when transferring the .KID file
+  
+  
+  
+ Installation Instructions:
+ ==========================
+ The install of this patch should NOT be queued.  The installer will be 
+ prompted for a device selection during the post-install.  The report 
+ should be queued as it will take some time depending on the site's 
+ activity in the INTEGRATED BILLING ACTION (#350) file since May 5, 2010.
+  
+ To avoid disruptions, this patch should be installed when users are
+ not on the system and during non-peak hours.  Of particular concern would
+ be the items below.
+  
+    - Do not install the patch when prescriptions are being
+      transmitted to CMOP.  Wait for the CMOP transmission to finish
+      or complete the installation before the transmission starts.
+      Check with Pharmacy Service or your pharmacy Automated Data
+      Processing Application Coordinator (ADPAC) to find out when
+      CMOP transmissions occur.
+  
+    - If installed during the normal workday, it is recommended that the
+      following selection(s) in the OPTION (#19) file, and all of their
+      descendants be disabled to prevent possible conflicts while running
+      the KIDS Install. Other VISTA users will not be affected.
+  
+         Register a Patient                   [DG REGISTER PATIENT]
+         Load/Edit Patient Data               [DG LOAD PATIENT DATA]
+         UPDATE BATCH JOB FOR HL7 v2.3        [VAFC BATCH UPDATE]
+         Patient Prescription Processing      [PSO LM BACKDOOR ORDERS]
+         Release Medication                   [PSO RELEASE]
+  
+  Installation will take less than 5 minutes.
+  
+ 1.  OBTAIN PATCHES
+     ==============
+  
+     Obtain the host file DG_53_P840.KID, which contains the following
+     three patch installs:
+  
+        DG*5.3*840
+        IB*2.0*449
+        IVM*2.0*149
+  
+     Sites can retrieve VistA software from the following FTP addresses.
+     The preferred method is to FTP the files from:
+  
+        download.vista.med.va.gov
+  
+     This will transmit the files from the first available FTP server.
+     Sites may also elect to retrieve software directly from a specific
+     server as follows:
+  
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+  
+     The DG_53_P840.KID host file is located in the anonymous.software
+     directory.  Use ASCII Mode when downloading the file.
+  
+ 2.  From the Installation menu, select the LOAD A DISTRIBUTION option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file DG_53_P840.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]DG_53_P840.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+        Loading Distribution...
+  
+        DG*5.3*840
+        IB*2.0*449
+        IVM*2.0*149
+  
+     Use INSTALL NAME: DG*5.3*840 to install this distribution.
+  
+ 3.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD:
+     ==================================================
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     DG*5.3*840):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  INSTALL MULTI-BUILD:
+     ====================
+     This is the step to start the installation of this KIDS build.  This
+     will need to be run for DG*5.3*840 multi-build.
+  
+     a.  Choose the Install Package(s) option to start the install.
+     b.  When prompted for the "Select INSTALL NAME:", enter DG*5.3*840.
+     c.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//'  Answer NO.
+     d.  When prompted "Want KIDS to INHIBIT LOGONs during the
+         install? YES//"  enter NO.
+     e.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//"  enter YES.
+     f.  When prompted "Enter options you wish to mark as 'Out Of
+         Order':"  enter the following options:
+  
+         Register a Patient                   [DG REGISTER PATIENT]
+         Load/Edit Patient Data               [DG LOAD PATIENT DATA]
+         UPDATE BATCH JOB FOR HL7 v2.3        [VAFC BATCH UPDATE]
+         Patient Prescription Processing      [PSO LM BACKDOOR ORDERS]
+         Release Medication                   [PSO RELEASE]
+  
+     g.  When prompted "Enter protocols you wish to mark as 'Out Of
+         Order':"  enter <return>.
+     h.  When prompted "Delay Install (Minutes):  (0-60): 0//"  enter an
+         appropriate number of minutes to delay the installation in
+         order to give users enough time to exit the disabled options
+         before the installation starts.
+     i.  When prompted "Device: Home//"  respond with the correct device.
+  
+ 5.  The IB post-install routine delivered with IB*2*449 will do the tasks
+     listed below.  The time required to accomplish these tasks is less 
+     than 2 minutes however the post-install report will take some time and
+     should be queued.  The post-install routine IB20P449 is being left on 
+     the system after the install.  Once this patch has been successfully
+     installed you may delete the post init routine:  IB20P449
+   
+      a.  A new Exemption Reason (#354.2) file entry is being added by the
+          post-install of this patch (IB20P449) of CATASTROPHICALLY 
+          DISABLED.
+      b.  A new IB Charge Removal Reasons (#350.3) file entry is being
+          added by the post-install of this patch (IB20P449):
+             CATASTROPHICALLY DISABLED
+     c.  A device prompt is issued for the post-install report.  This 
+         report should be queued and sent to a printer of at least 132
+         columns.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P449
+    Before:       n/a   After: B10083206  **449**
+Routine Name: IBARXEU1
+    Before: B17664186   After: B17685834  **26,112,74,275,367,449**
+Routine Name: IBOCDRPT
+    Before:       n/a   After: B17809803  **449**
+ 
+Routine list of preceding patches: 367
+
+=============================================================================
+User Information:
+Entered By  : ZEIGLER,EDWARD L              Date Entered  : FEB 22, 2011
+Completed By: MORRIS,DARLENE V              Date Completed: AUG 19, 2011
+Released By : KUBIAK,PHILLIP A              Date Released : SEP 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

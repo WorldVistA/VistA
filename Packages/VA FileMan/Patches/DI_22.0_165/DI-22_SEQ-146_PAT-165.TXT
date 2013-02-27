@@ -1,0 +1,633 @@
+$TXT Created by BEUSCHEL,GARY at FM22-PATCH.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 06/14/11 at 08:30
+=============================================================================
+Run Date: NOV 01, 2011                     Designation: DI*22*165
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22       SEQ #146                     Status: Released
+                  Compliance Date: DEC 02, 2011
+=============================================================================
+
+Associated patches: (v)DI*22*58    <<= must be installed BEFORE `DI*22*165'
+                    (v)DI*22*122   <<= must be installed BEFORE `DI*22*165'
+                    (v)DI*22*160   <<= must be installed BEFORE `DI*22*165'
+                    (v)DI*22*162   <<= must be installed BEFORE `DI*22*165'
+                    (v)DI*22*164   <<= must be installed BEFORE `DI*22*165'
+
+Subject: IGNORE THE NOISE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+                           ** Notice: **
+ ** See "Installation Instructions" section for Installation Warning **
+   
+ This patch addresses the following items:
+  
+ 1. Remedy Tickets 354944,483379,495322:
+ FIND^DIC erroneously uses an errant extant DIC("S") if the file being
+ searched has node 7.5 of the .01 field defined in the DD
+ (^DD(file#,.01,7.5)). (Files which have been standardized have this node
+ set.) This is a problem because all inputs to FIND^DIC are supposed to be
+ via its parameters, and not via setting extraneous local variables.
+ Note: This problem is solved by "new"ing DIC within the API. This will protect
+ against other pre-existing DIC variables too, such as DIC(0).
+ (Routine ^DICF,^DICF4)
+  
+ Here's how we test it. Before the patch is installed:
+ Select a file which has been standardized. Let's choose the VA PRODUCT
+ (#50.68) file. It has a node 7.5 on its .01 field:
+  
+ ^DD(50.68,.01,7.5)=I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries Must
+ be edited via the Master File Server (MFS).","","!?5,$C(7)")
+  
+ Let's do a lookup.
+ >D FIND^DIC(50.68,,,,"ACAI",,,,,"MYLIST")
+  
+ >ZW MYLIST
+ MYLIST("DILIST",0)="2^*^0^"
+ MYLIST("DILIST",1,1)="ACAI CAP/TAB"
+ MYLIST("DILIST",1,2)="ACAI LIQUID,ORAL"
+ MYLIST("DILIST",2,1)=20716
+ MYLIST("DILIST",2,2)=21041
+  
+ Clear the local variables, perhaps using P^DI. Set DIC("S"), which is not
+ a valid input variable to the FIND^DIC API. Redo the lookup.
+ >S DIC("S")="W !,""Alice lives here."""
+  
+ >D FIND^DIC(50.68,,,,"ACAI",,,,,"MYLIST")
+  
+ Alice lives here.
+ Alice lives here.
+ >ZW MYLIST
+ MYLIST("DILIST",0)="2^*^0^"
+ MYLIST("DILIST",1,1)="ACAI CAP/TAB"
+ MYLIST("DILIST",1,2)="ACAI LIQUID,ORAL"
+ MYLIST("DILIST",2,1)=20716
+ MYLIST("DILIST",2,2)=21041
+ Not good! It's executing the errant DIC("S").
+  
+ Now let's make it worse. Let's make DIC("S") screen out the results.
+ >S DIC("S")="W !,""Alice lives here."" I 0"         
+  
+ >D FIND^DIC(50.68,,,,"ACAI",,,,,"MYLIST")
+  
+ Alice lives here.
+ Alice lives here.
+ >ZW MYLIST
+ MYLIST("DILIST",0)="0^*^0^"
+ Yikes! That's bad. That screen has affected our results.
+  
+ Repeat the above test after the patch is installed and you'll find that
+ Alice doesn't live here anymore. FIND^DIC will ignore the errant DIC("S").
+  
+ 2. Remedy Ticket 409387:
+ It is possible to have 2 different fields in the same file with traditional
+ cross references of the same name. This is not good.
+ (Routine ^DICE)
+  
+ Here's how we test it. Before the patch is installed:
+ Create a traditional cross reference on a field in some test file you've
+ got hanging around. (It doesn't matter whether the cross reference is for
+ both lookup and sorting, or just lookup.) Now create a traditional xref of
+ the same name on another field in the same file. You've got two cross
+ references with the same name! Not good.
+  
+ After the patch is installed, you won't be able to do it. Make sure you
+ delete the cross references you created.
+  
+ 3. Remedy Ticket 417451:
+ Any 2-digit time that's zero + 1 digit before 06 is interpreted as p.m.;
+ 06 and after is interpreted as a.m. This is not correct. All times that
+ start with zero should be interpreted as a.m. For example: T@06 is correctly
+ interpreted as 6 a.m. but T@04 is wrongly interpreted as 4 p.m.
+ (Routine ^DIDT, aka ^%DT)
+  
+ Let's test it out. This is what we see before the patch:
+ >S %DT="AET" D ^%DT
+ DATE: T+1@4  (JUL 28, 2010@16:00)    <- The time has 1 digit, and it's
+ before 6, so FM makes an assumption of 4 p.m. That's fine here, because the
+ user could mean either morning or afternoon.
+  
+ >S %DT="AET" D ^%DT
+ DATE: T+1@04  (JUL 28, 2010@16:00)   <- The time has 2 digits, and it's
+ before 06, so FM again makes an assumption of 4 p.m. That's wrong here,
+ because there's no question the user means morning.
+  
+ >S %DT="AET" D ^%DT
+ DATE: T+1@0400  (JUL 28, 2010@04:00) <- FM gets it right if the time has
+ 4 digits.
+  
+ >S %DT="AET" D ^%DT
+ DATE: T+1@05  (JUL 28, 2010@17:00)   <- FM gets 05 wrong, too.
+  
+ >S %DT="AET" D ^%DT
+ DATE: T+1@06  (JUL 28, 2010@06:00)   <- FM gets 06 right.
+  
+ >S %DT="AET" D ^%DT
+ DATE: T+1@07  (JUL 28, 2010@07:00)   <- FM gets 07 right.
+  
+ Repeat the above test after the patch is installed, and you'll find that
+ all 2-digit times beginning with zero should be interpreted as a.m.
+  
+ 4. Remedy Ticket 425109:
+ When FileMan subtotals two entries with similar (1st 25 characters are the
+ same) names, it may assign all the counts to the entry with the shorter
+ name, and it drops the entry with the longer name.
+  
+ To correct this, we're editing the MUMPS OPERATING SYSTEM (#.7) file. We're
+ changing the GLOBAL LENGTH (MAX) (#2) field from 120 to 250. While we're
+ there, we'll also take the opportunity to change the ROUTINE SIZE (MAX) (#3)
+ field from 8000 to 15000, and the INDIVIDUAL SUBSCRIPT LENGTH (#7) field
+ from 63 to 250.
+ (Routines ^DIPR165, ^DINIT21)
+  
+ Here's how we test it. Before the patch is installed, do the following print:
+ Select OPTION: PRINT FILE ENTRIES  
+  
+ OUTPUT FROM WHAT FILE: PATIENT//  PATIENT
+                                           (64421 entries)
+ SORT BY: NAME// APP
+      1   APPOINTMENT    (multiple)
+      2   APPOINTMENT REQUEST COMMENT  
+      3   APPOINTMENT REQUEST DATE  
+      4   APPOINTMENT REQUEST ON 1010EZ  
+      5   APPOINTMENT REQUEST STATUS  
+ CHOOSE 1-5: 1  APPOINTMENT  (multiple)
+ APPOINTMENT SUB-FIELD: 'APPO
+      1   APPOINTMENT DATE/TIME  
+      2   APPOINTMENT TYPE  
+      3   APPOINTMENT TYPE SUB-CATEGORY  
+ CHOOSE 1-3: 1  APPOINTMENT DATE/TIME
+ START WITH APPOINTMENT DATE/TIME: FIRST// t-1 (or whatever date range
+ GO TO APPOINTMENT DATE/TIME: LAST// t-1        will get you results)
+   WITHIN APPOINTMENT DATE/TIME, SORT BY: APP
+      1   APPOINTMENT    (multiple)
+      2   APPOINTMENT REQUEST COMMENT  
+      3   APPOINTMENT REQUEST DATE  
+      4   APPOINTMENT REQUEST ON 1010EZ  
+      5   APPOINTMENT REQUEST STATUS  
+ CHOOSE 1-5: 1  APPOINTMENT  (multiple)
+   APPOINTMENT SUB-FIELD: 'STATUS  
+   START WITH STATUS: FIRST// @
+   GO TO STATUS: LAST// @
+     WITHIN STATUS, SORT BY: APP
+      1   APPOINTMENT    (multiple)
+      2   APPOINTMENT REQUEST COMMENT  
+      3   APPOINTMENT REQUEST DATE  
+      4   APPOINTMENT REQUEST ON 1010EZ  
+      5   APPOINTMENT REQUEST STATUS  
+ CHOOSE 1-5: 1  APPOINTMENT  (multiple)
+     APPOINTMENT SUB-FIELD: CLINIC:
+     HOSPITAL LOCATION FIELD: 'NON-COUNT CLINIC? (Y OR N)  
+     START WITH NON-COUNT CLINIC? (Y OR N): FIRST// N  NO
+     GO TO NON-COUNT CLINIC? (Y OR N): LAST// N  NO
+       WITHIN NON-COUNT CLINIC? (Y OR N), SORT BY: APP
+      1   APPOINTMENT    (multiple)
+      2   APPOINTMENT REQUEST COMMENT  
+      3   APPOINTMENT REQUEST DATE  
+      4   APPOINTMENT REQUEST ON 1010EZ  
+      5   APPOINTMENT REQUEST STATUS  
+ CHOOSE 1-5: 1  APPOINTMENT  (multiple)
+       APPOINTMENT SUB-FIELD: +CLINIC  
+       START WITH CLINIC: FIRST// 
+         WITHIN CLINIC, SORT BY: 
+ STORE IN 'SORT' TEMPLATE: 
+ FIRST PRINT FIELD: !NAME
+      1   NAME  
+      2   NAME COMPONENTS  
+ CHOOSE 1-2: 1  NAME
+ THEN PRINT FIELD: 
+ Heading (S/C): PATIENT STATISTICS// 
+ START AT PAGE: 1// 
+ DEVICE:   VIRTUAL TELNET    Right Margin: 80// 
+  
+ ...HMMM, JUST A MOMENT PLEASE...
+  
+ PATIENT STATISTICS                             NOV 17,2010  13:22    PAGE 1
+           NAME
+ ---------------------------------------------------------------------------
+  
+                  CLINIC: 240 MINUTES
+ SUBCOUNT  1
+                  CLINIC: CHAPLAIN
+ SUBCOUNT  2
+ ...
+  
+ You'll get lots of clinics. Pick two, and change their names in the
+ HOSPITAL LOCATION (#44) file:
+  
+ INPUT TO WHAT FILE: PATIENT// 44  HOSPITAL LOCATION  (1552 entries)
+ EDIT WHICH FIELD: ALL// .01  NAME
+ THEN EDIT FIELD: 
+  
+ Select HOSPITAL LOCATION NAME: 240 MINUTES       
+ NAME: 240 MINUTES// MY NEW CLINIC NAME IS FUN
+  
+ Select HOSPITAL LOCATION NAME: CHAPLAIN
+      1   CHAPLAIN       
+      2   CHAPLAIN GROUP       
+ CHOOSE 1-2: 1  CHAPLAIN     
+ NAME: CHAPLAIN// MY NEW CLINIC NAME IS FUNNER
+  
+ Now run that print again. Verify that only the MY NEW CLINIC NAME IS FUN
+ clinic appears in the report, and that it may have the counts of both
+ clinics.
+                  CLINIC: MY NEW CLINIC NAME IS FUN
+ SUBCOUNT  3
+  
+ After the patch is installed, both clinics should appear in the report.
+ Don't forget to restore the names of the clinics!
+  
+ 5. Remedy Tickets 429694, 430874, 433940, 435273, 435986, 438326, 441772:
+ When doing a ^DIC lookup, and DIC(0) contains the "T" parameter, VA FileMan
+ aborts if X (the item being looked up) contains more than 40 characters.
+ This is now fixed.
+ (Routines ^DIC1, ^DIC3, ^DICM)
+  
+ Here's how we test it. Before the patch is installed:
+ >S X=<a string longer than 40 characters>
+ >K DIC S DIC(0)="EMT",DIC=50 D ^DIC
+  
+ <UNDEFINED>EXACT+3^DIC3 *DICR(2,"ORG")
+  
+ After the patch is installed, you won't see this error.
+  
+ 6. Remedy Ticket 441529:
+  
+ If a field is being audited, and it has an audit condition, if you delete
+ the audit condition, the auditing will fail for deletions, although it
+ continues to work for additions. This problem was introduced in patch
+ DI*22*160.
+ (Routine ^DIK1)
+  
+ 7. Remedy Ticket 480112:
+  
+ The VA FileMan Browser does not work if the Terminal Emulator being used
+ causes variables IOSTBM and IOIL to be defined on Kernel sign-in, and IORI
+ is not defined.
+ (Routine ^DDBR)
+  
+ Here's how we test it. Before the patch is installed:
+ FMD>S X="IOSTBM;IOIL" D ENDR^%ZISS
+  
+ FMD>W $D(IOSTBM)
+ 1
+ FMD>W $D(IOIL)
+ 1
+ FMD>W $D(IORI)
+ 0
+ FMD>K ^TMP("EXAMPLE",$J)
+  
+ FMD>F I=1:1:10 S ^TMP("EXAMPLE",$J,I)="THIS IS LINE "_I
+  
+ FMD>W $$TEST^DDBRT
+ 1
+ FMD>D BROWSE^DDBR("^TMP(""EXAMPLE"",$J)","N","Example")
+ << Nothing is displayed >>
+  
+ FMD>D ^%G
+  
+ Device: 
+ Right margin: 80 => 
+ Screen size for paging (0=nopaging)? 24 => 
+ For help on global specifications DO HELP^%G
+ Global ^TMP("DIERR",$J -- NOTE: translation in effect
+ ^TMP("DIERR",543906203,1)=842
+ ^TMP("DIERR",543906203,1,"TEXT",1)="Reverse index cannot be found for
+                                     Terminal Type C-VT320."
+ ^TMP("DIERR",543906203,"E",842,1)=""
+  
+ However, we see that reverse index is indeed defined for this terminal type:
+  
+ Global ^%ZIS(2,242,0) -- NOTE: translation in effect
+ ^%ZIS(2,242,0)="C-VT320^1"
+  
+ Global ^%ZIS(2,242,14) -- NOTE: translation in effect
+ ^%ZIS(2,242,14)="$C(27)_""D""^$C(27)_""M""^$C(27,55)^$C(27,56)^$C(27)_""E"""
+  
+ After the patch is installed, the Browser will work.
+  
+ 8. Remedy Ticket 449884:
+  
+ The API C^%DTC, which adds a given number of days to a date and returns the
+ resulting date, can return an invalid date if the number of days contains a
+ fraction.
+ (Routine ^DIDTC)
+  
+ Here's how we test it. Before the patch is installed:
+ FMD>S MYDT=3101231
+ FMD>F I=.1:.1:1 S X1=MYDT,X2=I D C^%DTC W !,X," +",I
+  
+ 3101231 +.1
+ 3101231 +.2
+ 3101231 +.3
+ 3101301 +.4  <<
+ 3101301 +.5  <<
+ 3110101 +.6
+ 3110101 +.7
+ 3110101 +.8
+ 3110101 +.9
+ 3110101 +1
+ You can see that when .4 or .5 is added to 12/31/2010, the API invents a
+ new month: 13/01/2010.
+  
+ After the patch is installed, the API will settle down to its boring old
+ self.
+  
+ 9. Remedy Ticket 485258:
+  
+ If a field is more than 100 characters, and a new-style cross-reference on
+ that field has a maximum length more than 100 characters, the API
+ $$FIND1^DIC can fail if the item being looked up is more than 30 characters.
+ (Routine ^DICUIX)
+  
+ Here's how we test it. Before the patch is installed:
+ Create a test file with just the .01 field.
+ Make it free text with more than 100 characters.
+ Once you've done that, delete the B cross-reference and create a new-style
+ B cross reference with a maximum length more than 100 characters.
+  
+ Your file might look like this:
+ 16082,.01     NAME                   0;1 FREE TEXT (Required)
+  
+               INPUT TRANSFORM:  K:$L(X)>225!($L(X)<3)!'(X'?1P.E) X
+               LAST EDITED:      APR 19, 2011 
+               HELP-PROMPT:      Answer must be 3-225 characters in length. 
+               FIELD INDEX:      B (#292)    REGULAR    IR    LOOKUP & SORTING
+                   Short Descr:  LOOKUP AND SORTING
+                   Description:  LOOKUP AND SORTING 
+                     Set Logic:  S ^DIZ(16082,"B",$E(X,1,225),DA)=""
+                    Kill Logic:  K ^DIZ(16082,"B",$E(X,1,225),DA)
+                    Whole Kill:  K ^DIZ(16082,"B")
+                          X(1):  NAME  (16082,.01)  (Subscr 1)  (Len 225)
+                                 (forwards)
+  
+ Now edit the file to add a record to it.
+ Make the NAME "Office of Quality & Performance". That's 31 characters.
+  
+ Now let's do a couple of lookups:
+ FMD>S X="Office of Quality & Performance"
+ FMD>W $$FIND1^DIC(16082,,,X)
+ 1 << found it
+ FMD>W $$FIND1^DIC(16082,,"BX",X)
+ 0 << didn't find it.
+  
+ If you change the length of the B cross-reference from 225 to 100
+ characters, both lookups will work.
+  
+ After the patch is installed, the lookups will work regardless of the
+ length of the B cross-reference.
+  
+  
+ 10. Remedy Ticket 487174:
+  
+ The LIST^DIC API aborts when asked to retrieve computed fields within a
+ multiple.
+ (Routine ^DICU2)
+  
+ Here's how we test it. Before the patch is installed:
+  
+ Pick a file with a multiple which has a computed field. The HOSPITAL LOCATION
+ (#44) file will do. The AVAILABILITY (#44.002) subfile contains the DAY OF
+ WEEK (#3) field, which is computed. The API requires an IENS (the second
+ parameter) when a subfile is involved, so we'll use record 16.
+  
+ >D LIST^DIC(44.002,",16,",3)
+  
+ S Y(44.002,3,1)=$S($D(^SC(D0,"T",D1,0)):^(0),1:"") S X=$P(Y(44.002,3,1),U,1)
+ D DW^%DTC S X=X
+ <UNDEFINED>I4+9^DICU2 *D1
+  
+ After the patch is installed the API will give you the day of the week -
+ you'll see it in ^TMP("DILIST",$J
+ (But the API still won't give you the time of day!)
+  
+  
+ Documentation
+ =============
+ No documentation changes were necessary for this patch. No animals were
+ hurt during testing. The most up-to-date VA FileMan end-user documentation
+ is available on the VHA Software Document Library (VDL) at the following
+ Internet Website:
+     http://www.va.gov/vdl/application.asp?appid=5
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ The VA FileMan documentation is also available in HTML format at the 
+ following Intranet Websites:
+  
+   * Getting Started Manual:
+     http://vaww.vista.med.va.gov/fileman/docs/u1/index.shtml
+  
+   * Advanced User Manual:
+     http://vaww.vista.med.va.gov/fileman/docs/u2/index.shtml
+  
+   * APIs/Programmer Manual:
+     http://vaww.vista.med.va.gov/fileman/docs/pm/index.shtml
+  
+   * ScreenMan Tutorial:
+     http://vaww.vista.med.va.gov/fileman/docs/scrnman/index.shtml
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - 31 Aug 2010
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22*165 contains
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch 
+ does not alter or modify any VistA Blood Bank software design 
+ safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22*165 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+ Remedy Tickets
+ ==============
+ 354944
+ 409387
+ 417451
+ 425109
+ 429694
+ 430874
+ 433940
+ 435273
+ 435986
+ 438326
+ 441529
+ 441772
+ 449884
+ 480112
+ 483379
+ 485258
+ 487174
+ 495322
+  
+ Thanks to Test Sites 
+ ====================
+ Big Spring VAMC
+ Philadelphia VAMC
+ Central Texas HCS
+ Upstate NY HCS
+  
+ Routine Summary: 
+ ================
+ Please see the "Routine Information" section. 
+ *Note: Routine: DIPR165 issues a warning during the installation of 
+ this patch if it appears that TaskMan is still running and/or logons 
+ have not been inhibited.
+  
+ Installation Instructions:
+ =========================
+ ** Although queuing of this patch is allowed, it is HIGHLY RECOMMENDED
+ that ALL Users be off the system and VISTA Background jobs be STOPPED
+ before this patch is installed. TaskMan should be stopped or placed in
+ a wait state. Failure to do so may result in 'source routine edited'
+ errors during a database update. Edits may be lost and records may be
+ left in an inconsistent state. An error that occurs before a cross-
+ reference is executed, for example, may lead to corrupted data or hard
+ errors in the future. **
+  
+ Also, please make sure that no other patches are installed until
+ Installation for this patch has completed.
+  
+ The following installation instructions are based upon the premise 
+ that the installer has heeded the above warning.
+  
+ Installation should take less than a minute.
+  
+      1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+ This option will load the KIDS package onto your system.
+  
+      2.  The patch has now been loaded into a transport global on your 
+ system. You now need to use KIDS to install the transport global.
+  
+      3.  On the KIDS menu, under the 'Installation' menu, use the 
+ following options:
+  
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Backup a Transport Global
+  
+      4.  In accordance with the warning at the beginning of the 
+ installation instructions, make sure ALL interactive processes, and 
+ ALL non-interactive background jobs are stopped following your site 
+ specific procedures. TaskMan should be stopped or placed in a wait state.
+ All users should be off the system. NOT performing this step could result
+ in 'source routine edited' error during database updates, and records may
+ be left in an inconsistent state.
+  
+      5.  On the KIDS menu, under the 'Installation' menu, use the 
+ following option:
+  
+            Select Installation Option: Install Package(s)
+            Select INSTALL NAME: DI*22.0*165
+                                 ===========
+  
+ The Environment Check Routine DIPR165 runs automatically during this
+ step. DIPR165 issues a warning if it appears that TaskMan is still 
+ running or logons have not been inhibited. You will also see:
+  
+ I'm checking to ensure that entry 18, CACHE/OpenM,
+ exists in the MUMPS OPERATING SYSTEM (#.7) file.
+ ...It does. 
+      <<If it doesn't, the installation will stop, and you'll need>>
+      <<to correct the situation before the patch will install.   >> 
+  
+            Answer 'YES' to 'Want KIDS to INHIBIT LOGONs during the 
+ install?'
+            Answer 'NO' to 'Want to DISABLE Scheduled Options, Menu 
+ Options, and Protocols?'
+  
+ During the Post-Install process, you will see:
+  Beginning Post-Installation...
+  
+     I'm saving routine DIDT as %DT.
+     I'm saving routine DIDTC as %DTC.
+  
+     I'm checking the settings for CACHE/OpenM
+     in the MUMPS OPERATING SYSTEM (#.7) file.
+     ...I'm changing the GLOBAL LENGTH (MAX) (#2) field from 120 to 250.
+     ...I'm changing the ROUTINE SIZE (MAX) (#3) field from 8000 to 15000.
+     ...I'm changing the INDIVIDUAL SUBSCRIPT LENGTH (#7) field from 63 to 250.
+  
+ Finished Post-Installation.
+  
+      6.  Re-enable all processes stopped in step 4 above.
+  
+ Post Installation
+ =================
+ Upon successful installation of this patch, routine DIPR165 may be 
+ deleted.
+  
+   Example
+   =======
+ >D ^ZTRDEL
+  
+ ROUTINE DELETE
+  
+ All Routines? No => No
+  
+ Routine: DIPR165
+ Routine: 
+ 1 routine
+  
+ 1 routines to DELETE, OK: NO// Y
+ DIPR165  
+ Done.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.0;VA FileMan;**[Patch List]**;Mar 30, 1999;Build 32
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDBR
+    Before: B25667508   After: B25668351  **165**
+Routine Name: DIC1
+    Before: B33524054   After: B33532125  **1,4,17,20,31,48,78,86,70,122,165**
+Routine Name: DIC3
+    Before: B33944165   After: B34032053  **1,16,4,17,20,28,40,86,70,159,
+                                           164,165**
+Routine Name: DICE
+    Before: B16732240   After: B18028605  **26,58,165**
+Routine Name: DICF
+    Before: B32265284   After: B33106724  **20,31,165**
+Routine Name: DICF4
+    Before: B20498815   After: B21205416  **4,31,165**
+Routine Name: DICM
+    Before: B32299770   After: B34755435  **4,20,31,40,149,159,165**
+Routine Name: DICU2
+    Before: B28019483   After: B28509022  **165**
+Routine Name: DICUIX
+    Before: B19550178   After: B19486149  **20,28,67,164,165**
+Routine Name: DIDT
+    Before: B19912051   After: B22414014  **14,35,162,165**
+Routine Name: DIDTC
+    Before: B31975807   After: B31993211  **14,36,71,117,164,165**
+Routine Name: DIK1
+    Before: B14750350   After: B14766986  **1,10,41,146,160,165**
+Routine Name: DINIT21
+    Before: B10881037   After: B10884786  **110,160,165**
+Routine Name: DIPR165
+    Before:       n/a   After: B14785799  **165**
+ 
+Routine list of preceding patches: 58, 122, 160, 162, 164
+
+=============================================================================
+User Information:
+Entered By  : BEUSCHEL,GARY                 Date Entered  : JUN 17, 2010
+Completed By: SINGH,GURBIR                  Date Completed: OCT 31, 2011
+Released By : HARROD,PAUL                   Date Released : NOV 01, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

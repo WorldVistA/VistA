@@ -1,0 +1,208 @@
+$TXT Created by SCRUGGS,Carnetta at DAYT29.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 11/14/11 at 07:49
+=============================================================================
+Run Date: DEC 07, 2011                     Designation: MHV*1*9
+Package : MHV - MYHEALTHEVET                  Priority: EMERGENCY
+Version : 1         SEQ #5                      Status: Released
+                  Compliance Date: DEC 09, 2011
+=============================================================================
+
+Associated patches: (v)MHV*1*5     <<= must be installed BEFORE `MHV*1*9'
+                    (v)MHV*1*6     <<= must be installed BEFORE `MHV*1*9'
+
+Subject: MHV SM PRIMARY CARE PROVIDER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ MHV*1*9 Secure Messaging
+  
+ Summary
+ -------
+ When My HealtheVet (MHV) Secure Messaging (SM) patients are assigned to
+ Primary Care Management Module (PCMM) teams other than their Primary Care
+ provider team, their MHV SM PCMM primary care provider association is 
+ broken.  This results in MHV SM users not able to send messages to/from 
+ their SM Primary Care team. MHV*1*9 uses a different support PCMM call to 
+ always return the patient's currently assigned, Primary Care provider.
+  
+  
+ Detailed Description
+ --------------------
+ Secure Messaging allows patients and clinicians to email each other
+ securely and confidentially, and allows clinicians to post those
+ email threads to the medical record as progress notes.
+  
+ Relationships between patients and clinicians are established based on
+ PCMM providers, clinic appointments and Order Entry/Results Reporting (OE/RR) 
+ teams.  Secure Messaging uses triage groups based on these relationships 
+ to manage which patients are able to email which providers.  More
+ information on Secure Messaging can be found on the MHV Product site
+ http://vawwl.va.gov/MyHea1theVet/, and MHV web site www.myhealth.va.gov.
+  
+ When patients are assigned to other PCMM teams in the electronic VA Medical
+ Record, their MHV SM PCMM provider association is broken.  This results in
+ MHV SM users not able to send messages to/from their SM Primary Care team.
+  
+ Before this patch, MHV application routines (MHVXPAT and MHVXDEMS) call, 
+ IA#1916 SCAPMC - SUPPORTED PCMM CALLS, Application Programmer Interface 
+ (API) call to $$PRPT^SCAPMC() to return a patient's Primary Care provider 
+ to MHV SM. This API does not always return the current Primary Care 
+ provider.
+    
+ MHV*1*9 patch resolves the issue by always returning the SM patient's 
+ Primary Care provider(s) using the support call, IA#1252 PRIMARY CARE 
+ INPUT AND OUTPUT API CALLS, API $$OUTPTPR^SDUTL3().
+  
+  
+ New Service Request (NSR):
+ --------------------------
+ There is no NSR associated with this patch.
+  
+  
+ Remedy Ticket(s):
+ -----------------
+ HD0000000530122 Secure Message patient association issue
+  
+  
+ Remedy Overview:
+ -----------------
+ 1. HD0000000530122 Secure Message patient association issue
+   
+ Problem:
+ --------
+ Secure Message patient association issue.
+  
+ When linking PCMM Primary care team to Secure Messaging, all of the 
+ patient associations are not linking at this site (Butler 529).
+ The VISN secure messaging coordinator reports we are the only site with 
+ this issue and data will soon be collected to show Secure Messaging 
+ Veterans in PCMM only. Secure Messaging allows patient associations with
+ PCMM and clinics and our site is utilizing both to capture all
+ associations.  One PCMM team is functioning in associating all of the 
+ patients but the others are not functioning at all and other associating 
+ some patients.
+   
+ Resolution:
+ ------------
+ Modified routines MHVXPAT and MHVXDEMS to always return the Primary Care 
+ provider.
+  
+  
+ Documentation Retrieval:
+ ------------------------
+ The software for this patch is distributed as KIDS build MHV*1.0*9. This 
+ patch has no changes to the My HealtheVet Technical Manual.  
+ The My HealtheVet Technical Manual is available through the 
+ VistA Documentation Library (VDL) at the following address:
+  
+ http://www.va.gov/vdl/HealtheVet.asp?appID=153
+  
+  
+ Participating Test Sites:
+ -------------------------
+ Durham VAMC
+ Maryland HCS
+ Phoenix VAMC
+ Upstate New York HCS
+ West Palm Beach VAMC
+  
+  
+   ================INSTALLATION INSTRUCTIONS =================
+  
+ The patch is distributed in KIDS format in a PackMan message.
+ This patch requires MHV*1*5 and MHV*1*6 to be installed. 
+  
+ Install time - less than 2 minutes.
+  
+ This patch can be installed with users on the system, and should be
+ installed during off-peak hours.  No options need to be disabled to
+ install this patch.
+  
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+ Select Kernel Installation & Distribution System Option: INStallation
+                                                          ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+ Select Installation Option:
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the
+            INSTALL NAME, enter MHV*1.0*9):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+  
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this
+         patch is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s)
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch:
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+         install? NO //' answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu
+         Options, and Protocols? NO //' answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;My HealtheVet;**[Patch List]**;Aug 23, 2005;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MHVXDEMS
+    Before:  B6081300   After:  B6047250  **5,9**
+Routine Name: MHVXPAT
+    Before: B60657479   After: B62269575  **6,9**
+ 
+Routine list of preceding patches: 5, 6
+
+=============================================================================
+User Information:
+Entered By  : KEEVICAN,MICHAEL              Date Entered  : MAY 18, 2011
+Completed By: OLSEN,JAMES                   Date Completed: DEC 01, 2011
+Released By : BLACK,KATHLEEN                Date Released : DEC 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

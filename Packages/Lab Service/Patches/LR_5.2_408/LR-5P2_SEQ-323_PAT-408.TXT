@@ -1,0 +1,610 @@
+$TXT Created by MORTON,RANDY at BBMGR-FO-HINES.MED.VA.GOV  (KIDS) on Thursday, 04/07/11 at 07:07
+=============================================================================
+Run Date: JUL 18, 2011                     Designation: LR*5.2*408
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #323                    Status: Released
+                  Compliance Date: AUG 18, 2011
+=============================================================================
+
+
+Subject: DISABLE VISTA BLOOD BANK ENTRY/EDIT OPTIONS
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ LR*5.2*408 finalizes the transition from VistA Version 5.2 Blood Bank 
+ package to the VistA Blood Establishment Computer Software (VBECS) 
+ system. Sites with VBECS have already disabled the VistA Version 5.2 
+ Blood Bank package when database conversion was executed with the records 
+ remaining in VistA available as read-only information. The Enter/Edit 
+ options for VistA Version 5.2 Blood Bank are permanently disabled with 
+ the installation of this patch regardless if a database conversion 
+ was performed at the site or if the Blood Bank package is being used.
+  
+ BLOOD BANK CLEARANCE: 
+ =====================
+ VISTA Laboratory Package patch LR*5.2*408 contains changes to software 
+ controlled by VHA DIRECTIVE 2004-058, titled VISTA BLOOD BANK SOFTWARE. 
+ Changes include: 
+ Routines:
+  
+ LRBLDC
+ LRBLDCU
+ LRBLDED
+ LRBLDEL
+ LRBLDK
+ LRBLDLG
+ LRBLDMV
+ LRBLDPH
+ LRBLDR
+ LRBLDRR
+ LRBLDT
+ LRBLDUC
+ LRBLDX
+ LRBLJA
+ LRBLJCK
+ LRBLJD
+ LRBLJED
+ LRBLJL
+ LRBLJLA
+ LRBLJLG
+ LRBLJM
+ LRBLJR
+ LRBLJSH
+ LRBLJT
+ LRBLJW
+ LRBLP
+ LRBLPCS
+ LRBLPE
+ LRBLPED
+ LRBLPH
+ LRBLPQA
+ LRBLPT
+ LRBLPUS
+ LRBLPX
+ LRBLS
+ LRBLST
+ LRBLTX
+ LRBLVAL
+ LRUWG
+  
+ Options:
+  
+ LRBLAR
+ LRBLDA
+ LRBLDAWARD
+ LRBLDC
+ LRBLDCP
+ LRBLDCU
+ LRBLDCX
+ LRBLDD
+ LRBLDDAT
+ LRBLDEDIT
+ LRBLDEF
+ LRBLDK
+ LRBLDLG
+ LRBLDLT
+ LRBLDMV
+ LRBLDO
+ LRBLDPH
+ LRBLDR
+ LRBLDRR
+ LRBLDT
+ LRBLDUC
+ LRBLIDN
+ LRBLIDR
+ LRBLILA
+ LRBLILR
+ LRBLILS
+ LRBLISH
+ LRBLIUC
+ LRBLIUP
+ LRBLIUR
+ LRBLIW
+ LRBLJM
+ LRBLJTR
+ LRBLPCS
+ LRBLPED
+ LRBLPEDIT
+ LRBLPER
+ LRBLPET
+ LRBLPH
+ LRBLPIC
+ LRBLPLOGIN
+ LRBLPOST
+ LRBLPSI
+ LRBLPT
+ LRBLPTXR
+ LRBLPX
+ LRBLRIN
+ LRBLRIS
+ LRBLRIT
+ LRBLSEB
+ LRBLSEC
+ LRBLSED
+ LRBLSEE
+ LRBLSEF
+ LRBLSEH
+ LRBLSEL
+ LRBLSER
+ LRBLSET
+ LRBLSEU
+ LRBLSF
+ LRBLSLL
+ LRBLSMS
+ LRBLSNO
+ LRBLSP
+ LRBLSPP
+ LRBLSRI
+ LRBLSRQ
+ LRBLSSP
+ LRBLST
+ LRBLTTW
+ LRBLTX
+ LRBLVAL
+  
+ All of the above changes have been reviewed by the VISTA Blood Bank 
+ Developer and found to have no unintended impact on the VISTA BLOOD BANK 
+ SOFTWARE control functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*408 have no unintended effect 
+ on Blood Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*408 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ POTENTIAL IMPACT ON SITES: This patch contains changes to 40 routines and 
+ 0 files identified in Veterans Health Administration (VHA) Directive 
+ 2004-058, group B listing. The changes have no unintended effect on Blood 
+ Bank functionality or medical device control functions. The adverse 
+ potential to sites is limited to the disabling of the VistA Blood Bank 
+ Version 5.2 Enter/Edit functionality.
+  
+ VALIDATION REQUIREMENTS BY OPTION: 
+ ==================================
+ The options affected by this patch are being disabled and do not 
+ require validation. 
+  
+ Local validation of the remaining VistA 5.2 Blood Bank options 
+ not disabled by the installation of LR*5.2*408 would only extend to 
+ verifying access to the options. Sites can view data or run reports 
+ from options not included in this patch description. 
+  
+ MINIMAL TEST CASE SCENARIOS BY OPTION, INCLUSIVE OF ALL CONTROL FUNCTIONS:
+ ==========================================================================
+ There are no test case scenarios for this patch.
+  
+ CHANGES IMPLEMENTED:
+ ====================
+  
+ The following files are modified:
+ Access will be restricted on the following files:
+ File #    File Name              Field #     Field Name
+ =====     =========              =======     ==========
+ 62.55     AGGLUTINATION STRENGTH     .01     NAME
+ 62.55     AGGLUTINATION STRENGTH       1     WILL STAND FOR
+ 63.01     BLOOD BANK                 .01     DATE/TIME SPECIMEN TAKEN
+ 63.01     BLOOD BANK                 .03     DATE REPORT COMPLETED
+ 63.01     BLOOD BANK                 .04     ENTERING PERSON
+ 63.01     BLOOD BANK                 .05     SPECIMEN
+ 63.01     BLOOD BANK                .055     COLLECTION SAMPLE
+ 63.01     BLOOD BANK                 .06     ACCESSION NUMBER
+ 63.01     BLOOD BANK                 .07     PHYSICIAN
+ 63.01     BLOOD BANK                 .08     WARD
+ 63.01     BLOOD BANK                 .09     PHLEBOTOMIST
+ 63.01     BLOOD BANK                  .1     DATE/TIME RECEIVED
+ 63.01     BLOOD BANK                 .12     ACCESSION LINK
+ 63.01     BLOOD BANK                 .99     SPECIMEN COMMENT
+ 63.01     BLOOD BANK                 2.1     DIRECT AHG(POLYSPECIFIC)
+ 63.01     BLOOD BANK                 2.2     DIRECT AHG(5 min incub)
+ 63.01     BLOOD BANK                 2.3     DIRECT AHG CC
+ 63.01     BLOOD BANK                 2.4     ANTI-IgG
+ 63.01     BLOOD BANK                 2.5     ANTI-IgG CC
+ 63.01     BLOOD BANK                 2.6     ANTI-COMPLEMENT
+ 63.01     BLOOD BANK                 2.7     ANTI-COMPLEMENT (5 min incub)
+ 63.01     BLOOD BANK                 2.8     ANTI-COMPLEMENT CC
+ 63.01     BLOOD BANK                 2.9     DIRECT AHG INTERPRETATION
+ 63.01     BLOOD BANK                2.91     DIRECT AHG TEST COMMENT
+ 63.01     BLOOD BANK                   3     ELUATE ANTIBODY
+ 63.01     BLOOD BANK                   4     SCREEN CELL METHOD
+ 63.01     BLOOD BANK                   6     ANTIBODY SCREEN 
+                                              INTERPRETATION
+ 63.01     BLOOD BANK                 6.1     RBC ANTIGEN PRESENT
+ 63.01     BLOOD BANK                 6.2     RBC ANTIGEN ABSENT
+ 63.01     BLOOD BANK                 6.3     HLA ANTIGEN PRESENT
+ 63.01     BLOOD BANK                 6.4     HLA ANTIGEN ABSENT
+ 63.01     BLOOD BANK                   7     SERUM ANTIBODY
+ 63.01     BLOOD BANK                   8     ANTIBODY SCREEN COMMENT
+ 63.01     BLOOD BANK                   9     RBC TYPING METHOD
+ 63.01     BLOOD BANK                  10     ABO INTERPRETATION
+ 63.01     BLOOD BANK                10.2     ABO TYPING TECH
+ 63.01     BLOOD BANK                10.3     ABO TESTING COMMENT
+ 63.01     BLOOD BANK                  11     RH  INTERPRETATION
+ 63.01     BLOOD BANK                11.2     RH TYPING TECH
+ 63.01     BLOOD BANK                11.3     RH TESTING COMMENT
+ 63.01     BLOOD BANK                 121     PT CELLS+ANTI D (sal)
+ 63.01     BLOOD BANK                 122     PT CELLS+RH CTRL (sal)
+ 63.01     BLOOD BANK                 123     PT CELLS(sal)+ANTI D(hp IS)
+ 63.01     BLOOD BANK                 124     PT CELLS(ser)+ANTI D(hp IS)
+ 63.01     BLOOD BANK                 125     PT CELLS+ANTI D (hp 37)
+ 63.01     BLOOD BANK                 126     PT CELLS+ANTI D (hp AHG)
+ 63.01     BLOOD BANK                 127     PT CELLS+ANTI D SLIDE (hp)
+ 63.01     BLOOD BANK                 128     PT CELLS(sal)+RH CTRL (hp IS)
+ 63.01     BLOOD BANK                 129     PT CELLS(ser)+RH CTRL(hp IS)
+ 63.01     BLOOD BANK               129.1     PT CELLS+RH CTRL (hp 37)
+ 63.01     BLOOD BANK              129.11     PT CELLS+RH CTRL (hp AHG)
+ 63.01     BLOOD BANK              129.12     PT CELLS+RH CTRL SLIDE (hp)
+ 63.01     BLOOD BANK                 131     INTERPRETATION OF RH TESTING
+ 63.01     BLOOD BANK                 132     RH TEST COMMENT
+ 63.01     BLOOD BANK                 133     PT Cells(sal)+Anti D(mod) IS
+ 63.01     BLOOD BANK                 134     PT Cells(ser)+Anti D(mod) IS
+ 63.01     BLOOD BANK                 135     PT Cells+Anti D(mod) 37
+ 63.01     BLOOD BANK                 136     PT Cells+Anti D(mod) AHG
+ 63.01     BLOOD BANK                 138     PT Cells(sal)+RH Ctrl(sal) IS
+ 63.01     BLOOD BANK                 139     PT Cells(ser)+RH Ctrl(sal) IS
+ 63.01     BLOOD BANK               139.1     PT Cells+RH Ctrl(sal) 37
+ 63.01     BLOOD BANK              139.11     PT Cells+RH Ctrl(sal) AHG
+ 63.01     BLOOD BANK                 141     PT CELLS(ser)+ANTI A IS
+ 63.01     BLOOD BANK                 142     PT CELLS(sal)+ANTI A IS
+ 63.01     BLOOD BANK                 143     PT CELLS+ANTI A SLIDE
+ 63.01     BLOOD BANK                 144     PT CELLS(ser)+ANTI B IS
+ 63.01     BLOOD BANK                 145     PT CELLS(sal)+ANTI B IS
+ 63.01     BLOOD BANK                 146     PT CELLS+ANTI B SLIDE
+ 63.01     BLOOD BANK                 147     PT CELLS(ser)+ANTI A,B IS
+ 63.01     BLOOD BANK                 148     PT CELLS(ser)+ANTI A,B (RT)
+ 63.01     BLOOD BANK                 149     PT CELLS(sal)+ANTI A,B (IS)
+ 63.01     BLOOD BANK               149.1     PT CELLS(sal)+ANTI A,B (RT)
+ 63.01     BLOOD BANK              149.11     PT CELLS+ANTI A,B SLIDE
+ 63.01     BLOOD BANK              149.12     PT SERUM+A1 CELLS
+ 63.01     BLOOD BANK              149.13     PT SERUM+B CELLS
+ 63.01     BLOOD BANK                 151     INTERPRETATION OF ABO TESTING
+ 63.01     BLOOD BANK                 152     ABO TESTING COMMENT
+ 63.01     BLOOD BANK                 153     INTERPRETATION ABO 
+                                              GROUP(cell)
+ 63.01     BLOOD BANK                 154     INTERPRETATION ABO GROUP(ser)
+ 63.011    RBC ANTIGEN PRESENT        .01     RBC ANTIGEN PRESENT
+ 63.011    RBC ANTIGEN PRESENT        .02     COMMENT
+ 63.0112   RBC ANTIGEN ABSENT         .01     RBC ANTIGEN ABSENT
+ 63.0112   RBC ANTIGEN ABSENT         .02     COMMENT
+ 63.0114   HLA ANTIGEN ABSENT         .01     HLA ANTIGEN ABSENT
+ 63.0114   HLA ANTIGEN ABSENT         .02     COMMENT
+ 63.012    ELUATE ANTIBODY            .01     ELUATE ANTIBODY
+ 63.013    HLA ANTIGEN PRESENT        .01     HLA ANTIGEN PRESENT
+ 63.013    HLA ANTIGEN PRESENT        .02     COMMENT
+ 63.014    SCREEN CELL METHOD         .01     SCREEN CELL METHOD
+ 63.014    SCREEN CELL METHOD         .02     TECHNIQUE
+ 63.014    SCREEN CELL METHOD           1     SCREEN CELL
+ 63.015    SCREEN CELL                .01     SCREEN CELL
+ 63.015    SCREEN CELL                .02     SOURCE
+ 63.015    SCREEN CELL                .03     INTERPRETATION
+ 63.015    SCREEN CELL                .04     IS
+ 63.015    SCREEN CELL                .05     37 C
+ 63.015    SCREEN CELL                .06     AHG
+ 63.015    SCREEN CELL                .07     CONTROL CELL
+ 63.015    SCREEN CELL                .08     ROOM TEMP
+ 63.015    SCREEN CELL                .09     12-18 C
+ 63.015    SCREEN CELL                 .1     4 C
+ 63.018    RBC TYPING METHOD          .01     RBC TYPING METHOD
+ 63.018    RBC TYPING METHOD          .02     TECHNIQUE
+ 63.018    RBC TYPING METHOD            1     ANTISERUM
+ 63.019    ANTISERUM                  .01     ANTISERUM
+ 63.019    ANTISERUM                  .02     LOT #
+ 63.019    ANTISERUM                  .03     INTERPRETATION
+ 63.019    ANTISERUM                  .04     IS
+ 63.019    ANTISERUM                  .05     37 C
+ 63.019    ANTISERUM                  .06     AHG
+ 63.019    ANTISERUM                  .07     CONTROL CELL
+ 63.019    ANTISERUM                  .08     ROOM TEMP
+ 63.019    ANTISERUM                  .09     12-18 C
+ 63.019    ANTISERUM                   .1     4 C
+ 63.199    SPECIMEN COMMENT           .01     SPECIMEN COMMENT
+ 63.46     SERUM ANTIBODY             .01     SERUM ANTIBODY
+ 63.46     SERUM ANTIBODY             .02     ANTIBODY COMMENT
+ 63.48     ANTIBODY SCREEN COMMENT    .01     ANTIBODY SCREEN COMMENT
+ 65.50     Entire File
+ 66.20     Entire File
+ 66.50     Entire File
+ 66.90     Entire File
+  
+ The following options are placed out of order:
+ Option Name   Option Text
+ =======================================================================
+ LRBLAR        Remove data change audits
+ LRBLDA        Donor collection/deferral edit
+ LRBLDAWARD    Acknowledge donor award by deletion
+ LRBLDC        Donor collection/processing
+ LRBLDCP       Collection disposition/component preparation
+ LRBLDCU       Cumulative donations and awards
+ LRBLDCX       Edit donor consent
+ LRBLDD        Donor demographics
+ LRBLDDAT      ABO/Rh testing of donor units
+ LRBLDEDIT     Blood donor group/type edit
+ LRBLDEF       Permanent deferral/special comments
+ LRBLDK        Remove ex-donors
+ LRBLDLG       Donor registration
+ LRBLDLT       Enter/edit donor letters
+ LRBLDMV       Move a blood donation
+ LRBLDO        Old blood donor records
+ LRBLDPH       Donor phenotyping
+ LRBLDR        Donor history, physical and consent form
+ LRBLDRR       Test review/Component labeling/release
+ LRBLDT        Lab tests(not ABO/Rh) on donor units
+ LRBLDUC       Donor unit ABO/Rh recheck
+ LRBLIDN       Disposition -not transfused
+ LRBLIDR       Disposition -relocation
+ LRBLILA       Unit CAUTION tag labels
+ LRBLILR       Log-in regular (invoices)
+ LRBLILS       Enter blood inventory typing charges
+ LRBLISH       Shipping invoices for blood components
+ LRBLIUC       Unit ABO/Rh confirmation
+ LRBLIUP       Unit phenotyping
+ LRBLIUR       Units release to stock (cancel) by patient
+ LRBLIW        Inventory ABO/Rh testing worksheet
+ LRBLJM        Edit pooled blood product
+ LRBLJTR       Transfer unit to new division
+ LRBLPCS       Blood component requests
+ LRBLPED       Pediatric unit preparation
+ LRBLPEDIT     Patient ABO/Rh edit
+ LRBLPER       Previous records
+ LRBLPET       Enter test data
+ LRBLPH        Patient Medication List
+ LRBLPIC       Select units for patients
+ LRBLPLOGIN    Specimen log-in
+ LRBLPOST      File 81 conversion
+ LRBLPSI       Special instructions
+ LRBLPT        Blood transfusion results
+ LRBLPTXR      Unknown unit transfusion reaction
+ LRBLPX        Enter crossmatch results
+ LRBLRIN       Supplier invoices (inventory)
+ LRBLRIS       Special typing charges (inventory)
+ LRBLRIT       Supplier transactions (inventory)
+ LRBLSEB       Edit blood product file
+ LRBLSEC       Edit unit - patient fields
+ LRBLSED       Edit unit disposition fields
+ LRBLSEE       Free autologous/directed donor units
+ LRBLSEF       Edit blood bank descriptions file
+ LRBLSEH       Edit donor history questions
+ LRBLSEL       Edit unit log-in
+ LRBLSER       Remove units with final disposition
+ LRBLSET       Tests for inclusion in transfusion report
+ LRBLSEU       Edit blood bank utility file
+ LRBLSF        Edit number of lines in a label
+ LRBLSLL       Edit lab letter file
+ LRBLSMS       Maximum surgical blood order edit
+ LRBLSNO       Edit Corresponding Antigen/Antibody
+ LRBLSP        Blood bank patient edit options
+ LRBLSPP       Edit previous transfusion record
+ LRBLSRI       Remove inappropriate transfusion requests
+ LRBLSRQ       Edit Blood Component Request File
+ LRBLSSP       Edit blood bank site parameters
+ LRBLST        Tests for display on patient look-up
+ LRBLTTW       Test worklist
+ LRBLTX        Tests for transfusion follow-up
+ LRBLVAL       Blood bank validation documentation
+  
+  
+ ROUTINES MODIFIED DURING THE INSTALLATION OF THIS PATCH:
+ ROUTINE:
+ ========
+ LRBLDC
+ LRBLDCU
+ LRBLDED
+ LRBLDEL
+ LRBLDK
+ LRBLDLG
+ LRBLDMV
+ LRBLDPH
+ LRBLDR
+ LRBLDRR
+ LRBLDT
+ LRBLDUC
+ LRBLDX
+ LRBLJA
+ LRBLJCK
+ LRBLJD
+ LRBLJED
+ LRBLJL
+ LRBLJLA
+ LRBLJLG
+ LRBLJM
+ LRBLJR
+ LRBLJSH
+ LRBLJT
+ LRBLJW
+ LRBLP
+ LRBLPCS
+ LRBLPE
+ LRBLPED
+ LRBLPH
+ LRBLPQA
+ LRBLPT
+ LRBLPUS
+ LRBLPX
+ LRBLS
+ LRBLST
+ LRBLTX
+ LRBLVAL
+ LRUWG
+  
+ REMEDY TICKETS:
+ ===============
+ Not applicable
+  
+  
+ TEST SITES:
+ ===========
+  DURHAM, NC 
+  HEARTLAND-EAST HCS 
+  HUNTINGTON, WV
+  MILWAUKEE, WI 
+  PHILADELPHIA, PA 
+  SAN DIEGO, CA 
+  SAN FRANCISCO, CA 
+  
+  
+ INSTALLATION INSTRUCTIONS: 
+ ========================== 
+  
+ Note: Users must not access VistA Blood Bank Version 5.2 options during 
+ the installation of this patch.
+  
+ No laboratory background jobs need to be stopped. No options need to be 
+ placed out of service.
+  
+ This patch may be loaded with users on the system.
+ Installation will take less than 5 minutes.
+  
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+    
+   2.  From the Kernel Installation and Distribution System Menu, select 
+       the Installation menu.  
+    
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter LR*5.2*408):
+       a.  Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch.  It will NOT
+           backup any other changes such as DDs or templates.
+       b.  Compare Transport Global to Current System  - this option will
+           allow you to view all changes that will be made when the patch
+           is installed.  It compares all components of the patch 
+           (routines, DDs, templates, etc.).
+  
+       NOTE:
+       The Compare Transport Global will generate the following warning 
+       for the Routine LRUWG:
+  
+       *** WARNING, your routine has different patches than the incoming
+       routine ***
+  
+       This is an expected result for this routine. Ignore this message 
+       and continue with the installation. This warning is reported 
+       because the LRUWG routine has not been patched/modified previously 
+       and the Compare Transport Global routine is expecting that all 
+       routines will have a prior version statement on the second line, 
+       which this routine does not. This issue is documented to be fixed 
+       in patch XU*8*547.
+  
+       c.  Verify Checksums in Transport Global - this option will
+           allow you to ensure the integrity of the routines that are in
+           the transport global.
+       d.  Print Transport Global - this option will allow you to view the
+           components of the KIDS build.
+    
+   4.  Use the Install Package(s) option and select the package 
+       LR*5.2*408.
+    
+   5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', respond NO.
+    
+   6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR408
+    Before:       n/a   After: B26812435  **408**
+Routine Name: LRBLDC
+    Before: B18246921   After: B18272496  **72,247,408**
+Routine Name: LRBLDCU
+    Before:  B6912463   After:  B6930637  **72,247,408**
+Routine Name: LRBLDED
+    Before:  B7786610   After:  B7884301  **90,247,408**
+Routine Name: LRBLDEL
+    Before: B12423140   After: B12432038  **247,408**
+Routine Name: LRBLDK
+    Before:  B4986215   After:  B4995737  **247,408**
+Routine Name: LRBLDLG
+    Before: B24837211   After: B24862807  **90,247,408**
+Routine Name: LRBLDMV
+    Before:  B8125382   After:  B8139587  **26,247,408**
+Routine Name: LRBLDPH
+    Before: B12474385   After: B12502276  **247,408**
+Routine Name: LRBLDR
+    Before: B20180505   After: B20207748  **72,247,408**
+Routine Name: LRBLDRR
+    Before: B25487142   After: B25500537  **72,90,97,247,408**
+Routine Name: LRBLDT
+    Before: B18989962   After: B19003681  **72,97,247,408**
+Routine Name: LRBLDUC
+    Before:  B6967983   After:  B6977505  **72,247,408**
+Routine Name: LRBLDX
+    Before:  B6289087   After:  B6297985  **247,408**
+Routine Name: LRBLJA
+    Before: B22206171   After: B22277627  **72,90,247,408**
+Routine Name: LRBLJCK
+    Before: B13704675   After: B13736751  **72,247,267,408**
+Routine Name: LRBLJD
+    Before: B17526948   After: B17555322  **25,72,78,247,267,408**
+Routine Name: LRBLJED
+    Before: B19813234   After: B19911409  **72,90,247,408**
+Routine Name: LRBLJL
+    Before: B32044357   After: B32065813  **16,72,79,90,247,408**
+Routine Name: LRBLJLA
+    Before: B12954422   After: B12968369  **72,247,408**
+Routine Name: LRBLJLG
+    Before: B33485546   After: B33508403  **72,139,247,267,408**
+Routine Name: LRBLJM
+    Before:  B7587108   After:  B7598421  **90,247,267,408**
+Routine Name: LRBLJR
+    Before: B11541905   After: B11560523  **72,247,267,408**
+Routine Name: LRBLJSH
+    Before: B13270669   After: B13303384  **247,408**
+Routine Name: LRBLJT
+    Before: B12315310   After: B12324211  **247,267,408**
+Routine Name: LRBLJW
+    Before: B15908424   After: B15926526  **72,247,408**
+Routine Name: LRBLP
+    Before: B23063826   After: B23154871  **247,408**
+Routine Name: LRBLPCS
+    Before: B18630025   After: B18635044  **1,72,247,267,408**
+Routine Name: LRBLPE
+    Before: B16478868   After: B16485111  **35,72,100,121,247,408**
+Routine Name: LRBLPED
+    Before: B30672400   After: B30696766  **72,247,267,408**
+Routine Name: LRBLPH
+    Before:  B4606867   After:  B4630075  **247,408**
+Routine Name: LRBLPQA
+    Before: B11183171   After: B11222268  **247,408**
+Routine Name: LRBLPT
+    Before: B11904359   After: B11913257  **72,247,408**
+Routine Name: LRBLPUS
+    Before: B22228922   After: B22233347  **72,247,267,275,408**
+Routine Name: LRBLPX
+    Before: B24141645   After: B24148620  **72,77,247,275,408**
+Routine Name: LRBLS
+    Before: B20512427   After: B20867231  **97,247,267,275,315,408**
+Routine Name: LRBLST
+    Before:  B4195346   After:  B4239069  **247,408**
+Routine Name: LRBLTX
+    Before: B19096112   After: B19105208  **247,408**
+Routine Name: LRBLVAL
+    Before:   B807361   After:   B825391  **247,408**
+Routine Name: LRUWG
+    Before: B14787480   After: B14796767  **408**
+ 
+Routine list of preceding patches: 315
+
+=============================================================================
+User Information:
+Entered By  : MORTON,RANDY                  Date Entered  : NOV 09, 2010
+Completed By: KANIA,KEVIN                   Date Completed: JUN 27, 2011
+Released By : CURTIS,SEAN                   Date Released : JUL 18, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

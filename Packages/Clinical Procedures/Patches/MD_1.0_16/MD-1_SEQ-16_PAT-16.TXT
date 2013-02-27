@@ -1,0 +1,993 @@
+
+=============================================================================
+Run Date: JUN 10, 2011                     Designation: MD*1*16
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #16                      Status: Released
+                  Compliance Date: JUL 11, 2011
+=============================================================================
+
+Associated patches: (v)GMRV*5*23   <<= must be installed BEFORE `MD*1*16'
+                    (v)MD*1*21     <<= must be installed BEFORE `MD*1*16'
+
+Subject: Clinical Flowsheets
+
+Category: 
+  - Data Dictionary
+  - Other
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Clinical Flowsheets patch of the Clinical Procedures (CP) package 
+ provides an electronic representation of the traditional paper flowsheet
+ maintained during each inpatient stay.  Vitals, Intake/Output, Wound 
+ Documentation, etc., are examples of data types that can be recorded via 
+ Clinical Flowsheets into the Veterans Health Information System and 
+ Technology Architecture (VistA) system.  Clinical Flowsheets provides a 
+ departure from its predecessor applications by storing collected 
+ information as discrete data.  Some date elements, such as vital signs, 
+ are available to the Vitals Package and Computerized Patient Record 
+ System (CPRS).  Various reports built on the other data elements are 
+ available for CPRS in the form of TIU Notes.  
+  
+ There are two ways to enter data into Clinical Flowsheets: manually and 
+ via Health Level 7 (HL7) messaging.  Any instrument or external system 
+ capable of sending HL7 messages can be considered a source of data for 
+ Clinical Flowsheets (provided that the HL7 messages conform to Clinical 
+ Flowsheets requirements).
+  
+ Clinical Flowsheets uses VistA Data Extraction Framework (VDEF) support, 
+ HL7 messaging, and the CP Gateway service to notify the medical device of 
+ the patient's admission, discharge, and transfer.  
+  
+ The Clinical Flowsheets patch consists of three (3) Graphical User 
+ Interface (GUI) components and one (1) Kernel Installation & Distribution 
+ System (KIDS) build:
+  
+   1)       Clinical Observations (CliO) Generic Interface (CGI)
+   2)       CP Flowsheets
+   3)       CP Console
+  
+   1)       MD1_0P16.KID 
+  
+  
+  
+ 1.  FEATURE:  Provide GUI to view, enter and edit patient's data.  
+ Clinical Flowsheets provides a user-friendly, customizable, GUI with
+ "flow-sheets" to view, manually edit, and manually enter patient ICU 
+ Vitals and I&O information.
+  
+ 2.  FEATURE:  Interface with patient medical monitoring devices.
+ Clinical Flowsheets project and application will provide an interface for 
+ the collection of patient data from the monitoring devices.  The 
+ collected and verified data will be stored automatically in the 
+ appropriate VistA database(s).
+  
+ 3.  FEATURE:  Introduces the Admission Discharge Transfer (ADT) system.
+ With VistA Data Extraction Framework (VDEF) support, Health Level 7 (HL7) 
+ messaging, and the CP Gateway service, CP's ADT sub-system will notify 
+ the ICU device of the patient admission, discharge, and transfer.  This
+ patch does not support events that do not provide bed/ward location data. 
+  
+ 4.  FEATURE:  Standardized Terminology Files.
+ Clinical Flowsheets supports standardized terminology files with Vitals 
+ Measurements, and Intake & Output (I&O) terms.  This standardized
+ terminology file is also a component of patch MD*1*16.
+  
+ 5.  FEATURE:  Interface with other VistA applications and systems.
+ Clinical Flowsheets interfaces with other VistA applications such as 
+ Vitals, Computerized Patient Record System, and Text Integration 
+ Utilities.
+  
+  
+  
+ ASSOCIATED NOIS/REMEDY TICKET
+ =============================
+ NONE 
+  
+  
+ ASSOCIATED E3R
+ ==============
+ NONE
+  
+  
+ 508 Compliance
+ ==============
+ Clinical Flowsheets is in full compliance with the Section 508
+ Rehabilitation Act of 1973 (EDMS 318043).
+  
+  
+ NEW FILES
+ =========
+ 704.001     CP_CONSOLE_ACL                 
+ 704.002     CP_HL7_LOG                     
+ 704.004     CP_HL7_LOG_REASON              
+ 704.005     CP_MOVEMENT_AUDIT              
+ 704.006     CP_PROTOCOL_LOCATION           
+ 704.007     CP_SHIFT                       
+ 704.008     CP_SCHEDULE                    
+ 704.101     TERM                           
+ 704.102     TERM_TYPE                      
+ 704.103     TERM_QUALIFIER_PAIR            
+ 704.104     TERM_UNIT_CONVERSION           
+ 704.105     TERM_UNIT_PAIR                 
+ 704.106     TERM_CHILD_PAIR                
+ 704.107     TERM_RANGE_CHECK               
+ 704.108     TERM_MAPPING_TABLE             
+ 704.109     TERM_MAPPING_PAIR              
+ 704.111     OBS_VIEW                       
+ 704.1111    OBS_VIEW_TERMINOLOGY           
+ 704.1112    OBS_VIEW_FILTER                                
+ 704.112     OBS_FLOWSHEET                  
+ 704.1121    OBS_FLOWSHEET_PAGE             
+ 704.1122    OBS_FLOWSHEET_SUPP_PAGE        
+ 704.1123    OBS_FLOWSHEET_TOTAL            
+ 704.113     OBS_TOTAL                      
+ 704.1131    OBS_TOTAL_TERMINOLOGY          
+ 704.115     OBS_ALARM                      
+ 704.116     OBS_SET                        
+ 704.1161    OBS_SET_OBS_PAIR               
+ 704.117     OBS                            
+ 704.118     OBS_QUALIFIER                  
+ 704.119     OBS_AUDIT                      
+ 704.121     CP_KARDEX_ACTION               
+ 704.1211    CP_KARDEX_EVENTS               
+ 704.1212    CP_KARDEX_AUDIT                
+  
+  
+ DATA DICTIONARY CHANGES
+ =======================
+  
+ DATA FILES:
+    702.01    CP DEFINITION   MODIFY  FIELD   #.04    DEFAULT TIU NOTE
+                              ADD     FIELD   #.11    HIGH VOLUME
+                              ADD     FIELD   #.13    ID
+                              ADD     FIELD   #.9     DESCRIPTION
+  
+    702.09    CP INSTRUMENT   ADD     FIELD   #.1     ID
+                              MODIFY  FIELD   #.12    PROCESSING CODE
+  
+ NEW DIALOGS:                                        
+    7040020.001                                    
+    7040020.002                                    
+    7040020.003                                    
+    7040020.004     
+  
+ NEW OPTIONS:                                        
+    MD CLIO                                        
+    MDCP GATEWAY CONTEXT                           
+  
+ NEW SECURITY KEYS:                                  
+    MD ADMINISTRATOR                               
+    MD HL7 MANAGER                                 
+    MD MANAGER                                     
+    MD READ-ONLY                                   
+    MD TRAINEE                                     
+  
+ NEW PROTOCOLS:                                      
+    MD DGPM PATIENT MOVEMENT                       
+    MDC ADT_A01 OUTBOUND                           
+    MDC ADT_A02 OUTBOUND                           
+    MDC ADT_A03 OUTBOUND                           
+    MDC ADT_A11 OUTBOUND                           
+    MDC ADT_A12 OUTBOUND                           
+    MDC ADT_A13 OUTBOUND                           
+    MDC CPAN VS                                    
+    MDC CPCAN VS                                   
+    MDC CPCDE VS                                   
+    MDC CPCT VS                                    
+    MDC CPDE VS                                    
+    MDC CPTP VS                                    
+    MDC CPUPI VS                                   
+    MDHL Device Client                             
+    MDHL Device Server                             
+  
+ NEW HL7 APPLICATION PARAMETERS:                     
+    MDC ADT OUTBOUND SPL                           
+    MDC CPAN                                       
+    MDC CPCAN                                      
+    MDC CPCDE                                      
+    MDC CPCT                                       
+    MDC CPDE                                       
+    MDC CPTP                                       
+    MDC CPUPI                                      
+    MDHL-IN                                        
+    MDHL-OUT                                       
+  
+ NEW HL LOGICAL LINKS:                               
+    MDHL IN                                        
+  
+ NEW PARAMETER DEFINITIONS:                          
+    MD COMMANDS                                    
+    MD PARAMETERS                                  
+  
+ NEW REMOTE PROCEDURES:                              
+    MD CLIO                                        
+    MD GATEWAY                                     
+    MDCP CORRECTIONS BY IEN                        
+    MDCP MESSAGE BY IEN                            
+    MDCP RESULTS BY STATUS                         
+    MDCP UPDATE MESSAGE REASON                     
+    MDCP UPDATE MESSAGE STATUS                     
+  
+  
+ TEST SITES:
+ ===========
+ Heartland East VAMC (St. Louis)
+ Eastern Colorado HCS (Denver)
+ Ralph Johnson VAMC (Charleston)
+ VA Pittsburgh HCS, Heinz and University
+ VA Maryland Health Care (Baltimore)
+ Robley Rex VAMC(Louisville)
+ Lexington VAMC
+  
+  
+ SERVER SOFTWARE (VistA Patch MD*1*16) INSTALLATION INSTRUCTIONS:
+ ================================================================
+  
+ NOTE:  Vitals patches GMRV*5*22 and 23 are pre-requisites to the 
+ installation of MD*1*16 software.
+  
+ To obtain all updated MD*1*16 files, use File Transfer Protocol (FTP)
+ to retrieve MD1_0P16.KID from one of the following OI Field Offices'
+ ANONYMOUS.SOFTWARE directories:
+  
+       OI Field Office    FTP Address                Directory
+       ---------------    -----------                ---------
+       Albany             ftp.fo-albany.med.va.gov   anonymous.software
+       Hines              ftp.fo-hines.med.va.gov    anonymous.software
+       Salt Lake City     ftp.fo-slc.med.va.gov      anonymous.software
+  
+  
+ NOTE:  MD*1*16 (Clinical Flowsheets) includes "pre-install" routine 
+ MDPRE16 and "post-install" routine MDPOST16.  For Clinical Flowsheets to 
+ function Properly, those routines must finish completely.  A message will 
+ display on screen, among other installation messages, documenting when 
+ each of those routines is "complete"/"done". The MDPRE16 routine will 
+ install the Care Action Schedule function and load and map the terms for 
+ the Terminology file. The MDPOST16 routine will load the VDEF event-type
+ protocols.
+  
+  
+ This patch can be loaded with users in the system. Installation time is 
+ less than five minutes.
+  
+ ATTENTION: Installation of this patch should NOT BE QUEUED.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+ Please note: the time required to complete the post-install and to 
+ receive the MailMan message will vary depending on your system load.
+  
+  1.  Locate the CP Flowsheets KIDS Build Host File containing this patch 
+      within your VISTA system (e.g., "SYS$USER:[XXX]MD1_0P16.KID").
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter MD*1.0*16)
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      MD*1.0*16
+  
+      a.  MD*1.0*16 will import a MailMan Mail Group.  When prompted 
+          "Enter the Coordinator for Mail Group 'MD DEVICE ERRORS':
+          COORDINATOR,NAME//", answer with the appropriate mail group
+          coordinator.
+      b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+          of Install? NO//', answer NO.
+      c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO. 
+      d.  When prompted 'Want to DISABLE Scheduled Options and Menu Options
+          and Protocols? NO//', answer NO.
+  
+  
+ Example Server Installation:
+ =============================
+ Select Kernel Installation & Distribution System Option: Installation
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 1  Load a Distribution
+ Enter a Host File: USER$:[HFS]MD1_0P16.KID
+  
+ KIDS Distribution saved on Aug 26, 2009@14:10:09
+ Comment: TRANSPORTED 26 AUGUST 2009 14:10
+  
+ This Distribution contains Transport Globals for the following Package(s):
+ Build MD*1.0*16 
+  
+ OK to continue with Load? NO// YES
+  
+ Distribution OK!
+  
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+  
+    MD*1.0*16
+ Use INSTALL NAME: MD*1.0*16 to install this Distribution.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: Install Package(s)
+ Select INSTALL NAME:    MD*1.0*16     Loaded from Distribution  
+ 9/18/09@12:12:48
+      => TRANSPORTED 26 AUGUST 2009 14:10  ;Created on Aug 26, 
+ 2009@14:10:09
+  
+ This Distribution was loaded on Sep 18, 2009@12:12:48 with header of 
+    TRANSPORTED 26 AUGUST 2009 14:10  ;Created on Aug 26, 2009@14:10:09
+    It consisted of the following Install(s):
+       MD*1.0*16
+ Checking Install for Package MD*1.0*16
+  
+ Install Questions for MD*1.0*16
+  
+ Incoming Files:
+  
+  
+    702.01    CP DEFINITION
+ Note:  You already have the 'CP DEFINITION' File.
+  
+  
+    702.09    CP INSTRUMENT
+ Note:  You already have the 'CP INSTRUMENT' File.
+  
+  
+    704.001   CP_CONSOLE_ACL
+  
+    704.002   CP_HL7_LOG
+  
+    704.004   CP_HL7_LOG_REASON
+  
+    704.005   CP_MOVEMENT_AUDIT
+  
+    704.006   CP_PROTOCOL_LOCATION
+  
+    704.007   CP_SHIFT
+  
+    704.008   CP_SCHEDULE
+  
+    704.101   TERM
+  
+    704.102   TERM_TYPE  (including data)
+  
+    704.103   TERM_QUALIFIER_PAIR
+  
+    704.104   TERM_UNIT_CONVERSION
+  
+    704.105   TERM_UNIT_PAIR
+  
+    704.106   TERM_CHILD_PAIR
+  
+    704.107   TERM_RANGE_CHECK
+  
+    704.108   TERM_MAPPING_TABLE
+  
+    704.109   TERM_MAPPING_PAIR
+  
+    704.111   OBS_VIEW
+  
+    704.1111  OBS_VIEW_TERMINOLOGY
+  
+    704.1112  OBS_VIEW_FILTER
+  
+    704.112   OBS_FLOWSHEET
+  
+    704.1121  OBS_FLOWSHEET_PAGE
+  
+    704.1122  OBS_FLOWSHEET_SUPP_PAGE
+  
+    704.1123  OBS_FLOWSHEET_TOTAL
+  
+    704.113   OBS_TOTAL
+  
+    704.1131  OBS_TOTAL_TERMINOLOGY
+  
+    704.115   OBS_ALARM
+  
+    704.116   OBS_SET
+  
+    704.1161  OBS_SET_OBS_PAIR
+  
+    704.117   OBS
+  
+    704.118   OBS_QUALIFIER
+  
+    704.119   OBS_AUDIT
+  
+    704.121   CP_KARDEX_ACTION
+  
+    704.1211  CP_KARDEX_EVENTS
+  
+    704.1212  CP_KARDEX_AUDIT
+  
+ Incoming Mail Groups:
+  
+ Enter the Coordinator for Mail Group 'MD DEVICE ERRORS': 
+ COORDINATOR,MAIL//      
+  CITY     STATE     INIT          OCCUPATION
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME// 0;132;9999  GENERIC INCOMING TELNET
+  
+  
+  Install Started for MD*1.0*16 : 
+                Sep 18, 2009@12:20:09
+  
+ Build Distribution Date: Aug 26, 2009
+  
+  Installing Routines:
+                Sep 18, 2009@12:20:10
+  
+  Running Pre-Install Routine: ^MDPRE16
+  Removing existing Clinical Data Model files.
+  MD*1.0*16 Pre-Init Tasks Done.
+  
+  Installing Data Dictionaries: 
+                Sep 18, 2009@12:20:19
+  
+  Installing Data: 
+                Sep 18, 2009@12:20:19
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing SECURITY KEY
+  
+  Installing DIALOG
+  
+  Installing MAIL GROUP
+  
+  Installing HL LOGICAL LINK
+  
+  Installing HL7 APPLICATION PARAMETER
+  
+  Installing PROTOCOL
+  
+  Installing REMOTE PROCEDURE
+  
+  Installing OPTION
+  
+  Installing PARAMETER DEFINITION
+                Sep 18, 2009@12:20:20
+  
+  Running Post-Install Routine: ^MDPOST16
+  Installing command file...
+  Installing command 'AddADTTarget'...
+  Installing command 'AddBattery'...
+  Installing command 'AddFlowsheet'...
+  Installing command 'AddFlowsheetPage'...
+  Installing command 'AddFlowsheetTotal'...
+  Installing command 'AddFlowsheetView'...
+  Installing command 'AddFlowsheetViewFilter'...
+  Installing command 'AddFlowsheetViewTerm'...
+  Installing command 'AddInstrument'...
+  Installing command 'AddKardexAction'...
+  Installing command 'AddKardexAudit'...
+  Installing command 'AddKardexEvent'...
+  Installing command 'AddMappingTable'...
+  Installing command 'AddMappingTableTerm'...
+  Installing command 'AddObservation'...
+  Installing command 'AddObservationAudit'...
+  Installing command 'AddObservationToSet'...
+  Installing command 'AddPatientAlarm'...
+  Installing command 'AddProcedure'...
+  Installing command 'AddProcedureInstrument'...
+  Installing command 'AddQualifier'...
+  Installing command 'AddSchedule'...
+  Installing command 'AddSet'...
+  Installing command 'AddShift'...
+  Installing command 'AddSupplementalPage'...
+  Installing command 'AddTerm'...
+  Installing command 'AddTermChild'...
+  Installing command 'AddTermPair'...
+  Installing command 'AddTermRangeCheck'...
+  Installing command 'AddTermType'...
+  Installing command 'AddTermUnit'...
+  Installing command 'AddTermUnitConversion'...
+  Installing command 'AddTextToNote'...
+  Installing command 'AddTotal'...
+  Installing command 'AddTotalTerm'...
+  Installing command 'ClearClinicalDataModel'...
+  Installing command 'ClearNoteText'...
+  Installing command 'ClearParameterSettings'...
+  Installing command 'DeleteADTFeedByID'...
+  Installing command 'DeleteFlowsheet'...
+  Installing command 'DeleteFlowsheetPagePairs'...
+  Installing command 'DeleteFlowsheetTotalPairs'...
+  Installing command 'DeleteFlowsheetView'...
+  Installing command 'DeleteFlowsheetViewFilters'...
+  Installing command 'DeleteFlowsheetViewTerms'...
+  Installing command 'DeleteKardexEvents'...
+  Installing command 'DeleteMappingTable'...
+  Installing command 'DeleteMappingTableTerms'...
+  Installing command 'DeleteProcedureInstrumentList'...
+  Installing command 'DeleteShift'...
+  Installing command 'DeleteTermByID'...
+  Installing command 'DeleteTermChildPairs'...
+  Installing command 'DeleteTermChildrenByID'...
+  Installing command 'DeleteTermPairs'...
+  Installing command 'DeleteTermPairsByID'...
+  Installing command 'DeleteTermRangeChecks'...
+  Installing command 'DeleteTermRangeChecksByID'...
+  Installing command 'DeleteTermTypes'...
+  Installing command 'DeleteTermUnitConversions'...
+  Installing command 'DeleteTermUnitConversionsByID'...
+  Installing command 'DeleteTermUnitPairs'...
+  Installing command 'DeleteTermUnitPairsByID'...
+  Installing command 'DeleteTotal'...
+  Installing command 'DeleteTotalFlowsheetPairs'...
+  Installing command 'DeleteTotalTerms'...
+  Installing command 'DiscontinueKardexAction'...
+  Installing command 'ExportInstrument'...
+  Installing command 'ExportMappingTable'...
+  Installing command 'ExportMappingTableTerms'...
+  Installing command 'ExportProcedure'...
+  Installing command 'ExportTerm'...
+  Installing command 'ExportTermChildPair'...
+  Installing command 'ExportTermQualifierPair'...
+  Installing command 'ExportTermRangeCheck'...
+  Installing command 'ExportTermUnitConversion'...
+  Installing command 'ExportTermUnitPair'...
+  Installing command 'ExportView'...
+  Installing command 'ExportViewFilters'...
+  Installing command 'ExportViewTerminology'...
+  Installing command 'GetADTTargets'...
+  Installing command 'GetAPMessages'...
+  Installing command 'GetAccessControlList'...
+  Installing command 'GetAllViewFiltersByID'...
+  Installing command 'GetBackgroundTaskList'...
+  Installing command 'GetBackgroundTaskStatus'...
+  Installing command 'GetFacilityLocations'...
+  Installing command 'GetFlowsheet'...
+  Installing command 'GetFlowsheetList'...
+  Installing command 'GetFlowsheetPageList'...
+  Installing command 'GetFlowsheetSupplementalPage'...
+  Installing command 'GetFlowsheetSupplementalPageListActive'...
+  Installing command 'GetFlowsheetSupplementalPageListAll'...
+  Installing command 'GetFlowsheetTotalList'...
+  Installing command 'GetFlowsheetView'...
+  Installing command 'GetFlowsheetViewFilters'...
+  Installing command 'GetFlowsheetViewList'...
+  Installing command 'GetFlowsheetViewTerms'...
+  Installing command 'GetHL7LogicalLinkList'...
+  Installing command 'GetHL7Message'...
+  Installing command 'GetHL7MonitorErrors'...
+  Installing command 'GetHL7MonitorReasons'...
+  Installing command 'GetHospitalDivisions'...
+  Installing command 'GetHospitalLocationList'...
+  Installing command 'GetInstrument'...
+  Installing command 'GetInstrumentList'...
+  Installing command 'GetKardexAction'...
+  Installing command 'GetKardexActionEvents'...
+  Installing command 'GetKardexActionList'...
+  Installing command 'GetKardexEvent'...
+  Installing command 'GetKardexEventAudits'...
+  Installing command 'GetKardexEventList'...
+  Installing command 'GetLookupValues'...
+  Installing command 'GetMailGroupList'...
+  Installing command 'GetMappingTableByID'...
+  Installing command 'GetMappingTableList'...
+  Installing command 'GetMappingTableTermsByID'...
+  Installing command 'GetNotePrivs'...
+  Installing command 'GetNoteTitlesCP'...
+  Installing command 'GetNoteTitlesPN'...
+  Installing command 'GetObservationAuditLog'...
+  Installing command 'GetObservationBrief'...
+  Installing command 'GetObservationByID'...
+  Installing command 'GetObservationLog'...
+  Installing command 'GetObservationsByDate'...
+  Installing command 'GetObservationsByStatus'...
+  Installing command 'GetParameterList'...
+  Installing command 'GetParameterValue'...
+  Installing command 'GetPatientAlarms'...
+  Installing command 'GetPatientList'...
+  Installing command 'GetPatientListByWard'...
+  Installing command 'GetPerson'...
+  Installing command 'GetPersonList'...
+  Installing command 'GetProcedure'...
+  Installing command 'GetProcedureInstrumentList'...
+  Installing command 'GetProcedureList'...
+  Installing command 'GetQualifierPairTerms'...
+  Installing command 'GetReportItems'...
+  Installing command 'GetReportList'...
+  Installing command 'GetReportTerms'...
+  Installing command 'GetRolesAll'...
+  Installing command 'GetSchedules'...
+  Installing command 'GetServerDateTime'...
+  Installing command 'GetShiftList'...
+  Installing command 'GetSubscriberProtocols'...
+  Installing command 'GetTemporaryNoteID'...
+  Installing command 'GetTermByID'...
+  Installing command 'GetTermChildPairs'...
+  Installing command 'GetTermQualifierPairs'...
+  Installing command 'GetTermQualifierPairsByID'...
+  Installing command 'GetTermRangeChecks'...
+  Installing command 'GetTermRangeChecksByPt'...
+  Installing command 'GetTermUnitConversions'...
+  Installing command 'GetTermUnitConversionsByID'...
+  Installing command 'GetTermUnitPairs'...
+  Installing command 'GetTermUnitPairsByID'...
+  Installing command 'GetTermValuePairs'...
+  Installing command 'GetTermValuePairsByID'...
+  Installing command 'GetTerms'...
+  Installing command 'GetTotal'...
+  Installing command 'GetTotalList'...
+  Installing command 'GetTotalTerms'...
+  Installing command 'GetTreatingSpecialtyList'...
+  Installing command 'GetUserInformation'...
+  Installing command 'GetUserRoles'...
+  Installing command 'GetValidESignature'...
+  Installing command 'GetVersionInformation'...
+  Installing command 'GetView'...
+  Installing command 'GetViewList'...
+  Installing command 'GetWardList'...
+  Installing command 'ImportInstrumentExisting'...
+  Installing command 'ImportInstrumentNew'...
+  Installing command 'ImportMappingTableExisting'...
+  Installing command 'ImportMappingTableKey'...
+  Installing command 'ImportMappingTableNew'...
+  Installing command 'ImportProcedureExisting'...
+  Installing command 'ImportProcedureNew'...
+  Installing command 'ImportTermChildPair'...
+  Installing command 'ImportTermQualifierPair'...
+  Installing command 'ImportTermRangeCheck'...
+  Installing command 'ImportTermUnitConversion'...
+  Installing command 'ImportTermUnitPair'...
+  Installing command 'ImportViewExisting'...
+  Installing command 'ImportViewFilter'...
+  Installing command 'ImportViewNew'...
+  Installing command 'ImportViewTerm'...
+  Installing command 'InstallClinicalDataModel'...
+  Installing command 'LogSecurityAccess'...
+  Installing command 'OpenParameterSettings'...
+  Installing command 'PatientAlarmClear'...
+  Installing command 'PatientAlarmDeactivate'...
+  Installing command 'PatientAlarmSet'...
+  Installing command 'ReSubmitHL7Message'...
+  Installing command 'RemoveACLPermission'...
+  Installing command 'RenameFlowsheet'...
+  Installing command 'RenameFlowsheetTotal'...
+  Installing command 'RenameFlowsheetView'...
+  Installing command 'RenameInstrument'...
+  Installing command 'RenameProcedure'...
+  Installing command 'RenameSchedule'...
+  Installing command 'RenameShift'...
+  Installing command 'SendEMailMessage'...
+  Installing command 'SignTIUDocument'...
+  Installing command 'StartBackgroundTask'...
+  Installing command 'StopBackgroundTask'...
+  Installing command 'UpdateACLPermission'...
+  Installing command 'UpdateFlowsheet'...
+  Installing command 'UpdateFlowsheetView'...
+  Installing command 'UpdateHL7MessageMappingTable'...
+  Installing command 'UpdateHL7MessagePatientID'...
+  Installing command 'UpdateInstrument'...
+  Installing command 'UpdateKardexAction'...
+  Installing command 'UpdateKardexActionStatus'...
+  Installing command 'UpdateKardexEvent'...
+  Installing command 'UpdateMappingTable'...
+  Installing command 'UpdateMappingTableName'...
+  Installing command 'UpdateObservationStatus'...
+  Installing command 'UpdateParameterValue'...
+  Installing command 'UpdateProcedure'...
+  Installing command 'UpdateSchedule'...
+  Installing command 'UpdateShift'...
+  Installing command 'UpdateSupplementalPage'...
+  Installing command 'UpdateTerm'...
+  Installing command 'UpdateTermDataType'...
+  Installing command 'UpdateTermType'...
+  Installing command 'UpdateTotal'...
+  Importing a new Dictionary and Clinical Data Model.
+  Deactivating existing terms.
+  Installing new terminology.
+  Storing check sum for file TERM...
+  Storing check sum for file TERM_TYPE...
+  Storing check sum for file TERM_QUALIFIER_PAIR...
+  Storing check sum for file TERM_UNIT_CONVERSION...
+  Storing check sum for file TERM_UNIT_PAIR...
+  Storing check sum for file TERM_CHILD_PAIR...
+  Storing check sum for file TERM_RANGE_CHECK...
+  Storing check sum for file TERM_MAPPING_TABLE...
+  Storing check sum for file TERM_MAPPING_PAIR...
+  New Clinical Data Model for Terminology has been installed.
+  Removing obsolete parameters ...
+  Updating queued job settings ...
+  Task 'TASK_CLIO_CLEANUP' updated...
+  Task 'TASK_CP_CLEANUP' updated...
+  Task 'TASK_HL7_CLEANUP' updated...
+  Updating CP Definition File...
+  Terminology Caching disabled, use CP Console to rebuild.
+  Updating CP Instrument File...
+  New VDEF events filed, remember to activate those needed for this 
+ installation
+  Checking for components pointing to inactive terminology
+  
+  Scanning File: OBS_VIEW_TERMINOLOGY (704.1111) Field: TERM_ID
+    0 issue(s) found.
+  
+  Scanning File: OBS_VIEW_FILTER (704.1112) Field: FILTER_TERM
+    0 issue(s) found.
+  
+  Scanning File: OBS_FLOWSHEET_SUPP_PAGE (704.1122) Field: 
+ DEFAULT_METHOD_ID
+    0 issue(s) found.
+  
+  Scanning File: OBS_FLOWSHEET_SUPP_PAGE (704.1122) Field: 
+ DEFAULT_POSITION_ID
+    0 issue(s) found.
+  
+  Scanning File: OBS_FLOWSHEET_SUPP_PAGE (704.1122) Field: 
+ DEFAULT_LOCATION_ID
+    0 issue(s) found.
+  
+  Scanning File: OBS_FLOWSHEET_SUPP_PAGE (704.1122) Field: 
+ DEFAULT_PRODUCT_ID
+    0 issue(s) found.
+  
+  Scanning File: OBS_TOTAL (704.113) Field: DEFAULT_UNIT
+    0 issue(s) found.
+  
+ MD*1.0*16                                    
+ --------------------------------------------------------------------------
+  
+  
+  Scanning File: OBS_TOTAL_TERMINOLOGY (704.1131) Field: TERM_ID
+    0 issue(s) found.
+  
+  Scanning File: OBS_ALARM (704.115) Field: TERM_ID
+    0 issue(s) found.
+  MD*1.0*16 Post Init complete
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MD*1.0*16 Installed. 
+                Sep 18, 2009@12:23:58
+  
+ Install Message sent #692557
+ --------------------------------------------------------------------------
+           +------------------------------------------------------------+
+   100%    |             25             50             75               |
+ Complete  +------------------------------------------------------------+
+  
+  
+  
+  
+ Install Completed
+  
+  
+  
+  
+ DOCUMENTATION/SOFTWARE RETRIEVAL:                  
+ =================================
+  
+ Supporting Clinical Flowsheets documentation/software is contained
+ in the MD1_0P16_EXES_AND_DOC.zip file and can be retrieved in BINARY
+ format via FTP and the following methods:
+  
+ 1. The preferred method is to transfer the files using a FTP from 
+ "download.vista.med.va.gov".  Files will transmit from the first 
+ available FTP server.
+  
+ 2. The files may also be downloaded directly from one of the following OI 
+ Field Offices' ANONYMOUS.SOFTWARE directories:
+  
+       OI Field Office    FTP Address                Directory
+       Albany             ftp.fo-albany.med.va.gov   anonymous.software
+       Hines              ftp.fo-hines.med.va.gov    anonymous.software
+       Salt Lake City     ftp.fo-slc.med.va.gov      anonymous.software
+  
+ The Clinical Flowsheets supporting documents are: 
+  
+  
+  File Name                     Description
+  ---------                     -----------
+  CPFlowsheets.exe             MD*1.0*16 CP Flowsheets Executable
+  
+  CPConsole.exe                MD*1.0*16 CP Console Executable
+  
+  CPGatewayService.exe         MD*1.0*16 CP Gateway Service Executable
+  
+  CliO_Terminology.doc         MD*1.0*16 Clinical Flowsheets Terminology
+  
+  MD_1_P16_UM.doc              MD*1.0*16 Clinical Procedures (CP) V1.0 
+ Flowsheets Module User Manual
+  
+  MD_1_P16_IG.doc              MD*1.0*16 Clinical Procedures (CP) V1.0 
+ Flowsheets Module Installation Guide
+  
+  MD_1_P16_IMPG.DOC            MD*1.0*16 Clinical Procedures (CP) V1.0 
+ Flowsheets Module Implementation Guide
+  
+  MD_1_P16_RN.DOC              MD*1.0*16 Clinical Procedures (CP) V1.0 
+ Flowsheets Module Release Notes
+  
+  CLINPROC1_TM.DOC             Clinical Procedures (CP) Technical Manual 
+ and 
+                               Package Security Guide 
+  
+  CPFlowsheets.hlp             MD*1.0*16 CP Flowsheets online Help
+  
+  CPFlowsheets.cnt             MD*1.0*16 CP Flowsheets online Help contents
+  
+  cpconsole.hlp                MD*1.0*16 CP Console online Help
+  
+  CPConsole.cnt                MD*1.0*16 CP Console online Help contents
+  
+  RoboEx32.dll                .DLL file required to access Help files
+  
+  
+  
+ CLINICAL FLOWSHEETS GUI INSTALLATION
+ ====================================
+  
+ To obtain all updated MD*1*16 files, use File Transfer Protocol (FTP)
+ to retrieve that MD1_0P16_EXES_AND_DOC.zip file from one of the OI Field
+ Offices' ANONYMOUS.SOFTWARE directories.
+  
+ That "ZIP file" contains the following Clinical Flowsheets software:
+  
+       Name                      Description
+       ----                      -----------
+       CPConsole.exe            CP Console executable
+       CPFlowsheets.exe         CP Flowsheets executable
+       CPGatewayService.exe     CP Gateway Service executable
+  
+  
+ Installing CP Console and CP Flowsheets
+ ---------------------------------------
+ Please refer to the Clinical Flowsheets Installation Guide document
+ (MD_1_P16_IG.doc) for extensive Clinical Flowsheets installation details.
+  
+ The CP Console and CP Flowsheets components may be installed locally on 
+ individual workstations or remotely on a server that is operating 24/7.
+  
+  
+ Installing the CP Gateway Service
+ ---------------------------------
+  
+ To obtain software for CP Gateway Service installation assistance, use
+ File Transfer Protocol (FTP) to retrieve MD1_0P16_Gateway_Installer.zip
+ file from one of the OI Field Offices' ANONYMOUS.SOFTWARE directories.
+  
+ The CP Gateway.exe file must be copied to the local server on which you 
+ intend to run it.
+  
+ Note: The CP Gateway Service can run on the same server as the Clinical 
+ Procedures legacy version, CP Gateway executable, but it must reside in a 
+ different folder.
+  
+ The CP Gateway Service is a Windows service that does not
+ require a user to start it each time like the legacy CP Gateway
+ executable. You can configure the CP Gateway Service to start in an
+ unattended mode and run in the background.
+  
+    Note:
+    -----
+       For more extensive installation details, please refer to the 
+       Clinical Flowsheets Installation Guide documentation 
+       (MD_1_P16_IG.doc)
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDCA01
+    Before:       n/a   After:   B246267  **16**
+Routine Name: MDCA02
+    Before:       n/a   After:   B249639  **16**
+Routine Name: MDCA03
+    Before:       n/a   After:   B249717  **16**
+Routine Name: MDCA08
+    Before:       n/a   After:   B250107  **16**
+Routine Name: MDCA11
+    Before:       n/a   After:   B249637  **16**
+Routine Name: MDCA12
+    Before:       n/a   After:   B249715  **16**
+Routine Name: MDCA13
+    Before:       n/a   After:   B249793  **16**
+Routine Name: MDCADT
+    Before:       n/a   After: B17415336  **16**
+Routine Name: MDCEVN
+    Before:       n/a   After:  B5496501  **16**
+Routine Name: MDCLIO
+    Before:       n/a   After:B122792172  **16**
+Routine Name: MDCLIO1
+    Before:       n/a   After:B224898714  **16**
+Routine Name: MDCLIOV
+    Before:       n/a   After: B66920230  **16**
+Routine Name: MDCPHL7A
+    Before:       n/a   After: B35583022  **16**
+Routine Name: MDCPHL7B
+    Before:       n/a   After: B22582267  **16**
+Routine Name: MDCPID
+    Before:       n/a   After: B16674309  **16**
+Routine Name: MDCPSIGN
+    Before:       n/a   After:  B8353645  **16**
+Routine Name: MDCPURG
+    Before:       n/a   After: B45328768  **16**
+Routine Name: MDCPV1
+    Before:       n/a   After:  B2107795  **16**
+Routine Name: MDCPVDEF
+    Before:       n/a   After: B50621778  **16**
+Routine Name: MDCSPV1
+    Before:       n/a   After: B11770150  **16**
+Routine Name: MDCUTL
+    Before:       n/a   After: B29067220  **16**
+Routine Name: MDPOST16
+    Before:       n/a   After: B56396413  **16**
+Routine Name: MDPRE16
+    Before:       n/a   After: B10287673  **16**
+Routine Name: MDTERM
+    Before:       n/a   After: B23534371  **16**
+
+=============================================================================
+User Information:                          Hold Date     : JUN 07, 2011
+Entered By  : JACKSON,TODD                  Date Entered  : NOV 06, 2006
+Completed By: SHANE,CLARK                   Date Completed: MAY 16, 2011
+Released By : BLACK,KATHLEEN                Date Released : JUN 10, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

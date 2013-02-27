@@ -1,0 +1,561 @@
+
+=============================================================================
+Run Date: MAR 28, 2012                     Designation: DG*5.3*797
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #751                    Status: Released
+                  Compliance Date: APR 28, 2012
+=============================================================================
+
+Associated patches: (v)DG*5.3*565  <<= must be installed BEFORE `DG*5.3*797'
+                    (v)DG*5.3*621  <<= must be installed BEFORE `DG*5.3*797'
+                    (v)DG*5.3*697  <<= must be installed BEFORE `DG*5.3*797'
+                    (v)DG*5.3*754  <<= must be installed BEFORE `DG*5.3*797'
+                    (v)DG*5.3*764  <<= must be installed BEFORE `DG*5.3*797'
+                    (v)DG*5.3*780  <<= must be installed BEFORE `DG*5.3*797'
+                    (v)DG*5.3*790  <<= must be installed BEFORE `DG*5.3*797'
+                    (v)DG*5.3*792  <<= must be installed BEFORE `DG*5.3*797'
+                    (v)DG*5.3*793  <<= must be installed BEFORE `DG*5.3*797'
+                    (v)DG*5.3*828  <<= must be installed BEFORE `DG*5.3*797'
+
+Subject: MILITARY SERVICE DATA SHARING (MSDS) PROJECT
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch has enhancements to the Veterans Health Information Systems and
+ Technology Architecture (VistA) system to support technology and business
+ changes that are occurring with the implementation of the Enrollment
+ System Redesign (ESR) Military Service Data Sharing (MSDS) project.
+  
+ The MSDS project will introduce an MSDS Broker that will be activated in 
+ ESR. The Broker will construct a definitive military service data set 
+ including data received from the VA/DoD Identity Repository (VADIR), the
+ Beneficiary Identification and Records Locator System (BIRLS) and VistA.
+ Once the MSDS Broker is activated, ESR becomes the authoritative source
+ for Military Service Episode data. The verified MSE data will be shared 
+ via an Eligibility/Enrollment transmission (ORF/ORU~Z11) from ESR with all
+ treating facilities of record for the veteran. The ESR-verified Military
+ Service Episode data cannot be edited by VistA except to add new episodes.
+ An unlimited number of military service episodes per veteran will now be
+ supported.
+  
+ This patch is being released along with patches EAS*1.0*92, IVM*2.0*141,
+ DVB*4.0*62, and PXRM*2.0*21 in host file DG_53_P797.KID.
+     
+ This patch modifies the Registration v5.3 application as described below:
+   
+  
+ 1.  Receive Military Service Episodes from ESR
+ ----------------------------------------------
+ ESR-verified Military Service Episode (MSE) data will now be sent to VistA
+ in the Z11 HL7 message.  The Z11 receivers were modified to upload MSEs
+ from the ZMH segment.  The routines associated with the Z11 upload 
+ changes, modified by this patch are DGENUPL1, DGENUPL3, & DGENUPL7.
+  
+ 2.  Support storage of unlimited Military Service Episodes
+ ----------------------------------------------------------
+ The MSDS project increases the number of MSEs from three to an unlimited 
+ number. Modifications were made to the data dictionary of the PATIENT file
+ (#2). A new MILITARY SERVICE EPISODE sub-file (#2.3216) was added and will
+ support the storage of an unlimited number of MSEs for each veteran.
+  
+ 3.  Enhance Registration to support unlimited MSEs
+ --------------------------------------------------
+ Military Service Episodes were displayed and edited on the Military 
+ Service Data, Screen 6 of the Registration options.  There was a limit of 
+ three MSEs.  To support unlimited MSEs, Screen 6 will now just display the
+ last three MSEs.  If there are more than three, the message <more 
+ episodes> will display under the third.  A new Screen 6.1 was added that 
+ will display all the MSEs and allow the user to add new MSEs, or edit MSEs
+ that have not been verified by ESR.
+  
+ 4.  Lock all Military Service Episodes sent from ESR
+ ----------------------------------------------------
+ ESR is the authoritative source for Military Service data.  The 
+ ESR-verified MSEs sent to VistA in the Z11 cannot be edited or deleted by 
+ VistA users.  MSEs received from ESR are identified by <> on Screen 6.1 
+ and cannot be selected to edit or delete. MSEs entered by the VistA site 
+ are identified by [] on Screen 6.1 and can be edited or deleted.  
+  
+ 5.  Store old Military Service Episodes
+ ---------------------------------------
+ MSEs already on file for a veteran when the new MILITARY SERVICE EPISODE 
+ sub-file (#2.3216) is added, will remain in the Patient record in the old 
+ locations (i.e. the sets of fields in the PATIENT file (#2) that store the
+ the LAST, NTL and NNTL service episodes) for historical purposes.  A new
+ Screen 6.2 was added to display these old MSEs by selecting the View 
+ History action on Screen 6.1. When a patient record is accessed via the
+ Load/Edit Patient Data [DG LOAD PATIENT DATA] or Register a Patient [DG
+ REGISTER PATIENT] option(s) for the first time AFTER this patch is
+ installed, the data stored in the 'old' locations will be copied into the
+ new MILITARY SERVICE EPISODE sub-file (#2.3216).  This action is
+ transparent to the end user.
+  
+ 6.  Support transmission of unlimited Military Service Episodes
+ ---------------------------------------------------------------
+ The Z07 HL7 message builder will be modified to support the transmission 
+ of unlimited MSEs to ESR. The most recent three MSEs will still be sent in
+ the ZMH segment with the Military History Type codes SL (most recent), SNL
+ (next most recent) and SNNL (next next most recent).  A new Military 
+ History Type code, MSD, will be added to send all additional MSEs in the 
+ ZMH segment.  The codes are not stored but are calculated during the 
+ process to build the full data transmission to HEC (ORF/ORU~Z07).  The 
+ calculation occurs in the routine VAFHLZMH.
+  
+ 7.  Retrieve unlimited Military Service Episodes in ROM
+ -------------------------------------------------------
+ The Register Once Message (ROM) query will be modified to support the 
+ transmission and retrieval of unlimited MSEs from the last site treated. 
+ The following data elements have been added to the DG REGISTER ONCE FIELD 
+ DEFINITION (#391.23) file.
+  
+       File      Field     Name
+       -------   ------    ---------
+       2.3216    .01       MSDS SERVICE ENTRY DATE
+       2.3216    .02       MSDS SERVICE SEPARATION DATE
+       2.3216    .03       MSDS SERVICE BRANCH
+       2.3216    .04       MSDS SERVICE COMPONENT
+       2.3216    .05       MSDS SERVICE NUMBER
+       2.3216    .06       MSDS SERVICE DISCHARGE
+       2.3216    .07       MSDS DATA LOCKED
+  
+ 8.  Modify Registration consistency checks
+ ------------------------------------------
+ Registration consistency checks that pertain to military service data 
+ will be modified to check the MSEs in the new sub-file location.  The 
+ consistency checks will only be done on MSEs that have not yet been 
+ received from ESR as verified MSEs.  The following consistency checks 
+ were modified:
+  
+    67           NO CV, CHECK SERVICE SEP DATE
+    72           MSE DATA MISSING/INCOMPLETE 
+    73           MSE DATES INCONSISTENT 
+    79           MSE DATES OVERLAP 
+    81           COMBAT DT NOT WITHIN MSE
+    83           BOS REQUIRES DATE W/IN WWII 
+    84           FILIPINO VET, PROOF MISSING 
+    85           FILIPINO VET SHOULD BE VET='Y' 
+  
+ 9.  Modify Military Service data edit checks
+ --------------------------------------------
+ Data edit checks performed at the time of user data entry were modified 
+ to use the new military service data fields.  The data checks that are 
+ being performed are:
+  
+ a. Check for valid dates.
+ b. Check for service separation date not earlier than service entry date.
+ c. Check for overlapping MSEs.
+ d. Check for WWII MSE dates for certain service branches.
+ e. Filipino Vet proof requires Filipino Vet service branch.
+ f. Veteran age check.
+ g. Check for appropriate service components with certain service branches.
+ h. No editing allowed if data was verified by the Health Eligibility 
+    Center (HEC).
+  
+ 10.  Combat Vet End Date calculation
+ ------------------------------------
+ The Combat Vet End Date calculation was modified to use the new MSE 
+ fields.
+  
+ 11.  Add two new Types of Discharge
+ -----------------------------------
+ Two new discharge types were added to the TYPE OF DISCHARGE file (#25) to 
+ be consistent with the discharge types sent to ESR from VADIR/BIRLS.  The 
+ new types are:
+  
+     8  DISHONORABLE-VA
+     9  HONORABLE-VA
+  
+ Dishonorable for VA purposes means that for the VBA, there is another 
+ reason or circumstance that the VBA has determined that makes the Veteran 
+ "Dishonorable" for VA purposes.  The Veteran is not eligible for 
+ enrollment in the VA Health Care Program.  If SC conditions exist, they 
+ may be treated for the SC conditions only.
+  
+ Honorable for VA purposes means that for the VBA, even though their DD-214
+ says "General" or "Other Than Honorable", there is another reason or
+ circumstance that the VBA has determined that makes the Veteran 
+ "Honorable" for VA purposes.
+  
+ 12.  Display of Military Service Data modified in MPI inquiry options
+ ---------------------------------------------------------------------
+ The display of Military Service Data for Master Patient Index (MPI)
+ Inquiry options was modified to get the MSEs from the new MILITARY 
+ SERVICE EPISODE sub-file (#2.3216).  The modified display is used by the 
+ Patient MPI/PD Data Inquiry [RG EXCEPTION TF INQUIRY] and Display Remote 
+ Patient Data Query [RG REMOTE PDAT DISPLAY] options.
+   
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+   
+   
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy Tickets associated with this patch.
+   
+   
+ This patch addresses the following Code Change Request(s) (CCRs):
+ -----------------------------------------------------------------
+ REEG_00011166 - VistA: Accept new Discharge Types of HVA and DVA from ESR
+  
+  
+ Components Sent With Patch
+ --------------------------
+ The following is a list of files included in this patch:
+  
+                                      UP    SEND  DATA                
+                                      DATE  SEC.  COMES  SITE   RSLV  
+ FILE #  NAME                         DD    CODE  W/FILE DATA   PTS 
+ --------------------------------------------------------------------
+ 2       PATIENT                      YES   YES   NO     N/A    N/A
+ Sub-file: 
+  2.3215   SERVICE [OEF OR OIF]
+  2.3216   MILITARY SERVICE EPISODE
+  
+ 25      TYPE OF DISCHARGE            YES   YES   YES    REPL   NO
+  
+ 391.23  DG REGISTER ONCE FIELD DEFI  YES   YES   YES    OVER   NO
+  
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name (Number)                     File Name (Number)
+ -------------------                     ------------------
+ SERVICE SEPARATION DATE [LAST] (#.327)  PATIENT (#2)
+ OEF/OIF TO DATE (#.03)                  SERVICE [OEF OR OIF] (#2.3215)
+ SERVICE ENTRY DATE (#.01)               MILITARY SERVICE EPISODE (#2.3216)
+ SERVICE SEPARATION DATE (#.02)          MILITARY SERVICE EPISODE (#2.3216)
+ SERVICE BRANCH (#.03)                   MILITARY SERVICE EPISODE (#2.3216)
+ SERVICE COMPONENT (#.04)                MILITARY SERVICE EPISODE (#2.3216)
+ SERVICE NUMBER (#.05)                   MILITARY SERVICE EPISODE (#2.3216)
+ SERVICE DISCHARGE TYPE (#.06)           MILITARY SERVICE EPISODE (#2.3216)
+ DATA LOCKED (#.07)                      MILITARY SERVICE EPISODE (#2.3216)
+  
+ The following is a list of Protocols included in this patch:
+  
+ NAME                            TYPE
+ -------------------------------------------------------------------------
+ DGEN MSDS ADD                   action
+ DGEN MSDS DELETE                action
+ DGEN MSDS EDIT                  action
+ DGEN MSDS MENU                  menu
+ DGEN MSDS VIEW HISTORY          action 
+  
+ The following is a list of List Templates included in this patch:
+  
+ NAME                            TYPE OF LIST
+ -------------------------------------------------------------------------
+ DGEN MSDS PATIENT               PROTOCOL
+ DGEN MSDS PATIENT VIEW          DISPLAY
+  
+   
+ Documentation Retrieval:
+ ========================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to use File Transfer Protocol (FTP) to download 
+ the files from download.vista.med.va.gov. This transmits the files from
+ the first available FTP server. Sites may also elect to retrieve software
+ directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at:  http://www.va.gov/vdl/
+  
+ The following file should be downloaded in the binary FTP mode.
+   
+ Filename                 Description
+ --------                 -----------
+ DG_5_3_P797_REG_UM.PDF   Revised PIMS V. 5.3 Registration Menu User Manual
+ EAS_1_92_UM.PDF          Enrollment Application System (EAS) 1.0 User 
+                            Manual
+ IVM_2_141_TM.PDF         Income Verification Match (IVM) 2.0 Technical 
+                            Manual
+  
+  
+ Test Sites:
+ ===========
+ VA Maryland HCS, Baltimore, MD
+ Clement J. Zablocki VAMC, Milwaukee, WI
+ Central Alabama Veterans HCS, Tuskegee, AL 
+  
+  
+ Software Retrieval:
+ ===================
+ The software for this patch is not being distributed through the National
+ Patch Module.  This patch is being distributed as a host file. The host 
+ file will contain five Kernel Installation & Distribution System (KIDS)
+ builds.
+  
+                  Host File Name:  DG_53_P797.KID
+                          Builds:  DG*5.3*797
+                                   EAS*1.0*92
+                                   IVM*2.0*141
+                                   DVB*4.0*62
+                                   PXRM*2.0*21
+  
+ Sites may retrieve the software directly using FTP from the 
+ ANONYMOUS.SOFTWARE directory. The preferred method is to FTP the files 
+ from:
+   
+                     download.vista.med.va.gov
+   
+ This will transmit the files from the first available FTP server.
+ Sites may also elect to retrieve software directly from a specific
+ server as follows:
+   
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+   
+  **Note:  Use ASCII mode when downloading the .KID file
+  
+  
+ *************************************************************************
+ * IMPORTANT TECHNICAL NOTE regarding this patch, DG*5.3*797, and XINDEX *
+ *                                                                       *
+ * XINDEX will report the following unfounded error before patch         *
+ * installation when checking the build:                                 *
+ *                                                                       *
+ *  DGENUPL1                                                             *
+ *     PARSE+34     F - Label is not valid.                              *
+ *                                                                       *
+ * XINDEX will report the following unfounded error after patch          *
+ * installation when checking the build:                                 *
+ *                                                                       *
+ *  DGENUPL1                                                             *
+ *     PARSE+36     F - Label is not valid.                              *
+ *************************************************************************
+  
+   
+   
+     ================ INSTALLATION INSTRUCTIONS =================
+  
+  
+ If installed during the normal workday, it is recommended the following
+ menu options be disabled to prevent possible conflicts while running the
+ KIDS Install. Other VistA users will not be affected.
+          
+     Register a Patient                    [DG REGISTER PATIENT]
+     Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+     Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+     Update HINQs to the Patient file      [DVB HUPLOAD]
+     Review Patient vs. HINQ data          [DVB HUPLOAD-PRINT]
+   
+ Install Time - less than 5 minutes
+  
+ ************** PRE-INSTALLATION INSTRUCTIONS ************************
+  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+  Use the Schedule/Unschedule Options [XUTM SCHEDULE]option on the 
+  Taskman Management [XUTM MGR] menu.
+  
+  The HL7 incoming filers should be stopped.  Use the Monitor, Start,
+  Stop Filers [HL FILER MONITOR] option on the Filer and Link
+  Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+  Menu [HL MAIN MENU].
+ *********************************************************************
+   
+        
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Download the KIDS file DG_53_P797.KID from the ANONYMOUS.SOFTWARE
+     directory to the appropriate directory on your system.
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+         Edits and Distribution ...  
+         Utilities ...  
+         Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+         Load a Distribution 
+         Print Transport Global 
+         Compare Transport Global to Current System 
+         Verify Checksums in Transport Global 
+         Install Package(s) 
+         Restart Install of Package(s) 
+         Unload a Distribution 
+         Backup a Transport Global 
+    
+     Select Installation Option: LOAD A DISTRIBUTION
+                                 -------------------
+  
+ 3.  Select the LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, 
+     and enter: DG_53_P797.KID
+    
+ 4.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter DG*5.3*797):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 5.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.  Enter DG*5.3*797.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer YES
+     d.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':'  Enter the following options:
+  
+          Register a Patient                [DG REGISTER PATIENT]
+          Load/Edit Patient Data            [DG LOAD PATIENT DATA]
+          Preregister a Patient             [DGPRE PRE-REGISTER OPTION]
+          Update HINQs to the Patient file  [DVB HUPLOAD]
+          Review Patient vs. HINQ data      [DVB HUPLOAD-PRINT]
+  
+ ************** POST-INSTALLATION INSTRUCTIONS ************************
+ The post-install routine, EAS1092P, will update fields in the 1010EZ
+ MAPPING file (#711) for the records related to the Last Service Episode.  
+ This routine can be deleted once the installation process is completed.
+  
+ After patch installation has completed, restart the HL7 incoming filers.  
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+  
+ Reschedule the IVM Background Job.  Use the Schedule/Unschedule Options
+ [XUTM SCHEDULE]option on the Taskman Management [XUTM MGR] Menu.
+ *********************************************************************
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGCV
+    Before: B52767874   After: B53926779  **528,576,564,673,778,792,797**
+Routine Name: DGCVRPT
+    Before: B26451377   After: B27927471  **564,731,792,797**
+Routine Name: DGENUPL1
+    Before: B36244583   After: B36548434  **147,222,232,314,397,379,407,
+                                           363,673,653,688,797**
+Routine Name: DGENUPL3
+    Before: B60017954   After: B71805311  **147,230,232,377,404,451,653,
+                                           688,793,797**
+Routine Name: DGENUPL7
+    Before: B32315527   After: B33592868  **232,367,397,417,379,431,513,
+                                           628,673,653,742,688,797**
+Routine Name: DGLOCK
+    Before: B51327037   After: B53456898  **108,161,247,485,672,673,688,
+                                           754,797**
+Routine Name: DGMSCK
+    Before:  B6019031   After: B10563594  **451,797**
+Routine Name: DGMSE
+    Before:       n/a   After:  B7269534  **797**
+Routine Name: DGMSEUTL
+    Before:       n/a   After: B16538229  **797**
+Routine Name: DGREGG
+    Before:  B3448816   After:  B3973658  **565,797**
+Routine Name: DGRODEBR
+    Before: B51758161   After: B55430347  **533,572,754,797**
+Routine Name: DGROHLR
+    Before: B17894920   After: B18624727  **533,572,754,797**
+Routine Name: DGROHLR1
+    Before: B36915578   After: B54801555  **572,622,647,809,754,797**
+Routine Name: DGROHLU
+    Before: B26960116   After: B27082369  **533,572,754,797**
+Routine Name: DGRP6
+    Before: B17663817   After: B15573608  **161,247,343,397,342,451,672,
+                                           689,797**
+Routine Name: DGRP61
+    Before:       n/a   After: B46948072  **797**
+Routine Name: DGRP62
+    Before:       n/a   After:  B4564085  **797**
+Routine Name: DGRP6CL
+    Before: B63349974   After: B70196214  **689,751,764,797**
+Routine Name: DGRPC
+    Before: B27065601   After: B28027409  **108,121,314,301,470,489,505,
+                                           451,568,585,641,653,688,754,
+                                           797**
+Routine Name: DGRPC2
+    Before: B66765890   After: B70981451  **45,69,108,121,205,218,342,
+                                           387,470,467,489,505,507,528,
+                                           451,564,570,657,688,780,797**
+Routine Name: DGRPC3
+    Before: B27710641   After: B40710915  **451,632,673,657,688,754,797**
+Routine Name: DGRPCE
+    Before: B36086453   After: B37126023  **121,122,175,297,342,451,626,
+                                           689,653,754,797**
+Routine Name: DGRPCE1
+    Before: B61785296   After: B64356482  **108,226,470,454,489,505,522,
+                                           451,632,689,657,688,804,754,
+                                           797**
+Routine Name: DGRPDD1
+    Before: B29668639   After: B31264129  **72,136,244,621,797**
+Routine Name: DGRPDT
+    Before: B69084078   After: B77027156  **562,603,626,673,731,797**
+Routine Name: DGRPE
+    Before: B60707997   After: B52635716  **32,114,139,169,175,247,190,
+                                           343,397,342,454,415,489,506,
+                                           244,547,522,528,555,508,451,
+                                           626,638,624,677,672,702,689,
+                                           735,688,797**
+Routine Name: DGRPMS
+    Before: B49653378   After: B64725384  **451,626,646,673,689,688,797**
+Routine Name: DGRPP
+    Before: B19076912   After: B19131336  **92,147,343,404,397,489,689,
+                                           688,828,797**
+Routine Name: DGRPV
+    Before: B17609021   After: B18200549  **109,114,247,190,327,365,343,
+                                           397,415,489,546,545,451,624,
+                                           677,672,689,716,688,797**
+Routine Name: VADPT4
+    Before: B37063377   After: B42853987  **343,342,528,689,688,790,797**
+Routine Name: VAFCPDT2
+    Before: B21679490   After: B26407080  **414,505,627,697,797**
+Routine Name: VAFHLZM1
+    Before: B66971868   After: B67564189  **314,673,797**
+Routine Name: VAFHLZM2
+    Before:  B3676248   After: B10489371  **673,797**
+Routine Name: VAFHLZMH
+    Before: B17707490   After: B30066508  **190,314,673,797**
+ 
+Routine list of preceding patches: 565, 621, 697, 754, 764, 780, 790, 792
+                           793, 828
+
+=============================================================================
+User Information:
+Entered By  : MOORE,TERRY D                 Date Entered  : OCT 17, 2008
+Completed By: MORRIS,DARLENE V              Date Completed: MAR 20, 2012
+Released By : GROOMS,ANTHONY E              Date Released : MAR 28, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

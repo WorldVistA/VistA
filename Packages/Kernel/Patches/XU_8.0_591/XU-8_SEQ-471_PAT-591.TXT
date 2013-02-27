@@ -1,0 +1,187 @@
+$TXT Created by TRAN,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Monday, 03/19/12 at 05:48
+=============================================================================
+Run Date: APR 09, 2012                     Designation: XU*8*591
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #471                      Status: Released
+                  Compliance Date: MAY 10, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*586    <<= must be installed BEFORE `XU*8*591'
+
+Subject: NEW TAXONOMIES FOR 01/01/2012
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Remedy ticket#:590249
+ FORUM Tracking Message#:56024468
+ Blood Bank Clearance: 1/17/12
+  
+ Test sites:
+ - CENTRAL TEXAS HCS   
+ - LEXINGTON, KY VAMC
+ - MONTANA HCS
+                        XU*8*591
+  
+ This patch adds new entries #1176, 1177, 1178 ,and 1179 into the PERSON
+ CLASS File (#8932.1):
+  
+ NUMBER: 1176
+  PROVIDER TYPE: Allopathic & Osteopathic Physicians
+  CLASSIFICATION: Obstetrics & Gynecology
+  AREA OF SPECIALIZATION: Female Pelvic Medicine and Reconstructive 
+                          Surgery
+  STATUS: Active                        VA CODE: V181807
+  X12 CODE: 207VF0040X                  SPECIALTY CODE: 16
+  DEFINITION:   A subspecialist in Female Pelvic Medicine and 
+  Reconstructive Surgery is a physician in Urology or Obstetrics and
+  Gynecology who, by virtue of education and training, is prepared to
+  provide consultation and comprehensive management of women with 
+  complex benign pelvic conditions, lower urinary tract disorders, and 
+  pelvic floor dysfunction. Comprehensive management includes those
+  diagnostic and therapeutic procedures necessary for the total care of
+  the patient with these conditions and complications resulting from them. 
+   
+  Source: American Board of Medical Specialties, 2011.  
+   
+  Resources: www.abms.org 
+  INDIVIDUAL/NON: INDIVIDUAL
+  PROVIDER TYPE CODE (c): 20            CLASSIFICATION CODE (c): 7V
+  AREA OF SPECIALIZATION CODE (c): F0040
+  
+ NUMBER: 1177
+  PROVIDER TYPE: Allopathic & Osteopathic Physicians
+  CLASSIFICATION: Psychiatry & Neurology
+  AREA OF SPECIALIZATION: Behavioral Neurology & Neuropsychiatry
+  STATUS: Active                        VA CODE: V182914
+  X12 CODE: 2084B0040X                  SPECIALTY CODE: 26
+  DEFINITION:   Behavioral Neurology & Neuropsychiatry is a medical
+  subspecialty involving the diagnosis and treatment of neurologically
+  based behavioral issues.  
+   
+  Source: National Uniform Claim Committee.  
+   
+  Additional Resources: American Academy of Neurology, www.aan.com. 
+  INDIVIDUAL/NON: INDIVIDUAL
+  PROVIDER TYPE CODE (c): 20            CLASSIFICATION CODE (c): 84
+  AREA OF SPECIALIZATION CODE (c): B0040
+  
+ NUMBER: 1178
+  PROVIDER TYPE: Allopathic & Osteopathic Physicians
+  CLASSIFICATION: Urology
+  AREA OF SPECIALIZATION: Female Pelvic Medicine and Reconstructive 
+                          Surgery
+  STATUS: Active                        VA CODE: V183401
+  X12 CODE: 2088F0040X                  SPECIALTY CODE: 34
+  DEFINITION:   A subspecialist in Female Pelvic Medicine and
+  Reconstructive Surgery is a physician in Urology or Obstetrics and
+  Gynecology who, by virtue of education and training, is prepared to
+  provide consultation and comprehensive management of women with
+  complex benign pelvic conditions, lower urinary tract disorders, and 
+  pelvic floor dysfunction. Comprehensive management includes those
+  diagnostic and therapeutic procedures necessary for the total care of 
+  the patient with these conditions and complications resulting from them.
+   
+  Source: American Board of Medical Specialties, 2011. 
+   
+  Resources: www.abms.org 
+  INDIVIDUAL/NON: INDIVIDUAL
+  PROVIDER TYPE CODE (c): 20            CLASSIFICATION CODE (c): 88
+  AREA OF SPECIALIZATION CODE (c): F0040
+  
+ NUMBER: 1179
+  PROVIDER TYPE: Allopathic & Osteopathic Physicians
+  CLASSIFICATION: Anesthesiology
+  AREA OF SPECIALIZATION: Pediatric Anesthesiology
+  STATUS: Active                        VA CODE: V110403
+  X12 CODE: 207LP3000X                  SPECIALTY CODE: 05
+  DEFINITION:   An anesthesiologist who has had additional skill and 
+  experience in and is primarily concerned with the anesthesia, sedation,
+  and pain management needs of infants and children. A pediatric
+  anesthesiologist generally provides services including the evaluation 
+  of complex medical problems in infants and children when surgery is
+  necessary, planning and care for children before and after surgery, pain
+  control, anesthesia and sedation for any procedures out of the operating
+  room such as MRI, CT scan, and radiation therapy.
+  
+  Source: American Academy of Pediatrics 7/1/2006
+  
+  INDIVIDUAL/NON: INDIVIDUAL
+  PROVIDER TYPE CODE (c): 20            CLASSIFICATION CODE (c): 7L
+  AREA OF SPECIALIZATION CODE (c): P3000
+  
+  
+ Blood Bank Team Coordination
+  ============================
+ Blood Bank Clearance: 1/17/12
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*591 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*591 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*591
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ The routine XU8P591 will be deleted after the installation completes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**; July 10, 1995;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P591
+    Before:       n/a   After: B37444237  **591**
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : JAN 03, 2012
+Completed By: BEST,LISA                     Date Completed: MAR 29, 2012
+Released By : TILLIS,LEWIS                  Date Released : APR 09, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

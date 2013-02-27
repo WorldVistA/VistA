@@ -1,0 +1,336 @@
+$TXT Created by ALSAHHAR,SAMI at CMAI.FO-BIRM.MED.VA.GOV  (KIDS) on Thursday, 10/13/11 at 11:34
+=============================================================================
+Run Date: DEC 07, 2011                     Designation: PSS*1*159
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #146                      Status: Released
+                  Compliance Date: JAN 06, 2012
+=============================================================================
+
+Associated patches: (v)PSS*1*142   <<= must be installed BEFORE `PSS*1*159'
+                    (v)PSS*1*153   <<= must be installed BEFORE `PSS*1*159'
+
+Subject: MED ROUTE ENHANCEMENT FOR CPRS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This enhancement, approved by the Pharmacy Legacy Enhancement (PLE) User
+ Group, will resolve Patient Safety Issue PSI-08-026/PSPO #852 reported in
+ Remedy Ticket HD233682. This patch will activate the functionality 
+ associated with the fields introduced with patch PSS*1*153.
+  
+  
+ This patch will help mitigate incorrect medication routes being displayed
+ for selection in the Computerized Patient Record System (CPRS) V. 3.0.
+ This enhancement affects Inpatient Medications unit dose orders, IV Fluids
+ orders, and Outpatient Pharmacy orders entered via CPRS orders dialog.
+  
+ The pharmacy Integration Control Registration (ICR) #2418 is modified
+ to return appropriate medication routes for the orderable item in CPRS
+ ordering dialog with the following conditions.
+  
+ Note: The fields referenced below are from the PHARMACY ORDERABLE ITEM
+       file (#50.7):
+  
+   1. ICR Modifications
+    - Default Med Route
+      It will be derived from the DEFAULT MED ROUTE field (#.06) if it's
+      populated or from the POSSIBLE MED ROUTES multiple (#50.711) if it's
+      populated with a single entry and the USE DOSAGE FORM MED ROUTE LIST
+      field (#10) is set to "NO."
+  
+    - Optional Med Routes
+      The medication route selection list in CPRS will be populated with
+      entries from the POSSIBLE MED ROUTES multiple (#50.711) if the USE
+      DOSAGE FORM MED ROUTE LIST field (#10) is set to "NO." Otherwise, it
+      will be populated from the medication routes associated with the
+      orderable item's dosage form, which is the current logic.
+  
+  2. The logic for editing the medication route has been modified in the 
+     following options:
+      - Edit Orderable Items [PSS EDIT ORDERABLE ITEMS]
+      - Drug Enter/Edit [PSS DRUG ENTER/EDIT]
+      - Dispense Drug/Orderable Item Maintenance [PSS MAINTAIN ORDERABLE
+        ITEMS]
+  
+     The software will now ensure that the DEFAULT MED ROUTE field (#.06)
+     of the PHARMACY ORDERABLE ITEM file (#50.7) is either defined and/or
+     at least one entry is defined in the POSSIBLE MED ROUTES multiple
+     (#50.711) or the USE DOSAGE FORM MED ROUTE LIST field (#10) is set to
+     YES so that the medication route selection during order entry is
+     listed appropriately.
+  
+     Note: This patch will change USE DOSAGE FORM MED ROUTE LIST field
+           (#10) of the PHARMACY ORDERABLE ITEM file (#50.7) from not
+           required to a required field. This field will be used to
+           determine the medication route selection during order entry.
+           The post-install routine will loop through the PHARMACY
+           ORDERABLE ITEM file (#50.7) and check if the USE DOSAGE FORM MED
+           ROUTE LIST field (#10) is set to "NO". If it is set to "NO", and
+           the DEFAULT MED ROUTE field (#.06) is not populated and there
+           are no POSSIBLE MED ROUTES field (#11) populated then it will
+           set the USE DOSAGE FORM MED ROUTE LIST field (#10) to "YES" so
+           that the MED ROUTES from the DOSAGE FORM will continue to
+           display in CPRS for selection. A report with a list of the
+           Pharmacy Orderable Items that were changed will be captured and
+           sent as a MailMan message to the installer and other users
+           indicated during the installation process. It is important that
+           the Pharmacy ADPAC or designee review these settings, and make
+           changes as appropriate to use the functionality introduced with
+           this patch.
+  
+  3. The Pharmacy System Parameters Edit [PSS SYS EDIT] option is modified
+     to remove the DEFAULT MED ROUTE FOR CPRS field (#80.7) of the 
+     PHARMACY SYSTEM file (#59.7) from the list of fields that can be
+     edited.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ PHARMACY SYSTEM (#59.7)    DEFAULT MED ROUTE FOR      Deleted
+                            CPRS (#80.7)
+ PHARMACY ORDERABLE ITEM (#50.7) 
+                            USE DOSAGE FORM MED        Modified
+                            ROUTE LIST (#10) 
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)     New/Modified/Deleted 
+ -------------      ----      ------------------     --------------------
+ N/A 
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20080601 - Medication Route Selection Enhancement
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ PSI-08-026, PSPO #852
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ HD0000000233682 - Incorrect med routes display for dispense drug.
+  
+  
+ Test Sites:
+ -----------
+ NEW JERSEY HCS
+ OKLAHOMA CITY, OK
+ PUGET SOUND HCS
+ TAMPA, FL
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ File Description                        File Name             FTP Mode
+ --------------------------------------------------------------------------
+ Pharmacy Data Management User Manual    PSS_1_UM_R1211.PDF    (binary)
+ Pharmacy Data Management User Manual    PSS_1_P159_UM_CP.PDF  (binary)
+ Change Pages
+ PHARMACY DATA MANAGEMENT Technical Manual/  PSS_1_TM_R1211.PDF   (binary)
+ Security Guide
+ PHARMACY DATA MANAGEMENT Technical Manual/  PSS_1_P159_TM_CP.PDF (binary)
+ Security Guide Change Pages
+  
+  
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ - The environment check routine PSS159EN will prompt the patch installer
+   to enter at least one person, (other than the installer), to receive the
+   mail message when the post-install routine has completed. This person
+   should be the Pharmacy ADPAC or a designee.
+  
+ - The post-install routine will loop through the PHARMACY ORDERABLE ITEM
+   file (#50.7) and check if the USE DOSAGE FORM MED ROUTE LIST field (#10)
+   is set to "NO". If it is set to "NO", and the DEFAULT MED ROUTE field
+   (#.06) is not populated and there are no POSSIBLE MED ROUTES field (#11)
+   populated then it will set the USE DOSAGE FORM MED ROUTE LIST field
+   (#10) to "YES" so that the MED ROUTES from the DOSAGE FORM will continue
+   to display in CPRS for selection. A report with a list of the Pharmacy
+   Orderable Items that were changed will be captured and sent as a MailMan
+   message to the installer and other users indicated during the
+   installation process.
+  
+ - The post-install routine will delete the data and data dictionary of
+   the DEFAULT MED ROUTE FOR CPRS field (#80.7) of the PHARMACY SYSTEM 
+   file (#59.7) as we're using new logic in this patch to provide the
+   appropriate medication route to CPRS.
+  
+ - The environment check routine PSS159EN and the post-install routine
+   PSSP159 will be deleted at the end of patch installation.
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ This patch should be installed during non-peak hours when there is minimum
+ number of users on the system and should not be queued. Installation will
+ take no longer than 2 minutes.
+ Suggested time to install: During non-peak hours.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, you may elect to use the
+    following option. When prompted for the INSTALL enter the patch #
+    (PSS*1.0*159):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Use the Install Package(s) option and select the package PSS*1.0*159.
+  
+      The message below will display followed by the PHARMACY USER
+      prompt. You must enter at least one Pharmacy user in order to
+      proceed with the installation of this patch. See the message
+      below for instructions on which user(s) to enter. Then after all 
+      users have been entered, a "Continue with install" prompt will
+      be issued.
+   
+                  -------------------------------------
+    
+      Will first run the Environment Check Routine, PSS159EN
+      
+      Upon completion of the post-install, a mail message will be sent
+      to the patch installer, and at least one pharmacy user. Please
+      enter one or more Pharmacy users (e.g., Pharmacy ADPAC or designee)
+      who should receive this message.
+  
+      Enter Pharmacy User: PHARMACY,ADPAC
+  
+      Continue with install? Y//
+  
+                  -------------------------------------
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    respond NO.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond NO.
+  
+ 7. If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0. 
+  
+ Post-Installation Instructions
+ ------------------------------
+ The environment check routine PSS159EN and the post-install routine
+ PSSP159 will be deleted at the end of patch installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS159EN
+    Before:       n/a   After:  B4735666  **159**
+Routine Name: PSSJORDF
+    Before: B46862726   After: B55766382  **5,13,34,38,69,113,94,140,142,159**
+Routine Name: PSSP159
+    Before:       n/a   After:  B8242782  **159**
+Routine Name: PSSPOIM1
+    Before: B56773373   After: B57105824  **29,38,47,141,153,159**
+Routine Name: PSSPOIMO
+    Before:B110356198   After:B131205688  **29,32,38,47,68,102,125,141,
+                                           153,159**
+Routine Name: PSSYSP
+    Before:   B162983   After:   B143904  **20,38,87,120,137,140,159**
+ 
+Routine list of preceding patches: 142, 153
+
+=============================================================================
+User Information:
+Entered By  : ALSAHHAR,SAMI                 Date Entered  : AUG 25, 2010
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: NOV 16, 2011
+Released By : VECE,VIRGINIA                 Date Released : DEC 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

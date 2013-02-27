@@ -1,0 +1,222 @@
+$TXT Created by DESMOND,LINDA at MNTVLL.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 06/17/10 at 14:08
+=============================================================================
+Run Date: AUG 08, 2011                     Designation: DG*5.3*824
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #742                    Status: Released
+                  Compliance Date: SEP 08, 2011
+=============================================================================
+
+Associated patches: (v)DG*5.3*788  <<= must be installed BEFORE `DG*5.3*824'
+
+Subject: FIX CALL LIST PROBLEMS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will fix two problems that are preventing patients from
+ appearing on the NEW ENROLLEE APPOINTMENT REQUEST CALL LIST report 
+ produced by the Call List [DGEN NEACL MGT RPT1] option. Described below,
+ these problems appear to be related to the implementation of features in
+ DG*5.3*788 SEQ #708 'Add Preferred Facility to Call List.' Problem 1 was
+ discovered during development of DG*5.3*824 and Problem 2 was reported by
+ a site reviewing patch DG*5.3*788 after it was released.
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ HD0000000331777 - DG*5.3*788 possible list problem
+  
+ This patch addresses the following Code Change Request (CCR):
+ -------------------------------------------------------------
+ REEG_00009614 - HD0000000331777 - DG*5.3*788 possible list problem 
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ HD0000000331777 - DG*5.3*788 possible list problem
+  
+ Problem:
+ --------
+ Patients that should be appearing on the NEW ENROLLEE APPOINTMENT REQUEST 
+ CALL LIST report produced by the Call List [DGEN NEACL MGT RPT1] option 
+ are being omitted by two problems:
+  
+ 1. Preferred Facility check - Changes were introduced by patch DG*5.3*788 
+ so that only patients with a preferred facility that matched the site 
+ printing the report would appear. However, the code is comparing the 
+ record number (IEN) of the Institution file (#4) record for the site with 
+ the station number of the patient's preferred facility. Unless the IEN 
+ is the same as the station number this check will fail.
+  
+ 2. Non-Count Clinic Appointment - A patient that appeared on the Call 
+ List will be omitted if a non-count clinic appointment is made. An 
+ appointment in a non-count clinic should not remove the patient from the 
+ Call List. The problem is caused by the following fields in the PATIENT 
+ file (#2) becoming populated when the appointment is made:
+  
+           APPOINTMENT REQUEST STATUS field #1010.161  
+           DATE STATUS LAST EDITED field #1010.162 
+           APPOINTMENT REQUEST COMMENT field #1010.163 
+           DATE COMMENT LAST EDITED FIELD #1010.164 
+  
+ If these fields are populated, the patient will not appear on the Call 
+ List. These fields should not get populated for an appointment in a 
+ non-count clinic.
+  
+ Resolution:
+ -----------
+ 1. A change was made to the routine DGENACL. The variable DGSITE will be 
+ set to the site's station number, not the site's record number in the 
+ INSTITUTION file (#4). The station number of the patient's preferred 
+ facility will now be compared to the station number of the site printing 
+ the report.
+  
+ 2. A fix has been added to the routine DGENA2 to check whether the
+ patient's appointment is being made in a non-count clinic. If so, the
+ fields listed above will not be populated and the otherwise non-appointed
+ patient will properly remain on the call list.
+  
+ Note:  This patch checks new enrollees' non-count clinic appointments
+ made from the time of installation forward. It does not check for
+ enrollees appointed before that time and restore their names to the call
+ list.
+  
+ Test Sites:
+ -----------
+ Salisbury VAMC (Large)
+ New York Harbor HCS (Large)
+ Puget Sound HCS (Large/Integrated)
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ This patch may be installed during normal working hours.
+  
+ Install Time - less than 5 minutes
+       
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter DG*5.3*824):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.  When prompted for INSTALL NAME, enter DG*5.3*824.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO.
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer YES.
+        
+            Call List          [DGEN NEACL MGT RPT1]           
+  
+     d.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':'  press <ENTER>.
+     e.  When prompted 'Enter protocols you wish to mark as 'Out Of
+         Order':'  press <ENTER>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13,1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENA2
+    Before: B45947101   After: B47383662  **121,122,147,232,327,469,491,
+                                           779,788,824**
+ Description of Changes:
+  BEFORE:
+  DGENA2 +2         ;;5.3;Registration;**121,122,147,232,327,469,491,779,788**;Aug 13,1
+  993;Build 18
+   
+  AFTER:
+  DGENA2 +2         ;;5.3;Registration;**121,122,147,232,327,469,491,779,788,824**;Aug 
+  13,1993;Build 18
+   
+   
+  BEFORE:
+  DGENA2 +174|TAB|. ; also, if non count clinic, do not file data.
+   
+  AFTER:
+  DGENA2 +174       . ; also, if non count clinic, do not file data.
+   |TAB| +175       . I ($$GET1^DIQ(44,DGCLN,2502,"I")="Y") Q
+
+Routine Name: DGENACL
+    Before: B18382293   After: B18482166  **779,788,824**
+ Description of Changes:
+  BEFORE:
+   
+   +17        S (DGBEG,DGEND,DGERROR)="",DGSITE=+$$SITE^VASITE()
+   
+   +109       S (DGERROR,DGPFTFLG)="",DGSITE=+$$SITE^VASITE()
+   
+   
+  AFTER:
+   
+   +17        S (DGBEG,DGEND,DGERROR)="",DGSITE=+$P($$SITE^VASITE(),U,3)
+   
+   +109       S (DGERROR,DGPFTFLG)="",DGSITE=+$P($$SITE^VASITE(),U,3)
+
+ 
+Routine list of preceding patches: 788
+
+=============================================================================
+User Information:
+Entered By  : FERRARESE,MARY ANN            Date Entered  : FEB 10, 2010
+Completed By: RUDINGER,NANCY L.             Date Completed: JUL 25, 2011
+Released By : GROOMS,ANTHONY E              Date Released : AUG 08, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

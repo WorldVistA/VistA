@@ -1,0 +1,115 @@
+$TXT Created by UNDERHILL,GARDNER at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 06/22/11 at 16:10
+=============================================================================
+Run Date: DEC 10, 2012                     Designation: FH*5.5*28
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #30                    Status: Released
+                  Compliance Date: JAN 10, 2013
+=============================================================================
+
+Associated patches: (v)FH*5.5*25   <<= must be installed BEFORE `FH*5.5*28'
+
+Subject: ADD NEW FOOD ITEMS TO FOOD PREFERENCE FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+ 1. A recent NTRT push has added KIDNEY BEANS and OCTOPUS to the GMR 
+ ALLERGIES file (#120.82). Option Create/Map Food Preferences to Allergies
+ [FHSELA] option does not present these to the user for mapping.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ HD0000000490577 - Need N&FS patch to add OCTOPUS, KIDNEY BEANS as food 
+                   allergies 
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Dayton, OH
+ Heartland - West HCS
+ South Texas HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  HD0000000490577 - Need N&FS patch to add OCTOPUS, KIDNEY BEANS as 
+     food allergies
+  
+ Problem:
+ --------
+ A recent NTRT push has added KIDNEY BEANS and OCTOPUS as food allergies to
+ the GMR ALLERGIES file. These new food allergies are not presented to the
+ user in the "Create/Map Food Preferences to Allergies" [FHSELA] option
+ for mapping.
+  
+ Resolution:
+ -----------
+ Option FHSELA calls routine FHSELA2 to build a list of food allergies to
+ be mapped. This list is hard coded and must be updated with each new NTRT
+ push. The routine FHSELA2 will be modified to include KIDNEY BEANS and 
+ OCTOPUS in the hard coded list of food allergies. Once included in the
+ list, the user will be able to map these new food allergies when needed.
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter FH*5.5*28)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package FH*5.5*28
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSELA2
+    Before:B108792933   After:B111633822  **8,13,23,25,28**
+ 
+Routine list of preceding patches: 25
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : JUN 20, 2011
+Completed By: CRICHLOW,SHERRY               Date Completed: DEC 04, 2012
+Released By : BOSE,MARY ELLEN               Date Released : DEC 10, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,151 @@
+$TXT Created by THOMPSON,Seth at CHEY204.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 01/04/12 at 07:36
+=============================================================================
+Run Date: APR 23, 2012                     Designation: PSJ*5*271
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #227                      Status: Released
+                  Compliance Date: MAY 24, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*271'
+
+Subject: SCHEDULE FREQUENCY MISMATCH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ When using the Order Entry (IV) [PSJI ORDER] menu option to finish
+ multiple IV orders for the same patient, a variable containing the
+ schedule frequency is being carried over from one order to the next,
+ causing orders to be created with a frequency that does not match
+ the schedule.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ 1. HD0000000289086 - BCMA -Order Problem  Schedule Frequency Issue
+    Duplicates:
+    HD0000000067743
+    HD0000000276568
+    HD0000000311983 
+    HD0000000316681  
+    HD0000000319635 
+    HD0000000375829 
+    HD0000000383357 
+    HD0000000417634 
+    HD0000000417828 
+    HD0000000440371 
+    HD0000000451509 
+    HD0000000469860 
+    HD0000000478466 
+    HD0000000496531 
+    HD0000000522581 
+    HD0000000586362 
+    HD0000000590495 
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Charlie Norwood VAMC - Augusta
+ Beckley VAMC
+ Central Plains HCS 
+ Martinsburg VAMC
+ Richmond VAMC
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+  
+ 1. HD0000000289086 - BCMA -Order Problem  Schedule Frequency Issue
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #1418
+  
+    Problem:
+    --------
+    When using the Order Entry (IV) [PSJI ORDER] menu option to finish
+    multiple IV orders for the same patient, a variable containing the 
+    schedule frequency is being carried over from one order to the next,
+    causing orders to be created with a frequency that does not match
+    the schedule.
+  
+    Resolution:
+    ----------- 
+    Routine PSIVOPT has been modified so that variable ZZND will be killed
+    in the process of leaving order selection. This will prevent the
+    frequency from previous orders from hanging over into the finishing of
+    new orders resulting in BCMA and dosing problems.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed after normal business
+ hours. Installation should take less than 2 minutes. Inpatient Medications
+ users should be off the system.
+   
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu. [Note: TEXT
+    PRINT/DISPLAY option in the PackMan menu will display the patch text
+    only].
+   
+ 2. From the Kernel Installation and Distribution System (KIDS) menu,
+    select the Installation menu.
+   
+ 3. From this menu, you may elect to use the following options:
+    (when prompted for INSTALL NAME, enter PSJ*5.0*271)
+   
+    a.  Backup a Transport Global - this option will create a backup
+        message of any routines exported with the patch.  It will
+        NOT backup any other changes such as DDs or templates.
+    b.  Compare Transport Global to Current System  - this option
+        will allow you to view all changes that will be made when
+        the patch is installed.  It compares all components of the
+        patch (routines, DDs, templates, etc.).
+    c.  Verify Checksums in Transport Global - this option will
+        allow you to ensure the integrity of the routines that are
+        in the transport global.
+    d.  Print Transport Global - this option will allow you to view
+        the components of the KIDS build.
+  
+ 4. Use the Install Package(s) option and select the package PSJ*5.0*271
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    respond NO.
+   
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVOPT
+    Before: B57204242   After: B57262738  **17,27,58,88,104,110,155,181,271**
+ 
+Routine list of preceding patches: 181
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : JAN 03, 2012
+Completed By: BYRD,TIERRA                   Date Completed: APR 23, 2012
+Released By : LYTTLE,KIM M                  Date Released : APR 23, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

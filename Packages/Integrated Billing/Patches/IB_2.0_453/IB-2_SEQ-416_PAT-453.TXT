@@ -1,0 +1,226 @@
+$TXT Created by KOGER,RON at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 05/24/11 at 14:11
+=============================================================================
+Run Date: AUG 10, 2011                     Designation: IB*2*453
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #416                      Status: Released
+                  Compliance Date: SEP 10, 2011
+=============================================================================
+
+
+Subject: FY2012 DSS STOP CODE UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates Integrated Billing Clinic Stop Codes to reflect 
+ Fiscal Year 2012 changes.
+  
+ **************************************************************************
+ Note: In order to provide CORRECT billing of co-pay charges for the 
+ Decision Support System (DSS) Stop Code changes, this patch should be
+ installed as soon as possible.
+ **************************************************************************
+   
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000476131    FY 2012 DSS Stop Code updates
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ JAMES A. HALEY VETERANS' HOSPITAL- TAMPA
+ VA WESTERN NY HCS - BUFFALO
+    
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000476131    FY 2012 DSS Stop Code updates
+   
+   Problem: 
+   --------
+   As requested by the Chief Business Office (CBO), the IB CLINIC
+   STOP CODE BILLABLE TYPES (#352.5) file needs to be updated to
+   reflect changes for Fiscal Year 2012.
+   
+   Resolution:
+   -----------
+   Add and update requested Stop Codes as described below:
+  
+  
+ STOP CODES ADDED
+ ----------------
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+ 110   OCT 1,2011   SPECIALTY CARE  INTERV RAD PRE/POST CNSLT      OVERRIDE
+ 240   OCT 1,2011   SPECIALTY CARE  PM&R ASSIST TECH CLINIC
+ 338   OCT 1,2011   NON-BILLABLE    TELEPHONE PRIMARY CARE         OVERRIDE
+ 504   OCT 1,2011   NON-BILLABLE    GRANT & PER DIEM GROUP         OVERRIDE
+ 507   OCT 1,2011   NON-BILLABLE    HUD/VASH GROUP                 OVERRIDE
+ 508   OCT 1,2011   NON-BILLABLE    HCHV/HCMI GROUP                OVERRIDE
+ 698   OCT 1,2011   BASIC CARE      SF TELECARE FROM NONVAMC PROV
+  
+  
+ STOP CODES MODIFIED
+ -------------------
+  
+ STOP    EFFECTIVE                                                 OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                      FLAG
+ ---------------------------------------------------------------------------
+  
+ OLD:
+  
+ 372   JUN 16,2008  NON-BILLABLE    MOVE PROGRAM INDIVIDUAL        OVERRIDE
+ 373   JUN 16,2008  NON-BILLABLE    MOVE PROGRAM GROUP             OVERRIDE
+ 511   MAR  1,2011  NON-BILLABLE    GRANT AND PER DIEM             OVERRIDE
+ 522   OCT  1,2002  NON-BILLABLE    HUD/VASH                       OVERRIDE
+ 529   MAR  1,2011  NON-BILLABLE    HCHV/HCMI                      OVERRIDE
+ 648   OCT  1,2010  BASIC CARE      NC RTCV TELECARE NONVAMC
+ 682   OCT  1,2002  NON-BILLABLE    VA-REFER HOME/COMMUN CARE PROV OVERRIDE
+ 683   OCT  1,2005  NON-BILLABLE    NON-VIDEO MONITORING ONLY      OVERRIDE
+ 684   OCT  1,2003  NON-BILLABLE    HM THLTH NOVIDEO INTRVN 2 ONLY OVERRIDE
+ 685   OCT  1,2003  NON-BILLABLE    CARE OF CCS PROGRAM PATIENTS   OVERRIDE
+ 686   OCT  1,2003  NON-BILLABLE    CCS TELEPHONE (ETC.) CARE
+ 715   OCT  1,2002  BASIC CARE      ONGOING TREATMENT (Non-MH)     OVERRIDE
+  
+  
+ NEW:
+  
+ 372   OCT 1,2011   NON-BILLABLE    MOVE! PGM INDIV                OVERRIDE
+ 373   OCT 1,2011   NON-BILLABLE    MOVE! PGM GROUP                OVERRIDE
+ 511   OCT 1,2011   NON-BILLABLE    GRANT & PER DIEM INDIV         OVERRIDE
+ 522   OCT 1,2011   NON-BILLABLE    HUD/VASH INDIV                 OVERRIDE
+ 529   OCT 1,2011   NON-BILLABLE    HCHV/HCMI INDIV                OVERRIDE
+ 648   OCT 1,2011   BASIC CARE      RT CVT W NONVAMC PROVID LOC
+ 682   OCT 1,2011   NON-BILLABLE    VA-REFER TO HCBC PROV          OVERRIDE
+ 683   OCT 1,2011   NON-BILLABLE    HT NON-VIDEO MONITORING        OVERRIDE
+ 684   OCT 1,2011   NON-BILLABLE    HT NON-VIDEO INTERVENTION      OVERRIDE
+ 685   OCT 1,2011   NON-BILLABLE    HT PROGRAM PATIENTS            OVERRIDE
+ 686   OCT 1,2011   NON-BILLABLE    TELEPHONE BY HT STAFF          OVERRIDE
+ 715   OCT 1,2011   BASIC CARE      ONGOING TREATMENT (Non-MH)
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*453)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*453.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//" respond NO.
+  
+     7. You may delete routine IB20P453 after the installation.
+  
+  
+ *** After the install please review the installation to verify the
+     Stop Codes were added.  See below:
+   
+   
+ ------------------------------------------------
+  
+ DSS Clinic Stop Codes, Post-Install Starting
+  
+  Adding new codes to file 352.5
+  
+    110  INTERV RAD PRE/POST CNSLT
+  
+    240  PM&R ASSIST TECH CLINIC
+  
+    338  TELEPHONE PRIMARY CARE
+  
+    504  GRANT & PER DIEM GROUP
+  
+    507  HUD/VASH GROUP
+  
+    508  HCHV/HCMI GROUP
+  
+    698  SF TELECARE FROM NONVAMC PROV
+  
+      7 entries added to 352.5
+  
+  Updating Stop Code entries in file 352.5
+  
+    372  MOVE! PGM INDIV
+  
+    373  MOVE! PGM GROUP
+  
+    511  GRANT & PER DIEM INDIV
+  
+    522  HUD/VASH INDIV
+  
+    529  HCHV/HCMI INDIV
+  
+    648  RT CVT W NONVAMC PROVID LOC
+  
+    682  VA-REFER TO HCBC PROV
+  
+    683  HT NON-VIDEO MONITORING
+  
+    684  HT NON-VIDEO INTERVENTION
+  
+    685  HT PROGRAM PATIENTS
+  
+    686  TELEPHONE BY HT STAFF
+  
+    715  ONGOING TREATMENT (Non-MH)
+  
+      12 updates added to file 352.5
+  
+ DSS Clinic Stop Codes, Post-Install Complete
+  
+ ------------------------------------------------
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P453
+    Before:       n/a   After: B15195835  **453**
+
+=============================================================================
+User Information:
+Entered By  : KOGER,RON                     Date Entered  : APR 15, 2011
+Completed By: BYRD,TIERRA                   Date Completed: AUG 10, 2011
+Released By : CAULFIELD,MARY                Date Released : AUG 10, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

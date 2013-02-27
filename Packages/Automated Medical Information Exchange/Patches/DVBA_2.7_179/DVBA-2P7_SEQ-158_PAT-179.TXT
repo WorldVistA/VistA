@@ -1,0 +1,656 @@
+$TXT Created by MCGINNIS,RON at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 05/24/12 at 15:19
+=============================================================================
+Run Date: JUN 27, 2012                     Designation: DVBA*2.7*179
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #158                    Status: Released
+                  Compliance Date: JUL 28, 2012
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*148<<= must be installed BEFORE `DVBA*2.7*179'
+                    (v)DVBA*2.7*149<<= must be installed BEFORE `DVBA*2.7*179'
+                    (v)PSO*7*382   <<= must be installed BEFORE `DVBA*2.7*179'
+
+Subject: CAPRI NOTIFICATION ENHANCEMENT & DEFECT FIXES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ I. OVERVIEW
+  
+    This patch (DVBA*2.7*179) and CAPRI GUI v179 provides defect fixes and
+    enhancements for the CAPRI GUI and the Automated Medical Information
+    Exchange (AMIE) package.  Please refer to the 'FUNCTIONAL OVERVIEW'
+    section (III.) for the specific changes and primary functionality being
+    delivered.
+  
+  
+ II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+   
+    The following section lists the Remedy tickets and/or New Service 
+    Requests associated with this patch.
+   
+    1. Associated Remedy Ticket(s):
+       ----------------------------
+       HD0000000131110 - CAPRI E/M Forwarding Address Not Working
+         Duplicates:     None
+  
+       HD0000000585077 - Tab control access error - Violation occurred 
+         Duplicates:     None
+  
+  
+       HD0000000554852 - Cannot copy from 2507 screen except with edit menu
+         Duplicates:     None
+  
+    2. Associated New Service Request(s):
+       ----------------------------------
+       NONE 
+   
+ III. FUNCTIONAL OVERVIEW
+   
+    The following is an overview of the changes and primary functionality
+    that will be delivered in CAPRI GUI v179 and this VistA patch 
+    (DVBA*2.7*179).
+    
+    1. The following Remedy tickets are being addressed:
+   
+       a. HD0000000131110 - CAPRI E/M Forwarding Address Not Working
+   
+       Problem
+       -------
+       The email address entered using the Tools/Change Forwarding Address
+       option in CAPRI is never used by VistA to provide notification of
+       significant 2507 exam request changes.
+  
+       Solution
+       --------
+       This issue is resolved by the Notification and Tracking of Changes
+       to Exam Request Status enhancement in section 3. b. of this patch
+       description. 
+  
+       b.  HD0000000585077 - Tab control access error - Violation occured
+  
+       Problem
+       -------
+       CAPRI generates a "Tab control access error" when a user clicks on
+       the Clinical Documents tab, clicks on a different tab and quickly
+       clicks back to the Clinical Documents tab.  The error occurs
+       because the processing of the previous tab click has not completed.
+  
+       Solution
+       --------
+       The tab control logic has been modified to disable the tab control
+       temporarily while the tab click logic is being executed.  The tab
+       control is re-enabled immediately upon completion of the tab click
+       logic to prevent duplicate triggering.
+  
+       c.  HD0000000554852 - Cannot copy from 2507 screen except with edit
+                             menu
+  
+       Problem
+       -------
+       When a user attempts to copy text from the Exam Results field of the
+       Exam Detail form using the Ctrl-C hotkey, CAPRI generates an error.
+       The user workaround is to use the Edit menu prior to using Ctrl-C.
+       Also, the Exam Results field does not provide a popup edit menu when
+       clicking the right mouse button on the field.
+  
+       Solution
+       --------
+       The Exam Results field has been modified to properly initialize the
+       copy function immediately after the user clicks the field.  A popup
+       edit menu containing Copy and Select All options has been added to
+       the Exam Results field.
+  
+  
+   2. The following defects that were reported directly to the CAPRI
+      development team are being addressed:
+  
+      a. Defect - "AUDIO" template name displays when selecting "BLANK"
+                   template.
+  
+      Problem
+      -------
+      When a user adds two templates from the "Available Templates"
+      list on the "Browse Templates" form, deletes the first template by
+      double-clicking in the "Selected Templates" list, and clicks
+      "Generate Template", CAPRI displays the deleted template's
+  
+      name in the "Template Name" field on the C&P Worksheets tab list.
+      This behavior occurs because CAPRI does not update the internal
+      selected items list when a template is deleted from the "Selected
+      Templates" list.
+  
+      Solution
+      --------
+      Modify CAPRI to update the internal selected items list every time
+      a template is deleted from the "Selected Templates" list.
+  
+  
+      b. Defect - Intermittent horizontal scrolling issues when a large
+                  number of exam templates are merged.
+  
+      Problem
+      -------
+      When a large number of templates are merged, the total length of
+      the template selection buttons that activate each template exceed
+      the available space on the template form and some buttons become
+      hidden.  The scroll control that enables the user to access the
+      hidden button does not function reliably and prevents the user
+      from accessing the hidden template selection buttons.
+  
+      Solution
+      --------
+      The scroll control has been replaced with a scroll bar that displays
+      immediately below the row of template selection buttons when the total
+      length of the buttons exceeds the available space. 
+  
+  
+      c. Defect - Switching sites after using VistaWeb causes print problem
+  
+      Problem
+      -------
+      CAPRI retains the VistaWeb tab as the active tab instead of resetting
+      the active tab to C&P Exams when a user accesses VistaWeb, immediately
+      switches sites, and does not select a patient at the new site. This
+      causes the File/Print option to attempt to print VistaWeb data from
+      the patient at the previous site.
+  
+      Solution
+      --------
+      CAPRI has been modified to set the active tab to C&P Exams whenever
+      a user switches sites whether a patient is selected or not at the new
+      site.
+  
+    
+   3. The following enhancements that were requested by Veterans Health
+      Administration Veterans Affairs Central Office (VHAVACO) and/or
+      Health Revenue Center (HRC) are being addressed:
+  
+      a. Add Medication Profile and Refill Option to CAPRI/HRC Menus.
+  
+      This patch addresses a request made by the HRC to add the Medication 
+      Profile and Refill [PSO HRC PROFILE/REFILL] option to the existing
+      CAPRI menus, HRC Pharmacy Menu [DVBA HRC MENU PHARMACY] and
+      HRC Pharmacy Customer Care Menu [DVBA HRC MENU PHARMACY CC].
+    
+      This change will allow Pharmacy Customer Care agents at the HRC to
+      view a medication profile and to request refills for prescriptions
+      on behalf of the patient they are serving. Adding this option to the
+      HRC menus will assist the HRC in providing 'first call resolution'
+      to veterans.
+  
+  
+      b. Notification and Tracking of Changes to Exam Request Status 
+  
+      Changes have been made to CAPRI to send notification email messages
+      to the original requestor of a 2507 exam request when the exam
+      request is canceled or when the exam request is released to the
+      regional office, but not yet printed.
+  
+      A new Request Status by Date Range report has been added to the
+      CAPRI Reports dialog box.  This report sorts by the last date
+      that the request status changed.  The user selects a date
+      range of status changes to include in the report. A status filter
+      value may also be selected that will cause the report to only return
+      records with the selected status. The report defaults to 'All Statuses'.
+      The user may choose the output format as plain text format for printing
+      or delimited format for import into external programs.
+  
+      The new Request Status by Date Range report depends on a new
+      DATE STATUS LAST CHANGED (#7) field in the 2507 REQUEST (#396.3) file.
+      This patch will automatically populate the field for 2507 REQUEST
+      records that have been entered in the last 90 days.
+      
+       
+      c. Modify CAPRI Reports to Improve Data Collection Performance
+      
+      Certain CAPRI reports were originally designed to collect data by
+      making a separate call to the database for each date in a date range.
+      This design results in increased wait times for the data collection
+      to complete.  The reports have been re-designed to collect all data
+      for the date range with a single call to the database.  The following
+      reports have been re-designed:
+         * Admission Report for SC Veterans
+         * Re-admission Report
+         * Discharge Report
+         * Incompetent Veterans Report
+  
+  
+      d. Priority of Exam Dropdown Box Size Increase and Sort
+  
+      The CAPRI IPT requested modifications to the dropdown box that displays
+      the Priority of Exam list on the Add New C&P Exam form and the View
+      C&P Exam form.  The length of the dropdown box has been increased to
+      display all available exam priorities without the use of a scrollbar.
+      The available exam priorities will now be sorted in ascending alphabetic
+      order.
+  
+      e. Add CLAIMS.FORUM.VA.GOV to the remote mode server list
+  
+      CAPRI automatically runs in remote mode when a user connects to
+      the CLAIMS server with the name FORUM.VA.GOV. The CLAIMS server
+      name is being changed to CLAIMS.FORUM.VA.GOV. This patch adds
+      CLAIMS.FORUM.VA.GOV as a valid remote mode server.
+  
+    
+ IV. TECHNICAL COMPONENTS
+  
+   The following section describes the technical components being exported
+   with this patch. 
+  
+                                             UP    SEND  DATA
+                                             DATE  SEC.  COMES  SITE   RSLV
+   FILE #     FILE NAME                      DD    CODE  W/FILE DATA   PTS
+   ------------------------------------------------------------------------
+   396.3      2507 REQUEST                   YES   NO    NO
+   Partial DD: subDD: 396.3      fld: 7
+                                 fld: 17
+  
+   1. The following Routines are being added/modified:
+  
+       a. Modify: DVBAB1
+          Description of change:
+          This routine has been modified to send email notifications to a
+          requestor of a 2507 Request when the request has been either
+          canceled or completed, but not printed.
+  
+       b. Modify: DVBAB82
+          Description of change:
+          This routine has been modified to add the new Request Status
+          by Date Range report.
+  
+       c. Modify: DVBARSBD
+          Description of changes:
+          This new routine implements the new Request Status by Date
+          Range report.  It collects 2507 REQUEST (#396.3) file records
+          that have a DATE STATUS LAST CHANGED within a selected date range.
+          The record data for each record is formatted into rows and
+          returned to CAPRI for display and printing.  The routine is called
+          by DVBAB82.
+  
+       d. Modify: DVBAB51
+          Description of changes:
+          This routine generates the Incompetent Patient Report and
+          has been modified to replace the report output local array with a
+          temporary global. The RPC Broker now makes one call to VistA to
+          process the entire date range. This new method of data gathering
+          speeds up the report processing considerably.
+  
+       e. Modify: DVBAB53
+          Description of changes:
+          This routine generates the Discharge Report and has been modified
+          to replace the report output local array with a temporary global.
+          The RPC Broker now makes one call to VistA to process the entire
+          date range. This new method of data gathering speeds up the
+          report processing considerably.
+  
+       f. Modify: DVBAB54
+          Description of changes:
+          This routine generates the Admission Report and has been modified
+          to replace the report output local array with a temporary global.
+          The RPC Broker now makes one call to VistA to process the entire
+          date range. This new method of data gathering speeds up the
+          report processing considerably.
+  
+       g. Modify: DVBAB56 and DVBAB98
+          Description of changes:
+          These routines generate the Re-admission Report and have been
+          modified to replace the report output local array with a
+          temporary global. The RPC Broker now makes one call to VistA to
+          process the entire date range. This new method of data gathering
+          speeds up the report processing considerably.
+  
+  
+   2.  The following file is being modified:
+    
+       a. 2507 REQUEST (#396.3)
+  
+          Field 7, DATE STATUS LAST CHANGED, is a new field that contains
+          the date of the last REQUEST STATUS (#17) value change.  The 
+          field is automatically populated by a new trigger on the REQUEST
+          STATUS field.
+  
+          Field 17, REQUEST STATUS, has been modified to add a trigger that
+          populates the DATE STATUS LAST CHANGED field when the REQUEST
+          STATUS changes.
+  
+  
+   3.  The following REMOTE PROCEDUREs are being modified:
+  
+       a. DVBAB SEND MSG
+          An additional input parameter (VAL5) of type 'literal' has been
+          added to contain the 2507 REQUEST IEN.
+  
+       b. DVBAB REPORT INCOMPVET
+          The RETURN VALUE TYPE has been changed to GLOBAL ARRAY and WORD 
+          WRAP ON now equals TRUE.
+  
+       c. DVBAB REPORT DISCHARGE
+          The RETURN VALUE TYPE has been changed to GLOBAL ARRAY and WORD 
+          WRAP ON now equals TRUE.
+  
+       d. DVBAB REPORT READMIT
+          The RETURN VALUE TYPE has been changed to GLOBAL ARRAY and WORD 
+          WRAP ON now equals TRUE.
+  
+       e. DVBAB REPORT ADMISSIONS 
+          The RETURN VALUE TYPE has been changed to GLOBAL ARRAY and WORD 
+          WRAP ON now equals TRUE.
+  
+  
+   4.  The following OPTIONS are being added:
+  
+       a. The Outpatient Pharmacy option Medication Profile and Refill 
+          [PSO HRC PROFILE/REFILL] will be added to the HRC Pharmacy Menu
+          [DVBA HRC MENU PHARMACY]
+        
+       b. The Outpatient Pharmacy option Medication Profile and Refill 
+          [PSO HRC PROFILE/REFILL] will be added to the HRC Pharmacy Customer
+          Care Menu [DVBA HRC MENU PHARMACY CC]
+  
+  
+   5. The following INTEGRATION CONTROL REGISTRATION's (ICR's) have been
+      added or modified.
+          
+      a.  4595      NAME: DBIA4589-G
+          CUSTODIAL PACKAGE: OUTPATIENT PHARMACY
+      
+          SUBSCRIBING PACKAGE: AUTOMATED MED INFO EXCHANGE                
+                         Usage of the following options: 
+                          
+                             PSOCP RESET COPAY STATUS 
+                             PSO P 
+                             PSO VIEW 
+                             PSO LM BACKDOOR ORDERS 
+                             PSO HRC PROFILE/REFILL 
+               USAGE: Controlled Subscri    ENTERED: FEB 10,2005
+               STATUS: Active               EXPIRES: 
+               DURATION: Till Otherwise Agr VERSION: 
+               FILE:                        ROOT: 
+               DESCRIPTION:                 TYPE: Other
+         The Health Revenue Center (HRC) will be using a special telnet feature
+         in CAPRI-Remote.  This allows a user to be automatically logged into
+         the local VistA system and provides access to the site's regular VistA 
+         functionality.  The HRC requires access to the menu options listed
+         in this Integration Agreement in order to access various records for
+         a given patient.  
+     
+         HRC First Party Call Center contact representatives will use the HRC 
+         Pharmacy Menu [DVBA HRC MENU PHARMACY] option to handle calls from 
+         veterans related to the Consolidated Co-payment Processing Center
+         (CCPC)  billing statements.  The menu option will be available through
+         the CAPRI application, which provides local common service to VistA
+         for HRC CAPRI remote users.  Users of the HRC Pharmacy Menu [DVBA HRC
+         MENU PHARMACY] option will typically be licensed and registered
+         personnel (i.e. pharmacists and pharmacy technicians).  
+     
+         NOTES 
+         ======================================================================
+         * The Reset Copay Status/Cancel Charges [PSOCP RESET COPAY STATUS] 
+         option may be used to change the patients Copay.  
+     
+         * Pharmacy Benefits Management endorses the addition of the Patient 
+           Prescription Processing [PSO LM BACKDOOR ORDERS] to the HRC Pharmacy 
+           Menu [DVBA HRC MENU PHARMACY] menu option, with the understanding 
+           that HRC users will not use the option to alter existing Outpatient 
+           Pharmacy records. 
+  
+          KEYWORDS: HRC
+                    AMIE
+                    DVB
+                    CAPRI
+                    DVBA
+                              ********************
+  
+ V. SOFTWARE AND DOCUMENTATION RETRIEVAL
+     
+   1. VistA Patch DVBA*2.7*179
+    
+      a. The VistA server software is being distributed as a PackMan patch
+         message through the National Patch Module (NPM). The KIDS build
+         for this patch is DVBA*2.7*179.
+  
+   2. CAPRI GUI v179 Client Software & User Documentation
+  
+      a.  The CAPRI GUI v179 client software is being distributed as
+          executable CAPRI.exe ([DVBA_27_P179_06.ZIP]). The 
+          installed executable for this patch is client version 
+          179.06 with a size of 13.8 MB.
+  
+          The CAPRI GUI v179 client software and documentation for this
+          patch may be retrieved directly using FTP. The preferred method
+          is to FTP the files from:
+  
+             download.vista.med.va.gov
+  
+         This transmits the files from the first available FTP server.
+         Sites may also elect to retrieve software directly from a specific
+         server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+         Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+         Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+  
+        The following files will be available:
+  
+        File Name             Contents                     Retrieval format
+        ---------             --------                     ----------------
+        DVBA_27_P179_06.ZIP   File(s) indented below:      BINARY
+         - CAPRI.exe             CAPRI v179 executable
+         - CAPRI.map             CAPRI error map
+         - CAPRISession.r2w      Reflections session configuration
+         - ssh_config            Secure Shell configuration       
+         - CAPRI_GUI_ISG.doc  CAPRI GUI Installation Supplemental Guide
+        DVBA_27_P179_RN.PDF   Patch Release Notes          BINARY
+        DVBA_27_P179_UM.PDF   Updated CAPRI User Manual    BINARY 
+  
+       The VistA Documentation Library (VDL) web site will also contain the
+       'Release Notes' and updated 'CAPRI User Manual'. This web site is
+       usually updated within 1-3 days of the patch release date.
+  
+       The VDL web address for CAPRI user documentation is:
+      
+          http://www.va.gov/vdl/application.asp?appid=133
+  
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES:
+  
+  1. Users On the System
+  
+     a. This patch (DVBA*2.7*179) may be installed while CAPRI users are
+        still using the previously released version of the CAPRI GUI
+        (i.e. CAPRI.exe v177.05).
+  
+     b. Once the installation of this patch has been completed, CAPRI users
+        should be upgraded to the new released version of the CAPRI GUI
+        (CAPRI.exe [DVBA_27_P179_06.ZIP]). Please refer to the 
+        CAPRI_GUI_ISG.doc document within the DVBA_27_P179_06.zip file
+        for supplemental installation instructions regarding the
+        installation of the following files:
+            CAPRI.map             CAPRI error map
+            CAPRISession.r2w      Reflections session configuration
+            ssh_config            Secure Shell configuration
+  
+     c. This patch modifies routines used by the CAPRI GUI application 
+        and the Automated Medical Information Exchange (AMIE) package. It
+        should be installed during non-peak hours to minimize disruption to
+        users and to reduce the possibility of errors when the routines are
+        updated.
+  
+  2. VistA Options
+         
+     a. The following VistA options should be disabled while installing
+        this patch:
+  
+       DVBA HRC MENU PHARMACY       HRC Pharmacy Menu
+       DVBA HRC MENU PHARMACY CC    HRC Pharmacy Customer Care Menu
+       DVBA INCOMPETENT VET REPORT  Incompetent Veterans Report
+       DVBA DISCHARGE RPT           Discharge Report
+       DVBA RE-ADMISSION REPORT     Re-admission Report
+       DVBA SERV CONN ADM REPORT    Admission Report for Service Connected
+                                    Veterans
+  
+  3. Software Installation Time
+  
+     a. The estimated installation time for VistA patch DVBA*2.7*179 is 
+        less than 5 minutes during off peak hours.
+   
+  4. Required Builds
+  
+     a. The following is a list of REQUIRED builds for this KIDS
+        distribution (DVBA*2.7*179). KIDS will not allow the installation
+        of this patch without their prior installation.
+  
+        Required Builds:
+        ----------------
+        DVBA*2.7*148
+        DVBA*2.7*149
+        DVBA*2.7*177
+        PSO*7.0*382
+  
+  
+ VII. INSTALLATION INSTRUCTIONS:
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+    2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+  
+    3. From this menu, you may now elect to use the following options (when
+       prompted for INSTALL NAME, enter DVBA*2.7*179).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+    4. Use the Install Package(s) option and select package DVBA*2.7*179.
+  
+    5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//', respond NO.
+  
+    6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', it is recommended you answer NO.
+  
+    7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond YES.  When prompted to select the options
+       you would like to place out of order, enter the following:
+  
+       DVBA HRC MENU PHARMACY         HRC Pharmacy Menu    
+       DVBA HRC MENU PHARMACY CC HRC  Pharmacy Customer Care Menu
+       DVBA INCOMPETENT VET REPORT    Incompetent Veterans Report
+       DVBA DISCHARGE RPT             Discharge Report
+       DVBA RE-ADMISSION REPORT       Re-admission Report
+       DVBA SERV CONN ADM REPORT      Admission Report for Service Connected
+                                      Veterans
+  
+    8. If CAPRI GUI users have not already been upgraded to the new 
+       version of the CAPRI GUI v179 (CAPRI.exe [DVBA_27_P179_06.ZIP]), 
+       they should be upgraded as soon as possible upon installation of 
+       this patch.
+  
+    9. NOTE: Pre/Post-init routine DVBA179P is a temporary routine used as
+       part of the pre/post-install process.  This routine will not be
+       automatically deleted by KIDS after patch installation. After successful
+       completion of the TaskMan task that populates the new DATE STATUS LAST
+       CHANGED (#7) field of the 2507 REQUEST (#396.3) file, the routine may
+       be manually deleted.
+  
+    Additional information on Post-Install Routine POST^DVBA179P
+    ==========================================================================
+    The Post-Install Routine for patch DVB*2.7*179, POST^DVBA179P, makes a call
+    to two entry points: POST1 and POST2.
+  
+    The POST1 entry point of routine DVBA179P adds menu items to two of the
+    HRC menus distributed in a previous patch.
+  
+    The POST2 entry point of routine DVBA179P automatically queues a TaskMan
+    task that will populate the new DATE STATUS LAST CHANGED (#7) field in the
+    2507 REQUEST (#396.3) file with the most recent activity date for any
+    record that was entered in the last 90 days.  Limiting the number of 
+    records to those entered in the last 90 days provides the most business
+    value with the least impact on the VistA system resources.
+  
+    Even though the expected number of records should be small (< 5000), the
+    field population task contains checks for a user-requested stop. A MailMan
+    message will be created and sent to the person installing the patch
+    indicating the reason for premature task stoppage.
+  
+    To re-queue a "stopped" field population task, re-run the POST2 entry point
+    of routine DVBA179P by entering at the programmer's prompt:
+  
+    > D POST2^DVBA179P
+  
+    Successful completion of the field population task results in a MailMan
+    message being  created and sent to the person installing the patch.
+  
+  
+  
+ VIII. TEST SITES
+  
+   The following sites participated in the testing of the CAPRI GUI v179 
+   and DVBA*2.7*179 server software.
+  
+    Test Sites:
+    ---------- 
+    * Alexandria
+    * Denver
+    * Greater LA
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA179P
+    Before:       n/a   After: B30688582  **179**
+Routine Name: DVBAB1
+    Before: B54842893   After:B100042303  **35,37,50,42,53,57,73,104,109,
+                                           137,146,143,179**
+Routine Name: DVBAB51
+    Before: B44742648   After: B51087227  **35,149,179**
+Routine Name: DVBAB53
+    Before: B45878963   After: B51879016  **35,99,100,149,179**
+Routine Name: DVBAB54
+    Before: B30133216   After: B35153355  **35,149,179**
+Routine Name: DVBAB56
+    Before: B24628055   After: B25277073  **35,149,179**
+Routine Name: DVBAB82
+    Before:B101314855   After:B109260107  **42,90,100,119,156,149,179**
+Routine Name: DVBAB98
+    Before: B29136155   After: B34547501  **35,149,179**
+Routine Name: DVBARSBD
+    Before:       n/a   After: B41501602  **179**
+
+=============================================================================
+User Information:
+Entered By  : MCGINNIS,RONALD P             Date Entered  : NOV 23, 2011
+Completed By: DELACRUZ,KRISTINA             Date Completed: JUN 26, 2012
+Released By : FRANCE,KATHI                  Date Released : JUN 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

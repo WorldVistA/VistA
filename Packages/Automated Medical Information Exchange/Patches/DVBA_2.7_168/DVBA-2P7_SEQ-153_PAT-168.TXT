@@ -1,0 +1,761 @@
+$TXT Created by WINTERTON,STEVEN at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 05/24/11 at 13:41
+=============================================================================
+Run Date: AUG 16, 2011                     Designation: DVBA*2.7*168
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #153                    Status: Released
+                  Compliance Date: SEP 16, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*32 <<= must be installed BEFORE `DVBA*2.7*168'
+                    (v)DVBA*2.7*149<<= must be installed BEFORE `DVBA*2.7*168'
+
+Subject: CAPRI GUI SECURE SHELL ENHANCEMENT & REMEDY FIXES
+
+Category: 
+  - Informational
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ I. OVERVIEW
+  
+   This patch (DVBA*2.7*168) and CAPRI GUI v168 provides defect fixes and
+   enhancements for the CAPRI GUI and the Automated Medical Information
+   Exchange (AMIE) package.  Please refer to the 'FUNCTIONAL OVERVIEW'
+   section (III.) for the specific changes and primary functionality being
+   delivered.
+  
+ II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+   
+    The following section lists the Remedy tickets and/or New Service 
+    Requests associated with this patch.
+   
+    1. Associated Remedy Ticket(s):
+       ----------------------------
+       HD0000000398114 - CAPRI hypertension graph inconsistent
+         Duplicates:     None
+       HD0000000289084 - Template behaving strangely-hourglass/cursor flutter
+         Duplicates:     None
+       HD0000000424423 - Unable to Perform Specific date range Queries in
+                         VistAWeb
+         Duplicates:     HD0000000452178
+                         HD0000000492763
+       HD0000000341272 - CAPRI - Lab Values appearing under the Patients Med Tab
+         Duplicates:     None
+       HD0000000420795 - DoD Tab returns "List index out of bounds (316)" error
+         Duplicates:     None
+       HD0000000438650 - VBA user can't re-print C&P Exam results for his office
+         Duplicates:     None
+       HD0000000462290 - 5 Des Moines users cannot access VistA Web tab in CAPRI
+         Duplicates:     HD0000000471440
+                         HD0000000472317
+       HD0000000474181 - CAPRI issue when ordering exams at Omaha
+         Duplicates:     None
+       HD0000000484927 - Other Facilities visited [WASHINGTON DC] connects
+                         to [PUGET SOUND]
+         Duplicates:     None
+       HD0000000489731 - Unable to access Capri C&P Training website from 
+                         GUI help
+         Duplicates:     None 
+       HD0000000474175 - Buffalo user gets errors when entering new patients
+         Duplicates:     None
+       HD0000000481041 - new DBQ for MH--possible flaws identified
+         Duplicates:     None
+  
+  
+    2. Associated New Service Request(s):
+       ----------------------------------
+       NONE 
+   
+ III. FUNCTIONAL OVERVIEW
+   
+    The following is an overview of the changes and primary functionality
+    that will be delivered in CAPRI GUI v168 and this VistA patch 
+    (DVBA*2.7*168).
+    
+    1. The following Remedy tickets are being addressed:
+   
+       a. HD0000000398114 - CAPRI hypertension graph inconsistent
+   
+       Problem
+       -------
+       The Graph Report functionality on the Vitals tab produces inconsistent
+       results when comparing inserted values to the graphed coordinates or
+       a written report of Blood Pressure readings. The "value" reading
+       does NOT match the lined graph coordinates, or the written report of
+       Blood Pressure readings.  
+   
+       Solution
+       --------
+       The method used to sort data points on the graph has been modified
+       to consistently sort and plot the data points in date order.
+  
+       b. HD0000000289084 - Template behaving strangely-hourglass/cursor 
+                            flutter
+   
+       Problem
+       -------
+       The C&P Worksheets tab would cause CAPRI to hang if the name of the
+       selected patient duplicated another patient in the patient file and
+       both patients were associated with 10 or more CAPRI template exams.
+  
+       Solution
+       --------
+       The method used to retrieve exam template lists has been modified to
+       limit the data retrieval to the DFN of the selected patient.
+  
+  
+       c. HD0000000424423 - Unable to Perform Specific date range Queries in
+                            VistAWeb 
+   
+       Problem
+       -------
+       The data entry fields in VistaWeb options that require user entry,
+       such as the Date Range field on Med Admin HX (BCMA) screen, do not
+       respond to user input.  Research indicated that the accelerator keys
+       on the Clinical Documents tab were intercepting the keystrokes.
+      
+  
+       Solution
+       --------
+       The accelerator key values for the Clinical Documents tab are activated
+       only when the Clinical Documents tab is selected.
+  
+  
+       d. HD0000000341272 - CAPRI - Lab Values appearing under the Patients
+                            Med Tab  
+   
+       Problem
+       -------
+       Selecting "Active Outpatient" from the "Meds" tab of the "Clinical
+       Documents" tab returned data for "Lab" at some sites.  Research
+       determined the cause of the incorrect data retrieval was due to local
+       modifications to the DISPLAY GROUP (#100.98) file. 
+  
+       Solution
+       --------
+       The data retrieval method has been modified to perform a lookup on
+       the DISPLAY GROUP file and no longer assume a consistent record numbering
+       scheme.  This solution is supported by the addition of AMIE to
+       Integration Control Reference #873.
+  
+  
+       e. HD0000000420795 - DoD Tab returns "List index out of bounds (316)"
+                            error
+  
+       Problem
+       -------
+       Retrieving Progress Note data from the Federal Health Information
+       Exchange (FHIE) using the DoD Records tab occasionally generated an
+       error.  Research indicated that the data records were not always in
+       the format expected, preventing CAPRI from determining the end of a
+       record.
+  
+       Solution
+       --------
+       The data retrieval method has been modified to provide a more robust
+       determination of the end of received Progress Note records.
+  
+  
+       f. HD0000000438650 - VBA user can't re-print C&P Exam results for
+                            his office
+       Problem
+       -------
+       The "Reprint Final C&P Results" button on the C&P Exam tab incorrectly
+       returns a message "Those results do not belong to your office" and fails
+       to reprint the results.
+  
+       Solution
+       --------
+       The reprint method has been modified to ensure that the user's site 
+       identifier is properly set prior to attempting generation of the report.
+         
+  
+       g. HD0000000462290 - 5 Des Moines users cannot access VistA Web 
+                            tab in CAPRI
+  
+       Problem
+       -------
+       The VistaWeb tab generates the message "ERROR: invalid parameters".
+       Research determined that the user's login division from CLAIMS
+       is not valid on the VistaWeb system connection.
+       
+       Solution
+       --------
+       The VistaWeb connection method has been modified to pass the division
+       from the connected remote site.
+  
+  
+       h. HD0000000474181 - CAPRI issue when ordering exams at Omaha
+  
+       Problem
+       -------
+       The Routing Location list on the Add New C&P Exam is displayed in
+       a different order after a user connects to a different site and
+       returns to the original site. 
+  
+       Solution
+       --------
+       The method that generates the Routing Location list has been
+       modified to consistently retrieve and display the appropriate
+       routing locations.     
+    
+  
+       i. HD0000000484927 - Other Facilities visited [WASHINGTON DC] connects
+                            to [PUGET SOUND]
+  
+       Problem
+       -------
+       Selecting "Washington" from the list generated by the Other Facilities
+       Visited button connects the user to Puget Sound.  Research indicated
+       that the addition of the City and State to CAPRI Remote site selection
+       dialog box affected the existing name matching algorithm used when
+       switching sites.
+  
+       Solution
+       --------
+       The method used to determine the site selected has been modified to
+       provide name matching on the site name prior to adding the City
+       and State.
+  
+       j. HD0000000489731 - Unable to access Capri C&P Training website
+                            from GUI help
+       Problem
+       -------
+       Unable to access CAPRI C&P Training website from the CAPRI GUI help.
+       User receives the following error:
+           Server Error in '/' Application.
+  
+           The resource cannot be found.
+  
+       Solution
+       --------
+       The CAPRI C&P Training website URL has been updated to go to the
+       Disability Examination Management Office (DEMO) website where the
+       user can use the CAPRI link to access the CAPRI C&P Training.
+  
+       k. HD0000000474175 - Buffalo user gets errors when entering new patients
+  
+       Problem
+       -------
+       Clicking Add Patient when the Last Service Entry Date, Last
+       Service Separation Date, Branch of Service, and Type of
+       Discharge fields are all unanswered on the Enter New Patient
+       dialog box generates an error message stating that "Military
+       Service Episode Did Not File Successfully."
+  
+       Solution
+       --------
+       The Enter New Patient dialog has been modified to no longer
+       generate the "false" error when all 4 of the military service
+       episode fields are left unanswered.
+  
+       l. HD0000000481041 - new DBQ for MH--possible flaws identified
+   
+       Problem
+       -------
+       Clicking "Done" on the Template dialog box to complete a merged exam
+       that consists of a single History tab generates a false message:
+       "You haven't yet clicked on the following sections:".
+  
+       Solution
+       --------
+       The method that provides the indication of exam tab activity has been
+       modified to correctly update the exam tab status.
+  
+  
+   2. The following defects that were reported directly to the CAPRI
+      development team are being addressed:
+  
+      a. Defect - Loading VistA Data pop up screen progress bar shows
+                  no activity.
+  
+      Problem
+      -------
+      When creating a Special Reports for A&A Pension a pop up screen
+      indicating "Loading VistA Data..." appears with a progress bar
+      that shows no activity.  This pop up can also be inadvertently
+      displayed after the filter criteria selection window appears. 
+  
+      Solution
+      --------
+      The wait dialog processing has been moved into the procedure
+      that requires user notification and displays 'Updating discharge
+      type list x of x' at the bottom of the wait dialog to provide
+      progress notification.
+  
+  
+      b. Defect - CAPRI errors when the user's account has no primary
+                  menu assigned
+       
+      Problem
+      -------
+      CAPRI generates a "Value is not initialized" error on start up
+      for CLAIMS users when the user's account does not have a primary
+      menu assigned.
+  
+      Solution
+      --------
+      The method that determines if a primary menu is assignable has been
+      modified to validate the primary menu prior to processing it.
+  
+  
+      c. Defect - CAPRI News window periodically displays flashing
+                  yellow and green bar
+       
+      Problem
+      -------
+      After accessing Tools and News, the CAPRI News window occasionally
+      displays a flashing yellow and green bar instead of the news
+      information. Research indicated that the behavior occurs when
+      CAPRI is unable to connect to the news server.
+  
+      Solution
+      --------
+      The news retrieval and display process has been modified to
+      prevent the behavior.
+  
+      d. Defect - VBA - Exam Request Template loses data after
+                       logging out of CAPRI and back in again.
+       
+      Problem
+      -------
+      The complete contents of the Contact Info entered on the Exam Request
+      Template dialog does not persist from one CAPRI session to another.
+      Research determined that the persistence failure occurs when the
+      first line of data is over 15 or 20 characters.
+  
+      Solution
+      --------
+      The processing of the file (CAPRI.cfg) that persists the Contact
+      Info data has been modified to eliminate line length restrictions.
+  
+  
+      e. Defect - CAPRI freezes when CAPRI window is dragged to 
+                  bottom and then click on "expanded details"
+       
+      Problem
+      -------
+      An exam template "Expanded Details" dialog box becomes
+      inaccessible when opened while the title bar of the main
+      CAPRI form is at the bottom of the Windows desktop.  The
+      inability to interact with the "Expanded Details" leaves
+      the application in a "hung" state.
+  
+      Solution
+      --------
+      The "Expanded Details" dialog box has been modified to
+      open at the center of the screen regardless of the position
+      of the main CAPRI form.
+  
+    
+      f. Defect - CAPRI allows VBA to select a division that
+                  should be inactive or hidden
+       
+      Problem
+      -------
+      The Routing Location list on the View C&P Exam dialog box
+      is not filtered by the DISABLE ALL EXAMS? field in the CAPRI
+      DIVISION EXAM LIST (#396.15) file.  This allows a user to
+      enter a new exam using the filtered routing location list
+      on the Add New C&P Exam dialog box and immediately change
+      the routing location to an inactive site using the View C&P
+      Exam dialog box.
+  
+      Solution
+      --------
+      The Routing Location list on the View C&P Exam dialog box
+      has been modified to be filtered by the DISABLE ALL EXAMS?
+      field.
+  
+   
+      g. Defect - Right hand template navigation button disappears
+                  after saving exam with more than 10 templates
+  
+      Problem
+      -------
+      The Template dialog box provides right and left navigation buttons
+      at both ends of the template name buttons when the total button size
+      exceeds the available space.  The buttons work properly when a
+      new template is generated, but fail to operate after a template
+      has been closed and re-opened.
+  
+      Solution
+      --------  
+      The method that processes a re-opened exam has been modified to
+      recalculate the template name button size and an event procedure
+      has been added to the navigation buttons that supplements the
+      scrolling behavior.  
+  
+  
+      h. Defect - "Could not obtain OLE control window handle" application
+                  exception error when clicking VistaWeb.
+  
+      Problem
+      -------
+      Clicking the "Logout" button on a VistaWeb session running in the 
+      CAPRI VistaWeb tab notifies the user that VistaWeb is trying to close
+      the browser window.  If the user clicks "OK", then an application error
+      is generated when the user clicks on the VistaWeb tab to start a new
+      session.
+  
+      Solution
+      --------
+      An event procedure was added that prevents VistaWeb from prompting
+      the user to close the CAPRI web browser window.
+  
+  
+      i. Defect - Miles no longer appear next to routing locations after
+                  closing the Add New C&P Exam dialog box with the close
+                  icon ("X").
+  
+      Problem
+      -------
+      When a user closes the Add New C&P Exam dialog box with the close
+      icon ("X"), CAPRI bypasses critical cancel processing that occurs
+      when clicking the "Cancel Request" button.
+  
+      Solution
+      --------
+      The close icon ("X") has been removed to prevent the user from
+      closing the Add New C&P Exam dialog box without either clicking
+      "Cancel Request" or "Send Exam Request".
+  
+  
+   3. The following enhancements that were requested by Veterans Health
+      Administration Veterans Affairs Central Office (VHAVACO) are
+      being addressed:
+  
+      a. CAPRI/AMIE- 
+  
+      Changes have been made to CAPRI and AMIE to allow for use of
+      alphanumeric Regional Office Station Numbers. Previously, all
+      Regional Office Station Numbers were numeric.
+      1. The 7132 ROUTING LOCATION (#3.5) field of the AMIE REPORT file 
+         (#396.2) has been altered to allow storage of alphanumeric
+         Regional Office Station Numbers.
+      2. Input checks for AMIE options requiring a Regional Office have
+         been altered to allow for the input of alphanumeric Station
+         Numbers.
+  
+      b. CAPRI/AMIE -
+      The CAPRI "Pending C&P Exam" Report and the AMIE "Pending C&P Exams
+      Report" [DVBA C PENDING REPORT] Option Report have been updated to
+      include all Exam Statuses following the exam name.
+  
+      c. CAPRI - 
+      The HTMLHelpViewer infrastructure components for Windows HTML
+      help has been added to the main CAPRI form to provide support
+      for the future addition of application on-line help.
+  
+      d. CAPRI -  
+      The Consolidated Remote Reports dialog box accessed from the Help/
+      Consolidated Remote Reports menu option has been enhanced as follows:
+  
+        1. An "All RO's" checkbox has been added for the AMIS 290 report,
+           which when checked, enables the AMIS 290 report to collect data
+           for all regional offices at the selected site(s).
+  
+        2. A "Select Priority of Exam Filter" radio group has been added for
+           the AMIS 290 report, which enables the AMIS 290 report results to
+           to be filtered by:  "Agent Orange", "Benefits Delivery Discharge/
+           Quick Start", "DES Claimed Condition/Fit for Duty", or "All except
+           AO, BDD, DCS, DFD, and QS". 
+  
+  
+      e. CAPRI -
+      The functionality of the "VistA" button at the bottom right of the main
+      CAPRI form has been modified to provide terminal session connections
+      using either an Attachmate "Reflection for Unix and OpenVMS" session 
+      window that utilizes a secure shell connection or the original telnet
+      connection window.  A dialog box displays 'Do you wish to use Reflection
+      to launch a secure shell session?' after clicking the "VistA" button.
+      If the user selects 'YES', then CAPRI will launch an Attachmate secure 
+      shell connection.  If the user selects 'NO', then CAPRI will launch the 
+      original telnet connection window.  This enhancement will only impact 
+      users who connect and authenticate through the CLAIMS server and 
+      currently have access to the "VistA" button.
+  
+    *************************************************************************
+    * NOTE: Some users with slow Reflection session startup may experience
+    *       an auto-login failure when CAPRI starts the Reflection session, 
+    *       because the token utilized to authenticate the user expires in
+    *       20 seconds.  A new Kernel patch XU*8*573 LENGTHEN TIME FOR TOKEN
+    *       SIGNON will address the token expiration problem by lengthening
+    *       the life span of the token to 2 minutes.
+    *************************************************************************
+   
+ IV. TECHNICAL COMPONENTS
+  
+   The following section describes the technical components being exported
+   with this patch. 
+  
+                                             UP    SEND  DATA
+                                             DATE  SEC.  COMES  SITE   RSLV
+   FILE #     FILE NAME                      DD    CODE  W/FILE DATA   PTS
+   ------------------------------------------------------------------------
+   396.2      AMIE REPORT                    YES   NO    NO
+    Partial DD subDD 396.2      fld: 3.5
+  
+   1. The following Routines are being added/modified:
+  
+       a. Modify: DVBAB6
+          Description of change:
+          This routine has been modified to display all Exam Statuses (i.e.
+          Open and Completed) after the Exam name.
+  
+       b. Modify: DVBASPD2
+          Description of change:
+          This routine has been modified to accommodate Regional Office
+          substation Station Numbers that consist of a numeric portion
+          followed by an alphanumeric suffix.
+  
+       c. Modify: DVBAUTIL
+          Description of changes:
+          This routine has been modified to accommodate Regional Office
+          Station Numbers that consist of a numeric portion followed 
+          by an alphanumeric suffix.
+  
+       d. Modify: DVBCPND1
+          Description of change:
+          This routine has been modified to display all Exam Statuses (i.e.
+          Open and Completed) after the Exam name.
+  
+       e. Modify: DVBCUTL2  
+          Description of change:
+          This routine has been modified to display all Exam Statuses (i.e.
+          Open and Completed) after the Exam name.
+  
+       f. Modify: DVBABURL
+          Description of change:
+          This routine has been modified to use the Disability Examination 
+          Management Office (DEMO) URL of http://vaww.demo.va.gov/ rather 
+          than http://vaww.demo.va.gov/capri/capri.aspx . The higher level 
+          URL should be more stable and require less frequent changes.
+  
+   2.  The following file is being modified:
+    
+       a. AMIE REPORT
+          Field 3.5, 7132 ROUTING LOCATION, has been modified to
+          accommodate Regional Office Station Numbers that consist of a
+          numeric portion followed by an alphanumeric suffix.
+  
+ V. SOFTWARE AND DOCUMENTATION RETRIEVAL
+     
+   1. VistA Patch DVBA*2.7*168
+    
+      a. The VistA server software is being distributed as a PackMan patch
+         message through the National Patch Module (NPM). The KIDS build
+         for this patch is DVBA*2.7*168.
+  
+   2. CAPRI GUI v168 Client Software & User Documentation
+  
+      a.  The CAPRI GUI v168 client software is being distributed as
+          executable CAPRI.exe ([DVBA_27_P168_05.ZIP]). The 
+          installed executable for this patch is client version 
+          168.05 with a size of 13.6 MB.
+  
+          The CAPRI GUI v168 client software and documentation for this
+          patch may be retrieved directly using FTP. The preferred method
+          is to FTP the files from:
+  
+             download.vista.med.va.gov
+  
+         This transmits the files from the first available FTP server.
+         Sites may also elect to retrieve software directly from a specific
+         server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+         Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+         Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+  
+        The following files will be available:
+  
+        File Name             Contents                     Retrieval format
+        ---------             --------                     ----------------
+        DVBA_27_P168_05.ZIP   File(s) indented below:      BINARY
+         - CAPRI.exe             CAPRI v168 executable
+         - CAPRI.map             CAPRI error map
+         - CAPRISession.r2w      Reflections session configuration
+         - ssh_config            Secure Shell configuration       
+         - DVBA_27_P168_ISG.doc  CAPRI GUI Installation Supplemental Guide
+        DVBA_27_P168_RN.PDF   Patch Release Notes          BINARY
+        DVBA_27_P168_UM.PDF   Updated CAPRI User Manual    BINARY 
+  
+       The VistA Documentation Library (VDL) web site will also contain the
+       'Release Notes' and updated 'CAPRI User Manual'. This web site is
+       usually updated within 1-3 days of the patch release date.
+  
+       The VDL web address for CAPRI user documentation is:
+      
+          http://www.va.gov/vdl/application.asp?appid=133
+  
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES:
+  
+  1. Users On the System
+  
+     a. This patch (DVBA*2.7*168) may be installed while CAPRI users are
+        still using the previously released version of the CAPRI GUI
+        (i.e. DVBA_27_149.exe).
+  
+     b. Once the installation of this patch has been completed, CAPRI users
+        should be upgraded to the new released version of the CAPRI GUI
+        (CAPRI.exe [DVBA_27_P168_05.ZIP]). Please refer to the 
+        DVBA_27_P168_ISG.doc document within the DVBA_27_P168_05.zip file
+        for supplemental installation instructions regarding the
+        installation of the following files:
+            CAPRI.map             CAPRI error map
+            CAPRISession.r2w      Reflections session configuration
+            ssh_config            Secure Shell configuration
+  
+     c. This patch modifies routines used by the CAPRI GUI application 
+        and the Automated Medical Information Exchange (AMIE) package. It
+        should be installed during non-peak hours to minimize disruption to
+        users and to reduce the possibility of errors when the routines are
+        updated.
+  
+  2. VistA Options
+         
+     a. The following VistA options should be disabled while installing
+        this patch:
+  
+       DVBA ALL ADMISSIONS  Admission Inquiry by Date  (All Ad missions)
+       DVBA INCOMPETENT VET REPORT  Incompetent Veterans Report
+       DVBA DISCHARGE RPT           Discharge Report
+       DVBA PENDING REQUESTS RPT    Pending Form 7131 Requests Report
+       DVBA RE-ADMISSION REPORT     Re-admission Report
+       DVBA SERV CONN ADM REPORT    Admission Report for Service Connected
+                                    Veterans
+       DVBA REPORT PENSION/A&A      Report for Pension and A&A
+       DVBA C PENDING REPORT        Pending C&P Exams Report
+       DVBA C INQUIRY               Inquiry for C&P Requests
+  
+  3. Software Installation Time
+  
+     a. The estimated installation time for VistA patch DVBA*2.7*168 is 
+        less than 5 minutes during off peak hours.
+   
+  4. Required Builds
+  
+     a. The following is a list of REQUIRED builds for this KIDS
+        distribution (DVBA*2.7*168). KIDS will not allow the installation
+        of this patch without their prior installation.
+  
+        Required Builds:
+        ----------------
+        DVBA*2.7*32
+        DVBA*2.7*149
+  
+ VII. INSTALLATION INSTRUCTIONS:
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+    2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+  
+    3. From this menu, you may now elect to use the following options (when
+       prompted for INSTALL NAME, enter DVBA*2.7*168).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+    4. Use the Install Package(s) option and select package DVBA*2.7*168.
+  
+    5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//', respond NO.
+  
+    6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', it is recommended you answer NO.
+  
+    7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond YES.  When prompted to select the options
+       you would like to place out of order, enter the following:
+  
+       DVBA ALL ADMISSIONS          Admission Inquiry by Date  (All
+                                    Admissions)
+       DVBA INCOMPETENT VET REPORT  Incompetent Veterans Report
+       DVBA DISCHARGE RPT           Discharge Report
+       DVBA PENDING REQUESTS RPT    Pending Form 7131 Requests Report
+       DVBA RE-ADMISSION REPORT     Re-admission Report
+       DVBA SERV CONN ADM REPORT    Admission Report for Service Connected
+                                    Veterans
+       DVBA REPORT PENSION/A&A      Report for Pension and A&A
+       DVBA C PENDING REPORT        Pending C&P Exams Report
+       DVBA C INQUIRY               Inquiry for C&P Requests
+  
+    8. If CAPRI GUI users have not already been upgraded to the new 
+       version of the CAPRI GUI v168 (CAPRI.exe [DVBA_27_P168_05.ZIP]), 
+       they should be upgraded as soon as possible upon installation of 
+       this patch.
+  
+    9. Please refer to the CAPRI v168 Installation Supplemental Guide for
+       instructions on the placement of files distributed to support
+       the introduction of Attachmate Reflection Secure Shell and the
+       CAPRI error map file that supports the CAPRI error log.
+  
+ VIII. TEST SITES
+  
+   The following sites participated in the testing of the CAPRI GUI v168 
+   and DVBA*2.7*168 server software.
+  
+    Test Sites:
+    ---------- 
+     * Alexandria, LA VAMC
+     * North Florida/South Georgia
+     * Greater Los Angeles HSC
+     * Denver VA Medical Center
+     * Upstate New York HSC
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBAB6
+    Before: B29419198   After: B30141617  **35,90,108,168**
+Routine Name: DVBABURL
+    Before:  B2397510   After:  B2300547  **104,136,143,149,168**
+Routine Name: DVBASPD2
+    Before: B47508013   After: B48576328  **3,57,149,168**
+Routine Name: DVBAUTIL
+    Before: B26516388   After: B26857986  **17,32,168**
+Routine Name: DVBCPND1
+    Before: B22927581   After: B23119648  **17,168**
+Routine Name: DVBCUTL2
+    Before: B26372352   After: B27251229  **168***
+ 
+Routine list of preceding patches: 32, 108, 149
+
+=============================================================================
+User Information:
+Entered By  : MCGINNIS,RONALD P             Date Entered  : MAR 23, 2011
+Completed By: DELACRUZ,KRISTINA             Date Completed: AUG 16, 2011
+Released By : FRANCE,KATHI                  Date Released : AUG 16, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

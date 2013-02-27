@@ -1,0 +1,523 @@
+$TXT Created by ZEIGLER,EDWARD L at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Tuesday, 11/09/10 at 13:41
+=============================================================================
+Run Date: FEB 07, 2011                     Designation: PRC*5.1*148
+Package : PRC - IFCAP                         Priority: EMERGENCY
+Version : 5.1       SEQ #124                    Status: Released
+                  Compliance Date: FEB 14, 2011
+=============================================================================
+
+Associated patches: (v)PRC*5.1*23  <<= must be installed BEFORE `PRC*5.1*148'
+                    (v)PRC*5.1*81  <<= must be installed BEFORE `PRC*5.1*148'
+                    (v)PRC*5.1*135 <<= must be installed BEFORE `PRC*5.1*148'
+                    (v)PRC*5.1*140 <<= must be installed BEFORE `PRC*5.1*148'
+
+Subject: 1358 SEGREGATION OF DUTIES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement ()
+  - Input Template
+  - Print Template
+  - Sort Template
+
+Description:
+============
+
+    ***********************************************************************
+    ** This patch is being released with an Emergency status because of  **
+    ** the shortened 7 day compliance date.  This patch must be          **
+    ** installed in all systems within the 7 day compliance requirement. **
+    ** It is important IRM coordinate installation with their Fiscal     **
+    ** Service.  This will immediately affect the way 1358 Miscellaneous **
+    ** Obligations are created and processed by all parties involved     **
+    ** including Control Point Clerks, Control Point Officials and       **
+    ** Accounting Technicians.                                           **
+    ***********************************************************************
+  
+  
+ In support of the requirement to implement Segregation of Duties within the 
+ 1358 module in IFCAP, new functionality is being introduced with this patch.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ 20080801 Enhancing Internal Controls and Reporting Capabilities for 1358 
+          Misc Obligations: Implements adequate controls with respect to 
+          segregation of duties and oversight by contracting officials,
+          improving documentation requirements, and enhancing 1358
+          reporting capabilities within Integrated Funds Distribution,
+          Control Point Activity, Accounting and Procurement (IFCAP) that
+          will be used at the station, Veterans Integrated Service Network
+          (VISN), and enterprise levels.  A Government Accountability
+          Office (GAO) review questioned VHA's internal control standards
+          governing the authorization and use of miscellaneous obligations
+          as well as oversight abilities. Direction by the Congressional
+          Oversight Committee of the House.  GAO Report - GAO-08-1056T
+          Improvements Needed in Design of Controls over Miscellaneous 
+          Obligations, July 31, 2008.  Department of Veterans Affairs
+          Memorandum, Interim Memos (Interim Guidance on Miscellaneous
+          Obligations, VA Form 4-1358, dated January 30, 2008 AND
+          Department of Veterans Affairs Memorandum, Revised Guidance for
+          Processing of Miscellaneous Obligations, VA Form 4-1358, dated
+          May 18, 2008.
+  
+  
+ The changes made by this patch are described below:
+  
+ 1. ENFORCE SEGREGATION OF DUTIES ON 1358
+ ----------------------------------------
+ This patch modifies IFCAP to enforce segregation of duties.
+  
+    1A. REQUESTOR VALUE ON 1358 MAINTAINED BY SOFTWARE
+        This patch modifies IFCAP to automatically set the REQUESTOR field
+        equal to the current user instead of prompting for a REQUESTOR when
+        a 1358 obligation or 1358 adjustment is entered or edited.
+  
+        The software will warn a control point official and allow them to
+        stop before being automatically set as the REQUESTOR on a 1358.
+        The warning is similar to the following:
+  
+          WARNING: The system will assign you as the CP Clerk (Requestor)
+          of this 1358. You will be unable to approve a 1358 on which you
+          are the REQUESTOR due to segregation of duties.
+          Do you want to proceed (Y/N)? NO//
+  
+        These modifications do not apply to 1358s with a temporary
+        transaction number.  However, once a 1358 transaction is given a
+        permanent number, the REQUESTOR field is maintained by the
+        software.
+  
+       The following options have been modified with these changes:
+         New 1358 Request [PRCEC NEW]
+         Increase/Decrease Adjustment [PRCEC ADJUST]
+         Copy a Transaction [PRCSECP]  (only when 1358)
+         Edit 1358 Request [PRCEC EDIT]
+         Change Existing Transaction Number [PRCSANTN] (only when 1358)
+  
+  
+    1B. ENFORCE SEGREGATION OF DUTIES FOR APPROVING OFFICAL
+        After this patch is installed, the software will not allow a user
+        to act as the approving official on a 1358 transaction if they are
+        the requestor on that transaction.
+  
+  
+    1C. ENFORCE SEGREGATION OF DUTIES FOR OBLIGATOR
+        After this patch is installed, the software will not allow a user
+        to obligate a 1358 transaction if they are the requestor or 
+        approving official on that transaction.
+  
+ 2. NEW FIELDS AND REQUIRED FIELDS
+ ---------------------------------
+ To record justification for use of the 1358 obligation form users will be
+ required to select a 1358 Authority and Sub-Authority (where applicable)
+ prior to creation of the 1358 document.  The Authorities are being
+ nationally distributed and are not to be edited locally.  The list of
+ Authorities and Sub-Authorities being distributed with this patch are:
+  
+    1  NURSING HOME/ADULT DAYCARE
+       A  NURSING HOME
+       B  ADULT DAY CARE
+    2  FEE BASIS
+       A  FEE MEDICAL/DENTAL (PRE-AUTHORIZED)
+       B  FEE MEDICAL/DENTAL (NOT PRE-AUTHORIZED)
+       C  HOMEMAKER/HOME HEALTH AID
+       D  NON-VA HOSPITALIZATION (PRE-AUTHORIZED)
+       E  NON-VA HOSPITALIZATION (NOT PRE-AUTHORIZED)
+       F  NON-CONTRACT EMERGENCY TRAVEL
+    3  STANDARDIZED OBLIGATIONS
+       A  FEDERAL TELECOMMUNICATIONS SERVICES
+       B  COLLEGE OF AMERICAN PATHOLOGY
+       C  CONVENIENCE CHECK FEES
+       D  DENVER ACQUISITION AND LOGISTICS CENTER SERVICES AND SUPPLIES
+       E  EMERGENCY CARE BENEFICIARY TRAVEL, INCLUDING MILEAGE
+       F  FEE BASIS PURCHASE CARD
+       G  FEDERAL EMPLOYEES COMPENSATION PROGRAM
+       H  SHPS
+       I  STANDARD LEVEL USER CHARGES/GSA
+       J  TRANSIT BENEFITS
+       K  FRANCHISE FUND: SECURITY AND INVESTIGATIONS CENTER
+       L  FRANCHISE FUND: LAW ENFORCEMENT TRAINING CENTER
+       M  FRANCHISE FUND: FINANCIAL SERVICES CENTER
+       N  FRANCHISE FUND: DEBT MANAGEMENT CENTER
+       O  FRANCHISE FUND: CORPORATE DATA CENTER OPERATIONS
+       P  FRANCHISE FUND: RECORDS CENTER AND VAULT
+    4  LIMITED OPEN TRAVEL AUTHORITY
+    5  RESEARCH STUDIES
+    6  INTER-LIBRARY LOAN PROGRAM
+    7  AFFILIATED AGREEMENTS FOR INTERNS/RESIDENTS
+    8  TORT CLAIMS/EEO SETTLEMENTS/OIG CONFIDENTIAL SERVICES
+    9  VOLUNTEER MEAL TICKETS
+    10 INCENTIVE THERAPY/COMPENSATED WORK THERAPY
+    11 BENEFICIARY TRAVEL
+    12 HOME IMPROVEMENT STRUCTURAL ALTERATIONS
+    13 OUTER BURIAL RECEPTACLES
+    14 VBA LEASE AGREEMENT OVERTIME CHARGES
+    15 HOME OXYGEN BILLS
+    16 PROSTHETICS
+    17 PHARMACY AND SUBSISTENCE PRIME VENDOR
+    18 REGULATED UTILITIES
+    19 TUITION REIMBURSEMENT TO VA EMPLOYEES
+    20 NON-PROCUREMENT OBLIGATIONS
+       A  ONE VA PLUS FUND
+       B  COMPENSATED WORK THERAPY PROGRAM
+       C  INTERNAL VA PROGRAMS AND AGREEMENTS
+       D  VA HOMELESS PROVIDERS GRANT AND PER DIEM PROGRAM
+       E  CEMETERY GRANTS AND STATE HOME PROGRAM
+       F  GSA ACTIVITIES
+       G  GOVERNMENT PRINTING OFFICE
+       H  INTER-AGENCY SHARING AGREEMENTS (VA/DOD SHARING)
+       I  INTRA-AGENCY SHARING AGREEMENTS (VHA, VBA, NCA, OI&T)
+       J  INTERGOVERNMENTAL PERSONNEL AGREEMENTS AND SERVICES, INCLUDING CASUS
+    21 HEALTH ADMIN CARE PROGRAMS
+       A  CHAMPVA
+       B  SPINA BIFIDA HEALTH
+       C  CHILDREN OF WOMEN VIETNAM VETERANS
+       D  FOREIGN MEDICAL PROGRAM
+       E  OTHER HEALTH ADMINISTRATION HEALTH CARE PROGRAMS
+    22 SPECIAL ADAPTIVE HOUSING INSPECTIONS
+    23 STATE APPROVING AGENCY
+  
+ To enhance requirement of data, two additional required fields are being
+ added to the 1358 creation process.  The fields are Service Start Date and
+ Service End Date.  Also the Purpose field is now being mandated for all
+ original 1358s and adjustments to 1358s.  Vendor and Contract are being
+ made conditionally mandatory based on the Authority selected.
+  
+ The 1358 form in IFCAP is being revised to accommodate the new fields 
+ Authority (Code and Text), Sub-authority (Code and text), Service Start 
+ Date and Service End Date.
+  
+ Prior to a 1358 being flagged for approval or being allowed to be 
+ approved, the new mandatory fields are reviewed and verified for 
+ completion.  If they are not complete the document will not be allowed to 
+ move forward in the approval process.
+  
+ The following options, reports and displays are being enhanced to support 
+ the new fields Authority, Sub-Authority, Service Start Date and Service 
+ End Date: 
+      New 1358 Request [PRCEC NEW]
+      Edit 1358 Request [PRCEC EDIT]
+      Print 1358 [PRCEC PRINT 1358]
+      Print Obligated 1358s [PRCEC PRINT PO FROM 1358]
+      Approve Requests [PRCSAPP]
+      Obligate 1358 [PRCEF OBLIGATE]
+      Display/Print 1358 [PRCEF DISPLAY/PRINT 1358]
+      Register by Day [PRCHOUT PO REG/DAY]
+  
+  
+ 3.  ADD AUTHORITY/SUB-AUTHORITY CODE TO 1358's SO CODE SHEET SENT TO FMS
+ ------------------------------------------------------------------------
+ After this patch is installed when a new 1358 is obligated, the code of
+ the authority/sub-authority under which the 1358 was created will be sent
+ in the 13th piece of the MO2 segment of the SO code sheet generated for
+ that 1358 obligation.  The authority/sub-authority codes will also be sent
+ in SO modification documents for increase/ decrease adjustments
+ subsequently created for that 1358.
+  
+  
+ 4.  DELETE MISSING FIELDS REPORT (1358)
+ ---------------------------------------
+ Installation of this patch deletes the Missing Fields Report (1358), It
+ has been identified that absence of a specified vendor or contract data
+ could be justifiable and not a violation of policy/regulation. This patch
+ has controlled the edit process thereby making the Missing Fields Report
+ (1358) [PRC 1358 MISSING FIELDS] no longer needed.
+  
+  
+ 5.  REMOVE OBLIGATION DATA [PRCSENOD] OPTION
+ --------------------------------------------
+ Installation of this patch deletes the Obligation Data [PRCSENOD] 
+ option.  The option was determined to no longer being used and would have 
+ not enforced separation of duties.
+  
+  
+  
+ Components Sent With Patch
+ --------------------------
+  
+ The following is a list of files included in this patch:
+  
+                                      UP    SEND  DATA                
+                                      DATE  SEC.  COMES  SITE   RSLV  
+ FILE #  NAME                         DD    CODE  W/FILE DATA   PTS 
+ --------------------------------------------------------------------
+ 410     CONTROL POINT ACTIVITY       YES   NO    NO        
+ Partial DD: subDD 410     fld: 6
+                           fld: 6.5
+                           fld: 19
+                           fld: 19.1
+  
+ 410.9   AUTHORITY OF REQUEST         YES   YES   YES    OVER    NO
+  
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name (Number)           File Name (Number)
+ -------------------           ------------------
+ SERVICE START DATE (6)        CONTROL POINT ACTIVITY (410)
+ SERVICE END DATE (6.5)        CONTROL POINT ACTIVITY (410)
+ AUTHORITY (19)                CONTROL POINT ACTIVITY (410)
+ SUB AUTHORITY (19.1)          CONTROL POINT ACTIVITY (410)
+  
+  
+ The following is a list of templates included in this patch:
+  
+ Template Name            Type    File Name (Number)            Action
+ -------------            ----    ------------------            --------
+ PRCE 1358 ADJUSTMENT     INPUT   CONTROL POINT ACTIVITY (410)  SEND
+ PRCE NEW 1358            INPUT   CONTROL POINT ACTIVITY (410)  SEND
+ PRCSENA 1358             INPUT   CONTROL POINT ACTIVITY (410)  SEND
+ PRC 1358 MISSING FIELDS  PRINT   CONTROL POINT ACTIVITY (410)  DELETE
+ PRCH OBLIGATED 1358 LIST PRINT   PROCUREMENT & ACCOUNTING      SEND
+                                    TRANSACTIONS (442)
+ PRCH PO REGISTER         PRINT   PROCUREMENT & ACCOUNTING      SEND
+                                    TRANSACTIONS (442)
+ PRC MISSING 1358 FIELDS  SORT    CONTROL POINT ACTIVITY (410)  DELETE
+  
+  
+  
+ The following is a list of options included in this patch:
+  
+ Option Name               Type               New/Modified/Delete
+ -----------               ----               ------------------- 
+ PRC 1358 MISSING FIELDS   ROUTINE            DELETE
+ PRCSENOD                  ROUTINE            DELETE 
+  
+  
+ Documentation Retrieval:
+ ------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at:  http://www.va.gov/vdl/
+  
+ Below is a list of the files related to this patch that will be needed 
+ and available via the FTP sites listed above.
+  
+ File Description                    File Name                            FTP
+ -----------------------------------------------------------------------------
+ IFCP5_1ACCOUNTING_TECH.PDF          Accounting Technician User's Guide   bin
+ IFCP5_1APPLICATION_COORD.PDF        Application Coordinator User's Guide bin
+ IFCP5_1SECURITY_GUIDE.PDF           Package Security Guide               bin
+ IFCP5_1TECHNICAL_MANUAL.PDF         Technical Manual                     bin
+ IFCP5_1CP_CLERK_USER'S_GUIDE.PDF    Control Point Clerk User's Guide     bin
+ IFCP5_1CP_OFFICIAL_USER'S_GUIDE.PDF Control Point Official User's Guide  bin
+  
+  
+ Test Sites:
+ -----------
+ Central Texas, TX
+ Erie, PA
+ St. Cloud, MN 
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+  Compliance Reports (1358) [PRC 1358 COMPLIANCE REPORTS]
+  Control Point Clerk's Menu [PRCSCP CLERK]
+  Control Point Official's Menu [PRCSCP OFFICIAL]
+  FMS Rejected Obligation Document Processing [PRCFA REJECT FMS OBLIG DOC]
+  1358 Monitoring Reports - Scheduled  [PRC 1358 MONITORING]
+  1358 Processing Menu [PRCEF 1358 FISCAL PROCESSING]
+  
+ Install Time - less than 5 minutes
+  
+  
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PRC*5.1*148):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+         If there Options included in this patch, then be sure to 
+         include the following.
+              
+         When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//'  Answer NO unless your system does not do this in a
+         nightly TaskMan process.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer YES (unless otherwise
+         indicated)
+     d.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':'  Enter the following options:
+   
+  Compliance Reports (1358) [PRC 1358 COMPLIANCE REPORTS]
+  Control Point Clerk's Menu [PRCSCP CLERK]
+  Control Point Official's Menu [PRCSCP OFFICIAL]
+  FMS Rejected Obligation Document Processing [PRCFA REJECT FMS OBLIG DOC]
+  1358 Monitoring Reports - Scheduled  [PRC 1358 MONITORING]
+  1358 Processing Menu [PRCEF 1358 FISCAL PROCESSING]
+  
+     e.  When prompted 'Enter protocols you wish to mark as 'Out Of
+         Order':' press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRC1358C
+    Before:  B4910186   After:  B3640057  **130,148**
+ Description of Changes:
+  Routine was edited to remove the Missing Fields (1358) report.
+
+Routine Name: PRCE58P0
+    Before: B15103802   After: B17096977  **148**
+Routine Name: PRCE58P2
+    Before: B14887203   After: B16930657  **148**
+Routine Name: PRCEADJ
+    Before: B31997445   After: B34959566  **140,148**
+ Description of Changes:
+  This routine is used to enter an increase/decrease adjustment.  It was 
+  modified to warn a control point official and allow them to stop.  A lock 
+  time-out was also changed.
+
+Routine Name: PRCEFIS5
+    Before: B12287079   After: B14226098  **148**
+Routine Name: PRCEN
+    Before: B18332756   After: B46938754  **23,148**
+ Description of Changes:
+  This routine is used to enter 1358 requests and edit 1358 requests and
+  adjustments. It was modified to warn a control point official and allow
+  them to stop.  A lock time-out was changed.  Record unlocking was improved
+  to correct cases were a 1358 was left locked after the edit.
+
+Routine Name: PRCEOB1
+    Before:  B4186076   After:  B5824737  **148**
+Routine Name: PRCESOE
+    Before: B36367973   After: B45274590  **148**
+ Description of Changes:
+  This routine is used to obligate or rebuild/transmit SO for 1358.
+  It was modified to warn a 1358 requestor or approver is not permitted
+  To rebuild or retransmit the 1358.
+
+Routine Name: PRCESOM
+    Before: B49737920   After: B59523571  **148**
+ Description of Changes:
+  This routine is used to adjust a 1358 transaction.
+  It was modified to warn a 1358 requestor or approver is not permitted
+  to rebuild or retransmit the 1358.
+
+Routine Name: PRCFFU2
+    Before:  B8191248   After: B10580880  **130,148**
+ Description of Changes:
+  Routine was edited to insert authority/sub-authority code into the 13th 
+  piece of the MO2 segment of the 1358's SO transaction sent to FMS.
+
+Routine Name: PRCS58OB
+    Before: B21940704   After: B21961903  **148**
+Routine Name: PRCSAPP1
+    Before: B11267015   After: B12057361  **148**
+Routine Name: PRCSAPP2
+    Before: B18964515   After: B21099667  **14,81,148**
+ Description of Changes:
+  This routine is used to create new 1358, edit 1358, and adjust 1358.
+  It was modified to warn a 1358 requestor is not permitted to rebuild
+  or retransmit the 1358.
+
+Routine Name: PRCSECP
+    Before: B28160184   After: B28930970  **81,148**
+ Description of Changes:
+  This routine is used to copy a transaction. It was modified to warn a
+  control point official and allow them to stop when a 1358 is copied.
+
+Routine Name: PRCSECP1
+    Before: B15371548   After: B15793904  **148**
+Routine Name: PRCSEM
+    Before:  B6717561   After:  B7333642  **148**
+Routine Name: PRCSUT2
+    Before: B49296654   After: B51951982  **13,135,148**
+ Description of Changes:
+  This routine is used to change an existing transaction number. It was
+  modified to warn a control point official and allow them to stop when
+  changing a 1358.  Lock time-outs were changed.  The requestor value is now
+  automatically set for a 1358.  An existing problem was corrected for
+  temporary transaction numbers where the specified inventory distribution
+  point was not being saved.
+
+ 
+Routine list of preceding patches: 23, 81, 130, 135, 140
+
+=============================================================================
+User Information:
+Entered By  : MCGAUGH,MAVIS L               Date Entered  : AUG 27, 2010
+Completed By: LYNCH,MARY F.                 Date Completed: FEB 04, 2011
+Released By : NELSON,VICKI M                Date Released : FEB 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,137 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 06/14/11 at 13:43
+=============================================================================
+Run Date: NOV 23, 2011                     Designation: GMPL*2*39
+Package : GMPL - PROBLEM LIST                 Priority: Mandatory
+Version : 2        SEQ #35                      Status: Released
+                  Compliance Date: DEC 24, 2011
+=============================================================================
+
+Associated patches: (v)GMPL*2*35   <<= must be installed BEFORE `GMPL*2*39'
+
+Subject: FIX FOR GENERAL ERRORS IN PROBLEM LIST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1. A diagnosis entered on the Diagnosis Tab of the Encounter Form on the 
+ Notes Tab of CPRS GUI is not added to the problem list for inpatients
+ whose hospital location type is "Clinic".
+  
+ 2. A CPRS GUI user at a non-VA site entering a new problem list item while
+ entering an encounter for a patient will generate an undefined variable 
+ error when saving the form. This will cause all of the just entered data
+ for the encounter to not be saved.
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1.  HD0000000287369 Inpatient Encounter Add To Problem List does not work
+ 2.  HD0000000302068 Encounter information "disappears"
+  
+ Associated NSRs:
+ ================
+ N/A
+    
+ Participating Test Sites:
+ =========================
+ VA North Florida/South Georgia VA HCS
+ VA Southern Nevada HCS - Las Vegas
+ Clement J Zablocki Veterans Affairs Medical Center - Milwaukee 
+  
+ Remedy Overview:
+ ================
+ 1.  HD0000000287369 Inpatient Encounter Add To Problem List does not work
+  
+ Problem:
+ --------
+ A diagnosis entered on the Diagnosis Tab of the Encounter Form on the 
+ Notes Tab of CPRS GUI is not added to the problem list for inpatients
+ whose hospital location type is "Clinic".
+  
+ Resolution:
+ -----------
+ Modify the CPRS GUI Mumps side to save the diagnosis entered on the
+ Diagnosis Tab of the Encounter Form on the Notes Tab of CPRS GUI for
+ inpatients whose hospital location type is "Clinic".
+  
+ 2.  HD0000000302068 Encounter information "disappears"
+  
+ Problem:
+ --------
+ At a non-VA site the Appointment Management [SDAM APPT MGT] option will
+ generate an <UNDEFINED> error when the user tries to add a diagnosis code
+ to the problem list during the Check Out [CO] process. This error will
+ crash the option and lost all of the data entered during the Check Out
+ process.
+  
+ Resolution:
+ -----------
+ Modify the Mumps code used by the Appointment Management [SDAM APPT MGT]
+ option to take into account the user is at a non-VA site and set all
+ variables properly.
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system.  Installation time
+ will be less than 2 minutes.
+  
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter GMPL*2.0*39)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package 
+        GMPL*2.0*39
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;Problem List;**[Patch List]**;Aug 25, 1994;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMPLUTL
+    Before: B40604448   After: B40762056  **3,6,8,10,16,26,35,39**
+Routine Name: GMPLUTL1
+    Before: B25017636   After: B25149940  **3,8,7,9,26,35,39**
+ 
+Routine list of preceding patches: 35
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : FEB 26, 2009
+Completed By: HEFFERNAN,COREY               Date Completed: NOV 03, 2011
+Released By : PERSCHON,ANDREA               Date Released : NOV 23, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,119 @@
+$TXT Created by NIXON,TONY at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 06/07/12 at 19:13
+=============================================================================
+Run Date: OCT 22, 2012                     Designation: PSO*7*400
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #343                      Status: Released
+                  Compliance Date: NOV 22, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*385   <<= must be installed BEFORE `PSO*7*400'
+
+Subject: MESSAGE DISPLAYED IN ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch resolves the following issue:
+  
+ Users receive a message in error while entering the dosage during Patient
+ Prescription Processing.
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ HD0000000504860 - Incomplete Dosaging Data message
+  
+  
+ Associated NSRs:
+ ================
+ N/A
+    
+    
+ Participating Test Sites:
+ =========================
+ Salisbury - W.G. (Bill) Hefner VA Medical Center
+ Orlando VA Medical Center
+ Clarksburg - Louis A. Johnson VA Medical Center
+   
+  
+ Remedy Overview:
+ ================
+ HD0000000504860 - Incomplete Dosaging Data message
+  
+ Problem:
+ --------
+ After a user exits the VIEW PRESCRIPTION option, a variable is left over.
+ This stray variable alters the process flow in PATIENT PRESCRPTION PROCESSING.
+ As a result, the user receives the "Incomplete Dosaging Data" message in
+ error while entering the dosage for a prescription.
+  
+  
+ Resolution:
+ ----------- 
+ Modify routine PSORXVW, so that the stray variable, QUIT, is deleted upon
+ exiting the VIEW PRESCRIPTION option. Deleting the variable on exiting the
+ process is "good programming practice". 
+  
+  
+   =================== INSTALLATION INSTRUCTIONS =====================
+     
+   Installation will take less than 2 minutes.  Users may be on the system.
+     
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+   2. From the Kernel Installation & Distribution System menu, select
+          the Installation menu.
+     
+   3. From this menu, you may select to use the following options
+          (when prompted for INSTALL NAME, enter PSO*7.0*400)
+     
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+     
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch
+          is installed. It compares all components of the patch (routines,
+          DDs, templates, etc.).
+     
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+     
+    4. Use the Install Package(s) option and select the package PSO*7.0*400
+     
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.
+     
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORXVW
+    Before: B70052400   After: B70126239  **14,35,46,96,103,88,117,131,
+                                           146,156,185,210,148,233,260,
+                                           264,281,359,385,400**
+ 
+Routine list of preceding patches: 385
+
+=============================================================================
+User Information:
+Entered By  : NIXON,ANTOINE                 Date Entered  : NOV 16, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: OCT 01, 2012
+Released By : CONNOLLY,BARBARA              Date Released : OCT 22, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

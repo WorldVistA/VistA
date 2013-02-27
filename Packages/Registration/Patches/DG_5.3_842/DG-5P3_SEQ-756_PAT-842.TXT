@@ -1,0 +1,390 @@
+
+=============================================================================
+Run Date: JUN 29, 2012                     Designation: DG*5.3*842
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #756                    Status: Released
+                  Compliance Date: JUL 29, 2012
+=============================================================================
+
+Associated patches: (v)DG*5.3*763  <<= must be installed BEFORE `DG*5.3*842'
+                    (v)DG*5.3*841  <<= must be installed BEFORE `DG*5.3*842'
+
+Subject: ESR 3.6 Pension Data Sharing
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Input Template
+
+Description:
+============
+
+  *****************************************************************************
+  Note:  This patch is being released in support of the Enrollment System
+         Re-design (ESR) 3.6 Pension Data Sharing project.  DG*5.3*842 is being
+         released along with IVM*2*150 (Income Verification Match) in host
+         file: DG_53_P842.KID.
+   
+         It is imperative that these patches be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  *****************************************************************************
+   
+  The Health Eligibility Center (HEC) requested modifications to the Enrollment
+  System Redesign (ESR) and Veterans Health Information Systems and Technology
+  Architecture Registration, Enrollment and Eligibility (Vista REE) software to
+  support the requirements of the Pension Data Sharing project.
+   
+  This patch modifies the Registration v5.3 application as described below:
+   
+  1.  VA Pension Award Effective Date, Termination Date and Reasons
+  -----------------------------------------------------------------
+  Pension Award Effective Date, Termination Date and Reasons have been added
+  as new fields on the VistA Registration Screen.  An extension of Screen <7>
+  has been added for editing and display of the VA Pension data.   The Pension
+  Termination Date and Termination Reasons are presented as display only
+  fields.  A single Pension Award Reason is permitted, and up to four Pension
+  Termination Reasons can be displayed.  The Z11 receivers and the Z07 senders
+  were modified to include the new Pension fields in the ZE2 segment.
+   
+  2.  Z11 Upload Rules
+  --------------------
+  The following upload rules apply to the VA Pension data:
+  a) The Pension Award Effective Date, Pension Award Reason, Pension
+  Termination Date, and Pension Termination Reason(s) shall always be loaded
+  to VistA unless the following condition is true:  Pension Award Reason on
+  VistA = 'Original Award', and the Pension Award Effective Date on VistA is
+  equal to or is earlier than the Pension Award Effective Date on the
+  incoming message, and the Pension Termination Date on the incoming message
+  has no value.
+  b) Once an incoming message is received with any Pension Data, VistA shall
+  lock the Pension Indicator field from editing by a VistA user.
+  c) If the incoming message contains a Pension Award Reason that is equal
+  to 'Original Award,' and the Pension Award Reason and Pension Award
+  Effective Date are uploaded, VistA shall lock the Pension Award Reason and
+  Pension Award Effective Date fields from editing by a VistA user.
+  d) If the incoming message contains a Pension Termination Reason that does
+  not have a null value and the Pension Termination Date and Pension
+  Termination Reason are uploaded, VistA shall lock all Pension data fields
+  from editing by a VistA user.  
+   
+  3.  Pension Award Effective Date
+  --------------------------------
+  The following rules apply to the Pension Award Effective Date:
+  a) Must be a precise date.
+  b) Must be greater than the Veteran's Date of Birth + 16 years.
+  c) Is not a required field.
+  d) A change made to the Pension Award Effective Date shall trigger the
+  sending of a Z07 message.
+   
+  4.  Pension Award Reason
+  ------------------------
+  The Pension Award Reason shall be editable if it has not been locked from
+  editing by the Z11 upload rules listed above, and the Pension Award
+  Reason is not equal to 'Original Award', and the Pension Termination Date
+  is null.  The Pension Award Reason is not a required field.
+   
+  5.  Class II Dental Indicator
+  -----------------------------
+  Class II Dental Indicator and Class II Dental Application Due Before
+  Date have been added as new 'display only' fields on the VistA
+  Registration Screen <6>.
+   
+  6.  Help Text Changes
+  -----------------------------
+  Medal of Honor and Class II Dental Indicator were added to the VistA
+  Registration Screen <6> help text.
+   
+   
+  Patch Components:
+  =================
+   
+  Files & Fields Associated:
+  --------------------------
+  The following is a list of files included in this patch:
+   
+                                       UP    SEND  DATA                
+                                       DATE  SEC.  COMES  SITE   RSLV  
+  FILE #  NAME                         DD    CODE  W/FILE DATA   PTS 
+  --------------------------------------------------------------------
+  2       PATIENT                      YES   No    NO     N/A    N/A
+  27.18   PENSION AWARD REASONS        YES   NO    YES    N/A    N/A
+   
+  The following is a list of fields included in this patch:
+   
+  Field Name (Number)                        File Name (Number)
+  -------------------                        ------------------
+  RECEIVING A VA PENSION? (#.36235)          PATIENT (#2)
+  PENSION AWARD EFFECTIVE DATE (#.3851)      PATIENT (#2)
+  PENSION AWARD REASON (#.3852)              PATIENT (#2)
+  PENSION TERMINATED DATE (#.3853)           PATIENT (#2)
+  PENSION TERMINATED REASON 1 (#.3854)       PATIENT (#2)
+  PENSION TERMINATED REASON 2 (#.3855)       PATIENT (#2)
+  PENSION TERMINATED REASON 3 (#.3856)       PATIENT (#2)
+  PENSION TERMINATED REASON 4 (#.3857)       PATIENT (#2)
+  CLASS II DENTAL INDICATOR (#.3858)         PATIENT (#2)
+  DENTAL APPL DUE BEFORE DATE (#.3859)       PATIENT (#2)
+  PENSION INDICATOR LOCK (#.386)             PATIENT (#2)
+  PENSION AWARD LOCK (#.3861)                PATIENT (#2)
+  REASON (#.01)                              PENSION AWARD REASONS
+                                             (#27.18)
+  CODE (#1)                                  PENSION AWARD REASONS
+                                             (#27.18)
+   
+   
+  Forms Associated:
+  -----------------
+  N/A
+   
+   
+  Mail Groups Associated:
+  -----------------------
+  N/A
+   
+   
+  Options Associated:
+  -------------------
+  N/A
+   
+   
+  Protocols Associated:
+  ---------------------
+  N/A
+   
+   
+  Security Keys Associated:
+  -------------------------
+  N/A
+   
+   
+  Templates Associated:
+  ---------------------
+  The following is a list of templates included in this patch:
+   
+  Template Name            Type        File Name (Number)
+  -------------            ----        ------------------
+  DG LOAD EDIT SCREEN 7    INPUT       PATIENT    (#2)
+   
+     
+  New Service Request (NSRs):
+  ---------------------------
+  N/A
+   
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+   
+   
+  Test Sites:
+  -----------
+  VA PUGET SOUND HCS, WA
+  CHILLICOTHE VAMC, OH
+  VA HEALTH CAR UPSTATE NEW YORK,NY
+    
+    
+  Documentation Retrieval Instructions:
+  =====================================
+  Updated documentation describing the new functionality introduced by this 
+  patch is available.
+   
+  The preferred method is to FTP the files from ftp://download.vista.med.va.gov/.
+  This transmits the files from the first available FTP server. Sites may 
+  also elect to retrieve software directly from a specific server as follows:
+   
+   Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+   Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+   Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  The documentation will be in the form of Adobe Acrobat files.
+   
+  The following files should be downloaded in the binary FTP mode.
+   
+   Filename                    Description
+   --------                    -----------
+  DG_5_3_P842_REG_UM.PDF      Revised PIMS V. 5.3 Registration Menu User Manual
+  DG_5_3_P842_ADTBE_UM.PDF    Revised PIMS V. 5.3 ADT Module User Manual
+  IVM_2_150_TM.PDF            Income Verification Match (IVM) 2.0 Technical Manual
+   
+  Documentation can also be found on the VA Software Documentation Library at:
+  http://www4.va.gov/vdl/
+   
+  Patch Installation:
+  ===================
+   
+  Installation Instructions:
+  --------------------------
+   
+  This patch may be run with users on the system, however because the
+  Registration options need to be placed out of order, we suggest it
+  be installed after business hours.
+   
+  Installation will take less than 2 minutes.
+   
+  The following options should be disabled during installation:
+   
+          Register a Patient                   [DG REGISTER PATIENT]
+          Load/Edit Patient Data               [DG LOAD PATIENT DATA]
+          UPDATE BATCH JOB FOR HL7 v2.3        [VAFC BATCH UPDATE]
+   
+  1.  OBTAIN PATCHES
+      ==============
+   
+      Obtain the host file DG_53_P842.KID, which contains the following
+      three patch installs:
+   
+         DG*5.3*842
+         IVM*2.0*150
+   
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+   
+         download.vista.med.va.gov
+   
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+   
+         Albany                  ftp.fo-albany.med.va.gov
+         Hines                   ftp.fo-hines.med.va.gov
+         Salt Lake City          ftp.fo-slc.med.va.gov
+   
+      The DG_53_P842.KID host file is located in the anonymous.software
+      directory.  Use ASCII Mode when downloading the file.
+   
+  2.  From the Installation menu, select the LOAD A DISTRIBUTION option.
+   
+      When prompted for "Enter a Host File:", enter the full directory path
+      where you saved the host file DG_53_P842.KID (e.g.,
+      SYS$SYSDEVICE:[ANONYMOUS]DG_53_P842.KID).
+   
+      When prompted for "OK to continue with Load? NO//", enter "YES."
+   
+      The following will display:
+   
+         Loading Distribution...
+   
+         DG*5.3*842
+         IVM*2.0*150
+   
+      Use INSTALL NAME: DG*5.3*842 to install this
+      distribution.
+   
+  3.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD:
+      ==================================================
+      From the Installation menu, you may select to use the following
+      options (when prompted for the INSTALL NAME, enter
+      DG*5.3*842):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch.  It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+  4.  INSTALL MULTI-BUILD:
+      ====================
+      This is the step to start the installation of this KIDS build.  This
+      will need to be run for DG*5.3*842 multi-build.
+   
+      a.  Choose the Install Package(s) option to start the install.
+      b.  When prompted for the "Select INSTALL NAME:", enter DG*5.3*842.
+      c.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion
+          of Install? NO//"  enter NO.
+      d.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? YES//"  enter NO.
+      e.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? YES//"  enter YES.
+      f.  When prompted "Enter options you wish to mark as 'Out Of
+          Order':"  enter the following options:
+   
+          Register a Patient                   [DG REGISTER PATIENT]
+          Load/Edit Patient Data               [DG LOAD PATIENT DATA]
+          UPDATE BATCH JOB FOR HL7 v2.3        [VAFC BATCH UPDATE]
+   
+      g.  When prompted "Enter protocols you wish to mark as 'Out Of
+          Order':"  enter <return>.
+      h.  When prompted "Delay Install (Minutes):  (0-60): 0//"  enter an
+          appropriate number of minutes to delay the installation in 
+          order to give users enough time to exit the disabled options
+          before the installation starts.
+      i.  When prompted "Device: Home//"  respond with the correct device.
+   
+  ************** POST-INSTALLATION INSTRUCTIONS ************************
+  The pre-install routine, DG53842P, will delete the old X-Ref trigger
+  in PATIENT file #2 for RECEIVING A VA PENSION? field #.36235.  This
+  routine can be deleted once the installation process is completed.
+  **********************************************************************
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53842P
+    Before:       n/a   After:   B247157  **842**
+Routine Name: DGENPTA
+    Before: B40976431   After: B48293501  **121,122,147,688,754,838,841,842**
+Routine Name: DGENPTA1
+    Before: B22181053   After: B25498748  **121,147,314,677,659,653,688,
+                                           810,754,838,841,842**
+Routine Name: DGENUPL1
+    Before: B36548434   After: B41786889  **147,222,232,314,397,379,407,
+                                           363,673,653,688,797,842**
+Routine Name: DGENUPL2
+    Before: B73697731   After: B78421208  **147,222,232,310,314,367,397,
+                                           677,631,675,672,673,716,653,
+                                           688,838,842**
+Routine Name: DGENUPL4
+    Before: B67002910   After: B87089440  **147,177,232,253,327,367,377,
+                                           514,451,625,673,708,688,841,
+                                           842**
+Routine Name: DGENUPLB
+    Before:  B3546052   After:  B9493909  **625,763,842**
+Routine Name: DGRP6
+    Before: B15906836   After: B18281969  **161,247,343,397,342,451,672,
+                                           689,797,841,842**
+Routine Name: DGRP7
+    Before: B17215942   After: B19041748  **528,653,688,842**
+Routine Name: DGRP7CP
+    Before:       n/a   After: B20220559  **842**
+Routine Name: DGRPE
+    Before: B52635716   After: B53481298  **32,114,139,169,175,247,190,
+                                           343,397,342,454,415,489,506,
+                                           244,547,522,528,555,508,451,
+                                           626,638,624,677,672,702,689,
+                                           735,688,797,842**
+Routine Name: DGRPH
+    Before: B24473030   After: B25194652  **114,343,397,415,489,545,638,
+                                           624,689,842**
+Routine Name: DGRPV
+    Before: B18200549   After: B18383656  **109,114,247,190,327,365,343,
+                                           397,415,489,546,545,451,624,
+                                           677,672,689,716,688,797,842**
+Routine Name: VAFHLZE2
+    Before:       n/a   After:  B3792068  **842**
+ 
+Routine list of preceding patches: 763, 841
+
+=============================================================================
+User Information:
+Entered By  : BRICKER,DENNIS                Date Entered  : APR 18, 2011
+Completed By: GOLDEN,JEANNE                 Date Completed: JUN 29, 2012
+Released By : GROOMS,ANTHONY E              Date Released : JUN 29, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

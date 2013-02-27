@@ -1,0 +1,143 @@
+$TXT Created by BOWEN,MARY JANE at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 02/10/11 at 10:39
+=============================================================================
+Run Date: MAR 10, 2011                     Designation: DG*5.3*839
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #738                    Status: Released
+                  Compliance Date: MAR 18, 2011
+=============================================================================
+
+Associated patches: (v)DG*5.3*729  <<= must be installed BEFORE `DG*5.3*839'
+
+Subject: CHANGE CENSUS CLOSEOUT DATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch will change the PTF(Patient Treatment File) Census 
+  closeout date from the 14th day of the month following the
+  census date to the 7th.
+   
+  ASSOCIATED REMEDY TICKETS:
+  =========================  
+  HD0000000457200 - close out date modification request
+  
+  ASSOCIATED NSR'S:
+  ================
+  N/A 
+   
+  PARTICIPATING TEST SITES:
+  ========================
+  Alexandria, LA
+  Bay Pines, FL
+  Montana HCS
+   
+  REMEDY OVERVIEW:
+  ===============
+  HD0000000457200 - close out date modification request
+   
+  Problem:
+  ========
+  The Veterans Health Administration's (VHA) closeout dates for 
+  all monthly and end of fiscal year updates for VHA corporate 
+  patient data files are decreasing from the current requirement
+  of 14 calendar days to 7 calendar days after the date of an encounter
+  or discharge effective February 1, 2011. Currently the PTF Census 
+  closeout is set for the 14th of the month following the census date.
+  
+  Solution:
+  =========
+  This patch changes the PTF quarterly census closeout date to the 7th
+  of the month following the census date.
+  
+  If the 3/31/2011 census record exists in the PTF CENSUS DATE (#45.86)
+  file, the post-initialization routine DG53P839 will update the
+  CLOSEOUT DATE (#.02) field to 4/7/2011. This patch may be installed
+  out of sequence if needed to update the CLOSEOUT DATE (#.02) field prior to
+  the original closeout date of 4/14/2011. 
+  
+  
+  INSTALLATION INSTRUCTIONS:
+  ===========================
+  This patch may be run with users on the system, HOWEVER because
+  the Registration options need to be placed out of order, we
+  suggest it be installed after business hours.
+   
+  Installation will take less than 2 minutes.
+   
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+    
+       NOTE:  If the required patches are not installed, the transport 
+              global will be removed.  If the transport global is removed
+              you will need to repeat this step.
+    
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+    
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter DG*5.3*839):
+       a.  Compare Transport Global to Current System  - this option will
+           allow you to view all changes that will be made when the patch
+           is installed.  It compares all components of the patch 
+           (routines, DDs, templates, etc.).
+       b.  Verify Checksums in Transport Global - this option will
+           allow you to ensure the integrity of the routines that are in
+           the transport global.
+       c.  Print Transport Global - this option will allow you to view the
+           components of the KIDS build.
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+    
+   4.  Use the Install Package(s) option and select the package DG*5.3*839.
+    
+   5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', respond NO.
+    
+   6.  When prompted,'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//', respond YES.
+       When prompted,'Enter options you wish to mark as 'Out Of Order':',
+       enter:            
+             PTF Menu                    [DG PTF MENU] 
+             Load/Edit PTF Data          [DG PTF SCREEN]
+             PTF Transmission            [DG PTF TRANSMISSION VADATS]
+             Census Status Report        [DGPT CENSUS STATUS REPORT]
+             Regenerate Census Workfile    [DGPT CENSUS REGEN WORKFILE]
+             Display Census Date Parameters [DGPT CENSUS DATE DISPLAY]    
+    
+       When prompted,'Enter protocols you wish to mark as 'Out Of 
+       Order':', hit enter.
+   
+   7. Routine DG53P839 can be deleted after install.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P839
+    Before:       n/a   After:  B1925284  **839**
+Routine Name: DGPTCO1
+    Before: B26233066   After: B27588916  **136,383,432,696,729,839**
+ 
+Routine list of preceding patches: 729
+
+=============================================================================
+User Information:
+Entered By  : BOWEN,MARY JANE               Date Entered  : JAN 28, 2011
+Completed By: LEANORD,TATIANA               Date Completed: MAR 10, 2011
+Released By : CANNEDY,JOELLEN               Date Released : MAR 10, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

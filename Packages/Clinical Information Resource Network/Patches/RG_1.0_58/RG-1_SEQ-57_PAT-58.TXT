@@ -1,0 +1,123 @@
+$TXT Created by DAVIS,PAULETTE T at DEVCRN.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 04/05/11 at 09:18
+=============================================================================
+Run Date: SEP 28, 2011                     Designation: RG*1*58
+Package : RG - CLINICAL INFO RESOURCE NETWORK Priority: Mandatory
+Version : 1        SEQ #57                      Status: Released
+                  Compliance Date: OCT 29, 2011
+=============================================================================
+
+Associated patches: (v)RG*1*54     <<= must be installed BEFORE `RG*1*58'
+
+Subject: VISTA UPDATE CAN ERROR WHEN CMOR FIELD IS NULL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  NOTE:  RG* and MPIF* patches should NOT be installed on legacy
+  systems to avoid issues with the legacy systems ending up as
+  Treating Facilities.
+   
+  RG*1.0*54 is a required build for patch RG*1*58.
+   
+  Issue #1
+  When the Healthcare Identity Management (HC IdM) team uses the MPI
+  Override Primary View Values [MPI DATA MGT PRIM VW OVERRIDE] option to
+  update identity fields in the MPI VETERAN/ CLIENT (#985) file, those
+  updates are sent to the associated VistA site(s) via Health Level 7
+  (HL7) messaging.  If the COORDINATING MASTER OF RECORD (#991.03) field
+  in the PATIENT (#2) file for that site record is null, then a SUBSCRIPT
+  error at NS+1^XUAF4 could occur at the site.  Even though the
+  COORDINATING MASTER OF RECORD (#991.03) field is no longer used, it is
+  usually populated.  The processing code in routine RGADTP2 has been
+  modified to address instances when the COORDINATING MASTER OF RECORD
+  (#991.03) field is null.  The code change will prevent an error when
+  routine ^XUAF4 is called.
+             
+  Associated Remedy Ticket(s):
+  ============================
+  There are no associated Remedy Tickets.
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  Charleston, SC VAMC
+  Connecticut HCS
+  Louisville, KY VAMC
+        
+  Installation Instructions:
+  ==========================
+  This patch takes less than 2 minutes to install.  This patch should
+  be loaded during non-peak hours to minimize disruption to the users.
+   
+  1.  Users are allowed on the system during patch installation.
+  
+  2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+      Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+      Link Management Options [HL MENU FILER LINK MGT] menu on the
+      HL7 Main Menu [HL MAIN MENU].
+     
+  3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  6.  Use the Install Package(s) option and select the package RG*1.0*54.
+   
+  7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+   
+  8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES.  The following OPTIONS should be
+      disabled during the installation.
+   
+      Register a Patient              [DG REGISTER PATIENT]
+      Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+      Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+      UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+      MPI/PD Master Menu              [RGMGR]
+   
+  9.  After patch installation has completed, restart the HL7 incoming
+      filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+      option on the Filer and Link Management Options [HL MENU FILER 
+      LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL INFO RESOURCE NETWORK;**[Patch List]**;30 Apr 99;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RGADTP2
+    Before: B53164737   After: B54208943  **27,20,45,44,47,48,49,52,54,58**
+ 
+Routine list of preceding patches: 54
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,PAULETTE                Date Entered  : MAR 10, 2011
+Completed By: ULRICH,CYNTHIA                Date Completed: SEP 12, 2011
+Released By : HEUER,CINDY                   Date Released : SEP 28, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

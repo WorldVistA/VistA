@@ -1,0 +1,169 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 09/30/11 at 07:48
+=============================================================================
+Run Date: DEC 27, 2011                     Designation: ECX*3*135
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #122                      Status: Released
+                  Compliance Date: JAN 27, 2012
+=============================================================================
+
+Associated patches: (v)ECX*3*133   <<= must be installed BEFORE `ECX*3*135'
+
+Subject: UPDATE TO NATIONAL CLINIC (728.441) FILE
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Patch ECX*3.0*135 adds 35 new clinic codes and updates the description
+ of 2 existing codes in the NATIONAL CLINIC (#728.441) file.
+  
+  ASSOCIATED REMEDY TICKET: 
+  =========================
+  1)  HD0000000522831    Update to the NATIONAL CLINIC (#728.441) file
+  
+  ASSOCIATED NSR: 
+  ===============
+  N/A
+  
+  PARTICIPATING TEST SITES: 
+  =========================
+  Charleston, SC
+  New York Harbor HCS
+  Washington, DC
+  
+  Remedy Overview:
+  ================
+  1)  HD0000000522831    Update to the NATIONAL CLINIC (#728.441) file
+  
+  
+  Problem:
+  --------
+  A request was made to update the NATIONAL CLINIC (#728.441) file with
+  35 new NATIONAL CLINIC codes and update the description of 2 existing codes.
+  
+  
+  Resolution:
+  -----------
+  This patch updates the NATIONAL CLINIC (#728.441) file by adding 35 
+  new records and updates the description of 2 existing codes.
+  
+  
+  The following entries have been added to the NATIONAL CLINIC (#728.441)
+  file:
+  
+  
+  Code                  Short Description
+  --------------------------------------------
+  ACUP                  Acupuncture
+  BIOF                  Biofeedback
+  CBHT                  Cognitive Behavioral Therapy
+  CHAP                  Chaplain
+  DEMT                  Dementia-MH Therapist
+  DEPS                  Dementia-Psychologist
+  ECOE                  Epilepsy Center of Excellence
+  GIMA                  Guided Imagery
+  HYPN                  Hypnotherapy
+  MANT                  Mantram Repetition
+  MBSR                  Mindfulness-Based Stress Reduction
+  MDTN                  Meditation
+  MHMT                  Mental Health-MH Therapist
+  MHPS                  Mental Health-Psychologist
+  MMMT                  Multiple CoMorbidities-MH Therapist
+  MMPS                  Multiple CoMorbidities-Psychologist
+  MSCE                  MS Center of Excellence
+  MSGT                  Massage therapy
+  NAHL                  Native American healing
+  NDTR                  Nutrition Diet Tech Registered
+  NUDT                  Nutrition Diet Tech
+  NUTR                  Nutrition Staff
+  PADR                  PADRECC
+  PILA                  Pilates
+  PLMT                  Palliative Care-MH Therapist
+  PLPS                  Palliative Care-Psychologist
+  RFLX                  Reflexology
+  RLXT                  Relaxation techniques
+  TAIC                  Tai chi
+  TPHT                  Therapeutic or healing touch
+  YOGA                  Yoga
+  DTMV                  Diet Tech-MOVE
+  NUMV                  Nutritionist-MOVE
+  RDMV                  Registered Dietitian-MOVE
+  RDNU                  Nutrition Registered Dietitian
+  
+  
+  The following code's description changed:
+  
+  Existing Code         New Short Description
+  --------------------------------------------
+  CNSZ                  E-Consult
+  CPRZ                  SCAN-ECHO
+  
+  
+ Note: Each entry added to the ECX global will take approximately 85 bytes.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+  
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+ 2. From the Kernel Installation & Distribution System menu, select
+    the Installation menu.
+  
+ 3. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter ECX*3.0*135).      
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch is
+           installed.
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+        d. Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+     
+ 4. Use the Install Package(s) option and select the package ECX*3.0*135.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+    respond NO.
+  
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols? NO//" respond NO.
+  
+ 7. During install, verify that all entries were added successfully.
+    If an error is displayed, please file a Remedy Ticket.  
+  
+ 8. The routine ECX135PT will be removed from your production system
+    after the patch has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX135PT
+    Before:       n/a   After: B14341935  **135**
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : SEP 14, 2011
+Completed By: LEANORD,TATIANA               Date Completed: DEC 22, 2011
+Released By : VASSAR,CAROL                  Date Released : DEC 27, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

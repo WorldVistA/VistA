@@ -1,0 +1,216 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 10/06/11 at 15:45
+=============================================================================
+Run Date: APR 30, 2012                     Designation: PSJ*5*244
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #228                      Status: Released
+                  Compliance Date: MAY 31, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*50    <<= must be installed BEFORE `PSJ*5*244'
+                    (v)PSJ*5*101   <<= must be installed BEFORE `PSJ*5*244'
+
+Subject: NON-VERIFIED ORDER CLEAN-UP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issues:
+  
+ 1. When executing the Non-Verified/Pending Orders report, there 
+ appears to be a slow response time when searching for orders. 
+  
+ 2. An incorrect error message is displaying when user initiates a new IV 
+ order after entering a complex order.
+  
+ 3. An Undefined error is occurring when initiating an unverified order 
+ while the Unit Dose Clean-Up [PSJU BRJ] job is running.
+ Additionally, this patch will correct the XINDEX errors occurring in
+ routines, PSGBRJ and PSIVORE2.
+   
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS: 
+ ===========================
+ 1. HD0000000398874 - SBY-Slow response when searching for orders
+ 2. HD0000000412242 - Incorrect Error Message Displaying
+    Duplicate:
+    HD0000000194250 - Problem w/IV Entry Day Procedure Patient
+    HD0000000276802 - PHANTOM COMPLEX ORDER
+    HD0000000374010 - IV PIGGYBACK 1 time told 'complex order. start date
+                      may not..."
+    HD0000000424619 - On one patient using ioe cannot enter IV order
+ 3. HD0000000403045 - UNDEF ERROR
+  
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Salisbury, NC
+ Upstate New York HCS
+ Minneapolis, MN
+ Chillicothe, OH
+  
+ REMEDY OVERVIEW: 
+ ================
+ 1. HD0000000398874 - 6 SBY - Slow response when searching for orders
+  
+ Problem:
+ --------
+ When running the Non-Verified/Pending Orders report [PSJU VBW] and 
+ displaying an Order Summary, the report would often take several minutes
+ to run.  This is because the cross-references which contains 
+ non-verified orders is growing too large, since there is no existing
+ mechanism for removing discontinued orders from the cross-reference.
+  
+ Resolution:
+ -----------
+ Introduced a new tag in the Unit Dose Clean-Up option [PSJU BRJ] which 
+ will remove discontinued orders from the cross-references which contains
+ "orders not verified by a nurse" and "orders verified by a nurse but not a
+ pharmacist" ("ANV, "APV", "ANIV", and "APIV").
+  
+  
+ 2. HD0000000412242 - 5 Incorrect Error Message Displaying.
+  
+ Problem:
+ --------
+ The problem occurs after a user has created a complex order in CPRS and 
+ verified it using Inpatient Order Entry [PSJ OE].  The order has a 
+ schedule type of FILL on Request during the verification process.
+ Afterwards, if the user enters a new IV order, the user will 
+ inadvertently receive error message during IV order entry at several
+ points stating:
+ "This is a Complex Order. [This field] may not be edited at this point"
+ despite the fact that the new order is not complex.
+  
+ Resolution:
+ -----------
+ Changed routine PSIVORE2 so that Inpatient Order Entry no longer looks 
+ at the old complex order to deliver the warning message.
+  
+  
+ 3. HD0000000403045 - UNDEF ERROR
+  
+ Problem:
+ --------
+ Users can receive an Undefined Error when working on an unverified order
+ during the Unit Dose Clean-Up nightly background job [PSJU BRJ].  It is
+ possible for the Unit Dose Clean-Up to delete the Non-Verified Order that 
+ a user is working on before the process is completed.  This will cause an
+ error when trying to exit the order.
+  
+ Resolution:
+ -----------
+ Changed the routine PSGBRJ so that the Unit Dose Clean-Up will not delete 
+ a Non-Verified Order if there is a lock on the corresponding CPRS order.
+  
+  
+  
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ the Inpatient Medications users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes 
+  
+ 1.  Load Transport Global 
+     ---------------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+  
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+     Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*244):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d.  Print Transport Global - This option will allow you to view the 
+         components of the KIDS build.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO. 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? YES//' respond YES 
+  
+           1) When prompted "Enter options you wish to mark as "Out 
+              of Order":" enter the following options:
+              
+                 Inpatient Order Entry         [PSJ OE]
+                 Non-Verified/Pending Orders   [PSJU VBW]
+                 Unit Dose Clean-Up            [PSJU BRJ]
+  
+           2) When prompted "Enter protocols you wish to mark as "Out of
+              Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGBRJ
+    Before: B17214121   After: B19761653  **12,50,244**
+Routine Name: PSIVORE2
+    Before: B13568787   After: B13789762  **21,58,101,244**
+ 
+Routine list of preceding patches: 50, 101
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : JUL 08, 2010
+Completed By: CRICHLOW,SHERRY               Date Completed: APR 25, 2012
+Released By : TEAGUE,LYN                    Date Released : APR 30, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

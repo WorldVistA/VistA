@@ -1,0 +1,137 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 10/06/11 at 11:28
+=============================================================================
+Run Date: NOV 29, 2011                     Designation: IB*2*460
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #424                      Status: Released
+                  Compliance Date: DEC 15, 2011
+=============================================================================
+
+
+Subject: NEED CY2012 ADMINISTRATIVE CHARGE FOR 3rd PARTY RX CLAIMS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will update the administrative charge based on a new dispensing
+ fee of $12.39 for third party pharmacy prescription claims with an
+ effective date of January 1st, 2012.
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ HD0000000478455 Need CY2012 Administrative charge for 3rd party RX claims 
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Edith Nourse Rogers Memorial Veterans Hospital - Bedford
+ VA Butler Healthcare - Butler
+ VA San Diego Healthcare System
+  
+ REMEDY OVERVIEW:
+ ================
+ HD0000000478455 Need CY2012 Administrative charge for 3rd party RX claims
+  
+  Problem:
+  --------
+  The Chief Business Office has requested an update to the administrative 
+  charge for third party pharmacy prescription with an effective date of
+  January 1st, 2012.
+  
+  Resolution:
+  -----------
+  The post-init routine IB20P460 will call a procedure to inactivate rate
+  schedules containing the RX COST charge set for rate types: Reimbursable
+  Insurance, No Fault Insurance, Tort Feasor, and Workers Compensation with
+  an inactive date of December 31, 2011. It also updates the adjustments
+  for those rate types with the new dispensing fee effective from January
+  1st, 2012 in the Rate Schedule (#363) file.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*460):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P460.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P460
+    Before:       n/a   After:  B2863245  **460**
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : AUG 01, 2011
+Completed By: DAWSON,TIM                    Date Completed: NOV 23, 2011
+Released By : MARSHALL,FALENCIA B.          Date Released : NOV 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

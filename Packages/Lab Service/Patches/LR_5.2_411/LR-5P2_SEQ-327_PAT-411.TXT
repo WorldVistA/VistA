@@ -1,0 +1,242 @@
+$TXT Created by CARPENTER,TERRY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 03/27/12 at 12:44
+=============================================================================
+Run Date: MAY 08, 2012                     Designation: LR*5.2*411
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #327                    Status: Released
+                  Compliance Date: JUN 08, 2012
+=============================================================================
+
+Associated patches: (v)LR*5.2*187  <<= must be installed BEFORE `LR*5.2*411'
+                    (v)LR*5.2*269  <<= must be installed BEFORE `LR*5.2*411'
+                    (v)LR*5.2*341  <<= must be installed BEFORE `LR*5.2*411'
+
+Subject: FIX PROBLEM WITH DELETION OF PRESELECTED LAB TEST/PATIENT LISTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is a VM patch that addresses 3 issues in the Lab package.
+  
+ 1. When trying to accession an order user gets the message "TEST 
+    NAME does not have an appropriate accession area. Order xxxxx IS  
+    NOT ACCESSIONED."
+  
+ 2. The GROUP DATA REVIEW [LRGVP] option does not always show the
+    proper report routing location.
+  
+ 3. <UNDEFINED> error occurs when trying to delete old user-defined
+    patient/test lists. 
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ ========================
+ 1. HD0000000504691  -  More accessioning errors #3 - already accessioned
+  
+ 2. HD0000000070072  -  Group data review location
+  
+ 3. HD0000000389262  -  Error trap message <UNDEFINED> EN2+3^LRUMD
+    Duplicate(s):
+     HD0000000439046 -  <UNDEFINED> error with Lab worksheet
+     
+  
+  
+    
+ Testing Sites:
+ =============
+ MANCHERSTER VAMC            
+ BRONX VAMC                  
+ VA NORTH FLORIDA/SOUTH GEORGIA HCS 
+  
+  
+ BLOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*411 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by VHA 
+ DIRECTIVE 2004-058 titled VISTA BLOOD BANK SOFTWARE VERSION 5.2.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*411 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*411 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1:  HD0000000504691     -  More accessioning errors - already accessioned
+  
+  
+     Problem
+     ------------
+     When using the Group Verify [LRGV] option, the variable LRDUZ(2) is
+     sometimes created to hold the division of a reference lab.  That
+     variable is not cleared during exit of the Group Verify [LRGV] option.
+     If a user goes from the Group Verify [LRGV] option to an accessioning
+     option, the presence of the variable LRDUZ(2) may prevent
+     accessioning.
+  
+     Solution:
+     ---------
+     Modify routine LRGV to N(ew) the variable LRDUZ upon entry to the 
+     Group Verify [LRGV] option so that the variable is gone when the Group
+     Verify [LRGV] option is exited.
+  
+     Routine:    LRGV  
+  
+  
+  
+  
+ 2:  HD0000000070072     -  Group data review location 
+  
+    Problem:
+    --------                                                           
+  
+    The GROUP DATA REVIEW [LRGVP] option prints the ward for inpatients
+    and the report routing location for outpatients.  The report routing 
+    location is currently obtained from a REPORT ROUTING field (#.1) in 
+    the LAB DATA file (#63). This field is an old data item that is not
+    always reliable and there is some discussion as to phasing out the
+    usage of this data field.
+  
+    Solution:
+    ---------
+    Modify routine LRGVP to get the REPORT ROUTING LOCATION field (#6)
+    of ACCESSION NUMBER subfile (#68.02) of the ACCESSION FILE file (#68).
+  
+    Routine:  LRGVP  
+  
+  
+  
+  
+ 3.  HD0000000389262    -  Error trap message <UNDEFINED> EN2+3^LRUMD
+     Duplicate(s):
+       HD0000000439046  -  <UNDEFINED> error with Lab worksheet
+  
+  
+    Problem
+    ------------
+    User-defined patient lists and user-defined lab test lists are stored
+    in the USER REQUEST LIST subfile  (#69.28) of the LAB SECTION PRINT
+    FILE file (#69.2). LAST DATE USED field (#.02) of USER REQUEST LIST
+    subfile (#69.28) is used to allow users to delete lists that have not
+    been used in a user-specified amount of time. When user-defined test
+    lists are created/modified in CPRS (user-defined patient lists can not
+    be created in CPRS), the global level which holds the LAST DATE USED
+    field (#.02) is not created or updated.  When a user goes in to delete
+    some old unused patient/test lists the code is expecting this global
+    level to be there.  When it is not there an <UNDEFINED> error ensues.
+  
+  
+    Solution
+    ------------
+    Modify routine LR7OGO to create/update the global level containing
+    the LAST USED DATE when a user-defined test list is created or
+    modified in CPRS.  Also, routine LRUMD is modified to not error when
+    this global level is missing if a user tries to delete old patient
+    lists or old test lists. A post-init routine, LR411PST, is also
+    created that will go through the USER REQUEST LIST subfile (#69.28) 
+    and add the missing global level for users when this global level is
+    missing.  A MailMan message is sent to the patch installer detailing
+    which users were updated. 
+  
+    The subject line will display as follows:
+  
+    Subj: PATCH LR*5.2*411 POST-INIT RESULTS  
+  
+    Once the message has been obtained, no further actions are required.
+  
+    Routine:    LR7OGO   LRUMD   LR411PST
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+  
+   The install time for this patch is less than 2 minutes. This patch
+   can be installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*411.
+       If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+       Install? NO//, choose 'NO'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+  
+   7.  You may delete routine LR411PST upon successful installation of the 
+       patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Dec 30, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR411PST
+    Before:       n/a   After: B11951303  **411**
+Routine Name: LR7OGO
+    Before: B19431022   After: B20823962  **187,411**
+Routine Name: LRGV
+    Before: B41992939   After: B42006074  **269,411**
+Routine Name: LRGVP
+    Before:  B5498903   After:  B5578309  **112,411**
+Routine Name: LRUMD
+    Before: B18103037   After: B18337665  **201,341,411**
+ 
+Routine list of preceding patches: 112, 187, 269, 341
+
+=============================================================================
+User Information:
+Entered By  : CARPENTER,TERRY               Date Entered  : APR 13, 2011
+Completed By: BYRD,TIERRA                   Date Completed: MAY 07, 2012
+Released By : CONLIN,TERESA                 Date Released : MAY 08, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,126 @@
+$TXT Created by MENDOZA,RAUL at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 06/28/12 at 14:39
+=============================================================================
+Run Date: NOV 05, 2012                     Designation: XWB*1.1*59
+Package : XWB - RPC BROKER                    Priority: Mandatory
+Version : 1.1        SEQ #44                    Status: Released
+                  Compliance Date: DEC 06, 2012
+=============================================================================
+
+
+Subject: MISSING LABEL 'RPUT'
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ 
+ This is a simple patch modifies the routine XWBTCPM2 and modifies one line 
+ of code.  The call to RPUT^XUSBSE1 is commented out.
+ 
+ Documentation Changes:
+ ======================
+ The most up-to-date Remote Procedure Call (RPC) Broker end-user documentation
+ is availableon the VHA Software Document Library (VDL) at the following
+ Internet Website:
+ http://www.va.gov/vdl/application.asp?appid=23 
+ 
+ NOTE: VistA documentation is made available online in Microsoft Word format
+ (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ 
+ Test Sites:
+ ==========
+ Washington DC
+  
+  
+ Remedy Tickets:
+ ==============
+ HD624499
+  
+ 
+ Blood Bank Team Coordination: 
+ =============================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XWB*1.1*59 contains changes
+ to a package referenced in VHA OI SEPG SOP 192-023 Review of VISTA Patches for
+ Effects on VISTA Blood Bank Software. This patch does not alter or modify any
+ VistA Blood Bank software design safeguards or safety critical elements
+ functions.
+ 
+ RISK ANALYSIS: Changes made by patch XWB*1.1*59 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+  
+  
+ Installation Instructions: 
+ ==========================
+   
+  This patch may be installed with VISTA users online. However, it is
+  recommended that it be Queued for a time of generally least activity.  
+   
+  TaskMan or any background jobs does not need to be STOPPED or placed
+  in a WAIT state.
+ 
+  Installation should take less than a minute.
+  
+      1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+ This option will load the KIDS package onto your system.
+  
+      2.  The patch has now been loaded into a transport global on your 
+ system. You now need to use KIDS to install the transport global.
+  
+      3.  On the KIDS menu, under the 'Installation' menu, use the 
+ following options:
+  
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Backup a Transport Global
+ 
+      4.  On the KIDS menu, under the 'Installation' menu, use the 
+ following option:
+  
+            Select Installation Option: Install Package(s)
+            Select INSTALL NAME: XWB*1.1*59
+                                 ===========
+  
+            Answer 'NO'Want KIDS to INHIBIT LOGONs during the 
+ install?'
+            Answer 'NO' to 'Want to DISABLE Scheduled Options, Menu 
+ Options, and Protocols?'
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.1;RPC BROKER;**[Patch List]**;Mar 28, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XWBTCPM2
+    Before:  B4246015   After:  B4708442  **43,45,53,59**
+ 
+Routine list of preceding patches: 53
+
+=============================================================================
+User Information:
+Entered By  : MENDOZA,RAUL E.               Date Entered  : MAY 31, 2012
+Completed By: BEST,LISA                     Date Completed: OCT 17, 2012
+Released By : PALMER,MICHAEL                Date Released : NOV 05, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

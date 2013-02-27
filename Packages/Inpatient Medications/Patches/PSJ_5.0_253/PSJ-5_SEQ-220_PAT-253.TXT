@@ -1,0 +1,274 @@
+$TXT Created by HARRIS,JAMES at DVACACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Wednesday, 09/14/11 at 12:26
+=============================================================================
+Run Date: JAN 30, 2012                     Designation: PSJ*5*253
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #220                      Status: Released
+                  Compliance Date: MAR 01, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*225   <<= must be installed BEFORE `PSJ*5*253'
+                    (v)PSJ*5*245   <<= must be installed BEFORE `PSJ*5*253'
+
+Subject: IMR3 ALLERGY AND ALERTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ ********************************************************************
+ IMPORTANT:  PATCHES PSJ*5*254 AND PSB*3*58 MUST BE INSTALLED 
+             IMMEDIATELY AFTER INSTALLATION OF THIS PATCH.
+  
+  Patch PSB*3*58 contains changes that will not function until 
+  patch PSJ*5*254 is installed. The following patches should be 
+  installed at the same time, in the following sequence:
+               PSJ*5*253, PSJ*5*254, PSB*3*58.
+ ********************************************************************
+  
+  
+ This patch contains the following two defect fixes:
+  
+ 1. This patch corrects an issue in Bar Code Medication Administration
+    V. 3.0 in which orders do not display on the Virtual Due List (VDL) 
+    if the order's Schedule Type is Continuous or Fill on Request, and 
+    the order contains a Schedule defined in the Administration Schedule 
+    File (#51.1) with a Schedule Type of On Call.
+  
+ 2. This patch corrects an issue in Inpatient Medications V. 5.0 in which
+    changing a Non-Verified order's Schedule Type to On Call automatically
+    changes the name of the order's Schedule to On Call without alerting 
+    the user.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)           Field Name (Number)  New/Modified/Deleted
+ ------------------           -------------------  --------------------
+ Non-Verified Orders (#53.1)  Schedule Type (#7)   Modified
+  
+ Forms Associated:
+ None.
+  
+ Mail Groups Associated:
+ None.
+  
+ Options Associated:
+ None.
+  
+ Protocols Associated:
+ None.
+  
+ Security Keys Associated:
+ None.
+  
+ Templates Associated:
+ None.
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ---------------------------- 
+ None.
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ PSPO1765 - ON CALL, FILL on REQUEST doesn't show in BCMA. The VAMC 
+ reported all Inpatient Medication orders with schedule type of Fill on 
+ Request and a schedule of ON CALL appeared on the BCMA VDL, but not 
+ orders with schedule type of Fill on Request and schedule of ON CALL 
+ PREMED.
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ HD415492 -  ON CALL, FILL on REQUEST doesn't show in BCMA
+  
+ Problem:
+ -------
+ An order with a SCHEDULE of "ON CALL" and a Schedule Type of Fill on 
+ Request will appear in BCMA.  The problem is if a site as a SCHEDULE of 
+ ON CALL(Pre-OP) or something similar where they have added onto the On 
+ Call name in the .01 field in 51.1. If Pharmacy has made the order Fill 
+ On Request, that is when it doesn't display in BCMA.
+  
+ Resolution:
+ ----------
+ Inpatient Medications will send orders to BCMA as schedule type ON CALL 
+ if the order contains a schedule that is defined in the Administration 
+ Schedule File (#51.1) as type ON CALL, and the order itself has a 
+ schedule type of Continuous or Fill on Request. If the order has a 
+ schedule type of ONE TIME, PRN, or ON CALL, the order's schedule type 
+ will always determine the type displayed in BCMA.
+  
+  
+  
+ HD414275 - Schedule is Automatically Converted if Schedule Type is On Call
+  
+ Problem:
+ -------
+ When a Non-Verified order's Schedule Type is changed to On Call during 
+ Inpatient Order Entry, the name of the order's Schedule is automatically
+ changed to "ON CALL", without alerting the user that the change has 
+ occurred.
+  
+ Resolution:
+ ----------
+ The code performing the automatic change of an order's Schedule will be 
+ removed. The fix for HD415492 in this patch removes the requirement for
+ a Continuous or Fill on Request order's schedule to be equal to "ON CALL"
+ for the order to display as an On Call order in BCMA.
+  
+ Test Sites:
+ ----------
+ Central TX
+ Houston, TX
+ Iron Mountain, MI
+ Loma Linda, CA
+ Manchester, NH
+ Minneapolis, MN
+ Phoenix, AZ
+ Pittsburgh, PA
+ St. Cloud, MN
+ Upstate New York
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.va.gov/vdl/
+  
+ Title                           File Name                    FTP Mode
+ -----------------------------------------------------------------------
+ Inpatient Medications V. 5.0    PSJ_5_P253_P254_RN.DOC       BINARY
+ Allergy and Alerts Release
+ Notes
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post-installation routine PSJ0253 deletes the cross reference on the 
+ Schedule Type (#7) field in the Non-Verified Orders (#53.1) file that 
+ automatically changes the order's schedule to ON CALL if the order's 
+ schedule type is "OC".
+  
+ Do not queue this patch to install at a later time. Do not install this
+ patch while users are logged in to Inpatient Medications V.5.0. 
+  
+  
+ After the patch has been installed, the IRM should manually delete
+ post-installation routine PSJ0253.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ None.
+  
+  
+ Installation Instructions
+ -------------------------
+ REMINDER: Do NOT queue this patch to install at a later time.
+  
+ Verify users are logged of the Inpatient Medications V. 5.0 application.
+ This patch should take less than 5 minutes to install.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter PSJ*5.0*253.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', accept the default, 'NO'.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', enter 'YES'.
+  
+       The following menu options should be disabled:
+    
+         Option Name       Menu Text
+         ___________       _________  
+         PSJU NE           Order Entry
+         PSJ OE            Inpatient Order Entry
+  
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Post-installation routine PSJ0253 should be manually deleted after the 
+ patch has been installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC, 1997;Build 31
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE4
+    Before: B31772207   After: B31371280  **2,50,64,58,111,113,245,253**
+Routine Name: PSJ0253
+    Before:       n/a   After:   B187235  **253**
+Routine Name: PSJBCMA
+    Before: B74176392   After: B78979447  **32,41,46,57,63,66,56,69,58,
+                                           81,91,104,111,112,186,159,173,
+                                           190,113,225,253**
+Routine Name: PSJBCMA1
+    Before: B70492057   After: B68412667  **32,41,46,57,63,66,56,58,81,
+                                           91,104,186,159,173,253**
+
+=============================================================================
+User Information:                          Hold Date     : JAN 21, 2012
+Entered By  : HARRIS,JAMES C                Date Entered  : JAN 19, 2011
+Completed By: PAYNE,RONALD                  Date Completed: DEC 22, 2011
+Released By : CONNOLLY,BARBARA              Date Released : JAN 30, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

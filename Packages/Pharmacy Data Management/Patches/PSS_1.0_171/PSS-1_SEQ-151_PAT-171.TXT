@@ -1,0 +1,217 @@
+$TXT Created by HARRIS,JAMES at DVACACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Wednesday, 04/18/12 at 13:06
+=============================================================================
+Run Date: SEP 12, 2012                     Designation: PSS*1*171
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #151                      Status: Released
+                  Compliance Date: OCT 13, 2012
+=============================================================================
+
+Associated patches: (v)PSS*1*35    <<= must be installed BEFORE `PSS*1*171'
+                    (v)PSS*1*85    <<= must be installed BEFORE `PSS*1*171'
+
+Subject: IMR 4 NO ALLERGY ASSESS, UNLIMITED SI/OPI
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ ****************************** ATTENTION ********************************
+  
+ The IMR4 UNLIMITED SI/OPI TEXT, LAST INJECTION SITE enhancement includes 4
+ patches which must be installed in the following order:
+  
+   1. PSS*1*171
+   2. PSJ*5*267
+   3. PSB*3*68
+   4. PSB*3*69
+  
+ ************************************************************************* 
+  
+ Enhancements
+ =====================
+  
+ The enhancement in this patch provides an alert to the pharmacist 
+ in Inpatient Medications V. 5.0 when no allergy assessment is on
+ file for the patient, and a method for the pharmacist to enter an
+ allergy assessment after receiving the alert.  A pharmacy intervention
+ is automatically created if the pharmacist chooses to not enter an
+ assessment.
+  
+   ** NOTE: The new NO ALLERGY ASSESSMENT interventions will 
+            not be logged until patch PSS*1*171 is installed.        
+  
+ The No Allergy Assessment functionality will be available at the
+ following options:
+  
+ Inpatient Order Entry [PSJ OE]
+ Non-Verified/Pending Orders [PSJU VBW]
+ Order Entry [PSJU NE]
+ Order Entry (IV) [PSJI ORDER]
+ Profile (IV) [PSJI PROFILE]
+  
+ When a patient with no allergy assessment is selected from one of the
+ affected options, the following message will be displayed to the
+ pharmacist:
+  
+ "NO ALLERGY ASSESSMENT exists for this patient! Would you like to enter
+ one now?"
+  
+   - If the pharmacist enters 'YES' at this prompt, they are prompted
+        for allergy information.
+   - If the pharmacist enters 'NO' at this prompt, a pharmacist
+     intervention is created, with a type of 'NO ALLERGY
+     ASSESSMENT'. The pharmacist is then prompted for Provider
+     and Recommendation. A new Recommendation, 'UNABLE TO ASSESS',
+     has been created specifically for this type of intervention.
+  
+  
+ This enhancement will address Patient Safety Issue PSPO 445.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)        New/Modified/Deleted
+ ------------------        -------------------        --------------------
+ APSP INTERVENTION         RECOMMENDATION (#.08)      Modified
+ (#9009032.4)
+  
+ APSP INTERVENTION TYPE   *New Entry - 'NO ALLERGY    Modified
+ (#9009032.3)              ASSESSMENT'
+  
+ APSP INTERVENTION        *New Entry - 'UNABLE TO     Modified
+ RECOMMENDATION            ASSESS'
+ (#9009032.5)
+  
+  
+ Forms Associated:
+ N/A
+  
+ Mail Groups Associated:
+ N/A
+  
+ Options Associated:
+ N/A    
+  
+ Protocols Associated:
+ N/A
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A 
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ PSPO 445 
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ HD169850
+  
+  
+ Test Sites:
+ -----------
+ Central Texas
+ Manchester, NH
+ Pittsburgh, PA
+ St. Cloud, MN
+ Albany,NY (VISN 2)
+ Bath, NY (VISN 2)
+ Canandaigua, NY (VISN 2)
+ Syracuse, NY (VISN 2)
+ VA Western New York Healthcare System at Batavia (VISN 2)
+ VA Western New York Healthcare System at Buffalo (VISN 2)
+  
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+  
+ Installation Instructions
+ -------------------------
+ Do not install this patch while Inpatient Medications users are 
+ on the System processing orders using any of the four affected 
+ order entry options. Installation will take less than 1 minute.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System menu, 
+      Select the Installation menu.
+  
+   3. From this menu, you may select to use the following options
+     (when prompted for INSTALL NAME, enter patch PSS*1.0*171)
+        a. Backup a Transport Global - this option will create a
+           backup message of any routines exported with the patch.
+           It will NOT backup any other changes such as DDs or
+           templates.
+  
+        b. Compare Transport Global to Current System - this option
+           will allow you to view all changes that will be made when
+           the patch is installed. It compares all components of the
+           patch (routines, DDs, templates, etc.). 
+  
+        c. Verify Checksums in Transport Global - this option will
+           ensure the integrity of the routines that are in the transport
+           global.
+  
+   4. Use the Install Package(s) option and select the package patch
+      PSS*1.0*171.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO//" respond NO.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ None.
+  
+ Post-Installation Instructions
+ ------------------------------
+ None.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDDUT3
+    Before: B31120110   After: B34317397  **35,171**
+ 
+Routine list of preceding patches: 35
+
+=============================================================================
+User Information:
+Entered By  : HARRIS,JAMES C                Date Entered  : NOV 03, 2011
+Completed By: PAYNE,RONALD                  Date Completed: SEP 12, 2012
+Released By : CONNOLLY,BARBARA              Date Released : SEP 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,218 @@
+
+=============================================================================
+Run Date: MAR 07, 2011                     Designation: OR*3*293
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #287                      Status: Released
+                  Compliance Date: JUL 19, 2011
+=============================================================================
+
+Associated patches: (v)OR*3*282    <<= must be installed BEFORE `OR*3*293'
+                    (v)OR*3*303    <<= must be installed BEFORE `OR*3*293'
+
+Subject: NEW ORDER CHECK FILE
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch is being released in conjunction with CPRS GUI v28.  CPRS GUI 
+ version 28 consists of five host files: PSS_1_151.KID, PSS_1_142.KID, 
+ CPRS28_REQUIRED.KID, OR_PSJ_PXRM_28.KID and CPRS28_RELATED.KID. These 
+ five host files contain software that support CPRS GUI v28 
+ functionality.  The host files were created to simplify installation at 
+ Veterans Health Administration (VHA) facilities and to assist in the 
+ phased implementation release method for CPRS v28.  CPRS v28 will follow 
+ a phased implementation.  To see current status and target dates for 
+ Sites/VISN/Region please refer to the following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+  
+ Please refer to the "CPRS GUI v.28 and Associated Patches Installation 
+ Guide" for installation sequence information.  This document is exported 
+ as OR_30_280IG.doc and OR_30_280IG.pdf and is included in OR_30_280.ZIP.
+  
+ Installation and set-up information specific to OR*3*280 is included in 
+ "CPRS GUI v.28 and Associated Patches Installation Guide".   
+  
+ Patch information:
+ PSS patches exported as two host files support CPRS v28 functionality.
+ PSS_1_142.KID
+ PSS_1_151.KID
+  
+ CPRS28_REQUIRED.KID includes the required patches needed to support CPRS 
+ GUI v28 functionality.  It includes builds for the following patches:
+ OR*3.0*293
+ GMRC*3.0*66
+ GMRA*4.0*45
+  
+ OR_PSJ_PXRM_28.KID includes the CPRS, Pharmacy and Clinical Reminders 
+ patches required for CPRS GUI v28.  It includes builds for the following 
+ patches: 
+ OR*3.0*280
+ PSJ*5.0*226
+ PXRM*2.0*16
+  
+ CPRS28_RELATED.KID includes the related patches needed to support CPRS 
+ GUI v28 functionality.  It includes builds for the following patches:
+ GMRC*3.0*64
+ GMTS*2.7*90
+ OR*3.0*337
+  
+ Installation of these five host files should be coordinated among the 
+ packages affected because these host files will install the software 
+ needed to implement CPRS GUI v28.
+  
+ The purpose of this patch is to create a new centralized repository for 
+ the collection of all order checking information in each VISTA instance. 
+ This repository is file 100.05.  Also with this file, the patch installs 
+ Application Programming Interfaces (APIs) that allow applications 
+ programmers to add any order checks that their applications generate into 
+ this file.  
+  
+ There are no functional changes with this patch. Therefore, users should 
+ see no difference in the way order checks are generated or displayed.
+  
+ Remedy 362006
+ =============
+ There is also a change made for Remedy ticket #362006.  This change is 
+ to use DILOCKTM to help lock the order file record to prevent error 
+ conditions.  NEXTIFN^ORCSAVE has been using locking that is not in 
+ conformance with the SOP. This issue could cause RENEW+54^ORWDXR errors 
+ and program crashes although the incidence rate would be very low. 
+ Testing will require multiple CPRS users creating orders at the same 
+ time. 
+  
+  
+ --NOTE--
+ This patch schedules a task which converts the entries that are currently 
+ in file 100 on node 9 of each order and puts them into the new file 
+ 100.05.  This process may take a long time and thus the patch should be 
+ installed when the system is not highly loaded.  Also, since the task 
+ takes the current data from file 100 it is possible that control 
+ characters that existed there could get copied over into the new file as 
+ well. 
+  
+ --FURTHER NOTE--
+ As the above said task will create new entries in file 100.05 based off 
+ of existing order checks in file 100, file 100.05 has the potential to 
+ grow to a large size.  Depending on your system configuration, this may 
+ cause you to need extra journal files.  If you are monitoring the system 
+ and notice you need to allocate additional system resources for this 
+ task/process you may kill off the task in order to perform the necessary 
+ tasks. Once you are ready you will then need to restart the process by 
+ running the following at programmer prompt:
+  
+ D TASK^ORY293
+  
+ The task will pick back up where it left off when you killed off the 
+ original task.
+  
+  
+  
+  
+  
+  This patch addresses the following New Service Request (NSR):
+  -------------------------------------------------------------
+  There are no NSRs associated with this patch.
+    
+    
+  This patch addresses the following NOIS/Remedy Ticket(s):
+  ---------------------------------------------------------
+  Remedy 362006
+   
+  Components Sent With Patch
+  --------------------------
+   
+  Total number of routines modified: 6
+  Total number of new routines: 2
+  Total number of routines: 8
+  
+  The following is a list of files included in this patch:
+  ========================================================
+  File 100.05 - ORDER CHECK INSTANCES
+  
+  INSTALLATION INSTRUCTIONS:  
+  =========================
+    
+  This patch is exported as part of CPRS28_REQUIRED.KID
+   
+  CPRS v28 and associated patches will follow a phased implementation.  
+  Software retreival of CPRS28_REQUIRED.KID will be coordinated with the 
+  phased implementation.  To see current status and target dates for 
+  Sites/VISN/Region please refer to the following site:
+  
+  http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+  For more details and instructions related to CPRS 28 and related 
+  patches, please refer to the install guide OR_30_280IG.DOC, available
+  on the VDL.  It will also be distributed when your site is targeted for 
+  installation.
+  
+  
+  This patch should be loaded during non-peak hours to minimize disruption
+  to users.  Users may be on the system during installation. Installation
+  will take less than 5 minutes.
+   
+  1. From the Kernel Installation and Distribution System Menu, select the
+     Installation menu.
+   
+  2. From this menu, you may elect to use the following options (when 
+     prompted for INSTALL NAME, enter CPRS28 REQUIRED 1.0):
+       a.  Backup a Transport Global
+       b.  Compare Transport Global to Current System
+       c.  Verify Checksums in Transport Global
+   
+  3. Use the Install Package(s) options and select the package CPRS28 
+     REQUIRED 1.0
+  4. When prompted 'Want KIDS to INHIBIT LOGONS during install? YES//',
+     respond "NO".
+   
+  5. When prompted 'Want to DISABLE Scheduled Options, Menu Options and 
+     Protocols? YES//', respond "NO".
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCHECK
+    Before: B47055177   After: B56557816  **7,56,70,94,141,215,243,293**
+Routine Name: ORCSAVE
+    Before: B74126884   After: B74510622  **7,56,70,73,92,94,116,141,163,
+                                           187,190,195,243,303,293**
+Routine Name: ORCSAVE2
+    Before: B68713994   After: B68162412  **4,27,56,70,94,116,190,157,
+                                           215,265,243,293**
+Routine Name: ORMBLDPS
+    Before: B74740266   After: B77690426  **7,38,54,86,97,94,116,129,141,
+                                           190,195,237,254,243,293**
+Routine Name: OROCAPI1
+    Before:       n/a   After: B44849780  **293**
+Routine Name: ORQ2
+    Before: B44237971   After: B46973301  **12,56,75,94,141,213,195,243,
+                                           282,293**
+Routine Name: ORSRCHOR
+    Before: B77451785   After: B81351241  **243,293**
+Routine Name: ORY293
+    Before:       n/a   After:  B2220767  **293**
+ 
+Routine list of preceding patches: 282, 303
+
+=============================================================================
+User Information:
+Entered By  : HAWSEY,JASON                  Date Entered  : MAR 19, 2008
+Completed By: SERVICE,JOHN                  Date Completed: MAR 07, 2011
+Released By : MONTGOMERY,ALAN               Date Released : MAR 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,122 @@
+Subj: Release of VistALink Version 1.6 Software  [#53621983] 01/20/11@07:16
+115 lines
+From: LASHLEY,ANTHONY - SYSTEMS ANALYST (Infrastructure Team)  In 'IN' basket.
+Page 1  *New*
+-------------------------------------------------------------------------------
+TO:  
+     G.IRM CHIEFS (NATIONAL) & STAFF
+     G.SITEMANAGERSNATIONAL
+     G.SSA
+     G.PATCH
+     G.CS STAFF
+ 
+FROM: Health Platform Support/Infrastructure Team
+ 
+RELEASE INFORMATION
+===================
+A new version of VistALink, v1.6, is being provided, adding support for 
+newer WebLogic application server versions (v9.2 and higher). VistALink 
+consists of Java-side adapter libraries and an M-side listener, enabling 
+Java and J2EE applications to call and execute existing Remote Procedure 
+Calls (RPCs) on VistA M servers. VistALink is being leveraged by an 
+expanding number of existing and future J2EE applications.
+ 
+This new version was tested at the following Medical Center test sites:
+ 
+ - Captain James A. Lovell Federal Health Care Center (North Chicago, IL)
+ - Charlie Norwood VA Medical Center (Augusta, GA)
+ - El Paso VA Health Care System (El Paso, TX)
+ - Gulf Coast Veterans Health Care System (Biloxi, MS)
+ - Puget Sound Health Care System (Seattle, WA)
+ - San Diego Healthcare System (San Diego, CA)
+ - Southern Nevada Healthcare System (Las Vegas, NV)
+ 
+SOFTWARE CHANGES
+================
+New features for J2EE/WebLogic administrators include:
+ 
+ - Compatibility of all components with WebLogic versions v9.2 and higher
+  (including v10 and v11g)
+ 
+ - Support for WebLogic v9/10/11g's "J2EE Shared Library" feature to
+   reduce resource consumption of resource adapter libraries
+ 
+ - Support for J2CA v1.5-compatible resource adapters, including the 
+   ability for to deploy and manage multiple adapters as a single 
+   deployment unit 
+ 
+ - Elimination of DNS lookup caching of M system IP addresses (allowing 
+   dynamic DNS changes of system IP addresses to be registered by 
+   resource adapters)
+ 
+New features for M/VistA administrators include:
+ 
+ - On Cachi/Linux systems, support to launch VistALink listener via Linux
+   XINETD 
+ 
+ - Client IP addresses for failed client connections are now captured in
+   the error trap
+ 
+SOFTWARE RETRIEVAL
+==================
+The software for this package is available for retrieval via FTP as of 
+1/18/2011.  A single XOB_1_6_0_028.ZIP file contains all the files 
+necessary to install VistALink on both Java and M systems. The KIDS file 
+contains three new VistA packages: XOBU 1.6, XOBS 1.6, and XOBV 1.5. You 
+are encouraged to use the TCP/IP FTP utility to obtain the software from 
+one of the following OI Field Office ANONYMOUS.SOFTWARE directories:
+ 
+OI&T Field Office       FTP Address
+-------------------     --------------
+Albany                  ftp.fo-albany.med.va.gov
+Hines                   ftp.fo-hines.med.va.gov
+Salt Lake City          ftp.fo-slc.med.va.gov
+VistA Download Site     download.vista.med.va.gov
+ 
+File Name          Description                    Retrieval Format
+------------       --------------                 ----------------
+XOB_1_6_0_028.ZIP  Contains both java and M sides BINARY
+XOB_1_6_B15.KID    KIDS file for M installations  ASCII
+XOB_1_6_DG.PDF     Developer's Guide              BINARY
+XOB_1_6_IG.PDF     Installation Guide             BINARY
+XOB_1_6_RN.PDF     Release Notes                  BINARY
+XOB_1_6_SM.PDF     System Management Guide        BINARY
+ 
+DOCUMENTATION
+=============
+The documentation set will also be posted within the next few days within 
+the Infrastructure section on the VistA Documentation Library (VDL) at 
+http://www.va.gov/vdl/.
+ 
+MANDATE/COMPLIANCE DATE
+=======================
+M/VistA sites must install VistALink v1.6 (M side) within thirty days of 
+release as per VHA Directive 2001-23, Installation Timeframes for 
+Veterans Health Information Systems and Technology Architecture (VistA) 
+Software Packages and Patches.
+ 
+Java components should be upgraded as needed to support newer versions of 
+WebLogic. The v1.6 listener is backwards compatible with v1.5 (and v1.0) 
+VistALink java clients.
+ 
+M COMPONENT COMPLIANCE DATE
+===========================
+February 20, 2011  
+ 
+BLOOD BANK CLEARANCE
+====================
+Clearance - 4/29/2010
+ 
+VistALink v1.6 contains changes to a package referenced in VHA OI SEPG 
+SOP 192-023, "Review of VISTA Patches for Effects on VISTA Blood Bank 
+Software." VistALink v1.6 was reviewed by the Blood Bank team and no 
+problems were found.
+ 
+ADDITIONAL INFORMATION
+======================
+If you have any questions concerning the installation or implementation 
+of this package, please contact the Enterprise VistA Support Help Desk at 
+1-888-596-HELP (4357) or enter a VistALink 1.6 problem ticket in Remedy. 
+VistALink 1.6 is listed under the Applications-HealtheVet-VistA category.
+
+Enter message action (in IN basket): Ignore//

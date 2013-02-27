@@ -1,0 +1,976 @@
+EMERGENCY Released OR*3*323 SEQ #285
+Extracted from mail message
+**KIDS**:OR*3.0*323^
+
+**INSTALL NAME**
+OR*3.0*323
+"BLD",7606,0)
+OR*3.0*323^ORDER ENTRY/RESULTS REPORTING^0^3101102^y
+"BLD",7606,1,0)
+^^19^19^3100825^
+"BLD",7606,1,1,0)
+This patch corrects the following issue within the ORDER ENTRY/RESULTS
+"BLD",7606,1,2,0)
+REPORTING package:
+"BLD",7606,1,3,0)
+ 
+"BLD",7606,1,4,0)
+HD0000000352115 - Delayed order release event for repeating lab quick 
+"BLD",7606,1,5,0)
+                  order.
+"BLD",7606,1,6,0)
+ 
+"BLD",7606,1,7,0)
+   A repeating lab order with a released delay will wrongly copy the value
+"BLD",7606,1,8,0)
+   Ordering Parameters Location field found in the firing event to the
+"BLD",7606,1,9,0)
+   Ordering Location of the child order. 
+"BLD",7606,1,10,0)
+ 
+"BLD",7606,1,11,0)
+HD0000000377607 - DC1+5^ORCSEND Errors
+"BLD",7606,1,12,0)
+ 
+"BLD",7606,1,13,0)
+   The Order file's veiled field originally was used to hide unreleased 
+"BLD",7606,1,14,0)
+   orders many years ago. The functionality was brought to use once more 
+"BLD",7606,1,15,0)
+   by patch OR*3*282 to hide lab parent orders once they are signed.
+"BLD",7606,1,16,0)
+   Unfortunately, it was not discovered that running the Lab Order Checks
+"BLD",7606,1,17,0)
+   clean up utilities purged old veiled orders. This functionality may 
+"BLD",7606,1,18,0)
+   have been appropriate for unsigned new orders but not for signed parent
+"BLD",7606,1,19,0)
+   orders.
+"BLD",7606,4,0)
+^9.64PA^^
+"BLD",7606,6)
+1^
+"BLD",7606,6.3)
+10
+"BLD",7606,"ABPKG")
+n
+"BLD",7606,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7606,"KRN",.4,0)
+.4
+"BLD",7606,"KRN",.401,0)
+.401
+"BLD",7606,"KRN",.402,0)
+.402
+"BLD",7606,"KRN",.403,0)
+.403
+"BLD",7606,"KRN",.5,0)
+.5
+"BLD",7606,"KRN",.84,0)
+.84
+"BLD",7606,"KRN",3.6,0)
+3.6
+"BLD",7606,"KRN",3.8,0)
+3.8
+"BLD",7606,"KRN",9.2,0)
+9.2
+"BLD",7606,"KRN",9.8,0)
+9.8
+"BLD",7606,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",7606,"KRN",9.8,"NM",1,0)
+ORCSEND1^^0^B65475435
+"BLD",7606,"KRN",9.8,"NM",2,0)
+ORELR1^^0^B27892139
+"BLD",7606,"KRN",9.8,"NM",3,0)
+ORELR2^^0^B31661540
+"BLD",7606,"KRN",9.8,"NM","B","ORCSEND1",1)
+
+"BLD",7606,"KRN",9.8,"NM","B","ORELR1",2)
+
+"BLD",7606,"KRN",9.8,"NM","B","ORELR2",3)
+
+"BLD",7606,"KRN",19,0)
+19
+"BLD",7606,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",7606,"KRN",19.1,0)
+19.1
+"BLD",7606,"KRN",101,0)
+101
+"BLD",7606,"KRN",409.61,0)
+409.61
+"BLD",7606,"KRN",771,0)
+771
+"BLD",7606,"KRN",779.2,0)
+779.2
+"BLD",7606,"KRN",870,0)
+870
+"BLD",7606,"KRN",8989.51,0)
+8989.51
+"BLD",7606,"KRN",8989.52,0)
+8989.52
+"BLD",7606,"KRN",8994,0)
+8994
+"BLD",7606,"KRN","B",.4,.4)
+
+"BLD",7606,"KRN","B",.401,.401)
+
+"BLD",7606,"KRN","B",.402,.402)
+
+"BLD",7606,"KRN","B",.403,.403)
+
+"BLD",7606,"KRN","B",.5,.5)
+
+"BLD",7606,"KRN","B",.84,.84)
+
+"BLD",7606,"KRN","B",3.6,3.6)
+
+"BLD",7606,"KRN","B",3.8,3.8)
+
+"BLD",7606,"KRN","B",9.2,9.2)
+
+"BLD",7606,"KRN","B",9.8,9.8)
+
+"BLD",7606,"KRN","B",19,19)
+
+"BLD",7606,"KRN","B",19.1,19.1)
+
+"BLD",7606,"KRN","B",101,101)
+
+"BLD",7606,"KRN","B",409.61,409.61)
+
+"BLD",7606,"KRN","B",771,771)
+
+"BLD",7606,"KRN","B",779.2,779.2)
+
+"BLD",7606,"KRN","B",870,870)
+
+"BLD",7606,"KRN","B",8989.51,8989.51)
+
+"BLD",7606,"KRN","B",8989.52,8989.52)
+
+"BLD",7606,"KRN","B",8994,8994)
+
+"BLD",7606,"QUES",0)
+^9.62^^
+"BLD",7606,"REQB",0)
+^9.611^2^2
+"BLD",7606,"REQB",1,0)
+OR*3.0*282^1
+"BLD",7606,"REQB",2,0)
+OR*3.0*169^1
+"BLD",7606,"REQB","B","OR*3.0*169",2)
+
+"BLD",7606,"REQB","B","OR*3.0*282",1)
+
+"MBREQ")
+0
+"PKG",170,-1)
+1^1
+"PKG",170,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",170,20,0)
+^9.402P^^
+"PKG",170,22,0)
+^9.49I^1^1
+"PKG",170,22,1,0)
+3.0^2971217^2980917^11712
+"PKG",170,22,1,"PAH",1,0)
+323^3101102
+"PKG",170,22,1,"PAH",1,1,0)
+^^19^19^3101102
+"PKG",170,22,1,"PAH",1,1,1,0)
+This patch corrects the following issue within the ORDER ENTRY/RESULTS
+"PKG",170,22,1,"PAH",1,1,2,0)
+REPORTING package:
+"PKG",170,22,1,"PAH",1,1,3,0)
+ 
+"PKG",170,22,1,"PAH",1,1,4,0)
+HD0000000352115 - Delayed order release event for repeating lab quick 
+"PKG",170,22,1,"PAH",1,1,5,0)
+                  order.
+"PKG",170,22,1,"PAH",1,1,6,0)
+ 
+"PKG",170,22,1,"PAH",1,1,7,0)
+   A repeating lab order with a released delay will wrongly copy the value
+"PKG",170,22,1,"PAH",1,1,8,0)
+   Ordering Parameters Location field found in the firing event to the
+"PKG",170,22,1,"PAH",1,1,9,0)
+   Ordering Location of the child order. 
+"PKG",170,22,1,"PAH",1,1,10,0)
+ 
+"PKG",170,22,1,"PAH",1,1,11,0)
+HD0000000377607 - DC1+5^ORCSEND Errors
+"PKG",170,22,1,"PAH",1,1,12,0)
+ 
+"PKG",170,22,1,"PAH",1,1,13,0)
+   The Order file's veiled field originally was used to hide unreleased 
+"PKG",170,22,1,"PAH",1,1,14,0)
+   orders many years ago. The functionality was brought to use once more 
+"PKG",170,22,1,"PAH",1,1,15,0)
+   by patch OR*3*282 to hide lab parent orders once they are signed.
+"PKG",170,22,1,"PAH",1,1,16,0)
+   Unfortunately, it was not discovered that running the Lab Order Checks
+"PKG",170,22,1,"PAH",1,1,17,0)
+   clean up utilities purged old veiled orders. This functionality may 
+"PKG",170,22,1,"PAH",1,1,18,0)
+   have been appropriate for unsigned new orders but not for signed parent
+"PKG",170,22,1,"PAH",1,1,19,0)
+   orders.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","ORCSEND1")
+0^1^B65475435^B65175146
+"RTN","ORCSEND1",1,0)
+ORCSEND1 ;SLC/MKB-Release cont ;11/22/06
+"RTN","ORCSEND1",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**4,29,45,61,79,94,116,138,158,149,187,215,243,282,323**;Dec 17, 1997;Build 10
+"RTN","ORCSEND1",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORCSEND1",4,0)
+ ;
+"RTN","ORCSEND1",5,0)
+ ;Reference to PSJEEU supported by IA #486
+"RTN","ORCSEND1",6,0)
+ ;Reference to PSJORPOE supported by IA #3167
+"RTN","ORCSEND1",7,0)
+ ;
+"RTN","ORCSEND1",8,0)
+PKGSTUFF(PKG) ; Package code
+"RTN","ORCSEND1",9,0)
+ S PKG=$$GET1^DIQ(9.4,+PKG_",",1) Q:'$L(PKG)
+"RTN","ORCSEND1",10,0)
+ D:$L($T(@PKG)) @PKG
+"RTN","ORCSEND1",11,0)
+ Q
+"RTN","ORCSEND1",12,0)
+LR ; Spawn child orders if continuous schedule
+"RTN","ORCSEND1",13,0)
+ N ORSTRT,ORPARENT,OR0,ORNP,ORDIALOG,ORL,ORX,ORTIME,ORPITEM,ORPSAMP,ORPSPEC,ORPURG,ORPCOMM,ORPTYPE,ORPCOLL,ORS1,ORS2,P,ORCHLD,ORDG,ORLAST,ORDUZ,ORLOG,ORCOLLCT,STS
+"RTN","ORCSEND1",14,0)
+ S ORPARENT=+ORIFN,OR0=$G(^OR(100,ORIFN,0)),ORL=$P(OR0,U,10)
+"RTN","ORCSEND1",15,0)
+ D SCHEDULE(ORIFN,"LR",.ORSTRT) I ORSTRT'>1 D  Q
+"RTN","ORCSEND1",16,0)
+ . N START S START=$O(ORSTRT(0)) Q:START=$P($G(^OR(100,+ORIFN,0)),U,8)
+"RTN","ORCSEND1",17,0)
+ . D DATES^ORCSAVE2(+ORIFN,START) ;update start date from schedule
+"RTN","ORCSEND1",18,0)
+ S ORNP=+$P(OR0,U,4),ORDIALOG=+$P(OR0,U,5),ORDUZ=+$P(OR0,U,6),ORLOG=$P(OR0,U,7),ORDG=+$P(OR0,U,11)
+"RTN","ORCSEND1",19,0)
+ D GETDLG1^ORCD(ORDIALOG),GETORDER(ORIFN),GETIMES^ORCDLR1
+"RTN","ORCSEND1",20,0)
+ K ORDIALOG($$PTR^ORCD("OR GTX ADMIN SCHEDULE"),1),ORDIALOG($$PTR^ORCD("OR GTX DURATION"),1)
+"RTN","ORCSEND1",21,0)
+ S ORPITEM=$$PTR^ORCD("OR GTX ORDERABLE ITEM")
+"RTN","ORCSEND1",22,0)
+ S ORPSAMP=$$PTR^ORCD("OR GTX COLLECTION SAMPLE")
+"RTN","ORCSEND1",23,0)
+ S ORPSPEC=$$PTR^ORCD("OR GTX SPECIMEN")
+"RTN","ORCSEND1",24,0)
+ S ORPURG=$$PTR^ORCD("OR GTX LAB URGENCY")
+"RTN","ORCSEND1",25,0)
+ S ORPCOMM=$$PTR^ORCD("OR GTX WORD PROCESSING 1")
+"RTN","ORCSEND1",26,0)
+ S ORPTYPE=$$PTR^ORCD("OR GTX COLLECTION TYPE")
+"RTN","ORCSEND1",27,0)
+ S ORPCOLL=$$PTR^ORCD("OR GTX START DATE/TIME")
+"RTN","ORCSEND1",28,0)
+LR1 N ORLASTC  S ORS1=0 F  S ORS1=$O(ORX(ORS1)) Q:ORS1'>0  D
+"RTN","ORCSEND1",29,0)
+ . N ORL S ORL=$P(OR0,U,10) ;protect ORL from calling routine ;DJE/VM *323
+"RTN","ORCSEND1",30,0)
+ . F P=ORPITEM,ORPSAMP,ORPSPEC,ORPURG,ORPCOMM,ORPTYPE S ORDIALOG(P,1)=$G(ORX(ORS1,P)) ;set values to next instance
+"RTN","ORCSEND1",31,0)
+ . S ORCOLLCT=$G(ORDIALOG(ORPTYPE,1))
+"RTN","ORCSEND1",32,0)
+ . S ORS2=0 F  S ORS2=$O(ORSTRT(ORS2)) Q:ORS2'>0  D
+"RTN","ORCSEND1",33,0)
+ .. S ORDIALOG(ORPCOLL,1)=ORS2 ;,ORDUZ=DUZ,ORLOG=+$E($$NOW^XLFDT,1,12)
+"RTN","ORCSEND1",34,0)
+ .. I ORCOLLCT="LC" S ORDIALOG(ORPTYPE,1)=$S($$LABCOLL^ORCDLR1(ORS2):"LC",1:"WC")
+"RTN","ORCSEND1",35,0)
+ .. I ORCOLLCT="I" S ORDIALOG(ORPTYPE,1)=$S($$IMMCOLL^ORCDLR1(ORS2):"I",1:"WC")
+"RTN","ORCSEND1",36,0)
+ .. D CHILD^ORCSEND3()
+"RTN","ORCSEND1",37,0)
+ .. S ORLASTC=$P(^OR(100,ORIFN,0),"^",8)
+"RTN","ORCSEND1",38,0)
+ . D DATES^ORCSAVE2(ORPARENT,,ORLASTC) S $P(^OR(100,ORPARENT,3),"^",8)=1
+"RTN","ORCSEND1",39,0)
+ S:$G(ORCHLD) ^OR(100,ORPARENT,2,0)="^100.002PA^"_ORLAST_U_ORCHLD
+"RTN","ORCSEND1",40,0)
+ S ORIFN=ORPARENT,ORQUIT=1,STS=$P(^OR(100,ORIFN,3),U,3)
+"RTN","ORCSEND1",41,0)
+ I (STS=1)!(STS=13)!(STS=11) S ORERR="1^Unable to release orders"
+"RTN","ORCSEND1",42,0)
+ D RELEASE^ORCSAVE2(ORPARENT,1,ORNOW,DUZ,$G(NATURE))
+"RTN","ORCSEND1",43,0)
+ Q
+"RTN","ORCSEND1",44,0)
+SCHEDULE(IFN,PKG,ORY,STRT) ; Returns list of start time(s) from schedule
+"RTN","ORCSEND1",45,0)
+ N I,X,PSJSD,PSJFD,PSJW,PSJNE,PSJPP,PSJX,PSJAT,PSJM,PSJTS,PSJY,PSJAX,PSJSCH,PSJOSD,PSJOFD,PSJC,ORDUR
+"RTN","ORCSEND1",46,0)
+ S PSJSD=$S(+$G(STRT):STRT,1:$P($G(^OR(100,+IFN,0)),U,8)) I 'PSJSD S ORY=-1 Q
+"RTN","ORCSEND1",47,0)
+ S ORY=1,ORY(PSJSD)="" ;1st occurrance
+"RTN","ORCSEND1",48,0)
+ S I=$O(^OR(100,+IFN,4.5,"ID","SCHEDULE",0)) Q:'I  Q:'$L($G(PKG))
+"RTN","ORCSEND1",49,0)
+ S X=$G(^OR(100,+IFN,4.5,I,1)),PSJX=$S(X:$$GET1^DIQ(51.1,+X_",",.01),1:X)
+"RTN","ORCSEND1",50,0)
+ S PSJW=+$G(ORL),PSJNE="",PSJPP=PKG D ENSV^PSJEEU Q:'$L($G(PSJX))
+"RTN","ORCSEND1",51,0)
+ I $G(PSJTS)'="C",$G(PSJTS)'="D" Q  ;not continuous or day-of-week
+"RTN","ORCSEND1",52,0)
+ S PSJSCH=PSJX,I=$O(^OR(100,+IFN,4.5,"ID","DAYS",0)) Q:'I
+"RTN","ORCSEND1",53,0)
+ S ORDUR=$G(^OR(100,+IFN,4.5,+I,1))
+"RTN","ORCSEND1",54,0)
+ S:ORDUR PSJFD=$$FMADD^XLFDT(PSJSD,+ORDUR,,-1)
+"RTN","ORCSEND1",55,0)
+ I 'ORDUR S X=+$E(ORDUR,2,9) D
+"RTN","ORCSEND1",56,0)
+ . I PSJM S PSJFD=$$FMADD^XLFDT(PSJSD,,,(PSJM*X)-1) ;X_#times
+"RTN","ORCSEND1",57,0)
+ . E  D  ;no freq in minutes --> day of week
+"RTN","ORCSEND1",58,0)
+ .. N DAYS,LOCMX,SCHMX
+"RTN","ORCSEND1",59,0)
+ .. S LOCMX=$$GET^XPAR("ALL^LOC.`"_+ORL,"LR MAX DAYS CONTINUOUS",1,"Q")
+"RTN","ORCSEND1",60,0)
+ .. K ^TMP($J,"ORCSEND1 SCHEDULE")
+"RTN","ORCSEND1",61,0)
+ .. D ZERO^PSS51P1(PSJY,,,,"ORCSEND1 SCHEDULE")
+"RTN","ORCSEND1",62,0)
+ .. S SCHMX=+$G(^TMP($J,"ORCSEND1 SCHEDULE",PSJY,2.5))
+"RTN","ORCSEND1",63,0)
+ .. K ^TMP($J,"ORCSEND1 SCHEDULE")
+"RTN","ORCSEND1",64,0)
+ .. ;S SCHMX=$P(^PS(51.1,PSJY,0),U,7)
+"RTN","ORCSEND1",65,0)
+ .. S DAYS=$S('SCHMX:LOCMX,LOCMX<SCHMX:LOCMX,1:SCHMX)
+"RTN","ORCSEND1",66,0)
+ .. S PSJFD=$$FMADD^XLFDT(PSJSD,DAYS,,-1)
+"RTN","ORCSEND1",67,0)
+ D ENSPU^PSJEEU K ORY
+"RTN","ORCSEND1",68,0)
+ I ORDUR M ORY=PSJC Q
+"RTN","ORCSEND1",69,0)
+ S ORY=$S(PSJC<$E(ORDUR,2,9):PSJC,1:$E(ORDUR,2,9))
+"RTN","ORCSEND1",70,0)
+ N NXT
+"RTN","ORCSEND1",71,0)
+ S NXT=0 F I=1:1:ORY S NXT=$O(PSJC(NXT)) Q:'NXT  S ORY(NXT)=PSJC(NXT)
+"RTN","ORCSEND1",72,0)
+ Q
+"RTN","ORCSEND1",73,0)
+GETORDER(IFN) ; Set ORX(Inst,Ptr)=Value
+"RTN","ORCSEND1",74,0)
+ N I,X,Y,PTR,INST,TYPE
+"RTN","ORCSEND1",75,0)
+ S I=0 F  S I=$O(^OR(100,IFN,4.5,I)) Q:I'>0  S X=$G(^(I,0)),Y=$G(^(1)) D
+"RTN","ORCSEND1",76,0)
+ . S PTR=+$P(X,U,2),INST=+$P(X,U,3),TYPE=$P($G(^ORD(101.41,PTR,1)),U)
+"RTN","ORCSEND1",77,0)
+ . I TYPE'="W" S ORX(INST,PTR)=Y Q
+"RTN","ORCSEND1",78,0)
+ . S ORX(INST,PTR)="^OR(100,"_IFN_",4.5,"_I_",2)"
+"RTN","ORCSEND1",79,0)
+ Q
+"RTN","ORCSEND1",80,0)
+PTR(X) ; Returns ptr of prompt X in Order Dialog file
+"RTN","ORCSEND1",81,0)
+ Q +$O(^ORD(101.41,"AB",$E("OR GTX "_X,1,63),0))
+"RTN","ORCSEND1",82,0)
+PS ; spawn child orders if multiple doses
+"RTN","ORCSEND1",83,0)
+PSJ ; (Inpt only)
+"RTN","ORCSEND1",84,0)
+PSS ;
+"RTN","ORCSEND1",85,0)
+ N ORPARENT,OR0,ORNP,ORDIALOG,ORDUZ,ORLOG,ORL,ORDG,ORCAT,ORX,ORP,ORI,STS
+"RTN","ORCSEND1",86,0)
+ N ORDOSE,ORT,ORSCH,ORDUR,ORSTRT,ORFRST,ORCONJ,ORID,ORDD,ORSTR,ORDGNM
+"RTN","ORCSEND1",87,0)
+ N ORSTART,ORCHLD,ORLAST,ORSIG,OROI,ID,OR3,ORIG,CODE,ORPKG,ORENEW,I,ORADMIN
+"RTN","ORCSEND1",88,0)
+ S ORPARENT=+ORIFN,OR0=$G(^OR(100,ORPARENT,0)),OR3=$G(^(3))
+"RTN","ORCSEND1",89,0)
+ Q:$P(OR0,U,12)'="I"  S ORCAT="I",ORNP=+$P(OR0,U,4)
+"RTN","ORCSEND1",90,0)
+ S ORDIALOG=+$P(OR0,U,5),ORDUZ=+$P(OR0,U,6),ORLOG=$P(OR0,U,7)
+"RTN","ORCSEND1",91,0)
+ S ORL=$P(OR0,U,10),ORDG=+$P(OR0,U,11),ORPKG=+$P(OR0,U,14)
+"RTN","ORCSEND1",92,0)
+ D GETDLG1^ORCD(ORDIALOG),GETORDER(ORPARENT)
+"RTN","ORCSEND1",93,0)
+ S ORDOSE=$$PTR("INSTRUCTIONS"),ORT=$$PTR("ROUTE")
+"RTN","ORCSEND1",94,0)
+ S ORSCH=$$PTR("SCHEDULE"),ORDUR=$$PTR("DURATION")
+"RTN","ORCSEND1",95,0)
+ S ORCONJ=$$PTR("AND/THEN") D STRT S ORSTART=$G(ORSTRT("BEG"))
+"RTN","ORCSEND1",96,0)
+ S ORADMIN=$$PTR("ADMIN TIMES")
+"RTN","ORCSEND1",97,0)
+ D DATES^ORCSAVE2(ORPARENT,ORSTART) Q:$$DOSES(ORPARENT)'>1
+"RTN","ORCSEND1",98,0)
+ S ORFRST=$$PTR("NOW"),ORSIG=$$PTR("SIG")
+"RTN","ORCSEND1",99,0)
+ S ORID=$$PTR("DOSE"),ORDD=$$PTR("DISPENSE DRUG")
+"RTN","ORCSEND1",100,0)
+ S ORSTR=$$PTR("STRENGTH"),ORDGNM=$$PTR("DRUG NAME")
+"RTN","ORCSEND1",101,0)
+ I $P(OR3,U,11)=2,$O(^OR(100,+$P(OR3,U,5),2,0)) D
+"RTN","ORCSEND1",102,0)
+ . S ORENEW=+$P(OR3,U,5),I=0
+"RTN","ORCSEND1",103,0)
+ . I $$VALUE^ORX8(ORENEW,"NOW") S I=$O(^OR(100,ORENEW,2,0))
+"RTN","ORCSEND1",104,0)
+ . F  S I=$O(^OR(100,ORENEW,2,I)) Q:I<1  S ORENEW(I)=""
+"RTN","ORCSEND1",105,0)
+PS1 F ORP="ORDERABLE ITEM","URGENCY","WORD PROCESSING 1" D
+"RTN","ORCSEND1",106,0)
+ . N PTR S PTR=$$PTR(ORP) Q:PTR'>0  Q:'$D(ORX(1,PTR))
+"RTN","ORCSEND1",107,0)
+ . S ORDIALOG(PTR,1)=ORX(1,PTR) S:$E(ORP)="O" OROI=ORX(1,PTR)
+"RTN","ORCSEND1",108,0)
+ S ORI=$$FRSTDOSE I $G(ORX(1,ORFRST)) D
+"RTN","ORCSEND1",109,0)
+ . F ORP=ORDOSE,ORT,ORID S:$D(ORX(ORI,ORP)) ORDIALOG(ORP,1)=ORX(ORI,ORP)
+"RTN","ORCSEND1",110,0)
+ . S ID=$G(ORX(ORI,ORID)) S:$P(ID,"&",6) ORDIALOG(ORDD,1)=$P(ID,"&",6)
+"RTN","ORCSEND1",111,0)
+ . S ORDIALOG(ORSCH,1)="NOW",ORSTART=$$NOW^XLFDT
+"RTN","ORCSEND1",112,0)
+ . D SIG,CHILD^ORCSEND3(ORSTART)
+"RTN","ORCSEND1",113,0)
+ F  D  S ORI=$O(ORX(ORI)) Q:ORI'>0
+"RTN","ORCSEND1",114,0)
+ . F ORP=ORDOSE,ORT,ORSCH,ORDUR,ORID,ORADMIN S:$D(ORX(ORI,ORP)) ORDIALOG(ORP,1)=ORX(ORI,ORP) K:'$D(ORX(ORI,ORP)) ORDIALOG(ORP,1)
+"RTN","ORCSEND1",115,0)
+ . K ORDIALOG(ORDD,1) S ID=$G(ORX(ORI,ORID))
+"RTN","ORCSEND1",116,0)
+ . S:$P(ID,"&",6) ORDIALOG(ORDD,1)=$P(ID,"&",6)
+"RTN","ORCSEND1",117,0)
+ . S ORSTART=$G(ORSTRT(ORI))
+"RTN","ORCSEND1",118,0)
+ . D SIG,CHILD^ORCSEND3(ORSTART)
+"RTN","ORCSEND1",119,0)
+ S:$G(ORCHLD) ^OR(100,ORPARENT,2,0)="^100.002PA^"_ORLAST_U_ORCHLD
+"RTN","ORCSEND1",120,0)
+ S ORIFN=ORPARENT,ORQUIT=1,OR3=$G(^OR(100,ORIFN,3)),STS=$P(OR3,U,3)
+"RTN","ORCSEND1",121,0)
+ I (STS=1)!(STS=13)!(STS=11) S ORERR="1^Unable to release orders"
+"RTN","ORCSEND1",122,0)
+ D RELEASE^ORCSAVE2(ORIFN,1,ORNOW,DUZ,$G(NATURE)) K ^TMP("ORWORD",$J)
+"RTN","ORCSEND1",123,0)
+ S $P(^OR(100,ORIFN,3),U,8)=1 ;veil parent order - set stop date/time?
+"RTN","ORCSEND1",124,0)
+ Q:(STS=1)!(STS=13)!(STS=11)  ;unsuccessful
+"RTN","ORCSEND1",125,0)
+PS2 ; ck if parent is unsigned or edit
+"RTN","ORCSEND1",126,0)
+ I $P($G(^OR(100,ORIFN,8,1,0)),U,4)=2 S $P(^(0),U,4)="" K ^OR(100,"AS",ORVP,9999999-ORLOG,ORIFN,1) ;clear ES
+"RTN","ORCSEND1",127,0)
+ Q:$P(OR3,U,11)'=1  S ORIG=$P(OR3,U,5) Q:ORIG'>0
+"RTN","ORCSEND1",128,0)
+ S CODE=$S($P($G(^OR(100,ORIG,3)),U,3)=5:"CA",1:"DC")
+"RTN","ORCSEND1",129,0)
+ D MSG^ORMBLD(ORIG,CODE) I "^1^13^"[(U_$P($G(^OR(100,ORIG,3)),U,3)_U) D
+"RTN","ORCSEND1",130,0)
+ . N NATR S NATR=+$O(^ORD(100.02,"C","C",0))
+"RTN","ORCSEND1",131,0)
+ . S $P(^OR(100,ORIG,3),U,3)=12,$P(^(3),U,7)=0,^(6)=NATR_U_DUZ_U_ORNOW
+"RTN","ORCSEND1",132,0)
+ . D CANCEL^ORCSEND(ORIG) ;ck for unrel actions
+"RTN","ORCSEND1",133,0)
+ Q
+"RTN","ORCSEND1",134,0)
+DOSES(IFN) ; count number of doses in order
+"RTN","ORCSEND1",135,0)
+ N I,CNT S CNT=0
+"RTN","ORCSEND1",136,0)
+ S I=0 F  S I=$O(^OR(100,+$G(IFN),4.5,"ID","INSTR",I)) Q:I'>0  I $L($G(^OR(100,+$G(IFN),4.5,I,1))) S CNT=CNT+1
+"RTN","ORCSEND1",137,0)
+ S I=+$O(^OR(100,+$G(IFN),4.5,"ID","NOW",0)) I I,$G(^OR(100,+$G(IFN),4.5,I,1)) S CNT=CNT+1
+"RTN","ORCSEND1",138,0)
+ Q CNT
+"RTN","ORCSEND1",139,0)
+FRSTDOSE() ; Return instance of first dose
+"RTN","ORCSEND1",140,0)
+ N I,Y S I=0,Y=1
+"RTN","ORCSEND1",141,0)
+ F  S I=$O(ORX(I)) Q:I'>0  I $D(ORX(I,ORDOSE)) S Y=I Q
+"RTN","ORCSEND1",142,0)
+ Q Y
+"RTN","ORCSEND1",143,0)
+SIG ; Build text of instructions
+"RTN","ORCSEND1",144,0)
+ N ORDRUG,ID,DOSE,ORI,ORX K ^TMP("ORWORD",$J,ORSIG,1)
+"RTN","ORCSEND1",145,0)
+ S ORDRUG=$G(ORDIALOG(ORDD,1)),ID=$G(ORDIALOG(ORID,1))
+"RTN","ORCSEND1",146,0)
+ S DOSE=$G(ORDIALOG(ORDOSE,1)),ORI=1
+"RTN","ORCSEND1",147,0)
+ S ORX=$$DOSE^ORCDPS2_$$RTE^ORCDPS2_$$SCH^ORCDPS2_$$DUR^ORCDPS2
+"RTN","ORCSEND1",148,0)
+ S ^TMP("ORWORD",$J,ORSIG,1,0)="^^1^1^"_DT_U,^(1,0)=ORX
+"RTN","ORCSEND1",149,0)
+ S ORDIALOG(ORSIG,1)=$NA(^TMP("ORWORD",$J,ORSIG,1))
+"RTN","ORCSEND1",150,0)
+ S ORDIALOG(ORDOSE,"FORMAT")="@"
+"RTN","ORCSEND1",151,0)
+ K ORDIALOG(ORSTR,1),ORDIALOG(ORDGNM,1)
+"RTN","ORCSEND1",152,0)
+ I ORDRUG,'ID D  ;set strength or drug name
+"RTN","ORCSEND1",153,0)
+ . N STR,ITM S STR=$P(ID,"&",7)_$P(ID,"&",8)
+"RTN","ORCSEND1",154,0)
+ . I STR'>0 S ORDIALOG(ORDGNM,1)=$$GET1^DIQ(50,+ORDRUG_",",.01) Q
+"RTN","ORCSEND1",155,0)
+ . S ITM=$P($G(^ORD(101.43,+$G(OROI),0)),U)
+"RTN","ORCSEND1",156,0)
+ . S:ITM'[STR ORDIALOG(ORSTR,1)=STR
+"RTN","ORCSEND1",157,0)
+ Q
+"RTN","ORCSEND1",158,0)
+STRT ; Build ORSTRT(inst)=date.time array of start times by dose
+"RTN","ORCSEND1",159,0)
+ N OI,PSOI,XD,XH,XM,XS,ORWD,ORI,SCH,ORSD,X,ORD K ORSTRT
+"RTN","ORCSEND1",160,0)
+ S OI=$G(ORX(1,$$PTR^ORCD("OR GTX ORDERABLE ITEM")))
+"RTN","ORCSEND1",161,0)
+ S PSOI=+$P($G(^ORD(101.43,+OI,0)),U,2),(XD,XH,XM,XS)=0
+"RTN","ORCSEND1",162,0)
+ S ORWD=+$G(^SC(+$G(ORL),42)) ;ward
+"RTN","ORCSEND1",163,0)
+ S ORI=0 F  S ORI=$O(ORX(ORI)) Q:ORI<1  D
+"RTN","ORCSEND1",164,0)
+ . S SCH=$G(ORX(ORI,ORSCH)),ORSD="" S:'$L(SCH) X=$$NOW^XLFDT
+"RTN","ORCSEND1",165,0)
+ . S:$L(SCH) ORSD=$$STARTSTP^PSJORPOE(+ORVP,SCH,PSOI,ORWD),X=$P(ORSD,U,4)
+"RTN","ORCSEND1",166,0)
+ . S ORSTRT(ORI)=$$FMADD^XLFDT(X,XD,XH,XM,XS) ;START+OFFSET
+"RTN","ORCSEND1",167,0)
+ . ; update OFFSET for next THEN dose
+"RTN","ORCSEND1",168,0)
+ . D DUR(ORI) I $G(ORX(ORI,ORCONJ))="T" D
+"RTN","ORCSEND1",169,0)
+ .. I $G(ORD("XD"))<1,$G(ORD("XH"))<1,$G(ORD("XM"))<1,$G(ORD("XS"))<1 S ORD("XD")=+$P(ORSD,U,3) ;default duration
+"RTN","ORCSEND1",170,0)
+ .. N I,Y F I="XD","XH","XM","XS" S Y=@I,@I=Y+$G(ORD(I))
+"RTN","ORCSEND1",171,0)
+ .. K ORD
+"RTN","ORCSEND1",172,0)
+ ; find beginning date.time for parent
+"RTN","ORCSEND1",173,0)
+ S ORI=0,X=9999999 F  S ORI=$O(ORSTRT(ORI)) Q:ORI<1  I ORSTRT(ORI)<X S X=ORSTRT(ORI)
+"RTN","ORCSEND1",174,0)
+ S ORSTRT("BEG")=X
+"RTN","ORCSEND1",175,0)
+ Q
+"RTN","ORCSEND1",176,0)
+DUR(I) ; Accumulate duration in ORD("Xt") for offsetting next THEN dose
+"RTN","ORCSEND1",177,0)
+ N X,Y S X=$$FMDUR^ORCDPS3($G(ORX(I,ORDUR)))
+"RTN","ORCSEND1",178,0)
+ I X["S",+X>$G(ORD("XS")) S ORD("XS")=+X
+"RTN","ORCSEND1",179,0)
+ I X["'",+X>$G(ORD("XM")) S ORD("XM")=+X
+"RTN","ORCSEND1",180,0)
+ I X["H",+X>$G(ORD("XH")) S ORD("XH")=+X
+"RTN","ORCSEND1",181,0)
+ S Y=$S(X["D":+X,X["W":+X*7,X["M":+X*30,1:0)
+"RTN","ORCSEND1",182,0)
+ I Y,Y>$G(ORD("XD")) S ORD("XD")=Y
+"RTN","ORCSEND1",183,0)
+ Q
+"RTN","ORCSEND1",184,0)
+VBEC ; Spawn VBECS children
+"RTN","ORCSEND1",185,0)
+ D:$L($T(EN^ORCSEND2)) EN^ORCSEND2
+"RTN","ORCSEND1",186,0)
+ Q
+"RTN","ORELR1")
+0^2^B27892139^B28214557
+"RTN","ORELR1",1,0)
+ORELR1 ; slc/dcm - Cross check/update file 100 with file 69
+"RTN","ORELR1",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**20,42,323**;Dec 17, 1997;Build 10
+"RTN","ORELR1",3,0)
+EN ;Fix inconsistencies from ^OR to ^LRO(69
+"RTN","ORELR1",4,0)
+ W !,"This utility will look for inconsistencies between OE/RR 3.0 and Lab files."
+"RTN","ORELR1",5,0)
+ W !,"It will compare records in the Orders file (100) with the Lab Order file (69)."
+"RTN","ORELR1",6,0)
+ W !!,"Problems identified",?53,"Resolution"
+"RTN","ORELR1",7,0)
+ W !,"-------------------",?53,"----------"
+"RTN","ORELR1",8,0)
+ W !,"^OR(100,IFN,0) does not exist",?53,"^OR(100,IFN) killed"
+"RTN","ORELR1",9,0)
+ W !,"Bad pointers on child orders",?53,"Pointers removed"
+"RTN","ORELR1",10,0)
+ W !,"Child orders with no parent order",?53,"Pointer removed"
+"RTN","ORELR1",11,0)
+ W !,"Child order missing parent pointer",?53,"Pointer restored"
+"RTN","ORELR1",12,0)
+ W !,"Incorrect status on parent order",?53,"Status corrected"
+"RTN","ORELR1",13,0)
+ ;W !,"Old veiled orders",?53,"Purged" ;DJE-VM *323 - it's not appropriate to purge unveiled orders since OR*3*282
+"RTN","ORELR1",14,0)
+ W !,"Unrecognized pointer to file 69",?53,"Order cancelled"
+"RTN","ORELR1",15,0)
+ W !,"Unconverted orders from OE/RR 2.5",?53,"Order lapsed"
+"RTN","ORELR1",16,0)
+ W !,"Invalid pointer to file 69",?53,"Order cancelled"
+"RTN","ORELR1",17,0)
+ W !,"Incorrect status on uncollected specimens",?53,"Status updated"
+"RTN","ORELR1",18,0)
+ W !,"Incorrect status on completed orders",?53,"Status updated"
+"RTN","ORELR1",19,0)
+ W !,"Missing reference to file 69",?53,"Cancelled (optional)"
+"RTN","ORELR1",20,0)
+ W !,"Old pending, active & unreleased orders",?53,"Status changed"
+"RTN","ORELR1",21,0)
+ W !!,"Continue"
+"RTN","ORELR1",22,0)
+ N %,I,ORLOR,ORPEND,ORPENDT,ORIFN,ORAFIX,ZTSAVE
+"RTN","ORELR1",23,0)
+ S %=2 D YN^DICN Q:%'=1
+"RTN","ORELR1",24,0)
+LRO W !,"Check for CPRS orders that no longer exist in the Lab Order file"
+"RTN","ORELR1",25,0)
+ S ORLRO=0,%=2 D YN^DICN Q:%=-1  S:%=1 ORLRO=1 I %=0 W !!,"You may want to cancel any active orders that no longer have a valid",!,"reference to file 69 (may have been purged from lab files).",! G LRO
+"RTN","ORELR1",26,0)
+CAN S ORPEND=0,ORPENDT=0
+"RTN","ORELR1",27,0)
+ W !,"Do you want to remove old PENDING, ACTIVE and UNRELEASED orders" S %=2 D YN^DICN Q:%=-1  S:%=1 ORPEND=1
+"RTN","ORELR1",28,0)
+ I %=0 W !!,"Unreleased orders are removed from the system.",!,"Old pending orders are changed to a Lapsed status, which will",!,"remove them from the current orders context."
+"RTN","ORELR1",29,0)
+ I %=0 W !,"Active orders that no longer have corresponding entries in the lab files",!,"are changed to Lapsed" G CAN
+"RTN","ORELR1",30,0)
+ I ORPEND S %DT="AEQ",%DT("A")="Remove old orders with Start dates before: ",%DT("B")="T-30" D  ;_$S($P($G(^ORD(100.99,1,2)),"^",16):$P(^(2),"^",16),1:30) D
+"RTN","ORELR1",31,0)
+ . N % D ^%DT
+"RTN","ORELR1",32,0)
+ . I Y<0 S ORPEND=0 W !!,"Old orders will not be removed." Q
+"RTN","ORELR1",33,0)
+ . S ORPEND=1,ORPENDT=Y
+"RTN","ORELR1",34,0)
+ S ORIFN=0,%=2 ;,X=$P($G(^ORD(100.99,1,2)),"^",12) I X W !,"Do you want to start where the last clean-up left off (#"_X_")" S %=1 D YN^DICN Q:%=-1  S:%=1 ORIFN=X
+"RTN","ORELR1",35,0)
+ I %=2 W !,"OK, which ORIFN do you want to start with: 0// " R X:DTIME Q:'$T  S:X=""!(X=0) X=.1 Q:'X  S ORIFN=X
+"RTN","ORELR1",36,0)
+FIX W !,"Do you want me to correct the inconsistencies now"
+"RTN","ORELR1",37,0)
+ S ORAFIX=0,%=2 D YN^DICN Q:%=-1  S:%=1 ORAFIX=1 I %=0 W !!,"Answer 'YES' to correct them now, or 'NO' to just display them.",! G FIX
+"RTN","ORELR1",38,0)
+ F I="ORLRO","ORPEND","ORPENDT","ORIFN","ORAFIX" S ZTSAVE(I)=""
+"RTN","ORELR1",39,0)
+ D QUE^ORUTL1("DEQUE^ORELR1","Check from 100 to 69",.ZTSAVE)
+"RTN","ORELR1",40,0)
+ Q
+"RTN","ORELR1",41,0)
+DEQUE ;Queued entry point
+"RTN","ORELR1",42,0)
+ N SIBCNT,SIBPCNT,NOCNT,OCNT,UNCNT,TTCNT,PHCNT,ICNT,WICNT,BSCNT,DCNT,CNT,PCNT,APCNT,A,UCNT,END,ORDUZ,PTCNT,HCNT,NCNT,VCNT,UCCNT,IVCNT,ICNT,ACNT,ICCNT,STCNT,LCNT,PKG,ORSICK
+"RTN","ORELR1",43,0)
+ S (SIBCNT,SIBPCNT,NOCNT,OCNT,UNCNT,TTCNT,PHCNT,ICNT,WICNT,BSCNT,DCNT,CNT,PCNT,APCNT,UCNT,END,ORDUZ,PTCNT,HCNT,NCNT,VCNT,UCCNT,IVCNT,ICNT,ACNT,ICCNT,STCNT,LCNT)=0,PKG=$O(^DIC(9.4,"B","LAB SERVICE",0)) Q:PKG=""
+"RTN","ORELR1",44,0)
+ D NOW^%DTC
+"RTN","ORELR1",45,0)
+ I '$D(DT) S DT=X
+"RTN","ORELR1",46,0)
+ U IO
+"RTN","ORELR1",47,0)
+ W !,"Inconsistency report between OE/RR (100) and LAB (69) files..."
+"RTN","ORELR1",48,0)
+ W !,"Date/time Started: "_$$DATETIME^ORU(%)
+"RTN","ORELR1",49,0)
+ W !,"Now looking for data..."
+"RTN","ORELR1",50,0)
+ F  S ORIFN=$O(^OR(100,ORIFN)) Q:ORIFN<1  S ORSICK=ORIFN D A^ORELR2 S ORIFN=ORSICK Q:END
+"RTN","ORELR1",51,0)
+ W:IOSL-$Y<25 @IOF
+"RTN","ORELR1",52,0)
+ W !!,"Total inconsistencies: "_TTCNT
+"RTN","ORELR1",53,0)
+ W !,"Date/time Completed: "_$$DATETIME^ORU($$NOW^XLFDT())
+"RTN","ORELR1",54,0)
+ W:DCNT !,"Wrong Patient Total: "_DCNT
+"RTN","ORELR1",55,0)
+ W:PCNT !,"Old Pending orders total: "_PCNT
+"RTN","ORELR1",56,0)
+ W:APCNT !,"Old Active orders total: "_APCNT
+"RTN","ORELR1",57,0)
+ W:UCNT !,"Old Unreleased orders total: "_UCNT
+"RTN","ORELR1",58,0)
+ W:UNCNT !,"Unconverted 2.5 orders total: "_UNCNT
+"RTN","ORELR1",59,0)
+ W:PTCNT !,"Parent status update total: "_PTCNT
+"RTN","ORELR1",60,0)
+ W:HCNT !,"Bad child pointer total: "_HCNT
+"RTN","ORELR1",61,0)
+ W:NCNT !,"Orders with no status total: "_NCNT
+"RTN","ORELR1",62,0)
+ ;W:VCNT !,"Old veiled orders: "_VCNT ;DJE-VM *323 - it's not appropriate to purge unveiled orders since OR*3*282
+"RTN","ORELR1",63,0)
+ W:UCCNT !,"Unrecognized package link: "_UCCNT
+"RTN","ORELR1",64,0)
+ W:BSCNT !,"Bad package link ,null status: "_BSCNT
+"RTN","ORELR1",65,0)
+ W:IVCNT !,"Invalid package link: "_IVCNT
+"RTN","ORELR1",66,0)
+ W:WICNT !,"No enterer: "_WICNT
+"RTN","ORELR1",67,0)
+ W:PHCNT !,"No physician: "_PHCNT
+"RTN","ORELR1",68,0)
+ W:ICNT !,"Incorrect status: "_ICNT
+"RTN","ORELR1",69,0)
+ W:ACNT !,"Active canceled orders: "_ACNT
+"RTN","ORELR1",70,0)
+ W:ICCNT !,"Incomplete should be complete: "_ICCNT
+"RTN","ORELR1",71,0)
+ W:STCNT !,"Status should be complete: "_STCNT
+"RTN","ORELR1",72,0)
+ W:LCNT !,"Missing reference in 69: "_LCNT
+"RTN","ORELR1",73,0)
+ W:NOCNT !,"No order # in 69: "_NOCNT
+"RTN","ORELR1",74,0)
+ W:OCNT !,"Missing pointer to 100: "_OCNT
+"RTN","ORELR1",75,0)
+ W:SIBCNT !,"Child with no parent: "_SIBCNT
+"RTN","ORELR1",76,0)
+ W:SIBPCNT !,"Child orders with wrong parent pointer: "_SIBPCNT
+"RTN","ORELR1",77,0)
+ K ORLRO,ORPEND,ORPENDT,ORIFN,ORAFIX
+"RTN","ORELR1",78,0)
+ I $D(ZTQUEUED) S ZTREQ="@"
+"RTN","ORELR1",79,0)
+ Q
+"RTN","ORELR2")
+0^3^B31661540^B32255054
+"RTN","ORELR2",1,0)
+ORELR2 ; slc/dcm - Cross check file 100 with file 69 ;2/21/96  13:30 ;
+"RTN","ORELR2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**20,42,169,323**;Dec 17, 1997;Build 10
+"RTN","ORELR2",3,0)
+A ;Enter here
+"RTN","ORELR2",4,0)
+ N X,ORENT,ORSTS,ORX1,ORX,ORX3,ORSDT,ORITEM,ORX4,ORX6,ORDAD,ORX1,ORDFN,ORPCL,ORSTS,ORSTRT,ORENT,ORWHO,ORSIB,ORPSTS,LRDFN,LRODT,LRORD,LRSN,LRSTS
+"RTN","ORELR2",5,0)
+ S (ORENT,ORSTS,ORX1)=""
+"RTN","ORELR2",6,0)
+ I '$D(^OR(100,ORIFN,0)) D WRT(ORIFN,"No ^OR(100,ORIFN,0)") K:ORAFIX ^OR(100,ORIFN) Q
+"RTN","ORELR2",7,0)
+ I '$D(^OR(100,ORIFN,3)) D WRT(ORIFN,"No ^OR(100,ORIFN,3)") D:ORAFIX PURG^ORELR3(ORIFN) Q
+"RTN","ORELR2",8,0)
+ S ORX=^OR(100,ORIFN,0),ORX3=$G(^(3)),ORSDT=$P(ORX3,"^",6),ORITEM=$P(ORX3,"^",7),ORX4=$G(^(4)),ORX6=$G(^(6)),ORDAD=$O(^(2,0)),ORX1=$O(^OR(100,ORIFN,1,0)),ORX1=$E($G(^(+ORX1,0)),1,15),ORDFN=$P(ORX,"^",2)
+"RTN","ORELR2",9,0)
+ I '$P(ORX,"^",14) W ORIFN,! D WRT(ORIFN,"No package defined") D:ORAFIX PURG^ORELR3(ORIFN) Q
+"RTN","ORELR2",10,0)
+ Q:$P(ORX,"^",14)'=PKG
+"RTN","ORELR2",11,0)
+ Q:ORDFN'[";DPT("
+"RTN","ORELR2",12,0)
+ S ORPCL=$P(ORX3,"^",4),ORSTS=$P(ORX3,"^",3),ORSTRT=$P(ORX,"^",8),ORENT=$P(ORX,"^",7),ORWHO=$P(ORX,"^",6),ORSIB=$P(ORX3,"^",9)
+"RTN","ORELR2",13,0)
+ D NOW^%DTC
+"RTN","ORELR2",14,0)
+ I ORENT>+($E(%,1,10)-.01) Q
+"RTN","ORELR2",15,0)
+ I ORSTS=99 D WRT(ORIFN,"No Status",1) S NCNT=NCNT+1 Q
+"RTN","ORELR2",16,0)
+ I ORPCL,ORPCL[";ORD(101,",$D(^ORD(101,+ORPCL,0)),$P(^(0),"^")["ORGY " Q
+"RTN","ORELR2",17,0)
+ ;I $P(ORX3,"^",8),DT>$P(ORENT,".") D  ;DJE-VM *323 - it's not appropriate to purge unveiled orders since OR*3*282
+"RTN","ORELR2",18,0)
+ ;. I ORSTS=2,ORAFIX S $P(^OR(100,ORIFN,3),"^",8)="" Q  ;Unveil completed order
+"RTN","ORELR2",19,0)
+ ;. S VCNT=VCNT+1
+"RTN","ORELR2",20,0)
+ ;. D WRT(ORIFN,"Old Veiled order: ORPK="_ORX4)
+"RTN","ORELR2",21,0)
+ ;. D:ORAFIX PURG^ORELR3(ORIFN)
+"RTN","ORELR2",22,0)
+ I ORDAD S ORPSTS=ORSTS D DAD^ORELR3(ORIFN) Q
+"RTN","ORELR2",23,0)
+ I ORSIB D
+"RTN","ORELR2",24,0)
+ . I '$D(^OR(100,ORSIB)) S SIBCNT=SIBCNT+1 D WRT(ORIFN,"Child order with no parent") S:ORAFIX $P(^OR(100,ORIFN,3),"^",9)="" Q
+"RTN","ORELR2",25,0)
+ . I '$D(^OR(100,ORSIB,2,ORIFN)) S SIBPCNT=SIBPCNT+1 D WRT(ORIFN,"Child order with missing parent pointer") I ORAFIX S ^OR(100,ORSIB,2,ORIFN,0)=ORIFN
+"RTN","ORELR2",26,0)
+ I ORSTS=11,ORPENDT,ORSTRT<ORPENDT D DC^ORELR3 Q
+"RTN","ORELR2",27,0)
+ Q:$P(ORX3,"^",3)=11
+"RTN","ORELR2",28,0)
+ Q:$P(ORX3,"^",3)=10
+"RTN","ORELR2",29,0)
+ I $L($P(ORX4,"^",4,99)) Q:$P(ORX3,"^",3)=1  D  Q
+"RTN","ORELR2",30,0)
+ . I 'ORSTS S BSCNT=BSCNT+1 D WRT(ORIFN,"Bad package link, null status:"_ORX4) I '$P(ORX4,"^",4) D:ORAFIX PURG^ORELR3(ORIFN) Q
+"RTN","ORELR2",31,0)
+ . I ORSTS'=1 S UCCNT=UCCNT+1 D WRT(ORIFN,"Unrecognized package link:"_ORX4) D:ORAFIX STATUS^ORCSAVE2(ORIFN,1)
+"RTN","ORELR2",32,0)
+ I '$D(^OR(100,ORIFN,4)) D  Q
+"RTN","ORELR2",33,0)
+ . I ORSTS'=1,ORSTS'=2,'(ORSTS>8&(ORSTS<15)),$P(ORX3,"^",13)'=2 D WRT(ORIFN,"No package node") S UCCNT=UCCNT+1 D:ORAFIX STATUS^ORCSAVE2(ORIFN,1)
+"RTN","ORELR2",34,0)
+ I '$L(^OR(100,ORIFN,4)) D  Q
+"RTN","ORELR2",35,0)
+ . I ORSTS'=1,ORSTS'=2,'(ORSTS>8&(ORSTS<15)) D WRT(ORIFN,"Empty package node") S UCCNT=UCCNT+1 D:ORAFIX STATUS^ORCSAVE2(ORIFN,1)
+"RTN","ORELR2",36,0)
+ I ORX4["^" D  Q
+"RTN","ORELR2",37,0)
+ . I ORSTS=""!(ORSTS=1)!(ORSTS=2)!(ORSTS=14)!(ORSTS=12) Q
+"RTN","ORELR2",38,0)
+ . S UNCNT=UNCNT+1
+"RTN","ORELR2",39,0)
+ . I ORLRO,'$D(^LRO(69,+ORX4,1,$P(ORX4,"^",2),2,$P(ORX4,"^",3))) D WRT(ORIFN,"Didn't get converted, NOT IN 69") D:ORAFIX STATUS^ORCSAVE2(ORIFN,14) Q
+"RTN","ORELR2",40,0)
+ . I '$D(^LRO(69,+ORX4,1,+$P(ORX4,"^",2))) D WRT(ORIFN,"Didn't get converted") D:ORAFIX STATUS^ORCSAVE2(ORIFN,14) Q
+"RTN","ORELR2",41,0)
+ . S UNCNT=UNCNT-1
+"RTN","ORELR2",42,0)
+ I ORX4'[";" D  Q
+"RTN","ORELR2",43,0)
+ . I ORLRO,'$D(^LRO(69,"C",+ORX4)),ORSTS'=14,ORSTS'=1,ORSTS'=2 S NOCNT=NOCNT+1 D WRT(ORIFN,"ORD# not in 69:"_ORX4) D:ORAFIX STATUS^ORCSAVE2(ORIFN,14)
+"RTN","ORELR2",44,0)
+ S LRORD=+ORX4,LRODT=$P(ORX4,";",2),LRSN=$P(ORX4,";",3),LRSTS=""
+"RTN","ORELR2",45,0)
+ I 'LRORD!('LRODT)!('LRSN),ORSTS'=1,ORSTS'=14,ORSTS'=2 D WRT(ORIFN,"Invalid ORPK:"_LRORD_";"_LRODT_";"_LRSN) S IVCNT=IVCNT+1 D:ORAFIX STATUS^ORCSAVE2(ORIFN,14) Q
+"RTN","ORELR2",46,0)
+ I ORLRO,ORSTS'=1,ORSTS'=14,ORSTS'=2,LRODT,LRSN,'$D(^LRO(69,LRODT,1,LRSN,0)) S LCNT=LCNT+1 D WRT(ORIFN,"No entry in 69:"_LRODT_";"_LRSN) D:ORAFIX STATUS^ORCSAVE2(ORIFN,14) Q
+"RTN","ORELR2",47,0)
+ I ORDFN[";DPT(",LRODT,LRSN S LRDFN=+$G(^DPT(+ORDFN,"LR")),X=+$G(^LRO(69,LRODT,1,LRSN,0)) I X,X'=LRDFN S X="Wrong patient! OR:"_LRDFN_" LR:"_X_" ORPK:"_LRODT_";"_LRSN,DCNT=DCNT+1 D WRT(ORIFN,X,1) Q
+"RTN","ORELR2",48,0)
+ I 'ORWHO D WRT(ORIFN,"No 'Entered by'",1) S WICNT=WICNT+1
+"RTN","ORELR2",49,0)
+ I '$P(ORX,"^",4),LRODT,LRSN S PHCNT=PHCNT+1 D
+"RTN","ORELR2",50,0)
+ . S X=$P($G(^LRO(69,LRODT,1,LRSN,0)),"^",6)
+"RTN","ORELR2",51,0)
+ . D WRT(ORIFN,"No Physician in 100"_$S('X:" or 69",1:""),$S(X:"",1:1))
+"RTN","ORELR2",52,0)
+ . I X,ORAFIX S $P(^OR(100,ORIFN,0),"^",4)=X S:'$P(^(3),"^",7) $P(^(3),"^",7)=X
+"RTN","ORELR2",53,0)
+ I $D(^LRO(69,+LRODT,1,+LRSN,1)) S LRSTS=$P(^(1),"^",4)
+"RTN","ORELR2",54,0)
+ S I=0
+"RTN","ORELR2",55,0)
+ I LRSTS="",$D(^LRO(69,+LRODT,1,+LRSN,6)) S J=0 F  S J=$O(^LRO(69,LRODT,1,LRSN,6,J)) Q:J<1  I ^(J,0)["NO DRAW for test" S I=1 Q
+"RTN","ORELR2",56,0)
+ I I,ORSTS'=2,ORSTS'=1,ORSTS'=9 D WRT(ORIFN,"Active canceled order") S ACNT=ACNT+1 D:ORAFIX STATUS^ORCSAVE2(ORIFN,1)
+"RTN","ORELR2",57,0)
+ I ORSTS=9 S ICCNT=ICCNT+1 D WRT(ORIFN,"Incomplete should be Complete") D:ORAFIX STATUS^ORCSAVE2(ORIFN,2)
+"RTN","ORELR2",58,0)
+ I ORSTS'=1,ORSTS'=2,ORSTS'=9,$D(^LRO(69,+LRODT,1,+LRSN,3)),$P(^(3),"^",2) N LRTN S LRTN=0 F  S LRTN=$O(^LRO(69,LRODT,1,LRSN,2,LRTN)) Q:'LRTN  S X=^(LRTN,0) I $P(X,"^",7)=ORIFN,$P(X,"^",3),$P(X,"^",4),$P(X,"^",5) D
+"RTN","ORELR2",59,0)
+ . S X1=$G(^LRO(68,$P(X,"^",4),1,$P(X,"^",3),1,$P(X,"^",5),4,+X,0))
+"RTN","ORELR2",60,0)
+ . I $P(X1,"^",5) D WRT(ORIFN,"Status should be Complete") S STCNT=STCNT+1 D:ORAFIX STATUS^ORCSAVE2(ORIFN,2)
+"RTN","ORELR2",61,0)
+ I ORSTS'=1,ORSTS'=2,ORSTS'=13,ORSTS'=14 N ORI,ORX S ORI=0 F  S ORI=$O(^OR(100,ORIFN,4.5,"ID","ORDERABLE",ORI)) Q:ORI<1  I $D(^OR(100,ORIFN,4.5,ORI,1)) S ORX=^(1) I $D(^ORD(101.43,+ORX,0)) S ORX=+$P(^(0),"^",2) I ORX D
+"RTN","ORELR2",62,0)
+ . I $D(^LRO(69,LRODT,1,LRSN,2,"B",ORX)) S ORX=$O(^(ORX,0)) I '$L($P(^LRO(69,LRODT,1,LRSN,2,ORX,0),"^",7)) D WRT(ORIFN,"Missing pointer to 100") S OCNT=OCNT+1 I ORAFIX S $P(^LRO(69,LRODT,1,LRSN,2,ORX,0),"^",7)=ORIFN
+"RTN","ORELR2",63,0)
+ D DC^ORELR3
+"RTN","ORELR2",64,0)
+ Q
+"RTN","ORELR2",65,0)
+WRT(ORIFN,TEXT,FIX) ;Disp
+"RTN","ORELR2",66,0)
+ S CNT=CNT+1,TTCNT=TTCNT+1
+"RTN","ORELR2",67,0)
+ Q:$E(IOST,1,2)="P-"
+"RTN","ORELR2",68,0)
+ ;I CNT>100 W !!,"Continue" S %=1 D YN^DICN S CNT=0 I %=2 S END=1
+"RTN","ORELR2",69,0)
+ ;W !,ORIFN_"=>"_ORX1_"<"_$G(ORENT)_">"_$G(ORSTS)_"<"_TEXT_$S($G(FIX):">Not fixed",1:"")
+"RTN","ORELR2",70,0)
+ W "."
+"RTN","ORELR2",71,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",7606,6)
+^285
+**END**
+**END**

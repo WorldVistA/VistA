@@ -1,0 +1,327 @@
+$TXT Created by RAY,Constance at CHEY132.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 05/16/12 at 13:58
+=============================================================================
+Run Date: JUN 18, 2012                     Designation: ROR*1.5*17
+Package : ROR - CLINICAL CASE REGISTRIES      Priority: Mandatory
+Version : 1.5        SEQ #17                    Status: Released
+                  Compliance Date: JUL 19, 2012
+=============================================================================
+
+Associated patches: (v)PSN*4*293   <<= must be installed BEFORE `ROR*1.5*17'
+                    (v)ROR*1.5*15  <<= must be installed BEFORE `ROR*1.5*17'
+
+Subject: Direct Acting Antiviral(DAA) Reports
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Description:
+ ===========
+  
+ The following is a list of changes included in this patch:
+  
+ 1. A new HIV generic drug, EMTRICI./RILPIVIRINE/TENOFOVIR (Complera) was 
+ approved by the Food and Drug Administration (FDA).  This new medication 
+ has been added to the ROR GENERIC DRUG (#799.51) file and can now be 
+ selected on reports to provide information about the patients taking the 
+ new medication.
+  
+ 2. The List of Registry Patients report has been enhanced to allow users 
+ to specify an Only Confirmed After date.  If the user selects this 
+ feature, the Pending box will be disabled.  This will allow users to 
+ generate a list of recently confirmed patients that have been added to 
+ the registry after a specific date.
+  
+ 3. A new diagnosis group, Post Traumatic Stress Disorder (PTSD), has been 
+ added to the common templates.  The ICD code for PTSD is 309.81.
+  
+ 4. Lab test selection on the Lab Utilization report, the Combined Meds 
+ and Labs report, the DAA Lab Monitoring report and the Edit Site 
+ Parameters option in the GUI has been changed to be case insensitive.  
+ For example, if a user enters "zinc" as a search criterion, all test 
+ names for "zinc" will be returned regardless of the case of the test name 
+ in file #60 (e.g. zinc, Zinc, ZINC, zINC, etc.).  This problem was 
+ reported in Remedy ticket #215842.
+  
+ 5. The text on the Result Ranges panel and the report header of the Liver 
+ Score by Range report have been modified to provide additional 
+ instruction.  
+  
+ 6. The text on the Result Ranges panel and the report header of the Renal 
+ Function by Range report have been modified to provide additional 
+ instruction.
+  
+ 7. A new HepC report, Potential DAA Candidates, has been added to 
+ identify patients who may be eligible for the new HepC Direct Acting 
+ Anti-Viral(DAA) medications. The user may request a list of HepC patients 
+ with treatment histories of 'naive' and/or 'experienced'.  Patients who 
+ are 'naive' have never taken any registry medications.  Patients who are 
+ 'experienced' have not received DAA medications but have taken other 
+ registry medications.  The user may choose to exclude experienced 
+ patients who have fills for other registry medications within a specified 
+ number of days.
+  
+ 8. A new HepC report, DAA Lab Monitoring, has been added to monitor 
+ laboratory results for patients who have taken DAAs.  The user may 
+ display the two most recent test results prior to the first DAA fill date 
+ as well as selected lab test results for X weeks after the first DAA fill 
+ date.  The user may also restrict the lab test results after the first 
+ DAA fill date to be the most recent.  Any registry medications for the 
+ patient filled 60 days before the first DAA fill date through today 
+ display automatically on the report.
+  
+ 9. The preview and printing of the CDC form has been modified to correct 
+ the transposition of check box values for the risk factors, "Bisexual 
+ male" and the "Intravenous/injection drug user".
+  
+ 10. An installation problem with the CCR help file referenced in Remedy 
+ ticket #233500 is corrected.
+  
+ 11. This patch brings the Clinical Case Registries (CCR) application into 
+ 508 compliance in many areas.
+  
+  
+ Patch Components
+ ===============
+  
+  
+ File Name (Number)            Record Name        New/Modified/Deleted
+ ------------------            -----------        --------------------
+ ROR XML ITEM (#799.1)         HCV                New
+                               HCV_DATE           New
+                               STATUS             New
+                               GT                 New
+                               FILL_MED           New
+                               NAIVE              New
+                               EXP                New
+                               EXP_DAYS           New
+                               TREATMENT_HISTORY  New
+                               FILL_DATE          New
+                               DATE_RANGE_4       New
+                               WEEKS_AFTER        New
+                               DAA_FILL           New
+                               WKS_LAB            New
+                               CONFDT_AFTER       New
+                               CONFIRM_AFTER      New
+  
+ ROR REPORT PARAMETERS (#799.34)
+                               Potential DAA 
+                               Candidates         New
+                               DAA Lab Monitoring New
+                               Pharmacy 
+                               Prescription 
+                               Utilization        New
+ ROR GENERIC DRUG (#799.51)    EMTRICI./          New
+                               RILPIVIRINE/
+                               TENOFOVIR
+  
+ Dialog Name                                      New/Modified/Deleted
+ -----------             
+ 7980000.018 Report options                       Modified
+ 7981019.001 Liver Report by Range (HTML)         Modified
+ 7981020.001 Renal Function by Range (HTML)       Modified
+ 7981021.001 Potential DAA Candidates (HTML)      New
+ 7981021.002 Potential DAA Candidates (CSV)       New
+ 7981022.001 DAA Lab Monitoring (HTML)            New
+ 7981022.002 DAA Lab Monitoring (CSV)             New
+ 7981995.001 Lab data templates (HTML)            Modified
+ 7981998.001 CSS and Scripts                      Modified
+ 7981999.001 Common XSL templates (HTML)          Modified
+  
+ Associated Remedy Tickets:
+ ------------------------
+ 1.  HD0000000233500   Unable to access help file
+ 2.  HD0000000215842   Lab Utilization does not allow selected LAB test 
+  
+ Test Sites:
+ ----------
+ PALO ALTO HCS
+ San Antonio, TX
+ Coatsville, PA 
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.va.gov/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ ROR1_5P17DOC1.ZIP            ROR User Manual                    BINARY
+                     
+ ROR1_5P17DOC2.ZIP            Release Notes,                     BINARY
+                              Technical Manual/Security Guide,
+                              Installation/Implementation 
+                              Guide
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ -------------------------------
+ Installation Instructions
+ -------------------------
+ This patch includes an M patch and a revised Graphical User Interface
+ (GUI) executeable.
+  
+ Installation of the patch will not take more than 5 minutes. This patch
+ can be installed with VistA users online, but Registry users should be
+ logged out of the CCR Registry Application, as a new GUI is to be
+ installed.
+  
+ NOTE: The nightly task (the [ROR TASK] option) must not be running
+       during the installation.
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ M INSTALLATION INSTRUCTIONS
+ =========================== 
+  
+ 1. Make sure you have the ROR VA IRM security key.
+  
+ 2. Use the "INSTALL/CHECK MESSAGE" option on the PackMan menu. This
+    option loads the patch into a Transport Global on your system.
+  
+ 3. From the Kernel Installation and Distribution System (KIDS)
+    menu, select the Installation menu.
+  
+ 4. From this menu, you may elect to use the following options:
+    (when prompted for INSTALL NAME, enter ROR*1.5*17)
+  
+   a.  Verify Checksums in Transport Global - This option will allow
+       you to ensure the integrity of the routines that are in the
+       transport global.
+   b.  Print Transport Global - This option will allow you to view
+       the components of the KIDS build.
+   c.  Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this
+       patch is installed.  It compares all components of this patch
+       (routines, Data Dictionaries (DD's), templates, etc.).
+   d.  Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch. It will not
+       backup any other changes such as DD's or templates.
+  
+ 5. Use the Install Package(s) option and select the package
+     ROR*1.5*17.
+  
+    The following messages display:
+  
+ Incoming Files:
+  
+    799.31    ROR XML ITEM  (including data)
+ Note:  You already have the 'ROR XML ITEM' File.
+ I will OVERWRITE your data with mine.
+  
+    799.34    ROR REPORT PARAMETERS  (including data)
+ Note:  You already have the 'ROR REPORT PARAMETERS' File.
+ I will OVERWRITE your data with mine.
+  
+    799.51    ROR GENERIC DRUG  (including data)
+ Note:  You already have the 'ROR GENERIC DRUG' File.
+ I will OVERWRITE your data with mine.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+    NO//', respond "NO".
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond "NO".
+  
+ 8. Enter the Device you want to print the Install message.  
+     You can queue the install by enter a 'Q' at the device prompt. 
+     Enter a '^' to abort the install.  
+  
+  
+ GUI INSTALLATION INSTRUCTIONS
+ =============================
+  
+ IMPORTANT NOTE:  This patch includes a revised Graphical User Interface
+ (GUI) application which must be distributed to the appropriate 
+ workstations.  After the patch is installed correctly, and the GUI is 
+ updated, the version of the GUI will be 1.5.17.
+  
+ File Name         Contents      Transfer Mode  
+ ---------         -----------   -------------
+ ROR1_5P17GUI.ZIP  Zipped GUI    BINARY
+  
+ 1. Unzip the ROR1_5P17GUI.ZIP into a temporary folder.
+       
+ 2. Open the temporary folder and double click the file CCRSetup.exe to
+    begin the install.
+       
+ 3. Wait until the setup Wizard prepares the installation 
+    procedure. A welcome message displays.
+   
+ 4. Click Next to continue the installation.
+       
+ 5. Select the directory in which to install the CCR GUI. 
+    We recommend that you accept the default directory: 
+    C:\Program Files\VistA\Clinical Case Registries. To 
+    select a different location, click Change and select 
+    the directory. Click Next to proceed with installation.
+   
+ 6. Review the installation settings and click Install to 
+    proceed. The setup Wizard finishes the installation
+    and a confirmation screen displays.
+       
+ 7. Click Finish.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;CLINICAL CASE REGISTRIES;**[Patch List]**;Feb 17, 2006;Build 33
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RORP017
+    Before:       n/a   After:  B8290353  **17**
+Routine Name: RORRP018
+    Before:  B7897873   After:  B9023679  **17**
+Routine Name: RORUTL11
+    Before:  B3286551   After:  B3560733  **13,14,15,17**
+Routine Name: RORX001
+    Before: B43373564   After: B45889554  **8,10,14,17**
+Routine Name: RORX021
+    Before:       n/a   After:  B9370835  **17**
+Routine Name: RORX021A
+    Before:       n/a   After:B128932587  **17**
+Routine Name: RORX022
+    Before:       n/a   After: B14560975  **17**
+Routine Name: RORX022A
+    Before:       n/a   After:B125489130  **8,13,17**
+Routine Name: RORXU002
+    Before:B116207704   After:B118388269  **1,10,13,15,17**
+ 
+Routine list of preceding patches: 15
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : AUG 16, 2011
+Completed By: BERRY,LINDA                   Date Completed: JUN 06, 2012
+Released By : VANCAMP,E PHILIP              Date Released : JUN 18, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

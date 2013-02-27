@@ -1,0 +1,123 @@
+$TXT Created by NIXON,TONY at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 06/02/10 at 16:30
+=============================================================================
+Run Date: OCT 19, 2011                     Designation: PSO*7*357
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #320                      Status: Released
+                  Compliance Date: NOV 19, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*268   <<= must be installed BEFORE `PSO*7*357'
+
+Subject: USER RECEIVES ERROR WHILE COMPLETING ORDER ENTERED IN CPRS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ An undefined error occurred when completing a PENDING order using the
+ the following option: "Complete Orders from OERR" [PSO LMOE FINISH]
+  
+ The error occurred in routine PSOORFIN because the variable PSODFN is
+ not defined.  When the error occurs the user is kicked out of the system.
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ HD0000000342143 - <UNDEFINED>NEW^PSOBING1 *PSODFN
+  
+ Duplicates:
+ HD0000000345060 - <UNDEFINED>NEW^PSOBING1 *PSODFN
+ HD0000000354965 - <UNDEFINED>NEW^PSOBING1 *PSODFN
+ HD0000000357032 - $ZE= <UNDEFINED>NEW^PSOBING1 *PSODFN
+ HD0000000368590 - UNDEF ERROR IN PSOBING1
+ HD0000000372466 - UNDEFINED>NEW^PSOBING1
+  
+  
+ Associated NSRs:
+ ================
+ N/A
+   
+   
+ Participating Test Sites:
+ =========================
+ Spokane VAMC
+ VA Heartland - East (Marion)
+ Coatesville VAMC
+ James J. Peters VAMC  - Bronx  
+   
+  
+ Remedy Overview:
+ ================
+ HD0000000342143 - <UNDEFINED>NEW^PSOBING1 *PSODFN
+  
+  
+ Problem:
+ --------
+ The undefined error occurred in routine PSOBING1.  This is because the
+ variable PSODFN is not defined.  In some situations, PSOBING1 is being
+ called before PSODFN is set to a value.
+  
+ Resolution:
+ -----------
+ Modify routine PSOBING1 to check if PSODFN is defined.  If this variable
+ is not defined, then exit PSOBING1 before an error is generated.
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter PSO*7*357)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package PSO*7*357
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBING1
+    Before: B55027504   After: B55083995  **5,28,56,135,244,268,357**
+ 
+Routine list of preceding patches: 268
+
+=============================================================================
+User Information:
+Entered By  : NIXON,ANTOINE                 Date Entered  : MAY 20, 2010
+Completed By: LANG,MICKEY                   Date Completed: OCT 06, 2011
+Released By : FOX,KIRK                      Date Released : OCT 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

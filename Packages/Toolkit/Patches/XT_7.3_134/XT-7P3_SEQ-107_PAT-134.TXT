@@ -1,0 +1,218 @@
+
+=============================================================================
+Run Date: NOV 06, 2012                     Designation: XT*7.3*134
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3       SEQ #107                    Status: Released
+                  Compliance Date: DEC 07, 2012
+=============================================================================
+
+
+Subject: HOW TO STOP THE CPRS MONITOR.
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Remedy Ticket: 717878
+ Blood Bank Clearance: 2/7/2012
+ Tracking message #: 57729798
+ Test Sites: Upstate NY HCS; Mountain Home, TN VAMC
+  
+  
+    XT*7.3*134
+  
+ The CPRS RESPONSE TIME MONITOR was originally released as part of Kernel 
+ Toolkit (patch XT*7.3*84). However, most of its functionality has now 
+ transitioned to the new Capacity Management Tools 3.0 package, in 
+ particular the ability to track timing date for coversheet load times 
+ (but not individual coversheet sections). The national web server 
+ supporting the CPRS Response Time Monitor application has been shut down. 
+ The following instructions are intended to assist sites in shutting down 
+ the CPRS Response Time Monitor if it is no longer being used locally.
+  
+ 1. Some sites may still use the CPRS Response Time Monitor with a local 
+ web server. In this case you would not want to shut down the CPRS 
+ Response Time Monitor. Look in the CPRS MONITOR (#177100.12) file if the
+ WEB SERVER ADDRESS, WEB SERVER FTP USER, and WEB SERVER FTP PASSWORD
+ fields are populated, there is a good chance your site may still be using
+ the CPRS RESPONSE MONITOR, locally.
+  
+ For example:
+  
+ OUTPUT FROM WHAT FILE: CPRS MONITOR// 
+ Select CPRS MONITOR FACILITY:    ZZ ALBANY
+ ANOTHER ONE: 
+ STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO//  - No record number (IEN), no 
+ Computed
+ Fields
+  
+ FACILITY: ZZ ALBANY                     TIU TAB: OFF
+   LAB COVERSHEET: OFF                   REMINDERS COVERSHEET: OFF
+   HFS LOCATION: USER4:TEST              WEB PAGE NAME: cprsmonitor500
+   NUMBER OF HOURS TO DISPLAY: 8         MAXIMUM SECONDS TO DISPLAY: 30
+   TIU LINE COLOR: 192,0,0               LAB LINE COLOR: 0,192,0
+   REMINDERS LINE COLOR: 0,0,192         DISPLAY GRID?: YES
+   BACKGROUND COLOR: 230,230,230         NUMBER OF DAYS TO KEEP DATA: 7
+   WEB PAGE ROOT LOCATION: //            LOG VMS FTP ACTIVITY: NO
+   SYSTEM ACTIVE: NO                     DELETE OLD COM FILES (VMS): YES
+   STATION NUMBER: 500                   WEB SERVER ADDRESS: XXXXXXXXXXX
+   WEB SERVER FTP USER: SCHMIT,R         WEB SERVER FTP PASSWORD: <Hidden>
+   NATIONAL FTP SERVER ADDRESS: vaftp.va.gov
+   NATIONAL FTP USER: itmuser            NATIONAL FTP PASSWORD: <Hidden>
+  
+ If your site is not using the CPRS Response Time Monitor locally, 
+ you can continue with steps 2-5 below.
+  
+ If your site IS using the CPRS RESPONSE TIME MONITOR LOCALLY, 
+ go to step 6.
+  
+ 2. Set the "Master Switch" for CPRS Monitor "OFF". To do this, use the
+ "Edit CPRS Monitor Parameter File" [AWCM EDIT PARAM FILE] option,
+ available from the CPRS Monitor Main Menu [AWCM MAIN]. Look at the value
+ for the SYSTEM ACTIVE field. Set it to "NO".
+  
+ For example:
+  
+ Using the CPRS Monitor Main Menu:
+  
+             ==>>  1    Edit CPRS Monitor Parameter File
+                   2    Generate CPRS Monitor Web Data
+                   3    Purge CPRS Monitor Data
+                   4    Roll Up Data to National Database
+                   5    Re-send Data to National Server
+  
+ Select CPRS Monitor Main Menu  Option: 1   Edit CPRS Monitor Parameter
+                                            File
+  
+ Edit the CPRS Monitor Parameter File
+  
+ Select CPRS MONITOR FACILITY:    <Your facility>
+ SYSTEM ACTIVE: YES//NO
+  
+ 3. Check the Option Scheduling file to see if any of the following 
+ options are scheduled (Schedule/Unschedule Options). If any are present 
+ and active, un-schedule them -- by entering the @-sign in the Option name 
+ field:
+  
+  - Generate CPRS Monitor Web Data [AWCM CPRS MONITOR]
+  - Local Nightly Rollup [AWCM LOCAL ROLLUP]
+  - Roll Up Data to National Database [AWCM ROLL UP NATIONAL DATA]
+  - Purge CPRS Monitor Data [AWCM PURGE CPRS MONITOR DATA]
+  
+ For example:
+  
+ Select OPTION to schedule or reschedule:    AWCM CPRS MONITOR  (R)
+  
+                           Edit Option Schedule
+  
+ Option Name: AWCM CPRS MONITOR  <<< Enter "@" here to un-schedule
+ Menu Text: Generate CPRS Monitor Web Data            TASK ID: 8623180
+   
+ -----------------------------------------------------
+   QUEUED TO RUN AT WHAT TIME: a date and time
+  
+ DEVICE FOR QUEUED JOB OUTPUT:
+  
+  QUEUED TO RUN ON VOLUME SET:
+  
+       RESCHEDULING FREQUENCY: 600S
+  
+              TASK PARAMETERS:
+  
+             SPECIAL QUEUEING: STARTUP    
+ ------------------------------------------------------
+  
+ WARNING: DELETIONS ARE DONE IMMEDIATELY!
+            (EXITING WITHOUT SAVING WILL NOT RESTORE DELETED RECORDS.)
+ Are you sure you want to delete this entire record (Y/N)?Y  <<<< select 
+ "Yes"
+  
+  
+ 4. Disable the options: Set OUT OF ORDER for these options.
+  
+  - Generate CPRS Monitor Web Data  [AWCM CPRS MONITOR]
+  - Local Nightly Rollup [AWCM LOCAL ROLLUP]
+  - Roll Up Data to National Database [AWCM ROLL UP NATIONAL DATA]
+  - Purge CPRS Monitor Data [AWCM PURGE CPRS MONITOR DATA]
+  
+ For example: 
+  
+ Select Menu Management Option: edit options
+  
+ Select OPTION to edit: AWCM CPRS MONITOR  Generate CPRS Monitor Web Data
+ NAME: AWCM CPRS MONITOR// 
+ MENU TEXT: Generate CPRS Monitor Web Data  Replace 
+ PACKAGE: 
+ OUT OF ORDER MESSAGE: NO FURTHER USE per XT*7.3*134 <<<< Enter a text line
+ here.
+ LOCK: ^
+  
+ 5. Optionally examine the contents of the VMS directory specified in the 
+ "HFS LOCATION" field of the CPRS Monitor (#177100.12) file, if a
+ location is specified by that field. Files that might be left around in
+ this location include a web page file, AWCMOVEHTM.COM, and AWCMOVEHTM.LOG.
+ These host files can be deleted at the site's discretion.
+  
+ For example: 
+  
+ VA FileMan 22.0
+  
+ Select OPTION: INQUIRE TO FILE ENTRIES  
+  
+ OUTPUT FROM WHAT FILE: CPRS MONITOR
+  
+ Select CPRS MONITOR FACILITY: `1  facility name
+  
+ FACILITY: facility name
+   TIU TAB: ON                           LAB COVERSHEET: ON
+   REMINDERS COVERSHEET: ON              HFS LOCATION: user$:[xxx.TEMP]
+  
+ You may check the directory user$:[xxx.TEMP] to delete the two web page 
+ files.
+  
+ From VMS level:
+  
+ ISC6A2$ dir user$:[xxx.TEMP]            <<< dir user$:[xxx.TEMP]
+ AWCMOVEHTM.COM;1                AWCMOVEHTM.LOG;1
+  
+ SC6A2$ del AWCMOVEHTM.COM;1             <<< del AWCMOVEHTM.COM;1
+ SC6A2$ del AWCMOVEHTM.LOG;1             <<< del AWCMOVEHTM.LOG;1
+  
+ 6. If you are using the CPRS Monitor Locally do step 3 and ONLY 
+ un-schedule the following option:
+  
+   Roll Up Data to National Database [AWCM ROLL UP NATIONAL DATA]
+  
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 2/7/2012
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*134 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XT*7.3*134 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : JUL 09, 2012
+Completed By: BEST,LISA                     Date Completed: NOV 06, 2012
+Released By : TILLIS,LEWIS                  Date Released : NOV 06, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

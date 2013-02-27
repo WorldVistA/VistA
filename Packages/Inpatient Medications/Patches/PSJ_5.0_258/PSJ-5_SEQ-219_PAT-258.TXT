@@ -1,0 +1,233 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 09/06/11 at 09:33
+=============================================================================
+Run Date: NOV 30, 2011                     Designation: PSJ*5*258
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #219                      Status: Released
+                  Compliance Date: DEC 31, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*258'
+
+Subject: UNDEFINED ERROR WHEN RENEWING IV ORDER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following items in the Inpatient Medications
+ package:
+  
+ 1. 'Undefined' error when Copying an IV Order
+ 2. Pre-Exchange Report Not Printing When Orders Are Renewed
+ 3. Can't Copy an IV Order
+ 4. Syntax error when renewing multiple Unit Dose orders
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1. HD0000000464717 - Renewing IV order bombs 
+  
+ 2. HD0000000343009 - Pre-exchange report not printing when orders are
+                      renewed
+  
+ 3. HD0000000427446 - Can't copy an IV order
+  
+ 4. HD0000000284893 - SYNTAX ERROR LD1+6 DDIOL
+    
+    Duplicates:
+    -----------
+    HD0000000290367 
+    HD0000000297096 
+    HD0000000312704 
+    HD0000000360610 
+    HD0000000452678 
+    HD0000000458864 
+    HD0000000494102
+    HD0000000496019
+    HD0000000497479
+    HD0000000498578
+    HD0000000506948
+  
+  
+ Participating Test Sites:
+ =========================
+ Bronx VAMC
+ Connecticut HCS
+ Oklahoma City VAMC
+ Sierra Nevada HCS
+  
+  
+ Remedy Overview:
+ ================
+  
+ 1. HD0000000464717 - Renewing IV order bombs
+  
+    Problem:
+    --------
+    When a user creates a new IV order in Order Entry (IV) [PSJI ORDER]
+    without first viewing the patient profile, then immediately renews
+    the order without exiting Order Entry (IV), an undefined error will
+    occur during renewal.
+  
+    Resolution:
+    -----------
+    Changed the routine PSIVOPT2 so that the variable PSGDT is always set, 
+    ensuring that the error will not occur.
+  
+  
+ 2. HD0000000343009 - Pre-exchange report not printing when orders are
+                      renewed
+  
+    Problem:
+    --------
+    When using the Speed Renew (RN) function of PSJU NE (Order Entry,) if 
+    there are pre-exchange doses, the system will prompt the user for the 
+    output device to print the pre-exchange report.  However, because the 
+    variable which holds the pre-exchange dose data gets reset by the exit 
+    logic of PSJU LM SPEED RENEW protocol, the report does not get printed.
+  
+    Resolution:
+    -----------
+    Modified the routine PSJHVARS to not reset the variable until after the
+    pre-exchange report is printed.
+  
+  
+ 3. HD0000000427446 - Can't copy an IV order
+  
+    Problem:
+    --------
+    In Inpatient Order Entry [PSJ OE], when a user selects an existing or
+    newly-copied order, chooses the Edit option, and then presses Enter
+    without typing a selection, they will be unable to Accept and will be
+    stuck in an endless loop of prompts.
+  
+    Resolution:
+    -----------
+    Removed all references to the variable PSJEDFLG from the routines 
+    PSIVOPT1 and PSIVORFE.  This will prevent the loop from occurring.
+  
+  
+ 4. HD0000000284893 - SYNTAX ERROR LD1+6 DDIOL
+  
+    Problem:
+    --------
+    When renewing multiple unit dose orders through the Inpatient Order
+    Entry [PSJ OE] menu option, if the patient has an allergy related to
+    one of the orders being renewed, a <SYNTAX> error will result. This is 
+    the result of some variables being 'killed' instead of 'newed'.
+  
+    Resolution:
+    -----------
+    All variables in tag UPDREN^PSIVOPT2 are being newed instead of killed.
+    
+  
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Inpatient Medications users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+ 1.  Load Transport Global 
+     ---------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  Start Up KIDS              
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     --------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*258):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer YES. 
+  
+         1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+                 Inpatient Order Entry [PSJ OE]
+  
+         2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVOPT1
+    Before: B44616556   After: B43461784  **29,58,101,110,127,181,258**
+Routine Name: PSIVOPT2
+    Before: B36149205   After: B36639315  **23,29,58,110,127,133,135,157,
+                                           181,258**
+Routine Name: PSIVORFE
+    Before: B12682889   After: B12567684  **58,81,110,258**
+Routine Name: PSJHVARS
+    Before: B74499296   After: B74222254  **16,22,30,58,181,258**
+ 
+Routine list of preceding patches: 181
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : FEB 22, 2011
+Completed By: WERNER,GARY                   Date Completed: NOV 21, 2011
+Released By : HARDY,STACY                   Date Released : NOV 30, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

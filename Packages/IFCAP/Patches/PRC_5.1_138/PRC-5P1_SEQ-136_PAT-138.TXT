@@ -1,0 +1,176 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Tuesday, 09/20/11 at 10:51
+=============================================================================
+Run Date: JAN 24, 2012                     Designation: PRC*5.1*138
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #136                    Status: Released
+                  Compliance Date: FEB 24, 2012
+=============================================================================
+
+Associated patches: (v)PRC*5.1*95  <<= must be installed BEFORE `PRC*5.1*138'
+                    (v)PRC*5.1*118 <<= must be installed BEFORE `PRC*5.1*138'
+
+Subject: AMENDMENT DISCOUNT ERRORS;PURGE HOUSEKEEPING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following 2 issues:
+  
+ 1. Discount entries are not properly linking to item entries which is
+    causing amendment processing errors to occur.
+  
+ 2. The option 'Load IFCAP File 417 Data into PurgeMaster' there is a
+    misspelling of the word, "reconciliation'.  Currently, it reads as 
+    "reconilliation".
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ Remedy:
+ =======
+ 1. HD0000000055186 Amendment processing error <UNDEFINED>PCT+2^PRCHSF3
+      Duplicates:  HD0000000055187, HD0000000055189, HD0000000055195,
+                   HD0000000055199, HD0000000055200, HD0000000055201,
+                   HD0000000055203, HD0000000055210, HD0000000055231,
+                   HD0000000055254, HD0000000055266, HD0000000055274,
+                   HD0000000055539, HD0000000055587, HD0000000055605,
+                   HD0000000085311, HD0000000121085, HD0000000148249,
+                   HD0000000154863, HD0000000162281, HD0000000164046,
+                   HD0000000188134, HD0000000200141, HD0000000205541,
+                   HD0000000290538
+  
+ 2. HD0000000187977 Purge housekeeping
+  
+  
+ Test Sites:
+ ===========
+ Tennessee Valley HCS
+ Little Rock VAMC
+  
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000055186 Amendment processing error <UNDEFINED>PCT+2^PRCHSF3
+  
+  
+    Problem:
+    --------
+    When doing amendment processing on an Open Market order, if the order 
+    status is changed to 'Federal Supply Schedule or OGA (Other Government
+    Agency) Contracts' and the user has entered a discount on an item and
+    in a later amendment process adds a contract number to the same item,
+    an <UNDEFINED> error will occur.  The error occurs because the discount
+    entry has not been properly linked to the item entry due to the missing
+    contract number in the discount entry.
+  
+  
+    Resolution:
+    -----------                    
+    Modify code so when entering a routine to calculate new discount
+    information, the routine will first insure that the item node is
+    aligned with the discount node for the contract number.
+  
+  
+    Routines: PRCHSF3
+  
+  
+  
+ 2. HD0000000187977 Purge housekeeping
+  
+  
+    Problem:
+    --------
+    National Support reported spelling error in word 'reconciliation' in
+    file cleanup processing.
+  
+    Resolution:
+    -----------                    
+    Modified routine PRCG239P and PRCG239Q to correct spelling for 
+    'reconilliation' to 'reconciliation'
+  
+  
+    Routines: PRCG239P, PRCG239Q
+   
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*138)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*138.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       YES//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? NO//', respond YES 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+       Amendment to Purchase Card Order     [PRCH AMENDMENT TO P/C ORDER]
+       Amendment to Purchase Order          [PRCHPC AMEND]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCG239P
+    Before:   B952278   After:   B952278  **95,138**
+Routine Name: PRCG239Q
+    Before: B13467421   After: B13453904  **95,138**
+Routine Name: PRCHSF3
+    Before: B15319520   After: B17379017  **118,138**
+ 
+Routine list of preceding patches: 95, 118
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : JUN 17, 2009
+Completed By: PODLEY,CHRIS                  Date Completed: JAN 10, 2012
+Released By : NELSON,VICKI M                Date Released : JAN 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

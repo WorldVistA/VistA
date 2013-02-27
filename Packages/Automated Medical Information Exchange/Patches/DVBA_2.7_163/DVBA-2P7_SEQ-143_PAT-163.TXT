@@ -1,0 +1,472 @@
+$TXT Created by FAIRBROTHER,EILEEN at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 04/29/11 at 09:35
+=============================================================================
+Run Date: MAY 23, 2011                     Designation: DVBA*2.7*163
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #143                    Status: Released
+                  Compliance Date: JUN 06, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*143<<= must be installed BEFORE `DVBA*2.7*163'
+                    (v)DVBA*2.7*161<<= must be installed BEFORE `DVBA*2.7*163'
+
+Subject: CAPRI TEMPLATES AND AMIE WORKSHEET
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Other
+
+Description:
+============
+
+  
+                        *******     PLEASE NOTE    *******
+                   This mandatory patch has a 14 day compliance  
+                   ********************************************
+  
+  I.  OVERVIEW
+  
+    This patch introduces enhancements to the AUTOMATED MED INFO EXCHANGE
+    (AMIE) V 2.7 package and the Compensation & Pension Record Interchange
+    (CAPRI) application, Compensation & Pension Worksheet Module (CPWM)
+    in support of new and modified Compensation and Pension (C&P)
+    Disability Benefit Questionnaires (DBQs).
+  
+  
+    The following provides a high level overview of patch DVBA*2.7*163.
+  
+   1. CAPRI - Template Additions
+  
+      Veterans Benefits Administration Veterans Affairs Central Office 
+      (VBAVACO) has approved content for the following new CAPRI Disability
+      Benefits Questionnaires:
+  
+        * DBQ KIDNEY CONDITIONS (NEPHROLOGY)
+        * DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS
+  
+   2. CAPRI - Template Modifications
+  
+      VBAVACO has approved modifications for the following CAPRI Disability
+      Benefit Questionnaires:
+  
+        * DBQ HEMATOLOGIC AND LYMPHATIC CONDITIONS, INCLUDING LEUKEMIA
+        * DBQ PROSTATE CANCER
+  
+   3. CAPRI - Template Defects
+  
+      a. A defect has been addressed in the CAPRI templates distributed
+         with this patch.
+  
+         The defect of word wrapping in the CAPRI template report preview 
+         and output is being addressed in this patch.
+  
+   4. AMIE - C&P Examination Worksheet Additions
+     
+      VBAVACO has approved content for the following new AMIE C&P
+      questionnaire worksheets:
+  
+        * DBQ KIDNEY CONDITIONS (NEPHROLOGY)
+        * DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS
+  
+   5. AMIE - C&P Examination Worksheet Modifications
+  
+      VBAVACO has approved modifications for the following AMIE C&P
+      questionnaire worksheets:
+  
+        * DBQ HEMIC AND LYMPHATIC CONDITIONS INCLUDING LEUKEMIA 
+        * DBQ PROSTATE CANCER
+  
+   6. AMIE - C&P Examination Worksheet Defects
+  
+      a. Defects have been addressed within the following AMIE worksheets:
+  
+         No AMIE worksheet defects are being addressed.
+  
+  II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+  
+    The following section lists the Remedy tickets and/or New Service 
+    Requests associated with this patch.
+  
+   1. Associated Remedy Ticket(s):
+      ----------------------------------
+  
+      There are no Remedy Tickets associated with this patch.
+  
+   2. Associated New Service Request(s):
+      ----------------------------------
+      There are no New Service Requests associated with this patch.
+   
+  III. FUNCTIONAL OVERVIEW
+   
+    The following section contains an overview of the changes and primary
+    functionality being delivered in this patch.
+  
+   1. CAPRI - Template Additions
+   
+      a. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved the following new CAPRI Disability Benefit
+         Questionnaire templates based on new C&P questionnaire worksheets.
+  
+        * DBQ KIDNEY CONDITIONS (NEPHROLOGY)
+        * DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS
+   
+          This patch implements these new templates, which are accessible
+          through the Compensation & Pension Worksheet Module (CPWM) of the
+          CAPRI GUI.
+  
+   2. CAPRI - Template Modifications
+  
+      a. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved modifications to the following CAPRI Disability
+         Benefits Questionnaire templates based on new C&P questionnaire
+         worksheets.
+  
+        * DBQ HEMATOLOGIC AND LYMPHATIC CONDITIONS, INCLUDING LEUKEMIA 
+          The "Treatment" section has added options for recording Anemia
+          and Thrombocytopenia. The "Other pertinent physical
+          findings" section has new questions about Scars. The
+          "Diagnostic Testing" section has added an area for CBC results.
+  
+        * DBQ PROSTATE CANCER 
+          The "Voiding dysfunction" section has been updated to reference
+          severity and cause. The "Urinary Tract/kidney infection"
+          and "Retrograde ejaculation" sections have been added. The
+          "Erectile dysfunction" section has been expanded to reference
+          probability and diagnosis. The "Residual conditions and/or
+          complications" section has been expanded. The "Other pertinent
+          findings" section has added questions about scars.
+     
+   3. CAPRI - Template Defects
+  
+      a. The report code was modified to produce more accurate word 
+         wrapping on the report.
+  
+         Please note the following:
+         - If the user's display is set to "Windows XP Style", the user
+           will initially see the word wrapping issue. Users are instructed
+           to click the "Preview" button prior to clicking the "Done" 
+           button to clear the wrapping issue.
+         - If the user's display is set to "Windows Classic Style" they
+           will not experience the word wrapping issues.
+  
+         Please Note:  The word-wrapping issue has only been addressed on
+         DBQs contained in this patch. Previously released DBQs will be 
+         addressed in future patches.
+  
+  
+   4. AMIE - C&P Examination Worksheet Additions
+  
+      a. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved the following new Automated Medical Information
+         Exchange (AMIE) C&P Questionnaire worksheets.
+  
+        * DBQ KIDNEY CONDITIONS (NEPHROLOGY)
+        * DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS
+  
+         This patch implements the new content for the AMIE C&P Disability
+         Benefit Questionnaire worksheets, which are accessible through the
+         VISTA AMIE software package.
+  
+   5. AMIE - C&P Examination Worksheet Modifications
+  
+      a. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved modifications to the following Automated Medical
+         Information Exchange (AMIE) C&P Questionnaire worksheets.
+  
+        * DBQ HEMIC AND LYMPHATIC CONDITIONS INCLUDING LEUKEMIA
+          The "Treatment" section has added options for recording Anemia
+          and Thrombocytopenia. The "Other pertinent physical
+          findings" section has new questions about Scars. The
+          "Diagnostic Testing" section has added an area for CBC results.
+  
+        * DBQ PROSTATE CANCER
+          The "Voiding dysfunction" section has been updated to reference
+          severity and cause. The "Urinary Tract/kidney infection"
+          and "Retrograde ejaculation" sections have been added. The
+          "Erectile dysfunction" section has been expanded to reference
+          probability and diagnosis. The "Residual conditions and/or
+          complications" section has been expanded. The "Other pertinent
+          findings" section has added questions about scars. 
+  
+   6. AMIE - C&P Examination Worksheet Defects
+  
+      There are no AMIE Examination worksheet defects associated with 
+      this patch.
+  
+ IV. TECHNICAL COMPONENTS
+  
+   The following section describes the technical components being exported
+   with this patch.
+  
+   1. The following FILE will be included.
+  
+                                       UP    SEND  DATA               USER
+                                       DATE  SEC.  COMES  SITE  RSLV  OVER
+    FILE#   NAME                       DD    CODE  W/FILE DATA  PTS   RIDE
+    ----------------------------------------------------------------------
+    396.18 CAPRI TEMPLATE DEFINITIONS  NO    YES   YES    OVER  NO    NO 
+   
+  
+   2. The following Template Definition updates will be added to the CAPRI 
+      TEMPLATE DEFINITIONS (#396.18) file:
+  
+        * DBQ HEMATOLOGIC AND LYMPHATIC CONDITIONS, INCLUDING LEUKEMIA~163
+        * DBQ KIDNEY CONDITIONS (NEPHROLOGY)~163
+        * DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS~163
+        * DBQ PROSTATE CANCER~163
+  
+   3. New entries with the following C&P questionnaire worksheets will be
+      created and activated in the AMIE EXAM (#396.6) file.
+  
+        * DBQ HEMIC AND LYMPHATIC CONDITIONS INCLUDING LEUKEMIA
+  
+          Post-init routine DVBA163P will create a new record in the
+          AMIE EXAM (#396.6) file for the new DBQ HEMIC AND LYMPHATIC 
+          CONDITIONS INCLUDING LEUKEMIA worksheet. The STATUS field of the
+          new record will be set to "ACTIVE". The new IEN will be 324.
+          This entry will have no worksheet number. The previous version 
+          of the DBQ HEMIC AND LYMPHATIC CONDITIONS INCLUDING LEUKEMIA
+          worksheet with IEN 304 will be set to "INACTIVE".
+  
+          Routine DVBCQHA4 will contain the text for the DBQ HEMIC AND 
+          LYMPHATIC CONDITIONS INCLUDING LEUKEMIA worksheet. Routine
+          DVBCQHA3 will access the new text routine and print the blank DBQ
+          HEMIC AND LYMPHATIC CONDITIONS INCLUDING LEUKEMIA worksheet.
+  
+        * DBQ KIDNEY CONDITIONS (NEPHROLOGY)
+  
+          Post-init routine DVBA163P will create a new record in the
+          AMIE EXAM (#396.6) file for the new DBQ KIDNEY CONDITIONS
+          (NEPHROLOGY) worksheet. The STATUS field of the new record will
+          be set to "ACTIVE". The new IEN will be 316. This entry will have
+          no worksheet number.
+  
+          Routine DVBCQKC2 will contain the text for the DBQ KIDNEY 
+          CONDITIONS (NEPHROLOGY) worksheet. Routine DVBCQKC1 will access
+          the new text routine and print the blank DBQ KIDNEY CONDITIONS
+          (NEPHROLOGY) worksheet.
+  
+        * DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS
+  
+          Post-init routine DVBA163P will create a new record in the
+          AMIE EXAM (#396.6) file for the new DBQ MALE REPRODUCTIVE SYSTEM
+          CONDITIONS worksheet. The STATUS field of the new record will be
+          set to "ACTIVE". The new IEN will be 317. This entry will have no
+          worksheet number.
+  
+          Routines DVBCQMR2 and DVBCQMR3 will contain the text for the
+          DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS worksheet. Routine
+          DVBCQMR1 will access the new text routines and print the blank
+          DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS worksheet.
+  
+        * DBQ PROSTATE CANCER
+  
+          Post-init routine DVBA163P will create a new record in the
+          AMIE EXAM (#396.6) file for the new DBQ PROSTATE CANCER 
+          worksheet. The STATUS field of the new record will be set to
+          "ACTIVE". The new IEN will be 323. This entry will have no
+          worksheet number. The previous version of the DBQ PROSTATE CANCER
+          worksheet with IEN 308 will be set to "INACTIVE".
+  
+          Routine DVBCQPC4 will contain the text for the DBQ PROSTATE
+          CANCER worksheet. Routine DVBCQPC3 will access the new text
+          routine and print the blank DBQ PROSTATE CANCER worksheet.
+  
+   5. The following new routines will be added with this patch:
+      
+      * DVBCQHA3
+      * DVBCQHA4
+      * DVBCQKC1
+      * DVBCQKC2
+      * DVBCQMR1
+      * DVBCQMR2
+      * DVBCQMR3
+      * DVBCQPC3
+      * DVBCQPC4
+  
+ V. SOFTWARE & DOCUMENTATION RETRIEVAL
+     
+    The following section provides information regarding the retrieval of
+    the software and related user documentation.
+  
+   1. VistA Patch DVBA*2.7*163
+    
+      a. This patch is being distributed as a PackMan patch message through
+         the National Patch Module (NPM). The KIDS build for this patch is
+         DVBA*2.7*163.
+  
+   2. User Documentation
+  
+      a. The user documentation for this patch may be retrieved directly
+         using FTP. The preferred method is to FTP the files from:
+  
+             download.vista.med.va.gov
+  
+         This transmits the files from the first available FTP server.
+         
+         Sites may also elect to retrieve documentation directly from a
+         specific server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+         Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+         Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+         The following files will be available:
+  
+         File Name                                Format  Description
+      ------------------------------------        ------  -----------------
+      DVBA_27_P163_RN.PDF                         Binary  Release Notes
+      DVBA_27_P163_DBQ_HEMICANDLYMPHATIC_WF.DOC   Binary  Workflow Document
+      DVBA_27_P163_DBQ_KIDNEYCONDITIONS_WF.DOC    Binary  Workflow Document
+      DVBA_27_P163_DBQ_MALEREPRODUCTIVE_WF.DOC
+                                                  Binary  Workflow Document
+      DVBA_27_P163_DBQ_PROSTATECANCER_WF.DOC      Binary  Workflow Document
+  
+       b. Documentation may also be retrieved from the VistA Documentation 
+          Library (VDL) on the Internet at the following address. This web 
+          site is usually updated within 1-3 days of the patch release
+          date.
+  
+                http://www4.va.gov/vdl/application.asp?appid=133 
+  
+            
+ VI. INSTALLATION REQUIREMENTS/NOTES
+   
+   The following section provides pre-installation notes and requirements
+   for installing the software.
+    
+   1. Users On the System
+   
+    a. CAPRI GUI Users - This patch may be installed while users are
+       running the CAPRI GUI.  
+  
+    b. VistA Users - This patch may be installed with users on the
+       system, but should be loaded during non-peak hours to minimize
+       disruption to users and to reduce the possibility of errors when
+       the routines and file entries are updated.
+  
+    c. VistA Options - There are no VistA options to disable while
+       installing this patch.
+  
+   2. Software Installation Time
+   
+    a. The estimated installation time is less than 5 minutes during off 
+       peak hours.
+  
+   3. Required Builds
+  
+    a. The following is a list of REQUIRED builds for this KIDS software
+       distribution.  KIDS will not allow the installation of this patch
+       without their prior installation.
+  
+        Required Build(s):
+        ------------------
+        DVBA*2.7*143
+        DVBA*2.7*161
+  
+ VII. INSTALLATION INSTRUCTIONS
+  
+    The following section provides the steps for installing the software.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+      the KIDS distribution included with this message.
+  
+   2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+  
+   3. From this menu, you may now elect to use the following options (when
+      prompted for INSTALL NAME, enter DVBA*2.7*163).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed. 
+  
+          CAUTION: Do not use the KIDS "Full Comparison" option. Due to 
+          the length of some CAPRI Template names, the "Full Comparison"
+          option can go into a loop.  This problem has been reported to 
+          the Kernel developers. The "Second line of Routines Only", 
+          "Routines only", and "Old style Routine compare" options may be
+          used.
+  
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+  
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select package DVBA*2.7*163.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', answer NO.
+  
+   6. When prompted to 'Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO//', answer NO.
+  
+   7. NOTE: Pre/Post-init routine DVBA163P is a temporary routine used as
+      part of the pre/post-install process and will be automatically
+      deleted by KIDS after patch installation. However, in some cases
+      Cache doesn't always delete the routine. You may delete it manually
+      if you discover this at your site.
+  
+ VIII. TEST SITES 
+  
+    The following sites participated in the testing of the DVBA*2.7*163
+    software.  
+  
+    Test Sites
+    -----------
+    Alexandria
+    Denver
+    North Florida/South Georgia
+    Pittsburgh
+    Upstate New York
+    Miami
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA163P
+    Before:       n/a   After: B82401635  **163**
+Routine Name: DVBCQHA3
+    Before:       n/a   After:  B3618811  **163**
+Routine Name: DVBCQHA4
+    Before:       n/a   After:B158066365  **163**
+Routine Name: DVBCQKC1
+    Before:       n/a   After:  B3168711  **163**
+Routine Name: DVBCQKC2
+    Before:       n/a   After:B197977446  **163**
+Routine Name: DVBCQMR1
+    Before:       n/a   After:  B3327590  **163**
+Routine Name: DVBCQMR2
+    Before:       n/a   After:B231729813  **163**
+Routine Name: DVBCQMR3
+    Before:       n/a   After: B16446873  **163**
+Routine Name: DVBCQPC3
+    Before:       n/a   After:  B3061851  **163**
+Routine Name: DVBCQPC4
+    Before:       n/a   After:B164864227  **163**
+
+=============================================================================
+User Information:
+Entered By  : FAIRBROTHER,EILEEN            Date Entered  : NOV 09, 2010
+Completed By: DAWSON,JEREMIAH               Date Completed: MAY 23, 2011
+Released By : FRANCE,KATHI                  Date Released : MAY 23, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

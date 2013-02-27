@@ -1,0 +1,148 @@
+
+=============================================================================
+Run Date: MAR 09, 2011                     Designation: WEBV*1*20
+Package : WEBV - VISTA WEB                    Priority: Mandatory
+Version : 1        SEQ #17                      Status: Released
+                  Compliance Date: MAR 09, 2011
+=============================================================================
+
+
+Subject: VistAWeb v13 - NHIN/VLER Segment B / Imaging AWIV
+
+Category: 
+  - Other
+  - Informational
+
+Description:
+============
+
+ ************************************************************************
+ *  Version 13 of VistAWeb (build last updated 2/9/2011) will be        *
+ *  promoted to the production  server for national release on          *
+ *  Wednesday, March 9, 2011, at 9 p.m. EST.                            *
+ *                                                                      *
+ * NOTE: This patch is loaded on the National VistAWeb server. There is *
+ * nothing that local sites can or need to do besides communicate       *
+ * changes to users.                                                    *
+ ************************************************************************
+  
+ VistAWeb V13 includes the following enhancements:
+  
+ 1. Updates to NHIN (Nationwide Health Information Network) Providers
+    and Data:
+    - Added MedVirginia as a data provider.  They will provide data for
+      allergy, patient problems, outpatient pharmacy, labs (Chem & Hem),
+      Encounters, and Procedures. 
+    - Added Department of Defense as a data provider.
+    - Lab data from NHIN data providers will now be aggregated in the
+      Chem & Hem report.
+    - Domain specific messages from the NHIN providers will now appear in
+      the grid report for those domains.  Specifically, they will appear
+      in reports for Allergies, Patient Problems, Outpatient Pharmacy,
+      and Chem & Hem.
+  
+ 2. Updates to Broker Connections
+    - Changes to broker connections to support patch XWB*1.1*35. This will
+      increase server thru-put, and decrease network traffic.
+    - This change will be invisible to the users.
+  
+ 3. Addition of links in VistAWeb to be able to use the Advanced Web Image
+    Viewer Component (AWIV) for image display
+    - Added the ability for the VistaWeb browser to display AWIV Columns
+      and Image Icon links on the Progress Notes and the Radiology >>
+      Imaging categories within VistaWeb.
+  
+  IMPORTANT NOTE: This version of VistAWeb is the second step in providing 
+  the ability to view digital images within the VistAWeb browser.  The full
+  functionality to view images in VistAWeb was enabled when Vista Imaging
+  patch MAG*3.0*105 was nationally released on January 5, 2011.
+  
+  As an overview, Imaging Patch MAG*3.0*105 provides an installer for the
+  AWIV ActiveX component which is required to be on the user's workstation
+  in order for VistAWeb to be able to display digital images.
+  
+  The VistA Imaging team was responsible for the AWIV's ActiveX deployment
+  VA-wide with Imaging patch MAG*3.0*105 and that patch description 
+  provides instructions for installing the AWIV ActiveX component.
+  
+ 4. HART (Health Assessment Review Tool) report display
+    - Data displayed on the HART report was not truncated in the Comment
+      column, so the entire report appeared making the row unreasonably
+      tall.
+    - The report will now have similar truncating for HART data as is done
+      in CPRS. This will reduce the size of the report and make it easier
+      for the user to read. The entire text of the comment field will be
+      available in the detailed display window.
+ 
+ 5. Section 508 (Accessibility) Changes
+     NOTE: Most changes will be noticeable primarily by users that utilize 
+           accessibility tools, such as JAWS or WindowEyes
+    - Addition of links to the main content area in reports
+    - Rework of the report pages to use fewer web frames
+    - Addition of alternate text for some components
+  
+ 6. Remedy Tickets Resolved
+    #384880, #384940, #385962 - Allergy report errors out if a connection 
+       cannot be made to station 200 (patients with no station 200 data 
+       do not throw an error). 
+  
+ TEST SITES:
+ ==================================================================
+  San Diego, CA
+  East Orange, NJ
+  Seattle, WA (Puget Sound)
+  North Chicago, IL
+  Hampton, VA
+  
+ DOCUMENTATION INFORMATION:
+ ==================================================================
+ Please refer to the VistAWeb CPRS Access and Installation Guide, the 
+ VistAWeb User Manual, and the VistAWeb Technical Guide for more
+ information. The manuals are provided in Microsoft Word and Adobe PDF
+ formats on the web at the following addresses:
+     http://www.va.gov/vdl 
+     http://vista.med.va.gov/vistaweb
+  
+ The Adobe PDF files are also available for FTP transfer.
+ The preferred method is to FTP the files from:
+  
+   download.vista.med.va.gov
+  
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve documents directly from a specific server, 
+ as shown below. These files MUST be obtained in BINARY mode.
+  
+ CIO FIELD OFFICE     FTP ADDRESS              DIRECTORY 
+ Albany               ftp.fo-albany.med.va.gov [anonymous.software]
+ Hines                ftp.fo-hines.med.va.gov  [anonymous.software]
+ Salt Lake City       ftp.fo-slc.med.va.gov    [anonymous.software]
+  
+ Username is "anonymous" without the quotes. Once in the FTP server, change 
+ directory into the software directory (i.e., cd software).
+  
+ The names of the files are as shown below:
+   
+ VistAWeb User Manual: WEBV_1_20_UM.pdf 
+ VistAWeb Technical Manual: WEBV_1_20_TM.pdf 
+ VistAWeb CPRS Access & Server Installation Guide: WEBV_1_20_IG.pdf 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : MONSON,STEVEN R               Date Entered  : APR 22, 2009
+Completed By: SERVICE,JOHN                  Date Completed: MAR 09, 2011
+Released By : KREUZ,SHERI B                 Date Released : MAR 09, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,418 @@
+$TXT Created by ENFINGER,MARK J at MDEVCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Monday, 10/29/12 at 13:58
+=============================================================================
+Run Date: FEB 11, 2013                     Designation: PSO*7*390
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #345                      Status: Released
+                  Compliance Date: MAR 13, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*251   <<= must be installed BEFORE `PSO*7*390'
+                    (v)PSO*7*379   <<= must be installed BEFORE `PSO*7*390'
+                    (v)PSO*7*386   <<= must be installed BEFORE `PSO*7*390'
+                    (v)PSO*7*396   <<= must be installed BEFORE `PSO*7*390'
+                    (v)OR*3*352    <<= must be installed BEFORE `PSO*7*390'
+                    (v)PSS*1*169   <<= must be installed BEFORE `PSO*7*390'
+                    (v)PSO*7*398   <<= must be installed BEFORE `PSO*7*390'
+                    (v)PSO*7*401   <<= must be installed BEFORE `PSO*7*390'
+
+Subject: MOCHA 1 Enhancements 1 Outpatient Medications
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ ***************************Attention************************* 
+  
+ This patch is part of the Medication Order Check Healthcare Application 
+ (MOCHA)v1.0 Enhancements 1 group of patches. There are a total of eight 
+ patches and one .kid (host) file that must be installed as a group.  The 
+ patches must be installed in the following order:
+  
+ OR*3*352
+ PSS*1*164
+ PSS*1*169
+ PSO*7*390
+ PSO*7*417
+ PSJ*5*268
+ <xxx>_1_0_P23.kid
+ PSJ*5*260
+ PSJ*5*288
+  
+ For the ".kid" file, value of <xxx> will be determined by the ward 
+ automated dispensing equipment in use at your facility.  If no ward 
+ automated dispensing equipment is in use at your site, this file will 
+ not be needed. For those sites using Pyxis, xxx=PPU, for Omnicell sites,
+ xxx=OPU, and for McKesson sites, xxx=MPU.  To obtain this file or if 
+ additional information is required regarding this ".kid" file, please 
+ contact your site's Informatix contact.
+   
+ *** IMPORTANT *** 
+ PSO*7*417 must be installed immediately after 
+ installation of PSO*7*390. PSO*7*417 addresses a potential undefined 
+ error when renewing prescriptions without an allergy order check.
+  
+ ***NOTE***
+ After installation of this patch the second line of routine PSORENW 
+ is missing patch 388, and the second line of routine PSORXI is missing 
+ patch 387.  This will be corrected with patch PSO*7*417 which is part 
+ of this release, and which should be installed immediately following 
+ installation of this patch. 
+  
+ Patch PSO*7*390 will provide the following enhancements:
+  
+    1. Add menu option Check Drug Interaction [PSO CHECK DRUG INTERACTION]
+       to the Outpatient Pharmacy Manager [PSO MANAGER], Pharmacist Menu 
+       [PSO USER1] and Rx (Prescriptions) [PSO RX] menus
+  
+   2. Add ListMan hidden action [DX Check Interactions] to the Outpatient
+      Pharmacy medication profile template [PSO LM ACTIVE ORDERS]
+  
+   3. Add Inpatient Medication Orders for Outpatient (IMO) to the 
+      Drug-Drug Interaction and Therapeutic Duplication order checks
+  
+   4. Add Sign/symptoms to the Allergy/ADR order check display 
+      (remote/local).
+  
+   5. Creatinine Clearance (CrCl) and Body Surface Area (BSA) will be 
+      added to the Outpatient Medication Profile and Patient Information
+      Headers
+  
+   6. Add Observed/Historical and Severity to allergy/ADR warning display
+      info
+  
+   7. CPRS will incorporate the changes made in Backdoor Outpatient 
+      Pharmacy to include IMO orders in OP Enhanced Order Checks
+  
+   8. The word 'Pending Order' will be changed to 'Pending Drug'
+  
+   9. Patch OR*3*352, which is included in this project release, created the
+      Drug Allergies sub-file in the Order Check Instances file (#100.05).
+      After installation of the MOCHA V1.0 Enhancement 1 patches,
+      Drug-Allergy order checks that occur in back door pharmacy will be
+      stored in the Order Check Instances file.
+  
+ ****************************************************************
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Options Associated:
+ --------------------
+  
+  Option Name                 Type       Action
+  -----------                 ----       ------
+  PSO CHECK DRUG INTERACTION  Run        SEND TO SITE
+  PSO MANAGER                 Menu       USE AS LINK FOR MENU ITEM
+  PSO USER1                   Menu       USE AS LINK FOR MENU ITEM
+  PSO RX                      Menu       USE AS LINK FOR MENU ITEM
+  
+ Protocols Associated:
+ ---------------------
+  
+  Protocol Name                          Action
+  -------------                          ------
+  PSO DISPLAY DRUG ALLERGIES             SEND TO SITE                
+  PSO DRUG CHECK                         SEND TO SITE                
+  PSO FILL/RELEASE DATE DISPLAY          SEND TO SITE                
+  PSO HIDDEN ACTIONS                     USE AS LINK FOR MENU/ITEM/  
+  PSO HIDDEN ACTIONS #2                  SEND TO SITE                
+  PSO LM ACTION PROFILE                  ATTACH TO MENU              
+  PSO LM ADD INTERVENTION                SEND TO SITE                
+  PSO LM DELETE INTERVENTION             SEND TO SITE  
+  PSO LM DISPLAY ORDER STATUS            ATTACH TO MENU              
+  PSO LM EDIT INTERVENTION               SEND TO SITE                
+  PSO LM HIDDEN OTHER                    SEND TO SITE                
+  PSO LM HIDDEN OTHER #2                 USE AS LINK FOR MENU/ITEM/  
+  PSO LM INPATIENT MEDICATION PROFILE    SEND TO SITE                
+  PSO LM INTERVENTION MENU               SEND TO SITE                
+  PSO LM MULTI-RX PRINT                  ATTACH TO MENU              
+  PSO LM NON-VA MEDS RPT                 ATTACH TO MENU              
+  PSO LM PRINT INTERVENTION              SEND TO SITE   
+  PSO LM PRINT MED INFO                  ATTACH TO MENU              
+  PSO LM QUEUE TO CMOP                   SEND TO SITE                
+  PSO LM VIEW INTERVENTION               SEND TO SITE                
+  PSO RDI REMOTE                         SEND TO SITE                
+  PSO SPEED CANCEL                       SEND TO SITE                
+  PSO SPEED PULL SUSPENSE                SEND TO SITE                
+  PSO SPEED REFILL                       SEND TO SITE                
+  PSO SPEED RELEASE                      SEND TO SITE                
+  PSO SPEED RENEW                        SEND TO SITE 
+  PSO SPEED REPRINT                      SEND TO SITE                
+  PSO SPEED SIG LOG REPRINT              SEND TO SITE                
+  VALM DOWN A LINE                       SEND TO SITE                
+  VALM FIRST SCREEN                      SEND TO SITE                
+  VALM GOTO PAGE                         SEND TO SITE                
+  VALM LAST SCREEN                       SEND TO SITE                
+  VALM LEFT                              SEND TO SITE              
+  VALM NEXT SCREEN                       SEND TO SITE              
+  VALM PREVIOUS SCREEN                   SEND TO SITE  
+  VALM PRINT LIST                        SEND TO SITE              
+  VALM PRINT SCREEN                      SEND TO SITE              
+  VALM QUIT                              SEND TO SITE              
+  VALM REFRESH                           SEND TO SITE              
+  VALM RIGHT                             SEND TO SITE              
+  VALM SEARCH LIST                       SEND TO SITE              
+  VALM TURN ON/OFF MENUS                 SEND TO SITE              
+  VALM UP ONE LINE                       SEND TO SITE   
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+  
+  Template Name                          Action
+  -------------                          ------
+  PSO LM ACTIVE ORDERS                   SEND TO SITE
+  PSO LM ORDER SELECTION                 SEND TO SITE
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Associated Change Requests: 
+ ---------------------------
+ CR1005/CCR4538
+ CR1005/CCR5859
+ CR1007/CCR4536
+ CR2572/CR2577/CCR3904
+ CR789/CR793/CCR4410
+ CR1113/CCR4414
+ CR1114/CCR4415
+ CR2734/CCR5209
+ CR5183/CCR5198
+ CR5256
+  
+ Test Sites:
+ -----------
+ Boston, MA
+ Fresno, CA
+ West Palm Beach, FL
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+ Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:  
+ http://www.va.gov/vdl/
+  
+    FILE NAME                    DESCRIPTION
+    =========                    ===========
+  
+ PSO_7_MAN_UM_R0113.PDF          Outpatient Pharmacy v7.0 Manager's
+                                 User Manual
+  
+ PSO_7_P390_MAN_UM_CP.PDF        Outpatient Pharmacy v7.0 Manager's
+                                 User Manual Change Pages
+  
+ PSO_7_TECH_UM_R0113.PDF         Outpatient Pharmacy v7.0 Technician's
+                                 User Manual
+  
+ PSO_7_P390_TECH_UM_CP.PDF       Outpatient Pharmacy v7.0 Technician's
+                                 User Manual Change Pages
+  
+ PSO_7_TM_R0113.PDF              Outpatient Pharmacy v7.0 Technical
+                                 Manual/Security Guide
+  
+ PSO_7_P390_TM_CP.PDF            Outpatient Pharmacy v7.0 Technical
+                                 Manual/Security Guide Change Pages
+  
+ PSO_7_PHAR_UM_R0113.PDF         Outpatient Pharmacy v7.0 Pharmacist's
+                                 User Manual
+  
+ PSO_7_P390_PHAR_UM_CP.PDF       Outpatient Pharmacy v7.0 Pharmacist's
+                                 Change Pages
+  
+ M1E1_PSO_7_PSJ_5_PSS_1_RN.PDF   Medication Order Check Healthcare
+                                 Application (MOCHA) v1 Enhancements
+                                 1 Release Notes 
+  
+ Installation Instructions:
+ --------------------------
+  
+ This patch should not be installed when Outpatient Medications options
+ are being used. If this is not possible, we recommend it should be 
+ installed during Non-Peak hours.
+  
+  
+ Install Time - less than 5 minutes
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option to unload the build.  
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSO*7.0*390):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter "PSO*7.0*390" at the INSTALL NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//'  answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 86
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCAN
+    Before: B49661114   After: B51638197  **11,21,24,27,32,37,88,117,131,
+                                           185,253,251,375,379,390**
+Routine Name: PSOCAN2
+    Before: B82356240   After: B85271948  **8,18,62,46,88,164,235,148,
+                                           259,281,287,251,375,379,396,
+                                           390**
+Routine Name: PSODDPR2
+    Before:B150369494   After:B104633902  **251,375,379,390**
+Routine Name: PSODDPR4
+    Before: B94930565   After:B102172775  **251,375,387,379,390**
+Routine Name: PSODDPR5
+    Before: B80117354   After:B158488185  **251,375,379,390**
+Routine Name: PSODDPR7
+    Before:       n/a   After: B68911471  **390**
+Routine Name: PSODDPR8
+    Before:       n/a   After: B30129604  **390**
+Routine Name: PSODDPRE
+    Before:B127148270   After:B132472323  **251,375,387,379,390**
+Routine Name: PSODEM
+    Before: B13834682   After: B15804329  **5,19,233,258,326,390**
+Routine Name: PSODGAL1
+    Before: B23109209   After: B77114277  **251,401,390**
+Routine Name: PSODGAL2
+    Before:       n/a   After: B20866110  **390**
+Routine Name: PSODRG
+    Before: B71911727   After: B74687625  **20,23,36,53,54,46,112,139,
+                                           207,148,243,268,324,251,375,
+                                           387,398,390**
+Routine Name: PSOLMUTL
+    Before: B13307787   After: B14836265  **19,46,84,99,131,132,148,268,
+                                           225,305,386,390**
+Routine Name: PSON52
+    Before: B65058460   After: B65058460  **1,16,23,27,32,46,71,111,124,
+                                           117,131,139,157,143,219,148,
+                                           239,201,268,260,225,303,358,
+                                           251,387,379,390**
+Routine Name: PSONEW
+    Before: B28865824   After: B41741762  **11,27,32,46,94,130,268,225,
+                                           251,379,390**
+Routine Name: PSOORNE4
+    Before: B81172924   After: B85067804  **11,27,32,36,46,75,96,103,99,
+                                           117,131,225,386,390**
+Routine Name: PSOORNEW
+    Before: B78892061   After: B81591143  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390**
+Routine Name: PSOORUT2
+    Before: B65940792   After: B95782995  **11,146,132,182,233,243,261,
+                                           268,264,305,390**
+Routine Name: PSORENW
+    Before: B35245788   After: B38420531  **11,27,30,46,71,96,100,130,
+                                           148,206,390**
+Routine Name: PSORENW4
+    Before: B56734074   After: B60124334  **11,23,27,32,37,64,46,75,71,
+                                           100,130,117,152,148,264,225,
+                                           301,390**
+Routine Name: PSORXEDT
+    Before: B39990451   After: B44148603  **21,23,44,71,146,185,148,253,390**
+Routine Name: PSORXI
+    Before: B15276698   After: B15382592  **268,324,251,390**
+Routine Name: PSOUTL
+    Before: B96529999   After:B125518087  **1,21,126,174,218,259,324,390**
+Routine Name: PSOVER1
+    Before:B118625991   After:B126374469  **32,46,90,131,202,207,148,243,
+                                           268,281,324,358,251,375,387,
+                                           379,390**
+ 
+Routine list of preceding patches: 301, 326, 386, 396, 398, 401
+
+=============================================================================
+User Information:
+Entered By  : ENFINGER,MARK                 Date Entered  : MAY 04, 2011
+Completed By: YARBER,KIMBERLY               Date Completed: FEB 11, 2013
+Released By : VECE,VIRGINIA                 Date Released : FEB 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,191 @@
+$TXT Created by BAUMANN,SCOTT A at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Tuesday, 12/14/10 at 10:38
+=============================================================================
+Run Date: MAY 31, 2011                     Designation: PRC*5.1*152
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #128                    Status: Released
+                  Compliance Date: JUL 01, 2011
+=============================================================================
+
+
+Subject: 1358 MISC. OBLIG. - FEE BASIS APIS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This enhancement patch introduces two new application program interfaces
+ (APIs) that provide information on 1358 miscellaneous obligations.  The
+ Fee Basis application will call these APIs to enforce and report on
+ segregation of duties for the Certifier of a Fee payment batch. Per
+ segregation of duties a Certifier cannot have previously acted in the role
+ of Requestor, Approver or Obligator on the 1358 miscellaneous obligation
+ that is linked to the payment batch.
+  
+ This patch does not modify any IFCAP options or processes.
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ 20080801 Enhancing Internal Controls and Reporting Capabilities for 1358 
+          Misc Obligations: Implements adequate controls with respect to 
+          segregation of duties and oversight by contracting officials,
+          improving documentation requirements, and enhancing 1358
+          reporting capabilities within Integrated Funds Distribution,
+          Control Point Activity, Accounting and Procurement (IFCAP) that
+          will be used at the station, Veterans Integrated Service Network
+          (VISN), and enterprise levels.  A Government Accountability
+          Office (GAO) review questioned VHA's internal control standards
+          governing the authorization and use of miscellaneous obligations
+          as well as oversight abilities. Direction by the Congressional
+          Oversight Committee of the House.  GAO Report - GAO-08-1056T
+          Improvements Needed in Design of Controls over Miscellaneous 
+          Obligations, July 31, 2008.  Department of Veterans Affairs
+          Memorandum, Interim Memos (Interim Guidance on Miscellaneous
+          Obligations, VA Form 4-1358, dated January 30, 2008 AND
+          Department of Veterans Affairs Memorandum, Revised Guidance for
+          Processing of Miscellaneous Obligations, VA Form 4-1358, dated
+          May 18, 2008.
+  
+  
+ The changes made by this patch are described below:
+  
+ 1. ADD NEW API UOKCERT^PRCEMOA()
+            
+    This API verifies that the person would not violate segregation of duty
+    when certifying an invoice associated with a 1358 miscellaneous
+    obligation by ensuring that they have not previously acted as a
+    requestor, approver, or obligator on that 1358.  This new API is
+    documented by integration agreement #5573.
+  
+    An adjustment (increase/decrease) to a 1358 miscellaneous obligation
+    will only impact the API results if that adjustment has been obligated
+    by the accounting technician.
+  
+  
+ 2. ADD NEW API $$EV1358^PRCEMOA()
+  
+    This API provides information on the events (initial obligation and
+    increase/decrease adjustments) and IFCAP actors (requestor, approving
+    official, obligator) for a specified 1358 miscellaneous obligation.
+    This new API is documented by integration agreement #5574.
+  
+  
+ Test Sites:
+ -----------
+ Central Texas, TX
+ Erie,  PA
+ St. Cloud,  MN 
+ Tomah, WI
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.va.gov/vdl/
+  
+ Title                         File Name                       FTP Mode
+ IFCAP TECH MANUAL         ifcap5_1tech manual.pdf             (binary)
+ -----------------------------------------------------------------------
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ This patch may be installed during normal business hours with users on the
+ system.
+ Install Time - less than 5 minutes
+  
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PRC*5.1*152):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCEMOA
+    Before:       n/a   After: B37610580  **152**
+ Description of Changes:
+  New routine that contains the APIs.
+
+
+=============================================================================
+User Information:
+Entered By  : MCGAUGH,MAVIS L               Date Entered  : OCT 21, 2010
+Completed By: LYNCH,MARY F.                 Date Completed: MAY 25, 2011
+Released By : NELSON,VICKI M                Date Released : MAY 31, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

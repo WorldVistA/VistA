@@ -1,0 +1,248 @@
+$TXT Created by ROCHA,MARCELO at CFDA.FO-BIRM.MED.VA.GOV  (KIDS) on Tuesday, 10/12/10 at 15:21
+=============================================================================
+Run Date: APR 20, 2011                     Designation: PSS*1*158
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #142                      Status: Released
+                  Compliance Date: MAY 21, 2011
+=============================================================================
+
+
+Subject: FDA MEDICATION GUIDES - ON-DEMAND DISPLAY (INCREMENT 2)
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch contains software modifications to the Pharmacy Data Management 
+ (PDM) V. 1.0 application to support the FDA Medication Guides project. The 
+ project objective is to allow pharmacy staff to retrieve the FDA Medication 
+ Guide for prescriptions that contain FDA approved information that can help
+ patients avoid serious adverse events. The FDA requires that Medication
+ Guides be included with certain prescribed drugs and biological products 
+ when the Agency determines that: 
+  
+  . Certain information is necessary to prevent serious adverse effects 
+  . Patient decision-making should be advised by information about a known
+    serious side effect with a product, or 
+  . Patient adherence to directions for the use of a product is essential
+    to its effectiveness. 
+  
+ The features in the FDA Medication Guides project are being delivered in
+ incremental releases. This patch is part of the Increment 2 release. The 
+ features included in this release are:
+  
+  . Establishment of a Server Repository for FDA Medication Guides within 
+    the VA network.
+  
+  . Updates to 900+ entries in the VA PRODUCT file (#50.68) to store the 
+    corresponding FDA Medication Guide document name will be provided via
+    the NDF Monthly Data Update patches.
+  
+  . Introduction of a PC based Java software component to enable the
+    automatic retrieval of an FDA Medication Guide from within VistA. The
+    software does not require any direct user interaction. It works as a 
+    bridge between VistA and the PC where it is installed. The software 
+    identifies a request from VistA for a specific FDA Medication Guide and
+    automatically retrieves it from the Server Repository and displays to the
+    user via the Internet Explorer browser. 
+   
+  . Introduction of a new option called Display FDA Medication Guide [PSN MED
+    GUIDE] to the National Drug File V. 4.0 application for retrieving and 
+    displaying the FDA Medication Guide for a specific VA Product.
+  
+  . Introduction of new functionality to the Patient Prescription Processing
+    [PSO LM BACKDOOR] option in the Outpatient Pharmacy V. 7.0 application
+    for retrieving and displaying the FDA Medication Guide for a specific 
+    prescription.
+   
+ Below is a list of all the applications involved in this release along
+ with their patch number:
+   
+    APPLICATION/VERSION                                  PATCH
+    -----------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*343
+    NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*263
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*158
+    
+ The FDA Medication Guides project is expected to complete in three 
+ increments. Among other features, the next Increment will automate the 
+ printing of FDA Medication Guides for prescriptions dispensed by the VA
+ via Outpatient Pharmacy application when the prescription label is printed.
+    
+ The following modifications are included in this patch (PSS*1*158):
+    
+   1. New Data Dictionary field added to PHARMACY SYSTEM (#59.7) file
+  
+   A new field called FDA MED GUIDE SERVER URL (#100) is being added to the
+   PHARMACY SYSTEM (#59.7) file. This field will be used to store the FDA
+   Medication Guide Web server URL which will be used in conjunction with
+   the FDA MED GUIDE (#100) field in the VA PRODUCT (#50.68) file to compose
+   the complete FDA Medication Guide URL for a specific VA Product entry.
+   
+   2. A post-install routine will run to set this new field with the value
+   shown below, which is the current FDA Medication Guides web Server URL:
+   
+      http://vaww.national.cmop.va.gov/FDAMedGuides/
+   
+   Note: Integration Control Registration (ICR) #2613 is being modified to
+         include this new field in the list of fields that can be read by
+         the National Drug File (NDF) application.
+   
+   
+ Associated Patient Safety Issues:
+ =================================
+ N/A
+  
+  
+ Associated New Service Request (NSR):
+ =====================================
+ N/A 
+  
+ Associated Remedy Ticket(s):
+ ============================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ Central Plains HCS, NE
+ North Chicago, IL
+ Palo Alto HCS, CA
+   
+  
+ Documentation Retrieval:
+ ========================
+ The documentation can be obtained from the ANONYMOUS.SOFTWARE directory at 
+ one of the OI Field Offices. The preferred method is to FTP the files from
+ DOWNLOAD.VISTA.MED.VA.GOV, which will transmit the files from the first
+ available server.  Alternatively, sites may elect to retrieve the files
+ from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY
+    Albany              FTP.FO-ALBANY.MED.VA.GOV       anonymous.software
+    Hines               FTP.FO-HINES.MED.VA.GOV        anonymous.software
+    Salt Lake City      FTP.FO-SLC.MED.VA.GOV          anonymous.software
+   
+     The documentation distribution includes:
+  
+     FILE NAME                         DESCRIPTION
+     ------------------------------------------------------------------------
+     PHAR_FDA_MED_GUIDE_REL2_RN.PDF   FDA Medication Guides Project Release
+                                      Notes
+     PHAR_FDA_MED_GUIDE_REL2_IG.PDF   FDA Medication Guides Project 
+                                      Installation Guide
+   
+ Documentation can also be retrieved from the VA Software Documentation 
+ Library (VDL) on the Internet at the following address, 
+ http://www.va.gov/vdl. 
+  
+   
+ Project Installation Instructions:
+ ==================================
+ In addition to this patch, the FDA Medication Guide Increment 2 project
+ also contains a Java Application component, which is distributed in the
+ PSN_4_P263.ZIP file. This file contains an executable file that should
+ be installed on Pharmacy user computers that will be used for retrieving
+ FDA Medication Guides via Outpatient Pharmacy or National Drug File 
+ applications. For detailed installation instructions please refer to the
+ "FDA Medication Guides Project Installation Guide" document.
+  
+ FTP Instructions:
+ =================
+ The files listed below may be obtained via FTP.  The preferred method is 
+ to FTP the files from:
+  
+    download.vista.med.va.gov
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+    CIO FIELD OFFICE   FTP ADDRESS                 DIRECTORY
+    ----------------   -------------------------   --------------------
+    Albany             ftp.fo-albany.med.va.gov    [anonymous.software]
+    Hines              ftp.fo-hines.med.va.gov     [anonymous.software]
+    Salt Lake City     ftp.fo-slc.med.va.gov       [anonymous.software]
+  
+  
+    File Name           Contents                 Retrieval Format
+    --------------      ----------------------   ----------------
+    PSN_4_P263.ZIP      File(s) indented below   BINARY
+  
+     - On-Demand_Med_Guide_Viewer-1.0.0.11_setup.exe
+                        Install file for the Java Application 
+                        component.
+  
+  
+ Patch Installation Instructions
+ ===============================
+ Patch installation will take less than 2 minutes. It is recommended that
+ installation be queued for off peak hours.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSS*1.0*158).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSS*1.0*158.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+  
+ Java Application Component Installation Instructions
+ ====================================================
+ In order to install the Java Application component follow these steps:
+  
+   1. Unzip the PSN_4_P263.ZIP file
+  
+   2. Copy the On-Demand_Med_Guide_Viewer-1.0.0.11_setup.exe executable
+      file onto a local directory.
+  
+   3. Run the executable file. Note: you must have administrator rights
+      on the machine when you run it.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;09/30/97;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS158P
+    Before:       n/a   After:   B330463  **158**
+
+=============================================================================
+User Information:
+Entered By  : ROCHA,MARCELO                 Date Entered  : AUG 18, 2010
+Completed By: GREER,MIKE                    Date Completed: APR 20, 2011
+Released By : TEAGUE,LYN                    Date Released : APR 20, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

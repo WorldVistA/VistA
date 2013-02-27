@@ -1,0 +1,335 @@
+$TXT Created by DEWAYNE,BRANDON PAUL at SMA.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 10/17/11 at 14:52
+=============================================================================
+Run Date: DEC 29, 2011                     Designation: FB*3.5*133
+Package : FB - FEE BASIS                      Priority: EMERGENCY
+Version : 3.5       SEQ #111                    Status: Released
+                  Compliance Date: JAN 04, 2012
+=============================================================================
+
+Associated patches: (v)FB*3.5*122  <<= must be installed BEFORE `FB*3.5*133'
+
+Subject: FEE 5010 PAYMENT FILE CHANGES
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement ()
+
+Description:
+============
+
+ ************************************************************************
+ *  Please make sure FB*3.5*122 has been successfully installed before  *
+ *                   installing FB*3.5*133.                             *
+ *                                                                      *
+ *  FB*3.5*133 MUST be installed immediately after FB*3.5*122 to avoid  *
+ *                application/processing errors.                        *
+ ************************************************************************
+  
+ This patch moves several new Fee 5010 fields in the FEE BASIS PAYMENT
+ (#162) file from the INITIAL TREATMENT DATE multiple to the SERVICE
+ PROVIDED multiple. This is required in order to avoid provider information
+ from being overwritten under the following set of circumstances:
+   - A patient has two different claims that have the same vendor and
+     date of service.
+  
+ The affected fields added in FB*3.5*121 that will be moved are:
+ ^FBAAC(D0,1,D1,1,D2,2)=
+    (#58) ATTENDING PROV NAME [1F] ^ (#59) ATTENDING PROV
+    ==>NPI [2F] ^ (#60) ATTENDING PROV TAXONOMY CODE [3F] ^
+    ==>(#61) OPERATING PROV NAME [4F] ^ (#62) OPERATING PROV
+    ==>NPI [5F] ^ (#63) RENDERING PROV NAME [6F] ^ (#64)
+    ==>RENDERING PROV NPI [7F] ^ (#65) RENDERING PROV
+    ==>TAXONOMY CODE [8F] ^ (#66) SERVICING PROV NAME [9F] ^
+    ==>(#67) SERVICING PROV NPI [10F] ^ (#68) REFERRING PROV
+    ==>NAME [11F] ^ (#69) REFERRING PROV NPI [12F] ^
+ and the following created/installed in patch FB*3.5*122:
+ ^FBAAC(D0,1,D1,1,D2,4)=
+    (#76) SERVICING FACILITY ADDRESS [1F] ^ (#77)
+    ==>SERVICING FACILITY CITY [2F] ^ (#78) SERVICING
+    ==>FACILITY STATE [3P:5] ^ (#79) SERVICING FACILITY ZIP
+    ==>[4F] ^
+  
+ The new locations are:
+ ^FBAAC(D0,1,D1,1,D2,1,D3,4)=
+    (#58) ATTENDING PROV NAME [1F] ^ (#59) ATTENDING
+    ==>PROV NPI [2F] ^ (#60) ATTENDING PROV TAXONOMY
+    ==>CODE [3F] ^ (#61) OPERATING PROV NAME [4F] ^
+    ==>(#62) OPERATING PROV NPI [5F] ^ (#63) RENDERING
+    ==>PROV NAME [6F] ^ (#64) RENDERING PROV NPI [7F] ^
+    ==>(#65) RENDERING PROV TAXONOMY CODE [8F] ^ (#66)
+    ==>SERVICING PROV NAME [9F] ^ (#67) SERVICING PROV
+    ==>NPI [10F] ^ (#68) REFERRING PROV NAME [11F] ^
+    ==>(#69) REFERRING PROV NPI [12F] ^
+ ^FBAAC(D0,1,D1,1,D2,1,D3,5)=
+    (#76) SERVICING FACILITY ADDRESS [1F] ^ (#77)
+    ==>SERVICING FACILITY CITY [2F] ^ (#78) SERVICING
+    ==>FACILITY STATE [3P:5] ^ (#79) SERVICING FACILITY
+    ==>ZIP [4F] ^
+  
+ Changes in the Enter Payment [FBAA ENTER PAYMENT], Edit Payment 
+ [FBAA EDIT PAYMENT], Invoice Display [FBAA INVOICE DISPLAY] and 
+ Potential Cost Recovery Report (PCRR) [FB PCR], options will be 
+ necessary to enter/edit and display the moved data.
+  
+ This patch requires FB*3.5*122 
+  
+ Patch Components
+ ================
+ Files and Fields Associated:
+  
+ File Name (Number)          Field Name (Number)    New/Modified/Deleted
+ ------------------------------------------------------------------------
+ FEE BASIS PAYMENT (162)     ATTENDING PROV NAME (#58)           Modified
+ FEE BASIS PAYMENT (162)     ATTENDING PROV NPI (#59)            Modified
+ FEE BASIS PAYMENT (162)     ATTENDING PROV TAXONOMY CODE (#60)  Modified
+ FEE BASIS PAYMENT (162)     OPERATING PROV NAME (#61)           Modified
+ FEE BASIS PAYMENT (162)     OPERATING PROV NPI (#62)            Modified
+ FEE BASIS PAYMENT (162)     RENDERING PROV NAME (#63)           Modified
+ FEE BASIS PAYMENT (162)     RENDERING PROV NPI (#64)            Modified
+ FEE BASIS PAYMENT (162)     RENDERING PROV TAXONOMY CODE (#65)  Modified
+ FEE BASIS PAYMENT (162)     SERVICING PROV NAME (#66)           Modified
+ FEE BASIS PAYMENT (162)     SERVICING PROV NPI (#67)            Modified
+ FEE BASIS PAYMENT (162)     REFERRING PROV NAME (#68)           Modified
+ FEE BASIS PAYMENT (162)     REFERRING PROV NPI (#69)            Modified
+ FEE BASIS PAYMENT (162)     SERVICING FACILITY ADDRESS  (#76)   Modified
+ FEE BASIS PAYMENT (162)     SERVICING FACILITY CITY (#77)       Modified
+ FEE BASIS PAYMENT (162)     SERVICING FACILITY STATE (#78)      Modified
+ FEE BASIS PAYMENT (162)     SERVICING FACILITY ZIP (#79)        Modified
+  
+ Forms Associated: N/A
+ Mail Groups Associated: N/A
+ Options Associated: N/A
+ Protocols Associated: N/A
+ Security Keys Associated: N/A
+ Templates Associated: N/A
+ Parameters Associated: N/A
+ Remote Procedures Associated: N/A
+  
+  
+ New Service Request (NSRs):
+ ------------------------------------------------------------------------
+ 20090705 VistA Fee HIPAA 5010 Implementation, Discovery and Requirements
+          To meet the expanding needs of Electronic Data Interchange
+          (EDI) processes and address the system and data changes
+          required with the 5010 version, the Fee Basis package will need
+          to collect, store and report additional elements from the claim
+          data.  National Provider Identifiers (NPI) and physical service
+          locations are needed to better inform downstream or dependent
+          processes.  Much of the additional data collection is needed to
+          support (1) revenue functions, where a third party insurance
+          has a financial obligation surrounding payments made for
+          non-service connected episodes of care and (2) pricing
+          functions, where the service location impacts the allowed
+          amount for a healthcare service.
+  
+  The fixes made by this patch are described below:
+  
+ 1. MOVE DATA FIELDS FOR 5010 PROVIDER AND SERVICING FACILITY
+  
+  Problem:
+  --------
+  When a patient has two different claims that have the same vendor and
+  date of service, some 5010 data under the Initial Treatment Date
+  multiple is being overwritten for outpatient claims.
+  
+  Resolution:
+  -----------
+  Moved the 5010 provider and servicing facility fields under the
+  Service Provided Multiple in the FEE BASIS PAYMENT (#162) file.
+  
+ 2. ENSURE ENTER, EDIT AND VIEW SCREENS DISPLAY THE MOVED DATA FIELDS
+  
+  Problem:
+  --------
+  Outpatient Enter Payment [FBAA ENTER PAYMENT], Edit Payment 
+  [FBAA EDIT PAYMENT], Invoice Display [FBAA INVOICE DISPLAY] and the 
+  Potential Cost Recovery Report (PCRR) [FB PRC] options need to edit 
+  and read from the new field locations.
+  
+  Resolution:
+  -----------
+  Edited the following routines to accomplish the enter/edit/view
+  requirements:
+  FBUTL8   (Created in FB*3.5*122). Removed FILE tag and code as it is no
+           longer needed
+  FBAACO   removed reference to FILE^FBUTL8 that is no longer needed
+  FBAACO2  Merged the two separate ^DIE calls into the main call since
+           the fields are on the same level now
+  FBAACO3  Merged the two separate ^DIE calls into the main call since
+           the fields are on the same level now
+  FBAAPET  Merged the two separate ^DIE calls into the main call since
+           the fields are on the same level now
+  FBAAPCR2 Retrieving the new fields from the SERVICE PROVIDED level
+           instead of the SERVICE DATE level
+  FBAAPIN  updated the nodes to extract the provider information to be
+           displayed during Invoice Display (changes within PROV linetag)
+  FBXIP133 (New pre/post install routine) to remove old data dictionary
+           fields in the wrong location in file FEE BASIS PAYMENT (#162)
+  
+ 3. ENSURE LINE ITEM PROVIDER INFORMATION WAS BEING SAVED PROPERLY 
+    FOR CIVIL HOSPITAL
+  
+  Problem:
+  --------
+  When trying to enter the line item provider information for a civil
+  hospital claim, the information was not being properly saved.
+  
+  Resolution:
+  -----------
+  A variable was improperly being newed which was preventing the data
+  from being saved properly. This fix was made in FBUTL8
+  
+ 4.ENSURE LINE ITEM PROVIDER INFORMATION WAS BEING EDITED PROPERLY 
+    FOR CIVIL HOSPITAL
+  
+  Problem:
+  --------
+  When trying to edit the line item provider information for a civil
+  hospital claim, the information was not being properly saved.
+  
+  Resolution:
+  -----------
+  Made changes to the routine to allow for proper saving of the edited
+  line item provider information. This fix was made in FBCHEP1. 
+  
+  TEST SITES                       Size/Type
+  ===================================================
+  El Paso, TX                      Medium
+  Gainesville (N FL/S GA)          Large/Integrated
+  Big Spring, TX                   Small
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ Documentation can be found on the VA Software Documentation Library
+ at: http://www.va.gov/vdl/
+  
+  Title                            File Name      
+  --------------------------------------------------
+  Installation Guide FB*3.5*133    FB_3_5_133_ig.pdf       
+  Release Notes FB*3.5*133         FB_3_5_133_rn.pdf      
+  Technical Manual                 fb3_5tm.pdf             
+  Technical Manual                 fb3_5tm.doc
+  Fee Basis User Manual            fb_35_um.pdf          
+  Fee Basis User Manual            fb_35_um.doc
+  
+  Sites may wish to FTP the files from download.vista.med.va.gov.
+  This transmits the files from the first available FTP server. Sites may
+  also elect to retrieve software directly from a specific server as
+  follows:
+  
+  Albany      ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines        ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Below is a list of the files related to this patch that will be needed
+ and available via the FTP sites listed above.
+  
+ File Description                 File Name             FTP Mode
+ -----------------------------------------------------------------
+ Installation Guide FB*3.5*133    FB_3_5_133_ig.pdf     Binary
+ Release Notes FB*3.5*133         FB_3_5_133_rn.pdf     Binary
+ Technical Manual                 fb3_5tm.pdf           Binary
+ Fee Basis User Manual            fb_35_um.pdf          Binary 
+  
+ Patch Installation:
+  
+ Pre/Post-Installation Overview
+ ------------------------------
+ The pre-installation routine FBXIP133 will delete the old 5010 provider
+ and service facility fields from the FEE BASIS PAYMENT (#162) file in
+ preparation for the installation to create the fields in a new
+ location.
+  
+ The post-install routine FBXIP133 will queue a Taskman job to remove
+ any test data from FB*3.5*122 test sites that may be in the old field
+ locations for 5010 provider and servicing facility address.
+  
+ Installation Instructions
+ -------------------------
+ Fee Basis and Fee Basis Claims System (FBCS) users should not be on the
+ system during installation due to the changes to the data dictionary for
+ the FEE BASIS PAYMENT file.
+  
+ Install Time - less than 5 minutes
+  
+ The pre/post installation routine FBXIP133 may be deleted after the
+ tasked job from the post-install has completed.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, you may elect to use the
+    following option. When prompted for the INSTALL enter the patch
+    FB*3.5*133.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD.s or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD.s, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?'
+     answer NO
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols?' answer NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAACO
+    Before: B28594326   After: B28861560  **4,61,79,116,122,133**
+Routine Name: FBAACO2
+    Before: B13323096   After: B14116879  **4,55,61,77,116,122,133**
+Routine Name: FBAACO3
+    Before: B50872609   After: B48919280  **4,38,55,61,116,122,133**
+Routine Name: FBAAPET
+    Before: B35557510   After: B35047442  **4,38,55,61,77,116,122,133**
+Routine Name: FBAAPIN
+    Before: B33397999   After: B33741138  **4,61,122,133**
+Routine Name: FBCHEP1
+    Before: B11345024   After: B11600569  **38,61,122,133**
+Routine Name: FBPCR2
+    Before: B61489051   After: B77224131  **4,48,55,69,76,98,122,133**
+Routine Name: FBUTL8
+    Before: B31445484   After: B25540087  **122,133**
+Routine Name: FBXIP133
+    Before:       n/a   After: B10333437  **133**
+ 
+Routine list of preceding patches: 122
+
+=============================================================================
+User Information:
+Entered By  : CLARK,KAREN Y                 Date Entered  : OCT 12, 2011
+Completed By: DEWAYNE,BRANDON               Date Completed: DEC 28, 2011
+Released By : CAULFIELD,MARY                Date Released : DEC 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,150 @@
+$TXT Created by GOLDSMITH,RHONDA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 03/23/12 at 05:06
+=============================================================================
+Run Date: JUN 18, 2012                     Designation: PRS*4*135
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #123                      Status: Released
+                  Compliance Date: JUN 19, 2012
+=============================================================================
+
+Associated patches: (v)PRS*4*130   <<= must be installed BEFORE `PRS*4*135'
+
+Subject: OCCUPATION SERIES 0679 TO HYBRID STATUS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  Effective June 17, 2012, occupation series code 0679 (Medical Support 
+  Assistant) will be converted to Hybrid status per Public Law 111-163,
+  the Omnibus Health Services Act.
+  
+  Per Payroll & HR Systems Service, occupation series code 0679 is in 
+  addition to the codes previously converted for Public Law 111-163 
+  in patch PRS*4*130.
+  
+    
+  ASSOCIATED NSR(s):
+  ==================
+  NA   
+  
+     
+  ASSOCIATED REMEDY TICKET(S):
+  ============================
+  1. HD0000000603725 - Occupation Series 0679 Converted to Hybrid Status
+  
+  
+  PARTICIPATING TEST SITES:
+  =========================
+  VA Black Hills HCS
+  St. Cloud VAMC
+  W.G. (Bill) Hefner VAMC - Salisbury
+  
+    
+  Remedy Overview:
+  ================
+  1. HD0000000603725 - Occupation Series 0679 Converted to Hybrid Status
+  
+  Problem:
+  --------
+  Effective June 17, 2012, occupation series 0679 (Medical Support
+  Assistant) will be converted to Hybrid status per Public Law 111-163.
+  
+  Resolution:
+  -----------
+  The VistA ETA (Enhanced Time and Attendance System) software is updated
+  to include the occupation series/title code 0679 (Medical Support
+  Assistants) in the Hybrid table in order to recognize the employees as
+  hybrids. The hybrid table resides in routine PRSAENT1.
+  
+  
+   INSTALLATION INSTRUCTIONS:
+   ==========================
+   If installed during the normal workday, it is recommended that the PAID
+   users be off the system and that all the PAID ETA options in the OPTION
+   (#19) file be disabled to prevent possible conflicts while running the
+   KIDS install. All the ETA options can be selected by using the PAID ETA
+   namespace of PRS and the asterisk, or wildcard character (*). As shown in
+   steps 4.c of the installation instructions, type PRS*, to disable all
+   PAID ETA options. Other VISTA users will not be affected. 
+  
+   Install Time - less than 2 minutes.
+   
+   1.   Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.
+   
+   2.   Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]:
+   
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+            Patch Monitor Main Menu ...
+   
+        Select Kernel Installation & Distribution System Option: INStallation
+                            ---
+     1      Load a Distribution
+     2      Verify Checksums in Transport Global
+     3      Print Transport Global
+     4      Compare Transport Global to Current System
+     5      Backup a Transport Global
+     6      Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+   
+             Select Installation Option:
+   
+   3.   From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter PRS*4.0*135):
+   
+        a.  Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+        b.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed. It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+   4.   Use the Install Package(s) option and select the package
+        PRS*4.0*135.
+   
+        a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+            NO//', answer NO
+        b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? YES//', answer YES.
+        c.  When prompted 'Enter options you wish to mark as 'Out Of
+            Order':', enter PRS*
+        d.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order':', press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSAENT1
+    Before: B32605125   After: B33573800  **96,130,135**
+ 
+Routine list of preceding patches: 130
+
+=============================================================================
+User Information:                          Hold Date     : JUN 17, 2012
+Entered By  : GOLDSMITH,RHONDA              Date Entered  : MAR 22, 2012
+Completed By: LANG,MICKEY                   Date Completed: JUN 12, 2012
+Released By : CARTER,LYNN                   Date Released : JUN 18, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,120 @@
+$TXT Created by CREMEANS,TERRY at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 06/01/10 at 11:19
+=============================================================================
+Run Date: MAR 31, 2011                     Designation: PSO*7*352
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #308                      Status: Released
+                  Compliance Date: MAY 01, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*345   <<= must be installed BEFORE `PSO*7*352'
+
+Subject: IGNORED REJECTS REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the issue where the Ignored Rejects Report [PSO IGNORED 
+ REJECTS REPORT] returns an undefined error when sorting on PATIENT and
+ only one patient is selected.
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ HD0000000404445    <UNDEFINED>SORT1+15^PSOBPSRP
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Oklahoma City VA Medical Center
+ VA North Florida/South Georgia VA HCS
+ VA Puget Sound HCS
+  
+   
+ Remedy Overview:
+ ================
+ HD0000000404445    <UNDEFINED>SORT1+15^PSOBPSRP
+   
+ Problem: 
+ ========
+ The Ignored Rejects Report [PSO IGNORED REJECTS REPORT] is receiving 
+ an error when the user sorts by PATIENT and only one patient is
+ selected.
+  
+ Resolution:
+ ===========
+ Need to modify PSOBPSRP to change the variable I to PSOIBP in the EN
+ and SORT1 tags.
+  
+ Technical Resolution:
+ ---------------------
+ EN^PSOBPSRP & SORT1^PSOBPSRP   Change the variable I to PSOIBP.
+        
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  Users should not be
+ generating the Ignored Rejects Report [PSO IGNORED REJECTS REPORT]
+ when this patch is installed. 
+  
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*352)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*352.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;13 Feb 97;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBPSRP
+    Before: B13181433   After: B13567876  **260,345,352**
+ 
+Routine list of preceding patches: 345
+
+=============================================================================
+User Information:
+Entered By  : CREMEANS,THERESA              Date Entered  : APR 01, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: MAR 22, 2011
+Released By : FOX,KIRK                      Date Released : MAR 31, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

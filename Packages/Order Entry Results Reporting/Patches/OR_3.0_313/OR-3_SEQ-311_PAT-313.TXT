@@ -1,0 +1,235 @@
+$TXT Created by ESCALERA,Diego at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 10/17/12 at 16:23
+=============================================================================
+Run Date: DEC 27, 2012                     Designation: OR*3*313
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #311                      Status: Released
+                  Compliance Date: JAN 26, 2013
+=============================================================================
+
+Associated patches: (v)OR*3*245    <<= must be installed BEFORE `OR*3*313'
+
+Subject: CONSULT ALERTS & QUICK ORDER ISSUES & INCORRECT HELP TEXT
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch corrects 3 issues within the ORDER ENTRY/RESULTS REPORTING 
+ package:
+  
+ 1. The CONSULT/REQUEST UPDATED alert description needs updating to notify
+    users of all actions that trigger this alert.
+  
+ 2. GMRCOR REQUEST [52] quick orders should prompt users with the
+    RELATED SERVICES value stored in the quick order.
+  
+ 3. Update the help text for the POINT TO WHICH FILE field of the 
+    Enter/Edit prompts [PM] menu option.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+  
+ 1.  HD0000000069951 -  CON/REQ UPDATED alert--add'l online info, please
+ 2.  HD0000000071077 -  Quick Order (Associated Service) updating issue 
+ 3.  HD0000000069403 -  PROMPTS POINTING TO A SUB-FILE
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Fayetteville, AR
+ Puget Sound HCS
+ Orlando, FL 
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. HD0000000069951 - CON/REQ UPDATED alert--add'l online info, please
+  
+ Problem:
+ --------
+ The CONSULT/REQUEST UPDATED alert description in the OE/RR NOTIFICATION
+ (#100.9) file does not inform the user that the alert will be sent if a 
+ consult has been Scheduled, Updated or if a comment has been added.
+  
+ Resolution:
+ -----------
+ The CONSULT/REQUEST UPDATED description entry in the OE/RR NOTIFICATION
+ (#100.9) file has been modified to the following wording:
+  
+   NAME: CONSULT/REQUEST UPDATED
+  
+   DESCRIPTION: Triggered within the Consult/Request package when a comment
+   is added to the consult or the consult is scheduled.  Typical recipients
+   are determined by the Consult/Request package.  It is deleted upon
+   completion of the follow-up action.
+  
+ The CONSULT/REQUEST UPDATED entry in the CPRS Technical Manual (Non-GUI
+ version) has been modified to the following wording:
+  
+   Consult/Request Updated [CONSULT/REQUEST UPDATED]
+  
+   Trigger: Within Consults package
+   
+   Mechanism: Consult package determines the consult had a comment added or
+   the consult was scheduled.
+  
+ Note: Patch GMRC*3*71 has done a similar change to the Consult/Request
+ manuals.
+  
+  
+ 2. HD0000000071077 - Quick Order (Associated Service) updating issue 
+  
+ Problem:
+ --------
+ When creating a Quick order for a consult procedure, if a user makes an 
+ edit to the RELATED SERVICES (#2) field in the GMRC PROCEDURE (#123.3) 
+ file, the quick order does not update and the user is not allowed to 
+ change the service that was originally entered, unless more than one 
+ Related Services has been defined on the consult procedure. 
+  
+ Resolution:
+ -----------
+ The ORDER DIALOG (#101.41) file entries for GMRCOR REQUEST and OR GTX 
+ REQUEST SERVICE have been modified to always prompt the user with the 
+ service that has been saved on the quick order.  If the service is wrong, 
+ they can then change it at that time.
+  
+  
+ 3. HD0000000069403 - PROMPTS POINTING TO A SUB-FILE 
+  
+ Problem:
+ --------
+ Users with FileMan Programmer Access get additional options when creating
+ an order dialog prompt of type "pointer". The help text for the "Point to
+ Which File:" prompt from the Enter/Edit Prompts option of the Order Menu
+ Management [ORCM MGMT] menu option, indicates that the user can point to a
+ sub-file. However, this functionality is no longer present and is not used
+ by CPRS.
+  
+ Current help text wording:
+  
+    "Enter the file or subfile by name, file number, or global root 
+     (without the leading '^')."
+  
+ Resolution:
+ -----------
+ Routine ORCMEDT4 has been modified to remove the subfile wording.
+  
+ New help text wording:
+  
+    "Enter the file by name, file number, or global root (without the
+     leading '^')."
+  
+  
+ Documentation Retrieval:
+ ========================
+ An updated CPRS Technical Manual (Non-GUI version) will be distributed 
+ with OR*3*313.  The documents are available on the ANONYMOUS.SOFTWARE
+ directory at one of the following Office of Information (OI) Field
+ Offices.
+   
+  Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.med.va.gov, which will transmit the files from the
+      first available FTP server.
+   
+  (2) Sites may also elect to retrieve documentation directly from a
+      specific server as follows:
+   
+   Albany          ftp.fo-albany.med.va.gov
+   Hines           ftp.fo-hines.med.va.gov
+   Salt Lake City  ftp.fo-slc.med.va.gov
+   
+   The documentation distribution includes:
+   
+   FILE NAMES                   DESCRIPTION
+   ----------                   -----------
+   cprslmtm.pdf                 CPRS Technical Manual
+  
+  (3) Documentation can also be retrieved from VHA Software Document
+      Library (VDL) on the Internet at the following address,
+      http://www.va.gov/vdl.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system.  Installation time 
+ will be less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: 
+      Installation                                                         
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter "OR*3.0*313"):
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+ 4.  Use the Install Package(s) option and select the package.
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+  
+ Routine ORY313 will be deleted upon installation of the patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCMEDT4
+    Before: B65048297   After: B65485434  **8,46,95,245,313**
+Routine Name: ORY313
+    Before:       n/a   After:   B597938  **313**
+ 
+Routine list of preceding patches: 245
+
+=============================================================================
+User Information:
+Entered By  : RANDALL,SHERRY                Date Entered  : MAY 15, 2009
+Completed By: SESSLER,APRIL                 Date Completed: DEC 05, 2012
+Released By : PERSCHON,ANDREA               Date Released : DEC 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

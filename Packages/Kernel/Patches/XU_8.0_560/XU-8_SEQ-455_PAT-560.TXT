@@ -1,0 +1,192 @@
+$TXT Created by TRAN,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 01/11/11 at 10:59
+=============================================================================
+Run Date: MAY 11, 2011                     Designation: XU*8*560
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #455                      Status: Released
+                  Compliance Date: JUN 11, 2011
+=============================================================================
+
+Associated patches: (v)XU*8*545    <<= must be installed BEFORE `XU*8*560'
+
+Subject: Update Person Class file 01/01/2011
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy tickets #: HD0000000453701
+ Test sites:
+ BATTLE CREEK, MI VAMC
+ LITTLE ROCK, AR VAMC
+ MONTANA HCS 
+                             XU*8*560
+  
+ This patch updates the Person Class file(#8932.1) for 01/01/2011 with the 
+ followings:
+  
+ 1) Add three new taxonomies (entries #1167-1169 in the Person Class file):
+  
+   NUMBER: 1167
+   PROVIDER TYPE: Other Service Providers Type
+   CLASSIFICATION: Lactation Consultant, Non-RN
+   STATUS: Active                        VA CODE: V070850
+   X12 CODE: 174N00000X
+   
+   DEFINITION:   An individual trained to provide breastfeeding assistance
+   services to both mothers and infants. Lactation Consultants are not 
+   required to be nurses and are trained through specific courses of
+   education. The Lactation Consultant may have additional certification
+   through a national or international organization.
+   
+   Source: National Uniform Claim Committee 
+   
+   INDIVIDUAL/NON: INDIVIDUAL
+   PROVIDER TYPE CODE (c): 17            CLASSIFICATION CODE (c): 4N
+   AREA OF SPECIALIZATION CODE (c): 00000
+  
+   NUMBER: 1168 
+   PROVIDER TYPE: Other Service Providers Type
+   CLASSIFICATION: Clinical Ethicist     STATUS: Active
+   VA CODE: V081810                      X12 CODE: 174V00000X
+   
+   DEFINITION:   A clinical ethicist has been trained in bioethics and 
+   ethics case consultation. The clinical ethicist addresses
+   medical-ethical dilemmas arising in clinical practice, such as
+   end-of-life care, refusal of treatment, and futility of care; assists
+   patients and health care providers with medical decision-making; and
+   provides ethics education for patients and families.
+   
+   Source: National Uniform Claim Committee 
+   
+   INDIVIDUAL/NON: INDIVIDUAL
+   PROVIDER TYPE CODE (c): 17            CLASSIFICATION CODE (c): 4V
+   AREA OF SPECIALIZATION CODE (c): 00000
+  
+   NUMBER: 1169
+   PROVIDER TYPE: Allopathic & Osteopathic Physicians
+   CLASSIFICATION: Electrodiagnostic Medicine
+   STATUS: Active                        VA CODE: V181550
+   X12 CODE: 204R00000X                  SPECIALTY CODE: 13
+   
+   DEFINITION: Electrodiagnostic medicine is the medical subspecialty that
+   applies neurophysiologic techniques to diagnose, evaluate, and treat 
+   patients with impairments of the neurologic, neuromuscular, and/or
+   muscular systems. Qualified physicians are trained in performing
+   electrophysiological testing and interpretation of the test data. They
+   require knowledge in anatomy, physiology, kinesiology, histology, and
+   pathology of the brain, spinal cord, autonomic nerves, cranial nerves,
+   peripheral nerves, neuromuscular junction, and muscles. They must know
+   clinical features and treatment of diseases of the central, peripheral,
+   and autonomic nervous systems, as well as those of neuromuscular
+   junction and muscle. Physicians also require special knowledge
+   about electric signal processing, including waveform analysis, 
+   electronics and instrumentation, stimulation and recording equipment,
+   and statistics.  
+   
+   Source: American Association of Neuromuscular & Electrodiagnostic 
+          Medicine, 2011. www.aanem.org
+   
+   INDIVIDUAL/NON: INDIVIDUAL
+   PROVIDER TYPE CODE (c): 20            CLASSIFICATION CODE (c): 4R
+   AREA OF SPECIALIZATION CODE (c): 00000
+  
+ 2) Update the taxonomy 225000000X (entry #410 in the Person Class file):
+   The CLASSIFICATION field (#1) was changed from "Orthotics/Prosthetics
+   Fitter" to "Orthotic Fitter" and the DEFINITION field (#11) was changed
+   from "An individual trained in the management of fitting custom and
+   non-custom orthotics." to "An individual trained in the management of
+   fitting prefabricated orthoses."
+  
+   NUMBER: 410
+   PROVIDER TYPE: Respiratory, Rehabilitative and Restorative Service 
+   Providers
+   CLASSIFICATION: Orthotic Fitter       STATUS: Active
+   VA CODE: V130207                      X12 CODE: 225000000X
+   SPECIALTY CODE: 57
+   DEFINITION:   An individual trained in the management of fitting 
+   prefabricated orthoses.
+   
+   Source: National Uniform Claim Committee 
+   Additional Resources: American 
+   Board for Certification in Orthotics, Prosthetics and Pedorthics, Inc.,
+   www.abcop.org and Board of Certification/Accreditation, International,
+   www.bocusa.org.  
+   
+   INDIVIDUAL/NON: INDIVIDUAL
+   PROVIDER TYPE CODE (c): 22            CLASSIFICATION CODE (c): 50
+   AREA OF SPECIALIZATION CODE (c): 00000
+  
+ FORUM Tracking message #: 53805201 
+  
+ Blood Bank Team Coordination
+  ============================
+ Blood Bank Clearance: 1/25/2011
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*560 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*560 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*560
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+  
+ The routine XU8P560 will be deleted after the installation completes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**; July 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P560
+    Before:       n/a   After: B29629689  **560**
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : JAN 05, 2011
+Completed By: SINGH,GURBIR                  Date Completed: MAY 03, 2011
+Released By : TILLIS,LEWIS                  Date Released : MAY 11, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

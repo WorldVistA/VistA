@@ -1,0 +1,246 @@
+$TXT Created by BRICKER,DENNIS at DEVVOO.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 10/28/10 at 10:37
+=============================================================================
+Run Date: JUN 17, 2011                     Designation: DVB*4*65
+Package : DVB - HINQ                          Priority: EMERGENCY
+Version : 4        SEQ #61                      Status: Released
+                  Compliance Date: JUN 19, 2011
+=============================================================================
+
+Associated patches: (v)DVB*4*63    <<= must be installed BEFORE `DVB*4*65'
+
+Subject: VBA DATA SHARING VISTA HINQ RESPONSE
+
+Category: 
+  - Routine
+  - Enhancement ()
+
+Description:
+============
+
+  *********************************ATTENTION***********************************
+  NOTE: This patch is an emergency released with a 48-hour compliance.  Failure
+  to install this patch within the compliance date will cause Hospital Inquiry
+  (HINQ) Response software to display garbled data and negatively impact the
+  HINQ upload process for new HINQ requests.
+   
+     The Austin Information Technology Center (AITC) will suspend
+         responses to Hospital Inquiry (HINQ) queries until all sites have
+         successfully installed this patch in their production accounts.  
+   
+     Users will receive the following message when attempting to request a
+         HINQ during the AITC down time.  
+   
+         Connecting to VBA database
+         FTA15:   Device is busy
+         Enter requests in the Suspense file
+   
+     Users may still enter requests into the HINQ Suspense file, to be
+         processed once the 48 hour compliance period has ended.
+   
+     The software is not backward compatible; therefore HINQ Responses
+         received prior to installation of the patch may appear garbled when
+         viewed and may not upload appropriately.  It will be necessary for
+         facility staff to request new HINQs for affected patients as needed.
+   
+  *****************************************************************************
+   
+  The Health Eligibility Center (HEC) has requested changes to the
+  Vista Registration, Enrollment and Eligibility (Vista REE) to function
+  with changes to the Enrollment Systems Redesign (ESR) in the HINQ
+  Response and Display for the VBA Data Sharing project.
+   
+  WebHINQ display of new data elements
+  ------------
+  Pension Award Effective Date
+  Pension Award Reason Code
+  Pension Award Termination Date
+  Pension Termination Code 1
+  Pension Termination Code 2
+  Pension Termination Code 3
+  Pension Termination Code 4
+  DD214 Dental Treatment Indicator
+  Permanent and Total Disability Effective Date
+   
+  These new data elements will be contained in the HINQ Response based upon
+  character string placement.  There are no new fields or changes to the data
+  dictionary with this patch.
+   
+  Patch Components:
+  ===============+=
+   
+  Files & Fields Associated:
+  --------------------------
+  N/A
+   
+   
+  Forms Associated:
+  -----------------
+  N/A
+   
+   
+  Mail Groups Associated:
+  -----------------------
+  N/A
+   
+   
+  Options Associated:
+  -------------------
+  N/A
+   
+   
+  Protocols Associated:
+  ---------------------
+  N/A
+   
+   
+  Security Keys Associated:
+  -------------------------
+  N/A
+   
+   
+  Templates Associated:
+  ---------------------
+  N/A
+   
+     
+  New Service Request (NSRs):
+  ---------------------------
+  N/A
+   
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+   
+   
+  Test Sites:
+  -----------
+  ALBANY VAMC, Albany, NY
+  BALTIMORE VAMC, Baltimore, MD
+  WICHITA VAMC, Wichita, KS
+   
+   
+  Documentation Retrieval Instructions:
+  =====================================
+  Updated documentation describing the new functionality introduced by this 
+  patch is available.
+   
+  The preferred method is to FTP the files from ftp://download.vista.med.va.gov/.
+  This transmits the files from the first available FTP server. Sites may 
+  also elect to retrieve software directly from a specific server as follows:
+   
+   Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+   Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+   Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  The documentation will be in the form of Adobe Acrobat files.
+   
+  The following files should be downloaded in the binary FTP mode.
+   
+    Filename                  Description
+    --------                  -----------
+    DVB_4_P65_REG_UM.PDF      Revised DVB V. 4.0 User Manual
+   
+  Documentation can also be found on the VA Software Documentation Library at:
+  http://www4.va.gov/vdl/
+   
+   
+  Patch Installation:
+  ===================
+   
+  Installation Instructions:
+  --------------------------
+   
+  This patch may be run with users on the system, HOWEVER because the HINQ
+  options need to be placed out of order, we suggest it be installed after
+  business hours.
+   
+  Installation will take less than 2 minutes.
+   
+  The following options should be disabled during installation:
+   
+          Print Suspense File Messages    [DVB HSUSP-PRINTSUSP]
+          Process the HINQ Suspense File  [DVB HSUSP-PROCESSFILE]
+   
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following option. When prompted for the INSTALL enter the patch
+      #(DVB*4.0*65):
+   
+           a.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will
+               not backup any other changes such as DD's or templates.
+           b.  Compare Transport Global to Current System - This option
+               will allow you to view all changes that will be made when
+               this patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           c.  Verify Checksums in Transport Global - This option will
+               allow you to ensure the integrity of the routines that are
+               in the transport global.
+   
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+   
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+       respond NO.
+   
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? YES//', respond YES.
+   
+  7.  When prompted, "Enter options you wish to mark as 'Out Of Order':",
+      enter:
+   
+        Print Suspense File Messages    [DVB HSUSP-PRINTSUSP]
+        Process the HINQ Suspense File  [DVB HSUSP-PROCESSFILE]
+   
+  8.  When prompted, "Enter protocols you wish to mark as 'Out Of
+      Order':", press <Enter>.
+   
+  9. When prompted, "Delay Install (Minutes):  (0-60): 0//", press <Enter>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;HINQ;**[Patch List]**;03/25/92;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBHQEDT
+    Before: B21705515   After: B22066129  **6,49,65**
+Routine Name: DVBHQM1
+    Before: B34394004   After: B34655117  **49,65**
+Routine Name: DVBHQM11
+    Before: B14847772   After: B22113835  **7,20,49,65**
+Routine Name: DVBHQM2
+    Before: B31832375   After: B35953581  **49,63,65**
+Routine Name: DVBHQR1
+    Before: B21400838   After: B21624161  **5,32,53,49,65**
+Routine Name: DVBHQR11
+    Before: B30574454   After: B34481907  **32,35,49,63,65**
+Routine Name: DVBHUTL1
+    Before:  B6969582   After:  B6884601  **15,20,65**
+ 
+Routine list of preceding patches: 63
+
+=============================================================================
+User Information:
+Entered By  : BRICKER,DENNIS                Date Entered  : AUG 03, 2010
+Completed By: MORRIS,DARLENE V              Date Completed: JUN 02, 2011
+Released By : HEUER,CINDY                   Date Released : JUN 17, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

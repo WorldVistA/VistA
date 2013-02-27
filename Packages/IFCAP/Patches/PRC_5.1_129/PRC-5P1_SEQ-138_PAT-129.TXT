@@ -1,0 +1,199 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Wednesday, 10/26/11 at 11:06
+=============================================================================
+Run Date: APR 17, 2012                     Designation: PRC*5.1*129
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #138                    Status: Released
+                  Compliance Date: MAY 18, 2012
+=============================================================================
+
+Associated patches: (v)PRC*5.1*125 <<= must be installed BEFORE `PRC*5.1*129'
+
+Subject: TASKED OPTION;INVOICE ADDRESS;ROUTINE SACC VIOLATION
+
+Category: 
+  - Routine
+  - Input Template
+
+Description:
+============
+
+ This patch addresses the following 3 issues:
+  
+ 1. When using Taskman to run the Inactivate Expired Charge Cards [PRCH 
+    INACTIVATE EXP CHAR CARD] option, the system is not changing the status
+    to inactive.
+  
+ 2. Option, New Purchase Order [PRCHPC PO ADD], must have query INVOICE 
+    ADDRESS default 'FMS' changed to "VA FSC'.
+  
+ 3. Routine PRCHNPO6 is not in compliance with SACC (VistA Programming 
+    Standards and Conventions) since lock ':0' is less than the value of
+    the Kernel variable "DILOCKTM".
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ Remedy:
+ ======
+ 1. HD0000000289276 Tasking option 'Inactivate Expired Charge Cards' not 
+                    working
+  
+  
+ 2. HD0000000244695 Issue with Invoice Address default
+      Duplicate: HD0000000351410 Change invoice address
+  
+ 3. HD0000000364830 VISTA SACC violation in routine PRCHNPO6
+  
+          
+  
+ Test Sites:
+ ==========
+ Salisbury - W.G (Bill) Hefner VA Medical Center
+ VA Western NY HCS
+ Fargo VA Medical Center
+  
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000289276 Tasking option 'Inactivate Expired Charge Cards' not 
+                    working
+  
+ Problem:
+ --------
+ When users use the Schedule/Unschedule option via Taskman, Expired 
+ Purchase Charge Cards are not being inactivated when they should be.   
+ This is happening because processing quits with no action as there 
+ is a query for STATION when tasked.
+  
+  
+ Resolution:
+ ---------------
+ Modify processing logic to skip STATION query when option is tasked to
+ begin card logic checking for expired/terminated cards.
+  
+  
+ Routines: PRCH3A
+  
+  
+ 2. HD0000000244695 Issue with Invoice Address default
+  
+  
+ Problem:
+ --------
+ The default for Invoice Address is 'FMS' and should be 'VA FSC'. 
+  
+  
+ Resolution:
+ -----------
+ Modify the default for Invoice Address to 'VA FSC' in the following input 
+ templates:  PRCH2138
+             PRCHSIMP
+             PRCH DETAILED PURCHASE CARD
+             PRCH DIRECT DELIVERY ORDER
+             PRCH PROSTHETIC
+             PRCH PC DIRECT DELIVERY
+             PRCH DELIVERY ORDER      
+  
+  
+ Routines: PRCHNPO6 
+  
+ 3. HD0000000364830 VistA SACC violation in routine PRCHNPO6
+  
+ Problem:
+ --------
+ Locking code in routine PRCHNPO6 at tag EN8+3 is not in compliance with
+ VistA SACC due to the incremental lock time out of 0 (zero) being less 
+ than DILOCKTM.
+ --------------------------------------------------------------------------
+  
+ 2.4.6   LOCK Command
+  
+ 2.4.6.1 All LOCKs shall be of the incremental form. (Exemption: Kernel)
+  
+ All incremental LOCKS must have a timeout, the timeout must not 
+ be less than the value of the Kernel variable "DILOCKTM".
+  
+  
+ Resolution:
+ -----------
+ Modify lock timeout to use variable DILOCKTM, if defined, or 3 or 5 
+ seconds depending on the lock changed.
+  
+  
+ Routines: PRCHNPO6
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*129)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*129.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? NO//', respond YES.  When prompted to select the options
+       you would like to place out of order, enter the following:
+  
+       New Purchase Order                     [PRCHPC PO ADD]
+       New Detailed Purchase Card Order       [PRCH ENTER DETAILED ORDER]
+       New Simplified Purchase Card Order     [PRCH ENTER SIMPLIFIED ORDER]
+       New Direct Delivery Order for Purchase [PRCH PC DIRECT DELIVERY1]
+       Enter Delivery Order                   [PRCH ENTER DELIVERY ORDER]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCH3A
+    Before:  B4013336   After:  B4015402  **8,125,129**
+Routine Name: PRCHNPO6
+    Before: B21803940   After: B22810187  **129**
+ 
+Routine list of preceding patches: 125
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : NOV 28, 2008
+Completed By: HEFFERNAN,COREY               Date Completed: APR 12, 2012
+Released By : NELSON,VICKI M                Date Released : APR 17, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

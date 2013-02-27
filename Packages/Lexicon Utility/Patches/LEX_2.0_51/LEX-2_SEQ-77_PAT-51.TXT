@@ -1,0 +1,336 @@
+$TXT Created by HACKETT,THOMAS at LEXPLQ.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 07/26/12 at 17:04
+=============================================================================
+Run Date: DEC 18, 2012                     Designation: LEX*2*51
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #77                      Status: Released
+                  Compliance Date: JAN 18, 2013
+=============================================================================
+
+Associated patches: (v)LEX*2*41    <<= must be installed BEFORE `LEX*2*51'
+                    (v)XU*8*502    <<= must be installed BEFORE `LEX*2*51'
+                    (v)LEX*2*73    <<= must be installed BEFORE `LEX*2*51'
+
+Subject: Lexicon Problem List Standardization
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+  
+  This patch creates the subset of SNOMED CT (Systemized Nomenclature of 
+  Medicine Clinical Terms) that will be used by the Problem List
+  Standardization project as the standard for the Problem List application.
+  The patch also populates the Mappings file (#757.33) which holds the
+  mappings between the SNOMED CT codes that are members of the Problem List
+  subset and ICD-9-CM (Classification of Diseases, Ninth Revision, Clinical
+  Modification) codes, and an API (Application Programming Interface) to
+  retrieve those mappings.
+  
+  This patch transports the data, data dictionaries and new APIs required
+  to support the Problem List Standardization project.
+  
+  This patch exports data for the following files:
+  
+  
+         EXPRESSIONS               (#757.01) 
+         CODES                     (#757.02)
+         REPLACEMENT WORDS         (#757.05)
+         SEMANTIC MAP              (#757.1)
+         SEMANTIC CLASS            (#757.11)
+         SEMANTIC TYPE             (#757.12)
+         SUBSET DEFINITIONS        (#757.2)
+         SUBSETS DEFINITION        (#757.21)
+         MAPPING DEFINITIONS       (#757.32)
+         MAPPINGS                  (#757.33)
+          
+  
+ Enhancements
+ ============
+  
+    
+   Two new subsets have been defined in the subset definitions file 
+   (#757.2) and populated in the subsets file (#757.21).
+  
+     1. Problem List Standard (PLS)
+        This contains those elements of SNOMED CT that were identified by
+        VA subject matter experts, in consultation with external partners,
+        as properly belonging to the 'Standard Problem List'. The original
+        VA (Veterans Affairs) / KP (Kaiser Permanente) list has been
+        augmented by VA subject matter experts.
+  
+     2. Clinical Findings (CLF)
+        This subset contains those elements of SNOMED CT that belong to the
+        'findings' and 'disorders' hierarchies. The membership of these 
+        hierarchies was determined from the parenthetical terms in the
+        SNOMED CT fully specified names. The purpose of this subset is to
+        allow the Problem List application to implement an 'extended
+        search' capability should the user be unable to find a suitable
+        term in the Problem List Standard data.
+  
+   A new mapping has been defined in the Mapping Definitions file (#757.32)
+   for the SNOMED CT to ICD-9-CM mappings (SCT2ICD).  A new mapping has 
+   also been defined for the SNOMED CT to ICD-10-CM mappings (SCT210D), for
+   future use.
+   
+   The SNOMED CT to ICD-9-CM mappings have been loaded into the Mappings 
+   file (#757.33). 
+  
+   A new field, Designation Code (18) has been created in the Expressions
+   file (#757.01). This is a multiple that allows a Designation Code and
+   its associated Coding System to be stored for each expression.
+  
+   The "G" cross-reference logic of the Mappings File (#757.33) has been 
+   updated.
+  
+   The replacement word functionality used by the subsets has been
+   expanded.
+  
+   The "ASL" cross-reference of the Expressions file (#757.01) is
+   recalculated to match the site file content.
+  
+  
+ API Summary
+ ===========
+  
+    New
+        GETSYN^LEXTRAN1  Returns synonyms for a code    
+  
+        Refer to DBIA #5006 for details concerning input parameters and
+        output of this call.
+  
+        GETFSN^LEXTRAN1  Returns fully specified name for a given code 
+  
+        Refer to DBIA #5007 for details concerning input parameters and
+        output of this call.
+  
+        GETPREF^LEXTRAN1 Returns preferred term for a given code 
+  
+        Refer to DBIA #5008 for details concerning input parameters and
+        output of this call.
+  
+        GETDES^LEXTRAN1  Returns designation code for a given designation 
+  
+        Refer to DBIA #5009 for details concerning input parameters and
+        output of this call.
+  
+  
+        GETASSN^LEXTRAN1  Returns mapped target codes for a given source code 
+  
+        Refer to DBIA #5010 for details concerning input parameters and
+        output of this call.
+  
+  
+ Files Summary
+ =============
+  
+      (#757.01)    EXPRESSIONS
+  
+       * A new field DESIGNATION CODE (#18) has been added. This field
+         is a multiple and stores zero to many designation codes along
+         with their associated coding systems. 
+  
+      (#757.2)     SUBSET DEFINITIONS
+       
+       * Two new subsets PLS (Problem List Standard - #7000038) and
+         CLF (Clinical Findings - #7000039) have been added to this file.
+         The data is not part of this build, but is in the export file.
+  
+      (#757.21)    SUBSETS
+  
+       * The data for the two new subsets has been loaded into this file.
+         The data is not part of this build, but is in the export file.
+      
+      (#757.32)    MAPPING DEFINITIONS
+  
+       * A new mapping definition SCT2ICD (SNOMED CT to ICD-9-CM) has been
+         added to this file.
+         The data is not part of this build, but is in the export file.
+  
+      (#757.33)    MAPPINGS
+  
+       * The data for the new mapping has been loaded into this file.
+         The data is not part of this build, but is in the export file.
+  
+  
+ REMEDY TICKETS:
+ ===============
+ None. 
+  
+ Test Sites:
+ ===========
+ Orlando
+ Birmingham
+ Black Hills
+  
+ FTP (File Transfer Protocol) Software Retrieval:
+ ================================================
+   
+        The KIDs (Kernel Installation & Distribution System) build is being
+        distributed in a Packman Message from the National Patch Module
+        (NPM).
+   
+        Data for this patch is being distributed in a global host file:
+   
+            Filename         FTP Protocol
+            ------------     ------------
+            LEX_2_51.GBL     ASCII
+   
+   
+        The preferred method is to FTP this file from 
+        download.vista.med.va.gov
+        which will transmit the file from the first available FTP server.
+   
+        This file may also be downloaded directly from a particular FTP
+        location at the following locations.
+   
+             Hines           ftp.fo-hines.med.va.gov
+             Albany          ftp.fo-albany.med.va.gov
+             Salt Lake       ftp.fo-slc.med.va.gov
+   
+             The file is available in the ANONYMOUS.SOFTWARE directory. 
+             The file may take 8 minutes to 22 minutes to transfer.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+  
+     1)  Users may be on the system during the install of LEX*2.0*51.
+         It is recommended that this patch be installed during non-peak
+         hours.  This patch should take from 18 to 53 minutes to install
+         depending on the system.
+  
+             Create a backup    10 -  26 minutes
+             Load the Global     7 -  18 minutes
+             Kids Install       36 -  66 minutes
+             Total              53 - 110 minutes
+  
+     2)  Create a backup of the following global file before continuing:
+  
+             Lexicon Files            #757-757.41    ^LEX(
+             SUBSET DEFINITIONS File  #757.2         ^LEXT(
+  
+         These backup files may get as large as 1.2 gigabytes.  Make sure
+         space is available before proceeding.  It should take from 10 to
+         26 minutes to create the backup files.
+  
+         Before you begin backing up the data in the ^LEX global, first 
+         clear out the UNRESOLVED NARRATIVE file 757.06.  This will 
+         prevent the backup procedure from encountering a control character
+         and aborting in error.  At the programmer prompt, issue the 
+         following MUMPS command to remove the control characters:
+  
+            >D CLR^LEXAR7 
+  
+         When you are creating a backup of non-subscripted globals, you are
+         saving the entire global.  You should use the utility ^%GO for
+         non-subscripted globals, and when prompted for a global, enter 
+         the global root (global name only, no open parenthesis, no file
+         number and no commas, as shown below).  Examples:
+  
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^LEX             Lexicon Files
+             ^LEXT            SUBSET DEFINITIONS File 
+  
+     3)  Install the data from the global host file LEX_2_51.GBL.  This
+         file contains the Lexicon Utility's import global ^LEXM.
+  
+         This global is approximately 397.4 megabytes in size.  Make sure
+         there is sufficient space available to load this global with
+         journaling on.  The loading of the global should take from 
+         7 to 18 minute.
+  
+         From the Programmer prompt, execute the following routine:
+  
+             >D ^%GI 
+             
+             Global input
+             
+             Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_51.GBL
+             Parameters? "RS" => 
+             Globals were saved on 20 Jun 2012   2:39 PM   Cache
+             with description: LEX*2*51 Data
+             
+             Input option: A
+             ^LEXM
+  
+     4)  Set up user and IO variables (D ^XUP) for programmer access.
+  
+     5)  Distribution Load:
+  
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+  
+     6)  KIDS Installation:
+  
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LEX*2.0*51.
+  
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+  
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+  
+         The KIDs install should take from 36 - 66 minutes
+  
+     7)  Cleanup
+  
+         a)  The Environment Check routine LEX2051 and the Post-Install 
+             routine LEX2051P should be deleted using the KERNEL option 
+             'Delete Routines' [XTRDEL] upon completion of the
+             installation.
+  
+             NOTE:  The installation of this patch should trigger an
+                    update protocol and may spawn background tasks for 
+                    the Clinical Reminders or Consult packages.  You 
+                    do not need to wait for these background jobs to 
+                    complete to delete the Environment Check and 
+                    Post-Install routines.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 77
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2051
+    Before:       n/a   After: B75576733  **51**
+Routine Name: LEX2051P
+    Before:       n/a   After:  B6259698  **51**
+Routine Name: LEXABC
+    Before: B40816510   After: B46217187  **4,25,26,29,38,73,51**
+Routine Name: LEXALK
+    Before: B22765108   After: B22806965  **2,3,6,25,51**
+Routine Name: LEXNDX2
+    Before: B17369617   After: B21432451  **51**
+Routine Name: LEXTOLKN
+    Before: B19919745   After: B38854621  **4,55,73,51**
+Routine Name: LEXTRAN1
+    Before: B78844478   After: B91365999  **59,73,51**
+Routine Name: LEXU
+    Before: B21347694   After: B21563695  **2,6,9,15,25,36,73,51**
+Routine Name: LEXXGI4
+    Before:       n/a   After: B22057583  **51**
+ 
+Routine list of preceding patches: 73
+
+=============================================================================
+User Information:
+Entered By  : FRANKSON,FERDINAND            Date Entered  : JUN 06, 2007
+Completed By: LEE,ROBERT                    Date Completed: NOV 30, 2012
+Released By : SCHWARTZ,VIKIE                Date Released : DEC 18, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

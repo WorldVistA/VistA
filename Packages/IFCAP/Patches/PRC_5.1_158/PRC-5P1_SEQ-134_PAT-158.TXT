@@ -1,0 +1,379 @@
+$TXT Created by GREENE,LYFORD K. at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Tuesday, 07/05/11 at 15:03
+=============================================================================
+Run Date: OCT 13, 2011                     Designation: PRC*5.1*158
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #134                    Status: Released
+                  Compliance Date: NOV 13, 2011
+=============================================================================
+
+Associated patches: (v)PRC*5.1*148 <<= must be installed BEFORE `PRC*5.1*158'
+                    (v)PRC*5.1*152 <<= must be installed BEFORE `PRC*5.1*158'
+
+Subject: MODIFICATION TO REMOVE MISCELLANEOUS FROM 1358 DOCUMENT
+
+Category: 
+  - Routine
+  - Print Template
+  - Enhancement (Mandatory)
+  - Sort Template
+  - Data Dictionary
+
+Description:
+============
+
+ As part of the 1358 Segregation of Duties initiative, the word 
+ "Miscellaneous" and its abbreviation "Misc." are being removed from 
+ references to the 1358 Obligation in screen displays, printouts, help 
+ text, templates and VistA manuals.  Headers for screen display and
+ printout will now show 1358, the Authority description and the
+ Sub-Authority description instead of the phrase "MISCELLANEOUS
+ OBLIGATION".  The value of entry #21's NAME field (#.01) in the PAT TYPE
+ file (#442.5), which was "MISC.OBLIGATION (1358)", now will be "1358
+ OBLIGATION".  In addition, on forms the Authority and Sub-Authority Codes
+ will now display on the same line followed by the Service Start Date and
+ Service End Date on the next line.
+  
+ In addition, this patch also includes the following changes.  In fields
+ END DATE FOR 1358 (#33) and AUTO ACCRUE (#34) of the Control Point
+ Activity file (#410) the "Miscellaneous" references are removed and the
+ misspellings of words accrue, accrued, and accrual are corrected.  Print
+ Template PRCS1358 FORM PRINT for the Procurement & Accounting Transactions
+ file (#442) is deleted from the database as it was determined that this
+ template has serious logic errors and that it is apparently not referenced
+ by currently functional IFCAP application code.
+  
+  
+ The changes made by this patch are described below:
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)             Field Name (Number)  New/Modified/Deleted
+ ------------------             -------------------  --------------------
+ CONTROL POINT ACTIVITY (410)   END DATE FOR 1358 (33)  Modified
+ CONTROL POINT ACTIVITY (410)   AUTO ACCRUE (34)        Modified
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name          Type   File Name (Number)    New/Modified/Deleted 
+ -------------          ----   ------------------    --------------------
+ PRCFA 1358 EOM REPORT  SORT   PROCUREMENT & ACCOUNTING   Modified
+                                 TRANSACTIONS (442)
+ PRCH OBLIGATED 1358    SORT   PROCUREMENT & ACCOUNTING   Modified
+    LIST                         TRANSACTIONS (442)
+ PRCS1358 FORM PRINT    PRINT  PROCUREMENT & ACCOUNTING   Deleted
+                                 TRANSACTIONS (442)
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20080801 Enhancing Internal Controls and Reporting Capabilities for
+          1358 Misc. Obligations: Implements adequate controls with
+          respect to segregation of duties and oversight by contracting
+          officials, improving documentation requirements, and enhancing
+          1358 reporting capabilities within Integrated Funds
+          Distribution,Control Point Activity, Accounting and
+          Procurement (IFCAP) that will be used at the station, Veterans
+          Integrated Service Network (VISN), and enterprise levels.  A
+          Government Accountability Office (GAO) review questioned VHA's
+          internal control standards governing the authorization and use
+          of miscellaneous obligations as well as oversight abilities.
+          Direction by the Congressional Oversight Committee of the
+          House.  GAO Report - GAO-08-1056T Improvements Needed in
+          Design of Controls over Miscellaneous Obligations, July 31,
+          2008.  Department of Veterans Affairs Memorandum, Interim
+          Memos (Interim Guidance on Miscellaneous Obligations, VA Form
+          4-1358, dated January 30, 2008 AND Department of Veterans
+          Affairs Memorandum, Revised Guidance for Processing of
+          Miscellaneous Obligations, VA Form 4-1358, dated May 18, 2008.
+  
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ VA Heartland-West (Kansas City, MO)
+ St. Cloud VAMC (St. Cloud, MN)
+ Tomah VAMC (Tomah, WI)
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Accounting Technician         ifcp5_1accounting_tech.pdf      binary
+     User's Guide
+ Application Coordinator       ifcp5_1application_coord.pdf    binary
+     User's Guide
+ Budget Analyst User's Guide   ifcp5_1budget_analyst.pdf       binary
+ Control Point Clerk           ifcp5_1cp_clerk.pdf             binary
+     User's Guide
+ Control Point Official        ifcp5_1cp_official.pdf          binary
+     User's Guide
+ Control Point Requestor       ifcp5_1cp_requestor.pdf         binary
+     User's Guide
+ Delivery Order User's Guide   ifcp5_1delivery_orders.pdf      binary
+ DynaMed-IFCAP Implementation  ifcp5_1DynaMed_IG.doc           binary
+     Guide
+ Generic Inventory User's      ifcp5_1gip.pdf                  binary
+     Guide
+ Package Security Guide        ifcp5_1security_guide.pdf       binary
+ Point of Use Manual           ifcp5_1pou_manual.pdf           binary
+ PPM Accountable Officer    ifcp5_1ppm_accountable_officer.pdf binary
+     User's Guide
+ Purchase Card User's Guide    ifcp5_1purchase_card.pdf        binary
+ Purchasing Agent User's       ifcp5_1purchasing_agent.pdf     binary
+     Guide
+ Requirements Analyst          ifcp5_1requirements_analyst.pdf binary
+     User's Guide
+ Requisition Clerk User's      ifcp5_1requisition_clerk.pdf    binary
+     Guide
+ Technical Manual              ifcp5_1tech_manual.pdf          binary
+ Voucher Audit Clerk           ifcp5_1voucher_audit_clerk.pdf  binary
+     User's Guide
+ Warehouse Clerk User's        ifcp5_1warehouse_clerk.pdf      binary
+      Guide
+  
+  
+ Patch Installation:
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+          List of Menu Options for site to disable
+          ---------------------------------------- 
+          Requestor's Menu               [PRCSREQUESTOR]
+          Control Point Clerk's Menu     [PRCSCP CLERK]
+          Control Point Official's Menu  [PRCSCP OFFICIAL]
+          Accounting Technician Menu     [PRCFA ACCTG TECH]
+          Payment/Invoice Tracking Menu  [PRCFD PAYMENTS MENU]
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL NAME enter
+     PRC*5.1*158.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch PRC*5.1*158 to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO// answer NO
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// answer YES 
+     When prompted to select the options you would like to place out of
+     order, enter the following:
+  
+          Requestor's Menu               [PRCSREQUESTOR]
+          Control Point Clerk's Menu     [PRCSCP CLERK]
+          Control Point Official's Menu  [PRCSCP OFFICIAL]
+          Accounting Technician Menu     [PRCFA ACCTG TECH]
+          Payment/Invoice Tracking Menu  [PRCFD PAYMENTS MENU]
+  
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0// answer 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The Post-Init routine PRC51158 is deleted by KIDS after execution and 
+ does not need to be deleted manually.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRC51158
+    Before:       n/a   After:  B1290947  **158**
+ Description of Changes:
+  This is the Post-Init routine for patch PRC*5.1*158 and it is
+  automatically deleted towards the end of the KIDS installation process. 
+  Via a FILE^DIE call, it files "1358 OBLIGATION" into the #.01 field of
+  entry #21 in the PAT TYPE file (#442.5). If the filing is unsuccessful, it
+  invokes KIDS APIs to record the failure in the entry of the INSTALL file
+  (#9.7).
+
+Routine Name: PRCE58P0
+    Before: B17096977   After: B17204092  **148,158**
+ Description of Changes:
+  This routine displays a 1358 to the screen.  It was edited to remove 
+  "MISCELLANEOUS" from the header, to move the display of the Authority &
+  Sub-Authority descriptions to the header, to move the display of Service
+  Start Date & Service End Date to underneath the Authority Codes, and to
+  adjust the page break logic to prevent scrolling of the display out of the
+  viewing area.
+
+Routine Name: PRCE58P1
+    Before: B16244569   After: B16647166  **158**
+ Description of Changes:
+  This routine is invoked during display of a 1358 to the screen.  It was 
+  edited change a naked global reference to the explicit reference to 
+  correct an abend that was occurring after the heading change. The naked 
+  reference had been implemented with an external call to header logic
+  between it and the previous explicit global reference, which was a SAC
+  violation.  The routine was also edited to change the page break to
+  accommodate the expanded display header.
+
+Routine Name: PRCE58P2
+    Before: B16930657   After: B16749881  **148,158**
+ Description of Changes:
+  This routine is used in hard copy prints of a 1358.  It was edited to 
+  remove "MISCELLANEOUS" from the header, to move the display of the
+  Authority & Sub-Authority descriptions to the header, and to move the
+  display of Service Start Date & Service End Date to underneath the
+  Authority Codes.  It was also edited to prevent the double printing of 
+  the Approving Official's name.
+
+Routine Name: PRCE58P3
+    Before: B17336618   After: B17424731  **158**
+ Description of Changes:
+  This routine is invoked to continue the hard copy print of the 1358.  It 
+  was edited to change a naked global reference to an explicit reference to
+  correct an abend that was occurring after the heading change. The naked 
+  reference had been implemented with an external call to header logic
+  between it and the previous explicit global reference, which was a SAC
+  violation.
+
+Routine Name: PRCEMOA
+    Before: B37610580   After: B39455655  **152,158**
+ Description of Changes:
+  This routine was edited to add logic for extrinsic function 
+  $$AUTHR^PRCMOA() which returns the Authority and Sub-Authority 
+  descriptions when provided IENs of the AUTHORITY OF REQUEST file (#410.9)
+  entries. This function is referenced in logic of the revised header for
+  1358 displays and prints.
+
+Routine Name: PRCFDPV1
+    Before:  B6229471   After:  B6007702  **158**
+ Description of Changes:
+  This routine was edited to change "1358 Miscellaneous Obligation" to 
+  "1358 Obligation" as a potential display value.
+
+Routine Name: PRCFDPV2
+    Before:  B8185376   After:  B7956553  **158**
+ Description of Changes:
+  This routine was edited to change "1358 Miscellaneous Obligation" to 
+  "1358 Obligation" as a potential display value.
+
+Routine Name: PRCFFERM
+    Before:  B5746342   After:  B5398839  **158**
+ Description of Changes:
+  This routine was edited to change the displayed value from "1358 
+  Miscellaneous Obligation" to "1358 Obligation".
+
+Routine Name: PRCFFERU
+    Before:  B9964660   After:  B9629227  **158**
+ Description of Changes:
+  This routine was edited to change the displayed value from "1358 
+  Miscellaneous Obligation" to "1358 Obligation".
+
+Routine Name: PRCFFU13
+    Before: B15290042   After: B15091179  **158**
+ Description of Changes:
+  This routine was edited to change the displayed value from "1358 
+  Miscellaneous Obligation" to "1358 Obligation".
+
+Routine Name: PRCSP11
+    Before: B13657459   After: B15814288  **158**
+ Description of Changes:
+  This routine is used to print a 1358 in Fiscal.  It was edited to remove 
+  "MISCELLANEOUS" from the header, replacing it with the descriptions of 
+  the Authority and Sub-Authority.  It was also edited to add the Authority 
+  and Sub-Authority codes to the printout.  Additionally, the Service Start 
+  Date and Service End Date were added to the output.
+
+ 
+Routine list of preceding patches: 148, 152
+
+=============================================================================
+User Information:
+Entered By  : MCGAUGH,MAVIS L               Date Entered  : MAY 10, 2011
+Completed By: QUACKENBUSH,BONNIE GAIL       Date Completed: OCT 13, 2011
+Released By : NELSON,VICKI M                Date Released : OCT 13, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,134 @@
+$TXT Created by GOLDSMITH,RHONDA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 10/04/12 at 13:39
+=============================================================================
+Run Date: DEC 19, 2012                     Designation: PRS*4*136
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #125                      Status: Released
+                  Compliance Date: JAN 19, 2013
+=============================================================================
+
+Associated patches: (v)PRS*4*35    <<= must be installed BEFORE `PRS*4*136'
+
+Subject: PAY PERIOD DOES NOT RESET INTO 2013
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Pay period calculation does not extend past 2012 pay periods.
+    
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A   
+  
+     
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. HD0000000595980 - Routine PRSAPPU problem
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Nebraska Western Iowa HCS
+ VA Black Hills HCS
+ Louisville VAMC
+     
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000595980 - Routine PRSAPPU problem
+  
+ Problem:
+ --------
+ User found that the routine PRSAPPU was only coded to calculate pay
+ periods correctly through the 12-27 pay period.  If a year 2013 pay 
+ period date was entered, the pay period did not roll over to 13-1.  
+ It would remain at year 12 and continue to increase by one 
+ (i.e. 12-28, 12-29, 12-30, etc).
+  
+ Resolution:
+ ----------- 
+ Modified routine PRSAPPU to extend pay period calculation past the year 
+ 2012.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch should be installed while PAID ETA users are off the system.  
+ Install time - less than 2 minutes.
+   
+   1.   Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.
+   
+   2.   Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]:
+   
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+            Patch Monitor Main Menu ...
+   
+        Select Kernel Installation & Distribution System Option: INStallation
+                            ---
+     1      Load a Distribution
+     2      Verify Checksums in Transport Global
+     3      Print Transport Global
+     4      Compare Transport Global to Current System
+     5      Backup a Transport Global
+     6      Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+   
+             Select Installation Option:
+   
+   3.   From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter PRS*4.0*136):
+   
+        a.  Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+        b.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed. It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+   4.   Use the Install Package(s) option and select the package
+        PRS*4.0*136.
+   
+        a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+            NO//', answer NO
+        b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSAPPU
+    Before: B37499229   After: B38465710  **19,22,35,136**
+ 
+Routine list of preceding patches: 35
+
+=============================================================================
+User Information:
+Entered By  : GOLDSMITH,RHONDA              Date Entered  : JUL 12, 2012
+Completed By: LANG,MICKEY                   Date Completed: DEC 13, 2012
+Released By : CARTER,LYNN                   Date Released : DEC 19, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

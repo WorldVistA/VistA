@@ -1,0 +1,188 @@
+
+=============================================================================
+Run Date: MAR 08, 2012                     Designation: FB*3.5*138
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #113                    Status: Released
+                  Compliance Date: APR 08, 2012
+=============================================================================
+
+Associated patches: (v)FB*3.5*130  <<= must be installed BEFORE `FB*3.5*138'
+
+Subject: PROJECT ARCH INCREMENT 3
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This build is a multi-package build that contains FB*3.5*138
+ and PXRM*2.0*23. It supports the third increment for Project ARCH 
+ (Access to Care Received Closer to Home).
+  
+ The Veterans' Mental Health And Other Care Improvements Act Of 2008, 
+ Section 403, Public Law 110-387 mandates that the Department of
+ Veterans  Affairs (VA) conduct a pilot program over three years for
+ contract care of eligible Veterans in selected Veterans Integrated
+ Service Networks (VISNs).
+  
+ The Office of Policy Analysis within the Office of the Assistant
+ Deputy  Under Secretary for Health for Policy and Planning
+ (ADUSH/PP) requested the capability to automatically identify all
+ Veterans who are eligible for a high visibility Congressionally
+ mandated contract care pilot program (named Project ARCH, Access to
+ Care Received Closer to Home) in  five VISNs (1, 6, 15, 18, and 19).
+  
+ FB*3.5*138:
+ This build adds the PROJECT ARCH REMINDER DELAY field (#38) to the 
+ FEE BASIS SITE PARAMETERS file (#161.4) that allows sites to customize
+ number of days that the Project ARCH Clinical Reminder will become
+ due again after the patient Declines or Refuses services offered.
+  
+ Two new options are also installed on the Project ARCH Menu. 
+ - The ARCH Eligibility Data Upload option allows sites to upload 
+   the national Project ARCH data extract files that contain the updates 
+   for Project ARCH Eligibility. 
+ - The ARCH Clinical Reminder Due Delay option sets the value in the new
+   PROJECT ARCH REMINDER DELAY field with a number between 1 and 180 days.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+  
+ This patch addresses the following Remedy Tickets:
+ --------------------------------------------------
+ There is no Remedy Tickets associated with this patch.
+  
+  
+ Components Sent With Patch
+ --------------------------
+  
+ The following is a list of files included in this patch:
+  
+                                       UP    SEND  DATA                USER
+                                       DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                 DD    CODE  W/FILE  DATA  PTRS  RIDE
+ --------------------------------------------------------------------------
+  
+ 161.4       FEE BASIS SITE PARAMETERS YES   YES   NO                  NO
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name (Number)                     File Name (Number)
+                                         Subfile Name (Number)
+ -------------------                     ---------------------
+ PROJECT ARCH REMINDER DELAY (38)        FEE BASIS SITE PARAMETERS (161.4)
+  
+ The following is a list of options included in this patch:
+ OPTION:
+ -------
+ FB ARCH DATA UPLOAD
+ FB ARCH REMINDER DELAY
+ FB PROJECT ARCH MENU
+  
+  
+ Documentation Retrieval:
+ ------------------------
+ Sites may retrieve documentation in one of the following ways:
+  
+  1.  The preferred method is to FTP (File Transfer Protocol)
+      the files from
+      download.vista.med.va.gov, which will transmit the files from the
+      first available FTP server.
+  
+  2.  Sites may also elect to retrieve documentation directly from a
+      specific server as follows:
+  
+      Albany          ftp.fo-albany.med.va.gov
+      Hines           ftp.fo-hines.med.va.gov
+      Salt Lake City  ftp.fo-slc.med.va.gov
+  
+  3.  Documentation can also be retrieved from the VistA Documentation
+      Library (VDL) on the Internet at the following address,
+      http://www.va.gov/vdl.
+  
+ The documentation distribution includes:
+  
+     FILE NAME                             DESCRIPTION
+     ---------------------------------------------------------------------
+     Init8_ARCH3_InstallationUserGuide.doc Installation and User Guide
+  
+  
+ Test Sites:
+ -----------
+ Togus
+ Richmond
+ Kansas City
+ Prescott
+ Fort Harrison
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ ENVIRONMENT CHECK:                               DELETE ENV ROUTINE: 
+  PRE-INIT ROUTINE:                          DELETE PRE-INIT ROUTINE: 
+ POST-INIT ROUTINE:                         DELETE POST-INIT ROUTINE: 
+ PRE-TRANSPORT RTN: 
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+  
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system. Installation will
+ take less than 5 minutes. The Clinical Reminders Exchange entry
+ containing the reminder and dialog will be installed and the
+ installer may be prompted for replacement items. Because of this the
+ patch should not be queued and the site's Clinical Reminders manager
+ should be on hand during the install.
+  
+ 1. Use the 'Load a Distribution' option on the KIDS installation menu.
+    When prompted to enter a host file type in 
+  
+ [DIR]:ARCH_PILOT_PROJECT_INCREMENT_3.KID,
+    where [DIR] is the local directory where you have stored the host file.
+  
+ 2. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    options, as desired:
+        Print Transport Global
+        Compare Transport Global to Current System
+        Verify Checksums in Transport Global
+        Backup a Transport Global
+  
+ 3. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    option to install the patch:
+        Install Package(s) ARCH PILOT PROJECT INCREMENT 3.0
+  
+ 4. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO//", respond 'NO'.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+    respond 'NO'.
+  
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//", respond 'NO'.
+
+Routine Information:
+====================
+Routine Name: FBARCH0
+    Checksum:
+  Before:  51834191   After:  26823995
+
+=============================================================================
+User Information:                          Hold Date     : MAR 08, 2012
+Entered By  : TOMLIN,BRIAN                  Date Entered  : DEC 06, 2011
+Completed By: LEONARD,KEN                   Date Completed: MAR 08, 2012
+Released By : MARSHALL,FALENCIA B.          Date Released : MAR 08, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

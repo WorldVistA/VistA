@@ -1,0 +1,236 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Wednesday, 03/03/10 at 11:52
+=============================================================================
+Run Date: JUN 24, 2011                     Designation: PRC*5.1*142
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #129                    Status: Released
+                  Compliance Date: JUL 25, 2011
+=============================================================================
+
+Associated patches: (v)PRC*5.1*1   <<= must be installed BEFORE `PRC*5.1*142'
+                    (v)PRC*5.1*24  <<= must be installed BEFORE `PRC*5.1*142'
+                    (v)PRC*5.1*71  <<= must be installed BEFORE `PRC*5.1*142'
+                    (v)PRC*5.1*72  <<= must be installed BEFORE `PRC*5.1*142'
+
+Subject: GIP TRANSACTION REGISTER REPORT;GIP ISSUE;PRCB MONTHLY ACCRUAL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. Sites can only run the Transaction Register Report option [PRCP
+    TRANSACTION REG REPORT] one month at a time.  Users need to be able to
+    enter a From and To month period of time to report multiple months in a
+    single run.
+  
+ 2. Users are experiencing an issue with the GIP (Generic Inventory
+    Package). When making a manual adjustment for an item with zero on
+    hand, if only updating on hand quantity the inventory value remains at
+    0. This causes negative inventory values with subsequent distributions.
+    Will modify the QT (Quantities) action code of the ENter/Edit 
+    Inventory Item Data option [PRCP EDIT INVENTORY ITEMS].
+  
+ 3. Fiscal users that ran the Accrual (Monthly) option [PRCB MONTHLY
+    ACCRUAL] reported a document transmission less than the compiled report
+    dollars. File LOCK protection will be installed to ensure the compile
+    completes before any other steps can be executed.
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. HD0000000288161 GIP Transaction Register Report print limitation
+    Duplicate: HD0000000358356 Transaction Register report after Patch
+                               PRC*127
+                           
+ 2. HD0000000286684 GIP Issue
+  
+ 3. HD0000000264196 PRCB MONTHLY ACCRUAL
+    Duplicates: HD000000359617 Monthly accrual not showing CC transactions
+                HD000000374213 No un-reconciled charges showing
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A         
+  
+ Test Sites:
+ ===========
+ VA North Texas HCS
+ Northport VA Medical Center
+ Salem VA Medical Center 
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000288161 GIP Transaction Register Report print limitation
+  
+ Problem:
+ --------
+ Site can only run one month at a time when running the Transaction 
+ Register Report option [PRCP TRANSACTION REG REPORT].
+  
+  
+ Resolution:
+ -----------
+ Modify reporting process to allow user to enter a From/To month period of
+ time to report multiple months in a single run. 
+  
+  
+ Routines: PRCPRTRA, PRCPRTR1
+  
+  
+ 2. HD0000000286684 GIP Issue
+  
+ Problem:
+ --------
+ User is experiencing an issue with the GIP. When making a manual 
+ adjustment for an item with zero on hand, if only updating on hand
+ quantity the inventory value remains at 0 (along with the average cost).
+ This causes negative inventory value with subsequent distributions.
+  
+  
+ Resolution:
+ -----------
+ Modify QT action code of the ENter/Edit Inventory Item Data option [PRCP
+ EDIT INVENTORY ITEMS] to require entry of an inventory value when
+ increasing on hand from zero to new amount. If the user is updating a zero
+ value inventory item they will be asked to verify that they are updating
+ only on-hand quantity on a zero value inventory item.
+  
+  
+ Routines:  PRCPEIL1 
+  
+  
+ 3. HD0000000264196 PRCB MONTHLY ACCRUAL
+  
+  
+ Problem:
+ --------
+ Fiscal users that run the Accrual (Monthly) option [PRCB MONTHLY ACCRUAL]
+ reported a document transmission less than the compiled report dollars.
+  
+  
+ Resolution:
+ -----------
+ Analysis determined that users ran the Accrual (Monthly) option [PRCB 
+ MONTHLY ACCRUAL] for step '1 Compile/Print Monthly Accrual' by tasking to
+ a printer and IMMEDIATELY ran step '3 Generate/Rebuild FMS SV-Document'
+ before the compile had completed in the tasked option.  Installed file
+ LOCK protection to ensure compile has completed before any other steps can
+ be executed.
+  
+  
+ Routines: PRCB8B, PRCB1F, PRCB1F1 
+  
+  
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ The revised documentation is available on the ANONYMOUS.SOFTWARE directory
+ at one of the following Office of Information (OI) Field Offices. These
+ files should be retrieved in binary format.
+     
+ Sites may retrieve documentation in one of the following ways:
+    
+  (1) The preferred method is to FTP the files from
+  download.vista.med.va.gov, which will transmit the files from  the first
+  available FTP server.
+     
+  (2) Sites may also elect to retrieve documentation directly from a  
+  specific server as follows:
+  
+      Albany                ftp.fo-albany.med.va.gov
+      Hines                 ftp.fo-hines.med.va.gov
+      Salt Lake City        ftp.fo-slc.med.va.gov
+     
+  The documentation distribution includes:
+  
+  File Name                 Description                     Protocol
+  ---------                 -----------                     --------
+  ifcp5_1pou_maunual.pdf    Point of Use Manual             Binary
+  ifcp5_1gip.pdf            Generic Inventory User Manual   Binary
+  
+ The updated manual will be posted to the VDL immediately after the
+ release of the patch.
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install these routines at any time without interruption to
+ users.  It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*142)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*142.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? NO//', respond YES.  When prompted to select the options
+       you would like to place out of order, enter the following:
+  
+       'PRCP TRANSACTION REG REPORT' Transaction Register Report        
+       'PRCP MAIN MENU'              Primary Inventory Point Main Menu  
+       'PRCB MONTHLY ACCRUAL'        Accrual (Monthly)     
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCB1F
+    Before: B35008607   After: B39550550  **64,72,142**
+Routine Name: PRCB1F1
+    Before: B34840384   After: B35552802  **142**
+Routine Name: PRCB8B
+    Before: B13077965   After: B13230822  **71,142**
+Routine Name: PRCPEIL1
+    Before: B24705575   After: B35914399  **1,142**
+Routine Name: PRCPRTR1
+    Before: B11748758   After: B12520469  **24,142**
+Routine Name: PRCPRTRA
+    Before: B24224831   After: B30885412  **1,142**
+ 
+Routine list of preceding patches: 1, 24, 71, 72
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : OCT 29, 2009
+Completed By: HEFFERNAN,COREY               Date Completed: JUN 10, 2011
+Released By : NELSON,VICKI M                Date Released : JUN 24, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

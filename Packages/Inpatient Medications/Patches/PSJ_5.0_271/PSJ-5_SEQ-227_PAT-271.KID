@@ -1,0 +1,554 @@
+Released PSJ*5*271 SEQ #227
+Extracted from mail message
+**KIDS**:PSJ*5.0*271^
+
+**INSTALL NAME**
+PSJ*5.0*271
+"BLD",8533,0)
+PSJ*5.0*271^INPATIENT MEDICATIONS^0^3120104^y
+"BLD",8533,1,0)
+^^6^6^3120104^
+"BLD",8533,1,1,0)
+This patch will correct the following issue:
+"BLD",8533,1,2,0)
+ 
+"BLD",8533,1,3,0)
+   When using the Order Entry (IV) [PSJI ORDER] menu option. A 
+"BLD",8533,1,4,0)
+   variable containing schedule frequency was being left behind. 
+"BLD",8533,1,5,0)
+   Causing order to be created with a frequency that would not 
+"BLD",8533,1,6,0)
+   match the schedule.
+"BLD",8533,4,0)
+^9.64PA^^
+"BLD",8533,6.3)
+2
+"BLD",8533,"ABPKG")
+n
+"BLD",8533,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8533,"KRN",.4,0)
+.4
+"BLD",8533,"KRN",.401,0)
+.401
+"BLD",8533,"KRN",.402,0)
+.402
+"BLD",8533,"KRN",.403,0)
+.403
+"BLD",8533,"KRN",.5,0)
+.5
+"BLD",8533,"KRN",.84,0)
+.84
+"BLD",8533,"KRN",3.6,0)
+3.6
+"BLD",8533,"KRN",3.8,0)
+3.8
+"BLD",8533,"KRN",9.2,0)
+9.2
+"BLD",8533,"KRN",9.8,0)
+9.8
+"BLD",8533,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",8533,"KRN",9.8,"NM",1,0)
+PSIVOPT^^0^B57262738
+"BLD",8533,"KRN",9.8,"NM","B","PSIVOPT",1)
+
+"BLD",8533,"KRN",19,0)
+19
+"BLD",8533,"KRN",19.1,0)
+19.1
+"BLD",8533,"KRN",101,0)
+101
+"BLD",8533,"KRN",409.61,0)
+409.61
+"BLD",8533,"KRN",771,0)
+771
+"BLD",8533,"KRN",779.2,0)
+779.2
+"BLD",8533,"KRN",870,0)
+870
+"BLD",8533,"KRN",8989.51,0)
+8989.51
+"BLD",8533,"KRN",8989.52,0)
+8989.52
+"BLD",8533,"KRN",8994,0)
+8994
+"BLD",8533,"KRN","B",.4,.4)
+
+"BLD",8533,"KRN","B",.401,.401)
+
+"BLD",8533,"KRN","B",.402,.402)
+
+"BLD",8533,"KRN","B",.403,.403)
+
+"BLD",8533,"KRN","B",.5,.5)
+
+"BLD",8533,"KRN","B",.84,.84)
+
+"BLD",8533,"KRN","B",3.6,3.6)
+
+"BLD",8533,"KRN","B",3.8,3.8)
+
+"BLD",8533,"KRN","B",9.2,9.2)
+
+"BLD",8533,"KRN","B",9.8,9.8)
+
+"BLD",8533,"KRN","B",19,19)
+
+"BLD",8533,"KRN","B",19.1,19.1)
+
+"BLD",8533,"KRN","B",101,101)
+
+"BLD",8533,"KRN","B",409.61,409.61)
+
+"BLD",8533,"KRN","B",771,771)
+
+"BLD",8533,"KRN","B",779.2,779.2)
+
+"BLD",8533,"KRN","B",870,870)
+
+"BLD",8533,"KRN","B",8989.51,8989.51)
+
+"BLD",8533,"KRN","B",8989.52,8989.52)
+
+"BLD",8533,"KRN","B",8994,8994)
+
+"BLD",8533,"QUES",0)
+^9.62^^
+"BLD",8533,"REQB",0)
+^9.611^1^1
+"BLD",8533,"REQB",1,0)
+PSJ*5.0*181^2
+"BLD",8533,"REQB","B","PSJ*5.0*181",1)
+
+"MBREQ")
+0
+"PKG",221,-1)
+1^1
+"PKG",221,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",221,20,0)
+^9.402P^^
+"PKG",221,22,0)
+^9.49I^1^1
+"PKG",221,22,1,0)
+5.0^2971215^2981113^1
+"PKG",221,22,1,"PAH",1,0)
+271^3120104
+"PKG",221,22,1,"PAH",1,1,0)
+^^6^6^3120104
+"PKG",221,22,1,"PAH",1,1,1,0)
+This patch will correct the following issue:
+"PKG",221,22,1,"PAH",1,1,2,0)
+ 
+"PKG",221,22,1,"PAH",1,1,3,0)
+   When using the Order Entry (IV) [PSJI ORDER] menu option. A 
+"PKG",221,22,1,"PAH",1,1,4,0)
+   variable containing schedule frequency was being left behind. 
+"PKG",221,22,1,"PAH",1,1,5,0)
+   Causing order to be created with a frequency that would not 
+"PKG",221,22,1,"PAH",1,1,6,0)
+   match the schedule.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSIVOPT")
+0^1^B57262738^B57204242
+"RTN","PSIVOPT",1,0)
+PSIVOPT ;BIR/PR,MLM-OPTION DRIVER ; 1/4/12 7:36am
+"RTN","PSIVOPT",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**17,27,58,88,104,110,155,181,271**;16 DEC 97;Build 2
+"RTN","PSIVOPT",3,0)
+ ;
+"RTN","PSIVOPT",4,0)
+ ; Reference to ^PS(55 is supported by DBIA# 2191
+"RTN","PSIVOPT",5,0)
+ ; Reference to ^PSDRUG is supported by DBIA# 2192        
+"RTN","PSIVOPT",6,0)
+ ; Reference to ^PS(52.6 is supported by DBIA# 1231
+"RTN","PSIVOPT",7,0)
+ ; Reference to ^PS(52.7 is supported by DBIA# 2173
+"RTN","PSIVOPT",8,0)
+ ;
+"RTN","PSIVOPT",9,0)
+ NEW PSIVLOCK S PSIVLOCK=0
+"RTN","PSIVOPT",10,0)
+ ;I ON["P" L +^PS(53.1,+ON):1 S:'$T PSIVLOCK=1
+"RTN","PSIVOPT",11,0)
+ I ON["V" L +^PS(55,DFN,"IV",+ON55):1 S:'$T PSIVLOCK=1
+"RTN","PSIVOPT",12,0)
+ I PSIVLOCK W !,$C(7),$C(7),"This order is being edited by another user. Try later." G K
+"RTN","PSIVOPT",13,0)
+ ;W ! L +^PS(55,DFN,"IV",+ON55):1 I '$T W !,$C(7),$C(7),"This order is being edited by another user. Try later." G K
+"RTN","PSIVOPT",14,0)
+ I PSIVAC="O"!(PSIVAC="H") S PSIVAC=PSIVAC_"(DFN,ON,P(17),P(3))"
+"RTN","PSIVOPT",15,0)
+ S TEX="Active order ***" I $D(UWLFLAG),UWLFLAG="1.001" S XED=0 D @PSIVAC G K
+"RTN","PSIVOPT",16,0)
+ S DONE=0 F  D ACT Q:DONE
+"RTN","PSIVOPT",17,0)
+ ;
+"RTN","PSIVOPT",18,0)
+UNLOCK ; Unlock order.
+"RTN","PSIVOPT",19,0)
+ ;I ON["P" L -^PS(53.1,+ON)
+"RTN","PSIVOPT",20,0)
+ ;E  L -^PS(55,DFN,"IV",+ON55)
+"RTN","PSIVOPT",21,0)
+ I ON["V" L -^PS(55,DFN,"IV",+ON55)
+"RTN","PSIVOPT",22,0)
+ ;
+"RTN","PSIVOPT",23,0)
+K ; Kill variables. *271
+"RTN","PSIVOPT",24,0)
+ K %,DA,DIE,DIK,DLAYGO,DNE,DR,DRG,DRGI,DRGT,ERR,HELP,J,OD,P,P16,PSIVAL,PSIVC,PSIVLOG,PSIVNOL,PSIVOK,PSIVOPT,PSIVREA,SCRNPRO,TEX,XED,ZZND
+"RTN","PSIVOPT",25,0)
+ Q
+"RTN","PSIVOPT",26,0)
+ACT ; Prompt for order action.
+"RTN","PSIVOPT",27,0)
+ K PSJIVBD NEW PSGFDX,PSGSDX S (PSJORD,ON)=ON55
+"RTN","PSIVOPT",28,0)
+ S PSJCOM=$S(ON["V":$P($G(^PS(55,DFN,"IV",+ON,.2)),"^",8),1:$P($G(^PS(53.1,+ON,.2)),"^",8))
+"RTN","PSIVOPT",29,0)
+ D:ON["V" EN^PSJLIORD(DFN,ON)
+"RTN","PSIVOPT",30,0)
+ I ON["P",($P($G(^PS(53.1,+ON,0)),U,9)="N"),'PSJCOM D GT531^PSIVORFA(DFN,ON),VF^PSIVORC2 S DONE=1 Q
+"RTN","PSIVOPT",31,0)
+ I ON["P",PSJCOM Q:'$$LOCK^PSJOEA(DFN,PSJCOM)  N PSJO,ON,PSJORD S PSJO=0 F  S PSJO=$O(^PS(53.1,"ACX",PSJCOM,PSJO)) Q:'PSJO  Q:$G(Y)="Q"  S (PSJORD,ON)=PSJO_"P" D
+"RTN","PSIVOPT",32,0)
+ .D:($P($G(^PS(53.1,+ON,0)),U,9)="N") GT531^PSIVORFA(DFN,ON),VF^PSIVORC2
+"RTN","PSIVOPT",33,0)
+ .D:($P($G(^PS(53.1,+ON,0)),U,9)="P") EN^PSJLIFN
+"RTN","PSIVOPT",34,0)
+ I $G(PSJCOM) N PSJORD S PSJORD=PSJCOM D CHK^PSJOEA1
+"RTN","PSIVOPT",35,0)
+ I ON'["V",'+$G(PSJCOM) D EN^PSJLIFN
+"RTN","PSIVOPT",36,0)
+ S DONE=1
+"RTN","PSIVOPT",37,0)
+ Q
+"RTN","PSIVOPT",38,0)
+ ;
+"RTN","PSIVOPT",39,0)
+CK ; Check if drugs are still valid.
+"RTN","PSIVOPT",40,0)
+ F DRGT="AD","SOL" S FIL=$S(DRGT="AD":52.6,1:52.7) F DRGI=0:0 S DRGI=$O(DRG(DRGT,DRGI)) Q:'DRGI  D
+"RTN","PSIVOPT",41,0)
+ .S DRG=+$P(DRG(DRGT,DRGI),U),X=$G(^PS(FIL,DRG,"I")) I $S('X:0,DT<X:0,1:1)!$S('$G(^PSDRUG(+$P($G(^PS(FIL,DRG,0)),U,2),"I")):0,^("I")>DT:0,1:1) S ERR=1
+"RTN","PSIVOPT",42,0)
+ Q
+"RTN","PSIVOPT",43,0)
+ ;
+"RTN","PSIVOPT",44,0)
+D ; Discontinue order.
+"RTN","PSIVOPT",45,0)
+ D D^PSIVOPT2
+"RTN","PSIVOPT",46,0)
+ Q
+"RTN","PSIVOPT",47,0)
+ ;
+"RTN","PSIVOPT",48,0)
+O(DFN,ON,STAT,STOP) ; On/Off Call
+"RTN","PSIVOPT",49,0)
+ D NOW^%DTC I STAT="H",STOP<% D EXPIR Q
+"RTN","PSIVOPT",50,0)
+ I "OA"'[STAT W !,$C(7),"Only active orders may be placed on hold." Q
+"RTN","PSIVOPT",51,0)
+ S PSIVALT=1,PSIVREA=$S(STAT'="O":"O",1:"C"),(P(17),STAT)=$S(PSIVREA="O":"O",1:"A") W:PSIVREA="C" ?$X+4,$C(7),TEX
+"RTN","PSIVOPT",52,0)
+ D UPSTAT,LOG^PSIVORAL D:STAT="A" CKO^PSIVCHK
+"RTN","PSIVOPT",53,0)
+ Q
+"RTN","PSIVOPT",54,0)
+ ;
+"RTN","PSIVOPT",55,0)
+E ; Entry for Pharmacy edit
+"RTN","PSIVOPT",56,0)
+ N PSJEDIT1 D E^PSIVOPT1
+"RTN","PSIVOPT",57,0)
+ Q
+"RTN","PSIVOPT",58,0)
+ ;
+"RTN","PSIVOPT",59,0)
+R ; Renew order.
+"RTN","PSIVOPT",60,0)
+ D R^PSIVOPT2
+"RTN","PSIVOPT",61,0)
+ Q
+"RTN","PSIVOPT",62,0)
+ ;
+"RTN","PSIVOPT",63,0)
+H(DFN,ON,STAT,STOP)          ; Place order on hold.
+"RTN","PSIVOPT",64,0)
+ D NOW^%DTC I STAT="H" I STOP<% D EXPIR Q
+"RTN","PSIVOPT",65,0)
+ I "HA"'[STAT W !,$C(7),"Only active orders may be placed on hold." Q
+"RTN","PSIVOPT",66,0)
+ D NATURE^PSIVOREN I '$D(P("NAT")) W !!,"Order unchanged." Q
+"RTN","PSIVOPT",67,0)
+ S PSIVALT=1,PSIVREA=$S(STAT'="H":"H",1:"U"),(P(17),STAT)=$S(PSIVREA="H":"H",1:"A") W:PSIVREA="U" ?$X+4,$C(7),TEX
+"RTN","PSIVOPT",68,0)
+ D UPSTAT,LOG^PSIVORAL,HOLD^PSIVOE,ENLBL^PSIVOPT(2,DUZ,DFN,3,+ON55,$S(PSIVREA="H":"H1",1:"H0")) D:STAT="A" CKO^PSIVCHK
+"RTN","PSIVOPT",69,0)
+ Q
+"RTN","PSIVOPT",70,0)
+ ;
+"RTN","PSIVOPT",71,0)
+S ; View order.
+"RTN","PSIVOPT",72,0)
+ D @$S(ON55["V":"GT55^PSIVORFB",1:"GT531^PSIVORFA("_DFN_","""_ON55_""")") W @IOF D EN^PSIVORV2
+"RTN","PSIVOPT",73,0)
+ Q
+"RTN","PSIVOPT",74,0)
+ ;
+"RTN","PSIVOPT",75,0)
+EXPIR ; Update status of expired orders.
+"RTN","PSIVOPT",76,0)
+ I STAT="H" S PSIVREA="H",P(17)="E"
+"RTN","PSIVOPT",77,0)
+ S STAT="E" D UPSTAT,EXPIR^PSIVOE W $C(7),"  This order has expired."
+"RTN","PSIVOPT",78,0)
+ Q
+"RTN","PSIVOPT",79,0)
+ ;
+"RTN","PSIVOPT",80,0)
+UPSTAT ; Update orders status.
+"RTN","PSIVOPT",81,0)
+ N DA,DR,DIE,PSIVACT S PSIVACT=1,DA=+ON55,DA(1)=DFN,DIE="^PS(55,"_DFN_",""IV"",",DR="100///"_P(17)_$S($G(PSIVREA)="H":";149///1",$G(PSIVREA)="U":";149///@",1:"") D ^DIE
+"RTN","PSIVOPT",82,0)
+ Q
+"RTN","PSIVOPT",83,0)
+ ;
+"RTN","PSIVOPT",84,0)
+ENIN ; Entry for inpatient order entry/profile options.
+"RTN","PSIVOPT",85,0)
+ N DFN,ON,P,PSIVAC S PSIVAC="C" I PSJORD["P" S (P("PON"),ON)=+PSJORD_"P",DFN=PSGP D SHOW1^PSIVORC Q
+"RTN","PSIVOPT",86,0)
+ S (P("PON"),ON,ON55)=+PSJORD_"V",DFN=PSGP D GT55^PSIVORFB,EN^PSIVORV2,PSIVOPT:'$D(PSJPRF)
+"RTN","PSIVOPT",87,0)
+ L -^PS(55,DFN,"IV",+PSJORD)
+"RTN","PSIVOPT",88,0)
+ Q
+"RTN","PSIVOPT",89,0)
+ ;
+"RTN","PSIVOPT",90,0)
+ENARI(DFN,ON,PSGUOW,PSIVAL) ; Auto-reinstate IV orders if movement is deleted.
+"RTN","PSIVOPT",91,0)
+ ;Create a list of recipients beyond normal mail group
+"RTN","PSIVOPT",92,0)
+ S PSGORNUM=$S($G(PSGORD):PSGORD,$G(PSJORD):PSJORD,$G(OR55):OR55,1:"")
+"RTN","PSIVOPT",93,0)
+ I $G(PSGORNUM) D
+"RTN","PSIVOPT",94,0)
+ .I $D(^PS(55,PSGP,"IV",+PSGORNUM,0)),$P(^PS(55,PSGP,"IV",+PSGORNUM,0),U,6)'="" S PSJSENTO($J,$P(^PS(55,PSGP,"IV",+PSGORNUM,0),U,6))="" ; Provider
+"RTN","PSIVOPT",95,0)
+ .I $D(^PS(55,PSGP,"IV",+PSGORNUM,2)),$P(^PS(55,PSGP,"IV",+PSGORNUM,2),U,11)'="" S PSJSENTO($J,$P(^PS(55,PSGP,"IV",+PSGORNUM,2),U,11))="" ; Entered by
+"RTN","PSIVOPT",96,0)
+ .I $D(^PS(55,PSGP,"IV",+PSGORNUM,4)),$P(^PS(55,PSGP,"IV",+PSGORNUM,4),U,1)'="" S PSJSENTO($J,$P(^PS(55,PSGP,"IV",+PSGORNUM,4),U,1))="" ; Verifying Nurse
+"RTN","PSIVOPT",97,0)
+ ; find pharmacist that finished the IV order
+"RTN","PSIVOPT",98,0)
+ N PSJX,ENTBY S PSJX=$G(^PS(55,PSGP,"IV",+ON,"A",1,0))
+"RTN","PSIVOPT",99,0)
+ I $P(PSJX,U,2)="F" S ENTBY=$$VA200($P(PSJX,U,3)) I ENTBY'="" S PSJSENTO($J,ENTBY)=""
+"RTN","PSIVOPT",100,0)
+ ;
+"RTN","PSIVOPT",101,0)
+ I $G(PSGALO)'=18530,$G(PSGORNUM),$$IVDUPADD^PSIVOPT(PSGP,+PSGORNUM) S ^TMP("PSJNOTUNDC",$J,PSGP,+PSGORNUM_"V")="" Q
+"RTN","PSIVOPT",102,0)
+ N DA,DR,DIE,DIK,PSIVREA,PSIVALCK,PSIVOPT,PSIVALT,X,Y
+"RTN","PSIVOPT",103,0)
+ S X=$G(^PS(55,DFN,"IV",+ON,"ADC")) I X K ^PS(55,"ADC",X,DFN,+ON),^PS(55,DFN,"IV",+ON,"ADC")
+"RTN","PSIVOPT",104,0)
+ ;S PSIVACT=1,DR=$S(+$P($G(^PS(55,DFN,"IV",+ON,4)),U,18)=1:"100///H",+$P($G(^PS(55,DFN,"IV",+ON,0)),U,10)=1:"100///H",1:"100///A")_";.03////"_+$P($G(^PS(55,DFN,"IV",+ON,2)),U,7)_";109///@;116///@;121///@;157////@"
+"RTN","PSIVOPT",105,0)
+ S PSIVACT=1,DR=$S(+$P($G(^PS(55,DFN,"IV",+ON,0)),U,10)=1:"100///H;157///HP",+$P($G(^PS(55,DFN,"IV",+ON,4)),U,18)=1:"100///H;157///@",1:"100///A;157///@")_";.03////"_+$P($G(^PS(55,DFN,"IV",+ON,2)),U,7)_";109///@;116///@;121///@"
+"RTN","PSIVOPT",106,0)
+ S DIE="^PS(55,"_DFN_",""IV"",",DA=+ON,DA(1)=DFN
+"RTN","PSIVOPT",107,0)
+ N CHKIT S CHKIT=$G(^PS(55,DFN,"IV",+ON,2)) I $P(CHKIT,U,6)["P",($P(CHKIT,U,9)="R") S DR=DR_";114///@;123///@"
+"RTN","PSIVOPT",108,0)
+ D ^DIE
+"RTN","PSIVOPT",109,0)
+ S ^TMP("PSJUNDC",$J,DFN,ON_"V")=""
+"RTN","PSIVOPT",110,0)
+ S ON55=ON,P(17)="A",PSIVREA=$S($D(PSJUNDC):"AI",1:"I"),PSIVALCK="STOP",(PSIVOPT,PSIVALT)=1,PSIVAL=$P($G(^PS(53.3,+PSIVAL,0)),U) D LOG^PSIVORAL
+"RTN","PSIVOPT",111,0)
+ ;* S Y=^PS(55,DFN,"IV",+ON,0),P(3)=+$P(Y,U,3),ORIFN=$P(Y,U,21),P(12)="" D:'$D(PSJIVORF) ORPARM^PSIVOREN I PSJIVORF D
+"RTN","PSIVOPT",112,0)
+ S Y=^PS(55,DFN,"IV",+ON,0),P(3)=+$P(Y,U,3),P(12)="" D:'$D(PSJIVORF) ORPARM^PSIVOREN I PSJIVORF D
+"RTN","PSIVOPT",113,0)
+ .D EN1^PSJHL2(DFN,"SC",+ON55_"V","AUTO REINSTATED")
+"RTN","PSIVOPT",114,0)
+ S PSGTOL=$S($D(PSJUNDC):3,1:2)
+"RTN","PSIVOPT",115,0)
+ Q:$S('$D(PSJUNDC):0,PSGALO=18540:1,1:'$P($G(PSJSYSW0),U,15))
+"RTN","PSIVOPT",116,0)
+ I $D(^PS(53.41,1,1,PSGUOW,1,DFN,1,3,1,+ON)) K DIK,DA S DIK="^PS(53.41,1,1,"_PSGUOW_",1,"_DFN_",1,3,1,",DA=+ON,DA(1)=1,DA(2)=PSGP,DA(3)=PSGUOW,DA(4)=3 D ^DIK
+"RTN","PSIVOPT",117,0)
+ E  K DA D ENLBL^PSIVOPT(PSGTOL,PSGUOW,DFN,3,+ON,"RE")
+"RTN","PSIVOPT",118,0)
+ Q
+"RTN","PSIVOPT",119,0)
+ ;
+"RTN","PSIVOPT",120,0)
+ENINP(DFN,ON) ; Entry from Inpatient Profile.
+"RTN","PSIVOPT",121,0)
+ N PSIVAC,ON55 S PSIVAC="PRO" D @($S(ON["V":"GT55^PSIVORFB",1:"GT531^PSIVORFA("_DFN_","""_ON_""")")),ENNH^PSIVORV2(ON)
+"RTN","PSIVOPT",122,0)
+ Q
+"RTN","PSIVOPT",123,0)
+ENLBL(PSGTOL,PSGUOW,PSGP,PSGTOO,DA,RES) ;
+"RTN","PSIVOPT",124,0)
+ ;Queue MAR labels for IV orders.
+"RTN","PSIVOPT",125,0)
+ Q:'$D(^DPT(PSGP,.1))  I '$D(PSJSYSW0) N PSJACPF,PSJACNWP S PSJACPF=11 D WP^PSJAC Q:'PSJSYSL
+"RTN","PSIVOPT",126,0)
+ N P,X,Y
+"RTN","PSIVOPT",127,0)
+ S X=$P(PSJSYSW0,U,2),Y=$P($G(^PS(55,PSGP,"IV",DA,0)),U,4)
+"RTN","PSIVOPT",128,0)
+ S Y=$S(Y="A":4,Y="H":5,Y="C":6,1:3) I X=1!(X[Y) D NOW^%DTC S PSGDT=% D ENL^PSGVDS S ^PS(55,DFN,"IV",DA,7)=PSGDT_U_RES
+"RTN","PSIVOPT",129,0)
+ Q
+"RTN","PSIVOPT",130,0)
+ ;
+"RTN","PSIVOPT",131,0)
+IVDUPADD(PSGP,ORDERNUM) ;
+"RTN","PSIVOPT",132,0)
+ N PSJCOM
+"RTN","PSIVOPT",133,0)
+ S DUPLOOP=0
+"RTN","PSIVOPT",134,0)
+ S DUPFOUND=0
+"RTN","PSIVOPT",135,0)
+ ;Loop through the additives of order to reinstate
+"RTN","PSIVOPT",136,0)
+ S PSJCOM=+$P($G(^PS(55,+PSGP,"IV",ORDERNUM,.2)),"^",8) F  S DUPLOOP=$O(^PS(55,PSGP,"IV",ORDERNUM,"AD",DUPLOOP)) Q:((DUPLOOP="")!(DUPFOUND))  D
+"RTN","PSIVOPT",137,0)
+ .;Get the additive code no.
+"RTN","PSIVOPT",138,0)
+ .S TARGET=$P(^PS(55,PSGP,"IV",ORDERNUM,"AD",DUPLOOP,0),"^",1)
+"RTN","PSIVOPT",139,0)
+ .D NOW^%DTC
+"RTN","PSIVOPT",140,0)
+ .S DATELOOP=%
+"RTN","PSIVOPT",141,0)
+ .;Loop through the current orders for the patient by date
+"RTN","PSIVOPT",142,0)
+ .F  S DATELOOP=$O(^PS(55,PSGP,"IV","AIS",DATELOOP)) Q:((DATELOOP="")!(DUPFOUND))  D
+"RTN","PSIVOPT",143,0)
+ ..S EXISTORD=""
+"RTN","PSIVOPT",144,0)
+ ..;Loop through the orders for date by order number
+"RTN","PSIVOPT",145,0)
+ ..F  S EXISTORD=$O(^PS(55,PSGP,"IV","AIS",DATELOOP,EXISTORD)) Q:((EXISTORD="")!(DUPFOUND))  D
+"RTN","PSIVOPT",146,0)
+ ...;Loop through additives for the existing order
+"RTN","PSIVOPT",147,0)
+ ...I PSJCOM>0 Q:+$P($G(^PS(55,+PSGP,"IV",EXISTORD,.2)),"^",8)
+"RTN","PSIVOPT",148,0)
+ ...S EXISTADD=0
+"RTN","PSIVOPT",149,0)
+ ...F  S EXISTADD=$O(^PS(55,PSGP,"IV",EXISTORD,"AD",EXISTADD)) Q:((EXISTADD="")!(DUPFOUND))  D 
+"RTN","PSIVOPT",150,0)
+ ....;Extract the Additive Code number for the Order
+"RTN","PSIVOPT",151,0)
+ ....S MATCHADD=$P(^PS(55,PSGP,"IV",EXISTORD,"AD",EXISTADD,0),"^",1)
+"RTN","PSIVOPT",152,0)
+ ....;If the existing order and the order to be reinstated have the same additive code then return FOUND=TRUE
+"RTN","PSIVOPT",153,0)
+ ....I MATCHADD=TARGET D
+"RTN","PSIVOPT",154,0)
+ .....S DUPFOUND=1
+"RTN","PSIVOPT",155,0)
+ Q DUPFOUND
+"RTN","PSIVOPT",156,0)
+ ;
+"RTN","PSIVOPT",157,0)
+VA200(X) ;Return the IEN for the user.
+"RTN","PSIVOPT",158,0)
+ ; X = User name
+"RTN","PSIVOPT",159,0)
+ NEW DIC,Y S DIC="^VA(200,",DIC(0)="NZ" D ^DIC
+"RTN","PSIVOPT",160,0)
+ I +Y=-1 Q ""
+"RTN","PSIVOPT",161,0)
+ Q $P(Y,U)
+"VER")
+8.0^22.0
+"BLD",8533,6)
+^227
+**END**
+**END**

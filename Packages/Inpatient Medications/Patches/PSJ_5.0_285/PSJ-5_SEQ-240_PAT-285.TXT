@@ -1,0 +1,165 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 10/04/12 at 12:54
+=============================================================================
+Run Date: FEB 07, 2013                     Designation: PSJ*5*285
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #240                      Status: Released
+                  Compliance Date: MAR 10, 2013
+=============================================================================
+
+Associated patches: (v)PSJ*5*267   <<= must be installed BEFORE `PSJ*5*285'
+
+Subject: FIX INVALID INFUSION RATE ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Inpatient Medications 
+ package:
+  
+ 1. A trailing zero in the Infusion Rate can cause an Invalid Infusion
+    Rate error.
+  
+ 2. When editing the Admin Times on an active order with a day-of-week   
+    schedule, an <UNDEFINED> error will occur.
+  
+ 3. Changing the Schedule of an IVPB order from a schedule with a frequency
+    to a schedule without a frequency will result in an inaccurate Dose Due
+    line for the new order.
+  
+  
+ ASSOCIATED NSR(S):
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Ann Arbor VAMC
+ Cincinnati VAMC
+ Salisbury VAMC
+ Upstate NY HCS
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. HD0000000497619 - invalid infusion rates
+  
+ 2. HD0000000617617 - ERROR - <UNDEFINED>A41+8^PSGOE91
+  
+ 3. HD0000000612618 - IV label shows dose due in 2011
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================
+ 1. HD0000000497619
+  
+    Problem:
+    -------
+    When entering an IV order in CPRS, if the Infusion Rate is entered 
+    with a trailing zero after the decimal point (e.g. 10.0), then when the
+    order is signed, an error of "Invalid Infusion Rate" will result.
+  
+    Resolution:
+    ----------
+    Changed routine PSJHLU so that a decimal with trailing zeroes is 
+    properly interpreted as a valid number.
+  
+  
+ 2. HD0000000617617
+  
+    Problem:
+    -------
+    When editing the Admin Times on an active order with a day-of-week 
+    schedule, an <UNDEFINED> error will occur because the variable ZZND
+    is not defined for day-of-week schedules.
+  
+    Resolution:
+    ----------
+    Changed PSGOE91 so that the <UNDEFINED> error does not occur.
+  
+  
+ 3. HD0000000612618
+  
+    Problem:
+    -------
+    When editing an active IVPB order and Auto-Verify is set to "Yes" for 
+    the user, changing the Schedule from a schedule with a frequency to a 
+    schedule without a frequency causes the old frequency to remain, 
+    resulting in an inaccurate "dose due" line for the new order.
+   
+    Resolution:
+    ----------
+    Changed PSIVORFB so that the frequency is properly reset when changing 
+    the schedule.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2. From the Kernel Installation & Distribution System menu, select the
+    Installation menu.  
+  
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSJ*5.0*285)
+   
+    a.  Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+    b.  Print Transport Global - This option will allow you to view the
+        components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  It compares all components of this patch (routines,
+        DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package PSJ*5.0*285.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+    respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE91
+    Before: B37672131   After: B37734191  **50,64,58,110,111,136,113,179,
+                                           265,267,285**
+Routine Name: PSIVORFB
+    Before: B83047869   After: B84688439  **3,18,28,68,58,85,110,111,120,
+                                           134,213,161,181,273,267,285**
+Routine Name: PSJHLU
+    Before: B45862286   After: B45959307  **1,56,72,102,134,181,267,285**
+ 
+Routine list of preceding patches: 267
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : SEP 20, 2012
+Completed By: WERNER,GARY                   Date Completed: FEB 01, 2013
+Released By : CONNOLLY,BARBARA              Date Released : FEB 07, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

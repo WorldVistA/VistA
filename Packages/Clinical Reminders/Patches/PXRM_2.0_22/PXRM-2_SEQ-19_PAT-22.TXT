@@ -1,0 +1,217 @@
+
+=============================================================================
+Run Date: JUL 31, 2012                     Designation: PXRM*2*22
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #19                      Status: Released
+                  Compliance Date: AUG 31, 2012
+=============================================================================
+
+Associated patches: (v)PXRM*2*18   <<= must be installed BEFORE `PXRM*2*22'
+
+Subject: TERATOGENIC DRUGS ORDER CHECK
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Print Template
+  - Routine
+
+Description:
+============
+
+ General Overview:
+ =================
+ The build for this patch is distributed as part of a multi-package build that
+ contains PXRM*2.0*22 and OR*3.0*357. The multi-package build name is
+ TERATOGENIC MEDICATIONS ORDER CHECKS 1.0. 
+  
+ This patch releases two new National Reminder Order Checks for placing
+ Teratogenic Medications.
+  
+ This patch also addresses two bug fixes in the Reminder Order Check setup. To
+ address these fixes the Reminder Order Check System had to be broken up into
+ two files.
+  
+ File 801 Reminder Order Check Items Group and file 801.1 Reminder Order Check
+ Rules.
+  
+ File 801 contains the grouping of Orderable Items. This file has also been
+ modified to allow groups to include entries from the Drugs file, file #50, 
+ VA Generic file, file #50.6 and VA Drug Class file, file # 50.605.
+  
+ File 801.1 contains the Reminder Order Check Rules.
+  
+ These changes will allow site to modify the Active and Testing Fields for
+ National Rules.
+  
+ This patch also fixes a Mumps error when the select order checks prompt
+ times out.
+ 
+ This patch fixes a problem with Reminder Exchange automatically setting a
+ dialog item disable field to 1 instead of the packed value.
+ 
+ This patch fixes a problem with Reminder Exchange taking an error when
+ installing a dialog item that contains an ICD9 code as an additional 
+ finding item.
+ 
+ This patch fixes a problem with the Reminder Definition Inquiry not showing
+ usage of Reminder Order Check, if the usage field contains an "O".
+  
+ To support the two-file structure, the existing menu options have been renamed
+ and two new options will be released with this patch.
+ 
+ This patch also contains an update to the VA-RANDOM NUMBER computed finding
+ description.
+  
+ Remedy Tickets:
+ ==============
+ 536991
+ 502067
+ 606277
+ 603685
+ 599706
+ 616620 
+ 
+ Documentation:
+ ==============
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may also
+ elect to retrieve software directly from a specific server as follows:
+  
+ Albany          ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines           ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City  ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ This documentation will be in the form of Adobe Acrobat files.
+ The updated documentation associated with this patch is:
+  Installation Guide: PXRM_2_22_IG.PDF
+  Manager's Manual: PXRM_2_22_MM.PDF
+  
+ Clinical Reminders documentation can also be found in the VistA
+ Documentation Library: (http://vista.med.va.gov/vdl/) or
+ http://www.va.gov/vdl.
+  
+ Build Components:
+ =================
+  
+  Data Dictionary:
+  ================
+    FILE #       NAME
+    801          REMINDER ORDER CHECK ITEMS GROUP
+    801.1        REMINDER ORDER CHECK RULES
+    811.4        REMINDER COMPUTED FINDINGS (data updates only)
+    811.8        REMINDER EXCHANGE (data updates only)
+     
+  Input Templates:
+  ================          
+   PXRM EDIT ORDER CHECK    FILE #801             DELETE AT SITE
+  
+  Options:
+  ========
+    PXRM MANAGERS MENU                             
+    PXRM ORDER CHECK MENU
+    PXRM ORDER CHECK RULE EDIT
+    PXRM ORDER CHECK RULE INQ
+    PXRM ORDER CHECK TESTER
+    PXRM ORDER CHK ITEMS GROUP EDT
+    PXRM ORDER CHK ITEMS GROUP INQ
+  
+  
+  Print Templates:
+  ================
+    PXRM ORDER CHECK ITEMS GROUP    FILE #801      SEND TO SITE
+    PXRM ORDER CHECK RULE INQUIRY    FILE #801.1   SEND TO SITE
+ 
+  Form:
+  =====
+    PXRM OCG EDIT    FILE #801                     SEND TO SITE
+    PXRM OCG EDIT HISTORY    FILE #801             SEND TO SITE
+    PXRM OCG EDIT RESTRICTED    FILE #801          SEND TO SITE
+    PXRM OCR EDIT    FILE #801.1                   SEND TO SITE
+    PXRM OCR EDIT HISTORY    FILE #801.1           SEND TO SITE
+    PXRM OCR EDIT RESTRICTED    FILE #801.1        SEND TO SITE
+  
+  
+ Host File
+ ==========
+ This is a multi-package build; consequently it will be available only as a host
+ file. The name of the file is TERATOGENIC_MEDICATIONS_ORDER_CHECKS.KID.
+  
+ Sites will retrieve VistA software from the following FTP addresses.  The
+ preferred method is to FTP the files from download.vista.med.va.gov.  This
+ transmits the files from the first available FTP server. Sites may also elect
+ to retrieve software directly from a specific server as follows:
+  
+ Albany          ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines           ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City  ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Installation:
+ =============
+ For installation instructions see the Installation Guide, PXRM_2_22_IG.PDF.
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMEXIC
+    Before: B79443458   After: B79715012  **6,12,17,16,18,22**
+Routine Name: PXRMEXPD
+    Before:B193477804   After:B195546503  **12,17,16,18,22**
+Routine Name: PXRMEXPS
+    Before:B186693422   After:B192112578  **12,16,18,22**
+Routine Name: PXRMEXPU
+    Before: B23582804   After: B24380868  **6,12,22**
+Routine Name: PXRMEXU4
+    Before: B80659466   After: B80777182  **6,12,22**
+Routine Name: PXRMEXU5
+    Before: B37340412   After: B38868108  **12,16,18,22**
+Routine Name: PXRMFF
+    Before: B39772882   After: B39857893  **4,6,11,18,22**
+Routine Name: PXRMFRPT
+    Before:B109052864   After:B123701570  **12,17,16,18,22**
+Routine Name: PXRMOCG
+    Before:       n/a   After: B15745100  **22**
+Routine Name: PXRMOCR
+    Before:       n/a   After: B25443579  **22**
+Routine Name: PXRMORCH
+    Before:B212664484   After: B29035983  **16,22**
+Routine Name: PXRMORED
+    Before:       n/a   After:B122497918  **22**
+Routine Name: PXRMORXR
+    Before: B75991552   After: B55018956  **16,22**
+Routine Name: PXRMP22E
+    Before:       n/a   After:   B765040  **22**
+Routine Name: PXRMP22I
+    Before:       n/a   After: B14560687  **22**
+Routine Name: PXRMPSN
+    Before: B29549599   After: B29904639  **12,17,16,18,22**
+Routine Name: PXRMPTD1
+    Before:  B6820528   After:  B7212281  **4,12,22**
+Routine Name: PXRMREV
+    Before: B12256539   After: B13113840  **4,16,22**
+Routine Name: PXRMSMAN
+    Before:       n/a   After:  B2877129  **22**
+ 
+Routine list of preceding patches: 18
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,WILLIAM ANTHONY      Date Entered  : JUN 01, 2011
+Completed By: OLSEN,JAMES                   Date Completed: JUL 30, 2012
+Released By : VANCAMP,E PHILIP              Date Released : JUL 31, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

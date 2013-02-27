@@ -1,0 +1,174 @@
+$TXT Created by TRAN,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 03/08/12 at 11:19
+=============================================================================
+Run Date: APR 09, 2012                     Designation: XU*8*582
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #472                      Status: Released
+                  Compliance Date: MAY 10, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*77     <<= must be installed BEFORE `XU*8*582'
+                    (v)XU*8*431    <<= must be installed BEFORE `XU*8*582'
+
+Subject: Fixes for ERROR TRAP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy tickets #: 485324;500167;501817
+ Test sites:
+ - ALEXANDRIA, LA VAMC
+ - CENTRAL TEXAS HCS
+ - CLARKSBURG, WV VAMC
+ - WASHINGTON, DC VAMC 
+ Blood Bank Clearance: 8/24/11
+  
+         XU*8.0*582
+  
+ This Kernel patch addresses the following issues:
+  
+ 1) The error trap routine ^%ZTER checks a count in the ERROR TRAP 
+    SUMMARY file (#3.077) and stop recording errors once this limit has
+    been reached. This limit was initialized to 10 in previous patch
+    XU*8*431. However, some sites have reported that the current 10 error
+    limit(per day) is too low. 
+  
+    This patch will increase the limit to 100 for sites that still
+    have 10 as the default. However, if sites have already changed the
+    default to any other number, this patch will not touch it.
+  
+    Sites can use FileMan to edit the KERNEL SYSTEM PARAMETERS file
+    (#8989.3) field ERROR LIMIT (#520.1). The sites can also, turn off the
+    option and record unlimited errors by setting the field is NULL.
+  
+    For example:
+  
+    VA FileMan
+  
+    INPUT TO WHAT FILE: KERNEL SYSTEM PARAMETERS// 
+    EDIT WHICH FIELD: ALL// 520.1  ERROR LIMIT
+    THEN EDIT FIELD: 
+  
+    Select KERNEL SYSTEM PARAMETERS DOMAIN NAME:    
+                                     KRN.FO-OAKLAND.MED.VA.GOV
+    ERROR LIMIT: 100// @
+         SURE YOU WANT TO DELETE? Y  (Yes)
+  
+ 2) The MOST RECENT DATE/TIME field (#2) in the ERROR TRAP SUMMARY 
+    file (#3.077) file wasn't updated with the last date/time an error 
+    occurred. After this patch, the error trap routine will check and
+    update the FIRST DATE/TIME field (#1), and MOST RECENT DATE/TIME field
+    (#2).
+  
+ 3) The description of Error trap Auto [XUERTRP AUTO CLEAN] is 
+    updated to reflect the change on Error Limit functionality. The Error 
+    Limit is defined on the KEEP ERROR TRAP field (#520.3) in the KERNEL 
+    SYSTEM PARAMETERS file (#8989.3).  The default is 7 if the field is
+    blank.
+  
+    Before:
+  
+    DESCRIPTION:   This is a queueable option to clean up the error trap.  
+    By default this option will clean-up any errors that were recorded 
+    more than 7 days ago.  If in the Taskman Scheduling option the TASK 
+    PARAMETERS field has another numeric value that will be used instead.  
+  
+    After:
+  
+    DESCRIPTION:   This is a queueable option to clean up the error trap. 
+    This option will clean-up any errors that were recorded more than a 
+    number of days ago. The number of days is defined on the KEEP ERROR
+    TRAP field (#520.3) in the KERNEL SYSTEM PARAMETERS file (#8989.3). The
+    default is 7 if the field is blank.
+  
+ 4) When attempting to restore variables from an error, this message is 
+    displayed:
+    "MUST BE IN SAME UCI TO RESTORE PROGRAM --- VARIABLES RESTORED"
+  
+    This is actually harmless and the variables are restored anyway, but it
+    is not necessary and confusing.
+    After this patch, the message "VARIABLES RESTORED" is displayed.
+  
+ Blood Bank Team Coordination
+  ============================
+  
+ Blood Bank Clearance: 8/24/11
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*582 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*582 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*582
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to Rebuild Menu Trees Upon Completion of Install? No//
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ The routine XU8P582 will be deleted after the installation completes.
+ There is no after Checksum of the routine XU8P582.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XTER2
+    Before: B14234268   After: B14433664  **71,77,582**
+Routine Name: XU8P582
+    Before:       n/a   After:  B3489387  **582**
+Routine Name: ZTER
+    Before: B51850002   After: B54412923  **8,18,32,24,36,63,73,79,86,
+                                           112,118,162,275,392,455,431,
+                                           582**
+ 
+Routine list of preceding patches: 77, 431
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : JUL 11, 2011
+Completed By: BEST,LISA                     Date Completed: MAR 28, 2012
+Released By : TILLIS,LEWIS                  Date Released : APR 09, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

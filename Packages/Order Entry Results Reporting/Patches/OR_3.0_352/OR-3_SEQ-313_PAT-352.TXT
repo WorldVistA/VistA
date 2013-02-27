@@ -1,0 +1,248 @@
+$TXT Created by HAWSEY,JASON at CPRS30.FO-SLC.MED.VA.GOV  (KIDS) on Friday, 06/08/12 at 07:17
+=============================================================================
+Run Date: FEB 11, 2013                     Designation: OR*3*352
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #313                      Status: Released
+                  Compliance Date: MAR 14, 2013
+=============================================================================
+
+Associated patches: (v)OR*3*346    <<= must be installed BEFORE `OR*3*352'
+                    (v)OR*3*357    <<= must be installed BEFORE `OR*3*352'
+
+Subject: MOCHA V1.0 ENHANCEMENTS 1
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ ****************Attention*************************
+ This patch is part of the Medication Order Check Healthcare Application 
+ (MOCHA) v1.0 Enhancements 1 group of patches. There are a total of eight 
+ patches and one .kid (host) file that must be installed as a group.  The 
+ patches must be installed in the following order:
+  
+ OR*3*352
+ PSS*1*164
+ PSS*1*169
+ PSO*7*390
+ PSO*7*417
+ PSJ*5*268
+ <xxx>_1_0_P23.kid
+ PSJ*5*260
+ PSJ*5*288
+ For the ".kid" file, value of <xxx> will be determined by the ward 
+ automated dispensing equipment in use at your facility.  If no ward 
+ automated dispensing equipment is in use at your site, this file will not 
+ be needed. For those sites using Pyxis, xxx=PPU, for Omnicell sites, 
+ xxx=OPU, and for McKesson sites, xxx=MPU.  To obtain this file or if 
+ additional information is required regarding this ".kid" file, please 
+ contact your site's Informatix contact.
+  
+  
+ This is a companion patch to the Medication Order Check Healthcare 
+ Application (MOCHA) version 1.0 Enhancements group of patches that will
+ resolve a number of issues with the Computerized Patient Record System
+ (CPRS) version 3.0 order checking functionality. The following issues are
+ addressed:
+    1.  When running the dosage order checks for a medication order, data
+        is retrieved from the Pharmacy Enterprise Product System (PEPS)
+        server. PEPS may return the "Unexpected error has occurred."
+        message, which CPRS did not display to the user. CPRS will now
+        inform the user that dosing order checks could not be performed
+        when PEPS returns the "Unexpected error has occurred." message.
+    2.  When a drug interaction order check results in two or more 
+        interactions with the same severity between the same two drugs,
+        CPRS displayed each interaction separately. CPRS will now group the
+        multiple interactions with the same severity for the same drug pair
+        together.
+    3.  When an order for an outpatient medication is placed, CPRS would
+        not perform order checks against the patient's existing medication
+        clinic orders. CPRS will now include those medication clinic orders
+        in its outpatient medication order checks.
+    4.  A problem was identified where a user using the FileMan Inquire 
+        to File Entries option would not see the monograph text for an
+        ORDER CHECK INSTANCES file entry. The data dictionary for the ORDER
+        CHECK INSTANCES file and the code that stores the monograph text
+        were fixed so that the monograph text is now displayed when a user
+        performs an inquiry.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ ORDER CHECK                SEVERITY LEVEL (#9)     Deleted
+      INSTANCES (#100.05)   INTERVENTION IEN (#10)  Deleted
+                            DOSAGE ORDERED (#11)    Deleted
+                            ORDER CHECK
+                                 DATABASE (#12)     Deleted
+                            DISPENSE
+                                 FREQUENCY (#17)    Deleted
+                            LAB RESULTS (#18)       Deleted
+                            MONOGRAPH (#15)         Modified
+                            DRUG ALLERGIES (#17)    New
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The pre-installation routine will delete the existing data dictionary for
+ the ORDER CHECK INSTANCES file (#100.05) without deleting existing data.
+ This will allow KIDS to properly install the new data dictionary.
+  
+ The post-installation routine will create a tasked job that will clean up 
+ the MONOGRAPH (#15) field in the ORDER CHECK INSTANCES file (#100.05) so 
+ that FileMan will display the data in the MONOGRAPH field. The installer 
+ will receive an email after this process is complete, providing 
+ instructions on how to delete the post-installation routine.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options (when prompted for the INSTALL, enter OR*3.0*352):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ Once the post-installation task has completed, the installer will receive 
+ an email message with the subject line "OR*3.0*352 POST INSTALLATION 
+ REPORT" in his/her IN basket (the message may not have a status of NEW)
+ with instructions on how to remove the post-installation routine.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCHECK
+    Before:B109458729   After:B109213586  **7,56,70,94,141,215,243,293,
+                                           280,346,357,352**
+Routine Name: ORDSGCHK
+    Before: B89700507   After: B90665074  **280,352**
+Routine Name: ORKPS1
+    Before: B71033645   After: B76491746  **232,272,346,352**
+Routine Name: ORY352
+    Before:       n/a   After:  B8020148  **352**
+ 
+Routine list of preceding patches: 357
+
+=============================================================================
+User Information:
+Entered By  : HAWSEY,JASON                  Date Entered  : JUL 20, 2011
+Completed By: BARLOW,KENNETH                Date Completed: FEB 11, 2013
+Released By : SCHMIT,BECKY                  Date Released : FEB 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

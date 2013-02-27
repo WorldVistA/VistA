@@ -1,0 +1,221 @@
+$TXT Created by DAVIS,PAULETTE T at DEVCRN.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 05/24/12 at 13:52
+=============================================================================
+Run Date: JUN 18, 2012                     Designation: DG*5.3*856
+Package : DG - REGISTRATION                   Priority: EMERGENCY
+Version : 5.3       SEQ #754                    Status: Released
+                  Compliance Date: JUN 20, 2012
+=============================================================================
+
+Associated patches: (v)DG*5.3*766  <<= must be installed BEFORE `DG*5.3*856'
+                    (v)DG*5.3*800  <<= must be installed BEFORE `DG*5.3*856'
+                    (v)DG*5.3*821  <<= must be installed BEFORE `DG*5.3*856'
+                    (v)DG*5.3*837  <<= must be installed BEFORE `DG*5.3*856'
+
+Subject: TREATING FACILITY LIST (#391.91) FILE ISSUES
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  DG*5.3*766, DG*5.3*800, DG*5.3*821, and DG*5.3*837 are required builds
+  for patch DG*5.3*856.
+   
+  Issue #1
+  The following Data Dictionary change has been made to the TREATING
+  FACILITY LIST (#391.91) file.  A new cross-reference, "AISS", was
+  needed for the James A Lovell joint VA/Department of Defense (DoD)
+  Medical Center in North Chicago.  This cross-reference is on the
+  INSTITUTION (#.02) and the fully qualified ID, which is based on
+  the SOURCE ID (#11), ASSIGNING AUTHORITY (#10), and SOURCE ID
+  TYPE (#.09) fields.
+           
+  Post-init routine, DG53856P, is queued to run in the background.
+  It traverses the entries in TREATING FACILITY LIST (#391.91) file
+  and sets the new "AISS" cross-reference.
+    
+  Code changes have been made in routine VAFCTFU2 to use the "AISS"
+  cross-reference.
+    
+  Data Dictionary changes distributed in patch DG*5.3*837 removed
+  the SOURCE ID and IDENTIFIER STATUS fields at the multiple
+  (sub-file) level and moved the fields to the file level in the
+  TREATING FACILITY LIST (#391.91) file.  Previously, QUERYTF^VAFCTFU2
+  returned one record for a PATIENT/INSTITUTION.  Due to the DD change,
+  the QUERYTF module in routine VAFCTFU2 will now return all entries
+  from the "APAT" cross-reference for all sites.
+    
+  Issue #2
+  After the installation of patch DG*5.3*837, VISN 1 and Providence VAMC
+  reported an issue with DATE LAST TREATED (#.03) and ADT/HL7 EVENT
+  REASON (#.07) not being updated consistently in the TREATING FACILITY
+  LIST (#391.91) file.  Those facilities generate local reports on the
+  file to get information regarding admissions, discharges, or clinic
+  check-outs.  In DG*5.3*837, additional parameters were added to the
+  FILE^VAFCTFU API; however, the downstream routine that called the API
+  was not modified for the additional parameters.  For patch DG*5.3*856,
+  code changes will establish default values for the VAFCTFU parameters
+  so that downstream routines function correctly again without having
+  to be modified.  The past DATE LAST TREATED (#.03) and ADT/HL7 EVENT
+  REASON (#.07) (those that occurred beginning with the installation of
+  DG*5.3*837) will not be recovered in the TREATING FACILITY LIST
+  (#391.91) file.  However, as normal patient activity occurs, the DATE
+  LAST TREATED (#.03) and ADT/HL7 EVENT REASON (#.07) will be populated
+  moving forward.
+      
+  Issue #3
+  After the installation of patch DG*5.3*837, a number of facilities
+  indicated that the Register Once functionality was unable to pull data
+  from a shared facility.  The records were linking to the MPI, but the
+  data to be pulled from the remote shared site as part of Register Once 
+  was not happening. Facilities reported the following display:
+    
+    The query to the LST has been terminated because required information
+    was not provided by the MPI.
+    Data retrieval from LST site has not been successful.
+    Please continue the Registration Process.
+      
+  This issue was also caused by the changes to the FILE^VAFCTFU API. 
+  By adding default values as new parameters, the Register Once
+  functionality is restored.
+             
+  Data Dictionary Changes:
+  ========================
+  The following change has been made to the TREATING FACILITY LIST
+  (#391.91) file.  The "AISS" cross-reference has been added on the
+  INSTITUTION (#.02), SOURCE ID (#11), ASSIGNING AUTHORITY (#10), and
+  SOURCE ID TYPE (#.09) fields.
+         
+  Associated Remedy Ticket(s):
+  ============================
+  HD0000000707643 - Pittsburgh HCS
+  HD0000000708248 - Providence VAMC
+  HD0000000709774 - Manchester VAMC
+  HD0000000710480 - VA Northern Arizona HCS
+  HD0000000710517 - Charleston VAMC
+  HD0000000710555 - VA New Jersey HCS
+  HD0000000710580 - Durham VAMC
+  HD0000000710607 - Boise VAMC
+  HD0000000710608 - Iron Mountain VAMC
+  HD0000000710617 - Orlando VAMC
+  HD0000000710625 - Coatesville VAMC
+  HD0000000710752 - Northampton VAMC
+  HD0000000711155 - Dublin VAMC
+  HD0000000711595 - Charleston VAMC
+  HD0000000711665 - Upstate New York HCS
+  HD0000000712506 - Wilmington VAMC
+  HD0000000712511 - Birmingham VAMC
+  HD0000000712670 - Chillicothe VAMC
+  HD0000000712685 - Huntington VAMC
+  HD0000000712897 - VA Central Alabama HCS
+  HD0000000713086 - West Palm Beach VAMC
+  HD0000000714400 - VA Greater Los Angeles HCS
+  HD0000000717582 - VA North Texas HCS
+  HD0000000718599 - VA Amarillo HCS
+  HD0000000717879 - Charleston VAMC
+  HD0000000718674 - VA Central Ark. Veterans HCS
+  HD0000000719605 - VA Connecticut HCS
+  HD0000000720813 - Lexington VAMC
+  HD0000000721387 - Milwaukee VAMC
+    
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  Durham VAMC
+  North Chicago VAMC
+  Pittsburgh HCS
+  Providence VAMC
+   
+  Post-Install Routine:
+  =====================
+  Post-init routine, DG53856P, is queued to run in the background.
+  It traverses the entries in TREATING FACILITY LIST (#391.91) file
+  and sets the new "AISS" cross-reference.
+   
+  Installation Instructions:
+  ==========================
+  This patch takes less than 2 minutes to install.  This patch should
+  be loaded during non-peak hours to minimize disruption to the users.
+     
+  1.  Users are allowed on the system during patch installation.
+   
+  2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+      Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+      Link Management Options [HL MENU FILER LINK MGT] menu on the
+      HL7 Main Menu [HL MAIN MENU].
+   
+  3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  6.  Use the Install Package(s) option and select the package DG*5.3*856.
+     
+  7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+   
+  8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES.  The following OPTIONS should be
+      disabled during the installation.
+      Register a Patient              [DG REGISTER PATIENT]
+      Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+      Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+      Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+      UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+   
+  9.  After patch installation has completed, restart the HL7 incoming
+      filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+      option on the Filer and Link Management Options [HL MENU FILER 
+      LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+   
+  10. Routine DG53856P can be deleted from your system after the
+      background job has run to completion.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53856P
+    Before:       n/a   After:  B5103050  **856**
+Routine Name: VAFCTF
+    Before: B10073625   After: B10514469  **428,713,766,856**
+Routine Name: VAFCTFU
+    Before: B65013803   After: B67856699  **149,240,261,255,316,392,440,
+                                           428,474,520,697,800,821,837,
+                                           856**
+Routine Name: VAFCTFU1
+    Before:  B9951191   After: B11999906  **261,392,448,449,800,856**
+Routine Name: VAFCTFU2
+    Before: B41375332   After: B47326411  **821,856**
+ 
+Routine list of preceding patches: 766, 837
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,PAULETTE                Date Entered  : MAY 01, 2012
+Completed By: CHESNEY,CHRISTINE M           Date Completed: JUN 18, 2012
+Released By : HEUER,CINDY                   Date Released : JUN 18, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

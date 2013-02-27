@@ -1,0 +1,192 @@
+$TXT Created by RUZBACKI,RON at PEPCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Friday, 12/16/11 at 12:55
+=============================================================================
+Run Date: FEB 06, 2012                     Designation: PSS*1*168
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: EMERGENCY
+Version : 1       SEQ #147                      Status: Released
+                  Compliance Date: FEB 20, 2012
+=============================================================================
+
+Associated patches: (v)PSS*1*117   <<= must be installed BEFORE `PSS*1*168'
+                    (v)PSO*7*379   <<= must be installed BEFORE `PSS*1*168'
+                    (v)PSS*1*163   <<= must be installed BEFORE `PSS*1*168'
+
+Subject: MOCHA RETRY AFTER ORDER CHECK FAILURE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ When calls are made to the Medication Order Check Healthcare Application 
+ (MOCHA), a "Ping" type of call is made first to test the communication, 
+ and if that is successful, the subsequent order check call is made. If 
+ either call fails, the process is aborted, and a message is displayed 
+ indicating that order checks cannot be performed.
+  
+ This patch introduces a "re-try" if either of these calls fail. After a
+ three second hang, the call (Ping or order check) will be attempted again.
+ If the same call fails a second time, the process will be aborted with the
+ message indicating that order checks cannot be performed.
+  
+ This patch also addresses an issue (in conjunction with patch PSO*7.0*379)
+ concerning Orderable Items that are flagged as Supplies. If an order check
+ is to be performed on an order that only has an Orderable Item with no
+ Dispense Drug, an attempt is made to find the best drug available that is
+ matched to the Orderable Item for the order check. Currently, if the 
+ Orderable Item is marked as a supply, no order checks are performed. But 
+ if the Orderable Item has both Supply and non-Supply Items matched to it, 
+ order checks can possibly be performed on one of the non-supply items. 
+ This patch makes the change to look for non-Supply Items matched to the 
+ supply Orderable Item to perform the order checks on.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch. 
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ There are no Remedy tickets associated with this patch. 
+  
+  
+ Components Exported With Patch: 
+ -------------------------------
+ Only routines are exported with this patch.
+                                             
+  
+ Documentation Retrieval:
+ ------------------------
+ There are no documentation changes associated with this patch. 
+  
+  
+ Test Sites:
+ -----------
+ CHARLESTON, SC
+ KANSAS CITY, MO
+ MARTINEZ, CA
+ PALO ALTO, CA
+ TUSCALOOSA, AL
+                                       
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ The Environment Check routine PSSEN168 will perform the following:
+  
+      Check to see if patch PSO*7.0*379 is installed. If not, the 
+      PSS*1.0*168 patch install process will be aborted. The reason this
+      check is contained in an Environment check routine instead of a
+      normal patch requirement is so the CMOP National Host facilities can
+      also install this patch. If PSO*7.0*379 is not installed, but the
+      location is a CMOP National Host facility, the PSS*1.0*168 install
+      will not be aborted.
+  
+      The Environment check routine PSSEN168 is marked to be deleted upon 
+      install, but it will only be deleted if the Kernel parameter XPD 
+      NO_EPP_DELETE is not set to 1.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ This patch should not be installed when Pharmacy Data Management options
+ are being used. And since this patch exports routines that are invoked on 
+ every medication order check, we recommend it should be installed during
+ Non-Peak hours for all Clinical Applications, and that includes tasked
+ jobs from Clinical Applications.
+  
+ Install Time - less than 5 minutes
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option to unload the build.  
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSS*1.0*168):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter "PSS*1.0*168" at the INSTALL NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//'  answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDSAPK
+    Before:B182688846   After:B181797737  **117,168**
+Routine Name: PSSDSAPM
+    Before:B211863558   After:B209948615  **117,168**
+Routine Name: PSSEN168
+    Before:       n/a   After:   B297175  **168**
+Routine Name: PSSHRIT
+    Before:B156393255   After:B157119688  **136,168**
+Routine Name: PSSHRQ2
+    Before:  B5074500   After:  B6796536  **136,163,168**
+ 
+Routine list of preceding patches: 117, 163
+
+=============================================================================
+User Information:
+Entered By  : RUZBACKI,RON T                Date Entered  : SEP 06, 2011
+Completed By: YARBER,KIMBERLY               Date Completed: FEB 02, 2012
+Released By : VECE,VIRGINIA                 Date Released : FEB 06, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

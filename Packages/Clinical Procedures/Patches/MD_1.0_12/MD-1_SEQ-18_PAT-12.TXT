@@ -1,0 +1,378 @@
+
+=============================================================================
+Run Date: FEB 14, 2012                     Designation: MD*1*12
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #18                      Status: Released
+                  Compliance Date: MAR 16, 2012
+=============================================================================
+
+Associated patches: (v)MD*1*16     <<= must be installed BEFORE `MD*1*12'
+
+Subject: CP FLOWSHEETS HL7 REDESIGN
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+  
+ This Clinical Procedures (CP) Flowsheets patch (i.e., MD*1*12) will 
+ support outbound Health Level Seven (HL7) messaging without the use of 
+ the VistA Data Extraction Framework (VDEF).  This patch with HL7 
+ messaging, and the CP Gateway service will enhance notification to 
+ medical devices of a patient's admission, discharge, and transfer (ADT).  
+ This patch will improve current CP Flowsheets Outbound ADT Feed 
+ functionality.
+  
+ Note:  Patch MD*1*16 is the Clinical Flowsheets application.  Patch 
+ MD*1*16 is a pre-requisite to this patch (MD*1*12).  Prior to installing 
+ MD*1*12, MD*1*16 must be installed and the Clinical Flowsheets Outbound
+ ADT Feed must be configured. Instructions for the configuration of the 
+ Outbound ADT Feed are in section 6.4 of the Clinical Flowsheets
+ Implementation Guide (MD_1_P12_IMPG.DOC)
+  
+  
+  
+  
+ 1.  FEATURE:  Support HL7 messaging without the use of VDEF.
+  
+ 2.  ENHANCEMENT:  Provide support of HL7 Discharge (A03)/Cancel Discharge 
+ (A13) messages containing no ward/bed data.
+  
+ 3.  ENHANCEMENT:  Provide support of the Outbound ADT Feed.
+  
+  
+  
+ ASSOCIATED NOIS/REMEDY TICKET
+ =============================
+ HD0000000484147:        The ADT feed provided by CP in patch MD*1*16 is not 
+ sending discharge messages.
+  
+ Solution:               The CP ADT feed was not designed to support any ADT 
+ message not having ward/bed data.  The VistA/Registration (DG) ADT Discharge
+ Message has no ward/bed data.  CP patch MD*1*12 adds support of ADT Discharge
+ Messages containing no ward/bed data.
+  
+  
+  
+ ASSOCIATED E3R
+ ==============
+ NONE
+  
+  
+ DATA DICTIONARY CHANGES
+ =======================
+  
+  
+ (FILE #704.005)CP_MOVEMENT_AUDIT
+  *ADD* FIELD #.09: ACCEPTED_BY_QUEUE
+  *ADD* FIELD #.1: QUEUE_ERROR_MSG       
+  
+  
+ DATA FILE CHANGE:
+ (FILE #101)PROTOCOL CHANGE:
+    Protocol                field           old value   new value
+    MDC CPAN VS     (#770.6) PROCESSING ID   "debug"    NULL
+  
+  
+  
+ TEST SITES:
+ ===========
+   Heartland East HCS - St. Louis, MO           (large [integrated])
+   Nebraska-Western Iowa HCS - Omaha, NE        (large [integrated])
+   Minneapolis HCS - Minneapolis, MN            (large)
+   Mountain Home VAMC - Mountain Home, TN       (medium)
+  
+  
+  
+ SERVER SOFTWARE (VistA Patch MD*1*12) INSTALLATION INSTRUCTIONS:
+ ================================================================
+  
+ NOTE:  Clinical Procedures patch MD*1*16 is a pre-requisite to the
+ installation of MD*1*12 software.
+  
+ To obtain all updated MD*1*12 files, use File Transfer Protocol (FTP)
+ to retrieve MD1_0P12.KID from one of the following OI Field Offices'
+ ANONYMOUS.SOFTWARE directories:
+  
+       OI Field Office    FTP Address                Directory
+       ---------------    -----------                ---------
+       Albany             ftp.fo-albany.med.va.gov   anonymous.software
+       Hines              ftp.fo-hines.med.va.gov    anonymous.software
+       Salt Lake City     ftp.fo-slc.med.va.gov      anonymous.software
+  
+  
+ NOTE:  MD*1*12 (Clinical Flowsheets) includes "pre-install" routine 
+ MDPRE12.  For Clinical Flowsheets to function Properly, this routine 
+ must finish completely.  A message will display on the screen, among other
+ installation messages, documenting when the routine is "complete"/"done". 
+ The MDPRE12 routine will inactivate CP FLOWSHEETS' HL7/VDEF event-type
+ protocols. MDPRE12 is not deleted during MD*1*12 installation, but
+ deletion of that routine will cause no issue with functionality and
+ performance.
+  
+  
+ This patch can be loaded with users in the system. Installation time is 
+ less than three minutes.
+  
+ ATTENTION: Installation of this patch should NOT BE QUEUED.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+ Please note: the time required to complete the post-install and to 
+ receive the MailMan message will vary depending on your system load.
+  
+  1.  Locate the CP Flowsheets KIDS Build Host File containing this patch 
+      within your VISTA system (e.g., "SYS$USER:[XXX]MD1_0P12.KID").
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter MD*1.0*12)
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+      d.  Load a Distribution - This option will allow you to choose the
+          HFS file to load the distribution from (e.g. , MD1_0P12.KID)
+  
+  
+  4.  Use the Install Package(s) option and select the package
+      MD*1.0*12.
+  
+      a.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+          of Install? NO//', answer NO.
+      b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO. 
+      c.  When prompted 'Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? NO//', answer NO.
+  
+  
+ Example Server Installation:
+ =============================
+ Select Kernel Installation & Distribution System Option: Installation
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 1  Load a Distribution
+ Enter a Host File: 
+ This is a required response. Enter '^' to exit
+ Enter a Host File: MD1_0P12.KID
+  
+ KIDS Distribution saved on Nov 01, 2011@14:24:44
+ Comment: TRANSPORT MD*1*12
+  
+ This Distribution contains Transport Globals for the following Package(s):
+ Build MD*1.0*12
+  
+ OK to continue with Load? NO// YES
+  
+ Distribution OK!
+  
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+  
+    MD*1.0*12
+ Use INSTALL NAME: MD*1.0*12 to install this Distribution.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: Install Package(s)
+ Select INSTALL NAME:    MD*1.0*12    11/1/11@14:24:44
+      => Transport MD*1*12  ;Created on Nov 01, 2011@14:24:44
+  
+ This Distribution was loaded on Nov 01, 2011@14:29:31 with header of 
+    Transport MD*1*12   ;Created on Nov 01, 2011@14:24:44
+    It consisted of the following Install(s):
+       MD*1.0*12
+ Checking Install for Package MD*1.0*12
+  
+ Install Questions for MD*1.0*12
+  
+ Incoming Files:
+  
+  
+    704.005   CP_MOVEMENT_AUDIT
+ Note:  You already have the 'CP_MOVEMENT_AUDIT' File.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   NONE
+  
+  
+  
+  Install Started for MD*1.0*12 : 
+                Nov 01, 2011@14:29:31
+  
+ Build Distribution Date: Nov 01, 2011
+  
+  Installing Routines:
+                Nov 01, 2011@14:29:31
+  
+  Running Pre-Install Routine: ^MDPRE12
+  MD*1.0*12 Pre Init begin
+  Task 'TASK_HL7_CLEANUP' updated...
+  CP Flowsheets - VDEF entries have been deactivated
+  MD*1.0*12 Pre Init complete
+  
+                                    
+ MD*1.0*12                                    
+ --------------------------------------------------------------------------
+  
+  Installing Data Dictionaries: 
+                Nov 01, 2011@14:29:32
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing PROTOCOL
+                Nov 01, 2011@14:29:32
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MD*1.0*12 Installed. 
+                Nov 01, 2011@14:29:32
+  
+  
+ Install Message sent #692557
+  
+           +------------------------------------------------------------+
+   100%    |             25             50             75               |
+ Complete  +------------------------------------------------------------+
+  
+  
+ Install Completed
+  
+  
+  
+  
+ DOCUMENTATION/SOFTWARE RETRIEVAL:                  
+ =================================
+  
+ Supporting Clinical Flowsheets documentation/software is contained
+ in the MD1_0P12_DOC.zip file and can be retrieved in BINARY
+ format via FTP and the following methods:
+  
+ 1. The preferred method is to transfer the files using a FTP from 
+ "download.vista.med.va.gov".  Files will transmit from the first 
+ available FTP server.
+  
+ 2. The files may also be downloaded directly from one of the following OI 
+ Field Offices' ANONYMOUS.SOFTWARE directories:
+  
+       OI Field Office    FTP Address                Directory
+       Albany             ftp.fo-albany.med.va.gov   anonymous.software
+       Hines              ftp.fo-hines.med.va.gov    anonymous.software
+       Salt Lake City     ftp.fo-slc.med.va.gov      anonymous.software
+  
+ The Clinical Flowsheets supporting documents are: 
+  
+  
+  
+  File Name                     Description
+  ---------                     -----------
+  MD_1_P12_RN.pdf              MD*1.0*12 Clinical Flowsheets Release Notes
+  
+  MD_1_P12_TM.pdf              MD*1.0*12 Clinical Flowsheets Technical 
+                               Manual
+  
+  MD_1_P12_IMPG.pdf            MD*1.0*12 Clinical Flowsheets Implementation
+                               Guide
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDCA01
+    Before:   B246267   After:   B207065  **16,12**
+Routine Name: MDCA02
+    Before:   B249639   After:   B207137  **16,12**
+Routine Name: MDCA03
+    Before:   B249717   After:   B207209  **16,12**
+Routine Name: MDCA08
+    Before:   B250107   After:   B207569  **16,12**
+Routine Name: MDCA11
+    Before:   B249637   After:   B207135  **16,12**
+Routine Name: MDCA12
+    Before:   B249715   After:   B207207  **16,12**
+Routine Name: MDCA13
+    Before:   B249793   After:   B207279  **16,12**
+Routine Name: MDCADT
+    Before: B17415336   After: B16434281  **16,12**
+Routine Name: MDCEVN
+    Before:  B5496501   After:  B5482617  **16,12**
+Routine Name: MDCPMESQ
+    Before:       n/a   After:  B5560920  **12**
+Routine Name: MDCPVDEF
+    Before: B50621778   After: B62382929  **16,12**
+Routine Name: MDCUTL
+    Before: B29067220   After: B28631093  **16,12**
+Routine Name: MDPRE12
+    Before:       n/a   After: B12272159  **12**
+ 
+Routine list of preceding patches: 16
+
+=============================================================================
+User Information:
+Entered By  : JACKSON,TODD                  Date Entered  : APR 11, 2005
+Completed By: SERVICE,JOHN                  Date Completed: JAN 19, 2012
+Released By : BECKLEY,ROBERT J              Date Released : FEB 14, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

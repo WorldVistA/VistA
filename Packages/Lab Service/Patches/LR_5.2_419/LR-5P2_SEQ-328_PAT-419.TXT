@@ -1,0 +1,195 @@
+$TXT Created by CARPENTER,TERRY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Friday, 03/09/12 at 12:32
+=============================================================================
+Run Date: JUL 24, 2012                     Designation: LR*5.2*419
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #328                    Status: Released
+                  Compliance Date: AUG 24, 2012
+=============================================================================
+
+Associated patches: (v)LR*5.2*256  <<= must be installed BEFORE `LR*5.2*419'
+
+Subject: ORDERED TESTS FILED UNDER WRONG PATIENT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following 2 issues in the Laboratory 
+ Package:
+  
+ 1. This ticket (HD0000000506977) addresses Patient Safety issue PSPO 
+    #2070. A lab test ordered through CPRS may be misplaced on an order for
+    the wrong patient in LAB ORDER ENTRY file (#69).
+  
+ 2. This ticket (HD0000000616913) was created because the LOCK 
+    timeout is not in compliance with SACC guidelines.
+  
+ BLOOD BANK REVIEW:
+ ==================
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*419 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by VHA 
+ DIRECTIVE 2004-058 titled VISTA BLOOD BANK SOFTWARE VERSION 5.2.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*419 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*419 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. HD0000000506977        - CPRS order filed in lab under wrong patient
+ 2. HD0000000616913        - LOCK timeout not in compliance with SACC 
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ WASHINGTON, DC
+ SALISBURY, NC
+ HEARTLAND - EAST
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1:  HD0000000506977     - CPRS order filed in lab under wrong patient
+    
+     PATIENT SAFETY ISSUES:
+     ======================
+     PSPO #2070
+  
+  
+     Problem:
+     --------
+     When several tests are ordered for a patient within a 10 minute
+     time span including midnight, one of the tests may be misplaced
+     on an order for a different patient in LAB ORDER ENTRY file (#69).
+  
+     In CPRS, several lab test orders for a patient can be signed
+     simultaneously.  If the collection times for the orders are within
+     10 minutes of each other, the code looks to combine the tests into
+     one order.  This is fine if the 10 minute time span is within a single
+     day.  However, if the 10 minute span includes midnight, then the
+     tests should not be combined on the same order.  The function call
+     $$INDAIR in routine LR7OF5 checks to see if the 2 orders under
+     consideration for combining are for the same patient.  However, when
+     this check reveals 2 different patients, the code does not set the
+     flag which indicates that a separate order is required.  The result
+     is either a test for 1 patient going to an order for a different 
+     patient in LAB ORDER ENTRY file (#69) or an incomplete sequence added 
+     to LAB ORDER ENTRY file (#69). 
+  
+  
+     Solution:
+     ---------
+     Modify the function call $$INDAIR in routine LR7OF5 to set the flag,
+     which indicates that a separate order is required when the 2 orders
+     under consideration for combining are determined to be for 2
+     different patients.
+  
+     Routine:    LR7OF5  
+  
+  
+  
+ 2:  HD0000000616913     -  LOCK timeout not in compliance with SACC
+  
+  
+     Problem:
+     --------
+     There is an incremental LOCK in LR7OF5 with a timeout of 0.  With
+     regard to LOCK timeouts, SACC says in section 2.4.6.1:
+  
+     2.4.6.1 All LOCKS shall be of the incremental form.(Exemption:Kernel)
+             All incremental LOCKS must have a timeout, the timeout must
+             not be less than the value of the Kernel variable DILOCKTM.
+  
+     Solution:
+     ---------
+     Modify routine LR7OF5 to set the LOCK timeout to the value of the
+     variable DILOCKTM if it exists.  If the variable does not exist,
+     set the timeout to 3 seconds.
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ The install time for this patch is less than 2 minutes. This patch
+ can be installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*419.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OF5
+    Before: B23983731   After: B24113773  **223,221,256,419**
+ 
+Routine list of preceding patches: 256
+
+=============================================================================
+User Information:
+Entered By  : CARPENTER,TERRY               Date Entered  : FEB 21, 2012
+Completed By: BYRD,TIERRA                   Date Completed: JUL 17, 2012
+Released By : CONLIN,TERESA                 Date Released : JUL 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

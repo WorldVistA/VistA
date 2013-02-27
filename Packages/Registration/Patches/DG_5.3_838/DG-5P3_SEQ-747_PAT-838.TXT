@@ -1,0 +1,320 @@
+$TXT Created by CROSSMAN,PAM at DEVESR.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 03/29/11 at 13:24
+=============================================================================
+Run Date: NOV 09, 2011                     Designation: DG*5.3*838
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #747                    Status: Released
+                  Compliance Date: DEC 10, 2011
+=============================================================================
+
+Associated patches: (v)DG*5.3*536  <<= must be installed BEFORE `DG*5.3*838'
+                    (v)DG*5.3*754  <<= must be installed BEFORE `DG*5.3*838'
+
+Subject: ESR 3.5 PREFERRED FACILITY
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch has enhancements to the Veterans Health Information Systems 
+ and Technology Architecture (VistA) system to support technology and 
+ business changes that are occurring with the implementation of the 
+ Enrollment System Redesign (ESR) Preferred Facility project, Change 
+ Request (CR) 9620.
+  
+ Currently, a Veteran selects a Preferred Facility (PF) at the time of 
+ application for enrollment. The Preferred Facility information is rarely 
+ updated by the Veteran and is not linked to the location where the 
+ Veteran actually receives care. As a result, the value of the preferred 
+ facility assignment is limited. CR 9620 specifies changes needed in the 
+ way that a Veteran's Preferred Facility is entered and stored in ESR and 
+ VistA. These changes are necessitated by the requirements of the 
+ Veterans Benefit Handbook Project.
+  
+  
+ This patch modifies the Registration v5.3 application as follows:
+  
+ 1. VistA is modified to support the population of the SOURCE DESIGNATION
+ field (#27.03) for the preferred facility.  The SOURCE DESIGNATION field
+ (#27.03) is a new field added to the PATIENT file (#2).  The SOURCE
+ DESIGNATION field (#27.03) is a set of codes consisting of the
+ following values:
+  
+             'V' FOR VISTA 
+             'E' FOR ESR 
+             'PA' FOR PCP ACTIVE
+             'PI' FOR PCP INACTIVE
+       
+ The SOURCE DESIGNATION field (#27.03) value is automatically set by
+ the Enrollment System (ES) or the VistA system.
+  
+ 2. The VistA software will only allow a user to edit the PREFERRED 
+ FACILITY field (#27.02) if the veteran's SOURCE DESIGNATION field (#27.03)
+ value is 'V' for VistA or 'PI' for PCP Inactive.
+  
+ 3. The VistA software will display the following help text if a user 
+ attempts to edit the PREFERRED FACILITY field (#27.02) of a record whose
+ SOURCE DESIGNATION field (#27.03) value is not editable by the VistA
+ software.
+  
+ "Preferred Facility can only be edited/modified by an ESR user, please 
+ contact the HEC to request changes/edits"
+       
+ The SOURCE DESIGNATION field (#27.03) values deemed not editable by the
+ VistA software are 'E' for ESR and 'PA' for PCP Active.
+  
+ 4. Once ESR has assigned the Preferred Facility value, VistA users will
+ not be allowed to change the value.
+  
+ 5. Modify VistA to trigger a Z07 HL7 message to be sent to ESR when the
+ PREFERRED FACILITY field (#27.02) has been assigned/modified.
+  
+ 6. Modify VistA to store the PREFERRED FACILITY feild (#27.02) and
+ associated SOURCE DESIGNATION field (#27.03) in the PATIENT file (#2). If
+ VistA receives a Z11 HL7 message with Preferred Facility, display what ESR
+ sent in the Patient Enrollment [DGEN PATIENT ENROLLMENT] menu.
+  
+ 7. PREFERRED FACILITY field (#27.02) shall be changed to a required field
+ and must be entered by a VistA user when the veteran is first
+ registered/enrolled in the VA Medical Center.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+ This patch addresses the following Change Request (CR):
+ -------------------------------------------------------
+ CR 9620
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy Tickets associated with this patch.
+  
+  
+ Components Sent With Patch
+ --------------------------
+ The following is a list of files included in this patch:
+  
+                                      UP    SEND  DATA                
+                                      DATE  SEC.  COMES  SITE   RSLV  
+ FILE #  NAME                         DD    CODE  W/FILE DATA   PTS 
+ --------------------------------------------------------------------
+ 2       PATIENT                      YES   YES   NO     N/A    N/A
+  
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name (Number)                     File Name (Number)
+ -------------------                     ------------------
+ SOURCE DESIGNATION (#27.03)                PATIENT (#2)
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+ 2,27.03       SOURCE DESIGNATION     ENR;3 SET
+  
+                                 'V' FOR VISTA; 
+                                 'E' FOR ESR; 
+                                 'PA' FOR PCP ACTIVE; 
+                                 'PI' FOR PCP INACTIVE; 
+               LAST EDITED:      DEC 02, 2010 
+               DESCRIPTION:      Source designation contains the value of 
+                                 the place the Preferred Facility field
+                                 (#27.02) was  assigned for the patient.  
+                                 Source designation is automatically
+                                 assigned by the system. The VistA system
+                                 can only assign a Preferred Facility if
+                                 the current Source Designation is VistA or
+                                 Primary Care Provider (PCP) Inactive.
+  
+ Templates changed:
+ ------------------                                     
+ The following two List Templates were modified. The Top Margin field was
+ changed to accommodate the display of the Preferred Facility Source
+ Designation on the Patient Enrollment screen.
+  
+ NAME: DGEN PATIENT ENROLL HISTORY       TYPE OF LIST: DISPLAY
+   RIGHT MARGIN: 80                      TOP MARGIN: 6
+   BOTTOM MARGIN: 19                     OK TO TRANSPORT?: OK
+   USE CURSOR CONTROL: YES
+   SCREEN TITLE: Patient Enrollment History
+   ALLOWABLE NUMBER OF ACTIONS: 1        AUTOMATIC DEFAULTS: YES
+   HIDDEN ACTION MENU: VALM HIDDEN ACTIONS
+   ARRAY NAME:  ^TMP("DGENEH",$J)        EXIT CODE: D EXIT^DGENLEH
+   HEADER CODE: D HDR^DGENLEH            HELP CODE: D HELP^DGENLEH
+   ENTRY CODE: D INIT^DGENLEH
+  
+  
+ NAME: DGEN PATIENT ENROLLMENT           TYPE OF LIST: PROTOCOL
+   RIGHT MARGIN: 80                      TOP MARGIN: 6
+   BOTTOM MARGIN: 19                     OK TO TRANSPORT?: OK
+   USE CURSOR CONTROL: YES
+   PROTOCOL MENU: DGEN PATIENT ENROLLMENT MENU
+   SCREEN TITLE: Patient Enrollment      ALLOWABLE NUMBER OF ACTIONS: 1
+   AUTOMATIC DEFAULTS: YES               HIDDEN ACTION MENU: VALM HIDDEN 
+ ACTIONS
+   ARRAY NAME:  ^TMP("DGEN",$J)
+   EXIT CODE: D EXIT^DGENL               HEADER CODE: D HDR^DGENL
+   HELP CODE: D HELP^DGENL               ENTRY CODE: D INIT^DGENL
+  
+  
+  
+  
+ Test Sites:
+ ===========
+ Charleston VAMC, SC
+ Northport VAMC, NY
+ North Texas HCS, TX
+ Upstate New York HCS, NY
+  
+  
+ Documentation Retrieval Instructions:
+ =====================================
+    
+  The preferred method is to FTP the files from 
+        ftp://download.vista.med.va.gov/
+  
+  This transmits the files from the first available FTP server. Sites may 
+  also elect to retrieve software directly from a specific server as 
+ follows:
+   
+   Albany        ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+   Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+   Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  The documentation will be in the form of Adobe Acrobat files.
+   
+  The following files should be downloaded in the binary FTP mode.
+   
+   Filename                    Description
+   --------                    -----------
+  DG_5_3_P838_REG_UM.PDF      Revised PIMS V. 5.3 Registration Menu User 
+                                                  Manual
+  IVM_2_TM_PF.PDF             Revised IVM V. 2.0 IVM Technical Manual
+   
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www4.va.gov/vdl/
+  
+  
+     ================ INSTALLATION INSTRUCTIONS =================
+  
+ If installed during the normal workday, it is recommended the following
+ menu options be disabled to prevent possible conflicts while running the
+ KIDS Install. Other VistA users will not be affected.
+         
+     Register a Patient             [DG REGISTER PATIENT]
+     Load/Edit Patient Data         [DG LOAD PATIENT DATA]
+     Preregister a Patient          [DGPRE PRE-REGISTER OPTION]
+     Patient Enrollment             [DGEN PATIENT ENROLLMENT]
+   
+ Install Time - less than 5 minutes
+   
+        
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the packman message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE packman option.
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+         Edits and Distribution ...  
+         Utilities ...  
+         Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+         Load a Distribution 
+         Print Transport Global 
+         Compare Transport Global to Current System 
+         Verify Checksums in Transport Global 
+         Install Package(s) 
+         Restart Install of Package(s) 
+         Unload a Distribution 
+         Backup a Transport Global 
+       
+    
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter DG*5.3*838):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+    **This is the step to start the installation of this KIDS patch: 
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.  Enter DG*5.3*838.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer YES
+     d.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':'  Enter the following options:
+  
+           Register a Patient             [DG REGISTER PATIENT]
+           Load/Edit Patient Data         [DG LOAD PATIENT DATA]
+           Preregister a Patient          [DGPRE PRE-REGISTER OPTION]
+           Patient Enrollment             [DGEN PATIENT ENROLLMENT]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;08/13/93;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENL
+    Before:  B3753745   After:  B4128842  **121,147,838**
+Routine Name: DGENL1
+    Before: B67982069   After: B67706574  **121,147,232,266,343,564,672,
+                                           659,653,688,838**
+Routine Name: DGENLEH
+    Before:  B2186607   After:  B2546057  **121,838**
+Routine Name: DGENPT
+    Before:   B759428   After:  B3244381  **121,147,838**
+Routine Name: DGENPTA
+    Before: B39663736   After: B40338921  **121,122,147,688,754,838**
+Routine Name: DGENPTA1
+    Before: B21277182   After: B21823541  **121,147,314,677,659,653,688,
+                                           810,754,838**
+Routine Name: DGENU
+    Before: B42315700   After: B43981146  **121,122,147,232,314,564,624,
+                                           672,659,653,688,536,838**
+Routine Name: DGENUPL2
+    Before: B70882830   After: B73697731  **147,222,232,310,314,367,397,
+                                           677,631,675,672,673,716,653,
+                                           688,838**
+ 
+Routine list of preceding patches: 536, 754
+
+=============================================================================
+User Information:
+Entered By  : CROSSMAN,PAM                  Date Entered  : JAN 27, 2011
+Completed By: MORRIS,DARLENE V              Date Completed: OCT 27, 2011
+Released By : GROOMS,ANTHONY E              Date Released : NOV 09, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

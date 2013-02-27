@@ -1,0 +1,432 @@
+Released LR*5.2*419 SEQ #328
+Extracted from mail message
+**KIDS**:LR*5.2*419^
+
+**INSTALL NAME**
+LR*5.2*419
+"BLD",9011,0)
+LR*5.2*419^LAB SERVICE^0^3120309^y
+"BLD",9011,1,0)
+^^3^3^3120309^^
+"BLD",9011,1,1,0)
+This patch is a VM patch that addresses Patient Safety issue PSPO #2070.
+"BLD",9011,1,2,0)
+A lab test ordered through CPRS (Computerized Patient Record System) can
+"BLD",9011,1,3,0)
+be placed on an order for the wrong patient in file #69(LAB ORDER ENTRY).
+"BLD",9011,4,0)
+^9.64PA^^
+"BLD",9011,6.3)
+1
+"BLD",9011,"ABPKG")
+n
+"BLD",9011,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9011,"KRN",.4,0)
+.4
+"BLD",9011,"KRN",.401,0)
+.401
+"BLD",9011,"KRN",.402,0)
+.402
+"BLD",9011,"KRN",.403,0)
+.403
+"BLD",9011,"KRN",.5,0)
+.5
+"BLD",9011,"KRN",.84,0)
+.84
+"BLD",9011,"KRN",3.6,0)
+3.6
+"BLD",9011,"KRN",3.8,0)
+3.8
+"BLD",9011,"KRN",9.2,0)
+9.2
+"BLD",9011,"KRN",9.8,0)
+9.8
+"BLD",9011,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9011,"KRN",9.8,"NM",1,0)
+LR7OF5^^0^B24113773
+"BLD",9011,"KRN",9.8,"NM","B","LR7OF5",1)
+
+"BLD",9011,"KRN",19,0)
+19
+"BLD",9011,"KRN",19.1,0)
+19.1
+"BLD",9011,"KRN",101,0)
+101
+"BLD",9011,"KRN",409.61,0)
+409.61
+"BLD",9011,"KRN",771,0)
+771
+"BLD",9011,"KRN",779.2,0)
+779.2
+"BLD",9011,"KRN",870,0)
+870
+"BLD",9011,"KRN",8989.51,0)
+8989.51
+"BLD",9011,"KRN",8989.52,0)
+8989.52
+"BLD",9011,"KRN",8994,0)
+8994
+"BLD",9011,"KRN","B",.4,.4)
+
+"BLD",9011,"KRN","B",.401,.401)
+
+"BLD",9011,"KRN","B",.402,.402)
+
+"BLD",9011,"KRN","B",.403,.403)
+
+"BLD",9011,"KRN","B",.5,.5)
+
+"BLD",9011,"KRN","B",.84,.84)
+
+"BLD",9011,"KRN","B",3.6,3.6)
+
+"BLD",9011,"KRN","B",3.8,3.8)
+
+"BLD",9011,"KRN","B",9.2,9.2)
+
+"BLD",9011,"KRN","B",9.8,9.8)
+
+"BLD",9011,"KRN","B",19,19)
+
+"BLD",9011,"KRN","B",19.1,19.1)
+
+"BLD",9011,"KRN","B",101,101)
+
+"BLD",9011,"KRN","B",409.61,409.61)
+
+"BLD",9011,"KRN","B",771,771)
+
+"BLD",9011,"KRN","B",779.2,779.2)
+
+"BLD",9011,"KRN","B",870,870)
+
+"BLD",9011,"KRN","B",8989.51,8989.51)
+
+"BLD",9011,"KRN","B",8989.52,8989.52)
+
+"BLD",9011,"KRN","B",8994,8994)
+
+"BLD",9011,"QUES",0)
+^9.62^^
+"BLD",9011,"REQB",0)
+^9.611^1^1
+"BLD",9011,"REQB",1,0)
+LR*5.2*256^2
+"BLD",9011,"REQB","B","LR*5.2*256",1)
+
+"MBREQ")
+0
+"PKG",26,-1)
+1^1
+"PKG",26,0)
+LAB SERVICE^LR^CORE LAB SYSTEM
+"PKG",26,20,0)
+^9.402P^1^1
+"PKG",26,20,1,0)
+2^^LRXDRPT
+"PKG",26,20,1,1)
+
+"PKG",26,20,"B",2,1)
+
+"PKG",26,22,0)
+^9.49I^1^1
+"PKG",26,22,1,0)
+5.2^2940927^2950304
+"PKG",26,22,1,"PAH",1,0)
+419^3120309
+"PKG",26,22,1,"PAH",1,1,0)
+^^3^3^3120309
+"PKG",26,22,1,"PAH",1,1,1,0)
+This patch is a VM patch that addresses Patient Safety issue PSPO #2070.
+"PKG",26,22,1,"PAH",1,1,2,0)
+A lab test ordered through CPRS (Computerized Patient Record System) can
+"PKG",26,22,1,"PAH",1,1,3,0)
+be placed on an order for the wrong patient in file #69(LAB ORDER ENTRY).
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","LR7OF5")
+0^1^B24113773^B23983731
+"RTN","LR7OF5",1,0)
+LR7OF5 ;slc/dcm - Setup new order from OE/RR ;2/4/99  06:42
+"RTN","LR7OF5",2,0)
+ ;;5.2;LAB SERVICE;**223,221,256,419**;Sep 27, 1994;Build 1
+"RTN","LR7OF5",3,0)
+ ;
+"RTN","LR7OF5",4,0)
+ ;This routine invokes IA #2060, #2835, #2747
+"RTN","LR7OF5",5,0)
+ ;
+"RTN","LR7OF5",6,0)
+ORES(LRDFN,SDT,TYPE,SAMP,PROV,LOC,SPEC,ENTERBY)  ;Look for match on orders already processed for this session
+"RTN","LR7OF5",7,0)
+ ;SDT=Requested Date time of collection
+"RTN","LR7OF5",8,0)
+ ;TYPE=Collection type
+"RTN","LR7OF5",9,0)
+ Q:'$D(TYPE) "" Q:'$G(SDT) ""
+"RTN","LR7OF5",10,0)
+ N EX,REF,X,STRT,ORI,END
+"RTN","LR7OF5",11,0)
+ S (X,REF)="",(END,STRT)=0
+"RTN","LR7OF5",12,0)
+ F  S STRT=$O(^TMP("OR",$J,"LRES",LRDFN,STRT)) Q:'STRT  I $D(^(STRT,TYPE)) S ORI=0 D  Q:END
+"RTN","LR7OF5",13,0)
+ . F  S ORI=$O(^TMP("OR",$J,"LRES",LRDFN,STRT,TYPE,ORI)) Q:'ORI  S REF=^(ORI) D  Q:END
+"RTN","LR7OF5",14,0)
+ .. I $$ABS^XLFMTH($$FMDIFF^XLFDT(SDT,STRT,2))>600 S REF="" Q
+"RTN","LR7OF5",15,0)
+ .. I REF D  Q
+"RTN","LR7OF5",16,0)
+ ... I $$INDAIR(LRDFN,+REF) S REF="" Q
+"RTN","LR7OF5",17,0)
+ ... S X=$$REF(LRDFN,$P(REF,"^",2),$P(REF,"^",3)),END=1
+"RTN","LR7OF5",18,0)
+ I 'REF Q ""
+"RTN","LR7OF5",19,0)
+ I '$L(X) S X="O."_+REF
+"RTN","LR7OF5",20,0)
+ Q X
+"RTN","LR7OF5",21,0)
+FIND(PAT,ODT,SDT,TYPE,SAMP,PROV,LOC,SPEC,ENTERBY) ;Look for match on patient, time, type, specimen, provider
+"RTN","LR7OF5",22,0)
+ ;PAT=LRDFN
+"RTN","LR7OF5",23,0)
+ ;ODT=LRODT
+"RTN","LR7OF5",24,0)
+ ;TYPE=COLLECTION TYPE
+"RTN","LR7OF5",25,0)
+ ;SDT=EST. DATE/TIME OF COLLECTION
+"RTN","LR7OF5",26,0)
+ ;SAMP=COLLECTION SAMPLE
+"RTN","LR7OF5",27,0)
+ ;PROV=PROVIDER
+"RTN","LR7OF5",28,0)
+ ;LOC=LRLLOC (LOCATION)
+"RTN","LR7OF5",29,0)
+ ;SPEC=SPECIMEN
+"RTN","LR7OF5",30,0)
+ Q:'$D(^LRO(69,"D",PAT,ODT)) ""
+"RTN","LR7OF5",31,0)
+ N EX,IFN,X,X0,X1,X4,Y,XORD
+"RTN","LR7OF5",32,0)
+ S IFN=9999999999,X=""
+"RTN","LR7OF5",33,0)
+ F  S IFN=$O(^LRO(69,"D",PAT,ODT,IFN),-1) Q:IFN<1  D  Q:$L(X)
+"RTN","LR7OF5",34,0)
+ . Q:+$G(^LRO(69,ODT,1,IFN,0))'=PAT  ;double check for patient match
+"RTN","LR7OF5",35,0)
+ . Q:$P($G(^LRO(69,ODT,1,IFN,3)),"^")  ;cannot add to 'collected' orders
+"RTN","LR7OF5",36,0)
+ . Q:$$ORD(ODT,IFN)  ;cannot add if any part of order's collected
+"RTN","LR7OF5",37,0)
+ . Q:$L($P($G(^LRO(69,ODT,1,IFN,1)),"^",7))  ;don't add to a combined order
+"RTN","LR7OF5",38,0)
+ . Q:'$D(^LRO(69,ODT,1,IFN,0))  S X0=^(0),X1=$G(^(.1))
+"RTN","LR7OF5",39,0)
+ . Q:$P(X0,"^",4)'=TYPE
+"RTN","LR7OF5",40,0)
+ . ;'LC' collection types must have same collection times
+"RTN","LR7OF5",41,0)
+ . I TYPE="LC",$P(X0,"^",8)'=SDT Q
+"RTN","LR7OF5",42,0)
+ . I TYPE'="LC",$P(X0,"^",8),SDT,$$ABS^XLFMTH($$FMDIFF^XLFDT(SDT,$P(X0,"^",8),2))>600 Q  ;don't combine if time difference is >10 min
+"RTN","LR7OF5",43,0)
+ . L +^LRO(69,"C",+X1):$G(DILOCKTM,3)
+"RTN","LR7OF5",44,0)
+ . I '$T Q
+"RTN","LR7OF5",45,0)
+ . L -^LRO(69,"C",+X1)
+"RTN","LR7OF5",46,0)
+ . I '$$GOT^LROE(+X1,ODT) Q  ;Don't combine on canceled order
+"RTN","LR7OF5",47,0)
+ . I $$INDAIR(PAT,+X1,1) S X=" " Q  ;Don't combine if duplicate test.
+"RTN","LR7OF5",48,0)
+ . S X=$$REF(PAT,ODT,IFN)
+"RTN","LR7OF5",49,0)
+ . S XORD=$S($L(X):"",1:+X1)
+"RTN","LR7OF5",50,0)
+ S:$G(XORD) X="O."_XORD
+"RTN","LR7OF5",51,0)
+ S:X=" " X=""
+"RTN","LR7OF5",52,0)
+ Q X
+"RTN","LR7OF5",53,0)
+REF(LRDFN,ODT,IFN)    ;Setup codes used for combining
+"RTN","LR7OF5",54,0)
+ ;Returns "" if no match found or:
+"RTN","LR7OF5",55,0)
+ ;   O.LRORD=Order # to combine with
+"RTN","LR7OF5",56,0)
+ ;   S.LRSN.LRORD=Specimen number to combine with
+"RTN","LR7OF5",57,0)
+ ;   C.LRSN.LRORD=Creates new LRSN under this order number so that unique data is retained (ENTERBY,PROVIDER,LOC,SPEC)
+"RTN","LR7OF5",58,0)
+ N X0,X1,X4,LRORD,LRODT,LRSN,LRCODE,GOT
+"RTN","LR7OF5",59,0)
+ Q:'$D(^LRO(69,+$G(ODT),1,+$G(IFN),.1)) 0 S LRORD=^(.1),(LRODT,GOT)=0,LRCODE=""
+"RTN","LR7OF5",60,0)
+ F  S LRODT=$O(^LRO(69,"C",LRORD,LRODT)) Q:'LRODT!GOT  S LRSN=0 F  S LRSN=$O(^LRO(69,"C",LRORD,LRODT,LRSN)) Q:'LRSN!GOT  D
+"RTN","LR7OF5",61,0)
+ . Q:'$D(^LRO(69,LRODT,1,LRSN,0))  S X0=^(0),X1=$G(^(.1))
+"RTN","LR7OF5",62,0)
+ . Q:+X0'=LRDFN  ;Patient check
+"RTN","LR7OF5",63,0)
+ . S X4=$G(^LRO(69,LRODT,1,LRSN,4,1,0))
+"RTN","LR7OF5",64,0)
+ . I $P(X0,"^",2)=ENTERBY,$P(X0,"^",3)=SAMP,$P(X0,"^",6)=PROV,$P(X0,"^",9)=LOC,X4=SPEC S LRCODE="S."_LRSN_"."_+X1,GOT=1 Q
+"RTN","LR7OF5",65,0)
+ . I $P(X0,"^",3)=SAMP,X4=SPEC S LRCODE="C."_LRSN_"."_+X1,GOT=1 Q
+"RTN","LR7OF5",66,0)
+ Q LRCODE
+"RTN","LR7OF5",67,0)
+ORD(ODT,SN) ;Check to see if any part of the order's been collected
+"RTN","LR7OF5",68,0)
+ N LRORD
+"RTN","LR7OF5",69,0)
+ Q:'$D(^LRO(69,+$G(ODT),1,+$G(SN),.1)) 0 S LRORD=^(.1)
+"RTN","LR7OF5",70,0)
+ N LRODT,LRSN,GOT
+"RTN","LR7OF5",71,0)
+ S LRODT=0
+"RTN","LR7OF5",72,0)
+ F  S LRODT=$O(^LRO(69,"C",LRORD,LRODT)) Q:'LRODT  S LRSN=0 F  S LRSN=$O(^LRO(69,"C",LRORD,LRODT,LRSN)) Q:'LRSN  D
+"RTN","LR7OF5",73,0)
+ . I $D(^LRO(69,LRODT,1,LRSN,3)) S GOT=1 Q
+"RTN","LR7OF5",74,0)
+ Q +$G(GOT)
+"RTN","LR7OF5",75,0)
+INDAIR(LRDFN,LRORD,CHK) ;Check for test duplication and tests that require their own order #
+"RTN","LR7OF5",76,0)
+ ;Function returns 0 if test allowed, 1 if not
+"RTN","LR7OF5",77,0)
+ ;CHK=1 if called from FIND, 0 if called from ORES (doesn't check ORES array)
+"RTN","LR7OF5",78,0)
+ Q:'$G(LRORD) 1
+"RTN","LR7OF5",79,0)
+ N UTS,X,X4,ODT,LRSN,TST,EX
+"RTN","LR7OF5",80,0)
+ S ODT=0,EX=0
+"RTN","LR7OF5",81,0)
+ F  S ODT=$O(^LRO(69,"C",LRORD,ODT)) Q:'ODT!(EX)  S LRSN=0 F  S LRSN=$O(^LRO(69,"C",LRORD,ODT,LRSN)) Q:'LRSN!(EX)  D
+"RTN","LR7OF5",82,0)
+ . I +$G(^LRO(69,LRODT,1,LRSN,0))'=LRDFN S EX=1 Q  ;Check for same patient
+"RTN","LR7OF5",83,0)
+ . S UTS=0 F  S UTS=$O(^TMP("OR",$J,"LROT",SDT,TYPE,SAMP,SPEC,UTS)) Q:'UTS  S X=^(UTS) D  Q:EX
+"RTN","LR7OF5",84,0)
+ .. S X4=$G(^LRO(69,LRODT,1,LRSN,4,1,0))
+"RTN","LR7OF5",85,0)
+ .. I X4=SPEC,$D(^LRO(69,ODT,1,LRSN,2,"B",+X)) S EX=1 Q  ;Duplicate test
+"RTN","LR7OF5",86,0)
+ .. I $P($G(^LAB(60,+X,0)),"^",20) S EX=1 Q  ;Combining not allowed
+"RTN","LR7OF5",87,0)
+ .. S TST=0 F  S TST=$O(^LRO(69,ODT,1,LRSN,2,"B",TST)) Q:'TST  D  Q:EX  ;Duplicate check for all tests
+"RTN","LR7OF5",88,0)
+ ... I $P($G(^LAB(60,TST,0)),"^",20) S EX=1 Q
+"RTN","LR7OF5",89,0)
+ ... N EXY
+"RTN","LR7OF5",90,0)
+ ... D EXPAND^LR7OU1(TST,.EXY)
+"RTN","LR7OF5",91,0)
+ ... S EXY=0 F  S EXY=$O(EX(EXY)) Q:'EXY  I $D(^LRO(69,ODT,1,LRSN,2,"B",EXY)) S EX=1 Q  ;Check panels for duplicate
+"RTN","LR7OF5",92,0)
+ ... Q:EX
+"RTN","LR7OF5",93,0)
+ ... I $G(CHK) S EX=$$ESTEST(TST,LRXZ,LRSDT)
+"RTN","LR7OF5",94,0)
+ Q EX
+"RTN","LR7OF5",95,0)
+ESTEST(TEST,TYPE,STARTDT)       ;Check ORES array for potential duplicates
+"RTN","LR7OF5",96,0)
+ Q:'$G(TEST) 0 Q:'$D(TYPE) 0 Q:'$G(STARTDT) 0
+"RTN","LR7OF5",97,0)
+ N IFN,ACT,LRI,ES,X
+"RTN","LR7OF5",98,0)
+ S ES=0,LRI=""
+"RTN","LR7OF5",99,0)
+ F  S LRI=$O(ORES(LRI)) Q:'LRI!(ES)  S IFN=+LRI,ACT=$P(LRI,";",2)  I $$VALUE^ORCSAVE2(IFN,"COLLECT")=TYPE D
+"RTN","LR7OF5",100,0)
+ . I +$P($G(^ORD(101.43,+$$VALUE^ORCSAVE2(IFN,"ORDERABLE"),0)),"^",2)'=TEST S ES=0 Q
+"RTN","LR7OF5",101,0)
+ . S X=$P($G(^OR(100,IFN,8,ACT,0)),"^")
+"RTN","LR7OF5",102,0)
+ . I X,$$ABS^XLFMTH($$FMDIFF^XLFDT(X,STARTDT,2))<600 S ES=1 Q
+"RTN","LR7OF5",103,0)
+ Q ES
+"VER")
+8.0^22.0
+"BLD",9011,6)
+^328
+**END**
+**END**

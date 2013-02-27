@@ -1,0 +1,187 @@
+$TXT Created by CHANDARANA,RISHAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 08/31/10 at 18:53
+=============================================================================
+Run Date: FEB 22, 2011                     Designation: FB*3.5*114
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #102                    Status: Released
+                  Compliance Date: MAR 24, 2011
+=============================================================================
+
+Associated patches: (v)FB*3.5*61   <<= must be installed BEFORE `FB*3.5*114'
+                    (v)FB*3.5*101  <<= must be installed BEFORE `FB*3.5*114'
+
+Subject: FIX PROBLEMS WITH PURGE & BATCHES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch does the following:
+ - corrects a problem with two Fee Basis routines that aren't updating 
+   data properly.  
+ - corrects the wrong data displaying when using the Enter Unauthorized 
+   Claim [FBUC ENTER] option.  
+ - corrects a warning that is not displayed when running low on available 
+   batches.
+  
+  ASSOCIATED REMEDY:
+  =================
+  1) HD0000000237917 - FGH - FEE BASIS BATCH NUMBER file questions 
+  2) HD0000000333483 - FGH - data populated when accessing ENTER UNAUTHORIZED 
+                       CLAIM option
+  3) HD0000000354967 - OPENING A BATCH ISSUE
+  
+  ASSOCIATED NSR(s):
+  ==================
+  N/A
+  
+  PARTICIPATING TEST SITES:
+  ========================
+  VA Tennessee Valley HCS
+  Huntington VAMC
+  VA Montana HCS
+  VA North Florida/South Georgia VA HCS
+  
+  REMEDY OVERVIEW:
+  ===============
+  1) HD0000000237917 - FGH - FEE BASIS BATCH NUMBER file questions 
+  
+  Problem:
+  ========
+  When using the options Delete reject flag [FBAA VOUCHER DELETE REJECT] and
+  Re-initiate Rejected Payment Items [FBAA REINITIATE REJECTS] to finalize 
+  batches with rejected items, the software is creating new cross-references
+  with the current date and not deleting previous cross-references. 
+  This is resulting in extraneous cross-references.  
+  
+  Solution:
+  =========
+  The routines FBAARD and FBAARR have been modified to use FileMan to update
+  the user who entered, date finalized and status fields.  This prevents 
+  the creation of extraneous cross-references.  
+  
+  Post-install routine FBXIP114 will re-index the "AF" cross-reference on 
+  the DATE FINALIZIED field (#13) in the FEE BASIS BATCH (#161.7) file to
+  clean up the extraneous cross-references.  
+  
+  2) HD0000000333483 - FGH - data populated when accessing ENTER UNAUTHORIZED 
+                       CLAIM option
+  
+  Problem:
+  ========
+  When entering the ENTER UNAUTHORIZED CLAIM [FBUC ENTER] option after using 
+  the View Registration Data [DG REGISTRATION VIEW] option, the user is 
+  presented with a default patient.  At this point, there shouldn't be a 
+  patient selected at all.   
+  
+  Solution:
+  =========
+  The routine FBUCEN has been modified to new FileMan variables prior to 
+  calling FileMan so that the previous value isn't retained.  
+  
+  3) HD0000000354967 - OPENING A BATCH ISSUE
+  
+  Problem:
+  ========
+  When a site is running low on available batches (101 or less), the 
+  user should receive a warning instructing them to contact their 
+  Information Resources Management (IRM) department to run a purge.  
+  The users are currently not receiving the warning because the 
+  calculation is incorrect.  
+  
+  In routine FBAAUTL, some locks are not compliant with SAC standards.  
+  
+  Solution:
+  =========
+  The routine FBAAUTL should be looking at the file header for the 
+  FEE BASIS BATCH (#161.7) file.  If this number is greater than 99899,
+  the user should be warned that the site is running low on batches so 
+  that they can take necessary action.  
+  
+  Locks in routine FBAAUTL are now SAC compliant.  
+  
+  INSTALLATION INSTRUCTIONS
+  =========================
+  This patch may be installed during normal working hours.  However, as
+  certain Fee Basis options are going to be placed out of order, it is 
+  recommended that Fee Basis users not be on the system at the time.   
+  
+  Installation should take under five minutes.
+  
+  The post install routine FBXIP114 may be deleted upon successful 
+  installation of this patch.                                           
+  
+  1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+      the KIDS distribution included with this message.
+    
+  2.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+    
+  3.  From this menu, you may elect to use the following options
+      (when prompted for INSTALL NAME, enter FB*3.5*114):
+      a.  Compare Transport Global to Current System  - this option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+      b.  Verify Checksums in Transport Global - this option will
+          allow you to ensure the integrity of the routines that are in
+          the transport global.
+      c.  Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+      d.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+    
+  4.  Use the Install Package(s) option and select the package FB*3.5*114.
+    
+  5.  When prompted, 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', respond NO.
+    
+  6.  When prompted, 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES.
+  
+      When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+      enter:
+      Open a Batch                               [FBAA OPEN BATCH]
+      Enter Unauthorized Claim                   [FBUC ENTER]
+      Delete reject flag                         [FBAA VOUCHER DELETE REJECT]
+      Re-initiate Rejected Payment Items         [FBAA REINITIATE REJECTS]
+      Enter Pharmacy Invoice                     [FBAA ENTER PHARMACY INVOICE] 
+      
+      When prompted, 'Enter protocols you wish to mark as 'Out of Order':',
+      enter: <ENTER>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAARD
+    Before: B20785486   After: B20514488  **114**
+Routine Name: FBAARR
+    Before: B32814537   After: B32870767  **61,114**
+Routine Name: FBAAUTL
+    Before: B22355196   After: B23591801  **101,114**
+Routine Name: FBUCEN
+    Before: B26051535   After: B26341993  **32,61,114**
+Routine Name: FBXIP114
+    Before:       n/a   After:   B940419  **114**
+ 
+Routine list of preceding patches: 61, 101
+
+=============================================================================
+User Information:
+Entered By  : CHANDARANA,RISHAN             Date Entered  : MAR 22, 2010
+Completed By: PODLEY,CHRIS                  Date Completed: FEB 02, 2011
+Released By : MARSHALL,FALENCIA B.          Date Released : FEB 22, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

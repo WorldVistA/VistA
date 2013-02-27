@@ -1,0 +1,167 @@
+$TXT Created by HERRING,VENESSA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 04/17/12 at 08:47
+=============================================================================
+Run Date: AUG 21, 2012                     Designation: PSO*7*361
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #339                      Status: Released
+                  Compliance Date: SEP 20, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*367   <<= must be installed BEFORE `PSO*7*361'
+
+Subject: CMOP MESSAGE CUTOFF/VIEW RX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1. If a CMOP (Consolidated Mail Outpatient Pharmacy) transmission is 
+    rejected, Outpatient Pharmacy provides the user with a reason for the 
+    rejection. This reason is displayed under the COMMENTS header of the
+    CMOP EVENT LOG.  The comment explaining the rejected message is not
+    being entirely displayed.
+  
+  
+ REASON FOR REJECTION
+ --------------------
+ CMOP STOCKS PACKSIZE     <= Incomplete message
+ CMOP STOCKS PACKSIZE  30 <= Complete message
+  
+ 2. When viewing a prescription using menu option View Prescriptions [PSO
+    VIEW], the conjunction Except does not show for complex orders.
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ HD0000000386555 - Messages being cut-off
+ HD0000000439428 - When viewing rx - conjunction not displaying for complex
+                   order
+  
+ Associated NSRs:
+ ================
+ N/A
+   
+   
+ Participating Test Sites:
+ =========================
+ HEARTLAND-EAST HCS
+ LOUISVILLE VAMC
+  
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000386555 - Messages being cut-off
+  
+ Problem:
+ --------
+ The CMOP Event Log is not displaying certain messages in its entirety.
+ In the example below, the comment, "CMOP STOCKS PACKSIZE" should display
+ "CMOP STOCKS PACKSIZE  30".
+  
+ FileMan displays the entire message but the CMOP Event Log under the [PSO 
+ VIEW] option does not provide enough space to display the entire message.
+ Please see the example provided.
+  
+  
+ *************************** E X A M P L E *********************************
+ CMOP Event Log:                                                                 
+ Date/Time             Rx Ref  TRN-Order       Stat             Comments         
+ ============================================================================ 
+ 05/03/10@1107         Orig    2629-238         NDISP    CMOP STOCKS PACKSIZE 
+ 06/09/10@0756         Ref 1   3136-222         NDISP    CMOP STOCKS PACKSIZE
+  
+  
+ Resolution:
+ -----------
+ Certain fields and headers can be moved left providing the space needed 
+ to display the complete message under the COMMENTS header.
+  
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSORXVW2 so that the entire message is displayed.
+  
+  
+ 2. HD0000000439428 - When viewing rx - conjunction not displaying for 
+                      complex order
+  
+  
+ Problem:
+ --------
+ When using the View Prescription [PSO VIEW] option for a complex order with 
+ the Except conjunction, the conjunction is not displaying.  If the complex 
+ order has an 'And' or 'Then' conjunction, it does display properly.
+  
+ Resolution:
+ -----------
+ When viewing a prescription using the View Prescriptions [PSO VIEW] menu
+ option, the code was checking for an 'E' for the Except conjunction
+ instead of checking for an 'X'.  This caused the conjunction to not
+ display.  This will now check for 'X'.
+  
+ Technical Resolution:
+ ---------------------
+ Need to modify DOSE1+10^PSORXVW2 to check for X instead of E for the Except
+ conjunction.
+  
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter PSO*7.0*361)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package PSO*7.0*361
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORXVW2
+    Before: B44714099   After: B44478716  **33,71,117,152,148,367,361**
+ 
+Routine list of preceding patches: 367
+
+=============================================================================
+User Information:
+Entered By  : NIXON,ANTOINE                 Date Entered  : JUN 16, 2010
+Completed By: LANG,MICKEY                   Date Completed: JUL 25, 2012
+Released By : BAYLIS,RANDALL S              Date Released : AUG 21, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

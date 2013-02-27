@@ -1,0 +1,236 @@
+
+=============================================================================
+Run Date: MAR 22, 2012                     Designation: TIU*1*261
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #243                      Status: Released
+                  Compliance Date: APR 21, 2012
+=============================================================================
+
+Associated patches: (v)TIU*1*233   <<= must be installed BEFORE `TIU*1*261'
+                    (v)MAG*3*121   <<= must be installed BEFORE `TIU*1*261'
+
+Subject: RESCIND ADVANCE DIRECTIVE
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ Description:
+ ===========
+  
+ Patch TIU*1*261 supports Imaging patch MAG*3.0*121. The two patches are 
+ being released in a combined release, with  TIU*1*261 requiring 
+ MAG*3.0*121.  Patch MAG*3.0*121 provides the ability to watermark images 
+ "RESCINDED".
+  
+ Patch TIU*1*261 permits an authorized user to rescind an Advance 
+ Directive document by changing the title to RESCINDED ADVANCE DIRECTIVE.  
+ MAG*3.0*121 takes it from there and watermarks any linked images
+ "RESCINDED". 
+  
+           ****************************************************
+                  NOTE: EXACT TITLE NAMES are REQUIRED
+           ****************************************************
+ Exact title names are required as shown below:
+      1   ADVANCE DIRECTIVE       [TITLE]  
+       Std Title: ADVANCE DIRECTIVE
+      2   RESCINDED ADVANCE DIRECTIVE     [TITLE] 
+       Std Title: RESCINDED ADVANCE DIRECTIVE
+  
+ Variations on these titles will cause the Change Title action to fail to
+ watermark images as rescinded.  
+  
+ These exact titles are required by policy.  See the VHA HANDBOOK 1004.02
+ section on Advance Directives:
+   http://vaww1.va.gov/vhapublications/ViewPublication.asp?pub_ID=2042 
+  
+  
+ Patch Components
+ ================
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ NSR 20060401 Watermarking Rescinded Images
+  
+  
+  
+ Remedy Ticket(s) & Overview:
+ ---------------------------
+ There are no Remedy tickets associated with this patch. 
+  
+  
+  
+ Test Sites:
+ ----------
+ This patch is being tested by Imaging at test sites for MAG*3.0*121:
+  
+  Battle Creek, MI (Medium) 
+  Fayetteville, NC (Large) 
+  Huntington, WV (Medium) 
+  Orlando, FL (Large)
+  West Haven, CT (Integrated, Large) 
+  VISN 2 (Integrated, Large) 
+  
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.  
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ FILES TO DOWNLOAD ARE LISTED BELOW:
+  
+ File Description                        File Name             FTP Mode
+ ----------------------------------------------------------------------
+ TIU Clinical Coordinator User Manual    tiuum.pdf             (binary)
+ INSTALL FILE                            TIU_10_P261.KID       (ASCII)
+  
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.va.gov/vdl/
+  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Patch TIU*1*261 is distributed in a separate Host File in a combined 
+ release with MAG*3.0*121. Patch MAG*3.0*121 must be installed before 
+ TIU*1*261.
+  
+ Before installing TIU*1*261, you will need to download TIU*1*261 files to 
+ a local storage location.
+  
+ FILES TO DOWNLOAD ARE LISTED BELOW:
+  
+ File Description                        File Name             FTP Mode
+ ----------------------------------------------------------------------
+ TIU Clinical Coordinator User Manual    tiuum.pdf             (binary)
+ INSTALL FILE                            TIU_10_P261.KID       (ASCII)
+  
+ TIU files may be retrieved as follows:
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  
+ As an ALTERNATIVE RETRIEVAL METHOD, sites with access to the Imaging 
+ download site can download the TIU Install file from the individual site 
+ folders descendant from folder Mag3_0P121_and_TIU1_0P261 on the Imaging 
+ download site:
+  
+  ftp.imaging.med.va.gov/Software/Released_Software
+  
+ FILE TO DOWNLOAD IS LISTED BELOW:
+  
+ File Description                        File Name             FTP Mode
+ ----------------------------------------------------------------------
+ INSTALL FILE                            TIU_10_P261.KID       (ASCII)
+  
+  
+   
+ Installation Instructions:
+ -------------------------
+ Patch TIU*1*261 may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  Patch TIU*1*261 should take less than 2 
+ minutes to install.  Please check to see when the following options are 
+ scheduled to run and do NOT install this patch at that time:
+     TIU NIGHTLY TASK and
+     TIU PRINT PN BATCH SCHEDULED
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1. Use the 'Load a Distribution' option on the KIDS installation menu.  
+ Select Installation Option: Load a Distribution.
+ Enter a Host File:  [DIR] TIU_10_P261.KID
+     where [DIR] is the local directory where you have stored the host 
+ file.
+  
+ 2. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    options as desired:
+       Print Transport Global
+       Compare Transport Global to Current System
+       Verify checksums in Transport Global
+       Backup a Transport Global
+  
+ 3. On the KIDS menu under the 'INSTALLATION' menu, use the following 
+    option to install the patch:
+         Install Package(s) (TIU*1.0*261)
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGON's during the install? YES//",
+    respond "NO".
+  
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? YES//", respond "NO".
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ TIU*1*261 has no Post-Installation Instructions.
+  
+  
+ Routines included in the Host File for this patch:
+ ==================================================
+  
+ The second line of each of these routines now looks like:
+  ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build #
+  
+ Routine Name: TIURB3
+     Before: N/A   After: 10193289**261**
+  
+ Routine Name: TIURS1
+     Before: B73623745 After: 76091051  **7,36,58,100,109,142,
+                                          156,184,233,261**
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIURB3
+    Before:       n/a   After: B10193289  **261**
+Routine Name: TIURS1
+    Before: B73623745   After: B76091051  **7,36,58,100,109,142,156,184,
+                                           233,261**
+ 
+Routine list of preceding patches: 233
+
+=============================================================================
+User Information:
+Entered By  : MCCLENAHAN,MARGARET           Date Entered  : MAY 23, 2011
+Completed By: GRAZIANI,ROBERT               Date Completed: MAR 06, 2012
+Released By : SCHMIT,BECKY                  Date Released : MAR 22, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

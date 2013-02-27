@@ -1,0 +1,127 @@
+$TXT Created by DIMICELI,RON at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 09/01/11 at 07:48
+=============================================================================
+Run Date: MAY 21, 2012                     Designation: XT*7.3*132
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3       SEQ #106                    Status: Released
+                  Compliance Date: JUN 21, 2012
+=============================================================================
+
+
+Subject: XINDEX routines in Transport Global
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch fixes two issues with the XINDEX utility.
+  
+  Remedy Tickets
+  ==============
+  1. 63071 The users would like a way to run XINDEX against incoming patches.
+   Resolution: 
+     The XINDEX utility will now prompt the user for an Install name, a patch
+     loaded through KIDS.  XINDEX will then verify the routines in the patch.
+  
+  2. 495603  A site noted that XINDEX doesn't allow a number in the Package
+     name on the 2nd line. Also, this utility, incorrectly flags $ET and
+     $ES as errors.
+   Resolution:
+     This patch corrects both issues.
+  
+  Thanks to Test Sites
+  ====================
+  VA MONTANA HCS 
+  DAYTON VAMC 
+    
+  Blood Bank Clearance
+  ====================
+  Clearance - 8/3/2011
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*132 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+  not alter or modify any VistA Blood Bank software design safeguards or
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XT*7.3*132 have no effect on Blood
+  Bank software functionality, therefore RISK is none.
+  
+    
+  Installation Instructions
+  =========================
+  This patch may be installed with VISTA users online. However, it is
+  recommended that it be Queued for a time of generally least activity.  
+    
+  TaskMan or any background jobs does not need to be STOPPED or placed
+  in a WAIT state, and installation should take less than a minute.
+   
+  1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+     This option will load the KIDS package onto your system.  
+    
+  2. The patch has now been loaded into a transport global on your 
+     system. You now need to use KIDS to install the transport global.  
+     
+  3. On the KIDS menu, under the 'Installation' menu, use the 
+     following options: 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global
+          Backup a Transport Global 
+    
+  4. On the KIDS menu, in the 'Installation' menu, use the following option: 
+          Select Installation Option: Install Package(s) 
+          Select INSTALL NAME: XT*7.3*132
+                               ==========
+ 
+       Want KIDS to INHIBIT LOGONs during the install? NO//
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+          
+  This patch also contains the routine XT73P132.  This routine is only used
+  to verify that XINDEX correctly handles the 2nd line and $ET and $ES.  It
+  can be deleted from your system after the patch has been installed.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XINDEX
+    Before: B30427549   After: B30540711  **20,27,48,61,66,68,110,121,128,132**
+Routine Name: XINDX10
+    Before: B25398590   After: B26794578  **20,27,66,68,132**
+Routine Name: XINDX11
+    Before: B11119765   After: B11308547  **20,27,121,132**
+Routine Name: XINDX3
+    Before: B12749285   After: B14051168  **20,27,61,68,110,121,128,132**
+Routine Name: XINDX6
+    Before: B19519203   After: B20048257  **20,27,66,110,132**
+Routine Name: XINDX9
+    Before: B16811292   After: B17326619  **20,27,48,61,66,68,110,121,132**
+Routine Name: XT73P132
+    Before:       n/a   After:    B11819  **132**
+Routine Name: XTRUTL1
+    Before:  B1160376   After:  B3068515  **20,66,132**
+ 
+Routine list of preceding patches: 128
+
+=============================================================================
+User Information:
+Entered By  : DIMICELI,RON                  Date Entered  : MAY 25, 2011
+Completed By: BEST,LISA                     Date Completed: MAY 07, 2012
+Released By : MALMIN,PAUL                   Date Released : MAY 21, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,162 @@
+$TXT Created by CARPENTER,TERRY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 09/29/11 at 09:57
+=============================================================================
+Run Date: JUL 25, 2012                     Designation: LR*5.2*415
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #329                    Status: Released
+                  Compliance Date: AUG 25, 2012
+=============================================================================
+
+Associated patches: (v)LR*5.2*379  <<= must be installed BEFORE `LR*5.2*415'
+
+Subject: MODIFY LRWLST1 TO ADDRESS IN-COMMON ACCESSIONING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is a VM patch that addresses a problem in the Lab package
+ related to accessioning with in-common accession areas. When an
+ "in-common" accession area is added to an existing accession area, it
+ is possible that data in file #68 (ACCESSION) will be overwritten and 2
+ patients will have the same accession number.
+  
+ BLOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*415 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by VHA 
+ DIRECTIVE 2004-058 titled VISTA BLOOD BANK SOFTWARE VERSION 5.2.
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*415 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*415 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+    
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ ========================
+ 1. HD0000000464026         -  Issue with possible overwrite of patient
+                               information in Lab
+    Duplicate(s)
+      
+      HD0000000521518       -  FileMan DBS call failed during accessioning
+                               in Routine LRWLST1
+  
+  
+     
+ Testing Sites:
+ =============
+ Washington, DC
+ Bronx, NY
+ Salisbury, NC
+ Heartland - East HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1:  HD0000000464026      -  Issue with possible overwrite of patient
+                             information in Lab
+     Duplicate(s):
+  
+        HD0000000521518   -  FileMan DBS call failed during accessioning in
+                             routine LRWLST1
+  
+  
+     Problem:
+     --------
+     If an accession area (ACCAREA1) has an "in-common" accession area,
+     (ACCAREA2), it means that the two accession areas have a common pool
+     of accession numbers.  When accessioning occurs, routine LRWLST1
+     gets the first unused accession number in the "in-common" accession
+     area (ACCAREA2) and uses that accession number.  If that accession 
+     number is already in use in ACCAREA1, data is overwritten in 
+     file #68 (ACCESSION) for ACCAREA1, and you end up with 2 different
+     patients with the same accession number.
+  
+  
+     Solution:
+     ---------
+     Modify routine LRWLST1 to check and make sure that the accession
+     number under consideration is not already in use in either the
+     "in-common" accession area (ACCAREA2) or the "originating" accession  
+     area (ACCAREA1).
+  
+     Routine:    LRWLST1  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+  
+   The install time for this patch is less than 2 minutes. This patch
+   can be installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*415.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRWLST1
+    Before: B84896731   After: B94767270  **48,65,121,153,261,286,331,379,415**
+ 
+Routine list of preceding patches: 379
+
+=============================================================================
+User Information:
+Entered By  : CARPENTER,TERRY               Date Entered  : SEP 28, 2011
+Completed By: BYRD,TIERRA                   Date Completed: JUL 25, 2012
+Released By : BARKOOZIS,GREGORY             Date Released : JUL 25, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

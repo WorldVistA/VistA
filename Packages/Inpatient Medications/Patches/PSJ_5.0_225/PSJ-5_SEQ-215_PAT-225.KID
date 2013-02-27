@@ -1,0 +1,2662 @@
+Released PSJ*5*225 SEQ #215
+Extracted from mail message
+**KIDS**:PSJ*5.0*225^
+
+**INSTALL NAME**
+PSJ*5.0*225
+"BLD",8106,0)
+PSJ*5.0*225^INPATIENT MEDICATIONS^0^3110519^y
+"BLD",8106,1,0)
+^^19^19^3110519^
+"BLD",8106,1,1,0)
+This patch will correct the following issues:
+"BLD",8106,1,2,0)
+ 
+"BLD",8106,1,3,0)
+1. If the Units per Dose of an order are entered as "0" or a non-numeric 
+"BLD",8106,1,4,0)
+   value, the Units per Dose is recorded as 0. This is contrary to the 
+"BLD",8106,1,5,0)
+   documentation, which states that under these circumstances, the units 
+"BLD",8106,1,6,0)
+   per dose should be 1.
+"BLD",8106,1,7,0)
+ 
+"BLD",8106,1,8,0)
+2. Intermittent as needed (PRN) IV Orders created by CPRS which should 
+"BLD",8106,1,9,0)
+   have no value in the SCHEDULE INTERVAL field (#.17) of the IV SUB-FILE 
+"BLD",8106,1,10,0)
+   (#55.01) are being incorrectly set to 1440 (1 day).
+"BLD",8106,1,11,0)
+ 
+"BLD",8106,1,12,0)
+3. Intravenous push (IVP) orders are not showing up on the medicatinos 
+"BLD",8106,1,13,0)
+   due worksheet.
+"BLD",8106,1,14,0)
+ 
+"BLD",8106,1,15,0)
+4. The Meds tab in CPRS is not showing active orders that have been 
+"BLD",8106,1,16,0)
+   placed on HOLD when the sort type is by Drug (Alphabetical).
+"BLD",8106,1,17,0)
+ 
+"BLD",8106,1,18,0)
+5. In CPRS, when the ORCH CONTEXT MEDS parameter is not set, some 
+"BLD",8106,1,19,0)
+   non-active orders visible even though none should be.
+"BLD",8106,4,0)
+^9.64PA^^
+"BLD",8106,6)
+4^
+"BLD",8106,6.3)
+16
+"BLD",8106,"ABPKG")
+n
+"BLD",8106,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8106,"KRN",.4,0)
+.4
+"BLD",8106,"KRN",.401,0)
+.401
+"BLD",8106,"KRN",.402,0)
+.402
+"BLD",8106,"KRN",.403,0)
+.403
+"BLD",8106,"KRN",.5,0)
+.5
+"BLD",8106,"KRN",.84,0)
+.84
+"BLD",8106,"KRN",3.6,0)
+3.6
+"BLD",8106,"KRN",3.8,0)
+3.8
+"BLD",8106,"KRN",9.2,0)
+9.2
+"BLD",8106,"KRN",9.8,0)
+9.8
+"BLD",8106,"KRN",9.8,"NM",0)
+^9.68A^11^10
+"BLD",8106,"KRN",9.8,"NM",1,0)
+PSJORRN^^0^B62913592
+"BLD",8106,"KRN",9.8,"NM",2,0)
+PSJMIV^^0^B16816087
+"BLD",8106,"KRN",9.8,"NM",3,0)
+PSJMDIR^^0^B25710894
+"BLD",8106,"KRN",9.8,"NM",4,0)
+PSIVORFA^^0^B24982662
+"BLD",8106,"KRN",9.8,"NM",6,0)
+PSJBCMA^^0^B74176392
+"BLD",8106,"KRN",9.8,"NM",7,0)
+PSJORRE^^0^B32342688
+"BLD",8106,"KRN",9.8,"NM",8,0)
+PSJORRE1^^0^B35616681
+"BLD",8106,"KRN",9.8,"NM",9,0)
+PSJORRN1^^0^B57655173
+"BLD",8106,"KRN",9.8,"NM",10,0)
+PSJORRO^^0^B63875984
+"BLD",8106,"KRN",9.8,"NM",11,0)
+PSJPXRM1^^0^B33659931
+"BLD",8106,"KRN",9.8,"NM","B","PSIVORFA",4)
+
+"BLD",8106,"KRN",9.8,"NM","B","PSJBCMA",6)
+
+"BLD",8106,"KRN",9.8,"NM","B","PSJMDIR",3)
+
+"BLD",8106,"KRN",9.8,"NM","B","PSJMIV",2)
+
+"BLD",8106,"KRN",9.8,"NM","B","PSJORRE",7)
+
+"BLD",8106,"KRN",9.8,"NM","B","PSJORRE1",8)
+
+"BLD",8106,"KRN",9.8,"NM","B","PSJORRN",1)
+
+"BLD",8106,"KRN",9.8,"NM","B","PSJORRN1",9)
+
+"BLD",8106,"KRN",9.8,"NM","B","PSJORRO",10)
+
+"BLD",8106,"KRN",9.8,"NM","B","PSJPXRM1",11)
+
+"BLD",8106,"KRN",19,0)
+19
+"BLD",8106,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",8106,"KRN",19.1,0)
+19.1
+"BLD",8106,"KRN",101,0)
+101
+"BLD",8106,"KRN",409.61,0)
+409.61
+"BLD",8106,"KRN",771,0)
+771
+"BLD",8106,"KRN",779.2,0)
+779.2
+"BLD",8106,"KRN",870,0)
+870
+"BLD",8106,"KRN",8989.51,0)
+8989.51
+"BLD",8106,"KRN",8989.52,0)
+8989.52
+"BLD",8106,"KRN",8994,0)
+8994
+"BLD",8106,"KRN","B",.4,.4)
+
+"BLD",8106,"KRN","B",.401,.401)
+
+"BLD",8106,"KRN","B",.402,.402)
+
+"BLD",8106,"KRN","B",.403,.403)
+
+"BLD",8106,"KRN","B",.5,.5)
+
+"BLD",8106,"KRN","B",.84,.84)
+
+"BLD",8106,"KRN","B",3.6,3.6)
+
+"BLD",8106,"KRN","B",3.8,3.8)
+
+"BLD",8106,"KRN","B",9.2,9.2)
+
+"BLD",8106,"KRN","B",9.8,9.8)
+
+"BLD",8106,"KRN","B",19,19)
+
+"BLD",8106,"KRN","B",19.1,19.1)
+
+"BLD",8106,"KRN","B",101,101)
+
+"BLD",8106,"KRN","B",409.61,409.61)
+
+"BLD",8106,"KRN","B",771,771)
+
+"BLD",8106,"KRN","B",779.2,779.2)
+
+"BLD",8106,"KRN","B",870,870)
+
+"BLD",8106,"KRN","B",8989.51,8989.51)
+
+"BLD",8106,"KRN","B",8989.52,8989.52)
+
+"BLD",8106,"KRN","B",8994,8994)
+
+"BLD",8106,"QUES",0)
+^9.62^^
+"BLD",8106,"REQB",0)
+^9.611^4^4
+"BLD",8106,"REQB",1,0)
+PSJ*5.0*113^2
+"BLD",8106,"REQB",2,0)
+PSJ*5.0*170^2
+"BLD",8106,"REQB",3,0)
+PSJ*5.0*116^2
+"BLD",8106,"REQB",4,0)
+PSJ*5.0*213^2
+"BLD",8106,"REQB","B","PSJ*5.0*113",1)
+
+"BLD",8106,"REQB","B","PSJ*5.0*116",3)
+
+"BLD",8106,"REQB","B","PSJ*5.0*170",2)
+
+"BLD",8106,"REQB","B","PSJ*5.0*213",4)
+
+"MBREQ")
+0
+"PKG",203,-1)
+1^1
+"PKG",203,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",203,20,0)
+^9.402P^^
+"PKG",203,22,0)
+^9.49I^1^1
+"PKG",203,22,1,0)
+5.0^2971215^2980417^1271
+"PKG",203,22,1,"PAH",1,0)
+225^3110519^33288
+"PKG",203,22,1,"PAH",1,1,0)
+^^19^19^3110519
+"PKG",203,22,1,"PAH",1,1,1,0)
+This patch will correct the following issues:
+"PKG",203,22,1,"PAH",1,1,2,0)
+ 
+"PKG",203,22,1,"PAH",1,1,3,0)
+1. If the Units per Dose of an order are entered as "0" or a non-numeric 
+"PKG",203,22,1,"PAH",1,1,4,0)
+   value, the Units per Dose is recorded as 0. This is contrary to the 
+"PKG",203,22,1,"PAH",1,1,5,0)
+   documentation, which states that under these circumstances, the units 
+"PKG",203,22,1,"PAH",1,1,6,0)
+   per dose should be 1.
+"PKG",203,22,1,"PAH",1,1,7,0)
+ 
+"PKG",203,22,1,"PAH",1,1,8,0)
+2. Intermittent as needed (PRN) IV Orders created by CPRS which should 
+"PKG",203,22,1,"PAH",1,1,9,0)
+   have no value in the SCHEDULE INTERVAL field (#.17) of the IV SUB-FILE 
+"PKG",203,22,1,"PAH",1,1,10,0)
+   (#55.01) are being incorrectly set to 1440 (1 day).
+"PKG",203,22,1,"PAH",1,1,11,0)
+ 
+"PKG",203,22,1,"PAH",1,1,12,0)
+3. Intravenous push (IVP) orders are not showing up on the medicatinos 
+"PKG",203,22,1,"PAH",1,1,13,0)
+   due worksheet.
+"PKG",203,22,1,"PAH",1,1,14,0)
+ 
+"PKG",203,22,1,"PAH",1,1,15,0)
+4. The Meds tab in CPRS is not showing active orders that have been 
+"PKG",203,22,1,"PAH",1,1,16,0)
+   placed on HOLD when the sort type is by Drug (Alphabetical).
+"PKG",203,22,1,"PAH",1,1,17,0)
+ 
+"PKG",203,22,1,"PAH",1,1,18,0)
+5. In CPRS, when the ORCH CONTEXT MEDS parameter is not set, some 
+"PKG",203,22,1,"PAH",1,1,19,0)
+   non-active orders visible even though none should be.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+10
+"RTN","PSIVORFA")
+0^4^B24982662^B24701688
+"RTN","PSIVORFA",1,0)
+PSIVORFA ;BIR/MLM-FILE/RETRIEVE ORDERS IN 53.1 ; 8/17/09 9:23am
+"RTN","PSIVORFA",2,0)
+ ;;5.0; INPATIENT MEDICATIONS ;**4,7,18,28,50,71,58,91,80,110,111,134,225**;16 DEC 97;Build 16
+"RTN","PSIVORFA",3,0)
+ ;
+"RTN","PSIVORFA",4,0)
+ ; Reference to ^PS(51.1 supported by DBIA 2177.
+"RTN","PSIVORFA",5,0)
+ ; Reference to ^PS(51.2 supported by DBIA 2178.
+"RTN","PSIVORFA",6,0)
+ ; Reference to ^PS(52.7 supported by DBIA 2173.
+"RTN","PSIVORFA",7,0)
+ ; Reference to ^PS(52.6 supported by DBIA 1231.
+"RTN","PSIVORFA",8,0)
+ ;
+"RTN","PSIVORFA",9,0)
+GT531(DFN,ON) ; Retrieve order data from 53.1 and place into local array
+"RTN","PSIVORFA",10,0)
+ ;
+"RTN","PSIVORFA",11,0)
+ NEW PSGOES S PSGOES=1
+"RTN","PSIVORFA",12,0)
+ F X="CUM","LF","LFA","LF","PRNTON" S P(X)=""
+"RTN","PSIVORFA",13,0)
+ S Y=$G(^PS(53.1,+ON,0)),P(17)=$P(Y,U,9),P("LOG")=$P(Y,U,16),(P(21),P("21FLG"),PSJORIFN)=$P(Y,U,21)
+"RTN","PSIVORFA",14,0)
+ S P("RES")=$P(Y,U,24),P("OLDON")=$P(Y,U,25),P("NEWON")=$P(Y,U,26),P("FRES")=$P(Y,U,27)
+"RTN","PSIVORFA",15,0)
+ S P("MR")=$P(Y,U,3),P(6)=+$P(Y,U,2),Y=$G(^VA(200,+P(6),0)),$P(P(6),U,2)=$P(Y,U),Y=$G(^PS(51.2,+P("MR"),0)),$P(P("MR"),U,2)=$S($P(Y,U,3)]"":$P(Y,U,3),1:$P(Y,U))
+"RTN","PSIVORFA",16,0)
+ S Y=$G(^PS(53.1,+ON,.2)),P("PD")=$S(+Y:$P(Y,U)_U_$$OIDF^PSJLMUT1(+Y),1:""),P("DO")=$P(Y,U,2),P("NAT")=$P(Y,U,3),P("PRY")=$P(Y,U,4),(PSJCOM,P("PRNTON"))=$P(Y,U,8)
+"RTN","PSIVORFA",17,0)
+ S P("INS")=$G(^PS(53.1,+ON,.3))
+"RTN","PSIVORFA",18,0)
+ I $G(^PS(53.1,+ON,4))]"" S P("NINIT")=$P(^(4),U),P("NINITDT")=$P(^(4),U,2)
+"RTN","PSIVORFA",19,0)
+ NEW NAME S NAME=""
+"RTN","PSIVORFA",20,0)
+ I $D(^PS(53.1,+ON,1,1)) D DD^PSJLMUT1("^PS(53.1,+ON,",.NAME)
+"RTN","PSIVORFA",21,0)
+ S P("INS")=P("INS")_$S(P("INS")]"":" of ",1:"")_NAME
+"RTN","PSIVORFA",22,0)
+ S P("APPT")=$G(^PS(53.1,+ON,"DSS")),P("CLIN")=$P(P("APPT"),"^"),P("APPT")=$P(P("APPT"),"^",2)
+"RTN","PSIVORFA",23,0)
+ S Y=$G(^PS(53.1,+ON,2)),P(9)=$P(Y,U),P(11)=$P(Y,U,5),P(15)=$S($P(Y,U,6)'="":$P(Y,U,6),$G(PSGS0XT)'="":PSGS0XT,$P($G(ZZND),"^",3)'="":$P(ZZND,"^",3),1:""),P(2)=$P(Y,U,2),P(3)=$P(Y,U,4)
+"RTN","PSIVORFA",24,0)
+ S Y=$G(^PS(53.1,+ON,4)),P("CLRK")=$P(Y,U,7)_U_$P($G(^VA(200,+$P(Y,U,7),0)),U),P("REN")=$P(Y,U,9),X=P(9)
+"RTN","PSIVORFA",25,0)
+ I $P($G(^PS(53.1,+ON,0)),U,7)="P",(P(9)'["PRN") S P(9)=P(9)_" PRN"
+"RTN","PSIVORFA",26,0)
+ K PSGST,XT
+"RTN","PSIVORFA",27,0)
+ ;PSJ*5*225 remove 1440 default
+"RTN","PSIVORFA",28,0)
+ I P(9)]"",P(9)'["PRN",(P(11)="") D  S P(15)=$S($G(XT)]""&'+$G(XT):XT,+$G(XT)>0:XT,$G(PSGS0XT):PSGS0XT,1:1440),P(11)=Y
+"RTN","PSIVORFA",29,0)
+ . I $O(^PS(51.1,"APPSJ",P(9),0)) D DIC^PSGORS0 Q
+"RTN","PSIVORFA",30,0)
+ . I '$O(^PS(51.1,"APPSJ",P(9),0)) N NOECH,PSGSCH S NOECH=1 D EN^PSIVSP
+"RTN","PSIVORFA",31,0)
+ S Y=$G(^PS(53.1,+ON,8)),P(4)=$P(Y,U),P(23)=$P(Y,U,2),P("SYRS")=$P(Y,U,3),P(5)=$P(Y,U,4),P(8)=$P(Y,U,5),P(7)=$P(Y,U,7),P("IVRM")=$P(Y,U,8)
+"RTN","PSIVORFA",32,0)
+ S P(4)=$S(P(4)'="":P(4),$G(PSIVTYPE):PSIVTYPE,1:"")
+"RTN","PSIVORFA",33,0)
+ S:'P("IVRM")&($D(PSIVSN)) P("IVRM")=+PSIVSN S Y=$G(^PS(59.5,+P("IVRM"),0)),$P(P("IVRM"),U,2)=$P(Y,U),Y=$G(^PS(53.1,+ON,9)),P("REM")=$P(Y,U),P("OPI")=$P(Y,U,2,3)
+"RTN","PSIVORFA",34,0)
+ S P("DTYP")=$S(P(4)="":0,P(4)="P"!(P(23)="P")!(P(5)):1,P(4)="H":2,1:3)
+"RTN","PSIVORFA",35,0)
+ S P("PACT")=$G(^PS(53.1,+ON,"A",1,0))
+"RTN","PSIVORFA",36,0)
+ D GTDRG,GTOT^PSIVUTL(P(4)) D:'$D(PSJLABEL) GTPC(ON)
+"RTN","PSIVORFA",37,0)
+ N ND2P5 S ND2P5=$G(^PS(53.1,+ON,2.5)) D
+"RTN","PSIVORFA",38,0)
+ .S P("DUR")=$P(ND2P5,"^",2)
+"RTN","PSIVORFA",39,0)
+ .S P("LIMIT")=$P(ND2P5,"^",4)
+"RTN","PSIVORFA",40,0)
+ .S P("IVCAT")=$P(ND2P5,"^",5)
+"RTN","PSIVORFA",41,0)
+ Q
+"RTN","PSIVORFA",42,0)
+GTDRG ;
+"RTN","PSIVORFA",43,0)
+ K DRG F X="AD","SOL" S FIL=$S(X="AD":52.6,1:52.7) F Y=0:0 S Y=$O(^PS(53.1,+ON,X,Y)) Q:'Y  D
+"RTN","PSIVORFA",44,0)
+ .S (DRGI,DRG(X,0))=$G(DRG(X,0))+1,DRG=$G(^PS(53.1,+ON,X,Y,0)),ND=$G(^PS(FIL,+DRG,0)),DRGN=$P(ND,U),DRG(X,+DRGI)=+DRG_U_$P(ND,U)_U_$P(DRG,U,2)_U_$P(DRG,U,3)_U_$P(ND,U,13)_U_$P(ND,U,11)
+"RTN","PSIVORFA",45,0)
+ Q
+"RTN","PSIVORFA",46,0)
+ ;
+"RTN","PSIVORFA",47,0)
+GTPC(ON) ; Retrieve Provider Comments and create "scratch" fields to edit
+"RTN","PSIVORFA",48,0)
+ Q
+"RTN","PSIVORFA",49,0)
+ ;
+"RTN","PSIVORFA",50,0)
+PUT531 ; Move data in local variables to 53.1
+"RTN","PSIVORFA",51,0)
+ S:'$D(P(9)) P(9)=$G(PSGSCH)
+"RTN","PSIVORFA",52,0)
+ S ND(0)=+ON_U_+P(6)_U_$S(+P("MR"):+P("MR"),1:"")_U_$P(P("OT"),U)_U_U_U_"C",$P(ND(0),U,9)=P(17),$P(ND(0),U,21)=$G(P(21))
+"RTN","PSIVORFA",53,0)
+ S $P(ND(0),U,14,16)=P("LOG")_U_DFN_U_P("LOG"),$P(ND(0),U,24,26)=$G(P("RES"))_U_$G(P("OLDON"))_U_$G(P("NEWON"))
+"RTN","PSIVORFA",54,0)
+ S ND(2)=P(9)_U_P(2)_U_U_P(3)_U_P(11)_U_$S($G(P(15))'="":P(15),$G(PSGS0XT)'="":PSGS0XT,$P($G(ZZND),"^",3)'="":$P(ZZND,"^",3),1:""),$P(ND(4),U,7,9)=+P("CLRK")_U_U_P("REN")
+"RTN","PSIVORFA",55,0)
+ S ND(8)=P(4)_U_P(23)_U_P("SYRS")_U_P(5)_U_P(8)_"^^"_P(7)_"^"_+P("IVRM"),ND(9)=$S($L(P("REM")_P("OPI")):P("REM")_U_P("OPI"),1:"") S $P(ND(4),U,1,2)=$G(P("NINIT"))_U_$G(P("NINITDT"))
+"RTN","PSIVORFA",56,0)
+ S:+$G(P("CLIN")) $P(^PS(53.1,+ON,"DSS"),"^")=P("CLIN")
+"RTN","PSIVORFA",57,0)
+ S:+$G(P("APPT")) $P(^PS(53.1,+ON,"DSS"),"^",2)=P("APPT")
+"RTN","PSIVORFA",58,0)
+ S:$G(P("LIMIT"))]"" $P(^PS(53.1,+ON,2.5),"^",4)=P("LIMIT")
+"RTN","PSIVORFA",59,0)
+ I $G(PSJORD)["V"!($G(PSJORD)["P") I $G(^PS(53.1,+ON,2.5))="" N DUR S DUR=$$GETDUR^PSJLIVMD(DFN,+PSJORD,$S((PSJORD["P"):"P",1:"IV"),1) I DUR]"" D
+"RTN","PSIVORFA",60,0)
+ .I $G(IVLIMIT) S $P(^PS(53.1,+ON,2.5),"^",4)=DUR K IVLIMIT Q
+"RTN","PSIVORFA",61,0)
+ .S $P(^PS(53.1,+ON,2.5),"^",2)=DUR
+"RTN","PSIVORFA",62,0)
+ F X=0,2,4,8,9 S ^PS(53.1,+ON,X)=ND(X)
+"RTN","PSIVORFA",63,0)
+ S PSIVCAT=$$IVCAT^PSJHLU(DFN,ON,.P) S:PSIVCAT]"" $P(^PS(53.1,+ON,2.5),"^",5)=PSIVCAT K PSIVCAT
+"RTN","PSIVORFA",64,0)
+ S:'+$G(^PS(53.1,+ON,.2)) $P(^(.2),U,1,3)=+P("PD")_U_P("DO")_U_$G(P("NAT"))
+"RTN","PSIVORFA",65,0)
+ F DRGT="AD","SOL" D:$D(DRG(DRGT)) PTD531
+"RTN","PSIVORFA",66,0)
+ K DA,DIK S PSGS0Y=P(11),PSGS0XT=P(15),DA=+ON,DIK="^PS(53.1," D IX^DIK K DA,DIK,PSGS0Y,PSGS0XT,ND,^PS(53.1,"AS","P",DFN,+ON)
+"RTN","PSIVORFA",67,0)
+ K:P(17)="A" ^PS(53.1,"AS","N",DFN,+ON)
+"RTN","PSIVORFA",68,0)
+ S:P(15)="D" $P(^PS(53.1,+ON,2),U,6)="D"
+"RTN","PSIVORFA",69,0)
+ Q
+"RTN","PSIVORFA",70,0)
+ ;
+"RTN","PSIVORFA",71,0)
+UPD100 ; Update order data in file 100
+"RTN","PSIVORFA",72,0)
+ D:'$D(PSJIVORF) ORPARM^PSIVOREN Q:'PSJIVORF
+"RTN","PSIVORFA",73,0)
+ S PSJORL=$$ENORL^PSJUTL($G(VAIN(4))) D SET^PSIVORFE
+"RTN","PSIVORFA",74,0)
+ Q
+"RTN","PSIVORFA",75,0)
+ ;
+"RTN","PSIVORFA",76,0)
+PTD531 ; Move drug data from local array into 53.1
+"RTN","PSIVORFA",77,0)
+ K ^PS(53.1,+ON,DRGT) S ^PS(53.1,+ON,DRGT,0)=$S(DRGT="AD":"^53.157^0^0",1:"^53.158^0^0")
+"RTN","PSIVORFA",78,0)
+ F X=0:0 S X=$O(DRG(DRGT,X)) Q:'X  D
+"RTN","PSIVORFA",79,0)
+ .S X1=$P(DRG(DRGT,X),U),Y=^PS(53.1,+ON,DRGT,0),$P(Y,U,3)=$P(Y,U,3)+1,DRG=$P(Y,U,3),$P(Y,U,4)=$P(Y,U,4)+1
+"RTN","PSIVORFA",80,0)
+ .S ^PS(53.1,+ON,DRGT,0)=Y,Y=+X1_U_$P(DRG(DRGT,X),U,3) S:DRGT="AD" $P(Y,U,3)=$P(DRG(DRGT,X),U,4) S ^PS(53.1,+ON,DRGT,+DRG,0)=Y
+"RTN","PSIVORFA",81,0)
+ Q
+"RTN","PSJBCMA")
+0^6^B74176392^B73076125
+"RTN","PSJBCMA",1,0)
+PSJBCMA ;BIR/MV-RETURN INPATIENT ACTIVE MEDS (CONDENSED) ; 2/28/11 3:10pm
+"RTN","PSJBCMA",2,0)
+ ;;5.0; INPATIENT MEDICATIONS ;**32,41,46,57,63,66,56,69,58,81,91,104,111,112,186,159,173,190,113,225**;16 DEC 97;Build 16
+"RTN","PSJBCMA",3,0)
+ ;
+"RTN","PSJBCMA",4,0)
+ ; Reference to ^PS(50.7 is supported by DBIA 2180.
+"RTN","PSJBCMA",5,0)
+ ; Reference to ^PS(51 is supported by DBIA 2176.
+"RTN","PSJBCMA",6,0)
+ ; Reference to ^PS(51.1 is supported by DIBA 2177.
+"RTN","PSJBCMA",7,0)
+ ; Reference to ^PS(51.2 is supported by DBIA 2178.
+"RTN","PSJBCMA",8,0)
+ ; Reference to ^PS(52.6 is supported by DBIA 1231.
+"RTN","PSJBCMA",9,0)
+ ; Reference to ^PS(52.7 is supported by DBIA 2173.
+"RTN","PSJBCMA",10,0)
+ ; Reference to ^PS(55 is supported by DBIA 2191.
+"RTN","PSJBCMA",11,0)
+ ; Reference to ^PSDRUG is supported by DBIA 2192.
+"RTN","PSJBCMA",12,0)
+ ; Usage of this routine by BCMA is supported by DBIA 2828.
+"RTN","PSJBCMA",13,0)
+ ;
+"RTN","PSJBCMA",14,0)
+EN(DFN,BDT,OTDATE)         ; return condensed list of inpatient meds
+"RTN","PSJBCMA",15,0)
+ NEW CNT,DN,F,FON,ON,PST,WBDT,X,X1,X2,Y,%
+"RTN","PSJBCMA",16,0)
+ D:+$G(DFN) ORDER
+"RTN","PSJBCMA",17,0)
+ I '$D(^TMP("PSJ",$J,1,0)) S ^(0)=-1
+"RTN","PSJBCMA",18,0)
+ K PSJINX
+"RTN","PSJBCMA",19,0)
+ Q
+"RTN","PSJBCMA",20,0)
+ORDER ;Loop thru orders.
+"RTN","PSJBCMA",21,0)
+ I '+$G(BDT) D NOW^%DTC S BDT=%
+"RTN","PSJBCMA",22,0)
+ I BDT'["." S BDT=BDT_".0001"
+"RTN","PSJBCMA",23,0)
+ S PSJINX=0
+"RTN","PSJBCMA",24,0)
+ ;U/D orders
+"RTN","PSJBCMA",25,0)
+ S F="^PS(55,DFN,5,",WBDT=BDT
+"RTN","PSJBCMA",26,0)
+ F  S WBDT=$O(^PS(55,DFN,5,"AUS",WBDT)) Q:'WBDT  D
+"RTN","PSJBCMA",27,0)
+ . F ON=0:0 S ON=$O(^PS(55,DFN,5,"AUS",WBDT,ON)) Q:'ON  S FON=ON_"U",PSJON(FON)="" D UDVAR
+"RTN","PSJBCMA",28,0)
+ ;IV orders
+"RTN","PSJBCMA",29,0)
+ S F="^PS(55,DFN,""IV"",",WBDT=BDT
+"RTN","PSJBCMA",30,0)
+ F  S WBDT=$O(^PS(55,DFN,"IV","AIS",WBDT)) Q:'WBDT  D
+"RTN","PSJBCMA",31,0)
+ . F ON=0:0 S ON=$O(^PS(55,DFN,"IV","AIS",WBDT,ON)) Q:'ON  S FON=ON_"V",PSJON(FON)="" D IVVAR
+"RTN","PSJBCMA",32,0)
+ ;Pending orders
+"RTN","PSJBCMA",33,0)
+ S F="^PS(53.1,"
+"RTN","PSJBCMA",34,0)
+ F PST="P","N" F ON=0:0 S ON=$O(^PS(53.1,"AS",PST,DFN,ON)) Q:'ON  D
+"RTN","PSJBCMA",35,0)
+ . S FON=ON_"P"
+"RTN","PSJBCMA",36,0)
+ . S X=$P($G(^PS(53.1,+ON,0)),U,4) D @$S(X="F":"IVVAR",1:"UDVAR")
+"RTN","PSJBCMA",37,0)
+ ;When a one-time order is found, check against PSJON(FON) array to
+"RTN","PSJBCMA",38,0)
+ ;make sure no duplicates return on ^TMP.
+"RTN","PSJBCMA",39,0)
+ I '+$G(OTDATE) D NOW^%DTC S X1=$E(%,1,12),X2=-30 D C^%DTC S OTDATE=X
+"RTN","PSJBCMA",40,0)
+ I OTDATE'["." S OTDATE=OTDATE_".0001"
+"RTN","PSJBCMA",41,0)
+ Q:BDT'>OTDATE
+"RTN","PSJBCMA",42,0)
+ S F="^PS(55,DFN,5,",WBDT=OTDATE
+"RTN","PSJBCMA",43,0)
+ F  S WBDT=$O(^PS(55,DFN,5,"AU","O",WBDT)) Q:'WBDT  D
+"RTN","PSJBCMA",44,0)
+ .  F ON=0:0 S ON=$O(^PS(55,DFN,5,"AU","O",WBDT,ON)) Q:'ON  D
+"RTN","PSJBCMA",45,0)
+ .. S FON=ON_"U" D:'$D(PSJON(FON)) UDVAR
+"RTN","PSJBCMA",46,0)
+ S F="^PS(55,DFN,""IV"",",WBDT=OTDATE
+"RTN","PSJBCMA",47,0)
+ F  S WBDT=$O(^PS(55,DFN,"IV","AIS",WBDT)) Q:'WBDT  D
+"RTN","PSJBCMA",48,0)
+ . F ON=0:0 S ON=$O(^PS(55,DFN,"IV","AIS",WBDT,ON)) Q:'ON  D
+"RTN","PSJBCMA",49,0)
+ .. S X=$P($G(^PS(55,DFN,"IV",ON,0)),U,9)
+"RTN","PSJBCMA",50,0)
+ .. I X]"",$$ONE(DFN,ON_"V",X,$P(X,"^",2),$P(X,"^",3))="O" D
+"RTN","PSJBCMA",51,0)
+ ... S FON=ON_"V" D:'$D(PSJON(FON)) IVVAR
+"RTN","PSJBCMA",52,0)
+ K PSJON
+"RTN","PSJBCMA",53,0)
+ Q
+"RTN","PSJBCMA",54,0)
+UDVAR ;Set ^TMP for Unit dose & Pending orders
+"RTN","PSJBCMA",55,0)
+ D UDPEND Q:'$$CLINICS($G(CLINIC)) 
+"RTN","PSJBCMA",56,0)
+ D TMP
+"RTN","PSJBCMA",57,0)
+ ;Setup Dispense drug for ^TMP
+"RTN","PSJBCMA",58,0)
+ S CNT=0 D NOW^%DTC
+"RTN","PSJBCMA",59,0)
+ F X=0:0 S X=$O(@(F_ON_",1,"_X_")")) Q:'X  D
+"RTN","PSJBCMA",60,0)
+ . S PSJDD=@(F_ON_",1,"_X_",0)") I $P(PSJDD,"^",3)]"",$P(PSJDD,"^",3)'>% Q
+"RTN","PSJBCMA",61,0)
+ .;*225 Don't allow 0
+"RTN","PSJBCMA",62,0)
+ . I +$P(PSJDD,"^",2)=0 S $P(PSJDD,"^",2)=1
+"RTN","PSJBCMA",63,0)
+ . S CNT=CNT+1
+"RTN","PSJBCMA",64,0)
+ . S ^TMP("PSJ",$J,PSJINX,700,CNT,0)=+PSJDD_U_$P($G(^PSDRUG(+PSJDD,0)),U)_U_$S((FON["U")&($P(PSJDD,U,2)=""):1,(FON["U")&($E($P(PSJDD,U,2))="."):"0"_$P(PSJDD,U,2),1:$P(PSJDD,U,2))_U_$P(PSJDD,U,3)
+"RTN","PSJBCMA",65,0)
+ S:CNT ^TMP("PSJ",$J,PSJINX,700,0)=CNT
+"RTN","PSJBCMA",66,0)
+ K PSJ,PSJDD
+"RTN","PSJBCMA",67,0)
+ Q
+"RTN","PSJBCMA",68,0)
+IVVAR ;Set variables for IV and pending orders
+"RTN","PSJBCMA",69,0)
+ NEW ND,X,Y
+"RTN","PSJBCMA",70,0)
+ I FON["P" D UDPEND Q:'$$CLINICS(CLINIC)  S PSJ("INFRATE")=$P($G(^PS(53.1,ON,8)),U,5)
+"RTN","PSJBCMA",71,0)
+ I FON["V" D  Q:'$$CLINICS(CLINIC)
+"RTN","PSJBCMA",72,0)
+ . S X=$G(^PS(55,DFN,"IV",ON,0)),CLINIC=$G(^("DSS")) Q:'$$CLINICS(CLINIC)
+"RTN","PSJBCMA",73,0)
+ . S PSJ("STARTDT")=$P(X,U,2),PSJ("STOPDT")=$P(X,U,3)
+"RTN","PSJBCMA",74,0)
+ . S PSJ("INFRATE")=$P(X,U,8),PSJ("SCHD")=$P(X,U,9)
+"RTN","PSJBCMA",75,0)
+ . S PSJ("ADM")=$P(X,U,11),PSJ("AUTO")=$P(X,U,12),PSJ("STATUS")=$P(X,U,17)
+"RTN","PSJBCMA",76,0)
+ . S PSJ("IVTYPE")=$P(X,U,4),PSJ("INSYR")=$P(X,U,5)
+"RTN","PSJBCMA",77,0)
+ . S PSJ("CPRS")=$P(X,U,21),PSJ("CHEMO")=$P(X,U,23)
+"RTN","PSJBCMA",78,0)
+ . S X=$G(^PS(55,DFN,"IV",ON,.2))
+"RTN","PSJBCMA",79,0)
+ . S PSJ("DO")="",PSJ("MR")=$P(X,U,3),PSJ("PRI")=$P(X,U,4),PSJ("FLG")=$P(X,U,7),PSJ("COM")="",PSJ("SRC")=""
+"RTN","PSJBCMA",80,0)
+ . I PSJ("FLG") D
+"RTN","PSJBCMA",81,0)
+ .. N S1,A,B,C
+"RTN","PSJBCMA",82,0)
+ .. S S1="" F  S S1=$O(^PS(55,DFN,"IV",ON,"A",S1),-1) Q:'S1  S C=$G(^(S1,0)) S A=$P(C,U,2),B=$P(C,U,4) Q:A="UG"  D  I PSJ("SRC")]"" Q
+"RTN","PSJBCMA",83,0)
+ ... Q:A'="G"
+"RTN","PSJBCMA",84,0)
+ ... S PSJ("SRC")=$S(B["FLAGGED BY PHARM":"PHARMACIST",B["FLAGGED BY CPRS":"CPRS",1:"")
+"RTN","PSJBCMA",85,0)
+ ... S PSJ("COM")=$P(B," ",4,99)
+"RTN","PSJBCMA",86,0)
+ . S PSJ("OI")=+X
+"RTN","PSJBCMA",87,0)
+ . S X=$G(^PS(55,DFN,"IV",ON,2))
+"RTN","PSJBCMA",88,0)
+ . S PSJ("PREV")=$P(X,U,5) I PSJ("PREV")["V",(+PSJ("PREV")=+ON) S PSJ("PREV")=""
+"RTN","PSJBCMA",89,0)
+ . S PSJ("FOLLOW")=$P(X,U,6),PSJ("RFO")=$P(X,U,9) I PSJ("FOLLOW")["V",(+PSJ("FOLLOW")=+ON) S (PSJ("FOLLOW"),PSJ("RFO"))=""
+"RTN","PSJBCMA",90,0)
+ . S PSJ("SIOPI")=$S($P($G(^PS(55,DFN,"IV",+ON,3)),"^",2)&($P($G(^PS(55,DFN,"IV",+ON,3)),"^")'=""):"!",1:"")_$P($G(^(3)),"^")
+"RTN","PSJBCMA",91,0)
+ . N SCHD S SCHD=PSJ("SCHD")
+"RTN","PSJBCMA",92,0)
+ . S PSJ("STC")=$$ONE(DFN,ON_"V",SCHD,PSJ("STARTDT"),PSJ("STOPDT"))
+"RTN","PSJBCMA",93,0)
+ . I PSJ("STC")=""!(PSJ("STC")="C") S PSJ("STC")=$S(SCHD["PRN":"P",1:"C")
+"RTN","PSJBCMA",94,0)
+ . I PSJ("STC")="C" S PSJ("STC")=$S(SCHD["ON CALL":"OC",SCHD["ON-CALL":"OC",SCHD["ONCALL":"OC",1:"C")
+"RTN","PSJBCMA",95,0)
+ D TMP
+"RTN","PSJBCMA",96,0)
+ S CNT=0
+"RTN","PSJBCMA",97,0)
+ F X=0:0 S X=$O(@(F_ON_",""AD"","_X_")")) Q:'X  D
+"RTN","PSJBCMA",98,0)
+ . S ND=$G(@(F_ON_",""AD"","_X_",0)")),DN=$G(^PS(52.6,+ND,0))
+"RTN","PSJBCMA",99,0)
+ . S CNT=CNT+1,^TMP("PSJ",$J,PSJINX,850,CNT,0)=+ND_U_$P(DN,U)_U_$P(ND,U,2)_U_$P(ND,U,3)
+"RTN","PSJBCMA",100,0)
+ S:CNT ^TMP("PSJ",$J,PSJINX,850,0)=CNT,CNT=0
+"RTN","PSJBCMA",101,0)
+ F X=0:0 S X=$O(@(F_ON_",""SOL"","_X_")")) Q:'X  D
+"RTN","PSJBCMA",102,0)
+ . S ND=$G(@(F_ON_",""SOL"","_X_",0)")),DN=$G(^PS(52.7,+ND,0))
+"RTN","PSJBCMA",103,0)
+ . S CNT=CNT+1,^TMP("PSJ",$J,PSJINX,950,CNT,0)=+ND_U_$P(DN,U)_U_$P(ND,U,2)_U_$P(DN,U,4)
+"RTN","PSJBCMA",104,0)
+ S:CNT ^TMP("PSJ",$J,PSJINX,950,0)=CNT
+"RTN","PSJBCMA",105,0)
+ K PSJ
+"RTN","PSJBCMA",106,0)
+ S X1=0
+"RTN","PSJBCMA",107,0)
+ F  S X1=$O(^PS(55,DFN,"IVBCMA",X1)) Q:'X1  D
+"RTN","PSJBCMA",108,0)
+ . S XX=$G(^PS(55,DFN,"IVBCMA",X1,0)) Q:ON'=$P(XX,"^",2)  S PSJBCID=$P(XX,"^"),X2=0
+"RTN","PSJBCMA",109,0)
+ . F I=1:1 S X2=$O(^PS(55,DFN,"IVBCMA",X1,"AD",X2)) Q:'X2  S X=^(X2,0),^TMP("PSJ",$J,PSJINX,800,PSJBCID,I)=+X_"^"_$S($D(^PS(52.6,+X,0)):$P(^(0),"^"),1:"*****")_"^"_$P(X,"^",2,99)
+"RTN","PSJBCMA",110,0)
+ . I I>1 S ^TMP("PSJ",$J,PSJINX,800,PSJBCID,0)=I-1
+"RTN","PSJBCMA",111,0)
+ . S X2=0
+"RTN","PSJBCMA",112,0)
+ . F I=1:1 S X2=$O(^PS(55,DFN,"IVBCMA",X1,"SOL",X2)) Q:'X2  S X=^(X2,0),^TMP("PSJ",$J,PSJINX,900,PSJBCID,I)=$P(X,"^")_"^"_$S($D(^PS(52.7,$P(X,"^"),0)):$P(^(0),"^"),1:"*****")_"^"_$P(X,"^",2,99)
+"RTN","PSJBCMA",113,0)
+ . I I>1 S ^TMP("PSJ",$J,PSJINX,900,PSJBCID,0)=I-1
+"RTN","PSJBCMA",114,0)
+ Q
+"RTN","PSJBCMA",115,0)
+UDPEND ;
+"RTN","PSJBCMA",116,0)
+ S X=$G(@(F_ON_",0)")) I $P(F,",")[53.1 S CLINIC=$G(@(F_ON_",""DSS"")")) Q:'$$CLINICS(CLINIC)
+"RTN","PSJBCMA",117,0)
+ I $P(F,",")[55 S CLINIC=$G(@(F_ON_",8)")) Q:'$$CLINICS(CLINIC)
+"RTN","PSJBCMA",118,0)
+ S PSJ("MR")=$P(X,U,3),PSJ("SM")=$P(X,U,5),PSJ("HSM")=$P(X,U,6)
+"RTN","PSJBCMA",119,0)
+ S PSJ("ST")=$P(X,U,7),PSJ("STATUS")=$P(X,U,9)
+"RTN","PSJBCMA",120,0)
+ S PSJ("CPRS")=$P(X,U,21),PSJ("PREV")=$P(X,U,25),PSJ("FOLLOW")=$P(X,U,26),PSJ("RFO")=$P(X,U,27)
+"RTN","PSJBCMA",121,0)
+ S:FON["U" PSJ("NGIVEN")=$P(X,U,22)
+"RTN","PSJBCMA",122,0)
+ S X=$G(@(F_ON_",.2)"))
+"RTN","PSJBCMA",123,0)
+ S PSJ("DO")=$P(X,U,2),PSJ("PRI")=$P(X,U,4),PSJ("FLG")=$P(X,U,7),PSJ("COM")="",PSJ("SRC")=""
+"RTN","PSJBCMA",124,0)
+ I PSJ("FLG") D
+"RTN","PSJBCMA",125,0)
+ . N S1,A,B,C
+"RTN","PSJBCMA",126,0)
+ . S S1="" F  S S1=$O(^PS(55,DFN,5,ON,9,S1),-1) Q:'S1  S C=$G(^(S1,0)) S A=$P(C,U,3),B=$P(C,U,4) Q:A=7010!(A=7030)  D  I PSJ("SRC")]"" Q
+"RTN","PSJBCMA",127,0)
+ .. Q:A'=7000&(A'=7020)
+"RTN","PSJBCMA",128,0)
+ .. S PSJ("SRC")=$S(A=7000:"PHARMACIST",A=7020:"CPRS",1:"")
+"RTN","PSJBCMA",129,0)
+ .. S PSJ("COM")=$G(@(F_ON_",13)"))
+"RTN","PSJBCMA",130,0)
+ S PSJ("OI")=+X
+"RTN","PSJBCMA",131,0)
+ S X=$G(@(F_ON_",2)"))
+"RTN","PSJBCMA",132,0)
+ S PSJ("SCHD")=$P(X,U),PSJ("STARTDT")=$P(X,U,2)
+"RTN","PSJBCMA",133,0)
+ S PSJ("STOPDT")=$P(X,U,4),PSJ("ADM")=$P(X,U,5)
+"RTN","PSJBCMA",134,0)
+ S X=$G(@(F_ON_",4)"))
+"RTN","PSJBCMA",135,0)
+ S PSJ("AUTO")=$P(X,U,11)
+"RTN","PSJBCMA",136,0)
+ ;naked reference on line below refers to  full reference created by indirect reference to F_ON, where F may refer to ^PS(53.1 or the IV or UD multiple ^PS(55
+"RTN","PSJBCMA",137,0)
+ S PSJ("SIOPI")=$S($P($G(@(F_ON_",6)")),"^",2)&($P($G(@(F_ON_",6)")),"^")'=""):"!",1:"")_$$ENSET($P($G(^(6)),"^"))
+"RTN","PSJBCMA",138,0)
+ D SIOPI
+"RTN","PSJBCMA",139,0)
+ S PSJ("STC")=PSJ("ST")
+"RTN","PSJBCMA",140,0)
+ I PSJ("ST")="R"!(PSJ("ST")="C") S PSJ("STC")=$S(PSJ("SCHD")["PRN":"P","^ONCALL^ON-CALL^ON CALL^"[("^"_PSJ("SCHD")_"^"):"OC",$$ONE(DFN,FON,PSJ("SCHD"))="O":"O",1:"C")
+"RTN","PSJBCMA",141,0)
+ Q 
+"RTN","PSJBCMA",142,0)
+TMP ;Setup ^TMP that have common fields between IV and U/D
+"RTN","PSJBCMA",143,0)
+ N A
+"RTN","PSJBCMA",144,0)
+ S PSJINX=PSJINX+1
+"RTN","PSJBCMA",145,0)
+ S PSJ("OINAME")=$$OIDF^PSJLMUT1(+PSJ("OI")) I PSJ("OINAME")["NOT FOUND" S PSJ("OINAME")=""
+"RTN","PSJBCMA",146,0)
+ S PSJ("OIDF")=$$GET1^DIQ(50.7,+PSJ("OI"),.02)
+"RTN","PSJBCMA",147,0)
+ I PSJ("OINAME")="" S PSJ("OIDF")=""
+"RTN","PSJBCMA",148,0)
+ S A=$G(^PS(51.2,+PSJ("MR"),0)),PSJ("MRABB")=$P(A,U,3),PSJ("MRNM")=$P(A,U)
+"RTN","PSJBCMA",149,0)
+ S ^TMP("PSJ",$J,PSJINX,0)=DFN_U_+ON_U_FON_U_PSJ("PREV")_U_PSJ("FOLLOW")_U_$G(PSJ("IVTYPE"))_U_$G(PSJ("INSYR"))_U_$G(PSJ("CHEMO"))_U_PSJ("CPRS")_U_$G(PSJ("RFO"))
+"RTN","PSJBCMA",150,0)
+ S ^TMP("PSJ",$J,PSJINX,1)=PSJ("MRABB")_U_PSJ("STC")_U_$G(PSJ("SCHD"))_U_PSJ("STARTDT")_U_PSJ("STOPDT")_U_PSJ("ADM")_U_PSJ("STATUS")_U_$G(PSJ("NGIVEN"))_U_$G(PSJ("ST"))_U_$G(PSJ("AUTO"))
+"RTN","PSJBCMA",151,0)
+ S ^TMP("PSJ",$J,PSJINX,1,0)=$P(A,U,8)_U_PSJ("MRNM")_U_$P(A,U,9)
+"RTN","PSJBCMA",152,0)
+ S ^TMP("PSJ",$J,PSJINX,2)=PSJ("DO")_U_$G(PSJ("INFRATE"))_U_$G(PSJ("SM"))_U_$G(PSJ("HSM"))
+"RTN","PSJBCMA",153,0)
+ S ^TMP("PSJ",$J,PSJINX,3)=PSJ("OI")_U_PSJ("OINAME")_U_PSJ("OIDF")
+"RTN","PSJBCMA",154,0)
+ S ^TMP("PSJ",$J,PSJINX,4)=PSJ("SIOPI")
+"RTN","PSJBCMA",155,0)
+ S A=$$SNDTSTA^PSJHL4A(PSJ("PRI"),PSJ("SCHD"))
+"RTN","PSJBCMA",156,0)
+ S ^TMP("PSJ",$J,PSJINX,5)=$S(A=1:0,1:1)_U_PSJ("FLG")_U_PSJ("SRC")_U_PSJ("COM")
+"RTN","PSJBCMA",157,0)
+ Q
+"RTN","PSJBCMA",158,0)
+SIOPI ; Use provider comments if order is pending and there is no SI
+"RTN","PSJBCMA",159,0)
+ NEW X,Y,Z
+"RTN","PSJBCMA",160,0)
+ I FON["P",(PSJ("SIOPI")=""),$O(^PS(53.1,+ON,12,0)) D
+"RTN","PSJBCMA",161,0)
+ . F X=0:0 S X=$O(^PS(53.1,+ON,12,X)) Q:'X  S Z=$G(^(X,0)) D
+"RTN","PSJBCMA",162,0)
+ .. S Y=$L(PSJ("SIOPI"))
+"RTN","PSJBCMA",163,0)
+ .. S:Y+$L(Z)'>179 PSJ("SIOPI")=PSJ("SIOPI")_Z_""
+"RTN","PSJBCMA",164,0)
+ . I Y+$L(Z)>179 S PSJ("SIOPI")="SEE PROVIDER COMMENTS"
+"RTN","PSJBCMA",165,0)
+ Q
+"RTN","PSJBCMA",166,0)
+ENSET(X) ; expands SPECIAL INSTRUCTIONS field contained in X into Y
+"RTN","PSJBCMA",167,0)
+ N X1,X2,Y S Y=""
+"RTN","PSJBCMA",168,0)
+ F X1=1:1:$L(X," ") S X2=$P(X," ",X1) I X2]"" S Y=Y_$S($L(X2)>30:X2,'$D(^PS(51,+$O(^PS(51,"B",X2,0)),0)):X2,$P(^(0),"^",2)]""&$P(^(0),"^",4):$P(^(0),"^",2),1:X2)_" "
+"RTN","PSJBCMA",169,0)
+ S Y=$E(Y,1,$L(Y)-1)
+"RTN","PSJBCMA",170,0)
+ Q Y
+"RTN","PSJBCMA",171,0)
+ONE(DFN,ORD,SCH,START,STOP) ;Determine if order is one-time, and return schedule type
+"RTN","PSJBCMA",172,0)
+ ; Input:  DFN - patient's IEN
+"RTN","PSJBCMA",173,0)
+ ;         ORD - order number
+"RTN","PSJBCMA",174,0)
+ ;         SCH - schedule text (required)
+"RTN","PSJBCMA",175,0)
+ ;         START - order start date (optional)
+"RTN","PSJBCMA",176,0)
+ ;         STOP - order stop date (optional)
+"RTN","PSJBCMA",177,0)
+ N X,ONEFRQ,TYP,T
+"RTN","PSJBCMA",178,0)
+ I $G(PSJ("PREV")),$G(PSJ("FOLLOW")) I +PSJ("PREV")=+PSJ("FOLLOW") S (PSJ("PREV"),PSJ("FOLLOW"))=""
+"RTN","PSJBCMA",179,0)
+ ; PSJ*5*190 One-Time PRN
+"RTN","PSJBCMA",180,0)
+ I $G(SCH)="",$G(DFN),$G(ORD) D
+"RTN","PSJBCMA",181,0)
+ .I ORD["U" S SCH=$P($G(^PS(55,DFN,5,+ORD,2)),"^")
+"RTN","PSJBCMA",182,0)
+ .I ORD["V" S SCH=$P($G(^PS(55,DFN,"IV",+ORD,0)),"^",9)
+"RTN","PSJBCMA",183,0)
+ I $G(SCH)]"",$$OTPRN^PSJBCMA3(SCH)="O" Q "O"
+"RTN","PSJBCMA",184,0)
+ I $G(DFN)]"",$G(ORD)]"",ORD["U",$P(^PS(55,DFN,5,+ORD,0),"^",7)'="R" Q $P(^PS(55,DFN,5,+ORD,0),"^",7)
+"RTN","PSJBCMA",185,0)
+ I $G(SCH)="" Q ""
+"RTN","PSJBCMA",186,0)
+ ; PSJ*5*113 Determine schedule type from ^PS(51.1, not from schedule name.
+"RTN","PSJBCMA",187,0)
+ I $D(^PS(51.1,"AC","PSJ",SCH)) S X=$O(^(SCH,"")) S X=$P(^PS(51.1,X,0),"^",5) Q $S(X="D":"C",1:X)
+"RTN","PSJBCMA",188,0)
+ I $G(START)]"",$G(STOP)]"",START=STOP Q "O"
+"RTN","PSJBCMA",189,0)
+ I $$DAY(SCH) Q "C"
+"RTN","PSJBCMA",190,0)
+ Q ""
+"RTN","PSJBCMA",191,0)
+CLINIC(CL) ;
+"RTN","PSJBCMA",192,0)
+ I $P(CL,"^",2)?7N!($P(CL,"^",2)?7N1".".N) Q 1
+"RTN","PSJBCMA",193,0)
+ Q 0
+"RTN","PSJBCMA",194,0)
+CLINICS(CL) ;
+"RTN","PSJBCMA",195,0)
+ Q:'$$CLINIC(CL) 1
+"RTN","PSJBCMA",196,0)
+ Q:'$D(^PS(53.46,"B",+CL)) 1
+"RTN","PSJBCMA",197,0)
+ N A
+"RTN","PSJBCMA",198,0)
+ S A=$O(^PS(53.46,"B",+CL,"")) Q:'A 1
+"RTN","PSJBCMA",199,0)
+ Q $P(^PS(53.46,A,0),"^",4)
+"RTN","PSJBCMA",200,0)
+DAY(SCH) ;determine if this is a 'day of the week' schedule
+"RTN","PSJBCMA",201,0)
+ I $G(SCH)="" Q 0
+"RTN","PSJBCMA",202,0)
+ N D,DAY,DAYS,I,X
+"RTN","PSJBCMA",203,0)
+ S DAYS="SUNDAY,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY"
+"RTN","PSJBCMA",204,0)
+ F I=1:1 S D=$P(SCH,"-",I) Q:D=""  D  Q:X=0
+"RTN","PSJBCMA",205,0)
+ . S X=0 F J=1:1:7 S DAY=$P(DAYS,",",J) D  Q:X=1
+"RTN","PSJBCMA",206,0)
+ .. I D=$E(DAY,1,$L(D)) S X=1
+"RTN","PSJBCMA",207,0)
+ Q X
+"RTN","PSJMDIR")
+0^3^B25710894^B25417869
+"RTN","PSJMDIR",1,0)
+PSJMDIR ;BIR/MV-MED DUE WORKSHEET DIR CALLS ; 5/14/09 8:13am
+"RTN","PSJMDIR",2,0)
+ ;;5.0; INPATIENT MEDICATIONS ;**225**;16 DEC 97;Build 16
+"RTN","PSJMDIR",3,0)
+ ;
+"RTN","PSJMDIR",4,0)
+MEDTYPE(PSGMARWD) ;*** Ask for Med choices
+"RTN","PSJMDIR",5,0)
+ ;PSGMARWD will be defined if the user was selected by ward.
+"RTN","PSJMDIR",6,0)
+ ;If PSJMPRN is defined, that mean this module is calling from the MDWS.
+"RTN","PSJMDIR",7,0)
+ ;
+"RTN","PSJMDIR",8,0)
+ K DIR S DIR(0)="LAO^1:6^I X[1&($L(X)>1) K X" S DIR("A")="Enter medication type(s): "
+"RTN","PSJMDIR",9,0)
+ ;PSJ*5*225 Update menu to include IVP
+"RTN","PSJMDIR",10,0)
+ S DIR("?",1)="1.  All medications",DIR("?",2)="2.  Non-IV medications only",DIR("?",3)="3.  IVPB (Includes IV syringe orders with a med route of IVP, IV, or IVPB."
+"RTN","PSJMDIR",11,0)
+ S DIR("?",4)="          All other IV syringe orders are included with non-IV medications).",DIR("?",5)="4.  LVPs",DIR("?",6)="5.  TPNs",DIR("?",7)="6.  Chemotherapy medications (IV)",DIR("?",8)=""
+"RTN","PSJMDIR",12,0)
+ N XTYPE S:$G(PSGMARWD) XTYPE=$P($G(^PS(59.6,+$O(^PS(59.6,"B",+PSGMARWD,0)),0)),"^",2) S DIR("B")=$S($G(XTYPE):XTYPE,1:2)
+"RTN","PSJMDIR",13,0)
+ S DIR("?")="e.g.  Enter 1 or 2-4,5 or 2."
+"RTN","PSJMDIR",14,0)
+ S DIR("?",9)="A combination of choices can be entered here except for option 1."
+"RTN","PSJMDIR",15,0)
+ W !! D ^DIR
+"RTN","PSJMDIR",16,0)
+ Q $$STOP
+"RTN","PSJMDIR",17,0)
+ ;
+"RTN","PSJMDIR",18,0)
+STDATE() ;*** Ask for starting date and time
+"RTN","PSJMDIR",19,0)
+ ;
+"RTN","PSJMDIR",20,0)
+ K DIR S DIR(0)="DO^::EXAR",DIR("A")="Enter Start Date and Time",DIR("?")="Date and time must be entered." W !! D ^DIR
+"RTN","PSJMDIR",21,0)
+ Q $$STOP
+"RTN","PSJMDIR",22,0)
+ ;
+"RTN","PSJMDIR",23,0)
+ENDATE(PSGTMP,PSGTMP1) ;*** Ask for eding date and time
+"RTN","PSJMDIR",24,0)
+ ;
+"RTN","PSJMDIR",25,0)
+ K DIR S DIR(0)="DAO^"_PSGTMP_":"_PSGTMP1_":EXAR",DIR("A")="Enter Ending Date and Time: "
+"RTN","PSJMDIR",26,0)
+ S DIR("?")="Time must be entered.",DIR("?",1)="The worksheet will list only medications due for a 24 hour",DIR("?",2)="period.  Please keep ending date and time within that range."
+"RTN","PSJMDIR",27,0)
+ W !! D ^DIR
+"RTN","PSJMDIR",28,0)
+ Q $$STOP
+"RTN","PSJMDIR",29,0)
+ ;
+"RTN","PSJMDIR",30,0)
+PRN() ;
+"RTN","PSJMDIR",31,0)
+ ;
+"RTN","PSJMDIR",32,0)
+ K DIR S DIR(0)="YO",DIR("A")="Would you like to include PRN Medications (Y/N)",DIR("B")="NO"
+"RTN","PSJMDIR",33,0)
+ S DIR("?")="Answer ""YES"" to include PRN orders in the Medication Due Worksheet.  (The PRN medications will print after the Continuous medications.)"
+"RTN","PSJMDIR",34,0)
+ W !! D ^DIR
+"RTN","PSJMDIR",35,0)
+ Q $$STOP
+"RTN","PSJMDIR",36,0)
+ ;
+"RTN","PSJMDIR",37,0)
+ADMTM ;*** Askif user want to sort by admin team
+"RTN","PSJMDIR",38,0)
+ ;
+"RTN","PSJMDIR",39,0)
+ S (PSGTM,PSGTMALL)=0
+"RTN","PSJMDIR",40,0)
+ K DIR S DIR(0)="YO",DIR("A")="Do you want to sort by Administration Team (Y/N)",DIR("B")="NO"
+"RTN","PSJMDIR",41,0)
+ S DIR("?",1)="Enter ""Y"" for ""YES"" if you wish to sort by Administration",DIR("?",2)="team. Enter ""N"" for ""NO"" if you do not wish to sort by",DIR("?",3)="Administration Team."
+"RTN","PSJMDIR",42,0)
+ S DIR("?",4)="",DIR("?",5)="If you choose to sort by Adminstration Team, you",DIR("?")="may choose which teams will be included in the report."
+"RTN","PSJMDIR",43,0)
+ W !! D ^DIR Q:$$STOP!'+Y
+"RTN","PSJMDIR",44,0)
+ ;
+"RTN","PSJMDIR",45,0)
+ ;*** Because "ALL" is not a team, must use DIR to include "ALL"
+"RTN","PSJMDIR",46,0)
+ ;    default and then call DIC to look up the selected team
+"RTN","PSJMDIR",47,0)
+ ;
+"RTN","PSJMDIR",48,0)
+ F  Q:$$STOP!(X="")!$G(PSGTMALL)  D ADMTM2
+"RTN","PSJMDIR",49,0)
+ S PSGTM=$S($O(PSGTM(0))'="":1,1:0)
+"RTN","PSJMDIR",50,0)
+ Q
+"RTN","PSJMDIR",51,0)
+ADMTM2 ;
+"RTN","PSJMDIR",52,0)
+ K DIR S DIR(0)="FAO",DIR("A")="Select Administration Team: ",DIR("B")="ALL",DIR("?")="^D DICTM^PSJMDIR" W ! D ^DIR Q:$$STOP  I Y="ALL" S PSGTMALL=1 Q
+"RTN","PSJMDIR",53,0)
+ D DICTM
+"RTN","PSJMDIR",54,0)
+ S PSJSTOP=$S($D(DTOUT):1,$D(DUOUT):1,(Y<0)&'$D(PFLG):1,1:0)
+"RTN","PSJMDIR",55,0)
+ Q
+"RTN","PSJMDIR",56,0)
+ ;
+"RTN","PSJMDIR",57,0)
+DICTM ;*** LooK up a team.
+"RTN","PSJMDIR",58,0)
+ ;
+"RTN","PSJMDIR",59,0)
+ K DIC S DIC="^PS(57.7,"_PSGWD_",1,",DIC(0)="QEMIZ"
+"RTN","PSJMDIR",60,0)
+ F PFLG=0:1 D ^DIC Q:Y<0  I PFLG S DIC(0)=DIC(0)_"A",DIC("A")="Select another Administration Team: " S PSGTM(Y(0,0))=+Y
+"RTN","PSJMDIR",61,0)
+ Q
+"RTN","PSJMDIR",62,0)
+ ;
+"RTN","PSJMDIR",63,0)
+RBADM ;*** Sort by PATIENT, ROOM-BED or ADMIN TIME
+"RTN","PSJMDIR",64,0)
+ ;
+"RTN","PSJMDIR",65,0)
+ K DIR S DIR(0)="SAO^A:Administration Time;R:Room-Bed;P:Patient",DIR("A")="Do you wish to sort by Administration Time (A), Room-Bed (R), Patient (P): ",DIR("B")="A"
+"RTN","PSJMDIR",66,0)
+ S DIR("?",1)="Enter an ""A"" if you want orders to display in order of Administration Time.",DIR("?",2)="Enter a ""R"" if you want orders to display in order of patient room-bed."
+"RTN","PSJMDIR",67,0)
+ S DIR("?")="Enter a ""P"" if you want orders to display in order of patient name."
+"RTN","PSJMDIR",68,0)
+ W ! D ^DIR Q:$$STOP  S PSGRBADM=Y
+"RTN","PSJMDIR",69,0)
+ Q
+"RTN","PSJMDIR",70,0)
+ ;
+"RTN","PSJMDIR",71,0)
+RBPPN ;*** Sort by ROOM-BED or PATIENT(when selected by WARD).
+"RTN","PSJMDIR",72,0)
+ ;
+"RTN","PSJMDIR",73,0)
+ K DIR S DIR(0)="SAO^R:Room-Bed;P:PATIENT",DIR("A")="Do you wish to sort by Room-Bed (R), Patient (P): ",DIR("B")="R"
+"RTN","PSJMDIR",74,0)
+ S DIR("?",1)="Enter an ""R"" if you want orders to display in order of patient room-bed.",DIR("?")="Enter a ""P"" if you want orders to display in order of patient name."
+"RTN","PSJMDIR",75,0)
+ W ! D ^DIR Q:$$STOP  S PSGRBPPN=Y
+"RTN","PSJMDIR",76,0)
+ Q
+"RTN","PSJMDIR",77,0)
+ ;
+"RTN","PSJMDIR",78,0)
+STOP() ;
+"RTN","PSJMDIR",79,0)
+ ;
+"RTN","PSJMDIR",80,0)
+ S PSJSTOP=$S($D(DTOUT):1,$D(DUOUT):1,$D(DIRUT):1,1:0)
+"RTN","PSJMDIR",81,0)
+ Q PSJSTOP
+"RTN","PSJMIV")
+0^2^B16816087^B16573670
+"RTN","PSJMIV",1,0)
+PSJMIV ;BIR/MV-IV ORDER FOR MED DUE WORKSHEET.  ; 5/14/09 8:12am
+"RTN","PSJMIV",2,0)
+ ;;5.0; INPATIENT MEDICATIONS ;**58,116,225**;16 DEC 97;Build 16
+"RTN","PSJMIV",3,0)
+ ;
+"RTN","PSJMIV",4,0)
+ ; Reference to ^PS(55 is supported by DBIA 2191.
+"RTN","PSJMIV",5,0)
+ ;
+"RTN","PSJMIV",6,0)
+START ;*** Read IV orders
+"RTN","PSJMIV",7,0)
+ NEW P S ON=""
+"RTN","PSJMIV",8,0)
+ F PSGEXPDT=PSGPLS-.0001:0 S PSGEXPDT=$O(^PS(55,PSGP,"IV","AIT",PST,PSGEXPDT)) Q:'PSGEXPDT  F  S ON=$O(^PS(55,PSGP,"IV","AIT",PST,PSGEXPDT,ON)) Q:ON=""  D IV
+"RTN","PSJMIV",9,0)
+ Q
+"RTN","PSJMIV",10,0)
+IV ;*** Process IV order based on schedule and interval
+"RTN","PSJMIV",11,0)
+ K ADM N X,ON55,PSJLABEL S DFN=PSGP,PSJLABEL=1 D GT55^PSIVORFB
+"RTN","PSJMIV",12,0)
+ Q:"DE"[P(17)
+"RTN","PSJMIV",13,0)
+ Q:P(2)>PSGPLF
+"RTN","PSJMIV",14,0)
+ ;PSJ*5*225 include IVP
+"RTN","PSJMIV",15,0)
+ S X=$P(P("MR"),U,2) Q:XTYPE=2&(X["IV")  Q:XTYPE=3&(PST="S")&'($S(X="IVP":1,X="IV":1,X="IVPB":1,1:0))
+"RTN","PSJMIV",16,0)
+ S QST=$$ONE^PSJBCMA(PSGP,ON,P(9),P(2),P(3))
+"RTN","PSJMIV",17,0)
+ S QST=$S(P(9)["PRN":"OVP",QST="O":"OVO",1:"CV")_XTYPE
+"RTN","PSJMIV",18,0)
+ I P(9)]"" D SCHEDULE Q
+"RTN","PSJMIV",19,0)
+ S PSGON=0 D:P(15) INTERVAL
+"RTN","PSJMIV",20,0)
+ Q
+"RTN","PSJMIV",21,0)
+INTERVAL ;*** Calculate admin time by schedule interval.
+"RTN","PSJMIV",22,0)
+ NEW MN,ND,ND1,PLSD,PSGPLC,ST,T,TS
+"RTN","PSJMIV",23,0)
+ K PSGMAR
+"RTN","PSJMIV",24,0)
+ F I=0:1 S ADM=$$FMADD^XLFDT(P(2),0,0,P(15)*I,0) Q:ADM>$S(P(3)<PSGPLF:P(3),1:PSGPLF)  S:ADM'<PSGPLS PSGMAR(ADM)=""
+"RTN","PSJMIV",25,0)
+ S ON=ON_"*" D IVTMP ;*** ON_"*" =projected time for cont. IV.
+"RTN","PSJMIV",26,0)
+ Q
+"RTN","PSJMIV",27,0)
+SCHEDULE ;*** Calculate admin times for IV that has schedule defined.
+"RTN","PSJMIV",28,0)
+ K PSGMAR S PSGPLC=0 S PSGOES=1,X=P(9) D EN^PSGS0 S T=PSGS0XT,PSGOES=""
+"RTN","PSJMIV",29,0)
+ S ND1=P(4),ST=P(2),PLSD=P(3),TS=P(11),MN=T,ND=P(9) I $S(ST'?7N1"."1N.E:1,1:PLSD'?7N1"."1N.E) S PSGPLC="OI" Q
+"RTN","PSJMIV",30,0)
+ D ENIV^PSJPL0
+"RTN","PSJMIV",31,0)
+ D IVTMP
+"RTN","PSJMIV",32,0)
+ Q
+"RTN","PSJMIV",33,0)
+IVTMP ;*** Set IV ^TMP.
+"RTN","PSJMIV",34,0)
+ I DRG S X=$S($G(DRG("AD",1)):DRG("AD",1),1:$G(DRG("SOL",1))),DRG=$E($$ENPDN^PSGMI($P(X,U,6)),1,20)_U_ON
+"RTN","PSJMIV",35,0)
+ F ADMIN=0:0 S ADMIN=$O(PSGMAR(ADMIN)) Q:'ADMIN  S PSJADT=$P(ADMIN,"."),PSJATME=+$E($P(ADMIN,".",2)_"0000",1,4) D @PSGSS
+"RTN","PSJMIV",36,0)
+ Q
+"RTN","PSJMIV",37,0)
+P ;*** Set ^TMP when select by patient
+"RTN","PSJMIV",38,0)
+ S ^TMP($J,PSJADT,PPN_U_PSGP,PSJATME,QST,DRG)=PSGP_U_ON_U_PSJPPID_U_PSJPWDN_U_PSJPRB
+"RTN","PSJMIV",39,0)
+ Q
+"RTN","PSJMIV",40,0)
+G ;*** Goto W to set ^TMP when selected by WARD/WARD GROUP
+"RTN","PSJMIV",41,0)
+ ;
+"RTN","PSJMIV",42,0)
+W ;
+"RTN","PSJMIV",43,0)
+ S:PSGRBADM="A" ^TMP($J,PSJADT,TM,PSJATME,PSJPRB,PPN,QST,DRG)=PSGP_U_ON_U_PSJPPID_U_PSGWN_U_PSJPRB
+"RTN","PSJMIV",44,0)
+ S:PSGRBADM="R" ^TMP($J,PSJADT,TM,PSJPRB,PPN,PSJATME,QST,DRG)=PSGP_U_ON_U_PSJPPID_U_PSGWN_U_PSJPRB
+"RTN","PSJMIV",45,0)
+ S:PSGRBADM="P" ^TMP($J,PSJADT,TM,PPN_U_PSGP,PSJATME,QST,DRG)=PSGP_U_ON_U_PSJPPID_U_PSGWN_U_PSJPRB
+"RTN","PSJMIV",46,0)
+ Q
+"RTN","PSJMIV",47,0)
+ ;
+"RTN","PSJMIV",48,0)
+ ;
+"RTN","PSJMIV",49,0)
+PRT ;*** Print IV orders for Med Due Worksheet.
+"RTN","PSJMIV",50,0)
+ N ON55,DRG,P,PSJLABEL S DFN=PSGP,PSJLABEL=1
+"RTN","PSJMIV",51,0)
+ D:QST'["Z" GT55^PSIVORFB
+"RTN","PSJMIV",52,0)
+ ;* I QST["Z" D GT531^PSIVORFA(DFN,ON) S P("OPI")=^TMP($J,QST,PSGP,ON,1)
+"RTN","PSJMIV",53,0)
+ I QST["Z" D GT531^PSIVORFA(DFN,ON),SI^PSJMPEND S P("OPI")=PSJSI
+"RTN","PSJMIV",54,0)
+ F X="LOG",2,3 S:P(X) P(X)=$$ENDTC^PSGMI(P(X))
+"RTN","PSJMIV",55,0)
+ S PSJONETM=$S(QST="OVO":1,1:0)
+"RTN","PSJMIV",56,0)
+ S PSJSI=$P(P("OPI"),"^")
+"RTN","PSJMIV",57,0)
+ NEW NEED S PSJNEED=0
+"RTN","PSJMIV",58,0)
+ F X="AD","SOL" D NAMENEED^PSJMUTL(X,40,.NEED) S PSJNEED=PSJNEED+NEED
+"RTN","PSJMIV",59,0)
+ S X=$L($P(P("OPI"),"^"))/41,X=$P(X,".")+($P(X,".",2)>0)+(P(4)="C")
+"RTN","PSJMIV",60,0)
+ S:$D(DRG("AD",0))&$D(DRG("SOL",0)) X=X+1
+"RTN","PSJMIV",61,0)
+ S PSJNEED=PSJNEED+X+4+PSJONETM
+"RTN","PSJMIV",62,0)
+ D ^PSJMPRTU
+"RTN","PSJMIV",63,0)
+ D:(PSJNEED+PSJLN)>PSJTOTLN HDR^PSJMPRTU Q:$G(PSJSTOP)
+"RTN","PSJMIV",64,0)
+ D PRTIV
+"RTN","PSJMIV",65,0)
+ Q
+"RTN","PSJMIV",66,0)
+ ;
+"RTN","PSJMIV",67,0)
+PRTIV ;
+"RTN","PSJMIV",68,0)
+ ;* W !,PSJPRT(1),?39,$E(P("LOG"),1,5)," | ",$E(P(2),1,5),$E(P(2),9,15)," | ",P(3)
+"RTN","PSJMIV",69,0)
+ W !,PSJPRT(1),?39,$E(P("LOG"),1,5)," | "
+"RTN","PSJMIV",70,0)
+ I QST["Z" W "P E N D I N G"
+"RTN","PSJMIV",71,0)
+ E  W $E(P(2),1,5),$E(P(2),9,15)," | ",P(3)
+"RTN","PSJMIV",72,0)
+ NEW X,Y
+"RTN","PSJMIV",73,0)
+ F X=0:0 S X=$O(DRG("AD",X)) Q:'X  D NAME^PSIVUTL(DRG("AD",X),40,.NAME,1) F Y=0:0 S Y=$O(NAME(Y))  Q:'Y  D ADSOL W NAME(Y)
+"RTN","PSJMIV",74,0)
+ I $G(DRG("SOL",1)) D ADSOL W " in"
+"RTN","PSJMIV",75,0)
+ F X=0:0 S X=$O(DRG("SOL",X)) Q:'X  D NAME^PSIVUTL(DRG("SOL",X),40,.NAME,0) F Y=0:0 S Y=$O(NAME(Y))  Q:'Y  D ADSOL W NAME(Y)
+"RTN","PSJMIV",76,0)
+ S:ON["*" PSJASTR=1
+"RTN","PSJMIV",77,0)
+ W !?39,$P(P("MR"),U,2)," ",P(9)," ",P(8)
+"RTN","PSJMIV",78,0)
+ W:PSJONETM !?39,"*** ONE TIME ***"
+"RTN","PSJMIV",79,0)
+ W:P(4)="C" !?39,"*CAUTION-CHEMOTHERAPY*"
+"RTN","PSJMIV",80,0)
+ I PSJSI]"" W !?39 F Y=1:1:$L(PSJSI," ") S Y1=$P(PSJSI," ",Y) W:($L(Y1)+$X)>79 !?39 W Y1_" "
+"RTN","PSJMIV",81,0)
+ W !?39,"RN/LPN Init: ________"
+"RTN","PSJMIV",82,0)
+ W !
+"RTN","PSJMIV",83,0)
+ S PSJLN=PSJLN+PSJNEED
+"RTN","PSJMIV",84,0)
+ Q
+"RTN","PSJMIV",85,0)
+ADSOL ;
+"RTN","PSJMIV",86,0)
+ I PSJLN>PSJTOTLN W !?39,"*** CONTINUE ON NEXT PAGE ***" NEW X D ^PSJMPRTU,HDR^PSJMPRTU D
+"RTN","PSJMIV",87,0)
+ .W !,PSJPRT(1),?39,$E(P("LOG"),1,5)," | ",$E(P(2),1,5),$E(P(2),9,15)," | ",P(3)
+"RTN","PSJMIV",88,0)
+ S PSJLN=PSJLN+1,PSJNEED=PSJNEED-1
+"RTN","PSJMIV",89,0)
+ S I=$O(PSJPRT(1)) W !,$G(PSJPRT(+I)),?39
+"RTN","PSJMIV",90,0)
+ K:I PSJPRT(I)
+"RTN","PSJMIV",91,0)
+ Q
+"RTN","PSJORRE")
+0^7^B32342688^B32121973
+"RTN","PSJORRE",1,0)
+PSJORRE ;BIR/MV-RETURN INPATIENT ACTIVE MEDS (CONDENSED) ; 2/28/11 3:11pm
+"RTN","PSJORRE",2,0)
+ ;;5.0; INPATIENT MEDICATIONS ;**22,51,50,58,81,110,111,112,134,225**;16 DEC 97;Build 16
+"RTN","PSJORRE",3,0)
+ ;
+"RTN","PSJORRE",4,0)
+ ;Reference to ^PS(52.6 is supported by DBIA 1231.
+"RTN","PSJORRE",5,0)
+ ;Reference to ^PS(52.7 is supported by DBIA 2173.
+"RTN","PSJORRE",6,0)
+ ;Reference to ^PS(55 is supported by DBIA 2191.
+"RTN","PSJORRE",7,0)
+ ;Reference to ^TMP("PS" is documented in DBIA #2383.
+"RTN","PSJORRE",8,0)
+ ;
+"RTN","PSJORRE",9,0)
+OCL(DFN,BDT,EDT,TFN,MVIEW)         ; return condensed list of inpat meds
+"RTN","PSJORRE",10,0)
+ ; MVIEW=0   -  This returns the 'unsorted' list as it was returned prior to GUI 27 
+"RTN","PSJORRE",11,0)
+ ; MVIEW=1   -  This returns the old sort view of the list, pre-sorted for GUI 27
+"RTN","PSJORRE",12,0)
+ ; MVIEW=2   -  This returns new sort view #1 of the order profile for GUI 27 
+"RTN","PSJORRE",13,0)
+ ; MVIEW=3   -  This returns new sort view #2 of the order profile for GUI 27
+"RTN","PSJORRE",14,0)
+ D @$S($G(MVIEW)=3:"OCL^PSJORRN1(DFN,BDT,EDT,.TFN)",$G(MVIEW)=2:"OCL^PSJORRN(DFN,BDT,EDT,.TFN)",$G(MVIEW)=1:"OCL^PSJORRO(DFN,BDT,EDT,.TFN)",1:"OCL1(DFN,BDT,EDT,TFN)")
+"RTN","PSJORRE",15,0)
+ Q
+"RTN","PSJORRE",16,0)
+OCL1(DFN,BDT,EDT,TFN,MVIEW) ; Execute this section if MVIEW=0
+"RTN","PSJORRE",17,0)
+ N ADM,CNT,DN,DO,F,FON,INFUS,INST,MR,ND,ND0,ND2,ND6,ON,PON,PST,SCH,SIO,STAT,TYPE,UNITS,WBDT,X,Y,PSJCLIN,A
+"RTN","PSJORRE",18,0)
+ ; PON=placer order number (oerr), FON=filler order number
+"RTN","PSJORRE",19,0)
+ S:BDT="" BDT=DT S WBDT=BDT_".000001"
+"RTN","PSJORRE",20,0)
+ S:EDT="" EDT=9999999
+"RTN","PSJORRE",21,0)
+ S:EDT'["." EDT=EDT_".999999"
+"RTN","PSJORRE",22,0)
+ S F="^PS(55,DFN,5," F  S WBDT=$O(^PS(55,DFN,5,"AUS",WBDT)) Q:'WBDT  F ON=0:0 S ON=$O(^PS(55,DFN,5,"AUS",WBDT,ON)) Q:'ON  D UDTMP
+"RTN","PSJORRE",23,0)
+ S F="^PS(53.1," F PST="P","N" F ON=0:0 S ON=$O(^PS(53.1,"AS",PST,DFN,ON)) Q:'ON  S X=$P($G(^PS(53.1,+ON,0)),U,4) D @$S(X="U":"UDTMP",1:"IVTMP")
+"RTN","PSJORRE",24,0)
+ S F="^PS(55,"_DFN_",""IV"",",WBDT=BDT F  S WBDT=$O(^PS(55,DFN,"IV","AIS",WBDT)) Q:'WBDT  F ON=0:0 S ON=$O(^PS(55,DFN,"IV","AIS",WBDT,ON)) Q:'ON  D IVTMP
+"RTN","PSJORRE",25,0)
+ Q
+"RTN","PSJORRE",26,0)
+ ;
+"RTN","PSJORRE",27,0)
+UDTMP ;*** Set ^TMP for Unit dose orders.
+"RTN","PSJORRE",28,0)
+ N PROVIDER,RNWDT,EDTCMPLX,NDP2 S (MR,SCH,INST,PON)="",FON=+ON_$S(F["53.1":"P",1:"U")
+"RTN","PSJORRE",29,0)
+ D TYPE
+"RTN","PSJORRE",30,0)
+ S RNWDT=$$LASTREN^PSJLMPRI(DFN,FON) I RNWDT S RNWDT=+RNWDT
+"RTN","PSJORRE",31,0)
+ S NDP2=$G(@(F_ON_",.2)")) S EDTCMPLX=$P(NDP2,"^",8)
+"RTN","PSJORRE",32,0)
+ S ND2=$G(@(F_ON_",2)")) I 'EDTCMPLX I F'["53.1",($P(ND2,U,2)>EDT) Q
+"RTN","PSJORRE",33,0)
+ S ND0=$G(@(F_ON_",0)")) I 'EDTCMPLX I F["53.1",($P(ND0,U,16)>EDT) Q
+"RTN","PSJORRE",34,0)
+ S STAT=$$CODES^PSIVUTL($P(ND0,U,9),$S(FON["P":53.1,1:55.06),28)
+"RTN","PSJORRE",35,0)
+ S ND6=$P($G(@(F_ON_",6)")),"^"),INST=$G(@(F_+ON_",.3)"))
+"RTN","PSJORRE",36,0)
+ S FON=+ON_$S(F["53.1":"P",1:"U"),DO=$P($G(@(F_ON_",.2)")),"^",2)
+"RTN","PSJORRE",37,0)
+ D DRGDISP^PSJLMUT1(DFN,FON,40,0,.DN,1)
+"RTN","PSJORRE",38,0)
+ ;*225 Don't allow 0 Units
+"RTN","PSJORRE",39,0)
+ S UNITS="" I '$O(@(F_+ON_",1,1)")) S UNITS=$P($G(@(F_+ON_",1,1,0)")),U,2) S:(FON["U")&(+UNITS=0) UNITS=1
+"RTN","PSJORRE",40,0)
+ S:+$P(ND0,U,3) MR=$$MR^PSJORRE1(+$P(ND0,U,3))
+"RTN","PSJORRE",41,0)
+ N NOTGIVEN S NOTGIVEN=$S(FON["U":$P($G(^PS(55,DFN,5,+ON,0)),"^",22),1:"")
+"RTN","PSJORRE",42,0)
+ S TFN=TFN+1
+"RTN","PSJORRE",43,0)
+ S ^TMP("PS",$J,TFN,0)=FON_";I"_U_DN(1)_"^^"_$P(ND2,U,4)_"^^"_DO_U_UNITS_U_$P(ND0,U,21)_U_STAT_U_U_U_U_NOTGIVEN_U_($P(ND0,U,9)="P"&($P(ND0,U,24)="R"))_U_$P(ND2,U,2)_U_$G(RNWDT)
+"RTN","PSJORRE",44,0)
+ K ^TMP("PS",$J,TFN,"CLINIC",0) I PSJCLIN]"" S ^TMP("PS",$J,TFN,"CLINIC",0)=PSJCLIN
+"RTN","PSJORRE",45,0)
+ S PROVIDER=$P($G(@(F_+ON_",0)")),"^",2)
+"RTN","PSJORRE",46,0)
+ I PROVIDER S ^TMP("PS",$J,TFN,"P",0)=PROVIDER_"^"_$P($G(^VA(200,PROVIDER,0)),"^")
+"RTN","PSJORRE",47,0)
+ S ^TMP("PS",$J,TFN,"MDR",0)=MR]"" S:MR]"" ^TMP("PS",$J,TFN,"MDR",1,0)=MR
+"RTN","PSJORRE",48,0)
+ S ^TMP("PS",$J,TFN,"SCH",0)=$P(ND2,U)]"" S:$P(ND2,U)]"" ^TMP("PS",$J,TFN,"SCH",1,0)=$P(ND2,U)
+"RTN","PSJORRE",49,0)
+ S ^TMP("PS",$J,TFN,"SIG",0)=INST]"" S:INST]"" ^TMP("PS",$J,TFN,"SIG",1,0)=INST
+"RTN","PSJORRE",50,0)
+ S ^TMP("PS",$J,TFN,"ADM",0)=$P(ND2,U,5)]"" S:$P(ND2,U,5)]"" ^TMP("PS",$J,TFN,"ADM",1,0)=$P(ND2,U,5)
+"RTN","PSJORRE",51,0)
+ S ^TMP("PS",$J,TFN,"SIO",0)=ND6]"" S:ND6]"" ^TMP("PS",$J,TFN,"SIO",1,0)=ND6
+"RTN","PSJORRE",52,0)
+ Q
+"RTN","PSJORRE",53,0)
+ ;
+"RTN","PSJORRE",54,0)
+IVTMP ;*** Set ^TMP for IV orders.
+"RTN","PSJORRE",55,0)
+ N PROVIDER,START,STOP,EDTCMPLX,NDP2,IVLIM
+"RTN","PSJORRE",56,0)
+ S NDP2=$G(@(F_ON_",.2)")) S EDTCMPLX=$P(NDP2,"^",8)
+"RTN","PSJORRE",57,0)
+ S ND0=$G(@(F_ON_",0)")) I 'EDTCMPLX I F'["53.1",($P(ND0,U,2)>EDT) Q
+"RTN","PSJORRE",58,0)
+ D TYPE
+"RTN","PSJORRE",59,0)
+ S FON=+ON_$S(F["53.1":"P",1:"V"),TFN=TFN+1,CNT=0
+"RTN","PSJORRE",60,0)
+ S RNWDT=$$LASTREN^PSJLMPRI(DFN,FON) I RNWDT S RNWDT=+RNWDT
+"RTN","PSJORRE",61,0)
+ F X=0:0 S X=$O(@(F_ON_",""AD"","_X_")")) Q:'X  S ND=$G(@(F_ON_",""AD"","_X_",0)")),DN=$P($G(^PS(52.6,+ND,0)),U),Y=DN_U_$P(ND,U,2) S:$P(ND,U,3) Y=Y_U_$P(ND,U,3) S CNT=CNT+1,^TMP("PS",$J,TFN,"A",CNT,0)=Y
+"RTN","PSJORRE",62,0)
+ S ^TMP("PS",$J,TFN,"A",0)=CNT,CNT=0
+"RTN","PSJORRE",63,0)
+ F X=0:0 S X=$O(@(F_ON_",""SOL"","_X_")")) Q:'X  S ND=$G(@(F_ON_",""SOL"","_X_",0)")),DN=$G(^PS(52.7,+ND,0)),CNT=CNT+1,^TMP("PS",$J,TFN,"B",CNT,0)=$P(DN,U)_U_$P(ND,U,2)_U_$P(DN,U,4)
+"RTN","PSJORRE",64,0)
+ S ^TMP("PS",$J,TFN,"B",0)=CNT
+"RTN","PSJORRE",65,0)
+ S TYPE=$P(ND0,U,4),(MR,SCH,INST,INFUS)=""
+"RTN","PSJORRE",66,0)
+ I FON["P" S ND2=$G(^PS(53.1,+ON,2)),SCH=$P(ND2,U),START=$P(ND2,U,2),STOP=$P(ND2,U,4),MR=$P(ND0,U,3),INFUS=$P($G(^PS(53.1,+ON,8)),U,5),STAT=$$CODES^PSIVUTL($P(ND0,U,9),53.1,28),ADM=$P(ND2,U,5),SIO=$P($G(@(F_+ON_",6)")),"^")
+"RTN","PSJORRE",67,0)
+ I FON'["P" S START=$P(ND0,U,2),STOP=$P(ND0,U,3),SCH=$P(ND0,U,9),INFUS=$P(ND0,U,8),MR=$P($G(^PS(55,DFN,"IV",+ON,.2)),U,3),STAT=$$CODES^PSIVUTL($P(ND0,U,17),55.01,100),ADM=$P(ND0,U,11),SIO=$P($G(@(F_+ON_",3)")),"^")
+"RTN","PSJORRE",68,0)
+ S DN=$G(@(F_+ON_",.2)")),DO=$P(DN,U,2)
+"RTN","PSJORRE",69,0)
+ S DN=$S(+$P(DN,U):$$OIDF^PSJLMUT1($P(DN,U)),1:"")
+"RTN","PSJORRE",70,0)
+ S:MR MR=$$MR^PSJORRE1(+MR),INST=$G(@(F_+ON_",.3)"))
+"RTN","PSJORRE",71,0)
+ S ^TMP("PS",$J,TFN,0)=FON_";I"_U_DN_U_INFUS_U_STOP_"^^"_DO_"^^"_$P(ND0,"^",21)_U_STAT_U_U_U_U_U_($P(ND0,U,9)="P"&($P(ND0,U,24)="R"))_U_START_U_$G(RNWDT)
+"RTN","PSJORRE",72,0)
+ K ^TMP("PS",$J,TFN,"CLINIC",0) I PSJCLIN]"" S ^TMP("PS",$J,TFN,"CLINIC",0)=PSJCLIN
+"RTN","PSJORRE",73,0)
+ S PROVIDER=$P($G(@(F_+ON_",0)")),"^",6)
+"RTN","PSJORRE",74,0)
+ I PROVIDER S ^TMP("PS",$J,TFN,"P",0)=PROVIDER_"^"_$P($G(^VA(200,PROVIDER,0)),"^")
+"RTN","PSJORRE",75,0)
+ S ND2P5=$G(@(F_+ON_",2.5)")) S IVLIM=$P(ND2P5,U,4) I $E(IVLIM)="a" S IVLIM="doses"_$P(IVLIM,"a",2)
+"RTN","PSJORRE",76,0)
+ I IVLIM="" S IVLIM=$P(ND2P5,U,2) S:(IVLIM'["d")&(IVLIM'["h") IVLIM=""
+"RTN","PSJORRE",77,0)
+ S ^TMP("PS",$J,TFN,"MDR",0)=MR]"" S:MR]"" ^TMP("PS",$J,TFN,"MDR",1,0)=MR
+"RTN","PSJORRE",78,0)
+ S ^TMP("PS",$J,TFN,"SIG",0)=INST]"" S:INST]"" ^TMP("PS",$J,TFN,"SIG",1,0)=INST
+"RTN","PSJORRE",79,0)
+ S ^TMP("PS",$J,TFN,"SCH",0)=SCH]"" S:SCH]"" ^TMP("PS",$J,TFN,"SCH",1,0)=SCH
+"RTN","PSJORRE",80,0)
+ S ^TMP("PS",$J,TFN,"ADM",0)=ADM]"" S:ADM]"" ^TMP("PS",$J,TFN,"ADM",1,0)=ADM
+"RTN","PSJORRE",81,0)
+ S ^TMP("PS",$J,TFN,"SIO",0)=SIO]"" S:SIO]"" ^TMP("PS",$J,TFN,"SIO",1,0)=SIO
+"RTN","PSJORRE",82,0)
+ I $G(IVLIM)]"" S ^TMP("PS",$J,TFN,"IVLIM",0)=IVLIM
+"RTN","PSJORRE",83,0)
+ Q
+"RTN","PSJORRE",84,0)
+STAT(Y,X) ;* Return the full status instead of just the code for U/D.
+"RTN","PSJORRE",85,0)
+ S X=$P($P(";"_$P(Y,U,3),";"_X_":",2),";")
+"RTN","PSJORRE",86,0)
+ Q X
+"RTN","PSJORRE",87,0)
+TYPE ;determine if this is an IMO order or not
+"RTN","PSJORRE",88,0)
+ S (A,PSJCLIN)="" I F["PS(53.1" S A=$G(^PS(53.1,ON,"DSS"))
+"RTN","PSJORRE",89,0)
+ I F["PS(55" S A=$S(F["IV":$G(^PS(55,DFN,"IV",ON,"DSS")),1:$G(^PS(55,DFN,5,ON,8)))
+"RTN","PSJORRE",90,0)
+ I $P(A,"^",2)'="" S PSJCLIN=+A
+"RTN","PSJORRE",91,0)
+ Q
+"RTN","PSJORRE1")
+0^8^B35616681^B35337470
+"RTN","PSJORRE1",1,0)
+PSJORRE1 ;BIR/MV-RETURN INPATIENT ACTIVE MEDS (EXPANDED) ; 2/28/11 3:11pm
+"RTN","PSJORRE1",2,0)
+ ;;5.0; INPATIENT MEDICATIONS ;**22,51,50,58,81,91,110,111,134,225**;16 DEC 97;Build 16
+"RTN","PSJORRE1",3,0)
+ ;
+"RTN","PSJORRE1",4,0)
+ ; Reference to ^PS(51.2 is supported by DBIA 2178.
+"RTN","PSJORRE1",5,0)
+ ; Reference to ^PS(52.6 is supported by DBIA 1231.
+"RTN","PSJORRE1",6,0)
+ ; Reference to ^PS(52.7 is supported by DBIA 2173.
+"RTN","PSJORRE1",7,0)
+ ; Reference to ^PS(55 is supported by DBIA 2191.
+"RTN","PSJORRE1",8,0)
+ ; Reference to ^PSDRUG is supported by DBIA 2192.
+"RTN","PSJORRE1",9,0)
+ ; Reference to ^TMP("PS" is documented in DBIA #2384.
+"RTN","PSJORRE1",10,0)
+ ;
+"RTN","PSJORRE1",11,0)
+OEL(DFN,ON)         ; return list of expanded inpat meds
+"RTN","PSJORRE1",12,0)
+ K ^TMP("PS",$J)
+"RTN","PSJORRE1",13,0)
+ N ADM,CNT,DN,DO,F,INFUS,INST,MR,ND,ND0,ND2,ND2P5,ND6,NDOI,SCH,SIO,START,STAT,STOP,TYP,UNITS,X,Y
+"RTN","PSJORRE1",14,0)
+ S F=$S(ON["P":"^PS(53.1,",ON["U":"^PS(55,DFN,5,",1:"^PS(55,"_DFN_",""IV"",")
+"RTN","PSJORRE1",15,0)
+ I ON'["P",'$D(@(F_+ON_")")) Q
+"RTN","PSJORRE1",16,0)
+ I ON["P" S X=$G(^PS(53.1,+ON,0)) Q:$P(X,U,15)'=DFN  S TYP=$P(X,U,4) D @$S(TYP="U":"UDTMP",1:"IVTMP")
+"RTN","PSJORRE1",17,0)
+ D:ON'["P" @$S(ON["U":"UDTMP",1:"IVTMP")
+"RTN","PSJORRE1",18,0)
+ S Y=$S(ON["V":5,1:12),CNT=0
+"RTN","PSJORRE1",19,0)
+ I $O(@(F_+ON_","_Y_",0)")) D
+"RTN","PSJORRE1",20,0)
+ . F X=0:0 S X=$O(@(F_+ON_","_Y_","_X_")")) Q:'X  D
+"RTN","PSJORRE1",21,0)
+ ..S CNT=CNT+1,ND=$G(@(F_+ON_","_Y_","_X_",0)")),^TMP("PS",$J,"PC",CNT,0)=ND
+"RTN","PSJORRE1",22,0)
+ S ^TMP("PS",$J,"PC",0)=CNT
+"RTN","PSJORRE1",23,0)
+ Q
+"RTN","PSJORRE1",24,0)
+ ;
+"RTN","PSJORRE1",25,0)
+UDTMP ;*** Set ^TMP for Unit dose orders.
+"RTN","PSJORRE1",26,0)
+ N DO,DN,INST,X,Y,PROVIDER,NOTGIVEN,RNWDT
+"RTN","PSJORRE1",27,0)
+ S (MR,SCH,INST)=""
+"RTN","PSJORRE1",28,0)
+ S ND2=$G(@(F_+ON_",2)")),ND0=$G(@(F_+ON_",0)"))
+"RTN","PSJORRE1",29,0)
+ S ND6=$P($G(@(F_+ON_",6)")),"^")
+"RTN","PSJORRE1",30,0)
+ S RNWDT=$$LASTREN^PSJLMPRI(DFN,ON) I RNWDT S RNWDT=+RNWDT
+"RTN","PSJORRE1",31,0)
+ S STAT=$$CODES^PSIVUTL($P(ND0,U,9),$S(ON["P":53.1,1:55.06),28)
+"RTN","PSJORRE1",32,0)
+ S NDOI=$G(@(F_+ON_",.2)")),DO=$P(NDOI,U,2)
+"RTN","PSJORRE1",33,0)
+ S DN(1)=$$OIDF^PSJLMUT1(NDOI) I DN(1)=""  K DN D DRGDISP^PSJLMUT1(DFN,ON,40,0,.DN,1)
+"RTN","PSJORRE1",34,0)
+ ;*225 Don't allow 0 units
+"RTN","PSJORRE1",35,0)
+ S UNITS="" I '$O(@(F_+ON_",1,1)")) S UNITS=$P($G(@(F_+ON_",1,1,0)")),U,2) S:(ON["U")&(+UNITS=0) UNITS=1
+"RTN","PSJORRE1",36,0)
+ S MR=$$MR(+$P(ND0,U,3)),INST=$G(@(F_+ON_",.3)"))
+"RTN","PSJORRE1",37,0)
+ S NOTGIVEN=$S(ON["U":$P($G(^PS(55,DFN,5,+ON,0)),"^",22),1:"")
+"RTN","PSJORRE1",38,0)
+ S ^TMP("PS",$J,0)=DN(1)_"^^"_$P(ND2,U,4)_"^^"_$P(ND2,U,2)_U_STAT_"^^^"_DO_U_UNITS_U_$P(ND0,U,21)_U_U_NOTGIVEN_U_($P(ND0,U,9)="P"&($P(ND0,U,24)="R"))_U_U_$G(RNWDT)
+"RTN","PSJORRE1",39,0)
+ S PROVIDER=$P($G(@(F_+ON_",0)")),"^",2)
+"RTN","PSJORRE1",40,0)
+ I PROVIDER S ^TMP("PS",$J,"P",0)=PROVIDER_"^"_$P($G(^VA(200,PROVIDER,0)),"^")
+"RTN","PSJORRE1",41,0)
+ S ^TMP("PS",$J,"MDR",0)=MR]"" S:MR]"" ^TMP("PS",$J,"MDR",1,0)=MR
+"RTN","PSJORRE1",42,0)
+ S ^TMP("PS",$J,"SCH",0)=$P(ND2,U)]"" S:$P(ND2,U)]"" ^TMP("PS",$J,"SCH",1,0)=$P(ND2,U)
+"RTN","PSJORRE1",43,0)
+ S:$P(ND0,U,7)]"" ^TMP("PS",$J,"SCH",0)=1,$P(^TMP("PS",$J,"SCH",1,0),U,2)=$$GTSCHT($P(ND0,U,7))_"^"_$P(ND0,U,7)
+"RTN","PSJORRE1",44,0)
+ S ^TMP("PS",$J,"SIG",0)=INST]"" S:INST]"" ^TMP("PS",$J,"SIG",1,0)=INST
+"RTN","PSJORRE1",45,0)
+ S ^TMP("PS",$J,"ADM",0)=$P(ND2,U,5)]"" S:$P(ND2,U,5)]"" ^TMP("PS",$J,"ADM",1,0)=$P(ND2,U,5)
+"RTN","PSJORRE1",46,0)
+ S ^TMP("PS",$J,"SIO",0)=ND6]"" S:ND6]"" ^TMP("PS",$J,"SIO",1,0)=ND6
+"RTN","PSJORRE1",47,0)
+ NEW VERPHARM S:ON["U" VERPHARM=$P($G(@(F_+ON_",4)")),U,3)
+"RTN","PSJORRE1",48,0)
+ S:+$G(VERPHARM) $P(^TMP("PS",$J,"RXN",0),U,5)=VERPHARM
+"RTN","PSJORRE1",49,0)
+ NEW PSJDD,INACTDT,NDDD,OUTOI,PSJOUT S CNT=0
+"RTN","PSJORRE1",50,0)
+ F PSJDD=0:0 S PSJDD=$O(@(F_+ON_",1,PSJDD)")) Q:'PSJDD  D
+"RTN","PSJORRE1",51,0)
+ . S NDDD=@(F_+ON_",1,PSJDD,0)")
+"RTN","PSJORRE1",52,0)
+ . I $P(NDDD,U,3)]"",($P(NDDD,U,3)'>DT) Q
+"RTN","PSJORRE1",53,0)
+ . S PSJOUT=$P($G(^PSDRUG(+NDDD,8)),U,5)
+"RTN","PSJORRE1",54,0)
+ . I +PSJOUT D
+"RTN","PSJORRE1",55,0)
+ .. S INACTDT=$G(^PSDRUG(+PSJOUT,"I")),OUTOI=+$G(^PSDRUG(+PSJOUT,2))
+"RTN","PSJORRE1",56,0)
+ .. I INACTDT]"",(INACTDT'>DT) S (PSJOUT,OUTOI)=""
+"RTN","PSJORRE1",57,0)
+ . I '+PSJOUT,($P($G(^PSDRUG(+NDDD,2)),U,3)["O") D
+"RTN","PSJORRE1",58,0)
+ .. S PSJOUT=+NDDD,OUTOI=+NDOI
+"RTN","PSJORRE1",59,0)
+ .. S INACTDT=$G(^PSDRUG(+NDDD,"I"))
+"RTN","PSJORRE1",60,0)
+ .. I INACTDT]"",(INACTDT'>DT) S (PSJOUT,OUTOI)=""
+"RTN","PSJORRE1",61,0)
+ . S UNITS=$P(NDDD,U,2) S:(ON["U")&(UNITS="") UNITS=1
+"RTN","PSJORRE1",62,0)
+ . S CNT=CNT+1,^TMP("PS",$J,"DD",CNT,0)=+NDDD_U_UNITS_U_PSJOUT_U_$G(OUTOI)
+"RTN","PSJORRE1",63,0)
+ S ^TMP("PS",$J,"DD",0)=CNT
+"RTN","PSJORRE1",64,0)
+ Q
+"RTN","PSJORRE1",65,0)
+ ;
+"RTN","PSJORRE1",66,0)
+IVTMP ;*** Set ^TMP for IV orders.
+"RTN","PSJORRE1",67,0)
+ N PROVIDER,RNWDT,IVLIM S ND0=$G(@(F_+ON_",0)")),CNT=0
+"RTN","PSJORRE1",68,0)
+ F X=0:0 S X=$O(@(F_+ON_",""AD"","_X_")")) Q:'X  S ND=$G(@(F_+ON_",""AD"","_X_",0)")),DN=$P($G(^PS(52.6,+ND,0)),U),Y=DN_U_$P(ND,U,2) S:$P(ND,U,3) Y=Y_U_$P(ND,U,3) S CNT=CNT+1,^TMP("PS",$J,"A",CNT,0)=Y
+"RTN","PSJORRE1",69,0)
+ S RNWDT=$$LASTREN^PSJLMPRI(DFN,ON) I RNWDT S RNWDT=+RNWDT
+"RTN","PSJORRE1",70,0)
+ S ^TMP("PS",$J,"A",0)=CNT,CNT=0
+"RTN","PSJORRE1",71,0)
+ F X=0:0 S X=$O(@(F_+ON_",""SOL"","_X_")")) Q:'X  S ND=$G(@(F_+ON_",""SOL"","_X_",0)")),DN=$G(^PS(52.7,+ND,0)),CNT=CNT+1,^TMP("PS",$J,"B",CNT,0)=$P(DN,U)_U_$P(ND,U,2)_U_$P(DN,U,4)
+"RTN","PSJORRE1",72,0)
+ S ^TMP("PS",$J,"B",0)=CNT
+"RTN","PSJORRE1",73,0)
+ S INST=$G(@(F_+ON_",.3)"))
+"RTN","PSJORRE1",74,0)
+ I ON["P" D
+"RTN","PSJORRE1",75,0)
+ . S SCH=$P($G(^PS(53.1,+ON,2)),U)
+"RTN","PSJORRE1",76,0)
+ . S PROVIDER=$P(ND0,U,2)
+"RTN","PSJORRE1",77,0)
+ . S MR=$$MR(+$P(ND0,U,3)),STAT=$$CODES^PSIVUTL($P(ND0,U,9),53.1,28)
+"RTN","PSJORRE1",78,0)
+ . S INFUS=$P($G(^PS(53.1,+ON,8)),U,5)
+"RTN","PSJORRE1",79,0)
+ . S ND2=$G(@(F_+ON_",2)")),START=$P(ND2,U,2),STOP=$P(ND2,U,4)
+"RTN","PSJORRE1",80,0)
+ . S ADM=$P(ND2,U,5),SIO=$P($G(@(F_+ON_",6)")),"^")
+"RTN","PSJORRE1",81,0)
+ . S ND2P5=$G(@(F_+ON_",2.5)")) S IVLIM=$P(ND2P5,U,4) I $E(IVLIM)="a" S IVLIM="doses"_$P(IVLIM,"a",2)
+"RTN","PSJORRE1",82,0)
+ . I IVLIM="" S IVLIM=$P(ND2P5,U,2) S:(IVLIM'["d")&(IVLIM'["h") IVLIM=""
+"RTN","PSJORRE1",83,0)
+ I ON'["P"  D
+"RTN","PSJORRE1",84,0)
+ . S PROVIDER=$P(ND0,U,6)
+"RTN","PSJORRE1",85,0)
+ . S SCH=$P(ND0,U,9),INFUS=$P(ND0,U,8),STAT=$$CODES^PSIVUTL($P(ND0,U,17),55.01,100)
+"RTN","PSJORRE1",86,0)
+ . S MR=$$MR(+$P($G(^PS(55,DFN,"IV",+ON,.2)),U,3))
+"RTN","PSJORRE1",87,0)
+ . S START=$P(ND0,U,2),STOP=$P(ND0,U,3)
+"RTN","PSJORRE1",88,0)
+ . S ADM=$P(ND0,U,11),SIO=$P($G(@(F_+ON_",3)")),"^")
+"RTN","PSJORRE1",89,0)
+ . NEW VERPHARM S VERPHARM=$P($G(^PS(55,DFN,"IV",+ON,4)),U,4)
+"RTN","PSJORRE1",90,0)
+ . S:+VERPHARM $P(^TMP("PS",$J,"RXN",0),U,5)=VERPHARM
+"RTN","PSJORRE1",91,0)
+ . S ND2P5=$G(@(F_+ON_",2.5)")) S IVLIM=$P(ND2P5,U,4) I IVLIM="" S IVLIM=$P(ND2P5,U,2) S:(IVLIM'["d")&(IVLIM'["h") IVLIM=""
+"RTN","PSJORRE1",92,0)
+ S DN=$G(@(F_+ON_",.2)")),DO=$P(DN,U,2)
+"RTN","PSJORRE1",93,0)
+ S DN=$S(+$P(DN,U):$$OIDF^PSJLMUT1($P(DN,U)),1:"")
+"RTN","PSJORRE1",94,0)
+ S ^TMP("PS",$J,0)=DN_U_INFUS_U_STOP_"^^"_START_U_STAT_"^^^"_DO_"^^"_$P(ND0,U,21)_U_U_U_($P(ND0,U,9)="P"&($P(ND0,U,24)="R"))_U_U_$G(RNWDT)
+"RTN","PSJORRE1",95,0)
+ I PROVIDER S ^TMP("PS",$J,"P",0)=PROVIDER_"^"_$P($G(^VA(200,PROVIDER,0)),"^")
+"RTN","PSJORRE1",96,0)
+ S ^TMP("PS",$J,"MDR",0)=MR]"" S:MR]"" ^TMP("PS",$J,"MDR",1,0)=MR
+"RTN","PSJORRE1",97,0)
+ S ^TMP("PS",$J,"SCH",0)=SCH]"" S:SCH]"" ^TMP("PS",$J,"SCH",1,0)=SCH
+"RTN","PSJORRE1",98,0)
+ I ON["P" S:$P(ND0,U,7)]"" ^TMP("PS",$J,"SCH",0)=1,$P(^TMP("PS",$J,"SCH",1,0),U,2)=$$GTSCHT($P(ND0,U,7))_"^"_$P(ND0,U,7)
+"RTN","PSJORRE1",99,0)
+ S ^TMP("PS",$J,"SIG",0)=INST]"" S:INST]"" ^TMP("PS",$J,"SIG",1,0)=INST
+"RTN","PSJORRE1",100,0)
+ S ^TMP("PS",$J,"ADM",0)=ADM]"" S:ADM]"" ^TMP("PS",$J,"ADM",1,0)=ADM
+"RTN","PSJORRE1",101,0)
+ S ^TMP("PS",$J,"SIO",0)=SIO]"" S:SIO]"" ^TMP("PS",$J,"SIO",1,0)=SIO
+"RTN","PSJORRE1",102,0)
+ I $G(IVLIM)]"" S ^TMP("PS",$J,"IVLIM",0)=$G(IVLIM)
+"RTN","PSJORRE1",103,0)
+ Q
+"RTN","PSJORRE1",104,0)
+ ;
+"RTN","PSJORRE1",105,0)
+MR(X) ;RETURN MED ROUTE ABBR. IF THE ABBR="" RETURN MED ROUTE'S NAME.
+"RTN","PSJORRE1",106,0)
+ S X=$G(^PS(51.2,X,0))
+"RTN","PSJORRE1",107,0)
+ Q $S($P(X,U,3)]"":$P(X,U,3),1:$P(X,U))
+"RTN","PSJORRE1",108,0)
+ ;
+"RTN","PSJORRE1",109,0)
+GTSTAT(X) ;
+"RTN","PSJORRE1",110,0)
+ Q $S(X="A":"ACTIVE",X="D":"DISCONTINUED",X="I":"INCOMPLETE",X="N":"NON-VERFIED",X="U":"UNRELEASED",X="P":"PENDING",X="DE":"DISCONTINUED (EDIT)",X="O":"ON CALL",1:"NOT FOUND")
+"RTN","PSJORRE1",111,0)
+ ;
+"RTN","PSJORRE1",112,0)
+VA200(X) ;Return the IEN for the user.
+"RTN","PSJORRE1",113,0)
+ ; X = User name
+"RTN","PSJORRE1",114,0)
+ NEW DIC,Y S DIC="^VA(200,",DIC(0)="NZ" D ^DIC
+"RTN","PSJORRE1",115,0)
+ I +Y=-1 Q ""
+"RTN","PSJORRE1",116,0)
+ Q $P(Y,U)
+"RTN","PSJORRE1",117,0)
+GTSCHT(X)       ;
+"RTN","PSJORRE1",118,0)
+ Q $S(X="C":"CONTINUOUS",X="O":"ONE TIME",X="P":"PRN",X="R":"FILL ON REQUEST",X="OC":"ON CALL",1:"NOT FOUND")
+"RTN","PSJORRN")
+0^1^B62913592^B61459384
+"RTN","PSJORRN",1,0)
+PSJORRN ;BIR/MV-RETURN INPATIENT ACTIVE MEDS (CONDENSED) NEW SORT ; 2/28/11 3:21pm
+"RTN","PSJORRN",2,0)
+ ;;5.0; INPATIENT MEDICATIONS ;**134,213,225**;16 DEC 97;Build 16
+"RTN","PSJORRN",3,0)
+ ;
+"RTN","PSJORRN",4,0)
+ ;Reference to ^PS(52.6 is supported by DBIA 1231.
+"RTN","PSJORRN",5,0)
+ ;Reference to ^PS(52.7 is supported by DBIA 2173.
+"RTN","PSJORRN",6,0)
+ ;Reference to ^PS(55 is supported by DBIA 2191.
+"RTN","PSJORRN",7,0)
+ ;Reference to ^PS(50.7 is supported by DBIA #2180.
+"RTN","PSJORRN",8,0)
+ ;Reference to ^TMP("PS" is documented in DBIA #2383.
+"RTN","PSJORRN",9,0)
+ ;
+"RTN","PSJORRN",10,0)
+OCL(DFN,BDT,EDT,TFN) ; return condensed list of inpat meds
+"RTN","PSJORRN",11,0)
+ ; MVIEW=2   -  This is the new sort with GUI 27
+"RTN","PSJORRN",12,0)
+ ; Execute this section if MVIEW=2
+"RTN","PSJORRN",13,0)
+ N ADM,CNT,DN,DO,F,FON,INFUS,INST,MR,ND,ND0,ND2,ND6,ON,PON,PST,SCH,SIO,STAT,TYPE,UNITS,WBDT,X,Y,PSJCLIN,A,TFN2,%
+"RTN","PSJORRN",14,0)
+ S TFN2=0
+"RTN","PSJORRN",15,0)
+ ; PON=placer order number (oerr), FON=filler order number
+"RTN","PSJORRN",16,0)
+ ; *225 Add time or base on now
+"RTN","PSJORRN",17,0)
+ D NOW^%DTC S:BDT="" BDT=% S:BDT'["." BDT=BDT_".000001"
+"RTN","PSJORRN",18,0)
+ S:EDT="" EDT=9999999
+"RTN","PSJORRN",19,0)
+ S:EDT'["." EDT=EDT_".999999"
+"RTN","PSJORRN",20,0)
+ ;*225 Correct Display Calcualtion
+"RTN","PSJORRN",21,0)
+ S F="^PS(55,DFN,5,",WBDT=BDT F  S WBDT=$O(^PS(55,DFN,5,"AUS",WBDT)) Q:'WBDT  F ON=0:0 S ON=$O(^PS(55,DFN,5,"AUS",WBDT,ON)) Q:'ON  D UDTMP
+"RTN","PSJORRN",22,0)
+ S F="^PS(53.1," F PST="P","N" S ON=0 F  S ON=$O(^PS(53.1,"AS",PST,DFN,ON)) Q:'ON  S X=$P($G(^PS(53.1,+ON,0)),U,4) D @$S(X="U":"UDTMP",1:"IVTMP")
+"RTN","PSJORRN",23,0)
+ S F="^PS(55,"_DFN_",""IV"",",WBDT=BDT F  S WBDT=$O(^PS(55,DFN,"IV","AIS",WBDT)) Q:'WBDT  S ON=0 F  S ON=$O(^PS(55,DFN,"IV","AIS",WBDT,ON)) Q:'ON  D IVTMP
+"RTN","PSJORRN",24,0)
+ S X1="" F  S X1=$O(^TMP("PSJTMP",$J,X1)) Q:X1=""  S X2="" F  S X2=$O(^TMP("PSJTMP",$J,X1,X2)) Q:X2=""  D
+"RTN","PSJORRN",25,0)
+ .S X3="" F  S X3=$O(^TMP("PSJTMP",$J,X1,X2,X3)) Q:X3=""  S X4="" F  S X4=$O(^TMP("PSJTMP",$J,X1,X2,X3,X4)) Q:X4=""  D
+"RTN","PSJORRN",26,0)
+ ..S X5="" F  S X5=$O(^TMP("PSJTMP",$J,X1,X2,X3,X4,X5)) Q:X5=""  S TFN=$G(TFN)+1 D
+"RTN","PSJORRN",27,0)
+ ...; The merge below sends the proper ^TMP("PS",$J structure back to the calling
+"RTN","PSJORRN",28,0)
+ ...; routine PSJORRE
+"RTN","PSJORRN",29,0)
+ ...M ^TMP("PS",$J,TFN)=^TMP("PSJTMP",$J,X1,X2,X3,X4,X5) S ^TMP("PS",$J,"PC",0)=TFN
+"RTN","PSJORRN",30,0)
+ K ^TMP("PSJTMP",$J)
+"RTN","PSJORRN",31,0)
+ Q
+"RTN","PSJORRN",32,0)
+ ;
+"RTN","PSJORRN",33,0)
+UDTMP ;*** Set ^TMP for Unit dose orders.
+"RTN","PSJORRN",34,0)
+ N PROVIDER,ND8,RNWDT,EDTCMPLX,NDP2,PSJOINM,PSJOI,PSJDDNM,LOC,PRIO,NDDSS
+"RTN","PSJORRN",35,0)
+ S (MR,SCH,INST,PON,NDDSS)="",FON=+ON_$S(F["53.1":"P",1:"U")
+"RTN","PSJORRN",36,0)
+ D TYPE
+"RTN","PSJORRN",37,0)
+ S RNWDT=$$LASTREN^PSJLMPRI(DFN,FON) I RNWDT S RNWDT=+RNWDT
+"RTN","PSJORRN",38,0)
+ S NDP2=$G(@(F_ON_",.2)")) S EDTCMPLX=$P(NDP2,"^",8),PRIO=$P(NDP2,"^",4)
+"RTN","PSJORRN",39,0)
+ S ND2=$G(@(F_ON_",2)")) I 'EDTCMPLX I F'["53.1",($P(ND2,U,2)>EDT) Q
+"RTN","PSJORRN",40,0)
+ S ND0=$G(@(F_ON_",0)")) I 'EDTCMPLX I F["53.1",($P(ND0,U,16)>EDT) Q
+"RTN","PSJORRN",41,0)
+ S ND8=$G(@(F_ON_",8)")),NDP2=$P($G(@(F_ON_",.2)")),"^")
+"RTN","PSJORRN",42,0)
+ S STAT=$$CODES^PSIVUTL($P(ND0,U,9),$S(FON["P":53.1,1:55.06),28)
+"RTN","PSJORRN",43,0)
+ S ND6=$P($G(@(F_ON_",6)")),"^"),INST=$G(@(F_+ON_",.3)"))
+"RTN","PSJORRN",44,0)
+ S FON=+ON_$S(F["53.1":"P",1:"U"),DO=$P($G(@(F_ON_",.2)")),"^",2)
+"RTN","PSJORRN",45,0)
+ D DRGDISP^PSJLMUT1(DFN,FON,40,0,.DN,1)
+"RTN","PSJORRN",46,0)
+ ;*225 Don't allow 0 Units
+"RTN","PSJORRN",47,0)
+ S UNITS="" I '$O(@(F_+ON_",1,1)")) S UNITS=$P($G(@(F_+ON_",1,1,0)")),U,2) S:(FON["U")&(+UNITS=0) UNITS=1
+"RTN","PSJORRN",48,0)
+ S:+$P(ND0,U,3) MR=$$MR^PSJORRE1(+$P(ND0,U,3))
+"RTN","PSJORRN",49,0)
+ N NOTGIVEN S NOTGIVEN=$S(FON["U":$P($G(^PS(55,DFN,5,+ON,0)),"^",22),1:"")
+"RTN","PSJORRN",50,0)
+ ;******** GUI 27 new sort for Meds Tab
+"RTN","PSJORRN",51,0)
+ I F[53.1 S NDDSS=$G(@(F_ON_",""DSS"")")),LOC=$P(NDDSS,"^")
+"RTN","PSJORRN",52,0)
+ S:F'[53.1 LOC=$P(ND8,"^") S LOC=$S($P($G(NDDSS),"^",2):LOC,1:"~") I LOC S LOC=$P($G(^SC(LOC,0)),"^")
+"RTN","PSJORRN",53,0)
+ S PSJST=$P(ND0,"^",9)
+"RTN","PSJORRN",54,0)
+ S GP=$S((",A,R,H,RE,")[(","_PSJST_","):1,(",P,N,")[(","_PSJST_","):2,PSJST="E":3,(",D,DE,DR,")[(","_PSJST_","):4,1:0)
+"RTN","PSJORRN",55,0)
+ S PSJST2=$S(PSJST="A":1,PSJST="R":2,PSJST="H":3,PSJST="S":4,PSJST="P":5,PSJST="O":6,PSJST="N":7,PSJST="I":8,PSJST="P":9,GP=4&($G(PRIO)="D"):10,PSJST="E":11,PSJST="D":12,PSJST="DE":13,PSJST="RE":14,PSJST="R":15,1:0)
+"RTN","PSJORRN",56,0)
+ S PSJOI=$P(NDP2,"^"),PSJOINM=$P($G(^PS(50.7,+PSJOI,0)),"^")
+"RTN","PSJORRN",57,0)
+ ;*******
+"RTN","PSJORRN",58,0)
+ S TFN2=$G(TFN2)+1
+"RTN","PSJORRN",59,0)
+ S CNT=0,PSJOINM=$S(PSJOINM]"":PSJOINM,1:"UNKNOWN")
+"RTN","PSJORRN",60,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,0)=FON_";I"_U_DN(1)_"^^"_$P(ND2,U,4)_"^^"_DO_U_UNITS_U_$P(ND0,U,21)_U_STAT_U_U_U_U_NOTGIVEN_U_($P(ND0,U,9)="P"&($P(ND0,U,24)="R"))_U_$P(ND2,U,2)_U_$G(RNWDT)
+"RTN","PSJORRN",61,0)
+ K ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"CLINIC",0) I PSJCLIN]"" S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"CLINIC",0)=PSJCLIN
+"RTN","PSJORRN",62,0)
+ S PROVIDER=$P($G(@(F_+ON_",0)")),"^",2)
+"RTN","PSJORRN",63,0)
+ I PROVIDER S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"P",0)=PROVIDER_"^"_$P($G(^VA(200,PROVIDER,0)),"^")
+"RTN","PSJORRN",64,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"MDR",0)=MR]"" S:MR]"" ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"MDR",1,0)=MR
+"RTN","PSJORRN",65,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"SCH",0)=$P(ND2,U)]"" S:$P(ND2,U)]"" ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"SCH",1,0)=$P(ND2,U)
+"RTN","PSJORRN",66,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"SIG",0)=INST]"" S:INST]"" ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"SIG",1,0)=INST
+"RTN","PSJORRN",67,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"ADM",0)=$P(ND2,U,5)]"" S:$P(ND2,U,5)]"" ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"ADM",1,0)=$P(ND2,U,5)
+"RTN","PSJORRN",68,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"SIO",0)=ND6]"" S:ND6]"" ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"SIO",1,0)=ND6
+"RTN","PSJORRN",69,0)
+ Q
+"RTN","PSJORRN",70,0)
+ ;
+"RTN","PSJORRN",71,0)
+IVTMP ;*** Set ^TMP for IV orders.
+"RTN","PSJORRN",72,0)
+ N PROVIDER,START,STOP,EDTCMPLX,NDP2,IVLIM,PRIO,LOC,NDDSS
+"RTN","PSJORRN",73,0)
+ S (PROVIDER,START,STOP,EDTCMPLX,NDP2,IVLIM,PRIO,LOC,NDDSS)=""
+"RTN","PSJORRN",74,0)
+ S NDP2=$G(@(F_ON_",.2)")) S EDTCMPLX=$P(NDP2,"^",8),PRIO=$P(NDP2,"^",4)
+"RTN","PSJORRN",75,0)
+ S ND0=$G(@(F_ON_",0)")) I 'EDTCMPLX I F'["53.1",($P(ND0,U,2)>EDT) Q
+"RTN","PSJORRN",76,0)
+ D TYPE
+"RTN","PSJORRN",77,0)
+ S FON=+ON_$S(F["53.1":"P",1:"V"),TFN2=TFN2+1,CNT=0
+"RTN","PSJORRN",78,0)
+ S RNWDT=$$LASTREN^PSJLMPRI(DFN,FON) I RNWDT S RNWDT=+RNWDT
+"RTN","PSJORRN",79,0)
+ ;******** GUI 27 new sort for Meds Tab
+"RTN","PSJORRN",80,0)
+ S NDDSS=$G(@(F_ON_",""DSS"")")),NDP2=$G(@(F_ON_",.2)"))
+"RTN","PSJORRN",81,0)
+ S PSJOI=$P(NDP2,"^")
+"RTN","PSJORRN",82,0)
+ I F[53.1 S PSJST=$P(ND0,"^",9)
+"RTN","PSJORRN",83,0)
+ I F'[53.1 S PSJST=$P(ND0,"^",17)
+"RTN","PSJORRN",84,0)
+ S GP=$S((",A,R,H,RE,")[(","_PSJST_","):1,(",P,N,")[(","_PSJST_","):2,PSJST="E":3,(",D,DE,DR,")[(","_PSJST_","):4,1:0)
+"RTN","PSJORRN",85,0)
+ S PSJST2=$S(PSJST="A":1,PSJST="R":2,PSJST="H":3,PSJST="S":4,PSJST="P":5,PSJST="O":6,PSJST="N":7,PSJST="I":8,PSJST="P":9,GP=4&($G(PRIO)="D"):10,PSJST="E":11,PSJST="D":12,PSJST="DE":13,PSJST="RE":14,PSJST="R":15,1:0)
+"RTN","PSJORRN",86,0)
+ S LOC=$P(NDDSS,"^") S LOC=$S($P(NDDSS,"^",2):LOC,1:"~") I LOC S LOC=$P($G(^SC(LOC,0)),"^")
+"RTN","PSJORRN",87,0)
+ I PSJOI'="" S PSJOINM=$P($G(^PS(50.7,+PSJOI,0)),"^")
+"RTN","PSJORRN",88,0)
+ I PSJOI="" S PSJOINM="Orderable Item Not Found"
+"RTN","PSJORRN",89,0)
+ ;********
+"RTN","PSJORRN",90,0)
+ S CNT=0,PSJOINM=$S(PSJOINM]"":PSJOINM,1:"UNKNOWN")
+"RTN","PSJORRN",91,0)
+ F X=0:0 S X=$O(@(F_ON_",""AD"","_X_")")) Q:'X  S ND=$G(@(F_ON_",""AD"","_X_",0)")),DN=$P($G(^PS(52.6,+ND,0)),U),Y=DN_U_$P(ND,U,2) S:$P(ND,U,3) Y=Y_U_$P(ND,U,3) S CNT=CNT+1,^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"A",CNT,0)=Y
+"RTN","PSJORRN",92,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"A",0)=CNT,CNT=0
+"RTN","PSJORRN",93,0)
+ F X=0:0 S X=$O(@(F_ON_",""SOL"","_X_")")) Q:'X  S ND=$G(@(F_ON_",""SOL"","_X_",0)")),DN=$G(^PS(52.7,+ND,0)),CNT=CNT+1,^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"B",CNT,0)=$P(DN,U)_U_$P(ND,U,2)_U_$P(DN,U,4)
+"RTN","PSJORRN",94,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"B",0)=CNT
+"RTN","PSJORRN",95,0)
+ S TYPE=$P(ND0,U,4),(MR,SCH,INST,INFUS)=""
+"RTN","PSJORRN",96,0)
+ I FON["P" S ND2=$G(^PS(53.1,+ON,2)),SCH=$P(ND2,U),START=$P(ND2,U,2),STOP=$P(ND2,U,4),MR=$P(ND0,U,3),INFUS=$P($G(^PS(53.1,+ON,8)),U,5),STAT=$$CODES^PSIVUTL($P(ND0,U,9),53.1,28),ADM=$P(ND2,U,5),SIO=$P($G(@(F_+ON_",6)")),"^")
+"RTN","PSJORRN",97,0)
+ I FON'["P" S START=$P(ND0,U,2),STOP=$P(ND0,U,3),SCH=$P(ND0,U,9),INFUS=$P(ND0,U,8),MR=$P($G(^PS(55,DFN,"IV",+ON,.2)),U,3),STAT=$$CODES^PSIVUTL($P(ND0,U,17),55.01,100),ADM=$P(ND0,U,11),SIO=$P($G(@(F_+ON_",3)")),"^")
+"RTN","PSJORRN",98,0)
+ S DN=$G(@(F_+ON_",.2)")),DO=$P(DN,U,2)
+"RTN","PSJORRN",99,0)
+ S DN=$S(+$P(DN,U):$$OIDF^PSJLMUT1($P(DN,U)),1:"")
+"RTN","PSJORRN",100,0)
+ S:MR MR=$$MR^PSJORRE1(+MR),INST=$G(@(F_+ON_",.3)"))
+"RTN","PSJORRN",101,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,0)=FON_";I"_U_DN_U_INFUS_U_STOP_"^^"_DO_"^^"_$P(ND0,"^",21)_U_STAT_U_U_U_U_U_($P(ND0,U,9)="P"&($P(ND0,U,24)="R"))_U_START_U_$G(RNWDT)
+"RTN","PSJORRN",102,0)
+ K ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"CLINIC",0) I PSJCLIN]"" S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"CLINIC",0)=PSJCLIN
+"RTN","PSJORRN",103,0)
+ S PROVIDER=$P($G(@(F_+ON_",0)")),"^",6)
+"RTN","PSJORRN",104,0)
+ I PROVIDER S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"P",0)=PROVIDER_"^"_$P($G(^VA(200,PROVIDER,0)),"^")
+"RTN","PSJORRN",105,0)
+ S ND2P5=$G(@(F_+ON_",2.5)")) S IVLIM=$P(ND2P5,U,4) I $E(IVLIM)="a" S IVLIM="doses"_$P(IVLIM,"a",2)
+"RTN","PSJORRN",106,0)
+ I IVLIM="" S IVLIM=$P(ND2P5,U,2) S:(IVLIM'["d")&(IVLIM'["h") IVLIM=""
+"RTN","PSJORRN",107,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"MDR",0)=MR]"" S:MR]"" ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"MDR",1,0)=MR
+"RTN","PSJORRN",108,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"SIG",0)=INST]"" S:INST]"" ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"SIG",1,0)=INST
+"RTN","PSJORRN",109,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"SCH",0)=SCH]"" S:SCH]"" ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"SCH",1,0)=SCH
+"RTN","PSJORRN",110,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"ADM",0)=ADM]"" S:ADM]"" ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"ADM",1,0)=ADM
+"RTN","PSJORRN",111,0)
+ S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"SIO",0)=SIO]"" S:SIO]"" ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"SIO",1,0)=SIO
+"RTN","PSJORRN",112,0)
+ I $G(IVLIM)]"" S ^TMP("PSJTMP",$J,GP,PSJST,LOC,PSJOINM,TFN2,"IVLIM",0)=IVLIM
+"RTN","PSJORRN",113,0)
+ Q
+"RTN","PSJORRN",114,0)
+STAT(Y,X) ;* Return the full status instead of just the code for U/D.
+"RTN","PSJORRN",115,0)
+ S X=$P($P(";"_$P(Y,U,3),";"_X_":",2),";")
+"RTN","PSJORRN",116,0)
+ Q X
+"RTN","PSJORRN",117,0)
+TYPE ;determine if this is an IMO order or not
+"RTN","PSJORRN",118,0)
+ S (A,PSJCLIN)="" I F["PS(53.1" S A=$G(^PS(53.1,ON,"DSS"))
+"RTN","PSJORRN",119,0)
+ I F["PS(55" S A=$S(F["IV":$G(^PS(55,DFN,"IV",ON,"DSS")),1:$G(^PS(55,DFN,5,ON,8)))
+"RTN","PSJORRN",120,0)
+ I $P(A,"^",2)'="" S PSJCLIN=+A
+"RTN","PSJORRN",121,0)
+ Q
+"RTN","PSJORRN1")
+0^9^B57655173^B55578785
+"RTN","PSJORRN1",1,0)
+PSJORRN1 ;BIR/JCH-RETURN INPATIENT MEDS (CONDENSED) SECOND 'NEW' SORT ; 3/21/11 2:54pm
+"RTN","PSJORRN1",2,0)
+ ;;5.0; INPATIENT MEDICATIONS ;**134,213,225**;16 DEC 97;Build 16
+"RTN","PSJORRN1",3,0)
+ ;
+"RTN","PSJORRN1",4,0)
+ ;Reference to ^PS(52.6 is supported by DBIA 1231.
+"RTN","PSJORRN1",5,0)
+ ;Reference to ^PS(52.7 is supported by DBIA 2173.
+"RTN","PSJORRN1",6,0)
+ ;Reference to ^PS(55 is supported by DBIA 2191.
+"RTN","PSJORRN1",7,0)
+ ;Reference to ^TMP("PS" is documented in DBIA #2383.
+"RTN","PSJORRN1",8,0)
+ ;Reference to ^SC is documented in DBIA #10040.
+"RTN","PSJORRN1",9,0)
+ ;Reference to ^PS(50.7 is supported by DBIA #2180.
+"RTN","PSJORRN1",10,0)
+ ;
+"RTN","PSJORRN1",11,0)
+ ; return condensed list of inpat meds with Alpha Primary Sort
+"RTN","PSJORRN1",12,0)
+OCL(DFN,BDT,EDT,TFN) ; Execute this section if MVIEW=1
+"RTN","PSJORRN1",13,0)
+ N ADM,CNT,DN,DO,F,FON,INFUS,INST,MR,ND,ND0,ND2,ND6,ON,PON,PST,SCH,SIO,STAT,TYPE,UNITS,WBDT,X,Y,PSJCLIN,A,TFN2,PSJOTYP,PSJNOW,PSJ30DAY,%
+"RTN","PSJORRN1",14,0)
+ S TFN2=TFN,PSJNOW=$$DATE^PSJUTL2(),PSJ30DAY=$$FMADD^XLFDT(PSJNOW,-30) S $P(PSJ30DAY,".",2)="000001"
+"RTN","PSJORRN1",15,0)
+ ; PON=placer order number (oerr), FON=filler order number
+"RTN","PSJORRN1",16,0)
+ ; *225 Add time or base on now
+"RTN","PSJORRN1",17,0)
+ D NOW^%DTC S:BDT="" BDT=% S:BDT'["." BDT=BDT_".000001" S WBDT=BDT S:WBDT<PSJ30DAY WBDT=PSJ30DAY
+"RTN","PSJORRN1",18,0)
+ S:EDT="" EDT=9999999
+"RTN","PSJORRN1",19,0)
+ S:EDT'["." EDT=EDT_".999999"
+"RTN","PSJORRN1",20,0)
+ ;*225 Correct Display Calcualtion
+"RTN","PSJORRN1",21,0)
+ S F="^PS(55,DFN,5," F  S WBDT=$O(^PS(55,DFN,5,"AUS",WBDT)) Q:'WBDT  F ON=0:0 S ON=$O(^PS(55,DFN,5,"AUS",WBDT,ON)) Q:'ON  S PSJOTYP="D" D UDTMP
+"RTN","PSJORRN1",22,0)
+ S F="^PS(53.1," F PST="P","N" F ON=0:0 S ON=$O(^PS(53.1,"AS",PST,DFN,ON)) Q:'ON  S X=$P($G(^PS(53.1,+ON,0)),U,4) S PSJOTYP=$S(PST="P":"P1",1:"P2") D @$S(X="U":"UDTMP",1:"IVTMP")
+"RTN","PSJORRN1",23,0)
+ S F="^PS(55,"_DFN_",""IV"",",WBDT=BDT F  S WBDT=$O(^PS(55,DFN,"IV","AIS",WBDT)) Q:'WBDT  F ON=0:0 S ON=$O(^PS(55,DFN,"IV","AIS",WBDT,ON)) Q:'ON  S PSJOTYP="V" D IVTMP
+"RTN","PSJORRN1",24,0)
+ S X1="" F  S X1=$O(^TMP("PSJTMP",$J,X1)) Q:X1=""  S X2="" F  S X2=$O(^TMP("PSJTMP",$J,X1,X2)) Q:X2=""  S X3="" F  S X3=$O(^TMP("PSJTMP",$J,X1,X2,X3)) Q:X3=""  D
+"RTN","PSJORRN1",25,0)
+ .S X4="" F  S X4=$O(^TMP("PSJTMP",$J,X1,X2,X3,X4)) Q:X4=""  D
+"RTN","PSJORRN1",26,0)
+ ..; The merge below sends the proper ^TMP("PS",$J structure back to the calling routine PSJORRE
+"RTN","PSJORRN1",27,0)
+ ..S TFN=$G(TFN)+1 M ^TMP("PS",$J,TFN)=^TMP("PSJTMP",$J,X1,X2,X3,X4) S ^TMP("PS",$J,"PC",0)=TFN
+"RTN","PSJORRN1",28,0)
+ K ^TMP("PSJTMP",$J)
+"RTN","PSJORRN1",29,0)
+ Q
+"RTN","PSJORRN1",30,0)
+ ;
+"RTN","PSJORRN1",31,0)
+UDTMP ;*** Set ^TMP for Unit dose orders.
+"RTN","PSJORRN1",32,0)
+ N PROVIDER,RNWDT,EDTCMPLX,NDP2,PSJSTP,PSJLOC,PSJST2,NDDSS
+"RTN","PSJORRN1",33,0)
+ S (MR,SCH,INST,PON,NDDSS)="",FON=+ON_$S(F["53.1":"P",1:"U")
+"RTN","PSJORRN1",34,0)
+ I $E($G(PSJOTYP))="P",'$G(WBDT) S WBDT=+ON
+"RTN","PSJORRN1",35,0)
+ D TYPE S PSJLOC=$S($G(PSJCLIN):$P($G(^SC(+PSJCLIN,0)),"^"),1:"zzz")
+"RTN","PSJORRN1",36,0)
+ S RNWDT=$$LASTREN^PSJLMPRI(DFN,FON) I RNWDT S RNWDT=+RNWDT
+"RTN","PSJORRN1",37,0)
+ S NDP2=$G(@(F_ON_",.2)")) S EDTCMPLX=$P(NDP2,"^",8)
+"RTN","PSJORRN1",38,0)
+ S ND2=$G(@(F_ON_",2)")) I 'EDTCMPLX I F'["53.1",($P(ND2,U,2)>EDT) Q
+"RTN","PSJORRN1",39,0)
+ S ND0=$G(@(F_ON_",0)")) I 'EDTCMPLX I F["53.1",($P(ND0,U,16)>EDT) Q
+"RTN","PSJORRN1",40,0)
+ S STAT=$$CODES^PSIVUTL($P(ND0,U,9),$S(FON["P":53.1,1:55.06),28)
+"RTN","PSJORRN1",41,0)
+ S ND6=$P($G(@(F_ON_",6)")),"^"),INST=$G(@(F_+ON_",.3)"))
+"RTN","PSJORRN1",42,0)
+ S ND8=$P($G(@(F_ON_",8)")),"^")
+"RTN","PSJORRN1",43,0)
+ S FON=+ON_$S(F["53.1":"P",1:"U"),DO=$P($G(@(F_ON_",.2)")),"^",2)
+"RTN","PSJORRN1",44,0)
+ D DRGDISP^PSJLMUT1(DFN,FON,40,0,.DN,1)
+"RTN","PSJORRN1",45,0)
+ ;*225 Don't allow 0 Units
+"RTN","PSJORRN1",46,0)
+ S UNITS="" I '$O(@(F_+ON_",1,1)")) S UNITS=$P($G(@(F_+ON_",1,1,0)")),U,2) S:(FON["U")&(+UNITS=0) UNITS=1
+"RTN","PSJORRN1",47,0)
+ S:+$P(ND0,U,3) MR=$$MR^PSJORRE1(+$P(ND0,U,3))
+"RTN","PSJORRN1",48,0)
+ N NOTGIVEN S NOTGIVEN=$S(FON["U":$P($G(^PS(55,DFN,5,+ON,0)),"^",22),1:"")
+"RTN","PSJORRN1",49,0)
+ ;******** GUI 27 New sort format #2 for Meds Tab
+"RTN","PSJORRN1",50,0)
+ I F[53.1 S NDDSS=$G(@(F_ON_",""DSS"")")),LOC=$P(NDDSS,"^")
+"RTN","PSJORRN1",51,0)
+ S:F'[53.1 LOC=$P(ND8,"^") S LOC=$S(LOC]"":LOC,1:"~") I LOC S LOC=$P($G(^SC(LOC,0)),"^")
+"RTN","PSJORRN1",52,0)
+ ;PSJ*5*225 include HOLD orders
+"RTN","PSJORRN1",53,0)
+ S PSJST=$P(ND0,"^",9) S PSJST2=$S(PSJST="A":1,PSJST="E":2,PSJST="H":3,1:"") Q:'PSJST2
+"RTN","PSJORRN1",54,0)
+ S PSJOI=$P(NDP2,"^"),PSJOINM=$P($G(^PS(50.7,+PSJOI,0)),"^")
+"RTN","PSJORRN1",55,0)
+ S PSJSTP=+$P(ND2,"^",4)
+"RTN","PSJORRN1",56,0)
+ ;********
+"RTN","PSJORRN1",57,0)
+ S TFN2=$G(TFN2)+1
+"RTN","PSJORRN1",58,0)
+ S DN(1)=$S($G(DN(1))="":"UNKNOWN",1:DN(1))
+"RTN","PSJORRN1",59,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,0)=FON_";I"_U_DN(1)_"^^"_$P(ND2,U,4)_"^^"_DO_U_UNITS_U_$P(ND0,U,21)_U_STAT_U_U_U_U_NOTGIVEN_U_($P(ND0,U,9)="P"&($P(ND0,U,24)="R"))_U_$P(ND2,U,2)_U_$G(RNWDT)
+"RTN","PSJORRN1",60,0)
+ K ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"CLINIC",0) I PSJCLIN]"" S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"CLINIC",0)=PSJCLIN
+"RTN","PSJORRN1",61,0)
+ S PROVIDER=$P($G(@(F_+ON_",0)")),"^",2)
+"RTN","PSJORRN1",62,0)
+ I PROVIDER S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"P",0)=PROVIDER_"^"_$P($G(^VA(200,PROVIDER,0)),"^")
+"RTN","PSJORRN1",63,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"MDR",0)=MR]"" S:MR]"" ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"MDR",1,0)=MR
+"RTN","PSJORRN1",64,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"SCH",0)=$P(ND2,U)]"" S:$P(ND2,U)]"" ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"SCH",1,0)=$P(ND2,U)
+"RTN","PSJORRN1",65,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"SIG",0)=INST]"" S:INST]"" ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"SIG",1,0)=INST
+"RTN","PSJORRN1",66,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"ADM",0)=$P(ND2,U,5)]"" S:$P(ND2,U,5)]"" ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"ADM",1,0)=$P(ND2,U,5)
+"RTN","PSJORRN1",67,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"SIO",0)=ND6]"" S:ND6]"" ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"SIO",1,0)=ND6
+"RTN","PSJORRN1",68,0)
+ Q
+"RTN","PSJORRN1",69,0)
+ ;
+"RTN","PSJORRN1",70,0)
+IVTMP ;*** Set ^TMP for IV orders.
+"RTN","PSJORRN1",71,0)
+ N PROVIDER,START,STOP,EDTCMPLX,NDP2,IVLIM,PSJLOC,NDDSS
+"RTN","PSJORRN1",72,0)
+ S (PROVIDER,START,STOP,EDTCMPLX,NDP2,IVLIM,PSJLOC,NDDSS)=""
+"RTN","PSJORRN1",73,0)
+ I $E($G(PSJOTYP))="P",'$G(WBDT) S WBDT=+ON
+"RTN","PSJORRN1",74,0)
+ S NDP2=$G(@(F_ON_",.2)")) S EDTCMPLX=$P(NDP2,"^",8)
+"RTN","PSJORRN1",75,0)
+ S ND0=$G(@(F_ON_",0)")) I 'EDTCMPLX I F'["53.1",($P(ND0,U,2)>EDT) Q
+"RTN","PSJORRN1",76,0)
+ D TYPE S PSJLOC=$S($G(PSJCLIN):$P($G(^SC(+PSJCLIN,0)),"^"),1:"zzz")
+"RTN","PSJORRN1",77,0)
+ S FON=+ON_$S(F["53.1":"P",1:"V"),CNT=0
+"RTN","PSJORRN1",78,0)
+ S RNWDT=$$LASTREN^PSJLMPRI(DFN,FON) I RNWDT S RNWDT=+RNWDT
+"RTN","PSJORRN1",79,0)
+ ;******** GUI 27 old sort, new format for Meds Tab
+"RTN","PSJORRN1",80,0)
+ S NDDSS=$G(@(F_ON_",""DSS"")")),NDP2=$G(@(F_ON_",.2)"))
+"RTN","PSJORRN1",81,0)
+ S PSJOI=$P(NDP2,"^"),PSJST=""
+"RTN","PSJORRN1",82,0)
+ I F[53.1 S PSJST=$P(ND0,"^",9)
+"RTN","PSJORRN1",83,0)
+ I F'[53.1 S PSJST=$P(ND0,"^",17)
+"RTN","PSJORRN1",84,0)
+ ;PSJ*5*225 include HOLD orders
+"RTN","PSJORRN1",85,0)
+ S PSJST2=$S(PSJST="A":1,PSJST="E":2,PSJST="H":3,1:"") Q:'PSJST2
+"RTN","PSJORRN1",86,0)
+ S LOC=$P(NDDSS,"^") S LOC=$S(LOC]"":LOC,1:"~")  I LOC S LOC=$P($G(^SC(LOC,0)),"^")
+"RTN","PSJORRN1",87,0)
+ I PSJOI'="" S PSJOINM=$P($G(^PS(50.7,+PSJOI,0)),"^")
+"RTN","PSJORRN1",88,0)
+ I PSJOI="" S PSJOINM="Orderable Item Not Found"
+"RTN","PSJORRN1",89,0)
+ S PSJSTP=$P(ND0,"^",3)
+"RTN","PSJORRN1",90,0)
+ ;********
+"RTN","PSJORRN1",91,0)
+ S TFN2=$G(TFN2)+1
+"RTN","PSJORRN1",92,0)
+ S DN(1)=$S($G(DN(1))="":"UNKNOWN",1:DN(1)),CNT=0
+"RTN","PSJORRN1",93,0)
+ F X=0:0 S X=$O(@(F_ON_",""AD"","_X_")")) Q:'X  S ND=$G(@(F_ON_",""AD"","_X_",0)")),DN=$P($G(^PS(52.6,+ND,0)),U),Y=DN_U_$P(ND,U,2) S:$P(ND,U,3) Y=Y_U_$P(ND,U,3) S CNT=CNT+1,DN(CNT)=Y S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"A",CNT,0)=Y
+"RTN","PSJORRN1",94,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"A",0)=CNT,CNT=0
+"RTN","PSJORRN1",95,0)
+ F X=0:0 S X=$O(@(F_ON_",""SOL"","_X_")")) Q:'X  S ND=$G(@(F_ON_",""SOL"","_X_",0)")),DN=$G(^PS(52.7,+ND,0)),CNT=CNT+1,^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"B",CNT,0)=$P(DN,U)_U_$P(ND,U,2)_U_$P(DN,U,4)
+"RTN","PSJORRN1",96,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"B",0)=CNT
+"RTN","PSJORRN1",97,0)
+ S TYPE=$P(ND0,U,4),(MR,SCH,INST,INFUS)=""
+"RTN","PSJORRN1",98,0)
+ I FON["P" S ND2=$G(^PS(53.1,+ON,2)),SCH=$P(ND2,U),START=$P(ND2,U,2),STOP=$P(ND2,U,4),MR=$P(ND0,U,3),INFUS=$P($G(^PS(53.1,+ON,8)),U,5),STAT=$$CODES^PSIVUTL($P(ND0,U,9),53.1,28),ADM=$P(ND2,U,5),SIO=$P($G(@(F_+ON_",6)")),"^")
+"RTN","PSJORRN1",99,0)
+ I FON'["P" S START=$P(ND0,U,2),STOP=$P(ND0,U,3),SCH=$P(ND0,U,9),INFUS=$P(ND0,U,8),MR=$P($G(^PS(55,DFN,"IV",+ON,.2)),U,3),STAT=$$CODES^PSIVUTL($P(ND0,U,17),55.01,100),ADM=$P(ND0,U,11),SIO=$P($G(@(F_+ON_",3)")),"^")
+"RTN","PSJORRN1",100,0)
+ S DN=$G(@(F_+ON_",.2)")),DO=$P(DN,U,2)
+"RTN","PSJORRN1",101,0)
+ S DN=$S(+$P(DN,U):$$OIDF^PSJLMUT1($P(DN,U)),1:"")
+"RTN","PSJORRN1",102,0)
+ S:MR MR=$$MR^PSJORRE1(+MR),INST=$G(@(F_+ON_",.3)"))
+"RTN","PSJORRN1",103,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,0)=FON_";I"_U_DN_U_INFUS_U_STOP_"^^"_DO_"^^"_$P(ND0,"^",21)_U_STAT_U_U_U_U_U_($P(ND0,U,9)="P"&($P(ND0,U,24)="R"))_U_START_U_$G(RNWDT)
+"RTN","PSJORRN1",104,0)
+ K ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"CLINIC",0) I PSJCLIN]"" S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"CLINIC",0)=PSJCLIN
+"RTN","PSJORRN1",105,0)
+ S PROVIDER=$P($G(@(F_+ON_",0)")),"^",6)
+"RTN","PSJORRN1",106,0)
+ I PROVIDER S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"P",0)=PROVIDER_"^"_$P($G(^VA(200,PROVIDER,0)),"^")
+"RTN","PSJORRN1",107,0)
+ S ND2P5=$G(@(F_+ON_",2.5)")) S IVLIM=$P(ND2P5,U,4) I $E(IVLIM)="a" S IVLIM="doses"_$P(IVLIM,"a",2)
+"RTN","PSJORRN1",108,0)
+ I IVLIM="" S IVLIM=$P(ND2P5,U,2) S:(IVLIM'["d")&(IVLIM'["h") IVLIM=""
+"RTN","PSJORRN1",109,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"MDR",0)=MR]"" S:MR]"" ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"MDR",1,0)=MR
+"RTN","PSJORRN1",110,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"SIG",0)=INST]"" S:INST]"" ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"SIG",1,0)=INST
+"RTN","PSJORRN1",111,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"SCH",0)=SCH]"" S:SCH]"" ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"SCH",1,0)=SCH
+"RTN","PSJORRN1",112,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"ADM",0)=ADM]"" S:ADM]"" ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"ADM",1,0)=ADM
+"RTN","PSJORRN1",113,0)
+ S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"SIO",0)=SIO]"" S:SIO]"" ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"SIO",1,0)=SIO
+"RTN","PSJORRN1",114,0)
+ I $G(IVLIM)]"" S ^TMP("PSJTMP",$J,DN(1),PSJST2,WBDT,TFN2,"IVLIM",0)=IVLIM
+"RTN","PSJORRN1",115,0)
+ Q
+"RTN","PSJORRN1",116,0)
+STAT(Y,X) ;* Return the full status instead of just the code for U/D.
+"RTN","PSJORRN1",117,0)
+ S X=$P($P(";"_$P(Y,U,3),";"_X_":",2),";")
+"RTN","PSJORRN1",118,0)
+ Q X
+"RTN","PSJORRN1",119,0)
+TYPE ;determine if this is an IMO order or not
+"RTN","PSJORRN1",120,0)
+ S (A,PSJCLIN)="" I F["PS(53.1" S A=$G(^PS(53.1,ON,"DSS"))
+"RTN","PSJORRN1",121,0)
+ I F["PS(55" S A=$S(F["IV":$G(^PS(55,DFN,"IV",ON,"DSS")),1:$G(^PS(55,DFN,5,ON,8)))
+"RTN","PSJORRN1",122,0)
+ I $P(A,"^",2)'="" S PSJCLIN=+A
+"RTN","PSJORRN1",123,0)
+ Q
+"RTN","PSJORRO")
+0^10^B63875984^B62410106
+"RTN","PSJORRO",1,0)
+PSJORRO ;BIR/MV-RETURN INPATIENT MEDS (CONDENSED) OLD SORT ; 2/28/11 3:27pm
+"RTN","PSJORRO",2,0)
+ ;;5.0; INPATIENT MEDICATIONS ;**134,213,225**;16 DEC 97;Build 16
+"RTN","PSJORRO",3,0)
+ ;
+"RTN","PSJORRO",4,0)
+ ;Reference to ^PS(52.6 is supported by DBIA 1231.
+"RTN","PSJORRO",5,0)
+ ;Reference to ^PS(52.7 is supported by DBIA 2173.
+"RTN","PSJORRO",6,0)
+ ;Reference to ^PS(55 is supported by DBIA 2191.
+"RTN","PSJORRO",7,0)
+ ;Reference to ^TMP("PS" is documented in DBIA #2383.
+"RTN","PSJORRO",8,0)
+ ;Reference to ^SC is documented in DBIA #10040.
+"RTN","PSJORRO",9,0)
+ ;Reference to ^PS(50.7 is supported by DBIA #2180.
+"RTN","PSJORRO",10,0)
+ ;
+"RTN","PSJORRO",11,0)
+ ; return condensed list of inpat meds
+"RTN","PSJORRO",12,0)
+OCL(DFN,BDT,EDT,TFN) ; Execute this section if MVIEW=1
+"RTN","PSJORRO",13,0)
+ N ADM,CNT,DN,DO,F,FON,INFUS,INST,MR,ND,ND0,ND2,ND6,ON,PON,PST,SCH,SIO,STAT,TYPE,UNITS,WBDT,X,Y,PSJCLIN,A,TFN2,PSJOTYP,%
+"RTN","PSJORRO",14,0)
+ S TFN2=TFN
+"RTN","PSJORRO",15,0)
+ ; PON=placer order number (oerr), FON=filler order number
+"RTN","PSJORRO",16,0)
+ ;*225 Add time or use now
+"RTN","PSJORRO",17,0)
+ D NOW^%DTC S:BDT="" BDT=% S:BDT'["." BDT=BDT_".000001"
+"RTN","PSJORRO",18,0)
+ S:EDT="" EDT=9999999
+"RTN","PSJORRO",19,0)
+ S:EDT'["." EDT=EDT_".999999"
+"RTN","PSJORRO",20,0)
+ ;*225 Use Correct Start
+"RTN","PSJORRO",21,0)
+ S F="^PS(55,DFN,5,",WBDT=BDT F  S WBDT=$O(^PS(55,DFN,5,"AUS",WBDT)) Q:'WBDT  F ON=0:0 S ON=$O(^PS(55,DFN,5,"AUS",WBDT,ON)) Q:'ON  S PSJOTYP="D" D UDTMP
+"RTN","PSJORRO",22,0)
+ S F="^PS(53.1," F PST="P","N" F ON=0:0 S ON=$O(^PS(53.1,"AS",PST,DFN,ON)) Q:'ON  S X=$P($G(^PS(53.1,+ON,0)),U,4) S PSJOTYP=$S(PST="P":"P1",1:"P2") D @$S(X="U":"UDTMP",1:"IVTMP")
+"RTN","PSJORRO",23,0)
+ S F="^PS(55,"_DFN_",""IV"",",WBDT=BDT F  S WBDT=$O(^PS(55,DFN,"IV","AIS",WBDT)) Q:'WBDT  F ON=0:0 S ON=$O(^PS(55,DFN,"IV","AIS",WBDT,ON)) Q:'ON  S PSJOTYP="V" D IVTMP
+"RTN","PSJORRO",24,0)
+ S X1="" F  S X1=$O(^TMP("PSJTMP",$J,X1)) Q:X1=""  S X2="" F  S X2=$O(^TMP("PSJTMP",$J,X1,X2)) Q:X2=""  S X3="" F  S X3=$O(^TMP("PSJTMP",$J,X1,X2,X3)) Q:X3=""  D
+"RTN","PSJORRO",25,0)
+ .S X4="" F  S X4=$O(^TMP("PSJTMP",$J,X1,X2,X3,X4)) Q:X4=""  S X5="" F  S X5=$O(^TMP("PSJTMP",$J,X1,X2,X3,X4,X5)) Q:X5=""  D
+"RTN","PSJORRO",26,0)
+ ..; The merge below sends the proper ^TMP("PS",$J structure back to the calling routine PSJORRE
+"RTN","PSJORRO",27,0)
+ ..S TFN=$G(TFN)+1 M ^TMP("PS",$J,TFN)=^TMP("PSJTMP",$J,X1,X2,X3,X4,X5) S ^TMP("PS",$J,"PC",0)=TFN
+"RTN","PSJORRO",28,0)
+ K ^TMP("PSJTMP",$J)
+"RTN","PSJORRO",29,0)
+ Q
+"RTN","PSJORRO",30,0)
+ ;
+"RTN","PSJORRO",31,0)
+UDTMP ;*** Set ^TMP for Unit dose orders.
+"RTN","PSJORRO",32,0)
+ N PROVIDER,RNWDT,EDTCMPLX,NDP2,PSJSTP,PSJLOC,NDDSS
+"RTN","PSJORRO",33,0)
+ S (PROVIDER,RNWDT,EDTCMPLX,NDP2,PSJSTP,PSJLOC,NDDSS)=""
+"RTN","PSJORRO",34,0)
+ S (MR,SCH,INST,PON)="",FON=+ON_$S(F["53.1":"P",1:"U")
+"RTN","PSJORRO",35,0)
+ I $E($G(PSJOTYP))="P",'$G(WBDT) S WBDT=+ON
+"RTN","PSJORRO",36,0)
+ D TYPE S PSJLOC=$S($G(PSJCLIN):$P($G(^SC(+PSJCLIN,0)),"^"),1:"zzz")
+"RTN","PSJORRO",37,0)
+ S RNWDT=$$LASTREN^PSJLMPRI(DFN,FON) I RNWDT S RNWDT=+RNWDT
+"RTN","PSJORRO",38,0)
+ S NDP2=$G(@(F_ON_",.2)")) S EDTCMPLX=$P(NDP2,"^",8)
+"RTN","PSJORRO",39,0)
+ S ND2=$G(@(F_ON_",2)")) I 'EDTCMPLX I F'["53.1",($P(ND2,U,2)>EDT) Q
+"RTN","PSJORRO",40,0)
+ S ND0=$G(@(F_ON_",0)")) I 'EDTCMPLX I F["53.1",($P(ND0,U,16)>EDT) Q
+"RTN","PSJORRO",41,0)
+ S STAT=$$CODES^PSIVUTL($P(ND0,U,9),$S(FON["P":53.1,1:55.06),28)
+"RTN","PSJORRO",42,0)
+ S ND6=$P($G(@(F_ON_",6)")),"^"),INST=$G(@(F_+ON_",.3)"))
+"RTN","PSJORRO",43,0)
+ S ND8=$P($G(@(F_ON_",8)")),"^")
+"RTN","PSJORRO",44,0)
+ S FON=+ON_$S(F["53.1":"P",1:"U"),DO=$P($G(@(F_ON_",.2)")),"^",2)
+"RTN","PSJORRO",45,0)
+ D DRGDISP^PSJLMUT1(DFN,FON,40,0,.DN,1)
+"RTN","PSJORRO",46,0)
+ ;*225 Don't allow 0 Units
+"RTN","PSJORRO",47,0)
+ S UNITS="" I '$O(@(F_+ON_",1,1)")) S UNITS=$P($G(@(F_+ON_",1,1,0)")),U,2) S:(FON["U")&(+UNITS=0) UNITS=1
+"RTN","PSJORRO",48,0)
+ S:+$P(ND0,U,3) MR=$$MR^PSJORRE1(+$P(ND0,U,3))
+"RTN","PSJORRO",49,0)
+ N NOTGIVEN S NOTGIVEN=$S(FON["U":$P($G(^PS(55,DFN,5,+ON,0)),"^",22),1:"")
+"RTN","PSJORRO",50,0)
+ ;******** GUI 27 old sort, new format for Meds Tab
+"RTN","PSJORRO",51,0)
+ I F[53.1 S NDDSS=$G(@(F_ON_",""DSS"")")),LOC=$P(NDDSS,"^")
+"RTN","PSJORRO",52,0)
+ S:F'[53.1 LOC=$P(ND8,"^") S LOC=$S(LOC]"":LOC,1:"~") I LOC S LOC=$P($G(^SC(LOC,0)),"^")
+"RTN","PSJORRO",53,0)
+ S PSJST=$P(ND0,"^",9)
+"RTN","PSJORRO",54,0)
+ S GP=$S((",A,H,")[(","_PSJST_","):2,(",P,N,")[(","_PSJST_","):1,PSJST="E":3,(",DE,DR,D,RE,R,")[(","_PSJST_","):4,1:0)
+"RTN","PSJORRO",55,0)
+ S PSJST2=$S(PSJST="A":1,PSJST="R":2,PSJST="H":3,PSJST="S":4,PSJST="P":5,PSJST="O":6,PSJST="N":7,PSJST="I":8,PSJST="P":9,GP=4&($G(PRIO)="D"):10,PSJST="E":11,PSJST="D":12,PSJST="DE":13,PSJST="RE":14,PSJST="R":15,1:0)
+"RTN","PSJORRO",56,0)
+ S PSJOI=$P(NDP2,"^"),PSJOINM=$P($G(^PS(50.7,+PSJOI,0)),"^")
+"RTN","PSJORRO",57,0)
+ S PSJSTP=+$P(ND2,"^",4)
+"RTN","PSJORRO",58,0)
+ ;********
+"RTN","PSJORRO",59,0)
+ S TFN2=$G(TFN2)+1
+"RTN","PSJORRO",60,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,0)=FON_";I"_U_DN(1)_"^^"_$P(ND2,U,4)_"^^"_DO_U_UNITS_U_$P(ND0,U,21)_U_STAT_U_U_U_U_NOTGIVEN_U_($P(ND0,U,9)="P"&($P(ND0,U,24)="R"))_U_$P(ND2,U,2)_U_$G(RNWDT)
+"RTN","PSJORRO",61,0)
+ K ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"CLINIC",0) I PSJCLIN]"" S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"CLINIC",0)=PSJCLIN
+"RTN","PSJORRO",62,0)
+ S PROVIDER=$P($G(@(F_+ON_",0)")),"^",2)
+"RTN","PSJORRO",63,0)
+ I PROVIDER S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"P",0)=PROVIDER_"^"_$P($G(^VA(200,PROVIDER,0)),"^")
+"RTN","PSJORRO",64,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"MDR",0)=MR]"" S:MR]"" ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"MDR",1,0)=MR
+"RTN","PSJORRO",65,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"SCH",0)=$P(ND2,U)]"" S:$P(ND2,U)]"" ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"SCH",1,0)=$P(ND2,U)
+"RTN","PSJORRO",66,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"SIG",0)=INST]"" S:INST]"" ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"SIG",1,0)=INST
+"RTN","PSJORRO",67,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"ADM",0)=$P(ND2,U,5)]"" S:$P(ND2,U,5)]"" ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"ADM",1,0)=$P(ND2,U,5)
+"RTN","PSJORRO",68,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"SIO",0)=ND6]"" S:ND6]"" ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"SIO",1,0)=ND6
+"RTN","PSJORRO",69,0)
+ Q
+"RTN","PSJORRO",70,0)
+ ;
+"RTN","PSJORRO",71,0)
+IVTMP ;*** Set ^TMP for IV orders.
+"RTN","PSJORRO",72,0)
+ N PROVIDER,START,STOP,EDTCMPLX,NDP2,IVLIM,PSJLOC
+"RTN","PSJORRO",73,0)
+ I $E($G(PSJOTYP))="P",'$G(WBDT) S WBDT=+ON
+"RTN","PSJORRO",74,0)
+ S NDP2=$G(@(F_ON_",.2)")) S EDTCMPLX=$P(NDP2,"^",8)
+"RTN","PSJORRO",75,0)
+ S ND0=$G(@(F_ON_",0)")) I 'EDTCMPLX I F'["53.1",($P(ND0,U,2)>EDT) Q
+"RTN","PSJORRO",76,0)
+ D TYPE S PSJLOC=$S($G(PSJCLIN):$P($G(^SC(+PSJCLIN,0)),"^"),1:"zzz")
+"RTN","PSJORRO",77,0)
+ S FON=+ON_$S(F["53.1":"P",1:"V"),CNT=0
+"RTN","PSJORRO",78,0)
+ S RNWDT=$$LASTREN^PSJLMPRI(DFN,FON) I RNWDT S RNWDT=+RNWDT
+"RTN","PSJORRO",79,0)
+ ;******** GUI 27 old sort, new format for Meds Tab
+"RTN","PSJORRO",80,0)
+ S NDDSS=$G(@(F_ON_",""DSS"")")),NDP2=$G(@(F_ON_",.2)"))
+"RTN","PSJORRO",81,0)
+ S PSJOI=$P(NDP2,"^")
+"RTN","PSJORRO",82,0)
+ I F[53.1 S PSJST=$P(ND0,"^",9)
+"RTN","PSJORRO",83,0)
+ I F'[53.1 S PSJST=$P(ND0,"^",17)
+"RTN","PSJORRO",84,0)
+ S GP=$S((",A,H,")[(","_PSJST_","):2,(",P,N,")[(","_PSJST_","):1,PSJST="E":3,(",DE,DR,D,RE,R,")[(","_PSJST_","):4,1:0)
+"RTN","PSJORRO",85,0)
+ S PSJST2=$S(PSJST="A":1,PSJST="R":2,PSJST="H":3,PSJST="S":4,PSJST="P":5,PSJST="O":6,PSJST="N":7,PSJST="I":8,PSJST="P":9,GP=4&($G(PRIO)="D"):10,PSJST="E":11,PSJST="D":12,PSJST="DE":13,PSJST="RE":14,PSJST="R":15,1:0)
+"RTN","PSJORRO",86,0)
+ S LOC=$P(NDDSS,"^") S LOC=$S(LOC]"":LOC,1:"~")  I LOC S LOC=$P($G(^SC(LOC,0)),"^")
+"RTN","PSJORRO",87,0)
+ I PSJOI="" S PSJOINM="Orderable Item Not Found"
+"RTN","PSJORRO",88,0)
+ I PSJOI'="" S PSJOINM=$P($G(^PS(50.7,+PSJOI,0)),"^")
+"RTN","PSJORRO",89,0)
+ S PSJSTP=$P(ND0,"^",3)
+"RTN","PSJORRO",90,0)
+ ;********
+"RTN","PSJORRO",91,0)
+ S TFN2=$G(TFN2)+1
+"RTN","PSJORRO",92,0)
+ F X=0:0 S X=$O(@(F_ON_",""AD"","_X_")")) Q:'X  S ND=$G(@(F_ON_",""AD"","_X_",0)")),DN=$P($G(^PS(52.6,+ND,0)),U),Y=DN_U_$P(ND,U,2) S:$P(ND,U,3) Y=Y_U_$P(ND,U,3) S CNT=CNT+1,^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"A",CNT,0)=Y
+"RTN","PSJORRO",93,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"A",0)=CNT,CNT=0
+"RTN","PSJORRO",94,0)
+ F X=0:0 S X=$O(@(F_ON_",""SOL"","_X_")")) Q:'X  S ND=$G(@(F_ON_",""SOL"","_X_",0)")),DN=$G(^PS(52.7,+ND,0)),CNT=CNT+1,^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"B",CNT,0)=$P(DN,U)_U_$P(ND,U,2)_U_$P(DN,U,4)
+"RTN","PSJORRO",95,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"B",0)=CNT
+"RTN","PSJORRO",96,0)
+ S TYPE=$P(ND0,U,4),(MR,SCH,INST,INFUS)=""
+"RTN","PSJORRO",97,0)
+ I FON["P" S ND2=$G(^PS(53.1,+ON,2)),SCH=$P(ND2,U),START=$P(ND2,U,2),STOP=$P(ND2,U,4),MR=$P(ND0,U,3),INFUS=$P($G(^PS(53.1,+ON,8)),U,5),STAT=$$CODES^PSIVUTL($P(ND0,U,9),53.1,28),ADM=$P(ND2,U,5),SIO=$P($G(@(F_+ON_",6)")),"^")
+"RTN","PSJORRO",98,0)
+ I FON'["P" S START=$P(ND0,U,2),STOP=$P(ND0,U,3),SCH=$P(ND0,U,9),INFUS=$P(ND0,U,8),MR=$P($G(^PS(55,DFN,"IV",+ON,.2)),U,3),STAT=$$CODES^PSIVUTL($P(ND0,U,17),55.01,100),ADM=$P(ND0,U,11),SIO=$P($G(@(F_+ON_",3)")),"^")
+"RTN","PSJORRO",99,0)
+ S DN=$G(@(F_+ON_",.2)")),DO=$P(DN,U,2)
+"RTN","PSJORRO",100,0)
+ S DN=$S(+$P(DN,U):$$OIDF^PSJLMUT1($P(DN,U)),1:"")
+"RTN","PSJORRO",101,0)
+ S:MR MR=$$MR^PSJORRE1(+MR),INST=$G(@(F_+ON_",.3)"))
+"RTN","PSJORRO",102,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,0)=FON_";I"_U_DN_U_INFUS_U_STOP_"^^"_DO_"^^"_$P(ND0,"^",21)_U_STAT_U_U_U_U_U_($P(ND0,U,9)="P"&($P(ND0,U,24)="R"))_U_START_U_$G(RNWDT)
+"RTN","PSJORRO",103,0)
+ K ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"CLINIC",0) I PSJCLIN]"" S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"CLINIC",0)=PSJCLIN
+"RTN","PSJORRO",104,0)
+ S PROVIDER=$P($G(@(F_+ON_",0)")),"^",6)
+"RTN","PSJORRO",105,0)
+ I PROVIDER S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"P",0)=PROVIDER_"^"_$P($G(^VA(200,PROVIDER,0)),"^")
+"RTN","PSJORRO",106,0)
+ S ND2P5=$G(@(F_+ON_",2.5)")) S IVLIM=$P(ND2P5,U,4) I $E(IVLIM)="a" S IVLIM="doses"_$P(IVLIM,"a",2)
+"RTN","PSJORRO",107,0)
+ I IVLIM="" S IVLIM=$P(ND2P5,U,2) S:(IVLIM'["d")&(IVLIM'["h") IVLIM=""
+"RTN","PSJORRO",108,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"MDR",0)=MR]"" S:MR]"" ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"MDR",1,0)=MR
+"RTN","PSJORRO",109,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"SIG",0)=INST]"" S:INST]"" ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"SIG",1,0)=INST
+"RTN","PSJORRO",110,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"SCH",0)=SCH]"" S:SCH]"" ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"SCH",1,0)=SCH
+"RTN","PSJORRO",111,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"ADM",0)=ADM]"" S:ADM]"" ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"ADM",1,0)=ADM
+"RTN","PSJORRO",112,0)
+ S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"SIO",0)=SIO]"" S:SIO]"" ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"SIO",1,0)=SIO
+"RTN","PSJORRO",113,0)
+ I $G(IVLIM)]"" S ^TMP("PSJTMP",$J,PSJLOC,GP,PSJST,WBDT,TFN2,"IVLIM",0)=IVLIM
+"RTN","PSJORRO",114,0)
+ Q
+"RTN","PSJORRO",115,0)
+STAT(Y,X) ;* Return the full status instead of just the code for U/D.
+"RTN","PSJORRO",116,0)
+ S X=$P($P(";"_$P(Y,U,3),";"_X_":",2),";")
+"RTN","PSJORRO",117,0)
+ Q X
+"RTN","PSJORRO",118,0)
+TYPE ;determine if this is an IMO order or not
+"RTN","PSJORRO",119,0)
+ S (A,PSJCLIN)="" I F["PS(53.1" S A=$G(^PS(53.1,ON,"DSS"))
+"RTN","PSJORRO",120,0)
+ I F["PS(55" S A=$S(F["IV":$G(^PS(55,DFN,"IV",ON,"DSS")),1:$G(^PS(55,DFN,5,ON,8)))
+"RTN","PSJORRO",121,0)
+ I $P(A,"^",2)'="" S PSJCLIN=+A
+"RTN","PSJORRO",122,0)
+ Q
+"RTN","PSJPXRM1")
+0^11^B33659931^B33327052
+"RTN","PSJPXRM1",1,0)
+PSJPXRM1 ;BIR/MV-RETURN INPATIENT ACTIVE MEDS (EXPANDED) ; 2/28/11 3:28pm
+"RTN","PSJPXRM1",2,0)
+ ;;5.0; INPATIENT MEDICATIONS ;**90,170,225**;16 DEC 97;Build 16
+"RTN","PSJPXRM1",3,0)
+ ;
+"RTN","PSJPXRM1",4,0)
+ ; Reference to ^PS(51.2 is supported by DBIA 2178.
+"RTN","PSJPXRM1",5,0)
+ ; Reference to ^PS(52.6 is supported by DBIA 1231.
+"RTN","PSJPXRM1",6,0)
+ ; Reference to ^PS(52.7 is supported by DBIA 2173.
+"RTN","PSJPXRM1",7,0)
+ ; Reference to ^PS(55 is supported by DBIA 2191.
+"RTN","PSJPXRM1",8,0)
+ ; Reference to ^PSDRUG is supported by DBIA 2192.
+"RTN","PSJPXRM1",9,0)
+ ; Reference to ^VA(200 is supported by DBIA 10060.
+"RTN","PSJPXRM1",10,0)
+ ; Reference to ^DIC is supported by DBIA 10006.
+"RTN","PSJPXRM1",11,0)
+ ;
+"RTN","PSJPXRM1",12,0)
+OEL(DAS,NAME)         ; return list of expanded inpat meds
+"RTN","PSJPXRM1",13,0)
+ N ADM,CNT,DFN,DN,DO,F,INFUS,INST,MR,ND,ND0,ND2,ND6,NDOI,ON,SCH,SIO,START,STAT,STOP,TYP,UNITS,X,Y
+"RTN","PSJPXRM1",14,0)
+ S DFN=$P(DAS,";")
+"RTN","PSJPXRM1",15,0)
+ S F=$S($P(DAS,";",2)["P":"^PS(53.1,",$P(DAS,";",2)=5:"^PS(55,DFN,5,",1:"^PS(55,"_DFN_",""IV"",")
+"RTN","PSJPXRM1",16,0)
+ S ON=$P(DAS,";",3)_$S($P(DAS,";",2)="IV":"V",$P(DAS,";",2)=5:"U",1:"P")
+"RTN","PSJPXRM1",17,0)
+ I ON'["P",'$D(@(F_+ON_")")) Q
+"RTN","PSJPXRM1",18,0)
+ I ON["P" S X=$G(^PS(53.1,+ON,0)) Q:$P(X,U,15)'=DFN  S TYP=$P(X,U,4) D @$S(TYP="U":"UDTMP",1:"IVTMP")
+"RTN","PSJPXRM1",19,0)
+ D:ON'["P" @$S(ON["U":"UDTMP",1:"IVTMP")
+"RTN","PSJPXRM1",20,0)
+ S Y=$S(ON["V":5,1:12),CNT=0
+"RTN","PSJPXRM1",21,0)
+ I $O(@(F_+ON_","_Y_",0)")) D
+"RTN","PSJPXRM1",22,0)
+ . F X=0:0 S X=$O(@(F_+ON_","_Y_","_X_")")) Q:'X  D
+"RTN","PSJPXRM1",23,0)
+ ..S CNT=CNT+1,ND=$G(@(F_+ON_","_Y_","_X_",0)")),NAME("PC",CNT,0)=ND
+"RTN","PSJPXRM1",24,0)
+ S NAME("PC",0)=CNT
+"RTN","PSJPXRM1",25,0)
+ Q
+"RTN","PSJPXRM1",26,0)
+ ;
+"RTN","PSJPXRM1",27,0)
+UDTMP ;*** Set array for Unit dose orders.
+"RTN","PSJPXRM1",28,0)
+ N DO,DN,INST,X,Y,PROVIDER,NOTGIVEN
+"RTN","PSJPXRM1",29,0)
+ S (MR,SCH,INST)=""
+"RTN","PSJPXRM1",30,0)
+ S ND2=$G(@(F_+ON_",2)")),ND0=$G(@(F_+ON_",0)"))
+"RTN","PSJPXRM1",31,0)
+ S ND6=$P($G(@(F_+ON_",6)")),"^")
+"RTN","PSJPXRM1",32,0)
+ S NAME("STAT")=$$CODES^PSIVUTL($P(ND0,U,9),$S(ON["P":53.1,1:55.06),28)
+"RTN","PSJPXRM1",33,0)
+ D DRGDISP^PSJLMUT1(DFN,ON,40,0,.DN,1)
+"RTN","PSJPXRM1",34,0)
+ S NDOI=$G(@(F_+ON_",.2)")),NAME("OI")=+NDOI,NAME("DO")=$P(NDOI,U,2)
+"RTN","PSJPXRM1",35,0)
+ S NAME("START")=$P(ND2,"^",2),NAME("STOP")=$P(ND2,"^",4)
+"RTN","PSJPXRM1",36,0)
+ S NAME("UNITS")="" I '$O(@(F_+ON_",1,1)")) S NAME("UNITS")=$P($G(@(F_+ON_",1,1,0)")),U,2) S:(ON["U")&(NAME("UNITS")="") NAME("UNITS")=1
+"RTN","PSJPXRM1",37,0)
+ S NAME("MR")=$$MR(+$P(ND0,U,3)),NAME("INST")=$G(@(F_+ON_",.3)"))
+"RTN","PSJPXRM1",38,0)
+ S NAME("NOTGIVEN")=$S(ON["U":$P($G(^PS(55,DFN,5,+ON,0)),"^",22),1:"")
+"RTN","PSJPXRM1",39,0)
+ S NAME("OERR")=$P(ND0,U,21)
+"RTN","PSJPXRM1",40,0)
+ S NAME("PENDRENEWAL")=($P(ND0,U,9)="P"&($P(ND0,U,24)="R"))
+"RTN","PSJPXRM1",41,0)
+ S NAME("PROVIDER")=$P($G(@(F_+ON_",0)")),"^",2)
+"RTN","PSJPXRM1",42,0)
+ I NAME("PROVIDER") S NAME("PROVIDER")=NAME("PROVIDER")_"^"_$P($G(^VA(200,NAME("PROVIDER"),0)),"^")
+"RTN","PSJPXRM1",43,0)
+ S NAME("MDR",0)=NAME("MR")]"" S:NAME("MR")]"" NAME("MDR",1,0)=NAME("MR")
+"RTN","PSJPXRM1",44,0)
+ S NAME("SCH",0)=$P(ND2,U)]"" S:$P(ND2,U)]"" NAME("SCH",1,0)=$P(ND2,U)
+"RTN","PSJPXRM1",45,0)
+ S:$P(ND0,U,7)]"" NAME("SCH",0)=1,$P(NAME("SCH",1,0),U,2)=$$GTSCHT($P(ND0,U,7))_"^"_$P(ND0,U,7)
+"RTN","PSJPXRM1",46,0)
+ S NAME("SIG",0)=INST]"" S:INST]"" NAME("SIG",1,0)=INST
+"RTN","PSJPXRM1",47,0)
+ S NAME("ADM",0)=$P(ND2,U,5)]"" S:$P(ND2,U,5)]"" NAME("ADM",1,0)=$P(ND2,U,5)
+"RTN","PSJPXRM1",48,0)
+ S NAME("SIO",0)=ND6]"" S:ND6]"" NAME("SIO",1,0)=ND6
+"RTN","PSJPXRM1",49,0)
+ S:ON["U" NAME("VERPHARM")=$P($G(@(F_+ON_",4)")),U,3)
+"RTN","PSJPXRM1",50,0)
+ NEW PSJDD,INACTDT,NDDD,OUTOI,PSJOUT S CNT=0
+"RTN","PSJPXRM1",51,0)
+ F PSJDD=0:0 S PSJDD=$O(@(F_+ON_",1,PSJDD)")) Q:'PSJDD  D
+"RTN","PSJPXRM1",52,0)
+ . S NDDD=@(F_+ON_",1,PSJDD,0)")
+"RTN","PSJPXRM1",53,0)
+ . I $P(NDDD,U,3)]"",($P(NDDD,U,3)'>DT) Q
+"RTN","PSJPXRM1",54,0)
+ . S PSJOUT=$P($G(^PSDRUG(+NDDD,8)),U,5)
+"RTN","PSJPXRM1",55,0)
+ . I +PSJOUT D
+"RTN","PSJPXRM1",56,0)
+ .. S INACTDT=$G(^PSDRUG(+PSJOUT,"I")),OUTOI=+$G(^PSDRUG(+PSJOUT,2))
+"RTN","PSJPXRM1",57,0)
+ .. I INACTDT]"",(INACTDT'>DT) S (PSJOUT,OUTOI)=""
+"RTN","PSJPXRM1",58,0)
+ . I '+PSJOUT,($P($G(^PSDRUG(+NDDD,2)),U,3)["O") D
+"RTN","PSJPXRM1",59,0)
+ .. S PSJOUT=+NDDD,OUTOI=+NDOI
+"RTN","PSJPXRM1",60,0)
+ .. S INACTDT=$G(^PSDRUG(+NDDD,"I"))
+"RTN","PSJPXRM1",61,0)
+ .. I INACTDT]"",(INACTDT'>DT) S (PSJOUT,OUTOI)=""
+"RTN","PSJPXRM1",62,0)
+ . ;* S UNITS=$S('+$P(NDDD,U,2):1,1:$P(NDDD,U,2))
+"RTN","PSJPXRM1",63,0)
+ . ;*225 Don't allow 0 Units
+"RTN","PSJPXRM1",64,0)
+ . S UNITS=$P(NDDD,U,2) S:(ON["U")&(+UNITS=0) UNITS=1
+"RTN","PSJPXRM1",65,0)
+ . S CNT=CNT+1,NAME("DD",CNT,0)=+NDDD_U_UNITS_U_PSJOUT_U_$G(OUTOI)
+"RTN","PSJPXRM1",66,0)
+ S NAME("DD",0)=CNT
+"RTN","PSJPXRM1",67,0)
+ Q
+"RTN","PSJPXRM1",68,0)
+ ;
+"RTN","PSJPXRM1",69,0)
+IVTMP ;*** Set array for IV orders.
+"RTN","PSJPXRM1",70,0)
+ N PROVIDER S ND0=$G(@(F_+ON_",0)")),CNT=0
+"RTN","PSJPXRM1",71,0)
+ F X=0:0 S X=$O(@(F_+ON_",""AD"","_X_")")) Q:'X  S ND=$G(@(F_+ON_",""AD"","_X_",0)")),DN=$P($G(^PS(52.6,+ND,0)),U),Y=DN_U_$P(ND,U,2) S:$P(ND,U,3) Y=Y_U_$P(ND,U,3) S CNT=CNT+1,NAME("AD",CNT,0)=Y
+"RTN","PSJPXRM1",72,0)
+ S NAME("AD",0)=CNT,CNT=0
+"RTN","PSJPXRM1",73,0)
+ F X=0:0 S X=$O(@(F_+ON_",""SOL"","_X_")")) Q:'X  S ND=$G(@(F_+ON_",""SOL"","_X_",0)")),DN=$G(^PS(52.7,+ND,0)),CNT=CNT+1,NAME("SOL",CNT,0)=$P(DN,U)_U_$P(ND,U,2)_U_$P(DN,U,4)
+"RTN","PSJPXRM1",74,0)
+ S NAME("SOL",0)=CNT
+"RTN","PSJPXRM1",75,0)
+ S NAME("INST")=$G(@(F_+ON_",.3)"))
+"RTN","PSJPXRM1",76,0)
+ I ON["P" D
+"RTN","PSJPXRM1",77,0)
+ . S NAME("SCH")=$P($G(^PS(53.1,+ON,2)),U)
+"RTN","PSJPXRM1",78,0)
+ . S NAME("PROVIDER")=$P(ND0,U,2)
+"RTN","PSJPXRM1",79,0)
+ . S NAME("MR")=$$MR(+$P(ND0,U,3)),NAME("STAT")=$$CODES^PSIVUTL($P(ND0,U,9),53.1,28)
+"RTN","PSJPXRM1",80,0)
+ . S NAME("INFUS")=$P($G(^PS(53.1,+ON,8)),U,5)
+"RTN","PSJPXRM1",81,0)
+ . S ND2=$G(@(F_+ON_",2)")),NAME("START")=$P(ND2,U,2),NAME("STOP")=$P(ND2,U,4)
+"RTN","PSJPXRM1",82,0)
+ . S NAME("ADM")=$P(ND2,U,5),NAME("SIO")=$P($G(@(F_+ON_",6)")),"^")
+"RTN","PSJPXRM1",83,0)
+ . S NAME("DN")=$G(@(F_+ON_",.2)")),NAME("DO")=$P(NAME("DN"),U,2)
+"RTN","PSJPXRM1",84,0)
+ . S:NAME("DO")="" NAME("DO")=$P($G(NAME("AD",1,0)),U,2)
+"RTN","PSJPXRM1",85,0)
+ . S NAME("DN")=$S(+$P(NAME("DN"),U):$$OIDF^PSJLMUT1($P(NAME("DN"),U)),1:"")
+"RTN","PSJPXRM1",86,0)
+ I ON'["P"  D
+"RTN","PSJPXRM1",87,0)
+ . S NAME("PROVIDER")=$P(ND0,U,6)
+"RTN","PSJPXRM1",88,0)
+ . S NAME("SCH")=$P(ND0,U,9),NAME("INFUS")=$P(ND0,U,8),NAME("STAT")=$$CODES^PSIVUTL($P(ND0,U,17),55.01,100)
+"RTN","PSJPXRM1",89,0)
+ . S NAME("MR")=$$MR(+$P($G(^PS(55,DFN,"IV",+ON,.2)),U,3))
+"RTN","PSJPXRM1",90,0)
+ . S NAME("START")=$P(ND0,U,2),NAME("STOP")=$P(ND0,U,3)
+"RTN","PSJPXRM1",91,0)
+ . S NAME("ADM")=$P(ND0,U,11),NAME("SIO")=$P($G(@(F_+ON_",3)")),"^")
+"RTN","PSJPXRM1",92,0)
+ . S NAME("VERPHARM")=$P($G(^PS(55,DFN,"IV",+ON,4)),U,4)
+"RTN","PSJPXRM1",93,0)
+ . S NAME("DN")=$G(@(F_+ON_",.2)")),NAME("DO")=$P(NAME("DN"),U,2)
+"RTN","PSJPXRM1",94,0)
+ . S NAME("DN")=$S(+$P(NAME("DN"),U):$$OIDF^PSJLMUT1($P(NAME("DN"),U)),1:"")
+"RTN","PSJPXRM1",95,0)
+ S NAME("OERR")=$P(ND0,U,21)
+"RTN","PSJPXRM1",96,0)
+ S NAME("PENDRENEWAL")=($P(ND0,U,9)="P"&($P(ND0,U,24)="R"))
+"RTN","PSJPXRM1",97,0)
+ I NAME("PROVIDER") S NAME("PROVIDER")=NAME("PROVIDER")_"^"_$P($G(^VA(200,NAME("PROVIDER"),0)),"^")
+"RTN","PSJPXRM1",98,0)
+ S NAME("MDR",0)=NAME("MR")]"" S:NAME("MR")]"" NAME("MDR",1,0)=NAME("MR")
+"RTN","PSJPXRM1",99,0)
+ S NAME("SCH",0)=NAME("SCH")]"" S:NAME("SCH")]"" NAME("SCH",1,0)=NAME("SCH")
+"RTN","PSJPXRM1",100,0)
+ I ON["P" S:$P(ND0,U,7)]"" NAME("SCH",0)=1,$P(NAME("SCH",1,0),U,2)=$$GTSCHT($P(ND0,U,7))_"^"_$P(ND0,U,7)
+"RTN","PSJPXRM1",101,0)
+ S NAME("SIG",0)=NAME("INST")]"" S:NAME("INST")]"" NAME("SIG",1,0)=NAME("INST")
+"RTN","PSJPXRM1",102,0)
+ S NAME("ADM",0)=NAME("ADM")]"" S:NAME("ADM")]"" NAME("ADM",1,0)=NAME("ADM")
+"RTN","PSJPXRM1",103,0)
+ S NAME("SIO",0)=NAME("SIO")]"" S:NAME("SIO")]"" NAME("SIO",1,0)=NAME("SIO")
+"RTN","PSJPXRM1",104,0)
+ Q
+"RTN","PSJPXRM1",105,0)
+ ;
+"RTN","PSJPXRM1",106,0)
+MR(X) ;RETURN MED ROUTE ABBR. IF THE ABBR="" RETURN MED ROUTE'S NAME.
+"RTN","PSJPXRM1",107,0)
+ S X=$G(^PS(51.2,X,0))
+"RTN","PSJPXRM1",108,0)
+ Q $S($P(X,U,3)]"":$P(X,U,3),1:$P(X,U))
+"RTN","PSJPXRM1",109,0)
+ ;
+"RTN","PSJPXRM1",110,0)
+GTSTAT(X) ;
+"RTN","PSJPXRM1",111,0)
+ Q $S(X="A":"ACTIVE",X="D":"DISCONTINUED",X="I":"INCOMPLETE",X="N":"NON-VERFIED",X="U":"UNRELEASED",X="P":"PENDING",X="DE":"DISCONTINUED (EDIT)",X="O":"ON CALL",1:"NOT FOUND")
+"RTN","PSJPXRM1",112,0)
+ ;
+"RTN","PSJPXRM1",113,0)
+VA200(X) ;Return the IEN for the user.
+"RTN","PSJPXRM1",114,0)
+ ; X = User name
+"RTN","PSJPXRM1",115,0)
+ NEW DIC,Y S DIC="^VA(200,",DIC(0)="NZ" D ^DIC
+"RTN","PSJPXRM1",116,0)
+ I +Y=-1 Q ""
+"RTN","PSJPXRM1",117,0)
+ Q $P(Y,U)
+"RTN","PSJPXRM1",118,0)
+GTSCHT(X)       ;
+"RTN","PSJPXRM1",119,0)
+ Q $S(X="C":"CONTINUOUS",X="O":"ONE TIME",X="P":"PRN",X="R":"FILL ON REQUEST",X="OC":"ON CALL",1:"NOT FOUND")
+"VER")
+8.0^22.0
+"BLD",8106,6)
+^215
+**END**
+**END**

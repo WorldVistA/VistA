@@ -1,0 +1,354 @@
+$TXT Created by ROCHA,MARCELO at CFDA.FO-BIRM.MED.VA.GOV  (KIDS) on Tuesday, 10/12/10 at 15:20
+=============================================================================
+Run Date: APR 20, 2011                     Designation: PSO*7*343
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #312                      Status: Released
+                  Compliance Date: MAY 21, 2011
+=============================================================================
+
+Associated patches: (v)PSN*4*263   <<= must be installed BEFORE `PSO*7*343'
+
+Subject: FDA MEDICATION GUIDES - ON-DEMAND DISPLAY (INCREMENT 2)
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ This patch contains software modifications to the Outpatient Pharmacy (OP)
+ V. 7.0 application to support the FDA Medication Guides project. The 
+ project objective is to allow pharmacy staff to retrieve the FDA Medication 
+ Guide for prescription items that contain FDA approved information that
+ can help patients avoid adverse events. The FDA requires that Medication
+ Guides be included with certain prescribed drugs and biological products
+ when the Agency determines that:
+  
+  . Certain information is necessary to prevent serious adverse effects 
+  . Patient decision-making should be advised by information about a known
+    serious side effect with a product, or 
+  . Patient adherence to directions for the use of a product is essential
+    to its effectiveness. 
+  
+ The features in the FDA Medication Guides project are being delivered in
+ incremental releases. This patch is part of the Increment 2 release. The 
+ features included in this release are:
+  
+  . Establishment of a Server Repository for FDA Medication Guides within 
+    the VA network.
+  
+  . Updates to 900+ entries in the VA PRODUCT file (#50.68) to store the 
+    corresponding FDA Medication Guide document name will be provided via
+    the NDF Monthly Data Update patches.
+  
+  . Introduction of a PC based Java software component to enable the
+    automatic retrieval of an FDA Medication Guide from within VistA. The
+    software does not require any direct user interaction. It works as a 
+    bridge between VistA and the PC where it is installed. The software 
+    identifies a request from VistA for a specific FDA Medication Guide and
+    automatically retrieves it from the Server Repository and displays to the
+    user via the Internet Explorer browser. 
+   
+  . Introduction of a new option called Display FDA Medication Guide [PSN MED
+    GUIDE] to the National Drug File V. 4.0 application for retrieving and 
+    displaying the FDA Medication Guide for a specific VA Product.
+  
+  . Introduction of new functionality to the Patient Prescription Processing
+    [PSO LM BACKDOOR] option in the Outpatient Pharmacy V. 7.0 application
+    for retrieving and displaying the FDA Medication Guide for a specific 
+    prescription.
+    
+ Below is a list of all the applications involved in this release along
+ with their patch number:
+   
+    APPLICATION/VERSION                                  PATCH
+    -----------------------------------------------------------------
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*158
+    NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*263
+    OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*343
+    
+ The FDA Medication Guides project is expected to complete in three 
+ increments. Among other features, the next Increment will automate the 
+ printing of FDA Medication Guides for prescriptions dispensed by the VA
+ via Outpatient Pharmacy application when the prescription label is printed.
+    
+ The following modification is included in this patch (PSO*7*343):
+   
+ Patient Prescription Processing [PSO LM BACKDOOR ORDERS] option
+  
+  Pharmacists will be able to retrieve an FDA Medication Guide for a 
+  specific prescription by selecting the prescription and invoking the OTH
+  (Other OP Actions) hidden action and choosing the new item MG Display FDA
+  Medication Guide. A Java software component running at the user's PC will 
+  then display the FDA Medication Guide Adobe Acrobat document (.pdf) by 
+  automatically opening it via the user's default web browser, which will
+  allow the users to print it to any printer available to them, as seen 
+  below:
+        
+                    --- Other OP Actions ---
+   PN   Progress Note (OP)
+   AP   Action Profile (OP)
+   MI   Print Medication Instructions
+   DO   Display Orders' Statuses
+   MG   Display FDA Medication Guide
+  
+   Select Item(s): MG   Display FDA Medication Guide  
+   
+   The following URL provides the link to the FDA Medication Guide associated
+   with this medication. Thin Client users: copy/paste the URL below into a
+   browser to access the FDA Medication Guide for this drug:
+  
+   vaww.national.cmop.va.gov/FDAMedGuides/Lindane_(Generic)_(2008).pdf
+  
+   Please wait... 
+  
+     [FDA Medication Guide .pdf document opens on the web browser]
+  
+   
+  If a user tries to use this option from a computer which does not have the 
+  required Java software component installed, the following message will 
+  display:
+  
+   Select Item(s): MG   Display FDA Medication Guide  
+  
+   The following URL provides the link to the FDA Medication Guide associated
+   with this medication. Thin Client users: copy/paste the URL below into a
+   browser to access the FDA Medication Guide for this drug:
+  
+   vaww.national.cmop.va.gov/FDAMedGuides/Lindane_(Generic)_(2008).pdf
+  
+   Please wait... 
+     
+   The system is unable to display FDA Med Guide automatically.
+   
+   The FDA Medication Guide will not automatically open on Thin Client and some
+   types of encrypted sessions. If you do not believe this is the reason contact
+   your local technical support for assistance.
+  
+   You can copy/paste the link above into your browser's address bar to retrieve
+   the FDA Medication Guide.
+    
+   Enter RETURN to continue, '?' for HELP, or '^' to exit: ?
+  
+   When unable to get the FDA Medication Guide to display, review the following
+   suggestion(s) for troubleshooting potential problems:
+   
+   1) The browser did not open automatically. This may be due to the following:
+      - You might be connected to VistA via Thin Client or an encrypted session
+        that prevents the FDA Med Guide from automatically displaying. Please
+        copy and paste the URL link below into your browser's address bar to
+        retrieve the FDA Medication Guide:
+  
+    vaww.national.cmop.va.gov/FDAMedGuides/Lindane_Lotion_(Generic)_(2008).pdf
+  
+      - The computer might not have the required Java software component
+        installed or the software might not be functioning properly. Please,
+        contact technical support for assistance.
+  
+   2) When doing a copy/paste of the link into the browser's address and an HTTP
+      404 - File Not Found error is received. This may be due to the following:
+      - A common issue exists when the link is displayed in two lines in the
+        terminal screen. When you copy both lines at the same time and paste it
+        into the browser's address, the second line is ignored by the browser
+        resulting in a 'broken' link. To resolve this issue, copy and paste one
+        line at a time from the terminal screen into the browser's address to
+        make sure the complete link is used.
+      - The FDA Medication Guide Server may be down at the moment. Please, wait
+        a few minutes and try again. If the problem persists, contact technical
+        support for assistance.
+  
+   3) The browser opened automatically, however you receive an HTTP 404 - File
+      Not Found error. This may be due to the following:
+      - The FDA Medication Guide Server may be down at the moment. Please, wait
+        a few minutes and try again. If the problem persists, contact technical
+        support for assistance.
+   
+   
+   If a user tries to use this option for a medication that does not have
+   an FDA Medication Guide on file, the following message will display: 
+  
+       Select Item(s): MG   Display FDA Medication Guide  
+      
+       There is no FDA Medication Guide associated with this medication.
+  
+    Enter RETURN to continue, '?' for HELP, or '^' to exit: ?
+  
+    When unable to get the FDA Medication Guide to display, review the following
+    suggestion(s) for troubleshooting potential problems:
+  
+    1) If no FDA Medication Guide exists for a product that you believe should
+       have one, confirm that one is required by visiting the FDA website
+       (www.fda.gov). If one is required, log a support ticket to request its
+       addition. Please understand that there may be a delay between the time
+       that a new Medication Guide is posted to the FDA website and when it is
+       made available in VistA through a National Drug File data update patch.
+   
+   
+   Note: This option requires a Java software component to be installed on
+   ----  the user's computer. This software will be released as part of this
+         project. Please, refer to the project Release Notes and Installation
+         Guide documentation for further information.
+   
+   
+ Associated Patient Safety Issues:
+ =================================
+ N/A
+  
+  
+ Associated New Service Request (NSR):
+ =====================================
+ N/A 
+  
+ Associated Remedy Ticket(s):
+ ============================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ CENTRAL PLAINS HCS
+ MINNEAPOLIS MN
+ NORTH CHICAGO IL
+ PALO ALTO HCS
+    
+  
+ Documentation Retrieval:
+ ========================
+ The documentation can be obtained from the ANONYMOUS.SOFTWARE directory at 
+ one of the OI Field Offices. The preferred method is to FTP the files from
+ DOWNLOAD.VISTA.MED.VA.GOV, which will transmit the files from the first
+ available server.  Alternatively, sites may elect to retrieve the files
+ from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY
+    Albany              FTP.FO-ALBANY.MED.VA.GOV       anonymous.software
+    Hines               FTP.FO-HINES.MED.VA.GOV        anonymous.software
+    Salt Lake City      FTP.FO-SLC.MED.VA.GOV          anonymous.software
+   
+     The documentation distribution includes:
+  
+     FILE NAME                         DESCRIPTION
+     ------------------------------------------------------------------------
+     PSO_7_PHAR_UM_R0411.PDF          Outpatient Pharmacy User Manual
+     PSO_7_P343_PHAR_UM_CP.PDF        Outpatient Pharmacy User Manual Change
+                                      Pages
+     PSO_7_TM_R0411.PDF               Outpatient Pharmacy Technical Manual
+     PSO_7_P316_P343_TM_CP.PDF        Outpatient Pharmacy Technical Manual
+                                      Change Pages
+     PHAR_FDA_MED_GUIDE_REL2_RN.PDF   FDA Medication Guides Project Release
+                                      Notes
+     PHAR_FDA_MED_GUIDE_REL2_IG.PDF   FDA Medication Guides Project 
+                                      Installation Guide
+   
+ Documentation can also be retrieved from the VA Software Documentation 
+ Library (VDL) on the Internet at the following address, 
+ http://www.va.gov/vdl. 
+  
+   
+ Project Installation Instructions:
+ ==================================
+ In addition to this patch, the FDA Medication Guide Increment 2 project
+ also contains a Java Application component, which is distributed in the
+ PSN_4_P263.ZIP file. This file contains an executable file that should
+ be installed on Pharmacy user computers that will be used for retrieving
+ FDA Medication Guides via Outpatient Pharmacy or National Drug File 
+ applications. For detailed installation instructions please refer to the
+ "FDA Medication Guides Project Installation Guide" document.
+  
+ FTP Instructions:
+ =================
+ The files listed below may be obtained via FTP.  The preferred method is 
+ to FTP the files from:
+  
+    download.vista.med.va.gov
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+    CIO FIELD OFFICE   FTP ADDRESS                 DIRECTORY
+    ----------------   -------------------------   --------------------
+    Albany             ftp.fo-albany.med.va.gov    [anonymous.software]
+    Hines              ftp.fo-hines.med.va.gov     [anonymous.software]
+    Salt Lake City     ftp.fo-slc.med.va.gov       [anonymous.software]
+  
+  
+    File Name           Contents                 Retrieval Format
+    --------------      ----------------------   ----------------
+    PSN_4_P263.ZIP      File(s) indented below   BINARY
+  
+     - On-Demand_Med_Guide_Viewer-1.0.0.11_setup.exe
+                        Install file for the Java Application 
+                        component.
+  
+  
+ Patch Installation Instructions
+ ===============================
+ Patch installation will take less than 2 minutes. It is recommended that
+ installation be queued for off peak hours.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSO*7.0*343).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSO*7.0*343.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+  
+ Java Application Component Installation Instructions
+ ====================================================
+ In order to install the Java Application component follow these steps:
+  
+   1. Unzip the PSN_4_P263.ZIP file
+  
+   2. Copy the On-Demand_Med_Guide_Viewer-1.0.0.11_setup.exe executable
+      file onto a local directory.
+  
+   3. Run the executable file. Note: you must have administrator rights
+      on the machine when you run it.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOFDAMG
+    Before:       n/a   After:  B1007173  **343**
+
+=============================================================================
+User Information:
+Entered By  : ALEXANDER,DAVID               Date Entered  : SEP 25, 2009
+Completed By: GREER,MIKE                    Date Completed: APR 20, 2011
+Released By : TEAGUE,LYN                    Date Released : APR 20, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

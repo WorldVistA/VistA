@@ -1,0 +1,168 @@
+$TXT Created by KOGER,RON at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 02/25/11 at 16:32
+=============================================================================
+Run Date: MAR 29, 2011                     Designation: IB*2*450
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #414                      Status: Released
+                  Compliance Date: APR 13, 2011
+=============================================================================
+
+
+Subject: ADDITIONAL FY2011 DSS STOP CODE UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates Integrated Billing Clinic Stop Codes to reflect 
+ additional Fiscal Year 2011 changes.
+  
+ **************************************************************************
+ Note: In order to provide CORRECT billing of co-pay charges for the 
+ Decision Support System (DSS) Stop Code changes, this patch is being
+ released with a shortened compliance date.  Please install it as soon as
+ possible.
+ **************************************************************************
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. HD0000000465540    Additional FY 2011 DSS Stop Code updates
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Western NY HCS
+ VA Pittsburgh HCS
+ VA San Diego Healthcare System
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000465540    Additional FY 2011 DSS Stop Code updates
+  
+   Problem: 
+   --------
+   As requested by the Chief Business Office (CBO), the IB CLINIC
+   STOP CODE BILLABLE TYPES (#352.5) file needs to be updated to
+   reflect additional changes for Fiscal Year 2011.
+  
+   Resolution:
+   -----------
+   Update requested Stop Codes as described below:
+  
+ STOP CODES MODIFIED
+ -------------------
+    
+ STOP  EFFECTIVE                                                  OVERRIDE
+ CODE  DATE        BILLABLE TYPE     DESCRIPTION                  FLAG
+ -------------------------------------------------------------------------------
+ OLD:
+ 394   MAR 1,2011    BASIC CARE      MED SPECIALTY SHARED APPT
+ 416   MAR 1,2011    BASIC CARE      PRE-SURG EVAL BY NON-MD      OVERRIDE
+ 185   OCT 1,2010    BASIC CARE      PHYSICIAN EXTENDER (NP)      OVERRIDE
+ 186   OCT 1,2010    BASIC CARE      PHYSICIAN EXTENDER (PA)      OVERRIDE
+ 187   OCT 1,2010    BASIC CARE      PHYSICIAN EXTENDER (CNS)     OVERRIDE
+ 188   OCT 1,2010    BASIC CARE      PHYSICIAN RESIDENT           OVERRIDE
+  
+ NEW:
+ 394   MAR 30,2011   SPECIALTY CARE  MED SPECIALTY SHARED APPT
+ 416   MAR 30,2011   BASIC CARE      PRE-SURG EVAL BY NON-MD
+ 185   MAR 30,2011   BASIC CARE      PHYSICIAN EXTENDER (NP)
+ 186   MAR 30,2011   BASIC CARE      PHYSICIAN EXTENDER (PA)
+ 187   MAR 30,2011   BASIC CARE      PHYSICIAN EXTENDER (CNS)
+ 188   MAR 30,2011   BASIC CARE      PHYSICIAN RESIDENT
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*450)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*450.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//" respond NO.
+   
+ *After the install please review the installation to verify the Stop Codes
+     were added.  See below:
+  
+ -------------------------------------------------
+  
+ DSS Clinic Stop Codes, Post-Install Starting
+  
+  Updating Stop Code entries in file 352.5
+  
+    394  MED SPECIALTY SHARED APPT
+  
+    416  PRE-SURG EVAL BY NON-MD
+  
+    185  PHYSICIAN EXTENDER (NP)
+  
+    186  PHYSICIAN EXTENDER (PA)
+  
+    187  PHYSICIAN EXTENDER (CNS)
+  
+    188  PHYSICIAN RESIDENT
+  
+      6 updates added to file 352.5
+  
+ DSS Clinic Stop Codes, Post-Install Complete
+  
+  
+ -------------------------------------------------
+  
+     7. You may delete routine IB20P450 after the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P450
+    Before:       n/a   After:  B7323273  **450**
+
+=============================================================================
+User Information:
+Entered By  : KOGER,RON                     Date Entered  : FEB 23, 2011
+Completed By: DAWSON,TIM                    Date Completed: MAR 22, 2011
+Released By : MURRAY,ANGELA                 Date Released : MAR 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

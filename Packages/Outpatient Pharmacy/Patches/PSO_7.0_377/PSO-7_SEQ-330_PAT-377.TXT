@@ -1,0 +1,151 @@
+$TXT Created by HERRING,VENESSA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 02/28/12 at 11:44
+=============================================================================
+Run Date: MAR 19, 2012                     Designation: PSO*7*377
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #330                      Status: Released
+                  Compliance Date: APR 19, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*158   <<= must be installed BEFORE `PSO*7*377'
+                    (v)PSO*7*379   <<= must be installed BEFORE `PSO*7*377'
+
+Subject: ERROR MESSAGE WHEN TRYING TO EDIT RX REFILLS / SETTING ZTIO TO ION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+ 1) The message 'There is no refill data to be edited' incorrectly
+    displays when editing a prescription that does have refills.
+  
+ 2) Due to a change in system printing a modification needs to be made to
+    the device setup for the Daily Amis Report [PSO DAILY AMIS].
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ 1)      HD0000000456767 - Error message displays when trying to edit refills
+  
+ 2)      HD0000000428388 - Setting ZTIO to IO.
+                  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Oklahoma City VA Medical Center
+ Cincinnati VA Medical Center
+ VA North Texas HCS
+  
+ Remedy Overview:
+ ================
+ 1)      HD0000000456767 - Error message displays when trying to edit refills
+  
+   
+ Problem: 
+ ========
+ In Patient Prescription Processing [PSO LM BACKDOOR ORDERS], if a user starts
+ to add a refill but then backs out using the ^, they are then not able to 
+ edit refills.  The user must exit out of the prescription and go back into it
+ before being allowed to edit the refills.
+  
+ Resolution:
+ ===========
+ Modify processing so refills can still be edited after backing out of adding a
+ new refill in Patient Prescription Processing [PSO LM BACKDOOR ORDERS].
+  
+ Technical Resolution:
+ =====================
+ Modify routine PSOOREDT to set the REF variable when editing a prescription.
+  
+  
+ 2)      HD0000000428388 - Setting ZTIO to IO
+  
+ Problem: 
+ ========
+ Due to a change in system printing a modification needs to be made to
+ the device setup for the Daily Amis Report [PSO DAILY AMIS].
+  
+  
+ Resolution:
+ ===========
+ Modify the Daily Amis Report to work correctly with the system printing
+ changes.
+  
+  
+ Technical Resolution:
+ =====================
+ Modify routine PSOAMIS1 to set ZTIO=ION.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ Users should not be processing prescriptions while patch is being
+ installed.  
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*377)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*377.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOAMIS1
+    Before: B24192536   After: B24206918  **158,377**
+Routine Name: PSOOREDT
+    Before: B68488747   After: B69885568  **4,20,27,37,57,46,78,102,104,
+                                           119,143,148,260,281,304,289,
+                                           298,379,377**
+ 
+Routine list of preceding patches: 158, 379
+
+=============================================================================
+User Information:
+Entered By  : HERRING,VENESSA               Date Entered  : FEB 04, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: MAR 14, 2012
+Released By : FOX,KIRK                      Date Released : MAR 19, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

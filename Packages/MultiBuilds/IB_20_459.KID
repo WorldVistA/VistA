@@ -1,0 +1,1088 @@
+KIDS Distribution saved on Sep 23, 2011@17:42:57
+IB/PRCA Remedy Ticket Fixes
+**KIDS**:IB*2.0*459^PRCA*4.5*280^
+
+**INSTALL NAME**
+IB*2.0*459
+"BLD",8875,0)
+IB*2.0*459^INTEGRATED BILLING^0^3110923^y
+"BLD",8875,1,0)
+^^4^4^3110923^^
+"BLD",8875,1,1,0)
+This patch addresses two issues. The first issue is regarding the Claims
+"BLD",8875,1,2,0)
+Matching report [RCDP CLAIMS MATCH] not display the corresponding first
+"BLD",8875,1,3,0)
+party debts. The second issue is about the incorrect charge type NURSING
+"BLD",8875,1,4,0)
+HOME CARE (NSC) showing on the patient's bill.
+"BLD",8875,4,0)
+^9.64PA^^
+"BLD",8875,6)
+^411
+"BLD",8875,6.3)
+16
+"BLD",8875,"ABPKG")
+n
+"BLD",8875,"INIT")
+POST^IB20P459
+"BLD",8875,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8875,"KRN",.4,0)
+.4
+"BLD",8875,"KRN",.401,0)
+.401
+"BLD",8875,"KRN",.402,0)
+.402
+"BLD",8875,"KRN",.403,0)
+.403
+"BLD",8875,"KRN",.5,0)
+.5
+"BLD",8875,"KRN",.84,0)
+.84
+"BLD",8875,"KRN",3.6,0)
+3.6
+"BLD",8875,"KRN",3.8,0)
+3.8
+"BLD",8875,"KRN",9.2,0)
+9.2
+"BLD",8875,"KRN",9.8,0)
+9.8
+"BLD",8875,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",8875,"KRN",9.8,"NM",1,0)
+IBEFUR^^0^B20510496
+"BLD",8875,"KRN",9.8,"NM",2,0)
+IBEFURF^^0^B18754511
+"BLD",8875,"KRN",9.8,"NM","B","IBEFUR",1)
+
+"BLD",8875,"KRN",9.8,"NM","B","IBEFURF",2)
+
+"BLD",8875,"KRN",19,0)
+19
+"BLD",8875,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",8875,"KRN",19.1,0)
+19.1
+"BLD",8875,"KRN",101,0)
+101
+"BLD",8875,"KRN",409.61,0)
+409.61
+"BLD",8875,"KRN",771,0)
+771
+"BLD",8875,"KRN",779.2,0)
+779.2
+"BLD",8875,"KRN",870,0)
+870
+"BLD",8875,"KRN",8989.51,0)
+8989.51
+"BLD",8875,"KRN",8989.52,0)
+8989.52
+"BLD",8875,"KRN",8994,0)
+8994
+"BLD",8875,"KRN","B",.4,.4)
+
+"BLD",8875,"KRN","B",.401,.401)
+
+"BLD",8875,"KRN","B",.402,.402)
+
+"BLD",8875,"KRN","B",.403,.403)
+
+"BLD",8875,"KRN","B",.5,.5)
+
+"BLD",8875,"KRN","B",.84,.84)
+
+"BLD",8875,"KRN","B",3.6,3.6)
+
+"BLD",8875,"KRN","B",3.8,3.8)
+
+"BLD",8875,"KRN","B",9.2,9.2)
+
+"BLD",8875,"KRN","B",9.8,9.8)
+
+"BLD",8875,"KRN","B",19,19)
+
+"BLD",8875,"KRN","B",19.1,19.1)
+
+"BLD",8875,"KRN","B",101,101)
+
+"BLD",8875,"KRN","B",409.61,409.61)
+
+"BLD",8875,"KRN","B",771,771)
+
+"BLD",8875,"KRN","B",779.2,779.2)
+
+"BLD",8875,"KRN","B",870,870)
+
+"BLD",8875,"KRN","B",8989.51,8989.51)
+
+"BLD",8875,"KRN","B",8989.52,8989.52)
+
+"BLD",8875,"KRN","B",8994,8994)
+
+"BLD",8875,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8875,"QUES",0)
+^9.62^^
+"BLD",8875,"REQB",0)
+^9.611^5^1
+"BLD",8875,"REQB",5,0)
+IB*2.0*347^2
+"BLD",8875,"REQB","B","IB*2.0*347",5)
+
+"INIT")
+POST^IB20P459
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+459^3110923
+"PKG",200,22,1,"PAH",1,1,0)
+^^4^4^3110923
+"PKG",200,22,1,"PAH",1,1,1,0)
+This patch addresses two issues. The first issue is regarding the Claims
+"PKG",200,22,1,"PAH",1,1,2,0)
+Matching report [RCDP CLAIMS MATCH] not display the corresponding first
+"PKG",200,22,1,"PAH",1,1,3,0)
+party debts. The second issue is about the incorrect charge type NURSING
+"PKG",200,22,1,"PAH",1,1,4,0)
+HOME CARE (NSC) showing on the patient's bill.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","IB20P459")
+0^^B2470984
+"RTN","IB20P459",1,0)
+IB20P459 ;ALB/CXW - IB V2.0 POST INIT, IB Action Type Update; 12-SEP-2011
+"RTN","IB20P459",2,0)
+ ;;2.0;INTEGRATED BILLING;**459**;21-MAR-94;Build 16
+"RTN","IB20P459",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IB20P459",4,0)
+ Q
+"RTN","IB20P459",5,0)
+ ;
+"RTN","IB20P459",6,0)
+POST ; 
+"RTN","IB20P459",7,0)
+ D MSG("    IB*2*459 Post-Install .....")
+"RTN","IB20P459",8,0)
+ D UPACT
+"RTN","IB20P459",9,0)
+ D MSG("    IB*2*459 Post-Install Complete")
+"RTN","IB20P459",10,0)
+ Q
+"RTN","IB20P459",11,0)
+ ;
+"RTN","IB20P459",12,0)
+UPACT ;Update to file #350.1
+"RTN","IB20P459",13,0)
+ N IBI,IBY,IBCR,IBAT,IBCEN,IBNCC,DIE,DA,DR,X
+"RTN","IB20P459",14,0)
+ S IBNCC="HOSPITAL CARE (NSC)"
+"RTN","IB20P459",15,0)
+ S IBCEN=$O(^PRCA(430.2,"B",IBNCC,0))
+"RTN","IB20P459",16,0)
+ I 'IBCEN D MSG(">>> "_IBNCC_" not defined on file #430.2, no update on file #350.1") Q
+"RTN","IB20P459",17,0)
+ D MSG(">>> Updating Charge Category to file #350.1...")
+"RTN","IB20P459",18,0)
+ F IBI=1:1 S IBCR=$P($T(IBAT+IBI),";;",2) Q:IBCR="QUIT"  D
+"RTN","IB20P459",19,0)
+ . S IBY=$P(IBCR,"^")
+"RTN","IB20P459",20,0)
+ . S IBY=$O(^IBE(350.1,"B",IBY,0))
+"RTN","IB20P459",21,0)
+ . I 'IBY D MSG(" >> "_IBCR_" not defined on file #350.1") Q
+"RTN","IB20P459",22,0)
+ . S DA=+IBY,DIE="^IBE(350.1,",DR=".03///"_IBNCC D ^DIE K DA,DIE,DR
+"RTN","IB20P459",23,0)
+ . D MSG(" >> "_IBNCC_" updated to the "_IBCR_" type")
+"RTN","IB20P459",24,0)
+ Q
+"RTN","IB20P459",25,0)
+ ;
+"RTN","IB20P459",26,0)
+MSG(X) ;
+"RTN","IB20P459",27,0)
+ D MES^XPDUTL(X)
+"RTN","IB20P459",28,0)
+ Q
+"RTN","IB20P459",29,0)
+ ;
+"RTN","IB20P459",30,0)
+IBAT ; Name
+"RTN","IB20P459",31,0)
+ ;;DG FEE SERVICE (INPT) NEW
+"RTN","IB20P459",32,0)
+ ;;DG FEE SERVICE (INPT) UPDATE
+"RTN","IB20P459",33,0)
+ ;;DG FEE SERVICE (INPT) CANCEL
+"RTN","IB20P459",34,0)
+ ;;QUIT
+"RTN","IB20P459",35,0)
+ ;
+"RTN","IBEFUR")
+0^1^B20510496
+"RTN","IBEFUR",1,0)
+IBEFUR ;ALB/ARH - UTILITY: FIND RELATED FIRST AND THIRD PARTY BILLS ; 3/7/00
+"RTN","IBEFUR",2,0)
+ ;;2.0;INTEGRATED BILLING;**130,459**;21-MAR-94;Build 16
+"RTN","IBEFUR",3,0)
+ ;;Per VHA Directive 10-93-142, this routine should not be modified.
+"RTN","IBEFUR",4,0)
+ ; 
+"RTN","IBEFUR",5,0)
+ ; Called by Accounts Receivable report option
+"RTN","IBEFUR",6,0)
+ ;
+"RTN","IBEFUR",7,0)
+ ; for a specific Third Party bill, return all related Third Party bills
+"RTN","IBEFUR",8,0)
+ ; matchs with the selected bill are based on:   (selected bill is included in list returned)
+"RTN","IBEFUR",9,0)
+ ; 1)  Event Date (399,.03), returns all bills with same Event Date
+"RTN","IBEFUR",10,0)
+ ; 
+"RTN","IBEFUR",11,0)
+ ; 2)  PTF # (399,.08), returns all bills with the same PTF number
+"RTN","IBEFUR",12,0)
+ ; 3)  PTF # (399,.08), returns all bills with Outpatient Visit Dates (399,43) within the admission date range
+"RTN","IBEFUR",13,0)
+ ; 
+"RTN","IBEFUR",14,0)
+ ; 4)  Opt Visit Dates (399,43), returns all bills with one or more matching Opt Visit Dates
+"RTN","IBEFUR",15,0)
+ ; 5)  Opt Visit Dates (399,43), returns all bills for any PTF (399,.08) stay covering any of the Opt Visit Dates
+"RTN","IBEFUR",16,0)
+ ;
+"RTN","IBEFUR",17,0)
+ ; 6)  Prescriptions (362.4): returns all bills with one or more matching Rx # and fill date
+"RTN","IBEFUR",18,0)
+ ;
+"RTN","IBEFUR",19,0)
+ ; ^TMP("IBRBT", $J, selected bill ifn) = PATIENT HAS ANY RX COVERAGE ON FROM DATE OF BILL (0/1)
+"RTN","IBEFUR",20,0)
+ ; ^TMP("IBRBT", $J, selected bill ifn, matching bill ifn) = 
+"RTN","IBEFUR",21,0)
+ ;                                        BILL FROM ^ BILL TO ^ CANCELLED (0/1) ^ AR BILL NUMBER ^ 
+"RTN","IBEFUR",22,0)
+ ;                                        PAYER SEQUENCE ^ PAYER IS MEDICARE SUPPLEMENTAL (0/1) ^ PAYER NAME
+"RTN","IBEFUR",23,0)
+ ;
+"RTN","IBEFUR",24,0)
+TPTP(IBIFN) ; given a specific Third Party bill, find all related Third Party Bills
+"RTN","IBEFUR",25,0)
+ N IB0,DFN,IBEVDT,IBPTF,IBADM,IBDIS,IBOPV,IBPTF1,IBXRF,IBRXN,IBRXDT,IBX Q:'$G(IBIFN)
+"RTN","IBEFUR",26,0)
+ S IB0=$G(^DGCR(399,+IBIFN,0)) Q:IB0=""  S DFN=$P(IB0,U,2),IBEVDT=$P(IB0,U,3),IBPTF=$P(IB0,U,8)
+"RTN","IBEFUR",27,0)
+ ;
+"RTN","IBEFUR",28,0)
+ K ^TMP("IBRBT",$J,IBIFN) S IBX=$$LN1^IBEFURT(IBIFN) D SAVELN1^IBEFURT(IBIFN,IBX)
+"RTN","IBEFUR",29,0)
+ ;
+"RTN","IBEFUR",30,0)
+ I +IBEVDT D TPEVDT^IBEFURT(DFN,IBEVDT,IBIFN) ; find all bills with the same Event Date (399,.03)
+"RTN","IBEFUR",31,0)
+ ;
+"RTN","IBEFUR",32,0)
+IT I +IBPTF D TPPTF^IBEFURT(IBPTF,IBIFN) ; find all bills with the same PTF number  (399,.08)
+"RTN","IBEFUR",33,0)
+ ;
+"RTN","IBEFUR",34,0)
+ ; find any bills with Outpatient Visit Dates within the date range of the admission (PTF)
+"RTN","IBEFUR",35,0)
+ I +IBPTF S IBADM=$P($G(^DGPT(+IBPTF,0)),U,2),IBDIS=+$G(^DGPT(+IBPTF,70)) S:'IBDIS IBDIS=DT D
+"RTN","IBEFUR",36,0)
+ . D TPOPV^IBEFURT(DFN,IBADM,IBDIS,IBIFN)
+"RTN","IBEFUR",37,0)
+ ;
+"RTN","IBEFUR",38,0)
+OT ; find all bills that have one or more of the same Opt Visit Dates (399,43)
+"RTN","IBEFUR",39,0)
+ S IBX=0 F  S IBX=$O(^DGCR(399,+IBIFN,"OP",IBX)) Q:'IBX  S IBOPV=+$G(^DGCR(399,+IBIFN,"OP",IBX,0)) D
+"RTN","IBEFUR",40,0)
+ . D TPOPV^IBEFURT(DFN,IBOPV,IBOPV,IBIFN)
+"RTN","IBEFUR",41,0)
+ ;
+"RTN","IBEFUR",42,0)
+ ; find any bills for inpatient admissions whose date range includes one or more of the Opt Visit Dates
+"RTN","IBEFUR",43,0)
+ S IBX=0 F  S IBX=$O(^DGCR(399,+IBIFN,"OP",IBX)) Q:'IBX  S IBOPV=+$G(^DGCR(399,+IBIFN,"OP",IBX,0)) D
+"RTN","IBEFUR",44,0)
+ . S IBADM=$$ADM^IBCU64(DFN,IBOPV) I +IBADM S IBPTF1=$P(IBADM,U,4) I +IBPTF1 D
+"RTN","IBEFUR",45,0)
+ .. D TPPTF^IBEFURT(IBPTF1,IBIFN)
+"RTN","IBEFUR",46,0)
+ ;
+"RTN","IBEFUR",47,0)
+RT ; find all bills that have one or more of the same Prescription: same Rx number and fill date (362.4,.01,.03)
+"RTN","IBEFUR",48,0)
+ S IBXRF="AIFN"_IBIFN,IBRXN="" F  S IBRXN=$O(^IBA(362.4,IBXRF,IBRXN))  Q:'IBRXN  D
+"RTN","IBEFUR",49,0)
+ . S IBX=0 F  S IBX=$O(^IBA(362.4,IBXRF,IBRXN,IBX)) Q:'IBX  S IBRXDT=$P($G(^IBA(362.4,IBX,0)),U,3) D
+"RTN","IBEFUR",50,0)
+ .. D TPRX^IBEFURT(DFN,IBRXN,IBRXDT,IBIFN)
+"RTN","IBEFUR",51,0)
+ Q
+"RTN","IBEFUR",52,0)
+ ;
+"RTN","IBEFUR",53,0)
+ ; ==============================================================================================================
+"RTN","IBEFUR",54,0)
+ ;
+"RTN","IBEFUR",55,0)
+ ; Called by Accounts Receivable report option
+"RTN","IBEFUR",56,0)
+ ;
+"RTN","IBEFUR",57,0)
+ ; for a specific Third Party bill, return all related First Party Charges
+"RTN","IBEFUR",58,0)
+ ; only a single record of a charge event is returned, defining the charges current status, although there may 
+"RTN","IBEFUR",59,0)
+ ; have been cancellations or updates to the original charge
+"RTN","IBEFUR",60,0)
+ ;    o Inpatient Events may have multiple charge events (Copay and Per Diem)
+"RTN","IBEFUR",61,0)
+ ;    o Opt and Rx Events have only a single charge event (Copay)
+"RTN","IBEFUR",62,0)
+ ; 
+"RTN","IBEFUR",63,0)
+ ; matchs with the selected bill are based on:
+"RTN","IBEFUR",64,0)
+ ; 1) Event Date (399,.03), returns Inpatient charges whose Parent Event (350,.16) has that Event Date (350,.17)
+"RTN","IBEFUR",65,0)
+ ; 2) PTF # (399,.08), returns Outpatient charge for Opt Visits Dates within timeframe of admission
+"RTN","IBEFUR",66,0)
+ ; 
+"RTN","IBEFUR",67,0)
+ ; 3) Opt Visit Date (399,43), returns the Outpatient charge for that Event Date (350,.17)
+"RTN","IBEFUR",68,0)
+ ; 4) Opt Visit Date (399,43), returns Inpatient charges for any admission that includes that Opt Visit Date
+"RTN","IBEFUR",69,0)
+ ; 
+"RTN","IBEFUR",70,0)
+ ; 5) Rx Record (362.4,.05) and Rx Date (362.4,.03) and Outpatient Pharmacy, returns the Rx charge for the fill
+"RTN","IBEFUR",71,0)
+ ; 6) Opt Visit Date (399,43) and Outpatient Pharmacy, returns any First Party Rx charge on one of the 
+"RTN","IBEFUR",72,0)
+ ;    selected bills Opt Visit Dates that is not billed on any Third Party bill
+"RTN","IBEFUR",73,0)
+ ;
+"RTN","IBEFUR",74,0)
+ ; ^TMP("IBRBF", $J , selected bill ifn ) = ""
+"RTN","IBEFUR",75,0)
+ ; ^TMP("IBRBF", $J , selected bill ifn , charge ifn) = 
+"RTN","IBEFUR",76,0)
+ ; BILL FROM ^ BILL TO ^ CANCELLED? (1/0)^ AR BILL NUMBER ^ TOTAL CHARGE ^ ACTION TYPE (SHORT) ^ # DAYS ON HOLD
+"RTN","IBEFUR",77,0)
+ ;
+"RTN","IBEFUR",78,0)
+TPFP(IBIFN) ; given a specific Third Party Bill, find all related First Party Bills
+"RTN","IBEFUR",79,0)
+ N IBX,IBY,IB0,DFN,IBEVDT,IBPTF,IBADM,IBOPV,IBXRF,IBRXN,IBRXIFN,IBRXDT,IBFROM,IBTO Q:'$G(IBIFN)
+"RTN","IBEFUR",80,0)
+ S IB0=$G(^DGCR(399,+IBIFN,0)) Q:IB0=""  S DFN=$P(IB0,U,2),IBEVDT=$P(IB0,U,3)
+"RTN","IBEFUR",81,0)
+ ;
+"RTN","IBEFUR",82,0)
+ K ^TMP("IBRBF",$J,IBIFN) D SAVELN1^IBEFURF(IBIFN)
+"RTN","IBEFUR",83,0)
+ ;
+"RTN","IBEFUR",84,0)
+IF ; find all First Party charges for the Inpatient Event Date (Admission Date) on the Third Party bill
+"RTN","IBEFUR",85,0)
+ D FPINPT^IBEFURF(DFN,IBEVDT,IBIFN)
+"RTN","IBEFUR",86,0)
+ ;
+"RTN","IBEFUR",87,0)
+ ; find any First Party Outpatient charges for Visit Dates within the date range of the admission (PTF)
+"RTN","IBEFUR",88,0)
+ S IBPTF=$P(IB0,U,8) I +IBPTF S IBADM=$$PTFADM^IBCU64(+IBPTF) I +IBADM S IBADM=$$AD^IBCU64(IBADM) D
+"RTN","IBEFUR",89,0)
+ . S IBX=$P(IBADM,U,2)\1 I 'IBX S IBX=DT
+"RTN","IBEFUR",90,0)
+ . D FPOPV^IBEFURF(DFN,+IBADM\1,IBX,IBIFN)
+"RTN","IBEFUR",91,0)
+ ;
+"RTN","IBEFUR",92,0)
+OF ; find First Party charges for the Opt Visit Dates on the Third Party Bill
+"RTN","IBEFUR",93,0)
+ S IBX=0 F  S IBX=$O(^DGCR(399,+IBIFN,"OP",IBX)) Q:'IBX  S IBOPV=+$G(^DGCR(399,+IBIFN,"OP",IBX,0)) D
+"RTN","IBEFUR",94,0)
+ . D FPOPV^IBEFURF(DFN,IBOPV,IBOPV,IBIFN)
+"RTN","IBEFUR",95,0)
+ ;
+"RTN","IBEFUR",96,0)
+ ; find any charges for inpatient admissions whose date range includes one or more of the Opt Visit Dates
+"RTN","IBEFUR",97,0)
+ S IBX=0 F  S IBX=$O(^DGCR(399,+IBIFN,"OP",IBX)) Q:'IBX  S IBOPV=+$G(^DGCR(399,+IBIFN,"OP",IBX,0)) D
+"RTN","IBEFUR",98,0)
+ . S IBADM=$$ADM^IBCU64(DFN,IBOPV) I 'IBADM Q
+"RTN","IBEFUR",99,0)
+ . D FPINPT^IBEFURF(DFN,+IBADM,IBIFN)
+"RTN","IBEFUR",100,0)
+ ;
+"RTN","IBEFUR",101,0)
+RF ; find First Party charges for any Rx's on the selected Third Party bill
+"RTN","IBEFUR",102,0)
+ ; based on Rx IFN (52), fill date and fill# (362.4,.05,.03,.1)
+"RTN","IBEFUR",103,0)
+ N IBRXFL
+"RTN","IBEFUR",104,0)
+ S IBXRF="AIFN"_IBIFN,IBRXN="" F  S IBRXN=$O(^IBA(362.4,IBXRF,IBRXN))  Q:'IBRXN  D
+"RTN","IBEFUR",105,0)
+ . S IBX=0 F  S IBX=$O(^IBA(362.4,IBXRF,IBRXN,IBX)) Q:'IBX  D
+"RTN","IBEFUR",106,0)
+ .. S IBY=$G(^IBA(362.4,IBX,0)),IBRXIFN=$P(IBY,U,5),IBRXDT=$P(IBY,U,3),IBRXFL=$P(IBY,U,10) Q:'IBRXIFN
+"RTN","IBEFUR",107,0)
+ .. D FPRX^IBEFURF(IBRXIFN,IBRXDT,IBIFN,IBRXFL)
+"RTN","IBEFUR",108,0)
+ ;
+"RTN","IBEFUR",109,0)
+ ; find First Party Charges for any RX filled on one of the Third Party bill's Opt Visit Dates
+"RTN","IBEFUR",110,0)
+ ; that is not billed on any Third Party bill
+"RTN","IBEFUR",111,0)
+ S IBFROM=$G(^DGCR(399,IBIFN,"U")),IBTO=$P(IBFROM,U,2),IBFROM=+IBFROM K IBX
+"RTN","IBEFUR",112,0)
+ D RXDISP^IBCSC5C(DFN,IBFROM,IBTO,.IBX,"","",1,1) ; get all Rx's for patient in date range
+"RTN","IBEFUR",113,0)
+ S IBRXN="" F  S IBRXN=$O(IBX(IBRXN)) Q:IBRXN=""  S IBRXDT=0 F  S IBRXDT=$O(IBX(IBRXN,IBRXDT)) Q:'IBRXDT  D
+"RTN","IBEFUR",114,0)
+ . I '$D(^DGCR(399,"AOPV",DFN,IBRXDT,IBIFN)) Q  ; rx not on bills opt visit date
+"RTN","IBEFUR",115,0)
+ . I +$$RXTP^IBEFURT(DFN,IBRXN,IBRXDT) Q  ; rx billed on a third party bill
+"RTN","IBEFUR",116,0)
+ . S IBRXIFN=$P(IBX(IBRXN,IBRXDT),U,1)
+"RTN","IBEFUR",117,0)
+ . D FPRX^IBEFURF(IBRXIFN,IBRXDT,IBIFN)
+"RTN","IBEFUR",118,0)
+ Q
+"RTN","IBEFURF")
+0^2^B18754511
+"RTN","IBEFURF",1,0)
+IBEFURF ;ALB/ARH - UTILITY: FIND RELATED FIRST PARTY BILLS ; 3/7/00
+"RTN","IBEFURF",2,0)
+ ;;2.0;INTEGRATED BILLING;**130,347,459**;21-MAR-94;Build 16
+"RTN","IBEFURF",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IBEFURF",4,0)
+ ;
+"RTN","IBEFURF",5,0)
+ ; the following procedures search for First Party charges for specific events, matchs are returned in TMP
+"RTN","IBEFURF",6,0)
+ ; only a single record of a charge event is returned, defining the charges current status, although there may 
+"RTN","IBEFURF",7,0)
+ ; have been cancellations or updates to the original charge
+"RTN","IBEFURF",8,0)
+ ;    o Inpatient Events may have multiple charge events (Copay and Per Diem)
+"RTN","IBEFURF",9,0)
+ ;    o Opt and Rx Events have only a single charge event (Copay)
+"RTN","IBEFURF",10,0)
+ ; 
+"RTN","IBEFURF",11,0)
+ ; ^TMP("IBRBF",$J, XRF, charge ifn) = 
+"RTN","IBEFURF",12,0)
+ ; BILL FROM ^ BILL TO ^ CANCELLED? (1/0)^ AR BILL NUMBER ^ TOTAL CHARGE ^ ACTION TYPE (SHORT) ^ # DAYS ON HOLD
+"RTN","IBEFURF",13,0)
+ ;
+"RTN","IBEFURF",14,0)
+FPINPT(DFN,ADMDT,XRF) ; given a patient and admission date, find any Inpatient Charges
+"RTN","IBEFURF",15,0)
+ ; find the record of the Event (based on Event Date) then find all charges with that Event as the Parent Event
+"RTN","IBEFURF",16,0)
+ N IBFPIFN,IBEVDT,IBEVIFN,IB0 S ADMDT=+$G(ADMDT)\1
+"RTN","IBEFURF",17,0)
+ I +$G(DFN),+$G(ADMDT) S IBEVDT=-(ADMDT+.01) F  S IBEVDT=$O(^IB("AFDT",DFN,IBEVDT)) Q:'IBEVDT!(-IBEVDT<ADMDT)  D
+"RTN","IBEFURF",18,0)
+ . S IBEVIFN=0 F  S IBEVIFN=$O(^IB("AFDT",DFN,IBEVDT,IBEVIFN)) Q:'IBEVIFN  D
+"RTN","IBEFURF",19,0)
+ .. S IBFPIFN=0 F  S IBFPIFN=$O(^IB("AF",IBEVIFN,IBFPIFN)) Q:'IBFPIFN  D
+"RTN","IBEFURF",20,0)
+ ... S IB0=$G(^IB(IBFPIFN,0)) Q:IB0=""  I $P($G(^IBE(350.1,+$P(IB0,U,3),0)),U,1)["OPT" Q
+"RTN","IBEFURF",21,0)
+ ... D FPONE(IBFPIFN,$G(XRF))
+"RTN","IBEFURF",22,0)
+ Q
+"RTN","IBEFURF",23,0)
+ ;
+"RTN","IBEFURF",24,0)
+FPOPV(DFN,DT1,DT2,XRF) ; given a patient and date range, find any Outpatient Charges
+"RTN","IBEFURF",25,0)
+ ; find all records where the Event Date is within the selected date range and the charge is Outpatient
+"RTN","IBEFURF",26,0)
+ N IBFPIFN,IBEVDT,IB0 I '$G(DT2) S DT2=+$G(DT1)
+"RTN","IBEFURF",27,0)
+ I +$G(DFN),+$G(DT1) S IBEVDT=-(DT2+.01) F  S IBEVDT=$O(^IB("AFDT",DFN,IBEVDT)) Q:'IBEVDT!(-IBEVDT<DT1)  D
+"RTN","IBEFURF",28,0)
+ . S IBFPIFN=0 F  S IBFPIFN=$O(^IB("AFDT",DFN,IBEVDT,IBFPIFN)) Q:'IBFPIFN  D
+"RTN","IBEFURF",29,0)
+ .. S IB0=$G(^IB(IBFPIFN,0)) Q:IB0=""  I $P($G(^IBE(350.1,+$P(IB0,U,3),0)),U,1)'["OPT" Q
+"RTN","IBEFURF",30,0)
+ .. D FPONE(IBFPIFN,$G(XRF))
+"RTN","IBEFURF",31,0)
+ Q
+"RTN","IBEFURF",32,0)
+ ;
+"RTN","IBEFURF",33,0)
+FPRX(RXIFN,FILLDT,XRF,IBRXFL) ; given the prescription ifn (52) and the fill date, find any First Party charges
+"RTN","IBEFURF",34,0)
+ ; get specific charge entry for an Rx from the Prescription file (52,106 and 52,52,9)
+"RTN","IBEFURF",35,0)
+ N IBFPIFN,IBFILLN,DFN S IBFPIFN=""
+"RTN","IBEFURF",36,0)
+ I '+$G(RXIFN) Q
+"RTN","IBEFURF",37,0)
+ I '+$G(FILLDT) Q
+"RTN","IBEFURF",38,0)
+ S IBFILLN=$G(IBRXFL)
+"RTN","IBEFURF",39,0)
+ S DFN=$$FILE^IBRXUTL(RXIFN,2) Q:'DFN
+"RTN","IBEFURF",40,0)
+ I $$FILE^IBRXUTL(RXIFN,22)=$G(FILLDT) D
+"RTN","IBEFURF",41,0)
+ . S IBFPIFN=+$P($$IBND^IBRXUTL(DFN,RXIFN),"^",2)
+"RTN","IBEFURF",42,0)
+ . D FPONE(IBFPIFN,$G(XRF))
+"RTN","IBEFURF",43,0)
+ E  D
+"RTN","IBEFURF",44,0)
+ . S:IBFILLN="" IBFILLN=$$RFLNUM^IBRXUTL(RXIFN,FILLDT)
+"RTN","IBEFURF",45,0)
+ . S IBFPIFN=+$$IBNDFL^IBRXUTL(DFN,RXIFN,IBFILLN)
+"RTN","IBEFURF",46,0)
+ . D FPONE(IBFPIFN,$G(XRF))
+"RTN","IBEFURF",47,0)
+ Q
+"RTN","IBEFURF",48,0)
+ ;
+"RTN","IBEFURF",49,0)
+FPONE(FPIFN,XRF) ; for a FP charge entry get the one line item that defines the entire events charge(s)
+"RTN","IBEFURF",50,0)
+ ; get the Parent Charge then use the last charge entry as the current record for the event
+"RTN","IBEFURF",51,0)
+ N IBPARENT,IBLAST,IBDATA Q:'$G(FPIFN)
+"RTN","IBEFURF",52,0)
+ ;
+"RTN","IBEFURF",53,0)
+ S IBPARENT=+$P($G(^IB(+FPIFN,0)),U,9) Q:'IBPARENT
+"RTN","IBEFURF",54,0)
+ S IBLAST=+$$LAST^IBECEAU(IBPARENT) Q:'IBLAST
+"RTN","IBEFURF",55,0)
+ ;
+"RTN","IBEFURF",56,0)
+ I '$$DONE(IBLAST,$G(XRF)) S IBDATA=$$LN2(IBLAST) D SAVELN2(IBLAST,IBDATA,$G(XRF))
+"RTN","IBEFURF",57,0)
+ Q
+"RTN","IBEFURF",58,0)
+ ;
+"RTN","IBEFURF",59,0)
+ ; ========================================================================================
+"RTN","IBEFURF",60,0)
+ ;
+"RTN","IBEFURF",61,0)
+DONE(FPIFN,XRF) ; return true if item charge (last) is already included
+"RTN","IBEFURF",62,0)
+ N IBX S IBX="" S XRF=$S($G(XRF)="":"FP",1:XRF) I +$G(FPIFN),$D(^TMP("IBRBF",$J,XRF,+FPIFN)) S IBX=1
+"RTN","IBEFURF",63,0)
+ Q IBX
+"RTN","IBEFURF",64,0)
+ ;
+"RTN","IBEFURF",65,0)
+SAVELN1(XRF,DATA) ; set charges found into array, ^TMP("IBRBF",$J,XRF) = DATA
+"RTN","IBEFURF",66,0)
+ S XRF=$S($G(XRF)="":"FP",1:XRF),^TMP("IBRBF",$J,XRF)=$G(DATA)
+"RTN","IBEFURF",67,0)
+ Q
+"RTN","IBEFURF",68,0)
+ ;
+"RTN","IBEFURF",69,0)
+SAVELN2(FPIFN,DATA,XRF) ; set charges found into array, ^TMP("IBRBF",$J,XRF,charge ifn) = DATA (from $$LN2)
+"RTN","IBEFURF",70,0)
+ I +$G(FPIFN),$D(^IB(+FPIFN,0)) S XRF=$S($G(XRF)="":"FP",1:XRF),^TMP("IBRBF",$J,XRF,+FPIFN)=$G(DATA)
+"RTN","IBEFURF",71,0)
+ Q
+"RTN","IBEFURF",72,0)
+ ;
+"RTN","IBEFURF",73,0)
+LN2(FPIFN) ; return data for a specific First Party Bill:
+"RTN","IBEFURF",74,0)
+ ; BILL FROM ^ BILL TO ^ CANCELLED? (1/0)^ AR BILL NUMBER ^ TOTAL CHARGE ^ ACTION TYPE (SHORT) ^ # DAYS ON HOLD
+"RTN","IBEFURF",75,0)
+ ; for rx's: FROM date is the (re)fill date in 52 and TO is the date entry added (release date)
+"RTN","IBEFURF",76,0)
+ ; also set # Days On Hold only if the bill is currently in On Hold status
+"RTN","IBEFURF",77,0)
+ N IBX,IB0,IB1 S IBX="",IB0=$G(^IB(+$G(FPIFN),0)) I IB0="" G LN2Q
+"RTN","IBEFURF",78,0)
+ S IB1=$G(^IB(+FPIFN,1))
+"RTN","IBEFURF",79,0)
+ ;
+"RTN","IBEFURF",80,0)
+ S $P(IBX,U,1)=$S(+$P(IB0,U,4)=52:$$RXDT(+FPIFN),+$P(IB0,U,14):+$P(IB0,U,14),1:+$P(IB1,U,2))\1
+"RTN","IBEFURF",81,0)
+ S $P(IBX,U,2)=$S(+$P(IB0,U,15):+$P(IB0,U,15),1:+$P(IB1,U,2))\1
+"RTN","IBEFURF",82,0)
+ S $P(IBX,U,3)=$$CANC(+FPIFN)
+"RTN","IBEFURF",83,0)
+ S $P(IBX,U,4)=$P(IB0,U,11)
+"RTN","IBEFURF",84,0)
+ S $P(IBX,U,5)=$P(IB0,U,7)
+"RTN","IBEFURF",85,0)
+ S $P(IBX,U,6)=$$ATAB($P(IB0,U,3))
+"RTN","IBEFURF",86,0)
+ S $P(IBX,U,7)=$$OHDT(+FPIFN)
+"RTN","IBEFURF",87,0)
+LN2Q Q IBX
+"RTN","IBEFURF",88,0)
+ ;
+"RTN","IBEFURF",89,0)
+ ; ========================================================================================
+"RTN","IBEFURF",90,0)
+ ; 
+"RTN","IBEFURF",91,0)
+ ; these procedures return First Party charge specific data and status
+"RTN","IBEFURF",92,0)
+ ;
+"RTN","IBEFURF",93,0)
+ATAB(AT) ; given an Action Type (ptr to 350.1), return a shortened/abbreviated form of Action Type (350.1,.01)
+"RTN","IBEFURF",94,0)
+ N IBX,IBY S IBX="",IBY=$P($G(^IBE(350.1,+$G(AT),0)),U,1) I IBY="" G ATABQ
+"RTN","IBEFURF",95,0)
+ I "IB DG PSO"'[$E(IBY,1,3) S IBX=IBY
+"RTN","IBEFURF",96,0)
+ I IBX="" S IBY=$P(IBY," ",2,999),IBY=$P(IBY," ",1,$L(IBY," ")-1) S IBX=IBY
+"RTN","IBEFURF",97,0)
+ATABQ Q IBX
+"RTN","IBEFURF",98,0)
+ ;
+"RTN","IBEFURF",99,0)
+CANC(FPIFN) ; given a First Party Charge (ptr to 350), return 1 if charge is Cancelled, "" otherwise
+"RTN","IBEFURF",100,0)
+ ; is cancelled if the Action Type (350,.03) Sequence Number (350.1,.05) is Cancel
+"RTN","IBEFURF",101,0)
+ ; or is cancelled if the Status (350,.05) is Cancelled (350.21,.05) (never passed to AR)
+"RTN","IBEFURF",102,0)
+ N IBX,IBY,IB0 S IBX="",IB0=$G(^IB(+$G(FPIFN),0)) I IB0="" G CANCQ
+"RTN","IBEFURF",103,0)
+ S IBY=$P($G(^IBE(350.1,+$P(IB0,U,3),0)),U,5) I +IBY=2 S IBX=1 ;  action is cancel
+"RTN","IBEFURF",104,0)
+ I 'IBX S IBY=$P($G(^IBE(350.21,+$P(IB0,U,5),0)),U,5) I +IBY S IBX=1 ;  status is cancel
+"RTN","IBEFURF",105,0)
+CANCQ Q IBX
+"RTN","IBEFURF",106,0)
+ ;
+"RTN","IBEFURF",107,0)
+RXDT(FPIFN) ; return fill date of rx being billed, Resulting From must be 52
+"RTN","IBEFURF",108,0)
+ ; fill date for Original = (52,22), for Refill = (52,52,.01)
+"RTN","IBEFURF",109,0)
+ N IBX,IBY,IB0,IBRX,IBRXN S IBX="",IB0=$G(^IB(+$G(FPIFN),0)) I IB0="" G RXDTQ
+"RTN","IBEFURF",110,0)
+ S IBY=$P(IB0,U,4) I +IBY=52 S IBRX=+$P(IBY,":",2),IBRXN=+$P(IBY,":",3) D  I +IBY S IBX=IBY\1
+"RTN","IBEFURF",111,0)
+ . S IBY=$S('IBRXN:$$FILE^IBRXUTL(IBRX,22),1:+$$SUBFILE^IBRXUTL(IBRX,IBRXN,52,.01))
+"RTN","IBEFURF",112,0)
+RXDTQ Q IBX
+"RTN","IBEFURF",113,0)
+ ;
+"RTN","IBEFURF",114,0)
+OHDT(FPIFN) ; return the bills # DAYS ON HOLD, if the bill is currently in the On Hold Status
+"RTN","IBEFURF",115,0)
+ N IBX,IBY,IB0 S IBX="",IB0=$G(^IB(+$G(FPIFN),0)) I IB0="" G OHDQ
+"RTN","IBEFURF",116,0)
+ S IBY=$P($G(^IBE(350.21,+$P(IB0,U,5),0)),U,6)
+"RTN","IBEFURF",117,0)
+ I +IBY S IBY=$P($G(^IB(+FPIFN,1)),U,6) I +IBY S IBX=$$FMDIFF^XLFDT(DT,IBY)
+"RTN","IBEFURF",118,0)
+OHDQ Q IBX
+"VER")
+8.0^22.0
+**INSTALL NAME**
+PRCA*4.5*280
+"BLD",8876,0)
+PRCA*4.5*280^ACCOUNTS RECEIVABLE^0^3110923^y
+"BLD",8876,1,0)
+^^3^3^3110923^
+"BLD",8876,1,1,0)
+ 
+"BLD",8876,1,2,0)
+This patch addresses one issue about the incorrect charge type NURSING
+"BLD",8876,1,3,0)
+HOME CARE (NSC) showing on the patient's bill.
+"BLD",8876,4,0)
+^9.64PA^^0
+"BLD",8876,6)
+^241
+"BLD",8876,6.3)
+12
+"BLD",8876,"INIT")
+POST^PRCA280
+"BLD",8876,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8876,"KRN",.4,0)
+.4
+"BLD",8876,"KRN",.401,0)
+.401
+"BLD",8876,"KRN",.402,0)
+.402
+"BLD",8876,"KRN",.403,0)
+.403
+"BLD",8876,"KRN",.5,0)
+.5
+"BLD",8876,"KRN",.84,0)
+.84
+"BLD",8876,"KRN",3.6,0)
+3.6
+"BLD",8876,"KRN",3.8,0)
+3.8
+"BLD",8876,"KRN",9.2,0)
+9.2
+"BLD",8876,"KRN",9.8,0)
+9.8
+"BLD",8876,"KRN",9.8,"NM",0)
+^9.68A^^0
+"BLD",8876,"KRN",19,0)
+19
+"BLD",8876,"KRN",19.1,0)
+19.1
+"BLD",8876,"KRN",101,0)
+101
+"BLD",8876,"KRN",409.61,0)
+409.61
+"BLD",8876,"KRN",771,0)
+771
+"BLD",8876,"KRN",779.2,0)
+779.2
+"BLD",8876,"KRN",870,0)
+870
+"BLD",8876,"KRN",8989.51,0)
+8989.51
+"BLD",8876,"KRN",8989.52,0)
+8989.52
+"BLD",8876,"KRN",8994,0)
+8994
+"BLD",8876,"KRN","B",.4,.4)
+
+"BLD",8876,"KRN","B",.401,.401)
+
+"BLD",8876,"KRN","B",.402,.402)
+
+"BLD",8876,"KRN","B",.403,.403)
+
+"BLD",8876,"KRN","B",.5,.5)
+
+"BLD",8876,"KRN","B",.84,.84)
+
+"BLD",8876,"KRN","B",3.6,3.6)
+
+"BLD",8876,"KRN","B",3.8,3.8)
+
+"BLD",8876,"KRN","B",9.2,9.2)
+
+"BLD",8876,"KRN","B",9.8,9.8)
+
+"BLD",8876,"KRN","B",19,19)
+
+"BLD",8876,"KRN","B",19.1,19.1)
+
+"BLD",8876,"KRN","B",101,101)
+
+"BLD",8876,"KRN","B",409.61,409.61)
+
+"BLD",8876,"KRN","B",771,771)
+
+"BLD",8876,"KRN","B",779.2,779.2)
+
+"BLD",8876,"KRN","B",870,870)
+
+"BLD",8876,"KRN","B",8989.51,8989.51)
+
+"BLD",8876,"KRN","B",8989.52,8989.52)
+
+"BLD",8876,"KRN","B",8994,8994)
+
+"BLD",8876,"QUES",0)
+^9.62^^
+"BLD",8876,"REQB",0)
+^9.611^^0
+"INIT")
+POST^PRCA280
+"MBREQ")
+0
+"PKG",142,-1)
+1^1
+"PKG",142,0)
+ACCOUNTS RECEIVABLE^PRCA^BILL COLLECTIONS
+"PKG",142,20,0)
+^9.402P^1^1
+"PKG",142,20,1,0)
+2^^PRCAMRG
+"PKG",142,20,1,1)
+
+"PKG",142,20,"B",2,1)
+
+"PKG",142,22,0)
+^9.49I^1^1
+"PKG",142,22,1,0)
+4.5^^2950320
+"PKG",142,22,1,"PAH",1,0)
+280^3110923
+"PKG",142,22,1,"PAH",1,1,0)
+^^3^3^3110923
+"PKG",142,22,1,"PAH",1,1,1,0)
+ 
+"PKG",142,22,1,"PAH",1,1,2,0)
+This patch addresses one issue about the incorrect charge type NURSING
+"PKG",142,22,1,"PAH",1,1,3,0)
+HOME CARE (NSC) showing on the patient's bill.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PRCA280")
+0^^B4573663
+"RTN","PRCA280",1,0)
+PRCA280 ;ALB/CXW - POST INIT, Type of Care correction; 14-SEP-2011
+"RTN","PRCA280",2,0)
+ ;;4.5;Accounts Receivable;**280**;Mar 20, 1995;Build 12
+"RTN","PRCA280",3,0)
+ ;;Per VHA Directive 10-93-142, this routine should not be modified.
+"RTN","PRCA280",4,0)
+ Q
+"RTN","PRCA280",5,0)
+ ;
+"RTN","PRCA280",6,0)
+POST ; 
+"RTN","PRCA280",7,0)
+ D MSG("    PRCA*4.5*280 Post-Install .....")
+"RTN","PRCA280",8,0)
+ D UPACT
+"RTN","PRCA280",9,0)
+ D MSG("    PRCA*4.5*280 Post-Install Complete")
+"RTN","PRCA280",10,0)
+ D MSG("")
+"RTN","PRCA280",11,0)
+ Q
+"RTN","PRCA280",12,0)
+ ;
+"RTN","PRCA280",13,0)
+UPACT ;Update to Type of Care #15.1 in file #430
+"RTN","PRCA280",14,0)
+ N IBI,IBDG,IBAT,IBAIEN,IBCEN,IBNCC,PRCAX,PRCATC,PRCACNT,DIE,DA,DR,X
+"RTN","PRCA280",15,0)
+ S IBNCC="HOSPITAL CARE (NSC)"
+"RTN","PRCA280",16,0)
+ S IBCEN=$O(^PRCA(430.2,"B",IBNCC,0))
+"RTN","PRCA280",17,0)
+ I 'IBCEN D MSG(">>> "_IBNCC_" not defined on file #430.2, no update on file #430") Q
+"RTN","PRCA280",18,0)
+ ; update if patient charges in these type events
+"RTN","PRCA280",19,0)
+ S IBDG="^DG FEE SERVICE (INPT) CANCEL^DG FEE SERVICE (INPT) NEW^DG FEE SERVICE (INPT) UPDATE^"
+"RTN","PRCA280",20,0)
+ ;
+"RTN","PRCA280",21,0)
+ D MSG(">>> Updating Type of Care to file #430...")
+"RTN","PRCA280",22,0)
+ S IBI="",PRCACNT=0
+"RTN","PRCA280",23,0)
+ F  S IBI=$O(^IB("ABIL",IBI)) Q:IBI=""  D
+"RTN","PRCA280",24,0)
+ . S IBAIEN=$O(^IB("ABIL",IBI,0)) Q:'IBAIEN
+"RTN","PRCA280",25,0)
+ . S IBAT=$P($G(^IB(IBAIEN,0)),"^",3) Q:'IBAT
+"RTN","PRCA280",26,0)
+ . S IBAT=$P(^IBE(350.1,IBAT,0),"^")
+"RTN","PRCA280",27,0)
+ . ; no update if none of 3 dg fee service (inpt)
+"RTN","PRCA280",28,0)
+ . I '$F(IBDG,"^"_IBAT_"^") Q
+"RTN","PRCA280",29,0)
+ . S PRCAX=$O(^PRCA(430,"B",IBI,0)) Q:'PRCAX
+"RTN","PRCA280",30,0)
+ . S PRCATC=$P(^PRCA(430,PRCAX,0),"^",16)
+"RTN","PRCA280",31,0)
+ . ; no update if exists or null
+"RTN","PRCA280",32,0)
+ . I ('PRCATC)!(PRCATC=IBCEN) Q
+"RTN","PRCA280",33,0)
+ . S PRCATC=$P(^PRCA(430.2,PRCATC,0),"^")
+"RTN","PRCA280",34,0)
+ . S DA=+PRCAX,DIE="^PRCA(430,",DR="15.1///"_IBCEN D ^DIE K DA,DIE,DR
+"RTN","PRCA280",35,0)
+ . D MSG(" >> "_PRCATC_" on "_IBI_" changed to "_IBNCC)
+"RTN","PRCA280",36,0)
+ . S PRCACNT=PRCACNT+1
+"RTN","PRCA280",37,0)
+ D MSG(">>> The type of care on total "_PRCACNT_$S(PRCACNT=1:" bill has",1:" bills have")_" been updated")
+"RTN","PRCA280",38,0)
+ Q
+"RTN","PRCA280",39,0)
+ ;
+"RTN","PRCA280",40,0)
+MSG(X) ;
+"RTN","PRCA280",41,0)
+ D MES^XPDUTL(X)
+"RTN","PRCA280",42,0)
+ Q
+"RTN","PRCA280",43,0)
+ ;
+"VER")
+8.0^22.0
+**END**
+**END**

@@ -1,0 +1,156 @@
+Release of VA NATIONAL HEALTH INFO NETWORK (NHIN) (Version 1.0) - October 
+28, 2010
+ 
+RELEASE INFORMATION:
+====================
+The NHIN RPC Package (NHIN 1.0) will be used with the Department of 
+Veterans Affairs (VA) Nationwide Health Information Network (NHIN) 
+Gateway Adapter Version 2.0. The purpose of the VA NHIN Gateway Adapter 
+is to implement the actions necessary to exchange electronic health 
+records (EHRs) generated from the VA and received from authorized NHIN 
+Health Information Exchanges (HIEs). The VA NHIN Gateway Adapter uses a 
+service-oriented architecture (SOA) to share patient health data and to 
+communicate between systems.
+ 
+The VA NHIN Adapter interfaces with the VA NHIN CONNECT Gateway, which is 
+an implemented instance of the Federal CONNECT Gateway software. The 
+Federal NHIN CONNECT Gateway is the product deliverable of the Federal 
+Health Architecture (FHA), under the Department of Health and Human 
+
+Enter RETURN to continue or '^' to exit: ^
+
+Enter message action (in FOIA FILES basket): Ignore// Print
+Print recipient list? No//   NO
+DEVICE: HOME// ;;99999999999  VIRTUAL TELNET
+
+
+MailMan message for MOODY,SUSAN G
+Printed at VAHACG.FO-ALBANY.MED.VA.GOV  03/21/11@15:52
+Subj: Release of VA NATIONAL HEALTH INFO NETWORK (NHIN) (Version 1.0)  [#47620]
+28 Oct 2010 16:07:52 -0400 (EDT)  124 lines
+From: <KREUZ.SHERI_B@FORUM.VA.GOV>  In 'FOIA FILES' basket.   Page 1
+-------------------------------------------------------------------------------
+Release of VA NATIONAL HEALTH INFO NETWORK (NHIN) (Version 1.0) - October 
+28, 2010
+ 
+RELEASE INFORMATION:
+====================
+The NHIN RPC Package (NHIN 1.0) will be used with the Department of 
+Veterans Affairs (VA) Nationwide Health Information Network (NHIN) 
+Gateway Adapter Version 2.0. The purpose of the VA NHIN Gateway Adapter 
+is to implement the actions necessary to exchange electronic health 
+records (EHRs) generated from the VA and received from authorized NHIN 
+Health Information Exchanges (HIEs). The VA NHIN Gateway Adapter uses a 
+service-oriented architecture (SOA) to share patient health data and to 
+communicate between systems.
+ 
+The VA NHIN Adapter interfaces with the VA NHIN CONNECT Gateway, which is 
+an implemented instance of the Federal CONNECT Gateway software. The 
+Federal NHIN CONNECT Gateway is the product deliverable of the Federal 
+Health Architecture (FHA), under the Department of Health and Human 
+Services (HSS). This product is the result of the collaboration and 
+shared development cost of a group of more than twenty government 
+agencies known as the Federal Consortium. The VA has been exchanging 
+medical information with the Department of Defense (DoD) for several 
+years. By using the VA CONNECT Gateway together with the VA NHIN Adapter, 
+the VA will now be able to share patient health data with other federal 
+partners, as well as private providers, such as Kaiser Permanente.
+ 
+The VA NHIN Gateway Adapter is a HealtheVet-VistA application that acts 
+as a gateway between the VA and other Health Information Exchanges (HIEs) 
+to share patient clinical records. The VA NHIN Gateway Adapter is 
+deployed as a single, national instance at AITC (Austin Information 
+Technology Center). Payloads are standards-based CDA (Clinical Document 
+Architecture) XML documents. VistA data is retrieved through the use of 
+VistALink-mediated RPC calls; HIE data retrieved by the NHIN Adapter is 
+displayed by VistAWeb. The NHIN Adapter provides a read-only service: it 
+does not create a clinical repository with the data it mediates.
+ 
+SOFTWARE CHANGES:
+=================
+This package release of NHIN Version 1.0 will add the following VistA 
+file entries:
+ 
+        NHIN APPLICATION PROXY to the OPTION file (#19).
+        NHIN GET VISTA DATA to the REMOTE PROCEDURE FILE (#8994).
+ 
+The post-install routine will create a new proxy user in the NEW PERSON 
+file (#200).  The user name will be NHIN,APPLICATION PROXY. 
+ 
+SOFTWARE RETRIEVAL:
+===================
+ 
+Sites should download the following two files:
+ 
+File Name               Contents                FTP Retrieval Format
+-------------           ------------       ---------------------------
+NHIN1_0.KID             KIDS Build                      ASCII
+NHIN_TM.PDF             Installation Guide              Binary
+                        and Technical Manual
+ 
+Sites may retrieve the file listed above in one of the following ways:
+ 
+(1) The preferred method is to FTP the files from 
+download.vista.med.va.gov, which will transmit the files from the first 
+available FTP server. 
+ 
+(2) Sites may also elect to retrieve these files directly from a specific 
+server as follows:
+ 
+OI FIELD OFFICE         FTP ADDRESS                  DIRECTORY
+--------------------    --------------------------   ----------------
+Albany                  ftp.fo-albany.med.va.gov     [anonymous.software]
+Hines                   ftp.fo-hines.med.va.gov      [anonymous.software]
+Salt Lake City          ftp.fo-slc.med.va.gov        [anonymous.software]
+ 
+ 
+DOCUMENTATION:   
+================
+NHIN_TM.PDF will also be posted within the next few days within the 
+Clinical Section on the VistA Documentation Library (VDL) at 
+http://www4.va.gov/vdl/
+ 
+        File Name       Contents
+        -------------   -----------
+        NHIN_TM.PDF     Installation Guide and Technical Manual
+ 
+MANDATE: 
+=========
+Installation of the NHIN RPC Package (NHIN V1.0) supports VA compliance 
+with Executive Order 13410 "Promoting Quality and Efficient Health Care 
+in Federal Government Administered or Sponsored Health Care Programs".  
+The NHIN RPC Package enhances the data elements that can be exchanged 
+among HIEs, which is foundational to VA meeting the President's goal of 
+development of the Virtual Lifetime Electronic Record (VLER), an open 
+architecture, non-proprietary, standards-based approach to exchange of 
+health care information.  
+ 
+Sites are mandated to install this KIDS build to support NHIN-related 
+efforts.  Due to the high visibility of this project, at the VA Secretary 
+and White House levels, the compliance date for installing this KIDS 
+build has been set at 14 days.
+ 
+M COMPONENT COMPLIANCE DATE:
+=============================
+       November 12, 2010  
+ 
+ADDITIONAL INFORMATION:
+=======================
+ 
+If you have any questions concerning the installation or implementation 
+of this package, please call the VA Service Desk at 1-888-596-HELP (4357) 
+or log a Remedy Ticket for NHIN:   Category = 
+Applications-HealtheVet-VistA, TYPE=NHIN, ITEM = Other
+ 
+VISTAWEB V. 12 versus V. 13:
+============================
+ 
+Installation of the NHIN RPC Package at all 129 VistA systems is the 
+first step in completing a national delivery of NHIN.  Only the 
+clinicians at the sites that have Initial Operating Capability (IOC) 
+approval for installing VistAWeb Version 13 will have access to NHIN data 
+when the RPC package is installed.  (IOC sites include:  San Diego, 
+Hampton, East Orange, North Chicago and Puget Sound)  Clinicians at the 
+remaining VA Medical Centers will not have access to NHIN data until 
+VistAWeb Version 13 (WEBV*1.0*20) is nationally released, tentatively 
+scheduled for early-  to mid-November 2010.  

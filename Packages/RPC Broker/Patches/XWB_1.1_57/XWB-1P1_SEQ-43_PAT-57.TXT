@@ -1,0 +1,117 @@
+$TXT Created by CLARKE,KYLE E at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 11/15/11 at 16:24
+=============================================================================
+Run Date: APR 11, 2012                     Designation: XWB*1.1*57
+Package : XWB - RPC BROKER                    Priority: Mandatory
+Version : 1.1        SEQ #43                    Status: Released
+                  Compliance Date: MAY 12, 2012
+=============================================================================
+
+Associated patches: (v)XWB*1.1*46  <<= must be installed BEFORE `XWB*1.1*57'
+
+Subject: FOREGROUND COVERSHEET TIMES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains changes to a single routine (XWBPRS) which provides
+ the ability to monitor Computerized Patient Record System (CPRS) 
+ foreground coversheet load times by Capacity Management.
+  
+ Caution:  The modified routine is directly involved in the handling of 
+ Remote Procedure Calls (RPCs) from GUI applications using RPC Broker 
+ connections.  There is the possibility that installation of this patch 
+ will impact GUI applications that are currently running RPCs, resulting in
+ EDITED errors.  It is recommended that the patch be installed without
+ users on the system, or at least with minimal users (and with users being
+ asked to sign-off or be inactive during the period in which the patch will
+ be installed).
+  
+ Test Sites
+ ==========
+  
+ Chicago HCS, IL
+ Heartland-West HCS, Kansas-Ciy, MO
+ Northport, NY
+  
+  
+ Remedy Tickets: None
+  
+ Blood Bank Team Coordination: 
+ =============================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XWB*1.1*57 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XWB*1.1*57 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ Installation Instructions
+ =========================
+  
+ 1. Caution:  The modified routine is directly involved in the handling 
+ of RPCs from GUI applications using RPC Broker connections. There is the 
+ possibility that installation of this patch will impact GUI applications 
+ that are currently running RPCs, resulting in EDITED errors. It is
+ recommended that the patch be installed without users on the system, or at
+ least with minimal users (and with users being asked to sign-off or be 
+ inactive during the period in which the patch will be installed). 
+  
+ 2. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  This
+ option will load the Kernel Installation and Distribution System (KIDS)
+ distribution onto your system.
+  
+ 3. You DO NOT need to stop TaskMan or the background filers.  
+  
+ 4. The patch has now been loaded into a transport global on your system.  
+ On the KIDS menu, select the 'Installation' menu and use the following
+ options: 
+  
+  - Verify Checksums in Transport Global 
+  - Print Transport Global
+  - Compare Transport Global to Current System 
+  - Backup a Transport Global
+  
+ 5. Installation will take less than 1 minute.
+  
+    On the KIDS menu, under the 'Installation' menu, use the following
+    option:
+  
+       Install Package(s)
+  
+       Select INSTALL NAME: 'XWB*1.1*57'
+                             ==========
+    Accept the following defaults:
+  
+       Want KIDS to INHIBIT LOGONs during the install? NO//
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.1;RPC BROKER;**[Patch List]**;Mar 28, 1997;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XWBPRS
+    Before: B38623517   After: B75006565  **35,43,46,57**
+ 
+Routine list of preceding patches: 46
+
+=============================================================================
+User Information:
+Entered By  : IVEY,JOEL                     Date Entered  : JUN 06, 2011
+Completed By: DERBES-MURPHY,ELISA           Date Completed: APR 11, 2012
+Released By : PALMER,MICHAEL                Date Released : APR 11, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

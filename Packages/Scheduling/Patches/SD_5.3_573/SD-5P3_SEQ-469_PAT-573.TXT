@@ -1,0 +1,255 @@
+$TXT Created by CURTIS,RICHARD L at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 11/30/10 at 14:46
+=============================================================================
+Run Date: FEB 25, 2011                     Designation: SD*5.3*573
+Package : SD - SCHEDULING                     Priority: EMERGENCY
+Version : 5.3       SEQ #469                    Status: Released
+                  Compliance Date: FEB 28, 2011
+=============================================================================
+
+Associated patches: (v)SD*5.3*568  <<= must be installed BEFORE `SD*5.3*573'
+
+Subject: MID-FY2011 TABLE MAINTENANCE FOR CLINIC STOP FILE (#40.7)
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch provides mid-Fiscal Year 2011 updates to the CLINIC STOP
+ file (#40.7) as requested by the Decision Support Office (DSO).
+  
+                         ***IMPORTANT NOTE: ***
+ **************************************************************************
+ ** This patch is being released with a compliance date of               **
+ ** February 28, 2011.                                                   **
+ ** This patch should be installed as close to COB on February 28, 2011  **
+ ** as possible, but not after March 1, 2011.  Early installation of     **
+ ** this patch could result in transmission of incorrect stop codes      **
+ ** that will result in errors from Austin.  Coordination with the       **
+ ** MAS PAS/ADPAC is imperative, as the patch will cause changes to the  **
+ ** CLINIC STOP file (#40.7).  Testing can be done in a site's mirror    **
+ ** account before installation in production to verify changes.         **
+ ** This patch inactivates, creates and modifies descriptions of stop    **
+ ** codes effective March 1, 2011, therefore, installing early may       **
+ ** modify certain stop codes that may currently be in use at your site. **
+ ** It is advised that clinics with stop codes assigned that will        **
+ ** incur restriction date/type changes should be corrected as soon as   **
+ ** possible after installation.  Please keep in mind that new stop      **
+ ** code corrections should not be assigned until March 1, 2011 as they  **
+ ** will not be accepted in Austin until that date.  All other stop code **
+ ** corrections should be made as early as possible on March 1, 2011.    **
+ **                                                                      **
+ **************************************************************************
+  
+ ASSOCIATED NSR:
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. HD0000000433432 - Mid-FY2011 Table Maintenance for Clinic Stop file 
+                      (#40.7)
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate New York
+ Miami, FL
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ HD0000000433432 - Mid-FY2011 Table Maintenance for Clinic Stop file 
+                   (#40.7)
+  
+    Problem:
+    --------
+    The Decision Support Service office has requested updates to several
+    stop codes:  add 1 new stop code, inactivate 1 stop code, reactivate
+    1 stop code, change the Restriction Type/Date for 2 stop codes and
+    change the name of 6 stop codes (including the one being reactivated).
+    Further details are provided below.
+  
+    Resolution:
+    -----------
+    This patch updates the CLINIC STOP (#40.7) file for the following 10
+    stop codes, as indicated:
+  
+    Stop Code Being Added:  (Will take effect when the patch is installed 
+                             but should not be used until 3/1/2011)
+  
+    158  BRACHYTHERAPY TREATMENT
+         Restriction Type:  E     Restriction Date: N/A
+  
+    Stop Code Being Inactivated:  (Effective 3/1/2011)
+  
+    219  TBI (TRAUMATIC BRAIN INJURY)
+         Inactivation Date: 3/1/2011
+  
+    Stop Codes with name changes: (Will take effect when the patch is
+                                   installed)
+  
+    197  Old Name: POLYTRAUMA INDIV
+         New Name: POLYTRAUMA/TBI IND
+  
+    198  Old Name: POLYTRAUMA GRP
+         New Name: POLYTRAUMA/TBI GRP
+  
+    199  Old Name: POLYTRAUMA PHONE
+         New Name: TELEPHONE POLYTRAUMA/TBI
+  
+    348  Old Name: PRIMARY CARE GROUP PRI ONLY
+         New Name: PRIMARY CARE SHARED APPT
+  
+    394  Old Name: MED SPECIALTY GROUP PRI ONLY
+         New Name: MED SPECIALTY SHARED APPT
+  
+    Stop Code Being Reactivated and with name changes
+  
+    511  Reactivation Date:  3/1/2011
+         
+         Old Name: NEUROBEHAVIORAL-INDIVIDUAL
+         New Name: GRANT AND PER DIEM
+  
+    Stop Codes Having Restriction Type/Date Changed (effective 3/1/2011)
+  
+    434  NON-OR ANESTHESIA PROCEDURES
+         Old Restriction Type: P   New Restriction Type: E
+         Restriction Date: None
+  
+    529  HCHV/HCMI
+         Old Restriction Type: P   New Restriction Type: E
+         Restriction Date: None
+  
+ TECHNICAL SUMMARY:
+ ==================
+ The following two Fileman templates may be helpful:
+ ===================================================
+ 1)  An inquiry for the restriction changes.  When making this
+     inquiry prior to installing the patch, it will echo back
+     the existing restriction type for each.
+  
+ Select OPTION: 5  INQUIRE TO FILE ENTRIES
+  
+ OUTPUT FROM WHAT FILE: CLINIC STOP// 
+ Select CLINIC STOP NAME: 434  NON-OR ANESTHESIA PROCEDURES     434
+ ANOTHER ONE: 529  HCHV/HCMI     529
+ ANOTHER ONE: 
+ STANDARD CAPTIONED OUTPUT? Yes// N  (No)
+ FIRST PRINT FIELD: NAME  
+ THEN PRINT FIELD: AMIS REPORTING STOP CODE  
+ THEN PRINT FIELD: RESTRICTION TYPE  
+ THEN PRINT FIELD: 
+ Heading (S/C): CLINIC STOP LIST// 
+ DEVICE:   UCX/TELNET    Right Margin: 80// 
+ CLINIC STOP LIST                               OCT  5,2010  16:08    PAGE 
+ 1
+                                 AMIS
+                                 REPORTING  RESTRICTION
+ NAME                            STOP CODE  TYPE
+ --------------------------------------------------------------------------
+ NON-OR ANESTHESIA PROCEDURES     434       Primary
+ HCHV/HCMI                        529       Primary
+  
+  
+ 2)  A search to identify all clinics which have the stop code which is
+     being Inactivated as the Stop Code or Credit Stop Code.  The results
+     can be placed in a Sort Template or printed to the screen:
+  
+ Select OPTION: 3  SEARCH FILE ENTRIES
+  
+ OUTPUT FROM WHAT FILE: CLINIC STOP// 44  HOSPITAL LOCATION
+                                           (838 entries)
+  
+   -A- SEARCH FOR HOSPITAL LOCATION FIELD: STOP CODE NUMBER  
+   -A- CONDITION: =  EQUALS
+   -A- EQUALS CLINIC STOP: 219  TBI (TRAUMATIC BRAIN INJURY)     219
+  
+   -B- SEARCH FOR HOSPITAL LOCATION FIELD: CREDIT STOP CODE  
+   -B- CONDITION: =  EQUALS
+   -B- EQUALS CLINIC STOP: 219  TBI (TRAUMATIC BRAIN INJURY)     219
+  
+   -C- SEARCH FOR HOSPITAL LOCATION FIELD: 
+  
+ IF: A    STOP CODE NUMBER EQUALS 427 (TBI (TRAUMATIC BRAIN INJURY))
+ OR: B     Or CREDIT STOP CODE EQUALS 427 (TBI (TRAUMATIC BRAIN INJURY))
+ OR: 
+  
+ STORE RESULTS OF SEARCH IN TEMPLATE: 
+  
+ SORT BY: NAME// 
+ START WITH NAME: FIRST// 
+ FIRST PRINT FIELD: STOP CODE NUMBER  
+ THEN PRINT FIELD: CREDIT STOP CODE  
+ THEN PRINT FIELD: 
+ Heading (S/C): HOSPITAL LOCATION SEARCH  Replace 
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+  
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+  
+  ***Routine SD11SUPP can be manually deleted after patch is installed***
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+  
+    3. From this menu, you may select the following options:
+       (when prompted for INSTALL NAME, enter SD*5.3*573)
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch
+          is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+    4. Use the Install Package(s) option and select the package SD*5.3*573.
+  
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.
+  
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//" respond NO.
+  
+   NOTE: Details of the changes applied by this patch are provided
+         during the installation and may also be reviewed with the Install
+         File Print option on the Utilities menu on the Kernel Installation
+         and Distribution System menu.
+  
+         It is important to check the CLINIC STOP (#40.7) file post
+         installation to make sure that all of the updates are correctly
+         reflected in the file 40.7 - CLINIC STOP. If any discrepancies
+         are found you should enter a Remedy Ticket.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD11SUPP
+    Before:       n/a   After: B69344956  **573**
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : SEP 30, 2010
+Completed By: WERNER,GARY                   Date Completed: FEB 25, 2011
+Released By : BENBOW,PHYLLIS O              Date Released : FEB 25, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

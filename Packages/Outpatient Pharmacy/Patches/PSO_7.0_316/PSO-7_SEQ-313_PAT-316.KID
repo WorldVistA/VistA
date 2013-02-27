@@ -1,0 +1,516 @@
+Released PSO*7*316 SEQ #313
+Extracted from mail message
+**KIDS**:PSO*7.0*316^
+
+**INSTALL NAME**
+PSO*7.0*316
+"BLD",6981,0)
+PSO*7.0*316^OUTPATIENT PHARMACY^0^3100302^y
+"BLD",6981,1,0)
+^^47^47^3100302^
+"BLD",6981,1,1,0)
+Patches PSO*7*316 and GMTS*2.7*92 correct issues reported with the 
+"BLD",6981,1,2,0)
+Tool #2: Medication Worksheet. The Health Summary patch GMTS*2.7*92
+"BLD",6981,1,3,0)
+will require patch PSO*7*316 and will create a national entry in the
+"BLD",6981,1,4,0)
+HEALTH SUMMARY COMPONENT file (#142.1) for Tool #2: Medication Worksheet.
+"BLD",6981,1,5,0)
+ 
+"BLD",6981,1,6,0)
+1. The existing Application Program Interface (API) #4827 did not
+"BLD",6981,1,7,0)
+   return fields required by Tool #2: Medication Worksheet.
+"BLD",6981,1,8,0)
+ 
+"BLD",6981,1,9,0)
+Problem:
+"BLD",6981,1,10,0)
+--------
+"BLD",6981,1,11,0)
+Routine PSS^PSO59 returns data about the demographics of outpatient 
+"BLD",6981,1,12,0)
+pharmacy divisions, such as site name and address.  The existing API did 
+"BLD",6981,1,13,0)
+not return the division's assigned area code and phone number, which are 
+"BLD",6981,1,14,0)
+present in the format of Tool #2: Medication Worksheet.
+"BLD",6981,1,15,0)
+ 
+"BLD",6981,1,16,0)
+Resolution:
+"BLD",6981,1,17,0)
+-----------
+"BLD",6981,1,18,0)
+This patch modifies routine PSO59 to return the AREA CODE field (#.03)
+"BLD",6981,1,19,0)
+and PHONE NUMBER field (#.04) as part of the target array.
+"BLD",6981,1,20,0)
+ 
+"BLD",6981,1,21,0)
+2.  Routine PSOQUAP distributed with patch PSO*7*294 is not used.
+"BLD",6981,1,22,0)
+ 
+"BLD",6981,1,23,0)
+Problem:
+"BLD",6981,1,24,0)
+--------
+"BLD",6981,1,25,0)
+During testing of patch PSO*7*294, changes were made that resulted in 
+"BLD",6981,1,26,0)
+routine PSOQUAP being no longer required.  The routine was left in the 
+"BLD",6981,1,27,0)
+patch at the time in order to reduce the remaining testing time required.
+"BLD",6981,1,28,0)
+ 
+"BLD",6981,1,29,0)
+Resolution:
+"BLD",6981,1,30,0)
+-----------
+"BLD",6981,1,31,0)
+This patch removes routine PSOQUAP.  There are no known programs that 
+"BLD",6981,1,32,0)
+call this routine.
+"BLD",6981,1,33,0)
+ 
+"BLD",6981,1,34,0)
+3.  PSO*7*294 was noncompliant with Programming Standards and 
+"BLD",6981,1,35,0)
+    Conventions (SAC) for VistA applications.
+"BLD",6981,1,36,0)
+ 
+"BLD",6981,1,37,0)
+Problem:
+"BLD",6981,1,38,0)
+--------
+"BLD",6981,1,39,0)
+During the internal review of some of the routines distributed with 
+"BLD",6981,1,40,0)
+PSO*7*294 findings uncovered some SAC standard violations.
+"BLD",6981,1,41,0)
+ 
+"BLD",6981,1,42,0)
+Resolution:
+"BLD",6981,1,43,0)
+-----------
+"BLD",6981,1,44,0)
+Routines PSOQ0186 and PSOQMCAL are being replaced with GMTSPST2.  
+"BLD",6981,1,45,0)
+Corresponding Health Summary patch GMTS*2.7*92 creates a national Health
+"BLD",6981,1,46,0)
+Summary component for Tool #2: Medication Worksheet to utilize the
+"BLD",6981,1,47,0)
+replacement routines.
+"BLD",6981,4,0)
+^9.64PA^^
+"BLD",6981,6.3)
+5
+"BLD",6981,"KRN",0)
+^9.67PA^779.2^20
+"BLD",6981,"KRN",.4,0)
+.4
+"BLD",6981,"KRN",.401,0)
+.401
+"BLD",6981,"KRN",.402,0)
+.402
+"BLD",6981,"KRN",.403,0)
+.403
+"BLD",6981,"KRN",.5,0)
+.5
+"BLD",6981,"KRN",.84,0)
+.84
+"BLD",6981,"KRN",3.6,0)
+3.6
+"BLD",6981,"KRN",3.8,0)
+3.8
+"BLD",6981,"KRN",9.2,0)
+9.2
+"BLD",6981,"KRN",9.8,0)
+9.8
+"BLD",6981,"KRN",9.8,"NM",0)
+^9.68A^3^2
+"BLD",6981,"KRN",9.8,"NM",1,0)
+PSOQUAP^^1^
+"BLD",6981,"KRN",9.8,"NM",3,0)
+PSO59^^0^B11268834
+"BLD",6981,"KRN",9.8,"NM","B","PSO59",3)
+
+"BLD",6981,"KRN",9.8,"NM","B","PSOQUAP",1)
+
+"BLD",6981,"KRN",19,0)
+19
+"BLD",6981,"KRN",19.1,0)
+19.1
+"BLD",6981,"KRN",101,0)
+101
+"BLD",6981,"KRN",409.61,0)
+409.61
+"BLD",6981,"KRN",771,0)
+771
+"BLD",6981,"KRN",779.2,0)
+779.2
+"BLD",6981,"KRN",870,0)
+870
+"BLD",6981,"KRN",8989.51,0)
+8989.51
+"BLD",6981,"KRN",8989.52,0)
+8989.52
+"BLD",6981,"KRN",8994,0)
+8994
+"BLD",6981,"KRN","B",.4,.4)
+
+"BLD",6981,"KRN","B",.401,.401)
+
+"BLD",6981,"KRN","B",.402,.402)
+
+"BLD",6981,"KRN","B",.403,.403)
+
+"BLD",6981,"KRN","B",.5,.5)
+
+"BLD",6981,"KRN","B",.84,.84)
+
+"BLD",6981,"KRN","B",3.6,3.6)
+
+"BLD",6981,"KRN","B",3.8,3.8)
+
+"BLD",6981,"KRN","B",9.2,9.2)
+
+"BLD",6981,"KRN","B",9.8,9.8)
+
+"BLD",6981,"KRN","B",19,19)
+
+"BLD",6981,"KRN","B",19.1,19.1)
+
+"BLD",6981,"KRN","B",101,101)
+
+"BLD",6981,"KRN","B",409.61,409.61)
+
+"BLD",6981,"KRN","B",771,771)
+
+"BLD",6981,"KRN","B",779.2,779.2)
+
+"BLD",6981,"KRN","B",870,870)
+
+"BLD",6981,"KRN","B",8989.51,8989.51)
+
+"BLD",6981,"KRN","B",8989.52,8989.52)
+
+"BLD",6981,"KRN","B",8994,8994)
+
+"BLD",6981,"QUES",0)
+^9.62^^
+"BLD",6981,"REQB",0)
+^9.611^2^2
+"BLD",6981,"REQB",1,0)
+PSO*7.0*294^2
+"BLD",6981,"REQB",2,0)
+PSO*7.0*273^2
+"BLD",6981,"REQB","B","PSO*7.0*273",2)
+
+"BLD",6981,"REQB","B","PSO*7.0*294",1)
+
+"MBREQ")
+0
+"ORD",0,9.8)
+9.8;;1;RTNF^XPDTA;RTNE^XPDTA
+"ORD",0,9.8,0)
+ROUTINE
+"PKG",141,-1)
+1^1
+"PKG",141,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",141,20,0)
+^9.402P^^
+"PKG",141,22,0)
+^9.49I^1^1
+"PKG",141,22,1,0)
+7.0^2971216^2980917^11712
+"PKG",141,22,1,"PAH",1,0)
+316^3100302
+"PKG",141,22,1,"PAH",1,1,0)
+^^47^47^3100302
+"PKG",141,22,1,"PAH",1,1,1,0)
+Patches PSO*7*316 and GMTS*2.7*92 correct issues reported with the 
+"PKG",141,22,1,"PAH",1,1,2,0)
+Tool #2: Medication Worksheet. The Health Summary patch GMTS*2.7*92
+"PKG",141,22,1,"PAH",1,1,3,0)
+will require patch PSO*7*316 and will create a national entry in the
+"PKG",141,22,1,"PAH",1,1,4,0)
+HEALTH SUMMARY COMPONENT file (#142.1) for Tool #2: Medication Worksheet.
+"PKG",141,22,1,"PAH",1,1,5,0)
+ 
+"PKG",141,22,1,"PAH",1,1,6,0)
+1. The existing Application Program Interface (API) #4827 did not
+"PKG",141,22,1,"PAH",1,1,7,0)
+   return fields required by Tool #2: Medication Worksheet.
+"PKG",141,22,1,"PAH",1,1,8,0)
+ 
+"PKG",141,22,1,"PAH",1,1,9,0)
+Problem:
+"PKG",141,22,1,"PAH",1,1,10,0)
+--------
+"PKG",141,22,1,"PAH",1,1,11,0)
+Routine PSS^PSO59 returns data about the demographics of outpatient 
+"PKG",141,22,1,"PAH",1,1,12,0)
+pharmacy divisions, such as site name and address.  The existing API did 
+"PKG",141,22,1,"PAH",1,1,13,0)
+not return the division's assigned area code and phone number, which are 
+"PKG",141,22,1,"PAH",1,1,14,0)
+present in the format of Tool #2: Medication Worksheet.
+"PKG",141,22,1,"PAH",1,1,15,0)
+ 
+"PKG",141,22,1,"PAH",1,1,16,0)
+Resolution:
+"PKG",141,22,1,"PAH",1,1,17,0)
+-----------
+"PKG",141,22,1,"PAH",1,1,18,0)
+This patch modifies routine PSO59 to return the AREA CODE field (#.03)
+"PKG",141,22,1,"PAH",1,1,19,0)
+and PHONE NUMBER field (#.04) as part of the target array.
+"PKG",141,22,1,"PAH",1,1,20,0)
+ 
+"PKG",141,22,1,"PAH",1,1,21,0)
+2.  Routine PSOQUAP distributed with patch PSO*7*294 is not used.
+"PKG",141,22,1,"PAH",1,1,22,0)
+ 
+"PKG",141,22,1,"PAH",1,1,23,0)
+Problem:
+"PKG",141,22,1,"PAH",1,1,24,0)
+--------
+"PKG",141,22,1,"PAH",1,1,25,0)
+During testing of patch PSO*7*294, changes were made that resulted in 
+"PKG",141,22,1,"PAH",1,1,26,0)
+routine PSOQUAP being no longer required.  The routine was left in the 
+"PKG",141,22,1,"PAH",1,1,27,0)
+patch at the time in order to reduce the remaining testing time required.
+"PKG",141,22,1,"PAH",1,1,28,0)
+ 
+"PKG",141,22,1,"PAH",1,1,29,0)
+Resolution:
+"PKG",141,22,1,"PAH",1,1,30,0)
+-----------
+"PKG",141,22,1,"PAH",1,1,31,0)
+This patch removes routine PSOQUAP.  There are no known programs that 
+"PKG",141,22,1,"PAH",1,1,32,0)
+call this routine.
+"PKG",141,22,1,"PAH",1,1,33,0)
+ 
+"PKG",141,22,1,"PAH",1,1,34,0)
+3.  PSO*7*294 was noncompliant with Programming Standards and 
+"PKG",141,22,1,"PAH",1,1,35,0)
+    Conventions (SAC) for VistA applications.
+"PKG",141,22,1,"PAH",1,1,36,0)
+ 
+"PKG",141,22,1,"PAH",1,1,37,0)
+Problem:
+"PKG",141,22,1,"PAH",1,1,38,0)
+--------
+"PKG",141,22,1,"PAH",1,1,39,0)
+During the internal review of some of the routines distributed with 
+"PKG",141,22,1,"PAH",1,1,40,0)
+PSO*7*294 findings uncovered some SAC standard violations.
+"PKG",141,22,1,"PAH",1,1,41,0)
+ 
+"PKG",141,22,1,"PAH",1,1,42,0)
+Resolution:
+"PKG",141,22,1,"PAH",1,1,43,0)
+-----------
+"PKG",141,22,1,"PAH",1,1,44,0)
+Routines PSOQ0186 and PSOQMCAL are being replaced with GMTSPST2.  
+"PKG",141,22,1,"PAH",1,1,45,0)
+Corresponding Health Summary patch GMTS*2.7*92 creates a national Health
+"PKG",141,22,1,"PAH",1,1,46,0)
+Summary component for Tool #2: Medication Worksheet to utilize the
+"PKG",141,22,1,"PAH",1,1,47,0)
+replacement routines.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSO59")
+0^3^B11268834^B10289625
+"RTN","PSO59",1,0)
+PSO59 ;BHM/DB - Outpatient Site File API ; 2/9/10 11:04am
+"RTN","PSO59",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**213,229,254,267,273,316**;DEC 1997;Build 5
+"RTN","PSO59",3,0)
+ ;Reference to ^DIC(4 supported by DBIA 2251
+"RTN","PSO59",4,0)
+ ;Reference to ^DIC(49 supported by DBIA 2250
+"RTN","PSO59",5,0)
+ ;
+"RTN","PSO59",6,0)
+PSS(PSOIEN,PSOTXT,LIST) ;
+"RTN","PSO59",7,0)
+ N DA,DIC,DR,X,I,DIQ
+"RTN","PSO59",8,0)
+ I $G(LIST)="" Q
+"RTN","PSO59",9,0)
+ I $G(LIST)'="" K ^TMP($J,LIST)
+"RTN","PSO59",10,0)
+ I '$G(PSOIEN),$G(PSOTXT)="" S ^TMP($J,LIST,0)="-1^NO DATA FOUND" Q
+"RTN","PSO59",11,0)
+ I $G(PSOIEN),$G(PSOTXT)="" D SINGLE Q 
+"RTN","PSO59",12,0)
+ I '$G(PSOIEN),$G(PSOTXT)'="" D
+"RTN","PSO59",13,0)
+ .I $G(PSOTXT)="??" D ALLDIV Q
+"RTN","PSO59",14,0)
+ .I $G(PSOTXT)'="??" D SINGLE Q
+"RTN","PSO59",15,0)
+ I $G(PSOIEN),$G(PSOTXT)'="" S PSOTXT="" D SINGLE Q
+"RTN","PSO59",16,0)
+ Q
+"RTN","PSO59",17,0)
+ ;
+"RTN","PSO59",18,0)
+SINGLE ;RETURNS SINGLE DIVISION
+"RTN","PSO59",19,0)
+ K ^TMP($J,LIST) S:$G(PSOIEN)>0 ^TMP($J,LIST,PSOIEN,0)=0
+"RTN","PSO59",20,0)
+ I $G(PSOIEN)>0,'$D(^PS(59,PSOIEN,0)) S ^TMP($J,LIST,PSOIEN,0)="-1^NO DATA FOUND" Q
+"RTN","PSO59",21,0)
+ I $G(PSOTXT)'="",'$D(^PS(59,"B",PSOTXT)),$G(PSOIEN)>0 S ^TMP($J,LIST,PSOIEN,0)="-1^NO DATA FOUND" Q
+"RTN","PSO59",22,0)
+ S DA=$S($G(PSOIEN)]"":PSOIEN,1:$O(^PS(59,"B",PSOTXT,0)))
+"RTN","PSO59",23,0)
+ I $G(DA)'>0 S ^TMP($J,LIST,0)="-1^NO DATA FOUND" Q
+"RTN","PSO59",24,0)
+ K ^UTILITY("DIQ1",$J),DIC S DIC=59,DR=".01;.02;.03;.04;.05;.06;.07;.08;1;100;101;1003;1008",DIQ(0)="IE" D EN^DIQ1
+"RTN","PSO59",25,0)
+ I '$D(^UTILITY("DIQ1",$J)) S ^TMP($J,LIST,PSOIEN,0)="-1^NO DATA FOUND" Q
+"RTN","PSO59",26,0)
+ F X=.01,.02,.03,.04,.05,.06,.07,.08,1,100,101,1003,1008 D
+"RTN","PSO59",27,0)
+ .I $G(^UTILITY("DIQ1",$J,59,DA,X,"I"))'=$G(^UTILITY("DIQ1",$J,59,DA,X,"E")) S ^TMP($J,LIST,DA,X)=$G(^UTILITY("DIQ1",$J,59,DA,X,"I"))_"^"_$G(^UTILITY("DIQ1",$J,59,DA,X,"E")) Q
+"RTN","PSO59",28,0)
+ .S ^TMP($J,LIST,DA,X)=$G(^UTILITY("DIQ1",$J,59,DA,X,"I"))
+"RTN","PSO59",29,0)
+ S PSOTXT=$G(^UTILITY("DIQ1",$J,59,DA,.01,"E")) S ^TMP($J,LIST,"B",PSOTXT,DA)=""
+"RTN","PSO59",30,0)
+ S ^TMP($J,LIST,DA,0)=$G(^TMP($J,LIST,DA,0))+1
+"RTN","PSO59",31,0)
+ K DA,DIC,DIQ,DR,PSOIEN,PSOTXT
+"RTN","PSO59",32,0)
+ Q
+"RTN","PSO59",33,0)
+ ;
+"RTN","PSO59",34,0)
+ALLDIV ; RETURNS ALL DIVISIONS
+"RTN","PSO59",35,0)
+ N IEN,SITE S IEN=0,SITE=""
+"RTN","PSO59",36,0)
+ F  S SITE=$O(^PS(59,"B",SITE)) Q:SITE=""  D
+"RTN","PSO59",37,0)
+ .S ^TMP($J,LIST,0)=$G(^TMP($J,LIST,0))+1
+"RTN","PSO59",38,0)
+ .F  S IEN=$O(^PS(59,"B",SITE,IEN)) Q:'IEN  D
+"RTN","PSO59",39,0)
+ ..N PSODIV S PSODIV=$G(^PS(59,IEN,0))
+"RTN","PSO59",40,0)
+ ..S ^TMP($J,LIST,"B",SITE,IEN)=""
+"RTN","PSO59",41,0)
+ ..S ^TMP($J,LIST,IEN,.01)=$P($G(PSODIV),U,1)
+"RTN","PSO59",42,0)
+ ..S ^TMP($J,LIST,IEN,.02)=$P($G(PSODIV),U,2)
+"RTN","PSO59",43,0)
+ ..S ^TMP($J,LIST,IEN,.03)=$P($G(PSODIV),U,3)
+"RTN","PSO59",44,0)
+ ..S ^TMP($J,LIST,IEN,.04)=$P($G(PSODIV),U,4)
+"RTN","PSO59",45,0)
+ ..S ^TMP($J,LIST,IEN,.05)=$P($G(PSODIV),U,5)
+"RTN","PSO59",46,0)
+ ..S ^TMP($J,LIST,IEN,.06)=$P($G(PSODIV),U,6)
+"RTN","PSO59",47,0)
+ ..S ^TMP($J,LIST,IEN,.07)=$P($G(PSODIV),U,7)
+"RTN","PSO59",48,0)
+ ..S ^TMP($J,LIST,IEN,.08)=$S($P($G(PSODIV),U,8)>0:$P($G(PSODIV),U,8)_"^"_$P($G(^DIC(5,$P($G(PSODIV),U,8),0)),U,1),1:"")
+"RTN","PSO59",49,0)
+ ..S ^TMP($J,LIST,IEN,1)=$P($G(^PS(59,IEN,"SAND")),U,1)
+"RTN","PSO59",50,0)
+ ..S ^TMP($J,LIST,IEN,100)=$S($P($G(^PS(59,IEN,"INI")),U,1)>0:$P($G(^PS(59,IEN,"INI")),U,1)_"^"_$P($G(^DIC(4,$P($G(^PS(59,IEN,"INI")),U,1),0)),U,1),1:"")
+"RTN","PSO59",51,0)
+ ..S ^TMP($J,LIST,IEN,101)=$S($P($G(^PS(59,IEN,"INI")),U,2)>0:$P($G(^PS(59,IEN,"INI")),U,2)_"^"_$P($G(^DIC(4,$P($G(^PS(59,IEN,"INI")),U,2),0)),U,1),1:"")
+"RTN","PSO59",52,0)
+ ..S ^TMP($J,LIST,IEN,1003)=$S($G(^PS(59,IEN,"IB"))>0:$G(^PS(59,IEN,"IB"))_"^"_$P($G(^DIC(49,$G(^PS(59,IEN,"IB")),0)),U,1),1:"")
+"RTN","PSO59",53,0)
+ ..S ^TMP($J,LIST,IEN,1008)=$P($G(^PS(59,IEN,"SAND")),U,3)
+"RTN","PSO59",54,0)
+ Q
+"RTN","PSOQUAP")
+1^1^^B21998022
+"VER")
+8.0^22.0
+"BLD",6981,6)
+^313
+**END**
+**END**

@@ -1,0 +1,319 @@
+$TXT Created by TATUM,BILL at MDEVCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Friday, 09/14/12 at 13:45
+=============================================================================
+Run Date: FEB 11, 2013                     Designation: PSJ*5*268
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #241                      Status: Released
+                  Compliance Date: MAR 13, 2013
+=============================================================================
+
+Associated patches: (v)PSJ*5*133   <<= must be installed BEFORE `PSJ*5*268'
+                    (v)PSJ*5*161   <<= must be installed BEFORE `PSJ*5*268'
+                    (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*268'
+                    (v)PSJ*5*200   <<= must be installed BEFORE `PSJ*5*268'
+                    (v)PSJ*5*241   <<= must be installed BEFORE `PSJ*5*268'
+                    (v)PSJ*5*254   <<= must be installed BEFORE `PSJ*5*268'
+                    (v)PSJ*5*267   <<= must be installed BEFORE `PSJ*5*268'
+
+Subject: AUTOMATIC DISPENSING MACHINE HOOKS
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ ***************************Attention*************************
+ This patch is part of the Medication Order Check Healthcare Application
+ (MOCHA) v1.0 Enhancements 1 group of patches. There are a total of eight
+ patches and one .KID (host) file that must be installed as a group. The
+ patches must be installed in the following order:
+  
+ OR*3*352
+ PSS*1*164
+ PSS*1*169
+ PSO*7*390
+ PSO*7*417
+ PSJ*5*268
+ <xxx>_1_0_P23.KID
+ PSJ*5*260
+ PSJ*5*288
+  
+ For the ".KID" file, value of <xxx> will be determined by the ward 
+ automated dispensing equipment in use at your facility. If no ward
+ automated dispensing equipment is in use at your site, this file will not
+ be needed. For those sites using Pyxis, xxx=PPU, for Omnicell, xxx=OPU and
+ for McKesson sites, xxx=MPU. To obtain this file or if additional
+ information is required regarding this ".KID" file, please contact your
+ site's Informatix contact.
+  
+ This patch is designed and intended to "decouple" the automated 
+ dispensing machine interface calls from the current Inpatient Medication
+ (IP) package routines. The interfaces calls are currently imbedded in 
+ regular "patched routines" at the sites using a Pyxis, Omnicell, or 
+ McKesson automated dispensing machine. This patch creates a new "shell" 
+ routine (PSJADM) to which interface calls can be added. The routines 
+ being affected by "decoupling" are PSGOEE, PSGOETO, PSGOEV, PSJHLV, 
+ PSJCOMR, and PSJOEA2. In the past, anytime these routines were patched at
+ the sites using one of the machines listed above, the local modified 
+ routine(s) would have to be backed up and saved before patching could 
+ occur. The local mods would be lost otherwise. After patching, the 
+ patched routines would have to be incorporated into the locally modified
+ routines in order for the automated dispensing machines to operate 
+ properly and appropriately.
+  
+  
+ ************************ WARNING ******************************
+  
+ If your facility has the Pyxis/Omnicell/McKesson interface from 
+ Informatix Laboratories Corp. (ILC), this patch will overwrite routines 
+ that contain the local modifications. These routines are PSGOEE, PSGOET0,
+ PSGOEV, PSJCOMR, PSJHLV, and PSJOEA2.  This could affect certain orders 
+ being sent across this interface. The modifications will have to be 
+ reintroduced following installation of this patch. You should contact 
+ your ILC representative who will supply you with a NEW PSJADM routine 
+ which contains the interface code. This will be a one-time only install.
+  
+ ****************************************************************
+  
+ **The 2nd line of routine PSJOEA2 does not list patch 267.  This 
+ will be corrected in a future release.**
+  
+ ****************************************************************
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Options Associated:
+ --------------------
+ N/A
+  
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Associated Change Requests: 
+ ---------------------------
+ CR4948 
+ CCR4683
+  
+  
+  
+ Test Sites:
+ -----------
+ Boston, MA
+ Fresno, CA
+ West Palm Beach, FL
+  
+  
+  
+                                                                          
+ Documentation Retrieval Instructions:
+ -------------------------------------
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+ Albany          ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines           ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City  ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library
+ at:  http://www.va.gov/vdl/ 
+  
+  
+  
+    FILE NAME                    DESCRIPTION
+    =========                    ===========
+  
+ PSJ_5_NURSE_UM_R0113.PDF        Inpatient Medications v5.0 Nurse's
+                                 User Manual
+  
+ PSJ_5_P260_P268_NURSE_UM_CP.PDF Inpatient Medications v5.0 Nurse's
+                                 User Manual Change Pages
+  
+ PSJ_5_PHAR_UM_R0113.PDF         Inpatient Medications v5.0 Pharmacist's
+                                 User Manual
+  
+ PSJ_5_P260_P268_PHAR_UM_CP.PDF  Inpatient Medications v5.0 Pharmacist's
+                                 User Manual Change Pages
+  
+ PSJ_5_SUPR_UM_R0113.PDF         Inpatient Medications v5.0 Supervisor's
+                                 User Manual
+  
+ PSJ_5_P260_P268_SUPR_UM_CP.PDF  Inpatient Medications v5.0 Supervisor's
+                                 User Manual Change Pages
+  
+ PSJ_5_TM_R0113.PDF              Inpatient Medications v5.0 Technical
+                                 Manual/Security Guide
+  
+ PSJ_5_P260_P268_TM_CP.PDF       Inpatient Medications v5.0 Technical
+                                 Manual/Security Guide Change Pages
+  
+ M1E1_PSO_7_PSJ_5_PSS_1_RN.PDF   Medication Order Check Healthcare
+                                 Application (MOCHA) v1 Enhancements
+                                 1 Release Notes
+  
+  
+  
+                
+  
+ Installation Instructions:
+ --------------------------
+  
+ This patch should not be installed when Inpatient Medications options
+ are being used. If this is not possible, we recommend it should be 
+ installed during Non-Peak hours.
+  
+  
+ Install Time - less than 5 minutes
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option to unload the build.  
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*268):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter "PSJ*5.0*268" at the INSTALL NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//'  answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOEE
+    Before: B96504063   After: B97027844  **4,7,29,47,64,58,82,91,110,
+                                           111,112,142,179,181,254,267,
+                                           268**
+Routine Name: PSGOETO
+    Before: B36634660   After: B38155409  **3,13,25,31,33,50,68,58,85,
+                                           105,90,117,110,111,112,161,254,
+                                           267,268**
+Routine Name: PSGOEV
+    Before: B68395983   After: B70528939  **5,7,15,28,33,50,64,58,77,78,
+                                           80,110,111,133,171,207,241,267,
+                                           268**
+Routine Name: PSJADM
+    Before:       n/a   After:    B19148  **268**
+Routine Name: PSJCOMR
+    Before: B75920625   After: B76828040  **110,127,136,157,181,268**
+Routine Name: PSJHLV
+    Before: B21285520   After: B21639863  **39,42,78,92,127,133,268**
+Routine Name: PSJOEA2
+    Before: B28764670   After: B29720730  **127,133,200,268**
+ 
+Routine list of preceding patches: 200, 267
+
+=============================================================================
+User Information:
+Entered By  : TATUM,WILLIAM                 Date Entered  : OCT 26, 2011
+Completed By: YARBER,KIMBERLY               Date Completed: FEB 11, 2013
+Released By : TEAGUE,LYN                    Date Released : FEB 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

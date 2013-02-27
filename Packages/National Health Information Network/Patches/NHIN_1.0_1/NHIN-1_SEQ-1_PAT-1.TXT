@@ -1,0 +1,122 @@
+$TXT Created by BUECHLER,MELANIE K at AVIVA-VDEV.FO-SLC.MED.VA.GOV  (KIDS) on Tuesday, 02/15/11 at 15:05
+=============================================================================
+Run Date: MAR 18, 2011                     Designation: NHIN*1*1
+Package : NHIN - NATIONAL HEALTH INFO NETWORK Priority: Mandatory
+Version : 1         SEQ #1                      Status: Released
+                  Compliance Date: MAR 25, 2011
+=============================================================================
+
+
+Subject: ADDITIONAL DOMAINS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch enhances the Nationwide Health Information Network (NwHIN) 
+ package to make additional health data domains available to share via the 
+ existing NHIN GET VISTA DATA RPC:
+  
+  - Visits
+  - Procedures (Surgery and Radiology)
+  - TIU Documents
+  - Lab results grouped by panel
+  
+ Additional data elements have also been added to the Allergy, Vitals, and 
+ Medications domains.
+  
+ Remedy Tickets:
+ ==============
+ No tickets were addressed in this patch.
+  
+ Test Sites:
+ ==========
+ Hampton
+ San Diego
+ East Orange
+  
+ Installation Instructions:
+ =========================
+ This patch may be installed with users on the system; however, it should
+ be installed at a non-peak time to minimize disruption to the users.
+ Installation of this patch should take less than 1 minute.
+  
+ 1.  Use the 'Install/Check Message' option on the PackMan menu.
+  
+ 2.  From the Kernel Installation and Distribution System Menu, select
+     the Installation menu.
+  
+ 3.  From this menu, you may elect to use the following options (when
+     Prompted for INSTALL NAME, enter NHIN*1.0*1):
+     a.      Print Transport Global
+     b.      Compare Transport Global to Current System
+     c.      Verify Checksums in Transport Global 
+     d.      Backup a Transport Global
+  
+ 4.  Use the Install Package(s) option and select NHIN*1.0*1.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;NHIN;**[Patch List]**;Oct 25, 2010;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: NHINV
+    Before:       n/a   After: B15789004  **1**
+Routine Name: NHINVAPT
+    Before:       n/a   After:  B9234836  **1**
+Routine Name: NHINVART
+    Before:       n/a   After: B30332823  **1**
+Routine Name: NHINVIMM
+    Before:       n/a   After:  B9313203  **1**
+Routine Name: NHINVIT
+    Before:       n/a   After: B33591565  **1**
+Routine Name: NHINVLR
+    Before:       n/a   After: B25540846  **1**
+Routine Name: NHINVLRA
+    Before:       n/a   After: B45252098  **1**
+Routine Name: NHINVLRO
+    Before:       n/a   After: B32647424  **1**
+Routine Name: NHINVPL
+    Before:       n/a   After: B19846807  **1**
+Routine Name: NHINVPRC
+    Before:       n/a   After:  B6896734  **1**
+Routine Name: NHINVPS
+    Before:       n/a   After: B14129801  **1**
+Routine Name: NHINVPSI
+    Before:       n/a   After: B41411886  **1**
+Routine Name: NHINVPSO
+    Before:       n/a   After: B65991145  **1**
+Routine Name: NHINVPT
+    Before:       n/a   After: B59592091  **1**
+Routine Name: NHINVRA
+    Before:       n/a   After: B18363736  **1**
+Routine Name: NHINVSIT
+    Before:       n/a   After: B60599762  **1**
+Routine Name: NHINVSR
+    Before:       n/a   After: B25931760  **1**
+Routine Name: NHINVTIU
+    Before:       n/a   After: B18326219  **1**
+
+=============================================================================
+User Information:
+Entered By  : BUECHLER,MELANIE K            Date Entered  : JAN 27, 2011
+Completed By: GALLAGHER,DEBORAH             Date Completed: MAR 16, 2011
+Released By : KREUZ,SHERI B                 Date Released : MAR 18, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

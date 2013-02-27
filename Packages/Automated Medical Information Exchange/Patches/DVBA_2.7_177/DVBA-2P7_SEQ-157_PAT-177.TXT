@@ -1,0 +1,257 @@
+
+=============================================================================
+Run Date: JAN 23, 2012                     Designation: DVBA*2.7*177
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #157                    Status: Released
+                  Compliance Date: FEB 23, 2012
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*168<<= must be installed BEFORE `DVBA*2.7*177'
+
+Subject: CAPRI GUI REMEDY AND DEFECT FIXES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ I. OVERVIEW
+  
+   This patch is an informational patch for CAPRI GUI v177.  CAPRI GUI v177
+   provides defect fixes for the CAPRI GUI package.  Please refer to the
+   'FUNCTIONAL OVERVIEW' section (III.) for the specific changes and primary
+   functionality being delivered.
+  
+ II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+   
+    The following section lists the Remedy tickets and/or New Service 
+    Requests associated with this patch.
+   
+    1. Associated Remedy Ticket(s):
+       ----------------------------
+       HD0000000301104 - Patient info not hidden when switching sites
+         Duplicates:     None
+       HD0000000486950 - Admission Report for SC Veterans returns error at
+                         Pittsburgh
+         Duplicates:     None
+  
+  
+  
+    2. Associated New Service Request(s):
+       ----------------------------------
+       NONE 
+   
+ III. FUNCTIONAL OVERVIEW
+   
+    The following is an overview of the changes and primary functionality
+    that will be delivered in CAPRI GUI v177.
+    
+    1. The following Remedy tickets are being addressed:
+   
+       a. HD0000000301104 - Patient info not hidden when switching sites
+   
+       Problem
+       -------
+       CAPRI displays the patient's name, SSN, DOB, and ICN at the top of
+       the main CAPRI form after selecting a patient.  When the user switches
+       sites, the patient name and SSN clear, but the DOB and ICN from
+       the previous patient continues to display until after a patient
+       is selected at the new site.
+   
+       Solution
+       --------
+       The DOB and ICN fields will clear at the same time the patient name
+       and SSN clear when switching sites.
+  
+       b. HD0000000486950 - Admission Report for SC Veterans returns error
+                            at Pittsburgh 
+   
+       Problem
+       -------
+       The Print One Item Per Page menu option in the CAPRI Reports dialog
+       box generates an Access Violation error when attempting to print
+       a report with more than 6,000 records.  The Access Violation occurs
+       because the existing method used to generate reports depletes the
+       user workstation resources.
+  
+       Solution
+       --------
+       The method used to generate reports has been converted to a system
+       that allows an unlimited number of pages to be generated without
+       depleting the user workstation resources.
+  
+  
+  
+   2. The following defects that were reported directly to the CAPRI
+      development team are being addressed:
+  
+      a. Defect - Request Status field is cleared after trying to re-open
+                  a cancelled exam.
+  
+      Problem
+      -------
+      The Tools/Manage C&P Exam Requests option displays Canceled exam
+      requests in C&P Exam Requests list in the C&P Exam Request Report
+      Management dialog box.  Since the business rules were not developed
+      for re-opening a Canceled exam in CAPRI, re-opening a Canceled exam
+      request record results in the record being in an inconsistent state.
+      
+  
+      Solution
+      --------
+      Canceled exam requests will no longer display in the C&P Exam Requests
+      list for selection to prevent the user from attempting to re-open them.
+  
+  
+      b. Defect - CAPRI patient does not match patient in exam template
+                  after selecting a new patient.
+       
+      Problem
+      -------
+      CAPRI allows a user to select a new patient when an exam template is
+      open for the current patient.
+  
+      Solution
+      --------
+      CAPRI now verifies that there are no open exam templates before
+      allowing the user to select a new patient.  When an open exam
+      template exists, CAPRI displays a dialog box warning the user to
+      "Please close the open template" and brings the open template forward
+      after clicking "OK".
+  
+  
+      c. Defect - Edit Exam List Parameters option generates List Index Out
+                  of Bounds error. 
+       
+      Problem
+      -------
+      When a user clicks "Go Back" after clicking either "Edit Selected" or
+      "Delete Selected", the "Edit Selected" and "Delete Selected" buttons
+      remain enabled even though no items are selected in the "Custom Lists
+      Defined..." list in the "Edit Exam List Parameters" dialog box.  If
+      the user clicks either "Edit selected" or "Delete selected" again,
+      CAPRI generates a "List Index Out of Bounds" error.
+  
+      Solution
+      --------
+      The "Edit Selected" and "Delete Selected" buttons will only be enabled
+      when an item is selected in the "Custom Lists Defined..." list.
+  
+      d. Defect - C&P Final reports containing more than 1,000 pages causes
+                  error.
+       
+      Problem
+      -------
+      The Print menu option in the CAPRI Reports dialog box generates an
+      Access Violation error when attempting to print a C&P Final report
+      with more than 1,000 pages.  The Access Violation occurs because
+      the existing method used to generate reports depletes the user
+      workstation resources.
+  
+      Solution
+      --------
+      The method used to generate reports has been converted to a system that
+      allows an unlimited number of pages to be generated without depleting
+      the user workstation resources.
+  
+  
+   
+ IV. TECHNICAL COMPONENTS
+  
+   There are no technical components being exported with this patch. 
+  
+  
+ V. SOFTWARE AND DOCUMENTATION RETRIEVAL
+     
+   1. CAPRI GUI v177 Client Software & User Documentation
+  
+      a.  The CAPRI GUI v177 client software is being distributed as
+          executable CAPRI.exe ([DVBA_27_P77_05.ZIP]). The 
+          installed executable for this patch is client version 
+          177.05 with a size of 13.8 MB.
+  
+          The CAPRI GUI v177 client software and documentation for this
+          patch may be retrieved directly using FTP. The preferred method
+          is to FTP the files from:
+  
+             download.vista.med.va.gov
+  
+         This transmits the files from the first available FTP server.
+         Sites may also elect to retrieve software directly from a specific
+         server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+         Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+         Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+  
+        The following files will be available:
+  
+        File Name             Contents                     Retrieval format
+        ---------             --------                     ----------------
+        DVBA_27_P177_05.ZIP   File(s) indented below:      BINARY
+         - CAPRI.exe             CAPRI v177 executable
+         - CAPRI.map             CAPRI error map
+         - CAPRISession.r2w      Reflections session configuration
+         - ssh_config            Secure Shell configuration       
+         - DVBA_27_P168_ISG.doc  CAPRI GUI Installation Supplemental Guide
+        DVBA_27_P177_RN.PDF   Patch Release Notes          BINARY
+  
+       The VistA Documentation Library (VDL) web site will also contain the
+       'Release Notes' and updated 'CAPRI User Manual'. This web site is
+       usually updated within 1-3 days of the patch release date.
+  
+       The VDL web address for CAPRI user documentation is:
+      
+          http://www.va.gov/vdl/application.asp?appid=133
+  
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES:
+   
+  1. Required Builds
+  
+     a. The following is a list of REQUIRED builds for this
+        distribution (DVBA*2.7*177).
+  
+        Required Builds:
+        ----------------
+        DVBA*2.7*168
+  
+ VII. INSTALLATION INSTRUCTIONS:
+  
+    1. Please refer to the CAPRI v168 Installation Supplemental Guide for
+       instructions on the placement of files distributed to support
+       the Attachmate Reflection Secure Shell and the CAPRI error map file
+       that supports the CAPRI error log.
+  
+  
+ VIII. TEST SITES
+  
+   The following sites participated in the testing of the CAPRI GUI v177 
+   software.
+  
+    Test Sites:
+    ---------- 
+     * Alexandria, LA VAMC
+     * Greater Los Angeles HSC
+     * Denver VA Medical Center
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : MCGINNIS,RONALD P             Date Entered  : OCT 19, 2011
+Completed By: DELACRUZ,KRISTINA             Date Completed: JAN 23, 2012
+Released By : FRANCE,KATHI                  Date Released : JAN 23, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

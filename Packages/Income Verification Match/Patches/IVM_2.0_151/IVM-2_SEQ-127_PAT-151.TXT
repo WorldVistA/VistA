@@ -1,0 +1,252 @@
+$TXT Created by DESMOND,LINDA at DEVVOO.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 11/16/11 at 13:18
+=============================================================================
+Run Date: DEC 02, 2011                     Designation: IVM*2*151
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #127                      Status: Released
+                  Compliance Date: JAN 02, 2012
+=============================================================================
+
+Associated patches: (v)IVM*2*148   <<= must be installed BEFORE `IVM*2*151'
+
+Subject: Z05 CHANGES FOR ADD A PERSON
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Health Eligibility Center (HEC) requested modifications to the 
+ Enrollment System Redesign (ESR) and VistA Registration, Enrollment and
+ Eligibility (Vista REE) software to support the requirements of the Add a
+ Person project.
+   
+ This patch consists of code changes to address three Code Change Requests 
+ (CCRs) for the uploading of data into VistA from the Z05 HL7 message sent 
+ from ESR.  The uploading of the data had been a requirement of the ESR 
+ 3.1/Veterans' Online Application (VOA) project, but due to the discovery 
+ of some defects after ESR 3.1/VOA was released, the uploading of the data 
+ into VistA was suppressed to mitigate possible data corruption in VistA.  
+ The ESR defects have all been corrected and this patch will reinstate the 
+ functionality to upload the data from the Z05 as described in the 
+ following CCRs:
+  
+ CodeCR REEG_10441
+ Reversal of the VistA code changes from CR 10251 will allow the ORU-Z05 
+ ZTA, ZEM, and ZCT segments to file in VistA appropriately based on 
+ original requirements identified in the VOA VistA SRS.
+  
+ CodeCR REEG_10442
+ Reversal of the VistA codes changes from CR 10345 will allow the Father's 
+ and Mother's Names to be sent on the Z07 to ESR and filed into VistA upon 
+ receipt of the Z05 from ESR.  These changes will comply with the original 
+ requirements identified in the VOA VistA SRS.  
+  
+ CodeCR REEG_10443
+ Reversal of the VistA code changes from CCR 10346 will allow the 
+ veteran's employer name and address to be sent on the Z07 to ESR.  These 
+ changes will comply with the original requirements identified in the VOA 
+ VistA SRS.  
+  
+   
+  CodeCR Change Requests:  
+  -----------------------
+  CodeCR REEG_00010441 Reverse CCR 10251 when ESR defect CCRS 10166, 
+                         10168, 10221, 10269 and 10299 are fixed
+  CodeCR REEG_00010442 Reverse CCR 10345 when ESR defects CCRR 10218 and
+                         10300 are corrected
+  CodeCR REEG_00010443 Reverse CCR 10346 when ESR defects CCRs 10269 is 
+                         fixed
+   
+   
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+   
+  Test Sites:
+  -----------
+  Chillicothe VAMC, OH
+  Coatesville VAMC, PA
+  Upstate New York HCS, NY
+    
+   
+ Documentation Retrieval Instructions:
+ =====================================
+    
+ The preferred method is to FTP the files from: 
+ ftp://download.vista.med.va.gov/
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+   
+   Albany        ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+   Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+   Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+ The documentation will be in the form of Adobe Acrobat files.
+ The following files should be downloaded in the binary FTP mode.
+   
+ File Description                        File Name                 FTP Mode
+ --------------------------------------------------------------------------
+ Revised IVM V2.0 Technical Manual       IVM_2_151_TM.PDF         Binary
+  
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+   
+ Post-Installation Overview
+ ==============================
+ The post-installation routine associated with this patch, IVM2151P, will 
+ add the following records to the IVM DEMOGRAPHIC UPLOAD FIELDS file 
+ (#301.92):
+  
+  
+ DHCP FIELD NAME: FATHER'S NAME          HL7 LOCATION: ZPD06
+   UPLOADABLE DEMOGRAPHIC FIELD: YES     DHCP FILE: PATIENT
+   DHCP FIELD NUMBER: .2401              ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.2401 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.2401 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: MOTHER'S NAME          HL7 LOCATION: ZPD07
+   UPLOADABLE DEMOGRAPHIC FIELD: YES     DHCP FILE: PATIENT
+   DHCP FIELD NUMBER: .2402              ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.2402 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.2402 D LOOK^IVMPREC9
+  
+  
+ The post-installation routine may be deleted after the installation is 
+ complete.
+  
+  
+ Patch Installation:
+ ===================
+   
+ Installation Instructions:
+ --------------------------
+   
+ This patch should NOT be installed while the IVM BACKGROUND JOB [IVM 
+ BACKGROUND JOB] is running.
+  
+ Install Time - less than 5 minutes
+  
+ ************** PRE-INSTALLATION INSTRUCTIONS ************************
+  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+  Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+  Taskman Management [XUTM MGR] menu.
+  
+  The HL7 incoming filers should be stopped.  Use the Monitor, Start,
+  Stop Filers [HL FILER MONITOR] option on the Filer and Link
+  Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+  Menu [HL MAIN MENU].
+ *********************************************************************
+  
+       
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter IVM*2.0*151):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.  When prompted for INSTALL NAME, enter IVM*2.0*151.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer NO
+  
+  
+ ************** POST-INSTALLATION INSTRUCTIONS ************************
+  After patch installation has completed, restart the HL7 incoming
+  filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+  option on the Filer and Link Management Options [HL MENU FILER LINK
+  MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+  
+  Reschedule the IVM Background Job.  Use the Schedule/Unschedule 
+  Options [XUTM SCHEDULE]option on the Taskman Management [XUTM MGR] 
+  Menu.
+ *********************************************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;21-OCT-94;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVM2151P
+    Before:       n/a   After:  B5786239  **151**
+Routine Name: IVMPREC6
+    Before:B143009000   After:B142485762  **3,4,12,17,34,58,79,102,115,
+                                           140,144,121,151**
+Routine Name: IVMPREC8
+    Before:B204616028   After:B213937231  **5,6,12,58,73,79,102,115,121,
+                                           148,151**
+Routine Name: IVMPREC9
+    Before: B63018866   After: B65534530  **34,58,115,121,151**
+Routine Name: IVMPRECA
+    Before: B87129700   After: B87617069  **5,6,12,34,58,56,115,144,121,151**
+Routine Name: IVMPTRN8
+    Before: B74827499   After: B74907432  **9,11,19,12,21,17,24,36,37,
+                                           47,48,42,34,77,76,75,79,85,89,
+                                           98,56,97,104,113,109,114,105,
+                                           115,121,151**
+ 
+Routine list of preceding patches: 148
+
+=============================================================================
+User Information:
+Entered By  : CROSSMAN,PAM                  Date Entered  : MAY 25, 2011
+Completed By: MORRIS,DARLENE V              Date Completed: NOV 16, 2011
+Released By : GROOMS,ANTHONY E              Date Released : DEC 02, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

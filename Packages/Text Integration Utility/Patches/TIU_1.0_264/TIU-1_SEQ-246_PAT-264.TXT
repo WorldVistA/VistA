@@ -1,0 +1,334 @@
+$TXT Created by THOMPSON,Seth at CHEY204.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 04/30/12 at 08:15
+=============================================================================
+Run Date: JAN 18, 2013                     Designation: TIU*1*264
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #246                      Status: Released
+                  Compliance Date: FEB 18, 2013
+=============================================================================
+
+Associated patches: (v)TIU*1*257   <<= must be installed BEFORE `TIU*1*264'
+
+Subject: MED GUI V2 MAINTENANCE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+  This patch will correct the following issues:
+  1) If a user enters a note in Mobile Electronic Documentation (MED), and
+     does not select a different note before exiting, in some cases the
+     newly entered note would be lost.
+  
+  2) The parameter [TIU MED HSTYPE] Health Summary Type for MED was set to
+     accept a free text value that should contain a pointer to the Health
+     Summary type to be used with MED. This was a problem, because a user
+     had to know the Internal Entry Number (IEN) of the health summary in
+     order to update the parameter.
+  
+  3) When certain Patient Data Objects (PDO) are imported from MED notes,
+     internal data was incorrectly getting added to the note.
+  
+  4) MED was calculating when to suggest database compaction incorrectly.
+     Also, when database compaction was suggested, and the users clicked
+     Yes in order to compact the database, MED would get stuck in an
+     infinite loop and hang.
+  
+  5) The Action menu, in MED is displaying on all tabs, even though it is 
+     only related to the Notes tab. This can cause confusion if there is a 
+     note selected on the notes tab and the user is on a different tab.
+  
+  6) When using a dialog template in MED, parent choices are grayed out,
+     but the same choices are not grayed out if viewed in CPRS.
+  
+  7) Med Install guide references the wrong Security Key.
+  
+  8) If a user attempted to retrieve two patients with the same names they
+     would import correctly, but only one would be selectable in the
+     patient selection dialog.
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+  1)  HD0000000465060 - Mobile Med -  Memphis Saving last note issue
+      Duplicates:
+      HD0000000502587 - Unable to transfer MED into CPRS
+      HD0000000502588 - MED upload  issue
+  2)  HD0000000476493 - XPAR Menu Tools doesn't work to set HS Type
+  3)  HD0000000496166 - TIU (MED) Support/Active Problems PDO does not 
+                        import
+      Duplicates:
+      HD0000000612559 - object in note displaying additional text
+  4)  HD0000000509956 - Suggested Database Compaction Causes Crash
+  5)  HD0000000491440 - Deactivate Edit/Delete Action Menu on ScratchPad
+  6)  HD0000000536495 - Wording of templates
+      Duplicates:
+      HD0000000554750 - MED templates are too grayed out
+  7)  HD0000000555934 - Update to TIU Manuals
+  8)  HD0000000580076 - Unable to differentiate between similar names 
+  
+  
+ ASSOCIATED NSR:
+ ===============
+  N/A
+  
+  
+ Participating Review Sites:
+ ===========================
+  Albuquerque VA Medical Center
+  Portland VA Medical Center
+  Palo Alto Health Care System
+  
+  
+ Overview of Remedy ticket(s):
+ =============================
+  1) HD0000000465060 - Mobile Med - Memphis Saving last note issue
+  Problem 1:
+  ----------
+  If a user enters a note in MED, and does not select a different note
+  before exiting, in some cases the newly entered note would be lost.
+  
+  Resolution 1:
+  -------------
+  The MED GUI has been updated to list the Save option in the Actions 
+  menu, so that users can save notes at any point while entering. It 
+  should also be noted that each note will be saved locally every few 
+  seconds, to ensure as much data is retained as possible even through 
+  system failure.
+  
+  
+  2) HD0000000476493 - XPAR Menu Tools doesn't work to set HS Type
+  Problem 2:
+  ----------
+  The parameter [TIU MED HSTYPE] Health Summary Type for MED was set to
+  accept a free text value that should contain a pointer to the Health
+  Summary type to be used with MED. This was a problem, because a user had
+  to know the Internal Entry Number of the health summary in order to
+  update the parameter.
+  
+  Resolution 2:
+  -------------
+  The [TIU MED HSTYPE] Health Summary Type for MED parameter definition and
+  routine TIUMED1 have been modified so that the parameter will now list
+  Health Summary types for selection, as well as all name entry.
+  
+  
+  3) HD0000000496166 - TIU (MED) Support/Active Problems PDO does not 
+                       import
+  Problem 3:
+  ----------
+  When certain Patient Data Objects are imported from MED notes, internal 
+  data was incorrectly getting added to the note. 
+  
+  Resolution 3:
+  -------------
+  The MED Imported DLL has been updated to exclude the extra internal 
+  information from notes that contain PDO when imported by MED.
+  
+  
+  4) HD0000000509956 - Suggested Database Compaction Causes Crash. 
+  Problem 4:
+  ----------
+  MED was calculating when to suggest database compaction incorrectly.
+  Also, when database compaction was suggested, and the users clicked Yes
+  in order to compact the database, MED would get stuck in an infinite loop
+  and hang.
+  
+  Resolution 4:
+  -------------
+  The MED GUI has been modified to correctly calculate the size of the 
+  database, and correctly close after database compaction.
+  
+  
+  5) HD0000000491440 - Deactivate Edit/Delete Action Menu on ScratchPad
+  Problem 5:
+  ----------
+  The Action menu in MED is displaying on all tabs, even though it is 
+  only related to the Notes tab. This can cause confusion if there is a 
+  note selected on the notes tab and the user is on a different tab.
+  
+  Resolution 5:
+  -------------
+  The MED GUI has been modified to only display the Action menu when the 
+  Notes tab is the current selection.
+  
+  
+  6) HD0000000536495 - Wording of templates
+  Problem 6:
+  ----------
+  When using a dialog template in MED, parent choices are grayed out, but
+  the same choices are not grayed out if viewed in CPRS.
+  
+  Resolution 6:
+  -------------
+  The MED GUI has been modified so that the parent dialog templates are 
+  correctly displayed in black and are no longer grayed out.
+  
+  
+  7) HD0000000555934 - Update to TIU Manuals
+  Problem 7:
+  ----------
+  MED Release Notes & Installation Guide references the wrong Security Key.
+  
+  Resolution 7:
+  -------------
+  Modified the reference to the XUPROG Security key on page 12 of the
+  install guide to correctly reference the TIU MED MGT key.
+  
+  
+  8) HD0000000580076 - Unable to differentiate between similar names
+  Problem 8:
+  ----------
+  If a user attempted to retrieve two patients with the same names they
+  would import correctly, but only one would be selectable in the patient
+  selection dialog.
+  
+  Resolution 8:
+  -------------
+  Allow the use of duplicate entries in the patient selection dialog
+  so patients with the same name are now individually selectable.
+  
+  
+ Client Application/Documentation:
+ =================================
+  The MED GUI Client (version 2.3.264.10) is being distributed as a zip
+  file via FTP. 
+  Complete documentation for the MED application is included in the 
+  required patch TIU*1.0*257. Installation instructions for the MED GUI 
+  client are found in the TIU*1.0*264 documentation.  
+  
+  
+ DOCUMENTATION: 
+ ============== 
+  Documentation is available for the TIU Mobile Electronic Documentation
+  on the ANONYMOUS.SOFTWARE directory at one of the following Office of 
+  Information (OI) Field Offices. Sites will be able to download the
+  documentation in either the ".PDF" or ".DOC" formats.
+  
+  The preferred method is to FTP the files from: Download.vista.med.va.gov
+  
+  This transmits files from the first available FTP server. Sites may 
+  also elect to retrieve documentation directly from a specific server as 
+  follows:
+  
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+  
+ File Name:               Description:                  Protocol:
+ ==========               ============                  =========
+ TIU_1_262_MED_IG.pdf     MED Installation Guide        Binary
+                          updated to address issue 7
+                          about incorrect Security Key
+  
+ TIU_1_264_MED_IG.pdf     MED Installation Guide        Binary
+                          created for this patch 
+  
+  Documentation may be found on the System Design and Development Web 
+  page at:  http://www.va.gov/vdl
+  
+ SOFTWARE INSTALLATION:
+ ======================
+  
+ File Name:          Description:          Protocol:       Directory:
+ ==========          ============          =========       ==========
+ TIU_1_264_MED.ZIP   Contains MED GUI      Binary          [SOFTWARE]
+                     install file 
+                     detailed below
+  
+ Contents of ZIP file:              Description:
+ =====================              ============
+ MED264Setup.exe                    MED GUI Client Install File
+  
+  Retrieve software directly from a specific server as follows:
+  
+ Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ INSTALL INSTRUCTIONS:
+ =====================
+ There is a Vista Patch Installation and a TIU MED GUI Client Installation.
+ The Vista Patch and the GUI Client have NO dependencies on each other, so 
+ the order of installation is not important. Either can be installed 
+ separately without any adverse affects.
+ The Vista Patch can be installed before the GUI Client is updated on your 
+ TIU MED Workstations, however, the workstations should be updated as soon 
+ as possible (see TIU_1_264_MED_IG).
+  
+ The Vista Patch will take less than 1 minute.
+ Suggested time to install: non-peak requirement hours.
+ Users do NOT have to be off the system during install.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+  
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter TIU*1.0*264):
+          a.  Verify Checksums in Transport Global - This option will 
+              allow you to ensure the integrity of the routines that are 
+              in the transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option 
+              will allow you to view all changes that will be made when 
+              this patch is installed.  It compares all components of 
+              this patch (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will 
+              not backup any other changes such as DD's or templates.
+  
+   4. Use the Install Package(s) option and select the package 
+      TIU*1.0*264.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO. 
+  
+  
+ Post Install Instructions:
+ ==========================
+ This release includes a new MED GUI Client that needs to be installed
+ on all laptop/desktop PC's which are configured to be used with the 
+ Mobile Electronic Documentation (MED) software.
+  
+ Please refer to the MED Installation Guide (TIU_1_264_MED_IG.PDF) for
+ complete installation instructions.  
+  
+ The current TIU MED Technical and User Manuals are detailed in 
+ TIU*1.0*262, and can be found here:
+  
+     http://www.va.gov/vdl/application.asp?appid=190
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUMED1
+    Before: B40119157   After: B43223292  **244,257,264**
+ 
+Routine list of preceding patches: 257
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : OCT 05, 2011
+Completed By: SHERMAN,BILL                  Date Completed: JAN 11, 2013
+Released By : HINES,RICK                    Date Released : JAN 18, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

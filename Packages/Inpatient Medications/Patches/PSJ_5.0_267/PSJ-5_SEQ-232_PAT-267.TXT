@@ -1,0 +1,581 @@
+$TXT Created by HARRIS,JAMES at DVACACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Thursday, 08/09/12 at 21:21
+=============================================================================
+Run Date: SEP 12, 2012                     Designation: PSJ*5*267
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #232                      Status: Released
+                  Compliance Date: OCT 13, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*200   <<= must be installed BEFORE `PSJ*5*267'
+                    (v)PSJ*5*253   <<= must be installed BEFORE `PSJ*5*267'
+                    (v)PSJ*5*254   <<= must be installed BEFORE `PSJ*5*267'
+                    (v)PSJ*5*263   <<= must be installed BEFORE `PSJ*5*267'
+                    (v)PSJ*5*265   <<= must be installed BEFORE `PSJ*5*267'
+                    (v)PSS*1*171   <<= must be installed BEFORE `PSJ*5*267'
+                    (v)PSJ*5*273   <<= must be installed BEFORE `PSJ*5*267'
+
+Subject: IMR4 NO ALLERGY ASSESSMENT, UNLIMITED LENGTH SI/OPI
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ ******************************* WARNING **********************************
+  
+ If your facility has the Pyxis/Omnicell/McKesson interface from ILC this
+ patch will overwrite any local modifications in routines PSJOEA2, PSGOEE, 
+ PSGOETO, and PSGOEV. This could affect certain orders being sent across
+ this interface. The modifications will have to be reintroduced following
+ installation of this patch.
+  
+ **************************************************************************
+ ******************************* ATTENTION ********************************
+  
+ The IMR4 UNLIMITED SI/OPI TEXT, LAST INJECTION SITE enhancement includes 4
+ patches which must be installed in the following order:
+  
+  1. PSS*1*171
+  2. PSJ*5*267
+  3. PSB*3*68
+  4. PSB*3*69
+  
+ ************************************************************************* 
+  
+  
+ Enhancements
+ =====================
+  
+ 1. Special Instructions/Other Print Info
+  ________________________________________
+  With this enhancement, Special Instructions and Other Print Info have
+  been modified to support an unlimited amount of text. The existing
+  functionality that copies the provider comments from the Computerized
+  Patient Record System (CPRS) to be copied into each field has been
+  retained, and an additional action has been added to optionally open a
+  word processing edit dialog after copying the provider comments into the
+  appropriate field (Special Instructions for Unit Dose, Other Print Info 
+  for IV).
+  
+  Special Instructions and Other Print Info may also be entered
+  and/or edited from within Inpatient Medications V. 5.0 order entry 
+  options.
+  
+  Prior to this enhancement, Inpatient Medications maximum character
+  length for Special Instructions was 180 characters and for Other Print
+  Info the maximum length was 60 characters. This enhancement resolves
+  Patient Safety Issues PSPO 42, 1466 / Remedy Ticket HD336419
+  - Comment lengths between CPRS and Pharmacy.
+  
+ 2. No Allergy Assessment
+  ________________________ 
+  The No Allergy Assessment enhancement provides an interactive alert to
+  the pharmacist in Inpatient Medications V. 5.0 when no allergy assessment
+  is on file for the patient, and a method for the pharmacist to enter an
+  allergy assessment after receiving the alert.  A pharmacy intervention 
+  is automatically created if the pharmacist chooses to not enter an
+  assessment. 
+  
+   ** NOTE: The new NO ALLERGY ASSESSMENT interventions will 
+            not be logged until patch PSS*1*171 is installed.        
+  
+  The No Allergy Assessment functionality will be available at the 
+  following options:
+  
+    Inpatient Order Entry [PSJ OE]
+    Non-Verified/Pending Orders [PSJU VBW]
+    Order Entry [PSJU NE]
+    Order Entry (IV) [PSJI ORDER]
+    Profile (IV) [PSJI PROFILE]
+  
+ When a patient with no allergy assessment is selected from one of the
+ affected options, the following message will be displayed to the
+ pharmacist: 
+  
+ "NO ALLERGY ASSESSMENT exists for this patient! Would you like to enter
+ one now?" 
+  
+  - If the pharmacist enters 'YES' at this prompt, they are prompted
+    for allergy information. 
+  - If the pharmacist enters 'NO' at this prompt, a pharmacist intervention
+    is created, with a type of 'NO ALLERGY ASSESSMENT'. The pharmacist is
+    then prompted for Provider and Recommendation. A new Recommendation,
+    'UNABLE TO ASSESS', has been created specifically  for this type of 
+    intervention.
+  
+  This enhancement will address Patient Safety Issue PSPO 445.
+  
+  
+ Defects Addressed
+ =========================
+  
+ 1. HD 187184 - IV Med Stop Date
+  
+    Problem
+    -------
+    When an IV order is renewed the status automatically changes to
+    expired, but the stop date does not change to the time the order
+    actually stops.
+  
+    Resolution
+    ----------
+    Routine PSJHL3 has been modified to correctly set the stop date of the
+    order that has been renewed to the time of renewal. 
+  
+  
+  2. HD 176676/PSPO 480 - Inpatient doesn't change order status to Expired.
+     
+     Problem
+     -------
+     The Inpatient Medications V. 5.0 package does not change order status
+     to Expired when sending orders to CPRS with Stop Date/Time in the 
+     past.
+  
+     Solution:
+     ---------
+     Routine PSJHL3 has been modified to change the order status to 
+     Expired, if the order's Stop Date/Time is in the past, when sending 
+     orders to CPRS. 
+     **This is a partial solution addressing Inpatient Medications V.5.0
+       functionality only. Patch OR*3*350 addresses CPRS GUI functionality.
+  
+  3. HD 377288 (original) - Default response should be "No"
+     
+     Problem
+     -------
+     When an Inpatient Unit Dose order's Dosage Ordered field does not 
+     match the dosage indicated by the Dispense Drug and Units per 
+     Dose fields, the warning prompt "Would you like to continue
+     verifying the order?" is displayed after accepting the order via the 
+     AC-Accept action. The prompt's default response is "Yes", even though 
+     the order is flawed.
+                          
+     The Inpatient Medications Workgroup has requested 
+     this be changed to "No".
+  
+     Solution
+     -------- 
+     When an Inpatient Unit Dose order's Dosage Ordered fi eld does not 
+     match the dosage indicated by the Dispense Drug and Units per 
+     Dose fields, the default response for the prompt "Would you like to
+     continue verifying the order?" will be changed to "No", as requested 
+     by the Inpatient Medications Workgroup.
+  
+  
+  4. HD 273000 (original) - Field Validation Not Correct
+  
+     Problem
+     -------
+     When a second Dispense drug is added to a Unit Dose medication order,
+     and no Dosage Ordered is selected, the following message display:
+  
+         THE FOLLOWING IS EITHER INVALID OR MISSING FROM THIS ORDER:
+  
+         THIS FIELD IS NECESSARY FOR VERIFICATION.
+         Enter RETURN to continue or '^' to exit: 
+  
+     Note that there is no actual field name displayed as an invalid field.
+     This is incorrect. 
+  
+     Solution
+     --------
+     In CHK^PSGOEV the variable CHK gets set to 8 and there is no handling
+     for a value of 8. The message is correct when CHK is set to 7.
+  
+  
+  5. HD 517634/PSPO 2137 - Provider Comments not displayed.
+  
+     Problem
+     -------
+     Provider Comments for continuous IV orders are not displaying in CPRS
+     after the order is verified in Inpatient Medications.
+  
+     Resolution
+     ----------
+     When IV orders are verified in Inpatient Medications, if the order
+     contains Provider Comments, include the Provider Comments in the
+     update sent to CPRS in order to keep the order synchronized.
+  
+  6. HD 586428/PSPO 2137 - Provider Comments not displayed after Verify.
+  
+     Problem
+     -------
+     When an IV order is created with Provider Comments, and then edited
+     prior to verification so as to trigger the creation of a new order,
+     Provider Comments do not carry over to the new order if auto-verify 
+     is not used. As a result, the verifying pharmacist may not see the
+     original Provider Comments.
+  
+     Solution
+     --------
+     Prior to the initial verification of an order, the original Provider 
+     Comments should carry over to new a order created due to edit, so that
+     the pharmacist verifying the order has an opportunity to see the 
+     Provider Comments.
+  
+  
+ Patch 
+ Components                                                                
+ ================                                                          
+  
+ Files & Fields 
+ Associated
+ ------------------
+ FILE
+ ---------------------------    
+ NON-VERIFIED ORDERS (#53.1)    SPECIAL INSTRUCTIONS (LONG) (#135)
+ NON-VERIFIED ORDERS (#53.1)    OTHER PRINT INFO (LONG) (#136)
+                                                                                
+ Forms 
+ Associated:                                                               
+ -----------------                                                         
+ N/A
+     
+ Mail Groups 
+ Associated:                                                         
+ -----------------------                                                   
+ N/A
+                                                                                 
+ Options 
+ Associated:                                                             
+ -------------------                                                       
+ Inpatient Order Entry [PSJ OE]
+ Non-Verified/Pending Orders [PSJU VBW]
+ Order Entry [PSJU NE]
+ Order Entry (IV) [PSJI ORDER]
+ Profile (IV) [PSJI PROFILE]
+  
+ Protocols 
+ Associated:                                                           
+ ---------------------                                                     
+ PSJ LM FINISH
+ PSJ LM NEW ORDER
+ PSJ LM NEW ORDER FROM PROFILE
+ PSJ LM OE MENU
+ PSJ LM SELECT ORDER
+ PSJ LM SHOW PROFILE
+                                                                                                                                                            
+ Security Keys 
+ Associated:                                                       
+ ------------------------                                                  
+ N/A
+                                                                                 
+ Templates 
+ Associated:                                                           
+ ---------------------                                                     
+ N/A
+                                                                                 
+ Additional 
+ Information:                                                         
+                                                                                 
+ New Service Requests 
+ (NSRs)                                                     
+ ----------------------------                                              
+ N/A
+                                                                                 
+ Patient Safety Issues 
+ (PSIs)                                                    
+ -----------------------------                                             
+ PSPO 445 / PSI-06-184
+ PSPO 480 / PSI-07-027
+ PSPO 2137 
+  
+    
+ Remedy Ticket(s) & 
+ Overview                                                     
+ ---------------------------                                               
+ HD169850 - Inpt/Outpatient pharmacy alerts for no allergy assessment not 
+ generated.
+ HD336419 - Comments truncated when copying to Special Instructions.
+                                                  
+  
+ Test Sites:
+ -----------
+ Central Texas
+ Manchester, NH
+ Pittsburgh, PA
+ St. Cloud, MN
+ Albany,NY (VISN 2)
+ Bath, NY (VISN 2)
+ Canandaigua, NY (VISN 2)
+ Syracuse, NY (VISN 2)
+ VA Western New York Healthcare System at Batavia (VISN 2)
+ VA Western New York Healthcare System at Buffalo (VISN 2)
+  
+                                                                       
+                                                                                 
+ Documentation Retrieval 
+ Instructions                                            
+ ------------------------------------                                      
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+                                                                                 
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.                             
+                   
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+                                                                                 
+  Albany       ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines        ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov   <ftp://ftp.fo-slc.med.va.gov>
+                                                                                 
+ Documentation can also be found on the VA Software Documentation 
+ Library at: http://www4.va.gov/vdl/
+      
+                                                                                 
+ Title                         File Name                   FTP Mode
+ ----------------------        ------------------------    ---------
+ Inpatient Medications V.5.0   PSJ_5_NURSE_UM_R0912.PDF    BINARY
+ Nurse's User Manual 
+                                                                                 
+ Inpatient Medications V.5.0   PSJ_5_P267_NURSE_UM_CP.PDF  BINARY
+ V. 5.0 Nurse's User Manual
+ Change Pages 
+                                                                              
+ Inpatient Medications V.5.0   PSJ_5_PHAR_UM_R0912.PDF     BINARY
+ Pharmacist's User Manual 
+                                                                                 
+ Inpatient Medications V.5.0   PSJ_5_P267_PHAR_UM_CP.PDF   BINARY
+ Pharmacist's User Manual 
+ Change Pages 
+                                                                                 
+ Inpatient Medications V.5.0   PSJ_5_TM_R0912.PDF          BINARY
+ Technical Manual/Security
+ Guide
+                                                                          
+ Inpatient Medications V.5.0   PSJ_5_P267_TM_CP.PDF        BINARY
+ Technical Manual/Security
+ Guide Change Pages
+  
+ Inpatient Medications V. 5.0  PSJ_5_P267_RN.PDF       BINARY
+ IMR 4 Release Notes
+                                                                                 
+ ---------------------------------------------------------------
+                                                                                 
+ Patch 
+ Installation:                                                             
+                                                                                 
+                                                                                 
+ Pre/Post Installation 
+ Overview                                                  
+ ------------------------------                                            
+ Do not queue this patch to install at a later time. Do not 
+ install this patch while users are logged in to Inpatient 
+ Medications V.5.0.                 
+                                                                                 
+                                                                                 
+ Pre-Installation 
+ Instructions                                                   
+ -----------------------------                                             
+ None.                                                                     
+  
+                                                                                 
+ Installation 
+ Instructions                                                       
+ -------------------------                                                 
+ Verify users are logged off the Inpatient Medications V. 5.0 application.
+ This patch should take less than 5 minutes to install.
+                                                                                 
+ 1.  Choose the PackMan message containing this patch.
+                                                                                 
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+                                                                                 
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the 
+     following options when prompted for the INSTALL enter PSJ*5.0*267.
+                                                                                  
+        a. Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+        b. Compare Transport Global to Current System - This option will  
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+                                                                                 
+ 4.  From the Installation Menu, select the Install Package(s) Option and
+     choose the patch to install.
+                                                                                 
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+ accept the default, 'NO'.
+                                                                                 
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+ Protocols? NO//', enter 'YES'.
+                                                                                 
+       The following menu options should be disabled:
+ A
+    Option Name           Menu Text
+    ___________           ___________
+    PSJI DELETE ORDER     Delete Orders
+    PSJI ORDER            Order Entry (IV)
+    PSJI PROFILE          Profile (IV)
+    PSJU NE               Order Entry            
+    PSJU VBW              Non-Verified/Pending Orders
+    PSJ OE                Inpatient Order Entry
+   
+                                                                                 
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+                                                                                 
+ Post-Installation 
+ Instructions                                                  
+ ------------------------------                                            
+ None.                                                                     
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 158
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGAL5
+    Before: B17746718   After: B28188853  **3,22,50,267**
+Routine Name: PSGMIV
+    Before: B47833428   After: B42223209  **4,20,21,28,58,111,131,145,267**
+Routine Name: PSGMMIV
+    Before: B45072835   After: B42167886  **20,21,58,111,131,145,267**
+Routine Name: PSGMMIVC
+    Before: B25751401   After: B25628895  **20,21,28,31,35,67,58,110,267**
+Routine Name: PSGMUTL
+    Before: B22961901   After: B28358090  **50,104,110,111,131,267**
+Routine Name: PSGOE41
+    Before: B27908531   After: B27985656  **50,63,64,69,58,111,136,113,267**
+Routine Name: PSGOE7
+    Before: B19317930   After: B19281966  **9,26,34,52,55,50,87,111,181,
+                                           254,267**
+Routine Name: PSGOE81
+    Before: B36275295   After: B32608596  **26,50,64,58,82,110,111,136,
+                                           113,267**
+Routine Name: PSGOE91
+    Before: B41731482   After: B37672131  **50,64,58,110,111,136,113,179,
+                                           265,267**
+Routine Name: PSGOEE
+    Before: B82566620   After: B96504063  **4,7,29,47,64,58,82,91,110,
+                                           111,112,142,179,181,254,267**
+Routine Name: PSGOEF1
+    Before: B29780196   After: B28843982  **2,7,35,39,45,47,50,63,67,58,
+                                           95,110,186,181,267**
+Routine Name: PSGOEL
+    Before: B13337438   After: B13821654  **267**
+Routine Name: PSGOETO
+    Before: B35267208   After: B36634660  **3,13,25,31,33,50,68,58,85,
+                                           105,90,117,110,111,112,161,254,
+                                           267**
+Routine Name: PSGOEV
+    Before: B64524901   After: B68395983  **5,7,15,28,33,50,64,58,77,78,
+                                           80,110,111,133,171,207,241,267**
+Routine Name: PSGOT
+    Before: B15567753   After: B22872398  **13,68,90,110,173,134,161,254,267**
+Routine Name: PSGOTR
+    Before: B10174903   After: B19415814  **110,127,133,129,267**
+Routine Name: PSGP
+    Before: B11885377   After: B12038299  **10,53,111,181,267**
+Routine Name: PSGVW
+    Before: B29380284   After: B31699559  **50,58,85,80,104,110,267**
+Routine Name: PSGVW0
+    Before:  B7338389   After: B10085740  **49,54,85,267**
+Routine Name: PSIV
+    Before: B24224990   After: B24205537  **7,16,29,38,53,56,72,58,110,
+                                           181,267**
+Routine Name: PSIVEDT1
+    Before: B59446179   After: B63913566  **3,7,41,47,50,64,58,116,110,
+                                           111,113,267**
+Routine Name: PSIVORAL
+    Before: B14231518   After: B19351743  **58,135,267**
+Routine Name: PSIVORC2
+    Before: B56200056   After: B59003278  **29,49,50,65,58,85,101,110,
+                                           127,151,181,267**
+Routine Name: PSIVORFA
+    Before: B24982662   After: B27786981  **4,7,18,28,50,71,58,91,80,110,
+                                           111,134,225,267**
+Routine Name: PSIVORFB
+    Before: B62956553   After: B83047869  **3,18,28,68,58,85,110,111,120,
+                                           134,213,161,181,273,267**
+Routine Name: PSIVORV2
+    Before: B15186195   After: B15709057  **15,81,267**
+Routine Name: PSIVVW1
+    Before: B14739849   After: B23979189  **58,81,267**
+Routine Name: PSJBCMA
+    Before: B78979447   After: B81219931  **32,41,46,57,63,66,56,69,58,
+                                           81,91,104,111,112,186,159,173,
+                                           190,113,225,253,267**
+Routine Name: PSJBCMA1
+    Before: B68412667   After: B94159665  **32,41,46,57,63,66,56,58,81,
+                                           91,104,186,159,173,253,267**
+Routine Name: PSJBCMA2
+    Before:  B5529154   After: B57484334  **32,41,54,56,81,267**
+Routine Name: PSJBCMA5
+    Before:       n/a   After: B78422093  **267**
+Routine Name: PSJCOM
+    Before: B38929893   After: B39982545  **110,186,267**
+Routine Name: PSJCOMV
+    Before: B41315630   After: B40002868  **110,127,267**
+Routine Name: PSJDPT
+    Before:  B7019925   After: B13914109  **53,124,166,160,198,267**
+Routine Name: PSJHL3
+    Before: B66158358   After: B90089505  **1,11,14,40,42,47,50,56,58,
+                                           92,101,102,123,110,111,152,134,
+                                           226,267**
+Routine Name: PSJHL9
+    Before: B61245429   After: B61245429  **1,18,31,42,47,50,63,72,75,
+                                           58,80,110,111,134,267**
+Routine Name: PSJHLU
+    Before: B34870321   After: B45862286  **1,56,72,102,134,181,267**
+Routine Name: PSJINHIS
+    Before:       n/a   After:  B7395737  **267**
+Routine Name: PSJINVW
+    Before:       n/a   After:B101370185  **267**
+Routine Name: PSJLIORD
+    Before:  B9649309   After:  B9927943  **1,16,29,58,85,110,149,267**
+Routine Name: PSJLIUTL
+    Before: B53236065   After: B52930175  **39,50,58,81,85,110,180,263,267**
+Routine Name: PSJLIVFD
+    Before: B40536268   After: B54237436  **7,50,63,64,58,81,91,80,116,
+                                           110,111,180,134,181,254,267**
+Routine Name: PSJLIVMD
+    Before: B76799837   After: B95539776  **37,50,63,58,81,91,80,116,110,
+                                           111,180,134,209,254,267**
+Routine Name: PSJLMGUD
+    Before: B30595874   After: B30433867  **25,58,85,116,110,111,267**
+Routine Name: PSJLMPRU
+    Before: B14487092   After: B14898207  **16,58,85,110,185,181,267**
+Routine Name: PSJLMUDE
+    Before: B63620133   After: B65175235  **7,47,50,63,64,58,80,116,110,
+                                           111,164,175,201,181,254,267**
+Routine Name: PSJO
+    Before: B23069149   After: B23946604  **31,58,110,181,267**
+Routine Name: PSJOE0
+    Before: B25720453   After: B25370612  **47,56,110,133,162,241,267**
+Routine Name: PSJOEA2
+    Before: B28381449   After: B28764670  **127,133,200,267**
+Routine Name: PSJP
+    Before: B21335743   After: B21519406  **10,53,60,181,273,267**
+Routine Name: PSJPDV1
+    Before: B15709363   After: B16075972  **3,33,58,267**
+Routine Name: PSJRXI
+    Before: B15938376   After: B20674326  **3,181,254,267**
+Routine Name: PSJUTL
+    Before: B65890056   After:B135053726  **9,47,58,80,110,136,157,177,
+                                           134,179,267**
+
+=============================================================================
+User Information:
+Entered By  : HARRIS,JAMES C                Date Entered  : OCT 12, 2011
+Completed By: PAYNE,RONALD                  Date Completed: SEP 12, 2012
+Released By : CONNOLLY,BARBARA              Date Released : SEP 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

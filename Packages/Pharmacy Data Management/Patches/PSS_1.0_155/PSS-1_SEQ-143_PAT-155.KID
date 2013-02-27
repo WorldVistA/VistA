@@ -1,0 +1,1888 @@
+Released PSS*1*155 SEQ #143
+Extracted from mail message
+**KIDS**:PSS*1.0*155^
+
+**INSTALL NAME**
+PSS*1.0*155
+"BLD",7085,0)
+PSS*1.0*155^PHARMACY DATA MANAGEMENT^0^3110125^y
+"BLD",7085,1,0)
+^^55^55^3110118^
+"BLD",7085,1,1,0)
+This patch addresses the New Service Request (NSR) #20070434 to prevent
+"BLD",7085,1,2,0)
+the inadvertent creation of supra-therapeutic possible dosages for high
+"BLD",7085,1,3,0)
+risk medications during the dosage creation segment of Pharmacy Data
+"BLD",7085,1,4,0)
+Management and National Drug File (NDF) updates.  The Pharmacy Data
+"BLD",7085,1,5,0)
+Management V. 1.0 and the National Drug File V. 4.0 were modified
+"BLD",7085,1,6,0)
+to satisfy the request. The NDF portion is addressed in patch PSN*4*262.
+"BLD",7085,1,7,0)
+ 
+"BLD",7085,1,8,0)
+This patch has the following enhancements:
+"BLD",7085,1,9,0)
+ 
+"BLD",7085,1,10,0)
+1. This enhancement utilizes three new fields that were added to the
+"BLD",7085,1,11,0)
+   VA PRODUCT file (#50.68) as part of patch PSN*4*261. These fields will
+"BLD",7085,1,12,0)
+   be used during the Match/Rematch process of the Drug Enter/Edit [PSS
+"BLD",7085,1,13,0)
+   DRUG ENTER/EDIT] and the Enter/Edit Dosages [PSS EDIT DOSAGES] options
+"BLD",7085,1,14,0)
+   to determine if possible dosages should be auto- created or not. The
+"BLD",7085,1,15,0)
+   three fields are:
+"BLD",7085,1,16,0)
+         - CREATE DEFAULT POSSIBLE DOSAGE field (#40)
+"BLD",7085,1,17,0)
+         - POSSIBLE DOSAGES TO CREATE field (#41)
+"BLD",7085,1,18,0)
+         - PACKAGE field (#42)
+"BLD",7085,1,19,0)
+ 
+"BLD",7085,1,20,0)
+When CREATE DEFAULT POSSIBLE DOSAGE field (#40) is "YES", then the
+"BLD",7085,1,21,0)
+existing functionality of auto-creating possible dosages will be retained.
+"BLD",7085,1,22,0)
+When this field is "NO", it will be used in combination with the value in
+"BLD",7085,1,23,0)
+POSSIBLE DOSAGES TO CREATE field (#41) to determine the auto-creation of
+"BLD",7085,1,24,0)
+possible dosages.
+"BLD",7085,1,25,0)
+ 
+"BLD",7085,1,26,0)
+The following conditions will apply when CREATE DEFAULT POSSIBLE DOSAGE
+"BLD",7085,1,27,0)
+field (#40) is "NO":
+"BLD",7085,1,28,0)
+ 
+"BLD",7085,1,29,0)
+   a. If POSSIBLE DOSAGES TO CREATE field (#41) is "NO", no possible
+"BLD",7085,1,30,0)
+      dosages will be auto-created and the following message will be
+"BLD",7085,1,31,0)
+      displayed:
+"BLD",7085,1,32,0)
+ 
+"BLD",7085,1,33,0)
+     "Due to National Drug File settings no possible dosages were
+"BLD",7085,1,34,0)
+      auto-created."
+"BLD",7085,1,35,0)
+   b. If POSSIBLE DOSAGES TO CREATE field (#41) is "O", 1x possible dosage
+"BLD",7085,1,36,0)
+      will be auto-created for the package specified by the new PACKAGE
+"BLD",7085,1,37,0)
+      field (#42) and the following message will be displayed:
+"BLD",7085,1,38,0)
+ 
+"BLD",7085,1,39,0)
+      "Due to National Drug File settings only one possible dosage will be
+"BLD",7085,1,40,0)
+       auto-created.
+"BLD",7085,1,41,0)
+       If other dosages are needed, create POSSIBLE DOSAGES or LOCAL
+"BLD",7085,1,42,0)
+       POSSIBLE DOSAGES as appropriate."
+"BLD",7085,1,43,0)
+ 
+"BLD",7085,1,44,0)
+   c. If POSSIBLE DOSAGES TO CREATE field (#41) is "B", 1x and 2x possible
+"BLD",7085,1,45,0)
+      dosages will be auto-created for the package specified by the new
+"BLD",7085,1,46,0)
+      PACKAGE field (#42).
+"BLD",7085,1,47,0)
+ 
+"BLD",7085,1,48,0)
+2. This patch retires the Auto Create Dosages [PSS DOSAGE CONVERSION]
+"BLD",7085,1,49,0)
+   option. This option is retired because, if it is run inadvertently, it
+"BLD",7085,1,50,0)
+   will delete all existing "Possible Dosages" and "Local Possible
+"BLD",7085,1,51,0)
+   Dosages" and will re-set the Possible Dosages back to NDF settings. The
+"BLD",7085,1,52,0)
+   changes that were entered locally by the site for "Possible Dosages"
+"BLD",7085,1,53,0)
+   and "Local Possible Dosages" will be lost. Upon patch installation,
+"BLD",7085,1,54,0)
+   this option will be removed from the Dosages [PSS DOSAGES MANAGEMENT]
+"BLD",7085,1,55,0)
+   menu.
+"BLD",7085,4,0)
+^9.64PA^^
+"BLD",7085,6.3)
+36
+"BLD",7085,"ABPKG")
+n
+"BLD",7085,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7085,"KRN",.4,0)
+.4
+"BLD",7085,"KRN",.401,0)
+.401
+"BLD",7085,"KRN",.402,0)
+.402
+"BLD",7085,"KRN",.403,0)
+.403
+"BLD",7085,"KRN",.5,0)
+.5
+"BLD",7085,"KRN",.84,0)
+.84
+"BLD",7085,"KRN",3.6,0)
+3.6
+"BLD",7085,"KRN",3.8,0)
+3.8
+"BLD",7085,"KRN",9.2,0)
+9.2
+"BLD",7085,"KRN",9.8,0)
+9.8
+"BLD",7085,"KRN",9.8,"NM",0)
+^9.68A^9^7
+"BLD",7085,"KRN",9.8,"NM",1,0)
+PSSUTIL^^0^B98434598
+"BLD",7085,"KRN",9.8,"NM",4,0)
+PSSUTIL3^^0^B6535118
+"BLD",7085,"KRN",9.8,"NM",5,0)
+PSSDOS^^0^B84561151
+"BLD",7085,"KRN",9.8,"NM",6,0)
+PSSDOSCR^^1^
+"BLD",7085,"KRN",9.8,"NM",7,0)
+PSSDOSCX^^1^
+"BLD",7085,"KRN",9.8,"NM",8,0)
+PSSDOSER^^0^B77903107
+"BLD",7085,"KRN",9.8,"NM",9,0)
+PSSDEE^^0^B93197121
+"BLD",7085,"KRN",9.8,"NM","B","PSSDEE",9)
+
+"BLD",7085,"KRN",9.8,"NM","B","PSSDOS",5)
+
+"BLD",7085,"KRN",9.8,"NM","B","PSSDOSCR",6)
+
+"BLD",7085,"KRN",9.8,"NM","B","PSSDOSCX",7)
+
+"BLD",7085,"KRN",9.8,"NM","B","PSSDOSER",8)
+
+"BLD",7085,"KRN",9.8,"NM","B","PSSUTIL",1)
+
+"BLD",7085,"KRN",9.8,"NM","B","PSSUTIL3",4)
+
+"BLD",7085,"KRN",19,0)
+19
+"BLD",7085,"KRN",19,"NM",0)
+^9.68A^2^1
+"BLD",7085,"KRN",19,"NM",2,0)
+PSS DOSAGE CONVERSION^^1^
+"BLD",7085,"KRN",19,"NM","B","PSS DOSAGE CONVERSION",2)
+
+"BLD",7085,"KRN",19.1,0)
+19.1
+"BLD",7085,"KRN",101,0)
+101
+"BLD",7085,"KRN",409.61,0)
+409.61
+"BLD",7085,"KRN",771,0)
+771
+"BLD",7085,"KRN",779.2,0)
+779.2
+"BLD",7085,"KRN",870,0)
+870
+"BLD",7085,"KRN",8989.51,0)
+8989.51
+"BLD",7085,"KRN",8989.52,0)
+8989.52
+"BLD",7085,"KRN",8994,0)
+8994
+"BLD",7085,"KRN","B",.4,.4)
+
+"BLD",7085,"KRN","B",.401,.401)
+
+"BLD",7085,"KRN","B",.402,.402)
+
+"BLD",7085,"KRN","B",.403,.403)
+
+"BLD",7085,"KRN","B",.5,.5)
+
+"BLD",7085,"KRN","B",.84,.84)
+
+"BLD",7085,"KRN","B",3.6,3.6)
+
+"BLD",7085,"KRN","B",3.8,3.8)
+
+"BLD",7085,"KRN","B",9.2,9.2)
+
+"BLD",7085,"KRN","B",9.8,9.8)
+
+"BLD",7085,"KRN","B",19,19)
+
+"BLD",7085,"KRN","B",19.1,19.1)
+
+"BLD",7085,"KRN","B",101,101)
+
+"BLD",7085,"KRN","B",409.61,409.61)
+
+"BLD",7085,"KRN","B",771,771)
+
+"BLD",7085,"KRN","B",779.2,779.2)
+
+"BLD",7085,"KRN","B",870,870)
+
+"BLD",7085,"KRN","B",8989.51,8989.51)
+
+"BLD",7085,"KRN","B",8989.52,8989.52)
+
+"BLD",7085,"KRN","B",8994,8994)
+
+"BLD",7085,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",7085,"QUES",0)
+^9.62^^
+"BLD",7085,"REQB",0)
+^9.611^6^4
+"BLD",7085,"REQB",2,0)
+PSN*4.0*262^2
+"BLD",7085,"REQB",4,0)
+PSS*1.0*110^2
+"BLD",7085,"REQB",5,0)
+PSS*1.0*147^2
+"BLD",7085,"REQB",6,0)
+PSS*1.0*144^2
+"BLD",7085,"REQB","B","PSN*4.0*262",2)
+
+"BLD",7085,"REQB","B","PSS*1.0*110",4)
+
+"BLD",7085,"REQB","B","PSS*1.0*144",6)
+
+"BLD",7085,"REQB","B","PSS*1.0*147",5)
+
+"KRN",19,13860,-1)
+1^2
+"KRN",19,13860,0)
+PSS DOSAGE CONVERSION
+"MBREQ")
+0
+"ORD",0,9.8)
+9.8;;1;RTNF^XPDTA;RTNE^XPDTA
+"ORD",0,9.8,0)
+ROUTINE
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",517,-1)
+1^1
+"PKG",517,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",517,20,0)
+^9.402P^^
+"PKG",517,22,0)
+^9.49I^1^1
+"PKG",517,22,1,0)
+1.0^2970930^2971014^11595
+"PKG",517,22,1,"PAH",1,0)
+155^3110125
+"PKG",517,22,1,"PAH",1,1,0)
+^^55^55^3110125
+"PKG",517,22,1,"PAH",1,1,1,0)
+This patch addresses the New Service Request (NSR) #20070434 to prevent
+"PKG",517,22,1,"PAH",1,1,2,0)
+the inadvertent creation of supra-therapeutic possible dosages for high
+"PKG",517,22,1,"PAH",1,1,3,0)
+risk medications during the dosage creation segment of Pharmacy Data
+"PKG",517,22,1,"PAH",1,1,4,0)
+Management and National Drug File (NDF) updates.  The Pharmacy Data
+"PKG",517,22,1,"PAH",1,1,5,0)
+Management V. 1.0 and the National Drug File V. 4.0 were modified
+"PKG",517,22,1,"PAH",1,1,6,0)
+to satisfy the request. The NDF portion is addressed in patch PSN*4*262.
+"PKG",517,22,1,"PAH",1,1,7,0)
+ 
+"PKG",517,22,1,"PAH",1,1,8,0)
+This patch has the following enhancements:
+"PKG",517,22,1,"PAH",1,1,9,0)
+ 
+"PKG",517,22,1,"PAH",1,1,10,0)
+1. This enhancement utilizes three new fields that were added to the
+"PKG",517,22,1,"PAH",1,1,11,0)
+   VA PRODUCT file (#50.68) as part of patch PSN*4*261. These fields will
+"PKG",517,22,1,"PAH",1,1,12,0)
+   be used during the Match/Rematch process of the Drug Enter/Edit [PSS
+"PKG",517,22,1,"PAH",1,1,13,0)
+   DRUG ENTER/EDIT] and the Enter/Edit Dosages [PSS EDIT DOSAGES] options
+"PKG",517,22,1,"PAH",1,1,14,0)
+   to determine if possible dosages should be auto- created or not. The
+"PKG",517,22,1,"PAH",1,1,15,0)
+   three fields are:
+"PKG",517,22,1,"PAH",1,1,16,0)
+         - CREATE DEFAULT POSSIBLE DOSAGE field (#40)
+"PKG",517,22,1,"PAH",1,1,17,0)
+         - POSSIBLE DOSAGES TO CREATE field (#41)
+"PKG",517,22,1,"PAH",1,1,18,0)
+         - PACKAGE field (#42)
+"PKG",517,22,1,"PAH",1,1,19,0)
+ 
+"PKG",517,22,1,"PAH",1,1,20,0)
+When CREATE DEFAULT POSSIBLE DOSAGE field (#40) is "YES", then the
+"PKG",517,22,1,"PAH",1,1,21,0)
+existing functionality of auto-creating possible dosages will be retained.
+"PKG",517,22,1,"PAH",1,1,22,0)
+When this field is "NO", it will be used in combination with the value in
+"PKG",517,22,1,"PAH",1,1,23,0)
+POSSIBLE DOSAGES TO CREATE field (#41) to determine the auto-creation of
+"PKG",517,22,1,"PAH",1,1,24,0)
+possible dosages.
+"PKG",517,22,1,"PAH",1,1,25,0)
+ 
+"PKG",517,22,1,"PAH",1,1,26,0)
+The following conditions will apply when CREATE DEFAULT POSSIBLE DOSAGE
+"PKG",517,22,1,"PAH",1,1,27,0)
+field (#40) is "NO":
+"PKG",517,22,1,"PAH",1,1,28,0)
+ 
+"PKG",517,22,1,"PAH",1,1,29,0)
+   a. If POSSIBLE DOSAGES TO CREATE field (#41) is "NO", no possible
+"PKG",517,22,1,"PAH",1,1,30,0)
+      dosages will be auto-created and the following message will be
+"PKG",517,22,1,"PAH",1,1,31,0)
+      displayed:
+"PKG",517,22,1,"PAH",1,1,32,0)
+ 
+"PKG",517,22,1,"PAH",1,1,33,0)
+     "Due to National Drug File settings no possible dosages were
+"PKG",517,22,1,"PAH",1,1,34,0)
+      auto-created."
+"PKG",517,22,1,"PAH",1,1,35,0)
+   b. If POSSIBLE DOSAGES TO CREATE field (#41) is "O", 1x possible dosage
+"PKG",517,22,1,"PAH",1,1,36,0)
+      will be auto-created for the package specified by the new PACKAGE
+"PKG",517,22,1,"PAH",1,1,37,0)
+      field (#42) and the following message will be displayed:
+"PKG",517,22,1,"PAH",1,1,38,0)
+ 
+"PKG",517,22,1,"PAH",1,1,39,0)
+      "Due to National Drug File settings only one possible dosage will be
+"PKG",517,22,1,"PAH",1,1,40,0)
+       auto-created.
+"PKG",517,22,1,"PAH",1,1,41,0)
+       If other dosages are needed, create POSSIBLE DOSAGES or LOCAL
+"PKG",517,22,1,"PAH",1,1,42,0)
+       POSSIBLE DOSAGES as appropriate."
+"PKG",517,22,1,"PAH",1,1,43,0)
+ 
+"PKG",517,22,1,"PAH",1,1,44,0)
+   c. If POSSIBLE DOSAGES TO CREATE field (#41) is "B", 1x and 2x possible
+"PKG",517,22,1,"PAH",1,1,45,0)
+      dosages will be auto-created for the package specified by the new
+"PKG",517,22,1,"PAH",1,1,46,0)
+      PACKAGE field (#42).
+"PKG",517,22,1,"PAH",1,1,47,0)
+ 
+"PKG",517,22,1,"PAH",1,1,48,0)
+2. This patch retires the Auto Create Dosages [PSS DOSAGE CONVERSION]
+"PKG",517,22,1,"PAH",1,1,49,0)
+   option. This option is retired because, if it is run inadvertently, it
+"PKG",517,22,1,"PAH",1,1,50,0)
+   will delete all existing "Possible Dosages" and "Local Possible
+"PKG",517,22,1,"PAH",1,1,51,0)
+   Dosages" and will re-set the Possible Dosages back to NDF settings. The
+"PKG",517,22,1,"PAH",1,1,52,0)
+   changes that were entered locally by the site for "Possible Dosages"
+"PKG",517,22,1,"PAH",1,1,53,0)
+   and "Local Possible Dosages" will be lost. Upon patch installation,
+"PKG",517,22,1,"PAH",1,1,54,0)
+   this option will be removed from the Dosages [PSS DOSAGES MANAGEMENT]
+"PKG",517,22,1,"PAH",1,1,55,0)
+   menu.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+7
+"RTN","PSSDEE")
+0^9^B93197121^B91898198
+"RTN","PSSDEE",1,0)
+PSSDEE ;BIR/WRT-MASTER DRUG ENTER/EDIT ROUTINE ;01/21/00
+"RTN","PSSDEE",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**3,5,15,16,20,22,28,32,34,33,38,57,47,68,61,82,90,110,155**;9/30/97;Build 36
+"RTN","PSSDEE",3,0)
+ ;
+"RTN","PSSDEE",4,0)
+ ;Reference to ^PS(59 supported by DBIA #1976
+"RTN","PSSDEE",5,0)
+ ;Reference to REACT1^PSNOUT supported by DBIA #2080
+"RTN","PSSDEE",6,0)
+ ;Reference to $$UP^XLFSTR(X) supported by DBIA #10104
+"RTN","PSSDEE",7,0)
+ ;Reference to $$PSJDF^PSNAPIS(P1,P3) supported by DBIA #2531
+"RTN","PSSDEE",8,0)
+ ;
+"RTN","PSSDEE",9,0)
+BEGIN N PSSUPRAF
+"RTN","PSSDEE",10,0)
+ S PSSFLAG=0 D ^PSSDEE2 S PSSZ=1 F PSSXX=1:1 K DA D ASK Q:PSSFLAG
+"RTN","PSSDEE",11,0)
+DONE D ^PSSDEE2 K PSSFLAG Q
+"RTN","PSSDEE",12,0)
+ASK W ! S DIC="^PSDRUG(",DIC(0)="QEALMNTV",DLAYGO=50,DIC("T")="" D ^DIC K DIC I Y<0 S PSSFLAG=1 Q
+"RTN","PSSDEE",13,0)
+ S (FLG1,FLG2,FLG3,FLG4,FLG5,FLG6,FLG7,FLAG,FLGKY,FLGOI)=0 K ^TMP($J,"ADD"),^TMP($J,"SOL")
+"RTN","PSSDEE",14,0)
+ S DA=+Y,DISPDRG=DA L +^PSDRUG(DISPDRG):0 I '$T W !,$C(7),"Another person is editing this one." Q
+"RTN","PSSDEE",15,0)
+ S PSSHUIDG=1,PSSNEW=$P(Y,"^",3) D USE,NOPE,COMMON,DEA,MF K PSSHUIDG,PSSUPRAF
+"RTN","PSSDEE",16,0)
+ ; if any outpatient site has a dispense machine running HL7 V.2.4, then
+"RTN","PSSDEE",17,0)
+ ; run the new routine and create message
+"RTN","PSSDEE",18,0)
+ N XX,DNSNAM,DNSPORT,DVER,DMFU,PSSUPRA S XX=""
+"RTN","PSSDEE",19,0)
+ F XX=0:0 S XX=$O(^PS(59,XX)) Q:'XX  D
+"RTN","PSSDEE",20,0)
+ .S DVER=$$GET1^DIQ(59,XX_",",105,"I"),DMFU=$$GET1^DIQ(59,XX_",",105.2)
+"RTN","PSSDEE",21,0)
+ .S DNSNAM=$$GET1^DIQ(59,XX_",",2006),DNSPORT=$$GET1^DIQ(59,XX_",",2007)
+"RTN","PSSDEE",22,0)
+ .D:DVER="2.4"&(DNSNAM'="")&(DMFU="YES") DRG^PSSDGUPD(DISPDRG,PSSNEW,DNSNAM,DNSPORT)
+"RTN","PSSDEE",23,0)
+ D DRG^PSSHUIDG(DISPDRG,PSSNEW) L -^PSDRUG(DISPDRG) K FLG3,PSSNEW
+"RTN","PSSDEE",24,0)
+ Q
+"RTN","PSSDEE",25,0)
+COMMON S DIE="^PSDRUG(",DR="[PSSCOMMON]" D ^DIE Q:$D(Y)!($D(DTOUT))  W:'$D(Y) !,"PRICE PER DISPENSE UNIT: " S:'$D(^PSDRUG(DA,660)) $P(^PSDRUG(DA,660),"^",6)="" W:'$D(Y) $P(^PSDRUG(DA,660),"^",6)
+"RTN","PSSDEE",26,0)
+ D DEA,CK,ASKND,OIKILL^PSSDEE1,COMMON1
+"RTN","PSSDEE",27,0)
+ Q
+"RTN","PSSDEE",28,0)
+COMMON1 W !,"Just a reminder...you are editing ",$P(^PSDRUG(DISPDRG,0),"^"),"."
+"RTN","PSSDEE",29,0)
+ S (PSSVVDA,DA)=DISPDRG D DOSN^PSSDOS S DA=PSSVVDA K PSSVVDA D USE,APP,ORDITM^PSSDEE1
+"RTN","PSSDEE",30,0)
+ Q
+"RTN","PSSDEE",31,0)
+CK D DSPY^PSSDEE1 S FLGNDF=0
+"RTN","PSSDEE",32,0)
+ Q
+"RTN","PSSDEE",33,0)
+ASKND S %=-1 I $D(^XUSEC("PSNMGR",DUZ)) D MESSAGE^PSSDEE1 W !!,"Do you wish to match/rematch to NATIONAL DRUG file" S %=1 S:FLGMTH=1 %=2 D YN^DICN
+"RTN","PSSDEE",34,0)
+ I %=0 W !,"If you answer ""yes"", you will attempt to match to NDF." G ASKND
+"RTN","PSSDEE",35,0)
+ S PSSUPRAF=%
+"RTN","PSSDEE",36,0)
+ I %=2 K X,Y Q
+"RTN","PSSDEE",37,0)
+ I %<0 K X,Y Q
+"RTN","PSSDEE",38,0)
+ I %=1 D RSET^PSSDEE1,EN1^PSSUTIL(DISPDRG,1) S X="PSNOUT" X ^%ZOSF("TEST") I  D REACT1^PSNOUT S DA=DISPDRG I $D(^PSDRUG(DA,"ND")),$P(^PSDRUG(DA,"ND"),"^",2)]"" D ONE
+"RTN","PSSDEE",39,0)
+ Q
+"RTN","PSSDEE",40,0)
+ONE S PSNP=$G(^PSDRUG(DA,"I")) I PSNP,PSNP<DT Q
+"RTN","PSSDEE",41,0)
+ W !,"You have just VERIFIED this match and MERGED the entry." D CKDF D EN2^PSSUTIL(DISPDRG,1) S:'$D(OLDDF) OLDDF="" I OLDDF'=NEWDF S FLGNDF=1 D WR
+"RTN","PSSDEE",42,0)
+ Q
+"RTN","PSSDEE",43,0)
+CKDF S NWND=^PSDRUG(DA,"ND"),NWPC1=$P(NWND,"^",1),NWPC3=$P(NWND,"^",3),DA=NWPC1,K=NWPC3 S X=$$PSJDF^PSNAPIS(DA,K) S NEWDF=$P(X,"^",2),DA=DISPDRG
+"RTN","PSSDEE",44,0)
+ N PSSK D PKIND^PSSDDUT2
+"RTN","PSSDEE",45,0)
+ Q
+"RTN","PSSDEE",46,0)
+NOPE S ZAPFLG=0 I '$D(^PSDRUG(DA,"ND")),$D(^PSDRUG(DA,2)),$P(^PSDRUG(DA,2),"^",1)']"" D DFNULL
+"RTN","PSSDEE",47,0)
+ I '$D(^PSDRUG(DA,"ND")),'$D(^PSDRUG(DA,2)) D DFNULL
+"RTN","PSSDEE",48,0)
+ I $D(^PSDRUG(DA,"ND")),$P(^PSDRUG(DA,"ND"),"^",2)']"",$D(^PSDRUG(DA,2)),$P(^PSDRUG(DA,2),"^",1)']"" D DFNULL
+"RTN","PSSDEE",49,0)
+ Q
+"RTN","PSSDEE",50,0)
+DFNULL S OLDDF="",ZAPFLG=1
+"RTN","PSSDEE",51,0)
+ Q
+"RTN","PSSDEE",52,0)
+ZAPIT I $D(ZAPFLG),ZAPFLG=1,FLGNDF=1,OLDDF'=NEWDF D CKIV^PSSDEE1
+"RTN","PSSDEE",53,0)
+ Q
+"RTN","PSSDEE",54,0)
+APP W !!,"MARK THIS DRUG AND EDIT IT FOR: " D CHOOSE
+"RTN","PSSDEE",55,0)
+ Q
+"RTN","PSSDEE",56,0)
+CHOOSE I $D(^XUSEC("PSORPH",DUZ))!($D(^XUSEC("PSXCMOPMGR",DUZ))) W !,"O  - Outpatient" S FLG1=1
+"RTN","PSSDEE",57,0)
+ I $D(^XUSEC("PSJU MGR",DUZ)) W !,"U  - Unit Dose" S FLG2=1
+"RTN","PSSDEE",58,0)
+ I $D(^XUSEC("PSJI MGR",DUZ)) W !,"I  - IV" S FLG3=1
+"RTN","PSSDEE",59,0)
+ I $D(^XUSEC("PSGWMGR",DUZ)) W !,"W  - Ward Stock" S FLG4=1
+"RTN","PSSDEE",60,0)
+ I $D(^XUSEC("PSAMGR",DUZ))!($D(^XUSEC("PSA ORDERS",DUZ))) W !,"D  - Drug Accountability" S FLG5=1
+"RTN","PSSDEE",61,0)
+ I $D(^XUSEC("PSDMGR",DUZ)) W !,"C  - Controlled Substances" S FLG6=1
+"RTN","PSSDEE",62,0)
+ I $D(^XUSEC("PSORPH",DUZ)) W !,"X  - Non-VA Med" S FLG7=1
+"RTN","PSSDEE",63,0)
+ I FLG1,FLG2,FLG3,FLG4,FLG5,FLG6 S FLAG=1
+"RTN","PSSDEE",64,0)
+ I FLAG W !,"A  - ALL"
+"RTN","PSSDEE",65,0)
+ W !
+"RTN","PSSDEE",66,0)
+ I 'FLG1,'FLG2,'FLG3,'FLG4,'FLG5,'FLG6,'FLG7 W !,"You do not have the proper keys to continue. Sorry, this concludes your editing session.",! S FLGKY=1 K DIRUT,X Q
+"RTN","PSSDEE",67,0)
+ I FLGKY'=1 D
+"RTN","PSSDEE",68,0)
+ . K DIR S DIR(0)="FO^1:30"
+"RTN","PSSDEE",69,0)
+ . S DIR("A")="Enter your choice(s) separated by commas "
+"RTN","PSSDEE",70,0)
+ . F  D ^DIR Q:$$CHECK($$UP^XLFSTR(X))
+"RTN","PSSDEE",71,0)
+ . S PSSANS=X,PSSANS=$$UP^XLFSTR(PSSANS) D BRANCH,BRANCH1
+"RTN","PSSDEE",72,0)
+ Q
+"RTN","PSSDEE",73,0)
+ ;
+"RTN","PSSDEE",74,0)
+CHECK(X) ; Validates Application Use response
+"RTN","PSSDEE",75,0)
+ N CHECK,I,C
+"RTN","PSSDEE",76,0)
+ S CHECK=1 I X=""!(Y["^")!($D(DIRUT)) Q CHECK
+"RTN","PSSDEE",77,0)
+ F I=1:1:$L(X,",") D
+"RTN","PSSDEE",78,0)
+ . S C=$P(X,",",I) W !?43,C," - "
+"RTN","PSSDEE",79,0)
+ . I C="O",FLG1 W "Outpatient" Q
+"RTN","PSSDEE",80,0)
+ . I C="U",FLG2 W "Unit Dose" Q
+"RTN","PSSDEE",81,0)
+ . I C="I",FLG3 W "IV" Q
+"RTN","PSSDEE",82,0)
+ . I C="W",FLG4 W "Ward Stock" Q
+"RTN","PSSDEE",83,0)
+ . I C="D",FLG5 W "Drug Accountability" Q
+"RTN","PSSDEE",84,0)
+ . I C="C",FLG6 W "Controlled Substances" Q
+"RTN","PSSDEE",85,0)
+ . I C="X",FLG7 W "Non-VA Med" Q
+"RTN","PSSDEE",86,0)
+ . W "Invalid Entry",$C(7) S CHECK=0
+"RTN","PSSDEE",87,0)
+ Q CHECK
+"RTN","PSSDEE",88,0)
+BRANCH D:PSSANS["O" OP D:PSSANS["U" UD D:PSSANS["I" IV D:PSSANS["W" WS
+"RTN","PSSDEE",89,0)
+ D:PSSANS["D" DACCT D:PSSANS["C" CS D:PSSANS["X" NVM
+"RTN","PSSDEE",90,0)
+ Q
+"RTN","PSSDEE",91,0)
+BRANCH1 I FLAG,PSSANS["A" D OP,UD,IV,WS,DACCT,CS,NVM
+"RTN","PSSDEE",92,0)
+ Q
+"RTN","PSSDEE",93,0)
+OP I FLG1 D
+"RTN","PSSDEE",94,0)
+ . W !,"** You are NOW editing OUTPATIENT fields. **"
+"RTN","PSSDEE",95,0)
+ . S PSIUDA=DA,PSIUX="O^Outpatient Pharmacy" D ^PSSGIU
+"RTN","PSSDEE",96,0)
+ . I %=1 D
+"RTN","PSSDEE",97,0)
+ . . S DIE="^PSDRUG(",DR="[PSSOP]" D ^DIE K DIR D OPEI,ASKCMOP
+"RTN","PSSDEE",98,0)
+ . . S X="PSOCLO1" X ^%ZOSF("TEST") I  D ASKCLOZ S FLGOI=1
+"RTN","PSSDEE",99,0)
+ I FLG1 D CKCMOP
+"RTN","PSSDEE",100,0)
+ Q
+"RTN","PSSDEE",101,0)
+CKCMOP I $P($G(^PSDRUG(DISPDRG,2)),"^",3)'["O" S:$D(^PSDRUG(DISPDRG,3)) $P(^PSDRUG(DISPDRG,3),"^",1)=0 K:$D(^PSDRUG("AQ",DISPDRG)) ^PSDRUG("AQ",DISPDRG) S DA=DISPDRG D ^PSSREF
+"RTN","PSSDEE",102,0)
+ Q
+"RTN","PSSDEE",103,0)
+UD I FLG2 W !,"** You are NOW editing UNIT DOSE fields. **" S PSIUDA=DA,PSIUX="U^Unit Dose" D ^PSSGIU I %=1 S DIE="^PSDRUG(",DR="62.05;212.2" D ^DIE S DIE="^PSDRUG(",DR="212",DR(2,50.0212)=".01;1" D ^DIE S FLGOI=1
+"RTN","PSSDEE",104,0)
+ Q
+"RTN","PSSDEE",105,0)
+IV I FLG3 W !,"** You are NOW editing IV fields. **" S (PSIUDA,PSSDA)=DA,PSIUX="I^IV" D ^PSSGIU I %=1 D IV1 S FLGOI=1
+"RTN","PSSDEE",106,0)
+ Q
+"RTN","PSSDEE",107,0)
+IV1 K PSSIVOUT ;This variable controls the selection process loop.
+"RTN","PSSDEE",108,0)
+ W !,"Edit Additives or Solutions: " K DIR S DIR(0)="SO^A:ADDITIVES;S:SOLUTIONS;" D ^DIR Q:$D(DIRUT)  S PSSASK=Y(0) D:PSSASK="ADDITIVES" ENA^PSSVIDRG D:PSSASK="SOLUTIONS" ENS^PSSVIDRG I '$D(PSSIVOUT) G IV1
+"RTN","PSSDEE",109,0)
+ K PSSIVOUT
+"RTN","PSSDEE",110,0)
+ Q
+"RTN","PSSDEE",111,0)
+WS I FLG4 W !,"** You are NOW editing WARD STOCK fields. **" S DIE="^PSDRUG(",DR="300;301;302" D ^DIE
+"RTN","PSSDEE",112,0)
+ Q
+"RTN","PSSDEE",113,0)
+DACCT I FLG5 W !,"** You are NOW editing DRUG ACCOUNTABILITY fields. **" S DIE="^PSDRUG(",DR="441" D ^DIE S DIE="^PSDRUG(",DR="9",DR(2,50.1)="1;2;400;401;402;403;404;405" D ^DIE
+"RTN","PSSDEE",114,0)
+ Q
+"RTN","PSSDEE",115,0)
+CS I FLG6 W !,"** You are NOW Marking/Unmarking for CONTROLLED SUBS. **" S PSIUDA=DA,PSIUX="N^Controlled Substances" D ^PSSGIU
+"RTN","PSSDEE",116,0)
+ Q
+"RTN","PSSDEE",117,0)
+NVM I FLG7 W !,"** You are NOW Marking/Unmarking for NON-VA MEDS. **" S PSIUDA=DA,PSIUX="X^Non-VA Med" D ^PSSGIU
+"RTN","PSSDEE",118,0)
+ Q
+"RTN","PSSDEE",119,0)
+ASKCMOP I $D(^XUSEC("PSXCMOPMGR",DUZ)) W !!,"Do you wish to mark to transmit to CMOP? " K DIR S DIR(0)="Y",DIR("?")="If you answer ""yes"", you will attempt to mark this drug to transmit to CMOP."
+"RTN","PSSDEE",120,0)
+ D ^DIR I "Nn"[X K X,Y,DIRUT Q
+"RTN","PSSDEE",121,0)
+ I "Yy"[X S PSXFL=0 D TEXT^PSSMARK H 7 N PSXUDA S (PSXUM,PSXUDA)=DA,PSXLOC=$P(^PSDRUG(DA,0),"^"),PSXGOOD=0,PSXF=0,PSXBT=0 D BLD^PSSMARK,PICK2^PSSMARK S DA=PSXUDA
+"RTN","PSSDEE",122,0)
+ Q
+"RTN","PSSDEE",123,0)
+ASKCLOZ W !!,"Do you wish to mark/unmark as a LAB MONITOR or CLOZAPINE DRUG? " K DIR S DIR(0)="Y",DIR("?")="If you answer ""yes"", you will have the opportunity to edit LAB MONITOR or CLOZAPINE fields."
+"RTN","PSSDEE",124,0)
+ D ^DIR I "Nn"[X K X,Y,DIRUT Q
+"RTN","PSSDEE",125,0)
+ I "Yy"[X S NFLAG=0 D MONCLOZ
+"RTN","PSSDEE",126,0)
+ Q
+"RTN","PSSDEE",127,0)
+MONCLOZ K PSSAST D FLASH W !,"Mark/Unmark for Lab Monitor or Clozapine: " K DIR S DIR(0)="S^L:LAB MONITOR;C:CLOZAPINE;" D ^DIR Q:$D(DIRUT)  S PSSAST=Y(0) D:PSSAST="LAB MONITOR" ^PSSLAB D:PSSAST="CLOZAPINE" CLOZ
+"RTN","PSSDEE",128,0)
+ Q
+"RTN","PSSDEE",129,0)
+FLASH K LMFLAG,CLFALG,WHICH S WHICH=$P($G(^PSDRUG(DISPDRG,"CLOZ1")),"^"),LMFLAG=0,CLFLAG=0
+"RTN","PSSDEE",130,0)
+ I WHICH="PSOCLO1" S CLFLAG=1
+"RTN","PSSDEE",131,0)
+ I WHICH'="PSOCLO1" S:WHICH'="" LMFLAG=1
+"RTN","PSSDEE",132,0)
+ Q
+"RTN","PSSDEE",133,0)
+CLOZ Q:NFLAG  Q:$D(DTOUT)  Q:$D(DIRUT)  Q:$D(DUOUT)  W !,"** You are NOW editing CLOZAPINE fields. **" D ^PSSCLDRG
+"RTN","PSSDEE",134,0)
+ Q
+"RTN","PSSDEE",135,0)
+USE K PACK S PACK="" S:$P($G(^PSDRUG(DISPDRG,"PSG")),"^",2)]"" PACK="W" I $D(^PSDRUG(DISPDRG,2)) S PACK=PACK_$P(^PSDRUG(DISPDRG,2),"^",3)
+"RTN","PSSDEE",136,0)
+ I PACK'="" D
+"RTN","PSSDEE",137,0)
+ .W $C(7) N XX W !! F XX=1:1:79 W "*"
+"RTN","PSSDEE",138,0)
+ .W !,"This entry is marked for the following PHARMACY packages: "
+"RTN","PSSDEE",139,0)
+ .D USE1
+"RTN","PSSDEE",140,0)
+ Q
+"RTN","PSSDEE",141,0)
+USE1 W:PACK["O" !," Outpatient" W:PACK["U" !," Unit Dose" W:PACK["I" !," IV"
+"RTN","PSSDEE",142,0)
+ W:PACK["W" !," Ward Stock" W:PACK["D" !," Drug Accountability"
+"RTN","PSSDEE",143,0)
+ W:PACK["N" !," Controlled Substances" W:PACK["X" !," Non-VA Med"
+"RTN","PSSDEE",144,0)
+ W:'$D(PACK) !," NONE"
+"RTN","PSSDEE",145,0)
+ I PACK'["O",PACK'["U",PACK'["I",PACK'["W",PACK'["D",PACK'["N",PACK'["X" W !," NONE"
+"RTN","PSSDEE",146,0)
+ Q
+"RTN","PSSDEE",147,0)
+WR I ^XMB("NETNAME")'["CMOP-" W:OLDDF'="" !,"The dosage form has changed from "_OLDDF_" to "_NEWDF_" due to",!,"matching/rematching to NDF.",!,"You will need to rematch to Orderable Item.",!
+"RTN","PSSDEE",148,0)
+ Q
+"RTN","PSSDEE",149,0)
+PRIMDRG I $D(^PS(59.7,1,20)),$P(^PS(59.7,1,20),"^",1)=4!($P(^PS(59.7,1,20),"^",1)=4.5) I $D(^PSDRUG(DISPDRG,2)) S VAR=$P(^PSDRUG(DISPDRG,2),"^",3) I VAR["U"!(VAR["I") D PRIM1
+"RTN","PSSDEE",150,0)
+ Q
+"RTN","PSSDEE",151,0)
+PRIM1 W !!,"You need to match this drug to ""PRIMARY DRUG"" file as well.",! S DIE="^PSDRUG(",DR="64",DA=DISPDRG D ^DIE K VAR
+"RTN","PSSDEE",152,0)
+ Q
+"RTN","PSSDEE",153,0)
+MF I $P($G(^PS(59.7,1,80)),"^",2)>1 I $D(^PSDRUG(DISPDRG,2)) S PSSOR=$P(^PSDRUG(DISPDRG,2),"^",1) I PSSOR]"" D EN^PSSPOIDT(PSSOR),EN2^PSSHL1(PSSOR,"MUP")
+"RTN","PSSDEE",154,0)
+ Q
+"RTN","PSSDEE",155,0)
+MFA I $P($G(^PS(59.7,1,80)),"^",2)>1 S PSSOR=$P(^PS(52.6,ENTRY,0),"^",11),PSSDD=$P(^PS(52.6,ENTRY,0),"^",2) I PSSOR]"" D EN^PSSPOIDT(PSSOR),EN2^PSSHL1(PSSOR,"MUP") D MFDD
+"RTN","PSSDEE",156,0)
+ Q
+"RTN","PSSDEE",157,0)
+MFS I $P($G(^PS(59.7,1,80)),"^",2)>1 S PSSOR=$P(^PS(52.7,ENTRY,0),"^",11),PSSDD=$P(^PS(52.7,ENTRY,0),"^",2) I PSSOR]"" D EN^PSSPOIDT(PSSOR),EN2^PSSHL1(PSSOR,"MUP") D MFDD
+"RTN","PSSDEE",158,0)
+ Q
+"RTN","PSSDEE",159,0)
+MFDD I $D(^PSDRUG(PSSDD,2)) S PSSOR=$P(^PSDRUG(PSSDD,2),"^",1) I PSSOR]"" D EN^PSSPOIDT(PSSOR),EN2^PSSHL1(PSSOR,"MUP")
+"RTN","PSSDEE",160,0)
+ Q
+"RTN","PSSDEE",161,0)
+OPEI N PSDRUGND
+"RTN","PSSDEE",162,0)
+ S PSDRUGND=$G(^PSDRUG(DISPDRG,"ND"))
+"RTN","PSSDEE",163,0)
+ I PSDRUGND']"" Q
+"RTN","PSSDEE",164,0)
+ I $P(PSDRUGND,"^",3)']"",$P(PSDRUGND,"^",10)']"" Q
+"RTN","PSSDEE",165,0)
+ I $P(PSDRUGND,"^",10)]"" G OPEI1
+"RTN","PSSDEE",166,0)
+ I $P($G(^PSNDF(50.68,$P(PSDRUGND,"^",3),1)),"^",2)]"" G OPEI1
+"RTN","PSSDEE",167,0)
+ Q
+"RTN","PSSDEE",168,0)
+OPEI1 ;
+"RTN","PSSDEE",169,0)
+ S DIE="^PSDRUG(",DR="28",DA=DISPDRG
+"RTN","PSSDEE",170,0)
+ D ^DIE
+"RTN","PSSDEE",171,0)
+ Q
+"RTN","PSSDEE",172,0)
+DEA ;
+"RTN","PSSDEE",173,0)
+ I $P($G(^PSDRUG(DISPDRG,3)),"^")=1,($P(^PSDRUG(DISPDRG,0),"^",3)[1!($P(^(0),"^",3)[2)) D DSH
+"RTN","PSSDEE",174,0)
+ Q
+"RTN","PSSDEE",175,0)
+DSH W !!,"****************************************************************************"
+"RTN","PSSDEE",176,0)
+ W !,"This entry contains a ""1"" or a ""2"" in the ""DEA, SPECIAL HDLG""",!,"field, therefore this item has been UNMARKED for CMOP transmission."
+"RTN","PSSDEE",177,0)
+ W !,"****************************************************************************",! S $P(^PSDRUG(DISPDRG,3),"^")=0 K ^PSDRUG("AQ",DISPDRG) S DA=DISPDRG N % D ^PSSREF
+"RTN","PSSDEE",178,0)
+ Q
+"RTN","PSSDOS")
+0^5^B84561151^B61025597
+"RTN","PSSDOS",1,0)
+PSSDOS ;BIR/RTR-Dose edit option ;03/10/00
+"RTN","PSSDOS",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**38,49,50,47,129,147,155**;9/30/97;Build 36
+"RTN","PSSDOS",3,0)
+ ;
+"RTN","PSSDOS",4,0)
+ ;Reference to PS(50.607 supported by DBIA 2221
+"RTN","PSSDOS",5,0)
+DOSN ;
+"RTN","PSSDOS",6,0)
+ N X,Y,PSSNFID,PSSNAT,PSSNAT1,PSSNATND,PSSNATDF,PSSNATUN,PSSNOCON,PSSST,PSSUN,PSSNAME,PSSIND,PSSDOSA,PSSXYZ,PSSNATST,POSDOS,LPDOS
+"RTN","PSSDOS",7,0)
+ N PSSDIEN,PSSONLYI,PSSONLYO,PSSTALK,PSSIZZ,PSSOZZ,PSSSKIPP,PSSWDXF
+"RTN","PSSDOS",8,0)
+ N PSSUPRA,PSSIEN S PSSIEN=DA
+"RTN","PSSDOS",9,0)
+DOSNX ;
+"RTN","PSSDOS",10,0)
+ D STUN
+"RTN","PSSDOS",11,0)
+ I PSSST="",$O(^PSDRUG(PSSIEN,"DOS1",0)) K ^PSDRUG(PSSIEN,"DOS") K ^PSDRUG(PSSIEN,"DOS1")
+"RTN","PSSDOS",12,0)
+ S (PSSIZZ,PSSOZZ)=0 S:'$G(PSSSKIPP) PSSSKIPP=0
+"RTN","PSSDOS",13,0)
+ S PSSXYZ=0 D CHECK
+"RTN","PSSDOS",14,0)
+ ;Display strength
+"RTN","PSSDOS",15,0)
+ D:$P($G(^PSDRUG(PSSIEN,"DOS")),"^")'="" XNWS
+"RTN","PSSDOS",16,0)
+ I PSSXYZ,PSSUPRA="NN" D:$P($G(^PSDRUG(PSSIEN,"DOS")),"^")="" XNW G DOSA
+"RTN","PSSDOS",17,0)
+ I $P($G(^PSDRUG(PSSIEN,"DOS")),"^")'="",$O(^PSDRUG(PSSIEN,"DOS1",0)) N PSSIENS,PSS11 G DOSA
+"RTN","PSSDOS",18,0)
+ ;.N PSSDESTP W !!,"Strength from National Drug File match => "_$S($E($G(PSSNATST),1)=".":"0",1:"")_$G(PSSNATST)_"    "_$P($G(^PS(50.607,+$G(PSSUN),0)),"^")
+"RTN","PSSDOS",19,0)
+ ;.W !,"Strength currently in the Drug File    => "_$S($E($P($G(^PSDRUG(PSSIEN,"DOS")),"^"),1)=".":"0",1:"")_$P($G(^PSDRUG(PSSIEN,"DOS")),"^")_"    "_$S($P($G(^PS(50.607,+$G(PSSUN),0)),"^")'["/":$P($G(^(0)),"^"),1:"") S PSSDESTP=1 D MS^PSSDSPOP
+"RTN","PSSDOS",20,0)
+ ;.K PSSDESTP
+"RTN","PSSDOS",21,0)
+ ;
+"RTN","PSSDOS",22,0)
+ I $G(PSSXYZ),'$O(^PSDRUG(PSSIEN,"DOS1",0)) D  D ^DIR K DIR I Y=1 S PSSSKIPP=1 D EN2^PSSUTIL(PSSIEN,1) G DOSNX
+"RTN","PSSDOS",23,0)
+ .K DIR S DIR(0)="Y",DIR("B")="N",DIR("A")="Create Possible Dosages for this drug",DIR("?")=" "
+"RTN","PSSDOS",24,0)
+ .S DIR("?",1)="This drug meets the criteria to have Possible Dosages, but it currently does",DIR("?",2)="not have any. If you answer 'YES', Possible Dosages will be created for this"
+"RTN","PSSDOS",25,0)
+ .S DIR("?",3)="drug, based on the match to the National Drug File."
+"RTN","PSSDOS",26,0)
+ .W !!,"This drug can have Possible Dosages, but currently does not have any.",!
+"RTN","PSSDOS",27,0)
+ .I $G(PSSUPRAF)=2,(PSSUPRA="NO"!(PSSUPRA="NB")) W !,"This drug has been set within the National Drug File to auto create "_$S(PSSUPRA="NO":"only one ",PSSUPRA="NB":"two ",1:""),!,"possible dosage"_$S(PSSUPRA="NO":".",1:"s."),!
+"RTN","PSSDOS",28,0)
+ I '$O(^PSDRUG(PSSIEN,"DOS1",0)) D LPD,QUES G:'Y END G LOCX
+"RTN","PSSDOS",29,0)
+DOSA S PSSST=$P($G(^PSDRUG(PSSIEN,"DOS")),"^") S PSSWDXF=0
+"RTN","PSSDOS",30,0)
+ W !!,"Strength => "_$S($E($G(PSSST),1)=".":"0",1:"")_$G(PSSST)_"   Unit => "_$S($P($G(^PS(50.607,+$G(PSSUN),0)),"^")'["/":$P($G(^(0)),"^"),1:"") W !
+"RTN","PSSDOS",31,0)
+ ;;;I $D(^PSDRUG(PSSIEN,"DOS1"))
+"RTN","PSSDOS",32,0)
+ D:($Y+5)>IOSL QASK G:PSSWDXF WXF W !,"POSSIBLE DOSAGES:" D
+"RTN","PSSDOS",33,0)
+ .F PDS=0:0 S PDS=$O(^PSDRUG(PSSIEN,"DOS1",PDS)) Q:'PDS!(PSSWDXF)  D
+"RTN","PSSDOS",34,0)
+ ..S POSDOS=$G(^PSDRUG(PSSIEN,"DOS1",PDS,0))
+"RTN","PSSDOS",35,0)
+ ..D:($Y+5)>IOSL QASK Q:PSSWDXF  W !,"   DISPENSE UNITS PER DOSE: ",$S($E($P(POSDOS,U),1)=".":"0",1:"")_$P(POSDOS,U) D
+"RTN","PSSDOS",36,0)
+ ...S X=$P(POSDOS,U) D SET^PSSDOSLZ W ?38,"DOSE: ",X,?60,"PACKAGE: ",$P(POSDOS,U,3)
+"RTN","PSSDOS",37,0)
+ ;;;I $D(^PSDRUG(PSSIEN,"DOS2"))
+"RTN","PSSDOS",38,0)
+ S PSSWDXF=0 W !!,"LOCAL POSSIBLE DOSAGES:" D
+"RTN","PSSDOS",39,0)
+ .F PDS=0:0 S PDS=$O(^PSDRUG(PSSIEN,"DOS2",PDS)) Q:'PDS!(PSSWDXF)  D
+"RTN","PSSDOS",40,0)
+ ..D:($Y+5)>IOSL QASK Q:PSSWDXF  S LPDOS=$G(^PSDRUG(PSSIEN,"DOS2",PDS,0)) W !,"  LOCAL POSSIBLE DOSAGE: " D
+"RTN","PSSDOS",41,0)
+ ...I $L($P(LPDOS,U))'>27 W $P(LPDOS,U),?55,"PACKAGE: ",$P(LPDOS,U,2) D WXFPT(LPDOS) Q
+"RTN","PSSDOS",42,0)
+ ...W !,?10,$P(LPDOS,U),!,?55,"PACKAGE: ",$P(LPDOS,U,2) D WXFPT(LPDOS)
+"RTN","PSSDOS",43,0)
+WXF ;
+"RTN","PSSDOS",44,0)
+ I $$CHECK^PSSUTIL3(PSSIEN),($G(PSSUPRAF)'=2) D
+"RTN","PSSDOS",45,0)
+ .I PSSUPRA="NN" W !!,"Due to National Drug File settings no possible dosages were auto-created."
+"RTN","PSSDOS",46,0)
+ .I PSSUPRA="NO" W !!,"Due to National Drug File settings only ONE possible dosage was auto-created.",!,"If other dosages are needed, create POSSIBLE DOSAGES or LOCAL POSSIBLE DOSAGES",!,"as appropriate."
+"RTN","PSSDOS",47,0)
+ .I PSSUPRA="NB" W !!,"Due to National Drug File settings TWO possible dosages were auto-created."
+"RTN","PSSDOS",48,0)
+ I $E(PSSUPRA)="N",($G(PSSUPRAF)=2) D
+"RTN","PSSDOS",49,0)
+ .I PSSUPRA["N" W !!,"This drug has been set within the National Drug File to "_$S(PSSUPRA="NN":"not ",1:"")_"auto create "_$S(PSSUPRA="NO":"only one ",PSSUPRA="NB":"two ",1:""),!,"possible dosage"_$S(PSSUPRA="NO":".",1:"s.")
+"RTN","PSSDOS",50,0)
+ .S DIR("?",1)="This drug meets the criteria to have Possible Dosages, but it currently does",DIR("?",2)="not have any. If you answer 'YES', Possible Dosages will be created for this"
+"RTN","PSSDOS",51,0)
+ .S DIR("?",3)="drug, based on the match to the National Drug File."
+"RTN","PSSDOS",52,0)
+ W ! K DIR S DIR(0)="Y",DIR("A")="Do you want to "_$S(PSSUPRA="NN"&('$O(^PSDRUG(PSSIEN,"DOS1",0))):"manually enter possible",1:"edit the")_" dosages",DIR("B")="N"
+"RTN","PSSDOS",53,0)
+ I $G(PSSXYZ),'$O(^PSDRUG(PSSIEN,"DOS1",0)),$E(PSSUPRA)="N" D
+"RTN","PSSDOS",54,0)
+ .S DIR("?")=" ",DIR("?",1)="This drug meets the criteria to have Possible Dosages, but it currently does",DIR("?",2)="not have any. If you answer 'YES', Possible Dosages can be manually entered for this drug."
+"RTN","PSSDOS",55,0)
+ D ^DIR K DIR I 'Y W ! D END Q
+"RTN","PSSDOS",56,0)
+ I $G(PSSST) W !!,"Changing the strength will update all possible dosages for this Drug.",!
+"RTN","PSSDOS",57,0)
+ ;Edit Strength
+"RTN","PSSDOS",58,0)
+ I $G(PSSST) W ! K DIE S DIE="^PSDRUG(",DA=PSSIEN,DR=901 D ^DIE W ! K DIE,PSSXYZ I $P($G(^PSDRUG(PSSIEN,"DOS")),"^")="" K ^PSDRUG(PSSIEN,"DOS") K ^PSDRUG(PSSIEN,"DOS1") W !!,"Deleting Strength has deleted all Possible Dosages!",!
+"RTN","PSSDOS",59,0)
+ I '$P($G(^PSDRUG(PSSIEN,"DOS")),"^") D LPD D QUES G:'Y END G LOC
+"RTN","PSSDOS",60,0)
+ ;
+"RTN","PSSDOS",61,0)
+DOSA1 K DIC S DA(1)=PSSIEN,DIC="^PSDRUG("_PSSIEN_",""DOS1"",",DIC(0)="QEAMLZ",DIC("A")="Select DISPENSE UNITS PER DOSE: " D  D ^DIC K DIC I Y<1!($D(DTOUT))!($D(DUOUT)) G DOSLOC
+"RTN","PSSDOS",62,0)
+ .S DIC("W")="W ""  ""_$S($E($P($G(^PSDRUG(PSSIEN,""DOS1"",+Y,0)),""^"",2),1)=""."":""0"",1:"""")_$P($G(^PSDRUG(PSSIEN,""DOS1"",+Y,0)),""^"",2)_""    ""_$P($G(^PSDRUG(PSSIEN,""DOS1"",+Y,0)),""^"",3)"
+"RTN","PSSDOS",63,0)
+ S PSSDOSA=+Y
+"RTN","PSSDOS",64,0)
+ W ! K DIE S DA(1)=PSSIEN,DA=PSSDOSA,DR=".01;2",DIE="^PSDRUG("_PSSIEN_",""DOS1""," D ^DIE K DIE D:'$D(Y)&('$D(DTOUT)) BCMA^PSSDOSER G:$D(Y)!($D(DTOUT)) DOSLOC
+"RTN","PSSDOS",65,0)
+ W ! G DOSA1
+"RTN","PSSDOS",66,0)
+DOSLOC ;
+"RTN","PSSDOS",67,0)
+ S (PSSPCI,PSSPCO)=0
+"RTN","PSSDOS",68,0)
+ F PSSPCZ=0:0 S PSSPCZ=$O(^PSDRUG(PSSIEN,"DOS1",PSSPCZ)) Q:'PSSPCZ  D
+"RTN","PSSDOS",69,0)
+ .I $P($G(^PSDRUG(PSSIEN,"DOS1",PSSPCZ,0)),"^",2)'="" S:$P($G(^(0)),"^",3)["I" PSSPCI=1 S:$P($G(^(0)),"^",3)["O" PSSPCO=1
+"RTN","PSSDOS",70,0)
+ I PSSPCI,PSSPCO W !! K DIR S DIR(0)="Y",DIR("B")="N",DIR("A")="Enter/Edit Local Possible Dosages" D  D ^DIR K DIR I Y'=1 K PSSPCI,PSSPCO,PSSPCZ W ! D END Q
+"RTN","PSSDOS",71,0)
+ .S DIR("?")=" ",DIR("?",1)="Possible Dosages exist for both Outpatient Pharmacy and Inpatient Medications.",DIR("?",2)="Local Possible Dosages can be added, but will not be displayed for selection"
+"RTN","PSSDOS",72,0)
+ .S DIR("?",3)="as long as there are Possible Dosages.",DIR("?",4)=" ",DIR("?",5)="Enter 'Y' to Enter/Edit Local Possible Dosages."
+"RTN","PSSDOS",73,0)
+ K PSSPCI,PSSPCO,PSSPCZ
+"RTN","PSSDOS",74,0)
+ ;
+"RTN","PSSDOS",75,0)
+LOCX ;
+"RTN","PSSDOS",76,0)
+ I $G(PSSSKIPP) G LOC
+"RTN","PSSDOS",77,0)
+ I $G(PSSIZZ),$G(PSSOZZ) G LOC
+"RTN","PSSDOS",78,0)
+ K PSSONLYO,PSSONLYI
+"RTN","PSSDOS",79,0)
+ I $G(PSSIZZ),'$G(PSSOZZ) S PSSONLYO=1
+"RTN","PSSDOS",80,0)
+ I $G(PSSOZZ),'$G(PSSIZZ) S PSSONLYI=1
+"RTN","PSSDOS",81,0)
+ S PSSTALK=1,PSSDIEN=PSSIEN D LOC^PSSUTIL K PSSONLYI,PSSONLYO,PSSTALK,PSSDIEN
+"RTN","PSSDOS",82,0)
+LOC ; Edit local dose
+"RTN","PSSDOS",83,0)
+ D STUN,NATND,PR
+"RTN","PSSDOS",84,0)
+ W ! K DIC S DA(1)=PSSIEN,DIC="^PSDRUG("_PSSIEN_",""DOS2"",",DIC(0)="QEAMLZ" D  D ^DIC K DIC I Y<1!($D(DTOUT))!($D(DUOUT)) D END Q
+"RTN","PSSDOS",85,0)
+ .S DIC("W")="W ""  ""_$P($G(^PSDRUG(PSSIEN,""DOS2"",+Y,0)),""^"",2)"
+"RTN","PSSDOS",86,0)
+ S PSSDOSA=+Y,PSSOTH=$S($P($G(^PS(59.7,1,40.2)),"^"):1,1:0)
+"RTN","PSSDOS",87,0)
+ W ! K DIE S DA(1)=PSSIEN,DA=PSSDOSA,DR=".01;S:'$G(PSSOTH) Y=""@1"";3;@1;1",DIE="^PSDRUG("_PSSIEN_",""DOS2"","
+"RTN","PSSDOS",88,0)
+ D ^DIE K DIE,PSSOTH G:$P($G(^PSDRUG(PSSIEN,"DOS2",PSSDOSA,0)),"^")="" LOC D:'$D(Y)&('$D(DTOUT)) BCMA1^PSSDOSER I $D(Y)!($D(DTOUT)) D END Q
+"RTN","PSSDOS",89,0)
+ I $$TEST^PSSDSPOP(PSSIEN) K DA,DIE,DR,DIDEL S DA(1)=PSSIEN,DA=PSSDOSA,DR="4;5",DIE="^PSDRUG("_PSSIEN_",""DOS2""," D ^DIE K DIE,DA,DR,DIDEL I $D(Y)!($D(DTOUT)) D END Q
+"RTN","PSSDOS",90,0)
+ G LOC
+"RTN","PSSDOS",91,0)
+LPD ; Display local dose before edit
+"RTN","PSSDOS",92,0)
+ S PSSWDXF=0 D:($Y+5)>IOSL QASK Q:PSSWDXF  W !!,"LOCAL POSSIBLE DOSAGES:" D
+"RTN","PSSDOS",93,0)
+ .F PDS=0:0 S PDS=$O(^PSDRUG(PSSIEN,"DOS2",PDS)) Q:'PDS!(PSSWDXF)  D
+"RTN","PSSDOS",94,0)
+ ..D:($Y+5)>IOSL QASK Q:PSSWDXF  S LPDOS=$G(^PSDRUG(PSSIEN,"DOS2",PDS,0)) W !,"  " D
+"RTN","PSSDOS",95,0)
+ ...I $L($P(LPDOS,U))'>27 W $P(LPDOS,U),?55,"PACKAGE: ",$P(LPDOS,U,2) D WXFPT(LPDOS) Q
+"RTN","PSSDOS",96,0)
+ ...W !,?10,$P(LPDOS,U),!,?55,"PACKAGE: ",$P(LPDOS,U,2) D WXFPT(LPDOS)
+"RTN","PSSDOS",97,0)
+ Q
+"RTN","PSSDOS",98,0)
+CHECK ;
+"RTN","PSSDOS",99,0)
+ K PSSUPRA,PSSNAT,PSSNATND,PSSNATDF,PSSNATUN,PSSNATST,PSSIZZ,PSSOZZ
+"RTN","PSSDOS",100,0)
+ D NATND
+"RTN","PSSDOS",101,0)
+ ;I $G(PSSST) S PSSXYZ=1 Q
+"RTN","PSSDOS",102,0)
+ Q:'PSSNATDF!('PSSNATUN)!($G(PSSNATST)="")
+"RTN","PSSDOS",103,0)
+ Q:'$D(^PS(50.606,PSSNATDF,0))!('$D(^PS(50.607,PSSNATUN,0)))
+"RTN","PSSDOS",104,0)
+ I PSSNATST'?.N&(PSSNATST'?.N1".".N) Q
+"RTN","PSSDOS",105,0)
+ I $D(^PS(50.606,"ACONI",PSSNATDF,PSSNATUN)),$O(^PS(50.606,"ADUPI",PSSNATDF,0)) S (PSSXYZ,PSSIZZ)=1
+"RTN","PSSDOS",106,0)
+ I $D(^PS(50.606,"ACONO",PSSNATDF,PSSNATUN)),$O(^PS(50.606,"ADUPO",PSSNATDF,0)) S (PSSXYZ,PSSOZZ)=1
+"RTN","PSSDOS",107,0)
+ Q
+"RTN","PSSDOS",108,0)
+END K PSSNFID,PSSNAT,PSSNAT1,PSSNATND,PSSNATDF,PSSNATUN,PSSNOCON,PSSST,PSSUN,PSSIEN,PSSNAME,PSSIND,PSSDOSA,PSSXYZ,PSSNATST
+"RTN","PSSDOS",109,0)
+ Q
+"RTN","PSSDOS",110,0)
+ULK ;No need to unlock, called from Drug enter/edit
+"RTN","PSSDOS",111,0)
+ Q:'$G(PSSIEN)
+"RTN","PSSDOS",112,0)
+ L -^PSDRUG(PSSIEN)
+"RTN","PSSDOS",113,0)
+ Q
+"RTN","PSSDOS",114,0)
+QUES ;
+"RTN","PSSDOS",115,0)
+ W ! K DIR S DIR(0)="Y",DIR("A")="Do you want to edit Local Possible Dosages",DIR("B")="N" D ^DIR K DIR Q
+"RTN","PSSDOS",116,0)
+ Q
+"RTN","PSSDOS",117,0)
+STUN S PSSST=$P($G(^PSDRUG(PSSIEN,"DOS")),"^"),PSSUN=$P($G(^("DOS")),"^",2)
+"RTN","PSSDOS",118,0)
+ Q
+"RTN","PSSDOS",119,0)
+NATND S PSSNAT=+$P($G(^PSDRUG(PSSIEN,"ND")),"^",3),PSSNAT1=$P($G(^("ND")),"^")
+"RTN","PSSDOS",120,0)
+ S PSSNATND=$$DFSU^PSNAPIS(PSSNAT1,PSSNAT) S PSSNATDF=$P(PSSNATND,"^"),PSSNATST=$P(PSSNATND,"^",4),PSSNATUN=$P(PSSNATND,"^",5)
+"RTN","PSSDOS",121,0)
+ S PSSUPRA=$$SUPRA^PSSUTIL3(PSSNAT)
+"RTN","PSSDOS",122,0)
+ Q
+"RTN","PSSDOS",123,0)
+PR I PSSST'=""!(PSSNATST'=""),(PSSUN!(PSSNATUN)) D
+"RTN","PSSDOS",124,0)
+ .W !!,"Strength: "_$S($E($S(PSSST'="":PSSST,1:PSSNATST),1)=".":"0",1:"")_$S(PSSST'="":PSSST,1:PSSNATST)
+"RTN","PSSDOS",125,0)
+ .W ?30,"Unit: "_$P($G(^PS(50.607,+$S(PSSUN:PSSUN,1:PSSNATUN),0)),"^")
+"RTN","PSSDOS",126,0)
+ E  W !!,"Strength: ",?30,"Unit: "
+"RTN","PSSDOS",127,0)
+ Q
+"RTN","PSSDOS",128,0)
+XNW ;
+"RTN","PSSDOS",129,0)
+ I $P(^PSDRUG(PSSIEN,"ND"),"^",2)]"",('$D(^PSDRUG(PSSIEN,"DOS"))) S ^PSDRUG(PSSIEN,"DOS")=PSSNATST_"^"_PSSNATUN
+"RTN","PSSDOS",130,0)
+XNWS ;
+"RTN","PSSDOS",131,0)
+ N PSSDESTP W !!,"Strength from National Drug File match => "_$S($E($G(PSSNATST),1)=".":"0",1:"")_$G(PSSNATST)_"    "_$P($G(^PS(50.607,+$G(PSSUN),0)),"^")
+"RTN","PSSDOS",132,0)
+ W !,"Strength currently in the Drug File    => "_$S($E($P($G(^PSDRUG(PSSIEN,"DOS")),"^"),1)=".":"0",1:"")_$P($G(^PSDRUG(PSSIEN,"DOS")),"^")_"    "_$S($P($G(^PS(50.607,+$G(PSSUN),0)),"^")'["/":$P($G(^(0)),"^"),1:"") S PSSDESTP=1 D MS^PSSDSPOP
+"RTN","PSSDOS",133,0)
+ K PSSDESTP
+"RTN","PSSDOS",134,0)
+ Q
+"RTN","PSSDOS",135,0)
+ ;
+"RTN","PSSDOS",136,0)
+ ;
+"RTN","PSSDOS",137,0)
+QASK ;Ask to continue
+"RTN","PSSDOS",138,0)
+ N DIR,X,Y,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","PSSDOS",139,0)
+ K DIR W ! S DIR(0)="E",DIR("A")="Press Return to continue,'^' to exit"  D ^DIR K DIR I 'Y S PSSWDXF=1
+"RTN","PSSDOS",140,0)
+ W @IOF
+"RTN","PSSDOS",141,0)
+ Q
+"RTN","PSSDOS",142,0)
+ ;
+"RTN","PSSDOS",143,0)
+ ;
+"RTN","PSSDOS",144,0)
+WXFPT(PSSWDXVL) ;Add print fields with PSS*1*147
+"RTN","PSSDOS",145,0)
+ N PSSWDX1,PSSWDX2,PSSWDX3,PSSWDX4,PSSWDX5,PSSWDX6
+"RTN","PSSDOS",146,0)
+ S PSSWDX4=""
+"RTN","PSSDOS",147,0)
+ S PSSWDX1=$P(PSSWDXVL,"^",3),PSSWDX2=$P(PSSWDXVL,"^",5),PSSWDX3=$P(PSSWDXVL,"^",6)
+"RTN","PSSDOS",148,0)
+ I PSSWDX2 S PSSWDX4=$P($G(^PS(51.24,+PSSWDX2,0)),"^")
+"RTN","PSSDOS",149,0)
+ S PSSWDX5=$S($E(PSSWDX3)=".":"0",1:"")_PSSWDX3
+"RTN","PSSDOS",150,0)
+ S PSSWDX6=$L(PSSWDX5)
+"RTN","PSSDOS",151,0)
+ D:($Y+5)>IOSL QASK Q:PSSWDXF  W !?4,"BCMA UNITS PER DOSE: "_PSSWDX1
+"RTN","PSSDOS",152,0)
+ I PSSWDX6<12 D:($Y+5)>IOSL QASK Q:PSSWDXF  W !?4,"       NUMERIC DOSE: "_PSSWDX5,?38,"DOSE UNIT: "_PSSWDX4 Q
+"RTN","PSSDOS",153,0)
+ D:($Y+5)>IOSL QASK Q:PSSWDXF  W !,?4,"       NUMERIC DOSE: "_PSSWDX5
+"RTN","PSSDOS",154,0)
+ D:($Y+5)>IOSL QASK Q:PSSWDXF  W !,?38,"DOSE UNIT: "_PSSWDX4
+"RTN","PSSDOS",155,0)
+ Q
+"RTN","PSSDOSCR")
+1^6^^B51826396
+"RTN","PSSDOSCX")
+1^7^^B30691990
+"RTN","PSSDOSER")
+0^8^B77903107^B56720883
+"RTN","PSSDOSER",1,0)
+PSSDOSER ;BIR/RTR-Dose edit option ;03/10/00
+"RTN","PSSDOSER",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**34,38,50,57,47,68,82,125,129,144,155**;9/30/97;Build 36
+"RTN","PSSDOSER",3,0)
+ ;Reference to ^PS(50.607 supported by DBIA #2221
+"RTN","PSSDOSER",4,0)
+ ;Reference to ^PS(59 supported by DBIA #1976
+"RTN","PSSDOSER",5,0)
+ ;
+"RTN","PSSDOSER",6,0)
+ ;have an entry point for NDF to call when rematching
+"RTN","PSSDOSER",7,0)
+DOS ;Edit dosages
+"RTN","PSSDOSER",8,0)
+ D CHECK^PSSUTLPR I $G(PSSNOCON) K PSSNOCON D END Q
+"RTN","PSSDOSER",9,0)
+ D END
+"RTN","PSSDOSER",10,0)
+ W !! S DIC(0)="QEAMZ",DIC("A")="Select Drug: ",DIC="^PSDRUG(" D ^DIC K DIC I Y<1!($D(DTOUT))!($D(DUOUT)) D END W ! Q
+"RTN","PSSDOSER",11,0)
+ S PSSIEN=+Y,PSSNAME=$P($G(^PSDRUG(PSSIEN,0)),"^"),PSSIND=$P($G(^("I")),"^"),PSSNFID=$P($G(^(0)),"^",9)
+"RTN","PSSDOSER",12,0)
+ S PSSPKG=$P($G(^PSDRUG(PSSIEN,2)),"^",3)
+"RTN","PSSDOSER",13,0)
+ W !!,"This entry is marked for the following PHARMACY packages:"
+"RTN","PSSDOSER",14,0)
+ W:PSSPKG["O" !,"Outpatient" W:PSSPKG["U" !,"Unit Dose"
+"RTN","PSSDOSER",15,0)
+ W:PSSPKG["I" !,"IV" W:PSSPKG["W" !,"Ward Stock"
+"RTN","PSSDOSER",16,0)
+ W:PSSPKG["N" !,"Controlled Substances" W:PSSPKG["X" !,"Non-VA Med"
+"RTN","PSSDOSER",17,0)
+ I PSSPKG'["O",PSSPKG'["U",PSSPKG'["I",PSSPKG'["W",PSSPKG'["N",PSSPKG'["X" W !," (none)"
+"RTN","PSSDOSER",18,0)
+ K PSSPKG L +^PSDRUG(PSSIEN):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I '$T W !!,$C(7),"Another person is editing this drug.",! K DIR S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR G DOS
+"RTN","PSSDOSER",19,0)
+ W !!,PSSNAME_$S($G(PSSNFID):"    *N/F*",1:"") W ?52,"Inactive Date: "_$S($G(PSSIND):$E(PSSIND,4,5)_"/"_$E(PSSIND,6,7)_"/"_$E(PSSIND,2,3),1:"")
+"RTN","PSSDOSER",20,0)
+ S (PSSIZZ,PSSOZZ,PSSSKIPP)=0
+"RTN","PSSDOSER",21,0)
+RES ;
+"RTN","PSSDOSER",22,0)
+ D STUN
+"RTN","PSSDOSER",23,0)
+ I PSSST="",$O(^PSDRUG(PSSIEN,"DOS1",0)) K ^PSDRUG(PSSIEN,"DOS") K ^PSDRUG(PSSIEN,"DOS1")
+"RTN","PSSDOSER",24,0)
+ S PSSXYZ=0 D CHECK
+"RTN","PSSDOSER",25,0)
+ I PSSXYZ,PSSUPRA="NN" D MPD K:$D(PSSZ) PSSZ Q
+"RTN","PSSDOSER",26,0)
+ D:$G(PSSST) XNWS I $G(PSSST),$O(^PSDRUG(PSSIEN,"DOS1",0)) D STR G SKIP
+"RTN","PSSDOSER",27,0)
+ I PSSXYZ,'$O(^PSDRUG(PSSIEN,"DOS1",0)) D  D ^DIR K DIR I Y=1 S PSSSKIPP=1 D EN2^PSSUTIL(PSSIEN,1) G RES
+"RTN","PSSDOSER",28,0)
+ .K DIR S DIR(0)="Y",DIR("B")="N",DIR("A")="Create Possible Dosages for this drug",DIR("?")=" "
+"RTN","PSSDOSER",29,0)
+ .S DIR("?",1)="This drug meets the criteria to have Possible Dosages, but it currently does",DIR("?",2)="not have any. If you answer 'YES', Possible Dosages will be created for this"
+"RTN","PSSDOSER",30,0)
+ .S DIR("?",3)="drug, based on the match to the National Drug File."
+"RTN","PSSDOSER",31,0)
+ .W !!!,"This drug can have Possible Dosages, but currently does not have any.",!
+"RTN","PSSDOSER",32,0)
+ .I PSSUPRA["N" W !,"This drug has been set within the National Drug File to "_$S(PSSUPRA="NN":"not ",1:"")_"auto create "_$S(PSSUPRA="NO":"only one ",PSSUPRA="NB":"two ",1:""),!,"possible dosage"_$S(PSSUPRA="NO":".",1:"s."),!
+"RTN","PSSDOSER",33,0)
+ .W !
+"RTN","PSSDOSER",34,0)
+SKIP ;
+"RTN","PSSDOSER",35,0)
+ K PSSXYZ,PSSZ
+"RTN","PSSDOSER",36,0)
+ I '$O(^PSDRUG(PSSIEN,"DOS1",0)) G LOCX
+"RTN","PSSDOSER",37,0)
+DOSA S PSSST=$P($G(^PSDRUG(PSSIEN,"DOS")),"^")
+"RTN","PSSDOSER",38,0)
+ W !!,"Strength => "_$S($E($G(PSSST),1)=".":"0",1:"")_$G(PSSST)_"   Unit => "_$S($P($G(^PS(50.607,+$G(PSSUN),0)),"^")'["/":$P($G(^(0)),"^"),1:"") W !
+"RTN","PSSDOSER",39,0)
+ I PSSUPRA["N",'PSSSKIPP,'$G(PSSZ) S PSSZ=1 D
+"RTN","PSSDOSER",40,0)
+ .W !,"This drug has been set within the National Drug File to "_$S(PSSUPRA="NN":"not ",1:"")_"auto create "_$S(PSSUPRA="NO":"only one ",PSSUPRA="NB":"two ",1:""),!,"possible dosage"_$S(PSSUPRA="NO":".",1:"s."),!
+"RTN","PSSDOSER",41,0)
+ K DIC S DA(1)=PSSIEN,DIC="^PSDRUG("_PSSIEN_",""DOS1"",",DIC(0)="QEAMLZ",DLAYGO=50,DIC("A")="Select DISPENSE UNITS PER DOSE: " D  D ^DIC K DIC,DLAYGO I Y<1!($D(DTOUT))!($D(DUOUT)) G DOSLOC
+"RTN","PSSDOSER",42,0)
+ .S DIC("W")="W ""  ""_$S($E($P($G(^PSDRUG(PSSIEN,""DOS1"",+Y,0)),""^"",2),1)=""."":""0"",1:"""")_$P($G(^PSDRUG(PSSIEN,""DOS1"",+Y,0)),""^"",2)_""    ""_$P($G(^PSDRUG(PSSIEN,""DOS1"",+Y,0)),""^"",3)"
+"RTN","PSSDOSER",43,0)
+ S PSSDOSA=+Y,PSSOTH=$S($P($G(^PS(59.7,1,40.2)),"^"):1,1:0)
+"RTN","PSSDOSER",44,0)
+ W ! K DIE S DA(1)=PSSIEN,DA=PSSDOSA,DR=".01;S:'$G(PSSOTH) Y=""@1"";@1;2",DIE="^PSDRUG("_PSSIEN_",""DOS1""," D ^DIE K DIE D:'$D(Y)&('$D(DTOUT)) BCMA G:$D(Y)!($D(DTOUT)) DOSLOC  ;;<*144 - RJS
+"RTN","PSSDOSER",45,0)
+ G DOSA
+"RTN","PSSDOSER",46,0)
+DOSLOC ;
+"RTN","PSSDOSER",47,0)
+ S (PSSPCI,PSSPCO)=0 K:$D(PSSZ) PSSZ
+"RTN","PSSDOSER",48,0)
+ F PSSPCZ=0:0 S PSSPCZ=$O(^PSDRUG(PSSIEN,"DOS1",PSSPCZ)) Q:'PSSPCZ  D
+"RTN","PSSDOSER",49,0)
+ .I $P($G(^PSDRUG(PSSIEN,"DOS1",PSSPCZ,0)),"^",2)'="" S:$P($G(^(0)),"^",3)["I" PSSPCI=1 S:$P($G(^(0)),"^",3)["O" PSSPCO=1
+"RTN","PSSDOSER",50,0)
+ I PSSPCI,PSSPCO W !! K DIR S DIR(0)="Y",DIR("B")="N",DIR("A")="Enter/Edit Local Possible Dosages" D  D ^DIR K DIR I Y'=1 K PSSPCI,PSSPCO,PSSPCZ W ! D ULK G DOS
+"RTN","PSSDOSER",51,0)
+ .S DIR("?")=" ",DIR("?",1)="Possible Dosages exist for both Outpatient Pharmacy and Inpatient Medications.",DIR("?",2)="Local Possible Dosages can be added, but will not be displayed for selection"
+"RTN","PSSDOSER",52,0)
+ .S DIR("?",3)="as long as there are Possible Dosages.",DIR("?",4)=" ",DIR("?",5)="Enter 'Y' to Enter/Edit Local Possible Dosages."
+"RTN","PSSDOSER",53,0)
+ K PSSPCI,PSSPCO,PSSPCZ
+"RTN","PSSDOSER",54,0)
+LOCX ;
+"RTN","PSSDOSER",55,0)
+ I $G(PSSSKIPP) G LOC
+"RTN","PSSDOSER",56,0)
+ I $G(PSSIZZ),$G(PSSOZZ) G LOC
+"RTN","PSSDOSER",57,0)
+ K PSSONLYI,PSSONLYO
+"RTN","PSSDOSER",58,0)
+ I $G(PSSIZZ),'$G(PSSOZZ) S PSSONLYO=1
+"RTN","PSSDOSER",59,0)
+ I $G(PSSOZZ),'$G(PSSIZZ) S PSSONLYI=1
+"RTN","PSSDOSER",60,0)
+ S PSSTALK=1,PSSDIEN=PSSIEN D LOC^PSSUTIL K PSSONLYO,PSSONLYI,PSSTALK,PSSDIEN
+"RTN","PSSDOSER",61,0)
+ ;MAKE SURE THOSE ARE THE VARIABLES YOU NEED TO SET
+"RTN","PSSDOSER",62,0)
+LOC ; Edit local dose
+"RTN","PSSDOSER",63,0)
+ D STUN,NATND,PR
+"RTN","PSSDOSER",64,0)
+ W ! K DIC S DA(1)=PSSIEN,DIC="^PSDRUG("_PSSIEN_",""DOS2"",",DLAYGO=50,DIC(0)="QEAMLZ" D  D ^DIC K DIC,DLAYGO I Y<1!($D(DTOUT))!($D(DUOUT)) D ULK G DOS
+"RTN","PSSDOSER",65,0)
+ .S DIC("W")="W ""  ""_$P($G(^PSDRUG(PSSIEN,""DOS2"",+Y,0)),""^"",2)"
+"RTN","PSSDOSER",66,0)
+ S PSSDOSA=+Y,PSSOTH=$S($P($G(^PS(59.7,1,40.2)),"^"):1,1:0)
+"RTN","PSSDOSER",67,0)
+ W ! K DIE S DA(1)=PSSIEN,DA=PSSDOSA,DR=".01;S:'$G(PSSOTH) Y=""@1"";3;@1;1",DIE="^PSDRUG("_PSSIEN_",""DOS2""," D ^DIE K DIE,PSSOTH
+"RTN","PSSDOSER",68,0)
+ I $P($G(^PSDRUG(PSSIEN,"DOS2",PSSDOSA,0)),"^")="" G LOC
+"RTN","PSSDOSER",69,0)
+ D:'$D(Y)&('$D(DTOUT)) BCMA1 I $D(Y)!($D(DTOUT)) D ULK G DOS
+"RTN","PSSDOSER",70,0)
+ I '$D(Y)&('$D(DTOUT)),$$TEST^PSSDSPOP(PSSIEN) K DA,DIE,DR,DIDEL S DA(1)=PSSIEN,DA=PSSDOSA,DR="4;5",DIE="^PSDRUG("_PSSIEN_",""DOS2""," D ^DIE K DIE,DA,DR,DIDEL I $D(Y)!($D(DTOUT)) D ULK G DOS
+"RTN","PSSDOSER",71,0)
+ G LOC
+"RTN","PSSDOSER",72,0)
+ Q
+"RTN","PSSDOSER",73,0)
+STR ;Edit strength
+"RTN","PSSDOSER",74,0)
+ N PSSIENS,PSS11
+"RTN","PSSDOSER",75,0)
+ ;W !!,"Strength from National Drug File match => "_$S($E($G(PSSNATST),1)=".":"0",1:"")_$G(PSSNATST)_"    "_$P($G(^PS(50.607,+$G(PSSUN),0)),"^")
+"RTN","PSSDOSER",76,0)
+ ;W !,"Strength currently in the Drug File    => "_$S($E($P($G(^PSDRUG(PSSIEN,"DOS")),"^"),1)=".":"0",1:"")_$P($G(^PSDRUG(PSSIEN,"DOS")),"^")_"    "_$S($P($G(^PS(50.607,+$G(PSSUN),0)),"^")'["/":$P($G(^(0)),"^"),1:"") D MS^PSSDSPOP
+"RTN","PSSDOSER",77,0)
+ W ! K DIR S DIR(0)="Y",DIR("?")="Changing the strength will update all possible dosages for this Drug",DIR("B")="N",DIR("A")="Edit Strength" D ^DIR K DIR I 'Y W ! Q
+"RTN","PSSDOSER",78,0)
+ W ! K DIE S DIE="^PSDRUG(",DA=PSSIEN,DR=901 D ^DIE K DIE W !
+"RTN","PSSDOSER",79,0)
+ I $P($G(^PSDRUG(PSSIEN,"DOS")),"^")="" K ^PSDRUG(PSSIEN,"DOS") K ^PSDRUG(PSSIEN,"DOS1") W !!,"Deleting Strength has deleted all Possible Dosages!",!
+"RTN","PSSDOSER",80,0)
+ Q
+"RTN","PSSDOSER",81,0)
+CHECK ;
+"RTN","PSSDOSER",82,0)
+ K PSSNAT,PSSNATND,PSSNATDF,PSSNATUN,PSSNATST,PSSIZZ,PSSOZZ
+"RTN","PSSDOSER",83,0)
+ S PSSNAT=+$P($G(^PSDRUG(PSSIEN,"ND")),"^",3),PSSNAT1=$P($G(^("ND")),"^") I 'PSSNAT!('PSSNAT1) Q
+"RTN","PSSDOSER",84,0)
+ S PSSNATND=$$DFSU^PSNAPIS(PSSNAT1,PSSNAT) S PSSNATDF=$P(PSSNATND,"^"),PSSNATST=$P(PSSNATND,"^",4),PSSNATUN=$P(PSSNATND,"^",5)
+"RTN","PSSDOSER",85,0)
+ S PSSUPRA=$$SUPRA^PSSUTIL3(PSSNAT)
+"RTN","PSSDOSER",86,0)
+ ;I $G(PSSST) S PSSXYZ=1 Q
+"RTN","PSSDOSER",87,0)
+ Q:'PSSNATDF!('PSSNATUN)!($G(PSSNATST)="")
+"RTN","PSSDOSER",88,0)
+ Q:'$D(^PS(50.606,PSSNATDF,0))!('$D(^PS(50.607,PSSNATUN,0)))
+"RTN","PSSDOSER",89,0)
+ I PSSNATST'?.N&(PSSNATST'?.N1".".N) Q
+"RTN","PSSDOSER",90,0)
+ I $D(^PS(50.606,"ACONI",PSSNATDF,PSSNATUN)),$O(^PS(50.606,"ADUPI",PSSNATDF,0)) S (PSSXYZ,PSSIZZ)=1
+"RTN","PSSDOSER",91,0)
+ I $D(^PS(50.606,"ACONO",PSSNATDF,PSSNATUN)),$O(^PS(50.606,"ADUPO",PSSNATDF,0)) S (PSSXYZ,PSSOZZ)=1
+"RTN","PSSDOSER",92,0)
+ Q
+"RTN","PSSDOSER",93,0)
+END K PSSIZZ,PSSOZZ,PSSSKIPP,PSSNFID,PSSNAT,PSSNAT1,PSSNATND,PSSNATDF,PSSNATUN,PSSNOCON,PSSST,PSSUN,PSSIEN,PSSNAME,PSSIND,PSSDOSA,PSSXYZ,PSSNATST
+"RTN","PSSDOSER",94,0)
+ Q
+"RTN","PSSDOSER",95,0)
+ULK ;
+"RTN","PSSDOSER",96,0)
+ Q:'$G(PSSIEN)
+"RTN","PSSDOSER",97,0)
+ N XX,DNSNAM,DNSPORT,DVER,DMFU S XX=""
+"RTN","PSSDOSER",98,0)
+ I '$G(PSSHUIDG) D DRG^PSSHUIDG(PSSIEN) D
+"RTN","PSSDOSER",99,0)
+ .F XX=0:0 S XX=$O(^PS(59,XX)) Q:'XX  D
+"RTN","PSSDOSER",100,0)
+ ..S DVER=$$GET1^DIQ(59,XX_",",105,"I"),DMFU=$$GET1^DIQ(59,XX_",",105.2)
+"RTN","PSSDOSER",101,0)
+ ..I DVER="2.4" S DNSNAM=$$GET1^DIQ(59,XX_",",2006),DNSPORT=$$GET1^DIQ(59,XX_",",2007) I DNSNAM'=""&(DMFU="YES") D DRG^PSSDGUPD(PSSIEN,"",DNSNAM,DNSPORT)
+"RTN","PSSDOSER",102,0)
+ L -^PSDRUG(PSSIEN)
+"RTN","PSSDOSER",103,0)
+ Q
+"RTN","PSSDOSER",104,0)
+BCMA ;
+"RTN","PSSDOSER",105,0)
+ I $P($G(^PSDRUG(PSSIEN,2)),"^",3)'["I",$P($G(^(2)),"^",3)'["U" Q
+"RTN","PSSDOSER",106,0)
+ I $P($G(^PSDRUG(PSSIEN,"DOS1",PSSDOSA,0)),"^",3)'["I" Q
+"RTN","PSSDOSER",107,0)
+ K DIE S DA(1)=PSSIEN,DA=PSSDOSA,DR=3,DIE="^PSDRUG("_PSSIEN_",""DOS1""," D ^DIE K DIE
+"RTN","PSSDOSER",108,0)
+ Q
+"RTN","PSSDOSER",109,0)
+BCMA1 ;
+"RTN","PSSDOSER",110,0)
+ I $P($G(^PSDRUG(PSSIEN,2)),"^",3)'["I",$P($G(^(2)),"^",3)'["U" Q
+"RTN","PSSDOSER",111,0)
+ I $P($G(^PSDRUG(PSSIEN,"DOS2",PSSDOSA,0)),"^",2)'["I" Q
+"RTN","PSSDOSER",112,0)
+ K DIE S DA(1)=PSSIEN,DA=PSSDOSA,DR=2,DIE="^PSDRUG("_PSSIEN_",""DOS2""," D ^DIE K DIE
+"RTN","PSSDOSER",113,0)
+ Q
+"RTN","PSSDOSER",114,0)
+STUN S PSSST=$P($G(^PSDRUG(PSSIEN,"DOS")),"^"),PSSUN=$P($G(^("DOS")),"^",2)
+"RTN","PSSDOSER",115,0)
+ Q
+"RTN","PSSDOSER",116,0)
+NATND S PSSNAT=+$P($G(^PSDRUG(PSSIEN,"ND")),"^",3),PSSNAT1=$P($G(^("ND")),"^")
+"RTN","PSSDOSER",117,0)
+ S PSSNATND=$$DFSU^PSNAPIS(PSSNAT1,PSSNAT) S PSSNATDF=$P(PSSNATND,"^"),PSSNATST=$P(PSSNATND,"^",4),PSSNATUN=$P(PSSNATND,"^",5)
+"RTN","PSSDOSER",118,0)
+ Q
+"RTN","PSSDOSER",119,0)
+PR I PSSST'=""!(PSSNATST'=""),(PSSUN!(PSSNATUN)) D
+"RTN","PSSDOSER",120,0)
+ .W !!,"Strength: "_$S($E($S(PSSST'="":PSSST,1:PSSNATST),1)=".":"0",1:"")_$S(PSSST'="":PSSST,1:PSSNATST)
+"RTN","PSSDOSER",121,0)
+ .W ?30,"Unit: "_$P($G(^PS(50.607,+$S(PSSUN:PSSUN,1:PSSNATUN),0)),"^")
+"RTN","PSSDOSER",122,0)
+ E  W !!,"Strength: ",?30,"Unit: "
+"RTN","PSSDOSER",123,0)
+ Q
+"RTN","PSSDOSER",124,0)
+ ;
+"RTN","PSSDOSER",125,0)
+ ;
+"RTN","PSSDOSER",126,0)
+XNWS ;
+"RTN","PSSDOSER",127,0)
+ N PSSDESTP S PSSDESTP=1
+"RTN","PSSDOSER",128,0)
+ W !!,"Strength from National Drug File match => "_$S($E($G(PSSNATST),1)=".":"0",1:"")_$G(PSSNATST)_"    "_$P($G(^PS(50.607,+$G(PSSUN),0)),"^")
+"RTN","PSSDOSER",129,0)
+ W !,"Strength currently in the Drug File    => "_$S($E($P($G(^PSDRUG(PSSIEN,"DOS")),"^"),1)=".":"0",1:"")_$P($G(^PSDRUG(PSSIEN,"DOS")),"^")_"    "_$S($P($G(^PS(50.607,+$G(PSSUN),0)),"^")'["/":$P($G(^(0)),"^"),1:"") D MS^PSSDSPOP
+"RTN","PSSDOSER",130,0)
+ K PSSDESTP
+"RTN","PSSDOSER",131,0)
+ Q
+"RTN","PSSDOSER",132,0)
+MPD ; manually enter poosible dosage
+"RTN","PSSDOSER",133,0)
+ I $P($G(^PSDRUG(PSSIEN,"DOS")),"^")="" S:$P(^PSDRUG(PSSIEN,"ND"),"^",2)]"" ^PSDRUG(PSSIEN,"DOS")=PSSNATST_"^"_PSSNATUN
+"RTN","PSSDOSER",134,0)
+ I PSSXYZ,'$O(^PSDRUG(PSSIEN,"DOS1",0)) D  D ^DIR K DIR I 'Y W ! K PSSXYZ K:$D(PSSZ) PSSZ I '$O(^PSDRUG(PSSIEN,"DOS1",0)) G LOCX Q
+"RTN","PSSDOSER",135,0)
+ .K DIR S DIR(0)="Y",DIR("B")="N",DIR("A")="Do you want to manually enter possible dosages",DIR("?")=" "
+"RTN","PSSDOSER",136,0)
+ .S DIR("?",1)="This drug meets the criteria to have Possible Dosages, but it currently does",DIR("?",2)="not have any. If you answer 'YES', Possible Dosages can be manually entered for this drug."
+"RTN","PSSDOSER",137,0)
+ .W !!!,"This drug can have Possible Dosages, but currently does not have any.",!
+"RTN","PSSDOSER",138,0)
+ .S PSSZ=1 W !,"This drug has been set within the National Drug File to "_$S(PSSUPRA="NN":"not ",1:"")_"auto create "_$S(PSSUPRA="NO":"only one ",PSSUPRA="NB":"two ",1:""),!,"possible dosage"_$S(PSSUPRA="NO":".",1:"s."),!
+"RTN","PSSDOSER",139,0)
+ D XNWS,STR,DOSA
+"RTN","PSSDOSER",140,0)
+ Q
+"RTN","PSSUTIL")
+0^1^B98434598^B91400007
+"RTN","PSSUTIL",1,0)
+PSSUTIL ;BIR/RTR-utility routine for NDF changes ;04/04/00
+"RTN","PSSUTIL",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**34,38,147,155**;9/30/97;Build 36
+"RTN","PSSUTIL",3,0)
+ ;
+"RTN","PSSUTIL",4,0)
+ ;Reference to PS(50.607 supported by DBIA 2221
+"RTN","PSSUTIL",5,0)
+EN(PSSDIEN) ;Receive Drug entries unmatched as a result of NDF changes
+"RTN","PSSUTIL",6,0)
+ ;Not called, NDF deletes the possible and local possible dosages
+"RTN","PSSUTIL",7,0)
+ Q
+"RTN","PSSUTIL",8,0)
+EN1(PSSDIEN,PSSTALK) ;Receive Drug entries that have been unmatched
+"RTN","PSSUTIL",9,0)
+ N PSSLD,PSSLOCV,PSSPWXEX
+"RTN","PSSUTIL",10,0)
+ S PSSLOCV=$O(^PS(59.7,0))
+"RTN","PSSUTIL",11,0)
+ ;I $P($G(^PS(59.7,+$G(PSSLOCV),80)),"^",3)<2 Q
+"RTN","PSSUTIL",12,0)
+ W !!,"Deleting Possible Dosages.."
+"RTN","PSSUTIL",13,0)
+ K ^PSDRUG(PSSDIEN,"DOS"),^PSDRUG(PSSDIEN,"DOS1")
+"RTN","PSSUTIL",14,0)
+ H 1 W "."
+"RTN","PSSUTIL",15,0)
+ I '$G(PSSTALK) K ^PSDRUG(PSSDIEN,"DOS2") G EQ
+"RTN","PSSUTIL",16,0)
+ I '$O(^PSDRUG(PSSDIEN,"DOS2",0)) W !
+"RTN","PSSUTIL",17,0)
+ I $O(^PSDRUG(PSSDIEN,"DOS2",0)) D DASK D  W ! K DIR S DIR(0)="Y",DIR("B")="Y",DIR("A")="Delete these Local Possible Dosages" D ^DIR K DIR I Y=1 W !!,"Deleting Local Possible Dosages.." K ^PSDRUG(PSSDIEN,"DOS2") H 1 W "." W ! G EQ
+"RTN","PSSUTIL",18,0)
+ .S PSSPWXEX=0 W !!,"LOCAL POSSIBLE DOSAGES:"
+"RTN","PSSUTIL",19,0)
+ .W ! F PSSLD=0:0 S PSSLD=$O(^PSDRUG(PSSDIEN,"DOS2",PSSLD)) Q:'PSSLD!(PSSPWXEX)  D
+"RTN","PSSUTIL",20,0)
+ ..D:($Y+5)>IOSL ZASK Q:PSSPWXEX  W !,$P($G(^PSDRUG(PSSDIEN,"DOS2",PSSLD,0)),"^")_"   "_$S($P($G(^(0)),"^",2)="":"(No package)",1:"(Package -> "_$P($G(^(0)),"^",2)_")") D DOSEADD
+"RTN","PSSUTIL",21,0)
+ I $O(^PSDRUG(PSSDIEN,"DOS2",0)) W !!,"Local Possible Dosages not deleted.",!
+"RTN","PSSUTIL",22,0)
+EQ Q
+"RTN","PSSUTIL",23,0)
+EN2(PSSDIEN,PSSTALK) ;Receive Drug entries matched to NDF
+"RTN","PSSUTIL",24,0)
+ ;Do we need entry point on an Orderable Item match (not matched to NDF)
+"RTN","PSSUTIL",25,0)
+ Q:'$D(^PSDRUG(PSSDIEN,0))
+"RTN","PSSUTIL",26,0)
+ K ^PSDRUG(PSSDIEN,"DOS"),^PSDRUG(PSSDIEN,"DOS1")
+"RTN","PSSUTIL",27,0)
+ N PSSUPRA,PSSLOC,PSSO,PSSI,PSSND,PSSND1,PSSBOTH,PSSONLYI,PSSONLYO,PSSNODE,PSSDF,PSSST,PSSUN,PSSTOT,PSSTOTX,PSSDUPD,PSSTODOS,PSSFLAG
+"RTN","PSSUTIL",28,0)
+ S PSSLOC=$O(^PS(59.7,0))
+"RTN","PSSUTIL",29,0)
+ ;I $P($G(^PS(59.7,+$G(PSSLOC),80)),"^",3)<3 Q
+"RTN","PSSUTIL",30,0)
+ S PSSBOTH=1
+"RTN","PSSUTIL",31,0)
+ S (PSSONLYI,PSSONLYO,PSSFLAG)=0,PSSUPRA=""
+"RTN","PSSUTIL",32,0)
+ S PSSND=$P($G(^PSDRUG(PSSDIEN,"ND")),"^",3),PSSND1=$P($G(^("ND")),"^") I 'PSSND!('PSSND1) G LOC
+"RTN","PSSUTIL",33,0)
+ S PSSNODE=$$DFSU^PSNAPIS(PSSND1,PSSND) S PSSDF=$P(PSSNODE,"^"),PSSST=$P(PSSNODE,"^",4),PSSUN=$P(PSSNODE,"^",5)
+"RTN","PSSUTIL",34,0)
+ S PSSUPRA=$$SUPRA^PSSUTIL3(PSSND)
+"RTN","PSSUTIL",35,0)
+ I $G(PSSTALK) W !!,"Resetting Possible Dosages..",! D  K DIR S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR
+"RTN","PSSUTIL",36,0)
+ .I PSSUPRA="NO",$G(PSSXYZ)=1 W !,"Due to National Drug File settings only ONE possible dosage was auto-created.",!,"If other dosages are needed, create POSSIBLE DOSAGES or LOCAL POSSIBLE ",!,"DOSAGES as appropriate.",!
+"RTN","PSSUTIL",37,0)
+ .I PSSUPRA="NB",$G(PSSXYZ)=1 W !,"Due to National Drug File settings TWO possible dosages were auto-created.",!
+"RTN","PSSUTIL",38,0)
+ I 'PSSDF!('PSSUN)!($G(PSSST)="") G LOC
+"RTN","PSSUTIL",39,0)
+ I '$D(^PS(50.606,PSSDF,0))!('$D(^PS(50.607,PSSUN,0))) G LOC
+"RTN","PSSUTIL",40,0)
+ I PSSST'?.N&(PSSST'?.N1".".N) G LOC
+"RTN","PSSUTIL",41,0)
+ S (PSSI,PSSO)=0
+"RTN","PSSUTIL",42,0)
+ I $D(^PS(50.606,"ACONI",PSSDF,PSSUN)),$O(^PS(50.606,"ADUPI",PSSDF,0)) S PSSI=1
+"RTN","PSSUTIL",43,0)
+ I $D(^PS(50.606,"ACONO",PSSDF,PSSUN)),$O(^PS(50.606,"ADUPO",PSSDF,0)) S PSSO=1
+"RTN","PSSUTIL",44,0)
+ I 'PSSO,'PSSI G LOC
+"RTN","PSSUTIL",45,0)
+ I PSSUPRA="NN" S ^PSDRUG(PSSDIEN,"DOS")=PSSST_"^"_PSSUN Q
+"RTN","PSSUTIL",46,0)
+ I PSSUPRA="NO"!(PSSUPRA="NB") G EN2^PSSUTIL3
+"RTN","PSSUTIL",47,0)
+ I PSSI,'PSSO D  S:PSSTOT>1 PSSTOTX=PSSTOT-1,^PSDRUG(PSSDIEN,"DOS")=PSSST_"^"_PSSUN,PSSONLYO=1,PSSBOTH=0,^PSDRUG(PSSDIEN,"DOS1",0)="^50.0903^"_$G(PSSTOTX)_"^"_$G(PSSTOTX) G LOC
+"RTN","PSSUTIL",48,0)
+ .S PSSTOT=1 F PSSDUPD=0:0 S PSSDUPD=$O(^PS(50.606,"ADUPI",PSSDF,PSSDUPD)) Q:'PSSDUPD  D
+"RTN","PSSUTIL",49,0)
+ ..S PSSTODOS=PSSDUPD*PSSST
+"RTN","PSSUTIL",50,0)
+ ..S ^PSDRUG(PSSDIEN,"DOS1",PSSTOT,0)=PSSDUPD_"^"_PSSTODOS_"^I",^PSDRUG(PSSDIEN,"DOS1","B",PSSDUPD,PSSTOT)="" S PSSTOT=PSSTOT+1
+"RTN","PSSUTIL",51,0)
+ I PSSO,'PSSI D  S:PSSTOT>1 PSSTOTX=PSSTOT-1,^PSDRUG(PSSDIEN,"DOS")=PSSST_"^"_PSSUN,PSSONLYI=1,PSSBOTH=0,^PSDRUG(PSSDIEN,"DOS1",0)="^50.0903^"_$G(PSSTOTX)_"^"_$G(PSSTOTX) G LOC
+"RTN","PSSUTIL",52,0)
+ .S PSSTOT=1 F PSSDUPD=0:0 S PSSDUPD=$O(^PS(50.606,"ADUPO",PSSDF,PSSDUPD)) Q:'PSSDUPD  D
+"RTN","PSSUTIL",53,0)
+ ..S PSSTODOS=PSSDUPD*PSSST
+"RTN","PSSUTIL",54,0)
+ ..S ^PSDRUG(PSSDIEN,"DOS1",PSSTOT,0)=PSSDUPD_"^"_PSSTODOS_"^O",^PSDRUG(PSSDIEN,"DOS1","B",PSSDUPD,PSSTOT)="" S PSSTOT=PSSTOT+1
+"RTN","PSSUTIL",55,0)
+ I PSSO,PSSI D  S:PSSTOT>1 PSSTOTX=PSSTOT-1,PSSFLAG=1,^PSDRUG(PSSDIEN,"DOS")=PSSST_"^"_PSSUN,^PSDRUG(PSSDIEN,"DOS1",0)="^50.0903^"_$G(PSSTOTX)_"^"_$G(PSSTOTX)
+"RTN","PSSUTIL",56,0)
+ .S PSSTOT=1 F PSSDUPD=0:0 S PSSDUPD=$O(^PS(50.606,"ADUPI",PSSDF,PSSDUPD)) Q:'PSSDUPD  D
+"RTN","PSSUTIL",57,0)
+ ..S PSSTODOS=PSSDUPD*PSSST
+"RTN","PSSUTIL",58,0)
+ ..S ^PSDRUG(PSSDIEN,"DOS1",PSSTOT,0)=PSSDUPD_"^"_PSSTODOS S $P(^PSDRUG(PSSDIEN,"DOS1",PSSTOT,0),"^",3)=$S($D(^PS(50.606,"ADUPO",PSSDF,PSSDUPD)):"IO",1:"I") S ^PSDRUG(PSSDIEN,"DOS1","B",PSSDUPD,PSSTOT)="" S PSSTOT=PSSTOT+1
+"RTN","PSSUTIL",59,0)
+ I PSSO,PSSI D  S:PSSTOT>1 PSSTOTX=PSSTOT-1,PSSFLAG=1,^PSDRUG(PSSDIEN,"DOS")=PSSST_"^"_PSSUN,^PSDRUG(PSSDIEN,"DOS1",0)="^50.0903^"_$G(PSSTOTX)_"^"_$G(PSSTOTX)
+"RTN","PSSUTIL",60,0)
+ .F PSSDUPD=0:0 S PSSDUPD=$O(^PS(50.606,"ADUPO",PSSDF,PSSDUPD)) Q:'PSSDUPD  D
+"RTN","PSSUTIL",61,0)
+ ..I $D(^PS(50.606,"ADUPI",PSSDF,PSSDUPD)) Q
+"RTN","PSSUTIL",62,0)
+ ..S PSSTODOS=PSSDUPD*PSSST
+"RTN","PSSUTIL",63,0)
+ ..S ^PSDRUG(PSSDIEN,"DOS1",PSSTOT,0)=PSSDUPD_"^"_PSSTODOS_"^O",^PSDRUG(PSSDIEN,"DOS1","B",PSSDUPD,PSSTOT)="" S PSSTOT=PSSTOT+1
+"RTN","PSSUTIL",64,0)
+ Q
+"RTN","PSSUTIL",65,0)
+LOC ;Set local possible dosages
+"RTN","PSSUTIL",66,0)
+ N PSSOITEM,PSSOID,PSSLTOT,PSSLTOTX,PSDUPDPT,PSNOUN,PSNOUNPA,PSNOUNPT,PSALL,PSDOD,PSSLPT,PSSLPTX,PSSLPNO,PSSLP,PSSNL,PSSNLF,PSSNLX
+"RTN","PSSUTIL",67,0)
+ S PSSOITEM=$P($G(^PSDRUG(PSSDIEN,2)),"^") Q:'PSSOITEM
+"RTN","PSSUTIL",68,0)
+ S PSSOID=$P($G(^PS(50.7,PSSOITEM,0)),"^",2) Q:'PSSOID
+"RTN","PSSUTIL",69,0)
+ Q:'$O(^PS(50.606,PSSOID,"NOUN",0))
+"RTN","PSSUTIL",70,0)
+ I $O(^PSDRUG(PSSDIEN,"DOS2",0)) G LOCMRG
+"RTN","PSSUTIL",71,0)
+ I '$G(PSSTALK) G QUIET
+"RTN","PSSUTIL",72,0)
+ W ! K DIR S DIR("A")="This drug has no Local Possible Dosages, do you want to create them",DIR("B")="Y",DIR(0)="Y"
+"RTN","PSSUTIL",73,0)
+ S DIR("?")=" ",DIR("?",1)="If you answer 'YES', Local Possible Dosages will be created for this drug using",DIR("?",2)="nouns associated with the "_$P($G(^PS(50.606,+$G(PSSOID),0)),"^")_" Dosage Form."
+"RTN","PSSUTIL",74,0)
+ D ^DIR K DIR I Y'=1 Q
+"RTN","PSSUTIL",75,0)
+ W !!,"Setting Local Possible Dosages..",!
+"RTN","PSSUTIL",76,0)
+ K DIR S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR
+"RTN","PSSUTIL",77,0)
+QUIET ;
+"RTN","PSSUTIL",78,0)
+ I $O(^PS(50.606,PSSOID,"DUPD",0)) D  S:PSSLTOT>1 PSSLTOTX=PSSLTOT-1,^PSDRUG(PSSDIEN,"DOS2",0)="^50.0904^"_$G(PSSLTOTX)_"^"_$G(PSSLTOTX) Q
+"RTN","PSSUTIL",79,0)
+ .S PSSLTOT=1
+"RTN","PSSUTIL",80,0)
+ .F PSNOUN=0:0 S PSNOUN=$O(^PS(50.606,PSSOID,"NOUN",PSNOUN)) Q:'PSNOUN  S PSNOUNPT=$P($G(^(PSNOUN,0)),"^"),PSNOUNPA=$P($G(^(0)),"^",2) D:PSNOUNPT'=""
+"RTN","PSSUTIL",81,0)
+ ..Q:PSNOUNPA=""
+"RTN","PSSUTIL",82,0)
+ ..F PSDOD=0:0 S PSDOD=$O(^PS(50.606,PSSOID,"DUPD",PSDOD)) Q:'PSDOD  S PSDUPDPT=$P($G(^(PSDOD,0)),"^") D:PSDUPDPT'=""
+"RTN","PSSUTIL",83,0)
+ ...I $G(PSSONLYO),PSNOUNPA'["O" Q
+"RTN","PSSUTIL",84,0)
+ ...I $G(PSSONLYI),PSNOUNPA'["I" Q
+"RTN","PSSUTIL",85,0)
+ ...D TEST^PSSUTIL3
+"RTN","PSSUTIL",86,0)
+ ...S PSALL=$G(PSDUPDPT)_" "_$S($G(PSSNLF):$G(PSSNLX),1:$G(PSNOUNPT)) K PSSNL,PSSNLF,PSSNLX
+"RTN","PSSUTIL",87,0)
+ ...S ^PSDRUG(PSSDIEN,"DOS2",PSSLTOT,0)=$G(PSALL)_"^"_$G(PSNOUNPA),^PSDRUG(PSSDIEN,"DOS2","B",$E(PSALL,1,30),PSSLTOT)="" S PSSLTOT=PSSLTOT+1
+"RTN","PSSUTIL",88,0)
+ S PSSLTOT=1 F PSNOUN=0:0 S PSNOUN=$O(^PS(50.606,PSSOID,"NOUN",PSNOUN)) Q:'PSNOUN  S PSNOUNPT=$P($G(^(PSNOUN,0)),"^"),PSNOUNPA=$P($G(^(0)),"^",2) D:PSNOUNPT'=""
+"RTN","PSSUTIL",89,0)
+ .Q:PSNOUNPA=""
+"RTN","PSSUTIL",90,0)
+ .I $G(PSSONLYI),PSNOUNPA'["I" Q
+"RTN","PSSUTIL",91,0)
+ .I $G(PSSONLYO),PSNOUNPA'["O" Q
+"RTN","PSSUTIL",92,0)
+ .S ^PSDRUG(PSSDIEN,"DOS2",PSSLTOT,0)=PSNOUNPT_"^"_$G(PSNOUNPA),^PSDRUG(PSSDIEN,"DOS2","B",$E(PSNOUNPT,1,30),PSSLTOT)="" S PSSLTOT=PSSLTOT+1
+"RTN","PSSUTIL",93,0)
+ I PSSLTOT>1 S PSSLTOTX=PSSLTOT-1 S ^PSDRUG(PSSDIEN,"DOS2",0)="^50.0904^"_$G(PSSLTOTX)_"^"_$G(PSSLTOTX)
+"RTN","PSSUTIL",94,0)
+ Q
+"RTN","PSSUTIL",95,0)
+LOCMRG ;Merge new Local Possible Dosages with existing ones
+"RTN","PSSUTIL",96,0)
+ N PSSLIEN,PSSLIENX,PSSPWZEX
+"RTN","PSSUTIL",97,0)
+ I '$G(PSSTALK) G QUIET1
+"RTN","PSSUTIL",98,0)
+ W !!,"This drug has the following Local Possible Dosages:",!
+"RTN","PSSUTIL",99,0)
+ S PSSPWZEX=0 F PSSLIEN=0:0 S PSSLIEN=$O(^PSDRUG(PSSDIEN,"DOS2",PSSLIEN)) Q:'PSSLIEN!(PSSPWZEX)  D
+"RTN","PSSUTIL",100,0)
+ .D:($Y+5)>IOSL XASK Q:PSSPWZEX  S PSSLIENX=$P($G(^PSDRUG(PSSDIEN,"DOS2",PSSLIEN,0)),"^")
+"RTN","PSSUTIL",101,0)
+ .I $L(PSSLIENX)'>53 W !,PSSLIENX,?55,"PACKAGE: ",$P($G(^PSDRUG(PSSDIEN,"DOS2",PSSLIEN,0)),"^",2) D DOSEADX Q
+"RTN","PSSUTIL",102,0)
+ .W !,PSSLIENX,!,?55,"PACKAGE: ",$P($G(^PSDRUG(PSSDIEN,"DOS2",PSSLIEN,0)),"^",2) D DOSEADX
+"RTN","PSSUTIL",103,0)
+ W ! K DIR S DIR(0)="Y",DIR("B")="Y",DIR("A")="Do you want to merge new Local Possible Dosages"
+"RTN","PSSUTIL",104,0)
+ S DIR("?")=" ",DIR("?",1)="If you answer 'YES', any new Local Possible Dosages found based on the nouns",DIR("?",2)="associated with the "_$P($G(^PS(50.606,+$G(PSSOID),0)),"^")_" Dosage Form"
+"RTN","PSSUTIL",105,0)
+ S DIR("?",3)="will be added to you current Local Possible Dosages."
+"RTN","PSSUTIL",106,0)
+ D ^DIR K DIR I Y'=1 Q
+"RTN","PSSUTIL",107,0)
+ W !!,"Setting Local Possible Dosages..",!
+"RTN","PSSUTIL",108,0)
+ K DIR S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR
+"RTN","PSSUTIL",109,0)
+QUIET1 ;
+"RTN","PSSUTIL",110,0)
+ I $O(^PS(50.606,PSSOID,"DUPD",0)) D  Q
+"RTN","PSSUTIL",111,0)
+ .F PSNOUN=0:0 S PSNOUN=$O(^PS(50.606,PSSOID,"NOUN",PSNOUN)) Q:'PSNOUN  S PSNOUNPT=$P($G(^(PSNOUN,0)),"^"),PSNOUNPA=$P($G(^(0)),"^",2) D:PSNOUNPT'=""
+"RTN","PSSUTIL",112,0)
+ ..Q:PSNOUNPA=""
+"RTN","PSSUTIL",113,0)
+ ..F PSDOD=0:0 S PSDOD=$O(^PS(50.606,PSSOID,"DUPD",PSDOD)) Q:'PSDOD  S PSDUPDPT=$P($G(^(PSDOD,0)),"^") D:PSDUPDPT'=""
+"RTN","PSSUTIL",114,0)
+ ...I $G(PSSONLYO),PSNOUNPA'["O" Q
+"RTN","PSSUTIL",115,0)
+ ...I $G(PSSONLYI),PSNOUNPA'["I" Q
+"RTN","PSSUTIL",116,0)
+ ...D TEST^PSSUTIL3
+"RTN","PSSUTIL",117,0)
+ ...S PSALL=$G(PSDUPDPT)_" "_$S($G(PSSNLF):$G(PSSNLX),1:$G(PSNOUNPT)) K PSSNL,PSSNLF,PSSNLX
+"RTN","PSSUTIL",118,0)
+ ...S (PSSLPT,PSSLPTX,PSSLPNO)=0 F PSSLP=0:0 S PSSLP=$O(^PSDRUG(PSSDIEN,"DOS2",PSSLP)) Q:'PSSLP  S PSSLPTX=PSSLPTX+1 S PSSLPT=PSSLP I PSALL=$P($G(^PSDRUG(PSSDIEN,"DOS2",PSSLP,0)),"^") S PSSLPNO=1
+"RTN","PSSUTIL",119,0)
+ ...Q:PSSLPNO
+"RTN","PSSUTIL",120,0)
+ ...S PSSLPT=PSSLPT+1,PSSLPTX=PSSLPTX+1
+"RTN","PSSUTIL",121,0)
+ ...S ^PSDRUG(PSSDIEN,"DOS2",PSSLPT,0)=$G(PSALL)_"^"_$G(PSNOUNPA),^PSDRUG(PSSDIEN,"DOS2","B",$E(PSALL,1,30),PSSLPT)="",^PSDRUG(PSSDIEN,"DOS2",0)="^50.0904^"_$G(PSSLPT)_"^"_$G(PSSLPTX)
+"RTN","PSSUTIL",122,0)
+ F PSNOUN=0:0 S PSNOUN=$O(^PS(50.606,PSSOID,"NOUN",PSNOUN)) Q:'PSNOUN  S PSNOUNPT=$P($G(^(PSNOUN,0)),"^"),PSNOUNPA=$P($G(^(0)),"^",2) D:PSNOUNPT'=""
+"RTN","PSSUTIL",123,0)
+ .Q:PSNOUNPA=""
+"RTN","PSSUTIL",124,0)
+ .I $G(PSSONLYO),PSNOUNPA'["O" Q
+"RTN","PSSUTIL",125,0)
+ .I $G(PSSONLYI),PSNOUNPA'["I" Q
+"RTN","PSSUTIL",126,0)
+ .S (PSSLPT,PSSLPTX,PSSLPNO)=0 F PSSLP=0:0 S PSSLP=$O(^PSDRUG(PSSDIEN,"DOS2",PSSLP)) Q:'PSSLP  S PSSLPTX=PSSLPTX+1 S PSSLPT=PSSLP I PSNOUNPT=$P($G(^PSDRUG(PSSDIEN,"DOS2",PSSLP,0)),"^") S PSSLPNO=1
+"RTN","PSSUTIL",127,0)
+ .Q:PSSLPNO
+"RTN","PSSUTIL",128,0)
+ .S PSSLPT=PSSLPT+1,PSSLPTX=PSSLPTX+1
+"RTN","PSSUTIL",129,0)
+ .S ^PSDRUG(PSSDIEN,"DOS2",PSSLPT,0)=$G(PSNOUNPT)_"^"_$G(PSNOUNPA),^PSDRUG(PSSDIEN,"DOS2","B",$E(PSNOUNPT,1,30),PSSLPT)="",^PSDRUG(PSSDIEN,"DOS2",0)="^50.0904^"_$G(PSSLPT)_"^"_$G(PSSLPTX)
+"RTN","PSSUTIL",130,0)
+ Q
+"RTN","PSSUTIL",131,0)
+ ;
+"RTN","PSSUTIL",132,0)
+ ;
+"RTN","PSSUTIL",133,0)
+DOSEADD ;New fields added with PSS*1*147
+"RTN","PSSUTIL",134,0)
+ N PSSPW1,PSSPW2,PSSPW3,PSSPW4,PSSPW5,PSSPW6,PSSPW7,PSSPW8
+"RTN","PSSUTIL",135,0)
+ S PSSPW7=""
+"RTN","PSSUTIL",136,0)
+ S PSSPW1=$G(^PSDRUG(PSSDIEN,"DOS2",PSSLD,0))
+"RTN","PSSUTIL",137,0)
+ S PSSPW2=$P(PSSPW1,"^",3)
+"RTN","PSSUTIL",138,0)
+ S PSSPW3=$S($E(PSSPW2)=".":"0",1:"")_PSSPW2
+"RTN","PSSUTIL",139,0)
+ D:($Y+5)>IOSL ZASK Q:PSSPWXEX  W !?3,"BCMA UNITS PER DOSE: "_PSSPW3
+"RTN","PSSUTIL",140,0)
+ S PSSPW4=$P(PSSPW1,"^",5),PSSPW5=$P(PSSPW1,"^",6)
+"RTN","PSSUTIL",141,0)
+ S PSSPW6=$S($E(PSSPW5)=".":"0",1:"")_PSSPW5
+"RTN","PSSUTIL",142,0)
+ I PSSPW4 S PSSPW7=$P($G(^PS(51.24,+PSSPW4,0)),"^")
+"RTN","PSSUTIL",143,0)
+ S PSSPW8=$L(PSSPW6)+$L(PSSPW7)
+"RTN","PSSUTIL",144,0)
+ D:($Y+5)>IOSL ZASK Q:PSSPWXEX  I PSSPW8<49 W !?3,"NUMERIC DOSE: "_PSSPW6_"   DOSE UNIT: "_PSSPW7 Q
+"RTN","PSSUTIL",145,0)
+ W !?3,"NUMERIC DOSE: "_PSSPW6
+"RTN","PSSUTIL",146,0)
+ W !?3,"DOSE UNIT: "_PSSPW7
+"RTN","PSSUTIL",147,0)
+ Q
+"RTN","PSSUTIL",148,0)
+ ;
+"RTN","PSSUTIL",149,0)
+ ;
+"RTN","PSSUTIL",150,0)
+DOSEADX ;New fields added with PSS*1*147
+"RTN","PSSUTIL",151,0)
+ N PSSPWX1,PSSPWX2,PSSPWX3,PSSPWX4,PSSPWX5,PSSPWX6,PSSPWX7,PSSPWX8
+"RTN","PSSUTIL",152,0)
+ S PSSPWX7=""
+"RTN","PSSUTIL",153,0)
+ S PSSPWX1=$G(^PSDRUG(PSSDIEN,"DOS2",PSSLIEN,0))
+"RTN","PSSUTIL",154,0)
+ S PSSPWX2=$P(PSSPWX1,"^",3)
+"RTN","PSSUTIL",155,0)
+ S PSSPWX3=$S($E(PSSPWX2)=".":"0",1:"")_PSSPWX2
+"RTN","PSSUTIL",156,0)
+ D:($Y+5)>IOSL XASK Q:PSSPWZEX  W !?3,"BCMA UNITS PER DOSE: "_PSSPWX3
+"RTN","PSSUTIL",157,0)
+ S PSSPWX4=$P(PSSPWX1,"^",5),PSSPWX5=$P(PSSPWX1,"^",6)
+"RTN","PSSUTIL",158,0)
+ S PSSPWX6=$S($E(PSSPWX5)=".":"0",1:"")_PSSPWX5
+"RTN","PSSUTIL",159,0)
+ I PSSPWX4 S PSSPWX7=$P($G(^PS(51.24,+PSSPWX4,0)),"^")
+"RTN","PSSUTIL",160,0)
+ S PSSPWX8=$L(PSSPWX6)+$L(PSSPWX7)
+"RTN","PSSUTIL",161,0)
+ D:($Y+5)>IOSL XASK Q:PSSPWZEX  I PSSPWX8<49 W !?3,"NUMERIC DOSE: "_PSSPWX6_"   DOSE UNIT: "_PSSPWX7 Q
+"RTN","PSSUTIL",162,0)
+ W !?3,"NUMERIC DOSE: "_PSSPWX6
+"RTN","PSSUTIL",163,0)
+ W !?3,"DOSE UNIT: "_PSSPWX7
+"RTN","PSSUTIL",164,0)
+ Q
+"RTN","PSSUTIL",165,0)
+ ;
+"RTN","PSSUTIL",166,0)
+ ;
+"RTN","PSSUTIL",167,0)
+ZASK ;Ask to continue
+"RTN","PSSUTIL",168,0)
+ N DIR,X,Y,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","PSSUTIL",169,0)
+ K DIR W ! S DIR(0)="E",DIR("A")="Press Return to continue,'^' to exit the list"  D ^DIR K DIR I 'Y S PSSPWXEX=1
+"RTN","PSSUTIL",170,0)
+ W @IOF
+"RTN","PSSUTIL",171,0)
+ Q
+"RTN","PSSUTIL",172,0)
+ ;
+"RTN","PSSUTIL",173,0)
+ ;
+"RTN","PSSUTIL",174,0)
+XASK ;Ask to continue
+"RTN","PSSUTIL",175,0)
+ N DIR,X,Y,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","PSSUTIL",176,0)
+ K DIR W ! S DIR(0)="E",DIR("A")="Press Return to continue,'^' to exit the list"  D ^DIR K DIR I 'Y S PSSPWZEX=1
+"RTN","PSSUTIL",177,0)
+ W @IOF
+"RTN","PSSUTIL",178,0)
+ Q
+"RTN","PSSUTIL",179,0)
+ ;
+"RTN","PSSUTIL",180,0)
+ ;
+"RTN","PSSUTIL",181,0)
+DASK ;Ask to continue
+"RTN","PSSUTIL",182,0)
+ N DIR,X,Y,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","PSSUTIL",183,0)
+ K DIR W ! S DIR(0)="E",DIR("A")="Press Return to continue"  D ^DIR K DIR
+"RTN","PSSUTIL",184,0)
+ W @IOF
+"RTN","PSSUTIL",185,0)
+ Q
+"RTN","PSSUTIL3")
+0^4^B6535118^n/a
+"RTN","PSSUTIL3",1,0)
+PSSUTIL3 ;BIR/SJA-utility routine for NDF changes ;07/09/10
+"RTN","PSSUTIL3",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**155**;9/30/97;Build 36
+"RTN","PSSUTIL3",3,0)
+ ;
+"RTN","PSSUTIL3",4,0)
+EN2 N PSSPKG
+"RTN","PSSUTIL3",5,0)
+ S PSSPKG=$P($$POSDOS^PSNAPIS(PSSND),"^",3)
+"RTN","PSSUTIL3",6,0)
+ D  S:PSSTOT>1 PSSTOTX=PSSTOT-1,^PSDRUG(PSSDIEN,"DOS")=PSSST_"^"_PSSUN,PSSONLYO=1,PSSBOTH=0,^PSDRUG(PSSDIEN,"DOS1",0)="^50.0903^"_$G(PSSTOTX)_"^"_$G(PSSTOTX) I '(PSSI&PSSO) G LOC^PSSUTIL
+"RTN","PSSUTIL3",7,0)
+ .S PSSTOT=1 F PSSDUPD=1,2 D
+"RTN","PSSUTIL3",8,0)
+ ..I PSSUPRA="NO"&(PSSDUPD=2) Q
+"RTN","PSSUTIL3",9,0)
+ ..S PSSTODOS=PSSDUPD*PSSST
+"RTN","PSSUTIL3",10,0)
+ ..S ^PSDRUG(PSSDIEN,"DOS1",PSSTOT,0)=PSSDUPD_"^"_PSSTODOS_"^"_PSSPKG,^PSDRUG(PSSDIEN,"DOS1","B",PSSDUPD,PSSTOT)="" S PSSTOT=PSSTOT+1
+"RTN","PSSUTIL3",11,0)
+ Q
+"RTN","PSSUTIL3",12,0)
+TEST ;
+"RTN","PSSUTIL3",13,0)
+ K PSSNL,PSSNLF,PSSNLX
+"RTN","PSSUTIL3",14,0)
+ Q:$G(PSNOUNPT)=""
+"RTN","PSSUTIL3",15,0)
+ Q:$L(PSNOUNPT)'>3
+"RTN","PSSUTIL3",16,0)
+ S PSSNL=$E(PSNOUNPT,($L(PSNOUNPT)-2),$L(PSNOUNPT))
+"RTN","PSSUTIL3",17,0)
+ I $G(PSSNL)="(S)"!($G(PSSNL)="(s)") S PSSNLF=1 D
+"RTN","PSSUTIL3",18,0)
+ .I $G(PSDUPDPT)'>1 S PSSNLX=$E(PSNOUNPT,1,($L(PSNOUNPT)-3))
+"RTN","PSSUTIL3",19,0)
+ .I $G(PSDUPDPT)>1 S PSSNLX=$E(PSNOUNPT,1,($L(PSNOUNPT)-3))_$E(PSSNL,2)
+"RTN","PSSUTIL3",20,0)
+ Q
+"RTN","PSSUTIL3",21,0)
+SUPRA(PSSND) ; set supra flag
+"RTN","PSSUTIL3",22,0)
+ N PSSDOS,PSSCD,PSSDOSC,PSSPKG
+"RTN","PSSUTIL3",23,0)
+ S PSSDOS=$$POSDOS^PSNAPIS(PSSND),PSSCD=$P(PSSDOS,"^"),PSSDOSC=$P(PSSDOS,"^",2),PSSPKG=$P(PSSDOS,"^",3)
+"RTN","PSSUTIL3",24,0)
+ Q $S(PSSCD="N"&(PSSDOSC="O"):"NO",(PSSCD="N")&(PSSDOSC="B"):"NB",(PSSCD="N")&(PSSDOSC="N"):"NN",1:"")
+"RTN","PSSUTIL3",25,0)
+ ;
+"RTN","PSSUTIL3",26,0)
+CHECK(PSSIEN) ; check if the drug meets the criteria to have Possible Dosages
+"RTN","PSSUTIL3",27,0)
+ N PSSNAT,PSSNAT1,PSSNATND,PSSNATDF,PSSNATUN,PSSNATST
+"RTN","PSSUTIL3",28,0)
+ D NATND
+"RTN","PSSUTIL3",29,0)
+ I 'PSSNATDF!('PSSNATUN)!($G(PSSNATST)="") Q 0
+"RTN","PSSUTIL3",30,0)
+ I '$D(^PS(50.606,PSSNATDF,0))!('$D(^PS(50.607,PSSNATUN,0))) Q 0
+"RTN","PSSUTIL3",31,0)
+ I PSSNATST'?.N&(PSSNATST'?.N1".".N) Q 0
+"RTN","PSSUTIL3",32,0)
+ I $D(^PS(50.606,"ACONI",PSSNATDF,PSSNATUN)),$O(^PS(50.606,"ADUPI",PSSNATDF,0)) Q 1
+"RTN","PSSUTIL3",33,0)
+ I $D(^PS(50.606,"ACONO",PSSNATDF,PSSNATUN)),$O(^PS(50.606,"ADUPO",PSSNATDF,0)) Q 1
+"RTN","PSSUTIL3",34,0)
+ Q 0
+"RTN","PSSUTIL3",35,0)
+NATND S PSSNAT=+$P($G(^PSDRUG(PSSIEN,"ND")),"^",3),PSSNAT1=$P($G(^("ND")),"^")
+"RTN","PSSUTIL3",36,0)
+ S PSSNATND=$$DFSU^PSNAPIS(PSSNAT1,PSSNAT)
+"RTN","PSSUTIL3",37,0)
+ S PSSNATDF=$P(PSSNATND,"^"),PSSNATST=$P(PSSNATND,"^",4),PSSNATUN=$P(PSSNATND,"^",5)
+"RTN","PSSUTIL3",38,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",7085,6)
+^143
+**END**
+**END**

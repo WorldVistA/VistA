@@ -1,0 +1,208 @@
+$TXT Created by SMITH,KEVIN at DEVVFF.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 12/01/11 at 10:42
+=============================================================================
+Run Date: APR 10, 2012                     Designation: NUR*4*43
+Package : NUR - NURSING SERVICE               Priority: Mandatory
+Version : 4        SEQ #43                      Status: Released
+                  Compliance Date: MAY 11, 2012
+=============================================================================
+
+
+Subject: NEW FUNCTIONS FOR PAID ENHANCEMENTS FOR VANOD
+
+Category: 
+  - Data Dictionary
+  - Input Template
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch supports patch PRS*4.0*126--PAID ENHANCEMENTS FOR VANOD. This 
+ patch--NUR*4.0*43--must be installed prior to patch PRS*4.0*126. This 
+ patch provides for the ability to enter and store additional information 
+ for Nursing Locations that is required by the VANOD (Veterans Affairs 
+ Nursing Outcomes Database) in accordance with Public Law 107-135 and the 
+ OIG Recommendation 4a (annual reporting requirement). 
+  
+ The enhancements made by this patch are summarized below:
+ ---------------------------------------------------------
+ The option Nursing Location File, Edit [NURSFL-LOC] has been updated to 
+ provide entry and storage of the following additional data elements to 
+ describe a nursing location: 
+  
+ 1.     CARE SETTING, Inpatient or Other
+ 2.     UNIT TYPE: The unit type can be selected from a list of types 
+        defined by VANOD and stored in the new file VANOD UNIT TYPES
+        (#212.8)
+ 3.     INPATIENT DSS DEPARTMENT: a free text field to be defined by VANOD
+ 4.     POC DATA ENTRY PERSONNEL: VistA User responsible for entering POC 
+        data for the Nursing Location
+ 5.     POC DATA APPROVAL PERSONNEL: VistA User responsible for approving 
+        POC data for the Nursing Location
+  
+   
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ NURS LOCATION
+   (#211.4)                 CARE SETTING (#.5)   Modified
+   (#211.4)                 UNIT TYPE (#.6)      Modified
+   (#211.4)                 INPATIENT DSS
+                            DEPARTMENT (#.7)     Modified
+   (#211.414)               POC DATA ENTRY
+                            PERSONNEL (#.01)     Modified
+   (#211.415)               POC DATA APPROVAL
+                            PERSONNEL (#.01)     Modified
+   (#211.416)               SERVICE DATE (#.01)  Modified
+   (#211.416)               STATUS (#1)          Modified
+ NURS POSITION CONTROL
+   (#211.82)                PRIMARY
+                            ASSIGNMENT (#6)      Modified
+ VANOD UNIT TYPES
+   (#212.8)                 UNIT TYPE
+                            NAME (#.01)          New
+                            UNIT TYPE
+                            DEFINITION (#1)      New
+                            SETTING (#2)         New
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)     New/Modified/Deleted 
+ -------------      ----      ------------------     --------------------
+ NURS-I-PRIORITY 1A INPUT     NURS LOCATION (#211.4) Modified
+  
+  
+ Test Sites:
+ -----------
+ CENTRAL TEXAS HCS
+ CHICAGO HCS
+ MANCHESTER, NH
+ PRESCOTT, AZ
+ UPSTATE NEW YORK HCS
+ WEST PALM BEACH, FL
+ AMARILLO, TX - Loaded software into production, but did not test.
+   
+   
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/. This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software directly
+ from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.va.gov/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Nursing User Manual           NURS_4_P43_UM_CP.PDF            (binary)
+   - Change Pages
+ Release Notes                 NURS_4_P43_RN.PDF               (binary)
+   
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system, however, it should 
+ be installed at a non-peak time to minimize disruption to the users. It 
+ is strongly recommended that all the NURSING SERVICE options in the 
+ OPTION (#19) file be disabled to prevent possible conflicts while 
+ running the KIDS install.
+  
+ All the NURSING SERVICE options can be selected by using the namespace 
+ of NUR*, to disable all NURSING SERVICE options. Other VISTA users will 
+ not be affected. 
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch 
+     NUR*4.0*43:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' Answer NO
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Answer YES
+  
+     When prompted 'Enter options you wish to mark as 'Out Of Order':' 
+     Answer NUR*
+  
+     When prompted 'Enter protocols you wish to mark as 'Out Of Order':'
+     Press Return
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' Answer 0
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The post install routine NURXP43 will build the new indexes required.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NURSING SERVICE;**[Patch List]**;APR 25, 1997;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: NURSUT6
+    Before:       n/a   After:   B967330  **43**
+Routine Name: NURXP43
+    Before:       n/a   After:  B1845464  **43**
+
+=============================================================================
+User Information:
+Entered By  : TSAI,PEI                      Date Entered  : NOV 16, 2009
+Completed By: CORONA,JOSE                   Date Completed: APR 09, 2012
+Released By : STOKER,ELAINE                 Date Released : APR 10, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

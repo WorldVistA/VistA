@@ -1,0 +1,361 @@
+$TXT Created by LEYVA,KATHRYN at DEVVVV.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 08/16/12 at 19:42
+=============================================================================
+Run Date: DEC 03, 2012                     Designation: VPS*1*1
+Package : VPS - VA POINT OF SERVICE (KIOSKS)  Priority: Mandatory
+Version : 1         SEQ #1                      Status: Released
+                  Compliance Date: JAN 03, 2013
+=============================================================================
+
+
+Subject: VA POINT OF SERVICE KIOSKS 1.0 RELEASE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ VHA has recently identified interactive kiosks as an innovation that will 
+ enable VA Medical Centers (VAMCs) to enhance services to veterans and 
+ improve the efficiency of operations. Many Veterans Integrated Service 
+ Networks (VISNs) and VAMCs have already implemented kiosks in the past, 
+ and are currently using them to provide streamlined approaches for 
+ veterans to perform various tasks.  
+  
+ The VA's vision for the VETLINK VA Point of Service (VPS) kiosk is to 
+ streamline and improve patient clinical and administrative processes 
+ across the VA healthcare network and to provide standard, easy-to-use 
+ capabilities for patients and employees to access and update information 
+ and perform business transactions through incremental releases. The VA's 
+ vision includes a modular and configurable solution that may be tailored 
+ to fit each facility's individual needs. 
+  
+ The VETLINK VPS Kiosk Application Server uses the RPC BROKER to make calls 
+ to the Remote Procedures (RPCs) residing on the VistA host. 
+  
+  
+ Overview of items in the VPS package:
+ =====================================
+ New Option - VPS KIOSK INTERFACE    [VPS KIOSK INTERFACE]
+ This broker type option contains the RPCs that support the VPS Kiosk
+ system. The VETLINK VPS Kiosk system will call upon these RPCs for 
+ specific events triggered by the kiosk machine accessed by a patient 
+ (e.g., at check-in) or by VAMC staff. The following remote procedures
+ are attached to this menu.
+  
+ New RPCs
+ -------- 
+ VPS GET PATIENT DEMOGRAPHIC - This RPC will accept patient SSN as input
+ then retrieve patient demographic data from VistA.
+  
+ VPS GET CLINIC - This RPC will accept a partial or full Clinic Name as
+ input then retrieves Clinic IEN, Clinic Name, Clinic Physical Location
+ from VistA based on the matching Clinic Name characters from the INPUT
+ String.
+  
+ Pre-existing RPCs (already at sites)
+ ------------------------------------
+ XWB GET VARIABLE VALUE - This pre-existing RPC BROKER RPC accepts the name
+ of a variable which will be evaluated and its value returned to the
+ server. For example, this RPC may be called with a parameter like DUZ
+ which will be returned as 123456. 
+  
+ ORWPT FULLSSN - This pre-existing OE/RR RPC accepts an SSN in the format
+ 999999999(P), and returns a list of matching patients.
+  
+ ORWPT LAST5 - This pre-existing OE/RR RPC returns a list of patients
+ matching the string of Last Name Initial_Last 4 SSN (Initial/Last 4
+ look-up to PATIENT file).
+  
+ ORWPT LIST ALL - This pre-existing OE/RR RPC returns a set of patient
+ names for use with a long list box.
+  
+  
+ Patch Components:
+ =================   
+  
+ Options Associated:
+  
+ Option                  Type                        New/Modified/Deleted
+ ------                  ----                        -------------------- 
+ VPS KIOSK INTERFACE     Broker (Client/Server)       New
+  
+  
+ Remote Procedure                                    New/Modified/Deleted
+ ----------------                                    -------------------- 
+ VPS GET PATIENT DEMOGRAPHIC                          New
+ VPS GET CLINIC                                       New
+  
+  
+ This package addresses the following New Service Request (NSR):
+ ===============================================================
+ 20090210 - VA Point of Service Initiative
+  
+  
+ This package addresses the following Remedy ticket(s):
+ ======================================================
+ There is no Remedy ticket associated with this patch.
+  
+  
+ Test Sites:
+ ===========
+ Portland VAMC
+ Pittsburgh HCS
+ Atlanta VAMC
+ Oklahoma City VAMC
+ 
+ 
+ Documentation Retrieval:
+ ========================
+ Sites may retrieve documentation in one of the following ways:
+  
+  1. The preferred method is to FTP the files from 
+ download.vista.med.va.gov, which will transmit the files from the
+ first available FTP server.
+  
+  2. Sites may also elect to retrieve documentation directly from 
+ a specific server as follows:
+  
+      Albany            ftp.fo-albany.med.va.gov
+      Hines             ftp.fo-hines.med.va.gov
+      Salt Lake City    ftp.fo-slc.med.va.gov
+ 
+ FILE NAME      DESCRIPTION
+ vps_1_1_rn.pdf Release Notes
+  
+ 
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are post installation instructions for this patch related to adding 
+ a new option and a proxy user in VistA.
+  
+  
+ Installation Instructions:
+ ==========================
+ Users are allowed to remain on the system during the installation.
+ The installation will complete in less than TWO minutes and there are 
+ no options or menus to disable.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     VPS*1.0*1:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer NO if this is done as a nightly job    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// answer NO
+  
+  
+  
+ Post Installation Instructions:
+ ===============================
+ 1. It is highly recommended that the VPS KIOSK INTERFACE Menu be added as
+ an Item in the XUCOMMAND. This setup will allow the RPC calls from the 
+ VPS Kiosk Server(s) to be properly routed by the RPC Broker in VistA. If
+ you do not add this to the Common Menu, you will need to assign the VPS 
+ KIOSK INTERFACE to each user designated by your VPS site lead user.
+  
+  
+ Example: 
+  
+ DEVISC1A3:DEVVPP>D ^XUP
+  
+ Setting up programmer environment
+ This is a TEST account.
+  
+ Terminal Type set to: C-VT320
+  
+ Select OPTION NAME: EVE
+      1   EVE       Systems Manager Menu
+      2   EVENT CAPTURE  ECX ECS MAINTENANCE     Event Capture
+ . . . .
+ Press <RETURN> to see more, '^' to exit this list, OR
+ CHOOSE 1-5: 1  EVE     Systems Manager Menu
+  
+           Core Applications ...
+           Device Management ...
+    FM     VA FileMan ...
+           Manage Mailman ...
+           Menu Management ...
+           Programmer Options ...
+ . ....
+  
+ Select Systems Manager Menu Option: MENU Management
+  
+           Edit options
+           Key Management ...
+           Secure Menu Delegation ...
+  . . . .
+  
+ Select Menu Management Option: EDIT OPTIONs
+  
+ Select OPTION to edit: XUCOMMAND       SYSTEM COMMAND OPTIONS
+ NAME: XUCOMMAND// 
+ MENU TEXT: SYSTEM COMMAND OPTIONS  Replace 
+ PACKAGE: 
+ OUT OF ORDER MESSAGE: 
+ LOCK: 
+ REVERSE/NEGATIVE LOCK: 
+ DESCRIPTION:
+ This is the basic command file, which holds commands executable from 
+ anywhere in the menu processor.
+  
+   Edit? NO// 
+ TYPE: menu// 
+ HEADER: 
+ ENTRY ACTION: 
+ EXIT ACTION: 
+ Select ITEM: XUS KAAJEE WEB LOGON// 
+   ITEM: XUS KAAJEE WEB LOGON// 
+   SYNONYM: 
+   DISPLAY ORDER: 
+ Select ITEM: VPS KIOSK INTERFACE       VPS KIOSK INTERFACE
+   Are you adding 'VPS KIOSK INTERFACE' as a new MENU (the 25TH for this 
+ OPTION)?
+  No// Y  (Yes)
+    MENU SYNONYM: 
+   SYNONYM: 
+   DISPLAY ORDER: 
+ Select ITEM: ^
+  
+  
+ 2.  Create a CONNECT,VPS connector proxy account in the NEW PERSON file
+ (#200) using the Foundations Management [XOBU SITE SETUP MENU].  
+ Site IRM will need to take note of the ACCESS and VERIFY codes and keep 
+ these codes in a place that can be later retrieved since these codes
+ will need to be provided to the VPS point of contact in  order to 
+ configure the VETLINK VPS Kiosk. 
+  
+ Here is a screen shot example:
+  
+ Select OPTION NAME:    XOBU SITE SETUP MENU     Foundations Management
+ Foundations Management
+  
+       Foundations Manager :: Main   Jun 04, 2012@14:19:31            
+                     <<<      VistALink Parameters     >>>
+  
+     VistALink Version: 1.6    Heartbeat Rate: 180    Latency Delta: 180
+  
+                     <<< VistALink Listener Status Log >>>
+   ID  Box-Volume        Port   Status       Status Date/Time       
+                                                                                 
+      If this screen shows no running listener(s), it is likely that       
+      the VistALink listener(s) for this system are managed by the       
+      TCP/IP utility at the VMS system level and are already running.      
+  
+      The following TCP/IP command will show the status of all      
+      listener services with names starting with vlink:             
+                  $ tcpip show service vlink*                                    
+      Please contact IRM site staff for additional information    
+      regarding the VistALink listener(s) such as port number(s).          
+      Enter ?? for more actions
+            
+ SP  Site Parameters                     SL  Start Listener
+ CFG Manage Configurations               STP Stop Listener
+ CP  Enter/Edit Connector Proxy User     SB  Start Box
+ RE  Refresh                             CU  Clean Up Log
+ CM  Connection Manager
+ Select Action:Quit// CP   Enter/Edit Connector Proxy User  
+ Enter NPF CONNECTOR PROXY name : CONNECT,VPS           
+ Want to edit ACCESS CODE (Y/N): Y
+ Enter a new ACCESS CODE <Hidden>: ********
+ Please re-type the new code to show that I have it right: ********
+ OK, Access code has been changed!
+ The VERIFY CODE has been deleted as a security measure.
+ You will need to enter a new VERIFY code so the user can sign-on.
+  
+ Want to edit VERIFY CODE (Y/N): Y
+  
+ Enter a new VERIFY CODE: *************
+  
+ Please re-type the new code to show that I have it right: *************
+  
+ OK, Verify code has been changed!
+  
+ Here is the entry in the NEW PERSON file (#200):
+                                                                                
+  NAME: CONNECT,VPS                       VERIFY CODE never expires: Yes
+  DATE ENTERED: JUN 04, 2012              CREATOR: USER,TESTONE
+  NAME COMPONENTS: 200
+  SIGNATURE BLOCK PRINTED NAME: VPS CONNECT
+  MULTIPLE SIGN-ON: ALLOWED
+  User Class: CONNECTOR PROXY             ISPRIMARY: Yes
+  
+  
+ 3.  Once the CONNECT,VPS user has been defined, the XMUSER 
+ menu will need to added as the PRIMARY MENU option AND add the
+ VPS KIOSK INTERFACE broker menu as a Secondary Menu option. Here 
+ is a screen shot example:
+                          Edit an Existing User
+ NAME: CONNECT,VPS                                     Page 1 of 5
+  
+    NAME... CONNECT,VPS                                 INITIAL:      
+     TITLE:                                           NICK NAME:           
+       SSN:                                                 DOB:            
+    DEGREE:                                           MAIL CODE:           
+   DISUSER:                                     TERMINATION DATE:            
+   Termination Reason:                                              
+  
+            PRIMARY MENU OPTION: XMUSER           
+  Select SECONDARY MENU OPTIONS: VPS KIOSK INTERFACE                        
+ Want to edit ACCESS CODE (Y/N):       FILE MANAGER ACCESS CODE:                
+ Want to edit VERIFY CODE (Y/N):    
+  
+                Select DIVISION:                               
+                SERVICE/SECTION:                               
+  
+ Exit     Save     Next Page     Refresh
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VA POINT OF SERVICE (KIOSKS);**[Patch List]**;Oct 21, 2011;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPSRPC1
+    Before:       n/a   After:B145653820  **1**
+
+=============================================================================
+User Information:                          Hold Date     : NOV 30, 2012
+Entered By  : RODRIGUEZ,CESAR               Date Entered  : MAY 14, 2012
+Completed By: ROBBINS,BRADLEY               Date Completed: OCT 30, 2012
+Released By : MILLIGAN,KERRY                Date Released : DEC 03, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

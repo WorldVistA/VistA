@@ -1,0 +1,220 @@
+$TXT Created by MOORE,JIM at NXT.FO-OAKLAND.MED.VA.GOV  (KIDS) on Friday, 02/18/11 at 09:31
+=============================================================================
+Run Date: NOV 23, 2011                     Designation: HL*1.6*155
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #124                    Status: Released
+                  Compliance Date: DEC 24, 2011
+=============================================================================
+
+Associated patches: (v)HL*1.6*147  <<= must be installed BEFORE `HL*1.6*155'
+
+Subject: HLO SINGLE THREADED CLIENT FLAG
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Patch HL*1.6*155 provides an enhancement to the VistA Health Level
+ Seven Optimized software (HLO) that improves its performance
+ for sending messages to a remote HL7 server that is single
+ threaded.  This enhancement was requested by the Lab Reengineering
+ application, but may be used to configure any interface that
+ sends messages via HLO to a single threaded server.
+ 
+ A new field is added to the HL Logical Link file (#870). The 
+ field is SINGLE THREADED (#23).  It is a flag that should be
+ set to YES if the HL Logical Link entry is for a server
+ that is single threaded.   The effect of setting the flag
+ is to guarantee that no more than one HLO client process at
+ a time will attempt to open a connection to the server.  This
+ field does NOT affect interfaces that do not use HLO.
+  
+ Support staff may set the new field via Fileman.  However, for
+ application teams that need to release new entries in the 
+ HL Logical Link file, there are two new APIs that may be used
+ to set the flag, for example, in a post-installation routine.  
+  
+ 
+ New APIs:
+ =========
+ 
+ 
+  $$ONETHRED^HLOTLNK(LINKNAME)
+  ============================
+  Returns the value of the SINGLE THREADED flag (field #23) of an entry
+  in the HL LOGICAL LINK file (#870.
+    
+     Input:
+        LINKNAME - (required) the name given to an entry in the HL LOGICAL
+                   LINK file.
+   
+     Output:
+        function return value - 1 if the SINGLE THREADED flag is set to YES,
+                                otherwise it returns 0.
+ 
+ 
+  $$STHREADS^HLOTLNK(LINKNAME,ON)
+  ===============================
+  This is used to turn on or off the SINGLE THREADED flag (field #23) of
+  an entry in the HL LOGICAL LINK file (#870).
+       
+    Input:
+       LINKNAME - (required) the name (.01 field) of an entry in the
+               HL LOGICAL LINK file (#870).
+       ON - (optional) A value of:  1 will set the flag.
+                                    0 or "" will cause the flag to be deleted. 
+                                    Not passed - same effect as "".
+         
+    Output:
+       function return value - Returns the new value of the SINGLE THREADED flag,
+                               or -1 if the inputs were invalid.
+          
+   
+  Test Sites:
+  ===========
+  HUNTINGTON, WV VAMC
+  LEXINGTON, KY VAMC
+  NEW JERSEY HCS 
+   
+  Remedy:  
+  ========
+   N/A
+ 
+ 
+  
+ Installation Instructions:
+ =========================
+  
+    1.  Users are allowed to be on the system during the installation. 
+        Installation time is under 3 minutes.  
+        
+    2.  Disable the HL7 TCPIP services for the HLO multi-listener running on
+        all nodes in the cluster. For example, at the VMS prompt in your
+        production account:
+  
+          ISC6A1> TCPIP          <-- at the VMS prompt
+          TCPIP> DISABLE SERVICE HLS5001CACHE  
+  
+          In your test account:
+  
+          ISC6A1> TCPIP          <-- at the VMS prompt
+          TCPIP> DISABLE SERVICE HLS5026CACHE  
+  
+         You could also do this from the M programmer's prompt as follows:
+   
+         VISTA> D ^%CLI   <-- at the M programmer's prompt                       
+         CLI command: TCPIP                 
+         TCPIP> DISABLE SERVICE HLS5001CACHE  
+  
+    3.  Use the STOP HLO option of the HLO SYSTEM MONITOR screen to temporarily
+        stop the transmission of HLO messages. Wait several minutes to insure 
+        that all HLO processes have terminated.
+        
+  
+    4.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+        option will load the KIDS package onto your system.
+  
+    5.  This patch is now loaded into a transport global on your system.
+        The next step is to use KIDS to install the Transport global.  On
+        the KIDS menu, under the 'Installation' menu, use the following
+        options:
+  
+           Verify Checksums in Transport Global
+  
+           Print Transport Global 
+  
+           Compare Transport Global to Current System 
+  
+           Backup a Transport Global
+  
+           Install Package(s) 
+  
+        When using the Install Package(s) menu option to install the patch
+        build, you will be asked several questions.  The questions, and the
+        answers you should supply, are shown below.
+  
+        INSTALL NAME: <HL*1.6*155>
+  
+        Want KIDS to Rebuild Menu Trees Upon Completion of Install?  <NO>
+  
+        Want KIDS to INHIBIT LOGONS during the install?  <NO>
+  
+        Want to DISABLE Scheduled Options, Menu Options,
+  
+          and Protocols?  <NO>
+   
+       A pre-install routine will verify that all HLO processes have been
+       stopped before the installation will complete. 
+   
+  
+    6. Enable the HL7 TCPIP services for the multi-listeners
+  
+          For example, in a production account at the VMS prompt:
+          ISC6A1> TCPIP             <-- at the VMS prompt
+          TCPIP> ENABLE SERVICE HLS5001CACHE 
+  
+          For example, in a test account:
+  
+          ISC6A1> TCPIP             <-- at the VMS prompt
+          TCPIP> ENABLE SERVICE HLS5026CACHE 
+  
+         You could also do this from the M programmer's prompt as follows:
+  
+         VISTA> D ^%CLI   <-- at the M programmer's prompt                       
+         CLI command: TCPIP
+         TCPIP> ENABLE SERVICE HLS5001CACHE   
+  
+    
+    7. Use the START HLO option within the HLO SYSTEM MONITOR screen
+       to resume transmission of HLO messages in your production account.
+       This step is optional in test systems.
+   
+    8. On production systems, verify that outgoing messages have resumed
+       being transmitted.  You can do this by monitoring the system via the
+       HLO System Monitor for a few minutes to insure that the count of
+       messages pending transmission is not growing.
+  
+    
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLOCLNT
+    Before: B80403155   After: B82958166  **126,130,131,134,137,139,143,
+                                           147,155**
+Routine Name: HLOCLNT1
+    Before: B33784645   After: B35977020  **126,130,131,134,137,139,146,155**
+Routine Name: HLOPING
+    Before: B23547701   After: B25888835  **147*,155*
+Routine Name: HLOT
+    Before:  B3437824   After:  B6475686  **126,131,139,146,155**
+Routine Name: HLOTLNK
+    Before: B26226165   After: B30609561  **126,130,131,139,146,155**
+ 
+Routine list of preceding patches: 146, 147
+
+=============================================================================
+User Information:
+Entered By  : MOORE,CHARLES J               Date Entered  : FEB 09, 2011
+Completed By: SINGH,GURBIR                  Date Completed: NOV 21, 2011
+Released By : APOLONIO,AUGUSTO              Date Released : NOV 23, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

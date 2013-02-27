@@ -1,0 +1,360 @@
+
+=============================================================================
+Run Date: MAR 21, 2012                     Designation: GMTS*2.7*99
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7        SEQ #92                    Status: Released
+                  Compliance Date: APR 21, 2012
+=============================================================================
+
+
+Subject: High Risk Mental Health Patient - National Reminder & Flag
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Other
+  - Informational
+
+Description:
+============
+
+ This patch is in support of the Improve Veteran Mental Health (IVMH) 
+ initiative, High Risk Mental Health (HRMH) - National Reminder & Flag.
+ This patch will install four Health Summary Components, two Health 
+ Summary Types, and a single Health Summary Object.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+   Four new entries added to HEALTH SUMMARY COMPONENT (#142.1)
+  
+ 1. MAS CONTACTS - This component will display contact phone numbers for
+ the patient along with contact information for emergency and NOK contacts,
+ if available
+  
+ 2. MAS MH CLINIC VISITS FUTURE - This component uses a Reminder Location
+ List to help find the next appointment for the patient in any mental
+ health clinic.
+  
+ 3. MH HIGH RISK PRF HX - This component will display current assignment
+ status and assignment history of the Category II (local) High Risk for
+ Suicide Patient Record Flag.
+  
+ 4. MH TREATMENT COORDINATOR - This component will display the Mental 
+ Health Treatment Coordinator assigned to this patient.
+  
+   Two new entries added to HEALTH SUMMARY TYPE (#142)
+  
+ 1. VA-MH HIGH RISK PATIENT - This Type contains the four Health Summary
+ Components mentioned above, and is the basis for creating the VA-MH HIGH
+ RISK PATIENT (TIU) Health Summary Object.
+  
+ 2. REMOTE MH HIGH RISK PATIENT - This Type contains the same components 
+ as #1 and allows viewing the aforementioned information from remote sites.
+  
+   One new entry added to HEALTH SUMMARY OBJECT (#142.5)
+  
+ 1. VA-MH HIGH RISK PATIENT (TIU) - This object is created from the VA-MH
+ HIGH RISK PATIENT Health Summary Type and allows embedding the 
+ aforementioned information into a document.  Its primary use here is to 
+ allow creation of the VA-MH HIGH RISK PATIENT TIU/HS object for use in 
+ the VA-MH HIGH RISK NO SHOW FOLLOW-UP Reminder Dialog.
+  
+   One new entry is added to the REMINDER EXCHANGE file (811.8)
+  
+ 1. GMTS FOR HRMH is used by the Reminder Exchange install utility called
+ from the post-install routine.  This entry contains the Health Summary
+ items distributed with this patch.
+  
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20070589 - High Risk Mental Health Patient - National Reminder and Flag
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ UPSTATE NEW YORK HCS BUFFALO
+ PORTLAND VAMC
+ NORTHPORT VAMC
+ NORTHERN CALIFORNIA HCS
+ MILWAUKEE VAMC
+ MARYLAND HCS
+ INDIANAPOLIS VAMC
+ CHICAGO VAMC
+  
+ Software & Documentation Retrieval Instructions
+ ------------------------------------ 
+ The software for this set of patches is not being distributed through the 
+ National Patch Module. There is a multi-package build named HIGH RISK MH 
+ 1.0 which contains the following KIDS builds: DG*5.3*836, SD*5.3*578, 
+ TIU*1.0*260, GMTS*2.7*99, and PXRM*2.0*18.The associated host file is 
+ named HIGH_RISK_MH_1_0.KID.
+  
+ The set of documentation has been bundled into a single zip file named: 
+ HRMHP_DOCS.ZIP.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from: 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve the files directly from a specific 
+ server as follows:
+  
+ Albany      ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines       ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov  <ftp://ftp.fo-slc.med.va.gov>
+  
+ HRMHP_DOCS.ZIP contains the following files:
+  
+ PXRM_2_18_IG.PDF
+ PXRM_2_UM.PDF
+ PXRM_2_TM.PDF
+ PXRM_2_MM.PDF
+ PXRM_2_18_RN.PDF
+ HSUM_2_7_99_UM.PDF
+ HSUM_2_7_99_TM.PDF
+ DG_5_3_836_IG.PDF
+ SD_5_3_578_IG.PDF
+  
+ Documentation can also be found on the VistA Documentation Library (VDL)
+ at:
+ http://www.va.gov/vdl/
+  
+ Title                         File Name                      FTP Mode
+ ----------------------------------------------------------------------- 
+ High Risk Mental Health Patient Project Installation and Setup Guide 
+                                PXRM_2_18_IG.PDF               Binary
+ PXRM User Manual               PXRM_2_UM.PDF                  Binary
+ PXRM Tech Manual               PXRM_2_TM.PDF                  Binary
+ High Risk Mental Health Patient Project Release Notes
+                                PXRM_2_18_RN.PDF               Binary
+ Clinical Reminders Manager's Manual
+                                PXRM_2_MM.PDF                  Binary
+ GMTS User Manual               HSUM_2_7_99_UM.pdf             Binary
+ GMTS Tech Manual               HSUM_2_7_99_TM.pdf             Binary
+ DG Install Guide               DG_5_3_836_IG.PDF              Binary
+ SD Install Guide               SD_5_3_578_IG.PDF              Binary 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Prior to installing the patch, the HEALTH SUMMARY COMPONENT file (#142.1) 
+ needs to be examined for any ABBREVIATION entries that will conflict with 
+ the four new components exported with this patch.  Each new national 
+ component along with its ABBREVIATION is listed here:
+  
+ NAME                                    ABBREVIATION
+ MAS CONTACTS                            CON
+ MAS MH CLINIC VISITS FUTURE             MHFV
+ MH HIGH RISK PRF HX                     MHRF
+ MH TREATMENT COORIDNATOR                MHTC
+  
+ The "C" cross-reference for the HEALTH SUMMARY COMPONENT file (#142.1) 
+ contains the ABBREVIATION for each component.  Examine the global listing 
+ for this cross-reference to determine if any local components will need 
+ the ABBREVATION field updated.
+  
+ ^GMT(142.1,"C","CMB",239)=""
+ ^GMT(142.1,"C","CN",5)=""
+ ^GMT(142.1,"C","CNB",240)=""
+ ^GMT(142.1,"C","CON",660187="" <-Example of a local component that will 
+ conflict with the incoming MAS CONTACTS component abbreviation. 
+  
+ If an ABBREVIATION conflict is found, the "Create/Modify Health Summary 
+ Components" option of the GMTS IRM MAINTENANCE MENU should be used to 
+ edit the local component's ABBREVIATION.
+  
+ This patch contains an installation routine (GMTSPI99) that will perform 
+ an environment check, do any necessary housekeeping, and then install the 
+ new Health Summary items.
+  
+ The environment check will examine the HEALTH SUMMARY COMPONENT file 
+ (#142.1) to ensure there will not be any NAME (.01) or NUMBER (.001) 
+ collisions with the four new nationally deployed Health Summary 
+ Components (MAS CONTACTS, MAS MH CLINIC VISITS FUTURE, MH TREATMENT 
+ COORDINATOR).  If any potential collisions are found, the install will be 
+ ABORTED until the issue is resolved.  After the issue has been addressed, 
+ local IT staff can re-install the patch using Restart Install of 
+ Packages option.
+  
+ After the environment check, PRE^GMTSPI98  will delete 
+ any previous versions of: the Reminder Exchange file used to deploy 
+ portions of the Health Summary items, the Health Summary Components, and 
+ the Health Summary Types. PRE will also re-index the HEALTH SUMMARY TYPE 
+ and HEALTH SUMMARY COMPONENT files along with rebuilding the Ad Hoc 
+ Health Summary.
+  
+ After PRE, POST^GMTSPI98 will create stub entries in file #142 for the 
+ remote Health Summary Type, and then call the silent Reminder Exchange 
+ install utility to install the remaining Health Summary items.  Lastly, 
+ POST will re-index the HEALTH SUMMARY TYPE and HEALTH SUMMARY COMPONENT 
+ files along with rebuilding the Ad Hoc Health Summary.
+  
+ The routine GMTSPI98 contains the PRE and POST install actions for this 
+ build. GMTSPI98 can be deleted after successful installation.
+  
+ Installation Instructions
+ -------------------------
+ The following install steps are only a high level overview, please follow 
+ the PXRM install guide for more detailed instructions and guidance.
+  
+ 1.  Download the HIGH_RISK_MH_1_0.KID file from the appropriate  
+     FTP Server to the directory on your system.
+  
+ 2.  Use LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and 
+     enter: [DIR]:HIGH_RISK_MH_1_0.KID, where [DIR] is the local
+     directory where you have stored the host file.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use any of
+     the following options. When prompted for the INSTALL enter the build 
+     HIGH RISK MH 1.0:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this build. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this build
+         is installed. It compares all components of this build
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and 
+     choose the build to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Answer 'NO'
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Answer 'NO'
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The two new HEALTH SUMMARY TYPEs, VA-HIGH RISK PATIENT and REMOTE MH 
+ HIGH RISK PATIENT will need to be added to the CPRS GUI Reports tab 
+ selection list.  This can be setup from one of several menu options.  
+ Detailed instruction are available in the Health Summary User 
+ Manual (hsum_2_7_um.pdf).
+  
+ GMTS COORDINATOR
+ CPRS Reports Tab 'Health Summary Types List' Menu
+         Edit 'Health Summary Types List' Parameters
+  
+ OR
+  
+ CPRS MANAGER MENU  ORMGR     CPRS Manager Menu
+         PE     CPRS Configuration (Clin Coord) ...
+                 GP     GUI Parameters ...
+                         HS     GUI Health Summary Types
+  
+  
+ Allowable Health Summary Types may be set for the following:
+  
+      2   User          USR    [choose from NEW PERSON]
+      3   Division      DIV    [choose from INSTITUTION]
+      4   System        SYS    [DVF.FO-SLC.MED.VA.GOV]
+      5   Service       SRV    [choose from SERVICE/SECTION]
+  
+  
+ Add the new REMOTE MH HIGH RISK PATIENT - HEALTH SUMMARY TYPE to the 
+ appropriate list based on your local practice and procedures.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSMHAP
+    Before:       n/a   After: B10560404  **99**
+Routine Name: GMTSMHCI
+    Before:       n/a   After: B11062334  **99**
+Routine Name: GMTSMHRF
+    Before:       n/a   After:  B3664137  **99**
+Routine Name: GMTSMHTC
+    Before:       n/a   After:    B56951  **99**
+Routine Name: GMTSPI99
+    Before:       n/a   After: B27352766  **99**
+
+=============================================================================
+User Information:                          Hold Date     : FEB 23, 2012
+Entered By  : THOMPSON,WILLIAM ANTHONY      Date Entered  : APR 05, 2011
+Completed By: OLSEN,JAMES                   Date Completed: FEB 14, 2012
+Released By : SCHWARTZ,VIKIE                Date Released : MAR 21, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

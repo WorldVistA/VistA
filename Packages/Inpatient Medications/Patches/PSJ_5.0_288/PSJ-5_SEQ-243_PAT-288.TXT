@@ -1,0 +1,262 @@
+$TXT Created by ENFINGER,MARK J at MDEVCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Friday, 12/14/12 at 17:17
+=============================================================================
+Run Date: FEB 11, 2013                     Designation: PSJ*5*288
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #243                      Status: Released
+                  Compliance Date: MAR 13, 2013
+=============================================================================
+
+Associated patches: (v)PSJ*5*260   <<= must be installed BEFORE `PSJ*5*288'
+
+Subject: MOCHA v1.0 Enhancements 1 IP FOLLOWUP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ ***************************Attention*************************
+ This patch is part of the Medication Order Check Healthcare Application 
+ (MOCHA)v1.0 Enhancements 1 group of patches. There are a total of eight 
+ patches and one .kid (host) file that must be installed as a group. The 
+ patches must be installed in the following order:
+  
+ OR*3*352
+ PSS*1*164
+ PSS*1*169
+ PSO*7*390
+ PSO*7*417
+ PSJ*5*268
+ <xxx>_1_0_P23.kid
+ PSJ*5*260
+ PSJ*5*288
+  
+ For the ".kid" file, value of <xxx> will be determined by the ward 
+ automated dispensing equipment in use at your facility.  If no ward 
+ automated dispensing equipment is in use at your site, this file will
+ not be needed. For those sites using Pyxis, xxx=PPU, for Omnicell sites,
+ xxx=OPU, and for McKesson sites, xxx=MPU.  To obtain this file or if 
+ additional information is required regarding this ".kid" file, please 
+  
+ Patch PSJ*5*288 will provide the following enhancements:
+  
+ 1. This build is to be installed immediately after PSJ*5.0*260 to not 
+    allow the selection of a supply item when using Inpatient Medication
+    profile hidden option 'Check Interactions' synonym (CK).
+  
+ 2. Corrects an issue with data scrolling off the screen that was 
+    occurring during duplicate therapy order display when using the 
+    hidden menu option 'Check Interactions' synonym (CK).
+  
+ 3. Corrects an issue where if a number of edits are made to a specific 
+    field, the system errors out upon verification of the order.
+  
+ 4. Includes a fix to keep orders with a discontinued status from being 
+    included in a list of orders that can be discontinued.
+  
+ 5. Includes a fix to ensure that order checks are not run when a supply 
+    item is selected for verification and that the system will not hang.
+  
+ 6. Corrects a hard error that occurs when an Inpatient order is 
+    discontinued.
+  
+ 7. Includes a change to allow IMO orders to be discontinued from the 
+    list of Therapeutic Duplications in Inpatient Order Entry.
+  
+ ****************************************************************
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Options Associated:
+ --------------------
+  
+  Option Name                 Type       Action
+  -----------                 ----       ------
+  N/A
+  
+ Protocols Associated:
+ ---------------------
+  N/A
+  
+  Protocol Name                          Action
+  -------------                          ------
+  N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+  N/A
+  
+  Template Name                          Action
+  -------------                          ------
+  N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Associated Change Requests: 
+ ---------------------------
+  CCR5888
+  CCR6035
+  CCR6214
+  CCR6215
+  CCR6244
+  CCR6251
+  CCR6259
+  
+ Test Sites:
+ -----------
+ Boston, MA
+ Fresno, CA
+ West Palm Beach, FL
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+  
+ Updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+ Albany         ftp.fo-albany.med.va.gov <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov  <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov    <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www.va.gov/vdl/
+  
+    FILE NAME                    DESCRIPTION
+    =========                    ===========
+  
+ M1E1_PSO_7_PSJ_5_PSS_1_RN.PDF   Medication Order Check Healthcare
+                                 Application (MOCHA) v1 Enhancements
+                                 1 Release Notes 
+  
+ Installation Instructions:
+ --------------------------
+  
+ This patch should not be installed when Inpatient Medications options
+ are being used. If this is not possible, we recommend it should be 
+ installed during Non-Peak hours.
+  
+  
+ Install Time - less than 5 minutes
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option to unload the build.  
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*288):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter "PSJ*5.0*288" at the INSTALL NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//'  answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE7
+    Before: B28193796   After: B28469184  **9,26,34,52,55,50,87,111,181,
+                                           254,267,260,288**
+Routine Name: PSGOEC
+    Before: B74688532   After: B75069336  **23,58,110,175,201,134,181,260,288**
+Routine Name: PSGOEV
+    Before: B73577896   After: B81363759  **5,7,15,28,33,50,64,58,77,78,
+                                           80,110,111,133,171,207,241,267,
+                                           268,260,288**
+Routine Name: PSJDGCK
+    Before:  B7861600   After:  B7938407  **260,288**
+Routine Name: PSJOCDT
+    Before: B48494609   After: B55186647  **181,260,288**
+ 
+Routine list of preceding patches: 260
+
+=============================================================================
+User Information:
+Entered By  : ENFINGER,MARK                 Date Entered  : NOV 09, 2012
+Completed By: YARBER,KIMBERLY               Date Completed: FEB 11, 2013
+Released By : TEAGUE,LYN                    Date Released : FEB 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

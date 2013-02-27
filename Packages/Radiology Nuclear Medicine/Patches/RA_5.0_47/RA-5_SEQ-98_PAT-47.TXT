@@ -1,0 +1,973 @@
+
+=============================================================================
+Run Date: AUG 23, 2011                     Designation: RA*5*47
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5        SEQ #98                      Status: Released
+                  Compliance Date: SEP 23, 2011
+=============================================================================
+
+Associated patches: (v)RA*5*90     <<= must be installed BEFORE `RA*5*47'
+                    (v)RA*5*99     <<= must be installed BEFORE `RA*5*47'
+                    (v)RA*5*104    <<= must be installed BEFORE `RA*5*47'
+
+Subject: Standardize VistA RIS messaging interface to current IHE specs
+
+Category: 
+  - Routine
+  - Input Template
+  - Print Template
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ Associated NSR (New Service Request):
+ =====================================
+ 20050606
+ http://vista.med.va.gov/nsrd/Tab_GeneralInfoView.asp?RequestID=20050606
+   
+ This patch will provide the functionality to update the messages broadcast
+ by VistA (Veterans Health Information System & Technology Architecture)
+ Radiology in accordance with HL7 (Health Level 7) version 2.4 standards.
+   
+ This patch will add a Study Instance UID (Unique Identifier) to specific
+ v2.4 HL7 event messages (when an order is registered, an exam cancelled,
+ or when an exam reaches the examined status and when a report message is
+ sent).  This will allow Vista Radiology to send event transactions to a
+ commercial PACS (Picture Archiving and Communications System) directly,
+ bypassing the Vista DICOM (Digital Imaging and Communications in Medicine)
+ Text Gateway. 
+  
+ Configuration instructions to set up the PACS to do this are included with
+ VistA Imaging patch MAG*3.0*49, which must be installed after this patch.
+   
+ The Study Instance UID is a unique key that associates the images to a
+ particular study, and thus is required in messages sent to the PACS.
+ Since 1996, this value has been created by the Vista DICOM Text Gateway,
+ which then sends the DICOM messages to the PACS. Now, HL7 is the accepted
+ protocol for transferring this information. The VA would like to
+ accommodate commercial PACS and supply them with HL7 order messages and
+ discontinue the use of DICOM for this application.
+   
+ This patch will create the new Site Specific Accession Number (SSAN) field
+ by pre-pending the Facility ID to the day-case number.  There will be a new
+ division parameter and a set-up option created to control use of the SSAN.
+ After the division parameter is set to YES, the system will generate and
+ store the Site Specific Accession Number during Registration and add the
+ display of the SSAN to options, reports and look-ups which previously
+ displayed the case number or day-case number.
+    
+ Patch RA*5.0*47 and Patch MAG*3.0*49 are closely related. Patch RA*5.0*47
+ must be installed first and Patch MAG*3.0*49 must be installed right after
+ Patch RA*5.0*47. Each patch creates APIs used by the other and therefore
+ must be installed in that order.  After both RA*5.0*47 and MAG*3.0*49 are
+ installed AND properly set up, the site will not need the Vista DICOM Text
+ Gateway to create the unique key for the commercial PACS.
+   
+ 1. The RAHLR* routines have been modified to call the following Imaging APIs
+ for v2.4 messages: 'PID^MAGDHLS', 'PV1^MAGDHLS', & 'NPFON^MAG7UFO'.  These
+ APIs are called to get the Patient ID information needed to build the PID
+ segment, Patient Visit information needed for the PV1 segment and Ordering
+ Provider Call Back Phone Number(s) for the ORC segment.  Calls to these
+ Imaging API's are covered by the following ICR's:
+  
+    5021 - NPFON^MAG7UFO
+    5023 - PID^MAGDHLS and PV1^MAGDHLS
+  
+ 2. The RAHLR* routines have also been modified to call the following Imaging 
+ APIs for v2.4 messages: 'STUDYUID^MAGDRAHL' and 'ZDS^MAGDRAHL'.  These APIs
+ are called in order to generate a unique Study Instance User Identification
+ (SIUID) key.  The SIUID is then stored in a new VistA Radiology field 
+ called the STUDY INSTANCE UID (70.03,81) and is then used to create a new
+ ZDS segment, which is placed after the OBR segment and used in the ORM and
+ ORU HL7 v2.4 message types.  Calls to these Imaging APIs are covered by
+ the following ICR:
+   
+    5022 - ZDS^MAGDRAHL
+  
+ 3. 'RA REG 2.4', 'RA EXAMINED 2.4', 'RA CANCEL 2.4', & 'RA RPT 2.4' are
+ newly created event driver protocols that are exported with this patch.
+  
+ 4. The [RA REGISTER] input template has been modified to check if the new
+ Site Specific Accession Number site parameter (see #8 below) is turned on
+ and if it is to do the following:
+  (a) file the site accession number in the new SITE ACCESSION NUMBER 
+      (#31) field
+  (b) file the study instance UID in the new STUDY INSTANCE UID (#81) field
+  
+ Both of these new fields are in the EXAMINATIONS (#70.03) multiple.
+    
+ 5. The routine RAAPI has been added to update the new SITE ACCESSION 
+ NUMBER field. This routine also provides a private integration agreement 
+ with VistA Imaging providing them with several new API's:
+   
+    - ACCFIND^RAAPI provides the ability to pass in an accession number and
+      return the examination identifiers specific to a particular exam record.
+    
+    - ACCRPT^RAAPI provides the ability to pass in a pointer value to an entry
+      in the RAD/NUC MED REPORTS (#74) file and return the accession number(s). 
+   
+    - GETSIUID^RAAPI provides the ability to pass in the exam data for an exam,
+      i.e. the RADFN, RADTI and RACNI and return the study instance UID.
+   
+    - SIUIDFND^RAAPI provides the ability to pass in a study instance UID and
+      return the exam data (RADFN, RADTI, RACNI) associated with that SIUID.
+    
+ 6. The EXAM DATE (#.01) field of the REGISTERED EXAMS (#70.02) sub-file
+ has been modified so that data in that field is now uneditable.
+    
+ 7. Because of the addition of the SITE ACCESSION NUMBER and STUDY INSTANCE
+ UID fields to the EXAMINATIONS multiple, the [RA REGISTER] input template
+ must be re-compiled.  The RA47PST routine re-compiles the [RA REGISTER] input
+ template.
+  
+ 8. A new option called Site Accession Number Set-up [RA SITEACCNUM] has been
+ added to the IRM Menu [RA SITEMANAGER].  This option functions as a switch
+ to turn on the use of the SITE SPECIFIC ACCESSION NUMBER (SSAN).  This will
+ provide the sites with the ability to *NOT* begin using the SSAN until 
+ all devices are able to handle the longer accession number.  The parameter is
+ set by division and it is distributed with a NULL value.  All divisions will
+ be set when the switch is flipped (either ALL ON or ALL OFF).  Only when this
+ parameter is set to YES will the Radiology package generate and store the
+ Site Accession Number during Registration.  
+  
+ NOTE: DO NOT TURN ON THIS SITE PARAMETER UNTIL READY TO BEGIN V2.4 MESSAGING;
+ SEE "V2.4 MESSAGING SET-UP STEPS" BELOW.
+    
+ Also, after the parameter is set to YES the SSAN will be displayed in RA
+ options where the Case Number or Day-Case Number was previously displayed.
+ ******************************************************************************
+ ***   NOTE: For historical cases created before the parameter was set,     ***
+ ***   there is no associated SSAN, therefore the Case Number or Day-Case   ***
+ ***   Number will continue to display for the life of those cases.         ***
+ ******************************************************************************
+    
+ Below are examples of the existing and new displays, followed by a list of
+ options which will be affected:
+    
+ EXAMPLE (EXISTING DISPLAY, DIVISION PARAMETER = NO or NULL):
+ ============================================================
+ Select Exam Entry/Edit Menu Option:  Case No. Exam Edit
+    
+ Enter Case Number: 3039
+    
+ Choice Case No.         Procedure                 Name                  Pt ID
+ ------ ---------------  ---------                 ---------------       ------
+  1     032009-3039      ANGIO CAROTID CEREBRAL UN POLHAUS,TOM             9865
+                         (RAD  Detailed) CPT:75665
+    
+ EXAMPLE (NEW DISPLAY, DIVISION PARAMETER = YES):
+ ================================================
+ Select Exam Entry/Edit Menu Option:  Case No. Exam Edit
+    
+ Enter Case Number: 141-032009-3039  <-- user may still select by case # (3039)
+    
+ Choice Case No.         Procedure              Name                 Pt ID
+ ------ ------------     ---------             ----------------      ------
+  1     141-032009-3039  ANGIO CAROTID CEREBRAL UN POLHAUS,TOM             9865
+                         (RAD  Detailed) CPT:75665
+    
+    OPTIONS AFFECTED:
+    =================
+    Abnormal Exam Report   [RA ABNORMAL]
+    Access Uncorrected Reports   [RA UNCORRECTED REPORTS]
+    Add Exams to Last Visit   [RA ADDEXAM]
+    Add/Remove Report From Batch   [RA BTCHREMOVE]
+    Cancel an Exam   [RA CANCEL]
+    Case No. Exam Edit   [RA EDITCN]
+    Clinic Distribution List   [RA RPTDISTLISTCLINIC]
+    Daily Log Report   [RA LOG]
+    Delete a Report   [RA DELETERPT]
+    Delinquent Status Report   [RA DELINQUENT]
+    Diagnostic Code and Interpreter Edit by Case No.   [RA DIAGCN]
+    Display Patient Demographics   [RA PROFDEMOS]
+    Display a Rad/Nuc Med Report   [RA RPTDISP]
+    Draft Report (Reprint)   [RA REPRINT]
+    Duplicate Dosage Ticket   [RA DOSAGE TICKET]
+    Duplicate Flash Card   [RA FLASH]
+    Edit Exam by Patient   [RA EDITPT]
+    Exam Deletion   [RA DELETEXAM]
+    Exam Profile (selected sort)   [RA PROFSORT]
+    Exam Status Display   [RA STATLOOK]
+    Incomplete Exam Report   [RA INCOMPLETE]
+    Indicate No Purging of an Exam/report   [RA NOPURGE]
+    Jacket Labels   [RA LABELS]
+    List Reports in a Batch   [RA BTCHLIST]
+    On-line Verifying of Reports   [RA RPTONLINEVERIFY]
+    Outside Report Entry/Edit   [RA OUTSIDE RPTENTRY]
+    Override a Single Exam's Status to 'complete'   [RA OVERRIDE]
+    Print Division Parameter List   [RA SYSDIVLIST]
+    Print Rad/Nuc Med Requests by Date   [RA ORDERPRINTS]
+    Print Selected Requests by Patient   [RA ORDERPRINTPAT]
+    Print a Batch of Reports   [RA BTCHPRINT]
+    Profile of Rad/Nuc Med Exams   [RA PROFQUICK]
+    Radiopharmaceutical Administration Report   [RA NM RADIOPHARM ADMIN]
+    Radiopharmaceutical Usage Report   [RA NM RADIOPHARM USAGE]
+    Register Patient for Exams   [RA REG]
+    Report Entry/Edit   [RA RPTENTRY]
+    Report's Print Status   [RA RPTDISTPRINTSTATUS]
+    Request an Exam   [RA ORDEREXAM]
+    Restore a Deleted Report   [RA RESTORE REPORT]
+    Select Report to Print by Patient   [RA RPTPAT]
+    Status Tracking of Exams   [RA STATRACK]
+    Summary/Detail report (for Outpt Proc Wait Times)   [RA TIMELINESS REPORT]
+    Summary/Detail report (for Verification Timeliness)   [RA PERFORMIN RPTS]
+    Unprinted Reports List   [RA RPTDISTLISTUNPRINTED]
+    Unverified Reports   [RA DAIUVR]
+    Unverify a Report for Amendment   [RA UNVERIFY]
+    Update Exam Status   [RA UPDATEXAM]
+    Verify Batch   [RA BTCHVERIFY]
+    Verify Report Only   [RA RPTVERIFY]
+    View Exam by Case No.   [RA VIEWCN]
+    Ward Distribution List   [RA RPTDISTLISTWARD]
+    
+    
+ Data Dictionary Changes:
+ ------------------------
+ FILE #   FIELD #    FIELD NAME                   NEW/MODIFIED item(s)
+ -------- ---------  -----------------            --------------------
+ 70       70.02,.01  EXAM DATE                    MODIFIED
+ 70       70.03,31   SITE ACCESSION NUMBER        NEW   
+ 70       70.03,81   STUDY INSTANCE UID           NEW
+    
+ 74       74,.01     DAY-CASE#                    MODIFIED
+ 74       74.05,.01  OTHER CASE#                  MODIFIED
+     
+ 79       79,.131    USE SITE ACCESSION NUMBER?   NEW
+    
+   
+ Software & Documentation Retrieval:
+ -----------------------------------
+ SOFTWARE
+ This patch is available via FTP (File Transfer Protocol) in a KIDS (Kernel
+ Installation and Distribution System) distribution file.  The Host File is
+ named RA_5_P47.KID. 
+      
+ The software distribution includes:
+ File Name              Description           Download Format
+ RA_5_P47.KID           KIDS Build            ASCII
+ 
+ DOCUMENTATION
+ These are the documentation changes associated with this patch:
+ User Manual       : RA5_0UM.doc, RA5_0UM.pdf
+ Technical Manual  : RA5_0TM.doc, RA5_0TM.pdf
+ HL7 Interface Spec: RA5_0HL7spec.doc, RA5_0HL7spec.pdf
+ HL7 Setup Manual  : RA5_0HL7setup.doc, RA5_0HL7setup.pdf
+ Release Notes     : RA5_0RN_P47.doc, RA5_0RN_P47.pdf
+   
+ The software and the documentation can be found in the following
+ [ANONYMOUS.SOFTWARE] directories:
+   
+                              PREFERRED ADDRESS
+                              -------------------------
+ First available ftp server   download.vista.med.va.gov
+   
+ SPECIFIC FIELD OFFICE        FTP ADDRESS
+ ---------------------        ------------------------
+ Albany                       ftp.fo-albany.med.va.gov
+ Hines                        ftp.fo-hines.med.va.gov
+ Salt Lake City               ftp.fo-slc.med.va.gov
+   
+   
+ Test Sites
+ ==========
+ South Texas HCS
+ Las Vegas VAMC
+ San Diego VAMC
+  
+   
+ INSTALLATION INSTRUCTIONS
+ =========================
+  The install time for this patch is less than ten minutes.
+  
+  Radiology users should be off of the system.
+  
+  Since this patch impacts VistA HL7 messaging, this patch is best installed
+  when system activity is minimal.
+  
+  Please shutdown the VistA Radiology and Voice Recognition interfaces.  On
+  the VistA side the shutdown of VistA Radiology means that all radiology
+  logical links should be shutdown.
+    
+  Please notify the Radiology department that the VistA Radiology application
+  will be shutdown. This shutdown will impact the HL7 messaging between
+  VistA Radiology, Voice Recognition, PACS & VistA Imaging.
+  
+  NOTE:  MailMan and Kernel patches must be current on the target system to
+         avoid problems loading and installing this patch.
+    
+     1. From the 'Kernel Installation and Distribution System' (KIDS) menu,
+        select the 'Installation' menu.
+     
+     2. Use the 'Load a Distribution' option.  When prompted for a Host File, 
+        enter the host file named RA_5_P47.KID.  You may need to indicate
+        the full path to the directory containing this file.
+         
+     From the 'Installation' menu you may choose any of the following options
+     prior to installing this patch:
+   
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch.  It will NOT
+         backup any other changes such as data dictionaries or templates.
+  
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch is 
+         installed. It compares all components of the patch (routines, DDs,
+         templates, etc.)
+   
+      c. Verify Checksums in Transport Global - this option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+   
+     3. Use the 'Install Package(s)' option under the 'Installation' menu.
+        When prompted for INSTALL NAME, enter: RA*5.0*47.
+   
+        When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? YES//", respond YES.
+        
+        When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        YES//", respond NO.
+   
+        When prompted "Want to DISABLE Scheduled Options and Menu Options?
+        YES//", respond YES.      
+  
+        When prompted "Enter options you wish to mark as 'Out of Order':",
+        enter the following to disable all Rad/Nuc Med options:
+      
+           RA*
+   
+        When prompted "Enter protocols you wish to mark as 'Out of
+        Order':", depress the 'Enter' key. There are no protocols to set 
+        'Out of Order'.
+  
+     4. Verify that the patch installation completed correctly by using the
+        KIDS 'Utilities...' [XPD UTILITY] option 'Install File Print' [XPD
+        PRINT INSTALL FILE] and selecting this patch (RA*5.0*47).
+  
+     5. Please delete the RA47PST post-install routine.
+  
+   
+  AFTER PATCH RA*5.0*47 IS INSTALLED, PATCH MAG*3.0*49 SHOULD BE INSTALLED!!
+      
+   
+ V2.4 MESSAGING SET-UP STEPS
+ ===========================
+   
+ ******************************************************************************
+ * Once the site is ready to switch over to HL7 V2.4 messaging the following  *
+ * steps must be done.  DO NOT PROCEED WITH THESE STEPS UNTIL READY TO SWITCH *
+ * OVER TO HL7 V2.4 MESSAGING.                                                *
+ *                                                                            *
+ * THESE STEPS MUST BE DONE IN COORDINATION WITH THE VOICE RECOGNITION        *
+ * AND PACS SOFTWARE IN USE AT THE SITE.                                      *
+ ******************************************************************************
+    
+ IMPORTANT: These steps should be done when users are not using the Radiology
+ Options or Voice Recognition software.
+   
+ The following steps are for setting up the Voice Recognition and PACS event
+ driver protocols.  If the PACS is upgrading from using DICOM messages from
+ the VistA Imaging Text Gateway to HL7 V2.4 messaging, or for setting up the
+ VistA Imaging MAGD SEND ORM and MAGD SEND ORU subscriber protocols, please
+ refer to the MAG*3.0*49 patch documentation.  That documentation also 
+ describes how to specify the sending and receiving application names as
+ well as the TCP/IP (Transmission Control Protocol/Internet Protocol)
+ address and port number of the HL7 listener on the PACS.
+    
+ In order to use the new IHE (Integrating the Healthcare Enterprise) 
+ compliant HL7 v2.4 messaging provided by this patch, the corresponding
+ voice recognition and PACS subscriber protocols must be added as
+ SUBSCRIBERS to the new v2.4 event driver protocols exported in this
+ patch.  These are likely the subscriber protocols that the site currently
+ has for the existing v2.3 (or previous) protocols.
+    
+ Also, the corresponding voice recognition and PACS subscriber protocols should
+ be removed from the existing v2.3 event driver protocols, to prevent the
+ broadcast of duplicate messages.
+  
+ OVERVIEW OF THE V2.4 SET-UP STEPS:
+ 1) Remove Voice Recognition and PACS subscribers RA TALKLINK ORM, RA PSCRIBE
+      ORM, RA RADWHERE ORM, RA SEND ORM from existing ORM event drivers:
+ o RA REG 2.3  (PACS may need to be removed from RA REG)
+ o RA EXAMINED 2.3  (PACS may need to be removed from RA EXAMINED)
+ o RA CANCEL 2.3  (PACS may need to be removed from RA CANCEL)
+  
+ 2) Remove Voice Recognition and PACS subscribers RA TALKLINK ORU, RA PSCRIBE
+      ORU, RA RADWHERE ORU, RA SEND ORU from existing ORU event drivers: 
+ o RA RPT 2.3  (PACS may need to be removed from RA RPT)
+  
+ 3) Add Voice Recognition and PACS subscribers to new v2.4 ORM event 
+    drivers: 
+ o RA REG 2.4
+ o RA EXAMINED 2.4
+ o RA CANCEL 2.4
+  
+ 4) Add Voice Recognition and PACS subscribers to new v2.4 ORU event 
+    driver: 
+ o RA RPT 2.4
+  
+ 5) Change Version ID field of message receipt protocol to 2.4
+  
+ 6) Turn on Site Specific Accession Number parameter
+  
+ For further details and examples of each step, see below.
+     
+ ******************************************************************************
+ * Note:                                                                      *
+ * In the examples below, RA TALKLINK ORM/ORU is used to illustrate the       *
+ * process, but the steps are the same for RA PSCRIBE ORM/ORU, RA RADWHERE    *
+ * ORM/ORU and/or RA SEND ORM/ORU.  Just substitute the appropriate name.     *
+ ******************************************************************************
+    
+ STEP 1 - REMOVE VR AND PACS SUBSCRIBERS FROM EXISTING 'ORM' EVENT DRIVER
+ PROTOCOLS
+ ============================================================================
+ Remove the Voice Recognition and PACS subscriber protocols from the RA
+ CANCEL 2.3, RA EXAMINED 2.3 and RA REG 2.3 protocols.  The PACS subscriber
+ may need to be removed from the RA REG, RA EXAMINED and RA CANCEL 
+ protocols.
+    
+  - For TalkStation the subscriber protocol is RA TALKLINK ORM.
+  - For PowerScribe the subscriber protocol is RA PSCRIBE ORM.
+  - For RadWhere    the subscriber protocol is RA RADWHERE ORM.
+  - For PACS        the subscriber protocol is RA SEND ORM.
+    
+ EXAMPLE 1
+ =========
+ [Note: This step needs to be done for the RA REG 2.3, RA CANCEL 2.3 and
+ RA EXAMINED 2.3 protocols, but only RA REG 2.3 is shown in this example.]
+  
+        Select OPTION NAME: HL7 MAIN MENU   HL MAIN MENU     HL7 Main Menu
+  
+                  Event monitoring menu ...
+                  Systems Link Monitor
+                  Filer and Link Management Options ...
+                  Message Management Options ...
+                  Interface Developer Options ...
+                  Site Parameter Edit
+           HLO    HL7 (Optimized) MAIN MENU ...
+  
+      Select HL7 Main Menu Option:  Interface Developer Options
+  
+           EA     Application Edit
+           EP     Protocol Edit
+           EL     Link Edit
+           VI     Validate Interfaces
+                  Reports ...
+  
+      Select Interface Developer Options Option:  Protocol Edit
+  
+      Select PROTOCOL NAME: RA REG 2.3   <--- select v2.3 event driver protocol
+   
+  
+                        HL7 INTERFACE SETUP                         PAGE 1 OF 2
+        -----------------------------------------------------------------------
+  
+                    NAME: RA REG 2.3                                             
+  
+       DESCRIPTION (wp):   [This protocol is triggered whenever a Radiology]
+  
+  
+       ENTRY ACTION:
+  
+       EXIT ACTION:
+  
+  
+       TYPE: event driver  <--- Hit <return> at this field to go to next screen
+  
+        _________________________________________________________________
+  
+  
+  
+        COMMAND:                                  Press <PF1>H for help
+                           HL7 EVENT DRIVER                         PAGE 2 OF 2
+                          RA REG 2.3                    
+        ----------------------------------------------------------------------
+              SENDING APPLICATION: RA-VOICE-SERVER
+         TRANSACTION MESSAGE TYPE: ORM                        EVENT TYPE: O01
+                MESSAGE STRUCTURE:
+                    PROCESSING ID:                            VERSION ID: 2.3 
+                  ACCEPT ACK CODE:                  APPLICATION ACK TYPE:
+  
+          RESPONSE PROCESSING RTN: **************                            
+                                   SUBSCRIBERS
+          RA TALKLINK ORM   <--- remove VR ORM subscriber              
+          RA SEND ORM       <--- remove PACS ORM subscriber, if applicable
+        _____________________________________________________________________ 
+    
+    
+ STEP 2 - REMOVE VR AND PACS SUBSCRIBERS FROM EXISTING 'ORU' EVENT DRIVER
+ PROTOCOL
+ =============================================================================
+ Remove the Voice Recognition and PACS subscriber protocols from the RA 
+ RPT 2.3 protocols.  The PACS subscriber may need to be removed from the RA
+ RPT protocol.
+  
+  - For TalkStation the subscriber protocol is RA TALKLINK ORU.
+  - For PowerScribe the subscriber protocol is RA PSCRIBE ORU.
+  - For RadWhere    the subscriber protocol is RA RADWHERE ORU.
+  - For PACS        the subscriber protocol is RA SEND ORU.
+    
+ EXAMPLE 2
+ =========
+        Select OPTION NAME: HL7 MAIN MENU  HL MAIN MENU     HL7 Main Menu
+  
+                  Event monitoring menu ...
+                  Systems Link Monitor
+                  Filer and Link Management Options ...
+                  Message Management Options ...
+                  Interface Developer Options ...
+                  Site Parameter Edit
+           HLO    HL7 (Optimized) MAIN MENU ...
+  
+        Select HL7 Main Menu Option:  Interface Developer Options
+  
+           EA     Application Edit
+           EP     Protocol Edit
+           EL     Link Edit
+           VI     Validate Interfaces
+                  Reports ...
+  
+        Select Interface Developer Options Option:  Protocol Edit
+  
+ Select PROTOCOL NAME: RA RPT 2.3   <--- select v2.3 event driver protocol
+   
+  
+                        HL7 INTERFACE SETUP                         PAGE 1 OF 2
+        -----------------------------------------------------------------------
+  
+                    NAME: RA RPT 2.3                                             
+  
+        DESCRIPTION (wp):   [This protocol is triggered whenever a Radiology]
+  
+  
+        ENTRY ACTION:
+  
+        EXIT ACTION:
+  
+  
+       TYPE: event driver  <--- Hit <return> at this field to go to next screen
+  
+        _________________________________________________________________
+  
+  
+  
+        COMMAND:                                  Press <PF1>H for help
+                           HL7 EVENT DRIVER                         PAGE 2 OF 2
+                          RA RPT 2.3                    
+       ----------------------------------------------------------------------
+              SENDING APPLICATION: RA-VOICE-SERVER
+         TRANSACTION MESSAGE TYPE: ORU                        EVENT TYPE: R01
+                MESSAGE STRUCTURE:
+                    PROCESSING ID:                            VERSION ID: 2.3   
+                  ACCEPT ACK CODE:                  APPLICATION ACK TYPE:
+  
+          RESPONSE PROCESSING RTN: **************                          
+                                   SUBSCRIBERS
+          RA TALKLINK ORU   <--- remove appropriate VR ORU subscriber          
+          RA SEND ORU       <--- remove PACS ORU subscriber, if applicable
+        _____________________________________________________________________   
+    
+    
+ STEP 3 - ADD VR AND PACS SUBSCRIBERS TO NEW 'ORM' EVENT DRIVER PROTOCOLS
+ ========================================================================
+ Add the voice recognition and PACS 'ORM' subscriber protocols to the
+ RA CANCEL 2.4, RA EXAMINED 2.4 and RA REG 2.4 protocols:
+             
+  - For TalkStation the subscriber protocol is RA TALKLINK ORM.
+  - For PowerScribe the subscriber protocol is RA PSCRIBE ORM.
+  - For RadWhere    the subscriber protocol is RA RADWHERE ORM.
+  - For PACS        the subscriber protocol is RA SEND ORM.
+  
+ EXAMPLE 3
+ =========
+ [Note: This step is done for the RA REG 2.4, RA CANCEL 2.4 and
+ RA EXAMINED 2.4 protocols, but only RA REG 2.4 is shown in this example.]
+    
+        Select OPTION NAME: HL7 MAIN MENU  HL MAIN MENU     HL7 Main Menu
+  
+                  Event monitoring menu ...
+                  Systems Link Monitor
+                  Filer and Link Management Options ...
+                  Message Management Options ...
+                  Interface Developer Options ...
+                  Site Parameter Edit
+           HLO    HL7 (Optimized) MAIN MENU ...
+  
+      Select HL7 Main Menu Option:  Interface Developer Options
+  
+           EA     Application Edit
+           EP     Protocol Edit
+           EL     Link Edit
+           VI     Validate Interfaces
+                  Reports ...
+  
+      Select Interface Developer Options Option:  Protocol Edit
+  
+      Select PROTOCOL NAME: RA REG 2.4   <--- select v2.4 event driver protocol
+   
+  
+                        HL7 INTERFACE SETUP                         PAGE 1 OF 2
+       ----------------------------------------------------------------------
+  
+                    NAME: RA REG 2.4                                             
+  
+        DESCRIPTION (wp):   [This protocol is triggered whenever a Radiology]
+  
+  
+        ENTRY ACTION:
+  
+        EXIT ACTION:
+  
+  
+       TYPE: event driver  <--- Hit <return> at this field to go to next screen
+  
+        _________________________________________________________________
+  
+  
+  
+        COMMAND:                                  Press <PF1>H for help
+                           HL7 EVENT DRIVER                         PAGE 2 OF 2
+                          RA REG 2.4                    
+        ----------------------------------------------------------------------
+              SENDING APPLICATION: RA-VOICE-SERVER
+         TRANSACTION MESSAGE TYPE: ORM                        EVENT TYPE: O01
+                MESSAGE STRUCTURE:
+                    PROCESSING ID:                            VERSION ID: 2.4    
+                  ACCEPT ACK CODE:                  APPLICATION ACK TYPE:
+  
+          RESPONSE PROCESSING RTN: **************                              
+                                   SUBSCRIBERS
+          RA TALKLINK ORM   <--- add appropriate VR ORM subscriber        
+          RA SEND ORM       <--- add PACS ORM subscriber, if applicable
+        _____________________________________________________________________  
+   
+   
+ STEP 4 - ADD VR SUBSCRIBERS TO NEW 'ORU' EVENT DRIVER PROTOCOL
+ ===========================================================
+ Add the voice recognition and PACS 'ORU' subscriber protocols to the
+ RA RPT 2.4 protocol:                                
+    
+  - For TalkStation the subscriber protocol is RA TALKLINK ORU.
+  - For PowerScribe the subscriber protocol is RA PSCRIBE ORU.
+  - For RadWhere    the subscriber protocol is RA RADWHERE ORU.
+  - For PACS        the subscriber protocol is RA SEND ORU.
+    
+ EXAMPLE 4
+ =========
+        Select OPTION NAME: HL7 MAIN MENU  HL MAIN MENU     HL7 Main Menu
+  
+                  Event monitoring menu ...
+                  Systems Link Monitor
+                  Filer and Link Management Options ...
+                  Message Management Options ...
+                  Interface Developer Options ...
+                  Site Parameter Edit
+           HLO    HL7 (Optimized) MAIN MENU ...
+  
+        Select HL7 Main Menu Option:  Interface Developer Options
+  
+           EA     Application Edit
+           EP     Protocol Edit
+           EL     Link Edit
+           VI     Validate Interfaces
+                  Reports ...
+  
+        Select Interface Developer Options Option:  Protocol Edit
+  
+      Select PROTOCOL NAME: RA RPT 2.4   <--- select v2.4 event driver protocol
+   
+  
+                        HL7 INTERFACE SETUP                         PAGE 1 OF 2
+      -----------------------------------------------------------------------
+  
+                    NAME: RA RPT 2.4                                             
+  
+        DESCRIPTION (wp):   [This protocol is triggered whenever a Radiology]
+  
+  
+        ENTRY ACTION:
+  
+        EXIT ACTION:
+  
+  
+     TYPE: event driver  <--- Hit <return> at this field to go to next screen
+  
+        _________________________________________________________________
+  
+  
+  
+        COMMAND:                                  Press <PF1>H for help
+                           HL7 EVENT DRIVER                         PAGE 2 OF 2
+                          RA RPT 2.4                    
+      ------------------------------------------------------------------------
+              SENDING APPLICATION: RA-VOICE-SERVER
+         TRANSACTION MESSAGE TYPE: ORU                        EVENT TYPE: R01
+                MESSAGE STRUCTURE:
+                    PROCESSING ID:                            VERSION ID: 2.4   
+                  ACCEPT ACK CODE:                  APPLICATION ACK TYPE:
+          RESPONSE PROCESSING RTN: **************                        
+                                   SUBSCRIBERS
+          RA TALKLINK ORU   <--- add appropriate VR ORU subscriber          
+          RA SEND ORU       <--- add PACS ORU subscriber, if applicable
+        _____________________________________________________________________ 
+     
+    
+ STEP 5 - CHANGE "VERSION ID" FIELD OF EXISTING MESSAGE RECEIPT PROTOCOL TO 2.4
+ ==============================================================================
+ For the existing message receipt protocol, change the VERSION ID field to 2.4.
+    
+  - For TalkStation this usually means RA TALKLINK TCP SERVER REPORT
+  - For PowerScribe this usually means RA PSCRIBE TCP SERVER REPORT
+  - For RadWhere    this usually means RA RADWHERE TCP SERVER REPORT
+    
+ EXAMPLE 5
+ =========
+        Select OPTION NAME: HL7 MAIN MENU  HL MAIN MENU     HL7 Main Menu
+   
+                Event monitoring menu ...
+                Systems Link Monitor
+                Filer and Link Management Options ...
+                Message Management Options ...
+                Interface Developer Options ...
+                Site Parameter Edit
+         HLO    HL7 (Optimized) MAIN MENU ...
+   
+ Select HL7 Main Menu Option:  Interface Developer Options
+   
+         EA     Application Edit
+         EP     Protocol Edit
+         EL     Link Edit
+         VI     Validate Interfaces
+                Reports ...
+   
+ Select Interface Developer Options Option: EP  Protocol Edit
+   
+ Select PROTOCOL NAME: RA TALKLINK TCP SERVER RPT <--- select existing message
+                                                         receipt event driver
+                                                         protocol (TALKLINK is
+                                                         used in this example)
+   
+   
+                        HL7 INTERFACE SETUP                         PAGE 1 OF 2
+ ------------------------------------------------------------------------------
+  
+             NAME: RA TALKLINK TCP SERVER RPT                             
+  
+ DESCRIPTION (wp):   [Driver protocol for sending report to VISTA Rad]
+  
+  
+ ENTRY ACTION:
+  
+  EXIT ACTION:
+  
+  
+      TYPE: event driver  <--- Hit <return> at this field to go to next screen
+  
+  
+ _____________________________________________________________________________
+  
+  
+                           HL7 EVENT DRIVER                         PAGE 2 OF 2
+                          RA TALKLINK TCP SERVER RPT    
+ ------------------------------------------------------------------------------
+       SENDING APPLICATION: RA-TALKLINK-TCP                   
+  TRANSACTION MESSAGE TYPE: ORU              EVENT TYPE: R01
+         MESSAGE STRUCTURE:           
+             PROCESSING ID:                  VERSION ID: 2.3 <--- Change this
+                                                         === <--- field to 2.4
+  
+           ACCEPT ACK CODE:                  APPLICATION ACK TYPE:
+  
+  RESPONSE PROCESSING RTN:
+                            SUBSCRIBERS
+   RA TALKLINK TCP REPORT                                         
+                                                                  
+ _____________________________________________________________________________
+                                                                 
+   
+ STEP 6 - 'TURN ON' THE USE OF THE LONG SITE ACCESSION NUMBER
+ =====================================================================
+ This parameter will function as a "switch" to turn on the use of the
+ Site Accession Number (Site Specific Accession Number).  Until this 
+ field is set to "YES" the system will NOT generate and store the Site 
+ Accession Number during Registration of a new case.  Only when all 
+ devices are able to handle the Site Accession Number should this field
+ be set to "YES", at which point the system will generate and store the
+ Site Accession Number during Registration.
+    
+ EXAMPLE 6
+ =========
+      Select OPTION NAME: RA SITEMANAGER       IRM Menu
+    
+           Device Specifications for Imaging Locations
+           Distribution Queue Purge
+           Failsoft Parameters
+           Imaging Type Activity Log
+           Purge Data Function
+           Rebuild Distribution Queues
+           Report File x-ref Clean-up Utility
+           Site Accession Number Set-up
+           Credit completed exams for an Imaging Location
+           Resource Device Specifications for Division
+           Schedule Perf. Indic. Summary for 15th of month
+           Template Compilation
+    
+ Select IRM Menu Option: Site Accession Number Set-up
+  
+    Warning: Turning on the Site Specific Accession Number should only
+    be done in conjunction with using the RA v2.4 messaging protocols.
+  
+    NOTE: Changing the Site Specific Accession Number parameter at a
+    multidivisional site will change the parameter for ALL divisions.
+  
+ Current value of Site Specific Accession Number parameter: NO
+ Use Site Specific Accession Number? YES
+ 
+ 
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RA47PST
+    Before:       n/a   After:  B2113178  **47**
+Routine Name: RAAPI
+    Before:       n/a   After: B13582847  **47**
+Routine Name: RABTCH
+    Before: B17982922   After: B22491328  **47**
+Routine Name: RABTCH1
+    Before:  B8775338   After: B11297029  **8,47**
+Routine Name: RACNLU
+    Before: B30407285   After: B35984519  **7,15,23,47**
+Routine Name: RADD2
+    Before: B18013466   After: B18850431  **84,47**
+Routine Name: RADEM1
+    Before: B19574388   After: B25958437  **45,47**
+Routine Name: RADLQ1
+    Before: B28970876   After: B33800278  **15,97,47**
+Routine Name: RADLQ2
+    Before: B15746312   After: B16418030  **15,47**
+Routine Name: RADLQ3
+    Before: B19143902   After: B23869496  **87,93,47**
+Routine Name: RADLY
+    Before: B26714727   After: B30113114  **15,47**
+Routine Name: RADLY1
+    Before: B26810238   After: B34932703  **47**
+Routine Name: RAEDPT
+    Before:  B9185618   After: B10329969  **10,18,28,45,47**
+Routine Name: RAESO
+    Before: B25953776   After: B27993971  **47**
+Routine Name: RAFLH
+    Before: B19507472   After: B23566413  **47**
+Routine Name: RAFLH2
+    Before:  B2908024   After:  B4606601  **47**
+Routine Name: RAHLACK
+    Before:       n/a   After: B10346213  **47**
+Routine Name: RAHLEXF
+    Before: B13384367   After: B22623264  **12,25,47**
+Routine Name: RAHLO1
+    Before: B64623938   After: B66582328  **4,5,12,17,21,27,48,55,66,87,
+                                           84,94,104,47**
+Routine Name: RAHLO3
+    Before: B23255414   After: B23427355  **4,81,84,47**
+Routine Name: RAHLR1
+    Before:       n/a   After: B24833741  **47**
+Routine Name: RAHLR1A
+    Before:       n/a   After: B53486094  **47**
+Routine Name: RAHLRPT1
+    Before:       n/a   After: B48303444  **47**
+Routine Name: RAHLRPT2
+    Before:       n/a   After:  B7037276  **47**
+Routine Name: RAHLRS1
+    Before: B61692156   After: B62793760  **80,84,95,47**
+Routine Name: RAHLRU
+    Before: B29214365   After: B44912236  **10,25,81,103,47**
+Routine Name: RAHLRU1
+    Before:       n/a   After: B76146976  **47**
+Routine Name: RAHLTCPX
+    Before:       n/a   After: B93748547  **47**
+Routine Name: RAJAC
+    Before:  B6912958   After:  B8745582  **1,8,47**
+Routine Name: RAMAG03C
+    Before: B25745401   After: B28078514  **90,47**
+Routine Name: RANMUSE2
+    Before: B37954161   After: B42611600  **65,47**
+Routine Name: RANMUSE3
+    Before: B15377223   After: B17130788  **65,47**
+Routine Name: RAORD61
+    Before:  B6552894   After:  B7128704  **45,68,47**
+Routine Name: RAPM
+    Before: B71205125   After: B73229634  **37,44,48,67,99,47**
+Routine Name: RAPM2
+    Before: B95462078   After: B96765436  **37,44,48,63,67,99,47**
+Routine Name: RAPMW2
+    Before: B77528050   After: B79947106  **67,79,83,99,47**
+Routine Name: RAPRINT1
+    Before: B27115956   After: B29745884  **34,97,47**
+Routine Name: RAPROD
+    Before: B43504474   After: B45447427  **10,35,45,56,99,47**
+Routine Name: RAPROS
+    Before: B24692872   After: B29816651  **47**
+Routine Name: RAPTLU
+    Before: B29961881   After: B37279557  **2,8,15,23,56,47**
+Routine Name: RAREG
+    Before: B38658501   After: B43601921  **23,85,47**
+Routine Name: RARIC
+    Before: B23522072   After: B25901329  **23,27,101,47**
+Routine Name: RART1
+    Before: B63509883   After: B63511305  **8,16,15,21,23,27,34,99,47**
+Routine Name: RART2
+    Before:  B9304244   After:  B9326949  **26,47**
+Routine Name: RARTE
+    Before: B36165154   After: B44678185  **18,34,45,56,99,47**
+Routine Name: RARTE1
+    Before: B63911053   After: B66239828  **2,15,17,23,31,68,56,47**
+Routine Name: RARTE2
+    Before: B31220499   After: B32141462  **10,31,47**
+Routine Name: RARTE3
+    Before:  B5429116   After:  B5378644  **31,56,47**
+Routine Name: RARTE4
+    Before: B26359911   After: B25063198  **15,27,41,82,56,47**
+Routine Name: RARTE5
+    Before:B100088941   After:B102640298  **56,95,97,47**
+Routine Name: RARTE6
+    Before:B115912861   After:B140134431  **56,95,99,47**
+Routine Name: RARTR3
+    Before: B24116267   After: B28579692  **8,10,19,27,35,45,75,47**
+Routine Name: RARTST2A
+    Before: B25475060   After: B25475148  **47**
+Routine Name: RARTUVR3
+    Before: B30058032   After: B35802159  **56,47**
+Routine Name: RASTEXT
+    Before: B28312092   After: B34738271  **48,47**
+Routine Name: RASYS
+    Before: B25529542   After: B37308956  **42,47**
+Routine Name: RAUTL1
+    Before: B52864092   After: B56859744  **5,9,18,71,82,84,94,47**
+Routine Name: RAUTL15
+    Before: B18156092   After: B20281413  **5,10,47**
+Routine Name: RAUTL2
+    Before: B39107271   After: B40821700  **10,26,45,47**
+Routine Name: RAUTL20
+    Before: B31321948   After: B34736490  **5,34,47**
+Routine Name: RAUTL3
+    Before:  B9927768   After: B11997585  **26,47**
+ 
+Routine list of preceding patches: 42, 65, 75, 85, 90, 93, 97, 99, 101, 103
+                           104
+
+=============================================================================
+User Information:                          Hold Date     : JUL 27, 2011
+Entered By  : CEBELINSKI,GREGORY            Date Entered  : JAN 14, 2004
+Completed By: SINGH,GURBIR                  Date Completed: JUN 28, 2011
+Released By : COWNIE,KEVIN                  Date Released : AUG 23, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

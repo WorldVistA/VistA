@@ -1,0 +1,662 @@
+KIDS Distribution saved on Feb 10, 2011@15:37:03
+PSS*1*142 RELEASED
+**KIDS**:PSS*1.0*142^
+
+**INSTALL NAME**
+PSS*1.0*142
+"BLD",6386,0)
+PSS*1.0*142^PHARMACY DATA MANAGEMENT^0^3110210^y
+"BLD",6386,1,0)
+^^24^24^3090126^
+"BLD",6386,1,1,0)
+ 
+"BLD",6386,1,2,0)
+This enhancement is an interim resolution approved by the Inpatient
+"BLD",6386,1,3,0)
+Medications Workgroup for Patient Safety Issue PSI 08-025, PSPO #852
+"BLD",6386,1,4,0)
+as described in Remedy Ticket HD233682.  This patch will help resolve
+"BLD",6386,1,5,0)
+incorrect medication routes being displayed for selection in the
+"BLD",6386,1,6,0)
+Computerized Patient Record System (CPRS).
+"BLD",6386,1,7,0)
+ 
+"BLD",6386,1,8,0)
+Problem:
+"BLD",6386,1,9,0)
+--------
+"BLD",6386,1,10,0)
+Currently, for IV orders, if there is more than one orderable item on the
+"BLD",6386,1,11,0)
+order, no default medication route is being denoted as a default in the
+"BLD",6386,1,12,0)
+CPRS selection list even if all the orderable items on the order share
+"BLD",6386,1,13,0)
+the same default med route.
+"BLD",6386,1,14,0)
+ 
+"BLD",6386,1,15,0)
+ 
+"BLD",6386,1,16,0)
+Resolution:
+"BLD",6386,1,17,0)
+-----------
+"BLD",6386,1,18,0)
+This enhancement for IV orders will denote the default med route in the
+"BLD",6386,1,19,0)
+selection list in CPRS if all of the orderable items on the order have
+"BLD",6386,1,20,0)
+the same default med route defined.  If one or more orderable items on
+"BLD",6386,1,21,0)
+the order have different default med routes, the current functionality
+"BLD",6386,1,22,0)
+will be retained, and no med route in the selection list for CPRS will be
+"BLD",6386,1,23,0)
+denoted as a default.  Routine PSSJORDF will be modified for this
+"BLD",6386,1,24,0)
+enhancement.
+"BLD",6386,4,0)
+^9.64PA^^
+"BLD",6386,6)
+2^
+"BLD",6386,6.3)
+3
+"BLD",6386,"KRN",0)
+^9.67PA^779.2^20
+"BLD",6386,"KRN",.4,0)
+.4
+"BLD",6386,"KRN",.401,0)
+.401
+"BLD",6386,"KRN",.402,0)
+.402
+"BLD",6386,"KRN",.403,0)
+.403
+"BLD",6386,"KRN",.5,0)
+.5
+"BLD",6386,"KRN",.84,0)
+.84
+"BLD",6386,"KRN",3.6,0)
+3.6
+"BLD",6386,"KRN",3.8,0)
+3.8
+"BLD",6386,"KRN",9.2,0)
+9.2
+"BLD",6386,"KRN",9.8,0)
+9.8
+"BLD",6386,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",6386,"KRN",9.8,"NM",1,0)
+PSSJORDF^^0^B46862726
+"BLD",6386,"KRN",9.8,"NM","B","PSSJORDF",1)
+
+"BLD",6386,"KRN",19,0)
+19
+"BLD",6386,"KRN",19.1,0)
+19.1
+"BLD",6386,"KRN",101,0)
+101
+"BLD",6386,"KRN",409.61,0)
+409.61
+"BLD",6386,"KRN",771,0)
+771
+"BLD",6386,"KRN",779.2,0)
+779.2
+"BLD",6386,"KRN",870,0)
+870
+"BLD",6386,"KRN",8989.51,0)
+8989.51
+"BLD",6386,"KRN",8989.52,0)
+8989.52
+"BLD",6386,"KRN",8994,0)
+8994
+"BLD",6386,"KRN","B",.4,.4)
+
+"BLD",6386,"KRN","B",.401,.401)
+
+"BLD",6386,"KRN","B",.402,.402)
+
+"BLD",6386,"KRN","B",.403,.403)
+
+"BLD",6386,"KRN","B",.5,.5)
+
+"BLD",6386,"KRN","B",.84,.84)
+
+"BLD",6386,"KRN","B",3.6,3.6)
+
+"BLD",6386,"KRN","B",3.8,3.8)
+
+"BLD",6386,"KRN","B",9.2,9.2)
+
+"BLD",6386,"KRN","B",9.8,9.8)
+
+"BLD",6386,"KRN","B",19,19)
+
+"BLD",6386,"KRN","B",19.1,19.1)
+
+"BLD",6386,"KRN","B",101,101)
+
+"BLD",6386,"KRN","B",409.61,409.61)
+
+"BLD",6386,"KRN","B",771,771)
+
+"BLD",6386,"KRN","B",779.2,779.2)
+
+"BLD",6386,"KRN","B",870,870)
+
+"BLD",6386,"KRN","B",8989.51,8989.51)
+
+"BLD",6386,"KRN","B",8989.52,8989.52)
+
+"BLD",6386,"KRN","B",8994,8994)
+
+"BLD",6386,"QUES",0)
+^9.62^^
+"BLD",6386,"REQB",0)
+^9.611^1^1
+"BLD",6386,"REQB",1,0)
+PSS*1.0*140^2
+"BLD",6386,"REQB","B","PSS*1.0*140",1)
+
+"MBREQ")
+0
+"PKG",517,-1)
+1^1
+"PKG",517,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",517,20,0)
+^9.402P^^
+"PKG",517,22,0)
+^9.49I^1^1
+"PKG",517,22,1,0)
+1.0^2970930^2971014^11595
+"PKG",517,22,1,"PAH",1,0)
+142^3110210^10000000009
+"PKG",517,22,1,"PAH",1,1,0)
+^^24^24^3110210
+"PKG",517,22,1,"PAH",1,1,1,0)
+ 
+"PKG",517,22,1,"PAH",1,1,2,0)
+This enhancement is an interim resolution approved by the Inpatient
+"PKG",517,22,1,"PAH",1,1,3,0)
+Medications Workgroup for Patient Safety Issue PSI 08-025, PSPO #852
+"PKG",517,22,1,"PAH",1,1,4,0)
+as described in Remedy Ticket HD233682.  This patch will help resolve
+"PKG",517,22,1,"PAH",1,1,5,0)
+incorrect medication routes being displayed for selection in the
+"PKG",517,22,1,"PAH",1,1,6,0)
+Computerized Patient Record System (CPRS).
+"PKG",517,22,1,"PAH",1,1,7,0)
+ 
+"PKG",517,22,1,"PAH",1,1,8,0)
+Problem:
+"PKG",517,22,1,"PAH",1,1,9,0)
+--------
+"PKG",517,22,1,"PAH",1,1,10,0)
+Currently, for IV orders, if there is more than one orderable item on the
+"PKG",517,22,1,"PAH",1,1,11,0)
+order, no default medication route is being denoted as a default in the
+"PKG",517,22,1,"PAH",1,1,12,0)
+CPRS selection list even if all the orderable items on the order share
+"PKG",517,22,1,"PAH",1,1,13,0)
+the same default med route.
+"PKG",517,22,1,"PAH",1,1,14,0)
+ 
+"PKG",517,22,1,"PAH",1,1,15,0)
+ 
+"PKG",517,22,1,"PAH",1,1,16,0)
+Resolution:
+"PKG",517,22,1,"PAH",1,1,17,0)
+-----------
+"PKG",517,22,1,"PAH",1,1,18,0)
+This enhancement for IV orders will denote the default med route in the
+"PKG",517,22,1,"PAH",1,1,19,0)
+selection list in CPRS if all of the orderable items on the order have
+"PKG",517,22,1,"PAH",1,1,20,0)
+the same default med route defined.  If one or more orderable items on
+"PKG",517,22,1,"PAH",1,1,21,0)
+the order have different default med routes, the current functionality
+"PKG",517,22,1,"PAH",1,1,22,0)
+will be retained, and no med route in the selection list for CPRS will be
+"PKG",517,22,1,"PAH",1,1,23,0)
+denoted as a default.  Routine PSSJORDF will be modified for this
+"PKG",517,22,1,"PAH",1,1,24,0)
+enhancement.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSSJORDF")
+0^1^B46862726
+"RTN","PSSJORDF",1,0)
+PSSJORDF ;BIR/MV-RETURN MED ROUTES(MR) AND INSTRUCTIONS(INS) ;06/26/98
+"RTN","PSSJORDF",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**5,13,34,38,69,113,94,140,142**;9/30/97;Build 3
+"RTN","PSSJORDF",3,0)
+ ;;
+"RTN","PSSJORDF",4,0)
+ ; Reference to ^PS(50.7 is supported by DBIA 2180.
+"RTN","PSSJORDF",5,0)
+ ; Reference to ^PS(51.2 is supported by DBIA 2178.
+"RTN","PSSJORDF",6,0)
+ ; Reference to ^PS(50.606 is supported by DBIA 2174.
+"RTN","PSSJORDF",7,0)
+ ; 
+"RTN","PSSJORDF",8,0)
+ ;* PSJORD is the Orderable Item IEN pass to Pharmacy by OE/RR.  
+"RTN","PSSJORDF",9,0)
+ ;* 1. If the dosage form is valid, this routine will return all med
+"RTN","PSSJORDF",10,0)
+ ;*    routes and instructions associated with that dose form.
+"RTN","PSSJORDF",11,0)
+ ;* 2. If the dose form is null, this routine will return all med routes
+"RTN","PSSJORDF",12,0)
+ ;*    that exist in the medication routes file.
+"RTN","PSSJORDF",13,0)
+ ;* 3. ^TMP format:
+"RTN","PSSJORDF",14,0)
+ ;*    ^TMP("PSJMR",$J,#)=MED ROUTE^MED ROUTE ABREVATION^IEN^OUTPATIENT
+"RTN","PSSJORDF",15,0)
+ ;*                       EXPANSION^IV FLAG^DEFAULT FLAG
+"RTN","PSSJORDF",16,0)
+ ;*    ^TMP("PSJNOUN",$J,D0)=NOUN^VERB^PREPOSITION
+"RTN","PSSJORDF",17,0)
+ ;*    ^TMP("PSJSCH",$J)=DEFAULT SCHEDULE NAME
+"RTN","PSSJORDF",18,0)
+ ;
+"RTN","PSSJORDF",19,0)
+START(PSJORD,PSJOPAC) ;
+"RTN","PSSJORDF",20,0)
+ NEW MR,MRNODE,INS,PSJDFNO,X,MCT,Z,PSJOISC
+"RTN","PSSJORDF",21,0)
+ I '+PSJORD D MEDROUTE Q
+"RTN","PSSJORDF",22,0)
+ S PSJDFNO=+$P($G(^PS(50.7,+PSJORD,0)),U,2)
+"RTN","PSSJORDF",23,0)
+ S PSJOISC=$P($G(^PS(50.7,+PSJORD,0)),"^",8)
+"RTN","PSSJORDF",24,0)
+ I $G(PSJOPAC)="O"!($G(PSJOPAC)="X") D:$G(PSJOISC)'="" EN^PSSOUTSC(.PSJOISC) S:$G(PSJOISC)'="" ^TMP("PSJSCH",$J)=$G(PSJOISC) G SCPASS
+"RTN","PSSJORDF",25,0)
+ I $G(PSJOISC)'="" D EN^PSSGSGUI(.PSJOISC,"I") S:$G(PSJOISC)'="" ^TMP("PSJSCH",$J)=$G(PSJOISC)
+"RTN","PSSJORDF",26,0)
+SCPASS ;
+"RTN","PSSJORDF",27,0)
+ I $G(^PS(50.606,PSJDFNO,0))="" D NOD Q:$D(^TMP("PSJMR",$J,1))  D MEDROUTE Q
+"RTN","PSSJORDF",28,0)
+ K ^TMP("PSJMR",$J),^TMP("PSJNOUN",$J)
+"RTN","PSSJORDF",29,0)
+ D DF
+"RTN","PSSJORDF",30,0)
+ Q
+"RTN","PSSJORDF",31,0)
+ ;
+"RTN","PSSJORDF",32,0)
+DF ;* Loop thru DF node to find all available med routes, nouns, and instructions.
+"RTN","PSSJORDF",33,0)
+ N VERB,MR,INS,X
+"RTN","PSSJORDF",34,0)
+ S (MR,INS,X,MCT)=0
+"RTN","PSSJORDF",35,0)
+ S VERB=$P($G(^PS(50.606,PSJDFNO,"MISC")),U)
+"RTN","PSSJORDF",36,0)
+ ;PSS*1*140 - If the orderable item has a default med route, send it back to CPRS
+"RTN","PSSJORDF",37,0)
+ ;as the only med route in ^TMP("PSJMR", otherwise use existing functionality.
+"RTN","PSSJORDF",38,0)
+ ;Check PHARMACY SYSTEM File (#59.7) to see if the site has set the
+"RTN","PSSJORDF",39,0)
+ ;parameter to use this functionality.  1 = yes, anything else = no
+"RTN","PSSJORDF",40,0)
+ S MR=+$P($G(^PS(50.7,+PSJORD,0)),"^",6) I MR,$D(^PS(51.2,MR,0)),$P($G(^(0)),"^",4)=1 S ^TMP("PSJMR",$J,1)=$P(^PS(51.2,MR,0),"^")_U_$P(^(0),"^",3)_U_MR_U_$P(^(0),"^",2)_U_$S($P(^(0),"^",6):1,1:0)_"^D",MCT=MCT+1 I $P($G(^PS(59.7,1,80)),"^",7)=1 Q
+"RTN","PSSJORDF",41,0)
+ S MR=0 F  S MR=$O(^PS(50.606,PSJDFNO,"MR",MR)) Q:'MR  D
+"RTN","PSSJORDF",42,0)
+ .  S X=+$G(^PS(50.606,PSJDFNO,"MR",MR,0)) Q:'X!($P($G(^TMP("PSJMR",$J,1)),"^",3)=X)
+"RTN","PSSJORDF",43,0)
+ .  S MRNODE=$G(^PS(51.2,X,0))
+"RTN","PSSJORDF",44,0)
+ .  I $P($G(MRNODE),"^",4)'=1 Q
+"RTN","PSSJORDF",45,0)
+ .  S MCT=MCT+1,^TMP("PSJMR",$J,MCT)=$P(MRNODE,U)_U_$P(MRNODE,U,3)_U_X_U_$P(MRNODE,U,2)_U_$S($P(MRNODE,U,6):1,1:0)
+"RTN","PSSJORDF",46,0)
+ S X=0
+"RTN","PSSJORDF",47,0)
+ I $D(^PS(50.606,PSJDFNO,"NOUN")) F Z=0:0 S Z=$O(^PS(50.606,PSJDFNO,"NOUN",Z)) Q:'Z  S X=X+1,^TMP("PSJNOUN",$J,X)=$P($G(^PS(50.606,PSJDFNO,"NOUN",Z,0)),U)_U_$P($G(^PS(50.606,PSJDFNO,"MISC")),U)_U_$P($G(^("MISC")),U,3)
+"RTN","PSSJORDF",48,0)
+ Q
+"RTN","PSSJORDF",49,0)
+ ;
+"RTN","PSSJORDF",50,0)
+MEDROUTE ;* Return all med routes in the med routes file.
+"RTN","PSSJORDF",51,0)
+ S (MR,MCT)=0 K ^TMP("PSJMR",$J)
+"RTN","PSSJORDF",52,0)
+ F  S MR=$O(^PS(51.2,MR)) Q:'MR  S MRNODE=^PS(51.2,MR,0) I $P(^PS(51.2,MR,0),"^",4)=1 S MCT=MCT+1,^TMP("PSJMR",$J,MCT)=$P(MRNODE,U)_U_$P(MRNODE,U,3)_U_MR_U_$P(MRNODE,U,2)_U_$S($P(MRNODE,U,6):1,1:0)
+"RTN","PSSJORDF",53,0)
+ Q
+"RTN","PSSJORDF",54,0)
+NOD K ^TMP("PSJMR",$J)
+"RTN","PSSJORDF",55,0)
+ S MR=+$P($G(^PS(50.7,+PSJORD,0)),"^",6) I MR,$D(^PS(51.2,MR,0)),$P(^PS(51.2,MR,0),"^",4)=1 S ^TMP("PSJMR",$J,1)=$P(^PS(51.2,MR,0),"^")_U_$P(^(0),"^",3)_U_MR_U_$P(^(0),"^",2)_U_$S($P(^(0),"^",6):1,1:0)_"^D"
+"RTN","PSSJORDF",56,0)
+ Q
+"RTN","PSSJORDF",57,0)
+START1(PSJORD,PSJQOF) ;Entry point for IV dialog PSS*1*94
+"RTN","PSSJORDF",58,0)
+ ; This is the new entry point for the IV Dialog box from CPRS GUI 27.  PSJORD will be an array
+"RTN","PSSJORDF",59,0)
+ ; sent by CPRS that contains all the IENS for all orderable items that are part of the order.  The zero node of the array
+"RTN","PSSJORDF",60,0)
+ ; will contain the total number of orderable items in the order.
+"RTN","PSSJORDF",61,0)
+ ; 
+"RTN","PSSJORDF",62,0)
+ ; PSJQOF is the quick order flag.  0=not a quick order 1=quick order
+"RTN","PSSJORDF",63,0)
+ ; 
+"RTN","PSSJORDF",64,0)
+ ; If there is only one orderable item, any default defined in the Pharmacy Orderable Item file (50.7) will be
+"RTN","PSSJORDF",65,0)
+ ; marked with a D at the end of the data string.
+"RTN","PSSJORDF",66,0)
+ ; 
+"RTN","PSSJORDF",67,0)
+ ; PSS*1*142
+"RTN","PSSJORDF",68,0)
+ ; If there is more than one orderable item in the order,
+"RTN","PSSJORDF",69,0)
+ ; and if all orderable items share the same default med route, the med route will be denoted
+"RTN","PSSJORDF",70,0)
+ ; with a "D" at the end of the data string, and a union (the overlapping)
+"RTN","PSSJORDF",71,0)
+ ; of the med routes will be returned.  For example if Dextrose can be given IV or IM, and the Ampicillin is only
+"RTN","PSSJORDF",72,0)
+ ; given IM, IM is the only med route that will be returned because it is the only overlapping med route between
+"RTN","PSSJORDF",73,0)
+ ; the two orderable items.  If there is no overlapping med route to be returned, then a NULL will be returned to CPRS.
+"RTN","PSSJORDF",74,0)
+ ; 
+"RTN","PSSJORDF",75,0)
+ ; If the quick order flag PSJQOF is set to 1, then CPRS is expecting the overlapping med routes for the orderable items
+"RTN","PSSJORDF",76,0)
+ ; as well as the entire list of med routes that are flagged for IV's.
+"RTN","PSSJORDF",77,0)
+ ; 
+"RTN","PSSJORDF",78,0)
+ I PSJQOF="" S PSJQOF=0
+"RTN","PSSJORDF",79,0)
+ K PSJORD1,^TMP("PSJMR",$J)
+"RTN","PSSJORDF",80,0)
+ I $G(PSJORD(0))=1 S PSJOPAC="I" D  Q
+"RTN","PSSJORDF",81,0)
+ . S PSJORD=$P($G(PSJORD(1)),"^",1)
+"RTN","PSSJORDF",82,0)
+ . D MEDRT(PSJORD)
+"RTN","PSSJORDF",83,0)
+ . I PSJQOF=1 S MCT=$O(^TMP("PSJMR",$J,"A"),-1) D ALLMED(MCT)
+"RTN","PSSJORDF",84,0)
+ . M PSJORD1=^TMP("PSJMR",$J)
+"RTN","PSSJORDF",85,0)
+ . D REMDUP
+"RTN","PSSJORDF",86,0)
+ . K PSJORD
+"RTN","PSSJORDF",87,0)
+ . M PSJORD=PSJORD1
+"RTN","PSSJORDF",88,0)
+ . K PSJORD1,^TMP("PSJMR",$J)
+"RTN","PSSJORDF",89,0)
+ S X=0
+"RTN","PSSJORDF",90,0)
+ F  S X=$O(PSJORD(X)) Q:X=""  D
+"RTN","PSSJORDF",91,0)
+ . S PSJORD=$P($G(PSJORD(X)),"^",1)
+"RTN","PSSJORDF",92,0)
+ . D MEDRT(PSJORD)
+"RTN","PSSJORDF",93,0)
+ . M PSJORD1(X)=^TMP("PSJMR",$J) K ^TMP("PSJMR",$J)  ;Start with fresh TMP for each OI
+"RTN","PSSJORDF",94,0)
+ D OVERLAP
+"RTN","PSSJORDF",95,0)
+ I PSJQOF=1 S MCT=$O(MRTEMP2("A"),-1) D ALLMED(MCT)
+"RTN","PSSJORDF",96,0)
+ M PSJORD1=^TMP("PSJMR",$J)
+"RTN","PSSJORDF",97,0)
+ D REMDUP
+"RTN","PSSJORDF",98,0)
+ D MULTIDEF(.PSJORD,.PSJORD1)  ;Multiple orderable items in order - do they share same default med route?
+"RTN","PSSJORDF",99,0)
+ K PSJORD
+"RTN","PSSJORDF",100,0)
+ M PSJORD=PSJORD1
+"RTN","PSSJORDF",101,0)
+ K PSJORD1,MRTEMP2,MRTEMP,MRNODE,MRNODE1,^TMP("PSJMR",$J),PSSCNTR1,PSJOPAC,ZZX,SAMEDEF,DEFAULT
+"RTN","PSSJORDF",102,0)
+ Q
+"RTN","PSSJORDF",103,0)
+MEDRT(PSJORD) ;All Med Routes for dosage form.
+"RTN","PSSJORDF",104,0)
+ N MR,X,PSJDFNO,MCT
+"RTN","PSSJORDF",105,0)
+ S (MR,MCT,X,PSJDFNO)=0
+"RTN","PSSJORDF",106,0)
+ S PSJDFNO=+$P($G(^PS(50.7,+PSJORD,0)),U,2)
+"RTN","PSSJORDF",107,0)
+ S MR=+$P($G(^PS(50.7,+PSJORD,0)),"^",6) I MR,$D(^PS(51.2,MR,0)),$P($G(^(0)),"^",4)=1 S ^TMP("PSJMR",$J,1)=MR_U_$P(^PS(51.2,MR,0),"^")_U_$P(^(0),"^",3)_U_$P(^(0),"^",2)_U_"D",MCT=MCT+1
+"RTN","PSSJORDF",108,0)
+ S MR=0 F  S MR=$O(^PS(50.606,PSJDFNO,"MR",MR)) Q:'MR  D
+"RTN","PSSJORDF",109,0)
+ . S X=+$G(^PS(50.606,PSJDFNO,"MR",MR,0))
+"RTN","PSSJORDF",110,0)
+ . I X=$P($G(^PS(50.7,+PSJORD,0)),"^",6) Q  ;Already counted as the default.  Don't count twice.
+"RTN","PSSJORDF",111,0)
+ . S MRNODE=$G(^PS(51.2,X,0))
+"RTN","PSSJORDF",112,0)
+ . I $P($G(MRNODE),"^",4)'=1 Q
+"RTN","PSSJORDF",113,0)
+ . S MCT=MCT+1,^TMP("PSJMR",$J,MCT)=X_U_$P(MRNODE,U)_U_$P(MRNODE,U,3)_U_$P(MRNODE,U,2)_U
+"RTN","PSSJORDF",114,0)
+ Q
+"RTN","PSSJORDF",115,0)
+ALLMED(MCT) ;Return all med routes with IV flag set to 1
+"RTN","PSSJORDF",116,0)
+ N MR,MRNODE
+"RTN","PSSJORDF",117,0)
+ I MCT="" S MCT=0
+"RTN","PSSJORDF",118,0)
+ S (MR,MRNODE)=""
+"RTN","PSSJORDF",119,0)
+ F  S MR=$O(^PS(51.2,MR)) Q:MR=""  D
+"RTN","PSSJORDF",120,0)
+ . S MRNODE=$G(^PS(51.2,MR,0))
+"RTN","PSSJORDF",121,0)
+ . I $P(MRNODE,U,4)'=1 Q  ;Not defined for all packages
+"RTN","PSSJORDF",122,0)
+ . I $P(MRNODE,U,6)'=1 Q  ;IV flag not set
+"RTN","PSSJORDF",123,0)
+ . S MCT=MCT+1,^TMP("PSJMR",$J,MCT)=MR_U_$P(MRNODE,U)_U_$P(MRNODE,U,3)_U_$P(MRNODE,U,2)_U
+"RTN","PSSJORDF",124,0)
+ Q
+"RTN","PSSJORDF",125,0)
+OVERLAP ; Only maintains any overlapping med routes between orderable items in order
+"RTN","PSSJORDF",126,0)
+ N MR,MRNODE,X,PSSCNTR1
+"RTN","PSSJORDF",127,0)
+ K MRTEMP,MRTEMP2
+"RTN","PSSJORDF",128,0)
+ S (MR,MRNODE,X)=""
+"RTN","PSSJORDF",129,0)
+ F  S X=$O(PSJORD1(X)) Q:X=""  D
+"RTN","PSSJORDF",130,0)
+ . F  S MR=$O(PSJORD1(X,MR)) Q:MR=""  D
+"RTN","PSSJORDF",131,0)
+ . . S MRNODE=$P($G(PSJORD1(X,MR)),"^",1)
+"RTN","PSSJORDF",132,0)
+ . . S MRTEMP(MRNODE)=$G(MRTEMP(MRNODE))+1
+"RTN","PSSJORDF",133,0)
+ S MR=""
+"RTN","PSSJORDF",134,0)
+ F  S MR=$O(MRTEMP(MR)) Q:MR=""  D
+"RTN","PSSJORDF",135,0)
+ . I MRTEMP(MR)'=$G(PSJORD(0)) K MRTEMP(MR) Q
+"RTN","PSSJORDF",136,0)
+ I '$D(MRTEMP) K PSJORD1 S PSJORD1="" Q  ;No overlapping med routes between orderable items.
+"RTN","PSSJORDF",137,0)
+ S (MR,MRNODE)="",PSSCNTR1=1
+"RTN","PSSJORDF",138,0)
+ F  S MR=$O(MRTEMP(MR)) Q:MR=""  D
+"RTN","PSSJORDF",139,0)
+ . S MRNODE=$G(^PS(51.2,MR,0))
+"RTN","PSSJORDF",140,0)
+ . S MRTEMP2(PSSCNTR1)=MR_U_$P(MRNODE,U,1)_U_$P(MRNODE,U,3)_U_$P(MRNODE,U,2)_U,PSSCNTR1=PSSCNTR1+1
+"RTN","PSSJORDF",141,0)
+ K PSJORD1,MRTEMP
+"RTN","PSSJORDF",142,0)
+ M PSJORD1=MRTEMP2
+"RTN","PSSJORDF",143,0)
+ Q
+"RTN","PSSJORDF",144,0)
+REMDUP ; Remove duplicate entries
+"RTN","PSSJORDF",145,0)
+ N MR,MRNODE
+"RTN","PSSJORDF",146,0)
+ S MR="",MRNODE=""
+"RTN","PSSJORDF",147,0)
+ F  S MR=$O(PSJORD1(MR)) Q:MR=""  D
+"RTN","PSSJORDF",148,0)
+ . S MRNODE=$P($G(PSJORD1(MR)),"^",2)
+"RTN","PSSJORDF",149,0)
+ . I $D(MRTEMP(MRNODE)) K PSJORD1(MR) Q
+"RTN","PSSJORDF",150,0)
+ . S MRTEMP(MRNODE)=$G(PSJORD1(MR))
+"RTN","PSSJORDF",151,0)
+ . I MR=1,$P($G(PSJORD1(MR)),"^",5)="D" S MRTEMP(MR)=PSJORD1(MR) Q  ;Maintain default if there is one.
+"RTN","PSSJORDF",152,0)
+ . S MRTEMP(MR)=PSJORD1(MR)
+"RTN","PSSJORDF",153,0)
+ S MR=""
+"RTN","PSSJORDF",154,0)
+ F  S MR=$O(MRTEMP(MR)) Q:MR=""  D
+"RTN","PSSJORDF",155,0)
+ . I MR'?1.N K MRTEMP(MR)
+"RTN","PSSJORDF",156,0)
+ I PSJORD(0)=1 M PSJORD1=MRTEMP
+"RTN","PSSJORDF",157,0)
+ K MRTEMP
+"RTN","PSSJORDF",158,0)
+ Q
+"RTN","PSSJORDF",159,0)
+MULTIDEF(PSJORD,PSJORD1) ; PSS*1*142
+"RTN","PSSJORDF",160,0)
+ ;Loop through the orderable items for the order.  Determine what (if any) default
+"RTN","PSSJORDF",161,0)
+ ;med route is for each orderable item.  Save this in the DEFAULT local array.
+"RTN","PSSJORDF",162,0)
+ ;Then compare the DEFAULT array entries with each other.  If any one of the subsequent
+"RTN","PSSJORDF",163,0)
+ ;entries does not match the first one, that means the orderable items do not all share
+"RTN","PSSJORDF",164,0)
+ ;the same default, and no med route will be marked as the default when the information
+"RTN","PSSJORDF",165,0)
+ ;is returned to CPRS.  If all of the orderable items share the same default, find that
+"RTN","PSSJORDF",166,0)
+ ;entry in the array of orderable items, and mark it as the default with a "D".
+"RTN","PSSJORDF",167,0)
+ S ZZX=0,DEFAULT=""
+"RTN","PSSJORDF",168,0)
+ F  S ZZX=$O(PSJORD(ZZX)) Q:ZZX=""  D
+"RTN","PSSJORDF",169,0)
+ . S DEFAULT=$G(PSJORD(ZZX))
+"RTN","PSSJORDF",170,0)
+ . S DEFAULT(ZZX)=$P($G(^PS(50.7,DEFAULT,0)),"^",6)
+"RTN","PSSJORDF",171,0)
+ S ZZX="",SAMEDEF=0
+"RTN","PSSJORDF",172,0)
+ F  S ZZX=$O(DEFAULT(ZZX)) Q:ZZX=""  D  Q:SAMEDEF=0
+"RTN","PSSJORDF",173,0)
+ . I DEFAULT(ZZX)'=$G(DEFAULT(1)) S SAMEDEF=0 Q
+"RTN","PSSJORDF",174,0)
+ . S SAMEDEF=1_"^"_$G(DEFAULT(1))
+"RTN","PSSJORDF",175,0)
+ Q:SAMEDEF=0
+"RTN","PSSJORDF",176,0)
+ I $P($G(SAMEDEF),"^")=1,$P($G(SAMEDEF),"^",2)="" Q  ;No orderable item has a valid default - default is ""
+"RTN","PSSJORDF",177,0)
+ S ZZX=""
+"RTN","PSSJORDF",178,0)
+ F  S ZZX=$O(PSJORD1(ZZX)) Q:ZZX=""  D
+"RTN","PSSJORDF",179,0)
+ . I $P($G(PSJORD1(ZZX)),"^",1)=$P($G(SAMEDEF),"^",2) S PSJORD1(ZZX)=PSJORD1(ZZX)_"D"
+"RTN","PSSJORDF",180,0)
+ Q
+"VER")
+8.0^22.0
+**END**
+**END**

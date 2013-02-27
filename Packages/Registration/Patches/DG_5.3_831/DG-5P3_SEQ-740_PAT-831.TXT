@@ -1,0 +1,153 @@
+$TXT Created by BOWEN,MARY JANE at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 11/17/10 at 07:53
+=============================================================================
+Run Date: APR 08, 2011                     Designation: DG*5.3*831
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #740                    Status: Released
+                  Compliance Date: MAY 09, 2011
+=============================================================================
+
+Associated patches: (v)DG*5.3*212  <<= must be installed BEFORE `DG*5.3*831'
+                    (v)DG*5.3*750  <<= must be installed BEFORE `DG*5.3*831'
+
+Subject: CE ALERT AND ED OBSERVATION CORRECTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the date of birth in the Patient Identification fields
+ (before edit) of the POTENTIAL CATASTROPHIC EDIT (CE) OF PATIENT IDENTIFYING 
+ DATA alert. It will also add Emergency Department (ED) Observation Treating 
+ Specialty for Application Programming Interface (API) to ask readmit question 
+ after a patient has been discharged.
+   
+  ASSOCIATED REMEDY TICKETS:
+  ========================= 
+  1) HD0000000394095 Potential Cat Edit Warning Message-DOB Error
+  2) HD0000000409065 1 Observation clinic dc'ing orders without asking the 
+                     readmit question - potential PSI -  PSPO #1746 
+  
+   
+  PARTICIPATING TEST SITES:
+  ========================
+  Charleston, SC
+  Manchester, NH
+  New York Harbor HCS
+  West Palm Beach, FL
+   
+  REMEDY OVERVIEW:
+  ===============
+  1) HD0000000394095 Potential Cat Edit Warning Message-DOB Error
+   
+  Problem:
+  ========
+  Healthcare Identity Management found for some records that 
+  there was an incorrect date of birth in the (before edit) 
+  section of the POTENTIAL CATASTROPHIC EDIT OF PATIENT 
+  IDENTIFYING DATA alert.
+  
+  Solution:
+  =========
+  Corrected routines DGRPECE and DGRPECE1 to correctly store 
+  and display data on the alerts.
+  
+  
+  2) HD0000000409065 1 Observation clinic dc'ing orders without asking the 
+                     readmit question
+    
+  Problem:
+  ========
+  Emergency room discharge is not asking if a patient is to be readmitted.
+  An API used by Computerized Patient Record System (CPRS) has 
+  Observation clinics hard coded and ED Observation clinic is not part of it.
+  
+  
+  Solution:
+  =========
+  Changed API DGPMOBS to include ED Observation clinic as one of the 
+  clinics that will need to be asked if a patient is to be readmitted.
+    
+    
+  INSTALLATION INSTRUCTIONS:
+  ===========================
+  This patch may be run with users on the system, HOWEVER because
+  certain Registration options need to be placed out of order, we strongly
+  suggest it be installed after business hours. It should take less than 
+  5 minutes to install.
+    
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+    
+       NOTE:  If the required patches are not installed, the transport 
+              global will be removed.  If the transport global is removed
+              you will need to repeat this step.
+    
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+    
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter DG*5.3*831):
+       a.  Compare Transport Global to Current System  - this option will
+           allow you to view all changes that will be made when the patch
+           is installed.  It compares all components of the patch 
+           (routines, DDs, templates, etc.).
+       b.  Verify Checksums in Transport Global - this option will
+           allow you to ensure the integrity of the routines that are in
+           the transport global.
+       c.  Print Transport Global - this option will allow you to view the
+           components of the KIDS build.
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+    
+   4.  Use the Install Package(s) option and select the package DG*5.3*831.
+    
+   5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', respond NO.
+    
+   6.  When prompted,'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//', respond Yes.
+       When prompted,'Enter options you wish to mark as 'Out Of Order':',
+       enter:
+              Register a Patient [DG REGISTER PATIENT]
+              Load/Edit Patient Data [DG LOAD PATIENT DATA]
+              Preregister a Patient [DGPRE PRE-REGISTER OPTION]
+              Collateral Patient Register [DG COLLATERAL PATIENT]  
+    
+       When prompted,'Enter protocols you wish to mark as 'Out Of 
+       Order':', hit enter.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13 1993;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGPMOBS
+    Before:  B5476336   After:  B5521441  **212,831**
+Routine Name: DGRPECE
+    Before: B73130741   After: B72565384  **638,682,700,720,653,688,750,831**
+Routine Name: DGRPECE1
+    Before: B29329791   After: B29546291  **638,831**
+Routine Name: DGRPECE2
+    Before: B34049720   After: B34204817  **638,831**
+ 
+Routine list of preceding patches: 212, 750
+
+=============================================================================
+User Information:
+Entered By  : BOWEN,MARY JANE               Date Entered  : JUN 09, 2010
+Completed By: LEANORD,TATIANA               Date Completed: APR 08, 2011
+Released By : HEUER,CINDY                   Date Released : APR 08, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

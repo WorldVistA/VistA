@@ -1,0 +1,242 @@
+
+=============================================================================
+Run Date: DEC 20, 2012                     Designation: IB*2*485
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #443                      Status: Released
+                  Compliance Date: DEC 31, 2012
+=============================================================================
+
+
+Subject: 2013 RX COPAY THRESHOLDS
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+  Per VHA FACT SHEET titled MEANS TEST, GEOGRAPHIC-BASED MEANS TEST AND
+  PENSION THRESHOLDS FOR CALENDAR YEAR 2013, this patch MUST be installed
+  before January 1, 2013. The patch is being released as an Emergency patch
+  together with DG*5.3*860 (2013 Means Test Thresholds) and EAS*1.0*108
+  (2013 GMT Thresholds) and may be installed out of sequence with respect
+  to other released IB patches.
+   
+  Every year, the government sets new values for the Medicare deductible 
+  and for the pension threshold rates. These values need to be updated in 
+  the associated billing files for accurate and legal billing. The purpose 
+  of this patch is to assist sites in the entry of the Basic Pension 
+  Threshold rates and the Medicare Deductible value for Calendar Year 2013.
+  
+  A post-init routine is included in this patch, which will automate the 
+  update of the new Medicare and pension threshold values. The Technical 
+  section below contains a list of the new rates, which may also be found 
+  in VHA FACT SHEET titled MEANS TEST, GEOGRAPHIC-BASED MEANS TEST AND
+  PENSION THRESHOLDS FOR CALENDAR YEAR 2013. If a site has already entered
+  the values manually, the record will be overwritten with the national 
+  update.
+   
+  The new pension rates for Calendar Year 2013 (with an effective date 
+  of 12/1/12) are defined in VHA FACT SHEET titled MEANS TEST, GEOGRAPHIC-
+  BASED MEANS TEST AND PENSION THRESHOLDS FOR CALENDAR YEAR 2013 as:
+   
+  *   $ 12,465 for a single veteran without dependents
+  *   $ 16,324 for a veteran with 1 dependent
+  *   An additional $ 2,129 for each additional dependent beyond 1 
+      dependent
+   
+  And the Medicare deductible rate effective 01/01/2013 is shown as:
+   
+  *   The Medicare deductible:  $ 1,184.
+   
+  This patch, IB*2.0*485, is one of three VistA 2013 threshold patches. It 
+  addresses the annual updates for the Pharmacy Copay Thresholds. Patch 
+  DG*5.3*860 will update the thresholds for the Means Tests and the 
+  Maximum Annual Pension Rate. Patch EAS*1.0*108 will address the annual
+  updates for the GMT Thresholds.
+   
+  Patch Components
+  ================
+   
+   
+  Files & Fields Associated:
+  N/A
+   
+  Forms Associated:
+   
+  Form Name             File #       New/Modified/Deleted
+  ---------             ------       --------------------
+  N/A
+   
+  Mail Groups Associated:
+   
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+   
+  Options Associated:
+   
+  Option Name            Type               New/Modified/Deleted
+  -----------            ----               -------------------- 
+  N/A
+   
+  Protocols Associated:
+   
+  Protocol Name       New/Modified/Deleted
+  -------------       -------------------- 
+  N/A
+   
+  Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+  Templates Associated:
+   
+  Template Name      Type      File Name (Number)  New/Modified/Deleted 
+  -------------      ----      ------------------  --------------------
+  N/A
+   
+  Additional Information:
+   
+  File #350.2 -- IB ACTION CHARGE is updated with a new record.  The values 
+   are as follows:
+   .01  KEY                 = "MEDICARE DEDUCTIBLE"
+   .02  EFFECTIVE DATE      = 3130101 (internal form for January 01, 2013)
+   .03  IB TRANSACTION TYPE = pointer to "MEDICARE DEDUCTIBLE" in file 
+  #350.1
+   .04  UNIT CHARGE, FIXED  =  1184
+   ==========
+    
+   File #354.3 -- BILLING THRESHOLDS is updated with a new record.  The 
+   values are as follows:
+   .01  DATE                        = 3121201 (internal form for 12/01/2012)
+   .02  TYPE                        = 1       (for BASIC PENSION)
+   .03  BASE RATE FOR VETERAN       = 12465
+   .04  BASE RATE WITH 1 DEPENDENT  = 16324
+   .05  BASE RATE WITH 2 DEPENDENTS = 18453
+   .06  BASE RATE WITH 3 DEPENDENTS = 20582
+   .07  BASE RATE WITH 4 DEPENDENTS = 22711
+   .08  BASE RATE WITH 5 DEPENDENTS = 24840
+   .09  BASE RATE WITH 6 DEPENDENTS = 26969
+   .1   BASE RATE WITH 7 DEPENDENTS = 29098
+   .11  BASE RATE WITH 8 DEPENDENTS = 31227
+   .12  ADDITIONAL DEPENDENT AMOUNT = 2129
+   
+  SOFTWARE RETRIEVAL
+  ------------------
+  The software for this patch is not being distributed through the National 
+   Patch Module. This patch is being distributed as a host file. The host 
+   file will contain the following three KIDS builds:
+    
+               Host file name:    DG_53_P860.KID
+    
+                       Builds: DG*5.3*860
+                               EAS*1.0*108
+                               IB*2.0*485
+   
+   Sites may retrieve the software directly using File Transfer Protocol
+   (FTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field
+   Offices:
+    
+                       Albany   : ftp.fo-albany.med.va.gov
+                       Hines    : ftp.fo-hines.med.va.gov
+                 Salt Lake City : ftp.fo-slc.med.va.gov
+         First Available Server : download.vista.med.va.gov
+    
+   The following file will be available:
+    
+       File Name            Description
+       ---------            -----------
+       DG_53_P860.KID       Host File containing KIDS software distribution
+    
+   Note:  Use ASCII mode when transferring the .KID file.
+   
+  New Service Requests (NSRs)
+  ----------------------------  
+  N/A
+   
+  Patient Safety Issues (PSIs)
+  -----------------------------
+  N/A
+   
+  Remedy Ticket(s) & Overview
+  ---------------------------
+  N/A
+   
+  Test Sites:
+  ----------
+  VISN 2
+  Chillicothe, OH VAMC
+  Puget Sound HCS
+   
+  Documentation Retrieval Instructions
+  ------------------------------------ 
+  N/A
+   
+  Patch Installation:
+   
+   
+  Pre/Post Installation Overview
+  ------------------------------
+  The IB20E485 pre-init routine will provide prompting during the patch
+  install and may be deleted after install.
+   
+  The IB20P485 post-install routine will update the following files and may 
+  be deleted after install.
+       IB ACTION CHARGE (#350.2)
+       BILLING EXEMPTIONS (#354.1)
+       BILLING THRESHOLDS (#354.3)
+   
+   
+   
+  Installation Instructions
+  -------------------------
+  The components sent with this patch IB*2.0*485 have been included in the 
+  HOST File DG_53_P860.KID.  Please follow the instructions listed in the 
+  INSTALLATION INSTRUCTIONS section of the patch description for patch 
+  DG*5.3*860.
+    
+   
+   
+  Pre-Installation Instructions
+  -----------------------------
+  NOTE:  during the installation, please bear in mind items below.
+   
+     1.   During installation, the BILLING EXEMPTIONS file (#354.1) will be
+          checked for medication co-payment exemptions based on prior
+          thresholds. If there are some, the installer will be prompted to
+          UPDATE AND PRINT the exemptions report since the exemption status
+          may change due to the new rates.
+    
+          Press <Enter> to accept the default value of Update & Print.
+          At the DEVICE prompt you must enter a print device. An entry is
+          required and the HOME device is not allowed; neither is the
+          p-Message device (this will abort the install). You MUST choose a
+          valid printer. You need not queue the report since the patch will
+          do so automatically.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20E485
+    Before:       n/a   After:  B2238685  **485**
+Routine Name: IB20P485
+    Before:       n/a   After: B34807557  **485**
+
+=============================================================================
+User Information:
+Entered By  : CROSSMAN,PAM                  Date Entered  : OCT 04, 2012
+Completed By: MOORE,TERRY D                 Date Completed: DEC 17, 2012
+Released By : POST,HELEN                    Date Released : DEC 20, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

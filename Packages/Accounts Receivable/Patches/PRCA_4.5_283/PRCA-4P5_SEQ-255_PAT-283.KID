@@ -1,0 +1,3220 @@
+Released PRCA*4.5*283 SEQ #255
+Extracted from mail message
+**KIDS**:PRCA*4.5*283^
+
+**INSTALL NAME**
+PRCA*4.5*283
+"BLD",8926,0)
+PRCA*4.5*283^ACCOUNTS RECEIVABLE^0^3120516^y
+"BLD",8926,1,0)
+^^12^12^3120516^
+"BLD",8926,1,1,0)
+This patch resolves the following three issues:
+"BLD",8926,1,2,0)
+ 
+"BLD",8926,1,3,0)
+1. For manual creation of deposits, AR must be changed to allow users to 
+"BLD",8926,1,4,0)
+   create a deposit record with a Deposit Ticket Number that is six digits
+"BLD",8926,1,5,0)
+   long, with no restrictions on the first three digits. 
+"BLD",8926,1,6,0)
+ 
+"BLD",8926,1,7,0)
+2. For the Third Party EDI Lockbox process, AR must be changed to accept
+"BLD",8926,1,8,0)
+   any nine-digit deposit number.
+"BLD",8926,1,9,0)
+ 
+"BLD",8926,1,10,0)
+3. Four reports have been modified to display all of the 9-digit deposit 
+"BLD",8926,1,11,0)
+   number. They are EFT Deposit Reconciliation Report, Daily Activity
+"BLD",8926,1,12,0)
+   Report, EFT Unmatched Aging Report, and Unapplied EFT Deposits Report.
+"BLD",8926,4,0)
+^9.64PA^344.3^2
+"BLD",8926,4,344.1,0)
+344.1
+"BLD",8926,4,344.1,2,0)
+^9.641^344.1^1
+"BLD",8926,4,344.1,2,344.1,0)
+AR DEPOSIT  (File-top level)
+"BLD",8926,4,344.1,2,344.1,1,0)
+^9.6411^.01^1
+"BLD",8926,4,344.1,2,344.1,1,.01,0)
+TICKET #
+"BLD",8926,4,344.1,222)
+y^y^p^^^^n^^n
+"BLD",8926,4,344.1,224)
+
+"BLD",8926,4,344.3,0)
+344.3
+"BLD",8926,4,344.3,2,0)
+^9.641^344.3^1
+"BLD",8926,4,344.3,2,344.3,0)
+EDI LOCKBOX DEPOSIT  (File-top level)
+"BLD",8926,4,344.3,2,344.3,1,0)
+^9.6411^.03^1
+"BLD",8926,4,344.3,2,344.3,1,.03,0)
+AR DEPOSIT RECORD
+"BLD",8926,4,344.3,222)
+y^y^p^^^^n^^n
+"BLD",8926,4,344.3,224)
+
+"BLD",8926,4,"APDD",344.1,344.1)
+
+"BLD",8926,4,"APDD",344.1,344.1,.01)
+
+"BLD",8926,4,"APDD",344.3,344.3)
+
+"BLD",8926,4,"APDD",344.3,344.3,.03)
+
+"BLD",8926,4,"B",344.1,344.1)
+
+"BLD",8926,4,"B",344.3,344.3)
+
+"BLD",8926,6.3)
+8
+"BLD",8926,"INI")
+PRE^RCDPP283
+"BLD",8926,"INID")
+^^y
+"BLD",8926,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8926,"KRN",.4,0)
+.4
+"BLD",8926,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",8926,"KRN",.401,0)
+.401
+"BLD",8926,"KRN",.402,0)
+.402
+"BLD",8926,"KRN",.403,0)
+.403
+"BLD",8926,"KRN",.5,0)
+.5
+"BLD",8926,"KRN",.84,0)
+.84
+"BLD",8926,"KRN",3.6,0)
+3.6
+"BLD",8926,"KRN",3.8,0)
+3.8
+"BLD",8926,"KRN",9.2,0)
+9.2
+"BLD",8926,"KRN",9.8,0)
+9.8
+"BLD",8926,"KRN",9.8,"NM",0)
+^9.68A^8^8
+"BLD",8926,"KRN",9.8,"NM",1,0)
+RCDPEM^^0^B58755837
+"BLD",8926,"KRN",9.8,"NM",2,0)
+RCDPESR3^^0^B55776988
+"BLD",8926,"KRN",9.8,"NM",3,0)
+RCDPUDEP^^0^B14082361
+"BLD",8926,"KRN",9.8,"NM",4,0)
+RCDPEREC^^0^B39834899
+"BLD",8926,"KRN",9.8,"NM",5,0)
+RCDPEDAR^^0^B115536602
+"BLD",8926,"KRN",9.8,"NM",6,0)
+RCDPEDA1^^0^B24558059
+"BLD",8926,"KRN",9.8,"NM",7,0)
+RCDPEAR2^^0^B62672024
+"BLD",8926,"KRN",9.8,"NM",8,0)
+RCDPE8NZ^^0^B55534071
+"BLD",8926,"KRN",9.8,"NM","B","RCDPE8NZ",8)
+
+"BLD",8926,"KRN",9.8,"NM","B","RCDPEAR2",7)
+
+"BLD",8926,"KRN",9.8,"NM","B","RCDPEDA1",6)
+
+"BLD",8926,"KRN",9.8,"NM","B","RCDPEDAR",5)
+
+"BLD",8926,"KRN",9.8,"NM","B","RCDPEM",1)
+
+"BLD",8926,"KRN",9.8,"NM","B","RCDPEREC",4)
+
+"BLD",8926,"KRN",9.8,"NM","B","RCDPESR3",2)
+
+"BLD",8926,"KRN",9.8,"NM","B","RCDPUDEP",3)
+
+"BLD",8926,"KRN",19,0)
+19
+"BLD",8926,"KRN",19.1,0)
+19.1
+"BLD",8926,"KRN",101,0)
+101
+"BLD",8926,"KRN",409.61,0)
+409.61
+"BLD",8926,"KRN",771,0)
+771
+"BLD",8926,"KRN",779.2,0)
+779.2
+"BLD",8926,"KRN",870,0)
+870
+"BLD",8926,"KRN",8989.51,0)
+8989.51
+"BLD",8926,"KRN",8989.52,0)
+8989.52
+"BLD",8926,"KRN",8994,0)
+8994
+"BLD",8926,"KRN","B",.4,.4)
+
+"BLD",8926,"KRN","B",.401,.401)
+
+"BLD",8926,"KRN","B",.402,.402)
+
+"BLD",8926,"KRN","B",.403,.403)
+
+"BLD",8926,"KRN","B",.5,.5)
+
+"BLD",8926,"KRN","B",.84,.84)
+
+"BLD",8926,"KRN","B",3.6,3.6)
+
+"BLD",8926,"KRN","B",3.8,3.8)
+
+"BLD",8926,"KRN","B",9.2,9.2)
+
+"BLD",8926,"KRN","B",9.8,9.8)
+
+"BLD",8926,"KRN","B",19,19)
+
+"BLD",8926,"KRN","B",19.1,19.1)
+
+"BLD",8926,"KRN","B",101,101)
+
+"BLD",8926,"KRN","B",409.61,409.61)
+
+"BLD",8926,"KRN","B",771,771)
+
+"BLD",8926,"KRN","B",779.2,779.2)
+
+"BLD",8926,"KRN","B",870,870)
+
+"BLD",8926,"KRN","B",8989.51,8989.51)
+
+"BLD",8926,"KRN","B",8989.52,8989.52)
+
+"BLD",8926,"KRN","B",8994,8994)
+
+"BLD",8926,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",8926,"QUES",0)
+^9.62^^
+"BLD",8926,"REQB",0)
+^9.611^3^2
+"BLD",8926,"REQB",1,0)
+PRCA*4.5*257^1
+"BLD",8926,"REQB",3,0)
+PRCA*4.5*284^1
+"BLD",8926,"REQB","B","PRCA*4.5*257",1)
+
+"BLD",8926,"REQB","B","PRCA*4.5*284",3)
+
+"FIA",344.1)
+AR DEPOSIT
+"FIA",344.1,0)
+^RCY(344.1,
+"FIA",344.1,0,0)
+344.1I
+"FIA",344.1,0,1)
+y^y^p^^^^n^^n
+"FIA",344.1,0,10)
+
+"FIA",344.1,0,11)
+
+"FIA",344.1,0,"RLRO")
+
+"FIA",344.1,0,"VR")
+4.5^PRCA
+"FIA",344.1,344.1)
+1
+"FIA",344.1,344.1,.01)
+
+"FIA",344.3)
+EDI LOCKBOX DEPOSIT
+"FIA",344.3,0)
+^RCY(344.3,
+"FIA",344.3,0,0)
+344.3I
+"FIA",344.3,0,1)
+y^y^p^^^^n^^n
+"FIA",344.3,0,10)
+
+"FIA",344.3,0,11)
+
+"FIA",344.3,0,"RLRO")
+
+"FIA",344.3,0,"VR")
+4.5^PRCA
+"FIA",344.3,344.3)
+1
+"FIA",344.3,344.3,.03)
+
+"INI")
+PRE^RCDPP283
+"MBREQ")
+0
+"PKG",142,-1)
+1^1
+"PKG",142,0)
+ACCOUNTS RECEIVABLE^PRCA^BILL COLLECTIONS
+"PKG",142,20,0)
+^9.402P^1^1
+"PKG",142,20,1,0)
+2^^PRCAMRG
+"PKG",142,20,1,1)
+
+"PKG",142,20,"B",2,1)
+
+"PKG",142,22,0)
+^9.49I^1^1
+"PKG",142,22,1,0)
+4.5^^2950320
+"PKG",142,22,1,"PAH",1,0)
+283^3120516
+"PKG",142,22,1,"PAH",1,1,0)
+^^12^12^3120516
+"PKG",142,22,1,"PAH",1,1,1,0)
+This patch resolves the following three issues:
+"PKG",142,22,1,"PAH",1,1,2,0)
+ 
+"PKG",142,22,1,"PAH",1,1,3,0)
+1. For manual creation of deposits, AR must be changed to allow users to 
+"PKG",142,22,1,"PAH",1,1,4,0)
+   create a deposit record with a Deposit Ticket Number that is six digits
+"PKG",142,22,1,"PAH",1,1,5,0)
+   long, with no restrictions on the first three digits. 
+"PKG",142,22,1,"PAH",1,1,6,0)
+ 
+"PKG",142,22,1,"PAH",1,1,7,0)
+2. For the Third Party EDI Lockbox process, AR must be changed to accept
+"PKG",142,22,1,"PAH",1,1,8,0)
+   any nine-digit deposit number.
+"PKG",142,22,1,"PAH",1,1,9,0)
+ 
+"PKG",142,22,1,"PAH",1,1,10,0)
+3. Four reports have been modified to display all of the 9-digit deposit 
+"PKG",142,22,1,"PAH",1,1,11,0)
+   number. They are EFT Deposit Reconciliation Report, Daily Activity
+"PKG",142,22,1,"PAH",1,1,12,0)
+   Report, EFT Unmatched Aging Report, and Unapplied EFT Deposits Report.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+9
+"RTN","RCDPE8NZ")
+0^8^B55534071^B54377716
+"RTN","RCDPE8NZ",1,0)
+RCDPE8NZ ;ALB/TMK/KML - Unapplied EFT Deposits report ;19 MAR 2003
+"RTN","RCDPE8NZ",2,0)
+ ;;4.5;Accounts Receivable;**173,212,208,269,276,283**;Mar 20, 1995;Build 8
+"RTN","RCDPE8NZ",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","RCDPE8NZ",4,0)
+ ;
+"RTN","RCDPE8NZ",5,0)
+EN ; entrypoint for stand-alone report option
+"RTN","RCDPE8NZ",6,0)
+ N %ZIS,ZTRTN,ZTSAVE,ZTDESC,POP,ZTSK,DIR,X,Y,RCDISPTY,RCSTDT,RCENDT
+"RTN","RCDPE8NZ",7,0)
+ S DIR("A")="START DATE: "
+"RTN","RCDPE8NZ",8,0)
+ S DIR(0)="DOA^:"_DT_":AEP" W ! D ^DIR K DIR
+"RTN","RCDPE8NZ",9,0)
+ Q:Y=""  Q:$D(DUOUT)!$D(DTOUT)
+"RTN","RCDPE8NZ",10,0)
+ S RCSTDT=+Y
+"RTN","RCDPE8NZ",11,0)
+ S DIR("A")="END DATE: "
+"RTN","RCDPE8NZ",12,0)
+ S DIR("B")=Y(0)
+"RTN","RCDPE8NZ",13,0)
+ S DIR(0)="DAO^"_RCSTDT_":"_DT_":APE" W ! D ^DIR K DIR
+"RTN","RCDPE8NZ",14,0)
+ Q:$D(DUOUT)!$D(DTOUT)
+"RTN","RCDPE8NZ",15,0)
+ S RCENDT=+Y
+"RTN","RCDPE8NZ",16,0)
+ ; ask if export to excel format is wanted
+"RTN","RCDPE8NZ",17,0)
+ S RCDISPTY=$$DISPTY^RCDPEM3()
+"RTN","RCDPE8NZ",18,0)
+ I RCDISPTY=-1 Q
+"RTN","RCDPE8NZ",19,0)
+ I RCDISPTY D INFO^RCDPEM6
+"RTN","RCDPE8NZ",20,0)
+ ; Ask device
+"RTN","RCDPE8NZ",21,0)
+ S %ZIS="QM" D ^%ZIS Q:POP
+"RTN","RCDPE8NZ",22,0)
+ I $D(IO("Q")) D  Q
+"RTN","RCDPE8NZ",23,0)
+ . S ZTRTN="PR^RCDPE8NZ",ZTDESC="AR - List of unlinked EFT deposit payments"
+"RTN","RCDPE8NZ",24,0)
+ . S ZTSAVE("RC*")=""
+"RTN","RCDPE8NZ",25,0)
+ . D ^%ZTLOAD
+"RTN","RCDPE8NZ",26,0)
+ . W !!,$S($D(ZTSK):"Your task number "_ZTSK_" has been queued.",1:"Unable to queue this job.")
+"RTN","RCDPE8NZ",27,0)
+ . K ZTSK,IO("Q") D HOME^%ZIS
+"RTN","RCDPE8NZ",28,0)
+ U IO
+"RTN","RCDPE8NZ",29,0)
+ D PR
+"RTN","RCDPE8NZ",30,0)
+ Q
+"RTN","RCDPE8NZ",31,0)
+ ;
+"RTN","RCDPE8NZ",32,0)
+PR ; Entrypoint for queued job
+"RTN","RCDPE8NZ",33,0)
+ N RCCT,RCPG,RCEFT,RCEFT1,RCDATA,RCDATA0,RCDA,RCREC,RCSTAT,RCDT,RCTOT,RCEFTD,RCSTOP,RCRDT
+"RTN","RCDPE8NZ",34,0)
+ N Z,RCSUM,RCUNAP,RCPOST,RCTR,RCCR,ZTSTOP,RECEXT
+"RTN","RCDPE8NZ",35,0)
+ ;
+"RTN","RCDPE8NZ",36,0)
+ ;  get list of unlinked EFT deposit data
+"RTN","RCDPE8NZ",37,0)
+ K ^TMP("RCDPE8NZZ_EFT",$J) ; subscripts: dep date,EFT ien,EFT det ien
+"RTN","RCDPE8NZ",38,0)
+ ;  Data is FMS doc indicator^FMS doc #^FMS Doc Status
+"RTN","RCDPE8NZ",39,0)
+ ;    FMS doc indicator = -1:no receipt  -2:no FMS doc  1:FMS doc exists
+"RTN","RCDPE8NZ",40,0)
+ ;
+"RTN","RCDPE8NZ",41,0)
+ S (RCCT,RCSTOP,RCSUM,RCUNAP)=0
+"RTN","RCDPE8NZ",42,0)
+ S RCEFT1="" F  S RCEFT1=$O(^RCY(344.3,"ARDEP",RCEFT1)) Q:RCEFT1=""!RCSTOP  S RCDA=0 F  S RCDA=$O(^RCY(344.3,"ARDEP",RCEFT1,RCDA)) Q:'RCDA  D  Q:RCSTOP
+"RTN","RCDPE8NZ",43,0)
+ . S RCDATA=$G(^RCY(344.3,RCDA,0)),RCDT=$P(RCDATA,U,7),RCTOT=0
+"RTN","RCDPE8NZ",44,0)
+ . Q:RCDT<RCSTDT  ; Before start date
+"RTN","RCDPE8NZ",45,0)
+ . Q:RCDT>(RCENDT+.999999)  ; After the end date
+"RTN","RCDPE8NZ",46,0)
+ . Q:'$P(RCDATA,"^",8)  ; no payment amt
+"RTN","RCDPE8NZ",47,0)
+ . S RCEFT=0 F  S RCEFT=$O(^RCY(344.31,"B",RCDA,RCEFT)) Q:'RCEFT!RCSTOP  S RCDATA0=$G(^RCY(344.31,RCEFT,0)) D  Q:RCSTOP
+"RTN","RCDPE8NZ",48,0)
+ . . S RCCT=RCCT+1
+"RTN","RCDPE8NZ",49,0)
+ . . I '(RCCT#100),$D(ZTQUEUED),$$S^%ZTLOAD S (RCSTOP,ZTSTOP)=1 K ZTREQ Q
+"RTN","RCDPE8NZ",50,0)
+ . . S RCREC=$$GETREC(RCEFT,RCDATA0,.RECEXT)
+"RTN","RCDPE8NZ",51,0)
+ . . Q:RCREC="PURGED"  ; need to prevent processed EFTs that had receipts purged from being generated on the report
+"RTN","RCDPE8NZ",52,0)
+ . . ;; PRCA276 - need to add EFT entries without a receipt to the total number of unapplied deposits
+"RTN","RCDPE8NZ",53,0)
+ . . I 'RCREC S RCUNAP=RCUNAP+1,^TMP("RCDPE8NZZ_EFT",$J,RCDT,RCDA,RCEFT)=-1,RCTOT=RCTOT+$P(RCDATA0,U,7) Q  ; No receipt therefore no FMS document
+"RTN","RCDPE8NZ",54,0)
+ . . S RCSTAT=$$FMSSTAT^RCDPUREC(RCREC)
+"RTN","RCDPE8NZ",55,0)
+ . . I $E($P(RCSTAT,U),1,2)="TR",$P(RCSTAT,U,2)["ACCEPTED" Q
+"RTN","RCDPE8NZ",56,0)
+ . . S RCUNAP=RCUNAP+1,RCTOT=RCTOT+$P(RCDATA0,U,7)  ; total unapplied deposits and total dollar amount of unapplied deposits
+"RTN","RCDPE8NZ",57,0)
+ . . I $P(RCSTAT,U,2)="NOT ENTERED" S ^TMP("RCDPE8NZZ_EFT",$J,RCDT,RCDA,RCEFT)="-2^^"_$P(RCSTAT,U) Q  ; No FMS doc
+"RTN","RCDPE8NZ",58,0)
+ . . S ^TMP("RCDPE8NZZ_EFT",$J,RCDT,RCDA,RCEFT)="1^"_$P(RCSTAT,U,1,2)_"^"_RECEXT
+"RTN","RCDPE8NZ",59,0)
+ . S:RCTOT ^TMP("RCDPE8NZZ_EFT",$J,RCDT,RCDA)=RCTOT,RCSUM=RCSUM+RCTOT
+"RTN","RCDPE8NZ",60,0)
+ I RCDISPTY D EXCEL Q
+"RTN","RCDPE8NZ",61,0)
+ D RPT
+"RTN","RCDPE8NZ",62,0)
+ Q
+"RTN","RCDPE8NZ",63,0)
+ ;
+"RTN","RCDPE8NZ",64,0)
+RPT ;  display/print the report using data populated in temporary global array
+"RTN","RCDPE8NZ",65,0)
+ S (RCPG,RCDT)=0,RCRDT=$$FMTE^XLFDT($$NOW^XLFDT(),2)
+"RTN","RCDPE8NZ",66,0)
+ F  S RCDT=$O(^TMP("RCDPE8NZZ_EFT",$J,RCDT)) Q:'RCDT  D  Q:RCSTOP
+"RTN","RCDPE8NZ",67,0)
+ . I 'RCPG!(($Y+5)>IOSL) D HDR(RCRDT,.RCPG,.RCSTOP) Q:RCSTOP
+"RTN","RCDPE8NZ",68,0)
+ . W ! S Z="DEPOSIT DATE: "_$$FMTE^XLFDT(RCDT,1) W ?(80-$L(Z)\2),Z,!
+"RTN","RCDPE8NZ",69,0)
+ . S RCEFT1=0 F  S RCEFT1=$O(^TMP("RCDPE8NZZ_EFT",$J,RCDT,RCEFT1)) Q:'RCEFT1  D
+"RTN","RCDPE8NZ",70,0)
+ . . S RCCT=RCCT+1
+"RTN","RCDPE8NZ",71,0)
+ . . I '(RCCT#100),$D(ZTQUEUED),$$S^%ZTLOAD S (RCSTOP,ZTSTOP)=1 W:$G(RCPG) !!,"TASK STOPPED BY USER!!" K ZTREQ Q
+"RTN","RCDPE8NZ",72,0)
+ . . S RCDATA0=$G(^RCY(344.3,RCEFT1,0))
+"RTN","RCDPE8NZ",73,0)
+ . . I ($Y+5)>IOSL D HDR(RCRDT,.RCPG,.RCSTOP) Q:RCSTOP
+"RTN","RCDPE8NZ",74,0)
+ . . ; PRCA*4.5*283 - Change the spaces for DEP # from 10 to 13 to allow 9 digit DEP #
+"RTN","RCDPE8NZ",75,0)
+ . . W !,$J("",4),$E($P(RCDATA0,U,6)_$S('$$HACEFT^RCDPEU(RCEFT1):"",1:"-HAC")_$J("",13),1,13)_"  "_$E($$FMTE^XLFDT($P(RCDATA0,U,7),2)_$J("",16),1,16)_"  "_$E($J(+$P(RCDATA0,U,8),"",2)_$J("",20),1,20)
+"RTN","RCDPE8NZ",76,0)
+ . . W "  "_$J(+$G(^TMP("RCDPE8NZZ_EFT",$J,RCDT,RCEFT1)),"",2)
+"RTN","RCDPE8NZ",77,0)
+ . . S RCEFT=0 F  S RCEFT=$O(^TMP("RCDPE8NZZ_EFT",$J,RCDT,RCEFT1,RCEFT)) Q:'RCEFT  S RCDATA=$G(^(RCEFT)),RCEFTD=$G(^RCY(344.31,RCEFT,0)) D
+"RTN","RCDPE8NZ",78,0)
+ . . . I ($Y+5)>IOSL D HDR(RCRDT,.RCPG,.RCSTOP) Q:RCSTOP
+"RTN","RCDPE8NZ",79,0)
+ . . . W !,$J("",5)_$P(RCEFTD,U,2)_"/"_$P(RCEFTD,U,3),!,$J("",6)_$E($P(RCEFTD,U,4)_$J("",50),1,50)_" "
+"RTN","RCDPE8NZ",80,0)
+ . . . W $E($J(+$P(RCEFTD,U,7),"",2)_$J("",12),1,12)_" "_$S($P(RCDATA,U,4)'="":$P(RCDATA,U,4),1:"NO RECEIPT")
+"RTN","RCDPE8NZ",81,0)
+ . . . S Z=$P(RCEFTD,U,8)
+"RTN","RCDPE8NZ",82,0)
+ . . . W !,$J("",8)_$E($S('Z:"UNMATCHED",Z=2:"PAPER EOB",1:"MATCHED TO ERA #: "_$P(RCEFTD,U,10)_$S(Z=-1:" (TOTALS MISMATCH)",1:""))_$J("",40),1,40)_"  "
+"RTN","RCDPE8NZ",83,0)
+ . . . W $S($P(RCDATA,U)=-1:"NO RECEIPT",$P(RCDATA,U)=-2:"NO FMS DOCUMENT",1:$E($P(RCDATA,U,2)_" - "_$P(RCDATA,U,3),1,30)),!
+"RTN","RCDPE8NZ",84,0)
+ I '$D(^TMP("RCDPE8NZZ_EFT",$J)) D HDR(RCRDT,.RCPG,.RCSTOP) W !!!,?26,"*** NO RECORDS TO PRINT ***"
+"RTN","RCDPE8NZ",85,0)
+ I $D(^TMP("RCDPE8NZZ_EFT",$J)) W !,"******** END OF REPORT ********",!
+"RTN","RCDPE8NZ",86,0)
+ I $D(ZTQUEUED) S ZTREQ="@"
+"RTN","RCDPE8NZ",87,0)
+ I '$D(ZTQUEUED) D ^%ZISC
+"RTN","RCDPE8NZ",88,0)
+ G:RCSTOP RPTQ
+"RTN","RCDPE8NZ",89,0)
+ I $E(IOST,1,2)="C-" D ASK(.RCSTOP)
+"RTN","RCDPE8NZ",90,0)
+ ;
+"RTN","RCDPE8NZ",91,0)
+RPTQ K ^TMP("RCDPE8NZZ_EFT",$J)
+"RTN","RCDPE8NZ",92,0)
+ Q
+"RTN","RCDPE8NZ",93,0)
+ ;
+"RTN","RCDPE8NZ",94,0)
+GETREC(EFTDA,EFTDET,RECEXT) ;  prca276
+"RTN","RCDPE8NZ",95,0)
+ ; input - EFTDA - IEN OF 344.31
+"RTN","RCDPE8NZ",96,0)
+ ; input - EFTDET - data stored at the 0 subscript of the THIRD PARTY EFT DETAIL file (344.31)
+"RTN","RCDPE8NZ",97,0)
+ ; input - RECEXT passed by reference
+"RTN","RCDPE8NZ",98,0)
+ ; output - RECEXT populated with the external receipt value that gets generated on the report
+"RTN","RCDPE8NZ",99,0)
+ ; output - RECEIPT - returns internal value of the receipt that either comes from the EFT file (344.31) or the ERA file (344.4) 
+"RTN","RCDPE8NZ",100,0)
+ N RECEIPT
+"RTN","RCDPE8NZ",101,0)
+ S RECEXT=0
+"RTN","RCDPE8NZ",102,0)
+ S RECEIPT=+$P($G(^RCY(344.4,+$P(EFTDET,U,10),0)),U,8)  ; get receipt off the ERA record
+"RTN","RCDPE8NZ",103,0)
+ I 'RECEIPT,$P(EFTDET,U,8)=2 S RECEIPT=+$O(^RCY(344,"AEFT",EFTDA,0))  ; EFT processed against paper EOB
+"RTN","RCDPE8NZ",104,0)
+ I 'RECEIPT S RECEIPT=$P(EFTDET,U,9) ; receipt not posted in payment file so get from EFT detail (unprocessed EFT)
+"RTN","RCDPE8NZ",105,0)
+ I +RECEIPT,'$D(^RCY(344,RECEIPT)) Q "PURGED"  ; handle purged receipts but broken pointer exists in 344.31; need to handle as a processed EFT 
+"RTN","RCDPE8NZ",106,0)
+ I +RECEIPT S RECEXT=$P(^RCY(344,RECEIPT,0),U)
+"RTN","RCDPE8NZ",107,0)
+ Q +RECEIPT
+"RTN","RCDPE8NZ",108,0)
+ ;
+"RTN","RCDPE8NZ",109,0)
+HDR(RCRDT,RCPG,RCSTOP) ; Print header data
+"RTN","RCDPE8NZ",110,0)
+ N Z0
+"RTN","RCDPE8NZ",111,0)
+ I 'RCSTOP,RCPG D ASK(.RCSTOP) Q:RCSTOP
+"RTN","RCDPE8NZ",112,0)
+ I RCPG!($E(IOST,1,2)="C-") W @IOF,*13
+"RTN","RCDPE8NZ",113,0)
+ S RCPG=RCPG+1
+"RTN","RCDPE8NZ",114,0)
+ S Z0="Unapplied EFT Deposits Report",Z0=$J("",80-$L(Z0)\2)_Z0 W !,Z0 W ?70,"Page: ",RCPG
+"RTN","RCDPE8NZ",115,0)
+ S Z0="Run Date: "_RCRDT,Z0=$J("",80-$L(Z0)\2)_Z0 W !,Z0
+"RTN","RCDPE8NZ",116,0)
+ S Z0="Date Range: "_$$FMTE^XLFDT(RCSTDT,2)_" - "_$$FMTE^XLFDT(RCENDT,2)_" (Deposit Date)",Z0=$J("",80-$L(Z0)\2)_Z0 W !,Z0
+"RTN","RCDPE8NZ",117,0)
+ I RCPG=1 D
+"RTN","RCDPE8NZ",118,0)
+ . S Z0="TOTAL NUMBER OF UNAPPLIED DEPOSITS: "_RCUNAP,Z0=$J("",80-$L(Z0)\2)_Z0 W !,Z0
+"RTN","RCDPE8NZ",119,0)
+ . S Z0="TOTAL AMOUNT OF UNAPPLIED DEPOSITS: $"_$FN(RCSUM,",",2),Z0=$J("",80-$L(Z0)\2)_Z0 W !,Z0,!
+"RTN","RCDPE8NZ",120,0)
+ ; PRCA*4.5*283 - Add 3 more spaces between DEPOSIT # and DEPOSIT DATE
+"RTN","RCDPE8NZ",121,0)
+ ; to allow for 9 digit DEPOSIT #'s
+"RTN","RCDPE8NZ",122,0)
+ W !!,"    DEPOSIT #      DEPOSIT DATE      TOT AMT OF DEPOSIT    TOT AMT UNPOSTED"
+"RTN","RCDPE8NZ",123,0)
+ W !,"     PAYER/ID",!,$J("",6)_"TRACE #"_$J("",44)_"PAYMENT AMT  RECEIPT #",!,$J("",8)_$E("ERA MATCHED"_$J("",40),1,40)_"  FMS DOC #/STATUS"
+"RTN","RCDPE8NZ",124,0)
+ W !,$TR($J("",IOM)," ","=")
+"RTN","RCDPE8NZ",125,0)
+ Q
+"RTN","RCDPE8NZ",126,0)
+ ;
+"RTN","RCDPE8NZ",127,0)
+ASK(RCSTOP) ;
+"RTN","RCDPE8NZ",128,0)
+ I $E(IOST,1,2)'["C-" Q
+"RTN","RCDPE8NZ",129,0)
+ N DIR,DIROUT,DIRUT,DTOUT,DUOUT
+"RTN","RCDPE8NZ",130,0)
+ S DIR(0)="E" W ! D ^DIR
+"RTN","RCDPE8NZ",131,0)
+ I ($D(DIRUT))!($D(DUOUT)) S RCSTOP=1 Q
+"RTN","RCDPE8NZ",132,0)
+ Q
+"RTN","RCDPE8NZ",133,0)
+ ;
+"RTN","RCDPE8NZ",134,0)
+EXCEL ; Print report formatted for export to Excel
+"RTN","RCDPE8NZ",135,0)
+ N STR1
+"RTN","RCDPE8NZ",136,0)
+ W !,"DEPOSIT #^DEPOSIT DATE^TOT AMT DEPOSIT^TOT AMT UNPOSTED^PAYER ID^TRACE #^PAYMENT AMT^RECEIPT #^ERA MATCHED^FMS DOC #/STATUS",!
+"RTN","RCDPE8NZ",137,0)
+ S RCDT=0 F  S RCDT=$O(^TMP("RCDPE8NZZ_EFT",$J,RCDT)) Q:'RCDT  D  Q:RCSTOP
+"RTN","RCDPE8NZ",138,0)
+ .S RCEFT1=0 F  S RCEFT1=$O(^TMP("RCDPE8NZZ_EFT",$J,RCDT,RCEFT1)) Q:'RCEFT1  D
+"RTN","RCDPE8NZ",139,0)
+ ..S RCDATA0=$G(^RCY(344.3,RCEFT1,0))
+"RTN","RCDPE8NZ",140,0)
+ ..S STR1=$P(RCDATA0,U,6)_$S('$$HACEFT^RCDPEU(RCEFT1):"",1:"-HAC")_U_$$FMTE^XLFDT($P(RCDATA0,U,7))_U_$P(RCDATA0,U,8)_U
+"RTN","RCDPE8NZ",141,0)
+ ..S STR1=STR1_+$G(^TMP("RCDPE8NZZ_EFT",$J,RCDT,RCEFT1))_U
+"RTN","RCDPE8NZ",142,0)
+ ..;
+"RTN","RCDPE8NZ",143,0)
+ ..S RCEFT=0 F  S RCEFT=$O(^TMP("RCDPE8NZZ_EFT",$J,RCDT,RCEFT1,RCEFT)) Q:'RCEFT  S RCDATA=$G(^(RCEFT)),RCEFTD=$G(^RCY(344.31,RCEFT,0)) D
+"RTN","RCDPE8NZ",144,0)
+ ...W STR1
+"RTN","RCDPE8NZ",145,0)
+ ...W $P(RCEFTD,U,2)_"/"_$P(RCEFTD,U,3)_U_$P(RCEFTD,U,4)_U
+"RTN","RCDPE8NZ",146,0)
+ ...W +$P(RCEFTD,U,7)_U_$S($P(RCDATA,U,4)'="":$P(RCDATA,U,4),1:"NO RECEIPT")_U
+"RTN","RCDPE8NZ",147,0)
+ ...W $P(RCEFTD,U,10)_U
+"RTN","RCDPE8NZ",148,0)
+ ...W $S($P(RCDATA,U)=-1:"NO RECEIPT",$P(RCDATA,U)=-2:"NO FMS DOCUMENT",1:$P(RCDATA,U,2)_" - "_$P(RCDATA,U,3))
+"RTN","RCDPE8NZ",149,0)
+ ...W !
+"RTN","RCDPE8NZ",150,0)
+ Q
+"RTN","RCDPEAR2")
+0^7^B62672024^B61283482
+"RTN","RCDPEAR2",1,0)
+RCDPEAR2 ;ALB/TMK/PJH - EFT Unmatched Aging Report - FILE 344.3 ;04-NOV-02
+"RTN","RCDPEAR2",2,0)
+ ;;4.5;Accounts Receivable;**173,269,276,284,283**;Mar 20, 1995;Build 8
+"RTN","RCDPEAR2",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","RCDPEAR2",4,0)
+ Q
+"RTN","RCDPEAR2",5,0)
+ ;
+"RTN","RCDPEAR2",6,0)
+EN1 ; Entry from option - run on the fly
+"RTN","RCDPEAR2",7,0)
+ N DIR,Y,%ZIS,ZTRTN,ZTSAVE,ZTDESC,POP,X,RCNP,RCJOB,RCJOB1
+"RTN","RCDPEAR2",8,0)
+ N RCRANGE,RCDISPTY,RCSTART,ZTSTOP,RCEND,DIC,RCIND,RCNP1
+"RTN","RCDPEAR2",9,0)
+ S RCIND=1
+"RTN","RCDPEAR2",10,0)
+ S RCRANGE=$$DTRNG^RCDPEM4()
+"RTN","RCDPEAR2",11,0)
+ I RCRANGE=0 G EN1Q
+"RTN","RCDPEAR2",12,0)
+ I $P(RCRANGE,U,1) D
+"RTN","RCDPEAR2",13,0)
+ . S RCSTART=$P(RCRANGE,U,2)-1
+"RTN","RCDPEAR2",14,0)
+ . S RCEND=$P(RCRANGE,U,3)
+"RTN","RCDPEAR2",15,0)
+ ;Get insurance company to be used as filter
+"RTN","RCDPEAR2",16,0)
+ ; PRCA*4.5*284 - RCDPEM9 now return a stack in RCNP (Type of Response(1=Range,2=All,3=Specific)^From Range^Thru Range)
+"RTN","RCDPEAR2",17,0)
+ S RCNP=$$GETPAY^RCDPEM9(344.31) I +RCNP=-1 G EN1Q
+"RTN","RCDPEAR2",18,0)
+ ;Get display type
+"RTN","RCDPEAR2",19,0)
+ S RCDISPTY=$$DISPTY^RCDPEM3() Q:RCDISPTY=-1
+"RTN","RCDPEAR2",20,0)
+ I $D(DUOUT)!$D(DTOUT) G EN1Q
+"RTN","RCDPEAR2",21,0)
+ I RCDISPTY D INFO^RCDPEM6
+"RTN","RCDPEAR2",22,0)
+ S:$P($G(RCRANGE),U)>0 RCIND=RCIND+3
+"RTN","RCDPEAR2",23,0)
+ S:$D(^TMP("RCSELPAY",$J))&(+RCNP=1) RCIND=RCIND+5
+"RTN","RCDPEAR2",24,0)
+ S RCJOB=$J
+"RTN","RCDPEAR2",25,0)
+ ; Ask device
+"RTN","RCDPEAR2",26,0)
+ S %ZIS="QM" D ^%ZIS G:POP EN1Q
+"RTN","RCDPEAR2",27,0)
+ I $D(IO("Q")) D  G EN1Q
+"RTN","RCDPEAR2",28,0)
+ . S ZTRTN="RPTOUT^RCDPEAR2",ZTDESC="EFT AGING REPORT"
+"RTN","RCDPEAR2",29,0)
+ . S ZTSAVE("*")=""
+"RTN","RCDPEAR2",30,0)
+ . ; PRCA*4.5*284 - Because TMP global may be on another server, save off specific payers in local
+"RTN","RCDPEAR2",31,0)
+ . I +RCNP=3 M RCNP1=^TMP("RCSELPAY",$J)
+"RTN","RCDPEAR2",32,0)
+ . D ^%ZTLOAD
+"RTN","RCDPEAR2",33,0)
+ . W !!,$S($D(ZTSK):"Your task number "_ZTSK_" has been queued.",1:"Unable to queue this job.")
+"RTN","RCDPEAR2",34,0)
+ . K ZTSK,IO("Q") D HOME^%ZIS
+"RTN","RCDPEAR2",35,0)
+ U IO
+"RTN","RCDPEAR2",36,0)
+ D RPTOUT
+"RTN","RCDPEAR2",37,0)
+EN1Q Q
+"RTN","RCDPEAR2",38,0)
+ ;
+"RTN","RCDPEAR2",39,0)
+RPTOUT(RCPRT) ; Entrypoint for queued job, nightly job
+"RTN","RCDPEAR2",40,0)
+ ; RCPRT = name of the subscript for ^TMP to use to return all lines
+"RTN","RCDPEAR2",41,0)
+ ;        (for bulletin).  If undefined or null, output is printed
+"RTN","RCDPEAR2",42,0)
+ ; Return global if RCPRT not null: ^TMP($J,RCPRT,line#)=line text
+"RTN","RCDPEAR2",43,0)
+ N RCCT,RCPG,RCPGS,RCSTOP,RCNT,RCTOT,RCOUT,RC0,RC13,RCZ,RCZ0,RC00,Z,Z0,DIC,DUOUT,X,RCPAY,RCRUNDT
+"RTN","RCDPEAR2",44,0)
+ S RCPRT=$G(RCPRT)
+"RTN","RCDPEAR2",45,0)
+ S (RCCT,RCSTOP,RCPG,RCNT,RCTOT,RCPGS)=0,RCRUNDT=$$NOW^RCDPEM6
+"RTN","RCDPEAR2",46,0)
+ S RCPGS=1
+"RTN","RCDPEAR2",47,0)
+ K ^TMP($J,"RCERA_AGED"),^TMP($J,"RCERA_ADJ")
+"RTN","RCDPEAR2",48,0)
+ ; PRCA*4.5*284 - Queued job needs to reload payer selection list
+"RTN","RCDPEAR2",49,0)
+ I $G(RCJOB)'="",RCJOB'=$J D
+"RTN","RCDPEAR2",50,0)
+ . K ^TMP("RCSELPAY",$J)
+"RTN","RCDPEAR2",51,0)
+ . D RLOAD^RCDPEAR1(344.31)
+"RTN","RCDPEAR2",52,0)
+ . S RCJOB=$J
+"RTN","RCDPEAR2",53,0)
+ ; build local payer array here
+"RTN","RCDPEAR2",54,0)
+ S RCNP=+RCNP
+"RTN","RCDPEAR2",55,0)
+ D SELPAY^RCDPEAR1(RCNP,RCJOB,.RCPAY)
+"RTN","RCDPEAR2",56,0)
+ I RCPRT'="" K ^TMP($J,RCPRT)
+"RTN","RCDPEAR2",57,0)
+ S RCZ0=0 F  S RCZ0=$O(^RCY(344.31,"AMATCH",0,RCZ0)) Q:'RCZ0  D
+"RTN","RCDPEAR2",58,0)
+ .Q:$P($G(^RCY(344.31,RCZ0,3)),U)
+"RTN","RCDPEAR2",59,0)
+ .Q:$P($G(^RCY(344.31,RCZ0,0)),U,7)=0
+"RTN","RCDPEAR2",60,0)
+ .S RC13=$P($G(^RCY(344.31,RCZ0,0)),U,13)  ;date received
+"RTN","RCDPEAR2",61,0)
+ .; Check for payer match
+"RTN","RCDPEAR2",62,0)
+ .I '$$CHKPYR^RCDPEDAR(RCZ0,0,RCJOB) Q
+"RTN","RCDPEAR2",63,0)
+ .; Check date range
+"RTN","RCDPEAR2",64,0)
+ .I $P(RCRANGE,U,1) Q:(RCSTART>RC13)!(RC13>RCEND)
+"RTN","RCDPEAR2",65,0)
+ .; Passed all the filters - include on report
+"RTN","RCDPEAR2",66,0)
+ .S ^TMP($J,"RCEFT_AGED",$$FMDIFF^XLFDT(RC13,DT),RCZ0)=0,RCNT=RCNT+1
+"RTN","RCDPEAR2",67,0)
+ I RCDISPTY D HDR(.RCCT,.RCPG,.RCSTOP,RCPRT,RCRANGE,.RCPAY,RCRUNDT),EXCEL Q
+"RTN","RCDPEAR2",68,0)
+ ;
+"RTN","RCDPEAR2",69,0)
+ ; Find total amount of EFTs
+"RTN","RCDPEAR2",70,0)
+ S RCZ="" F  S RCZ=$O(^TMP($J,"RCEFT_AGED",RCZ)) Q:RCZ=""  S RCZ0=0 F  S RCZ0=$O(^TMP($J,"RCEFT_AGED",RCZ,RCZ0)) Q:'RCZ0  D  G:RCSTOP PRTQ
+"RTN","RCDPEAR2",71,0)
+ . I $D(ZTQUEUED),$$S^%ZTLOAD S (RCSTOP,ZTSTOP)=1 K ZTREQ I +$G(RCPG) W:RCPRT="" !!,"***TASK STOPPED BY USER***" Q
+"RTN","RCDPEAR2",72,0)
+ . S RC0=$G(^RCY(344.31,RCZ0,0)),RC00=$G(^RCY(344.3,+RC0,0))
+"RTN","RCDPEAR2",73,0)
+ . S RCTOT=RCTOT+$P(RC0,U,7)
+"RTN","RCDPEAR2",74,0)
+ ;
+"RTN","RCDPEAR2",75,0)
+ S RCZ="" F  S RCZ=$O(^TMP($J,"RCEFT_AGED",RCZ)) Q:RCZ=""  S RCZ0=0 F  S RCZ0=$O(^TMP($J,"RCEFT_AGED",RCZ,RCZ0)) Q:'RCZ0  D  G:RCSTOP PRTQ
+"RTN","RCDPEAR2",76,0)
+ . I $D(ZTQUEUED),$$S^%ZTLOAD S (RCSTOP,ZTSTOP)=1 K ZTREQ I +$G(RCPG) W:RCPRT="" !!,"***TASK STOPPED BY USER***" Q
+"RTN","RCDPEAR2",77,0)
+ . I RCPG D SETLINE(" ",.RCCT,.RCPRT) ; On detail list, skip line
+"RTN","RCDPEAR2",78,0)
+ . I 'RCPG!(($Y+5)>IOSL) S RCPGS=RCPGS+1 D HDR(.RCCT,.RCPG,.RCSTOP,RCPRT,RCRANGE,.RCPAY,RCRUNDT) Q:RCSTOP
+"RTN","RCDPEAR2",79,0)
+ . S RC0=$G(^RCY(344.31,RCZ0,0)),RC00=$G(^RCY(344.3,+RC0,0))
+"RTN","RCDPEAR2",80,0)
+ . S RCTOT=RCTOT+$P(RC0,U,7)
+"RTN","RCDPEAR2",81,0)
+ . S Z=$$SETSTR^VALM1($J(-RCZ,4),"",1,4)
+"RTN","RCDPEAR2",82,0)
+ . S Z=$$SETSTR^VALM1("  "_$P(RC0,U,4),Z,5,75)
+"RTN","RCDPEAR2",83,0)
+ . D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",84,0)
+ . S Z=$$SETSTR^VALM1($P(RC0,U,2)_"/"_$P(RC0,U,3),"",11,69)
+"RTN","RCDPEAR2",85,0)
+ . S Z=$$SETSTR^VALM1("  "_$$FMTE^XLFDT($P(RC0,U,12),2),Z,70,10)
+"RTN","RCDPEAR2",86,0)
+ . D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",87,0)
+ . S Z=$$SETSTR^VALM1($J("",6)_$S($P(RC0,U,13):$$FMTE^XLFDT($P(RC0,U,13),2),1:""),"",1,17)
+"RTN","RCDPEAR2",88,0)
+ . S Z=$$SETSTR^VALM1("  "_$J($P(RC0,U,7),15,2),Z,18,17)
+"RTN","RCDPEAR2",89,0)
+ . ; PRCA*4.5*283 - change length from 8 to 11 to allow for 9 digit
+"RTN","RCDPEAR2",90,0)
+ . ; DEP #'s
+"RTN","RCDPEAR2",91,0)
+ . S Z=$$SETSTR^VALM1("  "_$P(RC00,U,6),Z,35,11)
+"RTN","RCDPEAR2",92,0)
+ . S Z=$$SETSTR^VALM1("  "_$S($P(RC00,U,12):"",1:"NOT ")_"POSTED TO 8NZZ"_$S($P(RC00,U,12):" ON "_$$FMTE^XLFDT($P(RC00,U,11),2),1:""),Z,47,36)
+"RTN","RCDPEAR2",93,0)
+ . D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",94,0)
+ . ;
+"RTN","RCDPEAR2",95,0)
+ . K RCOUT
+"RTN","RCDPEAR2",96,0)
+ . D GETS^DIQ(344.31,RCZ0_",",2,"E","RCOUT")
+"RTN","RCDPEAR2",97,0)
+ . Q:'$O(RCOUT(344.31,RCZ0_",",2,0))
+"RTN","RCDPEAR2",98,0)
+ . D SETLINE($J("",8)_"--EXCEPTION NOTES--",.RCCT,RCPRT)
+"RTN","RCDPEAR2",99,0)
+ . S Z=0 F  S Z=$O(RCOUT(344.31,RCZ0_",",2,Z)) Q:'Z  D  Q:RCSTOP
+"RTN","RCDPEAR2",100,0)
+ .. I ($Y+5)>IOSL D HDR(.RCCT,.RCPG,.RCSTOP,RCPRT,RCRANGE,.RCPAY,RCRUNDT) Q:RCSTOP
+"RTN","RCDPEAR2",101,0)
+ .. D SETLINE($J("",8)_" "_RCOUT(344.31,RCZ0_",",2,Z),.RCCT,RCPRT)
+"RTN","RCDPEAR2",102,0)
+ ;
+"RTN","RCDPEAR2",103,0)
+ F Z0=1:1:2 D SETLINE(" ",.RCCT,RCPRT)
+"RTN","RCDPEAR2",104,0)
+ I ($Y+7)>IOSL!'RCPG D HDR(.RCCT,.RCPG,.RCSTOP,RCPRT,RCRANGE,.RCPAY,RCRUNDT)
+"RTN","RCDPEAR2",105,0)
+ S Z=$$SETSTR^VALM1("TOTALS:","",1,79)
+"RTN","RCDPEAR2",106,0)
+ ;
+"RTN","RCDPEAR2",107,0)
+ W !,"*** END OF REPORT ***",!
+"RTN","RCDPEAR2",108,0)
+PRTQ I '$D(ZTQUEUED),'RCSTOP,RCPG,RCPRT="" D ASK()
+"RTN","RCDPEAR2",109,0)
+ I $D(ZTQUEUED) S ZTREQ="@"
+"RTN","RCDPEAR2",110,0)
+ I '$D(ZTQUEUED) D ^%ZISC
+"RTN","RCDPEAR2",111,0)
+ K ^TMP($J,"RCEFT_AGED"),ZTQUEUED
+"RTN","RCDPEAR2",112,0)
+ Q
+"RTN","RCDPEAR2",113,0)
+ ;
+"RTN","RCDPEAR2",114,0)
+HDR(RCCT,RCPG,RCSTOP,RCPRT,RCRANGE,RCPAY,RCRUNDT) ;Prints report heading
+"RTN","RCDPEAR2",115,0)
+ ; Function returns RCPG = current page # and RCCT = running line count
+"RTN","RCDPEAR2",116,0)
+ ;   and RCSTOP = 1 if user aborted print 
+"RTN","RCDPEAR2",117,0)
+ ; Above parameters must be passed by reference
+"RTN","RCDPEAR2",118,0)
+ ; RCPRT = name of the subscript for ^TMP to use to return all lines
+"RTN","RCDPEAR2",119,0)
+ ;        (for bulletin).  If undefined or null, output is printed
+"RTN","RCDPEAR2",120,0)
+ ; RCRANGE - date range filter value to be printed as part of the header
+"RTN","RCDPEAR2",121,0)
+ ; RCPAY (required/pass-by-ref) - Payer filter value(s)
+"RTN","RCDPEAR2",122,0)
+ ;
+"RTN","RCDPEAR2",123,0)
+ N CNT,END,START,Z,Z0
+"RTN","RCDPEAR2",124,0)
+ I RCPG!($E(IOST,1,2)="C-") D
+"RTN","RCDPEAR2",125,0)
+ . I RCPG&($E(IOST,1,2)="C-")&(RCPRT="") D ASK(.RCSTOP) Q:RCSTOP
+"RTN","RCDPEAR2",126,0)
+ . I RCPRT="" W @IOF,*13 Q  ; Write form feed for report
+"RTN","RCDPEAR2",127,0)
+ Q:$G(RCSTOP)
+"RTN","RCDPEAR2",128,0)
+ S RCPG=RCPG+1
+"RTN","RCDPEAR2",129,0)
+ S Z0="EFT UNMATCHED AGING REPORT"
+"RTN","RCDPEAR2",130,0)
+ S Z=$$SETSTR^VALM1($J("",80-$L(Z0)\2)_Z0,"",1,79)
+"RTN","RCDPEAR2",131,0)
+ S:'RCDISPTY Z=$$SETSTR^VALM1("Page: "_RCPG,Z,64,17)
+"RTN","RCDPEAR2",132,0)
+ D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",133,0)
+ S Z0="RUN DATE: "_RCRUNDT,Z0=$J("",80-$L(Z0)\2)_Z0
+"RTN","RCDPEAR2",134,0)
+ S Z=$$SETSTR^VALM1(Z0,"",1,79)
+"RTN","RCDPEAR2",135,0)
+ D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",136,0)
+ ; Payer(s)
+"RTN","RCDPEAR2",137,0)
+ S Z="PAYERS: "
+"RTN","RCDPEAR2",138,0)
+ I $D(RCPAY)=1 S Z=Z_RCPAY
+"RTN","RCDPEAR2",139,0)
+ I $D(RCPAY)=10 D
+"RTN","RCDPEAR2",140,0)
+ . S CNT=0
+"RTN","RCDPEAR2",141,0)
+ . F  S CNT=$O(RCPAY(CNT)) Q:'CNT  D
+"RTN","RCDPEAR2",142,0)
+ .. I Z="PAYERS: " S Z=Z_RCPAY(CNT) Q
+"RTN","RCDPEAR2",143,0)
+ .. S Z=Z_$S(Z]"":",",1:"")_RCPAY(CNT)
+"RTN","RCDPEAR2",144,0)
+ .. I $L(Z)>60 D
+"RTN","RCDPEAR2",145,0)
+ ... S Z=$J("",88-$L(Z)\2)_Z
+"RTN","RCDPEAR2",146,0)
+ ... D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",147,0)
+ ... S Z=""
+"RTN","RCDPEAR2",148,0)
+ I Z]"" D
+"RTN","RCDPEAR2",149,0)
+ . S Z=$J("",88-$L(Z)\2)_Z
+"RTN","RCDPEAR2",150,0)
+ . D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",151,0)
+ ; Date Range
+"RTN","RCDPEAR2",152,0)
+ S END=$P(RCRANGE,U,3)
+"RTN","RCDPEAR2",153,0)
+ S START=$P(RCRANGE,U,2)
+"RTN","RCDPEAR2",154,0)
+ S Z="DATE RANGE: "_$P($$FMTE^XLFDT(START,2),"@")_" - "_$P($$FMTE^XLFDT(END,2),"@")_" (DATE EFT FILED)",Z=$J("",80-$L(Z)\2)_Z
+"RTN","RCDPEAR2",155,0)
+ D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",156,0)
+ Q:RCDISPTY
+"RTN","RCDPEAR2",157,0)
+ D SETLINE("AGED",.RCCT,RCPRT)
+"RTN","RCDPEAR2",158,0)
+ S Z=$$SETSTR^VALM1("DAYS"_$J("",2)_"TRACE #","",1,79)
+"RTN","RCDPEAR2",159,0)
+ D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",160,0)
+ S Z=$$SETSTR^VALM1($J("",10)_"DEPOSIT FROM/ID"_$J("",46)_"DEP DATE","",1,79)
+"RTN","RCDPEAR2",161,0)
+ D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",162,0)
+ ; PRCA*4.5*283 - Add 3 more spaces between DEP # AND DEPOSIT POST 
+"RTN","RCDPEAR2",163,0)
+ ; STATUS to allow for 9 digit DEP #'s
+"RTN","RCDPEAR2",164,0)
+ S Z=$$SETSTR^VALM1($J("",6)_"FILE DATE"_$J("",5)_"DEPOSIT AMOUNT"_$J("",2)_"DEP #  "_$J("",5)_"DEPOSIT POST STATUS",Z,1,79)
+"RTN","RCDPEAR2",165,0)
+ D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",166,0)
+ D SETLINE($TR($J("",IOM-1)," ","="),.RCCT,RCPRT)
+"RTN","RCDPEAR2",167,0)
+ I RCPG=1 D
+"RTN","RCDPEAR2",168,0)
+ . S Z=$$SETSTR^VALM1("TOTALS:","",1,79)
+"RTN","RCDPEAR2",169,0)
+ . D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",170,0)
+ . S Z=$$SETSTR^VALM1(" NUMBER AGED ELECTRONIC EFT MESSAGES FOUND: "_RCNT,"",1,79)
+"RTN","RCDPEAR2",171,0)
+ . D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",172,0)
+ . S Z=$$SETSTR^VALM1(" AMOUNT AGED ELECTRONIC EFT MESSAGES FOUND: $"_$FN(+RCTOT,",",2),"",1,79)
+"RTN","RCDPEAR2",173,0)
+ . D SETLINE(Z,.RCCT,RCPRT)
+"RTN","RCDPEAR2",174,0)
+ . D SETLINE($TR($J("",IOM-1)," ","="),.RCCT,RCPRT)
+"RTN","RCDPEAR2",175,0)
+ Q
+"RTN","RCDPEAR2",176,0)
+ ;
+"RTN","RCDPEAR2",177,0)
+SETLINE(Z,RCCT,RCPRT) ; Sets line into print global or writes line
+"RTN","RCDPEAR2",178,0)
+ ; Z = txt to output
+"RTN","RCDPEAR2",179,0)
+ ; RCCT = line counter
+"RTN","RCDPEAR2",180,0)
+ ; RCPRT = flag if 1, indicates output to global, no writes 
+"RTN","RCDPEAR2",181,0)
+ S RCCT=RCCT+1
+"RTN","RCDPEAR2",182,0)
+ I RCPRT="" W !,Z Q
+"RTN","RCDPEAR2",183,0)
+ S ^TMP($J,RCPRT,RCCT)=Z
+"RTN","RCDPEAR2",184,0)
+ Q
+"RTN","RCDPEAR2",185,0)
+ ;
+"RTN","RCDPEAR2",186,0)
+ASK(RCSTOP) ; Ask to continue
+"RTN","RCDPEAR2",187,0)
+ ; If passed by reference ,RCSTOP is returned as 1 if print is aborted
+"RTN","RCDPEAR2",188,0)
+ I $E(IOST,1,2)'["C-" Q
+"RTN","RCDPEAR2",189,0)
+ N DIR,DIROUT,DIRUT,DTOUT,DUOUT
+"RTN","RCDPEAR2",190,0)
+ S DIR(0)="E" W ! D ^DIR
+"RTN","RCDPEAR2",191,0)
+ I ($D(DIRUT))!($D(DUOUT)) S RCSTOP=1 Q
+"RTN","RCDPEAR2",192,0)
+ Q
+"RTN","RCDPEAR2",193,0)
+ ;
+"RTN","RCDPEAR2",194,0)
+EXCEL ; Print report to screen, one record per line for export to MS Excel.
+"RTN","RCDPEAR2",195,0)
+ W !!,"Aged Days^Trace #^Deposit From/ID^File Date^Deposit Amount^Deposit #^Deposit Post Status^Deposit Date"
+"RTN","RCDPEAR2",196,0)
+ S RCZ="" F  S RCZ=$O(^TMP($J,"RCEFT_AGED",RCZ)) Q:RCZ=""  S RCZ0=0 F  S RCZ0=$O(^TMP($J,"RCEFT_AGED",RCZ,RCZ0)) Q:'RCZ0  D  G:RCSTOP PRTQ2
+"RTN","RCDPEAR2",197,0)
+ . I $D(ZTQUEUED),$$S^%ZTLOAD S (RCSTOP,ZTSTOP)=1 K ZTREQ I +$G(RCPG) W:RCPRT="" !!,"***TASK STOPPED BY USER***" Q
+"RTN","RCDPEAR2",198,0)
+ . S RC0=$G(^RCY(344.31,RCZ0,0)),RC00=$G(^RCY(344.3,+RC0,0))
+"RTN","RCDPEAR2",199,0)
+ . S Z=$J(-RCZ,4)_"^"_$P(RC0,U,4)_"^"_$P(RC0,U,2)_"/"_$P(RC0,U,3)_"^"_$S($P(RC0,U,13):$$FMTE^XLFDT($P(RC0,U,13),2),1:"")_"^"
+"RTN","RCDPEAR2",200,0)
+ . S Z=Z_$P(RC0,U,7)_"^"_$P(RC00,U,6)_"^"_$S($P(RC00,U,12):"",1:"NOT ")_"POSTED TO 8NZZ"_$S($P(RC00,U,12):"^"_$$FMTE^XLFDT($P(RC0,U,12),2),1:"")
+"RTN","RCDPEAR2",201,0)
+ . W !,Z
+"RTN","RCDPEAR2",202,0)
+ W !!,"*** END OF REPORT ***",!
+"RTN","RCDPEAR2",203,0)
+ ;
+"RTN","RCDPEAR2",204,0)
+PRTQ2 ;
+"RTN","RCDPEAR2",205,0)
+ I $D(ZTQUEUED) S ZTREQ="@"
+"RTN","RCDPEAR2",206,0)
+ I '$D(ZTQUEUED) D ^%ZISC
+"RTN","RCDPEAR2",207,0)
+ K ^TMP($J,"RCEFT_AGED"),^TMP("RCSELPAY",$J),^TMP("RCPAYER",$J),^TMP($J,"RCERA_ADJ")
+"RTN","RCDPEAR2",208,0)
+ Q
+"RTN","RCDPEDA1")
+0^6^B24558059^B23249063
+"RTN","RCDPEDA1",1,0)
+RCDPEDA1 ;ALB/TMK/PJH - ACTIVITY REPORT HEADER ;04-NOV-02
+"RTN","RCDPEDA1",2,0)
+ ;;4.5;Accounts Receivable;**173,269,276,284,283**;Mar 20, 1995;Build 8
+"RTN","RCDPEDA1",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","RCDPEDA1",4,0)
+ Q
+"RTN","RCDPEDA1",5,0)
+ ;
+"RTN","RCDPEDA1",6,0)
+HDR(RCCT,RCPG,RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) ;Prints report heading
+"RTN","RCDPEDA1",7,0)
+ ; Function returns RCPG = current page # and RCCT = running line count
+"RTN","RCDPEDA1",8,0)
+ ;   and RCSTOP = 1 if user aborted print
+"RTN","RCDPEDA1",9,0)
+ ; Parameters RCCT,RCPG,RCSTOP must be passed by reference
+"RTN","RCDPEDA1",10,0)
+ ; RCDT1,RCDT2 = from,to date
+"RTN","RCDPEDA1",11,0)
+ ; RCDET = flag = 1 if detail is desired
+"RTN","RCDPEDA1",12,0)
+ N Z,Z0,Z1,X,Y
+"RTN","RCDPEDA1",13,0)
+ Q:RCNITE&(RCPG)
+"RTN","RCDPEDA1",14,0)
+ I RCPG!($E(IOST,1,2)="C-") D
+"RTN","RCDPEDA1",15,0)
+ . Q:$G(RCNITE)
+"RTN","RCDPEDA1",16,0)
+ . I RCPG&($E(IOST,1,2)="C-") D ASK(.RCSTOP) Q:RCSTOP
+"RTN","RCDPEDA1",17,0)
+ . W @IOF,*13 ; Write form feed
+"RTN","RCDPEDA1",18,0)
+ Q:RCSTOP
+"RTN","RCDPEDA1",19,0)
+ S RCPG=RCPG+1
+"RTN","RCDPEDA1",20,0)
+ I '$D(RCNP) N RCNP S RCNP=2  ; PRCA276 if coming from nightly job need to define payer selection variable
+"RTN","RCDPEDA1",21,0)
+ I '$D(VAUTD) N VAUTD S VAUTD=1  ; PRCA276 if coming from nightly job need to define division selection variable
+"RTN","RCDPEDA1",22,0)
+ S Z0="EDI LOCKBOX DAILY ACTIVITY "_$S($G(RCDET):"DETAIL",1:"SUMMARY")_" REPORT"
+"RTN","RCDPEDA1",23,0)
+ S Z=$$SETSTR^VALM1($J("",80-$L(Z0)\2)_Z0,"",1,79)
+"RTN","RCDPEDA1",24,0)
+ S Z=$$SETSTR^VALM1("Page: "_RCPG,Z,70,10)
+"RTN","RCDPEDA1",25,0)
+ D SETLINE^RCDPEDAR(RCNITE,Z,.RCCT)
+"RTN","RCDPEDA1",26,0)
+ S Z="RUN DATE: "_$$FMTE^XLFDT($$NOW^XLFDT(),2),Z=$J("",80-$L(Z)\2)_Z
+"RTN","RCDPEDA1",27,0)
+ D SETLINE^RCDPEDAR(RCNITE,Z,.RCCT)
+"RTN","RCDPEDA1",28,0)
+ ;prca276 add divisions to header
+"RTN","RCDPEDA1",29,0)
+ S Z1="" I 'VAUTD S Z0=0 F  S Z0=$O(VAUTD(Z0)) Q:'Z0  S Z1=Z1_VAUTD(Z0)_", "
+"RTN","RCDPEDA1",30,0)
+ S Z="DIVISIONS: "_$S(VAUTD:"ALL",1:$E(Z1,1,$L(Z1)-2)),Z=$J("",80-$L(Z)\2)_Z
+"RTN","RCDPEDA1",31,0)
+ D SETLINE^RCDPEDAR(RCNITE,Z,.RCCT)
+"RTN","RCDPEDA1",32,0)
+ ; prca 276 add payer selection list to header
+"RTN","RCDPEDA1",33,0)
+ S Z1="" I RCNP'=2 S Z0=0 F  S Z0=$O(^TMP("RCSELPAY",$J,Z0)) Q:'Z0  S Z1=Z1_^TMP("RCSELPAY",$J,Z0)_", "
+"RTN","RCDPEDA1",34,0)
+ S Z="PAYERS: "_$S(RCNP=2:"ALL",1:$E(Z1,1,$L(Z1)-2)),Z=$J("",80-$L(Z)\2)_Z
+"RTN","RCDPEDA1",35,0)
+ D SETLINE^RCDPEDAR(RCNITE,Z,.RCCT)
+"RTN","RCDPEDA1",36,0)
+ ;prca 276  add date filter to header
+"RTN","RCDPEDA1",37,0)
+ S Z="DATE RANGE: "_$$FMTE^XLFDT(RCDT1,2)_" - "_$$FMTE^XLFDT(RCDT2,2)_" (Date Deposit Added)",Z=$J("",80-$L(Z)\2)_Z
+"RTN","RCDPEDA1",38,0)
+ D SETLINE^RCDPEDAR(RCNITE,Z,.RCCT)
+"RTN","RCDPEDA1",39,0)
+ D SETLINE^RCDPEDAR(RCNITE," ",.RCCT)
+"RTN","RCDPEDA1",40,0)
+ I $G(RCDET) D
+"RTN","RCDPEDA1",41,0)
+ . ; PRCA*4.5*283 - Add 3 more spaces between DEP # and DEPOSIT DT 
+"RTN","RCDPEDA1",42,0)
+ . ; and remove 3 spaces between DEPOSIT DT and DEP AMOUNT to allow for 9 digit DEP #'s
+"RTN","RCDPEDA1",43,0)
+ . S Z=$$SETSTR^VALM1("DEP #      DEPOSIT DT  "_$J("",19)_"DEP AMOUNT          FMS DEPOSIT STAT","",1,80)
+"RTN","RCDPEDA1",44,0)
+ . D SETLINE^RCDPEDAR(RCNITE,Z,.RCCT)
+"RTN","RCDPEDA1",45,0)
+ . D SETLINE^RCDPEDAR(RCNITE," ",.RCCT)
+"RTN","RCDPEDA1",46,0)
+ . ; PRCA*4.5*284, Move Match Status to left 3 space to allow for 10 digit ERA #'s
+"RTN","RCDPEDA1",47,0)
+ . S Z=$$SETSTR^VALM1($J("",3)_"EFT #"_$J("",23)_"DATE PD   PAYMENT AMOUNT  ERA MATCH STATUS","",1,80)
+"RTN","RCDPEDA1",48,0)
+ . D SETLINE^RCDPEDAR(RCNITE,Z,.RCCT)
+"RTN","RCDPEDA1",49,0)
+ . S Z=$$SETSTR^VALM1($J("",10)_"EFT PAYER TRACE #","",1,30)
+"RTN","RCDPEDA1",50,0)
+ . D SETLINE^RCDPEDAR(RCNITE,Z,.RCCT)
+"RTN","RCDPEDA1",51,0)
+ . S Z=$$SETSTR^VALM1($J("",14)_"PAYMENT FROM","",1,30)
+"RTN","RCDPEDA1",52,0)
+ . D SETLINE^RCDPEDAR(RCNITE,Z,.RCCT)
+"RTN","RCDPEDA1",53,0)
+ . S Z=$$SETSTR^VALM1($J("",45)_"DEP RECEIPT #","",1,60)
+"RTN","RCDPEDA1",54,0)
+ . S Z=$$SETSTR^VALM1("DEP RECEIPT STATUS",Z,61,19)
+"RTN","RCDPEDA1",55,0)
+ . D SETLINE^RCDPEDAR(RCNITE,Z,.RCCT)
+"RTN","RCDPEDA1",56,0)
+ D SETLINE^RCDPEDAR(RCNITE,$TR($J("",IOM-1)," ","="),.RCCT)
+"RTN","RCDPEDA1",57,0)
+ Q
+"RTN","RCDPEDA1",58,0)
+ ;
+"RTN","RCDPEDA1",59,0)
+ASK(RCSTOP) ; Ask to continue
+"RTN","RCDPEDA1",60,0)
+ ; If passed by reference ,RCSTOP is returned as 1 if print is aborted
+"RTN","RCDPEDA1",61,0)
+ I $E(IOST,1,2)'["C-" Q
+"RTN","RCDPEDA1",62,0)
+ N DIR,DIROUT,DIRUT,DTOUT,DUOUT
+"RTN","RCDPEDA1",63,0)
+ S DIR(0)="E" W ! D ^DIR
+"RTN","RCDPEDA1",64,0)
+ I ($D(DIRUT))!($D(DUOUT)) S RCSTOP=1 Q
+"RTN","RCDPEDA1",65,0)
+ Q
+"RTN","RCDPEDA1",66,0)
+ ;
+"RTN","RCDPEDA1",67,0)
+EFTDET(Z2,Z3,RCCT,RCPG,RCSTOP,RCDT1,RCDT2,RCDET,RCFMS1,RCNITE) ; Display EFT Detail
+"RTN","RCDPEDA1",68,0)
+ N DATA,X
+"RTN","RCDPEDA1",69,0)
+ S X=$$SETSTR^VALM1($P(Z3,U),"",4,6)
+"RTN","RCDPEDA1",70,0)
+ S X=$$SETSTR^VALM1($$FMTE^XLFDT($P(Z3,U,12)\1,2),X,32,8)
+"RTN","RCDPEDA1",71,0)
+ S X=$$SETSTR^VALM1($J($P(Z3,U,7),"",2),X,42,18)
+"RTN","RCDPEDA1",72,0)
+ ; PRCA*4.5*284, Move to left 3 space (61 to 58) to allow for 10 digit ERA #'s
+"RTN","RCDPEDA1",73,0)
+ S X=$$SETSTR^VALM1($$EXTERNAL^DILFD(344.31,.08,"",+$P(Z3,U,8))_$S($P(Z3,U,8)=1:"/ERA #"_$P(Z3,U,10),1:""),X,58,20)
+"RTN","RCDPEDA1",74,0)
+ I '$G(RCNITE),($Y+5)>IOSL D HDR(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDA1",75,0)
+ D SETLINE^RCDPEDAR(RCNITE,X,.RCCT)
+"RTN","RCDPEDA1",76,0)
+ S X=$$SETSTR^VALM1($P(Z3,U,4),"",11,61)
+"RTN","RCDPEDA1",77,0)
+ D SETLINE^RCDPEDAR(RCNITE,X,.RCCT)
+"RTN","RCDPEDA1",78,0)
+ S X=$$SETSTR^VALM1($P(Z3,U,2)_"/"_$P(Z3,U,3),"",15,65)
+"RTN","RCDPEDA1",79,0)
+ D SETLINE^RCDPEDAR(RCNITE,X,.RCCT)
+"RTN","RCDPEDA1",80,0)
+ S X=""
+"RTN","RCDPEDA1",81,0)
+ I $P(Z3,U,9) S X=$$SETSTR^VALM1($P($G(^RCY(344,+$P(Z3,U,9),0)),U),X,46,10)
+"RTN","RCDPEDA1",82,0)
+ S X=$$SETSTR^VALM1($G(RCFMS1(Z2)),X,61,19)
+"RTN","RCDPEDA1",83,0)
+ I '$G(RCNITE),($Y+5)>IOSL D HDR(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDA1",84,0)
+ D SETLINE^RCDPEDAR(RCNITE,X,.RCCT)
+"RTN","RCDPEDA1",85,0)
+ I $O(^RCY(344.31,Z2,2,0)) D  Q:RCSTOP
+"RTN","RCDPEDA1",86,0)
+ . N V
+"RTN","RCDPEDA1",87,0)
+ . I '$G(RCNITE),($Y+5)>IOSL D HDR(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDA1",88,0)
+ . D SETLINE^RCDPEDAR(RCNITE,$J("",10)_"ERROR MESSAGES FOR EFT DETAIL:",.RCCT)
+"RTN","RCDPEDA1",89,0)
+ . S V=0 F  S V=$O(^RCY(344.31,Z2,2,V)) Q:'V  D  Q:RCSTOP
+"RTN","RCDPEDA1",90,0)
+ .. I '$G(RCNITE),($Y+5)>IOSL D HDR(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDA1",91,0)
+ .. D SETLINE^RCDPEDAR(RCNITE,$J("",12)_$G(^RCY(344.31,Z2,2,V,0)),.RCCT)
+"RTN","RCDPEDA1",92,0)
+ I $D(^RCY(344.31,Z2,3)) D
+"RTN","RCDPEDA1",93,0)
+ .S DATA=$G(^RCY(344.31,Z2,3))
+"RTN","RCDPEDA1",94,0)
+ .S X="   MARKED AS DUPLICATE: "_$$FMTE^XLFDT($P(DATA,U,2),5)_" "_$$EXTERNAL^DILFD(344.31,.17,,$P(DATA,U))
+"RTN","RCDPEDA1",95,0)
+ .D SETLINE^RCDPEDAR(RCNITE,X,.RCCT)
+"RTN","RCDPEDA1",96,0)
+ .D SETLINE^RCDPEDAR(RCNITE,"",.RCCT)
+"RTN","RCDPEDA1",97,0)
+ .Q
+"RTN","RCDPEDA1",98,0)
+ Q
+"RTN","RCDPEDA1",99,0)
+ ;
+"RTN","RCDPEDA1",100,0)
+ ; *** Begin PRCA*4.5*276 - RBN ***
+"RTN","RCDPEDA1",101,0)
+TEXT ; Filtered by messages
+"RTN","RCDPEDA1",102,0)
+ ;;No Filters Applied
+"RTN","RCDPEDA1",103,0)
+ ;;Station/Division
+"RTN","RCDPEDA1",104,0)
+ ;;
+"RTN","RCDPEDA1",105,0)
+ ;;Date Range
+"RTN","RCDPEDA1",106,0)
+ ;;Station/Division, Date Range
+"RTN","RCDPEDA1",107,0)
+ ;;Payer
+"RTN","RCDPEDA1",108,0)
+ ;;Station/Division, Payer
+"RTN","RCDPEDA1",109,0)
+ ;;
+"RTN","RCDPEDA1",110,0)
+ ;;Date Range, Payer
+"RTN","RCDPEDA1",111,0)
+ ;;Station/Division, Date Range, Payer
+"RTN","RCDPEDA1",112,0)
+ Q
+"RTN","RCDPEDA1",113,0)
+ ;
+"RTN","RCDPEDA1",114,0)
+ ; *** End PRCA*4.5*276 ***
+"RTN","RCDPEDAR")
+0^5^B115536602^B111611189
+"RTN","RCDPEDAR",1,0)
+RCDPEDAR ;ALB/TMK - ACTIVITY REPORT ;04-NOV-02
+"RTN","RCDPEDAR",2,0)
+ ;;4.5;Accounts Receivable;**173,276,284,283**;Mar 20, 1995;Build 8
+"RTN","RCDPEDAR",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","RCDPEDAR",4,0)
+ Q
+"RTN","RCDPEDAR",5,0)
+ ;
+"RTN","RCDPEDAR",6,0)
+RPT ; Daily Activity Rpt On Demand
+"RTN","RCDPEDAR",7,0)
+ N DUOUT,DTOUT,DIR,X,Y,RCDT1,RCDT2,RCDET,ZTRTN,ZTSK,ZTDESC,ZTSTOP,%ZIS,POP
+"RTN","RCDPEDAR",8,0)
+ N RCDIV,RCINC,VAUTD,RCRANGE,RCNP,RCJOB,RCNP1
+"RTN","RCDPEDAR",9,0)
+ ; Get division/station
+"RTN","RCDPEDAR",10,0)
+ D DIVISION^VAUTOMA
+"RTN","RCDPEDAR",11,0)
+ I 'VAUTD&($D(VAUTD)'=11) G RPTQ
+"RTN","RCDPEDAR",12,0)
+ S DIR("A")="(S)UMMARY OR (D)ETAIL?: ",DIR(0)="SA^S:SUMMARY TOTALS ONLY;D:DETAIL AND TOTALS"
+"RTN","RCDPEDAR",13,0)
+ S DIR("B")="D" D ^DIR K DIR
+"RTN","RCDPEDAR",14,0)
+ I $D(DTOUT)!$D(DUOUT)!(Y="") G RPTQ
+"RTN","RCDPEDAR",15,0)
+ S RCDET=(Y="D")
+"RTN","RCDPEDAR",16,0)
+ S DIR("?")="ENTER THE EARLIEST DATE OF RECEIPT OF DEPOSIT TO INCLUDE ON THE REPORT"
+"RTN","RCDPEDAR",17,0)
+ S DIR(0)="DAO^:"_DT_":APE",DIR("A")="START DATE: " D ^DIR K DIR
+"RTN","RCDPEDAR",18,0)
+ I $D(DTOUT)!$D(DUOUT)!(Y="") G RPTQ
+"RTN","RCDPEDAR",19,0)
+ S RCDT1=Y
+"RTN","RCDPEDAR",20,0)
+ S DIR("?")="ENTER THE LATEST DATE OF RECEIPT OF DEPOSIT TO INCLUDE ON THE REPORT"
+"RTN","RCDPEDAR",21,0)
+ S DIR("B")=Y(0)
+"RTN","RCDPEDAR",22,0)
+ S DIR(0)="DAO^"_RCDT1_":"_DT_":APE",DIR("A")="END DATE: " D ^DIR K DIR
+"RTN","RCDPEDAR",23,0)
+ I $D(DTOUT)!$D(DUOUT)!(Y="") G RPTQ
+"RTN","RCDPEDAR",24,0)
+ S RCDT2=Y
+"RTN","RCDPEDAR",25,0)
+ ;Get insurance company to be used as filter
+"RTN","RCDPEDAR",26,0)
+ ; PRCA*4.5*284 - RCDPEM9 now return a stack in RCNP (Type of Response(1=Range,2=All,3=Specific)^From Range^Thru Range)
+"RTN","RCDPEDAR",27,0)
+ S RCNP=$$GETPAY^RCDPEM9(344.31) I +RCNP=-1 G RPTQ
+"RTN","RCDPEDAR",28,0)
+ S RCJOB=$J
+"RTN","RCDPEDAR",29,0)
+ ; Ask device
+"RTN","RCDPEDAR",30,0)
+ S %ZIS="QM" D ^%ZIS G:POP RPTQ
+"RTN","RCDPEDAR",31,0)
+ I $D(IO("Q")) D  G RPTQ
+"RTN","RCDPEDAR",32,0)
+ . S ZTRTN="EN^RCDPEDAR("_RCDET_","_RCDT1_","_RCDT2_")",ZTDESC="AR - EDI LOCKBOX DAILY ACTIVITY REPORT"
+"RTN","RCDPEDAR",33,0)
+ . S ZTSAVE("*")=""
+"RTN","RCDPEDAR",34,0)
+ . ; PRCA*4.5*284 - Because TMP global may be on another server, save off specific payers in local
+"RTN","RCDPEDAR",35,0)
+ . I +RCNP=3 M RCNP1=^TMP("RCSELPAY",$J)
+"RTN","RCDPEDAR",36,0)
+ . D ^%ZTLOAD
+"RTN","RCDPEDAR",37,0)
+ . W !!,$S($D(ZTSK):"Your task number "_ZTSK_" has been queued.",1:"Unable to queue this job.")
+"RTN","RCDPEDAR",38,0)
+ . K ZTSK,IO("Q") D HOME^%ZIS
+"RTN","RCDPEDAR",39,0)
+ U IO
+"RTN","RCDPEDAR",40,0)
+ D EN(RCDET,RCDT1,RCDT2)
+"RTN","RCDPEDAR",41,0)
+RPTQ Q
+"RTN","RCDPEDAR",42,0)
+ ;
+"RTN","RCDPEDAR",43,0)
+EN(RCDET,RCDT1,RCDT2) ; Entry point for queued job
+"RTN","RCDPEDAR",44,0)
+ ; RCDET = 1 to include detail, 0 for totals only
+"RTN","RCDPEDAR",45,0)
+ ; RCDT1,RCDT2 = date from,to
+"RTN","RCDPEDAR",46,0)
+ N Z,Z0,RC,RCT,DATA,RCSTOP,RCPG,RCIEN,STATION,RCFLG
+"RTN","RCDPEDAR",47,0)
+ ; PRCA*4.5*284 - Quueed job needs to reload payer selection list
+"RTN","RCDPEDAR",48,0)
+ I $G(RCJOB)'="",RCJOB'=$J D
+"RTN","RCDPEDAR",49,0)
+ . K ^TMP("RCSELPAY",$J)
+"RTN","RCDPEDAR",50,0)
+ . D RLOAD^RCDPEAR1(344.31)
+"RTN","RCDPEDAR",51,0)
+ . S RCJOB=$J
+"RTN","RCDPEDAR",52,0)
+ S RCNP=+RCNP
+"RTN","RCDPEDAR",53,0)
+ K ^TMP("RCDAILYACT",$J)
+"RTN","RCDPEDAR",54,0)
+ S Z=RCDT1-.0001,(RCSTOP,RCT)=0
+"RTN","RCDPEDAR",55,0)
+ F  S Z=$O(^RCY(344.3,"ARECDT",Z)) Q:'Z!(Z>(RCDT2_".9999"))!RCSTOP  D
+"RTN","RCDPEDAR",56,0)
+ .S Z0=0 F  S Z0=$O(^RCY(344.3,"ARECDT",Z,Z0)) Q:'Z0!RCSTOP  D
+"RTN","RCDPEDAR",57,0)
+ ..S DATA=$G(^RCY(344.3,Z0,0)),RCFLG=0
+"RTN","RCDPEDAR",58,0)
+ ..S RCIEN="" F  S RCIEN=$O(^RCY(344.31,"B",Z0,RCIEN)) Q:RCIEN=""  D
+"RTN","RCDPEDAR",59,0)
+ ...; check payer
+"RTN","RCDPEDAR",60,0)
+ ...I '$$CHKPYR(RCIEN,0,RCJOB) Q
+"RTN","RCDPEDAR",61,0)
+ ...; check station/division
+"RTN","RCDPEDAR",62,0)
+ ...I '$$CHKDIV(RCIEN,0,.VAUTD) Q
+"RTN","RCDPEDAR",63,0)
+ ...S RCFLG=1,^TMP("RCDAILYACT",$J,Z\1,Z0,"EFT",RCIEN)=""
+"RTN","RCDPEDAR",64,0)
+ ...Q
+"RTN","RCDPEDAR",65,0)
+ ..I RCFLG S ^TMP("RCDAILYACT",$J,Z\1,Z0)=DATA
+"RTN","RCDPEDAR",66,0)
+ ..S RCT=RCT+1 I '(RCT#100),$D(ZTQUEUED),$$S^%ZTLOAD S (RCSTOP,ZTSTOP)=1 K ZTREQ Q  ; Check for user stopped every 100 records
+"RTN","RCDPEDAR",67,0)
+ ..Q
+"RTN","RCDPEDAR",68,0)
+ .Q
+"RTN","RCDPEDAR",69,0)
+ D:'RCSTOP RPT1(0,RCDET,RCDT1,RCDT2,.RCSTOP,.RCPG)
+"RTN","RCDPEDAR",70,0)
+ D ENQ(RCSTOP,$G(RCPG))
+"RTN","RCDPEDAR",71,0)
+ Q
+"RTN","RCDPEDAR",72,0)
+ ;
+"RTN","RCDPEDAR",73,0)
+RPT1(RCNITE,RCDET,RCDT1,RCDT2,RCSTOP,RCPG) ; Entrypoint for nightly job
+"RTN","RCDPEDAR",74,0)
+ ; RCNITE = 1 if called from nightly job, 0 if called from on demand
+"RTN","RCDPEDAR",75,0)
+ ; RCDET = 1 to include detail, 0 for totals only
+"RTN","RCDPEDAR",76,0)
+ ; RCDT1,RCDT2 = date from,to
+"RTN","RCDPEDAR",77,0)
+ ; RCSTOP = returned = 1 if user elected to quit job
+"RTN","RCDPEDAR",78,0)
+ ; RCPG = the last page # printed, returned if passed by reference
+"RTN","RCDPEDAR",79,0)
+ ;
+"RTN","RCDPEDAR",80,0)
+ N X,Q,Q0,Z,Z0,Z1,Z2,Z3,ZCT,RCCT,RCDEP,RCDEPA,RCDEPAP,RCFMS,RCFMS1,RCD1,RCFMSTOT,RCEFT,RCMATCH,RCDEPREC,RCDT
+"RTN","RCDPEDAR",81,0)
+ N D,DIC,I,RCIEN,RCPAY
+"RTN","RCDPEDAR",82,0)
+ S (RCSTOP,RCPG,ZCT,RCCT,RCDEP,RCDEPA,RCDEPAP,RCDEPREC,Z)=0,RCD1=1
+"RTN","RCDPEDAR",83,0)
+ S RCNITE=+$G(RCNITE)
+"RTN","RCDPEDAR",84,0)
+ F  S Z=$O(^TMP("RCDAILYACT",$J,Z)) Q:'Z  D  G:RCSTOP RPT1Q ; Z = date
+"RTN","RCDPEDAR",85,0)
+ . I 'RCPG!$S('$G(RCNITE):($Y+5)>IOSL,1:0) D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) S RCDT=1 Q:RCSTOP
+"RTN","RCDPEDAR",86,0)
+ . S Q="DATE EFT DEPOSIT RECEIVED: "_$$FMTE^XLFDT(Z,2),Q=$J("",80-$L(Q)\2)_Q ; Center it
+"RTN","RCDPEDAR",87,0)
+ . I 'RCD1,$G(RCDET) D SETLINE(RCNITE,"",.RCCT) ; Skip line if >1 dt on pg
+"RTN","RCDPEDAR",88,0)
+ . S RCDT=0
+"RTN","RCDPEDAR",89,0)
+ . I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",90,0)
+ . I $G(RCDET) D
+"RTN","RCDPEDAR",91,0)
+ .. D SETLINE(RCNITE,Q,.RCCT)
+"RTN","RCDPEDAR",92,0)
+ .. D SETLINE(RCNITE,"",.RCCT)
+"RTN","RCDPEDAR",93,0)
+ . ; Z0 = ien of entry in file 344.3
+"RTN","RCDPEDAR",94,0)
+ . K RCEFT("D"),RCMATCH("D"),RCFMS("D")
+"RTN","RCDPEDAR",95,0)
+ . S Z0=0 F  S Z0=$O(^TMP("RCDAILYACT",$J,Z,Z0)) Q:'Z0  D  Q:RCSTOP
+"RTN","RCDPEDAR",96,0)
+ .. S Z1=$G(^TMP("RCDAILYACT",$J,Z,Z0))
+"RTN","RCDPEDAR",97,0)
+ .. S RCDEPREC=+$O(^RCY(344,"AD",+$P(Z1,U,3),0)),RCDEP(Z)=$G(RCDEP(Z))+1,RCDEPA(Z)=$G(RCDEPA(Z))+$P(Z1,U,8)
+"RTN","RCDPEDAR",98,0)
+ .. I $P($G(^RCY(344,RCDEPREC,2)),U)="" S RCFMS("D",-1)=$G(RCFMS("D",-1))+$P(Z1,U,8),RCFMS="NO FMS DOC"
+"RTN","RCDPEDAR",99,0)
+ .. I $P($G(^RCY(344,RCDEPREC,2)),U)'="" D
+"RTN","RCDPEDAR",100,0)
+ ... S X=$$STATUS^GECSSGET($P(^RCY(344,RCDEPREC,2),U))
+"RTN","RCDPEDAR",101,0)
+ ... I X=-1 S RCFMS("D",-1)=$G(RCFMS("D",-1))+$P(Z1,U,8) Q
+"RTN","RCDPEDAR",102,0)
+ ... S RCFMS=$E($P(X," "),1,10),Q=$E(X),Q=$S(Q="E"!(Q="R"):0,Q="Q":2,1:1),RCFMS("D",Q)=$G(RCFMS("D",Q))+$P(Z1,U,8)
+"RTN","RCDPEDAR",103,0)
+ ... ;
+"RTN","RCDPEDAR",104,0)
+ .. I $G(RCDET) D  Q:RCSTOP
+"RTN","RCDPEDAR",105,0)
+ ... ; PRCA*4.5*283 - change length of DEP # from 6 to 9 to allow for 9 digit DEP #'s
+"RTN","RCDPEDAR",106,0)
+ ... S X=$$SETSTR^VALM1($P(Z1,U,6),"",1,9)
+"RTN","RCDPEDAR",107,0)
+ ... ; Change DEPOSIT DT's starting position from 9 to 12
+"RTN","RCDPEDAR",108,0)
+ ... S X=$$SETSTR^VALM1($$FMTE^XLFDT($P(Z1,U,7)\1,2),X,12,10)
+"RTN","RCDPEDAR",109,0)
+ ... ; Change starting position from 21 to 23 & reduce length of spaces from 10 to 8.
+"RTN","RCDPEDAR",110,0)
+ ... S X=$$SETSTR^VALM1("",X,23,8)
+"RTN","RCDPEDAR",111,0)
+ ... S X=$$SETSTR^VALM1("",X,32,10)
+"RTN","RCDPEDAR",112,0)
+ ... S X=$$SETSTR^VALM1($E($J($P(Z1,U,8),"",2)_$J("",20),1,20)_RCFMS,X,43,37)
+"RTN","RCDPEDAR",113,0)
+ ... I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",114,0)
+ ... D SETLINE(RCNITE,X,.RCCT)
+"RTN","RCDPEDAR",115,0)
+ .. S RCFMSTOT=0,RCFMS1="NO FMS DOC"
+"RTN","RCDPEDAR",116,0)
+ .. I $O(^RCY(344.3,Z0,2,0)) D  Q:RCSTOP
+"RTN","RCDPEDAR",117,0)
+ ... N V
+"RTN","RCDPEDAR",118,0)
+ ... I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",119,0)
+ ... D SETLINE(RCNITE,$J("",10)_"ERROR MESSAGES FOR EFT:",.RCCT)
+"RTN","RCDPEDAR",120,0)
+ ... S V=0 F  S V=$O(^RCY(344.3,Z0,2,V)) Q:'V  D  Q:RCSTOP
+"RTN","RCDPEDAR",121,0)
+ .... I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",122,0)
+ .... D SETLINE(RCNITE,$J("",12)_$G(^RCY(344.3,Z0,2,V,0)),.RCCT)
+"RTN","RCDPEDAR",123,0)
+ .. S Z2=0 F  S Z2=$O(^TMP("RCDAILYACT",$J,Z,Z0,"EFT",Z2)) Q:'Z2  S Z3=$G(^RCY(344.31,Z2,0)) D  Q:RCSTOP
+"RTN","RCDPEDAR",124,0)
+ ... S RCEFT("D")=$G(RCEFT("D"))+1
+"RTN","RCDPEDAR",125,0)
+ ... S X=$S($P($G(^RCY(344,+$P(Z3,U,9),2)),U)'="":$$STATUS^GECSSGET($P(^RCY(344,+$P(Z3,U,9),2),U)),1:"")
+"RTN","RCDPEDAR",126,0)
+ ... I X'="",X'=-1,$E(X)'="R",$E(X)'="E" S RCFMSTOT=RCFMSTOT+$P(Z3,U,7),RCFMS1=$S($E(X)="Q":"QUEUED TO POST",1:"POSTED")
+"RTN","RCDPEDAR",127,0)
+ ... S RCFMS1(Z2)=$S(X="":"",X=-1:"NO FMS DOC",1:$E($P(X," "),1,10))
+"RTN","RCDPEDAR",128,0)
+ ... I $P(Z3,U,8) S RCMATCH("D")=$G(RCMATCH("D"))+1
+"RTN","RCDPEDAR",129,0)
+ ... I $G(RCDET) D EFTDET^RCDPEDA1(Z2,Z3,.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,.RCFMS1,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",130,0)
+ .. ;
+"RTN","RCDPEDAR",131,0)
+ .. Q:RCSTOP
+"RTN","RCDPEDAR",132,0)
+ .. I RCDET D SETLINE(RCNITE,"",.RCCT)
+"RTN","RCDPEDAR",133,0)
+ . ;
+"RTN","RCDPEDAR",134,0)
+ . Q:RCSTOP
+"RTN","RCDPEDAR",135,0)
+ . S RCDEPA=RCDEPA+$G(RCDEPA(Z)),RCDEP=RCDEP+$G(RCDEP(Z)),RCDEPAP=RCDEPAP+$G(RCDEPAP(Z)),RCFMSTOT("D")=$G(RCFMSTOT("D"))+$G(RCFMSTOT),RCEFT("T")=$G(RCEFT("T"))+$G(RCEFT("D")),RCMATCH("T")=$G(RCMATCH("T"))+$G(RCMATCH("D"))
+"RTN","RCDPEDAR",136,0)
+ . F Q=-1,0,1,2 S RCFMS("T",Q)=$G(RCFMS("T",Q))+$G(RCFMS("D",Q))
+"RTN","RCDPEDAR",137,0)
+ . D SETLINE(RCNITE,"",.RCCT)
+"RTN","RCDPEDAR",138,0)
+ . I $S('$G(RCNITE):($Y+5)>IOSL,1:0)!'RCPG D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",139,0)
+ . D SETLINE(RCNITE,$E("**TOTALS FOR DATE: "_$$FMTE^XLFDT(Z\1,2)_$J("",30),1,30)_"   # OF DEPOSIT TICKETS RECEIVED: "_+$G(RCDEP(Z))_$J("",5),.RCCT)
+"RTN","RCDPEDAR",140,0)
+ . D SETLINE(RCNITE,$J("",29)_"TOTAL AMOUNT OF DEPOSITS RECEIVED: $"_$J(+$G(RCDEPA(Z)),"",2),.RCCT)
+"RTN","RCDPEDAR",141,0)
+ . I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",142,0)
+ . D SETLINE(RCNITE,"",.RCCT)
+"RTN","RCDPEDAR",143,0)
+ . D SETLINE(RCNITE,$J("",20)_"DEPOSIT AMOUNTS SENT TO FMS:",.RCCT)
+"RTN","RCDPEDAR",144,0)
+ . I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",145,0)
+ . D SETLINE(RCNITE,$J("",39)_"ACCEPTED: $"_$J(+$G(RCFMS("D",1)),"",2),.RCCT)
+"RTN","RCDPEDAR",146,0)
+ . I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",147,0)
+ . D SETLINE(RCNITE,$J("",41)_"QUEUED: $"_$J(+$G(RCFMS("D",2)),"",2),.RCCT)
+"RTN","RCDPEDAR",148,0)
+ . I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",149,0)
+ . D SETLINE(RCNITE,$J("",35)_"ERROR/REJECT: $"_$J(+$G(RCFMS("D",0)),"",2),.RCCT)
+"RTN","RCDPEDAR",150,0)
+ . I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",151,0)
+ . D SETLINE(RCNITE,$J("",37)_"NOT IN FMS: $"_$J(+$G(RCFMS("D",-1)),"",2),.RCCT)
+"RTN","RCDPEDAR",152,0)
+ . D SETLINE(RCNITE,"",.RCCT)
+"RTN","RCDPEDAR",153,0)
+ . I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",154,0)
+ . D SETLINE(RCNITE,$J("",26)_"# EFT PAYMENT RECORDS: "_+$G(RCEFT("D")),.RCCT)
+"RTN","RCDPEDAR",155,0)
+ . I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",156,0)
+ . D SETLINE(RCNITE,$J("",25)_"# EFT PAYMENTS MATCHED: "_+$G(RCMATCH("D")),.RCCT)
+"RTN","RCDPEDAR",157,0)
+ . I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) Q:RCSTOP
+"RTN","RCDPEDAR",158,0)
+ . D SETLINE(RCNITE,$J("",18)_"MATCHED PAYMENT AMOUNT POSTED: $"_$J(+$G(RCDEPAP(Z)),"",2),.RCCT)
+"RTN","RCDPEDAR",159,0)
+ . D SETLINE(RCNITE,"",.RCCT)
+"RTN","RCDPEDAR",160,0)
+ I '$O(^TMP("RCDAILYACT",$J,0)) D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE)
+"RTN","RCDPEDAR",161,0)
+ G:RCSTOP!RCNITE RPT1Q
+"RTN","RCDPEDAR",162,0)
+ D SETLINE(RCNITE,"",.RCCT)
+"RTN","RCDPEDAR",163,0)
+ I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) G:RCSTOP RPT1Q
+"RTN","RCDPEDAR",164,0)
+ D SETLINE(RCNITE,$E("**** TOTALS FOR DATE RANGE:"_$J("",30),1,30)_"   # OF DEPOSIT TICKETS RECEIVED: "_+$G(RCDEP)_$J("",5),.RCCT)
+"RTN","RCDPEDAR",165,0)
+ D SETLINE(RCNITE,$J("",29)_"TOTAL AMOUNT OF DEPOSITS RECEIVED: $"_$J(+$G(RCDEPA),"",2),.RCCT)
+"RTN","RCDPEDAR",166,0)
+ I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) G:RCSTOP RPT1Q
+"RTN","RCDPEDAR",167,0)
+ D SETLINE(RCNITE,"",.RCCT)
+"RTN","RCDPEDAR",168,0)
+ D SETLINE(RCNITE,$J("",20)_"DEPOSIT AMOUNTS SENT TO FMS:",.RCCT)
+"RTN","RCDPEDAR",169,0)
+ I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) G:RCSTOP RPT1Q
+"RTN","RCDPEDAR",170,0)
+ D SETLINE(RCNITE,$J("",39)_"ACCEPTED: $"_+$G(RCFMS("T",1)),.RCCT)
+"RTN","RCDPEDAR",171,0)
+ I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) G:RCSTOP RPT1Q
+"RTN","RCDPEDAR",172,0)
+ D SETLINE(RCNITE,$J("",41)_"QUEUED: $"_+$G(RCFMS("T",2)),.RCCT)
+"RTN","RCDPEDAR",173,0)
+ I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) G:RCSTOP RPT1Q
+"RTN","RCDPEDAR",174,0)
+ D SETLINE(RCNITE,$J("",35)_"ERROR/REJECT: $"_+$G(RCFMS("T",0)),.RCCT)
+"RTN","RCDPEDAR",175,0)
+ I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) G:RCSTOP RPT1Q
+"RTN","RCDPEDAR",176,0)
+ D SETLINE(RCNITE,$J("",37)_"NOT IN FMS: $"_$J(+$G(RCFMS("T",-1)),"",2),.RCCT)
+"RTN","RCDPEDAR",177,0)
+ D SETLINE(RCNITE,"",.RCCT)
+"RTN","RCDPEDAR",178,0)
+ I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) G:RCSTOP RPT1Q
+"RTN","RCDPEDAR",179,0)
+ D SETLINE(RCNITE,$J("",26)_"# EFT PAYMENT RECORDS: "_+$G(RCEFT("T")),.RCCT)
+"RTN","RCDPEDAR",180,0)
+ I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) G:RCSTOP RPT1Q
+"RTN","RCDPEDAR",181,0)
+ D SETLINE(RCNITE,$J("",25)_"# EFT PAYMENTS MATCHED: "_+$G(RCMATCH("T")),.RCCT)
+"RTN","RCDPEDAR",182,0)
+ I '$G(RCNITE),($Y+5)>IOSL D HDR^RCDPEDA1(.RCCT,.RCPG,.RCSTOP,RCDT1,RCDT2,RCDET,RCNITE) G:RCSTOP RPT1Q
+"RTN","RCDPEDAR",183,0)
+ D SETLINE(RCNITE,$J("",18)_"MATCHED PAYMENT AMOUNT POSTED: $"_$J(+$G(RCDEPAP),"",2),.RCCT)
+"RTN","RCDPEDAR",184,0)
+ D SETLINE(RCNITE,"",.RCCT)
+"RTN","RCDPEDAR",185,0)
+ ;
+"RTN","RCDPEDAR",186,0)
+ W !,"******** END OF REPORT ********",!
+"RTN","RCDPEDAR",187,0)
+RPT1Q K ^TMP("RCDAILYACT",$J)
+"RTN","RCDPEDAR",188,0)
+ Q
+"RTN","RCDPEDAR",189,0)
+ ;
+"RTN","RCDPEDAR",190,0)
+ENQ(RCSTOP,RCPG) ; Clean up
+"RTN","RCDPEDAR",191,0)
+ I '$D(ZTQUEUED) D ^%ZISC I 'RCSTOP,RCPG D ASK^RCDPEDA1()
+"RTN","RCDPEDAR",192,0)
+ I $D(ZTQUEUED) S ZTREQ="@"
+"RTN","RCDPEDAR",193,0)
+ Q
+"RTN","RCDPEDAR",194,0)
+ ;
+"RTN","RCDPEDAR",195,0)
+SETLINE(RCNITE,Z,RCCT) ; Writes line
+"RTN","RCDPEDAR",196,0)
+ ; RCNITE = 1 to set array,  0 to write line
+"RTN","RCDPEDAR",197,0)
+ ; Z = txt to output
+"RTN","RCDPEDAR",198,0)
+ ; RCCT = line counter
+"RTN","RCDPEDAR",199,0)
+ S RCCT=RCCT+1
+"RTN","RCDPEDAR",200,0)
+ I $G(RCNITE) S ^TMP($J,"RCDPE_DAR",RCCT)=Z Q
+"RTN","RCDPEDAR",201,0)
+ W !,Z
+"RTN","RCDPEDAR",202,0)
+ Q
+"RTN","RCDPEDAR",203,0)
+ ;
+"RTN","RCDPEDAR",204,0)
+EFTDET(Z2,Z3,RCCT,RCPG,RCSTOP,RCDT1,RCDT2,RCDET,RCFMS1,RCNITE) ; Display EFT Detail
+"RTN","RCDPEDAR",205,0)
+ N X
+"RTN","RCDPEDAR",206,0)
+ I RCFLG W !,"^^^^^"
+"RTN","RCDPEDAR",207,0)
+ S RCFLG=1
+"RTN","RCDPEDAR",208,0)
+ W $P(Z3,U,1)_U
+"RTN","RCDPEDAR",209,0)
+ W $$FMTE^XLFDT($P(Z3,U,12)\1,2)_U
+"RTN","RCDPEDAR",210,0)
+ W $P(Z3,U,7)_U
+"RTN","RCDPEDAR",211,0)
+ W $$EXTERNAL^DILFD(344.31,.08,"",+$P(Z3,U,8))_$S($P(Z3,U,8)=1:":"_$P(Z3,U,10),1:"")_U
+"RTN","RCDPEDAR",212,0)
+ W $P(Z3,U,4)_U
+"RTN","RCDPEDAR",213,0)
+ W $P(Z3,U,2)_"/"_$P(Z3,U,3)_U
+"RTN","RCDPEDAR",214,0)
+ I $P(Z3,U,9) W $P($G(^RCY(344,+$P(Z3,U,9),0)),U)_U
+"RTN","RCDPEDAR",215,0)
+ I '$P(Z3,U,9) W U
+"RTN","RCDPEDAR",216,0)
+ W $G(RCFMS1(Z2))_U
+"RTN","RCDPEDAR",217,0)
+ I $O(^RCY(344.31,Z2,2,0)) D  W U Q:RCSTOP
+"RTN","RCDPEDAR",218,0)
+ . N V
+"RTN","RCDPEDAR",219,0)
+ . S V=0 F  S V=$O(^RCY(344.31,Z2,2,V)) Q:'V  D  Q:RCSTOP
+"RTN","RCDPEDAR",220,0)
+ .. W $G(^RCY(344.31,Z2,2,V,0))_";"
+"RTN","RCDPEDAR",221,0)
+ I $D(^RCY(344.31,Z2,3)) D WP^RCDPEM6($P(^RCY(344.31,Z2,3),U,3)) Q
+"RTN","RCDPEDAR",222,0)
+ W $P($G(^RCY(344.31,Z2,3)),U,3)
+"RTN","RCDPEDAR",223,0)
+ Q
+"RTN","RCDPEDAR",224,0)
+ ;
+"RTN","RCDPEDAR",225,0)
+CHKPYR(IEN,FLG,RCJOB) ;
+"RTN","RCDPEDAR",226,0)
+ ; IEN - ien in file 344.31 or 344.4
+"RTN","RCDPEDAR",227,0)
+ ; FLG - 0 if IEN contains ien in file 344.31, 1 if IEN contains ien in file 344.4
+"RTN","RCDPEDAR",228,0)
+ ; RCJOB - need to pass in the job number to access the previously populated temporary global array ^TMP("RCSELPAY",RCJOB) when rpt is queued to run
+"RTN","RCDPEDAR",229,0)
+ ; returns 1 if payer in 344.31/.02 or 344.4/.06 is in the list of selected payers ^TMP("RCSELPAY",RCJOB)
+"RTN","RCDPEDAR",230,0)
+ ; returns 0 otherwise
+"RTN","RCDPEDAR",231,0)
+ ;
+"RTN","RCDPEDAR",232,0)
+ N RCPAY,RES,Z
+"RTN","RCDPEDAR",233,0)
+ S RES=0
+"RTN","RCDPEDAR",234,0)
+ S:$G(RCJOB)="" RCJOB=$J
+"RTN","RCDPEDAR",235,0)
+ S RCPAY="" I IEN S RCPAY=$S(FLG:$P($G(^RCY(344.4,IEN,0)),U,6),1:$P($G(^RCY(344.31,IEN,0)),U,2))
+"RTN","RCDPEDAR",236,0)
+ I RCPAY'="" S (RCFLG,Z)=0 F  S Z=$O(^TMP("RCSELPAY",RCJOB,Z)) Q:Z=""  S:$E(RCPAY,1,30)=$G(^TMP("RCSELPAY",RCJOB,Z)) RES=1 I RES Q
+"RTN","RCDPEDAR",237,0)
+ Q RES
+"RTN","RCDPEDAR",238,0)
+ ;
+"RTN","RCDPEDAR",239,0)
+CHKDIV(IEN,FLG,VAUTD) ;
+"RTN","RCDPEDAR",240,0)
+ ; IEN - ien in file 344.31 or 344.4
+"RTN","RCDPEDAR",241,0)
+ ; FLG - 0 if IEN contains ien in file 344.31, 1 if IEN contains ien in file 344.4
+"RTN","RCDPEDAR",242,0)
+ ; VAUTD - array of selected divisions from DIVISION^VAUTOMA API call
+"RTN","RCDPEDAR",243,0)
+ ; returns 1 if division associated with an entry in 344.31 is on the list in VAUTD
+"RTN","RCDPEDAR",244,0)
+ ; returns 0 otherwise
+"RTN","RCDPEDAR",245,0)
+ N ERA,I,NAME,RCSTA,RES
+"RTN","RCDPEDAR",246,0)
+ S RES=0
+"RTN","RCDPEDAR",247,0)
+ I VAUTD=1 S RES=1 G CHKDIVX
+"RTN","RCDPEDAR",248,0)
+ I 'IEN G CHKDIVX
+"RTN","RCDPEDAR",249,0)
+ S ERA=$S(FLG:IEN,1:$P($G(^RCY(344.31,IEN,0)),U,10))
+"RTN","RCDPEDAR",250,0)
+ S RCSTA=$$ERASTA^RCDPEM3(ERA),NAME=$P(RCSTA,U)
+"RTN","RCDPEDAR",251,0)
+ I NAME="UNKNOWN" G CHKDIVX
+"RTN","RCDPEDAR",252,0)
+ S I=0 I 'VAUTD F  S I=$O(VAUTD(I)) Q:'I!RES  I NAME=VAUTD(I) S RES=1
+"RTN","RCDPEDAR",253,0)
+CHKDIVX ;
+"RTN","RCDPEDAR",254,0)
+ Q RES
+"RTN","RCDPEM")
+0^1^B58755837^B59208170
+"RTN","RCDPEM",1,0)
+RCDPEM ;ALB/TMK/PJH - POST EFT, ERA MATCHING TO EFT ;5/31/11 6:15pm
+"RTN","RCDPEM",2,0)
+ ;;4.5;Accounts Receivable;**173,255,269,276,283**;Mar 20, 1995;Build 8
+"RTN","RCDPEM",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified
+"RTN","RCDPEM",4,0)
+ ; IA 4050 covers call to SPL1^IBCEOBAR
+"RTN","RCDPEM",5,0)
+ Q
+"RTN","RCDPEM",6,0)
+ ; Note - keep processing in line with RCDPXPAP 
+"RTN","RCDPEM",7,0)
+EN ; Post EFT deposits, auto-match EFT's and ERA's 
+"RTN","RCDPEM",8,0)
+ ;
+"RTN","RCDPEM",9,0)
+ K ^TMP($J,"RCDPETOT")
+"RTN","RCDPEM",10,0)
+ ; ^TMP($J,"RCDPETOT",344.3 or 344.31,file ien)=
+"RTN","RCDPEM",11,0)
+ ;  (1) match (0/1/-1)   (2) total $   (3) posted (0/1)  (4) error ref
+"RTN","RCDPEM",12,0)
+ ;  (5) EFT deposit ien 344.1 if added for EFT
+"RTN","RCDPEM",13,0)
+ ;
+"RTN","RCDPEM",14,0)
+ N RCZ,RCSUM,RCDEP,RECTDA,RC0,RCER,RCDUZ,Z,Z0,Z1,DA,X,Y,DIE,DR
+"RTN","RCDPEM",15,0)
+ M RCDUZ=DUZ
+"RTN","RCDPEM",16,0)
+ N DUZ S DUZ=+$O(^VA(200,"B","EDILOCKBOX,AUTOMATIC",0)),DUZ(0)="" S:'DUZ DUZ=.5
+"RTN","RCDPEM",17,0)
+ K ^TMP($J,"RCXM"),^TMP($J,"RCTOT")
+"RTN","RCDPEM",18,0)
+ S ZTREQ="@"
+"RTN","RCDPEM",19,0)
+ L +^RCY(344.3,"ALOCK"):5 I '$T D  G ENQ ; Lock record
+"RTN","RCDPEM",20,0)
+ . ; Send bulletin that job could not be run
+"RTN","RCDPEM",21,0)
+ . S ^TMP($J,"RCXM",1)="The nightly job to post EFT deposits and match EFTs to ERAs could not be run",^TMP($J,"RCXM",2)="Another match process was already running (lock on ^RCY(344.3,""ALOCK"") )"
+"RTN","RCDPEM",22,0)
+ . D SENDBULL^RCDPEM1
+"RTN","RCDPEM",23,0)
+ ;
+"RTN","RCDPEM",24,0)
+ ; Post deposits for any unposted EFTs in file 344.3
+"RTN","RCDPEM",25,0)
+ ; 'Unposted' EFTs have a 0 in AMOUNT POSTED field
+"RTN","RCDPEM",26,0)
+ S ^TMP($J,"RCTOT","EFT_DEP")=0
+"RTN","RCDPEM",27,0)
+ S RCZ=0 F  S RCZ=$O(^RCY(344.3,"APOST",0,RCZ)) Q:'RCZ  S RC0=$G(^RCY(344.3,RCZ,0))  I RC0'="",$P(RC0,U,8) D
+"RTN","RCDPEM",28,0)
+ . S ^TMP($J,"RCTOT","EFT_DEP")=^TMP($J,"RCTOT","EFT_DEP")+1
+"RTN","RCDPEM",29,0)
+ . ; Verify check sums
+"RTN","RCDPEM",30,0)
+ . S RCSUM=$$CHKSUM^RCDPESR3(RCZ)
+"RTN","RCDPEM",31,0)
+ . I RCSUM'=$P(RC0,U,9) D  Q
+"RTN","RCDPEM",32,0)
+ .. ; Bulletin that check sums do not match
+"RTN","RCDPEM",33,0)
+ .. ; Update record error list and checksum error field
+"RTN","RCDPEM",34,0)
+ .. S RCER(1)=$$SETERR^RCDPEM0(2)
+"RTN","RCDPEM",35,0)
+ .. S RCER(2)="  Checksum is invalid and the EFT deposit record is corrupted.",RCER(3)="  Stored Checksum = "_$P(RC0,U,9)_" Calculated Checksum: "_RCSUM,RCER(4)="  This EFT deposit cannot be sent to FMS.  You must ask for it to be"
+"RTN","RCDPEM",36,0)
+ .. S RCER(5)="   retransmitted to your site."
+"RTN","RCDPEM",37,0)
+ .. D BULL^RCDPEM1(344.3,RC0,.RCER)
+"RTN","RCDPEM",38,0)
+ .. S $P(^TMP($J,"RCDPETOT",344.3,RCZ),U,4)=+$G(^TMP($J,"RCXM",0))
+"RTN","RCDPEM",39,0)
+ .. D STORERR^RCDPEM0(RCZ,.RCER)
+"RTN","RCDPEM",40,0)
+ .. S DIE="^RCY(344.3,",DA=RCZ,DR=".1////1" D ^DIE
+"RTN","RCDPEM",41,0)
+ .. S ^TMP($J,"RCTOT","CSUM")=$G(^TMP($J,"RCTOT","CSUM"))+1
+"RTN","RCDPEM",42,0)
+ . ;
+"RTN","RCDPEM",43,0)
+ . S RCDEP=+$P(RC0,U,3),RECTDA=+$O(^RCY(344,"AD",RCDEP,0))
+"RTN","RCDPEM",44,0)
+ . I RCDEP D LOCKDEP(RCDEP,1)
+"RTN","RCDPEM",45,0)
+ . I 'RCDEP!'RECTDA D  ;  Add deposit and/or receipt to files 344.1, 344
+"RTN","RCDPEM",46,0)
+ .. I 'RCDEP D  ; Add dep record RCDEP, update field .03 with the pointer
+"RTN","RCDPEM",47,0)
+ ... S RCDEP=+$$ADDDEP^RCDPEM0($P(RC0,U,6),$P(RC0,U,7),RCZ)
+"RTN","RCDPEM",48,0)
+ ... S ^TMP($J,"RCTOT","DEPOSIT")=$G(^TMP($J,"RCTOT","DEPOSIT"))+1
+"RTN","RCDPEM",49,0)
+ .. ;
+"RTN","RCDPEM",50,0)
+ .. I 'RECTDA,RCDEP D  ; Add receipt record, post to rev source cd 8NZZ
+"RTN","RCDPEM",51,0)
+ ... S RECTDA=+$$ADDREC^RCDPEM0(RCDEP,RCZ)
+"RTN","RCDPEM",52,0)
+ .. ;
+"RTN","RCDPEM",53,0)
+ . I RCDEP D LOCKDEP(RCDEP,0)
+"RTN","RCDPEM",54,0)
+ . ;
+"RTN","RCDPEM",55,0)
+ . I 'RCDEP!'RECTDA D  Q  ; Could not add entry to file 344.1 or 344 
+"RTN","RCDPEM",56,0)
+ .. ; Send a bulletin, update error text
+"RTN","RCDPEM",57,0)
+ .. S RCER(1)=$$SETERR^RCDPEM0(2),RCER(2)="  "_$S('RCDEP:"Neither a deposit nor a receipt were able",1:"A receipt was not able")_" to be added - no match attempted"
+"RTN","RCDPEM",58,0)
+ .. I RCDEP,'RECTDA S RCER(3)="  Deposit Ticket # created: "_$P($G(^RCY(344.1,+$P(RC0,U,3),0)),U)
+"RTN","RCDPEM",59,0)
+ .. S RCER($O(RCER(""),-1)+1)="This EFT deposit can't be sent to FMS.  You must ask Austin to retransmit"
+"RTN","RCDPEM",60,0)
+ .. D BULL^RCDPEM1(344.3,RC0,.RCER)
+"RTN","RCDPEM",61,0)
+ .. S $P(^TMP($J,"RCDPETOT",344.3,RCZ),U,4)=+$G(^TMP($J,"RCXM",0))
+"RTN","RCDPEM",62,0)
+ .. D STORERR^RCDPEM0(RCZ,.RCER)
+"RTN","RCDPEM",63,0)
+ .. S ^TMP($J,"RCTOT","ERR")=$G(^TMP($J,"RCTOT","ERR"))+1
+"RTN","RCDPEM",64,0)
+ . ;
+"RTN","RCDPEM",65,0)
+ . S DIE="^RCY(344.31," S Z=0 F  S Z=$O(^RCY(344.31,"B",RCZ,Z)) Q:'Z  S DA=Z,DR=".11////1" D ^DIE
+"RTN","RCDPEM",66,0)
+ ;
+"RTN","RCDPEM",67,0)
+ D MATCH(0,1)
+"RTN","RCDPEM",68,0)
+ L -^RCY(344.3,"ALOCK")
+"RTN","RCDPEM",69,0)
+ENQ K ^TMP($J,"RCDPETOT")
+"RTN","RCDPEM",70,0)
+ ;
+"RTN","RCDPEM",71,0)
+ ;ePayments 5010 part II enhancements
+"RTN","RCDPEM",72,0)
+ ;Create Bulletins of EEOB Moved or Copied today
+"RTN","RCDPEM",73,0)
+ D EN^RCDPEM8
+"RTN","RCDPEM",74,0)
+ Q
+"RTN","RCDPEM",75,0)
+ ;
+"RTN","RCDPEM",76,0)
+MATCH(RCMAN,RCPROC) ; Try to matched unmatched EFTs
+"RTN","RCDPEM",77,0)
+ ; RCMAN = 1 if job run manually, outside of nightly processing
+"RTN","RCDPEM",78,0)
+ ; RCPROC = 1 if called from EFT-EOB automatch, 0 if from manual match
+"RTN","RCDPEM",79,0)
+ ;
+"RTN","RCDPEM",80,0)
+ N RC0,RCER,RCZ,RCHAC
+"RTN","RCDPEM",81,0)
+ I '$O(^RCY(344.31,"AMATCH",0,0)) D  G MATCHQ
+"RTN","RCDPEM",82,0)
+ . ; Send bulletin - no unmatched EFTs found
+"RTN","RCDPEM",83,0)
+ . N RCT
+"RTN","RCDPEM",84,0)
+ . S RCT=+$O(^TMP($J,"RCXM"," "),-1)+1
+"RTN","RCDPEM",85,0)
+ . S ^TMP($J,"RCXM",RCT)=$S('$G(RCMAN):"The nightly job",1:"The manual option")_" to match EFTs has found no EFTs are currently unmatched on your system"
+"RTN","RCDPEM",86,0)
+ . I $G(RCMAN) S ^TMP($J,"RCXM",RCT+1)="The action was initiated by "_$P($G(^VA(200,DUZ,0)),U)
+"RTN","RCDPEM",87,0)
+ . D SENDBULL^RCDPEM1
+"RTN","RCDPEM",88,0)
+ ;
+"RTN","RCDPEM",89,0)
+ S RCZ=0 F  S RCZ=$O(^RCY(344.31,"AMATCH",0,RCZ)) Q:'RCZ  D
+"RTN","RCDPEM",90,0)
+ . K RCER
+"RTN","RCDPEM",91,0)
+ . S RC0=$G(^RCY(344.31,RCZ,0)),RCHAC=($E($P($G(^RCY(344.3,+RC0,0)),U,6),1,3)="HAC")
+"RTN","RCDPEM",92,0)
+ . Q:RC0=""  ; Bad xref
+"RTN","RCDPEM",93,0)
+ . Q:$S('RCHAC:'$P(RC0,U,11),1:0)  ; EFT deposit must have been recorded
+"RTN","RCDPEM",94,0)
+ . S ^TMP($J,"RCTOT","EFT")=$G(^TMP($J,"RCTOT","EFT"))+1
+"RTN","RCDPEM",95,0)
+ . I RCHAC S ^TMP($J,"RCTOT","EFT_HAC")=$G(^TMP($J,"RCTOT","EFT_HAC"))+1
+"RTN","RCDPEM",96,0)
+ . S ^TMP($J,"RCDPETOT",344.31,RCZ)=""
+"RTN","RCDPEM",97,0)
+ . ;
+"RTN","RCDPEM",98,0)
+ . D MATCH^RCDPEM0(RCZ,RCPROC)
+"RTN","RCDPEM",99,0)
+ ;
+"RTN","RCDPEM",100,0)
+ I '$O(^TMP($J,"RCXM",0)) K RCER S RCER(1)="",RCER(2)="NO EXCEPTIONS WHILE MATCHING EFTs-ERAs OR IN RECORDING THE DEPOSITS TO FMS" D BULL^RCDPEM1("","",.RCER) K RCER
+"RTN","RCDPEM",101,0)
+ D EN2^RCDPEM1,BULL^RCDPEM1("","",.RCER)
+"RTN","RCDPEM",102,0)
+ D SENDBULL^RCDPEM1
+"RTN","RCDPEM",103,0)
+ ;
+"RTN","RCDPEM",104,0)
+MATCHQ K ^TMP($J,"RCDPETOT"),^TMP($J,"RCTOT")
+"RTN","RCDPEM",105,0)
+ Q
+"RTN","RCDPEM",106,0)
+ ;
+"RTN","RCDPEM",107,0)
+LOCKDEP(RCDEP,LOCK) ; Lock/confirm deposit ien RCDEP file 341.1
+"RTN","RCDPEM",108,0)
+ ; If LOCK = 1 lock deposit
+"RTN","RCDPEM",109,0)
+ ; If LOCK = 0 unlock deposit
+"RTN","RCDPEM",110,0)
+ I $G(LOCK) D
+"RTN","RCDPEM",111,0)
+ . L +^RCY(344.1,RCDEP,0):5
+"RTN","RCDPEM",112,0)
+ . D CONFIRM^RCDPUDEP(RCDEP) ; confirm to prevent changes
+"RTN","RCDPEM",113,0)
+ I '$G(LOCK) L -^RCY(344.1,RCDEP,0)
+"RTN","RCDPEM",114,0)
+ Q
+"RTN","RCDPEM",115,0)
+ ;
+"RTN","RCDPEM",116,0)
+RCPTDET(RCRZ,RECTDA1,RCER) ; Adds detail to a receipt based on file 344.49
+"RTN","RCDPEM",117,0)
+ ; RCRZ = ien of ERA entry in file 344.49
+"RTN","RCDPEM",118,0)
+ ; RECTDA1 = ien of receipt entry in file 344
+"RTN","RCDPEM",119,0)
+ ; RCER = error array returned if passed by reference
+"RTN","RCDPEM",120,0)
+ ;
+"RTN","RCDPEM",121,0)
+ N RCR,RCSPL,RCZ0,RCTRANDA,RCQ,DR,DA,DIE,X,Y,Q,Z0,Z1,Z
+"RTN","RCDPEM",122,0)
+ ;
+"RTN","RCDPEM",123,0)
+ S RCR=0 F  S RCR=$O(^RCY(344.49,RCRZ,1,RCR)) Q:'RCR  D
+"RTN","RCDPEM",124,0)
+ . S RCZ0=$G(^RCY(344.49,RCRZ,1,RCR,0))
+"RTN","RCDPEM",125,0)
+ . I $P(RCZ0,U)'["." S RCSPL(+RCZ0)=$P(RCZ0,U,9) Q
+"RTN","RCDPEM",126,0)
+ . I $S(+$P(RCZ0,U,3)=0:$P($G(^RCY(344.49,RCRZ,0)),U,3),1:$P(RCZ0,U,3)<0) S RCSPL(RCZ0\1,+RCZ0)=RCZ0 Q
+"RTN","RCDPEM",127,0)
+ . S RCTRANDA=$$ADDTRAN^RCDPURET(RECTDA1)
+"RTN","RCDPEM",128,0)
+ . ;
+"RTN","RCDPEM",129,0)
+ . I 'RCTRANDA D  Q  ; Error adding receipt detail
+"RTN","RCDPEM",130,0)
+ .. S RCER(1)=$$SETERR^RCDPEM0() S RCER($O(RCER(""),-1)+1)="  NO DETAIL LINE ADDED TO RECEIPT "_$P($G(^RCY(344,RECTDA1,0)),U)_" FOR LINE #"_$P(RCZ0,U)_" IN EEOB WORKLIST SCRATCH PAD"
+"RTN","RCDPEM",131,0)
+ . ;
+"RTN","RCDPEM",132,0)
+ . ;Store receipt line detail
+"RTN","RCDPEM",133,0)
+ . D DET(RCRZ,RCR,RECTDA1,RCTRANDA)
+"RTN","RCDPEM",134,0)
+ . S RCSPL(RCZ0\1,+RCZ0)=RCZ0
+"RTN","RCDPEM",135,0)
+ S Z=0 F  S Z=$O(RCSPL(Z)) Q:'Z  S RCQ=+$G(RCSPL(Z)) I RCQ D
+"RTN","RCDPEM",136,0)
+ .;;Move EEOB if one claim entered-changed 10/19/11-see +25^RCDPEWL8
+"RTN","RCDPEM",137,0)
+ . S Z1=$O(RCSPL(Z,"")) Q:Z1=""
+"RTN","RCDPEM",138,0)
+ . I $O(RCSPL(Z,""),-1)=Z1,'$$SPLIT(Z,Z1,RCERA) Q  ; No split occurred
+"RTN","RCDPEM",139,0)
+ . S Z1=0 F  S Z1=$O(RCSPL(Z,Z1)) Q:'Z1  S Z0=$G(RCSPL(Z,Z1)) D
+"RTN","RCDPEM",140,0)
+ .. S Q=+$P($G(^RCY(344.4,RCRZ,1,RCQ,0)),U,2) ; EOB detail rec
+"RTN","RCDPEM",141,0)
+ .. Q:'Q
+"RTN","RCDPEM",142,0)
+ .. I '$P(Z0,U,7)!($P(Z0,U,2)="") D  ; Suspensed
+"RTN","RCDPEM",143,0)
+ ... D SPL1^IBCEOBAR(Q,$S($P(Z0,U,2)="":"NO BILL",1:$P(Z0,U,2)),"",$P(Z0,U,6)) ; IA 4050
+"RTN","RCDPEM",144,0)
+ .. E  D
+"RTN","RCDPEM",145,0)
+ ... D SPL1^IBCEOBAR(Q,$P(Z0,U,2),$P(Z0,U,7),$P(Z0,U,6)) ; Add the split bill # ; IA 4050
+"RTN","RCDPEM",146,0)
+ ;
+"RTN","RCDPEM",147,0)
+ Q
+"RTN","RCDPEM",148,0)
+SPLIT(Z,Z1,RCERA) ;Check if worklist was split but to to single claim
+"RTN","RCDPEM",149,0)
+ N SUB,NBILL,OBILL
+"RTN","RCDPEM",150,0)
+ ;Find split line in scratchpad
+"RTN","RCDPEM",151,0)
+ S SUB=$O(^RCY(344.49,RCERA,1,"B",Z1,"")) Q:'SUB 0
+"RTN","RCDPEM",152,0)
+ ;Get original claim number from scratchpad
+"RTN","RCDPEM",153,0)
+ S OBILL=$P($G(^RCY(344.49,RCERA,1,SUB-1,0)),U,2)
+"RTN","RCDPEM",154,0)
+ ;New claim number
+"RTN","RCDPEM",155,0)
+ S NBILL=$P(RCSPL(Z,Z1),U,2)
+"RTN","RCDPEM",156,0)
+ ;If new and old claim are not the same this is a move via split
+"RTN","RCDPEM",157,0)
+ I OBILL'="",OBILL'=NBILL Q 1
+"RTN","RCDPEM",158,0)
+ ;Otherwise this is not a split
+"RTN","RCDPEM",159,0)
+ Q 0
+"RTN","RCDPEM",160,0)
+ ;
+"RTN","RCDPEM",161,0)
+DET(RCZ,RCR,RECTDA1,RCTRANDA) ; Store receipt detail
+"RTN","RCDPEM",162,0)
+ ; RCZ = ien of entry file 344.49
+"RTN","RCDPEM",163,0)
+ ; RCR = ien of entry in file 344.491
+"RTN","RCDPEM",164,0)
+ ; RCPROC = Function calling this subroutine
+"RTN","RCDPEM",165,0)
+ ;        = 1 EFT match to ERA   = 0 manual add receipt
+"RTN","RCDPEM",166,0)
+ ; RECTDA1 = ien of entry in file 344
+"RTN","RCDPEM",167,0)
+ ; RCTRANDA = ien of entry in subfile 344.01
+"RTN","RCDPEM",168,0)
+ ;
+"RTN","RCDPEM",169,0)
+ N DIE,DA,DR,X,Y,Z,RCUP,RCCOM,RCZ0,RC0
+"RTN","RCDPEM",170,0)
+ S RC0=$G(^RCY(344.49,RCZ,0))
+"RTN","RCDPEM",171,0)
+ S RCZ0=$G(^RCY(344.49,RCZ,1,RCR,0))
+"RTN","RCDPEM",172,0)
+ S DR="",RCUP=+$O(^RCY(344.49,RCZ,1,"B",+RCZ0/1,0)),RCUP=$G(^RCY(344.49,RCZ,1,RCUP,0))
+"RTN","RCDPEM",173,0)
+ I $P(RCZ0,U,7) S DR=".09////^S X="_+$P(RCZ0,U,7)_"_$C(59)_""PRCA(430,"";"
+"RTN","RCDPEM",174,0)
+ S DR=DR_".04////"_(+$P(RCZ0,U,3))_";.27////"_RCR_";"
+"RTN","RCDPEM",175,0)
+ I $P(RC0,U,5)'="" S DR=DR_".1////"_$P(RC0,U,5)_";"
+"RTN","RCDPEM",176,0)
+ I $P(RC0,U,6)'="" S DR=DR_".08////"_$P(RC0,U,6)_";"
+"RTN","RCDPEM",177,0)
+ S RCCOM=$P(RCZ0,U,10)
+"RTN","RCDPEM",178,0)
+ S Z=0 F  S Z=$O(^RCY(344.49,RCZ,1,RCR,1,Z)) Q:'Z  I $P($G(^(Z,0)),U,5)=1 S DR=DR_".28////1;" Q  ; Update receipt line with dec adj flag
+"RTN","RCDPEM",179,0)
+ I $P(RCUP,U,2)["**ADJ" S DR=DR_"1.02////"_$E($S(RCCOM'="":RCCOM_"/",1:"")_$S($P($P(RCUP,U,2),"ADJ",2):"ERA adjustment - no bill referenced",1:"Total of EFT mismatched to ERA"),1,60)_";"
+"RTN","RCDPEM",180,0)
+ I $P($G(^RCY(344.49,RCZ,0)),U,4)'="" S DR=DR_".07////"_$P($G(^RCY(344.49,RCZ,0)),U,4)_";"
+"RTN","RCDPEM",181,0)
+ S DA(1)=RECTDA1,DA=RCTRANDA,DIE="^RCY(344,"_DA(1)_",1,"
+"RTN","RCDPEM",182,0)
+ D ^DIE
+"RTN","RCDPEM",183,0)
+ Q
+"RTN","RCDPEM",184,0)
+ ;
+"RTN","RCDPEREC")
+0^4^B39834899^B39701184
+"RTN","RCDPEREC",1,0)
+RCDPEREC ;ALB/TMK/KML/PJH - RECONCILIATION REPORT FOR EDI LOCKBOX FMS DOCS  ; 8/2/10 4:17pm
+"RTN","RCDPEREC",2,0)
+ ;;4.5;Accounts Receivable;**208,244,269,283**;Mar 20, 1995;Build 8
+"RTN","RCDPEREC",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","RCDPEREC",4,0)
+ ;
+"RTN","RCDPEREC",5,0)
+EN ; Entrypoint for producing the report
+"RTN","RCDPEREC",6,0)
+ N RCDDT,RCSEL,ZTRTN,ZTDESC,ZTSAVE,ZTSK,%ZIS,POP,DIR,DTOUT,DUOUT
+"RTN","RCDPEREC",7,0)
+ S DIR(0)="DA^3000101:"_DT_":AEPX",DIR("A")="SELECT THE EFT DEPOSIT DATE TO START WITH: " W ! D ^DIR K DIR
+"RTN","RCDPEREC",8,0)
+ S RCDDT=$S($D(DTOUT)!$D(DUOUT):"",1:Y)
+"RTN","RCDPEREC",9,0)
+ Q:'RCDDT
+"RTN","RCDPEREC",10,0)
+ S DIR("B")="ALL"
+"RTN","RCDPEREC",11,0)
+ S DIR(0)="SA^A:ALL;N:NOT FULLY TRANSFERRED",DIR("A")="DO YOU WANT (A)LL DEPOSITS OR ONLY THOSE (N)OT FULLY TRANSFERRED?: " W ! D ^DIR K DIR
+"RTN","RCDPEREC",12,0)
+ S RCSEL=$S($D(DTOUT)!$D(DUOUT):"",1:Y)
+"RTN","RCDPEREC",13,0)
+ Q:RCSEL=""
+"RTN","RCDPEREC",14,0)
+ W !
+"RTN","RCDPEREC",15,0)
+ S %ZIS="QM" D ^%ZIS Q:POP
+"RTN","RCDPEREC",16,0)
+ I $D(IO("Q")) D  Q
+"RTN","RCDPEREC",17,0)
+ . S ZTRTN="ENQUE^RCDPEREC",ZTDESC="AR - CR/TR RELATED DOCUMENTS FOR e-PAYMENTS"
+"RTN","RCDPEREC",18,0)
+ . S ZTSAVE("RCDDT")="",ZTSAVE("RCSEL")=""
+"RTN","RCDPEREC",19,0)
+ . D ^%ZTLOAD
+"RTN","RCDPEREC",20,0)
+ . W !!,$S($D(ZTSK):"Your task number"_ZTSK_" has been queued.",1:"Unable to queue this job.")
+"RTN","RCDPEREC",21,0)
+ . K ZTSK,IO("Q") D HOME^%ZIS
+"RTN","RCDPEREC",22,0)
+ U IO
+"RTN","RCDPEREC",23,0)
+ D ENQUE
+"RTN","RCDPEREC",24,0)
+ Q
+"RTN","RCDPEREC",25,0)
+ ;
+"RTN","RCDPEREC",26,0)
+ENQUE ; Queued entrypoint for the report
+"RTN","RCDPEREC",27,0)
+ ; RCDDT = starting EFT deposit date
+"RTN","RCDPEREC",28,0)
+ ; RCSEL = 'A' if all deposits included ... 'N' if only those not fully
+"RTN","RCDPEREC",29,0)
+ ;         transferred out of 8NZZ
+"RTN","RCDPEREC",30,0)
+ ;
+"RTN","RCDPEREC",31,0)
+ N Z,Z0,RCSTOP,RCD,RCR,RCSTAT,RCDEP,RCEFT,RCEFT1,RCT,RC0,RC00,RC000,RCTOT,RCTOT1,RCTRANS
+"RTN","RCDPEREC",32,0)
+ K ^TMP($J,"RCDEP")
+"RTN","RCDPEREC",33,0)
+ ;
+"RTN","RCDPEREC",34,0)
+ S (RCSTOP,RCT)=0,RCDDT=RCDDT-.1
+"RTN","RCDPEREC",35,0)
+ F  S RCDDT=$O(^RCY(344.3,"ADEP",RCDDT)) Q:'RCDDT!RCSTOP  S RCDEP=0 F  S RCDEP=$O(^RCY(344.3,"ADEP",RCDDT,RCDEP)) Q:'RCDEP  S RCEFT=0 F  S RCEFT=$O(^RCY(344.3,"ADEP",RCDDT,RCDEP,RCEFT)) Q:'RCEFT!RCSTOP  D
+"RTN","RCDPEREC",36,0)
+ . S RCTOT=0,RC0=$G(^RCY(344.3,RCEFT,0))
+"RTN","RCDPEREC",37,0)
+ . S RCD=$E(RCDDT_$J("",8),1,8)_RCDEP
+"RTN","RCDPEREC",38,0)
+ . S RCEFT1=0 F  S RCEFT1=$O(^RCY(344.31,"B",RCEFT,RCEFT1)) Q:'RCEFT1!RCSTOP  S RC00=$G(^RCY(344.31,RCEFT1,0)) D
+"RTN","RCDPEREC",39,0)
+ .. ;
+"RTN","RCDPEREC",40,0)
+ .. I $D(ZTQUEUED) S RCT=RCT+1 I '(RCT#100),$$S^%ZTLOAD S (RCSTOP,ZTSTOP)=1 K ZTREQ Q
+"RTN","RCDPEREC",41,0)
+ .. ;
+"RTN","RCDPEREC",42,0)
+ .. I '$D(^TMP($J,"RCDEP",RCD)) S ^TMP($J,"RCDEP",RCD)=$P(RC0,U,6,11),^TMP($J,"RCDEP",RCD,0)=$S($P(RC00,U,9):$$FMSSTAT^RCDPUREC($P(RC00,U,9)),1:"NO CR DOCUMENT"),^TMP($J,"RCDEP",RCD,"EFT")=RCEFT
+"RTN","RCDPEREC",43,0)
+ .. S RCTRANS=+$P(RC00,U,14) S:'RCTRANS RCTRANS=1
+"RTN","RCDPEREC",44,0)
+ .. ;
+"RTN","RCDPEREC",45,0)
+ .. I '$P(RC00,U,8) S ^TMP($J,"RCDEP",RCD,RCTRANS,"RCUNM")=RCEFT1 Q  ; Not matched
+"RTN","RCDPEREC",46,0)
+ .. ;
+"RTN","RCDPEREC",47,0)
+ .. I '$O(^RCY(344,"AEFT",RCEFT1,0)) D  Q  ; No receipt
+"RTN","RCDPEREC",48,0)
+ ... I $P(RC00,U,16)'="" D  Q  ; EFT detail entered on-line
+"RTN","RCDPEREC",49,0)
+ .... S ^TMP($J,"RCDEP",RCD,RCTRANS)=RCEFT1_U_"ENTERED ON-LINE"_U_$S($P(RC000,U,18):"ERA #"_$P($G(^RCY(344.4,+$P(RC00,U,10),0)),U),1:"PAPER EOB")_U_$P(RC00,U,16)_U_"NO RECEIPT",RCTOT=RCTOT+$P(RC00,U,7)
+"RTN","RCDPEREC",50,0)
+ ... S ^TMP($J,"RCDEP",RCD,RCTRANS)=RCEFT1_U_"NO TR DOC"_U_$S($P(RC00,U,10):"ERA #"_$P($G(^RCY(344.4,+$P(RC00,U,10),0)),U),1:"PAPER EOB")_"^^NO RECEIPT"
+"RTN","RCDPEREC",51,0)
+ .. ;
+"RTN","RCDPEREC",52,0)
+ .. S RCR=0 F  S RCR=$O(^RCY(344,"AEFT",RCEFT1,RCR)) Q:'RCR  S RC000=$G(^RCY(344,RCR,0)) D
+"RTN","RCDPEREC",53,0)
+ ... S RCTOT=RCTOT+$$PAYTOTAL^RCDPURED(RCR)
+"RTN","RCDPEREC",54,0)
+ ... S RCSTAT=$$FMSSTAT^RCDPUREC(RCR) S:$P(RCSTAT,U)="" RCSTAT="NO TR DOC"
+"RTN","RCDPEREC",55,0)
+ ... S ^TMP($J,"RCDEP",RCD,RCTRANS)=RCEFT1_U_$P(RCSTAT,U)_U_$S($P(RC000,U,18):"ERA #"_$P($G(^RCY(344.4,+$P(RC000,U,18),0)),U),1:"PAPER EOB")_U_$P(RCSTAT,U,2)_U_RCR
+"RTN","RCDPEREC",56,0)
+ . Q:RCSTOP
+"RTN","RCDPEREC",57,0)
+ . I RCSEL="N",+RCTOT=+$P(RC0,U,8) K ^TMP($J,"RCDEP",RCD) Q
+"RTN","RCDPEREC",58,0)
+ . S ^TMP($J,"RCDEP",RCD,"TOT")=RCTOT_U_$P(RC0,U,8)
+"RTN","RCDPEREC",59,0)
+ ;
+"RTN","RCDPEREC",60,0)
+ ; Output the report
+"RTN","RCDPEREC",61,0)
+ S RCD="",RCPG=0
+"RTN","RCDPEREC",62,0)
+ I RCSTOP K ^TMP($J,"RCDEP")
+"RTN","RCDPEREC",63,0)
+ F  S RCD=$O(^TMP($J,"RCDEP",RCD)) Q:RCD=""!RCSTOP  D  Q:RCSTOP  D TOT(RCD,.RCSTOP,.RCPG)
+"RTN","RCDPEREC",64,0)
+ . S RC0=$G(^TMP($J,"RCDEP",RCD)) D EFTDEP(RCD,.RCSTOP,.RCPG) ; EFT dep
+"RTN","RCDPEREC",65,0)
+ . Q:RCSTOP
+"RTN","RCDPEREC",66,0)
+ . S RCTRANS=0 F  S RCTRANS=$O(^TMP($J,"RCDEP",RCD,RCTRANS)) Q:'RCTRANS!RCSTOP  S RC00=$G(^(RCTRANS)) D  ; EFT detail deposits
+"RTN","RCDPEREC",67,0)
+ .. S RCSTOP=$$NEWPG(.RCPG) Q:RCSTOP
+"RTN","RCDPEREC",68,0)
+ .. I RC00="",$D(^TMP($J,"RCDEP",RCD,RCTRANS,"RCUNM")) S Z=$G(^("RCUNM")) D  Q  ; Unmatched
+"RTN","RCDPEREC",69,0)
+ ... W !,?3,$J("",6),"  UNMATCHED   ",$E($P(Z,U,2)_$J("",30),1,30)_"  "_$E($P(Z,U,3)_$J("",20),1,20)
+"RTN","RCDPEREC",70,0)
+ ... W !,?13,$P(Z,U,4)
+"RTN","RCDPEREC",71,0)
+ .. ;
+"RTN","RCDPEREC",72,0)
+ .. I RC00="" W !,?3,"ERROR IN EFT DETAIL LINE #: ",RCTRANS Q  ; Error
+"RTN","RCDPEREC",73,0)
+ .. ;
+"RTN","RCDPEREC",74,0)
+ .. S Z=$G(^RCY(344.31,+RC00,0))
+"RTN","RCDPEREC",75,0)
+ .. W !,?3,$E(+RC00_$J("",6),1,6)_"  "_$E($P(RC00,U,3)_$J("",10),1,10)_"  "_$E($P(Z,U,2)_$J("",30),1,30)_"  "_$E($P(Z,U,3)_$J("",20),1,20)
+"RTN","RCDPEREC",76,0)
+ ..; HIPAA 5010 - to accommodate the extended length of the Trace # field from 30 to 50 characters the Trace # will be printed on its own line.  
+"RTN","RCDPEREC",77,0)
+ .. W !,?13,$E($P(Z,U,4)_$J("",50),1,50)
+"RTN","RCDPEREC",78,0)
+ .. W !,?43,$E($P(RC00,U,5)_$J("",10),1,10),!,?15,$E($P(RC00,U,2)_$J("",10),1,10)_"  "_$E($P(RC00,U,4)_$J("",15),1,15)
+"RTN","RCDPEREC",79,0)
+ ;
+"RTN","RCDPEREC",80,0)
+ I 'RCSTOP,RCPG D ASK(.RCSTOP)
+"RTN","RCDPEREC",81,0)
+ ;
+"RTN","RCDPEREC",82,0)
+ I $D(ZTQUEUED) D
+"RTN","RCDPEREC",83,0)
+ . I $G(RCSTOP) D HDR1(0) W !,"TASK STOPPED BY USER" Q
+"RTN","RCDPEREC",84,0)
+ . S ZTREQ="@"
+"RTN","RCDPEREC",85,0)
+ I '$D(ZTQUEUED) D ^%ZISC
+"RTN","RCDPEREC",86,0)
+ K ^TMP($J,"RCDEP")
+"RTN","RCDPEREC",87,0)
+ Q
+"RTN","RCDPEREC",88,0)
+ ;
+"RTN","RCDPEREC",89,0)
+EFTDEP(RCD,RCSTOP,RCPG) ;
+"RTN","RCDPEREC",90,0)
+ ; RCD = deposit date (FM) concatenated with the deposit #
+"RTN","RCDPEREC",91,0)
+ N Z,Z0
+"RTN","RCDPEREC",92,0)
+ I $D(ZTQUEUED),$$S^%ZTLOAD S (RCSTOP,ZTSTOP)=1 K ZTREQ Q
+"RTN","RCDPEREC",93,0)
+ S Z=$G(^TMP($J,"RCDEP",RCD)),Z0=$G(^(RCD,0))
+"RTN","RCDPEREC",94,0)
+ S RCSTOP=$$NEWPG(.RCPG) Q:RCSTOP
+"RTN","RCDPEREC",95,0)
+ I $Y+7>IOSL W !! S RCSTOP=$$NEWPG(.RCPG) Q:RCSTOP
+"RTN","RCDPEREC",96,0)
+ W:'$P(RCPG,U,2) !!
+"RTN","RCDPEREC",97,0)
+ ; PRCA*4.5*283 - Change $E 'TO' position from 6 to 9 to allow for 9 digit DEP #'s
+"RTN","RCDPEREC",98,0)
+ W !,$E($$FMTE^XLFDT($P(Z,U,2),"2D")_$J("",8),1,8),"  ",$E(+$G(^TMP($J,"RCDEP",RCD,"EFT"))_$J("",6),1,6),"  ",$E($P(Z,U)_$J("",9),1,9),"  ",$J($P(Z,U,3),13,2),"  ",$E($S($P(Z,U,6):$$FMTE^XLFDT($P(Z,U,6),"2D"),1:"UNPOSTED")_$J("",8),1,8)
+"RTN","RCDPEREC",99,0)
+ W !,?5,$E($P(Z0,U)_$J("",20),1,20),"  ",$P(Z0,U,2)
+"RTN","RCDPEREC",100,0)
+ Q
+"RTN","RCDPEREC",101,0)
+ ;
+"RTN","RCDPEREC",102,0)
+TOT(RCD,RCSTOP,RCPG) ; Output the total lines for the deposit
+"RTN","RCDPEREC",103,0)
+ S RCSTOP=$$NEWPG(.RCPG) Q:RCSTOP
+"RTN","RCDPEREC",104,0)
+ W !,$J("",26),"TOTAL AMOUNT SENT VIA 'TR' DOCUMENTS: ",$J($G(^TMP($J,"RCDEP",RCD,"TOT")),15,2)
+"RTN","RCDPEREC",105,0)
+ W !,$J("",26),"TOTAL AMOUNT STILL TO BE TRANSFERRED: ",$J($P($G(^TMP($J,"RCDEP",RCD,"TOT")),U,2)-$G(^TMP($J,"RCD",RCD,"TOT")),15,2)
+"RTN","RCDPEREC",106,0)
+ Q
+"RTN","RCDPEREC",107,0)
+ ;
+"RTN","RCDPEREC",108,0)
+NEWPG(RCPG) ; Check for new page needed, output header
+"RTN","RCDPEREC",109,0)
+ ; Function returns 1 if user chooses to stop output
+"RTN","RCDPEREC",110,0)
+ N RCX,RCZ
+"RTN","RCDPEREC",111,0)
+ S RCZ=0,RCX=$P(RCPG,U,2)
+"RTN","RCDPEREC",112,0)
+ I 'RCPG!(($Y+5)>IOSL) D
+"RTN","RCDPEREC",113,0)
+ . D:RCPG ASK(.RCZ) I RCZ Q
+"RTN","RCDPEREC",114,0)
+ . D HDR1(.RCPG)
+"RTN","RCDPEREC",115,0)
+ I RCX S $P(RCPG,U,2)=0
+"RTN","RCDPEREC",116,0)
+ Q RCZ
+"RTN","RCDPEREC",117,0)
+ ;
+"RTN","RCDPEREC",118,0)
+SELECT() ; Select first deposit #
+"RTN","RCDPEREC",119,0)
+ ; Function returns values selected for first deposit #
+"RTN","RCDPEREC",120,0)
+ ;
+"RTN","RCDPEREC",121,0)
+ N DIR,X,Y,DTOUT,DUOUT
+"RTN","RCDPEREC",122,0)
+ ;
+"RTN","RCDPEREC",123,0)
+HDR1(RCPG) ;Print report hdr
+"RTN","RCDPEREC",124,0)
+ ; RCPG = last page #^0/1 for top of page indicator
+"RTN","RCDPEREC",125,0)
+ N Z,Z0,X
+"RTN","RCDPEREC",126,0)
+ I RCPG!($E(IOST,1,2)="C-") W @IOF,*13
+"RTN","RCDPEREC",127,0)
+ S RCPG=$G(RCPG)+1_U_1
+"RTN","RCDPEREC",128,0)
+ W !,"EDI LOCKBOX FUND 5287.4/8NZZ RECONCILIATION REPORT",?55,$$FMTE^XLFDT(DT,2),?70,"Page: ",+RCPG
+"RTN","RCDPEREC",129,0)
+ ; PRCA*4.5*283 - Move TOTAL DEP AMT to right 3 space (27 to 30) to allow for 9 digit DEP #'s
+"RTN","RCDPEREC",130,0)
+ W !!,"DEP DATE  ENTRY#  DEP #      TOTAL DEP AMT  POST DT   RECEIPT #",!,?5,"CR DOCUMENT           CR DOC STATUS"
+"RTN","RCDPEREC",131,0)
+ W !,?3,"EFT #   MATCHED TO  PAYER NAME                      PAYER ID            ",!,?13,"TRACE #"
+"RTN","RCDPEREC",132,0)
+ ; HIPAA 5010 - put receipt # on a separate line to accomodate the increased length of the TRACE # 
+"RTN","RCDPEREC",133,0)
+ W !,?20,"RECEIPT #"
+"RTN","RCDPEREC",134,0)
+ W !,?15,"TR DOCUMENT           TR DOC STATUS"
+"RTN","RCDPEREC",135,0)
+ W !,$TR($J("",IOM)," ","=")
+"RTN","RCDPEREC",136,0)
+ Q
+"RTN","RCDPEREC",137,0)
+ ;
+"RTN","RCDPEREC",138,0)
+ASK(RCSTOP) ;
+"RTN","RCDPEREC",139,0)
+ I $E(IOST,1,2)'["C-" Q
+"RTN","RCDPEREC",140,0)
+ N DIR,DIROUT,DIRUT,DTOUT,DUOUT
+"RTN","RCDPEREC",141,0)
+ S DIR(0)="E" W ! D ^DIR
+"RTN","RCDPEREC",142,0)
+ I ($D(DIRUT))!($D(DUOUT)) S RCSTOP=1 Q
+"RTN","RCDPEREC",143,0)
+ Q
+"RTN","RCDPEREC",144,0)
+ ;
+"RTN","RCDPESR3")
+0^2^B55776988^B60020580
+"RTN","RCDPESR3",1,0)
+RCDPESR3 ;ALB/TMK/PJH - Server auto-update utilities - EDI Lockbox ; 10/14/10 5:01pm
+"RTN","RCDPESR3",2,0)
+ ;;4.5;Accounts Receivable;**173,214,208,255,269,283**;Mar 20, 1995;Build 8
+"RTN","RCDPESR3",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","RCDPESR3",4,0)
+ Q
+"RTN","RCDPESR3",5,0)
+ ;
+"RTN","RCDPESR3",6,0)
+EFTIN(RCTXN,RCD,XMZ,RCGBL,RCEFLG) ; Adds a new EFT record to AR file 344.3
+"RTN","RCDPESR3",7,0)
+ ;  from Lockbox EFT msg
+"RTN","RCDPESR3",8,0)
+ ; RCTXN = the data on the header record of the message text
+"RTN","RCDPESR3",9,0)
+ ; RCD = array containing formatted mail message header data
+"RTN","RCDPESR3",10,0)
+ ; XMZ = the mail message number
+"RTN","RCDPESR3",11,0)
+ ; RCGBL = the name of the array or global where the message is stored
+"RTN","RCDPESR3",12,0)
+ ; RCEFLG = error flag returned if passed by reference
+"RTN","RCDPESR3",13,0)
+ ;
+"RTN","RCDPESR3",14,0)
+ N CT,RC,RC1,RCLAST,RCEFT,RCTDA,RCERR,RCTYP1,DA,DIK,RCZ,Z,Z0,DLAYGO
+"RTN","RCDPESR3",15,0)
+ ;
+"RTN","RCDPESR3",16,0)
+ ; Take data out of mail message
+"RTN","RCDPESR3",17,0)
+ S (RCEFLG,RCLAST)=0,CT=0,RCTYP1="835EFT"
+"RTN","RCDPESR3",18,0)
+ F  X XMREC Q:XMER<0  D  Q:RCLAST
+"RTN","RCDPESR3",19,0)
+ . I +XMRG=99,$P(XMRG,U,2)="$" S RCLAST=1 Q
+"RTN","RCDPESR3",20,0)
+ . S:XMRG'="" CT=CT+1,@RCGBL@(2,"D",CT)=XMRG
+"RTN","RCDPESR3",21,0)
+ ;
+"RTN","RCDPESR3",22,0)
+ I 'RCLAST,'$G(RCERR) K @RCGBL S RCERR=2 ;No $ as last character of msg
+"RTN","RCDPESR3",23,0)
+ ;
+"RTN","RCDPESR3",24,0)
+ I $G(RCERR)>0 D  G EFTQ
+"RTN","RCDPESR3",25,0)
+ . D ERRUPD^RCDPESR1(RCGBL,.RCD,RCTYP1,.RCERR)
+"RTN","RCDPESR3",26,0)
+ . S RCEFLG=1
+"RTN","RCDPESR3",27,0)
+ ;
+"RTN","RCDPESR3",28,0)
+ ; Add top-level entry to file 344.3
+"RTN","RCDPESR3",29,0)
+ S RCEFT=$$ADDEFT(RCTXN,XMZ,RCGBL,.RCERR)
+"RTN","RCDPESR3",30,0)
+ ;
+"RTN","RCDPESR3",31,0)
+ I $G(RCERR) D  G EFTQ ; 'BAD' EFT's
+"RTN","RCDPESR3",32,0)
+ . D ERRUPD^RCDPESR1(RCGBL,.RCD,RCTYP1,.RCERR)
+"RTN","RCDPESR3",33,0)
+ . S RCEFLG=1
+"RTN","RCDPESR3",34,0)
+ ;
+"RTN","RCDPESR3",35,0)
+ G:'RCEFT EFTQ
+"RTN","RCDPESR3",36,0)
+ ;
+"RTN","RCDPESR3",37,0)
+ ; Add the detail data to file 344.31 for this EFT record
+"RTN","RCDPESR3",38,0)
+ S Z=0 F  S Z=$O(^RCY(344.31,"B",RCEFT,Z)) Q:'Z  S DA=Z,DIK="^RCY(344.31," D ^DIK ; Delete any detail data already there
+"RTN","RCDPESR3",39,0)
+ ;
+"RTN","RCDPESR3",40,0)
+ S (RC,RC1,RCZ)=0
+"RTN","RCDPESR3",41,0)
+ F  S RCZ=$O(@RCGBL@(2,"D",RCZ)) Q:'RCZ  S Z0=$G(^(RCZ)) I Z0'="" D  Q:$G(RCERR)
+"RTN","RCDPESR3",42,0)
+ . I $P(Z0,U)="01" D  ; Each payer's data
+"RTN","RCDPESR3",43,0)
+ .. N DA,DIE,DR,X,Y,DO,DD,DIC
+"RTN","RCDPESR3",44,0)
+ .. S X=RCEFT
+"RTN","RCDPESR3",45,0)
+ .. S DIC("DR")=".11////0;.04////"_$P(Z0,U,2)_";.08////0"_$S($P(Z0,U,5)'="":";.02////"_$P(Z0,U,5),1:"")_$S($P(Z0,U,6)'="":";.03////"_$P(Z0,U,6),1:"")_";.07////"_$J(+$P(Z0,U,4)/100,"",2)_";.06////"_$S($P(Z0,U,8)'="":1,1:0)
+"RTN","RCDPESR3",46,0)
+ .. S DIC("DR")=DIC("DR")_";.12///"_$$FDT^RCDPESR9($P(Z0,U,3))_";.13////"_DT_$S($P(Z0,U,7)'="":";.05////"_$P(Z0,U,7),1:"")_$S($P(Z0,U,9)'="":";.15////"_$P(Z0,U,9),1:"")
+"RTN","RCDPESR3",47,0)
+ .. ;
+"RTN","RCDPESR3",48,0)
+ .. I $P(Z0,U,8)'="" D  ; tax id error
+"RTN","RCDPESR3",49,0)
+ ... D TAXERR^RCDPESR1("EFT",$P(Z0,U,5)_"  Payer ID: "_$P(RCTXN,U,6),$P(RCTXN,U,7),$P(RCTXN,U,8)) ; Send bad tax id bulletin
+"RTN","RCDPESR3",50,0)
+ .. ;
+"RTN","RCDPESR3",51,0)
+ .. S DIC(0)="L",DIC="^RCY(344.31,",DLAYGO=344.31 D FILE^DICN K DIC,DLAYGO,DO,DD
+"RTN","RCDPESR3",52,0)
+ .. I Y'>0 D  ; Error filing data
+"RTN","RCDPESR3",53,0)
+ ... S DIK="^RCY(344.3,",DA=RCEFT D ^DIK
+"RTN","RCDPESR3",54,0)
+ ... S Z=0 F  S Z=$O(^RCY(344.31,"B",RCEFT,Z)) Q:'Z  S DIK="^RCY(344.31,",DA=Z D ^DIK
+"RTN","RCDPESR3",55,0)
+ ... S RCEFLG=1,RCERR=3
+"RTN","RCDPESR3",56,0)
+ ... D ERRUPD^RCDPESR1(RCGBL,.RCD,RCTYP1,RCERR)
+"RTN","RCDPESR3",57,0)
+ ;
+"RTN","RCDPESR3",58,0)
+ I '$G(RCEFLG) D
+"RTN","RCDPESR3",59,0)
+ . S DIE="^RCY(344.3,",DA=RCEFT,DR=".09////"_$$CHKSUM(RCEFT) D ^DIE
+"RTN","RCDPESR3",60,0)
+ ;
+"RTN","RCDPESR3",61,0)
+EFTQ ;
+"RTN","RCDPESR3",62,0)
+ D CLEAN^DILF
+"RTN","RCDPESR3",63,0)
+ Q
+"RTN","RCDPESR3",64,0)
+ ;
+"RTN","RCDPESR3",65,0)
+ADDEFT(RCTXN,RCXMZ,RCGBL,RCERR) ; File EFT TOTAL record in file 344.3
+"RTN","RCDPESR3",66,0)
+ ; RCTXN = the data on the header record of the message text
+"RTN","RCDPESR3",67,0)
+ ; RCXMZ = the mail message number
+"RTN","RCDPESR3",68,0)
+ ; RCGBL = the name of the array or global where the message is stored
+"RTN","RCDPESR3",69,0)
+ ; Function returns the ien of the total record found/added
+"RTN","RCDPESR3",70,0)
+ ;    and also returns RCERR if passed by reference
+"RTN","RCDPESR3",71,0)
+ ;
+"RTN","RCDPESR3",72,0)
+ N RCTDA,RCRCPT,RCDUP,RCHAC,Z,Z0
+"RTN","RCDPESR3",73,0)
+ S (RCERR,RCTDA)=""
+"RTN","RCDPESR3",74,0)
+ ;
+"RTN","RCDPESR3",75,0)
+ ;I $E($P(RCTXN,U,6),1,3)'="469",$E($P(RCTXN,U,6),1,3)'="569",$E($P(RCTXN,U,6),1,3)'="HAC" D  G ADDQ ; Invalid EFT deposit number
+"RTN","RCDPESR3",76,0)
+ ;. N RCDXM,RCCT
+"RTN","RCDPESR3",77,0)
+ ;. S RCCT=0
+"RTN","RCDPESR3",78,0)
+ ;. S RCCT=RCCT+1,RCDXM(RCCT)="This EFT has an invalid deposit number for EDI Lockbox and has been rejected.",RCCT=RCCT+1,RCDXM(RCCT)=" "
+"RTN","RCDPESR3",79,0)
+ ;. S RCCT=RCCT+1,RCDXM(RCCT)=" ",RCCT=RCCT+1,RCDXM(RCCT)="Here are the contents of this message:"
+"RTN","RCDPESR3",80,0)
+ ;. D DISP("EDI LBOX INVALID EFT DEPOSIT #",RCCT,.RCDXM,RCXMZ)
+"RTN","RCDPESR3",81,0)
+ ;
+"RTN","RCDPESR3",82,0)
+ ; Make sure it's not already there or if so, it has no ptr to a deposit
+"RTN","RCDPESR3",83,0)
+ ; or if a deposit exists, that the deposit does not yet have a receipt
+"RTN","RCDPESR3",84,0)
+ S RCDUP=0,RCHAC=$E($P(RCTXN,U,6),1,3)="HAC" ; This is a HAC deposit
+"RTN","RCDPESR3",85,0)
+ I $P(RCTXN,U,6)'="" D
+"RTN","RCDPESR3",86,0)
+ . ;Format Deposit Date as FM date
+"RTN","RCDPESR3",87,0)
+ . N RCDDAT
+"RTN","RCDPESR3",88,0)
+ . S X=$$FDT^RCDPESR9($P(RCTXN,U,7))
+"RTN","RCDPESR3",89,0)
+ . S RCDDAT=0,%DT="X" D ^%DT S:Y>0 RCDDAT=Y
+"RTN","RCDPESR3",90,0)
+ . S Z=0 ; Lookup deposit by deposit #
+"RTN","RCDPESR3",91,0)
+ . F  S Z=$O(^RCY(344.3,"ADEP",RCDDAT,$P(RCTXN,U,6),Z)) Q:'Z  S Z0=$G(^RCY(344.3,Z,0)) S:'$P(Z0,U,3) RCTDA=Z Q:RCTDA  D  Q
+"RTN","RCDPESR3",92,0)
+ .. ; Deposit found - find receipt
+"RTN","RCDPESR3",93,0)
+ .. I $O(^RCY(344,"AD",$P(Z0,U,3),0)) S RCDUP=Z Q
+"RTN","RCDPESR3",94,0)
+ .. S RCTDA=Z
+"RTN","RCDPESR3",95,0)
+ ;
+"RTN","RCDPESR3",96,0)
+ I RCDUP D  ; Send bulletin that duplicate EFT received
+"RTN","RCDPESR3",97,0)
+ . N RCDXM,RCCT
+"RTN","RCDPESR3",98,0)
+ . S RCCT=0
+"RTN","RCDPESR3",99,0)
+ . S RCCT=RCCT+1,RCDXM(RCCT)="This EFT appears to be a duplicate transaction and has been rejected.",RCCT=RCCT+1,RCDXM(RCCT)=" "
+"RTN","RCDPESR3",100,0)
+ . S RCCT=RCCT+1,RCDXM(RCCT)=" ",RCCT=RCCT+1,RCDXM(RCCT)="Here are the contents of this message:"
+"RTN","RCDPESR3",101,0)
+ . D DISP("EDI LBOX DUP EFT DEPOSIT RECEIVED",RCCT,.RCDXM,RCXMZ)
+"RTN","RCDPESR3",102,0)
+ ;
+"RTN","RCDPESR3",103,0)
+ I 'RCDUP D  ; Add or update the record
+"RTN","RCDPESR3",104,0)
+ . N RCX,RCDTTM,DIE,DIC,DLAYGO,DD,DA,DO,DR,X,Y,%DT,DINUM
+"RTN","RCDPESR3",105,0)
+ . ;
+"RTN","RCDPESR3",106,0)
+ . S X=$$FDT^RCDPESR9($P(RCTXN,U,3))_"@"_$P(RCTXN,U,4)
+"RTN","RCDPESR3",107,0)
+ . S %DT="XTS" D ^%DT S:Y>0 RCDTTM=Y
+"RTN","RCDPESR3",108,0)
+ . ;
+"RTN","RCDPESR3",109,0)
+ . S DIC("DR")=""
+"RTN","RCDPESR3",110,0)
+ . S DIC("DR")=$S(RCDTTM'="":".02////"_RCDTTM,1:"")
+"RTN","RCDPESR3",111,0)
+ . S DIC("DR")=DIC("DR")_$S(DIC("DR")'="":";",1:"")_".06////"_$P(RCTXN,U,6)_";.07///"_$$FDT^RCDPESR9($P(RCTXN,U,7))
+"RTN","RCDPESR3",112,0)
+ . S DIC("DR")=DIC("DR")_";.08////"_$$ZERO^RCDPESR9($P(RCTXN,U,8),1)_";.13////"_$$NOW^XLFDT()_";.05////"_RCXMZ_";.14////0;.12////0"
+"RTN","RCDPESR3",113,0)
+ . ;
+"RTN","RCDPESR3",114,0)
+ . I RCTDA D  ; Overwrite the data already there
+"RTN","RCDPESR3",115,0)
+ .. L +^RCY(344.3,RCTDA):1 I '$T S RCTDA=-1 Q
+"RTN","RCDPESR3",116,0)
+ .. S DIE="^RCY(344.3,",DA=RCTDA,DR=DIC("DR") K DIC D ^DIE
+"RTN","RCDPESR3",117,0)
+ .. L -^RCY(344.3,RCTDA)
+"RTN","RCDPESR3",118,0)
+ . ;
+"RTN","RCDPESR3",119,0)
+ . I 'RCTDA D
+"RTN","RCDPESR3",120,0)
+ .. S RCX=+$O(^RCY(344.3," "),-1)
+"RTN","RCDPESR3",121,0)
+ .. F RCX=RCX+1:1 I '$D(^RCY(344.3,RCX,0)) L +^RCY(344.3,RCX,0):1 I $T S X=RCX Q
+"RTN","RCDPESR3",122,0)
+ .. S DIC(0)="L",DIC="^RCY(344.3,",DLAYGO=344.3,DINUM=RCX
+"RTN","RCDPESR3",123,0)
+ .. D FILE^DICN K DO,DD,DLAYGO,DIC,DINUM
+"RTN","RCDPESR3",124,0)
+ .. L -^RCY(344.3,RCX,0)
+"RTN","RCDPESR3",125,0)
+ .. S RCTDA=$S(Y<0:"",1:+Y)
+"RTN","RCDPESR3",126,0)
+ . ;
+"RTN","RCDPESR3",127,0)
+ . I 'RCTDA S RCERR=3 ; Error in add of EFT record to file 344.3 
+"RTN","RCDPESR3",128,0)
+ ;
+"RTN","RCDPESR3",129,0)
+ADDQ Q $S(RCTDA>0:RCTDA,1:"")
+"RTN","RCDPESR3",130,0)
+ ;
+"RTN","RCDPESR3",131,0)
+CHKSUM(RCTDA) ; Calc the checksum for EFT record stored in RCTDA in 344.3
+"RTN","RCDPESR3",132,0)
+ ;
+"RTN","RCDPESR3",133,0)
+ N RCDPCSUM,RCDPDATA,X,Y,Z,Z0
+"RTN","RCDPESR3",134,0)
+ ;
+"RTN","RCDPESR3",135,0)
+ S (RCDPCSUM,X)=0,Z0=$G(^RCY(344.3,RCTDA,0))
+"RTN","RCDPESR3",136,0)
+ ; Use pcs 1-8, leaving out piece 3
+"RTN","RCDPESR3",137,0)
+ S RCDPDATA=$P(Z0,U,1,8),$P(RCDPDATA,U,3)=""
+"RTN","RCDPESR3",138,0)
+ S X=RCDPCSUM_RCDPDATA X $S($G(^%ZOSF("LPC"))'="":^("LPC"),1:"S Y=""""") S RCDPCSUM=Y
+"RTN","RCDPESR3",139,0)
+ ; Use detail iens and pieces 3,4,7 to complete the checksum
+"RTN","RCDPESR3",140,0)
+ S Z=0 F  S Z=$O(^RCY(344.31,"B",RCTDA,Z)) Q:'Z  S Z0=$G(^RCY(344.31,Z,0)),RCDPDATA=Z_U_$P(Z0,U,3,4)_U_$P(Z0,U,7),X=RCDPCSUM_RCDPDATA X $S($G(^%ZOSF("LPC"))'="":^("LPC"),1:"S Y=""""") S RCDPCSUM=Y
+"RTN","RCDPESR3",141,0)
+ Q RCDPCSUM
+"RTN","RCDPESR3",142,0)
+ ;
+"RTN","RCDPESR3",143,0)
+DISP(RCTIT,RCCT,RCDXM,RCXMZ) ; Sends bulletin with formatted data from message
+"RTN","RCDPESR3",144,0)
+ ; RCTIT = title of bulletin
+"RTN","RCDPESR3",145,0)
+ ; RCCT = # of lines previously populated
+"RTN","RCDPESR3",146,0)
+ ; RCXDM = array containing the text of the bulletin
+"RTN","RCDPESR3",147,0)
+ N RC,Z
+"RTN","RCDPESR3",148,0)
+ K ^TMP("RC1",$J),^TMP("RC",$J),^TMP("RCTEMP",$J)
+"RTN","RCDPESR3",149,0)
+ S RC=1,^TMP("RCTEMP",$J,RC)=$G(^TMP("RCMSGH",$J,0))
+"RTN","RCDPESR3",150,0)
+ S Z=0 F  S Z=$O(^TMP("RCMSG",$J,2,"D",Z)) Q:'Z  S RC=RC+1,^TMP("RCTEMP",$J,RC)=$G(^TMP("RCMSG",$J,2,"D",Z))
+"RTN","RCDPESR3",151,0)
+ D DISP^RCDPESR8("^TMP(""RCTEMP"",$J)","^TMP(""RC1"",$J)",1,"^TMP(""RC"",$J)",75)
+"RTN","RCDPESR3",152,0)
+ S Z=0 F  S Z=$O(^TMP("RC",$J,Z)) Q:'Z  S RCCT=RCCT+1,RCDXM(RCCT)=$G(^TMP("RC",$J,Z))
+"RTN","RCDPESR3",153,0)
+ D BULLEFT^RCDPESR0("",RCXMZ,RCTIT,.RCDXM)
+"RTN","RCDPESR3",154,0)
+ K ^TMP("RC1",$J),^TMP("RC",$J),^TMP("RCTEMP",$J)
+"RTN","RCDPESR3",155,0)
+ Q
+"RTN","RCDPESR3",156,0)
+ ;
+"RTN","RCDPESR3",157,0)
+DUP(RCM,RCIFN,RCAMT,RCAMT1) ; EOB in mail message already stored in 361.1?
+"RTN","RCDPESR3",158,0)
+ ; RCM = msg # EOB was received in
+"RTN","RCDPESR3",159,0)
+ ; RCIFN = bill ien
+"RTN","RCDPESR3",160,0)
+ ; RCAMT = amt pd
+"RTN","RCDPESR3",161,0)
+ ; RCAMT1 = amt reported billed
+"RTN","RCDPESR3",162,0)
+ ; Returns 0 if none found, entry #^message checksum on file if found
+"RTN","RCDPESR3",163,0)
+ N Z,DUP,DUP1
+"RTN","RCDPESR3",164,0)
+ S (DUP,DUP1,Z)=0
+"RTN","RCDPESR3",165,0)
+ F  S Z=$O(^IBM(361.1,"AC",RCM,Z)) Q:'Z  I +$G(^IBM(361.1,Z,0))=RCIFN D  Q:DUP
+"RTN","RCDPESR3",166,0)
+ . I '$P($G(^IBM(361.1,Z,100)),U,5) S DUP1=Z Q  ; Partially filed before
+"RTN","RCDPESR3",167,0)
+ . I +$G(^IBM(361.1,Z,1))=+RCAMT,+$P($G(^IBM(361.1,1,Z,2)),U,4)=+RCAMT1 S DUP=Z_U_+$P($G(^IBM(361.1,Z,100)),U,5) Q
+"RTN","RCDPESR3",168,0)
+ I 'DUP,DUP1 S DUP=DUP1_"^0"
+"RTN","RCDPESR3",169,0)
+ Q DUP
+"RTN","RCDPESR3",170,0)
+ ;
+"RTN","RCDPESR3",171,0)
+DUPERA(DUP,RCNOUPD) ; Msg for duplicate ERA
+"RTN","RCDPESR3",172,0)
+ ; RCNOUPD = # of message with duplicate data
+"RTN","RCDPESR3",173,0)
+ ; DUP = flag = -1 if duplicate message received in same mail msg #
+"RTN","RCDPESR3",174,0)
+ K ^TMP("RCERR1",$J)
+"RTN","RCDPESR3",175,0)
+ S ^TMP("RCERR1",$J,1)=$S(DUP>0:"This an exact duplicate of an ERA received previously in mail msg "_RCNOUPD,1:"This ERA message was already fully processed - message was ignored")
+"RTN","RCDPESR3",176,0)
+ Q
+"RTN","RCDPESR3",177,0)
+ ;
+"RTN","RCDPESR3",178,0)
+BULLS(RCFILE,RCTDA,DUP,RCXMSG) ; Error bulletins for ERA
+"RTN","RCDPESR3",179,0)
+ I RCFILE=5 D BULL1^RCDPESR5(RCTDA,"^TMP(""RCERR1"",$J)",$S($G(DUP)>0:$G(DUP),1:""))
+"RTN","RCDPESR3",180,0)
+ I RCFILE=4 D BULL2^RCDPESR5(RCTDA,"^TMP(""RCERR1"",$J)",RCXMSG)
+"RTN","RCDPESR3",181,0)
+ Q
+"RTN","RCDPESR3",182,0)
+ ;
+"RTN","RCDPESR3",183,0)
+ADJERR(RCERR) ; Set up adj error text in RCERR(n) - pass by ref
+"RTN","RCDPESR3",184,0)
+ ; Function returns # of lines for error text
+"RTN","RCDPESR3",185,0)
+ S RCERR(1)="At least 1 adjustment transaction has been found on this ERA.  Before the",RCERR(2)="   receipt for this ERA can be processed, the appropriate adjustments",RCERR(3)="   must be made using the EEOB Worklist",RCERR(4)=" "
+"RTN","RCDPESR3",186,0)
+ Q 4
+"RTN","RCDPESR3",187,0)
+ ;
+"RTN","RCDPP283")
+0^^B86247^n/a
+"RTN","RCDPP283",1,0)
+RCDPP283 ;ALB/TXH - PRCA*4.5*283 PRE-INIT
+"RTN","RCDPP283",2,0)
+ ;;4.5;Accounts Receivable;**283**;Mar 20, 1995;Build 8
+"RTN","RCDPP283",3,0)
+ ;
+"RTN","RCDPP283",4,0)
+ Q
+"RTN","RCDPP283",5,0)
+PRE ; Pre-init to delete field .03 from file 344.3
+"RTN","RCDPP283",6,0)
+ ; the data is not deleted.
+"RTN","RCDPP283",7,0)
+ ;
+"RTN","RCDPP283",8,0)
+ N DIK,DA
+"RTN","RCDPP283",9,0)
+ S DIK="^DD(344.3,",DA=.03,DA(1)=344.3
+"RTN","RCDPP283",10,0)
+ D ^DIK
+"RTN","RCDPP283",11,0)
+ K DIK,DA
+"RTN","RCDPP283",12,0)
+ ;
+"RTN","RCDPP283",13,0)
+ Q
+"RTN","RCDPUDEP")
+0^3^B14082361^B15452883
+"RTN","RCDPUDEP",1,0)
+RCDPUDEP ;WISC/RFJ-deposit utilities ;29/MAY/2008
+"RTN","RCDPUDEP",2,0)
+ ;;4.5;Accounts Receivable;**114,173,257,283**;Mar 20, 1995;Build 8
+"RTN","RCDPUDEP",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","RCDPUDEP",4,0)
+ Q
+"RTN","RCDPUDEP",5,0)
+ ;
+"RTN","RCDPUDEP",6,0)
+ ;
+"RTN","RCDPUDEP",7,0)
+ADDDEPT(DEPOSIT,DEPDATE) ;  if the deposit is not entered, add it
+"RTN","RCDPUDEP",8,0)
+ ;
+"RTN","RCDPUDEP",9,0)
+ ;  if deposit date is missing, do not add the deposit
+"RTN","RCDPUDEP",10,0)
+ I 'DEPDATE Q 0
+"RTN","RCDPUDEP",11,0)
+ ;
+"RTN","RCDPUDEP",12,0)
+ ;  already in file, deposit number and deposit date match
+"RTN","RCDPUDEP",13,0)
+ N DA,RCDPFLAG
+"RTN","RCDPUDEP",14,0)
+ S DA=0 F  S DA=$O(^RCY(344.1,"B",DEPOSIT,DA)) Q:'DA  I $P($G(^RCY(344.1,DA,0)),"^",3)=DEPDATE S RCDPFLAG=1 Q
+"RTN","RCDPUDEP",15,0)
+ I $G(RCDPFLAG) Q DA
+"RTN","RCDPUDEP",16,0)
+ ;
+"RTN","RCDPUDEP",17,0)
+ ;  add it
+"RTN","RCDPUDEP",18,0)
+ N %,%DT,D0,DA,DD,DI,DIC,DIE,DLAYGO,DO,DQ,DR,X,Y
+"RTN","RCDPUDEP",19,0)
+ S DIC="^RCY(344.1,",DIC(0)="L",DLAYGO=344.1
+"RTN","RCDPUDEP",20,0)
+ ;  .03 = deposit date               .06 = opened by
+"RTN","RCDPUDEP",21,0)
+ ;  .07 = date/time opened           .12 = status (set to 1:open)
+"RTN","RCDPUDEP",22,0)
+ S DIC("DR")=".03////"_DEPDATE_";.06////"_DUZ_";.07///NOW;.12////1;"
+"RTN","RCDPUDEP",23,0)
+ S X=DEPOSIT
+"RTN","RCDPUDEP",24,0)
+ D FILE^DICN
+"RTN","RCDPUDEP",25,0)
+ I Y>0 Q +Y
+"RTN","RCDPUDEP",26,0)
+ Q 0
+"RTN","RCDPUDEP",27,0)
+ ;
+"RTN","RCDPUDEP",28,0)
+ ;
+"RTN","RCDPUDEP",29,0)
+SELDEPT(ADDNEW) ;  select a deposit
+"RTN","RCDPUDEP",30,0)
+ ;  if $g(addnew) allow adding a new deposit
+"RTN","RCDPUDEP",31,0)
+ ;  returns -1 for timeout or ^, 0 for no selection, or ien of deposit
+"RTN","RCDPUDEP",32,0)
+ N %,%T,%Y,C,D0,DA,DIC,DIE,DLAYGO,DQ,DR,DTOUT,DUOUT,RCDEFLUP,X,Y
+"RTN","RCDPUDEP",33,0)
+ S DIC="^RCY(344.1,",DIC(0)="QEAM",DIC("A")="Select DEPOSIT: "
+"RTN","RCDPUDEP",34,0)
+ S DIC("W")="D DICW^RCDPUDEP"
+"RTN","RCDPUDEP",35,0)
+ ;  use special lookup on input
+"RTN","RCDPUDEP",36,0)
+ S RCDEFLUP=1
+"RTN","RCDPUDEP",37,0)
+ I $G(ADDNEW) S DIC(0)="QEALM",DLAYGO=344.1,DIC("DR")=".03///TODAY;.06////"_DUZ_";.07///NOW;.12////1;"
+"RTN","RCDPUDEP",38,0)
+ D ^DIC
+"RTN","RCDPUDEP",39,0)
+ I Y<0,'$G(DUOUT),'$G(DTOUT) S Y=0
+"RTN","RCDPUDEP",40,0)
+ Q +Y
+"RTN","RCDPUDEP",41,0)
+ ;
+"RTN","RCDPUDEP",42,0)
+ ;
+"RTN","RCDPUDEP",43,0)
+DICW ;  write identifier code for receipt lookup
+"RTN","RCDPUDEP",44,0)
+ N DATA
+"RTN","RCDPUDEP",45,0)
+ S DATA=$G(^RCY(344.1,Y,0)) I DATA="" Q
+"RTN","RCDPUDEP",46,0)
+ ;  opened by
+"RTN","RCDPUDEP",47,0)
+ W ?13,"by: ",$E($P($G(^VA(200,+$P(DATA,"^",6),0)),"^"),1,15)
+"RTN","RCDPUDEP",48,0)
+ ;  date opened
+"RTN","RCDPUDEP",49,0)
+ I '$P(DATA,"^",7) S $P(DATA,"^",7)="???????"
+"RTN","RCDPUDEP",50,0)
+ W ?35," on: ",$E($P(DATA,"^",7),4,5),"/",$E($P(DATA,"^",7),6,7),"/",$E($P(DATA,"^",7),2,3)
+"RTN","RCDPUDEP",51,0)
+ ;  total dollars
+"RTN","RCDPUDEP",52,0)
+ W ?50," amt: $",$J($P(DATA,"^",4),9,2)
+"RTN","RCDPUDEP",53,0)
+ ;  status
+"RTN","RCDPUDEP",54,0)
+ W ?69," ",$P("N/A^OPEN^DEPOSITED^CONFIRMED^PROCESSED^VOID","^",+$P(DATA,"^",12)+1)
+"RTN","RCDPUDEP",55,0)
+ Q
+"RTN","RCDPUDEP",56,0)
+ ;
+"RTN","RCDPUDEP",57,0)
+ ;
+"RTN","RCDPUDEP",58,0)
+LOOKUP ;  special lookup on deposits, called from ^dd(344.1,.01,7.5)
+"RTN","RCDPUDEP",59,0)
+ ;  if rcdeflup flag not set, do not use special lookup
+"RTN","RCDPUDEP",60,0)
+ I '$D(RCDEFLUP) Q
+"RTN","RCDPUDEP",61,0)
+ ;  1:OPEN;3:CONFIRMED
+"RTN","RCDPUDEP",62,0)
+ ;  user entered O.? for lookup on open deposits
+"RTN","RCDPUDEP",63,0)
+ I X["O."!(X["o.") S DIC("S")="I $P(^(0),U,12)=1" S X="?" Q
+"RTN","RCDPUDEP",64,0)
+ ;  user entered C.? for lookup on confirmed deposits
+"RTN","RCDPUDEP",65,0)
+ I X["C."!(X["c.") S DIC("S")="I $P(^(0),U,12)=3" S X="?" Q
+"RTN","RCDPUDEP",66,0)
+ ;  deposit ticket # manually added is for electronic ticket only
+"RTN","RCDPUDEP",67,0)
+ ;  PRCA*283 - remove the restriction.
+"RTN","RCDPUDEP",68,0)
+ ;I $G(DIC(0))["L",$$AUTODEP(X) D EN^DDIOL(" ** Deposit #'s starting with "_$E(X,1,3)_" can only be used by automatic deposits",,"!") S X="" Q
+"RTN","RCDPUDEP",69,0)
+ ; Do not allow for 7-, 8-, or 9-digit electronic ticket to be added.
+"RTN","RCDPUDEP",70,0)
+ I $G(DIC(0))["L",'$D(^RCY(344.1,"B",X)),$L(X)>6,$L(X)<10 D EN^DDIOL(" ** Deposit # of "_$L(X)_" digits not allowed. "_$S($L(X)=9:"9 digits limited to automatic deposits.",1:""),,"!") S X="" Q
+"RTN","RCDPUDEP",71,0)
+ K DIC("S")
+"RTN","RCDPUDEP",72,0)
+ Q
+"RTN","RCDPUDEP",73,0)
+ ;
+"RTN","RCDPUDEP",74,0)
+ ;
+"RTN","RCDPUDEP",75,0)
+EDITDEP(DA,ASKDATE) ;  edit the deposit
+"RTN","RCDPUDEP",76,0)
+ ;  if $g(askdate) ask only the deposit date
+"RTN","RCDPUDEP",77,0)
+ N %,D,D0,DI,DIC,DIE,DQ,DR,J,X,Y
+"RTN","RCDPUDEP",78,0)
+ S (DIC,DIE)="^RCY(344.1,",DR=""
+"RTN","RCDPUDEP",79,0)
+ ;  deposit date(.03), do not allow edit if closed or either lockbox
+"RTN","RCDPUDEP",80,0)
+ I $$CHECKDEP^RCDPDPLU(DA) S DR=".03BANK DEPOSIT DATE//TODAY;"
+"RTN","RCDPUDEP",81,0)
+ ;  bank(.13)
+"RTN","RCDPUDEP",82,0)
+ S DR=DR_".13//"_$P($G(^RC(342.1,+$O(^RC(342.1,"AC",9,0)),0)),"^")_";"
+"RTN","RCDPUDEP",83,0)
+ ;  bank trace(.05)
+"RTN","RCDPUDEP",84,0)
+ S DR=DR_".05;"
+"RTN","RCDPUDEP",85,0)
+ ;  agency title(.17)
+"RTN","RCDPUDEP",86,0)
+ S DR=DR_".17//"_$P($G(^RC(342.1,+$O(^RC(342.1,"AC",10,0)),0)),"^")_";"
+"RTN","RCDPUDEP",87,0)
+ ;  agency location code(.14), comments(1)
+"RTN","RCDPUDEP",88,0)
+ S DR=DR_".14//"_$P(^RC(342,1,0),"^",7)_";1;"
+"RTN","RCDPUDEP",89,0)
+ ;
+"RTN","RCDPUDEP",90,0)
+ ;  only ask deposit date
+"RTN","RCDPUDEP",91,0)
+ I $G(ASKDATE) S DR=".03BANK DEPOSIT DATE//TODAY;"
+"RTN","RCDPUDEP",92,0)
+ D ^DIE
+"RTN","RCDPUDEP",93,0)
+ Q
+"RTN","RCDPUDEP",94,0)
+ ;
+"RTN","RCDPUDEP",95,0)
+ ;
+"RTN","RCDPUDEP",96,0)
+CONFIRM(DA) ;  confirm the deposit
+"RTN","RCDPUDEP",97,0)
+ N %DT,D,D0,DI,DIC,DIE,DQ,DR,X,Y
+"RTN","RCDPUDEP",98,0)
+ S (DIC,DIE)="^RCY(344.1,"
+"RTN","RCDPUDEP",99,0)
+ S DR=".04///"_$$TOTAL(DA)_";.12////3;.1////"_DUZ_";.11///NOW;"
+"RTN","RCDPUDEP",100,0)
+ D ^DIE
+"RTN","RCDPUDEP",101,0)
+ Q
+"RTN","RCDPUDEP",102,0)
+ ;
+"RTN","RCDPUDEP",103,0)
+ ;
+"RTN","RCDPUDEP",104,0)
+TOTAL(RCDEPTDA) ;  compute total dollars for all receipts on the deposit
+"RTN","RCDPUDEP",105,0)
+ N RCRECTDA,RCTRANDA,TOTAL
+"RTN","RCDPUDEP",106,0)
+ S RCRECTDA=0
+"RTN","RCDPUDEP",107,0)
+ F  S RCRECTDA=$O(^RCY(344,"AD",RCDEPTDA,RCRECTDA)) Q:'RCRECTDA  D
+"RTN","RCDPUDEP",108,0)
+ .   S RCTRANDA=0
+"RTN","RCDPUDEP",109,0)
+ .   F  S RCTRANDA=$O(^RCY(344,RCRECTDA,1,RCTRANDA)) Q:'RCTRANDA  D
+"RTN","RCDPUDEP",110,0)
+ .   .   S TOTAL=$G(TOTAL)+$P($G(^RCY(344,RCRECTDA,1,RCTRANDA,0)),"^",4)
+"RTN","RCDPUDEP",111,0)
+ Q +$G(TOTAL)
+"RTN","RCDPUDEP",112,0)
+ ;
+"RTN","RCDPUDEP",113,0)
+AUTODEP(X) ; Function returns 1 if the deposit ticket # in X is in the auto
+"RTN","RCDPUDEP",114,0)
+ ; deposit number space 269xxx, 369xxx, 469xxx, 569xxx, or 669xxx
+"RTN","RCDPUDEP",115,0)
+ ; and hasn't been previously entered via lockbox interface.
+"RTN","RCDPUDEP",116,0)
+ ; 
+"RTN","RCDPUDEP",117,0)
+ N Y
+"RTN","RCDPUDEP",118,0)
+ S Y=0
+"RTN","RCDPUDEP",119,0)
+ I $L(X)=6,$E(X,2,3)="69","23456"[$E(X),'$D(^RCY(344.1,"B",X)) S Y=1
+"RTN","RCDPUDEP",120,0)
+ Q Y
+"RTN","RCDPUDEP",121,0)
+ ;
+"VER")
+8.0^22.0
+"^DD",344.1,344.1,.01,0)
+TICKET #^RFX^^0;1^K:$L(X)>9!($L(X)<6)!'(X?6N.N) X
+"^DD",344.1,344.1,.01,1,0)
+^.1^^-1
+"^DD",344.1,344.1,.01,1,1,0)
+344.1^B
+"^DD",344.1,344.1,.01,1,1,1)
+S ^RCY(344.1,"B",$E(X,1,30),DA)=""
+"^DD",344.1,344.1,.01,1,1,2)
+K ^RCY(344.1,"B",$E(X,1,30),DA)
+"^DD",344.1,344.1,.01,3)
+Answer must be 6 digits in length. 9 digits can only be entered by automated payments.
+"^DD",344.1,344.1,.01,7.5)
+D LOOKUP^RCDPUDEP
+"^DD",344.1,344.1,.01,21,0)
+^.001^9^9^3120111^^
+"^DD",344.1,344.1,.01,21,1,0)
+Deposit Ticket Number as assigned by Dept. of Treasury.
+"^DD",344.1,344.1,.01,21,2,0)
+ 
+"^DD",344.1,344.1,.01,21,3,0)
+The Pre-Lookup (D LOOKUP^RCDPUDEP) places the following limits on
+"^DD",344.1,344.1,.01,21,4,0)
+entering Deposit Ticket Number data when entered via the appropriate 
+"^DD",344.1,344.1,.01,21,5,0)
+user option:
+"^DD",344.1,344.1,.01,21,6,0)
+        Limited to 6 digits.
+"^DD",344.1,344.1,.01,21,7,0)
+ 
+"^DD",344.1,344.1,.01,21,8,0)
+Ticket Deposit Numbers of 9 digits is limited to Lockbox Automated
+"^DD",344.1,344.1,.01,21,9,0)
+Deposit Process.
+"^DD",344.1,344.1,.01,23,0)
+^.001^5^5^3120111^^
+"^DD",344.1,344.1,.01,23,1,0)
+Patch PRCA*4.5*257 updates the Data Definition to conform to the fact that
+"^DD",344.1,344.1,.01,23,2,0)
+Consolidated Copayment Processing Center will start transmitting Deposit
+"^DD",344.1,344.1,.01,23,3,0)
+Ticket Numbers of 9 digits for credit card payment received from a new 
+"^DD",344.1,344.1,.01,23,4,0)
+Lockbox Bank. Site entered Deposit Ticket Number should still be limited
+"^DD",344.1,344.1,.01,23,5,0)
+to 6 digits.
+"^DD",344.1,344.1,.01,"DT")
+3120106
+"^DD",344.3,344.3,.03,0)
+AR DEPOSIT RECORD^P344.1'X^RCY(344.1,^0;3^Q
+"^DD",344.3,344.3,.03,1,0)
+^.1
+"^DD",344.3,344.3,.03,1,1,0)
+344.3^ARDEP
+"^DD",344.3,344.3,.03,1,1,1)
+S ^RCY(344.3,"ARDEP",$E(X,1,30),DA)=""
+"^DD",344.3,344.3,.03,1,1,2)
+K ^RCY(344.3,"ARDEP",$E(X,1,30),DA)
+"^DD",344.3,344.3,.03,1,1,3)
+Do not delete
+"^DD",344.3,344.3,.03,1,1,"DT")
+3030123
+"^DD",344.3,344.3,.03,3)
+Enter the AR Deposit ticket # that was created by this EFT.
+"^DD",344.3,344.3,.03,21,0)
+^.001^2^2^3120106^^^
+"^DD",344.3,344.3,.03,21,1,0)
+This is the reference to the deposit ticket in AR that was created by
+"^DD",344.3,344.3,.03,21,2,0)
+this EFT.
+"^DD",344.3,344.3,.03,"DT")
+3120111
+"BLD",8926,6)
+^255
+**END**
+**END**

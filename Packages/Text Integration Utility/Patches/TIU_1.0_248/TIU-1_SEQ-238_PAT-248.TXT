@@ -1,0 +1,225 @@
+$TXT Created by ROWLANDS,ELMER at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 07/20/10 at 12:30
+=============================================================================
+Run Date: MAY 27, 2011                     Designation: TIU*1*248
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #238                      Status: Released
+                  Compliance Date: JUN 27, 2011
+=============================================================================
+
+Associated patches: (v)TIU*1*177   <<= must be installed BEFORE `TIU*1*248'
+
+Subject: CHANGE SECURITY FOR THE TIU OPTION MISSING TEXT CLEANUP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ TIU option Missing Text Cleanup deletes/retracts documents from file #8925
+ that do not have a "TEXT" node for the note.  Since only certain people
+ have permission to delete/retract notes the use of this option should also
+ be controlled.
+  
+ This problem is being tracked with Patient Safety PSPO 1093.
+  
+ Associated NSR:
+ ===============
+ N/A
+  
+ Associated Remedy Ticket:
+ =========================
+ HD0000000277123  Note Retraction
+  
+ Participating Test Sites:
+ =========================
+ TBD
+  
+ Remedy Overview:
+ ================
+  
+ Problem: When running option Missing Text Cleanup, notes with no "TEXT" 
+ node in file #8925 are deleted/retracted.  Since only users that hold
+ Chief, MIS or Chief, HIM user class in the Authorization/Subscription
+ (USR) package should be allowed to delete/retract a note, restrictions
+ need to be made on this option.
+  
+ Some sites use user class Chief, HIM instead of Chief, MIS.  See patch 
+ USR*1*31.
+  
+ Resolution:
+ ===========
+ Create a security key named TIU MISSING TEXT CLEAN.  This security key 
+ will be needed to run option Missing Text Cleanup.  The key should only 
+ be assigned to holders of user class Chief,MIS or Chief, HIM in the 
+ Authorization/Subscription package.
+  
+ *************************************NOTE******************************
+ Granting condition in Allocation of security key TIU MISSING TEXT CLEAN 
+ contains code that checks to see if the person being assigned the key has 
+ USR user class CHIEF, MIS or CHIEF, HIM.  If they do not have it you 
+ cannot assign the security key.
+ ***********************************************************************
+  
+  
+ INSTALLATION:
+ =============
+  
+ This patch can be loaded with users on the system but it is recommended 
+ that it be scheduled for off hours. The installation time will vary
+ but it should be less than 2 minutes.
+  
+  
+  1.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  2.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter TIU*1.0*248):
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  3.  Use the Install Package(s) option and select the package
+      TIU*1.0*248.
+      a.  When prompted 'Want KIDS to Rebuild Menu Trees Upon 
+          Completion of Install? NO//', answer NO
+      b.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+          install? NO//', answer NO.
+      c.  When prompted 'Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? YES//', answer YES.
+      d.  When prompted to select the options you would like to place out 
+          of order, enter the following:
+  
+          TIU MISSING TEXT CLEAN       Missing Text Cleanup
+  
+  
+ SAMPLE INSTALL:
+ ===============
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: TIU*1.0*248       Loaded from Distribution  
+ 8/20/09@09:42:0
+ 6
+      => TIU*1*248 TEST v3
+  
+ This Distribution was loaded on Aug 20, 2009@09:42:06 with header of 
+    TIU*1*248 TEST v1
+    It consisted of the following Install(s):
+     TIU*1.0*248
+ Checking Install for Package TIU*1.0*248
+  
+ Install Questions for TIU*1.0*248
+  
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? YES// 
+  
+ Enter options you wish to mark as 'Out Of Order': TIU MISSING TEXT 
+ CLEAN       M
+ issing Text Cleanup
+  
+ Enter options you wish to mark as 'Out Of Order': 
+  
+ Enter protocols you wish to mark as 'Out Of Order': 
+  
+ Delay Install (Minutes):  (0-60): 0// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   TELNET TERMINAL
+  
+  
+  
+  
+  Install Started for TIU*1.0*248 : 
+                Aug 20, 2009@09:50:02
+  
+ Build Distribution Date: Aug 19, 2009
+  
+  Installing Routines:
+                Aug 20, 2009@09:50:02
+                                   
+ TIU*1.0*248                                   
+ --------------------------------------------------------------------------
+ ------
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing SECURITY KEY
+  
+  Installing OPTION
+                Aug 20, 2009@09:50:02
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  TIU*1.0*248 Installed. 
+                Aug 20, 2009@09:50:02
+  
+  Not a production UCI
+  
+  NO Install Message sent 
+ --------------------------------------------------------------------------
+ ------
+           +------------------------------------------------------------+
+   100%    |             25             50             75               |
+ Complete  +------------------------------------------------------------+
+  
+  
+  
+  
+ Install Completed
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUPS177
+    Before:  B7224355   After:  B8414102  **177,248**
+ 
+Routine list of preceding patches: 177
+
+=============================================================================
+User Information:
+Entered By  : ROWLANDS,ELMER                Date Entered  : MAR 05, 2009
+Completed By: SHERMAN,BILL                  Date Completed: APR 27, 2011
+Released By : KREUZ,SHERI B                 Date Released : MAY 27, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

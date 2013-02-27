@@ -1,0 +1,237 @@
+$TXT Created by CARPENTER,TERRY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 09/20/11 at 13:38
+=============================================================================
+Run Date: FEB 27, 2012                     Designation: LR*5.2*413
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #326                    Status: Released
+                  Compliance Date: MAR 29, 2012
+=============================================================================
+
+Associated patches: (v)LR*5.2*259  <<= must be installed BEFORE `LR*5.2*413'
+                    (v)LR*5.2*397  <<= must be installed BEFORE `LR*5.2*413'
+
+Subject: SOME ANATOMIC PATHOLOGY ROUTINE FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is a VM patch that addresses 3 issues related to the
+ Anatomic Pathology area of the Lab package.
+  
+ 1.  When using option LRAPMOD (Print path modifications) an 
+     <UNDEFINED> error is occurs.
+  
+  
+ 2.  When a date is typed in the EXPIRATION DATE field (#3), of the PERSON
+     CLASS MULTIPLE file (#200.05), of the NEW PERSON file (#200), for a
+     provider, that same provider will not be able to verify/electronically
+     sign Anatomic Pathology reports. This happens even if the date is a
+     future date.
+  
+ 3.  If more than one Special Studies selection is included in an Anatomic
+     Pathology Report, the text of the subsequent Special Studies is not
+     stored properly in the TIU document and thus doesn't display 
+     in CPRS.
+  
+  
+ BLOOD BANK REVIEW:
+ ==================
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*413 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by VHA 
+ DIRECTIVE 2004-058 titled VISTA BLOOD BANK SOFTWARE VERSION 5.2.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*413 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*413 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ ========================
+ 1. HD0000000503766        -  <UNDEFINED> PRTRPT+4^LRAPMOD
+  
+ 2. HD0000000071061        -  Electronic signature
+  
+ 3. HD0000000070843        -  Post patch 259 Special Studies issues
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+     
+  
+  
+    
+ Testing Sites:
+ =============
+ West Palm Beach VAMC - Large
+ Mountain Home VAMC - Medium
+ VA Puget Sound HCS - Integrated
+  
+  
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1.  HD0000000503766     -  <UNDEFINED> PRTRPT+4^LRAPMOD
+  
+  
+     Problem
+     -------
+     LRAPMOD (Print path modifications) is an option that prints all
+     verified versions of an Anatomic Pathology report beginning with
+     the most recent and going backwards in time.  The report uses
+     routine LRAPTIUP to print the reports from TIU (Text Integration
+     Utility).  The IEN, Internal Entry Number field (#.001) of the report
+     in the TIU DOCUMENT file (#8925) is passed from routine LRAPMOD to
+     routine LRAPTIUP. That IEN is also used to find the previous version 
+     of the report in TIU. After LRAPTIUP prints the requested document,
+     it KILLS the variable LRPTR, which is used to hold the IEN. When
+     control is returned to LRAPMOD, the variable LRPTR is
+     used to find the immediate preceding version of the report but it
+     is now <UNDEFINED>.
+  
+  
+     Solution
+     --------
+     Modify routine LRAPMOD to save the IEN (variable LRPTR is saved to
+     variable LRSAVPTR) before calling routine LRAPTIUP. Then use the
+     saved variable (LRSAVPTR) to find the next version of the report to
+     print.
+  
+     Routine:    LRAPMOD  
+  
+  
+  
+  
+ 2:  HD0000000071061     -  Electronic signature 
+  
+    Problem
+    -------
+    Routine LRAPRES1 handles the verification and electronic signature for
+    Anatomic Pathology reports.  In so doing, it checks for a date in the
+    EXPIRATION DATE field (#3), in the PERSON CLASS MULTIPLE file
+    (#200.05), of the NEW PERSON file (#200), for the person attempting to
+    sign/release the report. If there is a date in the EXPIRATION DATE
+    field (#3), the user is not able to sign/verify the report, even if it
+    is a future date.
+  
+    Solution
+    --------
+    Modify routine LRAPRES1 to check to see if there is an EXPIRATION DATE
+    that is in the past before prohibiting the user from signing/verifying
+    the report. 
+  
+    Routine:  LRAPRES1  
+  
+  
+  
+  
+ 3.  HD0000000070843     -  Post patch 259 Special Studies issues
+  
+  
+    Problem
+    -------
+    If an Anatomic Pathology report contains more than one Special 
+    Studies selection, the text for all of the Special Studies after the
+    first one is not stored properly in the TIU (Text Integration Utility)
+    and thus does not display in CPRS.
+  
+  
+    Solution
+    --------
+    Two programming loops are required to pick up the text for all of the
+    Special Studies associated with an Anatomic Pathology report. Currently
+    one loop is not functioning properly.  The fix is to modify routine
+    LRAPBR3 to get the second loop to function properly so that all Special
+    Studies text is picked up.
+  
+    Routine:    LRAPBR3
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+  
+   The install time for this patch is less than 2 minutes. This patch
+   can be installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*413.
+  
+       If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+       Install? NO//, choose 'NO'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRAPBR3
+    Before: B13308643   After: B13304017  **259,413**
+Routine Name: LRAPMOD
+    Before: B16465841   After: B16806171  **72,248,259,413**
+Routine Name: LRAPRES1
+    Before: B44582799   After: B44734045  **259,336,369,365,397,413**
+ 
+Routine list of preceding patches: 397
+
+=============================================================================
+User Information:
+Entered By  : CARPENTER,TERRY               Date Entered  : AUG 05, 2011
+Completed By: BYRD,TIERRA                   Date Completed: FEB 24, 2012
+Released By : CONLIN,TERESA                 Date Released : FEB 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

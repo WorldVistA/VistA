@@ -1,0 +1,393 @@
+$TXT Created by FAIRBROTHER,EILEEN at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 06/28/11 at 16:36
+=============================================================================
+Run Date: JUL 07, 2011                     Designation: DVBA*2.7*167
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #148                    Status: Released
+                  Compliance Date: JUL 10, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*171<<= must be installed BEFORE `DVBA*2.7*167'
+
+Subject: CAPRI CPWM TEMPLATES AND AMIE WORKSHEET DBQS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+                   *******     PLEASE NOTE    ******
+              This mandatory patch has a 3 day compliance
+              ******************************************** 
+  
+  I.  OVERVIEW
+  
+    This patch introduces enhancements to the AUTOMATED MED INFO EXCHANGE
+    (AMIE) V 2.7 package and the Compensation & Pension Record Interchange
+    (CAPRI) application, Compensation & Pension Worksheet Module (CPWM)
+    in support of new Compensation and Pension (C&P) Disability Benefit
+    Questionnaires (DBQs).
+  
+  
+    The following provides a high level overview of patch DVBA*2.7*167.
+  
+   1. CAPRI - Template Additions
+  
+      Veterans Benefits Administration Veterans Affairs Central Office 
+      (VBAVACO) has approved content for the following new CAPRI DBQ
+      templates:
+  
+      * DBQ AMYOTROPHIC LATERAL SCLEROSIS (LOU GEHRIG'S DISEASE)
+      * DBQ BACK (THORACOLUMBAR SPINE) CONDITIONS
+      * DBQ NECK (CERVICAL SPINE) CONDITIONS
+      * DBQ PERIPHERAL NERVES CONDITIONS (NOT INCLUDING DIABETIC
+        SENSORY-MOTOR PERIPHERAL NEUROPATHY)
+  
+   2. AMIE - C&P Examination Worksheet Additions
+     
+      VBAVACO has approved content for the following new AMIE C&P
+      Exam DBQ Worksheets:
+  
+      * DBQ AMYOTROPHIC LATERAL SCLEROSIS (LOU GEHRIG'S DISEASE)
+      * DBQ BACK (THORACOLUMBAR SPINE) CONDITIONS 
+      * DBQ NECK (CERVICAL SPINE) CONDITIONS 
+      * DBQ PERIPHERAL NERVES (EXCLUDING DIABETIC NEUROPATHY)
+  
+  
+  II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+  
+    The following section lists the Remedy tickets and/or New Service 
+    Requests associated with this patch.
+  
+   1. Associated Remedy Ticket(s):
+      ----------------------------------
+  
+      There are no Remedy Tickets associated with this patch.
+  
+   2. Associated New Service Request(s):
+      ----------------------------------
+      There are no New Service Requests associated with this patch.
+   
+  III. FUNCTIONAL OVERVIEW
+   
+    The following section contains an overview of the changes and primary
+    functionality that is being delivered in this patch.
+  
+   1. CAPRI - Template Additions
+   
+      a. Veterans Benefits Administration Veterans Affairs Central Office
+         has approved the following new CAPRI Disability Benefit
+         Questionnaire templates based on new C&P questionnaire worksheets.
+  
+         * DBQ AMYOTROPHIC LATERAL SCLEROSIS (LOU GEHRIG'S DISEASE)
+         * DBQ BACK (THORACOLUMBAR SPINE) CONDITIONS
+         * DBQ NECK (CERVICAL SPINE) CONDITIONS
+         * DBQ PERIPHERAL NERVES CONDITIONS (NOT INCLUDING DIABETIC
+           SENSORY-MOTOR PERIPHERAL NEUROPATHY)
+        
+         This patch implements these new templates, which are accessible
+         through the Compensation & Pension Worksheet Module (CPWM) of the
+         CAPRI GUI.
+  
+   2. AMIE - C&P Examination Worksheet Additions
+  
+       a. Veterans Benefits Administration Veterans Affairs Central Office
+          has approved the following new Automated Medical Information
+          Exchange (AMIE) C&P Questionnaire worksheets.
+  
+         * DBQ AMYOTROPHIC LATERAL SCLEROSIS (LOU GEHRIG'S DISEASE)
+         * DBQ BACK (THORACOLUMBAR SPINE) CONDITIONS 
+         * DBQ NECK (CERVICAL SPINE) CONDITIONS 
+         * DBQ PERIPHERAL NERVES (EXCLUDING DIABETIC NEUROPATHY)
+  
+         This patch implements the new content for the AMIE C&P Disability
+         Benefit Questionnaire worksheets, which are accessible through the
+         VISTA AMIE software package.
+  
+ IV. TECHNICAL COMPONENTS
+  
+   The following section describes the technical components being exported
+   with this patch.
+  
+   1. The following FILE will be included.
+  
+                                       UP    SEND  DATA               USER
+                                       DATE  SEC.  COMES  SITE  RSLV  OVER
+    FILE#   NAME                       DD    CODE  W/FILE DATA  PTS   RIDE
+    ----------------------------------------------------------------------
+    396.18 CAPRI TEMPLATE DEFINITIONS  NO    YES   YES    OVER  NO    NO 
+   
+  
+   2. The following new Template Definitions will be added to the CAPRI
+      TEMPLATE DEFINITIONS (#396.18) file:
+  
+      * DBQ AMYOTROPHIC LATERAL SCLEROSIS (LOU GEHRIG'S DISEASE)~167
+      * DBQ BACK (THORACOLUMBAR SPINE) CONDITIONS~167
+      * DBQ NECK (CERVICAL SPINE) CONDITIONS~167
+      * DBQ PERIPHERAL NERVES CONDITIONS (NOT INCLUDING DIABETIC
+        SENSORY-MOTOR PERIPHERAL NEUROPATHY)~167 
+  
+   3. New entries with the following C&P questionnaire worksheet(s) will be
+      created and activated in the AMIE EXAM (#396.6) file.
+  
+      * DBQ AMYOTROPHIC LATERAL SCLEROSIS (LOU GEHRIG'S DISEASE)
+  
+        Post-init routine DVBA167P will create a new record in the
+        AMIE EXAM (#396.6) file for the new DBQ AMYOTROPHIC LATERAL
+        SCLEROSIS (LOU GEHRIG'S DISEASE) worksheet. The STATUS field of the
+        new record will be set to "ACTIVE". The new IEN will be 311.
+        This entry will have no worksheet number.
+  
+        Routines DVBCQAL2 and DVBCQAL3 will contain the text for the
+        DBQ AMYOTROPHIC LATERAL SCLEROSIS (LOU GEHRIG'S DISEASE) worksheet.
+        Routine DVBCQAL1 will access the new text routines and print the
+        blank DBQ AMYOTROPHIC LATERAL SCLEROSIS (LOU GEHRIG'S DISEASE)
+        worksheet.
+  
+      * DBQ BACK (THORACOLUMBAR SPINE) CONDITIONS
+  
+        Post-init routine DVBA167P will create a new record in the
+        AMIE EXAM (#396.6) file for the new DBQ BACK (THORACOLUMBAR 
+        SPINE) CONDITIONS worksheet. The STATUS field of the new record
+        will be set to "ACTIVE". The new IEN will be 312. This entry will
+        have no worksheet number.
+  
+        Routines DVBCQBK2 and DVBCQBK3 will contain the text for the
+        DBQ BACK (THORACOLUMBAR SPINE) CONDITIONS worksheet. Routine
+        DVBCQBK1 will access the new text routines and print the blank DBQ
+        BACK (THORACOLUMBAR SPINE) CONDITIONS worksheet.
+  
+      * DBQ NECK (CERVICAL SPINE) CONDITIONS
+  
+        Post-init routine DVBA167P will create a new record in the
+        AMIE EXAM (#396.6) file for the new DBQ NECK (CERVICAL SPINE) 
+        CONDITIONS worksheet. The STATUS field of the new record will be
+        set to "ACTIVE". The new IEN will be 318. This entry will have no
+        worksheet number.
+  
+        Routines DVBCQNC2 and DVBCQNC3 will contain the text for the
+        DBQ NECK (CERVICAL SPINE) CONDITIONS worksheet. Routine DVBCQNC1
+        will access the new text routines and print the blank DBQ NECK
+        (CERVICAL SPINE) CONDITIONS worksheet.
+  
+      * DBQ PERIPHERAL NERVES (EXCLUDING DIABETIC NEUROPATHY)
+  
+        Post-init routine DVBA167P will create a new record in the
+        AMIE EXAM (#396.6) file for the new DBQ PERIPHERAL NERVES 
+        (EXCLUDING DIABETIC NEUROPATHY) worksheet. The STATUS field of the
+        new record will be set to "ACTIVE". The new IEN will be 319. This
+        entry will have no worksheet number.
+  
+        Routines DVBCQPN2, DVBCQPN3, and DVBCQPN4 will contain the text
+        for the DBQ PERIPHERAL NERVES (EXCLUDING DIABETIC NEUROPATHY)
+        worksheet. Routine DVBCQPN1 will access the new text routines and
+        print the blank DBQ PERIPHERAL NERVES (EXCLUDING DIABETIC
+        NEUROPATHY) worksheet.
+  
+   4. The following new routines will be added with this patch:
+      
+      * DVBCQAL1
+      * DVBCQAL2
+      * DVBCQAL3
+      * DVBCQBK1
+      * DVBCQBK2
+      * DVBCQBK3
+      * DVBCQNC1
+      * DVBCQNC2
+      * DVBCQNC3
+      * DVBCQPN1
+      * DVBCQPN2
+      * DVBCQPN3
+      * DVBCQPN4
+  
+ V. SOFTWARE & DOCUMENTATION RETRIEVAL
+     
+    The following section provides information regarding the retrieval of
+    the software and related user documentation.
+  
+   1. VistA Patch DVBA*2.7*167
+    
+      a. This patch is being distributed as a PackMan patch message through
+         the National Patch Module (NPM). The KIDS build for this patch is
+         DVBA*2.7*167.
+  
+   2. User Documentation
+  
+      a. The user documentation for this patch may be retrieved directly
+         using FTP. The preferred method is to FTP the files from:
+  
+             download.vista.med.va.gov
+  
+         This transmits the files from the first available FTP server.
+         
+         Sites may also elect to retrieve documentation directly from a
+         specific server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+         Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+         Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+         The following files will be available:
+  
+         File Name                                Format  Description
+      ------------------------------------        ------  -----------------
+      DVBA_27_P167_RN.PDF                         Binary  Release Notes
+  
+      b. Documentation may also be retrieved from the VistA Documentation 
+         Library (VDL) on the Internet at the following address. This web 
+         site is usually updated within 1-3 days of the patch release
+         date.
+  
+                http://www4.va.gov/vdl/application.asp?appid=133 
+  
+      C. Content and/or changes to the DBQs is communicated by the
+         Disability Examination Management Office (DEMO) through:
+  
+                http://vbacodmoint1.vba.va.gov/bl/21/DBQ/default.asp
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES
+   
+   The following section provides pre-installation notes and requirements
+   for installing the software.
+    
+   1. Users On the System
+   
+      a. CAPRI GUI Users - This patch may be installed while users are
+         running the CAPRI GUI.  
+  
+      b. VistA Users - This patch may be installed with users on the
+         system, but should be loaded during non-peak hours to minimize
+         disruption to users and to reduce the possibility of errors when
+         the routines and file entries are updated.
+  
+      c. VistA Options - There are no VistA options to disable while
+         installing this patch.
+  
+   2. Software Installation Time
+   
+      a. The estimated installation time is less than 5 minutes during off 
+         peak hours.
+  
+   3. Required Builds
+  
+      a. The following is a list of REQUIRED builds for this KIDS software
+         distribution.  KIDS will not allow the installation of this patch
+         without their prior installation.
+  
+         Required Build(s):
+         ------------------
+         DVBA*2.7*171
+  
+ VII. INSTALLATION INSTRUCTIONS
+  
+    The following section provides the steps for installing the software.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+      the KIDS distribution included with this message.
+  
+   2. From the 'Kernel Installation & Distribution System' menu, select
+      the Installation menu.
+  
+   3. From this menu, you may now elect to use the following options (when
+      prompted for INSTALL NAME, enter DVBA*2.7*167).
+  
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any changes such as DDs or templates.
+  
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. 
+  
+         CAUTION: Do not use the KIDS "Full Comparison" option. Due to 
+         the length of some CAPRI Template names, the "Full Comparison"
+         option can go into a loop.  This problem has been reported to 
+         the Kernel developers. The "Second line of Routines Only", 
+         "Routines only", and "Old style Routine compare" options may be
+         used.
+  
+      c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+     
+   4. Use the Install Package(s) option and select package DVBA*2.7*167.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', answer NO.
+  
+   6. When prompted to 'Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO//', answer NO.
+  
+   7. NOTE: Pre/Post-init routine DVBA167P is a temporary routine used as
+      part of the pre/post-install process and will be automatically
+      deleted by KIDS after patch installation. However, in some cases
+      Cache doesn't always delete the routine. You may delete it manually
+      if you discover this at your site.
+  
+ VIII. TEST SITES 
+  
+    The following sites participated in the testing of the DVBA*2.7*167
+    software.  
+  
+    Test Sites
+    -----------
+    Alexandria
+    North Florida/South Georgia
+    Upstate New York
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA167P
+    Before:       n/a   After: B74247065  **167**
+Routine Name: DVBCQAL1
+    Before:       n/a   After:  B3701814  **167**
+Routine Name: DVBCQAL2
+    Before:       n/a   After:B227186618  **167**
+Routine Name: DVBCQAL3
+    Before:       n/a   After:B113954504  **167**
+Routine Name: DVBCQBK1
+    Before:       n/a   After:  B3333342  **167**
+Routine Name: DVBCQBK2
+    Before:       n/a   After:B142057849  **167**
+Routine Name: DVBCQBK3
+    Before:       n/a   After:B110119301  **167**
+Routine Name: DVBCQNC1
+    Before:       n/a   After:  B3228754  **167**
+Routine Name: DVBCQNC2
+    Before:       n/a   After:B198685075  **167**
+Routine Name: DVBCQNC3
+    Before:       n/a   After: B55297284  **167**
+Routine Name: DVBCQPN1
+    Before:       n/a   After:  B4163489  **167**
+Routine Name: DVBCQPN2
+    Before:       n/a   After:B110141824  **167**
+Routine Name: DVBCQPN3
+    Before:       n/a   After: B53240353  **167**
+Routine Name: DVBCQPN4
+    Before:       n/a   After:B200735942  **167**
+
+=============================================================================
+User Information:
+Entered By  : FAIRBROTHER,EILEEN            Date Entered  : MAR 02, 2011
+Completed By: DAWSON,JEREMIAH               Date Completed: JUL 06, 2011
+Released By : FRANCE,KATHI                  Date Released : JUL 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

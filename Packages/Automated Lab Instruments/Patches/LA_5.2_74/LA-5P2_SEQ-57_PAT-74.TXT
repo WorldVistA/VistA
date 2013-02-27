@@ -1,0 +1,535 @@
+
+=============================================================================
+Run Date: SEP 24, 2012                     Designation: LA*5.2*74
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: Mandatory
+Version : 5.2        SEQ #57                    Status: Released
+                  Compliance Date: JUL 13, 2013
+=============================================================================
+
+Associated patches: (v)LA*5.2*66   <<= must be installed BEFORE `LA*5.2*74'
+                    (v)LA*5.2*68   <<= must be installed BEFORE `LA*5.2*74'
+                    (v)LR*5.2*350  <<= must be installed BEFORE `LA*5.2*74'
+                    (v)XM*8*36     <<= must be installed BEFORE `LA*5.2*74'
+
+Subject: LEDI IV
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ Blood Bank Clearance
+ ====================
+ Veterans Health Information Systems and Technology Architecture (VISTA)
+ Laboratory Package patch LA*5.2*74/LR*5.2*350 contains changes to 
+ software controlled by VHA DIRECTIVE 2004-053, titled VISTA BLOOD BANK 
+ SOFTWARE. Changes include: 
+    Routines:
+      LRU
+      LRX
+  
+ All of the above changes have been reviewed by the VISTA Blood Bank 
+ Developer and found to have no impact on the VISTA BLOOD BANK SOFTWARE 
+ control functions.
+  
+ RISK ANALYSIS: Changes made by patch LA*5.2*74/LR*5.2*350 have no effect 
+ on Blood Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*74/LR*5.2*350 
+ does not alter or modify any software design safeguards or safety 
+ critical elements functions.
+  
+ POTENTIAL IMPACT ON SITES: This patch contains changes to 2 routines and 
+ 0 files identified in Veterans Health Administration (VHA) Directive 
+ 2004-053, group B listing. The changes have no effect on Blood Bank 
+ functionality or medical device control functions. There is no adverse 
+ potential to sites.
+  
+ VALIDATION REQUIREMENTS BY OPTION: 
+ There are no validation requirements by option for this patch.
+  
+ MINIMAL TEST CASE SCENARIOS BY OPTION, INCLUSIVE OF ALL CONTROL FUNCTIONS:
+ There are no test case scenarios for this patch.
+  
+ ------------------------------------------------------------------------
+  
+  
+ Laboratory Electronic Data Interchange (LEDI) IV introduces enhancements
+ to the bi-directional interface that allows Department of Veterans Affairs
+ (VA) laboratories to communicate with other VA facilities, Commercial
+ Reference Laboratories, and Department of Defense (DoD) labs, and sets the
+ foundation for future communication of Anatomic Pathology (AP) and
+ Microbiology (Micro) orders and results.
+  
+ Note 1: The functionality to electronically transmit AP orders and AP and
+         Micro results are not being made available with this patch.
+  
+ Note 2: This patch is one of the patches in the LEDI IV project. The other
+         patches are: HDI*1.0*7 and LR*5.2*350. Because this is a
+         multi-package project, there is a multi-package host build that
+         installs the following builds: HDI*1.0*7, LR*5.2*350, and
+         LA*5.2*74.
+  
+ The software has the capacity and features necessary for sharing secure,
+ encrypted laboratory data between VA to VA, VA to Commercial Reference
+ Laboratories, and VA to DoD Labs. The LEDI IV software is an extension
+ of the LEDI III software, and enhances the general LEDI III functionality.
+  
+  
+ Enhancements
+ ============
+  
+ 1. The option 'Display Lab Universal Interface Message' [LA7 PRINT LAB UI
+    MESSAGE] was modified so large Health Level 7 International (HL7)
+    component fields display correctly.
+   
+ 2. Users can now specify their default settings for the prompts "Parse 
+    message fields based on HL7 segments?" and "Use Browser to display
+    message(s)?" These settings are accessible via the menu option General 
+    Lab User Parameters [LR USER PARAM].
+  
+ 3. The option 'Reprocess Lab HL7 Messages' [LA7 REPROCESS HL7 MESSAGES]
+    has been created to allow reprocessing of selected incoming Lab HL7
+    messages. Messages should be of type (I)ncoming, have a status of
+    (X)purgable, (E)rror, or (Q)ueued for processing, and be related to a
+    message configuration type of LAB UI or LEDI. Messages for other
+    configuration types should not be reprocessed at this time.
+  
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)       New/Modified/Deleted
+ ------------------         -------------------       --------------------
+ AUTO INSTRUMENT (#62.4)    NUMBER (#62.41,.001)             Modified
+  
+ LAB CODE MAPPING (#62.47)                                   New
+  
+ LA7 MESSAGE PARAMETER      NON-VA ORDER SNOMED CODES        New
+ (#62.48)                     (SUB-FILE #62.482)
+                            SEQUENCE (#62.482,.001)          New
+                            VA FILE ENTRY (#62.482,.01)      New
+                            SNOMED CT ID (#62.482,.02)       New
+                           
+  
+ LA7 MESSAGE LOG BULLETINS                                   Modified
+ (#62.485)
+  
+ LA7 MESSAGE QUEUE                                           Modified
+ (#62.49)
+                            INSTRUMENT NAME (#5)             Modified
+                            ADDITIONAL MESSAGE               New 
+                              IDENTIFIERS (#5.1)
+                            ADDITIONAL MESSAGE               New 
+                              IDENTIFIERS (#62.49002,.01)
+                            SENDING APPLICATION (#102)       Modified
+  
+ LAB SHIPPING MANIFEST
+ (#62.8)
+                            TEST STATUS (#62.801,.08)        Modified
+                            NON-VA SPECIMEN SNOMED CT        New
+                              (#62.801,20.1)
+                            NON-VA SAMPLE SNOMED CT          New
+                              (#62.801,20.2)
+  
+ LAB SHIPPING CONFIGURATION
+ (#62.9)
+                            COLLECTION WEIGHT CODE           Modified
+                              (#62.9001,2.36)
+                            FEEDER SHIPPING CONFIGURATION    New
+                              (#62.9002)
+                            ORDERING LOCATION                New
+                              (#62.9003) 
+  
+ Help Frames Associated:
+  
+ Help Frame Name:                                      New/Modified/Deleted
+ ---------------                                       --------------------
+ LA7V 62.47 ERROR CODES                                      New
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                       New/Modified/Deleted
+ ---------------                                       --------------------
+ LAB MESSAGING                                                 New
+  
+  
+ Options Associated:
+  
+ Option Name                             Type          New/Modified/Deleted
+ --------------------                    ----          --------------------
+ LA7 MAIN MENU                           Menu                Modified
+ LA7 REPROCESS HL7 MESSAGES              Routine             New
+ LA7S 62.48 PRINT SCT OVERRIDE           Routine             New
+ LA7S 62.9 PRINT                         Routine             New
+ LA7S CODE USAGE                         Routine             New
+ LA7S LOAD MAPPING SCT                   Routine             New
+ LA7S MANIFEST TEST ADD/REMOVE           Routine             Modified
+ LA7S MAP NON-VA SNOMED CODES            Edit                New
+ LA7S MGR MENU                           Menu                Modified
+ LA7V 62.47 ADD DOD                      Routine             New
+ LA7V 62.47 CLONE MSG CONFIG             Routine             New
+ LA7V 62.47 EDIT SUSC                    Routine             New
+ LA7V 62.47 ERROR CODE HELP              Action              New
+ LA7V 62.47 FIND IDENTIFIER              Routine             New
+ LA7V 62.47 LOCAL IDENTIFIER             Routine             New
+ LA7V 62.47 MAP SUSCS                    Routine             New
+ LA7V 62.47 MENU                         Menu                New
+ LA7V 62.47 PRINT BY MSG CONFIG          Routine             New
+ LA7V 62.47 PRINT CS MISMATCHES          Routine             New
+ LA7V 62.47 PRINT LOCAL                  Routine             New
+ LA7V 62.47 PRINT SUSC                   Routine             New
+ LA7VPFL                                 Routine             New
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Definition Name:                          New/Modified/Deleted
+ -------------------------                           --------------------
+ LA LEDI ORM HL7 STATUS                                      New
+ LA LEDI ORU HL7 STATUS                                      New
+ LA7UTILA PARSE                                              New
+ LA7UTILA PARSE LAST                                         New
+ LA7UTILA SHOIDS                                             New
+ LA7UTILA SHOIDS LAST                                        New
+ LA7UTILA USE BROWSER                                        New
+ LA7UTILA USE BROWSER LAST                                   New
+  
+  
+ Parameter Templates Associated:
+  
+ Parameter Template Name:                            New/Modified/Deleted
+ ------------------------                            --------------------
+ LR PKG                                                      Modified
+ LR USER                                                     Modified
+  
+  
+  
+ Test Sites
+ ==========
+  
+   BILOXI VAMC
+   BOSTON HCS
+   LEXINGTON VAMC
+   MILWAUKEE VAMC
+   NEW MEXICO HCS
+   NORTHERN ARIZONA HCS
+   NORTHAMPTON VAMC
+   PALO ALTO HCS
+   PHOENIX VAMC
+   SOUTH TEXAS HCS (large)(integrated)
+   SOUTHERN ARIZONA VA HCS
+  
+ We would also like to thank the following sites who participated in the
+ testing of the LEDI IV patch:
+  
+   CAPTN JAMES LOVELL FED HLT CTR (NORTH CHICAGO VAMC)
+   EL PASO VA HCS
+   HUNTINGTON VAMC
+   TAMPA VAMC
+  
+  
+  
+ Software and Documentation Retrieval Information
+ ================================================
+  
+ The LEDI IV patch will be controlled by a phased release. To control the
+ implementation of the LEDI IV patch and related SNOMED CT files, a secured
+ File Transfer Protocol (FTP) server with passwords will be used. A member
+ of the Product Development team will contact your site with the FTP 
+ server, username, and password prior to your scheduled installation date.
+  
+ Although this is a controlled, phased released, the user and installation
+ documentation will be available to all sites when the patch is officially
+ released and the phased implementations start. This will give sites the
+ opportunity to retrieve the documents before their phased installation
+ date.
+  
+  
+ Documentation is available for LEDI IV on the ANONYMOUS.SOFTWARE directory
+ at one of the following Office of Information (OI) Field Offices.
+  
+ The preferred method is to FTP the files from:
+    download.vista.med.va.gov
+  
+ This transmits files from the first available FTP server. Sites may also
+ elect to retrieve documentation directly from a specific server as
+ follows:
+         Albany                  ftp.fo-albany.med.va.gov
+         Hines                   ftp.fo-hines.med.va.gov
+         Salt Lake City          ftp.fo-slc.med.va.gov
+  
+ NOTE: The files listed below will be listed in each of the LEDI IV patches
+       that are part of the LEDI IV bundle; they only need to be downloaded
+       once.
+  
+ File Name               Contents                       Retrieval Format
+ ------------------      ---------------------          ----------------
+ LAB_LEDI_IV_IG.PDF      LEDI IV Installation Guide     binary
+ LAB_LEDI_IV_UM.PDF      LEDI IV User Manual            binary
+  
+  
+  
+ Patch Installation
+ ==================
+  
+ LA*5.2*74 is part of a combined build exported as a Kernel Installation
+ and Distribution System (KIDS) host file named:
+  
+      LAB_LEDI_IV.KID
+  
+ This bundle contains the following builds:
+  
+      HDI*1.0*7
+      LR*5.2*350
+      LA*5.2*74
+  
+  
+ Installation Instructions
+ -------------------------
+ The install time for this patch is approximately sixty (60) minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+ This patch MUST BE installed when Laboratory users are NOT on the system.
+  
+ Refer to the LDSI/LEDI IV Installation Guide for installation
+ instructions.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LA74
+    Before:       n/a   After: B46832584  **74**
+Routine Name: LA74A
+    Before:       n/a   After: B78776030  **74**
+Routine Name: LA7ADL
+    Before: B36417256   After: B38927932  **17,25,23,57,66,74**
+Routine Name: LA7ADL1
+    Before: B22525839   After: B22761823  **17,23,57,74**
+Routine Name: LA7CHKF
+    Before: B45130719   After:B118760272  **27,46,74**
+Routine Name: LA7CHKFP
+    Before: B12309445   After: B16811133  **27,74**
+Routine Name: LA7HDR
+    Before: B39353571   After: B43741529  **68,74**
+Routine Name: LA7LOG
+    Before: B24344749   After: B28186604  **17,27,67,74**
+Routine Name: LA7POC
+    Before: B12336377   After: B14984889  **67,74**
+Routine Name: LA7PURG
+    Before: B15026953   After: B15027084  **27,64,74**
+Routine Name: LA7SBCR2
+    Before: B11631994   After: B13756117  **27,46,64,74**
+Routine Name: LA7SCE
+    Before: B59304536   After: B67468089  **27,46,61,64,74**
+Routine Name: LA7SM
+    Before: B54631114   After: B66694300  **27,46,74**
+Routine Name: LA7SM1
+    Before: B31246337   After: B56269979  **27,46,61,74**
+Routine Name: LA7SM2
+    Before: B71701384   After: B54325058  **46,64,74**
+Routine Name: LA7SM2A
+    Before:       n/a   After: B16317595  **74**
+Routine Name: LA7SMA
+    Before:       n/a   After: B50957198  **74**
+Routine Name: LA7SMB
+    Before: B76474433   After: B50425818  **27,46,64,74**
+Routine Name: LA7SMB1
+    Before:       n/a   After:  B8530586  **74**
+Routine Name: LA7SMP
+    Before: B61468752   After: B84913875  **27,45,46,64,74**
+Routine Name: LA7SMP0
+    Before: B48779053   After: B70447945  **46,64,74**
+Routine Name: LA7SMPXL
+    Before: B17436315   After: B22838207  **27,42,46,64,74**
+Routine Name: LA7SMU
+    Before: B43475390   After: B44618035  **27,46,64,74**
+Routine Name: LA7SMU1
+    Before: B18357820   After: B47133373  **27,46,65,64,74**
+Routine Name: LA7SMU2
+    Before: B29210137   After: B28488734  **46,64,74**
+Routine Name: LA7SMU2A
+    Before:       n/a   After: B11988192  *74**
+Routine Name: LA7SRPT
+    Before:       n/a   After:    B91984  **74**
+Routine Name: LA7SRPT1
+    Before:       n/a   After: B69536146  **74**
+Routine Name: LA7SRPT2
+    Before:       n/a   After: B70233779  **74**
+Routine Name: LA7SRPT3
+    Before:       n/a   After: B48465055  **74**
+Routine Name: LA7SRPT4
+    Before:       n/a   After: B67490629  **74**
+Routine Name: LA7SRR
+    Before: B27494992   After: B41992274  **46,64,74**
+Routine Name: LA7UIO1
+    Before: B26968525   After: B66837499  **66,74**
+Routine Name: LA7UTILA
+    Before: B48089182   After: B34688936  **23,27,46,64,74**
+Routine Name: LA7UTILB
+    Before:       n/a   After: B12063183  **74**
+Routine Name: LA7UTILC
+    Before:       n/a   After:B150916057  **74**
+Routine Name: LA7UTILD
+    Before:       n/a   After:  B1067797  **74**
+Routine Name: LA7UXQA
+    Before: B12094582   After: B13015176  **27,67,74**
+Routine Name: LA7VHL
+    Before: B27733556   After: B32679919  **27,46,62,64,67,74**
+Routine Name: LA7VHLU
+    Before: B44857108   After: B47913954  **46,62,64,68,74**
+Routine Name: LA7VHLU1
+    Before: B17496162   After: B37375744  **46,61,64,74**
+Routine Name: LA7VHLU2
+    Before: B28776777   After: B50000516  **46,61,64,68,74**
+Routine Name: LA7VHLU3
+    Before: B55573792   After: B56049965  **46,64,68,74**
+Routine Name: LA7VHLU4
+    Before: B25782007   After: B27335749  **46,64,68,74**
+Routine Name: LA7VHLU5
+    Before: B49053645   After: B59941403  **46,64,68,74**
+Routine Name: LA7VHLU6
+    Before:       n/a   After: B56093217  **74**
+Routine Name: LA7VHLU7
+    Before:       n/a   After: B44598323  **74**
+Routine Name: LA7VHLU8
+    Before:       n/a   After: B10483894  **74**
+Routine Name: LA7VHLU9
+    Before: B16600197   After: B19044226  **68,74**
+Routine Name: LA7VHLUA
+    Before:       n/a   After:  B4032160  **74**
+Routine Name: LA7VHLUB
+    Before:       n/a   After:  B5119748  **74**
+Routine Name: LA7VIN
+    Before: B11531387   After: B29668237  **46,67,74**
+Routine Name: LA7VIN1
+    Before: B40551903   After: B53484134  **46,64,74**
+Routine Name: LA7VIN1A
+    Before: B58093289   After: B39196465  **64,67,74**
+Routine Name: LA7VIN1B
+    Before:       n/a   After: B33146599  **74**
+Routine Name: LA7VIN2
+    Before: B65721794   After: B44814406  **46,64,74**
+Routine Name: LA7VIN2A
+    Before:       n/a   After: B32994528  **74**
+Routine Name: LA7VIN3
+    Before:  B9589401   After:  B9946828  **46,64,74**
+Routine Name: LA7VIN4
+    Before: B73244122   After: B77157230  **46,64,67,66,74**
+Routine Name: LA7VIN4A
+    Before:       n/a   After: B16212997  **74**
+Routine Name: LA7VIN5
+    Before: B62438539   After: B68402424  **46,64,68,74**
+Routine Name: LA7VIN5A
+    Before: B70776537   After: B32697215  **46,64,67,72,66,74**
+Routine Name: LA7VIN5B
+    Before:       n/a   After: B39713645  **74**
+Routine Name: LA7VIN6
+    Before:       n/a   After: B18944829  **74**
+Routine Name: LA7VIN7
+    Before:       n/a   After: B81438195  **74**
+Routine Name: LA7VIN71
+    Before:       n/a   After: B21329203  **74**
+Routine Name: LA7VIN7A
+    Before:       n/a   After: B55259468  **74**
+Routine Name: LA7VIN7B
+    Before:       n/a   After: B59079752  **74**
+Routine Name: LA7VIN7C
+    Before:       n/a   After: B37686666  **74**
+Routine Name: LA7VIN7D
+    Before:       n/a   After: B43658444  **74**
+Routine Name: LA7VLCM
+    Before:       n/a   After: B18946807  **74**
+Routine Name: LA7VLCM1
+    Before:       n/a   After: B43117815  **74**
+Routine Name: LA7VLCM2
+    Before:       n/a   After: B30898261  **74**
+Routine Name: LA7VLCM3
+    Before:       n/a   After: B23687797  **74**
+Routine Name: LA7VLCM4
+    Before:       n/a   After: B20635804  **74**
+Routine Name: LA7VLCM5
+    Before:       n/a   After: B43878567  **74**
+Routine Name: LA7VLCM6
+    Before:       n/a   After: B24210919  **74**
+Routine Name: LA7VLCM7
+    Before:       n/a   After: B54459099  **74**
+Routine Name: LA7VMSG
+    Before: B23236199   After: B31327904  **27,50,56,46,64,74**
+Routine Name: LA7VMSG1
+    Before: B52098570   After: B59398226  **56,46,61,64,68,74**
+Routine Name: LA7VOBR
+    Before: B25844567   After: B25614862  **46,64,68,74**
+Routine Name: LA7VOBRA
+    Before: B39455733   After: B49742894  **46,64,68,74**
+Routine Name: LA7VOBRB
+    Before: B12807459   After: B28052109  **68,74**
+Routine Name: LA7VOBX
+    Before: B30185961   After: B30185961  **46,64,68,74**
+Routine Name: LA7VOBX1
+    Before: B28786998   After: B29612848  **46,61,63,64,71,68,74**
+Routine Name: LA7VOBX2
+    Before: B21393582   After: B34855807  **46,64,68,74**
+Routine Name: LA7VOBX3
+    Before: B83540167   After: B68636771  **46,64,68,74**
+Routine Name: LA7VOBX4
+    Before:       n/a   After: B56431898  **74**
+Routine Name: LA7VOBXA
+    Before: B53603815   After: B54895883  **46,70,64,68,74**
+Routine Name: LA7VORM
+    Before: B68105004   After: B73850639  **27,42,46,64,74**
+Routine Name: LA7VORM1
+    Before: B57485485   After: B84130620  **27,51,46,61,64,68,74**
+Routine Name: LA7VORM3
+    Before: B19868669   After: B30340071  **46,64,74**
+Routine Name: LA7VORU
+    Before: B24122155   After: B21144150  **27,46,61,64,71,68,74**
+Routine Name: LA7VORU1
+    Before: B61414246   After: B93159332  **46,64,68,74**
+Routine Name: LA7VORU2
+    Before:  B5334202   After: B30157126  **46,64,68,74**
+Routine Name: LA7VORUA
+    Before: B11624236   After: B41751237  **61,64,68,74**
+Routine Name: LA7VORUB
+    Before: B37430566   After: B55030598  **68,74**
+Routine Name: LA7VPFL
+    Before:       n/a   After: B35049121  **74**
+Routine Name: LA7VPID
+    Before: B23557446   After: B26321438  **46,64,74**
+Routine Name: LA7VSET
+    Before: B99076533   After: B99085612  **27,51,55,46,64,74**
+Routine Name: LA7VSTP
+    Before: B33029654   After: B33836613  **27,44,51,46,64,74**
+Routine Name: LA7XREF
+    Before:       n/a   After:  B4252557  **74**
+Routine Name: LAGEN
+    Before: B37741303   After: B50777837  **1,17,22,27,47,46,64,67,74**
+Routine Name: LAHWATCH
+    Before: B13955616   After: B13257024  **74**
+Routine Name: LAMIAUT3
+    Before: B13960389   After: B16090565  **74**
+Routine Name: LAWATCH
+    Before: B12233352   After: B14822305  **74**
+ 
+Routine list of preceding patches: 66, 68
+
+=============================================================================
+User Information:
+Entered By  : MCCORMACK,JOHN                Date Entered  : NOV 08, 2005
+Completed By: HARMON,LUCILLE                Date Completed: SEP 13, 2012
+Released By : BELSCHWINDER,MICHAEL          Date Released : SEP 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

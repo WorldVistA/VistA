@@ -1,0 +1,179 @@
+
+=============================================================================
+Run Date: JUN 21, 2011                     Designation: PXRM*2*20
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #15                      Status: Released
+                  Compliance Date: JUL 22, 2011
+=============================================================================
+
+Associated patches: (v)PXRM*2*17   <<= must be installed BEFORE `PXRM*2*20'
+
+Subject: ARCH PILOT - ACCESS RECEIVED CLOSER TO HOME 1.0
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ General Overview:
+ =================
+ This build is part of a multi-package build that contains FB*3.5*119
+ and PXRM*2.0*20. It supports the pilot for Project ARCH.
+  
+ The Veterans' Mental Health And Other Care Improvements Act Of 2008, 
+ Section 403, Public Law 110-387 mandates that the Department of
+ Veterans  Affairs (VA) conduct a pilot program over three years for
+ contract care  of eligible Veterans in selected Veterans Integrated
+ Service Networks (VISNs).
+  
+ The Office of Policy Analysis within the Office of the Assistant
+ Deputy  Under Secretary for Health for Policy and Planning
+ (ADUSH/PP) requested the capability to automatically identify all
+ Veterans who are eligible  for a high visibility Congressionally
+ mandated contract care pilot  program (named Project ARCH, Access to
+ Care Received Closer to Home) in  five VISNs (1, 6, 15, 18, and 19).
+  
+ FB*3.5*119:
+ This build adds a new multiple to the Fee Basis file (#161) that
+ contains the ARCH eligibility information and creates two new APIs
+ that are used by the Clinical Reminder ARCH computed findings.
+  
+ PXRM*2*20:
+ This build places VA-PROJECT ARCH VISN CONTRACT CARE PILOT ELIGIBILITY in
+ the Reminder Exchange file. This contains the following new components
+ that will be installed during the post-init.
+  
+ ROUTINE
+  PXRMARCH                                                            
+  
+ TIU TEMPLATE FIELD
+  ARCH SERVICE LIST                                                   
+  ARCH CONSENT FORM URL                                               
+  ARCH OVERVIEW TEXT                                                  
+  ARCH FAQ URL                                                        
+  ARCH CARE COORDINATOR                                               
+  
+ HEALTH FACTORS
+  ARCH
+  ARCH-NO SERVICE NEEDED THIS VISIT                                   
+  ARCH-SERVICE NEEDED THIS VISIT DECLINES                             
+  ARCH-SERVICE NEEDED THIS VISIT CONSENTS                             
+  
+ REMINDER SPONSOR
+  VHA Office of the Assistant Deputy Under Secretary for Health for Policy
+  and Planning                             
+  
+ REMINDER COMPUTED FINDINGS
+  VA-PROJECT ARCH ELIGIBILITY                                         
+  
+ REMINDER DEFINITION
+  VA-PROJECT ARCH VISN CONTRACT CARE PILOT                            
+  
+ REMINDER DIALOG
+  VA-PROJECT ARCH VISN CONTRACT CARE PILOT ELIGIBILITY                                                              
+  
+  Documentation:
+  ==============
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites
+ may also elect to retrieve software directly from a specific server as
+ follows:
+  
+ Albany          ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines           ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City  ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ This documentation will be in the form of Adobe Acrobat files.
+ The updated documentation associated with this patch is:
+  Installation Guide: PXRM_2_20_IG.PDF
+  
+ Clinical Reminders documentation can also be found in the VistA
+ Documentation Library: (http://vista.med.va.gov/vdl/) or
+ http://www.va.gov/vdl.
+  
+ Build Components:
+ =================
+  
+  Data Dictionary:
+  ================
+  
+ FILE #       NAME
+ -------------------------------------------------------------------------------
+ 811.8       REMINDER EXCHANGE
+  
+  Host File
+  ==========
+ This is a multi-package build, consequently it will be available
+ only as a host file. The name of the file is ARCH_PILOT_PROJECT_1_0.KID.
+  
+ Sites will retrieve VistA software from the following FTP addresses.  The
+ preferred method is to FTP the files from download.vista.med.va.gov.  This
+ transmits the files from the first available FTP server. Sites may also
+ elect to retrieve software directly from a specific server as follows:
+  
+ Albany          ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines           ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City  ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system. Installation will
+ take less than 5 minutes. The Clinical Reminders Exchange entry
+ containing the reminder and dialog will be installed and the
+ installer may be prompted for replacement items. Because of this the
+ patch should not be queued and the site's Clinical Reminders manager
+ should be on hand during the install.
+  
+ 1. Use the 'Load a Distribution' option on the KIDS installation menu.
+    When prompted to enter a host file type in [DIR]:ARCH_PILOT_PROJECT_1_0.KID,
+    where [DIR] is the local directory where you have stored the host file.
+  
+ 2. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    options, as desired:
+        Print Transport Global
+        Compare Transport Global to Current System
+        Verify Checksums in Transport Global
+        Backup a Transport Global
+  
+ 3. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    option to install the patch:
+        Install Package(s) ARCH PILOT PROJECT 1.0
+  
+ 4. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//,"
+    respond 'NO'.
+  
+ 5. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO// respond 'NO'.
+  
+ 6. The init routines PXRMP20E and PXRMP20I may be deleted once the
+    installation has completed.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMARCH
+    Before:       n/a   After:  B2152245  **20**
+Routine Name: PXRMP20E
+    Before:       n/a   After:   B831367  **20**
+Routine Name: PXRMP20I
+    Before:       n/a   After:  B4282594  **20**
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,WILLIAM ANTHONY      Date Entered  : MAR 04, 2011
+Completed By: OLSEN,JAMES                   Date Completed: JUN 06, 2011
+Released By : MONTGOMERY,ALAN               Date Released : JUN 21, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

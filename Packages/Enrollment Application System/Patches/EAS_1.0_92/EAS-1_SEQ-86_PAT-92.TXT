@@ -1,0 +1,200 @@
+
+=============================================================================
+Run Date: MAR 28, 2012                     Designation: EAS*1*92
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1        SEQ #86                      Status: Released
+                  Compliance Date: APR 28, 2012
+=============================================================================
+
+Associated patches: (v)EAS*1*81    <<= must be installed BEFORE `EAS*1*92'
+                    (v)EAS*1*93    <<= must be installed BEFORE `EAS*1*92'
+
+Subject: 1010EZ CHANGES FOR MSDS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch has enhancements to the Veterans Health Information Systems 
+ and Technology Architecture (VistA) system to support technology and 
+ business changes that are occurring with the implementation of the 
+ Enrollment System Redesign (ESR) Military Service Data Sharing (MSDS) 
+ project.
+  
+ The MSDS project will introduce an MSDS Broker that will be activated in 
+ ESR. The Broker will construct a definitive military service data set 
+ including data received from the VA/DoD Identity Repository (VADIR), the
+ Beneficiary Identification and Records Locator System (BIRLS) and VistA.
+ Once the MSDS Broker is activated, ESR becomes the authoritative source
+ for Military Service Episode data. The verified data will be shared from
+ ESR to all VistA sites of record for the veteran. The ESR-verified
+ Military Service Episode data cannot be edited by VistA except to add new
+ episodes. An unlimited number of military service episodes per veteran
+ will now be supported.
+  
+ This patch is being released along with patches DG*5.3*797, IVM*2.0*141, 
+ DVB*4.0*62, and PXRM*2.0*21 in host file DG_53_P797.KID.
+     
+ This patch modifies the Enrollment Application System v1.0 as described
+ below:
+   
+  
+ 1.  Modify Electronic 10-10EZ Processing
+ ----------------------------------------
+ The MSDS changes introduced by patch DG*5.3*797 include a new MILITARY 
+ SERVICE EPISODE sub-file (#2.3216) added to the PATIENT file (#2) to store
+ the veteran's military service episodes (MSE).  Modifications were made to
+ the Electronic 10-10EZ Processing option to store military service data,
+ entered electronically through the web-based application, into the new MSE
+ location in the PATIENT file (#2).  If authoritative military service data
+ has already been received from ESR, the filing of MSE data from the
+ electronic 10-10EZ will be blocked and a message will be displayed to the
+ user.
+  
+ 2.  Modify 10-10EZ Printing
+ ---------------------------
+ Printing the 10-10EZ was changed to get the veteran's last service 
+ episode data from the new sub-file location in the PATIENT file (#2).
+  
+ 3.  Update fields in the 1010EZ MAPPING file (#711)
+ ---------------------------------------------------
+ For the records related to the Last Service Episode, the data dictionary 
+ locations in the 1010EZ MAPPING file (#711) fields MAP-TO SUB-FILE (#3) 
+ and MAP-TO FIELD (#4) were changed to the new MILITARY SERVICE EPISODE 
+ sub-file (#2.3216).  The file updates will be done by the post-install 
+ routine EAS1092P.
+   
+  
+   
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+   
+   
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy Tickets associated with this patch.
+  
+ Documentation Retrieval:
+ ========================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to use File Transfer Protocol (FTP) to download 
+ the files from download.vista.med.va.gov. This transmits the files from
+ the first available FTP server. Sites may also elect to retrieve software
+ directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at:  http://www.va.gov/vdl/
+  
+ The following file should be downloaded in the binary FTP mode.
+   
+ Filename               Description
+ --------               -----------
+ EAS_1_92_UM.PDF        Enrollment Application System (EAS) 1.0 User Manual
+  
+  
+ Test Sites:
+ ===========
+ VA Maryland HCS, Baltimore, MD
+ Clement J. Zablocki VAMC, Milwaukee, WI
+ Central Alabama Veterans HCS, Tuskegee, AL
+  
+   
+ Software Retrieval:
+ ===================
+ The software for this patch is not being distributed through the National
+ Patch Module.  This patch is being distributed as a host file. The host 
+ file will contain five Kernel Installation & Distribution System (KIDS)
+ builds. 
+                  Host File Name:  DG_53_P797.KID
+                          Builds:  DG*5.3*797
+                                   EAS*1.0*92
+                                   IVM*2.0*141
+                                   DVB*4.0*62
+                                   PXRM*2.0*21
+  
+ Sites may retrieve the software directly using FTP from the 
+ ANONYMOUS.SOFTWARE directory. The preferred method is to FTP the files 
+ from:
+   
+                     download.vista.med.va.gov
+   
+ This will transmit the files from the first available FTP server.
+ Sites may also elect to retrieve software directly from a specific
+ server as follows:
+   
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+   
+  **Note:  Use ASCII mode when downloading the .KID file
+  
+  
+   
+   
+ ================ INSTALLATION INSTRUCTIONS =================
+  
+ Please refer to the patch description for patch DG*5.3*797 
+ for installation instructions.
+  
+  
+ Post-Install Process
+ --------------------
+ The post-install routine, EAS1092P, delivered with this patch, will 
+ update fields in the 1010EZ MAPPING file (#711) for the records related 
+ to the Last Service Episode. The data dictionary locations in the fields 
+ MAP-TO SUB-FILE (#3) and MAP-TO FIELD (#4) will be changed to the new 
+ MILITARY SERVICE EPISODE sub-file (#2.3216) as follows:
+  
+ RECORD NAME (#.01)                MAP-TO SUBFILE (#3)   MAP-TO FIELD (#4) 
+ --------------------------------------------------------------------------
+ LAST BRANCH OF SERVICE                2.3216                 .03
+ LAST ENTRY DATE                       2.3216                 .01
+ LAST DISCHARGE DATE                   2.3216                 .02
+ LAST DISCHARGE TYPE                   2.3216                 .06
+ SERVICE NUMBER                        2.3216                 .05
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EAS1092P
+    Before:       n/a   After:  B3221774  **92**
+Routine Name: EASEZC1
+    Before: B43867404   After: B44574624  **1,51,92**
+Routine Name: EASEZC3
+    Before: B18473049   After: B28318349  **51,92**
+Routine Name: EASEZF1
+    Before: B56432278   After: B94302027  **1,51,57,62,70,93,92**
+Routine Name: EASEZPVD
+    Before: B22024581   After: B31942470  **57,66,70,81,92**
+Routine Name: EASEZU3
+    Before: B62866657   After: B72715564  **1,57,92**
+ 
+Routine list of preceding patches: 81, 93
+
+=============================================================================
+User Information:
+Entered By  : HARTLEY,PETER                 Date Entered  : DEC 16, 2008
+Completed By: MORRIS,DARLENE V              Date Completed: MAR 20, 2012
+Released By : GROOMS,ANTHONY E              Date Released : MAR 28, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

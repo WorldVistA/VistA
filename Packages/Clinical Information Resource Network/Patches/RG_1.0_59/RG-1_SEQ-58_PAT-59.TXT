@@ -1,0 +1,237 @@
+$TXT Created by DAVIS,PAULETTE T at DEVCRN.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 01/11/12 at 11:55
+=============================================================================
+Run Date: APR 20, 2012                     Designation: RG*1*59
+Package : RG - CLINICAL INFO RESOURCE NETWORK Priority: Mandatory
+Version : 1        SEQ #58                      Status: Released
+                  Compliance Date: MAY 11, 2012
+=============================================================================
+
+Associated patches: (v)RG*1*47     <<= must be installed BEFORE `RG*1*59'
+                    (v)RG*1*48     <<= must be installed BEFORE `RG*1*59'
+                    (v)RG*1*57     <<= must be installed BEFORE `RG*1*59'
+                    (v)DG*5.3*837  <<= must be installed BEFORE `RG*1*59'
+                    (v)RG*1*58     <<= must be installed BEFORE `RG*1*59'
+
+Subject: MESSAGING ENHANCEMENTS FOR NEW FIELDS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  NOTE:  RG* and MPIF* patches should NOT be installed on legacy
+  systems to avoid issues with the legacy systems ending up as
+  Treating Facilities.
+   
+  RG*1.0*47, RG*1.0*48, RG*1.0*57, RG*1.0*58, and DG*5.3*837 are
+  required builds for patch RG*1*59.
+   
+  The messaging enhancements for new fields are being distributed in
+  three VistA namespaces.  The patches should be installed in this
+  order: DG*5.3*837, RG*1.0*59, and MPIF*1.0*54.  After installing
+  DG*5.3*837, it is not necessary to wait for the data conversion
+  completion bulletin to move on with installing RG*1.0*59.  It is
+  recommended that these three patches be installed within a short
+  time window.
+   
+  Issue #1: Duplicate Primary View Reject Exceptions
+  It was recommended in VistA patch RG*1*48 that facilities schedule
+  the MPI/PD Exception Purge [RG EXCEPTION PURGE] option to run hourly.
+  In the event that the job is not scheduled, then whenever a user
+  enters the MPI/PD Exception Handling [RG EXCEPTION HANDLING] option,
+  the Exception Purge will run.  That job removes duplicate exceptions
+  for the same exception TYPE and PATIENT, keeping the most recent
+  exception.
+  
+  However, once the Exception Purge has run, it does not run again for
+  an hour.  During that timeframe, if multiple Primary View Reject (234)
+  exceptions occur for the same patient, an exception is created for
+  each of these occurrences.  HC IdM requested that duplicate Primary
+  View Reject (234) exceptions not be created on VistA.  A code change
+  has been made to routine RGHLLOG to check if there is an existing
+  exception with an EXCEPTION STATUS of NOT PROCESSED.  If there is an
+  active exception for the exception TYPE and PATIENT, then a new
+  exception is not created.
+   
+  The user can review the history of rejected edits by using the
+  "PVR View PV Rej Detail" action item within the MPI/PD Exception
+  Handling [RG EXCEPTION HANDLING] option for a selected exception.
+   
+  Issue #2: Enhancement to the HL7 v2.4 PID Processor
+  Using Health Level Seven (HL7) messaging, patient identification
+  information is transmitted in the Patient Identification (PID)
+  segment.  The VistA HL7 v2.4 PID processor has been enhanced to
+  extract the TEMPORARY ID NUMBER and the FOREIGN ID NUMBER from the
+  PID segment.  The values are placed in ARRAY("TIN") and ARRAY("FIN"),
+  respectively.  If the value is equal to two double quotes (""), then
+  the corresponding ARRAY node is set to @.
+   
+  Issue #3: Enhancement to Patient Update Messaging
+  Routines RGADTP2 and RGADTP3 have been modified to examine incoming
+  data for TEMPORARY ID NUMBER and FOREIGN ID NUMBER and set the
+  appropriate array values.  Then the HL7 v2.4 patient update API is
+  called in routine VAFCPTED to update the PATIENT (#2) file.
+  (Note: The VAFCPTED routine is being updated in patch DG*5.3*837.)
+      
+  Issue #4: Prevent Non-Enumerated Record from Updating a More Recent
+  Record during the Linking to the New Record
+  When an "old" (non-enumerated) record was edited on VistA, it could
+  potentially influence Primary View for that record on the MPI, and
+  thus update a more recent patient record.  Healthcare Identity
+  Management (HC IdM) requests that this scenario be prevented.
+    
+  When facilities were originally enumerated and records in the PATIENT
+  (#2) file were seeded with Integration Control Numbers (ICN), all
+  records in the file were not enumerated - only records that were active
+  during a three-year time span were enumerated.  Patients added/edited
+  after the original seeding also get ICNs.  Therefore, there are old
+  records in the PATIENT (#2) file without ICNs.
+    
+  To prevent an old non-enumerated record from updating a more recent
+  record, two VistA patches (RG*1.0*59 and MPIF*1.0*54) and one Master
+  Veteran Index patch (MPI*1.0*90) will be issued.  These three patches
+  make the following changes:
+    
+  RG*1.0*59 (this patch)
+  ----------------------
+  - The A08 message builder has been enhanced to check whether ^XTMP("MPIF
+    OLD RECORDS",dfn) is defined.  If it is, the record is considered old,
+    and the A08 message builder includes an OBX segment in the message:
+           OBX^^CE^OLDER RECORD^^Y
+    
+  - The A08 application acknowledgment processor has been enhanced to kill
+    the "old" record designator, ^XTMP("MPIF OLD RECORDS",dfn), since if
+    the traits happen to be the same on the Primary View, no subsequent A31
+    synchronization message will be sent.  Since the Primary View and the
+    patient record are in sync, the "old" record designation can be removed,
+    and subsequent updates to this record are allowed to update the Primary
+    View.
+      
+  - The A31 message processor has been enhanced to kill the "old" record
+    designator, ^XTMP("MPIF OLD RECORDS",dfn).  If the MPI sends an update
+    message, the VistA record and the Primary View are in sync, and the
+    "old" record designation can be removed.
+      
+  MPIF*1.0*54
+  -----------
+  - The enumeration builder, remote procedure MPIF REMOTE LOCAL ICN
+    ASSIGN, has been enhanced to set the ^XTMP("MPIF OLD RECORDS",dfn)
+    global, if the record with that DFN has no ICN assigned and is not in
+    the ^DPT("AMPIMIS",dfn) index indicating it is in the process of being
+    assigned an ICN.
+    
+  - The A31 message builder has been enhanced to check whether ^XTMP("MPIF
+    OLD RECORDS",dfn) is defined.  If it is, the record is considered old,
+    and the A31 message builder includes an OBX segment in the message:
+           OBX^^CE^OLDER RECORD^^Y
+          
+  - The A31 application acknowledgment processor has been enhanced to kill
+    the "old" record designator, ^XTMP("MPIF OLD RECORDS",dfn), since if
+    the traits happen to be the same on the Primary View, no subsequent
+    A31 synchronization message will be sent.  Since the Primary View and
+    the patient record are in sync, the "old" record designation can be
+    removed, and subsequent updates to this record are allowed to update
+    the Primary View.
+     
+  MPI*1.0*90 (patch is ONLY installed on the MPI)
+  -----------------------------------------------
+  - The patch will check whether the incoming A31 or A08 message contains
+    an OBX segment marking the record as "old".  If it does, then the
+    authority score for the patient will be considered -1, and thus not
+    influence the Primary View.
+    
+  Associated Remedy Ticket(s):
+  ============================
+  There are no associated Remedy Tickets.
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  Alexandria VAMC
+  Altoona VAMC
+  New Mexico HCS (Albuquerque)
+  South Texas HCS
+        
+  Installation Instructions:
+  ==========================
+  This patch takes less than 2 minutes to install.  This patch should
+  be loaded during non-peak hours to minimize disruption to the users.
+   
+  1.  Users are allowed on the system during patch installation.
+   
+  2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+      Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+      Link Management Options [HL MENU FILER LINK MGT] menu on the
+      HL7 Main Menu [HL MAIN MENU].
+   
+  3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  6.  Use the Install Package(s) option and select the package RG*1.0*59.
+   
+  7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//',
+      respond NO.
+   
+  8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond YES.  The following OPTIONS should be
+      disabled during the installation.
+      Register a Patient              [DG REGISTER PATIENT]
+      Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+      Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+      Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+      UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+      MPI/PD Exception Handling       [RG EXCEPTION HANDLING]
+     
+  9.  After patch installation has completed, restart the HL7 incoming
+      filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+      option on the Filer and Link Management Options [HL MENU FILER 
+      LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+    
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL INFO RESOURCE NETWORK;**[Patch List]**;30 Apr 99;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RGADTP
+    Before: B77748334   After: B82380142  **26,27,20,34,35,40,45,44,47,59**
+Routine Name: RGADTP1
+    Before: B39482051   After: B41160023  **26,27,42,45,44,47,48,59**
+Routine Name: RGADTP2
+    Before: B54208943   After: B57266100  **27,20,45,44,47,48,49,52,54,58,59**
+Routine Name: RGADTP3
+    Before: B11058020   After: B13484715  **48,59**
+Routine Name: RGHLLOG
+    Before: B24264633   After: B30413623  **1,3,11,13,18,19,25,45,52,57,59**
+ 
+Routine list of preceding patches: 57, 58
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,PAULETTE                Date Entered  : NOV 16, 2011
+Completed By: ULRICH,CYNTHIA                Date Completed: APR 04, 2012
+Released By : HEUER,CINDY                   Date Released : APR 20, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

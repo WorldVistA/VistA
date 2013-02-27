@@ -1,0 +1,206 @@
+$TXT Created by HERRING,VENESSA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 07/20/11 at 16:23
+=============================================================================
+Run Date: MAY 29, 2012                     Designation: PSO*7*332
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #336                      Status: Released
+                  Compliance Date: JUN 29, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*251   <<= must be installed BEFORE `PSO*7*332'
+                    (v)PSO*7*368   <<= must be installed BEFORE `PSO*7*332'
+
+Subject: DATE OF DEATH/RETURN TO STOCK AND LAST FILL DATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1) When the Date of Death is deleted from a patient, a mailman message is 
+ generated that contains the patient's full name and last four digits of 
+ their Social Security Number in the subject line.  This is a patient 
+ privacy issue.
+  
+ 2) Return to Stock for the original fill and partials do not trigger a 
+ Vista Data Extract Framework (VDEF) call to update the Health Data
+ Repository (HDR).
+  
+ 3) When a prescription is auto-DC'ed, if the pharmacist reinstates the 
+ prescription, the Last Fill Date gets set to today's date rather than 
+ reverting back to the actual Last Fill Date.
+  
+   
+ Associated Remedy ticket(s):
+ ============================
+  
+ 1) HD0000000093395     Date of Death Security Issue
+ 2) HD0000000321470     Return to Stock VDEF Trigger
+ 3) HD0000000200801     Last Fill Date
+    Duplicates
+    HD0000000206936
+    HD0000000207965
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Oklahoma VA Medical Center
+ VA Western NY HCS
+ Battle Creek VA Medical Center
+  
+   
+ Remedy Overview:
+ ================
+ 1) HD0000000093395     Date of Death Security Issue
+   
+ Problem: 
+ ========
+ When the Date of Death is deleted from a patient and the patient has 
+ discontinued prescriptions, pending orders or non-VA meds from when the 
+ date of death was entered, a mailman message is sent to all users who 
+ have the PSORPH key.  This message contains the patient's full name and 
+ last four digits of their Social Security Number in the subject line.  
+ This is a patient privacy issue.
+  
+  
+ Resolution:
+ ===========
+ This issue will be resolved by removing the patient name and SSN 
+ information from the subject line of the mailman message.  
+  
+ A new mail group "PSO DEATH GROUP" will be created to send the message 
+ to.  If there are no users entered into the new mail group the message 
+ will then go to holders of the PSORPH key
+ just as it does now.
+  
+ All users who hold the PSORPH key will continue to receive the mail 
+ message even if they are not in the,  "PSO DEATH GROUP".  
+  
+ During patch installation, the installer will be prompted to enter the 
+ coordinator for the new Mail Group "PSO DEATH GROUP".
+  
+ This is a Patient Privacy issue.
+  
+  
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSOAUTOC.
+  
+  
+  
+ 2) HD0000000321470     Return to Stock VDEF Trigger
+  
+ Problem: 
+ ========
+ Return to Stock for the original fill and partials do not trigger a Vista
+ Data Extract Framework (VDEF) call to update the Health Data Repository (HDR).
+  
+ Resolution:
+ ===========
+ Need to modify processing so when an original fill or partial is returned
+ to stock a VDEF trigger occurs.
+  
+ Technical Resolution:
+ =====================
+ Modify routine PSORESK.
+  
+  
+ 3)HD0000000200801       Last Fill Date
+                           
+                           
+ Problem:
+ ========
+ When a prescription is auto-DC'ed, if the pharmacist reinstates the 
+ prescription, the Last Fill Date gets set to today's date rather than 
+ reverting back to the actual Last Fill Date.
+  
+ Resolution:
+ ===========
+ The Auto Cancel routine is not setting the Last Dispensed Date Holder
+ field (#127) in the Prescription file (#52). A change has been made to the
+ routine PSOAUTOC to set node 7 in the Prescription file (#52) so that the
+ correct date is populated in the Last Dispensed Date field.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSOAUTOC.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  It should
+ take less than 2 minutes to install this patch.
+  
+ NOTE:  The installer of this patch will be prompted to enter the name of 
+ the coordinator of the new mail group 'PSO DEATH GROUP'.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*332)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*332.
+  
+    5. When Prompted "Enter the Coordinator for Mail Group 'PSO DEATH 
+       GROUP':", Enter the name of the group coordinator.
+  
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOAUTOC
+    Before: B66695978   After: B70663599  **3,24,30,36,88,146,132,223,
+                                           148,249,324,251,332**
+Routine Name: PSORESK
+    Before: B71520625   After: B71957942  **15,9,27,40,47,55,85,130,185,
+                                           184,196,148,201,259,261,368,
+                                           332**
+ 
+Routine list of preceding patches: 251, 368
+
+=============================================================================
+User Information:
+Entered By  : HERRING,VENESSA               Date Entered  : APR 16, 2009
+Completed By: HEFFERNAN,COREY               Date Completed: MAY 11, 2012
+Released By : PARRIS,CHRIS                  Date Released : MAY 29, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,497 @@
+$TXT Created by NABER,DAVID at DEVVCC.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 09/20/11 at 12:44
+=============================================================================
+Run Date: NOV 01, 2011                     Designation: ECX*3*132
+Package : ECX - DSS EXTRACTS                  Priority: EMERGENCY
+Version : 3       SEQ #121                      Status: Released
+                  Compliance Date: NOV 04, 2011
+=============================================================================
+
+Associated patches: (v)ECX*3*127   <<= must be installed BEFORE `ECX*3*132'
+
+Subject: DSS FY 2012 ENHANCEMENTS
+
+Category: 
+  - Enhancement ()
+  - Routine
+  - Data Dictionary
+  - Print Template
+
+Description:
+============
+
+ ***********************************************************************
+ ** This patch is being released with an Emergency status because of  **
+ ** the shortened 3 day compliance date.  This patch must be          **
+ ** installed in all systems within the 3 day compliance requirement. **
+ ** This patch must be installed on or before 11/4/11 so that the     **
+ ** October DSS Extracts can be generated using the updated Fiscal    **
+ ** Year 12 logic.  Failure to comply with the installation date      **
+ ** will cause delays in extracting and reporting data.               **
+ ***********************************************************************
+  
+ The DSS FY12 Extract Enhancements shall provide the means of exporting 
+ data from selected VistA software modules and transmitting it to a DSS 
+ database residing at the AITC. This transfer is accomplished through a 
+ set of extract routines, intermediate files, and transmission routines. 
+ Data from VistA packages is stored by the extract routines in the 
+ intermediate files, where it is temporarily available for local use and 
+ auditing. The data is then transmitted to the AITC, where it is formatted 
+ and uploaded into commercial software. 
+  
+  
+ Included in the DSS FY12 scope are:
+      o       DSS Extract field additions and modifications
+      o       Disabling of DSS Extracts
+      o       DSS menu additions, modifications and deletions
+      o       New DSS report and report modifications
+  
+ Not included are the modifications to the AITC DSS software, the AITC 
+ legacy extracts, and Vendor software.
+  
+ Note:  The BCM extract has not been deployed nationally.  This extract is 
+ still a work in progress.  Modifications to this extract are documented 
+ and will continue being tested by a select group chosen by the DSO.
+  
+  
+ The following is a list of product features for this release:
+ =============================================================
+ 1.   Add Secondary Provider #1 to CLI Extract.        
+  
+ 2.   Add Secondary Provider #1 PC to CLI Extract.     
+  
+ 3.   Add Secondary Provider #1 NPI to CLI Extract.    
+  
+ 4.   Add Secondary Provider #2 to CLI Extract.        
+  
+ 5.   Add Secondary Provider #2 PC to CLI Extract.     
+  
+ 6.   Add Secondary Provider #2 NPI to CLI Extract.    
+  
+ 7.   Add Secondary Provider #3 to CLI Extract.        
+  
+ 8.   Add Secondary Provider #3 PC to CLI Extract.     
+  
+ 9.   Add Secondary Provider #3 NPI to CLI Extract.    
+  
+ 10.  Add Secondary Provider #4 to CLI Extract.        
+  
+ 11.  Add Secondary Provider #4 PC to CLI Extract.     
+  
+ 12.  Add Secondary Provider #4 NPI to CLI Extract.    
+  
+ 13.  Add Secondary Provider #5 to CLI Extract.        
+  
+ 14.  Add Secondary Provider #5 PC to CLI Extract.     
+  
+ 15.  Add Secondary Provider #5 NPI to CLI Extract.   
+  
+ 16.  Add Provider #4 to ECQ and ECS Extracts.
+  
+ 17.  Add Provider #4 Person Class to ECQ and ECS Extracts.  
+  
+ 18.  Add Provider #4 NPI to ECQ and ECS Extracts.   
+  
+ 19.  Add Provider #5 to ECQ and ECS Extracts. 
+  
+ 20.  Add Provider #5 Person Class to ECQ and ECS Extracts.  
+  
+ 21.  Add Provider #5 NPI to ECQ and ECS Extracts.     
+  
+ 22.  Change Diagnosis to Principal Diagnosis in ADM Extract.
+  
+ 23.  Modify the PRO Extract programming to create a new Feeder Location
+      value for Home Oxygen records.  Add a Feeder Location for Home Oxygen
+      (XXXXXHO2) when the "NPPD New Code" =  800 x (where the x represents
+      a letter code and XXXXX represents the 3 to 5 character station code
+      plus the characters H, O and 2.).
+        
+ 24.  PRO Extract error reporting change.
+      The Prosthetics DSS Extract (which creates File 727.826) has been 
+      modified to remove sending of an error message when the HPCS field is
+      null.
+  
+ 25.  Update reports for PRO Extract.
+      The following reports were modified to include the reporting of 
+      'rental' type Feeder Key listings:
+            o Prosthetics (PRO) YTD HCPCS Report [ECX PRO YTD REPORT]
+            o Prosthetics (PRO) Extract Audit [ECX PRO SOURCE AUDIT]
+  
+ 26.  Disable NUR Extract and associated reports.    
+      These updates will occur during the post-install and will change the
+      INACTIVE field (#13) of the EXTRACT DEFINITION file (#727.1) to
+      "YES", indicating NUR is inactive. NUR will be removed from the 
+      'Print Feeder Keys' and 'Print Feeder Location' reports. Options
+      'Nursing Extract' [ECXNURS] will be removed from the 'Package
+      Extracts' menu and 'Nursing (NUR) Extract Audit' [ECX NUR SOURCE
+      AUDIT] will be removed from the 'Extract Audit Reports' menu.  Both
+      options are marked 'out of order'.
+  
+ 27.  Remove DEN from listing in the 'Print Feeder Location' report.  
+  
+ 28.  Add new Admit Source field to ADM Extract.
+      A new field will be added to the Admission Extract (#727.802) 
+      file called ADMIT SOURCE (#91).  This is the PTF CODE field (#.01)
+      value of the SOURCE OF ADMISSION file (#45.1).
+  
+ 29.  Modify LAR Report in order to list test result 20 characters long.
+  
+ 30.  Create new Clinic Review Report. 
+      'EXPORT TO TEXT FILE FOR SPREADSHEET USE' is a new selection under 
+      the 'Clinics and DSS Stop Codes Print' option.  This selection (X)
+      will allow you to export the CLINICS AND STOP CODES (#728.44) File
+      to a text file for use in spreadsheets.  A template .xls worksheet
+      document is included in the [Documentation Retrieval] Section for
+      exporting this text file into.
+  
+ 31.  Correct Programming in BCM Extract. 
+  
+ 32.  Correct Data Dictionary changes in LAB Extract.
+      The Technical Description of the DATA NAME (#45) field of the 
+      LABORATORY EXTRACT (#727.813) File has been edited to retrieving the 
+      DATA NAME instead of the TEST NAME.
+  
+ 33.  Correct Data Dictionary changes in EVENT CAPTURE LOCAL Extract.
+      The Data Dictionary descriptions for PROVIDER (#16), PROVIDER #2
+      (#18), and PROVIDER #3 (#20) fields in the EVENT CAPTURE LOCAL
+      (#727.815) File have been edited to display the correct retrieval 
+      descriptions.
+  
+ 34.  Correct Data Dictionary changes in QUASAR Extract. 
+      The Data Dictionary descriptions for PROVIDER (#16), PROVIDER #2
+      (#18), and PROVIDER #3 (#20) fields in the QUASAR (#727.825) File
+      have been edited to display the correct retrieval descriptions.
+  
+ 35.  Modify logic to retrieve LAB LOINC Code.
+      With the LEX*2*75 patch (estimated, spring 2012 release), custodial
+      transition of the LAB LOINC file (#95.3) will migrate from Legacy LAB
+      to Standards and Terminology Services (STS). API(s) are being
+      distributed for accessing the LAB LOINC file (#95.3). This supports
+      Legacy LAB's encapsulation efforts and STS's LOINC Deployment
+      efforts. This patch modifies the call to retrieve the LOINC Code to
+      look for new Lexicon routine (LEXLR) first.  If Lexicon routine does
+      not exist, follow existing path to retrieve the LOINC code directly
+      from file #95.3.
+  
+ 36.  Add Date of Birth (#121) field to Surgery (SUR) Extract (#727.811) 
+      file.
+  
+ Components Sent With Patch
+ --------------------------
+  
+ The following is a list of files included in this patch:
+  
+                                           UP    SEND  DATA               
+                                           DATE  SEC.  COMES  SITE   RSLV 
+ FILE #       NAME                         DD    CODE  W/FILE DATA   PTS 
+ ------------------------------------------------------------------------
+ 727.802     ADMISSION EXTRACT              YES   NO    NO         
+ 727.811     SURGERY EXTRACT                YES   NO    NO
+ 727.813     LABORATORY EXTRACT             YES   NO    NO
+ 727.815     EVENT CAPTURE LOCAL EXTRACT    YES   NO    NO
+ 727.825     QUASAR EXTRACT                 YES   NO    NO
+ 727.826     PROSTHETICS EXTRACT            YES   NO    NO
+ 727.827     CLINIC EXTRACT                 YES   NO    NO
+  
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name (Number)                File Name (Number)
+ -------------------                ------------------                   
+ PRINCIPAL DIAGNOSIS (#32)          ADMISSION EXTRACT (#727.802)
+ ADMIT SOURCE (#91)                 ADMISSION EXTRACT (#727.802)
+ DATE OF BIRTH (#121)               SURGERY EXTRACT (#727.811)
+ DATA NAME (#45)                    LABORATORY EXTRACT (#727.813)
+ PROVIDER (#16)                     EVENT CAPTURE LOCAL EXTRACT (#727.815)
+ PROVIDER #2 (#18)                  EVENT CAPTURE LOCAL EXTRACT (#727.815)
+ PROVIDER #3 (#20)                  EVENT CAPTURE LOCAL EXTRACT (#727.815)
+ PROVIDER #4 (#100)                 EVENT CAPTURE LOCAL EXTRACT (#727.815)
+ PROVIDER #4 PERSON CLASS (#101)    EVENT CAPTURE LOCAL EXTRACT (#727.815)
+ PROVIDER #4 NPI (#102)             EVENT CAPTURE LOCAL EXTRACT (#727.815)
+ PROVIDER #5 (#103)                 EVENT CAPTURE LOCAL EXTRACT (#727.815)
+ PROVIDER #5 PERSON CLASS (#104)    EVENT CAPTURE LOCAL EXTRACT (#727.815)
+ PROVIDER #5 NPI (#105)             EVENT CAPTURE LOCAL EXTRACT (#727.815)
+ PROVIDER (#16)                     QUASAR EXTRACT (#727.825)
+ PROVIDER #2 (#18)                  QUASAR EXTRACT (#727.825)
+ PROVIDER #3 (#20)                  QUASAR EXTRACT (#727.825)
+ PROVIDER #4 (#100)                 QUASAR EXTRACT (#727.825) 
+ PROVIDER #4 PERSON CLASS (#101)    QUASAR EXTRACT (#727.825) 
+ PROVIDER #4 NPI (#102)             QUASAR EXTRACT (#727.825) 
+ PROVIDER #5 (#103)                 QUASAR EXTRACT (#727.825) 
+ PROVIDER #5 PERSON CLASS (#104)    QUASAR EXTRACT (#727.825) 
+ PROVIDER #5 NPI (#105)             QUASAR EXTRACT (#727.825) 
+ FEEDER KEY (#10)                   PROSTHETICS EXTRACT (#727.826)
+ SECONDARY PROVIDER #1 (#96)        CLINIC EXTRACT (#727.827)
+ SECONDARY PROVIDER #1 PC (#97)     CLINIC EXTRACT (#727.827)     
+ SECONDARY PROVIDER #1 NPI (#98)    CLINIC EXTRACT (#727.827)     
+ SECONDARY PROVIDER #2 (#99)        CLINIC EXTRACT (#727.827)     
+ SECONDARY PROVIDER #2 PC (#100)    CLINIC EXTRACT (#727.827)     
+ SECONDARY PROVIDER #2 NPI (#101)   CLINIC EXTRACT (#727.827)     
+ SECONDARY PROVIDER #3 (#102)       CLINIC EXTRACT (#727.827)     
+ SECONDARY PROVIDER #3 PC (#103)    CLINIC EXTRACT (#727.827)     
+ SECONDARY PROVIDER #3 NPI (#104)   CLINIC EXTRACT (#727.827)     
+ SECONDARY PROVIDER #4 (#105)       CLINIC EXTRACT (#727.827)
+ SECONDARY PROVIDER #4 PC (#106)    CLINIC EXTRACT (#727.827)     
+ SECONDARY PROVIDER #4 NPI (#107)   CLINIC EXTRACT (#727.827)     
+ SECONDARY PROVIDER #5 (#108)       CLINIC EXTRACT (#727.827)     
+ SECONDARY PROVIDER #5 PC (#109)    CLINIC EXTRACT (#727.827)     
+ SECONDARY PROVIDER #5 NPI (#110)   CLINIC EXTRACT (#727.827)     
+  
+ The following is a list of options included in this patch:
+  
+ Option Name                     Type               New/Modified
+ ------------------              ----               ------------
+ Nursing Extract [ECXNURS]       Option             Removed/Disabled
+ Nursing (NUR) Extract Audit [ECX NUR SOURCE AUDIT]
+                                 Option             Removed/Disabled
+  
+  
+ The following is a list of templates included in this patch:
+  
+ Template Name                   Type               New/Modified
+ ------------------              ----               ------------
+ ECX CLINIC REVIEW EXPORT        Print              New (#728.44) 
+  
+  
+ Security Key
+ ------------
+ ECX DSS TEST
+  
+ The purpose of this key is to allow future fiscal year extracts to be run 
+ by test sites only.
+  
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Documentation Retrieval:
+ ------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  
+ The documentation, including User and Technical manuals will be in the 
+ form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at: http://www4.va.gov/vdl/application.asp?appid=35
+  
+ Below is a list of the files related to this patch that will be needed and
+ available via the FTP sites listed above.
+  
+ File Description                       File Name                FTP Mode
+ -----------------------------------------------------------------------
+ User Manual                            DSS_3_FY2012_UM.pdf      Binary
+ Technical Manual                       DSS_3_FY2012_TM.pdf      Binary
+ Medical Records Data Definitions Guide DSS_3_FY2012_DD.pdf      Binary
+ Clinic Review Output (spreadsheet template sample)
+                               DSS_CLINIC_REVIEW_OUTPUT.xls      Binary  
+  
+  
+ Test Sites:
+ -----------
+ Little Rock
+ Cheyenne
+ Big Spring/W Texas
+ Boston
+ North Texas
+  
+ INSTALLATION:
+ =============
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+                 Extract Manager's Options [ECXMGR]
+  
+  
+ Install Time - less than 5 minutes (unless otherwise indicated)
+  
+ ***********************************************************  
+  
+    1.   LOAD TRANSPORT GLOBAL 
+         ---------------------
+         Choose the PackMan message containing this patch and invoke the 
+         INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2.   START UP KIDS 
+         -------------
+         Start up the Kernel Installation and Distribution System Menu 
+         [XPD MAIN]: 
+  
+              Edits and Distribution ...  
+              Utilities ...
+              Installation ...  
+     
+    Select Kernel Installation & Distribution System Option: INStallation 
+                                                             ---
+              Load a Distribution 
+              Print Transport Global 
+              Compare Transport Global to Current System 
+              Verify Checksums in Transport Global 
+              Install Package(s) 
+              Restart Install of Package(s) 
+              Unload a Distribution 
+              Backup a Transport Global 
+     
+    Select Installation Option:
+  
+    3.   Select Installation Option: 
+         --------------------------
+         NOTE: The following are OPTIONAL (When prompted for the INSTALL
+                NAME, enter ECX*3.0*132):
+        
+         a.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will
+             not backup any other changes such as DD's or templates.
+         b.  Compare Transport Global to Current System - This option 
+             will allow you to view all changes that will be made when 
+             this patch is installed.  It compares all components of this 
+             patch (routines, DD's, templates, etc.).
+         c.  Verify Checksums in Transport Global - This option will
+             allow you to ensure the integrity of the routines that are 
+             in the transport global.
+       
+    4.   Select Installation Option: Install Package(s) 
+                                     ----------------
+         **This is the step to start the installation of this KIDS patch: 
+     
+        a.  Choose the Install Package(s) option to start the patch
+            install.  Enter ECX*3.0*132 when prompted for a build name.
+        b.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+            install?  YES//' answer NO (unless otherwise indicated).
+        c.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? YES//' hit '<return>'. YES (unless
+               otherwise indicated).
+  
+        d.  When prompted 'Enter options you wish to mark as 'Out Of
+            Order':'  Enter the following options:
+   
+                    Extract Manager's Options [ECXMGR]
+  
+        e.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order':' press <return>.
+  
+        f. If prompted 'Delay Install (Minutes):  (0-60):  0//'
+           answer "0" (unless otherwise indicated).
+  
+ ************************************************************************
+ * Please note, routine ECXUPRO1 is the only routine that will not      *
+ * conform to the standard second line listing for routines included in *
+ * this patch.  For ECXUPRO1, the second line will look like this:      *
+ *                                                                      *
+ * ;;3.0;DSS EXTRACTS;**49,111,132**;Jul 2, 2003;Build 18               *
+ *                                                                      *
+ * This discrepancy in the build date will be fixed in a later patch.   *
+ ************************************************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P132
+    Before:       n/a   After:  B8865916  **132**
+Routine Name: ECXADM
+    Before: B47059189   After: B48340472  **1,4,11,8,13,24,33,39,46,71,
+                                           84,92,107,105,120,127,132**
+Routine Name: ECXALAR
+    Before: B16671173   After: B16714443  **46,51,112,132**
+Routine Name: ECXAPRO
+    Before: B45129674   After: B49978410  **9,21,33,36,132**
+Routine Name: ECXAPRO1
+    Before: B14438659   After: B15242720  **9,21,132**
+Routine Name: ECXBCM
+    Before: B49739627   After: B50933918  **107,127,132**
+Routine Name: ECXCPRO1
+    Before: B12615627   After: B13012758  **21,84,132**
+Routine Name: ECXEC
+    Before: B52665130   After: B58828917  **11,8,13,24,27,33,39,46,49,
+                                           71,89,92,105,120,127,132**
+Routine Name: ECXFEKEY
+    Before: B48603574   After: B44303669  **10,11,8,40,84,92,123,132**
+Routine Name: ECXFELOC
+    Before: B17796989   After: B16469856  **1,8,105,132**
+Routine Name: ECXKILL
+    Before:  B8836800   After:  B9384165  **9,8,21,24,31,39,49,84,89,105,
+                                           112,127,132**
+Routine Name: ECXKILL1
+    Before:  B7329433   After: B12209973  **39,46,89,120,127,132**
+Routine Name: ECXLABN
+    Before: B44410370   After: B44530777  **1,11,8,13,28,24,30,31,32,33,
+                                           39,42,46,70,71,80,92,107,105,
+                                           112,127,132**
+Routine Name: ECXPRO
+    Before: B39196226   After: B39410631  **9,13,15,21,24,33,39,46,71,
+                                           92,105,120,127,132**
+Routine Name: ECXPRO1
+    Before: B20364237   After: B20868424  **9,11,13,15,21,24,33,37,39,
+                                           100,105,112,132**
+Routine Name: ECXPRO2
+    Before: B11847237   After: B12154079  **9,15,21,24,33,127,132**
+Routine Name: ECXQSR
+    Before: B41725091   After: B48814475  **11,8,13,26,24,34,33,35,39,
+                                           43,46,49,64,71,84,92,106,105,
+                                           120,124,127,132**
+Routine Name: ECXQSR1
+    Before: B11045628   After: B12313439  **105,120,127,132**
+Routine Name: ECXSCLD
+    Before:B193735960   After:B199744247  **2,8,24,30,71,80,105,112,120,
+                                           126,132**
+Routine Name: ECXSCLD1
+    Before:       n/a   After:  B3035123  **132**
+Routine Name: ECXSCX1
+    Before: B69908401   After: B78250876  **8,28,24,27,29,30,31,33,84,
+                                           92,105,127,132**
+Routine Name: ECXSCXN
+    Before: B60394645   After: B65800632  **24,27,29,30,31,32,33,39,46,
+                                           49,52,71,84,92,107,105,120,124,
+                                           127,132**
+Routine Name: ECXSCXN1
+    Before: B11953560   After: B12284717  **71,105,127,132**
+Routine Name: ECXSURG
+    Before: B71637747   After: B72092726  **1,11,8,13,25,24,33,39,41,42,
+                                           46,50,71,84,92,99,105,112,128,
+                                           127,132**
+Routine Name: ECXSURG1
+    Before: B18403653   After: B19369745  **105,112,120,127,132**
+Routine Name: ECXUPRO1
+    Before:  B6892004   After:  B7105553  **49,111,132**
+Routine Name: ECXUTL6
+    Before: B71591342   After: B61658349  **92,105,112,119,132**
+ 
+Routine list of preceding patches: 36, 111, 119, 123, 126, 127
+
+=============================================================================
+User Information:
+Entered By  : YORTY,M ROBERT                Date Entered  : MAR 02, 2011
+Completed By: BARBER,HAROLDINE              Date Completed: NOV 01, 2011
+Released By : VASSAR,CAROL                  Date Released : NOV 01, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

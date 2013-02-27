@@ -1,0 +1,350 @@
+$TXT Created by CHAN,ALAN at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 10/27/09 at 11:10
+=============================================================================
+Run Date: MAR 17, 2011                     Designation: XU*8*504
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #452                      Status: Released
+                  Compliance Date: APR 17, 2011
+=============================================================================
+
+
+Subject: KAAJEE v1.1
+
+Category: 
+  - Enhancement (Mandatory)
+  - Other
+  - Routine
+
+Description:
+============
+
+  Patch Tracking #: FORUM message #48671395
+                    with subject titled 'Patch Tracking Message XU*8.0*504'
+  
+  
+  Test sites: North Chicago VAMC, El Paso VAMC, San Diego VAMC,
+              Augusta VAMC, Biloxi VAMC,Puget Sound VAMC, Las Vegas VAMC
+  
+  Blood Bank Clearance: 9/28/2009
+  
+  Related Remedy Tickets:  173599
+  
+  KAAJEE v1.1 is the successor to KAAJEE 1.0
+  that was originally released to support the BEA WebLogic Server 8.1 platform.
+  However, Version 1.1 of KAAJEE now supports BEA WebLogic Server 9.2 and 
+  later. 
+  Note:  KAAJEE v1.1 is NOT compatible with BEA WebLogic Server 8.1.
+  
+  Like KAAJEE v1.0, KAAJEE v1.1 provides a custom Authentication Provider
+  plug-in for BEA WebLogic J2EE servers, and a set of web forms
+  for web applications, that allow a web application to authenticate
+  and authorize an end-user using a Kernel system as the source
+  of authentication and authorization.
+  
+  Version 1.1 of KAAJEE implements all current features of KAAJEE v1.0.
+  
+  Included in the distribution are the following:
+       :: KAAJEE v1.1 jar files
+       :: Folder of Login web forms for Forms Authentication to drop
+          into a J2EE web application
+       :: JavaDoc API documentation for the user manager classes
+       :: Deployment Descriptor examples
+       :: Complete source code for the KAAJEE implementation
+       :: Sample Web Application
+       :: SSO/UC CCOW elements to make the Sample Web Application
+          SSO enabled
+  
+  VA Facilities (VAMCs) are expected to install the M-side component
+  as this brings in a new routine and other KIDS components.
+  
+  M KIDS Components:
+  ==================
+  
+   BUILD COMPONENT: ROUTINE
+   ENTRIES: XUSKAAJ1                       ACTION: SEND TO SITE
+  
+   POST-INSTALL ROUTINE: POST^XU8P504
+  
+  This post-install will add the following Application Proxy:  KAAJEE,PROXY.
+  
+  Options:
+  
+   BUILD COMPONENT: OPTION
+   ENTRIES: XUCOMMAND                   ACTION: USE AS LINK FOR MENU ITEMS
+   ENTRIES: XUS KAAJEE PROXY LOGON      ACTION: SEND TO SITE
+   ENTRIES: XUS KAAJEE WEB LOGON        ACTION: SEND TO SITE
+  
+  The XUS KAAJEE WEB LOGON is a "B"-type option.  This option contains
+  references to the following RPCs in its "RPC" multiple:
+  
+      * XUS KAAJEE GET CCOW TOKEN      
+  
+  The XUS KAAJEE PROXY LOGON is a "B"-type option.  This option contains
+  references to the following RPCs in its "RPC" multiple:
+  
+      * XUS KAAJEE GET USER VIA PROXY
+  
+  Security Keys:
+  
+   BUILD COMPONENT: SECURITY KEY
+   ENTRIES: XUKAAJEE_SAMPLE                ACTION: SEND TO SITE
+  
+  
+  RPCs:
+  
+   BUILD COMPONENT: REMOTE PROCEDURE
+   ENTRIES: XUS KAAJEE GET CCOW TOKEN      ACTION: SEND TO SITE
+   ENTRIES: XUS KAAJEE GET USER VIA PROXY  ACTION: SEND TO SITE
+  
+  VA Facilities are not expected to install the Java-side components
+  unless they have their own J2EE Application Server(s)
+  (e.g.:  BEA WebLogic Server) and managed them as well as develop
+  their own local J2EE web-based applications.
+  
+  Summary of issues addressed:
+  
+  *  Fully integrate Kernel/KAAJEE patch XU*8.0*451/KAAJEE 1.0.1.003.
+  
+  *  Add JavaScript code to warn users when login session is about to expire.
+  
+  *  Compiled and tested KAAJEE against SDS 13.0.
+  
+  *  Compiled and tested KAAJEE against VistaLink 1.6.0.025.
+  
+  *  Compiled and tested KAAJEE against BEA WebLogic 9.2 and 10.x platforms.
+  
+  *  Resolve deprecated BEA WebLogic Java Management Extensions (JMX),
+     Java classes and Application Programming Interfaces (APIs).
+  
+  *  Provide KAAJEE Sample Web Application.
+  
+  *  Provide enhanced SSL/TLS support.
+  
+  *  Provide SSO/UC CCOW elements to support Single Sign-on.
+  
+  Kernel Authentication and Authorization for J2EE (KAAJEE) is used by 
+  several HealtheVet-VistA applications (e.g.:  Blind Rehabilitation,
+  Veterans Personal Finance System(VPFS), Clinical Data Repository Health Data
+  Repository(CHDR), etc.) to provide authentication and authorization services.
+  Both KAAJEE and these consuming applications are Java 2 Platform, Enterprise
+  Edition (J2EE) applications that rely on a J2EE Application Server
+  (specifically WebLogic Server) to run.
+  
+  WebLogic Server is one element of the WebLogic Platform that includes:
+  Portal, Integration, Workshop IDE, JRockit, and other technologies.
+  Of these technologies, only WebLogic server is in the scope of the
+  Technical Reference Model (TRM) assessment that includes recommendations
+  and forecasts.  These forecasts project various releases for stages
+  of planning, evaluation, supported and deprecated.  It is the TRM
+  Forecast(02/12/2009) that has projected WebLogic 8.1 to be deprecated
+  in fourth quarter of CY2009.  Furthermore, this TRM has forecasted WebLogic 9.2
+  and 10.3 to be supported from Q4 of CY2009 through at least Q1 of CY2011.
+  
+  KAAJEE 1.1 is part of the WebLogic Upgrade (WLU) Project that includes
+  FatKAAT 1.1 and VistaLink 1.6.  It is the WLU Project that is collectively
+  providing the security and infrastructure needs for these and future
+  consuming applications to migrate from WebLogic 8.1 to either
+  WebLogic 9.2 or 10.3.
+  
+  KAAJEE 1.1 is being packaged and distributed through this patch.  This patch
+  incorporates all functional changes that were included in Kernel/KAAJEE
+  patch XU*8.0*451/KAAJEE 1.0.1.003.
+  
+  To comply with Section 508 requirements, KAAJEE 1.1 has incorporated
+  JavaScript code to warn users when the login session is about to expire.
+  
+  KAAJEE 1.0 was limited in the SSL/TLS support such that often in production
+  environments, the use of a load balancer like BIG-IP from F5 was used
+  to provide SSL mapping.  KAAJEE 1.1 now enhances SSL support to handle
+  additional use cases.
+  
+  This patch adds the capability to KAAJEE applications to use Single
+  Sign-On (SSO) as described in the Single Sign-On/User Context Project.
+  That is, the SSO capability is implemented within the framework of the
+  HL7 CCOW User Context standard.  Additional details are available in the
+  VistA document Library, in the document "SINGLE SIGN-ON/USER CONTEXT
+  (SSO/UC) DEPLOYMENT GUIDE."  For this implementation, only the User Context
+  is tracked, and there is no capability or APIs available yet to track
+  the Patient Context.  In other words, the KAAJEE applications
+  will be CCOW-enabled to the extent of tracking User Context changes.
+  By changes, we mean when a user is logged on and when a user is logged off.
+  To meet some of the requirements listed in the deployment guide mentioned
+  above, KAAJEE applications will be enabled to be logged off when using
+  the CCOW Monitor to clear the User Context.
+  
+  Java-side Components:
+  ==========================
+  
+      /kaajee-1.1.0.007/dd_examples/...
+      /kaajee-1.1.0.007/doc/readme.txt
+      /kaajee-1.1.0.007/jars/kaajee-1.1.0.007.jar
+      /kaajee-1.1.0.007/jars/jsp/logout.jsp
+      /kaajee-1.1.0.007/jars/jsp/login/login.jsp
+      /kaajee-1.1.0.007/jars/jsp/login/loginCookieInfo.htm
+      /kaajee-1.1.0.007/jars/jsp/login/loginerror.jsp
+      /kaajee-1.1.0.007/jars/jsp/login/loginerror403.jsp
+      /kaajee-1.1.0.007/jars/jsp/login/loginerrordisplay.jsp
+      /kaajee-1.1.0.007/jars/jsp/login/navigationerror.jsp
+      /kaajee-1.1.0.007/jars/jsp/login/SessionTimeout.jsp
+      /kaajee-1.1.0.007/jars/jsp/login/javascript/login.js
+      /kaajee-1.1.0.007/jars/jsp/login/images/HealtheVetVistaSmallBlue.jpg
+      /kaajee-1.1.0.007/jars/jsp/login/images/HealtheVetVistaSmallWhite.jpg
+      /kaajee-1.1.0.007/samples/kaajeeSampleApp-1.1.0.007.ear
+      /kaajee-1.1.0.007/samples/kaajeeSampleApp-1.1.0.007.ear.MD5
+      /kaajee-1.1.0.007/samples/exploded/...
+      /kaajee-1.1.0.007/samples/shortcuts/...
+      /kaajee-1.1.0.007/samples/sso-ccow/...
+  
+  See the 'Directory Structure' listed below for a list of components
+  for the Kaajee Security Provider.
+  
+  For updated KAAJEE v1.1 documentation, please refer to the KAAJEE V1.1
+  Deployment and Installation Guides located on the VHA Software
+  Document Library(VDL).
+  The direct link to the VDL for KAAJEE documentation is:
+  
+  http://www.va.gov/vdl/application.asp?appid=151 
+  
+  The M-side component of this patch will be available in the form
+  of a KIDS file and/or enclosed ZIP distribution
+  from one of the following OI Field Office ANONYMOUS.SOFTWARE
+  directories via FTP:
+  
+     IRM Field Office        FTP Address
+     ================        ===========
+     Albany                  ftp.fo-albany.med.va.gov  
+     Hines                   ftp.fo-hines.med.va.gov
+     Salt Lake City          ftp.fo-slc.med.va.gov 
+     VistA Download Site     download.vista.med.va.gov
+  
+  The Java-side component will be in a ZIP format and will be accompanied
+  by an MD5 checksum file.  These files will also be available from the
+  above FTP sites.
+  
+  These files will look similar to the following:
+  
+  KAAJEE_1_1_0_007.ZIP
+  KAAJEE_1_1_0_007_ZIP.MD5
+  kaajee_security_provider_1.1.0.002.zip
+  kaajee_security_provider_1.1.0.002.zip.MD5
+  
+  Note:  The Java-side components will only need to be installed if you have
+  BEA WebLogic Server 9.2 or 10.x.
+  These servers will most likely be located at one or more central locations
+  servicing HealtheVet-VistA applications (e.g.:  Blind Rehab, VPFS, PATS,
+  CHDR, etc.).
+  
+  Directory Structure:
+  ====================
+   * KAAJEE v1.1 retains the same directory structure as in KAAJEE v1.0.
+   * The directory structure of the distribution zip files is as follows:
+  
+       /kaajee_security_provider_1.1.0.002 - This is the KAAJEE SSPI <root>
+                                              level folder containing the
+                                              following files:
+        - build.xml         -- KAAJEE SSPI Ant build script.
+        - readme.txt        -- KAAJEE SSPI documentation (manual),
+                               which includes an introduction, change history,
+                               any special installation instructions, and any
+                               known issues/limitations.
+        - wlKaajeeSecurityProviders-1.1.0.002.jar
+                            -  The KAAJEE SSPI software deployment jar file.
+        - wlKaajeeSecurityProviders-1.1.0.002.jar.MD5
+                            -  The MD5 checksum value for the KAAJEE SSPI
+                               software deployment jar file.
+  
+       /common_pool_jars -- This folder contains the following files:
+        - commons-collections-3.1.jar
+        - commons-dbcp-1.2.1.jar
+        - commons-pool-1.2.jar
+  
+       /props -- This properties folder contains the following files:
+        - KaajeeDatabase.properties
+        - KaajeeManageableAuthenticator.xml
+  
+       /sql -- This folder contains the SQL scripts for the following
+               databases:
+        - CacheTables.sql
+        - OracleTables.sql
+  
+       /src -- This folder contains the KAAJEE SSPI Java source code (i.e., the 
+               application server software).
+  
+       /kaajee-1.1.0.007 contains the following sub-folders:
+        - /dd_examples -- This folder contains sample deployment descriptors.
+        - /doc         -- This folder contains a readme.txt file.
+        - /jars        -- This folder contains the KAAJEE JAR file and related 
+                          JSP files.
+        - /javadoc     -- This folder contains the KAAJEE javadocs.
+        - /samples     -- This folder contains the KAAJEE Sample Web
+                          application.
+        - /samples
+            /sso-ccow  -- This folder contains elements to make 
+                          the KAAJEE Sample Web application SSO enabled.
+        - /src         -- This folder contains the KAAJEE Java source code.
+  
+  
+  
+  =========================================================================
+  Installation:
+  
+  Install Time   less than 5 minutes.
+  
+  
+   1.  Installer must have the XUMGR key.
+  
+   2.  Users ARE allowed to be on the system during the installation. 
+  
+   3.  You DO NOT need to stop TaskMan.
+  
+   4.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   5.  The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the Transport global.
+       On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global
+          Compare Transport Global to Current System
+          Backup a Transport Global
+  
+   6.  Installation will take less than 2 minutes.
+       On the KIDS menu, under the 'Installation' menu, use the following
+       option:
+         Install Package(s)  'XU*8.0*504'
+                              ==========
+       Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  
+       Want KIDS to INHIBIT LOGONs during the install? NO//
+  
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+    
+  
+ =========================================================================
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P504
+    Before:       n/a   After:  B2414286  **504**
+Routine Name: XUSKAAJ1
+    Before:       n/a   After:  B1687417  **504**
+
+=============================================================================
+User Information:
+Entered By  : CHAN,ALAN                     Date Entered  : MAY 21, 2008
+Completed By: GARCIA,JOSE                   Date Completed: MAR 14, 2011
+Released By : LASHLEY,ANTHONY               Date Released : MAR 17, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

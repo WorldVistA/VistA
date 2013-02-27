@@ -1,0 +1,127 @@
+$TXT Created by MOORE,JIM at DAYT42.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 09/01/10 at 15:24
+=============================================================================
+Run Date: MAR 18, 2011                     Designation: SPN*2*25
+Package : SPN - SPINAL CORD DYSFUNCTION       Priority: Mandatory
+Version : 2        SEQ #26                      Status: Released
+                  Compliance Date: APR 18, 2011
+=============================================================================
+
+Associated patches: (v)SPN*2*26    <<= must be installed BEFORE `SPN*2*25'
+
+Subject: Remove References to Obsolete ICD Fields
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ In October 2003, certain fields in the VistA ICD Diagnosis, ICD 
+ Procedures, CPT, and CPT Modifier standard tables were identified as 
+ obsolete and to be replaced with newer data elements implementing data 
+ versioning in these tables.  Under the Code Set Versioning Project, the
+ code names, descriptions, inactive flags and dates were replaced by
+ versioned data elements, each with an effective date of use.
+  
+ A thorough review of the Spinal Cord Dysfunction (v2) package
+ has been completed.  This patch removes all references to the obsolete
+ fields in the ICD Diagnosis file (#80).  It has been determined that there
+ are no references to the obsolete fields in the 3 other affected code files
+ mentioned above.
+ 
+ The modifications made by this patch affect only two reports, replacing 
+ references to the obsolete, un-versioned DIAGNOSIS field (#3) of the
+ ICD Diagnosis file (#80) with the versioned form of that field provided by
+ the supported $$ICDDX^ICDCODE API. The two modified report options are
+ SCI/SCD Discharges [SPN PRINT DISCHARGE] and SCI/SCD Admissions
+ [SPN PRINT ADMISSIONS].
+ 
+ 
+ Associated Remedy Tickets
+ =========================
+ none
+  
+ Test Sites
+ ==========
+  Long Beach HCS
+  Minneapolis VAMC
+  Charlie Norwood VAMC, Augusta GA
+  McGuire VAMC, Richmond VA
+  Black Hills HCS
+   
+ Installation Instructions
+ ===================
+   1. Users ARE allowed to be on the system during the installation. 
+  
+   2. You DO NOT need to stop TaskMan or the background filers.
+  
+   3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+      option will load the KIDS package onto your system.
+  
+   4.  This patch is now loaded into a transport global on your system.
+       The next step is to use KIDS to install the Transport global.  On
+       the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+           Verify Checksums in Transport Global
+  
+           Print Transport Global 
+  
+           Compare Transport Global to Current System 
+  
+           Backup a Transport Global
+  
+           Install Package(s) 
+  
+   5. Accept the defaults for the following install questions:  
+  
+    a. When prompted 'Want KIDS to Rebuild Menu Trees Upon 
+      Completion of Install? YES//' answer NO
+   
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the 
+       install?  NO//' answer NO 
+    
+  6. When prompted 'Want to DISABLE Scheduled Options, Menu 
+     Options, and Protocols? NO//' answer YES
+     
+     These options should be disabled:
+   
+       SCI/SCD Discharges [SPN PRINT DISCHARGE] 
+       SCI/SCD Admissions [SPN PRINT ADMISSIONS].
+  
+  7. The installation should complete in less than one minute.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;Spinal Cord Dysfunction;**[Patch List]**;01/02/1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SPNPMDX
+    Before:  B5073735   After:  B5579887  **6,25**
+Routine Name: SPNPRT07
+    Before: B35679017   After: B36458264  **11,13,25**
+Routine Name: SPNPRT13
+    Before: B22128448   After: B22756998  **13,21,25**
+
+=============================================================================
+User Information:
+Entered By  : INGRAM,FLORENCE A             Date Entered  : NOV 05, 2009
+Completed By: MOORE,CHARLES J               Date Completed: MAR 18, 2011
+Released By : COWNIE,KEVIN                  Date Released : MAR 18, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

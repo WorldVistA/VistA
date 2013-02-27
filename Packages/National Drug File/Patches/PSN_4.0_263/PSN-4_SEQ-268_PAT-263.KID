@@ -1,0 +1,1252 @@
+Released PSN*4*263 SEQ #268
+Extracted from mail message
+**KIDS**:PSN*4.0*263^
+
+**INSTALL NAME**
+PSN*4.0*263
+"BLD",7495,0)
+PSN*4.0*263^NATIONAL DRUG FILE^0^3110222^y
+"BLD",7495,1,0)
+^9.61A^186^186^3110222^^^^
+"BLD",7495,1,1,0)
+This patch contains software modifications to the National Drug File (NDF)
+"BLD",7495,1,2,0)
+V. 4.0 application to support the FDA Medication Guides project. The 
+"BLD",7495,1,3,0)
+project objective is to allow pharmacy staff to retrieve the FDA Medication 
+"BLD",7495,1,4,0)
+Guide for prescription items that contain FDA approved information that
+"BLD",7495,1,5,0)
+can help patients avoid adverse events. The FDA requires that Medication
+"BLD",7495,1,6,0)
+Guides be included with certain prescribed drugs and biological products 
+"BLD",7495,1,7,0)
+when the Agency determines that: 
+"BLD",7495,1,8,0)
+ 
+"BLD",7495,1,9,0)
+ . Certain information is necessary to prevent serious adverse effects 
+"BLD",7495,1,10,0)
+ . Patient decision-making should be advised by information about a known
+"BLD",7495,1,11,0)
+   serious side effect with a product, or 
+"BLD",7495,1,12,0)
+ . Patient adherence to directions for the use of a product is essential
+"BLD",7495,1,13,0)
+   to its effectiveness. 
+"BLD",7495,1,14,0)
+ 
+"BLD",7495,1,15,0)
+The features in the FDA Medication Guides project are being delivered in
+"BLD",7495,1,16,0)
+incremental releases. This patch is part of the Increment 2 release. The 
+"BLD",7495,1,17,0)
+features included in this release are:
+"BLD",7495,1,18,0)
+ 
+"BLD",7495,1,19,0)
+ . Establishment of a Server Repository for FDA Medication Guides within 
+"BLD",7495,1,20,0)
+   the VA network.
+"BLD",7495,1,21,0)
+ 
+"BLD",7495,1,22,0)
+ . Updates to 900+ entries in the VA PRODUCT file (#50.68) to store the 
+"BLD",7495,1,23,0)
+   corresponding FDA Medication Guide document name will be provided via
+"BLD",7495,1,24,0)
+   the NDF Monthly Data Update patches.
+"BLD",7495,1,25,0)
+ 
+"BLD",7495,1,26,0)
+ . Introduction of a PC based Java software component to enable the
+"BLD",7495,1,27,0)
+   automatic retrieval of an FDA Medication Guide from within VistA. The
+"BLD",7495,1,28,0)
+   software does not require any direct user interaction. It works as a 
+"BLD",7495,1,29,0)
+   bridge between VistA and the PC where it is installed. The software 
+"BLD",7495,1,30,0)
+   identifies a request from VistA for a specific FDA Medication Guide and
+"BLD",7495,1,31,0)
+   automatically retrieves it from the Server Repository and displays to the
+"BLD",7495,1,32,0)
+   user via the Internet Explorer browser. 
+"BLD",7495,1,33,0)
+  
+"BLD",7495,1,34,0)
+ . Introduction of a new option called Display FDA Medication Guide [PSN MED
+"BLD",7495,1,35,0)
+   GUIDE] to the National Drug File V. 4.0 application for retrieving and 
+"BLD",7495,1,36,0)
+   displaying the FDA Medication Guide for a specific VA Product.
+"BLD",7495,1,37,0)
+ 
+"BLD",7495,1,38,0)
+ . Introduction of new functionality to the Patient Prescription Processing
+"BLD",7495,1,39,0)
+   [PSO LM BACKDOOR] option in the Outpatient Pharmacy V. 7.0 application
+"BLD",7495,1,40,0)
+   for retrieving and displaying the FDA Medication Guide for a specific 
+"BLD",7495,1,41,0)
+   prescription.
+"BLD",7495,1,42,0)
+  
+"BLD",7495,1,43,0)
+Below is a list of all the applications involved in this release along
+"BLD",7495,1,44,0)
+with their patch number:
+"BLD",7495,1,45,0)
+  
+"BLD",7495,1,46,0)
+   APPLICATION/VERSION                                  PATCH
+"BLD",7495,1,47,0)
+   -----------------------------------------------------------------
+"BLD",7495,1,48,0)
+   PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*158
+"BLD",7495,1,49,0)
+   NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*263
+"BLD",7495,1,50,0)
+   OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*343
+"BLD",7495,1,51,0)
+   
+"BLD",7495,1,52,0)
+The FDA Medication Guides project is expected to complete in three
+"BLD",7495,1,53,0)
+increments. Among other features, the next Increment will automate the
+"BLD",7495,1,54,0)
+printing of FDA Medication Guides for prescriptions dispensed by the VA
+"BLD",7495,1,55,0)
+via Outpatient Pharmacy application when the prescription label is printed.
+"BLD",7495,1,56,0)
+   
+"BLD",7495,1,57,0)
+The following modifications are included in this patch (PSN*4*263):
+"BLD",7495,1,58,0)
+  
+"BLD",7495,1,59,0)
+  A. FDA    Display FDA Medication Guide [PSN MED GUIDE] option
+"BLD",7495,1,60,0)
+ 
+"BLD",7495,1,61,0)
+  Users will be able to retrieve an FDA Medication Guide for a specific VA
+"BLD",7495,1,62,0)
+  Product by invoking this option. A Java software component running at the
+"BLD",7495,1,63,0)
+  user's PC will then display the FDA Medication Guide Adobe Acrobat 
+"BLD",7495,1,64,0)
+  document (.pdf) by automatically opening it via the user's default web
+"BLD",7495,1,65,0)
+  browser, which will allow the users to print it to any printer available
+"BLD",7495,1,66,0)
+  to them, as seen below:
+"BLD",7495,1,67,0)
+       
+"BLD",7495,1,68,0)
+  Select VA PRODUCT NAME: LINDAINE
+"BLD",7495,1,69,0)
+       1   LINDANE 1% CREAM,TOP  
+"BLD",7495,1,70,0)
+       2   LINDANE 1% LIQUID,TOP  
+"BLD",7495,1,71,0)
+       3   LINDANE 1% LOTION  
+"BLD",7495,1,72,0)
+       4   LINDANE 1% SHAMPOO  
+"BLD",7495,1,73,0)
+  CHOOSE 1-4: 3  LINDANE 1% LOTION  
+"BLD",7495,1,74,0)
+ 
+"BLD",7495,1,75,0)
+  The following URL provides the link to the FDA Medication Guide associated
+"BLD",7495,1,76,0)
+  with this medication. Thin Client users: copy/paste the URL below into a
+"BLD",7495,1,77,0)
+  browser to access the FDA Medication Guide for this drug:
+"BLD",7495,1,78,0)
+ 
+"BLD",7495,1,79,0)
+  vaww.national.cmop.va.gov/FDAMedGuides/Lindane_(Generic)_(2008).pdf
+"BLD",7495,1,80,0)
+ 
+"BLD",7495,1,81,0)
+    [FDA Medication Guide .pdf document opens on the web browser]
+"BLD",7495,1,82,0)
+  
+"BLD",7495,1,83,0)
+ 
+"BLD",7495,1,84,0)
+  If a user tries to use this option from a computer which does not have
+"BLD",7495,1,85,0)
+  the required Java software component installed, the following message
+"BLD",7495,1,86,0)
+  will display:
+"BLD",7495,1,87,0)
+ 
+"BLD",7495,1,88,0)
+  Select VA PRODUCT NAME: LINDAINE
+"BLD",7495,1,89,0)
+       1   LINDANE 1% CREAM,TOP  
+"BLD",7495,1,90,0)
+       2   LINDANE 1% LIQUID,TOP  
+"BLD",7495,1,91,0)
+       3   LINDANE 1% LOTION  
+"BLD",7495,1,92,0)
+       4   LINDANE 1% SHAMPOO  
+"BLD",7495,1,93,0)
+  CHOOSE 1-4: 3  LINDANE 1% LOTION  
+"BLD",7495,1,94,0)
+  
+"BLD",7495,1,95,0)
+  The following URL provides the link to the FDA Medication Guide associated
+"BLD",7495,1,96,0)
+  with this medication. Thin Client users: copy/paste the URL below into a
+"BLD",7495,1,97,0)
+  browser to access the FDA Medication Guide for this drug:
+"BLD",7495,1,98,0)
+  
+"BLD",7495,1,99,0)
+  vaww.national.cmop.va.gov/FDAMedGuides/Lindane_(Generic)_(2008).pdf
+"BLD",7495,1,100,0)
+  
+"BLD",7495,1,101,0)
+  Please wait... 
+"BLD",7495,1,102,0)
+     
+"BLD",7495,1,103,0)
+  The system is unable to display FDA Med Guide automatically.
+"BLD",7495,1,104,0)
+   
+"BLD",7495,1,105,0)
+  The FDA Medication Guide will not automatically open on Thin Client and some
+"BLD",7495,1,106,0)
+  types of encrypted sessions. If you do not believe this is the reason contact
+"BLD",7495,1,107,0)
+  your local technical support for assistance.
+"BLD",7495,1,108,0)
+ 
+"BLD",7495,1,109,0)
+  You can copy/paste the link above into your browser's address bar to retrieve
+"BLD",7495,1,110,0)
+  the FDA Medication Guide.
+"BLD",7495,1,111,0)
+   
+"BLD",7495,1,112,0)
+  Enter RETURN to continue, '?' for HELP, or '^' to exit: ?
+"BLD",7495,1,113,0)
+ 
+"BLD",7495,1,114,0)
+  When unable to get the FDA Medication Guide to display, review the following
+"BLD",7495,1,115,0)
+  suggestion(s) for troubleshooting potential problems:
+"BLD",7495,1,116,0)
+  
+"BLD",7495,1,117,0)
+  1) The browser did not open automatically. This may be due to the following:
+"BLD",7495,1,118,0)
+     - You might be connected to VistA via Thin Client or an encrypted session
+"BLD",7495,1,119,0)
+       that prevents the FDA Med Guide from automatically displaying. Please
+"BLD",7495,1,120,0)
+       copy and paste the URL link below into your browser's address bar to
+"BLD",7495,1,121,0)
+       retrieve the FDA Medication Guide:
+"BLD",7495,1,122,0)
+ 
+"BLD",7495,1,123,0)
+   vaww.national.cmop.va.gov/FDAMedGuides/Lindane_Lotion_(Generic)_(2008).pdf
+"BLD",7495,1,124,0)
+ 
+"BLD",7495,1,125,0)
+     - The computer might not have the required Java software component
+"BLD",7495,1,126,0)
+       installed or the software might not be functioning properly. Please,
+"BLD",7495,1,127,0)
+       contact technical support for assistance.
+"BLD",7495,1,128,0)
+  
+"BLD",7495,1,129,0)
+  2) When doing a copy/paste of the link into the browser's address and an HTTP
+"BLD",7495,1,130,0)
+     404 - File Not Found error is received. This may be due to the following:
+"BLD",7495,1,131,0)
+     - A common issue exists when the link is displayed in two lines in the
+"BLD",7495,1,132,0)
+       terminal screen. When you copy both lines at the same time and paste it
+"BLD",7495,1,133,0)
+       into the browser's address, the second line is ignored by the browser
+"BLD",7495,1,134,0)
+       resulting in a 'broken' link. To resolve this issue, copy and paste one
+"BLD",7495,1,135,0)
+       line at a time from the terminal screen into the browser's address to
+"BLD",7495,1,136,0)
+       make sure the complete link is used.
+"BLD",7495,1,137,0)
+     - The FDA Medication Guide Server may be down at the moment. Please, wait
+"BLD",7495,1,138,0)
+       a few minutes and try again. If the problem persists, contact technical
+"BLD",7495,1,139,0)
+       support for assistance.
+"BLD",7495,1,140,0)
+ 
+"BLD",7495,1,141,0)
+  3) The browser opened automatically, however you receive an HTTP 404 - File
+"BLD",7495,1,142,0)
+     Not Found error. This may be due to the following:
+"BLD",7495,1,143,0)
+     - The FDA Medication Guide Server may be down at the moment. Please, wait
+"BLD",7495,1,144,0)
+       a few minutes and try again. If the problem persists, contact technical
+"BLD",7495,1,145,0)
+       support for assistance.
+"BLD",7495,1,146,0)
+   
+"BLD",7495,1,147,0)
+ 
+"BLD",7495,1,148,0)
+  If a user tries to use this option for a medication that does not have an FDA
+"BLD",7495,1,149,0)
+  Medication Guide on file, the following message will display:
+"BLD",7495,1,150,0)
+ 
+"BLD",7495,1,151,0)
+   Select VA PRODUCT NAME: ALLO
+"BLD",7495,1,152,0)
+       1   ALLOPURINOL 100MG TAB  
+"BLD",7495,1,153,0)
+       2   ALLOPURINOL 100MG TAB,UD  
+"BLD",7495,1,154,0)
+       3   ALLOPURINOL 300MG TAB  
+"BLD",7495,1,155,0)
+       4   ALLOPURINOL 300MG TAB,UD  
+"BLD",7495,1,156,0)
+       5   ALLOPURINOL NA 500MG/VIL INJ  
+"BLD",7495,1,157,0)
+   CHOOSE 1-5:  1 ALLOPURINOL 100MG TAB  
+"BLD",7495,1,158,0)
+      
+"BLD",7495,1,159,0)
+   There is no FDA Medication Guide associated with this medication.
+"BLD",7495,1,160,0)
+  
+"BLD",7495,1,161,0)
+   Enter RETURN to continue, '?' for HELP, or '^' to exit: ?
+"BLD",7495,1,162,0)
+ 
+"BLD",7495,1,163,0)
+   When unable to get the FDA Medication Guide to display, review the following
+"BLD",7495,1,164,0)
+   suggestion(s) for troubleshooting potential problems:
+"BLD",7495,1,165,0)
+ 
+"BLD",7495,1,166,0)
+   1) If no FDA Medication Guide exists for a product that you believe should
+"BLD",7495,1,167,0)
+      have one, confirm that one is required by visiting the FDA website
+"BLD",7495,1,168,0)
+      (www.fda.gov). If one is required, log a support ticket to request its
+"BLD",7495,1,169,0)
+      addition. Please understand that there may be a delay between the time
+"BLD",7495,1,170,0)
+      that a new Medication Guide is posted to the FDA website and when it is
+"BLD",7495,1,171,0)
+      made available in VistA through a National Drug File data update patch.
+"BLD",7495,1,172,0)
+   
+"BLD",7495,1,173,0)
+ 
+"BLD",7495,1,174,0)
+  Note: This option requires a Java software component to be installed on
+"BLD",7495,1,175,0)
+  ----  the user's computer. This software will be released as part of this
+"BLD",7495,1,176,0)
+        project. Please, refer to the project Release Notes and Installation
+"BLD",7495,1,177,0)
+        Guide documentation for further information.
+"BLD",7495,1,178,0)
+   
+"BLD",7495,1,179,0)
+ 
+"BLD",7495,1,180,0)
+  B. The length of the FDA MED GUIDE field (#100) in the VA PRODUCT file
+"BLD",7495,1,181,0)
+     (#50.68) is being modified from 245 characters to 100 characters. The 
+"BLD",7495,1,182,0)
+     field will now be used to store only the PDF file name of the FDA  
+"BLD",7495,1,183,0)
+     Medication Guide rather than the complete link, which also had the web
+"BLD",7495,1,184,0)
+     server URL. The web server URL is now being stored on a new field called 
+"BLD",7495,1,185,0)
+     FDA MED GUIDE SERVER URL (#100) in the PHARMACY SYSTEM (#59.7) file,
+"BLD",7495,1,186,0)
+     which is introduced by patch PSS*1*158.
+"BLD",7495,4,0)
+^9.64PA^50.68^1
+"BLD",7495,4,50.68,0)
+50.68
+"BLD",7495,4,50.68,2,0)
+^9.641^50.68^1
+"BLD",7495,4,50.68,2,50.68,0)
+VA PRODUCT  (File-top level)
+"BLD",7495,4,50.68,2,50.68,1,0)
+^9.6411^100^1
+"BLD",7495,4,50.68,2,50.68,1,100,0)
+FDA MED GUIDE
+"BLD",7495,4,50.68,222)
+y^y^p^^^^n^^n
+"BLD",7495,4,50.68,224)
+
+"BLD",7495,4,"APDD",50.68,50.68)
+
+"BLD",7495,4,"APDD",50.68,50.68,100)
+
+"BLD",7495,4,"B",50.68,50.68)
+
+"BLD",7495,6)
+1^
+"BLD",7495,6.3)
+15
+"BLD",7495,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7495,"KRN",.4,0)
+.4
+"BLD",7495,"KRN",.401,0)
+.401
+"BLD",7495,"KRN",.402,0)
+.402
+"BLD",7495,"KRN",.403,0)
+.403
+"BLD",7495,"KRN",.5,0)
+.5
+"BLD",7495,"KRN",.84,0)
+.84
+"BLD",7495,"KRN",3.6,0)
+3.6
+"BLD",7495,"KRN",3.8,0)
+3.8
+"BLD",7495,"KRN",9.2,0)
+9.2
+"BLD",7495,"KRN",9.8,0)
+9.8
+"BLD",7495,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",7495,"KRN",9.8,"NM",1,0)
+PSNFDAMG^^0^B30999461
+"BLD",7495,"KRN",9.8,"NM",2,0)
+PSNMEDG^^0^B125078
+"BLD",7495,"KRN",9.8,"NM","B","PSNFDAMG",1)
+
+"BLD",7495,"KRN",9.8,"NM","B","PSNMEDG",2)
+
+"BLD",7495,"KRN",19,0)
+19
+"BLD",7495,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",7495,"KRN",19.1,0)
+19.1
+"BLD",7495,"KRN",101,0)
+101
+"BLD",7495,"KRN",409.61,0)
+409.61
+"BLD",7495,"KRN",771,0)
+771
+"BLD",7495,"KRN",779.2,0)
+779.2
+"BLD",7495,"KRN",870,0)
+870
+"BLD",7495,"KRN",8989.51,0)
+8989.51
+"BLD",7495,"KRN",8989.52,0)
+8989.52
+"BLD",7495,"KRN",8994,0)
+8994
+"BLD",7495,"KRN","B",.4,.4)
+
+"BLD",7495,"KRN","B",.401,.401)
+
+"BLD",7495,"KRN","B",.402,.402)
+
+"BLD",7495,"KRN","B",.403,.403)
+
+"BLD",7495,"KRN","B",.5,.5)
+
+"BLD",7495,"KRN","B",.84,.84)
+
+"BLD",7495,"KRN","B",3.6,3.6)
+
+"BLD",7495,"KRN","B",3.8,3.8)
+
+"BLD",7495,"KRN","B",9.2,9.2)
+
+"BLD",7495,"KRN","B",9.8,9.8)
+
+"BLD",7495,"KRN","B",19,19)
+
+"BLD",7495,"KRN","B",19.1,19.1)
+
+"BLD",7495,"KRN","B",101,101)
+
+"BLD",7495,"KRN","B",409.61,409.61)
+
+"BLD",7495,"KRN","B",771,771)
+
+"BLD",7495,"KRN","B",779.2,779.2)
+
+"BLD",7495,"KRN","B",870,870)
+
+"BLD",7495,"KRN","B",8989.51,8989.51)
+
+"BLD",7495,"KRN","B",8989.52,8989.52)
+
+"BLD",7495,"KRN","B",8994,8994)
+
+"BLD",7495,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",7495,"QUES",0)
+^9.62^^
+"BLD",7495,"REQB",0)
+^9.611^3^3
+"BLD",7495,"REQB",1,0)
+PSS*1.0*158^2
+"BLD",7495,"REQB",2,0)
+PSN*4.0*108^2
+"BLD",7495,"REQB",3,0)
+XT*7.3*123^2
+"BLD",7495,"REQB","B","PSN*4.0*108",2)
+
+"BLD",7495,"REQB","B","PSS*1.0*158",1)
+
+"BLD",7495,"REQB","B","XT*7.3*123",3)
+
+"FIA",50.68)
+VA PRODUCT
+"FIA",50.68,0)
+^PSNDF(50.68,
+"FIA",50.68,0,0)
+50.68
+"FIA",50.68,0,1)
+y^y^p^^^^n^^n
+"FIA",50.68,0,10)
+
+"FIA",50.68,0,11)
+
+"FIA",50.68,0,"RLRO")
+
+"FIA",50.68,0,"VR")
+4.0^PSN
+"FIA",50.68,50.68)
+1
+"FIA",50.68,50.68,100)
+
+"MBREQ")
+0
+"PKG",136,-1)
+1^1
+"PKG",136,0)
+NATIONAL DRUG FILE^PSN^This is the National Drug File Package V 3.14
+"PKG",136,22,0)
+^9.49I^1^1
+"PKG",136,22,1,0)
+4.0^2981030^2981223^11595
+"PKG",136,22,1,"PAH",1,0)
+263^3110222^10000000021
+"PKG",136,22,1,"PAH",1,1,0)
+^^186^186^3110222
+"PKG",136,22,1,"PAH",1,1,1,0)
+This patch contains software modifications to the National Drug File (NDF)
+"PKG",136,22,1,"PAH",1,1,2,0)
+V. 4.0 application to support the FDA Medication Guides project. The 
+"PKG",136,22,1,"PAH",1,1,3,0)
+project objective is to allow pharmacy staff to retrieve the FDA Medication 
+"PKG",136,22,1,"PAH",1,1,4,0)
+Guide for prescription items that contain FDA approved information that
+"PKG",136,22,1,"PAH",1,1,5,0)
+can help patients avoid adverse events. The FDA requires that Medication
+"PKG",136,22,1,"PAH",1,1,6,0)
+Guides be included with certain prescribed drugs and biological products 
+"PKG",136,22,1,"PAH",1,1,7,0)
+when the Agency determines that: 
+"PKG",136,22,1,"PAH",1,1,8,0)
+ 
+"PKG",136,22,1,"PAH",1,1,9,0)
+ . Certain information is necessary to prevent serious adverse effects 
+"PKG",136,22,1,"PAH",1,1,10,0)
+ . Patient decision-making should be advised by information about a known
+"PKG",136,22,1,"PAH",1,1,11,0)
+   serious side effect with a product, or 
+"PKG",136,22,1,"PAH",1,1,12,0)
+ . Patient adherence to directions for the use of a product is essential
+"PKG",136,22,1,"PAH",1,1,13,0)
+   to its effectiveness. 
+"PKG",136,22,1,"PAH",1,1,14,0)
+ 
+"PKG",136,22,1,"PAH",1,1,15,0)
+The features in the FDA Medication Guides project are being delivered in
+"PKG",136,22,1,"PAH",1,1,16,0)
+incremental releases. This patch is part of the Increment 2 release. The 
+"PKG",136,22,1,"PAH",1,1,17,0)
+features included in this release are:
+"PKG",136,22,1,"PAH",1,1,18,0)
+ 
+"PKG",136,22,1,"PAH",1,1,19,0)
+ . Establishment of a Server Repository for FDA Medication Guides within 
+"PKG",136,22,1,"PAH",1,1,20,0)
+   the VA network.
+"PKG",136,22,1,"PAH",1,1,21,0)
+ 
+"PKG",136,22,1,"PAH",1,1,22,0)
+ . Updates to 900+ entries in the VA PRODUCT file (#50.68) to store the 
+"PKG",136,22,1,"PAH",1,1,23,0)
+   corresponding FDA Medication Guide document name will be provided via
+"PKG",136,22,1,"PAH",1,1,24,0)
+   the NDF Monthly Data Update patches.
+"PKG",136,22,1,"PAH",1,1,25,0)
+ 
+"PKG",136,22,1,"PAH",1,1,26,0)
+ . Introduction of a PC based Java software component to enable the
+"PKG",136,22,1,"PAH",1,1,27,0)
+   automatic retrieval of an FDA Medication Guide from within VistA. The
+"PKG",136,22,1,"PAH",1,1,28,0)
+   software does not require any direct user interaction. It works as a 
+"PKG",136,22,1,"PAH",1,1,29,0)
+   bridge between VistA and the PC where it is installed. The software 
+"PKG",136,22,1,"PAH",1,1,30,0)
+   identifies a request from VistA for a specific FDA Medication Guide and
+"PKG",136,22,1,"PAH",1,1,31,0)
+   automatically retrieves it from the Server Repository and displays to the
+"PKG",136,22,1,"PAH",1,1,32,0)
+   user via the Internet Explorer browser. 
+"PKG",136,22,1,"PAH",1,1,33,0)
+  
+"PKG",136,22,1,"PAH",1,1,34,0)
+ . Introduction of a new option called Display FDA Medication Guide [PSN MED
+"PKG",136,22,1,"PAH",1,1,35,0)
+   GUIDE] to the National Drug File V. 4.0 application for retrieving and 
+"PKG",136,22,1,"PAH",1,1,36,0)
+   displaying the FDA Medication Guide for a specific VA Product.
+"PKG",136,22,1,"PAH",1,1,37,0)
+ 
+"PKG",136,22,1,"PAH",1,1,38,0)
+ . Introduction of new functionality to the Patient Prescription Processing
+"PKG",136,22,1,"PAH",1,1,39,0)
+   [PSO LM BACKDOOR] option in the Outpatient Pharmacy V. 7.0 application
+"PKG",136,22,1,"PAH",1,1,40,0)
+   for retrieving and displaying the FDA Medication Guide for a specific 
+"PKG",136,22,1,"PAH",1,1,41,0)
+   prescription.
+"PKG",136,22,1,"PAH",1,1,42,0)
+  
+"PKG",136,22,1,"PAH",1,1,43,0)
+Below is a list of all the applications involved in this release along
+"PKG",136,22,1,"PAH",1,1,44,0)
+with their patch number:
+"PKG",136,22,1,"PAH",1,1,45,0)
+  
+"PKG",136,22,1,"PAH",1,1,46,0)
+   APPLICATION/VERSION                                  PATCH
+"PKG",136,22,1,"PAH",1,1,47,0)
+   -----------------------------------------------------------------
+"PKG",136,22,1,"PAH",1,1,48,0)
+   PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*158
+"PKG",136,22,1,"PAH",1,1,49,0)
+   NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*263
+"PKG",136,22,1,"PAH",1,1,50,0)
+   OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*343
+"PKG",136,22,1,"PAH",1,1,51,0)
+   
+"PKG",136,22,1,"PAH",1,1,52,0)
+The FDA Medication Guides project is expected to complete in three
+"PKG",136,22,1,"PAH",1,1,53,0)
+increments. Among other features, the next Increment will automate the
+"PKG",136,22,1,"PAH",1,1,54,0)
+printing of FDA Medication Guides for prescriptions dispensed by the VA
+"PKG",136,22,1,"PAH",1,1,55,0)
+via Outpatient Pharmacy application when the prescription label is printed.
+"PKG",136,22,1,"PAH",1,1,56,0)
+   
+"PKG",136,22,1,"PAH",1,1,57,0)
+The following modifications are included in this patch (PSN*4*263):
+"PKG",136,22,1,"PAH",1,1,58,0)
+  
+"PKG",136,22,1,"PAH",1,1,59,0)
+  A. FDA    Display FDA Medication Guide [PSN MED GUIDE] option
+"PKG",136,22,1,"PAH",1,1,60,0)
+ 
+"PKG",136,22,1,"PAH",1,1,61,0)
+  Users will be able to retrieve an FDA Medication Guide for a specific VA
+"PKG",136,22,1,"PAH",1,1,62,0)
+  Product by invoking this option. A Java software component running at the
+"PKG",136,22,1,"PAH",1,1,63,0)
+  user's PC will then display the FDA Medication Guide Adobe Acrobat 
+"PKG",136,22,1,"PAH",1,1,64,0)
+  document (.pdf) by automatically opening it via the user's default web
+"PKG",136,22,1,"PAH",1,1,65,0)
+  browser, which will allow the users to print it to any printer available
+"PKG",136,22,1,"PAH",1,1,66,0)
+  to them, as seen below:
+"PKG",136,22,1,"PAH",1,1,67,0)
+       
+"PKG",136,22,1,"PAH",1,1,68,0)
+  Select VA PRODUCT NAME: LINDAINE
+"PKG",136,22,1,"PAH",1,1,69,0)
+       1   LINDANE 1% CREAM,TOP  
+"PKG",136,22,1,"PAH",1,1,70,0)
+       2   LINDANE 1% LIQUID,TOP  
+"PKG",136,22,1,"PAH",1,1,71,0)
+       3   LINDANE 1% LOTION  
+"PKG",136,22,1,"PAH",1,1,72,0)
+       4   LINDANE 1% SHAMPOO  
+"PKG",136,22,1,"PAH",1,1,73,0)
+  CHOOSE 1-4: 3  LINDANE 1% LOTION  
+"PKG",136,22,1,"PAH",1,1,74,0)
+ 
+"PKG",136,22,1,"PAH",1,1,75,0)
+  The following URL provides the link to the FDA Medication Guide associated
+"PKG",136,22,1,"PAH",1,1,76,0)
+  with this medication. Thin Client users: copy/paste the URL below into a
+"PKG",136,22,1,"PAH",1,1,77,0)
+  browser to access the FDA Medication Guide for this drug:
+"PKG",136,22,1,"PAH",1,1,78,0)
+ 
+"PKG",136,22,1,"PAH",1,1,79,0)
+  vaww.national.cmop.va.gov/FDAMedGuides/Lindane_(Generic)_(2008).pdf
+"PKG",136,22,1,"PAH",1,1,80,0)
+ 
+"PKG",136,22,1,"PAH",1,1,81,0)
+    [FDA Medication Guide .pdf document opens on the web browser]
+"PKG",136,22,1,"PAH",1,1,82,0)
+  
+"PKG",136,22,1,"PAH",1,1,83,0)
+ 
+"PKG",136,22,1,"PAH",1,1,84,0)
+  If a user tries to use this option from a computer which does not have
+"PKG",136,22,1,"PAH",1,1,85,0)
+  the required Java software component installed, the following message
+"PKG",136,22,1,"PAH",1,1,86,0)
+  will display:
+"PKG",136,22,1,"PAH",1,1,87,0)
+ 
+"PKG",136,22,1,"PAH",1,1,88,0)
+  Select VA PRODUCT NAME: LINDAINE
+"PKG",136,22,1,"PAH",1,1,89,0)
+       1   LINDANE 1% CREAM,TOP  
+"PKG",136,22,1,"PAH",1,1,90,0)
+       2   LINDANE 1% LIQUID,TOP  
+"PKG",136,22,1,"PAH",1,1,91,0)
+       3   LINDANE 1% LOTION  
+"PKG",136,22,1,"PAH",1,1,92,0)
+       4   LINDANE 1% SHAMPOO  
+"PKG",136,22,1,"PAH",1,1,93,0)
+  CHOOSE 1-4: 3  LINDANE 1% LOTION  
+"PKG",136,22,1,"PAH",1,1,94,0)
+  
+"PKG",136,22,1,"PAH",1,1,95,0)
+  The following URL provides the link to the FDA Medication Guide associated
+"PKG",136,22,1,"PAH",1,1,96,0)
+  with this medication. Thin Client users: copy/paste the URL below into a
+"PKG",136,22,1,"PAH",1,1,97,0)
+  browser to access the FDA Medication Guide for this drug:
+"PKG",136,22,1,"PAH",1,1,98,0)
+  
+"PKG",136,22,1,"PAH",1,1,99,0)
+  vaww.national.cmop.va.gov/FDAMedGuides/Lindane_(Generic)_(2008).pdf
+"PKG",136,22,1,"PAH",1,1,100,0)
+  
+"PKG",136,22,1,"PAH",1,1,101,0)
+  Please wait... 
+"PKG",136,22,1,"PAH",1,1,102,0)
+     
+"PKG",136,22,1,"PAH",1,1,103,0)
+  The system is unable to display FDA Med Guide automatically.
+"PKG",136,22,1,"PAH",1,1,104,0)
+   
+"PKG",136,22,1,"PAH",1,1,105,0)
+  The FDA Medication Guide will not automatically open on Thin Client and some
+"PKG",136,22,1,"PAH",1,1,106,0)
+  types of encrypted sessions. If you do not believe this is the reason contact
+"PKG",136,22,1,"PAH",1,1,107,0)
+  your local technical support for assistance.
+"PKG",136,22,1,"PAH",1,1,108,0)
+ 
+"PKG",136,22,1,"PAH",1,1,109,0)
+  You can copy/paste the link above into your browser's address bar to retrieve
+"PKG",136,22,1,"PAH",1,1,110,0)
+  the FDA Medication Guide.
+"PKG",136,22,1,"PAH",1,1,111,0)
+   
+"PKG",136,22,1,"PAH",1,1,112,0)
+  Enter RETURN to continue, '?' for HELP, or '^' to exit: ?
+"PKG",136,22,1,"PAH",1,1,113,0)
+ 
+"PKG",136,22,1,"PAH",1,1,114,0)
+  When unable to get the FDA Medication Guide to display, review the following
+"PKG",136,22,1,"PAH",1,1,115,0)
+  suggestion(s) for troubleshooting potential problems:
+"PKG",136,22,1,"PAH",1,1,116,0)
+  
+"PKG",136,22,1,"PAH",1,1,117,0)
+  1) The browser did not open automatically. This may be due to the following:
+"PKG",136,22,1,"PAH",1,1,118,0)
+     - You might be connected to VistA via Thin Client or an encrypted session
+"PKG",136,22,1,"PAH",1,1,119,0)
+       that prevents the FDA Med Guide from automatically displaying. Please
+"PKG",136,22,1,"PAH",1,1,120,0)
+       copy and paste the URL link below into your browser's address bar to
+"PKG",136,22,1,"PAH",1,1,121,0)
+       retrieve the FDA Medication Guide:
+"PKG",136,22,1,"PAH",1,1,122,0)
+ 
+"PKG",136,22,1,"PAH",1,1,123,0)
+   vaww.national.cmop.va.gov/FDAMedGuides/Lindane_Lotion_(Generic)_(2008).pdf
+"PKG",136,22,1,"PAH",1,1,124,0)
+ 
+"PKG",136,22,1,"PAH",1,1,125,0)
+     - The computer might not have the required Java software component
+"PKG",136,22,1,"PAH",1,1,126,0)
+       installed or the software might not be functioning properly. Please,
+"PKG",136,22,1,"PAH",1,1,127,0)
+       contact technical support for assistance.
+"PKG",136,22,1,"PAH",1,1,128,0)
+  
+"PKG",136,22,1,"PAH",1,1,129,0)
+  2) When doing a copy/paste of the link into the browser's address and an HTTP
+"PKG",136,22,1,"PAH",1,1,130,0)
+     404 - File Not Found error is received. This may be due to the following:
+"PKG",136,22,1,"PAH",1,1,131,0)
+     - A common issue exists when the link is displayed in two lines in the
+"PKG",136,22,1,"PAH",1,1,132,0)
+       terminal screen. When you copy both lines at the same time and paste it
+"PKG",136,22,1,"PAH",1,1,133,0)
+       into the browser's address, the second line is ignored by the browser
+"PKG",136,22,1,"PAH",1,1,134,0)
+       resulting in a 'broken' link. To resolve this issue, copy and paste one
+"PKG",136,22,1,"PAH",1,1,135,0)
+       line at a time from the terminal screen into the browser's address to
+"PKG",136,22,1,"PAH",1,1,136,0)
+       make sure the complete link is used.
+"PKG",136,22,1,"PAH",1,1,137,0)
+     - The FDA Medication Guide Server may be down at the moment. Please, wait
+"PKG",136,22,1,"PAH",1,1,138,0)
+       a few minutes and try again. If the problem persists, contact technical
+"PKG",136,22,1,"PAH",1,1,139,0)
+       support for assistance.
+"PKG",136,22,1,"PAH",1,1,140,0)
+ 
+"PKG",136,22,1,"PAH",1,1,141,0)
+  3) The browser opened automatically, however you receive an HTTP 404 - File
+"PKG",136,22,1,"PAH",1,1,142,0)
+     Not Found error. This may be due to the following:
+"PKG",136,22,1,"PAH",1,1,143,0)
+     - The FDA Medication Guide Server may be down at the moment. Please, wait
+"PKG",136,22,1,"PAH",1,1,144,0)
+       a few minutes and try again. If the problem persists, contact technical
+"PKG",136,22,1,"PAH",1,1,145,0)
+       support for assistance.
+"PKG",136,22,1,"PAH",1,1,146,0)
+   
+"PKG",136,22,1,"PAH",1,1,147,0)
+ 
+"PKG",136,22,1,"PAH",1,1,148,0)
+  If a user tries to use this option for a medication that does not have an FDA
+"PKG",136,22,1,"PAH",1,1,149,0)
+  Medication Guide on file, the following message will display:
+"PKG",136,22,1,"PAH",1,1,150,0)
+ 
+"PKG",136,22,1,"PAH",1,1,151,0)
+   Select VA PRODUCT NAME: ALLO
+"PKG",136,22,1,"PAH",1,1,152,0)
+       1   ALLOPURINOL 100MG TAB  
+"PKG",136,22,1,"PAH",1,1,153,0)
+       2   ALLOPURINOL 100MG TAB,UD  
+"PKG",136,22,1,"PAH",1,1,154,0)
+       3   ALLOPURINOL 300MG TAB  
+"PKG",136,22,1,"PAH",1,1,155,0)
+       4   ALLOPURINOL 300MG TAB,UD  
+"PKG",136,22,1,"PAH",1,1,156,0)
+       5   ALLOPURINOL NA 500MG/VIL INJ  
+"PKG",136,22,1,"PAH",1,1,157,0)
+   CHOOSE 1-5:  1 ALLOPURINOL 100MG TAB  
+"PKG",136,22,1,"PAH",1,1,158,0)
+      
+"PKG",136,22,1,"PAH",1,1,159,0)
+   There is no FDA Medication Guide associated with this medication.
+"PKG",136,22,1,"PAH",1,1,160,0)
+  
+"PKG",136,22,1,"PAH",1,1,161,0)
+   Enter RETURN to continue, '?' for HELP, or '^' to exit: ?
+"PKG",136,22,1,"PAH",1,1,162,0)
+ 
+"PKG",136,22,1,"PAH",1,1,163,0)
+   When unable to get the FDA Medication Guide to display, review the following
+"PKG",136,22,1,"PAH",1,1,164,0)
+   suggestion(s) for troubleshooting potential problems:
+"PKG",136,22,1,"PAH",1,1,165,0)
+ 
+"PKG",136,22,1,"PAH",1,1,166,0)
+   1) If no FDA Medication Guide exists for a product that you believe should
+"PKG",136,22,1,"PAH",1,1,167,0)
+      have one, confirm that one is required by visiting the FDA website
+"PKG",136,22,1,"PAH",1,1,168,0)
+      (www.fda.gov). If one is required, log a support ticket to request its
+"PKG",136,22,1,"PAH",1,1,169,0)
+      addition. Please understand that there may be a delay between the time
+"PKG",136,22,1,"PAH",1,1,170,0)
+      that a new Medication Guide is posted to the FDA website and when it is
+"PKG",136,22,1,"PAH",1,1,171,0)
+      made available in VistA through a National Drug File data update patch.
+"PKG",136,22,1,"PAH",1,1,172,0)
+   
+"PKG",136,22,1,"PAH",1,1,173,0)
+ 
+"PKG",136,22,1,"PAH",1,1,174,0)
+  Note: This option requires a Java software component to be installed on
+"PKG",136,22,1,"PAH",1,1,175,0)
+  ----  the user's computer. This software will be released as part of this
+"PKG",136,22,1,"PAH",1,1,176,0)
+        project. Please, refer to the project Release Notes and Installation
+"PKG",136,22,1,"PAH",1,1,177,0)
+        Guide documentation for further information.
+"PKG",136,22,1,"PAH",1,1,178,0)
+   
+"PKG",136,22,1,"PAH",1,1,179,0)
+ 
+"PKG",136,22,1,"PAH",1,1,180,0)
+  B. The length of the FDA MED GUIDE field (#100) in the VA PRODUCT file
+"PKG",136,22,1,"PAH",1,1,181,0)
+     (#50.68) is being modified from 245 characters to 100 characters. The 
+"PKG",136,22,1,"PAH",1,1,182,0)
+     field will now be used to store only the PDF file name of the FDA  
+"PKG",136,22,1,"PAH",1,1,183,0)
+     Medication Guide rather than the complete link, which also had the web
+"PKG",136,22,1,"PAH",1,1,184,0)
+     server URL. The web server URL is now being stored on a new field called 
+"PKG",136,22,1,"PAH",1,1,185,0)
+     FDA MED GUIDE SERVER URL (#100) in the PHARMACY SYSTEM (#59.7) file,
+"PKG",136,22,1,"PAH",1,1,186,0)
+     which is introduced by patch PSS*1*158.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSNFDAMG")
+0^1^B30999461^B4530408
+"RTN","PSNFDAMG",1,0)
+PSNFDAMG ;BIR/DMA - On-Demand FDA Med Guide Display ; 12 Feb 2010  8:26 AM
+"RTN","PSNFDAMG",2,0)
+ ;;4.0; NATIONAL DRUG FILE;**108,263**; 30 Oct 98;Build 15
+"RTN","PSNFDAMG",3,0)
+ ;Reference to ^PS(59.7 supported by DBIA #2613
+"RTN","PSNFDAMG",4,0)
+ ;
+"RTN","PSNFDAMG",5,0)
+EN(VAPRDIEN) ; Entry point for FDA Med Guide On-Demand Printing
+"RTN","PSNFDAMG",6,0)
+ N FDAMGFN,FDAMGURL,PCURL,STATUS,X
+"RTN","PSNFDAMG",7,0)
+ S FDAMGFN=$$FDAMG^PSNAPIS(VAPRDIEN)
+"RTN","PSNFDAMG",8,0)
+ I FDAMGFN="" D  Q
+"RTN","PSNFDAMG",9,0)
+ . W !!,"There is no FDA Medication Guide associated with this medication.",!
+"RTN","PSNFDAMG",10,0)
+ . D PAUSE
+"RTN","PSNFDAMG",11,0)
+ ;
+"RTN","PSNFDAMG",12,0)
+ W !!,"The following URL provides the link to the FDA Medication Guide associated"
+"RTN","PSNFDAMG",13,0)
+ W !,"with this medication. Thin Client users: copy/paste the URL below into a"
+"RTN","PSNFDAMG",14,0)
+ W !,"browser to access the FDA Medication Guide for this drug:"
+"RTN","PSNFDAMG",15,0)
+ W !!
+"RTN","PSNFDAMG",16,0)
+ ;
+"RTN","PSNFDAMG",17,0)
+ ; Concatenating the Web Server URL to the FDA Med Guide file name
+"RTN","PSNFDAMG",18,0)
+ S FDAMGURL=$$GET1^DIQ(59.7,1,100)_FDAMGFN
+"RTN","PSNFDAMG",19,0)
+ ;
+"RTN","PSNFDAMG",20,0)
+ D PRTURL(FDAMGURL)
+"RTN","PSNFDAMG",21,0)
+ ;
+"RTN","PSNFDAMG",22,0)
+ S PCURL="http://"_IO("IP")_":8091/viewmg="
+"RTN","PSNFDAMG",23,0)
+ ;
+"RTN","PSNFDAMG",24,0)
+ W !!,"Please wait...",!
+"RTN","PSNFDAMG",25,0)
+ ;
+"RTN","PSNFDAMG",26,0)
+ ;Invoking Kernel HTTP Toolkit
+"RTN","PSNFDAMG",27,0)
+ S STATUS=$$GETURL^XTHC10(PCURL_FDAMGURL)
+"RTN","PSNFDAMG",28,0)
+ ;
+"RTN","PSNFDAMG",29,0)
+ I +STATUS'=200 D
+"RTN","PSNFDAMG",30,0)
+ . W !,"The system is unable to display FDA Med Guide automatically."
+"RTN","PSNFDAMG",31,0)
+ . W !
+"RTN","PSNFDAMG",32,0)
+ . W !,"The FDA Medication Guide will not automatically open on Thin Client and some"
+"RTN","PSNFDAMG",33,0)
+ . W !,"types of encrypted sessions. If you do not believe this is the reason contact"
+"RTN","PSNFDAMG",34,0)
+ . W !,"your local technical support for assistance."
+"RTN","PSNFDAMG",35,0)
+ . W !
+"RTN","PSNFDAMG",36,0)
+ . W !,"You can copy/paste the link above into your browser's address bar to retrieve"
+"RTN","PSNFDAMG",37,0)
+ . W !,"the FDA Medication Guide."
+"RTN","PSNFDAMG",38,0)
+ . W !
+"RTN","PSNFDAMG",39,0)
+ ;
+"RTN","PSNFDAMG",40,0)
+ D PAUSE
+"RTN","PSNFDAMG",41,0)
+ Q
+"RTN","PSNFDAMG",42,0)
+ ;
+"RTN","PSNFDAMG",43,0)
+PAUSE ;
+"RTN","PSNFDAMG",44,0)
+ N DIR
+"RTN","PSNFDAMG",45,0)
+ S DIR("A")="Enter RETURN to continue, '?' for HELP, or '^' to exit",DIR(0)="E"
+"RTN","PSNFDAMG",46,0)
+ S DIR("?")="^D HELP^PSNFDAMG("""_$G(FDAMGURL)_""")" D ^DIR
+"RTN","PSNFDAMG",47,0)
+ Q
+"RTN","PSNFDAMG",48,0)
+ ;
+"RTN","PSNFDAMG",49,0)
+HELP(MGURL) ; Help Text
+"RTN","PSNFDAMG",50,0)
+ N DIR,DIRUT,DIROUT
+"RTN","PSNFDAMG",51,0)
+ W !,"When unable to get the FDA Medication Guide to display, review the following"
+"RTN","PSNFDAMG",52,0)
+ W !,"suggestion(s) for troubleshooting potential problems:"
+"RTN","PSNFDAMG",53,0)
+ W !
+"RTN","PSNFDAMG",54,0)
+ I $G(MGURL)'="" D
+"RTN","PSNFDAMG",55,0)
+ . W !,"1) The browser did not open automatically. This may be due to the following:"
+"RTN","PSNFDAMG",56,0)
+ . W !,"   - You might be connected to VistA via Thin Client or an encrypted session"
+"RTN","PSNFDAMG",57,0)
+ . W !,"     that prevents the FDA Med Guide from automatically displaying. Please"
+"RTN","PSNFDAMG",58,0)
+ . W !,"     copy and paste the URL link below into your browser's address bar to"
+"RTN","PSNFDAMG",59,0)
+ . W !,"     retrieve the FDA Medication Guide:"
+"RTN","PSNFDAMG",60,0)
+ . W !!  D PRTURL(MGURL) W !
+"RTN","PSNFDAMG",61,0)
+ . W !,"   - The computer might not have the required Java software component"
+"RTN","PSNFDAMG",62,0)
+ . W !,"     installed or the software might not be functioning properly. Please,"
+"RTN","PSNFDAMG",63,0)
+ . W !,"     contact technical support for assistance."
+"RTN","PSNFDAMG",64,0)
+ . W !
+"RTN","PSNFDAMG",65,0)
+ . S DIR("A")="Enter RETURN to continue" D PAUSE^VALM1 Q:($G(DIRUT)!$G(DIROUT))
+"RTN","PSNFDAMG",66,0)
+ . ;
+"RTN","PSNFDAMG",67,0)
+ . W !,"2) When doing a copy/paste of the link into the browser's address and an HTTP"
+"RTN","PSNFDAMG",68,0)
+ . W !,"   404 - File Not Found error is received. This may be due to the following:"
+"RTN","PSNFDAMG",69,0)
+ . W !,"   - A common issue exists when the link is displayed in two lines in the"
+"RTN","PSNFDAMG",70,0)
+ . W !,"     terminal screen. When you copy both lines at the same time and paste it"
+"RTN","PSNFDAMG",71,0)
+ . W !,"     into the browser's address, the second line is ignored by the browser"
+"RTN","PSNFDAMG",72,0)
+ . W !,"     resulting in a 'broken' link. To resolve this issue, copy and paste one"
+"RTN","PSNFDAMG",73,0)
+ . W !,"     line at a time from the terminal screen into the browser's address to"
+"RTN","PSNFDAMG",74,0)
+ . W !,"     make sure the complete link is used."
+"RTN","PSNFDAMG",75,0)
+ . W !,"   - The FDA Medication Guide Server may be down at the moment. Please, wait"
+"RTN","PSNFDAMG",76,0)
+ . W !,"     a few minutes and try again. If the problem persists, contact technical"
+"RTN","PSNFDAMG",77,0)
+ . W !,"     support for assistance."
+"RTN","PSNFDAMG",78,0)
+ . ;
+"RTN","PSNFDAMG",79,0)
+ . W !!,"3) The browser opened automatically, however you receive an HTTP 404 - File"
+"RTN","PSNFDAMG",80,0)
+ . W !,"   Not Found error. This may be due to the following:"
+"RTN","PSNFDAMG",81,0)
+ . W !,"   - The FDA Medication Guide Server may be down at the moment. Please, wait"
+"RTN","PSNFDAMG",82,0)
+ . W !,"     a few minutes and try again. If the problem persists, contact technical"
+"RTN","PSNFDAMG",83,0)
+ . W !,"     support for assistance."
+"RTN","PSNFDAMG",84,0)
+ . W !
+"RTN","PSNFDAMG",85,0)
+ E  D
+"RTN","PSNFDAMG",86,0)
+ . W !,"1) If no FDA Medication Guide exists for a product that you believe should"
+"RTN","PSNFDAMG",87,0)
+ . W !,"   have one, confirm that one is required by visiting the FDA website"
+"RTN","PSNFDAMG",88,0)
+ . W !,"   (www.fda.gov). If one is required, log a support ticket to request its"
+"RTN","PSNFDAMG",89,0)
+ . W !,"   addition. Please understand that there may be a delay between the time"
+"RTN","PSNFDAMG",90,0)
+ . W !,"   that a new Medication Guide is posted to the FDA website and when it is"
+"RTN","PSNFDAMG",91,0)
+ . W !,"   made available in VistA through a National Drug File data update patch."
+"RTN","PSNFDAMG",92,0)
+ Q
+"RTN","PSNFDAMG",93,0)
+ ;
+"RTN","PSNFDAMG",94,0)
+PRTURL(FDAMGURL) ; Prints the FDA Med Guide URL
+"RTN","PSNFDAMG",95,0)
+ S X=$G(FDAMGURL) I $$LOW^XLFSTR($E(X,1,7))="http://" S X=$E(X,8,999)
+"RTN","PSNFDAMG",96,0)
+ W $E(X,1,80) I $L(X)>80 D
+"RTN","PSNFDAMG",97,0)
+ . F  Q:$E(X,81,999)=""  S X=$E(X,81,999) W !,$E(X,1,80)
+"RTN","PSNFDAMG",98,0)
+ Q
+"RTN","PSNMEDG")
+0^2^B125078^B3857574
+"RTN","PSNMEDG",1,0)
+PSNMEDG ;BIR/DMA - REQUEST A MED GUIDE ; 12 Feb 2010  8:27 AM
+"RTN","PSNMEDG",2,0)
+ ;;4.0; NATIONAL DRUG FILE;**108,263**; 30 Oct 98;Build 15
+"RTN","PSNMEDG",3,0)
+ ;
+"RTN","PSNMEDG",4,0)
+ N DIC,Y W !
+"RTN","PSNMEDG",5,0)
+ ;
+"RTN","PSNMEDG",6,0)
+ F  S DIC=50.68,DIC(0)="AEQM" D ^DIC Q:Y<0  W ! D 
+"RTN","PSNMEDG",7,0)
+ . D EN^PSNFDAMG(+Y) W !
+"RTN","PSNMEDG",8,0)
+ ;
+"RTN","PSNMEDG",9,0)
+ Q
+"VER")
+8.0^22.0
+"^DD",50.68,50.68,100,0)
+FDA MED GUIDE^Fa^^MG;1^K:$L(X)>100!($L(X)<1) X
+"^DD",50.68,50.68,100,1,0)
+^.1^^0
+"^DD",50.68,50.68,100,3)
+Answer must be 1-100 characters in length
+"^DD",50.68,50.68,100,8.5)
+^
+"^DD",50.68,50.68,100,9)
+^
+"^DD",50.68,50.68,100,10)
+
+"^DD",50.68,50.68,100,21,0)
+^^3^3^3100818^
+"^DD",50.68,50.68,100,21,1,0)
+This field contains the filename of the FDA Medication Guide associated
+"^DD",50.68,50.68,100,21,2,0)
+with this VA Product. This field can only be edited on the National 
+"^DD",50.68,50.68,100,21,3,0)
+Drug File Management System.
+"^DD",50.68,50.68,100,23,0)
+^.001^2^2^3101012^^
+"^DD",50.68,50.68,100,23,1,0)
+This field is used for storing the FDA Medication Guide file name associated 
+"^DD",50.68,50.68,100,23,2,0)
+with this VA Product.
+"^DD",50.68,50.68,100,"AUDIT")
+y
+"^DD",50.68,50.68,100,"DT")
+3101007
+"BLD",7495,6)
+^268
+**END**
+**END**

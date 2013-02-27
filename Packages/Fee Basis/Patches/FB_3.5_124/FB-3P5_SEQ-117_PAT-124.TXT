@@ -1,0 +1,309 @@
+$TXT Created by MERRITT,JOHN at SQAVFF.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 05/11/12 at 12:31
+=============================================================================
+Run Date: SEP 05, 2012                     Designation: FB*3.5*124
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #117                    Status: Released
+                  Compliance Date: OCT 05, 2012
+=============================================================================
+
+Associated patches: (v)FB*3.5*61   <<= must be installed BEFORE `FB*3.5*124'
+                    (v)FB*3.5*79   <<= must be installed BEFORE `FB*3.5*124'
+                    (v)FB*3.5*108  <<= must be installed BEFORE `FB*3.5*124'
+
+Subject: VISTA FEE INVOICE ACCEPTANCE DATE CONTROLS
+
+Category: 
+  - Input Template
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch contains the modified components (Routines and Input 
+ Templates) which implement the VistA Financials Annual Enhancement called 
+ VistA Fee Invoice Acceptance Date Controls (NSR# 20080613).  The intent 
+ of this patch is to prevent a Fee Basis Invoice from being approved for 
+ payment, if the Invoice was received at the VA prior to the date(s) of 
+ service for the services being billed on the Invoice.
+  
+ The new checks are implemented at the field level as needed, wherever 
+ either the Invoice Received Date, or the Date(s) of Service for an 
+ Invoice are entered. The menu options affected are listed in Step 6 of the
+ Installation Instructions below.  In cases where the Invoice Received Date
+ is entered first, the user will not be allowed to enter a Date of Service
+ which is later than the Invoice Received Date.  If the Date(s) of Service
+ are entered first, the user will not be allowed to enter an Invoice
+ Received Date which is prior to the Date(s) of Service.  If a user is
+ editing a previously entered Invoice, where both types of dates have
+ already been entered, they will not be allowed to edit either the Date of
+ Service, or the Invoice Received Date, if they try to enter a new value
+ which results in the Invoice Received Date being prior to the Date(s) of
+ Service.  The changes made by this patch are described below:
+  
+ 1.  The system will perform a validity check that cannot be made until 
+ both dates are entered.  Either date may be entered first.  The 
+ modifications are implemented as field-level validity checks added where 
+ each of these date fields appear in the various options affected.
+  
+ 2.  The date-check code will first determine whether the Claim Received
+ Date and the Date of Service have both been entered.  If both dates 
+ have not yet been entered, then no comparison can be made, so the 
+ validity check code will take no further action when the first date is 
+ entered.
+  
+ 3.  If both dates have been entered and if the Claim Received Date is 
+ PRIOR TO the Date of Service, the second date entered will not be
+ accepted.
+  
+ 4.  Software cannot determine whether an invalid pair of dates is the 
+ result of a user entry error, or of a claim being submitted with invalid 
+ dates.  The system will notify the user when an error has been detected 
+ and reject the date just entered.  The user will then determine what 
+ action to take (i.e. re-enter the current date, go back and modify the 
+ first date entered, or exit the claim.) 
+  
+ The application will not allow the entry of both a Claim Received Date 
+ and a Date of Service, where the Claim Received Date is prior to the Date 
+ of Service.  Since both dates are required before a claim can be accepted 
+ and sent to Central Fee at the Austin Information Technology Center 
+ (AITC), this will prevent a claim from being submitted for payment with a 
+ Claim Received Date that is prior to the Date of Service.
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)   New/Modified/Deleted
+ ------------------         -------------------   --------------------
+ N/A
+   
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+  
+ Options Associated:
+  
+   
+ Option Name              Type               New/Modified/Deleted
+ -----------              ----               -------------------- 
+ N/A
+  
+   
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+   
+   
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+   
+ Templates Associated:
+  
+ Template Name      Type   File Name         (Number)  New/Modified/Deleted
+ -------------      ----   -----------------------     --------------------
+ FBCH EDIT PAYMENT  INPUT  Fee Basis Invoice  162.5    Modified
+ FBNH EDIT PAYMENT  INPUT  Fee Basis Invoice  162.5    Modified
+  
+  
+ Additional Information:
+ N/A 
+  
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ Request Name: VistA Fee Invoice Acceptance Date Controls
+   Request ID: 20080613
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+   
+ Problem:
+ -------
+ N/A
+   
+ Resolution:
+ ----------
+ N/A
+   
+ Test Sites:
+ ----------
+ ST. CLOUD, MN
+ MINNEAPOLIS, MN
+ SIOUX FALLS, SD
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/. This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software directly 
+ from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov  <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov    <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+  http://www4.va.gov/vdl/
+  
+   
+ Title                         File Name                       FTP Mode 
+ ---------------------------------------------------------------------
+ Fee Basis User Manual        FB_3_5_UM_R0912.PDF              binary
+ Fee Basis Technical Manual   FB_3_5_TM_R0912.PDF              binary
+ Release Notes/Installation   FB_3_5_P124_RN.PDF               binary
+     Guide FB*3.5*124
+  
+ Patch Installation:
+   
+ Pre/Post Installation Overview
+ ------------------------------
+ Standard Pre-Installation procedures for installing a patch from PackMan 
+ are all that are needed to install this patch.
+  
+ No Post-Installation procedures are necessary to install this patch.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.  Queuing the installation of this patch is not 
+ recommended.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (FB*3.5*124):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.  
+   
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  Accept the default of NO
+  
+ 6.  When prompted 'Enter options you wish to mark as 'Out Of 
+     Order':'  Enter the following options: 
+   
+        Enter Payment [FBAA ENTER PAYMENT]
+        Reimbursement Payment Entry [FBAA MEDICAL REIMBURSEMENT]
+        C&P/Multiple Patient Payment Entry [FBAA C&P ENTER PAYMENT]
+        Edit Pharmacy Invoice [FBAA EDIT PHARMACY INVOICE]
+        Enter Pharmacy Invoice [FBAA ENTER PHARMACY INVOICE]
+        Patient Re-imbursement [FBAA REIMBURSEMENT PHARMACY]
+        Multiple Payment Entry [FBAA MULTIPLE PAYMENT ENTRY]
+        Edit Payment [FBAA EDIT PAYMENT]
+        Ancillary Contract Hosp/CNH Payment [FBCH ANCILLARY PAYMENT]
+        Patient Reimbursement for Ancillary Services [FBCH ANCILLARY 
+               REIMBURSEMENT]
+        Enter Invoice/Payment [FBCH ENTER PAYMENT]
+        Reimbursement for Inpatient Hospital Invoice [FBCH REIMBURSEMENT 
+               INVOICE]
+        Invoice Edit [FBCH EDIT PAYMENT]
+        Multiple Ancillary Payments [FBCH MULTIPLE PAYMENTS]
+        Edit Ancillary Payment [FBCH EDIT ANCILLARY PAYMENT]
+        Edit CNH Payment [FBCNH EDIT PAYMENT]
+        Payments for Unauthorized Claims [FBUC PAYMENTS]
+  
+ 7.  If prompted "Delay Install (Minutes): (0-60): 0// respond 0 
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no Post-Installation steps necessary for installing this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAACO1
+    Before: B42250975   After: B49387409  **4,61,77,108,124**
+Routine Name: FBAACO3
+    Before: B50591838   After: B55394363  **4,38,55,61,116,122,133,108,124**
+Routine Name: FBAACO5
+    Before:  B6093422   After:  B6803212  **73,79,124**
+Routine Name: FBAAEPI
+    Before: B14319298   After: B20301979  **38,61,124**
+Routine Name: FBAAPET
+    Before: B39436624   After: B43544171  **4,38,55,61,77,116,122,133,108,124**
+Routine Name: FBAAPIE
+    Before: B21766218   After: B23308857  **61,124**
+Routine Name: FBAAPIE1
+    Before: B15539047   After: B16325296  **68,108,124**
+Routine Name: FBAAUTL
+    Before: B24039594   After: B25814851  **101,114,108,124**
+Routine Name: FBCHEP
+    Before: B33211512   After: B33379064  **4,61,77,82,122,108,124**
+Routine Name: FBCHEP1
+    Before: B33647893   After: B39779983  **38,61,122,133,108,124**
+Routine Name: FBCHPET
+    Before: B36398874   After: B40446570  **4,38,61,77,116,108,124**
+Routine Name: FBNHEDPA
+    Before:  B9054785   After: B15541684  **61,124**
+ 
+Routine list of preceding patches: 79, 108
+
+=============================================================================
+User Information:
+Entered By  : THAYER,CHRISTOPHER            Date Entered  : MAY 27, 2011
+Completed By: CORONA,JOSE                   Date Completed: SEP 05, 2012
+Released By : POST,HELEN                    Date Released : SEP 05, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

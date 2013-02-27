@@ -1,0 +1,486 @@
+
+=============================================================================
+Run Date: APR 19, 2011                     Designation: PSO*7*251
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #310                      Status: Released
+                  Compliance Date: SEP 15, 2011
+=============================================================================
+
+Associated patches: (v)PSS*1*129   <<= must be installed BEFORE `PSO*7*251'
+                    (v)PSO*7*279   <<= must be installed BEFORE `PSO*7*251'
+                    (v)PSO*7*287   <<= must be installed BEFORE `PSO*7*251'
+                    (v)PSO*7*289   <<= must be installed BEFORE `PSO*7*251'
+                    (v)PSO*7*298   <<= must be installed BEFORE `PSO*7*251'
+                    (v)PSO*7*324   <<= must be installed BEFORE `PSO*7*251'
+                    (v)PSO*7*334   <<= must be installed BEFORE `PSO*7*251'
+                    (v)PSO*7*358   <<= must be installed BEFORE `PSO*7*251'
+
+Subject: MEDICATION ORDER CHECK HEALTHCARE APPLICATION v1.0
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+  
+ This patch is part of a group of patches that make up the new Medication
+ Order Check Healthcare Application v1.0 (MOCHA).  These patches will
+ replace most of the current VistA medication order checking system with
+ version 1.0 of the new Medication Order Check Healthcare Application
+ (MOCHA) system that uses the First DataBank (FDB) Drug Information 
+ Framework (DIF) interfaces and database. The VistA Drug Interaction
+ module will be replaced by the FDB Drug-Drug Interaction Module (DDIM).
+ The VistA Duplicate Class module will be replaced by the FDB Enhanced
+ Therapeutic Classification (ETC) System. In addition, the following
+ three order checks that use VistA data have been added to Inpatient
+ Medications and Outpatient Pharmacy. These checks currently occur in
+ Computerized Patient Record System (CPRS), but will be new to Pharmacy
+ with the installation of these patches:
+  
+         Aminoglycoside Ordered
+         Dangerous Meds for Patients > 64
+         Glucophage - Lab Results
+   
+  A new Graphical User Interface (GUI) module is also being introduced
+ called Pharmacy Enterprise Customization System (PECS), to be used only by
+ members of Pharmacy Benefits Management (PBM).  It will allow the NDF
+ Support Group to customize the data provided by FDB for use in VistA.
+  
+  The following three patient safety issues have also been addressed in 
+  this release:
+         Order Checks on PreMix IV Solutions (PSI-06-012)
+         Order Check display sequence changes (PSI-07-080)
+         Eliminating confusion in Inpatient Medications Order Check display 
+         and processing (PSI-07-080)
+  
+ Please refer to the MOCHA v1.0 Release Notes for additional information.
+   
+ MOCHA v1.0 consists of two host files: PRE_1_3_PHARMACY_BUILD.KID,
+ PSS_1_136.zip, and two patches PSS*1*117 and PSO*7*375.
+ These files and patches contain software that support MOCHA v1.0
+ functionality.  The host files were created to simplify installation at
+  Veterans Health Administration (VHA) facilities and to assist in the phased
+ implementation release method for MOCHA v1.0.  To see current status and
+ target dates for Sites/VISN/Region please refer to the following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+ Sites will be provided instructions and guidance on installation and
+ implementation by the MOCHA Implementation team.  Installation information
+ for MOCHA v1.0 is included in the VistA to MOCHA v1.0 Interface
+ Installation Guide and the MOCHA v1.0 Combined Build Installation Guide.  
+  
+  
+  ************************** WARNING ***************************
+  **************************************************************
+  If your facility has the Parata or Kirby Lester interface from ILC, this
+  patch will overwrite any "local" modifications in routines PSOCAN2,
+  PSOCAN3, PSOLBL, PSORXL and PSORXL1. This could affect certain orders
+  being sent across this interface.  The modifications will have to be
+  reintroduced following installation of this patch.
+  **************************************************************
+  **************************************************************
+  
+  
+ Patch Information:
+ ===============
+  
+ PSS_1_136.zip includes the components necessary for the
+ interface that will be used in MOCHA v1.0:
+  
+  PRE_I_3_INTERFACE_BUILD.KID (contains PSS*1*136) 
+  PSSPRE_1_0.XML     
+  
+  PRE_I_3_PHARMACY_BUILD.KID includes the following required patches to
+ enable the MOCHA v1.0 functionality:
+   
+  PSO*7*251
+  PSJ*5*181
+  OR*3*272
+  
+ These patches will be distributed as standalone patches via FORUM and will
+ support MOCHA v1.0:
+     PSS*1*117
+     PSO*7*375
+  
+ The software will be distributed in a controlled process due to the phased
+ implementation. During each implementation phase, the Implementation Team
+ will provide each site the instructions and location to obtain the
+ software.
+  
+ Please refer to the documentation referenced below for more information.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch. 
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+  #339431 - Outpatient Pharmacy allows entry of 2 Rxs for the same drug. 
+  #188098 - The display of the order checks and allergy information is
+ causing  confusion to the user when prompting to log an intervention.
+ It was not  clear which warnings the intervention is being logged for.
+ This patch is changing the display for the order checks and allergy
+ warnings. PSI-07-080 (HD0000000188098).
+  
+ Associated PSIs: 
+ ----------------
+ PSI-07-080 
+  
+ Components Exported With Patch: 
+ -------------------------------
+  
+ The following is a list of fields included in this patch:
+  
+ Field Name                 (Number)     File Name             (Number)
+ -----------------------------------     ------------------------------
+ DISCONTINUE TYPE             100.1      PRESCRIPTION             52
+  Description - This field is used to distinguish what type of external
+ discontinue action occurred for a prescription.
+  
+ RECENTLY DC'D/EXPIRED DAYS   3.2        OUTPATIENT SITE          59
+  Description - This field indicates the number of days a discontinued or
+ expired prescription appears in reverse video on a patient's medication
+ profile.
+                                                       
+  
+ The following is a list of options included in this patch:
+  
+ Option Name                 Type       Action
+ -----------                 ----       ------
+ PSO ORDER CHECKS VERIFY     Run        SEND TO SITE
+ PSO INTERACTION VERIFY      Run        DELETE AT SITE
+  
+                                          
+        ================OTHER=================
+  
+ The following menu item, PSO LM INTERVENTION MENU, was added to the
+ following menus, PSO HIDDEN ACTIONS #2, PSO HIDDEN ACTIONS #1 and PSO
+ HIDDEN ACTIONS. The following menu items are linked to the following menu
+ PSO LM INTERVENTION MENU, PSO LM DELETE INTERVENTION, PSO LM EDIT
+ INTERVENTION, PSO LM ADD INTERVENTION, PSO LM PRINT INTERVENTION and PSO LM
+ VIEW INTERVENTION.  None of the aforementioned menus or their menus items
+ are new for this release.
+  
+ The following is a list of protocols included in this patch:
+  
+  Protocol Name                                 ACTIONS
+  -------------------------------------------------------------------------- 
+  PSO HIDDEN ACTIONS #2                         USE AS LINK FOR MENU ITEMS
+  PSO LM ACTION PROFILE                         SEND TO SITE
+  PSO LM BACKDOOR SELECT ORDER                  SEND TO SITE
+  PSO LM DISPLAY ORDER STATUS                   SEND TO SITE
+  PSO LM HIDDEN OTHER                           SEND TO SITE
+  PSO LM INPATIENT MEDICATION PROFILE           SEND TO SITE
+  PSO LM MEDICATION PROFILE                     SEND TO SITE
+  PSO LM MULTI-RX PRINT                         SEND TO SITE
+  PSO LM NON-VA MEDS RPT                        SEND TO SITE
+  PSO LM PRINT MED INFO                         SEND TO SITE
+  PSO NEW ORDER                                 SEND TO SITE
+  PSO PATIENT INFORMATION                       SEND TO SITE
+  PSO PATIENT RECORD UPDATE                     SEND TO SITE
+  PSO SPEED CANCEL                              SEND TO SITE
+  PSO SPEED PULL SUSPENSE                       SEND TO SITE
+  PSO SPEED REFILL                              SEND TO SITE
+  PSO SPEED RELEASE                             SEND TO SITE
+  PSO SPEED RENEW                               SEND TO SITE
+  PSO SPEED REPRINT                             SEND TO SITE
+  VALM DOWN A LINE                              SEND TO SITE
+  VALM FIRST SCREEN                             SEND TO SITE
+  VALM GOTO PAGE                                SEND TO SITE
+  VALM LAST SCREEN                              SEND TO SITE
+  VALM LEFT                                     SEND TO SITE
+  VALM NEXT SCREEN                              SEND TO SITE
+  VALM PREVIOUS SCREEN                          SEND TO SITE
+  VALM PRINT LIST                               SEND TO SITE
+  VALM PRINT SCREEN                             SEND TO SITE
+  VALM QUIT                                     SEND TO SITE
+  VALM REFRESH                                  SEND TO SITE
+  VALM RIGHT                                    SEND TO SITE
+  VALM SEARCH LIST                              SEND TO SITE
+  VALM TURN ON/OFF MENUS                        SEND TO SITE
+  VALM UP ONE LINE                              SEND TO SITE
+  PSO HIDDEN ACTIONS #1                         USE AS LINK FOR MENU ITEMS
+  PSO LM INTERVENTION MENU                      SEND TO SITE
+  PSO LM DELETE INTERVENTION                    SEND TO SITE
+  PSO LM EDIT INTERVENTION                      SEND TO SITE
+  PSO LM ADD INTERVENTION                       SEND TO SITE
+  PSO LM PRINT INTERVENTION                     SEND TO SITE
+  PSO HIDDEN ACTIONS                            USE AS LINK FOR MENU ITEMS
+  PSO ACTIVITY LOGS                             SEND TO SITE
+  PSO LM BACKDOOR COPY                          SEND TO SITE
+  PSO HOLD                                      SEND TO SITE
+  PSO UNHOLD                                    SEND TO SITE
+  PSO VERIFY                                    SEND TO SITE
+  PSO REPRINT                                   SEND TO SITE
+  PSO PULL ONE RX FROM SUSPENSE                 SEND TO SITE
+  PSO DRUG RESTR/GUIDE INFO                     SEND TO SITE
+  PSO REJECT DISPLAY OUTSIDE CALL               SEND TO SITE
+  PSO LM VIEW INTERVENTION                      SEND TO SITE
+                                                                          
+  
+  Test Sites
+  ==========
+  BOISE, ID
+  CHARLESTON, SC
+  KANSAS CITY, MO
+  NORTHERN CALIFORNIA HCS, CA
+  PALO ALTO HCS, CA
+  TUSCALOOSA, AL
+                
+  
+                           Documentation Retrieval
+                           =======================
+  
+ Updated documentation describing the new functionality introduced by this
+ patch will be downloaded to sites from the FTP address as directed by the
+ MOCHA Implementation team.
+  
+ This documentation will be in the form of Adobe Acrobat files.
+  
+ The documentation distribution includes:
+  
+    FILE NAME                    DESCRIPTION
+    =========                    ===========
+  
+ PSO_7_MAN_UM_R0411.PDF          Outpatient Pharmacy V. 7.0 Manager's User
+                                 Manual
+ PSO_7_P251_MAN_UM_CP.PDF        Outpatient Pharmacy V. 7.0 Manager's User
+                                 Manual Change Pages
+  
+ PSO_7_PHAR_UM_R0411.PDF         Outpatient Pharmacy V. 7.0 Pharmacist's
+                                 User Manual
+ PSO_7_P251_PHAR_UM_CP.PDF       Outpatient Pharmacy V. 7.0 Pharmacist's
+                                 User Manual Change Pages
+  
+ PSO_7_TECH_UM_R0411.PDF         Outpatient Pharmacy V. 7.0 Technician's
+                                 User Manual
+ PSO_7_P251_TECH_UM_CP.PDF       Outpatient Pharmacy V. 7.0 Technician's
+                                 User Manual Change Pages
+  
+ PSO_7_TM_R0411.PDF              Outpatient Pharmacy V. 7.0 Technical
+                                 Manual/Security Guide
+ PSO_7_P251_TM_CP.PDF            Outpatient Pharmacy V. 7.0 Technical
+                                 Manual/Security Guide Change Pages
+  
+ PSO_7_PSJ_5_PSS_1_RN.PDF        Medication Order Check Healthcare
+                                 Application (MOCHA) v1.0 Release Notes
+  
+ PSS_1_IG_R0411.PDF              VistA to MOCHA v1.0 Interface Installation
+                                 Guide
+  
+ MOCHA_CB_PSS_1_P117_IG.PDF      MOCHA v1.0 Combined Build Installation Guide
+  
+     Documentation can also be retrieved from the Vista Software
+     Documentation Library (VDL) on the Internet at the following address:
+     http://www.va.gov/vdl.
+    
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ Sites will be given access to the VISTA TO MOCHA V1.0 INTERFACE INSTALLATION
+ GUIDE and the MOCHA V1.0 COMBINED BUILD INSTALLATION GUIDE during their
+ implementation.
+  
+  
+ The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 202
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO251PO
+    Before:       n/a   After:  B7870474  **251**
+Routine Name: PSOAUTOC
+    Before: B66619284   After: B66695978  **3,24,30,36,88,146,132,223,
+                                           148,249,324,251**
+Routine Name: PSOBUILD
+    Before: B39788051   After: B42733386  **23,82,119,132,235,206,251**
+Routine Name: PSOCAN
+    Before: B47289602   After: B49079548  **11,21,24,27,32,37,88,117,131,
+                                           185,253,251**
+Routine Name: PSOCAN2
+    Before: B71168070   After: B76842420  **8,18,62,46,88,164,235,148,
+                                           259,281,287,251**
+Routine Name: PSOCAN3
+    Before: B70537692   After: B71472770  **15,24,27,32,36,94,88,117,131,
+                                           146,139,132,223,235,148,249,
+                                           225,324,251**
+Routine Name: PSOCMOP
+    Before: B37104900   After: B39239270  **2,16,21,27,43,61,126,148,274,
+                                           347,251**
+Routine Name: PSOCPPRE
+    Before:       n/a   After: B10424566  **251**
+Routine Name: PSODDPR1
+    Before:       n/a   After: B53867555  **251**
+Routine Name: PSODDPR2
+    Before:       n/a   After:B152050761  **251**
+Routine Name: PSODDPR3
+    Before:       n/a   After:B158305951  **251**
+Routine Name: PSODDPR4
+    Before:       n/a   After: B78835687  **251**
+Routine Name: PSODDPR5
+    Before:       n/a   After: B70994765  **251**
+Routine Name: PSODDPRE
+    Before:       n/a   After:B115217514  **324,251**
+Routine Name: PSODELI
+    Before:  B2912116   After:  B7741003  **10,268,251**
+Routine Name: PSODGAL1
+    Before:       n/a   After: B18486423  **251**
+Routine Name: PSODGDG1
+    Before: B34909765   After: B41300360  **251**
+Routine Name: PSODGDG2
+    Before: B12156402   After: B14020404  **27,130,251**
+Routine Name: PSODGDGP
+    Before:       n/a   After: B48532465  **251**
+Routine Name: PSODOSCL
+    Before:       n/a   After: B27277557  **251**
+Routine Name: PSODOSU2
+    Before:       n/a   After: B79224153  **251**
+Routine Name: PSODOSUN
+    Before:       n/a   After: B34559589  **251**
+Routine Name: PSODOSUT
+    Before:       n/a   After:B107545070  **251**
+Routine Name: PSODRDU2
+    Before: B29471172   After: B21988780  **132,251**
+Routine Name: PSODRG
+    Before: B38932823   After: B61621761  **20,23,36,53,54,46,112,139,
+                                           207,148,243,268,324,251**
+Routine Name: PSODSPL
+    Before: B19120882   After: B20367519  **132,251**
+Routine Name: PSOFUNC
+    Before:  B6545033   After:  B6752191  **146,223,249,251**
+Routine Name: PSOHLNEW
+    Before: B80638841   After: B83284791  **1,7,15,46,71,98,111,124,117,
+                                           131,146,132,143,223,235,148,
+                                           239,249,225,324,251**
+Routine Name: PSOLBL
+    Before: B63221606   After: B65338340  **8,19,30,36,47,71,92,120,157,
+                                           244,206,225,303,266,326,251**
+Routine Name: PSOLBLD
+    Before: B27529765   After: B32921586  **117,251**
+Routine Name: PSOLBLN
+    Before: B33988152   After: B58195867  **16,36,71,107,110,117,135,233,251**
+Routine Name: PSOLLL8
+    Before: B24617611   After: B27800299  **120,251**
+Routine Name: PSOLLLI
+    Before: B66532826   After: B67875911  **120,157,189,161,244,200,206,
+                                           225,303,266,326,251**
+Routine Name: PSOLMAO
+    Before:   B247627   After:  B1822420  **225,251**
+Routine Name: PSON52
+    Before: B64423774   After: B70712029  **1,16,23,27,32,46,71,111,124,
+                                           117,131,139,157,143,219,148,
+                                           239,201,268,260,225,303,358,
+                                           251**
+Routine Name: PSONEW
+    Before: B28292272   After: B28582823  **11,27,32,46,94,130,268,225,251**
+Routine Name: PSONEW2
+    Before: B32398190   After: B41668970  **32,37,46,71,94,124,139,157,
+                                           143,226,237,239,225,251**
+Routine Name: PSOORDRG
+    Before: B43080029   After: B43185005  **3,29,49,46,81,105,134,144,
+                                           132,188,207,148,243,251**
+Routine Name: PSOORED2
+    Before: B73436344   After: B74670919  **2,51,46,78,102,114,117,133,
+                                           159,148,247,260,281,289,276,
+                                           358,251**
+Routine Name: PSOORED3
+    Before: B56356282   After: B61521458  **46,78,99,117,133,148,249,251**
+Routine Name: PSOORED4
+    Before: B47668549   After: B52076927  **46,91,78,99,111,117,133,159,
+                                           148,251**
+Routine Name: PSOORED5
+    Before: B54868370   After: B59866468  **46,75,78,100,99,117,133,251**
+Routine Name: PSOORED6
+    Before: B63277277   After: B68912143  **78,104,117,133,143,219,148,
+                                           247,268,260,269,251**
+Routine Name: PSOORFI4
+    Before: B81135007   After: B81645508  **46,74,78,99,117,131,207,258,
+                                           274,300,308,251**
+Routine Name: PSOORNE1
+    Before: B69029902   After: B73585771  **11,21,27,32,37,46,71,94,104,
+                                           117,133,148,279,251**
+Routine Name: PSOORNE2
+    Before: B68054586   After: B68912310  **11,21,23,27,32,37,46,84,103,
+                                           117,131,146,156,210,148,222,
+                                           238,264,281,289,251**
+Routine Name: PSOORNEW
+    Before: B72157265   After: B74656936  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251**
+Routine Name: PSOORNW1
+    Before: B43500701   After: B44316879  **23,46,78,117,131,133,172,148,
+                                           222,268,206,251**
+Routine Name: PSOORNW2
+    Before: B45461771   After: B45717814  **10,23,37,46,117,131,133,148,
+                                           222,269,206,251**
+Routine Name: PSOORRD2
+    Before: B23700480   After: B24528466  **207,251**
+Routine Name: PSOORRDI
+    Before: B63177422   After: B49421616  **207,243,251**
+Routine Name: PSOORROC
+    Before:       n/a   After: B54619210  **251**
+Routine Name: PSOORUT1
+    Before: B71103407   After: B78073421  **1,14,30,46,132,148,233,274,
+                                           225,305,289,251**
+Routine Name: PSOP1
+    Before: B26127323   After: B26371231  **15,46,103,132,148,233,326,251**
+Routine Name: PSORENW0
+    Before: B79577371   After: B84117072  **11,27,32,59,64,46,71,96,100,
+                                           130,237,206,251**
+Routine Name: PSORN52
+    Before: B47667744   After: B50777957  **1,11,27,37,46,79,71,100,117,
+                                           157,143,219,148,239,201,225,
+                                           303,358,251**
+Routine Name: PSORN52C
+    Before: B49927643   After: B50060838  **1,7,11,27,46,75,87,100,111,
+                                           124,117,131,146,148,200,225,
+                                           251**
+Routine Name: PSORX1
+    Before: B63276635   After: B66023082  **7,22,23,57,62,46,74,71,90,
+                                           95,115,117,146,139,135,182,195,
+                                           233,268,300,170,320,326,324,
+                                           334,251**
+Routine Name: PSORXI
+    Before: B11542094   After: B15085329  **268,324,251**
+Routine Name: PSORXL
+    Before: B74408988   After: B74408988  **8,21,24,32,47,135,148,287,334,251**
+Routine Name: PSORXL1
+    Before: B49207569   After: B52372204  **36,46,148,260,274,287,289,358,251**
+Routine Name: PSORXPR
+    Before: B29756238   After: B29984044  **131,156,148,251**
+Routine Name: PSORXRP2
+    Before: B33732214   After: B33732214  **11,27,120,138,135,156,185,280,251**
+Routine Name: PSOVER
+    Before: B63192896   After: B81926399  **16,21,27,117,131,146,251**
+Routine Name: PSOVER1
+    Before: B57808886   After:B108309187  **32,46,90,131,202,207,148,243,
+                                           268,281,324,358,251**
+Routine Name: PSOVER2
+    Before: B13290514   After: B13436802  **131,251**
+Routine Name: PSOVRPT
+    Before: B19486000   After: B19926932  **251**
+ 
+Routine list of preceding patches: 253, 279, 280, 308, 334, 347, 358
+
+=============================================================================
+User Information:
+Entered By  : RUZBACKI,RON T                Date Entered  : JUL 07, 2006
+Completed By: CHALASANI,LAKSHMI             Date Completed: APR 19, 2011
+Released By : VECE,VIRGINIA                 Date Released : APR 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

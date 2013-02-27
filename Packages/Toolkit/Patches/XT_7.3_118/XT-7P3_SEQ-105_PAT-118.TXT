@@ -1,0 +1,119 @@
+$TXT Created by DIMICELI,RON at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 04/14/10 at 13:09
+=============================================================================
+Run Date: FEB 13, 2012                     Designation: XT*7.3*118
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3       SEQ #105                    Status: Released
+                  Compliance Date: MAR 15, 2012
+=============================================================================
+
+
+Subject: Fixes three bugs in Parameter Tool
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects three bugs in the Parameter Tool.
+ Remedy ticket 288770 noted that when using the 'Edit Parameter Values with
+  Template' option, a user can get stuck in a loop and can only exit if
+  they hit the control 'C' key.
+ Remedy ticket 317838 noted a subscript error when the pointer relationship
+  defined in the Parameter Tool is corrupted. 
+ Remedy ticket 386077 reported a subscript error at GET+10^XPAR when a Ward
+  Location contains multiple periods, i.e. 'TEST,DOCTOR M.D.'. 
+  
+ Remedy Ticket
+ =============
+  288770
+  317838
+  386077
+  
+ Thanks to Test Sites:
+ =====================
+  E. Colorado HCS
+  Milwaukee VAMC
+  White City VAMC 
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - 1/15/2009
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*118 contains 
+   changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+   VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+   not alter or modify any VistA Blood Bank software design safeguards or
+   safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XT*7.3*118 have no effect on Blood Bank
+  software functionality, therefore RISK is none.
+  
+  
+ Installation Instructions
+ =========================
+ ** Although queuing of this patch is allowed, it is HIGHLY RECOMMENDED
+ that ALL Users be off the system and VISTA Background jobs be STOPPED
+ before this patch is installed. TaskMan should be stopped or placed in
+ a wait state. Failure to do so may result in 'source routine edited'
+ errors. **
+  
+ The following installation instructions are based upon the premise 
+ that the installer has heeded the above warning.
+  
+ Installation should take less than one minute.
+  
+     1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+        This option will load the KIDS package onto your system.  
+  
+     2. The patch has now been loaded into a transport global on your 
+        system. You now need to use KIDS to install the transport global.  
+   
+     3. On the KIDS menu, under the 'Installation' menu, use the 
+        following options: 
+            Print Transport Global 
+            Compare Transport Global to Current System 
+            Verify Checksums in Transport Global
+            Backup a Transport Global 
+  
+      4. In accordance with the warning at the beginning of the 
+        installation instructions, make sure ALL interactive processes, and 
+        ALL non-interactive background jobs are stopped following your site 
+        specific procedures. TaskMan should be stopped or placed in a wait
+        state.  All users should be off the system. NOT performing this step
+        could result in 'source routine edited' error.
+  
+        On the KIDS menu, under the 'Installation' menu, use the 
+        following option: 
+            Select Installation Option: Install Package(s) 
+            Select INSTALL NAME: XT*7.3*118
+                                 ==========
+        Want KIDS to INHIBIT LOGONs during the install? YES
+        Want to DISABLE Scheduled Options, Menu Options, and Protocols? YES
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XPAR1
+    Before: B14526151   After: B14870924  **26,118**
+Routine Name: XPAREDIT
+    Before: B13536584   After: B13971261  **26,118**
+ 
+Routine list of preceding patches: 26
+
+=============================================================================
+User Information:
+Entered By  : DIMICELI,RON                  Date Entered  : DEC 04, 2008
+Completed By: SINGH,GURBIR                  Date Completed: JAN 25, 2012
+Released By : TILLIS,LEWIS                  Date Released : FEB 13, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,204 @@
+$TXT Created by WINTERTON,STEVEN B at DEVFEY.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 04/06/11 at 10:19
+=============================================================================
+Run Date: JUL 06, 2011                     Designation: DVBA*2.7*165
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #146                    Status: Released
+                  Compliance Date: AUG 06, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*149<<= must be installed BEFORE `DVBA*2.7*165'
+
+Subject: CAPRI Version Shutoff Parameter Update
+
+Category: 
+  - Enhancement (Mandatory)
+  - Informational
+
+Description:
+============
+
+    ************************ I M P O R T A N T *************************
+    ****                                                            ****
+    **** Installing this patch will prevent older versions of the   ****
+    ****   CAPRI GUI from accessing your VistA system. The newest   ****
+    ****    CAPRI version was released with patch DVBA*2.7*149.     ****
+    ****                                                            ****
+    ********************************************************************
+  
+ I. OVERVIEW
+  
+    This patch introduces (M)UMPS server side changes to the VistA Automated
+    Medical Information Exchange (AMIE) module in support of the Compensation
+    & Pension Record Interchange (CAPRI) package. CAPRI is a graphical user
+    interface (GUI) for the VistA Automated Medical Information Exchange
+    (AMIE) menu options.
+  
+    The purpose of this patch is to prevent CAPRI users from using older,
+    unsupported versions of the CAPRI GUI.   
+  
+ II. FUNCTIONAL OVERVIEW
+  
+    This patch updates CAPRI parameters in VistA through the post-install
+    routine DVBA165P that enforces a new required minimum version when 
+    executing the CAPRI GUI. Users signing in with CAPRI will now be
+    required to be running the latest released version of the CAPRI GUI,
+    DVBA*2.7*149.
+  
+    After this patch is installed, users who are not running the latest 
+    CAPRI GUI (DVBA*2.7*149) will not be allowed to continue using their
+    outdated version of CAPRI. Installing/Upgrading to the latest version
+    of CAPRI will be necessary in order to continue using this application.
+   
+ III. SOFTWARE & DOCUMENTATION RETRIEVAL
+  
+  The following section provides information regarding the retrieval of
+  the software and related user documentation.
+  
+  1. VistA Patch DVBA*2.7*165
+     a. This patch is being distributed as a PackMan patch message 
+        through the National Patch Module (NPM). The KIDS build for this
+        patch is DVBA*2.7*165.
+  
+  2. User Documentation
+     a. The user documentation for this patch may be retrieved directly
+        using FTP. The preferred method is to FTP the files from:
+  
+            download.vista.med.va.gov
+  
+        This transmits the files from the first available FTP server.
+      
+        Sites may also elect to retrieve documentation directly from a
+        specific server as follows:
+  
+        OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+        -----------------       -----------                ---------
+        Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+        Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+        Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+        The following files will be available:
+  
+           File Name                        Format  Description
+           -------------------------------- ------  ---------------
+           DVBA_27_P165_RN.PDF              Binary  Release Notes
+  
+     b. Documentation may also be retrieved from the VistA Documentation
+        Library (VDL) on the Internet at the following address. This web
+        site is usually updated within 1-3 days of the patch release date.
+  
+                http://www4.va.gov/vdl/application.asp?appid=133
+  
+ IV. INSTALLATION REQUIREMENTS/NOTES:
+  
+  1. Users on the System
+  
+     a. This patch (DVBA*2.7*165) may be installed while users are on the
+        system and/or while CAPRI users are still using a version of the
+        CAPRI GUI which after installation will become invalid.
+  
+     b. Once the installation of this patch has been completed, users will
+        be required to be upgraded to the latest released version
+        (DVBA*2.7*149) of the CAPRI GUI prior to logging into the 
+        application again. 
+  
+  2. VistA Options
+         
+     a. There are no VistA options to disable while installing this patch.
+  
+  3. Software Installation Time
+  
+     a. The estimated installation time for VistA patch DVBA*2.7*165 is less 
+        than a minute during off peak hours.
+   
+  4. Required Builds
+  
+     a. The following is a list of REQUIRED builds for this KIDS
+        distribution (DVBA*2.7*165). KIDS will not allow the installation
+        of this patch without its prior installation.
+  
+        Required Builds:
+        ----------------
+        DVBA*2.7*149
+  
+ V. INSTALLATION INSTRUCTIONS:
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+    2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+  
+    3. From this menu, you may now elect to use the following options (when
+       prompted for INSTALL NAME, enter DVBA*2.7*165).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+    4. Use the Install Package(s) option and select package DVBA*2.7*165.
+  
+    5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//', respond NO.
+  
+    6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', it is recommended you answer NO.
+  
+    7. When prompted to 'Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//', answer NO.
+  
+    8. NOTE: CAPRI GUI users will be required to be upgraded to the latest
+       version (DVBA*2.7*149) of the CAPRI GUI, prior to logging into the
+       application. Users already logged into the CAPRI GUI will be 
+       unaffected until they sign-off and try to log in again.
+  
+    9. NOTE: Post-Init routine DVBA165P is a temporary routine used as part
+       of the install process and will be automatically deleted by KIDS 
+       after patch installation. However, in some cases Cache doesn't always
+       delete the routine. You may delete it manually if you discover this
+       routine on your system.
+  
+ V. TEST SITES
+  
+    The following sites participated in the testing of this patch
+    (DVBA*2.7*165):
+  
+    Test Sites:
+    -----------
+     * Alexandria, LA VAMC
+     * North Florida/South Georgia
+     * Greater Los Angeles HSC
+     * Denver VA Medical Center
+     * Upstate New York HSC
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA165P
+    Before:       n/a   After:  B2381474  **165**
+
+=============================================================================
+User Information:
+Entered By  : FAIRBROTHER,EILEEN            Date Entered  : NOV 23, 2010
+Completed By: DELACRUZ,KRISTINA             Date Completed: JUL 05, 2011
+Released By : FRANCE,KATHI                  Date Released : JUL 06, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

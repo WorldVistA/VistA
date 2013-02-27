@@ -1,0 +1,182 @@
+$TXT Created by TATUM,BILL at MDEVCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Friday, 10/07/11 at 12:46
+=============================================================================
+Run Date: APR 26, 2012                     Designation: PSS*1*167
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #149                      Status: Released
+                  Compliance Date: MAY 27, 2012
+=============================================================================
+
+
+Subject: PDM/PPS-N SECURITY KEY PATCH
+
+Category: 
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+  
+  This patch is an enhancement patch. It will create five (5) new security
+  keys. They will be used to authenticate users using Kernel Authentication
+  & Authorization for J2EE (KAAJEE). Users who will need to access the
+  Pharmacy Product System-National (PPS-N) should be assigned these keys
+  after installing this patch, as appropriate. Site users may be assigned
+  the PSS_PPSN_VIEWER key only. The other four security keys are only to be
+  assigned to members of the National NDF Management Group.
+  
+  PPS-N is a new development effort underway, which is a  re-engineered
+  product to eventually replace the National Drug File Management System
+  (NDFMS).
+  
+  No routines are included in this patch.
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Associated PSIs: 
+ ----------------
+ N/A 
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ N/A
+  
+ Components Exported With Patch: 
+ -------------------------------
+  
+  
+ The following is a list of Security Keys included in this patch:
+  
+ Security Key Name               Action
+ -------------------             -------
+ PSS_PPSN_MANAGER                SEND TO SITE
+ PSS_PPSN_MIGRATOR               SEND TO SITE
+ PSS_PPSN_SECOND_APPROVER        SEND TO SITE
+ PSS_PPSN_SUPERVISOR             SEND TO SITE
+ PSS_PPSN_VIEWER                 SEND TO SITE
+  
+  
+                                                                          
+ Documentation Retrieval:
+ ------------------------
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+ Albany          ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines           ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City  ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation may also be found on the VA Software Documentation Library
+ at:  http://www.va.gov/vdl/ 
+  
+  
+ File Description                            File Name/ FTP Mode
+ ---------------------------------------------------------------------------
+ PDM Technical Manual/Security Guide         PSS_1_TM_R0312.PDF (binary)
+ PDM Technical Manual Change Pages           PSS_1_P167_TM_CP.PDF (binary)
+  
+  
+  
+ Test Sites:
+ -----------
+ Boise, ID
+ Charleston, SC 
+ Kansas City, MO
+ Northern California HCS, CA
+ Palo Alto HCS, CA
+ Tuscaloosa, AL
+  
+                
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ This patch should not be installed when Pharmacy Data Management options
+ are being used. We recommend it should be installed during Non-Peak hours.
+  
+ Install Time - less than 3 minutes
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option to unload the build.  
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSS*1.0*167):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter "PSS*1.0*167" at the INSTALL NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//'  answer NO
+  
+ ************ POST-INSTALLATION INSTRUCTIONS **************
+  
+ Not Applicable
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : TATUM,WILLIAM                 Date Entered  : JUL 08, 2011
+Completed By: SAVKOVIC,DAVID                Date Completed: APR 26, 2012
+Released By : SEBURN,CINDY L                Date Released : APR 26, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

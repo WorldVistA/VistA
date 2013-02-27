@@ -1,0 +1,296 @@
+$TXT Created by CURTIS,RICHARD L at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 10/28/11 at 16:11
+=============================================================================
+Run Date: DEC 23, 2011                     Designation: SD*5.3*560
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #476                    Status: Released
+                  Compliance Date: JAN 23, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*158  <<= must be installed BEFORE `SD*5.3*560'
+
+Subject: FIX SEVERAL ISSUES WITH THE EDIT OUTPATIENT ENCOUNTER OPTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will fix several issues when users execute the menu option
+ Edit Outpatient Encounter [SCENI OP ENCOUNTER EDIT].
+ Additionally, updates to the Scheduling User Manual - Supervisor 
+ Ambulatory Care Menu has been made.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1.  HD0000000314908 - How to change stop code entry
+  
+ 2.  HD0000000345881 - Issues with Edit Outpatient Encounter option
+  
+ 3.  HD0000000356560 - Appointment Type edits with Edit Outpatient 
+                       Encounter option
+  
+ 4.  HD0000000360131 - Editing Stop Codes allows selection of Inactive
+                       Stop Codes
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Montana HCS
+ Louisville, KY
+  
+  
+ REMEDY OVERVIEW:
+ =======================
+ 1. HD0000000314908 - How to change stop code entry
+  
+ Problem:
+ --------
+ If a clinic was set up with the incorrect primary stop code, the primary 
+ stop code for an encounter may need to be updated.
+ The stop code can be edited using the Incomplete Encounter Management 
+ Module (IEMM) menu option Edit Outpatient Encounter [SCENI OP ENCOUNTER
+ EDIT].  When this option is used to edit the primary stop code, it will
+ update the Outpatient Encounter file (#409.68) with the new primary stop
+ code and the Visit file (#9000010) for the record that is linked to the
+ Encounter.  It will also mark the Encounter in the Transmitted Outpatient
+ Encounter file (#409.73) for transmission required.
+ However, if the Encounter being edited is not associated with a 
+ scheduled appointment, this option will only update the Outpatient
+ Encounter file (#409.68).  The Transmitted Outpatient Encounter file 
+ (#409.73) will not be updated or flagged for transmission.
+  
+ Resolution:
+ -----------
+ Routine SCENIA2 will be modified so that when the primary stop code is 
+ updated for an encounter via the Edit Outpatient Encounter
+ [SCENI OP ENCOUNTER EDIT] option, the following files will be updated:
+ - The Outpatient Encounter file (#409.68);
+ - The Visit file (#9000010), for the record that is linked to the 
+ encounter;
+ - The Transmitted Outpatient Encounter file (#409.73), whether 
+ or not the encounter is associated with a scheduled appointment.
+  
+  
+ 2. HD0000000345881 - Issues with Edit Outpatient Encounter option
+  
+ Problem:
+ --------
+ If the Medical Center Division for an encounter is edited via the option 
+ Edit Outpatient Encounter [SCENI OP ENCOUNTER EDIT], the Visit file 
+ and the credit Visit file (if applicable) are not updated regardless
+ whether or not an appointment is associated with the encounter and the
+ encounter is not flagged for transmission required.
+  
+ Secondly, when the encounter is associated with an appointment and the
+ patient Eligibility on an encounter is edited via option Edit Outpatient
+ Encounter [SCENI OP ENCOUNTER EDIT], the appropriate files are updated:
+ - The Outpatient Encounter file (#409.68);
+ - The Credit or "Child" Encounter record, if applicable, (#409.68);
+ - The Visit file (#9000010);
+ - The credit or "child" Visit record, if applicable, (#9000010).
+ - The encounter is appropriately flagged for transmission required in the
+   Transmitted Outpatient Encounter file (#409.73),
+ However, if the encounter is not associated with an appointment, the 
+ Visit file and the Credit file, if applicable, are not updated.  Also, the
+ encounter is not flagged for transmission required. 
+  
+ Thirdly, if the Appointment Type for an encounter is edited via this
+ option, the encounter is not flagged for transmission required in
+ the Transmitted Outpatient Encounter file (#409.73), if the 
+ encounter is not associated with an appointment.  This edit does
+ not apply to the Visit record(s).
+  
+  
+ Resolution:
+ -----------
+ Routine SCENIA2 will be modified so that when any of the above
+ edits are made via option Edit Outpatient Encounter [SCENI OP
+ ENCOUNTER EDIT], the appropriate Visit records will be updated
+ regardless whether or not the encounter is associated with an
+ appointment and the encounter will be flagged for transmission
+ required.
+  
+  
+ 3. HD0000000356560 - Appointment Type edits with Edit Outpatient
+                      Encounter option
+  
+ Problem:
+ --------
+ As part of the Clinical Indicator Data Capture (CIDC) project,
+ Patient Care Encounter (PCE) patch PX*1.0*124, introduced new
+ functionality that now auto-populates the Encounter level
+ Service Connection Indicator.  The Scheduling Appointment Type
+ logic uses the Service Connection Indicator to determine if the
+ Appointment Type in the Outpatient Encounter file should be Service
+ Connected or not.  To insure compliance with this functionality, the Edit
+ Outpatient Encounter option [SCENI OP ENCOUNTER EDIT], should be
+ modified so that an Appointment Type of Service Connected cannot be edited
+ and any other Appointment Type cannot be changed to Service
+ Connected.  Editing the Eligibility also needs to be prohibited
+ when the encounter is Service Connected.
+  
+  
+ Resolution:
+ -----------
+ Routine SCENIA2 will be modified to prohibit editing the
+ Appointment Type field or the Eligibility for a selected encounter if
+ it is currently set to Service Connected.  If an attempt is made to
+ edit the Appointment Type for a selected encounter from any Appointment
+ Type value to Service Connected the validation logic will not allow it.
+  
+ If an attempt is made to edit an encounter where the Service Connection
+ Indicator in the associated Visit record equals 1 (Yes - Service
+ Connected), the following message will now be displayed:
+  
+ The Visit associated with the selected encounter is SERVICE CONNECTED.
+ You cannot edit the Appointment Type or Eligibility for this encounter.
+  
+ If an attempt is made to edit the Appointment Type to Service Connected,
+ the following message will now be displayed:
+  
+ The Visit entry associated with the selected encounter is NOT SERVICE
+ CONNECTED.  You cannot change the Appointment Type to SERVICE 
+ CONNECTED.
+  
+ The second message shown above is being added because currently all
+ the option echoes back to the user is "Updating Completed.", giving
+ the user the false impression that the change was made, when it was
+ not.  The message will only display when applicable.
+  
+  
+ 4. HD0000000360131 - Editing Stop Codes allows selection of Inactive Stop
+                      Codes
+  
+ Problem:
+ ---------
+ Currently, when option Edit Outpatient Encounter [SCENI OP ENCOUNTER
+ EDIT] is used to edit a Stop Code, the option allows the user to
+ select Inactive Stop Codes and proceeds to update the Outpatient
+ Encounter file (#409.68) record with the Inactive stop code selected.
+ Additionally, the option will also allow the user to select Stop Codes
+ that have a Restriction Type of "S" (secondary only).
+  
+ Resolution:
+ -----------
+ Routine SCENIA2 will be modified to check if a selected Stop Code is
+ Inactive or if the Restriction Type equals "S".  If the selected Stop
+ Code is Inactive, the software will also check to see if the Inactive
+ date is before or after the date of the selected encounter that is
+ being edited.  If it is prior to the encounter date, the following
+ message will be displayed to the user and they will not be allowed to
+ select the Stop Code:
+  
+ Sorry, that Stop Code was INACTIVE at the time of the selected 
+ encounter.
+  
+ After the above message is displayed, the user will be returned to the
+ Clinic Stop Code prompt.
+    
+ An additional check will also be made for the Stop Code Restriction
+ Type.  If it equals "S" (secondary only), the Restriction Date will
+ then be checked.  If this date is prior to the encounter date, the
+ following message will be displayed to the user and they will not be
+ allowed to select the Stop Code.  Following the message display, the
+ user will be returned to the Clinic Stop Code prompt:
+  
+ Sorry, the Restriction Type for that Stop Code is 'S' (secondary only).
+ You cannot select this stop code.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Users can be on the system during the installation of this patch.
+  
+ Installation should take less than 5 minutes.
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+     Select Kernel Installation & Distribution System Option:  INStallation
+                                                               ---
+  
+     1     Load a Distribution
+     2     Verify Checksums in Transport Global
+     3     Print Transport Global
+     4     Compare Transport Global to Current System
+     5     Backup a Transport Global
+     6     Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter SD*5.3*560):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will NOT
+         backup any other changes such as DDs or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed.  It compares all components of the patch
+         (routines, DDs, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+  
+     d.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+  
+ 4.  Use the Install Package(s) option and select the package SD*5.3*560.
+  
+     a.  When prompted "Want KIDS to INHIBIT LOGONS during the
+         install? NO//", respond No.
+  
+     b.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//", respond Yes.
+  
+         1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+            Edit Outpatient Encounter [SCENI OP ENCOUNTER EDIT]
+  
+         2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCENIA2
+    Before: B34322513   After: B89792782  **66,132,158,560**
+ 
+Routine list of preceding patches: 158
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : JUL 27, 2009
+Completed By: WERNER,GARY                   Date Completed: DEC 12, 2011
+Released By : BENBOW,PHYLLIS O              Date Released : DEC 23, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

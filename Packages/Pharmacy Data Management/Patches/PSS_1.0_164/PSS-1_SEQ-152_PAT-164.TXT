@@ -1,0 +1,297 @@
+$TXT Created by TATUM,BILL at MDEVCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Tuesday, 09/11/12 at 12:53
+=============================================================================
+Run Date: FEB 11, 2013                     Designation: PSS*1*164
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #152                      Status: Released
+                  Compliance Date: MAR 13, 2013
+=============================================================================
+
+Associated patches: (v)PSS*1*117   <<= must be installed BEFORE `PSS*1*164'
+                    (v)PSS*1*168   <<= must be installed BEFORE `PSS*1*164'
+
+Subject: MOCHA v1.0 Enhancements 1 PDM
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ ***************************Attention*************************
+ This patch is part of the Medication Order Check Healthcare Application
+ (MOCHA) v1.0 Enhancements 1 group of patches. There are a total of eight
+ patches and one .KID (host) file that must be installed as a group. The
+ patches must be installed in the following order:
+  
+ OR*3*352
+ PSS*1*164
+ PSS*1*169
+ PSO*7*390
+ PSO*7*417
+ PSJ*5*268
+ <xxx>_1_0_P23.KID
+ PSJ*5*260
+ PSJ*5*288
+  
+ For the".KID" file, value of <xxx> will be determined by the ward 
+ automated dispensing equipment in use at your facility. If no 
+ ward automated dispensing equipment is in use at your site, this 
+ file will not be needed.  For those sites using Pyxis, xxx=PPU, for 
+ Omnicell, xxx=OPU and for McKesson sites, xxx=MPU. To obtain this 
+ file or if additional information is required regarding this 
+ ".KID" file, please contact your site's Informatix contact.
+  
+  This patch makes three enhancements to Pharmacy Data Management (PDM)
+  and re-introduces an option from PSS*1*129 as a "stand alone" option:
+  
+  The first enhancement adds a new menu option under the menu option
+  entitled "PEPS Services" [PSS PEPS SERVICES]. This new option is entitled
+  "Print Interface Data File" [PSS VENDOR INTERFACE REPORT]. This report
+  prints entries from the VENDOR INTERFACE DATA file (#59.74). The user is
+  asked for a date/time range and the report is sorted by the most recent
+  downtime first.
+  
+  The second enhancement is a change to the menu option entitled
+  "Check PEPS Services Setup" [PSS CHECK PEPS SERVICES SETUP]. Additional
+  functionality is provided to the user with a device prompt to send the
+  output to a printer device or they may choose to print to the screen.
+  
+  The third enhancement deals with the way entries in the DOSE UNITS file
+  (#51.24) are displayed. Some of the entries in this file are composed
+  of TallMan lettering (mixed case). Under the menu option entitled
+  "Request Change to Dose Unit" [PSS DOSE UNIT REQUEST], if a user
+  requests a change to an entry that is composed of Tallman lettering,
+  previously, these entries did not collate as desired. Any entry
+  composed of TallMan lettering is converted to uppercase when doing the
+  lookup so that alphabetic sorting is maintained while still preserving
+  TallMan lettering. A Post-Install routine PSS164P is included to re-index
+  the DOSE UNITS file (#51.24).
+  
+  The option "Find Unmapped Local Possible Dosages" [PSS LOCAL DOSAGES
+  EDIT ALL] is exported and re-introduced as a "stand alone" option. The
+  option loops through all Local Possible Dosages, identifies entries
+  eligible for dosage checks that do not have data in the new Dose Unit
+  and Numeric Dose fields, and prompts for data entry into these fields.
+  It was purposely deleted with the install of MOCHA V1.0. It was thought
+  that it was no longer needed. It is being exported at the request of
+  the sites. It was found that some had not fully mapped their dosages
+  completely and have since added new drugs to DRUG file (#50) as well
+  as have unmatched some drugs to National Drug File (NDF).
+  
+ Files & Fields Accociated
+  
+ File Name (Number)          Field Name (Number)        
+ New/Modified/Deleted
+ --------------------        --------------------       -----------------
+ DOSE UNITS (51.24)          NAME (.01)                 Modified
+  A Partial Data Dictionary is sent with a New Style Cross-reference used 
+ for sorting and lookup (UPCASE).
+  
+ VENDOR INTERFACE            DATE/TIME VENDOR           Modified
+                             UNAVAILABLE (.01) DATA (59.74)
+  
+ VENDOR INTERFACE            DATE/TIME VENDOR           Modified
+                             AVAILABLE (1) DATA (59.74)
+  A Partial Data Dictionary is sent.
+                                                       
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                   Type         New/Modified/Deleted
+ -----------                   ----         --------------------
+ PSS PEPS SERVICES             Menu         Modified
+ PSS CHECK VENDOR DATABASE LINK Run         Modified
+ PSS Check PEPS SERVICES SETUP  Run         Modified
+ PSS LOCAL DOSAGES EDIT ALL     Run         Modified  (Stand Alone)
+ PSS SCHEDULE PEPS INTERFACE CK Run         Modified
+ PSS VENDOR INTERFACE REPORT    Run         New
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+  
+ Associated PSIs: 
+ ----------------
+ N/A 
+  
+                                                                          
+ Documentation Retrieval:
+ ------------------------
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+ Albany          ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines           ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City  ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library
+ at:  http://www.va.gov/vdl/ 
+  
+  
+  
+    FILE NAME                    DESCRIPTION
+    =========                    ===========
+  
+ PSS_1_TM_R0113.PDF              Pharmacy Data Management v1.0
+                                 Technical Manual/Security Guide
+  
+ PSS_1_P164_P169_TM_CP.PDF       Pharmacy Data Management v1.0
+                                 Technical Manual/Security Guide
+                                 Change Pages
+  
+ PSS_1_UM_R0113.PDF              Pharmacy Data Management v1.0 User
+                                 Manual
+  
+ PSS_1_P164_P169_UM_CP.PDF       Pharmacy Data Management v1.0 User
+                                 Manual Change Pages
+  
+ M1E1_PSO_7_PSJ_5_PSS_1_RN.PDF   Medication Order Check Healthcare
+                                 Application (MOCHA) v1 Enhancements
+                                 1 Release Notes
+  
+ Test Sites:
+ -----------
+ Boston, MA
+ Fresno, CA
+ West Palm Beach, FL
+  
+                
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ This patch should not be installed when Pharmacy Data Management options
+ are being used. If this is not possible, we recommend it should be 
+ installed during Non-Peak hours. 
+  
+ Install Time - less than 5 minutes
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option to unload the build.  
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSS*1.0*164):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter "PSS*1.0*164" at the INSTALL NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//'  answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS164P
+    Before:       n/a   After:    B76932  **164**
+Routine Name: PSSHRIT
+    Before:B157119688   After:B211684834  **136,168,164**
+Routine Name: PSSMEDRQ
+    Before: B97598352   After: B97804634  **129,147,164**
+ 
+Routine list of preceding patches: 147, 168
+
+=============================================================================
+User Information:
+Entered By  : TATUM,WILLIAM                 Date Entered  : APR 21, 2011
+Completed By: YARBER,KIMBERLY               Date Completed: FEB 11, 2013
+Released By : VECE,VIRGINIA                 Date Released : FEB 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

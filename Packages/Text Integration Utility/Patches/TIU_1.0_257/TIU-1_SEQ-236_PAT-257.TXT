@@ -1,0 +1,191 @@
+
+=============================================================================
+Run Date: JAN 21, 2011                     Designation: TIU*1*257
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #236                      Status: Released
+                  Compliance Date: AUG 07, 2011
+=============================================================================
+
+Associated patches: (v)TIU*1*244   <<= must be installed BEFORE `TIU*1*257'
+
+Subject: Mobile Electronic Documentation
+
+Category: 
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+ This patch addresses two potential patient safety issues with the Mobile
+ Electronic Documentation application released with TIU*1.0*244.
+ 
+ The first issue addressed is related to the intermittent failure when 
+ retrieving patient data into the MED database when two or more users 
+ simultaneously attempted to retrieve health summary information.  The data was
+ either not imported or imported and associated within the MED database to the
+ incorrect patient.
+ 
+ The second issue addressed is related to a patient having an incomplete or
+ corrupted date of birth.  MED would not allow patient information to be 
+ retrieved and would not allow that patient to be imported into the MED 
+ database.  This issue is fixed in the latest GUI client application.
+ 
+ Client Application/Documentation:
+ ================================
+ The KIDS build and GUI Client are being distributed as a host file via FTP. 
+ Complete documentation for the MED application is included in the required 
+ patch TIU*1.0*244.  Installation instructions for the MED GUI client are found
+ in the TIU*1*257 documentation.  
+  
+ 
+ DOCUMENTATION: 
+ ============== 
+ Documentation is available for the TIU Mobile Electronic Documentation
+ on the ANONYMOUS.SOFTWARE directory at one of the following Office of 
+ Information (OI) Field Offices. Sites will be able to utilize
+ Documentation in either the ".PDF" or "DOC" format after they extract 
+ the ZIP file.
+  
+ The preferred method is to FTP the files from: Download.vista.med.va.gov
+  
+ This transmits files from the first available FTP server. Sites may also 
+ elect to retrieve documentation directly from a specific server as 
+ follows:
+ 
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+  
+ File Name                                   Retrieval format:  
+ ===========                                 =================
+ TIU_1_257_MED_IG.DOC                            BINARY  
+ TIU_1_257_MED_IG.PDF                            BINARY
+ TIU_1_244_MED_TM.DOC                            BINARY
+ TIU_1_244_MED_TM.PDF                            BINARY
+ TIU_1_244_MED_UM.DOC                            BINARY
+ TIU_1_244_MED_UM.PDF                            BINARY
+ 
+ Documentation may be found on the System Design and Development Web page at:  
+ http://www.va.gov/vdl
+ 
+ SOFTWARE INSTALLATAION:
+ ======================
+ The file listed below must be obtained from a password protected FTP server
+ located in Silver Spring.  The implementation manager will be contacting 
+ each site with the username and password needed to access the file.
+  
+ File Name:          Description:               Transfer Type:       Directory:
+ =========           ===========                =============        =========
+ TIU_1_257_MED.ZIP   Contains the KIDS build &  binary               [TIUMED]
+                     MED GUI install file 
+                     detailed below
+ 
+ Contents of ZIP file:              Description:
+ ====================               ===========
+ MED Setup.exe                      MED GUI Client Install File
+ TIU_1_257_MED.KID                  KIDS build
+ 
+ FTP Address:  10.2.29.141 or 10.2.29.142
+    Username:  See Below*
+    Password:  See Below*
+ 
+ IMPORTANT:  This patch will be implemented in a phased approach and is 
+ scheduled to be coordinated from FY2011 Q2 until FY2011 Q4.  Thereafter 
+ it will be a standard, monitored release that will begin upon completion of
+ the first phase.
+ 
+ On your scheduled implementation date, your IRM POC will be contacted with 
+ the username and password needed to obtain the software from the protected 
+ server.  Site questions and problems should be reported via Remedy.
+ 
+ When the phased implementation has ended, the preferred method will be to 
+ FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may also 
+ elect to retrieve software directly from a specific server as follows:
+  
+   Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+   Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+   Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+ 
+ Build Components:
+ ================
+ The option [TIU MED GUI RPC] from TIU*1.0*244 will be removed and replaced
+ with the following option:
+ 
+   - Mobile Electronic Documentation [TIU MED GUI RPC V2]
+     Creates the desired context for the GUI application on the VistA server.
+ 
+ Installation Instructions (HOST File Only):
+ ===========================================
+ This patch may be installed with users on the system.
+ Installation of this patch should take less than 2 minutes.
+  
+ 1.  Use the 'Load a Distribution' option on the KIDS installation menu.
+     When prompted to enter a host file type in
+     TIU_1_257_MED.KID
+        a.  Answer YES to the question: Want to Continue with Load? YES// 
+   
+ 2.  From the Kernel Installation and Distribution System (KIDS) Menu, 
+     select the Installation menu.  
+   
+ 3.  From the Installation menu, you may elect to use the following 
+     options (when prompted for INSTALL NAME, enter TIU*1.0*257): 
+  
+     a.  Backup a Transport Global 
+     b.  Compare Transport Global to Current System 
+     c.  Verify Checksums in Transport Global
+ 
+ 4.  Use the Install Package(s) option and select the package:
+     TIU*1.0*257
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//', respond NO.
+  
+ 6.  If prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//',
+     respond NO.
+  
+ 7.  If prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? YES//', respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0-60): 0//', respond '0'.
+ 
+ Post Install Instructions:
+ =========================
+ Please refer to the Mobile Electronic Documentation's Install Guide for 
+ TIU*1*257 for complete installation instructions.  
+ 
+ Please refer to the Technical and User Manuals for complete information 
+ detailed in TIU*1.0*244.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUMED1
+    Before: B39834276   After: B40119157  **244,257**
+ 
+Routine list of preceding patches: 244
+
+=============================================================================
+User Information:
+Entered By  : BAKKE,ANDREW J                Date Entered  : JUL 29, 2010
+Completed By: GRAZIANI,ROBERT               Date Completed: JAN 21, 2011
+Released By : PASTERNOCK,JOY                Date Released : JAN 21, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

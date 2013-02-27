@@ -1,0 +1,206 @@
+$TXT Created by THOMPSON,Seth at CHEY204.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 11/22/11 at 07:07
+=============================================================================
+Run Date: JAN 31, 2012                     Designation: OR*3*324
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #301                      Status: Released
+                  Compliance Date: MAR 02, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*215    <<= must be installed BEFORE `OR*3*324'
+                    (v)OR*3*243    <<= must be installed BEFORE `OR*3*324'
+
+Subject: INCOMPLETE PATIENT MOVEMENT EVENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issues.
+ When a patient is discharged using the DG DISCHARGE PATIENT [Discharge 
+ a Patient] option and the user, at the Review Delayed Orders
+ prompt, enters "^^" or lets the system timeout, the discharge process does
+ not fully complete. Once the Review Delayed Orders prompt is exited in one
+ of the ways described above, processes that are supposed to take place
+ during the discharge don't happen. This is causing some orders to not
+ discontinue.
+  
+ Also, it was discovered that if a patient is discharged and only has
+ pharmacy and/or dietetic orders, the auto discontinue of these orders are
+ not being recorded in the OE/RR PATIENT EVENT file (#100.2). There is also
+ a rare circumstance in which, if the user discharging the patient is
+ assigned to a different division than the location of the ward, the entry
+ to the OE/RR PATIENT EVENT file (#100.2) is not created.
+  
+ Associated Remedy tickets:
+ ==========================
+  1. HD0000000318868 - PSPO#1505 - 3 Upon patient discharge...patient's 
+                       orders are NOT auto-DCing
+     Duplicates:
+     HD0000000319557 - Orders not auto-DCing on discharge.
+     HD0000000335059 - Incomplete Discharge Event
+     HD0000000344101 - Reactivation of old order upon admission
+     HD0000000171684 - Orders not DCed by discharge event
+     HD0000000296678 - Orders did not discontinue
+     HD0000000374121 - Orders not DC'ing after discharge
+     HD0000000400487 - Inpatient orders still active after discharge
+     HD0000000403097 - Diet still showing after discharge (Readmitted)
+     HD0000000404048 - Old diets are showing in Orders Tab
+     HD0000000443526 - Inpatient orders still active after patient 
+                       Discharged.
+  2. HD0000000259335 - 5 CPRS issue
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ VA New York Harbor HCS (New York)
+ VA Northern California HCS  
+ James A. Haley Veterans' Hospital - Tampa
+  
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000318868 - PSPO#1505 - 3 Upon patient discharge...patient's 
+                      orders are NOT auto-DCing
+   
+   Problem:
+   --------
+   When discharging a patient, using the DG DISCHARGE PATIENT [Discharge 
+   a Patient] option and the user at the prompt "Review Delayed Orders" 
+   enters "^^" or lets the system time out, diet orders will not
+   auto discontinue because the discharge does not fully complete. This is
+   a problem with the quitting flags being left behind.
+   
+   Resolution:
+   ------------
+   Routine ORCACT3 has been modified so that when protocol ORU REVIEW 
+   DELAYED ORDERS is called from protocol DGPM MOVEMENT EVENTS (this
+   happens on a patient movement) the VA Fileman flags that determine if
+   the user entered a string containing "^" or timed out are reset. This is
+   to ensure that the previous answer to the "Review Delayed Orders" prompt
+   does not affect the auto-discontinue of the orders.
+   
+ 2. HD0000000259335 - 5 CPRS issue
+   
+   Problem:
+   --------
+   When the only orders auto-discontinued during a patient movement are 
+   pharmacy and/or dietetic orders they are erroneously not recorded in the
+   OE/RR PATIENT EVENT file (#100.2). There is also a situation in which an
+   auto-discontinue rule is not found and applied when it should be. This
+   will only happen if the patient is being discharged from a ward whose
+   location is different than the location of the person who is doing the
+   discharge.  Upon discharge, the system will look at the ward location at
+   discharge to determine the division. That division is used to determine
+   if an auto-DC rule should be applied.  If the user's division is
+   different than the division assigned to the ward location at discharge
+   then the rule will not be found and applied.
+   
+   Resolution:
+   -----------
+   Routine ORMEVNT was modified to use the correct variable that holds 
+   the ward location of the discharge institution, which will then be
+   used to identify and apply an auto-DC rule. Routine ORMEVNT1 was
+   modified to check to see if an entry exists in file OE/RR PATIENT EVENT
+   (100.2) before adding the orders auto-DCed by pharmacy and/or
+   dietetics.  If no entry is found in file OE/RR PATIENT EVENT (100.2)
+   (implying that no orders were auto-DCed by the CPRS process) then an
+   entry is created and the package specific orders are recorded.
+   
+ Installation Instructions:
+ ==========================
+ It is recommended users are off the system. If a user is in the middle of 
+ order actions during installation of this patch CPRS may error and close.
+  
+ Install Time - less than 2 minutes
+  
+ 1.  Load Transport Global 
+     ---------------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter OR*3.0*324):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+         a.  Choose the Install Package(s) option to start the patch
+             install.
+  
+         b.  When prompted 'Want KIDS to INHIBIT LOGONs during the 
+             install? NO//' answer NO
+  
+         c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+            Options, and Protocols? NO//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCACT3
+    Before:  B6858691   After:  B7080060  **7,45,48,79,141,324**
+Routine Name: ORMEVNT
+    Before: B75252404   After: B75401539  **24,45,70,79,141,165,177,186,
+                                           195,278,243,324**
+Routine Name: ORMEVNT1
+    Before: B76421359   After: B78396667  **141,165,177,186,215,324**
+ 
+Routine list of preceding patches: 215, 243
+
+=============================================================================
+User Information:
+Entered By  : PHELPS,TY                     Date Entered  : OCT 26, 2009
+Completed By: SHERMAN,BILL                  Date Completed: JAN 10, 2012
+Released By : KREUZ,SHERI B                 Date Released : JAN 31, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

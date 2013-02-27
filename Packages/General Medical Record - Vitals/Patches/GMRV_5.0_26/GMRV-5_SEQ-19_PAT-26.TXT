@@ -1,0 +1,255 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Thursday, 02/17/11 at 08:16
+=============================================================================
+Run Date: JUN 28, 2011                     Designation: GMRV*5*26
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 5        SEQ #19                      Status: Released
+                  Compliance Date: JUL 29, 2011
+=============================================================================
+
+Associated patches: (v)GMRV*5*23   <<= must be installed BEFORE `GMRV*5*26'
+
+Subject: VITALS GUI CORRECTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following 4 issues in the VITALS GUI and the 
+ Vitals Lite feature of the CPRS GUI:
+  
+ 1. Column headings in Graph Report do not line up
+ 2. Vitals qualifiers no longer default in Vitals display
+ 3. Incorrect Weight/Height Warning message
+ 4. Unit of measure displays incorrectly in Warning Message
+  
+  
+ Associated NSR(S):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. HD0000000370490 - Columns do not line up
+ 2. HD0000000342434 - Default Vitals Qualifiers Display
+    Duplicates:
+    HD0000000368471 - LPM does not display on CPRS coversheet vitals
+    HD0000000374545 - FGH Values in Vitals Lite not visible unless 
+                       hovering
+ 3. HD0000000370807 - Weight/Height Warning Message
+ 4. HD0000000370106 - Units as Drop Down list in Vitals GUI
+  
+  
+ Participating Test Sites:
+ =========================
+ Bay Pines VAMC
+ VA North Florida / South Georgia HCS
+ Minneapolis HCS     
+  
+  
+ Remedy Overview:
+ ================     
+ 1. HD0000000370490 - Columns do not line up
+  
+    Problem:
+    --------
+    In the Vitals Measurement GUI, under the 'Reports' menu, the column
+    headings in the Graph Report do not line up properly but the data in
+    the report is fine.  The same report can be found under the 'File' menu
+    under the CPRS/Vitals Lite.
+       
+    Resolution:
+    -----------   
+    A modification will be made to the code to align the columns headings
+    correctly. 
+      
+  
+ 2. HD0000000342434 - Default Vitals Qualifiers Display
+  
+    Patient Safety Issue: PSPO #1630
+  
+    Problem:
+    --------
+    Currently, the 'Show Qualifier' box in Vitals/GUI/File/User Option 
+    is not checked as default for new users causing qualifiers to not
+    display in the data grid table display. Users who have changed this 
+    setting by selecting the 'Show Qualifier' box do see the qualifiers.
+    This affects the display in both Vitals GUI and CPRS/Vitals Lite.
+          
+    Resolution:
+    -----------
+    A modification will be made to the code to mark the 'Show Qualifiers'
+    box as checked so qualifiers will display as a default for all users.
+    A post-init routine (GMV26PST) will be run as part of the patch install
+    to set the Vitals GUI and CPRS Vitals Lite parameters:
+      
+    ABNORMALQUALIFIERS
+    NORMALQUALIFIERS
+    ABNORMALTEXTCOLOR
+    NORMALTEXCOLOR
+    CanvasAbnormal
+    CanvasNormal
+    
+  
+ 3. HD0000000370807 - Weight/Height Warning Message
+  
+    Problem:
+    --------
+    When using Vitals GUI, if the user selects multiple patients to enter
+    weight and the weight entered for the 2nd  or any subsequent patient
+    is 20% or more off from the 1st patient , a erroneous error message is
+    displayed alerting the user to the weight variation.  The error message
+    should only be displayed per patient and not compare patient to
+    patient.
+            
+    Resolution:
+    -----------   
+    A modification will be made to the code to not display the erroneous
+    message by reworking the weight calculation to review only the patient
+    in focus.
+      
+  
+ 4. HD0000000370106 - Units as Drop Down list in Vitals GUI
+  
+    Problem:
+    --------
+    Upon entering the Vitals Measurement GUI, the user places a check 
+    inside the Units box to the right of the 'weight' box to change it from
+    LB to KG and then enters a value in KG, the warning box is presented
+    with the incorrect unit of measure when the user attempts to save the
+    data.
+  
+    The same thing happens with IN vs CM for 'height'.
+  
+    Resolution:
+    -----------   
+    A modification will be made in the Vitals GUI to display the correct
+    unit of measure.
+  
+            
+ Software Retrieval:
+ ===================
+ The KIDS build is attached to this message.
+  
+ The other files in this patch are bundled into the VITL5_P26.ZIP 
+ file. Use Binary to download the file.
+  
+ Sites may retrieve the ZIP file in one of the following ways:
+  
+ 1.  The preferred method is to FTP the files from:
+  
+     download.vista.med.va.gov
+  
+     This will transmit the files from the first available FTP Server.
+  
+ 2.  Sites may also elect to retrieve the ZIP file directly from a 
+     specific Server as follows:
+  
+     CIO FIELD OFFICE      FTP ADDRESS                 DIRECTORY
+     ---------------       -----------                 ---------
+     Albany                ftp.fo-albany.med.va.gov    [anonymous.software]
+     Hines                 ftp.fo-hines.med.va.gov     [anonymous.software]
+     Salt Lake City        ftp.fo-slc.med.va.gov       [anonymous.software]
+  
+  
+     The ZIP file contains:
+  
+     FILE NAME                 DESCRIPTION                RETRIEVAL FORMAT
+     ----------                -----------                ----------------
+     VITL5_P26.EXE             GUI executable                       Binary 
+     VITL5_P26_SRC.ZIP         GUI source code                      Binary
+     GMV_VitalsViewEnter.DLL   DLL file                             Binary
+     GMV_VitalsViewEnter.HLP   Help file for DLL                    Binary
+     GMV_VitalsViewEnter.CNT   Table of Contents for                Binary
+                               the DLL Help file
+  
+  
+ Installation Instructions:
+ ==========================
+ 1.  This patch can be installed with users on the system. However, this
+     patch should be installed when use of the software is low.
+     Installation should take less than 2 minutes.
+  
+ 2.  Load the Transport Global.
+  
+ 3. (Optional) Run the following KIDS options before installing the patch:
+  
+               Compare Transport Global to Current System
+               Verify Checksums in Transport Global
+               Backup a Transport Global
+  
+ 4.  Install the Build GMRV*5.0*26.
+  
+     At the 'Want KIDS to INHIBIT LOGONs during the install' prompt, 
+     answer NO.
+  
+     At the 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols?' prompt answer YES.
+  
+     Place the following option 'out of order':
+  
+     Vitals/Measurements GUI Application [GMV V/M GUI]
+  
+ 5.  Move the routines to other CPUs if appropriate.
+  
+ 6.  Unzip the VITL5_P26.ZIP file and move the VITL5_P26.EXE file to an
+     appropriate directory and/or workstations.
+  
+ 7.  Install the new Vitals executable files.
+     a) Double-click on the VITL5_P26.EXE file to start the InstallShield 
+        Wizard.
+     b) Follow the Wizard instructions. When prompted to "Modify, repair, 
+        or remove the program." select "Repair".
+     c) Follow the wizard instructions to completion.
+  
+ 8.  The installation wizard creates the following files:
+  
+     C:\Program Files\vista\Vitals\Vitals.exe
+     C:\Program Files\vista\Vitals\VitalsManager.exe
+     C:\Program Files\vista\Vitals\Help\Vitals.hlp
+     C:\Program Files\vista\Vitals\Help\Vitals.cnt
+     C:\Program Files\vista\Vitals\Help\VitalsManager.hlp
+     C:\Program Files\vista\Vitals\Help\VitalsManager.cnt
+     C:\Program Files\vista\Vitals\Help\Roboex32.dll
+  
+     If you are running the Clinician and Manager files from individual
+     workstations and you want to push the files, you should include these
+     files in your script.
+  
+ 9.  Place the GMV_VitalsViewEnter.dll, GMV_VitalsViewEnter.hlp, and
+     GMV_VitalsViewEnter.cnt files in the "Program Files\vista\Common Files
+     directory of the workstation where CPRS is located. For example, if
+     CPRS is installed on the C:\ drive, the three DLL related files must
+     be copied into the C:\ Program Files\vista\Common Files directory. If
+     this directory path does not exist, you must create it.
+  
+     IMPORTANT: These files must not be installed in the same folder as
+     CPRS.  CPRS looks for these three files in the specified directory
+     path. If CPRS cannot find the DLL and its supporting files, the users
+     will not be able to enter patient vitals/measurements data.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;GEN. MED. REC. - VITALS;**[Patch List]**;Oct 31, 2002;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMV26PST
+    Before:       n/a   After: B48660098  26
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : MAR 22, 2010
+Completed By: WERNER,GARY                   Date Completed: JUN 07, 2011
+Released By : BOSE,MARY ELLEN               Date Released : JUN 28, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

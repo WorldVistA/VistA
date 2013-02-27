@@ -1,0 +1,244 @@
+
+=============================================================================
+Run Date: APR 19, 2011                     Designation: PSS*1*136
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #140                      Status: Released
+                  Compliance Date: SEP 15, 2011
+=============================================================================
+
+Associated patches: (v)XOBW*1*0    <<= must be installed BEFORE `PSS*1*136'
+                    (v)PSS*1*147   <<= must be installed BEFORE `PSS*1*136'
+
+Subject: MEDICATION ORDER CHECK HEALTHCARE APPLICATION
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ This patch is part of a group of patches that make up the new Medication 
+ Order Check Healthcare Application v1.0 (MOCHA).  These patches will 
+ replace most of the current VistA medication order checking system with 
+ version 1.0 of the new Medication Order Check Healthcare Application 
+ (MOCHA) system that uses the First DataBank (FDB) Drug Information 
+ Framework (DIF) interfaces and database. The VistA Drug Interaction 
+ module will be replaced by the FDB Drug-Drug Interaction Module (DDIM). 
+ The VistA Duplicate Class module will be replaced by the FDB Enhanced 
+ Therapeutic Classification (ETC) System. In addition, the following three 
+ order checks that use VistA data have been added to Inpatient Medications 
+ and Outpatient Pharmacy. These checks currently occur in Computerized 
+ Patient Record System (CPRS), but will be new to Pharmacy with the 
+ installation of these patches:
+  
+         Aminoglycoside Ordered
+         Dangerous Meds for Patients > 64
+         Glucophage - Lab Results
+   
+ A new Graphical User Interface (GUI) module is also being introduced 
+ called Pharmacy Enterprise Customization System (PECS), to be used only 
+ by members of Pharmacy Benefits Management (PBM).  It will allow the NDF 
+ Support Group to customize the data provided by FDB for use in VistA.
+  
+ The following three patient safety issues have also been addressed in 
+ this release:
+         Order Checks on PreMix IV Solutions (PSI-06-012)
+         Order Check display sequence changes (PSI-07-080)
+         Eliminating confusion in Inpatient Medications Order Check 
+         display and processing (PSI_07_080)
+  
+ Please refer to the MOCHA v1.0 Release Notes for additional information.
+   
+ MOCHA v1.0 consists of two host files: PSS_1_136.zip, 
+ PRE_I_3_PHARMACY_BUILD.KID, and two patches PSS*1*117 and PSO*7*375.  
+ These files and patches contain software that support MOCHA v1.0 
+ functionality.  The host files were created to simplify installation at 
+ Veterans Health Administration (VHA) facilities and to assist in the 
+ phased implementation release method for MOCHA v1.0.  To see current 
+ status and target dates for Sites/VISN/Region please refer to the 
+ following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+ Sites will be provided instructions and guidance on installation and 
+ implementation by the MOCHA Implementation team.  Installation 
+ information for MOCHA v1.0 is included in the VistA to MOCHA v1.0 
+ Interface Installation Guide and the MOCHA v1.0 Combined Build 
+ Installation Guide.  
+  
+ Patch Information:
+ PSS_1_136.zip includes the components necessary for the interface that
+ will be used in MOCHA v1.0:
+         PRE_I_3_INTERFACE_BUILD.KID (contains PSS*1*136)
+         PSSPRE_1_0.XML
+      
+ PRE_I_3_PHARMACY_BUILD.KID includes the following required patches to 
+ enable the MOCHA v1.0 functionality:
+         PSO*7*251
+         PSJ*5*181
+         OR*3*272
+  
+ These patches will be distributed as stand alone patches via FORUM and 
+ will support MOCHA v1.0:
+         PSS*1*117
+         PSO*7*375
+  
+ The software will be distributed in a controlled process due to the 
+ phased implementation.  During each implementation phase, the 
+ Implementation Team will provide each site the instructions and location 
+ to obtain the software.
+  
+  
+ This patch (PSS*1.0*136) provides the interface that will be used by 
+ MOCHA. It provides all the software and tools necessary to
+ complete the setup of the interface, which must be done prior to the
+ installation of the remaining patches that make up the new MOCHA system.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch. 
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ There are no Remedy tickets associated with this patch. 
+  
+  
+ Components Exported With Patch:  
+ -------------------------------
+ PSSPRE_1_0.XML: Cache Object used to parse incoming XML response from the 
+ FDB server.
+                   
+  
+ The following is a list of new files included in Patch:
+  
+ File Name                       File Number
+ ---------------------------------------------------------------
+ VENDOR DISABLE/ENABLE              59.73
+ VENDOR INTERFACE DATA              59.74
+  
+  
+ The following is a list of options associated with this patch:
+  
+ Option Name                        Type      Action
+ ------------------------------     ------    ----------------------------
+ PSS MGR                            Menu      USE AS LINK FOR MENU ITEMS
+ PSS PEPS SERVICES                  Run       SEND TO SITE
+ PSS CHECK VENDOR DATABASE LINK     Run       SEND TO SITE    
+ PSS CHECK PEPS SERVICES SETUP      Run       SEND TO SITE 
+ PSS ENABLE/DISABLE DB LINK         Run       SEND TO SITE
+  
+  
+ The following is a list of mailman bulletin associated with this patch:
+ ----------------- 
+ PSS FDB INTERFACE
+ PSS FDB INTERFACE RESTORED
+  
+  
+ Documentation Retrieval:
+ ------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch will be downloaded to sites from the FTP address as directed by the 
+ MOCHA Implementation team.
+  
+ The documentation distrubution includes:
+   
+ File Description                             File Name            FTP Mode
+ --------------------------------------------------------------------------
+ VistA to MOCHA V1.0 Interface Installation Guide
+                                              PSS_1_IG_R0411.PDF   (binary)
+ PDM Technical Manual/Security Guide (Revised April 2011) 
+                                              PSS_1_TM_R0411.PDF   (binary)
+ PDM Technical Manual/Security Guide Change Pages           
+                                              PSS_1_P136_AND_P117_TM_CP.PDF
+                                                                   (binary)
+ PDM User Manual (Revised April 2011)         PSS_1_UM_R0411.PDF   (binary)
+ PDM User Manual Change Pages                 PSS_1_P136_AND_P117_UM_CP.PDF
+                                                                   (binary)
+                            
+ Once released, documentation may be retrieved from the VA Software 
+ Document Library (VDL) on the Internet at the following address,
+ http://www.va.gov/vdl
+  
+ Below is a list of the files related to this patch that will be needed and
+ available via the FTP as instructed by the Implementation Team.
+   
+ File Description         File Name                         FTP Mode
+ -------------------------------------------------------------------
+ PSS_1_136.ZIP            PRE_1_3_INTERFACE_BUILD.KID       (binary)
+                          PSSPRE_1_0.XML                   
+  
+  
+ Test Sites:
+ -----------
+ BOISE, ID
+ CHARLESTON, SC
+ KANSAS CITY, MO
+ NORTHERN CALIFORNIA HCS, CA
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+ Please refer to the VISTA to MOCHA V.1.0 Interface Installation Guide for
+ complete installation instructions.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDSFDB
+    Before:       n/a   After: B37836695  **136**
+Routine Name: PSSFDBRT
+    Before:       n/a   After: B52400714  **136**
+Routine Name: PSSHFREQ
+    Before:       n/a   After: B27105352  **136**
+Routine Name: PSSHRCOM
+    Before:       n/a   After: B27377799  **136**
+Routine Name: PSSHRENV
+    Before:       n/a   After:  B6460862  **136**
+Routine Name: PSSHREQ
+    Before:       n/a   After:B201153193  **136**
+Routine Name: PSSHRIT
+    Before:       n/a   After:B156393255  **136**
+Routine Name: PSSHRPST
+    Before:       n/a   After:  B4804373  **136**
+Routine Name: PSSHRQ2
+    Before:       n/a   After:  B3729020  **136**
+Routine Name: PSSHRQ21
+    Before:       n/a   After:B139661010  **136**
+Routine Name: PSSHRQ22
+    Before:       n/a   After: B58385723  **136**
+Routine Name: PSSHRQ23
+    Before:       n/a   After:B235617797  **136**
+Routine Name: PSSHRQ2O
+    Before:       n/a   After: B29426427  **136**
+Routine Name: PSSHRVAL
+    Before:       n/a   After:B150414400  **136**
+Routine Name: PSSHRVL1
+    Before:       n/a   After:B194249230  **136**
+Routine Name: PSSHTTP
+    Before:       n/a   After:  B7570296  **136**
+
+=============================================================================
+User Information:
+Entered By  : GORDON,STEVE I                Date Entered  : MAY 12, 2008
+Completed By: CHALASANI,LAKSHMI             Date Completed: APR 19, 2011
+Released By : VECE,VIRGINIA                 Date Released : APR 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

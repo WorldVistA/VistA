@@ -1,0 +1,2780 @@
+
+=============================================================================
+Run Date: MAR 07, 2011                     Designation: OR*3*280
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #288                      Status: Released
+                  Compliance Date: JUL 19, 2011
+=============================================================================
+
+Associated patches: (v)OR*3*67         install with patch       `OR*3*280'
+                    (v)OR*3*181        install with patch       `OR*3*280'
+                    (v)OR*3*293        install with patch       `OR*3*280'
+                    (v)SD*5.3*536      install with patch       `OR*3*280'
+                    (v)OR*3*302        install with patch       `OR*3*280'
+                    (v)PSS*1*142       install with patch       `OR*3*280'
+                    (v)PSS*1*147       install with patch       `OR*3*280'
+                    (v)PSS*1*151       install with patch       `OR*3*280'
+                    (v)OR*3*243    <<= must be installed BEFORE `OR*3*280'
+                    (v)OR*3*295    <<= must be installed BEFORE `OR*3*280'
+                    (v)LR*5.2*395  <<= must be installed BEFORE `OR*3*280'
+
+Subject: CPRS GUI 28
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ CPRS v28 is an enhancement release with modifications for the PRE project 
+ (MOCHA 1.0), reminders order checks, the Lab Status report, a new 
+ Reminders finding, and consults.  In addition to these enhancements, 
+ software changes are being made to correct PSI and known Section 508 
+ issues.
+  CPRS GUI version 28 consists of five host files: PSS_1_151.KID, 
+ PSS_1_142.KID, CPRS28_REQUIRED.KID, OR_PSJ_PXRM_28.KID and 
+ CPRS28_RELATED.KID. These five host files contain software that support 
+ CPRS GUI v28 functionality.  The host files were created to simplify 
+ installation at Veterans Health Administration (VHA) facilities and to 
+ assist in the phased implementation release method for CPRS v28.  CPRS 
+ v28 will follow a phased implementation.  To see current status and 
+ target dates for Sites/VISN/Region please refer to the following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+  
+ Please refer to the "CPRS GUI v.28 and Associated Patches Installation 
+ Guide" for installation sequence information.  This document is exported 
+ as OR_30_280IG.doc and OR_30_280IG.pdf and is included in OR_30_280.ZIP.
+  
+ Installation and set-up information specific to OR*3*280 is included in 
+ "CPRS GUI v.28 and Associated Patches Installation Guide".   
+  
+ Patch information:
+ PSS patches exported as two host files support CPRS v28 functionality.
+        PSS_1_142.KID
+        PSS_1_151.KID
+  
+ CPRS28_REQUIRED.KID includes the required patches needed to support CPRS 
+ GUI v28 functionality.  It includes builds for the following patches:
+        OR*3.0*293
+        GMRC*3.0*66
+        GMRA*4.0*45
+  
+ OR_PSJ_PXRM_28.KID includes the CPRS, Pharmacy and Clinical Reminders 
+ patches required for CPRS GUI v28.  It includes builds for the following 
+ patches: 
+        OR*3.0*280
+        PSJ*5.0*226
+        PXRM*2.0*16
+  
+ CPRS28_RELATED.KID includes the related patches needed to support CPRS 
+ GUI v28 functionality.  It includes builds for the following patches:
+        GMRC*3.0*64
+        GMTS*2.7*90
+        OR*3.0*337
+  
+ Installation of these five host files should be coordinated among the 
+ packages affected because these host files will install the software 
+ needed to implement CPRS GUI v28.
+  
+  
+ Patient Safety Issues
+ =====================
+         PSPO 444: When the Order Is Signed the Recently Entered Allergy 
+ Is Not Assessed (PSI-06-183, Remedy 169995, CQ 13518) - Previously, 
+ because CPRS does order checking when the user presses Accept, it was 
+ possible that an allergy could be entered between the time an order was 
+ accepted and the user signed the order.
+ Resolution: Developers added an order check in CPRS that takes place at 
+ signature. This check is to detect only those allergies entered between 
+ the time the user accepts the orders and the user signs the orders.
+  
+         PSPO 538: Display of Patient Status (Inpatient vs. Outpatient) in 
+ CPRS Meds Tab Is Not Noticeable Enough Upon Ordering (PSI-07-085, Remedy 
+ 187803, CQ 16833, 17491) - Previously, when the user began ordering 
+ medications, the form caption at the top of the both the inpatient and 
+ outpatient dialogs read: "Medication Order". The providers felt that the 
+ patient's status was not noticeable enough.  
+ Resolution: To help users identify which kind of order they are placing, 
+ developers changed the form captions for the dialogs. The form captions 
+ at the top of the dialogs will now read "Outpatient Medications", 
+ "Inpatient Medications", or "Clinic Orders". The Infusion Order dialog 
+ will also display as "Infusion Orders" or "Clinic Infusion Orders" 
+ depending on the type of order being written. Also, to help users know 
+ what the patient status is, CPRS added the term "Inpatient" or 
+ "Outpatient" after the patient's name based on the patient's current 
+ status.
+  
+         PSPO 542: Delayed Orders Did Not Lapse in 24hr; MD Rewrote So 
+ There Were Two Sets of Orders (PSI-07-089, Remedy 189760, CQ 15180) - 
+ Previously, CPRS was using a calendar day instead of hours to calculate 
+ when to lapse some delayed orders.
+ Resolution: Developers changed how CPRS handles lapsing. Lapsing should 
+ now occur within 1 hour of the time of lapsing (due to the running of 
+ ORMTIME) instead of only lapsing shortly after midnight.
+  
+         PSPO 735: Addition of Audit Trail Functionality when Forwarding 
+ Consults - M Work (PSI-07-120, Remedy 195099, CQ 15561, 16430)  - 
+ Previously, when a user decided to forward a consult, CPRS did not 
+ display the name that the previous user had placed in the Attention 
+ field. It appeared to be blank. However, if the user forwarded the 
+ consult, the original name was placed in the Attention field without the 
+ user's knowledge. And there was no audit trail to review to whose 
+ attention the consult had been sent.
+ Resolution: CPRS developers corrected the problem by making the name in 
+ the attention line display when a user forwards a consult. If the user 
+ changes the person to whom the consult will go, CPRS keeps an audit trail 
+ of which names have been in the Attention field. The Consults Detail 
+ Display shows the history of which users took action on the consult, 
+ including who forwarded it and to whose attention it was previously sent. 
+ This resolution includes the changes in patch GMRC*3.0*64.
+  
+         PSPO 834: "Invalid Procedure" Error Message Needs Additional 
+ Information (PSI-07-247, Remedy 69886, CQ 15813, 16223) - Previously, if 
+ there was a problem placing a radiology or procedure order, CPRS would 
+ display the following error message: "Invalid Procedure, Inactive, no 
+ Imaging Type or no Procedure Type". This message was somewhat unclear. 
+ Resolution: This problem was resolved in two parts: 
+ o       Part 1 of 2: Developers replaced the error message with the 
+ following: "The order has not been saved.  You must contact the Imaging 
+ Department for help completing this order."
+ o       Part 2 of 2: Also, in response to this problem, developers added 
+ a feature in CPRS that generates a mail message that includes the error 
+ details and sends it to the responsible mail group. Users can designate 
+ which mail group the message is sent to through the OR RADIOLOGY ISSUES 
+ parameter.
+  
+         PSPO 837: Consult Alert Updates (COMPLETED Status) Navigate to 
+ TIU Doc instead of Comment Text (PSI-08-007, Remedy 70380, 70118, 197479, 
+ CQ 16030) - If the consult request was in COMPLETE status, then the 
+ comment alert took the user to the TIU document, not the new comment 
+ text, so the user could easily miss the request/actionable item.
+ Resolution: Developers changed CPRS so that when processing a "comment 
+ added" notification instead of opening the note attached to the consult, 
+ CPRS opens the consult and scrolls down to the specific comment. CPRS 
+ also highlights the comment to help it stand out.
+  
+         PSPO 849: Out Patient Pharmacy Complex Dosage Not Selecting 
+ Correct Number of Capsules in the SIG (PSI-08-021, Remedy 203642, 232325, 
+ CQ 16957) - Previously, when CPRS looked up dispense drugs, it used an 
+ internal entry number to identify the drug. However, the look up used the 
+ idea of "contains" instead of matching the entire number. For example, if 
+ two dispense drugs were returned, with number such as 236 and 2361, and 
+ both had the same dosage, the code, when looking for 236, might 
+ accidently match 2361 because they both contain the digits 236.
+ Resolution: Developers changed CPRS to ensure that it will no longer 
+ mismatch the IEN numbers by avoiding the "contains" scenario. It should 
+ now match correctly.
+  
+         PSPO 850: Using (IMO) and Appt Crosses Midnight, Appt. Not 
+ Available to Order Unit Dose Med in CPRS (PSI-07-117, Remedy 243000, 
+ 197489, CQ 15188, 10767, 17125) - Previously, if a user began entering 
+ orders in an Inpatient Medication for Outpatient (IMO) clinic, such as an 
+ emergency room situation, before midnight and then tried to enter orders 
+ after midnight, the user could not place the unit dose orders. 
+ Resolution: Developers changed CPRS so that when a user selects an 
+ encounter, the user can enter an order up to 23 hours in the past or if 
+ the user makes the encounter NOW, the user can enter orders up to 23 
+ hours in the future. This should enable users to handle situation where 
+ the appointment begins on one day and ends on another, such as Emergency 
+ Room situations.
+  
+         PSPO 852: Incorrect Med Routes Display for Dispense Drug 
+ (PSI-08-026, CQ 17783) - Previously for Unit Dose orders, CPRS displayed 
+ all medication routes for the dosage form of the orderable item as 
+ possible med routes the user could select. Even if an orderable item is 
+ only to be given as intramuscular (IM), the provider was able to select a 
+ potentially inappropriate medication route of subcutaneous (SC) or 
+ intravenous (IV).
+ Currently, for infusion orders, if there were more than one orderable 
+ item on the order, no default medication route was being denoted as a 
+ default in the CPRS selection list-even if all the orderable items on the 
+ order share the same default med route.
+ Resolution: CPRS developers changed how the unit dose medication routes 
+ work. Unit dose orders now call Pharmacy to get the correct medication 
+ route and designate the default medication route. This issue is resolved 
+ by OR*3.0*280 and PSS*1.0*140
+ For unit dose orders, the following apply:
+ a)      If a default medication route is defined in the orderable item 
+ file, CPRS displays only the default medication route for the Unit Dose 
+ orderable item in the medication route selection list.
+ b)      If there is no default medication route defined for the orderable 
+ item, CPRS displays all possible medication routes for the dosage form to 
+ the provider for selection.
+ c)      If there is only one possible medication route, it will be used 
+ as the default.
+ d)      If a medication route name or its abbreviation is not included in 
+ the selection list, a user may type it in.
+  
+ For infusion orders, the following rules apply:
+ a)      If all of the orderable items on the order have the same default 
+ medication route defined, designate the default med route in the 
+ selection list in CPRS.
+ b)      If one or more orderable items on the order have different 
+ default medication routes, no medication route in the selection lest will 
+ be denoted as the default.
+  
+         PSPO 853: Update CPRS GUI User Guide to Enhance Current 
+ Functionality Description of the Remove Pending Notification Button 
+ (PSI-08-027, CQ 18988)
+ Resolution: The Computerized Patient Record System (CPRS) User Guide: GUI 
+ Version was updated to include a warning about removing pending 
+ notifications. 
+  
+         PSPO 908: Due to Single Spacing of the CPRS Medication List, 
+ Provider Selected Wrong Medication (PSI-08-086, Remedy 251162, CQ 17241) 
+ - A provider ordered the wrong medication for a patient. The root cause 
+ analysis at the site decided that because of the single spacing of the 
+ medications in the selection list, a provider could select the incorrect 
+ medication. 
+ Resolution: Several options to improve the selection list have been 
+ considered. Some of these items may be included in future releases of the 
+ CPRS and Pharmacy packages. As an immediate step, the cognitive engineers 
+ from the Patient Safety 
+ Group advised CPRS developers to add a small amount of space between the 
+ dialog caption and the field where the selected medication is displayed. 
+ This change was made to Inpatient, Outpatient, and Non-VA Medication 
+ order forms. 
+  
+         PSPO 921: If Font Size Is OTHER THAN 8 in CPRS GUI, Critical 
+ Order Checks May Not Display Correctly (PSI-08-096, Remedy 253732, 
+ CQ17160,  17308) 
+ Resolution: Developers corrected this problem and the order checks should 
+ now display correctly at all font sizes.
+  
+         PSPO 1087: Order Prints at Old Location (Remedy 277718, 280707, 
+ 284718, 29171, CQ 17760) - If a user placed an order at one location but 
+ did not release the order, and then the patient is transferred and the 
+ user subsequently signed the order, the order prints at the old location, 
+ not the new one.
+ Resolution: Developers corrected this problem. The order prints to the 
+ appropriate location.
+  
+         PSPO 1149:  Admin Time of Complex Inpt Order May Be Used for Next 
+ Part of Complex Order (Remedy 281683, 279780, 284786, CQ 17754) - When 
+ the user created a complex order with at least two lines and assigned 
+ different schedules to each line, CPRS made the second line have the same 
+ schedule as the first line. 
+ Resolution: Developers corrected the error; each line has its appropriate 
+ schedule. 
+  
+         PSPO 1157: Non-VA Meds Displayed on CPRS Orders Tab-Custom Order 
+ View-All Non-VA Meds, but Not on CPRS Meds Tab (Remedy 285601, CQ 17777, 
+ 18137) - Previously, it was difficult for the user to know what date 
+ range the medications displayed on the Meds tab represented. This caused 
+ the user to think the Non-VA Meds were not displaying correctly, but the 
+ cause was the date range.
+ Resolution: Developers added a generic message to the Meds tab if the 
+ date range is not defined: "To set a specific date range go to Tools | 
+ Options | Other Parameters". If the date range is set, the message shows 
+ the date range: (7/1/09-8/15/09) for example. In most cases, users should 
+ use relative dates, such as T and T-120, for these dates when putting 
+ them in the Tools | Options dialog. If the user puts in specific dates, 
+ the dates will stay even if the user changes patients. The specific dates 
+ will not change until the user changes them.
+  
+         PSPO 1187:  Short-term-Reword the "Pop-up Box" to Make the 
+ Tubefeeding Order Clearer to the User (Remedy 290535, CQ 18407) - The 
+ Diet and Tubefeeding dialog could be confusing. The validation and 
+ warning pop-up dialog needed rewording to help the user know what was 
+ wrong and how to correct it if the order was entered incorrectly.
+ Resolution: With input from field users, developers changed the wording 
+ and formatting of the pop-up dialog, including using examples.
+  
+         PSPO 1426:  Patient Inquiry Displays Different Patient Info (CQ 
+ 18425) - Previously, if the user selected the Patient Inquiry button and 
+ then before the information loaded, the user tried to open a different 
+ patient's record, it was possible that the new patient's record could 
+ load and then the patient inquiry data would load, but it would be for 
+ the previous patient.
+ Resolution: This problem was created because two processes were trying to 
+ do something at the same time. The patient inquiry information was unable 
+ to finish before the new patient chart was loaded. Developers changed 
+ CPRS to change the cursor to an hourglass and disabling the Select New 
+ Patient menu item until such time as the Patient Inquiry information had 
+ returned.
+  
+         PSPO 1525: Category II Patient Flags Are Not Displaying in CPRS 
+ (Remedy 352337. 35820, CQ 18837) - There were some slight changes to the 
+ display of Patient Record Flags with OR*3.0*296, the previous version of 
+ the CPRS GUI. The change caused concern at some sites that some user 
+ might not notice some patient record flags that the user might need to 
+ scroll down to see.
+ Resolution: Developers added a splitter bar between the two categories of 
+ patient record flags so that the area can be resized. Also, after the 
+ label "Category II Patient Record Flags", developers added the number of 
+ flags displayed under the category (for example, the label might read: 
+ Category II Flags: 2 Item(s)).
+  
+ Known Issues
+ ============
+ NONE
+  
+ New Functionality
+ =================
+ Consults:
+ Add Earliest Appropriate Dates to CPRS Consults Ordering (NSR 20051008, 
+ CQ 10230)
+ CPRS added an earliest appropriate date to the Order a Consults dialog. 
+ This date can then be used to track how quickly consults are completed. 
+ The Consults Performance Monitor report will now use EARLIEST APPROPRIATE 
+ DATE in place of DATE OF REQUEST when calculating if requests are 
+ complete within the 30 and 60 day date ranges. The Orders tab detailed 
+ display, form SF 513, and Consults tab detailed display have been updated 
+ to show Earliest Appropriate Date.
+ At the request of prosthetics users, the earliest appropriate date does 
+ not apply to services that are defined as prosthetics consult services. 
+  
+ Eligibility Marker Display in Consults: OEF/OIF, Active Duty, and Service 
+ Connection (NSR 20060203, CQ 18061, 18062) 
+ Clerks were having difficulty scheduling appointments with the proper 
+ priority because they lacked information about the patient's 
+ characteristics. The request was therefore to add the following 
+ information to the SF-513 and to the consult detailed displays:
+         Service in Operation Enduring Freedom (OEF) or Operation Iraqi 
+         Freedom (OIF)
+         Active Duty status
+         Service connection conditions and rating
+  
+ Notes:
+ Class 3 to Class 1: CPRS - Number of Notes "Add Total Count of Notes" for 
+ Progress Notes (NSR 20080314, CQ 18884) 
+ On the Notes tab, CPRS displays a label over the Notes tree view, for 
+ example, Last 100 Signed Notes, but CPRS did not indicate how many total 
+ notes the patient had. Developers took functionality developed at a site 
+ and incorporated it into CPRS. Now, after the label above the Notes tab 
+ tree view (for example, Last 100 Signed Notes), the number of total notes 
+ is displayed, for example, (Total: 20).
+  
+ Order Checks:
+ Drug Dosage Order Checks Added to CPRS v.28 (Pharmacy Reengineering 
+ Support)
+ CPRS now sends information to Pharmacy to enable the checking of 
+ medication dosages prescribed for patients. This order checks occurs when 
+ a user accepts an order. The dosage order check settings are centrally 
+ controlled by the generically defined "DRUG DOSAGE" entry in the ORDER 
+ CHECKS file. There are three order checks that are part of the generic 
+ Dosage Order Check:
+         Maximum Single Dose is caused by the dosage of a single 
+ administration being above a therapeutic level for the specific drug. 
+ Patient factors such as height and weight can be included in determining 
+ the appropriate level for the drug.
+         Maximum Range Dose is caused by the combined dosage during a 
+ period of time being above or below a set range for the specific drug 
+ being ordered.  Patient factors such as height and weight can be included 
+ in determining the range for the drug.
+         General Dosing Information can display when for some reason the 
+ Maximum Single Dose and Maximum Range Dose order checks cannot be 
+ performed. A few possible reasons include the following:
+ o       Scenario 1:  Identify drugs that require a weight where patient 
+ does not have weight defined. 
+ o       Scenario 2: Identify drugs that require a BSA ( no height or 
+ weight defined)..i.e. Etoposide PO;  
+ o       Scenario 3:  Put in an order with a schedule that does not have a 
+ frequency defined. That should also give you a general dosing range.
+  
+         Errors and Exceptions can occur when data is missing or some 
+ other problem came up when trying to perform the dosage checks, for 
+ example a missing route or a drug not correctly defined.
+  
+  
+ Site-Defined Clinical Reminders Order Checks (NSR 20070103, CQ 18334)
+ Site-defined Clinical Reminder order checks enable sites to use reminder 
+ functionality, both reminder terms and reminder definitions, to perform 
+ checks for groups of orderable items. The site defines orderable items 
+ groups and then rules to check when the user selects Accept for that 
+ order. As part of the order check, the site also defines the text that 
+ CPRS will display when the order matches the rule. The displayed text may 
+ give the ordering clinician advice on how to proceed or a warning that 
+ the site determines will help providers during the ordering process. The 
+ text can also include Text Integration Utility (TIU) objects.
+ Sites can place orderable items in more than one group based on the rules 
+ that Clinical Reminders will use against the groups. 
+ Two considerations when implementing site-defined Clinical Reminder order 
+ checks include system performance and file maintenance. 
+         Using a large number of reminders in the order check process 
+ could have an effect on system responsiveness. 
+         The Reminder Order Check file, file #801, stores a pointer to an 
+ entry in the Orderable Item file, file #101.43. Because the order checks 
+ use orderable items, but the changes to the Orderable Item file do not 
+ automatically make changes to the Reminder Order Check file, Clinical 
+ Application Coordinators (CACs) or similar personnel at your site will 
+ need to manually maintain this file.
+  
+ Orders:
+ Add New IV Additive Frequency Field to Infusion Dialog
+ To support the Pharmacy Reengineering (PRE) project, CPRS developers 
+ added a new Additive Frequency field for continuous infusion orders in 
+ the Infusion Order dialog. The Additive Frequency field's purpose is to 
+ help the provider communicate into which bag or bags the pharmacist 
+ should place the additive and enable minimum and maximum daily dosage 
+ order checks to occur based on the additive quantity and additive 
+ frequency.
+ In this field, the user can select one of three choices:
+         1 Bag/Day - The additive should be put in a single bag for the 
+         defined duration.
+         All Bags - The additive should be placed in each bag.
+         See Comments - This choice is to enable the provider to give 
+ specific instructions to the pharmacist instead of the other choices. 
+ Because it does not enable CPRS to calculate a dosage, it is not possible 
+ to do the minimum and maximum daily dosage order check.
+  
+ Defect Fixes
+ ============
+ About CPRS
+         Help | About CPRS Display with Information on How to Log a Remedy 
+ Ticket and Remove Reference to Email Address (CQ 18721) - Previously, 
+ CPRS changed the splash screen to remove a reference to email address 
+ that is no longer monitored and instead direct users to contact their 
+ local support desk if they need help. The same change needed to be made 
+ to the About CPRS dialog that displays when a user selects Help | About.
+ Resolution: Developers made this change to the About CPRS dialog.
+  
+ Allergies
+         OK Button Erroneously Becomes Disabled on Allergy Dialog when 
+ Specific Steps Are Followed (Remedy 153279, CQ 15770) - Previously, if 
+ the user did the following specific steps, the user could produce this 
+ problem of the OK button being greyed out:
+ a)      Select a patient that has not had an allergy assessment.
+ b)      Enter a new allergy.
+ c)      Check the 'no known allergies' check box.
+ d)      Then uncheck.
+ e)      Notice that the OK button is grayed out, even after performing a 
+         search. 
+  
+ Resolution: Developers changed CPRS to correct this problem. If the user 
+ performs a search after the prior mentioned scenario, the OK button 
+ should be enabled.
+  
+         Marking Allergy Entered In Error Crashes CPRS (CQ 18650)
+ Resolution: Developers corrected this problem. This was fixed along with 
+ some other issues when some allergy related dialogs were made non-modal.
+  
+  
+  
+ Consults
+         Can Order Consults to a Disabled Service / Specialty (Remedy 
+ 69788, CQ 15781) - Previously, if a quick order was set up before the 
+ service or specialty was disabled, users could place a quick order to a 
+ disabled service or specialty. 
+ Resolution: Developers corrected the problem, and users can no longer 
+ order to a disabled service or specialty through a quick order.
+  
+         Can't Name a Consult Quick Order the Same Name as a Consult 
+ Service or It Fails to Function (Remedy 70920, CQ 15782) - This problem 
+ involved 2 issues.  First, if the site created a quick order (QO) with 
+ the same name as a service or specialty, then the user selected the QO, 
+ the user could not finish ordering the QO. The software could not resolve 
+ the name of the Consult Service as the QO entry would be encountered 
+ first. Second, when a QO with the same name as a Service Consult existed, 
+ the Service Consult did not load in the selection list.  
+ Resolution: Developers corrected both issues.
+  
+         When Saving a Quick Order, the Consult Quick Order Definition Can 
+ Have Left Over Text (Remedy 138939, CQ 15783) - Previously, this problem 
+ could occur when a user was saving a consult quick order. If the quick 
+ order initially had text in the Reason for Request field, but the user 
+ had removed the text, CPRS incorrectly saved the quick order with the 
+ text even though the field was blank when the quick order was saved. The 
+ problem would not appear until a user placed the quick order.
+ Resolution: Developers corrected this problem and the text should be 
+ cleared appropriately when it is removed from the Reason for Request 
+ field. 
+  
+         Building the Consults Service Tree (Remedy 143621, 160573, CQ 
+ 15784) - Previously, CPRS could take between 15 to 60 seconds to build 
+ the Consults tree if the site had a large number of consults. 
+ Resolution: Developers corrected this problem.
+  
+         On a Consult Request, There Is No Indicator of Which Consult 
+ Request Is Being Completed (Remedy 69525, CQ 15785) - Previously, when 
+ the user was doing a clinical complete on a consult, there was no 
+ indication of which consult the user was completing. The consults tree 
+ view was grayed out.
+ Resolution: Developers corrected this problem. When taking an action, 
+ such as completing, writing a note, or scheduling, etc., the consult on 
+ which the user is taking action will be the only consult selected in the 
+ tree view.
+  
+         Cosigners Can't Addend Unsigned Consults on Consults Tab, but Can 
+ on Notes Tab (Remedy #70163, CQ 15786) 
+ Resolution: Developers corrected this problem. Cosigners can addend an 
+ unsigned consult on both tabs.
+         Consults:  Can't View Consult Details from the Consults Tab (CQ 
+ 17586) - When the user was writing a consults note on the Consults tab, 
+ the user was unable to view the details of the consult while writing the 
+ note.
+ Resolution: To enable the user to view the consults details, developers 
+ added the View Consults Details to the right-click popup menu. If the 
+ user is writing a note and right-clicks on the note, the user can select 
+ the View Consults Details menu item that will display the consult 
+ details. The user can then close the detail window and continue writing 
+ the note.
+  
+         Consult "Reason for Request" Scrollbar Limitation (Remedy 337505, 
+ CQ 18623) - Previously, there was a problem with the scrollbar not 
+ working properly in some text boxes. If the user entered text that went 
+ beyond the bottom of the Reason for Request box, the scrollbar did not 
+ work properly. Sometimes the scrollbar did not display and sometimes it 
+ did display, but not correctly.
+ Resolution: Developers corrected this problem and the scrollbars should 
+ work correctly. 
+  
+         Consult Templates Producing Pointer Errors (CQ 19137) - 
+ Previously, if a user placed an order set with a Consult or Procedure 
+ containing a template for the first item and then the user canceled the 
+ order set before the template was complete, CPRS gave an error.
+ Resolution: Developers corrected this problem.
+  
+         Consult Edit/Resubmit Form Missing Resubmit/Cancel Buttons (CQ 
+ 19228) 
+ Resolution: Developers corrected this problem.
+  
+         Button Layout on Procedure Edit/Resubmit Form (CQ 19229) - There 
+ was a problem with where the buttons on this form were displaying.
+ Resolution: Developers corrected this problem.
+  
+  
+ Debugging Tools
+         Change RPC Log to Display Based on Command Line Parameter instead 
+ of XUPROGMODE Key (CQ 17922) - Previously, to see the remote procedure 
+ calls (RPCs) that CPRS had made from the Help menu, the user needed to 
+ have the XUPROGMODE key. Even with this key, the user could only see the 
+ last ten RPCs. If the user did not have the XUPROGMODE key, the user 
+ could use the command-line switch SHOWRPCS, but the RPCs would flash by 
+ very quickly on the bottom of the CPRS window as CPRS made the 
+ calls-making it difficult to see and remember them. 
+ Resolution: To improve the debugging capability of CPRS, developers 
+ changed how the SHOWRPCS command-line switch works. SHOWRPCS now makes 
+ the debugging tools available from the Help menu. Now, any user that puts 
+ the command-line switch SHOWRPCS in the shortcut to the CPRS executable 
+ can then user the Last Broker Call menu item to view the last 100 RPCs.
+  
+  
+ Electronic Signature
+         Signature Form Not Appearing in One Encounter Switch Scenario (CQ 
+ 18121) - Previously, the following scenario created a problem where the 
+ signature form did not display when it should have:
+ a)      Select an outpatient; set the visit to a clinic location. 
+ b)      Write event delayed orders for an inpatient event but do not sign.
+ c)      Admit the patient to trigger the release event. 
+ d)      In CPRS, select the order, then right-click the order
+ e)      Select Sign.
+ The user then had to right-click and select Sign a second time.
+ Resolution: Developers changed CPRS to ensure that the signature dialog 
+ box displays when it should.
+  
+         Signature Box Doesn't Wrap Text Properly with Non-VA (Remedy 
+ 246721, CQ 18264) - The text on the signature box was not wrapping 
+ correctly with Non-VA medications.
+ Resolution: Developers changed CPRS to wrap the text correctly.
+  
+  
+ Encounter
+         Clinic/PCP Text Scrolling Off Screen (Remedy 259143,  CQ 18169) - 
+ Previously, there was a strange problem where the text on the Encounter 
+ Location and Provider button would move up and off the button when users 
+ clicked or double-clicked the button several times.
+ Resolution: Developers identified and corrected the problem so that the 
+ text should display appropriately.
+  
+  
+ Event-Delayed Orders
+         <UNDEFINED> AUTH+2^ORWDPS32-M Error when Adding to Delayed Orders 
+ (CQ 17369) - Previously, when a user who has neither the PROVIDER nor 
+ ORES key and they are trying to write a medication order for existing 
+ delayed orders, CPRS displayed this error: <UNDEFINED> AUTH+2^ORWDPS32.
+ Resolution: Developers corrected the problem and CPRS no longer gives 
+ this error in this circumstance.
+  
+         Some EDO Orders Appear to Vanish under Particular Circumstances 
+ (CQ 18392) - Under specific circumstances and during the signature 
+ process, delayed orders seem to disappear although the orders have not 
+ gone away. To see this, the user would have to do the following;
+ a)      Select an outpatient. 
+ b)      Write (but do not sign) event delayed orders for an admission 
+ event. 
+ c)      Admit the patient and trigger the release event. 
+ d)      Right-click the order.
+ e)      Select Sign. 
+  
+ You get a warning about how the release event has occurred (as expected). 
+ However, the signature dialog did not display nor was the event category 
+ listed in the View Orders pane.
+ Resolution: Developers corrected this problem. The signature dialog now 
+ displays when appropriate. 
+  
+         Data Dictionary for 100.5, Field 2, Description Needs to Be 
+ Updated (CQ 18673) - The description for this field was slightly unclear.
+ Resolution: Developers updated the description of this field.
+  
+  
+ General Dialog Displays
+         Text Display Forms Present Double Scroll Bars under Some 
+ Conditions (Remedy 348473, CQ 18715) - Previously, if a user shrunk text 
+ dialogs to a small size, CPRS displayed double scroll bars.
+ Resolution: Developers added a minimum size constraint so that the 
+ problem did not appear.
+  
+ Graphing
+         Range Check Error Generated in Graphing When High User DUZ Values 
+ Are Used (Remedy 216970, CQ 15852) - Previously, if users had high values 
+ for their DUZ (an internal identification number that CPRS uses), CPRS 
+ sometimes experienced range check errors in conjunction with graphing.
+ Resolution: Developers corrected this problem and users should no longer 
+ see the range check errors.
+  
+         Anomaly in CPRS Graphing Tool (Remedy 336061, CQ 18609) - 
+ Previously, if a user set up a view in the graphing tool and saved the 
+ view, the name of the test changed to a patient name (not that of the 
+ patient's chart the user was in). The patient name also displayed under 
+ View Definitions. The problem was that CPRS was replacing the internal 
+ number CPRS uses for the test with an internal number identifying the 
+ patient.
+ Resolution: CPRS developers corrected the problem and the appropriate 
+ name displays.
+  
+         Graphing: High/low Reference Ranges Listed for Labs when Graphing 
+ Shows Incorrect Range (Remedy 300452, CQ 18174) - Previously, the 
+ graphing reference ranges displayed by CPRS are the current ranges. The 
+ ranges in the detailed display were correct.
+ Resolution: Developers corrected the problem by having CPRS display the 
+ same test with different reference ranges on different graphs.
+  
+  
+ Internal File Access
+         OR Recommended Changes for ICD and ICPT File Access (CQ 18180) - 
+ Previously, packages were doing direct global reads to get ICD and ICPT 
+ data from File 80 and File 81.
+ Resolution: Following recommendations, the CPRS developers changed the 
+ direct global reads to API calls.
+  
+  
+ Lab
+         Labs Tab:  "Go to Top"/"Go to Bottom" do not function on the lab 
+ Cumulative Window (CQ 17112) - Users reported that the Go to Top and Go 
+ to Bottom menu items did not work. Upon researching the problem, 
+ developers discovered that Freeze and Unfreeze items were also not 
+ working correctly.
+ Resolution: Developers corrected this problem and these menu items now 
+ work correctly. Developers also made changes to the Reports tab to make 
+ the changes consistent between the two tabs.
+  
+         Labs Tab Adjustable Divider Becomes Fixed (Microbiology and 
+ Anatomic Pathology) (CQ 17547) - Previously, when a user went into CPRS, 
+ navigated to the Labs tab, and viewing Microbiology or Anatomic Pathology 
+ data, CPRS displayed  an adjustable splitter bar that the user could 
+ adjust relative to the list of accessions available for display. However, 
+ if the user selected a different tab or report and then returned to the 
+ Microbiology or Anatomic Pathology display, the splitter bar dividing the 
+ window is not selectable or movable. It remained fixed where the user 
+ left it when moving to another tab or report. 
+ Resolution: Developers corrected this problem and the splitter bar would 
+ stay active (movable) for the life of the session.
+  
+         Lab Worksheet: Make Selection of Lab Group then Select Remove 
+ All-Cannot Reselect Group Previously Highlighted (CQ 18096) - When using 
+ the worksheet, if the user made a selection of a lab group and then 
+ selected Remove All, the user could not reselect the lab group that the 
+ user already highlighted. 
+ Resolution: Developers corrected this problem, and users can now reselect 
+ the lab group.
+  
+         CPRS Printing of Lab AP Reports Truncation (CQ 18128) - 
+ Previously, when printing Anatomic Pathology reports, the line was too 
+ long and was truncated. In this case, the accession number was truncated, 
+ making it difficult to know what the correct number was. 
+ Resolution: CPRS developers removed two spaces that preceded the text in 
+ each line. As a result, the full line should display correctly.
+  
+         Lab collection issues in CPRS (Remedy #275554, CQ 18473) - 
+ Previously, in the lab ordering dialog, the collection sample window did 
+ not expand to help users select items that began with similar words. For 
+ example, if a user tried to order a lab test for blood gas by selecting 
+ arterial or venous or mixed, it was difficult because each item at a site 
+ might start with "PORTEX SYRINGE". 
+ Resolution: Developers corrected this problem.
+  
+         Lab: Patient Has Lab Results in Most Recent Results but Label 
+ Contains "No Lab Results" (CQ 18553) - Previously, if a patient had only 
+ one lab collection without result, the label would read, "NO LAB 
+ RESULTS", which could be confusing.
+ Resolution: Developers corrected this problem.
+  
+         Anatomic Path Reports Disappearing (Remedy 308138, 301412, CQ 
+ 18267, 18268) - Previously, if a user were viewing information on the 
+ Labs and Reports tabs, CPRS could get confused and not clear variables as 
+ it should. The result was that information might not be displayed or 
+ information from the previous tab might be displayed. 
+ Resolution: Developers corrected this problem. As the user switches 
+ between the Labs and Reports tabs, CPRS clears the appropriate variables 
+ and the correct information is displayed. 
+ Note:   This item is duplicated under the Reports heading because it 
+ affects both tabs.
+  
+  
+         Labs: Date Range Display Issue (CQ 18600) - When user set the 
+ date range, CPRS GUI is filtering and displaying the data 
+ correctly-except in the date range at the top of the results pane.  This 
+ issue affected the All Tests by Date, Selected Tests by Date, Worksheet, 
+ and Lab Status reports. The Microbiology report handled the date ranges 
+ correctly.
+ Resolution: Developers corrected this problem and the date range at the 
+ top of the results pane now displays correctly.
+  
+         LR 395 Change Most Recent Lab Results to  Lab Status (CQ 18648) - 
+ Site reported that although the specimen has only been accessioned 
+ (Collected - Specimen in Lab), the label "Most Recent Lab Result" can be 
+ misleading, and perhaps the column heading of "Result" should it say 
+ "Status" instead. 
+ Resolution: Developers made the following changes to clarify what users 
+ are seeing. Developers modified the Most Recent Lab Results label to read 
+ Most Recent Lab Data. Developers changed the Result column header in Most 
+ Recent Report to Result / Status, and removed the Laboratory Result text 
+ in header label to make consistent with Reports Tab Functionality.
+  
+         LR Display Status: Add Oldest, Previous, Next, Newest to Most 
+ Recent Buttons Back/Forward Symbols (CQ 18798, NSR 20070438) - 
+ Previously, the button to move the Oldest, Previous, Next, and Newest 
+ were simply arrows on the buttons. There was no other visual cue to tell 
+ the users what the buttons did.
+ Resolution: Developers put the appropriate words on the appropriate 
+ buttons: Oldest, Previous, Next, and Newest.
+  
+         LR Display Status: Most Recent Report Should Not Display the Date 
+ Twice at Top of Display Page (CQ 18799, NSR 20070438) - Previously, CPRS 
+ displayed the date twice on the top of the Most Recent report in labs. 
+ Resolution: Developers removed the redundant date.
+  
+         LR Display Status: Most Recent Report Change Result Columns to 
+ Add Collected Date/Time First (CQ 18800, NSR 20070438) - Previously, the 
+ Most Recent lab display did not have a column for the date and time 
+ collected.
+ Resolution: Developers added a new column for the Collection Date/time at 
+ the beginning of the line for the lab test.
+  
+         Clicking OK on Worksheet, Get Can't Focus A Disabled Window 
+ (Remedy 364439, CQ 19075) - Previously, when a user had worked on the Lab 
+ Worksheet and then gone to another tab and returned, CPRS would give the 
+ "Cannot Focus on a Disabled Window" error.
+ Resolution: Developers corrected this problem. 
+  
+  
+ Location Switch
+         Refresh Location Form Pops Up on Select New Patient (CQ 18393) - 
+ Previously, if a patient was in an outpatient clinic and was admitted or 
+ if an inpatient was in an outpatient clinic, and the user switched 
+ patients or began to exit the chart and chose not to sign the orders, the 
+ Location Switch dialog displayed when it should not have.
+ Resolution: Developers corrected this problem, and the form should 
+ display appropriately.
+  
+         Order Prints at Old Location (PSPO 1087, Remedy 277718, 280707, 
+ 284718, 29171, CQ 17760) - If a user placed an order at one location but 
+ did not release the order, and then the patient is transferred and the 
+ user signed the order, the order prints at the old location, not the new 
+ one.
+ Resolution: Developers corrected this problem. The order prints to the 
+ appropriate location.
+  
+ Medications
+         Release Hold Action Not on Meds Tab ACTION Menu (Remedy 297242, 
+ CQ 17867) 
+ Resolution: Developers added the Release Hold items to the on the Meds 
+ tab Action menu.
+  
+ Non-VA Medications
+         Auto-accept Not Supported on Vista Non-VA Medications Quick 
+ Orders (CQ 18333) - In previous versions of CPRS, VistA Non-VA 
+ medications quick orders showed the auto-accept prompt. At some point, 
+ the auto-accept prompt was removed for this type of quick order.
+ Resolution: Developers corrected this problem and the prompt is once 
+ again presented to the user (usually a clinical coordinator) creating the 
+ VistA non-VA medication quick order.
+  
+  
+ Notifications
+         When Orders Are Lapsed, the Unsigned Order Notification Does NOT 
+ Go Away (CQ 17536) - When orders lapsed, the unsigned order notification 
+ did not go away. Because it displayed in CPRS, a user could try to 
+ process the alert and be taken to a screen that did not have any action 
+ to take. The order was gone and no signature was needed.
+ Resolution: Developers corrected the problem. When all orders have 
+ lapsed, the notification will be removed also. If any orders that require 
+ signature have not lapsed, the notification will display so that the user 
+ can sign the orders.
+  
+         Notifications:  Lab Result Action Alert in Conjunction with a 
+ Critical Info Alert Incorporates Test Name from Previous Alerts (CQ 
+ 17548) - When a lab result generates a CPRS Lab resulted action alert in 
+ conjunction with a Critical lab(s) action alert, the alert message 
+ incorporates the test name from previous alerts even when the same test 
+ is being alerted. For example, when a CO2 is alerted the action alert has 
+ the test name "CHEM7". If that CO2 is then alerted subsequently the 
+ follow-on alerts have the test name repeated. As shown below, the test 
+ name "Chem 7" was repeated several times:' 
+ Resolution: Developers corrected this problem. CPRS will now display the 
+ test name only once.
+  
+         Missing Sort Method for Patient Alerts Causes Access Violation 
+ (Remedy 311909, CQ 18250) - A user was constantly getting an access error 
+ when logging on to every computer. The problem was that the site had 
+ deleted the PACKAGE and SYSTEM level parameter setting for the ORB SORT 
+ METHOD parameter. Because the user did not have a user level setting, the 
+ access error occurred. 
+ Resolution: Developers corrected this problem by making the Date/Time 
+ sort method the default if the parameter does not have a value set at the 
+ user level.
+  
+         Pt Selection Dialog: Double-Clicking on Notification Does Not Go 
+ to Pt. Chart until Mouse Is Moved (CQ 18657) - Previously, if a user 
+ double-clicked on an alert or notification from the Patient Selection 
+ screen, CPRS did not go to the patient chart until the user moved the 
+ mouse. 
+ Resolution: Developers corrected this problem and double-clicking on a 
+ notification or alert does go to the chart whether the mouse is moved or 
+ not.
+  
+  
+ Order Checks
+         Flaws in "No Allergy Assessment" Order Check (CQ 9875) - In the 
+ Order Check window, it was difficult to know which order check was 
+ requiring a reason for override.
+ Resolution: The Order Check in blue is the one that needs a reason for 
+ override.
+  
+         Differentiate Order Checks from One Another when Multiple Order 
+ Checks Are Displayed (CQ 15323) - Previously, the order check display 
+ could be somewhat busy and confusing. 
+ Resolution: To improve readability, developers removed the underlining 
+ that was on order checks, added a blank line between each one, added a 
+ number for each (e.g., 2 of 6), and made the window taller. 
+  
+         Initiate "No Allergy Assessment Order Check when Order Is Signed 
+ (CQ 13525) - Previously, if a user wrote and order but did not sign it, 
+ and then entered a "No Known Allergy" assessment, CPRS had already stored 
+ that no assessment was done. Therefore, when the order was signed, CPRS 
+ displayed the warning that the patient needed an allergy assessment.
+ Resolution: Developers changed CPRS to check for an allergy assessment 
+ when the order is signed as well and when the user begins entering 
+ orders. Therefore, if the user completes the assessment between the time 
+ the user accepts the order and the time the user signs the order, CPRS 
+ does not display the order check.
+  
+         Order Check:  Reason for OC Not Displayed in OC Message Text (No 
+ Allergy Assessment) (CQ 17384) - In this case, the patient allergy status 
+ was "not assessed". When the user entered an order, CPRS displayed the 
+ order check dialog, but there was no reason in the text stating what the 
+ order check was.
+ Resolution: Developers corrected a height limit on the display and the 
+ text will now display correctly.
+  
+         When Multiple Order Checks Are Displayed, It Is Difficult to 
+ Distinguish Each Order Check (CQ 18391, 18589) - This is similar to CQ 
+ 15323. The users asked to have an improvement.
+ Resolution: To improve readability, developers removed the underlining 
+ that was on order checks, added a blank line between each one, added a 
+ number for each (e.g., 2 of 6), and made the window taller.
+  
+         NVA Auto-accept Quick Orders Do Not Generate Order Checks 
+ (CQ18692) - Non-VA Medication auto-accept quick orders were not 
+ generating the appropriate order checks.
+ Resolution: Developers corrected the problem and the Non-VA Medication 
+ quick orders should now have the appropriate order checks.
+  
+         Order Checks:  #4 Mark or Split Up Order Checks that Caused 
+ Justification Necessity (CQ 16782) - Users asked for changes to the order 
+ check display to make it clearer to users. In this case, the request was 
+ to separate and make it clearer which order check requires a reason for 
+ override justification.
+ Resolution: Developers changed the CPRS order check display to show those 
+ items that need an override reason are displayed in blue, labeled as high 
+ severity, and are at the top of the group of order checks.
+  
+         Caret Special Character Not Being Edited Out in Order Check 
+ Justification Text Area (CQ 18890) - Previously, the up caret (^) could 
+ be placed in the text area for the order check justification. This 
+ created some problems with strange characters being displayed.
+ Resolution: Developers added a check to CPRS so that the caret can no 
+ longer be placed in the order check justification text area. If the user 
+ does place a caret there, CPRS displays a warning message informing the 
+ user that the character is not allowed.
+  
+         Polypharmacy OC - Location Parameter Customization Suggestion 
+ Does Not Work (CQ 19119) - During testing, test personnel discovered that 
+ the customization suggestion of the ORK PROCESSING FLAG was not correct. 
+ Resolution: Because the suggestion was not working, it was removed from 
+ the manual.
+  
+         Help Text Is Confusing Regarding Schedule Type (Quick Order) (CQ 
+ 19610) - Previously, there was some confusion regarding some help text in 
+ the Quick Order Editor. As it turned out, the problem was not with the 
+ help text, but with the way the order validation was working. Instead of 
+ verifying the schedule type on the specific schedule entered, it was 
+ evaluating all schedules with a similar name. For example: ON CALL was 
+ looking at ON CALL, ON CALL ABC and ON CALL XYZ.
+ Resolution: The validation was changed so that it now only evaluates the 
+ specific schedule selected for the order.
+  
+ Order Dialogs
+         Diet Orders: Prevent Tube Feeding Orders from Accepting C and CC 
+ Values, Enforcing M for ML Values, and Change Messages (Remedy 146664, CQ 
+ 15833) - CPRS used to accept cubic centimeters (cc) in the quantity 
+ field, but it was inappropriate to do so. Although it was not 
+ appropriate, the dialog that CPRS displayed it something was missing or 
+ inappropriately entered mentioned CCs as well.
+ Resolution: Developers changed CPRS to automatically convert CCs into 
+ milliliters (ml). Developers also changed the text in the order dialog to 
+ remove the reference to cubic centimeters.
+  
+         Can't Do Long List Scroll Up on Additives List, on IV Order 
+ Dialog (Remedy 138908, CQ 15867)  - In the Infusion Order dialog when 
+ either the additives or solutions list contained more than 44 items, a 
+ problem could occur with navigating the list. If the user moved to the 
+ bottom of the list using the arrow keys and then tried to return to the 
+ top of the list using arrow keys, the list would not move back up. 
+ Resolution: Developers corrected the problem with the lists.
+  
+         Change Order's Tab Provider Column to Include the Entire First 
+ Name of the Provider (Remedy 69185, CQ 15915) 
+ Resolution: Developers changed the Order tab so that the provider's last 
+ and first name both display.
+  
+         Select Blank Line and Return to the Orders Tab with No Changes 
+ (CQ 16929) - Previously, CPRS allowed users to select a blank line or a 
+ black line from lists. 
+ Resolution: Developers changed CPRS so that if the user selects something 
+ invalid, such as a blank or black (dividing) line, CPRS displays a 
+ message and returns the user to the list for a valid selection.
+  
+         If Medication Order Dialog Width Is Shrunk Down Too Small, 
+ Pick-Up Values Will Overlap Days Supply and Quantity Fields (CQ 17324) 
+ Resolution: Developers corrected this problem by establishing a minimum 
+ width. With a font size of 18 point, there may still be some overlap, but 
+ the fields are still usable. 
+  
+         Charleston: ACCEPT Button on Opt Order Dialogs Floats (CQ17367) - 
+ Previously, the Accept button on the Outpatient Order dialogs did not 
+ adjust appropriately. It appeared to move over part of the dialog where 
+ it should not have been. 
+ Resolution: Developers made a change that should help the Accept button 
+ be in the right location. There may still be some overlap at the 18-point 
+ font size, but it should not interfere with the dialog's function.
+  
+         Orders Tab--Move up the Write Delayed Orders Row covers up View 
+ Orders/Active Orders Section (CQ 17440) - Previously, the user could 
+ adjust the dialog, moving up the Write Delayed Orders row, which then 
+ covers up the View Orders/Active Orders section. Users had to log off and 
+ relaunch CPRS to correct this problem.
+ Resolution: Developers corrected this problem. The user can no longer 
+ cover up the other part of the dialog.
+  
+         Unable to Renew Order Message Not Grammatically Correct (CQ 
+ 17443) - Previously, there was a grammatical error on the Unable to Renew 
+ Order dialog. 
+ Resolution: Developers corrected the error.
+  
+         Vertically Stretched Generic Text Order Dialog Won't Return to 
+ Normal Size (CQ 17669)
+ Resolution: Developers corrected this problem.
+  
+         Imaging Orders:  Research Pop-up Box-Selection List Is Not 
+ Selectable and User-typed Text Does Not Display (Remedy 296471, CQ 17702) 
+ - Previously, if a user were placing an imaging order and the user 
+ selected Research, Contract, or Sharing, a dialog popped up for more 
+ information. However in the Contract/Sharing/Research Source dialog, the 
+ user could not enter text or select anything from the drop-down lists.
+ Resolution: Developers corrected this problem, and the user can now 
+ select from a drop-down or can type in text.
+  
+         Order Dialog Increases in Size (Stretching from the Bottom) as 
+ the Similar Orders Are Placed (CQ 18428) - Each time a user placed 
+ additional orders in the same dialog, the dialog would grow slightly. 
+ This was most noticeable if the user placed a large number of the same 
+ orders from the same dialog. The only way to correct the problem was to 
+ reset the Size & Position Settings for User, but then the problem begins 
+ again.
+ Resolution: Developers corrected this problem. 
+  
+         Lab Collection Issues in CPRS (Remedy 275554, CQ 18473) - 
+ Previously, if a user hovered over a drop-down list selection in the 
+ Collection Sample window, a hint would display behind the drop-down list, 
+ making it unreadable. 
+ Resolution: Developers corrected the problem, and now when the user 
+ hovers over the selection, CPRS will display a hint that shows the full 
+ text in the selection.
+  
+         Add Clinic Infusion Orders Label to the Infusion Order Dialog (CQ 
+ 19231) - Previously, whether the user selected the Infusion dialog for an 
+ outpatient clinic or an Inpatient Medication for Outpatient (IMO) clinic, 
+ the dialog label was the same. Test sites requested that CPRS developers 
+ change the label to help users identify that the user is writing orders 
+ for an IMO clinic.
+ Resolution: Developers changed the label for the Infusion order dialog 
+ when the user is ordering in an IMO clinic to Clinic Infusion Order 
+ dialog. 
+  
+  
+  
+ Order Files
+         Nature of Order - Change SERVICE REJECT to REJECTED by SERVICE 
+ (CQ 15313) - Previously, in the Nature of Order file, the user could 
+ select a nature of order with a single letter. In this file, the letter 
+ for SERVICE CORRECTION was "S" while the letter for SERVICE REJECTION was 
+ "R". This was confusing to users who might incorrectly assume that "S" 
+ was for SERVICE REJECTION and choose the wrong Nature of Order.
+ Resolution: Developers changed the Nature of Order file so that the 
+ wording for SERVICE REJECTION is now REJECTED BY SERVICE. This should 
+ make it easier for users to pick the "R" for the correct REJECTED BY 
+ SERVICE. CPRS will only see this change in the Order Details display 
+ after an order has been rejected by service.
+  
+ Order Printing
+         Delayed Text Orders Will Be Printing at the Expected Location, 
+ Rather than the Current Location (Remedy 277146, CQ 17606) - In CPRS GUI 
+ v.26, if a user entered delayed admission, discharge, or transfer (A/D/T) 
+ orders, the order printed in the current encounter location. With CPRS 
+ GUI v.27, the order printed in the location associated with the A/D/T 
+ orders. 
+ Resolution: As per feedback from CPRS test sites, developers changed the 
+ print location back to the current encounter location unless there is a 
+ conflict in the patient's location. If there a conflict in the patient's 
+ location, CPRS displays the form that enables the user to specify at 
+ which location the orders should print.
+  
+ Order Sets
+         Access Violations when Order Sets Are Nested inside Other Order 
+ Sets (Remedy 69535, CQ 15856) 
+ Resolution: Developers corrected this problem. Users should no longer 
+ experience the access violation.
+  
+         "A Component Named OMNavA Already Exists" Error (Remedy 151361, 
+ CQ 15857) - When order sets are nested inside other order sets, and these 
+ order sets contain order menus, CPRS displayed "A component named OMNavA 
+ already exists" error.  
+ Resolution: Developers corrected this issue.
+  
+ Orders
+         IV Meds Order Dialog Is Not Sorting the Medication Correctly (CQ 
+ 15038) - Previously, with a long list of solutions in the Infusion Order 
+ dialog, if the user scrolled through the list, duplicate items would 
+ appear (the list would repeat itself). 
+ Resolution: Developers corrected this problem and the list no longer 
+ repeats itself as the user scrolls through it.
+  
+         The Character ^ Is Allowed on the CPRS GUI Side but Not the 
+ Pharmacy Side (Remedy 210792, CQ 15368) - Previously, the CPRS GUI 
+ accepted the up caret (^) in orders and comments. This caused problems 
+ because Pharmacy did not accept these characters. 
+ Resolution: Developers correctly this and CPRS will not longer allow this 
+ character in orders or comments.
+  
+         Modify "Give additional dose now" Warning Message (Remedy 218153, 
+ CQ 15777) - There was some confusion when a provider entered an inpatient 
+ order and selected the option to "Give additional dose now", CPRS created 
+ two orders. Some providers did not understand that if they selected 
+ "STAT" for the urgency, it affected both orders. Two STAT orders confused 
+ nursing staff that were supposed to implement the orders.
+ Resolution: As part of the short term solution for this problem, 
+ developers added a new message to CPRS when the provider selects "Give 
+ additional dose now". The message reads as follows: 
+ By checking the "Give additional dose now" box, you have actually entered 
+ two orders for the same medication "medication name"
+  
+ The "Give additional dose now" order has an administration schedule of 
+ NOW and a priority of "priority".
+ The "Ongoing" order has an administration schedule of "schedule" and a 
+ priority of "priority".
+  
+         Display Text of Order Prompts (Remedy 70340, CQ 15849) - 
+ Previously, the display text of order prompts, in generic orders, were 
+ getting cut off at the bottom of letters that hang below the line, such 
+ as y, p, g, q, etc.
+ Resolution: Developers corrected the problem.
+  
+         Changing Collection Time Changes Urgency, even though Prior Value 
+ of Urgency Is Still Valid (Remedy 69266, CQ 15868) - Previously, when the 
+ user placed lab test orders from the CPRS Orders tab and changed the 
+ urgency from Routine to another urgency and then entered the collection 
+ type, the urgency incorrectly changes back to Routine.  
+ Resolution: Developers corrected this problem and the urgency should 
+ remain as entered.
+  
+         Incorrect Error Message - User that Is Not Authorized to Place 
+ Med Orders (Remedy 71069, CQ 15917) - A user that was not authorized to 
+ place medication orders tried to place medication orders in a reminder 
+ dialog. CPRS displayed a message that the encounter physician was not 
+ authorized to place med orders. The message should have stated that the 
+ current user was not being able to place med orders. The current user was 
+ not authorized, but the encounter provider was.
+ Resolution: Developers corrected this problem. The correct user should be 
+ in the message. This change applies to orders from order sets, quick 
+ orders, and orders from reminder dialogs.
+  
+         Vertical Splitter above Write Orders Box Can Make View Orders 
+ List Disappear (Remedy 70260, CQ 15922) - Previously, the user could move 
+ the splitter bar above the Writer Orders box and cover the View Orders 
+ list such that the user could not uncover it again.
+ Resolution: Developers corrected this problem.
+  
+         The Quantity Dispense Message from the DRUG File Isn't Being 
+ Displayed during Complex Med Quick Orders (Remedy 71000, CQ 15933) - The 
+ Quantity Dispense Message (QDM) did not display correctly for complex 
+ quick orders that were not auto-accept quick orders. When CPRS displayed 
+ the medication order dialog and the user clicked on the dose that had a 
+ quantity dispense message, the message did not display, unless the user 
+ clicked a different dose and then re-clicked the original dose.
+ Resolution: Developers changed the complex Outpatient Medication Order 
+ dialog to display a QDM when the user clicks anywhere in a row-if a QDM 
+ was defined for the selected dose. The message does not display when the 
+ quick order information first displays in the dialog.
+  
+         Mailout or Window Status and Quantity for Some Medications Is 
+ Missing (CQ 16780) - Previously, if an order had a SIG over a specified 
+ length, some information, such as mail out or window status or quantity, 
+ on the Orders tab did not display correctly. 
+ Resolution: Developers corrected this problem. However, the problem can 
+ still occur if the user places an order from the Renew dialog.
+  
+         Cancelling Reason for Request for Generic and Quick Orders Still 
+ Places Order (CQ 17871) - For Generic and Quick orders, if the user 
+ cancelled a Reason for Request dialog, CPRS still places the order if it 
+ is Auto-Accept (all required fields already have a default as part of the 
+ quick order set up) or displays the quick order dialog if not Auto-Accept 
+ (or has not answered required fields).
+ Resolution: Developers changed CPRS so that if the user cancels from the 
+ template field, such as reason for request or comments, the order will 
+ not be placed regardless of whether it was auto-accept or not. This 
+ applies to all quick orders.
+  
+         Modify TORComboBox to Prevent:  Retention of Previously Selected 
+ Entry when >>entry HIGHLIGHTED >>BACKSPACE>>ENTER (CQ 18173) - 
+ Previously, if a field, such as the Route field, had a default value, but 
+ the user wanted to change the value by highlighting it and backspacing 
+ and then pressed <Enter>. It appeared to clear the value, but the value 
+ was carried through. 
+ Resolution: Developers corrected this problem. The combo boxes should now 
+ function correctly.
+  
+         Order Screen Not Updating with Selected Formulary Alternative 
+ (Remedy 297310, CQ 18234) - Previously, if the user selected a 
+ non-formulary (NF) drug and then selected a formulary alternative drug, 
+ the selected drug name might not update appropriately.
+ Resolution: Developers corrected the problem, and the drug name should 
+ update appropriately.
+  
+         VistA Intermittent IV QO w/PRN Only Schedule Is Stripped from 
+ Order in CPRS (CQ 18402) - Previously, if a user selected a VistA 
+ Intermittent IV quick order (QO) w/PRN only schedule to process, CPRS 
+ inappropriately stripped the PRN schedule from the order. 
+ Resolution: Developers corrected CPRS so that a VistA Intermittent IV 
+ Quick Order with PRN only schedule is permitted, and CPRS displays the 
+ PRN only schedule when QO is selected for processing.
+  
+         ADMIN Time: Not Defined for Quick Orders (CQ 18464) - Previously, 
+ if a user selected an auto-accept quick order for an inpatient and then 
+ before signing the order, the user decided to change the order, no 
+ administration times were displayed. This would not be seen unless the 
+ user tried to change the order because as it was an auto-accept quick 
+ order, the administration times would not display.
+ Resolution: Developers corrected the problem. If the user selects an 
+ auto-accept quick order for an inpatient but decides to change it before 
+ signing, the administration times display.
+  
+         List Index Out of Bounds (Remedy 321804, CQ 18474) - Previously, 
+ when a user was trying to enter a brand name, CPRS displayed a "List out 
+ of bounds" error.
+ Resolution: Developers corrected this problem.
+  
+         Ampersand in Delphi Controls (Remedy 268522, CQ 18475) - 
+ Previously, putting an ampersand (&) in the display text of an order menu 
+ could cause problems because CPRS recognized this as a command character 
+ for Delphi. 
+ Resolution: Developers changed CPRS so that the ampersand would be 
+ treated like a text character and not affect Delphi.
+  
+         Duration of nDOSES for a Continuous IV QO Is Accepted and Can Be 
+ Signed in Certain Scenario (CQ 18555) - Previously, if a user was 
+ defining an auto-accept intravenous (IV) quick order (QO), in a very 
+ specific scenario, a problem could occur that enabled the user to place a 
+ dose limitation on an intermittent quick order. When the quick order was 
+ selected in CPRS, it would then immediately show as expired. 
+ For this scenario to occur, the user would go into the VistA quick order 
+ editor and define an intermittent quick order with a number of doses in 
+ the limitation field. But when the user came to the (P)lace or (E)dit 
+ prompt, if the user changed the IV type to Continuous, but did not edit 
+ the limitation field, the order could be incorrectly accepted.
+ Resolution: Developers changed CPRS to delete the duration field if the 
+ duration contains a DOSE value and the user changes the IV type.
+  
+         Can't Save Personal Quick Orders after Clicking "Write Delayed 
+ Orders" (CQ 18660) - When a user was writing delayed orders and then 
+ tried to save what the user had put in the dialog as a personal quick 
+ order, the user could not save the order. This was functioning correctly. 
+ However, even after getting out of the delayed order functionality, the 
+ user could not save personal quick orders. The situation was not resolved 
+ until the user closed and then launched CPRS again.
+ Resolution: CPRS does not allow users to save personal quick orders while 
+ writing delayed orders. However, CPRS developers corrected the problem of 
+ not being able to save a personal quick order after exiting the delayed 
+ ordering features. 
+  
+         Oddities on Form to Set Meds Tab Date Parameters (CQ 18675) - 
+ Previously, there were problems with setting the date range on the Meds 
+ tab:
+ o       If the user did not enter both start and end dates, the entry is 
+ inappropriately deleted, and the parameter is not updated
+ o       The Date validation checker is inconsistent. Some dates (T-10y) 
+ seem to be accepted but are silently deleted; other dates generate a 
+ warning before the user is even finished typing. (For example, if the 
+ user started with a date of Feb 2, 2009, and then deleted the last two 
+ digits, CPRS displayed a warning even before the user had finished 
+ entering the date.) 
+ o       If the user typed any two digits of the year, CPRS displayed an 
+ error message: "Start time cannot be greater than today", which is 
+ incorrect.
+ Resolution: Developers corrected the warning message.
+  
+         Discontinued Orders Don't Print to Ward in Encounter Switch 
+ Scenarios (CQ 18676, 18677) - Previously, there was a problem with orders 
+ not printing to the ward when the patient switched location during the 
+ ordering session. The scenario causing this problem is as follows: 
+ a)      A user wrote but did not sign orders in an ordering session.
+ b)      The user discontinued but did not sign other orders.
+ c)      The user began a new session.
+ d)      During that session, the patient's location changed-the patient's 
+ location in CPRS is different than the location in Vista: such as an 
+ inpatient at an outpatient clinic, or an outpatient who is admitted after 
+ the order is written but before it is signed).
+ e)      When the user went to sign the orders, all orders displayed, as 
+ expected. 
+ f)      However, only the new orders displayed on the Encounter Switch 
+ form, and only the new orders printed. Discontinued orders should have 
+ printed at the ward location - they did not.
+ Resolution: CPRS now deals with orders in the following ways:
+ o       Non-delayed orders written in previous session display in 
+ encounter switch form.
+ o       All discontinued orders from current and previous session for 
+ non-delayed orders print at the ward location.
+  
+         Personal Quick Orders Don't Save All Values Entered for Some Meds 
+ (CQ 18695) - Previously, when the user saved a complex personal quick 
+ order (QO) and then selected the personal quick order, the quantity value 
+ that had been saved with the order did not fill in correctly. The 
+ quantity was set to zero. During internal testing, the development team 
+ also found that medication orders for tablets were functioning correctly.
+ Resolution: Developers corrected these problems with tablet orders and 
+ complex QO. With complex QO, the Days Supply will try to re-calculate. 
+ The quantity may not re-calculate depending on the medication.
+  
+         Duration or Total Volume Field Drop-Down List Option "Doses" 
+ Populates the List Each Time the User Selects "Intermittent" (CQ 18699) - 
+ Previously, when placing an infusion order, the Duration or Total Volume 
+ field drop-down list displayed several options (for example, L, ml, days, 
+ hours, doses). If the user selected "intermittent" for the Type, an 
+ additional doses item would display in the Duration or Total Volume field 
+ drop-down list (for example, L, ml, days, hours, doses, doses). 
+ Resolution: Developers corrected this problem, and selecting 
+ "intermittent" will no longer add another "doses" item to the drop-down 
+ list.
+  
+         Quantity Field Is Being Cleared for Certain Complex Orders when a 
+ Comment Is Entered (Remedy 348919, CQ 18722) - Previously, if the user 
+ attempted to place a complex medication quick order that had a free-text 
+ dose and a quantity defined, CPRS would remove the quantity if the user 
+ began to change a comment.
+ Resolution: Developers corrected this problem. The quantity remains the 
+ same if the comment is changed, but it will recalculate if the user 
+ changes other characteristics of the order, such as the schedule or the 
+ dose. The quantity may change to zero based on what the user changes.
+  
+         Doses Listed Twice on INFUSION DIALOG (Remedy 3404255, CQ 19032) 
+ - Previously, if a user entered part of an IV order, canceled the order, 
+ and then reentered an order, the duration drop-down list would 
+ incorrectly display some choices twice.
+ Resolution: Developers corrected this problem and CPRS should display 
+ each selection only once.
+  
+         Complex Orders: Order Detail Not Being Updated for Order Checks 
+ (CQ 19061) - Previously, CPRS did not put the order checks from the 
+ parent order to the child orders created when the user accepts a complex 
+ order.
+ Resolution: Developers corrected this problem and the order check 
+ information is not transferred to the child orders.
+  
+         Keep the Day-of-Week Schedule Field Consistent with the Other 
+ Schedule Forms (CQ 19156) - Sites testing CPRS v.28 asked if this dialog 
+ should have the same functionality that other dialogs use where if a 
+ unique schedule is not selected and the user tabs out of the field, then 
+ CPRS displays an error message.  Also, should the CTRL+ENTER 
+ functionality work for this dialog like others?
+ Resolution: Developers added a warning message that displays when exiting 
+ the schedule field if the schedule field does not contains a selection of 
+ non-unique schedule. Developers also added a warning message if the 
+ schedule field contains a control character. The CTRL+ENTER functionality 
+ is not and it should not be supported on this dialog.
+  
+         IV Infusion Dialog Drop-down Problem  Related to Solution/ 
+ Additive tab Switching (CQ 19220) - Previously, when the user selected 
+ the first solution for the order and the item had more than one volume, 
+ the drop-down list would display for the user to select, but then CPRS 
+ immediately switched to the Additive tab before the user could make a 
+ volume selection. 
+ Resolution: Developers changed how the dialog functions. The dialog will 
+ no longer switch to the additive tab if the user needs to make a volume 
+ selection. Instead, if there are multiple values or multiple defaults for 
+ the first solution selected for the order, the Volume drop-down will 
+ remain open until the user makes a selection or moves to a different part 
+ of the dialog. 
+  
+         Help Text for Intermittent & Continuous Type Orders Need to Be 
+ Edited to Make Distinction of DOSE Field (CQ 19452) - In the VistA Quick 
+ Order Editor, after converting the Quick Order to Continuous when the 
+ user returns to  the Doses Field and enters ??,  the Help Text still 
+ states that DOSES can be placed into this field, which is incorrect.
+ Resolution: Developers corrected the Help Text.
+  
+  
+ Parameter Changes/Additions
+         Enhance ORWOR CATEGORY SEQUENCE Parameter Definition to Include 
+ USER as a Selection (Remedy 105173, CQ 16601) - A site wanted to be able 
+ to set up a user-level sequence to help a visually impaired user work 
+ more efficiently.
+ Resolution: Developers added the User-level setting for the parameter.
+  
+         Modify the OR RA RFS CARRY ON Parameter to Include Division, 
+ Location, User, Service, System and Package Levels (CQ 16920) - 
+ Previously, this parameter could only be set at the System level.
+ Resolution: As requested, this parameter was expanded to have more levels 
+ at which it can be set: Package, System, Division, Service, and User.
+  
+         Two CPRS Parameters Have the Same Parameter Description (Remedy 
+ 69631, CQ 17700) - A user reported that two parameters, ORW ADDORD INPT 
+ and ORWOR WRITE ORDERS LIST, had the same description. 
+ Resolution: While researching the similar descriptions, developers 
+ discovered that the parameter ORW ADDORD INPT was no longer in use. The 
+ CPRS GUI v.28 installation will delete this parameter at sites. In 
+ addition, the developers added to the ORWOR WRITE ORDER LIST parameter 
+ description that it has been superseded by the parameter ORWDX WRITE 
+ ORDERS LIST and that it is there only for backwards compatibility.
+  
+         VBECS: Test Site Wants a Parameter for Changing Order of 
+ Diagnostic Tests (Remedy 380789, CQ 18426) 
+ Resolution: Developers added a new parameter OR VBECS DIAGNOSTIC TEST 
+ ORDER to enable sites to rearrange the order of diagnostic tests at the 
+ System, Division, or User level. Sites can change sequence numbers to put 
+ the list of tests in whatever order the site chooses. The site can also 
+ remove a test from the list by deleting the corresponding sequence 
+ number. 
+  
+         Need Parameter ORWT TOOLS MENU Description Updated for Submenu 
+ Info (Remedy 162367, CQ 19054) - With the addition of submenus to the 
+ Tools menu, the description of the ORWT TOOLS MENU parameter to reflect 
+ the changes.
+ Resolution: Developers changed the description to reflect the changes to 
+ this parameter.
+  
+         VBECS QO without a Start Date Is Rejected by VBECS with a Message 
+ Sent to Provider (Remedy 379127, CQ 19097) - Previously, if a user 
+ entered a VBECS quick order (QO) without a start date in CPRS, VBECS did 
+ not accept the order. While investigating the order, developers 
+ discovered that the start date and time was not being stored or passed to 
+ VBECS correctly. 
+ Resolution: Developers corrected the problem and the start date will now 
+ be stored and sent correctly. Based on the collection type, the start 
+ date will have a default value, which the user can change if needed.
+  
+         VBECS: A Site Requested a Parameter that Removes Collection 
+ Date/Time Defaults e.g., NOW (CQ 19167) - Previously, the providers 
+ ordering blood were not paying attention to the date for collection time. 
+ The providers would place the order and the default of NOW for the 
+ collection time would be placed in the order.
+ Resolution: CPRS developers created a new parameter OR VBECS REMOVE COLL 
+ TIME to enable the sites to remove the Collection Time Default when 
+ entering Diagnostic Test orders. The parameter has no affect on Quick 
+ orders.  Quick order values will be displayed.
+  
+         VBECS Create a Parameter that Would Allow Sites to Change 
+ Diagnostic Side with Blood Component Side (CQ 19266) - When the CPRS 
+ Blood Components and Diagnostic Tests Order Form dialog, some sites asked 
+ that the location on the dialog of the Blood Components panel and the 
+ Diagnostic Tests panel be switched. However, other sites disagreed and 
+ wanted them to remain as they were, with the Blood Components panel on 
+ the left and the Diagnostic Tests panel on the left.
+ Resolution: Developers created a new parameter, OR VBECS DIAGNOSTIC PANEL 
+ 1ST, to enable users to switch the location of the panels. This parameter 
+ can be set at the Package, System, and Division levels. 
+  
+  
+ Patient Record Flags
+         Make Close Button on Patient Record Flags Dialog a Default Button 
+ so that Enter Key Closes Dialog (Remedy 165177, CQ 15925) 
+ Resolution: Developers made the Close button the default. When a user 
+ selects Enter, the dialog should close.
+  
+ Patient Selection
+         Team List, Source Combination Option (Remedy 71063, CQ 15902) - 
+ Previously, if users were creating teams using source combinations and 
+ the clinic names were formatted by site name, hyphen, and then clinic 
+ name (e.g., SL-Cardio), the clinic name displayed only the site name 
+ (SL). If all the clinics were formatted the same way, it was impossible 
+ to tell which clinics had been selected. The problem was that CPRS was 
+ treating the hyphen (-) as a delimiter, a character that tells CPRS that 
+ one item is complete.
+ Resolution: Developers changed CPRS to not treat the hyphen as a 
+ delimiter. The complete clinic name should now display.
+  
+         Patient Selection Screen Does Not Maintain Column Widths between 
+ Patients (CQ 16671) - Previously, if the user adjusted the width of the 
+ Notifications columns, CPRS did not keep the widths as the user set them 
+ when the user selected a new patient.
+ Resolution: Developers corrected the problem, and CPRS saves the widths 
+ of the columns as the user sets them.
+  
+         Patient Selection Problem (Remedy 288256, CQ 18265) - Previously, 
+ users experienced problems when using the "Creating a personal list" 
+ option in CPRS. The users could no longer enter the patient's last name 
+ and last four of the social security number to include the patient on a 
+ list. Users were required to enter the first name, last name, and middle 
+ initial as a work around. 
+ Resolution: Developers corrected the problem so that users can now enter 
+ the patient's last name and the last four digits the patient's social 
+ security number to include the patient on a personal list.
+  
+         CV Not Clearing in Patient Demographics When Changing Patient 
+ List (CQ 18429) - Previously, when a user highlighted a patient name, the 
+ associated information displayed on the Patient Selection 
+ screen-including Combat Veteran status, if appropriate. If the user chose 
+ to find a different name without opening the record and selected a 
+ category, such as Ward, the Combat Veteran status continued to display 
+ when it should not have.
+ Resolution: Developers corrected this problem and the Combat Veteran 
+ status now updates appropriately.
+  
+         Access Violation on Patient Selection (CQ 18540, 18544) - The 
+ access violation occurred when the user double-clicked the Select New 
+ Patient under File menu. The user should have just clicked once. In this 
+ case, the second click activated the Patient Inquiry form, and then the 
+ user was selecting select a new patient from that form. The same type of 
+ problem occurred when the user double-clicked File | Review/Sign Changes..
+ Resolution: Developers corrected this problem by changing CPRS to 
+ complete the patient selection process or Review/Sign Changes. process 
+ before the patient inquiry can be activated.
+  
+ Postings
+         Postings Dialog Freezes Sporadically (CQ 19124) - Previously, 
+ when a user double-clicked on a posting or in the posting section, the 
+ dialog sporadically would freeze and not allow the user to close or 
+ interact with it.
+ Resolution: Developers corrected this problem.
+  
+ Primary Care Button
+         NSR 20090621: Modify the CPRS Primary Care Button to Display the 
+ Associate Provider (CQ 18551) 
+ Resolution: Developers added the ability to display the associate 
+ provider on the Primary Care Team button.
+  
+  
+ Printing
+         Printing Generic Orders with Several Lines of Text Truncates 
+ Lines That Exceed One Page in Length (Remedy 125784, 161946, CQ 15850, 
+ 15924) 
+ Resolution: Developers corrected the problem and CPRS will print the 
+ header and additional text correctly.
+  
+         There Is No Indication in the Print Setup Menu Option (Remedy 
+ 69698, CQ 15926) - If the user went to File | Print and tried to set a 
+ default printer, the default printer was not saved correctly. 
+ Resolution: Developers corrected the problem, and the user can now set a 
+ default printer from the File | Print and Print Setup menu items. Also, 
+ developers added a feature to CPRS that enables CPRS to remember the last 
+ printer you selected. Because CPRS remembers the printer, a user can 
+ print to a specific printer during the same session without having to 
+ constantly reselect the printer.
+  
+         Garbled Printout of Multi-Line Sigs on Clinical Reports (Remedy 
+ 144336, CQ 15943) - Previously, Pharmacy Objects under "Clinical Reports" 
+ (Active Outpatient/All Outpatient) do not print the "Sig" column 
+ correctly. The output appeared to be scrambled.
+ Resolution: Developers corrected the problem and the output should 
+ display correctly.
+  
+         GUI Print DS Chart Copy (Remedy 69315, CQ 19030) - Previously, 
+ the site was able to print discharge summary Work Copies but not Chart 
+ Copies. 
+ Resolution: Developers corrected this problem and sites should be able to 
+ print Chart Copies also.
+  
+  
+ Problem List
+         Duplicate Problems: Need to Check for Duplicates Based on ICD9 
+ Code (Remedy 192229, CQ 15928) - Previously, CPRS did not check if 
+ problems were duplicates based on ICD-9 codes. Thus, two problems with 
+ the same ICD-9 code could be on the Problem List.
+ Resolution: Developers corrected this problem.
+  
+         Unclear Error Message When Invalid Onset Dates Entered on Problem 
+ Tab (Remedy 69997, CQ 16123) - Previously, when the user entered an 
+ invalidly formatted date for the Onset date on the Problems tab, CPRS 
+ displayed an error message, but some date formats on the error message 
+ were incorrect.
+ Resolution: Developers corrected the date formats in the error message.
+  
+         Comments Not Showing under Remove Problem (Remedy 327569 - 6, CQ 
+ 19031) - If a user tried to remove a problem, the problem comment was not 
+ displaying in the remove dialog.
+ Resolution: Developers corrected this problem and the comment now 
+ displays appropriately.
+  
+  
+ Procedures
+         Can't Specify Chemo Drug Quantity on Procedure Tab (Remedy 
+ 123780, CQ 15837) - Previously, users could not enter a high chemotherapy 
+ drug quantity on the Encounter Form's Procedure tab. 
+ Resolution: Developers changed the limit on the Quantity field from 100 
+ to 999 match the maximum value in PCE (Patient Care Encounter).
+  
+ Provider Selection
+         Access Violation in Provider Selection (Remedy 321169, CQ 18472) 
+ - Users found that when using the keyboard's down arrow to select a 
+ provider, CPRS gave an access violation.
+ Resolution: Developers corrected this problem.
+  
+  
+ Radiology or Imaging
+         Contract Source Entered in Imaging Order Dialog Does Not Match 
+ Source Displayed in the Order Details (CQ 19236) - Developers found that 
+ CPRS was not using the correct identifier for the sources.
+ Resolution: Developers changed the CPRS remote procedure call (RPC) to 
+ use the correct identifier or internal entry number (IEN). The source 
+ should now display correctly.
+  
+  
+ Reminders
+         Can Enter PCE Data for a Future Date through Reminder Dialogs 
+ (Remedy 70591, CQ 11703, 15941) - Previously, although CPRS does not 
+ normally allow a user to enter encounter information for a future 
+ appointment, the user could enter future Patient Care Encounter (PCE) 
+ information for a future appointment. 
+ Resolution: Developers corrected this problem, and users should no longer 
+ be able to enter PCE information for a future appointment through a 
+ reminder dialog, a TIU template with a reminder dialog, nor a TIU 
+ template with a reminder dialog attached to a note title.
+  
+         Reminder Dialog Doesn't Remember the Size of the Resolution 
+ Window Anymore (Remedy 70423, CQ 15936) - There was problem with the 
+ splitter bars not staying where the user set them. They would return to 
+ the default location-particularly with the Resolution window.
+ Resolution: Developers corrected the problem: The splitter bars will stay 
+ where the user sets them.
+  
+         When Used in a Reminder Dialog, Template Field Default Values Do 
+ Not "Stick" (Remedy 119166, CQ 15960) - Previously, if the user was 
+ working on a reminder dialog and there were template fields, the default 
+ values in the fields were not being placed into the note. 
+ Resolution: Developers corrected this problem.
+  
+         User Loses Work when a Reminder Dialog Is Cancelled...No Warning 
+ Is Displayed (Remedy 233376, CQ 16341, 18395) - Previously, if a user was 
+ entering information in a reminder dialog and pressed the Cancel button, 
+ the dialog closed without warning the user that the information was going 
+ to be lost. 
+ Resolution: Developers added a warning that the information already 
+ entered in the reminder dialog will be lost if the user cancels out of 
+ the dialog.
+  
+         User Switches Patient while Reminder Dialog Is Open, Data from 
+ Previous Patient Used for Branching Logic (CQ 17665) - Previously, if a 
+ user changed patients while a reminder dialog with branching logic was 
+ open, the information was not cleared and reevaluated for the new patient 
+ so that the appropriate prompts displayed. Branching logic means that if 
+ the patient has a specified characteristic, one set of prompts display, 
+ but if the patient does not have the characteristic, then different 
+ prompts display.
+ Resolution: Developers corrected the problem. If the user switches 
+ patients with the a reminder dialog with branching logic open, the dialog 
+ now clears the information and correctly evaluates the reminder for the 
+ selected patient.
+  
+         Losing Reminder Buttons (Remedy 270817, CQ 17773) - Previously, 
+ users could cover the Finish button by pulling the grey form over those 
+ buttons at the bottom of the form (Cancel, Visit Date, Finish, etc.).
+ Resolution: Developers corrected this problem. The user can no longer 
+ cover the buttons.
+  
+         Reminder Window Displays Behind Main Window (Remedy 279998, 
+ 285859, 291824, CQ 17875) - When working with the Mental Health .dll 
+ (dynamic link library), the dialog occasionally displayed behind the main 
+ CPRS window and the user could not access the dialog.
+ Resolution: Developers corrected this problem. 
+  
+         Available Reminder Dialog:  Click on "+" to Expand Folder, Focus 
+ Goes to the Top, User Must Scroll Down (CQ 17940) - Previously, in the 
+ Available Reminders dialog, if the user clicked on the "+" to expand the 
+ folder, the list returned back to the top, forcing the user to scroll 
+ back down to see the expanded list.
+ Resolution: Developers corrected the problem with the mouse click moving 
+ the form back to the top, but there is still a visual problem with using 
+ the keyboard click. However, the screen reader reads the correct data 
+ because the focus is at the correct location.
+  
+         MH Test Not Clearing Out when Pressing Cancel Button in a 
+ Reminder Dialog Template (CQ 18395) - Previously, if a user entered 
+ answers for a mental health test in a reminder dialog that had a TIU 
+ template, but the user then press the Cancel button, the information was 
+ not cleared. If a mental health test was then opened again, the entered 
+ information was still there.
+ Resolution: Developers corrected this problem. The data now clears 
+ correctly when the user presses the Cancel button.
+  
+         Tilde in Reminder Dialog Objects Causes Subsequent Text to Be 
+ Truncated (Remedy 374851, CQ 19117) - Previously, Reminder dialogs did 
+ not appropriately handle TIU objects that contained Pharmacy Orderable 
+ Items with the tilde character (~). The Reminder dialog would not shows 
+ the tilde nor the text that followed the tilde.
+ Resolution: Developers changed CPRS so that Reminders dialog objects will 
+ now handle tildes and the text that follows appropriately.
+  
+  
+ Remote Data
+         Only the Remote Data Button Turns Blue when Remote Data Is 
+ Available, Not the VistaWeb Button (Remedy 275969, CQ 17584) - 
+ Previously, when the patient had remote data, the Remote Data button 
+ would change color as an indicator to the user that the remote data was 
+ available. The VistaWeb button did not change color even if there was 
+ remote data. 
+ Resolution: Developers change CPRS so that the VistaWeb button also 
+ changes color when remote data is available. It also displays as being 
+ selected when the user selects VistaWeb to view remote data. It displays 
+ as depressed until a new patient is selected.
+  
+  
+ Reports
+         Anatomic Path Reports Disappearing (Remedy 308138, 301412, CQ 
+ 18267, 18268) - Previously, if a user were viewing information on the 
+ Labs and Reports tabs, CPRS could get confused and not clear variables as 
+ it should. The result was that information might not be displayed or 
+ information from the previous tab might be displayed. 
+ Resolution: Developers corrected this problem. As the user switches 
+ between the Labs and Reports tabs, CPRS clears the appropriate variables 
+ and the correct information is displayed. 
+ Note:   This item is duplicated under the Labs heading because it affects 
+ both tabs.
+  
+         Sometimes AP Alerts Do Not Display in VistA CPRS Scroll/Roll (CQ 
+ 18682) - Previously, some anatomic pathology (AP) alerts were not 
+ displaying in the CPRS VistA roll and scroll character-based interface. 
+ Resolution: Developers changed how CPRS looks for the appropriate lab 
+ data to make it more accurate.
+  
+  
+ Set Up
+         Site Was Able to Assign 2 Items to the Same Sequence in a Dialog 
+ Group (Remedy 374911, CQ 19143) 
+ Resolution: Developers added a check so that two items cannot be assigned 
+ the same sequence number.
+  
+ Spell Check
+         Spell Checker Aborts if Note Starts with 2 or More Blank Lines 
+ (Remedy 70255, CQ 15244, 15822) 
+ Resolution: Developers corrected this problem.
+  
+         Alt-Tab Can Hide Spell Check Window behind CPRS, Making It Appear 
+ That CPRS Has Locked Up (Remedy 70492, CQ 15823) - Previously, when a 
+ user was spell checking a note and then used Alt-Tab to select another 
+ application, it could cause problems with CPRS. When the user returned to 
+ CPRS, the spell check window was behind CPRS and it appeared that CPRS 
+ was locked.
+ Resolution: Developers corrected the problem by changing CPRS to keep the 
+ spell check window in front of CPRS.
+  
+         Spell Checking Options, such as Ignore Uppercase, Not Retained 
+ from Spell Check to Spell Check (Remedy 132780, CQ 15824)  
+ Resolution: Developers changed CPRS to store the spell checking options.
+  
+         Access Violation after Using Spell Checker (Remedy 145863, CQ 
+ 15825) 
+ Resolution: Developers corrected this problem.
+  
+         When Returning from Spell Checker, a List Out of Bound Error 
+ Occurs (Remedy 71028, CQ 15859, 11664) - When the user has been using the 
+ spell checker and  returned to CPRS, CPRS experiences a list out of bound 
+ error, followed by CPRS locking up. This list out of bounds error was 
+ caused by the spell checker taking more time that the broker timeout. 
+ Resolution: Developers corrected this problem.
+  
+         Spell Check: When 1st Line of Text Is ******* Spell Check Will 
+ Not Work (Remedy 187352, CQ 16248) - Previously, if a line in a progress 
+ note contained only special characters, such as asterisks, the spell 
+ checker did not work correctly.
+ Resolution: Developers corrected this problem.
+  
+         Spell Check: Spell Check Window Hidden behind Current CPRS Window 
+ (Remedy 320202, CQ 18319) 
+ Resolution: Developers corrected this problem. In CPRS GUI v.28, the 
+ spell check was redesigned.
+  
+ Templates
+         Mouse Wheel Doesn't Work in Template Dialogs (Remedy 71293, CQ 
+ 15952) 
+ Resolution: Developers corrected this problem. The mouse wheel should now 
+ work in both template and reminder dialogs.
+  
+         Template Editor: OK, Cancel and Apply Buttons Can Be Partially 
+ Blocked (Remedy 279399, CQ 18274, 18598) - Previously, the user could 
+ move the different panels and panes on the Template Editor dialog and 
+ cover up some controls. 
+ Resolution: Developers put controls in place so that the user cannot move 
+ the various items on the dialog to cover up the controls. 
+  
+  
+ Time Out
+         When CPRS Is Timing Out There Is No Immediate Way to Close CPRS 
+ (Remedy 69106, CQ 15961) - Previously, when the CPRS Time Out dialog 
+ displayed and began counting down the time to close CPRS, there was no 
+ way to immediately close CPRS from the dialog. Also, if some other 
+ application was open and active, the CPRS Time Out dialog would not 
+ display on top of the other applications.
+ Resolution: Developers corrected both problems. Developers added a Close 
+ CPRS button to the CPRS Timeout dialog, and the dialog will now display 
+ on top of other applications if they are active.
+  
+         If CPRS Timeout Is Set to 0, It Counts Negative Numbers (CQ 
+ 17558) 
+ Resolution: Developers corrected these problems. If set to zero, CPRS 
+ closes after the appropriate time without any user interaction.
+  
+         CPRS Time Out Warning Message Pulls the User into Session Being 
+ Timed Out (Remedy 276342, CQ 17595) - This problem occurred in CPRS GUI 
+ v.27 when the user had several CPRS sessions open at one time and the 
+ session that was not currently active timed out. For example, if the 
+ provider was placing orders in the record of Patient C when the timeout 
+ occurred on Patient A, Patient A's record became active and the provider 
+ did not notice-meaning the provider could enter orders in the incorrect 
+ chart.  
+ Resolution: Developers changed CPRS so that when one session of multiple 
+ sessions that are opened is about to close, CPRS pulls the user into that 
+ session so that the dialog can warn the user by identifying which session 
+ is about to close, count down, if a countdown is set up, and close the 
+ session. The dialog now displays for the user which patient's chart 
+ (session) is about to close.
+  
+  
+ TIU (Text Integration Utilities)
+         When Changing Note Title to a Title without a Template or 
+ Boilerplate (Remedy 218011, CQ 15855) - Previously, when the user changed 
+ the note title to a title without a template or boilerplate, CPRS 
+ displayed a dialog to ask the user whether the text that the user had put 
+ in the first note should be placed in the new title's note. The dialog 
+ presented three items: 
+ o       Ignore the boilerplate text (text of note will not change).
+ o       Append the boilerplate text to the text of the note.
+ o       Replace the text in the note with the boilerplate text.
+ The options did not make clear what the user should do to retain the 
+ text. The request was to change the default response to better avoid 
+ losing text.
+ Resolution: Developers simplified this dialog. Now, it asks if the user 
+ wants to clear the existing note text and has a Yes and No button with 
+ the default being No. If the user selects a new note title and presses 
+ <Enter> in the dialog, CPRS retains the text in the new title's note. 
+  
+         When Writing a New Note with a Linked Template Dialog Boilerplate 
+ an Access Violation Occurs (Remedy 69674, CQ 15860) - When a user was 
+ writing a new note that had a linked template dialog boilerplate and CPRS 
+ timed out, an access violation occurred, and all references to the note 
+ were lost. There was no record of a note even having been started on 
+ patient.
+ Resolution: There will no longer be an access violation when a template 
+ dialog is open and CPRS times out.  Any open template dialog will be 
+ canceled (losing any entries made in the dialog), but all existing text 
+ in the note will be retained. 
+ Note:   However, if a user is entering a new note but the note contains 
+ no text, and a timeout occurs, the note will be deleted because it is 
+ empty. This is normal CPRS behavior for empty notes on time out.
+  
+         Assigning a Default Cosigner when There Are Large User IENs 
+ Causes Range Check Errors (Remedy 70088, CQ 15901) - Previously, when the 
+ user was assigning a default cosigner and the system had large internal 
+ entry numbers (IENs), a number CPRS user to identify users, range check 
+ errors could occur.
+ Resolution: Developers corrected the problem.
+  
+         Unable to Edit Notes after Pasting in Large Amounts of Text 
+ (Remedy 71058, CQ 16226) - Previously, if a user pasted a large amount of 
+ text into a note, the user was unable to edit the note. The only thing 
+ the user could do was to backspace out text and then to replace it with 
+ only the same amount of text that they took out.
+ Resolution: Developers changed CPRS to allow editing text after pasting 
+ in large amounts of text.
+  
+         Undo Not Working (Remedy 70341, CQ 18262) - Users noted that 
+ after pasting text into a note, the Undo feature was not working. 
+ Resolution: Developers corrected this problem. After pasting text into a 
+ note, the user can remove the pasted text immediately after pasting by 
+ selecting Edit | Undo or using the keyboard combination CRTL + Z. If the 
+ user types text, Undo will remove the text. The Undo feature only works 
+ once and then it switches to be a Redo (under Edit | Redo). Developers 
+ also added the CTRL+Y keyboard combination for Redo.
+  
+         Text Wraps Using Templates (Remedy 304116, CQ 18263) - 
+ Previously, the text in templates was not wrapping correctly especially 
+ when the text went down far enough to create the need for a scroll bar. 
+ Resolution: Developers changed CPRS to adjust for the text when a scroll 
+ bar displayed. This should correct the wrapping problem.
+  
+         TIU Word Processing Template Field TRUNCATION (Remedy 275552, CQ 
+ 18266)
+ Resolution: Developers corrected this problem. The field no longer 
+ truncates as did.
+  
+         Search for Text in Notes Tab (Remedy 242455, CQ 18269) - When the 
+ user was searching through notes, the feature worked fine. But, after 
+ doing a search, when attempting to do something else on the notes tab, 
+ the search would be done again-causing an annoyance to the user.
+ Resolution: Developers corrected this problem so that the search 
+ terminates correctly.
+  
+         Display on Pop Up Dialog for "Search for text (within current 
+ View)" Wrong; Display Says: "List Signed Notes by Author" (Remedy 278651, 
+ CQ 18270) - Previously, when the user selected the menu item "Search for 
+ text (within Current View)", the heading on the dialog that displayed 
+ incorrectly read, "List Signed Notes by Author". 
+ Resolution: Developers corrected the dialog label, which now correctly 
+ reads, "Search for text (within current View)".
+  
+         Identifying Co-Signer Requires Double Click Instead of Single and 
+ Does Not Refresh (CQ 19451) - Previously, there was a problem where users 
+ had to double-click to move a name to the list of additional cosigners. 
+ Then, there was also a problem in that the list did not appropriately 
+ refresh.
+ Resolution: Developers changed CPRS to move a name with a single click 
+ and the list now refreshes correctly. 
+  
+  
+ Tools Menu
+         Add Submenus to the Tools Menu (Remedy 162367, CQ 15848, 15962) 
+ Resolution: Developers added the ability to add submenus to the Tools 
+ menu and expanded the number of possible items to 99, including dividing 
+ lines.
+  
+  
+ VBECS (VistA Blood Establishment Computer System)
+         VBECS:  Expired Orders That Are Not Associated with a Specimen 
+ (CQ 16257) - Previously, CPRS was not accepting a change of status for 
+ expired orders.
+ Resolution: CPRS will now accept the update to the expired order status.
+  
+         VBECS: Reason for Request Does Not Auto-Fill on Order Dialog with 
+ Surgery QO (CQ 18037) - Previously, sites reported that the Reason for 
+ Request field does not auto fill on the order dialog with Surgery entry 
+ from quick orders (QO). 
+ Resolution: Developers changed CPRS so that when a quick order defines 
+ the urgency of PRE-OP and a surgery, CPRS puts the surgery in the Reason 
+ for Request field just as if the user selected it from the dialog.
+  
+         VBECS: Surgical QO MSBOS Alert Does Not Occur when #Units Are 
+ Exceeded (CQ 18039, 18040, 18041) - Previously, when a user placed a 
+ quick order for blood components for a surgery and the quantity exceeded 
+ the Maximum Surgical Blood Order Schedule (MSBOS) configuration in VBECS, 
+ the MSBOS alert did not occur. The alert also did not occur when a Type 
+ and Screen quick order was placed and then the user added blood 
+ components to the order.
+ Resolution: Developers corrected a problem where the logic to check the 
+ MSBOS was not occurring. The check is now occurring as it should.
+  
+         VBECS: Some Components Require T&S even though VBECS Has Been 
+ Configured Not to Require T&S (CQ 18443) - Previously, CPRS was 
+ incorrectly requiring some blood components, such as fresh frozen plasma 
+ or platelets, to have a T & S (type and screen) even though the 
+ configuration did not call for it. The check in CPRS for whether a blood 
+ component required a type and screen was not working correctly. 
+ Resolution: Developers corrected this problem and the check for a type 
+ and screen should function correctly.
+  
+         VBECS: Stat Urgency Changed to Routine when Selecting T&S (CQ 
+ 18747) - In the Blood Bank order dialog, sites reported that when 
+ selecting STAT for component when ordering the T&S, urgency changes to 
+ Routine. The problem was that CPRS was recalculating the urgency every 
+ time the user selected a new component or test. 
+ Resolution: Developers changed CPRS to retain the urgency the user 
+ originally entered.
+  
+         VBECS: QO Heading Displays "9^ROUTINE" (CQ 18784) - Previously, 
+ when the user selected a quick order, the dialog heading displayed, 
+ "9^ROUTINE". 
+ Resolution: CPRS developers corrected this problem. With quick orders, 
+ the dialog's heading should read, "Blood Components and Diagnostic Test 
+ Order Form".
+  
+         VBECS: QO with Collection Date T+14 Displays "Today" in Dialog 
+ (CQ 18791) - Previously, sites could create quick orders with the 
+ collection date as t+14 (14 days or two weeks in the future), but the 
+ Blood Components and Diagnostic Tests Order Form dialog displays "today" 
+ as the collection date.  The order detail displays the correct collection 
+ date as t+14.
+ Resolution: Developers found problems with a predefined Collection Time 
+ not being displayed correctly for Lab Collection types of Ward Collect 
+ and Send Patient.  Developers corrected this problem and fixed a problem 
+ with Collection Type/Time issues when editing quick orders. The correct 
+ predefined date now displays.
+  
+         VBECS: QO in CPRS Defaults to CT Ward Collect for All Locations 
+ (Remedy 358702, CQ 18794) - Previously, sites discovered problems with 
+ how the Collection Type was coming through with quick orders. 
+ Resolution: Developers corrected several problems with how the Collection 
+ Type was being used. It now functions correctly.
+  
+         VBECS: Ordering the Diagnostic Test after the Urgency Changes 
+ Urgency to Routine (CQ 18841) - When a user ordered a component and 
+ selected an urgency and then selected a type and screen, the urgency was 
+ incorrectly changed to Routine.
+ Resolution: Developers corrected this problem and the selected urgency 
+ will be retained.
+  
+         VBECS: Reason for Request and Comments Not Sent to VBECS 
+ Consistently (Remedy 366886, CQ 18873)  - Previously, CPRS was 
+ inconsistent sending a reason for request and comments to VBECS for 
+ diagnostic tests. 
+ Resolution: Developers changed CPRS to selectively add/remove the 
+ required flag (*) from fields based on what the user selected. The Reason 
+ for Request is not required for diagnostic tests, so this change should 
+ help clarify to the user when a particular field is required.
+  
+  
+         VBECS: Write a BB Order then Go to Change Order Containing Type 
+ and Screen, Another T&S Is Requested (CQ 18888) - Previously, if a user 
+ tried to change an unreleased Blood Bank (VBECS) order that already 
+ included a type and screen, CPRS incorrectly displayed the message that a 
+ type and screen was required.
+ Resolution: Developers changed CPRS to look at the content of the 
+ unreleased order and if a type and screen as included in the unreleased 
+ order, CPRS does not prompt for another, unnecessary type and screen.
+  
+         VBECS: Sending CPRS Active T&S with No Component from MSBOS 
+ Setting in VBECS (CQ 19070) - Previously, there was a problem with 
+ communication between CPRS and VBECS. When the user selected blood 
+ components and selected a surgery that did not require blood components 
+ according to the Maximum Surgical Blood Order Schedule (MSBOS) as the 
+ reason for request, CPRS was then informing the user that a Type and 
+ Screen was needed.
+ Resolution: Developers corrected this behavior. If the user selects a 
+ surgery that does not require blood components according to the MSBOS, 
+ CPRS now displays a dialog warning the user that no blood is required. 
+ CPRS also displays a label on the Blood Components and Diagnostic Test 
+ Order Form dialog.
+  
+         VBECS Future Orders: None of the RBC Orders Crossed to VBECS 
+ (Remedy 382825, 383708, 408643, 416671, CQ 19139, 19259) - Previously, 
+ some VBECS future orders were being cancelled because an incorrect lab 
+ specimen (Type and Screen) was associated with the order. The problem 
+ occurred because future orders were associated with an existing specimen 
+ that would expire in a few days instead of being associated with a Type 
+ and Screen that the user entered for the future blood product. After the 
+ existing specimen expired, the future order was cancelled because the 
+ associated Type and Screen's specimen had expired.
+ Resolution: Developers changed CPRS to compare the date wanted and the 
+ specimen expiration date to ensure that the order will be tied to the 
+ correct specimen. 
+  
+         VBECS: Keeping Date/Time Wanted, Collection Type, and Collection 
+ Date/Time Active (CQ 19168) - During testing, sites reported that 
+ clinicians found it confusing that they had to select an item in 
+ "shopping cart" or Selected Components and Tests area to modify the 
+ item's characteristics using the display above it confusing. The sites 
+ suggested that keeping the Date/Time Wanted, Collection Type, and 
+ Collection Date/Time active would allow them to directly select the item 
+ above. 
+ Resolution: CPRS developers took the advice of the sites and changed the 
+ Blood Components and Diagnostic Test Order Form dialog so that those 
+ items that apply to all components or diagnostic tests continue to 
+ display as the user edits the order. Also, the last item that a user 
+ edited in an area will display when the user puts the focus in that area 
+ either by tabbing into or clicking in that area. To edit a different 
+ item, the user must still select the item under the Selected Components 
+ and Tests area. 
+  
+         VBECS: QO for Immediate Collect No Ellipsis (Date/Time) Button 
+ Available to Select Date/Time Collection (Remedy 389479, CQ 19202) - 
+ Previously, when clinicians were placing orders, they wanted to set the 
+ time a few minutes in the future, but they could not see the ellipsis 
+ button.
+ Resolution: Developers found that the ellipsis button was inadvertently 
+ covered on the dialog and not functioning correctly. Developers corrected 
+ the problem and the ellipsis button is now functioning correctly.
+  
+         Blood Bank Reason for Request Requires Rolling the Mouse over 
+ Reasons Several Times (CQ 19224) - Previously, the only way to see a long 
+ reason for request on the Blood Components and Diagnostic Test Order Form 
+ dialog was to move the mouse over the reason for request several times.
+ Resolution: Developers altered the dialog slightly to make the Reason for 
+ Request field longer so that the reason can be seen without using a mouse 
+ over hint. The user should now be able to see the reason for request.
+  
+         VBECS: Font Size Equal to or Greater Than 10 in the VBECS Order 
+ Dialog Causes Display Problem with Diagnostic Test Panel (CQ 19268)  - 
+ The Diagnostic Test Panel at the top of the Blood Bank Order Dialog would 
+ only partially show when changing the font size to something above 8.  
+ Resolution: Developers corrected the problem. 
+  
+         VBECS QO with PLT, FFP, or CRYO that Do Not Require a T&S when 
+ Place Will Require a T&S (CQ 19306) - Previously, when a user created a 
+ quick order for platelets, plasma, or cryoprecipitate that did not 
+ require a Type and Screen, CPRS did show the warning that the Type and 
+ Screen was required when the order was placed.
+ Resolution: Developers changed CPRS to not require the test when it was 
+ not necessary.
+  
+         VBECS Duplicate T&S Order Warning Message Does Not Work with a 
+ Manual T&S Order (CQ 19312) - Previously, when a user was placing a quick 
+ order (QO) that created a duplicate Type and Screen order, CPRS gave the 
+ warning, but if the user placed the order manually from the Blood 
+ Component and Diagnostic Test Order Form dialog, the user did not get the 
+ warning message.
+ Resolution: Developers corrected this problem and the warning should 
+ display at the correct times.
+  
+         VBECS Surgery Entry in All Uppercase Does Not Trigger Warning (CQ 
+ 19325) - Previously, if a user created a quick order with a reason for 
+ request for a specific surgery that used different capitalization than 
+ the same surgery entered in the VBECS, such as NEPHRECTOMY instead of 
+ Nephrectomy, the Maximum Surgical Blood Order Schedule (MSBOS) warning 
+ did not display as it should.
+ Resolution: CPRS developers made sure that CPRS is now checking for the 
+ surgery regardless of capitalization so that the MSBOS warning will 
+ display correctly.
+  
+         VBECS Generic BB Opens with Scroll Bar at the Bottom of Screen 
+ (CQ 19342) - A test site reported that a user opened the Blood Component 
+ and Diagnostic Test Order Form dialog and saw a scroll bar across  the 
+ bottom of the dialog. This occurred when the user had the Windows Classic 
+ appearance setting instead of the Windows XP setting. 
+ Resolution: Developers made a change to support the Windows Classic 
+ setting also.
+  
+ 508 Changes
+         508: Problems Tab - View Menu - Return to Default View - JAWS (CQ 
+ 4700) - Previously, if a user returned to the default view by selecting 
+ View | Return to Default View, JAWS did not speak anything to tell the 
+ user that CPRS had returned to the default view.
+ Resolution: Developers corrected this problem. When the user selects View 
+ | Return to Default View and JAWS is running, JAWS will say, "Returning 
+ to default view".
+  
+         508: Problems Tab - JAWS (CQ 4709) - Previously, after the user 
+ went to the Problems tab in CPRS, the first time the user tabbed JAWS did 
+ not speak anything.
+ Resolution: Developers changed CPRS and the extra tab no longer exists.
+  
+         508: No Default Rad Btn on Patient Selection Screen Doesn't Read 
+ in JAWS (CQ 4716) - Previously, the No Default radio button in the 
+ Patient List group box on the Patient Selection screen did not read in 
+ JAWS when it was unavailable (greyed out). The user could get to all the 
+ other radio buttons (2 of 7 through 7 of 7: Providers, Team/Personal, 
+ Specialties, Clinics, Wards, and All), but they can't get to 1 of 7 (No 
+ Default) and didn't know it was greyed out.
+ Resolution: Developers changed CPRS so that JAWS now reads the No Default 
+ radio button when it is disabled. When a user tabs into the Patient List 
+ panel and a default patient list is not defined (the No Default radio 
+ button is greyed out), JAWS now says the following: No Default radio 
+ button unavailable 1 of 7. To move to the other patient list categories, 
+ press Tab. Pressing tab will direct focus to the 'All' patient list 
+ category. Then, JAWS reads the instructions that tell the user to press 
+ the Up Arrow or Down Arrow to move between patient selection categories.
+  
+         508: Problem List Tab: Would Like to Press <Enter> Key Here to 
+ Invoke "New Problem" (CQ 11529) - CPRS received a request from the field 
+ to make the New Problem button the default selection after a user 
+ selected the Problems tab.
+ Resolution: Developers made the change. When the user selects the 
+ Problems tab, the user can select the New Problem button by pressing 
+ either the <Space Bar> or the <Enter> key. If the user refreshes the 
+ patient data, CPRS keeps the focus wherever it was. When changing 
+ patients, CPRS places the focus in a default position, not on the New 
+ Problem button. 
+  
+         508: Combo Box Template Field Selections Can No Longer Be 
+ Selected Using Keyboard Past First Character (Remedy 70272, CQ 11708, 
+ 15766, 15767) - Previously, users could not type more than one character 
+ when attempting to select a template field. This problem meant that the 
+ user had to scroll through the list to find the appropriate selection, 
+ which could be very time-consuming.
+ Resolution: Developers corrected this problem, and the user can now type 
+ in more letters to quickly locate the appropriate selection.
+  
+         508: Difficulty Figuring Out How to Navigate to Enter Allergy on 
+ the Cover Sheet (CQ 15508) - Previously, it was very difficult for 
+ visually impaired users to know how to enter an allergy from the Cover 
+ Sheet. 
+ Resolution: Developers added instructions to the Allergies/Adverse 
+ Reaction list box when CPRS detects that JAWS is running. The 
+ instructions tell the user how enter an allergy.
+  
+         508: Allergy-Focus Never Goes to the Observed/Historical Radio 
+ Buttons when Tabbing through the Allergy Entry Dialog (CQ 15509) - 
+ Previously, if the user was using the keyboard to tab through the 
+ controls in the Enter Allergy or Adverse Reaction dialog, tabbing skipped 
+ the Observed and Historical radio buttons.
+ Resolution: Developers added the radio buttons to the tab order. The user 
+ can now tab to this control. 
+  
+         508:  Allergy-SR Does Not Read or Focus on Un-editable Fields in 
+ Allergy Entry Dialog (CQ 15510, 18654) - Previously, the screen reader 
+ did not read two fields on the Enter Allergy or Adverse Reaction dialog: 
+ the Originator and Origination Date. It did not read these fields because 
+ the user cannot edit these fields.
+ Resolution: Developers made a change so that the screen reader will now 
+ read these fields.
+  
+         508: Allergy-Blank Lines after the  Top Ten S/S Are Confusing 
+ Using JAWS (CQ 15511) - Previously, when a visually impaired user in the 
+ Enter Allergy or Adverse Reaction dialog moved down through the Signs and 
+ Symptoms (S/S) list, a blank line after the first ten items confused the 
+ user because there was no indication of what was happening.
+ Resolution: Developers changed the Signs and Symptoms list so that when 
+ JAWS is working, CPRS puts a line of dashes with an explanation instead 
+ of a blank line. This should help indicate to the visually impaired user 
+ that there are more items below.
+  
+         508: Allergy-Comment Does Not Read when Tabbing through the 
+ Allergy Entry Dialog (CQ 15512)
+ Resolution: Developers changed the Enter Allergy or Adverse Reaction 
+ dialog so that the screen reader begins speaking the comment as soon as 
+ the user tabs into the Comments field. 
+  
+         508: Allergy-Allergy Selected in the Lookup Dialog Reads as Not 
+ Selected in the Detail Dialog (CQ 15513) - Previously, after the user 
+ selected the reactant that caused an allergy or adverse reaction and then 
+ went to the Enter Allergy or Adverse Reaction dialog, the reactant was in 
+ a field that the user could not edit. Because the user could not edit the 
+ reactant, JAWS did not read it. 
+ Resolution: Developers changed CPRS so that JAWS now reads the field and 
+ the reactant, and then states that it is read-only.
+  
+         508: Allergy-The Word "Symptoms" Is Read as "Ymptoms" (CQ 15515)
+ Resolution: Developers corrected this. It now reads as "symptoms".
+  
+         508: Allergy-On the Cover Sheet, Focus Returns to Active Problem 
+ List after an Allergy Entry (CQ 15516) - When a user enters an allergy or 
+ views a detailed display of the allergy from  the CPRS Cover Sheet and 
+ then closes the dialog, the focus goes to the Active Problems pane 
+ instead of the Allergies/Adverse Reactions pane. 
+ Resolution: Because users can enter allergies from several locations in 
+ CPRS, focus cannot be returned from that dialog to the Allergies/Adverse 
+ Reactions section of the Cover Sheet. However, developers did change CPRS 
+ so that from the allergy detailed display, the focus will return to the 
+ Allergies/Adverse Reactions section of the Cover Sheet.
+  
+         508: Allergy-In Reactant Lookup Match List when  No Matches Were 
+ Found , "Grayed X Explanation" Is Read (CQ 15517) - Previously, in the 
+ Reactant Lookup Match list after a search, the screen reader read, 
+ "Grayed X Explanation". The reason for this was that the search did not 
+ produce results in some categories, and CPRS displayed an X in front of 
+ the category. What the screen reader read was not clear. 
+ Resolution: Developers changed the screen reader label. It now says, "No 
+ matches."
+  
+         508:  Allergy-S/S Selection Keystroke Needs Better Instruction 
+ (CQ 15518) - A user suggested that the instructions when the user is in 
+ the Signs and Symptoms list could be improved. It previously said, "Press 
+ Enter to set the value".
+ Resolution: Developers changed the label and it now speaks, ""Press Enter 
+ to select the sign/symptom".
+  
+         508: Allergy-If the User Hits Escape during Entry of the Allergy, 
+ the Allergy Is Abruptly Ended (CQ 15519) - If the user was entering an 
+ allergy and pressed <ESC>, then the entry was terminated without warning. 
+ Resolution: Developers added a dialog that will display and ask the user 
+ to confirm that the user wants to cancel the allergy entry.
+  
+         508: Allergy-The Severity Level Button Is Only Identified as "? 
+ Button" (CQ 15520) 
+ Resolution: Developers labeled the button as "Security level descriptions 
+ button".
+  
+         508: Problems Tab (CQ 15531) - Upon reviewing the Problems tab 
+ with a visually impaired user, several problems regarding navigation and 
+ access by a visually challenged user were identified:
+ o       Although not visible to a sighted user, there was a control that 
+ did not speak its location or purpose when JAWS was running-making it 
+ impossible for the JAWS user to know where focus was in the dialog or 
+ what to do next.
+ Resolution: Developers removed the hidden control and set CPRS to not tab 
+ to that location.
+ o       If the user selected or highlighted a problem, it was set as a 
+ description and was not cleared. Because the description was not properly 
+ cleared, the description could stay when the user changed to another 
+ patient.
+ Resolution: Developers made sure CPRS properly clears the description so 
+ it will not persist between patients.
+ o       When a user added or edited a problem and tabbed past the Date of 
+ Onset button, the focus shifted to a location hidden underneath the 
+ dialog, where JAWS read the last selected/added problem or the first 
+ problem in the list (if not selected/just added). 
+ Resolution: Developers corrected this problem by not allowing the other 
+ control to receive focus and subsequently be read by JAWS.
+ o       The tab order when on the Add/Edit dialog was confusing, and the 
+ user could Shift + Tab off the form, but not back onto the form. The user 
+ could Tab back onto the form, but not using Shift + Tab.
+ Resolution: Developers corrected the tab order and the Shift + Tab issue.
+  
+ In addition, while working on these problems, developers identified and 
+ corrected two other problems on the Problems tab.
+ o       When a user edited a selected problem (Action menu | Change), 
+ after leaving the menu, JAWS read the last selected or first problem in 
+ the list when it was hidden and underneath the Edit Problem form. This 
+ might or might not have been the problem being edited. 
+ Resolution: Developers corrected this problem by resetting the focus so 
+ that JAWS no longer reads the underlying problem.
+ o       When the user moved to the Cancel button, JAWS was reading the 
+ button twice. 
+ Resolution: Developers corrected this and JAWS will only speak Cancel 
+ once.
+  
+         Patient Selection Form Does Not Move or Resize Using Keyboard 
+ Commands (CQ 15963) - Previously, the user could not move or resize the 
+ Patient Selection form using the keyboard only (such as Alt + m and then 
+ the arrow keys to move the dialog). 
+ Resolution: CPRS developers corrected this problem, and user can now use 
+ the keyboard only to move and resize the form.
+  
+         508:  Order Sets:  Order Sets Are Difficult to Use (part 2)--Make 
+ the Allergies New Allergies Dialog Non-Modal (CQ 17765) - Previously, 
+ because some dialogs were modal-meaning the user could not move from one 
+ dialog to another, it was difficult for visually impaired users to know 
+ what it happening. With order sets, the visually impaired users did not 
+ know what the order set contained or that they could stop the order set 
+ using a button on the dialog. This inability to move between dialogs in 
+ the same application (modal dialogs require a response before the user 
+ can go to another dialog) also influenced how visually impaired users 
+ could use allergies dialogs.
+ Resolution: Developers changed the dialogs in Order Sets to be non-modal. 
+ So, when JAWS is running on the workstation and the user chooses an order 
+ set, CPRS displays a new dialog that informs the user about the order 
+ sets: what orders are included, an OK button to begin the order set, and 
+ instructions on how to move to the Order Set dialog and stop the order 
+ set in progress using keyboard commands.
+  
+         508: Order Sets: Order Sets Are Difficult to Use (part 3) -- Have 
+ the Screen Reader Read Auto-Accept QO (CQ 17766) - When using the menus 
+ created with order sets, individuals using the JAWS screen reader were 
+ only read the label on an item and then the screen reader began reading 
+ the first dialog in the order set.
+ Resolution: Developers added some text to CPRS so that when JAWS is 
+ reading an order set, it will now say, "Auto-Accept Quick Order name of 
+ the quick order placed." Then, it will read the rest of items in the 
+ order set.
+  
+         508: Order Sets: Order Sets Are Difficult to Use (part 4) Have 
+ the Order Set Dialog Pop Up a Message When Running SR (CQ 17767) 
+ Resolution: As directed, developers made the Order Set dialog bring up a 
+ message when an order set is running a screen reader (SR).
+  
+         JAWS Only Reads Visible Text in Interaction Selection Dropdown on 
+ Monograph Dialog (CQ 19017) 
+ Resolution: Developers changed CPRS so that JAWS will read the entire 
+ item.
+  
+         JAWS Reads Panel1 before Label on PRF Dialog (CQ 19163) 
+ Resolution: Developers corrected this problem and JAWS now reads 
+ appropriately.
+  
+         JAWS Reads Category I as "Category Eye" (CQ 19164) 
+ Resolution: Developers corrected the problem and it now read "Category 
+ One".
+  
+         508: Adjust Tab Order on PRF Dialog (CQ 19165) - For a keyboard 
+ only user, the tab order for the Patient Record Flag dialog changed from 
+ CPRS v.27.n to v.28. 
+ Resolution: CPRS developers changed the tab order for keyboard users back 
+ to what it was in CPRS v.27.n: main text block, notes block, OK button, 
+ Category I, Category II.
+  
+         JAWS Does Not Read Label for Note List Box on PRF Dialog (CQ 
+ 19166) 
+ Resolution: Developers changed CPRS to read the label on the Note list 
+ box on the Patient Record Flag (PRF) dialog.
+  
+         508: Patient Selection Form 508 Issues (CQ 19336, 19412) - 
+ Previously, on the Patient Selection screen, the screen reader did not 
+ detect the demographic information for the patient that displays when a 
+ patient name is highlighted. Also, the radio buttons under the Patient 
+ List group did not read that group label. 
+ Resolution: Developers changed CPRS so that JAWS will now detect the 
+ demographic information, such as the social security number, date of 
+ birth, gender, service connection status, and location.
+  
+         Enter Allergy or Adverse Reaction Form - Causative Agent Edit Is 
+ Partially Labeled (CQ 19337)
+ Resolution: Developers corrected this, providing more information.
+  
+         Enter Allergy or Adverse Reaction Form - Nature of Reaction Combo 
+ Box Is Partially Labeled (CQ 19338) 
+ Resolution: Developers corrected this problem and added to the label.
+  
+         Enter Allergy of Adverse Reaction Form:  Missing Edit Field Label 
+ (CQ 19339) - Previously, when a user went in to the Allergy or Adverse 
+ Reaction form, the Signs/Symptoms field did not speak the label correctly.
+ Resolution: Developers corrected this problem, and the field should now 
+ read correctly.
+  
+         Enter Allergy or Adverse Reaction Form:  Reaction Date/Time Edit 
+ Field Not Labeled (CQ 19341)
+ Resolution: Developers correctly labeled the Reaction Date/Time field.
+  
+         Enter Allergy or Adverse Reaction Form:  Issues with Calendar 
+ Utility (CQ 19344) - Previously, the CPRS calendar control through which 
+ a user would enter a date was not labeled correctly, which made it 
+ difficult to enter a date.
+ Resolution: Developers changed which control was used to enter a date. 
+ JAWS can now read the labels and dates entered with the date box control.
+  
+         508:  Problem List Lexicon Search:  The Number of Search Results 
+ Displayed on Screen Not Available to Screen Reader (CQ 19358) - After a 
+ Lexicon search was performed,  there was text at the bottom right of this 
+ form that gave a breakdown of the search results.  This text was not 
+ available to the screen reader.
+ Resolution: Developers placed the label displaying the search results in 
+ the tab order when the screen reader is running.
+  
+         508:  Add Problem Form:  Tab Order Problem (CQ 19359) - 
+ Previously, the tab order for this form did not seem to make sense. The 
+ OK and Cancel buttons came in the tab order before the other fields to 
+ enter a problem.
+ Resolution: Developers changed the tab order to something more logical.
+  
+         Problems Form:  Tab Selects List Box Not Visible On Form (CQ 
+ 19361) - If a user tabbed through the form and tabbed past the Date of 
+ Onset field but then shift + tabbed back, the focus would go to an 
+ invisible combobox. 
+ Resolution: Developers changed the tab order and the focus should no 
+ longer go into the combobox.
+  
+         508: Orders / Write Delayed Orders Button / Release Orders Form - 
+ Undetectable Text (CQ 19385) - Previously, when the user selected the 
+ Write Delayed Order button on the Orders tab, CPRS displayed the Release 
+ Order dialog, but the text at the top of the dialog was not available for 
+ the screen reader. 
+ Resolution: Developers corrected this problem. When the Release Order 
+ dialog displays, the text at the top of the dialog can now be read when a 
+ screen reader is running.
+  
+         508: Add New Orders Form - User Cannot Detect the Number to the 
+ Left of the Orders (CQ 19386)
+ Resolution: Developers corrected this problem and the screen reader will 
+ now read the number/prefix (Mnemonic) of the order.
+  
+         508: Order an Imaging Procedure Form - Reason for Study Label 
+ Issue (CQ 19392) - The Reason for Study field label lacked explanation of 
+ what the user should do.
+ Resolution: Developers added to the label so it now reads, "Reason for 
+ Study REQUIRED text 64 characters maximum length".
+  
+         508: Order an Imaging Procedure Form:  Submit To Field Not in Tab 
+ Order (CQ 19393) - Previously, it appeared that the Submit To field was 
+ not in the tab order. However, this field was a conditional field based 
+ on what imaging procedure the user selected. It was not in the tab order 
+ if it was not active.
+ Resolution: Although this was functioning as it was designed, it made it 
+ difficult for a visually challenged user to know that it was there unless 
+ it was active. Developers therefore changed CPRS to have the screen 
+ reader read that it was there even if it was not active.
+  
+         508: Order an Imaging Procedure Form:  Text Area Not in Tab Order 
+ (CQ 19394) - Previously, the text area that shows the order text was not 
+ in the tab order for keyboard users so they could not get to that 
+ information. 
+ Resolution: Developers placed the area in the text order.
+  
+         508:  Infusion Order Form Field Label Issues (CQ19397) - 
+ Previously, several fields on this dialog were mislabeled: the Type (IV 
+ Type Help) combo box, the Schedule (Day of Week) combo box, and the 
+ Infusion Rate (ml/hr) combo box.
+ Resolution: Developers corrected all the labels.
+  
+         508: Text Area Not in Tab Order on Various Forms (CQ 19400)
+ Resolution: Developers put the area in the tab order on several forms.
+  
+         508: Order a Procedure: Combo Box Is Read-Only/User Focus Problem 
+ (19401)
+ Resolution: Developers changed CPRS so that the "Service to perform this 
+ procedure" field is now in the tab order and can be read by JAWS.
+  
+         508: Non-VA Medications Form:  Unlabeled Field (CQ 19402) - 
+ Previously, the first field on the Non-VA Medications form was not 
+ labeled.
+ Resolution: Developers added a label to the Medication field and the 
+ Order SIG field. Also, the developers added a tab stop for the Quick 
+ Order field when the screen reader is active.
+  
+         508: Patient Care Order Form:  Combo Box Unlabeled (CQ 19403) 
+ Resolution: Developers labeled the combo box appropriately.
+  
+         508: Activity Orders:  User Focus Problem (CQ 19404) - 
+ Previously, if a user was working in this dialog, the screen reader did 
+ not read the order text in the box.
+ Resolution: Developers changed how CPRS deals with this order dialog 
+ based on whether a screen reader is running. When CPRS detects a screen 
+ reader, developers added the text order area to be tab order, labeled the 
+ new field, and made it read only so that the screen reader can read it 
+ and then tab out of the field.
+  
+         508: Non-Formulary Drug Request:  Edit Fields Label Issue (CQ 
+ 19405) 
+ Resolution: Developers labeled the Order Sig and Admin Schedule fields in 
+ the Medications dialog.
+  
+         508: Non-Formulary Drug Renewal:  Edit Fields Unlabeled (CQ 
+ 19406) - Previously, the screen reader did not read the Renew Orders or 
+ the Change Refills for Outpatient Medication dialogs correctly. 
+ Resolution: Developers changed how JAWS interacts with these dialogs. On 
+ the Renew Orders dialog, the tab order was changed and now goes from 
+ Change, OK, and Cancel. On the Change Refills for Outpatient Medication 
+ dialog, developers made changes so that the text field at the top of the 
+ dialog first receives focus so that the screen reader can read the order 
+ text, then tabs to the Refills field, and then tabs to the Pick Up field 
+ before returning to the text area that holds the order text.
+  
+         508: Provider & Location for Current Activities/New Visit Tab - 
+ Date Field Label Missing (CQ 19433) 
+ Resolution: Developers changed the label to display correctly.
+  
+         GUI Options Dialog Box is Not Resizable (CQ 19480) - Previously, 
+ if a user changed the font size for CPRS, the Options dialog (Tools | 
+ Options) did not resize appropriately and text or buttons could be cut 
+ off.
+ Resolution: Developers changed the dialog that it will resize when the 
+ font size is changed.
+  
+         JAWS Does Not Read Text Box Correctly on Text Order Dialog (CQ 
+ 19519) - Previously, in the Text Order dialog, JAWS read the wrong label 
+ for the Sig field if there was nothing in the Stop Date field. It read, 
+ "Stop Date" when the user tabbed to the Sig field.
+ Resolution: Developers corrected this problem. JAWS will correctly read 
+ the labels and content for the fields.
+  
+         508: IV Order-Solutions and Additives Tabs Are Not in the Tab 
+ Order (CQ 19531) - Previously, on the Infusion Order dialog, the 
+ Solutions and Additives tabs were not in the tab order and therefore 
+ could not be read by JAWS.
+ Resolution: Developers placed the Solutions and Additives tabs in the tab 
+ order.
+  
+         508: IV Order-Asterisks Not Read (CQ 19532) - Previously, JAWS 
+ did not read the asterisks on the Infusion Order dialog that marked the 
+ required fields.
+ Resolution: Developers changed CPRS and the asterisks will now be read.
+  
+         508: IV Order Form-Unable to access label click functions (CQ 
+ 19533) - Previously, users could not reach the links next to the labels 
+ for Route, Type, and Schedule that bring up the full list of routes, the 
+ definitions for continuous and intermittent, and the Day of Week schedule 
+ builder.
+ Resolution: Developers changed CPRS and the user should now receive 
+ instructions when the screen reader first tabs to those fields to reach 
+ the links by using the keyboard combination ctrl + alt+ L.
+  
+         508:  Patient Selection Form- Elements of form are not in tab 
+ order (CQ 19686) - Previously, the labels of some controls were not read, 
+ especially when the items were unavailable.
+ Resolution: Developers labeled the Process, Remove, Forward, and Show 
+ Comments buttons and the labels are in the tab order (as it is not 
+ possible to focus a disabled control). The labels for each button state 
+ that the buttons are disabled. The labels only display when the screen 
+ reader is running and the buttons are disabled.
+  
+ Test Sites: 
+ ===========
+  Charleston, SC
+  Cleveland, OH
+  Heartland East
+  Loma Linda, CA
+  Northern California Health Care System, CA
+  Palo Alto, CA
+  Philadelphia, PA
+  San Diego, CA
+  Tampa, FL
+  
+  CPRS v28/PRE(MOCHA 1.0) test sites
+  Boise, ID
+  Tuscaloosa, AL
+  Heartland West
+  
+ Documentation:
+ ==============
+ Updated documentation describing the new functionality 
+ introduced by this patch will be downloaded to sites from the
+ FTP address as directed by the CPRS Implementation team.
+  
+ This documentation will be in the form of Adobe Acrobat 
+ files.
+ The updated documentation associated with this patch is:
+  
+ File Name            Contents               Retrieval Format
+ ---------            --------               ----------------
+ OR_30_280.ZIP        File(s) indented below      Binary     
+     - CPRSCHART.EXE    CPRS Executable
+     - CPRS.CNT         CPRS Help CNT File
+     - CPRS.HLP         CPRS Help File
+     - CPRSGUITM.DOC    CPRS GUI Technical Manual (Word version) 
+     - CPRSGUITM.PDF    CPRS GUI Technical Manual 
+     - CPRSGUIUM.DOC    CPRS GUI User Manual      (Word version)
+     - CPRSGUIUM.PDF    CPRS GUI User Manual   
+     - CPRSLMTM.DOC     CPRS LM Technical Manual  (Word version)
+     - CPRSLMTM.PDF     CPRS LM Technical Manual
+     - OR_30_280IG.DOC  CPRS GUI v.28 and Associated Patches
+                        Installation Guide        (Word Version)       
+     - OR_30_280IG.PDF  CPRS GUI v.28 and Associated Patches
+                        Installation Guide
+     - OR_30_280RN.DOC  CPRS GUI V28 Release Notes (Word Version) 
+     - OR_30_280RN.PDF         CPRS GUI V28 Release Notes
+   
+  
+ OR_30_280_SRC.ZIP      CPRSChart Source            Binary 
+  
+ CPRS documentation can also be found in the VA Software 
+ Document Library:
+ http://www.va.gov/vdl.
+  
+ Host File
+ ==========
+ CPRS GUI version 28 consists of five host files: 
+ PSS_1_151.KID, PSS_1_142.KID, CPRS28_REQUIRED.KID, 
+ OR_PSJ_PXRM_28.KID and CPRS28_RELATED.KID. These five host 
+ files contain software that support CPRS GUI v28 
+ functionality.  The host files were created to simplify 
+ installation at Veterans Health Administration (VHA) 
+ facilities and to assist in the phased implementation release 
+ method for CPRS v28.  CPRS v28 will follow a phased 
+ implementation.  To see current status and target dates for 
+ Sites/VISN/Region please refer to the following site:
+  
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+ Sites will retrieve VistA software from an FTP address as 
+ directed by the CPRS Implementation team.  
+  
+ Installation:
+ =============
+ This patch is exported as part of OR_PSJ_PXRM_28.KID.  Please refer to 
+ the "CPRS GUI v.28 and Associated Patches Installation Guide" 
+ OR_30_280IG.DOC for installation sequence information and installation 
+ capture of the complete CPRS GUI v28 installation.  The OR_30_280IG.DOC
+ is available on the VDL. It will also be distributed when your site is
+ targeted for installation.
+  
+ Please note ORCDPS1 2nd line includes 337.  This is due to OR*3*280 and 
+ OR*3*337 developed out of the same account.  This will not be an issue 
+ because OR*3*337 is intended to be installed immediately after OR*3*280.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORB3SPEC
+    Before: B80611268   After: B89326077  **139,220,215,280**
+Routine Name: ORCDPS1
+    Before: B74826833   After: B78578103  **94,117,141,149,195,215,243,
+                                           280,337**
+Routine Name: ORCDPSIV
+    Before: B96653807   After:B121037905  **4,38,48,158,195,243,296,280**
+Routine Name: ORCHECK
+    Before: B56557816   After:B109684735  **7,56,70,94,141,215,243,293,280**
+Routine Name: ORCMEDT8
+    Before: B77783054   After: B78288682  **245,243,280**
+Routine Name: ORCNOTE
+    Before: B56454982   After: B59596403  **22,48,65,104,280**
+Routine Name: ORCSAVE
+    Before: B74510622   After: B92624396  **7,56,70,73,92,94,116,141,163,
+                                           187,190,195,243,303,293,280**
+Routine Name: ORCSAVE1
+    Before: B30031657   After: B34248374  **92,132,141,163,187,223,243,280**
+Routine Name: ORCSAVE2
+    Before: B68162412   After: B84878914  **4,27,56,70,94,116,190,157,
+                                           215,265,243,293,280**
+Routine Name: ORCSEND3
+    Before: B25867937   After: B25737895  **243,282,280**
+Routine Name: ORCXPND1
+    Before: B72217223   After: B72214647  **26,67,75,89,92,94,148,159,
+                                           188,172,215,243,280**
+Routine Name: ORCXPND3
+    Before: B44348323   After: B43846714  **25,30,43,85,172,243,280**
+Routine Name: ORDSGCHK
+    Before:       n/a   After: B89700507  **280**
+Routine Name: OREVNTX
+    Before: B73719059   After: B77019944  **141,243,280**
+Routine Name: OREVNTX1
+    Before: B72373665   After: B75868849  **141,165,149,243,280**
+Routine Name: ORKCHK
+    Before: B41864853   After: B42414888  **6,32,94,105,123,232,267,243,280**
+Routine Name: ORKCHK5
+    Before: B21617903   After: B45867526  **6,32,74,94,123,190,280**
+Routine Name: ORKCHK6
+    Before: B27434561   After: B31072886  **6,32,74,87,94,123,162,190,249,280**
+Routine Name: ORMBLDGM
+    Before:  B4563455   After:  B5247581  **26,68,97,190,195,280**
+Routine Name: ORMBLDP1
+    Before:  B3663295   After:  B5382020  **243,280**
+Routine Name: ORMBLDPS
+    Before: B77690426   After: B86048776  **7,38,54,86,97,94,116,129,141,
+                                           190,195,237,254,243,293,280**
+Routine Name: ORMFN
+    Before: B33381686   After: B37182976  **26,97,94,176,215,243,280**
+Routine Name: ORMGMRC
+    Before: B44058430   After: B44816636  **3,26,68,92,153,174,195,255,
+                                           243,280**
+Routine Name: ORMPS1
+    Before: B68866316   After: B70284401  **86,92,94,116,134,152,158,149,
+                                           190,195,215,265,275,243,280**
+Routine Name: ORMPS2
+    Before: B46355925   After: B47758235  **94,116,129,134,186,190,195,
+                                           215,265,243,280**
+Routine Name: ORORDDSC
+    Before: B12999110   After: B13143468  **301,295,280**
+Routine Name: ORQ2
+    Before: B46973301   After: B52016905  **12,56,75,94,141,213,195,243,
+                                           282,293,280**
+Routine Name: ORQQCN2
+    Before: B32612077   After: B33486661  **10,85,125,131,149,215,242,280**
+Routine Name: ORQQPL1
+    Before: B62886431   After: B62165510  **10,85,148,173,203,206,249,243,280**
+Routine Name: ORQQPL3
+    Before: B55317795   After: B54712722  **10,148,173,243,280**
+Routine Name: ORTSKLPS
+    Before:  B5805034   After:  B6566762  **243,280**
+Routine Name: ORUTL
+    Before:  B8377571   After:  B8567087  **95,280**Dec 17, 1997
+Routine Name: ORWCV
+    Before: B79773226   After: B80219268  **10,85,109,132,209,214,195,
+                                           215,260,243,282,302,280**
+Routine Name: ORWD
+    Before: B42948340   After: B39271044  **243,280**
+Routine Name: ORWDPS3
+    Before: B20620076   After: B20975704  **85,94,116,132,187,195,215,280**
+Routine Name: ORWDPS33
+    Before: B31468284   After: B40244944  **243,280**
+Routine Name: ORWDRA32
+    Before: B21866324   After: B21891696  **10,116,141,215,280**
+Routine Name: ORWDX
+    Before: B67409395   After: B66882759  **10,85,125,131,132,141,164,
+                                           178,187,190,195,215,246,243,
+                                           283,296,280**
+Routine Name: ORWDX2
+    Before: B12248764   After: B17614403  **246,243,280**
+Routine Name: ORWDXA
+    Before: B73502300   After: B82710229  **10,85,116,132,148,141,149,
+                                           187,213,195,215,243,280**
+Routine Name: ORWDXC
+    Before: B22991536   After: B52838872  **10,141,221,243,280**
+Routine Name: ORWDXM1
+    Before: B76690189   After: B71014486  **10,85,131,132,141,178,185,
+                                           187,215,243,280**
+Routine Name: ORWDXM2
+    Before: B75208802   After: B76107854  **10,85,109,116,132,158,187,
+                                           195,215,243,280**
+Routine Name: ORWDXM3
+    Before: B72094070   After:B104533418  **10,85,131,132,141,185,187,
+                                           190,195,215,243,303,296,280**
+Routine Name: ORWDXM4
+    Before: B32166098   After: B37881489  **10,85,215,296,280**
+Routine Name: ORWDXR01
+    Before: B14412931   After: B20020938  **187,190,195,215,280**
+Routine Name: ORWDXVB3
+    Before:       n/a   After:  B1399631  **280**
+Routine Name: ORWGAPI3
+    Before: B30105389   After: B30897218  **215,243,280**
+Routine Name: ORWGAPIR
+    Before: B41364234   After: B41610059  **215,260,243,280**
+Routine Name: ORWGAPIU
+    Before: B23844957   After: B23850893  **215,260,243,280**
+Routine Name: ORWIB
+    Before:  B5750648   After:  B5804851  **280**
+Routine Name: ORWLRR
+    Before: B13405957   After: B12620243  **10,280**
+Routine Name: ORWLRRG
+    Before:       n/a   After: B24435305  **280**
+Routine Name: ORWLRRG1
+    Before:       n/a   After: B42759995  **280**
+Routine Name: ORWOD
+    Before: B72302805   After: B75747824  **243,296,280**
+Routine Name: ORWOD1
+    Before: B38695937   After: B41715088  **243,296,280**
+Routine Name: ORWOR
+    Before: B39244307   After: B42631980  **10,85,132,141,163,187,190,
+                                           215,243,307,330,280**
+Routine Name: ORWORR
+    Before: B66127235   After: B67327939  **10,92,116,110,132,141,163,
+                                           189,195,215,243,280**
+Routine Name: ORWPCE
+    Before: B58056412   After: B60867098  **10,85,116,173,190,195,215,
+                                           243,295,280**
+Routine Name: ORWPCE1
+    Before: B63376274   After: B63538675  **10,85,116,132,148,187,190,
+                                           215,243,280**
+Routine Name: ORWPCE3
+    Before: B43500279   After: B43187706  **10,85,116,190,280**
+Routine Name: ORWPS
+    Before: B62358507   After: B65159605  **10,85,116,132,141,173,203,
+                                           190,195,265,275,243,280**
+Routine Name: ORWPT
+    Before: B59655732   After: B60483737  **10,85,132,149,206,187,190,
+                                           215,243,280**
+Routine Name: ORWPT1
+    Before: B15345796   After: B15675921  **10,109,280**
+Routine Name: ORWRP
+    Before: B77665061   After: B77042419  **1,10,85,109,132,160,194,227,
+                                           215,262,243,280**
+Routine Name: ORWTPR
+    Before: B16242046   After: B16455738  **85,173,215,243,280**
+Routine Name: ORY280
+    Before:       n/a   After: B95955808  **280**
+Routine Name: ORY2800
+    Before:       n/a   After: B15643771  **280**
+Routine Name: ORY28001
+    Before:       n/a   After: B71483826  **280**
+Routine Name: ORY28002
+    Before:       n/a   After: B78087672  **280**
+Routine Name: ORY28003
+    Before:       n/a   After: B89106334  **280**
+Routine Name: ORY28004
+    Before:       n/a   After: B57739965  **280**
+Routine Name: ORY28005
+    Before:       n/a   After: B65374324  **280**
+Routine Name: ORY28006
+    Before:       n/a   After: B62557827  **280**
+Routine Name: ORY28007
+    Before:       n/a   After: B55829468  **280**
+Routine Name: ORY2801
+    Before:       n/a   After: B40551743  **280**
+Routine Name: ORY2802
+    Before:       n/a   After: B26766910  **280**
+Routine Name: ORY2803
+    Before:       n/a   After: B12996879  **280**
+Routine Name: ORY2804
+    Before:       n/a   After: B13526807  **280**
+Routine Name: ORY280ES
+    Before:       n/a   After: B12630040  **280**
+Routine Name: ORY280P
+    Before:       n/a   After:  B3900420  **280**
+Routine Name: ORYDLG
+    Before: B14515305   After: B14515305  **141,165,216,243,280**
+ 
+Routine list of preceding patches: 95, 104, 242, 293, 295, 296, 302, 330
+                           337
+
+=============================================================================
+User Information:
+Entered By  : MASSEY,RONNY                  Date Entered  : NOV 06, 2007
+Completed By: SERVICE,JOHN                  Date Completed: MAR 07, 2011
+Released By : MONTGOMERY,ALAN               Date Released : MAR 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

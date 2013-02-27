@@ -1,0 +1,3102 @@
+Released DG*5.3*838 SEQ #747
+Extracted from mail message
+**KIDS**:DG*5.3*838^
+
+**INSTALL NAME**
+DG*5.3*838
+"BLD",7150,0)
+DG*5.3*838^REGISTRATION^0^3110329^y
+"BLD",7150,1,0)
+^^55^55^3110223^
+"BLD",7150,1,1,0)
+This patch has enhancements to the Veterans Health Information Systems 
+"BLD",7150,1,2,0)
+and Technology Architecture (VistA) system to support technology and 
+"BLD",7150,1,3,0)
+business changes that are occurring with the implementation of the 
+"BLD",7150,1,4,0)
+Enrollment System Redesign (ESR) Preferred Facility project, Change 
+"BLD",7150,1,5,0)
+Request (CR) 9620.
+"BLD",7150,1,6,0)
+ 
+"BLD",7150,1,7,0)
+Currently, a Veteran selects a Preferred Facility (PF) at the time of 
+"BLD",7150,1,8,0)
+application for enrollment. The Preferred Facility information is rarely 
+"BLD",7150,1,9,0)
+updated by the Veteran and is not linked to the location where the 
+"BLD",7150,1,10,0)
+Veteran actually receives care. As a result, the value of the preferred 
+"BLD",7150,1,11,0)
+facility assignment is limited. CR 9620 specifies changes needed in the 
+"BLD",7150,1,12,0)
+way that a Veteran's Preferred Facility is entered and stored in ESR and 
+"BLD",7150,1,13,0)
+VistA. These changes are necessitated by the requirements of the 
+"BLD",7150,1,14,0)
+Veterans Benefit Handbook Project.
+"BLD",7150,1,15,0)
+ 
+"BLD",7150,1,16,0)
+ 
+"BLD",7150,1,17,0)
+***NOTE***
+"BLD",7150,1,18,0)
+This patch needs to be released and loaded at the same time as ESR 3.5.
+"BLD",7150,1,19,0)
+ 
+"BLD",7150,1,20,0)
+ 
+"BLD",7150,1,21,0)
+This patch modifies the Registration v5.3 application as described below:
+"BLD",7150,1,22,0)
+ 
+"BLD",7150,1,23,0)
+1. Modify VistA to lock the Preferred Facility to prevent users from 
+"BLD",7150,1,24,0)
+changing the field once ESR has assigned it.
+"BLD",7150,1,25,0)
+ 
+"BLD",7150,1,26,0)
+2. Modify VistA to display to a VistA user the following help text when 
+"BLD",7150,1,27,0)
+a VistA user attempts to edit the Preferred Facility field.
+"BLD",7150,1,28,0)
+ 
+"BLD",7150,1,29,0)
+    "Preferred Facility can only be edited/modified by an ESR user, 
+"BLD",7150,1,30,0)
+     please contact HEC to request changes/edits"
+"BLD",7150,1,31,0)
+ 
+"BLD",7150,1,32,0)
+3. Modify VistA to upload SOURCE DESIGNATION from ESR. Source 
+"BLD",7150,1,33,0)
+Designation field (#27.03) is automatically assigned by the ESR or VistA
+"BLD",7150,1,34,0)
+system and is a new field in the PATIENT file (#2). Valid Source
+"BLD",7150,1,35,0)
+Designation's are:
+"BLD",7150,1,36,0)
+        a. V = VistA
+"BLD",7150,1,37,0)
+        b. E = ESR
+"BLD",7150,1,38,0)
+        c. PA = PCP Active
+"BLD",7150,1,39,0)
+        d. PI = PCP Inactive
+"BLD",7150,1,40,0)
+ 
+"BLD",7150,1,41,0)
+4. Modify VistA to allow a user to ONLY change Preferred Facility if a
+"BLD",7150,1,42,0)
+veteran's PF Source Designation is PCP Inactive (PI) or VistA (V).
+"BLD",7150,1,43,0)
+ 
+"BLD",7150,1,44,0)
+5. Modify VistA to trigger a Z07 HL7 message to be sent to ESR when a 
+"BLD",7150,1,45,0)
+Preferred Facility has been assigned/modified.
+"BLD",7150,1,46,0)
+ 
+"BLD",7150,1,47,0)
+6. Modify VistA to store the Preferred Facility and associated Source
+"BLD",7150,1,48,0)
+Designation in the Patient file (#2). If VistA receives a Z11 HL7 
+"BLD",7150,1,49,0)
+message with Preferred Facility, display what ESR sent in the Patient
+"BLD",7150,1,50,0)
+Enrollment [DGEN PATIENT ENROLLMENT] menu.  If no Z11 has been received, 
+"BLD",7150,1,51,0)
+display the most recent Preferred Facility assigned.
+"BLD",7150,1,52,0)
+ 
+"BLD",7150,1,53,0)
+7. Preferred Facility shall be changed to a required field and must be 
+"BLD",7150,1,54,0)
+entered by a VistA user when the veteran is first registered/enrolled in 
+"BLD",7150,1,55,0)
+the VA Medical Center.
+"BLD",7150,4,0)
+^9.64PA^2^1
+"BLD",7150,4,2,0)
+2
+"BLD",7150,4,2,2,0)
+^9.641^2^1
+"BLD",7150,4,2,2,2,0)
+PATIENT  (File-top level)
+"BLD",7150,4,2,2,2,1,0)
+^9.6411^27.03^1
+"BLD",7150,4,2,2,2,1,27.03,0)
+SOURCE DESIGNATION
+"BLD",7150,4,2,222)
+y^y^p^^^^n^^n
+"BLD",7150,4,2,224)
+
+"BLD",7150,4,"APDD",2,2)
+
+"BLD",7150,4,"APDD",2,2,27.03)
+
+"BLD",7150,4,"B",2,2)
+
+"BLD",7150,6.3)
+5
+"BLD",7150,"INIT")
+
+"BLD",7150,"KRN",0)
+^9.67PA^8989.52^19
+"BLD",7150,"KRN",.4,0)
+.4
+"BLD",7150,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",7150,"KRN",.401,0)
+.401
+"BLD",7150,"KRN",.402,0)
+.402
+"BLD",7150,"KRN",.403,0)
+.403
+"BLD",7150,"KRN",.5,0)
+.5
+"BLD",7150,"KRN",.84,0)
+.84
+"BLD",7150,"KRN",3.6,0)
+3.6
+"BLD",7150,"KRN",3.8,0)
+3.8
+"BLD",7150,"KRN",9.2,0)
+9.2
+"BLD",7150,"KRN",9.8,0)
+9.8
+"BLD",7150,"KRN",9.8,"NM",0)
+^9.68A^9^8
+"BLD",7150,"KRN",9.8,"NM",1,0)
+DGENL^^0^B4128842
+"BLD",7150,"KRN",9.8,"NM",2,0)
+DGENLEH^^0^B2546057
+"BLD",7150,"KRN",9.8,"NM",3,0)
+DGENPT^^0^B3244381
+"BLD",7150,"KRN",9.8,"NM",5,0)
+DGENPTA^^0^B40338921
+"BLD",7150,"KRN",9.8,"NM",6,0)
+DGENPTA1^^0^B21823541
+"BLD",7150,"KRN",9.8,"NM",7,0)
+DGENU^^0^B43981146
+"BLD",7150,"KRN",9.8,"NM",8,0)
+DGENUPL2^^0^B73697731
+"BLD",7150,"KRN",9.8,"NM",9,0)
+DGENL1^^0^B67706574
+"BLD",7150,"KRN",9.8,"NM","B","DGENL",1)
+
+"BLD",7150,"KRN",9.8,"NM","B","DGENL1",9)
+
+"BLD",7150,"KRN",9.8,"NM","B","DGENLEH",2)
+
+"BLD",7150,"KRN",9.8,"NM","B","DGENPT",3)
+
+"BLD",7150,"KRN",9.8,"NM","B","DGENPTA",5)
+
+"BLD",7150,"KRN",9.8,"NM","B","DGENPTA1",6)
+
+"BLD",7150,"KRN",9.8,"NM","B","DGENU",7)
+
+"BLD",7150,"KRN",9.8,"NM","B","DGENUPL2",8)
+
+"BLD",7150,"KRN",19,0)
+19
+"BLD",7150,"KRN",19.1,0)
+19.1
+"BLD",7150,"KRN",101,0)
+101
+"BLD",7150,"KRN",409.61,0)
+409.61
+"BLD",7150,"KRN",409.61,"NM",0)
+^9.68A^2^2
+"BLD",7150,"KRN",409.61,"NM",1,0)
+DGEN PATIENT ENROLL HISTORY^^0
+"BLD",7150,"KRN",409.61,"NM",2,0)
+DGEN PATIENT ENROLLMENT^^0
+"BLD",7150,"KRN",409.61,"NM","B","DGEN PATIENT ENROLL HISTORY",1)
+
+"BLD",7150,"KRN",409.61,"NM","B","DGEN PATIENT ENROLLMENT",2)
+
+"BLD",7150,"KRN",771,0)
+771
+"BLD",7150,"KRN",870,0)
+870
+"BLD",7150,"KRN",8989.51,0)
+8989.51
+"BLD",7150,"KRN",8989.52,0)
+8989.52
+"BLD",7150,"KRN",8994,0)
+8994
+"BLD",7150,"KRN","B",.4,.4)
+
+"BLD",7150,"KRN","B",.401,.401)
+
+"BLD",7150,"KRN","B",.402,.402)
+
+"BLD",7150,"KRN","B",.403,.403)
+
+"BLD",7150,"KRN","B",.5,.5)
+
+"BLD",7150,"KRN","B",.84,.84)
+
+"BLD",7150,"KRN","B",3.6,3.6)
+
+"BLD",7150,"KRN","B",3.8,3.8)
+
+"BLD",7150,"KRN","B",9.2,9.2)
+
+"BLD",7150,"KRN","B",9.8,9.8)
+
+"BLD",7150,"KRN","B",19,19)
+
+"BLD",7150,"KRN","B",19.1,19.1)
+
+"BLD",7150,"KRN","B",101,101)
+
+"BLD",7150,"KRN","B",409.61,409.61)
+
+"BLD",7150,"KRN","B",771,771)
+
+"BLD",7150,"KRN","B",870,870)
+
+"BLD",7150,"KRN","B",8989.51,8989.51)
+
+"BLD",7150,"KRN","B",8989.52,8989.52)
+
+"BLD",7150,"KRN","B",8994,8994)
+
+"BLD",7150,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",7150,"QUES",0)
+^9.62^^
+"BLD",7150,"REQB",0)
+^9.611^2^2
+"BLD",7150,"REQB",1,0)
+DG*5.3*536^1
+"BLD",7150,"REQB",2,0)
+DG*5.3*754^1
+"BLD",7150,"REQB","B","DG*5.3*536",1)
+
+"BLD",7150,"REQB","B","DG*5.3*754",2)
+
+"FIA",2)
+PATIENT
+"FIA",2,0)
+^DPT(
+"FIA",2,0,0)
+2I
+"FIA",2,0,1)
+y^y^p^^^^n^^n
+"FIA",2,0,10)
+
+"FIA",2,0,11)
+
+"FIA",2,0,"RLRO")
+
+"FIA",2,0,"VR")
+5.3^DG
+"FIA",2,2)
+1
+"FIA",2,2,27.03)
+
+"KRN",409.61,235,-1)
+0^2
+"KRN",409.61,235,0)
+DGEN PATIENT ENROLLMENT^1^^80^6^19^1^1^^DGEN PATIENT ENROLLMENT MENU^Patient Enrollment^1^^1
+"KRN",409.61,235,1)
+^VALM HIDDEN ACTIONS
+"KRN",409.61,235,"ARRAY")
+ ^TMP("DGEN",$J)
+"KRN",409.61,235,"COL",0)
+^409.621
+"KRN",409.61,235,"FNL")
+D EXIT^DGENL
+"KRN",409.61,235,"HDR")
+D HDR^DGENL
+"KRN",409.61,235,"HLP")
+D HELP^DGENL
+"KRN",409.61,235,"INIT")
+D INIT^DGENL
+"KRN",409.61,237,-1)
+0^1
+"KRN",409.61,237,0)
+DGEN PATIENT ENROLL HISTORY^2^^80^6^19^1^1^^^Patient Enrollment History^1^^1
+"KRN",409.61,237,1)
+^VALM HIDDEN ACTIONS
+"KRN",409.61,237,"ARRAY")
+ ^TMP("DGENEH",$J)
+"KRN",409.61,237,"FNL")
+D EXIT^DGENLEH
+"KRN",409.61,237,"HDR")
+D HDR^DGENLEH
+"KRN",409.61,237,"HLP")
+D HELP^DGENLEH
+"KRN",409.61,237,"INIT")
+D INIT^DGENLEH
+"MBREQ")
+0
+"ORD",17,409.61)
+409.61;17;1;;;;;;;LMDEL^XPDIA1
+"ORD",17,409.61,0)
+LIST TEMPLATE
+"PKG",47,-1)
+1^1
+"PKG",47,0)
+REGISTRATION^DG^PATIENT REGISTRATION, ADMISSION, DISCHARGE, EMBOSSER 
+"PKG",47,20,0)
+^9.402P^^
+"PKG",47,22,0)
+^9.49I^1^1
+"PKG",47,22,1,0)
+5.3^2930813^2960613
+"PKG",47,22,1,"PAH",1,0)
+838^3110329
+"PKG",47,22,1,"PAH",1,1,0)
+^^55^55^3110329
+"PKG",47,22,1,"PAH",1,1,1,0)
+This patch has enhancements to the Veterans Health Information Systems 
+"PKG",47,22,1,"PAH",1,1,2,0)
+and Technology Architecture (VistA) system to support technology and 
+"PKG",47,22,1,"PAH",1,1,3,0)
+business changes that are occurring with the implementation of the 
+"PKG",47,22,1,"PAH",1,1,4,0)
+Enrollment System Redesign (ESR) Preferred Facility project, Change 
+"PKG",47,22,1,"PAH",1,1,5,0)
+Request (CR) 9620.
+"PKG",47,22,1,"PAH",1,1,6,0)
+ 
+"PKG",47,22,1,"PAH",1,1,7,0)
+Currently, a Veteran selects a Preferred Facility (PF) at the time of 
+"PKG",47,22,1,"PAH",1,1,8,0)
+application for enrollment. The Preferred Facility information is rarely 
+"PKG",47,22,1,"PAH",1,1,9,0)
+updated by the Veteran and is not linked to the location where the 
+"PKG",47,22,1,"PAH",1,1,10,0)
+Veteran actually receives care. As a result, the value of the preferred 
+"PKG",47,22,1,"PAH",1,1,11,0)
+facility assignment is limited. CR 9620 specifies changes needed in the 
+"PKG",47,22,1,"PAH",1,1,12,0)
+way that a Veteran's Preferred Facility is entered and stored in ESR and 
+"PKG",47,22,1,"PAH",1,1,13,0)
+VistA. These changes are necessitated by the requirements of the 
+"PKG",47,22,1,"PAH",1,1,14,0)
+Veterans Benefit Handbook Project.
+"PKG",47,22,1,"PAH",1,1,15,0)
+ 
+"PKG",47,22,1,"PAH",1,1,16,0)
+ 
+"PKG",47,22,1,"PAH",1,1,17,0)
+***NOTE***
+"PKG",47,22,1,"PAH",1,1,18,0)
+This patch needs to be released and loaded at the same time as ESR 3.5.
+"PKG",47,22,1,"PAH",1,1,19,0)
+ 
+"PKG",47,22,1,"PAH",1,1,20,0)
+ 
+"PKG",47,22,1,"PAH",1,1,21,0)
+This patch modifies the Registration v5.3 application as described below:
+"PKG",47,22,1,"PAH",1,1,22,0)
+ 
+"PKG",47,22,1,"PAH",1,1,23,0)
+1. Modify VistA to lock the Preferred Facility to prevent users from 
+"PKG",47,22,1,"PAH",1,1,24,0)
+changing the field once ESR has assigned it.
+"PKG",47,22,1,"PAH",1,1,25,0)
+ 
+"PKG",47,22,1,"PAH",1,1,26,0)
+2. Modify VistA to display to a VistA user the following help text when 
+"PKG",47,22,1,"PAH",1,1,27,0)
+a VistA user attempts to edit the Preferred Facility field.
+"PKG",47,22,1,"PAH",1,1,28,0)
+ 
+"PKG",47,22,1,"PAH",1,1,29,0)
+    "Preferred Facility can only be edited/modified by an ESR user, 
+"PKG",47,22,1,"PAH",1,1,30,0)
+     please contact HEC to request changes/edits"
+"PKG",47,22,1,"PAH",1,1,31,0)
+ 
+"PKG",47,22,1,"PAH",1,1,32,0)
+3. Modify VistA to upload SOURCE DESIGNATION from ESR. Source 
+"PKG",47,22,1,"PAH",1,1,33,0)
+Designation field (#27.03) is automatically assigned by the ESR or VistA
+"PKG",47,22,1,"PAH",1,1,34,0)
+system and is a new field in the PATIENT file (#2). Valid Source
+"PKG",47,22,1,"PAH",1,1,35,0)
+Designation's are:
+"PKG",47,22,1,"PAH",1,1,36,0)
+        a. V = VistA
+"PKG",47,22,1,"PAH",1,1,37,0)
+        b. E = ESR
+"PKG",47,22,1,"PAH",1,1,38,0)
+        c. PA = PCP Active
+"PKG",47,22,1,"PAH",1,1,39,0)
+        d. PI = PCP Inactive
+"PKG",47,22,1,"PAH",1,1,40,0)
+ 
+"PKG",47,22,1,"PAH",1,1,41,0)
+4. Modify VistA to allow a user to ONLY change Preferred Facility if a
+"PKG",47,22,1,"PAH",1,1,42,0)
+veteran's PF Source Designation is PCP Inactive (PI) or VistA (V).
+"PKG",47,22,1,"PAH",1,1,43,0)
+ 
+"PKG",47,22,1,"PAH",1,1,44,0)
+5. Modify VistA to trigger a Z07 HL7 message to be sent to ESR when a 
+"PKG",47,22,1,"PAH",1,1,45,0)
+Preferred Facility has been assigned/modified.
+"PKG",47,22,1,"PAH",1,1,46,0)
+ 
+"PKG",47,22,1,"PAH",1,1,47,0)
+6. Modify VistA to store the Preferred Facility and associated Source
+"PKG",47,22,1,"PAH",1,1,48,0)
+Designation in the Patient file (#2). If VistA receives a Z11 HL7 
+"PKG",47,22,1,"PAH",1,1,49,0)
+message with Preferred Facility, display what ESR sent in the Patient
+"PKG",47,22,1,"PAH",1,1,50,0)
+Enrollment [DGEN PATIENT ENROLLMENT] menu.  If no Z11 has been received, 
+"PKG",47,22,1,"PAH",1,1,51,0)
+display the most recent Preferred Facility assigned.
+"PKG",47,22,1,"PAH",1,1,52,0)
+ 
+"PKG",47,22,1,"PAH",1,1,53,0)
+7. Preferred Facility shall be changed to a required field and must be 
+"PKG",47,22,1,"PAH",1,1,54,0)
+entered by a VistA user when the veteran is first registered/enrolled in 
+"PKG",47,22,1,"PAH",1,1,55,0)
+the VA Medical Center.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+8
+"RTN","DGENL")
+0^1^B4128842^B3753745
+"RTN","DGENL",1,0)
+DGENL ;ALB/RMO,LBD - Patient Enrollment - List Manager Screen;12 JUN 1997 10:00 am ; 1/27/11 2:51pm
+"RTN","DGENL",2,0)
+ ;;5.3;Registration;**121,147,838**;08/13/93;Build 5
+"RTN","DGENL",3,0)
+ ;
+"RTN","DGENL",4,0)
+EN(DFN) ;Main entry point to invoke the DGEN PATIENT ENROLLMENT protocol
+"RTN","DGENL",5,0)
+ ; Input  -- DFN      Patient IEN
+"RTN","DGENL",6,0)
+ ; Output -- None
+"RTN","DGENL",7,0)
+ D WAIT^DICD
+"RTN","DGENL",8,0)
+ D EN^VALM("DGEN PATIENT ENROLLMENT")
+"RTN","DGENL",9,0)
+ Q
+"RTN","DGENL",10,0)
+ ;
+"RTN","DGENL",11,0)
+HDR ;Header code
+"RTN","DGENL",12,0)
+ N DGPREFNM,X,VA,VAERR
+"RTN","DGENL",13,0)
+ D PID^VADPT
+"RTN","DGENL",14,0)
+ S VALMHDR(1)=$E("Patient: "_$P($G(^DPT(DFN,0)),U),1,30)_" ("_VA("BID")_")"
+"RTN","DGENL",15,0)
+ S X=$S('$D(^DPT(DFN,"TYPE")):"PATIENT TYPE UNKNOWN",$D(^DG(391,+^("TYPE"),0)):$P(^(0),U,1),1:"PATIENT TYPE UNKNOWN")
+"RTN","DGENL",16,0)
+ S VALMHDR(1)=$$SETSTR^VALM1(X,VALMHDR(1),60,80)
+"RTN","DGENL",17,0)
+ I $$PREF^DGENPTA(DFN,.DGPREFNM)
+"RTN","DGENL",18,0)
+ S VALMHDR(2)="Preferred Facility: "_$G(DGPREFNM)
+"RTN","DGENL",19,0)
+ S VALMHDR(2)=$$SETSTR^VALM1("Current Enrollment",VALMHDR(2),60,80)
+"RTN","DGENL",20,0)
+ S VALMHDR(3)="Preferred Facility Source: "_$$GET1^DIQ(2,DFN_",",27.03)  ;DG*5.3*838
+"RTN","DGENL",21,0)
+ Q
+"RTN","DGENL",22,0)
+ ;
+"RTN","DGENL",23,0)
+INIT ;Init variables and list array
+"RTN","DGENL",24,0)
+ D BLD
+"RTN","DGENL",25,0)
+ Q
+"RTN","DGENL",26,0)
+ ;
+"RTN","DGENL",27,0)
+BLD ;Build patient enrollment screen
+"RTN","DGENL",28,0)
+ D CLEAN^VALM10
+"RTN","DGENL",29,0)
+ K ^TMP("DGENIDX",$J),VALMHDR
+"RTN","DGENL",30,0)
+ S VALMBG=1,VALMCNT=0
+"RTN","DGENL",31,0)
+ ;
+"RTN","DGENL",32,0)
+ ;Build header
+"RTN","DGENL",33,0)
+ D HDR
+"RTN","DGENL",34,0)
+ ;
+"RTN","DGENL",35,0)
+ ;Build list area for current enrollment
+"RTN","DGENL",36,0)
+ D EN^DGENL1("DGEN",DFN,$$FINDCUR^DGENA(DFN),.VALMCNT)
+"RTN","DGENL",37,0)
+ D MESSAGE(DFN)
+"RTN","DGENL",38,0)
+ Q
+"RTN","DGENL",39,0)
+ ;
+"RTN","DGENL",40,0)
+HELP ;Help code
+"RTN","DGENL",41,0)
+ S X="?" D DISP^XQORM1 W !!
+"RTN","DGENL",42,0)
+ Q
+"RTN","DGENL",43,0)
+ ;
+"RTN","DGENL",44,0)
+EXIT ;Exit code
+"RTN","DGENL",45,0)
+ D CLEAN^VALM10
+"RTN","DGENL",46,0)
+ D CLEAR^VALM1
+"RTN","DGENL",47,0)
+ K ^TMP("DGENIDX",$J)
+"RTN","DGENL",48,0)
+ Q
+"RTN","DGENL",49,0)
+ ;
+"RTN","DGENL",50,0)
+EXPND ;Expand code
+"RTN","DGENL",51,0)
+ Q
+"RTN","DGENL",52,0)
+ ;
+"RTN","DGENL",53,0)
+MESSAGE(DFN) ;
+"RTN","DGENL",54,0)
+ ;Description: Sets VALMMSG to a custom message for the screen's message
+"RTN","DGENL",55,0)
+ ; window that is the status of the last enrollment query
+"RTN","DGENL",56,0)
+ ;
+"RTN","DGENL",57,0)
+ N DGQRY,STATUS,NOTIFY
+"RTN","DGENL",58,0)
+ S DGQRY=$$FINDLAST^DGENQRY(DFN)
+"RTN","DGENL",59,0)
+ I $$GET^DGENQRY(DGQRY,.DGQRY)
+"RTN","DGENL",60,0)
+ S STATUS=$$EXTERNAL^DILFD(27.12,.03,"F",DGQRY("STATUS"))
+"RTN","DGENL",61,0)
+ S NOTIFY=$$EXTERNAL^DILFD(27.12,.08,"F",DGQRY("NOTIFY"))
+"RTN","DGENL",62,0)
+ S VALMSG="Query: "_STATUS
+"RTN","DGENL",63,0)
+ S $E(VALMSG,28)="Notify: "_NOTIFY
+"RTN","DGENL",64,0)
+ Q
+"RTN","DGENL1")
+0^9^B67706574^B67982069
+"RTN","DGENL1",1,0)
+DGENL1 ;ALB/RMO,ISA/KWP,Zoltan,ALB/BRM,LBD,ERC,EG,CKN,BAJ - Patient Enrollment - Build List Area ; 2/2/11 4:08pm
+"RTN","DGENL1",2,0)
+ ;;5.3;Registration;**121,147,232,266,343,564,672,659,653,688,838**;Aug 13,1993;Build 5
+"RTN","DGENL1",3,0)
+ ;
+"RTN","DGENL1",4,0)
+EN(DGARY,DFN,DGENRIEN,DGCNT) ;Entry point to build list area
+"RTN","DGENL1",5,0)
+ ; for patient enrollment and patient enrollment history
+"RTN","DGENL1",6,0)
+ ; Input  -- DGARY    Global array subscript
+"RTN","DGENL1",7,0)
+ ;           DFN      Patient IEN
+"RTN","DGENL1",8,0)
+ ;           DGENRIEN Enrollment IEN
+"RTN","DGENL1",9,0)
+ ; Output -- DGCNT    Number of lines in the list
+"RTN","DGENL1",10,0)
+ N DGENCAT,DGENR,DGLINE
+"RTN","DGENL1",11,0)
+ I DGENRIEN,$$GET^DGENA(DGENRIEN,.DGENR) ;set-up enrollment array
+"RTN","DGENL1",12,0)
+ S DGENCAT=$$CATEGORY^DGENA4(,$G(DGENR("STATUS")))  ;enrollment category
+"RTN","DGENL1",13,0)
+ S DGENCAT=$$EXTERNAL^DILFD(27.15,.02,"",DGENCAT)
+"RTN","DGENL1",14,0)
+ S DGLINE=1,DGCNT=0
+"RTN","DGENL1",15,0)
+ D ENR(DGARY,DFN,.DGENR,.DGLINE,.DGCNT) ;enrollment
+"RTN","DGENL1",16,0)
+ D PF(DGARY,DFN,.DGENR,.DGLINE,.DGCNT) ;priority factors
+"RTN","DGENL1",17,0)
+ D HIS^DGENL2(DGARY,DFN,DGENRIEN,.DGLINE,.DGCNT) ;history
+"RTN","DGENL1",18,0)
+ Q
+"RTN","DGENL1",19,0)
+ ;
+"RTN","DGENL1",20,0)
+ENR(DGARY,DFN,DGENR,DGLINE,DGCNT) ;Enrollment 
+"RTN","DGENL1",21,0)
+ ; Input  -- DGARY    Global array subscript
+"RTN","DGENL1",22,0)
+ ;           DFN      Patient IEN
+"RTN","DGENL1",23,0)
+ ;           DGENR    Enrollment array
+"RTN","DGENL1",24,0)
+ ;           DGLINE   Line number
+"RTN","DGENL1",25,0)
+ ; Output -- DGCNT    Number of lines in the list
+"RTN","DGENL1",26,0)
+ N DGSTART
+"RTN","DGENL1",27,0)
+ ;
+"RTN","DGENL1",28,0)
+ S DGSTART=DGLINE ; starting line number
+"RTN","DGENL1",29,0)
+ D SET(DGARY,DGLINE,"Enrollment",31,IORVON,IORVOFF,,,,.DGCNT)
+"RTN","DGENL1",30,0)
+ ;
+"RTN","DGENL1",31,0)
+ ;Enrollment Date
+"RTN","DGENL1",32,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",33,0)
+ D SET(DGARY,DGLINE,"Enrollment Date: "_$S($G(DGENR("DATE")):$$EXT^DGENU("DATE",DGENR("DATE")),1:""),11,,,,,,.DGCNT)
+"RTN","DGENL1",34,0)
+ ;
+"RTN","DGENL1",35,0)
+ ;
+"RTN","DGENL1",36,0)
+ ;Enrollment End Date
+"RTN","DGENL1",37,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",38,0)
+ D SET(DGARY,DGLINE,"Enrollment End Date: "_$S($G(DGENR("END")):$$EXT^DGENU("END",DGENR("END")),1:""),7,,,,,,.DGCNT)
+"RTN","DGENL1",39,0)
+ ;
+"RTN","DGENL1",40,0)
+ ;Enrollment Application Date
+"RTN","DGENL1",41,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",42,0)
+ D SET(DGARY,DGLINE,"Application Date: "_$S($G(DGENR("APP")):$$EXT^DGENU("APP",DGENR("APP")),1:""),10,,,,,,.DGCNT)
+"RTN","DGENL1",43,0)
+ ;
+"RTN","DGENL1",44,0)
+ ;Source
+"RTN","DGENL1",45,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",46,0)
+ D SET(DGARY,DGLINE,"Source of Enrollment: "_$S($G(DGENR("SOURCE")):$$EXT^DGENU("SOURCE",DGENR("SOURCE")),1:""),6,,,,,,.DGCNT)
+"RTN","DGENL1",47,0)
+ ;
+"RTN","DGENL1",48,0)
+ ;Category
+"RTN","DGENL1",49,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",50,0)
+ D SET(DGARY,DGLINE,"Enrollment Category: "_DGENCAT,7,IORVON,IORVOFF,,,,.DGCNT)
+"RTN","DGENL1",51,0)
+ ;
+"RTN","DGENL1",52,0)
+ ;Status
+"RTN","DGENL1",53,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",54,0)
+ D SET(DGARY,DGLINE,"Enrollment Status: "_$S($G(DGENR("STATUS")):$$EXT^DGENU("STATUS",DGENR("STATUS")),1:""),9,,,,,,.DGCNT)
+"RTN","DGENL1",55,0)
+ ;
+"RTN","DGENL1",56,0)
+ ;Priority
+"RTN","DGENL1",57,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",58,0)
+ D SET(DGARY,DGLINE,"Enrollment Priority: "_$S($G(DGENR("PRIORITY")):DGENR("PRIORITY"),1:"")_$S($G(DGENR("SUBGRP")):$$EXT^DGENU("SUBGRP",DGENR("SUBGRP")),1:""),7,,,,,,.DGCNT)
+"RTN","DGENL1",59,0)
+ ;
+"RTN","DGENL1",60,0)
+ ;
+"RTN","DGENL1",61,0)
+ ;Effective date
+"RTN","DGENL1",62,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",63,0)
+ D SET(DGARY,DGLINE,"Effective Date: "_$S($G(DGENR("EFFDATE")):$$EXT^DGENU("EFFDATE",DGENR("EFFDATE")),1:""),12,,,,,,.DGCNT)
+"RTN","DGENL1",64,0)
+ ;
+"RTN","DGENL1",65,0)
+ ;Reason canceled/declined
+"RTN","DGENL1",66,0)
+ ; Removed blank line to fix format after screen header was increased
+"RTN","DGENL1",67,0)
+ ; to 3 lines (DG*5.3*838).
+"RTN","DGENL1",68,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",69,0)
+ D SET(DGARY,DGLINE,"Reason Canceled/Declined: "_$S($G(DGENR("REASON")):$$EXT^DGENU("REASON",DGENR("REASON")),1:""),2,,,,,,.DGCNT)
+"RTN","DGENL1",70,0)
+ ;
+"RTN","DGENL1",71,0)
+ ;Canceled/declined remarks
+"RTN","DGENL1",72,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",73,0)
+ D SET(DGARY,DGLINE,"Canceled/Declined Remarks: "_$S($G(DGENR("REASON"))'="":$$EXT^DGENU("REMARKS",DGENR("REMARKS")),1:""),1,,,,,,.DGCNT)
+"RTN","DGENL1",74,0)
+ ;
+"RTN","DGENL1",75,0)
+ ;Entered by
+"RTN","DGENL1",76,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",77,0)
+ D SET(DGARY,DGLINE,"",1,,,,,,.DGCNT)
+"RTN","DGENL1",78,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",79,0)
+ D SET(DGARY,DGLINE,"Entered By: "_$S($G(DGENR("USER")):$$EXT^DGENU("USER",DGENR("USER")),1:""),16,,,,,,.DGCNT)
+"RTN","DGENL1",80,0)
+ ;
+"RTN","DGENL1",81,0)
+ ;Date/time entered
+"RTN","DGENL1",82,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",83,0)
+ D SET(DGARY,DGLINE,"Date/Time Entered: "_$S($G(DGENR("DATETIME")):$$EXT^DGENU("DATETIME",DGENR("DATETIME")),1:""),9,,,,,,.DGCNT)
+"RTN","DGENL1",84,0)
+ ;
+"RTN","DGENL1",85,0)
+ ;Set line to start on next page
+"RTN","DGENL1",86,0)
+ F DGLINE=DGLINE+1:1:DGSTART+VALM("LINES") D SET(DGARY,DGLINE,"",1,,,,,,.DGCNT)
+"RTN","DGENL1",87,0)
+ Q
+"RTN","DGENL1",88,0)
+ ;
+"RTN","DGENL1",89,0)
+PF(DGARY,DFN,DGENR,DGLINE,DGCNT) ;Priority factors 
+"RTN","DGENL1",90,0)
+ ; Input  -- DGARY    Global array subscript
+"RTN","DGENL1",91,0)
+ ;           DFN      Patient IEN
+"RTN","DGENL1",92,0)
+ ;           DGENR    Enrollment array
+"RTN","DGENL1",93,0)
+ ;           DGLINE   Line number
+"RTN","DGENL1",94,0)
+ ; Output -- DGCNT    Number of lines in the list
+"RTN","DGENL1",95,0)
+ N DGSTART
+"RTN","DGENL1",96,0)
+ ;
+"RTN","DGENL1",97,0)
+ S DGSTART=DGLINE ; starting line number
+"RTN","DGENL1",98,0)
+ D SET(DGARY,DGLINE,"Priority Factors",31,IORVON,IORVOFF,,,,.DGCNT)
+"RTN","DGENL1",99,0)
+ ;
+"RTN","DGENL1",100,0)
+ ;POW
+"RTN","DGENL1",101,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",102,0)
+ D SET(DGARY,DGLINE,"POW: "_$S($G(DGENR("ELIG","POW"))'="":$$EXT^DGENU("POW",DGENR("ELIG","POW")),1:""),19,,,,,,.DGCNT)
+"RTN","DGENL1",103,0)
+ ;
+"RTN","DGENL1",104,0)
+ ;Purple Heart - added for patch 343;brm;10/23/00
+"RTN","DGENL1",105,0)
+ N PHDAT
+"RTN","DGENL1",106,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",107,0)
+ S PHDAT=$$PHEART(DFN,$G(DGENRIEN),$G(DGENR("DATETIME")))
+"RTN","DGENL1",108,0)
+ D SET(DGARY,DGLINE,"Purple Hrt: "_$P(PHDAT,U),12,,,,,,.DGCNT)
+"RTN","DGENL1",109,0)
+ D:$P(PHDAT,U)="YES" SET(DGARY,DGLINE,"Status: "_$P(PHDAT,U,2),32,,,,,,.DGCNT)
+"RTN","DGENL1",110,0)
+ D:$P(PHDAT,U)="NO" SET(DGARY,DGLINE,"Remarks: "_$P(PHDAT,U,3),31,,,,,,.DGCNT)
+"RTN","DGENL1",111,0)
+ ;
+"RTN","DGENL1",112,0)
+ ;Agent orange
+"RTN","DGENL1",113,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",114,0)
+ D SET(DGARY,DGLINE,"A/O Exp.: "_$S($G(DGENR("ELIG","AO"))'="":$$EXT^DGENU("AO",DGENR("ELIG","AO")),1:""),14,,,,,,.DGCNT)
+"RTN","DGENL1",115,0)
+ D SET(DGARY,DGLINE,"A/O Exp Loc: "_$S($G(DGENR("ELIG","AOEXPLOC"))'="":$$EXT^DGENU("AOEXPLOC",DGENR("ELIG","AOEXPLOC")),1:""),51,,,,,,.DGCNT)
+"RTN","DGENL1",116,0)
+ ;
+"RTN","DGENL1",117,0)
+ ;Ionizing radiation
+"RTN","DGENL1",118,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",119,0)
+ D SET(DGARY,DGLINE,"ION Rad.: "_$S($G(DGENR("ELIG","IR"))'="":$$EXT^DGENU("IR",DGENR("ELIG","IR")),1:""),14,,,,,,.DGCNT)
+"RTN","DGENL1",120,0)
+ ;
+"RTN","DGENL1",121,0)
+ ;Radiation Exposure Method
+"RTN","DGENL1",122,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",123,0)
+ D SET(DGARY,DGLINE,"Rad Exp Method: "_$S($G(DGENR("ELIG","RADEXPM"))'="":$$EXT^DGENU("RADEXPM",DGENR("ELIG","RADEXPM")),1:""),8,,,,,,.DGCNT)
+"RTN","DGENL1",124,0)
+ ;
+"RTN","DGENL1",125,0)
+ ;SW Asia Conditions - name change from Env con DG*5.3*688
+"RTN","DGENL1",126,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",127,0)
+ D SET(DGARY,DGLINE,"SW Asia Cond."_$S($G(DGENR("ELIG","EC"))'="":$$EXT^DGENU("EC",DGENR("ELIG","EC")),1:""),12,,,,,,.DGCNT)
+"RTN","DGENL1",128,0)
+ ;
+"RTN","DGENL1",129,0)
+ ;Military retirement - new fields added with DG*5.3*672
+"RTN","DGENL1",130,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",131,0)
+ S DGRET=$G(DGENR("ELIG","DISRET"))
+"RTN","DGENL1",132,0)
+ D SET(DGARY,DGLINE,"Mil Disab Retirement: "_$S($G(DGRET)=0:"NO",$G(DGRET)=1:"YES",$G(DGRET)=2:"YES",$G(DGRET)=3:"UNK",1:""),2,,,,,,.DGCNT)
+"RTN","DGENL1",133,0)
+ D SET(DGARY,DGLINE,"Dischrg Due to Disab: "_$S($G(DGENR("ELIG","DISLOD"))'="":$$EXT^DGENU("DISLOD",DGENR("ELIG","DISLOD")),1:""),42,,,,,,.DGCNT)
+"RTN","DGENL1",134,0)
+ ;
+"RTN","DGENL1",135,0)
+ ;Combat Vet End Date (added for DG*5.3*564 - HVE Phase III)
+"RTN","DGENL1",136,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",137,0)
+ D SET(DGARY,DGLINE,"Combat Vet End Date: "_$S($G(DGENR("ELIG","CVELEDT"))'="":$$EXT^DGENU("CVELEDT",DGENR("ELIG","CVELEDT")),1:""),3,,,,,,.DGCNT)
+"RTN","DGENL1",138,0)
+ ;
+"RTN","DGENL1",139,0)
+ ;Eligible for medicaid
+"RTN","DGENL1",140,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",141,0)
+ D SET(DGARY,DGLINE,"Eligible for MEDICAID: "_$S($G(DGENR("ELIG","MEDICAID"))'="":$$EXT^DGENU("MEDICAID",DGENR("ELIG","MEDICAID")),1:""),1,,,,,,.DGCNT)
+"RTN","DGENL1",142,0)
+ ;
+"RTN","DGENL1",143,0)
+ ;Service connected and percentage
+"RTN","DGENL1",144,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",145,0)
+ D SET(DGARY,DGLINE,"",1,,,,,,.DGCNT)
+"RTN","DGENL1",146,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",147,0)
+ D SET(DGARY,DGLINE,"Svc Connected: "_$S($G(DGENR("ELIG","SC"))'="":$$EXT^DGENU("SC",DGENR("ELIG","SC")),1:""),9,,,,,,.DGCNT)
+"RTN","DGENL1",148,0)
+ D SET(DGARY,DGLINE,"SC Percent: "_$S($G(DGENR("ELIG","SCPER"))'="":$$EXT^DGENU("SCPER",DGENR("ELIG","SCPER"))_"%",1:""),52,,,,,,.DGCNT)
+"RTN","DGENL1",149,0)
+ ;
+"RTN","DGENL1",150,0)
+ ;Aid & attendance and housebound
+"RTN","DGENL1",151,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",152,0)
+ D SET(DGARY,DGLINE,"Aid & Attendance: "_$S($G(DGENR("ELIG","A&A"))'="":$$EXT^DGENU("A&A",DGENR("ELIG","A&A")),1:""),6,,,,,,.DGCNT)
+"RTN","DGENL1",153,0)
+ D SET(DGARY,DGLINE,"Housebound: "_$S($G(DGENR("ELIG","HB"))'="":$$EXT^DGENU("HB",DGENR("ELIG","HB")),1:""),52,,,,,,.DGCNT)
+"RTN","DGENL1",154,0)
+ ;
+"RTN","DGENL1",155,0)
+ ;VA Pension
+"RTN","DGENL1",156,0)
+ ;Unemployable (added for DG*5.3*564 - HVE Phase III)
+"RTN","DGENL1",157,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",158,0)
+ D SET(DGARY,DGLINE,"VA Pension: "_$S($G(DGENR("ELIG","VAPEN"))'="":$$EXT^DGENU("VAPEN",DGENR("ELIG","VAPEN")),1:""),12,,,,,,.DGCNT)
+"RTN","DGENL1",159,0)
+ D SET(DGARY,DGLINE,"Unemployable: "_$S($G(DGENR("ELIG","UNEMPLOY"))'="":$$EXT^DGENU("UNEMPLOY",DGENR("ELIG","UNEMPLOY")),1:""),50,,,,,,.DGCNT)
+"RTN","DGENL1",160,0)
+ ;
+"RTN","DGENL1",161,0)
+ ;Total check amount
+"RTN","DGENL1",162,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",163,0)
+ D SET(DGARY,DGLINE,"Total Check Amount: "_$S($G(DGENR("ELIG","VACKAMT"))'="":$$EXT^DGENU("VACKAMT",DGENR("ELIG","VACKAMT")),1:""),4,,,,,,.DGCNT)
+"RTN","DGENL1",164,0)
+ ;
+"RTN","DGENL1",165,0)
+ ;PROJ 112/SHAD - DG*5.3*653
+"RTN","DGENL1",166,0)
+ I $G(DGENR("ELIG","SHAD"))=1 D
+"RTN","DGENL1",167,0)
+ .D SET(DGARY,DGLINE,"Proj 112/SHAD: "_$$EXT^DGENU("SHAD",DGENR("ELIG","SHAD")),49,,,,,,.DGCNT)
+"RTN","DGENL1",168,0)
+ ;
+"RTN","DGENL1",169,0)
+ ;Eligibility code
+"RTN","DGENL1",170,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",171,0)
+ D SET(DGARY,DGLINE,"Eligibility Code: "_$S($G(DGENR("ELIG","CODE"))'="":$$EXT^DGENU("CODE",DGENR("ELIG","CODE")),1:""),6,,,,,,.DGCNT)
+"RTN","DGENL1",172,0)
+ ;
+"RTN","DGENL1",173,0)
+ ;Means test
+"RTN","DGENL1",174,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",175,0)
+ D SET(DGARY,DGLINE,"Means Test Status: "_$S($G(DGENR("ELIG","MTSTA"))'="":$$EXT^DGENU("MTSTA",DGENR("ELIG","MTSTA")),1:""),5,,,,,,.DGCNT)
+"RTN","DGENL1",176,0)
+ ;
+"RTN","DGENL1",177,0)
+ ;Veteran Catastrophically Disabled
+"RTN","DGENL1",178,0)
+ S DGLINE=DGLINE+1
+"RTN","DGENL1",179,0)
+ D SET(DGARY,DGLINE,"Veteran CD Status: "_$S($G(DGENR("ELIG","VCD"))'="":$$EXT^DGENU("VCD",DGENR("ELIG","VCD")),1:""),5,,,,,,.DGCNT)
+"RTN","DGENL1",180,0)
+ ;
+"RTN","DGENL1",181,0)
+ ;Set line to start on next page
+"RTN","DGENL1",182,0)
+ F DGLINE=DGLINE+1:1:DGSTART+VALM("LINES") D SET(DGARY,DGLINE,"",1,,,,,,.DGCNT)
+"RTN","DGENL1",183,0)
+ Q
+"RTN","DGENL1",184,0)
+ ;
+"RTN","DGENL1",185,0)
+SET(DGARY,DGLINE,DGTEXT,DGCOL,DGON,DGOFF,DGSUB,DGNUM,DGDATA,DGCNT) ; moved to
+"RTN","DGENL1",186,0)
+ ;DGENL2 as DGENL1 was getting too big
+"RTN","DGENL1",187,0)
+ I $G(DGCOL)']"" S DGCOL=""
+"RTN","DGENL1",188,0)
+ I $G(DGON)']"" S DGON=""
+"RTN","DGENL1",189,0)
+ I $G(DGOFF)']"" S DGOFF=""
+"RTN","DGENL1",190,0)
+ I $G(DGSUB)']"" S DGSUB=""
+"RTN","DGENL1",191,0)
+ I $G(DGNUM)']"" S DGNUM=""
+"RTN","DGENL1",192,0)
+ I $G(DGDATA)']"" S DGDATA=""
+"RTN","DGENL1",193,0)
+ D SET^DGENL2(DGARY,DGLINE,DGTEXT,DGCOL,DGON,DGOFF,DGSUB,DGNUM,DGDATA,.DGCNT)
+"RTN","DGENL1",194,0)
+ Q
+"RTN","DGENL1",195,0)
+PHEART(DFN,DGENRIEN,PHENRDT) ;move to DGENL2
+"RTN","DGENL1",196,0)
+ N PHI,PHST,PHRR,PHDAT
+"RTN","DGENL1",197,0)
+ S PHDAT=$$PHEART^DGENL2(DFN,$G(DGENRIEN),$G(DGENR("DATETIME")))
+"RTN","DGENL1",198,0)
+ S PHI=$P(PHDAT,U),PHST=$P(PHDAT,U,2),PHRR=$P(PHDAT,U,3)
+"RTN","DGENL1",199,0)
+ I ($G(PHI)]""!($G(PHST)]"")!($G(PHRR)]"")) Q $G(PHI)_"^"_$G(PHST)_"^"_$G(PHRR)
+"RTN","DGENL1",200,0)
+ Q ""
+"RTN","DGENLEH")
+0^2^B2546057^B2186607
+"RTN","DGENLEH",1,0)
+DGENLEH ;ALB/RMO,LBD - Patient Enrollment History - List Manager Screen;12 JUN 1997 10:00 am ; 1/27/11 3:11pm
+"RTN","DGENLEH",2,0)
+ ;;5.3;Registration;**121,838**;08/13/93;Build 5
+"RTN","DGENLEH",3,0)
+ ;
+"RTN","DGENLEH",4,0)
+EN(DFN,DGENRIEN) ;Main entry point to invoke the DGEN PATIENT ENROLL HISTORY protocol
+"RTN","DGENLEH",5,0)
+ ; Input  -- DFN      Patient IEN
+"RTN","DGENLEH",6,0)
+ ;           DGENRIEN Enrollment IEN
+"RTN","DGENLEH",7,0)
+ ; Output -- None
+"RTN","DGENLEH",8,0)
+ D WAIT^DICD
+"RTN","DGENLEH",9,0)
+ D EN^VALM("DGEN PATIENT ENROLL HISTORY")
+"RTN","DGENLEH",10,0)
+ Q
+"RTN","DGENLEH",11,0)
+ ;
+"RTN","DGENLEH",12,0)
+HDR ;Header code
+"RTN","DGENLEH",13,0)
+ N DGPREFNM,X,VA,VAERR
+"RTN","DGENLEH",14,0)
+ D PID^VADPT
+"RTN","DGENLEH",15,0)
+ S VALMHDR(1)=$E("Patient: "_$P($G(^DPT(DFN,0)),U),1,30)_" ("_VA("BID")_")"
+"RTN","DGENLEH",16,0)
+ S X=$S('$D(^DPT(DFN,"TYPE")):"PATIENT TYPE UNKNOWN",$D(^DG(391,+^("TYPE"),0)):$P(^(0),U,1),1:"PATIENT TYPE UNKNOWN")
+"RTN","DGENLEH",17,0)
+ S VALMHDR(1)=$$SETSTR^VALM1(X,VALMHDR(1),60,80)
+"RTN","DGENLEH",18,0)
+ I $$PREF^DGENPTA(DFN,.DGPREFNM)
+"RTN","DGENLEH",19,0)
+ S VALMHDR(2)="Preferred Facility: "_$G(DGPREFNM)
+"RTN","DGENLEH",20,0)
+ S VALMHDR(2)=$$SETSTR^VALM1("Prior Enrollment",VALMHDR(2),60,80)
+"RTN","DGENLEH",21,0)
+ S VALMHDR(3)="Preferred Facility Source: "_$$GET1^DIQ(2,DFN_",",27.03)  ;DG*5.3*838
+"RTN","DGENLEH",22,0)
+ Q
+"RTN","DGENLEH",23,0)
+ ;
+"RTN","DGENLEH",24,0)
+INIT ;Init variables and list array
+"RTN","DGENLEH",25,0)
+ D BLD
+"RTN","DGENLEH",26,0)
+ Q
+"RTN","DGENLEH",27,0)
+ ;
+"RTN","DGENLEH",28,0)
+BLD ;Build patient enrollment screen
+"RTN","DGENLEH",29,0)
+ D CLEAN^VALM10
+"RTN","DGENLEH",30,0)
+ K ^TMP("DGENEHIDX",$J)
+"RTN","DGENLEH",31,0)
+ ;
+"RTN","DGENLEH",32,0)
+ ;Build header
+"RTN","DGENLEH",33,0)
+ D HDR
+"RTN","DGENLEH",34,0)
+ ;
+"RTN","DGENLEH",35,0)
+ ;Build list area for select enrollment history
+"RTN","DGENLEH",36,0)
+ D EN^DGENL1("DGENEH",DFN,DGENRIEN,.VALMCNT)
+"RTN","DGENLEH",37,0)
+ Q
+"RTN","DGENLEH",38,0)
+ ;
+"RTN","DGENLEH",39,0)
+HELP ;Help code
+"RTN","DGENLEH",40,0)
+ S X="?" D DISP^XQORM1 W !!
+"RTN","DGENLEH",41,0)
+ Q
+"RTN","DGENLEH",42,0)
+ ;
+"RTN","DGENLEH",43,0)
+EXIT ;Exit code
+"RTN","DGENLEH",44,0)
+ D CLEAN^VALM10
+"RTN","DGENLEH",45,0)
+ D CLEAR^VALM1
+"RTN","DGENLEH",46,0)
+ K ^TMP("DGENEHIDX",$J)
+"RTN","DGENLEH",47,0)
+ Q
+"RTN","DGENLEH",48,0)
+ ;
+"RTN","DGENLEH",49,0)
+EXPND ;Expand code
+"RTN","DGENLEH",50,0)
+ Q
+"RTN","DGENLEH",51,0)
+ ;
+"RTN","DGENPT")
+0^3^B3244381^B759428
+"RTN","DGENPT",1,0)
+DGENPT ;ALB/CJM,LBD - Patient Protocols; 13 JUN 1997 ; 3/29/11 11:59am
+"RTN","DGENPT",2,0)
+ ;;5.3;Registration;**121,147,838**;08/13/93;Build 5
+"RTN","DGENPT",3,0)
+ ;
+"RTN","DGENPT",4,0)
+PF ;Entry point for DGENPT PREFERRED FACILITY protocol
+"RTN","DGENPT",5,0)
+ ; Input  -- DFN      Patient IEN
+"RTN","DGENPT",6,0)
+ ; Output -- VALMBCK  R   =Refresh screen
+"RTN","DGENPT",7,0)
+ S VALMBCK=""
+"RTN","DGENPT",8,0)
+ D FULL^VALM1
+"RTN","DGENPT",9,0)
+ D PREFER(DFN)
+"RTN","DGENPT",10,0)
+ D HDR^DGENL
+"RTN","DGENPT",11,0)
+ D MESSAGE^DGENL(DFN)
+"RTN","DGENPT",12,0)
+ S VALMBCK="R"
+"RTN","DGENPT",13,0)
+ Q
+"RTN","DGENPT",14,0)
+ ;
+"RTN","DGENPT",15,0)
+PREFER(DFN) ;
+"RTN","DGENPT",16,0)
+ ;Description: Enter/Edit patient's preferred facility.
+"RTN","DGENPT",17,0)
+ ;Input: DFN - patient ien
+"RTN","DGENPT",18,0)
+ ;Output: none
+"RTN","DGENPT",19,0)
+ ;
+"RTN","DGENPT",20,0)
+ Q:'$G(DFN)
+"RTN","DGENPT",21,0)
+ Q:'$D(^DPT(DFN,0))
+"RTN","DGENPT",22,0)
+ ;
+"RTN","DGENPT",23,0)
+ N PREFAC,RESPONSE,PFSRC
+"RTN","DGENPT",24,0)
+ ;If SOURCE DESIGNATION field (#27.03) = 'E' or 'PA' then PREFERRED
+"RTN","DGENPT",25,0)
+ ;FACILITY cannot be edited. Display message and quit. (DG*5.3*838)
+"RTN","DGENPT",26,0)
+ S PFSRC=$P($G(^DPT(DFN,"ENR")),"^",3)
+"RTN","DGENPT",27,0)
+ I PFSRC="E"!(PFSRC="PA") D  Q
+"RTN","DGENPT",28,0)
+ .W !!,"Preferred Facility can only be edited/modified by an ESR user."
+"RTN","DGENPT",29,0)
+ .W !,"Please contact HEC to request changes/edits."
+"RTN","DGENPT",30,0)
+ .N DIR S DIR(0)="E",DIR("A")="Press RETURN to continue" W ! D ^DIR
+"RTN","DGENPT",31,0)
+ ;
+"RTN","DGENPT",32,0)
+ S PREFAC=$$PREF^DGENPTA(DFN)
+"RTN","DGENPT",33,0)
+ S:'PREFAC PREFAC=$P($$SITE^VASITE(),"^")
+"RTN","DGENPT",34,0)
+ W !
+"RTN","DGENPT",35,0)
+PRMPT I $$PROMPT^DGENU(2,27.02,PREFAC,.RESPONSE)
+"RTN","DGENPT",36,0)
+ I $G(RESPONSE)'="",$$STOREPRE^DGENPTA1(DFN,RESPONSE) Q
+"RTN","DGENPT",37,0)
+ I $P($G(^DPT(DFN,"ENR")),"^",2)="" W !,"Entry of a Preferred Facility is required!" G PRMPT
+"RTN","DGENPT",38,0)
+ I $G(X)="@" D
+"RTN","DGENPT",39,0)
+ .W !,"The Preferred Facility cannot be deleted!"
+"RTN","DGENPT",40,0)
+ .N DIR S DIR(0)="E",DIR("A")="Press RETURN to continue" W ! D ^DIR
+"RTN","DGENPT",41,0)
+ Q
+"RTN","DGENPTA")
+0^5^B40338921^B39663736
+"RTN","DGENPTA",1,0)
+DGENPTA ;ALB/CJM,ERC,CKN,TDM,PWC - Patient API - Retrieve Data ; 2/3/11 6:40pm
+"RTN","DGENPTA",2,0)
+ ;;5.3;Registration;**121,122,147,688,754,838**;Aug 13,1993;Build 5
+"RTN","DGENPTA",3,0)
+ ;
+"RTN","DGENPTA",4,0)
+VET(DFN) ;returns 1 if the patient is an eligible veteran
+"RTN","DGENPTA",5,0)
+ ;returns 0 if not a veteran or not eligible
+"RTN","DGENPTA",6,0)
+ ;
+"RTN","DGENPTA",7,0)
+ N VET S VET=0
+"RTN","DGENPTA",8,0)
+ I $G(DFN),$D(^DPT(DFN,0)) D
+"RTN","DGENPTA",9,0)
+ .S VET=1
+"RTN","DGENPTA",10,0)
+ .I $P($G(^DPT(DFN,"VET")),"^")="N" S VET=0
+"RTN","DGENPTA",11,0)
+ .I $P($G(^DPT(DFN,.15)),"^",2) S VET=0
+"RTN","DGENPTA",12,0)
+ Q VET
+"RTN","DGENPTA",13,0)
+ ;
+"RTN","DGENPTA",14,0)
+VET1(DFN) ;returns 1 if the patient is a veteran
+"RTN","DGENPTA",15,0)
+ ;returns 0 if not a veteran
+"RTN","DGENPTA",16,0)
+ ;
+"RTN","DGENPTA",17,0)
+ N VET S VET=0
+"RTN","DGENPTA",18,0)
+ I $G(DFN),$D(^DPT(DFN,0)) D
+"RTN","DGENPTA",19,0)
+ .I $P($G(^DPT(DFN,"VET")),"^")="Y" S VET=1
+"RTN","DGENPTA",20,0)
+ Q VET
+"RTN","DGENPTA",21,0)
+ ;
+"RTN","DGENPTA",22,0)
+ACTIVE(DFN,DGDT) ;
+"RTN","DGENPTA",23,0)
+ ;Description - Used to determine whether or not the patient has had a
+"RTN","DGENPTA",24,0)
+ ;  recent epiosode of inpatient or outpatient care.
+"RTN","DGENPTA",25,0)
+ ;Input:
+"RTN","DGENPTA",26,0)
+ ;  DFN - ien of record in Patient file
+"RTN","DGENPTA",27,0)
+ ;  DGDT - date used to specify how far back to go looking for episode
+"RTN","DGENPTA",28,0)
+ ;      of care
+"RTN","DGENPTA",29,0)
+ ;Output -
+"RTN","DGENPTA",30,0)
+ ;  returns 1 if recent episode of care, 0 otherwise
+"RTN","DGENPTA",31,0)
+ ;
+"RTN","DGENPTA",32,0)
+ ;!!!!!!! NOTE: This routine is not complete. !!!!!!!!!!!!!!!
+"RTN","DGENPTA",33,0)
+ ; Still need to define how user wants to define an 'active' patient.
+"RTN","DGENPTA",34,0)
+ ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+"RTN","DGENPTA",35,0)
+ ;
+"RTN","DGENPTA",36,0)
+ Q 1
+"RTN","DGENPTA",37,0)
+ ;
+"RTN","DGENPTA",38,0)
+PREF(DFN,FACNAME) ;
+"RTN","DGENPTA",39,0)
+ ;Description: Used to determine the patient's preferred facility.
+"RTN","DGENPTA",40,0)
+ ;Input:
+"RTN","DGENPTA",41,0)
+ ;  DFN - an ien of a record in the PATIENT file
+"RTN","DGENPTA",42,0)
+ ;Output:     
+"RTN","DGENPTA",43,0)
+ ;  Function Value - Returns a pointer to the INSTITUTION file entry that
+"RTN","DGENPTA",44,0)
+ ;    is the patient's preferred facility, NULL if the preferred facility
+"RTN","DGENPTA",45,0)
+ ;    can not be determined.
+"RTN","DGENPTA",46,0)
+ ;  FACNAME - optional parm, pass by reference - returns institution name
+"RTN","DGENPTA",47,0)
+ ;
+"RTN","DGENPTA",48,0)
+ N FAC
+"RTN","DGENPTA",49,0)
+ S (FACNAME,FAC)=""
+"RTN","DGENPTA",50,0)
+ I $D(DFN),$D(^DPT(DFN,0)) S FAC=$P($G(^DPT(DFN,"ENR")),"^",2)
+"RTN","DGENPTA",51,0)
+ S:FAC FACNAME=$P($G(^DIC(4,FAC,0)),"^")
+"RTN","DGENPTA",52,0)
+ Q FAC
+"RTN","DGENPTA",53,0)
+ ;
+"RTN","DGENPTA",54,0)
+DEATH(DFN) ;
+"RTN","DGENPTA",55,0)
+ ;Description: Used to determine whether or not the patient is alive.
+"RTN","DGENPTA",56,0)
+ ;Input:
+"RTN","DGENPTA",57,0)
+ ;  DFN - an ien of a record in the PATIENT file
+"RTN","DGENPTA",58,0)
+ ;Output:     
+"RTN","DGENPTA",59,0)
+ ;  Function Value - Returns 0 if there is no record of the patient's
+"RTN","DGENPTA",60,0)
+ ;    death, otherwise returns the patients date of death
+"RTN","DGENPTA",61,0)
+ ;
+"RTN","DGENPTA",62,0)
+ N DATE S DATE=0
+"RTN","DGENPTA",63,0)
+ I $D(DFN),$D(^DPT(DFN,0)) S DATE=$P($G(^DPT(DFN,.35)),"^")
+"RTN","DGENPTA",64,0)
+ I DATE S DATE=(DATE\1) ;get rid of the time portion
+"RTN","DGENPTA",65,0)
+ Q +DATE
+"RTN","DGENPTA",66,0)
+ ;
+"RTN","DGENPTA",67,0)
+GET(DFN,DGPAT) ;
+"RTN","DGENPTA",68,0)
+ ;Description: Returns DGPAT() array with identifying info for patient
+"RTN","DGENPTA",69,0)
+ ;  Input:
+"RTN","DGENPTA",70,0)
+ ;    DFN - ien, PATIENT file
+"RTN","DGENPTA",71,0)
+ ;  Output:
+"RTN","DGENPTA",72,0)
+ ;    Function Value - 1 on success, 0 on failure
+"RTN","DGENPTA",73,0)
+ ;    DGPAT() array (pass by reference)
+"RTN","DGENPTA",74,0)
+ ;      "DEATH" - date of death
+"RTN","DGENPTA",75,0)
+ ;      "DFN" - ien, PATIENT file
+"RTN","DGENPTA",76,0)
+ ;      "DOB" - date of birth
+"RTN","DGENPTA",77,0)
+ ;      "INELDATE" - INELIGIBLE DATE
+"RTN","DGENPTA",78,0)
+ ;      "INELREA" - INELIGIBLE REASON
+"RTN","DGENPTA",79,0)
+ ;      "INELDEC" - INELIGIBLE VARO DECISION
+"RTN","DGENPTA",80,0)
+ ;      "NAME" - patient name
+"RTN","DGENPTA",81,0)
+ ;      "PATYPE" - patient type
+"RTN","DGENPTA",82,0)
+ ;      "PID" - Primary Long ID
+"RTN","DGENPTA",83,0)
+ ;      "PREFAC" - preferred facility
+"RTN","DGENPTA",84,0)
+ ;      "PFSRC" - preferred facility source designation
+"RTN","DGENPTA",85,0)
+ ;      "SSN" - Social Security Number
+"RTN","DGENPTA",86,0)
+ ;      "SEX" - M=male, F=female
+"RTN","DGENPTA",87,0)
+ ;      "VETERAN" - VETERAN (Y/N)? - "Y"=YES,"N"=NO
+"RTN","DGENPTA",88,0)
+ ;      "AG/ALLY" - Agency/Allied Country
+"RTN","DGENPTA",89,0)
+ ;      "SPININJ" - Spinal Cord Injury
+"RTN","DGENPTA",90,0)
+ ;
+"RTN","DGENPTA",91,0)
+ N NODE
+"RTN","DGENPTA",92,0)
+ Q:'$G(DFN) 0
+"RTN","DGENPTA",93,0)
+ K DGPAT S DGPAT=""
+"RTN","DGENPTA",94,0)
+ S DGPAT("DFN")=DFN
+"RTN","DGENPTA",95,0)
+ S NODE=$G(^DPT(DFN,0))
+"RTN","DGENPTA",96,0)
+ Q:NODE="" 0
+"RTN","DGENPTA",97,0)
+ S DGPAT("NAME")=$P(NODE,"^")
+"RTN","DGENPTA",98,0)
+ S DGPAT("DOB")=$P(NODE,"^",3)
+"RTN","DGENPTA",99,0)
+ S DGPAT("SEX")=$P(NODE,"^",2)
+"RTN","DGENPTA",100,0)
+ S DGPAT("SSN")=$P(NODE,"^",9)
+"RTN","DGENPTA",101,0)
+ ;
+"RTN","DGENPTA",102,0)
+ S DGPAT("DEATH")=$P($G(^DPT(DFN,.35)),"^")
+"RTN","DGENPTA",103,0)
+ S DGPAT("PATYPE")=$P($G(^DPT(DFN,"TYPE")),"^")
+"RTN","DGENPTA",104,0)
+ S DGPAT("VETERAN")=$P($G(^DPT(DFN,"VET")),"^")
+"RTN","DGENPTA",105,0)
+ S DGPAT("PREFAC")=$P($G(^DPT(DFN,"ENR")),"^",2)
+"RTN","DGENPTA",106,0)
+ S DGPAT("PFSRC")=$P($G(^DPT(DFN,"ENR")),"^",3)
+"RTN","DGENPTA",107,0)
+ S DGPAT("INELDATE")=$P($G(^DPT(DFN,.15)),"^",2)
+"RTN","DGENPTA",108,0)
+ S DGPAT("INELREA")=$P($G(^DPT(DFN,.3)),"^",7)
+"RTN","DGENPTA",109,0)
+ S DGPAT("INELDEC")=$P($G(^DPT(DFN,"INE")),"^",6)
+"RTN","DGENPTA",110,0)
+ S DGPAT("PID")=$P($G(^DPT(DFN,.36)),"^",3)
+"RTN","DGENPTA",111,0)
+ S DGPAT("AG/ALLY")=$P($G(^DPT(DFN,.3)),"^",9)
+"RTN","DGENPTA",112,0)
+ S DGPAT("SPININJ")=$P($G(^DPT(DFN,57)),"^",4)
+"RTN","DGENPTA",113,0)
+ Q 1
+"RTN","DGENPTA",114,0)
+ ;
+"RTN","DGENPTA",115,0)
+SSN(DFN) ;
+"RTN","DGENPTA",116,0)
+ ;Description: Function returns the patient's SSN, or "" on failure.
+"RTN","DGENPTA",117,0)
+ ;
+"RTN","DGENPTA",118,0)
+ Q:'DFN ""
+"RTN","DGENPTA",119,0)
+ Q $P($G(^DPT(DFN,0)),"^",9)
+"RTN","DGENPTA",120,0)
+ ;
+"RTN","DGENPTA",121,0)
+NAME(DFN) ;
+"RTN","DGENPTA",122,0)
+ ;Description: Function returns the patient's NAME, or "" on failure.
+"RTN","DGENPTA",123,0)
+ ;
+"RTN","DGENPTA",124,0)
+ Q:'DFN ""
+"RTN","DGENPTA",125,0)
+ Q $P($G(^DPT(DFN,0)),"^")
+"RTN","DGENPTA",126,0)
+ ;
+"RTN","DGENPTA",127,0)
+EXT(SUB,VAL) ;
+"RTN","DGENPTA",128,0)
+ ;Description: Given the subscript used in the PATIENT object array,
+"RTN","DGENPTA",129,0)
+ ;   DGPAT(), and a field value, returns the external representation of
+"RTN","DGENPTA",130,0)
+ ;   the value, as defined in the fields output transform of the PATIENT
+"RTN","DGENPTA",131,0)
+ ;   file.
+"RTN","DGENPTA",132,0)
+ ;Input: 
+"RTN","DGENPTA",133,0)
+ ;  SUB - array subscript
+"RTN","DGENPTA",134,0)
+ ;  VAL - field value
+"RTN","DGENPTA",135,0)
+ ;Output:
+"RTN","DGENPTA",136,0)
+ ;  Function Value - returns the external value of the field
+"RTN","DGENPTA",137,0)
+ ;
+"RTN","DGENPTA",138,0)
+ Q:(($G(SUB)="")!($G(VAL)="")) ""
+"RTN","DGENPTA",139,0)
+ ;
+"RTN","DGENPTA",140,0)
+ N FLD
+"RTN","DGENPTA",141,0)
+ S FLD=$$FIELD^DGENPTA1(SUB)
+"RTN","DGENPTA",142,0)
+ Q:(FLD="") ""
+"RTN","DGENPTA",143,0)
+ Q $$EXTERNAL^DILFD(2,FLD,"F",VAL)
+"RTN","DGENPTA",144,0)
+ ;
+"RTN","DGENPTA",145,0)
+ ;
+"RTN","DGENPTA",146,0)
+VALPAT(DFN) ; --
+"RTN","DGENPTA",147,0)
+ ; Description: This function returns a 1 if the patient DFN is valid, 0 if the patient DFN is not valid.
+"RTN","DGENPTA",148,0)
+ ;
+"RTN","DGENPTA",149,0)
+ ;  Input:
+"RTN","DGENPTA",150,0)
+ ;    DFN - as pointer to patient in Patient (#2) file
+"RTN","DGENPTA",151,0)
+ ;
+"RTN","DGENPTA",152,0)
+ ; Output:
+"RTN","DGENPTA",153,0)
+ ;   Function Value - Is patient (DFN) valid?
+"RTN","DGENPTA",154,0)
+ ;                    Return 1 if successful, otherwise 0
+"RTN","DGENPTA",155,0)
+ ;
+"RTN","DGENPTA",156,0)
+ ; init variables
+"RTN","DGENPTA",157,0)
+ N DGVALID S DGVALID=0
+"RTN","DGENPTA",158,0)
+ ;
+"RTN","DGENPTA",159,0)
+ ; is patient (DFN) valid?
+"RTN","DGENPTA",160,0)
+ I $G(DFN),$D(^DPT(DFN,0)) S DGVALID=1
+"RTN","DGENPTA",161,0)
+ ;
+"RTN","DGENPTA",162,0)
+ Q DGVALID
+"RTN","DGENPTA",163,0)
+ ;
+"RTN","DGENPTA",164,0)
+ ;
+"RTN","DGENPTA",165,0)
+CURINPAT(DFN) ; --
+"RTN","DGENPTA",166,0)
+ ; Description: This function will determine if the patient is a current inpatient.
+"RTN","DGENPTA",167,0)
+ ;
+"RTN","DGENPTA",168,0)
+ ;  Input:
+"RTN","DGENPTA",169,0)
+ ;    DFN - IEN of record in Patient (#2) file
+"RTN","DGENPTA",170,0)
+ ;
+"RTN","DGENPTA",171,0)
+ ; Output:
+"RTN","DGENPTA",172,0)
+ ;   Function Value - Is patient a current inpatient? 
+"RTN","DGENPTA",173,0)
+ ;                    Return 1 if successful, otherwise 0
+"RTN","DGENPTA",174,0)
+ ;
+"RTN","DGENPTA",175,0)
+ N DGCUR S DGCUR=0
+"RTN","DGENPTA",176,0)
+ ;
+"RTN","DGENPTA",177,0)
+ ; if valid patient, check if current inpatient
+"RTN","DGENPTA",178,0)
+ I $$VALPAT(DFN) D
+"RTN","DGENPTA",179,0)
+ .;
+"RTN","DGENPTA",180,0)
+ .; is patient a current inpatient?
+"RTN","DGENPTA",181,0)
+ .I $G(^DPT(DFN,.105)) S DGCUR=1
+"RTN","DGENPTA",182,0)
+ ;
+"RTN","DGENPTA",183,0)
+ Q DGCUR
+"RTN","DGENPTA",184,0)
+ ;
+"RTN","DGENPTA",185,0)
+ ;
+"RTN","DGENPTA",186,0)
+INPAT(DFN,DGBEG,DGEND) ; --
+"RTN","DGENPTA",187,0)
+ ; Description: This function will determine if a patient was an inpatient between a specified date range.
+"RTN","DGENPTA",188,0)
+ ;
+"RTN","DGENPTA",189,0)
+ ;  Input:
+"RTN","DGENPTA",190,0)
+ ;       DFN - IEN of record in Patient (#2) file
+"RTN","DGENPTA",191,0)
+ ;    DGBEG - as begin date/time for inpatient search
+"RTN","DGENPTA",192,0)
+ ;    DGEND - as end date/time for inpatient search
+"RTN","DGENPTA",193,0)
+ ;
+"RTN","DGENPTA",194,0)
+ ; Output:
+"RTN","DGENPTA",195,0)
+ ;   Function Value - Was patient an inpatient between date range?
+"RTN","DGENPTA",196,0)
+ ;                    Return 1 if successful, otherwise 0
+"RTN","DGENPTA",197,0)
+ ;
+"RTN","DGENPTA",198,0)
+ N DGINPAT,DGSDT,DGEDT,DGMOVE,DGTRANS
+"RTN","DGENPTA",199,0)
+ S DGINPAT=0
+"RTN","DGENPTA",200,0)
+ ;
+"RTN","DGENPTA",201,0)
+ ; if not valid patient (DFN) and not valid date range, exit
+"RTN","DGENPTA",202,0)
+ I '$$VALPAT(DFN),'($$RANGE(DGBEG,DGEND)) G INPATQ
+"RTN","DGENPTA",203,0)
+ ;
+"RTN","DGENPTA",204,0)
+ ; init date/time(s)
+"RTN","DGENPTA",205,0)
+ S DGSDT=DGBEG-.0001,DGEDT=DGEND+$S($P(DGEND,".",2)="":.2359,1:"")
+"RTN","DGENPTA",206,0)
+ ;
+"RTN","DGENPTA",207,0)
+ ; use "APRD" x-ref of Patient Movement (#405) file
+"RTN","DGENPTA",208,0)
+ F  S DGSDT=$O(^DGPM("APRD",+DFN,DGSDT)) Q:'DGSDT!(DGSDT>DGEDT)!(DGINPAT)  D
+"RTN","DGENPTA",209,0)
+ .S DGMOVE=0 F  S DGMOVE=$O(^DGPM("APRD",+DFN,DGSDT,DGMOVE)) Q:'DGMOVE!(DGINPAT)  D
+"RTN","DGENPTA",210,0)
+ ..; - transaction type of movement
+"RTN","DGENPTA",211,0)
+ ..S DGTRANS=$P($G(^DGPM(DGMOVE,0)),"^",2)  ; movement transaction type
+"RTN","DGENPTA",212,0)
+ ..; - if trans type not DISCHARGE, CHECK-IN LODGER, CHECK-OUT LODGER
+"RTN","DGENPTA",213,0)
+ ..I DGTRANS'=3,(DGTRANS'=4),(DGTRANS'=5) S DGINPAT=1
+"RTN","DGENPTA",214,0)
+ ;
+"RTN","DGENPTA",215,0)
+INPATQ Q DGINPAT
+"RTN","DGENPTA",216,0)
+ ;
+"RTN","DGENPTA",217,0)
+ ;
+"RTN","DGENPTA",218,0)
+OUTPAT(DFN,DGBEG,DGEND) ; --
+"RTN","DGENPTA",219,0)
+ ; Description: This function will determine if a patient has an outpatient encounter between a specified date range that has successfully been checked out.
+"RTN","DGENPTA",220,0)
+ ;
+"RTN","DGENPTA",221,0)
+ ;  Input:
+"RTN","DGENPTA",222,0)
+ ;       DFN - IEN of record in Patient (#2) file
+"RTN","DGENPTA",223,0)
+ ;    DGBEG - as begin date/time for outpatient search
+"RTN","DGENPTA",224,0)
+ ;    DGEND - as end date/time for outpatient search
+"RTN","DGENPTA",225,0)
+ ;
+"RTN","DGENPTA",226,0)
+ ; Output:
+"RTN","DGENPTA",227,0)
+ ;   Function Value - Does patient have outpatient encounter between date
+"RTN","DGENPTA",228,0)
+ ;                    range that that has successfully been checked out?
+"RTN","DGENPTA",229,0)
+ ;                    Return 1 if successful, otherwise 0
+"RTN","DGENPTA",230,0)
+ ;
+"RTN","DGENPTA",231,0)
+ N DGOUT,DGSDT,DGEDT,DGOE
+"RTN","DGENPTA",232,0)
+ S DGOUT=0
+"RTN","DGENPTA",233,0)
+ ;
+"RTN","DGENPTA",234,0)
+ ; if not valid patient (DFN) and not valid date range, exit
+"RTN","DGENPTA",235,0)
+ I '$$VALPAT(DFN),'($$RANGE(DGBEG,DGEND)) G OUTPATQ
+"RTN","DGENPTA",236,0)
+ ;
+"RTN","DGENPTA",237,0)
+ ; init date/time(s)
+"RTN","DGENPTA",238,0)
+ S DGSDT=DGBEG-.0001,DGEDT=DGEND+$S($P(DGEND,".",2)="":.2359,1:"")
+"RTN","DGENPTA",239,0)
+ ;
+"RTN","DGENPTA",240,0)
+ ; use "ADFN" x-ref of Outpatient Encounter (#409.68) file
+"RTN","DGENPTA",241,0)
+ F  S DGSDT=$O(^SCE("ADFN",+DFN,DGSDT)) Q:'DGSDT!(DGSDT>DGEDT)!(DGOUT)  D
+"RTN","DGENPTA",242,0)
+ .;
+"RTN","DGENPTA",243,0)
+ .S DGOE=0 F  S DGOE=$O(^SCE("ADFN",+DFN,DGSDT,DGOE)) Q:'DGOE!(DGOUT)  D
+"RTN","DGENPTA",244,0)
+ ..; - if encounter checked out, set flag
+"RTN","DGENPTA",245,0)
+ ..I $P($G(^SCE(+DGOE,0)),"^",7) S DGOUT=1
+"RTN","DGENPTA",246,0)
+ ;
+"RTN","DGENPTA",247,0)
+OUTPATQ Q DGOUT
+"RTN","DGENPTA",248,0)
+ ;
+"RTN","DGENPTA",249,0)
+ ;
+"RTN","DGENPTA",250,0)
+RANGE(DGBEG,DGEND) ; --
+"RTN","DGENPTA",251,0)
+ ; Description: This function returns a 1 if two dates are a valid date range, 0 if they are not valid.
+"RTN","DGENPTA",252,0)
+ ;
+"RTN","DGENPTA",253,0)
+ ;  Input:
+"RTN","DGENPTA",254,0)
+ ;    DGBEG - as begin date of date range
+"RTN","DGENPTA",255,0)
+ ;    DGEND - as end date of date range
+"RTN","DGENPTA",256,0)
+ ;
+"RTN","DGENPTA",257,0)
+ ; Output:
+"RTN","DGENPTA",258,0)
+ ;   Function Value - Is date range valid?
+"RTN","DGENPTA",259,0)
+ ;                    Return 1 if successful, otherwise 0
+"RTN","DGENPTA",260,0)
+ ;
+"RTN","DGENPTA",261,0)
+ N DGOK
+"RTN","DGENPTA",262,0)
+ ;
+"RTN","DGENPTA",263,0)
+ S DGOK=0
+"RTN","DGENPTA",264,0)
+ ;
+"RTN","DGENPTA",265,0)
+ ; if input parameters not defined, exit
+"RTN","DGENPTA",266,0)
+ I '$D(DGBEG),('$D(DGEND)) G RANGEQ
+"RTN","DGENPTA",267,0)
+ ;
+"RTN","DGENPTA",268,0)
+ ; remove time from dates
+"RTN","DGENPTA",269,0)
+ S DGBEG=(DGBEG/1),DGEND=(DGEND/1)
+"RTN","DGENPTA",270,0)
+ ;
+"RTN","DGENPTA",271,0)
+ ; if begin date greater than end date, exit
+"RTN","DGENPTA",272,0)
+ I DGBEG>DGEND G RANGEQ
+"RTN","DGENPTA",273,0)
+ ;
+"RTN","DGENPTA",274,0)
+ ; if begin date and end date future dates, exit
+"RTN","DGENPTA",275,0)
+ I DGBEG>DT,(DGEND>DT) G RANGEQ
+"RTN","DGENPTA",276,0)
+ ;
+"RTN","DGENPTA",277,0)
+ S DGOK=1
+"RTN","DGENPTA",278,0)
+ ;
+"RTN","DGENPTA",279,0)
+RANGEQ Q DGOK
+"RTN","DGENPTA",280,0)
+ ;
+"RTN","DGENPTA",281,0)
+LOOKUP(SSN,DOB,SEX,ERROR) ;
+"RTN","DGENPTA",282,0)
+ ;Description: This function will do a search for the patient based on
+"RTN","DGENPTA",283,0)
+ ;the identifying information provided. The function will be successful
+"RTN","DGENPTA",284,0)
+ ;only if a single patient is found matching the identifiers provided.
+"RTN","DGENPTA",285,0)
+ ;
+"RTN","DGENPTA",286,0)
+ ;Inputs:
+"RTN","DGENPTA",287,0)
+ ;  SSN - patient Social Security Number
+"RTN","DGENPTA",288,0)
+ ;  DOB - patient date of birth (FM format)
+"RTN","DGENPTA",289,0)
+ ;  SEX - patient sex
+"RTN","DGENPTA",290,0)
+ ;Outputs:
+"RTN","DGENPTA",291,0)
+ ;  Function Value - patient DFN if successful, 0 otherwise
+"RTN","DGENPTA",292,0)
+ ;  ERROR - if unsuccessful, an error message is returned (optional, pass by reference)
+"RTN","DGENPTA",293,0)
+ ;
+"RTN","DGENPTA",294,0)
+ N DFN,NODE
+"RTN","DGENPTA",295,0)
+ ;
+"RTN","DGENPTA",296,0)
+ I $G(SSN)="" S ERROR="INVALID SSN" Q 0
+"RTN","DGENPTA",297,0)
+ S DFN=$O(^DPT("SSN",SSN,0))
+"RTN","DGENPTA",298,0)
+ I 'DFN S ERROR="SSN NOT FOUND" Q 0
+"RTN","DGENPTA",299,0)
+ I $O(^DPT("SSN",SSN,DFN)) S ERROR="MULTIPLE PATIENTS MATCHING SSN" Q 0
+"RTN","DGENPTA",300,0)
+ S NODE=$G(^DPT(DFN,0))
+"RTN","DGENPTA",301,0)
+ I $P(NODE,"^",2)'=SEX S ERROR="SEX DOES NOT MATCH" Q 0
+"RTN","DGENPTA",302,0)
+ I $E($P(NODE,"^",3),1,3)'=$E(DOB,1,3) S ERROR="DOB DOES NOT MATCH" Q 0
+"RTN","DGENPTA",303,0)
+ I $E($P(NODE,"^",3),4,5),$E($P(NODE,"^",3),4,5)'=$E(DOB,4,5) S ERROR="DOB DOES NOT MATCH" Q 0
+"RTN","DGENPTA",304,0)
+ Q DFN
+"RTN","DGENPTA1")
+0^6^B21823541^B21277182
+"RTN","DGENPTA1",1,0)
+DGENPTA1 ;ALB/CJM,EG,CKN,ERC,TDM,PWC - Patient API - File Data ; 2/3/11 6:45pm
+"RTN","DGENPTA1",2,0)
+ ;;5.3;Registration;**121,147,314,677,659,653,688,810,754,838**;Aug 13,1993;Build 5
+"RTN","DGENPTA1",3,0)
+ ;
+"RTN","DGENPTA1",4,0)
+LOCK(DFN) ;
+"RTN","DGENPTA1",5,0)
+ ;Description: Given an internal entry number of a PATIENT  record, this
+"RTN","DGENPTA1",6,0)
+ ;   function will lock the record. It should be used when updating the
+"RTN","DGENPTA1",7,0)
+ ;   record.
+"RTN","DGENPTA1",8,0)
+ ;Input:
+"RTN","DGENPTA1",9,0)
+ ;  DFN - Patient IEN
+"RTN","DGENPTA1",10,0)
+ ;Output:
+"RTN","DGENPTA1",11,0)
+ ;  Function Value - Returns 1 if the lock was successful, 0 otherwise
+"RTN","DGENPTA1",12,0)
+ ;
+"RTN","DGENPTA1",13,0)
+ I $G(DFN) L +^DPT(DFN):2
+"RTN","DGENPTA1",14,0)
+ Q $T
+"RTN","DGENPTA1",15,0)
+UNLOCK(DFN) ;
+"RTN","DGENPTA1",16,0)
+ ;Description: Given an internal entry number of a record in the PATIENT
+"RTN","DGENPTA1",17,0)
+ ;   file, this function will unlock the record that was previously
+"RTN","DGENPTA1",18,0)
+ ;   locked by LOCK PATIENT RECORD.  
+"RTN","DGENPTA1",19,0)
+ ;Input:
+"RTN","DGENPTA1",20,0)
+ ;   DFN - Patient IEN
+"RTN","DGENPTA1",21,0)
+ ;Output: None
+"RTN","DGENPTA1",22,0)
+ ;
+"RTN","DGENPTA1",23,0)
+ I $G(DFN) L -^DPT(DFN)
+"RTN","DGENPTA1",24,0)
+ Q
+"RTN","DGENPTA1",25,0)
+ ;
+"RTN","DGENPTA1",26,0)
+STOREPRE(DFN,DGPREFAC) ;
+"RTN","DGENPTA1",27,0)
+ ;Description: Used to store the patient's preferred facility in the
+"RTN","DGENPTA1",28,0)
+ ;   patient record.
+"RTN","DGENPTA1",29,0)
+ ;Input:
+"RTN","DGENPTA1",30,0)
+ ;  DFN - Patient IEN
+"RTN","DGENPTA1",31,0)
+ ;  DGPREFAC - pointer to the record in the INSTITUTION file.
+"RTN","DGENPTA1",32,0)
+ ;Output:
+"RTN","DGENPTA1",33,0)
+ ;  Function Value - Returns 1 on success, 0 on failure.
+"RTN","DGENPTA1",34,0)
+ ;
+"RTN","DGENPTA1",35,0)
+ N SUCCESS,DATA
+"RTN","DGENPTA1",36,0)
+ S SUCCESS=1
+"RTN","DGENPTA1",37,0)
+ D  ;drops out if invalid condition found
+"RTN","DGENPTA1",38,0)
+ . I $G(DFN),$D(^DPT(DFN,0))
+"RTN","DGENPTA1",39,0)
+ . E  S SUCCESS=0 Q
+"RTN","DGENPTA1",40,0)
+ . I ($G(DGPREFAC)'=""),'$G(DGPREFAC) S SUCCESS=0 Q
+"RTN","DGENPTA1",41,0)
+ . I $G(DGPREFAC),'$D(^DIC(4,DGPREFAC,0)) S SUCCESS=0 Q
+"RTN","DGENPTA1",42,0)
+ . S DATA(27.02)=DGPREFAC
+"RTN","DGENPTA1",43,0)
+ . S DATA(27.03)="V"     ; DG*5.3*838
+"RTN","DGENPTA1",44,0)
+ . S SUCCESS=$$UPD^DGENDBS(2,DFN,.DATA)
+"RTN","DGENPTA1",45,0)
+ Q SUCCESS
+"RTN","DGENPTA1",46,0)
+ ;
+"RTN","DGENPTA1",47,0)
+CHECK(DGPAT,ERROR) ;
+"RTN","DGENPTA1",48,0)
+ ;Description: Does validation checks on the patient contained in the
+"RTN","DGENPTA1",49,0)
+ ;DGPAT array.
+"RTN","DGENPTA1",50,0)
+ ;
+"RTN","DGENPTA1",51,0)
+ ;Input:
+"RTN","DGENPTA1",52,0)
+ ;  DGPAT - this local array contains patient data
+"RTN","DGENPTA1",53,0)
+ ;Output:
+"RTN","DGENPTA1",54,0)
+ ;  Function Value - returns 1 if all validation checks passed, 0 otherwise
+"RTN","DGENPTA1",55,0)
+ ;  ERROR - if validation checks fail, an error message is returned (pass by reference)
+"RTN","DGENPTA1",56,0)
+ ;
+"RTN","DGENPTA1",57,0)
+ ;
+"RTN","DGENPTA1",58,0)
+ N SUCCESS,FIELD
+"RTN","DGENPTA1",59,0)
+ S SUCCESS=1
+"RTN","DGENPTA1",60,0)
+ S ERROR=""
+"RTN","DGENPTA1",61,0)
+ ;
+"RTN","DGENPTA1",62,0)
+ ;check field values
+"RTN","DGENPTA1",63,0)
+ ;
+"RTN","DGENPTA1",64,0)
+ ;some of the field's input transforms require DA or DUZ to be defined, so do not do this
+"RTN","DGENPTA1",65,0)
+ ;F  S SUB=$O(DGPAT(SUB)) Q:SUB=""  D:(DGPAT(SUB)'="")  Q:'SUCCESS
+"RTN","DGENPTA1",66,0)
+ ;.S FIELD=$$FIELD(SUB)
+"RTN","DGENPTA1",67,0)
+ ;.I '$$TESTVAL^DGENDBS(2,FIELD,DGPAT(SUB)) D
+"RTN","DGENPTA1",68,0)
+ ;..S SUCCESS=0
+"RTN","DGENPTA1",69,0)
+ ;..S ERROR="BAD FIELD VALUE, PATIENT FILE FIELD = "_$$GET1^DID(2,FIELD,,"LABEL")
+"RTN","DGENPTA1",70,0)
+ ;
+"RTN","DGENPTA1",71,0)
+ ;instead, check field values without referencing DD
+"RTN","DGENPTA1",72,0)
+ I DGPAT("INELDEC")'="",($L(DGPAT("INELDEC"))>75)!($L(DGPAT("INELDEC"))<3) S SUCCESS=0,ERROR="BAD FIELD VALUE, PATIENT FIELD FIELD = INELIGIBLE VARO DECISION" G QCHECK
+"RTN","DGENPTA1",73,0)
+ ;
+"RTN","DGENPTA1",74,0)
+ I DGPAT("INELREA")'="",($L(DGPAT("INELREA"))>40) S SUCCESS=0,ERROR="BAD FIELD VALUE, PATIENT FIELD FIELD = INELIGIBLE REASON" G QCHECK
+"RTN","DGENPTA1",75,0)
+ ;
+"RTN","DGENPTA1",76,0)
+ I DGPAT("VETERAN")="" S SUCCESS=0,ERROR="BAD FIELD VALUE, PATIENT FIELD = VETERAN (Y/N)?" G QCHECK
+"RTN","DGENPTA1",77,0)
+ ;
+"RTN","DGENPTA1",78,0)
+ I DGPAT("DEATH"),(DGPAT("DEATH")>DT) S SUCCESS=0,ERROR="DATE OF DEATH CAN NOT BE A FUTURE DATE" G QCHECK
+"RTN","DGENPTA1",79,0)
+ ;
+"RTN","DGENPTA1",80,0)
+ I DGPAT("INELDATE"),(DGPAT("INELREA")="") S SUCCESS=0,ERROR="INELIGIBLE REASON UNSPECIFIED FOR INELIGIBLE PATIENT" G QCHECK
+"RTN","DGENPTA1",81,0)
+ ;
+"RTN","DGENPTA1",82,0)
+QCHECK ;
+"RTN","DGENPTA1",83,0)
+ Q SUCCESS
+"RTN","DGENPTA1",84,0)
+ ;
+"RTN","DGENPTA1",85,0)
+STORE(DGPAT,ERROR,NOCHECK) ;
+"RTN","DGENPTA1",86,0)
+ ;Description: Files data in the patient record.  It requires a lock
+"RTN","DGENPTA1",87,0)
+ ;on the Patient record, adn releases the lock when done.
+"RTN","DGENPTA1",88,0)
+ ;
+"RTN","DGENPTA1",89,0)
+ ;Input:
+"RTN","DGENPTA1",90,0)
+ ;  DGPAT- the patient array, passed by reference
+"RTN","DGENPTA1",91,0)
+ ;  NOCHECK - a flag, if set to 1 it means consistency checks were done aready, so skip
+"RTN","DGENPTA1",92,0)
+ ;
+"RTN","DGENPTA1",93,0)
+ ;Output:
+"RTN","DGENPTA1",94,0)
+ ;  Function Value - returns 1 if successful, otherwise 0
+"RTN","DGENPTA1",95,0)
+ ;  ERROR - on failure, an error message is returned (optional, pass by reference)
+"RTN","DGENPTA1",96,0)
+ ;
+"RTN","DGENPTA1",97,0)
+ S ERROR=""
+"RTN","DGENPTA1",98,0)
+ I '$D(DGPAT) S ERROR="PATIENT NOT FOUND" Q 0
+"RTN","DGENPTA1",99,0)
+ I '$$LOCK(DGPAT("DFN")) S ERROR="UNABLE TO LOCK THE PATIENT RECORD" Q 0
+"RTN","DGENPTA1",100,0)
+ I $G(NOCHECK)'=1 Q:'$$CHECK(.DGPAT,.ERROR) 0
+"RTN","DGENPTA1",101,0)
+ ;
+"RTN","DGENPTA1",102,0)
+ N DATA,SUB,FIELD,SUCCESS
+"RTN","DGENPTA1",103,0)
+ S SUB=""
+"RTN","DGENPTA1",104,0)
+ ;
+"RTN","DGENPTA1",105,0)
+ F  S SUB=$O(DGPAT(SUB)) Q:(SUB="")  I (SUB'="DEATH")&(SUB'="SSN") S FIELD=$$FIELD(SUB) I FIELD S DATA(FIELD)=$G(DGPAT(SUB))
+"RTN","DGENPTA1",106,0)
+ S SUCCESS=$$UPD^DGENDBS(2,DGPAT("DFN"),.DATA)
+"RTN","DGENPTA1",107,0)
+ I 'SUCCESS S ERROR="FILEMAN UNABLE TO UPDATE PATIENT RECORD"
+"RTN","DGENPTA1",108,0)
+ ; Call Purple Heart API to file PH data in file 2
+"RTN","DGENPTA1",109,0)
+ I SUCCESS,$D(DGPAT("PHI")) D EDITPH^DGRPLE($G(DGPAT("PHI")),$G(DGPAT("PHST")),$G(DGPAT("PHRR")),DGPAT("DFN"))
+"RTN","DGENPTA1",110,0)
+ ; Call POW API to file POW data in file 2 - DG*5.3*653
+"RTN","DGENPTA1",111,0)
+ ;I SUCCESS,$D(DGPAT("POWI")) D EDITPOW^DGRPLE($G(DGPAT("POWI")),$G(DGPAT("POWLOC")),$G(DGPAT("POWFDT")),$G(DGPAT("POWTDT")),DGPAT("DFN"))
+"RTN","DGENPTA1",112,0)
+ I SUCCESS D
+"RTN","DGENPTA1",113,0)
+ . I '$D(DGPAT("POWI")) D  Q
+"RTN","DGENPTA1",114,0)
+ . . N DATA,ERROR,DGENDA
+"RTN","DGENPTA1",115,0)
+ . . S DGENDA=DGPAT("DFN")
+"RTN","DGENPTA1",116,0)
+ . . S (DATA(.525),DATA(.526),DATA(.527),DATA(.528),DATA(.529))="@"
+"RTN","DGENPTA1",117,0)
+ . . I '$$UPD^DGENDBS(2,.DGENDA,.DATA,.ERROR) D
+"RTN","DGENPTA1",118,0)
+ . . . D ADDMSG^DGENUPL3(.MSGS,"Unable to update POW Data.",1)
+"RTN","DGENPTA1",119,0)
+ . . K DATA,ERROR,DGENDA
+"RTN","DGENPTA1",120,0)
+ . D EDITPOW^DGRPLE($G(DGPAT("POWI")),$G(DGPAT("POWLOC")),$G(DGPAT("POWFDT")),$G(DGPAT("POWTDT")),DGPAT("DFN"))
+"RTN","DGENPTA1",121,0)
+ D UNLOCK(DGPAT("DFN"))
+"RTN","DGENPTA1",122,0)
+ Q SUCCESS
+"RTN","DGENPTA1",123,0)
+ ;
+"RTN","DGENPTA1",124,0)
+FIELD(SUB) ;
+"RTN","DGENPTA1",125,0)
+ ;Description: Returns the field number of a subscript for the PATIENT object.
+"RTN","DGENPTA1",126,0)
+ ;
+"RTN","DGENPTA1",127,0)
+ N FNUM
+"RTN","DGENPTA1",128,0)
+ S FNUM=$S(SUB="DEATH":.351,SUB="PATYPE":391,SUB="VETERAN":1901,SUB="NAME":.01,SUB="DOB":.03,SUB="SEX":.02,SUB="SSN":.09,SUB="PREFAC":27.02,SUB="AG/ALLY":.309,1:"")
+"RTN","DGENPTA1",129,0)
+ S:'FNUM FNUM=$S(SUB="INELDATE":.152,SUB="INELREA":.307,SUB="INELDEC":.1656,SUB="PID":.363,SUB="EMGRES":.181,1:"")
+"RTN","DGENPTA1",130,0)
+ I FNUM="" S FNUM=$S(SUB="IR":.32103,SUB="RADEXPM":.3212,SUB="APPREQ":1010.159,SUB="APPREQDT":1010.1511,SUB="SPININJ":57.4,SUB="PFSRC":27.03,1:"")
+"RTN","DGENPTA1",131,0)
+ Q FNUM
+"RTN","DGENU")
+0^7^B43981146^B42315700
+"RTN","DGENU",1,0)
+DGENU ;ALB/CJM,ISA/KWP,Zoltan,LBD,EG,CKN,ERC,TMK,PWC - Enrollment Utilities; 04/24/2006 9:20 AM ; 2/16/11 9:35am
+"RTN","DGENU",2,0)
+ ;;5.3;Registration;**121,122,147,232,314,564,624,672,659,653,688,536,838**;Aug 13,1993;Build 5
+"RTN","DGENU",3,0)
+ ;
+"RTN","DGENU",4,0)
+DISPLAY(DFN) ;
+"RTN","DGENU",5,0)
+ ;Description: Display status message, current enrollment and
+"RTN","DGENU",6,0)
+ ;     preferred facility information
+"RTN","DGENU",7,0)
+ ;Input:
+"RTN","DGENU",8,0)
+ ;  DFN - Patient IEN
+"RTN","DGENU",9,0)
+ ;  Output:     none
+"RTN","DGENU",10,0)
+ ;
+"RTN","DGENU",11,0)
+ N STATUS
+"RTN","DGENU",12,0)
+ S STATUS=$$STATUS^DGENA(DFN)
+"RTN","DGENU",13,0)
+ I 'STATUS W !!,"Patient is NOT enrolled in the VA Patient Enrollment System..."
+"RTN","DGENU",14,0)
+ E  I STATUS=2 D
+"RTN","DGENU",15,0)
+ .W !!,"Patient is enrolled in the VA Patient Enrollment System..."
+"RTN","DGENU",16,0)
+ ; Purple Heart added status 21
+"RTN","DGENU",17,0)
+ E  I (STATUS=9)!(STATUS=1)!(STATUS=15)!(STATUS=16)!(STATUS=17)!(STATUS=18)!(STATUS=21) D
+"RTN","DGENU",18,0)
+ .W !!,"Application is pending for enrollment in the VA Patient Enrollment System..."
+"RTN","DGENU",19,0)
+ E  D
+"RTN","DGENU",20,0)
+ .W !!,"Patient is NOT enrolled in the VA Patient Enrollment System..."
+"RTN","DGENU",21,0)
+ D CUR(DFN)
+"RTN","DGENU",22,0)
+ Q
+"RTN","DGENU",23,0)
+ ;
+"RTN","DGENU",24,0)
+CUR(DFN) ;
+"RTN","DGENU",25,0)
+ ;Description - displays current enrollment, category, enrollment
+"RTN","DGENU",26,0)
+ ;  group threshold, preferred facility and source designation
+"RTN","DGENU",27,0)
+ ;
+"RTN","DGENU",28,0)
+ N FACNAME,PREFAC,PFSRC,DGEGT,DGEGTIEN,DGENCAT,DGENR,IORVON,IORVOFF
+"RTN","DGENU",29,0)
+ I $$GET^DGENA($$FINDCUR^DGENA(DFN),.DGENR)
+"RTN","DGENU",30,0)
+ ;Get enrollment category
+"RTN","DGENU",31,0)
+ S DGENCAT=$$CATEGORY^DGENA4(DFN)
+"RTN","DGENU",32,0)
+ ;Display Category in reverse video
+"RTN","DGENU",33,0)
+ D REV
+"RTN","DGENU",34,0)
+ ;Get enrollment group threshold
+"RTN","DGENU",35,0)
+ S DGEGTIEN=$$FINDCUR^DGENEGT
+"RTN","DGENU",36,0)
+ S DGEGT=$$GET^DGENEGT(DGEGTIEN,.DGEGT)
+"RTN","DGENU",37,0)
+ ;Preferred facility
+"RTN","DGENU",38,0)
+ S PREFAC=$$PREF^DGENPTA(DFN,.FACNAME)
+"RTN","DGENU",39,0)
+ ;Source Designation
+"RTN","DGENU",40,0)
+ S PFSRC=$$GET1^DIQ(2,DFN_",",27.03)
+"RTN","DGENU",41,0)
+ W !?3,"Enrollment Date",?35,": ",$S('$G(DGENR("DATE")):"-none-",1:$$EXT^DGENU("DATE",DGENR("DATE")))
+"RTN","DGENU",42,0)
+ W !?3,"Enrollment Application Date",?35,": ",$S('$G(DGENR("APP")):"-none-",1:$$EXT^DGENU("DATE",DGENR("APP")))
+"RTN","DGENU",43,0)
+ W !?3,IORVON,"Enrollment Category             : ",$S($G(DGENCAT)="":"-none-",1:$$EXTERNAL^DILFD(27.15,.02,"",DGENCAT)),IORVOFF
+"RTN","DGENU",44,0)
+ W !?3,"Enrollment Status",?35,": ",$S($G(DGENR("STATUS"))="":"-none-",1:$$EXT^DGENU("STATUS",DGENR("STATUS")))
+"RTN","DGENU",45,0)
+ W !?3,"Enrollment Priority",?35,": ",$S($G(DGENR("PRIORITY"))="":"-none-",1:DGENR("PRIORITY")),$S($G(DGENR("SUBGRP"))="":"",1:$$EXT("SUBGRP",DGENR("SUBGRP")))
+"RTN","DGENU",46,0)
+ W !?3,"Preferred Facility",?35,": ",$S($G(FACNAME)'="":FACNAME,1:"-none-")
+"RTN","DGENU",47,0)
+ W !?3,"Preferred Facility Source",?35,": ",$S($G(PFSRC)'="":PFSRC,1:"-none-")
+"RTN","DGENU",48,0)
+ W !?3,"Enrollment Group Threshold",?35,": ",$S($G(DGEGT("PRIORITY"))="":"-none-",1:$$EXTERNAL^DILFD(27.16,.02,"",$G(DGEGT("PRIORITY")))),$S($G(DGEGT("SUBGRP"))="":"",1:$$EXTERNAL^DILFD(27.16,.03,"",$G(DGEGT("SUBGRP"))))
+"RTN","DGENU",49,0)
+ W !
+"RTN","DGENU",50,0)
+ Q
+"RTN","DGENU",51,0)
+REV ;Get variables to display text in reverse video
+"RTN","DGENU",52,0)
+ N X
+"RTN","DGENU",53,0)
+ S X="IORVON;IORVOFF"
+"RTN","DGENU",54,0)
+ D ENDR^%ZISS
+"RTN","DGENU",55,0)
+ Q
+"RTN","DGENU",56,0)
+PATID(DFN) ;
+"RTN","DGENU",57,0)
+ ;Description - Called by FileMan as an identifier for the Patient file.
+"RTN","DGENU",58,0)
+ ;Displays current enrollment status, priority, and preferred facility.
+"RTN","DGENU",59,0)
+ ;
+"RTN","DGENU",60,0)
+ ;Input:
+"RTN","DGENU",61,0)
+ ;  DFN - ien to Patient file
+"RTN","DGENU",62,0)
+ ;
+"RTN","DGENU",63,0)
+ N PREFAC,DGENR,OUTPUT
+"RTN","DGENU",64,0)
+ I '$$GET^DGENA($$FINDCUR^DGENA(DFN),.DGENR) D
+"RTN","DGENU",65,0)
+ .S OUTPUT="NO ENROLLMENT APPLICATION ON FILE "
+"RTN","DGENU",66,0)
+ E  D
+"RTN","DGENU",67,0)
+ .S OUTPUT=$E("PRIORITY:"_DGENR("PRIORITY")_"   ",1,12)_$E("STATUS:"_$$EXT^DGENU("STATUS",DGENR("STATUS"))_"         ",1,26)
+"RTN","DGENU",68,0)
+ S PREFAC=$$PREF^DGENPTA(DFN)
+"RTN","DGENU",69,0)
+ S:PREFAC OUTPUT=OUTPUT_"PREFERRED FACILITY:"_$P($G(^DIC(4,PREFAC,99)),"^")
+"RTN","DGENU",70,0)
+ I $G(IOM) I ($X#$G(IOM))<6 D
+"RTN","DGENU",71,0)
+ .D EN^DDIOL(OUTPUT,,"?($X+(10-($X#IOM)))")
+"RTN","DGENU",72,0)
+ E  D
+"RTN","DGENU",73,0)
+ .D EN^DDIOL(OUTPUT,,"!?10")
+"RTN","DGENU",74,0)
+ Q
+"RTN","DGENU",75,0)
+ ;
+"RTN","DGENU",76,0)
+EXT(SUB,VAL) ;
+"RTN","DGENU",77,0)
+ ;Description: Given the subscript used in the PATIENT ENROLLMENT array,
+"RTN","DGENU",78,0)
+ ;     and a field value, returns the external representation of the
+"RTN","DGENU",79,0)
+ ;     value, as defined in the fields output transform of the PATIENT
+"RTN","DGENU",80,0)
+ ;     ENROLLMENT file.
+"RTN","DGENU",81,0)
+ ;Input: 
+"RTN","DGENU",82,0)
+ ;  SUB - subscript in the array defined by the PATIENT ENROLLMENT object
+"RTN","DGENU",83,0)
+ ;  VAL - value of the PATIENT ENROLLMENT object attribute named by SUB
+"RTN","DGENU",84,0)
+ ;Output:
+"RTN","DGENU",85,0)
+ ;  Function Value - returns the external value of the attribute as
+"RTN","DGENU",86,0)
+ ;     defined by the PATIENT ENROLLMENT file
+"RTN","DGENU",87,0)
+ ;
+"RTN","DGENU",88,0)
+ Q:(($G(SUB)="")!($G(VAL)="")) ""
+"RTN","DGENU",89,0)
+ ;
+"RTN","DGENU",90,0)
+ N FLD
+"RTN","DGENU",91,0)
+ S FLD=$$FIELD(SUB)
+"RTN","DGENU",92,0)
+ ;
+"RTN","DGENU",93,0)
+ Q:(FLD="") ""
+"RTN","DGENU",94,0)
+ Q $$EXTERNAL^DILFD(27.11,FLD,"F",VAL)
+"RTN","DGENU",95,0)
+ ;
+"RTN","DGENU",96,0)
+FIELD(SUB) ;
+"RTN","DGENU",97,0)
+ ;Description: given a subscript in the enrollment array, returns the
+"RTN","DGENU",98,0)
+ ;     corresponding field number
+"RTN","DGENU",99,0)
+ N FLD S FLD=""
+"RTN","DGENU",100,0)
+ D  ;drops out of block once SUB is determined
+"RTN","DGENU",101,0)
+ .I SUB="APP" S FLD=.01 Q
+"RTN","DGENU",102,0)
+ .I SUB="DATE" S FLD=.1 Q
+"RTN","DGENU",103,0)
+ .I SUB="END" S FLD=.11 Q
+"RTN","DGENU",104,0)
+ .I SUB="DFN" S FLD=.02 Q
+"RTN","DGENU",105,0)
+ .I SUB="SOURCE" S FLD=.03 Q
+"RTN","DGENU",106,0)
+ .I SUB="STATUS" S FLD=.04 Q
+"RTN","DGENU",107,0)
+ .I SUB="REASON" S FLD=.05 Q
+"RTN","DGENU",108,0)
+ .I SUB="REMARKS" S FLD=25 Q
+"RTN","DGENU",109,0)
+ .I SUB="FACREC" S FLD=.06 Q
+"RTN","DGENU",110,0)
+ .I SUB="PRIORITY" S FLD=.07 Q
+"RTN","DGENU",111,0)
+ .I SUB="EFFDATE" S FLD=.08 Q
+"RTN","DGENU",112,0)
+ .I SUB="PRIORREC" S FLD=.09 Q
+"RTN","DGENU",113,0)
+ .I SUB="SUBGRP" S FLD=.12 Q
+"RTN","DGENU",114,0)
+ .I SUB="CODE" S FLD=50.01 Q
+"RTN","DGENU",115,0)
+ .I SUB="SC" S FLD=50.02 Q
+"RTN","DGENU",116,0)
+ .I SUB="SCPER" S FLD=50.03 Q
+"RTN","DGENU",117,0)
+ .I SUB="POW" S FLD=50.04 Q
+"RTN","DGENU",118,0)
+ .I SUB="A&A" S FLD=50.05 Q
+"RTN","DGENU",119,0)
+ .I SUB="HB" S FLD=50.06 Q
+"RTN","DGENU",120,0)
+ .I SUB="VAPEN" S FLD=50.07 Q
+"RTN","DGENU",121,0)
+ .I SUB="VACKAMT" S FLD=50.08 Q
+"RTN","DGENU",122,0)
+ .I SUB="DISRET" S FLD=50.09 Q
+"RTN","DGENU",123,0)
+ .I SUB="DISLOD" S FLD=50.2 Q  ;field added with DG*5.3*672
+"RTN","DGENU",124,0)
+ .I SUB="MEDICAID" S FLD=50.1 Q
+"RTN","DGENU",125,0)
+ .I SUB="AO" S FLD=50.11 Q
+"RTN","DGENU",126,0)
+ .I SUB="AOEXPLOC" S FLD=50.22 Q  ;field added with DG*5.3*688
+"RTN","DGENU",127,0)
+ .I SUB="IR" S FLD=50.12 Q
+"RTN","DGENU",128,0)
+ .I SUB="EC" S FLD=50.13 Q    ;name now SW Asia Con, was Env Con DG*5.3*688
+"RTN","DGENU",129,0)
+ .I SUB="MTSTA" S FLD=50.14 Q
+"RTN","DGENU",130,0)
+ .I SUB="VCD" S FLD=50.15 Q
+"RTN","DGENU",131,0)
+ .I SUB="PH" S FLD=50.16 Q
+"RTN","DGENU",132,0)
+ .I SUB="UNEMPLOY" S FLD=50.17 Q
+"RTN","DGENU",133,0)
+ .I SUB="CVELEDT" S FLD=50.18 Q
+"RTN","DGENU",134,0)
+ .I SUB="SHAD" S FLD=50.19 Q  ;field added with DG*5.3*653
+"RTN","DGENU",135,0)
+ .I SUB="DATETIME" S FLD=75.01 Q
+"RTN","DGENU",136,0)
+ .I SUB="USER" S FLD=75.02 Q
+"RTN","DGENU",137,0)
+ .I SUB="RADEXPM" S FLD=76 Q
+"RTN","DGENU",138,0)
+ Q FLD
+"RTN","DGENU",139,0)
+ ;
+"RTN","DGENU",140,0)
+PROMPT(FILE,FIELD,DEFAULT,RESPONSE,REQUIRE,PRMPTNM) ;
+"RTN","DGENU",141,0)
+ ;Description: requests user to enter a single field value.
+"RTN","DGENU",142,0)
+ ;Input:
+"RTN","DGENU",143,0)
+ ;  FILE - the file #
+"RTN","DGENU",144,0)
+ ;  FIELD - the field #
+"RTN","DGENU",145,0)
+ ;  DEFAULT - default value, internal form
+"RTN","DGENU",146,0)
+ ;  REQUIRE - a flag, (+value)'=0 means to require a value to be
+"RTN","DGENU",147,0)
+ ;            entered and to return failure otherwise (optional)
+"RTN","DGENU",148,0)
+ ;  PRMPTNM - Optional
+"RTN","DGENU",149,0)
+ ;             0 - display field LABEL
+"RTN","DGENU",150,0)
+ ;             1 - Prompt field TITLE
+"RTN","DGENU",151,0)
+ ;Output:
+"RTN","DGENU",152,0)
+ ;  Function Value - 0 on failure, 1 on success
+"RTN","DGENU",153,0)
+ ;  RESPONSE - value entered by user, pass by reference
+"RTN","DGENU",154,0)
+ ;
+"RTN","DGENU",155,0)
+ Q:(('$G(FILE))!('$G(FIELD))) 0
+"RTN","DGENU",156,0)
+ S REQUIRE=$G(REQUIRE)
+"RTN","DGENU",157,0)
+ S PRMPTNM=$G(PRMPTNM)
+"RTN","DGENU",158,0)
+ N DIR,DA,QUIT,AGAIN
+"RTN","DGENU",159,0)
+ ;
+"RTN","DGENU",160,0)
+ S DIR(0)=FILE_","_FIELD_$S($G(REQUIRE):"",1:"O")_"AO"
+"RTN","DGENU",161,0)
+ I $G(DEFAULT)'="" DO
+"RTN","DGENU",162,0)
+ . S:+$G(PRMPTNM)=0 DIR("A")=$$GET1^DID(FILE,FIELD,"","LABEL")_": "_$$EXTERNAL^DILFD(FILE,FIELD,"F",DEFAULT)_"// "
+"RTN","DGENU",163,0)
+ . S:+$G(PRMPTNM)>0 DIR("A")=$$GET1^DID(FILE,FIELD,"","TITLE")_": "_$$EXTERNAL^DILFD(FILE,FIELD,"F",DEFAULT)_"// "
+"RTN","DGENU",164,0)
+ S QUIT=0
+"RTN","DGENU",165,0)
+ F  D  Q:QUIT
+"RTN","DGENU",166,0)
+ . D ^DIR
+"RTN","DGENU",167,0)
+ . I $D(DTOUT)!$D(DUOUT) S QUIT=1 Q
+"RTN","DGENU",168,0)
+ . I X="@" D  Q:AGAIN
+"RTN","DGENU",169,0)
+ . . S AGAIN=0
+"RTN","DGENU",170,0)
+ . . I 'REQUIRE,"Yy"'[$E($$YN^DGENCD1("  Are you sure")_"X") S AGAIN=1 Q
+"RTN","DGENU",171,0)
+ . . S RESPONSE="" ; This might trigger the "required" message below.
+"RTN","DGENU",172,0)
+ . E  I X="" S RESPONSE=$G(DEFAULT)
+"RTN","DGENU",173,0)
+ . E  S RESPONSE=$P(Y,"^")
+"RTN","DGENU",174,0)
+ . ;
+"RTN","DGENU",175,0)
+ . ; quit this loop if the user entered value OR value not required
+"RTN","DGENU",176,0)
+ . I RESPONSE'="" S QUIT=1 Q
+"RTN","DGENU",177,0)
+ . I 'REQUIRE S QUIT=1 Q
+"RTN","DGENU",178,0)
+ . W !,"This is a required response. Enter '^' to exit"
+"RTN","DGENU",179,0)
+ I $D(DTOUT)!$D(DUOUT) Q 0
+"RTN","DGENU",180,0)
+ Q 1
+"RTN","DGENU",181,0)
+ ;
+"RTN","DGENU",182,0)
+INST(VADUZ,VACHK) ;
+"RTN","DGENU",183,0)
+ ; Description: Determine the institution affiliation associated with a
+"RTN","DGENU",184,0)
+ ;              user.
+"RTN","DGENU",185,0)
+ ;
+"RTN","DGENU",186,0)
+ ;  Input:
+"RTN","DGENU",187,0)
+ ;     VADUZ =  array if passed by reference:
+"RTN","DGENU",188,0)
+ ;           VADUZ = DUZ
+"RTN","DGENU",189,0)
+ ;           VADUZ(2) =  
+"RTN","DGENU",190,0)
+ ;              o  if this value is null: DUZ(2) (institution affiliated
+"RTN","DGENU",191,0)
+ ;                    with user, prompted at Kernel sign-on)
+"RTN","DGENU",192,0)
+ ;              o  if value is not null: site to check as valid for the
+"RTN","DGENU",193,0)
+ ;                    user (Pointer to INSTITUTION (#4) file)
+"RTN","DGENU",194,0)
+ ; Output:
+"RTN","DGENU",195,0)
+ ;   Function Value - Returns pointer to the INSTITUTION (#4) file
+"RTN","DGENU",196,0)
+ ;    entry that is associated with the user, otherwise the pointer
+"RTN","DGENU",197,0)
+ ;    to the INSTITUTION (#4) file entry of the primary VA Medical
+"RTN","DGENU",198,0)
+ ;    Center division is returned.
+"RTN","DGENU",199,0)
+ ;
+"RTN","DGENU",200,0)
+ ;    VACHK = passed by reference, returned as:
+"RTN","DGENU",201,0)
+ ;         null if the value in VADUZ(2) is null
+"RTN","DGENU",202,0)
+ ;            0 if the value in VADUZ(2) is not null and is not a valid
+"RTN","DGENU",203,0)
+ ;              site for the user
+"RTN","DGENU",204,0)
+ ;            1 if the value in VADUZ(2) is not null and is a valid site
+"RTN","DGENU",205,0)
+ ;              for the user
+"RTN","DGENU",206,0)
+ ;
+"RTN","DGENU",207,0)
+ S VACHK=$S($G(VADUZ(2))="":"",1:0)
+"RTN","DGENU",208,0)
+ I $G(VADUZ(2)) D
+"RTN","DGENU",209,0)
+ . N X,ZZ
+"RTN","DGENU",210,0)
+ . Q:'$G(VADUZ)
+"RTN","DGENU",211,0)
+ . S X=$$DIV4^XUSER(.ZZ,VADUZ)
+"RTN","DGENU",212,0)
+ . I X,$D(ZZ(VADUZ(2))) S VACHK=1
+"RTN","DGENU",213,0)
+ I '$G(VADUZ(2)) S VADUZ(2)=$G(DUZ(2))
+"RTN","DGENU",214,0)
+ Q $S($G(VADUZ(2)):VADUZ(2),1:$P($$SITE^VASITE(),"^"))
+"RTN","DGENU",215,0)
+ ;
+"RTN","DGENU",216,0)
+GETINST(DGPREFAC,DGINST) ;Get Institution file data
+"RTN","DGENU",217,0)
+ ; Input  -- DGPREFAC Institution file IEN
+"RTN","DGENU",218,0)
+ ; Output -- 1=Successful and 0=Failure
+"RTN","DGENU",219,0)
+ ;           DGINST - Institution file Array
+"RTN","DGENU",220,0)
+ N DGINST0,DGINST99,DGOKF
+"RTN","DGENU",221,0)
+ S DGINST0=$G(^DIC(4,DGPREFAC,0)) G GETQ:DGINST0=""
+"RTN","DGENU",222,0)
+ S DGINST("NAME")=$P(DGINST0,U)
+"RTN","DGENU",223,0)
+ S DGINST99=$G(^DIC(4,DGPREFAC,99))
+"RTN","DGENU",224,0)
+ S DGINST("STANUM")=$P(DGINST99,U)
+"RTN","DGENU",225,0)
+ S DGOKF=1
+"RTN","DGENU",226,0)
+GETQ Q +$G(DGOKF)
+"RTN","DGENUPL2")
+0^8^B73697731^B70882830
+"RTN","DGENUPL2",1,0)
+DGENUPL2 ;ALB/CJM,RTK,TMK,ISA/KWP/RMM/CKN,EG,ERC,PWC - PROCESS INCOMING (Z11 EVENT TYPE) HL7 MESSAGES ; 2/14/11 2:45pm
+"RTN","DGENUPL2",2,0)
+ ;;5.3;REGISTRATION;**147,222,232,310,314,367,397,677,631,675,672,673,716,653,688,838**;Aug 13,1993;Build 5
+"RTN","DGENUPL2",3,0)
+ ;
+"RTN","DGENUPL2",4,0)
+ ;**************************************************************
+"RTN","DGENUPL2",5,0)
+ ;The following procedures parse particular segment types.
+"RTN","DGENUPL2",6,0)
+ ;Input:SEG(),MSGID
+"RTN","DGENUPL2",7,0)
+ ;Output:DGPAT(),DGELG(),DGENR(),DGCDIS(),DGNTR(),DGOEIF(),ERROR
+"RTN","DGENUPL2",8,0)
+ ;**************************************************************
+"RTN","DGENUPL2",9,0)
+ ;
+"RTN","DGENUPL2",10,0)
+PID ;
+"RTN","DGENUPL2",11,0)
+ S DGPAT("SSN")=SEG(19)
+"RTN","DGENUPL2",12,0)
+ Q
+"RTN","DGENUPL2",13,0)
+ ;
+"RTN","DGENUPL2",14,0)
+ZPD ;
+"RTN","DGENUPL2",15,0)
+ D ZPD^DGENUPLA ;code removed due to size of DGENUPLA - DG*5.3*688
+"RTN","DGENUPL2",16,0)
+ Q
+"RTN","DGENUPL2",17,0)
+ ;
+"RTN","DGENUPL2",18,0)
+ZIE ;
+"RTN","DGENUPL2",19,0)
+ S DGPAT("INELDATE")=$$CONVERT^DGENUPL1(SEG(2),"DATE",.ERROR)
+"RTN","DGENUPL2",20,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",21,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZIE SEGMENT, SEQ 2",.ERRCOUNT)
+"RTN","DGENUPL2",22,0)
+ S DGPAT("INELREA")=$$CONVERT^DGENUPL1(SEG(3))
+"RTN","DGENUPL2",23,0)
+ S DGPAT("INELDEC")=$$CONVERT^DGENUPL1(SEG(4))
+"RTN","DGENUPL2",24,0)
+ Q
+"RTN","DGENUPL2",25,0)
+ ;
+"RTN","DGENUPL2",26,0)
+ZIO ;New segment - DG*5.3*653
+"RTN","DGENUPL2",27,0)
+ D ZIO^DGENUPLA  ;Code for ZIO has moved to DGENUPLA
+"RTN","DGENUPL2",28,0)
+ Q
+"RTN","DGENUPL2",29,0)
+ ;
+"RTN","DGENUPL2",30,0)
+ZEL(COUNT) ;
+"RTN","DGENUPL2",31,0)
+ D ZEL^DGENUPLA(COUNT)  ;code for ZEL segment has moved to DGENUPLA
+"RTN","DGENUPL2",32,0)
+ Q
+"RTN","DGENUPL2",33,0)
+ ;
+"RTN","DGENUPL2",34,0)
+ZEN ;
+"RTN","DGENUPL2",35,0)
+ N SUB
+"RTN","DGENUPL2",36,0)
+ S DGENR("DATE")=$$CONVERT^DGENUPL1(SEG(2),"DATE",.ERROR)
+"RTN","DGENUPL2",37,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",38,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZEN SEGMENT, SEQ 2",.ERRCOUNT)
+"RTN","DGENUPL2",39,0)
+ S DGENR("SOURCE")=$$CONVERT^DGENUPL1(SEG(3))
+"RTN","DGENUPL2",40,0)
+ S DGENR("STATUS")=$$CONVERT^DGENUPL1(SEG(4))
+"RTN","DGENUPL2",41,0)
+ S ERROR=$$PEND(DFN,DGENR("STATUS"))
+"RTN","DGENUPL2",42,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",43,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"ENROLLMENT STATUS PENDING-ELIGIBILITY IS VERIFIED",.ERRCOUNT)
+"RTN","DGENUPL2",44,0)
+ S DGENR("REASON")=$$CONVERT^DGENUPL1(SEG(5))
+"RTN","DGENUPL2",45,0)
+ S DGENR("REMARKS")=$$CONVERT^DGENUPL1(SEG(6))
+"RTN","DGENUPL2",46,0)
+ S DGENR("FACREC")=$$CONVERT^DGENUPL1(SEG(7),"INSTITUTION",.ERROR)
+"RTN","DGENUPL2",47,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",48,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"FACILITY RECEIVED "_SEG(7)_" NOT FOUND IN THE INSTITUTION FILE",.ERRCOUNT)
+"RTN","DGENUPL2",49,0)
+ S DGPAT("PREFAC")=$$CONVERT^DGENUPL1(SEG(8),"INSTITUTION",.ERROR)
+"RTN","DGENUPL2",50,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",51,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"PREFERRED FACILITY "_SEG(8)_" NOT FOUND IN THE INSTITUTION FILE",.ERRCOUNT)
+"RTN","DGENUPL2",52,0)
+ ;
+"RTN","DGENUPL2",53,0)
+ S DGENR("PRIORITY")=$$CONVERT^DGENUPL1(SEG(9))
+"RTN","DGENUPL2",54,0)
+ S DGENR("EFFDATE")=$$CONVERT^DGENUPL1(SEG(10),"DATE",.ERROR)
+"RTN","DGENUPL2",55,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",56,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZEN SEGMENT, SEQ 10",.ERRCOUNT)
+"RTN","DGENUPL2",57,0)
+ S DGENR("APP")=$$CONVERT^DGENUPL1(SEG(11),"DATE",.ERROR)
+"RTN","DGENUPL2",58,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",59,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZEN SEGMENT, SEQ 11",.ERRCOUNT)
+"RTN","DGENUPL2",60,0)
+ ;
+"RTN","DGENUPL2",61,0)
+ ;!!!!!! take next line out when HEC begins transmitting application dt
+"RTN","DGENUPL2",62,0)
+ I DGENR("APP")=""!(DGENR("APP")="@") S DGENR("APP")=DGENR("DATE")
+"RTN","DGENUPL2",63,0)
+ I DGENR("APP")=""!(DGENR("APP")="@") S DGENR("APP")=DGENR("EFFDATE")
+"RTN","DGENUPL2",64,0)
+ ;
+"RTN","DGENUPL2",65,0)
+ S DGENR("END")=$$CONVERT^DGENUPL1(SEG(12),"DATE",.ERROR)
+"RTN","DGENUPL2",66,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",67,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZEN SEGMENT, SEQ 12",.ERRCOUNT)
+"RTN","DGENUPL2",68,0)
+ ;Phase II Parse out Sub-Group (SRS 6[B.4)
+"RTN","DGENUPL2",69,0)
+ S DGENR("SUBGRP")=$$CONVERT^DGENUPL1(SEG(13))
+"RTN","DGENUPL2",70,0)
+ S DGPAT("PFSRC")=$$CONVERT^DGENUPL1(SEG(14)) N PFSRC S PFSRC=DGPAT("PFSRC")
+"RTN","DGENUPL2",71,0)
+ I PFSRC'="V"&(PFSRC'="E")&(PFSRC'="PA")&(PFSRC'="PI")&(PFSRC'="@")&(PFSRC'="") D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZEN SEGMENT, SEQ 14",.ERRCOUNT) Q
+"RTN","DGENUPL2",72,0)
+ ;
+"RTN","DGENUPL2",73,0)
+ ;want to ignore double quotes sent for enrollment fields
+"RTN","DGENUPL2",74,0)
+ S SUB=""
+"RTN","DGENUPL2",75,0)
+ F  S SUB=$O(DGENR(SUB)) Q:SUB=""  I DGENR(SUB)="@"!(DGENR(SUB)="""""") S DGENR(SUB)=""
+"RTN","DGENUPL2",76,0)
+ ;
+"RTN","DGENUPL2",77,0)
+ Q
+"RTN","DGENUPL2",78,0)
+ ;
+"RTN","DGENUPL2",79,0)
+ZMT ;
+"RTN","DGENUPL2",80,0)
+ I SEG(1)>1 D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"ZMT SEGMENT, SEQ 1, SHOULD SPECIFY MEANS TEST",.ERRCOUNT) S ERROR=1 Q
+"RTN","DGENUPL2",81,0)
+ S DGELG("MTSTA")=$$CONVERT^DGENUPL1(SEG(3),"MT",.ERROR)
+"RTN","DGENUPL2",82,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",83,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZMT SEGMENT, SEQ 3",.ERRCOUNT)
+"RTN","DGENUPL2",84,0)
+ Q
+"RTN","DGENUPL2",85,0)
+ ;
+"RTN","DGENUPL2",86,0)
+ZCD ;
+"RTN","DGENUPL2",87,0)
+ ;Phase II for multiple ZCD's
+"RTN","DGENUPL2",88,0)
+ I SEG(1)>1 G SKIP
+"RTN","DGENUPL2",89,0)
+ S DGCDIS("BY")=$$CONVERT^DGENUPL1(SEG(3))
+"RTN","DGENUPL2",90,0)
+ S DGCDIS("DATE")=$$CONVERT^DGENUPL1(SEG(5),"DATE",.ERROR)
+"RTN","DGENUPL2",91,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",92,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZCD SEGMENT, SEQ 5",.ERRCOUNT)
+"RTN","DGENUPL2",93,0)
+ S DGCDIS("FACDET")=$$CONVERT^DGENUPL1(SEG(4),"INSTITUTION",.ERROR)
+"RTN","DGENUPL2",94,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",95,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"FACILITY "_SEG(4)_" MAKING CATASTROPHIC DISABILITY DETERMINATION NOT FOUND IN THE INSTITUTION FILE",.ERRCOUNT)
+"RTN","DGENUPL2",96,0)
+ S DGCDIS("REVDTE")=$$CONVERT^DGENUPL1(SEG(2),"DATE",.ERROR)
+"RTN","DGENUPL2",97,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",98,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZCD SEGMENT, SEQ 2",.ERRCOUNT)
+"RTN","DGENUPL2",99,0)
+ S DGCDIS("METDET")=$$CONVERT^DGENUPL1($P(SEG(6),$E(HLECH)))
+"RTN","DGENUPL2",100,0)
+ S DGCDIS("VCD")=$$CONVERT^DGENUPL1(SEG(12))
+"RTN","DGENUPL2",101,0)
+ ;SEQ 14 - DATE VETERAN REQUESTED CD EVALUATION
+"RTN","DGENUPL2",102,0)
+ S DGCDIS("VETREQDT")=$$CONVERT^DGENUPL1(SEG(14),"DATE",.ERROR)
+"RTN","DGENUPL2",103,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",104,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZCD SEGMENT, SEQ 14",.ERRCOUNT)
+"RTN","DGENUPL2",105,0)
+ ;SEQ 15 - DATE FACILITY INITIATED REVIEW
+"RTN","DGENUPL2",106,0)
+ S DGCDIS("DTFACIRV")=$$CONVERT^DGENUPL1(SEG(15),"DATE",.ERROR)
+"RTN","DGENUPL2",107,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",108,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZCD SEGMENT, SEQ 15",.ERRCOUNT)
+"RTN","DGENUPL2",109,0)
+ ;SEQ 16 - DATE VETERAN WAS NOTIFIED
+"RTN","DGENUPL2",110,0)
+ S DGCDIS("DTVETNOT")=$$CONVERT^DGENUPL1(SEG(16),"DATE",.ERROR)
+"RTN","DGENUPL2",111,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",112,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZCD SEGMENT, SEQ 16",.ERRCOUNT)
+"RTN","DGENUPL2",113,0)
+SKIP ;
+"RTN","DGENUPL2",114,0)
+ ;Phase II Parse out additional fields.  CONVERT type of RSN converts the code to IEN for diagnosis,procedure and condition (HL7TORSN^DGENA5).
+"RTN","DGENUPL2",115,0)
+ S DGCDIS("DIAG",SEG(1))=$$CONVERT^DGENUPL1(SEG(7),"CDRSN")
+"RTN","DGENUPL2",116,0)
+ S DGCDIS("PROC",SEG(1))=$$CONVERT^DGENUPL1(SEG(8),"CDRSN")
+"RTN","DGENUPL2",117,0)
+ S DGCDIS("EXT",SEG(1),1)=$$CONVERT^DGENUPL1($P(SEG(9),$E(HLECH)),"EXT")
+"RTN","DGENUPL2",118,0)
+ S DGCDIS("COND",SEG(1))=$$CONVERT^DGENUPL1(SEG(10),"CDRSN")
+"RTN","DGENUPL2",119,0)
+ S DGCDIS("SCORE",SEG(1))=$$CONVERT^DGENUPL1($P(SEG(11),$E(HLECH)))
+"RTN","DGENUPL2",120,0)
+ S DGCDIS("PERM",SEG(1))=$$CONVERT^DGENUPL1($P(SEG(13),$E(HLECH)))
+"RTN","DGENUPL2",121,0)
+ I DGCDIS("VCD")="Y",'DGCDIS("DIAG",SEG(1)),'DGCDIS("PROC",SEG(1)),'DGCDIS("COND",SEG(1)) D  Q
+"RTN","DGENUPL2",122,0)
+ .S ERROR=1 D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"NO VALID DIAGNOSIS,PROCEDURE, OR CONDITION IN THE ZCD SEGMENT",.ERRCOUNT)
+"RTN","DGENUPL2",123,0)
+ Q
+"RTN","DGENUPL2",124,0)
+ ;
+"RTN","DGENUPL2",125,0)
+ZSP ;
+"RTN","DGENUPL2",126,0)
+ S DGELG("SC")=$$CONVERT^DGENUPL1(SEG(2),"Y/N",.ERROR)
+"RTN","DGENUPL2",127,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",128,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZSP SEGMENT, SEQ 2",.ERRCOUNT)
+"RTN","DGENUPL2",129,0)
+ S DGELG("SCPER")=$$CONVERT^DGENUPL1(SEG(3))
+"RTN","DGENUPL2",130,0)
+ S DGELG("POS")=$$CONVERT^DGENUPL1(SEG(4),"POS",.ERROR)
+"RTN","DGENUPL2",131,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",132,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZSP SEGMENT, SEQ 4",.ERRCOUNT)
+"RTN","DGENUPL2",133,0)
+ S DGELG("EFFDT")=$$CONVERT^DGENUPL1(SEG(11),"DATE",.ERROR)
+"RTN","DGENUPL2",134,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",135,0)
+ . D ADDERROR^DGENUPL(MSGID,$G(DGELG("EFFDT")),"BAD VALUE, ZSP SEGMENT, SEQ 11",.ERRCOUNT)
+"RTN","DGENUPL2",136,0)
+ ;if effective date is null, set update value to "@" (delete)
+"RTN","DGENUPL2",137,0)
+ I DGELG("EFFDT")="" S DGELG("EFFDT")="@"
+"RTN","DGENUPL2",138,0)
+ ;
+"RTN","DGENUPL2",139,0)
+ ;added 8/3/98 to reduce #rejects
+"RTN","DGENUPL2",140,0)
+ ;if HEC sends SC=NO, SC% not sent, and site has value for SC% then delete it
+"RTN","DGENUPL2",141,0)
+ I DGELG("SC")="N",DGELG("SCPER")="" S DGELG("SCPER")="@"
+"RTN","DGENUPL2",142,0)
+ ;
+"RTN","DGENUPL2",143,0)
+ S DGELG("P&T")=$$CONVERT^DGENUPL1(SEG(6),"Y/N",.ERROR)
+"RTN","DGENUPL2",144,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",145,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZSP SEGMENT, SEQ 6",.ERRCOUNT)
+"RTN","DGENUPL2",146,0)
+ S DGELG("UNEMPLOY")=$$CONVERT^DGENUPL1(SEG(7),"Y/N",.ERROR)
+"RTN","DGENUPL2",147,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",148,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZSP SEGMENT, SEQ 7",.ERRCOUNT)
+"RTN","DGENUPL2",149,0)
+ S DGELG("SCAWDATE")=$$CONVERT^DGENUPL1(SEG(8),"DATE",.ERROR)
+"RTN","DGENUPL2",150,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",151,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZSP SEGMENT, SEQ 8",.ERRCOUNT)
+"RTN","DGENUPL2",152,0)
+ S DGELG("P&TDT")=$$CONVERT^DGENUPL1(SEG(10),"DATE",.ERROR)
+"RTN","DGENUPL2",153,0)
+ I ERROR D
+"RTN","DGENUPL2",154,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZSP SEGMENT, SEQ 10 - P&T EFFECTIVE DATE",.ERRCOUNT)
+"RTN","DGENUPL2",155,0)
+ Q
+"RTN","DGENUPL2",156,0)
+ ;
+"RTN","DGENUPL2",157,0)
+ZMH ;Purple Heart, OEFOIE, POW
+"RTN","DGENUPL2",158,0)
+ D ZMH^DGENUPL3 ;Moved to DGENUPL3 - DG*5.3*653 
+"RTN","DGENUPL2",159,0)
+ Q
+"RTN","DGENUPL2",160,0)
+ ;
+"RTN","DGENUPL2",161,0)
+ZRD ;
+"RTN","DGENUPL2",162,0)
+ N COUNT,DXCODE,NAME,COND
+"RTN","DGENUPL2",163,0)
+ S DXCODE=$P(SEG(2),$E(HLECH))
+"RTN","DGENUPL2",164,0)
+ I DXCODE="""""" S DXCODE=""
+"RTN","DGENUPL2",165,0)
+ S NAME=$P(SEG(2),$E(HLECH),2)
+"RTN","DGENUPL2",166,0)
+ Q:DXCODE=""  ;segment does not contain a disability condition
+"RTN","DGENUPL2",167,0)
+ ;
+"RTN","DGENUPL2",168,0)
+ S COUNT=1+(+$G(DGELG("RATEDIS")))
+"RTN","DGENUPL2",169,0)
+ S (COND,DGELG("RATEDIS",COUNT,"RD"))=$$DCLOOKUP(DXCODE,NAME)
+"RTN","DGENUPL2",170,0)
+ S DGELG("RATEDIS",COUNT,"PER")=$$CONVERT^DGENUPL1(SEG(3)),DGELG("RATEDIS")=COUNT
+"RTN","DGENUPL2",171,0)
+ S DGELG("RATEDIS",COUNT,"RDEXT")=$$CONVERT^DGENUPL1(SEG(12))
+"RTN","DGENUPL2",172,0)
+ S DGELG("RATEDIS",COUNT,"RDORIG")=$$CONVERT^DGENUPL1(SEG(13),"DATE",.ERROR)
+"RTN","DGENUPL2",173,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",174,0)
+ . D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZRD SEGMENT, S 13",.ERRCOUNT)
+"RTN","DGENUPL2",175,0)
+ S DGELG("RATEDIS",COUNT,"RDCURR")=$$CONVERT^DGENUPL1(SEG(14),"DATE",.ERROR)
+"RTN","DGENUPL2",176,0)
+ I ERROR D  Q
+"RTN","DGENUPL2",177,0)
+ . D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZRD SEGMENT, S 14",.ERRCOUNT)
+"RTN","DGENUPL2",178,0)
+ I 'COND D  Q
+"RTN","DGENUPL2",179,0)
+ .D ADDERROR^DGENUPL(MSGID,$G(DGPAT("SSN")),"BAD VALUE, ZRD SEGMENT, SEQ 2 - DISABILTY CONDITION LOOKUP FAILED",.ERRCOUNT)
+"RTN","DGENUPL2",180,0)
+ .S ERROR=1
+"RTN","DGENUPL2",181,0)
+ Q
+"RTN","DGENUPL2",182,0)
+OBX ;
+"RTN","DGENUPL2",183,0)
+ D OBX^DGENUPLA  ;code for OBX segment moved to DGENUPLA
+"RTN","DGENUPL2",184,0)
+ Q
+"RTN","DGENUPL2",185,0)
+ ;
+"RTN","DGENUPL2",186,0)
+ ;*********** end of segment parsers ****
+"RTN","DGENUPL2",187,0)
+ ;
+"RTN","DGENUPL2",188,0)
+DCLOOKUP(DGCODE,DGNAME) ;
+"RTN","DGENUPL2",189,0)
+ ; Description: Returns the ien of a Disability Condition (file #31) based on the DGCODE and DGNAME
+"RTN","DGENUPL2",190,0)
+ ;
+"RTN","DGENUPL2",191,0)
+ ;Input:
+"RTN","DGENUPL2",192,0)
+ ;  DGCODE - DX Code of the Disability Condition
+"RTN","DGENUPL2",193,0)
+ ;  DGNAME - name of the Disability Condition
+"RTN","DGENUPL2",194,0)
+ ;Output:
+"RTN","DGENUPL2",195,0)
+ ;  Function Value: ien of the entry found, or 0 otherwise
+"RTN","DGENUPL2",196,0)
+ ;
+"RTN","DGENUPL2",197,0)
+ Q:(DGCODE="") 0
+"RTN","DGENUPL2",198,0)
+ N NODE,IEN,FOUND
+"RTN","DGENUPL2",199,0)
+ S (FOUND,IEN)=0
+"RTN","DGENUPL2",200,0)
+ F  S IEN=$O(^DIC(31,"C",DGCODE,IEN)) Q:'IEN  D  Q:FOUND
+"RTN","DGENUPL2",201,0)
+ .S NODE=$G(^DIC(31,IEN,0))
+"RTN","DGENUPL2",202,0)
+ .I DGNAME=$P(NODE,"^"),DGCODE=$P(NODE,"^",3) S FOUND=1
+"RTN","DGENUPL2",203,0)
+ I 'FOUND S IEN=$O(^DIC(31,"C",DGCODE,0))
+"RTN","DGENUPL2",204,0)
+ Q +IEN
+"RTN","DGENUPL2",205,0)
+ ;
+"RTN","DGENUPL2",206,0)
+REGCHECK(DFN) ;
+"RTN","DGENUPL2",207,0)
+ ; Description: passes patient through the registration consistency checker
+"RTN","DGENUPL2",208,0)
+ ;Input -
+"RTN","DGENUPL2",209,0)
+ ;  DFN - is a pointer to the Patient File
+"RTN","DGENUPL2",210,0)
+ ;
+"RTN","DGENUPL2",211,0)
+ N DGCD,DGCHK,DGDAY,DGEDCN,DGER,DGLST,DGNCK,DGRPCOLD,DGSC,DGTYPE,DGVT,VA,X
+"RTN","DGENUPL2",212,0)
+ ;
+"RTN","DGENUPL2",213,0)
+ S DGEDCN=0
+"RTN","DGENUPL2",214,0)
+ D ^DGRPC
+"RTN","DGENUPL2",215,0)
+ Q
+"RTN","DGENUPL2",216,0)
+PEND(DFN,DGSTAT) ;
+"RTN","DGENUPL2",217,0)
+ N DGARR,DGEC,DGERR,DGX
+"RTN","DGENUPL2",218,0)
+ I $P($G(^DPT(DFN,.361)),U)'="V" Q 0
+"RTN","DGENUPL2",219,0)
+ I $G(DGSTAT)="@" Q 0
+"RTN","DGENUPL2",220,0)
+ I $G(DGSTAT)']"" Q 0
+"RTN","DGENUPL2",221,0)
+ S DGSTAT="^"_DGSTAT_"^"
+"RTN","DGENUPL2",222,0)
+ Q:"^15^17^"'[DGSTAT 0
+"RTN","DGENUPL2",223,0)
+ D GETS^DIQ(2,DFN_",",".301;.302;.361;.36295","IE","DGARR","DGERR")
+"RTN","DGENUPL2",224,0)
+ I $D(DGERR) Q 0
+"RTN","DGENUPL2",225,0)
+ S DGEC=$G(DGARR(2,DFN_",",.361,"I"))
+"RTN","DGENUPL2",226,0)
+ I $G(DGEC)']"" Q 0
+"RTN","DGENUPL2",227,0)
+ S DGEC=$P($G(^DIC(8,DGEC,0)),U,9)
+"RTN","DGENUPL2",228,0)
+ I $G(DGEC)']"" Q 0
+"RTN","DGENUPL2",229,0)
+ I DGEC=5 Q 1
+"RTN","DGENUPL2",230,0)
+ I DGEC=3 D  Q DGX
+"RTN","DGENUPL2",231,0)
+ . S DGX=1
+"RTN","DGENUPL2",232,0)
+ . I $G(DGARR(2,DFN_",",.301,"I"))'="Y" S DGX=0 Q
+"RTN","DGENUPL2",233,0)
+ . I +$G(DGARR(2,DFN_",",.302,"I"))>0 S DGX=0 Q
+"RTN","DGENUPL2",234,0)
+ . I +$G(DGARR(2,DFN_",",.36295,"I"))>0 S DGX=0 Q
+"RTN","DGENUPL2",235,0)
+ Q 0
+"VER")
+8.0^22.0
+"^DD",2,2,27.03,0)
+SOURCE DESIGNATION^S^V:VISTA;E:ESR;PA:PCP ACTIVE;PI:PCP INACTIVE;^ENR;3^Q
+"^DD",2,2,27.03,3)
+
+"^DD",2,2,27.03,21,0)
+^^5^5^3101202^
+"^DD",2,2,27.03,21,1,0)
+Source designation contains the value of the place the Preferred Facility 
+"^DD",2,2,27.03,21,2,0)
+field (#27.02) was assigned for the patient.  Source designation is 
+"^DD",2,2,27.03,21,3,0)
+automatically assigned by the system.  The VistA system can only assign 
+"^DD",2,2,27.03,21,4,0)
+a Preferred Facility if the current Source Designation is VistA or 
+"^DD",2,2,27.03,21,5,0)
+Primary Care Provider (PCP) Inactive.
+"^DD",2,2,27.03,23,0)
+^^8^8^3101202^
+"^DD",2,2,27.03,23,1,0)
+The source designation is the place in which the preferred facility has 
+"^DD",2,2,27.03,23,2,0)
+been assigned.  The users on the VistA system can only change a preferred 
+"^DD",2,2,27.03,23,3,0)
+facility if the source designation is VistA or if it is Primary Care 
+"^DD",2,2,27.03,23,4,0)
+Provider (PCP) Inactive.  All others options will be filed after 
+"^DD",2,2,27.03,23,5,0)
+receiving a Z11 HL7 message from Enrollment System Redesign (ESR).  ESR 
+"^DD",2,2,27.03,23,6,0)
+has their own rules in assigning a preferred facility on their side.
+"^DD",2,2,27.03,23,7,0)
+ 
+"^DD",2,2,27.03,23,8,0)
+The source designation is automatically assigned by the system.
+"^DD",2,2,27.03,"DT")
+3101202
+"BLD",7150,6)
+^747
+**END**
+**END**

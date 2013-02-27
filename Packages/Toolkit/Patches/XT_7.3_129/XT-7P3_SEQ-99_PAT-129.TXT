@@ -1,0 +1,195 @@
+$TXT Created by DAVIS,PAULETTE T at DEVCRN.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 03/11/11 at 12:25
+=============================================================================
+Run Date: MAY 20, 2011                     Designation: XT*7.3*129
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3        SEQ #99                    Status: Released
+                  Compliance Date: JUN 03, 2011
+=============================================================================
+
+
+Subject: CLEAN UP OF FILE 15
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  The purpose of patch XT*7.3*129 is to clean up the local VistA DUPLICATE
+  RECORD (#15) file for entries that were created by a push from the Master
+  Patient Index (MPI) before the Health Care Identity Management (HC IdM)
+  team completed their reviewed of the records.
+   
+  Background:
+  ===========
+  HC IdM found during testing, that when a Potential Duplicate Exception
+  is created in the Identity Management Toolkit, the local records involved
+  are automatically pushed down and populated in the VistA DUPLICATE RECORD
+  (#15) file before HC IdM dispositions the exception.  This is an issue
+  because the local site could potentially merge the two PATIENT (#2) file
+  records before HC IdM performs their analysis and before HC IdM resolves
+  the exception.  The local records could potentially be determined by HC IdM
+  as DO NOT LINK, and if so, the local site should not receive the records
+  in File #15.
+    
+  Requirement:
+  ============
+  The VistA DUPLICATE RECORD (#15) file will be automatically populated only
+  when HC IdM has resolved a Potential Duplicate Exception in the Identity
+  Management Toolkit with a disposition to link two local records.
+   
+  Changes:
+  ========
+  Patch XT*7.3*129 is part of three components to address the issue
+  described above.
+   
+   1. MPI*1.0*85 will be installed on the MPI. It includes a change to stop
+  the MPI from automatically adding entries to the VistA DUPLICATE RECORD
+  (#15) file as a result of search processing.
+   
+   2. XT*7.3*129 (this patch) will then be installed at the VistA sites.  It
+  includes a POST-INSTALL routine that queues a TaskMan task to purge the
+  DUPLICATE RECORD (#15) file of POTENTIAL DUPLICATE, UNVERIFIED records that
+  were previously pushed by the MPI.
+   
+   3. After all VistA sites have XT*7.3*129 installed, a manual task will
+  then be run on the MPI.  EN^MPIVDUP (exported in patch MPI*1.0*86) will
+  add record pairs identified on the MPI as potential duplicates to the
+  local VistA DUPLICATE RECORD (#15) file.
+          
+  Associated Remedy Ticket(s):
+  ============================
+  There are no associated Remedy Tickets.
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  Manchester VAMC
+  VA North Texas HCS
+  Oklahoma City VAMC
+     
+  Blood Bank Team Coordination
+  ============================
+  Clearance: 3/21/11 (from Randy Morton)
+   
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*129 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of VISTA
+  Patches for Effects on VISTA Blood Bank Software. This patch does not
+  alter or modify any VistA Blood Bank software design safeguards or safety
+  critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XT*7.3*129 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+      
+  Post-Install Routine:
+  =====================
+  The POST-INSTALL routine queues a process to delete records with the
+  following characteristics from the VistA DUPLICATE RECORD (#15) file:
+   - RECORD1 (#.01) and RECORD2 (#.02) pertain to the PATIENT (#2) file.
+   - STATUS (field #.03) = 'P' for POTENTIAL DUPLICATE, UNVERIFIED, and
+   - MERGE STATUS (field #.05) = 0 or "", and
+   - WHO CREATED (field #.09) = POSTMASTER (.5).
+   
+  The tasked process stores information in the ^XTMP("XT73P129") global.
+  The purge date in the 0 node is set to 60 days from the run date.
+   
+   ^XTMP("XT73P129",fmStartTime,0,"CNT")       : # records deleted
+   ^XTMP("XT73P129",fmStartTime,0,"COMPLETED") : completion time, FM format
+   ^XTMP("XT73P129",fmStartTime,0,"DUZ")       : DUZ of user that queued
+                                                 the process
+   ^XTMP("XT73P129",fmStartTime,0,"STARTED")   : start time, FM format
+   ^XTMP("XT73P129",fmStartTime,0,"STATUS")    : status information
+   ^XTMP("XT73P129",fmStartTime,IEN,0)         : 0 node of record deleted
+   
+  On successful completion, a MailMan message is sent to the POSTMASTER and
+  to the person that ran the installation.  The MailMan message provides
+  the following information.
+   
+  Subj: XT*7.3*129 POST-INSTALL COMPLETE  [#133294] 01/25/11@22:45
+  From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+  ------------------------------------------------------------------------
+  Post Install for patch XT*7.3*129 has run to completion.
+   
+        Time started: Jan 25, 2011@22:45:53
+      Time completed: Jan 25, 2011@22:45:56
+   
+  147 records were deleted from the DUPLICATE RECORD File (#15).
+   
+  The 0 nodes of deleted records are backed up in:
+   
+   ^XTMP("XT73P129",3110125.224553,IEN,0)
+   
+  You may now delete routine XT73P129.
+   
+  Enter message action (in IN basket): Ignore//
+   
+  Installation Instructions:
+  ==========================
+  This patch should be loaded during non-peak hours when most users are off
+  the system.  Installation will take less than 2 minutes.
+   
+  1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+      the KIDS distribution included with this message.
+   
+  2.  From the Kernel Installation and Distribution System Menu, select 
+      the Installation menu.  
+   
+  3.  From this menu, you may elect to use the following options
+      (when prompted for INSTALL NAME, enter XT*7.3*129):
+      a.  Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch.  It will NOT
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System  - this option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch 
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - this option will
+          allow you to ensure the integrity of the routines that are in
+          the transport global.
+      d.  Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+   
+  4.  Use the Install Package(s) option and select the package 
+      XT*7.3*129.
+   
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+      NO//', respond NO.
+   
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//', respond YES.  The following OPTIONS should
+      be disabled during the installation.
+         Duplicate Resolution System     [XDR MAIN MENU]
+         Operations                      [XDR OPERATIONS MENU]
+         Utilities                       [XDR UTILITIES MENU]
+         Manager Utilities               [XDR MANAGER UTILITIES]
+   
+  7.  When the person that ran the installation receives e-mail notification
+      that the post-install has completed, then routine XT73P129 can be
+      deleted from your system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XT73P129
+    Before:       n/a   After: B30337509  **129**
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,PAULETTE                Date Entered  : JAN 14, 2011
+Completed By: ALDERMAN,MATT S               Date Completed: MAY 02, 2011
+Released By : HEUER,CINDY                   Date Released : MAY 20, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

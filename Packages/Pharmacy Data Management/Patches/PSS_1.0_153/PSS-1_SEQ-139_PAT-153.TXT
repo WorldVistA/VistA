@@ -1,0 +1,175 @@
+$TXT Created by ALSAHHAR,SAMI at CMAI.FO-BIRM.MED.VA.GOV  (KIDS) on Thursday, 02/17/11 at 12:34
+=============================================================================
+Run Date: MAR 31, 2011                     Designation: PSS*1*153
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #139                      Status: Released
+                  Compliance Date: MAY 01, 2011
+=============================================================================
+
+Associated patches: (v)PSS*1*140   <<= must be installed BEFORE `PSS*1*153'
+                    (v)PSS*1*141   <<= must be installed BEFORE `PSS*1*153'
+
+Subject: FY11-PREPARATION FOR MED ROUTE ENHANCEMENT
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Print Template
+
+Description:
+============
+
+ This patch is being released in preparation for the medication routes
+ enhancement patch PSS*1*159. This patch contains the following:
+  
+  - The MED ROUTE field (#.06) of the PHARMACY ORDERABLE ITEM file (#50.7)
+    is renamed DEFAULT MED ROUTE.
+  
+  - The POSSIBLE MED ROUTES multiple (#50.711) is added to the PHARMACY
+    ORDERABLE ITEM file (#50.7). This multiple is pointing to the
+    MEDICATION ROUTES file (#51.2).
+  
+  - The USE DOSAGE FORM MED ROUTE LIST field (#10) is added to the PHARMACY
+    ORDERABLE ITEM file (#50.7) with YES/NO values.
+  
+ The above fields will be available when editing an existing or adding a 
+ new orderable item using the following options:
+   - Edit Orderable Items [PSS EDIT ORDERABLE ITEMS]
+   - Drug Enter/Edit [PSS DRUG ENTER/EDIT]
+   - Dispense Drug/Orderable Item Maintenance [PSS MAINTAIN ORDERABLE
+     ITEMS]
+  
+ The Default Med Route For OI Report [PSS DEF MED ROUTE OI RPT] option
+ is modified to include printing of the POSSIBLE MED ROUTES multiple.
+  
+ In addition, a post install routine will run to update the USE DOSAGE
+ FORM MED ROUTE LIST field (#10) based on the value of the DEFAULT MED
+ ROUTE FOR CPRS field (#80.7) of the PHARMACY SYSTEM file (#59.7). The
+ USE DOSAGE FORM MED ROUTE LIST field (#10) will be exported with "YES"
+ for sites that have the DEFAULT MED ROUTE FOR CPRS field (#80.7) set to
+ NO. Otherwise, the USE DOSAGE FORM MED ROUTE LIST field (#10) will be 
+ set to NO.
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ N/A
+  
+ Associated Patient Safety Issues:
+ =================================
+ N/A
+  
+ Associated New Service Request (NSR):
+ =====================================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ DURHAM, NC
+ NEW JERSEY HCS
+ OKLAHOMA CITY, OK
+ PUGET SOUND HCS
+  
+  
+ Documentation Retrieval:
+ ========================
+ The documentation is available on the ANONYMOUS.SOFTWARE directory at one
+ of the following Office of Information (OI) Field Offices.
+  
+    Albany
+    Hines
+    Salt Lake City
+  
+ Sites may retrieve documentation in one of the following ways.
+  
+ (1) The preferred method is to FTP the files from
+     download.vista.med.va.gov, which will transmit the files from the
+     first available FTP server.
+  
+ (2) Sites may also elect to retrieve documentation directly from a
+     specific server listed below.
+  
+     Albany              ftp.fo-albany.med.va.gov
+     Hines               ftp.fo-hines.med.va.gov
+     Salt Lake City      ftp.fo-slc.med.va.gov
+  
+ The documentation distribution includes the following.
+  
+    FILE NAME                    DESCRIPTION
+  
+    PSS_1_UM_R0411.PDF           Pharmacy Data Management User Manual
+    PSS_1_P153_UM_CP.PDF         Pharmacy Data Management User Manual
+                                 Change Pages
+    PSS_1_TM_R0411.PDF           Pharmacy Data Management V. 1.0 Technical
+                                 Manual/Security Guide
+    PSS_1_P153_TM_CP.PDF         Pharmacy Data Management Technical
+                                 Manual/Security Guide Change Pages
+  
+  
+ (3) Documentation can also be retrieved from the VA Software Document
+     Library (VDL) on the Internet at the following address:
+     http://www4.va.gov/vdl.
+  
+  
+ Install Information:
+ ====================
+ This patch can be installed with users on the system. Installation will
+ take less than 1 minute. Suggested time to install: non-peak requirement
+ hours.
+  
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+  
+  3. From this menu, you may select to use the following options
+     (when prompted for INSTALL NAME, enter PSS*1.0*153):
+    a. Backup a Transport Global - this option will create a backup
+       message of any routines exported with the patch. It will NOT
+       backup any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - this option will
+       allow you to view all changes that will be made when the patch
+       is installed. It compares all components of the patch (routines,
+       DDs, templates, etc.).
+    c. Verify Checksums in Transport Global - this option will ensure
+       the integrity of the routines that are in the transport global.
+  
+  4. Use the Install Package(s) option and select the package PSS*1.0*153.
+  
+  5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+     respond NO.
+  
+  6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 32
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSP153
+    Before:       n/a   After:   B445466  **153**
+Routine Name: PSSPOIM1
+    Before: B55245627   After: B56773373  **29,38,47,141,153**
+Routine Name: PSSPOIMO
+    Before: B75216229   After:B110356198  **29,32,38,47,68,102,125,141,153**
+ 
+Routine list of preceding patches: 141
+
+=============================================================================
+User Information:
+Entered By  : ALSAHHAR,SAMI                 Date Entered  : MAR 23, 2010
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: MAR 11, 2011
+Released By : CONSENTINO,ALBERT             Date Released : MAR 31, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

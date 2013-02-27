@@ -1,0 +1,155 @@
+$TXT Created by THOMPSON,Seth at CHEY204.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 04/16/12 at 11:27
+=============================================================================
+Run Date: JUL 24, 2012                     Designation: PSJ*5*277
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #231                      Status: Released
+                  Compliance Date: AUG 24, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*113   <<= must be installed BEFORE `PSJ*5*277'
+
+Subject: FIRST DOSE DISPLAY INCORRECT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct an issue in which the Expected First Dose line in
+ CPRS, as well as the REQUESTED START DATE line in Inpatient Order Entry 
+ (PSJ OE) are not displaying the correct date.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ HD0000000349678 - PSPO#1521 QOD (every other day) schedule not working
+  
+ Duplicates:
+ HD0000000350458
+ HD0000000380843
+ HD0000000410587
+ HD0000000486532
+ HD0000000526502
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Battle Creek VAMC
+ Lebanon VAMC
+ Upstate NY HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ HD0000000349678 - QOD (every other day) schedule not working
+  
+   Patient Safety Issue
+   --------------------
+   PSPO #1521
+  
+   Problem:
+   --------
+   The Inpatient Ward Parameter DEFAULT START DATE CALCULATION is used when
+   determining the Expected First Dose of an order.
+  
+   Currently, CPRS is defaulting this parameter to be 'USE NEXT ADMIN TIME 
+   AS DEFAULT'.  For sites which have this parameter set to 'USE CLOSEST 
+   ADMIN TIME AS DEFAULT' or 'USE NOW AS DEFAULT', the Expected First Dose 
+   does not match the actual first dose of the order if the order used a
+   schedule with a frequency of more than 1 day.
+  
+   This defect is causing the Expected First Dose displayed in CPRS, as
+   well as the REQUESTED START DATE in Inpatient Order Entry to display as
+   the next possible dose instead of the next dose in the specified
+   schedule.
+  
+     Example:
+     --------
+     If it is currently 10 am and you are creating an order with an admin
+     time at 9 am on a schedule of EVERY OTHER MORNING. Since Today's dose
+     has passed, the Expected Next Dose should show as the day after
+     tomorrow at 9 am, where it is currently showing as tomorrow at 9 am.
+  
+   Resolution:
+   ----------- 
+   Routine PSJORPOE has been modified so that CPRS will calculate the 
+   Expected First Dose based on the actual selected Inpatient Ward 
+   Parameter DEFAULT START DATE CALCULATION and not always base the 
+   calculation on 'USE NEXT ADMIN TIME AS DEFAULT'.
+  
+  
+ Installation Instructions:
+ ==========================
+ The patch should be installed when NO Inpatient Pharmacy or Outpatient
+ Pharmacy users are on the system.
+  
+ Installation will take less than 1 minute.
+  
+   ************************ NOTE ************************
+   If a user is on the system and using these programs, 
+   an 'EDITED' error will occur.
+   ******************************************************
+  
+ Suggested time to install: non-peak requirement hours.
+  
+  
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+ 2. From the Kernel Installation & Distribution System menu, select the
+    Installation menu.
+   
+ 3. From this menu, you may select to use the following options
+    (when prompted for INSTALL NAME, enter PSJ*5.0*277):
+        a.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        b.  Print Transport Global - This option will allow you to view
+            the components of the KIDS build.
+        c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this 
+            patch is installed.  It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+    
+ 4. Use the Install Package(s) option and select the package PSJ*5.0*277.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+    respond NO.
+    
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//" respond NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJORPOE
+    Before: B36843911   After: B36799843  **50,56,92,80,110,127,133,134,
+                                           113,277**
+ 
+Routine list of preceding patches: 113
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : APR 09, 2012
+Completed By: WERNER,GARY                   Date Completed: JUL 10, 2012
+Released By : LYTTLE,KIM M                  Date Released : JUL 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

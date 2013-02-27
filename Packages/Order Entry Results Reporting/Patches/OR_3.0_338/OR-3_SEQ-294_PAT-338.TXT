@@ -1,0 +1,261 @@
+$TXT Created by THOMPSON,SETH at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 07/05/11 at 14:48
+=============================================================================
+Run Date: OCT 12, 2011                     Designation: OR*3*338
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #294                      Status: Released
+                  Compliance Date: NOV 12, 2011
+=============================================================================
+
+
+Subject: UPDATE COVERSHEET PARAMETER
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch corrects an index out of bounds error that occurs in 
+ Computerized Patient Record System (CPRS) when the number of coversheet
+ report sequences exceed eight reports, and/or when the sequences are 
+ numbered outside the number range 1-8, in the parameter ORWCV1 
+ COVERSHEET LIST.
+  
+       
+ Associated Remedy Tickets:
+ ==========================
+ HD0000000416157  Coversheet can only handle 8 boxes when more are 
+ available to set.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Manchester VAMC, NH
+ South Texas Veterans HCS (San Antonio), TX
+ VA Maryland HCS (Baltimore), MD
+ Birmingham VAMC, AL
+  
+      
+ Remedy Overview
+ =====================
+ Problem:
+ --------
+ When more than eight coversheet report sequences are added to the 
+ parameter ORWCV1 COVERSHEET LIST users are confronted with a 'list index 
+ out of bounds' error after selecting a patient in CPRS GUI. The CPRS GUI 
+ coversheet is only coded to display a total of eight coversheet reports, 
+ however the parameter (ORWCV1 COVERSHEET LIST) is defined to accept up to 
+ 999 reports.
+  
+ Resolution:
+ -----------     
+ The ORWCV1 COVERSHEET LIST parameter in the PARAMETER DEFINITON file 
+ (#8989.51) INSTANCE DOMAIN field (6.2) is being modified from the value 
+ 1:999:2 to 1:8:2. This new value will prevent more than eight coversheet 
+ report sequences from being added and also limit the valid sequence 
+ numbers to one through eight. The ORWCV1 COVERSHEET LIST can be 
+ set for the following levels: User, Division, System, and Package.
+  
+ When the Packman function INSTALL/CHECK MESSAGE is selected the 
+ Environment Check routine ORZZFACE will run. If any cover sheet 
+ parameter settings contain more than eight sequences, or if any of the
+ existing sequences are numbered greater than eight, the message
+ "Installation of OR*3*338 Aborted. Please see mail message for details."
+ will display. A Mailman message will be sent to the user attempting to
+ install the patch with the subject line 'PARAMETER VALIDATION'. 
+  
+  
+ Message example:
+  
+ Subj: PARAMETER VALIDATION  [#633799] 07/08/11@19:40  9 lines
+ From: OR*3*338  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+ Below is a list of entities which have an instance in parameter
+ ORWCV1 COVERSHEET LIST that does not fall within the valid range of 1-8.
+ These need to be corrected before install of OR*3*338.
+ Please See The OR*3*338 Patch description for more information.
+  
+  PACKAGE: ORDER ENTRY/RESULTS REPORTING
+  NEW PERSON: CPRSSTUDENT,ONE
+  NEW PERSON: CPRSSTUDENT,TWO
+  DIVISION: CHEYENNE HEALTH CARE CENTER
+  
+  
+ Enter message action (in IN basket): Ignore//   
+  
+ ------------------------------------------------------------------------- 
+ ! ALL INSTANCES REPORTED MUST BE CORRECTED BEFORE THE PATCH WILL INSTALL!
+ -------------------------------------------------------------------------
+  
+ To make corrections use the steps listed below. 
+  
+ This example uses the CPRS Configuration (IRM) [OR PARAM IRM MENU] option,
+ the CPRS Configuration (Clin Coord) [OR PARAM COORDINATOR MENU] option can
+ also be used to make corrections:
+  
+ Select OPTION NAME: OR PARAM IRM MENU   CPRS Configuration (IRM)  
+ Select CPRS Configuration (IRM) Option: XX  General Parameter Tools
+ Select General Parameter Tools Option: EP  Edit Parameter Values
+ Select PARAMETER DEFINITION NAME: ORWCV1 COVERSHEET LIST   List of 
+ coversheet reports   
+  
+ ORWCV1 COVERSHEET LIST may be set for the following:
+  
+      2   User          USR    [choose from NEW PERSON]
+      3   Division      DIV    [choose from INSTITUTION]
+      4   System        SYS    [DAYTLAB.FO-BAYPINES.MED.VA.GOV]
+      6   Package       PKG    [ORDER ENTRY/RESULTS REPORTING]
+  
+ Enter selection:  <- enter the reported instance to be corrected
+  
+ ***For example, NEW PERSON: CPRSSTUDENT,TWO was listed in the message***
+  
+ Enter selection: 2  User   NEW PERSON
+ Select NEW PERSON NAME: CPRSSTUDENT
+      1   CPRSSTUDENT,ONE       co       
+      2   CPRSSTUDENT,TWO       CO     112     MEDICAL STUDENT
+ CHOOSE 1-2: 2  CPRSSTUDENT,TWO     CO     112     MEDICAL STUDENT
+  
+ ----- Setting ORWCV1 COVERSHEET LIST  for User: CPRSSTUDENT,TWO -----
+  
+ Select Sequence: ? <- entering '?' displays the current sequences
+  
+ Sequence  Value
+ --------  -----
+ 1         ORCV ACTIVE PROBLEMS
+ 2         ORCV ALLERGIES
+ 3         ORCV POSTINGS
+ 4         ORCV ACTIVE MEDICATIONS
+ 5         ORCV VITALS
+ 6         ORCV CLINICAL REMINDERS
+ 7         ORCV RECENT LAB RESULTS
+ 8         ORCV APPOINTMENTS
+ 9         ORCV IMMUNIZATIONS    <- must be deleted
+ 10        ORCV ACTIVE PROBLEMS  <- must be deleted
+  
+  
+ ***In this example 10 sequences are listed. Sequences 9 and 10 must be
+ deleted. Continue with the following steps to delete these sequences.*** 
+  
+ Select Sequence: 9            <- type '9' then press <enter>
+  
+ Sequence: 9// @  ...deleted   <- type '@' then press <enter>, the word 
+                                  'deleted' displays
+  
+ Select Sequence:10            <- type in '10' then press <enter>
+  
+ Sequence: 10// @  ...deleted  <- type '@' then press <enter>, the word 
+                                  'deleted' displays
+  
+ Select Sequence: ?            <- display the list to confirm deletion
+  
+ Sequence  Value
+ --------  -----
+ 1         ORCV ACTIVE PROBLEMS
+ 2         ORCV ALLERGIES
+ 3         ORCV POSTINGS
+ 4         ORCV ACTIVE MEDICATIONS
+ 5         ORCV VITALS
+ 6         ORCV CLINICAL REMINDERS
+ 7         ORCV RECENT LAB RESULTS
+ 8         ORCV APPOINTMENTS
+  
+ ***The example below shows an instance where a number sequence is greater
+ than eight. To correct this type of situation change the sequence number
+ greater than eight to a number between 1-8.***
+  
+ Sequence  Value
+ --------  -----
+ 1         ORCV POSTINGS
+ 2         ORCV ACTIVE MEDICATIONS
+ 3         ORCV VITALS
+ 9         ORCV ALLERGIES
+ 10        ORCV ACTIVE PROBLEMS    <- greater than '8' 
+                               
+ Select Sequence:10    <- type in '10' and press <enter>
+  
+ Sequence: 10// 5      <- type in '5' and press <enter> 
+  
+ Select Sequence: ?    <- display the list to confirm change
+  
+ Sequence  Value
+  --------  -----
+  1         ORCV POSTINGS
+  2         ORCV ACTIVE MEDICATIONS
+  3         ORCV VITALS
+  4         ORCV ALLERGIES
+  5         ORCV ACTIVE PROBLEMS   <- changed from '10' to '5'
+  
+  
+ After the patch has been successfully installed, cover sheet report 
+ sequence number entries will be limited to numbers 1-8 and the number of
+ sequences that can be added will be limited to eight.
+   
+      
+ Installation Instructions:
+ ==========================
+ This patch can be installed with users on the system. Installation will 
+ take less than two minutes. 
+       
+ 1.  Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN] and select Installation.
+  
+ 3.  From the Installation menu, you may select to use the following 
+     options (When prompted for the INSTALL NAME, enter OR*3.0*338): 
+         
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4. Choose the Install Package(s) option and enter OR*3.0*338.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    answer NO. 
+       
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//', answer NO. 
+  
+ Note: The Environment Check routine ORZZFACE runs two times 1) when the 
+ PackMan message containing this patch invokes the INSTALL/CHECK MESSAGE
+ PackMan option to load the transport global, and 2) when installing the 
+ patch. The ORZZFACE routine is automatically deleted with the successful
+ installation of this patch. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORZZFACE
+    Before:       n/a   After:  B5064470  **338*
+
+=============================================================================
+User Information:
+Entered By  : BELL,CHRISTOPHER W            Date Entered  : SEP 27, 2010
+Completed By: HULET,LEE ANN                 Date Completed: OCT 04, 2011
+Released By : HINES,RICK                    Date Released : OCT 12, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,205 @@
+
+=============================================================================
+Run Date: JUN 14, 2011                     Designation: PSJ*5*261
+Package : PSJ - INPATIENT MEDICATIONS         Priority: EMERGENCY
+Version : 5       SEQ #210                      Status: Released
+                  Compliance Date: SEP 15, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*261'
+
+Subject: DEFAULT STOP DATE FOR IV PENDING ORDERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Incorrect Stop Dates can be created when finishing orders in the Inpatient
+ Medications package for the following scenarios:
+  
+ 1. For an order that has an orderable item defined with multiple IV 
+ Additives, the finish process may not calculate the stop date correctly.  
+ The system defaults to the IV ROOM number of days defined for the IV type.
+ However, the system should default to the smallest value of all
+ occurrences of the following within the order: the IV ROOM number of days 
+ defined for the IV type from the IV ROOM file (#59.5), the DAY (nD) or
+ DOSE (nL) LIMIT field (#.05) from the PHARMACY ORDERABLE ITEM file
+ (#50.7), or the "NUMBER OF DAYS FOR IV ORDER" field (#3) from the IV
+ ADDITIVES (#52.6) file.
+  
+ 2. For an order that has an orderable item defined with a single IV 
+ Additive and that IV Additive has quick codes defined, the stop date does 
+ not calculate correctly. The system should default to the smallest value
+ of all occurrences of the following within the order: the IV ROOM number 
+ of days defined for the IV type from the IV ROOM file (#59.5), the DAY
+ (nD) or DOSE (nL) LIMIT field (#.05) from the PHARMACY ORDERABLE ITEM file
+ (#50.7), or the "NUMBER OF DAYS FOR IV ORDER" field (#3) from the IV
+ ADDITIVES (#52.6) file.
+  
+ 3. For an order that has an orderable item defined with multiple IV 
+ Solutions (PreMix), the finish process may not calculate the stop date 
+ correctly.  The system defaults to the IV ROOM number of days defined for 
+ the IV type. However, the system should default to the smallest value of 
+ all occurrences of the following within the order: the IV ROOM number of
+ days defined for the IV type from the IV ROOM file (#59.5) or the DAY (nD)
+ or DOSE (nL) LIMIT field (#.05) from the PHARMACY ORDERABLE ITEM file
+ (#50.7).
+  
+ Another issue introduced by MOCHA 1.0 is when the user finishes the order
+ without initially entering the IV Additive and then goes back and edits
+ the order during finish to add the IV Additive. In this case, the stop
+ date may not be calculated correctly. This will be corrected in a future
+ patch.
+  
+ Note that there is an existing issue when editing an active/non-verified
+ order where the stop date may not calculate correctly. Because of this 
+ issue and other edit issues that currently exist, it is recommended that
+ the stop date calculation should be monitored closely when using the edit
+ function.
+  
+  
+ Components exported with this patch:
+ ====================================
+ N/A   (Only routines exported)
+  
+  
+ New Service Requests (NSRs):
+ ============================
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ PSPO00002040 - Stop dates for medications are longer than is needed so 
+ patients may receive more of the medication than is appropriate. We know 
+ of at least 4 patients whose stop dates are incorrect from yesterday.
+  
+  
+ Remedy Ticket(s) & Overview:
+ ============================
+ 1. HD0000000490875 - MOCHA ISSUE - IV STOP DATES
+  
+ Problem:
+ -------
+ The default stop date was not calculated correctly when finishing IV 
+ orders.
+  
+ Resolution:
+ ----------
+ Modified the routines to calculate the stop date correctly after IV
+ Additives and IV Solutions (PreMix) have been entered.
+  
+                                        
+ Implementation/Installation:
+ ============================
+ Sites will be provided instructions and guidance on installation and 
+ implementation by the MOCHA Implementation team.
+  
+ The software will be distributed in a controlled process due to the 
+ phased implementation.  During each implementation phase, the 
+ Implementation Team will provide each site the instructions and location 
+ to obtain the software.
+        
+ Below is a list of the files related to this patch that will be needed and
+ available via the FTP as instructed by the Implementation Team.
+   
+ File Description         File Name                         FTP Mode
+ -------------------------------------------------------------------
+ PSJ*5.0*261              MOCHA_1_0_PSJ_5_261.KID           ASCII
+                                                                  
+  
+ Test Sites:
+ ===========
+ HEARTLAND-WEST HCS
+ PALO ALTO HCS
+ SAN FRANCISCO, CA
+ TUSCALOOSA, AL
+  
+  
+ Documentation Retrieval Instructions:
+ ===================================== 
+ N/A
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Installation Instructions
+ -------------------------
+ This patch should not be installed while Inpatient Medication options are 
+ in use. It is also recommended that it be installed when Computerized
+ Patient Record System (CPRS) usage is at a minimum, particularly for
+ Inpatient Medication ordering. This patch should take less than 5 minutes
+ to install.
+  
+    1. Download MOCHA_1_0_PSJ_5_261.KID into your local directory.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. Select the Load a Distribution and enter the directory that you
+       FTP'ed the host file to and MOCHA_1_0_PSJ_5_261.KID.  Example:
+       USER$:[ABC]MOCHA_1_0_PSJ_5_261.KID
+  
+    4. From the Kernel Installation & Distribution System (KIDS) menu,
+       you may select to use the following options (when prompted for
+       INSTALL NAME, enter PSJ*5.0*261):
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as Data Dictionaries or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+  
+   5. Use the Install Package(s) option and select the package PSJ*5.0*261.
+  
+   6. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ The second line of these routines now looks like:
+ ;;5.0; INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 46
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJLIFN
+    Before: B28386650   After: B28721093  **1,29,34,37,42,47,50,56,94,
+                                           80,116,110,181,261**
+Routine Name: PSJLIFNI
+    Before: B11257196   After: B11456971  **1,29,34,37,50,94,116,110,111,
+                                           181,261**
+ 
+Routine list of preceding patches: 181
+
+=============================================================================
+User Information:
+Entered By  : VO,MAI                        Date Entered  : MAY 25, 2011
+Completed By: YARBER,KIMBERLY               Date Completed: JUN 14, 2011
+Released By : TEAGUE,LYN                    Date Released : JUN 14, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

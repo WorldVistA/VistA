@@ -1,0 +1,323 @@
+$TXT Created by CROSSMAN,PAM at MNTVLL.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 04/21/11 at 14:42
+=============================================================================
+Run Date: JUN 17, 2011                     Designation: DG*5.3*830
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #741                    Status: Released
+                  Compliance Date: JUL 18, 2011
+=============================================================================
+
+Associated patches: (v)DG*5.3*725  <<= must be installed BEFORE `DG*5.3*830'
+                    (v)DG*5.3*754  <<= must be installed BEFORE `DG*5.3*830'
+
+Subject: COPAY TEST RPT; TIME OF DEATH
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ The Copay Exempt Test Needing Update At Next Appt. [DG CO-PAY TEST FUTURE
+ LIST] report menu option is incorrectly including certain future-appointed
+ patients whose latest, expired or soon-to expire Co-pay Exemption Tests
+ have been converted by IVM.  Such cases need to be excluded from the
+ report.
+  
+ With VistA sites' installation of one of the ESR 3.1/VOA patches 
+ (DG*5.3*754), the Death Entry [DG DEATH ENTRY] option is no longer
+ allowing users to enter a time value in conjunction with the date.  This 
+ patch will restore that functionality.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ =============================================================
+ There is no NSR associated with this patch.
+  
+ This patch addresses the following Change Request (CR):
+ ======================================================
+ CR 9612
+  
+ This patch addresses the following Remedy Ticket(s):
+ ====================================================
+ HD326978 - Copay Exemptions That Will Need Updating at Next Appt
+ HD476441 - LEX Date of Death - Date Issue
+  
+  
+ Components sent with patch
+ ==========================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ PATIENT       (2)          DATE OF DEATH (.351)  Modified 
+  
+  
+ Remedy Ticket(s) & Overview
+ ==========================
+  
+ 1. HD326978   Copay Exemptions That Will Need Updating at Next Appt
+  
+ Problem:
+ --------
+ The Copay Exempt Test Needing Update At Next Appt. [DG CO-PAY TEST FUTURE
+ LIST] report menu option is incorrectly including future-appointed
+ Non-service Connected (NSC) and 0% Service Connected (SC) patients whose
+ latest, expired or soon-to expire applicable Co-pay Exemption Tests have
+ been converted by IVM. These cases need to be excluded from the report.  
+ (Note:  cases where all is as above but Source of Income Test is not IVM
+ should remain on the report.)
+  
+ Resolution:
+ -----------
+ Modify routine DGMTOFA to exclude any veterans with the following 
+ criteria from the report:
+  
+ Existing RX Copay Test with Source of Income Test = IVM AND
+ Primary eligibility code = NSC OR
+ Primary eligibility code = SC Less than 50% and percentage is 0 and total 
+ annual VA check amount is 0 (these three conditions go together in that if
+ the eligibility code is SC Less than 50%, then the SC percentage has to be
+ 0 and the total annual VA check amount has to be 0.)
+  
+  
+ 2. HD476441 LEX Date of Death - Date Issue
+  
+ Problem:
+ --------
+ DG*5.3*754 modified the input transform on the DATE OF DEATH Field
+ (#.351) of the PATIENT File (#2) to disallow an imprecise date in support 
+ of ESR functionality. The change to the input transform inadvertently
+ removed the ability of site users to enter a time value in conjunction 
+ with the date of death.
+  
+ Resolution:
+ -----------
+ The input transform on the DATE OF DEATH Field (#.351) of the PATIENT 
+ File (#2) has been modified to add a "T" (allow time) into the %DT
+ parameter. This will allow any site using the Death Entry [DG DEATH 
+ ENTRY] option to specify a time value.
+  
+  
+ Associated Code Change Requests
+ ===============================
+ REEG_00009612 - HD0000000326978 - Copay Exemptions
+  
+  
+ Associated Test Sites:
+ =====================
+ Battle Creek VAMC (Medium)
+ Southern Arizona VA HCS (Large)
+ VA Hudson Valley HCS (Integrated)
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+   If installed during the normal workday, it is recommended the following
+   menu options be disabled to prevent possible conflicts while running the
+   KIDS Install. Other VistA users will not be affected.
+   
+       Copay Exempt Test Needing Update at Next Appt. [DG CO-PAY TEST
+                                                          FUTURE LIST]
+       Death Entry [DG DEATH ENTRY]
+  
+   Install Time - less than 5 minutes
+   
+       
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  START UP KIDS  
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+  
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+  
+   Select Kernel Installation & Distribution System Option: INStallation 
+                                                            --- 
+          Load a Distribution  
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+  
+  
+ 3.  Select Installation Option:  
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter DG*5.3*830):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+  
+ 4. Select Installation Option: Install Package(s)
+                                ------------------
+     **This is the step to start the installation of this KIDS patch: 
+   
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO.
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer YES. When prompted to 
+         select the options you would like to place out of order, enter the
+         following:
+         
+          Copay Exempt Test Needing Update At Next Appt. [DG CO-PAY TEST
+                                                             FUTURE LIST]
+          Death Entry [DG DEATH ENTRY]
+  
+     d.  When prompted 'Enter protocols you wish to mark as 'Out Of 
+         Order':' press <Enter>.
+  
+ Note:  In the Routine Information section below, where the routine's
+ second line is listed, please disregard the Build number, as it has been
+ generated by the National Patch Module and is irrelevant to VistA sites'
+ installations.  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGMTOFA
+    Before: B19818712   After: B25657506  **3,50,182,326,426,568,725,830**
+ Description of Changes:
+    BEFORE PATCH ROUTINE
+    ====================
+    MT       ; Is patient going to need to complete a MT/Copay by appt?
+             S 
+    DGMT=$$LST^DGMTU(DGDFN,$P(DGDATE,"."),DGMTYPT),DGMT1=$P($G(^DGMT(408.
+    31,+DGMT,0)),U,3) I DGMT1,"^3^10^"'[("^"_DGMT1_"^") D
+             .S X1=$P(DGMT,U,2),X2=365 D C^%DTC I 
+    $P(DGDATE,".")<X,$S(DGMT1=1:0,DGMT
+    1=9:0,1:1) Q
+             .;Check to see if Cat C/Pend Adj agreed to pay with test date 
+    >10/5/99
+             .I 
+    $P(DGMT,U,2)>2991005,$P($G(^DGMT(408.31,+DGMT,0)),U,11)=1,((DGMT1=6)
+    !(DGMT1=2)) Q
+             .;Check to see if Cat C, declined to provide income info but 
+    agreed to
+             .;pay -- no date restrictions on these types.
+             .I 
+    $G(DGMT1)=6,+$P($G(^DGMT(408.31,+DGMT,0)),U,14),+$P($G(^DGMT(408.31,
+    +DGMT,0)),U,11) Q
+             .; checking for future means test based on DT
+             .N DGNXTMT
+             .S DGNXTMT=$O(^IVM(301.5,"AE",DGDFN,DT))
+             .I 'DGNXTMT S DGNXTMT=""
+             .S 
+    ^TMP("DGMTO",$J,$S(+$P(^SC(DGCLN,0),U,15):$P(^(0),U,15),1:$O(^DG(40.
+    
+  8,0))),$P(^SC(DGCLN,0),U),$P(^DPT(DGDFN,0),U),DGDATE)=DGDFN_U_$P(DGMT,U,1,
+    4)_U_$
+    
+  P($P(DGTMP,U,10),";")_U_DGNXTMT,^TMP("DGMTL",$J,$P(^DPT(DGDFN,0),U),DGDFN)
+    =""
+             Q
+             ;
+    LETTER() ;
+     
+     
+    AFTER PATCH ROUTINE
+    ===================
+    MT       ; Is patient going to need to complete a MT/Copay by appt?
+             S 
+    DGMT=$$LST^DGMTU(DGDFN,$P(DGDATE,"."),DGMTYPT),DGMT1=$P($G(^DGMT(408.
+    31,+DGMT,0)),U,3) I DGMT1,"^3^10^"'[("^"_DGMT1_"^") D
+             . N MTQ,X S MTQ=0  ; only do the following for RX Co-pay tests
+             .I DGMTYPT=2 D  Q:MTQ=1
+             .. ;Exclude from report the following:
+             .. ;Existing RX Copay Test with Source of Test = IVM AND
+             .. ;Primary eligibility code = NSC OR Primary eligibility code 
+  =
+             .. ; SC Less than 50% and percentage is 0 and Total VA check 
+  amt 
+    = 0
+             .. ;  DG*5.3*830
+             .. I $P($G(^DGMT(408.31,+DGMT,0)),U,23)'=2 Q ; quit if not IVM
+             .. S X=$P($G(^DPT(DGDFN,.36)),"^",1)
+             .. I $P($G(^DIC(8,+X,0)),"^",9)=5!($$SC(DGDFN)) S MTQ=1
+             .S X1=$P(DGMT,U,2),X2=365 D C^%DTC I 
+    $P(DGDATE,".")<X,$S(DGMT1=1:0,DGMT
+    1=9:0,1:1) Q
+             .;Check to see if Cat C/Pend Adj agreed to pay with test date 
+    >10/5/99
+             .I 
+    $P(DGMT,U,2)>2991005,$P($G(^DGMT(408.31,+DGMT,0)),U,11)=1,((DGMT1=6)
+    !(DGMT1=2)) Q
+             .;Check to see if Cat C, declined to provide income info but 
+    agreed to
+             .;pay -- no date restrictions on these types.
+             .I 
+    $G(DGMT1)=6,+$P($G(^DGMT(408.31,+DGMT,0)),U,14),+$P($G(^DGMT(408.31,
+    +DGMT,0)),U,11) Q
+             .; checking for future means test based on DT
+             .N DGNXTMT
+             .S DGNXTMT=$O(^IVM(301.5,"AE",DGDFN,DT))
+             .I 'DGNXTMT S DGNXTMT=""
+             .S 
+    ^TMP("DGMTO",$J,$S(+$P(^SC(DGCLN,0),U,15):$P(^(0),U,15),1:$O(^DG(40.
+    
+  8,0))),$P(^SC(DGCLN,0),U),$P(^DPT(DGDFN,0),U),DGDATE)=DGDFN_U_$P(DGMT,U,1,
+    4)_U_$
+    
+  P($P(DGTMP,U,10),";")_U_DGNXTMT,^TMP("DGMTL",$J,$P(^DPT(DGDFN,0),U),DGDFN)
+    =""
+             Q
+             ;
+    SC(DFN)  ; Check if patient is SC 0% non-compensable
+             ; Input -- DFN       Patient IEN
+             ; Output -- 1=Yes and 0=No
+             N Y
+             S Y=0
+             ; Primary eligibility is SC LESS THAN 50%
+             I $D(^DPT(DFN,.36)),$P($G(^DIC(8,+^(.36),0)),"^",9)=3 S Y=1
+             G:'Y SCQ
+             ; Service connected percentage is zero
+             I $P($G(^DPT(DFN,.3)),"^",2)'=0 S Y=0 G SCQ
+             ; No Total annual VA check amount
+             I $P($G(^DPT(DFN,.362)),"^",20) S Y=0
+    SCQ      Q +$G(Y)
+             ;
+    LETTER() ;
+
+ 
+Routine list of preceding patches: 725
+
+=============================================================================
+User Information:
+Entered By  : CROSSMAN,PAM                  Date Entered  : JUN 09, 2010
+Completed By: RUDINGER,NANCY L.             Date Completed: JUN 08, 2011
+Released By : GROOMS,ANTHONY E              Date Released : JUN 17, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

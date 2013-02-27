@@ -1,0 +1,898 @@
+Released DG*5.3*834 SEQ #748
+Extracted from mail message
+**KIDS**:DG*5.3*834^
+
+**INSTALL NAME**
+DG*5.3*834
+"BLD",8480,0)
+DG*5.3*834^REGISTRATION^0^3110914^y
+"BLD",8480,1,0)
+^^11^11^3110914^
+"BLD",8480,1,1,0)
+1. This patch introduces an additional check on the Dependent's Effective
+"BLD",8480,1,2,0)
+Date when entering a new dependent using the Spouse/Dependent Add ("DA")
+"BLD",8480,1,3,0)
+protocol on the Family Demographic Data, Screen <8> in the Load/Edit
+"BLD",8480,1,4,0)
+Patient Data (DG LOAD PATIENT DA TA) option on the Registration Menu.
+"BLD",8480,1,5,0)
+This check will prevent the effective date from being prior to the
+"BLD",8480,1,6,0)
+Veteran's Date of Birth.
+"BLD",8480,1,7,0)
+ 
+"BLD",8480,1,8,0)
+2. This patch adjust's a check introduced with DG*5.3*799 which was to
+"BLD",8480,1,9,0)
+prevent sites from editing MT's through the registration menu's that they
+"BLD",8480,1,10,0)
+don't own.  The original check did not differentiate between parent and
+"BLD",8480,1,11,0)
+divisions of the parent.
+"BLD",8480,4,0)
+^9.64PA^^
+"BLD",8480,6)
+2^
+"BLD",8480,6.3)
+4
+"BLD",8480,"ABPKG")
+n
+"BLD",8480,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8480,"KRN",.4,0)
+.4
+"BLD",8480,"KRN",.401,0)
+.401
+"BLD",8480,"KRN",.402,0)
+.402
+"BLD",8480,"KRN",.403,0)
+.403
+"BLD",8480,"KRN",.5,0)
+.5
+"BLD",8480,"KRN",.84,0)
+.84
+"BLD",8480,"KRN",3.6,0)
+3.6
+"BLD",8480,"KRN",3.8,0)
+3.8
+"BLD",8480,"KRN",9.2,0)
+9.2
+"BLD",8480,"KRN",9.8,0)
+9.8
+"BLD",8480,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",8480,"KRN",9.8,"NM",1,0)
+DGRPEIS1^^0^B31978163
+"BLD",8480,"KRN",9.8,"NM",2,0)
+DGMTU^^0^B56759132
+"BLD",8480,"KRN",9.8,"NM","B","DGMTU",2)
+
+"BLD",8480,"KRN",9.8,"NM","B","DGRPEIS1",1)
+
+"BLD",8480,"KRN",19,0)
+19
+"BLD",8480,"KRN",19.1,0)
+19.1
+"BLD",8480,"KRN",101,0)
+101
+"BLD",8480,"KRN",409.61,0)
+409.61
+"BLD",8480,"KRN",771,0)
+771
+"BLD",8480,"KRN",779.2,0)
+779.2
+"BLD",8480,"KRN",870,0)
+870
+"BLD",8480,"KRN",8989.51,0)
+8989.51
+"BLD",8480,"KRN",8989.52,0)
+8989.52
+"BLD",8480,"KRN",8994,0)
+8994
+"BLD",8480,"KRN","B",.4,.4)
+
+"BLD",8480,"KRN","B",.401,.401)
+
+"BLD",8480,"KRN","B",.402,.402)
+
+"BLD",8480,"KRN","B",.403,.403)
+
+"BLD",8480,"KRN","B",.5,.5)
+
+"BLD",8480,"KRN","B",.84,.84)
+
+"BLD",8480,"KRN","B",3.6,3.6)
+
+"BLD",8480,"KRN","B",3.8,3.8)
+
+"BLD",8480,"KRN","B",9.2,9.2)
+
+"BLD",8480,"KRN","B",9.8,9.8)
+
+"BLD",8480,"KRN","B",19,19)
+
+"BLD",8480,"KRN","B",19.1,19.1)
+
+"BLD",8480,"KRN","B",101,101)
+
+"BLD",8480,"KRN","B",409.61,409.61)
+
+"BLD",8480,"KRN","B",771,771)
+
+"BLD",8480,"KRN","B",779.2,779.2)
+
+"BLD",8480,"KRN","B",870,870)
+
+"BLD",8480,"KRN","B",8989.51,8989.51)
+
+"BLD",8480,"KRN","B",8989.52,8989.52)
+
+"BLD",8480,"KRN","B",8994,8994)
+
+"BLD",8480,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8480,"QUES",0)
+^9.62^^
+"BLD",8480,"REQB",0)
+^9.611^2^2
+"BLD",8480,"REQB",1,0)
+DG*5.3*805^1
+"BLD",8480,"REQB",2,0)
+DG*5.3*799^1
+"BLD",8480,"REQB","B","DG*5.3*799",2)
+
+"BLD",8480,"REQB","B","DG*5.3*805",1)
+
+"MBREQ")
+0
+"PKG",47,-1)
+1^1
+"PKG",47,0)
+REGISTRATION^DG^PATIENT REGISTRATION, ADMISSION, DISCHARGE, EMBOSSER 
+"PKG",47,20,0)
+^9.402P^^
+"PKG",47,22,0)
+^9.49I^1^1
+"PKG",47,22,1,0)
+5.3^2930813^2960613
+"PKG",47,22,1,"PAH",1,0)
+834^3110914^1258
+"PKG",47,22,1,"PAH",1,1,0)
+^^11^11^3110914
+"PKG",47,22,1,"PAH",1,1,1,0)
+1. This patch introduces an additional check on the Dependent's Effective
+"PKG",47,22,1,"PAH",1,1,2,0)
+Date when entering a new dependent using the Spouse/Dependent Add ("DA")
+"PKG",47,22,1,"PAH",1,1,3,0)
+protocol on the Family Demographic Data, Screen <8> in the Load/Edit
+"PKG",47,22,1,"PAH",1,1,4,0)
+Patient Data (DG LOAD PATIENT DA TA) option on the Registration Menu.
+"PKG",47,22,1,"PAH",1,1,5,0)
+This check will prevent the effective date from being prior to the
+"PKG",47,22,1,"PAH",1,1,6,0)
+Veteran's Date of Birth.
+"PKG",47,22,1,"PAH",1,1,7,0)
+ 
+"PKG",47,22,1,"PAH",1,1,8,0)
+2. This patch adjust's a check introduced with DG*5.3*799 which was to
+"PKG",47,22,1,"PAH",1,1,9,0)
+prevent sites from editing MT's through the registration menu's that they
+"PKG",47,22,1,"PAH",1,1,10,0)
+don't own.  The original check did not differentiate between parent and
+"PKG",47,22,1,"PAH",1,1,11,0)
+divisions of the parent.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","DGMTU")
+0^2^B56759132^B56504667
+"RTN","DGMTU",1,0)
+DGMTU ;ALB/RMO,LBD,BRM,EG - Means Test Utilities ; 02/08/2005 07:10 AM
+"RTN","DGMTU",2,0)
+ ;;5.3;Registration;**4,33,182,277,290,374,358,420,426,411,332,433,456,476,519,451,630,783,799,834**;Aug 13, 1993;Build 4
+"RTN","DGMTU",3,0)
+ ;MT=Means Test
+"RTN","DGMTU",4,0)
+LST(DFN,DGDT,DGMTYPT) ;Last MT for a patient
+"RTN","DGMTU",5,0)
+ ;         Input  -- DFN   Patient IEN
+"RTN","DGMTU",6,0)
+ ;                   DGDT  Date/Time  (Optional- default today@2359)
+"RTN","DGMTU",7,0)
+ ;                DGMTYPT  Type of Test (Optional - if not defined 
+"RTN","DGMTU",8,0)
+ ;                                       Means Test will be assumed)
+"RTN","DGMTU",9,0)
+ ;         Output -- Annual Means Test IEN^Date of Test
+"RTN","DGMTU",10,0)
+ ;                   ^Status Name^Status Code^Source of Test
+"RTN","DGMTU",11,0)
+ N DGIDT,DGMTFL1,DGMTI,DGNOD,Y I '$D(DGMTYPT) S DGMTYPT=1
+"RTN","DGMTU",12,0)
+ S DGIDT=$S($G(DGDT)>0:-DGDT,1:-DT) S:'$P(DGIDT,".",2) DGIDT=DGIDT_.2359
+"RTN","DGMTU",13,0)
+ F  S DGIDT=+$O(^DGMT(408.31,"AID",DGMTYPT,DFN,DGIDT)) Q:'DGIDT!$G(DGMTFL1)  D
+"RTN","DGMTU",14,0)
+ .F DGMTI=0:0 S DGMTI=+$O(^DGMT(408.31,"AID",DGMTYPT,DFN,DGIDT,DGMTI)) Q:'DGMTI!$G(DGMTFL1)  D
+"RTN","DGMTU",15,0)
+ ..S DGNOD=$G(^DGMT(408.31,DGMTI,0)) I DGNOD,$G(^("PRIM"))!(DGMTYPT=4) S DGMTFL1=1,Y=DGMTI_"^"_$P(^(0),"^")_"^"_$$MTS(DFN,+$P(^(0),"^",3))_"^"_$P(DGNOD,"^",23) ; chk for primary MT
+"RTN","DGMTU",16,0)
+ Q $G(Y)
+"RTN","DGMTU",17,0)
+ ;
+"RTN","DGMTU",18,0)
+LVMT(DFN,DGDT) ;Last valid MT (status other than required)
+"RTN","DGMTU",19,0)
+ ;          Input  -- DFN    Patient IEN
+"RTN","DGMTU",20,0)
+ ;                    DGDT   Date (Optional - default today)
+"RTN","DGMTU",21,0)
+ ;          Output -- Annual Means Test IEN^Date of Test^Status Name
+"RTN","DGMTU",22,0)
+ ;                     ^Status Code
+"RTN","DGMTU",23,0)
+ N DGMT,DGMTL
+"RTN","DGMTU",24,0)
+ S:'$D(DGDT) DGDT=DT S DGMTL=$$LST^DGMTU(DFN,DGDT)
+"RTN","DGMTU",25,0)
+ I $P(DGMTL,"^",4)="R" F  S DGMT=$$LST^DGMTU(DFN,DGDT) Q:DGMT']""!($P(DGMT,U,4)'="R")  S DGDT=$P(DGMT,U,2)-1
+"RTN","DGMTU",26,0)
+ Q $S($G(DGMT)]"":DGMT,1:$G(DGMTL))
+"RTN","DGMTU",27,0)
+ ;
+"RTN","DGMTU",28,0)
+NVMT(DFN,DGDT) ;Next valid MT (status other than required)
+"RTN","DGMTU",29,0)
+ ;          Input  -- DFN    Patient IEN
+"RTN","DGMTU",30,0)
+ ;                    DGDT   Date (Required)
+"RTN","DGMTU",31,0)
+ ;          Output -- Annual Means Test IEN^Date of Test^Status Name
+"RTN","DGMTU",32,0)
+ ;                     ^Status Code
+"RTN","DGMTU",33,0)
+ N DGDTE,DGMT,DGMT0,DGMTI,DGMTPR,DGMTS
+"RTN","DGMTU",34,0)
+ S DGDTE=DGDT
+"RTN","DGMTU",35,0)
+ F  S DGDTE=$O(^DGMT(408.31,"AD",1,DFN,DGDTE)) Q:'DGDTE!$G(DGMT)  D
+"RTN","DGMTU",36,0)
+ .F DGMTI=0:0 S DGMTI=$O(^DGMT(408.31,"AD",1,DFN,DGDTE,DGMTI)) Q:'DGMTI  S DGMT0=$G(^DGMT(408.31,DGMTI,0)),DGMTS=+$P(DGMT0,"^",3),DGMTPR=$G(^("PRIM")) I +DGMT0,DGMTS'=1,DGMTPR S DGMT=DGMTI_"^"_+DGMT0_"^"_$$MTS^DGMTU(DFN,DGMTS) Q
+"RTN","DGMTU",37,0)
+ Q $G(DGMT)
+"RTN","DGMTU",38,0)
+ ;
+"RTN","DGMTU",39,0)
+MTS(DFN,DGMTS) ;MT status -- default current
+"RTN","DGMTU",40,0)
+ ;         Input  -- DFN    Patient IEN
+"RTN","DGMTU",41,0)
+ ;                   DGMTS  Means Test Status IEN  (Optional)
+"RTN","DGMTU",42,0)
+ ;         Output -- Status Name^Status Code
+"RTN","DGMTU",43,0)
+ N Y
+"RTN","DGMTU",44,0)
+ S DGMTS=$S($G(DGMTS)>0:DGMTS,1:$P($G(^DPT(DFN,0)),"^",14))
+"RTN","DGMTU",45,0)
+ I DGMTS S Y=$P($G(^DG(408.32,DGMTS,0)),"^",1,2)
+"RTN","DGMTU",46,0)
+ Q $G(Y)
+"RTN","DGMTU",47,0)
+ ;
+"RTN","DGMTU",48,0)
+DIS(DFN) ;Display patients current MT status,
+"RTN","DGMTU",49,0)
+ ;        eligibility for care, deductible information,
+"RTN","DGMTU",50,0)
+ ;        date of test and date of completion
+"RTN","DGMTU",51,0)
+ ;         Input  -- DFN    Patient IEN
+"RTN","DGMTU",52,0)
+ ;         Output -- None
+"RTN","DGMTU",53,0)
+ N DGCS,DGDED,DGMTI,DGMT0
+"RTN","DGMTU",54,0)
+ S DGCS=$P($G(^DPT(DFN,0)),"^",14) G DISQ:DGCS=""
+"RTN","DGMTU",55,0)
+ S DGMTI=+$$LST^DGMTU(DFN),DGMT0=$G(^DGMT(408.31,DGMTI,0))
+"RTN","DGMTU",56,0)
+ S MTSIG=$P(DGMT0,"^",29)
+"RTN","DGMTU",57,0)
+ W !,"Means Test Signed?: ",$S(MTSIG=1:"YES",MTSIG=0:"NO",MTSIG=9:"DELETED",1:"")
+"RTN","DGMTU",58,0)
+ I DGCS=1 W !!,"Patient Requires a Means Test"
+"RTN","DGMTU",59,0)
+ I DGCS=2 W !!,"Patient's Means Test is Pending Adjudication for "_$$PA^DGMTUTL(DGMTI)
+"RTN","DGMTU",60,0)
+ I DGCS=3 W !!,"Means Test Not Required"
+"RTN","DGMTU",61,0)
+ I ("^4^5^6^16^")[("^"_DGCS_"^") W !!,"Patient's status is ",$$GETNAME^DGMTH(DGCS)," based on primary means test"
+"RTN","DGMTU",62,0)
+ I $D(^DG(408.32,DGCS,"MSG")) W !,^("MSG")
+"RTN","DGMTU",63,0)
+ I DGCS=6 S DGDED=$P(DGMT0,"^",11) W ! W:DGDED]"" "Has",$S(DGDED:"",1:" not")," agreed to pay the deductible"
+"RTN","DGMTU",64,0)
+ S Y=$P(DGMT0,"^") X ^DD("DD") W !,"Primary Means Test ",$S(DGCS=1:"Required from",1:"Last Applied")," '",Y,"'"
+"RTN","DGMTU",65,0)
+ I ("^2^4^5^6^16^")[("^"_DGCS_"^") S Y=$P(DGMT0,"^",7) X ^DD("DD") W " (COMPLETED: ",Y,")"
+"RTN","DGMTU",66,0)
+ I DGCS=3 S Y=$P(DGMT0,"^",17) X ^DD("DD") W " (NO LONGER REQUIRED: ",Y,")"
+"RTN","DGMTU",67,0)
+DISQ Q
+"RTN","DGMTU",68,0)
+ ;
+"RTN","DGMTU",69,0)
+EDT(DFN,DGDT) ;Display patients current MT information and provide
+"RTN","DGMTU",70,0)
+ ;        the user with the option of proceeding with a required
+"RTN","DGMTU",71,0)
+ ;        MT or editing an existing means test
+"RTN","DGMTU",72,0)
+ ;         Input  -- DFN    Patient IEN
+"RTN","DGMTU",73,0)
+ ;                   DGDT   Date/Time
+"RTN","DGMTU",74,0)
+ ;         Output -- None
+"RTN","DGMTU",75,0)
+ ;
+"RTN","DGMTU",76,0)
+ ; obtain lock used to synchronize local MT/CT options with income test upload
+"RTN","DGMTU",77,0)
+ ; '+' added to VSITE check to allow divisions to edit parent owned tests
+"RTN","DGMTU",78,0)
+ N VSITE
+"RTN","DGMTU",79,0)
+ I $$LOCK^DGMTUTL(DFN)
+"RTN","DGMTU",80,0)
+ ;
+"RTN","DGMTU",81,0)
+ D DIS(DFN)
+"RTN","DGMTU",82,0)
+ S DGMTI=+$$LST(DFN,DGDT),VSITE=+$P($$SITE^VASITE(),U,3)
+"RTN","DGMTU",83,0)
+ G EDTQ:'DGMTI!(DGMTI'=+$$LST^DGMTU(DFN))
+"RTN","DGMTU",84,0)
+ I +$P($G(^DGMT(408.31,DGMTI,2)),U,5)'=VSITE G EDTQ ; Test doesn't belong to site
+"RTN","DGMTU",85,0)
+ S DGMT0=$G(^DGMT(408.31,DGMTI,0)),DGMTDT=+DGMT0,DGMTS=$P(DGMT0,"^",3)
+"RTN","DGMTU",86,0)
+ S DIR("A")="Do you wish to "_$S(DGMTS=1:"proceed with",1:"edit")_" the means test at this time"
+"RTN","DGMTU",87,0)
+ S DIR("B")=$S(DGMTS&($D(DGPRFLG)):"NO",DGMTS=1:"YES",1:"NO"),DIR(0)="Y"
+"RTN","DGMTU",88,0)
+ W ! D ^DIR G EDTQ:$D(DTOUT)!($D(DUOUT))
+"RTN","DGMTU",89,0)
+ I Y S DGMTYPT=1,DGMTACT="EDT",DGMTROU="EDTQ^DGMTU" G EN^DGMTSC
+"RTN","DGMTU",90,0)
+EDTQ K DGMT0,DGMTACT,DGMTDT,DGMTI,DGMTROU,DGMTS,DIR,DTOUT,DUOUT,Y
+"RTN","DGMTU",91,0)
+ ;
+"RTN","DGMTU",92,0)
+ ; release lock
+"RTN","DGMTU",93,0)
+ D UNLOCK^DGMTUTL(DFN)
+"RTN","DGMTU",94,0)
+ ;
+"RTN","DGMTU",95,0)
+ Q
+"RTN","DGMTU",96,0)
+ ;
+"RTN","DGMTU",97,0)
+CMTS(DFN) ;Get Current MT Status - query HEC if necessary
+"RTN","DGMTU",98,0)
+ ;
+"RTN","DGMTU",99,0)
+ ;        Input: DFN=patient ien
+"RTN","DGMTU",100,0)
+ ;       Output: MT IEN^Date of Test^Status Name
+"RTN","DGMTU",101,0)
+ ;                 ^Status Code^Source of Test
+"RTN","DGMTU",102,0)
+ ;
+"RTN","DGMTU",103,0)
+ N X,Y,DGMTDATA,DGQSENT,DGDOD,NODE0,DGRET,DGMFLG,DGTAG,DGMTYPT
+"RTN","DGMTU",104,0)
+ D CHKPT^DGMTU4(DFN)
+"RTN","DGMTU",105,0)
+ S DGMTYPT=1,DGMTDATA=$$LST(DFN,"",DGMTYPT)
+"RTN","DGMTU",106,0)
+ ;Next line checks to see if patient has expired, if so, Query not initiated
+"RTN","DGMTU",107,0)
+ S DGDOD=$P($G(^DPT(DFN,.35)),U)
+"RTN","DGMTU",108,0)
+ I +DGDOD Q DGMTDATA
+"RTN","DGMTU",109,0)
+ ;Next line checks to see if current test exists, if not, Query not initiated 
+"RTN","DGMTU",110,0)
+ I '$G(DGMTDATA) Q DGMTDATA
+"RTN","DGMTU",111,0)
+ D:+$$QFLG(DGMTDATA)
+"RTN","DGMTU",112,0)
+ .I $G(IVMZ10)'="UPLOAD IN PROGRESS",'$$OPEN^IVMCQ2(DFN),'$$SENT^IVMCQ2(DFN),$G(DGMFLG)'=0 D
+"RTN","DGMTU",113,0)
+ ..I $$LOCK^DGMTUTL(DFN)
+"RTN","DGMTU",114,0)
+ ..D QRYQUE2^IVMCQ2(DFN,$G(DUZ),0,$G(XQY)) S DGQSENT=1
+"RTN","DGMTU",115,0)
+ ..I '$D(ZTQUEUED),'$G(DGMSGF),$G(DGQSENT) W !!,"Financial query queued to be sent to HEC...",! H .5
+"RTN","DGMTU",116,0)
+ ..D UNLOCK^DGMTUTL(DFN)
+"RTN","DGMTU",117,0)
+ .S DGMTDATA=$$LST(DFN,"",DGMTYPT)
+"RTN","DGMTU",118,0)
+ D:+$$MFLG(DGMTDATA)
+"RTN","DGMTU",119,0)
+ .S DGMFLG=$$MFLG(DGMTDATA)
+"RTN","DGMTU",120,0)
+ .S DGTAG=$S(DGMFLG=1:"MSG"_DGMFLG,DGMFLG=2:"MSG"_DGMFLG,1:0)
+"RTN","DGMTU",121,0)
+ .I DGTAG["MSG",'$G(DGMSGF) D @DGTAG
+"RTN","DGMTU",122,0)
+ Q DGMTDATA   ;return most current MT data
+"RTN","DGMTU",123,0)
+MFLG(DGMTDATA) ;Set up appropriate informational message flag for user's
+"RTN","DGMTU",124,0)
+ ;benefit.
+"RTN","DGMTU",125,0)
+ ;Input        -     DGMTDATA as defined by $$LST function.
+"RTN","DGMTU",126,0)
+ ;Output       -     DGRETV
+"RTN","DGMTU",127,0)
+ ;     1 = Current Test is REQUIRED
+"RTN","DGMTU",128,0)
+ ;     2 = Test is > 365 days old and is in a status of
+"RTN","DGMTU",129,0)
+ ;         other than REQUIRED or NO LONGER REQUIRED
+"RTN","DGMTU",130,0)
+ ;     2 = Pend Adj for GMT, test date is 10/6/99 or
+"RTN","DGMTU",131,0)
+ ;         greater and agreed to the deductible
+"RTN","DGMTU",132,0)
+ ;     0 = CAT C/Pend Adj for MT, test date is 10/6/99
+"RTN","DGMTU",133,0)
+ ;         or greater and agreed to the deductible.
+"RTN","DGMTU",134,0)
+ ; OR  0 = Cat C, declined income info and agreed
+"RTN","DGMTU",135,0)
+ ;         to pay deductible.
+"RTN","DGMTU",136,0)
+ ; OR  0 = Has a future dated Means Test
+"RTN","DGMTU",137,0)
+ N DGRETV,FTST,DGMT0
+"RTN","DGMTU",138,0)
+ S DGRETV=0 I '$G(DGMTDATA) Q DGRETV
+"RTN","DGMTU",139,0)
+ S DGMT0=$G(^DGMT(408.31,+DGMTDATA,0))
+"RTN","DGMTU",140,0)
+ I $P(DGMTDATA,U,4)="R" S DGRETV=1
+"RTN","DGMTU",141,0)
+ I $$OLD^DGMTU4($P(DGMTDATA,U,2)),($P(DGMTDATA,U,4)'="N")&($P(DGMTDATA,U,4)'="R") S DGRETV=2
+"RTN","DGMTU",142,0)
+ I ($P(DGMTDATA,U,4)="C")!($P(DGMTDATA,U,4)="P"&($P(DGMT0,U,12)'<$P(DGMT0,U,27))),$P(DGMTDATA,U,2)>2991005,$P(DGMT0,U,11)=1 S DGRETV=0
+"RTN","DGMTU",143,0)
+ I ($P(DGMTDATA,U,4)="C"),+$P(DGMT0,U,14),+$P(DGMT0,U,11) S DGRETV=0
+"RTN","DGMTU",144,0)
+ D DOM^DGMTR I $G(DGDOM) S DGRETV=0
+"RTN","DGMTU",145,0)
+ S FTST=$$FUT(DFN)
+"RTN","DGMTU",146,0)
+ I DGRETV,FTST,$P(^DGMT(408.31,+FTST,0),U,19)=1 S DGRETV=0
+"RTN","DGMTU",147,0)
+ Q DGRETV
+"RTN","DGMTU",148,0)
+MSG1 ;Informational message 1
+"RTN","DGMTU",149,0)
+ N NODE0,Y
+"RTN","DGMTU",150,0)
+ S NODE0=$G(^DGMT(408.31,+DGMTDATA,0))
+"RTN","DGMTU",151,0)
+ W !!,$C(7),?15,"*** Patient Requires a Means Test ***",!
+"RTN","DGMTU",152,0)
+ S Y=$P(NODE0,U) X ^DD("DD") W !,?14,"Primary Means Test Required from "_Y,!
+"RTN","DGMTU",153,0)
+ I $G(IOST)["C-" R !!,"Enter <RETURN> to continue.",DGRET:DTIME
+"RTN","DGMTU",154,0)
+ Q
+"RTN","DGMTU",155,0)
+MSG2 ;Informational message 2
+"RTN","DGMTU",156,0)
+ N NODE0,Y
+"RTN","DGMTU",157,0)
+ S NODE0=$G(^DGMT(408.31,+DGMTDATA,0))
+"RTN","DGMTU",158,0)
+ W !!,$C(7),?17,"*** Patient Requires a Means Test ***",!
+"RTN","DGMTU",159,0)
+ S Y=$P(NODE0,U) X ^DD("DD") W !,?10,"Patient's Test dated "_Y_" is "_$P(DGMTDATA,U,3)_"."_" The test"
+"RTN","DGMTU",160,0)
+ W !,?10,"date is greater than 365 days old.  Please update."
+"RTN","DGMTU",161,0)
+ I $G(IOST)["C-" R !!,"Enter <RETURN> to continue.",DGRET:DTIME
+"RTN","DGMTU",162,0)
+ Q
+"RTN","DGMTU",163,0)
+QFLG(DGMTDATA) ;
+"RTN","DGMTU",164,0)
+ ;INPUT - DGMTDATA
+"RTN","DGMTU",165,0)
+ ;OUTPUT- IVMQFLG 1 if query is necessary 0 if not
+"RTN","DGMTU",166,0)
+ N IVMQFLG,DGMT0
+"RTN","DGMTU",167,0)
+ S IVMQFLG=0 I '$G(DGMTDATA) Q IVMQFLG
+"RTN","DGMTU",168,0)
+ S DGMT0=$G(^DGMT(408.31,+DGMTDATA,0))
+"RTN","DGMTU",169,0)
+ ;Set flag to 1 if Means test is Required.
+"RTN","DGMTU",170,0)
+ I $P(DGMTDATA,U,4)="R" S IVMQFLG=1
+"RTN","DGMTU",171,0)
+ ;Set flag to 1 if Means test older than 365 days and status is not
+"RTN","DGMTU",172,0)
+ ;NO LONGER REQUIRED and not REQUIRED.
+"RTN","DGMTU",173,0)
+ I $$OLD^DGMTU4($P(DGMTDATA,U,2)),($P(DGMTDATA,U,4)'="N")&($P(DGMTDATA,U,4)'="R") S IVMQFLG=1
+"RTN","DGMTU",174,0)
+ ;If Cat C/Pend Adj for MT, older than 365 days, agreed to pay, test
+"RTN","DGMTU",175,0)
+ ;date > 10/5/99 reset flag to 0 - no query is necessary.
+"RTN","DGMTU",176,0)
+ I ($P(DGMTDATA,U,4)="C")!($P(DGMTDATA,U,4)="P"&($P(DGMT0,U,12)'<$P(DGMT0,U,27))),$P(DGMTDATA,U,2)>2991005,$P(DGMT0,U,11)=1 S IVMQFLG=0
+"RTN","DGMTU",177,0)
+ ;If patient is Cat C, declined to provide income but has agreed to
+"RTN","DGMTU",178,0)
+ ;pay deductible, no query necessary - reset flag to 0
+"RTN","DGMTU",179,0)
+ I ($P(DGMTDATA,U,4)="C"),+$P(DGMT0,U,14),+$P(DGMT0,U,11) S DGRETV=0
+"RTN","DGMTU",180,0)
+ ;If patient is on a DOM ward, don't initiate query
+"RTN","DGMTU",181,0)
+ D DOM^DGMTR I $G(DGDOM) S IVMQFLG=0
+"RTN","DGMTU",182,0)
+ Q IVMQFLG
+"RTN","DGMTU",183,0)
+ ;
+"RTN","DGMTU",184,0)
+FUT(DFN,DGDT,DGMTYPT) ; Future MT for a patient
+"RTN","DGMTU",185,0)
+ ;DFN      Patient IEN
+"RTN","DGMTU",186,0)
+ ;DGDT     Date (Optional- default to today)
+"RTN","DGMTU",187,0)
+ ;DGMTYPT  Type of Test (Optional - default to MT)
+"RTN","DGMTU",188,0)
+ ;Return
+"RTN","DGMTU",189,0)
+ ;If a DCD test was performed it will be returned, else the
+"RTN","DGMTU",190,0)
+ ;current future dated test for the Income Year.
+"RTN","DGMTU",191,0)
+ ;MT IEN^Date of Test^Status Name^Status Code^Source
+"RTN","DGMTU",192,0)
+ ;
+"RTN","DGMTU",193,0)
+ N DGIDT,Y,MTIEN,SRCE,DONE,MTNOD,ARR,LAST,TYPTST
+"RTN","DGMTU",194,0)
+ S:'$D(DGMTYPT) DGMTYPT=1
+"RTN","DGMTU",195,0)
+ ;no future LTC eg 02/15/2005
+"RTN","DGMTU",196,0)
+ I ($G(DGMTYPT)=4) Q ""
+"RTN","DGMTU",197,0)
+ S TYPTST=$S(DGMTYPT=2:"AF",1:"AE")
+"RTN","DGMTU",198,0)
+ S DGIDT=$S($G(DGDT)>0:DGDT,1:DT),DONE=0
+"RTN","DGMTU",199,0)
+ S (ARR,LAST,Y)=""
+"RTN","DGMTU",200,0)
+ S:$P(DGIDT,".",2) DGIDT=$P(DGIDT,".")
+"RTN","DGMTU",201,0)
+ F  S DGIDT=$O(^IVM(301.5,TYPTST,DFN,DGIDT)) Q:'DGIDT!(DONE)  D
+"RTN","DGMTU",202,0)
+ .S MTIEN=0
+"RTN","DGMTU",203,0)
+ .F  S MTIEN=$O(^IVM(301.5,TYPTST,DFN,DGIDT,MTIEN)) Q:'MTIEN!(DONE)  D
+"RTN","DGMTU",204,0)
+ ..Q:'$D(^DGMT(408.31,MTIEN,0))
+"RTN","DGMTU",205,0)
+ ..S MTNOD=^DGMT(408.31,MTIEN,0),SRCE=$P(MTNOD,U,23)
+"RTN","DGMTU",206,0)
+ ..I SRCE'=1 S DONE=1,Y=MTIEN_U_$P(MTNOD,U)_U_$$MTS^DGMTU(DFN,+$P(MTNOD,U,3))_U_$P(MTNOD,U,23) Q
+"RTN","DGMTU",207,0)
+ ..I 'DONE,'$D(ARR($P(MTNOD,U),MTIEN)) S ARR($P(MTNOD,U),MTIEN)=MTIEN_U_$P(MTNOD,U)_U_$$MTS^DGMTU(DFN,+$P(MTNOD,U,3))_U_$P(MTNOD,U,23)
+"RTN","DGMTU",208,0)
+ I 'DONE S LAST=$O(ARR(""),-1) I LAST S Y=ARR(LAST,$O(ARR(LAST,""),-1))
+"RTN","DGMTU",209,0)
+ Q $G(Y)
+"RTN","DGRPEIS1")
+0^1^B31978163^B29345023
+"RTN","DGRPEIS1",1,0)
+DGRPEIS1 ;ALB/MIR - CALLS TO ADD NEW PATIENT RELATIONS AND INCOME PERSONS ; 6/19/09 11:33am
+"RTN","DGRPEIS1",2,0)
+ ;;5.3;Registration;**10,45,108,624,688,805,834**;Aug 13, 1993;Build 4
+"RTN","DGRPEIS1",3,0)
+ ;Adds entries to FILES #408.12 & 408.13
+"RTN","DGRPEIS1",4,0)
+ ;
+"RTN","DGRPEIS1",5,0)
+NEW ;check if data in FILE #408.12
+"RTN","DGRPEIS1",6,0)
+ ;out - DGPRI=IFN of #408.12
+"RTN","DGRPEIS1",7,0)
+ ;      DGFL [-1='^'/-2=time-out]
+"RTN","DGRPEIS1",8,0)
+ N DGRPDOB,DGRP0ND
+"RTN","DGRPEIS1",9,0)
+ I '$D(DGTSTDT) N DGTSTDT S DGTSTDT=$S($D(DGMTDT):DGMTDT,1:DT)
+"RTN","DGRPEIS1",10,0)
+ S DGPRI=$O(^DGPR(408.12,"C",DFN_";DPT(",0)),DGFL=$G(DGFL)
+"RTN","DGRPEIS1",11,0)
+ I '$D(^DGPR(408.12,+DGPRI,0)) S DGRP0ND=DFN_"^"_1_"^"_DFN_";DPT(",DGRPDOB=$P($G(^DPT(+DFN,0)),"^",3) D NEWPR
+"RTN","DGRPEIS1",12,0)
+ S DGIRI=$O(^DGMT(408.22,"B",DFN,0))
+"RTN","DGRPEIS1",13,0)
+ I '$D(^DGMT(408.22,+DGIRI,0)) D GETIENS^DGMTU2(DFN,+DGPRI,DGTSTDT)
+"RTN","DGRPEIS1",14,0)
+ Q
+"RTN","DGRPEIS1",15,0)
+NEWIP ;Add relation to #408.13 file
+"RTN","DGRPEIS1",16,0)
+ ; In - DFN=IEN of File #2
+"RTN","DGRPEIS1",17,0)
+ ;      DGRP0ND=0 node of 408.13
+"RTN","DGRPEIS1",18,0)
+ ;      DGDEP=Optional count of children dependents associated with patient
+"RTN","DGRPEIS1",19,0)
+ ;Out - DGIPI=408.13 IEN
+"RTN","DGRPEIS1",20,0)
+ K DINUM N DGRPDOB,DGSEX,I,X
+"RTN","DGRPEIS1",21,0)
+ S:('$D(DGDEP)) DGDEP=""
+"RTN","DGRPEIS1",22,0)
+ S DGRPDOB=$P(DGRP0ND,"^",3),DGSEX=$P(DGRP0ND,"^",2)
+"RTN","DGRPEIS1",23,0)
+ N CNT,I S CNT=0
+"RTN","DGRPEIS1",24,0)
+ F I=2,3,9 D
+"RTN","DGRPEIS1",25,0)
+ .S CNT=CNT+1,$P(DIC("DR"),";",CNT)=".0"_I_"////"_$P(DGRP0ND,U,I)
+"RTN","DGRPEIS1",26,0)
+ F I=10,11 D
+"RTN","DGRPEIS1",27,0)
+ .S CNT=CNT+1,$P(DIC("DR"),";",CNT)="."_I_"////"_$P(DGRP0ND,U,I)
+"RTN","DGRPEIS1",28,0)
+ F I=1:1:8 S DIC("DR")=DIC("DR")_";1."_I_"////"_$P(DGRP1ND,U,I)
+"RTN","DGRPEIS1",29,0)
+ S (DIK,DIC)="^DGPR(408.13,",DIC(0)="L",DLAYGO=408.13,X=$P(DGRP0ND,"^",1) K DD,DO D FILE^DICN S (DGIPI,DA)=+Y K DLAYGO
+"RTN","DGRPEIS1",30,0)
+ S Y=DGIPI,DGRP0ND=DFN_"^"_$S(SPOUSE:2,1:"")_"^"_+Y_";DGPR(408.13,"
+"RTN","DGRPEIS1",31,0)
+ ;FALLS THRU!
+"RTN","DGRPEIS1",32,0)
+NEWPR ;Add entry to file #408.12
+"RTN","DGRPEIS1",33,0)
+ ;In - DGRP0ND=0 node of 408.12
+"RTN","DGRPEIS1",34,0)
+ ;     DGRPDOB=DOB of relation
+"RTN","DGRPEIS1",35,0)
+ ;Out - DGPRI=IFN of new 408.12 entry
+"RTN","DGRPEIS1",36,0)
+ K DINUM N DOB,X
+"RTN","DGRPEIS1",37,0)
+ I '$D(DGTSTDT) N DGTSTDT S DGTSTDT=$S($D(DGMTDT):DGMTDT,1:DT)
+"RTN","DGRPEIS1",38,0)
+ S DOB=$G(DGRPDOB) I 'DOB S DOB=$E(DGTSTDT,1,3)-1_"0101" ; use dob for effective date...default = Jan 1 of prior year
+"RTN","DGRPEIS1",39,0)
+DIC ;* GTS - DG*6.3*688 restructured the IF code and DIC("S") that follows
+"RTN","DGRPEIS1",40,0)
+ N DGDEPCNT
+"RTN","DGRPEIS1",41,0)
+ S DGDEPCNT=$$CNTDEPS^DGMTU11(DFN)
+"RTN","DGRPEIS1",42,0)
+ I $P(DGRP0ND,"^",2)']"" DO
+"RTN","DGRPEIS1",43,0)
+ .S DIC="^DG(408.11,"
+"RTN","DGRPEIS1",44,0)
+ .S DIC(0)="AEQMZ"
+"RTN","DGRPEIS1",45,0)
+ .S DIC("A")="RELATIONSHIP: "
+"RTN","DGRPEIS1",46,0)
+ .S DIC("S")="I Y>2,""E""_DGSEX[$P(^(0),""^"",3),$S((DGTYPE=""D"")&(+DGDEPCNT<19):1,(DGTYPE=""D"")&(+DGDEPCNT>18)&(Y>6):1,(DGTYPE=""C"")&(Y<7):1,1:0)"
+"RTN","DGRPEIS1",47,0)
+ I $P(DGRP0ND,"^",2)']"" D ^DIC I '$D(DTOUT),(Y'>0) W *7,"   Required!!" G DIC
+"RTN","DGRPEIS1",48,0)
+ I $D(DTOUT) K DTOUT S DGFL=-2 G NEWPRQ
+"RTN","DGRPEIS1",49,0)
+ I $P(DGRP0ND,"^",2)']"" S $P(DGRP0ND,"^",2)=+Y
+"RTN","DGRPEIS1",50,0)
+ D ACT^DGRPEIS2 I DGFL<0 D  G NEWPRQ
+"RTN","DGRPEIS1",51,0)
+ .W !?3,*7,"Entry incomplete...deleted",!
+"RTN","DGRPEIS1",52,0)
+ .Q:'$G(DA)!($G(DIK)'="^DGPR(408.13,")  ;defined for deps in newip
+"RTN","DGRPEIS1",53,0)
+ .D ^DIK
+"RTN","DGRPEIS1",54,0)
+ ; ADDED FOR 834
+"RTN","DGRPEIS1",55,0)
+ I $G(DFN),$$GET1^DIQ(2,DFN,.03,"I")>DGACT D  G NEWPRQ
+"RTN","DGRPEIS1",56,0)
+ . W !?3,*7,"Effective date is prior to veteran's DOB (",$$GET1^DIQ(2,DFN,.03),")...deleted",!
+"RTN","DGRPEIS1",57,0)
+ . Q:'$G(DA)!($G(DIK)'="^DGPR(408.13,")
+"RTN","DGRPEIS1",58,0)
+ . D ^DIK
+"RTN","DGRPEIS1",59,0)
+ . N DIR S DIR(0)="FAO",DIR("A")="Enter RETURN to Continue" D ^DIR K DIR
+"RTN","DGRPEIS1",60,0)
+ S DIC("DR")=".02////"_$P(DGRP0ND,U,2)
+"RTN","DGRPEIS1",61,0)
+ N VAR S VAR=$P(DGRP0ND,U,3)
+"RTN","DGRPEIS1",62,0)
+ S DIC("DR")=DIC("DR")_";.03////^S X=VAR"
+"RTN","DGRPEIS1",63,0)
+ S (DIK,DIC)="^DGPR(408.12,",DIC(0)="L",DLAYGO=408.12,X=+DGRP0ND K DD,DO D FILE^DICN S DGPRI=+Y K DLAYGO D
+"RTN","DGRPEIS1",64,0)
+ .N DD,D0,DA,DLAYGO,DIC,X
+"RTN","DGRPEIS1",65,0)
+ .S DA(1)=DGPRI,DIC(0)="L",DIC="^DGPR(408.12,"_DA(1)_",""E"","
+"RTN","DGRPEIS1",66,0)
+ .S DLAYGO=408.1275,DIC("DR")=".02////1",X=DGACT
+"RTN","DGRPEIS1",67,0)
+ .D FILE^DICN
+"RTN","DGRPEIS1",68,0)
+ D RESET^DGMTU11(DFN)
+"RTN","DGRPEIS1",69,0)
+ S Y=DGPRI
+"RTN","DGRPEIS1",70,0)
+NEWPRQ K DGACT,DGSEX,DGRPDOB,DA,DIC,DIK,DIRUT,DTOUT,DUOUT,X,Y
+"RTN","DGRPEIS1",71,0)
+ Q
+"RTN","DGRPEIS1",72,0)
+SETUP ; called from SPINACT / sets vars for ASOF tag
+"RTN","DGRPEIS1",73,0)
+ N FNAME S FNAME=$P($$NAME^DGMTU1(+X),",",2)
+"RTN","DGRPEIS1",74,0)
+ S ACT=$O(^DGPR(408.12,+X,"E","AID","")),ACT=$O(^(+ACT,0)),ACT=$G(^DGPR(408.12,+X,"E",+ACT,0))
+"RTN","DGRPEIS1",75,0)
+ I $P(ACT,"^",2)']"" Q  ; never active
+"RTN","DGRPEIS1",76,0)
+ I '$P(ACT,U,2) D  Q
+"RTN","DGRPEIS1",77,0)
+ .W !,"Dependent has been inactivated as of "
+"RTN","DGRPEIS1",78,0)
+ .S Y=+ACT
+"RTN","DGRPEIS1",79,0)
+ .D DD^%DT W Y H 3
+"RTN","DGRPEIS1",80,0)
+ S IEN=+X
+"RTN","DGRPEIS1",81,0)
+ASOF ;ask as of date
+"RTN","DGRPEIS1",82,0)
+ N LYR,SPOUSE,DGXDT
+"RTN","DGRPEIS1",83,0)
+ I '$D(DGTSTDT) N DGTSTDT S DGTSTDT=$S($D(DGMTDT):DGMTDT,1:DT)
+"RTN","DGRPEIS1",84,0)
+ S SPOUSE=$S($P($G(^DGPR(408.12,+IEN,0)),"^",2)=2:1,1:0)
+"RTN","DGRPEIS1",85,0)
+ S LYR=$E($$LYR^DGMTSCU1(DGTSTDT),1,3)_1231
+"RTN","DGRPEIS1",86,0)
+ ;I 'SPOUSE S LYR=$E($$LYR^DGMTSCU1(LYR),1,3)_1231
+"RTN","DGRPEIS1",87,0)
+ K DIR S DIR(0)="D^"_+ACT_":"_LYR_":AEP",DIR("A")="Date "_FNAME_" no longer a dependent"
+"RTN","DGRPEIS1",88,0)
+ S DIR("?",1)="Enter the date this person was no longer a dependent of the veteran.",DIR("?",2)="This could include a date of death or the date a child turned 18 for"
+"RTN","DGRPEIS1",89,0)
+ S DIR("?",3)="children.  For a spouse, this would be the date of divorce or date ",DIR("?",4)="of death of the spouse.  Date must be after the person became a"
+"RTN","DGRPEIS1",90,0)
+ S DIR("?",5)="dependent, but prior to 12/31/"_($E(LYR,1,3)+1700)_"."
+"RTN","DGRPEIS1",91,0)
+ I 'SPOUSE S DIR("?",6)=" ",DIR("?",7)="A person should only be inactivated if the individual was not a",DIR("?",8)="dependent at any time during the prior calendar year."
+"RTN","DGRPEIS1",92,0)
+ S DIR("?")=" "
+"RTN","DGRPEIS1",93,0)
+ I SPOUSE S DIR("?",6)=" ",DIR("?",7)="A spouse should be inactivated if the spouse and veteran were not",DIR("?",8)="married as of 12/31/"_($E(LYR,1,3)+1700)_"."
+"RTN","DGRPEIS1",94,0)
+ D ^DIR K DIR
+"RTN","DGRPEIS1",95,0)
+ I $D(DTOUT)!$D(DUOUT) S DGFL=$S($D(DTOUT):-2,1:-1) Q
+"RTN","DGRPEIS1",96,0)
+ S DGXDT=Y
+"RTN","DGRPEIS1",97,0)
+ I $E(Y,1,3)=$E(LYR,1,3) D  Q:'$G(Y)
+"RTN","DGRPEIS1",98,0)
+ .N DIR,DIRUT,DIROUT,DTOUT,DUOUT
+"RTN","DGRPEIS1",99,0)
+ .W !!,"Warning: Data will be used if dependent was active at least one day in a"
+"RTN","DGRPEIS1",100,0)
+ .W !,"year.  Data will not be used if inactivation is prior to 1/1/"_($E(LYR,1,3)+1700)_" or it"
+"RTN","DGRPEIS1",101,0)
+ .W !,"is equal to the activation date."
+"RTN","DGRPEIS1",102,0)
+ .S DIR(0)="Y",DIR("B")="NO",DIR("A")="Do you wish to inactivate this dependent on the selected date?"
+"RTN","DGRPEIS1",103,0)
+ .D ^DIR
+"RTN","DGRPEIS1",104,0)
+ S DA(1)=IEN,DIC="^DGPR(408.12,"_DA(1)_",""E"",",X=DGXDT,DIC(0)="L",DLAYGO=408.1275 D ^DIC S DIE=DIC,DA=+Y,DR=".02////0" D ^DIE
+"RTN","DGRPEIS1",105,0)
+ D RESET^DGMTU11(DFN)
+"RTN","DGRPEIS1",106,0)
+ASOFQ K DA,DIC,DIE,DIR,DIRUT,DLAYGO,DR,DTOUT,DUOUT,X,Y
+"RTN","DGRPEIS1",107,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8480,6)
+^748
+**END**
+**END**

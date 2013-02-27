@@ -1,0 +1,208 @@
+$TXT Created by NABER,DAVID at DEVVCC.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 04/04/12 at 09:48
+=============================================================================
+Run Date: JUL 10, 2012                     Designation: ECX*3*137
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #123                      Status: Released
+                  Compliance Date: AUG 10, 2012
+=============================================================================
+
+Associated patches: (v)ECX*3*84    <<= must be installed BEFORE `ECX*3*137'
+                    (v)ECX*3*132   <<= must be installed BEFORE `ECX*3*137'
+
+Subject: DSS Prosthetics Report Fixes
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ One of the changes made in the recently released DSS FY 2012 updates 
+ patch was the addition of HO2 as a feeder location for the prosthetics 
+ extracts. 
+  
+ Here is the description of the change from patch ECX*3*132:
+  
+ Modify the PRO Extract programming to create a new Feeder Location value
+ for Home Oxygen records.  Add a Feeder Location for Home Oxygen (XXXXXHO2)
+ when the "NPPD New Code" =  800 x (where the x represents a letter code
+ and XXXXX represents the 3 to 5 character station code plus the characters
+ H, O and 2.).
+  
+ This change caused an error to be encountered when running the
+ Prosthetics (PRO) YTD HCPCS Report [ECX PRO YTD REPORT] option.
+  
+ ASSOCIATED REMEDY TICKETS: 
+ ==========================
+ 1)  HD0000000554882    Prosthetics (PRO) YTD HCPCS Report [ECX PRO YTD
+                        REPORT] causes error
+  
+ 2)  HD0000000535986    Incorrect build date on 2nd line of routine
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Central Plains HCS
+ Central Texas HCS
+ Salem, VA 
+  
+ Remedy Overview:
+ ================
+ 1)  HD0000000554882    Prosthetics (PRO) YTD HCPCS Report [ECX PRO YTD 
+                        REPORT] causes error 
+  
+ Problem:
+ --------
+ a). Since the release of ECX*3.0*132, it has been discovered that in rare 
+ circumstances, an error can be received when using the Prosthetics (PRO) 
+ YTD HCPCS Report [ECX PRO YTD REPORT].  This error occurs when the first 
+ record in the report has a feeder location that contains HO2.  In 
+ reviewing the issue, it was also discovered that a feeder location 
+ containing HO2 could also be incorrectly categorized on the report, 
+ depending on the feeder location of the record processed just before the 
+ HO2 type record. 
+  
+ b). Also, during the review of the remedy ticket, it was discovered that  
+ the Prosthetics (PRO) Extract Audit [ECX PRO SOURCE AUDIT] report could 
+ potentially miscount entries that had HO2 as part of the feeder 
+ location.  This would only happen in cases where the user has more than 
+ one division assigned in the NEW PERSON file (#200), the site has more
+ than one division identified in the PROSTHETICS SITE PARAMETERS file
+ (#669.9) and the user selects a specific division to appear on the
+ report.  Under those circumstances, it's possible for entries associated
+ with HO2 to not be counted and displayed on the audit report.
+  
+ Resolution:
+ -----------
+ a). The report has now been modified to account for the HO2 feeder
+ locations and will correctly put them in the right category for
+ reporting purposes.
+  
+ b). The report has been modified to account for entries related to HO2
+ and will properly identify and include them on the report.
+  
+  
+ 2)  HD0000000535986    Incorrect build date on 2nd line of routine
+  
+ Problem:
+ ========
+ There is an incorrect build date on the second line of routine ECXUPRO1.
+  
+ Resolution:
+ ===========
+ The second line of routine ECXUPRO1 was modified to have the correct 
+ build date of Dec 22, 1997.
+  
+ INSTALLATION:
+ =============
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+                 Extract Manager's Options [ECXMGR]
+  
+  
+ Install Time - less than 2 minutes
+  
+ ***********************************************************  
+  
+    1.   LOAD TRANSPORT GLOBAL 
+         ---------------------
+         Choose the PackMan message containing this patch and invoke the 
+         INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2.   START UP KIDS 
+         -------------
+         Start up the Kernel Installation and Distribution System Menu 
+         [XPD MAIN]: 
+  
+              Edits and Distribution ...  
+              Utilities ...
+              Installation ...  
+     
+    Select Kernel Installation & Distribution System Option: INStallation 
+                                                             ---
+              Load a Distribution 
+              Print Transport Global 
+              Compare Transport Global to Current System 
+              Verify Checksums in Transport Global 
+              Install Package(s) 
+              Restart Install of Package(s) 
+              Unload a Distribution 
+              Backup a Transport Global 
+     
+    Select Installation Option:
+  
+    3.   Select Installation Option: 
+         --------------------------
+         NOTE: The following are OPTIONAL (When prompted for the INSTALL
+                NAME, enter ECX*3.0*137):
+        
+         a.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will
+             not backup any other changes such as DD's or templates.
+         b.  Compare Transport Global to Current System - This option 
+             will allow you to view all changes that will be made when 
+             this patch is installed.  It compares all components of this 
+             patch (routines, DD's, templates, etc.).
+         c.  Verify Checksums in Transport Global - This option will
+             allow you to ensure the integrity of the routines that are 
+             in the transport global.
+       
+    4.   Select Installation Option: Install Package(s) 
+                                     ----------------
+         **This is the step to start the installation of this KIDS patch: 
+     
+        a.  Choose the Install Package(s) option to start the patch
+            install.  Enter ECX*3.0*137 when prompted for a build name.
+        b.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+            install?  NO//' answer NO (unless otherwise indicated).
+        c.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? NO//' answer YES (unless
+               otherwise indicated).
+  
+        d.  When prompted 'Enter options you wish to mark as 'Out Of
+            Order':'  Enter the following options:
+   
+                    Extract Manager's Options [ECXMGR]
+  
+        e.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order':' press <return>.
+  
+        f. If prompted 'Delay Install (Minutes):  (0-60):  0//'
+           answer "0" (unless otherwise indicated).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECXAPRO
+    Before: B49978410   After: B50281259  **9,21,33,36,132,137**
+Routine Name: ECXCPRO
+    Before: B31541311   After: B32166082  **21,24,33,84,137**
+Routine Name: ECXUPRO1
+    Before:  B7105553   After:  B7105553  **49,111,132,137**
+ 
+Routine list of preceding patches: 84, 132
+
+=============================================================================
+User Information:
+Entered By  : NABER,DAVID A                 Date Entered  : NOV 30, 2011
+Completed By: LEANORD,TATIANA               Date Completed: JUL 02, 2012
+Released By : VASSAR,CAROL                  Date Released : JUL 10, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

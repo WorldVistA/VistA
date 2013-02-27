@@ -1,0 +1,373 @@
+$TXT Created by THOMPSON,SETH at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 04/11/11 at 07:10
+=============================================================================
+Run Date: JUN 27, 2011                     Designation: OR*3*339
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #291                      Status: Released
+                  Compliance Date: JUL 28, 2011
+=============================================================================
+
+Associated patches: (v)OR*3*307    <<= must be installed BEFORE `OR*3*339'
+
+Subject: ANTICOAGULATION TOOL FIXES
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ The Anticoagulation Management Tool (AMT), released in patch OR*3*307, is 
+ a tool within the Computerized Patient Record System Graphical User 
+ Interface (CPRS GUI) which enables the user to enter, review, and
+ continuously update all information connected with patient anticoagulation
+ management.
+  
+ OR*3.0*339 is the first maintenance patch for the Anticoagulation 
+ Management Tool and resolves the following 9 issues:
+  
+ 1.  When a non-Provider (e.g., Student, Pharmacy Tech, etc.) is exiting 
+     the Anticoagulation module, the system no longer prompts for them to
+     identify the primary provider for the encounter.
+  
+ 2.  The ICD-9 code is not displayed for patients who have had the ICD-9 
+     code entered on a previous visit.
+  
+ 3.  Anticoagulation Consult requests with the status of Scheduled are not
+     completed when an Initial Note is filed.
+  
+ 4.  When the user modifies the Current Daily Dosing and modifies the Pill
+     Strength, it is possible that the daily doses will be incorrectly
+     recalculated.
+  
+ 5.  When the user attempts to enroll a patient in the Anticoagulation
+     module and the patient's most recent International Normalized Ratio  
+     (INR) was cancelled, an <UNDEFINED> error is encountered.
+  
+ 6.  When the user edits the number of tablets in Current Daily Dosing, it
+     is possible to have a zero appended to the end of the number,
+     significantly changing the desired dosage.
+  
+ 7.  INR results may cause a <DIVIDE> error in the Rosendaal Report in 
+     VistA.
+  
+ 8.  Changes to the Clinic Name for a patient visit in the Anticoagulation
+     module are not saved if this is the only change made and the user 
+     clicks on the Save/Exit button.
+  
+ 9.  The Anticoagulation module does not allow a Draw date on weekends.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1.  HD0000000392179 - Wrong name submit as Primary
+     Duplicate:
+     HD0000000406932 - New student not a billable student to Austin
+  
+ 2.  HD0000000396046 - Other Dx not saving ICD 9 code
+  
+ 3.  HD0000000404437 - Scheduling Consult Issue
+  
+ 4.  HD0000000418906 - Problem with auto calculation
+  
+ 5.  HD0000000420035 - Anticoagulation - a tech is trying to add a patient
+                       for a next week app but errors out.
+  
+ 6.  HD0000000424310 - Changing Tablets in Daily Dosaging
+  
+ 7.  HD0000000439690 - Rosendaal Report gets <DIVIDE> Error Under Certain
+                       Conditions
+  
+ 8.  HD0000000439776 - Changes to Patient Location not Saved Unless
+                       Complete Visit is Recorded
+  
+ 9.  HD0000000439782 - Can't Order INRs or CBCs for Weekend Collection
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA East Colorado HCS
+ VA West Los Angeles HCS
+ VA Western NY HCS
+ Tomah VAMC
+ VA Sierra Nevada HCS - Reno
+   
+   
+ REMEDY OVERVIEW:
+ ================
+ 1.  HD0000000392179 - Wrong name submit as Primary 
+  
+     Problem:
+     --------
+     When a non-Provider (e.g., Student, Intern, Technician, etc.) uses the
+     Anticoagulator to document their encounter, the resulting Visit in PCE
+     is left with an invalid Primary Provider (i.e., the Student) and data 
+     transmitted to Austin errors off due to the missing Primary Provider.
+  
+     Resolution:
+     -----------
+     The client- and server-side code were modified to assure that the 
+     provider identified by the student/intern as cosigner on the note or 
+     provider for the orders is also sent to the PCE API as the Primary 
+     Provider for the encounter.
+  
+  
+ 2.  HD0000000396046 - Other Dx not saving ICD 9 code
+  
+     Problem:
+     --------
+     When the user selects "Other" for the "Add'l Indication" field and
+     manually enters the "ICD-9 code", the visit is properly credited and
+     the diagnostic code is properly stored. However, it is not retrieved
+     and presented correctly when the patient returns for subsequent
+     visits, which then causes the data sent to Austin to be rejected due
+     to an incomplete encounter.
+  
+     Resolution:
+     -----------
+     The client-side code was modified to assign the ICD-9 code stored on a
+     prior encounter to the appropriate variable when the indication for
+     care was "Other."
+  
+     Note: This Remedy ticket has 2 parts; The first part is addressed by 
+     this patch and the second part is addressed in patch OR*3*330,
+     released 10/18/2010.
+  
+ 3.  HD0000000404437 - Scheduling Consult Issue 
+  
+     Problem:
+     --------
+     Anticoagulation Consult requests with the status of 'Scheduled' are
+     not completed when an Initial Note is filed like requests with a
+     status of 'Pending' or 'Active' are.
+  
+     Resolution:
+     -----------
+     Modified the server-side code that retrieves the list of consult 
+     requests to match with an initial anticoagulation note to include 
+     requests with a status of 'scheduled' in addition to 'pending' or 
+     'active' consults.
+  
+ 4.  HD0000000418906 - Problem with auto calculation 
+  
+     Patient Safety Issue: PSPO #1813
+  
+     Problem:
+     --------
+     If the user is modifying the daily dosing on the Enter Information 
+     tab and elects to change the pill strength, without clicking OK or 
+     Cancel, the daily doses will be incorrectly recalculated when the 
+     user tabs or clicks away from the pill strength edit box.
+     
+     Resolution:
+     -----------
+     The anomaly results from the interaction between the code that gets 
+     executed on exit from the pill strength edit box and the code that 
+     gets invoked when the contents of the daily dosing edit boxes change. 
+     This can only occur when both the Pill Strength and the Daily Dosing 
+     edit boxes are enabled (i.e., editable).
+  
+     The solution which was implemented is to toggle the enabled property 
+     of the Pill Strength edit box off when the user is changing the daily 
+     dosing, and back on when the user either submits or cancels the 
+     changes.
+  
+ 5.  HD0000000420035 - Anticoagulation - a tech is trying to add a patient
+                       for a next week app but errors out. 
+  
+     Problem:
+     --------
+     If the user attempts to enroll a patient in the AMT whose most recent
+     INR was cancelled, the following error will occur:
+  
+     $ZE= <UNDEFINED>COMPTEST+6^ORAM1 *X
+  
+     The AMT remains open, but its connection is lost, and the session
+     can't be recovered.
+   
+     Resolution:
+     -----------
+     The error above occurred in DT^DILF, which accepts an internal-format
+     FileMan date/time and returns the external-format date/time. In the
+     case above, the input string to DT^DILF was empty so it returned an
+     empty string which caused the UNDEFINED error.
+     The code was modified to accommodate an empty string for the draw
+     date/time, allowing the code to proceed without error.
+  
+ 6.  HD0000000424310 - Changing Tablets in Daily Dosaging 
+  
+     Patient Safety Issue: PSPO #1823
+  
+     Problem:
+     --------
+     If the user deletes the number of tablets in the Change Daily Dosing
+     function of the AMT of CPRS, the field is populated with a zero and
+     the cursor is positioned in front of the zero.  If the user then
+     enters a number, the zero remains appended to the number, 
+     significantly changing the value of the number (i.e., '2' becomes
+     '20').
+  
+     Resolution:
+     -----------
+     Modified the OnChange event handler for the dosing grid to assure that
+     a zero would only be left for the number of tablets if the user
+     entered nothing else.
+  
+ 7.  HD0000000439690 - Rosendaal Report gets <DIVIDE> Error Under Certain
+                       Conditions
+  
+     Problem:
+     --------
+     When a patient has two consecutive INRs which are identical, one 
+     in-range and one out-range, due to goal range change, a division by 
+     zero error occurs in the Rosendaal Report in VistA.
+     
+     Resolution:
+     -----------
+     Logic in routine ORAMTTR has been modified to account for the 
+     difference of two INRs being zero and calculate accordingly.
+      
+ 8.  HD0000000439776 - Changes to Patient Location not Saved Unless 
+                       Complete Visit is Recorded 
+   
+     Problem:
+     --------
+     Changes to the Clinic Name for a patient visit in the AMT are not
+     saved if this is the only change made and the user clicks on the
+     Save/Exit button.
+  
+     Resolution:
+     -----------
+     The code on both the client and server was modified to accommodate 
+     saving the patient location when the Save & Exit button is clicked.  
+     
+ 9.  HD0000000439782 - Can't Order INRs or CBCs for Weekend Collection
+  
+     Problem:
+     --------
+     Some sites have asked for the ability to specify a Draw Date on 
+     weekends.  Currently, the Anticoagulation module does not allow the
+     user to specify a Draw Date on a Saturday or Sunday for INR or CBC
+     (complete blood count ) orders. If the user attempts to do so, the
+     application will automatically increment the collection date to the
+     following Monday.
+     
+     Resolution:
+     -----------
+     The application was modified to inform the user that the date they 
+     have selected for the Draw Date is a Saturday or Sunday, and allow
+     them to leave it or change it, as they deem appropriate.
+  
+   
+ SOFTWARE RETRIEVAL:
+ ===================
+ To obtain the current client software, use FTP to retrieve OR_30_339.zip
+ from one of the following OI Field Offices' ANONYMOUS.SOFTWARE
+ directories:
+  
+  OI Field Office    FTP Address                 Directory
+  ---------------    -----------                 ---------
+  Albany             ftp.fo-albany.med.va.gov    anonymous.software
+  Hines              ftp.fo-hines.med.va.gov     anonymous.software
+  Salt Lake City     ftp.fo-slc.med.va.gov       anonymous.software
+  
+ The software distribution includes this file:  OR_30_339.zip (1.07 MB)
+  
+  FILE NAME          RETRIEVAL FORMAT    
+  ---------          ----------------
+  OR_30_339.ZIP      BINARY
+  
+  
+  ZIP FILE CONTENTS          DESCRIPTION           FILE VERSION    
+  -----------------          -----------           ------------
+  AntiCoagulate.exe          Client                1.0.1.1
+  
+ GUI Client installation instructions are in the Anticoagulation Management
+ Installation/Implementation Guide in the VistA Documentation Library:  
+ http://www.va.gov/vdl.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+   
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+   
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+   
+     Select Kernel Installation & Distribution System Option:  Installation
+                                                               ---
+          1      Load a Distribution
+          2      Verify Checksums in Transport Global
+          3      Print Transport Global
+          4      Compare Transport Global to Current System
+          5      Backup a Transport Global
+          6      Install Package(s)
+                 Restart Install of Package(s)
+                 Unload a Distribution
+   
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter OR*3.0*339):
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch is
+         installed.  It compares all components of this patch (routines,
+         DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+   
+ 4.  Use the Install Package(s) option and select the package OR*3.0*339.
+   
+     a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+         install? NO//", answer NO.
+     b.  When prompted "Want to DISABLE Scheduled Options and Menu Options
+         and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORAM1
+    Before:B159543113   After:B161086526  **307,339**
+Routine Name: ORAM2
+    Before:B120270114   After:B121018591  **307,339**
+Routine Name: ORAMTTR
+    Before: B84948729   After: B84841974  **307,339**
+Routine Name: ORAMX
+    Before:B147643525   After:B153727620  **307,339**
+ 
+Routine list of preceding patches: 307
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : SEP 29, 2010
+Completed By: WERNER,GARY                   Date Completed: JUN 07, 2011
+Released By : STOKER,ELAINE                 Date Released : JUN 27, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

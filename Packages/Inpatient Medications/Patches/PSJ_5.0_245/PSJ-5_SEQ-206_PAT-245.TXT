@@ -1,0 +1,146 @@
+$TXT Created by HARRIS,JAMES at IVBCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Thursday, 08/05/10 at 19:25
+=============================================================================
+Run Date: FEB 10, 2011                     Designation: PSJ*5*245
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #206                      Status: Released
+                  Compliance Date: MAR 13, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*113   <<= must be installed BEFORE `PSJ*5*245'
+
+Subject: POST DEFECT PATCH TO PSJ*5*113
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch corrects the following issues that were introduced by patch 
+ PSJ*5*113:
+  
+  - In Abbreviated Order Entry, the "Schedule:" prompt appears twice.
+  - Pending renewal orders incorrectly fail schedule validation in Speed
+    Finish.
+  
+ Remedy Overview
+ ------------------
+ 1. HD0000000413812
+  
+  Problem:
+  --------
+  For users defined with an order entry process of ABBREVIATED in the
+  Inpatient User Parameters Edit [PSJ SEUP] option, the "Schedule:"
+  prompt appears twice when creating a new order via the Inpatient Order
+  Entry [PSJ OE] option.
+  
+  Solution:
+  ---------
+  For users defined with an order entry process of ABBREVIATED in the
+  Inpatient User Parameters Edit [PSJ SEUP] option, prompt for
+  "Schedule:" only once when creating a new order via the Inpatient Order
+  Entry [PSJ OE] option.
+  
+  
+ 2. HD0000000414155
+    HD0000000415173
+  
+  Problem:
+  --------
+  Pending Continuous Unit Dose renewal orders with valid schedule/admin
+  time combinations fail schedule validation when the SF - Speed Finish
+  action is used within the Order Entry [PSJU NE] option, but they pass
+  schedule validation, without edits, when the manual FN - Finish action
+  is used. These orders can't be finished using Speed Finish, and must be
+  finished using the manual FN - Finish action.
+  
+  Solution:
+  ---------
+  Within the Order Entry [PSJU NE] option, allow Continuous Unit Dose
+  orders with schedule/admin time combinations that pass the manual FN -
+  Finish action's schedule validation to also pass the SF - Speed Finish
+  action's schedule validation.
+  
+  
+ Associated PSIs:
+ ================
+ N/A 
+  
+ Associated Remedy Tickets:
+ ==========================
+ HD0000000413812 - Abbreviated Order Entry prompts for schedule twice.
+ HD0000000414155 - Speed Finish Order Problem
+ HD0000000415173 - Speed Finish Not Working.
+  
+  
+ Test Sites:
+ ===========
+ Central Texas HCS
+ Fayetteville, AR
+ New Jersey HCS
+                                                     
+  
+ Install Information:
+ ====================
+ It is recommended that this patch be installed after normal business hours
+ while no Inpatient Pharmacy users are processing orders.
+  
+ Installation will take no longer than 2 minutes.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+  
+  3. From this menu, you may select to use the following options
+     (when prompted for INSTALL NAME, enter PSJ*5.0*245):
+    a. Backup a Transport Global - This option will create a backup
+       message of any routines exported with the patch. It will NOT
+       backup any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when the patch
+       is installed. It compares all components of the patch (routines,
+       DDs, templates, etc.).
+    c. Verify Checksums in Transport Global - This option will ensure
+       the integrity of the routines that are in the transport global.
+  
+  4. Use the Install Package(s) option and select the package PSJ*5.0*245.
+  
+  5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+     respond NO.
+  
+  6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE4
+    Before: B30952598   After: B31772207  **2,50,64,58,111,113,245**
+Routine Name: PSGS0
+    Before: B75413878   After: B75670987  **12,25,26,50,63,74,83,116,110,
+                                           111,133,138,174,134,213,207,
+                                           190,113,245**
+ 
+Routine list of preceding patches: 113
+
+=============================================================================
+User Information:
+Entered By  : HARRIS,JAMES C                Date Entered  : JUL 21, 2010
+Completed By: PAYNE,RONALD                  Date Completed: FEB 10, 2011
+Released By : VECE,VIRGINIA                 Date Released : FEB 10, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

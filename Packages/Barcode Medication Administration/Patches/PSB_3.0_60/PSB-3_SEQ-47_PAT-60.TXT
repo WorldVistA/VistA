@@ -1,0 +1,181 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 06/15/11 at 13:46
+=============================================================================
+Run Date: NOV 21, 2011                     Designation: PSB*3*60
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #47                      Status: Released
+                  Compliance Date: DEC 22, 2011
+=============================================================================
+
+Associated patches: (v)PSB*3*50    <<= must be installed BEFORE `PSB*3*60'
+
+Subject: COVERSHEET ERROR, MEDICATION VARIANCE REPORT CORRECTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch Addresses 3 issues:
+  
+ 1. The  error "<SUBSCRIPT>ADM+3^PSBCSUTX" occurs
+    when selecting the BCMA Coversheet tab if the patient
+    only has IV Orders and no Unit Dose Orders.
+  
+ 2. The BCMA Medication Variance Report does not paginate
+    correctly.
+  
+ 3. The BCMA Medication Variance Report displays a variance
+    when a patch is removed, even if the patch was given on
+    time.
+  
+ Associated NSR(s):
+ ------------------
+  N/A
+  
+   
+ Associated Remedy ticket(s):
+ ----------------------------
+ 1. HD0000000454396 - SUBSCRIPT ERROR ADM+3^PSBCSUTX
+  
+ 2. HD0000000315072 - Medication Variance Log report not 
+                          paginating correctly
+  
+ 3. HD0000000453423 - Nicotin Patch with variance-Please contact 
+                          user see Case Log.
+   
+ PARTICIPATING TEST SITES:
+ -------------------------
+ Upstate New York HCS
+ Coatesville VAMC
+ Minneapolis VAMC
+  
+ REMEDY OVERVIEW
+ ---------------
+   
+ 1. HD0000000454396 - SUBSCRIPT ERROR ADM+3^PSBCSUTX
+  
+    Problem:
+    --------
+    When selecting the Coversheet Tab in BCMA, a subscript error
+    occurs if the patient has only IV (No Unit Dose) medications, and
+    at least one of the orders is expired. This causes BCMA to shut down.
+  
+    Resolution:
+    -----------
+    Additional expired date checks were added to routine PSBCSUTL
+    before calling ADD^PSBVDLU1.  An additional check was added
+    to verify that an order has actually been added to ^TMP("PSB") before
+    adding a node with the text "END" to the global.
+  
+ 2. HD00000000315072 - Medication Variance Log report not 
+                       paginating correctly
+  
+    Problem:
+    --------
+    The BCMA Medication Variance report only prints a header with a
+    new page number after all orders for a patient have been printed.
+    This causes the report not to paginate properly when a patient has more
+    than one page of data.
+  
+    Resolution:
+    -----------
+    Routine PSBOMV was modified to check if a page break is needed 
+    after each order is printed.
+  
+ 3. HD00000000453423 - Nicotine Patch with variance
+  
+    Problem:
+    --------
+    If there is a variance in the data/time recorded in the 
+    ACTION DATE/TIME (#.06) field of the BCMA MED LOG
+    (#53.79) file and the date/time recorded in DATE/TIME
+    OF OCCURRENCE (#.04) field in the BCMA MEDICATION 
+    VARIANCE LOG (#53.78) due to system lag, the BCMA 
+    Medication Variance Report displays a variance for the 
+    time the patch is removed.  The Variance report should
+    only display variances for the "Given" action of a patch.
+  
+    Resolution:
+    -----------
+    Routine PSBOMV was modified to allow for a variance up to
+    the value of the system variable DILOCKTM in the time
+    difference between ACTION DATE/TIME and the BCMA 
+    MEDICATION VARIANCE LOG.  If the system variable DILOCKTM
+    is not set, the allowed variance will be 3 seconds.  If, due to
+    unusually slow processing speeds, the variance between the
+    ACTION DATE/TIME (#.06) field of the BCMA MED LOG
+    (#53.79) file and the date/time recorded in DATE/TIME
+    OF OCCURRENCE (#.04) field in the BCMA MEDICATION 
+    VARIANCE LOG (#53.78) falls outside the value of DILOCKTM,  
+    the Variance will display on the MEDICATION VARIANCE LOG.
+  
+ Installation Instructions:
+ ==========================
+   
+    *************************** NOTE ************************
+    *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS  *
+    *  AN EDITED ERROR WILL OCCUR.                          *                 
+    *  The patch should be installed when NO BCMA Client    * 
+    *  users are on the system.                             *                   
+    *********************************************************
+   
+    Installation will take less than 1 minute.
+   
+    Suggested time to install: Non-peak requirement hours.
+   
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSB*3.0*60):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package PSB*3*60.
+   
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBCSUTL
+    Before:B132423549   After:B137031860  **16,13,38,32,50,60**
+Routine Name: PSBOMV
+    Before: B41185550   After: B49401054  **60**
+ 
+Routine list of preceding patches: 50
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : JAN 28, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: NOV 14, 2011
+Released By : FOX,KIRK                      Date Released : NOV 21, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

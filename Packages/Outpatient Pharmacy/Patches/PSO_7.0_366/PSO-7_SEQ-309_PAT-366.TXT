@@ -1,0 +1,114 @@
+$TXT Created by NIXON,TONY at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 08/18/10 at 15:18
+=============================================================================
+Run Date: APR 18, 2011                     Designation: PSO*7*366
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #309                      Status: Released
+                  Compliance Date: MAY 19, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*298   <<= must be installed BEFORE `PSO*7*366'
+
+Subject: ACTIVITY LOG ENTRY WITH NO TIME STAMP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ A VAMC has requested both a date and time stamp for prescription activity log
+ entries displayed in FileMan.  Currently, FileMan only displays the date that
+ a prescription was edited, not the time.  This modification does not affect
+ any prescription activity log displays in VistA.  The change affects FileMan
+ only.
+  
+ Associated Remedy Ticket(s):
+ ============================
+ HD0000000408991 - Activity log entry with no time stamp
+  
+  
+ Associated NSRs:
+ ================
+  N/A
+   
+   
+ Participating Test Sites:
+ =========================
+ Oklahoma City VAMC
+ VA Connecticut HCS
+ VA Gulf Coast Veterans Health Care System
+  
+   
+ Remedy Overview:
+ ================
+ HD0000000408991 - Activity log entry with no time stamp
+  
+ Problem:
+ --------
+ Prescription edits have only a date stamp.  A time stamp provides additional
+ detail that can be used for tracking.
+  
+ Resolution:
+ -----------
+ Modify routine PSORXED to display the time as well as the date for the FileMan
+ activity log.  This change will ensure that the .01 field of the ACTIVITY LOG
+ multiple (52.3) in the Prescription file (#52) contains both a date and time.
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter PSO*7.0*366)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package PSO*7.0*366
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORXED
+    Before: B68930511   After: B69656078  **2,16,21,26,56,71,125,201,246,
+                                           289,298,366**
+ 
+Routine list of preceding patches: 298
+
+=============================================================================
+User Information:
+Entered By  : NIXON,ANTOINE                 Date Entered  : AUG 09, 2010
+Completed By: PODLEY,CHRIS                  Date Completed: MAR 23, 2011
+Released By : FOX,KIRK                      Date Released : APR 18, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

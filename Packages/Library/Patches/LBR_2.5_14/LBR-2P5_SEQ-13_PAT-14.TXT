@@ -1,0 +1,161 @@
+$TXT Created by ELWELL,DAVID at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 11/01/12 at 15:04
+=============================================================================
+Run Date: DEC 13, 2012                     Designation: LBR*2.5*14
+Package : LBR - LIBRARY                       Priority: Mandatory
+Version : 2.5        SEQ #13                    Status: Released
+                  Compliance Date: JAN 13, 2013
+=============================================================================
+
+Associated patches: (v)LBR*2.5*12  <<= must be installed BEFORE `LBR*2.5*14'
+
+Subject: UNDEFINED ERROR IN LBRYRPT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 1 issue:
+   
+ 1. This patch will fix Remedy Ticket HD0000000059366, in which there is an
+    undefined error created when subsequently accessing certain reports
+    from the 'Serials Titles Reports...' or the 'Other Serials Reports...'
+    menu and then using a (^) to exit.
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. HD0000000059366 - <UNDEFINED>EXIT^LBRYRPT
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ RICHMOND, VA
+ TENNESSEE VALLEY HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. HD0000000059366 - <UNDEFINED>EXIT^LBRYRPT
+  
+  
+ Problem:
+ ========
+  
+ An undefined error occurs when subsequently running certain reports from the 
+ 'Serials Title Reports.' or 'Other Serials Reports.' menu and then using a 
+ (^) to exit. The following reports will cause the error:
+  
+ Serials Titles Reports [STR] menu:
+  
+                         [Missing Issues List]
+                         [All Serials Titles]
+                         [Local Titles by Location]
+                         [Local Titles by Vendor]
+                         [Local Microfilm Titles]
+  
+ Other Serials Reports [OSR] menu:
+  
+                         [Titles Due for Renewal]    
+                         [Local Gaps List]
+                         [Outstanding Routed to Return Issues] 
+                         [List of Recipients]
+                         [For-your-information titles]
+  
+ The routine LBRYRPT checks the value of "IOT", at line tag EXIT to determine 
+ the device type. The next line, EXIT+1, kills the system variable "IOT". Upon
+ running the routine again, the variable IOT is undefined.
+  
+  
+ Resolution:
+ ===========
+ The routine LBRYRPT has been modified by changing the line EXIT+1 to
+ prevent the variable "IOT" from being killed. As per the Standards and
+ Conventions Committee (SACC) guidelines 2.3.1.6, system variables
+ beginning in "IO" should not be modified.
+  
+  
+ Installation Instructions:
+ ==========================
+  
+    ***************************NOTE****************************  
+    * You may install this routine at any time without        *
+    * interruption to users.                                  *
+    ***********************************************************
+  
+   Installation will take less than 1 minute.
+  
+   Suggested time to install: Non-peak requirement hours.
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package LBR*2.5*14.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//" respond YES. When prompted to select the options
+       you would like to place out of order, enter the following:
+  
+        'LBRY MISSING ISSUE'          Missing Issues List
+        'LBRY TITLES ALPHABETICAL'    All Serials Titles
+        'LBRY TITLES LOCATION         Local Titles by Location
+        'LBRY TITLES VENDOR'          Local Titles by Vendor
+        'LBRY MICROFILM'              Local Microfilm Titles
+        'LBRY TITLES DUE RENEWAL'     Titles Due for Renewal    
+        'LBRY GAPS LIST'              Local Gaps List
+        'LBRY RECIPIENTS'             List of Recipients
+        'LBRY MISSING R-T-R'          Outstanding Routed to Return Issues
+        'LBRY FOR-YOUR-INFORMATION'   For-your-information titles
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.5;Library;**[Patch List]**;Mar 11, 1996;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LBRYRPT
+    Before: B26009591   After: B25967108  **2,9,12,14**
+ 
+Routine list of preceding patches: 12
+
+=============================================================================
+User Information:
+Entered By  : ELWELL,DAVID                  Date Entered  : MAR 15, 2012
+Completed By: BYRD,TIERRA                   Date Completed: DEC 12, 2012
+Released By : MORRIS,DELISA                 Date Released : DEC 13, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

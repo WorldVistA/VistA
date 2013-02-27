@@ -1,0 +1,138 @@
+$TXT Created by MOORE,JIM at NXT.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 05/26/11 at 11:58
+=============================================================================
+Run Date: OCT 05, 2011                     Designation: HL*1.6*152
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #123                    Status: Released
+                  Compliance Date: NOV 05, 2011
+=============================================================================
+
+Associated patches: (v)HL*1.6*147  <<= must be installed BEFORE `HL*1.6*152'
+
+Subject: HLO QUEUE FOR INCOMING APP ACK
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch changes how the HLO server determines the input queue to place an
+  incoming application acknowledgment message.   The server will follow these
+  rules:
+  
+    1) If the application specified an outgoing queue for the original
+       message, then the returning application acknowledgment will be placed
+       on a queue with the same name. 
+ 
+       For example, if the original message was placed on an outgoing queue
+       named 'MPI 1', then the application acknowledgement that is returned
+       will be placed on an incoming queue named 'MPI 1'.
+ 
+     2) When the original message was generated, the sending application may
+        or may not have specified the routine to process the returning
+        application acknowledgment.  If not, then the server will look
+        up the routine in the HLO APPLICATION REGISTRY file (#779.2).
+        In that case, the server will also look there for the name of the
+        queue to place the incoming application acknowledgment. 
+  
+     3) If the queue is not determined by rules 1) or 2), then the message
+        will be placed on the incoming queue named 'DEFAULT'. 
+ 
+  
+    Note: This change was requested for the Austin MPI, which receives a
+   large volume of application acknowledgments, resulting in a backlog of the
+   'DEFAULT' queue.  This change will cause the messages to be distributed
+   over many queues, thus eliminating or at least diminishing the backlog to
+   the default queue.
+ 
+  
+ Test Sites:
+ ===========
+  Austin MPI
+  Oklahoma City
+  Montana HCS
+  Upstate NY HCS
+  
+ Remedy:
+ =======
+ N/A
+ 
+ Installation Instructions:
+ ==========================
+   1. Users are allowed to be on the system during the installation.  The
+      installation will complete in less than one minute.
+  
+   2. For VMS sites, it is NOT necessary to disable any of the VMS TCPIP
+      Services.
+  
+   3.  Use the STOP HLO option of the HLO SYSTEM MONITOR screen to temporarily
+       stop the transmission of HLO messages. Wait several minutes to insure
+       that all HLO processes have terminated.(It is NOT necessary to
+       stop the HL7 1.6 logical links, filers, or any other of the
+       HL7 1.6 background processes.)
+  
+   4.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   5.  This patch is now loaded into a transport global on your system.
+       The next step is to use KIDS to install the Transport global.  On
+       the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Backup a Transport Global
+          Install Package(s) 
+  
+       When using the Install Package(s) menu option to install the 
+       patch build, you may be asked several questions.  The questions,
+       and the answers you should supply, are shown below.
+  
+        INSTALL NAME: <HL*1.6*152>
+  
+        Want KIDS to Rebuild Menu Trees Upon Completion of Install? <NO>
+  
+        Want KIDS to INHIBIT LOGONS during the install? NO// <NO>
+  
+        Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO// <NO>
+   
+   6. Verify that the install completed.
+  
+   7. Use the START HLO option within the HLO SYSTEM MONITOR screen
+      to resume transmission of HLO messages in your production account.
+      This step is optional in test systems. 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLOFILER
+    Before: B28701660   After: B29094813  **126,131,134,137,152**
+Routine Name: HLOSRVR1
+    Before: B86348500   After: B90167265  **126,130,131,133,134,137,138,
+                                           139,143,146,147,152**
+ 
+Routine list of preceding patches: 147
+
+=============================================================================
+User Information:
+Entered By  : MOORE,CHARLES J               Date Entered  : NOV 01, 2010
+Completed By: BEST,LISA                     Date Completed: SEP 21, 2011
+Released By : APOLONIO,AUGUSTO              Date Released : OCT 05, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

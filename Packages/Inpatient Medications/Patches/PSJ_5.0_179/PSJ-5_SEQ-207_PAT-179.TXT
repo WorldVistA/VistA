@@ -1,0 +1,310 @@
+$TXT Created by THOMPSON,SETH at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 12/13/10 at 14:53
+=============================================================================
+Run Date: MAR 02, 2011                     Designation: PSJ*5*179
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #207                      Status: Released
+                  Compliance Date: APR 02, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*95    <<= must be installed BEFORE `PSJ*5*179'
+                    (v)PSJ*5*113   <<= must be installed BEFORE `PSJ*5*179'
+                    (v)PSJ*5*142   <<= must be installed BEFORE `PSJ*5*179'
+                    (v)PSJ*5*193   <<= must be installed BEFORE `PSJ*5*179'
+
+Subject: POTENTIAL DOUBLE DOSING OF MEDS AND CLINIC STOP DATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ ************************** WARNING ***************************
+ **************************************************************
+ If your facility has the Pyxis/Omnicell/McKesson interface 
+ from ILC, this patch will overwrite any "local" modifications 
+ in routine PSGOEE. This could affect certain orders being 
+ sent across this interface.  The modifications will have to 
+ be reintroduced following installation of this patch.
+ **************************************************************
+ **************************************************************
+  
+ This patch addresses the following issues:
+  
+ 1.  After a unit dose is given in Bar Code Medication Administration for 
+ an Inpatient Order and the pharmacist edits a field with a star(*),
+ the new order may overwrite the administration that was given in BCMA.  
+ This presents the possibility of giving a patient a double dose.
+  
+ 2. Inpatient Medications for Outpatients (IMO): 
+ Outpatient Orders do not always display the correct default stop date
+ on the patient profile when executing the backdoor Pharmacy Order
+ Entry screen.
+  
+ 3.  Orders with a continuous schedule type may default to the wrong stop 
+ date/time.
+  
+ 4.  When a user edits the Admin time field, then the Comments field is 
+ also edited, the Admin time changes are not accepted by the system.  The 
+ Admin time goes back to the original time before the edits took place. 
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+  
+ 1.  HD0000000099382 - PSI-05-053 Drug dose can be administered twice.
+                     - PSPO #188
+ Duplicates:
+ HD0000000068419  
+ HD0000000094196  
+ HD0000000116779 
+ HD0000000185459 
+ HD0000000188822 
+ HD0000000145909
+ HD0000000195861 
+ HD0000000180202
+ HD0000000186152
+ HD0000000317097
+ HD0000000325406
+  
+ 2. HD0000000195783 - IMO Location not getting default stop date.
+ Duplicates:
+ HD0000000198025
+ HD0000000299750
+ HD0000000226674
+ HD0000000252574  
+ 3. HD0000000210901 - PSI-07-172 Reads of File 51.1 not checking Package
+                      Prefix.
+                    - PSPO #812
+ Duplicate:
+ HD0000000177654 
+  
+ 4.  HD0000000237637 - Editing Admit time, then comments renders no change.
+  
+ Duplicate:
+ HD0000000355465
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Maryland HCS
+ Oklahoma City, OK
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1.  HD0000000099382 - PSI-05-053 Drug dose can be administered twice.
+                     - PSPO #188
+  
+ PROBLEM
+ -------
+ When a dose is given in Bar Code Medication Administration for an
+ Inpatient Order, the order is marked in BCMA as GIVEN.  If a Pharmacist
+ edit's a field with a star (*), the new order may overwrite the
+ administration that was given in BCMA.  The possibility of giving the
+ patient a "double" dose exists.
+  
+ RESOLUTION
+ ----------
+ To resolve this issue, the calculation used to determine the "Start Date" 
+ of edited Active orders was changed.  The new calculation will use the 
+ last given administration time to determine when the next dose is due.
+ i.e. - With the exception of the (*)Start field, when the pharmacist
+ edit's a field with (*), the calculation of the new orders' Start
+ Date/Time will use the last given administration time to determine when
+ the next administration time and that will also be the new Start Date/Time
+ for the order.
+  
+ 2.  HD0000000195783 - IMO Location not getting default stop date
+  
+ PROBLEM
+ -------
+ When using inpatient medications for Outpatient Orders, the 
+ correct stop date is not displayed on the patient profile of the
+ Backdoor Pharmacy Order Entry screen.  If there is a value defined in
+ Clinic Definition File for the "NUMBER OF DAYS UNTIL STOP field, the
+ order should use the default stop date. Currently this default stop date
+ is not used when the order is finished as a unit dose.
+  
+ RESOLUTION
+ ----------
+ Routine, PSGNE3,will be modified to allow use of the NUMBER OF DAYS UNTIL 
+ STOP field in the Clinic Definition file when setting the Stop 
+ Date. 
+  
+ 3.  HD0000000210901 - PSI-07-172 Reads of File 51.1 not checking package 
+ prefix.
+                     - PSPO #812
+  
+ PROBLEM
+ -------
+ This Remedy ticket is also related to HD207510 (PSI-07-172). 
+  
+ When calculating the default Stop Date/Time for a Unit Dose order, 
+ Inpatient Medications uses the schedule type field from the Administration
+ Schedule File (#51.1) to determine which Inpatient Ward Parameter
+ should be used.  The Days Until Stop Date/Time or Days Until Stop for 
+ One-time will be used.  
+ However, the package prefix is not used when retrieving the schedule
+ type from the Schedule File and as result, the wrong schedule and
+ schedule type could be used.  This will result in an incorrect default
+ Stop Date/Time being calculated. 
+  
+ RESOLUTION
+ --------
+ Change the reference to the Administration Schedule File (#51.1)
+ that occurs when calculating the default Stop Date/Time to use the package
+ prefix. Once this is done, other packages' schedules will no longer have
+ an effect on the calculation of a Unit Dose order's default stop
+ date/time.
+  
+ 4.  HD0000000237637 - Editing Admin time, then comments renders no change.
+  
+ PROBLEM
+ -------
+ Updates to the admin time field are not accepted when editing the admin
+ time on an existing Unit Dose order, then editing the comment field. 
+ The original admin time will remain.  
+ This also happens when the user edits the comment field first.
+  
+  
+ RESOLUTION
+ ----------
+ When the comment field is among the fields that get edited, the DR
+ variable is reset with "*"  before calling fileman routine DIE to file the
+ edits.  
+ Routine PSGOEE0 is modified to concatenate the existing value of DR with
+ "*" instead of reset it with "*".
+  
+ TECHNICAL INFORMATION
+ =====================
+ Remedy Ticket HD0000000099382:
+  
+ To determine when the next dose is due, the following calculation will be
+ performed:
+  
+ If a "Starred Field is Edited" and "A dose was given in BCMA"
+   If the Administration was for a Scheduled Administration,
+     Are there "Administration Times" defined for this order?
+        If Yes: Determine Next Dose due by finding the "Next 
+                Administration"
+                after the last administration that was Given.  Set this
+                Date/Time to the Start Date of the new order.
+        If No:  Determine Next Dose due by adding the "Frequency" to the
+                last administration that was Given.  Set this Date/Time to
+                the Start Date of the new order
+   If the Administration was NOT for a Scheduled Administration time
+      Determine Next Dose due by adding the "Frequency" to the last
+      administration that was Given.  Set this Date/Time to the Start 
+      Date of the new order.
+  
+ The calculation above is an overview definition of the calculation.  The
+ actual calculation will attempt to take "Day of Week" Schedules, "Odd"
+ schedules, "Every other Day" schedules, etc. into account. Since these
+ and other schedules can span "days", the calculation will move forward to
+ the appropriate day based on the last administration given, the time of 
+ the edit, the schedule, and the administration times that are defined.
+  
+ SPECIAL NOTE: 
+  
+ 1. If the above calculation cannot calculate a Start Date/Time greater 
+    than "NOW", the existing Start Date/Time calculation will be used.
+ 2. This logic will only be used when editing "ACTIVE" orders that have had
+    BCMA Administrations that have been "Given" or "Refused"
+ 3. This logic will be used for Unit Dose orders and orders 
+    with Day of Week schedules.
+ 4. IV Piggyback orders will not allow acceptance without modification of
+    the start date so that it is after the last given administration.
+  
+ Also, as part of this change, the Expected First Dose (EFD) logic was 
+ modified.
+ The current logic did not take into account that the Start Date/Time could
+ change based on an edit to a starred field.  This logic was modified 
+ to calculate the Expected first dose using the newly re-calculated Start
+ Date/Time.  The Expected First Dose message has also been changed to 
+ Display "Next Dose Due" instead "Expected First Dose" for edited Active
+ Unit dose Orders.  The message "Expected First dose" has not been changed 
+  
+  
+ Installation Instructions:
+ ==========================
+ Suggested time to install:  non-peak requirement hours. 
+ This patch should be installed when NO Inpatient Pharmacy users are on 
+ the system.  If a user is on the system accessing this application, an
+ error will occur.                                                    
+ Install Time - less than 1 minute.
+  
+   
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSJ*5.0*179):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+    
+   4. Use the Install Package(s) option and select the package PSJ*5.0*179.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+    
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0; INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 45
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGNE3
+    Before: B30964253   After: B84337387  **4,26,47,50,63,69,105,80,111,
+                                           183,193,179**
+Routine Name: PSGOE6
+    Before: B24315055   After: B24406814  **3,7,39,45,65,58,81,156,134,179**
+Routine Name: PSGOE91
+    Before: B41628067   After: B41627571  **50,64,58,110,111,136,113,179**
+Routine Name: PSGOEE
+    Before: B61292541   After: B63399742  **4,7,29,47,64,58,82,91,110,
+                                           111,112,142,179**
+Routine Name: PSGOEE0
+    Before: B26990604   After: B27327541  **58,95,179**
+Routine Name: PSIVCHK
+    Before: B22884839   After: B24591078  **54,58,81,111,213,113,179**
+Routine Name: PSJOE1
+    Before: B23620921   After: B23435460  **2,7,25,30,47,56,64,179**
+Routine Name: PSJUTL
+    Before: B65061820   After: B65890056  **9,47,58,80,110,136,157,177,
+                                           134,179**
+ 
+Routine list of preceding patches: 95, 113, 134, 142, 193
+
+=============================================================================
+User Information:
+Entered By  : CASTLE,JOHN                   Date Entered  : JUN 02, 2006
+Completed By: CRICHLOW,SHERRY               Date Completed: FEB 24, 2011
+Released By : CAMPBELL,THOMAS               Date Released : MAR 02, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

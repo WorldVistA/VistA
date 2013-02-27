@@ -1,0 +1,1320 @@
+Released PSS*1*171 SEQ #151
+Extracted from mail message
+**KIDS**:PSS*1.0*171^
+
+**INSTALL NAME**
+PSS*1.0*171
+"BLD",8211,0)
+PSS*1.0*171^PHARMACY DATA MANAGEMENT^0^3120418^y
+"BLD",8211,1,0)
+^^56^56^3120110^
+"BLD",8211,1,1,0)
+Special Instructions/Other Print Info
+"BLD",8211,1,2,0)
+________________________________________
+"BLD",8211,1,3,0)
+With this enhancement, Special Instructions and Other Print Info have been
+"BLD",8211,1,4,0)
+modified to support an unlimited amount of text. The existing
+"BLD",8211,1,5,0)
+functionality that copies the provider comments from the Computerized
+"BLD",8211,1,6,0)
+Patient Record System (CPRS) to be copied into each field has been
+"BLD",8211,1,7,0)
+retained, and an additional action has been added to optionally open a
+"BLD",8211,1,8,0)
+word processing edit dialog after copying the provider comments into the
+"BLD",8211,1,9,0)
+appropriate field (Special Instructions for Unit Dose, Other Print Info
+"BLD",8211,1,10,0)
+for IV).
+"BLD",8211,1,11,0)
+ 
+"BLD",8211,1,12,0)
+Special Instructions and Other Print Info may also be entered
+"BLD",8211,1,13,0)
+and/or edited from within Inpatient Medications V. 5.0 order entry
+"BLD",8211,1,14,0)
+options.
+"BLD",8211,1,15,0)
+ 
+"BLD",8211,1,16,0)
+Prior to this enhancement, Inpatient Medications maximum character
+"BLD",8211,1,17,0)
+length for Special Instructions was 180 characters and for Other Print
+"BLD",8211,1,18,0)
+Info the maximum length was 60 characters. This enhancement resolves
+"BLD",8211,1,19,0)
+Patient Safety Issues PSPO 42, 1466 / Remedy Ticket HD336419
+"BLD",8211,1,20,0)
+- Comment lengths between CPRS and Pharmacy.
+"BLD",8211,1,21,0)
+ 
+"BLD",8211,1,22,0)
+No Allergy Assessment
+"BLD",8211,1,23,0)
+________________________
+"BLD",8211,1,24,0)
+The No Allergy Assessment enhancement provides an interactive alert to the
+"BLD",8211,1,25,0)
+pharmacist in Inpatient Medications V. 5.0 when no allergy assessment is
+"BLD",8211,1,26,0)
+on file for the patient, and a method for the pharmacist to enter an
+"BLD",8211,1,27,0)
+allergy assessment after receiving the alert.  A pharmacy intervention
+"BLD",8211,1,28,0)
+is automatically created if the pharmacist chooses to not enter an
+"BLD",8211,1,29,0)
+assessment.
+"BLD",8211,1,30,0)
+ 
+"BLD",8211,1,31,0)
+The No Allergy Assessment functionality will be available at the
+"BLD",8211,1,32,0)
+following options:
+"BLD",8211,1,33,0)
+ 
+"BLD",8211,1,34,0)
+Delete Orders [PSJI DELETE ORDER]
+"BLD",8211,1,35,0)
+Inpatient Order Entry [PSJ OE]
+"BLD",8211,1,36,0)
+Non-Verified/Pending Orders [PSJU VBW]
+"BLD",8211,1,37,0)
+Order Entry [PSJU NE]
+"BLD",8211,1,38,0)
+Order Entry (IV) [PSJI ORDER]
+"BLD",8211,1,39,0)
+Profile (IV) [PSJI PROFILE]
+"BLD",8211,1,40,0)
+ 
+"BLD",8211,1,41,0)
+When a patient with no allergy assessment is selected from one of the
+"BLD",8211,1,42,0)
+affected options, the following message will be displayed to the
+"BLD",8211,1,43,0)
+pharmacist:
+"BLD",8211,1,44,0)
+ 
+"BLD",8211,1,45,0)
+"NO ALLERGY ASSESSMENT exists for this patient! Would you like to enter
+"BLD",8211,1,46,0)
+one now?"
+"BLD",8211,1,47,0)
+ 
+"BLD",8211,1,48,0)
+ - If the pharmacist enters 'YES' at this prompt, they are prompted
+"BLD",8211,1,49,0)
+   for allergy information.
+"BLD",8211,1,50,0)
+ - If the pharmacist enters 'NO' at this prompt, a pharmacist intervention
+"BLD",8211,1,51,0)
+   is created, with a type of 'NO ALLERGY ASSESSMENT'. The pharmacist is
+"BLD",8211,1,52,0)
+   then prompted for Provider and Recommendation. A new Recommendation,
+"BLD",8211,1,53,0)
+   'UNABLE TO ASSESS', has been created specifically  for this type of
+"BLD",8211,1,54,0)
+   intervention.
+"BLD",8211,1,55,0)
+ 
+"BLD",8211,1,56,0)
+This enhancement will address Patient Safety Issue PSPO 445.
+"BLD",8211,4,0)
+^9.64PA^55^4
+"BLD",8211,4,55,0)
+55
+"BLD",8211,4,55,2,0)
+^9.641^55.04^4
+"BLD",8211,4,55,2,55.01,0)
+IV  (sub-file)
+"BLD",8211,4,55,2,55.01,1,0)
+^9.6411^154^1
+"BLD",8211,4,55,2,55.01,1,154,0)
+OTHER PRINT INFO (LONG)
+"BLD",8211,4,55,2,55.04,0)
+ACTIVITY LOG  (sub-file)
+"BLD",8211,4,55,2,55.04,1,0)
+^9.6411^3^2
+"BLD",8211,4,55,2,55.04,1,2,0)
+OTHER PRINT INFO (OLD VALUE)
+"BLD",8211,4,55,2,55.04,1,3,0)
+OTHER PRINT INFO (NEW VALUE)
+"BLD",8211,4,55,2,55.06,0)
+UNIT DOSE  (sub-file)
+"BLD",8211,4,55,2,55.06,1,0)
+^9.6411^135^1
+"BLD",8211,4,55,2,55.06,1,135,0)
+SPECIAL INSTRUCTIONS (LONG)
+"BLD",8211,4,55,2,55.09,0)
+ACTIVITY LOG  (sub-file)
+"BLD",8211,4,55,2,55.09,1,0)
+^9.6411^5^1
+"BLD",8211,4,55,2,55.09,1,5,0)
+OLD DATA (WORD PROCESSING)
+"BLD",8211,4,55,222)
+y^y^p^^^^n^^n
+"BLD",8211,4,55,224)
+
+"BLD",8211,4,9009032.3,0)
+9009032.3
+"BLD",8211,4,9009032.3,222)
+n^y^f^^n^^y^m^n
+"BLD",8211,4,9009032.4,0)
+9009032.4
+"BLD",8211,4,9009032.4,2,0)
+^9.641^9009032.4^1
+"BLD",8211,4,9009032.4,2,9009032.4,0)
+APSP INTERVENTION  (File-top level)
+"BLD",8211,4,9009032.4,2,9009032.4,1,0)
+^9.6411^.08^1
+"BLD",8211,4,9009032.4,2,9009032.4,1,.08,0)
+RECOMMENDATION
+"BLD",8211,4,9009032.4,222)
+y^y^p^^^^n^^n
+"BLD",8211,4,9009032.4,224)
+
+"BLD",8211,4,9009032.5,0)
+9009032.5
+"BLD",8211,4,9009032.5,222)
+n^y^f^^n^^y^m^n
+"BLD",8211,4,"APDD",55,55.01)
+
+"BLD",8211,4,"APDD",55,55.01,154)
+
+"BLD",8211,4,"APDD",55,55.04)
+
+"BLD",8211,4,"APDD",55,55.04,2)
+
+"BLD",8211,4,"APDD",55,55.04,3)
+
+"BLD",8211,4,"APDD",55,55.06)
+
+"BLD",8211,4,"APDD",55,55.06,135)
+
+"BLD",8211,4,"APDD",55,55.09)
+
+"BLD",8211,4,"APDD",55,55.09,5)
+
+"BLD",8211,4,"APDD",9009032.4,9009032.4)
+
+"BLD",8211,4,"APDD",9009032.4,9009032.4,.08)
+
+"BLD",8211,4,"B",55,55)
+
+"BLD",8211,4,"B",9009032.3,9009032.3)
+
+"BLD",8211,4,"B",9009032.4,9009032.4)
+
+"BLD",8211,4,"B",9009032.5,9009032.5)
+
+"BLD",8211,6)
+1^
+"BLD",8211,6.3)
+19
+"BLD",8211,"ABPKG")
+n
+"BLD",8211,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8211,"KRN",.4,0)
+.4
+"BLD",8211,"KRN",.401,0)
+.401
+"BLD",8211,"KRN",.402,0)
+.402
+"BLD",8211,"KRN",.403,0)
+.403
+"BLD",8211,"KRN",.5,0)
+.5
+"BLD",8211,"KRN",.84,0)
+.84
+"BLD",8211,"KRN",3.6,0)
+3.6
+"BLD",8211,"KRN",3.8,0)
+3.8
+"BLD",8211,"KRN",9.2,0)
+9.2
+"BLD",8211,"KRN",9.8,0)
+9.8
+"BLD",8211,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",8211,"KRN",9.8,"NM",1,0)
+PSSDDUT3^^0^B34317397
+"BLD",8211,"KRN",9.8,"NM","B","PSSDDUT3",1)
+
+"BLD",8211,"KRN",19,0)
+19
+"BLD",8211,"KRN",19.1,0)
+19.1
+"BLD",8211,"KRN",101,0)
+101
+"BLD",8211,"KRN",409.61,0)
+409.61
+"BLD",8211,"KRN",771,0)
+771
+"BLD",8211,"KRN",779.2,0)
+779.2
+"BLD",8211,"KRN",870,0)
+870
+"BLD",8211,"KRN",8989.51,0)
+8989.51
+"BLD",8211,"KRN",8989.52,0)
+8989.52
+"BLD",8211,"KRN",8994,0)
+8994
+"BLD",8211,"KRN","B",.4,.4)
+
+"BLD",8211,"KRN","B",.401,.401)
+
+"BLD",8211,"KRN","B",.402,.402)
+
+"BLD",8211,"KRN","B",.403,.403)
+
+"BLD",8211,"KRN","B",.5,.5)
+
+"BLD",8211,"KRN","B",.84,.84)
+
+"BLD",8211,"KRN","B",3.6,3.6)
+
+"BLD",8211,"KRN","B",3.8,3.8)
+
+"BLD",8211,"KRN","B",9.2,9.2)
+
+"BLD",8211,"KRN","B",9.8,9.8)
+
+"BLD",8211,"KRN","B",19,19)
+
+"BLD",8211,"KRN","B",19.1,19.1)
+
+"BLD",8211,"KRN","B",101,101)
+
+"BLD",8211,"KRN","B",409.61,409.61)
+
+"BLD",8211,"KRN","B",771,771)
+
+"BLD",8211,"KRN","B",779.2,779.2)
+
+"BLD",8211,"KRN","B",870,870)
+
+"BLD",8211,"KRN","B",8989.51,8989.51)
+
+"BLD",8211,"KRN","B",8989.52,8989.52)
+
+"BLD",8211,"KRN","B",8994,8994)
+
+"BLD",8211,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8211,"QUES",0)
+^9.62^^
+"BLD",8211,"REQB",0)
+^9.611^2^2
+"BLD",8211,"REQB",1,0)
+PSS*1.0*85^2
+"BLD",8211,"REQB",2,0)
+PSS*1.0*35^2
+"BLD",8211,"REQB","B","PSS*1.0*35",2)
+
+"BLD",8211,"REQB","B","PSS*1.0*85",1)
+
+"DATA",9009032.3,1,0)
+INAPPROPRIATE DRUG
+"DATA",9009032.3,2,0)
+INCORRECT DOSE
+"DATA",9009032.3,3,0)
+INCORRECT FORM OR ROUTE OF ADMINISTRATION
+"DATA",9009032.3,4,0)
+INCORRECT DOSING INTERVAL OR SCHEDULE
+"DATA",9009032.3,5,0)
+CONTRAINDICATION FOR USE
+"DATA",9009032.3,6,0)
+ALLERGY
+"DATA",9009032.3,7,0)
+INCORRECT PATIENT
+"DATA",9009032.3,8,0)
+DRUG OF CHOICE NOT PRESCRIBED WITH NO APPARENT JUSTIFICATION
+"DATA",9009032.3,9,0)
+EXCESSIVE LENGTH OF THERAPY OR QUANTITY
+"DATA",9009032.3,10,0)
+NON-FORMULARY MEDICATION
+"DATA",9009032.3,11,0)
+OMISSION ORDER
+"DATA",9009032.3,12,0)
+ORDER FOR DISCONTINUED MEDICATION
+"DATA",9009032.3,13,0)
+THERAPEUTIC DUPLICATION ORDERED
+"DATA",9009032.3,14,0)
+MEDICATION NOT PREPARED OR ADMINISTERED
+"DATA",9009032.3,15,0)
+TRANSCRIPTION ERROR
+"DATA",9009032.3,16,0)
+CLARIFICATION OF ORDER
+"DATA",9009032.3,17,0)
+OTHER
+"DATA",9009032.3,18,0)
+CRITICAL DRUG INTERACTION
+"DATA",9009032.3,19,0)
+SIGNIFICANT DRUG INTERACTION
+"DATA",9009032.3,20,0)
+MAX SINGLE DOSE
+"DATA",9009032.3,21,0)
+DAILY DOSE RANGE
+"DATA",9009032.3,22,0)
+MAX SINGLE DOSE & DAILY DOSE RANGE
+"DATA",9009032.3,24,0)
+NO ALLERGY ASSESSMENT
+"DATA",9009032.5,1,0)
+CHANGE DRUG
+"DATA",9009032.5,2,0)
+CHANGE FORM OR ROUTE OF ADMINISTRATION
+"DATA",9009032.5,3,0)
+ORDER LAB TEST
+"DATA",9009032.5,4,0)
+ORDER SERUM DRUG LEVEL
+"DATA",9009032.5,5,0)
+CHANGE DOSE
+"DATA",9009032.5,6,0)
+START OR DISCONTINUE A DRUG
+"DATA",9009032.5,7,0)
+CHANGE DOSING INTERVAL
+"DATA",9009032.5,8,0)
+NO CHANGE
+"DATA",9009032.5,9,0)
+OTHER
+"DATA",9009032.5,10,0)
+UNABLE TO ASSESS
+"FIA",55)
+PHARMACY PATIENT
+"FIA",55,0)
+^PS(55,
+"FIA",55,0,0)
+55P
+"FIA",55,0,1)
+y^y^p^^^^n^^n
+"FIA",55,0,10)
+
+"FIA",55,0,11)
+
+"FIA",55,0,"RLRO")
+
+"FIA",55,0,"VR")
+1.0^PSS
+"FIA",55,55)
+1
+"FIA",55,55.01)
+1
+"FIA",55,55.01,154)
+
+"FIA",55,55.04)
+1
+"FIA",55,55.04,2)
+
+"FIA",55,55.04,3)
+
+"FIA",55,55.06)
+1
+"FIA",55,55.06,135)
+
+"FIA",55,55.09)
+1
+"FIA",55,55.09,5)
+
+"FIA",55,55.1154)
+0
+"FIA",55,55.16)
+0
+"FIA",55,55.42)
+0
+"FIA",55,55.43)
+0
+"FIA",55,55.6135)
+0
+"FIA",9009032.3)
+APSP INTERVENTION TYPE
+"FIA",9009032.3,0)
+^APSPQA(32.3,
+"FIA",9009032.3,0,0)
+9009032.3
+"FIA",9009032.3,0,1)
+n^y^f^^n^^y^m^n
+"FIA",9009032.3,0,10)
+
+"FIA",9009032.3,0,11)
+
+"FIA",9009032.3,0,"RLRO")
+
+"FIA",9009032.3,0,"VR")
+1.0^PSS
+"FIA",9009032.3,9009032.3)
+0
+"FIA",9009032.4)
+APSP INTERVENTION
+"FIA",9009032.4,0)
+^APSPQA(32.4,
+"FIA",9009032.4,0,0)
+9009032.4ID
+"FIA",9009032.4,0,1)
+y^y^p^^^^n^^n
+"FIA",9009032.4,0,10)
+
+"FIA",9009032.4,0,11)
+
+"FIA",9009032.4,0,"RLRO")
+
+"FIA",9009032.4,0,"VR")
+1.0^PSS
+"FIA",9009032.4,9009032.4)
+1
+"FIA",9009032.4,9009032.4,.08)
+
+"FIA",9009032.5)
+APSP INTERVENTION RECOMMENDATION
+"FIA",9009032.5,0)
+^APSPQA(32.5,
+"FIA",9009032.5,0,0)
+9009032.5
+"FIA",9009032.5,0,1)
+n^y^f^^n^^y^m^n
+"FIA",9009032.5,0,10)
+
+"FIA",9009032.5,0,11)
+
+"FIA",9009032.5,0,"RLRO")
+
+"FIA",9009032.5,0,"VR")
+1.0^PSS
+"FIA",9009032.5,9009032.5)
+0
+"MBREQ")
+0
+"PKG",517,-1)
+1^1
+"PKG",517,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",517,20,0)
+^9.402P^^
+"PKG",517,22,0)
+^9.49I^1^1
+"PKG",517,22,1,0)
+1.0^2970930^2971014^11595
+"PKG",517,22,1,"PAH",1,0)
+171^3120418^10000000009
+"PKG",517,22,1,"PAH",1,1,0)
+^^56^56^3120418
+"PKG",517,22,1,"PAH",1,1,1,0)
+Special Instructions/Other Print Info
+"PKG",517,22,1,"PAH",1,1,2,0)
+________________________________________
+"PKG",517,22,1,"PAH",1,1,3,0)
+With this enhancement, Special Instructions and Other Print Info have been
+"PKG",517,22,1,"PAH",1,1,4,0)
+modified to support an unlimited amount of text. The existing
+"PKG",517,22,1,"PAH",1,1,5,0)
+functionality that copies the provider comments from the Computerized
+"PKG",517,22,1,"PAH",1,1,6,0)
+Patient Record System (CPRS) to be copied into each field has been
+"PKG",517,22,1,"PAH",1,1,7,0)
+retained, and an additional action has been added to optionally open a
+"PKG",517,22,1,"PAH",1,1,8,0)
+word processing edit dialog after copying the provider comments into the
+"PKG",517,22,1,"PAH",1,1,9,0)
+appropriate field (Special Instructions for Unit Dose, Other Print Info
+"PKG",517,22,1,"PAH",1,1,10,0)
+for IV).
+"PKG",517,22,1,"PAH",1,1,11,0)
+ 
+"PKG",517,22,1,"PAH",1,1,12,0)
+Special Instructions and Other Print Info may also be entered
+"PKG",517,22,1,"PAH",1,1,13,0)
+and/or edited from within Inpatient Medications V. 5.0 order entry
+"PKG",517,22,1,"PAH",1,1,14,0)
+options.
+"PKG",517,22,1,"PAH",1,1,15,0)
+ 
+"PKG",517,22,1,"PAH",1,1,16,0)
+Prior to this enhancement, Inpatient Medications maximum character
+"PKG",517,22,1,"PAH",1,1,17,0)
+length for Special Instructions was 180 characters and for Other Print
+"PKG",517,22,1,"PAH",1,1,18,0)
+Info the maximum length was 60 characters. This enhancement resolves
+"PKG",517,22,1,"PAH",1,1,19,0)
+Patient Safety Issues PSPO 42, 1466 / Remedy Ticket HD336419
+"PKG",517,22,1,"PAH",1,1,20,0)
+- Comment lengths between CPRS and Pharmacy.
+"PKG",517,22,1,"PAH",1,1,21,0)
+ 
+"PKG",517,22,1,"PAH",1,1,22,0)
+No Allergy Assessment
+"PKG",517,22,1,"PAH",1,1,23,0)
+________________________
+"PKG",517,22,1,"PAH",1,1,24,0)
+The No Allergy Assessment enhancement provides an interactive alert to the
+"PKG",517,22,1,"PAH",1,1,25,0)
+pharmacist in Inpatient Medications V. 5.0 when no allergy assessment is
+"PKG",517,22,1,"PAH",1,1,26,0)
+on file for the patient, and a method for the pharmacist to enter an
+"PKG",517,22,1,"PAH",1,1,27,0)
+allergy assessment after receiving the alert.  A pharmacy intervention
+"PKG",517,22,1,"PAH",1,1,28,0)
+is automatically created if the pharmacist chooses to not enter an
+"PKG",517,22,1,"PAH",1,1,29,0)
+assessment.
+"PKG",517,22,1,"PAH",1,1,30,0)
+ 
+"PKG",517,22,1,"PAH",1,1,31,0)
+The No Allergy Assessment functionality will be available at the
+"PKG",517,22,1,"PAH",1,1,32,0)
+following options:
+"PKG",517,22,1,"PAH",1,1,33,0)
+ 
+"PKG",517,22,1,"PAH",1,1,34,0)
+Delete Orders [PSJI DELETE ORDER]
+"PKG",517,22,1,"PAH",1,1,35,0)
+Inpatient Order Entry [PSJ OE]
+"PKG",517,22,1,"PAH",1,1,36,0)
+Non-Verified/Pending Orders [PSJU VBW]
+"PKG",517,22,1,"PAH",1,1,37,0)
+Order Entry [PSJU NE]
+"PKG",517,22,1,"PAH",1,1,38,0)
+Order Entry (IV) [PSJI ORDER]
+"PKG",517,22,1,"PAH",1,1,39,0)
+Profile (IV) [PSJI PROFILE]
+"PKG",517,22,1,"PAH",1,1,40,0)
+ 
+"PKG",517,22,1,"PAH",1,1,41,0)
+When a patient with no allergy assessment is selected from one of the
+"PKG",517,22,1,"PAH",1,1,42,0)
+affected options, the following message will be displayed to the
+"PKG",517,22,1,"PAH",1,1,43,0)
+pharmacist:
+"PKG",517,22,1,"PAH",1,1,44,0)
+ 
+"PKG",517,22,1,"PAH",1,1,45,0)
+"NO ALLERGY ASSESSMENT exists for this patient! Would you like to enter
+"PKG",517,22,1,"PAH",1,1,46,0)
+one now?"
+"PKG",517,22,1,"PAH",1,1,47,0)
+ 
+"PKG",517,22,1,"PAH",1,1,48,0)
+ - If the pharmacist enters 'YES' at this prompt, they are prompted
+"PKG",517,22,1,"PAH",1,1,49,0)
+   for allergy information.
+"PKG",517,22,1,"PAH",1,1,50,0)
+ - If the pharmacist enters 'NO' at this prompt, a pharmacist intervention
+"PKG",517,22,1,"PAH",1,1,51,0)
+   is created, with a type of 'NO ALLERGY ASSESSMENT'. The pharmacist is
+"PKG",517,22,1,"PAH",1,1,52,0)
+   then prompted for Provider and Recommendation. A new Recommendation,
+"PKG",517,22,1,"PAH",1,1,53,0)
+   'UNABLE TO ASSESS', has been created specifically  for this type of
+"PKG",517,22,1,"PAH",1,1,54,0)
+   intervention.
+"PKG",517,22,1,"PAH",1,1,55,0)
+ 
+"PKG",517,22,1,"PAH",1,1,56,0)
+This enhancement will address Patient Safety Issue PSPO 445.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSSDDUT3")
+0^1^B34317397^B31120110
+"RTN","PSSDDUT3",1,0)
+PSSDDUT3 ;BIR/LDT-Pharmacy Data Management DD Utility ; 09/17/97 14:35
+"RTN","PSSDDUT3",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**35,171**;9/30/97;Build 19
+"RTN","PSSDDUT3",3,0)
+ ;
+"RTN","PSSDDUT3",4,0)
+ ; Reference to ENSD^PSGNE3 is supported by DBIA #2150.
+"RTN","PSSDDUT3",5,0)
+ ; Reference to EN^PSGCT is supported by DBIA #2146.
+"RTN","PSSDDUT3",6,0)
+ ; Reference to ENT^PSIVWL is supported by DBIA #2154.
+"RTN","PSSDDUT3",7,0)
+ ;
+"RTN","PSSDDUT3",8,0)
+ADTM ;UNIT DOSE MULTIPLE of PHARMACY PATIENT file (55) field 41
+"RTN","PSSDDUT3",9,0)
+ S PSSHLP(1)="THE TIMES MUST BE TWO (2) OR FOUR (4) DIGITS, SEPARATED WITH"
+"RTN","PSSDDUT3",10,0)
+ S PSSHLP(2)="DASHES ('-'), AND BE IN ASCENDING ORDER. (IE. 01-05-13)"
+"RTN","PSSDDUT3",11,0)
+ D WRITE
+"RTN","PSSDDUT3",12,0)
+ Q
+"RTN","PSSDDUT3",13,0)
+ ;
+"RTN","PSSDDUT3",14,0)
+SPCIN ;UNIT DOSE MULTIPLE of PHARMACY PATIENT file (55) field 8
+"RTN","PSSDDUT3",15,0)
+ S PSSHLP(1)="IF ABBREVIATIONS ARE USED, THE TOTAL LENGTH OF THE EXPANDED"
+"RTN","PSSDDUT3",16,0)
+ S PSSHLP(2)="INSTRUCTIONS ALSO MAY NOT EXCEED 180 CHARACTERS."
+"RTN","PSSDDUT3",17,0)
+ D WRITE
+"RTN","PSSDDUT3",18,0)
+ Q
+"RTN","PSSDDUT3",19,0)
+ ;
+"RTN","PSSDDUT3",20,0)
+SCHTP ;Called from the Unit Dose Multiple of file 55, Schedule Type field 7
+"RTN","PSSDDUT3",21,0)
+ S PSSHLP(1)="CHOOSE FROM:"
+"RTN","PSSDDUT3",22,0)
+ S PSSHLP(1,"F")="!!"
+"RTN","PSSDDUT3",23,0)
+ S PSSHLP(2)="C - CONTINUOUS"
+"RTN","PSSDDUT3",24,0)
+ S PSSHLP(2,"F")="!?3"
+"RTN","PSSDDUT3",25,0)
+ S PSSHLP(3)="O - ONE-TIME"
+"RTN","PSSDDUT3",26,0)
+ S PSSHLP(3,"F")="!?3"
+"RTN","PSSDDUT3",27,0)
+ S PSSHLP(4)="OC - ON CALL"
+"RTN","PSSDDUT3",28,0)
+ S PSSHLP(4,"F")="!?3"
+"RTN","PSSDDUT3",29,0)
+ S PSSHLP(5)="P - PRN"
+"RTN","PSSDDUT3",30,0)
+ S PSSHLP(5,"F")="!?3"
+"RTN","PSSDDUT3",31,0)
+ S PSSHLP(6)="R - FILL ON REQUEST"
+"RTN","PSSDDUT3",32,0)
+ S PSSHLP(6,"F")="!?3"
+"RTN","PSSDDUT3",33,0)
+ D WRITE
+"RTN","PSSDDUT3",34,0)
+ Q
+"RTN","PSSDDUT3",35,0)
+ ;
+"RTN","PSSDDUT3",36,0)
+CHKSI ;Called from Unit Dose Multiple of file (55), Special Instructions
+"RTN","PSSDDUT3",37,0)
+ ;field 8 (Replaces ^PSGSICHK)
+"RTN","PSSDDUT3",38,0)
+ I $S(X'?.ANP:1,X["^":1,1:$L(X)>180) K X Q
+"RTN","PSSDDUT3",39,0)
+ N Y S Y="" F Y(1)=1:1:$L(X," ") S Y(2)=$P(X," ",Y(1)) I Y(2)]"" D CHK1 Q:'$D(X)
+"RTN","PSSDDUT3",40,0)
+ I $D(X),Y]"",X'=$E(Y,1,$L(Y)-1) D EN^DDIOL("EXPANDS TO:","","!?3") F Y(1)=1:1 S Y(2)=$P(Y," ",Y(1)) Q:Y(2)=""  D:$L(Y(2))+$X>78 EN^DDIOL("","","!") D EN^DDIOL(Y(2)_" ","","?0")
+"RTN","PSSDDUT3",41,0)
+ K Y Q
+"RTN","PSSDDUT3",42,0)
+CHK1 ;
+"RTN","PSSDDUT3",43,0)
+ I $L(Y(2))<31,$D(^PS(51,+$O(^PS(51,"B",Y(2),0)),0)),$P(^(0),"^",2)]"",$P(^(0),"^",4) S Y(2)=$P(^(0),"^",2)
+"RTN","PSSDDUT3",44,0)
+ I $L(Y)+$L(Y(2))>180 K X Q
+"RTN","PSSDDUT3",45,0)
+ S Y=Y_Y(2)_" " Q
+"RTN","PSSDDUT3",46,0)
+ ;
+"RTN","PSSDDUT3",47,0)
+EN2 ;Called from Unit Dose multiple of file 55, STOP DATE/TIME field 34
+"RTN","PSSDDUT3",48,0)
+ ;Replaces EN2^PSGDL
+"RTN","PSSDDUT3",49,0)
+ K PSGDLS S ND2=^PS(55,DA(1),5,DA,2) I '$P(ND2,"^",5),'$P(ND2,"^",6) G DONE
+"RTN","PSSDDUT3",50,0)
+ D EN^DDIOL(" ...Dose Limit... ","","?0")
+"RTN","PSSDDUT3",51,0)
+ ;
+"RTN","PSSDDUT3",52,0)
+ENGO ;
+"RTN","PSSDDUT3",53,0)
+ S SCH=$P(ND2,"^")
+"RTN","PSSDDUT3",54,0)
+ S ST=$S($D(PSGDLS):PSGDLS,1:$P(ND2,"^",2))
+"RTN","PSSDDUT3",55,0)
+ S TS=$P(ND2,"^",5),MN=$P(ND2,"^",6)
+"RTN","PSSDDUT3",56,0)
+ I $P(PSJSYSW0,U,5)=2 D
+"RTN","PSSDDUT3",57,0)
+ . S $P(PSJSYSW0,U,5)=1
+"RTN","PSSDDUT3",58,0)
+ . S X="PSGNE3" X ^%ZOSF("TEST") I  S ST=$$ENSD^PSGNE3(ST,TS,ST,"")
+"RTN","PSSDDUT3",59,0)
+ . S $P(PSJSYSW0,U,5)=2
+"RTN","PSSDDUT3",60,0)
+ G MWF:SCH["@",DONE:'TS&'MN
+"RTN","PSSDDUT3",61,0)
+ I 'TS S X="PSGCT" X ^%ZOSF("TEST") I  S AM=MN*PSGDL,X=$$EN^PSGCT(ST,AM) G DONE
+"RTN","PSSDDUT3",62,0)
+ S TM=$E(ST_"00000",9,8+$L($P(TS,"-")))
+"RTN","PSSDDUT3",63,0)
+ F Q=1:1 Q:$P(TS,"-",Q)=""!(TM<$P(TS,"-",Q))
+"RTN","PSSDDUT3",64,0)
+ S X=ST\1,C=0 F Q=Q:1 D:$P(TS,"-",Q)="" ADD S C=C+1 I C=PSGDL S X=X_"."_$P(TS,"-",Q) G DONE
+"RTN","PSSDDUT3",65,0)
+ ;
+"RTN","PSSDDUT3",66,0)
+MWF ; if schedule is similar to monday-wednesday-friday
+"RTN","PSSDDUT3",67,0)
+ S TS=$P(SCH,"@",2),SCH=$P(SCH,"@"),X=$P(ST,"."),C=0 D SCHK G:C=PSGDL DONE F Q=1:1 S X1=$P(ST,"."),X2=Q D C^%DTC S X1=X D DW^%DTC D CHK G:C=PSGDL DONE
+"RTN","PSSDDUT3",68,0)
+SCHK S X1=X D DW^%DTC F Q=1:1:$L(SCH,"-") S WKD=$P(SCH,"-",Q) I WKD=$E(X,1,$L(WKD)) Q
+"RTN","PSSDDUT3",69,0)
+ E  Q
+"RTN","PSSDDUT3",70,0)
+ S TM=$E(ST_"00000",9,8+$L($P(TS,"-"))) F Q=1:1:$L(TS,"-") I TM<$P(TS,"-",Q) S C=C+1 I C=PSGDL S X=X1_"."_$P(TS,"-",Q) Q
+"RTN","PSSDDUT3",71,0)
+ Q
+"RTN","PSSDDUT3",72,0)
+CHK F QQ=1:1:$L(SCH,"-") S WKD=$P(SCH,"-",QQ) I WKD=$E(X,1,$L(WKD)) D TS Q
+"RTN","PSSDDUT3",73,0)
+ Q
+"RTN","PSSDDUT3",74,0)
+TS F Q1=1:1:$L(TS,"-") S C=C+1 I C=PSGDL S X=X1_"."_$P(TS,"-",Q1) Q
+"RTN","PSSDDUT3",75,0)
+ Q
+"RTN","PSSDDUT3",76,0)
+ ;
+"RTN","PSSDDUT3",77,0)
+DONE ;
+"RTN","PSSDDUT3",78,0)
+ K %H,%T,%Y,MN,ND2,ND4,PSGDLS,PSGDL,Q1,QQ,SCH,TM,WKD,TS,X1,X2 Q
+"RTN","PSSDDUT3",79,0)
+ ;
+"RTN","PSSDDUT3",80,0)
+ADD ;
+"RTN","PSSDDUT3",81,0)
+ S X1=$P(X,"."),X2=$S(MN&'(MN#1440):MN\1440,1:1) D C^%DTC S Q=1 Q
+"RTN","PSSDDUT3",82,0)
+ ;
+"RTN","PSSDDUT3",83,0)
+ENDL ;From DD(55.01,.03,0) Replaces call ENDL^PSIVSP
+"RTN","PSSDDUT3",84,0)
+ D EN^DDIOL("   Dose limit ....  ","","?0") S PSIVMIN=P(15)*X,PSIVSD=+P(2)
+"RTN","PSSDDUT3",85,0)
+ I PSIVMIN<0 D EN^DDIOL(" --- There is something wrong with this order !!","","!!") D EN^DDIOL("     Call inpatient supervisor .....") S Y=-1 K PSIVMIN Q
+"RTN","PSSDDUT3",86,0)
+ I P(4)="P"!(P(5))!(P(23)="P"),PSIVMIN=0,"^NOW^STAT^ONCE^"'[("^"_$P(P(9)," ")_"^") D DLP G QDL
+"RTN","PSSDDUT3",87,0)
+ S X="PSIVWL" X ^%ZOSF("TEST") I  D ENT^PSIVWL
+"RTN","PSSDDUT3",88,0)
+QDL I $D(X) S X=Y X ^DD("DD") W $P(Y,"@")," ",$P(Y,"@",2) S Y=X
+"RTN","PSSDDUT3",89,0)
+ Q
+"RTN","PSSDDUT3",90,0)
+DLP ;
+"RTN","PSSDDUT3",91,0)
+ S X=X+1,$P(PSIVSD,".",2)=$P(PSIVSD,".",2)_$E("0000",1,4-$L($P(PSIVSD,".",2))) D CHK3 S X2=0,Y=1 I X<2 S Y=+PSIVSD G QDLP
+"RTN","PSSDDUT3",92,0)
+ I $P(PSIVSD,".",2)>$P(P(11),"-",$L(P(11),"-")) S X2=1 G OV
+"RTN","PSSDDUT3",93,0)
+ G:$P(P(11),"-")>$P(PSIVSD,".",2) OV
+"RTN","PSSDDUT3",94,0)
+ F Y=1:1 S X1=$P(P(11),"-",Y) I X1=$P(PSIVSD,".",2)!($P(PSIVSD,".",2)<X1) Q
+"RTN","PSSDDUT3",95,0)
+OV I P(11)="" D EN^DDIOL(" ???","","$C(7)") D EN^DDIOL("*** You have not defined any administration times !!","","!?15") K X Q
+"RTN","PSSDDUT3",96,0)
+ F Y=Y:1 S:$P(P(11),"-",Y)="" X2=X2+1,Y=0,X=X+1 S X=X-1 Q:X<1
+"RTN","PSSDDUT3",97,0)
+ S X=PSIVSD\1 I X2>0 S X1=PSIVSD D C^%DTC S X=$P(X,".") ; install with version 17.3 of fileman
+"RTN","PSSDDUT3",98,0)
+ S Y=+(X_"."_$P(P(11),"-",Y))
+"RTN","PSSDDUT3",99,0)
+QDLP K X1,X2 Q
+"RTN","PSSDDUT3",100,0)
+ ;
+"RTN","PSSDDUT3",101,0)
+ENI ;^DD(555.01,.03,0)
+"RTN","PSSDDUT3",102,0)
+ K:$L(X)<1!($L(X)>30)!(X["""")!($A(X)=45) X I '$D(X)!'$D(P(4)) Q
+"RTN","PSSDDUT3",103,0)
+ I P(4)="P"!(P(5))!(P(23)="P") Q:'X  S X="INFUSE OVER "_X_" MIN." D EN^DDIOL("   "_X,"","?0") Q
+"RTN","PSSDDUT3",104,0)
+ I X'=+X,($P(X,"@",2,999)'=+$P(X,"@",2,999)!(+$P(X,"@",2,999)<0)) K X Q
+"RTN","PSSDDUT3",105,0)
+ S SPSOL=$O(DRG("SOL",0)) I 'SPSOL K SPSOL,X D EN^DDIOL("  You must define at least one solution !!","","?0") Q
+"RTN","PSSDDUT3",106,0)
+ I X=+X S X=X_" ml/hr" D EN^DDIOL(" ml/hr","","?0") D SPSOL S P(15)=$S('X:0,1:SPSOL\X*60+(SPSOL#X/X*60+.5)\1) K SPSOL Q
+"RTN","PSSDDUT3",107,0)
+ S SPSOL=$P(X,"@",2) S:$P(X,"@")=+X $P(X,"@")=$P(X,"@")_" ml/hr" D EN^DDIOL("   "_+SPSOL_" Label"_$S(SPSOL'=1:"s",1:"")_" per day","","?0") D EN^DDIOL("at an infusion rate of: "_$P(X,"@"),"","!?15") S P(15)=$S('SPSOL:0,1:1440/SPSOL\1) K SPSOL
+"RTN","PSSDDUT3",108,0)
+ Q
+"RTN","PSSDDUT3",109,0)
+SPSOL S SPSOL=0 F XXX=0:0 S XXX=$O(DRG("SOL",XXX)) Q:'XXX  S SPSOL=SPSOL+$P(DRG("SOL",XXX),U,3)
+"RTN","PSSDDUT3",110,0)
+ K XXX Q
+"RTN","PSSDDUT3",111,0)
+CHK3 F Y=1:1 Q:$L(P(11))>240!($P(P(11),"-",Y)="")  S $P(P(11),"-",Y)=$P(P(11),"-",Y)_$E("0000",1,4-$L($P(P(11),"-",Y)))
+"RTN","PSSDDUT3",112,0)
+ Q
+"RTN","PSSDDUT3",113,0)
+ ;
+"RTN","PSSDDUT3",114,0)
+WRITE ;Calls EN^DDIOL to write text
+"RTN","PSSDDUT3",115,0)
+ D EN^DDIOL(.PSSHLP) K PSSHLP Q
+"RTN","PSSDDUT3",116,0)
+ Q
+"RTN","PSSDDUT3",117,0)
+ ;
+"RTN","PSSDDUT3",118,0)
+AASCRN(PSSREC) ; Screen the RECOMMENDATION field (#.08) in APSPQA INTERVENTION file
+"RTN","PSSDDUT3",119,0)
+ ; Input : PSSREC - IEN of APSP INTERVENTION RECOMMENDATION file (#9009032.5) entry
+"RTN","PSSDDUT3",120,0)
+ ; Output : FALSE - Filter out 'UNABLE TO ASSESS' recommendations if not a NO ALLERGY ASSESSMENT intervention type, 
+"RTN","PSSDDUT3",121,0)
+ ;          filter out all recommendation except 'OTHER' and 'UNABLE TO ASSESS' if not a NO ALLERGY ASSESSMENT intervention type
+"RTN","PSSDDUT3",122,0)
+ ; Output : TRUE - Include only 'UNABLE TO ASSESS' and 'OTHER' recommendations if working on a NO ALLERGY ASSESSMENT intervention type, 
+"RTN","PSSDDUT3",123,0)
+ ;          include all recommendatons except 'UNABLE TO ASSESS' and 'OTHER' if not working on a NO ALLERGY ASSESSMENT intervention type
+"RTN","PSSDDUT3",124,0)
+ I $G(^APSPQA(32.3,+$P($G(^APSPQA(32.4,+$G(DA),0)),"^",7),0))="NO ALLERGY ASSESSMENT" Q $S($G(^APSPQA(32.5,+$G(PSSREC),0))="UNABLE TO ASSESS":1,$G(^APSPQA(32.5,+$G(PSSREC),0))="OTHER":1,1:0)
+"RTN","PSSDDUT3",125,0)
+ Q $S($G(^APSPQA(32.5,+$G(PSSREC),0))="UNABLE TO ASSESS":0,1:1)
+"UP",55,55.01,-1)
+55^IV
+"UP",55,55.01,0)
+55.01
+"UP",55,55.04,-2)
+55^IV
+"UP",55,55.04,-1)
+55.01^A
+"UP",55,55.04,0)
+55.04
+"UP",55,55.06,-1)
+55^5
+"UP",55,55.06,0)
+55.06
+"UP",55,55.09,-2)
+55^5
+"UP",55,55.09,-1)
+55.06^9
+"UP",55,55.09,0)
+55.09
+"UP",55,55.1154,-2)
+55^IV
+"UP",55,55.1154,-1)
+55.01^10
+"UP",55,55.1154,0)
+55.1154
+"UP",55,55.16,-3)
+55^5
+"UP",55,55.16,-2)
+55.06^9
+"UP",55,55.16,-1)
+55.09^1
+"UP",55,55.16,0)
+55.16
+"UP",55,55.42,-3)
+55^IV
+"UP",55,55.42,-2)
+55.01^A
+"UP",55,55.42,-1)
+55.04^2
+"UP",55,55.42,0)
+55.42
+"UP",55,55.43,-3)
+55^IV
+"UP",55,55.43,-2)
+55.01^A
+"UP",55,55.43,-1)
+55.04^3
+"UP",55,55.43,0)
+55.43
+"UP",55,55.6135,-2)
+55^5
+"UP",55,55.6135,-1)
+55.06^15
+"UP",55,55.6135,0)
+55.6135
+"VER")
+8.0^22.0
+"^DD",55,55.01,154,0)
+OTHER PRINT INFO (LONG)^55.1154^^10;0
+"^DD",55,55.01,154,21,0)
+^^4^4^3120111^
+"^DD",55,55.01,154,21,1,0)
+For use by Pharmacy to print additional information on IV labels and
+"^DD",55,55.01,154,21,2,0)
+reports. This is very similar to the REMARKS (#.1) field in the IV (#100)
+"^DD",55,55.01,154,21,3,0)
+of the PHARMACY PATIENT (#55) file, except OTHER PRINT is shown
+"^DD",55,55.01,154,21,4,0)
+on the label and the IV REPORTS.
+"^DD",55,55.01,154,23,0)
+^.001^2^2^3120111^^^^
+"^DD",55,55.01,154,23,1,0)
+This field is a word processing field and may contain an unlimited number 
+"^DD",55,55.01,154,23,2,0)
+of lines of text.
+"^DD",55,55.01,154,"DT")
+3111019
+"^DD",55,55.04,2,0)
+OTHER PRINT INFO (OLD VALUE)^55.42^^2;0
+"^DD",55,55.04,2,21,0)
+^^4^4^3120418^
+"^DD",55,55.04,2,21,1,0)
+This contains the previous data that was in the OTHER PRINT INFO (LONG) 
+"^DD",55,55.04,2,21,2,0)
+(#154) multiple in the IV (#100) multiple in the PHARMACY PATIENT (#55) 
+"^DD",55,55.04,2,21,3,0)
+file, prior to an edit. The data is captured automatically and is not 
+"^DD",55,55.04,2,21,4,0)
+editable.
+"^DD",55,55.04,3,0)
+OTHER PRINT INFO (NEW VALUE)^55.43^^3;0
+"^DD",55,55.04,3,21,0)
+^^3^3^3120418^
+"^DD",55,55.04,3,21,1,0)
+This contains the new data in the OTHER PRINT INFO (LONG) (#154) multiple 
+"^DD",55,55.04,3,21,2,0)
+in the IV (#100) multiple in the PHARMACY PATIENT (#55) file, after an 
+"^DD",55,55.04,3,21,3,0)
+edit. The data is captured automatically and is not editable.  
+"^DD",55,55.06,135,0)
+SPECIAL INSTRUCTIONS (LONG)^55.6135^^15;0
+"^DD",55,55.06,135,21,0)
+^^2^2^3120111^
+"^DD",55,55.06,135,21,1,0)
+This is any special instructions needed for this order.  This would
+"^DD",55,55.06,135,21,2,0)
+include the physician's reason for ordering a PRN.
+"^DD",55,55.06,135,23,0)
+^.001^2^2^3120111^^^
+"^DD",55,55.06,135,23,1,0)
+This word processing field may contain an unlimited number of lines of 
+"^DD",55,55.06,135,23,2,0)
+text.
+"^DD",55,55.09,5,0)
+OLD DATA (WORD PROCESSING)^55.16^^1;0
+"^DD",55,55.09,5,21,0)
+^.001^3^3^3120418^^^
+"^DD",55,55.09,5,21,1,0)
+This contains the previous data that was in the changed field, if the 
+"^DD",55,55.09,5,21,2,0)
+field being changed is a Word Processing field. The data is captured
+"^DD",55,55.09,5,21,3,0)
+automatically and is not editable.
+"^DD",55,55.1154,0)
+OTHER PRINT INFO (LONG) SUB-FIELD^^.01^1
+"^DD",55,55.1154,0,"DT")
+3111016
+"^DD",55,55.1154,0,"NM","OTHER PRINT INFO (LONG)")
+
+"^DD",55,55.1154,0,"UP")
+55.01
+"^DD",55,55.1154,.01,0)
+SPECIAL INSTRUCTIONS (LONG)^WLx^^0;1^Q
+"^DD",55,55.1154,.01,"DT")
+3111016
+"^DD",55,55.16,0)
+OLD DATA (WORD PROCESSING) SUB-FIELD^^.01^1
+"^DD",55,55.16,0,"DT")
+3111103
+"^DD",55,55.16,0,"NM","OLD DATA (WORD PROCESSING)")
+
+"^DD",55,55.16,0,"UP")
+55.09
+"^DD",55,55.16,.01,0)
+OLD DATA (WORD PROCESSING)^WLx^^0;1^Q
+"^DD",55,55.16,.01,21,0)
+^.001^3^3^3120418^^
+"^DD",55,55.16,.01,21,1,0)
+This contains the previous data that was in the changed field, if the 
+"^DD",55,55.16,.01,21,2,0)
+field being changed is a Word Processing field. The data is captured
+"^DD",55,55.16,.01,21,3,0)
+automatically and is not editable.
+"^DD",55,55.16,.01,"DT")
+3111103
+"^DD",55,55.42,0)
+OTHER PRINT INFO (OLD VALUE) SUB-FIELD^^.01^1
+"^DD",55,55.42,0,"DT")
+3120222
+"^DD",55,55.42,0,"NM","OTHER PRINT INFO (OLD VALUE)")
+
+"^DD",55,55.42,0,"UP")
+55.04
+"^DD",55,55.42,.01,0)
+OTHER PRINT INFO (OLD VALUE)^WLx^^0;1^Q
+"^DD",55,55.42,.01,21,0)
+^^4^4^3120418^
+"^DD",55,55.42,.01,21,1,0)
+This contains the previous data that was in the OTHER PRINT INFO (LONG) 
+"^DD",55,55.42,.01,21,2,0)
+(#154) multiple in the IV (#100) multiple in the PHARMACY PATIENT (#55) 
+"^DD",55,55.42,.01,21,3,0)
+file, prior to an edit. The data is captured automatically and is not 
+"^DD",55,55.42,.01,21,4,0)
+editable.
+"^DD",55,55.42,.01,"DT")
+3120222
+"^DD",55,55.43,0)
+OTHER PRINT INFO (NEW VALUE) SUB-FIELD^^.01^1
+"^DD",55,55.43,0,"DT")
+3120222
+"^DD",55,55.43,0,"NM","OTHER PRINT INFO (NEW VALUE)")
+
+"^DD",55,55.43,0,"UP")
+55.04
+"^DD",55,55.43,.01,0)
+OTHER PRINT INFO (NEW VALUE)^WLx^^0;1^Q
+"^DD",55,55.43,.01,21,0)
+^^3^3^3120418^
+"^DD",55,55.43,.01,21,1,0)
+This contains the new data in the OTHER PRINT INFO (LONG) (#154) multiple 
+"^DD",55,55.43,.01,21,2,0)
+in the IV (#100) multiple in the PHARMACY PATIENT (#55) file, after an 
+"^DD",55,55.43,.01,21,3,0)
+edit. The data is captured automatically and is not editable.  
+"^DD",55,55.43,.01,"DT")
+3120222
+"^DD",55,55.6135,0)
+SPECIAL INSTRUCTIONS (LONG) SUB-FIELD^^.01^1
+"^DD",55,55.6135,0,"DT")
+3111016
+"^DD",55,55.6135,0,"NM","SPECIAL INSTRUCTIONS (LONG)")
+
+"^DD",55,55.6135,0,"UP")
+55.06
+"^DD",55,55.6135,.01,0)
+SPECIAL INSTRUCTIONS (LONG)^WLx^^0;1^Q
+"^DD",55,55.6135,.01,"DT")
+3111016
+"^DD",9009032.3,9009032.3,0)
+FIELD^^.01^2
+"^DD",9009032.3,9009032.3,0,"DDA")
+N
+"^DD",9009032.3,9009032.3,0,"DT")
+2930311
+"^DD",9009032.3,9009032.3,0,"IX","B",9009032.3,.01)
+
+"^DD",9009032.3,9009032.3,0,"NM","APSP INTERVENTION TYPE")
+
+"^DD",9009032.3,9009032.3,0,"PT",9009032.4,.07)
+
+"^DD",9009032.3,9009032.3,0,"VRPK")
+PHARMACY DATA MANAGEMENT
+"^DD",9009032.3,9009032.3,.001,0)
+NUMBER^NJ5,0I^^ ^K:+X'=X!(X>99999)!(X<1)!(X?.E1"."1N.N) X
+"^DD",9009032.3,9009032.3,.001,3)
+Type a Number between 1 and 99999, 0 Decimal Digits
+"^DD",9009032.3,9009032.3,.001,21,0)
+^^1^1^2930121^
+"^DD",9009032.3,9009032.3,.001,21,1,0)
+This field is used to select entries by their internal number.
+"^DD",9009032.3,9009032.3,.001,"DT")
+2891005
+"^DD",9009032.3,9009032.3,.01,0)
+TYPE^RFI^^0;1^K:$L(X)>75!($L(X)<3)!'(X'?1P.E) X
+"^DD",9009032.3,9009032.3,.01,1,0)
+^.1
+"^DD",9009032.3,9009032.3,.01,1,1,0)
+9009032.3^B
+"^DD",9009032.3,9009032.3,.01,1,1,1)
+S ^APSPQA(32.3,"B",$E(X,1,30),DA)=""
+"^DD",9009032.3,9009032.3,.01,1,1,2)
+K ^APSPQA(32.3,"B",$E(X,1,30),DA)
+"^DD",9009032.3,9009032.3,.01,3)
+Answer must be 3-75 characters in length.
+"^DD",9009032.3,9009032.3,.01,21,0)
+^^2^2^2921123^^^
+"^DD",9009032.3,9009032.3,.01,21,1,0)
+Enter a description of an error type to use with APSP 
+"^DD",9009032.3,9009032.3,.01,21,2,0)
+INTERVENTION FILE.
+"^DD",9009032.3,9009032.3,.01,"DEL",.01,0)
+I 1
+"^DD",9009032.3,9009032.3,.01,"DT")
+2930311
+"^DD",9009032.4,9009032.4,.08,0)
+RECOMMENDATION^R*P9009032.5'^APSPQA(32.5,^0;8^S DIC("S")="I $$AASCRN^PSSDDUT3(+Y)" D ^DIC K DIC S DIC=DIE,X=+Y K:Y<0 X
+"^DD",9009032.4,9009032.4,.08,3)
+Select a recommendation.
+"^DD",9009032.4,9009032.4,.08,4)
+
+"^DD",9009032.4,9009032.4,.08,12)
+The 'UNABLE TO ASSESS' recommendation is only available for NO ALLERGY ASSESSMENT interventions.
+"^DD",9009032.4,9009032.4,.08,12.1)
+S DIC("S")="I $$AASCRN^PSSDDUT3(+Y)"
+"^DD",9009032.4,9009032.4,.08,21,0)
+^.001^5^5^3111130^^^^
+"^DD",9009032.4,9009032.4,.08,21,1,0)
+This is the type of recommendation the pharmacist is going
+"^DD",9009032.4,9009032.4,.08,21,2,0)
+to make to the provider. You can see the list of selections
+"^DD",9009032.4,9009032.4,.08,21,3,0)
+by entering a '?' at the prompt. Just as in previous fields
+"^DD",9009032.4,9009032.4,.08,21,4,0)
+if none of the selections cover the recommendation the
+"^DD",9009032.4,9009032.4,.08,21,5,0)
+pharmacist should enter an 'Other' at the prompt.
+"^DD",9009032.4,9009032.4,.08,"DT")
+3111130
+"^DD",9009032.5,9009032.5,0)
+FIELD^^.01^2
+"^DD",9009032.5,9009032.5,0,"DDA")
+N
+"^DD",9009032.5,9009032.5,0,"DT")
+2900227
+"^DD",9009032.5,9009032.5,0,"IX","B",9009032.5,.01)
+
+"^DD",9009032.5,9009032.5,0,"NM","APSP INTERVENTION RECOMMENDATION")
+
+"^DD",9009032.5,9009032.5,0,"PT",9009032.4,.08)
+
+"^DD",9009032.5,9009032.5,0,"VRPK")
+PHARMACY DATA MANAGEMENT
+"^DD",9009032.5,9009032.5,.001,0)
+NUMBER^NJ3,0I^^ ^K:+X'=X!(X>999)!(X<1)!(X?.E1"."1N.N) X
+"^DD",9009032.5,9009032.5,.001,3)
+Type a Number between 1 and 999, 0 Decimal Digits
+"^DD",9009032.5,9009032.5,.001,21,0)
+^^1^1^2930121^
+"^DD",9009032.5,9009032.5,.001,21,1,0)
+This field is used to select entries by the enternal number.
+"^DD",9009032.5,9009032.5,.001,"DT")
+2900227
+"^DD",9009032.5,9009032.5,.01,0)
+RECOMMENDATION^RFI^^0;1^K:$L(X)>50!($L(X)<3)!'(X'?1P.E) X
+"^DD",9009032.5,9009032.5,.01,1,0)
+^.1
+"^DD",9009032.5,9009032.5,.01,1,1,0)
+9009032.5^B
+"^DD",9009032.5,9009032.5,.01,1,1,1)
+S ^APSPQA(32.5,"B",$E(X,1,30),DA)=""
+"^DD",9009032.5,9009032.5,.01,1,1,2)
+K ^APSPQA(32.5,"B",$E(X,1,30),DA)
+"^DD",9009032.5,9009032.5,.01,3)
+Answer must be 3-50 characters in length.
+"^DD",9009032.5,9009032.5,.01,21,0)
+^.001^3^3^3111122^^^^
+"^DD",9009032.5,9009032.5,.01,21,1,0)
+This field holds a free text narrative describing a recommended
+"^DD",9009032.5,9009032.5,.01,21,2,0)
+action to be taken to resolve a Intervention. Examples would
+"^DD",9009032.5,9009032.5,.01,21,3,0)
+be things like Change Drug, Change Dosage, Order Lab Tests, etc.
+"^DD",9009032.5,9009032.5,.01,"DEL",.01,0)
+I 1
+"^DD",9009032.5,9009032.5,.01,"DT")
+2900227
+"^DIC",9009032.3,9009032.3,0)
+APSP INTERVENTION TYPE^9009032.3
+"^DIC",9009032.3,9009032.3,0,"GL")
+^APSPQA(32.3,
+"^DIC",9009032.3,9009032.3,"%",0)
+^1.005^1^1
+"^DIC",9009032.3,9009032.3,"%",1,0)
+PSO
+"^DIC",9009032.3,9009032.3,"%","B","PSO",1)
+
+"^DIC",9009032.3,9009032.3,"%D",0)
+^^6^6^2981214^^^^
+"^DIC",9009032.3,9009032.3,"%D",1,0)
+This file is used to store intervention types.
+"^DIC",9009032.3,9009032.3,"%D",2,0)
+Intervention types are actually reasons that a pharmacist had
+"^DIC",9009032.3,9009032.3,"%D",3,0)
+to stop filling a prescription and contact a provider to
+"^DIC",9009032.3,9009032.3,"%D",4,0)
+either change the prescription or get clarification of it.
+"^DIC",9009032.3,9009032.3,"%D",5,0)
+Examples of intervention types may include things such as:
+"^DIC",9009032.3,9009032.3,"%D",6,0)
+CRITICAL DRUG INTERACTION, ALLERGY, INCORRECT DOSE, etc.
+"^DIC",9009032.3,"B","APSP INTERVENTION TYPE",9009032.3)
+
+"^DIC",9009032.5,9009032.5,0)
+APSP INTERVENTION RECOMMENDATION^9009032.5
+"^DIC",9009032.5,9009032.5,0,"GL")
+^APSPQA(32.5,
+"^DIC",9009032.5,9009032.5,"%",0)
+^1.005^1^1
+"^DIC",9009032.5,9009032.5,"%",1,0)
+PSO
+"^DIC",9009032.5,9009032.5,"%","B","PSO",1)
+
+"^DIC",9009032.5,9009032.5,"%D",0)
+^^5^5^2981214^^^^
+"^DIC",9009032.5,9009032.5,"%D",1,0)
+This file is used to store intervention recommendations.
+"^DIC",9009032.5,9009032.5,"%D",2,0)
+Intervention recommendations are actions taken by the pharmacist when
+"^DIC",9009032.5,9009032.5,"%D",3,0)
+there is some reason that a prescription had to be clarified or changed.
+"^DIC",9009032.5,9009032.5,"%D",4,0)
+Recommendations would include things like:  Change drug, change dosage,
+"^DIC",9009032.5,9009032.5,"%D",5,0)
+order lab tests, etc.
+"^DIC",9009032.5,"B","APSP INTERVENTION RECOMMENDATION",9009032.5)
+
+"BLD",8211,6)
+^151
+**END**
+**END**

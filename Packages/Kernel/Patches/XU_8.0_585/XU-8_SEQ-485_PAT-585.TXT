@@ -1,0 +1,295 @@
+$TXT Created by MOORE,JIM at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 09/11/12 at 10:21
+=============================================================================
+Run Date: OCT 10, 2012                     Designation: XU*8*585
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #485                      Status: Released
+                  Compliance Date: NOV 10, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*546    <<= must be installed BEFORE `XU*8*585'
+
+Subject: Linux Print Queues
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch adds the PRINT QUEUE device type to the Device file (#3.5).  
+ PRINT QUEUE devices will work only on Linux or VMS systems, and will not
+ work on Windows systems, which use a different approach to providing print
+ queues. 
+  
+ Remedy Ticket: None
+ =============
+ 
+ 
+ Blood Bank Clearance
+ ====================  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*585 contains changes
+ to a package referenced in VHA OI SEPG SOP 192-023 Review of VISTA Patches for
+ Effects on VISTA Blood Bank Software. This patch does not alter or modify any
+ VistA Blood Bank software design safeguards or safety critical elements
+ functions.
+ 
+ RISK ANALYSIS: Changes made by patch XU*8*585 have no effect on Blood Bank
+ software functionality, therefore RISK is none. 
+ 
+ 
+ Test Sites
+ ==========
+ Oklahoma City, OK
+ El Paso
+ Tennessee Valley HCS
+  
+ Overview
+ ========
+ Print queue devices make use of the print queue functionality provided by 
+ the underlying OS.  When a VistA user selects a print queue device at the
+ device prompt, a host file is created and the application's output is
+ directed to the host file.  When the application calls the Kernel Device
+ Manager to close the device, the Device Manager closes the host file and
+ calls the OS to print the file, which causes a print job to be queued.  
+ The OS is responsible for insuring that the queued print job is actually
+ printed, and the host file is automatically deleted once printing is
+ completed.
+  
+ Using a Print Queue Device
+ ==========================
+ VistA users use the new PRINT QUEUE devices simply by selecting a PRINT QUEUE
+ device at the device prompt.  
+  
+ Configuring a Print Queue Device
+ ================================
+ The new XUDEVEDITPQ [Print Queue Edit] option has been added to the 
+ XUDEVEDIT [Device Edit] menu for configuring Print Queue devices. In order
+ to use a Print Queue device, there must be a print queue configured on the
+ host OS.  Instructions for doing that are outside of the scope of this
+ document. The name of the print queue, as configured within the OS, is
+ used as the value for the $I field (#1) of the device.
+  
+  
+ Converting HFS Devices that use ^NVSPRTU to PRINT QUEUE Devices (Optional)
+ ==========================================================================
+ Currently sites utilize the print queue services provided by the OS 
+ through the use of the ^NVSPRTU routine distributed by National VistA
+ Support (NVS).  The devices that use the NVS solution for print queues are
+ HFS type devices, and their OPEN EXECUTE and CLOSE EXECUTE logic call the
+ ^NVSPRTU routine.   The name of the print queue, as configured in the OS,
+ is located in the $I field (#1) of the device.  Those device entries may
+ be converted to the new PRINT QUEUE type by using the CNVRT^XU8P585 API. 
+ Instructions are in the POST-INSTALLATION section of the patch
+ installation instructions. 
+  
+ The conversion process is simple, and requires just changing the device 
+ type from HFS to PQ.  However, it should be noted that the Device Manger
+ will treat several of the device's fields differently:
+  
+  a) Calls to the routine ^NVSPRTU by the OPEN EXECUTE, CLOSE EXECUTE, and
+     PRE-OPEN EXECUTE logic will be ignored.
+  b) These device fields will be totally ignored:  ASK PARAMETERS field
+     (#5), ASK HOST FILE field (#5.1),  ASK HFS I/O OPERATION  field (#5.2),
+     OPEN PARAMETERS field (#15). 
+  
+  
+ New and Modified Files
+ =====================
+  
+ DEVICE file (#3.5) (Modified)
+ ============================
+  
+ TYPE field (#2) - The code PQ for PRINT QUEUE has been added to the set of
+ codes.
+  
+ PURGE OLD PRINT QUEUE FILES field (#.13) has been added. Normally host 
+ files placed on a print queue are automatically purged after 24 hours even
+ if printing has not occurred.  However, sites may set this field to NO to
+ suspend purging for host files created via that particular device.  Doing
+ so should only be done for short periods while troubleshooting issues
+ involving print queues.
+  
+ PRINT QUEUE JOBS file (#3.52)(New)
+ ==================================
+ This new file tracks the host files and print jobs that are passed to the OS
+ for printing.  Entries in this file are automatically created when a PRINT
+ QUEUE device is opened.  Entries are purged after 48 hours.  
+  
+  
+ New and Modified Options
+ ========================
+  
+ XUDEVEDIT menu option [Device Edit] (modified)
+ ===================================
+ This menu now includes the new XUDEVEDITPQ option [XUDEVEDITPQ].
+  
+ XUDEVEDITPQ option [XUDEVEDITPQ] (new)
+ ================================
+ This is a new option for creating or editing entries in the DEVICE file 
+ (#3.5) of the new PRINT QUEUE type.
+  
+ XU PURGE PRINT QUEUE HFS FILES option [PURGE PRINT QUEUE HOST FILES] (new)
+ ====================================================================
+ The purpose of this new option is to purge the file PRINT QUEUE JOBS 
+ (#3.52) of old entries.  Entries are purged after 24 hours.  The option
+ also purges host files that still exist after 24 hours.  Normally, host
+ files should be printed and deleted long before then.
+  
+ Patch Installation Instructions
+ ===============================
+  
+ Pre-Installation Steps
+  
+ 1) Create the print_queues sub-directory under the directory used by the
+    Kernel Device Manager for HFS files.  The HFS directory is shown in the
+    KERNEL SYSTEM PARAMETERS  file (#8989.3), in the PRIMARY HFS DIRECTORY
+    field (#320).
+   
+  **  NOTE: **  Create the new sub-directory print-queues in ** lowercase **
+  letters.  Linux systems DO distinguish between lowercase and uppercase,
+  though VMS systems do not.    
+  
+ 2) Set the group permissions for the new sub-directory to allow the
+    creation, writing, reading, and deleting of files.
+  
+ VMS Example:
+   Suppose the directory used for host files is USER$:[TEMP].  Then enter 
+   these commands at the VMS command prompt:
+  
+      CREATE/DIRECTORY USER$:[TEMP.print_queues]
+      set protection=(g:rwed) USER$:[TEMP]print_queues.DIR
+      
+  
+  
+ Linux Example:
+   Suppose the directory used for host files is /var/tmp/.  Then enter these
+   commands at the Linux command prompt:
+  
+          mkdir /var/tmp/print_queues
+          chmod g=rwx /var/tmp/print_queues
+  
+  
+ 3) Sites that operate in a mixed OS environment, with both VMS and Linux
+    systems, must repeat steps 1) and 2) to create a sub-directory 
+    print_queues on the secondary system, located in the directory shown in
+    the KERNEL SYSTEM PARAMETERS file (#8989.3), in the SECONDARY HFS
+    DIRECTORY field (#320.2).
+  
+ Installation Steps
+ ==================
+  
+   1. Users are allowed to be on the system during the installation.  It is
+      recommended that the installation be queued during off-peak hours. The
+      installation could take up to 2 minutes
+  
+   2. You DO NOT need to stop TaskMan or the background filers.
+  
+   3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+      option will load the KIDS package onto your system.
+  
+   4. This patch is now loaded into a transport global on your system.
+      The next step is to use KIDS to install the Transport global.  On
+      the KIDS menu, under the 'Installation' menu, use the following
+      options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Backup a Transport Global
+          Install Package(s) 
+  
+       When using the Install Package(s) menu option to install the 
+       patch build, you may be asked several questions.  The questions,
+       and the answers you should supply, are shown below.
+  
+        INSTALL NAME: <XU*8.0*585>
+  
+        Want KIDS to Rebuild Menu Trees Upon Completion of Install? <NO>
+  
+        Want KIDS to INHIBIT LOGONS during the install? NO// <NO>
+  
+        Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO// <NO>
+   
+   6. Verify that the install completed.   No further steps are needed. 
+  
+   7. The post-install routine ^XU8P585 should not be deleted.  It can be
+      run again without causing harm.
+  
+  
+ Post-Installation Steps
+ =======================
+  
+ 1) The post-installation routine should automatically have scheduled the
+    option XU PURGE PRINT QUEUE HFS FILES option [PURGE PRINT QUEUE HOST
+    FILES] to run hourly on Linux and VMS systems, but not Windows.
+    In addition, if your site runs under both VMS and Linux, the option 
+    should also be scheduled to run on the Linux system.  HFS files created
+    on the VMS system are not accessible from the Linux system and vice
+    versa.
+  
+ 2) VMS and Linux sites should convert their existing HFS devices that
+    call the ^NVSPRTU routine to the new PRINT QUEUE type devices.  To
+    do the conversion, enter at the MUMPS programmer prompt:
+  
+ >   DO CNVRT^XU8P585
+  
+  
+    The conversion should take less than one minute. A list of all devices
+    that are converted is created in the global array: ^XTMP("%ZIS HFS TO
+    PQ")
+  
+    The conversion can be reversed by entering at the MUMPS programmer 
+    prompt:
+  
+    >DO UNDO^XU8P585
+  
+   
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P585
+    Before:       n/a   After: B15237979  **585**
+Routine Name: ZIS2
+    Before: B17503413   After: B19905647  **69,104,112,118,136,241,440,
+                                           546,585**
+Routine Name: ZIS6
+    Before: B20915436   After: B21650565  **24,49,69,118,127,136,440,546,585**
+Routine Name: ZISC
+    Before: B22332594   After: B23112618  **24,36,49,69,199,216,275,409,
+                                           440,585**
+Routine Name: ZISEDIT
+    Before:  B2624513   After:  B2972844  **440,585**
+Routine Name: ZISFM
+    Before:       n/a   After:  B3818871  **585**
+Routine Name: ZISPQ
+    Before:       n/a   After:B101069140  **585**
+Routine Name: ZISX
+    Before:   B220757   After:  B1066676  **585**
+ 
+Routine list of preceding patches: 546
+
+=============================================================================
+User Information:
+Entered By  : MOORE,CHARLES J               Date Entered  : AUG 24, 2011
+Completed By: BEST,LISA                     Date Completed: SEP 18, 2012
+Released By : TILLIS,LEWIS                  Date Released : OCT 10, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

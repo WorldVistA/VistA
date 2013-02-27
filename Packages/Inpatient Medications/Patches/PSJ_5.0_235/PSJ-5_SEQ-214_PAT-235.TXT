@@ -1,0 +1,272 @@
+
+=============================================================================
+Run Date: SEP 08, 2011                     Designation: PSJ*5*235
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #214                      Status: Released
+                  Compliance Date: OCT 09, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*113   <<= must be installed BEFORE `PSJ*5*235'
+
+Subject: EXPECTED FIRST DOSE IS INCORRECT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following 2 issues:
+  
+ 1. The Expected First Dose line in CPRS, as well as the REQUESTED START
+    DATE line in Inpatient Order Entry [PSJ OE] are not displaying the
+    correct date.
+  
+ 2. When a complex Unit Dose order is entered in CPRS, and the complex 
+    order uses a THEN conjunction, and the Administration time of the first
+    section of the order is before the current time, the Administration 
+    time for the subsequent section(s) is incorrect.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ 1. HD0000000349678 - QOD (every other day) schedule not working
+    Duplicates:
+    HD0000000350458 - Problem with start time of order
+    HD0000000380843 - First dose of an edited order doesn't appear on 
+                      anticipated date of next day for  Q14day order
+    HD0000000410587 - QOD schedule and BCMA
+    HD0000000486532 - Fentanyl patches order issue 
+  
+ 2. HD0000000282528 - Complex Order using conjunction of THEN
+                      skips the first dose of the second part when the
+                      first part has a duration of 1 day.
+    Duplicates:
+    HD0000000228645 - Complex delayed orders - copy and transfer problem
+    HD0000000236194 - Complex Dates Overlap on StepUp dosing
+    HD0000000391656 - Known Complex Order Issue
+    HD0000000467939 - Start and stop dates for titration order 
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Lebanon VAMC
+ Milwaukee VAMC
+ San Diego VAMC
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+  
+ 1. HD0000000349678 - QOD (every other day) schedule not working
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #1521
+  
+    Problem:
+    --------
+    When calculating the Expected First Dose, CPRS is ignoring the 
+    Inpatient Ward parameter DEFAULT START DATE CALCULATION and is
+    defaulting the calculation for the first dose of the order to be based
+    on USE NEXT ADMIN TIME AS DEFAULT.  Depending on the Administration
+    Schedule used and for Wards with this Parameter set to either USE NOW
+    AS DEFAULT or USE CLOSEST AS DEFAULT, the Expected First Dose in CPRS 
+    and the Requested Start date in Inpatient Order Entry (PSJ OE) can be
+    incorrect and not match the actual Due date shown in the BCMA Virtual
+    Due List.
+  
+  
+    Example:
+  
+    If it is currently 10 am and you are creating an order with an 
+    Administration time of 9 am on a schedule of EVERY OTHER MORNING, and
+    since Today's dose has passed, the Expected Next Dose should show as
+    the day-after-tomorrow at 9 am, where it is currently showing as
+    Tomorrow at 9 am.
+  
+    Resolution:
+    ----------- 
+    Routine PSJORPOE has been modified so that CPRS will calculate the 
+    Expected First Dose based on the actual selected Inpatient Ward 
+    parameter DEFAULT START DATE CALCULATION and not always base the 
+    calculation on USE NEXT ADMIN TIME AS DEFAULT.
+  
+    NOTE:
+    -----
+    This is not a defect but is in fact the way the system was designed.
+    Making this change therefore necessitates an update to the Inpatient
+    Medications Nurse's User Manual and Pharmacist's Manual to reflect 
+    this change.
+  
+  
+ 2. HD0000000282528 - Complex Order using conjunction of THEN skips the
+                      first dose of the second part when the first part has
+                      a duration of 1 day.
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #1136
+  
+    Problem:
+    --------
+    The system currently calculates the start time of each section of a 
+    complex order independently and the calculations are erroneously based
+    on NOW. This is causing the subsequent sections in a complex order to
+    have an incorrect start time.
+  
+  
+    Example:
+    
+    If it is 1000 and the second part of a complex order using the THEN
+    conjunction has Administration times of 0900 and 1700, this order would
+    start on that day at 1700 because 0900 today has already passed. This
+    is incorrect.
+  
+    Resolution:
+    -----------
+    Routine PSJORPOE has been modified so that tag STARTSTP now accepts 
+    another parameter and allows the start date calculation to be based on
+    an initial date. Previously all calculations were based on NOW. After
+    this correction, calculations will be based on the date/time passed
+    in.
+  
+    **NOTE** 
+    This change modifies Integration Agreement #3167 
+   
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ The revised NURSE'S USER MANUAL and PHARMACIST'S USER MANUAL are available
+ on the ANONYMOUS.SOFTWARE directory at one of the following Office of
+ Information (OI) Field Offices.
+ These files should be retrieved in binary format.
+     
+  Sites may retrieve documentation in one of the following ways:
+    
+  (1) The preferred method is to FTP the files from 
+      download.vista.med.va.gov, which will transmit the files from 
+      the first available FTP server.
+     
+  (2) Sites may also elect to retrieve documentation directly from a
+      specific server as follows:
+     
+      Albany                ftp.fo-albany.med.va.gov
+      Hines                 ftp.fo-hines.med.va.gov
+      Salt Lake City        ftp.fo-slc.med.va.gov
+     
+  The documentation distribution includes:
+  
+  File Name                    Description                        Protocol
+  ---------                    -----------                        --------
+  psj_5_nurse_um_r0911.pdf     Nurse's User Manual                Binary
+  psj_5_phar_um_r0911.pdf      Pharmacist's User Manual           Binary
+  psj_5_p235_nurse_um_cp.pdf   Nurse's UM change pages            Binary
+  psj_5_p235_phar_um_cp.pdf    Pharmacist's UM change pages       Binary
+  
+  
+ Software Retrieval:
+ ===================
+ Patches for this installation are combined in host file 
+ PSJ_235_OR_333.KID.
+  
+ Installation of this host file should be coordinated among the packages 
+ affected since only one installation is necessary.
+  
+ The patches are:
+  
+      PSJ*5.0*235
+      OR*3.0*333
+  
+ Sites may retrieve the KIDS build in one of the following ways:
+  
+ (1) The preferred method is to FTP the files from 
+     download.vista.med.va.gov which will transmit the files from the first
+     available FTP server.
+  
+ (2) Sites may also elect to retrieve the patch directly from a specific
+     server as follows:
+  
+     OIFO               FTP ADDRESS                  DIRECTORY
+     --------------     ------------------------     ------------------
+     Albany             ftp.fo-albany.med.va.gov     anonymous.software
+     Hines              ftp.fo-hines.med.va.gov      anonymous.software
+     Salt Lake City     ftp.fo-slc.med.va.gov        anonymous.software
+  
+  
+ Installation Instructions:
+ ==========================
+ PSJ*5.0*235 is being released in conjunction with ORDER ENTRY/RESULTS 
+ REPORTING patch, OR*3.0*333.  Installing PSJ*5.0*235 will also install
+ OR*3.0*333.
+  
+   ************************ NOTE ************************
+   IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS ,
+   AN EDITED ERROR WILL OCCUR.  
+   The patch should be installed when NO Inpatient Pharmacy 
+   or Outpatient Pharmacy users are on the system.
+   ******************************************************
+  
+   Installation will take less than 1 minute.
+  
+   Suggested time to install: non-peak requirement hours.
+  
+  
+   1. Obtain the file PSJ_235_OR_333.KID.
+     
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+   3. Use Load a Distribution using PSJ_235_OR_333.KID when
+      prompted to Enter a Host File name.  You may need to append a
+      directory name.
+   
+   4. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSJ*5.0*235):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+    
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+    
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJORPOE
+    Before: B36843911   After: B37607736  **50,56,92,80,110,127,133,134,
+                                           113,235**
+ 
+Routine list of preceding patches: 113
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : NOV 16, 2009
+Completed By: WERNER,GARY                   Date Completed: AUG 22, 2011
+Released By : BLOCH,JACULYN                 Date Released : SEP 08, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

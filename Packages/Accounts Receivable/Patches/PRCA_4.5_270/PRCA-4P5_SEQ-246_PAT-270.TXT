@@ -1,0 +1,212 @@
+$TXT Created by FIAMENGO,GRACE E at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 04/19/11 at 12:44
+=============================================================================
+Run Date: MAY 26, 2011                     Designation: PRCA*4.5*270
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #246                    Status: Released
+                  Compliance Date: JUN 26, 2011
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*157<<= must be installed BEFORE `PRCA*4.5*270'
+                    (v)PRCA*4.5*184<<= must be installed BEFORE `PRCA*4.5*270'
+                    (v)PRCA*4.5*202<<= must be installed BEFORE `PRCA*4.5*270'
+                    (v)PRCA*4.5*205<<= must be installed BEFORE `PRCA*4.5*270'
+                    (v)PRCA*4.5*226<<= must be installed BEFORE `PRCA*4.5*270'
+                    (v)PRCA*4.5*251<<= must be installed BEFORE `PRCA*4.5*270'
+
+Subject: E-BILLING PRESERVE CLAIM NUMBER WHEN CLONED
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+   ******************************************************************
+   *                                                                *
+   *  PRCA*4.5*270 must be installed prior to installing IB*2*433.  *
+   *                                                                *
+   ******************************************************************
+  
+  
+ Because there is a correlation between claim numbers in Integrated 
+ Billing (IB) and claim numbers in Accounts Receivable (AR), this AR 
+ patch is needed to accompany patch IB*2.0*433. This patch modifies 
+ the BILL NO. field (#.01) of the ACCOUNTS RECEIVABLE file (#430) to 
+ support adding the iteration number to the claim number of the original 
+ claim once it has been cancelled via the new correction process.
+      
+ These changes result from business needs identified by the Chief Business
+ Office (CBO). The ability to resubmit a rejected or denied claim with the
+ original claim number is the normal process for most of the industry. This
+ will also provide the ability to better track the processing of claims as
+ it will provide the ability to follow claims through the resubmission
+ process and to track the changes that were required as a result of a
+ rejections or denials.
+  
+ Please note that IB users will be prevented from correcting non-accrued
+ claims and claims where payments have already been posted.  For those 
+ claims, the user will be directed to continue to use the existing CLON
+  option, as they have previously.
+  
+ In order to accommodate the potentially longer bill numbers, the fixed
+ length OIG extracts were modified to only include the first 11 characters
+ of the bill number.
+  
+ Components Sent With Patch 
+ --------------------------
+  
+ The following is a list of files included in this patch:
+  
+                                        UP    SEND  DATA
+                                        DATE  SEC.  COMES   SITE RSLV
+ FILE #      FILE NAME                  DD    CODE  W/FILE  DATA PTRS  
+ --------------------------------------------------------------------
+ 430         ACCOUNTS RECEIVABLE        YES   YES   NO               
+ Partial DD: subDD: 430        fld: .01
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ eBilling - Preserve Claim Number When Cloned #20080110
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+  
+ Test Sites:
+ -----------
+ El Paso
+ Montana HCS
+ VISN 2
+  
+  
+  
+      ================INSTALLATION INSTRUCTIONS =================
+  
+ You should install this patch during non-peak hours, when no Integrated 
+ Billing or Accounts Receivable users are on the system. 
+  
+ Install Time - less than 2 minutes 
+  
+  
+      ************** PRE-INSTALLATION INSTRUCTIONS **************
+  
+ For additional information regarding this patch, please refer to the 
+ Release Notes on the VA Software Document Library (VDL) titled:
+   
+      eBilling - Preserve Claim Number When Cloning.
+  
+      ***********************************************************
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PRCA*4.5*270):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+  
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer NO
+  
+  
+     ************** POST-INSTALLATION INSTRUCTIONS **************
+     
+     Post install, it is recommended that the corresponding IB patch,
+     IB*2.0*433, be installed immediately after this install is complete.
+  
+     ***********************************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAFBD
+    Before: B15064352   After: B15657675  **16,48,86,90,119,165,204,203,
+                                           173,220,184,270**
+Routine Name: PRCAFBDM
+    Before:  B5442375   After:  B9939431  **60,90,204,203,220,270**
+Routine Name: PRCASVC3
+    Before:  B2825735   After:  B5074979  **158,202,270**
+Routine Name: RCBEIB
+    Before: B36271140   After: B39033616  **157,270**
+Routine Name: RCBEUTR1
+    Before: B31843556   After: B33352818  **153,169,192,226,270**
+Routine Name: RCFMPUR
+    Before:  B1763752   After:  B2588116  **270**
+Routine Name: RCNRIG
+    Before: B10660569   After: B10826119  **41,77,117,103,203,220,270**
+Routine Name: RCRJROIG
+    Before: B25548246   After: B25716906  **103,174,203,205,220,270**
+Routine Name: RCXVDC3
+    Before: B31900577   After: B34125515  **201,227,228,232,248,251,270**
+ 
+Routine list of preceding patches: 157, 184, 202, 226, 251
+
+=============================================================================
+User Information:
+Entered By  : JUTZI,WILLIAM CHRISTOPHER     Date Entered  : MAY 19, 2010
+Completed By: ROBBINS,BRADLEY               Date Completed: MAY 10, 2011
+Released By : CAULFIELD,MARY                Date Released : MAY 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

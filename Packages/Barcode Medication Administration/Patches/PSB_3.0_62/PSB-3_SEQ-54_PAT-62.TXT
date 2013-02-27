@@ -1,0 +1,148 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 01/30/12 at 08:43
+=============================================================================
+Run Date: AUG 06, 2012                     Designation: PSB*3*62
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #54                      Status: Released
+                  Compliance Date: SEP 06, 2012
+=============================================================================
+
+Associated patches: (v)PSB*3*51    <<= must be installed BEFORE `PSB*3*62'
+
+Subject: BCMA COVERSHEET IV OVERVIEW REPORT CORRECTION, MISSED MED REPORT CORRECTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch Addresses 2 issues:
+  
+ 1.  The BCMA Missed Medications Report may be inconsistent
+     when run for a whole day versus incremental times if
+     the order's Administration Times are edited.
+  
+ 2.  The initials of the nurse who marked an IV Bag "Infusing"
+     do not display in the Legend of the BCMA IV Overview
+     Coversheet report when a different nurse marks the bag
+     "Stopped" or "Completed".
+  
+ Associated NSR(s):
+ =================
+  N/A
+  
+   
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. HD0000000471952 - MISSED MED REPORT INCONSISTANT
+  
+ 2. HD0000000429083 - Initials fall off IV report when second 
+                      person takes an action on the IV
+   
+ Participating Test Sites:
+ ========================
+ Upstate New York HCS
+ Central Texas VHCS
+ Northern Arizona VA HCS
+  
+ Remedy Overview:
+ ===============
+   
+ 1. HD0000000471952 - MISSED MED REPORT INCONSISTANT
+  
+    Problem:
+    --------
+    When an order's Administration Times are edited to a time prior
+    to the current time in VistA, the BCMA Missed Medications report
+    will display the administration as missed if the report time
+    parameters includes the administration time, but do not include
+    the time the order was edited. 
+  
+    Resolution:
+    -----------
+    Routine PSBOMM2 was modified to check for edits for the entire
+    day when determining administrations Missed Medications report. 
+  
+ 2. HD00000000429083 - Initials fall off IV report when second person 
+                       takes an action on the IV
+  
+    Problem:
+    --------
+    The Initials of the Nurse who marked an IV Bag infusing do not display
+    in the Legend of the BCMA IV Overview Coversheet report when a
+    different Nurse marks the bag Stopped or Completed.
+  
+    Resolution:
+    -----------
+    Routine PSBOCI was modified to include all initials from "Actions" in
+    the AUDIT LOG (#53.799) sub-file and "Comments" in the COMMENT
+    (#53.793) sub-file.
+  
+ Installation Instructions:
+ =========================
+   
+    *************************** NOTE ***********************
+    *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS *
+    *  AN EDITED ERROR WILL OCCUR.                         *                   
+    *  The patch should be installed when NO BCMA Client   * 
+    *  users are on the system.                            *               
+    ********************************************************
+   
+    Installation will take less than 1 minute.
+   
+    Suggested time to install: Non-peak requirement hours.
+   
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSB*3.0*62):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package PSB*3.0*62.
+   
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBOCI
+    Before: B79246118   After: B87456425  **32,62**
+Routine Name: PSBOMM2
+    Before: B39960811   After: B40308817  **26,32,51,62**
+ 
+Routine list of preceding patches: 51
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : FEB 17, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: JUL 25, 2012
+Released By : LYTTLE,KIM M                  Date Released : AUG 06, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

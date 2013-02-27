@@ -1,0 +1,180 @@
+$TXT Created by CURTIS,RICHARD L at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 01/07/11 at 09:49
+=============================================================================
+Run Date: AUG 19, 2011                     Designation: SD*5.3*577
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #472                    Status: Released
+                  Compliance Date: SEP 19, 2011
+=============================================================================
+
+Associated patches: (v)SD*5.3*66   <<= must be installed BEFORE `SD*5.3*577'
+
+Subject: FIX ERROR WITH IEMM ERROR CORRECTION OPTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes an undefined error which occurs when using the Correct 
+ Incomplete Encounters [SCENI IEMM ERROR CORRECTION] menu option.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ HD0000000347133 - $ZE= <UNDEFINED>EN+15^SCENIA0 *SCINF("DFN")
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Dayton, OH
+ Pittsburgh HCS
+ Salisbury, NC
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ HD0000000347133 - $ZE= <UNDEFINED>EN+15^SCENIA0 *SCINF("DFN")
+  
+ Problem:
+ --------
+ Occasionally, an undefined error occurs when using the Correct Incomplete
+ Encounters [SCENI IEMM ERROR CORRECTION] menu option.  This is 
+ because routine SCENIA0 makes an extrinsic function call to API
+ OPENC^SCUTIE1, which is designed to return the flag equal to a 
+ negative one and create and return an error message in local array, SCINF
+ when no records are found, as follows:
+  
+ SCINF("ERROR")= "No (Deleted) Outpatient Encounter entry found."
+  
+ However, the calling routine (SCENIA0) is not checking for this possible 
+ value being returned.  Instead, it is assuming a record was found and 
+ that local array, SCINF, was built containing various pieces of data 
+ extracted from that record, such as the patient DFN.
+  
+ Resolution:
+ -----------
+ Routine SCENIA0 will be modified to check if the flag (variable SDFLG) 
+ was returned as a negative one (-1) and local array, SCINF("ERROR") is 
+ defined. When this is true, it will display the following message to the 
+ user and quit:
+  
+ No (Deleted) Outpatient Encounter entry found.
+  
+  
+ TECHNICAL:
+ ==========
+  
+ Current Code in routine SCENIA0
+ -------------------------------
+  
+ S SDFLG=$$OPENC^SCUTIE(SDXPTR,"SCINF")
+ ;
+ S DFN=SCINF("DFN")
+  
+  
+ Modified Code in routine SCENIA0
+ --------------------------------
+  
+ S SDFLG=$$OPENC^SCUTIE(SDXPTR,"SCINF")
+ I SDFLG=-1,$D(SCINF("ERROR")) W !!,$G(SCINF("ERROR")) H 3 K SCINF Q
+ ;
+ S DFN=SCINF("DFN")
+  
+ This will display the appropriate message to the user and quit:
+  
+ No (Deleted) Outpatient Encounter entry found.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Users are allowed on the system during the installation of this patch.
+  
+ Installation should take less than 5 minutes.
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+     Select Kernel Installation & Distribution System Option:  INStallation
+                                                               ---
+  
+     1     Load a Distribution
+     2     Verify Checksums in Transport Global
+     3     Print Transport Global
+     4     Compare Transport Global to Current System
+     5     Backup a Transport Global
+     6     Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter SD*5.3*577):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will NOT
+         backup any other changes such as DDs or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed.  It compares all components of the patch
+         (routines, DDs, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+  
+     d.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+  
+ 4.  Use the Install Package(s) option and select the package SD*5.3*577.
+  
+     a.  When prompted "Want KIDS to INHIBIT LOGONS during the
+         install? NO//", respond NO.
+  
+     b.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", respond YES.
+  
+         1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+            Correct Incomplete Encounters [SCENI IEMM ERROR CORRECTION]
+  
+         2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCENIA0
+    Before: B12845973   After: B13233235  **66,577**
+ 
+Routine list of preceding patches: 66
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : DEC 07, 2010
+Completed By: SESSLER,APRIL                 Date Completed: AUG 16, 2011
+Released By : DANE,SIDNEY                   Date Released : AUG 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

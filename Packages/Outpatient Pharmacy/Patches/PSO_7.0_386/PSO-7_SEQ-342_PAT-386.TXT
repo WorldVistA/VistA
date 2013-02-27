@@ -1,0 +1,394 @@
+$TXT Created by ANWER,MOHAMED at CMNT.FO-BIRM.MED.VA.GOV  (KIDS) on Tuesday, 07/24/12 at 18:28
+=============================================================================
+Run Date: SEP 24, 2012                     Designation: PSO*7*386
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #342                      Status: Released
+                  Compliance Date: OCT 25, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*367   <<= must be installed BEFORE `PSO*7*386'
+                    (v)PSO*7*384   <<= must be installed BEFORE `PSO*7*386'
+                    (v)PSO*7*385   <<= must be installed BEFORE `PSO*7*386'
+                    (v)PSO*7*387   <<= must be installed BEFORE `PSO*7*386'
+
+Subject: HOLD/UNHOLD & FLAG/UNFLAG
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ The Pharmacy Legacy Enhancements (PLE) Increment 9 Release includes the 
+ following modifications to the Outpatient Pharmacy V. 7.0 application:
+  
+ 1. Prescription HOLD/UNHOLD Functionality
+    --------------------------------------
+    a.  The HOLD REASON field (#99) of the PRESCRIPTION file (#52) has the
+        following set of codes, which is presented to the PSORPH key holder
+        during prescription 'HOLD' process:
+  
+        '1 INSUFFICIENT QTY IN STOCK'
+        '2 DRUG-DRUG INTERACTION'
+        '3 PATIENT REACTION'
+        '4 PHYSICIAN TO BE CONTACTED'
+        '5 ALLERGY REACTIONS'
+        '6 DRUG REACTION'
+        '7 BAD ADDRESS'
+        '8 PER PATIENT REQUEST'
+        '99 OTHER--SEE COMMENTS'
+   
+         As per the recommendation of the Pharmacy User Group the 
+         following changes were made to the set of codes:
+  
+         The following new codes were added:
+         '9 CONSULT/PRIOR APPROVAL NEEDED'
+         '98 OTHER/TECH (NON-CLINICAL)'
+         
+         The following code descriptions were modified:
+         '4 PHYSICIAN TO BE CONTACTED' to '4 PROVIDER TO BE CONTACTED'
+         '6 DRUG REACTION' to '6 ADVERSE DRUG REACTION'
+         '99 OTHER--SEE COMMENTS' to 'OTHER/RPH (CLINICAL)'
+  
+         The following codes were removed as they were redundant and code
+         '6 ADVERSE DRUG REACTION' to be used in its place:
+         '3 PATIENT REACTION' 
+         '5 ALLERGY REACTIONS' 
+  
+         Note:
+         A post-install routine has been included in this patch that will
+         convert the historical data of codes '3' and '5' to code '6'. 
+  
+         On complete installation of this patch, the HOLD REASON field 
+         (#99) of the PRESCRIPTION file (#52) will have the following set
+         of codes:
+         '1 INSUFFICIENT QTY IN STOCK'
+         '2 DRUG-DRUG INTERACTION'
+         '4 PROVIDER TO BE CONTACTED'
+         '6 ADVERSE DRUG REACTION'
+         '7 BAD ADDRESS'
+         '8 PER PATIENT REQUEST'
+         '9 CONSULT/PRIOR APPROVAL NEEDED'
+         '98 OTHER/TECH (NON-CLINICAL)'
+         '99 OTHER/RPH (CLINICAL)'
+  
+    b. New Security Key PSO TECH ADV for pharmacy technicians
+       A new security key called PSO TECH ADV has been created, which 
+       will allow a user to HOLD a prescription using one of the following
+       HOLD reasons, which are a subset of the hold reasons that are
+       available to the PSORPH key holders in item (a) above:
+  
+       '1 INSUFFICIENT QTY IN STOCK'
+       '7 BAD ADDRESS'
+       '8 PER PATIENT REQUEST'
+       '98 OTHER/TECH (NON-CLINICAL)'
+  
+       The PSO TECH ADV key holders will be able to remove a prescription
+       from HOLD only for the above hold reasons whether they were put 
+       on HOLD by the PSORPH key holder or by the PSO TECH ADV key holder.
+  
+    c. UNHOLD Comments
+       The UNHOLD action has been modified to display the original hold 
+       reason along with the hold comments (if any) as seen in the example
+       below:
+       
+ +---------------------------------------------------------------------+
+ | Select Action: Next Screen// UH   UH  UNHOLD                        |
+ | Nature of Order: WRITTEN//        W                                 |
+ |                                                                     |
+ | HOLD COMMENTS: HOLD COMMENTS ENTERED BY THE USER MANUALLY. (REASON: |
+ |                BAD ADDRESS) on MAY 10, 2012                         |
+ |                                                                     |
+ | UNHOLD COMMENTS:                                                    |
+ +---------------------------------------------------------------------+
+  
+    d. Rx Activity Log
+       All activities related to HOLD/UNHOLD action on a prescription will
+       be captured in the activity log as seen below:
+  
+      
+ +---------------------------------------------------------------------+
+ | Activity Log:                                                       |
+ | #   Date        Reason         Rx Ref         Initiator Of Activity |
+ | ...                                                                 |
+ | 8   05/10/12    HOLD           REFILL 1       USER,PHARMACY         |
+ | Comments: Rx placed on HOLD (Reason: BAD ADDRESS) and removed from  |
+ |           SUSPENSE - HOLD COMMENTS ENTERED BY THE USER MANUALLY.    |
+ | ...                                                                 |
+ | 9   05/10/12    UNHOLD         REFILL 1       USER,PHARMACY         |
+ | Comments: Rx Removed from HOLD - UNHOLD COMMENTS ENTERED BY THE USER|
+ |           WHEN REMOVING THE RX FROM HOLD.                           |
+ +---------------------------------------------------------------------+
+  
+  
+ 2. Flagging/Unflagging of a pending renewal order
+    ----------------------------------------------
+    The flagging/unflagging functionality was limited to new pending orders
+    only from Computerized Patient Record System (CPRS) V. 3.0. Changes
+    were made to extend this functionality to pending renewal orders from
+    CPRS as well.
+    Note: Flagging/Unflagging is a functionality for the pharmacist (PSORPH
+          key holders) only.
+  
+ 3. Non-holders of PSORPH key were able to unflag pending orders
+    ------------------------------------------------------------
+    The action FL (Flag/Unflag) is blocked for users without the PSORPH
+    key when finishing a new pending order. However, if the user selected 
+    FN (Finish) to finish a new flagged pending order the software was
+    allowing the user to unflag the pending order. This has been changed
+    to no longer allow non-holders of the PSORPH key to unflag pending 
+    orders.
+  
+ 4. Non PSORPH key holder access to Edit/DC actions
+    -----------------------------------------------
+    When processing pending new/renewal orders from CPRS, a non PSORPH key
+    holder could use the actions 'Edit' or 'Discontinue' on the order, 
+    which should not be allowed. This functionality has been disabled.
+  
+ 5. COMMENT field (#.05) in the ACTIVITY LOG sub-file (#52.3) of the 
+    PRESCRIPTION file (#52)
+    ----------------------------------------------------------------
+    The length of this field has been increased from 75 to 100 characters
+    long to accommodate HOLD and UNHOLD comments.
+   
+ 6. PSO52API API (Application Programming Interface)
+    ------------------------------------------------
+    This API was modified to check if the prescription's expiration date 
+    is in the past. If it is and the current prescription status is not
+    DISCONTINUED, DELETED, or EXPIRED, the API will update the prescription
+    status to EXPIRED. The API will also send updates to CPRS and Health
+    Data Repository (HDR) of the status change.
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)         Field Name (#)              New/Modified/Deleted
+ ------------------    ----------------            --------------------
+ PRESCRIPTION(#52)     HOLD REASON(#99)            Modified 
+   
+ Forms Associated:
+  
+ Form Name             File #                      New/Modified/Deleted
+ ---------             ------                      --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                   New/Modified/Deleted
+ ---------------                                   --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                  Type                 New/Modified/Deleted
+ -----------                  ----                 --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                     New/Modified/Deleted
+ -------------                                     --------------------
+ PSO LM RENEW MENU                                 Modified
+ PSO LM FLAG                                       Modified 
+   
+  
+ Security Keys Associated:
+  
+ Security Key Name                                 New/Modified/Deleted
+ -------------                                     --------------------
+ PSO TECH ADV                                      New
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)         New/Modified/Deleted
+ -------------      ----      -------------         --------------------
+ N/A
+  
+   
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20080524
+   
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSI-07-027/PSPO 480
+ PSPO 2235 
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ 176676
+ 622464
+  
+  
+ TEST Sites:
+ ===========
+ OKLAHOMA CITY, OK
+ ORLANDO, FL
+ PUGET SOUND HCS
+ UPSTATE NEW YORK HCS
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ File Description                        File Name                FTP Mode
+ --------------------------------------------------------------------------
+ Outpatient Pharmacy V. 7.0 Manager's    PSO_7_MAN_UM_R0912.PDF
+    (binary)
+ User Manual
+ Outpatient Pharmacy V. 7.0 Manager's    PSO_7_P386_MAN_UM_CP.PDF  (binary)
+ User Manual Change Pages
+ Outpatient Pharmacy V. 7.0 Pharmacist's PSO_7_PHAR_UM_R0912.PDF   (binary)
+ User Manual
+ Outpatient Pharmacy V. 7.0 Pharmacist's PSO_7_P386_PHAR_UM_CP.PDF (binary)
+ User Manual Change Pages
+ Outpatient Pharmacy V.7.0 Technician's  PSO_7_TECH_UM_R0912.PDF   (binary)
+ User Manual
+ Outpatient Pharmacy V.7.0 Technician's  PSO_7_P386_TECH_UM_CP.PDF (binary)
+ User Manual Change Pages 
+ Outpatient Pharmacy V. 7.0 Technical    PSO_7_TM_R0912.PDF        (binary)
+ Manual/Security Guide 
+ Outpatient Pharmacy V. 7.0 Technical    PSO_7_P386_TM_CP.PDF      (binary)
+ Manual/Security Guide Change Pages   
+   
+  
+ 3) Documentation can also be retrieved from the VA Software Documentation
+     Library (VDL) on the Internet at the following address:
+     http://www4.va.gov/vdl.
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post-install routine will convert all prescriptions currently on 
+ 'HOLD' status with HOLD REASONS '3 PATIENT REATION' and '5 ALLERGY 
+ REACTIONS' to '6 ADVERSE DRUG REACTION'.
+  
+ Installation Instructions
+ -------------------------
+ Do not install this patch while Outpatient Pharmacy users are on the
+ system or when Outpatient orders are being entered and signed through
+ Computerized Patient Record System. Installation time will vary from 
+ site to site due to the post-install run.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSO*7.0*386).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSO*7.0*386.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+   7. Note: The post-install routine PSO386P will be automatically deleted
+      from your system upon completion of the installation.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO386P
+    Before:       n/a   After:   B345440  **386**
+Routine Name: PSO52API
+    Before: B65813054   After: B71395456  **213,229,252,387,386**
+Routine Name: PSOHLD
+    Before: B56482932   After: B80803768  **1,16,21,24,27,32,55,82,114,
+                                           130,166,148,268,281,298,358,
+                                           353,385,386**
+Routine Name: PSOHLDA
+    Before: B10014334   After:  B7186036  **148,225,386**
+Routine Name: PSOLMRN
+    Before:   B567748   After:   B821442  **11,46,84,225,386**
+Routine Name: PSOLMUTL
+    Before: B11386551   After: B13307787  **19,46,84,99,131,132,148,268,
+                                           225,305,386**
+Routine Name: PSOORAL2
+    Before: B19960223   After: B19047765  **258,260,386**
+Routine Name: PSOORNE4
+    Before: B68513696   After: B81172924  **11,27,32,36,46,75,96,103,99,
+                                           117,131,225,386**
+Routine Name: PSOORNEW
+    Before: B74656936   After: B78892061  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386**
+Routine Name: PSOORRNW
+    Before: B24262987   After: B20831236  **11,27,51,46,71,94,130,131,
+                                           146,206,225,384,386**
+Routine Name: PSORXPR1
+    Before: B11372879   After: B10534780  **258,386**
+Routine Name: PSORXVW1
+    Before: B71843058   After: B71614057  **35,47,46,71,99,117,156,193,
+                                           210,148,258,260,240,281,359,
+                                           354,367,386**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : MAR 21, 2011
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: SEP 05, 2012
+Released By : CONNOLLY,BARBARA              Date Released : SEP 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

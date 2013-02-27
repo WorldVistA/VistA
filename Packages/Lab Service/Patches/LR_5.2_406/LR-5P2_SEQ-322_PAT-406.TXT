@@ -1,0 +1,164 @@
+$TXT Created by CARPENTER,TERRY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 09/07/10 at 11:33
+=============================================================================
+Run Date: MAY 10, 2011                     Designation: LR*5.2*406
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #322                    Status: Released
+                  Compliance Date: JUN 10, 2011
+=============================================================================
+
+Associated patches: (v)LR*5.2*291  <<= must be installed BEFORE `LR*5.2*406'
+                    (v)LR*5.2*372  <<= must be installed BEFORE `LR*5.2*406'
+
+Subject: SOME ALERTS FOR LAB TEST RESULTS ARE NOT SENT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses Patient Safety Issue PSPO #1384 which involves
+ critical lab test result alerts.  When a lab test result is verified
+ and that result lies outside the normal boundaries defined for the
+ test, alerts are generated that are sent to the physicians who are
+ responsible for the patient's care.  In some cases these alerts are
+ not being generated.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ ========================
+ HD0000000311272 - Critical lab alert not being sent
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Boston HCS
+ Nebraska Western Iowa HCS
+ Montana HCS
+ Oklahoma City VAMC
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ HD0000000311272 - Critical lab alert not being sent
+  
+     Patient Safety Issue PSPO #1384 
+  
+     Problem:
+     --------
+     Sometimes a group of lab tests are ordered for a patient and the
+     test results for these tests are not all entered and verified at
+     the same time.  When this happens, a test result of "pending" is
+     sometimes stored in the LAB DATA file (#63).  If "pending" is
+     stored as a result for a test in file 63 and then an abnormal/critical
+     result is entered and verified, the code does not generate an OBX
+     segment (results segment) in the HL7 message and therefore the alerts
+     are not sent out to the appropriate physicians and/or caregivers.
+  
+     Solution:
+     ---------
+     Modify routine LRVER3 to set a new node in the LRSA array to indicate
+     this condition (a result of "pending" stored in file 63).  This node 
+     will be LRSA(test#,3). Also modify routine LR7OB63 to look for this
+     node when creating the ^TMP("LRX") global. This ^TMP("LRX") global is
+     subsequently used to generate the HL7 message which in turn triggers
+     the alerts and notifications when appropriate (results outside of
+     reference range).
+     
+     Routines:  LRVER3   LR7OB63
+  
+  
+ BLOOD BANK CLEARANCE:
+ =====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*406 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by VHA 
+ DIRECTIVE 2004-058 titled VISTA BLOOD BANK SOFTWARE VERSION 5.2.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*406 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*406 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+ The install time for this patch is less than 2 minutes. This patch may be
+ installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify that
+       all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*406.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OB63
+    Before: B23763803   After: B23908890  **121,187,286,372,406**
+Routine Name: LRVER3
+    Before: B49207018   After: B49397241  **42,100,121,140,171,153,221,
+                                           286,291,406**
+ 
+Routine list of preceding patches: 291, 372
+
+=============================================================================
+User Information:
+Entered By  : CARPENTER,TERRY               Date Entered  : AUG 04, 2010
+Completed By: WERNER,GARY                   Date Completed: APR 19, 2011
+Released By : BARKOOZIS,GREGORY             Date Released : MAY 10, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

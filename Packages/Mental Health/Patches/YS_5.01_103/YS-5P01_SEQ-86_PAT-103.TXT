@@ -1,0 +1,484 @@
+
+=============================================================================
+Run Date: APR 19, 2012                     Designation: YS*5.01*103
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01        SEQ #86                   Status: Released
+                  Compliance Date: MAY 20, 2012
+=============================================================================
+
+Associated patches: (v)YS*5.01*96  <<= must be installed BEFORE `YS*5.01*103'
+
+Subject: NEW INSTRUMENTS AND CONSULTS
+
+Category: 
+  - Other
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Outcomes Monitoring (OM) project's main focus in Patch YS*5.01*103 is
+ to add new instruments to the Mental Health Assistant (MHA3) and make two 
+ previously retired instruments (i.e., Revised NEO Personality Inventory 
+ and Personality Assessment Inventory) operational again. Outcomes
+ Monitoring refers to the evaluation of the treatment provided patients in
+ the Veterans Health Administration (VHA). These new instruments will help
+ clinicians and administrators analyze the effectiveness of treatment, help
+ clarify diagnoses and provide empirical measures for treatment outcomes.
+  
+   New Mental Health Instruments:
+   ==============================
+   ASSIST - Alcohol, Smoking and Substance Involvement Screening Test
+   BAM - Brief Addiction Monitor
+   BASIS-24 - Behavior and Symptom Identification Scale
+   CDR - Clinical Dementia Rating
+   CIWA-AR - Clinical Institute Withdrawal Assessment - Alcohol Revised
+   COWS - Clinical Opiate Withdrawal Scale
+   FAST - Functional Assessment Staging
+   GAD 7 - Generalized Anxiety Disorder, 7 items
+   GDS - Geriatric Depression Scale
+   GDS DEMENTIA - Global Deterioration Scale
+   INDEX OF ADL - Katz Index of Independence in Activities of Daily Living
+   ISMI - Internalized Stigma of Mental Illness Inventory
+   NEOPI - Revised NEO Personality Inventory
+   PAI - Personality Assessment Inventory 
+   PCL-SZ - PTSD Checklist Stressor Specific
+   POQ - Pain Outcomes Questionnaire
+   SBR - Suicide Behavior Report
+   SLUMS - Saint Louis University Mental Status Examination
+   WAI-SR - Working Alliance Inventory-Short Revised 
+   WHYMPI - West Haven-Yale Multiphasic Pain Inventory
+   ZBI SCREEN - Zarit Burden Interview: Screening version
+   ZBI SHORT - Zarit Burden Interview: Short version
+  
+  
+ NEW features in Mental Health Assistant (MHA3):
+ ---------------------------------------------------
+ Ability to create a Text Integration Utility (TIU) note containing the
+ results of the instrument administered to the patient and linking it to a
+ consult for that patient.
+  
+ Improved screen navigation within the MHA3. Near the upper left portion
+ of several screens (e.g., Instrument Administrator), there is now a white
+ arrow surrounded by a green circle. When the user clicks on this arrow,
+ the software will go back to the Main Menu. Prior to this patch, the user
+ had to exit the window and go back to the Main Menu.
+  
+ Additional User Preferences are added. The user can define what menu the
+ MHA3 will start with. Prior to this patch, MHA3 always started with
+ the Main Menu. With this patch, the default is the 'Main Menu', but the user
+ can select a different starting point such as 'Instrument Administrator'.
+  
+ A new tab labeled 'Special Results' is added to the 'Instrument Review
+ Results' screen. This tab presents summary data of instruments important
+ to the clinician such as depression scores over time. The user has the
+ ability to pick and choose the instruments that will appear on the display.
+  
+ Ability to print a blank instrument form from within the MHA3. Prior to
+ this patch, the user had to print a blank form from the 'roll and scroll' 
+ interface. This new functionality makes it easier for the Mental Health user 
+ to give a patient a hardcopy of the instrument to fill out at his/her leisure.
+ However, some instruments require the user to have the YSP security key.
+ They are:
+  
+  AUIR - Alcohol Use Inventory (Revised)
+  BSI18 - Brief Symptom Inventory 18
+  HLOC - Health Locus of Control Scale
+  IEQ - Rotter Internal-External Scale
+  MBMD - Millon Behavioral Medicine Diagnostic
+  MCMI2 - Millon Clinical Multiaxial Inventory-II
+  MCMI3 - Millon Clinical Multiaxial Inventory III
+  MHLA - Multidimensional Health Locus of Control: Form A
+  MHLB - Multidimensional Health Locus of Control: Form B
+  MMP2S - MMPI 2 Short Form
+  MMPI2 - Minnesota Multiphasic Personality Inventory 2
+  NEOPI - Revised NEO Personality Inventory
+  PAI - Personality Assessment Inventory
+  RLOC - Rotter Locus of Control
+  SCL9R - Symptom Checklist-90-Revised
+  STAI - State-Trait Anxiety Inventory
+  
+  
+   Files:
+   ====== 
+   16 files are re-released in this patch to support the new instruments:
+   All entries are exported with an internal entry number less than
+   100000 which are the 'national entries' of the files.
+   -----------------------------------------------------------------------
+   MH TESTS AND SURVEYS file (#601.71)
+  
+   MH QUESTIONS file (#601.72)
+  
+   MH INTRODUCTIONS file (#601.73)
+  
+   MH RESPONSE TYPES file (#601.74)
+  
+   MH CHOICES file (#601.75)
+  
+   MH CHOICETYPES (#601.751)
+   This file is reintroduced and the data is handled specifically in the
+   post-install portion of the build. 
+  
+   MH INSTRUMENT CONTENT file (#601.76) 
+  
+   MH SECTIONS file (#601.81)
+  
+   MH RULES file (#601.82)
+  
+   MH INSTRUMENTRULES file (#601.83)
+  
+   MH ADMINISTRATIONS file (#601.84)
+  
+   MH SCALEGROUPS file (#601.86)
+  
+   MH SCALES file (#601.87)
+  
+   MH DISPLAY file (#601.88)
+  
+   MH CHOICEIDENTIFIERS file (#601.89)
+  
+   MH SCORING KEYS file (#601.91)
+   
+   MH REPORT file (#601.93)
+     
+  
+   Remote Procedures
+   =================
+   NAME: YTQ CONSULT CREATE
+   TAG: CCREATE                          ROUTINE: YTQCONS
+   RETURN VALUE TYPE: ARRAY              AVAILABILITY: SUBSCRIPTION
+   VERSION: 1
+   DESCRIPTION:   
+   Links consult requests and MHA3 results.
+   Input : YS("AD") as ien of MH ADMINISTRATIONS file (#601.84)
+           YS("CON") as ien of REQUEST/CONSULTATION file (#123)
+           YS("COSIGNER") as ien of NEW PERSON file(#200)
+  
+   NAME: YTQ DELETE ENTRY
+   TAG: DELENTRY                         ROUTINE: YTQAPI6
+   RETURN VALUE TYPE: ARRAY              AVAILABILITY: SUBSCRIPTION
+   INACTIVE: ACTIVE
+   DESCRIPTION:   
+   Deletes an entry from a file.
+   
+   
+   Input: YSDATA=Array name to return success/error response
+          YS("FILE")=File number (e.g., 627.8)
+          YS("IEN")=record internal entry number (e.g., 100123)  
+   Output: YSDATA(1)="[DATA]"
+           or
+           YSDATA(1)="[ERROR]"
+           YSDATA(2)="error message"
+   
+  Example:
+   > S YSDATA="TEST",YS("FILE")=627.8,YS("IEN")=100123
+   > D DELENTRY^YTQAPI6(.YSDATA,.YS)
+  
+  
+   Option:
+   =======
+   YS BROKER1 [YS BROKER1]
+   The two new Remote Procedures are added to the RPC multiple field.
+  
+   New Field in MH TESTS AND SURVEYS file (#601.71)
+   ================================================
+   
+   601.71,30     CONSULT NOTE TITLE     8;10 POINTER TO TIU DOCUMENT DEFINITION
+                 FILE (#8925.1)
+  
+               LAST EDITED:      MAR 22, 2010 
+               HELP-PROMPT:      Select Consult Note Title. 
+               DESCRIPTION:      This is the Consult Note Title associated with
+                                 this instrument.  
+  
+   Data Dictionary Changes:
+   ========================
+   In MH CHOICES file (#601.75) CHOICE TEXT field (#3), the C and AU
+   cross-references were changed from the old style MUMPS cross-references
+   to the "new style" cross-references.
+  
+   The AU cross-reference was repaired to include the "AU" within the KILL
+   logic of the cross-reference.
+  
+   601.75,3      CHOICE TEXT            1;1 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>240!($L(X)<1) X
+               LAST EDITED:      FEB 10, 2011 
+               HELP-PROMPT:      Answer must be 1-240 characters in length. 
+               DESCRIPTION:      Text of the alternative in a multiple choice
+                                 test, eg. True, None of the Above.  
+  
+               FIELD INDEX:      C (#581)    REGULAR    IR    LOOKUP & SORTING
+                   Short Descr:  Lookup & sorting on CHOICE TEXT (#3)
+                   Description:  This is a regular cross-reference to allow
+                                 lookup and sorting on the CHOICE TEXT field
+                                 (#3).  
+                     Set Logic:  S ^YTT(601.75,"C",$E(X,1,240),DA)=""
+                    Kill Logic:  K ^YTT(601.75,"C",$E(X,1,240),DA)
+                    Whole Kill:  K ^YTT(601.75,"C")
+                          X(1):  CHOICE TEXT  (601.75,3)  (Subscr 1)  (Len 240)
+                                 (forwards)
+  
+               FIELD INDEX:      AU (#582)    REGULAR    IR    SORTING ONLY
+                   Short Descr:  Uppercase CHOICE TEXT (#3) for sorting
+                   Description:  This is a regular cross-reference to allow
+                                 sorting on the uppercase value of the CHOICE
+                                 TEXT field (#3).  
+                     Set Logic:  S ^YTT(601.75,"AU",$E(X,1,240),DA)=""
+                    Kill Logic:  K ^YTT(601.75,"AU",$E(X,1,240),DA)
+                    Whole Kill:  K ^YTT(601.75,"AU")
+                          X(1):  CHOICE TEXT  (601.75,3)  (Subscr 1)  (Len 240)
+                                 (forwards)
+                                   Transform (Storage):  S X=$$UP^XLFSTR(X)
+  
+               RECORD INDEX:     AC (#732)    REGULAR    IR    SORTING ONLY
+                   Short Descr:  CHOICE TEXT (#3) & LEGACY VALUE (#4) for
+                                 sorting
+                   Description:  This is a regular cross-reference to allow
+                                 sorting on the CHOICE TEXT (#3) and LEGACY
+                                 VALUE (#4) fields.  
+                     Set Logic:  S ^YTT(601.75,"AC",$E(X(1),1,200),$E(X(2),1,30)
+                                 ,DA)=""
+                    Kill Logic:  K ^YTT(601.75,"AC",$E(X(1),1,200),$E(X(2),1,30)
+                                 ,DA)
+                    Whole Kill:  K ^YTT(601.75,"AC")
+                          X(1):  CHOICE TEXT  (601.75,3)  (Subscr 1)  (Len 200)
+                                 (forwards)
+                          X(2):  LEGACY VALUE  (601.75,4)  (Subscr 2)  (Len 30)
+                                 (forwards)
+  
+   In MH DISPLAY file (#601.88) COMPONENT field (#11), 2 additional choice
+   types were added to the "Set of Codes". This allows the Mental Health
+   GUI to handle two additional types of components. The additions are as
+   follows:
+  
+   'OS' FOR Staff combo; 
+   'OC' FOR Consultation combo;
+  
+   The field definition now looks as follows:
+   
+   601.88,11     COMPONENT              0;12 SET
+  
+                                 'RA' FOR RadioGroup; 
+                                 'CK' FOR CheckList; 
+                                 'CO' FOR ComboBox; 
+                                 'LI' FOR List; 
+                                 'ED' FOR Edit; 
+                                 'MA' FOR Mask Edit; 
+                                 'SP' FOR Spin Edit; 
+                                 'ME' FOR Memo; 
+                                 'DA' FOR Date Picker; 
+                                 'TR' FOR Track Bar; 
+                                 'OR' FOR ORcombo Box; 
+                                 'NA' FOR Not Applicable; 
+                                 'OS' FOR Staff combo; 
+                                 'OC' FOR Consultation combo; 
+               LAST EDITED:      FEB 01, 2011 
+               DESCRIPTION:
+                                 Set of components to use in the display.
+  
+   Associated Remedy Tickets:
+   ==========================
+   493289 - This ticket requests two new instruments; WAI-SR and WHOQUL, 
+   be added to the Mental Health Assistant. The WAI-SR instrument is 
+   one of the new instruments added by this patch. The WHOQUL instrument 
+   will be handled as a New Service Request (NSR). If approved, the WHOQUL 
+   instrument will be added in a future patch. This ticket will remain
+   open.
+  
+   508930 - The Instrument Description option under the Help menu of the 
+   Instrument Administrator of the MHA was inactive (i.e., gray). When 
+   invoked, nothing happened. With this patch the option is active and will
+   display the description of any instrument that is highlighted. 
+  
+   526957 - Prior to this patch, opening an incomplete administration was 
+   restricted. With this patch, any user can open an incomplete 
+   administration. 
+  
+   586235 - When the last question on the MMPI2 instrument was not
+   answered, the MHA considered the instrument incomplete no matter what
+   the user did. This patch allows the user to skip the last question and
+   save the instrument as completed.
+  
+   Test Site(s):
+   ============= 
+   Upstate New York HCS (all locations)
+   Atlanta,GA VAMC
+   Durham,NC
+   Hines,IL VAMC 
+   St. Louis (Heartland East HCS)  
+  
+   SOFTWARE RETRIEVAL:
+   ===================
+  
+    The following software and documentation files are exported as part
+    of this patch:
+  
+     File Name                Contents                        Format
+     ---------                --------                        ------
+     YS_501_103.ZIP           All software and                Binary
+                              manuals for this patch
+     ------------------------------------------------------------------
+     Software included in the YS_501_103.ZIP is as follows:
+  
+     YS_501_103.KID           MHA Server Components           ASCII
+  
+     YS_501_103_Setup.exe     Mental Health Assistant         Binary
+                              This file is the complete 
+                              install for the Mental Health
+                              Assistant GUI Version 1.0.3.58
+                                YS_MHA.exe
+                                YS_MHA_A.dll
+                                YS_MHA_AUX.dll
+                                borlndmm.dll
+  
+     MHA3_IG.PDF              MHA3 Installation Guide         Binary
+     MHA3_IG.DOC              MHA3 Installation Guide         Binary
+     MHA3_UM.PDF              MHA3 User Manual                Binary
+     MHA3_UM.DOC              MHA3 User Manual                Binary
+     MHA3_RN.PDF              MHA3 Release Notes              Binary
+     MHA3_RN.DOC              MHA3 Release Notes              Binary
+     MH_TM.PDF                MH Technical Manual/Security    Binary
+                              Guide                  
+     MH_TM.DOC                MH Technical Manual/Security    Binary
+                              Guide
+  
+    The software files are available on the following OI Field Offices'
+    ANONYMOUS.SOFTWARE directories.
+  
+    All sites are encouraged to use their FTP capability to obtain these
+    files.  Use the FTP address "download.vista.med.va.gov" (without the
+    quotes) to connect to the first available FTP server where the files
+    are located.
+  
+     OI FIELD OFFICE    FTP ADDRESS                DIRECTORY
+     ===============    ===========                =========
+     ALBANY             ftp.fo-albany.med.va.gov   [ANONYMOUS.SOFTWARE]
+     HINES              ftp.fo-hines.med.va.gov    [ANONYMOUS.SOFTWARE]
+     SALT LAKE          ftp.fo-slc.med.va.gov      [ANONYMOUS.SOFTWARE]
+  
+    PRE-INSTALLATION INSTRUCTIONS:
+    ==============================
+  
+    Create the progress note title "MENTAL HEALTH CONSULT NOTE"
+    (without quotes) under the PROGRESS NOTES | CONSULTS hierarchy. If 
+    this note title already exists, do not create another one.
+   
+    This patch adds a new field, CONSULT NOTE TITLE (#30), to the MH 
+    TESTS AND SURVEYS (#601.71) file. This field is a pointer to the TIU 
+    DOCUMENT DEFINITION (#8925.1) file. This patch exports the entries in 
+    FILE 601.71 with the CONSULT NOTE TITLE field filled in with this note
+    title.
+   
+    If this note title is not defined or not recognized by the 
+    installation process, you will see an error message for each FILE
+    601.71 entry.
+   
+    Example of error message:
+    ** ERROR IN POINTER RESOLUTION OF DATA **
+    Unable to find exact match and resolve pointer  (^TIU(8925.1,  
+    Entry:MENTAL HEALTH CONSULT NOTE).
+   
+    You can correct/change the entries after installation by using the
+    following menu path and option:
+   
+    MHS MANAGER [YSMANAGER]
+      MHA3 Utilities [YTQ MHA3 MENU]
+        Stop/Re-Start Progress Notes for an Instrument [YTQ PNOTE FLAG]
+   
+    Example of linking note title to a FILE 601.71 entry:       
+    Select MH TESTS AND SURVEYS NAME: MORSE FALL SCALE  <-select test 
+    GENERATE PNOTE: Yes//                               <-answer Yes
+    TIU TITLE: MENTAL HEALTH DIAGNOSTIC STUDY NOTE//    <-take default
+    CONSULT NOTE TITLE:                                 <-select note title
+    
+    Some tests require the user to have the YSP security key.
+  
+  
+    Installation Instructions:
+    ==========================
+    1. Use the 'LOAD A DISTRIBUTION' option on the PackMan menu. The
+       Host File name is YS_501_103.KID.  Answer YES to the question:
+       "Want to Continue with Load? YES//"
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to install the Transport global. 
+       On the KIDS menu, under the 'Installation' menu, use the 
+       following options:
+  
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Backup a Transport Global
+  
+    3. Users may remain on the system, but installation should be done 
+       at off peak hours.
+  
+    4. Installation will take less than ten minutes. 
+  
+    5. From the 'Installation Menu' of the KIDS menu, run the option
+       'Install Package(s)' Select the package 'YS*5.01*103'
+       and proceed with install.
+   
+    6. Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+       Please answer according to your site's policy.
+  
+       When prompted 'Want KIDS to INHIBIT LOGONs during the
+       install//', respond NO.
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//', respond YES
+  
+       Place the following options out of order:
+        YS BROKER1
+  
+    7. Please refer to the INSTALL WINDOWS ILLUSTRATION section of the 
+       MENTAL HEALTH ASSISTANT VERSION 3 INSTALLATION GUIDE to install
+       the MHA software.
+  
+    8. Ensure that the option YS BROKER1 [YS BROKER1] is on the Mental
+       Health users secondary menu, if it is not already there.
+  
+    9. Place the MHA3 application on the CPRS Tools menu, if it is not 
+        already there. For instructions on how to add the MHA3 application to
+        the CPRS Tools menu, see the "Setting up VistA MHA3 on CPRS GUI Tools
+        Menu" section in the Installation Guide.
+  
+    10. You may delete the YS103PRE routine when the installation is
+        complete.
+  
+    11. Please follow the instructions in the "Client: GUI Software"
+        section of the Installation Guide to setup and distribute the GUIs
+        for this patch. The new GUIs must be installed for the MHA3
+        functionality to perform.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS103PRE
+    Before:       n/a   After: B10436745  **103**
+Routine Name: YSASNAR
+    Before: B39487387   After: B39846642  **24,30,37,38,44,55,67,76,103**
+Routine Name: YTQAPI14
+    Before: B30095919   After: B29549616  **85,97,96,103**
+Routine Name: YTQAPI6
+    Before:  B5268725   After:  B8407277  **85,103**
+Routine Name: YTQCONS
+    Before:       n/a   After: B22590519  **103**
+
+=============================================================================
+User Information:
+Entered By  : TRAXLER,FRANK                 Date Entered  : DEC 03, 2010
+Completed By: ELIJAH,VICKEY                 Date Completed: MAR 29, 2012
+Released By : VANCAMP,E PHILIP              Date Released : APR 19, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

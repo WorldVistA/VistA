@@ -1,0 +1,127 @@
+$TXT Created by IVEY,JOEL at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 05/25/11 at 09:23
+=============================================================================
+Run Date: AUG 23, 2011                     Designation: XU*8*557
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #458                      Status: Released
+                  Compliance Date: SEP 23, 2011
+=============================================================================
+
+
+Subject: REMOTE APPLICATION FILE ENTRIES FOR MDWS APPS
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ XU*8*557 REMOTE APPLICATION FILE ENTRIES FOR MDWS APPS
+  
+ Patches XU*8*404 and XWB*1.1*45 provided the basis for the Broker Security
+ Enhancement (BSE) and provided applications which used the CAPRI visitor 
+ access with time to switch to the connection mechanisms provided in the 
+ BSE. Subsequently, patches XU*8*523 and XWB*1.1*53 provided support for
+ Imaging, VistA Web, and Medical Domain Web Services (MDWS) with support
+ for their use of the CAPRI visitor access.  To prepare applications using 
+ the Medical Domain Web Services (MDWS) for use nationally and in 
+ compliance with the Broker Security Enhancement, this patch enters data
+ for the following applications in the REMOTE APPLICATION file (#8994.5).
+  
+    MYHEALTHEVET 
+    NATIONAL SUICIDE HOTLINE 
+    NATIONAL HOMELESS HOTLINE 
+    NUMI
+    MOVE 
+    TBI SCREENING 
+    MEDICAL DOMAIN WEB SERVICES 
+    PCS ANALYTICS
+  
+ This patch installs 1 broker or client/server context option MEDICAL 
+ DOMAIN WEB SERVICES [MWVS MEDICAL DOMAIN WEB SVCS].
+  
+ This patch contains 1 routine (XUSP557) that is run automatically as part
+ of the installation.  
+  
+ Installation of this patch takes less than a minute.
+  
+ Patch Priority: Mandatory
+ Patch Categories: Other, Routine
+  
+  List of Test Sites: 
+  ===================
+ BOSTON HCS
+ CLARKSBURG, WV
+ WHITE RIVER JUNCTION
+ WASHINGTON, DC
+ PALO ALTO, CA
+  
+  BloodBank Clearance: 
+  ====================
+ 12/8/10 
+  
+   EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*579 contains 
+   changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+   VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+   not alter or modify any VistA Blood Bank software design safeguards or
+   safety critical elements functions.
+    
+   RISK ANALYSIS: Changes made by patch XU*8*557 have no effect on Blood
+   Bank software functionality, therefore RISK is none
+  
+  
+  Installation Instructions: 
+  
+       1.   Users ARE allowed to be on the system during the 
+       installation.  
+  
+       2.   Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+       This option will load the KIDS (Kernel Installation and 
+       Distribution System) package onto your system.
+  
+       3.   You DO NOT need to stop TaskMan or the background filers.  
+  
+       4.   The patch has now been loaded into a transport global on your 
+       system.  On the KIDS menu, select the 'Installation' menu and use 
+       the following options: 
+             Verify Checksums in Transport Global 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Backup a Transport Global 
+  
+         Return to Programmers Prompt and use "D ^XPDKRN": 
+             Select KIDS OPTION: INSTALL PACKAGE(S)
+                                 =======
+              Select INSTALL NAME: XU*8.0*557 
+                                   ==========
+        Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// NO
+                                                                         ==
+        Want KIDS to INHIBIT LOGONs during the install? NO// NO 
+                                                             ==
+        Want to DISABLE Scheduled Options, Menu Options, and Protocols? 
+        NO// NO 
+             ==
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUSP557
+    Before:       n/a   After: B28972274  **557**
+
+=============================================================================
+User Information:
+Entered By  : IVEY,JOEL                     Date Entered  : NOV 30, 2010
+Completed By: SINGH,GURBIR                  Date Completed: AUG 08, 2011
+Released By : TILLIS,LEWIS                  Date Released : AUG 23, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

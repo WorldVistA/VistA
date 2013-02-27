@@ -1,0 +1,142 @@
+
+=============================================================================
+Run Date: MAR 28, 2012                     Designation: PXRM*2*21
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #18                      Status: Released
+                  Compliance Date: APR 28, 2012
+=============================================================================
+
+Associated patches: (v)DG*5.3*797  <<= must be installed BEFORE `PXRM*2*21'
+                    (v)PXRM*2*17   <<= must be installed BEFORE `PXRM*2*21'
+
+Subject: MILITARY SERVICE COMPUTED FINDING UPDATES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ General Overview:
+ =================
+ One aspect of the Military Service Data Sharing (MSDS) project
+ increases the number of military service episodes from three to an
+ unlimited number. It provides new APIs for Clinical Reminders to
+ use to get this data. These APIs are used to update the computed
+ findings, VA-SERVICE BRANCH and VA-LAST SERVICE SEPARATION DATE
+ (which is renamed VA-SERVICE SEPARATION DATES), so they
+ can get data for all episodes of service.
+ 
+ A new list type computed finding: VA-OEF/OIF SERVICE (LIST) is also
+ included. It can be used to build lists of patients with OEF/OIF
+ service.
+  
+ Build Components:
+ =================
+ 
+  Data Dictionary:
+  ================
+ 
+ FILE #       NAME
+ -------------------------------------------------------------------------------
+ 811.4       REMINDER COMPUTED FINDING
+ 
+ Documentation Retrieval:
+ ========================
+ Updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ The preferred method is to use File Transfer Protocol (FTP) to download 
+ the files from download.vista.med.va.gov. This transmits the files from
+ the first available FTP server. Sites may also elect to retrieve
+ software directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov  <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov    <ftp://ftp.fo-slc.med.va.gov>
+   
+  
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at:  http://www.va.gov/vdl/
+  
+ The following file should be downloaded in the binary FTP mode.
+   
+ Filename                 Description
+ --------                 -----------
+ PXRM_2_21_MM.PDF         Clinical Reminders Manager's Manual
+ 
+  
+ Test Sites:
+ ===========
+ VA Maryland HCS, Baltimore, MD
+ Clement J. Zablocki VAMC, Milwaukee, WI
+ Central Alabama Veterans HCS, Tuskegee, AL
+  
+ Software Retrieval:
+ ===================
+ The software for this patch is not being distributed through the
+ National Patch Module.  This patch is being distributed as a host file.
+ The host  file will contain five Kernel Installation & Distribution
+ System (KIDS) builds.
+  
+                  Host File Name:  DG_53_P797.KID
+                          Builds:  DG*5.3*797
+                                   EAS*1.0*92
+                                   IVM*2.0*141
+                                   DVB*4.0*62
+                                   PXRM*2.0*21
+  
+ Sites may retrieve the software directly using FTP from the 
+ ANONYMOUS.SOFTWARE directory. The preferred method is to FTP the files 
+ from:
+   
+                     download.vista.med.va.gov
+   
+ This will transmit the files from the first available FTP server.
+ Sites may also elect to retrieve software directly from a specific
+ server as follows:
+   
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+   
+  **Note:  Use ASCII mode when downloading the .KID file
+ 
+ Installation:
+ =============
+ Please refer to the patch description for patch DG*5.3*797 for
+ installation instructions.
+ 
+ The init routine PXRMP21I may be deleted once the installation has completed.
+ 
+ 
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMMSER
+    Before: B91863448   After:B106196572  **11,12,21**
+Routine Name: PXRMP21I
+    Before:       n/a   After:  B4139737  **21**
+ 
+Routine list of preceding patches: 12
+
+=============================================================================
+User Information:
+Entered By  : BAKKE,ANDREW J                Date Entered  : APR 18, 2011
+Completed By: OLSEN,JAMES                   Date Completed: MAR 27, 2012
+Released By : VANCAMP,E PHILIP              Date Released : MAR 28, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

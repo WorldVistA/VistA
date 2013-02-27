@@ -1,0 +1,106 @@
+$TXT Created by METCALF,ROGER at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Friday, 01/27/12 at 09:43
+=============================================================================
+Run Date: AUG 30, 2012                     Designation: XU*8*596
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #480                      Status: Released
+                  Compliance Date: SEP 30, 2012
+=============================================================================
+
+
+Subject: CAPRI TELNET VISN23
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket:  - HD0000000582965.
+  
+ The patches resolves a connection problem for Health Resource Center (HRC)
+ users who try to telnet to VistA servers in VISN 23.
+   
+ Test Sites
+ ==========
+ 
+ Minneapolis
+ St Cloud
+ Sioux Falls
+ Fargo
+ Black Hills
+  
+  
+ Blood Bank Team Coordination
+ ===========================
+ Clearance: 02/07/2012
+     
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+     
+ RISK ANALYSIS: Changes made by patch XU*8.0*596 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+     
+     
+    Installation Instructions
+    =========================
+     
+    1. Users ARE allowed to be on the system during the installation. 
+       However, it is recommended that the patch be installed during
+       non-peak time. It will take about five minute to install the
+       the patch, but it can be queued if you wish.
+     
+    2. You DO NOT need to stop TaskMan or the background filers.
+     
+    3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+       This option will load the KIDS package onto your system.
+     
+    4. The patch has now been loaded into a Transport global on your 
+       system. You now need to use KIDS to install the Transport global. On
+       the KIDS menu, under the 'Installation' menu, use the following
+       options:
+     
+                    Verify Checksums in Transport Global
+                    Print Transport Global
+                    Compare Transport Global to Current System
+                    Backup a Transport Global
+     
+       On the KIDS menu, under the 'Installation' menu, use the following
+       option:
+                    Install Package(s)  
+                    Select INSTALL NAME:XU*8.0*596
+                                        ========== 
+    
+      Accept the defaults for the following install questions:
+      Want KIDS to INHIBIT LOGONs during the install? NO//
+      Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUSRB4
+    Before: B17078784   After: B18063785  **150,337,395,419,437,499,523,
+                                           573,596**
+ 
+Routine list of preceding patches: 573
+
+=============================================================================
+User Information:
+Entered By  : METCALF,ROGER A               Date Entered  : JAN 26, 2012
+Completed By: BEST,LISA                     Date Completed: AUG 14, 2012
+Released By : MALMIN,PAUL                   Date Released : AUG 30, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

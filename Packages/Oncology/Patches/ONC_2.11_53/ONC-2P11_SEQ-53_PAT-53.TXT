@@ -1,0 +1,724 @@
+
+=============================================================================
+Run Date: SEP 01, 2011                     Designation: ONC*2.11*53
+Package : ONC - ONCOLOGY                      Priority: Mandatory
+Version : 2.11        SEQ #53                   Status: Released
+                  Compliance Date: OCT 02, 2011
+=============================================================================
+
+Associated patches: (v)ONC*2.11*52 <<= must be installed BEFORE `ONC*2.11*53'
+
+Subject: CStage 0203/NAACCR v12.1
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Print Template
+  - Input Template
+
+Description:
+============
+
+ Patch ONC*2.11*53 (CStage 0203/NAACCR v12.1)
+ 
+ All Data Dictionary modifications have been reviewed and approved by the Data
+ Base Administrator.
+  
+ This patch contains the following:
+ 
+  1) Collaborative Stage version 0203
+ 
+     This patch implements CS version 0203.  The necessary data conversions will
+     be performed when the patch is installed.
+ 
+     This patch also identifies cases for which CS 0203 review/recoding is
+     required or recommended.  To facilitate this process a new data item, CS
+     REVIEW REQUIRED (#165.5,247), has been added.  If, during the CS 0203
+     conversion process, a case satisfies the "review/recode" criteria, CS
+     REVIEW REQUIRED will be set to 1 (Needs review).  The registrar may then
+     create a list of cases requiring review/recoding via the [CPR Print Custom
+     Reports] or [DS Define Search Criteria] options by sorting or searching for
+     CS REVIEW REQUIRED values of "Needs review".  Upon reviewing the case,
+     the registrar can change CS REVIEW REQUIRED to 0 (Reviewed) thereby 
+     removing the case from any future review/recode lists.
+ 
+     NOTE: The following CS conversions were inadvertently left out of patch
+           ONC*2.11*51 and have be included in patch ONC*2.11*53.
+ 
+           For Lymphoma schema:
+           TUMOR SIZE (CS) (#165.5,29.2) values of 888 have been to converted to
+           988.
+ 
+           For Prostate schema:
+           SSF1 (#165.5,44.1) values of 990 have been to converted to 980.
+ 
+  2) NAACCR (North American Association of Central Cancer Registries) v12.1
+ 
+     This patch implements NAACCR Record Layout v12.1.  The following changes
+     have been included in this patch:
+ 
+     MARITAL STATUS AT DX (#165.5,11)
+     New code 6 (Unmarried or Domestic Partner)
+ 
+     MULTIPLICITY COUNTER (#165.5,196)
+     New code 00 (No primary tumor identified)
+     New code 89 (Multicentric, multifocal, number unknown)
+ 
+  3) [CF Automatic Casefinding-Lab Search]
+     [PT Automatic Casefinding-PTF Search]
+ 
+     Lab casefinding has been enhanced to include the following:
+ 
+     Squamous cell neoplasms (805-808) of the skin
+     Basal cell neoplasms (809)
+ 
+     PTF casefinding has been enhanced to include the following ICD-9 codes:
+ 
+     228.02 HEMANGIOMA INTRACRANIAL
+     288.4  HEMOPHAGOCYTIC SYNDROMES
+     289.6  FAMILIAL POLYCYTHEMIA
+ 
+  4) [PA Print Complete Abstract (132c)]
+     APPROACH (#165.5,234)
+ 
+     The label for data item APPROACH was incorrectly listed as "Surg App 2010"
+     on the [PA Print Complete Abstract (132c)] report.  This has been fixed.
+     It is now labeled as "Approach".
+ 
+  5) APUDOMA (8248/1) of the LUNG
+ 
+     In patch ONC*2.11*52 APUDOMA was removed from the "no staging" list for
+     LUNG cases.  Since APUDOMA exists only with a Behavior Code of "/1"
+     (Neoplasms of uncertain and unknown behavior) it has been returned to the
+     LUNG "no staging" list.
+  
+  6) 7th Edition Melanoma of the Skin
+ 
+     In the 6th Edition of AJCC (American Joint Committee on Cancer) staging,
+     the following histologies were "no longer appropriate for or relevant to
+     the staging of melanoma".  For this reason they were added to the "no
+     staging" list.
+ 
+     8723/3 MALIGNANT MELANOMA, REGRESSING
+     8728/3 MENINGEAL MELANOMATOSIS
+     8730/3 AMELANOTIC MELANOMA
+     8740/3 MALIGNANT MELANOMA IN JUNCTIONAL NEVUS
+     8741/2 PRECANCEROUS MELANOSIS, NOS
+     8741/3 MALIGNANT MELANOMA IN PRECANCEROUS MELANOSIS
+     8742/2 LENTIGO MALIGNA
+     8746/3 MUCOSAL LENTIGINOUS MELANOMA
+     8770/3 MIXED EPITHELIOID AND SPINDLE CELL MELANOMA
+     8773/3 SPINDLE CELL MELANOMA, TYPE A
+     8774/3 SPINDLE CELL MELANOMA, TYPE B
+ 
+     With the implementation of the 7th Edition these histologies are now
+     stageable.
+ 
+     They will remain on the "no staging" list for 6th Edition cases.
+ 
+  7) Addr Current--No & Street [3748-3807]
+ 
+     The PATIENT (#2) file field STREET ADDRESS [LINE 1] (#2,.111) is the source
+     for the NAACCR data item "Addr Current--No & Street".  If STREET ADDRESS
+     [LINE 1] contained an "@" character, the following EDITS error would occur:
+ 
+     E:Addr Current--No & Street is not valid   
+ 
+     To resolve this problem the "@" character has been added to the list of
+     characters that will be stripped from address data prior to inclusion in
+     the NAACCR extract record.
+ 
+  8) FORDS (Facility Oncology Registry Data Standards) 2011
+ 
+     In accordance with FORDS 2011 the following Site-Specific Surgery Codes
+     have been modified or added:
+ 
+     LIVER AND INTRAHEPATIC BILE DUCTS C22.0 C22.1
+     Re-worded description of code 66: 
+       Excision of an intrahepatic bile duct PLUS partial hepatectomy
+ 
+     Re-worded description of code 75:
+       Extrahepatic bile duct and hepatectomy WITH transplant
+ 
+     BREAST C50.0 C50.9
+     Added new code 76: 
+       Bilateral mastectomy for single tumor involving both breasts
+ 
+     PROSTATE C61.9
+     Clarified code 19: 
+       Transurethral resection (TURP) NOS, no specimen sent to path
+ 
+     Clarified code 21:
+       Transurethral resection (TURP) NOS, specimen sent to path
+ 
+  9) DATE OF MULTIPLE TUMORS (#165.5,195)
+ 
+     If MULT TUM RPT AS ONE PRIM (#165.5,194) was coded as 99 (Unknown), DATE OF
+     MULTIPLE TUMORS was being stuffed with 99/99/9999.  This was incorrect.
+     It should be stuffed with the DATE DX (#165.5,3) value.  This has been
+     fixed.
+ 
+ 10) ELAPSED MONTHS TO COMPLETION (#165.5,157.1)
+ 
+     ELAPSED MONTHS TO COMPLETION was not being calculated correctly for all
+     cases.  The current calculation will utilize only the "month" portions of
+     DATE OF FIRST CONTACT (#165.5,155) and DATE CASE COMPLETED (#165.5,90) and
+     disregard the "day" portions.
+ 
+ 11) [CT Create ACOS Data Download]
+ 
+     If a DATE DX (#165.5,3) value was inexact (e.g. "2010"), the [CT Create
+     ACOS Data Download] option would include it in the previous year's download
+     data. 
+ 
+     For example, if the "Diagnosis Year" selected was "2009" and a 2010 case
+     had an inexact DATE DX of "2010", the 2010 case was being included in the
+     2009 download.
+ 
+     This has been fixed.
+  
+ 12) Neuroendocrine Tumors
+ 
+     7th Edition Neuroendocrine Tumors of the Colon (C18.0, C18.2-C18.9) were
+     being stuffed with the "no staging" values.  This was incorrect and has
+     been fixed.  7th Edition Neuroendocrine Tumors are stageable.
+ 
+ 13) [NC Print Abstract NOT Complete List]
+ 
+     The "PRIMARY ABSTRACT NOT-COMPLETE Report" can be sorted by either DATE DX
+     or DATE OF FIRST CONTACT.  If the "sorted by" field was null (blank), the
+     null entry would not appear on the report.
+ 
+     For example, if a "not complete" case did not have a DATE OF FIRST CONTACT
+     and DATE OF FIRST CONTACT was selected as the "sorted by" field, this case
+     would not appear on the NOT-COMPLETE Report.
+ 
+     This has been fixed.
+ 
+ 14) INITIATED BY (#165.5,244)
+ 
+     A new data item, INITIATED BY, has been added to the abstract.  INITIATED
+     BY will be stuffed with the user's name when a new abstract is created.
+     INITIATED BY can be viewed in "Case Administration" section of the
+     abstract.
+ 
+ 15) STATE DEATH CERT (#160,19.1)
+     NAACCR item "Cause of Death" [1910] 2269-2272
+ 
+     STATE DEATH CERT was originally created to accommodate the non-standard
+     CAUSE OF DEATH codes 7777 and 7797.  With the removal of CAUSE OF DEATH in
+     patch ONC*2.11*52, it is no longer necessary to prompt for STATE DEATH
+     CERT.  It has therefore been removed from the "Death Information" section
+     of the follow-up dialog.
+ 
+     The NAACCR item "Cause of Death" [1910] 2269-2272 will now be computed
+     from the VITAL STATUS (#160.04,1) value.
+ 
+     If VITAL STATUS = 1 (Alive)
+       "Cause of Death" = "0000" (Patient alive at last contact)
+ 
+     If VITAL STATUS = 0 (Dead)
+       "Cause of Death" = "7777" (State death certificate not available)
+    
+ 16) NEOADJUVANT THERAPY (#165.5,245)
+ 
+     A new data item, NEOADJUVANT THERAPY, has been added to the abstract.
+     NEOADJUVANT THERAPY has been placed as the last item in "First Course of
+     Treatment" surgery dialog.  It has the following values:
+ 
+     NEOADJUVANT THERAPY: ??
+          
+         Neoadjuvant therapy is the administration of therapeutic agents before 
+         the main treatment.
+    
+      Choose from: 
+        0        Not recommended/NA
+        1        Radiation
+        2        Chemotherapy
+        3        Hormone therapy
+        4        Immunotherapy
+        5        Combination of neoadjuvant tx
+        8        Recommended but not done
+        9        Unknown if recommended or done
+ 
+ 17) 7th Edition MERKEL CELL CARCINOMA (8247)
+ 
+     a) The 7th Edition Cancer Staging Manual was the first edition to contain a
+        chapter specific to MERKEL CELL CARCINOMA.  The 7th Edition MERKEL CELL
+        CARCINOMA criteria were being used for all previous editions.  This has
+        been fixed.  The 7th Edition criteria now apply only to 2010+ cases.
+ 
+     b) 7th Edition Merkel cell carcinoma of the eyelid (C44.1) was being staged
+        with the MERKEL CELL CARCINOMA criteria.  This was incorrect.  Merkel
+        Cell of the eyelid should be staged as CARCINOMA OF THE EYELID.  This
+        has been fixed.
+ 
+     c) When computing STAGE GROUP PATHOLOGIC (#165.5,88), the algorithms for 
+        computing Stage Groups IB and IIB were not correct.  This has been fixed
+        with the following staging logic:
+ 
+        If T1 pNX cN0 M0, STAGE GROUP PATHOLOGIC = IB 
+        If T2 pNX cN0 M0, STAGE GROUP PATHOLOGIC = IIB 
+        If T3 pNX cN0 M0, STAGE GROUP PATHOLOGIC = IIB 
+ 
+ 18) MULTIPLE TUMORS (#165.5,69)
+     MULTIPLICITY COUNTER (#165.5,196)
+ 
+     2007+ cases were being prompted for both MULTIPLE TUMORS and MULTIPLICITY
+     COUNTER.  This was redundant.  Pre-2007 cases will now be prompted for
+     MULTIPLE TUMORS and 2007+ cases will be prompted for MULTIPLICITY COUNTER.
+ 
+ 19) [Oncology Site Manager Menu]
+     [RI Reindex Data Files (160,165.5,165)]
+ 
+     The [RI Reindex Data Files (160,165.5,165)] option no longer functions
+     properly and has been deleted.
+ 
+ 20) [EA Edit Site/AccSeq# Data]
+     Remedy Ticket # 463070 - <UNDEFINED>PRIM+1^ONCOUTC *ONCOD
+ 
+     If, when using the [EA Edit Site/AccSeq# Data] option, the registrar
+     answered "No" to the "Data OK?" prompt, the program would abort with the
+     following error:
+ 
+     <UNDEFINED>PRIM+1^ONCOUTC *ONCOD0
+  
+     This has been fixed and resolves Remedy Ticket # 463070.
+ 
+ 21) [TNM Compute percentage of TNM forms completed]
+ 
+     The [TNM Compute percentage of TNM forms completed] option was utilizing a
+     DATE DX date range to compute the TNM form completion percentage.  This was
+     incorrect.  It will now utilize a DATE OF FIRST CONTACT date range.
+ 
+ 22) ABSTRACTED BY (#165.5,92)
+ 
+     ABSTRACTED BY is stuffed with the registrar's name when a case is
+     'Completed' for the first time.  It is never deleted or subsequently
+     re-stuffed.  Some older 'Complete' cases have no ABSTRACTED BY values.  For
+     these cases there is no way for the registrar to fill in ABSTRACTED BY.
+ 
+     Now, if ABSTRACTED BY is missing for a 'Complete' case, re-'Completing" the
+     case will stuff the registrar's name into ABSTRACTED BY.
+ 
+ 23) Inter-field edit check WARNING
+ 
+     The inter-field edit check which compares OTHER CANCER against SEQUENCE
+     NUMBER has been modified.
+ 
+     Old WARNING:
+     WARNING: OTHER CANCER = No
+           SEQUENCE NUMBER must be 00
+ 
+     New WARNING:
+     WARNING: OTHER CANCER = No
+           SEQUENCE NUMBER must be 00 or 60
+ 
+     Also, if OTHER CANCER = "Yes", this edit is now bypassed.
+ 
+ 24) SCOPE OF LN SURGERY (F) (#165.5,138.4)
+     SCOPE OF LN SURGERY @FAC (F) (#165.5,138.5)
+     "No Treatment" Stuffing
+ 
+     The SCOPE OF LN SURGERY (F) and SCOPE OF LN SURGERY @FAC (F) "No Treatment"
+     stuffing logic for the following primary sites was stuffing a value of 0
+     (None).  This was incorrect.  It should stuff a value of 9 (Unknown/NA).
+     This has been fixed.
+  
+     C75.1 PITUITARY
+     C75.2 CRANIOPHARYNGEAL DUCT
+     C75.3 PINEAL GLAND
+ 
+ 25) Incorrectly formatted request error
+ 
+     The following EDITS error is usually caused by the existence of non-
+     standard characters within one of the OncoTrax TEXT fields:
+ 
+     -2  Client: Incorrectly formatted request error
+ 
+     Unfortunately, the error message does not specify which of the 14 TEXT
+     fields contains the non-standard character(s).
+ 
+     To assist the registrar in locating the problem TEXT field, a new option
+     has been added to the Utility Menu:
+ 
+     TEXT Find non-standard characters in TEXT
+ 
+     This is how it works:
+ 
+     Select *..Utility Options Option:  Find non-standard characters in TEXT
+     Select primary or patient name: TEST,A
+ 
+     TEXT-REMARKS
+     TEXT line: BCG (bacille Calmette-Guirin)
+     Non-standard character: i
+ 
+ 26) [DF Print Due Follow-up List by Month Due]
+     [LF Print Delinquent (LTF) List]
+ 
+     The [DF Print Due Follow-up List by Month Due] and [LF Print Delinquent
+     (LTF) List] options have been modified.  Each option now has 2 report
+     formats: "Standard format" and "Remote employees format".  Upon selecting
+     either of these options the registrar will be prompted to select the
+     desired format.
+ 
+ Select *..Follow-up Functions Option: DF Print Due Follow-up List by Month Due
+ 
+  Select report format: ?
+ 
+ Select the report format you wish to use for this report.
+ 
+      Select one of the following:
+ 
+           1         Standard format
+           2         Remote employees format
+ 
+     The "Standard format" displays:
+      Full patient name
+      PID#
+      Date of Last Contact or Death
+      Site/GP
+      Date DX
+ 
+ Example of "Standard format":
+  Name                  Pid#   Follow-up   Site/Gp                    Date Dx
+ ********************************************************************************
+                              DUE FOLLOW-UP: FEB 2011
+  TEST,PATIENT          T9999  02/18/2010  PROSTATE                   03/16/2010
+ 
+     The "Remote employees format" displays:
+      First 5 characters of patient name
+      PID#
+      Date of Last Contact or Death
+      Accession/Sequence number
+      Site/GP
+      Date DX
+ 
+ Example of "Remote employees format":
+  Name   Pid#   Follow-up   Acc/Seq        Site/Gp                    Date Dx
+ ********************************************************************************
+                              DUE FOLLOW-UP: FEB 2011
+  TEST,  T9999  02/18/2010  2010-00010/00  PROSTATE                   03/16/2010
+ 
+ 27) 7th Edition staging of Cutaneous Squamous Cell Carcinomas and Other 
+     Cutaneous Carcinomas
+ 
+     For Cutaneous Carcinoma cases with N values of N2a, N2b or N2c, automatic
+     staging was calculating stage group values of 99 (Unknown).  This was
+     incorrect and has been fixed.
+ 
+ 28) NAACCR item TNM Clin Descriptor [974-974]
+ 
+     Some older cases may be extracting a TNM Clin Descriptor value of 4 (Y
+     (Classification during or after initial multimodality therapy)).
+     Code 4 is only appropriate as a TNM Path Descriptor.  This has been fixed.
+ 
+ 29) FEE BASIS (#165.5,237)
+ 
+     The DESCRIPTION of FEE BASIS has been modified.  The references to "work
+     up" and "services not provided at the medical center" have been removed.
+ 
+     Old DESCRIPTION:  
+     Indicates if the patient was referred to another facility for work up,
+     treatment or services not provided at the medical center or to a
+     facility closer to the patient's residence either on a "Fee Basis" or
+     via a CONTRACT with the reporting facility.
+ 
+     New DESCRIPTION:  
+     Indicates if the patient was referred to another facility for
+     treatment or to a facility closer to the patient's residence
+     either on a "Fee Basis" or via a CONTRACT with the reporting
+     facility.
+ 
+ 30) Gastrointestinal Stromal Tumors (GIST) of Stomach
+     Neuroendocrine Tumors (NET) of Stomach
+     CS SCHEMA DISCRIMINATOR (#165.5,240)
+ 
+     GIST and NET stomach cases were being prompted for CS SCHEMA DISCRIMINATOR.
+     This was incorrect and has been fixed.
+ 
+ 31) AFIP SUBMISSION (#165.5,83)
+ 
+     The Armed Forces Institute of Pathology (AFIP) will disestablish by
+     September 2011.  Effective April 1, 2011, all consultation cases must be
+     sent to the Joint Pathology Center (JPC).
+ 
+     In accordance with this change the LABEL for data item AFIP SUBMISSION has
+     been changed to AFIP/JPC SUBMISSION.
+ 
+ 32) COC ACCREDITATION (#160.1,68)
+  
+     A new data item, COC ACCREDITATION, has been added to the ONCOLOGY SITE
+     PARAMETERS (#160.1) file.  This data item will identify the registry as
+     being associated with a CoC (Commission on Cancer) accredited cancer 
+     program.
+ 
+     This data item has been added to the VACCR (VA Central Cancer Registry)
+     extract at column position [2547-2548].
+ 
+ 33) CLASS OF CASE 30
+     SURG DX/STAGING PROC @FAC (#165.5,58.4)
+ 
+     If CLASS OF CASE = 30 (Dx and all tx elsewhere AND reporting facility
+     participated in dx), SURG DX/STAGING PROC @FAC was being stuffed with "00"
+     (No surgical diagnostic or staging procedure).  This was incorrect.
+     For CLASS OF CASE = 30 cases, surgical diagnostic and staging procedures
+     are valid.  This has been fixed.  
+ 
+ 34) [RA Automatic Casefinding-Radiology Search]
+     [PT Automatic Casefinding-PTF Search]
+     Remedy Ticket # 496331 - Case Finding Issue
+ 
+     Casefinding requires an ONCOLOGY SITE PARAMETERS (#160.1) entry whose 
+     DIVISION (#200,16) value matches the user's login DIVISION.  If the user
+     logged in to a DIVISION for which there was no ONCOLOGY SITE PARAMETERS
+     entry, the program would abort with the following error:
+ 
+     <SUBSCRIPT>T+3^ONCOCFR ^ONCO(160.1,"")
+ 
+     This has been fixed.  In the event that the user now attempts to run
+     OncoTrax casefinding from a DIVISION for which there is no matching
+     ONCOLOGY SITE PARAMETER entry, a message will be displayed and the program
+     will return to the [SUS *..Casefinding/Suspense ...] menu.
+ 
+ 35) NOTE TITLE (#165.5,248)
+     NOTE DATE (#165.5,249)
+ 
+     Two new data items, NOTE TITLE and NOTE DATE, have been added to the
+     abstract.  NOTE TITLE and NOTE DATE record the name and date of the note
+     which documents staging in the medical record.  They appear after PHYSICIAN
+     STAGING (#165.5,66) in the "Stage of Disease at Diagnosis" section of the
+     abstract.
+ 
+ 36) SITE-GROUP FOR ONCOLOGY (#164.2)
+     LEUKEMIA, ACUTE LYMPHOCYTIC
+     LEUKEMIA, ACUTE NONLYMPHOCYTIC
+     LEUKEMIA, CHRONIC LYMPHOCYTIC
+     LEUKEMIA, CHRONIC MYELOCYTIC
+     HEMATO/RETICULO, OTHER
+ 
+     a) The following SITE-GROUP OF ONCOLOGY entries were being blocked from
+     selection when creating a new primary.  This block has been removed.
+ 
+     LEUKEMIA, ACUTE LYMPHOCYTIC
+     LEUKEMIA, ACUTE NONLYMPHOCYTIC
+     LEUKEMIA, CHRONIC LYMPHOCYTIC
+     LEUKEMIA, CHRONIC MYELOCYTIC
+ 
+     b) The entry HEMATO/RETICULO, OTHER has been added to the SITE-GROUP FOR
+     ONCOLOGY file.
+ 
+     The following topographies have been associated with it:
+     C42.0  BLOOD
+     C42.1  BONE MARROW
+     C42.2  SPLEEN
+     C42.3  RETICULOENDOTHELIAL SYSTEM NOS
+     C42.4  HEMATOPOIETIC SYSTEM NOS
+ 
+ 37) [LF Print Delinquent (LTF) List]
+ 
+     The DELINQUENT (LTF) report has been modified to exclude patients whose
+     primaries are all non-analytic.  If a patient has at least one analytic
+     primary, they will be included in the DELINQUENT (LTF) report.    
+     
+ Associated Remedy Tickets:
+ ==========================
+ Remedy Ticket #463070
+ Remedy Ticket #496331
+ 
+ Test Sites
+ ==========
+ Upstate New York HCS
+ Washington, DC
+ Hines, Il
+ West Haven, Ct
+  
+ Installation instructions:
+ ==========================
+ This patch should be loaded with Oncology users off the system. Installation
+ will take approximately 10 minutes.
+  
+ This patch is available via FTP as a Kernel Installation and Distribution
+ System (KIDS) distribution file.  The Host File is named ONC211P53.KID and is
+ located in the [ANONYMOUS.SOFTWARE] directory of the following OI Field
+ Offices.
+     
+                                PREFERRED ADDRESS
+                                -----------------
+  First available ftp server    download.vista.med.va.gov
+  
+  SPECIFIC FIELD OFFICE         FTP ADDRESS
+  ---------------------         -----------
+  Albany                        ftp.fo-albany.med.va.gov
+  Hines                         ftp.fo-hines.med.va.gov
+  SLC                           ftp.fo-slc.med.va.gov
+  
+ 1. Load the KIDS distribution file via the 'Load a Distribution' option on the
+    KIDS Installation menu.
+  
+ 2. Prior to installing the patch you may want to make use of the following
+    optional installation options located on the KIDS Installation menu:
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+    c.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 3. Install the KIDS distribution via the 'Install Package(s)' option on the
+    KIDS Installation menu.
+  
+    a.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+        Install? NO//'
+        Answer NO.
+  
+    b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+        Answer NO.
+   
+    c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//'
+        Answer NO. 
+ 
+ 
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ONCACD0
+    Before: B95532395   After: B95904961  **9,12,20,24,25,28,29,30,36,
+                                           37,38,40,41,44,45,47,48,49,50,
+                                           51,52,53**
+Routine Name: ONCACD1
+    Before: B45249992   After: B46060891  **9,12,14,18,20,22,24,25,26,
+                                           28,29,31,36,37,41,43,47,48,51,
+                                           52,53**
+Routine Name: ONCACDU2
+    Before: B59275052   After: B61713188  **12,18,20,21,22,24,26,27,29,
+                                           30,31,32,34,36,37,38,39,41,46,
+                                           47,49,50,51,52,53**
+Routine Name: ONCASCI
+    Before:       n/a   After:  B3659084  **53**
+Routine Name: ONCATF
+    Before: B46954107   After: B46881443  **19,25,27,36,40,42,46,51,53**
+Routine Name: ONCCS3
+    Before:B110139216   After:B114262815  **51,53**
+Routine Name: ONCCSRS
+    Before: B36593567   After: B36525274  **43,46,48,51,53**
+Routine Name: ONCEDIT
+    Before: B92473708   After: B90474447  **27,28,34,36,39,42,43,45,46,
+                                           47,49,50,51,52,53**
+Routine Name: ONCGENED
+    Before: B21942419   After: B21951578  **47,48,49,50,51,53**
+Routine Name: ONCLNG
+    Before: B16826450   After: B16808865  **46,52,53**
+Routine Name: ONCMPH
+    Before:  B1661060   After:  B2009397  **47,49,53**
+Routine Name: ONCNTX
+    Before: B86527795   After: B87537325  **13,15,16,19,22,25,26,27,32,
+                                           33,34,36,37,38,39,41,42,43,44,
+                                           45,46,47,49,51,53**
+Routine Name: ONCOAIC
+    Before: B11700168   After: B11789159  **1,24,25,27,32,42,44,45,51,53**
+Routine Name: ONCOAIM
+    Before: B21968816   After: B22101895  **1,5,6,25,27,36,37,44,45,46,51,53**
+Routine Name: ONCOAIP
+    Before:B101300916   After:B102640886  **1,5,6,7,11,13,15,16,18,19,
+                                           22,24,27,28,32,33,34,35,36,37,
+                                           38,39,40,42,43,44,45,46,47,48,
+                                           49,50,51,52,53**
+Routine Name: ONCOCFL
+    Before:  B2951203   After:  B4012582  **25,26,29,43,44,53**
+Routine Name: ONCOCFL1
+    Before: B53522627   After: B51225377  **25,26,27,28,29,32,33,43,44,
+                                           46,49,51,53**
+Routine Name: ONCOCFP
+    Before: B45439806   After: B49907269  **22,23,25,26,27,28,29,34,43,
+                                           46,49,52,53**
+Routine Name: ONCOCFR
+    Before: B27939122   After: B29802331  **13,24,25,26,27,34,37,39,46,50,53**
+Routine Name: ONCOCOM
+    Before: B45996797   After: B52166923  **1,6,11,12,13,14,16,17,19,25,
+                                           36,42,43,44,46,47,48,51,53**
+Routine Name: ONCODIS
+    Before:   B778292   After:   B778332  **6,7,9,10,11,12,13,14,15,16,
+                                           17,18,19,20,21,22,23,24,25,26,
+                                           27,28,29,30,31,32,33,34,35,36,
+                                           37,38,39,40,41,42,43,44,45,46,
+                                           47,48,49,50,51,52,53**
+Routine Name: ONCODSP
+    Before: B46334292   After: B47131458  **1,5,6,13,18,22,23,25,26,39,
+                                           40,44,48,51,53**
+Routine Name: ONCOEDC
+    Before: B21946157   After: B22606428  **6,7,13,27,36,41,47,48,49,51,53**
+Routine Name: ONCOPA1
+    Before: B57148361   After: B57218127  **13,15,16,18,28,33,34,36,40,
+                                           41,42,43,44,45,46,47,48,49,50,
+                                           51,52,53**
+Routine Name: ONCOPA2
+    Before: B41746526   After: B42413552  **13,15,19,22,27,34,36,37,42,
+                                           44,45,46,49,50,51,53**
+Routine Name: ONCOPA3A
+    Before: B28319379   After: B27991276  **15,17,25,26,44,50,51,52,53**
+Routine Name: ONCOPRT
+    Before:B140768231   After:B139700452  **24,25,26,27,36,50,51,52,53**
+Routine Name: ONCOTN
+    Before:B115804133   After:B117634895  **1,3,6,7,11,15,19,22,25,28,
+                                           29,35,36,37,41,42,43,44,46,47,
+                                           49,50,51,52,53**
+Routine Name: ONCOTNM
+    Before:B129865304   After:B135670314  **1,6,15,22,25,28,30,33,35,36,
+                                           41,42,43,51,52,53**
+Routine Name: ONCOTNO
+    Before: B19193207   After: B21376640  **1,6,7,11,15,27,32,35,47,49,
+                                           50,51,52,53**
+Routine Name: ONCOUTC
+    Before: B16183520   After: B13598286  **5,24,25,47,49,53**
+Routine Name: ONCPCI
+    Before: B23251445   After: B23262004  **15,19,24,26,27,28,33,35,36,
+                                           42,43,44,45,46,47,49,51,53**
+Routine Name: ONCPCS
+    Before: B12985977   After: B13466537  **40,48,51,53**
+Routine Name: ONCPRE53
+    Before:       n/a   After:   B122157  **53**
+Routine Name: ONCPS53A
+    Before:       n/a   After:B169093757  **53**
+Routine Name: ONCPS53B
+    Before:       n/a   After:B159998399  **53**
+Routine Name: ONCPS53C
+    Before:       n/a   After:B149245653  **53**
+Routine Name: ONCPST53
+    Before:       n/a   After:  B2057318  **53**
+Routine Name: ONCRPC
+    Before:       n/a   After: B14695423  **53**
+Routine Name: ONCSG3
+    Before: B66480576   After: B69938670  **35,51,53**
+Routine Name: ONCSG4
+    Before: B79131484   After: B79706344  **35,51,52,53**
+Routine Name: ONCSUBS
+    Before:  B5258902   After:  B5242717  **51,52,53**
+Routine Name: ONCTNMC
+    Before:  B9268516   After:  B9628869  **46,49,53**
+ 
+Routine list of preceding patches: 52
+
+=============================================================================
+User Information:
+Entered By  : BIELO,GARY                    Date Entered  : MAR 21, 2011
+Completed By: BERRY,LINDA                   Date Completed: SEP 01, 2011
+Released By : CONSENTINO,ALBERT             Date Released : SEP 01, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

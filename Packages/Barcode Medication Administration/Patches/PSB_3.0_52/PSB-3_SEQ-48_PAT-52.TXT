@@ -1,0 +1,195 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 05/16/11 at 14:30
+=============================================================================
+Run Date: DEC 13, 2011                     Designation: PSB*3*52
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #48                      Status: Released
+                  Compliance Date: JAN 13, 2012
+=============================================================================
+
+Associated patches: (v)PSB*3*28    <<= must be installed BEFORE `PSB*3*52'
+                    (v)PSB*3*33    <<= must be installed BEFORE `PSB*3*52'
+                    (v)PSB*3*56    <<= must be installed BEFORE `PSB*3*52'
+
+Subject: UNABLE TO SCAN ERROR, INCORRECT MISSED MED REPORT, ERROR MESSAGE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 4 issues:
+  
+ 1.     An error occurs when running the BCMA (Bar Code Medication 
+        Administration) Unable to Scan Detailed report, causing BCMA to
+        shut down.
+ 2.     The Missed Medications Report is displaying invalid Start and
+        Stop Date/Times for One Time orders.
+ 3.     The Missed Medications Report is displaying an invalid comment and
+        status for a given medication.
+ 4.     The BCMA "Filing Transaction MEDPASS" error message does not 
+        indicate what is causing the error.
+  
+  
+ Associated NSR(s):
+ ------------------
+ N/A
+   
+  
+ Associated Remedy ticket(s):
+ ----------------------------
+ 1. HD0000000321137 - Unable to Run Detailed Report  Error in PSBOSF
+     duplicates: HD00000000321162
+                 HD00000000321944
+                 HD00000000337504
+ 2. HD0000000410010 - Incorrect start and stop date/time for one-time meds
+ 3. HD0000000455224 - Comment associated to multiple patients in missing med
+                      report
+     duplicates: HD0000000485860
+ 4. HD0000000353145 - Requesting correction to BCMA error message display
+   
+   
+ PARTICIPATING TEST SITES:
+ -------------------------
+ VA Gulf Coast Veterans HCS - Biloxi
+ Oklahoma City VAMC
+ VA Western NY HCS - Syracuse
+  
+  
+ REMEDY OVERVIEW
+ ---------------
+   
+ 1. HD0000000321137 - Unable to Run Detailed Report  Error in PSBOSF
+    
+ Problem:
+ --------
+ When attempting to run the "Unable to Scan Detailed Report", the code 
+ attempts to store a large amount of information in a local array, causing an 
+ RPC Broker Error.
+  
+ Resolution:
+ -----------
+ Routine PSBOSF was modified to store Report Information in a Temporary Global 
+ instead of an Array, hence eliminating the broker error.
+  
+  
+ 2. HD0000000410010 - Incorrect start and stop date/time for one-time meds
+  
+ Problem: 
+ --------
+ When the "Missed Medications" report is run for a Ward which contains two
+ patients with the same PHARMACY PATIENT (#55) UNIT DOSE (#.06) IEN (INTERNAL
+ ENTRY NUMBER), and a schedule type of One-Time, the same start and stop 
+ times will display for both orders on the report, even though they should be
+ different.
+  
+ Resolution:
+ -----------
+ Routine PSBOMM was modified to include the Patient DFN (Data File 
+ Number) in the PSBSTXT and PSBSTXP arrays so the start and stop date/time
+ will not be overwritten for patients with the same order number.
+  
+ 3. HD000000455224 - Comment associated to multiple patients in
+                         missing med report
+  
+ Patient Safety Issue:
+ ---------------------
+ PSPO #1946
+  
+ Problem:
+ --------
+ When the "Missed Medications" report is run for a Ward which contains two
+ patients with the same PHARMACY PATIENT (#55) UNIT DOSE (#.06) IEN,
+ multiple errors will occur on the report if one med is marked Held with a 
+ comment entered, and the other is marked given.
+  
+ Resolution:
+ -----------
+ Routine PSBOMM was modified to include the Patient DFN in the PSBG array so
+ the Admin Status and Comment will not be copied to a patient with the
+ same PHARMACY PATIENT (#55) UNIT DOSE (#.06) IEN.
+      
+ 4. HD000000353145 - Requesting correction to BCMA error message display
+  
+ Problem:
+ --------
+ The Error Message "Error(s) Filing Transactions MEDPASS" is not helpful to
+ the end user.
+  
+ Resolution:
+ -----------
+ Routine PSBML was modified to add detail to the error message including
+ the type of error that occurred, and the field and file names in which the
+ Error occurred.  
+  
+ Installation Instructions:
+ ==========================
+   
+    *************************** NOTE ****************************
+    *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS      *
+    *  AN EDITED ERROR WILL OCCUR.                              *
+    *  The patch should be installed when NO BCMA Client        *
+    *  users are on the system.                                 *
+    * ***********************************************************
+   
+ Installation will take less than 1 minute.
+   
+ Suggested time to install: Non-peak requirement hours
+   
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+ 2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+ 3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSB*3.0*52):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package PSB*3*52.
+   
+ 5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBML
+    Before: B81177596   After: B89675982  **6,3,4,9,11,13,25,45,33,52**
+Routine Name: PSBOMM
+    Before: B87016727   After: B93407461  **26,32,56,52**
+Routine Name: PSBOSF
+    Before:B209435927   After:B212704733  **28,52**
+ 
+Routine list of preceding patches: 28, 33, 56
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : SEP 18, 2009
+Completed By: LANG,MICKEY                   Date Completed: NOV 15, 2011
+Released By : LYTTLE,KIM M                  Date Released : DEC 13, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

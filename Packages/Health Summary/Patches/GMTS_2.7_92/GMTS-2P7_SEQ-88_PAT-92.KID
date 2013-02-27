@@ -1,0 +1,1086 @@
+Released GMTS*2.7*92 SEQ #88
+Extracted from mail message
+**KIDS**:GMTS*2.7*92^
+
+**INSTALL NAME**
+GMTS*2.7*92
+"BLD",6982,0)
+GMTS*2.7*92^HEALTH SUMMARY^0^3100413^y
+"BLD",6982,1,0)
+^^78^78^3100406^
+"BLD",6982,1,1,0)
+Patches PSO*7*316 and GMTS*2.7*92 correct issues reported with the 
+"BLD",6982,1,2,0)
+Tool #2: Medication Worksheet. The Health Summary patch GMTS*2.7*92
+"BLD",6982,1,3,0)
+will require patch PSO*7*316 and will create a national entry in the
+"BLD",6982,1,4,0)
+HEALTH SUMMARY COMPONENT file (#142.1) for Tool #2: Medication Worksheet.
+"BLD",6982,1,5,0)
+ 
+"BLD",6982,1,6,0)
+ 
+"BLD",6982,1,7,0)
+1.  Current standards for patient privacy and confidentiality were not 
+"BLD",6982,1,8,0)
+being met within the report.
+"BLD",6982,1,9,0)
+ 
+"BLD",6982,1,10,0)
+Problem:
+"BLD",6982,1,11,0)
+--------
+"BLD",6982,1,12,0)
+The report was hard-coded to display a patient's last four digits of the 
+"BLD",6982,1,13,0)
+SSN in the body of the report.
+"BLD",6982,1,14,0)
+ 
+"BLD",6982,1,15,0)
+Resolution:
+"BLD",6982,1,16,0)
+-----------
+"BLD",6982,1,17,0)
+Removed the programming that displayed the last four digits of patient 
+"BLD",6982,1,18,0)
+SSN.  Additionally, the release of health summary patch GMTS*2.7*85 now
+"BLD",6982,1,19,0)
+permits the removal of the patient SSN from the health summary overall
+"BLD",6982,1,20,0)
+header.  The change in this patch now permits the worksheet to be
+"BLD",6982,1,21,0)
+printed with no SSN references remaining.
+"BLD",6982,1,22,0)
+ 
+"BLD",6982,1,23,0)
+2.  Wrong pharmacy division name printing on the report header.
+"BLD",6982,1,24,0)
+ 
+"BLD",6982,1,25,0)
+Problem:
+"BLD",6982,1,26,0)
+--------
+"BLD",6982,1,27,0)
+At integrated sites, the name of the primary facility would print on the 
+"BLD",6982,1,28,0)
+report even when generated from the legacy facility.
+"BLD",6982,1,29,0)
+ 
+"BLD",6982,1,30,0)
+Resolution:
+"BLD",6982,1,31,0)
+-----------
+"BLD",6982,1,32,0)
+The internal programming that selects the name of the pharmacy
+"BLD",6982,1,33,0)
+division shown at the top of the worksheet and the pharmacy phone
+"BLD",6982,1,34,0)
+number associated with it has been revised. 
+"BLD",6982,1,35,0)
+ 
+"BLD",6982,1,36,0)
+3.  Medication Worksheet does not distinguish ACTIVE and HOLD status 
+"BLD",6982,1,37,0)
+prescriptions.
+"BLD",6982,1,38,0)
+ 
+"BLD",6982,1,39,0)
+Problem:
+"BLD",6982,1,40,0)
+--------
+"BLD",6982,1,41,0)
+In the initial release of Medication Reconciliation software with 
+"BLD",6982,1,42,0)
+PSO*7*294, one of the known issues was that a prescription with status of 
+"BLD",6982,1,43,0)
+HOLD was not clearly identified as such in the Medication Worksheet.
+"BLD",6982,1,44,0)
+ 
+"BLD",6982,1,45,0)
+Resolution:
+"BLD",6982,1,46,0)
+-----------
+"BLD",6982,1,47,0)
+A status indicator is added for prescriptions with status of HOLD, 
+"BLD",6982,1,48,0)
+similar to the existing indicator for PENDING prescriptions in that 
+"BLD",6982,1,49,0)
+report.
+"BLD",6982,1,50,0)
+ 
+"BLD",6982,1,51,0)
+4.  The initial release of Medication Reconciliation tools with patch 
+"BLD",6982,1,52,0)
+PSO*7*294 required manual creation of Health Summary components.
+"BLD",6982,1,53,0)
+ 
+"BLD",6982,1,54,0)
+Problem:
+"BLD",6982,1,55,0)
+--------
+"BLD",6982,1,56,0)
+There is no guarantee that all VA facilities set up the components 
+"BLD",6982,1,57,0)
+exactly as indicated in the Medication Reconciliation Implementation 
+"BLD",6982,1,58,0)
+Guide.
+"BLD",6982,1,59,0)
+ 
+"BLD",6982,1,60,0)
+Resolution:
+"BLD",6982,1,61,0)
+-----------
+"BLD",6982,1,62,0)
+This patch introduces the following file entries with nationally 
+"BLD",6982,1,63,0)
+standardized internal entry numbers (IENs).
+"BLD",6982,1,64,0)
+ 
+"BLD",6982,1,65,0)
+        HEALTH SUMMARY COMPONENT file (#142.1)
+"BLD",6982,1,66,0)
+        ======================================
+"BLD",6982,1,67,0)
+        Entry #252 - Medication Worksheet (Tool #2)
+"BLD",6982,1,68,0)
+ 
+"BLD",6982,1,69,0)
+        HEALTH SUMMARY TYPE file (#141)
+"BLD",6982,1,70,0)
+        ===============================
+"BLD",6982,1,71,0)
+        The above-listed Health Summary Component (IEN #252) will be added
+"BLD",6982,1,72,0)
+        to the existing GMTS HS ADHOC OPTION Health Summary type
+"BLD",6982,1,73,0)
+ 
+"BLD",6982,1,74,0)
+        VAQ - DATA SEGMENT file (#394.71)
+"BLD",6982,1,75,0)
+        =================================
+"BLD",6982,1,76,0)
+        This file contains an entry corresponding to the above-listed
+"BLD",6982,1,77,0)
+        Health Summary Component (IEN #252) that will be listed as
+"BLD",6982,1,78,0)
+        Medication Worksheet (tool #2). 
+"BLD",6982,4,0)
+^9.64PA^^
+"BLD",6982,6.3)
+4
+"BLD",6982,"INIT")
+CI^GMTSP92I
+"BLD",6982,"KRN",0)
+^9.67PA^779.2^20
+"BLD",6982,"KRN",.4,0)
+.4
+"BLD",6982,"KRN",.401,0)
+.401
+"BLD",6982,"KRN",.402,0)
+.402
+"BLD",6982,"KRN",.403,0)
+.403
+"BLD",6982,"KRN",.5,0)
+.5
+"BLD",6982,"KRN",.84,0)
+.84
+"BLD",6982,"KRN",3.6,0)
+3.6
+"BLD",6982,"KRN",3.8,0)
+3.8
+"BLD",6982,"KRN",9.2,0)
+9.2
+"BLD",6982,"KRN",9.8,0)
+9.8
+"BLD",6982,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",6982,"KRN",9.8,"NM",1,0)
+GMTSPST2^^0^B66239035
+"BLD",6982,"KRN",9.8,"NM",2,0)
+GMTSP92I^^0^B7403484
+"BLD",6982,"KRN",9.8,"NM","B","GMTSP92I",2)
+
+"BLD",6982,"KRN",9.8,"NM","B","GMTSPST2",1)
+
+"BLD",6982,"KRN",19,0)
+19
+"BLD",6982,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",6982,"KRN",19.1,0)
+19.1
+"BLD",6982,"KRN",101,0)
+101
+"BLD",6982,"KRN",409.61,0)
+409.61
+"BLD",6982,"KRN",771,0)
+771
+"BLD",6982,"KRN",779.2,0)
+779.2
+"BLD",6982,"KRN",870,0)
+870
+"BLD",6982,"KRN",8989.51,0)
+8989.51
+"BLD",6982,"KRN",8989.52,0)
+8989.52
+"BLD",6982,"KRN",8994,0)
+8994
+"BLD",6982,"KRN","B",.4,.4)
+
+"BLD",6982,"KRN","B",.401,.401)
+
+"BLD",6982,"KRN","B",.402,.402)
+
+"BLD",6982,"KRN","B",.403,.403)
+
+"BLD",6982,"KRN","B",.5,.5)
+
+"BLD",6982,"KRN","B",.84,.84)
+
+"BLD",6982,"KRN","B",3.6,3.6)
+
+"BLD",6982,"KRN","B",3.8,3.8)
+
+"BLD",6982,"KRN","B",9.2,9.2)
+
+"BLD",6982,"KRN","B",9.8,9.8)
+
+"BLD",6982,"KRN","B",19,19)
+
+"BLD",6982,"KRN","B",19.1,19.1)
+
+"BLD",6982,"KRN","B",101,101)
+
+"BLD",6982,"KRN","B",409.61,409.61)
+
+"BLD",6982,"KRN","B",771,771)
+
+"BLD",6982,"KRN","B",779.2,779.2)
+
+"BLD",6982,"KRN","B",870,870)
+
+"BLD",6982,"KRN","B",8989.51,8989.51)
+
+"BLD",6982,"KRN","B",8989.52,8989.52)
+
+"BLD",6982,"KRN","B",8994,8994)
+
+"BLD",6982,"QUES",0)
+^9.62^^
+"BLD",6982,"REQB",0)
+^9.611^3^3
+"BLD",6982,"REQB",1,0)
+PSO*7.0*316^2
+"BLD",6982,"REQB",2,0)
+GMTS*2.7*56^2
+"BLD",6982,"REQB",3,0)
+GMTS*2.7*37^2
+"BLD",6982,"REQB","B","GMTS*2.7*37",3)
+
+"BLD",6982,"REQB","B","GMTS*2.7*56",2)
+
+"BLD",6982,"REQB","B","PSO*7.0*316",1)
+
+"INIT")
+CI^GMTSP92I
+"MBREQ")
+0
+"PKG",160,-1)
+1^1
+"PKG",160,0)
+HEALTH SUMMARY^GMTS^Integrated Health Summary Tools
+"PKG",160,22,0)
+^9.49I^1^1
+"PKG",160,22,1,0)
+2.7^2951020^2951219
+"PKG",160,22,1,"PAH",1,0)
+92^3100413
+"PKG",160,22,1,"PAH",1,1,0)
+^^78^78^3100413
+"PKG",160,22,1,"PAH",1,1,1,0)
+Patches PSO*7*316 and GMTS*2.7*92 correct issues reported with the 
+"PKG",160,22,1,"PAH",1,1,2,0)
+Tool #2: Medication Worksheet. The Health Summary patch GMTS*2.7*92
+"PKG",160,22,1,"PAH",1,1,3,0)
+will require patch PSO*7*316 and will create a national entry in the
+"PKG",160,22,1,"PAH",1,1,4,0)
+HEALTH SUMMARY COMPONENT file (#142.1) for Tool #2: Medication Worksheet.
+"PKG",160,22,1,"PAH",1,1,5,0)
+ 
+"PKG",160,22,1,"PAH",1,1,6,0)
+ 
+"PKG",160,22,1,"PAH",1,1,7,0)
+1.  Current standards for patient privacy and confidentiality were not 
+"PKG",160,22,1,"PAH",1,1,8,0)
+being met within the report.
+"PKG",160,22,1,"PAH",1,1,9,0)
+ 
+"PKG",160,22,1,"PAH",1,1,10,0)
+Problem:
+"PKG",160,22,1,"PAH",1,1,11,0)
+--------
+"PKG",160,22,1,"PAH",1,1,12,0)
+The report was hard-coded to display a patient's last four digits of the 
+"PKG",160,22,1,"PAH",1,1,13,0)
+SSN in the body of the report.
+"PKG",160,22,1,"PAH",1,1,14,0)
+ 
+"PKG",160,22,1,"PAH",1,1,15,0)
+Resolution:
+"PKG",160,22,1,"PAH",1,1,16,0)
+-----------
+"PKG",160,22,1,"PAH",1,1,17,0)
+Removed the programming that displayed the last four digits of patient 
+"PKG",160,22,1,"PAH",1,1,18,0)
+SSN.  Additionally, the release of health summary patch GMTS*2.7*85 now
+"PKG",160,22,1,"PAH",1,1,19,0)
+permits the removal of the patient SSN from the health summary overall
+"PKG",160,22,1,"PAH",1,1,20,0)
+header.  The change in this patch now permits the worksheet to be
+"PKG",160,22,1,"PAH",1,1,21,0)
+printed with no SSN references remaining.
+"PKG",160,22,1,"PAH",1,1,22,0)
+ 
+"PKG",160,22,1,"PAH",1,1,23,0)
+2.  Wrong pharmacy division name printing on the report header.
+"PKG",160,22,1,"PAH",1,1,24,0)
+ 
+"PKG",160,22,1,"PAH",1,1,25,0)
+Problem:
+"PKG",160,22,1,"PAH",1,1,26,0)
+--------
+"PKG",160,22,1,"PAH",1,1,27,0)
+At integrated sites, the name of the primary facility would print on the 
+"PKG",160,22,1,"PAH",1,1,28,0)
+report even when generated from the legacy facility.
+"PKG",160,22,1,"PAH",1,1,29,0)
+ 
+"PKG",160,22,1,"PAH",1,1,30,0)
+Resolution:
+"PKG",160,22,1,"PAH",1,1,31,0)
+-----------
+"PKG",160,22,1,"PAH",1,1,32,0)
+The internal programming that selects the name of the pharmacy
+"PKG",160,22,1,"PAH",1,1,33,0)
+division shown at the top of the worksheet and the pharmacy phone
+"PKG",160,22,1,"PAH",1,1,34,0)
+number associated with it has been revised. 
+"PKG",160,22,1,"PAH",1,1,35,0)
+ 
+"PKG",160,22,1,"PAH",1,1,36,0)
+3.  Medication Worksheet does not distinguish ACTIVE and HOLD status 
+"PKG",160,22,1,"PAH",1,1,37,0)
+prescriptions.
+"PKG",160,22,1,"PAH",1,1,38,0)
+ 
+"PKG",160,22,1,"PAH",1,1,39,0)
+Problem:
+"PKG",160,22,1,"PAH",1,1,40,0)
+--------
+"PKG",160,22,1,"PAH",1,1,41,0)
+In the initial release of Medication Reconciliation software with 
+"PKG",160,22,1,"PAH",1,1,42,0)
+PSO*7*294, one of the known issues was that a prescription with status of 
+"PKG",160,22,1,"PAH",1,1,43,0)
+HOLD was not clearly identified as such in the Medication Worksheet.
+"PKG",160,22,1,"PAH",1,1,44,0)
+ 
+"PKG",160,22,1,"PAH",1,1,45,0)
+Resolution:
+"PKG",160,22,1,"PAH",1,1,46,0)
+-----------
+"PKG",160,22,1,"PAH",1,1,47,0)
+A status indicator is added for prescriptions with status of HOLD, 
+"PKG",160,22,1,"PAH",1,1,48,0)
+similar to the existing indicator for PENDING prescriptions in that 
+"PKG",160,22,1,"PAH",1,1,49,0)
+report.
+"PKG",160,22,1,"PAH",1,1,50,0)
+ 
+"PKG",160,22,1,"PAH",1,1,51,0)
+4.  The initial release of Medication Reconciliation tools with patch 
+"PKG",160,22,1,"PAH",1,1,52,0)
+PSO*7*294 required manual creation of Health Summary components.
+"PKG",160,22,1,"PAH",1,1,53,0)
+ 
+"PKG",160,22,1,"PAH",1,1,54,0)
+Problem:
+"PKG",160,22,1,"PAH",1,1,55,0)
+--------
+"PKG",160,22,1,"PAH",1,1,56,0)
+There is no guarantee that all VA facilities set up the components 
+"PKG",160,22,1,"PAH",1,1,57,0)
+exactly as indicated in the Medication Reconciliation Implementation 
+"PKG",160,22,1,"PAH",1,1,58,0)
+Guide.
+"PKG",160,22,1,"PAH",1,1,59,0)
+ 
+"PKG",160,22,1,"PAH",1,1,60,0)
+Resolution:
+"PKG",160,22,1,"PAH",1,1,61,0)
+-----------
+"PKG",160,22,1,"PAH",1,1,62,0)
+This patch introduces the following file entries with nationally 
+"PKG",160,22,1,"PAH",1,1,63,0)
+standardized internal entry numbers (IENs).
+"PKG",160,22,1,"PAH",1,1,64,0)
+ 
+"PKG",160,22,1,"PAH",1,1,65,0)
+        HEALTH SUMMARY COMPONENT file (#142.1)
+"PKG",160,22,1,"PAH",1,1,66,0)
+        ======================================
+"PKG",160,22,1,"PAH",1,1,67,0)
+        Entry #252 - Medication Worksheet (Tool #2)
+"PKG",160,22,1,"PAH",1,1,68,0)
+ 
+"PKG",160,22,1,"PAH",1,1,69,0)
+        HEALTH SUMMARY TYPE file (#141)
+"PKG",160,22,1,"PAH",1,1,70,0)
+        ===============================
+"PKG",160,22,1,"PAH",1,1,71,0)
+        The above-listed Health Summary Component (IEN #252) will be added
+"PKG",160,22,1,"PAH",1,1,72,0)
+        to the existing GMTS HS ADHOC OPTION Health Summary type
+"PKG",160,22,1,"PAH",1,1,73,0)
+ 
+"PKG",160,22,1,"PAH",1,1,74,0)
+        VAQ - DATA SEGMENT file (#394.71)
+"PKG",160,22,1,"PAH",1,1,75,0)
+        =================================
+"PKG",160,22,1,"PAH",1,1,76,0)
+        This file contains an entry corresponding to the above-listed
+"PKG",160,22,1,"PAH",1,1,77,0)
+        Health Summary Component (IEN #252) that will be listed as
+"PKG",160,22,1,"PAH",1,1,78,0)
+        Medication Worksheet (tool #2). 
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","GMTSP92I")
+0^2^B7403484^n/a
+"RTN","GMTSP92I",1,0)
+GMTSP92I ;BIR/RMS - Post Install GMTS*2.7*92    ; 4/6/10 11:30am
+"RTN","GMTSP92I",2,0)
+ ;;2.7;Health Summary;**92**;Oct 20, 1995;Build 4
+"RTN","GMTSP92I",3,0)
+ Q
+"RTN","GMTSP92I",4,0)
+CI ; Component Install
+"RTN","GMTSP92I",5,0)
+ N GMTSIN,GMTSLIM,GMTSINST,GMTSTL,GMTSINST,GMTSTOT,GMTSBLD,GMTSCPS,GMTSCP,GMTSCI
+"RTN","GMTSP92I",6,0)
+ S GMTSCPS="MRT2"
+"RTN","GMTSP92I",7,0)
+ F GMTSCI=1:1 Q:'$L($P(GMTSCPS,";",GMTSCI))  D
+"RTN","GMTSP92I",8,0)
+ . S GMTSCP=$P(GMTSCPS,";",GMTSCI) K GMTSIN
+"RTN","GMTSP92I",9,0)
+ . D ARRAY Q:'$D(GMTSIN)
+"RTN","GMTSP92I",10,0)
+ . I $L($G(GMTSIN("TIM"))),+($G(GMTSIN(0)))>0 S GMTSLIM(+($G(GMTSIN(0))),"TIM")=$G(GMTSIN("TIM"))
+"RTN","GMTSP92I",11,0)
+ . I $L($G(GMTSIN("OCC"))),+($G(GMTSIN(0)))>0 S GMTSLIM(+($G(GMTSIN(0))),"OCC")=$G(GMTSIN("OCC"))
+"RTN","GMTSP92I",12,0)
+ . S GMTSINST=$$ADD^GMTSXPD1(.GMTSIN),GMTSTOT=+($G(GMTSTOT))+($G(GMTSINST))
+"RTN","GMTSP92I",13,0)
+ ; Rebuild Ad Hoc Health Summary Type
+"RTN","GMTSP92I",14,0)
+ D:+($G(GMTSTOT))>0 BUILD^GMTSXPD3
+"RTN","GMTSP92I",15,0)
+ D LIM
+"RTN","GMTSP92I",16,0)
+ I +$$ROK("GMTSXPS1")>0 D
+"RTN","GMTSP92I",17,0)
+ . N GMTSHORT S GMTSHORT=1,GMTSINST="",GMTSBLD="GMTS*2.7*92" D SEND^GMTSXPS1
+"RTN","GMTSP92I",18,0)
+ Q
+"RTN","GMTSP92I",19,0)
+ARRAY ; Build Array
+"RTN","GMTSP92I",20,0)
+ K GMTSIN N GMTSI,GMTSTXT,GMTSEX,GMTSFLD,GMTSUB,GMTSVAL,GMTSPDX S GMTSPDX=1,GMTSCP=$G(GMTSCP) Q:'$L(GMTSCP)
+"RTN","GMTSP92I",21,0)
+ F GMTSI=1:1 D  Q:'$L(GMTSTXT)
+"RTN","GMTSP92I",22,0)
+ . S GMTSTXT="",GMTSEX="S GMTSTXT=$T("_GMTSCP_"+"_GMTSI_")" X GMTSEX S:$L(GMTSTXT,";")'>3 GMTSTXT="" Q:'$L(GMTSTXT)
+"RTN","GMTSP92I",23,0)
+ . S GMTSFLD=$P(GMTSTXT,";",2),GMTSUB=$P(GMTSTXT,";",3),GMTSVAL=$P(GMTSTXT,";",4)
+"RTN","GMTSP92I",24,0)
+ . S:$E(GMTSFLD,1)=1&(+GMTSFLD<2) GMTSVAL=$P(GMTSTXT,";",4,5)
+"RTN","GMTSP92I",25,0)
+ . S:$E(GMTSFLD,1)=" "!('$L(GMTSFLD)) GMTSTXT="" Q:GMTSTXT=""
+"RTN","GMTSP92I",26,0)
+ . S:$L(GMTSFLD)&('$L(GMTSUB)) GMTSIN(GMTSFLD)=GMTSVAL Q:$L(GMTSFLD)&('$L(GMTSUB))  S:$L(GMTSFLD)&($L(GMTSUB)) GMTSIN(GMTSFLD,GMTSUB)=GMTSVAL
+"RTN","GMTSP92I",27,0)
+ . S:$G(GMTSFLD)=7&(+($G(GMTSUB))>0) GMTSPDX=0
+"RTN","GMTSP92I",28,0)
+ K:+($G(GMTSPDX))=0 GMTSIN("PDX")
+"RTN","GMTSP92I",29,0)
+ Q
+"RTN","GMTSP92I",30,0)
+LIM ; Limits
+"RTN","GMTSP92I",31,0)
+ N GMTSI,GMTST,GMTSO,GMTSA S GMTSI=0 F  S GMTSI=$O(GMTSLIM(GMTSI)) Q:+GMTSI=0  D
+"RTN","GMTSP92I",32,0)
+ . S GMTSA=$P($G(^GMT(142.1,+($G(GMTSI)),0)),"^",3),GMTST=$G(GMTSLIM(+GMTSI,"TIM")) S:'$L(GMTST) GMTST=$S(GMTSA="Y ":"1Y ",1:"")
+"RTN","GMTSP92I",33,0)
+ . S GMTSA=$P($G(^GMT(142.1,+($G(GMTSI)),0)),"^",5),GMTSO=$G(GMTSLIM(+GMTSI,"OCC")) S:'$L(GMTSO) GMTSO=$S(GMTSA="Y ":"10 ",1:"")
+"RTN","GMTSP92I",34,0)
+ . D TO^GMTSXPD3(GMTSI,GMTST,GMTSO)
+"RTN","GMTSP92I",35,0)
+ Q
+"RTN","GMTSP92I",36,0)
+ROK(X) ; Routine OK
+"RTN","GMTSP92I",37,0)
+ S X=$G(X) Q:'$L(X) 0 N GMTSEX,GMTSTXT S GMTSEX="S GMTSTXT=$T(+1^"_X_")" X GMTSEX
+"RTN","GMTSP92I",38,0)
+ Q:'$L(GMTSTXT) 0  Q 1
+"RTN","GMTSP92I",39,0)
+ ;                
+"RTN","GMTSP92I",40,0)
+MRT2 ; Medication Worksheet Component Data
+"RTN","GMTSP92I",41,0)
+ ;0;;252
+"RTN","GMTSP92I",42,0)
+ ;.01;;Medication Worksheet (Tool #2)
+"RTN","GMTSP92I",43,0)
+ ;1;;TOOL2;GMTSPST2
+"RTN","GMTSP92I",44,0)
+ ;1.1;;0
+"RTN","GMTSP92I",45,0)
+ ;2;;
+"RTN","GMTSP92I",46,0)
+ ;3;;MRT2
+"RTN","GMTSP92I",47,0)
+ ;3.5;;3
+"RTN","GMTSP92I",48,0)
+ ;3.5;1;This component displays a list of the patient's active and pending
+"RTN","GMTSP92I",49,0)
+ ;3.5;2;outpatient prescriptions in a patient-friendly worksheet format with space
+"RTN","GMTSP92I",50,0)
+ ;3.5;3;intended for written notes by the patient, provider or caregiver.
+"RTN","GMTSP92I",51,0)
+ ;4;;
+"RTN","GMTSP92I",52,0)
+ ;5;;
+"RTN","GMTSP92I",53,0)
+ ;6;;
+"RTN","GMTSP92I",54,0)
+ ;7;;0
+"RTN","GMTSP92I",55,0)
+ ;8;;
+"RTN","GMTSP92I",56,0)
+ ;9;;Medication Worksheet
+"RTN","GMTSP92I",57,0)
+ ;10;;
+"RTN","GMTSP92I",58,0)
+ ;11;;
+"RTN","GMTSP92I",59,0)
+ ;12;;
+"RTN","GMTSP92I",60,0)
+ ;13;;
+"RTN","GMTSP92I",61,0)
+ ;14;;
+"RTN","GMTSP92I",62,0)
+ ;PDX;;1
+"RTN","GMTSP92I",63,0)
+ ;
+"RTN","GMTSP92I",64,0)
+ Q
+"RTN","GMTSP92I",65,0)
+ ;
+"RTN","GMTSPST2")
+0^1^B66239035^n/a
+"RTN","GMTSPST2",1,0)
+GMTSPST2 ;BIR/RMS - MED RECON TOOL #2 (MEDICATION WORKSHEET) ; 10/13/09 11:15am
+"RTN","GMTSPST2",2,0)
+ ;;2.7;Health Summary;**92**;Oct 20, 1995;Build 4
+"RTN","GMTSPST2",3,0)
+ ;
+"RTN","GMTSPST2",4,0)
+ ;Reference to COVER^ORWPS supported by DBIA 4926
+"RTN","GMTSPST2",5,0)
+ ;Reference to $$OI^ORX8 supported by DBIA 2467
+"RTN","GMTSPST2",6,0)
+ ;Reference to $$VALUE^ORCSAVE2 supported by DBIA 2747
+"RTN","GMTSPST2",7,0)
+ ;Reference to TEXT^ORQ12 supported by DBIA 4202
+"RTN","GMTSPST2",8,0)
+ ;
+"RTN","GMTSPST2",9,0)
+TOOL2 N DAYSEP,DRUGHDR1,DRUGHDR2,DRUGSEP,INSTSEP1,INSTSEP2
+"RTN","GMTSPST2",10,0)
+ N EMPTYLN,PRETYPE,SUPTYPE,PSOQPEND
+"RTN","GMTSPST2",11,0)
+ N BLNKLN,IDRUG,ISIG,ITYPE
+"RTN","GMTSPST2",12,0)
+ N NVA,PAGE,PGWIDTH,PGLENGTH,GMTS59
+"RTN","GMTSPST2",13,0)
+ N RXIEN,SIGCNT,SIGPOS,XPOS1,XPOS2,XPOS4
+"RTN","GMTSPST2",14,0)
+ N RPTDATE,SUPCNT,SUPDRUG,VADM
+"RTN","GMTSPST2",15,0)
+ S GMTS59=$$PSOSITE
+"RTN","GMTSPST2",16,0)
+ S PGWIDTH=IOM-5,PGLENGTH=IOSL-9
+"RTN","GMTSPST2",17,0)
+ Q:PGWIDTH<48  ;ensure that the IOM variable is wide enough
+"RTN","GMTSPST2",18,0)
+ S RPTDATE=$$FMTE^XLFDT($$NOW^XLFDT,"1D")
+"RTN","GMTSPST2",19,0)
+ S XPOS1=(PGWIDTH-26)\2  ;title
+"RTN","GMTSPST2",20,0)
+ S XPOS2=PGWIDTH-6       ;page number
+"RTN","GMTSPST2",21,0)
+ S XPOS4=(PGWIDTH-53)\2  ;refill info
+"RTN","GMTSPST2",22,0)
+ S $P(BLNKLN," ",PGWIDTH)=" "
+"RTN","GMTSPST2",23,0)
+ S EMPTYLN="!,""|"_$E(BLNKLN,1,PGWIDTH-2)_"|"""
+"RTN","GMTSPST2",24,0)
+ S DAYSEP="|       |       |       |       |"
+"RTN","GMTSPST2",25,0)
+ S DRUGHDR1="|                 |MORNING| NOON  |EVENING|BEDTIME|       COMMENTS"
+"RTN","GMTSPST2",26,0)
+ S DRUGHDR1=DRUGHDR1_$E(BLNKLN,$L(DRUGHDR1),PGWIDTH-2)_"|"
+"RTN","GMTSPST2",27,0)
+ S DRUGHDR2="|                 "_DAYSEP
+"RTN","GMTSPST2",28,0)
+ S DRUGHDR2=DRUGHDR2_$E(BLNKLN,$L(DRUGHDR2),PGWIDTH-2)_"|"
+"RTN","GMTSPST2",29,0)
+ S $P(DRUGSEP,"~",PGWIDTH-2)="~"
+"RTN","GMTSPST2",30,0)
+ S DRUGSEP="|"_DRUGSEP_"|"
+"RTN","GMTSPST2",31,0)
+ S $P(INSTSEP1,"-",PGWIDTH-2)="-"
+"RTN","GMTSPST2",32,0)
+ S INSTSEP1="|"_INSTSEP1_"|"
+"RTN","GMTSPST2",33,0)
+ S INSTSEP2="| UNITS PER DOSE: "_DAYSEP
+"RTN","GMTSPST2",34,0)
+ S INSTSEP2=INSTSEP2_$E(BLNKLN,$L(INSTSEP2),PGWIDTH-2)_"|"
+"RTN","GMTSPST2",35,0)
+ S PAGE=1
+"RTN","GMTSPST2",36,0)
+ D CKP^GMTSUP Q:$D(GMTSQIT)
+"RTN","GMTSPST2",37,0)
+ D HD,SHOW(DFN)
+"RTN","GMTSPST2",38,0)
+ Q
+"RTN","GMTSPST2",39,0)
+SHOW(DFN) ;
+"RTN","GMTSPST2",40,0)
+ N LIST,NVA
+"RTN","GMTSPST2",41,0)
+ D COVER^ORWPS(.LIST,DFN)
+"RTN","GMTSPST2",42,0)
+ D GETOPORD(.LIST)
+"RTN","GMTSPST2",43,0)
+ D GETRXDAT(.LIST)
+"RTN","GMTSPST2",44,0)
+ S SUPTYPE=0,PRETYPE="D"
+"RTN","GMTSPST2",45,0)
+ S ITYPE="@"
+"RTN","GMTSPST2",46,0)
+ F  S ITYPE=$O(LIST(ITYPE)) Q:ITYPE]"ZZZ"  Q:ITYPE=""  D
+"RTN","GMTSPST2",47,0)
+ . I PRETYPE'=ITYPE D
+"RTN","GMTSPST2",48,0)
+ . . W !,DRUGSEP
+"RTN","GMTSPST2",49,0)
+ . . W @EMPTYLN
+"RTN","GMTSPST2",50,0)
+ . . W !,"|","SUPPLY ITEMS:"_$E(BLNKLN,14,PGWIDTH-2)_"|"
+"RTN","GMTSPST2",51,0)
+ . . S PRETYPE=ITYPE
+"RTN","GMTSPST2",52,0)
+ . . I (ITYPE="S")&(SUPTYPE=0) D
+"RTN","GMTSPST2",53,0)
+ . . . S SUPTYPE=1,SUPCNT=0,SUPDRUG=""
+"RTN","GMTSPST2",54,0)
+ . . . F  S SUPDRUG=$O(LIST(ITYPE,SUPDRUG)) Q:SUPDRUG=""  D
+"RTN","GMTSPST2",55,0)
+ . . . . S SUPCNT=SUPCNT+1
+"RTN","GMTSPST2",56,0)
+ . . . I $Y>(PGLENGTH-SUPCNT) W !,DRUGSEP,@IOF D HD
+"RTN","GMTSPST2",57,0)
+ . S IDRUG=""
+"RTN","GMTSPST2",58,0)
+ . F  S IDRUG=$O(LIST(ITYPE,IDRUG)) Q:IDRUG=""  D
+"RTN","GMTSPST2",59,0)
+ . . S SIGCNT=0,SIGPOS=""
+"RTN","GMTSPST2",60,0)
+ . . F  S SIGPOS=$O(LIST(ITYPE,IDRUG,SIGPOS)) Q:SIGPOS=""  D
+"RTN","GMTSPST2",61,0)
+ . . . S SIGCNT=SIGCNT+1
+"RTN","GMTSPST2",62,0)
+ . . I $Y>(PGLENGTH-SIGCNT) W !,DRUGSEP,@IOF D HD
+"RTN","GMTSPST2",63,0)
+ . . W:'SUPTYPE !,DRUGSEP,@EMPTYLN
+"RTN","GMTSPST2",64,0)
+ . . W !,"|",IDRUG_$E(BLNKLN,$L(IDRUG),PGWIDTH-3)_"|"
+"RTN","GMTSPST2",65,0)
+ . . Q:SUPTYPE
+"RTN","GMTSPST2",66,0)
+ . . S ISIG=0
+"RTN","GMTSPST2",67,0)
+ . . F  S ISIG=$O(LIST(ITYPE,IDRUG,ISIG)) Q:ISIG<1  D
+"RTN","GMTSPST2",68,0)
+ . . . W !,"|     ",LIST(ITYPE,IDRUG,ISIG),$E(BLNKLN,$L(LIST(ITYPE,IDRUG,ISIG)),PGWIDTH-8),"|"
+"RTN","GMTSPST2",69,0)
+ . . W !,INSTSEP1,!,INSTSEP2
+"RTN","GMTSPST2",70,0)
+NVA ;
+"RTN","GMTSPST2",71,0)
+ I $D(NVA) D
+"RTN","GMTSPST2",72,0)
+ . N NVACNT,NVADRUG
+"RTN","GMTSPST2",73,0)
+ . W !,DRUGSEP
+"RTN","GMTSPST2",74,0)
+ . W @EMPTYLN
+"RTN","GMTSPST2",75,0)
+ . W !,"|","NON-VA Medications:"_$E(BLNKLN,20,PGWIDTH-2)_"|"
+"RTN","GMTSPST2",76,0)
+ . W @EMPTYLN
+"RTN","GMTSPST2",77,0)
+ . S NVACNT=0
+"RTN","GMTSPST2",78,0)
+ . S NVADRUG=""
+"RTN","GMTSPST2",79,0)
+ . F  S NVADRUG=$O(NVA(NVADRUG)) Q:NVADRUG=""  D
+"RTN","GMTSPST2",80,0)
+ . . S NVACNT=NVACNT+1
+"RTN","GMTSPST2",81,0)
+ . . I $Y>(PGLENGTH-NVACNT) W !,DRUGSEP,@IOF D HD
+"RTN","GMTSPST2",82,0)
+ . . W !,"|",NVADRUG_$E(BLNKLN,$L(NVADRUG),PGWIDTH-3)_"|"
+"RTN","GMTSPST2",83,0)
+ K NVACNT,NVADRUG
+"RTN","GMTSPST2",84,0)
+ W !,INSTSEP1
+"RTN","GMTSPST2",85,0)
+ D
+"RTN","GMTSPST2",86,0)
+ . Q:'$G(PSOQPEND)
+"RTN","GMTSPST2",87,0)
+ . W !!,"Any medication items listed as ""pending"" are those that have just been" D CKP^GMTSUP Q:$D(GMTSQIT)
+"RTN","GMTSPST2",88,0)
+ . W !,"written by your provider(s).  These medication orders will be reviewed" D CKP^GMTSUP Q:$D(GMTSQIT)
+"RTN","GMTSPST2",89,0)
+ . W !,"by your pharmacist, prior to the prescription(s) being dispensed.  When" D CKP^GMTSUP Q:$D(GMTSQIT)
+"RTN","GMTSPST2",90,0)
+ . W !,"you receive your new prescription(s), by mail or from the pharmacy window," D CKP^GMTSUP Q:$D(GMTSQIT)
+"RTN","GMTSPST2",91,0)
+ . W !,"be sure to follow the instructions on the prescription label.  If you" D CKP^GMTSUP Q:$D(GMTSQIT)
+"RTN","GMTSPST2",92,0)
+ . W !,"have any question about your medication, please call your provider or " D CKP^GMTSUP Q:$D(GMTSQIT)
+"RTN","GMTSPST2",93,0)
+ . W !,"your pharmacist." D CKP^GMTSUP Q:$D(GMTSQIT)
+"RTN","GMTSPST2",94,0)
+ Q
+"RTN","GMTSPST2",95,0)
+GETOPORD(ORDLIST) ;
+"RTN","GMTSPST2",96,0)
+ N LISTIEN,KILLORD
+"RTN","GMTSPST2",97,0)
+ S LISTIEN=0
+"RTN","GMTSPST2",98,0)
+ F  S LISTIEN=$O(ORDLIST(LISTIEN)) Q:LISTIEN<1  D
+"RTN","GMTSPST2",99,0)
+ . S KILLORD=$$IPORD(ORDLIST(LISTIEN))
+"RTN","GMTSPST2",100,0)
+ . I 'KILLORD S KILLORD=$$CKSTATUS(ORDLIST(LISTIEN))
+"RTN","GMTSPST2",101,0)
+ . K:KILLORD ORDLIST(LISTIEN)
+"RTN","GMTSPST2",102,0)
+ Q
+"RTN","GMTSPST2",103,0)
+IPORD(LISTNODE) ;
+"RTN","GMTSPST2",104,0)
+ N RETURN,PKG
+"RTN","GMTSPST2",105,0)
+ S RETURN=0
+"RTN","GMTSPST2",106,0)
+ S PKG=$P($P(LISTNODE,"^",1),";",2)
+"RTN","GMTSPST2",107,0)
+ I "UI"[PKG S RETURN=1
+"RTN","GMTSPST2",108,0)
+ I $P(LISTNODE,"^",1)["N;" D
+"RTN","GMTSPST2",109,0)
+ . S:$P(LISTNODE,"^",4)="ACTIVE" NVA($P(LISTNODE,"^",2),+LISTNODE)=LISTNODE
+"RTN","GMTSPST2",110,0)
+ . S RETURN=1
+"RTN","GMTSPST2",111,0)
+ Q RETURN
+"RTN","GMTSPST2",112,0)
+CKSTATUS(LISTNODE) ;
+"RTN","GMTSPST2",113,0)
+ N RETURN,RXIEN
+"RTN","GMTSPST2",114,0)
+ S RETURN=0 ; ASSUME ACTIVE AND NOT PASS MED
+"RTN","GMTSPST2",115,0)
+ S:$P(LISTNODE,"^",4)["DISCONTINUED" RETURN=1
+"RTN","GMTSPST2",116,0)
+ S:$P(LISTNODE,"^",4)["EXPIRED" RETURN=1
+"RTN","GMTSPST2",117,0)
+ Q RETURN
+"RTN","GMTSPST2",118,0)
+GETRXDAT(RXS) ;
+"RTN","GMTSPST2",119,0)
+ N RXSIEN,DRUGNAME,FSIG,RXTYPE
+"RTN","GMTSPST2",120,0)
+ S RXSIEN=0
+"RTN","GMTSPST2",121,0)
+ F  S RXSIEN=$O(RXS(RXSIEN)) Q:RXSIEN<1  D
+"RTN","GMTSPST2",122,0)
+ . I $P(RXS(RXSIEN),";")["P" D GETPEND(RXSIEN) S PSOQPEND=1 Q  ;-> 
+"RTN","GMTSPST2",123,0)
+ . S RXIEN=+RXS(RXSIEN)
+"RTN","GMTSPST2",124,0)
+ . S DRUGNAME=$$DRUGNAME(RXIEN)
+"RTN","GMTSPST2",125,0)
+ . I $P(RXS(RXSIEN),U,4)="HOLD" S DRUGNAME=DRUGNAME_" (**Rx Status=HOLD**)"
+"RTN","GMTSPST2",126,0)
+ . S RXTYPE=$$GETTYPE(RXIEN)
+"RTN","GMTSPST2",127,0)
+ . N SIGLINE,DIWF,DIWL,X
+"RTN","GMTSPST2",128,0)
+ . K ^UTILITY($J,"W")
+"RTN","GMTSPST2",129,0)
+ . S DIWF="C"_(PGWIDTH-8),DIWL=1
+"RTN","GMTSPST2",130,0)
+ . S SIGLINE=0 F  S SIGLINE=$O(^TMP($J,"GMTSPSRX",DFN,RXIEN,"M",SIGLINE)) Q:'+SIGLINE  D
+"RTN","GMTSPST2",131,0)
+ .. S X=^TMP($J,"GMTSPSRX",DFN,RXIEN,"M",SIGLINE,0)
+"RTN","GMTSPST2",132,0)
+ .. D ^DIWP
+"RTN","GMTSPST2",133,0)
+ . S SIGLINE=0 F  S SIGLINE=$O(^UTILITY($J,"W",1,SIGLINE)) Q:'+SIGLINE  D
+"RTN","GMTSPST2",134,0)
+ .. S FSIG(SIGLINE)=^UTILITY($J,"W",1,SIGLINE,0)
+"RTN","GMTSPST2",135,0)
+ . M RXS(RXTYPE,DRUGNAME)=FSIG
+"RTN","GMTSPST2",136,0)
+ . N PSOQSUB,REFILLS
+"RTN","GMTSPST2",137,0)
+ . S PSOQSUB=$O(RXS(RXTYPE,DRUGNAME,":"),-1)+1
+"RTN","GMTSPST2",138,0)
+ . S REFILLS=^TMP($J,"GMTSPSRX",DFN,RXIEN,9)-($S(^TMP($J,"GMTSPSRX",DFN,RXIEN,"RF",0)>0:^TMP($J,"GMTSPSRX",DFN,RXIEN,"RF",0),1:0))
+"RTN","GMTSPST2",139,0)
+ . S RXS(RXTYPE,DRUGNAME,PSOQSUB)=REFILLS_" refill(s) remaining prior to "_$$FMTE^XLFDT(^TMP($J,"GMTSPSRX",DFN,RXIEN,26))_" (Rx #"_^TMP($J,"GMTSPSRX",DFN,RXIEN,.01)_")"
+"RTN","GMTSPST2",140,0)
+ . K ^TMP($J,"GMTSPSRX"),^UTILITY($J,"W"),REFILLS
+"RTN","GMTSPST2",141,0)
+ Q
+"RTN","GMTSPST2",142,0)
+DRUGNAME(RXIEN) ;
+"RTN","GMTSPST2",143,0)
+ N DRUGIEN,DRUGNM,DRUGND1,DRUGND3,DRUGVAPN
+"RTN","GMTSPST2",144,0)
+ D RX^PSO52API(DFN,"GMTSPSRX",RXIEN,,"0,2,3,R,M")
+"RTN","GMTSPST2",145,0)
+ I ^TMP($J,"GMTSPSRX",DFN,RXIEN,6.5)]"" Q ^TMP($J,"GMTSPSRX",DFN,RXIEN,6.5)
+"RTN","GMTSPST2",146,0)
+ S DRUGIEN=+^TMP($J,"GMTSPSRX",DFN,RXIEN,6)
+"RTN","GMTSPST2",147,0)
+ S DRUGNM=$P(^TMP($J,"GMTSPSRX",DFN,RXIEN,6),U,2)
+"RTN","GMTSPST2",148,0)
+ D NDF^PSS50(DRUGIEN,,,,,"GMTSNDF")
+"RTN","GMTSPST2",149,0)
+ S DRUGND1=+^TMP($J,"GMTSNDF",DRUGIEN,20)
+"RTN","GMTSPST2",150,0)
+ S DRUGND3=+^TMP($J,"GMTSNDF",DRUGIEN,22)
+"RTN","GMTSPST2",151,0)
+ I DRUGND1,DRUGND3 S DRUGVAPN=$P($$PROD2^PSNAPIS(DRUGND1,DRUGND3),U)
+"RTN","GMTSPST2",152,0)
+ K ^TMP($J,"GMTSNDF")
+"RTN","GMTSPST2",153,0)
+ I $G(DRUGVAPN)]"" Q DRUGVAPN
+"RTN","GMTSPST2",154,0)
+ Q DRUGNM
+"RTN","GMTSPST2",155,0)
+GETPEND(RXSIEN) ;
+"RTN","GMTSPST2",156,0)
+ N PSOQPDN,PSOQDIND,PSOQ100,PSOQSCT,GMTSPST2
+"RTN","GMTSPST2",157,0)
+ S PSOQ100=$P(RXS(RXSIEN),U,3) Q:'+PSOQ100
+"RTN","GMTSPST2",158,0)
+ S PSOQPDN=$P($$OI^ORX8(PSOQ100),U,2)
+"RTN","GMTSPST2",159,0)
+ S PSOQDIND=$$VALUE^ORCSAVE2(PSOQ100,"DRUG") D
+"RTN","GMTSPST2",160,0)
+ . Q:'+PSOQDIND
+"RTN","GMTSPST2",161,0)
+ . D DATA^PSS50(PSOQDIND,,,,,"GMTSPST2")
+"RTN","GMTSPST2",162,0)
+ . S PSOQPDN=$G(^TMP($J,"GMTSPST2",PSOQDIND,.01))
+"RTN","GMTSPST2",163,0)
+ D TEXT^ORQ12(.GMTSPST2,PSOQ100,65)
+"RTN","GMTSPST2",164,0)
+ F PSOQSCT=2:1:$O(GMTSPST2(":"),-1) S RXS("D","**PENDING** "_PSOQPDN,PSOQSCT)=GMTSPST2(PSOQSCT)
+"RTN","GMTSPST2",165,0)
+ K ^TMP($J,"GMTSPST2")
+"RTN","GMTSPST2",166,0)
+ Q
+"RTN","GMTSPST2",167,0)
+GETTYPE(RXIEN) ;
+"RTN","GMTSPST2",168,0)
+ N RETURN,CLASS,DRUG
+"RTN","GMTSPST2",169,0)
+ S RETURN="D"
+"RTN","GMTSPST2",170,0)
+ S DRUG=+^TMP($J,"GMTSPSRX",DFN,RXIEN,6)
+"RTN","GMTSPST2",171,0)
+ D DATA^PSS50(DRUG,,,,,"GMTSPS50")
+"RTN","GMTSPST2",172,0)
+ S CLASS=^TMP($J,"GMTSPS50",DRUG,2)
+"RTN","GMTSPST2",173,0)
+ K ^TMP($J,"GMTSPS50")
+"RTN","GMTSPST2",174,0)
+ S:$E(CLASS,1,1)="X" RETURN="S"
+"RTN","GMTSPST2",175,0)
+ S:$E(CLASS,1,2)="DX" RETURN="S"
+"RTN","GMTSPST2",176,0)
+ Q RETURN
+"RTN","GMTSPST2",177,0)
+PSOSITE() ;DETERMINE APPROPRIATE 'OUTPATIENT SITE' (FILE #59) ENTRY
+"RTN","GMTSPST2",178,0)
+ K ^TMP($J,"GMTSA59")
+"RTN","GMTSPST2",179,0)
+ D PSS^PSO59(,"??","GMTSA59")
+"RTN","GMTSPST2",180,0)
+ N GMTS59,STANUM
+"RTN","GMTSPST2",181,0)
+ S GMTS59=0
+"RTN","GMTSPST2",182,0)
+ I $G(DUZ(2))]"" D
+"RTN","GMTSPST2",183,0)
+ . S STANUM=$$GET1^DIQ(4,DUZ(2),99)
+"RTN","GMTSPST2",184,0)
+ . S GMTS59=$$GETDIV(STANUM,"ST")
+"RTN","GMTSPST2",185,0)
+ I 'GMTS59 S GMTS59=$$GETDIV($$SITE^VASITE,"IN")
+"RTN","GMTSPST2",186,0)
+ I 'GMTS59 S GMTS59=$O(^TMP($J,"GMTSA59",0))
+"RTN","GMTSPST2",187,0)
+ Q GMTS59
+"RTN","GMTSPST2",188,0)
+GETDIV(STIN,TYPE) ;
+"RTN","GMTSPST2",189,0)
+ I $G(STIN)']"" Q 0
+"RTN","GMTSPST2",190,0)
+ N DIV,GETDIV
+"RTN","GMTSPST2",191,0)
+ S (DIV,GETDIV)=0
+"RTN","GMTSPST2",192,0)
+ F  S DIV=$O(^TMP($J,"GMTSA59",DIV)) Q:'+DIV  D
+"RTN","GMTSPST2",193,0)
+ . I TYPE="ST",^TMP($J,"GMTSA59",DIV,.06)=STIN S GETDIV=DIV
+"RTN","GMTSPST2",194,0)
+ . I TYPE="IN",^TMP($J,"GMTSA59",DIV,100)=STIN S GETDIV=DIV
+"RTN","GMTSPST2",195,0)
+ Q GETDIV
+"RTN","GMTSPST2",196,0)
+HD ;
+"RTN","GMTSPST2",197,0)
+ D 4^VADPT
+"RTN","GMTSPST2",198,0)
+ D PSS^PSO59(GMTS59,,"GMTSSITE")
+"RTN","GMTSPST2",199,0)
+ W !,"Date: ",RPTDATE,?XPOS1,"PATIENT MEDICATION INFORMATION"
+"RTN","GMTSPST2",200,0)
+ W ?XPOS2,"Page: ",PAGE
+"RTN","GMTSPST2",201,0)
+ S PAGE=PAGE+1
+"RTN","GMTSPST2",202,0)
+ W !,?XPOS4,"PRINTED BY THE VA MEDICAL CENTER AT: "_$P(^TMP($J,"GMTSSITE",GMTS59,100),U,2)
+"RTN","GMTSPST2",203,0)
+ W !,?XPOS4,"FOR PRESCRIPTION REFILLS CALL ("_^TMP($J,"GMTSSITE",GMTS59,.03)_") "_^TMP($J,"GMTSSITE",GMTS59,.04)
+"RTN","GMTSPST2",204,0)
+ W !!,"Name: ",$E(VADM(1),1,28)
+"RTN","GMTSPST2",205,0)
+ W ?30," PHARMACY - "_^TMP($J,"GMTSSITE",GMTS59,.01)_" DIVISION"
+"RTN","GMTSPST2",206,0)
+ I ^TMP($J,"GMTSSITE",GMTS59,.01)'=^TMP($J,"GMTSSITE",GMTS59,.07) W " ("_^TMP($J,"GMTSSITE",GMTS59,.07)_")"
+"RTN","GMTSPST2",207,0)
+ W !!,INSTSEP1,!,DRUGHDR1
+"RTN","GMTSPST2",208,0)
+ D KVA^VADPT
+"RTN","GMTSPST2",209,0)
+ K ^TMP($J,"GMTSSITE")
+"RTN","GMTSPST2",210,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",6982,6)
+^88
+**END**
+**END**

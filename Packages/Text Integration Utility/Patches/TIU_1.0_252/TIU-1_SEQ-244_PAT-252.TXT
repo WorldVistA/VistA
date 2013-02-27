@@ -1,0 +1,208 @@
+$TXT Created by MCCLENAHAN,MARGARET E E at DEVCUR.FO-SLC.MED.VA.GOV  (KIDS) on Tuesday, 01/17/12 at 13:48
+=============================================================================
+Run Date: JUL 11, 2012                     Designation: TIU*1*252
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #244                      Status: Released
+                  Compliance Date: AUG 11, 2012
+=============================================================================
+
+Associated patches: (v)TIU*1*249   <<= must be installed BEFORE `TIU*1*252'
+
+Subject: GET TIU TEMPLATE INFORMATION
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch supports the Dental Package and is released in conjunction with
+ patch DENT*1.2*59.  Patch TIU*1.0*252 must be installed before patch 
+ DENT*1.2*59. Patch TIU*1.0*252 provides Remote Procedure Call (RPC) TIU
+ TEMPLATE GET TEMPLATE which is used in DENT*1.2*59. It returns basic
+ information about a given template in the TIU TEMPLATE FILE [#8927].
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+ N/A
+  
+  
+ Forms Associated:
+ N/A
+  
+  
+ Mail Groups Associated:
+ N/A
+  
+  
+ Options Associated:
+ N/A
+  
+  
+ Protocols Associated:
+ N/A
+  
+  
+ Security Keys Associated:
+ N/A
+  
+  
+ Templates Associated:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ N/A
+  
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Name                   New/Modified/Deleted         
+ ---------------------                   --------------------
+ TIU TEMPLATE GET TEMPLATE               New
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ This patch is being tested by the Dental package in association with 
+ DENT*1.2*59 at their test sites.
+  
+ Northport, NY           LARGE
+ Portland, OR            LARGE
+ New York Harbor         LARGE/INTEGRATED
+ Tucson, AZ              LARGE
+  
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the file from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the file from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.va.gov/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ TIU Technical Manual          tiutm.doc                       Binary
+                               tiutm.pdf                       Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Patch TIU*1*252 must be installed before patch DENT*1.2*59.
+  
+  
+ Installation Instructions
+ -------------------------
+ Patch TIU*1.0*252 may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ There are no TIU Menu Options to disable.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     TIU*1.0*252:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' enter 'NO'.    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' enter 'NO'.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// enter 'NO'. 
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no Post-Installation Instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUSRVT2
+    Before: B12280503   After: B14345619  **80,105,249,252**
+ 
+Routine list of preceding patches: 249
+
+=============================================================================
+User Information:
+Entered By  : MCCLENAHAN,MARGARET           Date Entered  : SEP 10, 2009
+Completed By: GRAZIANI,ROBERT               Date Completed: MAY 30, 2012
+Released By : KREUZ,SHERI B                 Date Released : JUL 11, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

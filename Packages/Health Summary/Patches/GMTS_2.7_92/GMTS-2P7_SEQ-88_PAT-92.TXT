@@ -1,0 +1,226 @@
+$TXT Created by SILVERMAN,ROBERT at CMNU.FO-BIRM.MED.VA.GOV  (KIDS) on Tuesday, 04/13/10 at 11:10
+=============================================================================
+Run Date: APR 28, 2011                     Designation: GMTS*2.7*92
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7        SEQ #88                    Status: Released
+                  Compliance Date: MAY 29, 2011
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*37 <<= must be installed BEFORE `GMTS*2.7*92'
+                    (v)GMTS*2.7*56 <<= must be installed BEFORE `GMTS*2.7*92'
+                    (v)PSO*7*316   <<= must be installed BEFORE `GMTS*2.7*92'
+
+Subject: CORRECTIONS TO MEDICATION WORKSHEET (TOOL #2)
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Patches PSO*7*316 and GMTS*2.7*92 correct issues reported with the 
+ Tool #2: Medication Worksheet. The Health Summary patch GMTS*2.7*92
+ will require patch PSO*7*316 and will create a national entry in the
+ HEALTH SUMMARY COMPONENT file (#142.1) for Tool #2: Medication Worksheet.
+  
+  
+ 1.  Current functionality for display of patient Social Security Number 
+ was not being provided within the report in a format consistent with other
+ Class I Health Summary components.
+  
+ Problem:
+ --------
+ The report was hard-coded to display a patient's last four digits of the 
+ SSN in the body of the report.
+  
+ Resolution:
+ -----------
+ Removed the programming that displayed the last four digits of patient SSN
+ directly within the Health Summary component. Health Summary patch 
+ GMTS*2.7*85 introduced a feature that permits the removal of the patient
+ SSN from the health summary overall header. The change in this patch now
+ similarly permits the worksheet to be printed with no SSN references
+ remaining. All control of the patient identifiers, such as display of
+ patient date of birth and SSN, is now controlled by the parameters set at
+ the Health Summary Type level, consistent with other Class I Health
+ Summary components.
+  
+ 2.  Wrong pharmacy division name printing on the report header.
+  
+ Problem:
+ --------
+ At integrated sites, the name of the primary facility division would
+ print on the report even when generated from another pharmacy division.
+  
+ Resolution:
+ -----------
+ The internal programming that selects the name of the pharmacy
+ division shown at the top of the worksheet and the pharmacy phone
+ number associated with it has been revised. 
+  
+ At facilities where there are multiple entries in OUTPATIENT 
+ SITE file (#59) that share the same SITE NUMBER, the Medication Worksheet
+ is unable to distinguish between these entries in order to choose the
+ correct pharmacy name and phone number for display in the report header.  
+ In these cases, the result may be that the displayed name and phone number
+ are for a division other than the pharmacy's preferred phone number for 
+ patient calls. 
+  
+ 3.  Medication Worksheet does not distinguish ACTIVE and HOLD status 
+ prescriptions.
+  
+ Problem:
+ --------
+ In the initial release of Medication Reconciliation software with 
+ PSO*7*294, one of the known issues was that a prescription with status of 
+ HOLD was not clearly identified as such in the Medication Worksheet.
+  
+ Resolution:
+ -----------
+ A status indicator is added for prescriptions with status of HOLD, 
+ similar to the existing indicator for PENDING prescriptions in that 
+ report.
+  
+ 4.  The initial release of Medication Reconciliation tools with patch 
+ PSO*7*294 required manual creation of Health Summary components.
+  
+ Problem:
+ --------
+ There is no guarantee that all VA facilities set up the components 
+ exactly as indicated in the Medication Reconciliation Implementation 
+ Guide.
+  
+ Resolution:
+ -----------
+ This patch introduces the following file entries with nationally 
+ standardized internal entry numbers (IENs).
+  
+         HEALTH SUMMARY COMPONENT file (#142.1)
+         ======================================
+         Entry #252 - Medication Worksheet (Tool #2)
+  
+         HEALTH SUMMARY TYPE file (#142)
+         ===============================
+         The above-listed Health Summary Component (IEN #252) will be added
+         to the existing GMTS HS ADHOC OPTION Health Summary type
+  
+         VAQ - DATA SEGMENT file (#394.71)
+         =================================
+         This file contains an entry corresponding to the above-listed
+         Health Summary Component (IEN #252) that will be listed as
+         Medication Worksheet (tool #2).  
+  
+ Associated Remedy Tickets:
+ ==========================
+ HD 255089
+ HD 257550 
+ HD 263499
+ HD 318929
+ HD 321428
+  
+ Associated NSRs:
+ ================
+ N/A
+  
+ Associated E3R's:
+ =================
+ N/A
+  
+ Associated PSIs:
+ ================
+ N/A
+  
+ Test Sites:
+ ===========
+ FAYETTEVILLE, NC
+ HEARTLAND-WEST HCS
+ MANCHESTER, NH
+ WASHINGTON, DC
+  
+ Documentation Retrieval:
+ ========================
+ Sites may retrieve documentation in one of the following ways:
+  
+ 1. The preferred method is to FTP the files from
+    download.vista.med.va.gov, which will transmit the files from
+    the first available FTP server.
+  
+ 2. Sites may also elect to retrieve documentation directly from a
+    specific server as follows:
+  
+    Albany          ftp.fo-albany.med.va.gov
+    Hines           ftp.fo-hines.med.va.gov
+    Salt Lake City  ftp.fo-slc.med.va.gov
+  
+ 3. Documentation can also be retrieved from VA Software Document Library
+    on the Internet at the following address, http://www.va.gov/vdl.
+  
+    The documentation distribution includes:
+   
+    FILE NAME                            DESCRIPTION
+    ---------                            -----------
+    HSUM_2_7_UM.PDF                      Health Summary User Manual
+    HSUM2_7_TM.PDF                       Health Summary Technical Manual
+    GMTS_2_7_P92_PSO_7_P316_IG.PDF       Medication Reconciliation -
+                                         Medication Worksheet (Tool #2)
+                                         Installation Guide
+  
+    Please see patch PSO*7*316 for other documentation associated
+    with this release.
+  
+ Installation Instructions:
+ ==========================
+  
+ The VA strongly recommends that you install this patch in a test 
+ environment before installing it in production.
+  
+ Users may remain on the system during installation.  Installation takes 
+ less than a minute.  You should install this patch at non-peak hours. 
+  
+ For more detail on the pre- and post-installation requirements, refer to 
+ the Health Summary Installation Guide associated with this patch.
+  
+ 1.  Use the INSTALL/CHECK MESSAGE on the PackMan menu.
+  
+ 2.  From the Kernel Installation & Distribution System menu, select
+     the Installation menu.  When prompted, select GMTS*2.7*92.
+  
+ 3.  From this menu, you may select the option Verify Checksums in
+     Transport Global.  All components of this patch are new so the options
+     Backup a Transport Global and Compare Transport Global to Current
+     System need not be invoked.  When prompted, select GMTS*2.7*92.
+  
+ 4.  Use the Install Package(s) option and select GMTS*2.7*92.
+  
+ 5.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+     respond NO.
+  
+ 6.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSP92I
+    Before:       n/a   After:  B7403484  **92**
+Routine Name: GMTSPST2
+    Before:       n/a   After: B66239035  **92**
+
+=============================================================================
+User Information:
+Entered By  : SILVERMAN,ROBERT              Date Entered  : MAY 01, 2009
+Completed By: FARMER,LINDA                  Date Completed: APR 18, 2011
+Released By : RITCHIE,ROXANNE               Date Released : APR 28, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

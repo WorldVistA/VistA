@@ -1,0 +1,280 @@
+$TXT Created by MOORE,JIM at NXT.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 07/17/12 at 08:30
+=============================================================================
+Run Date: SEP 19, 2012                     Designation: HL*1.6*158
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #126                    Status: Released
+                  Compliance Date: OCT 20, 2012
+=============================================================================
+
+Associated patches: (v)HL*1.6*152  <<= must be installed BEFORE `HL*1.6*158'
+                    (v)HL*1.6*153  <<= must be installed BEFORE `HL*1.6*158'
+                    (v)HL*1.6*155  <<= must be installed BEFORE `HL*1.6*158'
+                    (v)HL*1.6*157  <<= must be installed BEFORE `HL*1.6*158'
+
+Subject: HLO BUG FIXES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Input Template
+
+Description:
+============
+
+ Patch HL*1.6*158 makes several changes to the Health Level Seven Optimized
+ (HLO) software.
+  
+   Changes:
+   ============
+   1. Patch HL*1.6*155 included routine HLOPING with a typo on the list of
+      patches on the second line.  This patch corrects the second line.
+      ** When installing this patch, you should ignore the warning about
+      the incoming routine having different patches. **
+ 
+   2. It has been reported that, on rare occasions, when an application
+      acknowledgment is received the ACKNOWLEDGMENT BY field (#.07) and the
+      COMPLETION STATUS field (#.2) of the original message's record in the
+      HLO MESSAGE ADMINISTRATION file (#778) are not updated.  The issue
+      is caused by contention between the server process and the infiler
+      process trying to update the same record at the same time.  This patch
+      resolves the problem by having the infiler process do all the updates
+      to the record.
+  
+   3. There is a mistake in the set and kill logic for the "C" and "D"
+      new-style cross-references in the MESSAGE TYPE ACTIONS sub-file
+      (#779.21) of the HLO APPLICATION REGISTRY file (#779.2). When the
+      message type and message event are edited, the old entry in the
+      cross-references may be left defined. The set and kill logic is
+      corrected in this patch. 
+  
+   4. The HLO APPLICATION REGISTRY file (#779.2) has been enhanced to allow
+      Applications to specify how long to retain their messages before they
+      are purged.  
+ 
+      To support this new functionality, these fields have been added:
+       
+      a) In the HLO MESSAGE ADMINISTRATION FILE (#778) the optional
+         APP-SPECIFIED RETENTION field (#.22) is new.  It will be used
+         to store the retention time specified by the application.
+ 
+      In the HLO APPLICATION REGISTRY file (#779.2) there are two new fields.
+ 
+      b) The MINIMUM RETENTION TIME field (#.13) specifies the default
+         retention time for the application. 
+ 
+      c) In the MESSAGE TYPE ACTIONS multiple (field #1) is the MINIMUM
+         RETENTION TIME field (#.08) that applies to the specific message
+         type.  If present it will override the general retention time
+         specified in field #.13 (see b above).
+     
+      d) The new EDIT MESSAGE RETENTION TIME [HLO MESSAGE RETENTION
+         TIME] option has been added to the HLO APPLICATION REGISTRY MENU
+         option [APPLICATION REGISTRY MENU] so that application developers
+         can edit the new parameters. 
+ 
+    5. In the file HLO SYSTEM PARAMETERS file (#779.1) the NORMAL MSG
+       RETENTION (DAYS) field (#.07) has been modified to record the retention
+       time for the site's HLO messages in days rather than hours.  The
+       default retention time will be 3 days, rather than the 36 hours that
+       was used prior to this patch.  Sites may reset the parameter to 1 or 2 
+       days if disk space is a problem.
+ 
+    6. The HLO PING option [PING REMOTE SYSTEM] has been modified to include
+       the user's DUZ in the PING message. This is a troubleshooting aid
+       requested by Product Support. 
+  
+    7. Two syntax errors, reported in Remedy tickets HD0000000624496 and
+       HD0000000624517, were corrected. The syntax errors were both for 
+       block structure mismatches in routines HLOPROC and HLUCM001.
+ 
+    8. The HLO APIs for sending messages through middleware, such as the VIE,
+       contains a bug. The APIs allow the application to specify two
+       logical links, one for the receiving facility and one for the
+       middleware.  If the application specifies that the messages are to
+       be routed through middleware, the HLO client should send the message
+       to the IP address and port # of the middleware.  However, HLO instead
+       attempts to send the message to the IP address of the middleware but
+       the port # of the receiving facility, rather than the middleware's
+       port #.  This patch fixes this issue.
+       
+   
+  Test Sites:
+  ===========
+ El Paso VAMC
+ Oklahoma City, OK
+ Tennessee Valley HCS
+  
+   
+  Remedy:  
+  ======
+  HD0000000581602
+  HD0000000580568
+  HD0000000580566
+  HD0000000624496
+  HD0000000624517
+  
+   
+  
+ Installation Instructions:
+ =========================
+  
+    1.  Users are allowed to be on the system during the installation. 
+        Installation time is under 3 minutes.  
+        
+    2.  For your production account, disable the HL7 TCPIP services
+        for the HLO multi-listener running on all nodes in the cluster. 
+        This step is optional for test accounts. 
+  
+        For example, at the VMS prompt in your
+        production account:
+  
+          ISC6A1> TCPIP          <-- at the VMS prompt
+          TCPIP> DISABLE SERVICE HLS5001CACHE  
+  
+            
+   3.   Use the STOP HLO option of the HLO SYSTEM MONITOR screen to temporarily
+        stop the transmission of HLO messages. Wait several minutes to insure 
+        that all HLO processes have terminated.
+  
+  
+    4.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+        option will load the KIDS package onto your system.
+  
+    5.  This patch is now loaded into a transport global on your system.
+        The next step is to use KIDS to install the Transport global.  On
+        the KIDS menu, under the 'Installation' menu, use the following
+        options:
+  
+           Verify Checksums in Transport Global
+  
+           Print Transport Global 
+  
+           Compare Transport Global to Current System 
+  
+           Backup a Transport Global
+  
+           Install Package(s) 
+  
+        When using the Install Package(s) menu option to install the patch
+        build, you will be asked several questions.  The questions, and the
+        answers you should supply, are shown below.
+  
+        INSTALL NAME: <HL*1.6*158>
+  
+        Want KIDS to Rebuild Menu Trees Upon Completion of Install?  <NO>
+  
+        Want KIDS to INHIBIT LOGONS during the install?  <NO>
+  
+        Want to DISABLE Scheduled Options, Menu Options,
+  
+          and Protocols?  <NO>
+   
+      
+    6.   Enable the HL7 TCPIP services for the multi-listeners
+  
+         For example, in a production account at the VMS prompt:
+         ISC6A1> TCPIP             <-- at the VMS prompt
+         TCPIP> ENABLE SERVICE HLS5001CACHE 
+  
+    
+    7.  Use the START HLO option within the HLO SYSTEM MONITOR screen
+        to resume transmission of HLO messages in your production account.
+        This step is optional for test systems.
+   
+    8.  On production systems, verify that outgoing messages have resumed
+        being transmitted.  You can do this by monitoring the system via the
+        HLO System Monitor for a few minutes to insure that the count of
+        messages pending transmission is not growing.
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13, 1995;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLOAPI1
+    Before:B101211192   After: B99684875  **126,132,134,137,146,158**
+Routine Name: HLOAPI2
+    Before: B76422316   After: B76156297  **126,131,133,134,137,138,146,158**
+Routine Name: HLOAPI3
+    Before: B99815060   After:B108017449  **126,133,134,137,138,158**
+Routine Name: HLOAPP
+    Before: B13112019   After: B19865517  **126,132,137,139,158**
+Routine Name: HLOASUB1
+    Before: B91573157   After: B94636014  **126,134,138,146,147,158**
+Routine Name: HLOCLNT
+    Before: B82958166   After: B81537005  **126,130,131,134,137,139,143,
+                                           147,155,158**
+Routine Name: HLOCLNT1
+    Before: B35977020   After: B23616126  **126,130,131,134,137,139,146,
+                                           155,158**
+Routine Name: HLOCLNT2
+    Before: B39313138   After: B34928918  **126,130,131,133,134,137,143,158**
+Routine Name: HLOCLNT3
+    Before:  B5637938   After:  B5589114  **126,130,134,137,158**
+Routine Name: HLOF778
+    Before: B31915800   After: B32326577  **126,134,137,138,158**
+Routine Name: HLOF778A
+    Before: B40090633   After: B76735588  **126,134,137,138,158**
+Routine Name: HLOFILER
+    Before: B29094813   After: B27084628  **126,131,134,137,152,158**
+Routine Name: HLOP158
+    Before:       n/a   After:   B829320  **158**
+Routine Name: HLOPING
+    Before: B25888835   After: B28571657  **147,155,158**
+Routine Name: HLOPROC
+    Before: B28480069   After: B28479466  **126,134,146,147,158**
+Routine Name: HLOQUE
+    Before:B153912092   After:B154240206  **126,132,134,137,138,143,147,
+                                           153,158**
+Routine Name: HLOSITE
+    Before:  B8278014   After:  B9605158  **126,138,147,153,158**
+Routine Name: HLOSRVR
+    Before: B95024776   After: B82216599  **126,130,131,134,137,138,139,
+                                           143,147,157,158**
+Routine Name: HLOSRVR1
+    Before: B90167265   After: B68927877  **126,130,131,133,134,137,138,
+                                           139,143,146,147,152,158**
+Routine Name: HLOSRVR2
+    Before:  B5350765   After:  B5343067  **131,137,138,146,158**
+Routine Name: HLOUSR
+    Before:B121166141   After:B121713479  **126,130,134,137,138,139,146,
+                                           147,153,158**
+Routine Name: HLOUSR3
+    Before: B69258883   After: B69134170  **126,134,138,139,147,158**
+Routine Name: HLOUSR7
+    Before: B22703242   After: B25426797  **147,153,158**
+Routine Name: HLUCM001
+    Before: B49070779   After: B50315331  **79,88,103,158**
+ 
+Routine list of preceding patches: 103, 152, 153, 155, 157
+
+=============================================================================
+User Information:
+Entered By  : MOORE,CHARLES J               Date Entered  : NOV 17, 2011
+Completed By: BEST,LISA                     Date Completed: SEP 10, 2012
+Released By : APOLONIO,AUGUSTO              Date Released : SEP 19, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

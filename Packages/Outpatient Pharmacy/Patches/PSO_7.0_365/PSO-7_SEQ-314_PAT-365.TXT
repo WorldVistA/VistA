@@ -1,0 +1,128 @@
+$TXT Created by HERRING,VENESSA at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 07/22/10 at 12:59
+=============================================================================
+Run Date: MAY 17, 2011                     Designation: PSO*7*365
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #314                      Status: Released
+                  Compliance Date: JUN 17, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*294   <<= must be installed BEFORE `PSO*7*365'
+
+Subject: INCORRECT REMOTE MEDS MESSAGE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the Patient Safety issue (PSPO#1744) where the
+ incorrect message 'No Active Remote Medications for this patient' is 
+ displayed to the user when trying to retrieve remote medications when 
+ entering a Progress Note.  The provider, when pulling progress notes, 
+ may not see all of a patient's medications and can result in the patient 
+ missing medication doses.
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ 1) HD0000000408280 - (PSPO#1744) Remote Meds Object Not Returning Correct
+                                  Result
+    Duplicates: HD0000000408169
+                HD0000000450673 
+                  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Iron Mountain VAMC
+ William S. Middleton Memorial Veterans Hospital - Madison
+ VA Roseburg HCS
+  
+ Remedy Overview:
+ ================
+ 1)     HD0000000408280 - Remote Meds Object Not Returning Correct Result
+   
+ Problem: 
+ ========
+ A patient will show remote meds in Vista Web yet when calling the object 
+ remote meds from a note, it returns the message 'No Active Remote Medications 
+ for this patient'.  If you try a minute later, you get a list of the remote 
+ medications.
+  
+ Resolution:
+ ===========
+ Modify processing so if the HDR is not available display the correct message.
+  
+ Technical Resolution:
+ =====================
+ Modify routine PSOQ0595 at PSOQ0595+21 so if the connection for remote data
+ is down, the correct message 'Connection to Remote Data Not Available' is 
+ displayed to the user.
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.
+ It is recommended that this patch be installed after hours when users not
+ adding notes that use the Remote Meds object.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*365)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*365.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOQ0595
+    Before: B12584907   After: B12587476  **294,365**
+ 
+Routine list of preceding patches: 294
+
+=============================================================================
+User Information:
+Entered By  : HERRING,VENESSA               Date Entered  : JUL 22, 2010
+Completed By: PODLEY,CHRIS                  Date Completed: APR 15, 2011
+Released By : FOX,KIRK                      Date Released : MAY 17, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

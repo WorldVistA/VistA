@@ -1,0 +1,302 @@
+$TXT Created by WOLF,ED at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 06/22/12 at 15:28
+=============================================================================
+Run Date: JUL 24, 2012                     Designation: SD*5.3*539
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #486                    Status: Released
+                  Compliance Date: AUG 24, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*446  <<= must be installed BEFORE `SD*5.3*539'
+                    (v)SD*5.3*491  <<= must be installed BEFORE `SD*5.3*539'
+                    (v)SD*5.3*532  <<= must be installed BEFORE `SD*5.3*539'
+
+Subject: ELEC WAIT LIST, PAT APPT INFO TXN, PRIM CARE MGT MOD FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses several issues related to Electronic Wait List 
+ (EWL), Patient Appointment Information Transmission (PAIT) and the 
+ Primary Care Management Module (PCMM) as reported in the following Remedy
+ tickets:
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1)  HD0000000306890 - Patient inactivation
+ 2)  HD0000000242378 - Wait List enter/edit problem
+       Duplicate:
+     HD0000000309381 - SD*5.3*528 FOLLOW UP
+ 3)  HD0000000323988 - SD WAIT LIST CLEAN UP
+ 4)  HD0000000306704 - ERROR 850 for PAIT
+       Duplicates:
+     HD0000000306552 - SD-PAIT REJECTED 850 ERRORS
+     HD0000000306774 - Transmission error code 850
+     HD0000000316828 - 850 rejection in PAIT
+     HD0000000317595 - Error 850
+     HD0000000327499 - 850 Pait error
+     HD0000000327715 - PAIT ERROR CODE 850
+     HD0000000370183 - SD-PAIT REJECTED  Rejected Transmissions to view the
+                       rejections
+ 5)  HD0000000335268 - No integration agreement for $$EOP^ESPUTIL in  SDWLCU6
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Upstate NY HCS
+ Cheyenne VA Medical Center
+ Ralph H. Johnson VA Medical Center - Charleston
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+  
+ 1)  HD0000000306890 - Patient inactivation
+  
+ Problem:
+ ======= 
+ The PCMM NIGHTLY TASK [SCMC PCMM NIGHTLY TASK] option that reports on 
+ Primary Care Management Module (PCMM) inactivation messages references 
+ VHA Directive 2003-063 which was rescinded by VHA Directive 2006-059.
+   
+ Solution:
+ ========
+ Modification has been made to eliminate a reference to the rescinded
+ VHA DIRECTIVE 2003-063.
+  
+  
+ Description of the following messages has been modified:
+  
+ Patients Scheduled for Inactivation from PC Panel
+ Patients With Extended PCMM Inactivation Dates
+ Patients Automated Inactivations from PC Panels
+  
+ **Due to this change the Primary Care Management Module (PCMM) User Manual
+ Will be updated on pages 8-10.
+  
+  
+ 2)  HD0000000242378 - Wait List enter/edit problem
+  
+ Problem:
+ =======
+ One part of the SD Wait List Cleanup [SD WAIT LIST CLEANUP] report is titled
+ the Wait List Key Field 'NULL'  which was created when the EWL package
+ erroneously allowed for creation of EWL entries with missing but required
+ fields. The entries have been closed but are still listed as awaiting
+ correction. Report may also show some old EWL entries that do not have
+ the required CURRENT STATUS field (#23). Both of these show as incomplete on
+ the report but as Enter/Edit Wait List (Sch/PCMM) [SD WAIT LIST ENTER/EDIT]
+ option recognizes only open EWL entries, these can't be changed and should
+ not be listed on the report.
+    
+ Solution:
+ ======== 
+ The SD Wait List Cleanup [SD WAIT LIST CLEANUP] report was modified as follows:
+  
+ When evaluating EWL entries for the Wait List Key Field 'NULL' listing do 
+ not evaluate incomplete entries not having the CURRENT STATUS field (# 
+ 23) of the SD WAIT LIST file (# 409.3) populated.  
+  
+ Entries with 'NULL' in the CURRENT STATUS field will be closed by this 
+ report using code ER:ENTERED IN ERROR filed in the DISPOSITION field
+ (#21) if their ORIGINATING DATE field (#1) is before the current
+ computer date.( This will assure that this will not interfere with any
+ process of partial EWL entry on the same date the report is generated as
+ valid incomplete entries might have been created due to a physical
+ disconnection of the user's workstation during the EWL entry process 
+ which need to be reported on).
+  
+ Eliminate any closed EWL entries from evaluation of  'NULL' values in 
+ their required fields.
+  
+ Closed entries will not be listed on the report.
+  
+ The Open Closed EWL Entry [SD WAIT LIST OPEN CLOSED ENTRY] option was modified
+ to not allow opening of closed EWL entries with code ER:ENTERED IN ERROR.
+  
+    
+ 3)  HD0000000323988 - SD WAIT LIST CLEAN UP
+  
+ Problem:
+ =======
+ The existing software of the SD Wait List Cleanup [SD WAIT LIST CLEANUP] option
+ does not handle all circumstances correctly. The cleanup option should address
+ only open wait list entries because the closed entries can't be corrected.
+  
+ Solution:
+ ========
+ Only open EWL entries will be evaluated by the SD Wait List Cleanup [SD WAIT
+ LIST CLEANUP] option and the user is prompted there for correction if
+ applicable.
+  
+ **Due to this change the Electronic Wait List (EWL) for Scheduling and 
+ Primary Care Management Module (PCMM) User Manual will be updated on 
+ pages 50 & 70.
+   
+  
+ 4)  HD0000000306704 - ERROR 850 for PAIT
+  
+ Problem:
+ =======
+ It has been determined that PV1 segment should contain the 'empty' value 
+ Instead of '0000' in sequence P1.4 if both the Appointment Type field 
+ (#9.5) and the Purpose of Visit field (#9) in the Appointment multiple
+ (#1900) of the Patient file (#2) are NULL. It happens very seldom,
+ primarily with canceled appointments.
+  
+ Solution:
+ =========
+ Routine SDRPA20 was modified to generate the PV1 segment with the 
+ Admission Type sequence as NULL if both the Appointment Type field
+ (#9.5) and the Purpose of the Visit field (#9) field in the Appointment
+ multiple (#1900) of the Patient file are NULL as well.
+ All previously rejected appointments as described above, will be accepted 
+ because newly generated appointment entries will have NULL instead of 
+ '0000' if applicable.
+  
+  
+ 5)  HD0000000335268 - No integration agreement for $$EOP^ESPUTIL in  SDWLCU6
+  
+ Problem:
+ =======
+ There was no integration agreement for a call to $$EOP^ESPUTIL() in 
+ routine SDWLCU6. Additionally, the called function has not been published.
+  
+  
+ Solution:
+ ========
+ Code was added to the routine for the function so the call is not needed.
+  
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ======================== 
+ The following documentation will be posted to the VDL immediately after
+ the release of this patch.  
+  
+ Sites may retrieve the draft documentation directly using FTP from the
+ ANONYMOUS.SOFTWARE directory at the following OI Field Offices:
+    
+                     Albany   : ftp.fo-albany.med.va.gov
+                     Hines    : ftp.fo-hines.med.va.gov
+               Salt Lake City : ftp.fo-slc.med.va.gov
+       First Available Server : download.vista.med.va.gov
+    
+ The following files will be available:
+    
+     File Name               Description
+     ---------               -----------
+     SD_53_P539_EWLUM.PDF    EWL USER MANUAL (revised)
+     SD_53_P539_PCMMUM.PDF   PCMM USER MANUAL (revised) 
+  
+  
+ * Note: Use Binary mode when transferring the .PDF files.  
+         The .PDF files can be read on a PC using the Adobe
+         Acrobat Reader program.
+  
+  
+                   INSTALLATION INSTRUCTIONS:
+ ===============================================================
+  
+ NOTE:
+ ====
+  
+  **************************************************************
+  This patch CANNOT BE INSTALLED on the following days:
+       1st  to  4th of each month
+       15th to 18th of each month
+  due to The Patient Appointment Information Transmission potential activity.
+  
+ ****************************************************************************
+  
+ Users can be on the system during the installation of this patch.   
+ Because some heavily used Scheduling options will be out of order during
+ the install, it is recommended that the patch be installed in
+ off-peak hours.
+  
+ Installation time is less than three minutes.
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter SD*5.3*539)
+   
+         a.  Verify Checksums in Transport Global - This option will
+             allow you to ensure the integrity of the routines that 
+             are in the transport global.
+         b.  Print Transport Global - This option will allow you to
+             view the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option
+             will allow you to view all changes that will be made when
+             this patch is installed.  It compares all components of
+             this patch(routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a
+             backup message of any routines exported with this patch.
+             It will not backup any other changes such as DD's or 
+             templates.
+   
+    4. Use the Install Package(s) option and select the package
+       SD*5.3*539.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//" respond YES 
+   
+          1) When prompted "Enter options you wish to mark as "Out of
+             Order":" enter the following option:
+             
+             PCMM NIGHTLY TASK                [SCMC PCMM NIGHTLY TASK]
+             SD Wait List Cleanup             [SD WAIT LIST CLEANUP] 
+             Rejected Transmissions           [SD-PAIT REJECTED]
+             Manual Startup PAIT Transmission [SD-PAIT MANUAL TRANSMISSION]
+             Taskman PAIT Transmission        [SD-PAIT TASKED TRANSMISSION]
+                  
+          2) When prompted "Enter protocols you wish to mark as "Out of
+             Order":" enter the following names:
+   
+             PAIT TRANSMISSION EVENT          [SD-PAIT-EVENT]
+             SC PAIT SUBSCRIBERS              [SD-PAIT-SUBS]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCMCTSK5
+    Before: B82463254   After: B58969240  **297,532,539**
+Routine Name: SDRPA20
+    Before:  B2396276   After:  B2381552  **446,539**
+Routine Name: SDWLCU1
+    Before: B23373844   After: B23960341  **280,427,539**
+Routine Name: SDWLCU5
+    Before: B43176687   After: B44615400  **280,427,491,539**
+Routine Name: SDWLCU6
+    Before: B10460494   After: B15169755  **427,491,539**
+Routine Name: SDWLEC
+    Before: B20668345   After: B22264705  **446,539**
+
+=============================================================================
+User Information:
+Entered By  : WOLF,ED                       Date Entered  : JUL 11, 2008
+Completed By: HEFFERNAN,COREY               Date Completed: JUL 18, 2012
+Released By : KRILEY,MARSHA                 Date Released : JUL 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

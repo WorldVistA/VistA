@@ -1,0 +1,130 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 02/22/11 at 11:20
+=============================================================================
+Run Date: JUL 08, 2011                     Designation: DVBA*2.7*160
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #149                    Status: Released
+                  Compliance Date: AUG 08, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*17 <<= must be installed BEFORE `DVBA*2.7*160'
+
+Subject: 7131 PRINT JOB
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 1 issue:
+  
+ 1. During the New Form 7131 Request Report [DVBA NEW REQUEST], 7131
+    Requests containing ADDITIONAL REMARKS (#396.05) with blank lines
+    do not print in their entirety.
+  
+ Associated NSR(s):
+ ------------------
+ N/A
+  
+ Associated Remedy ticket(s):
+ ----------------------------
+ 1. HD0000000405676 - St. Paul VARO cannot send complete 7131 to Fargo
+                      VAMC [on hold until 7/7]
+  
+ Participating Test Sites:
+ -------------------------
+ VA Western NY HCS - Batavia
+ Fargo VAMC
+ Philadelphia VAMC
+  
+   
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000405676 - St. Paul VARO cannot send complete 7131 to Fargo
+                      VAMC [on hold until 7/7]
+  
+   
+    Problem:
+    --------
+    When users run the New Form 7131 Request Report [DVBA NEW REQUEST], any
+    records with ADDITIONAL REMARKS (#396.02) containing blank lines will
+    only print up until the first blank line is encountered.
+  
+  
+    Resolution:
+    -----------
+    DVBAREQ3, which collects the data during the New Form 7131 Request 
+    Report [DVBA NEW REQUEST], will no longer assume that a blank line
+    is the end of the ADDITIONAL REMARKS (#396.02) subfile and will 
+    continue printing the ADDITIONAL REMARKS until it has reached the end 
+    of the subfiles contents.
+  
+  
+ Installation Instructions:
+ ==========================
+  
+    ****************************NOTE************************** 
+    * It is not necessary to disable any options.  You may   *
+    * install these routines at any time without interruption*
+    * to users.                                              *
+    **********************************************************
+  
+    Installation will take less than 2 minutes.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter DVBA*2.7*160)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+   
+    4. Use the Install Package(s) option and select the package DVBA*2.7*160.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBAREQ3
+    Before: B18695641   After: B18754678  **17,160**
+ 
+Routine list of preceding patches: 17
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : SEP 21, 2010
+Completed By: PODLEY,CHRIS                  Date Completed: JUL 05, 2011
+Released By : FITCH,DONNA                   Date Released : JUL 08, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

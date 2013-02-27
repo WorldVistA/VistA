@@ -1,0 +1,122 @@
+$TXT Created by TRAN-TEST,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 06/16/11 at 09:15
+=============================================================================
+Run Date: NOV 23, 2011                     Designation: XU*8*570
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #463                      Status: Released
+                  Compliance Date: DEC 24, 2011
+=============================================================================
+
+Associated patches: (v)XU*8*157    <<= must be installed BEFORE `XU*8*570'
+                    (v)XU*8*503    <<= must be installed BEFORE `XU*8*570'
+                    (v)XU*8*553    <<= must be installed BEFORE `XU*8*570'
+
+Subject: FIXES JUMPING PROBLEMS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy#:487937; 483004; 496477
+  
+ Test sites:
+  - CENTRAL TEXAS HCS
+  - SALISBURY, NC VAMC
+  - WILKES BARRE, PA VAMC
+  
+ Patch Tracking Message: #54679435
+  
+  
+ This Kernel patch fixes following problems:
+  
+ 1) If an Out Of Order Message is placed for an option, it works 
+   correctly if   we paddle through the menus. However if we execute an '^'
+   jump, it is ignored and users can access the option freely before the 
+   menu tree gets a rebuild. It involves OUT OF ORDER MESSAGE field (#2) in
+   the OPTION file (#19). (Remedy ticket #483004)
+  
+ 2) If the Queuing Required field(#3.92) is set for an option, users 
+    can't execute an "^" jump to the option. (Remedy ticket #487937)
+  
+ 3) The Queuing Required field (#3.92) isn't checked correctly for an 
+    option. The option is able to run without queuing. 
+    (Remedy ticket #496477)
+  
+  
+ Blood Bank Team Coordination
+ ============================
+   Blood Bank Clearance: 6/15/2011
+   
+   EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*570 contains 
+   changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+   VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+   not alter or modify any VistA Blood Bank software design safeguards or 
+   safety critical elements functions.
+    
+   RISK ANALYSIS: Changes made by patch XU*8*570 have no effect on Blood 
+   Bank software functionality, therefore RISK is none.
+    
+ Installation Instructions
+ =========================
+   
+   1. Users ARE allowed to be on the system during the installation. 
+      However, it is recommended that the patch be installed during
+      non-peak time. It will take about two minutes to install the
+      patch, but you may queue the installation if you wish.
+    
+   2. You DO NOT need to stop TaskMan or the background filers.
+    
+   3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+      This option will load the KIDS package onto your system.
+    
+   4. The patch has now been loaded into a Transport global on your system.
+      You now need to use KIDS to install the Transport global. On the KIDS
+      menu, under the 'Installation' menu, use the following options:
+    
+                   Verify Checksums in Transport Global
+                   Print Transport Global
+                   Compare Transport Global to Current System
+                   Backup a Transport Global
+    
+      On the KIDS menu, under the 'Installation' menu, use the following
+      option:
+                   Install Package(s)  
+                   Select INSTALL NAME:XU*8.0*570
+                                       ========== 
+  
+    Accept the defaults for the following install questions:  
+    Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+    Want KIDS to INHIBIT LOGONs during the install?  NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQ
+    Before: B24858955   After: B25124681  **9,46,94,103,157,570**
+Routine Name: XQ75
+    Before: B51335820   After: B51528192  **47,46,157,253,553,570**
+Routine Name: XQCHK
+    Before: B16817550   After: B16549312  **47,110,149,303,427,503,570**
+Routine Name: XQCHK2
+    Before:  B6390700   After:  B8962094  **427,503,570**
+ 
+Routine list of preceding patches: 503, 553
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : APR 28, 2011
+Completed By: SINGH,GURBIR                  Date Completed: NOV 21, 2011
+Released By : TILLIS,LEWIS                  Date Released : NOV 23, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

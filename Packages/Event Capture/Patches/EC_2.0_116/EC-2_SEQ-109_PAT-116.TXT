@@ -1,0 +1,181 @@
+
+=============================================================================
+Run Date: DEC 10, 2012                     Designation: EC*2*116
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #109                      Status: Released
+                  Compliance Date: JAN 10, 2013
+=============================================================================
+
+Associated patches: (v)EC*2*112    <<= must be installed BEFORE `EC*2*116'
+
+Subject: ECS FY12 GUI Updates
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch addresses two issues identified in the event capture GUI 
+ module since the release of patch EC*2*112.
+  
+ Functional Overview
+ ===================
+  
+ 1) When launched from CPRS, the splash screen does not get closed.  If
+ the Event Capture application is minimized and restored, the splash screen
+ will stay on top of all EC forms.
+  
+ Corrective action: In the CPRS specific Event Capture launch code, we now 
+ close the splash screen.
+  
+ 2) In Data Entry by Patient, when a recent visit was selected as a basis 
+ for adding a new procedure and the user selected a new category and a new 
+ procedure, the associated clinic is no longer set to the default value.  
+ The associated clinic interface was disabled and the user was unable to 
+ change it to the desired value.
+  
+ Corrective action: We removed the code that causes the associated clinic 
+ to be set under these circumstances.  This returns this particular 
+ behavior to that seen in version 109.
+  
+ Components Sent With Patch
+ ==========================
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+  
+ Form Name                       File #            New/Modified/Deleted
+ ----------------------------------------------------------------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+  
+ Mail Group Name                    New/Modified/Deleted
+ -------------------------------------------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+  
+ Options
+ -------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+  
+ Protocol Name                      New/Modified/Deleted
+ -------------------------------------------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+  
+ Security Key
+ ------------
+ N/A
+  
+ Help Frames
+ -----------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 732662 - When starting ECS GUI from the CPRS GUI tools menu the VistA 
+ splash screen does not close and remains on top of all other forms.  The 
+ splash screen will only disappear when ECS is closed.  When ECS is started
+ independently of CPRS, the splash screen behaves appropriately.
+  
+ 726618 and duplicates - On the date entry by patient screen, if a category
+ and procedure are selected such that a new default associated clinic is
+ selected, the user is unable to change the clinic as the box is grayed
+ out.
+  
+ Test Sites
+ ========== 
+  
+  Albuquerque, NM
+  Louisville, KY
+  Northern Indiana (Marion, IN) 
+  Battle Creek, MI
+  
+ Software and Documentation Retrieval
+ ====================================
+  
+ The Event Capture GUI client software is being distributed as a self-
+ extracting Install Shield executable.  The installed executable for
+ this patch is client version 2.1.3.4 with a size of 1670 KB.
+  
+ The GUI client software and documentation for this patch
+ may be retrieved directly using FTP from the ANONYMOUS.SOFTWARE  directory
+ at the following Office of Information (OI) Field Offices:
+  
+   OIFO               FTP ADDRESS                  DIRECTORY
+   ------------       ------------------------     ------------------
+   First available    download.vista.med.va.gov    anonymous.software
+   Albany             ftp.fo-albany.med.va.gov     anonymous.software
+   Hines              ftp.fo-hines.med.va.gov      anonymous.software
+   Salt Lake City     ftp.fo-slc.med.va.gov        anonymous.software
+  
+ The following files will be available:
+  
+     File Name           Format        Description
+     ---------           ------        -----------
+     EC_2_P116.ZIP       BINARY        EC GUI client installer zip file
+  
+ The Technical and User Manuals as well as the Installation Guide and 
+ Release Notes can be obtained via FTP from the following
+ ANONYMOUS.SOFTWARE directories:
+  
+        OI Field Office                  FTP Address
+        ---------------                  ------------------------
+        Albany                           ftp.fo-albany.med.va.gov
+        Hines                            ftp.fo-hines.med.va.gov
+        Salt Lake City                   ftp.fo-slc.med.va.gov
+   
+        File Name           Description
+        ----------------    ----------------------------------------
+        N/A
+  
+ Installation Instructions
+ ========================= 
+  
+  1.  Install the Event Capture GUI client software following the
+      instructions of the EC GUI Installation Guide found on the VistA
+      Documentation Library (VDL) at the following link:
+      http://www.va.gov/vdl/application.asp?appid=39
+  
+  2.  The Event Capture GUI executable file "ECS GUI.exe", that
+      is unbundled after running the install in step #1, may be
+      copied to another machine without additional supporting files.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : NABER,DAVID A                 Date Entered  : JUL 24, 2012
+Completed By: SBERRO,SANDRA                 Date Completed: DEC 04, 2012
+Released By : MORRIS,THERESA                Date Released : DEC 10, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

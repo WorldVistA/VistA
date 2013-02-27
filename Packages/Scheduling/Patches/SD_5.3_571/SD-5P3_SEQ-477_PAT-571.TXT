@@ -1,0 +1,300 @@
+$TXT Created by CURTIS,RICHARD L at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 08/23/11 at 17:01
+=============================================================================
+Run Date: JAN 12, 2012                     Designation: SD*5.3*571
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #477                    Status: Released
+                  Compliance Date: FEB 12, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*536  <<= must be installed BEFORE `SD*5.3*571'
+                    (v)SD*5.3*561  <<= must be installed BEFORE `SD*5.3*571'
+
+Subject: PROVIDER SEC KEY, RR NOT SHOWING IN CPRS, ABILITY TO ADD INACT PROV
+
+Category: 
+  - Routine
+  - Input Template
+  - Other
+
+Description:
+============
+
+ This patch will fix an issue with the Recall Reminder security key for 
+ providers, fix an issue with displaying recall reminders on the CPRS 
+ cover sheet and prohibit selecting an inactive provider when adding a new 
+ recall reminder.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) HD0000000371946 - Security Key for Providers
+ 2) HD0000000392624 - Recall Reminder not showing on CPRS cover sheet
+    Duplicate:
+       HD0000000393154 - Maximum of 2 recalls on a single patient per day
+ 3) HD0000000445051 - Able to enter inactive providers
+    Duplicate:
+       HD0000000457586 - Can a provider be deleted from 403.54
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Texas HCS
+ Spokane, WA
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) HD0000000371946 - Security Key for Providers
+  
+    Problem:
+    --------
+    When adding a provider to the RECALL REMINDERS PROVIDERS file (#403.54)
+    via menu option Edit/Add Clinic Recall Provider [SDRR ADD RECALL
+    PROVIDER], the provider can be set up with a security key (which is
+    optional) in the KEY field (#6).  This is a locally created and named
+    security key that is used solely for this purpose.  Each site can
+    create this security key via menu option Key Management [XUKEYMGMT] and
+    it gets added to the SECURITY KEY file (#19.1).  When a provider is set
+    up with a security key, any actions (adds, edits or deletes) taken on
+    recall reminders for that provider should be restricted to users who
+    possess the security key.  Presently, the edit functionality in menu
+    option Add/Edit Clinic Recall Patient [SDRR CARD ADD] does restrict
+    users without the security key from making edits to recall reminders
+    for any providers set up with the security key.  However, the option
+    allows any users to add new recall reminders for those same
+    providers, when it should restrict users without the security key.
+    Additionally, when recall reminders are deleted/cancelled via menu
+    option Delete/Cancel Clinic Recall Entry [SDRR DELETE RECALL], it
+    allows any users to perform this action even on recall reminders
+    for providers assigned a security key.  Again, it should restrict
+    users who do not hold the security key from taking this action on
+    recall reminders for providers assigned a security key.
+        
+    Resolution:
+    -----------
+    Input Template SDRR RECALL CARD ADD for the RECALL REMINDERS file
+    (#403.5) will be updated to call a new API (Application Programming
+    Interface) called SCREEN(), that has been added to routine SDRRUTL.
+    This new API will screen to check if the provider selected by the
+    user has been assigned the security key and whether the user holds
+    that security key.  If the user does not hold the security key, the
+    following warning message will be displayed:
+  
+         Provider selected is assigned Security Key
+         which you do not hold.
+         Please contact your Recall Coordinator.
+  
+         No Recall Record created.
+  
+    By design, a user is not allowed to perform an early exit (up-arrow
+    out) at any point, once they start to create a new Recall entry.  So,
+    if the user selects a provider assigned a security key, which the
+    user does not hold, the above warning message will be displayed and
+    the user will be immediately exited from the option.  Otherwise, they
+    will be forced to enter another provider in order to exit the option.
+    In addition, new Exit Actions will be added to the standalone menu
+    option Add/Edit Clinic Recall Patient [SDRR CARD ADD] in the OPTION
+    file (#19) and to the Appointment Management [SDAM APPT MGT] protocol
+    Recall Reminder Action [SDRR EVENT] in the PROTOCOL file (#101) to
+    insure the partially created record is properly deleted from the
+    RECALL REMINDERS file (#403.5).
+  
+    The current software for editing existing recall reminders, already
+    screens to insure the user holds the security key, if the provider
+    assigned to the selected recall reminder is assigned the security key
+    and does not allow the user to edit, when applicable.  However, if
+    the user selects an existing recall reminder for a provider who is not
+    assigned the security key, the current software does not prevent the
+    user from changing the provider to another provider who is assigned
+    the security key, which the user does not hold.  In this situation,
+    the user will be presented with the following warning message and then
+    re-prompted for the provider:
+  
+  
+         Provider selected is assigned Security Key
+         which you do not hold.
+         Please contact your Recall Coordinator.
+  
+    The current software permits users to do an early exit (up-arrow out)
+    when performing edits, so in this situation the user will not be
+    immediately exited and the existing Recall Entry will not be deleted.
+    
+    Routine SDRRDEL will also be modified so that when a security key is
+    assigned to a provider, only users holding that key will be able to
+    delete/cancel recall reminders for the provider via option
+    Delete/Cancel Clinic Recall Entry [SDRR DELETE RECALL].
+  
+    If a user does not hold the security key, the following warning 
+    message will be displayed:
+  
+             THE PROVIDER ASSIGNED TO THIS RECALL REMINDER IS
+             ASSIGNED A SECURITY KEY WHICH YOU DO NOT HAVE.
+             PLEASE CONTACT YOUR RECALL COORDINATOR.
+  
+  
+ 2) HD0000000392624 - Recall Reminder not showing on CPRS cover sheet
+  
+    Problem:
+    --------
+    When more than two recall reminders are entered for a patient for the
+    same recall date, only the first one entered and the last one entered
+    display on the CPRS cover sheet.
+  
+    Resolution:
+    -----------
+    Routine SDRROR will be modified so that when more than two recall
+    reminders are entered for a patient for the same recall date, they
+    will all display on the CPRS cover sheet.
+  
+ 3) HD0000000445051 - Able to enter inactive providers
+  
+    Problem:
+    --------
+    When adding a new recall reminder to the RECALL REMINDERS file (#403.5)
+    a user can select a provider who has been inactivated in the RECALL
+    REMINDERS PROVIDERS file (#403.54).
+  
+    Resolution:
+    -----------
+    Input Template SDRR RECALL CARD ADD for the RECALL REMINDERS file
+    (#403.5) will be updated to call a new API (Application Programming
+    Interface) called SCREEN(), that has been added to routine SDRRUTL.
+    This new API will screen to check if the provider selected by the
+    user has been Inactivated in the RECALL REMINDERS PROVIDERS file
+    (#403.54).  If the selected provider has been Inactivated, the
+    following warning message will be displayed:
+  
+         Provider selected is Inactive.
+         Please contact your Recall Coordinator.
+  
+         No Recall Record created.
+  
+    By design, a user is not allowed to perform an early exit (up-arrow
+    out) at any point, once they start to create a new Recall entry.  So,
+    if the user selects a provider who has been Inactivated, the above
+    warning message will be displayed and the user will be immediately
+    exited from the option.  Otherwise, the user will be forced to enter
+    another provider in order to exit the option.
+    In addition, new Exit Actions will be added to the standalone menu
+    option Add/Edit Clinic Recall Patient [SDRR CARD ADD] in the OPTION
+    file (#19) and to the Appointment Management [SDAM APPT MGT] protocol
+    Recall Reminder Action [SDRR EVENT] in the PROTOCOL file (#101) to
+    insure the partially created record is properly deleted from the
+    RECALL REMINDERS file (#403.5).
+  
+    The current software permits users to do an early exit (up-arrow out)
+    when performing edits to existing recall reminders.  So, if the user
+    attempts to edit the provider and selects an Inactive provider or is
+    editing a pre-existing, active recall entry for an Inactive provider
+    and try to accept that provider as the default, the following
+    warning message will display and the user will be re-prompted to
+    select the provider:
+  
+         Provider selected is Inactive.
+         Please contact your Recall Coordinator.
+  
+    In this situation, the existing recall entry will not be deleted if
+    the user does an early exit.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Users can be on the system during the installation of this patch.
+  
+ Installation should take less than 5 minutes.
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+     Select Kernel Installation & Distribution System Option:  INStallation
+                                                               ---
+  
+     1     Load a Distribution
+     2     Verify Checksums in Transport Global
+     3     Print Transport Global
+     4     Compare Transport Global to Current System
+     5     Backup a Transport Global
+     6     Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter SD*5.3*571):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will NOT
+         backup any other changes such as DDs or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed.  It compares all components of the patch
+         (routines, DDs, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+  
+     d.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+  
+ 4.  Use the Install Package(s) option and select the package SD*5.3*571.
+  
+     a. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//", respond NO.
+     
+     b. When prompted "Want KIDS to INHIBIT LOGONS during the install?
+        NO//", respond NO.
+  
+     c.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", respond YES.
+  
+         1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+            Edit/Add Clinic Recall Provider    [SDRR ADD RECALL PROVIDER]
+            Add/Edit Clinic Recall Patient     [SDRR CARD ADD]
+            Appointment Management             [SDAM APPT MGT]
+  
+         2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDRRDEL
+    Before:  B3357699   After:  B6149328  **536,571**
+Routine Name: SDRROR
+    Before:  B4074384   After:  B4946192  **536,561,571**
+Routine Name: SDRRUTL
+    Before: B34000828   After: B50446681  **536,571**
+ 
+Routine list of preceding patches: 561
+
+=============================================================================
+User Information:
+Entered By  : HSI,TUAN                      Date Entered  : SEP 03, 2010
+Completed By: SESSLER,APRIL                 Date Completed: JAN 12, 2012
+Released By : BENBOW,PHYLLIS O              Date Released : JAN 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,122 @@
+$TXT Created by METELLUS,Anaja at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Friday, 10/01/10 at 14:50
+=============================================================================
+Run Date: NOV 22, 2011                     Designation: TIU*1*255
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #241                      Status: Released
+                  Compliance Date: DEC 23, 2011
+=============================================================================
+
+Associated patches: (v)TIU*1*219   <<= must be installed BEFORE `TIU*1*255'
+
+Subject: IDENTIFIED SIGNER DISAPPEARS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch will correct the following issues:
+  
+ 1) Identified Additional Signers disappear from a note after  
+    re-identifying them (using the Identify Additional Signer command in
+    CPRS' Note tab) and then removing them using the "Remove" or "Remove
+    All" button. This occurs although they have already signed the note.
+   
+  
+ Associated Remedy Tickets:
+ =========================
+ 1) HD0000000399602 - Identified Signer Disappears
+       Duplicate(s):
+       HD0000000328759 - Additional Signer removed after being signed
+       
+  
+ Associated NSR(S):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Durham VA Medical Center
+ Edward Hines Jr. VA Hospital
+ Memphis VA Medical Center
+ VA Maryland HCS (Baltimore) 
+  
+ Remedy Ticket Overview:
+ =======================
+ 1) HD0000000399602 - Identified Signer Disappears
+  
+ Problem 1:
+ ----------
+    If an identified signer on a particular note is re-identified through
+    the Identify Additional Signers command, and then you remove it using
+    the "Remove" or "Remove All" button, it disappears from the note.
+  
+ Resolution 1:
+ -------------
+    Routine TIULX is modified to prevent removing an additional signer if
+    he/she has already signed the particular note.
+  
+  
+ ====================INSTALLATION INSTRUCTIONS==========================
+  
+  It is best that this patch be installed after normal business hours.
+  The installation time will take less than 2 minutes.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*255)
+   
+         a.  Verify Checksums in Transport Global - This option will
+             allow you to ensure the integrity of the routines that 
+             are in the transport global.
+         b.  Print Transport Global - This option will allow you to
+             view the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option
+             will allow you to view all changes that will be made when
+             this patch is installed.  It compares all components of
+             this patch(routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a
+             backup message of any routines exported with this patch.
+             It will not backup any other changes such as DD's or 
+             templates.
+   
+    4. Use the Install Package(s) option and select the package
+       TIU*1.0*255
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIULX
+    Before: B45161741   After: B48956159  **1,28,79,100,136,219,255**
+ 
+Routine list of preceding patches: 219
+
+=============================================================================
+User Information:
+Entered By  : METELLUS,ANAJA                Date Entered  : JUN 17, 2010
+Completed By: SHERMAN,BILL                  Date Completed: NOV 10, 2011
+Released By : KREUZ,SHERI B                 Date Released : NOV 22, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

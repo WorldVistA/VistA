@@ -1,0 +1,138 @@
+
+=============================================================================
+Run Date: NOV 05, 2012                     Designation: PSN*4*339
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #327                      Status: Released
+                  Compliance Date: NOV 12, 2012
+=============================================================================
+
+Associated patches: (v)PSN*4*337   <<= must be installed BEFORE `PSN*4*339'
+
+Subject: DATA UPDATE - PPSN NDC MIGRATION PATCH
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Patch PSN*4*339 is a onetime migration patch, that consists of NDC 
+ updates to NDC/UPN file (#50.67). This patch will transition The National
+ Drug File Management system to the Pharmacy Product System National
+ (PPSN). PPSN will convert the manually maintained NDC/UPN file to a system
+ that is supported by a commercial vendor.
+  
+ This patch will add new NDC data but will not make changes to the VA 
+ product file. There should not be any unmatched entries for the VA 
+ Pharmacy ADPAC to rematch. 
+  
+ This patch will generate four e-mail messages but the messages should not 
+ contain any data that the Pharmacy ADPAC will need to act on. But due to 
+ system design the patch will send the following patch messages. Only the
+ allergies update message will contain any data. Edits to the CS federal 
+ schedule on many VA Products is causing the NDF system to update the
+ ingredient list of patient's. Edits from a non-primary to a primary
+ ingredient will fix the underlying allergy for these patient's.
+  
+ DATA UPDATE FOR NDF
+ UPDATED DRUG INTERACTIONS
+ DRUG UNMATCHED FROM NATIONAL DRUG FILE
+ ALLERGIES UPDATE.
+  
+ If there is information found in these messages other than the Allergies 
+ Update, contact NDF Support at VHAPBH NDF in MS Outlook.
+  
+ Associated Remedy Tickets:
+ ==========================
+ N/A
+  
+ Test Sites:
+ ===========
+ CHILLICOTHE, OH
+ NEW YORK HCS, NY
+ OKLAHOMA CITY, OK
+ PALO ALTO HCS
+ PUGET SOUND HCS
+  
+ Installation Instructions and Software Retrieval:
+ =================================================
+  
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory
+ at one of the OI Field Offices.  The preferred method is to FTP
+ the file from DOWNLOAD.VISTA.MED.VA.GOV, which will transmit the file from
+ the first available server.  Alternatively, sites may elect to retrieve 
+ the file from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY
+    Albany              FTP.FO-ALBANY.MED.VA.GOV       anonymous.software
+    Hines               FTP.FO-HINES.MED.VA.GOV        anonymous.software
+    Salt Lake City      FTP.FO-SLC.MED.VA.GOV          anonymous.software
+  
+ The software distribution includes:
+  
+  FILE NAME             DESCRIPTION            BLOCK SIZE
+  
+ NDF4P339.KID            KIDS Build            187323 blocks
+  
+  
+ National Drug File (NDF) and Pharmacy Data Management (PDM) users should
+ be off the system when this patch is installed. Since this is a migration
+ patch, it'll take about 30-90 minutes depending on the system performance.
+ It's recommended to install during non-peak hours.
+  
+ The environment check routine for this patch checks that the installing
+ person is a valid user, and that the patch has not been installed.
+  
+ 1.  Retrieve the file NDF4P339.KID using one of the methods described
+     above.
+  
+ 2.  From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+  
+ 3.  From this menu, select the option Load a Distribution and select
+     NDF4P339.KID.
+  
+ 4.  From this menu, you may choose to use the option Verify Checksums in
+     Transport Global.  When prompted, select PSN*4.0*339. All components of
+     this patch are new, so the option Backup a Transport Global and
+     the option Compare Transport Global to Current System do not have
+     to be invoked.
+  
+ 5.  Use the Install Package(s) option and select PSN*4.0*339.
+  
+ 6.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+     respond NO.
+  
+ 7.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//" respond NO.                      
+  
+ 8.  Note: The environment check routine PSN339E and the post-install
+     routine PSN339D will be automatically deleted from your system upon
+     completion of the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 65
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSN339D
+    Before:       n/a   After: B75477032  **339**
+Routine Name: PSN339E
+    Before:       n/a   After:   B582699  **339**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : OCT 19, 2012
+Completed By: FARMER,LINDA                  Date Completed: NOV 01, 2012
+Released By : TEAGUE,LYN                    Date Released : NOV 05, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

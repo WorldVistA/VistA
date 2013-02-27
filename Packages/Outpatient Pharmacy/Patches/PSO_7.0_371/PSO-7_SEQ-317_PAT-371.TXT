@@ -1,0 +1,147 @@
+$TXT Created by CREMEANS,TERRY at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 02/15/11 at 13:36
+=============================================================================
+Run Date: AUG 22, 2011                     Designation: PSO*7*371
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #317                      Status: Released
+                  Compliance Date: SEP 22, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*348   <<= must be installed BEFORE `PSO*7*371'
+
+Subject: PSO RECALL LIST Report - EOR indicator and column length change.
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve two issues with the List of Patients/Prescriptions 
+ for Recall Notices [PSO RECALL LIST].
+  
+ 1) List of Patients/Prescriptions for Recall Notices is wrapping 
+    incorrectly.
+  
+ 2) PSO RECALL LIST Report needs End-of-Record Identifier.
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1) HD0000000430743 -  List of Patients/Prescriptions for Recall Notices
+                       [PSO RECALL LIST] Wrapping.
+ 2) HD0000000437040 -  PSO RECALL LIST Report needs End-of-Record
+                       Identifier.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ VA Palo Alto HCS
+ Oklahoma City VA Medical Center
+ Ralph H Johnson VA Medical Center - Charleston
+  
+   
+ Remedy Overview:
+ ================
+ 1)  HD0000000430743    List of Patients for Recall Notices Wrapping
+  
+        Problem: 
+        ========
+        The List of Patients/Prescriptions for Recall Notices [PSO RECALL
+        LIST] is wrapping incorrectly and cutting off data.  The original 
+        code was written while using KEA.   The users have been instructed 
+        to begin using REFLECTION which will require the use of 512 instead 
+        of 256 for the column width.
+  
+        Resolution:
+        ===========
+        Change the screen display from -  
+        
+             **  To avoid undesired wrapping of the output data,    **
+             **  please enter '0;256;999' at the 'DEVICE:' prompt.  **
+        To
+             **  To avoid undesired wrapping of the output data,    **
+             **  please enter '0;512;999' at the 'DEVICE:' prompt.  **
+             **  You may need to set your Terminal Session Display  **
+             **            Settings to 512 columns.                 **
+  
+  
+ 2)  HD0000000437040    PSO RECALL LIST Report needs End-of-Record Identifier. 
+       
+        Problem: 
+        ========
+        The List of Patients/Prescriptions for Recall Notices does not have 
+        an end-of-record indicator.
+  
+  
+        Resolution:
+        ===========
+        A new End-of-Record indicator,/*EOR*/, has been added.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  Users should not be
+ generating the List of Patients/Prescription for Recall Notice when 
+ this patch is installed.  It should take less than 2 minutes to install 
+ this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0* 371)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*371.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORLST
+    Before: B56046364   After: B59288392  **348,371**
+Routine Name: PSORLST2
+    Before: B68475218   After: B70157701  **348,371**
+ 
+Routine list of preceding patches: 348
+
+=============================================================================
+User Information:
+Entered By  : CREMEANS,THERESA              Date Entered  : OCT 20, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: AUG 10, 2011
+Released By : FOX,KIRK                      Date Released : AUG 22, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

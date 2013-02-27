@@ -1,0 +1,222 @@
+$TXT Created by CURTIS,RICHARD L at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 05/18/11 at 12:11
+=============================================================================
+Run Date: AUG 31, 2011                     Designation: DVBA*2.7*170
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #155                    Status: Released
+                  Compliance Date: OCT 01, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*12 <<= must be installed BEFORE `DVBA*2.7*170'
+                    (v)DVBA*2.7*118<<= must be installed BEFORE `DVBA*2.7*170'
+
+Subject: UPDATES TO 3 AMIE C&P EXAM WORKSHEETS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will update the Automated Medical Information Exchange (AMIE) 
+ Compensation and Pension (C&P) examination worksheets:  Ear Disease 
+ (#1310), Eating Disorders (Mental Disorders) (#0915) and, Epilepsy and 
+ Narcolepsy (#1220).  New entries with the updated versions of these
+ three worksheets will be created and activated in the AMIE EXAM file 
+ (#396.6).  The existing entries for these three worksheets in the AMIE 
+ EXAM file (#396.6) will be inactivated.
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. HD0000000444631 - Updates for 3 AMIE C&P Exam worksheets
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Batavia VAMC
+ Central Texas VHCS
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. HD0000000444631 - Updates for 3 AMIE C&P Exam worksheets
+  
+ Problem:
+ --------
+ Veterans Benefits Administration Veterans Affairs Central Office has 
+ approved content changes for the following AMIE C&P examination 
+ worksheets:  Ear Disease (#1310), Eating Disorders (Mental Disorders) 
+ (#0915), and Epilepsy and Narcolepsy (#1220).
+  
+ Resolution:
+ -----------
+ a) Created post-init routine DVBA170P, which will inactivate the existing 
+ versions of the Ear Disease, Eating Disorders (Mental Disorders) and 
+ Epilepsy and Narcolepsy C&P examination worksheets in the AMIE EXAM
+ file (#396.6) and activate the updated versions of each worksheet in the 
+ same file.  The current Internal Entry Number (IEN) for each C&P 
+ examination worksheet is:  Ear Disease (203), Eating Disorders (Mental 
+ Disorders) (204) and Epilepsy and Narcolepsy (115).  The new IEN
+ for each C&P examination worksheet will be:  Ear Disease (256), Eating 
+ Disorders (Mental Disorders) (257) and Epilepsy and Narcolepsy (258).
+  
+ b) Created routine DVBCWER5, which will contain the new text for the AMIE 
+ C&P Ear Disease examination worksheet.  Created routine DVBCWER4, 
+ which will access the text routine and print the blank examination 
+ worksheet.
+  
+ c) Created routine DVBCWEA7, which will contain the new text for the AMIE
+ C&P Eating Disorders (Mental Disorders) examination worksheet.  Created 
+ routine DVBCWEA6, which will access the text routines and print the blank 
+ examination worksheet.
+  
+ d) Created routine DVBCWEN3, which will contain the new text for the AMIE 
+ C&P Epilepsy and Narcolepsy examination worksheet.  Created routine
+ DVBCWEN2, which will access the text routine and print the blank 
+ examination worksheet.
+  
+ NEW RECORD ENTRIES:
+ ===================
+ This patch, through post-init routine DVBA170P, will create 3 new records 
+ (IEN=256, IEN=257 and IEN=258) in the AMIE EXAM file (#396.6) for the 
+ updated versions of the AMIE C&P Ear Disease examination worksheet, the
+ AMIE C&P Eating Disorders (Mental Disorders) examination worksheet, and
+ the AMIE C&P Epilepsy and Narcolepsy examination worksheet and inactivate
+ the existing records for these 3 examination worksheets (IEN=203, IEN=204
+ and IEN=115) in the AMIE EXAM file (#396.6).  This is done, per request by
+ the Veterans Benefits Administration Veterans Affairs Central Office, for
+ historical purposes.  The 5th piece of each of the existing records will
+ be updated with an "I", indicating Inactive and the 5th piece of each of
+ the new records will be updated with an "A", indicating Active.
+  
+ Current Records Before Patch:
+ -----------------------------
+ ^DVB(396.6,203,0)="EAR DISEASE^EAR DISEASE^3^DVBCWER2^A^^1310"
+  
+ ^DVB(396.6,204,0)="EATING DISORDERS (MENTAL DISORDERS)^EATING 
+ DISORDERS^14^DVBCWEA4^A^^0915"
+  
+ ^DVB(396.6,115,0)="EPILEPSY AND NARCOLEPSY^EPILEPSY AND 
+ NARCOLEPSY^23^DVBCWEN^A^^1220"
+  
+  
+ Current Records After Patch:
+ ----------------------------
+ ^DVB(396.6,203,0)="EAR DISEASE^EAR DISEASE^3^DVBCWER2^I^^1310"
+  
+ ^DVB(396.6,204,0)="EATING DISORDERS (MENTAL DISORDERS)^EATING 
+ DISORDERS^14^DVBCWEA4^I^^0915"
+  
+ ^DVB(396.6,115,0)="EPILEPSY AND NARCOLEPSY^EPILEPSY AND 
+ NARCOLEPSY^23^DVBCWEN^I^^1220"
+  
+  
+ New Records Added With This Patch:
+ ----------------------------------
+ ^DVB(396.6,256,0)="EAR DISEASE^EAR DISEASE^3^DVBCWER4^A^^1310"
+  
+ ^DVB(396.6,257,0)="EATING DISORDERS (MENTAL DISORDERS)^EATING 
+ DISORDERS^14^DVBCWEA6^A^^0915"
+  
+ ^DVB(396.6,258,0)="EPILEPSY AND NARCOLEPSY^EPILEPSY AND 
+ NARCOLEPSY^23^DVBCWEN2^A^^1220"
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be installed at any time.  Users do not have to be off the
+ system.  Installation will take less than 2 minutes.
+  
+ 1.  Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option:  INStallation
+                                                               ---
+  
+     1    Load a Distribution
+     2    Verify Checksums in Transport Global
+     3    Print Transport Global
+     4    Compare Transport Global to Current System
+     5    Backup a Transport Global
+     6    Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for the INSTALL NAME enter DVBA*2.7*170):
+  
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DD's or templates.
+  
+ 4.  Use the Install Package(s) option and select DVBA*2.7*170.
+  
+     a.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//" answer NO.
+  
+     b.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//" respond YES.
+  
+         1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+            Print Blank C&P Worksheet  [DVBA C PRINT BLANK C&P WORKSHE]
+  
+         2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+  
+ NOTE:  Post-init routine DVBA170P can be deleted after successful patch 
+ installation.  For any issues, please contact the National Help Desk.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;AUG 7,2003;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA170P
+    Before:       n/a   After: B10948530  **170**
+Routine Name: DVBCWEA6
+    Before:       n/a   After:  B2763256  **170**
+Routine Name: DVBCWEA7
+    Before:       n/a   After: B68478899  **170**
+Routine Name: DVBCWEN2
+    Before:       n/a   After:  B2692983  **170**
+Routine Name: DVBCWEN3
+    Before:       n/a   After: B22858134  **170**
+Routine Name: DVBCWER4
+    Before:       n/a   After:  B2582042  **170**
+Routine Name: DVBCWER5
+    Before:       n/a   After: B27923553  **170**
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : MAY 03, 2011
+Completed By: BYRD,TIERRA                   Date Completed: AUG 24, 2011
+Released By : ALEXANDER,DIANNE              Date Released : AUG 31, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

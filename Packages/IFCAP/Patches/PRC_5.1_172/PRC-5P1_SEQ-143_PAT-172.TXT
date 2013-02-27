@@ -1,0 +1,372 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Thursday, 09/13/12 at 12:54
+=============================================================================
+Run Date: JAN 14, 2013                     Designation: PRC*5.1*172
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #143                    Status: Released
+                  Compliance Date: FEB 14, 2013
+=============================================================================
+
+Associated patches: (v)PRC*5.1*139 <<= must be installed BEFORE `PRC*5.1*172'
+                    (v)PRC*5.1*154 <<= must be installed BEFORE `PRC*5.1*172'
+
+Subject: CLRS TRANSMISSION WITH FULL LINUX OS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ 1. Clinical Logistics CLRS TRANSMISSION processing update for those 
+     sites that have migrated to Full LINUX OS.
+  
+  
+ ASSOCIATED NSR(S):
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ St. Cloud VAMC
+ Sioux Falls VAMC
+ Black Hills HCS
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. HD0000000727207 IFCAP - Other: 
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ====================== 
+ 1. HD0000000727207 IFCAP - Other:
+  
+    Problem:
+    --------
+    Site integrated to Full LINUX OS and is no longer able to send monthly
+    CLO PROCUREMENT REPORTS (CLRS) transmission to Austin server.
+  
+  
+    Resolution:
+    -----------                    
+    Modify process for CLRS transmission to contain the proper OS script to
+    transmit CLRS data to Austin server under Full LINUX OS.
+  
+  
+ Routines: PRCHLO4, PRCHLO4A, PRCHLO5
+  
+  
+      ****************  NOTE  ****************
+  
+ Below are the revised patch instructions with the Linux notes added.
+  
+ Updated from 
+ PRC*5.1*83 SEQ #79.
+  
+   
+ Pre-Installation Overview
+ -------------------------
+   
+ The Pre Installation Instructions detail how the System Manager is to 
+ create the extract directory for the CLRS. The extract directory will
+ temporarily contain the station-level data that will be transferred to
+ the CLRS during the FTP process.  
+   
+ Post Installation Overview
+ --------------------------
+   
+ The Post Installation Instructions specify how to schedule the options
+ installed with PRC*5.1*83, the users that should be added to the new mail
+ group, and gives examples of the extract directory parameter setup and
+ validation of that setup.
+  
+ **************************************************************************
+ Only run these PRE and POST installation steps WHEN you are moving to a
+ FULL LINUX SYSTEM otherwise move down to the ALL SITES INSTALLATION 
+ INSTRUCTIONS.
+ **************************************************************************
+  
+ ********* FULL LINUX SYSTEM PRE INSTALLATION INSTRUCTIONS ****************
+    
+ INSTRUCTIONS FOR SETTING UP THE EXTRACT DIRECTORY FOR THE CLRS
+ --------------------------------------------------------------
+    
+ Patch PRC*5.1*83 was created to extract and transmit PO Activity and 
+ GIP module data from each station to a centrally located Report Server
+ employed by the PCLO.
+   
+ In order for each station to communicate with the CLRS, it is
+ important to establish an extract directory to transfer station-
+ level data to the CLRS.
+    
+ The following steps MUST be performed by the System Manager, because
+ Administrative privileges (for VMS, MS Windows or Linux OSs) are needed 
+ in order to perform the tasks required.  
+    
+ Perform all steps relevant to your OS prior to installing this patch.
+    
+ 1. Security Keys and Privileges
+    ----------------------------
+      You will need the following system access or privileges:
+      Massachusetts General Hospital Utility Multi-Programming 
+      System (MUMPS) Programmer
+  
+      Virtual Memory System (VMS) or Microsoft (MS) Windows/New Technology
+      (NT) Administrator.
+   
+ 2.  Station Number Identification
+     -----------------------------
+ NOTE:  Perform this step for each instance of Cache running on
+        your server(s) (single or multiple instances).
+   
+        You should be at the Programmer prompt:  >
+   
+        You will need to obtain the station number from your system.  
+    
+ NOTE:  When your system was configured, a unique number was assigned 
+        to the configuration (single station sites and multi-division 
+        facilities).
+   
+        In order to obtain the station number (used to name the 
+        directory), type the following two commands at the programmer 
+        prompt:
+    
+ >S Y=$$GET1^DIQ(4,$$KSP^XUPARAM("INST")_",",99) [Enter]
+ >W Y [Enter]
+ >500
+    
+ NOTE:  In this example, the site number returned is 500.
+        The command you entered MUST return a site number (which is 
+        set in the variable Y).
+    
+ 3.  Extract Directory Setup
+     -----------------------
+ NOTE:  The naming convention for directories is different for each OS.
+        Be sure to follow the instructions for your particular OS.
+          
+        a.  Cache / VMS Sites
+   
+ NOTE:  The proposed naming convention is a recommendation. A more 
+        knowledgeable and experienced System Manager may choose to setup 
+        the extract directory using existing drives and definitions. The
+        directory name chosen must have the appropriate READ, WRITE, 
+        EXECUTE, and DELETE privileges.
+    
+        1)  Set up a VMS Directory named USER$:[CLRSxxx] where xxx is 
+            the station number. 
+            In our example, the name of the directory would be:  
+            USER$:[CLRS500] (station number obtained in step 2).
+   
+ NOTE:  This directory will store approximately 10MB of data each month,
+        but will be purged of existing data when the next monthly 
+        occurs.  
+   
+        2)  The new directory MUST have READ, WRITE, EXECUTE, and DELETE
+            privileges for the currently installed Cache instance.  
+            You must have administrator privileges when you perform this
+            task in order to assure the directory is setup/created with 
+            the necessary permissions.
+    
+ Following is an example for you to follow to set up the extract 
+ directory.
+    
+ NOTE:  The owner of the directory should be CACHEMGR.
+    
+ $ CREATE/DIRECTORY DISK$:[CLRSnnn] /own=CACHEMGR
+ /PROTECTION=(S:RWED,O:RWED,G:RWED,W:RWED)/LOG
+    
+ NOTE:  Where DISK$=the disk of your choice (e.g. USER$, PQ$, etc. - SYS$
+        is not recommended) and xxx=the station number.
+    
+        3)  Following is an example of the SPOOL directory which is
+            presently configured on your Cache / VMS system. Also, these
+            commands may be performed in VMS to view the SPOOL directory. 
+   
+ NOTE:  Confirm that the extract directory has similar protections and
+        permissions 
+    
+ $ dir user$:[000000]spool.dir/sec
+    
+ Directory USER$:[000000]
+    
+  SPOOL.DIR;1          [CACHEMGR]                       
+  (RWED,RWED,RWED,RWED)
+  (IDENTIFIER=*,OPTIONS=DEFAULT,ACCESS=READ+WRITE+EXECUTE+DELETE)
+    
+ NOTE:  After the extract directory set up is complete, provide the 
+        directory name to the IRM IFCAP Application support person 
+        responsible for the installation of this patch. The extract 
+        directory name will be entered into the PRCPLO EXTRACT
+        DIRECTORY system parameter during patch installation.
+    
+         b.  Cache / MS Windows or NT Sites
+   
+ NOTE:  The proposed naming convention is a recommendation. A more 
+        knowledgeable and experienced System Manager may choose to 
+        setup the extract directory using existing drives and 
+        definitions. The directory name chosen must have the 
+        appropriate READ, WRITE, EXECUTE, and DELETE privileges. 
+   
+         1)   Set up an MS Windows directory named D:\CLRSxxx where xxx 
+              is the station number.
+              In our example, the name of the directory would be:  
+              D:\CLRS500 (station number obtained in step 2).
+   
+ NOTE:  This directory will store approximately 10MB of data each month. 
+        But will be purged of existing data when the next monthly 
+        extract occurs.
+  
+         2)  The new directory MUST have READ, WRITE, EXECUTE, and DELETE
+             privileges for the currently installed MS Windows instance.
+             You must have administrator privileges when you perform this
+             task in order to assure the directory is setup/created with 
+             the necessary permissions.
+    
+           
+         ********************************************************
+         *     SPECIAL INSTRUCTIONS FOR WINDOWS/NT STATIONS     *
+         *                                                      *
+         *  The directory set up in the example is D:\CLRS500.  * 
+         *  You MUST append a backslash ( \ ) to the MS Windows * 
+         *  directory name when you enter a value in the CLO    * 
+         *  System Parameter, for example: D:\CLRS500\          *  
+         *                                                      *
+         ********************************************************
+  
+      c. Linux Sites
+  
+ For sites converting to Linux from either Windows/NT or VMS
+  
+ 1)   Establish a directory that will have read/write/execute/delete 
+      privileges and will be accessible by VistA's TaskManager as 
+      this will run as a background job. 
+  
+ 2)  A preferred naming convention is recommended utilizing your 3 letter 
+     FQDN (Fully Qualified Domain Name or SCD (Site Code Designation)
+     and NNN (where N is the station number). As an example,
+     the standards committee agreed that the equivalent for Linux 
+     will be   /srv/vista/scd/user/clrsnnn.
+  
+     The FQDN/SCD would have been needed when the full LINUX OS was
+     set up.
+  
+     Sites can find this AllSites list for their code at the following 
+     internet address (This will need to be copy and pasted into notepad
+     with the word wrap format off so that this whole address is on one
+     line. Then copy and paste that into your address bar in your browser):
+  
+ http://vaww.sde.portal.va.gov/sites/fo/svcs/ectm/fis/vistaitaniumcommstds/
+ Shared%20Documents/Forms/AllItems.aspx?RootFolder=%2fsites%2ffo%2fsvcs%2fe
+ ctm%2ffis%2fvistaitaniumcommstds%2fShared%20Documents%2fRegion%20Ports%20a
+ nd%20Magic%20Numbers&FolderCTID=&View=%7b826C8328%2d7FEE%2d48A5%2d8B1E%2d8
+ C55DDDD55C1%7d
+  
+ 3)  If your station number was 656 and your FQDN/SCD code was stc, the 
+     directory path you would create would be:
+  
+     /srv/vista/stc/user/clrs656 
+  
+     where stc is the 3 character FQDN/SCD code and 656 is your station
+     number.
+  
+ 4)  Please confirm that the new directory MUST have READ, WRITE,
+     EXECUTE, and DELETE privileges for the currently installed Linux 
+     instance. You must have administrator privileges when you perform 
+     this task in order to assure the directory is setup/created with
+     the necessary permissions. 
+    
+         
+ ***********************************************************************
+ *                SPECIAL INSTRUCTIONS Linux                           * 
+ *                                                                     *
+ * The directory set up in the example is /srv/vista/stc/user/clrs656  * 
+ * You MUST append a forward slash ( / ) to the CLRS Extract Directory *
+ * name when you enter the value via option PRCPLO CLO SYSTEM PARAM,   *
+ * for example:  /srv/vista/stc/user/clrs656/                          *
+ *                                                                     *
+ ***********************************************************************
+  
+  
+  
+  
+  
+  
+    ================ ALL SITES INSTALLATION INSTRUCTIONS =================
+  
+ You may install this patch at any time without interruption to users.
+ **** The task job of CLO GIP Reports (CLRS) [PRCPLO CLO GIP OPTION] 
+ option does not have to be stopped during the installation of this 
+ patch****
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*172)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*172.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit enter. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+          CLO Procurement Reports (CLRS)    [PRCHLO CLO PROCUREMENT]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCHLO4
+    Before:B122818206   After:B178803139  **83,98,130,154,172**
+Routine Name: PRCHLO4A
+    Before: B72354777   After:B103101558  **83,104,98,130,154,172**
+Routine Name: PRCHLO5
+    Before: B87538990   After: B94100528  **83,98,139,172**
+ 
+Routine list of preceding patches: 139, 154
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : JUL 24, 2012
+Completed By: PODLEY,CHRIS                  Date Completed: DEC 27, 2012
+Released By : VASSAR,CAROL                  Date Released : JAN 14, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

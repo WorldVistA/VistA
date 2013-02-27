@@ -1,0 +1,182 @@
+$TXT Created by HAWSEY,JASON at CPRS29.FO-SLC.MED.VA.GOV  (KIDS) on Wednesday, 07/27/11 at 07:16
+=============================================================================
+Run Date: AUG 11, 2011                     Designation: OR*3*346
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: EMERGENCY
+Version : 3       SEQ #292                      Status: Released
+                  Compliance Date: SEP 15, 2011
+=============================================================================
+
+Associated patches: (v)OR*3*272    <<= must be installed BEFORE `OR*3*346'
+
+Subject: PHARMACY RE-ENGINEERING MOCHA V1.0 FOLLOWUP PATCH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ ****************************** Note **************************************
+ This patch is a follow-up patch for Medication Order Check Healthcare 
+ Application v1.0 (MOCHA).  The MOCHA v1.0 patches are being released as a 
+ phased implementation release.  To see current status and target dates for
+ Sites/VISN/Region please refer to the following site:
+ http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+ Sites should have received instructions and guidance on the installation 
+ of MOCHA v1.0 as it is a phased implementation. Patches PSO*7*387,
+ PSJ*5*263, PSS*1*163 and OR*3*346 need to be installed within 2 business 
+ days at all sites that have MOCHA v1.0 installed in production.  The 
+ remaining sites need to install the patches included with this release 
+ immediately after the installation of the MOCHA v1.0 patches.  These 
+ patches may be installed in any order after the MOCHA v1.0 patches are 
+ installed.   (The MOCHA v1.0 installation included patches PSS*1*136, 
+ PSO*7*251, PSJ*5*181, OR*3*272, PSS*1*117, PSO*7*375)
+  
+ **************************************************************************
+  
+ Specific issues handled
+ with this patch include the following:
+  
+ - Vendor DB Down
+    It was reported that upon signature of the order, the Order Check 
+ Detail no longer displayed that Order Checks could not be performed for 
+ Drug Interactions when the First Data Bank (FDB) database was down.  This 
+ issue has been fixed in this patch.
+  
+ - Double Drug-Drug Interaction
+    For certain drug-drug interaction such as Warfarin/Amiodarone, at the 
+ time of signature the user would receive two identical order checks.  
+ This has been fixed in this patch.
+  
+ - Timeout when signing large numbers of med orders
+    A scenario where the user would enter large number of med orders 
+ (either through a large order set or many individual orders) and choose 
+ to sign all of those orders at once was causing CPRS to hang and 
+ eventually timeout.  This would result in a locked patient chart and the 
+ user could not finish signing the orders.  It was determined that 
+ repetitive and unnecessary calls to the FDB server were taking place for 
+ each med order being signed.  This patch modifies the implementation of 
+ how CPRS processes the Pharmacy Enhanced Order Checks to remove the 
+ redundant calls and thus improving Order Check performance which in 
+ turn eliminates the Timeout scenario. This issue is logged as Remedy 
+ Ticket HD0000000502389.
+  
+  
+ Components Sent With Patch
+ --------------------------
+   
+ Routine Summary
+ The following is a list of the routine(s) included in this patch.  The
+ second line of each of these routine(s) will look like:
+   
+   <tab>;;3.0;ORDER ENTRY/RESULTS REPORTING;**[patch list]**;Dec 17, 1997
+   
+ Total number of routines modified: 8
+ Total number of new routines: 0
+ Total number of routines: 8
+  
+ The following is a list of files included in this patch:
+ ========================================================
+ There are no files associated with this patch.   
+  
+ Remedy Tickets:
+ ---------------
+ 502389 
+ 505254
+    
+ Test Sites:
+ -----------
+ Palo Alto HCS
+ VAMC Oklahoma City
+ Heartland West
+ Tuscaloosa
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Below are the basic instructions for this patch. OR*3*346 is part of the 
+ MOCHA 1.0 follow-up release but is being distributed as a standalone 
+ patch.  Thus it can be installed at any time after the required patch 
+ OR*3*272 is installed.
+  
+ It is not necessary to disable any options. You may install 
+ these routines at any time without interruption to users. It should
+ take less than 10 minutes to install this patch.
+  
+   1. Choose the PackMan message containing this patch and invoke the
+          INSTALL/CHECK MESSAGE PackMan option. 
+  
+   2. From the Kernel Installation & Distribution System menu, select 
+          the Installation menu.  
+  
+   3. From this menu, you may select to use the following options: 
+          (when prompted for INSTALL NAME, enter OR*3.0*346)
+    a. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+    b. Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+  
+    c. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this 
+          patch is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+    d. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will 
+          not backup any other changes such as DD's or templates.
+  
+   4. Use the Install Package(s) option and select the package 
+          OR*3.0*346
+  
+   5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+          YES//" respond NO.  
+  
+   6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+          and Protocols? YES//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCHECK
+    Before:B109684735   After:B109156050  **7,56,70,94,141,215,243,293,
+                                           280,346**
+Routine Name: ORCSAVE2
+    Before: B84878914   After: B84601504  **4,27,56,70,94,116,190,157,
+                                           215,265,243,293,280,346**
+Routine Name: ORKCHK6
+    Before: B26186989   After: B26376206  **6,32,74,87,94,123,162,190,
+                                           249,280,272,346**
+Routine Name: ORKPS
+    Before: B59221403   After: B67862708  **6,32,74,94,123,141,190,232,
+                                           316,272,346**
+Routine Name: ORKPS1
+    Before: B67186878   After: B71033645  **232,272,346**
+Routine Name: OROCAPI1
+    Before: B44849780   After: B44857555  **293,346**
+Routine Name: ORQ2
+    Before: B52016905   After: B51979169  **12,56,75,94,141,213,195,243,
+                                           282,293,280,346**
+Routine Name: ORWDXC
+    Before: B52838872   After: B61402104  **10,141,221,243,280,346**
+ 
+Routine list of preceding patches: 272
+
+=============================================================================
+User Information:
+Entered By  : HAWSEY,JASON                  Date Entered  : MAR 14, 2011
+Completed By: SHANE,CLARK                   Date Completed: AUG 11, 2011
+Released By : SCHMIT,BECKY                  Date Released : AUG 11, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

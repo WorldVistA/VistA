@@ -1,0 +1,360 @@
+Released OR*3*338 SEQ #294
+Extracted from mail message
+**KIDS**:OR*3.0*338^
+
+**INSTALL NAME**
+OR*3.0*338
+"BLD",8563,0)
+OR*3.0*338^ORDER ENTRY/RESULTS REPORTING^0^3110705^y
+"BLD",8563,1,0)
+^^2^2^3100927^
+"BLD",8563,1,1,0)
+This patch will correct an index out of bounds error that occurs when a 
+"BLD",8563,1,2,0)
+user adds too many coversheet reports to the CPRS gui.
+"BLD",8563,4,0)
+^9.64PA^^
+"BLD",8563,6)
+6^
+"BLD",8563,6.3)
+8
+"BLD",8563,"ABPKG")
+n
+"BLD",8563,"INID")
+y
+"BLD",8563,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8563,"KRN",.4,0)
+.4
+"BLD",8563,"KRN",.401,0)
+.401
+"BLD",8563,"KRN",.402,0)
+.402
+"BLD",8563,"KRN",.403,0)
+.403
+"BLD",8563,"KRN",.5,0)
+.5
+"BLD",8563,"KRN",.84,0)
+.84
+"BLD",8563,"KRN",3.6,0)
+3.6
+"BLD",8563,"KRN",3.8,0)
+3.8
+"BLD",8563,"KRN",9.2,0)
+9.2
+"BLD",8563,"KRN",9.8,0)
+9.8
+"BLD",8563,"KRN",19,0)
+19
+"BLD",8563,"KRN",19.1,0)
+19.1
+"BLD",8563,"KRN",101,0)
+101
+"BLD",8563,"KRN",409.61,0)
+409.61
+"BLD",8563,"KRN",771,0)
+771
+"BLD",8563,"KRN",779.2,0)
+779.2
+"BLD",8563,"KRN",870,0)
+870
+"BLD",8563,"KRN",8989.51,0)
+8989.51
+"BLD",8563,"KRN",8989.51,"NM",0)
+^9.68A^1^1
+"BLD",8563,"KRN",8989.51,"NM",1,0)
+ORWCV1 COVERSHEET LIST^^0
+"BLD",8563,"KRN",8989.51,"NM","B","ORWCV1 COVERSHEET LIST",1)
+
+"BLD",8563,"KRN",8989.52,0)
+8989.52
+"BLD",8563,"KRN",8989.52,"NM",0)
+^9.68A^^
+"BLD",8563,"KRN",8994,0)
+8994
+"BLD",8563,"KRN","B",.4,.4)
+
+"BLD",8563,"KRN","B",.401,.401)
+
+"BLD",8563,"KRN","B",.402,.402)
+
+"BLD",8563,"KRN","B",.403,.403)
+
+"BLD",8563,"KRN","B",.5,.5)
+
+"BLD",8563,"KRN","B",.84,.84)
+
+"BLD",8563,"KRN","B",3.6,3.6)
+
+"BLD",8563,"KRN","B",3.8,3.8)
+
+"BLD",8563,"KRN","B",9.2,9.2)
+
+"BLD",8563,"KRN","B",9.8,9.8)
+
+"BLD",8563,"KRN","B",19,19)
+
+"BLD",8563,"KRN","B",19.1,19.1)
+
+"BLD",8563,"KRN","B",101,101)
+
+"BLD",8563,"KRN","B",409.61,409.61)
+
+"BLD",8563,"KRN","B",771,771)
+
+"BLD",8563,"KRN","B",779.2,779.2)
+
+"BLD",8563,"KRN","B",870,870)
+
+"BLD",8563,"KRN","B",8989.51,8989.51)
+
+"BLD",8563,"KRN","B",8989.52,8989.52)
+
+"BLD",8563,"KRN","B",8994,8994)
+
+"BLD",8563,"PRE")
+ORZZFACE
+"BLD",8563,"QUES",0)
+^9.62^^
+"BLD",8563,"REQB",0)
+^9.611^^
+"KRN",8989.5,109943,0)
+167;DIC(9.4,^ORWCV1 COVERSHEET LIST^1
+"KRN",8989.5,109943,1)
+ORCV ACTIVE PROBLEMS
+"KRN",8989.5,109944,0)
+167;DIC(9.4,^ORWCV1 COVERSHEET LIST^2
+"KRN",8989.5,109944,1)
+ORCV ALLERGIES
+"KRN",8989.5,109945,0)
+167;DIC(9.4,^ORWCV1 COVERSHEET LIST^3
+"KRN",8989.5,109945,1)
+ORCV POSTINGS
+"KRN",8989.5,109946,0)
+167;DIC(9.4,^ORWCV1 COVERSHEET LIST^4
+"KRN",8989.5,109946,1)
+ORCV ACTIVE MEDICATIONS
+"KRN",8989.5,109947,0)
+167;DIC(9.4,^ORWCV1 COVERSHEET LIST^5
+"KRN",8989.5,109947,1)
+ORCV CLINICAL REMINDERS
+"KRN",8989.5,109948,0)
+167;DIC(9.4,^ORWCV1 COVERSHEET LIST^6
+"KRN",8989.5,109948,1)
+ORCV RECENT LAB RESULTS
+"KRN",8989.5,109949,0)
+167;DIC(9.4,^ORWCV1 COVERSHEET LIST^7
+"KRN",8989.5,109949,1)
+ORCV VITALS
+"KRN",8989.51,4707,-1)
+0^1
+"KRN",8989.51,4707,0)
+ORWCV1 COVERSHEET LIST^List of coversheet reports^1^Sequence^Coversheet Report
+"KRN",8989.51,4707,1)
+P^101.24^Select a report for the coversheet
+"KRN",8989.51,4707,3)
+I $P($G(^ORD(101.24,+Y,0)),"^",8)="C"
+"KRN",8989.51,4707,6)
+N^1:8:2^Enter the sequence in which the report should appear on the Cover Sheet
+"KRN",8989.51,4707,20,0)
+^8989.512^1^1^3100929^^^
+"KRN",8989.51,4707,20,1,0)
+This parameter allows a custom view of the Cover sheet in the CPRS Gui.
+"KRN",8989.51,4707,30,0)
+^8989.513I^4^4
+"KRN",8989.51,4707,30,1,0)
+4^4.2
+"KRN",8989.51,4707,30,2,0)
+2^200
+"KRN",8989.51,4707,30,3,0)
+6^9.4
+"KRN",8989.51,4707,30,4,0)
+3^4
+"MBREQ")
+0
+"ORD",20,8989.51)
+8989.51;20;;;PAR1E1^XPDTA2;PAR1F1^XPDIA3;PAR1E1^XPDIA3;PAR1F2^XPDIA3;;PAR1DEL^XPDIA3(%)
+"ORD",20,8989.51,0)
+PARAMETER DEFINITION
+"PKG",167,-1)
+1^1
+"PKG",167,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",167,20,0)
+^9.402P^^
+"PKG",167,22,0)
+^9.49I^1^1
+"PKG",167,22,1,0)
+3.0^2971217^2980417^1271
+"PKG",167,22,1,"PAH",1,0)
+338^3110705^15000026
+"PKG",167,22,1,"PAH",1,1,0)
+^^2^2^3110705
+"PKG",167,22,1,"PAH",1,1,1,0)
+This patch will correct an index out of bounds error that occurs when a 
+"PKG",167,22,1,"PAH",1,1,2,0)
+user adds too many coversheet reports to the CPRS gui.
+"PRE")
+ORZZFACE
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","ORZZFACE")
+0^^B5064470^n/a
+"RTN","ORZZFACE",1,0)
+ORZZFACE ;SMT/BP-OIFO Patch Pre Install ; 9/28/2010 11:01
+"RTN","ORZZFACE",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**338*;Dec 17, 1997;Build 8
+"RTN","ORZZFACE",3,0)
+ ;
+"RTN","ORZZFACE",4,0)
+ ; This is a pre install routine for patch OR*3*338
+"RTN","ORZZFACE",5,0)
+ ; IA#2686 - ^XTV(8989.5
+"RTN","ORZZFACE",6,0)
+ ;
+"RTN","ORZZFACE",7,0)
+EN ;
+"RTN","ORZZFACE",8,0)
+ N PIEN,ENT,INST,ENTERR,ENTDSP
+"RTN","ORZZFACE",9,0)
+ S PIEN=$O(^XTV(8989.51,"B","ORWCV1 COVERSHEET LIST",0))
+"RTN","ORZZFACE",10,0)
+ S ENT="" F  S ENT=$O(^XTV(8989.5,"AC",PIEN,ENT)) Q:ENT']""  D
+"RTN","ORZZFACE",11,0)
+ . S INST=0 F  S INST=$O(^XTV(8989.5,"AC",PIEN,ENT,INST)) Q:'INST  I (INST<1)!(INST>8) D  Q
+"RTN","ORZZFACE",12,0)
+ . . S ENTERR($O(ENTERR(""),-1)+1)=$$ERR(ENT)
+"RTN","ORZZFACE",13,0)
+ I $D(ENTERR)>0 D MAIL(.ENTERR),ABORT
+"RTN","ORZZFACE",14,0)
+ ;
+"RTN","ORZZFACE",15,0)
+ERR(STR) ;
+"RTN","ORZZFACE",16,0)
+ N OUTPT,FILNM,ENTDSP,INSTDP,ENT,INST
+"RTN","ORZZFACE",17,0)
+ S INST=$P(STR,";"),ENT=$P(STR,";",2)
+"RTN","ORZZFACE",18,0)
+ S FILNM=+$P(ENT,"(",2)
+"RTN","ORZZFACE",19,0)
+ D FILE^DID($S(FILNM:FILNM,1:ENT),"","NAME","OUTPT") S ENTDSP=$G(OUTPT("NAME"))
+"RTN","ORZZFACE",20,0)
+ S INSTDP=$$GET1^DIQ($S(FILNM:FILNM,1:ENT),INST,.01,"E")
+"RTN","ORZZFACE",21,0)
+ S:ENTDSP["DOMAIN" ENTDSP="SYSTEM"
+"RTN","ORZZFACE",22,0)
+ Q ENTDSP_": "_INSTDP
+"RTN","ORZZFACE",23,0)
+ ;
+"RTN","ORZZFACE",24,0)
+MAIL(ARY)  ;
+"RTN","ORZZFACE",25,0)
+ N XMDUZ,XMSUB,XMTEXT,XMY,DIFROM,I,II,MSG
+"RTN","ORZZFACE",26,0)
+ S XMDUZ="OR*3*338",XMSUB="PARAMETER VALIDATION",XMTEXT="MSG(",XMY(DUZ)="",I=1
+"RTN","ORZZFACE",27,0)
+ S MSG(I)="Below is a list of entities which have an instance in parameter",I=I+1
+"RTN","ORZZFACE",28,0)
+ S MSG(I)="ORWCV1 COVERSHEET LIST that does not fall within the valid range of 1-8.",I=I+1
+"RTN","ORZZFACE",29,0)
+ S MSG(I)="These need to be corrected before install of OR*3*338.",I=I+1
+"RTN","ORZZFACE",30,0)
+ S MSG(I)="Please See The OR*3*338 Patch description for more information.",I=I+1
+"RTN","ORZZFACE",31,0)
+ S MSG(I)="",I=I+1
+"RTN","ORZZFACE",32,0)
+ I $D(ARY) S II="" F  S II=$O(ARY(II)) Q:'II  S MSG(I)=" "_ARY(II),I=I+1
+"RTN","ORZZFACE",33,0)
+ E  S MSG(I)="No Entities Found"
+"RTN","ORZZFACE",34,0)
+ D ^XMD
+"RTN","ORZZFACE",35,0)
+ Q
+"RTN","ORZZFACE",36,0)
+ ;
+"RTN","ORZZFACE",37,0)
+ABORT ;
+"RTN","ORZZFACE",38,0)
+ D EN^DDIOL("Installation of OR*3*338 Aborted. Please see mail message for details.")
+"RTN","ORZZFACE",39,0)
+ S XPDQUIT=1
+"RTN","ORZZFACE",40,0)
+ Q
+"RTN","ORZZFACE",41,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",8563,6)
+^294
+**END**
+**END**

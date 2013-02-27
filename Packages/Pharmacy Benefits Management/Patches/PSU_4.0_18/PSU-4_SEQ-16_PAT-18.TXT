@@ -1,0 +1,181 @@
+$TXT Created by THOMPSON,SETH at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 03/30/11 at 10:18
+=============================================================================
+Run Date: JUL 19, 2011                     Designation: PSU*4*18
+Package : PSU - PHARMACY BENEFITS MANAGEMENT  Priority: Mandatory
+Version : 4        SEQ #16                      Status: Released
+                  Compliance Date: AUG 19, 2011
+=============================================================================
+
+Associated patches: (v)PSU*4*13    <<= must be installed BEFORE `PSU*4*18'
+                    (v)PSU*4*15    <<= must be installed BEFORE `PSU*4*18'
+                    (v)PSU*4*16    <<= must be installed BEFORE `PSU*4*18'
+                    (v)PSU*4*17    <<= must be installed BEFORE `PSU*4*18'
+
+Subject: DATE LIMIT PHARMACY BENEFITS MANAGEMENT MANUAL REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes the following issues:
+  
+ 1) When users run reports from the Manual Pharmacy Statistics option [PSU 
+ PBM MANUAL] for a large timeframe, this would cause the XTMP global to
+ fill up in some cases and prevent users from logging into CPRS.
+  
+ 2) Controlled substances are showing up as being linked incorrectly to an 
+ outpatient clinic.
+  
+ 3) Integrated facilities are not correctly distinguished between in 
+ national reports.
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1) HD0000000372048 - Restrict Time Range on PSO COSTMONTH
+ 2) HD0000000276007 - Wrong Division for Order on Procurement Report
+ 3) HD0000000418686 - PBM Extract Lab Data does not identify integrated 
+                      facility correctly
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Edward Hines Jr VA Hospital
+ Oklahoma City VA Medical Center
+ VA Western NY HCS
+  
+ Remedy Overview:
+ ================
+ 1) HD0000000372048 - Restrict Time Range on PSO COSTMONTH
+  
+ Problem:
+ --------
+ When a user run a report from the Manual Pharmacy Statistics option [PSU 
+ PBM MANUAL] for a large date range, it is possible for the XTMP global to
+ fill up and cause other applications, such as CPRS to not work correctly.
+  
+ Solution:
+ ---------
+ Routine PSUCP1 has been modified to display a warning message if a report
+ from Manual Pharmacy Statistics option [PSU PBM MANUAL] is being run with
+ a date range greater than 93 days.
+  
+ WARNING you have chosen a range greater than 93 days.
+ This could potentially create a very large amount of data.
+ This may result in system problems.
+  
+ 2) HD0000000276007 - Wrong Division for Order on Procurement Report
+  
+ Problem:
+ --------
+ In the Pharmacy Benefits Management Procurement report [psu pbm manual],
+ controlled substances are showing up as linked to an outpatient clinic
+ when they should only be tied to the division.
+  
+ Solution:
+ ---------
+ Routine PSUPR2 has been modified to reset the location for each invoice. 
+ The location was being incorrectly carried over from the previously 
+ processed invoice.
+  
+  
+ 3) HD0000000418686 - PBM Extract Lab Data does not identify integrated 
+                      facility correctly
+  
+ Problem:
+ --------
+ When transmitting lab results to the national server, Pharmacy Benefits 
+ Management was not sending the correct station number in the case of 
+ integrated sites. The station number was sent by Health Level Seven 
+ Optimized (HLO) and not PSU. This would send the 3 digit site number
+ instead of the 5 character alpha-numeric value which distinguishes the
+ station.
+  
+ Solution:
+ ---------
+ Routines PSULRHL1, PSULRHL2 and PSULRHL3 have been modified to send and
+ receive the 5 character alpha-numeric station number.
+ File 99999 has also been modified to add a new field to contain the 
+ station number.
+  
+ **Note** This file is not a standard national file and is only used and 
+ located on the CMOP-NAT server. For the most up to date definition at the 
+ time of this release please see the related remedy ticket. 
+  
+  ***********************Warning*****************************
+  *File 99999 should not exist on any server but CMOP-NAT.  *
+  *The definition has been preserved for development and    *
+  *reference purposes only.                                 *
+  ***********************************************************
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch can be installed with users on the system. Installation will
+ take less than 1 minute.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+  
+  3. From this menu, you may select to use the following options
+     (when prompted for INSTALL NAME, enter PSU*4.0*18):
+    a. Backup a Transport Global - this option will create a backup
+       message of any routines exported with the patch. It will NOT
+       backup any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - this option will
+       allow you to view all changes that will be made when the patch
+       is installed. It compares all components of the patch (routines,
+       DDs, templates, etc.).
+    c. Verify Checksums in Transport Global - this option will ensure
+       the integrity of the routines that are in the transport global.
+  
+  4. Use the Install Package(s) option and select the package PSU*4.0*18.
+  
+  5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//" respond NO.
+  
+  6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//" respond NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PHARMACY BENEFITS MANAGEMENT;**[Patch List]**;MARCH, 2005;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSUCP1
+    Before: B88326755   After: B93655899  **15,18**
+Routine Name: PSULRHL1
+    Before: B40583556   After: B46135990  **3,11,16,18**
+Routine Name: PSULRHL2
+    Before: B33793695   After: B36346912  **3,17,18**
+Routine Name: PSULRHL3
+    Before: B37733711   After: B37954984  **3,18**
+Routine Name: PSUPR2
+    Before: B62008793   After: B62683282  **13,18**
+ 
+Routine list of preceding patches: 13, 15, 16, 17
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : AUG 25, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: JUN 29, 2011
+Released By : SWOPE,PATTI L                 Date Released : JUL 19, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

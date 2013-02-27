@@ -1,0 +1,160 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 03/11/10 at 17:24
+=============================================================================
+Run Date: APR 26, 2011                     Designation: PRCA*4.5*264
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #245                    Status: Released
+                  Compliance Date: MAY 26, 2011
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*198<<= must be installed BEFORE `PRCA*4.5*264'
+                    (v)PRCA*4.5*252<<= must be installed BEFORE `PRCA*4.5*264'
+
+Subject: E-PAYMENT ERA
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two issues.  The first issue is regarding the EEOB
+ WORKLIST option showing the unrelated Explanation of Benefit (EOB) results
+ on a selected Electronic Remittance Advice (ERA).
+  
+ The second issue is about the "***Trans # xxxxxxxx REQUEST QUEUED ***"
+ message incorrectly appearing in the [Brief Account Profile] option.
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. HD00000000319757 e-Payment Issue
+    Duplicate: HD00000000250330 E-Payment attaching unrelated EOB's
+ 2. HD00000000349518 Odd Software Behavior
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ LEXINGTON, KY
+ TENNESSEE VALLEY HCS
+ TUCSON, AZ
+ UPSTATE NEW YORK HCS
+  
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ 1. HD0000000319757 e-Payment Issue
+  
+ Problem:
+ --------
+ Site received the Electronic Remittance Advice (ERA) populating some
+ unassociated EOB's for the Pharmacy claims in the EEOB WORKLIST option.
+  
+ Resolution:
+ -----------
+ Modified routine RCDPESR2 to capture the claim number using the service 
+ date in order to update the corresponding EOB's in the Electronic
+ Remittance Advice correctly.
+  
+ 2. HD00000000349518 Odd Software Behavior
+  
+ Problem:
+ --------
+ Site user printed an inquiry to a printer in the [Patient Payment/Refund
+ Transaction History Inquiry] option and then used the caret key to jump
+ to the [Brief Account Profile] option. User then received a "REQUEST
+ QUEUED" message when she selected a bill for viewing.
+  
+ Resolution:
+ -----------
+ Modified routine PRCACOL to kill the IO("Q") variable in the [Patient
+ Payment/Refund Transaction History Inquiry] option when a print 
+ transaction is complete.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system. This patch should be
+ installed at a time when the Accounts Receivable Nightly Process Background
+ Job [PRCA NIGHTLY PROCESS] is not scheduled to run.
+  
+ Install Time - Less than 5 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+             Restart Install of Package(s) 
+             Unload a Distribution 
+             Backup a Transport Global
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter PRCA*4.5*264):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         YES//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//' press <return>.
+      d. When prompted 'Enter options you wish to mark as 'Out Of
+           Order':', enter the following options:
+    
+    EEOB Worklist [RCDPE EDI LOCKBOX WORKLIST]
+    Patient Payment/Refund Transaction History Inquiry [PRCA PAYMENT TRANS
+    HISTORY]
+    Brief Account Profile [PRCAY ACCOUNT PROFILE]
+  
+      e. When prompted 'Enter protocols you wish to mark as 'Out Of
+           Order':', press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCACOL
+    Before: B22482657   After: B22513060  **165,198,264**
+Routine Name: RCDPESR2
+    Before: B78955148   After: B79069253  **173,216,208,230,252,264**
+ 
+Routine list of preceding patches: 198, 252
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : DEC 14, 2009
+Completed By: LANG,MICKEY                   Date Completed: APR 18, 2011
+Released By : GROOMS,CARMEN L               Date Released : APR 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

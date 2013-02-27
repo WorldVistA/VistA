@@ -1,0 +1,127 @@
+$TXT Created by MOORE,JIM at NXT.FO-OAKLAND.MED.VA.GOV  (KIDS) on Monday, 05/09/11 at 11:41
+=============================================================================
+Run Date: SEP 13, 2011                     Designation: XU*8*569
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #459                      Status: Released
+                  Compliance Date: OCT 14, 2011
+=============================================================================
+
+Associated patches: (v)XU*8*155    <<= must be installed BEFORE `XU*8*569'
+                    (v)XU*8*253    <<= must be installed BEFORE `XU*8*569'
+
+Subject: SECONDARY MENU DISPLAY NODES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes a problem in the Menu Manager that has occasionally
+ caused the compiled form of the secondary menus, located in the
+ ^XUTL("XQO",) global, to become corrupted for some users
+ at some sites.   This patch will prevent the problem from occurring. 
+ Also, the post-install routine will recompile the secondary menus for
+ all users. 
+  
+ Specific instances of this problem were verified to occur in Long Beach
+ while using the HealthEVet application RELEASE OF INFORMATION
+ MANAGER, but the problem may also occur in other situations. 
+  
+ Test Sites:
+ ===========
+  Oklahoma City
+  Tomah
+  Bay Pines
+  Long Beach
+  Upper NY HCS
+  
+ Blood Bank Clearance: 8/8/11
+ ============================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*569 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*569 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Remedy:
+ =======
+ HD0000000402811
+ HD0000000479341
+  
+ Installation Instructions:
+ ==========================
+   1. Users are allowed to be on the system during the installation.  It is
+      recommended that the installation be queued during off-peak hours,
+      because the post-installation routine will recompile the secondary
+      menus for all users. The installation could take up to 15 minutes
+  
+   2. You DO NOT need to stop TaskMan or the background filers.
+  
+   3.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   4.  This patch is now loaded into a transport global on your system.
+       The next step is to use KIDS to install the Transport global.  On
+       the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Backup a Transport Global
+          Install Package(s) 
+  
+       When using the Install Package(s) menu option to install the 
+       patch build, you may be asked several questions.  The questions,
+       and the answers you should supply, are shown below.
+  
+        INSTALL NAME: <XU*8.0*569>
+  
+        Want KIDS to Rebuild Menu Trees Upon Completion of Install? <NO>
+  
+        Want KIDS to INHIBIT LOGONS during the install? NO// <NO>
+  
+        Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO// <NO>
+   
+   6. Verify that the install completed.   No further steps are needed. 
+  
+   7.  The post-install routine ^XUP569 should not be deleted.  It can be
+        run again to recompile the user secondary menus without causing
+        any harm. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQCS
+    Before: B34794389   After: B35440882  **15,28,82,116,115,177,188,157,
+                                           253,569**
+Routine Name: XQSET
+    Before: B17368151   After: B21199509  **28,82,155,569**
+Routine Name: XUP569
+    Before:       n/a   After:   B182199  **569**
+ 
+Routine list of preceding patches: 155, 253
+
+=============================================================================
+User Information:
+Entered By  : MOORE,CHARLES J               Date Entered  : APR 20, 2011
+Completed By: SINGH,GURBIR                  Date Completed: AUG 10, 2011
+Released By : HARROD,PAUL                   Date Released : SEP 13, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,181 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 08/03/11 at 07:03
+=============================================================================
+Run Date: SEP 13, 2011                     Designation: PSB*3*57
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #45                      Status: Released
+                  Compliance Date: OCT 14, 2011
+=============================================================================
+
+Associated patches: (v)PSB*3*25    <<= must be installed BEFORE `PSB*3*57'
+                    (v)PSB*3*50    <<= must be installed BEFORE `PSB*3*57'
+
+Subject: BCMA MAH CORRECTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch addresses 3 issues:
+  
+ 1. The BCMA Medication Administration History (MAH) report does not line
+    up the action taken on a medication with the scheduled time of that
+    administration.
+  
+ 2. The BCMA MAH displays active medications on hold when an order is 
+    placed on Provider Hold, an additional action is taken (such as Flag),
+    and then the order is taken off Provider Hold.
+  
+ 3. When an order is created with a start date of today and a first
+    scheduled administration time of tomorrow, the BCMA MAH shows a
+    medication as scheduled to be given today.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+   
+ Associated Remedy ticket(s):
+ ============================
+ 1. HD0000000382261 - med admin history does not reflect admin in sync
+                      with  actual administration time
+  
+ 2. HD0000000278808 - MAH shows active meds on HOLD
+    Duplicate: 
+    HD0000000441332
+  
+ 3. HD0000000446339 - MAH does not capture correct start date
+   
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Minneapolis VAMC
+ Northern Arizona HCS
+ St. Cloud VAMC
+ Western New York HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+   
+ 1. HD0000000382261 - med admin history does not reflect admin in sync 
+                      with  actual administration time
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #1648
+  
+    Problem:
+    --------
+    When a medication has multiple scheduled administration times on a
+    single day, the actual administrations do not sync with the scheduled
+    administration time on the MAH.
+  
+    Resolution:
+    -----------
+    Modified routines PSBOMH1 to lineup the action taken on a medication
+    with the scheduled administration time of the medication on the
+    Medication Administration History Report.
+    Note - This resolution will not apply to IV medications that do not
+    contain an Administration Time or Unit Dose medications that have a
+    dosage form of 'patch'. 
+  
+ 2. HD00000000278808 - MAH shows active meds on HOLD
+  
+    Problem:
+    --------
+    When a medication is placed on Provider Hold in Inpatient Meds, and 
+    another action is taken on that order, such as Flagging the order, the
+    order will continue to display as Held on the BCMA MAH after the order
+    is taken off Provider Hold.
+  
+    Resolution:
+    -----------
+    Routine PSBOMH was modified to set a flag when the order is taken off
+    Provider Hold, and check for that flag when running the report.
+  
+ 3. HD00000000446339 - MAH does not capture correct start date
+  
+    Problem:
+    --------
+    When an order is created in Inpatient Meds with a start date of today
+    and a first scheduled administration of tomorrow, the order will appear
+    on the MAH as to be given today.
+  
+    Resolution:
+    -----------
+    Routine PSBOMH was modified to star out today's administration if the
+    first scheduled admin is not until tomorrow.
+  
+  
+ Installation Instructions:
+ ==========================
+   
+    *************************** NOTE *************************
+    *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+    *  AN EDITED ERROR WILL OCCUR.                           *                  
+    *  The patch should be installed when NO BCMA Client     *
+    *  users are on the system.                              *                 
+    * ********************************************************
+   
+    Installation will take less than 1 minute.
+   
+    Suggested time to install: Non-peak requirement hours.
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*57):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSB*3*57.
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBOMH
+    Before: B79507789   After: B84052119  **5,9,38,57**
+Routine Name: PSBOMH1
+    Before: B80229523   After: B95980208  **6,3,9,11,26,38,45,51,50,57**
+ 
+Routine list of preceding patches: 50
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : JUN 03, 2010
+Completed By: WERNER,GARY                   Date Completed: AUG 24, 2011
+Released By : CONNOLLY,BARBARA              Date Released : SEP 13, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

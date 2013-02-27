@@ -1,0 +1,122 @@
+$TXT Created by DIMICELI,RON at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Monday, 07/25/11 at 10:43
+=============================================================================
+Run Date: SEP 06, 2011                     Designation: XT*7.3*122
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3       SEQ #102                    Status: Released
+                  Compliance Date: OCT 07, 2011
+=============================================================================
+
+Associated patches: (v)XT*7.3*105  <<= must be installed BEFORE `XT*7.3*122'
+
+Subject: Include Comment size in ZTPP & ZTP1
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch Tracking #: 50957941
+  
+ Test Sites:
+ Alexandria, VAMC
+ Central Texas HCS
+ Montana HCS
+ White R. J. VAMC
+  
+ Blood Bank Clearance: 11/24/2009
+  
+ 1. Remedy Ticket HD340864
+ With the new SAC routine size having two components (code and comments) 
+ would it be possible for the size display in the command line utilities 
+ ZTPP and ZTP1 to indicate the component sizes? It would help when reviewing 
+ routines to have both listed as either can trigger a SAC violation. 
+ Otherwise there is no means for developers to review the size of routines 
+ and conformance with the SAC to avoid exceeding the limits.
+  
+ Fix: Added code to calculate the size of the comments and include in the
+ output.
+  
+ Test: Look at output from %ZTPP and by size for %ZTP1.
+  
+  
+ 2. Remedy Ticket HD338270
+ A user at the site is still using KERMIT to transfer data from their PC 
+ to VistA and with the fast connection it now takes less than a second to
+ make the transfer and this caused a DIVIDE error when calculating the
+ throughput.
+  
+ Fix: Check that the divisor is greater than zero.
+  
+ Test: Transport several small files and see if it fails.
+  
+ =========================================================================
+ Installation:
+  
+ >>>Users may remain on the system.
+ >>>TaskMan does *not* need to be stopped.
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the Transport global.
+       On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global
+          Compare Transport Global to Current System
+          Backup a Transport Global
+  
+   3.  Users can remain on the system.
+       This patch can be queued and installed at any time.
+       TaskMan can remain running.
+  
+   4.  Installation will take less than 2 minutes.
+       On the KIDS menu, under the 'Installation' menu, use the following
+       option:
+         Install Package(s)  'XT*7.3*122'
+                              ==========
+       Accept the following defaults.                       
+         
+       Want KIDS to INHIBIT LOGONs during the install? NO//
+  
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+       
+       ZTP1 and ZTPP will be renamed to %ZTP1 and %ZTPP.
+  
+ =========================================================================
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XTKERM1
+    Before:  B9699066   After: B10044288  **122**
+Routine Name: XTKERM2
+    Before: B12598666   After: B13430818  **122**
+Routine Name: ZTP1
+    Before: B17552324   After: B21465548  **20,70,91,105,122**
+Routine Name: ZTPP
+    Before: B11701778   After: B13596537  **4,11,20,70,122**
+ 
+Routine list of preceding patches: 105
+
+=============================================================================
+User Information:
+Entered By  : FORT,WALLY                    Date Entered  : AUG 05, 2009
+Completed By: SINGH,GURBIR                  Date Completed: SEP 01, 2011
+Released By : HARROD,PAUL                   Date Released : SEP 06, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

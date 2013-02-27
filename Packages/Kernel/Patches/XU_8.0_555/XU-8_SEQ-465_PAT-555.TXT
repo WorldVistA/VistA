@@ -1,0 +1,115 @@
+$TXT Created by METCALF,ROGER at RAA.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 07/27/11 at 07:03
+=============================================================================
+Run Date: DEC 07, 2011                     Designation: XU*8*555
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #465                      Status: Released
+                  Compliance Date: JAN 07, 2012
+=============================================================================
+
+
+Subject: Institution Fixes
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket:  - HD0000000404070
+  
+ The $$TF^XUAF4 API returns active treating facilities.  Station
+ 740 - TEXAS VALLEY COASTAL BEND HCS - is a special case exception
+ to the station number scheme, so the logic needed to include this
+ exception.  This patch implements the fix.
+  
+ Remedy ticket:  - HD0000000449781
+  
+ The patch adds VISN 99 to the Institution (#4) file.
+  
+ Remedy ticket:  - HD0000000455552
+  
+ The patch fixes the $$IEN^XUMF API for Institution lookups to use
+ the "D" cross-reference of file 4 instead of "XUMFIDX".  This fixes
+ a CMOP application.
+  
+ Test Sites
+ ==========
+ Oklahoma City, OK
+ Orlando, FL
+ CMOP-National
+  
+ Blood Bank Team Coordination
+ ===========================
+ Clearance: 11/07/2011
+     
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+     
+ RISK ANALYSIS: Changes made by patch XU*8.0*555 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+     
+     
+    Installation Instructions
+    =========================
+     
+    1. Users ARE allowed to be on the system during the installation. 
+       However, it is recommended that the patch be installed during
+       non-peak time. It will take about five minute to install the
+       the patch, but it can be queued if you wish.
+     
+    2. You DO NOT need to stop TaskMan or the background filers.
+     
+    3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+       This option will load the KIDS package onto your system.
+     
+    4. The patch has now been loaded into a Transport global on your 
+       system. You now need to use KIDS to install the Transport global. On
+       the KIDS menu, under the 'Installation' menu, use the following
+       options:
+     
+                    Verify Checksums in Transport Global
+                    Print Transport Global
+                    Compare Transport Global to Current System
+                    Backup a Transport Global
+     
+       On the KIDS menu, under the 'Installation' menu, use the following
+       option:
+                    Install Package(s)  
+                    Select INSTALL NAME:XU*8.0*555
+                                        ========== 
+    
+      Accept the defaults for the following install questions:
+      Want KIDS to INHIBIT LOGONs during the install? NO//
+      Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUAF4
+    Before: B47018536   After: B47165433  **43,112,206,209,232,217,261,
+                                           394,549,555**
+Routine Name: XUMF
+    Before: B99395645   After:B100459281  **218,335,416,555**
+Routine Name: XUMF555P
+    Before:       n/a   After:   B326953  **555**
+ 
+Routine list of preceding patches: 416, 549
+
+=============================================================================
+User Information:
+Entered By  : METCALF,ROGER A               Date Entered  : NOV 16, 2010
+Completed By: SINGH,GURBIR                  Date Completed: DEC 05, 2011
+Released By : TILLIS,LEWIS                  Date Released : DEC 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

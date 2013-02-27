@@ -1,0 +1,176 @@
+$TXT Created by LAM,ESTELLA at DEVCRN.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 09/24/10 at 09:56
+=============================================================================
+Run Date: JAN 26, 2011                     Designation: XU*8*551
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #448                      Status: Released
+                  Compliance Date: FEB 09, 2011
+=============================================================================
+
+
+Subject: SUPPORT FOR NON-PATIENT IDENTITY MANAGEMENT
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  Issue #1
+  In preparation to support non-patient identity management, the Master
+  Patient Index (MPI) has added new fields and several new cross-references
+  to the NEW PERSON (#200) and KERNEL SYSTEM PARAMETERS (#8989.3) files.
+   
+  Trigger cross-references have been added to the following NEW PERSON
+  (#200) file fields.  These cross-references will support the enumeration
+  or correlation of records within the NEW PERSON (#200) file and will
+  track changes to these fields to send updates to MPI.
+  NAME (#.01)
+  STREET ADDRESS 1 (#.111)
+  STREET ADDRESS 2 (#.112)
+  STREET ADDRESS 3 (#.113)
+  CITY (#.114)
+  STATE (#.115)
+  ZIP CODE (#.116)
+  PHONE (HOME) (#.131)
+  SEX (#4)
+  DOB (#5)
+  SSN (#9)
+  NPI (#41.99)
+  DEA# (#53.2)
+  On the VISITED FROM (#8910) 200.06 sub-file:
+  VISITED FROM (#.01)
+  DUZ AT HOME SITE (#2)
+   
+  The following new fields have been added to the NEW PERSON (#200) file.
+  =======================================================================
+  Enumeration Initiated (#900)
+  Enumeration Completed (#901)
+  Requires Transmission (#902)
+   
+  Issue #2
+  APIs were created for the STF, ORG, and PRA Health Level Seven (HL7)
+  PMU segments.  An API was created to trigger the PMU-B01 or PMU-B02
+  HL7 messages.  An API will process the application acknowledgment
+  from the PMU-B01 message setting the Enumeration Completed date and time
+  field and triggering the PMU-B02 message.  These APIs will handle both
+  the B01 and B02 for NEW PERSON (#200) or PAID EMPLOYEE (#450).
+     
+  Issue #3
+  The following new fields have been added to the KERNEL SYSTEM PARAMETER 
+  (#8989.3) file.
+  New Person Enumeration Started (#900)
+  PAID Enumeration Started (#901)
+  New Person Enumeration Finish (#902)
+  PAID Enumeration Finish (#903)
+   
+  The following new entries have been added to the PROTOCOL (#101) file.
+  ======================================================================
+  XUPS B01 CLIENT
+  XUPS B01 CLIENT HLO MPI
+  XUPS B01 SERVER
+  XUPS B01 SERVER HLO MPI
+  XUPS B02 CLIENT
+  XUPS B02 CLIENT HLO MPI 
+  XUPS B02 SERVER
+  XUPS B02 SERVER HLO MPI
+   
+  HL7 APPLICATION PARAMETER: The following HL7 APPLICATION PARAMETER
+  is used for this effort:
+  XUPS APP
+    
+  HLO APPLICATION REGISTRY: The following HLO APPLICATION REGISTRY
+  is used for this effort: 
+  XUPS APP
+     
+  Associated Remedy Ticket(s):
+  ============================
+  There are no associated Remedy Tickets.
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  Bay Pines VA HCS
+  Huntington VAMC
+  VA Montana HCS
+        
+  Blood Bank Team Coordination
+  ============================
+  Clearance: 12/16/10 (from Randy Morton)
+   
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*551 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of VISTA
+  Patches for Effects on VISTA Blood Bank Software. This patch does not
+  alter or modify any VistA Blood Bank software design safeguards or safety
+  critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*551 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+      
+  Installation Instructions:
+  ==========================
+  1.  This patch takes less than 2 minutes to install.  Users ARE allowed
+      to be on the system during the installation.  However, it is
+      recommended that the patch be installed during non-peak time.
+   
+  2.  You DO NOT need to stop TaskMan or the background filers.
+   
+  3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  6.  Use the Install Package(s) option and select the package XU*8.0*551.
+     
+  7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+   
+  8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUMPI
+    Before:       n/a   After:   B198383  **551**
+Routine Name: XUPSB01
+    Before:       n/a   After: B40618948  **551**
+Routine Name: XUPSGS
+    Before:       n/a   After: B37121734  **551**
+Routine Name: XUPSHL7B
+    Before:       n/a   After:  B2863425  **551**
+Routine Name: XUPSORG
+    Before:       n/a   After:  B2758347  **551**
+Routine Name: XUPSPRA
+    Before:       n/a   After:   B921249  **551**
+Routine Name: XUPSSTF
+    Before:       n/a   After: B26190804  **551**
+
+=============================================================================
+User Information:                          Hold Date     : JAN 01, 2011
+Entered By  : OGI,MICHAEL                   Date Entered  : JUL 08, 2010
+Completed By: CHESNEY,CHRISTINE M           Date Completed: DEC 22, 2010
+Released By : TILLIS,LEWIS                  Date Released : JAN 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

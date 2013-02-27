@@ -1,0 +1,148 @@
+$TXT Created by CHANDARANA,RISHAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 11/16/10 at 15:57
+=============================================================================
+Run Date: JUN 13, 2011                     Designation: DVB*4*66
+Package : DVB - HINQ                          Priority: Mandatory
+Version : 4        SEQ #60                      Status: Released
+                  Compliance Date: JUL 14, 2011
+=============================================================================
+
+Associated patches: (v)DVB*4*64    <<= must be installed BEFORE `DVB*4*66'
+
+Subject: FY10 & FY11 UPDATE DISABILITY CONDITION FILE
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ Add ICD9 code mapping to the DISABILITY CONDITION (#31) file.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) HD0000000424652 - ICD 9 Code Changes
+     
+ ASSOCIATED NSR's:
+ =================
+ N/A
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ New Mexico VA HCS - Albuquerque
+ VA San Diego HCS
+ VA East Colorado HCS - Denver
+   
+ REMEDY OVERVIEW:
+ ================
+  
+ 1) HD0000000424652 - ICD 9 Code Changes
+  
+    Problem:
+    --------
+    The Automated Service Connected Designation (ASCD) mapping needs to be
+    updated with the 2010 and 2011 ICD codes for mapping to disability
+    condition codes in the DISABILITY CONDITION (#31) file.
+  
+    Solution:
+    ---------
+    This patch will update the ICD9 code mapping in the file.  The table 
+    below details the update.  
+  
+        Rated                           Full/Partial
+        Disability      ICD9 Code       Match           Add/Delete
+        ----------------------------------------------------------
+        7705            287.4           Full            Delete
+        7332            787.6           Full            Delete
+        7705            287.41          Full            Add
+        7705            287.49          Full            Add
+        5238            724.03          Partial         Add
+        7332            787.60          Full            Add
+        7332            787.61          Full            Add
+        7332            787.62          Full            Add
+        7332            787.63          Full            Add
+        8045            780.33          Full            Add
+        8861            389.9           Full            Add
+        8867            011.90          Partial         Add
+        8882            352.9           Partial         Add
+        8883            352.9           Partial         Add
+        8884            352.9           Partial         Add
+        8886            356.9           Partial         Add
+        8887            356.9           Partial         Add
+        8889            345.90          Partial         Add
+        8892            298.9           Full            Add
+        8893            310.9           Full            Add
+        8894            300.9           Full            Add
+        8895            306.9           Full            Add
+        9007            298.9           Full            Add  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed with users on the system. 
+ Installation will take 5 minutes.
+     
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+     
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+     
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter DVB*4.0*66):
+       a.  Compare Transport Global to Current System  - this option will
+           allow you to view all changes that will be made when the patch
+           is installed.  It compares all components of the patch 
+           (routines, DDs, templates, etc.).
+       b.  Verify Checksums in Transport Global - this option will
+           allow you to ensure the integrity of the routines that are in
+           the transport global.
+       c.  Print Transport Global - this option will allow you to view the
+           components of the KIDS build.
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+     
+   4.  Use the Install Package(s) option and select the package DVB*4.0*66.
+     
+   5.  When prompted, 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', respond NO.
+     
+   6.  When prompted, 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond NO.
+  
+   7.  These post-install routines should be deleted after installation:
+  
+        DVB4P66
+        DVB4P66A
+        DVB4P66E
+        DVB4P66I 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;HINQ;**[Patch List]**;03/25/92;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVB4P66
+    Before:       n/a   After: B32848796  **66**
+Routine Name: DVB4P66A
+    Before:       n/a   After: B20020249  **66**
+Routine Name: DVB4P66E
+    Before:       n/a   After:  B1004941  **66**
+Routine Name: DVB4P66I
+    Before:       n/a   After: B12673385  **66**
+
+=============================================================================
+User Information:
+Entered By  : CHANDARANA,RISHAN             Date Entered  : SEP 27, 2010
+Completed By: PODLEY,CHRIS                  Date Completed: MAY 11, 2011
+Released By : FRANCE,KATHI                  Date Released : JUN 13, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,219 @@
+$TXT Created by TRAN,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Monday, 06/25/12 at 04:55
+=============================================================================
+Run Date: AUG 06, 2012                     Designation: XU*8*601
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #476                      Status: Released
+                  Compliance Date: SEP 06, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*586    <<= must be installed BEFORE `XU*8*601'
+                    (v)XU*8*591    <<= must be installed BEFORE `XU*8*601'
+
+Subject: UPDATE PERSON CLASS FILE 06/2012
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket#: 708767
+ FORUM Tracking Message#: 57365240
+ Blood Bank Clearance:6/4/2012 
+ Test sites:
+ - CENTRAL-TEXAS HCS
+ - HINES, IL VAMC
+ - MONTANA HCS
+            
+                 XU*8*601
+ This patch updates the Person Class file with the following entries:
+  
+     NUMBER  X12 CODE    VA CODE
+     ENTRY   TAXONOMY
+     ------  ----------  -------
+     1180    102L00000X  V010423
+     1181    102X00000X  V010701
+     1182    111NR0400X  V020601
+     1183    207LH0002X  V180204
+     1184    207LP3000X  V180205
+     1185    207PH0002X  V180606
+     1186    207QB0002X  V180708
+     1187    207QH0002X  V180709
+     1188    207RB0002X  V181022
+     1189    207RH0002X  V181023
+     1190    207RS0012X  V181024
+     1191    207RT0003X  V181025
+     1192    207VB0002X  V181808
+     1193    207VH0002X  V181809
+     1194    207YS0012X  V182207
+     1195    2080H0002X  V182518
+     1196    2080S0012X  V182519
+     1197    2080T0004X  V182520
+     1198    2081N0008X  V182605
+     1199    2084B0002X  V182915
+     1200    2084B0040X  V182916
+     1201    2084D0003X  V182917
+     1202    2084H0002X  V182918
+     1203    2084N0008X  V182919
+     1204    2084P0015X  V182920
+     1205    2084S0012X  V182921
+     1206    2085D0003X  V183011
+     1207    2085H0002X  V183012
+     1208    2086H0002X  V183108
+     1209    2088P0231X  V183402
+  
+ Using FileMan Inquire for more information of these entries.
+  
+ For example:
+  
+ VA FileMan 22.0
+  
+ Select OPTION: INQUIRE TO FILE ENTRIES  
+  
+ OUTPUT FROM WHAT FILE: PERSON CLASS// 
+ Select PERSON CLASS PROVIDER TYPE: `1180  Behavioral Health & Social 
+ Service Pro
+ viders     102L00000X  
+                     Psychoanalyst
+          ...OK? Yes//   (Yes)
+  
+ ANOTHER ONE: 
+ STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO// BOTH Computed Fields and Record 
+ Number
+  (IEN)
+  
+ NUMBER: 1180
+ PROVIDER TYPE: Behavioral Health & Social Service Providers
+  CLASSIFICATION: Psychoanalyst         STATUS: Active
+  VA CODE: V010423                      X12 CODE: 102L00000X
+  SPECIALTY CODE: 26
+  DEFINITION:   Psychoanalysis is a comprehensive, theoretical framework 
+  which, when applied to a treatment process, consists of an intensive
+  verbal, therapeutic relationship between an analyst and an analysand
+  which aims for symptom relief, emotional growth, and personal
+  integration. The psychoanalytic treatment process includes, but is not
+  limited to, the recognition of unconscious processes and conflicts; the
+  significance of developmental influences; and the impact of resistances,
+  defenses, transference and countertransference phenomena. Treatment is
+  enhanced by an understanding developed in the analyst's training and
+  personal analysis of unconscious manifestations, such as dreams, slips of
+  the tongue, fantasies and day dreams. Psychoanalytic technique varies in
+  relation to theoretical orientation.  
+   
+  Source:  Registry of Psychoanalysts published by the National Association
+  for the Advancement of Psychoanalysis [1/1/2007: new; 7/1/2007:
+  definition changed, source changed]
+  
+  PROVIDER TYPE CODE (c): 10            CLASSIFICATION CODE (c): 2L
+  AREA OF SPECIALIZATION CODE (c): 00000
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 6/4/2012
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*601 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*601 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*601
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ The routines XU8P601, XU8P601A, and XU8P601B will be deleted at the
+ end of this patch installation. If you wish to get the checksum values,
+ you can 'Verify Checksums in Transport Global' prior to patch install:
+  
+ Select Kernel Installation & Distribution System Option: INstallation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 2  Verify Checksums in Transport Global
+ Select INSTALL NAME:    XU*8.0*601     Loaded from Distribution    
+ 7/27/12@08:08:39
+      => XU*8*601
+  
+ This Distribution was loaded on Jul 27, 2012@08:08:39 with header of 
+    XU*8*601
+    It consisted of the following Install(s):
+      XU*8.0*601
+  
+ Want each Routine Listed with Checksums: Yes//   YES
+ DEVICE: HOME//   Telnet terminal
+  
+ PACKAGE: XU*8.0*601     Jul 27, 2012 8:09 am                          
+ PAGE 1
+ --------------------------------------------------------------------------
+ XU8P601   Calculated   53538518
+ XU8P601A  Calculated  201957940
+ XU8P601B  Calculated  176047575
+  
+    3 Routines checked, 0 failed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**; July 10, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P601
+    Before:       n/a   After: B53538518  **601**
+Routine Name: XU8P601A
+    Before:       n/a   After:B201957940  **601**
+Routine Name: XU8P601B
+    Before:       n/a   After:B176047575  **601**
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : MAY 16, 2012
+Completed By: BEST,LISA                     Date Completed: JUL 30, 2012
+Released By : TILLIS,LEWIS                  Date Released : AUG 06, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

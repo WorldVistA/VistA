@@ -1,0 +1,261 @@
+$TXT Created by WESTRA,HERLAN at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 05/02/12 at 14:53
+=============================================================================
+Run Date: SEP 20, 2012                     Designation: XU*8*593
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #482                      Status: Released
+                  Compliance Date: OCT 20, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*553    <<= must be installed BEFORE `XU*8*593'
+                    (v)XU*8*570    <<= must be installed BEFORE `XU*8*593'
+
+Subject: Fix Record Locks and Checksums
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch fixes errors in four Kernel routines and provides one 
+ enhancement.
+  
+ Routines ^XQ, ^XQ12, and ^XQTOC are modified to display <TEST ACCOUNT>
+ when displaying VistA menus in a test environment, removing the need for
+ systems administrators to modify the routines in test accounts.
+  
+ Routines ^XQ12 and ^XQ83 are modified to The Department of Veterans 
+ Affairs M Programming Standards and Conventions (SAC) policy on using 
+ incremental record locks.  No VistA functionality is changed as a result 
+ of these modifications.
+  
+ A new menu option "User start-up event" [XU USER START-UP] is added to the
+ OPTION file (#19).  The option will provide sites with a means to include
+ interactive user input upon VistA sign-on before the Primary Menu Option
+ is displayed.  Instructions for using the new option will be included in
+ the Kernel manuals in their next maintenance update.
+  
+  
+ Blood Bank Team Coordination
+ ============================
+   
+ Clearance - 05/01/12
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*593 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch 
+ does not alter or modify any VistA Blood Bank software design safeguards
+ or safety critical elements functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8*593 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Options Associated:
+  
+ Option Name                   Type                New/Modified/Deleted
+ -----------                   ----                --------------------
+ "User start-up event"
+ [XU USER START-UP]            X:extended action   New
+ This is an option used exclusively during a VistA user sign-on event. 
+ Items listed in this option are "TYPE:action" options in the OPTION file
+ (#19) that can be used to prompt users for input upon VistA sign-on and
+ before their Primary Menu Option is displayed.  It will not be used for
+ GUI sign-on.  It is called from XQ12.
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  HD0000000408572    Locks left on global XUTL
+  HD0000000583660    PATCH XU*8*570 CHECKSUMS DO NOT AGREE
+  HD0000000595357    LOCAL MOD TO XUS1
+  
+ 1. HD0000000408572 Locks left on global XUTL
+  
+ Problem:
+ -------
+ In MERGE^XQ12, MGPXU^XQ12 and MGSEC^XQ12 the lock and unlock are on 
+ different globals.
+  
+ Resolution:
+ ----------
+ Modified routine ^X12 to add a corresponding "unlock" on global ^XUTL to 
+ match the record lock. Removed the "unlock" on global ^DIC(19, as it was 
+ never locked.  Replaced zero timeout on the incremental locks with global 
+ variable DILOCKTM per SAC 2.4.6.1 "All incremental LOCKS must have a 
+ timeout, the timeout must not be less than the value of the Kernel 
+ variable DILOCKTM".  Also found and corrected incremental record locks in 
+ routine ^XQ83 that violated the same policy.
+  
+ 2. HD0000000583660 PATCH XU*8*570 CHECKSUMS DO NOT AGREE
+  
+ Problem:
+ -------
+ During installation of patch XU*8*570 in the test account, it was found
+ that routine checksums for ^XQ did not agree with the patch description.
+  
+ Resolution:
+ ----------
+ NVSSTAR routines are used to create a test environment from a production
+ Backup. They modify the routine ^XQ to display the text <TEST ACCOUNT> 
+ when prompting for a VistA menu option.  Routine ^XQ was changed to check 
+ for variable DUZ("TEST") before displaying menus, so this modification
+ will no longer be necessary when creating a test environment.  DUZ("TEST")
+ is set in routine ^XQ12 if the VistA system is not a production
+ environment.  Routines are ^XQ12 and ^XQTOC are similarly modified where 
+ menu prompts are created.
+  
+ 3. HD0000000595357 LOCAL MOD TO XUS1
+  
+ Problem:
+ -------
+ VISN 23 has modified ^XUS1 to display alerts when users log into VISTA 
+ when they have IFCAP reconciliations and pending actions to complete.  It 
+ also displays users' locations, phone numbers, room numbers, etc. and 
+ prompts users when information is missing or needs to be updated.  Since 
+ ^XUS1 is a Kernel routine that does not permit local modifications, a 
+ change needs to be considered that will meet local site needs while 
+ maintaining the integrity of Kernel software.
+  
+ Resolution:
+ ----------
+ This patch adds option "User start-up event" [XU USER START-UP] to the
+ OPTION file (#19) and modifies routine ^XQ12 to run the new option upon
+ VistA sign-on before the user's Primary Menu Option is displayed.  The new
+ option allows sites to add local options that include interactive
+ prompting to users upon VistA sign-on.
+  
+ Test Sites: (Patch Tracking Message #57436481)
+ ----------
+ Alexandria VA Medical Center, Pineville LA (502) - Medium
+ Overton Brooks VA Medical Center, Shreveport LA (667) - Large
+ VA Gulf Coast Veterans Health Care System, Biloxi MS (520) - Large
+ VA Tennessee Valley HCS (Nashville, Murfreesboro) TN (626) - Integrated
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Changes were made to the Kernel 8.0 Programmer Manual, Systems Manual, 
+ and Technical Manual for this patch.  The most up-to-date VA Kernel
+ end-user documentation is available on the VHA Software Document Library
+ (VDL) at the following Internet Website:
+      http://www.va.gov/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch should be installed during non-peak hours to minimize 
+ potential for disruption to users. TaskMan should be put in a Wait State
+ (DO WAIT^ZTMKU) and HL7 filers should be stopped. This patch should take
+ less than 10 minutes to install.  NOTE:  When installed in a TEST 
+ environment, your BEFORE checksums might not match the values shown below 
+ if any of the routines were modified to display <TEST ACCOUNT> in the 
+ VistA menu prompts. The checksums should match in a production 
+ environment.
+  
+   =======================================================================
+   This patch contains the routine XQ, which is the primary VistA Menu
+   Manager routine.  WARNING: Taskman should be put in a Wait State (DO
+   WAIT^ZTMKU) while installing this patch.  There is the possibility of a
+   few <EDITED> errors with VistA (non-GUI) users being kicked off the
+   system, but this will not cause any data corruption.  This patch should
+   be installed when system usage is minimal.
+   =======================================================================
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*593):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.  NOTE:  When installed in a TEST environment, 
+         your BEFORE checksums might not match the values shown below if
+         any of the routines were modified to display <TEST ACCOUNT> in
+         the VistA menu prompts.  The checksums should match in a
+         production environment.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Remove TaskMan from Wait State (DO RUN^ZTMKU) and restart HL7 incoming 
+ and outgoing filers.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQ
+    Before: B25124681   After: B26234879  **9,46,94,103,157,570,593**
+Routine Name: XQ12
+    Before: B55364301   After: B72908021  **9,20,46,157,253,593**
+Routine Name: XQ83
+    Before: B32884553   After: B33804424  **60,157,286,593**
+Routine Name: XQTOC
+    Before: B16630019   After: B17537937  **20,157,593**
+ 
+Routine list of preceding patches: 253, 286, 570
+
+=============================================================================
+User Information:
+Entered By  : WESTRA,HERLAN G               Date Entered  : JAN 10, 2012
+Completed By: BEST,LISA                     Date Completed: SEP 07, 2012
+Released By : TILLIS,LEWIS                  Date Released : SEP 20, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

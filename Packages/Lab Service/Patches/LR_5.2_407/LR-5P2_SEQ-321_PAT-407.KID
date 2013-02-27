@@ -1,0 +1,1092 @@
+Released LR*5.2*407 SEQ #321
+Extracted from mail message
+**KIDS**:LR*5.2*407^
+
+**INSTALL NAME**
+LR*5.2*407
+"BLD",8568,0)
+LR*5.2*407^LAB SERVICE^0^3101001^y
+"BLD",8568,1,0)
+^^11^11^3101001^^
+"BLD",8568,1,1,0)
+This patch is a VM lab patch that addresses 2 LOINC mapping issues.
+"BLD",8568,1,2,0)
+ 
+"BLD",8568,1,3,0)
+   1.  When exiting the option "Map Lab Tests to LOINC Codes" after no
+"BLD",8568,1,4,0)
+       matches are found related to an affirmative response to the
+"BLD",8568,1,5,0)
+       prompt "Do you want to see possible LOINC code matches?", an
+"BLD",8568,1,6,0)
+       <UNDEFINED> error results.
+"BLD",8568,1,7,0)
+ 
+"BLD",8568,1,8,0)
+   2.  The option to map a default LOINC code and the option to unmap a
+"BLD",8568,1,9,0)
+       default LOINC code use the same routines.  Sometimes the code gets
+"BLD",8568,1,10,0)
+       confused and prompts one to "unmap" when one is in the "map" 
+"BLD",8568,1,11,0)
+       option.
+"BLD",8568,4,0)
+^9.64PA^^
+"BLD",8568,6.3)
+1
+"BLD",8568,"ABPKG")
+n
+"BLD",8568,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8568,"KRN",.4,0)
+.4
+"BLD",8568,"KRN",.401,0)
+.401
+"BLD",8568,"KRN",.402,0)
+.402
+"BLD",8568,"KRN",.403,0)
+.403
+"BLD",8568,"KRN",.5,0)
+.5
+"BLD",8568,"KRN",.84,0)
+.84
+"BLD",8568,"KRN",3.6,0)
+3.6
+"BLD",8568,"KRN",3.8,0)
+3.8
+"BLD",8568,"KRN",9.2,0)
+9.2
+"BLD",8568,"KRN",9.8,0)
+9.8
+"BLD",8568,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",8568,"KRN",9.8,"NM",1,0)
+LRLNC0^^0^B91104328
+"BLD",8568,"KRN",9.8,"NM",2,0)
+LRLNCMD^^0^B23199384
+"BLD",8568,"KRN",9.8,"NM","B","LRLNC0",1)
+
+"BLD",8568,"KRN",9.8,"NM","B","LRLNCMD",2)
+
+"BLD",8568,"KRN",19,0)
+19
+"BLD",8568,"KRN",19.1,0)
+19.1
+"BLD",8568,"KRN",101,0)
+101
+"BLD",8568,"KRN",409.61,0)
+409.61
+"BLD",8568,"KRN",771,0)
+771
+"BLD",8568,"KRN",779.2,0)
+779.2
+"BLD",8568,"KRN",870,0)
+870
+"BLD",8568,"KRN",8989.51,0)
+8989.51
+"BLD",8568,"KRN",8989.52,0)
+8989.52
+"BLD",8568,"KRN",8994,0)
+8994
+"BLD",8568,"KRN","B",.4,.4)
+
+"BLD",8568,"KRN","B",.401,.401)
+
+"BLD",8568,"KRN","B",.402,.402)
+
+"BLD",8568,"KRN","B",.403,.403)
+
+"BLD",8568,"KRN","B",.5,.5)
+
+"BLD",8568,"KRN","B",.84,.84)
+
+"BLD",8568,"KRN","B",3.6,3.6)
+
+"BLD",8568,"KRN","B",3.8,3.8)
+
+"BLD",8568,"KRN","B",9.2,9.2)
+
+"BLD",8568,"KRN","B",9.8,9.8)
+
+"BLD",8568,"KRN","B",19,19)
+
+"BLD",8568,"KRN","B",19.1,19.1)
+
+"BLD",8568,"KRN","B",101,101)
+
+"BLD",8568,"KRN","B",409.61,409.61)
+
+"BLD",8568,"KRN","B",771,771)
+
+"BLD",8568,"KRN","B",779.2,779.2)
+
+"BLD",8568,"KRN","B",870,870)
+
+"BLD",8568,"KRN","B",8989.51,8989.51)
+
+"BLD",8568,"KRN","B",8989.52,8989.52)
+
+"BLD",8568,"KRN","B",8994,8994)
+
+"BLD",8568,"QUES",0)
+^9.62^^
+"BLD",8568,"REQB",0)
+^9.611^2^2
+"BLD",8568,"REQB",1,0)
+LR*5.2*399^2
+"BLD",8568,"REQB",2,0)
+LR*5.2*280^2
+"BLD",8568,"REQB","B","LR*5.2*280",2)
+
+"BLD",8568,"REQB","B","LR*5.2*399",1)
+
+"MBREQ")
+0
+"PKG",26,-1)
+1^1
+"PKG",26,0)
+LAB SERVICE^LR^CORE LAB SYSTEM
+"PKG",26,20,0)
+^9.402P^1^1
+"PKG",26,20,1,0)
+2^^LRXDRPT
+"PKG",26,20,1,1)
+
+"PKG",26,20,"B",2,1)
+
+"PKG",26,22,0)
+^9.49I^1^1
+"PKG",26,22,1,0)
+5.2^2940927^2950304
+"PKG",26,22,1,"PAH",1,0)
+407^3101001
+"PKG",26,22,1,"PAH",1,1,0)
+^^11^11^3101001
+"PKG",26,22,1,"PAH",1,1,1,0)
+This patch is a VM lab patch that addresses 2 LOINC mapping issues.
+"PKG",26,22,1,"PAH",1,1,2,0)
+ 
+"PKG",26,22,1,"PAH",1,1,3,0)
+   1.  When exiting the option "Map Lab Tests to LOINC Codes" after no
+"PKG",26,22,1,"PAH",1,1,4,0)
+       matches are found related to an affirmative response to the
+"PKG",26,22,1,"PAH",1,1,5,0)
+       prompt "Do you want to see possible LOINC code matches?", an
+"PKG",26,22,1,"PAH",1,1,6,0)
+       <UNDEFINED> error results.
+"PKG",26,22,1,"PAH",1,1,7,0)
+ 
+"PKG",26,22,1,"PAH",1,1,8,0)
+   2.  The option to map a default LOINC code and the option to unmap a
+"PKG",26,22,1,"PAH",1,1,9,0)
+       default LOINC code use the same routines.  Sometimes the code gets
+"PKG",26,22,1,"PAH",1,1,10,0)
+       confused and prompts one to "unmap" when one is in the "map" 
+"PKG",26,22,1,"PAH",1,1,11,0)
+       option.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","LRLNC0")
+0^1^B91104328^B90965448
+"RTN","LRLNC0",1,0)
+LRLNC0 ;DALOI/CA/FHS-MAP LAB TESTS TO LOINC CODES ;1-OCT-1998
+"RTN","LRLNC0",2,0)
+ ;;5.2;LAB SERVICE;**215,232,278,280,399,407**;Sep 27,1994;Build 1
+"RTN","LRLNC0",3,0)
+ ;Reference to ^DD supported by IA # 10154
+"RTN","LRLNC0",4,0)
+ ;=================================================================
+"RTN","LRLNC0",5,0)
+ ; Ask VistA test to map-Lookup in Lab Test file #60
+"RTN","LRLNC0",6,0)
+START ;entry point from option LR LOINC MAPPING
+"RTN","LRLNC0",7,0)
+ S LREND=0,LRLNC1=1 D TEST
+"RTN","LRLNC0",8,0)
+ I $G(LREND) G EXIT
+"RTN","LRLNC0",9,0)
+ I '$G(LRNLT) G START
+"RTN","LRLNC0",10,0)
+ ;MAP DEFAULT
+"RTN","LRLNC0",11,0)
+DEFAULT ;
+"RTN","LRLNC0",12,0)
+ N LRNLTX
+"RTN","LRLNC0",13,0)
+ Q:'$D(^LAM(+$G(LRNLT),0))#2
+"RTN","LRLNC0",14,0)
+ S LRNLTX=LRNLT
+"RTN","LRLNC0",15,0)
+ L +^LAM(LRNLTX,9):2 I '$T W !!?5,"Locked by another user",! H 5 Q
+"RTN","LRLNC0",16,0)
+ W !
+"RTN","LRLNC0",17,0)
+ K DIR S DIR("B")="No"
+"RTN","LRLNC0",18,0)
+ S DIR(0)="Y",DIR("A")="Do you want to edit/delete the Default LOINC code"
+"RTN","LRLNC0",19,0)
+ S DIR("?")="Enter yes to map/change the default LOINC code."
+"RTN","LRLNC0",20,0)
+ D ^DIR K DIR
+"RTN","LRLNC0",21,0)
+ L -^LAM(LRNLTX,9)
+"RTN","LRLNC0",22,0)
+ I $D(DIRUT) Q
+"RTN","LRLNC0",23,0)
+ I $G(LRDFONLY),$D(DIRUT) Q
+"RTN","LRLNC0",24,0)
+ I '$G(LRDFONLY),$D(DIRUT) D EXIT G START
+"RTN","LRLNC0",25,0)
+ I Y D  D DEFAULT^LRLNCMD
+"RTN","LRLNC0",26,0)
+ . Q:'$G(^LAM(LRNLT,9))
+"RTN","LRLNC0",27,0)
+ . W !!?5,"Deleting LOINC Default Code",!
+"RTN","LRLNC0",28,0)
+ . N DA,DR,X,DIE
+"RTN","LRLNC0",29,0)
+ . S DIE="^LAM(",DA=+LRNLT,DR="25///^S X=""@""" D ^DIE
+"RTN","LRLNC0",30,0)
+ L -^LAM(LRNLTX,9)
+"RTN","LRLNC0",31,0)
+ I $G(LRDFONLY) Q
+"RTN","LRLNC0",32,0)
+ I '$P($P($G(^LAB(60,LRIEN,0)),U,5),";",2) Q
+"RTN","LRLNC0",33,0)
+ASKSPEC D SPEC
+"RTN","LRLNC0",34,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNC0",35,0)
+ W !!
+"RTN","LRLNC0",36,0)
+ S DIR(0)="Y",DIR("A")="Do you want to see possible LOINC code matches"
+"RTN","LRLNC0",37,0)
+ S DIR("?")="Enter no if you already know the LOINC code."
+"RTN","LRLNC0",38,0)
+ S DIR("B")="No"
+"RTN","LRLNC0",39,0)
+ D ^DIR K DIR
+"RTN","LRLNC0",40,0)
+ I $D(DIRUT) D EXIT G START
+"RTN","LRLNC0",41,0)
+ I 'Y D ENTERLNC^LRLNCC
+"RTN","LRLNC0",42,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNC0",43,0)
+ I '$G(LRCODE) D LOINC
+"RTN","LRLNC0",44,0)
+ I $G(LRNO) D EXIT G START
+"RTN","LRLNC0",45,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNC0",46,0)
+ I $G(LRNO) D ENTERLNC^LRLNCC
+"RTN","LRLNC0",47,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNC0",48,0)
+CORRECT W !!
+"RTN","LRLNC0",49,0)
+ S DIR(0)="Y",DIR("A")="Is this the correct one"
+"RTN","LRLNC0",50,0)
+ S DIR("B")="Yes"
+"RTN","LRLNC0",51,0)
+ S DIR("?")="Enter no to select a different code."
+"RTN","LRLNC0",52,0)
+ D ^DIR K DIR
+"RTN","LRLNC0",53,0)
+ I $D(DIRUT)!($G(LREND)) D EXIT G START
+"RTN","LRLNC0",54,0)
+ I 'Y,$G(LRNO) D ENTERLNC^LRLNCC
+"RTN","LRLNC0",55,0)
+ I 'Y,'$G(LRNO) D LOINC
+"RTN","LRLNC0",56,0)
+ I $G(LRNO) D EXIT G START
+"RTN","LRLNC0",57,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNC0",58,0)
+ D CHKSPEC
+"RTN","LRLNC0",59,0)
+ I $G(LRNO) D EXIT G START
+"RTN","LRLNC0",60,0)
+ I $G(LRNEXT) G NEXTSP
+"RTN","LRLNC0",61,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNC0",62,0)
+ D LINK
+"RTN","LRLNC0",63,0)
+ I $G(LRNEXT) G NEXTSP
+"RTN","LRLNC0",64,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNC0",65,0)
+ D CHECK
+"RTN","LRLNC0",66,0)
+ I $G(LRNEXT) G NEXTSP
+"RTN","LRLNC0",67,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNC0",68,0)
+ D MAP
+"RTN","LRLNC0",69,0)
+NEXTSP D KILL1
+"RTN","LRLNC0",70,0)
+ G ASKSPEC
+"RTN","LRLNC0",71,0)
+KILL1 I $G(LRNLT) L -^LAM(LRNLT,9)
+"RTN","LRLNC0",72,0)
+ K DA,DIC,DIE,DINUM,DIR,DIRUT,DR,DTOUT,I,LRLNC,LRLNC0,LRLOINC,LRELEC,LRCODE,LRSPEC,LRSPECL,LRSPECN,LRTIME,LRUNTIS,S,Y
+"RTN","LRLNC0",73,0)
+ K DD,D0,DLAYGO,LRLNCNAM,LRNO,LRNOP,LRLNC1,LRNEXT,LRODLCD,X
+"RTN","LRLNC0",74,0)
+ Q
+"RTN","LRLNC0",75,0)
+EXIT I $G(LRNLT) L -^LAM(LRNLT,9)
+"RTN","LRLNC0",76,0)
+ K DA,DIC,DIE,DINUM,DIR,DIRUT,DR,DTOUT,I,LRCODE,LRDATA,LREND,LRLNC,LRLNC0,LRLOINC,LRELEC,LRIEN,LRNLT
+"RTN","LRLNC0",77,0)
+ K LRSPEC,LRSPECL,LRSPECN,LRTIME,LRTEST,LRUNITS,S,Y
+"RTN","LRLNC0",78,0)
+ K DD,DO,DLAYGO,LRLNCNAM,LRNO,LRNOP,LRDEF,LRLNC1,LRNEXT,LROLDCD,X
+"RTN","LRLNC0",79,0)
+ QUIT
+"RTN","LRLNC0",80,0)
+TEST W @IOF
+"RTN","LRLNC0",81,0)
+ K DIR,LRNLT
+"RTN","LRLNC0",82,0)
+ S DIR(0)="PO^60:QENMZ,",DIR("A")="VistA Lab Test to "_$S($D(LRDEL):"Delete/Unmap",1:"Link/Map")_" to LOINC "
+"RTN","LRLNC0",83,0)
+ S DIR("?")="Select Lab test you wish to "_$S($D(LRDEL):"delete/unmap",1:"link/map")_" to a LOINC Code"
+"RTN","LRLNC0",84,0)
+ D ^DIR K DIR
+"RTN","LRLNC0",85,0)
+ I $D(DIRUT)!'Y K DIRUT S LREND=1 K LRDEL Q
+"RTN","LRLNC0",86,0)
+ S LRIEN=+Y,LRTEST=$P(Y,U,2)
+"RTN","LRLNC0",87,0)
+ L +^LAB(60,LRIEN):2 I '$T W !?4,"Another user is editing this entry",! H 5 Q
+"RTN","LRLNC0",88,0)
+ ;Check for RESULT NLT CODE and if not one let enter
+"RTN","LRLNC0",89,0)
+ S LRNLT=+$P($G(^LAB(60,LRIEN,64)),U,2)
+"RTN","LRLNC0",90,0)
+DIS64 D  Q:$G(LR64DIS)
+"RTN","LRLNC0",91,0)
+ . Q:'$G(LRNLT)
+"RTN","LRLNC0",92,0)
+ . N LRLNC,LRANS
+"RTN","LRLNC0",93,0)
+ . S LRLNC=$P($G(^LAM(LRNLT,9)),U) Q:'LRLNC
+"RTN","LRLNC0",94,0)
+ . D GETS^DIQ(64,LRNLT_",",".01;1","E","LRANS")
+"RTN","LRLNC0",95,0)
+ . D GETS^DIQ(95.3,LRLNC_",",".01;80","E","LRANS")
+"RTN","LRLNC0",96,0)
+ . W !,!?5,$G(LRANS(64,LRNLT_",",.01,"E"))_" "_$G(LRANS(64,LRNLT_",",1,"E"))
+"RTN","LRLNC0",97,0)
+ . W !?4,"Default LOINC Already Mapped to:"
+"RTN","LRLNC0",98,0)
+ . W !,$G(LRANS(95.3,LRLNC_",",.01,"E"))_"  "_$G(LRANS(95.3,LRLNC_",",80,"E"))
+"RTN","LRLNC0",99,0)
+ I '$P($G(^LAB(60,LRIEN,64)),U,2) D
+"RTN","LRLNC0",100,0)
+ .W !!,"There is not a RESULT NLT CODE for "_LRTEST,".",!
+"RTN","LRLNC0",101,0)
+ .W !,"You must select one now to continue with the mapping of this test!",!
+"RTN","LRLNC0",102,0)
+ K DIE,DA,DR S DIE="^LAB(60,",DA=+LRIEN,DR=64.1 D ^DIE K DIE,DA,DR
+"RTN","LRLNC0",103,0)
+ L -^LAB(60,LRIEN)
+"RTN","LRLNC0",104,0)
+ I $G(X)<1!($D(Y)) S LRNLT="",LREND=1 K LRDEL Q
+"RTN","LRLNC0",105,0)
+ I $P($G(^LAB(60,+LRIEN,64)),U,2) D
+"RTN","LRLNC0",106,0)
+ . N DIC,DA,DR
+"RTN","LRLNC0",107,0)
+ . S DIC="^LAB(60,",DA=+LRIEN,DR=64 W !! W ?5,"IEN: [",DA,"] ",$P(^LAB(60,LRIEN,0),U) S S=$Y D EN^DIQ
+"RTN","LRLNC0",108,0)
+ W !
+"RTN","LRLNC0",109,0)
+ S LRNLT=$P($G(^LAB(60,LRIEN,64)),U,2)
+"RTN","LRLNC0",110,0)
+ I 'LRNLT G TEST
+"RTN","LRLNC0",111,0)
+ Q
+"RTN","LRLNC0",112,0)
+SPEC ; Ask Specimen- Lookup in Specimen multiple in Lab Test file #60
+"RTN","LRLNC0",113,0)
+ W !!
+"RTN","LRLNC0",114,0)
+LOOK61 K DIC,DA
+"RTN","LRLNC0",115,0)
+ N LRANS
+"RTN","LRLNC0",116,0)
+ Q:'$G(LRIEN)
+"RTN","LRLNC0",117,0)
+ S DIC=61,DIC(0)="AENMZQ"
+"RTN","LRLNC0",118,0)
+ S DIC("A")="Specimen source: "
+"RTN","LRLNC0",119,0)
+ D ^DIC
+"RTN","LRLNC0",120,0)
+ I $D(DUOUT)!($D(DTOUT))!(Y<1) D  Q
+"RTN","LRLNC0",121,0)
+ .K DIC,DA,DTOUT,DUOUT S LREND=1 Q
+"RTN","LRLNC0",122,0)
+ Q:$G(LREND)
+"RTN","LRLNC0",123,0)
+ S LRSPEC=+Y,LRSPECN=Y(0,0)
+"RTN","LRLNC0",124,0)
+ K DA,DIC,DIE,DR
+"RTN","LRLNC0",125,0)
+ I '$L($P($G(^LAB(60,LRIEN,0)),U,5)) G OVER
+"RTN","LRLNC0",126,0)
+ I '$D(^LAB(60,LRIEN,1)) D
+"RTN","LRLNC0",127,0)
+ .S DIC("P")=$P(^DD(60,100,0),"^",2)
+"RTN","LRLNC0",128,0)
+ I '$D(^LAB(60,LRIEN,1,LRSPEC)) D  G:$G(LRNOP) LOOK61
+"RTN","LRLNC0",129,0)
+ . N DIR
+"RTN","LRLNC0",130,0)
+ . W !," Are you sure you want to add this specimen"
+"RTN","LRLNC0",131,0)
+ . S DIR(0)="Y" D ^DIR I Y<1 S LRNOP=1 Q
+"RTN","LRLNC0",132,0)
+ . K DD,DO
+"RTN","LRLNC0",133,0)
+ . S DA(1)=LRIEN,X=LRSPEC,DINUM=X
+"RTN","LRLNC0",134,0)
+ . S DIC="^LAB(60,"_DA(1)_",1,"
+"RTN","LRLNC0",135,0)
+ . S DIC(0)="LMZ",DLAYGO=60.01
+"RTN","LRLNC0",136,0)
+ . D FILE^DICN S LRANS=Y
+"RTN","LRLNC0",137,0)
+ ;A DIE call is made to edit fields in subfile
+"RTN","LRLNC0",138,0)
+ I $P($G(LRANS),U,3) D
+"RTN","LRLNC0",139,0)
+ .S DIE=DIC K DIC
+"RTN","LRLNC0",140,0)
+ .S DA=+Y
+"RTN","LRLNC0",141,0)
+ .S DR="1:9.3"
+"RTN","LRLNC0",142,0)
+ .D ^DIE
+"RTN","LRLNC0",143,0)
+ K DIE,DR,DA
+"RTN","LRLNC0",144,0)
+OVER ;Check to see if linked to file 64.061.  If not, then let enter link.
+"RTN","LRLNC0",145,0)
+ I '$P($G(^LAB(61,LRSPEC,0)),U,9) D
+"RTN","LRLNC0",146,0)
+ .W !!,"There is not a LEDI HL7 code for "_LRSPECN,"."
+"RTN","LRLNC0",147,0)
+ .W !,"You must select one now to continue with the mapping of this test and specimen!",!
+"RTN","LRLNC0",148,0)
+ I '$P($G(^LAB(61,LRSPEC,0)),U,10) D  G:$G(LRNOP) LOOK61
+"RTN","LRLNC0",149,0)
+ .W !!,"There is not a TIME ASPECT for "_LRSPECN,".",!
+"RTN","LRLNC0",150,0)
+ .K DIE,DR,DA S DA=LRSPEC,DIE="^LAB(61,",DR=".09:.0961"
+"RTN","LRLNC0",151,0)
+ .D ^DIE
+"RTN","LRLNC0",152,0)
+ .S:$D(DIRUT) LRNOP=1
+"RTN","LRLNC0",153,0)
+ S LRELEC=$P($G(^LAB(61,LRSPEC,0)),U,9)
+"RTN","LRLNC0",154,0)
+ I 'LRELEC G SPEC
+"RTN","LRLNC0",155,0)
+ S LRSPECL=$P(^LAB(64.061,LRELEC,0),U,2)
+"RTN","LRLNC0",156,0)
+ Q
+"RTN","LRLNC0",157,0)
+LOINC ;Lookup possible LOINC matches in LAB LOINC file #95.3
+"RTN","LRLNC0",158,0)
+ D FIND^DIC(95.3,"","80","M",LRTEST,"","","I $P(^(0),U,8)=$G(LRELEC)!(LRELEC=74!(LRELEC=83)!(LRELEC=114)!(LRELEC=1376)&(""SER PLAS BLD""[$P(^(80),"":"",4)))","","LRLOINC","")
+"RTN","LRLNC0",159,0)
+CODE ;ask which code to map
+"RTN","LRLNC0",160,0)
+ D CODE^LRLNCC
+"RTN","LRLNC0",161,0)
+ Q
+"RTN","LRLNC0",162,0)
+LINK ;Link the code with file 64
+"RTN","LRLNC0",163,0)
+ S LRDATA=$P(^LAB(60,LRIEN,0),U,12) ;DATA NAME
+"RTN","LRLNC0",164,0)
+ I '$L(LRDATA) S LRDATA=$P($G(^LAB(60,+$G(LRIEN),0)),U,4) ;Set to subscript of test.
+"RTN","LRLNC0",165,0)
+ S LRTIME=$P(^LAB(95.3,LRCODE,0),U,7) ;TIME ASPECT
+"RTN","LRLNC0",166,0)
+ S LRUNITS=$P(^LAB(95.3,LRCODE,0),U,14) ;UNITS
+"RTN","LRLNC0",167,0)
+ S LRNLT=+$P(^LAM(LRNLT,0),U,2)
+"RTN","LRLNC0",168,0)
+LR64 ;
+"RTN","LRLNC0",169,0)
+ K DIC,DA
+"RTN","LRLNC0",170,0)
+ W !!
+"RTN","LRLNC0",171,0)
+ S DIC=64,DIC(0)="ENMZ",X=LRNLT
+"RTN","LRLNC0",172,0)
+ D ^DIC
+"RTN","LRLNC0",173,0)
+ I Y<1 D EXIT S LREND=1 Q
+"RTN","LRLNC0",174,0)
+ I $D(DTOUT)!($D(DUOUT)) K DTOUT,DUOUT D EXIT S LREND=1 Q
+"RTN","LRLNC0",175,0)
+ I 'Y S LRNEXT=1 Q
+"RTN","LRLNC0",176,0)
+ S LRNLT=+Y
+"RTN","LRLNC0",177,0)
+ Q
+"RTN","LRLNC0",178,0)
+CHECK ;Check to see if already mapped to a LOINC code
+"RTN","LRLNC0",179,0)
+ I $D(^LAM(LRNLT,5,LRSPEC,1,"B",LRTIME)) D SHOWPRE I $D(DIRUT) D EXIT S LREND=1 Q
+"RTN","LRLNC0",180,0)
+ I Y<1 S LRNEXT=1
+"RTN","LRLNC0",181,0)
+ Q
+"RTN","LRLNC0",182,0)
+MAP ;DIE call to add data name,time aspect,units, LOINC code, and lab test fields
+"RTN","LRLNC0",183,0)
+ L +^LAM(LRNLT,5):1 I '$T W !,"Another user is editing this record" H 5 Q
+"RTN","LRLNC0",184,0)
+ I '$D(^LAM(LRNLT,5,0)) D
+"RTN","LRLNC0",185,0)
+ .S DIC("P")=$P(^DD(64,20,0),"^",2)
+"RTN","LRLNC0",186,0)
+ I '$D(^LAM(LRNLT,5,LRSPEC)) D
+"RTN","LRLNC0",187,0)
+ .K DD,DO
+"RTN","LRLNC0",188,0)
+ .S DA(1)=LRNLT,DA=LRSPEC
+"RTN","LRLNC0",189,0)
+ .S DIC="^LAM("_DA(1)_",5,",DIC(0)="L",DLAYGO=64,X=LRSPEC,DINUM=X
+"RTN","LRLNC0",190,0)
+ .D FILE^DICN
+"RTN","LRLNC0",191,0)
+ I '$D(^LAM(LRNLT,5,LRSPEC,1,0)) D
+"RTN","LRLNC0",192,0)
+ .S DIC("P")=$P(^DD(64.01,30,0),"^",2)
+"RTN","LRLNC0",193,0)
+ S DA(2)=LRNLT,DA(1)=LRSPEC,X=LRTIME,DINUM=X
+"RTN","LRLNC0",194,0)
+ S DIC="^LAM("_DA(2)_",5,"_DA(1)_",1,"
+"RTN","LRLNC0",195,0)
+ I '$D(^LAM(LRNLT,5,LRSPEC,1,LRTIME)) D
+"RTN","LRLNC0",196,0)
+ .K DD,DO
+"RTN","LRLNC0",197,0)
+ .S DIC(0)="L",DLAYGO=64
+"RTN","LRLNC0",198,0)
+ .D FILE^DICN
+"RTN","LRLNC0",199,0)
+ S DA=LRTIME
+"RTN","LRLNC0",200,0)
+ K DIE,DR S DIE=DIC K DIC
+"RTN","LRLNC0",201,0)
+ S DR="1////"_LRUNITS_";2////"_LRDATA_";3////"_LRIEN_";4////"_LRCODE
+"RTN","LRLNC0",202,0)
+ D ^DIE
+"RTN","LRLNC0",203,0)
+ L -^LAM(LRNLT,5)
+"RTN","LRLNC0",204,0)
+ ;HERE SHOW WHAT WAS MAPPED
+"RTN","LRLNC0",205,0)
+ W @IOF
+"RTN","LRLNC0",206,0)
+ W !!
+"RTN","LRLNC0",207,0)
+ W !,"NLT: ",$P($G(^LAM(LRNLT,0)),U)
+"RTN","LRLNC0",208,0)
+ W !,"WKLD CODE: ",$P($G(^LAM(LRNLT,0)),U,2)
+"RTN","LRLNC0",209,0)
+ W !,"SPECIMEN: ",$P($G(^LAB(61,LRSPEC,0)),U)
+"RTN","LRLNC0",210,0)
+ K DIC,DR
+"RTN","LRLNC0",211,0)
+ S DIC=DIE
+"RTN","LRLNC0",212,0)
+ S S=$Y
+"RTN","LRLNC0",213,0)
+ D EN^DIQ
+"RTN","LRLNC0",214,0)
+INDEX60 ;Stores LOINC code in Laboratory Test file (#60) so know what tests are mapped.
+"RTN","LRLNC0",215,0)
+ Q:'$L($P($G(^LAB(60,LRIEN,0)),U,5))  ;set only atomic tests
+"RTN","LRLNC0",216,0)
+ N LRDA,LRFDA,LRERR
+"RTN","LRLNC0",217,0)
+ I '$G(^LAB(60,LRIEN,1,LRSPEC,0)) D
+"RTN","LRLNC0",218,0)
+ . K LRFDA,LRDA
+"RTN","LRLNC0",219,0)
+ . S LRFDA(1,60.01,"+1,"_LRIEN_",",.01)=LRSPEC
+"RTN","LRLNC0",220,0)
+ . S LRDA(1)=LRSPEC
+"RTN","LRLNC0",221,0)
+ . D UPDATE^DIE("","LRFDA(1)","LRDA","LRERR")
+"RTN","LRLNC0",222,0)
+ Q:$D(LRERR)
+"RTN","LRLNC0",223,0)
+ K LRFDA
+"RTN","LRLNC0",224,0)
+ S LRFDA(2,60.01,LRSPEC_","_LRIEN_",",95.3)=LRCODE
+"RTN","LRLNC0",225,0)
+ D FILE^DIE("","LRFDA(2)","LRERR")
+"RTN","LRLNC0",226,0)
+ Q
+"RTN","LRLNC0",227,0)
+SHOWPRE ;DISPLAY LOINC CODE ALREADY MAPPED TO NLT
+"RTN","LRLNC0",228,0)
+ S LRLNC=$P($G(^LAM(LRNLT,5,LRSPEC,1,LRTIME,1)),U)
+"RTN","LRLNC0",229,0)
+ W !!,"This test and specimen is already mapped to:"
+"RTN","LRLNC0",230,0)
+ W !,"LOINC code: ",LRLNC,"  ",$G(^LAB(95.3,+LRLNC,80))
+"RTN","LRLNC0",231,0)
+ W !
+"RTN","LRLNC0",232,0)
+ K DIR S DIR("B")="No"
+"RTN","LRLNC0",233,0)
+ S DIR(0)="Y",DIR("A")="Do you want to change this mapping"
+"RTN","LRLNC0",234,0)
+ S DIR("?")="If you enter yes, the current LOINC code will be overwritten with the LOINC code that you have chosen."
+"RTN","LRLNC0",235,0)
+ D ^DIR K DIR
+"RTN","LRLNC0",236,0)
+ Q 
+"RTN","LRLNC0",237,0)
+CHKSPEC ;Check that specimen of LOINC code same as specimen of test
+"RTN","LRLNC0",238,0)
+ I LRLNC0(8)=$G(LRELEC) Q
+"RTN","LRLNC0",239,0)
+ I (LRLNC0(8)=74!(LRLNC0(8)=83)!(LRLNC0(8)=114)!(LRLNC0(8)=1376))&($G(LRELEC)=74!($G(LRELEC)=83)!($G(LRELEC)=114)!($G(LRELEC)=1376)) Q
+"RTN","LRLNC0",240,0)
+ W !!,"The LOINC code that you have selected does not have the"
+"RTN","LRLNC0",241,0)
+ W !,"same specimen that you chose to map."
+"RTN","LRLNC0",242,0)
+ S DIR(0)="Y",DIR("A")="Are you sure you want to do this"
+"RTN","LRLNC0",243,0)
+ S DIR("?")="If you enter yes, the test will be mapped to this LOINC code."
+"RTN","LRLNC0",244,0)
+ S DIR("B")="Yes"
+"RTN","LRLNC0",245,0)
+ D ^DIR K DIR
+"RTN","LRLNC0",246,0)
+ I $D(DIRUT) S LREND=1 Q
+"RTN","LRLNC0",247,0)
+ I Y<1 S LRNO=1
+"RTN","LRLNC0",248,0)
+ Q
+"RTN","LRLNC0",249,0)
+6206 ;LOINC mapping ANTIMICROBIAL [^LAB(62.060)]
+"RTN","LRLNC0",250,0)
+ W !!
+"RTN","LRLNC0",251,0)
+ D EXITMI
+"RTN","LRLNC0",252,0)
+ S (LRDEL,LRDFONLY)=1
+"RTN","LRLNC0",253,0)
+ S DIR(0)="PO^62.06:QENMZ",DIR("A")="Select Antimicrobial "
+"RTN","LRLNC0",254,0)
+ S DIR("?")="Select Antimicrobial Susceptibility Drug"
+"RTN","LRLNC0",255,0)
+ D ^DIR K DIR
+"RTN","LRLNC0",256,0)
+ I $D(DIRUT)!(Y<1) K DIRUT D EXITMI Q
+"RTN","LRLNC0",257,0)
+ S LRIEN=Y,LRTEST=$P(Y(0),U,2)
+"RTN","LRLNC0",258,0)
+ L +^LAB(62.06,LRIEN):2 I '$T W !?4,"Being edited by another user" H 5 G 6206
+"RTN","LRLNC0",259,0)
+ ;Display Mapped code
+"RTN","LRLNC0",260,0)
+ S (LRNLTX,LRNLT)=+$P($G(^LAB(62.06,+LRIEN,64)),U)
+"RTN","LRLNC0",261,0)
+ I LRNLT D
+"RTN","LRLNC0",262,0)
+ . N LR64DIS
+"RTN","LRLNC0",263,0)
+ . S LR64DIS=1 D DIS64
+"RTN","LRLNC0",264,0)
+ D
+"RTN","LRLNC0",265,0)
+ . N DIE,DA,DR
+"RTN","LRLNC0",266,0)
+ . S DIE="^LAB(62.06,",DIC=DIE,DA=+LRIEN,DR=64 D ^DIE
+"RTN","LRLNC0",267,0)
+ L -^LAB(62.06,LRIEN)
+"RTN","LRLNC0",268,0)
+ I '$G(^LAB(62.06,+LRIEN,64))!($D(DTOUT))!($D(DUOUT)) G 6206
+"RTN","LRLNC0",269,0)
+ S LRDATA="LAB(62.06,"_+LRIEN_",",LRIEN=+LRIEN
+"RTN","LRLNC0",270,0)
+ S LRNLT=$P($G(^LAB(62.06,+LRIEN,64)),U)
+"RTN","LRLNC0",271,0)
+ I LRNLT S LRTEST=$$GET1^DIQ(64,LRNLT_",",.01,"ERR","ANS")
+"RTN","LRLNC0",272,0)
+ I LRNLT W ! D DEFAULT
+"RTN","LRLNC0",273,0)
+ G 6206
+"RTN","LRLNC0",274,0)
+ Q
+"RTN","LRLNC0",275,0)
+EXITMI ;Clean up 6206 variables.
+"RTN","LRLNC0",276,0)
+ K ANS,DA,DIC,DIE,DIR,DIRUT,DR,DTOUT,DUOUT,ERR,LRANS,LRDATA,LRDEF,LRDFONLY,LRNLT,LRNLTX,LRIEN,LRTEST
+"RTN","LRLNC0",277,0)
+ K LRDEL,LRDFONLY,X,Y
+"RTN","LRLNC0",278,0)
+ Q
+"RTN","LRLNCMD")
+0^2^B23199384^B22924919
+"RTN","LRLNCMD",1,0)
+LRLNCMD ;DALOI/CA/FHS-MAP LAB TESTS TO DEFAULT LOINC CODES ;1-MAY-1999
+"RTN","LRLNCMD",2,0)
+ ;;5.2;LAB SERVICE;**232,278,280,407**;Sep 27,1994;Build 1
+"RTN","LRLNCMD",3,0)
+ ;=================================================================
+"RTN","LRLNCMD",4,0)
+ ; Ask VistA test to map-Lookup in Lab Test file #60
+"RTN","LRLNCMD",5,0)
+START ;entry point from option LR LOINC MAPPING
+"RTN","LRLNCMD",6,0)
+ Q:$D(LRDFONLY)
+"RTN","LRLNCMD",7,0)
+ S LREND=0 D TEST
+"RTN","LRLNCMD",8,0)
+ I $G(LREND) G EXIT
+"RTN","LRLNCMD",9,0)
+ I '$G(LRNLT) G START
+"RTN","LRLNCMD",10,0)
+DEFAULT ;ENTRY POINT FROM LRLNC0
+"RTN","LRLNCMD",11,0)
+ W !
+"RTN","LRLNCMD",12,0)
+ S DIR(0)="Y",DIR("A")="Do you want to see possible LOINC code matches"
+"RTN","LRLNCMD",13,0)
+ S DIR("?")="Enter no if you already know the LOINC code."
+"RTN","LRLNCMD",14,0)
+ S DIR("B")="No"
+"RTN","LRLNCMD",15,0)
+ D ^DIR K DIR
+"RTN","LRLNCMD",16,0)
+ I $D(DIRUT),$G(LRLNC1) Q
+"RTN","LRLNCMD",17,0)
+ I $D(DIRUT) D EXIT G START
+"RTN","LRLNCMD",18,0)
+ I 'Y D ENTERLNC^LRLNCC
+"RTN","LRLNCMD",19,0)
+ I $G(LREND),$G(LRLNC1) K LREND Q
+"RTN","LRLNCMD",20,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNCMD",21,0)
+ I '$G(LRCODE) D LOINC
+"RTN","LRLNCMD",22,0)
+ I $G(LRNO),$G(LRLNC1) K LREND Q
+"RTN","LRLNCMD",23,0)
+ I $G(LRNO) D EXIT G START
+"RTN","LRLNCMD",24,0)
+ I $G(LREND),$G(LRLNC1) K LREND Q
+"RTN","LRLNCMD",25,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNCMD",26,0)
+ I $G(LRNO) D ENTERLNC^LRLNCC
+"RTN","LRLNCMD",27,0)
+ I $G(LREND),$G(LRLNC1) K LREND Q
+"RTN","LRLNCMD",28,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNCMD",29,0)
+CORRECT W !!
+"RTN","LRLNCMD",30,0)
+ S DIR(0)="Y",DIR("A")="Is this the correct one"
+"RTN","LRLNCMD",31,0)
+ S DIR("B")="Yes"
+"RTN","LRLNCMD",32,0)
+ S DIR("?")="Enter no to select a different code."
+"RTN","LRLNCMD",33,0)
+ D ^DIR K DIR
+"RTN","LRLNCMD",34,0)
+ I $D(DIRUT)!($G(LREND)),$G(LRLNC1) K LREND Q
+"RTN","LRLNCMD",35,0)
+ I $D(DIRUT)!($G(LREND)) D EXIT G START
+"RTN","LRLNCMD",36,0)
+ I 'Y,$G(LRNO) D ENTERLNC^LRLNCC
+"RTN","LRLNCMD",37,0)
+ I 'Y,'$G(LRNO) D LOINC
+"RTN","LRLNCMD",38,0)
+ I $G(LRNO) D EXIT G START
+"RTN","LRLNCMD",39,0)
+ I $G(LREND),$G(LRLNC1) K LREND Q
+"RTN","LRLNCMD",40,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNCMD",41,0)
+ D LINK
+"RTN","LRLNCMD",42,0)
+ I $G(LREND),$G(LRLNC1) K LREND Q
+"RTN","LRLNCMD",43,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNCMD",44,0)
+ D CHECK
+"RTN","LRLNCMD",45,0)
+ I $G(LREND),$G(LRLNC1) K LREND Q
+"RTN","LRLNCMD",46,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNCMD",47,0)
+ D MAP
+"RTN","LRLNCMD",48,0)
+ I $G(LRLNC1) K LRCODE Q
+"RTN","LRLNCMD",49,0)
+ D EXIT
+"RTN","LRLNCMD",50,0)
+ G START
+"RTN","LRLNCMD",51,0)
+EXIT I $G(LRNLT) L -^LAM(LRNLT,9)
+"RTN","LRLNCMD",52,0)
+ K DA,DIC,DIE,DINUM,DIR,DIRUT,DR,DTOUT,I,LRCODE,LRDATA,LREND,LRLNC,LRLNC0,LRLOINC,LRELEC,LRIEN,LRNLT,LRSPEC,LRSPECL,LRSPECN,LRTIME,LRTEST,LRUNITS,S,Y
+"RTN","LRLNCMD",53,0)
+ K DD,DO,DLAYGO,LRLNCNAM,LRNO,X,LRNUM,LROLDCD
+"RTN","LRLNCMD",54,0)
+ QUIT
+"RTN","LRLNCMD",55,0)
+TEST D TEST^LRLNC0
+"RTN","LRLNCMD",56,0)
+ Q
+"RTN","LRLNCMD",57,0)
+LOINC ;Lookup possible LOINC matches in LAB LOINC file #95.3
+"RTN","LRLNCMD",58,0)
+ D FIND^DIC(95.3,"","80","M",LRTEST,"","","I '$G(^(4))","","LRLOINC","")
+"RTN","LRLNCMD",59,0)
+CODE ;ask which code to map
+"RTN","LRLNCMD",60,0)
+ I +LRLOINC("DILIST",0)=0 D  Q
+"RTN","LRLNCMD",61,0)
+ .W !!,"No matches found."
+"RTN","LRLNCMD",62,0)
+ .S LRNO=1
+"RTN","LRLNCMD",63,0)
+ W ! S I=0
+"RTN","LRLNCMD",64,0)
+ F  S I=$O(LRLOINC("DILIST","ID",I)) Q:'I!$G(LREND)  D
+"RTN","LRLNCMD",65,0)
+ .I $E(IOST,1,2)="C-",'(I#18) D  Q:$G(LREND)
+"RTN","LRLNCMD",66,0)
+ ..S DIR(0)="E" D ^DIR
+"RTN","LRLNCMD",67,0)
+ ..S:$S($G(DIRUT):1,$G(DUOUT):1,1:0) LREND=1
+"RTN","LRLNCMD",68,0)
+ .W !,I,":",LRLOINC("DILIST","ID",I,80)
+"RTN","LRLNCMD",69,0)
+ K DIRUT,DUOUT
+"RTN","LRLNCMD",70,0)
+ W !!
+"RTN","LRLNCMD",71,0)
+ S DIR(0)="N^1:"_$S($G(LREND):I-2,1:$P(LRLOINC("DILIST",0),U),1:0)
+"RTN","LRLNCMD",72,0)
+ S DIR("A")="LOINC code to map this test"
+"RTN","LRLNCMD",73,0)
+ D ^DIR K DIR,LREND
+"RTN","LRLNCMD",74,0)
+ I $D(DIRUT) S LREND=1 Q
+"RTN","LRLNCMD",75,0)
+ S LRCODE=LRLOINC("DILIST",1,+Y)
+"RTN","LRLNCMD",76,0)
+ D DISPL^LRLNCC
+"RTN","LRLNCMD",77,0)
+ Q
+"RTN","LRLNCMD",78,0)
+LINK ;Link the code with file 64
+"RTN","LRLNCMD",79,0)
+ S LRNLT=+$P(^LAM(LRNLT,0),U,2)
+"RTN","LRLNCMD",80,0)
+LR64 ;
+"RTN","LRLNCMD",81,0)
+ K DIC,DA
+"RTN","LRLNCMD",82,0)
+ W !!
+"RTN","LRLNCMD",83,0)
+ S DIC=64,DIC(0)="ENMZ",X=LRNLT
+"RTN","LRLNCMD",84,0)
+ D ^DIC
+"RTN","LRLNCMD",85,0)
+ I Y=-1!($D(DTOUT))!($D(DUOUT)) K DTOUT,DUOUT S LREND=1 Q
+"RTN","LRLNCMD",86,0)
+ S LRNLT=+Y
+"RTN","LRLNCMD",87,0)
+ Q
+"RTN","LRLNCMD",88,0)
+CHECK ;Check to see if already mapped to a LOINC code
+"RTN","LRLNCMD",89,0)
+ Q:'$P($G(^LAM(LRNLT,9)),U)
+"RTN","LRLNCMD",90,0)
+ D SHOWPRE
+"RTN","LRLNCMD",91,0)
+ I $D(DIRUT)!'Y S LREND=1 Q
+"RTN","LRLNCMD",92,0)
+ ;DELETE EXISTING DEFAULT MAPPING
+"RTN","LRLNCMD",93,0)
+ S DA=LRNLT
+"RTN","LRLNCMD",94,0)
+ S DIE="^LAM(",DR="25////@"
+"RTN","LRLNCMD",95,0)
+ D ^DIE
+"RTN","LRLNCMD",96,0)
+ K DA,DIE
+"RTN","LRLNCMD",97,0)
+ Q
+"RTN","LRLNCMD",98,0)
+MAP ;DIE call to add DEFAULT LOINC CODE
+"RTN","LRLNCMD",99,0)
+ I '$D(LRDFONLY)  S LRDATA=$P(^LAB(60,LRIEN,0),U,12) ;DATA NAME
+"RTN","LRLNCMD",100,0)
+ I '$L(LRDATA) S LRDATA=$P(^LAB(60,LRIEN,0),U,4)
+"RTN","LRLNCMD",101,0)
+ S LRTIME=$P(^LAB(95.3,LRCODE,0),U,7) ;TIME ASPECT
+"RTN","LRLNCMD",102,0)
+ S LRUNITS=$P(^LAB(95.3,LRCODE,0),U,14) ;UNITS
+"RTN","LRLNCMD",103,0)
+ L +^LAM(LRNLT):1 I '$T W !,"Another user is editing this record!!" H 5 Q
+"RTN","LRLNCMD",104,0)
+ S DIE="^LAM(",DA=LRNLT,DR="25////"_LRCODE_";25.2////"_LRTIME_";25.3////"_LRUNITS_";25.4////"_LRDATA_";25.5////"_$S($D(LRDFONLY):"@",1:LRIEN)
+"RTN","LRLNCMD",105,0)
+ D ^DIE
+"RTN","LRLNCMD",106,0)
+ L -^LAM(LRNLT)
+"RTN","LRLNCMD",107,0)
+MAP2 ;HERE SHOW WHAT WAS MAPPED
+"RTN","LRLNCMD",108,0)
+ Q:'$D(^LAM(+$G(LRNLT),0))#2
+"RTN","LRLNCMD",109,0)
+ W !!
+"RTN","LRLNCMD",110,0)
+ W !,"NLT: ",$P($G(^LAM(LRNLT,0)),U)
+"RTN","LRLNCMD",111,0)
+ W !,"WKLD CODE: ",$P($G(^LAM(LRNLT,0)),U,2)
+"RTN","LRLNCMD",112,0)
+ K DIC,DR
+"RTN","LRLNCMD",113,0)
+ S DIC="^LAM(",DA=LRNLT
+"RTN","LRLNCMD",114,0)
+ S S=$Y
+"RTN","LRLNCMD",115,0)
+ D EN^DIQ
+"RTN","LRLNCMD",116,0)
+ Q
+"RTN","LRLNCMD",117,0)
+SHOWPRE ;DISPLAY LOINC CODE ALREADY MAPPED TO NLT
+"RTN","LRLNCMD",118,0)
+ S LROLDCD=$P(^LAM(LRNLT,9),U)
+"RTN","LRLNCMD",119,0)
+ W !!,"This test is already mapped to:"
+"RTN","LRLNCMD",120,0)
+ W !,"Default LOINC code: ",LROLDCD_"-"_$P(^LAB(95.3,+$G(LROLDCD),0),U,15),"  ",$G(^LAB(95.3,LROLDCD,80))
+"RTN","LRLNCMD",121,0)
+ W !!
+"RTN","LRLNCMD",122,0)
+ S DIR(0)="Y",DIR("A")="Do you want to "_$S($D(LRDEL):"delete",1:"change")_" this default mapping",DIR("B")="NO"
+"RTN","LRLNCMD",123,0)
+ S:'$D(LRDEL) DIR("?")="If you enter yes, the current default LOINC code will be overwritten with the default LOINC code that you have chosen."
+"RTN","LRLNCMD",124,0)
+ S:$D(LRDEL) DIR("?")="If you enter yes, the current default LOINC code will be deleted."
+"RTN","LRLNCMD",125,0)
+ D ^DIR K DIR
+"RTN","LRLNCMD",126,0)
+ Q 
+"RTN","LRLNCMD",127,0)
+DELETE ;DELETE/UNMAP DEFAULT LOINC CODE
+"RTN","LRLNCMD",128,0)
+ S LREND=0,LRDEL=1 D TEST
+"RTN","LRLNCMD",129,0)
+ I $G(LREND) G EXIT
+"RTN","LRLNCMD",130,0)
+ D CHECK
+"RTN","LRLNCMD",131,0)
+ K LRDEL
+"RTN","LRLNCMD",132,0)
+ G EXIT
+"RTN","LRLNCMD",133,0)
+ Q
+"RTN","LRLNCMD",134,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8568,6)
+^321
+**END**
+**END**

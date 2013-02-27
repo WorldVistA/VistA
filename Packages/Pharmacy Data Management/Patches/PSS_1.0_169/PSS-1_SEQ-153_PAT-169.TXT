@@ -1,0 +1,240 @@
+$TXT Created by ENFINGER,MARK J at MDEVCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Monday, 10/29/12 at 14:00
+=============================================================================
+Run Date: FEB 11, 2013                     Designation: PSS*1*169
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #153                      Status: Released
+                  Compliance Date: MAR 13, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*379   <<= must be installed BEFORE `PSS*1*169'
+
+Subject: MOCHA v1.0 Enhancements 1 PDM
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ ***************************Attention*************************
+ This patch is part of the Medication Order Check Healthcare Application
+ (MOCHA)v1.0 Enhancements 1 group of patches. There are a total of eight
+ patches and one .kid (host) file that must be installed as a group. The
+ patches must be installed in the following order:
+  
+ OR*3*352
+ PSS*1*164
+ PSS*1*169
+ PSO*7*390
+ PSO*7*417
+ PSJ*5*268
+ <xxx>_1_0_P23.kid
+ PSJ*5*260
+ PSJ*5*288
+  
+ For the ".kid" file, value of <xxx> will be determined by the ward
+ automated dispensing equipment in use at your facility.  If no ward
+ automated dispensing equipment is in use at your site, this file will
+ not be needed. For those sites using Pyxis, xxx=PPU, for Omnicell sites,
+ xxx=OPU, and for McKesson sites, xxx=MPU.  To obtain this file or if 
+ additional information is required regarding this ".kid" file, please 
+ contact your site's Informatix contact.
+  
+ Patch PSS*1*169 will add menu option Check Drug Interaction 
+ [PSS CHECK DRUG INTERACTION] to the Pharmacy Data Management menu 
+ [PSS MGR]. This menu option allows the user to run the Check Drug 
+ Interaction utility.
+  
+ **The 2nd line of routine PSS551 lists patch 260 incorrectly.  This 
+ will be corrected in a future release.**
+  
+ ****************************************************************
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Options Associated:
+ --------------------
+  
+  Option Name                 Type       Action
+  -----------                 ----       ------
+  PSS CHECK DRUG INTERACTION  Run        SEND TO SITE
+  PSS MGR                     Menu       USE AS LINK FOR MENU ITEM
+  
+ Protocols Associated:
+ ---------------------
+ N/A  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Associated Change Requests: 
+ ---------------------------
+ CR1005/CCR4538
+  
+ Test Sites:
+ -----------
+ Boston, MA
+ Fresno, CA
+ West Palm Beach, FL
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+  
+ Updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as
+ follows:
+  
+ Albany         ftp.fo-albany.med.va.gov <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov  <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov    <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www.va.gov/vdl/
+  
+    FILE NAME                    DESCRIPTION
+    =========                    ===========
+  
+ PSS_1_TM_R0113.PDF              Pharmacy Data Management v1.0
+                                 Technical Manual/Security Guide
+  
+ PSS_1_P164_P169_TM_CP.PDF       Pharmacy Data Management v1.0
+                                 Technical Manual/Security Guide
+                                 Change Pages
+  
+ PSS_1_UM_R0113.PDF              Pharmacy Data Management v1.0 User
+                                 Manual
+  
+ PSS_1_P164_P169_UM_CP.PDF       Pharmacy Data Management v1.0 User
+                                 Manual Change Pages
+  
+ M1E1_PSO_7_PSJ_5_PSS_1_RN.PDF   Medication Order Check Healthcare
+                                 Application (MOCHA) v1 Enhancements
+                                 1 Release Notes
+  
+ Installation Instructions:
+ --------------------------
+  
+ This patch should not be installed when Pharmacy Data Management options
+ are being used. If this is not possible, we recommend it should be 
+ installed during Non-Peak hours.
+  
+ Install Time - less than 5 minutes
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option to unload the build.  
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSS*1.0*169):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter "PSS*1.0*169" at the INSTALL NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//'  answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 41
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS551
+    Before: B15715250   After: B15975307  **108,118,133,169,260**
+Routine Name: PSSDIUTL
+    Before:       n/a   After:B194726392  **169**
+Routine Name: PSSHRVL1
+    Before:B194249230   After:B197058497  **136,169**
+ 
+Routine list of preceding patches: 136, 260
+
+=============================================================================
+User Information:
+Entered By  : ENFINGER,MARK                 Date Entered  : SEP 15, 2011
+Completed By: YARBER,KIMBERLY               Date Completed: FEB 11, 2013
+Released By : VECE,VIRGINIA                 Date Released : FEB 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

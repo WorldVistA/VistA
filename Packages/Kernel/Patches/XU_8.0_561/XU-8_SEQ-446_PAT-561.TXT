@@ -1,0 +1,149 @@
+
+=============================================================================
+Run Date: JAN 13, 2011                     Designation: XU*8*561
+Package : XU - KERNEL                         Priority: EMERGENCY
+Version : 8       SEQ #446                      Status: Released
+                  Compliance Date: JAN 30, 2011
+=============================================================================
+
+
+Subject: Consolidated Information Regarding XU*8*546 Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Several issues have been reported with the release of Kernel Patch 
+ XU*8*546 regarding device setup. For your convenience, the Legacy VistA
+ Infrastructure team has consolidated ALL of the information related to
+ Kernel Patches XU*8*546 and XU*8*556 into one location.
+  
+ A. QUEUING Field:
+  
+ Devices with the name of NULL or HFS must NOT have their QUEUING field 
+ (#5.5) set to "FORCED" in the DEVICE file (#3.5).  You can set the QUEUING
+ field to ALLOWED.
+  
+ NOTE: Class 3 routines that are not written to permit queuing will no 
+ longer output to devices where the QUEUING field is set to FORCED.  Sites
+ that have completed the Linux upgrade checklist, should have already
+ addressed this issue.
+  
+ B. Access to Accounts:
+  
+ Some sites, while installing patch XU*8*546 in test accounts, have had 
+ problems with access to the accounts after the installation.
+  
+ There are two simple things to check in order to avoid any problems:
+  
+ 1.  There are 3 fields in the DEVICE file (# 3.5) to check before 
+ installing Patch XU*8*546:
+     
+     * Make sure that the SIGN-ON/SYSTEM DEVICE field (#1.95) is set to "YES" 
+ for devices OPA, RTA, TNA, & FTA.
+     
+     * Devices with the name of NULL or HFS must NOT have their QUEUING 
+ field (#5.5) set to "FORCED" in the DEVICE file (#3.5).  You can set the
+ QUEUING field to ALLOWED (as stated in paragraph A).
+  
+     * Make sure that no device has the TYPE field (#2) set to "HG". The 
+ environment check should have caused you to address this issue. After the 
+ installation of Patch XU*8*546, devices of TYPE "HG" cannot be selected.
+  
+ 2.  Once the install is complete, before terminating the session that 
+ installs Patch XU*8.0*546 do the following:
+     
+     * Confirm that roll & scroll users still have access to VistA.
+     
+     * Confirm that CPRS users can log into VistA.
+  
+  
+ The following is Description from Patch XU*8*546:
+  
+ On a mixed OS system, when the user enters the name of an HFS path/file 
+ and the output is queued. The task fails because the path/file was checked
+ when entered and it is fixed for the current system. The fix was to not
+ check the path/file until run time.
+  
+ The PRINT SIGN-ON LOG [XUSC LIST] option will print negative numbers 
+ if there is not a sign-off time.
+ Fix: Change the computed field ELAPSED TIME (MINUTES) (#99) to show "on line"
+ if there is not a sign-off value.
+  
+ The Windows HFS path check did not account for the server syntax
+ of "\\server\folder\file".
+ Fixed to allow this syntax.
+  
+  
+ Two parts to this ticket,
+ 1. The device handler did not enforce the "FORCED QUEUING" flag if the 
+ application did not pass in that it was setup to allow queuing (pass in 
+ %ZIS containing a "Q").
+                              *****
+ NOTE: Class 3 routines that are not written to permit queuing will no
+ longer output to devices where the QUEUING field is set to FORCED.  Sites
+ that have completed the Linux upgrade checklist, should have already
+ addressed this issue.  
+                              *****
+ 2. There is no code to supply a SPOOL file name under Linux.
+  
+ Support for Device Hunt Groups has been removed.
+ This is the DEVICE file (#3.5) fields *HUNT GROUP (#29) and HUNT GROUP 
+ DEVICE (#30).
+ This means that you must remove any HUNT GROUP devices before you install
+ this patch. Use FileMan to find if you have any.
+  
+ VA FileMan 22.0
+  
+ Select OPTION: PRINT FILE ENTRIES  
+  
+ OUTPUT FROM WHAT FILE: DEVICE// 
+ SORT BY: NAME// TYPE
+      1   TYPE  
+      2   TYPE-AHEAD  
+ CHOOSE 1-2: 1  TYPE
+ START WITH TYPE: FIRST// HUNT GROUP    USES INTERNAL CODE: HG
+ GO TO TYPE: LAST// HUNT GROUP    USES INTERNAL CODE: HG
+   WITHIN TYPE, SORT BY: 
+ FIRST PRINT FIELD: .01  NAME
+ THEN PRINT FIELD: HUNT GROUP DEVICE    (multiple)
+   THEN PRINT HUNT GROUP DEVICE SUB-FIELD: .01  HUNT GROUP DEVICE
+   THEN PRINT HUNT GROUP DEVICE SUB-FIELD: 
+ THEN PRINT FIELD: 
+ Heading (S/C): DEVICE LIST// 
+ START AT PAGE: 1// 
+ DEVICE:   SYSTEM    Right Margin: 80// 
+  
+ ...EXCUSE ME, HOLD ON...
+  
+ DEVICE LIST                                    SEP 29,2010  10:28    PAGE 1
+ NAME                            HUNT GROUP DEVICE
+ ----------------------------------------------------------------------------
+  
+         TYPE: HUNT GROUP
+ TEST HUNT GROUP                 SDD6
+                                 SDD5
+ HGTEST2                         UNIT 3 PTR
+                                 UNIT 2 PTR
+                                 UNIT 1 PTR
+  
+ OS print queues make the need for hunt groups obsolete.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : DIMICELI,RON                  Date Entered  : JAN 11, 2011
+Completed By: SINGH,GURBIR                  Date Completed: JAN 13, 2011
+Released By : TILLIS,LEWIS                  Date Released : JAN 13, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

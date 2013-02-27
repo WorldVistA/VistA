@@ -1,0 +1,144 @@
+$TXT Created by CLARKE,KYLE E at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 02/01/12 at 15:11
+=============================================================================
+Run Date: MAR 13, 2012                     Designation: XU*8*574
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #469                      Status: Released
+                  Compliance Date: APR 13, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*180    <<= must be installed BEFORE `XU*8*574'
+                    (v)XU*8*437    <<= must be installed BEFORE `XU*8*574'
+
+Subject: Connector Proxy Updates
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy tickets: 
+ - HD0000000424203
+ - HD0000000493429 
+  
+ Thank you to the following test sites: 
+ - Montrose, NY (VA Hudson Valley HCS)
+ - Mountain Home, TN (James H. Quillen VAMC)
+ - Philadelphia VAMC
+  
+ Functionality:
+ ============== 
+ (1) After this patch, new verify codes entered for CONNECTOR PROXY
+     accounts must be at least 12 characters in length, per VA Handbook
+     6500 requirements for service accounts.
+  
+ (2) For CONNECTOR PROXY accounts, the NEW PERSON (#200) field DATE VERIFY
+     CODE LAST CHANGED (#11.2) is now properly recorded as the actual date
+     changed, for the CONNECTOR PROXY user.
+  
+ (3) A new report is assists with the management of connector proxy
+     accounts. It comes as two options added to the User Management Menu
+     [XUOPTUSER]:
+  
+     - Proxy (Connector) Detail Report [XUSAP PROXY CONN DETAIL ALL]
+     - Proxy (Connector) Inquire [XUSAP PROXY CONN DETAIL INQ]
+  
+    The report:
+    
+    - Lists whether accounts are compliant with having verify codes
+      changed within the last 3 years.
+    - Optionally analyzes if any fields are populated inappropriately.
+    - Optionally lists signon activity for by account, sorted by
+      connecting client IP address and signon date.
+  
+ NOTE: Some connector proxy accounts may be annotated in the report with
+ the comment:
+  
+   Compliant w/3-year Service Account Mandate? *** NO <---- MUST FIX ***
+  
+ It is *STRONGLY* recommend to file a Remedy ticket under VistALink in
+ these cases, rather than immediately changing the verify code. This is to
+ avoid interruptions of service in national applications dependent on
+ VistALink connectivity and the particular connector proxy account(s) in
+ question. VA IT Engineering staff will assist sites in the process of
+ updating (or creating new) connector proxy accounts, and coordinating with
+ national data centers as needed, to minimize the possibility 
+ of interruptions in service.
+  
+ Blood Bank Clearance: 9/8/2011
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*574 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8.0*574 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ Installation Instructions
+ =========================
+ >>>Users may remain on the system.
+ >>>Allow KIDS to inhibit new sign-ons.
+ >>>TaskMan does *not* need to be stopped.
+ >>>Installation will take less than 1 minute.
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the Transport global.
+       On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global
+          Compare Transport Global to Current System              
+          Backup a Transport Global
+  
+   3.  This patch can be loaded any non-peak time. Users can remain on the
+       system. TaskMan can remain running.
+  
+   4.  Installation will take less than 1 minute.
+  
+       On the KIDS menu, under the 'Installation' menu, use the following
+       option:
+  
+          Install Package(s)
+          Select INSTALL NAME: 'XU*8.0*574'
+                                ==========
+       Accept the following defaults:
+  
+       Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+       Want KIDS to INHIBIT LOGONs during the install? YES// YES
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUS2
+    Before: B48747049   After: B54810517  **59,180,313,419,437,574**
+Routine Name: XUS4
+    Before:  B4758816   After:  B6220372  **180,574**
+Routine Name: XUSAP1
+    Before:       n/a   After:B170068636  **574**
+ 
+Routine list of preceding patches: 437
+
+=============================================================================
+User Information:
+Entered By  : CLARKE,KYLE E                 Date Entered  : MAY 05, 2011
+Completed By: SINGH,GURBIR                  Date Completed: MAR 05, 2012
+Released By : TILLIS,LEWIS                  Date Released : MAR 13, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

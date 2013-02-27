@@ -1,0 +1,139 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Tuesday, 12/13/11 at 10:02
+=============================================================================
+Run Date: AUG 22, 2012                     Designation: RA*5*111
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #100                      Status: Released
+                  Compliance Date: SEP 22, 2012
+=============================================================================
+
+
+Subject: UPDATE THE CPT BY PROCEDURE TYPE (#73.2) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issue:
+       
+ The Radiology Program Office sends out an updated listing
+ of the Radiology CPT by Procedure Type (73.2) on a 
+ yearly basis.  This update needs to be distributed to 
+ the sites.     
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+                
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1.  HD0000000582331 - 2012 file update of 73.2 CPT BY PROCEDURE TYPE
+      
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate New York HCS
+ Heartland West 
+      
+ REMEDY OVERVIEW:
+ ================     
+ 1.  HD0000000582331 - 2012 file update of 73.2 CPT BY PROCEDURE TYPE
+  
+ PROBLEM
+ -------
+ File 73.2 (RADIOLOGY CPT BY PROCEDURE TYPE) must be updated with the
+ yearly updates provided by the Radiology Program Office.
+        
+ RESOLUTION
+ ----------     
+ This patch will update the 73.2 file (RADIOLOGY CPT BY PROCEDURE TYPE) for
+ distribution to the sites.
+     
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+      
+ If installed during the normal workday, it is recommended that the 
+ the Radiology users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+ PRE Install Routine, RA111PRE, can be deleted after the installation.
+      
+ 1.  Load Transport Global 
+     ---------------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter RA*5.0*111):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+  a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+   b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+   c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+VERSION ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RA111PRE
+    Before:       n/a   After:  B1287478  **111**
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : DEC 01, 2011
+Completed By: CRICHLOW,SHERRY               Date Completed: AUG 09, 2012
+Released By : HORN,EDITH M                  Date Released : AUG 22, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,722 @@
+$TXT Created by THAYER,CHRISTOPHER at DEVVFF.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 05/11/12 at 09:52
+=============================================================================
+Run Date: AUG 06, 2012                     Designation: FB*3.5*108
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #115                    Status: Released
+                  Compliance Date: SEP 06, 2012
+=============================================================================
+
+Associated patches: (v)FB*3.5*25   <<= must be installed BEFORE `FB*3.5*108'
+                    (v)FB*3.5*67   <<= must be installed BEFORE `FB*3.5*108'
+                    (v)FB*3.5*68   <<= must be installed BEFORE `FB*3.5*108'
+                    (v)FB*3.5*79   <<= must be installed BEFORE `FB*3.5*108'
+                    (v)FB*3.5*82   <<= must be installed BEFORE `FB*3.5*108'
+                    (v)FB*3.5*98   <<= must be installed BEFORE `FB*3.5*108'
+                    (v)FB*3.5*103  <<= must be installed BEFORE `FB*3.5*108'
+                    (v)FB*3.5*107  <<= must be installed BEFORE `FB*3.5*108'
+                    (v)FB*3.5*116  <<= must be installed BEFORE `FB*3.5*108'
+                    (v)FB*3.5*122  <<= must be installed BEFORE `FB*3.5*108'
+                    (v)FB*3.5*133  <<= must be installed BEFORE `FB*3.5*108'
+
+Subject: FEE DATA & HERO ENHANCEMENT
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Input Template
+  - Other
+
+Description:
+============
+
+ This patch enhances Fee Basis to capture additional data associated with
+ Non-VA care.  Contracts can be specified for Medical Fee and Civil 
+ Hospital authorizations and payments.  Civil hospital invoices will allow 
+ entry of larger dollar amounts, additional diagnosis codes, present on 
+ admission indicators, the admitting diagnosis code, and additional 
+ procedure codes.  The existing transmissions to NVH Pricer and Central 
+ Fee will be modified to include additional data elements.  The 
+ transmission of these additional data elements will make it possible to 
+ comply with inpatient pricing requirements and improve the ability of the 
+ VA to review and report on purchased care.  
+  
+  
+ The changes made by this patch are described below: 
+  
+ 1.  CONTRACTED SERVICES AND CONTRACTS 
+  
+     This patch allows contracts to be entered for Medical Fee and Civil 
+     Hospital authorizations and payments.  Payment transactions sent from 
+     VistA to Central Fee will be modified to include the contract number.  
+     The contract number will be used to identify payments for pilot 
+     project HERO.  Contracts not associated with project HERO can also be 
+     entered and tracked using the new functionality.  The new contract 
+     functionality does not replace or modify the existing use of 
+     contracts in the Community Nursing Home module.  This patch also 
+     modifies VistA Fee Basis to prevent payments for unauthorized claims
+     from being considered as contracted services.  
+  
+ 1A. New Contract File 
+  
+     This patch adds a new FEE BASIS CONTRACT (#161.43) file.  This file 
+     contains a list of contracts for the local site.  Each contract 
+     can have one or more associated vendors.  
+  
+     A new option allows users to enter or edit contracts in this file.  
+     The option is named Contract File Enter/Edit [FBAA CONTRACT FILE].  
+     The option is locked with the FBAASUPERVISOR security key.  It is 
+     attached to the Supervisor Main Menu [FBAA SUPERVISOR OPTIONS].  
+  
+     Four existing options are moved from the supervisor menu to a new 
+     sub-menu to make room for the new contract option.  The new sub-menu 
+     is the Unauthorized Claims File Menu [FBCU FILE MENU].  The options 
+     moved to this menu are: 
+       Add New Person for Unauthorized Claim [FBUC ADD NEW PERSON] 
+       Disapproval Reasons File Enter/Edit [FBUC DISAPPROVAL REASONS FILE] 
+       Dispositions File Edit [FBUC DISPOSITIONS FILE] 
+       Request Info File Enter/Edit [FBUC REQUEST INFO FILE] 
+  
+ 1B. Project HERO Contracts 
+  
+     The patch will automatically enter the following two contracts into 
+     the FEE BASIS CONTRACT file for sites that are in VISN 8, 16, 20, or 
+     23.  
+       CONTRACT NUMBER       ASSOCIATED VENDOR ID 
+       VA101(049A3)-P-0269   942761537 (Delta) 
+       VA101049A3-P-0270     208418853 (HVHS) 
+     These two contracts are for pilot project HERO.  Sites in these VISNs 
+     must ensure that a project HERO contract is specified on all 
+     appropriate authorizations and payments.  These contract numbers will 
+     be used by the Austin database to track services provided under 
+     project HERO.  
+  
+ 1C. Identify Contract on Authorization 
+  
+     The patch modifies the software so users can select a contract when 
+     entering or editing authorizations under the Medical Fee and Civil 
+     Hospital modules.  Only contracts with an active status can be 
+     selected.  Only contracts associated with the authorized vendor can
+     be selected.  Therefore, contracts cannot be entered on a Medical Fee 
+     authorization that does not have a specified vendor.  
+  
+     Note: Sites that wish to enter contracts on Medical Fee 
+     authorizations must ensure the site parameter "ASK VENDOR DURING
+     AUTH." is set to "Y" so vendors can be entered on the authorization.  
+  
+ 1D. Payments for Unauthorized Claims not for a Contracted Service 
+  
+     This patch modifies the software to stop asking the user if a line 
+     item is for a contracted service when a payment for an unauthorized 
+     claim is entered or edited.  The system shall automatically consider 
+     these payments as not being for contracted services.  This 
+     modification will prevent an interest penalty from being applied to 
+     payments for unauthorized claims.  This modification applies to 
+     payments for all claims entered via the unauthorized claims module 
+     including those considered under the provisions of 38 U.S.C. 1725 and 
+     38 U.S.C. 1728.  It will not be possible to specify a contract on 
+     payments for unauthorized claims.  
+  
+ 1E. Identify Contract on Invoice/Payment 
+  
+     The patch modifies the software so a contract can be specified when 
+     Medical Fee and Civil Hospital invoices/payments are entered or 
+     edited.  The following rules will apply: 
+     o If a contract is specified on the associated authorization and the 
+       vendor being paid matches the vendor on the authorization, the 
+       software will automatically identify the payment as a contracted 
+       service under the same contract as on the authorization.  
+     o If the contract is not automatically selected due to the 
+       authorization (see above) and the user indicates that the line item 
+       is for a contracted service, the user is prompted for a contract.  
+       This is an optional field.  Only contracts with an active status
+       can be selected.  Only contracts associated with the vendor being
+       paid can be selected.  
+     
+  
+ 2.  ADDITIONAL DATA AND LARGER $ AMOUNTS FOR CIVIL HOSPITAL INVOICE 
+  
+     This patch modifies civil hospital authorizations and invoices and 
+     the Generic Pricer option.  The maximum dollar amount is increased 
+     from $999,999.99 to $9,999,999.99.  The maximum number of diagnosis 
+     codes and maximum number of procedure codes is increased from 5 to
+     25.  
+  
+     Additional data elements must be entered on the invoice and generic 
+     Pricer.  A present on admission indicator (POA) must be entered for 
+     each diagnosis code.  An admitting diagnosis code must be entered.  
+     These new data elements will be included in the message sent to the 
+     NVH Pricer system and in the B9 payment transaction sent to Central 
+     Fee.  
+  
+ 2A. Present on Admission Indicator 
+  
+     This patch modifies the software to require entry of a POA (present
+     on admission indicator) for each diagnosis code on a civil hospital 
+     invoice and generic Pricer.  An example follows: 
+  
+     POA1: ? 
+           Enter the present on admission indicator for the ICD1 
+           diagnosis.         Answer with PRESENT ON ADMISSION CODE 
+       Choose from: 
+       1        Unreported/Not used.  Exempt from POA reporting.  
+       N        Diagnosis was not present at time of inpatient admission.  
+       U        Documentation insufficient to determine.  
+       W        Provider unable to clinically determine.  
+       Y        Diagnosis was present at time of inpatient admission.  
+  
+ 2B. Admitting Diagnosis 
+  
+     This patch modifies the software to require entry of an Admitting 
+     Diagnosis on a civil hospital invoice and a generic Pricer. 
+     An example follows: 
+  
+     ADMITTING DIAGNOSIS: ? 
+         Enter the admitting diagnosis for this claim.  
+      Answer with ICD DIAGNOSIS CODE NUMBER, or DESCRIPTION 
+      Do you want the entire 14954-Entry ICD DIAGNOSIS List? 
+  
+  
+ 3.  SEND EDI CLAIM IDENTIFIER TO CENTRAL FEE 
+  
+     This patch modifies VistA Fee Basis to include an EDI identifier in 
+     the B3 (outpatient and ancillary), B5 (pharmacy), and B9 (civil 
+     hospital and community nursing home) payment transactions that are 
+     sent to Central Fee.  No additional data entry is required since EDI 
+     claims will be identified using the existing FPPS CLAIM ID field.  
+  
+  
+ 4.  SEND PATIENT ACCOUNT NUMBER TO CENTRAL FEE 
+  
+     This patch modifies VistA Fee Basis to include the value of the 
+     existing PATIENT ACCOUNT NUMBER field in the B3 (outpatient and 
+     ancillary) payment transaction that is sent to Central Fee.  
+     This patch modifies VistA Fee Basis to include the value of the 
+     existing PATIENT CONTROL NUMBER field in the B9 (civil hospital and 
+     community nursing home) payment transaction that is sent to Central 
+     Fee.  
+  
+  
+ 5.  REDUCE RISK OF INTERFACE ERRORS 
+  
+     This patch contains new line limits for payment batches.  It also 
+     examines several data fields that are sent in a batch message to 
+     ensure the space allotted for that field is not exceeded.  
+  
+ 5A. Batch Line Limits 
+  
+     Central Fee can only accept 32K characters in a single payment 
+     batch.  Since this patch includes additional data in payment batches, 
+     the maximum number of lines in a batch must be reduced to avoid a 
+     reject of the entire batch by Central Fee.  
+  
+     This patch reduces the maximum size of a payment batch from 100 to 85 
+     lines.  This limit applies to the B3 (outpatient and ancillary) and B5 
+     (pharmacy) payment batches.  This patch introduces a maximum 42 line 
+     limit for the contract hospital batch and a maximum 61 line limit for 
+     the community nursing home batch.  
+  
+     The following site parameters control these limits.  
+  
+     MAX # PAYMENT LINE ITEMS: 85// ?? 
+         The maximum number of payment line items that will be allowed in
+         a batch.  Any number between 1 and 85 is acceptable. This value
+         is checked during the enter payment options and will warn the
+         clerks when they are within 20 of the maximum. It will prevent
+         the clerks from exceeding this number.  
+    
+     MAX # CH PAYMENT LINES: 42// ?? 
+         The maximum number of payment line items that will be allowed in
+         a contract hospital batch.  This value is checked during the
+         enter payment options and will warn the clerks when they are
+         within 5 of the maximum.  It will prevent the clerks from 
+         exceeding this number.  
+    
+     MAX # CNH PAYMENT LINES: 61// ?? 
+         The maximum number of payment line items that will be allowed in
+         a community nursing home batch.  This value is checked during the 
+         enter payment options and will warn the clerks when they are 
+         within 5 of the maximum. It will prevent the clerks from
+         exceeding this number.  
+    
+ 5B. Length of Stay on Pricer Transaction 
+  
+     The NVH Pricer system in Austin does not support a length of stay 
+     greater than 999 days.  The message sent from VistA to the NVH Pricer 
+     only allocates 3 digits for the computed length of stay value.
+     Austin has reported instances where the message sent from VistA has
+     included more than 3 digits for the length of stay resulting in a
+     formatting error.  
+  
+     This patch modifies the Generic Pricer option to prevent entry of a 
+     discharge date that is more than 999 days after the admission date.  
+     This patch also modifies the Pricer batch message to send "***" as
+     the length of stay if the computed value exceeds 3 digits. This will 
+     result in a reject of the line by the NVH Pricer, but the remaining 
+     lines in the batch will no longer be adversely impacted.  
+  
+               
+ 5C. State Abbreviation 
+  
+     The message sent to the NVH Pricer and the B3, B5, and B9 payment 
+     batch sent to Central Fee contain a two character state abbreviation.  
+     In some cases, the 'state' CANADA was selected.  This 'state' has a 
+     five character abbreviation in the STATE file and the entire value 
+     was being placed in the message resulting in a format error.  
+  
+     This patch modifies these messages to send "**" as the state 
+     abbreviation if the state abbreviation exceeds 2 characters.  This 
+     will result in a reject of the line, but the remaining lines in the 
+     batch will no longer be adversely impacted.  
+  
+  
+  
+ Patch Components 
+ ================
+  
+  
+ Files & Fields Associated: 
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted 
+ ------------------         -------------------  --------------------
+ FEE BASIS PATIENT (161)     CONTRACT  (#105)                New 
+  
+ FEE BASIS SITE 
+       PARAMETERS  (161.4)   MAX # PAYMENT LINE ITEMS (#17)  New 
+                             MAX # CH PAYMENT LINES (#17.1)  New 
+                             MAX # CNH PAYMENT LINES (#17.2) New 
+ PRESENT ON ADMISSION (161.94)                               New 
+  
+ FEE BASIS PAYMENT  (162)    CONTRACT (#54)                  New 
+  
+ VA FORM 10-7078 (162.4)     ESTIMATED AMOUNT (#6)           Modified 
+  
+ FEE BASIS INVOICE (162.5)   BILLED CHARGES (#6.6)           Modified 
+                             AMOUNT CLAIMED (#7)             Modified 
+                             AMOUNT PAID (#8)                Modified 
+                             AMOUNT SUSPENDED (#9)           Modified 
+                             NVH PRICER AMOUNT (#26)         Modified 
+                             POA1 (#30.02)                   New 
+                             POA2 (#31.02)                   New 
+                             POA3 (#32.02)                   New 
+                             POA4 (#33.02)                   New 
+                             POA5 (#34.02)                   New 
+                             ICD6 (#35)                      New 
+                             POA6 (#35.02)                   New 
+                             ICD7 (#35.1)                    New 
+                             POA7 (#35.12)                   New 
+                             ICD8 (#35.2)                    New 
+                             POA8 (#35.22)                   New 
+                             ICD9 (#35.3)                    New 
+                             POA9 (#35.32)                   New 
+                             ICD10 (#35.4)                   New 
+                             POA10 (#35.42)                  New 
+                             ICD11 (#35.5)                   New 
+                             POA11 (#35.52)                  New 
+                             ICD12 (#35.6)                   New 
+                             POA12 (#35.62)                  New 
+                             ICD13 (#35.7)                   New 
+                             POA13 (#35.72)                  New 
+                             ICD14 (#35.8)                   New 
+                             POA14 (#35.82)                  New 
+                             ICD15 (#35.9)                   New 
+                             POA15 (#35.92)                  New 
+                             ICD16 (#36)                     New 
+                             POA16 (#36.02)                  New 
+                             ICD17 (#36.1)                   New 
+                             POA17 (#36.12)                  New 
+                             ICD18 (#36.2)                   New 
+                             POA18 (#36.22)                  New 
+                             ICD19 (#36.3)                   New 
+                             POA19 (#36.32)                  New 
+                             ICD20 (#36.4)                   New 
+                             POA20 (#36.42)                  New 
+                             ICD21 (#36.5)                   New 
+                             POA21 (#36.52)                  New 
+                             ICD22 (#36.6)                   New 
+                             POA22 (#36.62)                  New 
+                             ICD23 (#36.7)                   New 
+                             POA23 (#36.72)                  New 
+                             ICD24 (#36.8)                   New 
+                             POA24 (#36.82)                  New 
+                             ICD25 (#36.9)                   New 
+                             POA25 (#36.92)                  New 
+                             ADMITTING DIAGNOSIS (#39)       New 
+                             PROC6 (#44.06)                  New 
+                             PROC7 (#44.07)                  New 
+                             PROC8 (#44.08)                  New 
+                             PROC9 (#44.09)                  New 
+                             PROC10 (#44.1)                  New 
+                             PROC11 (#44.11)                 New 
+                             PROC12 (#44.12)                 New 
+                             PROC13 (#44.13)                 New 
+                             PROC14 (#44.14)                 New 
+                             PROC15 (#44.15)                 New 
+                             PROC16 (#44.16)                 New 
+                             PROC17 (#44.17)                 New 
+                             PROC18 (#44.18)                 New 
+                             PROC19 (#44.19)                 New 
+                             PROC20 (#44.2)                  New 
+                             PROC21 (#44.21)                 New 
+                             PROC22 (#44.22)                 New 
+                             PROC23 (#44.23)                 New 
+                             PROC24 (#44.24)                 New 
+                             PROC25 (#44.25)                 New 
+                             CONTRACT (#60)                  New 
+                             ADJUSTMENT AMOUNT (#2)          Modified 
+ Forms Associated: 
+  
+ Form Name             File #       New/Modified/Deleted 
+ ---------             ------       --------------------
+ N/A 
+  
+  
+ Mail Groups Associated: 
+  
+ Mail Group Name          New/Modified/Deleted 
+ ---------------          --------------------
+ N/A 
+  
+ Options Associated: 
+  
+ Option Name                   Type            New/Modified/Deleted 
+ -----------                   ----            -------------------- 
+ FBAA CONTRACT FILE            run routine      new 
+ FBAA SUPERVISOR OPTIONS       menu             modified 
+ FBUC ADD NEW PERSON           run routine      Modified 
+ FBUC DISAPPROVAL REASONS FILE run routine      modified 
+ FBUC DISPOSITIONS FILE        run routine      modified 
+ FBUC FILE MENU                menu             new 
+ FBUC REQUEST INFO FILE        run routine      modified 
+  
+  
+ Protocols Associated: 
+  
+ Protocol Name       New/Modified/Deleted 
+ -------------       -------------------- 
+ N/A 
+  
+  
+ Security Keys Associated: 
+  
+ Security Key Name 
+ -----------------
+ N/A 
+  
+ Templates Associated: 
+  
+ Template Name       Type      File Name (Number)     New/Modified/Deleted 
+ -------------       ----      ------------------     --------------------
+ FBAA AUTHORIZATION  INPUT     FEE BASIS PATIENT (#161)    Modified          
+ FBCH EDIT PAYMENT   INPUT     FEE BASIS INVOICE (#162.5)  Modified 
+ FBCH ENTER PAYMENT  INPUT     FEE BASIS INVOICE (#162.5)  Modified 
+  
+  
+  
+ Additional Information: N/A 
+  
+  
+ New Service Requests (NSRs) 
+ ----------------------------  
+ NSR 20070585   2007 Fee Data Enhancements Request 
+ NSR 20070807   Fee Enhancements to Support Project HERO 
+ NSR 20090112   Unauthorized Claims Interest Penalty Indicator 
+  
+  
+ Patient Safety Issues (PSIs) 
+ -----------------------------
+ N/A 
+  
+  
+ Remedy Ticket(s) & Overview 
+  
+ Remedy Ticket #479393  
+  
+ Problem: 
+ --------
+ Patch FB*3.5*116 created an error in the Fee Basis routine
+ FBAACO2 when it mistakenly killed the variable FBAAMM1.
+  
+ The reported issue is that patch FB*3.5*116 broke some functionality that
+ was introduced by patch FB*3.5*4 (released 9/23/1999).  This was the patch
+ that added the RBRVS fee schedule to VistA. The problem only occurs on the
+ second and subsequent lines for an invoice that has been marked as
+  contracted services.  For these subsequent lines:
+  
+ a. The user is no longer reminded that the payment is for contracted
+    services before the amount paid is asked.
+  
+ b. The software is inappropriately providing a default amount paid for these
+    contracted services (the lesser of the amount claimed or fee schedule
+    amount)
+  
+ c. The FEE SCHEDULE and FEE SCHEDULE AMOUNT fields are being inappropriately
+    populated with data.  This may result in an inappropriate payment symbol
+    of "R" or "F" being shown instead of the appropriate
+  
+  
+ Resolution:
+ -----------
+ Resolution to this error was to remove the erroneous kill from
+ FBAACO2. 
+  
+ Remedy Ticket #603189  
+  
+ Problem:
+ --------
+ On the Potential Cost Recovery Report patch FB*3.5*122 displays the
+ optional line rendering provider data for civil hospital invoice after
+ the associated procedure code.  However, the patch is inappropriately
+ assuming that the .01 LINE ITEM NUMBER value entered by the user matches
+ the internal entry number assigned by FileMan for that entry.  When that
+ is not true, the line rendering provider is shown with the wrong
+ procedure code.  
+  
+ Resolution:
+ -----------
+ The Resolution to this error was to make the selection based not
+ on the internal entry number but on the .01 LINE ITEM NUMBER value.
+  
+ Test Sites: 
+ ----------
+  
+ St. Cloud, MN
+ Black Hills HCS
+ Fargo, ND
+ Minneapolis, MN
+ Sioux Falls, SD
+   
+  
+  
+ Documentation Retrieval Instructions 
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this
+  patch is available.  
+  
+ The preferred method is to FTP the files from ftp://download.vista.med.va.gov/. 
+  
+ This transmits the files from the first available FTP server. Sites may also
+ elect to retrieve software directly from a specific server as follows: 
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-lbany.med.va.gov> 
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov> 
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov> 
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+  
+ http://www4.va.gov/vdl/ 
+  
+ Title                         File Name                       FTP Mode 
+ ---------------------------------------------------------------------
+ Fee Basis User Manual        FB_3_5_UM_R0512.PDF              binary
+ Fee Basis Technical Manual   FB_3_5_TM_R0512.PDF              binary
+ Release Notes/Installation   FB_3_5_P108_RN.PDF               binary
+     Guide FB*3.5*108
+  
+  
+ Patch Installation: 
+  
+  
+ Pre/Post Installation Overview 
+ ------------------------------
+   
+ Prior to the installation of FB*3.5*108 all open Fee Basis batches
+ must be closed.  And all closed batches must be transmitted to
+ Central Fee at the Austin Information Technology Center (AITC).
+  
+ With the installation of FB*3.5*108 batch message size will be
+ limited to 32k bytes maximum.  For an inpatient batch this will be
+ 85 lines of data.  If the message exceeds 32k Central Fee will 
+ reject the batch.
+  
+ Refer to paragraph 5 of this patch description for the maximum
+ size allowed for each of the batch types.
+  
+ Installation Instructions 
+ -------------------------
+ If installed during the normal workday, it is recommended that the
+ following selection(s) in the OPTION (#19) file, and all of their
+ descendants be disabled to prevent possible conflicts while running
+ the KIDS Install. Other VISTA users will not be affected.  
+  
+    Civil Hospital Main Menu         [FBCH MAIN MENU] 
+    Community Nursing Home Main Menu [FBCNH MAIN MENU] 
+    Medical Fee Main Menu            [FBAA MEDICAL MAIN MENU] 
+    Pharmacy Fee Main Menu           [FBAA PHARMACY MAIN MENU] 
+    Telephone Inquiry Menu           [FB PHONE MENU] 
+    Unauthorized Claim Main Menu     [FBUC MAIN] 
+  
+  
+ Install Time - less than 5 minutes 
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (FB*3.5*108):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.  
+              
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install YES//'  Answer NO  
+    
+    
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  Accept the default of NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, and Protocols?
+     NO//'  Answer YES
+  
+ 8.  When prompted 'Enter options you wish to mark as 'Out Of 
+     Order':'  Enter the following options: 
+   
+        Civil Hospital Main Menu         [FBCH MAIN MENU] 
+        Community Nursing Home Main Menu [FBCNH MAIN MENU] 
+        Medical Fee Main Menu            [FBAA MEDICAL MAIN MENU] 
+        Pharmacy Fee Main Menu           [FBAA PHARMACY MAIN MENU] 
+        Telephone Inquiry Menu           [FB PHONE MENU] 
+        Unauthorized Claim Main Menu     [FBUC MAIN] 
+  
+  
+  
+ 9.  If prompted "Delay Install (Minutes): (0-60): 0// respond 0 
+     -----------------------------------
+   
+  Post Installation Instructions
+  ------------------------------
+  
+  The post installation routine will automatically set up two contracts 
+  in the FEE BASIS CONTRACT (# 161.43) that currently have national
+  contracts.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 115
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAA79
+    Before: B22492731   After: B22692839  **12,23,101,103,108**
+Routine Name: FBAACCB1
+    Before: B24359201   After: B28490763  **55,61,116,108**
+Routine Name: FBAACFE
+    Before:       n/a   After:  B1826171  **108**
+Routine Name: FBAACO
+    Before: B28861560   After: B29088561  **4,61,79,116,122,133,108**
+Routine Name: FBAACO1
+    Before: B27913240   After: B42250975  **4,61,77,108**
+Routine Name: FBAACO2
+    Before: B14116879   After: B14357578  **4,55,61,77,116,122,133,108**
+Routine Name: FBAACO3
+    Before: B48919280   After: B50591838  **4,38,55,61,116,122,133,108**
+Routine Name: FBAACP
+    Before: B33766747   After: B46974663  **4,38,55,61,77,108**
+Routine Name: FBAACP1
+    Before:  B6699484   After:  B6956346  **4,61,116,108**
+Routine Name: FBAADEM1
+    Before: B13894268   After: B14338880  **13,51,103,108**
+Routine Name: FBAAMP
+    Before: B64408896   After: B64599378  **4,21,38,55,61,67,116,108**
+Routine Name: FBAAODP0
+    Before:  B4441197   After:  B4472268  **108**
+Routine Name: FBAAPET
+    Before: B35047442   After: B39436624  **4,38,55,61,77,116,122,133,108**
+Routine Name: FBAAPIE1
+    Before: B15392299   After: B15539047  **68,108**
+Routine Name: FBAAPIN
+    Before: B33741138   After: B34775282  **4,61,122,133,108**
+Routine Name: FBAAPM
+    Before:  B5041332   After:  B5082140  **13,108**
+Routine Name: FBAAUTL
+    Before: B23591801   After: B24039594  **101,114,108**
+Routine Name: FBAAUTL1
+    Before: B20594708   After: B21242092  **3,12,13,108**
+Routine Name: FBAAV0
+    Before: B39796273   After: B43916106  **3,4,55,89,98,116,108**
+Routine Name: FBAAV01
+    Before: B12040541   After: B12667626  **89,98,108**,JAN 30, 1995
+Routine Name: FBAAV2
+    Before: B11664283   After: B14009472  **3,89,98,116,108**
+Routine Name: FBAAV5
+    Before: B48447360   After: B71438715  **3,55,89,98,116,108**
+Routine Name: FBAAV6
+    Before: B18680215   After: B23733544  **55,108**
+Routine Name: FBCH78
+    Before: B31111171   After: B39732551  **43,103,108**
+Routine Name: FBCHCD
+    Before: B20886446   After: B20874782  **108**
+Routine Name: FBCHEP
+    Before: B30542505   After: B33211512  **4,61,77,82,122,108**
+Routine Name: FBCHEP1
+    Before: B11600569   After: B33647893  **38,61,122,133,108**
+Routine Name: FBCHPET
+    Before: B31374746   After: B36398874  **4,38,61,77,116,108**
+Routine Name: FBCHRR
+    Before:  B9913941   After: B12984210  **61,108**
+Routine Name: FBCHVH
+    Before: B25718092   After: B31027719  **55,61,122,108**
+Routine Name: FBNHEA
+    Before:  B9786847   After:  B9476317  **82,108**
+Routine Name: FBNHED
+    Before: B11080982   After: B10924946  **108**
+Routine Name: FBNHEDAT
+    Before: B13820385   After: B13901461  **103,108**
+Routine Name: FBNHEP
+    Before: B30246134   After: B33126997  **25,108**
+Routine Name: FBNHEP2
+    Before: B22842182   After: B25872550  **108**
+Routine Name: FBNHET
+    Before:  B9172247   After:  B9055754  **108**
+Routine Name: FBNHRC
+    Before: B13739085   After: B13819457  **108**
+Routine Name: FBPAY67
+    Before: B38135461   After: B41443321  **4,32,55,69,108**
+Routine Name: FBPAY671
+    Before: B36548177   After: B38061313  **4,32,55,69,101,108**
+Routine Name: FBPCR67
+    Before: B24858243   After: B27748859  **4,48,55,69,98,122,108**
+Routine Name: FBPCR671
+    Before: B40566981   After: B46739204  **4,48,55,69,76,98,122,108**
+Routine Name: FBPRICE
+    Before: B20572423   After: B22445892  **108**
+Routine Name: FBPRICE1
+    Before:  B8962799   After: B12291028  **56,55,77,108**
+Routine Name: FBSHAUT
+    Before: B73464234   After: B73848186  **13,108**
+Routine Name: FBUTL7
+    Before:       n/a   After: B17958373  **108**
+Routine Name: FBXIP108
+    Before:       n/a   After: B13213914  **108**
+ 
+Routine list of preceding patches: 25, 68, 103, 114, 133
+
+=============================================================================
+User Information:
+Entered By  : BAUMANN,SCOTT A               Date Entered  : NOV 13, 2008
+Completed By: CORONA,JOSE                   Date Completed: JUL 19, 2012
+Released By : MARSHALL,FALENCIA B.          Date Released : AUG 06, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

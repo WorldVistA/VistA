@@ -1,0 +1,184 @@
+
+=============================================================================
+Run Date: OCT 15, 2012                     Designation: GMTS*2.7*102
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7        SEQ #93                    Status: Released
+                  Compliance Date: NOV 15, 2012
+=============================================================================
+
+Associated patches: (v)YS*5.01*60      install with patch       `GMTS*2.7*102'
+                    (v)GMTS*2.7*49 <<= must be installed BEFORE `GMTS*2.7*102'
+
+Subject: MENTAL HEALTH CLEAN UP
+
+Category: 
+  - Informational
+  - Routine
+
+Description:
+============
+
+ This patch is being released in conjunction with the Mental Health
+ package version 5.01 patch 60 (YS*5.01*60) as a multiple build KIDS file. 
+ Therefore, this patch is an informational patch and does not contain a 
+ build.
+  
+ Patch YS*5.01*60 removes functionality from the Mental Health package 
+ that is no longer in use. The DD access level for the MEDICAL
+ RECORD file (#90) is changed to "@". The MENTAL HEALTH PHYSICAL
+ EXAM health summary component pulls data from file #90, and since that 
+ file is no longer supported, the DISABLE FLAG is set to PERMANENT for 
+ this component.
+  
+ Patch GMTS*2.7*102 will accomplish the following:
+  
+ (1) Inactivate the MENTAL HEALTH PHYSICAL EXAM health summary component 
+     by setting the DISABLE FLAG to PERMANENT.
+ (2) Rebuild the Health Summary Adhoc Report (the GMTS HS ADHOC OPTION
+     health summary type).
+ (3) The post-installation routine will email a usage report titled
+     PATCH GMTS*2.7*102 REPORT containing the following listings:
+     (a) Health summary types that contain the MENTAL HEALTH PHYSICAL EXAM
+         health summary component
+     (b) Health summary objects that contain the health summary types
+         listed in (a)
+  
+     The usage report is an informational report and no action is needed 
+     by the site. The installer should consider forwarding this report to
+     the local Clinical Application Coordinators (CACs).
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #     New/Modified/Deleted
+ ---------             ------     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------     
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name       Type               New/Modified/Deleted
+ -----------       ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                            New/Modified/Deleted
+ -------------                            -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type        File Name (Number)  New/Modified/Deleted
+ -------------     ----        ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -------------------------------------------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ -------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Upstate NY HCS
+ Atlanta VAMC
+ Edward Hines Jr. VA Hospital
+ Durham VAMC
+ VA NJ Health Care System
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available. The documentation is distributed inside the 
+ YS_501_60.zip file.
+  
+ The preferred method is to FTP the combined software and documentation ZIP
+ file from ftp://download.vista.med.va.gov/ using binary FTP mode. This
+ transmits the file from the first available FTP server. Sites may also
+ elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ Title                           File Name          
+ ----------------------------------------------------
+ Health Summary Technical Manual hsum_2_7_102_tm.pdf
+ Health Summary User Manual      hsum_2_7_102_um.pdf
+  
+  
+ Patch Installation:
+  
+  
+ See the patch description for patch YS*5.01*60 for installation 
+ instructions.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSMHPE
+    Before: B20887960   After: B21341517  **49,102**
+Routine Name: GMTSP102
+    Before:       n/a   After: B15354358  **102**
+ 
+Routine list of preceding patches: 49
+
+=============================================================================
+User Information:
+Entered By  : RUFF,ROBERT F                 Date Entered  : OCT 31, 2011
+Completed By: GRAZIANI,ROBERT               Date Completed: SEP 25, 2012
+Released By : SCHMIT,BECKY                  Date Released : OCT 15, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,355 @@
+$TXT Created by ZIMMER,TIMOTHY A at DEVFEY.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 03/08/12 at 09:22
+=============================================================================
+Run Date: APR 18, 2012                     Designation: IB*2*473
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #434                      Status: Released
+                  Compliance Date: MAY 19, 2012
+=============================================================================
+
+Associated patches: (v)IB*2*424    <<= must be installed BEFORE `IB*2*473'
+                    (v)IB*2*447    <<= must be installed BEFORE `IB*2*473'
+                    (v)IB*2*451    <<= must be installed BEFORE `IB*2*473'
+                    (v)IB*2*452    <<= must be installed BEFORE `IB*2*473'
+
+Subject: IB 5010 Maintenance
+
+Category: 
+  - Other
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This Integrated Billing (IB) patch finalizes the HIPAA 5010 enhancements.
+  
+ The intent of this patch is to:
+  
+ 1. When a procedure is entered on the claim, users are prompted to 
+    point/link diagnoses to that procedure. Up to four diagnoses can be 
+    linked. If an associated diagnosis code is deleted in the number one 
+    slot, the system doesn't re-order the codes, but it moves the
+    remaining codes up levels to fill the gaps. So if there are 4 codes
+    and 1 and 2 are deleted, the new software will move codes 3 and 4 into
+    the 1 and 2 position.
+  
+ 2. Capture and transmit Remaining liability qualifier and Remaining
+    Liability to Financial Services Center (FSC). 
+  
+ 3. Only send Purchase Service Provider ID and Purchase Service Amount when
+    claims contain a purchased service. The user will now get an error
+    instead of a warning for the following conditions:
+      a. A Purchase Service Amount exists but the Non-VA Facility is 
+         missing. 
+      b. A Non-VA Facility exists but there is no Purchase Service Amount.
+  
+ 4. Sync up Purchase Service Provider ID to agree with either Purchase
+    Service Provider Primary ID or Purchase Service provider secondary
+    ID.  
+  
+ 5. Send 000 in field 4 (Service Line Paid Amt) of the LCOB record and
+    field 8 (Other Payer Paid Amt) of OI1 record for entries with 0.00
+    dollar amounts.  
+    
+    Note:  For future payers, the amount will be null instead of 0.00 
+           dollars. For example, a secondary claim will show a null entry
+           for the tertiary payer and a dollar amount for the secondary
+           payer. 
+  
+ 6. Update CHAMPVA Rx Rate Schedules by adding data to the BILLABLE 
+    SERVICE and DISPENSING FEE fields.
+  
+ 7. Update TRICARE Rx Rate Schedules by creating two new Rate Schedules 
+    for the updated TRICARE dispensing fee of $10.27 with an effective 
+    date of 01/23/12. Inactivate the old TRICARE Rx Rate Schedules with an 
+    inactive date of 01/22/12.
+  
+ 8. Modify ePharmacy IB Billing Determination by excluding non-pharmacy 
+    insurance policies when calculating the Rate Type.
+  
+ 9. Correct slow down in locating 3rd Party claims with EEOBs - The need
+    was identified in Remedy ticket HD0000000597554.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ IB ERROR (#350.8)                                           Modified
+      Screen: I $$INC3508^IBY473PR(Y)
+ IB DATA ELEMENT DEFINITION (#364.5)                         Modified
+      Screen: I $$INCLUDE^IBY473PR(5,Y)
+ IB FORM SKELETON DEFINITION (#364.6)                        Modified
+      Screen: I $$INCLUDE^IBY473PR(6,Y)
+ IB FORM FIELD CONTENT (#364.7)                              Modified
+      Screen: I $$INCLUDE^IBY473PR(7,Y)
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ N/A
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------  
+ N/A 
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. HD0000000597554 - Recent changes substantially slowed down the display.
+  
+ Problem:
+ --------
+ Slow down locating 3rd Party claims with EEOBs - It was determined that
+ patches IB*2.0*451 and PRCA*4.5*276 added the ability to identify, via a
+ '%' indicator, first party bills associated with third party bills which
+ have EEOBs on file. The code to locate the bills utilized the
+ cross-reference "D" of the EVENT DATE field (#.03) in the Bill/Claims file
+ (#399). It was found that these changes substantially slowed down the
+ display of two specific reports to unsatisfactory levels.
+  
+  
+ Resolution:
+ -----------
+ After installation of this patch, the two report options affected will
+ utilize the cross-reference "APDT" of the EVENT DATE field (#.03) in the
+ Bill/Claims file (#399) to speed up data display. The following options
+ are modified:
+  
+   First Party Follow-Up Report   [IBJD FOLLOW-UP FIRST PARTY]
+   List all Bills for a Patient   [IB LIST ALL BILLS FOR PAT]
+  
+  
+  
+ Test Sites:
+ -----------
+ Birmingham
+ Loma Linda
+ North FL/South GA
+ Palo Alto
+ Richmond
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ No documentation is updated with this patch.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ ****Important Note: There is one **MANDATORY** pre-installation
+     activity associated with this install.
+  
+ The IB Staff MUST empty the 837 extract/transmission queue PRIOR to
+ the installation of this patch. ***
+  
+ Instructions on how to clear 837 queue (These must be conducted by MCCF)
+  
+ Step 1 (this generates a report to be used in Step 2)
+  
+ Select OPTION NAME: BILLING SUPERVISOR MENU IB BILLING SUPERVISOR MENU 
+ Billing Supervisor Menu
+  
+    EDI    EDI Menu For Electronic Bills ...
+    
+  
+ Select Billing Supervisor Menu Option: EDI EDI Menu For Electronic Bills
+  
+    TR     EDI Transmission Status Reports ...
+  
+ Select EDI Menu For Electronic Bills Option: TR EDI Transmission Status 
+ Reports
+  
+    REX    Ready for Extract Status Report
+  
+ Step 2 (Using report from Step 1)  (Note: These must be completed by MCCF)
+  
+ Select OPTION NAME: BILLING SUPERVISOR MENU IB BILLING SUPERVISOR 
+ MENU     Billing Supervisor Menu
+  
+    EDI    EDI Menu For Electronic Bills ...
+    
+ Select Billing Supervisor Menu Option: EDI EDI Menu For Electronic Bills
+    
+    SEND   Transmit EDI Bills - Manual
+  
+  
+ There are no other mandatory pre-installation activities associated
+ with this package.
+  
+  
+ **** Please note, if you select the option below, Compare Transport Global
+      to Current System, and select #1 Full Comparison, you will get a
+      system error:  <UNDEFINED>S+1^DIQ ^IBA(364.6,2228,0) due to a known
+      issue with the KIDS Full Compare option (see Remedy Ticket
+      HD0000000449218). You can run any of the other 3 compare options
+      without issue.
+  
+  
+ Installation Instructions
+ -------------------------
+  
+   ******************************************************************
+   *  You should install this patch during non-peak hours, when no  *
+   *  Integrated Billing or Accounts Receivable users are on the    *
+   *  system.                                                       *
+   ******************************************************************
+  
+  
+         ****There are no options to disable.
+  
+ Install Time: The installation time will depend on the size of the
+ BILL/CLAIMS (#399) file.
+  
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+ Select Kernel Installation & Distribution System Option: INStallation
+                                                          ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+ Select Installation Option:
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter IB*2.0*473):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).  
+  
+         ********Please note, if you select option #1 to run a Full
+         Comparison you will get a system error:  <UNDEFINED>S+1^DIQ
+         ^IBA(364.6,2228,0) due to a known issue with the KIDS Full 
+         Compare option (see Remedy Ticket # HD0000000449218). You can run
+         any of the other 3 compare options without issue.
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s)
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch:
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted for the INSTALL NAME, enter IB*2.0*473
+  
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//' answer NO
+  
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu
+         Options, and Protocols? NO//' answer NO
+  
+ 5.  Routines ^IBY473PO and ^IBY473PR will be deleted upon completion of 
+     installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCBB2
+    Before: B50172747   After: B51205466  **51,137,210,245,232,296,320,
+                                           349,371,403,432,447,473**
+Routine Name: IBCEF11
+    Before: B73456164   After: B67207596  **51,137,155,309,335,348,349,
+                                           371,432,447,473**
+Routine Name: IBCEF81
+    Before:B105842498   After:B108877759  **432,473**
+Routine Name: IBCEF82
+    Before:B111186112   After:B106453752  **432,473**
+Routine Name: IBCEFP
+    Before:B100162925   After:B115077680  **432,447,473**
+Routine Name: IBCEU1
+    Before: B59089714   After: B90709480  **137,155,296,349,371,432,473**
+Routine Name: IBCSC11
+    Before:  B7658686   After:  B7658686  **447,473**
+Routine Name: IBCSC9
+    Before:  B7536045   After:  B7536045  **52,51,447,473**
+Routine Name: IBCU72
+    Before: B11361036   After: B16150008  **62,210,473**
+Routine Name: IBJDF41
+    Before: B92006724   After: B88827246  **123,159,204,356,451,473**
+Routine Name: IBJTCA1
+    Before: B52613599   After: B53091604  **39,80,106,137,223,276,363,
+                                           384,432,452,473**
+Routine Name: IBNCPDP1
+    Before:B197349742   After:B196557252  **223,276,339,363,383,405,384,
+                                           411,434,437,435,455,452,473**
+Routine Name: IBY473PO
+    Before:       n/a   After: B10300393  **473**
+Routine Name: IBY473PR
+    Before:       n/a   After:  B1657081  **473**
+ 
+Routine list of preceding patches: 447, 451, 452
+
+=============================================================================
+User Information:
+Entered By  : ZIMMER,TIMOTHY A              Date Entered  : JAN 18, 2012
+Completed By: ROBBINS,BRADLEY               Date Completed: MAR 22, 2012
+Released By : CAULFIELD,MARY                Date Released : APR 18, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,209 @@
+$TXT Created by THOMPSON,Seth at CHEY204.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 09/13/11 at 06:58
+=============================================================================
+Run Date: JAN 12, 2012                     Designation: OR*3*347
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #300                      Status: Released
+                  Compliance Date: FEB 12, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*274    <<= must be installed BEFORE `OR*3*347'
+                    (v)OR*3*280    <<= must be installed BEFORE `OR*3*347'
+                    (v)OR*3*330    <<= must be installed BEFORE `OR*3*347'
+
+Subject: CPRS REPORTS AND VIEW CORRECTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ 1) Relative dates are not saving time in custom views in the CPRS orders 
+    tab.
+  
+ 2) Data on the clinical surgery report is hanging over from one item to 
+    another.
+  
+ 3) When creating a new patient movement, discontinued orders are 
+    displaying on the "Copy active orders for selected event" dialog
+  
+ 4) Incorrect data is showing up on the Search orders by Nature or Status 
+    [OR NATURE/STATUS ORDER SEARCH] report.
+  
+   
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000152901 - Custom Order View not saving correctly
+ 2. HD0000000290180 - Surgery Reports using Vista Web display incorrect
+                      surgery specialty for non-OR cases.
+    Duplicate:
+    HD0000000159365 - Unable to Save Custom Orders View
+ 3. HD0000000440138 - Delayed orders - Copy Active Orders
+ 4. HD0000000463465 - Requesting clarification on "Signature Not 
+                      Required" for discontinued telephone order.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Fayetteville, AR
+ Oklahoma City, OK
+ South Texas HCS
+   
+   
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000152901 - Custom Order View not saving correctly
+  
+     Problem:
+     --------
+     When selecting a custom order view on the CPRS orders tab, relative 
+     dates are not saving time.
+  
+     Resolution:
+     -----------
+     Routine ORWOR has been modified to allow the time in a relative 
+     date/time to be saved.
+  
+  
+  
+ 2. HD0000000290180 - Surgery Reports using Vista Web display incorrect 
+                      surgery specialty for non-OR cases.
+  
+     Problem:
+     --------
+     Some fields on clinical surgery reports are being carried over from a 
+     previous report. If there were two items on the surgery report, 
+     one of which had a surgical specialty, and the other did not, the 
+     first surgical specialty would hang over into the incorrect item.
+   
+     Resolution:
+     -----------
+     Modified routine ORWSR to correctly use FileMan calls and to clear 
+     variables. This will prevent data hangovers.
+  
+  
+ 3. HD0000000440138 - Delayed orders - Copy Active Orders
+  
+     Problem:
+     --------
+     When creating a new patient movement event in CPRS, recently 
+     discontinued orders are showing up in the "Copy active orders for 
+     selected event" dialog.
+   
+     Resolution:
+     -----------
+     Routine OREVNTX1 has been modified to filter out orders which 
+     have a status of discontinued, complete, expired, and cancelled
+     from the "Copy active orders for selected event" dialog.
+  
+      
+ 4. HD0000000463465 - Requesting clarification on "Signature Not 
+                      Required" for discontinued telephone order.
+  
+     Problem:
+     --------
+     The Search orders by Nature or Status [OR NATURE/STATUS ORDER SEARCH] 
+     report is displaying orders that contain the searched for nature of 
+     order in any action. This report should only be searching for the 
+     last action.
+     For example, if you have an order that was released with a nature of 
+     order value of telephoned, but then was changed due to service 
+     correction, and is now not yet released, this order will show up as 
+     active when you search for Telephoned and unsigned when you search 
+     for service correction.
+   
+     Resolution:
+     -----------
+     Routine ORSNAST2 has been modified so that the Search orders by 
+     Nature or Status [OR NATURE/STATUS ORDER SEARCH] report now only 
+     looks at the current status (last action) of the order and correctly 
+     displays the results.
+   
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+   
+   1.  Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+   2.  Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]: 
+   
+            Edits and Distribution ...  
+            Utilities ...  
+            Installation ...  
+   
+     Select Kernel Installation & Distribution System Option: Installation
+                                                              ---
+            1      Load a Distribution
+            2      Verify Checksums in Transport Global
+            3      Print Transport Global
+            4      Compare Transport Global to Current System
+            5      Backup a Transport Global
+            6      Install Package(s)
+                   Restart Install of Package(s)
+                   Unload a Distribution
+   
+   3.  From this menu, you may elect to use the following options
+       (When prompted for the INSTALL NAME, enter OR*3.0*347):
+   
+   
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will
+           not backup any other changes such as DD's or templates.
+       b.  Compare Transport Global to Current System - This option
+           will allow you to view all changes that will be made when
+           this patch is installed.  It compares all components of this
+           patch (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will
+           allow you to ensure the integrity of the routines that are
+           in the transport global.
+   
+   4.  Use the Install Package(s) option and select the package
+       OR*3.0*347.
+   
+       a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+           install? NO//", answer NO.
+       b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+           Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OREVNTX1
+    Before: B75868849   After: B76466044  **141,165,149,243,280,347**
+Routine Name: ORSNAST2
+    Before: B24780861   After: B25134010  **50,190,347**
+Routine Name: ORWOR
+    Before: B42631980   After: B42185290  **10,85,132,141,163,187,190,
+                                           215,243,307,330,280,347**
+Routine Name: ORWSR
+    Before: B26083948   After: B28551721  **109,116,132,148,160,190,274,347**
+ 
+Routine list of preceding patches: 274, 280
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : MAR 15, 2011
+Completed By: SESSLER,APRIL                 Date Completed: JAN 09, 2012
+Released By : PIERSON,YVONNE E              Date Released : JAN 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

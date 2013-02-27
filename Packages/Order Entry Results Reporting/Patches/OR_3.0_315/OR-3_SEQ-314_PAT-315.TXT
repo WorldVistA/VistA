@@ -1,0 +1,250 @@
+$TXT Created by CRUMLEY,JAMIE at DEVVLD.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 10/30/12 at 15:23
+=============================================================================
+Run Date: FEB 12, 2013                     Designation: OR*3*315
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: EMERGENCY
+Version : 3       SEQ #314                      Status: Released
+                  Compliance Date: FEB 20, 2013
+=============================================================================
+
+Associated patches: (v)OR*3*243    <<= must be installed BEFORE `OR*3*315'
+
+Subject: MISCELLANEOUS LAB CHANGES
+
+Category: 
+  - Routine
+  - Enhancement ()
+
+Description:
+============
+
+ 1. In the Computerized Patient Record System (CPRS), on the Labs tab,
+ under Anatomic Pathology, the accession number display should be changed
+ to show the Commercial-Off-The-Shelf (COTS) accession number. This patch
+ makes this change by looking for the presence of the Application
+ Programming Interface (API) GETACC^LRJWLST. If that API exists, CPRS will
+ use it to retrieve the COTS accession number from the LAB DATA file 
+ (#63). If no COTS accession number is available, the legacy accession 
+ number will display.
+  
+ 2. In CPRS, on the Labs tab, under Microbiology, the accession number
+ display should be changed to show the COTS accession number. This patch
+ makes this change by looking for the presence of the API GETACC^LRJWLST
+ and, if present, uses the API to retrieve the COTS accession number from
+ the LAB DATA file (#63). If no COTS accession number is available, the 
+ legacy accession number will display.
+  
+ ***Important Notes*** When this patch is installed on a system that does 
+ not yet contain the patch LR*5.2*383, running XINDEX will generate an 
+ error about a 'Reference to routine '^LRJWLST'. However, the reference is 
+ conditional, so will not cause a failure on the system.
+  
+ 3. Laboratory V5.2 patch LR*5.2*393 is adding the ability to inactivate a
+ collection sample. CPRS is being modified to honor the INACTIVE DATE
+ (#64.9101) field in the COLLECTION SAMPLE (#62) file once they are 
+ available.
+  
+ 4. An error was occurring in CPRS when attempting to display the Anatomic 
+ Pathology supplemental report. The error, an undefined variable error 
+ that appeared in the VistA error trap in a FileMan routine, was caused by
+ a modification done in support of the LEDI v4 release. In order to
+ eliminate the error, a modification was done to CPRS to support the LEDI
+ v4 change.
+  
+ 5. There are two new order reasons that are needed by Laboratory V5.2.
+ They are Obsolete Order and Purged Order. A request was made that these
+ two reasons be added to the ORDER REASON file (#100.03). The post install
+ of this patch will automatically add these reasons.
+  
+ 6. The Lab and Pharmacy users have requested that when certain fields are
+ updated in the LABORATORY TEST (#60) file, there should be a CPRS call
+ made to search for quick orders that contain the test that was updated. If
+ any are found, the appropriate personnel will be notified. This patch
+ addresses this issue by creating a new routine ORUQO that will search for
+ the specified test and notify the members of the OR CACS mail group. They
+ will be told the quick order name and whether it is active or inactive.
+  
+ 7. Since the COTS system, when present, will now be considered the Lab
+ system of record, the date/time completed from the COTS system should be
+ what is stored in the Lab system as the date/time completed. However, this
+ might cause some concern on the CPRS side since there may be a delay if
+ the interface from VistA to the COTS system is down for any reason. In
+ order to help mitigate this issue, this patch will modify the information
+ stored in the RESULTS DATE/TIME field (#71) of the ORDER file (#100) to
+ contain the date/time the results information was sent to CPRS, rather
+ than the date/time completed from the COTS system.
+  
+ 8. Laboratory V5.2 patch LR*5.2*393 will add the ability to inactivate a
+ topography. CPRS will honor the INACTIVE DATE (#64.9103) field in the
+ TOPOGRAPHY FIELD (#61) file when they become available.
+  
+ 9. The Laboratory Lab System Re-engineering project (LSRP) has requested
+ an API to allow Lab to veil an order in CPRS. This patch adds that new
+ API.
+  
+ 10. LSRP has requested an API to update the PACKAGE REFERENCE field (#33) 
+ of the ORDER file (#100). This patch adds that new API.
+  
+ Associated Remedy:
+ ==================
+ N/A
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Huntington, WV
+ Lexington, KY
+ Salisbury, NC
+  
+ Installation Instructions 
+ ========================= 
+ This patch can be loaded with users in the system. Installation time is
+ less than five minutes.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+  1.  Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  2.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*315.)
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  3.  Use the Install Package(s) option and select the package
+      OR*3.0*315.
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO. 
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu Options
+          and Protocols? NO//', answer NO.
+  
+  
+ Installation Example:
+ ===================== 
+  
+ Select INSTALL NAME: OR*3.0*315       Loaded from Distribution  
+ 6/5/09@17:45:53
+      => OR*3*315 6/5
+  
+ This Distribution was loaded on Jun 05, 2009@17:45:53 with header of 
+    OR*3*315 6/5
+    It consisted of the following Install(s):
+      OR*3.0*315
+ Checking Install for Package OR*3.0*315
+  
+ Install Questions for OR*3.0*315
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   TCP
+  
+  
+  
+  
+  Install Started for OR*3.0*315 : 
+                Jun 05, 2009@17:46:14
+  
+                                    
+                                 OR*3.0*315
+ -------------------------------------------------------------------------
+ Build Distribution Date: Jun 05, 2009
+  
+  Installing Routines:
+                Jun 05, 2009@17:46:14
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  OR*3.0*315 Installed. 
+                Jun 05, 2009@17:46:19
+  
+  
+ Install Message sent  #12434
+ --------------------------------------------------------------------------
+  
+           +------------------------------------------------------------+
+   100%    |             25             50             75               |
+ Complete  +------------------------------------------------------------+
+   
+ Install Completed 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORB3LAB
+    Before:  B3813832   After:  B4298367  **210,243,315**
+Routine Name: ORDV05E
+    Before: B20923407   After: B23354517  **109,208,315**
+Routine Name: ORDVX1
+    Before:  B5290851   After:  B5908194  **243,315**
+Routine Name: ORMLR
+    Before: B55346176   After: B55099277  **3,92,153,174,195,243,315**
+Routine Name: ORMLR4
+    Before:       n/a   After:    B85588  **315**
+Routine Name: ORUQO
+    Before:       n/a   After: B15426804  **315**
+Routine Name: ORUTL2
+    Before:       n/a   After:   B513377  **315**
+Routine Name: ORWDLR32
+    Before: B60083103   After: B65150188  **10,85,141,215,250,243,315**
+Routine Name: ORWDLR33
+    Before: B20970855   After: B23049267  **10,85,141,243,315**
+Routine Name: ORY315
+    Before:       n/a   After:  B8296998  **315**
+ 
+Routine list of preceding patches: 208, 243
+
+=============================================================================
+User Information:
+Entered By  : CRUMLEY,JAMIE                 Date Entered  : JUN 11, 2009
+Completed By: NADEAU,MARCY MARCONI          Date Completed: FEB 12, 2013
+Released By : SCHWARTZ,VIKIE                Date Released : FEB 12, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

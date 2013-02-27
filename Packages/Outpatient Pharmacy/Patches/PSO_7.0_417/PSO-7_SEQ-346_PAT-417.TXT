@@ -1,0 +1,244 @@
+$TXT Created by BROWN,STANLEY A at MDEVCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Wednesday, 11/28/12 at 16:13
+=============================================================================
+Run Date: FEB 11, 2013                     Designation: PSO*7*417
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #346                      Status: Released
+                  Compliance Date: MAR 13, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*387   <<= must be installed BEFORE `PSO*7*417'
+                    (v)PSO*7*388   <<= must be installed BEFORE `PSO*7*417'
+                    (v)PSO*7*390   <<= must be installed BEFORE `PSO*7*417'
+
+Subject: MOCHA v1.0 Enhancements 1 OP FOLLOWUP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ ***************************Attention*************************
+ This patch is part of the Medication Order Check Healthcare Application 
+ (MOCHA) v1.0 Enhancements 1 group of patches. There are a total of eight 
+ patches and one .kid (host) file that must be installed as a group.  The 
+ patches must be installed in the following order:
+  
+ OR*3*352
+ PSS*1*164
+ PSS*1*169
+ PSO*7*390
+ PSO*7*417
+ PSJ*5*268
+ <xxx>_1_0_P23.kid
+ PSJ*5*260
+ PSJ*5*288
+  
+ For the ".kid" file, value of <xxx> will be determined by the ward 
+ automated dispensing equipment in use at your facility.  If no ward 
+ automated dispensing equipment is in use at your site, this file will
+ not be needed. For those sites using Pyxis, xxx=PPU, for Omnicell sites,
+ xxx=OPU, and for McKesson sites, xxx=MPU.  To obtain this file or if 
+ additional information is required regarding this ".kid" file, please 
+ contact your site's Informatix contact.
+  
+ Patch PSO*7*417 will provide the following updates:
+  
+ 1. This build is to be installed immediately after PSO*7.0*390 to 
+    correct a potential undefined error when renewing prescriptions 
+    without drug allergies. <UNDEFINED>DAOC+8^PSONEW
+    (CCR6153). 
+  
+ 2. Updated the second lines of the following routines: 
+    a. Added patch number 388 to 2nd line of PSORENW and fixed typo. 
+    b. Added patch number 387 to 2nd line PSORXI (no code changes needed).
+       (CCR6213).
+  
+ 3. Corrected a potential SUBSCRIPT error reported by test site (Boston)
+    (CCR6212).
+  
+ ****************************************************************
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Options Associated:
+ --------------------
+  
+  Option Name                 Type       Action
+  -----------                 ----       ------
+  N/A
+  
+ Protocols Associated:
+ ---------------------
+  N/A
+  
+  Protocol Name                          Action
+  -------------                          ------
+  N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+  N/A
+  
+  Template Name                          Action
+  -------------                          ------
+  N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Associated Change Requests: 
+ ---------------------------
+  CCR6153
+  
+ Test Sites:
+ -----------
+ Boston, MA
+ Fresno, CA
+ West Palm Beach, FL
+  
+  Documentation Retrieval Instructions:
+  -------------------------------------
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+ Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www.va.gov/vdl/
+  
+    FILE NAME                    DESCRIPTION      
+    =========                    ===========
+  
+ M1E1_PSO_7_PSJ_5_PSS_1_RN.PDF   Medication Order Check Healthcare
+                                 Application (MOCHA) v1 Enhancements
+                                 1 Release Notes 
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ This patch should not be installed when Outpatient Medications options
+ are being used. If this is not possible, we recommend it should be 
+ installed during Non-Peak hours.
+  
+ Install Time - less than 5 minutes
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option to unload the build.  
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSO*7.0*417):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter "PSO*7.0*417" at the INSTALL NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//'  answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSONEW
+    Before: B41741762   After: B42013827  **11,27,32,46,94,130,268,225,
+                                           251,379,390,417**
+Routine Name: PSORENW
+    Before: B38420531   After: B38307227  **11,27,30,46,71,96,100,130,
+                                           148,206,388,390,417**
+Routine Name: PSORXI
+    Before: B15382592   After: B15382592  **268,324,251,387,390,417**
+ 
+Routine list of preceding patches: 390
+
+=============================================================================
+User Information:
+Entered By  : BROWN,STANLEY A               Date Entered  : NOV 02, 2012
+Completed By: YARBER,KIMBERLY               Date Completed: FEB 11, 2013
+Released By : VECE,VIRGINIA                 Date Released : FEB 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

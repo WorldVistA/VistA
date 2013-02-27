@@ -1,0 +1,73 @@
+The Clinical Data Repository/Health Data Repository (CHDR) software team would like to bring your attention to an update to the CHDR software 
+which is scheduled for 11:59 pm ET Wednesday January 9th. 2013. ANR:
+42797
+
+Please read below but this install will not require any action by your VA
+site managers. The functionality of the CHDR Admin GUI has not changed in 
+anyway. This release has to do with background messaging code change 
+requirements.
+
+This message was also sent in Outlook to the following mail groups:
+OIT PD PM Sec Init VLER CHDR Expanded; OIT PD Product Support Health PS 
+Clinical Team 2; OIT PD Product Support Health PS Healthcare Admin Team 2;  
+VHA CBO Program Application Specialists - PAS; VHA HIM; VHA Clinical 
+Applications; OIT PD PM MI VLER CHDR Development
+
+There are no site installs associated with this maintenance update to CHDR 
+version 2.1.2 (Austin Automation Center)The following is for informational 
+purposes only. CHDR works in the background to facilitate the exchange of 
+virtual lifetime electronic health records (VLER) between the Health Data 
+Repository (HDR) at VA, and the Clinical Data Repository (CDR) at DoD for 
+Active Dual Consumers (ADC). Dual consumers are patients eligible to 
+receive healthcare under both DoD and VA health plans, and/or patients being treated at both DoD and VA medical facilities. Most patients are marked active by an automated process developed by DoD. At the VA, patients can be marked active manually using VAs CHDR Administration Application Interface accessed via this website: 
+
+https://hdrchdr.aac.va.gov:5024/CHDR/.
+ 
+NOTE:A patient must be setup as ACTIVE before any patient data can be 
+exchanged. The VA Ruthless Reduction Task Force (RRTF) directed the HDR/CDS 
+to eliminate caching VistA data in HDR and to get data directly from VistA 
+sites. The defect repairs in this maintenance release make the current CHDR 
+system compliant with the HDR/CDS Release 3.3.No changes were made to the 
+CHDR Admin GUI.
+
+FUNTIONALITY PROVIDED by CHDR:
+· Supports the DoD patient ADC Automation process.
+· Provides bi-directional, real-time, exchange of computable, 
+standardized data. The computable data can be passed individually rather 
+than in text blocks so the data can be individually sorted and queried. At 
+VA the data can be viewed in VistAWeb.
+· Provides integrated outpatient medication lists and integrated drug 
+allergy for CHDR to perform medication and allergy interaction checks. At 
+VA, the alerts appear in CPRS.
+· VA receives historical clinical data on separated service members.
+The CHDR 2.1.2 Maintenance Release will also coincide with an upgrade from 
+
+HDR/CDS 3.3.
+
+SITE REQUIREMENTS:
+There are no site requirements at this time. Sites should already be setup 
+to  communicate with the CHDR server and have their security keys assigned, 
+as appropriate for each VAMC. Each site should have a selected clinical 
+user identified as the Administrative User (admitting clerk or similar) 
+who can setup patients as ACTIVE DUAL CONSUMERS.
+Although no documentation was updated for this release, CHDR-related 
+documentation can be found at:
+·<http://vista.med.va.gov/chdr/index.asp>- CHDR Site Home Page.
+·<http://www.va.gov/vdl/application.asp?appid=155> CHDR VDL
+
+[CLEARQUEST TICKETS/ RESOLVED BY THIS CHDR 2.1.2 MAINTENANCE RELEASE]
+There are no new enhancements or new functionality for end-users. The VA 
+Ruthless Reduction Task Force (RRTF) directed the HDR/CDS to eliminate 
+caching VistA data in HDR and get data directly from VistA sites. The 
+defect repairs in this maintenance release make the current CHDR system 
+compliant with the HDR CDS Release 3.3. The HDR/CDS and CHDR releases must 
+be deployed concurrently. The following table identifies the ClearQuest 
+tickets corrected for this maintenance release.
+  
+CQ    TicketDescription
+21101 No ORC.7/TQ.5 on Refill.
+21102 Current Provider is not being transformed into ORC.12.
+21103 No fatal Error Element in VHIM model for fatal errors.
+21104 Z04 messages sent to DoD contain different sending and receiving 
+site.
+21105 A CDS response has no error.

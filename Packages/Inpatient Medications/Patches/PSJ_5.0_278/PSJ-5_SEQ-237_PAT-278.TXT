@@ -1,0 +1,151 @@
+$TXT Created by ENELOW,JASON at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 10/11/12 at 16:09
+=============================================================================
+Run Date: OCT 24, 2012                     Designation: PSJ*5*278
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #237                      Status: Released
+                  Compliance Date: NOV 24, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*246   <<= must be installed BEFORE `PSJ*5*278'
+
+Subject: ORDERABLE ITEM UPDATE ON RENEWAL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Inpatient Medications 
+ package:
+  
+ 1. Orderable item not updating on renewal
+ 2. <SUBSCRIPT> error when viewing patient profiles
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. HD0000000317650 - Old active orderable items display
+  
+    Duplicates:
+    -----------
+    HD0000000529779
+    HD0000000716954
+  
+ 2. HD0000000622135 - STACK ERROR ON ENTERING THE IPM ACTION PROFILE
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Edward Hines Jr. VA Hospital - Hines
+ Jerry L. Pettis Memorial VA Medical Center - Loma Linda
+ North Chicago VAMC
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================
+ 1. HD0000000317650 - Old active orderable items display
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #1378
+    PSPO #2125
+  
+    Problem:
+    -------
+    When the Dispense Drug of an active order is matched to a new 
+    Orderable Item, and then that order is renewed and verified, the new
+    order shows the old Orderable Item with "INVALID DISPENSE DRUG" in the
+    black highlighted message section, when the order is viewed after it is
+    verified. The Dispense Drug is correct, but it is no longer matched to
+    the old Orderable Item that is displayed.
+  
+    Resolution:
+    ----------
+    Changed routine PSGOER so that the orderable item will be properly 
+    updated during the renewal process.
+  
+  
+ 2. HD0000000622135 - STACK ERROR ON ENTERING THE IPM ACTION PROFILE
+  
+    Problem:
+    --------
+    When viewing the Action Profile #1 option in Inpatient Order Entry [PSJ
+    OE], if the user has edited the ROUTE field for this order, it will 
+    cause a <SUBSCRIPT> error.
+  
+    Resolution:
+    -----------
+    Modified the routine PSGAP0 so that unrelated global data is killed 
+    before the Action Profile #1 is run, preventing the <SUBSCRIPT> error.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2. From the Kernel Installation & Distribution System menu, select 
+    the Installation menu.  
+   
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSJ*5*278)
+   
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+    b.  Print Transport Global - This option will allow you to view
+        the components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch 
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package PSJ*5*278.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+    respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGAP0
+    Before: B31616073   After: B31836925  **8,58,111,278**
+Routine Name: PSGOER
+    Before: B79379860   After: B82580886  **11,30,29,35,70,58,95,110,111,
+                                           133,141,198,181,246,278**
+ 
+Routine list of preceding patches: 246
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : MAY 22, 2012
+Completed By: WERNER,GARY                   Date Completed: OCT 19, 2012
+Released By : SEBURN,CINDY L                Date Released : OCT 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

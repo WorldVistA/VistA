@@ -1,0 +1,105 @@
+
+=============================================================================
+Run Date: FEB 11, 2013                     Designation: PRCA*4.5*280
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #257                    Status: Released
+                  Compliance Date: MAR 14, 2013
+=============================================================================
+
+
+Subject: CORRECTING TYPE OF CARE FIELD FOR SOME ACCOUNTS RECEIVABLE RECORDS
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch is an informational patch for Accounts Receivable.
+  
+ There will be a post-initialization routine run for Accounts
+ Receivable when the combined build associated with patch IB*2*459 is
+ installed. 
+  
+ When the Build associated with IB*2*459 is installed there will be an
+ Integrated Billing update to correct three IB ACTION TYPE (#350.1) file
+ entries, and then an Accounts Receivable update will correct the
+ necessary associated ACCOUNTS RECEIVABLE (#430) file records in the TYPE
+ OF CARE (#15.1) field.
+  
+  
+  
+ This patch is part of the combined build exported as a Kernel Installation
+ and Distribution System (KIDS) host file named:
+   
+    IB_20_459.KID   (IB/PRCA Remedy Ticket Fixes)
+  
+ This global host file contains the following distributions:
+  
+    IB*2.0*459      Contained in KIDS Host File IB_20_459.KID
+    PRCA*4.5*280    Contained in KIDS Host File IB_20_459.KID
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000473968 Incorrect charge type
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Asheville VA Medical Center                                           
+ Martinsburg VA Medical Center                                      
+ West Palm Beach VAMC    
+  
+ OVERVIEW OF REMEDY TICKETS(s):
+ ==============================
+ 1. HD0000000473968 Incorrect charge type
+  
+    Problem:
+    --------
+    The sites and patients are seeing NURSING HOME CARE (NSC) instead of
+    HOSPITAL CARE (NSC) for when the patient charges are:
+       DG FEE SERVICE (INPT) CANCEL   
+       DG FEE SERVICE (INPT) NEW       
+       DG FEE SERVICE (INPT) UPDATE. 
+  
+    Resolution:
+    -----------
+    The post-init routine mentioned above will correct the TYPE OF CARE
+    (#15.1) field for inpatient charge claims in the above three DG Fee
+    Service types from NURSING HOME CARE (NSC) to HOSPITAL CARE (NSC) in
+    the ACCOUNTS RECEIVABLE (#430) file.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Please refer to the patch description for IB*2.0*459 for instructions for
+ retrieving the data global host file and installing this patch.
+  
+  1.  CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: PRCA280.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCA280
+    Before:       n/a   After:  B4573663  **280**
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : SEP 14, 2011
+Completed By: DAWSON,TIM                    Date Completed: JAN 29, 2013
+Released By : GARRETT,WILLIAM               Date Released : FEB 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,327 @@
+$TXT Created by WESTRA,HERLAN at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 05/22/12 at 10:52
+=============================================================================
+Run Date: SEP 20, 2012                     Designation: XU*8*599
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #481                      Status: Released
+                  Compliance Date: OCT 20, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*546    <<= must be installed BEFORE `XU*8*599'
+
+Subject: Fix ENDOFFILE Errors
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will fix <ENDOFFILE> errors trapped in the VistA error log by
+ various Kernel routines when attempting to read from a terminal session
+ that is no longer connected to VistA.
+  
+ A new function $$ENDOFILE is added to routine ^%ZISUTL to set the
+ sequential file end-of-file handling to be consistent among different
+ operating systems.  The default setting for Cache on Linux/Unix differs
+ from settings on VMS and Windows.  The desired setting is for all Cache
+ versions on all operating systems to function as in the older DS.M version
+ of MUMPS for terminal sessions and host file handling (set $ZEOF=-1 at
+ end-of-file).
+  
+ Routine ^%ZIS is modified to call the new $$ENDOFILE^%ZISUTL function to 
+ set end-of-file handling when a terminal session is first established.  
+ This modification will have no effect on broker or VistAlink connections.
+  
+ Routine ^%ZISH is modified on all Cache versions to replace a hard-coded 
+ set of the end-of-file handling (when opening a host file) with the new
+ function call.
+  
+  
+ Blood Bank Team Coordination
+ ============================
+   
+ Clearance - 06/18/12
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*599 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+ not alter or modify any VistA Blood Bank software design safeguards or
+ safety critical elements functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8*599 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  HD0000000476379    ENDOFFILE Error Messages
+  HD0000000619925    ENDOFFILE ASK+1^XQ
+  
+ 1. HD0000000476379 ENDOFFILE Error Messages (Duplicate HD0000000619925)
+  
+ Problem:
+ -------
+ Sites with Linux Front End (FE) servers have been seeing quite a few 
+ <ENDOFFILE>ASK+1^XQ errors in the error trap.  Cache <ENDOFFILE> errors
+ occur during sequential Input/Output (IO) device READ statements when 
+ there is no data to READ.  Analysis of the error trap reveals that the 
+ server is trying to READ input from a user session, but there is no longer
+ a valid connection to an IO device.  The system variable $ZA is set to 
+ 2048, which corresponds to a Cache error of "The process is disconnected 
+ from its principal device."
+  
+ Resolution:
+ ----------
+ Function $$ENDOFILE^%ZISUTL has been created to set end-of-file handling 
+ for terminal I/O on Cache systems to be consistent with older DS.M 
+ versions of MUMPS. Instead of trapping an <ENDOFFILE> error, it will set 
+ the system variable $ZEOF=-1 when end-of-file is reached.  It will not be
+ called for valid <ENDOFFILE> errors, such as when a report which requires 
+ interactive user input is tasked to a printer (which cannot provide that 
+ input).
+  
+  
+ Test Sites: (Patch Tracking Message #58576370)
+ ----------
+ Alexandria VA Medical Center, Pineville LA (502) - Medium
+ Jack C. Montgomery VAMC, Muskogee OK (623) - Medium
+ Overton Brooks VA Medical Center, Shreveport LA (667) - Large
+ VA Butler Healthcare, Butler PA (529) - Small
+ VA Tennessee Valley HCS (Nashville, Murfreesboro) TN (626) - Integrated
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel end-user documentation is available on the
+ VHA Software Document Library (VDL) at the following Internet Website:
+      http://www.va.gov/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch cannot be queued.  RELOAD^ZTMGRSET command will automatically
+ run on the node where the patch is installed as part of 
+ the post-installation routine (please take note of the prompts and 
+ answer them according to the instructions).  However, the RELOAD^ZTMGRSET
+ will need to be run on each of the VistA nodes after the patch is
+ installed.  See the post-installation section for instructions.
+  
+ Place TaskMan in a wait state. (DO WAIT^ZTMKU)
+  
+ Inhibit users from login into the system.  (If you install when a few 
+ users are on the system and the possibility of some CLOBER errors is 
+ acceptable, then users can stay on the system.)
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with user on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 15 
+ minutes to install.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*599):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "YES". (Enter YES/NO based on pre-installation 
+     instructions).
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ -----------------------------
+ 1.  After the patch is installed, remove TaskMan from wait state. (DO
+ RUN^ZTMKU).
+  
+ 2.  The post-installation routine POST^XU8P599 will automatically run 
+ RELOAD^ZTMGRSET on the VistA node where the patch is installed (please 
+ note the prompts below and answer them as instructed).  However, it will
+ need to manually be run on each of the VistA nodes from programmer mode.  
+ When prompted for a patch number, type in 599.
+  
+  EXAMPLE of RELOAD^ZTMGRSET:
+  ==========================
+  
+  VISTA>DO RELOAD^ZTMGRSET  
+   
+  
+  ZTMGRSET Version 8.0 Patch level 
+  **34,36,69,94,121,127,136,191,275,355,446,584**
+  HELLO! I exist to assist you in correctly initializing the current 
+  account.
+   
+  This is namespace or uci VISTA,VISTA.
+  Should I continue? N//y (enter "Y", or patch will not be fully installed)
+                        = =================================================
+  I think you are using OpenM-NT
+  Which MUMPS system should I install?
+   
+  1 = VAX DSM(V6), VAX DSM(V7)
+  2 = MSM-PC/PLUS, MSM for NT or UNIX
+  3 = Cache (VMS, NT, Linux), OpenM-NT
+  4 = Datatree, DTM-PC, DT-MAX
+  5 = 
+  6 = 
+  7 = GT.M (VMS)
+  8 = GT.M (Unix)
+  System: 3// (accept default for Cache, OpenM-NT)
+          =   ====================================
+  Patch number to load: 599 (specify patch number 599 for XU*8*599)
+                        === =======================================
+  I will now rename a group of routines specific to your operating system.
+  Routine:  ZOSVONT      
+  Routine: ZTBKCONT
+  Routine:  ZIS4ONT      
+  Routine:  ZISFONT      
+  Routine:  ZISHONT Loaded, Saved as    %ZISH
+  Routine:  XUCIONT
+  Routine:  ZISTCPS
+  Routine:   ZTMDCL
+  Routine:  ZOSVKRO
+  Routine: ZOSVKSOE
+  Routine: ZOSVKSOS
+  Routine:  ZOSVKSD
+   
+  Now to load routines common to all systems.
+  Routine:   ZTLOAD
+  Routine:  ZTLOAD1
+  Routine:  ZTLOAD2
+  Routine:  ZTLOAD3
+  Routine:  ZTLOAD4
+  Routine:  ZTLOAD5
+  Routine:  ZTLOAD6
+  Routine:  ZTLOAD7
+  Routine:      ZTM
+  Routine:     ZTM0
+  Routine:     ZTM1
+  Routine:     ZTM2
+  Routine:     ZTM3
+  Routine:     ZTM4
+  Routine:     ZTM5
+  Routine:     ZTM6
+  Routine:     ZTMS
+  Routine:    ZTMS0
+  Routine:    ZTMS1
+  Routine:    ZTMS2
+  Routine:    ZTMS3
+  Routine:    ZTMS4
+  Routine:    ZTMS5
+  Routine:    ZTMS7
+  Routine:    ZTMSH
+  Routine:     ZTER
+  Routine:    ZTER1
+  Routine:      ZIS Loaded, Saved as     %ZIS
+  Routine:     ZIS1         
+  Routine:     ZIS2
+  Routine:     ZIS3         
+  Routine:     ZIS5         
+  Routine:     ZIS6
+  Routine:     ZIS7
+  Routine:     ZISC
+  Routine:     ZISP
+  Routine:     ZISS
+  Routine:    ZISS1
+  Routine:    ZISS2
+  Routine:   ZISTCP
+  Routine:   ZISUTL Loaded, Saved as  %ZISUTL
+  Routine:     ZTPP
+  Routine:     ZTP1
+  Routine:   ZTPTCH
+  Routine:   ZTRDEL
+  Routine:   ZTMOVE
+  Routine:    ZTBKC
+  Installing ^%Z editor
+  
+  ALL DONE
+   
+   Updating Routine file...
+   
+   Updating KIDS files...
+   
+   XU*8.0*599 Installed. 
+                 May 22, 2012@10:09:07
+   
+  ......
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;May 17, 2012;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P599
+    Before:       n/a   After:   B214875  **599**
+Routine Name: ZIS
+    Before: B19582012   After: B19247416  **18,23,69,112,199,191,275,363,
+                                           440,499,524,546,599**
+Routine Name: ZISHONT
+    Before: B60362647   After: B61304186  **34,65,84,104,191,306,385,440,
+                                           518,524,546,599**
+Routine Name: ZISUTL
+    Before: B10953558   After: B12853409  **18,24,34,69,118,127,199,275,
+                                           425,599**
+ 
+Routine list of preceding patches: 425, 546
+
+=============================================================================
+User Information:
+Entered By  : WESTRA,HERLAN G               Date Entered  : APR 20, 2012
+Completed By: BEST,LISA                     Date Completed: SEP 11, 2012
+Released By : TILLIS,LEWIS                  Date Released : SEP 20, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

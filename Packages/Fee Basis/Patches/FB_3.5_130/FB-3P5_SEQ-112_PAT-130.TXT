@@ -1,0 +1,288 @@
+$TXT Created by TOMLIN,BRIAN at DEVVII.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 11/01/11 at 00:16
+=============================================================================
+Run Date: MAR 07, 2012                     Designation: FB*3.5*130
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #112                    Status: Released
+                  Compliance Date: APR 07, 2012
+=============================================================================
+
+Associated patches: (v)FB*3.5*119  <<= must be installed BEFORE `FB*3.5*130'
+
+Subject: PROJECT ARCH INCREMENT 2
+
+Category: 
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Veterans' Mental Health And Other Care Improvements Act Of 2008, 
+ Section 403, Public Law 110-387 mandates that the Department of
+ Veterans Affairs (VA) conduct a pilot program over three years for
+ contract care  of eligible Veterans in selected Veterans Integrated
+ Service Networks (VISNs).
+  
+ The Office of Policy Analysis within the Office of the Assistant
+ Deputy Under Secretary for Health for Policy and Planning
+ (ADUSH/PP) requested the capability to automatically identify all
+ Veterans who are eligible for a high visibility Congressionally
+ mandated contract care pilot  program (named Project ARCH, Access to
+ Care Received Closer to Home) in five VISNs (1, 6, 15, 18, and 19).
+  
+ Patch FB*3.5*130 contains Project ARCH enhancements, which allow for
+ authorized users that hold the FB ARCH Security Key to identify patients
+ that were not included in the original Project ARCH Increment 1
+ eligibility dataset and allow them to be marked as being Project ARCH
+ Eligible in the local VistA system. The system now allows locally added
+ patients to be marked Not Project ARCH Eligible by users that hold the FB
+ ARCH Security Key. This patch also includes a "View Project ARCH
+ Eligibility" option that allows authorized users to view nationally and 
+ locally identified Project ARCH patients.
+  
+  
+ Complete list of patch items:
+  
+ 1. Project ARCH Menu is now included in Fee Basis Main Menu and is
+    accessible by users who hold the FB ARCH security key.
+  
+ 2. Users are restricted from editing ARCH eligibility status for
+    patients that have been determined to be ARCH eligible through
+    the national eligibility dataset.
+  
+ 3. System requires a justification for patients that have been
+    locally determined ARCH eligible before adding them to the local
+    dataset. Justification is selected from a provided list of reasons.
+  
+ 4. System requires the user to enter the Verification of mileage for
+    patients that have been locally determined ARCH eligible before
+    adding them to the local dataset.  
+  
+ 5. The "View Project ARCH Eligibility" option now allows authorized
+    users the ability to sort ARCH eligibility data in different views.
+    This option also allows users to view data for either a specific
+    patient or all ARCH eligible patients and to limit the data to a
+    certain date range. Users can now search for entries where the most
+    current ARCH eligibility entry matches the selected status
+    (Eligible / Not Eligible / Both).
+  
+ 6. System allows the user the ability to queue the output of the "View
+    Project ARCH Eligibility" option to run in the background, print to a
+    specific device, or print to Excel formatted text.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ FEE BASIS PROJECT          PROJECT ARCH JUSTI-  New
+ ARCH JUSTIFICATION          FICATION (.01)
+ (161.35)                   ACTIVE? (1)          New
+  
+ FEE BASIS PATIENT (161)    ARCH ELIGIBILITY
+  ARCH ELIGIBILITY           DETERMINATION (3)   New
+  sub-file (161.011)        JUSTIFICATION (4)    New
+                            VERIFICATION OF      New
+                             MILEAGE (5)
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A 
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ FB ADD ARCH            RUN ROUTINE        New
+  ELIGIBILITY 
+ FB PROJECT ARCH MENU   MENU               New
+ FB VIEW ARCH           RUN ROUTINE        New
+  ELIGIBILITY
+ FBAA MAIN MENU         MENU               Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ FB ARCH
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Togus
+ Richmond
+ Kansas City
+ Prescott
+ Fort Harrison 
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Sites may retrieve documentation in one of the following ways:
+  
+  1.  The preferred method is to FTP the files from
+      download.vista.med.va.gov, which will transmit the files from the
+      first available FTP server.
+  
+  2.  Sites may also elect to retrieve documentation directly from a
+      specific server as follows:
+  
+      Albany          ftp.fo-albany.med.va.gov
+      Hines           ftp.fo-hines.med.va.gov
+      Salt Lake City  ftp.fo-slc.med.va.gov
+  
+  3.  Documentation can also be retrieved from the VistA Documentation
+      Library (VDL) on the Internet at the following address,
+      http://www.va.gov/vdl.
+  
+ The documentation distribution includes:
+  
+     FILE NAME                             DESCRIPTION
+     ---------------------------------------------------------------------
+     Init8_ARC_Inc2 V3_IUG.PDF             Installation and User Guide 
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no pre/post installation routines associated with this patch.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch 
+     FB*3.5*130:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  Answer YES, unless your system does this in a
+     nightly TaskMan process.    
+     
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  Answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Answer NO
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ This installation has no impact on disc space or journal file consumption.
+  
+ Post-Installation Instructions
+ ------------------------------
+ FBY130PO is a post install routine that changes previously installed 
+ justification reasons to the official justification reasons. If no 
+ justification reasons were previously installed by a test version 
+ FB*3.5*130 patch then the post install routine will quit with no further 
+ action. Once it executes, it is deleted by KIDS.
+  
+ Upon completion of the patch install, the Project ARCH Care Coordinator 
+ or designee will need to have the FB ARCH Security Key assigned to them. 
+ This Security Key will allow access to the new menu options distributed 
+ in this patch under the Fee Basis Main Menu [FBAA MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBARCH0
+    Before:       n/a   After: B51834191  **119,130**
+Routine Name: FBARCHR0
+    Before:       n/a   After:B122985826  **130**
+Routine Name: FBARCHU
+    Before:       n/a   After: B24246185  **130**
+Routine Name: FBY130PO
+    Before:       n/a   After:  B5536715  **130**
+
+=============================================================================
+User Information:                          Hold Date     : MAR 07, 2012
+Entered By  : TOMLIN,BRIAN                  Date Entered  : JUL 28, 2011
+Completed By: LEONARD,KEN                   Date Completed: MAR 07, 2012
+Released By : MARSHALL,FALENCIA B.          Date Released : MAR 07, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

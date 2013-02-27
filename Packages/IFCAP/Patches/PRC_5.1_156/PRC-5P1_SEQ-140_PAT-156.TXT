@@ -1,0 +1,190 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Tuesday, 05/03/11 at 11:10
+=============================================================================
+Run Date: JUN 25, 2012                     Designation: PRC*5.1*156
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #140                    Status: Released
+                  Compliance Date: JUL 26, 2012
+=============================================================================
+
+Associated patches: (v)PRC*5.1*108 <<= must be installed BEFORE `PRC*5.1*156'
+
+Subject: CONVERT TEMP REQUISITION TO PO;PURCHASE ORDER 2237 FISCAL YEAR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 2 issues:
+  
+ 1. Option 'Convert a Temporary 2237 request to a Purchase Order' results 
+    in duplicate entries reported in Running Balance report
+  
+ 2. Entering Purchase Order for succeeding fiscal year results in 
+    requisition with current fiscal year
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ Remedy:
+ =======
+ 1. HD0000000451181 - FCP636 system is duplicating some orders entered
+    Duplicates:
+    HD0000000453921 - Purchase Card duplicates on running balance
+    HD0000000458216 - Duplicate transaction file issue
+    HD0000000494569 - Duplicate obligations in Running Balance
+    HD0000000508598 - Duplicated Transaction
+  
+ 2. HD0000000433365 - Purchase Order issue for BBFY
+    Duplicates: 
+    HD0000000433393 - Delivery Orders grabbing wrong BBFY transaction
+                      number and affecting Running Balance totals
+    HD0000000162405 - PO requisition BBFY for following year are set to
+                      current to current year BBFY
+                               
+ Test Sites:
+ ===========
+ Oklahoma City VAMC
+ St. Cloud VAMC
+ Tennessee Valley HCS
+  
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000451181 - FCP636 system is duplicating some orders entered
+  
+    Problem:
+    --------
+    When site runs option 'Convert a Temporary 2237 request into a Purchase
+    Card Order', the temporary transaction is not removed from the Running 
+    Balance report.
+  
+    Resolution:
+    -----------                    
+    Modify the order processing option for 'Convert a Temporary 2237
+    Request into a Purchase Card Order' to delete the temporary transaction
+    from the Running Balance index.
+  
+    ** A post install process will run to remove any duplicate Running
+    Balance transactions created by this error condition. Example of post 
+    install output:
+  
+    Running Post-Install Routine: FIX410^PRCS156P.
+  
+    NUMBER IEN 'RB' MISMATCHES: 3
+  
+    ** Temporary work file of deleted 'RB' duplicates is kept for 120 days 
+       in ^XTMP("PRCS156")
+  
+    Routines: PRCHCON1, PRCS156P
+  
+  
+ 2. HD0000000433365 - Purchase Order issue for BBFY
+  
+    Problem:
+    --------
+    Site reports that when dating a Purchase Order for the succeeding
+    fiscal year, the Purchase Order link requisition will default back to
+    the current year.  This affects the Running Balance reporting and the
+    order will be rejected by FMS in the succeeding fiscal year as being a
+    previous fiscal year order.
+  
+    Resolution:
+    -----------                    
+    Modified routine PRCOEDC to insure that the following fiscal year
+    (BBFY) is not reset to current fiscal year.
+  
+    Routines: PRCOEDC 
+  
+  
+  
+  
+ Installation Instructions:
+ ==========================
+  
+   You may install this patch at any time without interruption to users. 
+   
+   It should take less than 5 minutes to install this patch.
+  
+   ***********************************************************************
+   PLEASE NOTE: Post install routine PRCS156P will be deleted once the
+   install is complete.  If you wish to check the checksum of this routine 
+   please use the 'Verify Checksums in Transport Global' under the 
+   Installation Menu.
+   ***********************************************************************
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*156)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*156.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond YES
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+         Convert Temporary 2237 to PC Request [PRCH CONV TEMP]
+         New Detailed Purchase Card Order     [PRCH ENTER DETAILED ORDER]
+         New Purchase Order                   [PRCHPC PO ADD]
+         Enter Delivery Order                 [PRCH ENTER DELIVERY ORDER]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCHCON1
+    Before: B22950686   After: B24300474  **108,156**
+Routine Name: PRCOEDC
+    Before:  B2258003   After:  B2323134  **156**
+Routine Name: PRCS156P
+    Before:       n/a   After:  B2880057  **156**
+ 
+Routine list of preceding patches: 108
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : JAN 25, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: JUN 18, 2012
+Released By : VASSAR,CAROL                  Date Released : JUN 25, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

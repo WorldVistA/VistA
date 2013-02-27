@@ -1,0 +1,176 @@
+$TXT Created by DIMICELI,RON at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 01/12/12 at 07:35
+=============================================================================
+Run Date: FEB 17, 2012                     Designation: XU*8*594
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #466                      Status: Released
+                  Compliance Date: MAR 19, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*543    <<= must be installed BEFORE `XU*8*594'
+
+Subject: Fix problem with iMedConsent
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is being sent to all sites as a convenience because of the
+ compliance date of patch XU*8*543.  Patch 543 needs to be installed by
+ 2/13/2012 and some sites have encountered a problem with iMedConsent.
+ Patch 594 addresses this problem.
+  
+ This patch will correct the problem with patch XU*8*543
+  breaking the iMedConsent application.  It adds a parameter
+  to the new code that was introduced with patch 543. This
+  patch should be installed after patch 543 is installed.  
+  
+ All sites, please follow these instructions below: 
+   1. Make sure patch XU*8*543 is installed (see Installation below)
+   2. Install patch XU*8*594
+   3. Check if iMedConsent still works, if it works, you are done!
+      Please proceed with installation of other released XU patches.
+   4. If iMedConsent DOES NOT work 
+      Set the parameter XU594 to YES (see examples below)
+         a. This can be done from General Parameter Tools menu
+            under the CPRS Configuration (IRM) menu
+         b. This can also be done by running the routine
+            XPAREDIT
+   6. Make sure that iMedConsent works now, and you are done.
+      Please proceed with installation of other released XU patches.
+     
+     
+  Examples:
+  =========
+   Setting the XU594 parameter:
+  
+    CL     Clinician Menu ...
+    NM     Nurse Menu ...
+    WC     Ward Clerk Menu ...
+    PE     CPRS Configuration (Clin Coord) ...
+    IR     CPRS Configuration (IRM) ...
+  
+ Select CPRS Manager Menu Option: IR  CPRS Configuration (IRM)
+    OC     Order Check Expert System Main Menu ...
+    TI     ORMTIME Main Menu ...
+    UT     CPRS Clean-up Utilities ...
+    XX     General Parameter Tools ...
+    HD     HealtheVet Desktop Configuration ...
+    RD     Remote Data Order Checking Parameters
+  
+ Select CPRS Configuration (IRM) Option: GENERal Parameter Tools
+    LV     List Values for a Selected Parameter
+    LE     List Values for a Selected Entity
+    LP     List Values for a Selected Package
+    LT     List Values for a Selected Template
+    EP     Edit Parameter Values
+    ET     Edit Parameter Values with Template
+    EK     Edit Parameter Definition Keyword
+   
+ Select General Parameter Tools Option: EP  Edit Parameter Values
+                          --- Edit Parameter Values ---
+  
+ Select PARAMETER DEFINITION NAME: XU594     Patch 594 switch
+  
+ ---------- Setting XU594  for System: KRN.FO-OAKLAND.MED.VA.GOV ----------
+ Remove patch 543 fix: NO// YES
+ --------------------------------------------------------------------------
+  
+ Select PARAMETER DEFINITION NAME:
+  
+  Also can be set by running routine XPAREDIT
+  
+  >D ^XPAREDIT
+                          --- Edit Parameter Values ---
+  
+ Select PARAMETER DEFINITION NAME: XU594     Patch 594 switch
+  
+ ---------Setting XU594  for System: KRN.FO-OAKLAND.MED.VA.GOV ------------
+ Remove patch 543 fix: NO// YES 
+ --------------------------------------------------------------------------
+  
+ Select PARAMETER DEFINITION NAME:  
+  
+  
+  Remedy Tickets
+  ==============
+  539151  Problems with iMedConsent
+   Resolution: 
+    Routine XUS1B is changed to parameterize the new code
+  
+  
+  Thanks to Test Sites
+  ====================
+  New York Harbor HCS
+  VA Montana HCS
+  Central Texas HCS 
+  
+    
+  Blood Bank Clearance 1/12/12
+  ====================
+  Clearance - 1/12/2012
+   EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*594 contains 
+   changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+   VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+   not alter or modify any VistA Blood Bank software design safeguards or
+   safety critical elements functions.
+    
+   RISK ANALYSIS: Changes made by patch XU*8*594 have no effect on Blood Bank
+    software functionality, therefore RISK is none.
+     
+    
+  Installation Instructions
+  =========================
+  This patch should be installed during nonpeak time.
+  Allow KIDS to inhibit new sign-ons.
+  TaskMan does *not* need to be stopped or put in a wait state.
+  Installation should take less than a minute.
+   
+  1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+     This option will load the KIDS package onto your system.  
+    
+  2. The patch has now been loaded into a transport global on your 
+     system. You now need to use KIDS to install the transport global.  
+     
+  3. On the KIDS menu, under the 'Installation' menu, use the 
+     following options: 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global
+          Backup a Transport Global 
+    
+  4. On the KIDS menu, under the 'Installation' menu, use the
+     following option: 
+          Select Installation Option: Install Package(s) 
+          Select INSTALL NAME: XU*8.0*594
+                                ==========
+  
+       Want KIDS to INHIBIT LOGONs during the install? NO// YES
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUS1B
+    Before:  B8553582   After:  B8805326  **59,337,395,469,543,594**
+ 
+Routine list of preceding patches: 543
+
+=============================================================================
+User Information:
+Entered By  : DIMICELI,RON                  Date Entered  : JAN 10, 2012
+Completed By: SINGH,GURBIR                  Date Completed: FEB 16, 2012
+Released By : TILLIS,LEWIS                  Date Released : FEB 17, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

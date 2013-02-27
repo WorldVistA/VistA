@@ -1,0 +1,193 @@
+
+=============================================================================
+Run Date: MAR 07, 2011                     Designation: PSS*1*142
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #137                      Status: Released
+                  Compliance Date: JUL 19, 2011
+=============================================================================
+
+Associated patches: (v)PSS*1*140   <<= must be installed BEFORE `PSS*1*142'
+
+Subject: CPRS GUI V28 DEFAULT MED RT FOR IVS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is exported in conjunction with CPRS v28.
+  
+ CPRS v28 and associated patches will follow a phased implementation.
+ Software retrieval of CPRS28_REQUIRED.KID will be coordinated with the
+ phased implementation.  To see current status and target dates for
+ Sites/VISN/Region please refer to the following site:
+  
+   http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+  
+ Please refer to the "CPRS GUI v.28 and Associated Patches Installation 
+ Guide" for installation sequence information.  This document is exported 
+ as OR_30_280IG.doc and OR_30_280IG.pdf and is included in OR_30_280.ZIP.
+  
+ This enhancement is an interim resolution approved by the Inpatient
+ Medications Workgroup for Patient Safety Issue PSI 08-026, PSPO #852,
+ as described in Remedy Ticket HD233682. This patch will provide a default
+ medication route for IV fluids ordering dialog in Computerized Patient
+ Record System (CPRS) V. 3.0 if all of the orderable items on the order
+ share the same default medication route.
+  
+ Problem:
+ --------
+ Currently, for IV orders, if there is more than one orderable item on the
+ order, no default medication route is being presented as a default for the
+ medication route selection list in CPRS.
+  
+ Resolution:
+ -----------
+ This enhancement for IV orders will denote the default medication route
+ in the selection list in CPRS if all of the orderable items on the order
+ have the same default medication route defined. If the orderable items on
+ the order have different default medication routes, the current 
+ functionality will be retained where all medication routes from the 
+ orderable items will be displayed to the provider for selection in CPRS 
+ and no medication route will be presented as a default.
+  
+  
+ Associated NSRs:
+ ================
+ N/A
+  
+  
+ Associated PSIs:
+ ================
+ PSI 08-026, PSPO #852
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ HD0000000233682
+  
+  
+ Associated E3Rs:
+ ================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ BOISE, ID
+ CHARLESTON, SC
+ KANSAS CITY, MO
+ NORTHERN CALIFORNIA HCS, CA
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+  
+  
+ Documentation Retrieval:
+ ========================
+ Updated documentation describing the new functionality introduced by this
+ patch will be downloaded to sites from the FTP address as directed by the
+ CPRS Implementation team.
+  
+  
+ The documentation distribution includes the following.
+  
+    FILE NAME                      DESCRIPTION
+  
+ PSS_1_TM_R0211.PDF           Pharmacy Data Management V. 1.0 Technical
+                              Manual/Security Guide
+  
+ PSS_1_P142_TM_CP.PDF         Pharmacy Data Management V. 1.0 Technical
+                              Manual/Security Guide Change Pages
+  
+ PSS_1_UM_R0211.PDF           Pharmacy Data Management V. 1.0 User Manual
+                              
+ PSS_1_P142_UM_CP.PDF         Pharmacy Data Management V. 1.0 User Manual 
+                              Change Pages
+  
+  
+ Documentation can also be retrieved from the VistA Documentation Library
+ (VDL) on the Internet at the following address:  
+ http://www.va.gov/vdl.
+  
+  
+ Install Information:
+ ====================
+ This patch is exported in conjunction with CPRS v28.
+    
+ CPRS v28 and associated patches will follow a phased implementation.  
+ Software retrieval of CPRS28_REQUIRED.KID will be coordinated with the 
+ phased implementation.  To see current status and target dates for 
+ Sites/VISN/Region please refer to the following site:
+   
+   http://vaww.itfo.portal.va.gov/svcs/itfopmo/pre05/default.aspx
+   
+ For more details and instructions related to CPRS 28 and its related and
+ associated patches please refer to the install guide OR_30_280IG.DOC.
+  
+  
+ Suggested time to install: non-peak requirement hours.
+  
+  1.  Download the KIDS file PSS_1_142.KID from the appropriate directory.
+  
+  2.  Review your mapped set. If the routines are mapped, they should
+      be removed from the mapped set at this time.
+  
+  3.  From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+  
+  4.  From this menu, select the option Load a Distribution.  When prompted
+      for a file name, type in the directory where you have stored the host
+      file, followed by the file name.
+  
+  5.  From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSS*1.0*142.) 
+    a. Backup a Transport Global - this option will create a backup
+       message of any routines exported with the patch. It will NOT
+       backup any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - this option will
+       allow you to view all changes that will be made when the patch
+       is installed. It compares all components of the patch (routines,
+       DDs, templates, etc.).
+    c. Verify Checksums in Transport Global - this option will ensure
+       the integrity of the routines that are in the transport global.
+  
+  6.  Use the Install Package(s) option and at the INSTALL NAME prompt,
+      enter PSS*1.0*142.
+  
+  7. When prompted "Want KIDS to INHIBIT LOGONs during the install? YES//"
+     respond NO.
+  
+  8. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES//" respond NO.
+  
+  9. Installation of this patch should NOT be queued.
+  
+ 10. If any routines were unmapped as part of step 2, they should be
+     returned to the mapped set once the installation has run to
+     completion.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSJORDF
+    Before: B37133061   After: B46862726  **5,13,34,38,69,113,94,140,142**
+
+=============================================================================
+User Information:
+Entered By  : CASTLE,JOHN                   Date Entered  : JAN 26, 2009
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: FEB 24, 2011
+Released By : CAMPBELL,THOMAS               Date Released : MAR 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

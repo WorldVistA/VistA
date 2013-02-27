@@ -1,0 +1,830 @@
+Released XU*8*582 SEQ #472
+Extracted from mail message
+**KIDS**:XU*8.0*582^
+
+**INSTALL NAME**
+XU*8.0*582
+"BLD",1378,0)
+XU*8.0*582^KERNEL^0^3120308^y
+"BLD",1378,1,0)
+^^2^2^3110804^
+"BLD",1378,1,1,0)
+Kernel patch XU*8*582; Fix Error Trap.
+"BLD",1378,1,2,0)
+Please refer to the Description in Forum Patch Module for details.
+"BLD",1378,4,0)
+^9.64PA^^
+"BLD",1378,6.3)
+6
+"BLD",1378,"INID")
+^y
+"BLD",1378,"INIT")
+POST^XU8P582
+"BLD",1378,"KRN",0)
+^9.67PA^9002226^21
+"BLD",1378,"KRN",.4,0)
+.4
+"BLD",1378,"KRN",.401,0)
+.401
+"BLD",1378,"KRN",.402,0)
+.402
+"BLD",1378,"KRN",.403,0)
+.403
+"BLD",1378,"KRN",.5,0)
+.5
+"BLD",1378,"KRN",.84,0)
+.84
+"BLD",1378,"KRN",3.6,0)
+3.6
+"BLD",1378,"KRN",3.8,0)
+3.8
+"BLD",1378,"KRN",9.2,0)
+9.2
+"BLD",1378,"KRN",9.8,0)
+9.8
+"BLD",1378,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",1378,"KRN",9.8,"NM",1,0)
+ZTER^^0^B54412923
+"BLD",1378,"KRN",9.8,"NM",2,0)
+XTER2^^0^B14433664
+"BLD",1378,"KRN",9.8,"NM","B","XTER2",2)
+
+"BLD",1378,"KRN",9.8,"NM","B","ZTER",1)
+
+"BLD",1378,"KRN",19,0)
+19
+"BLD",1378,"KRN",19,"NM",0)
+^9.68A^1^1
+"BLD",1378,"KRN",19,"NM",1,0)
+XUERTRP AUTO CLEAN^^0
+"BLD",1378,"KRN",19,"NM","B","XUERTRP AUTO CLEAN",1)
+
+"BLD",1378,"KRN",19.1,0)
+19.1
+"BLD",1378,"KRN",101,0)
+101
+"BLD",1378,"KRN",409.61,0)
+409.61
+"BLD",1378,"KRN",771,0)
+771
+"BLD",1378,"KRN",779.2,0)
+779.2
+"BLD",1378,"KRN",870,0)
+870
+"BLD",1378,"KRN",8989.51,0)
+8989.51
+"BLD",1378,"KRN",8989.52,0)
+8989.52
+"BLD",1378,"KRN",8994,0)
+8994
+"BLD",1378,"KRN",9002226,0)
+9002226
+"BLD",1378,"KRN","B",.4,.4)
+
+"BLD",1378,"KRN","B",.401,.401)
+
+"BLD",1378,"KRN","B",.402,.402)
+
+"BLD",1378,"KRN","B",.403,.403)
+
+"BLD",1378,"KRN","B",.5,.5)
+
+"BLD",1378,"KRN","B",.84,.84)
+
+"BLD",1378,"KRN","B",3.6,3.6)
+
+"BLD",1378,"KRN","B",3.8,3.8)
+
+"BLD",1378,"KRN","B",9.2,9.2)
+
+"BLD",1378,"KRN","B",9.8,9.8)
+
+"BLD",1378,"KRN","B",19,19)
+
+"BLD",1378,"KRN","B",19.1,19.1)
+
+"BLD",1378,"KRN","B",101,101)
+
+"BLD",1378,"KRN","B",409.61,409.61)
+
+"BLD",1378,"KRN","B",771,771)
+
+"BLD",1378,"KRN","B",779.2,779.2)
+
+"BLD",1378,"KRN","B",870,870)
+
+"BLD",1378,"KRN","B",8989.51,8989.51)
+
+"BLD",1378,"KRN","B",8989.52,8989.52)
+
+"BLD",1378,"KRN","B",8994,8994)
+
+"BLD",1378,"KRN","B",9002226,9002226)
+
+"BLD",1378,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",1378,"QUES",0)
+^9.62^^
+"BLD",1378,"REQB",0)
+^9.611^2^2
+"BLD",1378,"REQB",1,0)
+XU*8.0*431^0
+"BLD",1378,"REQB",2,0)
+XU*8.0*77^0
+"BLD",1378,"REQB","B","XU*8.0*431",1)
+
+"BLD",1378,"REQB","B","XU*8.0*77",2)
+
+"INIT")
+POST^XU8P582
+"KRN",19,265,-1)
+0^1
+"KRN",19,265,0)
+XUERTRP AUTO CLEAN^Error trap Auto clean^^R^^^^^^^^
+"KRN",19,265,1,0)
+^^4^4^3111121
+"KRN",19,265,1,1,0)
+This is a queueable option to clean up the error trap. This option will 
+"KRN",19,265,1,2,0)
+clean-up any errors that were recorded more than a number of days ago. The
+"KRN",19,265,1,3,0)
+number of days is defined on the KEEP ERROR TRAP field (#520.3) in the KERNEL
+"KRN",19,265,1,4,0)
+SYSTEM PARAMETERS file (#8989.3). The default is 7 if the field is blank.
+"KRN",19,265,25)
+AUTO^XTERPUR
+"KRN",19,265,200.9)
+y
+"KRN",19,265,"U")
+ERROR TRAP AUTO CLEAN
+"MBREQ")
+0
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",3,-1)
+1^1
+"PKG",3,0)
+KERNEL^XU^SIGN-ON, SECURITY, MENU DRIVER, DEVICES, TASKMAN^
+"PKG",3,20,0)
+^9.402P^2^2
+"PKG",3,20,1,0)
+200^^XDRM200N
+"PKG",3,20,1,1)
+
+"PKG",3,20,2,0)
+2^^RGDRM03
+"PKG",3,20,2,1)
+
+"PKG",3,20,"B",2,2)
+
+"PKG",3,20,"B",200,1)
+
+"PKG",3,22,0)
+^9.49I^1^1
+"PKG",3,22,1,0)
+8.0^3090706^3090706^6
+"PKG",3,22,1,"PAH",1,0)
+582^3120308^82
+"PKG",3,22,1,"PAH",1,1,0)
+^^2^2^3120308
+"PKG",3,22,1,"PAH",1,1,1,0)
+Kernel patch XU*8*582; Fix Error Trap.
+"PKG",3,22,1,"PAH",1,1,2,0)
+Please refer to the Description in Forum Patch Module for details.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","XTER2")
+0^2^B14433664^B14234268
+"RTN","XTER2",1,0)
+XTER2 ;ISC-SF.SEA/JLI - MODIFICATION OF %XTER FOR USE WITH VAX DSM ;03/08/2012
+"RTN","XTER2",2,0)
+ ;;8.0;KERNEL;**71,77,582**;Jul 10, 1995;Build 6
+"RTN","XTER2",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified
+"RTN","XTER2",4,0)
+RESTOR ;
+"RTN","XTER2",5,0)
+ X ^%ZOSF("PROGMODE") I 'Y W !,$C(7),"^R to restore environment is restricted to users in programmer mode",$C(7),! G ^XTER1
+"RTN","XTER2",6,0)
+ S %XTZUCI=$P(%XTJOB,U,4) X ^%ZOSF("UCI") I $P(Y,",")'=$P(%XTZUCI,":"),$P(Y,",",2)'=$P(%XTZUCI,":") K %XTZUCI
+"RTN","XTER2",7,0)
+ F %XTZZZ=0:0 S %XTZZZ=$O(^%ZTER(1,%XTZDAT,1,%XTZNUM,"ZV",%XTZZZ)) Q:%XTZZZ'>0  I $D(^(%XTZZZ,"D"))#2,$D(^(0))#2,$E(^(0))'="$" I $E(^(0),1,6)'="%ZT(""^",$E(^(0),1)'="^" S @(^(0))=^("D")
+"RTN","XTER2",8,0)
+ I '$D(%XTZUCI) W !,$C(7),"MUST BE IN SAME UCI TO RESTORE PROGRAM --- VARIABLES RESTORED",! K %XTZDAT,%XTZNUM,%XTZZZ Q
+"RTN","XTER2",9,0)
+ S X=$P($P($P(^%ZTER(1,%XTZDAT,1,%XTZNUM,"ZE"),",",1),"^",2),":",1) I X'="" X ^%ZOSF("TEST") I $T S XCNP=0,DIF="^TMP($J," X ^%ZOSF("LOAD") K XCNP,DIF,^TMP($J)
+"RTN","XTER2",10,0)
+ W !,"VARIABLES RESTORED"
+"RTN","XTER2",11,0)
+ K %XTZZZ,%XTZDAT,%XTZNUM,%XTZUCI
+"RTN","XTER2",12,0)
+ Q
+"RTN","XTER2",13,0)
+ ;
+"RTN","XTER2",14,0)
+SLIST ;
+"RTN","XTER2",15,0)
+ S XTSTR1=0 R !!,"Enter part of error or routine to be matched: ",XTSTR:DTIME Q:'$T!(XTSTR="")!(XTSTR="^")  D T11
+"RTN","XTER2",16,0)
+ D T13 F XTI=0:0 Q:XTOUT  S XTI=$O(^TMP("XTER",$J,XTI)) Q:XTI'>0  F X=0:0 S X=$O(^TMP("XTER",$J,XTI,X)) Q:X'>0  S %XTZDAT=^(X),XTSTR1=XTSTR1+1,XTD=0 S %XTYL=%XTYL-1 D:'%XTYL MORE^XTER1A Q:XTOUT  D:'%XTYL T11 W:'%XTYL ! D T10
+"RTN","XTER2",17,0)
+ I XTSTR1=0 W !!?10,XTSTR," not found in error log",!
+"RTN","XTER2",18,0)
+ K XTSTR,XTSTR1
+"RTN","XTER2",19,0)
+Z Q
+"RTN","XTER2",20,0)
+T10 I ^%ZTER(1,%XTZDAT,1,X,"ZE")["," S %XTERR=$P($P(^("ZE"),",",4),"-",4),%XTERR=$P($P(^("ZE"),",",2),"-",3)_$S(%XTERR="":"",1:"(")_%XTERR_$S(%XTERR="":"",1:")")
+"RTN","XTER2",21,0)
+ S %XTERR(1)=$H-%XTZDAT,%XTERR(1)="T"_$S(%XTERR(1)=0:"",1:"-"_%XTERR(1)),%XTERR(1)=$E(%XTERR(1)_"     ",1,5)_" #"
+"RTN","XTER2",22,0)
+ I ^%ZTER(1,%XTZDAT,1,X,"ZE")["," W !,%XTERR(1),$J(X,3),")  ","<",%XTERR,">",$P(^%ZTER(1,%XTZDAT,1,X,"ZE"),",",1)_" "
+"RTN","XTER2",23,0)
+ I ^%ZTER(1,%XTZDAT,1,X,"ZE")'["," W !,%XTERR(1),$J(X,3),")  ",^("ZE")
+"RTN","XTER2",24,0)
+ S %XTZNUM=X,%="" I $D(^%ZTER(1,%XTZDAT,1,%XTZNUM,"H")) S %H=^("H") D YMD^%DTC S %=$P(%,".",2)_"000000",%=$E(%,1,2)_":"_$E(%,3,4)_":"_$E(%,5,6)
+"RTN","XTER2",25,0)
+ S X=%XTZNUM W ?39,%
+"RTN","XTER2",26,0)
+ W "  ",$P($S('$D(^%ZTER(1,%XTZDAT,1,X,"J")):"",1:^("J")),U,4),"  ",$J($P($S('$D(^("J")):"",1:^("J")),U,5),7),"  ",$P($S('$D(^("I")):"",1:^("I")),U)
+"RTN","XTER2",27,0)
+ Q
+"RTN","XTER2",28,0)
+T11 W !!,"Date",?6,"ErrNum",?17,"$ZE",?41,"Time",?49,"UCI/VOL",?61,"$J",?69,"$I" S %XTYL=IOSL-6
+"RTN","XTER2",29,0)
+ Q
+"RTN","XTER2",30,0)
+ ;
+"RTN","XTER2",31,0)
+T13 K ^TMP("XTER",$J) S %XTZDAT=0 F XTI=0:0 S %XTZDAT=$O(^%ZTER(1,%XTZDAT)) Q:%XTZDAT'>0  F X=0:0 S X=$O(^%ZTER(1,%XTZDAT,1,X)) Q:X'>0  I $D(^(X,"ZE")),^("ZE")[XTSTR S ^TMP("XTER",$J,(99999-%XTZDAT),X)=%XTZDAT
+"RTN","XTER2",32,0)
+ Q
+"RTN","XTER2",33,0)
+UDD ;Convert user date
+"RTN","XTER2",34,0)
+ K XTDTE,XTDTH,XTERR N %XTF,%XTY,X,Y
+"RTN","XTER2",35,0)
+ G T:%XTZDAT?1"T".E,T:%XTZDAT?1"t".E
+"RTN","XTER2",36,0)
+ S %XTF=$TR(%XTZDAT,$C(32,44,45,46),"////")
+"RTN","XTER2",37,0)
+B S %XTY="//" D R
+"RTN","XTER2",38,0)
+ S X=%XTF,%DT="XP",%DT(0)="-NOW" D ^%DT K %DT I Y'>0 S XTERR=1 K XTDTE,XTDTH G K
+"RTN","XTER2",39,0)
+ S XTDTH=+$$FMTH^XLFDT(Y),XTDTE=$$FMTE^XLFDT(Y,5)
+"RTN","XTER2",40,0)
+K Q
+"RTN","XTER2",41,0)
+E S XTERR=1 K XTDTH,XTDTE G K
+"RTN","XTER2",42,0)
+R Q:%XTF'[%XTY  S %XTF=$P(%XTF,%XTY,1)_"/"_$P(%XTF,%XTY,2,256) G R
+"RTN","XTER2",43,0)
+ ;
+"RTN","XTER2",44,0)
+T S %XTT=$E(%XTZDAT,2,99) I %XTT'="" G E:%XTT?7E.E,E:%XTT'?1"-"1N.N&(%XTT'?1"+"1N.N)
+"RTN","XTER2",45,0)
+ S XTDTH=$P($H,",",1)+%XTT G E:XTDTH<0 D UDA S XTDTH=-XTDTH G K
+"RTN","XTER2",46,0)
+ ;
+"RTN","XTER2",47,0)
+UDA ;
+"RTN","XTER2",48,0)
+ I '$D(XTDTH) S XTDTH=$P($H,",",1)
+"RTN","XTER2",49,0)
+ S XTDTE=$$HTE^XLFDT(XTDTH,5)
+"RTN","XTER2",50,0)
+ Q
+"RTN","XU8P582")
+0^^B3489387^n/a
+"RTN","XU8P582",1,0)
+XU8P582 ;BP-OAK/BT - Error Trap Summary Utilities ;08/02/2011
+"RTN","XU8P582",2,0)
+ ;;8.0;KERNEL;**582**;Jul 10, 1995;Build 6
+"RTN","XU8P582",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","XU8P582",4,0)
+ Q
+"RTN","XU8P582",5,0)
+POST ;Post-init for patch XU*8*582
+"RTN","XU8P582",6,0)
+ N FDA,XU582
+"RTN","XU8P582",7,0)
+ S XU582=+$P($G(^XTV(8989.3,1,"ZTER")),"^",1)
+"RTN","XU8P582",8,0)
+ I XU582=10 S FDA(8989.3,"1,",520.1)=100 D FILE^DIE("","FDA")
+"RTN","XU8P582",9,0)
+ D GETXUIEN ; Update Descption for the option XUERTRP AUTO CLEAN
+"RTN","XU8P582",10,0)
+ D PATCH^ZTMGRSET(582)
+"RTN","XU8P582",11,0)
+ Q
+"RTN","XU8P582",12,0)
+ ;
+"RTN","XU8P582",13,0)
+GETXUIEN ; get IEN of the option XUERTRP AUTO CLEAN
+"RTN","XU8P582",14,0)
+ N XUIEN S XUIEN=$$FIND1^DIC(19,"","MX","XUERTRP AUTO CLEAN","","","ERR")
+"RTN","XU8P582",15,0)
+ I XUIEN'>0 Q
+"RTN","XU8P582",16,0)
+ D DEF1(XUIEN) ; Update Description for the option XUERTRP AUTO CLEAN
+"RTN","XU8P582",17,0)
+ Q
+"RTN","XU8P582",18,0)
+ ;
+"RTN","XU8P582",19,0)
+DEF1(XUIEN) ; Update TEXT Description for an option
+"RTN","XU8P582",20,0)
+ N XUI1,XUDATA,XUY
+"RTN","XU8P582",21,0)
+ K ^TMP($J,"XUBA")
+"RTN","XU8P582",22,0)
+ F XUY=1:1:4 S XUDATA=$T(TEXT+XUY) Q:XUDATA=" ;;END"  D 
+"RTN","XU8P582",23,0)
+ . S ^TMP($J,"XUBA",XUIEN,XUY,0)=$P(XUDATA,";;",2)
+"RTN","XU8P582",24,0)
+ S XUI1=XUIEN_","
+"RTN","XU8P582",25,0)
+ D WP^DIE(19,XUI1,3.5,"K","^TMP($J,""XUBA"",XUIEN)")
+"RTN","XU8P582",26,0)
+ K ^TMP($J,"XUBA")
+"RTN","XU8P582",27,0)
+ Q
+"RTN","XU8P582",28,0)
+ ;
+"RTN","XU8P582",29,0)
+TEXT ;
+"RTN","XU8P582",30,0)
+ ;;This is a queueable option to clean up the error trap. This option will 
+"RTN","XU8P582",31,0)
+ ;;clean-up any errors that were recorded more than a number of days ago. The
+"RTN","XU8P582",32,0)
+ ;;number of days is defined on the KEEP ERROR TRAP field (#520.3) in the KERNEL
+"RTN","XU8P582",33,0)
+ ;;SYSTEM PARAMETERS file (#8989.3). The default is 7 if the field is blank.
+"RTN","XU8P582",34,0)
+ ;;END
+"RTN","ZTER")
+0^1^B54412923^B51850002
+"RTN","ZTER",1,0)
+%ZTER ; ISC-SF.SEA/JLI - KERNEL ERROR TRAP TO LOG ERRORS ;08/02/2011
+"RTN","ZTER",2,0)
+ ;;8.0;KERNEL;**8,18,32,24,36,63,73,79,86,112,118,162,275,392,455,431,582**;JUL 10, 1995;Build 6
+"RTN","ZTER",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ZTER",4,0)
+ S ^TMP("$ZE",$J,1)=$$LGR^%ZOSV
+"RTN","ZTER",5,0)
+ S ^TMP("$ZE",$J,0)=$$EC^%ZOSV
+"RTN","ZTER",6,0)
+ S ^TMP("$ZE",$J,2)=$ETRAP,$ETRAP="D ERR^%ZTER"
+"RTN","ZTER",7,0)
+ S ^TMP("$ZE",$J,3)=$ZA_"~#~"_$ZB
+"RTN","ZTER",8,0)
+ I (^TMP("$ZE",$J,0)["-ALLOC,")!(^TMP("$ZE",$J,0)["<STORE>")!(^TMP("$ZE",$J,0)["-MEMORY") D
+"RTN","ZTER",9,0)
+ . I '$D(XUALLOC) D
+"RTN","ZTER",10,0)
+ . . K (%ZTERLGR,DUZ,DT,DISYS,IO,IOBS,IOF,IOM,ION,IOSL,IOST,IOT,IOS,IOXY,U,XRTL,XQVOL,XQY,XQY0,XQDIC,XQPSM,XQPT,XQAUDIT,XQXFLG,ZTSTOP,ZTQUEUED,ZTREQ,DA,D0,DI,DIC,DIE)
+"RTN","ZTER",11,0)
+ . S %ZTER13A="ALLOC"
+"RTN","ZTER",12,0)
+Z1 K XUALLOC
+"RTN","ZTER",13,0)
+ S %ZTERZE=^TMP("$ZE",$J,0),%ZT("^XUTL(""XQ"",$J)")="" S:'$D(%ZTERLGR) %ZTERLGR=^TMP("$ZE",$J,1)
+"RTN","ZTER",14,0)
+ G:$$SCREEN(%ZTERZE,1) EXIT ;Let site screen errors, count don't show
+"RTN","ZTER",15,0)
+ ;Get a record.
+"RTN","ZTER",16,0)
+ S %ZTERH1=+$H L +^%ZTER(1,%ZTERH1,0):15
+"RTN","ZTER",17,0)
+ S %ZTER11N=$P($G(^%ZTER(1,%ZTERH1,1,0)),"^",3)
+"RTN","ZTER",18,0)
+ ;S %ZTER11N=$P($G(^%ZTER(1,%ZTERH1,0)),"^",2)+1,^%ZTER(1,%ZTERH1,0)=%ZTERH1_"^"_%ZTER11N,^(1,0)="^3.0751^"_%ZTER11N_"^"_%ZTER11N
+"RTN","ZTER",19,0)
+Z2 S %ZTER11N=%ZTER11N+1 G:$D(^%ZTER(1,%ZTERH1,1,%ZTER11N,0)) Z2
+"RTN","ZTER",20,0)
+ S %ZTER11C=$P($G(^%ZTER(1,%ZTERH1,0)),"^",2)+1
+"RTN","ZTER",21,0)
+ S ^%ZTER(1,%ZTERH1,0)=%ZTERH1_"^"_%ZTER11C,^%ZTER(1,%ZTERH1,1,0)="^3.0751^"_%ZTER11N_"^"_%ZTER11C
+"RTN","ZTER",22,0)
+ I %ZTER11N=1 S ^%ZTER(1,0)="ERROR LOG^3.075^"_%ZTERH1_"^"_($P(^%ZTER(1,0),"^",4)+1)
+"RTN","ZTER",23,0)
+ S %ZTERRT=$NA(^%ZTER(1,%ZTERH1,1,%ZTER11N))
+"RTN","ZTER",24,0)
+ S @%ZTERRT@(0)=%ZTER11N_"^"_$G(%ZTERAPP),^("ZE")=%ZTERZE S:$D(%ZTERLGR) ^("GR")=%ZTERLGR K %ZTERLGR ;p431
+"RTN","ZTER",25,0)
+ L -^%ZTER(1,%ZTERH1,0)
+"RTN","ZTER",26,0)
+ K %ZTER12A,%ZTER12B,%ZTER11C
+"RTN","ZTER",27,0)
+ ;Save $ZA and $ZB
+"RTN","ZTER",28,0)
+ S %ZTER12A=$$ENC($P(^TMP("$ZE",$J,3),"~#~",1)),%ZTER12B=$$ENC($P(^TMP("$ZE",$J,3),"~#~",2))
+"RTN","ZTER",29,0)
+ S %ZTER11I=$$UCI()
+"RTN","ZTER",30,0)
+ S @%ZTERRT@("H")=$H,^("J")=$J_"^^^"_%ZTER11I_"^"_$J
+"RTN","ZTER",31,0)
+ S @%ZTERRT@("I")=$I_"^"_%ZTER12A_"^"_%ZTER12B_"^"_$G(IO("ZIO"))_"^"_$X_"^"_$Y_"^"_$P
+"RTN","ZTER",32,0)
+ S %ZTERROR=$$ETXT
+"RTN","ZTER",33,0)
+ S %ZTERCNT=0
+"RTN","ZTER",34,0)
+ D STACK^%ZTER1 ;Save Special Variables
+"RTN","ZTER",35,0)
+ D SAVE("$X $Y",$X_" "_$Y)
+"RTN","ZTER",36,0)
+ I ^%ZOSF("OS")["OpenM" D
+"RTN","ZTER",37,0)
+ . D SAVE("$ZU(56,2)",$ZU(56,2))
+"RTN","ZTER",38,0)
+ . I $ZV["VMS" S $P(@%ZTERRT@("J"),"^",2,3)=$ZF("GETJPI",$J,"PRCNAM")_"^"_$ZF("GETJPI",$J,"USERNAME")
+"RTN","ZTER",39,0)
+ D SAVE("$ZV",$ZV)
+"RTN","ZTER",40,0)
+ ;End Special Variables
+"RTN","ZTER",41,0)
+ I ^%ZOSF("OS")["VAX DSM" K %ZTER11A,%ZTER11B D VXD^%ZTER1 I 1
+"RTN","ZTER",42,0)
+ E  D
+"RTN","ZTER",43,0)
+ . S %ZTERVAR="%"
+"RTN","ZTER",44,0)
+ . F  D VAR:$D(@%ZTERVAR)#2,SUBS:$D(@%ZTERVAR)>9 S %ZTERVAR=$O(@%ZTERVAR) Q:%ZTERVAR=""
+"RTN","ZTER",45,0)
+ D GLOB
+"RTN","ZTER",46,0)
+ S:%ZTERCNT>0 @%ZTERRT@("ZV",0)="^3.0752^"_%ZTERCNT_"^"_%ZTERCNT
+"RTN","ZTER",47,0)
+ S:'$D(^%ZTER(1,"B",%ZTERH1)) ^(%ZTERH1,%ZTERH1)=""
+"RTN","ZTER",48,0)
+ S ^%ZTER(1,%ZTERH1,1,"B",%ZTER11N,%ZTER11N)=""
+"RTN","ZTER",49,0)
+LIN ;Find the line of the error
+"RTN","ZTER",50,0)
+ S %ZTERY=$P(%ZTERZE,","),%ZTERX=$P(%ZTERY,"^") S:%ZTERX[">" %ZTERX=$P(%ZTERX,">",2)
+"RTN","ZTER",51,0)
+ I %ZTERX'="" D
+"RTN","ZTER",52,0)
+ . N X,XCNP,DIF K ^TMP($J,"XTER1")
+"RTN","ZTER",53,0)
+ . S X=$P($P(%ZTERY,"^",2),":") Q:X=""  X ^%ZOSF("TEST") Q:'$T
+"RTN","ZTER",54,0)
+ . S XCNP=0,DIF="^TMP($J,""XTER1""," X ^%ZOSF("LOAD") S %ZTERY=$P(%ZTERX,"+",1)
+"RTN","ZTER",55,0)
+ . I %ZTERY'="" F X=0:0 S X=$O(^TMP($J,"XTER1",X)) Q:X'>0  I $P(^(X,0)," ")=%ZTERY S X=X+$P(%ZTERX,"+",2),%ZTZLIN=$G(^TMP($J,"XTER1",X,0)) Q
+"RTN","ZTER",56,0)
+ . I %ZTERY="" S X=+$P(%ZTERX,"+",2) Q:X'>0  S %ZTZLIN=$G(^TMP($J,"XTER1",X,0))
+"RTN","ZTER",57,0)
+ K ^TMP($J,"XTER1")
+"RTN","ZTER",58,0)
+ S:$D(%ZTZLIN) @%ZTERRT@("LINE")=%ZTZLIN K %ZTZLIN
+"RTN","ZTER",59,0)
+ I %ZTERROR'="",$D(^%ZTER(2,"B",%ZTERROR)) S %ZTERROR=%ZTERROR_"^"_$P(^%ZTER(2,+$O(^(%ZTERROR,0)),0),"^",2)
+"RTN","ZTER",60,0)
+EXIT ;
+"RTN","ZTER",61,0)
+ D ECNT ;Update the Error Count in the Summary
+"RTN","ZTER",62,0)
+ I $G(%ZTER13A)["ALLOC" HALT  ;Don't allow job to go on.
+"RTN","ZTER",63,0)
+ S $EC="",$ET=$G(^TMP("$ZE",$J,2))
+"RTN","ZTER",64,0)
+ K ^TMP("$ZE",$J)
+"RTN","ZTER",65,0)
+ K %ZTER11A,%ZTER11B,%ZTER11D,%ZTER11H,%ZTER11I,%ZTER11L,%ZTER11N,%ZTER11Q,%ZTER11S,%ZTER11Z,%ZTER111,%ZTER112
+"RTN","ZTER",66,0)
+ K %ZTER12A,%ZTER12B,%ZTER13A,%ZTERVAP,%ZTERVAR,%ZTERSUB,%ZTERROR,%ZTERZE
+"RTN","ZTER",67,0)
+ K %ZTERRT,%ZTERH1,%ZTERCNT,%ZTERX,%ZTERY,%ZT
+"RTN","ZTER",68,0)
+ H 1 ;Slow down process
+"RTN","ZTER",69,0)
+ Q
+"RTN","ZTER",70,0)
+ ;
+"RTN","ZTER",71,0)
+VAR I "%ZTER"'=$E(%ZTERVAR,1,5) D SAVE(%ZTERVAR,@%ZTERVAR) Q
+"RTN","ZTER",72,0)
+ Q
+"RTN","ZTER",73,0)
+ ;
+"RTN","ZTER",74,0)
+SAVE(%ZTERN,%ZTERV) ;Save name and value into global, use special variables
+"RTN","ZTER",75,0)
+ S %ZTERCNT=%ZTERCNT+1,@%ZTERRT@("ZV",%ZTERCNT,0)=%ZTERN
+"RTN","ZTER",76,0)
+ I $L(%ZTERV)<256 S @%ZTERRT@("ZV",%ZTERCNT,"D")=%ZTERV Q
+"RTN","ZTER",77,0)
+ ;Variable too long for global node
+"RTN","ZTER",78,0)
+ S @%ZTERRT@("ZV",%ZTERCNT,"D")=$E(%ZTERV,1,255),^("L")=$L(%ZTERV)
+"RTN","ZTER",79,0)
+ N %ZTERI
+"RTN","ZTER",80,0)
+ F %ZTERI=1:1 S %ZTERV=$E(%ZTERV,256,$L(%ZTERV)) Q:'$L(%ZTERV)  S @%ZTERRT@("ZV",%ZTERCNT,"D",%ZTERI)=$E(%ZTERV,1,255)
+"RTN","ZTER",81,0)
+ Q
+"RTN","ZTER",82,0)
+ ;
+"RTN","ZTER",83,0)
+SUBS ;Save sub-nodes
+"RTN","ZTER",84,0)
+ S %ZTER11S="" Q:"%ZT("=$E(%ZTERVAR,1,4)  Q:",%ZTER11S,%ZTER11L,"[(","_%ZTERVAR_",")
+"RTN","ZTER",85,0)
+ S %ZTERVAP=%ZTERVAR_"(",%ZTERSUB="%ZTER11S)"
+"RTN","ZTER",86,0)
+ S %ZTER11S=%ZTERVAR
+"RTN","ZTER",87,0)
+ F  S %ZTER11S=$Q(@%ZTER11S) Q:%ZTER11S=""  D SAVE(%ZTER11S,@%ZTER11S)
+"RTN","ZTER",88,0)
+ Q
+"RTN","ZTER",89,0)
+ ;
+"RTN","ZTER",90,0)
+GLOB ; save off a list of global subtrees, %ZT is passed in subscripted by name
+"RTN","ZTER",91,0)
+ ; %ZTERCNT passed in to count the nodes we traverse
+"RTN","ZTER",92,0)
+ ; %ZTERNOD the nodes through which we $QUERY
+"RTN","ZTER",93,0)
+ ; %ZTERNAM the names of the global subtrees we're saving
+"RTN","ZTER",94,0)
+ ; %ZTEROPN is %ZTERNAM, evaluated, without close paren for $PIECEing
+"RTN","ZTER",95,0)
+ N %ZTERNOD,%ZTERNAM,%ZTEROPN
+"RTN","ZTER",96,0)
+ S %ZTERNAM="" ; the names of the global subtrees we're saving
+"RTN","ZTER",97,0)
+ F  S %ZTERNAM=$O(%ZT(%ZTERNAM)) Q:%ZTERNAM=""  D
+"RTN","ZTER",98,0)
+ . S %ZTERNOD=$NA(@%ZTERNAM) ; fully evaluate all the subscripts (incl. $J)
+"RTN","ZTER",99,0)
+ . S %ZTEROPN=$E(%ZTERNOD,1,$L(%ZTERNOD)-1) ; save %ZTERNOD w/o close paren
+"RTN","ZTER",100,0)
+ . ;S %ZTERSUB=$QL(%ZTERNOD) ; how many subscripts in the subtree root's name
+"RTN","ZTER",101,0)
+ . F  S %ZTERNOD=$Q(@%ZTERNOD) Q:%ZTERNOD=""  Q:%ZTERNOD'[%ZTEROPN  D  ; traverse subtree
+"RTN","ZTER",102,0)
+ . . S %ZTERCNT=%ZTERCNT+1 ; count each node
+"RTN","ZTER",103,0)
+ . . S @%ZTERRT@("ZV",%ZTERCNT,0)=$P(%ZTERNAM,")")_$P(%ZTERNOD,%ZTEROPN,2) ; unevaluated name
+"RTN","ZTER",104,0)
+ . . S @%ZTERRT@("ZV",%ZTERCNT,"D")=$G(@%ZTERNOD) ; value of node
+"RTN","ZTER",105,0)
+ Q
+"RTN","ZTER",106,0)
+ ;
+"RTN","ZTER",107,0)
+ETXT() ;Return the Text of the error
+"RTN","ZTER",108,0)
+ Q $S(%ZTERZE["%DSM-E":$P($P(%ZTERZE,"%DSM-E-",2),","),1:$P($P(%ZTERZE,"<",2),">"))
+"RTN","ZTER",109,0)
+ ;
+"RTN","ZTER",110,0)
+ENC(%ZT1) ;Encode a string with control char in \027 format
+"RTN","ZTER",111,0)
+ N %ZTI,%ZTB,%ZTC S %ZTB=""
+"RTN","ZTER",112,0)
+ F %ZTI=1:1:$L(%ZT1) S %ZTC=$E(%ZT1,%ZTI),%ZTB=%ZTB_$S(%ZTC'?1C:%ZTC,1:"\"_$E($A(%ZTC)+1000,2,4))_","
+"RTN","ZTER",113,0)
+ Q $E(%ZTB,1,$L(%ZTB)-1)
+"RTN","ZTER",114,0)
+ ;
+"RTN","ZTER",115,0)
+UCI() ;Return the UCI, Changed to Box:Volume p431
+"RTN","ZTER",116,0)
+ N Y S Y=""
+"RTN","ZTER",117,0)
+ D GETENV^%ZOSV S Y=$P(Y,"^",4)
+"RTN","ZTER",118,0)
+ Q Y
+"RTN","ZTER",119,0)
+ ;
+"RTN","ZTER",120,0)
+APPERROR(%ZTERNM) ;Caller gives name to Error. p431
+"RTN","ZTER",121,0)
+ S ^TMP("$ZE",$J,1)=$$LGR^%ZOSV
+"RTN","ZTER",122,0)
+ S ^TMP("$ZE",$J,0)=%ZTERNM
+"RTN","ZTER",123,0)
+ S ^TMP("$ZE",$J,2)=$ETRAP,$ETRAP="D ERR^%ZTER"
+"RTN","ZTER",124,0)
+ S ^TMP("$ZE",$J,3)=$ZA_"~#~"_$ZB
+"RTN","ZTER",125,0)
+ S %ZTERAPP=1
+"RTN","ZTER",126,0)
+ G Z1
+"RTN","ZTER",127,0)
+ ;
+"RTN","ZTER",128,0)
+ERR ;Handle an error in %ZTER
+"RTN","ZTER",129,0)
+ I $D(%ZTERH1),$D(%ZTER11N) S ^%ZTER(1,%ZTERH1,1,%ZTER11N,"ZE2")="%ZTER error: "_$ECODE
+"RTN","ZTER",130,0)
+ ;Should ^TMP("$ZE",$J) be killed here
+"RTN","ZTER",131,0)
+ HALT
+"RTN","ZTER",132,0)
+ ;
+"RTN","ZTER",133,0)
+ECNT ;Add to the error count
+"RTN","ZTER",134,0)
+ S %ZTER11A=$$FMT(%ZTERZE),%ZTER11N=0
+"RTN","ZTER",135,0)
+ I $L(%ZTER11A) L +^%ZTER(3.077,0):15 D  L -^%ZTER(3.077,0)
+"RTN","ZTER",136,0)
+ . S %ZTER11N=$O(^%ZTER(3.077,"B",$E(%ZTER11A,1,30),0))
+"RTN","ZTER",137,0)
+ . I '%ZTER11N F  Q:%ZTER11N  D
+"RTN","ZTER",138,0)
+ . . S %ZTER11N=$P($G(^%ZTER(3.077,0)),"^",3)+1,$P(^(0),"^",2,4)="3.077^"_%ZTER11N_"^"_%ZTER11N
+"RTN","ZTER",139,0)
+ . . I $D(^%ZTER(3.077,%ZTER11N,0)) S %ZTER11N=0 Q
+"RTN","ZTER",140,0)
+ . . S ^%ZTER(3.077,%ZTER11N,0)=%ZTER11A,^%ZTER(3.077,"B",$E(%ZTER11A,1,30),%ZTER11N)=""
+"RTN","ZTER",141,0)
+ . . Q
+"RTN","ZTER",142,0)
+ . I '$D(^%ZTER(3.077,%ZTER11N,4,0)) S ^(0)="^3.0775"
+"RTN","ZTER",143,0)
+ . S %ZTER11H=$H,%ZTER11S=($P(%ZTER11H,",",2)\3600)+1,%ZTER11H=+%ZTER11H
+"RTN","ZTER",144,0)
+ . S $P(^%ZTER(3.077,%ZTER11N,4,%ZTER11H,0),"~",%ZTER11S)=$P($G(^%ZTER(3.077,%ZTER11N,4,%ZTER11H,0)),"~",%ZTER11S)+1
+"RTN","ZTER",145,0)
+ . I $P($G(^%ZTER(3.077,%ZTER11N,0)),"^",2)="" S $P(^%ZTER(3.077,%ZTER11N,0),"^",2)=$$HTFM^XLFDT($H) ;P582
+"RTN","ZTER",146,0)
+ . S $P(^%ZTER(3.077,%ZTER11N,0),"^",3)=$$HTFM^XLFDT($H) ;P583
+"RTN","ZTER",147,0)
+ . Q
+"RTN","ZTER",148,0)
+ Q
+"RTN","ZTER",149,0)
+ ;
+"RTN","ZTER",150,0)
+ ;Output format 'Tag+offset^Routine, <error code>'
+"RTN","ZTER",151,0)
+FMT(%ZTE) ;Format the error text
+"RTN","ZTER",152,0)
+ I $E(%ZTE,1,2)="<>" S %ZTE=$E(%ZTE,3,999)
+"RTN","ZTER",153,0)
+ S %ZTE=$TR(%ZTE,"^","~")
+"RTN","ZTER",154,0)
+ I %ZTE["<"&($P(%ZTE,"<",2)[">") S %ZTE=$P($P(%ZTE,">",2)," ")_", "_$P(%ZTE,">")_">"
+"RTN","ZTER",155,0)
+ Q %ZTE
+"RTN","ZTER",156,0)
+ ;
+"RTN","ZTER",157,0)
+SCREEN(ERR,%ZT3) ;Screen out certain errors.
+"RTN","ZTER",158,0)
+ N %ZTA,%ZTE,%ZTI,%ZTJ,%ZTH,%ZTR S:'$D(ERR) ERR=$$EC^%ZOSV
+"RTN","ZTER",159,0)
+ I '$L(ERR) Q 0 ;Record
+"RTN","ZTER",160,0)
+ ;Set error text format
+"RTN","ZTER",161,0)
+ S %ZTH=+$H,%ZTE=$$FMT(ERR)
+"RTN","ZTER",162,0)
+ ;Find error in summary
+"RTN","ZTER",163,0)
+ S %ZTI=$O(^%ZTER(3.077,"B",%ZTE,0)),%ZTR=$G(^%ZTER(3.077,+%ZTI,4,%ZTH,0)),%ZTJ=0
+"RTN","ZTER",164,0)
+ F %ZTA=1:1:24 S %ZTJ=%ZTJ+$P(%ZTR,"~",%ZTA)
+"RTN","ZTER",165,0)
+ ;Check the limit on the number of errors to record.
+"RTN","ZTER",166,0)
+ I $P($G(^XTV(8989.3,1,"ZTER")),"^",1)'="",%ZTJ'<(+$P($G(^XTV(8989.3,1,"ZTER"),"10"),"^",1)) Q 1 ;Don't record
+"RTN","ZTER",167,0)
+ ;Check error screens
+"RTN","ZTER",168,0)
+ S %ZTE="",%ZTI=0
+"RTN","ZTER",169,0)
+ ;See if error is in list.
+"RTN","ZTER",170,0)
+ F %ZTJ=2,1 D  Q:%ZTI>0
+"RTN","ZTER",171,0)
+ . F %ZTI=0:0 S %ZTI=$O(^%ZTER(2,"AC",%ZTJ,%ZTI)) Q:%ZTI=""  S %ZTE=$S($G(^%ZTER(2,%ZTI,2))]"":^(2),1:$P(^(0),"^")) Q:ERR[%ZTE
+"RTN","ZTER",172,0)
+ . Q
+"RTN","ZTER",173,0)
+ ;Next see if we should count the error
+"RTN","ZTER",174,0)
+ I %ZTI>0 S %ZTE=$G(^%ZTER(2,%ZTI,0)) D  Q $P(%ZTE,"^",3)=2 ;See if we skip the recording of the error.
+"RTN","ZTER",175,0)
+ . Q:(%ZTJ=1)&('$G(%ZT3))
+"RTN","ZTER",176,0)
+ . I $P(%ZTE,"^",4) L +^%ZTER(2,%ZTI):10 S ^(3)=$G(^%ZTER(2,%ZTI,3))+1 L -^%ZTER(2,%ZTI)
+"RTN","ZTER",177,0)
+ . Q
+"RTN","ZTER",178,0)
+ Q 0 ;record error
+"RTN","ZTER",179,0)
+ ;
+"RTN","ZTER",180,0)
+UNWIND ;Unwind stack for new error trap. Called by app code.
+"RTN","ZTER",181,0)
+ S $ECODE="" S $ETRAP="D UNW^%ZTER Q:'$QUIT  Q -9" S $ECODE=",U1,"
+"RTN","ZTER",182,0)
+UNW Q:$ESTACK>1  S $ECODE="" Q
+"RTN","ZTER",183,0)
+ ;
+"RTN","ZTER",184,0)
+NEWERR() ;Does this OS support the M95 error trapping
+"RTN","ZTER",185,0)
+ Q 1 ;All current M system now support 95 error trapping
+"RTN","ZTER",186,0)
+ ;
+"RTN","ZTER",187,0)
+ABORT ;Pop the stack all the way.
+"RTN","ZTER",188,0)
+ S $ETRAP="Q:$ST>1  S $ECODE="""" Q"
+"RTN","ZTER",189,0)
+ Q
+"RTN","ZTER",190,0)
+ ;
+"RTN","ZTER",191,0)
+POST ;Do the post-init
+"VER")
+8.0^22.0
+"BLD",1378,6)
+^472
+**END**
+**END**

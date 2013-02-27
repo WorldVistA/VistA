@@ -1,0 +1,370 @@
+
+=============================================================================
+Run Date: FEB 16, 2012                     Designation: PSX*2*73
+Package : PSX - CMOP                          Priority: Mandatory
+Version : 2        SEQ #63                      Status: Released
+                  Compliance Date: MAR 17, 2012
+=============================================================================
+
+Associated patches: (v)PSX*2*69    <<= must be installed BEFORE `PSX*2*73'
+
+Subject: EPHARMACY PHASE 6
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans
+ Health Information Systems and Technology Architecture (VistA) electronic
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*385
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*452
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*11
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*73
+  
+ The patches (PSO*7*385, IB*2*452, BPS*1*11, and PSX*2*73) are being released
+ in the Kernel Installation and Distribution System (KIDS) multi-build
+ distribution BPS PSO IB PSX BUNDLE 7.0.
+  
+ The purpose of this software package is to maintain compliance with
+ legislative and federal mandates and to address and correct gaps and
+ inefficiencies in the current electronic pharmacy billing processes.  This
+ will ultimately increase revenues collected by VA Medical Centers and
+ outpatient pharmacies by reducing the volume of short pays and payment
+ denials.
+  
+ All pharmacy claims for payers that are processed electronically are
+ compliant with the current industry standards.  This software adds support
+ for the electronic billing of the Health Administration Center (HAC) CHAMPVA
+ payer in order to provide an automated process and to prevent manual
+ workarounds for CHAMPVA.
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  1. The ECME# label and data have been removed from the CMOP/ECME Activity
+     Report [BPS RPT CMOP/ECME ACTIVITY] and also from the Excel output.
+  
+  2. The background process that calculates suspense days will now round 
+     any partial day to the next full day.
+  
+  3. The ePharmacy Date of Service Calculation no longer considers the Fill
+     Date as an acceptable value. The algorithm uses the release date if it
+     exists. If the release date does not exist, the algorithm uses the
+     current date.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ Request Name: ePharmacy Claims Phase 6 (FY10)
+   Request ID: 20090215
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Birmingham
+ Loma Linda
+ Phoenix
+ Richmond
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov. This transmits the files from the first 
+ available FTP server. Sites may also elect to retrieve software directly from 
+ a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www.va.gov/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ CMOP Patch Release Notes      PSX_2_P73_RN.PDF                Binary       
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch should take up to 20 minutes to install.
+  
+ DO NOT QUEUE the installation of this patch.
+  
+ To avoid disruptions, these patches should be installed during non-peak
+ hours when there is minimal activity on the system.  Avoid times when ECME
+ claims are being transmitted.  Of particular concern would be the options
+ below.
+  
+     1. BPS NIGHTLY BACKGROUND JOB [BPS NIGHTLY BACKGROUND JOB]
+        Do not install the patch when ECME claims are being generated
+        by the BPS Nightly Background Job option.  Wait for this job to
+        finish or complete the installation before this job starts.
+  
+     2. Scheduled CS Transmission [PSXR SCHEDULED CS TRANS] and
+        Scheduled Non-CS Transmission [PSXR SCHEDULED NON-CS TRANS]
+        Do not install the patch when prescriptions are being
+        transmitted to CMOP.  Wait for the CMOP transmissions to finish
+        or complete the installation before the transmissions start. Both
+        the CS (Controlled Substances) and the non-CS CMOP transmission
+        options should be checked.  Check with Pharmacy Service or your
+        Pharmacy ADPAC to find out when CMOP transmissions occur.
+  
+  
+               ***** IMPORTANT INSTALLATION NOTES *****
+  
+ This patch bundle is changing the name of File #52.87.  The current name of
+ this file is 'PSO TRICARE AUDIT LOG'.  The new name of this file is 'PSO AUDIT
+ LOG'.  During the patch installation you will see the following information
+ presented to the screen:
+  
+       52.87     PSO AUDIT LOG
+    *BUT YOU ALREADY HAVE 'PSO TRICARE AUDIT LOG' AS FILE #52.87!
+    Shall I write over your PSO TRICARE AUDIT LOG File? YES// 
+  
+ Please accept the default answer of YES to this question.
+  
+ You will also be prompted to enter the coordinator for the new BPS CHAMPVA
+ mail group.  Prior to installation, please contact your Medical Care Cost
+ Recovery (MCCR) business department (Facility Revenue Manager) to
+ determine who will be the coordinator for this new mail group.  The users
+ in this mail group will receive bulletins related to the processing of
+ CHAMPVA electronic claims.  After the patch is installed, members can be
+ added to the mail group by using the Mail Group Edit [XMEDITMG] option.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file BPS_1_11_PSO_IB_PSX.KID, which contains the
+     following patches:
+  
+         BPS*1.0*11
+         PSO*7.0*385
+         IB*2.0*452
+         PSX*2.0*73
+  
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+  
+                     download.vista.med.va.gov
+  
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+  
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+  
+      The BPS_1_11_PSO_IB_PSX.KID host file is located in the
+      anonymous.software directory. Use ASCII Mode when downloading the
+      file.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file BPS_1_11_PSO_IB_PSX.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]BPS_1_11_PSO_IB_PSX.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         BPS PSO IB PSX BUNDLE 7.0
+         BPS*1.0*11
+         PSO*7.0*385
+         IB*2.0*452
+         PSX*2.0*73
+       Use INSTALL NAME: BPS PSO IB PSX BUNDLE 7.0 to install this
+       Distribution.
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     BPS PSO IB PSX BUNDLE 7.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the BPS PSO IB PSX BUNDLE 7.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter BPS PSO IB
+         PSX BUNDLE 7.0.
+     c.  When prompted to "Enter the Coordinator for Mail Group 'BPS
+         CHAMPVA':", please respond with the appropriate person.
+     d.  When prompted "Shall I write over your PSO TRICARE AUDIT LOG File?
+         YES//", please accept the default of YES in order to change the name
+         of this file as instructed above.
+     e.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES//", enter YES unless your system does this in a nightly
+         TaskMan process.
+     f.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         YES//", enter NO.
+     g.  When prompted " Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", enter NO.
+     h.  When prompted "Device: HOME//", respond with the correct device 
+         but do not queue this install.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CMOP;**[Patch List]**;11 Apr 97;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSXBPSRP
+    Before: B78524997   After: B77595338  **63,65,73**
+Routine Name: PSXRPPL1
+    Before: B52590597   After: B51826224  **3,48,62,66,65,69,73**
+Routine Name: PSXRPPL2
+    Before: B55484855   After: B55199697  **65,69,73**
+ 
+Routine list of preceding patches: 69
+
+=============================================================================
+User Information:
+Entered By  : BLAESER,DAVID                 Date Entered  : MAR 02, 2011
+Completed By: CONQUEST,KENNETH              Date Completed: FEB 15, 2012
+Released By : HARDY,STACY                   Date Released : FEB 16, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,196 @@
+$TXT Created by MOORE,JIM at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 08/30/11 at 09:57
+=============================================================================
+Run Date: OCT 27, 2011                     Designation: XU*8*572
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #462                      Status: Released
+                  Compliance Date: NOV 27, 2011
+=============================================================================
+
+Associated patches: (v)XU*8*546    <<= must be installed BEFORE `XU*8*572'
+
+Subject: Fix TaskMan 'Spacebar Return' Feature
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes problems in the Device Manager involving the use of the
+ 'spacebar return' functionality for selecting the last device used at the 
+ device prompt.  On occasion it has been reported that this functionality
+ caused the selection of an inappropriate device, such as a resource device, 
+ for printing.  This has been demonstrated to occur by using certain
+ CRPRS and some HealthEVet applications, and then selecting a device at the
+ legacy VistA device prompt.
+  
+ This issue can result in errors in the Kernel Error Trap from trying to
+ open, read, or write to inappropriate devices. Here is an example that was
+ reported:     <NOTOPEN>C1+3^ORPR03
+  
+ It has been determined that this issue occurs in several ways listed below:
+  
+  1) Because both FileMan and the Device Manager provide similar 'spacebar
+     return' functionality and both store the last device selected at the
+     same location in the ^DISV( global.  This patch resolves the issue
+     by changing where the Device Manager stores the last device selected.
+     By having FileMan and Device Manager store the last device selected
+     in different locations, Device Manager will stop selecting inappropriate
+     devices via 'spacebar return'.
+   
+  2) The Device Manager API ^%ZIS may be called non-interactively by
+     by applications such as CPRS in order to open a known device. That
+     is done by setting the input variable IOP to the device that is to
+     be used.  Before this patch, that would result in the value of the
+     'last device selected' to be modified, even though it was the 
+     application that selected the device, for example,  via a
+     configuration file, rather than the user selecting the device at
+     the device prompt. This patch modifies the Device Manager so that
+     such non-interactive selection of a device will NOT cause the user's
+    'last device selected' to be modified. 
+  
+  3) Similar to 2) above, the Device Manager's internal APIs NOQ^%ZISUTL 
+     and FIND^%ZISUTL are called non-interactively and result in the user's
+     'last device selected' being modified. These API's are used by TaskMan,
+     and prior to this patch calling Taskman non-interactively with a device
+     specified could result in the user's 'last device selected' being
+     modified.  For example, calling ^%ZTLOAD to queue a task with the input
+     parameter ZTIO set to the name of a RESOURCE DEVICE would result in
+     the user's 'last device selected' being set to the RESOURCE DEVICE. This
+     patch corrects that. 
+  
+  
+ Patch Components
+ ================
+ Routines only 
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+ HD0000000063152   Subject: Default Device Prompt
+  
+ Problem:
+ -------
+ This is the description that appeared in the Remedy Ticket:
+ It appears that we may be using ^DISV(+DUZ,"^%ZIS(1," for more then the  
+ last device. Users coming out of CPRS GUI and using spacebar return in  
+ Mailman, or other LM Packages, are starting to see some device names that  
+ look pretty wild to them, such as Notification Management or CPRS GUI  
+ Background Data. We need to consider storing those variables somewhere
+ else.
+  
+  
+ Resolution:
+ ----------
+  
+ Device lookups can be accomplished via both FileMan and the Device 
+ Manager.  They both offer the 'spacebar return' functionality, and they
+ both currently store the last device selected in the same location.   
+ Thus, users of functionality that make use of FileMan to select a device
+ may inadvertently overwrite the last device selected for printing via the
+ Device Manager.  The solution is that FileMan and the Device Manager store
+ the last device selected in different locations, which this patch
+ accomplishes. 
+  
+ Test Sites:
+ -----------
+ Lebanon
+ Oklahoma City
+ Upper New York HCS 
+  
+  
+ Patch Installation Overview:
+ ===========================
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ This patch cannot be queued.  
+  
+ Place TaskMan in a wait state. (DO WAIT^ZTMKU)
+  
+ Inhibit users from login into the system. (If you install when a few
+ users are on the system and the possibility of some CLOBER errors is
+ acceptable, then users can stay on the system.)
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ There are no options that need be disabled.
+  
+ Post Installation Overview
+ --------------------------
+  
+ The Post-Installation moves the routines ^ZIS1 and ^ZIS5 into the manager 
+ account and deletes post installation routine after the installation. 
+  
+ Installation:
+ =============
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter: XU*8*572
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+         Enter YES/NO to the Inhibit Logons question based on 
+         Pre-installation instructions.
+  
+      Want KIDS to INHIBIT LOGONs during the install? NO// YES 
+      Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 5.  Remove TaskMan from wait state.  (DO RUN^ZTMKU)
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P572
+    Before:       n/a   After:    B29201  **572**
+Routine Name: ZIS1
+    Before: B27515391   After: B29088522  **18,49,69,104,112,199,391,440,
+                                           499,518,546,572**
+Routine Name: ZIS5
+    Before: B14306275   After: B16057553  **18,24,69,499,518,546,572**
+ 
+Routine list of preceding patches: 546
+
+=============================================================================
+User Information:
+Entered By  : MOORE,CHARLES J               Date Entered  : MAY 05, 2011
+Completed By: SINGH,GURBIR                  Date Completed: OCT 26, 2011
+Released By : HARROD,PAUL                   Date Released : OCT 27, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

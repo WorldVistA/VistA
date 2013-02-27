@@ -1,0 +1,151 @@
+$TXT Created by MENDOZA,RAUL at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 10/21/10 at 16:43
+=============================================================================
+Run Date: JAN 03, 2012                     Designation: XT*7.3*126
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3       SEQ #104                    Status: Released
+                  Compliance Date: FEB 03, 2012
+=============================================================================
+
+
+Subject: Add Warning for option XDR VERIFY ALL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ A warning message proposed by the Healthcare Identity Management/Data 
+ Quality team (HC IdM) is being added to the Duplicate Resolution 
+ software. The following will be displayed when verifying a duplicate pair:
+  
+   
+  "*** WARNING!!!  You have verified these two records are the SAME   
+  patient.  Once these records are merged, there is no automated way to   
+  "un-do" the merge.  If you are not certain these are the same patient,   
+  edit the status back to 'Potential Duplicate, Unverified' and repeat 
+  the verification process.  For additional assistance, please log a 
+  NOIS/Remedy ticket. ***
+   
+   
+ While using option Verify Potential Duplicates [XDR VERIFY ALL], 
+ above warning message will be displayed before final verification process.
+   
+   
+ Patch Tracking Message #: 52920758
+ =========================
+   
+ Thanks to Test Sites:
+ ====================
+  Alexandria
+  Philadelphia
+  St Cloud 
+    
+ Blood Bank Clearance:   10/4/10
+ ====================
+   
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*126 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of VISTA
+ Patches for Effects on VISTA Blood Bank Software. This patch does not
+ alter or modify any VistA Blood Bank software design safeguards or safety
+ critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XT*7.3*126 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  
+ Related Remedy Tickets: #64606
+ ======================
+  
+ Documentation Retrieval Instructions:
+ ===================================== 
+  
+ Updated documentation describing the new functionality introduced by this 
+  patch is available.
+   
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+   
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  The documentation will be in the form of Adobe Acrobat files.
+  
+  The following file should be downloaded in the binary FTP mode.
+   
+    Filename                  Description
+    --------                  -----------
+    xt_73_p126_um.pdf         Duplicate Record Merge: Patient Merge User
+                              Manual
+   
+  Documentation can also be found on the VA Software Documentation Library
+  at: http://www4.va.gov/vdl/
+  
+  
+  
+  
+ Installation:
+ ============
+  
+ >>>Users may remain on the system.
+ >>>TaskMan does *not* need to be stopped.
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the Transport global.
+       On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global
+          Compare Transport Global to Current System
+          Backup a Transport Global
+  
+   3.  Users can remain on the system.
+       This patch can be queued and installed at any time.
+       TaskMan can remain running.
+  
+   4.  On the KIDS menu, under the 'Installation' menu, use the 
+        following option:
+             Select Installation Option: Install Package(s) 
+             Select INSTALL NAME:  XT*7.3*126
+                                   ==========
+  
+ Want KIDS to INHIBIT LOGONs during the install? YES// NO
+                                                        ==
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? YES// NO
+                                                                        ==
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XDRMVFY
+    Before:  B2426142   After:  B2860130  **23,126**
+Routine Name: XDRRMRG1
+    Before: B57210493   After: B66795233  **23,29,46,47,49,126**
+ 
+Routine list of preceding patches: 49
+
+=============================================================================
+User Information:
+Entered By  : MENDOZA,RAUL E.               Date Entered  : JUL 29, 2010
+Completed By: SINGH,GURBIR                  Date Completed: DEC 29, 2011
+Released By : HEUER,CINDY                   Date Released : JAN 03, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

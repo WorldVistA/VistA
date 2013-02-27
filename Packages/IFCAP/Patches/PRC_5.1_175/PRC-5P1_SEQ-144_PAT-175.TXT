@@ -1,0 +1,166 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Wednesday, 12/12/12 at 12:15
+=============================================================================
+Run Date: JAN 16, 2013                     Designation: PRC*5.1*175
+Package : PRC - IFCAP                         Priority: EMERGENCY
+Version : 5.1       SEQ #144                    Status: Released
+                  Compliance Date: JAN 22, 2013
+=============================================================================
+
+Associated patches: (v)PRC*5.1*117 <<= must be installed BEFORE `PRC*5.1*175'
+
+Subject: RUNAWAY JOURNALING WHEN CANCELLING A PROSTHETICS PURCHASE ORDER
+
+Category: 
+  - Routine
+  - Input Template
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ 1. Runaway Journaling caused by looping error message when using option 
+    in Prosthetics Purchasing Menu: Cancel Purchase Card Transaction
+   
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000784782- Prosthetics - journal file filling with entries
+     Duplicate:  HD0000000785434 RMPR - Journal file filling with entries 
+                 HD0000000786399 IFCAP - R1 & R3 runaway journal entries
+                 HD0000000786436 Runaway journaling process
+                 HD0000000787813 Runaway journaling process
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A 
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Gulf Coast Veterans Health Care System - Biloxi
+ VA Upstate NY HCS
+ Michael E DeBakey VA Medical Center - Houston
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. HD0000000784782 Prosthetics - journal file filling with entries
+  
+    Problem:
+    --------
+    When using Prosthetics option 'Cancel Purchase Card Transaction' 
+    [RMPR4 PCC] the user receives cancel error message "THERE HAS BEEN
+    PAYMENT MADE FOR THIS PURCHASE ORDER, CANNOT CANCEL" that will
+    loop infinitely, also writing 2 disk updates to journaling for each
+    message.
+  
+    Resolution:
+    -----------                    
+    Modify order cancelling process through IFCAP to insure the message
+    only displays a single time preventing runaway journaling. 
+  
+    Routines: PRCHAMU                   Input Template:  PRCHAMENDPRO
+  
+  
+  
+    
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+                    *** PRE-INSTALL INSTRUCTIONS ***
+  
+ If you have placed the Prosthetics option 'RMPR4 PCC' for Cancel Purchase 
+ Card Transaction Out of Order you MUST remove the Out of Order message 
+ for option.  You may use the Fileman process if you like or the 
+ following process to remove the Out of Order message from option.
+  
+ Select OPTION NAME: SYSTEMS MANAGER MENU
+  
+ Select Systems Manager Menu <TEST ACCOUNT> Option: MENU MANAgement
+  
+ Select Menu Management <TEST ACCOUNT> Option: OUT-OF-Order Set Management
+  
+ Select Out-Of-Order Set Management <TEST ACCOUNT> Option: REMOve 
+ Out-Of-Order Messages from a set of Options
+  
+ 1.   Option set named 'PRE-PRC*5.1*175' created on Dec 14, 2012 7:24:32 
+ am by BECKWITH
+      PRE-PRC*5.1*175's options/protocols appear to be Out-Of-Order.
+  
+ Return options in PRE-PRC*5.1*175 to general use? Y// ES
+ Should I remove the option set PRE-PRC*5.1*175 from ^XTMP?? Y// ES
+  
+ Select Out-Of-Order Set Management <TEST ACCOUNT> Option: 
+  
+                <<<< End of pre-install instructions >>> 
+  
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*175)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*175.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? NO//', respond YES 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+          Cancel Purchase Card Transaction     [RMPR4 PCC]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCHAMU
+    Before: B53048308   After: B54598370  **21,117,175**
+ 
+Routine list of preceding patches: 117
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : DEC 10, 2012
+Completed By: HEFFERNAN,COREY               Date Completed: JAN 14, 2013
+Released By : VASSAR,CAROL                  Date Released : JAN 16, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,131 @@
+$TXT Created by THOMPSON,Seth at CHEY204.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 07/06/11 at 09:50
+=============================================================================
+Run Date: NOV 15, 2011                     Designation: PSJ*5*223
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #218                      Status: Released
+                  Compliance Date: DEC 16, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*113   <<= must be installed BEFORE `PSJ*5*223'
+
+Subject: ONE TIME SCHEDULE TYPE DOES NOT MATCH SCHEDULE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issues:
+  
+ 1.  When executing Inpatient Pharmacy Backdoor Processing, users are able
+     to enter a SCHEDULE TYPE of "ONE TIME" when the Schedule field is not
+     "ONE TIME".  
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A 
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1.  HD0000000305526 - PSPO #1317 - 1 Undo Given action returned a One time
+     order back
+  
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Bronx, NY
+ Upstate New York HCS
+ Chillicothe, OH
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  HD0000000305526 - PSPO #1317 - 1 Undo Given action returned a One time
+  
+ Problem:
+ --------
+ Users are able to set the SCHEDULE TYPE to "ONE TIME" for a non "ONE 
+ TIME" Schedule.  This makes order appear incorrect in Bar Code 
+ Medication Administration (BCMA).
+  
+ Resolution:
+ ----------- 
+ Modify routine PSGOE8 and PSGOE9 to check the schedule type of the 
+ order's schedule and prevent the user from editing the SCHEDULE TYPE of
+ the order to "ONE TIME" if the SCHEDULE TYPE of the Schedule is not also
+ "ONE TIME". If the user attempts to edit the SCHEDULE TYPE to "ONE TIME"
+ and the SCHEDULE is not one time, the response below will be displayed
+ and the user will be prompted to input another SCHEDULE TYPE.
+  
+         SCHEDULE (XXX) is not a ONE TIME Schedule.
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed after normal business
+ hours. Installation should take less than 2 minutes.
+   
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu. [Note:
+    TEXT PRINT/DISPLAY option in the PackMan menu will display the
+    patch text only].
+   
+ 2. From the Kernel Installation and Distribution System (KIDS)
+    menu, select the Installation menu.
+   
+ 3. From this menu, you may elect to use the following options:
+    (when prompted for INSTALL NAME, enter PSJ*5.0*223)
+   
+    a.  Backup a Transport Global - this option will create a backup
+        message of any routines exported with the patch.  It will
+        NOT backup any other changes such as DDs or templates.
+    b.  Compare Transport Global to Current System  - this option
+        will allow you to view all changes that will be made when
+        the patch is installed.  It compares all components of the
+        patch (routines, DDs, templates, etc.).
+    c.  Verify Checksums in Transport Global - this option will
+        allow you to ensure the integrity of the routines that are
+        in the transport global.
+    d.  Print Transport Global - this option will allow you to view
+        the components of the KIDS build.
+   
+ 4. Use the Install Package(s) option and select the package
+    PSJ*5.0*223
+   
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+    NO//', respond NO.
+   
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE8
+    Before: B43388920   After: B45273468  **47,50,65,72,110,111,188,192,
+                                           113,223**
+Routine Name: PSGOE9
+    Before: B38035726   After: B39101657  **11,47,50,72,110,111,188,192,
+                                           207,113,223**
+ 
+Routine list of preceding patches: 113
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : APR 02, 2009
+Completed By: CRICHLOW,SHERRY               Date Completed: NOV 01, 2011
+Released By : CONNOLLY,BARBARA              Date Released : NOV 15, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,187 @@
+$TXT Created by ESCALERA,diego at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 01/24/12 at 17:18
+=============================================================================
+Run Date: MAR 29, 2012                     Designation: OR*3*314
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #304                      Status: Released
+                  Compliance Date: APR 29, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*296    <<= must be installed BEFORE `OR*3*314'
+
+Subject: RECURSIVE CHECK AND READER ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects 2 issues within the ORDER ENTRY/RESULTS REPORTING 
+ package:
+  
+ 1.  Sites with complex menus could experience a significant pause when
+     selecting items to replace or modify.
+  
+ 2.  When using the Search/replace components [ORCM SEARCH/REPLACE] option,
+     if a large number of components are selected by the user to be 
+     replaced, some of the components may not be updated.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ 1. HD0000000325357 - Editing order sets with ORCM MENU and ORCM ORDER SETS
+                      causes the system to hang.
+    Duplicates:
+        HD0000000310200 - Slow item edits from Enter/edit order menus
+        HD0000000382131 - Add Menu Function Requires Excessive Time in ORCH
+        HD0000000529932 - BHS - Order menus hanging, duplicate to 325357,
+                          310200, and 382131
+        HD0000000533073 - Editing Item in Order Menu stuck in 
+                          CHKPAR^ORCMEDT5 loop
+        HD0000000583341 - Long lag time when editing on order menu item
+        HD0000000587764 - LONG HANG when editing an order menu
+  
+  
+ 2. HD0000000327935 - Potential Dialog selection issue
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Puget Sound HSC, WA (Tacoma, Seattle)
+ Pittsburgh VAMC, PA
+ VA Central Iowa HCS, IA (Des Moines, Omaha, Iowa City) 
+ Orlando VAMC, FL
+ Edward Hines Jr. VA Hospital, Hines, IL 
+ Tomah VAMC, WI
+ VA Boston HCS, MA (Boston, Brockton, West Roxbury)
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000325357 - Editing order sets with ORCM MENU and ORCM ORDER SETS
+                      causes the system to hang.
+  
+    Problem:
+    --------
+    It was discovered that sites with complex order menus could experience
+    a significant pause when selecting items to replace or modify. This was
+    caused by the software looping through all associated menus repeatedly
+    to insure the modified item was not an ancestor to itself. This can
+    occur in the following options:
+  
+       Search/replace components [ORCM SEARCH/REPLACE]
+       Enter/edit order menus [ORCM MENU]
+  
+ ***NOTE***
+  
+ Remedy HD0000000325357 reports performance lags for both Enter/edit 
+ order menus [ORCM MENU] and Enter/edit order sets [ORCM ORDER SETS].
+  
+ These are two separate issues and will require separate solutions.
+  
+ Remedy HD0000000325357 tracks the fix to ORCM MENU with patch OR*3*314.
+ The performance lag for ORCM ORDER SETS is *not* fixed with OR*3*314.
+ Remedy HD0000000606919 has been created to track the performance issue
+ with ORCM ORDER SETS, which has no fix at this time.
+       
+    Resolution:
+    -----------
+    Routine ORCMEDT5 was modified to prevent the software from rechecking
+    menus that have already been checked.
+  
+  
+ 2. HD0000000327935 - Potential Dialog selection issue
+  
+    Problem:
+    --------
+    It was discovered that a potential dialog selection problem could occur
+    while using the Search/replace components [ORCM SEARCH/REPLACE] option.
+    If a large number of components were selected by the user to be replaced
+    some of the components may not be updated.  This was caused by the
+    routine ORCMEDT5 not properly handling the selected values returned
+    by a FileMan Application Program Interface (API).
+  
+    Resolution:
+    -----------
+    Routine ORCMEDT5 was modified to properly handle the selected values
+    even when a large number of components have been selected.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*314):
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      OR*3.0*314.
+  
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCMEDT5
+    Before: B35418320   After: B36616080  **8,46,296,314**
+ 
+Routine list of preceding patches: 296
+
+=============================================================================
+User Information:
+Entered By  : PHELPS,TY                     Date Entered  : MAY 27, 2009
+Completed By: HULET,LEE ANN                 Date Completed: MAR 21, 2012
+Released By : ERICKSON,REBECCA J            Date Released : MAR 29, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

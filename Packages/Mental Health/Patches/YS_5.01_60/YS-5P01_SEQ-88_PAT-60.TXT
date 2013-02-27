@@ -1,0 +1,1062 @@
+
+=============================================================================
+Run Date: OCT 15, 2012                     Designation: YS*5.01*60
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01        SEQ #88                   Status: Released
+                  Compliance Date: NOV 15, 2012
+=============================================================================
+
+Associated patches: (v)YS*5.01*33  <<= must be installed BEFORE `YS*5.01*60'
+                    (v)YS*5.01*49  <<= must be installed BEFORE `YS*5.01*60'
+                    (v)YS*5.01*52  <<= must be installed BEFORE `YS*5.01*60'
+                    (v)YS*5.01*70  <<= must be installed BEFORE `YS*5.01*60'
+                    (v)YS*5.01*82  <<= must be installed BEFORE `YS*5.01*60'
+                    (v)YS*5.01*88  <<= must be installed BEFORE `YS*5.01*60'
+                    (v)YS*5.01*96  <<= must be installed BEFORE `YS*5.01*60'
+                    (v)YS*5.01*103 <<= must be installed BEFORE `YS*5.01*60'
+                    (v)YS*5.01*106 <<= must be installed BEFORE `YS*5.01*60'
+
+Subject: RETIRE OBSOLETE FUNCTIONALITY
+
+Category: 
+  - Routine
+  - Other
+  - Data Dictionary
+  - Input Template
+  - Print Template
+
+Description:
+============
+
+  
+ This is a multiple build and is distributed as a Host File System (HFS)
+ file.  It comprises YS*5.01*60 (Mental Health Patch 60) and GMTS*2.7*102 
+ (Health Summary Patch 102).
+  
+ Please refer to the patch description for Health Summary patch 
+ GMTS*2.7*102 for technical information and documentation retrieval.
+  
+ Patch YS*5.01*60 removes the ability to add new records to the MEDICAL
+ RECORD file (#90), which the MENTAL HEALTH PHYSICAL EXAM health summary
+ component used.  This is controlled by DBIA 1280.  GMTS*2.7*102 disables
+ the MENTAL HEALTH PHYSICAL EXAM health summary component.  The code for
+ this obsolete component was located in the routine GMTSMHPE, which is in
+ GMTS*2.7*102.
+  
+ YS*5.01*60 Description:
+ =======================
+ Patch YS*5.01*60 addresses the retirement of Mental Health options, files,
+ data dictionaries, data associated with these files, and associated 
+ templates. These were determined by the Mental Health Strategic Healthcare
+ Group to be obsolete and are no longer supported by Health Systems Design
+ and Development.  All the software, files, options, and templates were
+ deprecated in 2004 or earlier.
+  
+ The retirement of the Mental Health Assistant 2 (MHA2) is also performed 
+ by this patch.  This old interface does not use the required national 
+ reporting system and does not have the required error checking found in 
+ MHA3.  In order to move all field activity to MHA3, an analysis was
+ performed by clinical and technical staff to determine the necessary 
+ software changes. The following Remote Procedure Calls (RPCs) are exported
+ with REMOTE PROCEDURE file (#8994), INACTIVE field (#.06) set to INACTIVE:
+    YTAPI CLERK RESPONSES
+    YTAPI GET INCOMPLETE
+    YTAPI LIST INCOMPLETES
+    YTAPI LISTALL
+    YTAPI LISTONE
+    YTAPI OUTNOTE
+    YTAPI PREVIEW
+    YTAPI PRIVLEGE
+    YTAPI QUEST
+    YTAPI SAVE INCOMPLETES
+    YTAPI SAVE TEST COMMENT
+    YTAPI SAVEIT
+    YTAPI SCOREIT
+    YTAPI SHOWALL
+    YTAPI SHOWIT
+    YTAPI TEST BATTERY
+    YTAPI TEST BULLETIN
+   
+ This patch also includes updates to routines which reference the deleted 
+ files, plus routines which did not meet the Standards and Conventions 
+ Committee (SACC) guidelines.
+  
+ The pre-init will check for outdated entries in the following two files 
+ and delete them. The count of deleted entries will be displayed for each
+ file.
+  
+    Some sites have residual data in the MH SCALEGROUPS file (#601.86);
+    the faulty entries have SCALEGROUPNAME equal to "RPCBroker1".
+  
+    The MH SCALES file (#601.87) may have entries with residual data; 
+    the faulty entries have SCALE NAME equal to "R1 Scale".
+  
+ One print template, YSJOB, is deleted. YSJOB is associated with the JOB
+ BANK file (#624).
+  
+ One input template, YSCEN UNIT DEF, is deleted. YSCEN UNIT DEF is
+ associated with the MENTAL HEALTH CENSUS file (#618).
+   
+ One protocol, YS PATIENT MOVEMENT, is deleted. The text for this protocol
+ is "MHS PATIENT MOVEMENT".
+  
+ One help frame, YS-PHY-EXAM-NORM, is updated. The header for this help
+ frame is "IS THE PHYSICAL EXAM NORMAL".  It was invoked by the YSPHY
+ routine, which is deleted by this patch.  The INVOKED BY ROUTINE
+ relationship has been removed. 
+  
+ The post-init will check the entries in the MH REPORT file (#601.93)
+ and remove any control characters.
+  
+ The following data dictionaries and their data are deleted by the routines
+ YS60PRE and YS60POST using the supported VA FileMan API EN^DIU2.
+   1. MENTAL HEALTH SITE PARAMETERS (#602)
+       Global: ^YSA(602)
+   2. MH TEXT (#605)
+       Global: ^YTX
+   3. JOB BANK (#624)
+       Global: ^YSG("JOB")
+      The data for this file is copied into the ^XTMP("YS*5.01*60") global
+      with an expiration date of 90 days. After that, the data will be
+      deleted from the ^XTMP global.
+   4. DSM CONVERSION (#627.99)
+       Global: ^YSD(627.99)
+   5. YSEXPERT (#628)
+       Global: ^YS(628)
+  
+ The values for "DD","RD","WR","DEL","LAYGO", and "AUDIT" access are
+ set to "@" for the following files:
+  
+   1. MEDICAL RECORD (#90)
+       Global: ^MR
+   2. PT. TEXT (#99)
+       Global: ^PTX
+   3. CRISIS NOTE DISPLAY (#600.7)
+       Global: ^YSG("CNT")
+   4. MH CLINICAL FILE (#615)
+       Global: ^YS(615)
+   5. MH WAIT LIST (#617)
+       Global: ^YSG("WAIT")
+   6. MENTAL HEALTH CENSUS (#618)
+       Global: ^YSG("CEN")
+   7. MENTAL HEALTH TEAM (#618.2)
+       Global: ^YSG("SUB")
+   8. MENTAL HEALTH INPT (#618.4)
+       Global: ^YSG("INP")
+   9. PROBLEM (#620)
+       Global: ^DIC(620)
+   10. INDICATOR (#625)
+       Global: ^DIC(625)
+  
+  Options to be deleted by KIDS:
+    1. YS SITE-FILE 16 - SIGNATURE....Edit Signature Block Title
+    2. YS SITE-FILE 602 TEST LIM - INSTRUMENT...Edit Instrument Restart Day Limit
+    3. YS SITE-FILE 602 WWU - WWU..........Edit Weighted Work Unit (WWU)
+    4. YSADMTEST - Psychological tests/interviews (administer)
+    5. YSAPROB - Add a new problem
+    6. YSAS CASE FINDER - ASI Case Finder
+    7. YSAS FOLLOWUP FINDER - ASI Followup Finder
+    8. YSCENCAD - Cancel a MH Census Discharge
+    9. YSCENCL - Custom List
+   10. YSCENCRISIS - Crisis notes and Messages
+   11. YSCENDAYHX - Previous Admissions by Date
+   12. YSCENDCDOC - Discharge Comments Entry
+   13. YSCENDIA - Active Diagnoses
+   14. YSCENED - Enter/Edit Current Inpatient Data
+   15. YSCENEDM - Enter/Edit MH Inpatient Data
+   16. YSCENFS - Census
+   17. YSCENGED - Group Data Entry/Edit
+   18. YSCENIL - Individual Patient List
+   19. YSCENLOS - Current Inpatient Days
+   20. YSCENMAIN - Inpatient Features
+   21. YSCENMEDS - Outpatient Medications
+   22. YSCENMGR - Inpatient Features management functions
+   23. YSCENNAM - Name Search
+   24. YSCENNEW - Recent Admissions
+   25. YSCENPAHX - Individual Data Look Up
+   26. YSCENPASS - Pass/Last Transfer List
+   27. YSCENPL - Patient Lists
+   28. YSCENPP - Patient Profile Data
+   29. YSCENREM - Graph of Patients Remaining
+   30. YSCENROT - Rotation of Teams
+   31. YSCENSL - Short Patient List
+   32. YSCENSUBUP - Team Definition
+   33. YSCENTAH - Team Admissions Record
+   34. YSCENTCEN - Team Census
+   35. YSCENTESTING - Psychological Tests and Interviews
+   36. YSCENTMHX - Ward/Team History - LOS, DRG and DXLS
+   37. YSCENTPTE - Treatment Plan Tracking data entry
+   38. YSCENTPTP - Treatment Plan Tracking Report
+   39. YSCENUNITUP - Ward Definition
+   40. YSCENUNT - Group Data Lookup
+   41. YSCENWDM - Statistics
+   42. YSCENWL - Work List
+   43. YSCLERK - Clerk-entered tests
+   44. YSCOMMENT - Append comments to tests and interviews
+   45. YSCRISNOT - Crisis note
+   46. YSDECTREES-R - Decision Tree Shell
+   47. YSDIRTEST - Staff entry of tests/interviews
+   48. YSEPROB - Edit a problem
+   49. YSEXTESTS - Exempt psychological tests
+   50. YSFPROB - Formulate new problem list
+   51. YSGAF CASE FINDER - GAF Case Finder
+   52. YSHX1 - History - present illness
+   53. YSHXPAST - Past medical history
+   54. YSHXPASTR - Past medical history (results of pt. report)
+   55. YSINST RESTART LIMIT - Edit Instrument Restart Limit
+   56. YSIPROB - Inactivate an active problem
+   57. YSJOBINQ - Inquire to job bank
+   58. YSJOBKILL - Purge job bank
+   59. YSJOBLIST - Search job bank
+   60. YSJOBUPDATE - Update job bank
+   61. YSMANAGEMENT - General Management
+   62. YSMLST - List Tests & Interviews
+   63. YSMOVP - Move crisis notes and messages
+   64. YSPATMSG - Patient message
+   65. YSPATPROF - Profile of patient
+   66. YSPERSHX - Psychosocial history
+   67. YSPERSHXR - Psychosocial history (results of pt. report)
+   68. YSPHYEXAM - Physical exam
+   69. YSPLDX - DSM Diagnosis (Problem list)
+   70. YSPLPDX - ICD9 Diagnosis (Problem list)
+   71. YSPPROB - Print the problem list
+   72. YSPRINT - Tests and interviews (results)
+   73. YSPROBLIST - Problem list
+   74. YSPTINSTRU - Patient-administered Instruments
+   75. YSRAPROB - Reactivate an inactive problem
+   76. YSREVSYS - Review of systems
+   77. YSREVSYSR - Review of systems (results of pt. report)
+   78. YSRFPROB - Reformulate a problem
+   79. YSRSPROB - Resolve a problem
+   80. YSTESTBAT - Test battery utility
+   81. YSVOCATIONAL - Vocational Rehabilitation
+   82. YSWAITCR - Create/edit wait lists
+   83. YSWAITE - Add patient to wait list
+   84. YSWAITEDI - Edit patient list data
+   85. YSWAITLST - Wait lists
+   86. YSWAITP - Print wait list
+   87. YSWAITREM - Remove patient from list
+   88. YSWAITSHUF - Move patient on list
+   89. YT SF36 HEALTH SURVEY - SF-36 Health Survey
+  
+  The following routines are updated by, or are part of, this patch:
+  
+ YS60POST  YS60PRE  YSASNAR  YSASPNT  YSCEN13  YSCEN5    YSDX3     
+ YSDX3UA   YSDXR    YSGAF3   YSLOCN   YSLRP    YSMHMENU  YSSITE 
+ YSSR      YSSR1    YSSR2    YSSRU    YTAPI7   YTMCMI2B  YTMCMI2C  
+ YTMMPI2   YTONLY   YTRPWRP  YTS
+  
+ The following is a complete list of routines deleted with this patch. 
+ Also listed are the updated routines with their new checksums:
+     1. YS03ENV        **delete at site**
+     2. YS04ENV        **delete at site**
+     3. YS04POST       **delete at site**
+     4. YS05ENV        **delete at site**
+     5. YS05POST       **delete at site**
+     6. YS06ENV        **delete at site**
+     7. YS23ENV        **delete at site**
+     8. YS23POST       **delete at site**
+     9. YS24ENV        **delete at site**
+    10. YS24POST       **delete at site**
+    11. YS26ENV        **delete at site**
+    12. YS29ENV        **delete at site**
+    13. YS30ENV        **delete at site**
+    14. YS30PRE        **delete at site**
+    15. YS32ENV        **delete at site**
+    16. YS33ENV        **delete at site**
+    17. YS37ENV        **delete at site**
+    18. YS38ENV        **delete at site**
+    19. YS38POST       **delete at site**
+    20. YS39POST       **delete at site**
+    21. YS42ENV        **delete at site**
+    22. YS43POST       **delete at site**
+    23. YS501100       **delete at site**
+    24. YS501P82       **delete at site**
+    25. YS501P83       **delete at site**
+    26. YS60POST         B7070768
+    27. YS60PRE          B9642192
+    28. YS85POST       **delete at site**
+    29. YS85PRE        **delete at site**
+    30. YS96POST       **delete at site**
+    31. YS97POST       **delete at site**
+    32. YSANTEG        **delete at site**
+    33. YSAPOST        **delete at site**
+    34. YSASCF         **delete at site**
+    35. YSASNAR          B38698089
+    36. YSASPNT          B10291993
+    37. YSCEN          **delete at site**
+    38. YSCEN1         **delete at site**
+    39. YSCEN10        **delete at site**
+    40. YSCEN13          B982218
+    41. YSCEN14        **delete at site**
+    42. YSCEN2         **delete at site**
+    43. YSCEN21        **delete at site**
+    44. YSCEN22        **delete at site**
+    45. YSCEN23        **delete at site**
+    46. YSCEN24        **delete at site**
+    47. YSCEN26        **delete at site**
+    48. YSCEN3         **delete at site**
+    49. YSCEN31        **delete at site**
+    50. YSCEN32        **delete at site**
+    51. YSCEN33        **delete at site**
+    52. YSCEN34        **delete at site**
+    53. YSCEN35        **delete at site**
+    54. YSCEN36        **delete at site**
+    55. YSCEN37        **delete at site**
+    56. YSCEN39        **delete at site**
+    57. YSCEN4         **delete at site**
+    58. YSCEN41        **delete at site**
+    59. YSCEN5           B5014852
+    60. YSCEN51        **delete at site**
+    61. YSCEN52        **delete at site**
+    62. YSCEN53        **delete at site**
+    63. YSCEN54        **delete at site**
+    64. YSCEN55        **delete at site**
+    65. YSCEN56        **delete at site**
+    66. YSCEN6         **delete at site**
+    67. YSCEN61        **delete at site**
+    68. YSCEN7         **delete at site**
+    69. YSCEN8         **delete at site**
+    70. YSCEN81        **delete at site**
+    71. YSCPAF         **delete at site**
+    72. YSCPAG         **delete at site**
+    73. YSCPAI         **delete at site**
+    74. YSCPAK         **delete at site**
+    75. YSCPAL         **delete at site**
+    76. YSCPAM         **delete at site**
+    77. YSCPAQ         **delete at site**
+    78. YSCUP          **delete at site**
+    79. YSCUP000       **delete at site**
+    80. YSCUP001       **delete at site**
+    81. YSCUP002       **delete at site**
+    82. YSCUP003       **delete at site**
+    83. YSCUP004       **delete at site**
+    84. YSD40030       **delete at site**
+    85. YSD40031       **delete at site**
+    86. YSD40032       **delete at site**
+    87. YSD40040       **delete at site**
+    88. YSD40041       **delete at site**
+    89. YSD40042       **delete at site**
+    90. YSD40050       **delete at site**
+    91. YSD40051       **delete at site**
+    92. YSD40052       **delete at site**
+    93. YSD40060       **delete at site**
+    94. YSD40061       **delete at site**
+    95. YSD40062       **delete at site**
+    96. YSD4C000       **delete at site**
+    97. YSD4CK00       **delete at site**
+    98. YSD4DSM        **delete at site**
+    99. YSD4E010       **delete at site**
+   100. YSD4E020       **delete at site**
+   101. YSD4POS0       **delete at site**
+   102. YSD4POST       **delete at site**
+   103. YSD4PRE        **delete at site**
+   104. YSD4PRE0       **delete at site**
+   105. YSD4UT01       **delete at site**
+   106. YSDX0001       **delete at site**
+   107. YSDX0002       **delete at site**
+   108. YSDX3            B10581455
+   109. YSDX3UA          B17115146
+   110. YSDXR             B3156016
+   111. YSDXR000       **delete at site**
+   112. YSDXR1         **delete at site**
+   113. YSEMSG         **delete at site**
+   114. YSESA          **delete at site**
+   115. YSESD          **delete at site**
+   116. YSESE          **delete at site**
+   117. YSESED         **delete at site**
+   118. YSESH          **delete at site**
+   119. YSESL          **delete at site**
+   120. YSESLOG        **delete at site**
+   121. YSESM          **delete at site**
+   122. YSESN          **delete at site**
+   123. YSESP          **delete at site**
+   124. YSESR          **delete at site**
+   125. YSESUT         **delete at site**
+   126. YSGAF3              B95532
+   127. YSHELP         **delete at site**
+   128. YSHX1          **delete at site**
+   129. YSHX1R         **delete at site**
+   130. YSJOB          **delete at site**
+   131. YSJOBK         **delete at site**
+   132. YSKFASI1       **delete at site**
+   133. YSKFASI2       **delete at site**
+   134. YSKFASIF       **delete at site**
+   135. YSKFASIM       **delete at site**
+   136. YSLOCN            B1428676
+   137. YSLRP              B836128
+   138. YSMHMENU           B571680
+   139. YSMV           **delete at site**
+   140. YSMV1          **delete at site**
+   141. YSNTEG         **delete at site**
+   142. YSNTEG0        **delete at site**
+   143. YSONIT         **delete at site**
+   144. YSONIT1        **delete at site**
+   145. YSONIT2        **delete at site**
+   146. YSONIT3        **delete at site**
+   147. YSPDR1         **delete at site**
+   148. YSPDXR         **delete at site**
+   149. YSPHY          **delete at site**
+   150. YSPHY1         **delete at site**
+   151. YSPHYR         **delete at site**
+   152. YSPP           **delete at site**
+   153. YSPP1          **delete at site**
+   154. YSPP1A         **delete at site**
+   155. YSPP2          **delete at site**
+   156. YSPP3          **delete at site**
+   157. YSPP4          **delete at site**
+   158. YSPP5          **delete at site**
+   159. YSPP6          **delete at site**
+   160. YSPP7          **delete at site**
+   161. YSPP8          **delete at site**
+   162. YSPP9          **delete at site**
+   163. YSPPJ          **delete at site**
+   164. YSPRBR1        **delete at site**
+   165. YSPRBR2        **delete at site**
+   166. YSPROB         **delete at site**
+   167. YSPROB1        **delete at site**
+   168. YSPROB2        **delete at site**
+   169. YSPROB3        **delete at site**
+   170. YSPROB4        **delete at site**
+   171. YSPROB5        **delete at site**
+   172. YSPROBR        **delete at site**
+   173. YSPROBR1       **delete at site**
+   174. YSPROSE        **delete at site**
+   175. YSPTX          **delete at site**
+   176. YSPTX1         **delete at site**
+   177. YSPTXR         **delete at site**
+   178. YSSITE            B3477669
+   179. YSSR             B31889856
+   180. YSSR1            B21510369
+   181. YSSR2             B7632392
+   182. YSSRU            B20557028
+   183. YSWX           **delete at site**
+   184. YSWX1          **delete at site**
+   185. YSWZ           **delete at site**
+   186. YSXRAF         **delete at site**
+   187. YSXRAF1        **delete at site**
+   188. YSXRAF2        **delete at site**
+   189. YSXRAF3        **delete at site**
+   190. YSXRAF4        **delete at site**
+   191. YSXRAF5        **delete at site**
+   192. YSXRAF6        **delete at site**
+   193. YSXRAG         **delete at site**
+   194. YSXRAG1        **delete at site**
+   195. YSXRAG2        **delete at site**
+   196. YSXRBA         **delete at site**
+   197. YSXRBA1        **delete at site**
+   198. YSXRBA2        **delete at site**
+   199. YSXRBA3        **delete at site**
+   200. YSXRBA4        **delete at site**
+   201. YSXRBA5        **delete at site**
+   202. YSXRBA6        **delete at site**
+   203. YTAPI7           B16428780
+   204. YTEX           **delete at site**
+   205. YTMCMI2B         B14715804
+   206. YTMCMI2C         B21611132
+   207. YTMMPI2          B20251423
+   208. YTONLY           B29076478
+   209. YTQQI001       **delete at site**
+   210. YTQQI002       **delete at site**
+   211. YTQQI003       **delete at site**
+   212. YTQQI004       **delete at site**
+   213. YTQQI005       **delete at site**
+   214. YTQQI006       **delete at site**
+   215. YTQQI007       **delete at site**
+   216. YTQQI008       **delete at site**
+   217. YTQQI009       **delete at site**
+   218. YTQQI00A       **delete at site**
+   219. YTQQI00B       **delete at site**
+   220. YTQQI00C       **delete at site**
+   221. YTQQI00D       **delete at site**
+   222. YTQQI00E       **delete at site**
+   223. YTQQI00F       **delete at site**
+   224. YTQQI00G       **delete at site**
+   225. YTQQI00H       **delete at site**
+   226. YTQQI00I       **delete at site**
+   227. YTQQI00J       **delete at site**
+   228. YTQQI00K       **delete at site**
+   229. YTRPWRP          B16819326
+   230. YTS              B16658002
+   231. YTTB           **delete at site*
+     
+ Remedy Tickets & Overview:
+ ==========================
+   HD0000000472509 - Global ^YTT contains control characters
+   HD0000000473325 - Control Characters in YTT global
+         These two tickets are addressed by the post-init.
+  
+  New Service Request (NSR's):
+  ============================
+    N/A
+  
+  Patient Safety Issues (PSI's):
+  =============================
+    N/A
+  
+  Test Site(s):
+  ===========
+  Atlanta, GA VAMC
+  Durham, NC VAMC
+  Hines, IL VAMC
+  VA New Jersey HCS (Lyons, NJ)
+  Upstate New York HCS (Albany, NY)
+  
+  Software Retrieval:
+  ===================
+  
+  The following software and documentation files are available in the
+  YS_501_60.ZIP file. Use the Binary format when downloading it.
+  It includes:
+  
+   File Name                      Contents                         Format
+   ---------                      --------                         ------
+   YS_501_60.KID                  YS*5.01*60                       ASCII
+                                  GMTS*2.7*102
+   YS_501_60_GMTS_2_7_102_RN.PDF  YS_MHA3 Release Notes            Binary
+   YS_501_60_GMTS_2_7_102_RN.DOC  YS_MHA3 Release Notes            Binary
+   YS_501_60_MH_TM_SG.PDF         Mental Health and Mental Health 
+                                  Assistant Version 3 Technical
+                                  Manual and Security Guide        Binary
+   YS_501_60_MH_TM_SG.DOC         Mental Health and Mental Health 
+                                  Assistant Version 3 Technical
+                                  Manual and Security Guide        Binary
+   HSUM_2_7_102_TM.PDF            Health Summary Technical Manual  Binary
+   HSUM_2_7_102_TM.DOC            Health Summary Technical Manual  Binary
+   HSUM_2_7_102_UM.PDF            Health Summary User Manual       Binary
+   HSUM_2_7_102_UM.DOC            Health Summary User Manual       Binary
+  
+  The software files are available on the following OI Field Offices'
+  ANONYMOUS.SOFTWARE directories.
+  
+  All sites are encouraged to use their FTP capability to obtain these
+  files.  Use the FTP address "download.vista.med.va.gov" (without the
+  quotes) to connect to the first available FTP server where the files
+  are located.
+  
+  OI Field Office    FTP Location                Directory
+  ===============    ============                =========
+  ALBANY             ftp.fo-albany.med.va.gov   [ANONYMOUS.SOFTWARE]
+  HINES              ftp.fo-hines.med.va.gov    [ANONYMOUS.SOFTWARE]
+  SALT LAKE          ftp.fo-slc.med.va.gov      [ANONYMOUS.SOFTWARE]
+  
+   Documentation can also be found on the VA Software Documentation Library
+   (VDL) at:  http://www4.va.gov/vdl/
+  
+  
+  Installation Instructions:
+  ==========================
+  
+  *** NOTE: DO NOT QUEUE THE INSTALLATION OF THIS PATCH. ***
+            You are prompted for some information during the install
+            process.
+  
+    1. Use the 'LOAD A DISTRIBUTION' option. 
+       The Host File name is YS_501_60.KID.
+     
+    2. The patch has now been loaded into a Transport global on your
+       system.
+       [Optional] On the KIDS menu, under the 'Installation' menu, use the
+       following options:
+   
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Backup a Transport Global
+   
+    3. Users may remain on the system, but installation should be done
+       at off-peak hours.
+   
+    4. Installation will take less than ten minutes
+       (rebuilding the Menu Trees will add to this, see note below).
+  
+    5. From the 'Installation Menu' of the KIDS menu, run the option
+       'Install Package(s)' and enter YS*5.01*60. 
+       Proceed with the installation.
+   
+    6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       YES//', respond NO.
+  
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? 
+       NO//, respond NO
+  
+       Want KIDS to Rebuild Menu Trees Upon Completion of Install? YES//,
+       respond YES
+   
+ When prompted 'When rebuilding the Health Summary Adhoc Report, do you
+ want to include disabled components? ', respond with either YES to include
+ disabled components or NO to exclude disabled components.
+  
+ If prompted 'Select the recipient(s) of the report below. Send mail to: ',
+ respond with the recipients or mail groups to send the PATCH GMTS*2.7*102
+ REPORT to; as a courtesy, the installer should include the site's local
+ clinical application coordinators (CACs).
+  
+ Also, the rebuilding of Menu Trees is recommended since menu options are
+ deleted. Rebuilding the Menu Trees will increase the time needed to
+ install this build.  It is recommended that the rebuilding be done at
+ installation, unless your site policy prohibits this.  If you choose to
+ not rebuild the Menu Trees immediately then it should be queued to run at
+ the earliest opportunity.
+  
+ The installation feedback listed below is an example.  The text displayed 
+ at your site WILL differ.
+   
+  Installation:
+  =============
+   
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+   
+  Select Installation Option: 1  Load a Distribution
+  Enter a Host File: SYS$:[DIRECTORY]YS_501_60.KID
+  
+  KIDS Distribution saved on Jul 25, 2012@10:10:27
+  Comment: YS*5.01*60 & GMTS*2.7*102
+  
+  This Distribution contains Transport Globals for the following
+  Package(s):
+  
+    YS*5.01*60
+    GMTS*2.7*102
+  
+  Distribution OK!
+  
+  Want to Continue with Load? YES//
+  Loading Distribution...
+  
+    YS*5.01*60
+    GMTS*2.7*102
+    
+  Use INSTALL NAME: YS*5.01*60 to install this Distribution.
+    
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+    
+  Select Installation Option: 6  Install Package(s)
+  Select INSTALL NAME: YS*5.01*60      7/25/12@10:22:01
+       => YS*5.01*60 & GMTS*2.7*102  ;Created on Jul 25, 2012@10:10:27
+    
+  This Distribution was loaded on Jul 25, 2012@10:22:01 with header of
+     YS*5.01*60 & GMTS*2.7*102  ;Created on Jul 25, 2012@10:10:27
+     It consisted of the following Install(s):
+       YS*5.01*60   GMTS*2.7*102
+  Checking Install for Package YS*5.01*60
+  
+  Install Questions for YS*5.01*60
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? YES//
+  
+  Checking Install for Package GMTS*2.7*102
+  
+  Install Questions for GMTS*2.7*102
+  
+  When rebuilding the Health Summary Adhoc Report,
+  do you want to include disabled components? NO
+  
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+  Enter the Device you want to print the Install messages.
+  You can queue the install by enter a 'Q' at the device prompt.
+  Enter a '^' to abort the install.
+  
+  DEVICE: HOME//   TELNET
+  
+  Install Started for YS*5.01*60 : 
+                Jul 25, 2012@10:22:41
+  
+ Build Distribution Date: Jul 25, 2012
+  
+  Installing Routines:
+                Jul 25, 2012@10:22:41
+  
+  Running Pre-Install Routine: ^YS60PRE
+ File entry deletion started Jul 25, 2012@10:22:42
+   Deleting entries for ^YTX(
+  Deleted 3 entries
+   Deleting entries for ^YSD(627.99,
+  Deleted Zero entries
+   Deleting entries for ^YS(628,
+  Deleted Zero entries
+ File entry deletion finished Jul 25, 2012@10:22:42
+ Deleted 5 entries in MH SCALEGROUPS File (#601.86)
+ Deleted 2 entries in MH SCALES File (#601.87)
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing HELP FRAME
+  
+  Installing PRINT TEMPLATE
+  
+  Installing INPUT TEMPLATE
+  
+  Installing PROTOCOL
+  
+  Installing REMOTE PROCEDURE
+  
+  Installing OPTION
+                Jul 25, 2012@10:22:43
+  
+  Running Post-Install Routine: ^YS60POST
+ File deletion started Jul 25, 2012@10:22:43
+ Deleted 0 entries from ^YSG("ERR")
+ File deletion finished Jul 25, 2012@10:22:45
+ Updating DD access Jul 25, 2012@10:22:45
+ Updated the DD for file #90
+ Updated the DD for file #99
+ Updated the DD for file #615
+ Updated the DD for file #600.7
+ Updated the DD for file #617
+ Updated the DD for file #618
+ Updated the DD for file #618.4
+ Updated the DD for file #620
+ Updated the DD for file #625
+ Checking entries in file 601.93 Jul 25, 2012@10:22:45
+ Done checking file 601.93 Jul 25, 2012@10:22:45
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  YS*5.01*60 Installed. 
+                Jul 25, 2012@10:22:45
+  
+ Install Started for GMTS*2.7*102 :                Jul 25, 2012@10:22:45
+  
+ Build Distribution Date: Jul 25, 2012
+  
+  Installing Routines:               Jul 25, 2012@10:22:45
+  
+  Running Pre-Install Routine: PRE^GMTSP102
+  
+ Deactivating the MENTAL HEALTH PHYSICAL EXAM component...
+ DONE
+  
+  Rebuilding Ad Hoc Summary..................................................
+  Done
+  
+  Running Post-Install Routine: POST^GMTSP102
+  
+ Select the recipient(s) of the report below.
+ Send mail to: IRM,ONE// IRM,ONE
+ Select basket to send to: IN//
+ And Send to:
+  
+ Finished assembling the usage report.
+  
+  Updating Routine file...
+  
+  Updating KIDS files..
+  
+  GMTS*2.7*102 Installed.                Jul 25, 2012@10:23
+  
+  Call MENU rebuild
+ Starting Menu Rebuild:  Jul 25, 2012@10:23
+  
+ Collecting primary menus in the New Person file...
+  
+                     Primary menus found in the New Person file
+                     ------------------------------------------
+  
+ OPTION NAME         MENU TEXT                    # OF         LAST     LAST
+                                                  USERS        USED     BUILT
+    .
+    .
+    .
+ Building secondary menu trees....
+  
+ Merging.... done.
+  
+ Menu Rebuild Complete:  Jul 25, 2012@10:23:11
+  
+ Install Completed
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS03ENV
+Routine Name: YS04ENV
+Routine Name: YS04POST
+Routine Name: YS05ENV
+Routine Name: YS05POST
+Routine Name: YS06ENV
+Routine Name: YS23ENV
+Routine Name: YS23POST
+Routine Name: YS24ENV
+Routine Name: YS24POST
+Routine Name: YS26ENV
+Routine Name: YS29ENV
+Routine Name: YS30ENV
+Routine Name: YS30PRE
+Routine Name: YS32ENV
+Routine Name: YS33ENV
+Routine Name: YS37ENV
+Routine Name: YS38ENV
+Routine Name: YS38POST
+Routine Name: YS39POST
+Routine Name: YS42ENV
+Routine Name: YS43POST
+Routine Name: YS501100
+Routine Name: YS501P82
+Routine Name: YS501P83
+Routine Name: YS60POST
+    Before:       n/a   After:  B7070768  **60**
+Routine Name: YS60PRE
+    Before:       n/a   After:  B9642192  **60**
+Routine Name: YS85POST
+Routine Name: YS85PRE
+Routine Name: YS96POST
+Routine Name: YS97POST
+Routine Name: YSANTEG
+Routine Name: YSAPOST
+Routine Name: YSASCF
+Routine Name: YSASNAR
+    Before: B39846642   After: B38698089  **24,30,37,38,44,55,67,76,103,60**
+Routine Name: YSASPNT
+    Before:  B9930691   After: B10291993  **39,73,88,60**
+Routine Name: YSCEN
+Routine Name: YSCEN1
+Routine Name: YSCEN10
+Routine Name: YSCEN13
+    Before: B22990980   After:   B982218  **52,60**
+Routine Name: YSCEN14
+Routine Name: YSCEN2
+Routine Name: YSCEN21
+Routine Name: YSCEN22
+Routine Name: YSCEN23
+Routine Name: YSCEN24
+Routine Name: YSCEN26
+Routine Name: YSCEN3
+Routine Name: YSCEN31
+Routine Name: YSCEN32
+Routine Name: YSCEN33
+Routine Name: YSCEN34
+Routine Name: YSCEN35
+Routine Name: YSCEN36
+Routine Name: YSCEN37
+Routine Name: YSCEN39
+Routine Name: YSCEN4
+Routine Name: YSCEN41
+Routine Name: YSCEN5
+    Before: B14850598   After:  B5014852  **60**
+Routine Name: YSCEN51
+Routine Name: YSCEN52
+Routine Name: YSCEN53
+Routine Name: YSCEN54
+Routine Name: YSCEN55
+Routine Name: YSCEN56
+Routine Name: YSCEN6
+Routine Name: YSCEN61
+Routine Name: YSCEN7
+Routine Name: YSCEN8
+Routine Name: YSCEN81
+Routine Name: YSCPAF
+Routine Name: YSCPAG
+Routine Name: YSCPAI
+Routine Name: YSCPAK
+Routine Name: YSCPAL
+Routine Name: YSCPAM
+Routine Name: YSCPAQ
+Routine Name: YSCUP
+Routine Name: YSCUP000
+Routine Name: YSCUP001
+Routine Name: YSCUP002
+Routine Name: YSCUP003
+Routine Name: YSCUP004
+Routine Name: YSD40030
+Routine Name: YSD40031
+Routine Name: YSD40032
+Routine Name: YSD40040
+Routine Name: YSD40041
+Routine Name: YSD40042
+Routine Name: YSD40050
+Routine Name: YSD40051
+Routine Name: YSD40052
+Routine Name: YSD40060
+Routine Name: YSD40061
+Routine Name: YSD40062
+Routine Name: YSD4C000
+Routine Name: YSD4CK00
+Routine Name: YSD4DSM
+Routine Name: YSD4E010
+Routine Name: YSD4E020
+Routine Name: YSD4POS0
+Routine Name: YSD4POST
+Routine Name: YSD4PRE
+Routine Name: YSD4PRE0
+Routine Name: YSD4UT01
+Routine Name: YSDX0001
+Routine Name: YSDX0002
+Routine Name: YSDX3
+    Before: B16999969   After: B10581455  **33,60**
+Routine Name: YSDX3UA
+    Before: B18903332   After: B17115146  **96,60**
+Routine Name: YSDXR
+    Before: B15093339   After:  B3156016  **60**
+Routine Name: YSDXR000
+Routine Name: YSDXR1
+Routine Name: YSEMSG
+Routine Name: YSESA
+Routine Name: YSESD
+Routine Name: YSESE
+Routine Name: YSESED
+Routine Name: YSESH
+Routine Name: YSESL
+Routine Name: YSESLOG
+Routine Name: YSESM
+Routine Name: YSESN
+Routine Name: YSESP
+Routine Name: YSESR
+Routine Name: YSESUT
+Routine Name: YSGAF3
+    Before: B37834673   After:    B95532  **48,49,60**
+Routine Name: YSHELP
+Routine Name: YSHX1
+Routine Name: YSHX1R
+Routine Name: YSJOB
+Routine Name: YSJOBK
+Routine Name: YSKFASI1
+Routine Name: YSKFASI2
+Routine Name: YSKFASIF
+Routine Name: YSKFASIM
+Routine Name: YSLOCN
+    Before:  B1578530   After:  B1428676  **70,60**
+Routine Name: YSLRP
+    Before:  B7960212   After:   B836128  **60**
+Routine Name: YSMHMENU
+    Before:  B1335369   After:   B571680  **60**
+Routine Name: YSMV
+Routine Name: YSMV1
+Routine Name: YSNTEG
+Routine Name: YSNTEG0
+Routine Name: YSONIT
+Routine Name: YSONIT1
+Routine Name: YSONIT2
+Routine Name: YSONIT3
+Routine Name: YSPDR1
+Routine Name: YSPDXR
+Routine Name: YSPHY
+Routine Name: YSPHY1
+Routine Name: YSPHYR
+Routine Name: YSPP
+Routine Name: YSPP1
+Routine Name: YSPP1A
+Routine Name: YSPP2
+Routine Name: YSPP3
+Routine Name: YSPP4
+Routine Name: YSPP5
+Routine Name: YSPP6
+Routine Name: YSPP7
+Routine Name: YSPP8
+Routine Name: YSPP9
+Routine Name: YSPPJ
+Routine Name: YSPRBR1
+Routine Name: YSPRBR2
+Routine Name: YSPROB
+Routine Name: YSPROB1
+Routine Name: YSPROB2
+Routine Name: YSPROB3
+Routine Name: YSPROB4
+Routine Name: YSPROB5
+Routine Name: YSPROBR
+Routine Name: YSPROBR1
+Routine Name: YSPROSE
+Routine Name: YSPTX
+Routine Name: YSPTX1
+Routine Name: YSPTXR
+Routine Name: YSSITE
+    Before:  B6427325   After:  B3477669  **60**
+Routine Name: YSSR
+    Before: B26878218   After: B31889856  **82,60**
+Routine Name: YSSR1
+    Before: B19626927   After: B21510369  **82,60**
+Routine Name: YSSR2
+    Before:  B7230831   After:  B7632392  **60**
+Routine Name: YSSRU
+    Before: B20772673   After: B20557028  **60**
+Routine Name: YSWX
+Routine Name: YSWX1
+Routine Name: YSWZ
+Routine Name: YSXRAF
+Routine Name: YSXRAF1
+Routine Name: YSXRAF2
+Routine Name: YSXRAF3
+Routine Name: YSXRAF4
+Routine Name: YSXRAF5
+Routine Name: YSXRAF6
+Routine Name: YSXRAG
+Routine Name: YSXRAG1
+Routine Name: YSXRAG2
+Routine Name: YSXRBA
+Routine Name: YSXRBA1
+Routine Name: YSXRBA2
+Routine Name: YSXRBA3
+Routine Name: YSXRBA4
+Routine Name: YSXRBA5
+Routine Name: YSXRBA6
+Routine Name: YTAPI7
+    Before: B14685979   After: B16428780  **71,60**
+Routine Name: YTEX
+Routine Name: YTMCMI2B
+    Before: B14589250   After: B14715804  **60**
+Routine Name: YTMCMI2C
+    Before: B21487673   After: B21611132  **60**
+Routine Name: YTMMPI2
+    Before: B20085337   After: B20251423  **60**
+Routine Name: YTONLY
+    Before: B27562940   After: B29076478  **19,37,60**
+Routine Name: YTQQI001
+Routine Name: YTQQI002
+Routine Name: YTQQI003
+Routine Name: YTQQI004
+Routine Name: YTQQI005
+Routine Name: YTQQI006
+Routine Name: YTQQI007
+Routine Name: YTQQI008
+Routine Name: YTQQI009
+Routine Name: YTQQI00A
+Routine Name: YTQQI00B
+Routine Name: YTQQI00C
+Routine Name: YTQQI00D
+Routine Name: YTQQI00E
+Routine Name: YTQQI00F
+Routine Name: YTQQI00G
+Routine Name: YTQQI00H
+Routine Name: YTQQI00I
+Routine Name: YTQQI00J
+Routine Name: YTQQI00K
+Routine Name: YTRPWRP
+    Before:  B8620690   After: B16819326  **71,76,96,60**
+Routine Name: YTS
+    Before: B16675759   After: B16658002  **37,54,60**
+Routine Name: YTTB
+ 
+Routine list of preceding patches: 33, 49, 52, 54, 70, 82, 88, 96, 103
+
+=============================================================================
+User Information:
+Entered By  : DEVLIN,MARK J                 Date Entered  : JAN 28, 2000
+Completed By: ELIJAH,VICKEY                 Date Completed: SEP 20, 2012
+Released By : VANCAMP,E PHILIP              Date Released : OCT 15, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

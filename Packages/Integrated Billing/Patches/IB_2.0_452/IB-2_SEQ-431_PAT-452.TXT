@@ -1,0 +1,513 @@
+
+=============================================================================
+Run Date: FEB 16, 2012                     Designation: IB*2*452
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #431                      Status: Released
+                  Compliance Date: MAR 17, 2012
+=============================================================================
+
+Associated patches: (v)IB*2*399    <<= must be installed BEFORE `IB*2*452'
+                    (v)IB*2*432    <<= must be installed BEFORE `IB*2*452'
+                    (v)IB*2*438    <<= must be installed BEFORE `IB*2*452'
+                    (v)IB*2*455    <<= must be installed BEFORE `IB*2*452'
+
+Subject: EPHARMACY PHASE 6
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Input Template
+  - Other
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans
+ Health Information Systems and Technology Architecture (VistA) electronic
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*385
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*452
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*11
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*73
+  
+ The patches (PSO*7*385, IB*2*452, BPS*1*11, and PSX*2*73) are being released 
+ in the Kernel Installation and Distribution System (KIDS) multi-build 
+ distribution BPS PSO IB PSX BUNDLE 7.0.
+  
+ The purpose of this software package is to maintain compliance with 
+ legislative and federal mandates and to address and correct gaps and 
+ inefficiencies in the current electronic pharmacy billing processes.  This 
+ will ultimately increase revenues collected by VA Medical Centers and 
+ outpatient pharmacies by reducing the volume of short pays and payment 
+ denials.
+  
+ All pharmacy claims for payers that are processed electronically are 
+ compliant with the current industry standards.  This software adds support 
+ for the electronic billing of the Health Administration Center (HAC) CHAMPVA 
+ payer in order to provide an automated process and to prevent manual 
+ workarounds for CHAMPVA.
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  1. Add IB support for CHAMPVA ePharmacy insurance and CHAMPVA patient
+     eligibility, and process CHAMPVA ePharmacy prescriptions using the 
+     CHAMPVA rate type.
+  
+  2. Add a new Claims Tracking Reason Not Billable (RNB) for CHAMPVA, 
+     inpatient prescriptions.
+  
+  3. Enhance the ECME Billing Events Report option [IB ECME BILLING EVENTS] as 
+     follows:
+      a. Add patient eligibility (VETERAN, TRICARE, CHAMPVA)
+      b. Display the NCPDP quantity and units when available and also the 
+         Billed quantity and units
+      c. Display a break-out of all fees and costs associated with each 
+         prescription
+      d. Display a break-out of the payer-reported amounts paid in the ECME
+         response for each prescription
+  
+  4. Create a bill in IB and AR when a DUPLICATE ECME response is received and 
+     only when a non-cancelled bill with the same Rx#, fill#, and payer 
+     sequence doesn't already exist.
+  
+  5. Add the display of the ECME# to several existing reports, screens, and 
+     MailMan messages that currently only show the Rx#.
+  
+  6. Add fields and prompts for the Pharmacy Relationship Code and for the 
+     Pharmacy Person Code in both the Process Insurance Buffer [IBCN INSURANCE 
+     BUFFER PROCESS] option and in the Patient Insurance Info View/Edit [IBCN 
+     PATIENT INSURANCE] option.
+  
+  7. Add a new Claims Tracking Reason Not Billable (RNB) for 
+     Auto-Reversals for Inpatient Prescriptions. Previous to this patch, 
+     the RNB for this situation was being filed by the system as OTHER.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                                   New/Modified/
+   Sub-File Name (#)    Field Name (#)                              Deleted
+ -------------------    -------------------                      -------------
+ PATIENT (#2)
+   INSURANCE TYPE sub-file (#2.312)
+                        PHARMACY RELATIONSHIP CODE (#4.05)          New
+                        PHARMACY PERSON CODE (#4.06)                New
+  
+ INSURANCE BUFFER (#355.33)
+                        PHARMACY RELATIONSHIP CODE (#60.15)         New
+                        PHARMACY PERSON CODE (#60.16)               New
+                        
+ PLAN (#366.03)
+                        TYPE (#.05)                                 Modified
+  
+ IB NCPDP EVENT LOG (#366.14)
+   EVENT sub-file (#366.141)
+                        BCID (#.12)                                 Modified
+                        DATE OF SERVICE (#.206)                     Modified
+                        RELEASE DATE (#.207)                        Modified
+                        QTY (#.208)                                 Modified
+                        BILLING UNITS (#.213)                       New
+                        NCPDP QTY (#.214)                           New
+                        NCPDP UNITS (#.215)                         New
+                        COPAY AMOUNT (#.311)                        Modified
+                        INGREDIENT COST PAID (#.312)                New
+                        DISPENSING FEE PAID (#.313)                 New
+                        PATIENT RESPONSIBILITY (INS) (#.314)        New
+                        ELIGIBILITY (#7.05)                         New
+   INSURANCE sub-file (#366.1412)
+                        PHARMACY PERSON CODE (#.09)                 New
+                        INGREDIENT COST (#.206)                     New
+                        USUAL AND CUSTOMARY CHARGE (#.207)          New
+                        PT INSURANCE POLICY (#.304)                 New
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ IBJ EXIT                             Modified
+ IBJT ECME RESP INFO MENU             Modified
+ IBJT VIEW ECME RX                    New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name             Type      File Name (Number)  New/Modified/Deleted
+ -------------             ----      ------------------  --------------------
+ IBCN PATIENT INSURANCE    INPUT     PATIENT (#2)           Modified
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ Request Name: ePharmacy Claims Phase 6 (FY10)
+   Request ID: 20090215
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Birmingham
+ Loma Linda
+ Phoenix
+ Richmond
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from
+ ftp://download.vista.med.va.gov. This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software directly from
+ a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www.va.gov/vdl/
+  
+ Title                                 File Name                     FTP Mode
+ ----------------------------------------------------------------------------
+ IB Release Notes (IB*2.0*452)         IB_2_0_P452_RN.PDF            Binary
+ IB Technical Manual/Security Guide    IB_2_0_P452_TM.PDF            Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is a post-install routine associated with this patch named IBY452PO.
+ The purpose of the post-install routine is to create one new entry in the
+ CLAIMS TRACKING NON-BILLABLE REASONS file (#356.8).  The new entry is named
+ CHAMPVA INPATIENT/DISCHARGE and it is automatically used by the IB billing
+ determination process when processing a CHAMPVA, inpatient prescription.
+ These prescriptions are non-billable.
+  
+ The post-install routine is automatically deleted by the system if allowed by
+ your Kernel site parameters configuration.  You may delete routine 
+ IBY452PO if the installation was successful and it is not automatically 
+ deleted by KIDS.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch should take up to 20 minutes to install.
+  
+ DO NOT QUEUE the installation of this patch.
+  
+ To avoid disruptions, these patches should be installed during non-peak
+ hours when there is minimal activity on the system.  Avoid times when ECME
+ claims are being transmitted.  Of particular concern would be the options
+ below.
+  
+     1. BPS NIGHTLY BACKGROUND JOB [BPS NIGHTLY BACKGROUND JOB]
+        Do not install the patch when ECME claims are being generated
+        by the BPS Nightly Background Job option.  Wait for this job to
+        finish or complete the installation before this job starts.
+  
+     2. Scheduled CS Transmission [PSXR SCHEDULED CS TRANS] and
+        Scheduled Non-CS Transmission [PSXR SCHEDULED NON-CS TRANS]
+        Do not install the patch when prescriptions are being transmitted
+        to CMOP.  Wait for the CMOP transmissions to finish or complete the
+        installation before the transmissions start. Both the CS
+        (Controlled Substances) and the non-CS CMOP transmission options
+        should be checked.  Check with Pharmacy Service or your Pharmacy
+        ADPAC to find out when CMOP transmissions occur.
+  
+  
+               ***** IMPORTANT INSTALLATION NOTES *****
+  
+ This patch bundle is changing the name of File #52.87.  The current name of
+ this file is 'PSO TRICARE AUDIT LOG'.  The new name of this file is 'PSO AUDIT
+ LOG'.  During the patch installation you will see the following information
+ presented to the screen:
+  
+       52.87     PSO AUDIT LOG
+    *BUT YOU ALREADY HAVE 'PSO TRICARE AUDIT LOG' AS FILE #52.87!
+    Shall I write over your PSO TRICARE AUDIT LOG File? YES//
+  
+ Please accept the default answer of YES to this question.
+  
+ You will also be prompted to enter the coordinator for the new BPS CHAMPVA
+ mail group.  Prior to installation, please contact your Medical Care Cost
+ Recovery (MCCR) business department (Facility Revenue Manager) to
+ determine who will be the coordinator for this new mail group.  The users
+ in this mail group will receive bulletins related to the processing of
+ CHAMPVA electronic claims.  After the patch is installed, members can be
+ added to the mail group by using the Mail Group Edit [XMEDITMG] option.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file BPS_1_11_PSO_IB_PSX.KID, which contains the
+     following patches:
+  
+         BPS*1.0*11
+         PSO*7.0*385
+         IB*2.0*452
+         PSX*2.0*73
+  
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+  
+                     download.vista.med.va.gov
+  
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+  
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+  
+      The BPS_1_11_PSO_IB_PSX.KID host file is located in the
+      anonymous.software directory. Use ASCII Mode when downloading the
+      file.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file BPS_1_11_PSO_IB_PSX.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]BPS_1_11_PSO_IB_PSX.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         BPS PSO IB PSX BUNDLE 7.0
+         BPS*1.0*11
+         PSO*7.0*385
+         IB*2.0*452
+         PSX*2.0*73
+       Use INSTALL NAME: BPS PSO IB PSX BUNDLE 7.0 to install this
+       Distribution.
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     BPS PSO IB PSX BUNDLE 7.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the BPS PSO IB PSX BUNDLE 7.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter BPS PSO IB
+         PSX BUNDLE 7.0.
+     c.  When prompted to "Enter the Coordinator for Mail Group 'BPS
+         CHAMPVA':", please respond with the appropriate person.
+     d.  When prompted "Shall I write over your PSO TRICARE AUDIT LOG File?
+         YES//", please accept the default of YES in order to change the name
+         of this file as instructed above.
+     e.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES//", enter YES unless your system does this in a nightly
+         TaskMan process.
+     f.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         YES//", enter NO.
+     g.  When prompted " Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", enter NO.
+     h.  When prompted "Device: HOME//", respond with the correct device 
+         but do not queue this install.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 26
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCC1
+    Before: B52622675   After: B54745451  **19,95,160,159,320,347,377,399,452**
+Routine Name: IBCNBCD
+    Before: B85841141   After: B87228703  **82,251,361,371,416,438,452**
+Routine Name: IBCNBEE
+    Before: B46140166   After: B46620313  **82,184,252,251,356,361,371,
+                                           377,416,438,452**
+Routine Name: IBCNBLE
+    Before: B79037653   After: B85092127  **82,231,184,251,371,416,435,452**
+Routine Name: IBCNBMI
+    Before: B88135696   After: B90850379  **82,184,246,251,299,345,361,
+                                           371,413,416,438,452**
+Routine Name: IBCNRDV
+    Before: B66590171   After: B68041959  **214,231,361,371,452**
+Routine Name: IBCNRE4
+    Before: B31384444   After: B30785687  **251,435,452**
+Routine Name: IBCNSP01
+    Before: B33683555   After: B38322308  **43,52,85,251,371,377,416,452**
+Routine Name: IBJDF5
+    Before: B27507847   After: B27986612  **123,185,240,452**
+Routine Name: IBJDF51
+    Before: B57917669   After: B57886181  **123,185,240,356,452**
+Routine Name: IBJTCA1
+    Before: B52064339   After: B52613599  **39,80,106,137,223,276,363,
+                                           384,432,452**
+Routine Name: IBJTRX
+    Before: B61346654   After: B76083313  **435,452**
+Routine Name: IBJTU6
+    Before:       n/a   After:  B7149148  **452**
+Routine Name: IBNCPDP
+    Before:  B5486206   After:  B5636694  **223,276,363,383,384,411,435,452**
+Routine Name: IBNCPDP1
+    Before:B163143081   After:B197349742  **223,276,339,363,383,405,384,
+                                           411,434,437,435,455,452**
+Routine Name: IBNCPDP2
+    Before: B72289199   After: B83475194  **223,276,342,347,363,383,405,
+                                           384,411,435,452**
+Routine Name: IBNCPDP3
+    Before: B84836012   After: B84831779  **223,276,342,363,383,384,411,
+                                           435,452**
+Routine Name: IBNCPDP4
+    Before: B55438909   After: B55547845  **276,342,405,384,411,435,452**
+Routine Name: IBNCPDP5
+    Before: B76631396   After: B79816493  **411,452**
+Routine Name: IBNCPDP6
+    Before: B13230978   After: B13361102  **383,384,411,452**
+Routine Name: IBNCPDPR
+    Before: B26651365   After:  B3700462  **276,347,384,452**
+Routine Name: IBNCPDPU
+    Before: B95492067   After:B114125068  **223,276,347,383,405,384,437,
+                                           435,452**
+Routine Name: IBNCPDS1
+    Before: B11093951   After: B10933965  **411,452**
+Routine Name: IBNCPEB
+    Before: B27674256   After: B27638146  **276,342,347,363,452**
+Routine Name: IBNCPEV
+    Before: B84626765   After: B94277434  **342,363,383,384,411,435,452**
+Routine Name: IBNCPEV1
+    Before: B49201751   After: B65821785  **342,339,363,411,435,452**
+Routine Name: IBNCPIV
+    Before: B54267861   After: B54224856  **435,452**
+Routine Name: IBNCPLOG
+    Before: B64598922   After: B76075004  **342,339,363,383,411,435,452**
+Routine Name: IBNCPNB
+    Before: B37701881   After: B37701881  **276,342,384,452**
+Routine Name: IBOHDT1
+    Before: B16207159   After: B18542858  **70,95,347,452**
+Routine Name: IBOHLD2
+    Before: B28331010   After: B31564132  **70,95,133,153,347,452**
+Routine Name: IBOHPT2
+    Before: B16246897   After: B19874021  **70,95,347,452**
+Routine Name: IBRBUL
+    Before: B33342361   After: B36492961  **70,95,121,153,195,347,452**
+Routine Name: IBRREL
+    Before: B25137354   After: B29208696  **95,153,199,347,452**
+Routine Name: IBY452PO
+    Before:       n/a   After:  B3019235  **452**
+ 
+Routine list of preceding patches: 399, 432, 438, 455
+
+=============================================================================
+User Information:
+Entered By  : GUSTAFSON,ERIC S              Date Entered  : MAR 02, 2011
+Completed By: CONQUEST,KENNETH              Date Completed: FEB 15, 2012
+Released By : MURRAY,ANGELA                 Date Released : FEB 16, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

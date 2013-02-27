@@ -1,0 +1,149 @@
+$TXT Created by NIXON,TONY at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 01/05/11 at 12:49
+=============================================================================
+Run Date: OCT 26, 2011                     Designation: PSO*7*368
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #321                      Status: Released
+                  Compliance Date: NOV 26, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*261   <<= must be installed BEFORE `PSO*7*368'
+                    (v)PSO*7*291   <<= must be installed BEFORE `PSO*7*368'
+
+Subject: DRUGS RETURNED TO STOCK NOT REFLECTED IN DRUG TRANSACTION HISTORY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ Drug balance amounts on the following reports are not updated when
+ medications are returned to stock using the RETURN MEDICATION TO STOCK
+ [PSO RETURNED STOCK] option:
+  
+ * Drug Balances by Location
+ * Drug Transaction History
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ HD0000000102502 - Deducting current balance after successful in Return
+ Medication to Stock
+   
+ Duplicate:
+ HD0000000399700 - DA background job does not show return to stock numbers  
+  
+  
+ Associated NSRs:
+ ================
+ N/A
+    
+    
+ Participating Test Sites:
+ =========================
+ Oklahoma City VA Medical Center
+ VA New York Harbor HCS
+ VA Palo Alto HCS
+  
+   
+ Remedy Overview:
+ ================
+ HD0000000102502 - Deducting current balance after successful in Return
+ Medication to Stock
+   
+  
+ Problem:
+ --------
+ When a drug is returned to stock, the following temporary global should
+ be updated: ^XTMP("PSA".  This global is used by the Drug Accountability
+ Nightly Background job to update inventory reports.  The process works
+ for dispensing medication but not when medication is returned.  This is
+ because the "Return Medication to Stock" option does not create an entry
+ in ^XTMP("PSA".
+  
+ DISCLAIMER: When "returning medication to stock" using the DELETE A
+ PRESCRIPTION option, you are not given the opportunity to return a
+ "partial" to stock.  This patch does not change this functionality.
+ It is recommended to use the RETURN MEDICATION TO STOCK option before
+ "deleting a prescription" if a partial has been dispensed.
+  
+  
+ Resolution:
+ -----------
+ Modify routines PSORESK and PSORXDL to create an entry ^XTMP("PSA", so that
+ the quantity for the medication being returned to stock is processed by the
+ Drug Accountability Nightly Background job.  This will ensure that the follow-
+ ing inventory reports reflect the correct inventory balances for the drug
+ returned:
+  
+  a. Drug Balances by Location
+  b. Drug Transaction History
+  
+  
+ PSORESK is for "Return medication to stock".
+  
+ PSORXDL is for "Delete a prescription".  This option will ask the user
+ if they want to return medication to stock before deletion.
+  
+  =================== INSTALLATION INSTRUCTIONS =====================
+    
+  Installation will take less than 2 minutes.  Users may be on the system.
+    
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+  2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+    
+  3. From this menu, you may select to use the following options
+         (when prompted for INSTALL NAME, enter PSO*7.0*368)
+    
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+    
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+    
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+    
+   4. Use the Install Package(s) option and select the package PSO*7.0*368
+    
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+    
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORESK
+    Before: B67129775   After: B71520625  **15,9,27,40,47,55,85,130,185,
+                                           184,196,148,201,259,261,368**
+Routine Name: PSORXDL
+    Before: B62315481   After: B65087564  **4,17,9,27,117,131,148,201,291,368**
+ 
+Routine list of preceding patches: 261, 291
+
+=============================================================================
+User Information:
+Entered By  : NIXON,ANTOINE                 Date Entered  : SEP 01, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: OCT 13, 2011
+Released By : VECE,VIRGINIA                 Date Released : OCT 26, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,186 @@
+$TXT Created by CURTIS,RICHARD L at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 03/07/12 at 16:40
+=============================================================================
+Run Date: AUG 08, 2012                     Designation: SD*5.3*576
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #488                    Status: Released
+                  Compliance Date: SEP 08, 2012
+=============================================================================
+
+Associated patches: (v)SD*5.3*562  <<= must be installed BEFORE `SD*5.3*576'
+
+Subject: FIX TO ACRP AD HOC REPORT & FIX OPTION DESCRIPTION
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will fix an error that occasionally occurs when running the 
+ Ambulatory Care Reporting Project (ACRP) Ad Hoc report [SCRPW AD HOC 
+ REPORT]. It will also correct a misspelling in the description of the
+ OPTION file (#19) for ACRP menu option Retransmit Ambulatory Care Data by
+ Date Range [SCDX AMBCAR RETRANS BY DATE].
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) HD0000000442518 - UNDEFINED>OEOU+3^SCRPW24
+ 2) HD0000000464638 - Letters transposed in description?
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Texas HCS
+ Charleston, SC
+ Connecticut HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) HD0000000442518 - UNDEFINED>OEOU+3^SCRPW24
+  
+    Problem:
+    --------
+    Occasionally, when a user runs the ACRP Ad Hoc Report [SCRPW AD
+    HOC REPORT], and selects Option Used to Create as an additional
+    print field, an undefined error will occur because the
+    Option Used to Create field (#.24) is null in the VISIT file
+    (#9000010).
+  
+    Resolution:
+    -----------
+    Routine SCRPW24 will be modified so that when a null value exists
+    for the Option Used to Create field (#.24) the report will print
+    "Unknown" and thus prevent this error from occurring.
+  
+ 2) HD0000000464638 - Letters transposed in description?
+  
+    Problem:
+    --------
+    In the description field of the OPTION file (#19) for ACRP option
+    Retransmit Ambulatory Care Data by Date Range [SCDX AMBCAR
+    RETRANS BY DATE], the last sentence references the ACRP nightly
+    background job option, but has the letters transposed, i.e.:
+  
+    Currently:  SDCX AMBCAR NIGHTLY XMIT
+                 ==
+  
+    Should Be:  SCDX AMBCAR NIGHTLY XMIT
+                 ==
+  
+    Resolution:
+    -----------
+    The transposed letters in the option description of the OPTION file
+    (#19) for ACRP option Retransmit Ambulatory Care Data by Date
+    Range [SCDX AMBCAR RETRANS BY DATE] will be corrected with this
+    patch.
+  
+ OTHER COMPONENTS:
+ ==========================
+  
+ OPTION:                                        ACTION:
+    SCDX AMBCAR RETRANS BY DATE                    SEND TO SITE
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Users can be on the system during the installation of this patch.
+  
+ Installation should take less than 5 minutes.
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+     Select Kernel Installation & Distribution System Option:  INStallation
+                                                               ---
+  
+     1     Load a Distribution
+     2     Verify Checksums in Transport Global
+     3     Print Transport Global
+     4     Compare Transport Global to Current System
+     5     Backup a Transport Global
+     6     Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter SD*5.3*576):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will NOT
+         backup any other changes such as DDs or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed.  It compares all components of the patch
+         (routines, DDs, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+  
+     d.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+  
+ 4. Use the Install Package(s) option and select the package SD*5.3*576.
+  
+    a. When prompted, "Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//", respond NO.
+  
+    b. When prompted, "Want KIDS to INHIBIT LOGONS during the
+       install? NO//", respond NO.
+  
+    c. When prompted, "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//", respond YES.
+  
+        1) When prompted "Enter options you wish to mark as "Out of
+           Order":" enter the following option:
+  
+            ACRP Ad Hoc Report                [SCRPW AD HOC REPORT]
+            Retransmit Ambulatory Care Data.. 
+            by Date Range                     [SCDX AMBCAR RETRANS BY DATE]
+  
+         2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCRPW24
+    Before: B79121310   After: B79827174  **144,163,180,254,243,295,329,
+                                           351,510,530,562,576**
+ 
+Routine list of preceding patches: 562
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : NOV 09, 2010
+Completed By: SESSLER,APRIL                 Date Completed: JUL 31, 2012
+Released By : FLANAGAN,PATTY                Date Released : AUG 08, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

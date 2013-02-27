@@ -1,0 +1,115 @@
+$TXT Created by KOGER,RON at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 05/21/12 at 05:15
+=============================================================================
+Run Date: JUN 04, 2012                     Designation: GEC*2*36
+Package : GEC - GENERIC CODE SHEET            Priority: EMERGENCY
+Version : 2        SEQ #31                      Status: Released
+                  Compliance Date: JUN 05, 2012
+=============================================================================
+
+Associated patches: (v)GEC*2*23    <<= must be installed BEFORE `GEC*2*36'
+
+Subject: GENERIC CODE SHEET PURGE LIMIT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch modifies the retention period when performing a Generic Code
+ Sheet purge.  These code sheets are purged on an annual basis and new
+ regulations require they be retained for a seven year time period.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000610510    CR Documents Missing in File 2100.1 - Central Plains
+    HD0000000708375    (duplicate)
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Charleston, SC
+ Northern California HCS
+ Phoenix, AZ
+    
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000610510    CR Documents Missing in File 2100.1 - Central Plains
+   
+   Problem: 
+   --------
+   When using the Purge Transmission Records/Code Sheets [PRC GECS PURGE]
+   option to perform a purge of Generic Code Sheets only a 365 day (one 
+   year) period is obtained.  New requirement mandate these code sheets be 
+   retained for a seven year time period.
+   
+   Resolution:
+   -----------
+   Modified the hard coded 365 day retention period to reflect a 2,558
+   day retention period.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter GEC*2.0*36)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        GEC*2.0*36.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;GEC;**[Patch List]**;MAR 14, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GECSPURG
+    Before:  B8625599   After:  B8984257  **23,36**
+ 
+Routine list of preceding patches: 23
+
+=============================================================================
+User Information:
+Entered By  : KOGER,RON                     Date Entered  : MAY 15, 2012
+Completed By: LEANORD,TATIANA               Date Completed: JUN 04, 2012
+Released By : VASSAR,CAROL                  Date Released : JUN 04, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

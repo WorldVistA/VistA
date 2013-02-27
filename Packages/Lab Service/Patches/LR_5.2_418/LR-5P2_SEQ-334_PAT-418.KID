@@ -1,0 +1,520 @@
+Released LR*5.2*418 SEQ #334
+Extracted from mail message
+**KIDS**:LR*5.2*418^
+
+**INSTALL NAME**
+LR*5.2*418
+"BLD",8990,0)
+LR*5.2*418^LAB SERVICE^0^3120301^y
+"BLD",8990,1,0)
+^^10^10^3120301^^
+"BLD",8990,1,1,0)
+This patch is a VM patch that addresses 3 LOINC-related issues in the Lab
+"BLD",8990,1,2,0)
+package.
+"BLD",8990,1,3,0)
+ 
+"BLD",8990,1,4,0)
+1.      Option LR LOINC LOOKUP won't accept default.
+"BLD",8990,1,5,0)
+ 
+"BLD",8990,1,6,0)
+2.      Option LR LOINC PRINT RESULT NLT prints MI (Microbiology) and BB 
+"BLD",8990,1,7,0)
+    (Blood Bank) tests when it should only print CH (Chemistry) tests.
+"BLD",8990,1,8,0)
+ 
+"BLD",8990,1,9,0)
+3.      Option LR LOINC PRINT RESULT NLT prints profiles (cosmic tests)
+"BLD",8990,1,10,0)
+    when it should only print individual tests (atomic tests).
+"BLD",8990,4,0)
+^9.64PA^^
+"BLD",8990,6.3)
+1
+"BLD",8990,"ABPKG")
+n
+"BLD",8990,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8990,"KRN",.4,0)
+.4
+"BLD",8990,"KRN",.401,0)
+.401
+"BLD",8990,"KRN",.402,0)
+.402
+"BLD",8990,"KRN",.403,0)
+.403
+"BLD",8990,"KRN",.5,0)
+.5
+"BLD",8990,"KRN",.84,0)
+.84
+"BLD",8990,"KRN",3.6,0)
+3.6
+"BLD",8990,"KRN",3.8,0)
+3.8
+"BLD",8990,"KRN",9.2,0)
+9.2
+"BLD",8990,"KRN",9.8,0)
+9.8
+"BLD",8990,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",8990,"KRN",9.8,"NM",1,0)
+LRLNC1^^0^B5120406
+"BLD",8990,"KRN",9.8,"NM",2,0)
+LRLNCNLT^^0^B12524711
+"BLD",8990,"KRN",9.8,"NM","B","LRLNC1",1)
+
+"BLD",8990,"KRN",9.8,"NM","B","LRLNCNLT",2)
+
+"BLD",8990,"KRN",19,0)
+19
+"BLD",8990,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",8990,"KRN",19.1,0)
+19.1
+"BLD",8990,"KRN",101,0)
+101
+"BLD",8990,"KRN",409.61,0)
+409.61
+"BLD",8990,"KRN",771,0)
+771
+"BLD",8990,"KRN",779.2,0)
+779.2
+"BLD",8990,"KRN",870,0)
+870
+"BLD",8990,"KRN",8989.51,0)
+8989.51
+"BLD",8990,"KRN",8989.52,0)
+8989.52
+"BLD",8990,"KRN",8994,0)
+8994
+"BLD",8990,"KRN","B",.4,.4)
+
+"BLD",8990,"KRN","B",.401,.401)
+
+"BLD",8990,"KRN","B",.402,.402)
+
+"BLD",8990,"KRN","B",.403,.403)
+
+"BLD",8990,"KRN","B",.5,.5)
+
+"BLD",8990,"KRN","B",.84,.84)
+
+"BLD",8990,"KRN","B",3.6,3.6)
+
+"BLD",8990,"KRN","B",3.8,3.8)
+
+"BLD",8990,"KRN","B",9.2,9.2)
+
+"BLD",8990,"KRN","B",9.8,9.8)
+
+"BLD",8990,"KRN","B",19,19)
+
+"BLD",8990,"KRN","B",19.1,19.1)
+
+"BLD",8990,"KRN","B",101,101)
+
+"BLD",8990,"KRN","B",409.61,409.61)
+
+"BLD",8990,"KRN","B",771,771)
+
+"BLD",8990,"KRN","B",779.2,779.2)
+
+"BLD",8990,"KRN","B",870,870)
+
+"BLD",8990,"KRN","B",8989.51,8989.51)
+
+"BLD",8990,"KRN","B",8989.52,8989.52)
+
+"BLD",8990,"KRN","B",8994,8994)
+
+"BLD",8990,"QUES",0)
+^9.62^^
+"BLD",8990,"REQB",0)
+^9.611^1^1
+"BLD",8990,"REQB",1,0)
+LR*5.2*278^2
+"BLD",8990,"REQB","B","LR*5.2*278",1)
+
+"MBREQ")
+0
+"PKG",26,-1)
+1^1
+"PKG",26,0)
+LAB SERVICE^LR^CORE LAB SYSTEM
+"PKG",26,20,0)
+^9.402P^1^1
+"PKG",26,20,1,0)
+2^^LRXDRPT
+"PKG",26,20,1,1)
+
+"PKG",26,20,"B",2,1)
+
+"PKG",26,22,0)
+^9.49I^1^1
+"PKG",26,22,1,0)
+5.2^2940927^2950304
+"PKG",26,22,1,"PAH",1,0)
+418^3120301
+"PKG",26,22,1,"PAH",1,1,0)
+^^10^10^3120301
+"PKG",26,22,1,"PAH",1,1,1,0)
+This patch is a VM patch that addresses 3 LOINC-related issues in the Lab
+"PKG",26,22,1,"PAH",1,1,2,0)
+package.
+"PKG",26,22,1,"PAH",1,1,3,0)
+ 
+"PKG",26,22,1,"PAH",1,1,4,0)
+1.      Option LR LOINC LOOKUP won't accept default.
+"PKG",26,22,1,"PAH",1,1,5,0)
+ 
+"PKG",26,22,1,"PAH",1,1,6,0)
+2.      Option LR LOINC PRINT RESULT NLT prints MI (Microbiology) and BB 
+"PKG",26,22,1,"PAH",1,1,7,0)
+    (Blood Bank) tests when it should only print CH (Chemistry) tests.
+"PKG",26,22,1,"PAH",1,1,8,0)
+ 
+"PKG",26,22,1,"PAH",1,1,9,0)
+3.      Option LR LOINC PRINT RESULT NLT prints profiles (cosmic tests)
+"PKG",26,22,1,"PAH",1,1,10,0)
+    when it should only print individual tests (atomic tests).
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","LRLNC1")
+0^1^B5120406^B4506781
+"RTN","LRLNC1",1,0)
+LRLNC1 ;DALOI/CA-LOOKUP LOINC CODE ;1-OCT-1998
+"RTN","LRLNC1",2,0)
+ ;;5.2;LAB SERVICE;**215,278,418**;Sep 27,1994;Build 1
+"RTN","LRLNC1",3,0)
+ ;Reference to ^DD supported by IA 10154
+"RTN","LRLNC1",4,0)
+ ;=================================================================
+"RTN","LRLNC1",5,0)
+ ; Ask VistA test to Lookup LOINC code in Lab Test file #60
+"RTN","LRLNC1",6,0)
+ N LRLOINC
+"RTN","LRLNC1",7,0)
+ W @IOF
+"RTN","LRLNC1",8,0)
+START ;entry point from option LR LOINC LOOKUP
+"RTN","LRLNC1",9,0)
+ D TEST
+"RTN","LRLNC1",10,0)
+ I $G(LREND) G EXIT
+"RTN","LRLNC1",11,0)
+ D SPEC
+"RTN","LRLNC1",12,0)
+ I $G(LREND) D EXIT G START
+"RTN","LRLNC1",13,0)
+ K DIC
+"RTN","LRLNC1",14,0)
+ENT S DIC="^LAB(95.3,",DIC(0)="AEQMZ"
+"RTN","LRLNC1",15,0)
+ S LRLOINC=$G(^LAB(60,LRIEN,1,LRSPEC,95.3))
+"RTN","LRLNC1",16,0)
+ S:+LRLOINC DIC("B")=LRLOINC
+"RTN","LRLNC1",17,0)
+ I '+LRLOINC D
+"RTN","LRLNC1",18,0)
+ . S DIC("B")=LRTEST_".."_$G(LRSPECL)
+"RTN","LRLNC1",19,0)
+ . S DIC("A")="LOINC Name..Specimen: "
+"RTN","LRLNC1",20,0)
+ W !,$$CJ^XLFSTR(" Your initial lookup entry is ",IOM)
+"RTN","LRLNC1",21,0)
+ W !,$$CJ^XLFSTR(LRTEST_".."_$G(LRSPECL),IOM)
+"RTN","LRLNC1",22,0)
+ W !,$$CJ^XLFSTR("e.g. TEST NAME..SPECIMEN",IOM),!
+"RTN","LRLNC1",23,0)
+ D ^DIC
+"RTN","LRLNC1",24,0)
+ I $D(DIRUT) G START
+"RTN","LRLNC1",25,0)
+ I Y=-1 W !!,"NO MATCHES FOUND" G START
+"RTN","LRLNC1",26,0)
+ S LRCODE=+Y
+"RTN","LRLNC1",27,0)
+ D DISPL
+"RTN","LRLNC1",28,0)
+ G START
+"RTN","LRLNC1",29,0)
+EXIT K DA,DIC,DIE,DINUM,DIR,DIRUT,DR,DTOUT,I,LRCODE,LRDATA,LREND,LRLNC,LRLNC0,LRLOINC,LRELEC,LRIEN,LRNLT,LRSPEC,LRSPECL,LRSPECN,LRTIME,LRTEST,LRUNITS,S,Y
+"RTN","LRLNC1",30,0)
+ QUIT
+"RTN","LRLNC1",31,0)
+TEST W !! K DIR,DIRUT
+"RTN","LRLNC1",32,0)
+ S DIR(0)="PO^60:QNEMZ,",DIR("A")="VistA Lab Test to Lookup LOINC "
+"RTN","LRLNC1",33,0)
+ S DIR("?")="Select Lab test you wish to lookup LOINC Code"
+"RTN","LRLNC1",34,0)
+ D ^DIR K DIR
+"RTN","LRLNC1",35,0)
+ I $D(DIRUT)!'Y K DIRUT S LREND=1 Q
+"RTN","LRLNC1",36,0)
+ S LRIEN=+Y,LRTEST=$P(Y,U,2)
+"RTN","LRLNC1",37,0)
+ Q
+"RTN","LRLNC1",38,0)
+SPEC ; Ask Specimen- Lookup in Specimen multiple in Lab Test file #60
+"RTN","LRLNC1",39,0)
+ K DA,DIC,DIE,DR
+"RTN","LRLNC1",40,0)
+ S DA(1)=LRIEN
+"RTN","LRLNC1",41,0)
+ S DIC="^LAB(60,"_LRIEN_",1,"
+"RTN","LRLNC1",42,0)
+ S DIC(0)="AQEMZ"
+"RTN","LRLNC1",43,0)
+ S DIC("A")="Specimen source: "
+"RTN","LRLNC1",44,0)
+ S DIC("P")=$P(^DD(60.01,0),"^",2)
+"RTN","LRLNC1",45,0)
+ D ^DIC
+"RTN","LRLNC1",46,0)
+ I $D(DIRUT)!(Y=-1) K DIC,DA,DIRUT S LREND=1 Q
+"RTN","LRLNC1",47,0)
+ S LRSPEC=+Y,LRSPECN=Y(0,0)
+"RTN","LRLNC1",48,0)
+ ;Check to see if linked to file 64.061.  If not, then let enter link.
+"RTN","LRLNC1",49,0)
+ I '$P($G(^LAB(61,LRSPEC,0)),U,9) D  Q
+"RTN","LRLNC1",50,0)
+ .W !!,"There is not a LEDI HL7 code for "_LRSPECN,".",!
+"RTN","LRLNC1",51,0)
+ S LRELEC=$P($G(^LAB(61,LRSPEC,0)),U,9)
+"RTN","LRLNC1",52,0)
+ I 'LRELEC G SPEC
+"RTN","LRLNC1",53,0)
+ S LRSPECL=$P(^LAB(64.061,LRELEC,0),U,2)
+"RTN","LRLNC1",54,0)
+ Q
+"RTN","LRLNC1",55,0)
+DISPL ;Show LOINC entry selected in file 95.3
+"RTN","LRLNC1",56,0)
+ D DISPL^LRLNCC
+"RTN","LRLNC1",57,0)
+ Q
+"RTN","LRLNCNLT")
+0^2^B12524711^B11740304
+"RTN","LRLNCNLT",1,0)
+LRLNCNLT ;DALOI/FHS-PRINT LAB TEST W/O RESULT NLT CODE ;1-OCT-1998
+"RTN","LRLNCNLT",2,0)
+ ;;5.2;LAB SERVICE;**215,278,418**;Sep 27,1994;Build 1
+"RTN","LRLNCNLT",3,0)
+EN ;
+"RTN","LRLNCNLT",4,0)
+ W @IOF,!! S LREND=0
+"RTN","LRLNCNLT",5,0)
+ W $$CJ^XLFSTR("This option will print tests and their RESULT NLT CODES",IOM)
+"RTN","LRLNCNLT",6,0)
+ W !,$$CJ^XLFSTR("assigned. Result NLT codes are required for LEDI and LOINC",IOM)
+"RTN","LRLNCNLT",7,0)
+ W !,$$CJ^XLFSTR("Mapping software to function properly.",IOM)
+"RTN","LRLNCNLT",8,0)
+ W !,$$CJ^XLFSTR("You may use the option 'Link Result NLT Manual' to make necessary changes.",IOM)
+"RTN","LRLNCNLT",9,0)
+ASK ;
+"RTN","LRLNCNLT",10,0)
+ K DIR S DIR(0)="S^0:All Lab Tests;1:Lab Tests with Result NLT Codes;2:Lab Tests without Result NLT Codes"
+"RTN","LRLNCNLT",11,0)
+ S DIR("?")="All will print Lab Tests with and w/o result NLT codes tests"
+"RTN","LRLNCNLT",12,0)
+ D ^DIR K DIR
+"RTN","LRLNCNLT",13,0)
+ G END:$S($G(DIRUT):1,$G(DUOUT):1,$G(DTOUT):1,1:0)
+"RTN","LRLNCNLT",14,0)
+ S LRSEL=Y
+"RTN","LRLNCNLT",15,0)
+ K %ZIS S %ZIS="Q" D ^%ZIS
+"RTN","LRLNCNLT",16,0)
+ G END:POP
+"RTN","LRLNCNLT",17,0)
+ I IO'=IO(0) S ZTRTN="DQ^LRLNCNLT",ZTIO=ION,ZTDESC="Print Lab Tests and Result Codes",ZTSAVE("LRSEL")="" D ^%ZTLOAD I $D(ZTSK)'[0 W !!?5," Tasked to Print on : ",ION G END
+"RTN","LRLNCNLT",18,0)
+ W @IOF D DQ G END
+"RTN","LRLNCNLT",19,0)
+ Q
+"RTN","LRLNCNLT",20,0)
+DQ ;
+"RTN","LRLNCNLT",21,0)
+ N DIR,LREND
+"RTN","LRLNCNLT",22,0)
+ S:$D(ZTQUEUED) ZTREQ="@" S LRPDT=$$FMTE^XLFDT($$NOW^XLFDT,1)
+"RTN","LRLNCNLT",23,0)
+ S (LRPAGE,LRCNT,LREND)=0
+"RTN","LRLNCNLT",24,0)
+ D HDR
+"RTN","LRLNCNLT",25,0)
+ S LRNODE="^LAB(60,""B"",0)",LRCNT=0
+"RTN","LRLNCNLT",26,0)
+ F  S LRNODE=$Q(@LRNODE) Q:$QS(LRNODE,2)'="B"  Q:$G(LREND)  D
+"RTN","LRLNCNLT",27,0)
+ . Q:$G(@LRNODE)!($G(LREND))
+"RTN","LRLNCNLT",28,0)
+ . S LRIEN=$QS(LRNODE,4),LRNAME=$QS(LRNODE,3),LRC=$P($G(^LAB(60,LRIEN,64)),U,2)
+"RTN","LRLNCNLT",29,0)
+ . S LRX=$G(^LAB(60,+$G(LRIEN),0)) Q:$P(LRX,U,3)=""
+"RTN","LRLNCNLT",30,0)
+ . Q:$P(LRX,"^",4)'="CH"           ;only CH tests are relevant
+"RTN","LRLNCNLT",31,0)
+ . Q:$O(^LAB(60,LRIEN,2,0))'=""    ;only atomic tests are relevant
+"RTN","LRLNCNLT",32,0)
+ . Q:"BO"'[$P(LRX,U,3)
+"RTN","LRLNCNLT",33,0)
+ . I $G(LRSEL)=2,LRC Q
+"RTN","LRLNCNLT",34,0)
+ . I $G(LRSEL)=1,'LRC Q
+"RTN","LRLNCNLT",35,0)
+ . S LRCNT=$G(LRCNT)+1
+"RTN","LRLNCNLT",36,0)
+ . D TOF Q:$G(LREND)
+"RTN","LRLNCNLT",37,0)
+ . W !,$$RJ^XLFSTR(LRIEN,5),?8,LRNAME
+"RTN","LRLNCNLT",38,0)
+ . I $G(LRC) D NLTPRT(LRC)
+"RTN","LRLNCNLT",39,0)
+ Q
+"RTN","LRLNCNLT",40,0)
+NLTPRT(LRC) ;
+"RTN","LRLNCNLT",41,0)
+ D TOF Q:LREND
+"RTN","LRLNCNLT",42,0)
+ N LRSPEC
+"RTN","LRLNCNLT",43,0)
+ I '$D(^LAM(LRC,0))#2 W !?15," **** Corrupt DATABASE ****" Q
+"RTN","LRLNCNLT",44,0)
+ W !?5,"[ ",$P(^LAM(LRC,0),U,2),?18,$P(^(0),U)," ]",!
+"RTN","LRLNCNLT",45,0)
+ S LRSPEC=0 F  S LRSPEC=$O(^LAB(60,LRIEN,1,LRSPEC)) Q:LRSPEC<1!($G(LREND))  D
+"RTN","LRLNCNLT",46,0)
+ . S LRX=+$G(^LAB(60,LRIEN,1,LRSPEC,95.3)) Q:'LRX
+"RTN","LRLNCNLT",47,0)
+ . I $Y>(IOSL-4) D TOF1 Q:$G(LREND)  W !,$$RJ^XLFSTR(LRIEN,5),?8,LRNAME
+"RTN","LRLNCNLT",48,0)
+ . W !?10,"Specimen [ ",$P($G(^LAB(61,LRSPEC,0)),U),"]  Mapped to LOINC CODE"
+"RTN","LRLNCNLT",49,0)
+ . W !,$G(^LAB(95.3,LRX,80)),!
+"RTN","LRLNCNLT",50,0)
+ Q
+"RTN","LRLNCNLT",51,0)
+END ;
+"RTN","LRLNCNLT",52,0)
+ I $G(LRCNT) W !?20,"Total Printed Tests: ",LRCNT,!
+"RTN","LRLNCNLT",53,0)
+ I $E(IOST)="P-" W @IOF
+"RTN","LRLNCNLT",54,0)
+ D ^%ZISC
+"RTN","LRLNCNLT",55,0)
+ K DIR,DIRUT,DUOUT,LRC,LRCNT,LREND,LRIEN,LRNAME,LRNODE,LRPAGE
+"RTN","LRLNCNLT",56,0)
+ K LRPDT,LRSEL,LRX,POP,ZTIO,ZTDESC,ZTRTN,ZTSAVE
+"RTN","LRLNCNLT",57,0)
+ ;
+"RTN","LRLNCNLT",58,0)
+ Q
+"RTN","LRLNCNLT",59,0)
+TOF ;
+"RTN","LRLNCNLT",60,0)
+ Q:$Y<(IOSL-3)
+"RTN","LRLNCNLT",61,0)
+TOF1 I $E(IOST,1,2)="C-" D  Q:$G(LREND)
+"RTN","LRLNCNLT",62,0)
+ . S DIR(0)="E" D ^DIR
+"RTN","LRLNCNLT",63,0)
+ . S:$S($G(DIRUT):1,$G(DUOUT):1,1:0) LREND=1
+"RTN","LRLNCNLT",64,0)
+HDR ;
+"RTN","LRLNCNLT",65,0)
+ I $G(LRPAGE) W @IOF
+"RTN","LRLNCNLT",66,0)
+ S LRPAGE=$G(LRPAGE)+1 W !,?5,LRPDT,?60,"Page: ",LRPAGE
+"RTN","LRLNCNLT",67,0)
+ W !,$$CJ^XLFSTR("Alphabetical Listing of CH Subscripted Lab Tests",IOM)
+"RTN","LRLNCNLT",68,0)
+ I $G(LRSEL)=1 W !,$$CJ^XLFSTR("That have RESULT NLT CODES assigned",IOM),!
+"RTN","LRLNCNLT",69,0)
+ I $G(LRSEL)=2 W !,$$CJ^XLFSTR("That do not have RESULT NLT CODES assigned",IOM),!
+"RTN","LRLNCNLT",70,0)
+ W !,"  IEN     Lab Test Name " I $G(LRSEL)=2 W ! Q
+"RTN","LRLNCNLT",71,0)
+ W !,"      NLT #        Result NLT Code Name ",!
+"RTN","LRLNCNLT",72,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8990,6)
+^334
+**END**
+**END**

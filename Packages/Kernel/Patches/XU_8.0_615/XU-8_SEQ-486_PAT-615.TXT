@@ -1,0 +1,103 @@
+
+=============================================================================
+Run Date: OCT 25, 2012                     Designation: XU*8*615
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #486                      Status: Released
+                  Compliance Date: NOV 25, 2012
+=============================================================================
+
+
+Subject: INFORMATIONAL - XU*8.0*585
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Patch XU*8.0*585 adds PRINT QUEUE, code PQ, to the TYPE field (#2) of the
+ DEVICE file (#3.5).   This patch provides additional instructions regarding
+ the installation of patch XU*8.0*585 and the use of the PRINT QUEUE device
+ type.  Currently, there is a hold on XU*8.0*585 which is being lifted
+ simultaneously with the release of informational patch XU*8.0*615.  
+ 
+ 1)  The use of the new PRINT QUEUE type is NOT mandatory.  Print queues may
+     still be used via HFS devices which call the NVSPRTU routine.  
+ 
+ 2)  The conversion utility CNVRT^XU8P585 should NOT be used.  Instead,
+     devices may optionally be converted on a cases-by-case basis.  See the
+     considerations  listed in 5) below.
+ 
+ 3)  The pre-installation steps for patch XU*8.0*585 instruct sites to create
+     the print_queues subdirectory.  Please keep in mind these additional
+     points:
+ 
+   a)  Applications staff at local sites may not have access to create the
+       required subdirectories.  Creation of directories for this patch
+       should be handled according to regional policies and procedures in
+       the same way that directory creation has been done in the past.
+   b)  On Linux systems, the standard for directories should be followed. 
+       Following that standard, the new subdirectory would be:
+               /srv/vista/<scd>/user/hfs/print_queues
+   c)  The instructions for creating the new print_queues subdirectory must
+       be implemented on every Linux node of the system. 
+ 
+ 4)  The new XU PURGE PRINT QUEUE HFS FILES option [PURGE PRINT QUEUE HOST
+     FILES] is scheduled automatically by the post-installation routine of
+     XU*8.0*585.  The option deletes 'old' interim host files created as the
+     result of using the PRINT QUEUE device type where the queued job fails
+     to print within 24 hours.  The host files are always automatically
+     deleted once the file is printed, but if printing fails to occur, then
+     the host files may hang around for a prolonged period and may pose a
+     privacy or security concern.  The issue has been raised that for some
+     print jobs, for example, batches of labels, it is NOT acceptable to
+     delete the host file in the event that it fails to print.  If that is
+     the case, there are these two alternatives: 
+ 
+   a)  A site may un-schedule the XU PURGE PRINT QUEUE HFS FILES option [PURGE
+       PRINT QUEUE HOST FILES].  If that is done, it would be up to the
+       site to periodically purge old, unneeded host files from the
+       print_queues directory.
+   b)  Alternatively, sites may choose NOT to use the new PRINT QUEUE device
+       type for certain devices, such as label printers. 
+ 
+ 5)  These considerations apply to the use of the new PRINT QUEUE device type:
+ 
+   a)  PRINT QUEUE devices do NOT allow the site to specify the OPEN parameters
+       to use.  Although it is not usually necessary to specify special OPEN
+       parameters, that may not always be the case.  In particular, there may
+       be label printers that require the use of the UNDEFINED open parameter,
+       as in "NWU".  For such printers, do NOT use the PRINT QUEUE device type.  
+   b)  A printer that currently uses the HFS type for print queues may be
+       converted to the new PRINT QUEUE device type by using Fileman to change
+       the TYPE field (#2) of the DEVICE file (#3.5) to PQ.   No other changes
+       are needed.  Each device that is converted should be tested. 
+   c)  The currently released version of the NVSMKPRN utilities are not
+       compatible with the PRINT QUEUE device type.  If the NVSMKPRN utilities
+       are used to edit a PRINT QUEUE type of device, the device type will
+       automatically change to HFS.  A new version of the NVSMKPRN utilities
+       that does support the PRINT QUEUE device type will be released in the
+       near future.   
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : MOORE,CHARLES J               Date Entered  : OCT 22, 2012
+Completed By: BEST,LISA                     Date Completed: OCT 24, 2012
+Released By : TILLIS,LEWIS                  Date Released : OCT 25, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

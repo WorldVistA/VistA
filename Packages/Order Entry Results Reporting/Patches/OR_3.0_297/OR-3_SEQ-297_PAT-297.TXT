@@ -1,0 +1,243 @@
+$TXT Created by ESCALERA,DIEGO at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Friday, 09/09/11 at 15:00
+=============================================================================
+Run Date: DEC 12, 2011                     Designation: OR*3*297
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #297                      Status: Released
+                  Compliance Date: JAN 12, 2012
+=============================================================================
+
+Associated patches: (v)OR*3*164    <<= must be installed BEFORE `OR*3*297'
+                    (v)OR*3*243    <<= must be installed BEFORE `OR*3*297'
+
+Subject: QUICK ORDER CORRECTIONS AND REMOVE PRE/POST-INSTALL ROUTINES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch resolves four reported issues within the Order Entry/Results 
+ Reporting (OE/RR) package:
+  
+ 1. Remove routine and menu option created by OR*3*281.
+ 2. Remove routine created by OR*3*299.
+ 3. Remove QO restriction of usage type 'PHARMACY'.  
+ 4. Undefined error when editing continuous infusion quick orders.
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. HD0000000218893  Need routine to remove option/routine created by 
+                     OR*3*281
+ 2. HD0000000284146  Need to remove routine created by OR*3*299
+ 3. HD0000000070004  CLE-0203-40174  Enter/Edit Quick Order Restriction: 
+                     Usage=Pharmacy fails
+    Duplicates:
+    HD0000000070030  UNY-0203-11773  PROBLEM WITH OR*3*164
+    HD0000000070506  PUG-0104-51473  QO restriction not working
+ 4. HD0000000276942  Undef error when editing continuous infusion quick 
+                     orders
+  
+   
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ VA Puget Sound (Tacoma), WA 
+ Minneapolis VAMC, MN 
+ Philadelphia VAMC, PA
+  
+   
+ Remedy Overview:
+ ================
+ 1) HD0000000218893  Need routine to remove option/routine created by 
+    OR*3*281. 
+   
+ Problem:
+ --------      
+ Patch OR*3*281 created temporary routine ORY281 and menu option 
+ RADIOLOGY/IMAGING QUICK ORDER SEARCH [ORCM RA SEARCH] to assist in
+ resolving an issue with Radiology Quick Orders. The routine and option are
+ now obsolete and should be removed from the system.
+   
+ Resolution:
+ -----------
+ Installing OR*3*297 deletes routine ORY281 and the RADIOLOGY/IMAGING 
+ QUICK ORDER SEARCH [ORCM RA SEARCH] option.
+  
+   
+ 2) HD0000000284146  Need to remove routine created by OR*3*299.
+   
+ Problem:
+ --------
+ Patch OR*3*299 created the temporary routine ORY299 to search for 
+ Outpatient Medication orders with potential problems. VA locations were
+ instructed to install patch OR*3*299 as soon as possible after installing
+ OR*3*243. The compliance date for OR*3*243 was Oct. 6, 2008. The routine
+ ORY299 is now obsolete and should be removed from the system.
+   
+ Resolution:
+ -----------
+ Installing OR*3*297 deletes routine ORY299. 
+   
+  
+ 3) HD0000000070004  CLE-0203-40174 Enter/edit QO Restriction: 
+    Usage=Pharmacy fails.
+   
+ Problem:
+ --------
+ Entering 'PHARMACY' at the 'Usage: ' prompt does not work. Even though 
+ the usage type value of 'PHARMACY' is accepted, the software does not
+ respect the restriction.
+   
+ Resolution:
+ -----------
+ The value 'PHARMACY' is never explicitly checked for in the routine that 
+ processes the restriction information. This issue was presented to the
+ CPRS Workgroup and their decision was that 'PHARMACY' should no longer
+ be allowed as an entry at the 'Usage: ' prompt. Routine ORCMEDT6 has been
+ modified to remove 'PHARMACY' as a usage type selection.
+  
+ To allow sites the opportunity to review orderable items that have the 
+ quick order only restriction set for PHARMACY, the post-install routine 
+ ORY297 searches the ORDERABLE ITEMS file (#101.43) and generates a MailMan
+ message that lists the PHARMACY restricted items. The message will have 
+ the subject line "ORDERABLE ITEM QUICK ORDER RESTRICTION SEARCH" and is
+ sent to the person that installs the patch. Please provide this list to
+ your Pharmacy ADPAC and Clinical Applications Coordinator to review 
+ and, if necessary, modify the listed items. Orderable item usage and
+ restriction can be edited using option Enter/edit QO restriction [ORCM QO
+ ITEMS].
+  
+ For example: If an orderable item needs to be restricted as Quick Order 
+ Only for BOTH Unit Dose and Outpatient Medications, the ADPAC would need 
+ to select each of those 'Usage' types and enter a YES in the 'QO ONLY' 
+ field as shown below: 
+  
+ Enter/edit QO restriction
+ Select an ORDERABLE ITEM (meds or labs only): ALLOPURINOL TAB
+  
+ Select the type of usage for which you wish to restrict ordering of this 
+ item.
+ Usage: ?
+  
+ Select the type of usage for which you wish to restrict ordering of this 
+ item.
+ Choose from:
+   NON-VA MEDICATIONS
+   OUTPATIENT MEDICATIONS
+   UNIT DOSE MEDICATIONS
+  
+ Usage: UNIT DOSE MEDICATIONS  <<<<
+ QO ONLY: YES   <<<<<<<<<<<<<<<<<<<
+  
+ Usage: OUTPATIENT MEDICATIONS <<<<
+ QO ONLY: YES  <<<<<<<<<<<<<<<<<<<<
+   
+   
+ 4) HD0000000276942  Undef error when editing continuous infusion quick 
+    orders.
+   
+ Problem:
+ --------
+ When attempting to edit certain continuous IV quick orders, an undefined 
+ error occurred. In addition, the help text/error message would display
+ twice.
+   
+ Resolution:
+ ----------
+ Routine ORCDLG2 has been modified to correctly handle infusion rate text
+ which is longer than allowed. Currently the limit is 30 characters 
+ including the 6 character " ml/hr" text that is automatically added.
+  
+   
+ Installation Instructions
+ =========================
+ This patch can be loaded with users in the system, but it is recommended 
+ that it be installed when user activity is low. Installation time will be
+ less than five minutes.
+   
+ 1.  Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+   
+ 2.  Start up the Kernel Installation and Distribution System Menu [XPD 
+     MAIN] and select Installation.
+       
+ 3.  From the Installation menu, you may select to use the following 
+     options (When prompted for the INSTALL NAME, enter OR*3.0*297):
+       
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will
+           not backup any other changes such as DD's or templates.
+       b.  Compare Transport Global to Current System - This option
+           will allow you to view all changes that will be made when
+           this patch is installed.  It compares all components of this
+           patch (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will
+           allow you to ensure the integrity of the routines that are
+           in the transport global.
+   
+ 4.  Use the Install Package(s) option and select the package OR*3.0*297
+   
+ 5.  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//, 
+     answer NO.
+  
+ 6.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//, 
+     answer NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? NO//, answer NO. 
+  
+ 8.  When prompted 'DEVICE: HOME//' press <ENTER> **DO NOT** QUEUE THIS
+     INSTALL (queuing this install or sending it to a printer will cause
+     the task to hang in taskman because the install still needs manual 
+     input)
+        
+ 9.  When prompted 'Requested Start Time: NOW//', press <ENTER> to run 
+     the process to generate the Mailman message now. If a time other than
+     'NOW' is entered the patch will install now, only the Mailman message
+     will generate at the time entered.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCDLG2
+    Before: B64872872   After: B67157200  **4,60,79,94,243,297**
+Routine Name: ORCMEDT6
+    Before: B25635065   After: B25826080  **164,297**
+Routine Name: ORY281
+    Before: B27046619   After:    Delete  
+Routine Name: ORY281A
+    Before:       n/a   After:    Delete  
+Routine Name: ORY281B
+    Before:       n/a   After:    Delete  
+Routine Name: ORY297
+    Before:       n/a   After:  B8397277  **297**
+Routine Name: ORY299
+    Before: B17744000   After:    Delete  
+Routine Name: ORY299A
+    Before:       n/a   After:    Delete  
+Routine Name: ORY299B
+    Before:       n/a   After:    Delete  
+
+=============================================================================
+User Information:
+Entered By  : CRUMLEY,JAMIE                 Date Entered  : JUL 01, 2008
+Completed By: HULET,LEE ANN                 Date Completed: DEC 06, 2011
+Released By : HINES,RICK                    Date Released : DEC 12, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

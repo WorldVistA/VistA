@@ -1,0 +1,129 @@
+$TXT Created by DIMICELI,RON at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 01/25/12 at 09:48
+=============================================================================
+Run Date: OCT 03, 2012                     Designation: XU*8*584
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #484                      Status: Released
+                  Compliance Date: NOV 03, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*543    <<= must be installed BEFORE `XU*8*584'
+
+Subject: Spool device problem with Linux
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch fixes the spooling problem with Linux systems. It also
+  fixes a problem with ZTMGRSET.
+ 
+  Kernel now defines the system variable XUOSVER as the version
+  number of the M operating system.
+  
+  Remedy Tickets
+  ==============
+  1. 513930  Documents sent to the Spool device were losing the line
+     terminators
+   Resolution: 
+     Several routines where changed to correct this problem
+  
+  2. 493030  ZTMGRSET doesn't save %ZTBKC and %ZTBKC1
+   Resolution:
+     Change ZTMGRSET to save %ZTBKC and %ZTBKC1
+  
+  Thanks to Test Sites
+  ====================
+  Wilkes-Barre VAMC 
+  El Paso VAMC
+  North Florida/South Georgia HCS 
+    
+  Blood Bank Clearance
+  ====================
+  Clearance - 9/20/2011
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*584 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+  not alter or modify any VistA Blood Bank software design safeguards or
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*584 have no effect on Blood Bank
+   software functionality, therefore RISK is none.
+ 
+    
+  Installation Instructions
+  =========================
+  Users should be off the system.
+  Allow KIDS to inhibit new sign-ons.
+  TaskMan does *not* need to be stopped. Should be put in a wait state.
+  ZTMGRSET will rename routines automatically.
+  Installation should take less than a minute.
+   
+  1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+     This option will load the KIDS package onto your system.  
+    
+  2. The patch has now been loaded into a transport global on your 
+     system. You now need to use KIDS to install the transport global.  
+     
+  3. On the KIDS menu, under the 'Installation' menu, use the 
+     following options: 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global
+          Backup a Transport Global 
+    
+  4. On the KIDS menu, under the 'Installation' menu, use the
+     following option: 
+          Select Installation Option: Install Package(s) 
+          Select INSTALL NAME: XU*8.0*584
+                                ==========
+ 
+       Want KIDS to INHIBIT LOGONs during the install? NO// YES
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+          
+  Post-Installation
+  =================
+  The Post Install routine POST^XU8P584 will call ZTMGRSET.  This will
+  resave ZIS4ONT as %ZIS4 and ZISS1 as %ZISS1.
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P584
+    Before:       n/a   After:    B31749  **584**
+Routine Name: XUS
+    Before: B30954416   After: B31567708  **16,26,49,59,149,180,265,337,
+                                           419,434,584**
+Routine Name: ZIS4ONT
+    Before: B31901858   After: B34039996  **34,59,69,191,278,293,440,499,
+                                           524,546,543,584**
+Routine Name: ZISS1
+    Before: B15833338   After: B15840610  **69,440,584**
+Routine Name: ZTMGRSET
+    Before: B54941338   After: B53358963  **34,36,69,94,121,127,136,191,
+                                           275,355,446,584**
+ 
+Routine list of preceding patches: 434, 446, 543
+
+=============================================================================
+User Information:
+Entered By  : DIMICELI,RON                  Date Entered  : AUG 17, 2011
+Completed By: BEST,LISA                     Date Completed: SEP 05, 2012
+Released By : TILLIS,LEWIS                  Date Released : OCT 03, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

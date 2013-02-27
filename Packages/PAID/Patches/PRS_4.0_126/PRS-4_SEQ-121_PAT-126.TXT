@@ -1,0 +1,988 @@
+$TXT Created by SMITH,KEVIN at DEVVFF.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 02/17/12 at 11:24
+=============================================================================
+Run Date: APR 10, 2012                     Designation: PRS*4*126
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #121                      Status: Released
+                  Compliance Date: MAY 11, 2012
+=============================================================================
+
+Associated patches: (v)PRS*4*17    <<= must be installed BEFORE `PRS*4*126'
+                    (v)PRS*4*100   <<= must be installed BEFORE `PRS*4*126'
+                    (v)PRS*4*112   <<= must be installed BEFORE `PRS*4*126'
+                    (v)PRS*4*114   <<= must be installed BEFORE `PRS*4*126'
+                    (v)NUR*4*43    <<= must be installed BEFORE `PRS*4*126'
+
+Subject: PAID ENHANCEMENTS FOR VANOD
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Print Template
+  - Other
+
+Description:
+============
+
+ This patch primarily implements new functionality within VistA's Personnel
+ and Accounting Integrated Data/ Enhanced Time and Attendance (PAID/ETA)
+ software version 4.0 to provide appropriate data to VANOD (Veterans
+ Affairs Nursing Outcomes Database) in accordance with Public Law 107-135
+ and the OIG Recommendation 4a (annual reporting requirement).  The patch
+ also includes minor modifications to existing ETA functionality to support
+ the collection of data for the VANOD.
+  
+ This patch is dependent on the Nursing Service patch-NUR*4*43.  The 
+ Nursing service patch also supports the collection of data for the
+ VANOD.  Patch NUR*4*43 must be installed prior to patch PRS*4*126.
+   
+ The patch implements functionality to gather and store information related
+ to nurses providing direct patient care (as well as indirect care).  It
+ provides functionality to enter, edit, update, review, certify and store
+ this information.  The system provides the ability for a point to point 
+ transfer of this information from each VistA instance to the VANOD. 
+    
+ The new options included in this patch utilize existing time and 
+ attendance data and provide the ability to capture new data elements in
+ order to provide a complete set of data related to nurses point of care
+ and mandatory overtime.
+  
+ Product Perspective:
+ --------------------
+  
+ The VistA PAID/ETA package is VHA's time and attendance system.  The 
+ system tracks employee timecards, leave requests, overtime requests etc.
+  
+ The posting of ETA timecard data continues to be the responsibility of 
+ timekeepers.  The ETA timecard data is not affected by any new 
+ functionality included in this patch.  The ETA timecard data provides the
+ basis for capturing additional data and building Nurse Point of Care (POC)
+ Daily Time records. The Nurse POC Daily Time records are separate from ETA
+ timecard records.  Any changes to the Nurse POC Daily Time records will
+ not result in changes to the ETA timecards.
+  
+ The enhancements made by this patch are summarized below:
+ ---------------------------------------------------------
+  
+ System ADPAC and/or the VANOD Site Coordinator
+ ----------------------------------------------
+ The following describes the enhancements made by this patch to implement 
+ division setup, maintenance and continuing operations for Nurse Point of 
+ Care ( NPOC) System ADPAC and/or the VANOD Site Coordinator.  There may be
+ a separate coordinator for each division on the VistA system and sites may
+ determine setup by division and may determine whether these menus and
+ options should be assigned to coordinators within each division.
+  
+ The following new menu has been added which contains all the Nurse POC 
+ options and reports for the NPOC Coordinator:
+  
+    Nurse POC Coordinator Menu [PRSN COORDINATOR MENU]
+    -------------------------------------------------- 
+  
+  
+  The Nurse POC Coordinator Menu contains the following new options:
+  
+  1.     Release Corrected POC Data for VANOD Extract [PRSN POC CORRECT 
+         RELEASE]
+      This option provides the VANOD Site Coordinator or designee the 
+      ability to review and release POC data that has been released in the
+      past and has subsequently been corrected and approved.  The option
+      releases all records for the day that has been corrected and may
+      release additional days if they have been impacted by the
+      correction.  E.g., a two day tour that is corrected may impact the
+      following day and that day would also need to be rebuilt and
+      released.
+  
+  2.     Release Pay Period POC Data for VANOD Extract [PRSN POC RELEASE]
+      This option provides ability to review POC data for a pay period and 
+      release that data for extraction to VANOD.  Select a single division 
+      or all divisions for release, and optionally view all POC/ETA
+      mismatches for the selected release group.
+       
+      The option transfers records from the POC Daily Time Records (#451) 
+      file to the POC Daily Activity Extraction (#451.7) file.
+  
+  3.     Return Approved Nurse POC Daily Time Record [PRSN RET APPROVED 
+         POC RECORD]
+      This option allows the ADPAC/VANOD Site Coordinator to return 
+      previously approved POC time records for additional editing by data
+      entry personnel.
+       
+      The following types of records can be returned:
+      1.  An Approved Nurse POC Daily Time record, that has never been
+          Released.
+      2.  An Approved Nurse POC Daily Time record that has been Released 
+          and has subsequently been Corrected.
+       
+      When returning records of type 1 above, the system will change the 
+      status of the Nurse POC Daily Time record for that nurse and date to
+      POC record exists and pay period status will be Open.  This will
+      allow the POC Data Entry Personnel to edit or delete any records
+      during that pay period.
+       
+      When returning records of type 2 above, the system will change the 
+      status of the Nurse POC Daily Time record for that nurse and date to
+      Corrected. This will allow the POC Data Entry Personnel to edit or
+      delete the correction for that day.
+       
+  
+  The Nurse POC Coordinator Menu also contains the following new submenus:
+  
+  1.     Package Maintenance [PRSN SITE MAINTENANCE COORD]
+         Menu option holding maintenance options for the VANOD site
+         coordinator.
+  
+        This submenu contains the following new options:
+  
+  A.     Edit POC Division Access Parameter [PRSN POC APPLICATION 
+         PARAMETER]
+      The option provides the VANOD site coordinator the ability to set 
+      the access parameter for POC data to either T&L unit or Nursing
+      Location for each division.  This parameter will determine how data 
+      entry personnel and data approval personnel access nurses for the 
+      division.
+  
+  B.     Edit Update T&L Unit POC Users [PRSN TL POC]
+      This option allows the PEV ADPAC to enter and edit POC Entry and 
+      Approval personnel for a T&L Unit.
+  
+  C.     Show Nurse Count by Location and T&L Unit [PRSN SHOW POC SYSTEM 
+         SETUP]
+      This option lists divisions and the locations in those divisions.  
+      It shows how many nurses from various T&Ls are assigned to those
+      locations. 
+          
+  D.     Show Nurse Detail by Location or T&L Unit [PRSN NURSES BY LOC/T&L]
+      This option lists Nurse details sorted by nurse location or T&L unit 
+      for the selected division(s).
+  
+  E.     Copy ETA personnel to POC personnel [PRSN COPY ETA TO POC]
+      This option will DELETE ALL existing POC data entry and approval 
+      personnel. Then it will copy ETA timekeepers to POC data entry and 
+      ETA supervisors to POC approval personnel. Employees with an * in
+      front of their name are separated and will NOT be copied.
+  
+  
+  Reports [PRSN COORDINATOR REPORTS MENU]
+  
+       This sub menu contains the following new reports:
+           
+    1      Activity Report by Group [PRSNR ACTIVITY BY GROUP-COORD]
+      This report provides nursing point of care activity over a date 
+      range, by location or T&L unit within a division.  The user can
+      specify a detailed or summary report.
+  
+    2      Individual Activity Report [PRSNR INDIV ACTIVITY-COORD]
+      This report provides individual nursing point of care activity over 
+      a date range, by location or T&L unit within a division.
+  
+    3      Mismatch Report-Point of Care vs. ETA Timecard [PRSNR 
+           MISMATCHES ETA POC-COORD]
+      This option provides the site coordinator the ability to report any 
+      mismatches between the ETA timecard and the Nurse's Point of Care 
+      (POC) record.  Mismatches are reported when there is a discrepancy
+      between the two records for either the type of time or start and stop
+      times for a particular type of time.
+  
+    4      Nursing Education Validation [PRSNR EDU VALIDATION-COORD]
+      This report provides nursing job codes, roles, assignments,education 
+      level and year degree earned over a date range, by location or T&L 
+      unit within a division.
+  
+    5      Nurse Position and Pay Information [PRSNR NURSE POSITION AND 
+           PAY]
+      This report provides costing data of all active nurse staff.  The 
+      report includes Name, SSN (last 4), Skill Mix, BOC, OCC, Assignment
+      Code, CC, Nurse Role, Grade/Step, Next Step Due Date, Years of
+      Service and Salary.  Payroll personnel can run this report for any
+      division.
+  
+    6      Non-direct Care Summary by Skill Mix [PRSNR NONDIR CARE 
+           SUMM-COORD]
+      This report provides a summary of non direct care hours performed by 
+      nurses and unlicensed personnel over a date range, by location or 
+      T&L unit within a division.
+  
+    7      Group Summary Direct & NonDirect [PRSNR SUM DIR & NONDIR - 
+           COORD]
+      This report provides a summary of type of work and hours per 
+      location.
+  
+    8      Nurse Group Work Summary by Skill Mix [PRSNR SKILL MIX GRP 
+           SUMM-COORD]
+      This report provides nursing group work summary by skill mix over a 
+      date range, by default location or T&L unit within a division.
+  
+    9      Location Overtime Detail [PRSNR LOC OT DETAIL - COORD]
+      This report provides a detail listing of all overtime per location.
+  
+    10     Location Overtime Summary [PRSNR LOC OT SUM SKILL - COORD]
+      This report provides a summary of each skill mix by reason and 
+      mandatory overtime indicator.
+  
+    11     Group Detail Report [PRSNR GROUP DETAIL - COORD]
+      This report provides nurse assignment and FTEE sorted by
+      occupation series code and last name.
+  
+    12     Group Summary Report [PRSNR GROUP SUMMARY - COORD]
+      This report provides the number of RNs, LPNs and UAPs assigned to the
+      selected locations.
+  
+    13     All Activity at a Nurse Location [PRSNR NURLOC ACTIVITY - COORD]
+      This report provides ALL activity performed at the requested nursing
+      location(s) by any nurse irrespective of the nurse default location.
+  
+    14     All Non Direct Activity at a Nurse Location [PRSNR NURLOC 
+           NONDIR - COORD]
+      This report provides a summary of ALL non direct activity performed 
+      at the requested nursing location(s) by any nurse irrespective of the
+      nurse default location.
+  
+    15     All Overtime at a Nurse Location [PRSNR NURLOC OT - COORD] 
+      This report provides ALL overtime performed at the requested nursing
+      location(s) by any nurse irrespective of the nurse default location.
+  
+    16     Mismatch Report by T&L Unit [PRSNR MISMATCHES BY T&L]
+      This option provides POC personnel the ability to report any 
+      mismatches between the ETA timecard and the Nurse's Point of Care
+      (POC) record.  Mismatches are reported when there is a discrepancy
+      between the two records for either the type of time or start and stop
+      times for a particular type of time.
+  
+    17     Unapproved POC Time by Pay Period [PRSNR UNAPPROVED POC TIME]
+      This report lists all unapproved POC time for a given pay period, 
+      including unapproved corrected time. A summary or detail report may 
+      be chosen.
+  
+  
+  PAYROLL
+  -------
+  
+ The option Enter/Edit T&L Unit [PRSA TL EDIT] has been modified to allow 
+ the entry of division for T&L units.  If a division elects to approve and
+ enter POC data by T&L unit, then each nursing T&L unit in that division
+ should be updated to reflect the division.
+  
+ The following report is added to Payroll's Employee Reports [PRSRFI-PAID 
+ SYSTEM REPORTS] menu:
+  
+  Nurse Position and Pay Information [PRSNR NURSE POSITION AND PAY]
+  
+  This report provides costing data of all active nurse staff.  The report 
+  includes Name, SSN (last 4), Skill Mix, BOC, OCC, Assignment Code, CC, 
+  Nurse Role, Grade/Step, Next Step Due Date, Years of Service and Salary.
+  Payroll personnel can run this report for any division.
+  
+  
+  NURSE POINT OF CARE DATA APPROVAL PERSONNEL
+  -------------------------------------------
+  
+  A new menu--Nurse POC Data Approval [PRSN DATA APPROVAL MENU]--is 
+  added.  The menu should be assigned to all personnel who will be required
+  to review and approve point of care data entry.
+  
+  The menu contains the following options:
+  
+  1.     Approve Corrected Daily POC Records [PRSN APPROV CORR POC]
+       This option is used to approve corrected daily POC records.
+  
+  2.     Approve Pay Period POC [PRSN APPROV POC PAYPD]
+       This option is used to approve pay period Nurse POC records.
+  
+  3.     The Nurse POC Data Approval Menu [PRSN DATA APPROVAL] contains a 
+  Reports [PRSN DAP REPORTS MENU] submenu with the following reports:
+  
+    1      Activity Report by Group [PRSNR ACTIVITY BY GROUP-DAP]
+      This report provides nursing point of care activity over a date 
+      range, by location or T&L unit within a division.  The user can
+      specify a detailed or summary report.
+  
+    2      Individual Activity Report [PRSNR INDIVIDUAL ACTIVITY-DAP]
+      This report provides individual nursing point of care activity over 
+      a date range, by location or T&L unit within a division.
+  
+    3      Mismatch Report-Point of Care vs. ETA Timecard [PRSNR 
+           MISMATCHES ETA POC-DAP]
+      This option provides POC data approval personnel the ability to 
+      report any mismatches between the ETA timecard and the Nurse's Point
+      of Care (POC) record.  Mismatches are reported when there is a
+      discrepancy between the two records for either the type of time or
+      start and stop times for a particular type of time.
+  
+    4      Nurse Group Work Summary by Skill Mix [PRSNR SKILL MIX GRP 
+           SUMM-DAP]
+      This report provides nursing group work summary by skill mix over a 
+      date range, by default location or T&L unit within a division.
+  
+    5      Nondirect Care Summary by Skillmix [PRSNR NONDIR CARE SUMM-DAP]
+      This report provides a summary of non direct care hours performed by
+      nurses and unlicensed personnel over a date range, by location or T&L
+      unit within a division.
+  
+    6      Location Overtime Detail [PRSNR LOC OT DETAIL - DAP]
+      This report provides a detail listing of all overtime per location.
+  
+    7      Location Overtime Summary [PRSNR LOC OT SUM SKILL - DAP]
+      This report provides a summary of each skill mix by reason and 
+      mandatory overtime indicator.
+  
+    8      Group Summary Direct & NonDirect [PRSNR SUM DIR & NONDIR - DAP]
+      This report provides a summary of type of work and hours per 
+      location.
+  
+    9      Nursing Education Validation [PRSNR EDU VALIDATION-COORD]
+      This report provides nursing job codes, roles, assignments,education 
+      level and year degree earned over a date range, by location or T&L 
+      unit within a division.
+  
+    10     All Activity at a Nurse Location [PRSNR NURLOC ACTIVITY - COORD]
+      This report provides ALL activity performed at the requested nursing
+      location(s) by any nurse irrespective of the nurse default location.
+  
+    11     All Non Direct Activity at a Nurse Location [PRSNR NURLOC 
+           NONDIR - COORD]
+      This report provides a summary of ALL non direct activity performed 
+      at the requested nursing location(s) by any nurse irrespective of the
+      nurse default location.
+  
+    12     All Overtime at a Nurse Location [PRSNR NURLOC OT - COORD] 
+      This report provides ALL overtime performed at the requested nursing
+      location(s) by any nurse irrespective of the nurse default location.
+  
+  
+    13     Mismatch Report by T&L Unit [PRSNR MISMATCHES BY T&L]
+      This option provides POC personnel the ability to report any 
+      mismatches between the ETA timecard and the Nurse's Point of Care
+      (POC) record.  Mismatches are reported when there is a discrepancy
+      between the two records for either the type of time or start and stop
+      times for a particular type of time.
+  
+    14     Unapproved POC Time by Pay Period [PRSNR UNAPPROVED POC TIME]
+      This report lists all unapproved POC time for a given pay period, 
+      including unapproved corrected time. A summary or detail report may 
+      be chosen.
+  
+  
+  NURSE POINT OF CARE DATA ENTRY PERSONNEL
+  ----------------------------------------
+  
+  A new menu-- Nurse POC Data Entry Menu ... [PRSN DATA ENTRY MENU]--is 
+ added.  The menu should be assigned to all personnel who will be required
+ to enter point of care data.
+  
+  The menu contains the following options:
+  
+  1.     Correct Released Nurse POC Data [PRSN CORRECT RELEASED POC DATA]
+       This option provides the functionality to enter corrections
+       to nurse POC data for direct care nurses for a prior date that has
+       already been released to VANOD.
+  
+  2.     Delete Nurse POC Daily Time Record [PRSN DEL POC RECORD]
+       This option allows data entry personnel to delete the following 
+       types of records:
+        
+  a.     An entered Nurse POC Daily Time record that has never been 
+         approved or released.
+  b.     A Nurse POC Daily Time record that is an unapproved correction to 
+         a previously released record.
+        
+       The system provides a message to the user as to the status of the
+       deletion request.
+  
+  3.     Enter Nurse POC Data [PRSN ENTER NURSE POC DATA]
+       This option is used to enter and edit nurse POC data for all of a 
+       nurse's time and attendance activity.
+  
+  4.     The Nurse POC Data Entry Menu [PRSN DATA ENTRY MENU] contains a 
+         Reports [PRSN DEP REPORTS MENU] submenu with the following
+         reports:
+  
+  a.     Activity Report by Group [PRSNR ACTIVITY BY GROUP-DEP]
+       This report provides nursing point of care activity over a date 
+       range, by location or T&L unit within a division.  The user can
+       specify a detailed or summary report.
+  
+  b.     Individual Activity Report [PRSNR INDIVIDUAL ACTIVITY-DEP]
+       This report provides individual nursing point of care activity over 
+       a date range, by location or T&L unit within a division.
+  
+  c.     Mismatch Report-Point of Care vs. ETA Timecard [PRSNR MISMATCHES 
+         ETA POC-DEP]
+       This option provides POC data entry personnel the ability to report 
+       any mismatches between the ETA timecard and the Nurse's Point of
+       Care (POC) record.  Mismatches are reported when there is a
+       discrepancy between the two records for either the type of time or
+       start and stop times for a particular type of time.
+  
+  d.     Mismatch Report by T&L Unit [PRSNR MISMATCHES BY T&L]
+      This option provides POC personnel the ability to report any 
+      mismatches between the ETA timecard and the Nurse's Point of Care
+      (POC) record.  Mismatches are reported when there is a discrepancy
+      between the two records for either the type of time or start and stop
+      times for a particular type of time.
+  
+  
+  TIMEKEEPERS
+  -----------
+  
+  The following option is added to the TimeKeeper Main Menu [PRSA TK MENU]:
+  
+  Turn On/Off POC Data Entry from Timecard Posting [PRSN TOGGLE TK POC 
+  POST]
+  
+       This option is controlled by a security key-PRSN DEP.  When a
+       timekeeper is added to the POC DATA ENTRY PERSONNEL multiple in the 
+       T&L unit file, they will automatically be assigned the SECURITY KEY
+       that unlocks this menu item from the TIMEKEEPER MAIN MENU.  The
+       option will give them the ability to TURN ON or TURN OFF the new
+       functionality in the POST EMPLOYEE time option, which takes a
+       timekeeper directly to the POC Data Entry from the POST EMPLOYEE
+       TIME option.
+  
+  
+  NURSES
+  ------
+  
+  A new menu--Nurse POC Staff Menu [PRSN NURSE MENU]--is added.  The menu 
+  should be assigned to all Nursing personnel who require point of care
+  data. The menu contains the following options:
+  
+  1.     Individual Activity Report [PRSNR INDIV ACTIVITY-NURSE]
+       This report provides individual nursing point of care activity over 
+       a date range, by location or T&L unit within a division.
+  
+  2.     Mismatch Report-Point of Care vs. ETA Timecard [PRSNR MISMATCHES 
+         ETA POC-NURSE]
+       This option provides a nurse the ability to report any mismatches
+       between their ETA timecard and their Nurse's Point of Care (POC) 
+       record. Mismatches are reported when there is a discrepancy between
+       the two records for either the type of time or start and stop times
+       for a particular type of time.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ PAID EMPLOYEE (#450.01)    USER PREFERENCES (#.01)    Modified
+ PAID EMPLOYEE (#450.01)    VALUE (#1)                 Modified
+ POC DAILY TIME RECORDS     PAY PERIOD (#.01)          New
+  (#451)               
+ POC DAILY TIME RECORDS     DIVISION (#.01)            New
+  (#451.06)            
+ POC DAILY TIME RECORDS     RELEASE USER (#1)          New
+  (#451.06)            
+ POC DAILY TIME RECORDS     RELEASE DATE/TIME (#2)     New
+  (#451.06)            
+ POC DAILY TIME RECORDS     TOTAL # VA NURSES
+  (#451.06)                 RELEASED (#3)              New
+ POC DAILY TIME RECORDS     TOTAL # RECORDS
+  (#451.06)                 RELEASED (#4)              New
+ POC DAILY TIME RECORDS     VA NURSE (#.01)            New
+  (#451.09)            
+ POC DAILY TIME RECORDS     POC RECORD PP STATUS (#1)  New
+  (#451.09)
+ POC DAILY TIME RECORDS     APP. SUPERVISOR (#2)       New
+  (#451.09)
+ POC DAILY TIME RECORDS     APP. DATE/TIME (#3)        New
+  (#451.09)
+ POC DAILY TIME RECORDS     NURSE DIVISION (#4)        New
+  (#451.09)
+ POC DAILY TIME RECORDS     NURSE LOCATION (#5)        New
+  (#451.09)
+ POC DAILY TIME RECORDS     NURSE T&L UNIT (#6)        New
+  (#451.09)
+ POC DAILY TIME RECORDS     DAY # (#.01)               New
+  (#451.99)            
+ POC DAILY TIME RECORDS     CORRECTION STATUS (#1)     New
+  (#451.99)
+ POC DAILY TIME RECORDS     ACTIVITY EXTRACTION # (#2) New
+  (#451.99)
+ POC DAILY TIME RECORDS     VERSION # (#.01)           New
+  (#451.999)            
+ POC DAILY TIME RECORDS     APP. CORRECT
+  (#451.999)                SUPERVISOR (#1)            New
+ POC DAILY TIME RECORDS     APP. CORRECT 
+  (#451.999)                DATE/TIME (#2)             New
+ POC DAILY TIME RECORDS     START TIME (#.01)          New
+  (#451.9999)            
+ POC DAILY TIME RECORDS     STOP TIME (#1)             New
+  (#451.9999)
+ POC DAILY TIME RECORDS     MEAL TIME (#2)             New
+  (#451.9999)
+ POC DAILY TIME RECORDS     TYPE OF TIME (#3)          New
+  (#451.9999)
+ POC DAILY TIME RECORDS     POINT OF CARE (#4)         New
+  (#451.9999)
+ POC DAILY TIME RECORDS     TYPE OF WORK (#5)          New
+  (#451.9999)
+ POC DAILY TIME RECORDS     MANDATORY INDICATOR (#6)   New
+  (#451.9999)
+ POC DAILY TIME RECORDS     REASON FOR OT/CT/RG (#7)   New
+  (#451.9999)
+ POC DAILY TIME RECORDS     MILITARY START TIME (#8)   New
+  (#451.9999)
+ POC DAILY TIME RECORDS     MILITARY STOP TIME (#9)    New
+  (#451.9999)
+ NURSE ROLE (#451.1)        CODE (#.01)                New
+ NURSE ROLE (#451.1)        ROLE (#1)                  New
+ NURSE ROLE (#451.1)        ASSIGNMENT (#2)            New
+ NURSE ROLE (#451.1)        CATEGORY (#3)              New
+ POC TYPE OF TIME (#451.4)  TYPE OF TIME CODE (#.01)   New
+ POC TYPE OF TIME (#451.4)  DESCRIPTION (#1)           New
+ POC TYPE OF TIME (#451.49) ETA TYPE OF TIME (#.01)    New
+ POC TYPE OF TIME (#451.49) ETA TYPE OF TIME CODE (#1) New
+ TYPE OF WORK (#451.5)      WORK CODE (#.01)           New
+ TYPE OF WORK (#451.5)      WORK DESCRIPTION (#1)      New
+ REASON FOR OVERTIME        OVERTIME CODE (#.01)       New
+  (#451.6)
+ REASON FOR OVERTIME        OVERTIME DESCRIPTION (#1)  New
+  (#451.6)
+ POC DAILY ACTIVITY         SEQUENCE NUMBER (#.01)     New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         NURSE INSTITUTION (#1)     New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         STATION NUMBER (#2)        New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         TIME CARD RELEASE
+ EXTRACTION (#451.7)        VERSION # (#3)             New
+ POC DAILY ACTIVITY         NURSE ID (#4)              New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         PAID EMPLOYEE IEN (#5)     New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         POC TIME RECORD DATE (#6)  New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         START TIME (#7)            New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         STOP TIME (#8)             New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         POC TYPE OF TIME (#9)      New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         POC NURSE LOCATION (#10)   New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         OVERTIME MANDATORY (#11)   New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         OVERTIME REASON (#12)      New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         POC TYPE OF WORK (#13)     New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         RELEASE DATE (#14)         New
+ EXTRACTION (#451.7)        
+ POC DAILY ACTIVITY         NURSE T&L UNIT (#15)       New
+ EXTRACTION (#451.7)        
+ T&L UNIT (#455.512)        MEDICAL CENTER
+                            DIVISION (#20.5)           New
+ T&L UNIT (#455.52)         POC DATA ENTRY
+                            PERSONNEL (#.01)           New
+ T&L UNIT (#455.531)        POC DATA APPROVAL
+                            PERSONNEL (#.01)           New
+ PAID PARAMETERS (#456.05)  EFFECTIVE PAY
+                            PERIOD (#.01)              New
+ PAID PARAMETERS (#456.05)  ACCESS TO NURSES FOR
+                            POC DATA (#1)              New
+ TYPE OF TIME (#457.3)                                 Additional data
+                                                       records only
+  
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ PRSA TL DISP          #455.5               Modified
+ PRSA TL EDIT          #455.5               Modified
+ PRSN DAILY TIME
+ RECORDS A/E/D         #451                 New
+ PRSN EDIT PAID
+ PARAMETERS            #456                 New
+ PRSN EDIT TL POC      #455.5               New
+  
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ PRSA TK MENU           Menu                    Modified
+ PRSN APPROV CORR POC   Option                  New
+ PRSN APPROV POC PAYPD  Option                  New
+ PRSN COORDINATOR MENU  Menu                    New
+ PRSN COORDINATOR
+ REPORTS MENU           Menu                    New
+ PRSN COPY ETA TO POC   Option                  New
+ PRSN CORRECT RELEASED
+ POC DATA               Option                  New
+ PRSN DAP REPORTS MENU  Menu                    New
+ PRSN DATA APPROVAL
+ MENU                   Menu                    New
+ PRSN DATA ENTRY MENU   Menu                    New
+ PRSN DEL POC RECORD    Option                  New
+ PRSN DEP REPORTS MENU  Menu                    New
+ PRSN ENTER NURSE POC
+ DATA                   Option                  New
+ PRSN NURSE MENU        Menu                    New
+ PRSN NURSES BY LOC/T&L Option                  New
+ PRSN POC APPLICATION
+ PARAMETER              Option                  New
+ PRSN POC CORRECT
+ RELEASE                Option                  New
+ PRSN POC RELEASE       Option                  New
+ PRSN POC TYPE OF TIME  Option                  New
+ PRSN RET APPROVED POC
+ RECORD                 Option                  New
+ PRSN SHOW POC SYSTEM
+ SETUP                  Option                  New
+ PRSN SITE MAINTENANCE
+ COORD                  Option                  New
+ PRSN TL POC            Option                  New
+ PRSN TOGGLE TK POC
+ POST                   Option                  New
+ PRSN VANOD EXTRACT     Option                  New
+ PRSNR ACTIVITY BY
+ GROUP-COORD            Option                  New
+ PRSNR ACTIVITY BY
+ GROUP-DAP              Option                  New
+ PRSNR ACTIVITY BY
+ GROUP-DEP              Option                  New
+ PRSNR EDU
+ VALIDATION-COORD       Option                  New
+ PRSNR GROUP
+ DETAIL - COORD         Option                  New
+ PRSNR GROUP
+ SUMMARY - COORD        Option                  New
+ PRSNR INDIV
+ ACTIVITY-COORD         Option                  New
+ PRSNR INDIV
+ ACTIVITY-NURSE         Option                  New
+ PRSNR INDIVIDUAL
+ ACTIVITY-DAP           Option                  New
+ PRSNR INDIVIDUAL
+ ACTIVITY-DEP           Option                  New
+ PRSNR LOC OT
+ DETAIL - COORD         Option                  New
+ PRSNR LOC OT
+ DETAIL - DAP           Option                  New
+ PRSNR LOC OT SUM
+ SKILL - COORD          Option                  New
+ PRSNR LOC OT SUM
+ SKILL - DAP            Option                  New
+ PRSNR MISMATCHES
+ BY T&L                 Option                  New
+ PRSNR MISMATCHES
+ ETA POC-COORD          Option                  New
+ PRSNR MISMATCHES
+ ETA POC-DAP            Option                  New
+ PRSNR MISMATCHES
+ ETA POC-DEP            Option                  New
+ PRSNR MISMATCHES
+ ETA POC-NURSE          Option                  New
+ PRSNR NONDIR CARE
+ SUMM-COORD             Option                  New
+ PRSNR NONDIR CARE
+ SUMM-DAP               Option                  New
+ PRSNR NURLOC
+ ACTIVITY - COORD       Option                  New
+ PRSNR NURLOC
+ NONDIR - COORD         Option                  New
+ PRSNR NURLOC
+ OT - COORD             Option                  New
+ PRSNR NURSE
+ POSITION AND PAY       Option                  New
+ PRSNR SKILL MIX
+ GRP SUMM-COORD         Option                  New
+ PRSNR SKILL MIX
+ GRP SUMM-DAP           Option                  New
+ PRSNR SUM DIR &
+ NONDIR - COORD         Option                  New
+ PRSNR SUM DIR &
+ NONDIR - DAP           Option                  New
+ PRSNR UNAPPROVED
+ POC TIME               Option                  New
+ PRSRFI-PAID SYSTEM
+ REPORTS                Menu                    Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ PRSN DEP
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ PRSN POC DIVISION            PAID PARAMETERS
+ PARAMS             Print     (#456)              New
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ Nursing Staffing Overtime (20050203)
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. HD0000000599520 - PAID T&L Report Incorrect
+  
+ Problem:
+ -------
+ Report did not limit itself to the originally intended values which caused
+ new data levels to be included in report.
+  
+ Resolution:
+ ----------
+ Corrected report to limit only to originally intended values.
+  
+ Test Sites:
+ ----------
+ CENTRAL TEXAS HCS
+ CHICAGO HCS
+ MANCHESTER, NH
+ PRESCOTT, AZ
+ UPSTATE NEW YORK HCS
+ WEST PALM BEACH, FL
+ AMARILLO, TX - Loaded software into production, but did not test.
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/. This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software directly
+ from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.va.gov/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ PAID User Manual              PAID_4_P126_UM_CP.PDF          (binary)
+  - Change Pages
+ Release Notes                 PAID_4_P126_RN.PDF             (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post install routine PRSXP126 will build the new indexes required.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system, however, it should
+ be installed at a non-peak time to minimize disruption to the users. It
+ is strongly recommended that all the PAID ETA options in the OPTION
+ (#19) file be disabled to prevent possible conflicts while running the
+ KIDS install.
+  
+ All the ETA options can be selected by using the PAID ETA namespace of 
+ PRS*, to disable all PAID ETA options. Other VISTA users will not be 
+ affected.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XXX*X.X*XX):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' Answer YES, unless your system does this in a 
+                    nightly TaskMan process.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Answer YES
+  
+     When prompted 'Enter options you wish to mark as 'Out Of Order':' 
+     Answer PRS*
+  
+     When prompted 'Enter protocols you wish to mark as 'Out Of Order':'
+     Press Return
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' Answer 0
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 59
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSADP1
+    Before: B11280993   After: B11335770  **22,114,126**
+Routine Name: PRSATIM
+    Before:  B4139617   After:  B4486909  **69,70,71,93,100,126**
+Routine Name: PRSATP
+    Before: B31400754   After: B32294391  **22,57,69,92,102,93,112,126**
+Routine Name: PRSN9A
+    Before:       n/a   After:  B5056202  **126**
+Routine Name: PRSN9B
+    Before:       n/a   After:  B2702215  **126**
+Routine Name: PRSNAA01
+    Before:       n/a   After: B36883552  **126**
+Routine Name: PRSNAC01
+    Before:       n/a   After: B21805645  **126**
+Routine Name: PRSNCAPE
+    Before:       n/a   After: B32183609  **126**
+Routine Name: PRSNCGP
+    Before:       n/a   After: B68249177  **126**
+Routine Name: PRSNCGR
+    Before:       n/a   After: B81915244  **126**
+Routine Name: PRSNCGR1
+    Before:       n/a   After: B27388966  **126**
+Routine Name: PRSNCR1
+    Before:       n/a   After: B13036287  **126**
+Routine Name: PRSNCTL
+    Before:       n/a   After: B22429209  **126**
+Routine Name: PRSNDPC1
+    Before:       n/a   After: B17799830  **126**
+Routine Name: PRSNEC
+    Before:       n/a   After: B21101088  **126**
+Routine Name: PRSNEE
+    Before:       n/a   After: B48948621  **126**
+Routine Name: PRSNEE0
+    Before:       n/a   After: B21641621  **126**
+Routine Name: PRSNEETP
+    Before:       n/a   After: B12540787  **126**
+Routine Name: PRSNRAD0
+    Before:       n/a   After: B15054277  **126**
+Routine Name: PRSNRAS0
+    Before:       n/a   After: B17764881  **126**
+Routine Name: PRSNRAS1
+    Before:       n/a   After: B20833055  **126**
+Routine Name: PRSNRDN0
+    Before:       n/a   After:  B8776479  **126**
+Routine Name: PRSNRDN1
+    Before:       n/a   After: B13341348  **126**
+Routine Name: PRSNREV0
+    Before:       n/a   After:  B7575459  **126**
+Routine Name: PRSNREV1
+    Before:       n/a   After: B10461851  **126**
+Routine Name: PRSNRGD0
+    Before:       n/a   After:  B9210603  **126**
+Routine Name: PRSNRGD1
+    Before:       n/a   After:  B5460196  **126**
+Routine Name: PRSNRGS0
+    Before:       n/a   After: B21962579  **126**
+Routine Name: PRSNRIA
+    Before:       n/a   After:  B6940996  **126**
+Routine Name: PRSNRLND
+    Before:       n/a   After: B35575903  **126**
+Routine Name: PRSNRLOS
+    Before:       n/a   After:B105227218  **126**
+Routine Name: PRSNRLS0
+    Before:       n/a   After: B58835393  **126**
+Routine Name: PRSNRMM
+    Before:       n/a   After:B135301607  **126**
+Routine Name: PRSNRMM1
+    Before:       n/a   After: B24342033  **126**
+Routine Name: PRSNRND0
+    Before:       n/a   After:  B8957328  **126**
+Routine Name: PRSNRND1
+    Before:       n/a   After: B16141742  **126**
+Routine Name: PRSNROLD
+    Before:       n/a   After: B46388978  **126**
+Routine Name: PRSNROLS
+    Before:       n/a   After: B69836614  **126**
+Routine Name: PRSNRSM0
+    Before:       n/a   After:  B8857878  **126**
+Routine Name: PRSNRSM1
+    Before:       n/a   After: B16892606  **126**
+Routine Name: PRSNRUR
+    Before:       n/a   After: B26480927  **126**
+Routine Name: PRSNRUT0
+    Before:       n/a   After: B18653114  **126**
+Routine Name: PRSNRUT1
+    Before:       n/a   After:  B6371966  **126**
+Routine Name: PRSNUT01
+    Before:       n/a   After: B37189173  **126**
+Routine Name: PRSNUT02
+    Before:       n/a   After: B66153406  **126**
+Routine Name: PRSNUT03
+    Before:       n/a   After: B67835037  **126**
+Routine Name: PRSNUT04
+    Before:       n/a   After: B45514733  **126**
+Routine Name: PRSNUT05
+    Before:       n/a   After: B12074969  **126**
+Routine Name: PRSPLVU
+    Before: B47621313   After: B47621805  **93,126**
+Routine Name: PRSRTLPR
+    Before: B14746144   After: B14710539  **2,6,10,16,17,126**
+Routine Name: PRSU1A
+    Before:       n/a   After: B13822383  **126**
+Routine Name: PRSU1B
+    Before:       n/a   After: B11305691  **126**
+Routine Name: PRSU1B1
+    Before:       n/a   After:  B2203162  **126**
+Routine Name: PRSXP126
+    Before:       n/a   After:  B2479075  **126**
+ 
+Routine list of preceding patches: 17, 100, 112, 114
+
+=============================================================================
+User Information:
+Entered By  : HEIGES,JOHN                   Date Entered  : SEP 02, 2009
+Completed By: CORONA,JOSE                   Date Completed: APR 09, 2012
+Released By : MCCLARAN,PAM                  Date Released : APR 10, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

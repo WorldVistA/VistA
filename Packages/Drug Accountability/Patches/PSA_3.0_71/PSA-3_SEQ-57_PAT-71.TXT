@@ -1,0 +1,298 @@
+$TXT Created by SMITH,ROBERT at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 12/13/10 at 09:04
+=============================================================================
+Run Date: MAR 02, 2011                     Designation: PSA*3*71
+Package : PSA - DRUG ACCOUNTABILITY           Priority: Mandatory
+Version : 3        SEQ #57                      Status: Released
+                  Compliance Date: APR 02, 2011
+=============================================================================
+
+Associated patches: (v)PSA*3*65    <<= must be installed BEFORE `PSA*3*71'
+                    (v)PSA*3*68    <<= must be installed BEFORE `PSA*3*71'
+                    (v)PSA*3*70    <<= must be installed BEFORE `PSA*3*71'
+
+Subject: CS DRUG RECEIVING FIX AND LOCK VERIFYING FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following problems:
+  
+ 1.  Sites are reporting that the invoices are being left in a LOCKED
+     VERIFYING status.
+  
+ 2.  Controlled Substance package is not updated when invoice is returned.
+  
+ 3.  The PSA IV ALL LOCATIONS nightly job enters an endless loop when
+     bad data is encountered.
+  
+ 4.  When processing an invoice with a blank ORDER UNIT, the system does
+     not generate a discrepancy report.
+  
+  
+ ASSOCIATED NSR(s):
+ ================== 
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1.  HD0000000211457 - Locked Invoice
+     Duplicates:
+     HD0000000220193 - DA invoice status = LOCKED VERIFYING
+     HD0000000275006 - Invoice has the status of "LOCKED VERIFYING
+     HD0000000315191 - Status = locked verifying
+     HD0000000319629 - Cannot process
+     HD0000000359733 - VERIFYING LOCKED
+  
+ 2.  HD0000000285500 - Can't received drug (CS) into vault
+     Duplicate:
+     HD0000000319801 - Unable to change Qty Invoiced amount
+  
+ 3.  HD0000000322644 - Run away PSA IV ALL LOCATIONS
+     Duplicate:
+     HD0000000127973   Inventory numbers not updating
+     HD0000000341849   PSA Run away job
+  
+ 4.  HD0000000279969 - Verifying invoices with blank order unit no longer
+                       on discrepancy report
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================= 
+ Chillicotte VAMC
+ Oklahoma City VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1.  HD0000000211457 - Locked Invoice
+  
+   PROBLEM
+   ======= 
+   Sites are reporting that the invoices are being left in a LOCKED
+   VERIFYING status when the user exits ("^") at the "Do you want to
+   print the verification error report?" prompt.  The problem is that 
+   the routine quits without executing the unlock logic leaving the
+   invoice in a locked status.
+  
+   RESOLUTION
+   ==========
+   The routine PSAVER will be modified to reset the PSAOUT variable to 0
+   after exiting the print routine and after the lock has been cleared.
+   Additionally, logic will be added to the PSAVER4 routine to check for
+   records in a LOCKED VERIFYING status and give the user the choice to
+   reset the status to PROCESSED.
+  
+   The pre-init routine PSAPRE71 will loop through ^PSD(58.811,"ASTAT,"L"
+   global and identify the invoices that have a "LOCKED VERIFYING" status.
+   It will send a Mailman message to the PSA NDC UPDATES mail group.  This
+   message will contain the Order#, Invoice#,Date the invoice was received
+   and the person that verified it.
+  
+   Subj: PSA*3*71 LOCKED INVOICE REPORT  [#114761] 07/16/10@15:17  10 lines
+   From: PSA*3*71 PREINSTALL  In 'IN' basket.   Page 1  *New*
+   -------------------------------------------------------------------------
+   The following Drug Accountability Order Invoices currently
+   have a status of LOCKED VERIFYING.
+  
+   Order#             Invoice#            Date Received       Verifier
+   VMP0809300C        VMPDEV080930C       SEP 30, 2008        USER1
+   VMP09041301A       VMPTEST9041301A     APR 14, 2009        USER2
+   CHY20090528A       CHY2090528A         MAY 28, 2009        USER1
+   VMP100330A         VMP100330A          MAR 30, 2010        USER1
+  
+   ***** End Of Report *****
+  
+   The 1st time a user identified in the mailman message, uses the
+   "Verify Invoices" [PSA VERIFY INVOICES] VistA option, the user will
+   see this new prompt:
+  
+   The following Invoices currently have a status of LOCKED VERIFYING.
+   These Invoices are either currently being Verified by you in another
+   session, or it may not have completed the Verify process correctly.
+  
+       Order#: VMP0809300C        Invoice#: VMPDEV080930C  LOCKED VERIFYING
+  
+    Select one of the following:
+  
+         P         RESET TO PROCESSED
+         C         MARK COMPLETED
+         S         SKIP
+  
+    PROCESS OR COMPLETE:
+  
+   The user may select "P" RESET TO PROCESSED, "C" MARK COMPLETED or "S" SKIP.
+   Once the user has worked all of the locked invoices, they will be removed
+   from the list and the user will not see this set of choices again. They will
+   only be given the opportunity to mark the invoices as COMPLETED during this
+   first session. If the user selects SKIP, that invoice will continue to be
+   displayed until the user answer YES to the "Do you want to reset the Order
+   Status to PROCESSED? NO//" prompt.
+  
+   Select OPTION NAME: PSA VERIFY INVOICES       Verify Invoices
+  
+     The following Invoices currently have a status of LOCKED VERIFYING.
+     These Invoices are either currently being Verified by you in another
+     session, or it may not have completed the Verify process correctly.
+  
+     1.   Order#: C502399000         Invoice#: 7229967488
+  
+     Do you want to reset the Order Status to PROCESSED? NO//
+  
+   If the user answers 'NO', the record will be left as is.
+   If the user answers 'YES', the record status is changed to PROCESSED.
+  
+     Order Status has been reset to PROCESSED for
+        Order#: C502399000 Invoice#: 7229967488
+  
+  
+ 2.  HD0000000285500 - Can't received drug (CS) into vault
+  
+   PROBLEM
+   =======
+   When an invoice was downloaded and processed by a tech, the quantity
+   received was changed to 0 on one item because it was going to be sent
+   back.  This was done in error.  It should have been received in and
+   then out.  The tech then changed the quantity received to reflect the
+   original quantity received - correcting the mistake.  After verifying
+   the invoice, the user checked the Controlled Substance package and
+   found the drug did not show as being received.
+  
+   RESOLUTION
+   ==========
+   The problem is that the routine PSAUTL4 did not detect a difference 
+   between a 0 and a null value, treating them as the same, and did not 
+   make an update.  The routine will be modified to distinguish between 0
+   and null, and send an update if the variable contains anything other
+   than nulls.
+  
+  
+ 3.  HD0000000322644 - Run away PSA IV ALL LOCATIONS
+  
+   PROBLEM
+   =======
+   The DRUG field (#.01) of DRUG sub-file (#58.8001) of the DRUG
+   ACCOUNTABILITY STATS file (#58.8) is a pointer field to the DRUG
+   file (#50).  When this field is populated with an alpha-numeric value,
+   the PSA IV ALL LOCATIONS [All Location Dispense/Purge] nightly job
+   goes into a endless loop and never completes it's processing.
+  
+   RESOLUTION
+   ==========
+   Routine PSAVERA1 will be modified to test the drug pointer variable
+   against the DRUG file to ensure that it is valid before storing the
+   data.
+  
+   The pre-init routine PSAPRE71 will loop through the DRUG
+   ACCOUNTABILITY STATS file at the drug level and remove the
+   alphanumeric entries that were created by the bug in PSAVERA1.
+   A MailMan message will be sent to the PSA NDC UPDATES mail group 
+   with a list of Pharmacy Locations and the bad drug entries that were
+   removed.
+  
+  
+ 4.  HD0000000279969 - Verifying invoices with blank order unit no longer
+                       on discrepancy report
+  
+   PROBLEM
+   =======
+   When a drug in the DRUG file (#50) has a blank ORDER UNIT subfield 
+   (#9) of the SYNONYM field (#401) and a user is processing an invoice
+   for that particular drug, the system does not generate a discrepancy
+   report.
+  
+   RESOLUTION
+   ==========
+   The routine PSAPROC7 will be modified to check for a null or zero
+   value of the ORDER UNIT variable during processing and verification
+   for the discrepancy report.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ Suggested time to install: non-peak requirement hours. The patch should be
+ installed when NO Drug Accountability users are on the system.
+  
+ Install Time - less than 5 minutes
+  
+  
+  1.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  2.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter PSA*3.0*71):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  3.  Use the Install Package(s) option and select the package
+      PSA*3.0*71.
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+          install? NO//', answer NO.
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0; DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**[Patch List]**;;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSAPRE71
+    Before:       n/a   After: B16456074  **71**
+Routine Name: PSAPROC7
+    Before: B57726362   After: B59246490  **3,12,27,21,42,61,64,67,68,71**
+Routine Name: PSAUTL4
+    Before: B27358372   After: B27511872  **3,21,48,54,61,67,71**
+Routine Name: PSAVER
+    Before: B77677006   After: B80171787  **60,65,71**
+Routine Name: PSAVER1
+    Before: B56200919   After: B57200195  **33,60,65,71**
+Routine Name: PSAVER4
+    Before: B15659954   After: B44861378  **15,60,71**
+Routine Name: PSAVERA1
+    Before: B60705765   After: B61000671  **21,61,63,70,71**
+ 
+Routine list of preceding patches: 65, 68, 70
+
+=============================================================================
+User Information:
+Entered By  : SMITH,ROBERT J                Date Entered  : APR 09, 2009
+Completed By: WERNER,GARY                   Date Completed: FEB 08, 2011
+Released By : VECE,VIRGINIA                 Date Released : MAR 02, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

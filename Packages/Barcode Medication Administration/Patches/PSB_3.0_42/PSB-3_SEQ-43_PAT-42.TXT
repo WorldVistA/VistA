@@ -1,0 +1,489 @@
+$TXT Created by NAPOLIELLO,GREG at CMLCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Wednesday, 10/20/10 at 13:18
+=============================================================================
+Run Date: FEB 16, 2011                     Designation: PSB*3*42
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #43                      Status: Released
+                  Compliance Date: MAR 19, 2011
+=============================================================================
+
+Associated patches: (v)PSB*3*31    <<= must be installed BEFORE `PSB*3*42'
+                    (v)PSB*3*50    <<= must be installed BEFORE `PSB*3*42'
+                    (v)PSB*3*56    <<= must be installed BEFORE `PSB*3*42'
+
+Subject: BCMA IHS PARAMETER/508 COMPLIANCE
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Other
+
+Description:
+============
+
+ ATTENTION: This patch includes a new Graphical User Interface (GUI) 
+ executable file. Installation of this GUI is required immediately after 
+ the KIDS install for the Patch to function.
+  
+  
+ This enhancement is intended to enable the BCMA application to recognize 
+ whether it is operating in the Indian Health Service (IHS) or Veterans 
+ Health Administration (VHA) environment, and respond by recognizing and 
+ displaying the patient identifier appropriate to the environment.  
+  
+ BCMA GUI Version 42 has been tested with CPRS GUI Version 27 using the 
+ CCOW functionality. The test sites have found that CCOW is working as 
+ expected in BCMA and have not reported any defects or anomalies during 
+ the testing. Per the Patient Safety Office and Bar Code Resource Office, 
+ sites may now enable CCOW by removing "/NOCCOW" from the Target field of 
+ the BCMA GUI Shortcut.
+  
+ Please review the BCMA V.3.0 User Manual - Appendix C (CCOW) located at 
+ the VA Software Document Library at:
+         http://www4.va.gov/vdl/application.asp?appid=84
+  
+  
+ Please see the Release Notes for more details on the following 
+ enhancements.
+  
+ 1. Enhancement: This will enable a single version of BCMA to be 
+    maintained by VHA and yet be installed and operate in a "plug and play"
+    fashion in an IHS or Tribal facility running Resource and Patient
+    Management System (RPMS). 
+  
+ 2. Enhancement: The BCMA Graphical User Interface (GUI) will display 
+    vital measurements from the Veterans Administration (VA)
+    VITALS/MEASUREMENTS package for VHA sites or optionally use the 
+    IHS PCC SUITE (APC) package which supports the V MEASURMENT file, if
+    operating at an IHS facility and that facility is configured to use the
+    V MEASUREMENT file.
+  
+ 3. Enhancement: All forms on the Unit Dose, IVP/IVPB and IV VDL Tabs have 
+    been updated to conform to Section 508 compliance standards. The
+    Coversheet has been excluded for now.
+  
+ 4. Enhancement: GUI Help Text Content has been updated to the current 
+    functionality.
+  
+  
+ This Patch also Addresses 7 reported issues:
+  
+ 1. PSI-07-223 (PSPO-823) - If an IV order is already infusing when it is
+    placed on provider hold, the IV can be stopped and then infused again 
+    while still on provider hold.
+ 2. PSPO-1678 - The MULTIPLE DOSE pop up form blocks the dosage on the 
+    Virtual Due List (VDL).
+ 3. All BCMA reports have a default date based on the Laptop Time instead 
+    of the Server Time.
+ 4. The MedLog form in BCMA will accept a space for the required comment.
+ 5. 3 Missing Dose request reasons are missing from the Reason drop down 
+    box on the BCMA Missing Dose form.
+ 6. Remove the obsolete Scratch HFS Directory from the BCMA Parameters GUI.
+ 7. The units ordered do not display on the BCMA Medication Log report 
+    when a missing dose is requested and the order is held and then given.
+  
+  
+ Associated NSR(s):
+ ------------------
+ 20051101
+  
+  
+ Associated PSI(s):
+ ------------------
+ PSI-07-223 (PSPO-823)
+ PSPO-1678
+  
+  
+ Associated Remedy ticket(s):
+ ----------------------------
+ 1.     HD0000000221177 - IV infusion Hold orders not working properly
+ 2.     HD0000000390027 - MULTI TAB DOSE POPUP BLOCKS DOSAGE
+ 3.     HD0000000293514 - BCMA order problem messages-replicating
+              Duplicate: HD00000000300988
+ 4.     HD0000000102421 - Comment will accept a space
+ 5.     HD0000000380321 - options missing from Missing Dose Request Reason
+                          drop down list
+ 6.     HD0000000380330 - Remove Scratch HFS Directory field from BCMA
+                          Parameters
+ 7.     HD0000000235723 - Units given does not show up on Log
+              Duplicate: HD00000000318398
+   
+  
+ REMEDY OVERVIEW
+ ---------------
+  
+ 1.  HD0000000221177 - BCMA order problem messages-replicating
+  
+  
+  Problem:
+  --------
+  PSI-07-223 (PSPO-823) - If an IV order is already infusing when it is
+  placed on provider hold, the IV can be stopped and then infused
+  again while still on provider hold.
+  
+  Resolution:
+  -----------
+  DELPHI file ScanIV.pas was modified to remove "Infusing" as option
+  from the "Select an Option" drop down box when the order is on
+  provider hold.  Also, the text "This order is on Provider hold!" was
+  added to the "Order Changes" box.
+  
+ 2.  HD00000000390027 - MULTI TAB DOSE POPUP BLOCKS DOSAGE
+  
+  Problem:
+  --------
+  PSPO-1678 - The MULTIPLE DOSE pop up form blocks the dosage ordered
+  on the Virtual Due List (VDL).
+  
+  Resolution:
+  -----------
+  DELPHI files MultipleDrugs.pas and MultipleDrugs.frm were modified
+  to add the field Dosage Ordered to the form.
+  
+ 3.  HD00000000293514 - BCMA order problem messages-replicating
+  
+  Problem:
+  --------
+  The original problem reported was an infinite loop causing thousands
+  of Mailman messages to be sent out when an invalid Mumps date (a
+  date prior to 12/31/1845) was passed in from the BCMA GUI when
+  running the Administration Times Report.  The invalid date was passed
+  because the user had a laptop time prior to 12/31/1845 and BCMA
+  reports default time is based on the Laptop time instead of the Server
+  time.  PSB*3*56 corrects the error of the infinite loop.  This patch will
+  change the default time of all BCMA reports to the server time instead
+  of the laptop time.
+  
+  Resolution:
+  -----------
+  DELPHI file ReportRequest.pas was modified to base the default time for
+  all reports on the server time.
+  
+ 4.  HD00000000102421 - Comment will accept a space
+  
+  Problem:
+  --------
+  When an order is given outside of the Allowable Time Limit,
+  the Med Log form will allow a space to be entered for the required
+  comment field.
+  
+  Resolution:
+  -----------
+  DELPHI file MedLog.pas was modified to require a valid character in
+  the comment field before OK can be clicked.
+  
+ 5.  HD00000000380321 - options missing from Missing Dose Request
+                        Reason drop down list
+  
+  Problem:
+  --------
+  Problem - Package Integrity Damaged, Package Contents Damaged and
+  Barcode/IEN Illegible are missing from the Missing Dose Request Reasons
+  Drop Down.
+  
+  Resolution:
+  -----------
+  DELPHI file MissingDose.frm was modified to add Package Integrity
+  Damaged, Package Contents Damaged and Barcode/IEN Illegible to the
+  Missing Dose Request Reasons Drop Down.
+  
+ 6.  HD00000000380330 - Remove Scratch HFS Directory field from BCMA
+                        Parameters
+  
+  Problem:
+  --------
+  The Scratch HFS Directory still displays on the BCMA Parameters GUI,
+  even though this field is now obsolete.
+  
+  Resolution:
+  -----------
+  DELPHI files BCMAParmeters.pas and BCMAParmeters.frm were modified
+  to remove the Scratch HFS Directory from the BCMA Parameters GUI.
+  
+ 7.  HD00000000235723 - Units given does not show up on Log
+  
+  Problem:
+  --------
+  If a missing dose is requested for an IVPB and the order is marked as
+  held, and the order is then given, the Units ordered do not show on the
+  Med Log.
+  
+  Resolution:
+  -----------
+  DELPHI file BCMA_Objects.pas and Mumps routine PSBML2 were modified
+  To display the "units ordered" for all given orders.
+  
+  
+ Test Sites:
+ ===========
+ Iron Mountain, MI
+ Manchester, NH
+ Pittsburgh, PA
+ Upstate New York
+ St. Cloud, MN 
+  
+  
+ Server Installation Instructions:
+ =================================
+  
+    *************************** NOTE ****************************
+    *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS      *
+    *  AN EDITED ERROR WILL OCCUR.                              *
+    *  The patch should be installed when NO BCMA Client        *
+    *  users are on the system.                                 *
+    * ***********************************************************
+  
+    Installation will take less than 1 minute.
+  
+    Suggested time to install: Non-peak requirement hours.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+  
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSB*3.0*42):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this
+              patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+   4. Use the Install Package(s) option and select the package PSB*3*42.
+  
+   5. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//" respond NO.
+  
+   6. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+  
+   7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+  
+  
+ Example Server Installation:
+ ============================
+ Select Installation Option: INStall Package(s)
+ Select INSTALL NAME: PSB*3.0*42   Loaded from Distribution  
+ 12/7/08@18:09:52
+ .
+ .
+ .
+ .
+ .
+ -------------------------------------------------------------------------
+           [------------------------------------------------------------]
+   100%    |             25             50             75               |
+ Complete  [------------------------------------------------------------]
+  
+  
+ Install Completed
+  
+  
+  
+ Client Installation Instructions:
+ =================================
+ The software distribution includes these modified files:
+  
+  FILE NAME      DESCRIPTION           FILE VERSION      BYTES   CHECKSUM
+  
+   BCMA.CHM      Client help file                          858 KB   n/a
+   BCMA.EXE      Client                   3.0.42.37      2,522 KB   n/a
+   BCMAPAR.EXE   Site parameter           3.0.42.10      1,048 KB   n/a
+   BCMAPAR.CHM   Client help file                           58 KB   n/a
+   INFOLIST.TXT  Setup information                           2 KB   n/a
+   README.TXT    Misc. information                           5 KB   n/a
+  
+  
+   1. Prior client compatible with patch:  NO
+   2. Client can be copied instead of installed:  YES
+   3. Is your site running the CareFusion Wireless Medication
+      Administration (WMA) software? If YES, please contact Carefusion to
+      ensure your site has the latest compatible WMA patch.
+  
+   BCMA.LOG Error Handling:
+  
+ Prior to installation, ensure that the following conditions are met for 
+ the current user:
+         - can create C:\TEMP directory
+         - C:\TEMP directory permits user to create files
+         - if the C:\TEMP\BCMA.LOG file exists, the user can write/append 
+           to that file.  
+  
+   If the above conditions are not met, BCMA will generate an error and 
+   exit immediately.
+  
+   RESOLUTION: If your site is still experiencing an issue with the 
+               BCMA.LOG file, one of the following resolutions can be used.
+  
+    1. IRMs must ensure that BCMA users have rights to create 
+       C:\TEMP and to create and store files in the C:\TEMP directory. 
+  
+    If the user is able to create C:\TEMP and is still experiencing issues,
+    delete the BCMA.LOG file and if necessary, delete the C:\TEMP 
+    directory.  
+  
+    When BCMA is first run, it will create the C:\TEMP directory and create
+    the BCMA.LOG file in that directory as needed.  
+  
+    2. Append " /NOLOGFILE" in the target field of the BCMA shortcut after 
+       the port number. 
+  
+         Note: a blank space must be entered before the "/" in the target 
+               field.
+  
+  
+    Note:  Use Binary mode to retrieve the .EXE file.
+  
+    To obtain the updated .EXE, use FTP to retrieve PSB3_0P42.EXE (4,000
+    KB) from one of the following OI Field Offices' ANONYMOUS.SOFTWARE
+    directories:
+  
+     OI Field Office   FTP Address                Directory
+     VA-wide           download.vista.med.va.gov  anonymous.software
+     Albany            ftp.fo-albany.med.va.gov   anonymous.software
+     Hines             ftp.fo-hines.med.va.gov    anonymous.software
+     Salt Lake City    ftp.fo-slc.med.va.gov      anonymous.software
+  
+    If BCMA is currently running, please exit BCMA. This client
+    installation patch file can be used to upgrade an existing version of
+    BCMA, or can be used for a brand new installation.
+  
+     1. Double Click on PSB3_0P42.EXE which will launch the InstallShield
+        Wizard.
+  
+     2. When the InstallShield Wizard Welcome screen is displayed, click
+        "Next".
+  
+     3. On the Choose Destination Location screen, simply click "Next"
+        If you would like to change the destination folder to one other
+        than default, click "Browse" to navigate to the folder of your
+        choice. Click "Next".
+  
+     4. On the "Setup Type" Screen select one of the following:
+              a. Typical - installs only the BCMA client program
+                 which is necessary for medication administration.
+              b. Complete - installs the BCMA client and the
+                 GUI BCMA site parameters definition program.
+              c. Custom - allows you to select which programs to install
+                 Typical is selected by default. Click "Next".
+  
+     5. The InstallShield Wizard Ready to Install the Program screen
+        will display. Click "Install" to proceed with the installation.
+  
+     6. The InstallShield Wizard Complete screen will be displayed.
+        Click "Finish" and the BCMA installation is now complete.
+  
+  
+ Documentation Retrieval:
+ ========================
+ Sites may retrieve documentation in one of the following ways:
+  
+ 1. The preferred method is to FTP the files from
+    download.vista.med.va.gov, which will transmit the files from
+    the first available FTP server.
+  
+ 2. Sites may also elect to retrieve documentation directly from a
+    specific server as follows:
+  
+     Albany           ftp.fo-albany.med.va.gov
+     Hines            ftp.fo-hines.med.va.gov
+     Salt Lake City   ftp.fo-slc.med.va.gov
+  
+ 3. Documentation can also be retrieved from VISTA Documentation Library
+    (VDL) on the Internet at the following address, http://www.va.gov/vdl.
+  
+  
+    The documentation distribution includes:
+  
+    FILE NAME                              DESCRIPTION
+    -----------------------------------------------------------------------
+    PSB_3_UM_CHAPTERS_1_THRU_4_R0111.PDF   BCMA V. 3.0. GUI User Manual,
+                                             Chapters 1 - 4
+  
+    PSB_3_UM_CHAPTERS_5_THRU_11_R0111.PDF  BCMA V. 3.0. GUI User Manual,
+                                             Chapters 5 - 11
+  
+    PSB_3_TM_R0111.PDF                     BCMA V. 3.0. Technical Manual /
+                                             Security Guide
+  
+    PSB_3_P42_TM_CP.PDF                    BCMA V. 3.0. Technical Manual /
+                                             Security Guide Change Pages 
+                                             PSB*3*42
+  
+    PSB_3_MAN_UM_R0111.PDF                 BCMA V. 3.0. Manager's User
+                                             Manual
+  
+    PSB_3_P42_MAN_UM_CP.PDF                BCMA V. 3.0. Manager's User
+                                             Manual Change Pages PSB*3*42
+  
+    PSB_3_UM_APPENDIXE_IHS                 BCMA V. 3.0. GUI User Manual -
+     _PARA_PT_ID_R0110.PDF                   Appendix E (Indian Health
+                                             Service)
+  
+    PSB_3_UM_APPENDIXD_508_COMPLIANCE      BCMA V. 3.0. Appendix D: 508
+     _R0111.PDF                              Compliance
+  
+    PSB_3_P42_RN.PDF                       Release Notes - Indian Health 
+                                             Service and Section 508
+                                             Compliance(PSB*3*42)
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSB3P42
+    Before:       n/a   After:   B292325  **42**
+Routine Name: PSBMD
+    Before: B72605670   After: B75575865  **23,42**
+Routine Name: PSBML2
+    Before: B72294246   After: B76455791  **3,18,22,23,13,45,42**
+Routine Name: PSBMLLKU
+    Before: B79282842   After: B85731436  **3,9,11,20,13,38,32,56,42**
+Routine Name: PSBMLU
+    Before: B27638405   After: B27962319  **6,11,13,28,42**
+Routine Name: PSBO
+    Before: B80519878   After: B80276857  **13,32,2,25,28,51,50,42**
+Routine Name: PSBOHDR
+    Before: B21187983   After: B25151951  **5,13,42**
+Routine Name: PSBOVT
+    Before:  B1375415   After:  B1749584  **42**
+Routine Name: PSBRPC
+    Before: B87760637   After:B117132779  **6,3,4,13,32,28,42**
+Routine Name: PSBRPC1
+    Before:  B9800054   After: B10114973  **42**
+Routine Name: PSBRPC3
+    Before:   B309069   After:   B308951  **6,3,4,16,13,10,32,28,42**
+Routine Name: PSBSVHL7
+    Before: B79400598   After: B79591201  **3,42**
+Routine Name: PSBVITFL
+    Before:  B4992078   After: B10030474  **31,42**
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : DEC 20, 2007
+Completed By: PAYNE,RONALD                  Date Completed: FEB 14, 2011
+Released By : LYTTLE,KIM M                  Date Released : FEB 16, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

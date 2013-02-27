@@ -1,0 +1,250 @@
+$TXT Created by CURTIS,RICHARD L at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 06/24/11 at 14:45
+=============================================================================
+Run Date: NOV 29, 2011                     Designation: SD*5.3*567
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #475                    Status: Released
+                  Compliance Date: DEC 30, 2011
+=============================================================================
+
+Associated patches: (v)SD*5.3*221  <<= must be installed BEFORE `SD*5.3*567'
+                    (v)SD*5.3*466  <<= must be installed BEFORE `SD*5.3*567'
+                    (v)SD*5.3*480  <<= must be installed BEFORE `SD*5.3*567'
+                    (v)SD*5.3*528  <<= must be installed BEFORE `SD*5.3*567'
+
+Subject: SCHEDULING ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will fix the following issues related to the Scheduling
+ software:
+  
+     - When exiting the Expand Entry Protocol in Appointment Management
+       [SDAM APPT MGT], not all variables are being properly killed.  
+     - After the Purge Scheduling Data [SD PURGE] option is ran,
+       Appointment Management [SDAM APPT MGT] and Patient Care Encounter
+       display the status for the appointments affected by the purge, as
+       'No Action Taken', instead of 'Checked Out'.
+     - There is a Data Dictionary discrepancy which exists with the
+       SPECIAL AVAILABILITY FLAG field (#3) of the PATTERN sub-file
+       (#44.005) in the HOSPITAL LOCATION file (#44), which is storing the
+       record Internal Entry Number instead of the applicable date.
+     - An undefined error occasionally occurs when Scheduling clerks are
+       making appointments.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) HD0000000339261 - Expand Entry in SDAM doesn't kill variables
+ 2) HD0000000371339 - Side effects of Purge option
+ 3) HD0000000415636 - Data Dictionary Discrepancy
+     Duplicate: HD0000000361098 - File 44 - Special Availability Flag
+ 4) HD0000000321086 - <UNDEFINED>WLCL120+4^SDM2A
+     Duplicate: HD0000000404422 - <UNDEFINED>WLCL120+4^SDM2A
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ ==========================
+ Charleston, SC
+ Connecticut HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) HD0000000339261 - Expand Entry in SDAM doesn't kill variables
+  
+    Problem:
+    --------
+    When a user goes into Appointment Management [SDAM APPT MGT] and 
+    selects Action Protocol Expand Entry to view patient information for an
+    appointment, upon exiting Appointment Management, if a user enters 
+    another menu option, such as Recall Reminder Main Menu [SDRR RECALL 
+    MAIN MENU] then selects the Add/Edit Clinic Recall Patient [SDRR CARD 
+    ADD] option; instead of the Patient Name prompt displaying, the system
+    immediately returns the user to the menu. This issue occurs due to a 
+    variable not being properly deleted.
+  
+    Resolution:
+    -----------
+    Routine SDAMEP will be modified to explicitly kill variable DIC
+    upon exiting the Expand Entry Action Protocol in Appointment
+    Management [SDAM APPT MGT].
+  
+  
+ 2) HD0000000371339 - Side effects of Purge option
+  
+    Problem:
+    --------
+    After running the Purge Scheduling Data [SD PURGE] option, appointments
+    for the date range of the purge, will now display a status of 'No
+    Action Taken', instead of 'Checked Out', when viewed in Appointment
+    Management [SDAM APPT MGT] or PCE Encounter Data Entry [PXCE ENCOUNTER 
+    DATA ENTRY].
+  
+    Resolution:
+    -----------
+    Routine SDAM1 will be modified so that appointments affected by the
+    purge will now show the correct status when viewed in Appointment
+    Management [SDAM APPT MGT] or PCE Encounter Data Entry [PXCE ENCOUNTER
+    DATA ENTRY].
+  
+  
+ 3) HD0000000415636 - Data Dictionary Discrepancy
+  
+    Problem:
+    --------
+    The data dictionary for the HOSPITAL LOCATION file (#44) indicates the
+    SPECIAL AVAILABILITY FLAG field (#3) of the PATTERN sub-file (#44.005)
+    is supposed to be a date field, but instead it is storing the Internal
+    Entry Number (IEN) for the record.
+  
+    Resolution:
+    -----------
+    Routine SDB1 will be modified so that the appropriate date is now
+    stored in the SPECIAL AVAILABILITY FLAG field (#3) of the PATTERN 
+    sub-file (#44.005) of the HOSPITAL LOCATION file (#44). Additionally,
+    post-init routine SD53P567 was created to read through the HOSPITAL
+    LOCATION file (#44) and where applicable, change the SPECIAL 
+    AVAILABILITY FLAG field (#3) of the PATTERN sub-file (#44.005) to the
+    appropriate date. Since this does not have any effect on other
+    applications, the post-init routine will search the HOSPITAL LOCATION
+    file (#44) starting from the beginning of Fiscal Year 2009 (October 1,
+    2009).
+  
+  
+ 4) HD0000000321086 - <UNDEFINED>WLCL120+4^SDM2A
+  
+    Problem:
+    --------
+    Occasionally an undefined error occurs when a Scheduling clerk attempts
+    to make an appointment, using either Appointment Management [SDAM APPT
+    MGT] or Make Appointment [SDM] menu options. The error occurs because
+    no check is being made for the existence of an availability pattern for
+    a selected date prior to trying to use that date to calculate for the
+    120 day rule.
+  
+    Resolution:
+    -----------
+    Routine SDM2A will be modified to check for the existence of an
+    availability pattern for a selected date before trying to use that
+    date to calculate for the 120 day rule. This will prevent future
+    occurrences of this error. A new Remedy ticket has been logged which
+    will remain open so research will continue in an attempt to determine
+    what is causing the file corruption that causes this sporadic error.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Users are allowed on the system during patch installation.
+  
+ Installation should take less than 2 minutes.  Post-install routine 
+ SD53P567 will be deleted after installation.
+  
+  
+ 1. LOAD TRANSPORT GLOBAL
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. START UP KIDS
+    -------------
+    Start up the Kernel Installation and Distribution System Menu [XPD
+    MAIN]
+   
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+       1  Load a Distribution
+       2  Verify Checksums in Transport Global
+       3  Print Transport Global
+       4  Compare Transport Global to Current System
+       5  Backup a Transport Global
+       6  Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+  
+ 3. From this menu, you may elect to use the following options (when
+    prompted for INSTALL NAME, enter SD*5.3*567):
+  
+    a. Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch.  It will NOT
+       backup any other changes such as DDs or templates.
+   
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when the patch
+       is installed.  It compares all components of the patch
+       (routines, DDs, templates, etc.).
+  
+    c. Verify Checksums in Transport Global - This option will ensure
+       the integrity of the routines that are in the transport global.
+  
+    d. Print Transport Global - This option will allow you to view
+       the components of the KIDS build.
+  
+ 4. Use the Install Package(s) option and select the package SD*5.3*567.
+  
+    a. When prompted "Want KIDS to INHIBIT LOGONS during the
+       install? NO//", respond NO.
+  
+    b. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//", respond YES.
+  
+     1) When prompted "Enter options you wish to mark as "Out of
+        Order":" enter the following option:
+  
+       Appointment Management              [SDAM APPT MGT]
+       Make Appointment                    [SDM]
+       PCE Encounter Data Entry            [PXCE ENCOUNTER DATA ENTRY]
+       PCE Encounter Data Entry and Delete [PXCE ENCOUNTER ENTRY & DELETE]
+       PCE Encounter Data Entry 
+        without Delete                     [PXCE ENCOUNTER ENTRY NO DELETE]
+       PCE Encounter Data Entry-Supervisor [PXCE ENCOUNTER ENTRY SUPER]
+       PCE Encounter Viewer                [PXCE ENCOUNTER VIEWER]
+  
+     2) When prompted "Enter protocols you wish to mark as "Out of
+        Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;SCHEDULING;**[Patch List]**;21-MAR-94;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53P567
+    Before:       n/a   After:  B1255136  **567**
+Routine Name: SDAM1
+    Before: B29444378   After: B33476298  **149,155,193,189,445,478,466,567**
+Routine Name: SDAMEP
+    Before:  B6822994   After:  B7085204  **241,334,480,567**
+Routine Name: SDB1
+    Before: B22788131   After: B23427765  **20,183,221,567**
+Routine Name: SDM2A
+    Before: B17573653   After: B19430225  **446,528,567**
+ 
+Routine list of preceding patches: 221, 466, 480, 528
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : JAN 14, 2010
+Completed By: SESSLER,APRIL                 Date Completed: NOV 15, 2011
+Released By : BENBOW,PHYLLIS O              Date Released : NOV 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

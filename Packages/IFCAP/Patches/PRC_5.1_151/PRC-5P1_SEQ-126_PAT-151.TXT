@@ -1,0 +1,246 @@
+$TXT Created by RAY,CONSTANCE at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Tuesday, 11/09/10 at 10:15
+=============================================================================
+Run Date: APR 01, 2011                     Designation: PRC*5.1*151
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #126                    Status: Released
+                  Compliance Date: APR 25, 2011
+=============================================================================
+
+Associated patches: (v)PRC*5.1*130 <<= must be installed BEFORE `PRC*5.1*151'
+                    (v)PRC*5.1*140 <<= must be installed BEFORE `PRC*5.1*151'
+                    (v)PRC*5.1*148 <<= must be installed BEFORE `PRC*5.1*151'
+
+Subject: CLRS EXTRACT UPDATE
+
+Category: 
+  - Routine
+  - Print Template
+  - Other
+
+Description:
+============
+
+  
+ In patch PRC*5.1*148 the 1358 form in IFCAP was modified to require 
+ users to select the Authority and Sub-authority (where applicable) and 
+ to enter a Service Start Date and a Service End Date.  This patch 
+ updates the F20 Control Point Activity file (#410) extract to include 
+ the new fields.  The Control Point Activity - F20 file extract is one of
+ the 23 Clinical Logistics Report Server (CLRS) extracts produced by
+ running the option, CLO Procurement Reports (CLRS) [PRCHLO CLO
+ PROCUREMENT].
+  
+ The 8 data elements are added in order starting with the 70th piece:
+     70 Authority IEN (internal value of field #19 in 410 record)
+     71 Authority Code (external value of field #19 in 410 record)  
+     72 Authority Description (external value of field #.02 in 19:410.9)
+     73 Sub-Authority IEN (internal value of field #19.1 in file 410)
+     74 Sub-Authority Code (external value of field #19.1 in file 410) 
+     75 Sub-Authority Description (external value of field #.02 in 19.1:410.9)
+     76 Service Start Date (field #6 in 410 record)
+     77 Service End Date (field #6.5 in 410 record)
+  
+ This patch also adds the fields to the Control Point Activity CLRS 
+ Extract Validation Template, PRCHLO410_HDR_VALIDATE. This template is 
+ used to view in IFCAP data from file #410 and referenced files
+ corresponding to data extracted from the Control Point Activity - F20 
+ extract.
+  
+ The security key, PRCSOBL, is deleted in this patch. The option the key
+ locked (Obligation Data) was removed in PRC*5.1*148.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ 20080801 Enhancing Internal Controls and Reporting Capabilities for 1358 
+          Misc Obligations: Implements adequate controls with respect to 
+          segregation of duties and oversight by contracting officials,
+          improving documentation requirements, and enhancing 1358
+          reporting capabilities within Integrated Funds Distribution,
+          Control Point Activity, Accounting and Procurement (IFCAP) that
+          will be used at the station, Veterans Integrated Service Network
+          (VISN), and enterprise levels.  A Government Accountability
+          Office (GAO) review questioned VHA's internal control standards
+          governing the authorization and use of miscellaneous obligations,
+          as well, as oversight abilities. Direction by the Congressional
+          Oversight Committee of the House.  GAO Report - GAO-08-1056T
+          Improvements Needed in Design of Controls over Miscellaneous
+          Obligations, July 31, 2008.  Department of Veterans Affairs
+          Memorandum, Interim Memos (Interim Guidance on Miscellaneous
+          Obligations, VA Form 4-1358, dated January 30, 2008 and
+          Department of Veterans Affairs Memorandum, Revised Guidance for
+          Processing of Miscellaneous Obligations, VA Form 4-1358, dated
+          May 18, 2008.
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ COMPONENTS SENT WITH PATCH 
+ ------------------------
+ The following is a list of routines included in this patch:
+ Routine Name                                   Action
+ ----------------------------------------------------------------------
+ PRCHLO3                                        modified
+ PRCHLO6                                        modified
+  
+ The following is a list of templates included in this patch:
+  
+   Template Name            Type            File Name (Number)
+ -----------------------------------------------------------------------
+   PRCHLO410_HDR_VALIDATE   Print        CONTROL POINT ACTIVITY (#410)
+   
+ The following is a list of security keys included in this patch:
+  
+    Security Key Name                      Add/modify/delete
+ -----------------------------------------------------------------------
+    PRCSOBL                              DELETE
+        
+  
+ Documentation Retrieval:
+ ------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at:  http://www.va.gov/vdl/
+  
+ Below is a list of the files related to this patch that will be needed 
+ and available via the FTP sites listed above.
+  
+ IFCP5_1TECH_MANUAL.PDF         Technical Manual                        bin
+ IFCP5_1APPLICATION_COORD.PDF   Application Coordinator User's Guide    bin
+ IFCP5_1SECURITY_GUIDE.PDF      Package Security Guide                  bin
+  
+ Test Sites:
+ -----------
+ Central Texas, TX
+ Erie, PA
+ St. Cloud, MN
+ Shreveport, LA
+ Tomah, WI
+   
+  
+  
+          ================INSTALLATION INSTRUCTIONS =================
+  
+       ****************************************************************
+       *                        SPECIAL NOTE                          *
+       *  Do NOT install this patch when the PRCHLO CLO PROCUREMENT   *
+       *  option is running or is scheduled to run via TaskMan.       *
+       ****************************************************************
+  
+ If installed during the normal workday it is recommended that 
+ the following menu options be disabled to prevent possible 
+ conflicts while running the KIDS Install. No other VistA users will be 
+ affected.
+  
+     CLO Procurement Reports (CLRS) [PRCHLO CLO PROCUREMENT]
+     Control Point Activities - F20 [PRCHLO CONTROL POINT ACTIVIT]
+  
+  
+ Install Time - about 5 minutes
+  
+  
+   1.   LOAD TRANSPORT GLOBAL 
+        ---------------------
+        Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+  
+   2.   START UP KIDS 
+        -------------
+        Start up the Kernel Installation and Distribution System Menu 
+        [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+   Select Kernel Installation & Distribution System Option:   Installation 
+                                                            
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s) 
+             Restart Install of Package(s) 
+             Unload a Distribution 
+             Backup a Transport Global 
+    
+    
+   3.   Select Installation Option: 
+        --------------------------
+        NOTE:  The following are OPTIONAL although running Backup a 
+        Transport Global is highly recommended.
+       
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+      
+   4.   Select Installation Option: Install Package(s) 
+                                    ------------------
+        **This is the step to start the installation of this KIDS patch:
+        (When prompted for the INSTALL NAME, enter PRC*5.1*151)
+    
+        a.  Choose the Install Package(s) option to start the patch
+            install.
+        b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+            YES//' answer NO (unless otherwise indicated)
+        c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+            Options, and Protocols? YES//' answer YES.
+        d.  When prompted 'Enter options you wish to mark as 'Out Of
+            Order':'  Enter the following options:
+         
+              CLO Procurement Reports (CLRS) [PRCHLO CLO PROCUREMENT]
+              Control Point Activities - F20 [PRCHLO CONTROL POINT ACTIVIT]
+         
+        e.  When prompted 'Enter protocols you wish to mark as 'Out Of 
+            Order':' press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCHLO3
+    Before:B150252555   After:B153453811  **83,130,151**
+Routine Name: PRCHLO6
+    Before:B125729852   After:B136943569  **130,140,151**
+ 
+Routine list of preceding patches: 140
+
+=============================================================================
+User Information:
+Entered By  : RAY,CONSTANCE                 Date Entered  : SEP 20, 2010
+Completed By: LYNCH,MARY F.                 Date Completed: APR 01, 2011
+Released By : NELSON,VICKI M                Date Released : APR 01, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

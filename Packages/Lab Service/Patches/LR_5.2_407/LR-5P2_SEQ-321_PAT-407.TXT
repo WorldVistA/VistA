@@ -1,0 +1,182 @@
+$TXT Created by CARPENTER,TERRY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Friday, 10/01/10 at 13:06
+=============================================================================
+Run Date: MAY 09, 2011                     Designation: LR*5.2*407
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #321                    Status: Released
+                  Compliance Date: JUN 09, 2011
+=============================================================================
+
+Associated patches: (v)LR*5.2*280  <<= must be installed BEFORE `LR*5.2*407'
+                    (v)LR*5.2*399  <<= must be installed BEFORE `LR*5.2*407'
+
+Subject: ADDRESS 2 LOINC MAPPING PROBLEMS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Lab Service patch addresses 2 LOINC mapping issues.
+  
+    1.  When exiting the option "Map Lab Tests to LOINC Codes" after no
+        matches are found related to an affirmative response to the
+        prompt "Do you want to see possible LOINC code matches?", an
+        <UNDEFINED> error results.
+  
+    2.  The option to map a default LOINC code and the option to unmap a
+        default LOINC code use the same routines.  Sometimes the code gets
+        confused and prompts one to "unmap" when one is in the "map" 
+        option.
+  
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ ========================
+ 1. HD0000000428829        -  Map Lab Tests to LOINC Codes option error
+  
+ 2. HD0000000418688        -  Problem with LOINC mapping
+  
+  
+ Testing Sites:
+ =============
+ James J. Peters VA Medical Center  - Bronx
+ Central Texas Veterans HCS (Temple, Waco)
+ Oklahoma City VA Medical Center
+  
+  
+ BLOOD BANK CLEARANCE:
+ =====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*407 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by VHA 
+ DIRECTIVE 2004-058 titled VISTA BLOOD BANK SOFTWARE VERSION 5.2.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*407 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*407 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1:  HD0000000428829     -  Map Lab Tests to LOINC Codes option error
+  
+  
+     Problem
+     ------------
+     Lab option "Map Lab Tests to LOINC Codes" asks if the user wants
+     to see possible LOINC code matches.  If the user responds "YES"
+     to this question and no possible matches are found, the user is
+     returned to the original prompt "VistA Lab Test to Link/Map to
+     LOINC :". If the user tries to exit the option with a "^" at this
+     point, an <UNDEFINED> error occurs.
+  
+  
+     Solution
+     ------------
+     Modify routine LRLNCMD to not clean up all the variables before
+     returning to routine LRLNC0 where the <UNDEFINED> was occurring.
+     This will allow routine LRLNC0 to clean up the variables upon
+     exit.
+  
+     Routine:  LRLNCMD
+  
+  
+ 2:  HD0000000418688     -  Problem with LOINC mapping
+  
+  
+    Problem
+    ------------
+    The problem is that the options "Map Lab Tests to Default LOINC
+    Code" and "Unmap/Delete Lab Tests to Default LOINC Code" utilize
+    the same code.  A $SELECT is used to determine the appropriate
+    prompt based on the value of the variable LRDEL.  The convoluted
+    code sometimes does not clear variable LRDEL when exiting from the
+    "Unmap/Delete Lab Tests to Default LOINC Code" option thus causing
+    the "Unmap/Delete" prompt to come up when user has entered the
+    "Map" option.
+  
+    Solution
+    ------------
+    Modify routine LRLNC0 to always clear the variable LRDEL when
+    exiting from the "Unmap/Delete" option.
+  
+    Routine:  LRLNC0
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+  
+   The install time for this patch is less than 2 minutes. This patch
+   can be installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify that
+       all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*407.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27,1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRLNC0
+    Before: B90965448   After: B91104328  **215,232,278,280,399,407**
+Routine Name: LRLNCMD
+    Before: B22924919   After: B23199384  **232,278,280,407**
+
+=============================================================================
+User Information:
+Entered By  : CARPENTER,TERRY               Date Entered  : SEP 22, 2010
+Completed By: BYRD,TIERRA                   Date Completed: APR 18, 2011
+Released By : BELSCHWINDER,MICHAEL          Date Released : MAY 09, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

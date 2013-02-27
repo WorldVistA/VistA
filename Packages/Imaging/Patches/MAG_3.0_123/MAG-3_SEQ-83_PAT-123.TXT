@@ -1,0 +1,635 @@
+
+=============================================================================
+Run Date: NOV 29, 2012                     Designation: MAG*3*123
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #83                      Status: Released
+                  Compliance Date: JAN 15, 2013
+=============================================================================
+
+Associated patches: (v)MAG*3*99    <<= must be installed BEFORE `MAG*3*123'
+                    (v)MAG*3*122   <<= must be installed BEFORE `MAG*3*123'
+
+Subject: INDIAN HEALTH SERVICE (IHS) PATIENT IDENTIFIER
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ MAG*3.0*123 will enable the use of IHS Patient Identifiers in VistA 
+ Imaging Applications. This patch will address patient identifier lookup 
+ issues for the Indian Health Service (IHS) and allow IHS sites to use 
+ Health Record Number (HRN) in place of Social Security Number (SSN) to 
+ uniquely identify patients. 
+  
+ This patch incorporates the following Patient Identifier functionality 
+ for IHS and will mainstream the software modifications so IHS can install 
+ new VistA Imaging patches as they are released in the VA. 
+ * The DICOM Text Gateway software will use HRN in Modality Worklist as a
+   patient identifier at IHS facilities. 
+ * The MUMPS DICOM Image Gateway will use HRN for matching patients when
+   processing images into RPMS at IHS facilities.
+ * Leading zeros will be stripped off of the HRN if present when processing
+   images at IHS facilities.
+ * The DICOM Correct utilities will use HRN for patient matching at IHS
+   facilities.
+ * When sending images to remote locations, the Routing application will
+   update the patient ID attribute of the DICOM header with the HRN at 
+   IHS facilities. 
+ * When exporting images, the DICOM Query/Retrieve application will use HRN
+   when updating the patient ID attribute in the DICOM header at IHS 
+   facilities. 
+ * The PACS ADT/Order interface will use HRN as the patient identifier in
+   the HL7 PID message segment at IHS facilities.
+  
+ NOTE: HRN is only unique within a division of Resource and Patient 
+ Management System (RPMS) at IHS facilities. 
+  
+ NOTE: All sites must install the KIDS portion of this patch on the VistA
+ System. Sites that have implemented the DICOM Gateways should install the
+ DICOM Gateway software as well.
+  
+ Patch Contents
+ --------------
+ Software
+ The following software is distributed with this patch:
+   MAG3_0P123.KID - KIDS (Kernel Installation & Distribution System)
+     package to be installed on the VistA System.
+   MAG3_0P123_DICOM_Setup.exe - Installation program for the DICOM Gateway.
+  
+ Documentation
+ The following documentation is distributed with this patch:
+   MAG3_0P123_Patch_Description.pdf - MAG*3.0*123 Patch Description
+   MAG3_0P123_DICOM_Install_Guide_Change.pdf - Updates for the VistA
+     Imaging DICOM Gateway Installation Guide.
+   MAG3_0P123_Technical_Manual_Change.pdf - Updates for the VistA Imaging 
+     Technical Manual.
+  
+ Files and Fields 
+ ----------------
+ The following files and fields were modified in this patch.
+  
+ File Name (number)   
+ DICOM GATEWAY PARAMETER (#2006.563)
+  
+ Field Name (number)
+ Agency (#202) - Identifies the agency in which the DICOM Gateway resides. 
+  
+ Mail Groups
+ -----------
+ This patch contains no new or modified mail groups.
+  
+ Forms
+ -----
+ This patch contains no new or modified forms.
+  
+ Security Keys
+ -------------
+ This patch contains no new or modified security keys.
+  
+ Remote Procedures
+ -----------------
+ This patch contains no new or modified remote procedure calls.
+  
+ Menu Options
+ ------------
+ This patch contains no new or modified VistA System menu options.
+  
+ Protocols
+ ---------
+ This patch contains no new or modified protocols.
+  
+ Templates
+ ---------
+ This patch contains no new or modified templates.
+  
+ Remedy Calls
+ ------------
+ This patch does not address any Remedy Calls.
+  
+ New Service Requests (NSR)
+ --------------------------
+ This patch does not addresses any New Service Requests (NSRs).
+  
+ Test Sites
+ ----------
+ The following sites are test sites for this patch:
+   VISN15 (Integrated - Large)
+   VISN2 (Integrated - Large)
+   Connecticut HCS - West Haven, CT (Integrated - Large)
+   IHS sites:
+     Choctaw Nation Healthcare Services Authority
+     Gallup Indian Medical Center
+     Northern Navajo Medical Center
+  
+ DICOM Gateway Changes
+ ---------------------
+ DICOM Gateway Routines
+ This section lists new and modified routines for the Imaging DICOM 
+ Gateway.
+  
+ For each routine, the second line will contain the following information. 
+  
+ ;;3.0; IMAGING; ** [Patch List]**; Mar 19, 2002; Build 60; Jul 16, 2012
+  
+ Please note that the "before" checksum may differ if test software has 
+ been installed.
+  
+ Routine Name    Checksum Before Checksum After  Patch List
+ MAGDAIR6        56732455        56957497        53,123
+ MAGDFCNS        77913878        79695820        9,10,11,30,50,49,123
+ MAGDFND3        87847559        88300541        10,30,51,54,53,49,99,123
+ MAGDFND4        31058834        31693764        10,11,30,50,54,49,123
+ MAGDHRC         82233547        82074077        11,30,51,49,123
+ MAGDHRC3        113328494       123987937       11,30,102,49,123
+ MAGDIR6B        19607847        20102559        11,30,51,54,53,99,123
+ MAGDIW2A        40090331        40107881        10,11,30,51,50,54,123
+ MAGDIW3B        40511860        40459819        11,30,51,50,54,123
+ MAGDLOGN        69219103        71283524        11,30,51,54,123
+ MAGDMFB1        81544111        82299095        9,21,11,30,51,69,54,53,123
+ MAGDMFBB        50673336        54136845        9,21,11,51,69,54,53,49,123
+ MAGDMFBE        69559531        104829530       9,21,11,30,51,69,54,53,123
+ MAGDRPC0        4265561         4855048         11,51,50,49,123
+ MAGDUID1        19789188        20351436        21,10,11,50,54,49,123
+ MAGDVRSN        21494340        21494340        1,7,9,26,21,10,36,3,11,
+                                                 30,5,51,50,52,69,75,102,
+                                                 103,54,53,66,49,99,123
+ MAGDWLU3        96198773        96496965        21,10,11,30,53,49,123
+ MAGSPID         new             3966944         123
+  
+ DICOM GATEWAY Menu Options
+ --------------------------
+ The Gateway menu used to update the Gateway parameters (Update Gateway
+ Configuration Parameters) has a new setting that specifies whether the 
+ DICOM Gateway is installed at a Department of Veterans Affairs (VA) site 
+ or an Indian Health Services (IHS) site.
+  
+ When users install this patch, they need to update their gateway 
+ configuration settings by running options 4-2-2.
+      4 - VistA DICOM System Maintenance
+         2 - Gateway Configuration and DICOM Master Files
+           2 - Update Gateway Configuration Parameters
+  
+ When going through the Gateway configuration settings, they will be 
+ prompted to specify whether the DICOM Gateway is installed at a 
+ Department of Veterans Affairs (VA) site or an Indian Health Services 
+ (IHS) site.
+  
+ Is this gateway installed in VA (V)or IHS (I)? V//
+  
+  
+ Installation (VA Sites)
+ -----------------------
+ This installation provides instructions for installing the patch at 
+ Department of Veterans Affairs (VA) sites. The installation prerequisites 
+ and instructions for IHS sites vary slightly and are described in the 
+ Installation (IHS Sites) section.
+  
+ Installation Planning
+ ---------------------
+ This patch must be installed by the compliance date to conform with VHA 
+ Directive 2001-023.
+  
+ NOTE: All sites running VistA Imaging 3.0 must install the KIDS portion
+ of this patch. 
+  
+ The time that it will take to install the various components of this 
+ patch is as follows: 
+         Installing the KIDS takes about two minutes.
+         Installing the DICOM Gateway takes about 10-15 minutes.
+  
+ Review the installation instructions in this MAG*3.0*123 Patch Description
+ before beginning the installation.
+  
+ NOTE: Do not use Remote Desktop to install the DICOM Gateway software. 
+ Attempts to install it using Remote Desktop will fail. You can use other 
+ applications such as PC Anywhere and DameWare for remote installations.
+  
+ TIP: It is a good idea to schedule the installation of a patch for a 
+ time when adequate support resources are available and system load is 
+ expected to be low.
+  
+ Steps in the Installation Process
+ ---------------------------------
+ Installing MAG*3.0*123 involves these stages, which should be performed 
+ in this order:
+ 1  Installing the KIDS package.
+ 2  Installing the DICOM Gateway software (the file 
+    MAG3_0P123_DICOM_Setup.exe). You must install on all DICOM Gateways by 
+    using the administrator account. 
+  
+ Installation Prerequisites
+ --------------------------
+ Before installing this patch, you will need to download the MAG*3.0*123 
+ KIDS package from the Imaging FTP site to a local storage location.
+  
+ Installing the VistA System KIDS Package
+ ----------------------------------------
+ Installing the KIDS package involves installing the file MAG3_0P123.KID 
+ on the VistA  system.
+  
+ Before installing the file, all released patches, including the patches 
+ listed in Prerequisite Patches, must be installed.
+  
+ Installing the KIDS Package
+ ---------------------------
+ To install the KIDS package:
+ 1.  Access the Kernel Installation and Distribution System Menu [XPD MAIN]
+ 2.  Run the Installation option [XPD INSTALLATION MENU].
+ 3.  Load the KIDS file by performing the following steps:
+    a.  Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to load
+        the KIDS distribution.
+    b.  When prompted, enter the path and file name (MAG3_0P123.KID) of 
+        the MAG*3.0*123 KIDS file that you downloaded from the Imaging FTP
+        server.
+    c.  When prompted to continue with the load, enter YES. A Distribution
+        OK! message will be displayed when the load is complete.
+ 4. After you load the KIDS file, use the following options to verify the
+    contents of the patch and to back up any affected routines.
+    a.  Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run 
+        this option if you want to ensure the integrity of the routines in
+        the patch.
+    b.  Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]
+        Run this option if you want to view all changes that will be made
+        when the patch is installed. All components (routines, options, and
+        so on) in the patch will be compared.
+    c.  Backup a Transport Global [XPD BACKUP] - Run this option if you
+        want to create a backup message of any routines exported with the
+        patch. The option will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, 
+    install the KIDS file by performing the following steps:
+    a.  Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b.  When prompted for the install name, enter MAG3_0P123.KID.
+    c.  Answer NO to the following prompts:
+  
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When the installation has finished, an Install Completed message will
+    be displayed.
+  
+ KIDS Installation Example
+ -------------------------
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: mag*3.0*123      8/7/12@16:00:27
+      => VistA Imaging V3.0 - Patch 123 - 07/24/2012 17:11PM  ;Created o
+  
+ This Distribution was loaded on Aug 07, 2012@16:00:27 with header of
+    VistA Imaging V3.0 - Patch 123 - 07/24/2012 17:11PM  ;Created on Jul 2
+ 4, 2012@17:11:19
+    It consisted of the following Install(s):
+     MAG*3.0*123
+ Checking Install for Package MAG*3.0*123
+  
+ Install Questions for MAG*3.0*123
+  
+ Incoming Files:
+  
+    2006.563  DICOM GATEWAY PARAMETER  (Partial Definition)
+ Note:  You already have the 'DICOM GATEWAY PARAMETER' File.
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  Install Started for MAG*3.0*123 :
+                Aug 07, 2012@16:00:43
+  
+ Build Distribution Date: Jul 24, 2012
+  
+  Installing Routines:........................
+                Aug 07, 2012@16:00:43
+  
+  Installing Data Dictionaries: ...
+                Aug 07, 2012@16:00:44
+  
+  Running Post-Install Routine: POST^MAGIP123.
+  
+ Post Install Mail Message: Aug 07, 2012@16:00:44
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*123 Installed.
+                Aug 07, 2012@16:00:44
+  
+  
+ Installing the DICOM Gateway
+ ----------------------------
+ The steps to update the software on the DICOM Gateways are detailed in the
+ MAG*3.0*123 Patch Description (MAG3_0P123_Patch_Description.pdf)
+  
+ Review the installation instructions in the Patch Description before
+ beginning the installation.
+  
+ Installing the MAG*3.0*123 DICOM Gateway involves running the file 
+ MAG3_0P123_DICOM_Setup.exe. 
+  
+ MAG*3.0*123 is an update of the DICOM Gateway rather than a full 
+ installation. Because of this you must install the MAG*3.0*99 DICOM 
+ Gateway first and then run the MAG*3.0*123 DICOM Gateway installation to 
+ update the MAG*3.0*99 DICOM Gateway.
+  
+ You must install the patch on all DICOM Gateways at the same time. That 
+ is, you must shut down all gateway processes that are running, install 
+ the patch on all gateway hosts and then start the gateway processes. 
+  
+  
+ Installation (IHS Sites)
+ ------------------------
+  
+ Installation Planning
+ ---------------------
+ Review the installation instructions in the MAG*3.0*123 Patch Description
+ before beginning the installation.
+  
+ NOTE:  Do not use Remote Desktop to install the DICOM Gateway software.
+ Attempts to install it using Remote Desktop will fail. You can use other 
+ applications such as PC Anywhere and DameWare for remote installations.
+  
+ TIP:  It is a good idea to schedule the installation of a patch for a 
+ time when adequate support resources are available and system load is 
+ expected to be low.
+  
+ Prerequisites
+ -------------
+ Before installing this patch, the following must be installed in this 
+ order:
+ 1. RA*5.0*1003 - This patch was released by IHS on 12/13/2011 and must be
+    installed according to the instructions provided with the patch.
+ 2. RA*5.0*1004 - This patch was released by IHS on 7/23/2012 and must be
+    installed according to the instructions provided by the patch.
+ 3. FUT70T4 - This Field Unit Test (FUT) was released to IHS sites on
+    11/7/2011 and must be installed before installing patch MAG*3.0*123. 
+  
+ NOTE: All FUT 70 KIDS prerequisites must be installed. For information 
+ about the FUT 70 KIDS prerequisites, see the FUT 70 installation 
+ instructions. 
+  
+ Steps in the Installation Process (IHS Sites)
+ ---------------------------------------------
+  
+ Installing MAG*3.0*123 involves these stages, which should be performed 
+ in this order:
+ 1. Installing the KIDS packages on the Resource Patient Management 
+    System (RPMS) host. See the following sections for detailed
+    instructions about these steps.
+ 2. Updating the DICOM Gateway on all DICOM Gateways.
+    a. Performing the pre-installation steps for the DICOM Gateway. 
+    b. Installing the MAG*3.0*99 DICOM Gateway.
+    c. Installing the Java Runtime Environment - MAG*3.0*99 post 
+       installation step.
+    d. Installing the MAG*3.0*123 DICOM Gateway (the file 
+       MAG3_0P123_DICOM_Setup.exe). See the following sections for detailed
+       instructions about these steps.
+ 3. Updating the Background Processor (BP) on each BP server.
+    a. Uninstall the current Background Processor:
+  
+ Control Panel>Add or Remove Programs>VistA Imaging Background Processor
+    
+    b. Run the MAG3_0P39_BPSetup.exe to install the MAG*3.0*39 Background
+       Processor software. See the MAG*3.0*39 Patch Description and the
+       MAG*3.0*39 Background Processor User Manual for detailed
+       instructions on installing and configuring the Background Processor.
+    c. Start the Background Processor.
+ 4. Updating the display clients on each clinical workstation.
+    a. Install the MAG*3.0*122 Clinical Capture and Clinical Display 
+       clients. See the MAG*3.0*122 Patch Description for detailed
+       instructions on the installation and setup.
+    b. Install the MAG*3.0*120 VistARad client. See the MAG*3.0*120 Patch
+       Description for detailed installation instructions.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1. Download all patches you need to install and the MAG*3.0*123 
+    distribution files to a local storage location. 
+ 2. Have your Radiology supervisor check for uncorrected DICOM images by
+    using the option Correct RAD-DICOM File Entries [MAGD FIX DICOM FILE]. 
+    The MAG*3.0*123 KIDS cannot be installed if there are any uncorrected 
+    images identified in the DICOM FAILED IMAGES File (#2006.575).
+ 3. Shut down all windows on all DICOM Gateways
+ 4. Shut down the Background Processor.
+  
+ Installing the KIDS Packages
+ ----------------------------
+ Installing the KIDS packages involves installing the following files on 
+ the RPMS host in this order:
+ 1.  00-MAG3_0P90.KID
+ 2.  01-MAG3_0P53.KID
+ 3.  02-MAG3_0P94.KID
+ 4.  03-MAG3_0P114.KID
+ 5.  04-MAG3_0P66.KID
+ 6.  05-MAG3_0P105.KID
+ 7.  06-MAG3_0P98.KID
+ 8.  07-MAG3_0P115.KID
+ 9.  08-MAG3_0P106.KID
+ 10. 09-MAG3_0P39KID
+ 11. 10-MAG3_0P49.KID
+ 12. 11-MAG3_0P117.KID
+ 13. 12-MAG3_0P99.KID
+ 14. 13-MAG3_0P104.KID
+ 15. 14-MAG3_0P120.KID
+ 16. 15-MAG3_0P122 KID
+ 17. 16-MAG3_0P123 KID
+  
+ The following section provides instructions for installing the MAG*3.0*123
+ KIDS. The installation instructions for the other KIDS files are similar.
+ For detailed instructions for each KIDS package, please refer to the Patch
+ Description of the relevant patch.
+  
+ Installing the MAG*3.0*123 KIDS Package
+ ---------------------------------------
+ To install the MAG*3.0*123 KIDS package:
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN]
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to 
+       load the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P123.KID) of
+       the KIDS file that you are installing.
+    c. When prompted to continue with the load, enter YES. A Distribution
+       OK! message will be displayed when the load is complete.
+ 4. After you load the KIDS file, use the following options to verify the
+    contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run
+       this option if you want to ensure the integrity of the routines in
+       the patch.
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] 
+       Run this option if you want to view all changes that will be made
+       when the patch is installed. All components (routines, options, and 
+       so on) in the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you
+       want to create a backup message of any routines exported with the
+       patch. The option will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install
+    the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter MAG3_0P123.KID.
+    c. Answer NO to the following prompts:
+  
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When the installation has finished, an Install Completed message 
+ will be displayed.
+  
+  
+ KIDS Installation Example
+ ------------------------- 
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: mag*3.0*123      8/7/12@16:00:27
+      => VistA Imaging V3.0 - Patch 123 - 07/24/2012 17:11PM  ;Created o
+  
+ This Distribution was loaded on Aug 07, 2012@16:00:27 with header of
+    VistA Imaging V3.0 - Patch 123 - 07/24/2012 17:11PM  ;Created on Jul 2
+ 4, 2012@17:11:19
+    It consisted of the following Install(s):
+     MAG*3.0*123
+ Checking Install for Package MAG*3.0*123
+  
+ Install Questions for MAG*3.0*123
+  
+ Incoming Files:
+  
+    2006.563  DICOM GATEWAY PARAMETER  (Partial Definition)
+ Note:  You already have the 'DICOM GATEWAY PARAMETER' File.
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*123 :
+                Aug 07, 2012@16:00:43
+  
+ Build Distribution Date: Jul 24, 2012
+  
+  Installing Routines:........................
+                Aug 07, 2012@16:00:43
+  
+  Installing Data Dictionaries: ...
+                Aug 07, 2012@16:00:44
+  
+  Running Post-Install Routine: POST^MAGIP123.
+  
+ Post Install Mail Message: Aug 07, 2012@16:00:44
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*123 Installed.
+                Aug 07, 2012@16:00:44
+  
+  
+ Installing the DICOM Gateway
+ ----------------------------
+  
+ The steps to update the software on the DICOM Gateways are detailed in the
+ MAG*3.0*123 Patch Description (MAG3_0P123_Patch_Description.pdf).
+  
+ Review the installation instructions in the Patch Description before
+ beginning the installation.
+  
+ Installing the MAG*3.0*123 DICOM Gateway involves running the file 
+ MAG3_0P123_DICOM_Setup.exe. 
+  
+ MAG*3.0*123 is an update of the DICOM Gateway rather than a full 
+ installation. Because of this you must install the MAG*3.0*99 DICOM 
+ Gateway first and then run the MAG*3.0*123 DICOM Gateway installation to 
+ update the MAG*3.0*99 DICOM Gateway.
+  
+ You must install the patch on all DICOM Gateways at the same time. That 
+ is, you must shut down all gateway processes that are running, install 
+ the patch on all gateway hosts and then start all gateway processes. 
+  
+ NOTE: Do not use Remote Desktop to install the DICOM Gateway software. 
+ Attempts to perform the installation using Remote Desktop will fail. You 
+ can use other applications such as PC Anywhere and DameWare for remote 
+ installations.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 67;Jul 24, 2012
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAG7RS
+    Before: B54368283   After: B63369541  **11,40,30,123**
+Routine Name: MAGDCCS
+    Before: B64783985   After: B66427733  **10,11,85,54,123**
+Routine Name: MAGDCCS2
+    Before: B16336800   After: B18217795  **10,11,30,54,123**
+Routine Name: MAGDCCSD
+    Before:  B9827446   After: B10038347  **10,11,123**
+Routine Name: MAGDHLS
+    Before: B67817009   After: B74934022  **49,123**
+Routine Name: MAGDIR81
+    Before: B80768896   After: B83085338  **11,30,51,50,46,54,53,123**
+Routine Name: MAGDIR8A
+    Before: B35665323   After: B36721014  **11,51,49,123**
+Routine Name: MAGDLB1
+    Before: B53612286   After: B55699904  **11,30,54,123**
+Routine Name: MAGDLB12
+    Before: B22838427   After: B22962820  **11,51,20,123**
+Routine Name: MAGDLB9
+    Before:  B9474795   After:  B9624068  **11,123**
+Routine Name: MAGDLBAA
+    Before: B19867393   After: B20043797  **11,51,54,53,123**
+Routine Name: MAGDQR03
+    Before:B166180822   After:B166761513  **51,54,66,123**
+Routine Name: MAGDQR04
+    Before: B76923926   After: B78024448  **51,54,66,123**
+Routine Name: MAGDQR21
+    Before:B159758067   After:B160483069  **83,104,123**
+Routine Name: MAGDRA1
+    Before: B21186342   After: B21556631  **10,11,30,123**
+Routine Name: MAGDRA2
+    Before: B28718021   After: B31366232  **10,11,51,54,49,123**
+Routine Name: MAGDRAHL
+    Before:  B8520421   After:  B8412113  **49,123**
+Routine Name: MAGDRPC3
+    Before: B57242503   After: B57972489  **11,30,51,50,85,54,49,123**
+Routine Name: MAGDRPC9
+    Before: B55355495   After: B55813118  **50,54,53,49,123**
+Routine Name: MAGDRPCA
+    Before: B90688059   After: B93958807  **53,123**
+Routine Name: MAGDTR05
+    Before: B47569511   After: B48114402  **46,54,123**
+Routine Name: MAGIP123
+    Before:       n/a   After:  B4047569  **123**
+Routine Name: MAGSPID
+    Before:  B3911091   After:  B3966944  **122,123**
+ 
+Routine list of preceding patches: 20, 49, 66, 104, 122
+
+=============================================================================
+User Information:
+Entered By  : TROMBETTA,KATHY               Date Entered  : SEP 15, 2011
+Completed By: SHOVESTUL,MARYANN             Date Completed: NOV 29, 2012
+Released By : HAAS,CHRISTINE T              Date Released : NOV 29, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

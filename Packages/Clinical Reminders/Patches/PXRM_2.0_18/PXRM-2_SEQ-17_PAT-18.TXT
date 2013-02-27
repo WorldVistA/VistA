@@ -1,0 +1,354 @@
+
+=============================================================================
+Run Date: MAR 21, 2012                     Designation: PXRM*2*18
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #17                      Status: Released
+                  Compliance Date: APR 21, 2012
+=============================================================================
+
+Associated patches: (v)PXRM*2*17   <<= must be installed BEFORE `PXRM*2*18'
+                    (v)SD*5.3*583  <<= must be installed BEFORE `PXRM*2*18'
+
+Subject: MH HIGH RISK PHASE 1
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ General Overview:
+ =================
+ This patch is one of the patches in part one of the High Risk Mental
+ Health project. The other patches are: DG*5.3*836, SD*5.3*578,
+ GMTS*2.7*99, and TIU*1*260. Because, this is a multi-package project
+ there is a multi-package build that installs the following
+ builds: DG*5.3*836, SD*5.3*578, GMTS*2.7*99, TIU*1.0*260, and
+ PXRM*2.0*18.
+ 
+ See the Release Notes, PXRM_2_18_RN.PDF, for a description of what
+ is included in this patch.
+ 
+  Remedy Tickets:
+  ==============
+  173532
+  366957
+  376141
+  390685
+  391160
+  393320
+  399010
+  404828
+  423379
+  457364
+  462943
+  475319
+  488811
+  556433
+  584156
+  
+  Test Sites:
+  ===========
+  UPSTATE NEW YORK HCS BUFFALO
+  PORTLAND VAMC
+  NORTHPORT VAMC
+  NORTHERN CALIFORNIA HCS
+  MILWAUKEE VAMC
+  MARYLAND HCS
+  INDIANAPOLIS VAMC
+  CHICAGO VAMC
+ 
+ 
+ Software & Documentation Retrieval Instructions
+ ===============================================
+ The software for this set of patches is not being distributed through
+ the National Patch Module. There is a multi-package build named HIGH
+ RISK MH 1.0 which contains the following KIDS builds: DG*5.3*836,
+ SD*5.3*578, TIU*1.0*260, GMTS*2.7*99, and PXRM*2.0*18.The associated
+ host file is named HIGH_RISK_MH_1_0.KID.
+ 
+ The set of documentation has been bundled into a single zip file named:
+ HRMHP_DOCS.ZIP.
+  
+ The preferred method for obtaining these files is to use File Transfer
+ Protocol (FTP) to download them from: 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve the files directly from a specific
+ server as
+ follows:
+ 
+ Albany      ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines       ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov  <ftp://ftp.fo-slc.med.va.gov>
+ 
+ HRMHP_DOCS.ZIP contains the following files:
+ 
+ PXRM_2_18_IG.PDF
+ PXRM_2_UM.PDF
+ PXRM_2_TM.PDF
+ PXRM_2_MM.PDF
+ PXRM_2_18_RN.PDF
+ HSUM_2_7_99_UM.PDF
+ HSUM_2_7_99_TM.PDF
+ DG_5_3_836_IG.PDF
+ SD_5_3_578_IG.PDF
+ 
+ Documentation can also be found on the VistA Documentation Library (VDL)
+ at:
+ http://www.va.gov/vdl/
+ 
+ Title                         File Name                      FTP Mode
+ ----------------------------------------------------------------------- 
+ High Risk Mental Health Patient Project Installation and Setup Guide 
+                                PXRM_2_18_IG.PDF               Binary
+ PXRM User Manual               PXRM_2_UM.PDF                  Binary
+ PXRM Tech Manual               PXRM_2_TM.PDF                  Binary
+ High Risk Mental Health Patient Project Release Notes
+                                PXRM_2_18_RN.PDF               Binary
+ Clinical Reminders Manager's Manual
+                                PXRM_2_MM.PDF                  Binary
+ GMTS User Manual               HSUM_2_7_99_UM.pdf             Binary
+ GMTS Tech Manual               HSUM_2_7_99_TM.pdf             Binary
+ DG Install Guide               DG_5_3_836_IG.PDF              Binary
+ SD Install Guide               SD_5_3_578_IG.PDF              Binary 
+ 
+ 
+ Build Components:
+ =================
+ 
+  Data Dictionary:
+  ================
+ 
+ FILE #       NAME
+ -------------------------------------------------------------------------------
+ 801.41      REMINDER DIALOG
+ 802.4       REMINDER FUNCTION FINDING FUNCTIONS
+ 811.4       REMINDER COMPUTED FINDINGS
+ 811.5       REMINDER TERM
+ 811.6       REMINDER SPONSOR
+ 811.8       REMINDER EXCHANGE
+ 811.9       REMINDER DEFINITION
+ 
+  Input Templates:
+  ================
+   PXRM EDIT ELEMENT  FILE #801.41  SEND TO SITE
+   PXRM EDIT GROUP    FILE #801.41  SEND TO SITE
+ 
+  Options:
+  ========
+   PXRM DEF INTEGRITY CHECK ALL  SEND TO SITE
+   PXRM DEF INTEGRITY CHECK ONE  SEND TO SITE
+   PXRM DIALOG CHECKER ALL       SEND TO SITE
+   PXRM DIALOG TOOLS MENU        USE AS LINK FOR MENU/ITEM/SUBSCRIBERS
+   PXRM REMINDER MANAGEMENT      USE AS LINK FOR MENU/ITEM/SUBSCRIBERS
+ 
+ 
+ Installation Instructions
+ =========================
+ The following install steps are only a high level overview, please
+ follow the  PXRM install guide for more detailed instructions and
+ guidance.
+ 
+ 1.  Download the HIGH_RISK_MH_1_0.KID file from the appropriate  
+     FTP Server to the directory on your system.
+ 
+ 2.  Use LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and 
+     enter: [DIR]:HIGH_RISK_MH_1_0.KID, where [DIR] is the local
+     directory where you have stored the host file.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use any of
+     the following options. When prompted for the INSTALL enter the build 
+     HIGH RISK MH 1.0:
+ 
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this build. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this build
+         is installed. It compares all components of this build
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and 
+     choose the build to install.
+ 
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Answer 'NO'
+ 
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Answer 'NO'
+ 
+ 7. The init routines PXRMP18I and PXRMP18E may be deleted once the
+    installation has successfully completed.
+ 
+ 
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRM
+    Before: B34249926   After: B34618632  **4,11,12,16,18**
+Routine Name: PXRMBMI
+    Before: B15140257   After: B15288671  **12,18**
+Routine Name: PXRMCDEF
+    Before:  B1896226   After:  B2105486  **4,18**
+Routine Name: PXRMCDUE
+    Before: B37885112   After: B41810574  **4,6,12,18**
+Routine Name: PXRMCF
+    Before: B44968496   After: B54030816  **6,12,18**
+Routine Name: PXRMCLST
+    Before: B23161852   After: B23383800  **18**
+Routine Name: PXRMCSD
+    Before: B79106380   After: B79166791  **9,17,18**
+Routine Name: PXRMCSTX
+    Before: B33673848   After: B33730668  **9,12,17,18**
+Routine Name: PXRMDATE
+    Before: B44842316   After: B67839072  **4,6,12,17,18**
+Routine Name: PXRMDEV
+    Before: B28974848   After: B28252558  **4,6,11,16,18**
+Routine Name: PXRMDLL
+    Before:B109993102   After:B110071468  **10,6,12,17,18**
+Routine Name: PXRMDLLA
+    Before: B76788131   After: B80062265  **6,12,18**
+Routine Name: PXRMDLRP
+    Before: B73262172   After: B90356438  **12,18**
+Routine Name: PXRMDNVA
+    Before:  B6143858   After:  B6248881  **4,6,17,18**
+Routine Name: PXRMDRUG
+    Before: B54625328   After: B62235689  **4,6,12,18**
+Routine Name: PXRMENOD
+    Before:  B2654901   After: B20293476  **4,6,18**
+Routine Name: PXRMERRH
+    Before: B20772290   After: B20920805  **4,17,18**
+Routine Name: PXRMEUT
+    Before: B48500029   After: B48589168  **4,6,17,18**
+Routine Name: PXRMEVFI
+    Before:  B5228534   After: B10519647  **6,18**
+Routine Name: PXRMEXFI
+    Before: B38889125   After: B53336583  **6,12,18**
+Routine Name: PXRMEXHF
+    Before: B46776039   After: B46895809  **12,17,18**
+Routine Name: PXRMEXIC
+    Before: B65705401   After: B79443458  **6,12,17,16,18**
+Routine Name: PXRMEXIU
+    Before: B64740382   After: B65964028  **4,6,12,17,18**
+Routine Name: PXRMEXPD
+    Before:B192354344   After:B193477804  **12,17,16,18**
+Routine Name: PXRMEXPS
+    Before:B186431616   After:B186693422  **12,16,18**
+Routine Name: PXRMEXSI
+    Before: B38100333   After: B38179497  **6,12,17,18**
+Routine Name: PXRMEXU0
+    Before:  B5352213   After:  B6669231  **4,12,18**
+Routine Name: PXRMEXU5
+    Before: B39432783   After: B37340412  **12,16,18**
+Routine Name: PXRMFF
+    Before: B22579006   After: B39772882  **4,6,11,18**
+Routine Name: PXRMFF0
+    Before:  B8007261   After: B16903444  **4,6,12,18**
+Routine Name: PXRMFFAT
+    Before:  B1091820   After:  B1990669  **4,6,18**
+Routine Name: PXRMFFDB
+    Before: B51498575   After: B67646936  **4,6,12,18**
+Routine Name: PXRMFFH
+    Before:  B8899863   After:  B8850687  **12,18**
+Routine Name: PXRMFRPT
+    Before:B103832616   After:B109052864  **12,17,16,18**
+Routine Name: PXRMHF
+    Before: B40611502   After: B40695055  **6,17,18**
+Routine Name: PXRMICHK
+    Before:       n/a   After:B126620696  **18**
+Routine Name: PXRMINDX
+    Before: B35686901   After: B36208748  **4,6,12,17,18**
+Routine Name: PXRMINTR
+    Before: B37092667   After: B38456694  **4,12,16,18**
+Routine Name: PXRMLDR
+    Before: B20046686   After: B20371554  **18**
+Routine Name: PXRMLEX
+    Before: B11804614   After: B13035630  **17,18**
+Routine Name: PXRMLOCF
+    Before: B84197605   After: B95480822  **4,6,11,12,18**
+Routine Name: PXRMLOCL
+    Before: B26127982   After: B26781951  **4,6,11,18**
+Routine Name: PXRMLOG
+    Before: B60154772   After: B61916340  **4,6,12,17,18**
+Routine Name: PXRMLOGX
+    Before: B66287455   After: B66338920  **4,18**
+Routine Name: PXRMMATH
+    Before:       n/a   After:  B1055537  **18**
+Routine Name: PXRMMSG
+    Before:  B1574379   After:  B1586253  **17,18**
+Routine Name: PXRMMST
+    Before: B74680448   After: B74769587  **4,6,17,18**
+Routine Name: PXRMOUTU
+    Before: B15077433   After: B15123879  **17,18**
+Routine Name: PXRMP18E
+    Before:   B473282   After:  B7271326  **18**
+Routine Name: PXRMP18I
+    Before:  B6133354   After: B53411935  **18**
+Routine Name: PXRMPCMM
+    Before:       n/a   After:  B8447638  **18**
+Routine Name: PXRMPDEM
+    Before: B55690004   After: B63031342  **5,4,11,12,17,18**
+Routine Name: PXRMPDRP
+    Before: B88268876   After: B99170461  **4,6,12,18**
+Routine Name: PXRMPDRS
+    Before: B64959167   After: B66950480  **4,6,12,17,18**
+Routine Name: PXRMPLST
+    Before: B53670346   After: B53881985  **4,6,18**
+Routine Name: PXRMPRF
+    Before:  B4757195   After: B14561968  **17,18**
+Routine Name: PXRMPSN
+    Before: B28129650   After: B29549599  **12,17,16,18**
+Routine Name: PXRMPTD2
+    Before:  B4776761   After:  B5119289  **4,6,18**
+Routine Name: PXRMPTL
+    Before: B39410710   After: B36712533  **4,12,18**
+Routine Name: PXRMRDI
+    Before: B14183125   After: B38535158  **4,17,18**
+Routine Name: PXRMREDT
+    Before: B64580454   After: B70692621  **4,6,12,18**
+Routine Name: PXRMSEL1
+    Before: B46694047   After: B46693402  **12,18**
+Routine Name: PXRMSTAC
+    Before:  B7039819   After: B10361634  **18**
+Routine Name: PXRMSTS
+    Before:B176990612   After:B177106484  **12,17,18**
+Routine Name: PXRMTAX
+    Before: B60695775   After: B65705767  **4,6,12,18**
+Routine Name: PXRMTERM
+    Before: B52228234   After: B55250159  **4,6,11,18**
+Routine Name: PXRMUTIL
+    Before: B85545936   After: B90350759  **4,6,11,12,17,18**
+Routine Name: PXRMVITL
+    Before: B14590186   After: B14733842  **6,12,17,18**
+Routine Name: PXRMVLST
+    Before: B42728225   After: B47316348  **4,18**
+Routine Name: PXRMVSIT
+    Before: B10285204   After: B10620425  **4,6,18**
+Routine Name: PXRMXDT1
+    Before: B69793720   After: B70086449  **4,6,12,17,18**
+ 
+Routine list of preceding patches: 16
+
+=============================================================================
+User Information:                          Hold Date     : MAR 18, 2012
+Entered By  : REDINGTON,PATRICK             Date Entered  : AUG 20, 2010
+Completed By: OLSEN,JAMES                   Date Completed: FEB 14, 2012
+Released By : MONTGOMERY,ALAN               Date Released : MAR 21, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

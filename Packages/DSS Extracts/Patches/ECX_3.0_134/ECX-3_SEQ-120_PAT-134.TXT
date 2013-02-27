@@ -1,0 +1,220 @@
+$TXT Created by PANNELL,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 05/05/11 at 13:02
+=============================================================================
+Run Date: OCT 17, 2011                     Designation: ECX*3*134
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #120                      Status: Released
+                  Compliance Date: OCT 31, 2011
+=============================================================================
+
+Associated patches: (v)ECX*3*129   <<= must be installed BEFORE `ECX*3*134'
+
+Subject: FY12 UPDATES TO DSS LOINC CODE FILE (#727.29)
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ ***************************************************************
+ *********************NOTE:************************************* 
+ THIS PATCH NEEDS TO BE IMPLEMENTED AFTER THE SEPTEMBER
+ LAB RESULTS (LAR) EXTRACT IS RUN AND BEFORE THE OCTOBER 
+ LAR EXTRACT IS RUN.
+  
+ ***************************************************************
+  
+ This patch will update the DSS Logical Observation Identifiers Names
+ and Codes (LOINC) (#727.29) FILE by adding 19 new codes and removing 
+ 2 existing codes.
+  
+  
+ Associated NSR(S):
+ ==================
+ N/A
+    
+   
+ Associated Remedy Ticket(s):
+ ============================
+ HD0000000483352     Update needed for DSS LOINC Code file (#727.29)
+  
+    
+ Participating Test Sites:
+ =========================
+ Long Beach, CA
+ Palo Alto HCS
+ Providence, RI
+   
+    
+ Remedy Overview:
+ ================
+ 1)    HD0000000483352     Update needed for DSS LOINC Code 
+                           file (#727.29)
+   
+    
+ Problem: 
+ --------
+ The Decision Support Office (DSO) has requested an update to the 
+ DSS LOINC FILE (#727.29) file. They need to add and remove codes 
+ from the file.
+   
+ Resolution:
+ -----------
+ The table will be updated as requested.
+   
+ Resolution Detail:
+  
+ (1) The entries that will be deleted in the DSS LOINC FILE (#727.29)
+     file are:
+  
+      LOINC Codes 29893-5 and 14092-1. 
+  
+ (2) The new entries that will be added to the DSS LOINC FILE (#727.29) file 
+     are:
+    
+   For LAR Test #34 with DSS Test Name "Hepatitis C Antibody" and 
+    Reporting Units of "NEG-POS/NON-REAC-REAC":
+      LOINC Code     LOINC NAME
+      ----------     ----------
+      57006-9        HCV IgG Ser EIA-aCnc
+      
+  
+   For LAR Test #35 with DSS Test Name "HIV Screening Antibody" and 
+    Reporting Units of "NEG-POS/NON-REAC-REAC":
+      LOINC Code     LOINC NAME
+      ----------     ----------
+      29893-5        HIV1 Ab Ser Ql EIA
+      14092-1        HIV1 Ab Ser Ql IF
+      42768-2        HIV1 & 2 Ab Ser-Imp
+      56888-1        HIV1+2 Ab+HIV1 p24 Ag Ser Ql EIA
+      58900-2        HIV1+2 Ab+HIV1 p24 Ag Ser EIA-aCnc
+  
+   For LAR Test #36 with DSS Test Name "CD4/CD8 Ratio (T Cell Screen)" and 
+    Reporting Units of "%":
+      LOINC Code     LOINC NAME
+      ----------     ----------
+      54218-3        CD3+CD4+ Cells/CD3+CD8+ Cells Bld
+  
+   For LAR Test #38 with DSS Test Name "HIV Viral Load" and 
+    Reporting Units of "COPIES/ML":
+      LOINC Code     LOINC NAME
+      ----------     ----------
+      25835-0        HIV1 RNA SerPl Ql PCR
+      41513-3        HIV1 RNA # SerPl Amp Prb DL=400
+      41515-8        HIV1 RNA # SerPl Amp Prb DL=75
+      5017-9         HIV1 RNA Bld Ql PCR
+      59419-2        HIV1 RNA # Plas bDNA
+  
+   For LAR Test #46 with DSS Test Name "Hepatitis B Core AB" and 
+    Reporting Units of "NEG-POS/NON-REAC-REAC":
+      LOINC Code     LOINC NAME
+      ----------     ----------
+      47358-7        HBV core Ab Ser Donr Ql EIA
+  
+   For LAR Test #47 with DSS Test Name "Hepatitis B e AG" and 
+    Reporting Units of "NEG-POS/NON-REAC-REAC":
+      LOINC Code     LOINC NAME
+      ----------     ----------
+      32178-6        HBV e Ag Titr Ser
+  
+   For the new LAR Test #90 with DSS Test Name "Erythrocyte Sedimentation
+    Rate" and Reporting Units of "MM/HR":
+      LOINC Code     LOINC NAME
+      ----------     ----------
+      4537-7         ESR Bld Qn Westrgrn
+      30341-2        ESR Bld Qn
+  
+   For the new LAR Test #91 with DSS Test Name "Rheumatoid Factor"
+    and Reporting Units of "IU/ML":
+      LOINC Code     LOINC NAME
+      ----------     ----------
+      11572-5        RF Ser-aCnc
+      6928-6         Rheumatoid fact Ser EIA-aCnc
+      15205-8        Rheumatoid fact Ser Neph-aCnc
+  
+    
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ **DO NOT INSTALL UNTIL ALL PRE-INSTALL INSTRUCTIONS HAVE BEEN COMPLETED**
+  
+ PRE-INSTALL
+ -----------
+ Contact the site DSS POC and review the following steps with them:
+     1. Has the September LAR EXTRACT been run to completion? If NO, get
+        a time frame for when it will be completed, audited, and reviewed
+        for issues?
+     2. Has the audit report - Laboratory Results (LAR) Extract Audit [ECX
+        LAR SOURCE AUDIT] - been completed and reviewed against the 
+        extract with no issues found?  If NO, please have them complete 
+        it and review it against the extract for issues.
+     3. Has the Lab Results DSS LOINC Code Report [ECX LAR LOINC RPT] 
+        been run and reviewed for inconsistencies or errors?
+     4. Does the DSS POC approve that the site has fully completed the 
+        September LAR EXTRACT and has not started anything with the 
+        October LAR EXTRACT?  If YES, proceed with installation of the 
+        patch into the site.
+   
+ INSTALL
+ -------  
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter ECX*3.0*134)
+    
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package ECX*3.0*134.
+  
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+    
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+   
+    7. You may delete the routine ECX134PT from your production system after
+       the patch has been successfully tested.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22,1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX134PT
+    Before:       n/a   After: B15782485  **134**
+
+=============================================================================
+User Information:
+Entered By  : PANNELL,BRIAN                 Date Entered  : APR 12, 2011
+Completed By: LEANORD,TATIANA               Date Completed: OCT 17, 2011
+Released By : VASSAR,CAROL                  Date Released : OCT 17, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

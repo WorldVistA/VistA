@@ -1,0 +1,250 @@
+$TXT Created by MORRISON,JENNIFER ANN at CMAI.FO-BIRM.MED.VA.GOV  (KIDS) on Friday, 12/16/11 at 12:02
+=============================================================================
+Run Date: MAR 07, 2012                     Designation: PSS*1*156
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #148                      Status: Released
+                  Compliance Date: APR 07, 2012
+=============================================================================
+
+Associated patches: (v)PSS*1*155   <<= must be installed BEFORE `PSS*1*156'
+
+Subject: FY11 OPAI ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch is being released as part of Pharmacy Legacy Enhancements Fiscal
+ Year 2011 to address the Outpatient Pharmacy Automation Interface (OPAI) 
+ Enhancements. The Outpatient Pharmacy patch PSO*7*354 is also being released 
+ as part of this enhancement.
+  
+ Veterans Affairs Medical Center (VAMC) facilities have moved to using multiple
+ vendors for automated medication dispensing systems to improve the efficiency
+ of outpatient pharmacy operations. The following enhancements were made to 
+ the Pharmacy Data Management software to allow any one division to have more 
+ than one Automated Dispensing Device (ADD) communicating with Veterans Health 
+ Information Systems and Technology Architecture (VistA) through OPAI.
+  
+ 1.A new OPAI sub-file (#50.0906) was added to the DRUG file (#50). It gives
+   sites the flexibility to define ADDs at the drug level. The sub-file 
+   (#50.0906) contains the following new fields:  
+      DIVISION  - This is the division associated with the ADD for the drug.
+                  This field is a pointer to the OUTPATIENT SITE file (#59).
+      WINDOW    - This field is a pointer to the PHARMACY AUTOMATED DISPENSING
+       DNS NAME   DEVICES file (#52.53). Orders with a route of WINDOW will be
+                  sent to this ADD.
+      MAIL      - This field is a pointer to the PHARMACY AUTOMATED DISPENSING
+       DNS NAME   DEVICES file (#52.53). Orders with a route of MAIL will be
+                  sent to this ADD.
+  
+    
+ 2.  The Drug Enter/Edit [PSS DRUG ENTER/EDIT] option was modified to include
+     the new fields as part of data entry. This option should be used when a
+     drug is to be sent to a specific dispensing device.
+    
+   
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ DRUG (#50)                 OPAI (#906)           Modified
+ OPAI sub-file (#50.0906)   DIVISION (#.01)       New
+                            WINDOW DNS NAME (#1)  New
+                            MAIL DNS NAME (#2)    New
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ PSS DRUG ENTER/EDIT    run routine         Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070106 - OPAI functionality expansion
+  
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ 447576
+   
+  
+ Test Sites:
+ ===========
+ HEARTLAND-WEST (Kansas city)
+ LONG BEACH, CA 
+ NEW JERSEY HCS
+ ORLANDO, FL
+ PUGET SOUND HCS
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be retrieved from the VA Software Document Library
+ (VDL) on the Internet at the following address: http://www4.va.gov/vdl/
+  
+ File Description                        File Name             FTP Mode
+ ---------------------------------------------------------------------------
+ Pharmacy Data Management User Manual    PSS_1_UM_R0312.PDF         (binary)
+ Pharmacy Data Management User Manual    PSS_1_P156_UM_CP.PDF       (binary)
+  Change Pages
+ Outpatient Pharmacy Automation          PSO_7_354_PSS_1_156_RN.PDF (binary)
+  Interface Expansion Release Notes
+  
+   
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+    
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minute 
+ to install.
+  
+ The following menu options should be disabled.
+  
+     Option Name                Menu Text
+     -----------------------    ------------------------------
+     PSS DRUG ENTER/EDIT        Drug Enter/Edit
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSS*1.0*156):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSS*1.0*156.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES//  respond YES. Select the following options
+     to disable.
+  
+       Option Name                Menu Text
+       -----------------------    ------------------------------
+       PSS DRUG ENTER/EDIT        Drug Enter/Edit
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDEE
+    Before: B93197121   After: B96127789  **3,5,15,16,20,22,28,32,34,33,
+                                           38,57,47,68,61,82,90,110,155,
+                                           156**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : MAY 13, 2010
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: FEB 21, 2012
+Released By : FOX,KIRK                      Date Released : MAR 07, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

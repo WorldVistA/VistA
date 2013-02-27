@@ -1,0 +1,666 @@
+Released TIU*1*264 SEQ #246
+Extracted from mail message
+**KIDS**:TIU*1.0*264^
+
+**INSTALL NAME**
+TIU*1.0*264
+"BLD",8483,0)
+TIU*1.0*264^TEXT INTEGRATION UTILITIES^0^3120430^y
+"BLD",8483,1,0)
+^^30^30^3111123^
+"BLD",8483,1,1,0)
+ This patch will correct the following issues:
+"BLD",8483,1,2,0)
+ If a user enters a note in Mobile Electronic Documentation, and does not 
+"BLD",8483,1,3,0)
+ select a different note before exiting, in some cases the newly entered 
+"BLD",8483,1,4,0)
+ note would be lost.
+"BLD",8483,1,5,0)
+ 
+"BLD",8483,1,6,0)
+ The parameter TIU MED HSTYPE was set to accept a free text value that 
+"BLD",8483,1,7,0)
+ should contain a pointer to the Health Summary type to be used with MED. 
+"BLD",8483,1,8,0)
+ This was a problem, because a user had to know the Internal entry 
+"BLD",8483,1,9,0)
+ number of the health summary in order to update the parameter.
+"BLD",8483,1,10,0)
+ 
+"BLD",8483,1,11,0)
+ When certain Patient Data Objects are imported from MED notes, internal 
+"BLD",8483,1,12,0)
+ data was incorrectly getting added to the note. 
+"BLD",8483,1,13,0)
+ 
+"BLD",8483,1,14,0)
+ Mobile Electronic Documentation was calculating when to suggest 
+"BLD",8483,1,15,0)
+ database compaction incorrectly. Also, when database compaction was 
+"BLD",8483,1,16,0)
+ suggested, and the users clicked Yes in order to compact the database, 
+"BLD",8483,1,17,0)
+ MED would get stuck in an infinite loop and hang.
+"BLD",8483,1,18,0)
+ 
+"BLD",8483,1,19,0)
+ The Action menu, in MED is displaying on all tabs, even though it is 
+"BLD",8483,1,20,0)
+ only related to the Notes tab. This can cause confusion if there is a 
+"BLD",8483,1,21,0)
+ note selected on the notes tab and the user is on a different tab.
+"BLD",8483,1,22,0)
+ 
+"BLD",8483,1,23,0)
+ When using a dialog template in MED, parent choices are grayed out. 
+"BLD",8483,1,24,0)
+ When the same choices are not grayed out if viewed in CPRS.
+"BLD",8483,1,25,0)
+ 
+"BLD",8483,1,26,0)
+ Med Install guide references the wrong Key.
+"BLD",8483,1,27,0)
+ 
+"BLD",8483,1,28,0)
+ If a user attempted to retrieve two patients with the same names they
+"BLD",8483,1,29,0)
+ would import correctly, but only one would be selectable in the patient
+"BLD",8483,1,30,0)
+ selection dialog.
+"BLD",8483,4,0)
+^9.64PA^^
+"BLD",8483,6.3)
+5
+"BLD",8483,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8483,"KRN",.4,0)
+.4
+"BLD",8483,"KRN",.401,0)
+.401
+"BLD",8483,"KRN",.402,0)
+.402
+"BLD",8483,"KRN",.403,0)
+.403
+"BLD",8483,"KRN",.5,0)
+.5
+"BLD",8483,"KRN",.84,0)
+.84
+"BLD",8483,"KRN",3.6,0)
+3.6
+"BLD",8483,"KRN",3.8,0)
+3.8
+"BLD",8483,"KRN",9.2,0)
+9.2
+"BLD",8483,"KRN",9.8,0)
+9.8
+"BLD",8483,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",8483,"KRN",9.8,"NM",1,0)
+TIUMED1^^0^B43223292
+"BLD",8483,"KRN",9.8,"NM","B","TIUMED1",1)
+
+"BLD",8483,"KRN",19,0)
+19
+"BLD",8483,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",8483,"KRN",19.1,0)
+19.1
+"BLD",8483,"KRN",101,0)
+101
+"BLD",8483,"KRN",409.61,0)
+409.61
+"BLD",8483,"KRN",771,0)
+771
+"BLD",8483,"KRN",779.2,0)
+779.2
+"BLD",8483,"KRN",870,0)
+870
+"BLD",8483,"KRN",8989.51,0)
+8989.51
+"BLD",8483,"KRN",8989.51,"NM",0)
+^9.68A^1^1
+"BLD",8483,"KRN",8989.51,"NM",1,0)
+TIU MED HSTYPE^^0
+"BLD",8483,"KRN",8989.51,"NM","B","TIU MED HSTYPE",1)
+
+"BLD",8483,"KRN",8989.52,0)
+8989.52
+"BLD",8483,"KRN",8994,0)
+8994
+"BLD",8483,"KRN","B",.4,.4)
+
+"BLD",8483,"KRN","B",.401,.401)
+
+"BLD",8483,"KRN","B",.402,.402)
+
+"BLD",8483,"KRN","B",.403,.403)
+
+"BLD",8483,"KRN","B",.5,.5)
+
+"BLD",8483,"KRN","B",.84,.84)
+
+"BLD",8483,"KRN","B",3.6,3.6)
+
+"BLD",8483,"KRN","B",3.8,3.8)
+
+"BLD",8483,"KRN","B",9.2,9.2)
+
+"BLD",8483,"KRN","B",9.8,9.8)
+
+"BLD",8483,"KRN","B",19,19)
+
+"BLD",8483,"KRN","B",19.1,19.1)
+
+"BLD",8483,"KRN","B",101,101)
+
+"BLD",8483,"KRN","B",409.61,409.61)
+
+"BLD",8483,"KRN","B",771,771)
+
+"BLD",8483,"KRN","B",779.2,779.2)
+
+"BLD",8483,"KRN","B",870,870)
+
+"BLD",8483,"KRN","B",8989.51,8989.51)
+
+"BLD",8483,"KRN","B",8989.52,8989.52)
+
+"BLD",8483,"KRN","B",8994,8994)
+
+"BLD",8483,"QUES",0)
+^9.62^^
+"BLD",8483,"REQB",0)
+^9.611^1^1
+"BLD",8483,"REQB",1,0)
+TIU*1.0*257^2
+"BLD",8483,"REQB","B","TIU*1.0*257",1)
+
+"KRN",8989.51,607,-1)
+0^1
+"KRN",8989.51,607,0)
+TIU MED HSTYPE^Health Summary Type for MED^0
+"KRN",8989.51,607,1)
+P^142:AMEQ
+"KRN",8989.51,607,30,0)
+^8989.513I^4^4
+"KRN",8989.51,607,30,1,0)
+1^200
+"KRN",8989.51,607,30,2,0)
+2^49
+"KRN",8989.51,607,30,3,0)
+3^4
+"KRN",8989.51,607,30,4,0)
+4^4.2
+"MBREQ")
+0
+"ORD",20,8989.51)
+8989.51;20;;;PAR1E1^XPDTA2;PAR1F1^XPDIA3;PAR1E1^XPDIA3;PAR1F2^XPDIA3;;PAR1DEL^XPDIA3(%)
+"ORD",20,8989.51,0)
+PARAMETER DEFINITION
+"PKG",588,-1)
+1^1
+"PKG",588,0)
+TEXT INTEGRATION UTILITIES^TIU^Text Integration Utilities 
+"PKG",588,20,0)
+^9.402P^^
+"PKG",588,22,0)
+^9.49I^1^1
+"PKG",588,22,1,0)
+1.0^2970620^2971202^1
+"PKG",588,22,1,"PAH",1,0)
+264^3120430
+"PKG",588,22,1,"PAH",1,1,0)
+^^30^30^3120430
+"PKG",588,22,1,"PAH",1,1,1,0)
+ This patch will correct the following issues:
+"PKG",588,22,1,"PAH",1,1,2,0)
+ If a user enters a note in Mobile Electronic Documentation, and does not 
+"PKG",588,22,1,"PAH",1,1,3,0)
+ select a different note before exiting, in some cases the newly entered 
+"PKG",588,22,1,"PAH",1,1,4,0)
+ note would be lost.
+"PKG",588,22,1,"PAH",1,1,5,0)
+ 
+"PKG",588,22,1,"PAH",1,1,6,0)
+ The parameter TIU MED HSTYPE was set to accept a free text value that 
+"PKG",588,22,1,"PAH",1,1,7,0)
+ should contain a pointer to the Health Summary type to be used with MED. 
+"PKG",588,22,1,"PAH",1,1,8,0)
+ This was a problem, because a user had to know the Internal entry 
+"PKG",588,22,1,"PAH",1,1,9,0)
+ number of the health summary in order to update the parameter.
+"PKG",588,22,1,"PAH",1,1,10,0)
+ 
+"PKG",588,22,1,"PAH",1,1,11,0)
+ When certain Patient Data Objects are imported from MED notes, internal 
+"PKG",588,22,1,"PAH",1,1,12,0)
+ data was incorrectly getting added to the note. 
+"PKG",588,22,1,"PAH",1,1,13,0)
+ 
+"PKG",588,22,1,"PAH",1,1,14,0)
+ Mobile Electronic Documentation was calculating when to suggest 
+"PKG",588,22,1,"PAH",1,1,15,0)
+ database compaction incorrectly. Also, when database compaction was 
+"PKG",588,22,1,"PAH",1,1,16,0)
+ suggested, and the users clicked Yes in order to compact the database, 
+"PKG",588,22,1,"PAH",1,1,17,0)
+ MED would get stuck in an infinite loop and hang.
+"PKG",588,22,1,"PAH",1,1,18,0)
+ 
+"PKG",588,22,1,"PAH",1,1,19,0)
+ The Action menu, in MED is displaying on all tabs, even though it is 
+"PKG",588,22,1,"PAH",1,1,20,0)
+ only related to the Notes tab. This can cause confusion if there is a 
+"PKG",588,22,1,"PAH",1,1,21,0)
+ note selected on the notes tab and the user is on a different tab.
+"PKG",588,22,1,"PAH",1,1,22,0)
+ 
+"PKG",588,22,1,"PAH",1,1,23,0)
+ When using a dialog template in MED, parent choices are grayed out. 
+"PKG",588,22,1,"PAH",1,1,24,0)
+ When the same choices are not grayed out if viewed in CPRS.
+"PKG",588,22,1,"PAH",1,1,25,0)
+ 
+"PKG",588,22,1,"PAH",1,1,26,0)
+ Med Install guide references the wrong Key.
+"PKG",588,22,1,"PAH",1,1,27,0)
+ 
+"PKG",588,22,1,"PAH",1,1,28,0)
+ If a user attempted to retrieve two patients with the same names they
+"PKG",588,22,1,"PAH",1,1,29,0)
+ would import correctly, but only one would be selectable in the patient
+"PKG",588,22,1,"PAH",1,1,30,0)
+ selection dialog.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","TIUMED1")
+0^1^B43223292^B40119157
+"RTN","TIUMED1",1,0)
+TIUMED1 ; BP/AJB - Mobile Elec. Doc ; 4/30/12 7:40am
+"RTN","TIUMED1",2,0)
+ ;;1.0;TEXT INTEGRATION UTILITIES;**244,257,264**;Jun 20, 1997;Build 5
+"RTN","TIUMED1",3,0)
+ ; ^SC(     IA# 10040
+"RTN","TIUMED1",4,0)
+ ; XPAR     IA# 2263
+"RTN","TIUMED1",5,0)
+ ; XUPARAM  IA# 2541
+"RTN","TIUMED1",6,0)
+ ; XLFSTR   IA# 10104
+"RTN","TIUMED1",7,0)
+ ; GMTSDVR  IA# 744
+"RTN","TIUMED1",8,0)
+ ; %ZISH    IA# 2320
+"RTN","TIUMED1",9,0)
+ ; DGPMDDCF IA# 1246
+"RTN","TIUMED1",10,0)
+ ; 
+"RTN","TIUMED1",11,0)
+ Q
+"RTN","TIUMED1",12,0)
+ACTLOC(TIULOC) ; IA # 10040
+"RTN","TIUMED1",13,0)
+ N D0,X I +$G(^SC(TIULOC,"OOS")) Q 0
+"RTN","TIUMED1",14,0)
+ S D0=+$G(^SC(TIULOC,42)) I D0 D WIN^DGPMDDCF Q 'X  ; IA # 1246
+"RTN","TIUMED1",15,0)
+ S X=$G(^SC(TIULOC,"I")) I +X=0 Q 1
+"RTN","TIUMED1",16,0)
+ I DT>$P(X,U)&($P(X,U,2)=""!(DT<$P(X,U,2))) Q 0
+"RTN","TIUMED1",17,0)
+ Q 1
+"RTN","TIUMED1",18,0)
+CLINLOC(TIUY,TIUF,TIUDIR) ; returns a set of clinics from HOSPITAL LOCATION
+"RTN","TIUMED1",19,0)
+ N TIUCNT,TIUDT,TIUIEN,TIUQUIT
+"RTN","TIUMED1",20,0)
+ S TIUCNT=0
+"RTN","TIUMED1",21,0)
+ F  Q:TIUCNT'<44  S TIUF=$O(^SC("B",TIUF),TIUDIR) Q:TIUF=""  D  ; IA # 10040
+"RTN","TIUMED1",22,0)
+ . S TIUIEN="" F  S TIUIEN=$O(^SC("B",TIUF,TIUIEN),TIUDIR) Q:'TIUIEN  D
+"RTN","TIUMED1",23,0)
+ . . I ($P($G(^SC(TIUIEN,0)),U,3)'="C") Q
+"RTN","TIUMED1",24,0)
+ . . I '+$$ACTLOC(TIUIEN) Q
+"RTN","TIUMED1",25,0)
+ . . S TIUCNT=TIUCNT+1,TIUY(TIUCNT)=TIUIEN_"^"_TIUF
+"RTN","TIUMED1",26,0)
+ Q
+"RTN","TIUMED1",27,0)
+GETHS(TIUY,TIUDFN) ; get health summary
+"RTN","TIUMED1",28,0)
+ N POP,TIUHF,TIUHS,TIULOC,TIUX
+"RTN","TIUMED1",29,0)
+ S TIUHS=$$GET^XPAR(DUZ_";VA(200,","TIU MED HSTYPE",1,"Q") ; IA # 2263
+"RTN","TIUMED1",30,0)
+ I '+TIUHS D
+"RTN","TIUMED1",31,0)
+ . N TIU,TIUDIV,TIUSRV,TIUSYS D USERINFO^XUSRB2(.TIU)
+"RTN","TIUMED1",32,0)
+ . S TIUDIV=+TIU(3),TIUSRV=$$LU^TIUPS244(49,TIU(5),"X")
+"RTN","TIUMED1",33,0)
+ . S TIUHS=$$GET^XPAR(TIUSRV_";DIC(49,","TIU MED HSTYPE",1,"Q")
+"RTN","TIUMED1",34,0)
+ . S:'+TIUHS TIUHS=$$GET^XPAR(TIUDIV_";DIC(4,","TIU MED HSTYPE",1,"Q")
+"RTN","TIUMED1",35,0)
+ . I '+TIUHS D
+"RTN","TIUMED1",36,0)
+ . . S TIUSYS=$$KSP^XUPARAM("WHERE") ; IA # 2541
+"RTN","TIUMED1",37,0)
+ . . S TIUSYS=$$LU^TIUPS244(4.2,TIUSYS)
+"RTN","TIUMED1",38,0)
+ . . S TIUHS=$$GET^XPAR(TIUSYS_";DIC(4.2,","TIU MED HSTYPE",1,"Q")
+"RTN","TIUMED1",39,0)
+ S TIUHF=$$DEFDIR^%ZISH("") ; use default directory IA # 2320
+"RTN","TIUMED1",40,0)
+ I '+TIUHS S ^TMP("TIUMED",$J,0)="No Default Health Summary Selected" M TIUY=^TMP("TIUMED",$J) K ^TMP("TIUMED",$J) Q
+"RTN","TIUMED1",41,0)
+ S TIULOC=TIUDFN_$J_".DAT"
+"RTN","TIUMED1",42,0)
+ D OPEN^%ZISH("TIUMED_"_$J,TIUHF,TIULOC,"W")
+"RTN","TIUMED1",43,0)
+ Q:+POP
+"RTN","TIUMED1",44,0)
+ U IO
+"RTN","TIUMED1",45,0)
+ D ENX^GMTSDVR(TIUDFN,TIUHS,0,0) ; IA # 744
+"RTN","TIUMED1",46,0)
+ D CLOSE^%ZISH("TIUMED_"_$J)
+"RTN","TIUMED1",47,0)
+ K ^TMP("TIUMED",$J)
+"RTN","TIUMED1",48,0)
+ I '+$$FTG^%ZISH(TIUHF,TIULOC,$NA(^TMP("TIUMED",$J,0)),3) Q
+"RTN","TIUMED1",49,0)
+ S TIUX(TIULOC)="" I $$DEL^%ZISH(TIUHF,$NA(TIUX))
+"RTN","TIUMED1",50,0)
+ M TIUY=^TMP("TIUMED",$J)
+"RTN","TIUMED1",51,0)
+ K ^TMP("TIUMED",$J)
+"RTN","TIUMED1",52,0)
+ Q
+"RTN","TIUMED1",53,0)
+GETOBJ(TIUY,TIUDFN,TIUOBJ) ; get patient data object
+"RTN","TIUMED1",54,0)
+ N DFN,TIUX,VA,VADM,VAERR
+"RTN","TIUMED1",55,0)
+ K ^TMP("TIUMED",$J) S TIUY=$NA(^TMP("TIUMED",$J))
+"RTN","TIUMED1",56,0)
+ S TIUOBJ="|"_TIUOBJ_"|"
+"RTN","TIUMED1",57,0)
+ S DFN=$G(TIUDFN) I '+DFN Q
+"RTN","TIUMED1",58,0)
+ S TIUX=$$BOIL^TIUSRVD(TIUOBJ,"")
+"RTN","TIUMED1",59,0)
+ I TIUX["~@" S TIUX=$P(TIUX,"~@",2) M @TIUY=@TIUX K @TIUX Q
+"RTN","TIUMED1",60,0)
+ M @TIUY@(0)=TIUX
+"RTN","TIUMED1",61,0)
+ Q
+"RTN","TIUMED1",62,0)
+GETPATDT(TIUY,TIUDFN,TIUSEC,TIUGHS) ; get patient data
+"RTN","TIUMED1",63,0)
+ I +$D(TIUDFN)=1,+$G(TIUDFN) S TIUDFN(0)=TIUDFN
+"RTN","TIUMED1",64,0)
+ N TIULIST
+"RTN","TIUMED1",65,0)
+ S TIULIST="" F  S TIULIST=$O(TIUDFN(TIULIST)) Q:TIULIST=""  D
+"RTN","TIUMED1",66,0)
+ . N TIU,TIUERR
+"RTN","TIUMED1",67,0)
+ . D FIND^DIC(2,,".01;.02I;.03I;.09","AXQ",$G(TIUDFN(TIULIST)),1,,,,"TIU","TIUERR")
+"RTN","TIUMED1",68,0)
+ . S TIU("NAME")=$G(TIU("DILIST","ID",1,.01))
+"RTN","TIUMED1",69,0)
+ . S TIU("SEX")=$G(TIU("DILIST","ID",1,.02))
+"RTN","TIUMED1",70,0)
+ . S TIU("DOB")=$G(TIU("DILIST","ID",1,.03))
+"RTN","TIUMED1",71,0)
+ . S TIU("SSN")=$G(TIU("DILIST","ID",1,.09))
+"RTN","TIUMED1",72,0)
+ . S TIU("SECURITY")=+$$GET1^DIQ(38.1,$G(TIUDFN(TIULIST)),2,"I")
+"RTN","TIUMED1",73,0)
+ . I '+$G(TIUSEC),+TIU("SECURITY") S (TIU("SEX"),TIU("DOB"),TIU("SSN"))="*SENSITIVE*"
+"RTN","TIUMED1",74,0)
+ . I +$G(TIUGHS) D GETHS(.TIUY,$G(TIUDFN(TIULIST)))
+"RTN","TIUMED1",75,0)
+ . S TIUY(TIULIST)=$G(TIUDFN(TIULIST))_U_TIU("NAME")_U_TIU("SEX")_U_TIU("SSN")_U_TIU("DOB")_U_TIU("SECURITY")
+"RTN","TIUMED1",76,0)
+ Q
+"RTN","TIUMED1",77,0)
+LAST5(TIUY,TIUID) ; IA # 3291
+"RTN","TIUMED1",78,0)
+ D LAST5^ORWPT(.TIUY,TIUID)
+"RTN","TIUMED1",79,0)
+ Q
+"RTN","TIUMED1",80,0)
+LISTALL(TIUY,TIUFROM,TIUDIR) ; IA # 1685
+"RTN","TIUMED1",81,0)
+ D LISTALL^ORWPT(.TIUY,TIUFROM,TIUDIR)
+"RTN","TIUMED1",82,0)
+ Q
+"RTN","TIUMED1",83,0)
+DELPARM ;
+"RTN","TIUMED1",84,0)
+ N DIC,DIR,DIROUT,DIRUT,DTOUT,DUOUT,POP,TIUANS,TIUERR,TIUSYS,X,Y
+"RTN","TIUMED1",85,0)
+DCONT K DIC,DIR,DIROUT,DIRUT,DTOUT,DUOUT,POP,TIUANS,TIUERR,TIUSYS,X,Y
+"RTN","TIUMED1",86,0)
+ S TIUSYS=$$KSP^XUPARAM("WHERE") ; IA # 2541
+"RTN","TIUMED1",87,0)
+ S TIUSYS=$$LU^TIUPS244(4.2,TIUSYS)_U_TIUSYS
+"RTN","TIUMED1",88,0)
+ S DIR(0)="SO^1:User;2:Service;3:Division;4:System"
+"RTN","TIUMED1",89,0)
+ S DIR("L",1)="Delete a Health Summary for one the following:"
+"RTN","TIUMED1",90,0)
+ S DIR("L",2)=""
+"RTN","TIUMED1",91,0)
+ S DIR("L",3)="     1   User       [choose from NEW PERSON]"
+"RTN","TIUMED1",92,0)
+ S DIR("L",4)="     2   Service    [choose from SERVICE/SECTION]"
+"RTN","TIUMED1",93,0)
+ S DIR("L",5)="     3   Division   [choose from INSTITUTION]"
+"RTN","TIUMED1",94,0)
+ S DIR("L")="     4   System     ["_$P(TIUSYS,U,2)_"]"
+"RTN","TIUMED1",95,0)
+ S DIR("A")="Enter Selection"
+"RTN","TIUMED1",96,0)
+ W @IOF
+"RTN","TIUMED1",97,0)
+ D ^DIR Q:$D(DIRUT)
+"RTN","TIUMED1",98,0)
+ S TIUANS=$S(Y=1:"VA(200,",Y=2:"DIC(49,",Y=3:"DIC(4,",Y=4:"DIC(4.2,")
+"RTN","TIUMED1",99,0)
+ S DIC(0)="AE",DIC=U_TIUANS
+"RTN","TIUMED1",100,0)
+ S DIC("A")="Please select a "_$$UP^XLFSTR(Y(0))_": "
+"RTN","TIUMED1",101,0)
+ I Y'=4 W ! D ^DIC Q:$D(DIRUT)
+"RTN","TIUMED1",102,0)
+ I +Y'>0 G DCONT
+"RTN","TIUMED1",103,0)
+ S TIUANS=TIUANS_U_$S(Y=4:TIUSYS,1:Y)
+"RTN","TIUMED1",104,0)
+ W !!,"Delete the Health Summary for "_$$UP^XLFSTR(Y(0))_" ["_$P(TIUANS,U,3)_"]",!
+"RTN","TIUMED1",105,0)
+ I '+$$READ^TIUU("YA","Are you sure? ","NO") G DCONT
+"RTN","TIUMED1",106,0)
+ D DEL^XPAR($P(TIUANS,U,2)_";"_$P(TIUANS,U),"TIU MED HSTYPE")
+"RTN","TIUMED1",107,0)
+ W !!,"Parameter Deleted.",! I $$READ^TIUU("EA","RETURN to continue...")
+"RTN","TIUMED1",108,0)
+ D DCONT
+"RTN","TIUMED1",109,0)
+ Q
+"RTN","TIUMED1",110,0)
+PARMEDIT ;
+"RTN","TIUMED1",111,0)
+ N DIC,DIR,DIROUT,DIRUT,DTOUT,DUOUT,POP,TIUANS,TIUERR,TIUSYS,X,Y
+"RTN","TIUMED1",112,0)
+CONT K DIC,DIR,DIROUT,DIRUT,DTOUT,DUOUT,POP,TIUANS,TIUERR,TIUSYS,X,Y
+"RTN","TIUMED1",113,0)
+ S TIUSYS=$$KSP^XUPARAM("WHERE") ; IA # 2541
+"RTN","TIUMED1",114,0)
+ S TIUSYS=$$LU^TIUPS244(4.2,TIUSYS)_U_TIUSYS
+"RTN","TIUMED1",115,0)
+ S DIR(0)="SO^1:User;2:Service;3:Division;4:System"
+"RTN","TIUMED1",116,0)
+ S DIR("L",1)="TIU MED HSTYPE may be set for the following:"
+"RTN","TIUMED1",117,0)
+ S DIR("L",2)=""
+"RTN","TIUMED1",118,0)
+ S DIR("L",3)="     1   User       [choose from NEW PERSON]"
+"RTN","TIUMED1",119,0)
+ S DIR("L",4)="     2   Service    [choose from SERVICE/SECTION]"
+"RTN","TIUMED1",120,0)
+ S DIR("L",5)="     3   Division   [choose from INSTITUTION]"
+"RTN","TIUMED1",121,0)
+ S DIR("L")="     4   System     ["_$P(TIUSYS,U,2)_"]"
+"RTN","TIUMED1",122,0)
+ S DIR("A")="Enter Selection"
+"RTN","TIUMED1",123,0)
+ W @IOF
+"RTN","TIUMED1",124,0)
+ D ^DIR Q:$D(DIRUT)
+"RTN","TIUMED1",125,0)
+ S TIUANS=$S(Y=1:"VA(200,",Y=2:"DIC(49,",Y=3:"DIC(4,",Y=4:"DIC(4.2,")
+"RTN","TIUMED1",126,0)
+ S DIC(0)="AE",DIC=U_TIUANS
+"RTN","TIUMED1",127,0)
+ S DIC("A")="Please select a "_$$UP^XLFSTR(Y(0))_": "
+"RTN","TIUMED1",128,0)
+ I Y'=4 W ! D ^DIC Q:$D(DIRUT)
+"RTN","TIUMED1",129,0)
+ I +Y'>0 G CONT
+"RTN","TIUMED1",130,0)
+ S TIUANS=TIUANS_U_$S(Y=4:TIUSYS,1:Y)
+"RTN","TIUMED1",131,0)
+ S DIC="^GMT(142,",DIC("A")="Enter a HS for "_$$UP^XLFSTR(Y(0))_" ["_$S(Y(0)="System":$P(TIUSYS,U,2),1:$P(TIUANS,U,3))_"]: "
+"RTN","TIUMED1",132,0)
+ S DIC("B")=$$GET^XPAR($P(TIUANS,U,2)_";"_$P(TIUANS,U),"TIU MED HSTYPE",1,"Q") ; IA # 2263
+"RTN","TIUMED1",133,0)
+ W ! D ^DIC
+"RTN","TIUMED1",134,0)
+ ;*264 Update parameter to use IEN.
+"RTN","TIUMED1",135,0)
+ I +Y>0 D EN^XPAR($P(TIUANS,U,2)_";"_$P(TIUANS,U),"TIU MED HSTYPE",1,"`"_+Y,.TIUERR) ; IA # 2263
+"RTN","TIUMED1",136,0)
+ G CONT
+"RTN","TIUMED1",137,0)
+ Q
+"RTN","TIUMED1",138,0)
+PATMAN(TIUY) ;
+"RTN","TIUMED1",139,0)
+ N TIUP S TIUY=0
+"RTN","TIUMED1",140,0)
+ D OWNSKEY^XUSRB(.TIUP,"TIU MED MANUAL PATIENT") I +TIUP(0) S TIUY=1
+"RTN","TIUMED1",141,0)
+ D OWNSKEY^XUSRB(.TIUP,"TIU MED MANUAL OVERRIDE") I +TIUP(0) S TIUY=2
+"RTN","TIUMED1",142,0)
+ Q
+"RTN","TIUMED1",143,0)
+PLISTMEM(TIUY,TIULIST) ;
+"RTN","TIUMED1",144,0)
+ N TIU,TIUDFN,TIUERR,TIUI,TIUJ
+"RTN","TIUMED1",145,0)
+ S TIUI=$NA(TIU(100.2101))
+"RTN","TIUMED1",146,0)
+ D GETS^DIQ(100.21,$G(TIULIST),"10*","I","TIU","TIUERR")
+"RTN","TIUMED1",147,0)
+ S TIUJ="" F  S TIUJ=$O(@TIUI@(TIUJ)) Q:'TIUJ  S TIUDFN(+TIUJ)=+@TIUI@(TIUJ,.01,"I")
+"RTN","TIUMED1",148,0)
+ D GETPATDT(.TIUY,.TIUDFN)
+"RTN","TIUMED1",149,0)
+ Q
+"RTN","TIUMED1",150,0)
+PLISTS(TIUY) ;
+"RTN","TIUMED1",151,0)
+ N TIU,TIUERR,TIUI,TIUJ,TIUX
+"RTN","TIUMED1",152,0)
+ S TIUI=$NA(TIU("DILIST")),TIUJ=$NA(^OR(100.21))
+"RTN","TIUMED1",153,0)
+ D FIND^DIC(100.21,,"-.01","AXQ",DUZ,,"C","I $P($G(^OR(100.21,Y,0)),U,2)=""P""",,"TIU")
+"RTN","TIUMED1",154,0)
+ I '+$G(@TIUI@(0)) Q
+"RTN","TIUMED1",155,0)
+ S TIUX="" F  S TIUX=$O(@TIUI@("2",TIUX)) Q:'+TIUX  S TIUY(TIUX)=@TIUI@("2",TIUX)_U_@TIUJ@(@TIUI@("2",TIUX),0)
+"RTN","TIUMED1",156,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8483,6)
+^246
+**END**
+**END**

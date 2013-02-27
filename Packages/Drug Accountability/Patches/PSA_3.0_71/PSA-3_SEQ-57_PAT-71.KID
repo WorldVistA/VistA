@@ -1,0 +1,2086 @@
+Released PSA*3*71 SEQ #57
+Extracted from mail message
+**KIDS**:PSA*3.0*71^
+
+**INSTALL NAME**
+PSA*3.0*71
+"BLD",7329,0)
+PSA*3.0*71^DRUG ACCOUNTABILITY^0^3101213^y
+"BLD",7329,1,0)
+^^23^23^3090629^
+"BLD",7329,1,1,0)
+This patch addresses the following problems:
+"BLD",7329,1,2,0)
+ 
+"BLD",7329,1,3,0)
+1.  HD211457 - Locked Invoice
+"BLD",7329,1,4,0)
+ Sites are reporting that the invoices are being left in a LOCK
+"BLD",7329,1,5,0)
+ VERIFYING status.
+"BLD",7329,1,6,0)
+ 
+"BLD",7329,1,7,0)
+2.  HD285500 - Can't received drug (CS) into vault
+"BLD",7329,1,8,0)
+ When a invoice was downloaded and processed by a tech, the quantity
+"BLD",7329,1,9,0)
+ received was changed to 0 on one item because it was going to be
+"BLD",7329,1,10,0)
+ sent back.  This was a mistake. It should be received in and then out.
+"BLD",7329,1,11,0)
+ Then the verifier did the verification and changed the qty received to
+"BLD",7329,1,12,0)
+ reflect the original qty received - correcting the mistake.
+"BLD",7329,1,13,0)
+ After verifying the invoice, the user checked the Controlled Substance
+"BLD",7329,1,14,0)
+ package and found the drug did not show as being received.
+"BLD",7329,1,15,0)
+  
+"BLD",7329,1,16,0)
+3.  HD322644 - Run away PSA IV ALL LOCATIONS - All Location Dispense/Purge
+"BLD",7329,1,17,0)
+ The PSA IV ALL LOCATIONS - All Location Dispense/Purge nightly job does
+"BLD",7329,1,18,0)
+ not complete.
+"BLD",7329,1,19,0)
+ 
+"BLD",7329,1,20,0)
+4. HD279969 - verifying invoices with blank order unit no longer on
+"BLD",7329,1,21,0)
+              discrepancy report
+"BLD",7329,1,22,0)
+ When processing a invoice with a blank ORDER UNIT the system returns a
+"BLD",7329,1,23,0)
+ zero and does not generate a discrepancy report.
+"BLD",7329,4,0)
+^9.64PA^^
+"BLD",7329,6)
+3^
+"BLD",7329,6.3)
+10
+"BLD",7329,"ABPKG")
+n
+"BLD",7329,"INI")
+PSAPRE71
+"BLD",7329,"INID")
+^^y
+"BLD",7329,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7329,"KRN",.4,0)
+.4
+"BLD",7329,"KRN",.401,0)
+.401
+"BLD",7329,"KRN",.402,0)
+.402
+"BLD",7329,"KRN",.403,0)
+.403
+"BLD",7329,"KRN",.5,0)
+.5
+"BLD",7329,"KRN",.84,0)
+.84
+"BLD",7329,"KRN",3.6,0)
+3.6
+"BLD",7329,"KRN",3.8,0)
+3.8
+"BLD",7329,"KRN",9.2,0)
+9.2
+"BLD",7329,"KRN",9.8,0)
+9.8
+"BLD",7329,"KRN",9.8,"NM",0)
+^9.68A^7^7
+"BLD",7329,"KRN",9.8,"NM",1,0)
+PSAVER^^0^B80171787
+"BLD",7329,"KRN",9.8,"NM",2,0)
+PSAVER1^^0^B57200195
+"BLD",7329,"KRN",9.8,"NM",3,0)
+PSAVER4^^0^B44861378
+"BLD",7329,"KRN",9.8,"NM",4,0)
+PSAVERA1^^0^B61000671
+"BLD",7329,"KRN",9.8,"NM",5,0)
+PSAUTL4^^0^B27511872
+"BLD",7329,"KRN",9.8,"NM",6,0)
+PSAPROC7^^0^B59246490
+"BLD",7329,"KRN",9.8,"NM",7,0)
+PSAPRE71^^0^B16456074
+"BLD",7329,"KRN",9.8,"NM","B","PSAPRE71",7)
+
+"BLD",7329,"KRN",9.8,"NM","B","PSAPROC7",6)
+
+"BLD",7329,"KRN",9.8,"NM","B","PSAUTL4",5)
+
+"BLD",7329,"KRN",9.8,"NM","B","PSAVER",1)
+
+"BLD",7329,"KRN",9.8,"NM","B","PSAVER1",2)
+
+"BLD",7329,"KRN",9.8,"NM","B","PSAVER4",3)
+
+"BLD",7329,"KRN",9.8,"NM","B","PSAVERA1",4)
+
+"BLD",7329,"KRN",19,0)
+19
+"BLD",7329,"KRN",19.1,0)
+19.1
+"BLD",7329,"KRN",101,0)
+101
+"BLD",7329,"KRN",409.61,0)
+409.61
+"BLD",7329,"KRN",771,0)
+771
+"BLD",7329,"KRN",779.2,0)
+779.2
+"BLD",7329,"KRN",870,0)
+870
+"BLD",7329,"KRN",8989.51,0)
+8989.51
+"BLD",7329,"KRN",8989.52,0)
+8989.52
+"BLD",7329,"KRN",8994,0)
+8994
+"BLD",7329,"KRN","B",.4,.4)
+
+"BLD",7329,"KRN","B",.401,.401)
+
+"BLD",7329,"KRN","B",.402,.402)
+
+"BLD",7329,"KRN","B",.403,.403)
+
+"BLD",7329,"KRN","B",.5,.5)
+
+"BLD",7329,"KRN","B",.84,.84)
+
+"BLD",7329,"KRN","B",3.6,3.6)
+
+"BLD",7329,"KRN","B",3.8,3.8)
+
+"BLD",7329,"KRN","B",9.2,9.2)
+
+"BLD",7329,"KRN","B",9.8,9.8)
+
+"BLD",7329,"KRN","B",19,19)
+
+"BLD",7329,"KRN","B",19.1,19.1)
+
+"BLD",7329,"KRN","B",101,101)
+
+"BLD",7329,"KRN","B",409.61,409.61)
+
+"BLD",7329,"KRN","B",771,771)
+
+"BLD",7329,"KRN","B",779.2,779.2)
+
+"BLD",7329,"KRN","B",870,870)
+
+"BLD",7329,"KRN","B",8989.51,8989.51)
+
+"BLD",7329,"KRN","B",8989.52,8989.52)
+
+"BLD",7329,"KRN","B",8994,8994)
+
+"BLD",7329,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",7329,"QUES",0)
+^9.62^^
+"BLD",7329,"REQB",0)
+^9.611^5^3
+"BLD",7329,"REQB",2,0)
+PSA*3.0*65^1
+"BLD",7329,"REQB",4,0)
+PSA*3.0*70^1
+"BLD",7329,"REQB",5,0)
+PSA*3.0*68^1
+"BLD",7329,"REQB","B","PSA*3.0*65",2)
+
+"BLD",7329,"REQB","B","PSA*3.0*68",5)
+
+"BLD",7329,"REQB","B","PSA*3.0*70",4)
+
+"INI")
+PSAPRE71
+"MBREQ")
+0
+"PKG",287,-1)
+1^1
+"PKG",287,0)
+DRUG ACCOUNTABILITY^PSA^Drug Accountability Inventory and Tracking module.
+"PKG",287,20,0)
+^9.402P^^
+"PKG",287,22,0)
+^9.49I^1^1
+"PKG",287,22,1,0)
+3.0^2971024^2971030^11595
+"PKG",287,22,1,"PAH",1,0)
+71^3101213^1611
+"PKG",287,22,1,"PAH",1,1,0)
+^^23^23^3101213
+"PKG",287,22,1,"PAH",1,1,1,0)
+This patch addresses the following problems:
+"PKG",287,22,1,"PAH",1,1,2,0)
+ 
+"PKG",287,22,1,"PAH",1,1,3,0)
+1.  HD211457 - Locked Invoice
+"PKG",287,22,1,"PAH",1,1,4,0)
+ Sites are reporting that the invoices are being left in a LOCK
+"PKG",287,22,1,"PAH",1,1,5,0)
+ VERIFYING status.
+"PKG",287,22,1,"PAH",1,1,6,0)
+ 
+"PKG",287,22,1,"PAH",1,1,7,0)
+2.  HD285500 - Can't received drug (CS) into vault
+"PKG",287,22,1,"PAH",1,1,8,0)
+ When a invoice was downloaded and processed by a tech, the quantity
+"PKG",287,22,1,"PAH",1,1,9,0)
+ received was changed to 0 on one item because it was going to be
+"PKG",287,22,1,"PAH",1,1,10,0)
+ sent back.  This was a mistake. It should be received in and then out.
+"PKG",287,22,1,"PAH",1,1,11,0)
+ Then the verifier did the verification and changed the qty received to
+"PKG",287,22,1,"PAH",1,1,12,0)
+ reflect the original qty received - correcting the mistake.
+"PKG",287,22,1,"PAH",1,1,13,0)
+ After verifying the invoice, the user checked the Controlled Substance
+"PKG",287,22,1,"PAH",1,1,14,0)
+ package and found the drug did not show as being received.
+"PKG",287,22,1,"PAH",1,1,15,0)
+  
+"PKG",287,22,1,"PAH",1,1,16,0)
+3.  HD322644 - Run away PSA IV ALL LOCATIONS - All Location Dispense/Purge
+"PKG",287,22,1,"PAH",1,1,17,0)
+ The PSA IV ALL LOCATIONS - All Location Dispense/Purge nightly job does
+"PKG",287,22,1,"PAH",1,1,18,0)
+ not complete.
+"PKG",287,22,1,"PAH",1,1,19,0)
+ 
+"PKG",287,22,1,"PAH",1,1,20,0)
+4. HD279969 - verifying invoices with blank order unit no longer on
+"PKG",287,22,1,"PAH",1,1,21,0)
+              discrepancy report
+"PKG",287,22,1,"PAH",1,1,22,0)
+ When processing a invoice with a blank ORDER UNIT the system returns a
+"PKG",287,22,1,"PAH",1,1,23,0)
+ zero and does not generate a discrepancy report.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+7
+"RTN","PSAPRE71")
+0^7^B16456074^n/a
+"RTN","PSAPRE71",1,0)
+PSAPRE71  ;BIR/RJS-PRE-INSTALL TO IDENTIFY BAD 58.8 DRUG POINTERS
+"RTN","PSAPRE71",2,0)
+ ;;3.0; DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**71**;;Build 10
+"RTN","PSAPRE71",3,0)
+ ;;
+"RTN","PSAPRE71",4,0)
+ N X1,X2,Y,PSADT,PSALOC,PSADAT,PSADRG,PSACNTR,PSAFND,PSAIEN,PSAIN,PSAINV,PSAORD,PSAPRO,PSARDT,PSAROU,PSAVDT,PSAVER,XMDUZ,XMSUB,XMTEXT,XMY
+"RTN","PSAPRE71",5,0)
+ S PSAROU="PSALCK"
+"RTN","PSAPRE71",6,0)
+ S PSACNTR=1,PSAFND=0
+"RTN","PSAPRE71",7,0)
+ S ^TMP($J,PSAROU,PSACNTR)="The following Drug Accountability Order Invoices currently",PSACNTR=PSACNTR+1
+"RTN","PSAPRE71",8,0)
+ S ^TMP($J,PSAROU,PSACNTR)="have a status of LOCKED VERIFYING.",PSACNTR=PSACNTR+1
+"RTN","PSAPRE71",9,0)
+ S ^TMP($J,PSAROU,PSACNTR)=" ",PSACNTR=PSACNTR+1
+"RTN","PSAPRE71",10,0)
+ S PSADAT="" D TXT("Order#",1),TXT("Invoice#",20),TXT("Date Received",40),TXT("Verifier",60)
+"RTN","PSAPRE71",11,0)
+ S ^TMP($J,PSAROU,PSACNTR)=PSADAT,PSACNTR=PSACNTR+1
+"RTN","PSAPRE71",12,0)
+ S PSAIEN=0 F  S PSAIEN=$O(^PSD(58.811,"ASTAT","L",PSAIEN)) Q:'PSAIEN  D
+"RTN","PSAPRE71",13,0)
+ .S PSAINV=0 F  S PSAINV=$O(^PSD(58.811,"ASTAT","L",PSAIEN,PSAINV)) Q:'PSAINV  D
+"RTN","PSAPRE71",14,0)
+ ..S PSAVDT=+$P(^PSD(58.811,PSAIEN,1,PSAINV,1,1,0),"^",8),PSARDT=+$P(^PSD(58.811,PSAIEN,1,PSAINV,0),"^",7)
+"RTN","PSAPRE71",15,0)
+ ..S PSAORD=$P(^PSD(58.811,PSAIEN,0),"^",1),PSAIN=$P(^PSD(58.811,PSAIEN,1,PSAINV,0),"^",1)
+"RTN","PSAPRE71",16,0)
+ ..S Y=PSARDT D DD^%DT S PSADT=Y
+"RTN","PSAPRE71",17,0)
+ ..I '$P($G(^PSD(58.811,PSAIEN,1,PSAINV,0)),"^",11) D UNLCK Q
+"RTN","PSAPRE71",18,0)
+ ..S PSAVER=$P(^VA(200,$P(^PSD(58.811,PSAIEN,1,PSAINV,0),"^",11),0),"^",1)
+"RTN","PSAPRE71",19,0)
+ ..S PSADAT="" D TXT(PSAORD,1),TXT(PSAIN,20),TXT(PSADT,40),TXT(PSAVER,60)
+"RTN","PSAPRE71",20,0)
+ ..S ^TMP($J,PSAROU,PSACNTR)=PSADAT,PSACNTR=PSACNTR+1,PSAFND=1
+"RTN","PSAPRE71",21,0)
+ ..S ^XTMP(PSAROU,$P(^PSD(58.811,PSAIEN,1,PSAINV,0),"^",11),PSAIEN,PSAINV)=""
+"RTN","PSAPRE71",22,0)
+ I $G(PSAFND) S X1=DT,X2=60 D C^%DTC S ^XTMP(PSAROU,0)=X_"^"_DT_"^PSA*3*71 LOCKED INVOICES"
+"RTN","PSAPRE71",23,0)
+ I 'PSAFND S ^TMP($J,PSAROU,PSACNTR)="No Locked Invoices Found.",PSACNTR=PSACNTR+1,^TMP($J,PSAROU,PSACNTR)="",PSACNTR=PSACNTR+1
+"RTN","PSAPRE71",24,0)
+ S PSACNTR=PSACNTR+1,^TMP($J,PSAROU,PSACNTR)="",PSACNTR=PSACNTR+1
+"RTN","PSAPRE71",25,0)
+ S XMSUB="PSA*3*71 LOCKED INVOICE REPORT",XMDUZ="PSA*3*71 PREINSTALL"
+"RTN","PSAPRE71",26,0)
+ D MAIL
+"RTN","PSAPRE71",27,0)
+ S PSAROU="PSACHK"
+"RTN","PSAPRE71",28,0)
+ D NOW^%DTC S Y=% D DD^%DT S PSADT=$P(Y,"@",1)_" at "_$P(Y,"@",2)
+"RTN","PSAPRE71",29,0)
+ S ^TMP(PSAROU,$J,0)=PSADT
+"RTN","PSAPRE71",30,0)
+ S PSALOC=0 F  S PSALOC=$O(^PSD(58.8,PSALOC)) Q:'PSALOC  D
+"RTN","PSAPRE71",31,0)
+ .S PSADRG=99999999 F  S PSADRG=$O(^PSD(58.8,PSALOC,1,PSADRG)) Q:PSADRG=""  D
+"RTN","PSAPRE71",32,0)
+ ..Q:PSADRG="B"
+"RTN","PSAPRE71",33,0)
+ ..I $L(PSADRG)'=$L(+PSADRG) S ^TMP(PSAROU,$J,PSALOC,PSADRG)="" K ^PSD(58.8,PSALOC,1,PSADRG,0)
+"RTN","PSAPRE71",34,0)
+ S XMSUB="PSA*3*71 PREINSTALL BAD 58.8 RECORD REPORT",XMDUZ="PSA*3*71 PREINSTALL"
+"RTN","PSAPRE71",35,0)
+ S PSACNTR=1,^TMP($J,PSAROU,PSACNTR)="PSA*3*71 PREINSTALL Bad PSD(58.8 Record Report for "_PSADT,PSACNTR=PSACNTR+1
+"RTN","PSAPRE71",36,0)
+ S ^TMP($J,PSAROU,PSACNTR)=" ",PSACNTR=PSACNTR+1
+"RTN","PSAPRE71",37,0)
+ I '$O(^TMP(PSAROU,$J,0)) S ^TMP($J,PSAROU,PSACNTR)="No Bad Records found.",PSACNTR=PSACNTR+1,^TMP($J,PSAROU,PSACNTR)="",PSACNTR=PSACNTR+1 G MAIL
+"RTN","PSAPRE71",38,0)
+ S PSALOC=0 F  S PSALOC=$O(^TMP(PSAROU,$J,PSALOC)) Q:'PSALOC  D
+"RTN","PSAPRE71",39,0)
+ .S PSACNTR=PSACNTR+1,^TMP($J,PSAROU,PSACNTR)=$P(^PSD(58.8,PSALOC,0),"^")
+"RTN","PSAPRE71",40,0)
+ .S PSADRG=0 F  S PSADRG=$O(^TMP(PSAROU,$J,PSALOC,PSADRG)) Q:PSADRG=""  D
+"RTN","PSAPRE71",41,0)
+ ..S PSACNTR=PSACNTR+1,^TMP($J,PSAROU,PSACNTR)="     "_PSADRG
+"RTN","PSAPRE71",42,0)
+ .S PSACNTR=PSACNTR+1,^TMP($J,PSAROU,PSACNTR)="",PSACNTR=PSACNTR+1,^TMP($J,PSAROU,PSACNTR)="   *** These have been removed from the file.***",PSACNTR=PSACNTR+1,^TMP($J,PSAROU,PSACNTR)=""
+"RTN","PSAPRE71",43,0)
+ S PSACNTR=PSACNTR+1,^TMP($J,PSAROU,PSACNTR)="",PSACNTR=PSACNTR+1
+"RTN","PSAPRE71",44,0)
+MAIL N DIFROM
+"RTN","PSAPRE71",45,0)
+ S PSACNTR=PSACNTR+1,^TMP($J,PSAROU,PSACNTR)="***** End Of Report *****"
+"RTN","PSAPRE71",46,0)
+ S XMTEXT="^TMP($J,"""_PSAROU_""","
+"RTN","PSAPRE71",47,0)
+ S XMY("G.PSA NDC UPDATES")=""
+"RTN","PSAPRE71",48,0)
+ D ^XMD
+"RTN","PSAPRE71",49,0)
+ Q
+"RTN","PSAPRE71",50,0)
+EXIT ; CLEAN UP
+"RTN","PSAPRE71",51,0)
+ K ^TMP($J),^TMP(PSAROU)
+"RTN","PSAPRE71",52,0)
+ Q
+"RTN","PSAPRE71",53,0)
+TXT(PSAVAL,PSACOL) S:'$D(PSADAT) PSADAT="" S PSADAT=$$SETSTR^VALM1(PSAVAL,PSADAT,PSACOL,$L(PSAVAL)) Q
+"RTN","PSAPRE71",54,0)
+ Q
+"RTN","PSAPRE71",55,0)
+UNLCK ; UNLOCK BACK LOCK
+"RTN","PSAPRE71",56,0)
+ F  L +^PSD(58.811,PSAIEN,1,PSAINV,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSAPRE71",57,0)
+ S DA=PSAINV,DA(1)=PSAIEN,DIE="^PSD(58.811,"_DA(1)_",1,",DR="2///P" D ^DIE
+"RTN","PSAPRE71",58,0)
+ L -^PSD(58.811,PSAIEN,1,PSAINV,0)
+"RTN","PSAPRE71",59,0)
+ Q
+"RTN","PSAPROC7")
+0^6^B59246490^B57726362
+"RTN","PSAPROC7",1,0)
+PSAPROC7 ;BIR/JMB-Process Uploaded Prime Vendor Invoice Data - CONT'D ;9/6/97
+"RTN","PSAPROC7",2,0)
+ ;;3.0; DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**3,12,27,21,42,61,64,67,68,71**; 10/24/97;Build 10
+"RTN","PSAPROC7",3,0)
+ ;This routine takes the data in XTMP and moves it to DA ORDERS file.
+"RTN","PSAPROC7",4,0)
+ ;It deletes the data in XTMP after it is copies.
+"RTN","PSAPROC7",5,0)
+ ;
+"RTN","PSAPROC7",6,0)
+ ;References to ^PSDRUG( are covered by IA #2095
+"RTN","PSAPROC7",7,0)
+INVOICE ;PSA*3*21 (3JAN01) - FILE INVOICE IMMEDIATELY
+"RTN","PSAPROC7",8,0)
+ ;
+"RTN","PSAPROC7",9,0)
+ S PSAIN=$G(^XTMP("PSAPV",PSACTRL,"IN")) Q:PSAIN=""
+"RTN","PSAPROC7",10,0)
+ Q:$P(PSAIN,"^",8)'="P"
+"RTN","PSAPROC7",11,0)
+ S PSAORD=$P(PSAIN,"^",4),PSAIEN=+$O(^PSD(58.811,"B",PSAORD,0)),PSACRED=0
+"RTN","PSAPROC7",12,0)
+ I 'PSAIEN D
+"RTN","PSAPROC7",13,0)
+ .F  L +^PSD(58.811,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSAPROC7",14,0)
+ .;(PSA*3*24 - Dave B. Jun 2 00 - Improper DIC call)
+"RTN","PSAPROC7",15,0)
+ .;(PSA*3*61 - add N DO. DICN will use DO if defined, we do not want to use it since DIC is defined.
+"RTN","PSAPROC7",16,0)
+ .N DO S DIC="^PSD(58.811,",DIC(0)="L",X=PSAORD D FILE^DICN K DIC L -^PSD(58.811,0) S PSAIEN=+Y
+"RTN","PSAPROC7",17,0)
+ F  L +^PSD(58.811,PSAIEN,0):10 I  Q
+"RTN","PSAPROC7",18,0)
+ S:'$D(^PSD(58.811,PSAIEN,1,0)) DIC("P")=$P(^DD(58.811,2,0),"^",2)
+"RTN","PSAPROC7",19,0)
+ S DA(1)=PSAIEN,DIC="^PSD(58.811,"_DA(1)_",1,",DIC(0)="L",X=$P(PSAIN,"^",2),DLAYGO=58.811 D ^DIC K DA,DLAYGO S PSAIEN1=+Y
+"RTN","PSAPROC7",20,0)
+ S DA(1)=PSAIEN,DA=PSAIEN1,DIE=DIC K DIC
+"RTN","PSAPROC7",21,0)
+ S PSALOCDR=$P($G(PSAIN),"^",7)
+"RTN","PSAPROC7",22,0)
+ S PSADELDR=$P($G(PSAIN),"^",6)
+"RTN","PSAPROC7",23,0)
+ S PSACSDR=$S($P(PSAIN,"^",10)="ALL CS":"A",$P(PSAIN,"^",9)="CS":"S",1:"N")
+"RTN","PSAPROC7",24,0)
+ S PSARECD=$P($G(PSAIN),"^",11)
+"RTN","PSAPROC7",25,0)
+ S PSAMV=$S(+$P(PSAIN,"^",12):$P(PSAIN,"^",12),1:"")
+"RTN","PSAPROC7",26,0)
+ S PSASUP=$S($P(PSAIN,"^",13)="SUP":1,1:"")
+"RTN","PSAPROC7",27,0)
+ ;DAVE B ( PSA*3*12) Invalid Concatenation of zero node
+"RTN","PSAPROC7",28,0)
+ S ^PSD(58.811,DA(1),1,DA,0)=$P(^(0),"^")_"^"_$P(PSAIN,"^",1)_"^P^"_$P(PSAIN,"^",3)_"^"_$G(PSALOCDR)_"^"_$G(PSADELDR)_"^"_$G(PSARECD)_"^"_$G(PSACSDR)_"^^"_DUZ_"^^"_$G(PSAMV)_"^"_$G(PSASUP)
+"RTN","PSAPROC7",29,0)
+ S DIK=DIE D IX^DIK
+"RTN","PSAPROC7",30,0)
+ K ^TMP($J,"PSADIF"),PSADIFLC ;*42 pre verify storage for  OU, DUOU, Cost, NDC changes
+"RTN","PSAPROC7",31,0)
+ S PSALINE=0 F  S PSALINE=$O(^XTMP("PSAPV",PSACTRL,"IT",PSALINE)) Q:PSALINE=""  D LINE
+"RTN","PSAPROC7",32,0)
+ D SCANDIF,MM ;*42 look for differences to drug file SEND EMAIL
+"RTN","PSAPROC7",33,0)
+ I PSACRED K DA S DA(1)=PSAIEN,DA=PSAIEN1,DIE="^PSD(58.811,"_DA(1)_",1,",DR="10///^S X=1" D ^DIE K DIE
+"RTN","PSAPROC7",34,0)
+ S $P(^PSD(58.811,PSAIEN,0),"^",2)=$P($G(^XTMP("PSAPV",PSACTRL,"DS")),"^")
+"RTN","PSAPROC7",35,0)
+ L -^PSD(58.811,PSAIEN,0)
+"RTN","PSAPROC7",36,0)
+ K ^XTMP("PSAPV",PSACTRL)
+"RTN","PSAPROC7",37,0)
+ Q
+"RTN","PSAPROC7",38,0)
+ ;
+"RTN","PSAPROC7",39,0)
+LINE ;Files line items.
+"RTN","PSAPROC7",40,0)
+ S PSADATA=^XTMP("PSAPV",PSACTRL,"IT",PSALINE) S:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,1,0)) DIC("P")=$P(^DD(58.8112,5,0),"^",2)
+"RTN","PSAPROC7",41,0)
+ ;PSA*3*31 Dave B - Check for invoice already in file
+"RTN","PSAPROC7",42,0)
+ S DA(2)=PSAIEN,DA(1)=PSAIEN1,(DA,X)=PSALINE,DIC="^PSD(58.811,"_DA(2)_",1,"_DA(1)_",1,",DIC(0)="L",DLAYGO=58.811 D ^DIC S PSAIEN2=+Y K DA,DIC,DLAYGO
+"RTN","PSAPROC7",43,0)
+ ;
+"RTN","PSAPROC7",44,0)
+ ;DAVEB PSA*3*3 (5may98)
+"RTN","PSAPROC7",45,0)
+ S PSADRG=$P($G(PSADATA),"^",6)
+"RTN","PSAPROC7",46,0)
+ S PSASYN=$P($G(PSADATA),"^",7)
+"RTN","PSAPROC7",47,0)
+ K PSAUNIT
+"RTN","PSAPROC7",48,0)
+ I $G(PSASYN)'="",$G(PSADRG)'="" S PSAUNIT=+$P($G(^PSDRUG(PSADRG,1,PSASYN,0)),"^",5)
+"RTN","PSAPROC7",49,0)
+ ;
+"RTN","PSAPROC7",50,0)
+ ;DAVE B (PSA*3*12) Assignment of order unit didn't take into 
+"RTN","PSAPROC7",51,0)
+ ;account the adjusted order unit.
+"RTN","PSAPROC7",52,0)
+ S PSAUNIT=$S($G(PSAUNIT):PSAUNIT,$P(PSADATA,"^",12)'="":$P(PSADATA,"^",12),+$P($P(PSADATA,"^",2),"~",2):+$P($P(PSADATA,"^",2),"~",2),1:0)  ;;*71
+"RTN","PSAPROC7",53,0)
+ S PSACS=$S($P(PSADATA,"^",19)="CS":1,1:0),PSANDC=$P($P(PSADATA,"^",4),"~"),PSAVSN=$P($P(PSADATA,"^",5),"~"),PSAUPC=$P($P(PSADATA,"^",26),"~")
+"RTN","PSAPROC7",54,0)
+ I PSANDC="",$P($P(PSADATA,"^",26),"~")'="" S PSANDC="S"_$P($P(PSADATA,"^",26),"~")
+"RTN","PSAPROC7",55,0)
+ S DA(2)=PSAIEN,DA(1)=PSAIEN1,DA=$S($D(PSAIEN2):PSAIEN2,1:PSALINE),DIE="^PSD(58.811,"_DA(2)_",1,"_DA(1)_",1,"
+"RTN","PSAPROC7",56,0)
+ ;DaveB (4may98) hard code filing data
+"RTN","PSAPROC7",57,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),1,DA,0),"^",3)=+PSADATA
+"RTN","PSAPROC7",58,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),1,DA,0),"^",11)=PSANDC
+"RTN","PSAPROC7",59,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),1,DA,0),"^",12)=PSAVSN
+"RTN","PSAPROC7",60,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),1,DA,0),"^",13)=PSAUPC
+"RTN","PSAPROC7",61,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),1,DA,0),"^",10)=PSACS
+"RTN","PSAPROC7",62,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),1,DA,0),"^",2)=PSADRG
+"RTN","PSAPROC7",63,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),1,DA,0),"^",4)=PSAUNIT
+"RTN","PSAPROC7",64,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),1,DA,0),"^",5)=$P(PSADATA,"^",3)
+"RTN","PSAPROC7",65,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),1,DA,0),"^",6)=DT
+"RTN","PSAPROC7",66,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),1,DA,0),"^",7)=DUZ
+"RTN","PSAPROC7",67,0)
+ ;BGN 67
+"RTN","PSAPROC7",68,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),3,DA,0),"^",1)=$P(PSADATA,"^",28)
+"RTN","PSAPROC7",69,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),3,DA,0),"^",2)=$P(PSADATA,"^",29)
+"RTN","PSAPROC7",70,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),3,DA,0),"^",3)=$P(PSADATA,"^",30)
+"RTN","PSAPROC7",71,0)
+ S $P(^PSD(58.811,DA(2),1,DA(1),3,DA,0),"^",4)=$P(PSADATA,"^",31)
+"RTN","PSAPROC7",72,0)
+ ;END 67
+"RTN","PSAPROC7",73,0)
+ S DIK=DIE D IX^DIK
+"RTN","PSAPROC7",74,0)
+ ;End PSA*3*7
+"RTN","PSAPROC7",75,0)
+ ;
+"RTN","PSAPROC7",76,0)
+ I +$P(PSADATA,"^",15)!($D(^XTMP("PSAPV",PSACTRL,"IT",PSALINE,"SUP"))) D ADJDRUG
+"RTN","PSAPROC7",77,0)
+ I $P(PSADATA,"^",8)'="" D QTY
+"RTN","PSAPROC7",78,0)
+ I +$P(PSADATA,"^",12) D OU
+"RTN","PSAPROC7",79,0)
+ I +$P(PSADATA,"^",23) D PRICE
+"RTN","PSAPROC7",80,0)
+ ;Adds the reorder level and/or dispense units per order unit
+"RTN","PSAPROC7",81,0)
+ I +$P(PSADATA,"^",7)!(+$P(PSADATA,"^",20))!(+$P(PSADATA,"^",21))!(+$P(PSADATA,"^",27)) D
+"RTN","PSAPROC7",82,0)
+ .S ^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSAIEN2,2)=$P(PSADATA,"^",20)_"^"_$P(PSADATA,"^",21)_"^"_$S(+$P(PSADATA,"^",7):+$P(PSADATA,"^",7),1:0)_"^"_+$P(PSADATA,"^",27)
+"RTN","PSAPROC7",83,0)
+ ;Bgn 67
+"RTN","PSAPROC7",84,0)
+ I $P(PSADATA,"^",5)'="" S ^XTMP("PSAVSN",$P(PSADATA,"^",5))=$P(PSADATA,"^",28)_"^"_$P(PSADATA,"^",29)_"^"_$P(PSADATA,"^",30)_"^"_$P(PSADATA,"^",31)
+"RTN","PSAPROC7",85,0)
+ ;End 67
+"RTN","PSAPROC7",86,0)
+ K ^XTMP("PSAPV",PSACTRL,"IT",PSALINE)
+"RTN","PSAPROC7",87,0)
+ Q
+"RTN","PSAPROC7",88,0)
+ADJDRUG ;Records adjusted drug received
+"RTN","PSAPROC7",89,0)
+ S PSAFLD="D"
+"RTN","PSAPROC7",90,0)
+ I +$P(PSADATA,"^",15) S PSADJ=+$P(PSADATA,"^",15),PSADUZ=+$P(PSADATA,"^",16),PSADT=+$P(PSADATA,"^",17),PSAREA="" D RECORD Q
+"RTN","PSAPROC7",91,0)
+ I $D(^XTMP("PSAPV",PSACTRL,"IT",PSALINE,"SUP")) S PSASNODE=^XTMP("PSAPV",PSACTRL,"IT",PSALINE,"SUP"),PSADJ=$P(PSASNODE,"^",3),PSADUZ=+$P(PSASNODE,"^"),PSADT=+$P(PSASNODE,"^",2),PSAREA="" D RECORD
+"RTN","PSAPROC7",92,0)
+ Q
+"RTN","PSAPROC7",93,0)
+OU ;Records adjusted order unit
+"RTN","PSAPROC7",94,0)
+ S PSAFLD="O",PSADJ=+$P(PSADATA,"^",12),PSADUZ=+$P(PSADATA,"^",13),PSADT=+$P(PSADATA,"^",14),PSAREA=""
+"RTN","PSAPROC7",95,0)
+ D RECORD
+"RTN","PSAPROC7",96,0)
+ Q
+"RTN","PSAPROC7",97,0)
+PRICE ;Records adjusted price per order unit
+"RTN","PSAPROC7",98,0)
+ S PSAFLD="P",PSADJ=+$P(PSADATA,"^",23),PSADUZ=+$P(PSADATA,"^",24),PSADT=+$P(PSADATA,"^",25),PSAREA=""
+"RTN","PSAPROC7",99,0)
+ S:PSADJ'=+$P(PSADATA,"^",3) PSACRED=1
+"RTN","PSAPROC7",100,0)
+ D RECORD
+"RTN","PSAPROC7",101,0)
+ Q
+"RTN","PSAPROC7",102,0)
+QTY ;Records adjusted quantity received.
+"RTN","PSAPROC7",103,0)
+ S PSAFLD="Q",PSADJ=+$P(PSADATA,"^",8),PSADUZ=+$P(PSADATA,"^",9),PSADT=+$P(PSADATA,"^",10),PSAREA=$P(PSADATA,"^",11)
+"RTN","PSAPROC7",104,0)
+ S:PSADJ'=+$P(PSADATA,"^") PSACRED=1
+"RTN","PSAPROC7",105,0)
+ D RECORD
+"RTN","PSAPROC7",106,0)
+ Q
+"RTN","PSAPROC7",107,0)
+RECORD ;Adds adjusted data to DA ORDERS file
+"RTN","PSAPROC7",108,0)
+ K DA S DA(3)=PSAIEN,DA(2)=PSAIEN1,DA(1)=PSAIEN2,X=PSAFLD
+"RTN","PSAPROC7",109,0)
+ S:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSAIEN2,1,0)) DIC("P")=$P(^DD(58.81125,9,0),"^",2)
+"RTN","PSAPROC7",110,0)
+ ;PSA*3*27 (DAVE B) removed killing of DA variable on next line
+"RTN","PSAPROC7",111,0)
+ S DIC="^PSD(58.811,"_DA(3)_",1,"_DA(2)_",1,"_DA(1)_",1,",DIC(0)="L",DLAYGO=58.811 D ^DIC S PSAIEN3=+Y K DLAYGO
+"RTN","PSAPROC7",112,0)
+ ;
+"RTN","PSAPROC7",113,0)
+ ;PSA*3*3
+"RTN","PSAPROC7",114,0)
+ ;DAVEB Hard code filing
+"RTN","PSAPROC7",115,0)
+ S DIE=DIC,DA=PSAIEN3
+"RTN","PSAPROC7",116,0)
+ S $P(^PSD(58.811,DA(3),1,DA(2),1,DA(1),1,DA,0),"^",2)=PSADJ
+"RTN","PSAPROC7",117,0)
+ S $P(^PSD(58.811,DA(3),1,DA(2),1,DA(1),1,DA,0),"^",3)=$G(PSAREA)
+"RTN","PSAPROC7",118,0)
+ S $P(^PSD(58.811,DA(3),1,DA(2),1,DA(1),1,DA,0),"^",4)=DT
+"RTN","PSAPROC7",119,0)
+ S $P(^PSD(58.811,DA(3),1,DA(2),1,DA(1),1,DA,0),"^",5)=DUZ
+"RTN","PSAPROC7",120,0)
+ ;
+"RTN","PSAPROC7",121,0)
+ S DIK=DIE,DA=PSAIEN3 D IX1^DIK K DA,DIE,DIK,PSAFLD
+"RTN","PSAPROC7",122,0)
+ Q
+"RTN","PSAPROC7",123,0)
+ ;*42 CHANGES
+"RTN","PSAPROC7",124,0)
+SCANDIF ; inspect invoice for noted differences in OU,DUOU,PPDU,NDC
+"RTN","PSAPROC7",125,0)
+ ;NEEDS PSAIEN, PSAIEN1
+"RTN","PSAPROC7",126,0)
+ K ^TMP($J,"PSADIF"),PSADIFLC
+"RTN","PSAPROC7",127,0)
+ S PSALINE=0 F  S PSALINE=$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE)) Q:PSALINE'>0  D CHECK
+"RTN","PSAPROC7",128,0)
+ Q
+"RTN","PSAPROC7",129,0)
+MM ;
+"RTN","PSAPROC7",130,0)
+ I $D(^TMP($J,"PSADIF")) D MESSAGE
+"RTN","PSAPROC7",131,0)
+ Q
+"RTN","PSAPROC7",132,0)
+CHECK ;Check line item for differences to drug file *42
+"RTN","PSAPROC7",133,0)
+ N ITM,ITMI,DRG,DRIEN,DIF,ZZ,XX,XXX,PCNT,PDIF,T,IENS
+"RTN","PSAPROC7",134,0)
+ ; use new API call to retrieve item fields see PSAUTL6
+"RTN","PSAPROC7",135,0)
+ D ITEM^PSAUTL6(PSAIEN,PSAIEN1,PSALINE,.ITM)
+"RTN","PSAPROC7",136,0)
+ D ITEM^PSAUTL6(PSAIEN,PSAIEN1,PSALINE,.ITMI,"I")
+"RTN","PSAPROC7",137,0)
+ I ITM(2)'>0 Q  ;zero quantity will not be filed
+"RTN","PSAPROC7",138,0)
+ S ITM("OU")=ITM(3),ITM("DUOU")=ITM(10),ITM("NDC")=ITM(13),ITM("PPOU")=ITM(4),ITM("PPDU")=$J(ITM("PPOU")/ITM("DUOU"),1,4)
+"RTN","PSAPROC7",139,0)
+ I ITMI(1)'?1.N S DRIEN=ITMI(1)
+"RTN","PSAPROC7",140,0)
+ I ITMI(1)?1.N S DRIEN=+ITMI(1)
+"RTN","PSAPROC7",141,0)
+ Q:'$D(^PSDRUG(DRIEN))
+"RTN","PSAPROC7",142,0)
+ S DRG("OU")=$$GET1^DIQ(50,DRIEN,12),DRG("DUOU")=$$GET1^DIQ(50,DRIEN,15),DRG("NDC")=$$GET1^DIQ(50,DRIEN,31),DRG("PPDU")=$$GET1^DIQ(50,DRIEN,16)
+"RTN","PSAPROC7",143,0)
+ K DIF
+"RTN","PSAPROC7",144,0)
+ F XX="OU","DUOU","NDC" I $D(DRG(XX)),ITM(XX)'=DRG(XX) S DIF(XX)=""
+"RTN","PSAPROC7",145,0)
+ I $G(DRG("PPDU")),ITM("PPDU")'=DRG("PPDU") S PCNT=.05*DRG("PPDU"),PDIF=DRG("PPDU")-ITM("PPDU") S:PDIF<0 PDIF=-1*PDIF S:PDIF>PCNT DIF("PPDU")=""
+"RTN","PSAPROC7",146,0)
+ S:ITM("OU")=""!(ITM("OU")=0) ITM("OU")="Blank",DIF("OU")=""  ;;*71
+"RTN","PSAPROC7",147,0)
+ S:DRG("OU")=""!(DRG("OU")=0) DRG("OU")="Blank",DIF("OU")=""  ;;*71
+"RTN","PSAPROC7",148,0)
+ I $D(DIF) D
+"RTN","PSAPROC7",149,0)
+ . F ZZ=" ",$J(ITM(.01),3)_"   "_ITM(1) D SET
+"RTN","PSAPROC7",150,0)
+ . S XXX="" F  S XXX=$O(DIF(XXX)) Q:XXX=""  D
+"RTN","PSAPROC7",151,0)
+ .. S ZZ="  ",T=XXX,ZZ=$$SETSTR^VALM1(T,ZZ,4,$L(T))
+"RTN","PSAPROC7",152,0)
+ .. S T="Old: "_DRG(XXX),ZZ=$$SETSTR^VALM1(T,ZZ,13,$L(T))
+"RTN","PSAPROC7",153,0)
+ .. S T="New: "_ITM(XXX),ZZ=$$SETSTR^VALM1(T,ZZ,36,$L(T))
+"RTN","PSAPROC7",154,0)
+ .. D SET
+"RTN","PSAPROC7",155,0)
+ Q
+"RTN","PSAPROC7",156,0)
+SET ;set differences into ^TMP
+"RTN","PSAPROC7",157,0)
+ S:'$G(PSADIFLC) PSADIFLC=3
+"RTN","PSAPROC7",158,0)
+ S ^TMP($J,"PSADIF",PSADIFLC,0)=ZZ,PSADIFLC=PSADIFLC+1
+"RTN","PSAPROC7",159,0)
+ Q
+"RTN","PSAPROC7",160,0)
+MESSAGE ;differences found, notify user and send message to g.PSA NDC UPDATES.
+"RTN","PSAPROC7",161,0)
+ K DIR N IENS
+"RTN","PSAPROC7",162,0)
+ S PSAORD=$$GET1^DIQ(58.811,PSAIEN,.01),IENS=PSAIEN1_","_PSAIEN
+"RTN","PSAPROC7",163,0)
+ S PSAINV=$$GET1^DIQ(58.8112,IENS,.01)
+"RTN","PSAPROC7",164,0)
+ S XMSUB="PRE Verify "_PSAORD_" : "_PSAINV_" Variance Report"
+"RTN","PSAPROC7",165,0)
+ S ^TMP($J,"PSADIF",1,0)=XMSUB,^TMP($J,"PSADIF",2,0)=" "
+"RTN","PSAPROC7",166,0)
+ W !,XMSUB,!
+"RTN","PSAPROC7",167,0)
+ W !,"Noted differences between the invoice line items and the drug file have",!,"been found. A mail message is being sent to G.PSA NDC UPDATES."
+"RTN","PSAPROC7",168,0)
+ W !!,"    Please check the message for accuracy.",!
+"RTN","PSAPROC7",169,0)
+ K DIR S DIR(0)="E",DIR("A")="<cr> - continue" D ^DIR
+"RTN","PSAPROC7",170,0)
+ K DIR
+"RTN","PSAPROC7",171,0)
+ S XMTEXT="^TMP($J,""PSADIF"",",XMY("G.PSA NDC UPDATES")=""
+"RTN","PSAPROC7",172,0)
+ D ^XMD
+"RTN","PSAPROC7",173,0)
+ K PSADIFLC,^TMP($J,"PSADIF")
+"RTN","PSAPROC7",174,0)
+ Q
+"RTN","PSAUTL4")
+0^5^B27511872^B27358372
+"RTN","PSAUTL4",1,0)
+PSAUTL4 ;BIR ISC/JMB-Verify Invoices Utility ; 8/19/97
+"RTN","PSAUTL4",2,0)
+ ;;3.0; DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**3,21,48,54,61,67,71**; 10/24/97;Build 10
+"RTN","PSAUTL4",3,0)
+ ;
+"RTN","PSAUTL4",4,0)
+ ;References to ^DIC(51.5 are covered by IA #1931
+"RTN","PSAUTL4",5,0)
+ ;References to ^PSDRUG( are covered by IA #2095
+"RTN","PSAUTL4",6,0)
+ I $G(PSADICW)=1 S PSALINE=Y
+"RTN","PSAUTL4",7,0)
+ ;This routine contains a utility to display a line item ready for
+"RTN","PSAUTL4",8,0)
+ ;verification. It is called by PSAVER1 and PSAVER2.
+"RTN","PSAUTL4",9,0)
+ ;
+"RTN","PSAUTL4",10,0)
+VERDISP ;Displays a line item on a processed or verified invoice
+"RTN","PSAUTL4",11,0)
+ W PSALINEN_"  "
+"RTN","PSAUTL4",12,0)
+DRUG S PSADJ=+$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,"B","D",0))
+"RTN","PSAUTL4",13,0)
+ I $G(PSADJ) D
+"RTN","PSAUTL4",14,0)
+ .S PSANODE=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,PSADJ,0))
+"RTN","PSAUTL4",15,0)
+ .S PSADJD=$S($P(PSANODE,"^",6)'="":$P(PSANODE,"^",6),1:$P(PSANODE,"^",2))
+"RTN","PSAUTL4",16,0)
+ .I PSADJD'?1.N S PSASUP=1
+"RTN","PSAUTL4",17,0)
+ .S PSADRG=$S(PSADJ&('PSASUP):$G(PSADJD),PSADJ&(PSASUP):0,1:+$P(PSADATA,"^",2))
+"RTN","PSAUTL4",18,0)
+ .I $G(PSADJD),$L(PSADJD)=$L(+PSADJD),$P($G(^PSDRUG(+PSADJD,0)),"^")'="" W "*"_$P($G(^PSDRUG(+PSADJD,0)),"^") S (PSADRG,PSA50IEN)=+PSADJD Q
+"RTN","PSAUTL4",19,0)
+ .I $G(PSADJD),$L(PSADJD)=$L(+PSADJD),$P($G(^PSDRUG(+PSADJD,0)),"^")="" S (PSADJ,PSADRG)=0 Q
+"RTN","PSAUTL4",20,0)
+ .W ?7,"**"_PSADJD S PSADJSUP=1,(PSADRG,PSA50IEN)=PSADJD
+"RTN","PSAUTL4",21,0)
+ I '$G(PSADJ) D
+"RTN","PSAUTL4",22,0)
+ .S (PSA50IEN,PSADRG)=$S(+$P(PSADATA,"^",2)&($P($G(^PSDRUG(+$P(PSADATA,"^",2),0)),"^")'=""):+$P(PSADATA,"^",2),1:0)
+"RTN","PSAUTL4",23,0)
+ .W $S(+$P(PSADATA,"^",2)&($P($G(^PSDRUG(+$P(PSADATA,"^",2),0)),"^")'=""):$P(^PSDRUG(+$P(PSADATA,"^",2),0),"^"),1:"DRUG UNKNOWN")
+"RTN","PSAUTL4",24,0)
+ I PSADRG D
+"RTN","PSAUTL4",25,0)
+ .I $P($G(^PSDRUG(PSADRG,2)),"^",3)["N" W " (Controlled Substance)" I $P($G(^PSD(58.8,+$P(PSAIN,"^",12),1,PSADRG,0)),"^",14),$P($G(^(0)),"^",14)'>DT W !,$C(7),$C(7),"** INACTIVE IN MASTER VAULT **"
+"RTN","PSAUTL4",26,0)
+ .I $D(^PSDRUG(PSADRG,"I")) W !?5,"** INACTIVE IN DRUG FILE **" Q
+"RTN","PSAUTL4",27,0)
+ .I $P($G(^PSD(58.8,+$P(PSAIN,"^",5),1,PSADRG,0)),"^",14),$P($G(^(0)),"^",14)'>DT W !,$C(7),$C(7),"** INACTIVE IN PHARMACY LOCATION **"
+"RTN","PSAUTL4",28,0)
+QTY W !,"Qty Invoiced: "
+"RTN","PSAUTL4",29,0)
+ ;No Adj. Qty
+"RTN","PSAUTL4",30,0)
+ S PSADJQ="",PSADJ=+$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,"B","Q",0))
+"RTN","PSAUTL4",31,0)
+ I $G(PSADJ) S PSANODE=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,PSADJ,0)),PSADJQ=$S($P(PSANODE,"^",6)'="":+$P(PSANODE,"^",6),1:$P(PSANODE,"^",2))
+"RTN","PSAUTL4",32,0)
+ ;Adj. Qty  <-RJS *71 START
+"RTN","PSAUTL4",33,0)
+ I $G(PSADJQ)'="" S PSAQTY=PSADJQ W PSAQTY_" ("_$S($P(PSADATA,"^",3):$P(PSADATA,"^",3),$P(PSADATA,"^",3)=0:0,1:"Blank")_")"
+"RTN","PSAUTL4",34,0)
+ I $G(PSADJQ)="" W $P(PSADATA,"^",3) S PSAQTY=$P(PSADATA,"^",3)  ;; <- RJS *71 END
+"RTN","PSAUTL4",35,0)
+UPC S PSAUPC=$P(PSADATA,U,13) W:PSAUPC'="" ?38,"UPC: "_PSAUPC
+"RTN","PSAUTL4",36,0)
+OU W !,"Order Unit  : "
+"RTN","PSAUTL4",37,0)
+ S PSAOU=$S(+$P(PSADATA,"^",4)&($P($G(^DIC(51.5,+$P(PSADATA,"^",4),0)),"^")'=""):+$P(PSADATA,"^",4),1:"")
+"RTN","PSAUTL4",38,0)
+ S PSATEMP=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,2))
+"RTN","PSAUTL4",39,0)
+ I +$P(PSATEMP,"^",3),PSADRG,+$P($G(^PSDRUG(PSADRG,1,+$P(PSATEMP,"^",3),0)),"^",5) S PSAOU=+$P(^PSDRUG(PSADRG,1,+$P(PSATEMP,"^",3),0),"^",5)
+"RTN","PSAUTL4",40,0)
+ S PSADJO="",PSADJ=+$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,"B","O",0))
+"RTN","PSAUTL4",41,0)
+ I $G(PSADJ) S PSANODE=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,PSADJ,0)),PSADJO=$S($P(PSANODE,"^",6)'="":$P(PSANODE,"^",6),1:$P(PSANODE,"^",2))
+"RTN","PSAUTL4",42,0)
+ ;Adj. Order Unit
+"RTN","PSAUTL4",43,0)
+ I PSADJO'="" W $S(+PSADJO&($P($G(^DIC(51.5,+PSADJO,0)),"^")'=""):$P($G(^DIC(51.5,+PSADJO,0)),"^"),1:"UNKNOWN")_" ("_$S(PSAOU:$P($G(^DIC(51.5,+PSAOU,0)),"^"),1:"Blank")_")" S PSAOU=+PSADJO
+"RTN","PSAUTL4",44,0)
+ I PSADJO="" W $S(+PSAOU:$P($G(^DIC(51.5,+PSAOU,0)),"^"),1:"Blank")
+"RTN","PSAUTL4",45,0)
+ ;
+"RTN","PSAUTL4",46,0)
+NDC S PSANDC=$P(PSADATA,"^",11)
+"RTN","PSAUTL4",47,0)
+ I $E(PSANDC)'="S" W ?38,"NDC: " D PSANDC1^PSAHELP W PSANDCX K PSANDCX
+"RTN","PSAUTL4",48,0)
+ ;
+"RTN","PSAUTL4",49,0)
+PRICE W !,"Unit Price  : $"
+"RTN","PSAUTL4",50,0)
+ S PSADJP=0,PSADJ=+$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,"B","P",0))
+"RTN","PSAUTL4",51,0)
+ I $G(PSADJ) S PSANODE=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,PSADJ,0)),PSADJP=$S(+$P(PSANODE,"^",6):+$P(PSANODE,"^",6),1:+$P(PSANODE,"^",2))
+"RTN","PSAUTL4",52,0)
+ ;Adj. Unit Price
+"RTN","PSAUTL4",53,0)
+ I $G(PSADJP) D
+"RTN","PSAUTL4",54,0)
+ .I $L($P(PSADJP,".",2))<2 S PSADJP=$P(PSADJP,".")_"."_$P(PSADJP,".",2)_$E("00",1,(2-$L($P(PSADJP,".",2))))
+"RTN","PSAUTL4",55,0)
+ .W $FN(PSADJP,",")_" ($"_$S(+$P(PSADATA,"^",5):$FN($P(PSADATA,"^",5),","),$P(PSADATA,"^",5)=0:"0.00",1:"")_")"
+"RTN","PSAUTL4",56,0)
+ .S PSAPRICE=PSADJP
+"RTN","PSAUTL4",57,0)
+ I '$G(PSADJP) D
+"RTN","PSAUTL4",58,0)
+ .S PSAPRICE=+$P(PSADATA,"^",5)
+"RTN","PSAUTL4",59,0)
+ .I $G(PSAPRICE)!(PSAPRICE=0) W $S($G(PSAPRICE):PSAPRICE,1:"0.00") Q
+"RTN","PSAUTL4",60,0)
+ .W "Blank"
+"RTN","PSAUTL4",61,0)
+ ;
+"RTN","PSAUTL4",62,0)
+VSN S:$D(PSADATA) PSAVSN=$P(PSADATA,"^",12) ;*48
+"RTN","PSAUTL4",63,0)
+ W ?38,"VSN: "_$S(PSAVSN'="":PSAVSN,1:"Blank"),!
+"RTN","PSAUTL4",64,0)
+ ;bgn *67
+"RTN","PSAUTL4",65,0)
+ S PSAP67=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,3,PSALINE,0))
+"RTN","PSAUTL4",66,0)
+ W !,"PV-Drug-Description  : ",$S($P(PSAP67,"^",1)'="":$P(PSAP67,"^",1),1:"Unknown")
+"RTN","PSAUTL4",67,0)
+ W ?55,"PV-DUOU  : ",$S($P(PSAP67,"^",4)'="":$P(PSAP67,"^",4),1:"Unknown")
+"RTN","PSAUTL4",68,0)
+ W !,"PV-Drug-Generic Name : ",$S($P(PSAP67,"^",2)'="":$P(PSAP67,"^",2),1:"Unknown")
+"RTN","PSAUTL4",69,0)
+ W ?55,"PV-UNITS : ",$S($P(PSAP67,"^",3)'="":$P(PSAP67,"^",3),1:"Unknown"),!
+"RTN","PSAUTL4",70,0)
+ ;end *67
+"RTN","PSAUTL4",71,0)
+VDU S PSADUOU=+$P(PSATEMP,"^"),PSAREORD=+$P(PSATEMP,"^",2),PSASUB=+$P(PSATEMP,"^",3),PSASTOCK=+$P(PSATEMP,"^",4)
+"RTN","PSAUTL4",72,0)
+ W !,"Dispense Units: "_$S($P($G(^PSDRUG(+PSADRG,660)),"^",8)'="":$P($G(^PSDRUG(+PSADRG,660)),"^",8),1:"Blank")
+"RTN","PSAUTL4",73,0)
+VDUOU W !,"Dispense Units Per Order Unit: "_$S(+PSADUOU:+PSADUOU,+PSASUB&(+$P($G(^PSDRUG(+PSADRG,1,PSASUB,0)),"^",7)):+$P($G(^PSDRUG(+PSADRG,1,PSASUB,0)),"^",7),1:"Blank"),!
+"RTN","PSAUTL4",74,0)
+ ;
+"RTN","PSAUTL4",75,0)
+ Q:'+$P($G(^PSD(58.8,+PSALOC,0)),"^",14)
+"RTN","PSAUTL4",76,0)
+ ;
+"RTN","PSAUTL4",77,0)
+STOCK S PSASTOCK=$S(+PSASTOCK:+PSASTOCK,+$P($G(^PSD(58.8,+PSALOC,1,+PSADRG,0)),"^",3):+$P($G(^PSD(58.8,+PSALOC,1,+PSADRG,0)),"^",3),1:"Blank")
+"RTN","PSAUTL4",78,0)
+ W "Stock Level   : "_PSASTOCK
+"RTN","PSAUTL4",79,0)
+REORDER S PSAREORD=$S(+PSAREORD:+PSAREORD,+$P($G(^PSD(58.8,+PSALOC,1,+PSADRG,0)),"^",5):+$P($G(^PSD(58.8,+PSALOC,1,+PSADRG,0)),"^",5),1:"Blank")
+"RTN","PSAUTL4",80,0)
+ W !,"Reorder Level : "_PSAREORD,!
+"RTN","PSAUTL4",81,0)
+ Q
+"RTN","PSAVER")
+0^1^B80171787^B77677006
+"RTN","PSAVER",1,0)
+PSAVER ;BIR/JMB-Verify Invoices ;9/6/97
+"RTN","PSAVER",2,0)
+ ;;3.0; DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**60,65,71**; 10/24/97;Build 10
+"RTN","PSAVER",3,0)
+ ;This routine allows the user to verify processed invoices. The entire
+"RTN","PSAVER",4,0)
+ ;invoice may be verified with/without editing. After verification, the
+"RTN","PSAVER",5,0)
+ ;pharmacy location or master vault balances are incremented during a
+"RTN","PSAVER",6,0)
+ ;background job (PSAVER5).
+"RTN","PSAVER",7,0)
+ ;
+"RTN","PSAVER",8,0)
+ I '$D(^XUSEC("PSA ORDERS",DUZ)) W !,"You do not hold the key to enter the option." Q
+"RTN","PSAVER",9,0)
+ I $D(^PSD(58.811,"ASTAT","L")) D LCKCHK^PSAVER4
+"RTN","PSAVER",10,0)
+ I '$D(^PSD(58.811,"ASTAT","P")) W !!,"There are no invoices that need to be verified." H 1 Q
+"RTN","PSAVER",11,0)
+ ;
+"RTN","PSAVER",12,0)
+ ;Creates a list of invoices that can be verified by the user. If the
+"RTN","PSAVER",13,0)
+ ;invoice contains at least one item marked as a controlled substance,
+"RTN","PSAVER",14,0)
+ ;the user must have the pharmacist key before it can be verified.
+"RTN","PSAVER",15,0)
+ S (PSACNT,PSAIEN,PSASUP)=0
+"RTN","PSAVER",16,0)
+ F  S PSAIEN=+$O(^PSD(58.811,"ASTAT","P",PSAIEN)) Q:'PSAIEN  D
+"RTN","PSAVER",17,0)
+ .Q:'$D(^PSD(58.811,PSAIEN,0))
+"RTN","PSAVER",18,0)
+ .S PSAIEN1=0 F  S PSAIEN1=+$O(^PSD(58.811,"ASTAT","P",PSAIEN,PSAIEN1)) Q:'PSAIEN1  D
+"RTN","PSAVER",19,0)
+ ..Q:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,0))
+"RTN","PSAVER",20,0)
+ ..I $P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",10)'=DUZ,$P(^(0),"^",8)="N"!(($P(^(0),"^",8)="S"!($P(^(0),"^",8)="A"))&($D(^XUSEC("PSJ RPHARM",DUZ)))) S PSACNT=PSACNT+1,PSAVER(PSACNT)=PSAIEN_"^"_PSAIEN1
+"RTN","PSAVER",21,0)
+ I 'PSACNT D  H 1 G EXIT
+"RTN","PSAVER",22,0)
+ .W !!,"There is at least one invoice that needs to be verified. However, invoices",!,"cannot be verified by the same person who processed them and a pharmacist",!,"must verify invoices that contain a drug marked as a controlled substance."
+"RTN","PSAVER",23,0)
+ .W !!,"There are no invoices you can verify because the invoice(s) meet one of the",!,"above conditions."
+"RTN","PSAVER",24,0)
+ ;
+"RTN","PSAVER",25,0)
+ESIG D SIG^XUSESIG G:X1="" EXIT S PSAOUT=0
+"RTN","PSAVER",26,0)
+ ;
+"RTN","PSAVER",27,0)
+PRINT ;Asks & prints all invoices the user can verify.
+"RTN","PSAVER",28,0)
+ W ! S DIR(0)="Y",DIR("B")="N",DIR("A")="Print processed invoices",DIR("?",1)="Enter YES to print all invoices you can verify then begin verification.",DIR("?")="Enter NO to bypass printing the invoices and begin verification."
+"RTN","PSAVER",29,0)
+ S DIR("??")="^D PRINTYN^PSAVER"
+"RTN","PSAVER",30,0)
+ D ^DIR K DIR G:$G(DIRUT) EXIT G:'Y ENTIRE
+"RTN","PSAVER",31,0)
+ W ! S %ZIS="Q" D ^%ZIS G:POP ENTIRE
+"RTN","PSAVER",32,0)
+ I $D(IO("Q")) D  G ENTIRE
+"RTN","PSAVER",33,0)
+ .K ZTSAVE
+"RTN","PSAVER",34,0)
+ .S ZTDESC="Drug Acct. - Print Prime Vendor Invoices",ZTDTH=$H,ZTRTN="PRTINV^PSAVER",ZTSAVE("PSAVER(")="" D ^%ZTLOAD
+"RTN","PSAVER",35,0)
+ D PRTINV
+"RTN","PSAVER",36,0)
+ ;
+"RTN","PSAVER",37,0)
+ENTIRE ;Displays a list of all invoices the user can select to be verified.
+"RTN","PSAVER",38,0)
+ S PSASLN="",$P(PSASLN,"-",80)="",PSADLN="",$P(PSADLN,"=",80)=""
+"RTN","PSAVER",39,0)
+ W @IOF,!?21,"<<< VERIFY ENTIRE INVOICE SCREEN >>>"
+"RTN","PSAVER",40,0)
+ W !!?2,"If there are no corrections, you can change the invoices' status",!?2,"to ""Verified"" by selecting them from the list. If you do have"
+"RTN","PSAVER",41,0)
+ W !?2,"corrections, press the return key then a second list will be",!?2,"displayed. You will be able to choose the invoices from that list",!?2,"and enter corrections.",!!?2,"Choose the invoices from the list you want to verify.",!,PSADLN
+"RTN","PSAVER",42,0)
+ S (PSA,PSACNT,PSASTOP)=0
+"RTN","PSAVER",43,0)
+ F  S PSA=+$O(PSAVER(PSA)) Q:'PSA  D  Q:PSASTOP
+"RTN","PSAVER",44,0)
+ .I $Y+5>IOSL D HDR Q:PSASTOP
+"RTN","PSAVER",45,0)
+ .S PSAIEN=$P(PSAVER(PSA),"^"),PSAIEN1=$P(PSAVER(PSA),"^",2),PSAORD=$P(^PSD(58.811,PSAIEN,0),"^"),PSAINV=$P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^"),PSAINVDT=+$P(^(0),"^",2),PSACNT=PSACNT+1
+"RTN","PSAVER",46,0)
+ .W !?(3-$L(PSA)),PSA_".  Order#: "_PSAORD_"  Invoice#: "_PSAINV_"  Invoice Date: "_$$FMTE^XLFDT(PSAINVDT)
+"RTN","PSAVER",47,0)
+ K PSASTOP W !,PSADLN
+"RTN","PSAVER",48,0)
+ S DIR(0)="LO^1:"_PSACNT,DIR("A")="Select invoices to verify",DIR("?",1)="Enter the number to the left of the invoice",DIR("?")="data to be verified or a range of numbers.",DIR("??")="^D SEL^PSAVER"
+"RTN","PSAVER",49,0)
+ W ! D ^DIR K DIR G:$G(DTOUT)!($G(DUOUT)) EXIT
+"RTN","PSAVER",50,0)
+ I Y="",$D(^PSD(58.811,"ASTAT","L")) D LCKCHK^PSAVER4,LOAD G EDIT
+"RTN","PSAVER",51,0)
+ I Y="",'$D(^PSD(58.811,"ASTAT","L")) D LOAD G EDIT
+"RTN","PSAVER",52,0)
+ S PSASEL=Y
+"RTN","PSAVER",53,0)
+ ;
+"RTN","PSAVER",54,0)
+OKAY ;Verifies correct invoices were selected.
+"RTN","PSAVER",55,0)
+ W @IOF,!?21,"<<< VERIFY ENTIRE INVOICE SCREEN >>>",!,PSADLN,!
+"RTN","PSAVER",56,0)
+ S PSACNT=0,PSATMP="" F PSAPC=1:1 S PSA=+$P(PSASEL,",",PSAPC) Q:'PSA  D
+"RTN","PSAVER",57,0)
+ .S PSAIEN=$P(PSAVER(PSA),"^"),PSAIEN1=$P(PSAVER(PSA),"^",2)
+"RTN","PSAVER",58,0)
+ .Q:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,0))
+"RTN","PSAVER",59,0)
+ .S PSAIN=^PSD(58.811,PSAIEN,1,PSAIEN1,0)
+"RTN","PSAVER",60,0)
+ .S PSAORD=$P(^PSD(58.811,PSAIEN,0),"^"),PSAINV=$P(PSAIN,"^"),PSAINVDT=+$P(PSAIN,"^",2),PSACNT=PSACNT+1
+"RTN","PSAVER",61,0)
+ .W !?(3-$L(PSACNT)),PSACNT_".  Order#: "_PSAORD_"  Invoice#: "_PSAINV_"  Invoice Date: "_$$FMTE^XLFDT(PSAINVDT)
+"RTN","PSAVER",62,0)
+ .I +$P(PSAIN,"^",5) D
+"RTN","PSAVER",63,0)
+ ..S PSALOC=+$P(PSAIN,"^",5) D SITES^PSAUTL1 S PSALOCN=$P(^PSD(58.8,PSALOC,0),"^")_PSACOMB
+"RTN","PSAVER",64,0)
+ ..W:$L(PSALOCN)>76 !?6,$P(PSALOCN,"(IP)",1)_"(IP)",!?23,$P(PSALOCN,"(IP)",2) W:$L(PSALOCN)<77 !?6,PSALOCN
+"RTN","PSAVER",65,0)
+ .I +$P(PSAIN,"^",12) W !?6,"MASTER VAULT: "_$P(^PSD(58.8,+$P(PSAIN,"^",12),0),"^")
+"RTN","PSAVER",66,0)
+ .W !
+"RTN","PSAVER",67,0)
+ .S PSAMSG="" D VERLOCK^PSAVER4 ; <== PSA*3*60 (RJS-VMP)
+"RTN","PSAVER",68,0)
+ .W:$L(PSAMSG) ?5,PSAMSG,!
+"RTN","PSAVER",69,0)
+ I PSASEL'=PSATMP S PSASEL=PSATMP K PSATMP
+"RTN","PSAVER",70,0)
+ I PSASEL="" S DIR(0)="E" D ^DIR G:$G(DIRUT) EXIT G ENTIRE
+"RTN","PSAVER",71,0)
+ S DIR(0)="Y",DIR("B")="N",DIR("A")="Are you sure "_$S(PSACNT=1:"this invoice's",1:"these invoices'")_" status should be changed to Verified"
+"RTN","PSAVER",72,0)
+ S DIR("?",1)="Enter YES if the list contains invoices with no corrections.",DIR("?",2)="Enter NO if the list contains at least one invoice you do not",DIR("?")="want to verify.",DIR("??")="^D VERIFY^PSAVER"
+"RTN","PSAVER",73,0)
+ D ^DIR K DIR D:'Y VERUNLCK^PSAVER4 G:$G(DIRUT) EXIT G:'Y ENTIRE ; <== PSA*3*60 (RJS-VMP)
+"RTN","PSAVER",74,0)
+ ;
+"RTN","PSAVER",75,0)
+ ;Send entire invoices to be verified in background, delete these
+"RTN","PSAVER",76,0)
+ ;invoices from the list, then create a new list of remaining invoices
+"RTN","PSAVER",77,0)
+ ;to be verified.
+"RTN","PSAVER",78,0)
+BKGJOB K PSAVBKG W ! F PSAPC=1:1 S PSA=+$P(PSASEL,",",PSAPC) Q:'PSA!(PSAOUT)  D
+"RTN","PSAVER",79,0)
+ .S PSAIEN=$P(PSAVER(PSA),"^"),PSAIEN1=$P(PSAVER(PSA),"^",2),PSASUP=0
+"RTN","PSAVER",80,0)
+ .Q:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,0))!('$D(^PSD(58.811,PSAIEN,0)))
+"RTN","PSAVER",81,0)
+ .S (PSACS,PSAERR,PSALINE,PSALNCNT,PSALNERR,PSALNSU)=0
+"RTN","PSAVER",82,0)
+ .S PSAIN=^PSD(58.811,PSAIEN,1,PSAIEN1,0),PSAINV=$P(PSAIN,"^"),PSAORD=$P(^PSD(58.811,PSAIEN,0),"^")
+"RTN","PSAVER",83,0)
+ .F  S PSALINE=+$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE)) Q:'PSALINE!(PSAOUT)  D
+"RTN","PSAVER",84,0)
+ ..Q:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0))
+"RTN","PSAVER",85,0)
+ ..S PSADATA=^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0),PSALNCNT=PSALNCNT+1
+"RTN","PSAVER",86,0)
+ ..S PSALOC=$S(+$P(PSADATA,"^",10):$P(PSAIN,"^",12),1:$P(PSAIN,"^",5))
+"RTN","PSAVER",87,0)
+ ..W "." D SETLINE^PSAVER3
+"RTN","PSAVER",88,0)
+ .Q:PSAOUT
+"RTN","PSAVER",89,0)
+ .I '$O(PSANOVER(PSAIEN,PSAIEN1,0)) D  Q
+"RTN","PSAVER",90,0)
+ ..S PSAVBKG(PSAIEN,PSAIEN1)="" K PSAVER(PSA) D STATUS^PSAVER3
+"RTN","PSAVER",91,0)
+ ..I '+$P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",13),$P($G(^PSD(58.8,+$P(PSAIN,"^",5),0)),"^",14)!($P($G(^PSD(58.8,+$P(PSAIN,"^",12),0)),"^",14)) D NEWDRUG^PSAVER1 I 1 ;*50
+"RTN","PSAVER",92,0)
+ ..W !,"   Order# "_PSAORD_" Invoice# "_PSAINV_"'s status has been changed to Verified!"
+"RTN","PSAVER",93,0)
+ .H 1 I $O(PSANOVER(PSAIEN,PSAIEN1,0)) D
+"RTN","PSAVER",94,0)
+ ..W !,"** Order# "_PSAORD_" Invoice# "_PSAINV_"'s status has not been changed to Verified."
+"RTN","PSAVER",95,0)
+ ..S PSAERR=0,PSAVER(PSA)=PSAIEN_"^"_PSAIEN1
+"RTN","PSAVER",96,0)
+ ..D PRINT^PSAVER3
+"RTN","PSAVER",97,0)
+ ..N PSATMP S PSATMP=PSASEL ;;<*65 RJS
+"RTN","PSAVER",98,0)
+ ..N PSASEL S PSASEL=PSA
+"RTN","PSAVER",99,0)
+ ..D VERUNLCK^PSAVER4  ;;*65 RJS>
+"RTN","PSAVER",100,0)
+ ..S PSAOUT=0
+"RTN","PSAVER",101,0)
+ ;
+"RTN","PSAVER",102,0)
+ ;If the invoices selected are error free, send them to the background
+"RTN","PSAVER",103,0)
+ ;job to complete the invoice and increment inventory.
+"RTN","PSAVER",104,0)
+ I $D(^PSD(58.811,"ASTAT","L")) D LCKCHK^PSAVER4
+"RTN","PSAVER",105,0)
+ D LOAD
+"RTN","PSAVER",106,0)
+ I $O(PSAVBKG(0)) D
+"RTN","PSAVER",107,0)
+ . K ZTSAVE S ZTDESC="Drug Acct. - Verify Prime Vendor Invoices",ZTIO="",ZTDTH=$H,ZTRTN="^PSAVER6",ZTSAVE("PSASEL")="",ZTSAVE("PSAVBKG(")="" D ^%ZTLOAD Q:$G(POP)
+"RTN","PSAVER",108,0)
+ ;D ^PSAVER6
+"RTN","PSAVER",109,0)
+ K PSAVBKG G:'$O(PSAEDIT(0)) EXIT
+"RTN","PSAVER",110,0)
+EDIT D EDIT^PSAVER1
+"RTN","PSAVER",111,0)
+ ;
+"RTN","PSAVER",112,0)
+EXIT I $O(PSANEWD(0)) D ^PSAVER4
+"RTN","PSAVER",113,0)
+ K %ZIS,DA,DD,DIC,DIE,DIK,DIR,DIRUT,DO,DR,DTOUT,DUOUT,PSA,PSA10,PSAGAIN,PSA50IEN,PSAA,PSABEFOR,PSACHG,PSACHO,PSACNT,PSACOMB,PSACS,PSACSLN,PSACTRL
+"RTN","PSAVER",114,0)
+ K PSADATA,PSADD,PSADJ,PSADJD,PSADJFLD,PSADJN,PSADJO,PSADJOP,PSADJOV,PSADJP,PSADJPP,PSADJPV,PSADJQ,PSADJQP,PSADJQV,PSADJSUP,PSADLN,PSADRG
+"RTN","PSAVER",115,0)
+ K PSADRGN,PSADUOU,PSAEDIT,PSAERR,PSAFLD,PSAFLDS,PSAHOLD,PSAIEN,PSAIEN1,PSAIN,PSAINV,PSAINVDT,PSAISIT,PSAISITN,PSAKK,PSAL,PSALEN,PSALINE,PSALINEN
+"RTN","PSAVER",116,0)
+ K PSALINES,PSALN,PSALN0,PSALNCNT,PSALND,PSALNERR,PSALNP,PSALNSU,PSALNV,PSALOAD,PSALOC,PSALOCA,PSALOCN,PSAMENU,PSAMV,PSAMVA,PSAMVIEN,PSAMVN,PSAN10,PSANAME,PSANDC,PSANEW,PSANEWD
+"RTN","PSAVER",117,0)
+ K PSANO,PSANODE,PSANOVER,PSANUM,PSAONE,PSAONEMV,PSAORD,PSAORDU,PSAPHARM,PSAPRICE,PSAOSIT,PSAOSITN,PSAOU,PSAOUT,PSAPC,PSAPCF,PSAPCL,PSAPG,PSAPRINT,PSAQTY,PSALOCK,PSAMSG
+"RTN","PSAVER",118,0)
+ K PSAREA,PSAREC,PSARECD,PSAREORD,PSASAVE,PSASEL,PSASET,PSASLN,PSASTOCK,PSASUB,PSASUP,PSASUPP,PSATAB,PSATEMP,PSAUPC,PSAVAULT,PSAVBKG,PSAVER,PSAVSN,PSAOU,PSATMP,PSALCK
+"RTN","PSAVER",119,0)
+ K PSASS,X,X1,Y,ZTDESC,ZTDTH,ZTIO,ZTRTN,ZTSAVE
+"RTN","PSAVER",120,0)
+ Q
+"RTN","PSAVER",121,0)
+ ;
+"RTN","PSAVER",122,0)
+HDR ;Header with screen hold
+"RTN","PSAVER",123,0)
+ S PSASS=21-$Y F PSAKK=1:1:PSASS W !
+"RTN","PSAVER",124,0)
+ S DIR(0)="E" D ^DIR K DIR I $G(DIRUT) S PSASTOP=1 Q
+"RTN","PSAVER",125,0)
+ W @IOF,!?21,"<<< VERIFY ENTIRE INVOICE SCREEN >>>",!!,PSADLN
+"RTN","PSAVER",126,0)
+ Q
+"RTN","PSAVER",127,0)
+LOAD ;Loads invoices to be edited into an array
+"RTN","PSAVER",128,0)
+ K PSAEDIT S (PSALOAD,PSACNT)=0
+"RTN","PSAVER",129,0)
+ F  S PSALOAD=+$O(PSAVER(PSALOAD)) Q:'PSALOAD  S PSACNT=PSACNT+1,PSAEDIT(PSACNT)=PSAVER(PSALOAD)
+"RTN","PSAVER",130,0)
+ K PSAVER
+"RTN","PSAVER",131,0)
+ Q
+"RTN","PSAVER",132,0)
+ ;
+"RTN","PSAVER",133,0)
+PRTINV ;Sends invoices to printer
+"RTN","PSAVER",134,0)
+ S (PSA,PSAOUT)=0 F  S PSA=+$O(PSAVER(PSA)) Q:'PSA!(PSAOUT)  D
+"RTN","PSAVER",135,0)
+ .S PSAORD=$P(PSAVER(PSA),"^"),PSAINV=$P(PSAVER(PSA),"^",2) D ^PSAORDP1
+"RTN","PSAVER",136,0)
+ D ^%ZISC
+"RTN","PSAVER",137,0)
+ Q
+"RTN","PSAVER",138,0)
+ ;
+"RTN","PSAVER",139,0)
+SEL ;Extended help to 'Select invoices'
+"RTN","PSAVER",140,0)
+ W !?5,"Enter the number to the left of the invoice data that you want to verify.",!?5,"The invoices' statuses will be changed to Verified."
+"RTN","PSAVER",141,0)
+ Q
+"RTN","PSAVER",142,0)
+SELHELP ;Extended help for 'Select invoices to verify'
+"RTN","PSAVER",143,0)
+ W !?5,"Enter the number to the left of the invoice data you want to verify.",!?5,"The line items will be displayed for you to select the ones you want"
+"RTN","PSAVER",144,0)
+ W !?5,"to correct."
+"RTN","PSAVER",145,0)
+ Q
+"RTN","PSAVER",146,0)
+PRINTYN ;Extended help for 'Print invoices?'
+"RTN","PSAVER",147,0)
+ W !?5,"Enter YES to print all of the processed invoices you can verify.",!?5,"Enter NO to bypass printing the invoices and continue with verification."
+"RTN","PSAVER",148,0)
+ Q
+"RTN","PSAVER",149,0)
+VERIFY ;Extended help for 'Are you sure...'
+"RTN","PSAVER",150,0)
+ W !!?5,"Enter YES if the list contains invoices to be verified.",!!?5,"Enter NO if the list contains at least one invoice that should not be"
+"RTN","PSAVER",151,0)
+ W !?5,"verified. You will be returned to the original list so you can choose",!?5,"the invoices to be verified again."
+"RTN","PSAVER",152,0)
+ Q
+"RTN","PSAVER1")
+0^2^B57200195^B56200919
+"RTN","PSAVER1",1,0)
+PSAVER1 ;BIR/JMB-Verify Invoices - CONT'D ;7/23/97
+"RTN","PSAVER1",2,0)
+ ;;3.0; DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**33,60,65,71**; 10/24/97;Build 10
+"RTN","PSAVER1",3,0)
+ ;This routine allows the user to edit processed invoices by selecting
+"RTN","PSAVER1",4,0)
+ ;the invoice's line item number. If there are no errors after editing
+"RTN","PSAVER1",5,0)
+ ;the line item is verified.
+"RTN","PSAVER1",6,0)
+ ;
+"RTN","PSAVER1",7,0)
+ ;References to global ^DIC(51.5 are covered by IA #1931
+"RTN","PSAVER1",8,0)
+ ;References to global ^PSDRUG( are covered by IA #2095
+"RTN","PSAVER1",9,0)
+ ;
+"RTN","PSAVER1",10,0)
+EDIT W @IOF,!?18,"<<< EDIT INVOICES TO BE VERIFIED SCREEN >>>",!!?2,"Choose the invoices from the list you want to edit.",!,PSASLN
+"RTN","PSAVER1",11,0)
+ S (PSA,PSACNT,PSASTOP)=0,PSATMP="" F  S PSA=+$O(PSAEDIT(PSA)) Q:'PSA  D  Q:PSASTOP
+"RTN","PSAVER1",12,0)
+ .I $Y+5>IOSL D HEADER Q:PSASTOP
+"RTN","PSAVER1",13,0)
+ .S PSAIEN=$P(PSAEDIT(PSA),"^"),PSAIEN1=$P(PSAEDIT(PSA),"^",2),PSAORD=$P(^PSD(58.811,PSAIEN,0),"^")
+"RTN","PSAVER1",14,0)
+ .S PSAINV=$P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^"),PSAINVDT=+$P(^(0),"^",2),PSACNT=PSACNT+1
+"RTN","PSAVER1",15,0)
+ .W !?2,PSA_".",?6,"Order#: "_PSAORD_"  Invoice#: "_PSAINV_"  Invoice Date: "_$$FMTE^XLFDT(PSAINVDT)
+"RTN","PSAVER1",16,0)
+ K PSASTOP W !,PSASLN
+"RTN","PSAVER1",17,0)
+ S DIR(0)="LO^1:"_PSACNT,DIR("A")="Select invoices to edit",DIR("?",1)="Enter the number to the left of the invoice",DIR("?")="data to be verified or a range of numbers.",DIR("??")="^D SELHELP^PSAVER"
+"RTN","PSAVER1",18,0)
+ W ! D ^DIR K DIR Q:$G(DIRUT)
+"RTN","PSAVER1",19,0)
+ S PSASEL=Y
+"RTN","PSAVER1",20,0)
+ ;
+"RTN","PSAVER1",21,0)
+SEL ;Select line items to be edit
+"RTN","PSAVER1",22,0)
+ K PSAVBKG S PSATMP=""
+"RTN","PSAVER1",23,0)
+ F PSAPC=1:1 S PSA=$P(PSASEL,",",PSAPC) Q:'PSA  D CORR Q:PSAOUT
+"RTN","PSAVER1",24,0)
+ I $O(PSAVBKG(0)) D
+"RTN","PSAVER1",25,0)
+ .;K ZTSAVE S ZTDESC="Drug Acct. - Verify Prime Vendor Invoices",ZTIO="",ZTDTH=$H,ZTRTN="^PSAVER6",ZTSAVE("PSAVBKG(")="" D ^%ZTLOAD
+"RTN","PSAVER1",26,0)
+ .D ^PSAVER6
+"RTN","PSAVER1",27,0)
+ Q
+"RTN","PSAVER1",28,0)
+ ;
+"RTN","PSAVER1",29,0)
+HEADER ;Header with screen hold
+"RTN","PSAVER1",30,0)
+ S PSASS=21-$Y F PSAKK=1:1:PSASS W !
+"RTN","PSAVER1",31,0)
+ S DIR(0)="E" D ^DIR K DIR I $G(DIRUT) S PSASTOP=1 Q
+"RTN","PSAVER1",32,0)
+ W @IOF,!?18,"<<< EDIT INVOICES TO BE VERIFIED SCREEN >>>",!!,PSASLN
+"RTN","PSAVER1",33,0)
+ Q
+"RTN","PSAVER1",34,0)
+ ;
+"RTN","PSAVER1",35,0)
+CORR N PSASEL1 S PSASEL1=PSASEL N PSASEL  ;;<*65 RJS
+"RTN","PSAVER1",36,0)
+ I $D(^PSD(58.811,"ASTAT","L")) D LCKCHK^PSAVER4
+"RTN","PSAVER1",37,0)
+ S PSAIEN=$P(PSAEDIT(PSA),"^"),PSAIEN1=$P(PSAEDIT(PSA),"^",2),PSASEL=PSA ;;*65 RJS>
+"RTN","PSAVER1",38,0)
+ S PSAMSG="" D VERLOCK^PSAVER4 ; <== PSA*3*60 (RJS-VMP)
+"RTN","PSAVER1",39,0)
+ I $L(PSAMSG) D  Q
+"RTN","PSAVER1",40,0)
+ .D HDR W !,?5,PSAMSG,! S DIR(0)="E" D ^DIR K DIR S PSASEL=PSASEL1 K PSALOCK(PSA),PSASEL1
+"RTN","PSAVER1",41,0)
+ S PSAIN=^PSD(58.811,PSAIEN,1,PSAIEN1,0),PSAINV=$P(^(0),"^"),PSAINVDT=$P(^(0),"^",2),PSAORD=$P(^PSD(58.811,PSAIEN,0),"^")
+"RTN","PSAVER1",42,0)
+ D HDR,RECD^PSAVER2 D:PSAOUT
+"RTN","PSAVER1",43,0)
+ .I PSAOUT D VERUNLCK^PSAVER4 W !,"** The invoice's status has not been changed to Verified!"
+"RTN","PSAVER1",44,0)
+ I $G(PSAOUT)!$G(DUOUT) S PSAOUT=0,PSASEL=PSASEL1 K PSALOCK(PSA),PSASEL1 Q
+"RTN","PSAVER1",45,0)
+ S PSALOC=+$P(PSAIN,"^",5),PSAMV=+$P(PSAIN,"^",12)
+"RTN","PSAVER1",46,0)
+ I PSALOC!($P(PSAIN,"^",8)="S")!($P(PSAIN,"^",8)="N") D  Q:PSAOUT
+"RTN","PSAVER1",47,0)
+ .D SITES^PSAUTL1 S PSALOCN=$S($G(PSALOC)'>0:"UNKNOWN",1:$P(^PSD(58.8,PSALOC,0),"^"))_PSACOMB
+"RTN","PSAVER1",48,0)
+ .W:$L(PSALOCN)>76 !!,$P(PSALOCN,"(IP)",1)_"(IP)",!?17,$P(PSALOCN,"(IP)",2) W:$L(PSALOCN)<77 !!,PSALOCN
+"RTN","PSAVER1",49,0)
+ .S DR=4 D PHARM^PSAVER2
+"RTN","PSAVER1",50,0)
+ I PSAMV!($P(PSAIN,"^",8)="S")!($P(PSAIN,"^",8)="A") W !!,$P($G(^PSD(58.8,PSAMV,0)),"^") S DR=13 D PHARM^PSAVER2
+"RTN","PSAVER1",51,0)
+ I X="" D VERUNLCK^PSAVER4 W !,"** The invoice's status has not been changed to Verified!" S PSAOUT=0,PSASEL=PSASEL1 K PSALOCK(PSA),PSASEL1 Q
+"RTN","PSAVER1",52,0)
+ ;
+"RTN","PSAVER1",53,0)
+LINES F  W ! S DIC="^PSD(58.811,"_PSAIEN_",1,"_PSAIEN1_",1,",DA(2)=PSAIEN,DA(1)=PSAIEN1,DIC(0)="QAEMZ",DIC("A")="Select Line#: " D ^DIC K DIC D  Q:PSAOUT
+"RTN","PSAVER1",54,0)
+ .I $G(DTOUT)!($G(DUOUT))!(Y<1) S PSAOUT=1 Q
+"RTN","PSAVER1",55,0)
+ .S PSALINE=+Y,PSALINEN=$P(Y,"^",2)
+"RTN","PSAVER1",56,0)
+ .I '$D(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0)) W !,"Invalid line number." Q
+"RTN","PSAVER1",57,0)
+ .S PSADATA=^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0),PSASUP=0
+"RTN","PSAVER1",58,0)
+ .S PSANDC=$P(PSADATA,"^",11),PSAVSN=$P(PSADATA,"^",12),PSALOC=$S(+$P(PSADATA,"^",10):+$P(PSAIN,"^",12),1:+$P(PSAIN,"^",5))
+"RTN","PSAVER1",59,0)
+VIEW .D HDR,VERDISP^PSAUTL4 W PSASLN,!
+"RTN","PSAVER1",60,0)
+ .W "1. Drug",!,"2. Quantity Received",!,"3. Order Unit",!,"4. Dispense Units per Order Unit",! S PSACHO=4
+"RTN","PSAVER1",61,0)
+ .I $P($G(^PSD(58.8,PSALOC,0)),"^",14)  W "5. Stock Level",!,"6. Reorder Level",! S PSACHO=6
+"RTN","PSAVER1",62,0)
+ .S DIR(0)="LO^1:"_PSACHO,DIR("A")="Edit fields",DIR("?")="Enter the number(s) of the data to be edited" S DIR("??")="^D DDQOR^PSAVER3"
+"RTN","PSAVER1",63,0)
+ .D ^DIR K DIR I $G(DTOUT)!($G(DUOUT)) S PSAOUT=1 Q
+"RTN","PSAVER1",64,0)
+ .Q:Y=""  S PSAFLDS=Y,PSASET=0 D HDR,VERDISP^PSAUTL4 W PSASLN
+"RTN","PSAVER1",65,0)
+FIELDS .F PSAPCF=1:1 S PSAFLD=$P(PSAFLDS,",",PSAPCF) Q:'PSAFLD!(PSAOUT)  D
+"RTN","PSAVER1",66,0)
+ ..I PSAFLD=1 D ASKDRUG^PSAVER2 Q
+"RTN","PSAVER1",67,0)
+ ..I PSAFLD=2 D QTY^PSAVER2 Q
+"RTN","PSAVER1",68,0)
+ ..I PSAFLD=3 D OU^PSAVER2 Q
+"RTN","PSAVER1",69,0)
+ ..I PSAFLD=4,'PSASET S PSA50IEN=PSADRG D DUOU^PSAVER2 Q
+"RTN","PSAVER1",70,0)
+ ..I PSAFLD=5 D STOCK^PSAVER2 Q
+"RTN","PSAVER1",71,0)
+ ..I PSAFLD=6 D REORDER^PSAVER2
+"RTN","PSAVER1",72,0)
+ ;<== PSA*3*60 (RJS-VMP)
+"RTN","PSAVER1",73,0)
+ ;Determines if the invoice's status should be changed to verified. If
+"RTN","PSAVER1",74,0)
+ ;so, the status is changed and the new drugs to the location is listed.
+"RTN","PSAVER1",75,0)
+ W ! S DIR(0)="Y",DIR("A")="Do you want to change the invoice's status to Verified",DIR("?",1)="Enter YES to change the invoice's status to Verified.",DIR("?")="Enter NO to keep the invoice's status as Processed."
+"RTN","PSAVER1",76,0)
+ S DIR("??")="^D CHGYN^PSAVER1" D ^DIR K DIR ;D:'Y VERUNLCK^PSAVER4
+"RTN","PSAVER1",77,0)
+ I $G(DIRUT)!('Y) D VERUNLCK^PSAVER4 W !,"** The invoice's status has not been changed to Verified!" S (PSAOUT,PSACHG)=0,PSASEL=PSASEL1 K PSALOCK(PSA),PSASEL1 Q
+"RTN","PSAVER1",78,0)
+ S PSACHG=Y,PSAVBKG(PSAIEN,PSAIEN1)=""
+"RTN","PSAVER1",79,0)
+ ;==> PSA*3*60 (RJS-VMP)
+"RTN","PSAVER1",80,0)
+ ;Looks to see if all line items are processed.
+"RTN","PSAVER1",81,0)
+PROCESS S (PSACS,PSAERR,PSALINE,PSALINES,PSALNCNT,PSALNSU,PSAOUT,PSASUP)=0
+"RTN","PSAVER1",82,0)
+ S PSAIN=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,0)),PSAORD=$P($G(^PSD(58.811,PSAIEN,0)),"^")
+"RTN","PSAVER1",83,0)
+ F  S PSALINE=$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE)) Q:'PSALINE!(PSAOUT)  D
+"RTN","PSAVER1",84,0)
+ .S PSADATA=^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0),PSALNERR=0,PSALNCNT=PSALNCNT+1
+"RTN","PSAVER1",85,0)
+ .D SETLINE^PSAVER3 I PSAOUT D VERUNLCK^PSAVER4 W !,"** The invoice's status has not been changed to Verified!" S (PSAOUT,PSACHG)=0,PSASEL=PSASEL1 K PSALOCK(PSA),PSASEL1 Q
+"RTN","PSAVER1",86,0)
+ .S:'+$G(PSALNERR) PSALINES=PSALINES+1 S PSADATA=^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0)
+"RTN","PSAVER1",87,0)
+ .S:+$P(PSADATA,"^",10) PSACS=PSACS+1
+"RTN","PSAVER1",88,0)
+ ;
+"RTN","PSAVER1",89,0)
+CHECK I PSALNCNT'=PSALINES D  Q
+"RTN","PSAVER1",90,0)
+ .K PSAHOLD(PSALOC,PSAIEN,PSAIEN1) W !!,"** The invoice has not been placed in a Verified status!"
+"RTN","PSAVER1",91,0)
+ .D END^PSAPROC D:+$G(PSAERR) PRINT^PSAVER3
+"RTN","PSAVER1",92,0)
+ .D VERUNLCK^PSAVER4 S PSASEL=PSASEL1 K PSALOCK(PSA),PSASEL1,PSAVBKG(PSAIEN,PSAIEN1) Q  ;;<*65 RJS>
+"RTN","PSAVER1",93,0)
+ I +PSALNCNT,PSALNCNT=PSACS D
+"RTN","PSAVER1",94,0)
+ .S $P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",8)="A" W !,"All drugs on the invoice are marked as a controlled substance."
+"RTN","PSAVER1",95,0)
+ .D:'+$P($G(^PSD(58.811,PSAIEN,1,PSAIEN1,0)),"^",12) MASTER^PSAVER5
+"RTN","PSAVER1",96,0)
+ I PSACS,PSALNCNT'=PSACS S $P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",8)="S" D:'$P($G(^PSD(58.811,PSAIEN,1,PSAIEN1,0)),"^",5) GETLOC^PSAVER5
+"RTN","PSAVER1",97,0)
+ I 'PSACS S $P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",8)="N" D:'$P($G(^PSD(58.811,PSAIEN,1,PSAIEN1,0)),"^",5) GETLOC^PSAVER5
+"RTN","PSAVER1",98,0)
+ I +PSALNCNT,PSALNCNT=PSALINES D  Q
+"RTN","PSAVER1",99,0)
+ .D CHG
+"RTN","PSAVER1",100,0)
+ .I PSALNCNT=PSASUP S $P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",13)=1 Q
+"RTN","PSAVER1",101,0)
+ .S $P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",13)=0
+"RTN","PSAVER1",102,0)
+ D END^PSAPROC D:+$G(PSAERR) PRINT^PSAVER3
+"RTN","PSAVER1",103,0)
+ Q
+"RTN","PSAVER1",104,0)
+ ;<== PSA*3*60 (RJS-VMP)
+"RTN","PSAVER1",105,0)
+CHG D STATUS^PSAVER3,NEWDRUG
+"RTN","PSAVER1",106,0)
+ W !!,"The invoice status has been changed to Verified!"
+"RTN","PSAVER1",107,0)
+ D END^PSAPROC
+"RTN","PSAVER1",108,0)
+ Q
+"RTN","PSAVER1",109,0)
+ ;
+"RTN","PSAVER1",110,0)
+NEWDRUG ;If this invoice will add new drugs to location/vault, store in an
+"RTN","PSAVER1",111,0)
+ ;array the location/vault and drug name to be printed later.
+"RTN","PSAVER1",112,0)
+ K PSALND,PSALN0,PSALNP,PSALNV
+"RTN","PSAVER1",113,0)
+ S PSALINE=0,PSAPHARM=+$P($G(^PSD(58.811,PSAIEN,1,PSAIEN1,0)),"^",5),PSAMV=$P($G(^(0)),"^",12)
+"RTN","PSAVER1",114,0)
+ Q:'PSALOC
+"RTN","PSAVER1",115,0)
+ F  S PSALINE=$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE)) Q:'PSALINE  D
+"RTN","PSAVER1",116,0)
+ .S PSALN0=+$P($G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0)),"^",2),PSALOC=$S($P($G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0)),"^",10):PSAMV,1:PSAPHARM)
+"RTN","PSAVER1",117,0)
+ .I $O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,"D",0)) D
+"RTN","PSAVER1",118,0)
+ ..S PSADJ=$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,"D",0))
+"RTN","PSAVER1",119,0)
+ ..Q:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,PSADJ,0))
+"RTN","PSAVER1",120,0)
+ ..S PSALNP=+$P(PSADJ,"^",2),PSALNV=+$P(PSADJ,"^",6)
+"RTN","PSAVER1",121,0)
+ .S PSADD=$S($G(PSALNV):PSALNV,$G(PSALNP):PSALNP,PSALN0:PSALN0,1:0)
+"RTN","PSAVER1",122,0)
+ .I PSADD,'$D(^PSD(58.8,PSALOC,1,PSADD,0)) S PSANEWD(PSALOC,$S($P($G(^PSDRUG(PSADD,0)),"^")'="":$P($G(^PSDRUG(PSADD,0)),"^"),1:"UNKNOWN"))=PSADD
+"RTN","PSAVER1",123,0)
+ Q
+"RTN","PSAVER1",124,0)
+ ;
+"RTN","PSAVER1",125,0)
+HDR ;Header for screen that displays invoice data to be edited.
+"RTN","PSAVER1",126,0)
+ W @IOF,!?18,"<<< EDIT INVOICES TO BE VERIFIED SCREEN >>>"
+"RTN","PSAVER1",127,0)
+ W !!,"Order#: "_PSAORD_"  Invoice#: "_PSAINV_"  Invoice Date: "_$$FMTE^XLFDT(PSAINVDT),!,PSASLN,!
+"RTN","PSAVER1",128,0)
+ Q
+"RTN","PSAVER1",129,0)
+ ;
+"RTN","PSAVER1",130,0)
+CHGYN ;Extended help for 'Do you want to change the invoice's status to Verified'
+"RTN","PSAVER1",131,0)
+ W !?5,"Enter YES if the invoice is completely correct. You will not be able",!?5,"to edit it again."
+"RTN","PSAVER1",132,0)
+ W !!?5,"Enter NO if you need to edit the invoice again. You can edit it again",!?5,"by selecting the Verify Orders option."
+"RTN","PSAVER1",133,0)
+ Q
+"RTN","PSAVER4")
+0^3^B44861378^B15659954
+"RTN","PSAVER4",1,0)
+PSAVER4 ;;BIR/JMB-Verify Invoices - CONT'D ;9/8/97
+"RTN","PSAVER4",2,0)
+ ;;3.0; DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**15,60,71**; 10/24/97;Build 10
+"RTN","PSAVER4",3,0)
+ ;This routine prints the report of new drugs that will be added to
+"RTN","PSAVER4",4,0)
+ ;each pharmacy location or master vault.
+"RTN","PSAVER4",5,0)
+ ;
+"RTN","PSAVER4",6,0)
+ ;Asks & prints all invoices the user can verify.
+"RTN","PSAVER4",7,0)
+ W @IOF,!,"The verified invoices contain new drugs for the assigned pharmacy location.",!,"A report will print by pharmacy location listing the new drugs. Use the"
+"RTN","PSAVER4",8,0)
+ W !,"Balance Adjustment option to enter an adjustment that reflects the total",!,"dispense units on hand for each new drug.",!!,"It is suggested that you send the report to a print."
+"RTN","PSAVER4",9,0)
+ K IO("Q") S %ZIS="Q" W !
+"RTN","PSAVER4",10,0)
+ D ^%ZIS I POP W !,"NO DEVICE SELECTED OR OUTPUT PRINTED!" Q
+"RTN","PSAVER4",11,0)
+ I $D(IO("Q")) D  G QUIT
+"RTN","PSAVER4",12,0)
+ .N ZTSAVE,ZTIO,ZTRTN,ZTSAVE,ZTDTH,ZTSK
+"RTN","PSAVER4",13,0)
+ .S ZTDESC="Drug Acct. - Print New Drugs",ZTDTH=$H,ZTRTN="PRINT^PSAVER4"
+"RTN","PSAVER4",14,0)
+ .S ZTSAVE("PSANEWD(")="" D ^%ZTLOAD
+"RTN","PSAVER4",15,0)
+ ;
+"RTN","PSAVER4",16,0)
+PRINT ;Sends invoices to printer
+"RTN","PSAVER4",17,0)
+ S (PSALOC,PSAOUT)=0,PSAPG=1,PSADLN="",$P(PSADLN,"=",80)="",PSASLN="",$P(PSASLN,"-",80)=""
+"RTN","PSAVER4",18,0)
+ F  S PSALOC=+$O(PSANEWD(PSALOC)) Q:'PSALOC!(PSAOUT)  S PSADRGN=1 D HDR  Q:PSAOUT  D  Q:PSAOUT
+"RTN","PSAVER4",19,0)
+ .F  S PSADRGN=$O(PSANEWD(PSALOC,PSADRGN)) Q:PSADRGN=""!(PSAOUT)  D:$Y+5>IOSL HDR Q:PSAOUT  W !,PSADRGN,!,PSASLN,!
+"RTN","PSAVER4",20,0)
+ D:$E(IOST,1,2)="C-"&('PSAOUT) END^PSAPROC W:$E(IOST)'="C" @IOF
+"RTN","PSAVER4",21,0)
+ K PSANEWD(PSALOC)
+"RTN","PSAVER4",22,0)
+QUIT D ^%ZISC S:$D(ZTQUEUED) ZTREQ="@" K IO("Q")
+"RTN","PSAVER4",23,0)
+ Q
+"RTN","PSAVER4",24,0)
+ ;
+"RTN","PSAVER4",25,0)
+HDR ;Prints the header to the New Drug Report on the screen & paper.
+"RTN","PSAVER4",26,0)
+ I $E(IOST,1,2)="C-" D:PSAPG'=1 END^PSAPROC Q:PSAOUT  W @IOF,!?28,"<<< NEW DRUG REPORT >>>"
+"RTN","PSAVER4",27,0)
+ I $E(IOST)'="C" W:PSAPG'=1 @IOF W !?20,"DRUG ACCOUNTABILITY/INVENTORY INTERFACE",!?28,"<<< NEW DRUG REPORT >>>",?72,"Page "_PSAPG
+"RTN","PSAVER4",28,0)
+ I $P($G(^PSD(58.8,PSALOC,0)),"^",2)="M" W !?34,"MASTER VAULT",!!,$P($G(^PSD(58.8,PSALOC,0)),"^")
+"RTN","PSAVER4",29,0)
+ I $P($G(^PSD(58.8,PSALOC,0)),"^",2)="P" D
+"RTN","PSAVER4",30,0)
+ .D SITES^PSAUTL1 S PSALOCN=$P(^PSD(58.8,PSALOC,0),"^")_PSACOMB
+"RTN","PSAVER4",31,0)
+ .W !?31,"PHARMACY LOCATION",!!
+"RTN","PSAVER4",32,0)
+ .W:$L(PSALOCN)>76 $P(PSALOCN,"(IP)",1)_"(IP)",!?17,$P(PSALOCN,"(IP)",2) W:$L(PSALOCN)<77 PSALOCN
+"RTN","PSAVER4",33,0)
+ W !,PSADLN S PSAPG=PSAPG+1
+"RTN","PSAVER4",34,0)
+ Q
+"RTN","PSAVER4",35,0)
+ ;
+"RTN","PSAVER4",36,0)
+VERLOCK ;==> PSA*3*60 (RJS-VMP)Sets invoice's status to Verifying
+"RTN","PSAVER4",37,0)
+ N DIC,DA,DR,DIE
+"RTN","PSAVER4",38,0)
+ I '$D(^PSD(58.811,"ASTAT","V",PSAIEN,PSAIEN1)),'$D(^PSD(58.811,"ASTAT","P",PSAIEN,PSAIEN1)),$D(^PSD(58.811,"ASTAT","L",PSAIEN,PSAIEN1)) D  Q
+"RTN","PSAVER4",39,0)
+ .S PSAMSG="**This Invoice is currently being Verified by another user"
+"RTN","PSAVER4",40,0)
+ I '$D(^PSD(58.811,"ASTAT","P",PSAIEN,PSAIEN1)),'$D(^PSD(58.811,"ASTAT","L",PSAIEN,PSAIEN1))&(($D(^PSD(58.811,"ASTAT","V",PSAIEN,PSAIEN1)))!($D(^PSD(58.811,"ASTAT","C",PSAIEN,PSAIEN1)))) D  Q
+"RTN","PSAVER4",41,0)
+ .S PSAMSG="**This Invoice has already been Verified by another user"
+"RTN","PSAVER4",42,0)
+ F  L +^PSD(58.811,PSAIEN,1,PSAIEN1,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSAVER4",43,0)
+ I '$D(^PSD(58.811,"ASTAT","L",PSAIEN,PSAIEN1)),'$D(^PSD(58.811,"ASTAT","V",PSAIEN,PSAIEN1)),$D(^PSD(58.811,"ASTAT","P",PSAIEN,PSAIEN1)) D
+"RTN","PSAVER4",44,0)
+ .S DA=PSAIEN1,DA(1)=PSAIEN,DIE="^PSD(58.811,"_DA(1)_",1,",DR="2///L;12////^S X="_DUZ
+"RTN","PSAVER4",45,0)
+ .D ^DIE
+"RTN","PSAVER4",46,0)
+ .S PSALOCK(PSA)=PSAIEN_"^"_PSAIEN1
+"RTN","PSAVER4",47,0)
+ .I PSATMP S PSATMP=PSATMP_","_PSA
+"RTN","PSAVER4",48,0)
+ .I 'PSATMP S PSATMP=PSA
+"RTN","PSAVER4",49,0)
+ L -^PSD(58.811,PSAIEN,1,PSAIEN1,0)
+"RTN","PSAVER4",50,0)
+ Q
+"RTN","PSAVER4",51,0)
+ ;
+"RTN","PSAVER4",52,0)
+VERUNLCK ; VERIFY CANCELED RESET INVOICE TO PROCESSED
+"RTN","PSAVER4",53,0)
+ N Y,PSAPC S PSACNT=0 F PSAPC=1:1 S PSA=+$P(PSASEL,",",PSAPC) Q:'PSA  D
+"RTN","PSAVER4",54,0)
+ .S PSAIEN=$P(PSALOCK(PSA),"^"),PSAIEN1=$P(PSALOCK(PSA),"^",2)
+"RTN","PSAVER4",55,0)
+ .I $D(^PSD(58.811,"ASTAT","L",PSAIEN,PSAIEN1)) D
+"RTN","PSAVER4",56,0)
+ ..N DIC,DA,DR,DIE
+"RTN","PSAVER4",57,0)
+ ..F  L +^PSD(58.811,PSAIEN,1,PSAIEN1,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSAVER4",58,0)
+ ..S DA=PSAIEN1,DA(1)=PSAIEN,DIE="^PSD(58.811,"_DA(1)_",1,",DR="2///P;12////@" D ^DIE
+"RTN","PSAVER4",59,0)
+ ..L -^PSD(58.811,PSAIEN,1,PSAIEN1,0)
+"RTN","PSAVER4",60,0)
+ Q  ;<== PSA*3*?? (RJS-VMP)
+"RTN","PSAVER4",61,0)
+ ;
+"RTN","PSAVER4",62,0)
+LCKCHK ; CHECK FOR LOCKED INVOICES
+"RTN","PSAVER4",63,0)
+ I $D(^XTMP("PSALCK",DUZ)) D UNLCK  ;; <*71 RJS >
+"RTN","PSAVER4",64,0)
+ N PSACT,PSACNT,PSAIEN,PSAIEN1,PSADUZ,PSASUP,PSALCHK,DUOUT S (PSACNT,PSAIEN)=0
+"RTN","PSAVER4",65,0)
+ F  S PSAIEN=+$O(^PSD(58.811,"ASTAT","L",PSAIEN)) Q:'PSAIEN  D
+"RTN","PSAVER4",66,0)
+ .Q:'$D(^PSD(58.811,PSAIEN,0))
+"RTN","PSAVER4",67,0)
+ .S PSAIEN1=0 F  S PSAIEN1=+$O(^PSD(58.811,"ASTAT","L",PSAIEN,PSAIEN1)) Q:'PSAIEN1  D
+"RTN","PSAVER4",68,0)
+ ..Q:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,0))!($P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",11)'=DUZ)
+"RTN","PSAVER4",69,0)
+ ..S PSACNT=PSACNT+1,PSALCHK(PSACNT)=PSAIEN_"^"_PSAIEN1
+"RTN","PSAVER4",70,0)
+ Q:'$D(PSALCHK)
+"RTN","PSAVER4",71,0)
+ D MSG
+"RTN","PSAVER4",72,0)
+ S PSACT=0 F  S PSACT=$O(PSALCHK(PSACT)) Q:'PSACT  D
+"RTN","PSAVER4",73,0)
+ .S PSAIEN=$P(PSALCHK(PSACT),"^",1),PSAIEN1=$P(PSALCHK(PSACT),"^",2),PSACNT=PSACT
+"RTN","PSAVER4",74,0)
+ .W !,?3,PSACNT,".",?8,"Order#: ",$P(^PSD(58.811,PSAIEN,0),"^"),?35,"Invoice#: ",$P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^")
+"RTN","PSAVER4",75,0)
+ W ! S DIR(0)="Y",DIR("A")="Do you want to reset the Order Status to PROCESSED",DIR("B")="NO"  D ^DIR K DIR Q:'Y!($G(DUOUT))
+"RTN","PSAVER4",76,0)
+ I PSACNT=1 S PSAIEN=$P(PSALCHK(1),"^"),PSAIEN1=$P(PSALCHK(1),"^",2)  D LCK1 Q
+"RTN","PSAVER4",77,0)
+ I PSACNT>1 D
+"RTN","PSAVER4",78,0)
+ .S DIR(0)="S^A:All;S:Selected"
+"RTN","PSAVER4",79,0)
+ .S DIR("A")="Which Orders"
+"RTN","PSAVER4",80,0)
+ .D ^DIR K DIR Q:'$D(Y)!($G(DUOUT))
+"RTN","PSAVER4",81,0)
+ I Y="S" D  Q
+"RTN","PSAVER4",82,0)
+ .S DIR(0)="L^1:"_PSACNT D ^DIR K DIR Q:'Y!($G(DUOUT))
+"RTN","PSAVER4",83,0)
+ .N PSACNT,PSANUM,PSACNTR S PSANUM=Y K Y
+"RTN","PSAVER4",84,0)
+ .D LCK2 I $G(Y)=0 K Y Q
+"RTN","PSAVER4",85,0)
+ .F PSACNTR=1:1 S PSACNT=$P(PSANUM,",",PSACNTR) Q:'PSACNT  D
+"RTN","PSAVER4",86,0)
+ ..S PSAIEN=$P(PSALCHK(PSACNT),"^",1),PSAIEN1=$P(PSALCHK(PSACNT),"^",2)  D LCK1
+"RTN","PSAVER4",87,0)
+ I Y="A" D
+"RTN","PSAVER4",88,0)
+ .D LCK2 I $G(Y)=0 K Y Q
+"RTN","PSAVER4",89,0)
+ .N PSACNT,PSACNTR
+"RTN","PSAVER4",90,0)
+ .S PSACNT=0 F  S PSACNT=$O(PSALCHK(PSACNT)) Q:'PSACNT  D
+"RTN","PSAVER4",91,0)
+ ..S PSAIEN=$P(PSALCHK(PSACNT),"^",1),PSAIEN1=$P(PSALCHK(PSACNT),"^",2)  D LCK1
+"RTN","PSAVER4",92,0)
+ Q
+"RTN","PSAVER4",93,0)
+LCK1 ; RESET ORDER STATUS TO PROCESSED
+"RTN","PSAVER4",94,0)
+ W !,?5,"Order Status has been reset to PROCESSED for",!,?8,"Order#: ",$P(^PSD(58.811,PSAIEN,0),"^")," Invoice#: ",$P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^")
+"RTN","PSAVER4",95,0)
+ N DIC,DA,DR,DIE
+"RTN","PSAVER4",96,0)
+ F  L +^PSD(58.811,PSAIEN,1,PSAIEN1,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSAVER4",97,0)
+ S DA=PSAIEN1,DA(1)=PSAIEN,DIE="^PSD(58.811,"_DA(1)_",1,",DR="2///P;12////@" D ^DIE
+"RTN","PSAVER4",98,0)
+ L -^PSD(58.811,PSAIEN,1,PSAIEN1,0)
+"RTN","PSAVER4",99,0)
+ Q
+"RTN","PSAVER4",100,0)
+LCK2 ; DOUBLE CHECK WITH USER BEFORE RESETTING INVOICE STATUS
+"RTN","PSAVER4",101,0)
+ S DIR(0)="Y",DIR("A")="Are you sure you want to change the Order Status to PROCESSED",DIR("B")="NO"
+"RTN","PSAVER4",102,0)
+ D ^DIR K DIR
+"RTN","PSAVER4",103,0)
+ Q
+"RTN","PSAVER4",104,0)
+CLCK ; RESET ORDER STATUS TO COMPLETED <*71 RJS 
+"RTN","PSAVER4",105,0)
+ W !,?5,"Order Status has been reset to COMPLETED for",!,?8,"Order#: ",$P(^PSD(58.811,PSAIEN,0),"^")," Invoice#: ",$P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^"),!
+"RTN","PSAVER4",106,0)
+ N DIC,DA,DR,DIE
+"RTN","PSAVER4",107,0)
+ F  L +^PSD(58.811,PSAIEN,1,PSAIEN1,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSAVER4",108,0)
+ S DA=PSAIEN1,DA(1)=PSAIEN,DIE="^PSD(58.811,"_DA(1)_",1,",DR="2///C" D ^DIE
+"RTN","PSAVER4",109,0)
+ L -^PSD(58.811,PSAIEN,1,PSAIEN1,0)
+"RTN","PSAVER4",110,0)
+ Q
+"RTN","PSAVER4",111,0)
+UNLCK ; RESET ORDER STATUS TO PROCESSED
+"RTN","PSAVER4",112,0)
+ D MSG
+"RTN","PSAVER4",113,0)
+ N PSAIEN,PSAIEN1,DUOUT S PSAIEN=0
+"RTN","PSAVER4",114,0)
+ F  S PSAIEN=$O(^XTMP("PSALCK",DUZ,PSAIEN)) Q:'PSAIEN  D
+"RTN","PSAVER4",115,0)
+ .S PSAIEN1=0 F  S PSAIEN1=$O(^XTMP("PSALCK",DUZ,PSAIEN,PSAIEN1)) Q:'PSAIEN1  D
+"RTN","PSAVER4",116,0)
+ ..W !,?8,"Order#: ",$P(^PSD(58.811,PSAIEN,0),"^"),?35,"Invoice#: ",$P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^"),?60,"LOCKED VERIFYING"
+"RTN","PSAVER4",117,0)
+ ..N DIR
+"RTN","PSAVER4",118,0)
+ ..S DIR(0)="S^P:RESET TO PROCESSED;C:MARK COMPLETED;S:SKIP"
+"RTN","PSAVER4",119,0)
+ ..S DIR("A")="PROCESS OR COMPLETE"
+"RTN","PSAVER4",120,0)
+ ..D ^DIR K DIR Q:'$D(Y)!($G(DUOUT))
+"RTN","PSAVER4",121,0)
+ ..I Y="P" D LCK1 W ! Q
+"RTN","PSAVER4",122,0)
+ ..I Y="C" D CLCK W ! Q
+"RTN","PSAVER4",123,0)
+ ..I Y="S" W !!,?5,"Order#: ",$P(^PSD(58.811,PSAIEN,0),"^")," Invoice#: ",$P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^")," HES BEEN SKIPPED",!
+"RTN","PSAVER4",124,0)
+ K ^XTMP("PSALCK",DUZ)
+"RTN","PSAVER4",125,0)
+ Q  ;;*71 RJS >
+"RTN","PSAVER4",126,0)
+MSG ; SHOW LOCK WARNING
+"RTN","PSAVER4",127,0)
+ W !!,?3,"The following Invoices currently have a status of LOCKED VERIFYING."
+"RTN","PSAVER4",128,0)
+ W !,?3,"These Invoices are either currently being Verified by you in another"
+"RTN","PSAVER4",129,0)
+ W !,?3,"session, or it may not have completed the Verify process correctly.",!
+"RTN","PSAVER4",130,0)
+ Q 
+"RTN","PSAVERA1")
+0^4^B61000671^B60705765
+"RTN","PSAVERA1",1,0)
+PSAVERA1 ;BHM/DB - Edit previously verified invoices;16NOV99
+"RTN","PSAVERA1",2,0)
+ ;;3.0; DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**21,61,63,70,71**; 10/24/97;Build 10
+"RTN","PSAVERA1",3,0)
+ ;References to ^DIC(51.5 are covered by IA #1931
+"RTN","PSAVERA1",4,0)
+ ;References to ^PSDRUG( are covered by IA #2095
+"RTN","PSAVERA1",5,0)
+ ;
+"RTN","PSAVERA1",6,0)
+ S $P(PSASLN,"=",79)="" K PSALINE
+"RTN","PSAVERA1",7,0)
+DISPLN S PSALINE=$S('$D(PSALINE):$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,0)),1:$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE))) G Q:PSALINE'>0 S CNT=$G(CNT)+1
+"RTN","PSAVERA1",8,0)
+ S PSADATA=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0))
+"RTN","PSAVERA1",9,0)
+ S PSATEMP=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,2))
+"RTN","PSAVERA1",10,0)
+ S PSAVSN=$P(PSADATA,"^",12),PSAOUT=0,PSADRUGN=""
+"RTN","PSAVERA1",11,0)
+DRUG S PSADJ=+$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,"B","D",0))
+"RTN","PSAVERA1",12,0)
+ I $G(PSADJ) D
+"RTN","PSAVERA1",13,0)
+ .S PSANODE=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,PSADJ,0))
+"RTN","PSAVERA1",14,0)
+ .S PSADJD=$S($P(PSANODE,"^",6)'="":$P(PSANODE,"^",6),1:$P(PSANODE,"^",2))
+"RTN","PSAVERA1",15,0)
+ .S PSASUP=$S(PSADJD'?1.N:1,1:0)
+"RTN","PSAVERA1",16,0)
+ .S PSADRG=$S(PSADJ&('PSASUP):$G(PSADJD),PSADJ&(PSASUP):0,1:+$P(PSADATA,"^",2))
+"RTN","PSAVERA1",17,0)
+ .I $G(PSADJD),$L(PSADJD)=$L(+PSADJD),$P($G(^PSDRUG(+PSADJD,0)),"^")'="" S (PSADRG,PSA50IEN)=+PSADJD Q
+"RTN","PSAVERA1",18,0)
+ .I $G(PSADJD),$L(PSADJD)=$L(+PSADJD),$P($G(^PSDRUG(+PSADJD,0)),"^")="" S (PSADJ,PSADRG)=0 Q
+"RTN","PSAVERA1",19,0)
+ .S PSADJSUP=1,(PSADRG,PSA50IEN)=PSADJD
+"RTN","PSAVERA1",20,0)
+ I '$G(PSADJ) D
+"RTN","PSAVERA1",21,0)
+ .S (PSA50IEN,PSADRG)=$S(+$P(PSADATA,"^",2)&($P($G(^PSDRUG(+$P(PSADATA,"^",2),0)),"^")'=""):+$P(PSADATA,"^",2),1:0)
+"RTN","PSAVERA1",22,0)
+ I $G(PSASUP) S PSADRUGN=PSADRG_" - SUP/ITM"  ;;<- PSA*3*70 RJS
+"RTN","PSAVERA1",23,0)
+ S:'$G(PSADRUGN) PSADRUGN=$S($P($G(^PSDRUG(PSADRG,0)),"^")'="":$P($G(^PSDRUG(PSADRG,0)),"^"),1:"Unknown Drug Name/Supply Item")
+"RTN","PSAVERA1",24,0)
+QTY ;Quantity
+"RTN","PSAVERA1",25,0)
+ ;No Adj. Qty
+"RTN","PSAVERA1",26,0)
+ S PSADJQ="",PSADJ=+$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,"B","Q",0))
+"RTN","PSAVERA1",27,0)
+ I $G(PSADJ) S PSANODE=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,PSADJ,0)),PSADJQ=$S($P(PSANODE,"^",6)'="":+$P(PSANODE,"^",6),1:$P(PSANODE,"^",2))
+"RTN","PSAVERA1",28,0)
+ ;Adj. Qty
+"RTN","PSAVERA1",29,0)
+ I $G(PSADJQ) S PSAQTY=PSADJQ
+"RTN","PSAVERA1",30,0)
+ I '$G(PSADJQ) S PSAQTY=$P(PSADATA,"^",3)
+"RTN","PSAVERA1",31,0)
+UPC S:$P(PSADATA,"^",13) PSAUPC=$P(PSADATA,"^",13)
+"RTN","PSAVERA1",32,0)
+OU ;W !,"Order Unit  : "
+"RTN","PSAVERA1",33,0)
+ S PSAOU=$S(+$P(PSADATA,"^",4)&($P($G(^DIC(51.5,+$P(PSADATA,"^",4),0)),"^")'=""):+$P(PSADATA,"^",4),1:"")
+"RTN","PSAVERA1",34,0)
+ S PSATEMP=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,2))
+"RTN","PSAVERA1",35,0)
+ I +$P(PSATEMP,"^",3),PSADRG,+$P($G(^PSDRUG(PSADRG,1,+$P(PSATEMP,"^",3),0)),"^",5) S PSAOU=+$P(^PSDRUG(PSADRG,1,+$P(PSATEMP,"^",3),0),"^",5)
+"RTN","PSAVERA1",36,0)
+ S PSADJO="",PSADJ=+$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,"B","O",0))
+"RTN","PSAVERA1",37,0)
+ I $G(PSADJ) S PSANODE=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,PSADJ,0)),PSADJO=$S($P(PSANODE,"^",6)'="":$P(PSANODE,"^",6),1:$P(PSANODE,"^",2))
+"RTN","PSAVERA1",38,0)
+ ;Adj. Order Unit
+"RTN","PSAVERA1",39,0)
+ I PSADJO'="" S PSAOU=+PSADJO
+"RTN","PSAVERA1",40,0)
+ I PSADJO="" ;W $S(+PSAOU:$P($G(^DIC(51.5,+PSAOU,0)),"^"),1:"Blank")
+"RTN","PSAVERA1",41,0)
+ ;
+"RTN","PSAVERA1",42,0)
+NDC S PSANDC=$P(PSADATA,"^",11)
+"RTN","PSAVERA1",43,0)
+ ;I $E(PSANDC)'="S" W ?38,"NDC: "_$S(PSANDC'="":$E(PSANDC,1,6)_"-"_$E(PSANDC,7,10)_"-"_$E(PSANDC,11,12),1:"Blank")
+"RTN","PSAVERA1",44,0)
+ ;
+"RTN","PSAVERA1",45,0)
+PRICE ;W !,"Unit Price  : $"
+"RTN","PSAVERA1",46,0)
+ S PSADJP=0,PSADJ=+$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,"B","P",0))
+"RTN","PSAVERA1",47,0)
+ I $G(PSADJ) S PSANODE=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,PSADJ,0)),PSADJP=$S(+$P(PSANODE,"^",6):+$P(PSANODE,"^",6),1:+$P(PSANODE,"^",2))
+"RTN","PSAVERA1",48,0)
+ ;Adj. Unit Price
+"RTN","PSAVERA1",49,0)
+ I $G(PSADJP) D
+"RTN","PSAVERA1",50,0)
+ .I $L($P(PSADJP,".",2))<2 S PSADJP=$P(PSADJP,".")_"."_$P(PSADJP,".",2)_$E("00",1,(2-$L($P(PSADJP,".",2))))
+"RTN","PSAVERA1",51,0)
+ .;W $FN(PSADJP,",")_" ($"_$S(+$P(PSADATA,"^",5):$FN($P(PSADATA,"^",5),","),$P(PSADATA,"^",5)=0:"0.00",1:"")_")"
+"RTN","PSAVERA1",52,0)
+ .S PSAPRICE=PSADJP
+"RTN","PSAVERA1",53,0)
+ I '$G(PSADJP) D
+"RTN","PSAVERA1",54,0)
+ .S PSAPRICE=+$P(PSADATA,"^",5)
+"RTN","PSAVERA1",55,0)
+ .;I $G(PSAPRICE)!(PSAPRICE=0) W $S($G(PSAPRICE):PSAPRICE,1:"0.00") Q
+"RTN","PSAVERA1",56,0)
+ .;W "Blank"
+"RTN","PSAVERA1",57,0)
+ ;
+"RTN","PSAVERA1",58,0)
+VSN ;W ?38,"VSN: "_$S(PSAVSN'="":PSAVSN,1:"Blank"),!
+"RTN","PSAVERA1",59,0)
+VDU S PSADUOU=+$P(PSATEMP,"^"),PSAREORD=+$P(PSATEMP,"^",2),PSASUB=+$P(PSATEMP,"^",3),PSASTOCK=+$P(PSATEMP,"^",4)
+"RTN","PSAVERA1",60,0)
+ S INVARRAY(PSAORD,PSAINV,PSALINE)=$G(PSADRG)_"~"_$G(PSADRUGN)_"^"_$G(PSAQTY)_"^"_$G(PSALOC)_"^"_$G(PSAOU)_"^"_$G(PSANDC)_"^"_$G(PSAPRICE)_"^"_$G(PSAVSN)_"^"_$G(PSAUPC),PSASUP=0
+"RTN","PSAVERA1",61,0)
+ ;
+"RTN","PSAVERA1",62,0)
+ I '+$P($G(^PSD(58.8,+PSALOC,0)),"^",14) G DISPLN
+"RTN","PSAVERA1",63,0)
+ ;
+"RTN","PSAVERA1",64,0)
+STOCK S PSASTOCK=$S(+PSASTOCK:+PSASTOCK,+$P($G(^PSD(58.8,+PSALOC,1,+PSADRG,0)),"^",3):+$P($G(^PSD(58.8,+PSALOC,1,+PSADRG,0)),"^",3),1:"Blank")
+"RTN","PSAVERA1",65,0)
+REORDER S PSAREORD=$S(+PSAREORD:+PSAREORD,+$P($G(^PSD(58.8,+PSALOC,1,+PSADRG,0)),"^",5):+$P($G(^PSD(58.8,+PSALOC,1,+PSADRG,0)),"^",5),1:"Blank")
+"RTN","PSAVERA1",66,0)
+ S INVARRAY(PSAORD,PSAINV,PSALINE)=$G(INVARRAY(PSAORD,PSAINV,PSALINE))_"^"_$G(PSASTOCK)_"^"_$G(PSAREORD)
+"RTN","PSAVERA1",67,0)
+ G DISPLN
+"RTN","PSAVERA1",68,0)
+ASK R !!,"Enter an '^' to abort, <RET> to continue, or a corresponding line item number: ",AN:DTIME I AN="" G DISPLN
+"RTN","PSAVERA1",69,0)
+ I AN["^" G Q
+"RTN","PSAVERA1",70,0)
+ I AN<0!(AN>CNT) W !,"Enter a number between 1 and ",CNT G ASK
+"RTN","PSAVERA1",71,0)
+ S (PSALINE,PSALINEN)=AN
+"RTN","PSAVERA1",72,0)
+PROCSS I '$D(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0)) W !,"Invalid line number." G ASK
+"RTN","PSAVERA1",73,0)
+ S PSADATA=^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0),PSASUP=0
+"RTN","PSAVERA1",74,0)
+ S PSANDC=$P(PSADATA,"^",11),PSAVSN=$P(PSADATA,"^",12),PSALOC=$S($P(PSADATA,"^",10):+$P(PSAIN,"^",12),1:+$P(PSAIN,"^",5))
+"RTN","PSAVERA1",75,0)
+VIEW S PSALINEN=" " D VERDISP^PSAUTL4 W !,PSASLN,!
+"RTN","PSAVERA1",76,0)
+ W "1. Drug",!,"2. Order Unit",! S PSACHO=2
+"RTN","PSAVERA1",77,0)
+ S DIR(0)="LO^1:"_PSACHO,DIR("A")="Edit fields",DIR("?")="Enter the number(s) of the data to be edited" S DIR("??")="^D DDQOR^PSAVER3"
+"RTN","PSAVERA1",78,0)
+ D ^DIR K DIR I $G(DTOUT)!($G(DUOUT)) S PSAOUT=1 Q
+"RTN","PSAVERA1",79,0)
+ Q:Y=""  S PSAFLDS=Y,PSASET=0 ;D VERDISP^PSAUTL4 W PSASLN
+"RTN","PSAVERA1",80,0)
+FIELDS F PSAPCF=1:1 S PSAFLD=$P(PSAFLDS,",",PSAPCF) Q:'PSAFLD!(PSAOUT)  D
+"RTN","PSAVERA1",81,0)
+ .I PSAFLD=1 D ASKDRUG^PSAVERA2 Q
+"RTN","PSAVERA1",82,0)
+ .I PSAFLD=2 D OU^PSAVER2 Q
+"RTN","PSAVERA1",83,0)
+Q Q
+"RTN","PSAVERA1",84,0)
+ ;
+"RTN","PSAVERA1",85,0)
+UPDATE ; *63 RJS CODE REMOVED FROM PSAVERA AND CALLED BY PSAVERA
+"RTN","PSAVERA1",86,0)
+ ;File data in 58.8
+"RTN","PSAVERA1",87,0)
+ ;PSALOC= Either PSALOC or PSALOCB
+"RTN","PSAVERA1",88,0)
+ S PSADRG=PSABFR,PSABAL=0 I $D(^PSDRUG(PSADRG,0)) D
+"RTN","PSAVERA1",89,0)
+ .F  L +^PSD(58.8,PSALOC,1,PSADRG,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSAVERA1",90,0)
+ .S PSADUREC=PSAQTY*$G(PSAODUOU),PSABAL=$P($G(^PSD(58.8,PSALOC,1,PSADRG,0)),"^",4),$P(^PSD(58.8,PSALOC,1,PSADRG,0),"^",4)=PSABAL-$G(PSABFR("Q"))
+"RTN","PSAVERA1",91,0)
+ .L -^PSD(58.8,PSALOC,1,PSADRG,0)
+"RTN","PSAVERA1",92,0)
+ S PSADRG=PSAAFTER,PSAABAL=PSABAL,PSADUREC=PSAQTY*$G(PSADUOU)
+"RTN","PSAVERA1",93,0)
+ D NOW^%DTC S PSADT=+$E(%,1,14)
+"RTN","PSAVERA1",94,0)
+ I '$D(^PSD(58.8,PSALOC,1,PSADRG,0)) D
+"RTN","PSAVERA1",95,0)
+ .S:'$D(^PSD(58.8,PSALOC,1,0)) DIC("P")=$P(^DD(58.8,10,0),"^",2)
+"RTN","PSAVERA1",96,0)
+ .S DA(1)=PSALOC,DIC="^PSD(58.8,"_DA(1)_",1,",(DA,DINUM,X)=PSADRG,DIC(0)="L",DLAYGO=58.8 ;*53
+"RTN","PSAVERA1",97,0)
+ .F  L +^PSD(58.8,PSALOC,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSAVERA1",98,0)
+ .D FILE^DICN L -^PSD(58.8,PSALOC,0) K DIC,DA,DLAYGO
+"RTN","PSAVERA1",99,0)
+ F  L +^PSD(58.8,PSALOC,1,PSADRG,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSAVERA1",100,0)
+ S PSABAL=$P($G(^PSD(58.8,PSALOC,1,PSADRG,0)),"^",4)
+"RTN","PSAVERA1",101,0)
+ I $P($G(^PSD(58.8,PSALOC,1,PSADRG,0)),"^",1)'=PSADRG S $P(^PSD(58.8,PSALOC,1,PSADRG,0),"^",1)=PSADRG
+"RTN","PSAVERA1",102,0)
+ S $P(^PSD(58.8,PSALOC,1,PSADRG,0),"^",4)=PSADUREC+PSABAL
+"RTN","PSAVERA1",103,0)
+ I +$P($G(^PSD(58.8,PSALOC,0)),"^",14) D
+"RTN","PSAVERA1",104,0)
+ .I PSASTOCK'=$P(^PSD(58.8,PSALOC,1,PSADRG,0),"^",3) S $P(^PSD(58.8,PSALOC,1,PSADRG,0),"^",3)=PSASTOCK
+"RTN","PSAVERA1",105,0)
+ .I PSAREORD'=$P(^PSD(58.8,PSALOC,1,PSADRG,0),"^",5) S $P(^PSD(58.8,PSALOC,1,PSADRG,0),"^",5)=PSAREORD
+"RTN","PSAVERA1",106,0)
+ S:'$D(^PSD(58.8,PSALOC,1,PSADRG,5,0)) DIC("P")=$P(^DD(58.8001,20,0),"^",2)
+"RTN","PSAVERA1",107,0)
+ I '$D(^PSD(58.8,PSALOC,1,PSADRG,5,$E(DT,1,5)*100,0)) D
+"RTN","PSAVERA1",108,0)
+ .S DIC="^PSD(58.8,"_PSALOC_",1,"_PSADRG_",5,",DIC(0)="L",DIC("DR")="1////^S X=$G(PSABAL)",(X,DINUM)=$E(DT,1,5)*100,DA(2)=PSALOC,DA(1)=PSADRG,DLAYGO=58.8 D ^DIC K DIC
+"RTN","PSAVERA1",109,0)
+ .S X="T-1M" D ^%DT S DIC="^PSD(58.8,"_PSALOC_",1,"_PSADRG_",5,",DIC(0)="L",(X,DINUM)=$E(Y,1,5)*100 D ^DIC K DIC,DLAYGO S DA=+Y
+"RTN","PSAVERA1",110,0)
+ .S DA(2)=PSALOC,DA(1)=PSADRG,DIE="^PSD(58.8,"_DA(2)_",1,"_DA(1)_",5,",DR="3////^S X=$G(PSABAL)" D ^DIE K DIE
+"RTN","PSAVERA1",111,0)
+ S DA(2)=PSALOC,DA(1)=PSADRG,DIE="^PSD(58.8,"_DA(2)_",1,"_DA(1)_",5,",DA=$E(DT,1,5)*100,DR="5////^S X="_($P($G(^(0)),"^",3)+PSADUREC) D ^DIE K DIE
+"RTN","PSAVERA1",112,0)
+ L -^PSD(58.8,PSALOC,1,PSADRG,0)
+"RTN","PSAVERA1",113,0)
+ W !,"updating pharmacy location file."
+"RTN","PSAVERA1",114,0)
+FILE581 ;Update transaction file ;;*63
+"RTN","PSAVERA1",115,0)
+ S PSAVDUZ=DUZ,PSAREA="EDIT VERIFIED INVOICE"
+"RTN","PSAVERA1",116,0)
+ I '$G(PSABFR(581)) D NEW581 Q
+"RTN","PSAVERA1",117,0)
+ I PSADRG'=PSABFR S PSANQTY=0,PSAAQTY=$G(PSABFR("Q"))*-1
+"RTN","PSAVERA1",118,0)
+ I PSADRG=PSABFR S PSANQTY=PSADUREC D
+"RTN","PSAVERA1",119,0)
+ .S PSAAQTY=PSADUREC-$G(PSABFR("Q"))
+"RTN","PSAVERA1",120,0)
+FIND S PSAT=$P(^PSD(58.81,0),"^",3)+1 I $D(^PSD(58.81,PSAT)) S $P(^PSD(58.81,0),"^",3)=$P(^PSD(58.81,0),"^",3)+1 G FIND
+"RTN","PSAVERA1",121,0)
+ S DIC="^PSD(58.81,",DIC(0)="L",DLAYGO=58.81,(DINUM,X)=PSAT D ^DIC K DIC,DINUM,DLAYGO L -^PSD(58.81,0)
+"RTN","PSAVERA1",122,0)
+ S DIE="^PSD(58.81,",DA=PSAT
+"RTN","PSAVERA1",123,0)
+ I PSAAFTER'=PSABFR S PSADRG=PSABFR
+"RTN","PSAVERA1",124,0)
+ S DR="1////14;2////^S X=PSALOC;3////^S X=PSADT;4////^S X=PSADRG;48////^S X=PSADT;49////^S X=PSAVDUZ;50////^S X=PSANQTY;51////^S X=PSAAQTY;53////^S X=PSAREA;54////^S X=PSAABAL;71////^S X=PSAINV;106////^S X=PSAORD"
+"RTN","PSAVERA1",125,0)
+ F  L +^PSD(58.81,DA,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSAVERA1",126,0)
+ D ^DIE L -^PSD(58.81,DA,0) K DIE
+"RTN","PSAVERA1",127,0)
+ I PSAAFTER'=PSABFR S PSADRG=PSAAFTER D NEW581
+"RTN","PSAVERA1",128,0)
+ Q
+"RTN","PSAVERA1",129,0)
+ ;
+"RTN","PSAVERA1",130,0)
+NEW581 S PSAT=$P(^PSD(58.81,0),"^",3)+1 I $D(^PSD(58.81,PSAT)) S $P(^PSD(58.81,0),"^",3)=$P(^PSD(58.81,0),"^",3)+1 G NEW581
+"RTN","PSAVERA1",131,0)
+ S DIC="^PSD(58.81,",DIC(0)="L",DLAYGO=58.81,(DINUM,X)=PSAT D ^DIC K DIC,DINUM,DLAYGO L -^PSD(58.81,0)
+"RTN","PSAVERA1",132,0)
+ S PSADUREC=PSAQTY*$G(PSADUOU)
+"RTN","PSAVERA1",133,0)
+ S DIE="^PSD(58.81,",DA=PSAT,DR="1////1;2////^S X=PSALOC;3////^S X=PSADT;4////^S X=PSADRG;5////^S X=PSADUREC;6////^S X=PSAVDUZ;9////^S X=PSABAL;71////^S X=PSAINV;106////^S X=PSAORD"
+"RTN","PSAVERA1",134,0)
+ I $G(PSACS)>0 S DR=DR_";100////^S X=PSACS"
+"RTN","PSAVERA1",135,0)
+ F  L +^PSD(58.81,DA,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSAVERA1",136,0)
+ D ^DIE L -^PSD(58.81,DA,0) K DIE W !,"updating transaction file." Q
+"RTN","PSAVERA1",137,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",7329,6)
+^57
+**END**
+**END**

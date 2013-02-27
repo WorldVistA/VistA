@@ -1,0 +1,146 @@
+$TXT Created by HERRING,VENESSA at VMPDEV20.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 02/24/11 at 16:39
+=============================================================================
+Run Date: NOV 08, 2011                     Designation: PSO*7*381
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #324                      Status: Released
+                  Compliance Date: DEC 09, 2011
+=============================================================================
+
+Associated patches: (v)PSO*7*331   <<= must be installed BEFORE `PSO*7*381'
+
+Subject: ACTIVE NON-VA MEDS W/ START DATE NOT DISPLAY ON MEDS TAB
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue:
+  
+ Active Non-VA meds with a Start Date do not display on the Meds Tab when
+ no Stop Date is defined in the ORCH CONTEXT MEDS parameter.
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ HD0000000459847 - ORCH CONTEXT MEDS causes non-VA problem
+     
+ Duplicates:
+ HD0000000460140 - Non-VA meds not displaying on the Meds Tab Because it
+                   has Start Date
+ HD0000000464209 - Active Non VA meds not displaying
+ HD0000000463971 - Non-Va meds are not showing up in the Meds Tab, only on
+                   the cover sheet.
+ HD0000000463981 - Non-VA Meds not show on Meds tab
+  
+                  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Oklahoma City VA Medical Center
+ Jerry L. Pettis Memorial VA Medical Center - Loma Linda
+ VA Northern Indiana HCS
+  
+ Remedy Overview:
+ ================
+  
+ Patient Safety Issue:
+ ---------------------
+ PSPO #1962
+  
+ HD0000000459847 - ORCH CONTEXT MEDS causes non-VA problem
+   
+ Problem: 
+ ========
+ When viewing Non-VA meds on the Meds tab, if the Non-VA med has a Start
+ Date and there is no ORCH CONTEXT MEDS parameter Stop Date, the Non-VA
+ med does not display. 
+  
+ Resolution:
+ ===========
+ Modify processing so if both the ORCH Context Meds Start and Stop Dates
+ are blank set the date range to T-120 through T. 
+  
+ If the ORCH Context Meds Start Date is set but the Stop Date is blank,
+ default the Stop Date to Today.
+  
+ If the ORCH Context Meds Start Date is blank but the Stop Date is set, 
+ do not set a Start Date.
+  
+  
+ Technical Resolution:
+ =====================
+ Modify routines PSOORRLO, PSOORRLN, PSOORRL3 to set variables BDT and EDT
+ if they are null.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ Patients should not be in the Meds tab when patch is being installed.  
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*381)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*381.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOORRL3
+    Before: B26670310   After: B27858556  **225,331,381**
+Routine Name: PSOORRLN
+    Before: B46517542   After: B47940442  **225,331,381**
+Routine Name: PSOORRLO
+    Before: B42050035   After: B43456969  **225,331,381**
+ 
+Routine list of preceding patches: 331
+
+=============================================================================
+User Information:
+Entered By  : HERRING,VENESSA               Date Entered  : FEB 17, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: OCT 17, 2011
+Released By : FOX,KIRK                      Date Released : NOV 08, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

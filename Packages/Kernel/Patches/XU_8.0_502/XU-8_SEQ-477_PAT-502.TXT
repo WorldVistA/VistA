@@ -1,0 +1,118 @@
+$TXT Created by METCALF,ROGER at RAA.FO-OAKLAND.MED.VA.GOV  (KIDS) on Monday, 07/02/12 at 09:38
+=============================================================================
+Run Date: AUG 15, 2012                     Designation: XU*8*502
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #477                      Status: Released
+                  Compliance Date: SEP 15, 2012
+=============================================================================
+
+
+Subject: MFS Mappings parameters
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch provides the MASTER FILE PARAMETERS (#4.001) file for
+ the MAPPINGS (#757.33) file.  The Mappings file is used by Lexicon
+ utilities.  The Master File Parameters are used by the Master File
+ Server (MFS) mechanism to map the Mappings file HL7 segment fields
+ to their FileMan Mappings field equivalents.  The patch also updates
+ the MD5 Signature (#4.005) file with the necessary values to
+ calculate a proper checksum for Mappings.
+  
+ Blood Bank Team Coordination
+ ============================
+  
+ Clearance - 01/04/12
+ 
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*502 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*502 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ List of Test Sites
+ ==================
+  
+ Central Texas HCS
+ Hines VAMC
+ VA East Colorado HCS
+  
+ Installation
+ ============
+  
+  This patch can be installed with VISTA users online, however it 
+  is recommended that it be queued for install during non-peak
+  hours to avoid <EDITED> errors.  TaskMan does *not* need to be 
+  stopped.
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the Transport global.
+       On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global
+          Compare Transport Global to Current System
+          Backup a Transport Global
+  
+   3.  Users can remain on the system. This patch can be loaded any
+       non-peak time.
+       This patch can be queued and installed at any time.
+       TaskMan can remain running.
+  
+   4.  Installation takes less than 5 minutes.
+       On the KIDS menu, under the 'Installation' menu, use the following
+       option:
+  
+  
+         Install Package(s)  'XU*8.0*502'
+                              ==========
+ Accept the defaults for the following install questions:
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUMF502
+    Before:       n/a   After:  B4789792  **502**
+Routine Name: XUMF502P
+    Before:       n/a   After: B16782812  **502**
+Routine Name: XUMF5I
+    Before: B74082492   After: B96778215  **383,407,502**
+Routine Name: XUMFQR
+    Before: B34910260   After: B53643395  **407,502**
+ 
+Routine list of preceding patches: 407
+
+=============================================================================
+User Information:
+Entered By  : METCALF,ROGER A               Date Entered  : APR 30, 2008
+Completed By: BEST,LISA                     Date Completed: JUL 20, 2012
+Released By : TILLIS,LEWIS                  Date Released : AUG 15, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

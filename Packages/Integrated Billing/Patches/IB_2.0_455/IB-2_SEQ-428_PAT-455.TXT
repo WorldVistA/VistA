@@ -1,0 +1,166 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 10/07/11 at 18:45
+=============================================================================
+Run Date: JAN 12, 2012                     Designation: IB*2*455
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #428                      Status: Released
+                  Compliance Date: JAN 27, 2012
+=============================================================================
+
+Associated patches: (v)IB*2*427    <<= must be installed BEFORE `IB*2*455'
+                    (v)IB*2*435    <<= must be installed BEFORE `IB*2*455'
+
+Subject: CANNOT BILL FOR LOW DRUG COSTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains two issues. The first issue is about the unit price
+ of the drug cost seeming to be zero resulting in an error message of 'Not
+ ECME Billable: Cannot find price for Item'. This error message prevents IB
+ from generating third party bills for outpatient prescriptions. The second
+ issue concerns payment amounts on e-Pharmacy claims where the bill 
+ amount is different than what is shown via the ECME Billing Events Report
+ [IB ECME BILLING EVENTS] option.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000483161 4 Cannot Bill for Low Cost Drugs
+    duplicate: HD0000000476008 ePharmacy Issue
+               HD0000000487371 Unable to Pull Pharmacy Across to Billing
+               HD0000000487525 Cannot Find Price for Item
+               HD0000000483218 Cannot submit claim to ECME
+               HD0000000479578 TPJI is showing zero claims/balance due
+               HD0000000475015 ECME returned status: Cannot find price for item
+               HD0000000500116 Cannot find price for item
+               HD0000000480310 Not ECME Billable. Cannot find price for Item
+ 2. HD0000000483975 Different Payment Amounts on ePharmacy Claims
+    duplicate  HD0000000485757 EOB received shows different amount/payment
+               then amount on TPJI ePharmacy claim.
+               HD0000000486024 $0 on claim
+               HD0000000486057 Auto Biller Issue
+               HD0000000486320 Pharmacy Bills created with 0$ amounts
+               HD0000000486492 Auto Biller Issue
+               HD0000000486581 FOR E-PHARMACY WE WERE PAID MORE THAN BILLED
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Southern Oregon Rehabilitation Center & Clinics - White City
+ VA Southern Nevada HCS  - Las Vegas
+ Fargo VA Medical Center
+ Chillicothe VA Medical Center
+ VA Western NY HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000483161 4 Cannot Bill for Low Costs Drug
+  
+    Problem:
+    --------
+    Within the VistA Pharmacy Data Management (PSS) package, the Price Per
+    Dispense Unit field in the Drug file (#50) and the SYNONYM subfile
+    (#50.1) has rounded the dispense unit cost to 0.0000 if its actual
+    value from the calculated quotient of the Price Per Order Unit divided
+    by the Dispense Units Per Order Unit is less than 0.00005. When this
+    unit price of the drug is zero, ePharmacy users encounter an error
+    message and cannot generate a 3rd party bill for the prescription
+    in the IB package.
+    
+    Resolution:
+    -----------
+    Modified routines IBNCPDP1 and IBCRCC to verify the unit price of the
+    drug when the value received from the PSS package is zero. When the
+    value is zero, the actual unit price of the drug is recalculated and 
+    then the dispensing fee is added to successfully generate a 3rd party
+    bill for the prescription.
+  
+ 2. HD0000000483975 Different Payment Amounts on ePharmacy Claims
+  
+    Problem:
+    --------
+    When creating bills for e-Pharmacy claims, if the software is unable to
+    determine the CURRENT UNIT PRICE OF DRUG (#1.2) for the corresponding
+    REFILL (#52.1) sub-file entry it will default to the UNIT PRICE OF 
+    DRUG (#17) for the drug when calculating the bill amount which may 
+    lead to an incorrect value. 
+  
+    Resolution:
+    -----------
+    When trying to locate the CURRENT UNIT PRICE OF DRUG (#1.2) from the 
+    correct REFILL (#52.1) sub-file entry, the software will now use the 
+    FILL NUMBER field (#.1) from the IB BILL/CLAIMS PRESCRIPTION REFILL 
+    file (#362.4) and pass it to the function call so the billed value is
+    calculated using the correct amount.
+    
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*455)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*455.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCRCC
+    Before: B28233303   After: B32466815  **52,80,106,138,245,223,309,
+                                           347,370,383,427,455**
+Routine Name: IBNCPDP1
+    Before:B138462172   After:B163143081  **223,276,339,363,383,405,384,
+                                           411,434,437,435,455**
+ 
+Routine list of preceding patches: 427, 435
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : MAY 20, 2011
+Completed By: DAWSON,TIM                    Date Completed: JAN 11, 2012
+Released By : CAULFIELD,MARY                Date Released : JAN 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

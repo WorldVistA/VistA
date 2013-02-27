@@ -1,0 +1,751 @@
+$TXT Created by WINTERTON,STEVEN at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 09/07/11 at 06:44
+=============================================================================
+Run Date: SEP 14, 2011                     Designation: DVBA*2.7*175
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #156                    Status: Released
+                  Compliance Date: SEP 19, 2011
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*171<<= must be installed BEFORE `DVBA*2.7*175'
+                    (v)DVBA*2.7*173<<= must be installed BEFORE `DVBA*2.7*175'
+                    (v)DVBA*2.7*174<<= must be installed BEFORE `DVBA*2.7*175'
+
+Subject: CAPRI CPWM TEMPLATES AND AMIE WORKSHEET DBQS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+                   *********     PLEASE NOTE     *************
+                   This mandatory patch has a 3 day compliance
+                   *******************************************
+  
+ I.  OVERVIEW
+  
+    This patch introduces enhancements to the AUTOMATED MED INFO EXCHANGE
+    (AMIE) V 2.7 package and the Compensation & Pension Record Interchange
+    (CAPRI) application, Compensation & Pension Worksheet Module (CPWM)
+    in support of new and modified Compensation and Pension (C&P) 
+    Disability Benefit Questionnaires (DBQs).
+  
+    The following provides a high level overview of patch DVBA*2.7*175.
+  
+    1. CAPRI - Template Additions
+  
+       Veterans Benefits Administration Veterans Affairs Central Office
+       (VBAVACO) has approved content for the following new CAPRI 
+       Disability Benefits Questionnaires:
+  
+         * DBQ ABDOMINAL, INGUINAL, AND FEMORAL HERNIAS
+         * DBQ CHRONIC FATIGUE SYNDROME
+         * DBQ COLD INJURY RESIDUALS
+         * DBQ CRANIAL NERVES DISEASES
+         * DBQ ENDOCRINE DISEASES (OTHER THAN THYROID, PARATHYROID OR 
+           DIABETES MELLITUS)
+         * DBQ FIBROMYALGIA
+         * DBQ FORMER PRISONER OF WAR (POW) PROTOCOL
+         * DBQ GENERAL MEDICAL - COMPENSATION
+         * DBQ GENERAL MEDICAL - PENSION
+         * DBQ GULF WAR GENERAL MEDICAL EXAMINATION
+         * DBQ HIV-RELATED ILLNESSES
+         * DBQ INFECTIOUS DISEASES (OTHER THAN HIV-RELATED ILLNESS, CHRONIC
+           FATIGUE SYNDROME, AND TUBERCULOSIS
+         * DBQ INITIAL EVALUATION OF RESIDUALS OF TRAUMATIC BRAIN INJURY 
+           (I-TBI) DISABILITY
+         * DBQ LOSS OF SENSE OF SMELL AND OR TASTE
+         * DBQ NARCOLEPSY
+         * DBQ NUTRITIONAL DEFICIENCES
+         * DBQ ORAL AND DENTAL CONDITIONS INCLUDING MOUTH, LIPS AND TONGUE 
+           (OTHER THAN TEMPOROMANDIBULAR JOINT CONDITIONS)
+         * DBQ RESPIRATORY CONDITIONS (OTHER THAN TUBERCULOSIS AND SLEEP
+           ANPEA)
+         * DBQ REVIEW EVALUATION OF RESIDUALS OF TRAUMATIC BRAIN INJURY 
+           (R-TBI)
+         * DBQ SEIZURE DISORDERS (EPILEPSY)
+         * DBQ SINUSITIS, RHINITIS AND OTHER CONDITIONS OF THE NOSE, 
+           THROAT, LARYNX AND PHARYNX
+         * DBQ SYSTEMIC LUPUS ERYTHEMATOSUS (SLE) AND OTHER AUTOIMMUNE 
+           DISEASES (OTHER THAN HIV AND DIABETES MELLITUS TYPE I)
+         * DBQ THYROID AND PARATHYROID CONDITIONS
+         * DBQ URINARY TRACT (INCLUDING BLADDER AND URETHRA) CONDITIONS 
+           (EXCLUDING MALE REPRODUCTIVE ORGANS)
+  
+   2. AMIE - C&P Examination Worksheet Additions
+  
+       VBAVACO has approved content for the following new AMIE C&P
+       questionnaire worksheets:
+  
+         * DBQ ABDOMINAL, INGUINAL, AND FEMORAL HERNIAS
+         * DBQ CHRONIC FATIGUE SYNDROME
+         * DBQ COLD INJURY RESIDUALS
+         * DBQ CRANIAL NERVES
+         * DBQ ENDOCRINE DISEASES OTHER THAN DIABETES
+         * DBQ FIBROMYALGIA
+         * DBQ GENERAL MEDICAL EXAM - COMPENSATION
+         * DBQ GENERAL PENSION EXAM
+         * DBQ GULF WAR GENERAL MEDICAL EXAMINATION
+         * DBQ HIV-RELATED ILLNESS
+         * DBQ INFECTIOUS DISEASES
+         * DBQ INITIAL EVALUATION OF RESIDUALS OF TBI (I-TBI)
+         * DBQ LOSS OF SENSE OF SMELL AND TASTE
+         * DBQ NARCOLEPSY
+         * DBQ NUTRITIONAL DEFICIENCIES
+         * DBQ ORAL AND DENTAL
+         * DBQ PRISONER OF WAR PROTOCOL
+         * DBQ RESPIRATORY CONDITIONS
+         * DBQ REVIEW EVALUATION OF RESIDUALS OF TBI (R-TBI)
+         * DBQ SEIZURE DISORDERS (EPILEPSY)
+         * DBQ SINUSITIS/RHINITIS AND OTHER DISEASE OF THE NOSE, THROAT
+         * DBQ SYSTEMATIC LUPUS ERYTHEMATOUS (SLE) & OTHER IMMUNE DISOR
+         * DBQ THYROID & PARATHYROID
+         * DBQ URINARY TRACT AND BLADDER
+    
+    3. AMIE - C&P Examination Worksheet Modifications
+  
+       VBAVACO has approved modifications for the following AMIE C&P
+       Examination worksheets:
+  
+         * DBQ AMPUTATIONS
+         * DBQ AMYOTROPHIC LATERAL SCLEROSIS (LOU GEHRIG'S DISEASE)
+         * DBQ ANKLE CONDITIONS
+         * DBQ ARTERY AND VEIN CONDITIONS
+         * DBQ BACK (THORACOLUMBAR SPINE) CONDITIONS
+         * DBQ BREAST CONDITIONS AND DISORDERS
+         * DBQ CENTRAL NERVOUS SYSTEM DISEASES
+         * DBQ DIABETES MELLITUS
+         * DBQ DIABETIC SENSORY-MOTOR PERIPHERAL NEUROPATHY
+         * DBQ EAR CONDITIONS
+         * DBQ EATING DISORDERS
+         * DBQ ELBOW AND FOREARM CONDITIONS
+         * DBQ ESOPHAGEAL CONDITIONS
+         * DBQ EYE CONDITIONS
+         * DBQ FLATFOOT (PES PLANUS)
+         * DBQ FOOT MISCELLANEOUS (OTHER THAN FLATFOOT PES PLANUS)
+         * DBQ GALLBLADDER AND PANCREAS CONDITIONS
+         * DBQ GYNECOLOGICAL CONDITIONS
+         * DBQ HAIRY CELL AND OTHER B CELL LEUKEMIAS
+         * DBQ HAND AND FINGER CONDITIONS
+         * DBQ HEADACHES (INCLUDING MIGRAINE HEADACHES)
+         * DBQ HEARING LOSS AND TINNITUS
+         * DBQ HEART CONDITIONS
+         * DBQ HEMIC AND LYMPHATIC CONDITIONS INCLUDING LEUKEMIA
+         * DBQ HEPATITIS, CIRRHOSIS AND OTHER LIVER CONDITIONS
+         * DBQ HIP AND THIGH CONDITIONS
+         * DBQ HYPERTENSION
+         * DBQ INFECTIOUS INTESTINAL DISORDERS
+         * DBQ INITIAL PTSD
+         * DBQ INTESTINAL (OTHER THAN SURGICAL OR INFECTIOUS)
+         * DBQ INTESTINAL SURGERY (RESECTION, COLOSTOMY, ILEOSTOMY)
+         * DBQ ISCHEMIC HEART DISEASE
+         * DBQ KIDNEY CONDITIONS (NEPHROLOGY)
+         * DBQ KNEE AND LOWER LEG CONDITIONS
+         * DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS
+         * DBQ MEDICAL OPINION 1
+         * DBQ MEDICAL OPINION 2
+         * DBQ MEDICAL OPINION 3
+         * DBQ MEDICAL OPINION 4
+         * DBQ MEDICAL OPINION 5
+         * DBQ MENTAL DISORDERS (EXCEPT PTSD AND EATING DISORDERS)
+         * DBQ MULTIPLE SCLEROSIS (MS)
+         * DBQ MUSCLE INJURIES
+         * DBQ NECK (CERVICAL SPINE) CONDITIONS
+         * DBQ NON-DEGENERATIVE ARTHRITIS
+         * DBQ OSTEOMYELITIS
+         * DBQ PARKINSONS
+         * DBQ PERIPHERAL NERVES (EXCLUDING DIABETIC NEUROPATHY)
+         * DBQ PERITONEAL ADHESIONS
+         * DBQ PERSIAN GULF AND AFGHANISTAN INFECTIOUS DISEASES
+         * DBQ PROSTATE CANCER
+         * DBQ RECTUM AND ANUS CONDITIONS
+         * DBQ REVIEW PTSD
+         * DBQ SCARS DISFIGUREMENT
+         * DBQ SHOULDER AND ARM CONDITIONS
+         * DBQ SKIN DISEASES
+         * DBQ SLEEP APNEA
+         * DBQ STOMACH AND DUODENAL CONDITIONS
+         * DBQ TEMPOROMANDIBULAR JOINT (TMJ) CONDITIONS
+         * DBQ TUBERCULOSIS
+         * DBQ WRIST CONDITIONS
+  
+    4. CAPRI - Template Defects
+  
+       Defects have been addressed in the following CAPRI template(s):
+  
+         * DBQ GYNECOLOGICAL CONDITIONS
+         * DBQ INITIAL PTSD
+         * DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS
+         * DBQ PERIPHERAL NERVES CONDITIONS (NOT INCLUDING DIABETIC 
+           SENSORY-MOTOR PERIPHERAL NEUROPATHY)
+         * DBQ WRIST CONDITIONS
+  
+ II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+  
+     The following section lists the Remedy tickets and/or New Service
+     Requests associated with this patch.
+  
+    1. Associated Remedy Ticket(s):
+       ----------------------------------
+  
+       HD0000000517164 - DVBA*2.7*174 VistA Patch Installation test 
+       problem - Name of veteran did  not transfer automatically to
+       Gynecological DBQ
+  
+    2. Associated New Service Request(s):
+       ----------------------------------
+       There are no New Service Requests associated with this patch.
+  
+ III. FUNCTIONAL OVERVIEW
+  
+     The following section contains an overview of the changes and primary
+     functionality that is being delivered in this patch.
+  
+    1. CAPRI - Template Additions
+  
+       VBAVACO has approved the following new CAPRI Disability Benefit
+       Questionnaire templates based on new C&P questionnaire worksheets.
+  
+         * DBQ ABDOMINAL, INGUINAL, AND FEMORAL HERNIAS
+         * DBQ CHRONIC FATIGUE SYNDROME
+         * DBQ COLD INJURY RESIDUALS
+         * DBQ CRANIAL NERVES DISEASES
+         * DBQ ENDOCRINE DISEASES (OTHER THAN THYROID, PARATHYROID OR 
+           DIABETES MELLITUS)
+         * DBQ FIBROMYALGIA
+         * DBQ FORMER PRISONER OF WAR (POW) PROTOCOL
+         * DBQ GENERAL MEDICAL - COMPENSATION
+         * DBQ GENERAL MEDICAL - PENSION
+         * DBQ GULF WAR GENERAL MEDICAL EXAMINATION
+         * DBQ HIV-RELATED ILLNESSES
+         * DBQ INFECTIOUS DISEASES (OTHER THAN HIV-RELATED ILLNESS, CHRONIC
+           FATIGUE SYNDROME, AND TUBERCULOSIS
+         * DBQ INITIAL EVALUATION OF RESIDUALS OF TRAUMATIC BRAIN INJURY 
+           (I-TBI) DISABILITY
+         * DBQ LOSS OF SENSE OF SMELL AND OR TASTE
+         * DBQ NARCOLEPSY
+         * DBQ NUTRITIONAL DEFICIENCES
+         * DBQ ORAL AND DENTAL CONDITIONS INCLUDING MOUTH, LIPS AND TONGUE 
+           (OTHER THAN TEMPOROMANDIBULAR JOINT CONDITIONS)
+         * DBQ RESPIRATORY CONDITIONS (OTHER THAN TUBERCULOSIS AND SLEEP 
+           ANPEA)
+         * DBQ REVIEW EVALUATION OF RESIDUALS OF TRAUMATIC BRAIN INJURY 
+           (R-TBI)
+         * DBQ SEIZURE DISORDERS (EPILEPSY)
+         * DBQ SINUSITIS, RHINITIS AND OTHER CONDITIONS OF THE NOSE, 
+           THROAT, LARYNX AND PHARYNX
+         * DBQ SYSTEMIC LUPUS ERYTHEMATOSUS (SLE) AND OTHER AUTOIMMUNE 
+           DISEASES (OTHER THAN HIV AND DIABETES MELLITUS TYPE I)
+         * DBQ THYROID AND PARATHYROID CONDITIONS
+         * DBQ URINARY TRACT (INCLUDING BLADDER AND URETHRA) CONDITIONS 
+           (EXCLUDING MALE REPRODUCTIVE ORGANS)
+  
+       This patch implements these new templates, which are accessible
+       through the Compensation & Pension Worksheet Module (CPWM) of the
+       CAPRI GUI.
+  
+    2. AMIE - C&P Examination Worksheet Additions
+  
+       Veterans Benefits Administration Veterans Affairs Central Office
+       has approved the following new Automated Medical Information
+       Exchange (AMIE) C&P Questionnaire worksheets.
+  
+         * DBQ ABDOMINAL, INGUINAL, AND FEMORAL HERNIAS
+         * DBQ CHRONIC FATIGUE SYNDROME
+         * DBQ COLD INJURY RESIDUALS
+         * DBQ CRANIAL NERVES
+         * DBQ ENDOCRINE DISEASES OTHER THAN DIABETES
+         * DBQ FIBROMYALGIA
+         * DBQ GENERAL MEDICAL EXAM - COMPENSATION
+         * DBQ GENERAL PENSION EXAM
+         * DBQ GULF WAR GENERAL MEDICAL EXAMINATION
+         * DBQ HIV-RELATED ILLNESS
+         * DBQ INFECTIOUS DISEASES
+         * DBQ INITIAL EVALUATION OF RESIDUALS OF TBI (I-TBI)
+         * DBQ LOSS OF SENSE OF SMELL AND TASTE
+         * DBQ NARCOLEPSY
+         * DBQ NUTRITIONAL DEFICIENCIES
+         * DBQ ORAL AND DENTAL
+         * DBQ PRISONER OF WAR PROTOCOL
+         * DBQ RESPIRATORY CONDITIONS
+         * DBQ REVIEW EVALUATION OF RESIDUALS OF TBI (R-TBI)
+         * DBQ SEIZURE DISORDERS (EPILEPSY)
+         * DBQ SINUSITIS/RHINITIS AND OTHER DISEASE OF THE NOSE, THROAT
+         * DBQ SYSTEMATIC LUPUS ERYTHEMATOUS (SLE) & OTHER IMMUNE DISOR
+         * DBQ THYROID & PARATHYROID
+         * DBQ URINARY TRACT AND BLADDER
+  
+       This patch implements the new content for the AMIE C&P Disability
+       Benefit Questionnaire worksheets, which are accessible through the
+       VISTA AMIE software package. These worksheets will be printed out
+       with the following instructions:
+  
+          For a printed copy of the Disability Benefit Questionnaire (DBQ)
+          form, please visit the DBQ Switchboard, http://go.va.gov/DBQ.  
+          This page serves as a switchboard for DBQ-related information.  
+          For comments, questions, or suggestions regarding DBQ policy,
+          content, or use, please contact the Disability Examination
+          Management Office (DEMO) Corporate Mailbox by sending an email
+          to: CorporateMailbox.DEMO@va.gov.
+  
+    3. AMIE - C&P Examination Worksheet Modifications
+  
+       VBAVACO has approved modifications for the following AMIE C&P
+       Examination worksheets:
+  
+         * DBQ AMPUTATIONS
+         * DBQ AMYOTROPHIC LATERAL SCLEROSIS (LOU GEHRIG'S DISEASE)
+         * DBQ ANKLE CONDITIONS
+         * DBQ ARTERY AND VEIN CONDITIONS
+         * DBQ BACK (THORACOLUMBAR SPINE) CONDITIONS
+         * DBQ BREAST CONDITIONS AND DISORDERS
+         * DBQ CENTRAL NERVOUS SYSTEM DISEASES
+         * DBQ DIABETES MELLITUS
+         * DBQ DIABETIC SENSORY-MOTOR PERIPHERAL NEUROPATHY
+         * DBQ EAR CONDITIONS
+         * DBQ EATING DISORDERS
+         * DBQ ELBOW AND FOREARM CONDITIONS
+         * DBQ ESOPHAGEAL CONDITIONS
+         * DBQ EYE CONDITIONS
+         * DBQ FLATFOOT (PES PLANUS)
+         * DBQ FOOT MISCELLANEOUS (OTHER THAN FLATFOOT PES PLANUS)
+         * DBQ GALLBLADDER AND PANCREAS CONDITIONS
+         * DBQ GYNECOLOGICAL CONDITIONS
+         * DBQ HAIRY CELL AND OTHER B CELL LEUKEMIAS
+         * DBQ HAND AND FINGER CONDITIONS
+         * DBQ HEADACHES (INCLUDING MIGRAINE HEADACHES)
+         * DBQ HEARING LOSS AND TINNITUS
+         * DBQ HEART CONDITIONS
+         * DBQ HEMIC AND LYMPHATIC CONDITIONS INCLUDING LEUKEMIA
+         * DBQ HEPATITIS, CIRRHOSIS AND OTHER LIVER CONDITIONS
+         * DBQ HIP AND THIGH CONDITIONS
+         * DBQ HYPERTENSION
+         * DBQ INFECTIOUS INTESTINAL DISORDERS
+         * DBQ INITIAL PTSD
+         * DBQ INTESTINAL (OTHER THAN SURGICAL OR INFECTIOUS)
+         * DBQ INTESTINAL SURGERY (RESECTION, COLOSTOMY, ILEOSTOMY)
+         * DBQ ISCHEMIC HEART DISEASE
+         * DBQ KIDNEY CONDITIONS (NEPHROLOGY)
+         * DBQ KNEE AND LOWER LEG CONDITIONS
+         * DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS
+         * DBQ MEDICAL OPINION 1
+         * DBQ MEDICAL OPINION 2
+         * DBQ MEDICAL OPINION 3
+         * DBQ MEDICAL OPINION 4
+         * DBQ MEDICAL OPINION 5
+         * DBQ MENTAL DISORDERS (EXCEPT PTSD AND EATING DISORDERS)
+         * DBQ MULTIPLE SCLEROSIS (MS)
+         * DBQ MUSCLE INJURIES
+         * DBQ NECK (CERVICAL SPINE) CONDITIONS
+         * DBQ NON-DEGENERATIVE ARTHRITIS
+         * DBQ OSTEOMYELITIS
+         * DBQ PARKINSONS
+         * DBQ PERIPHERAL NERVES (EXCLUDING DIABETIC NEUROPATHY)
+         * DBQ PERITONEAL ADHESIONS
+         * DBQ PERSIAN GULF AND AFGHANISTAN INFECTIOUS DISEASES
+         * DBQ PROSTATE CANCER
+         * DBQ RECTUM AND ANUS CONDITIONS
+         * DBQ REVIEW PTSD
+         * DBQ SCARS DISFIGUREMENT
+         * DBQ SHOULDER AND ARM CONDITIONS
+         * DBQ SKIN DISEASES
+         * DBQ SLEEP APNEA
+         * DBQ STOMACH AND DUODENAL CONDITIONS
+         * DBQ TEMPOROMANDIBULAR JOINT (TMJ) CONDITIONS
+         * DBQ TUBERCULOSIS
+         * DBQ WRIST CONDITIONS
+  
+       This patch implements the new content for the AMIE C&P Disability
+       Benefit Questionnaire worksheets, which are accessible through the
+       VISTA AMIE software package. These worksheets will be updated to
+       print out the following instructions:
+  
+          For a printed copy of the Disability Benefit Questionnaire (DBQ)
+          form, please visit the DBQ Switchboard, http://go.va.gov/DBQ.  
+          This page serves as a switchboard for DBQ-related information.  
+          For comments, questions, or suggestions regarding DBQ policy,
+          content, or use, please contact the Disability Examination
+          Management Office (DEMO) Corporate Mailbox by sending an email
+          to: CorporateMailbox.DEMO@va.gov.
+  
+    4. CAPRI - Template Defects
+  
+      a. The DBQ GYNECOLOGICAL CONDITIONS template has been updated to
+         repair the following problem:
+  
+         When the DBQ GYNECOLOGICAL CONDITIONS template is merged with
+         another template, the Veteran's name does not appear on the
+         report.  This has been repaired, so that the Veteran's name
+         appears on the report.
+  
+      b. The DBQ INITIAL PTSD template has been updated to repair the
+         following problem:
+           
+         In Section I, question 3d, the sentence is cut off by the text
+         box. The text box has been enlarged so that the entire sentence is
+         visible.
+         
+      c. The DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS template has been
+         updated to repair the following problem:
+  
+         In Section 1, Diagnosis, there is incorrect embedded logic in the
+         blanks for "ICD code" and "Date of diagnosis:" following the
+         "Other male reproductive system conditions" selection.  The blanks
+         for "ICD code" and "Date of diagnosis" have been removed to
+         eliminate the embedded logic.
+  
+      d. The DBQ PERIPHERAL NERVES CONDITIONS (NOT INCLUDING DIABETIC 
+         SENSORY-MOTOR PERIPHERAL NEUROPATHY) has been updated to repair
+         the following problems:
+  
+         i. In section 6. Sensory Exam, Upper anterior thigh (L2) question,
+            if "Decreased" is checked for "Left", the data for the
+            Thigh/knee (L3/4) selection in the same section is incorrect on
+            the report. The problem has been repaired so that the correct
+            data for Thigh/ knee (L3/4) appears on the report.
+  
+         ii. When this template was merged with DBQ NECK (CERVICAL SPINE),
+             fields were being shared between the templates. VBA has
+             advised that the sharing of fields be removed. In order to
+             resolve this issue, the template has been modified to not
+             share fields between templates.
+  
+      e. The DBQ WRIST CONDITIONS template has been updated to repair
+         the following problem:
+        
+         In Section 4, Initial Range of Motion (ROM) Measurement, Left
+         wrist palmar fexion question, if the "70" is selected, the
+         selection will appear while viewing the template, but will not
+         appear on the report preview or on the report.  This problem has
+         been corrected so that a selection of "70" will appear on the
+         template, the report preview, and the report.
+  
+ IV. TECHNICAL COMPONENTS
+  
+    The following section describes the technical components being exported
+    with this patch.
+  
+    1. The following FILE will be included.
+  
+                                        UP    SEND  DATA               USER
+                                        DATE  SEC.  COMES  SITE  RSLV  OVER
+     FILE#   NAME                       DD    CODE  W/FILE DATA  PTS   RIDE
+     ----------------------------------------------------------------------
+     396.18 CAPRI TEMPLATE DEFINITIONS  NO    YES   YES    OVER  NO    NO
+  
+     2. The following Template Definition entries will be added to the 
+        CAPRI TEMPLATE DEFINITIONS (#396.18) file:
+  
+         DBQ ABDOMINAL, INGUINAL, AND FEMORAL HERNIAS~175
+         DBQ CHRONIC FATIGUE SYNDROME~175
+         DBQ COLD INJURY RESIDUALS~175
+         DBQ CRANIAL NERVES DISEASES~175
+         DBQ ENDOCRINE DISEASES (OTHER THAN THYROID, PARATHYROID OR 
+           DIABETES MELLITUS)~175
+         DBQ FIBROMYALGIA~175
+         DBQ FORMER PRISONER OF WAR (POW) PROTOCOL~175
+         DBQ GENERAL MEDICAL - COMPENSATION~175
+         DBQ GENERAL MEDICAL - PENSION~175
+         DBQ GULF WAR GENERAL MEDICAL EXAMINATION~175
+         DBQ GYNECOLOGICAL CONDITIONS~175
+         DBQ HIV-RELATED ILLNESSES~175
+         DBQ INFECTIOUS DISEASES (OTHER THAN HIV-RELATED ILLNESS, CHRONIC 
+           FATIGUE SYNDROME, AND TUBERCULOSIS~175
+         DBQ INITIAL EVALUATION OF RESIDUALS OF TRAUMATIC BRAIN INJURY 
+           (I-TBI) DISABILITY~175
+         DBQ INITIAL PTSD~175
+         DBQ LOSS OF SENSE OF SMELL AND OR TASTE~175
+         DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS~175
+         DBQ NARCOLEPSY~175
+         DBQ NUTRITIONAL DEFICIENCES~175
+         DBQ ORAL AND DENTAL CONDITIONS INCLUDING MOUTH, LIPS AND TONGUE 
+           (OTHER THAN TEMPOROMANDIBULAR JOINT CONDITIONS)~175
+         DBQ PERIPHERAL NERVES CONDITIONS (NOT INCLUDING DIABETIC 
+           SENSORY-MOTOR PERIPHERAL NEUROPATHY)~175
+         DBQ RESPIRATORY CONDITIONS (OTHER THAN TUBERCULOSIS AND SLEEP 
+           ANPEA)~175
+         DBQ REVIEW EVALUATION OF RESIDUALS OF TRAUMATIC BRAIN INJURY 
+           (R-TBI)~175
+         DBQ SEIZURE DISORDERS (EPILEPSY)~175
+         DBQ SINUSITIS, RHINITIS AND OTHER CONDITIONS OF THE NOSE, THROAT, 
+           LARYNX AND PHARYNX~175
+         DBQ SYSTEMIC LUPUS ERYTHEMATOSUS (SLE) AND OTHER AUTOIMMUNE 
+           DISEASES (OTHER THAN HIV AND DIABETES MELLITUS TYPE I)~175
+         DBQ THYROID AND PARATHYROID CONDITIONS~175
+         DBQ URINARY TRACT (INCLUDING BLADDER AND URETHRA) CONDITIONS 
+           (EXCLUDING MALE REPRODUCTIVE ORGANS)~175
+         DBQ WRIST CONDITIONS~175
+  
+     3. The following new entries with the following C&P questionnaire
+        worksheet(s) will be created, the REPORTING PROGRAM NAME field set
+        to DVBCQDRV and the STATUS field made "ACTIVE" in the AMIE
+        EXAM (#396.6) file:
+                                                      
+         IEN  Exam Name                               
+         ---  -------------------------------------------------------------
+         377   DBQ ENDOCRINE DISEASES OTHER THAN DIABETES
+         378   DBQ THYROID & PARATHYROID
+         379   DBQ CRANIAL NERVES
+         380   DBQ NARCOLEPSY
+         381   DBQ FIBROMYALGIA
+         382   DBQ SEIZURE DISORDERS (EPILEPSY)
+         383   DBQ URINARY TRACT AND BLADDER
+         384   DBQ ABDOMINAL, INGUINAL, AND FEMORAL HERNIAS
+         385   DBQ HIV-RELATED ILLNESS
+         386   DBQ INFECTIOUS DISEASES
+         387   DBQ SYSTEMATIC LUPUS ERYTHEMATOUS (SLE) & OTHER IMMUNE DISOR
+         388   DBQ NUTRITIONAL DEFICIENCIES
+         389   DBQ ORAL AND DENTAL
+         390   DBQ LOSS OF SENSE OF SMELL AND TASTE
+         391   DBQ SINUSITIS/RHINITIS AND OTHER DISEASE OF THE NOSE, THROAT
+         392   DBQ RESPIRATORY CONDITIONS
+         393   DBQ CHRONIC FATIGUE SYNDROME
+         394   DBQ INITIAL EVALUATION OF RESIDUALS OF TBI (I-TBI)
+         395   DBQ REVIEW EVALUATION OF RESIDUALS OF TBI (R-TBI)
+         396   DBQ GENERAL MEDICAL EXAM - COMPENSATION
+         397   DBQ GENERAL PENSION EXAM
+         398   DBQ COLD INJURY RESIDUALS
+         399   DBQ PRISONER OF WAR PROTOCOL
+         400   DBQ GULF WAR GENERAL MEDICAL EXAMINATION
+         401   DBQ AMPUTATIONS
+         403   DBQ AMYOTROPHIC LATERAL SCLEROSIS (LOU GEHRIG'S DISEASE)
+         404   DBQ ANKLE CONDITIONS
+         405   DBQ ARTERY AND VEIN CONDITIONS
+         406   DBQ BACK (THORACOLUMBAR SPINE) CONDITIONS
+         407   DBQ BREAST CONDITIONS AND DISORDERS
+         408   DBQ CENTRAL NERVOUS SYSTEM DISEASES
+         409   DBQ DIABETES MELLITUS
+         410   DBQ DIABETIC SENSORY-MOTOR PERIPHERAL NEUROPATHY
+         411   DBQ EAR CONDITIONS
+         412   DBQ EATING DISORDERS
+         413   DBQ ELBOW AND FOREARM CONDITIONS
+         414   DBQ ESOPHAGEAL CONDITIONS
+         415   DBQ EYE CONDITIONS
+         416   DBQ FLATFOOT (PES PLANUS)
+         417   DBQ FOOT MISCELLANEOUS (OTHER THAN FLATFOOT PES PLANUS)
+         418   DBQ GALLBLADDER AND PANCREAS CONDITIONS
+         419   DBQ GYNECOLOGICAL CONDITIONS
+         420   DBQ HAIRY CELL AND OTHER B CELL LEUKEMIAS
+         421   DBQ HAND AND FINGER CONDITIONS
+         422   DBQ HEADACHES (INCLUDING MIGRAINE HEADACHES)
+         423   DBQ HEARING LOSS AND TINNITUS
+         424   DBQ HEART CONDITIONS
+         425   DBQ HEMIC AND LYMPHATIC CONDITIONS INCLUDING LEUKEMIA
+         426   DBQ HEPATITIS, CIRRHOSIS AND OTHER LIVER CONDITIONS
+         427   DBQ HIP AND THIGH CONDITIONS
+         428   DBQ HYPERTENSION
+         429   DBQ INFECTIOUS INTESTINAL DISORDERS
+         430   DBQ INITIAL PTSD
+         431   DBQ INTESTINAL (OTHER THAN SURGICAL OR INFECTIOUS)
+         432   DBQ INTESTINAL SURGERY (RESECTION, COLOSTOMY, ILEOSTOMY)
+         433   DBQ ISCHEMIC HEART DISEASE
+         434   DBQ KIDNEY CONDITIONS (NEPHROLOGY)
+         435   DBQ KNEE AND LOWER LEG CONDITIONS
+         436   DBQ MALE REPRODUCTIVE SYSTEM CONDITIONS
+         437   DBQ MEDICAL OPINION 1
+         438   DBQ MEDICAL OPINION 2
+         439   DBQ MEDICAL OPINION 3
+         440   DBQ MEDICAL OPINION 4
+         441   DBQ MEDICAL OPINION 5
+         442   DBQ MENTAL DISORDERS (EXCEPT PTSD AND EATING DISORDERS)
+         443   DBQ MULTIPLE SCLEROSIS (MS)
+         444   DBQ MUSCLE INJURIES
+         445   DBQ NECK (CERVICAL SPINE) CONDITIONS
+         446   DBQ NON-DEGENERATIVE ARTHRITIS
+         447   DBQ OSTEOMYELITIS
+         448   DBQ PARKINSONS
+         449   DBQ PERIPHERAL NERVES (EXCLUDING DIABETIC NEUROPATHY)
+         450   DBQ PERITONEAL ADHESIONS
+         451   DBQ PERSIAN GULF AND AFGHANISTAN INFECTIOUS DISEASES
+         452   DBQ PROSTATE CANCER
+         453   DBQ RECTUM AND ANUS CONDITIONS
+         454   DBQ REVIEW PTSD
+         455   DBQ SCARS DISFIGUREMENT
+         456   DBQ SHOULDER AND ARM CONDITIONS
+         457   DBQ SKIN DISEASES
+         458   DBQ SLEEP APNEA
+         459   DBQ STOMACH AND DUODENAL CONDITIONS
+         460   DBQ TEMPOROMANDIBULAR JOINT (TMJ) CONDITIONS
+         461   DBQ TUBERCULOSIS
+         462   DBQ WRIST CONDITIONS
+  
+    4. The following new routine will be added with this patch:
+  
+         DVBCQDRV  Driver routine for printing DBQ AMIE Exam Worksheets
+  
+ V. SOFTWARE & DOCUMENTATION RETRIEVAL
+  
+     The following section provides information regarding the retrieval of
+     the software and related user documentation.
+  
+    1. VistA Patch DVBA*2.7*175
+  
+       a. This patch is being distributed as a PackMan patch message 
+          through the National Patch Module (NPM). The KIDS build for this
+          patch is DVBA*2.7*175.
+  
+    2. User Documentation
+  
+       a. The user documentation for this patch may be retrieved directly
+          using FTP. The preferred method is to FTP the files from:
+  
+              download.vista.med.va.gov
+  
+          This transmits the files from the first available FTP server.
+  
+          Sites may also elect to retrieve documentation directly from a
+          specific server as follows:
+  
+          OI&T FIELD OFFICE  FTP ADDRESS               DIRECTORY
+          -----------------  ------------------------  --------------------
+          Albany             ftp.fo-albany.med.va.gov  [anonymous.software]
+          Hines              ftp.fo-hines.med.va.gov   [anonymous.software]
+          Salt Lake City     ftp.fo-slc.med.va.gov     [anonymous.software]
+  
+          The following files will be available:
+  
+          File Name                               Format  Description
+          ------------------------------------    ------  -----------------
+          DVBA_27_P175_RN.PDF                     Binary  Release Notes
+          DVBA_27_P175_DBQ_MALEREPRODUCTIVE_WF.docx
+                                                  Binary  Workflow Document
+  
+       b. Documentation may also be retrieved from the VistA Documentation
+          Library (VDL) on the Internet at the following address. This web
+          site is usually updated within 1-3 days of the patch release 
+          date.
+  
+                 http://www4.va.gov/vdl/application.asp?appid=133
+  
+       c. Content and/or changes to the DBQs is communicated by the
+          Disabilty Examination Management Office (DEMO) through:
+  
+                 http://vbacodmoint1.vba.va.gov/bl/21/DBQ/default.asp
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES
+  
+    The following section provides pre-installation notes and requirements
+    for installing the software.
+  
+    1. Users On the System
+  
+     a. CAPRI GUI Users - This patch may be installed while users are
+        running the CAPRI GUI.
+  
+     b. VistA Users - This patch may be installed with users on the
+        system, but should be loaded during non-peak hours to minimize
+        disruption to users and to reduce the possibility of errors when
+        the routines and file entries are updated.
+  
+     c. VistA Options - There are no VistA options to disable while
+        installing this patch.
+  
+    2. Software Installation Time
+  
+       The estimated installation time is less than 5 minutes during off
+       peak hours.
+  
+    3. Required Builds
+  
+       The following is a list of REQUIRED builds for this KIDS software
+       distribution.  KIDS will not allow the installation of this patch
+       without their prior installation.
+  
+         Required Build(s):
+         ------------------
+         DVBA*2.7*171
+         DVBA*2.7*173
+         DVBA*2.7*174
+  
+    4. This patch has no dependencies with the released patch DVBA*2.7*168
+       and can be installed prior to the installation of DVBA*2.7*168.
+  
+  
+ VII. INSTALLATION INSTRUCTIONS
+  
+     The following section provides the steps for installing the software.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+    2. From the 'Kernel Installation & Distribution System' menu, select
+        the Installation menu.
+  
+    3. From this menu, you may now elect to use the following options (when
+       prompted for INSTALL NAME, enter DVBA*2.7*175).
+  
+        a. Backup a Transport Global - This option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any changes such as DDs or templates.
+  
+        b. Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when the patch
+           is installed.
+  
+           CAUTION: Do not use the KIDS "Full Comparison" option. Due to
+           the length of some CAPRI Template names, the "Full Comparison"
+           option can go into a loop.  This problem has been reported to
+           the Kernel developers and will be fixed with patch XU*8*559. The
+           "Second line of Routines Only", "Routines only", and "Old style
+           Routine compare" options may be used.
+  
+        c. Verify Checksums in Transport Global - This option will allow 
+           you to ensure the integrity of the routines that are in the
+           transport global.
+  
+        d. Print Transport Global - this option will allow you to view the
+           components of the KIDS build.
+  
+    4. Use the Install Package(s) option and select package DVBA*2.7*175.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO.
+  
+    6. When prompted to 'Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//', answer NO.
+  
+    7. NOTE: Pre/Post-init routine DVBA175P is a temporary routine used as
+       part of the pre/post-install process and will be automatically
+       deleted by KIDS after patch installation. However, in some cases
+       Cache doesn't always delete the routine. You may delete it manually
+       if you discover this at your site.
+  
+ VIII. TEST SITES
+  
+     The following sites participated in the testing of the DVBA*2.7*175
+     software.
+  
+     Test Sites
+     -----------
+     Alexandria
+     North Florida/South Georgia
+     Upstate New York
+     Miami
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA175P
+    Before:       n/a   After:B258823019  **175**
+Routine Name: DVBCQDRV
+    Before:       n/a   After:  B4174417  **175**
+
+=============================================================================
+User Information:
+Entered By  : WINTERTON,STEVEN              Date Entered  : AUG 16, 2011
+Completed By: DAWSON,JEREMIAH               Date Completed: SEP 13, 2011
+Released By : FRANCE,KATHI                  Date Released : SEP 14, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

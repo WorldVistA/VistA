@@ -1,0 +1,218 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Friday, 01/13/12 at 11:07
+=============================================================================
+Run Date: APR 18, 2012                     Designation: PSJ*5*247
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #225                      Status: Released
+                  Compliance Date: MAY 19, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*247'
+
+Subject: DO NOT ALLOW DISPENSE DRUG DELETE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will make the following corrections to the Inpatient 
+ Medications package:
+  
+ - Do not allow user to delete Dispense Drug of active order
+ - Undefined Error when discontinuing a copied IV order
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1. HD0000000212172 - Can delete dispense drug from active order even when
+                      dispensed
+    Duplicates:
+    HD0000000153632
+    HD0000000221413 
+    HD0000000360657 
+  
+ 2. HD0000000394986 - Undefined error when Copy an IV order
+  
+  
+ Participating Test Sites:
+ =========================
+ Bronx VAMC
+ Oklahoma City VAMC
+ Western NY HCS
+  
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000212172 - Can delete dispense drug from active order even when 
+                      dispensed
+  
+ Problem:
+ -------
+ In Inpatient Order Entry [PSJ OE], it is possible for a user to delete the
+ Dispense Drug of an active order, despite a warning that "Dispense Drugs 
+ for active orders cannot be deleted, but can be given an INACTIVE DATE."
+  
+ Resolution:
+ ----------
+ Modified the attributes of the Data Dictionary for the INPATIENT USER 
+ PARAMETERS file (#53.45), DISPENSE DRUG field (#.01), so that the 
+ Dispense Drug of an active order can no longer be deleted.
+  
+  
+ 2. HD0000000394986 - Undefined error when Copy an IV order
+  
+ Problem:
+ -------
+ When copying an order in Inpatient Order Entry [PSJ OE], if the user opts 
+ to discontinue the newly copied order before verifying it, he will receive
+ an Undefined error.  This is because the system is attempting to reference
+ an order which has not been created yet.
+  
+ Resolution:
+ ----------
+ Modified the routine PSJLIACT so that the correct order is discontinued if
+ discontinuation occurs before the order is verified.
+  
+  
+  
+ Data Dictionary Changes:
+ ========================
+ STORED IN ^PS(53.45,D0,2,
+  
+ BEFORE:
+ -------
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+ 53.4502,.01   DISPENSE DRUG          0;1 POINTER TO DRUG FILE (#50)
+                                  (Multiply asked)
+  
+               DELETE TEST:      1,0)= D:$G(PSGOEEND) EN^DDIOL("Dispense 
+                                 Drugs for active orders cannot be deleted,
+                                 but can be given an INACTIVE DATE.") I
+                                 $G(PSJPNDRN)&$G(^PS(53.1,+$G(ON),1,+$G(DA),0))
+                                 D EN^DDIOL($P(PSJPN DRN,"^",2))
+  
+ AFTER:
+ ------
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+ 53.4502,.01   DISPENSE DRUG          0;1 POINTER TO DRUG FILE (#50)
+                                  (Multiply asked)
+  
+               DELETE TEST:      1,0)= D:$G(PSGOEEND) EN^DDIOL("Dispense 
+                                 Drugs for active orders cannot be deleted,
+                                 but can be given an INACTIVE DATE.")
+                                 D:$G(PSJPNDRN)&$G(^PS
+                                 (53.1,+$G(ON),1,+$G(DA),0))
+                                 EN^DDIOL($P(PSJPNDRN,"^",2)) I
+                                 $G(PSGOEEND)!$G(PSJPNDRN)
+  
+  
+  
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Pharmacy Data Management users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+     Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PSJ*5.0*247):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d.  Print Transport Global - This option will allow you to view the 
+         components of the KIDS build.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+  
+     a.  Choose the Install Package(s) option to start the patch install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer YES.
+  
+           1) When prompted "Enter options you wish to mark as "Out
+              of Order":" enter the following option:
+              
+                 Inpatient Order Entry [PSJ OE]
+  
+           2) When prompted "Enter protocols you wish to mark as "Out of
+              Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJLIACT
+    Before: B42251773   After: B42921851  **15,47,62,58,82,97,80,110,111,
+                                           134,181,247**
+ 
+Routine list of preceding patches: 181
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : AUG 26, 2010
+Completed By: WERNER,GARY                   Date Completed: APR 12, 2012
+Released By : CONNOLLY,BARBARA              Date Released : APR 18, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

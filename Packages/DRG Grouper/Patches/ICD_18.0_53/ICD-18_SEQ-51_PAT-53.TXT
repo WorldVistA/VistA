@@ -1,0 +1,192 @@
+$TXT Created by BOWEN,MARY JANE at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 01/12/11 at 11:05
+=============================================================================
+Run Date: MAY 27, 2011                     Designation: ICD*18*53
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #51                     Status: Released
+                  Compliance Date: JUN 27, 2011
+=============================================================================
+
+Associated patches: (v)ICD*18*50   <<= must be installed BEFORE `ICD*18*53'
+
+Subject: DRG GROUPER FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  The Diagnostic Related Group (DRG) Grouper is used to compute
+  and display the DRG for a patient based on that patient's diagnoses
+  and any operations/procedures performed. It uses a mixture of 
+  formulas, Diagnosis and Operation identifiers, and tables that rely 
+  on data added to the DRG file (#80.2), the ICD DIAGNOSIS file (#80) 
+  and the ICD OPERATION/PROCEDURE file (#80.1).  
+  These files, the date and the age of the patient determine the codes 
+  and other information needed to pass into the formulas and the tables 
+  used in those formulas to calculate the DRG. These codes and the DRG 
+  codes come from the Federal Register for Center for Medicare and Medicaid
+  Services (CMS) and are updated and added to yearly effective 
+  October 1 of the year.
+ 
+  This patch corrects various DRG calculations.
+   
+  ASSOCIATED REMEDY TICKETS:
+  ========================== 
+  1) HD0000000411936 - DRG grouper 509 is showing as 232
+  2) HD0000000445988 - DRG012 displays DRG129 in VistA
+  3) HD0000000447594 - DRG Frequency report is missing the AVERAGE WEIGHT
+  4) HD0000000387684 - VISTA is calculating the DRG incorrectly - it 
+                       should be DRG 585
+     Duplicate:
+     HD0000000463472 - DRG IN VISTA IS 999, SHOULD BE 585
+    
+  ASSOCIATED NSR's:
+  =================
+  N/A
+    
+  PARTICIPATING TEST SITES:
+  =========================
+  Bay Pines, FL
+  Erie, PA
+  Upstate New York HCS
+    
+  REMEDY OVERVIEW:
+  ================
+  1) HD0000000411936 - DRG grouper 509 is showing as 232
+   
+  Problem:
+  ========
+  Routine ICDDRG0 code had the DRG hard coded to go to DRG 232 which was
+  changed to DRG 509 in 2007.
+    
+  Solution:
+  =========
+  Changed routine ICDDRG0 to only go to DRG 232 if effective date is less than
+  10/1/07.
+  
+  2) HD0000000445988 - DRG012 displays DRG129 in VistA
+  
+  Problem:
+  ========
+  DRG 012 is incorrectly calculating to DRG 129 in Vista.
+    
+  Solution:
+  =========
+  Added a look up for procedure code 31.1 in table code routines ICDTBL1B
+  and ICDTBL1C to group to the correct DRG.
+  
+  3) HD0000000447594 - DRG Frequency report is missing the AVERAGE WEIGHT
+   
+  Problem:
+  ========
+  Weights of Low, High and Average Length of Stay (ALOS) are assigned to each
+  DRG. Users have reported that the DRG Frequency report is not accurate 
+  due to weights not being assigned to DRGs.
+    
+  Solution:
+  =========
+  Routines ICD1853A and ICD1853B will correct the DRG weights.
+  
+  4) HD0000000387684 - VISTA is calculating the DRG incorrectly - it 
+  should be DRG 585
+   
+  Problem:
+  ========
+  DRG calculation for DRG 585 is showing as Ungroupable in Vista. 
+     
+  Solution:
+  =========
+  Added identifier for Total Mastectomy to procedure code 85.72. 
+  
+  INSTALLATION INSTRUCTIONS:
+  ===========================
+  This patch may be run with users on the system.  However, it would
+  be preferable if Medical Records coders were off the system.
+  Installation will take less than 5 minutes.
+   
+  1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+      the KIDS distribution included with this message.
+      NOTE:  If the required patches are not installed, the transport 
+      global will be removed.  If the transport global is removed you will
+      need to repeat this step.
+   
+  2.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  3.  From this menu, you may elect to use the following options
+      (when prompted for INSTALL NAME, enter ICD*18.0*53):
+      a.  Compare Transport Global to Current System  - this option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+      b.  Verify Checksums in Transport Global - this option will
+          allow you to ensure the integrity of the routines that are in
+          the transport global.
+      c.  Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+      d.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+   
+  4.  Use the Install Package(s) option and select the package ICD*18.0*53.
+   
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', respond No.
+   
+  6.  When prompted,'Want to DISABLE Scheduled Options, Menu Options, and 
+      Protocols? YES//', respond Yes.
+   
+      When prompted,'Enter options you wish to mark as 'Out Of Order':',
+      enter:
+              PTF Menu  [DG PTF MENU] 
+      When prompted,'Enter protocols you wish to mark as 'Out Of Order':', 
+      press enter.
+   
+  7.  Routine(s) ICD1853* can be deleted after the patch has been
+      successfully installed.
+   
+  8.  Following installation of this patch, it is necessary to run the
+      Update Transfer DRGs for Current FY [DG PTF UPDATE TRANSFER DRGs] 
+      option in order to make the transfer DRGs correspond to the 
+      appropriate grouper. This option updates/recalculates the transfer 
+      DRGs for PTF records opened during the current fiscal year.
+      The option is locked with the DG PTFSUP security key. The Menu path
+      is PTF Menu/Update DRG Information Menu/Update Transfer DRGs for
+      current FY.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;18.0;DRG Grouper;**[Patch List]**;Oct 13, 2000;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD1853A
+    Before:       n/a   After:B101815070  **53**
+Routine Name: ICD1853P
+    Before:       n/a   After:B104565852  **53**
+Routine Name: ICDDRG0
+    Before: B61230090   After: B61340562  **1,2,7,10,14,17,20,24,27,30,
+                                           31,32,33,37,45,50,53**
+Routine Name: ICDTBL1B
+    Before:  B6090903   After:  B6373278  **45,53**
+Routine Name: ICDTBL1C
+    Before:  B6090912   After:  B6365262  **50,53**
+ 
+Routine list of preceding patches: 50
+
+=============================================================================
+User Information:
+Entered By  : BOWEN,MARY JANE               Date Entered  : DEC 15, 2010
+Completed By: LEANORD,TATIANA               Date Completed: MAY 26, 2011
+Released By : DANE,SIDNEY                   Date Released : MAY 27, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

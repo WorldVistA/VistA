@@ -1,0 +1,206 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Monday, 01/30/12 at 11:07
+=============================================================================
+Run Date: APR 04, 2012                     Designation: PSJ*5*270
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #223                      Status: Released
+                  Compliance Date: MAY 05, 2012
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*270'
+                    (v)PSJ*5*263   <<= must be installed BEFORE `PSJ*5*270'
+
+Subject: IV PIGGYBACK BOTTLE FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Inpatient Medications 
+ package:
+  
+ 1. The Inpatient Medications Workgroup has requested a new check in 
+    Inpatient Order Entry [PSJ OE] to prevent an IV order from CPRS from 
+    being finished as a Piggyback if it includes a Bottle value.
+  
+ 2. During Allergy checks in Inpatient Order Entry [PSJ OE], it is 
+    possible to get an Undefined error.
+  
+  
+ Associated NSR(S):
+ =================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. HD0000000518275 - IV ADDITIVE FREQUENCY FIELD
+  
+ 2. HD0000000540868 - cannot finish order
+    Duplicate:
+    HD0000000541188 - Inpatient Medication's Allergy auto-check erroring
+  
+  
+ Participating Test Sites:
+ ========================
+ Augusta VAMC
+ Beckley VAMC
+ Durham VAMC
+ Western NY HCS
+  
+  
+ Remedy Ticket Overview:
+ ======================
+ 1. HD0000000518275 - IV ADDITIVE FREQUENCY FIELD
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #2097
+  
+    Problem:
+    -------
+    The Inpatient Medications Workgroup has requested a new check in 
+    Inpatient Order Entry [PSJ OE] to prevent an IV order from CPRS from 
+    being finished as a Piggyback if it includes a Bottle value.
+  
+    Resolution:
+    ----------
+    Changed PSIVORC1 so that the user will be presented with a new prompt 
+    asking them if they would like to delete the bottle value(s).  If the 
+    user replies "No", they will be prompted to choose a different IV Type.
+  
+    NOTE: If a user replies "Yes", the bottle value(s) will be immediately 
+    deleted and will not be automatically restored if a user exits out of 
+    the order before verifying it.  However, the bottle value can always be
+    manually re-entered if the IV Type is changed to a type which supports 
+    bottle values.
+  
+  
+ 2. HD0000000540868 - cannot finish order
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #2141
+  
+    Problem:
+    -------
+    During the Allergy checks process in Inpatient Order Entry [PSJ OE], 
+    a message is received from the Health Data Repository (HDR) to
+    determine Drug-Allergy Reactions.  If a Drug Class is received from
+    HDR which is not listed in the VA DRUG CLASS file (#50.605), this will
+    cause an <UNDEFINED> error.
+  
+    Resolution:
+    ----------
+    Changed PSJGMRA so that the <UNDEFINED> error does not occur, and a 
+    warning message informs the user of the invalid Drug Class.
+  
+ WARNING: The following drug classes do not exist in the VA DRUG CLASS file
+          (#50.605).  Please do a manual Drug-Allergy order check and 
+          notify the pharmacy ADPAC for follow-up.
+  
+ VA Drug Class: [Drug Class]
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS WHEN THE PATCH IS  
+ INSTALLED, AN 'EDITED' ERROR WILL OCCUR.
+  
+ The patch should be installed when NO Inpatient Pharmacy users are on the
+ system.
+  
+ Installation should take less than 2 minutes.
+  
+ 1. Load Transport Global 
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2. Start Up KIDS 
+    -------------
+    Start up the Kernel Installation and Distribution System Menu 
+    [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+  
+    Select Kernel Installation & Distribution System Option: INStallation 
+                                                             ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+    Select Installation Option: 
+  
+ 3. Select Installation Option: 
+    ---------------------------
+    NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+           NAME, enter PSJ*5.0*270):
+                                 
+    a.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+    c.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+    d.  Print Transport Global - This option will allow you to view the 
+        components of the KIDS build.
+      
+ 4. Select Installation Option: Install Package(s) 
+    ----------------------------------------------
+    **This is the step to start the installation of this KIDS patch: 
+    a.  Choose the Install Package(s) option to start the patch install.
+  
+    b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//' answer NO 
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//' answer YES.
+  
+           1) When prompted "Enter options you wish to mark as "Out
+              of Order":" enter the following options:
+              
+                 Inpatient Order Entry [PSJ OE]
+  
+           2) When prompted "Enter protocols you wish to mark as "Out of
+              Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVORC1
+    Before: B48694299   After: B54564779  **1,37,69,110,157,134,181,263,270**
+Routine Name: PSJGMRA
+    Before: B17486425   After: B22172498  **181,270**
+ 
+Routine list of preceding patches: 263
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : NOV 22, 2011
+Completed By: WERNER,GARY                   Date Completed: MAR 29, 2012
+Released By : TEAGUE,LYN                    Date Released : APR 04, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

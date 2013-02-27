@@ -1,0 +1,695 @@
+$TXT Created by RAY,Constance at CHEY132.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 08/02/12 at 08:43
+=============================================================================
+Run Date: OCT 09, 2012                     Designation: ROR*1.5*18
+Package : ROR - CLINICAL CASE REGISTRIES      Priority: Mandatory
+Version : 1.5        SEQ #18                    Status: Released
+                  Compliance Date: NOV 09, 2012
+=============================================================================
+
+Associated patches: (v)ROR*1.5*17  <<= must be installed BEFORE `ROR*1.5*18'
+
+Subject: NEW REGISTRIES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The following is a list of changes included in this patch:
+  
+ 1. This patch is designed to allow reporting tools used with the national 
+ Hepatitis C and HIV registries to be used with local registries. Sixteen 
+ new local registries are added based on ICD9-CM codes provided by the 
+ national Office of Public Health/Population Health.  The new registries 
+ represent patient diagnostic groups for:
+  Diabetes
+  Mental Health
+  Congestive Heart Failure (CHF)
+  Ischemic Heart Disease (IHD)
+  Breast Cancer
+  Hypertension
+  Cerebrovascular Disease (CVD)
+  Osteoarthritis
+  Chronic Obstructive Pulmonary Disease (COPD)
+  Dyslipidemia
+  Chronic Renal Disease (CRD)
+  Alzheimer's Disease
+  Rheumatoid Arthritis
+  Low Vision/Blind
+  Amputation
+  Multiple Sclerosis 
+  
+ 2. An option, 'Initialize new registries (one time)' is provided to 
+ schedule the initial build of the new registries.  The option is locked
+ with the ROR VA IRM security key. It is run one time and will search for
+ patients with qualifying ICD9 codes linked to outpatient visits, problem
+ lists and inpatient stays back to 1/1/1985.  Patients added to a local
+ registry are automatically confirmed.  The confirmation date is set to the
+ earliest date of the qualifying ICD9 code. Registries are not available to
+ users until they are initialized.
+  
+ 3. Once the registries are initialized, the nightly job (ROR TASK) 
+ searches for new patients with qualifying ICD9 codes.  Patients added to 
+ one of the 16 local registries are automatically confirmed.  The 
+ confirmation date is set to the date of the qualifying ICD code.
+  
+ 4. Only data from the national registries for HIV and Hepatitis C will be 
+ transmitted to the national database.  
+  
+ 5. Two new security keys have been added, ROR VA GENERIC ADMIN and ROR VA 
+ GENERIC USER.  These keys only provide access to the local registries.  
+  
+ Users assigned the new ROR VA GENERIC ADMIN key will have the ability to
+ delete patients from any of the sixteen local registries.  Patients are
+ deleted immediately and the deletion is logged in the technical log.  If
+ the patient has a future qualifying result, the patient is added back to
+ the appropriate registry.
+  
+ Users with the ROR VA GENERIC USER key will have the ability to run 
+ reports on all the local registries.
+  
+ 6. It will no longer be necessary to run the option, 'Re-index the ACL 
+ cross-reference' manually after assigning or un-assigning a security 
+ key.  The user's access privileges will be automatically updated at the 
+ time the user logs on.
+  
+ 7. The Select a Registry screen displayed when the user logs on, will 
+ list all the registries to which the user has keys.  The national 
+ registries for Hepatitis C and HIV will be listed first.  The local 
+ registries will be listed next in alphabetical order separated from the 
+ national registries by a blank line.
+  
+ 8. The Patient Screen for local registries does not include a "Pending 
+ only" checkbox or a "Pending Comments" column because patients added to 
+ local registries are automatically confirmed.
+  
+ 9. Site parameters can be customized for local registries.  The site 
+ parameters screen displays tabs for Lab Tests, Notifications and Local 
+ Fields.  A generic tab on the right side of the screen displays 
+ laboratory tests.  Select local laboratory tests under the Registry Lab 
+ tab and move them to the right.  Once a laboratory test is added, it is 
+ displayed in the middle pane of the Registry Lab Patient Data Editor.
+  
+ The names of VistA users who need to receive notifications about problems 
+ in registry processes can be added under the Notifications tab.
+  
+ Local fields can also be added to individual local registries.  These 
+ fields are used to include/exclude patients from reports. 
+  
+ 10. The following reports can be run for local registries:
+  BMI by Range Report
+  Clinic Follow Up Report
+  Combined Meds and Labs Report
+  Current Inpatient List Report
+  Diagnosis Report
+  General Utilization and Demographics Report
+  Procedures Report
+  Radiology Utilization Report
+  Inpatient Utilization Report
+  Lab Utilization Report
+  Liver Score by Range Report
+  Outpatient Utilization Report
+  Patient Medication History Report
+  Pharmacy Prescription Utilization Report
+  Renal Function by Range Report
+  
+ 11.The List of Registry Patients can be run for local registries but has 
+ been modified for use with local registries. The "Pending" checkbox has 
+ been removed from the Report Status panel. "Pending comments" and "First 
+ diagnosed at this facility" checkboxes have been removed from the Report 
+ Options panel.
+  
+ 12. The following reports are not supported for local registries:
+  Registry Lab Tests by Range Report
+  DAA Lab Monitoring Report
+  Potential DAA Candidates Report
+  VERA Reimbursement Report
+  Registry Medications
+  
+ 13. If the user has keys for the registries, the Other Registries 
+ selection panel will display those registries.  Registries listed in this 
+ panel can be used to include/exclude patients on reports.
+  
+ 14. The Common Template for Depression has been deleted and replaced with 
+ two new Common Templates for Major Depression and Other Depression.  
+ These templates are used to filter patients based on diagnoses when 
+ running reports.
+  
+ 15. ROR TASK has been modified to automatically update all registries.  It
+ is no longer necessary to list registries in the TASK PARAMETERS field.  
+ The description of the option has been modified to reflect this change.
+  
+ 16.  The Select Patient panel has been added to the DAA Lab Monitoring 
+ report.
+  
+  
+ Patch Components
+ ===============
+  
+ Data Dictionary  
+ ---------------
+  
+ File Name (Number)                               New/Modified/Deleted
+ --------------------------------------------------------------------
+ ROR REGISTRY PARAMETERS (#798.1)                    
+      FIELD:  AUTO-CONFIRM (#31)                            New
+  
+ ROR ICD SEARCH (#798.5)                                    New
+  
+  
+ File Data 
+ ---------
+  
+ File Name (Number)          Record Name           New/Modified/Deleted
+ --------------------------------------------------------------------- 
+ ROR REGISTRY PARAMETERS(#798.1) 
+                              VA DIABETES                    New
+                              VA MENTAL HEALTH               New
+                              VA CHF                         New
+                              VA IHD                         New
+                              VA BREAST CA                   New
+                              VA HTN                         New
+                              VA CVD                         New
+                              VA OSTEOARTHRITIS              New
+                              VA COPD                        New
+                              VA DYSLIPIDEMIA                New
+                              VA CRD                         New
+                              VA ALZHEIMERS                  New
+                              VA RHEUM                       New
+                              VA AMPUTATION                  New
+                              VA BLIND                       New
+                              VA MULTIPLE SCLEROSIS          New
+  
+ ROR SELECTION RULE(#798.2)  
+                              VA ALZHEIMERS PROBLEM          New
+                              VA ALZHEIMERS PTF              New
+                              VA ALZHEIMERS VPOV             New
+                              VA AMPUTATION PROBLEM          New
+                              VA AMPUTATION PTF              New
+                              VA AMPUTATION VPOV             New
+                              VA BLIND PROBLEM               New
+                              VA BLIND PTF                   New
+                              VA BLIND VPOV                  New
+                              VA BREAST CA PROBLEM           New
+                              VA BREAST CA PTF               New
+                              VA BREAST CA VPOV              New
+                              VA CHF PROBLEM                 New
+                              VA CHF PTF                     New
+                              VA CHF VPOV                    New
+                              VA COPD PROBLEM                New
+                              VA COPD PTF                    New
+                              VA COPD VPOV                   New
+                              VA CRD PROBLEM                 New
+                              VA CRD PTF                     New
+                              VA CRD VPOV                    New
+                              VA CVD PROBLEM                 New
+                              VA CVD PTF                     New
+                              VA CVD VPOV                    New
+                              VA DIABETES PROBLEM            New
+                              VA DIABETES PTF                New
+                              VA DIABETES VPOV               New
+                              VA DYSLIPIDEMIA PROBLEM        New
+                              VA DYSLIPIDEMIA PTF            New
+                              VA DYSLIPIDEMIA VPOV           New
+                              VA HEPC PROBLEM                Modified
+                              VA HEPC PTF                    Modified
+                              VA HEPC VPOV                   Modified
+                              VA HIV PROBLEM                 Modified
+                              VA HIV PTF                     Modified
+                              VA HIV VPOV                    Modified
+                              VA HTN PROBLEM                 New
+                              VA HTN PTF                     New
+                              VA HTN VPOV                    New
+                              VA IHD PROBLEM                 New
+                              VA IHD PTF                     New
+                              VA IHD VPOV                    New
+                              VA MENTAL HEALTH PROBLEM       New
+                              VA MENTAL HEALTH PTF           New
+                              VA MENTAL HEALTH VPOV          New
+                              VA MULTIPLE SCLEROSIS PROBLEM  New
+                              VA MULTIPLE SCLEROSIS PTF      New
+                              VA MULTIPLE SCLEROSIS VPOV     New
+                              VA OSTEOARTHRITIS PROBLEM      New
+                              VA OSTEOARTHRITIS PTF          New
+                              VA OSTEOARTHRITIS VPOV         New
+                              VA RHEUM PROBLEM               New
+                              VA RHEUM PTF                   New
+                              VA RHEUM VPOV                  New
+  
+ ROR ICD SEARCH(#798.5)                             
+                              VA DIABETES                    New
+                              VA MENTAL HEALTH               New
+                              VA CHF                         New
+                              VA IHD                         New
+                              VA BREAST CA                   New
+                              VA HTN                         New
+                              VA CVD                         New
+                              VA OSTEOARTHRITIS              New
+                              VA COPD                        New
+                              VA DYSLIPIDEMIA                New
+                              VA CRD                         New
+                              VA ALZHEIMERS                  New
+                              VA RHEUM                       New
+                              VA AMPUTATION                  New
+                              VA BLIND                       New
+                              VA MULTIPLE SCLEROSIS          New
+  
+  
+ ROR LIST ITEM(#799.1)         
+                              BMI                            New
+                              MELD                           New
+                              MELD-Na                        New
+                              APRI                           New
+                              FIB-4                          New
+                              Creatinine clearance
+                              by Cockcroft-Gault             New
+                              eGFR by MDRD                   New
+                              eGFR by CKD-EPI                New
+  
+ ROR METADATA(#799.2)
+                              45                             Modified
+                              9000010.07                     Modified
+                              9000011                        Modified
+  
+ PARAMETERS (#8989.5)
+                              Depression                     Deleted
+                              Other Depression               New
+                              Major Depression               New
+  
+  
+ Option Name                                       New/Modified/Deleted
+ ----------------------------------------------------------------------
+ ROR INITIALIZE                                              New
+ ROR TASK                                                    Modified
+  
+  
+ Security Key Name                                 New/Modified/Deleted 
+ -----------------------------------------------------------------------
+ ROR VA GENERIC ADMIN                                        New
+ ROR VA GENERIC USER                                         New
+  
+  
+ Test Sites:
+ ----------
+ PALO ALTO HCS
+ San Antonio, TX
+ Coatesville, PA 
+  
+  
+ Installation Files
+ ==================
+  
+ GUI Update
+ ----------
+ IMPORTANT NOTE:  This patch includes a revised Graphical User 
+ Interface (GUI) application which must be distributed to the 
+ appropriate workstations.  After the patch is installed correctly,
+ and the GUI is updated, the version of the GUI will be 1.5.18.
+  
+ File Name         Contents      Transfer Mode  
+ ---------         -----------   -------------
+ ROR1_5P18GUI.ZIP  Zipped GUI    BINARY
+  
+ The file listed above may be obtained via File Transfer Protocol
+ (FTP).  The preferred method is to FTP the file from:
+ Download.vista.med.va.gov.
+  
+ This transmits the file from the first available FTP server.  Sites 
+ may also elect to retrieve software directly from a specific server
+ as follows:
+  
+ OIFO              FTP Address                Directory
+ ----------------  -------------------------  --------------------
+ Albany            ftp.fo-albany.med.va.gov   [anonymous.software]
+ Hines             ftp.fo-hines.med.va.gov    [anonymous.software]
+ Salt Lake City    ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+  
+ M Code
+ ------
+ Included as a standard PackMan message.
+  
+  
+ Documentation Files
+ ===================
+  
+ The documentation has been updated and is distributed in the following
+ two zipped files. Each zip file contains both the .DOC and .PDF formats. 
+  
+ File Name             Description                        Protocol
+ ----------------------------------------------------------------- 
+ ROR1_5P18DOC1.ZIP     ROR User Manual                    BINARY
+                     
+  
+ ROR1_5P18DOC2.ZIP     Release Notes,                     BINARY
+                       Technical Manual/Security Guide,
+                       Installation/Implementation 
+                       Guide
+  
+ The revised CCR documentation is available on the
+ ANONYMOUS.SOFTWARE directory at one of the following
+  
+  
+ OIFO             FTP Address                Directory
+ --------------   ------------------------   ------------------
+ Albany           ftp.fo-albany.med.va.gov   anonymous.software
+ Hines            ftp.fo-hines.med.va.gov    anonymous.software
+ Salt Lake City   ftp.fo-slc.med.va.gov      anonymous.software
+  
+  
+ Sites may retrieve documentation in one of the following ways:
+  
+ 1. The preferred method is to FTP the files from 
+    download.vista.med.va.gov, which will transmit the files from the 
+    first available FTP server.
+ 2. Sites may also elect to retrieve documentation directly from a
+    specific server listed above.
+  
+  
+ Documentation may also be retrieved from the VistA Documentation 
+ Library (VDL) on the Intranet at the following address:
+ http://www.va.gov/vdl
+  
+  
+ Patch Installation Overview:
+ ============================ 
+  
+ This patch includes an M patch and a revised Graphical User Interface
+ (GUI) executeable.
+  
+ Below is a summary of the installation steps required for this patch.
+  
+ 1.  Install M components.
+ 2.  Update GUI.
+ 3.  Schedule ROR INITIALIZE to initialize local registries.
+ 4.  Assign new security keys, ROR VA GENERIC ADMIN and ROR VA GENERIC 
+ USER.
+  
+ M Installation Instructions:
+ =========================== 
+ Installation of the patch will not take more than 5 minutes. This patch
+ can be installed with VistA users online, but Registry users should be
+ logged out of the CCR Registry Application, as a new GUI is to be
+ installed.
+  
+ NOTE: The nightly task (the [ROR TASK] option) must not be running
+       during the installation.
+  
+ 1. Check the user who scheduled the nightly job, ROR TASK.  The task must 
+ be scheduled by an active user with the ROR VA IRM security key.  If the 
+ user has been terminated or no longer has the key, make sure the job is 
+ re-scheduled by a qualified user.
+  
+ 2. Make sure you have the ROR VA IRM security key.
+  
+ 3. Use the "INSTALL/CHECK MESSAGE" option on the PackMan menu. This
+    option loads the patch into a Transport Global on your system.
+  
+ 4. From the Kernel Installation and Distribution System (KIDS)
+    menu, select the Installation menu.
+  
+ 5. From this menu, you may elect to use the following options:
+    (when prompted for INSTALL NAME, enter ROR*1.5*18)
+  
+   a.  Verify Checksums in Transport Global - This option will allow
+       you to ensure the integrity of the routines that are in the
+       transport global.
+   b.  Print Transport Global - This option will allow you to view
+       the components of the KIDS build.
+   c.  Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this
+       patch is installed.  It compares all components of this patch
+       (routines, Data Dictionaries (DD's), templates, etc.).
+   d.  Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch. It will not
+       backup any other changes such as DD's or templates.
+  
+ 6. Use the Install Package(s) option and select the package
+     ROR*1.5*18.
+  
+    The following messages display:
+  
+ Incoming Files:
+  
+  
+    798.1     ROR REGISTRY PARAMETERS  (including data)
+ Note:  You already have the 'ROR REGISTRY PARAMETERS' File.
+ I will MERGE your data with mine.
+  
+  
+    798.2     ROR SELECTION RULE  (including data)
+ Note:  You already have the 'ROR SELECTION RULE' File.
+ I will REPLACE your data with mine.
+  
+  
+    798.5     ROR ICD SEARCH  (including data)
+  
+  
+    799.34    ROR REPORT PARAMETERS  (including data)
+ Note:  You already have the 'ROR REPORT PARAMETERS' File.
+ I will OVERWRITE your data with mine.
+  
+  
+ 7. Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+ 8. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+    NO//', respond "NO".
+  
+ 9. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond "NO".
+  
+ 10. Enter the Device you want to print the Install message.  
+    You can queue the install by enter a 'Q' at the device prompt. 
+    Enter a '^' to abort the install.
+  
+ 11.  Verify that the post-installation routine, RORP018, ran with no
+ errors.
+  
+     Running Post-Install Routine: ^RORP018
+   
+     Adding Other Depression common template...
+   
+     Adding Major Depression common template...
+   
+     Deleting Depression common template...
+   
+     Updating ROR METADATA...
+   
+     Updating ROR LIST ITEM...
+   
+  
+  
+ GUI Installation Instructions:
+ =============================
+  
+ File Name         Contents      Transfer Mode  
+ ---------         -----------   -------------
+ ROR1_5P18GUI.ZIP  Zipped GUI    BINARY
+  
+ 1. Unzip the ROR1_5P18GUI.ZIP into a temporary folder.
+       
+ 2. Open the temporary folder and double click the file CCRSetup.exe to
+    begin the install.
+       
+ 3. Wait until the setup Wizard prepares the installation 
+    procedure. A welcome message displays.
+   
+ 4. Click Next to continue the installation.
+       
+ 5. Select the directory in which to install the CCR GUI. 
+    We recommend that you accept the default directory: 
+    C:\Program Files\VistA\Clinical Case Registries. To 
+    select a different location, click Change and select 
+    the directory. Click Next to proceed with installation.
+   
+ 6. Review the installation settings and click Install to 
+    proceed. The setup Wizard finishes the installation
+    and a confirmation screen displays.
+       
+ 7. Click Finish.
+  
+  
+ Post-Installation Instructions:
+ ==============================
+  
+ These instructions explain how to schedule the option, ROR INITIALIZE.  
+ This option will populate the new registries with patients. 
+  
+  
+ 1. <<< IMPORTANT >>> Before you schedule the option, notify your system
+ manager that the size of the global, ^RORDATA, is estimated to increase
+ from 7 to 10 times its current size.
+  
+  
+ 2. After you have notified the system manager, make sure you have the ROR
+ VA IRM key and then schedule the option, ROR INITIALIZE, to run.  
+  
+ <<< IMPORTANT >>> This option may take well over 24 hours to complete.  It
+ can be stopped and re-started at any time.  When you schedule it, you have
+ the option to suspend its execution during peak business hours.  The
+ option may be running at the same time ROR TASK runs.
+  
+ >D ^XUP
+ Select OPTION NAME: ROR INITIALIZE       Initialize new registries (one 
+ time) 
+  
+     The following registries will be populated with new patients: 
+           
+         VA ALZHEIMERS
+         VA AMPUTATION
+         VA BLIND
+         VA BREAST CA
+         VA CHF
+         VA COPD
+         VA CRD
+         VA CVD
+         VA DIABETES
+         VA DYSLIPIDEMIA
+         VA HTN
+         VA IHD
+         VA MENTAL HEALTH
+         VA MULTIPLE SCLEROSIS
+         VA OSTEOARTHRITIS
+         VA RHEUM
+  
+     ROR TASK last ran on MAY 13, 2012@13:04:01 and took 0d 0h 9m 0s.
+  
+     The [ROR TASK] option is scheduled to run on May 17, 2012 at 19:00.  
+     If you are going to schedule the installation, please, choose an
+     appropriate time so that the post-install will either finish well
+     before the [ROR TASK] scheduled time or start after the option
+     completion.  
+  
+ Do you wish to continue? NO// YES
+ Maximum number of registry update subtasks:  (0-10): 5// 
+ Suspend the post-install during the peak hours? NO// 
+  
+   =============================================
+   Number of registry update (sub)tasks... 5
+   Suspend the tasks during peak hours.... No
+   =============================================
+  
+ Requested Start Time: NOW// 
+ The scheduled task number is [task #] 
+  
+ 3. Verify the task is running.  After the scheduled time, (no sooner than
+ 3 minutes after) check that the registry update task and selected number
+ of subtasks (if the site has more than 100,000 records in the PATIENT file
+ (#2)) have started.
+  
+ Options on the menu, XUTM INQ, can be used to view the task and selected 
+ sub-tasks.
+  
+ [EXAMPLE]
+ Select Taskman Management Option: List Tasks
+  
+                     List Tasks Option
+  
+                          All of one user's tasks.
+                          One user's future tasks.
+                          Every task.
+                          List of tasks.
+                          Unsuccessful tasks.
+                          Future tasks.
+                          Running tasks.
+  
+                     Select Type Of Listing: List of tasks.
+ Enter list to display: [Scheduled task number from step 2.]
+  
+ All tasks within the list 847187...
+  
+ 847187: TASK^RORSET02, Local Registries Initialization.  No device.  XXXTST.
+         From Today at 8:55,  By you.  Started running Today at 8:55.
+         Job #: 578949803 [228212AB]  Updated: Today at 8:58
+  
+  
+ 4. If you want to stop the task for any reason use the option, XUTM USER
+ in the User's Toolbox. All tasks will be terminated when any one task is
+ stopped. Tasks complete the patient they are currently processing before
+ stopping so it can take a few minutes to see that these tasks have been
+ removed from TaskMan. Allow five minutes before checking TaskMan.
+  
+ To re-start the task, run the option ROR INITIALIZE again. When the
+ initialization is re-started, the patients already processed during the
+ previous stopped tasks are skipped.
+  
+ 5.  Check that the task completed successfully. You will receive VIEW
+ ALERTS after successful completion of the Registry Initialization
+ process.  The system produces the following Alerts:
+  
+ ROR: Initialization of registry VA ALZHEIMERS succeeded
+ ROR: Initialization of registry VA AMPUTATION succeeded
+ ROR: Initialization of registry VA BLIND succeeded
+ ROR: Initialization of registry VA BREAST CA succeeded
+ ROR: Initialization of registry VA CHF succeeded
+ ROR: Initialization of registry VA COPD succeeded
+ ROR: Initialization of registry VA CRD succeeded
+ ROR: Initialization of registry VA CVD succeeded
+ ROR: Initialization of registry VA DIABETES succeeded
+ ROR: Initialization of registry VA DYSLIPIDEMIA succeeded
+ ROR: Initialization of registry VA HTN succeeded
+ ROR: Initialization of registry VA IHD succeeded
+ ROR: Initialization of registry VA MENTAL HEALTH succeeded
+ ROR: Initialization of registry VA MULTIPLE SCLEROSIS succeeded
+ ROR: Initialization of registry VA OSTEOARTHRITIS succeeded
+ ROR: Initialization of registry VA RHEUM succeeded
+  
+ 6. Assign Security keys, ROR VA GENERIC ADMIN to all people who currently 
+ hold ROR VA HIV ADMIN or ROR VA HEPC ADMIN keys and ROR VA GENERIC USER 
+ to all people who currently hold ROR VA HIV USER or ROR VA HEPC USER keys.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;CLINICAL CASE REGISTRIES;**[Patch List]**;Feb 17, 2006;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ROR10
+    Before: B33339833   After: B33146780  **18**
+Routine Name: RORERR20
+    Before: B65392976   After: B71322464  **18**
+Routine Name: ROREXT
+    Before: B24189218   After: B26631704  **18**
+Routine Name: RORP018
+    Before:       n/a   After: B38673890  **18**
+Routine Name: RORRP013
+    Before: B24923269   After: B33977201  **18**
+Routine Name: RORRP030
+    Before:  B2779702   After:  B4623293  **10,18**
+Routine Name: RORSET02
+    Before:       n/a   After: B21485315  **18**
+Routine Name: RORUPD09
+    Before:  B9474836   After: B11144111  **18**
+Routine Name: RORUPD50
+    Before: B18841385   After: B24129908  **10,14,18**
+Routine Name: RORUPDUT
+    Before: B47401581   After: B53163080  **18**
+Routine Name: RORUTL01
+    Before: B29781636   After: B43789340  **18**
+Routine Name: RORUTL05
+    Before: B58374925   After: B62674116  **1,2,18**
+Routine Name: RORUTL11
+    Before:  B3560733   After:  B3652168  **13,14,15,17,18**
+Routine Name: RORX022A
+    Before:B125489130   After:B129621152  **8,13,17,18**
+ 
+Routine list of preceding patches: 2, 17
+
+=============================================================================
+User Information:
+Entered By  : RAY,CONSTANCE                 Date Entered  : FEB 06, 2012
+Completed By: BERRY,LINDA                   Date Completed: SEP 20, 2012
+Released By : VANCAMP,E PHILIP              Date Released : OCT 09, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

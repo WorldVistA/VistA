@@ -1,0 +1,464 @@
+$TXT Created by ALOI,LEONARD C at TEST.INDIANAPOLIS.MED.VA.GOV  (KIDS) on Tuesday, 03/06/12 at 15:22
+=============================================================================
+Run Date: AUG 22, 2012                     Designation: DGBT*1*19
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #20                      Status: Released
+                  Compliance Date: SEP 11, 2012
+=============================================================================
+
+
+Subject: Beneficiary Travel Dashboard 1.0
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+ The purpose of the Beneficiary Travel Dashboard (BTD) web application is 
+ to assist Veterans Health Administration (VHA) Travel Office users who 
+ create travel claims make faster, more accurate decisions on mileage 
+ reimbursement. 
+  
+ This patch provides the infrastructure for the BTD web application which 
+ is installed as a client on the user's personal computer (PC).
+  
+ This patch should be installed by the compliance date, but installation 
+ of the web components will be phased according to the implementation 
+ schedule.  One web server will be configured per region.  Installation of 
+ the web and MUMPS components will be coordinated by the regional Service 
+ Line Manager (SLM), between the Information Resource Manager (IRM), local 
+ system managers and local Beneficiary Travel staff.  Training information 
+ will be sent to facilities prior to usage by travel clerks.  Depending on 
+ where your region falls in the implementation schedule, the BT Dashboard 
+ web application may be implemented shortly after installing this patch, 
+ or it may be farther in the future.
+  
+ Refer to the Beneficiary Travel Dashboard Installation Guide and User 
+ manual for instructions on installing and using web components of this 
+ application.
+  
+ BT Dashboard is a web-based application that displays a configurable list 
+ of the closest VHA facilities, as well as the clinical specialties 
+ offered at each facility, based on configuration in the new VistA  
+ Beneficiary Travel Dashboard Config File #392.5, installed with this 
+ patch. All of the data displayed in BT Dashboard is provided by the VistA 
+ Beneficiary Travel system and no data is entered via the BT Dashboard web 
+ application. 
+  
+ When configured, the clinical specialties can be viewed by selecting the 
+ facility name. BT Dashboard also displays patient appointments, notes, 
+ orders, consults, past claims and calculates the driving mileage from the 
+ patient's address to a configured set of VHA institutions. The BT 
+ Dashboard application automatically synchronizes with travel claims as 
+ they are created in VistA using the beneficiary travel claim menu. 
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)   New/Modified/Deleted
+ ------------------          -------------------   --------------------
+ BENEFICIARY TRAVEL
+ DASHBOARD CONFIG FILE
+ (#392.5)  
+                              NAME (392.5,.01)                NEW
+  
+                              VA INSTITUTION (392.5,1)        NEW
+                              VA INSTITUTION (392.52,.01)     NEW
+                              ACTIVE (392.52,1)               NEW
+                              ALTERNATE ADDRESS (392.52,2)    NEW
+                              SPECIALTY(392.52,3)             NEW
+                              SPECIALTY (392.523,.01)         NEW
+                              NON-VA INSTITUTION (392.5,2)    NEW
+                              NON-VA INSTITUTION (392.53,.01) NEW
+                              ACTIVE (392.53,1)               NEW
+                              ADDRESS (392.53,2)              NEW
+                              SPECIALTY (392.53,3)            NEW
+                              SPECIALTY (392.533,.01)         NEW
+  
+ BENEFICIARY TRAVEL 
+ DASHBOARD AUDIT FILE 
+ (#392.51) 
+                              AUDIT (.01)                     NEW
+                              NAME (1)                        NEW
+                              ACTION (2)                      NEW
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                New/Modified/Deleted
+ ---------------                                --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                        Type          New/Modified/Deleted
+ -----------                        ----          --------------------
+ DGBT BENE TRAVEL CONFIG EDIT       Edit                NEW
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                  New/Modified/Deleted
+ -------------                                  --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name          Type   File Name (Number)   New/Modified/Deleted
+ -----------------      ----   ------------------   --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ 20070411  Beneficiary Travel Package - Provides changes to the VistA 
+ Beneficiary Travel Package as Congress makes legislative changes to 
+ benefits rules and reimbursement amounts.
+  
+ Patient Safety Issues (PSI's)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites
+ ----------
+  
+ VAMC Long Beach Medical Center, Long Beach, CA
+ VA Greater Los Angeles Healthcare Systems, Los Angeles, CA
+ VA San Diego Healthcare System, San Diego, CA
+ James A Haley Veterans Hospital, Tampa, FL
+ Orlando VA Medical Center, Orlando, FL
+ Richard L. Roudebush VA Medical Center (Station 583), Indianapolis, IN
+ Minneapolis VA HCS (618), Minneapolis, MN
+ Southern Nevada Healthcare System, Las Vegas, NV
+ SAVAHCS, Tucson, AZ
+ New Mexico VA HealthCare Facility, Albuquerque, NM
+ Amarillo VA Health Care System, Amarillo, TX
+ Northern Indiana Health Care System, Marion, IN
+  
+ Documentation Retrieval Instructions:
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany       ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines        ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.va.gov/vdl/
+  
+ Title                     File Name                            FTP Mode
+ ---------------------------------------------------------------------
+  
+ Beneficiary Travel (BT) DGBT_1_19IG.PDF                        binary
+   Dashboard Installation Guide
+  
+ Beneficiary Travel (BT)   DGBT_1_19UM.PDF                      binary
+   Dashboard User Manual
+  
+ Beneficiary Travel (BT)   DGBT_1_19TM.PDF                       binary
+    Technical Manual
+  
+ Beneficiary Travel (BT)   DGBT_1_19RN.PDF                      binary
+   Dashboard Release Notes
+  
+ Patch Installation: 
+  
+ Pre/Post-installation Overview
+ ==============================
+  
+ The web components will be installed after this patch on a regional 
+ basis.  Facilities within a region will share a single regional web 
+ server.  Refer to the DGBT Beneficiary Travel Installation Guide for more 
+ information.  Implementation of the web application will be done based on 
+ a phased schedule.
+  
+  
+ M Component Installation Instructions
+ -------------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option
+  
+ 3.  From the Installation Menu, you may elect to use the following 
+     options. When prompted for the INSTALL enter the patch DGBT*1*19.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option
+     and choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//YES
+  
+     Enter options you wish to mark as 'Out Of Order': 
+           
+          DGBT BENE Travel Screen Claim Enter/Edit
+  
+ 8.  Enter protocols you wish to mark as 'Out Of Order':
+  
+ 9.  Delay Install (Minutes):  (0-60): 0//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ Results of the M installation can be found be going to the KIDS Menu and 
+ selecting PRINT INSTALL.  A Mailman message will be generated indicating 
+ install completion with the results.
+  
+ The Edit the BT Dashboard configuration file [DGBT BENE TRAVEL 
+ CONFIG EDIT] option will be used by the ADPAC to add the institution and 
+ specialty data.  The DGBT SUPERVISOR KEY is required to access this 
+ option.
+  
+ The ADPAC or user can add entries to the VA Institution and Non-VA 
+ Institution multiples. The Non-VA Institution multiple is a free text 
+ field that can be used to track institutions that are not in the 
+ Institution file #4. Institution to Track and Specialty multiples can be 
+ entered under each multiple. This data will appear beside the mileage in 
+ BT Dashboard.
+  
+ a.      Institution to Track points to the Institution file (#4)
+ b.      Specialty is a free text field and multiple specialties can be 
+ added for each institution. It is not required, but can be used to store 
+ services offered and notes about the institution.
+  
+ Note: The Alternate Address field in the VA Institution multiple is 
+ necessary only if the application returns 0 mileage for the site (i.e. 
+ the address in the Institution file #4 cannot be resolved by the mapping 
+ API used by BT Dashboard).
+  
+ BT Dashboard Configuration
+ ----------------------------
+  
+ Use the VistA option Edit the BT Dashboard configuration file [DGBT BENE 
+ TRAVEL CONFIG EDIT] to add a single entry to the BENEFICIARY 
+ TRAVEL DASHBOARD CONFIG File (#392.5).
+  
+ Note:  There should be only one entry in the BENEFICIARY TRAVEL 
+ DASHBOARD CONFIG file (#392.5) and its internal entry number (IEN) 
+ should be '1'.
+  
+ To ensure that the IEN is '1', an Information Resource Management (IRM) 
+ programmer or other staff member can initially create one "stub" entry 
+ in the new Beneficiary Travel Dashboard Config file #392.5 and verify 
+ that its IEN is '1'. The Name field (#.01) only can be entered to create
+ the record. Use either the Edit the BT Dashboard Configuration file 
+ [DGBT BENE TRAVEL CONFIG EDIT] option or FileMan ENTER OR EDIT FILE 
+ ENTRIES to add the entry.
+  
+ Sample Beneficiary Travel Dashboard Configuration session using the Edit 
+ the BT Dashboard Configuration file [DGBT BENE TRAVEL CONFIG EDIT] option
+ from programmer mode to enter a "stub" entry:
+  
+  
+ -------------------------------------------------------------------------
+ >D ^XUP
+  
+ Setting up programmer environment
+ This is a TEST account.
+  
+ Terminal Type set to: C-VT320
+  
+ Select OPTION NAME: DGBT BENE TRAVEL CONFIG EDIT       Edit the BT 
+ Dashboard configuration file
+ Edit the BT Dashboard configuration file 
+   
+  Select BENEFICIARY TRAVEL DASHBOARD CONFIG NAME: YOURFACILITY VAMC
+    Are you adding 'YOURFACILITY VAMC' as
+      a new BENEFICIARY TRAVEL DASHBOARD CONFIG (the 1ST)? No// Y  (Yes)
+ Select VA INSTITUTION: ^
+ Select BENEFICIARY TRAVEL DASHBOARD CONFIG NAME: 
+ >
+ --------------------------------------------------------------------------
+  
+  
+ To verify that the IEN of the new entry is '1', use FileMan INQUIRE TO 
+ FILE ENTRIES and select "BOTH" at the "Include COMPUTED fields" prompt.
+ There should be only one entry. Its IEN will be labeled "NUMBER" in the
+ display and its value should be '1'.
+  
+ Example
+ --------------------------------------------------------------------------
+ --
+ VA FileMan 22.0
+  
+ Select OPTION: INQUIRE TO FILE ENTRIES  
+  
+ OUTPUT FROM WHAT FILE: BENEFICIARY TRAVEL DASHBOARD CONFIG// 
+ Select BENEFICIARY TRAVEL DASHBOARD CONFIG NAME: YOURFACILITY VAMC  
+  ANOTHER ONE: 
+  STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO// BOTH Computed Fields and 
+ Record Number (IEN)
+   
+  NUMBER: 1                               NAME: YOURFACILITY VAMC
+   PRIMARY INSTITUTION: YOURFACILITY VAMC
+ --------------------------------------------------------------------------
+ ---  
+  
+  
+ The ADPAC or supervisor can then complete the configuration work by 
+ adding entries to the VA Institution and Non-VA Institution multiples.
+  
+ The Non-VA Institution multiple is a free text field that can be used to 
+ track institutions that are not in the Institution file #4. Institution 
+ to Track and Specialty multiples can be entered under each. The list of
+ specialties will appear in BT Dashboard when the user clicks on the 
+ mileage figure next to the institution.
+ a.      Institution to Track points to the Institution file (#4)
+ b.      Specialty is a free text field and multiple specialties can be 
+ added for each institution. This field is not required, but can also be
+ used to store services offered and notes about the institution.
+  
+ Note: The Alternate Address field in the VA Institution multiple is 
+ necessary only if the application returns 0 mileage or incorrect mileage
+ for the site (i.e., the address in the Institution file #4 cannot be
+ resolved by the mapping API used by BT Dashboard).
+  
+  
+ Sample Beneficiary Travel Dashboard Configuration session using the Edit 
+ the BT Dashboard Configuration file [DGBT BENE TRAVEL CONFIG EDIT] option
+ from the Beneficiary Travel Menu:
+  
+ --------------------------------------------------------------------------
+ ----
+  
+           Bene Travel Account file Enter/Edit
+           Claim Enter/Edit
+           Distance Enter/Edit
+           Edit the BT Dashboard configuration file
+           Income Certification Eligibility
+           Parameter Rates Enter/Edit
+           Report of Claim Amounts
+           Reprint of 70-3542d form
+           View of Claim
+  
+ Select Beneficiary Travel Menu Option: Edit the BT Dashboard 
+ configuration file
+   
+ Select BENEFICIARY TRAVEL DASHBOARD CONFIG NAME: YOURFACILITY VAMC
+ NAME: YOURFACILITY VAMC//
+ Select VA INSTITUTION: [YOUR CBOC]  
+  Are you adding '[YOUR CBOC] as a new VA INSTITUTION (the 
+  1ST for this BENEFICIARY TRAVEL DASHBOARD CONFIG)? No// Y  (Yes)
+    ACTIVE: 1  YES
+    ALTERNATE ADDRESS: 3111 MAIN STREET
+    Select SPECIALTY: SPECIALTY 1
+    Are you adding 'SPECIALTY 1' as a new SPECIALTY (the 1ST for this VA 
+  INSTITUTION)? No// Y  (Yes)
+    Select SPECIALTY:
+ Select VA INSTITUTION:
+ Select NON-VA INSTITUTION: INSTITUTION 2
+    Are you adding 'INSTITUTION 2' as a new NON-VA INSTITUTION (the 1ST 
+ for this BENEFICIARY TRAVEL DASHBOARD CONFIG)? No// Y  (Yes)
+    ACTIVE: 1  YES
+    ADDRESS: 3112 MAIN
+    Select SPECIALTY: SPECIALTY 2
+    Are you adding 'SPECIALTY 2' as a new SPECIALTY (the 1ST for this 
+  NON-VA INSTITUTION)? No// Y  (Yes)
+    Select SPECIALTY:
+ Select NON-VA INSTITUTION: ^
+ --------------------------------------------------------------------------
+  
+  
+ Sample completed configuration record:
+  
+ --------------------------------------------------------------------------
+  Select BENEFICIARY TRAVEL DASHBOARD CONFIG NAME: INDIANAPOLIS VAMC  
+  ANOTHER ONE: 
+  STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO// BOTH Computed Fields and 
+ Record Number (IEN)
+   
+  NUMBER: 1                               NAME: INDIANAPOLIS VAMC
+    PRIMARY INSTITUTION: INDIANAPOLIS VAMC
+ INSTITUTION TO TRACK: INDIANAPOLIS VAMC
+    ACTIVE: 1
+ INSTITUTION TO TRACK: BLOOMINGTON       ACTIVE: 1
+ SPECIALTY: Nutrition (2 days a month)
+ SPECIALTY: Mental Health
+ SPECIALTY: Social Work (1 day a month)
+ SPECIALTY: BT Dashboard User PMRS (1 day a month)
+ INSTITUTION TO TRACK: MUNCIE            ACTIVE: 1
+ SPECIALTY: Part-time Nutrition-MOVE Program
+ SPECIALTY: Clinical Pharmacist - fulltime
+ SPECIALTY: PTSD
+ SPECIALTY: Tele-retinal
+ SPECIALTY: Radiology
+ SPECIALTY: Lab Drawing - only couriered to Fort Wayne
+ --------------------------------------------------------------------------
+ --
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;Beneficiary Travel;**[Patch List]**;September 25, 2001;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGBTE
+    Before: B13515841   After: B14172323  **2,19**
+
+=============================================================================
+User Information:
+Entered By  : HARMON,LUCILLE                Date Entered  : SEP 06, 2011
+Completed By: YAMAMOTO,LARRY                Date Completed: JUL 24, 2012
+Released By : HEUER,CINDY                   Date Released : AUG 22, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

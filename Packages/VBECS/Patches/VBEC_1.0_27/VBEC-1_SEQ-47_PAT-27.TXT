@@ -1,0 +1,256 @@
+
+=============================================================================
+Run Date: SEP 24, 2012                     Designation: VBEC*1*27
+Package : VBEC - VBECS                        Priority: Mandatory
+Version : 1        SEQ #47                      Status: Released
+                  Compliance Date: NOV 08, 2012
+=============================================================================
+
+
+Subject: UPDATES FOR VBECS 1.6
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ VBEC*1.0*27 is exported as part of the VistA Blood 
+ Establishment Computer System (VBECS) Version 1.6.0 release.
+  
+ VBECS related VistA patches require customer validation in local Test 
+ accounts prior to installation in Production to meet Food & Drug 
+ Administration (FDA) requirements. The user validates the Blood Bank 
+ software for its intended use prior to its acceptance and use for 
+ patient care.
+  
+ Therefore, it is imperative that OIT Field Operations coordinate the 
+ installation of Blood Bank software patches with Pathology & Laboratory 
+ Medicine Service staff to allow adequate time for impact analysis and 
+ testing the changes prior to installation in Production. 
+  
+ The VBEC*1.0*27 patch, bundled and released with LR*5.2*412, addresses 
+ several issues: 
+  
+  1. 100 VistA MR 082310 (HD 419828) - Fixed an error that was caused by 
+     an attempt to file the DFN of the patient in the VBECS DSS EXTRACT
+     file (#6002.03). When the DFN matched too many first digits of the 
+     SSN's on file it resulted in overloaded memory. The correction 
+     forces FileMan to bypass all lookup routines and file the data as 
+     presented. 
+     No verification required. 
+  
+  2. 103 VistA MR 042111 (HD 473130) - Fixed an error that caused trailing 
+     zeroes to be stored in the DATE/TIME OF TRANSFUSION field (#9) in the 
+     VBECS DSS EXTRACT file (#6002.03). This also created an invalid "C" 
+     cross reference. The correction removes any trailing zeroes before 
+     the data is filed.
+     No verification required.
+  
+  3. 107 VistA MR 072711 - Fixed an error in the Maximum Surgical Blood 
+     Order Schedule (MSBOS). Surgeries set as "No blood required" did 
+     not present a message to the clinician when blood products were 
+     requested. The correction will provide the No blood required 
+     information for CPRS to display.
+     Verification steps: 
+       a) Blood Bank user must define a surgery in the VBECS system as 
+          No blood required.
+       b) CPRS user with ordering privileges then places an order for 
+          Type and Screen and one unit of Red Blood Cells on a test 
+          patient. 
+       c) CPRS user selects PRE-OP from the Urgency drop down box and 
+          selects the Surgery name that was configured by the Blood 
+          Bank user (step a.).
+       d) A No Blood Required message box displays to the CPRS user 
+          informing them that no blood is required for that surgery. The 
+          user can click Yes to remove the component order and continue 
+          to complete the order, or click No and record a reason for the 
+          request in comments.
+       e) The verification is successful when the No Blood Required 
+          message box displays to the CPRS user. 
+  
+ There is also a VBECS 1.6.0 server update patch that is also being 
+ released. Please refer to the VistA Blood Establishment Computer 
+ Software (VBECS) 1.6.0 Release Notes for detailed information 
+ about corrections in that patch. These documents will be found in 
+ the VBECS_1_6_0_DOCS_BUNDLE.ZIP file.
+  
+ BLOOD BANK CLEARANCE: 
+ =====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch VBEC*1*27 contains 
+ changes to a package referenced in BBM TEAM REVIEW OF VISTA PATCHES. 
+ This patch does not alter or modify any VistA Blood Bank software design 
+ safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch VBEC*1*27 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ ROUTINES:
+ =========
+  VBECA3C
+  VBECDSS
+  VBECP27
+  
+ DATA DICTIONARY:
+ ================
+  N/A
+  
+ REMEDY TICKETS:
+ ===============
+  HD0000000068013     HD0000000068136     HD0000000419828
+  HD0000000424381     HD0000000473130     HD0000000482899
+  HD0000000485590     HD0000000485651     HD0000000486484
+  HD0000000487089     HD0000000505790     HD0000000531346
+  HD0000000586132     HD0000000607702     HD0000000607791
+  
+ TEST SITES:
+ ===========
+  DALLAS, TX 
+  DURHAM, NC 
+  HEARTLAND-EAST HCS 
+    >Marion, IL 
+    >Poplar Bluff, MO 
+    >St. Louis, MO 
+  MILWAUKEE, WI 
+  PHILADELPHIA, PA 
+  PITTSBURGH, PA 
+  PUGET SOUND, WA 
+  SAN ANTONIO, TX 
+  SAN FRANCISCO, CA 
+  
+ INSTALLATION INFORMATION:
+ ==========================
+ The file listed below is obtained via the controlled VBECS software 
+ FTP. 
+  
+ Sites that have already installed VBECS in test or production must 
+ obtain the VBEC*1.0*27, LR*5.2*412, and VBECS 1.6.0 patches from 
+ the controlled VBECS software FTP site at: 
+      IP: 10.3.9.181 
+      Port: 20001 
+  
+      Enter your Domain and NT user name and password to gain access.
+  
+ These patches are released with a (45) day compliance for all sites that 
+ have VBECS installed in test or production.
+  
+ Installation Files: 
+ ===================
+  VBEC_27_LR_412.KID
+  
+ Documentation:  
+ ============== 
+ Documentation is available for the VBECS package on the 
+ ANONYMOUS.SOFTWARE directory at one of the following Office of 
+ Information (OI) Field Offices. Sites will be able to utilize
+ Documentation in either the ".PDF" or ".DOC" format after they extract 
+ the ZIP file.
+  
+ The preferred method is to FTP the files from:
+ Download.vista.med.va.gov
+  
+ This transmits files from the first available FTP server. Sites may also 
+ elect to retrieve documentation directly from a specific server as 
+ follows:
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+  
+ NOTE:  The ZIP file listed below will be listed in each of the 
+ VBECS and LR patches that are part of the VBECS package and associated 
+ patches. It only needs to be downloaded once.
+  
+ File Name                                   Retrieval format:  
+ ===========                                 ================= 
+ VBECS_1_6_0_DOCS_BUNDLE.ZIP                 BINARY 
+  
+  
+ The following files are contained in the VBECS_1_6_0_DOCS_BUNDLE.ZIP file 
+ and will not be individually located on the OI Field Office Anonymous 
+ Directories.
+  
+ The VBECS_1_6_0_DOCS_BUNDLE.ZIP file needs to be extracted on your 
+ system for use.
+  
+ =======================================================================
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 Patch 
+ Installation Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 Patch 
+ Installation Guide.pdf
+ VBECS 1.6.0 Patch Installation Form for the Production Environment.docx
+ VBECS 1.6.0 Patch Installation Form for the Production Environment.pdf
+ VBECS 1.6.0 Patch Installation Form for the Test Environment.docx
+ VBECS 1.6.0 Patch Installation Form for the Test Environment.pdf
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 
+ Release Notes.docx
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 
+ Release Notes.pdf
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 Technical 
+ Manual-Security Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 Technical 
+ Manual-Security Guide.pdf
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 User Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 User Guide.pdf
+ VBECS Known Defects and Anomalies.docx
+ VBECS Known Defects and Anomalies.pdf
+  
+ Installation Instructions:
+ ==========================
+ This patch may be loaded with users on the system.
+ Installation will take less than 5 minutes.
+  
+     1) Use the 'LOAD A DISTRIBUTION' option on the KIDS Installation
+        menu. The Host File name is VBEC_27_LR_412.KID Answer YES to the
+        question: Want to Continue with Load? YES// 
+     2) From the Kernel Installation and Distribution System Menu,
+        select the Installation menu.
+     3) From this menu, you may elect to use the following options
+        (when prompted for the INSTALL NAME, enter VBEC*1.0*27).
+        a) Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b) Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch
+           (routines, DDs, templates, etc.).
+        c) Verify Checksums in Transport Global - this option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+        d) Print Transport Global - this option will allow you to view 
+           the components of the KIDS build.
+     4) Use the Install Package(s) option and select the package 
+        VBEC*1.0*27.
+     5) When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//'  respond NO
+     6) When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//'  respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VBECS;**[Patch List]**;Apr 14, 2005;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VBECA3C
+    Before: B16841971   After: B17448242  **27**
+Routine Name: VBECDSS
+    Before: B14002875   After: B15027740  **1,27**
+Routine Name: VBECP27
+    Before:       n/a   After:  B3181798  **27**
+ 
+Routine list of preceding patches: 1
+
+=============================================================================
+User Information:
+Entered By  : MORTON,RANDY                  Date Entered  : MAY 03, 2011
+Completed By: ROBERTS,JERILYN               Date Completed: AUG 24, 2012
+Released By : MURCH,CLAUDETTE               Date Released : SEP 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

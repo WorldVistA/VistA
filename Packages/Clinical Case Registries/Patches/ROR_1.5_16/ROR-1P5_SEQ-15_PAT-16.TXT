@@ -1,0 +1,152 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Wednesday, 08/24/11 at 07:31
+=============================================================================
+Run Date: OCT 21, 2011                     Designation: ROR*1.5*16
+Package : ROR - CLINICAL CASE REGISTRIES      Priority: Mandatory
+Version : 1.5        SEQ #15                    Status: Released
+                  Compliance Date: NOV 21, 2011
+=============================================================================
+
+Associated patches: (v)ROR*1.5*14  <<= must be installed BEFORE `ROR*1.5*16'
+
+Subject: CORRECTION TO FIB-4 CALCULATION (LIVER SCORE)
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issue:
+       
+ The FIB-4 score is returning incorrect values in the Liver Score by 
+ Range Report.  Also, the text representation of the calculation at 
+ the bottom of the report displays incorrect.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A     
+                
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1.  HD0000000512757 Error in FIB 4 formula
+     Duplicate:
+     HD0000000513208 FIB-4 is giving the wrong results
+      
+      
+ PARTICIPATING TEST SITES:
+ =========================
+ San Antonio, TX
+ Coatesville, PA
+ Palo Alto HCS
+  
+      
+ REMEDY OVERVIEW:
+ ================     
+ 1. HD0000000512757 Error in FIB 4 formula
+       
+ PROBLEM:
+ --------
+ When running the Liver Score by Range Report, incorrect values are being
+ displayed in the  FIB 4 column as well as no decimal places are 
+ displaying.  Also, the text representation of the calculation also
+ displays incorrectly. 
+        
+ RESOLUTION:
+ -----------     
+ A modification will be made to the FIB 4 liver score calculation in
+ routine RORX019A to utilize the correct calculation as well as display the
+ result with 2 decimal places.
+      
+ DIALOG=7981019.001 will be modified to display the text representation of
+ the calculation correctly.
+      
+     
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+      
+ If installed during the normal workday, it is recommended that the 
+ Clinical Case Registries users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 2 minutes 
+  
+ 1.  Load Transport Global 
+     ---------------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter ROR*1.5*16):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+  a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+   b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+   c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;CLINICAL CASE REGISTRIES;**[Patch List]**;Feb 17, 2006;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RORX019A
+    Before:B208916635   After:B216855357  **10,13,14,16**
+ 
+Routine list of preceding patches: 14
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : JUN 08, 2011
+Completed By: CRICHLOW,SHERRY               Date Completed: OCT 13, 2011
+Released By : BELSCHWINDER,MICHAEL          Date Released : OCT 21, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

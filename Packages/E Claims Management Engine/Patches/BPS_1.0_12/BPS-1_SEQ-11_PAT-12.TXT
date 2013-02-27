@@ -1,0 +1,227 @@
+$TXT Created by GUSTAFSON,ERIC S at DEVVII.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 10/26/11 at 23:47
+=============================================================================
+Run Date: DEC 13, 2011                     Designation: BPS*1*12
+Package : BPS - E CLAIMS MGMT ENGINE          Priority: Mandatory
+Version : 1        SEQ #11                      Status: Released
+                  Compliance Date: DEC 29, 2011
+=============================================================================
+
+Associated patches: (v)BPS*1*10    <<= must be installed BEFORE `BPS*1*12'
+
+Subject: GET REVERSAL PAYER SHEET FROM THE PHARMACY PLAN
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The transaction associated with an ePharmacy claim may not have the 
+ current reversal payer sheet that should be used for a reversal claim.  To
+ resolve this problem, this patch will retrieve the reversal payer sheet
+ from the ePharmacy Plan associated with the ePharmacy claim.  On January 
+ 1, 2012, all ePharmacy claims must be submitted using National Council 
+ for Prescription Drug Programs (NCPDP) version D.0.  Installing this 
+ update will ensure that reversal claims will be submitted in the D.0 
+ format.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. HD0000000533767 - Retrieve the Reversal Payer Sheet from the Pharmacy
+    Plan
+    HD0000000536013 - Pharmacy transactions (Duplicate)
+  
+ Problem:
+ -------
+ If the payer changes payer sheet versions in between the initial claim
+ request and the subsequent reversal request, there is currently no way
+ to use the new version of the reversal payer sheet for that plan.
+  
+ Resolution:
+ ----------
+ This coding fix would correct this problem by always using the payer
+ sheet as specified in the ePharmacy plan.  ECME should retrieve the
+ Reversal Payer Sheet from the ePharmacy PLAN file (#366.03) rather than
+ from the BPS TRANSACTION file (#9002313.59).
+  
+  
+ Test Sites:
+ ----------
+ Richmond
+ Birmingham
+ Heartland East/St. Louis
+ Phoenix
+ Louisville 
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ No documentation is associated with this patch.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no pre or post-installation routines.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ The installation of this patch can be queued.  The installation will
+ take less than 2 minutes.
+  
+ To avoid disruptions, this patch should be installed during non-peak
+ hours when there is minimal activity on the system.  Avoid times when ECME
+ claims are being transmitted.  Of particular concern would be the options
+ below.
+  
+     1. BPS NIGHTLY BACKGROUND JOB [BPS NIGHTLY BACKGROUND JOB]
+        Do not install the patch when ECME claims are being generated
+        by the BPS Nightly Background Job option.  Wait for this job to
+        finish or complete the installation before this job starts.
+  
+     2. Scheduled CS Transmission [PSXR SCHEDULED CS TRANS] and
+        Scheduled Non-CS Transmission [PSXR SCHEDULED NON-CS TRANS]
+        Do not install the patch when prescriptions are being transmitted
+        to Consolidated Mail Outpatient Pharmacy (CMOP).  Wait for the
+        CMOP transmissions to finish or complete the installation before
+        the transmissions start. Both the CS (Controlled Substances) and
+        the non-CS CMOP transmission options should be checked.  Check with
+        Pharmacy Service or your Pharmacy ADPAC to find out when CMOP
+        transmissions occur.
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME, enter
+     BPS*1.0*12:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', enter NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', enter NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? NO//', enter NO.
+  
+ 8.  When prompted 'Device: Home//' enter the correct device.  This 
+     install can be queued.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', enter 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no post-installation processes that need to be performed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;E CLAIMS MGMT ENGINE;**[Patch List]**;JUN 2004;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: BPSECA8
+    Before: B20615528   After: B28856161  **1,5,10,12**
+ 
+Routine list of preceding patches: 10
+
+=============================================================================
+User Information:
+Entered By  : BLAESER,DAVID                 Date Entered  : OCT 19, 2011
+Completed By: CONQUEST,KENNETH              Date Completed: NOV 29, 2011
+Released By : CAULFIELD,MARY                Date Released : DEC 13, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

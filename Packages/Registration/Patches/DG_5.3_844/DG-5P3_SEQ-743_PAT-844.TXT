@@ -1,0 +1,190 @@
+$TXT Created by CHANDARANA,RISHAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 06/27/11 at 18:19
+=============================================================================
+Run Date: AUG 29, 2011                     Designation: DG*5.3*844
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #743                    Status: Released
+                  Compliance Date: SEP 29, 2011
+=============================================================================
+
+
+Subject: TREATING SPECIALTY UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch will change the names of four treating specialties and 
+  inactivate one treating specialty.
+   
+  ASSOCIATED REMEDY TICKETS:
+  =========================  
+  HD0000000487501 - Treating Specialty Table update needed.
+  
+  ASSOCIATED NSR'S:
+  ================
+  N/A 
+   
+  PARTICIPATING TEST SITES:
+  ========================
+  Central Texas HCS
+  Louisville, KY
+  Martinsburg, WV
+  
+   
+  REMEDY OVERVIEW:
+  ===============
+  HD0000000487501 - Treating Specialty Table update needed.
+   
+  Problem:
+  ========
+  Changes are needed for the SPECIALTY (#42.4) file due to a coming
+  change to VHA Directive 2006-014 "Admission Criteria, Service Codes and
+  Discharge Criteria for VA Nursing Home Care Units".
+  
+  Solution:
+  =========
+  This patch will change the names of four treating specialty codes
+  and inactivate one treating specialty code as defined below:
+  
+  Name Changes for the following four codes:
+  =========================================
+    Treating       Treating                       NEW NAME
+    Specialty      Specialty   
+    Code           Name 
+    -----------------------------------------------------------------
+     67       NH SHORT STAY MAINTENANCE       NH SHORT-STAY CONTINUING CARE
+     68       NH SHORT STAY PSYCHIATRIC CARE  NH SHORT-STAY MH RECOVERY
+     44       NH LONG STAY MAINTENANCE CARE   NH LONG-STAY CONTINUING CARE
+     45       NH LONG STAY PSYCHIATRIC CARE   NH LONG-STAY MH RECOVERY 
+  
+   These changes will be effective upon install of the patch.  The names
+   will also be changed in the FACILITY TREATING SPECIALTY (#45.7) file.  
+  
+   
+  Inactivating one code:
+  =====================
+    Treating              Treating                     INACTIVE DATE
+    Specialty             Specialty   
+    Code                  Name 
+    -----------------------------------------------------------------
+     43                  NH LONG STAY SKILLED NURSING    10/1/11
+   
+  The above code will become inactive on 10/1/11 and per email sent on 
+  6/8/11 announcing the directive change, sites should have followed 
+  the instructions for the inactivation as defined by the 
+  VA CLC Chief before that date. 
+  
+  Per email instructions:
+   
+  Required actions to prepare for the inactivation of TS 43:
+  
+  1. Between now and the effective date, as residents who are assigned
+     to treating specialty 43 are reviewed by the interdisciplinary team
+     for care planning, the team should:
+     Review the resident's reason for admission and goals for care.
+     Assign that resident to one of the following long stay treating 
+     specialty codes based on that review and discussion:
+  
+         TS 42 - Dementia care (NH LONG STAY DEMENTIA CARE)
+         TS 44 - Maintenance care (NH LONG-STAY CONTINUING CARE)
+         TS 45 - Psychiatric care or chronically mentally ill care
+                (NH LONG-STAY MH RECOVERY)
+         TS 46 - Spinal Cord Injury and Disorders
+                (NH LONG STAY SPINAL CORD INJ)
+  
+  2. Do not assign any new admissions to treating specialty code
+     43 effective immediately.
+  
+  3. By Sept 30, 2011 there will be no residents assigned treating
+     specialty code 43 -  Long stay skilled nursing care.
+  
+  
+                           
+  INSTALLATION INSTRUCTIONS:
+  ===========================
+  This patch may be run with users on the system, HOWEVER because
+  the Registration options need to be placed out of order, we
+  suggest it be installed after business hours.
+   
+  Installation will take less than 2 minutes.
+   
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+    
+       NOTE:  If the required patches are not installed, the transport 
+              global will be removed.  If the transport global is removed
+              you will need to repeat this step.
+    
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+    
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter DG*5.3*844):
+       a.  Compare Transport Global to Current System  - this option will
+           allow you to view all changes that will be made when the patch
+           is installed.  It compares all components of the patch 
+           (routines, DDs, templates, etc.).
+       b.  Verify Checksums in Transport Global - this option will
+           allow you to ensure the integrity of the routines that are in
+           the transport global.
+       c.  Print Transport Global - this option will allow you to view the
+           components of the KIDS build.
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+    
+   4.  Use the Install Package(s) option and select the package DG*5.3*844.
+    
+   5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', respond NO.
+    
+   6.  When prompted,'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', respond Yes.
+       
+       When prompted,'Enter options you wish to mark as 'Out Of Order':',
+       enter:            
+             PTF Menu                       [DG PTF MENU] 
+             Load/Edit PTF Data             [DG PTF SCREEN]
+             PTF Transmission               [DG PTF TRANSMISSION VADATS]
+             Census Status Report           [DGPT CENSUS STATUS REPORT]
+             Regenerate Census Workfile     [DGPT CENSUS REGEN WORKFILE]
+             Display Census Date Parameters [DGPT CENSUS DATE DISPLAY]    
+    
+       When prompted,'Enter protocols you wish to mark as 'Out Of 
+       Order':', hit enter.
+   
+   7. Routine DG53P844 can be deleted after install.
+  
+ Post-Install Section:
+ =====================
+ The individual installing this patch will receive a MailMan message 
+ listing any active patients whose current treating specialty code is 43.
+ Please forward the MailMan message to the appropriate personnel at your
+ site that assigns treating specialty codes to patients. Those patients who
+ are assigned TS 43, should be placed to another treating specialty.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P844
+    Before:       n/a   After: B39288188  **844**
+
+=============================================================================
+User Information:
+Entered By  : BOWEN,MARY JANE               Date Entered  : MAY 26, 2011
+Completed By: SESSLER,APRIL                 Date Completed: AUG 10, 2011
+Released By : FLANAGAN,PATTY                Date Released : AUG 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

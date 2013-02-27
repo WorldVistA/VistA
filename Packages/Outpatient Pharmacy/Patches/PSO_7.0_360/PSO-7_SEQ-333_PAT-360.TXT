@@ -1,0 +1,133 @@
+$TXT Created by CREMEANS,THERESA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 11/30/11 at 07:35
+=============================================================================
+Run Date: MAR 28, 2012                     Designation: PSO*7*360
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #333                      Status: Released
+                  Compliance Date: APR 28, 2012
+=============================================================================
+
+Associated patches: (v)PSO*7*326   <<= must be installed BEFORE `PSO*7*360'
+
+Subject: The variable LINE is not being renewed in PSOSD1. 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will fix an issue that was discovered in PSOSD1 where the variable
+ LINE is not being renewed.
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ HD0000000459019   Outpatient RX Profile displayed two different patient names.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Oklahoma City VA Medical Center
+ Lexington VA Medical Center
+ Cincinnati VA Medical Center
+  
+ PSPO
+ ==== 
+ PSPO1961
+  
+ Remedy Overview:
+ ================
+ HD0000000459019   Outpatient RX Profile displayed two different patient names.
+   
+   
+ Problem: 
+ ========
+ While reviewing the code that generates the Outpatient RX Profile report it 
+ was discovered that the variable LINE is not being renewed within the routine.
+  
+ The Outpatient RX Profile report, via CPRS, is separated into three sections. 
+ In the code for the second and third sections of the report the variable LINE
+ is renewed to eliminate the possibility of any extraneous characters that 
+ could show up in the separation lines of the report.  For the first section 
+ this variable is not renewed.
+  
+ ** Cincinnati VAMC had reported an issue where information was showing up
+    in the separator lines in the first part of the Outpatient RX Profile 
+    report.  This issue has not reoccurred at the site and we have not 
+    been able to reproduce it.  The change we have made to the routine 
+    will eliminate the possibility of extraneous characters showing up 
+    in the separator lines.
+  
+  
+ Resolution:
+ ===========
+ Modify the routine PSOSD1 to set the variable LINE to null prior to populating 
+ it with dashes.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  
+  
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*360 )
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*360 .
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOSD1
+    Before: B48899635   After: B48940095  **2,17,19,22,40,49,66,107,110,
+                                           132,233,258,240,320,326,360**
+ 
+Routine list of preceding patches: 326
+
+=============================================================================
+User Information:
+Entered By  : CREMEANS,THERESA              Date Entered  : JUN 15, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: MAR 15, 2012
+Released By : FOX,KIRK                      Date Released : MAR 28, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

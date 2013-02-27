@@ -1,0 +1,197 @@
+
+=============================================================================
+Run Date: NOV 28, 2012                     Designation: XU*8*620
+Package : XU - KERNEL                         Priority: EMERGENCY
+Version : 8       SEQ #489                      Status: Released
+                  Compliance Date: NOV 30, 2012
+=============================================================================
+
+
+Subject: SSN FOR DOD VISITOR USER
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ Remote access to VistA for Department of Defense (DoD) applications uses 
+ a "VISITOR" entry in the NEW PERSON file (#200) identified as "DEPARTMENT 
+ OF DEFENSE,USER".  This entry uses a dummy Social Security Number (SSN) 
+ of 123456789 to identify the user.
+  
+ Some VA sites have assigned this SSN to test users or terminated users.  
+ As a result, it appears that test users or terminated users are accessing 
+ patient data, giving the appearance of a security violation.
+  
+ To remedy the situation, the following steps should be performed:
+  
+    1.  Identify users with SSN 123456789
+    2.  If user is "DEPARTMENT OF DEFENSE,USER", then do nothing
+  
+        NAME: DEPARTMENT OF DEFENSE,USER        DATE ENTERED: NOV 14, 2012
+        CREATOR: 0                            SSN: 123456789
+         LAST SIGN-ON DATE/TIME: NOV 28, 2012@10:06:41
+         XUS Logon Attempt Count: 0            XUS Active User: Yes
+        ALIAS: VISITOR
+         NAME COMPONENTS: 200
+         SIGNATURE BLOCK PRINTED NAME: USER DEPARTMENT OF DEFENSE
+        SECONDARY MENU OPTIONS: DVBA CAPRI GUI
+        SECONDARY MENU OPTIONS: OR CPRS GUI CHART
+        SECONDARY MENU OPTIONS: OR CPRS GUI CHART
+  
+    3.  If user is NOT "DEPARTMENT OF DEFENSE,USER" then change the SSN
+  
+ If the site already has a "DEPARTMENT OF DEFENSE,USER" entry with SSN 
+ 123456789, then VistA will use that entry for DoD visitor access.  If 
+ not, then once these steps are completed, a new VISITOR entry will 
+ automatically be created for "DEPARTMENT OF DEFENSE,USER" when a remote
+ DoD application accesses VistA.
+  
+ Example:
+ =======
+  
+    STEP 1 - Identify users with SSN 123456789
+    ------------------------------------------
+  
+    Use VA FileMan to Search for entries in file #200 that have SSN 
+    "123456789".
+  
+    Select VA FileMan Option: Search File Entries
+  
+    OUTPUT FROM WHAT FILE: // 200  NEW PERSON
+                                              (1334 entries)
+  
+      -A- SEARCH FOR NEW PERSON FIELD: SSN  
+      -A- CONDITION: EQUALS  
+      -A- EQUALS: 123456789
+  
+      -B- SEARCH FOR NEW PERSON FIELD: 
+  
+    IF: A//     SSN EQUALS "123456789"
+  
+    STORE RESULTS OF SEARCH IN TEMPLATE: 
+  
+    SORT BY: NAME// 
+    START WITH NAME: FIRST// 
+    FIRST PRINT FIELD: NUMBER
+    THEN PRINT FIELD: NAME
+         1   NAME  
+         2   NAME COMPONENTS  
+    CHOOSE 1-2: 1  NAME
+    THEN PRINT FIELD: SSN  
+    THEN PRINT FIELD: 
+    Heading (S/C): NEW PERSON SEARCH// 
+    DEVICE:   TERMINAL    Right Margin: 80// 
+    NEW PERSON SEARCH                          NOV 26,2012  11:37    PAGE 1
+    NUMBER       NAME                                 SSN
+    
+    -----------------------------------------------------------------------
+  
+    589          TEST,USER THREE                      123456789
+  
+  
+  
+                             1 MATCH FOUND.
+  
+  
+    STEP 2 - If user is "DEPARTMENT OF DEFENSE,USER", then do nothing
+    -----------------------------------------------------------------
+  
+    Note that in STEP 1 above, the search found "TEST,USER THREE" with SSN 
+    "123456789", so changes will be required.  Proceed to step 3.
+  
+  
+    STEP 3 - If user is NOT "DEPARTMENT OF DEFENSE,USER" then change SSN
+    --------------------------------------------------------------------
+  
+    Use VA FileMan to Enter/Edit entries found in the above search.  
+    Replace the SSN with a value beginning with five zeros.
+  
+    Select VA FileMan Option: enter or Edit File Entries
+  
+  
+  
+    INPUT TO WHAT FILE: NEW PERSON// 
+    EDIT WHICH FIELD: ALL// SSN  
+    THEN EDIT FIELD: 
+  
+  
+    Select NEW PERSON NAME: TEST,USER THREE              
+    SSN: 123456789// 000006789
+  
+  
+    Select NEW PERSON NAME:
+  
+  
+ Blood Bank Team Coordination
+ ============================
+   
+ Clearance - <11/27/12>
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*620 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+ not alter or modify any VistA Blood Bank software design safeguards or
+ safety critical elements functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8.0*620 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ HD0000000776473 Inactive visitor account used to access many sites
+  
+ 1. HD0000000776473 Inactive visitor account used to access many sites
+  
+ Problem:
+ -------
+ The Information Security Officer (ISO) ran the monthly "Patient Same Name 
+ Next of Kin" report and flagged a terminated non-VA (contractor) employee 
+ as having accessed patient information after the employee termination 
+ date.  Upon further research it was determined that a remote application 
+ was identifying the employee by Social Security Number (SSN) "123456789" 
+ as the terminated user.  This SSN should have been associated with a user 
+ entry of "DEPARTMENT OF DEFENSE,USER".
+  
+ Resolution:
+ ----------
+ When the SSN was changed to a different value, a new "VISITOR" entry was
+ automatically created with user name "DEPARTMENT OF DEFENSE,USER" and SSN
+ "123456789".  This patch provides instructions to identify and correct NEW
+ PERSON file (#200) entries that have been improperly assigned the SSN of
+ "123456789".
+  
+  
+ Test Sites:
+ ----------
+ Manchester VA Medical Center, Manchester NH (608)
+ Providence VA Medical Center, Providence RI (650) 
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel end-user documentation is available on the
+ VHA Software Document Library (VDL) at the following Internet Website:
+      http://www.va.gov/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : WESTRA,HERLAN G               Date Entered  : NOV 26, 2012
+Completed By: SERVICE,JOHN                  Date Completed: NOV 28, 2012
+Released By : TILLIS,LEWIS                  Date Released : NOV 28, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

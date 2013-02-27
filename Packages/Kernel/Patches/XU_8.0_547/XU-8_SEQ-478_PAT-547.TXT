@@ -1,0 +1,147 @@
+$TXT Created by DIMICELI,RON at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 08/14/12 at 09:36
+=============================================================================
+Run Date: AUG 27, 2012                     Designation: XU*8*547
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #478                      Status: Released
+                  Compliance Date: SEP 24, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*539    <<= must be installed BEFORE `XU*8*547'
+
+Subject: KIDS doesn't support a Build name over 30 characters
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  Remedy ticket 403389 noted that the BUILD file (#9.6) is not always
+  updated during an install.  The problem was the cross references on the
+  .01 field, it had to be increased to 50 characters.
+   
+  The patch also contains APIs to support Protocols during a KIDS install and
+  support for GTM.
+  
+  
+ Remedy Tickets
+ =============
+  403389
+  
+ Thanks to Test Sites: 
+ =====================
+  Alexandria VAMC, LA
+  Central Plains HCS
+  Fargo VAMC, ND 
+  Shreveport, LA
+ 
+ Blood Bank Clearance
+ ====================
+  Clearance - 8/25/2010
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*547 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+  not alter or modify any VistA Blood Bank software design safeguards or
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*547 have no effect on Blood Bank
+   software functionality, therefore RISK is none.
+  
+  
+ Documentation:
+ ==============
+  The most up-to-date Kernel/Kernel Toolkit end-user documentation is available
+  on the VA Software Document Library (VDL) at the following Internet Website:
+  http://www.va.gov/vdl/application.asp?appid=10
+  
+  NOTE: VistA documentation is made available online in Microsoft Word format
+  (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  The Kernel/Kernel Toolkit APIs are also available in HTML format at the
+  following Intranet Website:
+  http://vaww.vista.med.va.gov/kernel/apis/index.shtml
+  
+  APIs for Protocols (DBIA #5567):
+   $$ADD^XPDPROT(parent,child,mnemonic,sequence) - add child to parent
+   $$DELETE^XPDPROT(parent,child) - delete child from parent
+   $$LKPROT^XPDPROT(protocol) - return ien for protocol
+   $$TYPE^XPDPROT(protocol ien) - return TYPE for protocol ien
+   OUT^XPDPROT(protocol,text) - place text in OUT OF ORDER field
+   RENAME^XPDPROT(protocol,name) - rename protocol to name
+   FIND^XPDPROT(.result,protocol) - find all parents for protocol  
+  
+ Installation Instructions
+ =========================
+ This patch may be installed with VISTA users online. However, it is
+ recommended that it be Queued for a time of generally least activity.  
+  
+ TaskMan and any background jobs does not need to be STOPPED or placed in
+  a WAIT state and installation should take less than a minute.
+  
+     1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+        This option will load the KIDS package onto your system.  
+  
+     2. The patch has now been loaded into a transport global on your 
+        system. You now need to use KIDS to install the transport global.  
+   
+     3. On the KIDS menu, under the 'Installation' menu, use the 
+        following options: 
+            Print Transport Global 
+            Compare Transport Global to Current System 
+            Verify Checksums in Transport Global
+            Backup a Transport Global 
+  
+     4. On the KIDS menu, under the 'Installation' menu, use the 
+        following option: 
+            Select Installation Option: Install Package(s) 
+            Select INSTALL NAME: XU*8.0*547
+                                 ==========
+        Want KIDS to INHIBIT LOGONs during the install? NO//
+        Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XPDCOM
+    Before: B18549454   After: B18982373  **21,58,108,124,393,506,539,547**
+Routine Name: XPDDCS
+    Before: B18646094   After: B20670591  **2,44,108,202,393,511,547**
+Routine Name: XPDIST
+    Before: B15156441   After: B18641684  **66,108,185,233,350,393,486,
+                                           539,547**
+Routine Name: XPDPROT
+    Before:       n/a   After:  B6898020  **547**
+Routine Name: XPDR
+    Before: B50211509   After: B53135412  **1,2,44,393,547**
+Routine Name: XPDT
+    Before: B81300874   After: B82909490  **2,10,28,41,44,51,58,66,68,
+                                           85,100,108,393,511,539,547**
+Routine Name: XPDV
+    Before: B41656792   After: B41763157  **30,44,58,108,511,525,539,547**
+ 
+Routine list of preceding patches: 539
+
+=============================================================================
+User Information:
+Entered By  : DIMICELI,RON                  Date Entered  : MAY 11, 2010
+Completed By: BEST,LISA                     Date Completed: AUG 14, 2012
+Released By : MALMIN,PAUL                   Date Released : AUG 27, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

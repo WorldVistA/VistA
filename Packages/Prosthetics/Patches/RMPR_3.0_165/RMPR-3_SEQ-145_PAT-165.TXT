@@ -1,0 +1,187 @@
+$TXT Created by BECKWITH,RALPH at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Monday, 05/09/11 at 09:40
+=============================================================================
+Run Date: SEP 07, 2011                     Designation: RMPR*3*165
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #145                      Status: Released
+                  Compliance Date: OCT 08, 2011
+=============================================================================
+
+Associated patches: (v)RMPR*3*110  <<= must be installed BEFORE `RMPR*3*165'
+                    (v)RMPR*3*144  <<= must be installed BEFORE `RMPR*3*165'
+
+Subject: HOME OXYGEN CHARGES;NPPD REPORTING;LETTER NOTIFICATION OPTIONS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses the following 3 issues:
+  
+ 1. Home Oxygen charges for a patient do not total for all linked Fund  
+    Control Points.                                              
+                                        
+ 2. The VistA National Prosthetic Patient Database (NPPD) reporting
+    does not match the national NPPD rollup for Unique Social
+    Security Number (SSN) totals between NEW item costs and USED   
+    inventory item costs.
+     
+ 3. Delete Prosthetics options Manual Send Delivery Notification and  
+    Returned Delivery Verification Card and remove same options from
+    Prosthetics Utilities Menu as the government contract for Letter 
+    Notification was cancelled.
+  
+  
+ Associated Remedy Tickets:
+ =========================
+ 1) HD0000000458301 Home Oxygen charges for patients are not splitting
+  
+ 2) HD0000000470618 Prosthetic NPPD Unique SSN totals discrepancy
+  
+ 3) HD0000000463428 Delete Delivery Notification options
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A 
+   
+ Test Sites:
+ ==========
+ VA Western NY HCS
+ Clarksburg - Louis A. Johnson VA Medical Center
+ Minneapolis VA Medical Center
+  
+  
+ Remedy Overview:
+ ================ 
+ 1) HD0000000458301 Home Oxygen charges for patients are not splitting
+  
+ Problem:
+ --------
+ When reviewing/editing Home Oxygen transactions for a patient, the FCP totals
+ only accrue for Fund Control Point (FCP) 910 and not new FCPs created 
+ over the years for Prosthetic Home Oxygen billing.
+  
+   
+ Resolution:
+ -----------
+ Modify routine RMPOBIL2 to accumulate dollars for all FCPs used in Home
+ Oxygen transactions and display individual FCP totals on screen.
+  
+ Routines: RMPOBIL2
+  
+  
+  
+ 2) HD0000000470618 Prosthetic NPPD Unique SSN totals discrepancy
+  
+ Problem:
+ --------         
+ Staff noticed that the VistA NPPD Worksheet reporting had Unique SSN
+ totals that differed from the national NPPD rollup totals for Unique SSN.
+  
+  
+ Resolution:
+ -----------
+ Modified the NPPD Worksheet compile routine to recognize NEW items 
+ from USED items to enable accurate reporting and totals for each type
+ of report.
+  
+ Routines: RMPRN6
+  
+  
+ 3) HD0000000463428 Delete Delivery Notification options
+  
+ Problem:
+ --------
+ As a response to Patient Letter Notification error resolution,
+ it was noted by Prosthetics staff that this program was cancelled
+ by the government.
+  
+  
+  
+ Resolution:
+ -----------
+ The following options will be deleted:
+  
+            MS     Manual Send Delivery Notification
+            RD     Returned Delivery Verification Card
+  
+  
+ Routines: none
+  
+  
+   
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install these routines at any time without interruption to 
+ users. It should take less than 2 minutes to install this patch. 
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*165)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       RMPR*3.0*165.
+   
+    5. Want KIDS to Rebuild Menu Trees Upon Completion of Install? 
+       NO//respond NO.
+  
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       YES//respond NO.  
+   
+    7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//respond YES. When prompted to select the 
+       options you would like to place out of order, enter the following:
+                                                                  
+       RMPO BILLING TRANSACTIONS         Billing Transactions
+       RMPR NPPD PRT                     Print NPPD Worksheets
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPOBIL2
+    Before: B60026916   After: B60979023  **29,44,46,50,110,165**
+Routine Name: RMPRN6
+    Before: B85232517   After: B90365732  **31,32,34,36,39,48,51,70,77,
+                                           90,144,165**
+ 
+Routine list of preceding patches: 110, 144
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : FEB 14, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: AUG 25, 2011
+Released By : MORRIS,DELISA                 Date Released : SEP 07, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

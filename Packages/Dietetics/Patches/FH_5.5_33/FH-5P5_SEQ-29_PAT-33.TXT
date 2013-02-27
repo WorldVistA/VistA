@@ -1,0 +1,126 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 03/21/12 at 16:27
+=============================================================================
+Run Date: NOV 14, 2012                     Designation: FH*5.5*33
+Package : FH - DIETETICS                      Priority: EMERGENCY
+Version : 5.5        SEQ #29                    Status: Released
+                  Compliance Date: NOV 21, 2012
+=============================================================================
+
+Associated patches: (v)FH*5.5*27   <<= must be installed BEFORE `FH*5.5*33'
+
+Subject: CORRECT PATIENT TRANSFER TO MULTIPLE CLINICIAN WARD
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ 1. When transferring an inpatient to a nutrition location with more than
+ one clinician assigned, it will generate an undefined error when filing
+ a tickler for the second clinician assigned to that nutrition location.
+ This error forces the user out of VistA.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000610875 - Palo Alto Error after FH*5.5*27 Installation 
+  
+    Duplicate(s)
+    ------------
+    HD0000000584102 - Error - <SUBSCRIPT>FIL+13^FHWTRN
+    HD0000000613268 - Error trap error <UNDEFINED>FILE+1^FHCTF2 *FHTF 
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ North Florida/South Georgia HCS
+ Salisbury, NC VAMC
+ New Jersey HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  HD0000000610875 - Palo Alto Error after FH*5.5*27 Installation
+  
+     PROBLEM:
+     --------
+     When a patient is transferred to a nutrition location with more than 
+     one clinician assigned to it, an error will be generated with the 
+     second clinician and the user will be forced out of VistA. 
+  
+  
+     RESOLUTION:
+     -----------
+     Modify routine FHWTRN to reset the variable FHTF for each clinician
+     assigned to the nutrition location that the patient is being
+     transferred to.
+  
+     TECHNICAL SUMMARY:
+     ==================
+     Routine FHWTRN will set the variable FHTF with the tickler data. Then
+     routine FHWTRN will call routine FILE^FHCTF2 to file the tickler for
+     the clinician. FHCTF2 will file the tickler, kill the variable FHTF
+     and return to FHWTRN. Routine FHWTRN does not reset variable FHTF.
+  
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter FH*5.5*33)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package FH*5.5*33
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHWTRN
+    Before: B37260983   After: B37070220  **4,27,33**
+ 
+Routine list of preceding patches: 27
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : MAR 20, 2012
+Completed By: CRICHLOW,SHERRY               Date Completed: NOV 07, 2012
+Released By : BOSE,MARY ELLEN               Date Released : NOV 14, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

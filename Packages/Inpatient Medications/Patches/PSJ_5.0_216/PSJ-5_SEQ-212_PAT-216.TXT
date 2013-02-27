@@ -1,0 +1,203 @@
+$TXT Created by ENELOW,JASON at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Thursday, 03/17/11 at 10:37
+=============================================================================
+Run Date: JUN 29, 2011                     Designation: PSJ*5*216
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #212                      Status: Released
+                  Compliance Date: JUL 30, 2011
+=============================================================================
+
+Associated patches: (v)PSJ*5*111   <<= must be installed BEFORE `PSJ*5*216'
+                    (v)PSJ*5*179   <<= must be installed BEFORE `PSJ*5*216'
+
+Subject:  WARNING MESSAGE DISPLAYED WHEN DOSAGE ORDERED DID NOT CHANGE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following 2 issues in the Inpatient 
+ Medications package:
+  
+ 1.  When an active Unit Dose order is edited to change the Dispense Drug
+     and the Units/Dose, and even though the new Dosage Ordered equals the
+     original Dosage Ordered, the user is incorrectly presented with a
+     warning message:
+  
+     "WARNING: Dosage Ordered and Dispense Units do not match."
+          Please verify Dosage.
+  
+     
+     This warning message should only display when an active Unit Dose
+     order is edited to change the Dispense Drug and the Units/Dose and the
+     new Dosage Ordered does NOT equal the original Dosage Ordered. Also,
+     field 2 (Dosage Ordered) and field 12 (Dispense Drug) should display
+     in reverse video.
+  
+  
+ 2.  When a user is prompted for dosage in Inpatient Order Entry [PSJ
+     OE], a response of null will no longer be allowed.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1.  HD0000000067749 - Activity Log not tracking edits to dispense drug
+                       field.  
+     Duplicates:
+     HD0000000232884 
+     HD0000000308234
+  
+ 2.  HD0000000426054 - NULL DOSAGE ORDERED.
+     Duplicates:
+     HD0000000460954
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Clement J. Zablocki VAMC - Milwaukee
+ Minneapolis HCS
+ Oklahoma City VAMC
+ VA Puget Sound HCS
+ San Diego HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. HD0000000067749 - Activity Log not tracking edits to dispense drug
+                      field
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #526
+  
+    Problem:
+    --------
+    When an active Unit Dose order is edited to change the Dispense Drug
+    and the Units/Dose, and even though the new Dosage Ordered equals the
+    original Dosage Ordered, the user is incorrectly presented with a
+    warning message:
+  
+     "WARNING: Dosage Ordered and Dispense Units do not match."
+          Please verify Dosage.
+  
+  
+    This warning message should only display when an active Unit Dose
+    order is edited to change the Dispense Drug and the Units/Dose and the
+    new Dosage Ordered does NOT equal the original Dosage Ordered. Also,
+    field 2 (Dosage Ordered) and field 12 (Dispense Drug) should display in
+    reverse video.
+  
+    Resolution:
+    -----------
+    Modify routine PSJDOSE to display the warning message only when the
+    Dispense Drug(s) times (X) the Unit/Dose is NOT equal to the Dosage
+    Ordered.  Only active Dispense Drugs will be included in the 
+    calculations.  Also, when the warning message displays, the Dosage 
+    Ordered and Dispense Drug items will display in reverse video.
+  
+    Note:
+    -----
+    The second item in the Remedy ticket, to update the activity log when 
+    this type of change is made, was addressed by the development team
+    in patch PSJ*5.0*215, released 10/26/2009.
+  
+   
+ 2. HD0000000426054 - NULL DOSAGE ORDERED.
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #1839
+  
+    Problem:
+    -------
+    Users can edit an order in Inpatient Order Entry [PSJ OE] and enter a
+    null value for Dosage Ordered, causing a problem with the BCMA display
+    for that order.
+  
+    Resolution:
+    ----------
+    Changed routine PSJDOSE so that a null value for Dosage Ordered is no 
+    longer allowed in Inpatient Order Entry.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ The patch should be installed when NO Inpatient Pharmacy users are on the
+ system.
+  
+ IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS WHEN THE PATCH IS  
+ INSTALLED, AN 'EDITED' ERROR WILL OCCUR.
+  
+ Installation will take less than 2 minutes.
+  
+ Suggested time to install: non-peak requirement hours.
+   
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+   2. From the Kernel Installation & Distribution System menu,
+      select the Installation menu.
+   
+   3. From this menu, you may select to use the following
+      options (when prompted for INSTALL NAME, enter PSJ*5.0*216):
+  
+      a) Verify Checksums in Transport Global   This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+      b) Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+      c) Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch is
+         installed.  It compares all components of this patch (routines,
+         DD's, templates, etc.).
+      d) Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+    
+   4. Use the Install Package(s) option and select the package PSJ*5.0*216.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? N0//" respond YES. 
+        
+      a) When prompted to enter options, respond with:
+      
+            Inpatient Order Entry [PSJ OE]
+  
+      b) When prompted "Enter protocols you wish to mark as "Out of
+         Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0; INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOEE0
+    Before: B27327541   After: B28840533  **58,95,179,216**
+Routine Name: PSJDOSE
+    Before: B45005446   After: B47956224  **50,65,106,111,216**
+ 
+Routine list of preceding patches: 111, 179
+
+=============================================================================
+User Information:
+Entered By  : DANG,CHAU                     Date Entered  : NOV 07, 2008
+Completed By: WERNER,GARY                   Date Completed: JUN 10, 2011
+Released By : HARDY,STACY                   Date Released : JUN 29, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

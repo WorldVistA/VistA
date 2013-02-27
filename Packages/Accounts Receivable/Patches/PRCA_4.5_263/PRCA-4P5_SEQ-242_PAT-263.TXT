@@ -1,0 +1,176 @@
+$TXT Created by HSI,TUAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 10/26/10 at 14:45
+=============================================================================
+Run Date: JAN 20, 2011                     Designation: PRCA*4.5*263
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #242                    Status: Released
+                  Compliance Date: FEB 20, 2011
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*233<<= must be installed BEFORE `PRCA*4.5*263'
+                    (v)PRCA*4.5*249<<= must be installed BEFORE `PRCA*4.5*263'
+
+Subject: FIX RCIB VARS & TRANS NUM
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will fix two issues found with the transmission of the original
+ bill to the Regional Counsel (RC).
+  
+   1. Accounts Receivable does not include Prosthetics data with the claim.
+   2. Accounts Receivable does not include Revenue Code charges with the 
+      claim.
+  
+ This patch will also fix a display format problem between the transaction 
+ number and the comment field under the TRANSACTIONS section of the 
+ Profile of Accounts Receivable [PRCAC PROFILE] option since there is no 
+ space between these fields. The changes will let the display easier to 
+ read by the viewer.
+  
+ Associated Remedy tickets:
+ ==========================
+ 1. HD0000000064275 - ISA-1004-10314 REGIONAL COUNSEL INTERFACE PROBLEM
+ 2. HD0000000296847 - Transaction Number so large running into comments 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Salisbury - W.G. (Bill) Hefner VA Medical Center
+ VA Palo Alto HSC
+ Portland VA Medical Center
+  
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000064275 - ISA-1004-10314 REGIONAL COUNSEL INTERFACE PROBLEM
+  
+    Problem:
+    --------
+    Revenue Codes charges and Prosthetics data information were missing
+    when selecting the action Refer Bill(s) to RC in the Review/Refer TP
+    Bills to RC [PRCAC RC REVIEW/REFER] option to transmit bills to
+    Regional Counsel.
+  
+    Array RCIB("PDR") and RCIB("RCV") were misspelled in the routine.
+  
+    Resolution:
+    -----------
+    Modified routine RCRCXM1 to correct references the RCIB("PRD") array 
+    and RCIB("RVC") array.
+  
+ 2. HD0000000296847 - Transaction Number so large running into comments
+  
+    Problem:
+    --------
+    When running the option Profile of Accounts Receivable [PRCAC 
+    PROFILE], under the TRANSACTIONS section, there is no space between the
+    transaction number and comment field if the transaction is a COMMENT
+    or an ADJUSTMENT type or a receipt; users are difficult to distinguish
+    the content between these fields.
+  
+    Resolution:
+    -----------
+    Modified routine PRCADR2 to add two spaces between the transaction 
+    number and comment field and add spaces among the rest of fields to
+    make them easier to read.
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ If installed during the normal workday, it is recommended that the 
+ Accounts Receivable users be off the system. Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 3 minutes.
+  
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter PRCA*4.5*263):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO.
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? YES//' answer YES.
+  
+        RC/DOJ Action Menu               [PRCAC DCDOJ ACTION MENU]
+        Review/Refer TP Bills to RC      [PRCAC RC REVIEW/REFER]
+        Profile of Accounts Receivable   [PRCAC PROFILE]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCADR2
+    Before: B15530730   After: B15662355  **45,104,108,149,141,172,241,
+                                           233,263**
+Routine Name: RCRCXM1
+    Before: B17272658   After: B17267466  **63,122,189,249,263**
+ 
+Routine list of preceding patches: 233, 249
+
+=============================================================================
+User Information:
+Entered By  : HSI,TUAN                      Date Entered  : JUL 21, 2009
+Completed By: PODLEY,CHRIS                  Date Completed: JAN 11, 2011
+Released By : GROOMS,CARMEN L               Date Released : JAN 20, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

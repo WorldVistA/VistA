@@ -1,0 +1,147 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Tuesday, 01/04/11 at 12:57
+=============================================================================
+Run Date: MAY 12, 2011                     Designation: ROR*1.5*12
+Package : ROR - CLINICAL CASE REGISTRIES      Priority: Mandatory
+Version : 1.5        SEQ #13                    Status: Released
+                  Compliance Date: JUN 12, 2011
+=============================================================================
+
+
+Subject: DISPLAY HEP C RESULTS IN CLINICAL CASE REGISTRIES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issue:
+      
+ Patients with positive HEPC test results are not being selected 
+ into the HEPC Registry.
+      
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ HD0000000421530 - Some patients with positive lab results for a specific 
+                   LOINC are NOT showing up on the HEP C list.
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ South Texas HCS
+ Coatesville, PA
+ Palo Alto HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ HD0000000421530 - Some patients with positive lab results for a specific 
+                   LOINC are NOT showing up on the HEP C list.
+ Duplicates:
+   HD0000000433447 
+   HD0000000441223
+   HD0000000446304
+   HD0000000453882
+  
+ PROBLEM:
+ --------
+ Patients that have a positive HEPC test result are not being 
+ displayed into the HEPC registry after the installation of the Automated 
+ Lab Instruments patch LA*5.2*68.  A modification was  made that affected
+ Lab Application Programmer Interfact (API) (GCPR^LA7QRY) which is utilized
+ by  Clinical Case Registries to collect Lab Test Result Codes.
+      
+ Resolution:
+ -----------   
+ A modification will be made in routine RORUPR1 to populate the 
+ RORLRC variable so Lab Test Result Codes will be identified.  This will
+ result in patients  being displayed into the HEPC registry properly based
+ on their lab test results. 
+           
+     
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Clinical Case Registry users be off  the system.  Other VISTA users will
+ not be affected.
+       
+ Install Time - less than 2 minutes.
+       
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+         
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+         
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option
+     --------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter ROR*1.5*12):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+      
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//', answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;CLINICAL CASE REGISTRIES;**[Patch List]**;Feb 17, 2006;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RORUPR1
+    Before: B69715396   After: B71424454  **12**
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : NOV 19, 2010
+Completed By: CRICHLOW,SHERRY               Date Completed: MAY 03, 2011
+Released By : BELSCHWINDER,MICHAEL          Date Released : MAY 12, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

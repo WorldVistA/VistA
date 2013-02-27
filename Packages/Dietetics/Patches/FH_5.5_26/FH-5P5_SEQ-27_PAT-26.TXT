@@ -1,0 +1,704 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 11/16/11 at 12:18
+=============================================================================
+Run Date: APR 04, 2012                     Designation: FH*5.5*26
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #27                    Status: Released
+                  Compliance Date: MAY 05, 2012
+=============================================================================
+
+
+Subject: UPDATE FOOD NUTRIENTS (#112) WITH USDA STANDARD RELEASE 23 DATA
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will update the FOOD NUTRIENTS file (#112) with nutrient data
+ contained in the USDA Standard Release 23.
+  
+ This file contains both standard USDA nutrient data based upon Handbook 
+ 456 and Revised Handbook 8, as well as user entered data.
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ HD0000000346610 - USDA Nutrient Database
+  
+ Duplicate(s)
+ ------------
+ HD0000000266894 - FGH - USDA HANDBOOK #8
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Phoenix, Arizona
+ Cincinnati, Ohio
+ New York Harbor, NY
+  
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ HD0000000346610 - USDA Nutrient Database
+  
+ Problem:
+ --------
+ The data in the FOOD NUTRIENTS file (#112) has not been updated since
+ the release of USDA Standard Release 10 of it nutrient data base.
+  
+ Resolution:
+ -----------
+ Created a set of programs to add/update the current nutrient data of the
+ FOOD NUTRIENTS file (#112). This will bring the file up to date with the
+ current USDA Standard Release 23.
+  
+ When the patch has successfully completed, 2 MailMan reports will be 
+ generated and mailed to the installer of the patch.  THESE REPORTS SHOULD 
+ BE FORWARDED TO THE N&FS ADPAC.
+  
+ The first report is 'RECORDS UPDATED BY PATCH FH*5.5*26' and will contain
+ records updated by the patch.  The second report, 'RECORDS ADDED BY PATCH
+ FH*5.5*26', will contain a listing of new records added to the file.  A
+ sample of each report is below:
+  
+ RECORDS UPDATED BY PATCH FH*5.5*26:
+ -----------------------------------
+ Subj: RECORDS UPDATED BY PATCH FH*5.5*26  [#637132] 11/16/11@10:34  
+ From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+ --------------------------------------------------------------------------
+ Update of FOOD NUTRIENTS file (#112) to USDA Standard Release 23
+ Records updated by patch FH*5.5*26
+ --------------------------------------------------------------------------
+ FOOD: 1-001 - BUTTER, W/SALT
+ Nutrient                                Old value           New value
+ --------------------------------------------------------------------------
+ FOOD ENERGY                             716.818             717
+ CALCIUM                                 23.5                24
+ IRON                                    .16                 .02
+ MAGNESIUM                               2.18                2
+ PHOSPHORUS                              22.8                24
+ POTASSIUM                               26                  24
+  
+  
+ RECORDS ADDED BY PATCH FH*5.5*26:
+ ---------------------------------
+ Subj: RECORDS ADDED BY PATCH FH*5.5*26  [#637133] 11/16/11@10:34 
+ From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+ --------------------------------------------------------------------------
+ Update of FOOD NUTRIENTS file (#112) to USDA Standard Release 23.
+ Records added by patch FH*5.5*26
+ --------------------------------------------------------------------------
+ NAME: MILK,FILLED,FLUID,W/LAURIC ACID OIL
+ CODE: 1-060                             COMMON UNITS: fl oz
+ GRAMS/COMMON UNIT: 30.5                 % AS PURCHASED: 100
+ EDITABLE?: N                            TYPE: 
+ PROTEIN: 3.33                           LIPIDS: 3.4
+ CARBOHYDRATE: 4.74                      FOOD ENERGY: 63
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Nutrition and Food Service users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 5 minutes
+  
+ 1.  Load Transport Global 
+     ---------------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+                                          NAME, enter FH*5.5*26):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer NO 
+  
+ 5.  When the patch has been successfully installed, the sites may delete 
+     all FHNDB* routines.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHNDB001
+    Before:       n/a   After: B79359978  **26**
+Routine Name: FHNDB002
+    Before:       n/a   After: B78991824  **26**
+Routine Name: FHNDB003
+    Before:       n/a   After: B79044799  **26**
+Routine Name: FHNDB004
+    Before:       n/a   After: B77093589  **26**
+Routine Name: FHNDB005
+    Before:       n/a   After: B79555221  **26**
+Routine Name: FHNDB006
+    Before:       n/a   After: B55685931  **26**
+Routine Name: FHNDB007
+    Before:       n/a   After: B71836730  **26**
+Routine Name: FHNDB008
+    Before:       n/a   After: B80969508  **26**
+Routine Name: FHNDB009
+    Before:       n/a   After: B86455485  **26**
+Routine Name: FHNDB010
+    Before:       n/a   After: B80150698  **26**
+Routine Name: FHNDB011
+    Before:       n/a   After: B78283356  **26**
+Routine Name: FHNDB012
+    Before:       n/a   After: B79050335  **26**
+Routine Name: FHNDB013
+    Before:       n/a   After: B83687492  **26**
+Routine Name: FHNDB014
+    Before:       n/a   After: B70839211  **26**
+Routine Name: FHNDB015
+    Before:       n/a   After: B85461260  **26**
+Routine Name: FHNDB016
+    Before:       n/a   After: B87803645  **26**
+Routine Name: FHNDB017
+    Before:       n/a   After: B86695016  **26**
+Routine Name: FHNDB018
+    Before:       n/a   After: B72342159  **26**
+Routine Name: FHNDB019
+    Before:       n/a   After: B70265875  **26**
+Routine Name: FHNDB020
+    Before:       n/a   After: B67765972  **26**
+Routine Name: FHNDB021
+    Before:       n/a   After: B66768348  **26**
+Routine Name: FHNDB022
+    Before:       n/a   After: B69933191  **26**
+Routine Name: FHNDB023
+    Before:       n/a   After: B63380123  **26**
+Routine Name: FHNDB024
+    Before:       n/a   After: B67437778  **26**
+Routine Name: FHNDB025
+    Before:       n/a   After: B68384311  **26**
+Routine Name: FHNDB026
+    Before:       n/a   After: B71586737  **26**
+Routine Name: FHNDB027
+    Before:       n/a   After: B70975481  **26**
+Routine Name: FHNDB028
+    Before:       n/a   After: B75804917  **26**
+Routine Name: FHNDB029
+    Before:       n/a   After: B64216141  **26**
+Routine Name: FHNDB030
+    Before:       n/a   After: B75266271  **26**
+Routine Name: FHNDB031
+    Before:       n/a   After: B67661120  **26**
+Routine Name: FHNDB032
+    Before:       n/a   After: B71374269  **26**
+Routine Name: FHNDB033
+    Before:       n/a   After: B61884510  **26**
+Routine Name: FHNDB034
+    Before:       n/a   After: B72423572  **26**
+Routine Name: FHNDB035
+    Before:       n/a   After: B69381195  **26**
+Routine Name: FHNDB036
+    Before:       n/a   After: B69866769  **26**
+Routine Name: FHNDB037
+    Before:       n/a   After: B67587246  **26**
+Routine Name: FHNDB038
+    Before:       n/a   After: B70379270  **26**
+Routine Name: FHNDB039
+    Before:       n/a   After: B72568668  **26**
+Routine Name: FHNDB040
+    Before:       n/a   After: B73771990  **26**
+Routine Name: FHNDB041
+    Before:       n/a   After: B70870978  **26**
+Routine Name: FHNDB042
+    Before:       n/a   After: B72973127  **26**
+Routine Name: FHNDB043
+    Before:       n/a   After: B64580147  **26**
+Routine Name: FHNDB044
+    Before:       n/a   After: B62654584  **26**
+Routine Name: FHNDB045
+    Before:       n/a   After: B76186216  **26**
+Routine Name: FHNDB046
+    Before:       n/a   After: B74628955  **26**
+Routine Name: FHNDB047
+    Before:       n/a   After: B77425601  **26**
+Routine Name: FHNDB048
+    Before:       n/a   After: B78490842  **26**
+Routine Name: FHNDB049
+    Before:       n/a   After: B79567723  **26**
+Routine Name: FHNDB050
+    Before:       n/a   After: B75433945  **26**
+Routine Name: FHNDB051
+    Before:       n/a   After: B81454729  **26**
+Routine Name: FHNDB052
+    Before:       n/a   After: B85231989  **26**
+Routine Name: FHNDB053
+    Before:       n/a   After: B83908002  **26**
+Routine Name: FHNDB054
+    Before:       n/a   After: B85682836  **26**
+Routine Name: FHNDB055
+    Before:       n/a   After: B82999814  **26**
+Routine Name: FHNDB056
+    Before:       n/a   After: B81644886  **26**
+Routine Name: FHNDB057
+    Before:       n/a   After: B82364391  **26**
+Routine Name: FHNDB058
+    Before:       n/a   After: B84561794  **26**
+Routine Name: FHNDB059
+    Before:       n/a   After: B83622553  **26**
+Routine Name: FHNDB060
+    Before:       n/a   After: B85388007  **26**
+Routine Name: FHNDB061
+    Before:       n/a   After: B64612280  **26**
+Routine Name: FHNDB062
+    Before:       n/a   After: B44811974  **26**
+Routine Name: FHNDB063
+    Before:       n/a   After: B46193365  **26**
+Routine Name: FHNDB064
+    Before:       n/a   After: B61000001  **26**
+Routine Name: FHNDB065
+    Before:       n/a   After: B54805649  **26**
+Routine Name: FHNDB066
+    Before:       n/a   After: B55351623  **26**
+Routine Name: FHNDB067
+    Before:       n/a   After: B50240298  **26**
+Routine Name: FHNDB068
+    Before:       n/a   After: B52698494  **26**
+Routine Name: FHNDB069
+    Before:       n/a   After: B49983047  **26**
+Routine Name: FHNDB070
+    Before:       n/a   After: B69820713  **26**
+Routine Name: FHNDB071
+    Before:       n/a   After: B74242416  **26**
+Routine Name: FHNDB072
+    Before:       n/a   After: B73200269  **26**
+Routine Name: FHNDB073
+    Before:       n/a   After: B73535552  **26**
+Routine Name: FHNDB074
+    Before:       n/a   After: B72527298  **26**
+Routine Name: FHNDB075
+    Before:       n/a   After: B74006046  **26**
+Routine Name: FHNDB076
+    Before:       n/a   After: B73663120  **26**
+Routine Name: FHNDB077
+    Before:       n/a   After: B75729632  **26**
+Routine Name: FHNDB078
+    Before:       n/a   After: B72333739  **26**
+Routine Name: FHNDB079
+    Before:       n/a   After: B76371964  **26**
+Routine Name: FHNDB080
+    Before:       n/a   After: B77447802  **26**
+Routine Name: FHNDB081
+    Before:       n/a   After: B78350303  **26**
+Routine Name: FHNDB082
+    Before:       n/a   After: B75143769  **26**
+Routine Name: FHNDB083
+    Before:       n/a   After: B61986548  **26**
+Routine Name: FHNDB084
+    Before:       n/a   After: B45538634  **26**
+Routine Name: FHNDB085
+    Before:       n/a   After: B62655233  **26**
+Routine Name: FHNDB086
+    Before:       n/a   After: B78976432  **26**
+Routine Name: FHNDB087
+    Before:       n/a   After: B54126292  **26**
+Routine Name: FHNDB088
+    Before:       n/a   After: B49370838  **26**
+Routine Name: FHNDB089
+    Before:       n/a   After: B55601300  **26**
+Routine Name: FHNDB090
+    Before:       n/a   After: B79153225  **26**
+Routine Name: FHNDB091
+    Before:       n/a   After: B80465773  **26**
+Routine Name: FHNDB092
+    Before:       n/a   After: B75975498  **26**
+Routine Name: FHNDB093
+    Before:       n/a   After: B75503103  **26**
+Routine Name: FHNDB094
+    Before:       n/a   After: B68072210  **26**
+Routine Name: FHNDB095
+    Before:       n/a   After: B67735866  **26**
+Routine Name: FHNDB096
+    Before:       n/a   After: B72016822  **26**
+Routine Name: FHNDB097
+    Before:       n/a   After: B77304908  **26**
+Routine Name: FHNDB098
+    Before:       n/a   After: B77292936  **26**
+Routine Name: FHNDB099
+    Before:       n/a   After: B82155690  **26**
+Routine Name: FHNDB100
+    Before:       n/a   After: B81767193  **26**
+Routine Name: FHNDB101
+    Before:       n/a   After: B79258714  **26**
+Routine Name: FHNDB102
+    Before:       n/a   After: B74002862  **26**
+Routine Name: FHNDB103
+    Before:       n/a   After: B76305015  **26**
+Routine Name: FHNDB104
+    Before:       n/a   After: B77703479  **26**
+Routine Name: FHNDB105
+    Before:       n/a   After: B78216292  **26**
+Routine Name: FHNDB106
+    Before:       n/a   After: B77992630  **26**
+Routine Name: FHNDB107
+    Before:       n/a   After: B76376777  **26**
+Routine Name: FHNDB108
+    Before:       n/a   After: B79881961  **26**
+Routine Name: FHNDB109
+    Before:       n/a   After: B75821222  **26**
+Routine Name: FHNDB110
+    Before:       n/a   After: B75427885  **26**
+Routine Name: FHNDB111
+    Before:       n/a   After: B72173105  **26**
+Routine Name: FHNDB112
+    Before:       n/a   After: B78723534  **26**
+Routine Name: FHNDB113
+    Before:       n/a   After: B68445795  **26**
+Routine Name: FHNDB114
+    Before:       n/a   After: B52583126  **26**
+Routine Name: FHNDB115
+    Before:       n/a   After: B52736203  **26**
+Routine Name: FHNDB116
+    Before:       n/a   After: B55725640  **26**
+Routine Name: FHNDB117
+    Before:       n/a   After: B67515964  **26**
+Routine Name: FHNDB118
+    Before:       n/a   After: B70672722  **26**
+Routine Name: FHNDB119
+    Before:       n/a   After: B66249923  **26**
+Routine Name: FHNDB120
+    Before:       n/a   After: B58012207  **26**
+Routine Name: FHNDB121
+    Before:       n/a   After: B59911646  **26**
+Routine Name: FHNDB122
+    Before:       n/a   After: B60081613  **26**
+Routine Name: FHNDB123
+    Before:       n/a   After: B66770316  **26**
+Routine Name: FHNDB124
+    Before:       n/a   After: B59587253  **26**
+Routine Name: FHNDB125
+    Before:       n/a   After: B53930141  **26**
+Routine Name: FHNDB126
+    Before:       n/a   After: B55613117  **26**
+Routine Name: FHNDB127
+    Before:       n/a   After: B58954247  **26**
+Routine Name: FHNDB128
+    Before:       n/a   After: B66538155  **26**
+Routine Name: FHNDB129
+    Before:       n/a   After: B71785334  **26**
+Routine Name: FHNDB130
+    Before:       n/a   After: B49690796  **26**
+Routine Name: FHNDB131
+    Before:       n/a   After: B57886182  **26**
+Routine Name: FHNDB132
+    Before:       n/a   After: B62181488  **26**
+Routine Name: FHNDB133
+    Before:       n/a   After: B61772555  **26**
+Routine Name: FHNDB134
+    Before:       n/a   After: B70498173  **26**
+Routine Name: FHNDB135
+    Before:       n/a   After: B68761175  **26**
+Routine Name: FHNDB136
+    Before:       n/a   After: B72314775  **26**
+Routine Name: FHNDB137
+    Before:       n/a   After: B67656174  **26**
+Routine Name: FHNDB138
+    Before:       n/a   After: B71445288  **26**
+Routine Name: FHNDB139
+    Before:       n/a   After: B77325183  **26**
+Routine Name: FHNDB140
+    Before:       n/a   After: B75273439  **26**
+Routine Name: FHNDB141
+    Before:       n/a   After: B75898560  **26**
+Routine Name: FHNDB142
+    Before:       n/a   After: B76076958  **26**
+Routine Name: FHNDB143
+    Before:       n/a   After: B73921295  **26**
+Routine Name: FHNDB144
+    Before:       n/a   After: B68774859  **26**
+Routine Name: FHNDB145
+    Before:       n/a   After: B81870148  **26**
+Routine Name: FHNDB146
+    Before:       n/a   After: B70767795  **26**
+Routine Name: FHNDB147
+    Before:       n/a   After: B56554702  **26**
+Routine Name: FHNDB148
+    Before:       n/a   After: B56574297  **26**
+Routine Name: FHNDB149
+    Before:       n/a   After: B68999075  **26**
+Routine Name: FHNDB150
+    Before:       n/a   After: B86131596  **26**
+Routine Name: FHNDB151
+    Before:       n/a   After: B68333347  **26**
+Routine Name: FHNDB152
+    Before:       n/a   After: B63828561  **26**
+Routine Name: FHNDB153
+    Before:       n/a   After: B62824293  **26**
+Routine Name: FHNDB154
+    Before:       n/a   After: B86554458  **26**
+Routine Name: FHNDB155
+    Before:       n/a   After: B87045804  **26**
+Routine Name: FHNDB156
+    Before:       n/a   After: B87136810  **26**
+Routine Name: FHNDB157
+    Before:       n/a   After: B89052416  **26**
+Routine Name: FHNDB158
+    Before:       n/a   After: B81989774  **26**
+Routine Name: FHNDB159
+    Before:       n/a   After: B85922310  **26**
+Routine Name: FHNDB160
+    Before:       n/a   After: B85511397  **26**
+Routine Name: FHNDB161
+    Before:       n/a   After: B83787470  **26**
+Routine Name: FHNDB162
+    Before:       n/a   After: B71105014  **26**
+Routine Name: FHNDB163
+    Before:       n/a   After: B68164605  **26**
+Routine Name: FHNDB164
+    Before:       n/a   After: B47936454  **26**
+Routine Name: FHNDB165
+    Before:       n/a   After: B64776727  **26**
+Routine Name: FHNDB166
+    Before:       n/a   After: B60147671  **26**
+Routine Name: FHNDB167
+    Before:       n/a   After: B54855158  **26**
+Routine Name: FHNDB168
+    Before:       n/a   After: B51472909  **26**
+Routine Name: FHNDB169
+    Before:       n/a   After: B63848526  **26**
+Routine Name: FHNDB170
+    Before:       n/a   After: B57266155  **26**
+Routine Name: FHNDB171
+    Before:       n/a   After: B66926692  **26**
+Routine Name: FHNDB172
+    Before:       n/a   After: B69487979  **26**
+Routine Name: FHNDB173
+    Before:       n/a   After: B66809702  **26**
+Routine Name: FHNDB174
+    Before:       n/a   After: B64209992  **26**
+Routine Name: FHNDB175
+    Before:       n/a   After: B44067890  **26**
+Routine Name: FHNDB176
+    Before:       n/a   After: B41299081  **26**
+Routine Name: FHNDB177
+    Before:       n/a   After: B42238694  **26**
+Routine Name: FHNDB178
+    Before:       n/a   After: B65073031  **26**
+Routine Name: FHNDB179
+    Before:       n/a   After: B62998248  **26**
+Routine Name: FHNDB180
+    Before:       n/a   After: B56510843  **26**
+Routine Name: FHNDB181
+    Before:       n/a   After: B81561347  **26**
+Routine Name: FHNDB182
+    Before:       n/a   After: B66719168  **26**
+Routine Name: FHNDB183
+    Before:       n/a   After: B58609462  **26**
+Routine Name: FHNDB184
+    Before:       n/a   After: B49058028  **26**
+Routine Name: FHNDB185
+    Before:       n/a   After: B49722708  **26**
+Routine Name: FHNDB186
+    Before:       n/a   After: B59546636  **26**
+Routine Name: FHNDB187
+    Before:       n/a   After: B59237055  **26**
+Routine Name: FHNDB188
+    Before:       n/a   After: B58424920  **26**
+Routine Name: FHNDB189
+    Before:       n/a   After: B56871609  **26**
+Routine Name: FHNDB190
+    Before:       n/a   After: B59083167  **26**
+Routine Name: FHNDB191
+    Before:       n/a   After: B55210382  **26**
+Routine Name: FHNDB192
+    Before:       n/a   After: B53180940  **26**
+Routine Name: FHNDB193
+    Before:       n/a   After: B60595429  **26**
+Routine Name: FHNDB194
+    Before:       n/a   After: B57724778  **26**
+Routine Name: FHNDB195
+    Before:       n/a   After: B56722060  **26**
+Routine Name: FHNDB196
+    Before:       n/a   After: B71039546  **26**
+Routine Name: FHNDB197
+    Before:       n/a   After: B81826182  **26**
+Routine Name: FHNDB198
+    Before:       n/a   After: B84318409  **26**
+Routine Name: FHNDB199
+    Before:       n/a   After: B83284434  **26**
+Routine Name: FHNDB200
+    Before:       n/a   After: B79590120  **26**
+Routine Name: FHNDB201
+    Before:       n/a   After: B75329174  **26**
+Routine Name: FHNDB202
+    Before:       n/a   After: B75715151  **26**
+Routine Name: FHNDB203
+    Before:       n/a   After: B78657633  **26**
+Routine Name: FHNDB204
+    Before:       n/a   After: B77657812  **26**
+Routine Name: FHNDB205
+    Before:       n/a   After: B76762442  **26**
+Routine Name: FHNDB206
+    Before:       n/a   After: B78365836  **26**
+Routine Name: FHNDB207
+    Before:       n/a   After: B78080622  **26**
+Routine Name: FHNDB208
+    Before:       n/a   After: B77255328  **26**
+Routine Name: FHNDB209
+    Before:       n/a   After: B60788228  **26**
+Routine Name: FHNDB210
+    Before:       n/a   After: B59915440  **26**
+Routine Name: FHNDB211
+    Before:       n/a   After: B54027186  **26**
+Routine Name: FHNDB212
+    Before:       n/a   After: B59084304  **26**
+Routine Name: FHNDB213
+    Before:       n/a   After: B54989959  **26**
+Routine Name: FHNDB214
+    Before:       n/a   After: B56186106  **26**
+Routine Name: FHNDB215
+    Before:       n/a   After: B47128434  **26**
+Routine Name: FHNDB216
+    Before:       n/a   After: B50258842  **26**
+Routine Name: FHNDB217
+    Before:       n/a   After: B54624795  **26**
+Routine Name: FHNDB218
+    Before:       n/a   After: B54206134  **26**
+Routine Name: FHNDB219
+    Before:       n/a   After: B56821971  **26**
+Routine Name: FHNDB220
+    Before:       n/a   After: B49817196  **26**
+Routine Name: FHNDB221
+    Before:       n/a   After: B49010257  **26**
+Routine Name: FHNDB222
+    Before:       n/a   After: B45215543  **26**
+Routine Name: FHNDB223
+    Before:       n/a   After: B58226338  **26**
+Routine Name: FHNDB224
+    Before:       n/a   After: B64030629  **26**
+Routine Name: FHNDB225
+    Before:       n/a   After: B73717118  **26**
+Routine Name: FHNDB226
+    Before:       n/a   After: B73660897  **26**
+Routine Name: FHNDB227
+    Before:       n/a   After: B59529255  **26**
+Routine Name: FHNDB228
+    Before:       n/a   After: B53860288  **26**
+Routine Name: FHNDB229
+    Before:       n/a   After: B53042607  **26**
+Routine Name: FHNDB230
+    Before:       n/a   After: B70593134  **26**
+Routine Name: FHNDB231
+    Before:       n/a   After: B71083590  **26**
+Routine Name: FHNDB232
+    Before:       n/a   After: B65602453  **26**
+Routine Name: FHNDB233
+    Before:       n/a   After: B67254733  **26**
+Routine Name: FHNDB234
+    Before:       n/a   After: B69042488  **26**
+Routine Name: FHNDB235
+    Before:       n/a   After: B67424533  **26**
+Routine Name: FHNDB236
+    Before:       n/a   After: B63340312  **26**
+Routine Name: FHNDB237
+    Before:       n/a   After: B62560720  **26**
+Routine Name: FHNDB238
+    Before:       n/a   After: B60906753  **26**
+Routine Name: FHNDB239
+    Before:       n/a   After: B57045724  **26**
+Routine Name: FHNDB240
+    Before:       n/a   After: B65601009  **26**
+Routine Name: FHNDB241
+    Before:       n/a   After: B63883141  **26**
+Routine Name: FHNDB242
+    Before:       n/a   After: B57930148  **26**
+Routine Name: FHNDB243
+    Before:       n/a   After: B61135873  **26**
+Routine Name: FHNDB244
+    Before:       n/a   After: B59581566  **26**
+Routine Name: FHNDB245
+    Before:       n/a   After: B69640864  **26**
+Routine Name: FHNDB246
+    Before:       n/a   After: B59581371  **26**
+Routine Name: FHNDB247
+    Before:       n/a   After: B59683478  **26**
+Routine Name: FHNDB248
+    Before:       n/a   After: B62365412  **26**
+Routine Name: FHNDB249
+    Before:       n/a   After: B57668906  **26**
+Routine Name: FHNDB250
+    Before:       n/a   After: B65817575  **26**
+Routine Name: FHNDB251
+    Before:       n/a   After: B67426583  **26**
+Routine Name: FHNDB252
+    Before:       n/a   After: B60524428  **26**
+Routine Name: FHNDB253
+    Before:       n/a   After: B58261706  **26**
+Routine Name: FHNDB254
+    Before:       n/a   After: B50204331  **26**
+Routine Name: FHNDB255
+    Before:       n/a   After: B21183501  **26**
+Routine Name: FHUD112
+    Before:       n/a   After: B76644082  **26**
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : MAY 26, 2010
+Completed By: MALDONADO,URIEL               Date Completed: MAR 30, 2012
+Released By : BOSE,MARY ELLEN               Date Released : APR 04, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

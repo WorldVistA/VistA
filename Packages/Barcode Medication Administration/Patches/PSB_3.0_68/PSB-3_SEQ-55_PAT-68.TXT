@@ -1,0 +1,642 @@
+$TXT Created by NAPOLIELLO,GREG at DVACACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Monday, 04/16/12 at 08:26
+=============================================================================
+Run Date: SEP 12, 2012                     Designation: PSB*3*68
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #55                      Status: Released
+                  Compliance Date: OCT 13, 2012
+=============================================================================
+
+Associated patches: (v)PSB*3*58    <<= must be installed BEFORE `PSB*3*68'
+                    (v)PSB*3*61    <<= must be installed BEFORE `PSB*3*68'
+                    (v)PSB*3*62    <<= must be installed BEFORE `PSB*3*68'
+                    (v)PSJ*5*267   <<= must be installed BEFORE `PSB*3*68'
+                    (v)PSB*3*67    <<= must be installed BEFORE `PSB*3*68'
+
+Subject: IMR4 UNLIMITED SI/OPI TEXT, LAST INJECTION SITE
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ ******************************* ATTENTION ********************************
+   
+ IMR4 UNLIMITED SI/OPI TEXT, LAST INJECTION SITE enhancement includes 4 
+ patches which must be installed in the following order:
+  
+ 1.      PSS*1*171
+ 2.      PSJ*5*267
+ 3.      PSB*3*68
+ 4.      PSB*3*69
+  
+ **************************************************************************
+  
+ ATTENTION: This patch includes a new Graphical User Interface (GUI)
+ executable file. Installation of this GUI is required immediately after
+ the KIDS install for the Patch to function.
+  
+ This version of BCMA was successfully tested in the field against Wireless
+ Medication Administration version 4.8 at Pittsburgh and Loma Linda.
+  
+ For retrieval and installation instructions, please see the Client
+ Installation Instructions section.
+  
+ The Special Instructions and Other Print Info Project addresses 
+ enhancements identified during Inpatient Medications Requirements for 
+ Special Focus Group Initial Request Analysis (IMR SFG IRA) Phase 
+ III/Phase IV, as well as modifications requested by the Bar Code
+ Medication Administration (BCMA) and Inpatient Medications workgroups.  
+  
+ The Inpatient Pharmacy patch PSJ*5*267 is also being released as part of
+ these enhancements.  The projects purpose is to Standardize the character
+ length between CPRS Provider's Comment, Inpatient Medications Special
+ Instructions, and the IV Pharmacy Other Print Information fields.
+  
+ The Inpatient Pharmacy patch PSJ*5*267 will add new fields to Inpatient 
+ Medication to support an unlimited amount of text for Special 
+ Instructions and Other Print Info (SI/OPI). 
+  
+ 1. BCMA Remote Procedure Calls (RPC) will be modified to send over the new
+    Inpatient Medications SI/OPI fields in an unlimited format to the BCMA
+    GUI client.
+  
+ 2. For backwards compatibility, of existing Active orders on file that
+    were using the old fixed length SI/OPI fields, then this information 
+    will be included in the new unlimited format also.
+  
+ 3. Modify the following reports to print the unlimited SI/OPI information:
+     a. Medication Administration History (MAH) Report
+     b. Display Order detail Report
+     c. Due List Report
+     d. IV Bag Status Report
+     e. Cover Sheet Report - Medication Overview Report
+     f. Cover Sheet Report - PRN Overview Report
+     g. Cover Sheet Report - IV Overview Report
+     h. Cover Sheet Report - Expired/DC'd/Expiring Report
+     i. BCMA Backup System (BCBU) Print MAR for All Wards
+     j. BCMA Backup System (BCBU) Print MAR for Selected Patient
+     k. BCMA Backup System (BCBU) Print MAR for Selected Ward
+  
+ 4. Add new check box field to allow if the unlimited text will be printed
+    on the following reports:
+     a. Due List Report
+     b. IV Bag Status Report
+     c. Cover Sheet Report - Medication Overview Report
+     d. Cover Sheet Report - PRN Overview Report
+     e. Cover Sheet Report - IV Overview Report
+     f. Cover Sheet Report - Expired/DC'd/Expiring Report
+  
+ 5. BCMA Client:
+     a. Added window to display unlimited Special Instructions / Other
+        Print Info via menu, right-click, and function key (F6).  This
+        window is also used to display Special Instructions / Other Print
+        Info when an order is flagged in Inpatient Medications and is given
+        in BCMA.
+     b. Fields which displayed Special Instructions / Other Print Info in
+        forms were widened to 80 characters and have vertical scroll.
+     c. Added Last Injections Site column to the Unit Dose VDL to show what
+        the last site was per Orderable item.
+     d. Enhanced the Injection Site dialog window to show two 
+        history tables.
+           1) To show the last 4 sites per the medication being given.
+           2) To show last 10 sites per the patient for any medication.
+       The tables above will use a new Division parameter, "Injection Site 
+       History Max Hours", added with this patch that controls how many
+       hours to look back when compiling these history tables.  The default
+       will be initialized to 72 hours, with this patch.
+  
+ This Patch also Addresses 3 reported Remedy ticket issues:
+  
+ 1. After scanning a medication that requires multiple doses
+    or dosage strengths, the multiple dose dialog box's 
+    invalid medication pop-up functionality appears to be broken.
+ 2. Unable to view all allergies/ADRs on BCMA GUI for patient with
+    numerous allergies/ADRs.
+ 3. The Patient Record Flag changes from Red to Black if you lock
+    your computer. 
+  
+ Please refer to the release notes for a full detailed list and examples 
+ of items included in this patch.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+                                                                New/Modified
+ File Name (Number)            Field Name (Number)                /Deleted
+ ---------------------------   ------------------------------   -----------
+ BCMA REPORT REQUEST (53.69)   INCLUDE SPECIAL INSTRUCTIONS (3)    NEW
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name            New/Modified/Deleted
+ ----------------         -------------------- 
+ N/A
+  
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name                 New/Modified/Deleted
+ -------------------      --------------------      
+ PSB GETINJECTIONSITE            New 
+ PSB GETCOVERSHEET1            Modified
+ PSB GETORDERTAB               Modified
+ PSB GETPRNS                   Modified 
+ PSB REPORT                    Modified
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)             New/Mod/Del
+ -------------      ----      ------------------             -----------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20031205, 20081003
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ PSPO 42, 1466, 2037
+  
+  
+ Associated Remedy Tickets:
+ -----------------------------
+ HD480879 -  PSB*58:  BCMA IMR 3 Sprint 1
+ HD488494 -  Unable to view all allergies/ADRs on BCMA GUI for 
+             patient with numerous allergies/ADRs.
+ HD506938 -  Patient Record Flag changes from Red to Black
+ HD419658 -  Special Instructions Cutting off When Using Med Overview and 
+             PRN Overview Reports
+  
+ REMEDY OVERVIEW
+ ---------------
+  
+ 1.  HD0000000336419 - Comment lengths between CPRS and Pharmacy
+  
+  Problem:
+  --------
+  The feature "Copy Provider Comments into Special Instruction" is 
+  truncating comments that exceed 180 characters.
+  
+  Resolution:
+  -----------
+  The Inpatient Pharmacy patch PSJ*5*267 will add new fields to Inpatient 
+  Medication to support an unlimited amount of text for Special 
+  Instructions and Other Print Info (SI/OPI).  BCMA has been modified
+  to handle these changes.
+  
+ 2.  HD0000000480879 - PSB*58:  BCMA IMR 3 Sprint 1
+  
+  Problem:
+  --------
+  After scanning a medication that requires multiple doses or dosage
+  strengths, the multiple dose dialog box's invalid medication pop-up
+  functionality appears to be broken.
+  
+  Resolution:
+  -----------
+  Delphi file MultipleDrugs.pas was modified to display the "Invalid
+  Medications" popup whenever an invalid dose is scanned.
+  
+ 3.  HD0000000488494 - Unable to view all allergies/ADRs on BCMA GUI for
+                       patient with numerous allergies/ADRs.
+  Problem:
+  --------
+  For patients with more than one line of Allergies/Adverse Reactions
+  (ADR's) in the BCMA GUI, anything after the first line will not
+  display on the GUI.
+  
+  Resolution:
+  -----------
+  Delphi files BCMA_Main.frm and BCMA_Main.pas were modified to display
+  all Allergies and ADR's.
+  
+ 4.  HD0000000506938 -  Patient Record Flag changes from Red to Black
+  
+  Problem:
+  --------
+  The Patient Record Flag changes from Red to Black if you lock your
+  computer.
+  
+  Resolution:
+  -----------
+  Delphi file MultipleDrugs.pas was modified to make sure the enable
+  Patient Record flag is always displayed as Red.
+  
+ 5.  HD0000000419658 - Special Instructions Cutting off When Using Med 
+                       Overview and PRN OVerview Reports
+  Problem:
+  --------
+  When printing these reports, the longer text did not wrap and were cut 
+  off.
+  
+  Resolution:
+  -----------
+  This project replaced the old fixed length text that was wrapped in a 
+  confined area to unlimited word processing text lines, which now prints
+  in full, in its own area on the report.
+  
+  
+ Test Sites:
+ -----------
+ Central Texas
+ Manchester, NH
+ Pittsburgh, PA
+ St. Cloud, MN
+ Albany,NY (VISN 2)
+ Bath, NY (VISN 2)
+ Canandaigua, NY (VISN 2)
+ Syracuse, NY (VISN 2)
+ VA Western New York Healthcare System at Batavia (VISN 2)
+ VA Western New York Healthcare System at Buffalo (VISN 2)
+  
+   
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.va.gov/vdl/
+  
+ File Description           File Name                              FTP Mode
+ --------------------------------------------------------------------------
+ BCMA V.3.0 GUI User Manual - Chapters 1 through 4
+                            PSB_3_UM_CHAPTERS_1_THRU_4_R0912.PDF   (binary)
+ BCMA V.3.0 GUI User Manual - Chapters 5 through 11
+                            PSB_3_UM_CHAPTERS_5_THRU_11_R0912.PDF  (binary)
+ BCMA V.3.0 Manager's User Manual  
+                            PSB_3_MAN_UM_R0912.PDF                 (binary)
+ BCMA V.3.0 Manager's User Manual Change Pages PSB*3*68
+                            PSB_3_P68_MAN_UM_CP.PDF                (binary)
+ Release Notes - BCMA V.3.0  (PSB*3*68)
+                            PSB_3_P68_RN.PDF                       (binary)
+  
+  
+ Patch Installation: 
+ ===================
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ A post install routine will run to initialize the New Kernel variable PSB 
+ INJECTION SITE MAX HOURS.  This will be used for the new Injection Site 
+ History functionality in BCMA.  This parameter may be changed after this
+ install via the BCMA site parameters GUI client, per division, to match
+ site policy.  This new parameter will be initialized for all divisions 
+ that have the Parameter "PSB ONLINE" set to YES as seen in the below
+ Example Install message. 
+  
+ A second part of the post install procedure, BCMA Injection Site Cross 
+ Ref Builder, will be tasked in the background and begin running 
+ immediately.  This process may take 20-30 hours to complete, depending on 
+ your sites BCMA MEDICATION LOG file size, but the BCMA system can be used 
+ while this background job is running.  
+  
+ The background job is designed to process the most recent Medical 
+ Administration records and work its way back through the BCMA MEDICATION 
+ LOG file until complete.  The most recent records should be available for 
+ the Injection History Window, in BCMA, in the first 1 or 2 hours.  A 
+ mailman message will be sent to the installer, once the background job 
+ has completed.
+ See an example below.
+  
+ The background job can be stopped gracefully, if Taskman is asked to 
+ stop, and a mailman message will be sent that contains the progress of 
+ the Cross Ref Builder to that point. This procedure can be restarted 
+ later and it will resume where it left off.  
+  
+   Restart the Cross Ref Builder background job, by typing the Mumps
+   command in Programmer Mode, as seen below, and press Enter:
+  
+      >D BEGIN^PSB3P68
+  
+   A mailman message will be sent to indicate the Cross Ref Builder 
+   background job has resumed.
+  
+ The status of this background job can be checked by typing the Mumps 
+ command in Programmer Mode as seen in the example status check below.
+  
+ The Post Install routine PSB3P68 should be deleted manually, after the 
+ mailman message is received showing the Cross Ref Builder is 100% 
+ complete. See Post Installation section below for instructions on how to
+ delete the routine.
+  
+  Example Mailman Message:
+  ------------------------
+  Subj: BCMA Injection Site Cross Ref Builder Results  [#141406] 
+  02/23/12@15:42 6 lines
+  From: PSB3P68 POST INSTALL  In 'IN' basket.   Page 1
+  -------------------------------------------------------------------------
+  BCMA Injection Site Cross Ref Builder Status: COMPLETED Feb 23,2012@15:23
+  
+          Total Records in file:      21,180,999
+              Records processed:      21,180,999
+             Total elapsed time:       1 5:22:32
+               Percent complete:            100%
+  
+  
+  Example Status Check:
+  ---------------------
+  
+    UCI>D STATUS^PSB3P68
+  
+    BCMA Injection Site Cross Ref Builder
+    Status: RUNNING since   Feb 23, 2012@15:42:47
+    74% complete
+  
+  
+  Example Install Message:
+  ------------------------ 
+  
+   *** PSB*3*68 POST INSTALL NOW RUNNING ***
+   
+    Initialize BCMA parameter PSB INJECTION SITE MAX HOURS...
+  
+      DIV                              MAX HRS
+  
+    Before update
+  
+      ABC DIVISION                       
+      XYZ DIVISION                       
+  
+    After update
+  
+      ABC DIVISION                       72
+      XYZ DIVISION                       72
+   
+  
+  
+    BCMA Injection Site Cross Ref Builder
+  
+    This request queued as Task # 4957178
+  
+    A Mailman message will be sent to you when the Cross Reference Builder
+    completes.
+  
+  
+ Installation Instructions
+ -------------------------
+ Do not queue this patch to install at a later time nor install this patch
+ while BCMA users are on the system. Installation will take no longer than
+ 5 minutes for the software components and new division parameter.  
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSB*3.0*68):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSB*3.0*68.
+  
+ 5.  When promted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//  respond NO. 
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Client Installation Instructions:
+ =================================
+ The software distribution includes these modified files:
+  
+  FILE NAME       DESCRIPTION           FILE VERSION       BYTES   CHECKSUM
+  
+  BCMA.CHM        Client help file                         865 KB    n/a
+  BCMA.EXE        Client                  3.0.68.12      2,561 KB    n/a
+  
+  BCMAPar.CHM     Parameters Client help                   143 KB    n/a
+  BCMApar.EXE     Parameters Client       3.0.68.4       1,068 KB    n/a
+  
+  
+   1. Prior client compatible with patch:  NO
+   2. Client can be copied instead of installed:  YES
+   3. Is your site running the CareFusion Wireless Medication
+      Administration (WMA) software? If YES, please contact Carefusion to
+      ensure your site has the latest compatible WMA patch.
+  
+  
+    Note:  Use Binary mode to retrieve the .EXE file.
+  
+    To obtain the updated .EXE, use FTP to retrieve PSB3_0P68.EXE from one
+    of the following OI Field Offices' ANONYMOUS.SOFTWARE directories:
+  
+     OI Field Office   FTP Address                Directory
+     VA-wide           download.vista.med.va.gov  anonymous.software
+     Albany            ftp.fo-albany.med.va.gov   anonymous.software
+     Hines             ftp.fo-hines.med.va.gov    anonymous.software
+     Salt Lake City    ftp.fo-slc.med.va.gov      anonymous.software
+  
+    If BCMA is currently running, please exit BCMA. This client
+    installation patch file can be used to upgrade an existing version of
+    BCMA, or can be used for a brand new installation.
+  
+     1. Double Click on PSB3_0P68.EXE which will launch the InstallShield
+        Wizard.
+  
+     2. When the InstallShield Wizard Welcome screen is displayed, click
+        "Next".
+  
+     3. On the Choose Destination Location screen, simply click "Next"
+        If you would like to change the destination folder to one other
+        than default, click "Browse" to navigate to the folder of your
+        choice. Click "Next".
+  
+     4. On the "Setup Type" Screen select one of the following:
+              a. Typical - installs only the BCMA client program
+                 which is necessary for medication administration.
+              b. Complete - installs the BCMA client and the
+                 GUI BCMA site parameters definition program.
+              c. Custom - allows you to select which programs to install
+                 Typical is selected by default. Click "Next".
+  
+     5. The InstallShield Wizard Ready to Install the Program screen
+        will display. Click "Install" to proceed with the installation.
+  
+     6. The InstallShield Wizard Complete screen will be displayed.
+        Click "Finish" and the BCMA installation is now complete.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Once the Cross Reference Builder mailman message is received stating the 
+ process has completed 100%, then The IRM should delete the Post install 
+ routine PSB3P68 using the below menu option from the Programmer's Options
+ menu:
+  
+ Select Programmer Options Option: Routine Tools
+  
+  
+           %Index of Routines
+           Check Routines on Other CPUs
+           Compare local/national checksums report
+           Compare routines on tape to disk
+           Compare two routines
+           Delete Routines
+           First Line Routine Print
+           Flow Chart Entire Routine
+           Flow Chart from Entry Point
+           Group Routine Edit
+           Input routines
+           List Routines
+           Load/refresh checksum values into ROUTINE file
+           Output routines
+           Routine Edit
+           Routines by Patch Number
+           Variable changer
+           Version Number Update
+  
+ Select Routine Tools Option: Delete Routines
+  
+ ROUTINE DELETE
+  
+ All Routines? No => No
+  
+ Routine: PSB3P68
+ Routine: 
+ 1 routine
+  
+ 1 routines to DELETE, OK: NO// Y
+ PSB3P68   
+ Done.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 26
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSB3P68
+    Before:       n/a   After: B55551583  **68**
+Routine Name: PSBCSUTL
+    Before:B145173894   After:B149737589  **16,13,38,32,50,60,58,68**
+Routine Name: PSBINJEC
+    Before:       n/a   After: B24162182  **68**
+Routine Name: PSBO
+    Before: B82537040   After: B87103799  **13,32,2,25,28,51,50,42,58,68**
+Routine Name: PSBOCE
+    Before: B78332113   After: B83955260  **32,50,68**
+Routine Name: PSBOCI
+    Before: B87456425   After: B92815487  **32,62,68**
+Routine Name: PSBOCM
+    Before: B76599407   After: B85413465  **32,50,68**
+Routine Name: PSBOCP
+    Before: B77940079   After: B82953642  **32,50,68**
+Routine Name: PSBODL
+    Before: B80947318   After: B85139144  **5,9,38,32,25,63,68**
+Routine Name: PSBODL1
+    Before: B38252588   After: B43970993  **5,9,32,28,68**
+Routine Name: PSBODO
+    Before: B34073273   After: B36995822  **5,21,24,38,58,68**
+Routine Name: PSBOIV
+    Before: B78135572   After: B83398690  **32,68**
+Routine Name: PSBOMH
+    Before: B85302995   After: B83165444  **5,9,38,57,67,68**
+Routine Name: PSBOMH2
+    Before: B39219364   After: B46571592  **6,20,27,26,67,68**
+Routine Name: PSBPRN
+    Before: B24812606   After: B32147222  **5,3,13,61,68**
+Routine Name: PSBRPC3
+    Before:   B309153   After:   B309181  **6,3,4,16,13,10,32,28,42,58,68**
+Routine Name: PSBVDLPB
+    Before: B89830861   After: B99542907  **11,13,38,32,58,68**
+Routine Name: PSBVDLTB
+    Before: B12630766   After: B13695318  **3,4,16,68**
+Routine Name: PSBVDLU1
+    Before: B56720920   After: B63529398  **13,32,68**
+Routine Name: PSBVDLUD
+    Before: B82540618   After: B85273287  **11,13,38,32,58,68**
+Routine Name: PSBVT
+    Before: B77039096   After: B79719168  **6,3,38,68**
+ 
+Routine list of preceding patches: 58, 61, 62, 63, 67
+
+=============================================================================
+User Information:
+Entered By  : NAPOLIELLO,GREG               Date Entered  : NOV 28, 2011
+Completed By: PAYNE,RONALD                  Date Completed: SEP 12, 2012
+Released By : LYTTLE,KIM M                  Date Released : SEP 12, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

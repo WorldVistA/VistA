@@ -1,0 +1,169 @@
+
+=============================================================================
+Run Date: JAN 27, 2011                     Designation: XU*8*565
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #450                      Status: Released
+                  Compliance Date: FEB 27, 2011
+=============================================================================
+
+
+Subject: Updated XU*8*548 post install instructions
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch is for informational purposes only and should not be
+ installed. It addresses changes to the Post-Installation Instructions
+ associated with patch XU*8.0*548.  The post-installation instructions
+ provided with XU*8.0*548 were inaccurate.  The proper configuration
+ of VistA will be clarified with these updated instructions.
+  
+ Problem:
+ -------
+ Post-Installation instructions for XU*8.0*548 stated that it was a
+ requirement to add the VA.GOV synonym to the site's domain.  This
+ requirement has been removed as it could cause problems.  If you
+ added the synonym VA.GOV as part of the installation of XU*8.0*548
+ then REMOVE it.  Your domain is defined correctly if you can send
+ messages to @VA.GOV email addresses.
+  
+ Resolution:
+ ----------
+ Sites that installed XU*8.0*548 into their production environments
+ should do the following: 
+     1. If you added VA.GOV as a synonym as described in the 
+        Post-Installation instructions, you should remove it. VA.GOV
+        should not be a synonym of any site.
+     2. You should review the Q-NPS.VA.GOV domain configuration to
+        insure that the FLAGS field (#1) contains an 'S'.
+         
+  
+ The full updated post installation instructions can be found at the
+ bottom of this message.
+  
+  
+ Patch Components
+ ================
+ This patch is informational only and does not contain components.
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ UPDATED documentation describing the new instructions clarified by this 
+ informational patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.  This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software directly
+ from a specific server as follows:
+   
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Release Notes                 XU_80_P548_RN.pdf               binary      
+  
+  
+ Updated Post Installation Instructions for XU*8.0*548:
+ -----------------------------------------------------
+ There are several manual post-installation steps associated with this
+ patch. The purpose of these instructions is to make sure that your system
+ is configured properly for this NPI Crosswalk Extract so that it will run
+ every time the CBO requests it via the NPI Administration website.
+  
+ For the NPI Crosswalk Extract process to work correctly several
+ requirements must be met:
+  
+ 1.  The NPI EXTRACT VERIFICATION mail group must be defined and correctly
+     configured.  Make sure the REMOTE MEMBER address is present and is
+     correctly typed. The correct configuration is:
+  
+ NPI EXTRACT VERIFICATION
+   TYPE: public                          ALLOW SELF ENROLLMENT: NO
+   REFERENCE COUNT: 65                   LAST REFERENCED: JUN 01, 2010
+   RESTRICTIONS: UNRESTRICTED
+   MEMBER: XXXXX,XXXXXX
+   DESCRIPTION: Members of this mail group will automatically receive an 
+                email verification entry for each NPI Extract file that has
+                been generated at the sites.
+   ORGANIZER: POSTMASTER
+   REMOTE MEMBER: vhaconpiextractmonitoring@VA.GOV
+  
+        The remote member MUST be entered exactly as shown above.
+  
+    ****************************************************************
+    ***                                                          ***
+    *** Common mistake: The remote member is NOT entered into    ***
+    ***                 the system correctly. It usually is      ***
+    ***                 misspelled or not defined.               ***
+    ***                                                          ***
+    ****************************************************************
+  
+  
+  
+ 2. The Q-NPS.VA.GOV domain must exist and the field 'FLAGS' must be
+    defined with a value of 'S'.  Example shown below.  
+  
+ Select DOMAIN NAME: Q-NPS.VA.GOV  
+ NUMBER: 579                             NAME: Q-NPS.VA.GOV
+   FLAGS: S                              RELAY DOMAIN: FOC-AUSTIN.VA.GOV
+   DHCP ROUTING INDICATOR: NPS           DISABLE TURN COMMAND: YES
+   LEVEL 1 NAME (c): GOV                 LEVEL 2 NAME (c): VA.GOV
+   LEVEL 3 NAME (c): Q-NPS.VA.GOV        LEVEL 4 NAME (c): Q-NPS.VA.GOV
+  
+  
+   
+ 3. The logical link NPI OUT must exist and be configured as follows, where
+    the field 'TCP/IP ADDRESS' is populated correctly and the field
+    'AUTOSTART' MUST be set to 'Enabled'.  Example shown below.
+  
+ Select HL LOGICAL LINK NODE: NPI OUT
+ ANOTHER ONE:
+ STANDARD CAPTIONED OUTPUT? Yes// Y  (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO// BOTH Computed Fields and Record 
+ Number
+  (IEN)
+   
+   LLP TYPE: TCP                         AUTOSTART: Enabled
+   QUEUE SIZE: 10                        RE-TRANSMISSION ATTEMPTS: 3
+   READ TIMEOUT: 27                      ACK TIMEOUT: 270
+   TCP/IP ADDRESS: 00.00.00.00           TCP/IP PORT: 8090
+   TCP/IP SERVICE TYPE: CLIENT (SENDER)  PERSISTENT: NO
+   RETENTION: 50                         SAY HELO: NO 
+  
+ NOTE: The IP address MUST be populated. The IP address shown is NOT a 
+       valid IP address for your site.  It should point to your local VIE.
+       If you are not sure of your sites' VIE IP address please contact the
+       VIE NATIONAL ADMIN Exchange mail group.
+  
+    ****************************************************************
+    ***                                                          ***
+    *** Common mistake: The HL LOGICAL LINK does not have the    ***
+    ***                 AUTOSTART field set to "Enabled".        ***
+    ***                                                          ***
+    ****************************************************************
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : WHITE,DARLENE                 Date Entered  : JAN 27, 2011
+Completed By: NULL,RODGER                   Date Completed: JAN 27, 2011
+Released By : TILLIS,LEWIS                  Date Released : JAN 27, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

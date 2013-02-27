@@ -1,0 +1,191 @@
+$TXT Created by GEBHART,BOBBIE at MNTVUU.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 06/01/12 at 09:58
+=============================================================================
+Run Date: JAN 30, 2013                     Designation: EN*7*91
+Package : EN - ENGINEERING                    Priority: Mandatory
+Version : 7        SEQ #86                      Status: Released
+                  Compliance Date: MAR 02, 2013
+=============================================================================
+
+Associated patches: (v)EN*7*35     <<= must be installed BEFORE `EN*7*91'
+                    (v)EN*7*60     <<= must be installed BEFORE `EN*7*91'
+
+Subject: CORRECT UNDEFINED ERROR, DIRECTIVE NUMBER CHANGE, TRIGGER NOT WORK
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses 3 issues:
+  
+ 1. User is receiving an Undefined Error when entering a "^" and any 
+    other character at an edit prompt followed by a "^" at the next edit  
+    prompt when using ENGINEERING EMPLOYEE FILE [ENEMP] and KEY
+    DISTRIBUTION BY EMPLOYEE [ENSPEDKEY] menu options.
+  
+ 2. Text Change to Directive # printed on Hand Receipt.
+  
+ 3. EQUIPMENT INVENTORY FILE (#6914) Consolidated Memorandum of Receipt
+    (CMR) field (#.19) trigger is not working properly.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Salisbury, NC.
+ Lake City, FL.
+ Detroit, MI.
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. HD0000000066718 - <Undefined> FMUT1^ENMAN
+    
+    Duplicate(s)
+    ------------
+    HD0000000328674 - Nutrition Status Averages do not seem to be accurate
+  
+ 2. HD0000000536047 - Need to change Directive number
+  
+ 3. HD0000000218630 - When changing CMR number, service pointer is not 
+                      changing with it
+  
+ Remedy Ticket Overview:
+ =======================
+  
+ 1. HD0000000066718
+  
+    Problem:
+    --------
+    User is receiving an <UNDEFINED> error when using the ENGINEERING
+    EMPLOYEE FILE Menu Option [ENEMP] and the KEY DISTRIBUTION BY EMPLOYEE
+    Menu Option [ENSPEDKEY] when entering a "^" and any other character at
+    an edit prompt followed by a "^" at the next edit prompt.
+  
+    Resolution:
+    -----------
+    Modified routines ENMAN and ENSP to protect variable DIC before the
+    DIE,DIC calls.
+  
+ 2. HD0000000536047
+  
+    Problem:
+    --------
+    Need to change Directive number on Hand Receipt text.  Currently
+    showing "Directive 7125, Part 4, 5006". New Directive should read
+    "Directive 7002, Part 2".
+  
+    Resolution:
+    -----------
+    Modified SIG^ENQCMR routine write line to reflect the correct Directive
+    information.
+  
+ 3. HD0000000218630
+  
+    Problem:
+    --------
+    CMR Field (#.19) triggers the population of the SERVICE POINTER field
+    (#.21) of the EQUIPMENT INVENTORY FILE (#6914) file. It is not updating
+    Service Pointer if CMR is changed only upon creation.
+  
+    Resolution:
+    -----------
+    Corrected the trigger to the following: DELETE VALUE)=@
+  
+    Technical:
+    ==========
+    Pre-install routine - EN7P91 - deletes the old triggers in the fields 
+    listed below. The routine will be deleted after install.
+  
+    The following partial Data Dictionary entries are included. 
+  
+                                           UP    SEND  DATA                USER
+                                           DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                     DD    CODE  W/FILE  DATA  PTRS  RIDE
+ ------------------------------------------------------------------------------
+  
+ 6914        EQUIPMENT INVENTORY            YES   NO    NO                  NO
+  
+ Partial DD: subDD: 6914       fld: .19
+  
+    ==================== Installation Instructions ====================
+  
+    If installed during the normal workday, it is recommended that the
+    Engineering users be off the system. Other VISTA users will not be
+    affected.
+  
+    Pre-install routine, EN7P91, will be deleted after patch installation.
+    Install Time - less than 2 minutes.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.
+  
+    2. From the Kernel Installation & Distribution System menu, select 
+       the installation menu.   
+           
+    3. From this menu, you may elect to use the following options
+       (When prompted for the INSTALL NAME, enter EN*7.0*91):
+  
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+  
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+  
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+  
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+    4. Use the Install Package(s) option and select the package
+       EN*7.0*91.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+  
+    7. The routine EN7P91 will be removed from your production and 
+       test system after the patch has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;ENGINEERING;**[Patch List]**;Aug 13, 1993;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EN7P91
+    Before:       n/a   After:   B482759  **91**
+Routine Name: ENEQCMR
+    Before: B18844899   After: B18781962  **39,60,91**
+Routine Name: ENMAN
+    Before:  B4076482   After:  B4532662  **35,91**
+Routine Name: ENSP
+    Before: B24023600   After: B24768455  **91**
+ 
+Routine list of preceding patches: 35, 60
+
+=============================================================================
+User Information:
+Entered By  : GEBHART,BOBBIE                Date Entered  : MAR 14, 2012
+Completed By: DUCKWORTH,TIM                 Date Completed: JAN 24, 2013
+Released By : NELSON,VICKI M                Date Released : JAN 30, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

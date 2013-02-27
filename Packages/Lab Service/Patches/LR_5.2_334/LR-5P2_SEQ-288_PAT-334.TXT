@@ -1,0 +1,498 @@
+
+=============================================================================
+Run Date: JUL 18, 2007                     Designation: LR*5.2*334
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #288                    Status: Released
+                  Compliance Date: AUG 18, 2007
+=============================================================================
+
+Associated patches: (v)LR*5.2*232  <<= must be installed BEFORE `LR*5.2*334'
+                    (v)LR*5.2*272  <<= must be installed BEFORE `LR*5.2*334'
+                    (v)LR*5.2*280  <<= must be installed BEFORE `LR*5.2*334'
+                    (v)LR*5.2*302  <<= must be installed BEFORE `LR*5.2*334'
+                    (v)XU*8*299    <<= must be installed BEFORE `LR*5.2*334'
+                    (v)XT*7.3*93   <<= must be installed BEFORE `LR*5.2*334'
+                    (v)HDI*1*1     <<= must be installed BEFORE `LR*5.2*334'
+
+Subject: NLT/LOINC V2.14 UPDATE
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ BLOOD BANK CLEARANCE
+ ====================
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*334 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by VHA 
+ DIRECTIVE 2004-058 titled VISTA BLOOD BANK SOFTWARE VERSION 5.2.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*334 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*334 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+ VALIDATION REQUIREMENT BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+ ====================== 
+  
+ ENHANCEMENTS:
+  
+ Map Lab Tests to LOINC Codes [LR LOINC MAP]
+ This option has been modified to permit the use of suffixed WKLD CODE 
+ in the NATIONAL VA LAB CODE (#64) field, of the LABORATORY TEST (#60) 
+ file. This modified option is located on the LOINC Main Menu [LRLOINC] 
+ menu
+  
+ Print LOINC Code Status [LR LOINC STATUS PRINT]
+ This patch will provide an option to list LOINC deprecated terms. The 
+ option will also provide a list of currently mapped/linked laboratory 
+ tests that are linked to LOINC deprecated terms. This new option is 
+ located on the LOINC Mapping Utility Menu [LR LOINC UTILITY] menu. 
+  
+  
+ This patch will support "Veterans Health Administration Unique 
+ Identifiers (VUID) standard. This patch will provide the necessary LAB 
+ LOINC (#95.3) file data dictionary modifications in support of Data 
+ Standardization (DS) and the maintenance of those standards by Enterprise 
+ Reference Terminology (ERT).
+  
+ LAB LOINC (#95.3) file protection has been significantly enhanced to 
+ prevent field editing of the file. All fields will be populated by the DS 
+ authority, there are no fields in this file that are site editable.
+  
+ LAB LOINC (#95.3) file contents will be updated to the Regenstrief issued 
+ LOINC version 2.14.
+  
+ This patch will update the WKLD CODE (#64) file and several laboratory 
+ standardized files associated with National Laboratory Test (NLT) package 
+ and Logical Observation Identifier Naming Codes (LOINC) coding. (See list 
+ below) 
+  
+ File #          File Name               Update Method
+ 64.061  LAB ELECTRONIC CODES            Replaced
+ 64.062  LAB ELECTRONIC SUBTYPES         Replaced
+ 64.2    WKLD SUFFIX CODES               Replaced
+ 64.22   WKLD ITEM FOR COUNT             Replaced
+ 64.3    WKLD INSTRUMENT MANUFACTURER    Replaced
+ 64.81   LAB NLT/CPT CODES               Replaced
+ 95.3    LAB LOINC                       Replaced
+ 95.31   LAB LOINC COMPONENT             Replaced
+ 64      WKLD CODE                       Updated
+  
+ ============================
+  
+ LOINC Copyright acknowledgement:
+ LOINC was Copyrighted 1995, 1996, 1997, by Regenstrief Institute and the 
+ Logical Observation Identifier Names and Codes (LOINC) Committee.  All 
+ rights reserved. LOINC is a trademark of the Regenstrief Institute.
+ Contact information:
+ LOINC c/o Medical Informatics 
+ The Regenstrief Institute, Inc. 
+ Health Information and Translational Sciences Bldg. (HITS)
+ 410 West 10th Street, Suite 2000 
+ Indianapolis, IN 46202
+ Telephone - 317.423.5558,  Fax- 317.423.5695
+ ========================
+  
+ VistA Laboratory Package LAB LOINC (#95.3) file does not support all of 
+ the fields contained in the LOINC database. Refer to the LOINC user's 
+ manual for more field details. The following fields are imported and 
+ supported within VistA. The field "(#X)" refers to the field in the LAB 
+ LOINC (#95.3) file were the data is stored.
+  
+ #    Loinc Term         VistA name
+ 1    LOINC_NUM          CODE field (#.01) + CHECK DIGIT field (#15)
+ 2    COMPONENT          COMPONENT field (#1)+LAB LOINC COMPONENT file
+                                 (95.31)
+ 3    PROPERTY           PROPERTY field (#2)
+ 4    TIME_ASPCT         TIME ASPECT field (#3)
+ 5    SYSTEM             SYSTEM field (#4)
+ 6    SCALE_TYP          SCALE TYPE field (#5)
+ 7    METHOD_TYP         METHOD TYPE field (#6)
+ 9    CLASS              CLASSTYPE field (#41)
+ 10   SOURCE             SOURCE field (#8)
+ 14   DT_LAST_CH         DATE LAST CHANGED field (#22)
+ 15   CHNG_REAS          CHANGE REASON field (#24)
+ 16   CHNG_TYPE          CHANGE TYPE field (#23)
+ 19   STATUS             STATUS field (#20)
+ 20   MAP_TO             MAP TO field (#21)
+ 23   VA_CD              VA CODE field (#34)
+ 59   SHORTNAME          SHORTNAME field (#81)
+   
+ Those local terms not included in the installed files should be formally 
+ requested by notifying the National Laboratory Test Coordinator using the 
+ form provided on the VistA Laboratory Documentation Web Page. 
+ http://vista.med.va.gov/clinicalspecialties/lab/
+  
+ Forward your completed request form to the Exchange distribution group:
+ VHAISD LAB NLT_LOINC
+  
+ ===========================
+ OPTIONS:
+  
+ NEW OPTION:
+ Print LOINC Code Status [LR LOINC STATUS PRINT]
+ This patch will provide an option to list LOINC deprecated terms. The 
+ option will also provide a list of currently mapped/linked laboratory 
+ tests that are linked to LOINC deprecated terms. This new option is 
+ located on the LOINC Mapping Utility Menu [LR LOINC UTILITY] menu. 
+  
+ MODIFIED OPTION:
+ Map Lab Tests to LOINC Codes [LR LOINC MAP]
+ This option has been modified to permit the use of suffixed WKLD CODE 
+ in the NATIONAL VA LAB CODE (#64) field, of the LABORATORY TEST (#60) 
+ file. This modified option is located on the LOINC Main Menu [LRLOINC] 
+ menu.
+  
+ =========================
+  
+ DATA DICTIONARY MODIFICATIONS:
+  
+ The screen has been removed from "NATIONAL VA LAB CODE" (#64) field, of 
+ the "LABORATORY TEST" (#60) file. This will permit the use of suffixed 
+ WKLD CODE in the NATIONAL VA LAB CODE (#64) field, of the LABORATORY 
+ TEST(#60) file.
+  
+ "AD" cross-reference has been created on the "STATUS" (#20) field of the 
+ "LAB LOINC" (#95.3) file. This cross-reference will provide a listing of 
+ LOINC codes that have a status update.
+  
+ The patch creates the following fields in the LAB LOINC (#95.3) file: 
+ MASTER ENTRY FOR VUID field (#99.98), VUID field (#99.99), and EFFECTIVE 
+ DATE/TIME field multiple (#99.991) with an Effective DATE/TIME field 
+ (95.3099,.01) and STATUS field (95.3099,.02) which includes a date/time 
+ stamp and a status of 'active' or 'inactive' in the files being 
+ standardized.
+  
+ This patch also modifies data dictionaries to prevent future modification 
+ to these files at a local site.
+  
+ Routine Summary:
+ ================
+  
+ The following is a list of the routine(s) included in this patch. The
+   second line of each of these routine(s) will look like:
+   
+       <tab>;;5.2;LAB SERVICE;**[patch list]**;Sep 27, 1994
+   
+                              CHECK^XTSUMBLD results
+  
+ Routine         Checksum       Checksum
+ Name            Before Patch   After Patch   Patch List
+  =======        ============   ===========   ==========
+ LR334           N/A            4244176       334 (deleted by patch)
+ LR334P          N/A            3802010       334
+ LR334PO         N/A            9206370       334
+ LR334POA        N/A            2989047       334
+ LR7OU5          13182116       12982551      127,201,272,334
+ LRLNCC          2634007        2869430       232,280,334
+ LRLNCST         N/A            5628677       334
+  
+  
+ ASSOCIATED NOIS:
+ ===============
+ N/A
+  
+ ASSOCIATED E3R:
+ ==============
+ N/A
+    
+ TEST SITES:
+ ==========
+ Boston HCS, MA
+ Biloxi VAMC, MS
+ Salt Lake VAMC, UT
+ North Chicago VAMC, IL
+ Shreveport VAMC, LA
+ Tucson VAMC, AZ
+ El Paso VAMC, TX
+ San Antonio VAMC, TX
+  
+  
+ Required Builds:
+ ==========================
+ LR*5.2*272
+ LR*5.2*302
+ LR*5.2*232
+ LR*5.2*280
+ XU*8.0*299
+ XT*7.3*93
+ HDI*1.0*1
+  
+ Installation Instructions:  
+ ========================= 
+  
+ The patch LR*5.2*334 KIDS build file named LR_52_334.KID is stored in the 
+ ASCII format.
+  
+ LAB_52_p334_IMPG.doc; VistA National Laboratory Test (NLT)/Logical 
+ Observation Identifier Naming Codes (LOINC) V2.14 Update Implementation 
+ Guide Patch LR*5.2*334 Version 5.2 - stored in a BINARY format.
+  
+ LAB_52_p334_IMPG.pdf; VistA National Laboratory Test (NLT)/Logical 
+ Observation Identifier Naming Codes (LOINC) V2.14 Update Implementation 
+ Guide Patch LR*5.2*334 Version 5.2 - stored in a BINARY format.
+  
+ All files can be obtained from the following Office of Information 
+ Field Offices (OIFOs) ANONYMOUS SOFTWARE directories. All sites are 
+ encouraged to use the File Transfer Protocol (FTP) capability. Use the 
+ FTP address "download.vista.med.va.gov" (without the quotes) to connect  
+ to the first available FTP server were the files are located.
+ OIFO         FTP Address                Directory
+ Albany       ftp.fo-albany.med.va.gov   anonymous.software 
+ Hines        ftp.fo-hines.med.va.gov    anonymous.software
+ Salt Lake    ftp.fo-slc.med.va.gov      anonymous.software
+   
+ All users may remain on the system. Installation time is less than 30 
+ minutes.
+  
+ Note: The patch should be installed during off peak hours.
+  
+ No laboratory background jobs need to be stopped. No options need to be 
+ placed out of service.
+  
+ LABORATORY USERS MUST NOT ACCESSION SPECIMENS OR ENTER/VERIFY RESULTS
+ DURING THE INSTALLATION because several reference files are being deleted 
+ and replaced with this patch.
+  
+ ============================                           
+  
+ From the Kernel Installation & Distribution System (KIDS) menu 
+  
+          1. Use the 'Load a Distribution' option to load the 
+             LR_52_334.KID file onto your system.
+          2. The patch has now been loaded into a Transport global
+             on your system. You now need to use KIDS to install
+             the Transport global.
+             On the KIDS menu, under the 'Installation' menu, use 
+             the following options:
+                 Print Transport Global 
+                 Compare Transport Global to Current System
+                 Verify Checksums in Transport Global
+                 Backup a Transport Global
+          3. Users may remain on the system, but installation 
+             should be done at off peak hours.
+          4. Installation time is less than 30 minutes during off 
+             peak hours and less than 45 minutes during peak hours.
+          5. Installation of this patch requires no additional 
+             memory space.
+          6. From the 'Installation Menu' of the KIDS menu, run the 
+             option
+             'Install Package(s)' Select the package 'LR*5.2*334' 
+             and proceed with the install.
+          7. Want KIDS to Rebuild Menu Trees Upon Completion of Install? 
+              YES// respond 'YES'
+  
+               Note: Answering yes can significantly increase install time.
+  
+           8. When prompted 'Want KIDS to INHIBIT LOGONS during the
+             install? YES//' respond NO.
+           9. When prompted 'Want to DISABLE scheduled Options, Menu
+             Options, and Protocols? YES//' respond NO.
+  
+ ================
+ Example of install:
+  
+ Select INSTALL NAME:    LR*5.2*334
+      Loaded from Distribution  12/13/06@14:50:38
+      => NLT/LOINC v2.14 Update  ;Created on Dec 13, 2006@13:46:31
+  
+ This Distribution was loaded on Dec 13, 2006@14:50:38 with header of 
+    NLT/LOINC v2.14 Update  ;Created on Dec 13, 2006@13:46:31
+    It consisted of the following Install(s):
+      LR*5.2*334
+ Checking Install for Package LR*5.2*334
+ Will first run the Environment Check Routine, LR334
+  
+                         --- Environment Check is Ok ---
+  
+                 Sending install loaded alert to mail group G.LMI
+  
+ Install Questions for LR*5.2*334
+  
+ Incoming Files:
+  
+    60        LABORATORY TEST  (Partial Definition)
+ Note:  You already have the 'LABORATORY TEST' File.
+  
+    64        WKLD CODE
+ Note: You already have the 'WKLD CODE' File.
+  
+    64.061    LAB ELECTRONIC CODES  (including data)
+ Note:  You already have the 'LAB ELECTRONIC CODES' File.
+ I will OVERWRITE your data with mine.
+  
+    64.062    LAB ELECTRONIC SUBTYPES  (including data)
+ Note:  You already have the 'LAB ELECTRONIC SUBTYPES' File.
+ I will OVERWRITE your data with mine.
+  
+    64.2      WKLD SUFFIX CODES  (including data)
+ Note:  You already have the 'WKLD SUFFIX CODES' File.
+ I will OVERWRITE your data with mine.
+  
+    64.22     WKLD ITEM FOR COUNT  (including data)
+ Note:  You already have the 'WKLD ITEM FOR COUNT' File.
+ I will OVERWRITE your data with mine.
+  
+    64.3      WKLD INSTRUMENT MANUFACTURER  (including data)
+ Note:  You already have the 'WKLD INSTRUMENT MANUFACTURER' File.
+ I will OVERWRITE your data with mine.
+  
+    64.81     LAB NLT/CPT CODES  (including data)
+ Note:  You already have the 'LAB NLT/CPT CODES' File.
+ I will OVERWRITE your data with mine.
+  
+    95.3      LAB LOINC  (including data)
+ Note:  You already have the 'LAB LOINC' File.
+ I will OVERWRITE your data with mine.
+  
+    95.31     LAB LOINC COMPONENT  (including data)
+ Note:  You already have the 'LAB LOINC COMPONENT' File.
+ I will OVERWRITE your data with mine.
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? YES//YES 
+  Note: Answering yes can significantly increase install time.
+  
+ Want KIDS to INHIBIT LOGONs during the install? YES// NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? YES// NO
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   UCX/TELNET
+  
+  Install Started for LR*5.2*334 : 
+                Dec 13, 2006@15:07:27
+  
+ Build Distribution Date: Dec 13, 2006
+  
+  Installing Routines:
+                Dec 13, 2006@15:07:27
+  
+  Running Pre-Install Routine: PRE^LR334
+  
+  .                         *** Preinstall completed ***
+  
+  Installing Data Dictionaries: 
+                Dec 13, 2006@15:07:27
+  
+  Installing Data: 
+                Dec 13, 2006@15:17:30
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing OPTION
+                Dec 13, 2006@15:17:30
+  
+  Running Post-Install Routine: POST^LR334 . . . . . . . . . . . . . . . . 
+ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+ . . . . .
+  
+  .                       Building List Of Added NLT CODEs
+  .
+   .                     Sending message to LMI Mail Group.
+  .
+   .                     List Of Added WKLD CODEs Complete
+ ..........................................................................
+ .....
+  
+               Sending install completion alert to mail group G.LMI
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  LR*5.2*334 Installed. 
+                Dec 13, 2006@15:20:24
+  
+  Install Message sent #XXXXX
+  
+  Call MENU rebuild
+  
+ Starting Menu Rebuild:  Dec 13, 2006@15:20:26
+  
+ Collecting primary menus in the New Person file...
+  
+  .                   Primary menus found in the New Person file
+  .                   ------------------------------------------
+  
+  
+ DIUSER      VA FileMan        1          06/04/92   12/05/06
+  
+ Building secondary menu trees....
+  
+ Merging.... done.
+  
+ Menu Rebuild Complete:  Dec 13, 2006@15:20:40
+           
+  
+ Install Completed
+  
+  
+ LIM: Review description for LR*5.2*334 use KIDS:Utilities: Build File 
+ Print
+  
+ POST INSTALLATION INSTRUCTIONS:
+ =============================
+ Review installed LOINC codes to ensure that codes with the status of 
+ Deprecated (DEL) are not used in your current mapping of LOINC codes. In 
+ some cases, deprecated LOINC codes [LAB LOINC (#95.3) file, MAP TO (#21) 
+ field] will have the suggested replacement LOINC code populated.
+  
+ Note:
+ If your site is a HOST LEDI site, changing of any LOINC or NLT codes 
+ should be coordinated with the collection site to ensure that both sites 
+ agree in LOINC and NLT mappings.
+  
+ Note:
+  Please refer to the VistA NLT/LOINC V2.14 UPDATE Patch LR*5.2*334 
+  Implementation Guide which provides the Laboratory Information 
+  Manager (LIM) a task-oriented approaches with step-by-step 
+  instructions and examples for mapping LOINC V2.14 codes.
+  
+ After successful installation of the patch, delete the following 
+ post-install routines;
+ LR334P,LR334PO,LR334POA
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR334
+    Before:       n/a   After: B13743638  **334**
+Routine Name: LR334P
+    Before:       n/a   After:  B8154508  **334**
+Routine Name: LR334PO
+    Before:       n/a   After: B61794689  **334**
+Routine Name: LR334POA
+    Before:       n/a   After:  B6030632  **334**
+Routine Name: LR7OU5
+    Before: B32500343   After: B32626485  **127,201,272,334**
+Routine Name: LRLNCC
+    Before:  B5698826   After:  B6425697  **232,280,334**
+Routine Name: LRLNCST
+    Before:       n/a   After: B20432429  **334**
+ 
+Routine list of preceding patches: 272, 280
+
+=============================================================================
+User Information:
+Entered By  : STALLING,FRANK                Date Entered  : MAR 31, 2005
+Completed By: ELIJAH,VICKEY                 Date Completed: JUL 16, 2007
+Released By : LECLAIR,RAY                   Date Released : JUL 18, 2007
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

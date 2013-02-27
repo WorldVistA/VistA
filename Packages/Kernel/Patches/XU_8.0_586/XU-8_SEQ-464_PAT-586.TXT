@@ -1,0 +1,122 @@
+$TXT Created by TRAN,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 09/22/11 at 06:58
+=============================================================================
+Run Date: DEC 05, 2011                     Designation: XU*8*586
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #464                      Status: Released
+                  Compliance Date: JAN 05, 2012
+=============================================================================
+
+Associated patches: (v)XU*8*581    <<= must be installed BEFORE `XU*8*586'
+
+Subject: NEW PERSON CLASSES ADDED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket#:524516;536397;527883 
+ FORUM Tracking Message#:55565346
+ Blood Bank Clearance on:10/4/2011
+  
+ Test sites:
+ - CENTRAL TEXAS HCS   
+ - LITTLE ROCK, AR (C) VAMC
+ - MONTANA HCS
+  
+                        XU*8*586
+  
+ This patch adds new entries #1174, and 1175 into the PERSON
+ CLASS File (#8932.1):
+  
+ NUMBER: 1174                            PROVIDER TYPE: Optometry
+   CLASSIFICATION: Optometry Resident    STATUS: Active
+   VA CODE: V060808                      X12 CODE: 390200000X
+   SPECIALTY CODE: 41
+   DEFINITION:   An individual who is enrolled in an organized health care 
+   education/training program leading to a degree, certification, 
+   registration, and/or licensure to provide health care.
+   PROVIDER TYPE CODE (c): 39            CLASSIFICATION CODE (c): 02
+   AREA OF SPECIALIZATION CODE (c): 00000
+  
+ NUMBER: 1175                            PROVIDER TYPE: Podiatry
+   CLASSIFICATION: Podiatry Resident     STATUS: Active
+   VA CODE: V120213                      X12 CODE: 390200000X
+   SPECIALTY CODE: 48
+   DEFINITION:   An individual who is enrolled in an organized health care 
+   education/training program leading to a degree, certification, 
+   registration, and/or licensure to provide health care.
+   PROVIDER TYPE CODE (c): 39            CLASSIFICATION CODE (c): 02
+   AREA OF SPECIALIZATION CODE (c): 00000
+  
+ Blood Bank Team Coordination
+  ============================
+ Blood Bank Clearance: 10/4/2011
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*586 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*586 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*586
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ The routine XU8P586 will be deleted after the installation completes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**; July 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P586
+    Before:       n/a   After: B10161272  **586**
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : SEP 22, 2011
+Completed By: SINGH,GURBIR                  Date Completed: DEC 02, 2011
+Released By : TILLIS,LEWIS                  Date Released : DEC 05, 2011
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
