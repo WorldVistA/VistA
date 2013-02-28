@@ -30,6 +30,7 @@ from VistARoutineImport import VistARoutineImport
 from VistAGlobalExport import VistAGlobalExport
 from LoggerManager import logger, initConsoleLogging, initFileLogging
 from VistATaskmanUtil import VistATaskmanUtil
+from MCompReposReadMeGenerator import MCompReposReadMeGenerator
 
 """ List of routine names that are excluded from export process """
 ROUTINE_EXTRACT_EXCLUDE_LIST = (
@@ -79,6 +80,7 @@ class VistADataExtractor:
     self.__copyAllGlobals__()
     self.__splitGlobalFiles__()
     self.__populatePackageFiles__()
+    self.__generatePackageReadMes__()
     self.__reportGitStatus__()
     self.__cleanup__()
 
@@ -87,7 +89,6 @@ class VistADataExtractor:
     DEFAULT_EXPECT_LOG_FILENAME = "VistAPExpect.log"
     vistATestClient.setLogFile(os.path.join(self._outputLogDir,
                                DEFAULT_EXPECT_LOG_FILENAME))
-    initConsoleLogging()
     initFileLogging(os.path.join(self._outputLogDir,
                                  DEFAULT_LOGGING_FILENAME))
 
@@ -180,6 +181,14 @@ class VistADataExtractor:
     for file in allZWRFiles:
       os.chmod(file, 0644)
 
+  def __generatePackageReadMes__(self):
+    # assume runs from the scripts directory
+    curDir = os.getcwd()
+    inputDir = os.path.normpath(os.path.join(curDir, "../"))
+    readMeGen = MCompReposReadMeGenerator(inputDir,
+                                          self._vistARepoDir)
+    readMeGen.generatePackageReadMes()
+
   def __reportGitStatus__(self):
     curDir = os.getcwd()
     try:
@@ -205,7 +214,7 @@ def getTempLogFile():
     return os.path.join(tempfile.gettempdir(), DEFAULT_OUTPUT_LOG_FILE_NAME)
 def main():
   testClientParser = createTestClientArgParser()
-  parser = argparse.ArgumentParser(description='VistA Data Extractor',
+  parser = argparse.ArgumentParser(description='VistA M Component Extractor',
                                    parents=[testClientParser])
   parser.add_argument('-o', '--outputDir', required=True,
                       help='output Dir to store global/routine export files')
@@ -219,6 +228,7 @@ def main():
   print (result)
   outputDir = result.outputDir
   assert os.path.exists(outputDir)
+  initConsoleLogging()
   """ create the VistATestClient"""
   testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
   assert testClient
