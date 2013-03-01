@@ -19,6 +19,7 @@ import os
 import argparse
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
 
+DEFAULT_GLOBAL_IMPORT_TIMEOUT = 60 # default time out is 60 seconds
 class VistAGlobalImport(object):
   def __init__(self):
     pass
@@ -38,7 +39,7 @@ class VistAGlobalImport(object):
     connection.send("A\r")
 
   def importGlobal(self, vistATestClient, inputFile,
-                   globalList=None, timeout=60):
+                   globalList=None, timeout=DEFAULT_GLOBAL_IMPORT_TIMEOUT):
     assert os.path.exists(inputFile)
     connection = vistATestClient.getConnection()
     nativeFile = os.path.normpath(inputFile)

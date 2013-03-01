@@ -22,9 +22,9 @@ import shutil
 import argparse
 import glob
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
-from LoggerManager import logger
+from LoggerManager import logger, initConsoleLogging
 from VistAPackageInfoFetcher import VistAPackageInfoFetcher
-from VistAGlobalImport import VistAGlobalImport
+from VistAGlobalImport import VistAGlobalImport, DEFAULT_GLOBAL_IMPORT_TIMEOUT
 from ExternalDownloader import obtainKIDSPatchFileBySha1
 from ConvertToExternalData import readSha1SumFromSha1File
 from ConvertToExternalData import isValidExternalDataFileName
@@ -35,6 +35,9 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_CACHE_DIR = os.path.normpath(os.path.join(SCRIPT_DIR, "../"))
 
 DEFAULT_INSTALL_DUZ = 17 # VistA-FOIA user, "USER,SEVENTEEN"
+CHECK_INSTALLATION_PROGRESS_TIMEOUT = 1200 # 1200 seconds or 20 minutes
+GLOBAL_IMPORT_BYTE_PER_SEC = 0.5*1024*1024 # import speed is 0.5 MiB per sec
+
 """ Default Installer for KIDS Patches """
 class DefaultKIDSPatchInstaller(object):
   #---------------------------------------------------------------------------#
@@ -96,7 +99,7 @@ class DefaultKIDSPatchInstaller(object):
   # Class Methods
   #---------------------------------------------------------------------------#
   """ Constructor
-    @kidsFile: the path to KIDS patch file
+    @kidsFile: the absolute path to KIDS patch file
     @kidsInstallName: the install name for the KIDS patch
     @seqNo: seqNo of the KIDS patch, default is None
     @logFile: logFile to store the log information for VistA interaction
@@ -342,7 +345,7 @@ class DefaultKIDSPatchInstaller(object):
     statusActionList.extend(KIDS_BUILD_STATUS_ACTION_LIST)
     expectList = [x[0] for x in statusActionList]
     while True:
-      index = connection.expect(expectList, 1200) # timeout to be 1200 seconds
+      index = connection.expect(expectList, CHECK_INSTALLATION_PROGRESS_TIMEOUT)
       status = expectList[index].replace("\\","")
       logger.info(status)
       callback = statusActionList[index][1]
@@ -354,10 +357,10 @@ class DefaultKIDSPatchInstaller(object):
         continue
   """ This is the entry point of KIDS installer
     It defines the workflow of KIDS installation process
-    @reinst: wether re-load the KIDS build file, default is True
+    @reinst: wether re-install the KIDS build, default is False
     @return, True if no error, otherwise False
   """
-  def runInstallation(self, vistATestClient, reinst=True):
+  def runInstallation(self, vistATestClient, reinst=False):
     connection = vistATestClient.getConnection()
     self.__setupLogFile__(connection)
     infoFetcher = VistAPackageInfoFetcher(vistATestClient)
@@ -366,7 +369,8 @@ class DefaultKIDSPatchInstaller(object):
     if infoFetcher.isInstallCompleted(installStatus):
       logger.warn("install %s is already completed!" %
                    self._kidsInstallName)
-      return True
+      if not reinst:
+        return True
     # run pre-installation preparation
     self.preInstallationWork(vistATestClient)
     if infoFetcher.isInstallStarted(installStatus):
@@ -388,10 +392,11 @@ class DefaultKIDSPatchInstaller(object):
     default implementation is to check the error condition
   """
   def handleKIDSInstallQuestions(self, connection, **kargs):
+    errorCheckTimeout = 5 # 5 seconds
     try:
-      connection.expect("\*\*INSTALL FILE IS CORRUPTED\*\*",5)
+      connection.expect("\*\*INSTALL FILE IS CORRUPTED\*\*",errorCheckTimeout)
       logger.error("%s:INSTALL FILE IS CORRUPTED" % self._kidsInstallName)
-      connection.expect("Select Installation ", 5)
+      connection.expect("Select Installation ", errorCheckTimeout)
       connection.send('\r')
       return False
     except Exception as ex:
@@ -454,7 +459,10 @@ class DefaultKIDSPatchInstaller(object):
     globalImport = VistAGlobalImport()
     for glbFile in globalFiles:
       logger.info("Import global file %s" % (glbFile))
-      globalImport.importGlobal(vistATestClient, glbFile)
+      fileSize = os.path.getsize(glbFile)
+      importTimeout = DEFAULT_GLOBAL_IMPORT_TIMEOUT
+      importTimeout += int(fileSize/GLOBAL_IMPORT_BYTE_PER_SEC)
+      globalImport.importGlobal(vistATestClient, glbFile, timeout=importTimeout)
 
   #---------------------------------------------------------------------------#
   #  Utilities Functions
@@ -630,30 +638,34 @@ def testGetPersonNameByDuz():
     testClient.getConnection().terminate()
   sys.exit(0)
 
-""" Test main entry """
-def testMain():
+""" main entry """
+def main():
   testClientParser = createTestClientArgParser()
   parser = argparse.ArgumentParser(description='Default KIDS Installer',
                                    parents=[testClientParser])
-  parser.add_argument('-k', '--kidsFile', required=True,
-                    help='path to KIDS Build file')
-  parser.add_argument('-i', '--install', required=True,
-                      help='kids install name')
-  parser.add_argument('-l', '--logFile', default = None,
-                      help='logFile')
+  parser.add_argument('kidsFile', metavar='K', help='path to KIDS Build file')
+  parser.add_argument('installName', metavar='I', help='kids install name')
+  parser.add_argument('-l', '--logFile', default=None, help='path to logFile')
+  parser.add_argument('-r', '--reinstall', default=False, action='store_true',
+                help='whether re-install the KIDS even it is already installed')
+  parser.add_argument('-m', '--multiBuildList', default=None, nargs='*',
+                      help='list of multibuild install names')
+  parser.add_argument('-g', '--globalFiles', default=None, nargs='*',
+                      help='list of global files that need to import')
+
   result = parser.parse_args();
   print (result)
   testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
-  return testClient
-  try:
-    defaultKidsInstall = DefaultKIDSPatchInstaller(result.kidsFile,
-                                                   result.install,
-                                                   result.logFile)
-    defaultKidsInstall.runInstallation(testClient)
-  finally:
-    testClient.getConnection().terminate()
+  assert testClient
+  initConsoleLogging()
+  with testClient:
+    kidsFile = os.path.abspath(result.kidsFile)
+    defaultKidsInstall = DefaultKIDSPatchInstaller(kidsFile,
+                                           result.installName,
+                                           logFile=result.logFile,
+                                           multiBuildList=result.multiBuildList,
+                                           globals=result.globalFiles)
+    defaultKidsInstall.runInstallation(testClient, result.reinstall)
 
 if __name__ == "__main__":
-  pass
-  #testMain()
-  #testGetPersonNameByDuz()
+  main()
