@@ -268,9 +268,6 @@ IF(TEST_VISTA_FRESH)
   endif()
 ENDIF()
 
-configure_file(CTestCustom.cmake.in ${VISTA_BINARY_DIR}/CTestCustom.cmake)
-include(CTest)
-
 #-----------------------------------------------------------------------------#
 ##### SECTION TO SETUP AUTOMATIC SYSTEM TESTING #####
 #-----------------------------------------------------------------------------#
