@@ -1,0 +1,185 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 08/16/12 at 13:42
+=============================================================================
+Run Date: FEB 25, 2013                     Designation: PSB*3*66
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #57                      Status: Released
+                  Compliance Date: MAR 28, 2013
+=============================================================================
+
+Associated patches: (v)PSB*3*2     <<= must be installed BEFORE `PSB*3*66'
+                    (v)PSB*3*58    <<= must be installed BEFORE `PSB*3*66'
+
+Subject: CORRECT IV BAG PARAMETER AND INVALID BAGS ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch addresses 2 issues:
+  
+ 1. IV Bag Parameters are not defined for a division which contains active
+    wards.
+  
+ 2. After multiple edits of solutions, invalid IV bags in BCMA may be
+    administered.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+    
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1.  HD0000000476258 -  The IVPB
+     Duplicate: 
+     HD0000000498636
+  
+ 2.  HD0000000525060 -  After Multiple edits of solutions still give
+                        old bags in BCMA
+     Duplicate:
+     HD0000000764381
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Tennessee Valley HCS
+ Coatesville VAMC
+  
+ REMEDY OVERVIEW:
+ ================   
+ 1. HD0000000476258 - The IVPB 
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #2012
+  
+    Problem:
+    --------
+    IV Bag Parameters are not required to be defined for a division which 
+    contains active wards.  Because there are no default parameters
+    required, invalid IV bags may be administered.
+  
+    Resolution:
+    -----------
+    Routine PSBPOIV was modified to use the default IV Bag Parameters if no
+    IV Bag Parameters are defined.  Also, routine PSBRPC was modified to
+    send a Mailman message to the holder of the PSB MANAGER key, requesting
+    that they set up the IV Bag Parameters for the division.
+  
+ 2. HD00000000525060 - After Multiple edits of solutions still give
+                       old bags in BCMA
+  
+    Problem:
+    --------
+    When making multiple edits to the solution of an IV bag, any label
+    printed after the time of the first edit will be valid.
+  
+    Resolution:
+    -----------
+    Routine PSBPOIV was modified to check for all edits and only allow
+    labels to be scanned which were printed after the last edit.
+  
+    NOTES:
+    ------
+    Routines APSPFUNC and BEHOVM called from PSBRPC are Indian Health
+    Services only routines and will display as an XINDEX error when
+    installing this patch in VA Accounts.  This functionality was
+    introduced by patch PSB*3.0*42. This enhancement is intended to enable
+    the BCMA application to recognize whether it is operating in the Indian
+    Health Service (IHS) or Veterans Health Administration (VHA)
+    environment, and respond by recognizing and displaying the patient
+    identifier appropriate to the environment. This will enable a single
+    version of BCMA to be maintained by VHA and yet be installed and
+    operate in a "plug and play" fashion in an IHS or Tribal facility
+    running Resource and Patient Management System (RPMS).
+  
+    If your site is accustomed to running D ^XINDEX after the patch 
+     Installation, you will receive the following:
+  
+     Compiled list of Errors and Warnings              
+  
+ PSBRPC   * *  329 Lines,  15110 Bytes, Checksum: B186718604
+   SCANPT+15  F - Reference to routine '^APSPFUNC'. That isn't in this UCI.
+   SCANPT+46  F - Reference to routine '^APSPFUNC'. That isn't in this UCI.
+   SCANPT+46  F - Reference to routine '^APSPFUNC'. That isn't in this UCI.
+   SCANPT+47  F - Reference to routine '^APSPFUNC'. That isn't in this UCI.
+   VITALS+16  F - Reference to routine '^BEHOVM'. That isn't in this UCI.
+  
+    This is due to the routines for Indian Health Services described 
+    above, and does not affect the functionality of this patch for VA
+    sites.  
+  
+    ***  No action is required.  ***
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+     *  AN EDITED ERROR WILL OCCUR.                           *                 
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system.                              *                 
+     * ********************************************************
+    
+     Installation will take less than 1 minute.
+    
+     Suggested time to install: Non-peak requirement hours.
+    
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*66):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSB*3.0*66.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBPOIV
+    Before: B63509685   After: B65823843  **2,66**
+Routine Name: PSBRPC
+    Before:B118630056   After:B186718604  **6,3,4,13,32,28,42,58,66**
+ 
+Routine list of preceding patches: 2, 58
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : AUG 04, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: FEB 06, 2013
+Released By : LYTTLE,KIM M                  Date Released : FEB 25, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

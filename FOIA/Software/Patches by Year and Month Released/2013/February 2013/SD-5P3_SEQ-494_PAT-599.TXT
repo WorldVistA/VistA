@@ -1,0 +1,148 @@
+$TXT Created by SPILLER,RICHARD at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 09/04/12 at 13:46
+=============================================================================
+Run Date: FEB 28, 2013                     Designation: SD*5.3*599
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #494                    Status: Released
+                  Compliance Date: MAR 30, 2013
+=============================================================================
+
+Associated patches: (v)SD*5.3*568  <<= must be installed BEFORE `SD*5.3*599'
+
+Subject: RE-DELETE UNUSED FIELDS IN THE HOSPITAL LOCATION FILE (#44)
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following Scheduling issue:
+  
+ 1. Previously deleted unused fields were inadvertently reinstalled into
+    system from patch SD*5.3*568. 
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1)  HD0000000740352 - In file 44 we see that 2 fields share the same global
+                       location
+     
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Texas HCS
+ Connecticut HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================= 
+ 1)  HD0000000740352 - In file 44 we see that 2 fields share the same global
+                       location
+  
+ Problem:
+ --------
+ Previously unused/deleted fields: PROCEDURE CHECK-OFF SHEET (#25), ASK     
+ PROVIDER AT CHECK OUT (#26), ASK DIAGNOSIS AT CHECK OUT (#27) and ASK STOP     
+ CODES AT CHECK OUT (#28) within the HOSPITAL LOCATION file (#44) were          
+ inadvertently reinstalled via patch SD*5.3*568. This causes an issue as fields  
+ ADMINISTER INPATIENT MEDS? (#2802) and PROCEDURE CHECK-OFF SHEET (#25) within  
+ the HOSPITAL LOCATION file (#44) store their data in the same global position.
+  
+ Resolution:
+ -----------
+ Re-Delete unused fields PROCEDURE CHECK-OFF SHEET (#25), ASK PROVIDER AT CHECK
+ OUT (#26), ASK DIAGNOSIS AT CHECK OUT (#27) and ASK STOP CODES AT CHECK OUT
+ (#28) within the HOSPITAL LOCATION file (#44). Data stored in the global
+ position 25 of the HOSPITAL LOCATION file (#44) will NOT be deleted if created
+ by the currently active ADMINISTER INPATIENT MEDS? (#2802) field.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system, but it is recommended
+ that it be installed when user activity is very low.
+  
+ Installation time will be less than five minutes.
+  
+   1. Load Transport Global 
+      ----------------------
+      Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+              
+   2. Start Up KIDS 
+      -------------
+      Start up the Kernel Installation and Distribution System Menu [XPD
+      MAIN]: 
+      
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: INStallation
+                                                               ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+   3. Select Installation Option: 
+      ---------------------------
+      NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+      NAME, enter SD*5.3*599):
+       
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+   4. Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+      **This is the step to start the installation of this KIDS patch: 
+  
+      a. Choose the Install Package(s) option to start the patch install.
+  
+      b. When prompted, "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO. 
+  
+      c. When prompted, "Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//", respond NO.
+  
+    5. Post init routine SD599PT can be deleted after patch install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD599PT
+    Before:       n/a   After:  B9142610  **599**
+
+=============================================================================
+User Information:
+Entered By  : SPILLER,RICHARD               Date Entered  : AUG 09, 2012
+Completed By: SESSLER,APRIL                 Date Completed: FEB 13, 2013
+Released By : FLANAGAN,PATTY                Date Released : FEB 28, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

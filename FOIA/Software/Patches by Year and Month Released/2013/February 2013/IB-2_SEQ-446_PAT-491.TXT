@@ -1,0 +1,1683 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 01/16/13 at 18:08
+=============================================================================
+Run Date: FEB 26, 2013                     Designation: IB*2*491
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #446                      Status: Released
+                  Compliance Date: MAR 13, 2013
+=============================================================================
+
+Associated patches: (v)IB*2*484    <<= must be installed BEFORE `IB*2*491'
+
+Subject: REASONABLE CHARGES 3.12
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ *************************************************************************
+  
+ Implementation of Reasonable Charges v3.12 is a two step process:
+  
+ 1. Installation of this patch. This will inactivate Reasonable
+    Charges v3.11 charges with an inactive date of 12/31/12. (See
+    Installation Instructions.)
+                                        
+ 2. Uploading the Reasonable Charges v3.12 charges. This will load new
+    charges with an effective date of  01/01/13 and needs to be done 
+    immediately after the patch install.
+  
+ PLEASE NOTE: If possible, it recommended that you install the
+    LEX*2*89 - Code Set FY13 2nd Qtr Update patch before this one, that 
+    way the charges will not need to be uploaded twice (once now, and 
+    once after the LEX*2*89 patch - for the new codes).
+  
+ PLEASE NOTE: There is a shortened Compliance Date for this patch.
+  
+ *************************************************************************
+  
+ Reasonable Charges version 3.12 is a charge update to the existing 
+ Reasonable Charges billed to Third Party Payers. The primary update with 
+ this patch is to the Procedure charges, which will be implemented when the
+ new RC v3.12 charges are uploaded (step 2).
+  
+ Inactive Date of Reasonable Charges v3.11 is 12/31/2012. 
+  
+ Effective Date of Reasonable Charges v3.12 is 01/01/2013.
+  
+ Reasonable Charges v3.11 loaded on your system will be inactivated with 
+ an inactivation date of 12/31/2012 when this patch is installed.
+                                        
+ Reasonable Charges v3.12 with an effective date of 01/01/2013 will be 
+ loaded on your system when the charges are uploaded as described below.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. HD0000000600800 CY13 Reasonable Charges Outpatient CPT/HCPCS charge updates
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Bay Pines VA Healthcare System 
+ James A. Haley Veterans' Hospital - Tampa
+ Spokane VA Medical Center
+  
+ REMEDY OVERVIEW:
+ ================
+ HD0000000600800 CY13 Reasonable Charges Outpatient CPT/HCPCS charge updates
+  
+   Problem:
+   --------           
+   Changes in the national CPT rates need to be distributed to all
+   hospitals so that proper billing can take place.
+  
+   Resolution:
+   -----------
+   This patch updates the Reasonable Charges files and distributes
+   them with a new version number and a new effective date.
+  
+ Technical Description
+ =====================
+ This patch exports 2 routines, one of which is the post-init (IBYP491)
+  
+ The post-init will inactivate all existing Reasonable Charges defined in the
+ Charge Master.  Reasonable Charges v3.11 will be inactivated with an 
+ inactivation date of 12/31/12 when this patch is installed.
+    
+ The following is an example of the post-init portion of the installation:
+  
+     Reasonable Charges v3.12 Post-Install .....
+  
+       >> Inactivating Existing Reasonable Charges, Please Wait...
+          Done.  93007 existing charges inactivated
+  
+     Reasonable Charges v3.12 Post-Install Complete
+  
+ Note:  The actual number of charges inactivated will vary based on the 
+ number of divisions billed at your site.  This will also determine the 
+ time required for the installation.
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file be disabled to prevent 
+ possible conflicts while running the KIDS Install. Other VISTA users will 
+ not be affected.
+  
+      Enter/Edit Billing Information [IB EDIT BILLING INFO]
+      Enter/Edit Charge Master [IBCR DISPLAY CHARGE MASTER]
+                        
+ Install Time - less than 30 minutes - but will vary from site to site
+ depending on the size of the Charge Item file (#363.2) which is searched
+ for charges to inactivate in the Post-Init.
+  
+ Loading the Charge Master with the new RC v3.12 charges is separate from 
+ the patch installation and will take additional time per division.
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                               ---
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global
+             Install Package(s) 
+             Restart Install of Package(s) 
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter IB*2.0*491):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+    
+ 4.  Select Installation Option: Install Package(s)
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a. Choose the Install Package(s) option to start the patch install.
+  
+     b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//' answer NO
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? YES//' answer YES
+     
+     d. When prompted 'Enter options you wish to mark as 'Out Of 
+        Order':'  Enter the following options:
+  
+        Enter/Edit Billing Information [IB EDIT BILLING INFO]
+        Enter/Edit Charge Master [IBCR DISPLAY CHARGE MASTER]
+  
+     e. When prompted 'Enter protocols you wish to mark as 'Out Of 
+        Order':' press <return>.
+    
+ 5.  CLEAN UP POST INIT ROUTINE
+     --------------------------
+     Optional - Once this patch has been successfully installed you may
+     delete the post init routine:  IBYP491
+  
+ 6.  UPLOAD REASONABLE CHARGES V3.9
+     ------------------------------
+     Follow instructions below: RC v3.12 Upload Instructions
+  
+ ********************** RC v3.12 Upload Instructions **********************
+                                       
+ After patch installation, the Reasonable Charges v3.12 charges will need 
+ to be loaded into the Charge Master for each division billed at the site.
+                                  
+ The charges for each Division will require approximately 1.8 - 2.0 MB of 
+ disk space.  Other files will be searched, but the new charges will be 
+ added to the Charge Item file (#363.2).
+  
+ The LEX*2*89 - Code Set FY13 2ND Qtr Update patch should be installed
+ before Uploading Reasonable Charges v3.12.
+  
+ Files Required for Upload:
+ --------------------------
+ The charge files are available on the following CIO Field Offices'
+ Anonymous.Software directories.  Use the appropriate FTP capability to 
+ retrieve the files (ASCII).
+                                       
+                                       
+   OI FIELD OFFICE          FTP ADDRESS                  DIRECTORY
+   ===============          ===========                  =========
+   ALBANY                   ftp.fo-albany.med.va.gov     anonymous.software
+   HINES                    ftp.fo-hines.med.va.gov      anonymous.software
+   SALT LAKE                ftp.fo-slc.med.va.gov        anonymous.software
+   FIRST AVAILABLE SERVER   download.vista.med.va.gov    anonymous.software
+  
+   The Reasonable Charge v3.12 Host Files, effective 01/01/13: (ASCII)
+   IBRC1301A.TXT        Inpatient Facility Charges (DRG)
+   IBRC1301B.TXT        Facility Charge (CPT)
+   IBRC1301C.TXT        Physician Charges (CPT)
+   IBRC1301D.TXT        Service Category Codes
+   IBRC1301E.TXT        Area Factors
+   IBRC1301F.TXT        Site Identification
+                                       
+ Upload Steps:
+ =============
+  
+ Step 1:  Get Host Files
+ -----------------------
+ Retrieve the 6 Reasonable Charges v3.12 Host Files in ASCII format (see
+ previous section).
+                                        
+ Step 2:  Determine Divisions
+ ----------------------------
+ Use the Print Charge Master [IBCR REPORTS FOR CHARGE MASTER] option and 
+ print the Billing Regions report to find which Billing Regions and 
+ Divisions have charges loaded onto your system.  These are the divisions 
+ that will need new charges loaded.
+                                        
+ Step 3:  Begin Upload Process
+ -----------------------------
+ Use the Load Host File into Charge Master [IBCR HOST FILE LOAD] option 
+ to load Reasonable Charges onto your system for every division for which
+ care is billed at your site. Carefully follow the instructions below, for 
+ each Billing Region. 
+                                        
+ You will see the prompt:
+                 
+       Select one of the following:
+ =============================================================================
+             1.1       Load CMAC into XTMP
+             1.2       Load AWP into XTMP
+             1.3       Load RC into XTMP
+             1.4       Load TP into XTMP
+             2         Assign Charge Set
+             3         Check Data Validity
+             4         Load into Charge Master
+             5         Delete XTMP files
+                                        
+ Below, in more detail, the steps will guide you through the process of 
+ selecting first 1.3, then 3, then 4, and waiting until 4 stops before 
+ continuing on to the next division (and capturing or printing all output 
+ for future reference).
+                                        
+ Step 4:  Load the Reasonable Charges
+ ------------------------------------
+ From the menu, select option 1.3 - Load RC into XTMP
+                                        
+ This loads the Host Files into temporary storage and calculates charges
+ for individual Divisions.
+  
+   - If there are no previously existing host files loaded, it will ask 
+     which version of Reasonable Charges to load.    
+     Select 3.12
+                                        
+   - When loading Reasonable Charges v3.12 the IBRC1301x.TXT files may be 
+     used for multiple divisions without reloading.  
+                                        
+   - If there exists any previously calculated charges (files) for a 
+     division, they will be displayed, and you will get the prompt:
+  
+         The above files already exist in XTMP.
+         Delete the above files and continue with upload?
+     Select Yes, to delete the previously calculated charges.
+                                      
+   - If there exist any previously loaded host files for any RC version, 
+     they will be displayed, and it will ask if they should be deleted.  
+     Select No, if the files are IBRC1301x.TXT since these are the  
+     correct files for v3.12, they may be re-used for multiple divisions.
+     Select Yes only if the files are from a different version.
+                                        
+   - Select Division:  Select the division number to load charges for. 
+     This should correspond to the Divisions associated with the Billing 
+     Regions determined previously.  Once the correct division is 
+     selected, answer Yes to Calculate Charges.
+  
+ Step 5: Check Data Validity
+ ---------------------------
+ From the menu, select option 3 - Check Data Validity.
+ This is optional, but it is suggested that it be run at least once, for 
+ the first division loaded.
+  
+ If the resulting report has any Line Data Errors, then check that the
+ latest version of CPT and DRG has been installed.  The Error key at the
+ end of the report does not mean that errors have occurred.  It simply
+ provides definitions of the types of errors that might occur.  Check the
+ individual line items in the report to see if any of the listed errors
+ have been detected.
+  
+ The following Procedures are now not found or inactive and will show as
+ line errors on this report, these may be ignored for new codes: 0319T,
+ 0320T, 0321T, 0322T, 0323T, 0324T, 0325T, 0327T, 0328T, C9294, C9295,
+ C9296, C9600, C9601, C9602, C9603, C9604, C9605, C9606, C9607, C9608,
+ G0452, G0453, G0454, G0455, G0456, G0457, J0178, J0485, J0716, J1744,
+ J2212, J7178, J7527, J9002, J9019, J9042, Q4131, Q4132, Q4133, Q9969
+ and for inactive codes: 29590, 31656, 31715, 32420, 32421, 32422, 37201, 
+ 37203, 37209, 43234, 65805, 71034, 71040, 71060, 75650, 75660, 75662,
+ 75665, 75671, 75680, 75685, 75900, 75961, 78000, 78001, 78003, 78006,
+ 78007, 78010, 78011, 83890, 83891, 83892, 83893, 83894, 83896, 83897,
+ 83898, 83900, 83901, 83902, 83903, 83904, 83905, 83906, 83907, 83908,
+ 83909, 83912, 83913, 83914, 88384, 88385, 88386, 90801, 90802, 90804,
+ 90805, 90806, 90807, 90808, 90809, 90810, 90811, 90812, 90813, 90814,
+ 90815, 90816, 90817, 90818, 90819, 90821, 90822, 90823, 90824, 90826,
+ 90827, 90828, 90829, 90857, 90862, 92980, 92981, 92982, 92984, 92995,
+ 92996, 93651, 93652, 95010, 95015, 95075, 95900, 95903, 95904, 95920,
+ 95934, 95936, 0030T, 0048T, 0242T, 0250T, 0251T, 0252T, 0276T, 0277T,
+ 0279T, 0280T, D0360, D0362, D1203, D1204, D4271, D6254, D6795, D6970,
+ D6972, D6973, D6976, D6977. 
+  
+ Step 6: Load into Charge Master
+ -------------------------------
+ From the menu, select option 4 - Load into Charge Master
+ Moves the charges calculated in selection 1.3 to permanent storage in the 
+ Charge Master.  The results report should match the examples below.
+  
+ It is important that this option completes before continuing.  Allow the 
+ upload of a division's charges to finish before attempting to upload 
+ another division.  A summary report will be printed when the upload is 
+ complete.  This option uses the same temporary files to calculate the
+ charges for all divisions, therefore they must be calculated and loaded 
+ serially.  
+                                        
+ Step 7: Repeat steps 4-6 for each Division needed
+ -------------------------------------------------
+ Steps 4-6 must be repeated for each division billed at your site.  Refer 
+ to the Divisions that already have charges assigned using the Billing 
+ Region Report list determined previously.
+  
+ In most cases, simply using the above options for loading Reasonable
+ Charges will result in the correct set up in the Charge Master. 
+  
+ -  Option 1.3, to calculate charges for a division
+ -  Option 4, to load those calculated charges into the Charge Master 
+    permanent files.
+                                        
+ However, if you are loading charges for a new site, or a site that may 
+ have changed its division number, then extra care is needed to ensure 
+ the setup of the Charge Master is correct. The following sections provide 
+ examples of displays and reports for the upload.
+  
+ ================= Reasonable Charges v3.12 Upload Details ================
+  
+ The Charge Host Files should load with the following counts:
+  
+  The following files were created in XTMP, they will be purged in 2 days:
+  ------------------------------------------------------------------------
+  IBRC1301A.TXT RC v3.12 Host File Upload, 1/14/13@15:23 by WANG,CHI    750
+  IBRC1301B.TXT RC v3.12 Host File Upload, 1/14/13@15:23 by WANG,CHI    6489
+  IBRC1301C.TXT RC v3.12 Host File Upload, 1/14/13@15:23 by WANG,CHI    17347
+  IBRC1301D.TXT RC v3.12 Host File Upload, 1/14/13@15:23 by WANG,CHI    30
+  IBRC1301E.TXT RC v3.12 Host File Upload, 1/14/13@15:23 by WANG,CHI    917
+  IBRC1301F.TXT RC v3.12 Host File Upload, 1/14/13@15:23 by WANG,CHI    1144
+                                         
+  
+ Any division that provides Inpatient Care should result in a summary with 
+ the following counts:
+  
+      IBCR UPLOAD RC 402 TOGUS, ME                      Count = 52753
+      IB Upload RC v3.12 402 TOGUS, ME, 1/14/13@16:03 by WANG,CHI
+  
+       Subfile                 Item     Count     Charge Set
+       -------                 ----     -----     -------------------------
+   1   Inpt Fac 1              CPT      24        RC-INPT FAC PR 402
+   2   Inpt Fac 2              CPT      6         RC-INPT FAC HR 402
+   3   Inpt Fac 4              CPT      5         RC-INPT FAC ML 402
+   4   Inpt Fac/Phys 1         CPT      3680      RC-INPT FAC PR 402
+   5   Inpt PD Anc             DRG      749       RC-INPT ANC 402
+   6   Inpt PD Anc ICU         DRG      749       RC-INPT ANC ICU 402
+   7   Inpt PD R&B             DRG      749       RC-INPT R&B 402
+   8   Inpt PD R&B ICU         DRG      749       RC-INPT R&B ICU 402
+   9   Inpt Phys 1             CPT      7905      RC-PHYSICIAN INPT PR 402
+   10  Inpt Phys 3             CPT      274       RC-PHYSICIAN INPT MN 402
+   11  Opt Fac 1               CPT      6477      RC-OPT FAC PR 402
+   12  Opt Fac 2               CPT      6         RC-OPT FAC HR 402
+   13  Opt Fac 4               CPT      5         RC-OPT FAC ML 402
+   14  Opt Fac/Phys 1          CPT      5480      RC-OPT FAC PR 402
+   15  Opt PD PHosp            MISCE    1         RC-OPT MISC 402
+   16  Opt Phys 1              CPT      6294      RC-PHYSICIAN OPT PR 402
+   17  Opt Phys 3              CPT      214       RC-PHYSICIAN OPT MN 402
+   18  SNF Fac 1               CPT      6118      RC-SNF FAC PR 402
+   19  SNF Fac 2               CPT      6         RC-SNF FAC HR 402
+   20  SNF Fac 4               CPT      5         RC-SNF FAC ML 402
+   21  SNF Fac/Phys 1          CPT      5054      RC-SNF FAC PR 402
+   22  SNF PD INC              BEDSE    2         RC-SNF INC 402
+   23  SNF Phys 1              CPT      7927      RC-PHYSICIAN SNF PR 402
+   24  SNF Phys 3              CPT      274       RC-PHYSICIAN SNF MN 402
+  
+ IB Upload Summary Report of Charge Items Loaded into the Charge Master
+  --------------------------------------------------------------------------
+  
+                IBCR UPLOAD RC 402 TOGUS, ME
+  
+ Inpt Fac 1          24 of 24 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     24 entries added to the Charge Set RC-INPT FAC PR 402.
+  
+  
+ Inpt Fac 2          6 of 6 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     6 entries added to the Charge Set RC-INPT FAC HR 402.
+  
+  
+ Inpt Fac 4          5 of 5 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     5 entries added to the Charge Set RC-INPT FAC ML 402.
+  
+  
+ Inpt Fac/Phys 1     3680 of 3680 records checked, 0 duplicates, 3 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     3677 entries added to the Charge Set RC-INPT FAC PR 402.
+  
+  
+ Inpt PD Anc         749 of 749 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     749 entries added to the Charge Set RC-INPT ANC 402.
+  
+  
+ Inpt PD Anc ICU     749 of 749 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     749 entries added to the Charge Set RC-INPT ANC ICU 402.
+  
+  
+ Inpt PD R&B         749 of 749 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     749 entries added to the Charge Set RC-INPT R&B 402.
+  
+  
+ Inpt PD R&B ICU     749 of 749 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     749 entries added to the Charge Set RC-INPT R&B ICU 402.
+  
+  
+ Inpt Phys 1         7905 of 7905 records checked, 0 duplicates, 33 with $=0
+                     95 line/data errors or warnings found for a 1.2% error rate.
+                     7777 entries added to the Charge Set RC-PHYSICIAN INPT PR 402.
+  
+      15746 = 0030T^3130101^^116.12^^              Line/Data Error: Not a valid active Item in source file
+      15798 = 0048T^3130101^^1738.95^^             Line/Data Error: Not a valid active Item in source file
+      16542 = 0252T^3130101^^1627.67^^             Line/Data Error: Not a valid active Item in source file
+      22085 = 29590^3130101^^137.97^^              Line/Data Error: Not a valid active Item in source file
+      22871 = 31656^3130101^^399.38^^              Line/Data Error: Not a valid active Item in source file
+      22880 = 31715^3130101^^191.7^^               Line/Data Error: Not a valid active Item in source file
+      22982 = 32420^3130101^^389.41^^              Line/Data Error: Not a valid active Item in source file
+      22985 = 32421^3130101^^273.56^^              Line/Data Error: Not a valid active Item in source file
+      22988 = 32422^3130101^^439.65^^              Line/Data Error: Not a valid active Item in source file
+      24551 = 37201^3130101^^976.14^^              Line/Data Error: Not a valid active Item in source file
+      24557 = 37203^3130101^^928.67^^              Line/Data Error: Not a valid active Item in source file
+      24575 = 37209^3130101^^397.53^^              Line/Data Error: Not a valid active Item in source file
+      25531 = 43234^3130101^^424.66^^              Line/Data Error: Not a valid active Item in source file
+      30705 = 65805^3130101^^457.87^^              Line/Data Error: Not a valid active Item in source file
+      31886 = 71034^3130101^^105.42^7^             Line/Data Error: Not a valid active Item in source file
+      31892 = 71040^3130101^^128.3^7^              Line/Data Error: Not a valid active Item in source file
+      31895 = 71060^3130101^^165.58^7^             Line/Data Error: Not a valid active Item in source file
+      32554 = 75650^3130101^^332.8^7^              Line/Data Error: Not a valid active Item in source file
+      32560 = 75660^3130101^^298.49^7^             Line/Data Error: Not a valid active Item in source file
+      32563 = 75662^3130101^^379.55^7^             Line/Data Error: Not a valid active Item in source file
+      32566 = 75665^3130101^^296.92^7^             Line/Data Error: Not a valid active Item in source file
+      32569 = 75671^3130101^^374.86^7^             Line/Data Error: Not a valid active Item in source file
+      32575 = 75680^3130101^^374.86^7^             Line/Data Error: Not a valid active Item in source file
+      32578 = 75685^3130101^^298.49^7^             Line/Data Error: Not a valid active Item in source file
+      32701 = 75900^3130101^^106.46^7^             Line/Data Error: Not a valid active Item in source file
+      32740 = 75961^3130101^^937.1^7^              Line/Data Error: Not a valid active Item in source file
+      33317 = 78000^3130101^^42.22^7^              Line/Data Error: Not a valid active Item in source file
+      33320 = 78001^3130101^^58.43^7^              Line/Data Error: Not a valid active Item in source file
+      33323 = 78003^3130101^^74.64^7^              Line/Data Error: Not a valid active Item in source file
+      33326 = 78006^3130101^^108.8^7^              Line/Data Error: Not a valid active Item in source file
+      33329 = 78007^3130101^^110.44^7^             Line/Data Error: Not a valid active Item in source file
+      33332 = 78010^3130101^^86.08^7^              Line/Data Error: Not a valid active Item in source file
+      33335 = 78011^3130101^^100.65^7^             Line/Data Error: Not a valid active Item in source file
+      34537 = 83912^3130101^^62.34^7^              Line/Data Error: Not a valid active Item in source file
+      36137 = 88384^3130101^^886.16^^              Line/Data Error: Not a valid active Item in source file
+      36140 = 88384^3130101^^97.78^7^              Line/Data Error: Not a valid active Item in source file
+      36143 = 88385^3130101^^221.45^7^             Line/Data Error: Not a valid active Item in source file
+      36146 = 88386^3130101^^296.09^7^             Line/Data Error: Not a valid active Item in source file
+      36269 = 90801^3130101^^259.89^^              Line/Data Error: Not a valid active Item in source file
+      36272 = 90802^3130101^^279.69^^              Line/Data Error: Not a valid active Item in source file
+      36275 = 90804^3130101^^106.93^^              Line/Data Error: Not a valid active Item in source file
+      36278 = 90805^3130101^^125.08^^              Line/Data Error: Not a valid active Item in source file
+      36281 = 90806^3130101^^162.76^^              Line/Data Error: Not a valid active Item in source file
+      36284 = 90807^3130101^^184.56^^              Line/Data Error: Not a valid active Item in source file
+      36287 = 90808^3130101^^245.24^^              Line/Data Error: Not a valid active Item in source file
+      36290 = 90809^3130101^^272.15^^              Line/Data Error: Not a valid active Item in source file
+      36293 = 90810^3130101^^117.58^^              Line/Data Error: Not a valid active Item in source file
+      36296 = 90811^3130101^^136.46^^              Line/Data Error: Not a valid active Item in source file
+      36299 = 90812^3130101^^173.41^^              Line/Data Error: Not a valid active Item in source file
+      36302 = 90813^3130101^^195.21^^              Line/Data Error: Not a valid active Item in source file
+      36305 = 90814^3130101^^253.7^^               Line/Data Error: Not a valid active Item in source file
+      36308 = 90815^3130101^^282.07^^              Line/Data Error: Not a valid active Item in source file
+      36311 = 90816^3130101^^117.31^^              Line/Data Error: Not a valid active Item in source file
+      36314 = 90817^3130101^^137.65^^              Line/Data Error: Not a valid active Item in source file
+      36317 = 90818^3130101^^173.1^^               Line/Data Error: Not a valid active Item in source file
+      36320 = 90819^3130101^^196.37^^              Line/Data Error: Not a valid active Item in source file
+      36323 = 90821^3130101^^256.35^^              Line/Data Error: Not a valid active Item in source file
+      36326 = 90822^3130101^^282.53^^              Line/Data Error: Not a valid active Item in source file
+      36329 = 90823^3130101^^128.69^^              Line/Data Error: Not a valid active Item in source file
+      36332 = 90824^3130101^^148.3^^               Line/Data Error: Not a valid active Item in source file
+      36335 = 90826^3130101^^183.79^^              Line/Data Error: Not a valid active Item in source file
+      36338 = 90827^3130101^^205.56^^              Line/Data Error: Not a valid active Item in source file
+      36341 = 90828^3130101^^264.81^^              Line/Data Error: Not a valid active Item in source file
+      36344 = 90829^3130101^^292.45^^              Line/Data Error: Not a valid active Item in source file
+      36380 = 90857^3130101^^64.52^^               Line/Data Error: Not a valid active Item in source file
+      36383 = 90862^3130101^^95.7^^                Line/Data Error: Not a valid active Item in source file
+      36913 = 92980^3130101^^2778.17^^             Line/Data Error: Not a valid active Item in source file
+      36916 = 92981^3130101^^772.49^^              Line/Data Error: Not a valid active Item in source file
+      36919 = 92982^3130101^^2061.59^^             Line/Data Error: Not a valid active Item in source file
+      36922 = 92984^3130101^^551.41^^              Line/Data Error: Not a valid active Item in source file
+      36938 = 92995^3130101^^2268.35^^             Line/Data Error: Not a valid active Item in source file
+      36941 = 92996^3130101^^604.75^^              Line/Data Error: Not a valid active Item in source file
+      37255 = 93651^3130101^^3670.48^^             Line/Data Error: Not a valid active Item in source file
+      37258 = 93652^3130101^^3995.65^^             Line/Data Error: Not a valid active Item in source file
+      37648 = 95900^3130101^^70.82^7^              Line/Data Error: Not a valid active Item in source file
+      37651 = 95903^3130101^^99.44^7^              Line/Data Error: Not a valid active Item in source file
+      37654 = 95904^3130101^^57.12^7^              Line/Data Error: Not a valid active Item in source file
+      37681 = 95920^3130101^^348.65^7^             Line/Data Error: Not a valid active Item in source file
+      37718 = 95934^3130101^^84.58^7^              Line/Data Error: Not a valid active Item in source file
+      37721 = 95936^3130101^^91.43^7^              Line/Data Error: Not a valid active Item in source file
+      39637 = D0360^3130101^^685.5^^               Line/Data Error: Not a valid active Item in source file
+      39640 = D0362^3130101^^476.8^^               Line/Data Error: Not a valid active Item in source file
+      39778 = D1203^3130101^^39.02^^               Line/Data Error: Not a valid active Item in source file
+      39781 = D1204^3130101^^39.2^^                Line/Data Error: Not a valid active Item in source file
+      40216 = D4271^3130101^^1095.38^^             Line/Data Error: Not a valid active Item in source file
+      40714 = D6254^3130101^^724.35^^              Line/Data Error: Not a valid active Item in source file
+      40828 = D6795^3130101^^620.97^^              Line/Data Error: Not a valid active Item in source file
+      40843 = D6970^3130101^^489.94^^              Line/Data Error: Not a valid active Item in source file
+      40846 = D6972^3130101^^395.31^^              Line/Data Error: Not a valid active Item in source file
+      40849 = D6973^3130101^^315.47^^              Line/Data Error: Not a valid active Item in source file
+      40855 = D6976^3130101^^288.9^^               Line/Data Error: Not a valid active Item in source file
+      40858 = D6977^3130101^^225.46^^              Line/Data Error: Not a valid active Item in source file
+      47445 = G0452^3130101^^63.92^7^              Line/Data Error: Item not found in source file
+      47450 = G0454^3130101^^28.62^^               Line/Data Error: Item not found in source file
+      47453 = G0455^3130101^^439.12^^              Line/Data Error: Item not found in source file
+  
+ Inpt Phys 3         274 of 274 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     274 entries added to the Charge Set RC-PHYSICIAN INPT MN 402.
+  
+  
+ Opt Fac 1           6477 of 6477 records checked, 0 duplicates, 0 with $=0
+                     120 line/data errors or warnings found for a 1.85% error rate.
+                     6357 entries added to the Charge Set RC-OPT FAC PR 402.
+  
+      6280  = 29590^3130101^^203.78^^              Line/Data Error: Not a valid active Item in source file
+      6780  = 31656^3130101^^2431.77^^             Line/Data Error: Not a valid active Item in source file
+      6812  = 32420^3130101^^1431.6^^              Line/Data Error: Not a valid active Item in source file
+      6814  = 32421^3130101^^1431.6^^              Line/Data Error: Not a valid active Item in source file
+      6816  = 32422^3130101^^1431.6^^              Line/Data Error: Not a valid active Item in source file
+      7230  = 37201^3130101^^4050.98^^             Line/Data Error: Not a valid active Item in source file
+      7234  = 37203^3130101^^7147.47^^             Line/Data Error: Not a valid active Item in source file
+      7246  = 37209^3130101^^7147.47^^             Line/Data Error: Not a valid active Item in source file
+      7804  = 43234^3130101^^2150.07^^             Line/Data Error: Not a valid active Item in source file
+      10196 = 65805^3130101^^5799.56^^             Line/Data Error: Not a valid active Item in source file
+      10970 = 71034^3130101^^448.12^^              Line/Data Error: Not a valid active Item in source file
+      10974 = 71040^3130101^^1019.34^^             Line/Data Error: Not a valid active Item in source file
+      10976 = 71060^3130101^^1019.34^^             Line/Data Error: Not a valid active Item in source file
+      11370 = 75650^3130101^^10907.6^^             Line/Data Error: Not a valid active Item in source file
+      11374 = 75660^3130101^^10907.6^^             Line/Data Error: Not a valid active Item in source file
+      11376 = 75662^3130101^^10907.6^^             Line/Data Error: Not a valid active Item in source file
+      11378 = 75665^3130101^^7581.11^^             Line/Data Error: Not a valid active Item in source file
+      11380 = 75671^3130101^^10907.6^^             Line/Data Error: Not a valid active Item in source file
+      11384 = 75680^3130101^^7581.11^^             Line/Data Error: Not a valid active Item in source file
+      11386 = 75685^3130101^^7581.11^^             Line/Data Error: Not a valid active Item in source file
+      11768 = 78000^3130101^^462.42^^              Line/Data Error: Not a valid active Item in source file
+      11770 = 78001^3130101^^462.42^^              Line/Data Error: Not a valid active Item in source file
+      11772 = 78003^3130101^^462.42^^              Line/Data Error: Not a valid active Item in source file
+      11774 = 78006^3130101^^930.01^^              Line/Data Error: Not a valid active Item in source file
+      11776 = 78007^3130101^^930.01^^              Line/Data Error: Not a valid active Item in source file
+      11778 = 78010^3130101^^601^^                 Line/Data Error: Not a valid active Item in source file
+      11780 = 78011^3130101^^601^^                 Line/Data Error: Not a valid active Item in source file
+      12304 = 88384^3130101^^50.29^^               Line/Data Error: Not a valid active Item in source file
+      12306 = 88385^3130101^^94.35^^               Line/Data Error: Not a valid active Item in source file
+      12308 = 88386^3130101^^242.66^^              Line/Data Error: Not a valid active Item in source file
+      12482 = 90801^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12484 = 90802^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12486 = 90804^3130101^^155.38^^              Line/Data Error: Not a valid active Item in source file
+      12488 = 90805^3130101^^155.38^^              Line/Data Error: Not a valid active Item in source file
+      12490 = 90806^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12492 = 90807^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12494 = 90808^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12496 = 90809^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12498 = 90810^3130101^^155.38^^              Line/Data Error: Not a valid active Item in source file
+      12500 = 90811^3130101^^155.38^^              Line/Data Error: Not a valid active Item in source file
+      12502 = 90812^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12504 = 90813^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12506 = 90814^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12508 = 90815^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12510 = 90816^3130101^^180.38^^              Line/Data Error: Not a valid active Item in source file
+      12512 = 90817^3130101^^163.68^^              Line/Data Error: Not a valid active Item in source file
+      12514 = 90818^3130101^^831.13^^              Line/Data Error: Not a valid active Item in source file
+      12516 = 90819^3130101^^187.2^^               Line/Data Error: Not a valid active Item in source file
+      12518 = 90821^3130101^^311.77^^              Line/Data Error: Not a valid active Item in source file
+      12520 = 90822^3130101^^504.74^^              Line/Data Error: Not a valid active Item in source file
+      12522 = 90823^3130101^^216.01^^              Line/Data Error: Not a valid active Item in source file
+      12524 = 90824^3130101^^486.01^^              Line/Data Error: Not a valid active Item in source file
+      12526 = 90826^3130101^^121.16^^              Line/Data Error: Not a valid active Item in source file
+      12528 = 90827^3130101^^202.14^^              Line/Data Error: Not a valid active Item in source file
+      12530 = 90828^3130101^^202.14^^              Line/Data Error: Not a valid active Item in source file
+      12532 = 90829^3130101^^202.14^^              Line/Data Error: Not a valid active Item in source file
+      12552 = 90857^3130101^^180.89^^              Line/Data Error: Not a valid active Item in source file
+      12554 = 90862^3130101^^105.5^^               Line/Data Error: Not a valid active Item in source file
+      12926 = 92980^3130101^^14189.93^^            Line/Data Error: Not a valid active Item in source file
+      12928 = 92981^3130101^^14189.93^^            Line/Data Error: Not a valid active Item in source file
+      12930 = 92982^3130101^^10248.59^^            Line/Data Error: Not a valid active Item in source file
+      12932 = 92984^3130101^^10248.59^^            Line/Data Error: Not a valid active Item in source file
+      12940 = 92995^3130101^^14539.65^^            Line/Data Error: Not a valid active Item in source file
+      12942 = 92996^3130101^^14539.65^^            Line/Data Error: Not a valid active Item in source file
+      13092 = 93651^3130101^^14295.23^^            Line/Data Error: Not a valid active Item in source file
+      13094 = 93652^3130101^^14295.23^^            Line/Data Error: Not a valid active Item in source file
+      13272 = 95010^3130101^^105.7^^               Line/Data Error: Not a valid active Item in source file
+      13276 = 95015^3130101^^105.7^^               Line/Data Error: Not a valid active Item in source file
+      13302 = 95075^3130101^^1117.98^^             Line/Data Error: Not a valid active Item in source file
+      13424 = 95900^3130101^^173.76^^              Line/Data Error: Not a valid active Item in source file
+      13426 = 95903^3130101^^173.76^^              Line/Data Error: Not a valid active Item in source file
+      13428 = 95904^3130101^^173.76^^              Line/Data Error: Not a valid active Item in source file
+      13468 = 95934^3130101^^173.76^^              Line/Data Error: Not a valid active Item in source file
+      13470 = 95936^3130101^^173.76^^              Line/Data Error: Not a valid active Item in source file
+      14140 = 0242T^3130101^^1117.98^^             Line/Data Error: Not a valid active Item in source file
+      14156 = 0250T^3130101^^5423.99^^             Line/Data Error: Not a valid active Item in source file
+      14158 = 0251T^3130101^^5423.99^^             Line/Data Error: Not a valid active Item in source file
+      14160 = 0252T^3130101^^2431.77^^             Line/Data Error: Not a valid active Item in source file
+      14188 = 0276T^3130101^^5423.99^^             Line/Data Error: Not a valid active Item in source file
+      14190 = 0277T^3130101^^5423.99^^             Line/Data Error: Not a valid active Item in source file
+      14194 = 0279T^3130101^^50.29^^               Line/Data Error: Not a valid active Item in source file
+      14196 = 0280T^3130101^^50.29^^               Line/Data Error: Not a valid active Item in source file
+      14246 = 0319T^3130101^^27914.93^^            Line/Data Error: Item not found in source file
+      14248 = 0320T^3130101^^11236.5^^             Line/Data Error: Item not found in source file
+      14250 = 0321T^3130101^^27914.93^^            Line/Data Error: Item not found in source file
+      14252 = 0322T^3130101^^6002.42^^             Line/Data Error: Item not found in source file
+      14254 = 0323T^3130101^^27914.93^^            Line/Data Error: Item not found in source file
+      14256 = 0324T^3130101^^6002.42^^             Line/Data Error: Item not found in source file
+      14258 = 0325T^3130101^^6002.42^^             Line/Data Error: Item not found in source file
+      14260 = 0327T^3130101^^136.73^^              Line/Data Error: Item not found in source file
+      14262 = 0328T^3130101^^136.73^^              Line/Data Error: Item not found in source file
+      14482 = C9294^3130101^^127.05^^              Line/Data Error: Item not found in source file
+      14484 = C9295^3130101^^118^^                 Line/Data Error: Item not found in source file
+      14486 = C9296^3130101^^68.35^^               Line/Data Error: Item not found in source file
+      14502 = C9600^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14504 = C9601^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14506 = C9602^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14508 = C9603^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14510 = C9604^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14512 = C9605^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14514 = C9606^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14516 = C9607^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14518 = C9608^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14738 = G0455^3130101^^199.71^^              Line/Data Error: Item not found in source file
+      14740 = G0456^3130101^^759.31^^              Line/Data Error: Item not found in source file
+      14742 = G0457^3130101^^759.31^^              Line/Data Error: Item not found in source file
+      14755 = J0178^3130101^^3689.37^^             Line/Data Error: Item not found in source file
+      14776 = J0485^3130101^^15.31^^               Line/Data Error: Item not found in source file
+      14792 = J0716^3130101^^10980.34^^            Line/Data Error: Item not found in source file
+      14852 = J1744^3130101^^933.44^^              Line/Data Error: Item not found in source file
+      14866 = J2212^3130101^^1.49^^                Line/Data Error: Item not found in source file
+      14929 = J7178^3130101^^3.67^^                Line/Data Error: Item not found in source file
+      14966 = J7527^3130101^^24.91^^               Line/Data Error: Item not found in source file
+      15004 = J9002^3130101^^2068.63^^             Line/Data Error: Item not found in source file
+      15008 = J9019^3130101^^1318.39^^             Line/Data Error: Item not found in source file
+      15016 = J9042^3130101^^382.58^^              Line/Data Error: Item not found in source file
+      15252 = Q4131^3130101^^477.77^^              Line/Data Error: Item not found in source file
+      15254 = Q4132^3130101^^549.68^^              Line/Data Error: Item not found in source file
+      15256 = Q4133^3130101^^438.3^^               Line/Data Error: Item not found in source file
+      15276 = Q9969^3130101^^40.3^^                Line/Data Error: Item not found in source file
+  
+ Opt Fac 2           6 of 6 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     6 entries added to the Charge Set RC-OPT FAC HR 402.
+  
+  
+ Opt Fac 4           5 of 5 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     5 entries added to the Charge Set RC-OPT FAC ML 402.
+  
+  
+ Opt Fac/Phys 1      5480 of 5480 records checked, 0 duplicates, 6 with $=0
+                     22 line/data errors or warnings found for a .4% error rate.
+                     5452 entries added to the Charge Set RC-OPT FAC PR 402.
+  
+      34502 = 83890^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34504 = 83891^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34506 = 83892^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34508 = 83893^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34510 = 83894^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34512 = 83896^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34514 = 83897^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34516 = 83898^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34518 = 83900^3130101^^169.9^^               Line/Data Error: Not a valid active Item in source file
+      34520 = 83901^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34522 = 83902^3130101^^72.12^^               Line/Data Error: Not a valid active Item in source file
+      34524 = 83903^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34526 = 83904^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34528 = 83905^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34530 = 83906^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34532 = 83907^3130101^^68.45^^               Line/Data Error: Not a valid active Item in source file
+      34534 = 83908^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34536 = 83909^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34540 = 83912^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34542 = 83913^3130101^^68.45^^               Line/Data Error: Not a valid active Item in source file
+      34544 = 83914^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      47449 = G0453^3130101^^84.52^^               Line/Data Error: Item not found in source file
+  
+ Opt PD PHosp        1 of 1 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     1 entries added to the Charge Set RC-OPT MISC 402.
+  
+  
+ Opt Phys 1          6294 of 6294 records checked, 0 duplicates, 33 with $=0
+                     93 line/data errors or warnings found for a 1.48% error rate.
+                     6168 entries added to the Charge Set RC-PHYSICIAN OPT PR 402.
+  
+      15748 = 0030T^3130101^^116.12^^              Line/Data Error: Not a valid active Item in source file
+      16544 = 0252T^3130101^^1627.67^^             Line/Data Error: Not a valid active Item in source file
+      22087 = 29590^3130101^^137.97^^              Line/Data Error: Not a valid active Item in source file
+      22873 = 31656^3130101^^399.38^^              Line/Data Error: Not a valid active Item in source file
+      22882 = 31715^3130101^^191.7^^               Line/Data Error: Not a valid active Item in source file
+      22984 = 32420^3130101^^389.41^^              Line/Data Error: Not a valid active Item in source file
+      22987 = 32421^3130101^^273.56^^              Line/Data Error: Not a valid active Item in source file
+      22990 = 32422^3130101^^439.65^^              Line/Data Error: Not a valid active Item in source file
+      24553 = 37201^3130101^^976.14^^              Line/Data Error: Not a valid active Item in source file
+      24559 = 37203^3130101^^928.67^^              Line/Data Error: Not a valid active Item in source file
+      24577 = 37209^3130101^^397.53^^              Line/Data Error: Not a valid active Item in source file
+      25533 = 43234^3130101^^424.66^^              Line/Data Error: Not a valid active Item in source file
+      30707 = 65805^3130101^^457.87^^              Line/Data Error: Not a valid active Item in source file
+      31888 = 71034^3130101^^105.42^7^             Line/Data Error: Not a valid active Item in source file
+      31894 = 71040^3130101^^128.3^7^              Line/Data Error: Not a valid active Item in source file
+      31897 = 71060^3130101^^165.58^7^             Line/Data Error: Not a valid active Item in source file
+      32556 = 75650^3130101^^332.8^7^              Line/Data Error: Not a valid active Item in source file
+      32562 = 75660^3130101^^298.49^7^             Line/Data Error: Not a valid active Item in source file
+      32565 = 75662^3130101^^379.55^7^             Line/Data Error: Not a valid active Item in source file
+      32568 = 75665^3130101^^296.92^7^             Line/Data Error: Not a valid active Item in source file
+      32571 = 75671^3130101^^374.86^7^             Line/Data Error: Not a valid active Item in source file
+      32577 = 75680^3130101^^374.86^7^             Line/Data Error: Not a valid active Item in source file
+      32580 = 75685^3130101^^298.49^7^             Line/Data Error: Not a valid active Item in source file
+      32742 = 75961^3130101^^937.1^7^              Line/Data Error: Not a valid active Item in source file
+      33319 = 78000^3130101^^42.22^7^              Line/Data Error: Not a valid active Item in source file
+      33322 = 78001^3130101^^58.43^7^              Line/Data Error: Not a valid active Item in source file
+      33325 = 78003^3130101^^74.64^7^              Line/Data Error: Not a valid active Item in source file
+      33328 = 78006^3130101^^108.8^7^              Line/Data Error: Not a valid active Item in source file
+      33331 = 78007^3130101^^110.44^7^             Line/Data Error: Not a valid active Item in source file
+      33334 = 78010^3130101^^86.08^7^              Line/Data Error: Not a valid active Item in source file
+      33337 = 78011^3130101^^100.65^7^             Line/Data Error: Not a valid active Item in source file
+      34539 = 83912^3130101^^62.34^7^              Line/Data Error: Not a valid active Item in source file
+      36139 = 88384^3130101^^886.16^^              Line/Data Error: Not a valid active Item in source file
+      36142 = 88384^3130101^^97.78^7^              Line/Data Error: Not a valid active Item in source file
+      36145 = 88385^3130101^^221.45^7^             Line/Data Error: Not a valid active Item in source file
+      36148 = 88386^3130101^^296.09^7^             Line/Data Error: Not a valid active Item in source file
+      36271 = 90801^3130101^^259.89^^              Line/Data Error: Not a valid active Item in source file
+      36274 = 90802^3130101^^279.69^^              Line/Data Error: Not a valid active Item in source file
+      36277 = 90804^3130101^^106.93^^              Line/Data Error: Not a valid active Item in source file
+      36280 = 90805^3130101^^125.08^^              Line/Data Error: Not a valid active Item in source file
+      36283 = 90806^3130101^^162.76^^              Line/Data Error: Not a valid active Item in source file
+      36286 = 90807^3130101^^184.56^^              Line/Data Error: Not a valid active Item in source file
+      36289 = 90808^3130101^^245.24^^              Line/Data Error: Not a valid active Item in source file
+      36292 = 90809^3130101^^272.15^^              Line/Data Error: Not a valid active Item in source file
+      36295 = 90810^3130101^^117.58^^              Line/Data Error: Not a valid active Item in source file
+      36298 = 90811^3130101^^136.46^^              Line/Data Error: Not a valid active Item in source file
+      36301 = 90812^3130101^^173.41^^              Line/Data Error: Not a valid active Item in source file
+      36304 = 90813^3130101^^195.21^^              Line/Data Error: Not a valid active Item in source file
+      36307 = 90814^3130101^^253.7^^               Line/Data Error: Not a valid active Item in source file
+      36310 = 90815^3130101^^282.07^^              Line/Data Error: Not a valid active Item in source file
+      36313 = 90816^3130101^^117.31^^              Line/Data Error: Not a valid active Item in source file
+      36316 = 90817^3130101^^137.65^^              Line/Data Error: Not a valid active Item in source file
+      36319 = 90818^3130101^^173.1^^               Line/Data Error: Not a valid active Item in source file
+      36322 = 90819^3130101^^196.37^^              Line/Data Error: Not a valid active Item in source file
+      36325 = 90821^3130101^^256.35^^              Line/Data Error: Not a valid active Item in source file
+      36328 = 90822^3130101^^282.53^^              Line/Data Error: Not a valid active Item in source file
+      36331 = 90823^3130101^^128.69^^              Line/Data Error: Not a valid active Item in source file
+      36334 = 90824^3130101^^148.3^^               Line/Data Error: Not a valid active Item in source file
+      36337 = 90826^3130101^^183.79^^              Line/Data Error: Not a valid active Item in source file
+      36340 = 90827^3130101^^205.56^^              Line/Data Error: Not a valid active Item in source file
+      36343 = 90828^3130101^^264.81^^              Line/Data Error: Not a valid active Item in source file
+      36346 = 90829^3130101^^292.45^^              Line/Data Error: Not a valid active Item in source file
+      36382 = 90857^3130101^^64.52^^               Line/Data Error: Not a valid active Item in source file
+      36385 = 90862^3130101^^95.7^^                Line/Data Error: Not a valid active Item in source file
+      36915 = 92980^3130101^^2778.17^^             Line/Data Error: Not a valid active Item in source file
+      36918 = 92981^3130101^^772.49^^              Line/Data Error: Not a valid active Item in source file
+      36921 = 92982^3130101^^2061.59^^             Line/Data Error: Not a valid active Item in source file
+      36924 = 92984^3130101^^551.41^^              Line/Data Error: Not a valid active Item in source file
+      36940 = 92995^3130101^^2268.35^^             Line/Data Error: Not a valid active Item in source file
+      36943 = 92996^3130101^^604.75^^              Line/Data Error: Not a valid active Item in source file
+      37257 = 93651^3130101^^3670.48^^             Line/Data Error: Not a valid active Item in source file
+      37260 = 93652^3130101^^3995.65^^             Line/Data Error: Not a valid active Item in source file
+      37650 = 95900^3130101^^70.82^7^              Line/Data Error: Not a valid active Item in source file
+      37653 = 95903^3130101^^99.44^7^              Line/Data Error: Not a valid active Item in source file
+      37656 = 95904^3130101^^57.12^7^              Line/Data Error: Not a valid active Item in source file
+      37683 = 95920^3130101^^348.65^7^             Line/Data Error: Not a valid active Item in source file
+      37720 = 95934^3130101^^84.58^7^              Line/Data Error: Not a valid active Item in source file
+      37723 = 95936^3130101^^91.43^7^              Line/Data Error: Not a valid active Item in source file
+      39639 = D0360^3130101^^685.5^^               Line/Data Error: Not a valid active Item in source file
+      39642 = D0362^3130101^^476.8^^               Line/Data Error: Not a valid active Item in source file
+      39780 = D1203^3130101^^39.02^^               Line/Data Error: Not a valid active Item in source file
+      39783 = D1204^3130101^^39.2^^                Line/Data Error: Not a valid active Item in source file
+      40218 = D4271^3130101^^1095.38^^             Line/Data Error: Not a valid active Item in source file
+      40716 = D6254^3130101^^724.35^^              Line/Data Error: Not a valid active Item in source file
+      40830 = D6795^3130101^^620.97^^              Line/Data Error: Not a valid active Item in source file
+      40845 = D6970^3130101^^489.94^^              Line/Data Error: Not a valid active Item in source file
+      40848 = D6972^3130101^^395.31^^              Line/Data Error: Not a valid active Item in source file
+      40851 = D6973^3130101^^315.47^^              Line/Data Error: Not a valid active Item in source file
+      40857 = D6976^3130101^^288.9^^               Line/Data Error: Not a valid active Item in source file
+      40860 = D6977^3130101^^225.46^^              Line/Data Error: Not a valid active Item in source file
+      47447 = G0452^3130101^^63.92^7^              Line/Data Error: Item not found in source file
+      47452 = G0454^3130101^^28.62^^               Line/Data Error: Item not found in source file
+      47455 = G0455^3130101^^439.12^^              Line/Data Error: Item not found in source file
+  
+ Opt Phys 3          214 of 214 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     214 entries added to the Charge Set RC-PHYSICIAN OPT MN 402.
+  
+  
+ SNF Fac 1           6118 of 6118 records checked, 0 duplicates, 0 with $=0
+                     110 line/data errors or warnings found for a 1.8% error rate.
+                     6008 entries added to the Charge Set RC-SNF FAC PR 402.
+  
+      6279  = 29590^3130101^^203.78^^              Line/Data Error: Not a valid active Item in source file
+      6779  = 31656^3130101^^2431.77^^             Line/Data Error: Not a valid active Item in source file
+      6811  = 32420^3130101^^1431.6^^              Line/Data Error: Not a valid active Item in source file
+      6813  = 32421^3130101^^1431.6^^              Line/Data Error: Not a valid active Item in source file
+      6815  = 32422^3130101^^1431.6^^              Line/Data Error: Not a valid active Item in source file
+      7229  = 37201^3130101^^4050.98^^             Line/Data Error: Not a valid active Item in source file
+      7233  = 37203^3130101^^7147.47^^             Line/Data Error: Not a valid active Item in source file
+      7245  = 37209^3130101^^7147.47^^             Line/Data Error: Not a valid active Item in source file
+      7803  = 43234^3130101^^2150.07^^             Line/Data Error: Not a valid active Item in source file
+      10195 = 65805^3130101^^5799.56^^             Line/Data Error: Not a valid active Item in source file
+      10969 = 71034^3130101^^448.12^^              Line/Data Error: Not a valid active Item in source file
+      10973 = 71040^3130101^^1019.34^^             Line/Data Error: Not a valid active Item in source file
+      10975 = 71060^3130101^^1019.34^^             Line/Data Error: Not a valid active Item in source file
+      11369 = 75650^3130101^^10907.6^^             Line/Data Error: Not a valid active Item in source file
+      11373 = 75660^3130101^^10907.6^^             Line/Data Error: Not a valid active Item in source file
+      11375 = 75662^3130101^^10907.6^^             Line/Data Error: Not a valid active Item in source file
+      11377 = 75665^3130101^^7581.11^^             Line/Data Error: Not a valid active Item in source file
+      11379 = 75671^3130101^^10907.6^^             Line/Data Error: Not a valid active Item in source file
+      11383 = 75680^3130101^^7581.11^^             Line/Data Error: Not a valid active Item in source file
+      11385 = 75685^3130101^^7581.11^^             Line/Data Error: Not a valid active Item in source file
+      11767 = 78000^3130101^^462.42^^              Line/Data Error: Not a valid active Item in source file
+      11769 = 78001^3130101^^462.42^^              Line/Data Error: Not a valid active Item in source file
+      11771 = 78003^3130101^^462.42^^              Line/Data Error: Not a valid active Item in source file
+      11773 = 78006^3130101^^930.01^^              Line/Data Error: Not a valid active Item in source file
+      11775 = 78007^3130101^^930.01^^              Line/Data Error: Not a valid active Item in source file
+      11777 = 78010^3130101^^601^^                 Line/Data Error: Not a valid active Item in source file
+      11779 = 78011^3130101^^601^^                 Line/Data Error: Not a valid active Item in source file
+      12303 = 88384^3130101^^50.29^^               Line/Data Error: Not a valid active Item in source file
+      12305 = 88385^3130101^^94.35^^               Line/Data Error: Not a valid active Item in source file
+      12307 = 88386^3130101^^242.66^^              Line/Data Error: Not a valid active Item in source file
+      12481 = 90801^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12483 = 90802^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12485 = 90804^3130101^^155.38^^              Line/Data Error: Not a valid active Item in source file
+      12487 = 90805^3130101^^155.38^^              Line/Data Error: Not a valid active Item in source file
+      12489 = 90806^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12491 = 90807^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12493 = 90808^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12495 = 90809^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12497 = 90810^3130101^^155.38^^              Line/Data Error: Not a valid active Item in source file
+      12499 = 90811^3130101^^155.38^^              Line/Data Error: Not a valid active Item in source file
+      12501 = 90812^3130101^^187.04^^              Line/Data Error: Not a valid ctive Item in source file
+      12503 = 90813^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12505 = 90814^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12507 = 90815^3130101^^187.04^^              Line/Data Error: Not a valid active Item in source file
+      12509 = 90816^3130101^^180.38^^              Line/Data Error: Not a valid active Item in source file
+      12511 = 90817^3130101^^163.68^^              Line/Data Error: Not a valid active Item in source file
+      12513 = 90818^3130101^^831.13^^              Line/Data Error: Not a valid active Item in source file
+      12515 = 90819^3130101^^187.2^^               Line/Data Error: Not a valid active Item in source file
+      12517 = 90821^3130101^^311.77^^              Line/Data Error: Not a valid active Item in source file
+      12519 = 90822^3130101^^504.74^^              Line/Data Error: Not a valid active Item in source file
+      12521 = 90823^3130101^^216.01^^              Line/Data Error: Not a valid active Item in source file
+      12523 = 90824^3130101^^486.01^^              Line/Data Error: Not a valid active Item in source file
+      12525 = 90826^3130101^^121.16^^              Line/Data Error: Not a valid active Item in source file
+      12527 = 90827^3130101^^202.14^^              Line/Data Error: Not a valid active Item in source file
+      12529 = 90828^3130101^^202.14^^              Line/Data Error: Not a valid active Item in source file
+      12531 = 90829^3130101^^202.14^^              Line/Data Error: Not a valid active Item in source file
+      12551 = 90857^3130101^^180.89^^              Line/Data Error: Not a valid active Item in source file
+      12553 = 90862^3130101^^105.5^^               Line/Data Error: Not a valid active Item in source file
+      12925 = 92980^3130101^^14189.93^^            Line/Data Error: Not a valid active Item in source file
+      12927 = 92981^3130101^^14189.93^^            Line/Data Error: Not a valid active Item in source file
+      12929 = 92982^3130101^^10248.59^^            Line/Data Error: Not a valid active Item in source file
+      12931 = 92984^3130101^^10248.59^^            Line/Data Error: Not a valid active Item in source file
+      12939 = 92995^3130101^^14539.65^^            Line/Data Error: Not a valid active Item in source file
+      12941 = 92996^3130101^^14539.65^^            Line/Data Error: Not a valid active Item in source file
+      13091 = 93651^3130101^^14295.23^^            Line/Data Error: Not a valid active Item in source file
+      13093 = 93652^3130101^^14295.23^^            Line/Data Error: Not a valid active Item in source file
+      13271 = 95010^3130101^^105.7^^               Line/Data Error: Not a valid active Item in source file
+      13275 = 95015^3130101^^105.7^^               Line/Data Error: Not a valid active Item in source file
+      13301 = 95075^3130101^^1117.98^^             Line/Data Error: Not a valid active Item in source file
+      13423 = 95900^3130101^^173.76^^              Line/Data Error: Not a valid active Item in source file
+      13425 = 95903^3130101^^173.76^^              Line/Data Error: Not a valid active Item in source file
+      13427 = 95904^3130101^^173.76^^              Line/Data Error: Not a valid active Item in source file
+      13467 = 95934^3130101^^173.76^^              Line/Data Error: Not a valid active Item in source file
+      13469 = 95936^3130101^^173.76^^              Line/Data Error: Not a valid active Item in source file
+      14139 = 0242T^3130101^^1117.98^^             Line/Data Error: Not a valid active Item in source file
+      14155 = 0250T^3130101^^5423.99^^             Line/Data Error: Not a valid active Item in source file
+      14157 = 0251T^3130101^^5423.99^^             Line/Data Error: Not a valid active Item in source file
+      14159 = 0252T^3130101^^2431.77^^             Line/Data Error: Not a valid active Item in source file
+      14187 = 0276T^3130101^^5423.99^^             Line/Data Error: Not a valid active Item in source file
+      14189 = 0277T^3130101^^5423.99^^             Line/Data Error: Not a valid active Item in source file
+      14193 = 0279T^3130101^^50.29^^               Line/Data Error: Not a valid active Item in source file
+      14195 = 0280T^3130101^^50.29^^               Line/Data Error: Not a valid active Item in source file
+      14245 = 0319T^3130101^^27914.93^^            Line/Data Error: Item not found in source file
+      14247 = 0320T^3130101^^11236.5^^             Line/Data Error: Item not found in source file
+      14249 = 0321T^3130101^^27914.93^^            Line/Data Error: Item not found in source file
+      14251 = 0322T^3130101^^6002.42^^             Line/Data Error: Item not found in source file
+      14253 = 0323T^3130101^^27914.93^^            Line/Data Error: Item not found in source file
+      14255 = 0324T^3130101^^6002.42^^             Line/Data Error: Item not found in source file
+      14257 = 0325T^3130101^^6002.42^^             Line/Data Error: Item not found in source file
+      14259 = 0327T^3130101^^136.73^^              Line/Data Error: Item not found in source file
+      14261 = 0328T^3130101^^136.73^^              Line/Data Error: Item not found in source file
+      14481 = C9294^3130101^^127.05^^              Line/Data Error: Item not found in source file
+      14483 = C9295^3130101^^118^^                 Line/Data Error: Item not found in source file
+      14485 = C9296^3130101^^68.35^^               Line/Data Error: Item not found in source file
+      14501 = C9600^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14503 = C9601^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14505 = C9602^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14507 = C9603^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14509 = C9604^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14511 = C9605^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14513 = C9606^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14515 = C9607^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14517 = C9608^3130101^^14483.27^^            Line/Data Error: Item not found in source file
+      14737 = G0455^3130101^^199.71^^              Line/Data Error: Item not found in source file
+      14739 = G0456^3130101^^759.31^^              Line/Data Error: Item not found in source file
+      14741 = G0457^3130101^^759.31^^              Line/Data Error: Item not found in source file
+      15251 = Q4131^3130101^^477.77^^              Line/Data Error: Item not found in source file
+      15253 = Q4132^3130101^^549.68^^              Line/Data Error: Item not found in source file
+      15255 = Q4133^3130101^^438.3^^               Line/Data Error: Item not found in source file
+      15275 = Q9969^3130101^^40.3^^                Line/Data Error: Item not found in source file
+  
+ SNF Fac 2           6 of 6 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     6 entries added to the Charge Set RC-SNF FAC HR 402.
+  
+  
+ SNF Fac 4           5 of 5 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     5 entries added to the Charge Set RC-SNF FAC ML 402.
+  
+  
+ SNF Fac/Phys 1      5054 of 5054 records checked, 0 duplicates, 3 with $=0
+                     24 line/data errors or warnings found for a .47% error rate.
+                     5027 entries added to the Charge Set RC-SNF FAC PR 402.
+  
+      32703 = 75900^3130101^^1248.46^^             Line/Data Error: Not a valid active Item in source file
+      32743 = 75961^3130101^^641.08^^              Line/Data Error: Not a valid active Item in source file
+      34501 = 83890^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34503 = 83891^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34505 = 83892^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34507 = 83893^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34509 = 83894^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34511 = 83896^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34513 = 83897^3130101^^20.78^^               Line/Data Error: Not a valid active Item in source file
+      34515 = 83898^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34517 = 83900^3130101^^169.9^^               Line/Data Error: Not a valid active Item in source file
+      34519 = 83901^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34521 = 83902^3130101^^72.12^^               Line/Data Error: Not a valid active Item in source file
+      34523 = 83903^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34525 = 83904^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34527 = 83905^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34529 = 83906^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34531 = 83907^3130101^^68.45^^               Line/Data Error: Not a valid active Item in source file
+      34533 = 83908^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34535 = 83909^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      34541 = 83913^3130101^^68.45^^               Line/Data Error: Not a valid active Item in source file
+      34543 = 83914^3130101^^85.56^^               Line/Data Error: Not a valid active Item in source file
+      37684 = 95920^3130101^^193.02^^              Line/Data Error: Not a valid active Item in source file
+      47448 = G0453^3130101^^84.52^^               Line/Data Error: Item not found in source file
+  
+ SNF PD INC          2 of 2 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     2 entries added to the Charge Set RC-SNF INC 402.
+  
+ SNF Phys 1          7927 of 7927 records checked, 0 duplicates, 33 with $=0
+                     95 line/data errors or warnings found for a 1.2% error rate.
+                     7799 entries added to the Charge Set RC-PHYSICIAN SNF PR 402.
+   
+      15747 = 0030T^3130101^^116.12^^              Line/Data Error: Not a valid active Item in source file
+      15799 = 0048T^3130101^^1738.95^^             Line/Data Error: Not a valid active Item in source file
+      16543 = 0252T^3130101^^1627.67^^             Line/Data Error: Not a valid active Item in source file
+      22086 = 29590^3130101^^137.97^^              Line/Data Error: Not a valid active Item in source file
+      22872 = 31656^3130101^^399.38^^              Line/Data Error: Not a valid active Item in source file
+      22881 = 31715^3130101^^191.7^^               Line/Data Error: Not a valid active Item in source file
+      22983 = 32420^3130101^^389.41^^              Line/Data Error: Not a valid active Item in source file
+      22986 = 32421^3130101^^273.56^^              Line/Data Error: Not a valid active Item in source file
+      22989 = 32422^3130101^^439.65^^              Line/Data Error: Not a valid active Item in source file
+      24552 = 37201^3130101^^976.14^^              Line/Data Error: Not a valid active Item in source file
+      24558 = 37203^3130101^^928.67^^              Line/Data Error: Not a valid active Item in source file
+      24576 = 37209^3130101^^397.53^^              Line/Data Error: Not a valid active Item in source file
+      25532 = 43234^3130101^^424.66^^              Line/Data Error: Not a valid active Item in source file
+      30706 = 65805^3130101^^457.87^^              Line/Data Error: Not a valid active Item in source file
+      31887 = 71034^3130101^^105.42^7^             Line/Data Error: Not a valid active Item in source file
+      31893 = 71040^3130101^^128.3^7^              Line/Data Error: Not a valid active Item in source file
+      31896 = 71060^3130101^^165.58^7^             Line/Data Error: Not a valid active Item in source file
+      32555 = 75650^3130101^^332.8^7^              Line/Data Error: Not a valid active Item in source file
+      32561 = 75660^3130101^^298.49^7^             Line/Data Error: Not a valid active Item in source file
+      32564 = 75662^3130101^^379.55^7^             Line/Data Error: Not a valid active Item in source file
+      32567 = 75665^3130101^^296.92^7^             Line/Data Error: Not a valid active Item in source file
+      32570 = 75671^3130101^^374.86^7^             Line/Data Error: Not a valid active Item in source file
+      32576 = 75680^3130101^^374.86^7^             Line/Data Error: Not a valid active Item in source file
+      32579 = 75685^3130101^^298.49^7^             Line/Data Error: Not a valid active Item in source file
+      32702 = 75900^3130101^^106.46^7^             Line/Data Error: Not a valid active Item in source file
+      32741 = 75961^3130101^^937.1^7^              Line/Data Error: Not a valid active Item in source file
+      33318 = 78000^3130101^^42.22^7^              Line/Data Error: Not a valid active Item in source file
+      33321 = 78001^3130101^^58.43^7^              Line/Data Error: Not a valid active Item in source file
+      33324 = 78003^3130101^^74.64^7^              Line/Data Error: Not a valid active Item in source file
+      33327 = 78006^3130101^^108.8^7^              Line/Data Error: Not a valid active Item in source file
+      33330 = 78007^3130101^^110.44^7^             Line/Data Error: Not a valid active Item in source file
+      33333 = 78010^3130101^^86.08^7^              Line/Data Error: Not a valid active Item in source file
+      33336 = 78011^3130101^^100.65^7^             Line/Data Error: Not a valid active Item in source file
+      34538 = 83912^3130101^^62.34^7^              Line/Data Error: Not a valid active Item in source file
+      36138 = 88384^3130101^^886.16^^              Line/Data Error: Not a valid active Item in source file
+      36141 = 88384^3130101^^97.78^7^              Line/Data Error: Not a valid active Item in source file
+      36144 = 88385^3130101^^221.45^7^             Line/Data Error: Not a valid active Item in source file
+      36147 = 88386^3130101^^296.09^7^             Line/Data Error: Not a valid active Item in source file
+      36270 = 90801^3130101^^259.89^^              Line/Data Error: Not a valid active Item in source file
+      36273 = 90802^3130101^^279.69^^              Line/Data Error: Not a valid active Item in source file
+      36276 = 90804^3130101^^106.93^^              Line/Data Error: Not a valid active Item in source file
+      36279 = 90805^3130101^^125.08^^              Line/Data Error: Not a valid active Item in source file
+      36282 = 90806^3130101^^162.76^^              Line/Data Error: Not a valid active Item in source file
+      36285 = 90807^3130101^^184.56^^              Line/Data Error: Not a valid active Item in source file
+      36288 = 90808^3130101^^245.24^^              Line/Data Error: Not a valid active Item in source file
+      36291 = 90809^3130101^^272.15^^              Line/Data Error: Not a valid active Item in source file
+      36294 = 90810^3130101^^117.58^^              Line/Data Error: Not a valid active Item in source file
+      36297 = 90811^3130101^^136.46^^              Line/Data Error: Not a valid active Item in source file
+      36300 = 90812^3130101^^173.41^^              Line/Data Error: Not a valid active Item in source file
+      36303 = 90813^3130101^^195.21^^              Line/Data Error: Not a valid active Item in source file
+      36306 = 90814^3130101^^253.7^^               Line/Data Error: Not a valid active Item in source file
+      36309 = 90815^3130101^^282.07^^              Line/Data Error: Not a valid active Item in source file
+      36312 = 90816^3130101^^117.31^^              Line/Data Error: Not a valid active Item in source file
+      36315 = 90817^3130101^^137.65^^              Line/Data Error: Not a valid active Item in source file
+      36318 = 90818^3130101^^173.1^^               Line/Data Error: Not a valid active Item in source file
+      36321 = 90819^3130101^^196.37^^              Line/Data Error: Not a valid active Item in source file
+      36324 = 90821^3130101^^256.35^^              Line/Data Error: Not a valid active Item in source file
+      36327 = 90822^3130101^^282.53^^              Line/Data Error: Not a valid active Item in source file
+      36330 = 90823^3130101^^128.69^^              Line/Data Error: Not a valid active Item in source file
+      36333 = 90824^3130101^^148.3^^               Line/Data Error: Not a valid active Item in source file
+      36336 = 90826^3130101^^183.79^^              Line/Data Error: Not a valid active Item in source file
+      36339 = 90827^3130101^^205.56^^              Line/Data Error: Not a valid active Item in source file
+      36342 = 90828^3130101^^264.81^^              Line/Data Error: Not a valid active Item in source file
+      36345 = 90829^3130101^^292.45^^              Line/Data Error: Not a valid active Item in source file
+      36381 = 90857^3130101^^64.52^^               Line/Data Error: Not a valid active Item in source file
+      36384 = 90862^3130101^^95.7^^                Line/Data Error: Not a valid active Item in source file
+      36914 = 92980^3130101^^2778.17^^             Line/Data Error: Not a valid active Item in source file
+      36917 = 92981^3130101^^772.49^^              Line/Data Error: Not a valid active Item in source file
+      36920 = 92982^3130101^^2061.59^^             Line/Data Error: Not a valid active Item in source file
+      36923 = 92984^3130101^^551.41^^              Line/Data Error: Not a valid active Item in source file
+      36939 = 92995^3130101^^2268.35^^             Line/Data Error: Not a valid active Item in source file
+      36942 = 92996^3130101^^604.75^^              Line/Data Error: Not a valid active Item in source file
+      37256 = 93651^3130101^^3670.48^^             Line/Data Error: Not a valid active Item in source file
+      37259 = 93652^3130101^^3995.65^^             Line/Data Error: Not a valid active Item in source file
+      37649 = 95900^3130101^^70.82^7^              Line/Data Error: Not a valid active Item in source file
+      37652 = 95903^3130101^^99.44^7^              Line/Data Error: Not a valid active Item in source file
+      37655 = 95904^3130101^^57.12^7^              Line/Data Error: Not a valid active Item in source file
+      37682 = 95920^3130101^^348.65^7^             Line/Data Error: Not a valid active Item in source file
+      37719 = 95934^3130101^^84.58^7^              Line/Data Error: Not a valid active Item in source file
+      37722 = 95936^3130101^^91.43^7^              Line/Data Error: Not a valid active Item in source file
+      39638 = D0360^3130101^^685.5^^               Line/Data Error: Not a valid active Item in source file
+      39641 = D0362^3130101^^476.8^^               Line/Data Error: Not a valid active Item in source file
+      39779 = D1203^3130101^^39.02^^               Line/Data Error: Not a valid active Item in source file
+      39782 = D1204^3130101^^39.2^^                Line/Data Error: Not a valid active Item in source file
+      40217 = D4271^3130101^^1095.38^^             Line/Data Error: Not a valid active Item in source file
+      40715 = D6254^3130101^^724.35^^              Line/Data Error: Not a valid active Item in source file
+      40829 = D6795^3130101^^620.97^^              Line/Data Error: Not a valid active Item in source file
+      40844 = D6970^3130101^^489.94^^              Line/Data Error: Not a valid active Item in source file
+      40847 = D6972^3130101^^395.31^^              Line/Data Error: Not a valid active Item in source file
+      40850 = D6973^3130101^^315.47^^              Line/Data Error: Not a valid active Item in source file
+      40856 = D6976^3130101^^288.9^^               Line/Data Error: Not a valid active Item in source file
+      40859 = D6977^3130101^^225.46^^              Line/Data Error: Not a valid active Item in source file
+      47446 = G0452^3130101^^63.92^7^              Line/Data Error: Item not found in source file
+      47451 = G0454^3130101^^28.62^^               Line/Data Error: Item not found in source file
+      47454 = G0455^3130101^^439.12^^              Line/Data Error: Item not found in source file
+  
+ SNF Phys 3          274 of 274 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     274 entries added to the Charge Set RC-PHYSICIAN SNF MN 402.
+  
+  
+  Any Provider based division that provides Outpatient Care Only should 
+  result in a summary with the following counts:
+  
+      IBCR UPLOAD RC 402GE AUBURN, ME                   Count = 18477
+      IB Upload RC v3.12 402GE AUBURN, ME, 1/16/13@14:57 by WANG,CHI
+  
+       Subfile                 Item     Count     Charge Set
+       -------                 ----     -----     -------------------------
+   1   Opt Fac 1               CPT      6477      RC-OPT FAC PR 402GE
+   2   Opt Fac 2               CPT      6         RC-OPT FAC HR 402GE
+   3   Opt Fac 4               CPT      5         RC-OPT FAC ML 402GE
+   4   Opt Fac/Phys 1          CPT      5480      RC-OPT FAC PR 402GE
+   5   Opt PD PHosp            MISCE    1         RC-OPT MISC 402GE
+   6   Opt Phys 1              CPT      6294      RC-PHYSICIAN OPT PR 402GE
+   7   Opt Phys 3              CPT      214       RC-PHYSICIAN OPT MN 402GE
+  
+  IB Upload Summary Report of Charge Items Loaded into the Charge Master
+  --------------------------------------------------------------------------
+  
+                IBCR UPLOAD RC 402GE AUBURN, ME
+  
+  
+ Opt Fac 1           6477 of 6477 records checked, 0 duplicates, 0 with $=0
+                     120 line/data errors or warnings found for a 1.85% error rate.
+                     6357 entries added to the Charge Set RC-OPT FAC PR 402GE.
+  
+      1641  = 29590^3130101^^210.35^^              Line/Data Error: Not a valid active Item in source file
+      1891  = 31656^3130101^^2510.21^^             Line/Data Error: Not a valid active Item in source file
+      1907  = 32420^3130101^^1477.79^^             Line/Data Error: Not a valid active Item in source file
+      1908  = 32421^3130101^^1477.79^^             Line/Data Error: Not a valid active Item in source file
+      1909  = 32422^3130101^^1477.79^^             Line/Data Error: Not a valid active Item in source file
+      2116  = 37201^3130101^^4181.66^^             Line/Data Error: Not a valid active Item in source file
+      2118  = 37203^3130101^^7378.04^^             Line/Data Error: Not a valid active Item in source file
+      2124  = 37209^3130101^^7378.04^^             Line/Data Error: Not a valid active Item in source file
+      2403  = 43234^3130101^^2219.42^^             Line/Data Error: Not a valid active Item in source file
+      3599  = 65805^3130101^^5986.64^^             Line/Data Error: Not a valid active Item in source file
+      3986  = 71034^3130101^^462.57^^              Line/Data Error: Not a valid active Item in source file
+      3988  = 71040^3130101^^1052.22^^             Line/Data Error: Not a valid active Item in source file
+      3989  = 71060^3130101^^1052.22^^             Line/Data Error: Not a valid active Item in source file
+      4186  = 75650^3130101^^11259.46^^            Line/Data Error: Not a valid active Item in source file
+      4188  = 75660^3130101^^11259.46^^            Line/Data Error: Not a valid active Item in source file
+      4189  = 75662^3130101^^11259.46^^            Line/Data Error: Not a valid active Item in source file
+      4190  = 75665^3130101^^7825.66^^             Line/Data Error: Not a valid active Item in source file
+      4191  = 75671^3130101^^11259.46^^            Line/Data Error: Not a valid active Item in source file
+      4193  = 75680^3130101^^7825.66^^             Line/Data Error: Not a valid active Item in source file
+      4194  = 75685^3130101^^7825.66^^             Line/Data Error: Not a valid active Item in source file
+      4385  = 78000^3130101^^477.34^^              Line/Data Error: Not a valid active Item in source file
+      4386  = 78001^3130101^^477.34^^              Line/Data Error: Not a valid active Item in source file
+      4387  = 78003^3130101^^477.34^^              Line/Data Error: Not a valid active Item in source file
+      4388  = 78006^3130101^^960.01^^              Line/Data Error: Not a valid active Item in source file
+      4389  = 78007^3130101^^960.01^^              Line/Data Error: Not a valid active Item in source file
+      4390  = 78010^3130101^^620.38^^              Line/Data Error: Not a valid active Item in source file
+      4391  = 78011^3130101^^620.38^^              Line/Data Error: Not a valid active Item in source file
+      4653  = 88384^3130101^^51.92^^               Line/Data Error: Not a valid active Item in source file
+      4654  = 88385^3130101^^97.39^^               Line/Data Error: Not a valid active Item in source file
+      4655  = 88386^3130101^^250.48^^              Line/Data Error: Not a valid active Item in source file
+      4742  = 90801^3130101^^193.07^^              Line/Data Error: Not a valid active Item in source file
+      4743  = 90802^3130101^^193.07^^              Line/Data Error: Not a valid active Item in source file
+      4744  = 90804^3130101^^160.4^^               Line/Data Error: Not a valid active Item in source file
+      4745  = 90805^3130101^^160.4^^               Line/Data Error: Not a valid active Item in source file
+      4746  = 90806^3130101^^193.07^^              Line/Data Error: Not a valid active Item in source file
+      4747  = 90807^3130101^^193.07^^              Line/Data Error: Not a valid active Item in source file
+      4748  = 90808^3130101^^193.07^^              Line/Data Error: Not a valid active Item in source file
+      4749  = 90809^3130101^^193.07^^              Line/Data Error: Not a valid active Item in source file
+      4750  = 90810^3130101^^160.4^^               Line/Data Error: Not a valid active Item in source file
+      4751  = 90811^3130101^^160.4^^               Line/Data Error: Not a valid active Item in source file
+      4752  = 90812^3130101^^193.07^^              Line/Data Error: Not a valid active Item in source file
+      4753  = 90813^3130101^^193.07^^              Line/Data Error: Not a valid active Item in source file
+      4754  = 90814^3130101^^193.07^^              Line/Data Error: Not a valid active Item in source file
+      4755  = 90815^3130101^^193.07^^              Line/Data Error: Not a valid active Item in source file
+      4756  = 90816^3130101^^186.2^^               Line/Data Error: Not a valid active Item in source file
+      4757  = 90817^3130101^^168.96^^              Line/Data Error: Not a valid active Item in source file
+      4758  = 90818^3130101^^857.94^^              Line/Data Error: Not a valid active Item in source file
+      4759  = 90819^3130101^^193.24^^              Line/Data Error: Not a valid active Item in source file
+      4760  = 90821^3130101^^321.82^^              Line/Data Error: Not a valid active Item in source file
+      4761  = 90822^3130101^^521.02^^              Line/Data Error: Not a valid active Item in source file
+      4762  = 90823^3130101^^222.98^^              Line/Data Error: Not a valid active Item in source file
+      4763  = 90824^3130101^^501.69^^              Line/Data Error: Not a valid active Item in source file
+      4764  = 90826^3130101^^125.07^^              Line/Data Error: Not a valid active Item in source file
+      4765  = 90827^3130101^^208.66^^              Line/Data Error: Not a valid active Item in source file
+      4766  = 90828^3130101^^208.66^^              Line/Data Error: Not a valid active Item in source file
+      4767  = 90829^3130101^^208.66^^              Line/Data Error: Not a valid active Item in source file
+      4777  = 90857^3130101^^186.73^^              Line/Data Error: Not a valid active Item in source file
+      4778  = 90862^3130101^^108.9^^               Line/Data Error: Not a valid active Item in source file
+      4964  = 92980^3130101^^14647.67^^            Line/Data Error: Not a valid active Item in source file
+      4965  = 92981^3130101^^14647.67^^            Line/Data Error: Not a valid active Item in source file
+      4966  = 92982^3130101^^10579.19^^            Line/Data Error: Not a valid active Item in source file
+      4967  = 92984^3130101^^10579.19^^            Line/Data Error: Not a valid active Item in source file
+      4971  = 92995^3130101^^15008.67^^            Line/Data Error: Not a valid active Item in source file
+      4972  = 92996^3130101^^15008.67^^            Line/Data Error: Not a valid active Item in source file
+      5047  = 93651^3130101^^14756.37^^            Line/Data Error: Not a valid active Item in source file
+      5048  = 93652^3130101^^14756.37^^            Line/Data Error: Not a valid active Item in source file
+      5137  = 95010^3130101^^109.11^^              Line/Data Error: Not a valid active Item in source file
+      5139  = 95015^3130101^^109.11^^              Line/Data Error: Not a valid active Item in source file
+      5152  = 95075^3130101^^1154.04^^             Line/Data Error: Not a valid active Item in source file
+      5213  = 95900^3130101^^179.36^^              Line/Data Error: Not a valid active Item in source file
+      5214  = 95903^3130101^^179.36^^              Line/Data Error: Not a valid active Item in source file
+      5215  = 95904^3130101^^179.36^^              Line/Data Error: Not a valid active Item in source file
+      5235  = 95934^3130101^^179.36^^              Line/Data Error: Not a valid active Item in source file
+      5236  = 95936^3130101^^179.36^^              Line/Data Error: Not a valid active Item in source file
+      5564  = 0242T^3130101^^1154.04^^             Line/Data Error: Not a valid active Item in source file
+      5572  = 0250T^3130101^^5598.96^^             Line/Data Error: Not a valid active Item in source file
+      5573  = 0251T^3130101^^5598.96^^             Line/Data Error: Not a valid active Item in source file
+      5574  = 0252T^3130101^^2510.21^^             Line/Data Error: Not a valid active Item in source file
+      5588  = 0276T^3130101^^5598.96^^             Line/Data Error: Not a valid active Item in source file
+      5589  = 0277T^3130101^^5598.96^^             Line/Data Error: Not a valid active Item in source file
+      5591  = 0279T^3130101^^51.92^^               Line/Data Error: Not a valid active Item in source file
+      5592  = 0280T^3130101^^51.92^^               Line/Data Error: Not a valid active Item in source file
+      5617  = 0319T^3130101^^28815.41^^            Line/Data Error: Item not found in source file
+      5618  = 0320T^3130101^^11598.97^^            Line/Data Error: Item not found in source file
+      5619  = 0321T^3130101^^28815.41^^            Line/Data Error: Item not found in source file
+      5620  = 0322T^3130101^^6196.04^^             Line/Data Error: Item not found in source file
+      5621  = 0323T^3130101^^28815.41^^            Line/Data Error: Item not found in source file
+      5622  = 0324T^3130101^^6196.04^^             Line/Data Error: Item not found in source file
+      5623  = 0325T^3130101^^6196.04^^             Line/Data Error: Item not found in source file
+      5624  = 0327T^3130101^^141.15^^              Line/Data Error: Item not found in source file
+      5625  = 0328T^3130101^^141.15^^              Line/Data Error: Item not found in source file
+      5729  = C9294^3130101^^131.15^^              Line/Data Error: Item not found in source file
+      5730  = C9295^3130101^^121.81^^              Line/Data Error: Item not found in source file
+      5731  = C9296^3130101^^70.55^^               Line/Data Error: Item not found in source file
+      5739  = C9600^3130101^^14950.48^^            Line/Data Error: Item not found in source file
+      5740  = C9601^3130101^^14950.48^^            Line/Data Error: Item not found in source file
+      5741  = C9602^3130101^^14950.48^^            Line/Data Error: Item not found in source file
+      5742  = C9603^3130101^^14950.48^^            Line/Data Error: Item not found in source file
+      5743  = C9604^3130101^^14950.48^^            Line/Data Error: Item not found in source file
+      5744  = C9605^3130101^^14950.48^^            Line/Data Error: Item not found in source file
+      5745  = C9606^3130101^^14950.48^^            Line/Data Error: Item not found in source file
+      5746  = C9607^3130101^^14950.48^^            Line/Data Error: Item not found in source file
+      5747  = C9608^3130101^^14950.48^^            Line/Data Error: Item not found in source file
+      5853  = G0455^3130101^^206.15^^              Line/Data Error: Item not found in source file
+      5854  = G0456^3130101^^783.8^^               Line/Data Error: Item not found in source file
+      5855  = G0457^3130101^^783.8^^               Line/Data Error: Item not found in source file
+      5865  = J0178^3130101^^3808.38^^             Line/Data Error: Item not found in source file
+      5886  = J0485^3130101^^15.81^^               Line/Data Error: Item not found in source file
+      5902  = J0716^3130101^^11334.55^^            Line/Data Error: Item not found in source file
+      5962  = J1744^3130101^^963.55^^              Line/Data Error: Item not found in source file
+      5976  = J2212^3130101^^1.54^^                Line/Data Error: Item not found in source file
+      6039  = J7178^3130101^^3.79^^                Line/Data Error: Item not found in source file
+      6076  = J7527^3130101^^25.71^^               Line/Data Error: Item not found in source file
+      6114  = J9002^3130101^^2135.36^^             Line/Data Error: Item not found in source file
+      6118  = J9019^3130101^^1360.92^^             Line/Data Error: Item not found in source file
+      6126  = J9042^3130101^^394.92^^              Line/Data Error: Item not found in source file
+      6274  = Q4131^3130101^^493.18^^              Line/Data Error: Item not found in source file
+      6275  = Q4132^3130101^^567.41^^              Line/Data Error: Item not found in source file
+      6276  = Q4133^3130101^^452.44^^              Line/Data Error: Item not found in source file
+      6286  = Q9969^3130101^^41.6^^                Line/Data Error: Item not found in source file
+  
+ Opt Fac 2           6 of 6 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     6 entries added to the Charge Set RC-OPT FAC HR 402GE.
+  
+  
+ Opt Fac 4           5 of 5 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     5 entries added to the Charge Set RC-OPT FAC ML 402GE.
+  
+  
+ Opt Fac/Phys 1      5480 of 5480 records checked, 0 duplicates, 6 with $=0
+                     22 line/data errors or warnings found for a .4% error rate.
+                     5452 entries added to the Charge Set RC-OPT FAC PR 402GE.
+  
+      11760 = 83890^3130101^^18.73^^               Line/Data Error: Not a valid active Item in source file
+      11761 = 83891^3130101^^18.73^^               Line/Data Error: Not a valid active Item in source file
+      11762 = 83892^3130101^^18.73^^               Line/Data Error: Not a valid active Item in source file
+      11763 = 83893^3130101^^18.73^^               Line/Data Error: Not a valid active Item in source file
+      11764 = 83894^3130101^^18.73^^               Line/Data Error: Not a valid active Item in source file
+      11765 = 83896^3130101^^18.73^^               Line/Data Error: Not a valid active Item in source file
+      11766 = 83897^3130101^^18.73^^               Line/Data Error: Not a valid active Item in source file
+      11767 = 83898^3130101^^77.11^^               Line/Data Error: Not a valid active Item in source file
+      11768 = 83900^3130101^^153.12^^              Line/Data Error: Not a valid active Item in source file
+      11769 = 83901^3130101^^77.11^^               Line/Data Error: Not a valid active Item in source file
+      11770 = 83902^3130101^^64.99^^               Line/Data Error: Not a valid active Item in source file
+      11771 = 83903^3130101^^77.11^^               Line/Data Error: Not a valid active Item in source file
+      11772 = 83904^3130101^^77.11^^               Line/Data Error: Not a valid active Item in source file
+      11773 = 83905^3130101^^77.11^^               Line/Data Error: Not a valid active Item in source file
+      11774 = 83906^3130101^^77.11^^               Line/Data Error: Not a valid active Item in source file
+      11775 = 83907^3130101^^61.69^^               Line/Data Error: Not a valid active Item in source file
+      11776 = 83908^3130101^^77.11^^               Line/Data Error: Not a valid active Item in source file
+      11777 = 83909^3130101^^77.11^^               Line/Data Error: Not a valid active Item in source file
+      11779 = 83912^3130101^^18.73^^               Line/Data Error: Not a valid active Item in source file
+      11780 = 83913^3130101^^61.69^^               Line/Data Error: Not a valid active Item in source file
+      11781 = 83914^3130101^^77.11^^               Line/Data Error: Not a valid active Item in source file
+      16577 = G0453^3130101^^100.05^^              Line/Data Error: Item not found in source file
+  
+ Opt PD PHosp        1 of 1 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     1 entries added to the Charge Set RC-OPT MISC 402GE.
+  
+  
+ Opt Phys 1          6294 of 6294 records checked, 0 duplicates, 33 with $=0
+                     93 line/data errors or warnings found for a 1.48% error rate.
+                     6168 entries added to the Charge Set RC-PHYSICIAN OPT PR 402
+ GE.
+  
+      6518  = 0030T^3130101^^104.65^^              Line/Data Error: Not a valid active Item in source file
+      6739  = 0252T^3130101^^1831.13^^             Line/Data Error: Not a valid active Item in source file
+      8398  = 29590^3130101^^155.21^^              Line/Data Error: Not a valid active Item in source file
+      8649  = 31656^3130101^^449.3^^               Line/Data Error: Not a valid active Item in source file
+      8652  = 31715^3130101^^215.67^^              Line/Data Error: Not a valid active Item in source file
+      8666  = 32420^3130101^^438.09^^              Line/Data Error: Not a valid active Item in source file
+      8667  = 32421^3130101^^307.75^^              Line/Data Error: Not a valid active Item in source file
+      8668  = 32422^3130101^^494.6^^               Line/Data Error: Not a valid active Item in source file
+      8890  = 37201^3130101^^1098.15^^             Line/Data Error: Not a valid active Item in source file
+      8892  = 37203^3130101^^1044.76^^             Line/Data Error: Not a valid active Item in source file
+      8898  = 37209^3130101^^447.22^^              Line/Data Error: Not a valid active Item in source file
+      9175  = 43234^3130101^^477.75^^              Line/Data Error: Not a valid active Item in source file
+      10399 = 65805^3130101^^515.1^^               Line/Data Error: Not a valid active Item in source file
+      10790 = 71034^3130101^^144.81^7^             Line/Data Error: Not a valid active Item in source file
+      10792 = 71040^3130101^^176.24^7^             Line/Data Error: Not a valid active Item in source file
+      10793 = 71060^3130101^^227.44^7^             Line/Data Error: Not a valid active Item in source file
+      11007 = 75650^3130101^^457.15^7^             Line/Data Error: Not a valid active Item in source file
+      11009 = 75660^3130101^^410.01^7^             Line/Data Error: Not a valid active Item in source file
+      11010 = 75662^3130101^^521.36^7^             Line/Data Error: Not a valid active Item in source file
+      11011 = 75665^3130101^^407.86^7^             Line/Data Error: Not a valid active Item in source file
+      11012 = 75671^3130101^^514.91^7^             Line/Data Error: Not a valid active Item in source file
+      11014 = 75680^3130101^^514.91^7^             Line/Data Error: Not a valid active Item in source file
+      11015 = 75685^3130101^^410.01^7^             Line/Data Error: Not a valid active Item in source file
+      11060 = 75961^3130101^^1287.23^7^            Line/Data Error: Not a valid active Item in source file
+      11242 = 78000^3130101^^57.99^7^              Line/Data Error: Not a valid active Item in source file
+      11243 = 78001^3130101^^80.26^7^              Line/Data Error: Not a valid active Item in source file
+      11244 = 78003^3130101^^102.53^7^             Line/Data Error: Not a valid active Item in source file
+      11245 = 78006^3130101^^149.44^7^             Line/Data Error: Not a valid active Item in source file
+      11246 = 78007^3130101^^151.7^7^              Line/Data Error: Not a valid active Item in source file
+      11247 = 78010^3130101^^118.24^7^             Line/Data Error: Not a valid active Item in source file
+      11248 = 78011^3130101^^138.25^7^             Line/Data Error: Not a valid active Item in source file
+      11778 = 83912^3130101^^56.18^7^              Line/Data Error: Not a valid active Item in source file
+      12542 = 88384^3130101^^798.64^^              Line/Data Error: Not a valid active Item in source file
+      12543 = 88384^3130101^^88.13^7^              Line/Data Error: Not a valid active Item in source file
+      12544 = 88385^3130101^^199.58^7^             Line/Data Error: Not a valid active Item in source file
+      12545 = 88386^3130101^^266.85^7^             Line/Data Error: Not a valid active Item in source file
+      12584 = 90801^3130101^^286.4^^               Line/Data Error: Not a valid active Item in source file
+      12585 = 90802^3130101^^308.23^^              Line/Data Error: Not a valid active Item in source file
+      12586 = 90804^3130101^^117.84^^              Line/Data Error: Not a valid active Item in source file
+      12587 = 90805^3130101^^137.84^^              Line/Data Error: Not a valid active Item in source file
+      12588 = 90806^3130101^^179.37^^              Line/Data Error: Not a valid active Item in source file
+      12589 = 90807^3130101^^203.39^^              Line/Data Error: Not a valid active Item in source file
+      12590 = 90808^3130101^^270.26^^              Line/Data Error: Not a valid active Item in source file
+      12591 = 90809^3130101^^299.92^^              Line/Data Error: Not a valid active Item in source file
+      12592 = 90810^3130101^^129.58^^              Line/Data Error: Not a valid active Item in source file
+      12593 = 90811^3130101^^150.38^^              Line/Data Error: Not a valid active Item in source file
+      12594 = 90812^3130101^^191.11^^              Line/Data Error: Not a valid active Item in source file
+      12595 = 90813^3130101^^215.13^^              Line/Data Error: Not a valid active Item in source file
+      12596 = 90814^3130101^^279.58^^              Line/Data Error: Not a valid active Item in source file
+      12597 = 90815^3130101^^310.85^^              Line/Data Error: Not a valid active Item in source file
+      12598 = 90816^3130101^^129.28^^              Line/Data Error: Not a valid active Item in source file
+      12599 = 90817^3130101^^151.7^^               Line/Data Error: Not a valid active Item in source file
+      12600 = 90818^3130101^^190.77^^              Line/Data Error: Not a valid active Item in source file
+      12601 = 90819^3130101^^216.4^^               Line/Data Error: Not a valid active Item in source file
+      12602 = 90821^3130101^^282.51^^              Line/Data Error: Not a valid active Item in source file
+      12603 = 90822^3130101^^311.36^^              Line/Data Error: Not a valid active Item in source file
+      12604 = 90823^3130101^^141.83^^              Line/Data Error: Not a valid active Item in source file
+      12605 = 90824^3130101^^163.44^^              Line/Data Error: Not a valid active Item in source file
+      12606 = 90826^3130101^^202.55^^              Line/Data Error: Not a valid active Item in source file
+      12607 = 90827^3130101^^226.53^^              Line/Data Error: Not a valid active Item in source file
+      12608 = 90828^3130101^^291.83^^              Line/Data Error: Not a valid active Item in source file
+      12609 = 90829^3130101^^322.3^^               Line/Data Error: Not a valid active Item in source file
+      12621 = 90857^3130101^^71.1^^                Line/Data Error: Not a valid active Item in source file
+      12622 = 90862^3130101^^105.47^^              Line/Data Error: Not a valid active Item in source file
+      12806 = 92980^3130101^^3125.44^^             Line/Data Error: Not a valid active Item in source file
+      12807 = 92981^3130101^^869.05^^              Line/Data Error: Not a valid active Item in source file
+      12808 = 92982^3130101^^2319.29^^             Line/Data Error: Not a valid active Item in source file
+      12809 = 92984^3130101^^620.33^^              Line/Data Error: Not a valid active Item in source file
+      12813 = 92995^3130101^^2551.89^^             Line/Data Error: Not a valid active Item in source file
+      12814 = 92996^3130101^^680.34^^              Line/Data Error: Not a valid active Item in source file
+      12910 = 93651^3130101^^4231.85^^             Line/Data Error: Not a valid active Item in source file
+      12911 = 93652^3130101^^4606.74^^             Line/Data Error: Not a valid active Item in source file
+      13041 = 95900^3130101^^83.83^7^              Line/Data Error: Not a valid active Item in source file
+      13042 = 95903^3130101^^117.7^7^              Line/Data Error: Not a valid active Item in source file
+      13043 = 95904^3130101^^67.61^7^              Line/Data Error: Not a valid active Item in source file
+      13052 = 95920^3130101^^412.69^7^             Line/Data Error: Not a valid active Item in source file
+      13064 = 95934^3130101^^100.11^7^             Line/Data Error: Not a valid active Item in source file
+      13065 = 95936^3130101^^108.22^7^             Line/Data Error: Not a valid active Item in source file
+      13984 = D0360^3130101^^714.06^^              Line/Data Error: Not a valid active Item in source file
+      13985 = D0362^3130101^^496.67^^              Line/Data Error: Not a valid active Item in source file
+      14031 = D1203^3130101^^40.65^^               Line/Data Error: Not a valid active Item in source file
+      14032 = D1204^3130101^^40.83^^               Line/Data Error: Not a valid active Item in source file
+      14177 = D4271^3130101^^1160.45^^             Line/Data Error: Not a valid active Item in source file
+      14343 = D6254^3130101^^744.66^^              Line/Data Error: Not a valid active Item in source file
+      14381 = D6795^3130101^^638.39^^              Line/Data Error: Not a valid active Item in source file
+      14386 = D6970^3130101^^503.68^^              Line/Data Error: Not a valid active Item in source file
+      14387 = D6972^3130101^^406.4^^               Line/Data Error: Not a valid active Item in source file
+      14388 = D6973^3130101^^324.31^^              Line/Data Error: Not a valid active Item in source file
+      14390 = D6976^3130101^^297^^                 Line/Data Error: Not a valid active Item in source file
+      14391 = D6977^3130101^^231.78^^              Line/Data Error: Not a valid active Item in source file
+      16576 = G0452^3130101^^57.61^7^              Line/Data Error: Item not found in source file
+      16578 = G0454^3130101^^33.88^^               Line/Data Error: Item not found in source file
+      16579 = G0455^3130101^^494.01^^              Line/Data Error: Item not found in source file
+  
+ Opt Phys 3          214 of 214 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     214 entries added to the Charge Set RC-PHYSICIAN OPT MN 402GE.
+  
+  
+ Any division with Non-Provider Based Freestanding Care should result in a 
+ summary with the following counts:
+  
+      IBCR UPLOAD RC 402GA CARIBOU, ME                  Count = 17549
+      IB Upload RC v3.12 402GA CARIBOU, ME, 1/16/13@15:22 by WANG,CHI
+  
+       Subfile                 Item     Count     Charge Set
+       -------                 ----     -----     -------------------------
+   1   FS Phys 1               CPT      16999     RC-PHYSICIAN FS PR 402GA
+   2   FS Phys 3               CPT      274       RC-PHYSICIAN FS MN 402GA
+   3   FS Phys/Add 00 1        CPT      2         RC-PHYSICIAN FS PR 402GA
+   4   FS Phys/Opt 1           CPT      267       RC-PHYSICIAN FS PR 402GA
+   5   FS Phys/Opt 4           CPT      5         RC-PHYSICIAN FS ML 402GA
+   6   FS Phys/Opt TC 1        CPT      2         RC-PHYSICIAN FS PR 402GA
+  
+  
+ IB Upload Summary Report of Charge Items Loaded into the Charge Master
+  -------------------------------------------------------------------------
+  
+                IBCR UPLOAD RC 402GA CARIBOU, ME
+  
+ FS Phys 1           16999 of 16999 records checked, 0 duplicates, 42 with $=0
+                     175 line/data errors or warnings found for a 1.03% error rate.
+                     16782 entries added to the Charge Set RC-PHYSICIAN FS PR 402GA.
+  
+      308   = 0030T^3130101^^97.48^^               Line/Data Error: Not a valid active Item in source file
+      326   = 0048T^3130101^^1857.51^^             Line/Data Error: Not a valid active Item in source file
+      602   = 0252T^3130101^^1738.65^^             Line/Data Error: Not a valid active Item in source file
+      2546  = 29590^3130101^^204.98^^              Line/Data Error: Not a valid active Item in source file
+      2814  = 31656^3130101^^1210.37^^             Line/Data Error: Not a valid active Item in source file
+      2817  = 31715^3130101^^204.77^^              Line/Data Error: Not a valid active Item in source file
+      2861  = 32420^3130101^^415.96^^              Line/Data Error: Not a valid active Item in source file
+      2862  = 32421^3130101^^596.34^^              Line/Data Error: Not a valid active Item in source file
+      2863  = 32422^3130101^^750.98^^              Line/Data Error: Not a valid active Item in source file
+      3554  = 37201^3130101^^1042.69^^             Line/Data Error: Not a valid active Item in source file
+      3556  = 37203^3130101^^5268.53^^             Line/Data Error: Not a valid active Item in source file
+      3562  = 37209^3130101^^424.64^^              Line/Data Error: Not a valid active Item in source file
+      3911  = 43234^3130101^^1108.76^^             Line/Data Error: Not a valid active Item in source file
+      5921  = 65805^3130101^^612.34^^              Line/Data Error: Not a valid active Item in source file
+      6460  = 71034^3130101^^498.6^^               Line/Data Error: Not a valid active Item in source file
+      6461  = 71034^3130101^^128.59^7^             Line/Data Error: Not a valid active Item in source file
+      6462  = 71034^3130101^^370.01^35^            Line/Data Error: Not a valid active Item in source file
+      6466  = 71040^3130101^^551.3^^               Line/Data Error: Not a valid active Item in source file
+      6467  = 71040^3130101^^156.5^7^              Line/Data Error: Not a valid active Item in source file
+      6468  = 71040^3130101^^394.81^35^            Line/Data Error: Not a valid active Item in source file
+      6469  = 71060^3130101^^808.48^^              Line/Data Error: Not a valid active Item in source file
+      6470  = 71060^3130101^^201.97^7^             Line/Data Error: Not a valid active Item in source file
+      6471  = 71060^3130101^^606.51^35^            Line/Data Error: Not a valid active Item in source file
+      7111  = 75650^3130101^^1155.51^^             Line/Data Error: Not a valid active Item in source file
+      7112  = 75650^3130101^^405.95^7^             Line/Data Error: Not a valid active Item in source file
+      7113  = 75650^3130101^^749.56^35^            Line/Data Error: Not a valid active Item in source file
+      7117  = 75660^3130101^^1277.67^^             Line/Data Error: Not a valid active Item in source file
+      7118  = 75660^3130101^^364.09^7^             Line/Data Error: Not a valid active Item in source file
+      7119  = 75660^3130101^^913.58^35^            Line/Data Error: Not a valid active Item in source file
+      7120  = 75662^3130101^^1508.15^^             Line/Data Error: Not a valid active Item in source file
+      7121  = 75662^3130101^^462.97^7^             Line/Data Error: Not a valid active Item in source file
+      7122  = 75662^3130101^^1045.19^35^           Line/Data Error: Not a valid active Item in source file
+      7123  = 75665^3130101^^1310.1^^              Line/Data Error: Not a valid active Item in source file
+      7124  = 75665^3130101^^362.18^7^             Line/Data Error: Not a valid active Item in source file
+      7125  = 75665^3130101^^947.92^35^            Line/Data Error: Not a valid active Item in source file
+      7126  = 75671^3130101^^1548.2^^              Line/Data Error: Not a valid active Item in source file
+      7127  = 75671^3130101^^457.24^7^             Line/Data Error: Not a valid active Item in source file
+      7128  = 75671^3130101^^1090.96^35^           Line/Data Error: Not a valid active Item in source file
+      7132  = 75680^3130101^^1418.51^^             Line/Data Error: Not a valid active Item in source file
+      7133  = 75680^3130101^^457.24^7^             Line/Data Error: Not a valid active Item in source file
+      7134  = 75680^3130101^^961.27^35^            Line/Data Error: Not a valid active Item in source file
+      7135  = 75685^3130101^^1260.51^^             Line/Data Error: Not a valid active Item in source file
+      7136  = 75685^3130101^^364.09^7^             Line/Data Error: Not a valid active Item in source file
+      7137  = 75685^3130101^^896.42^35^            Line/Data Error: Not a valid active Item in source file
+      7255  = 75900^3130101^^1652.7^^              Line/Data Error: Not a valid active Item in source file
+      7256  = 75900^3130101^^129.86^7^             Line/Data Error: Not a valid active Item in source file
+      7257  = 75900^3130101^^1522.85^35^           Line/Data Error: Not a valid active Item in source file
+      7290  = 75961^3130101^^1925.04^^             Line/Data Error: Not a valid active Item in source file
+      7291  = 75961^3130101^^1143.06^7^            Line/Data Error: Not a valid active Item in source file
+      7292  = 75961^3130101^^781.98^35^            Line/Data Error: Not a valid active Item in source file
+      7792  = 78000^3130101^^415.79^^              Line/Data Error: Not a valid active Item in source file
+      7793  = 78000^3130101^^51.5^7^               Line/Data Error: Not a valid active Item in source file
+      7794  = 78000^3130101^^364.29^35^            Line/Data Error: Not a valid active Item in source file
+      7795  = 78001^3130101^^527.11^^              Line/Data Error: Not a valid active Item in source file
+      7796  = 78001^3130101^^71.27^7^              Line/Data Error: Not a valid active Item in source file
+      7797  = 78001^3130101^^455.84^35^            Line/Data Error: Not a valid active Item in source file
+      7798  = 78003^3130101^^466.78^^              Line/Data Error: Not a valid active Item in source file
+      7799  = 78003^3130101^^91.05^7^              Line/Data Error: Not a valid active Item in source file
+      7800  = 78003^3130101^^375.73^35^            Line/Data Error: Not a valid active Item in source file
+      7801  = 78006^3130101^^1374.34^^             Line/Data Error: Not a valid active Item in source file
+      7802  = 78006^3130101^^132.71^7^             Line/Data Error: Not a valid active Item in source file
+      7803  = 78006^3130101^^1241.64^35^           Line/Data Error: Not a valid active Item in source file
+      7804  = 78007^3130101^^1305.78^^             Line/Data Error: Not a valid active Item in source file
+      7805  = 78007^3130101^^134.71^7^             Line/Data Error: Not a valid active Item in source file
+      7806  = 78007^3130101^^1171.07^35^           Line/Data Error: Not a valid active Item in source file
+      7807  = 78010^3130101^^953.74^^              Line/Data Error: Not a valid active Item in source file
+      7808  = 78010^3130101^^105^7^                Line/Data Error: Not a valid active Item in source file
+      7809  = 78010^3130101^^848.74^35^            Line/Data Error: Not a valid active Item in source file
+      7810  = 78011^3130101^^1017.28^^             Line/Data Error: Not a valid active Item in source file
+      7811  = 78011^3130101^^122.77^7^             Line/Data Error: Not a valid active Item in source file
+      7812  = 78011^3130101^^894.51^35^            Line/Data Error: Not a valid active Item in source file
+      8593  = 83890^3130101^^17.44^^               Line/Data Error: Not a valid active Item in source file
+      8594  = 83891^3130101^^17.44^^               Line/Data Error: Not a valid active Item in source file
+      8595  = 83892^3130101^^17.44^^               Line/Data Error: Not a valid active Item in source file
+      8596  = 83893^3130101^^17.44^^               Line/Data Error: Not a valid active Item in source file
+      8597  = 83894^3130101^^17.44^^               Line/Data Error: Not a valid active Item in source file
+      8598  = 83896^3130101^^17.44^^               Line/Data Error: Not a valid ctive Item in source file
+      8599  = 83897^3130101^^17.44^^               Line/Data Error: Not a valid active Item in source file
+      8600  = 83898^3130101^^71.83^^               Line/Data Error: Not a valid active Item in source file
+      8601  = 83900^3130101^^142.63^^              Line/Data Error: Not a valid active Item in source file
+      8602  = 83901^3130101^^71.83^^               Line/Data Error: Not a valid active Item in source file
+      8603  = 83902^3130101^^60.54^^               Line/Data Error: Not a valid active Item in source file
+      8604  = 83903^3130101^^71.83^^               Line/Data Error: Not a valid active Item in source file
+      8605  = 83904^3130101^^71.83^^               Line/Data Error: Not a valid active Item in source file
+      8606  = 83905^3130101^^71.83^^               Line/Data Error: Not a valid active Item in source file
+      8607  = 83906^3130101^^71.83^^               Line/Data Error: Not a valid active Item in source file
+      8608  = 83907^3130101^^57.46^^               Line/Data Error: Not a valid active Item in source file
+      8609  = 83908^3130101^^71.83^^               Line/Data Error: Not a valid active Item in source file
+      8610  = 83909^3130101^^71.83^^               Line/Data Error: Not a valid active Item in source file
+      8611  = 83912^3130101^^52.33^7^              Line/Data Error: Not a valid active Item in source file
+      8612  = 83912^3130101^^17.44^^               Line/Data Error: Not a valid active Item in source file
+      8613  = 83913^3130101^^57.46^^               Line/Data Error: Not a valid active Item in source file
+      8614  = 83914^3130101^^71.83^^               Line/Data Error: Not a valid active Item in source file
+      9528  = 88384^3130101^^743.94^^              Line/Data Error: Not a valid active Item in source file
+      9529  = 88384^3130101^^82.09^7^              Line/Data Error: Not a valid active Item in source file
+      9530  = 88384^3130101^^661.85^35^            Line/Data Error: Not a valid active Item in source file
+      9531  = 88385^3130101^^1609.34^^             Line/Data Error: Not a valid active Item in source file
+      9532  = 88385^3130101^^185.91^7^             Line/Data Error: Not a valid active Item in source file
+      9533  = 88385^3130101^^1423.43^35^           Line/Data Error: Not a valid active Item in source file
+      9534  = 88386^3130101^^1823.2^^              Line/Data Error: Not a valid active Item in source file
+      9535  = 88386^3130101^^248.57^7^             Line/Data Error: Not a valid active Item in source file
+      9536  = 88386^3130101^^1574.63^35^           Line/Data Error: Not a valid active Item in source file
+      9686  = 90801^3130101^^306.45^^              Line/Data Error: Not a valid active Item in source file
+      9687  = 90802^3130101^^333.65^^              Line/Data Error: Not a valid active Item in source file
+      9688  = 90804^3130101^^124.39^^              Line/Data Error: Not a valid active Item in source file
+      9689  = 90805^3130101^^144.64^^              Line/Data Error: Not a valid active Item in source file
+      9690  = 90806^3130101^^165.38^^              Line/Data Error: Not a valid active Item in source file
+      9691  = 90807^3130101^^199.87^^              Line/Data Error: Not a valid active Item in source file
+      9692  = 90808^3130101^^241.96^^              Line/Data Error: Not a valid active Item in source file
+      9693  = 90809^3130101^^278.49^^              Line/Data Error: Not a valid active Item in source file
+      9694  = 90810^3130101^^127.5^^               Line/Data Error: Not a valid active Item in source file
+      9695  = 90811^3130101^^163.35^^              Line/Data Error: Not a valid active Item in source file
+      9696  = 90812^3130101^^181.38^^              Line/Data Error: Not a valid active Item in source file
+      9697  = 90813^3130101^^217.22^^              Line/Data Error: Not a valid active Item in source file
+      9698  = 90814^3130101^^259.32^^              Line/Data Error: Not a valid active Item in source file
+      9699  = 90815^3130101^^297.2^^               Line/Data Error: Not a valid active Item in source file
+      9700  = 90816^3130101^^105.54^^              Line/Data Error: Not a valid active Item in source file
+      9701  = 90817^3130101^^126.46^^              Line/Data Error: Not a valid active Item in source file
+      9702  = 90818^3130101^^155.31^^              Line/Data Error: Not a valid active Item in source file
+      9703  = 90819^3130101^^180.3^^               Line/Data Error: Not a valid active Item in source file
+      9704  = 90821^3130101^^229.9^^               Line/Data Error: Not a valid active Item in source file
+      9705  = 90822^3130101^^258.28^^              Line/Data Error: Not a valid active Item in source file
+      9706  = 90823^3130101^^116.79^^              Line/Data Error: Not a valid active Item in source file
+      9707  = 90824^3130101^^135.67^^              Line/Data Error: Not a valid active Item in source file
+      9708  = 90826^3130101^^165.24^^              Line/Data Error: Not a valid active Item in source file
+      9709  = 90827^3130101^^188.16^^              Line/Data Error: Not a valid active Item in source file
+      9710  = 90828^3130101^^237.75^^              Line/Data Error: Not a valid active Item in source file
+      9711  = 90829^3130101^^267.49^^              Line/Data Error: Not a valid active Item in source file
+      9723  = 90857^3130101^^72.12^^               Line/Data Error: Not a valid active Item in source file
+      9724  = 90862^3130101^^117.36^^              Line/Data Error: Not a valid active Item in source file
+      10059 = 92980^3130101^^2967.59^^             Line/Data Error: Not a valid active Item in source file
+      10060 = 92981^3130101^^825.16^^              Line/Data Error: Not a valid active Item in source file
+      10061 = 92982^3130101^^2202.16^^             Line/Data Error: Not a valid active Item in source file
+      10062 = 92984^3130101^^589^^                 Line/Data Error: Not a valid active Item in source file
+      10068 = 92995^3130101^^2423.01^^             Line/Data Error: Not a valid active Item in source file
+      10069 = 92996^3130101^^645.98^^              Line/Data Error: Not a valid active Item in source file
+      10333 = 93651^3130101^^4318.21^^             Line/Data Error: Not a valid active Item in source file
+      10334 = 93652^3130101^^4700.76^^             Line/Data Error: Not a valid active Item in source file
+      10540 = 95010^3130101^^42.44^^               Line/Data Error: Not a valid active Item in source file
+      10542 = 95015^3130101^^24.23^^               Line/Data Error: Not a valid active Item in source file
+      10555 = 95075^3130101^^221.87^^              Line/Data Error: Not a valid active Item in source file
+      10695 = 95900^3130101^^183.14^^              Line/Data Error: Not a valid active Item in source file
+      10696 = 95900^3130101^^62.15^7^              Line/Data Error: Not a valid active Item in source file
+      10697 = 95900^3130101^^120.99^35^            Line/Data Error: Not a valid active Item in source file
+      10698 = 95903^3130101^^213.09^^              Line/Data Error: Not a valid active Item in source file
+      10699 = 95903^3130101^^87.26^7^              Line/Data Error: Not a valid active Item in source file
+      10700 = 95903^3130101^^125.83^35^            Line/Data Error: Not a valid active Item in source file
+      10701 = 95904^3130101^^161.44^^              Line/Data Error: Not a valid active Item in source file
+      10702 = 95904^3130101^^50.13^7^              Line/Data Error: Not a valid active Item in source file
+      10703 = 95904^3130101^^111.31^35^            Line/Data Error: Not a valid active Item in source file
+      10728 = 95920^3130101^^475.34^^              Line/Data Error: Not a valid active Item in source file
+      10729 = 95920^3130101^^305.96^7^             Line/Data Error: Not a valid active Item in source file
+      10730 = 95920^3130101^^169.38^35^            Line/Data Error: Not a valid active Item in source file
+      10764 = 95934^3130101^^175.85^^              Line/Data Error: Not a valid active Item in source file
+      10765 = 95934^3130101^^74.22^7^              Line/Data Error: Not a valid active Item in source file
+      10766 = 95934^3130101^^101.63^35^            Line/Data Error: Not a valid active Item in source file
+      10767 = 95936^3130101^^142.18^^              Line/Data Error: Not a valid active Item in source file
+      10768 = 95936^3130101^^80.23^7^              Line/Data Error: Not a valid active Item in source file
+      10769 = 95936^3130101^^61.95^35^             Line/Data Error: Not a valid active Item in source file
+      12099 = D0360^3130101^^685.5^^               Line/Data Error: Not a valid active Item in source file
+      12100 = D0362^3130101^^476.8^^               Line/Data Error: Not a valid active Item in source file
+      12146 = D1203^3130101^^39.02^^               Line/Data Error: Not a valid active Item in source file
+      12147 = D1204^3130101^^39.2^^                Line/Data Error: Not a valid active Item in source file
+      12292 = D4271^3130101^^1106.22^^             Line/Data Error: Not a valid active Item in source file
+      12458 = D6254^3130101^^724.35^^              Line/Data Error: Not a valid active Item in source file
+      12496 = D6795^3130101^^620.97^^              Line/Data Error: Not a valid active Item in source file
+      12501 = D6970^3130101^^489.94^^              Line/Data Error: Not a valid active Item in source file
+      12502 = D6972^3130101^^395.31^^              Line/Data Error: Not a valid active Item in source file
+      12503 = D6973^3130101^^315.47^^              Line/Data Error: Not a valid active Item in source file
+      12505 = D6976^3130101^^288.9^^               Line/Data Error: Not a valid active Item in source file
+      12506 = D6977^3130101^^225.46^^              Line/Data Error: Not a valid active Item in source file
+      14785 = G0452^3130101^^53.66^7^              Line/Data Error: Item not found in source file
+      14786 = G0453^3130101^^74.17^^               Line/Data Error: Item not found in source file
+      14787 = G0454^3130101^^25.11^^               Line/Data Error: Item not found in source file
+      14788 = G0455^3130101^^469.06^^              Line/Data Error: Item not found in source file
+  
+ FS Phys 3           274 of 274 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     274 entries added to the Charge Set RC-PHYSICIAN FS MN 402GA .
+  
+ FS Phys/Add 00 1    2 of 2 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     2 entries added to the Charge Set RC-PHYSICIAN FS PR 402GA.
+  
+  
+ FS Phys/Opt 1       267 of 267 records checked, 0 duplicates, 0 with $=0
+                     44 line/data errors or warnings found for a 16.48% error rate.
+                     223 entries added to the Charge Set RC-PHYSICIAN FS PR 402GA .
+  
+      65    = 0242T^3130101^^1099.95^^             Line/Data Error: Not a valid active Item in source file
+      73    = 0250T^3130101^^5336.51^^             Line/Data Error: Not a valid active Item in source file
+      74    = 0251T^3130101^^5336.51^^             Line/Data Error: Not a valid active Item in source file
+      88    = 0276T^3130101^^5336.51^^             Line/Data Error: Not a valid active Item in source file
+      89    = 0277T^3130101^^5336.51^^             Line/Data Error: Not a valid active Item in source file
+      91    = 0279T^3130101^^49.48^^               Line/Data Error: Not a valid active Item in source file
+      92    = 0280T^3130101^^49.48^^               Line/Data Error: Not a valid active Item in source file
+      117   = 0319T^3130101^^27464.69^^            Line/Data Error: Item not found in source file
+      118   = 0320T^3130101^^11055.27^^            Line/Data Error: Item not found in source file
+      119   = 0321T^3130101^^27464.69^^            Line/Data Error: Item not found in source file
+      120   = 0322T^3130101^^5905.61^^             Line/Data Error: Item not found in source file
+      121   = 0323T^3130101^^27464.69^^            Line/Data Error: Item not found in source file
+      122   = 0324T^3130101^^5905.61^^             Line/Data Error: Item not found in source file
+      123   = 0325T^3130101^^5905.61^^             Line/Data Error: Item not found in source file
+      124   = 0327T^3130101^^134.53^^              Line/Data Error: Item not found in source file
+      125   = 0328T^3130101^^134.53^^              Line/Data Error: Item not found in source file
+      189   = C9294^3130101^^125^^                 Line/Data Error: Item not found in source file
+      190   = C9295^3130101^^116.1^^               Line/Data Error: Item not found in source file
+      191   = C9296^3130101^^67.25^^               Line/Data Error: Item not found in source file
+      193   = C9600^3130101^^14249.67^^            Line/Data Error: Item not found in source file
+      194   = C9601^3130101^^14249.67^^            Line/Data Error: Item not found in source file
+      195   = C9602^3130101^^14249.67^^            Line/Data Error: Item not found in source file
+      196   = C9603^3130101^^14249.67^^            Line/Data Error: Item not found in source file
+      197   = C9604^3130101^^14249.67^^            Line/Data Error: Item not found in source file
+      198   = C9605^3130101^^14249.67^^            Line/Data Error: Item not found in source file
+      199   = C9606^3130101^^14249.67^^            Line/Data Error: Item not found in source file
+      200   = C9607^3130101^^14249.67^^            Line/Data Error: Item not found in source file
+      201   = C9608^3130101^^14249.67^^            Line/Data Error: Item not found in source file
+      222   = G0456^3130101^^747.06^^              Line/Data Error: Item not found in source file
+      223   = G0457^3130101^^747.06^^              Line/Data Error: Item not found in source file
+      226   = J0178^3130101^^3629.87^^             Line/Data Error: Item not found in source file
+      227   = J0485^3130101^^15.07^^               Line/Data Error: Item not found in source file
+      228   = J0716^3130101^^10803.24^^            Line/Data Error: Item not found in source file
+      229   = J1744^3130101^^918.39^^              Line/Data Error: Item not found in source file
+      230   = J2212^3130101^^1.47^^                Line/Data Error: Item not found in source file
+      231   = J7178^3130101^^3.61^^                Line/Data Error: Item not found in source file
+      233   = J7527^3130101^^24.5^^                Line/Data Error: Item not found in source file
+      234   = J9002^3130101^^2035.27^^             Line/Data Error: Item not found in source file
+      235   = J9019^3130101^^1297.12^^             Line/Data Error: Item not found in source file
+      236   = J9042^3130101^^376.41^^              Line/Data Error: Item not found in source file
+      254   = Q4131^3130101^^470.07^^              Line/Data Error: Item not found in source file
+      255   = Q4132^3130101^^540.81^^              Line/Data Error: Item not found in source file
+      256   = Q4133^3130101^^431.23^^              Line/Data Error: Item not found in source file
+      260   = Q9969^3130101^^39.65^^               Line/Data Error: Item not found in source file
+  
+ FS Phys/Opt 4       5 of 5 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     5 entries added to the Charge Set RC-PHYSICIAN FS ML 402GA.
+  
+  
+ FS Phys/Opt TC 1    2 of 2 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     2 entries added to the Charge Set RC-PHYSICIAN FS PR 402GA.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCRHBRV
+    Before: B47469711   After: B47845055  **148,169,245,270,285,298,325,
+                                           334,355,360,365,382,390,408,
+                                           412,423,427,439,445,462,468,
+                                           484,491**
+Routine Name: IBYP491
+    Before:       n/a   After:  B8381638  **491**
+ 
+Routine list of preceding patches: 484
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : NOV 16, 2012
+Completed By: DAWSON,TIM                    Date Completed: FEB 21, 2013
+Released By : MURRAY,ANGELA                 Date Released : FEB 26, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

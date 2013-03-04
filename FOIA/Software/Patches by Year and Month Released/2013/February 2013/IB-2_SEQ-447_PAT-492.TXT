@@ -1,0 +1,193 @@
+$TXT Created by KOGER,RON at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 11/30/12 at 12:03
+=============================================================================
+Run Date: FEB 28, 2013                     Designation: IB*2*492
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #447                      Status: Released
+                  Compliance Date: MAR 31, 2013
+=============================================================================
+
+
+Subject: FY2013 MIDYEAR DSS STOP CODE UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates Integrated Billing Clinic Stop Codes to reflect 
+ Fiscal Year 2013 midyear changes.
+  
+ **************************************************************************
+ Note: In order to provide CORRECT billing of co-pay charges for the 
+ Decision Support System (DSS) Stop Code changes, this patch should be
+ installed as soon as possible.
+ **************************************************************************
+   
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000776560    FY 2013 MIDYEAR STOP CODE UPDATES
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Louisville VAMC
+ Pittsburgh HCS
+ San Diego HCS
+  
+    
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000776560    FY 2013 MIDYEAR STOP CODE UPDATES
+   
+   Problem: 
+   --------
+   As requested by the Chief Business Office (CBO), the IB CLINIC
+   STOP CODE BILLABLE TYPES (#352.5) file needs to be updated to
+   reflect midyear changes for Fiscal Year 2013.
+   
+   Resolution:
+   -----------
+   Add and update requested Stop Codes as described below:
+  
+  
+ STOP CODES ADDED
+ ----------------
+  
+ STOP    EFFECTIVE                                                  OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                       FLAG
+ ---------------------------------------------------------------------------
+ 189   APR 1,2013   NON-BILLABLE    STORE & FORWARD HOME PROV SITE  OVERRIDE
+ 339   APR 1,2013   SPECIALTY CARE  OBSTETRICS                      OVERRIDE
+ 427   APR 1,2013   SPECIALTY CARE  ANES SPECIAL PROCS IN OR SUITE  OVERRIDE
+ 901   APR 1,2013   NON-BILLABLE    TELE-ICU PATIENT SITE           OVERRIDE
+  
+  
+ STOP CODES MODIFIED
+ -------------------
+  
+ STOP    EFFECTIVE                                                  OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                       FLAG
+ ----------------------------------------------------------------------------
+  
+ OLD:
+  
+ 188   MAR 30,2011  BASIC CARE      PHYSICIAN RESIDENT
+ 204   DEC 6,2001   SPECIALTY CARE  SPEECH PATHOLOGY
+ 371   OCT 1,2012   NON-BILLABLE    HT SCEEENING
+ 404   OCT 1,2012   SPECIALTY CARE  OB/GYN                          OVERRIDE
+ 448   FEB 1,2009   NON-BILLABLE    DES EXAM                        OVERRIDE
+ 704   OCT 1,2010   NON-BILLABLE    WOMENS GEN SPEC CA CARE         OVERRIDE
+  
+ NEW:
+  
+ 188   APR 1,2013   BASIC CARE      FELLOW/RESIDENT
+ 204   APR 1,2013   SPECIALTY CARE  SPEECH-LANGUAGE PATHOLOGY       OVERRIDE
+ 371   APR 1,2013   NON-BILLABLE    HT SCREENING
+ 404   APR 1,2013   SPECIALTY CARE  GYNECOLOGY                      OVERRIDE
+ 448   APR 1,2013   NON-BILLABLE    INTGRTED DIS EVAL (IDES) EXAM   OVERRIDE
+ 704   APR 1,2013   NON-BILLABLE    WMS SPECIFIC PREVENTIVE CARE    OVERRIDE
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*492)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*492.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//" respond NO.
+  
+     7. You may delete routine IB20P492 after the installation.
+  
+  
+ *** After the install please review the installation to verify the
+     Stop Codes were added.  See below:
+     NOTE: If any type of error message is displayed during installation
+     create a REMEDY ticket to resolve the issue.  
+   
+ ------------------------------------------------
+ DSS Clinic Stop Codes, Post-Install Starting
+  
+  Adding new codes to file 352.5
+  
+    189  STORE & FORWARD HOME PROV SITE
+  
+    339  OBSTETRICS
+  
+    427  ANES SPECIAL PROCS IN OR SUITE
+  
+    901  TELE-ICU PATIENT SITE
+  
+      4 entries added to 352.5
+  
+  Updating Stop Code entries in file 352.5
+  
+    188  FELLOW/RESIDENT
+                      
+    204  SPEECH-LANGUAGE PATHOLOGY
+  
+    371  HT SCREENING 
+    
+    404  GYNECOLOGY
+  
+    448  INTGRTED DIS EVAL (IDES) EXAM
+    
+    704  WMS SPECIFIC PREVENTIVE CARE
+  
+      6 updates added to file 352.5
+  
+ DSS Clinic Stop Codes, Post-Install Complete
+ ------------------------------------------------
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P492
+    Before:       n/a   After: B12541814  **492**
+
+=============================================================================
+User Information:
+Entered By  : KOGER,RON                     Date Entered  : NOV 28, 2012
+Completed By: LANG,MICKEY                   Date Completed: FEB 25, 2013
+Released By : POST,HELEN                    Date Released : FEB 28, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

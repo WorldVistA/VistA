@@ -1,0 +1,133 @@
+*****************************************************************
+=============================================================================
+Run Date: FEB 25, 2013                     Designation: OHRS*1.4*7
+Package : OHRS - OCCUPAT HEALTH RECORD-KEEPIN Priority: Mandatory
+Version : 1.4         SEQ #7                    Status: Released
+                  Compliance Date: MAR 28, 2013
+=============================================================================
+
+
+Subject: CISS-OHRS*1.4.7 Maintenance Updates
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ *****************************************************************
+ This is to announce the updates to the CISS-OHRS web application
+ version 1.4.7 will be rolled out nationally on February 22, 2013
+  
+ *****************************************************************
+  
+ BLOOD BANK CLEARANCE
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: OHRS*1.4*7
+ does not alter or modify any VistA Blood Bank software design
+ safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch OHRS*1.4*7 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+  
+ RELEASE INFORMATION:
+ ====================
+ This is an informational release notice only.
+  
+ SOFTWARE CHANGES:
+ ======================
+ 1.CCR2897 - Adverse reaction encounters were not displaying 10k 
+             characters of data on the review and print function.
+             The system will now display up to 10k characters when
+             using the print or review functions.
+  
+ 2.CCR2973 - 508 Updates: Some combo/edit box combinations are not read
+             by JAWS. The combo/edit boxes have been updated with 
+             accessibility labels so that JAWS will read those labels.
+  
+ 3.CCR2974 - Inactive PAID Employees and VSS volunteers can be 
+             returned to an active status in OHRS. On the patient 
+             demographic and work profile screens, the system
+             will enable the protected fields to allow
+             administrators to update the separation date
+             and return the status to active.
+  
+ 4.CCR2981 - On the ID3-Vaccination Status Report, 07/31 was being 
+             displayed as the date of decision on all expired seasonal
+             influenza vaccinations.  The system has been updated to 
+             return the date of decision to null when the vaccination
+             has expired.
+  
+ 5.CCR3001 - When a patient status changes from Employee to Volunteer
+             during the manual reconcile process, the system will now
+             remove the occupational series, job title and cost center.
+             The system will set the VAA affiliation and Service/
+             Product Line to the default value for Volunteers.
+  
+ 6.CCR3003 - In Version 1.4.5 of OHRS, the VSS patient load was not 
+             running automatically, the system has been updated so that
+             VSS load will now run automatically.
+  
+ 7.CCR3006 - After a patient has been reactivated to an active OHRS
+             patient, the PAID load should not overlay the 
+             patient information.
+  
+ 8.CCR3007 - After a patient has been reactivated to an active OHRS
+             patient, the VSS load should not overlay the patient 
+             information.
+  
+  
+ SYSTEM REQUIREMENTS:
+ ======================
+ n/a 
+  
+  
+ SOFTWARE RETRIEVAL:
+ ======================
+ n/a 
+  
+  
+ REMEDY TICKET(S) and OVERVIEW:
+ ==============================
+ n/a 
+  
+  
+ TEST SITES:
+ ======================
+ Alexandria VAMC, LA
+ Philadelphia VAMC, PA
+ Montgomery VAMC, AL
+  
+ DOCUMENTATION:
+ =====================
+ http://www.va.gov/vdl/ in the HealtheVet section.
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357
+ or log a Remedy Ticket via Remedy Requester application using the 
+ Category: Applications-HealtheVet-VistA and Type: OHRS
+  
+  
+ Routine Information:
+ ==================== 
+ No routines included
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,SHAWNTA                 Date Entered  : JAN 27, 2013
+Completed By: KAUR,RENE                     Date Completed: FEB 19, 2013
+Released By : MOODY,SUSAN                   Date Released : FEB 25, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

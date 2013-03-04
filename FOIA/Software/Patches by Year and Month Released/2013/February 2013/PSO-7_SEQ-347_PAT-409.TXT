@@ -1,0 +1,140 @@
+$TXT Created by NIXON,TONY at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 07/05/12 at 12:19
+=============================================================================
+Run Date: FEB 27, 2013                     Designation: PSO*7*409
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #347                      Status: Released
+                  Compliance Date: MAR 30, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*403   <<= must be installed BEFORE `PSO*7*409'
+
+Subject: INCORRECT MESSAGE DISPLAYS IN THE OPTION VIEW PRESCRIPTIONS.
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch resolves the following issue:
+  
+ An incorrect message displays in the option VIEW PRESCRIPTIONS [PSO VIEW].
+ This occurs after the user processes telephone refills and uses the caret
+ to jump to another option for viewing prescriptions. The message displayed
+ is not for the prescription being reviewed.
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ HD0000000712917 - Incorrect data displays in Vista option "VIEW PRESCRIPTION"
+ [PSO VIEW]
+  
+  
+  
+ Associated NSRs:
+ ================
+ N/A
+    
+    
+ Participating Test Sites:
+ =========================
+ William S. Middleton Memorial Veterans Hospital - Madison WI
+ Providence VA Medical Center - Providence RI
+ Michael E DeBakey VA Medical Center - Houston TX 
+   
+  
+ Remedy Overview:
+ ================
+ HD0000000712917 - Incorrect data displays in Vista option "VIEW PRESCRIPTION"
+ [PSO VIEW]
+  
+  
+ Problem:
+ --------
+ The option VIEW PRESCRIPTIONS [PSO VIEW] utilizes List Manager to display
+ information for the prescription entered by the user. This utility uses a
+ message box to display customized text to the screen. The text is set into
+ the variable VALMSG. 
+  
+ After processing telephone refills, and using the caret to jump to the VIEW
+ PRESCRIPTIONS [PSO VIEW] option, the message box displays information for
+ a prescription that was processed for telephone refills. The text
+ displayed is not for the prescription entered by the user for review.
+  
+  
+ Technical Explanation
+ ---------------------
+ If a telephone refill is placed into suspense, the suspense functionality
+ sets VALMSG with text stating that the prescription has been placed into
+ suspense. The variable remains set after processing, and contains suspense
+ text for the last prescription processed.
+  
+ The user jumps to VIEW PRESCRIPTIONS [PSO VIEW], to review information on
+ prescriptions that may or may not be telephone refills.  Because the
+ VALMSG variable is still set, the text in the message box is not for the
+ prescription displayed on the screen.
+  
+ Resolution:
+ ----------- 
+ Modify routine PSORXL1 so that the stray variable, VALMSG is deleted if
+ the prescription being processed is a telephone refill.
+  
+  
+   =================== INSTALLATION INSTRUCTIONS =====================
+     
+   Installation will take less than 2 minutes.  Users may be on the system.
+     
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+   2. From the Kernel Installation & Distribution System menu, select
+          the Installation menu.
+     
+   3. From this menu, you may select to use the following options
+          (when prompted for INSTALL NAME, enter PSO*7.0*409)
+     
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+     
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch
+          is installed. It compares all components of the patch (routines,
+          DDs, templates, etc.).
+     
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+     
+    4. Use the Install Package(s) option and select the package PSO*7.0*409
+     
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.
+     
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORXL1
+    Before: B53111526   After: B54568133  **36,46,148,260,274,287,289,
+                                           358,251,385,403,409**
+ 
+Routine list of preceding patches: 403
+
+=============================================================================
+User Information:
+Entered By  : NIXON,ANTOINE                 Date Entered  : JUN 15, 2012
+Completed By: HEFFERNAN,COREY               Date Completed: FEB 11, 2013
+Released By : BLOCH,JACULYN                 Date Released : FEB 27, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
