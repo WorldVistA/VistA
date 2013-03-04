@@ -29,4 +29,4 @@ yum update -y
 
 # Install baseline packages
 # TODO: detect virtualbox and install additions?
-yum install -y git xinetd perl wget ssh expect
+yum install -y git xinetd perl wget openssh-server expect
