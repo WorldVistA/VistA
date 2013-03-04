@@ -110,9 +110,21 @@ class KIDSPatchInfo(object):
     """ Associated Files """
     self.associatedInfoFiles = None
     self.associatedGlobalFiles = None
+
+  """ Utility method to add associated info file to the list """
+  def addToAssociatedInfoList(self, infoFile):
+    if not self.associatedInfoFiles:
+      self.associatedInfoFiles = []
+    self.associatedInfoFiles.append(infoFile)
+  """ Utility method to add associated global file to the list """
+  def addToAssociatedGlobalList(self, globalFile):
+    if not self.associatedGlobalFiles:
+      self.associatedGlobalFiles = []
+    self.associatedGlobalFiles.append(globalFile)
+
   def __str__(self):
     return ("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,"
-            " %s, %s, %s, %s, %s\n%s, \n%s\n%s, %s, %s" %
+        " %s, %s, %s, %s, %s\n%s, \ninfo:%s\nglobal:%s, %s, %s" %
              (self.package, self.namespace, self.version,
               self.patchNo, self.seqNo, self.installName,
               self.kidsFilePath, self.kidsSha1, self.kidsSha1Path,

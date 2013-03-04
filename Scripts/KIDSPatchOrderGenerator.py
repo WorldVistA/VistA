@@ -378,7 +378,10 @@ class KIDSPatchOrderGenerator(object):
   def __handlePatchAssociatedFiles__(self):
     """ handle the info files first """
     """ first by name assiciation """
-    for patchInfo in self._patchInfoDict.itervalues():
+    patchInfoList = self._patchInfoDict.values()
+    #handle the associated files for missingKIDSBuild info
+    patchInfoList.extend(self._missKidsBuildDict.values())
+    for patchInfo in patchInfoList:
       infoPath = patchInfo.kidsInfoPath
       if infoPath:
         infoName = os.path.basename(infoPath)
@@ -386,9 +389,7 @@ class KIDSPatchOrderGenerator(object):
         for infoFile in self._invalidInfoFileSet:
           infoFileName = os.path.basename(infoFile)
           if infoFileName.startswith(infoName[:infoName.rfind('.')]):
-            if not patchInfo.associatedInfoFiles:
-              patchInfo.associatedInfoFiles = []
-            patchInfo.associatedInfoFiles.append(infoFile)
+            patchInfo.addToAssociatedInfoList(infoFile)
             associateSet.add(infoFile)
             continue
         self._invalidInfoFileSet.difference_update(associateSet)
@@ -396,11 +397,15 @@ class KIDSPatchOrderGenerator(object):
     associateSet = set()
     for infoFile in self._invalidInfoFileSet:
       installName = getAssociatedInstallName(infoFile)
-      if installName and installName in self._patchInfoDict:
-        patchInfo = self._patchInfoDict[installName]
-        if not patchInfo.associatedInfoFiles:
-          patchInfo.associatedInfoFiles = []
-        patchInfo.associatedInfoFiles.append(infoFile)
+      if installName:
+        if installName in self._patchInfoDict:
+          patchInfo = self._patchInfoDict[installName]
+        #handle the associated files for missingKIDSBuild info
+        elif installName in self._missKidsBuildDict:
+          patchInfo = self._missKidsBuildDict[installName]
+        else:
+          continue
+        patchInfo.addToAssociatedInfoList(infoFile)
         associateSet.add(infoFile)
     self._invalidInfoFileSet.difference_update(associateSet)
 
@@ -410,9 +415,7 @@ class KIDSPatchOrderGenerator(object):
       installName = getAssociatedInstallName(globalFile)
       if installName and installName in self._patchInfoDict:
         patchInfo = self._patchInfoDict[installName]
-        if not patchInfo.associatedGlobalFiles:
-          patchInfo.associatedGlobalFiles = []
-        patchInfo.associatedGlobalFiles.append(globalFile)
+        patchInfo.addToAssociatedGlobalList(globalFile)
         associateSet.add(globalFile)
     self._globalFilesSet.difference_update(associateSet)
 

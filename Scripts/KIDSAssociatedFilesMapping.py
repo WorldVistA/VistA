@@ -22,6 +22,7 @@ KIDS_SINGLE_FILE_ASSOCIATION_DICT = {
   "CPRS GUI VERSION 28 NOTES.txt" : "MultiBuilds",
   "MAG3_0P121.ReadMe.txt" : "MAG*3.0*121",
   "MOCHA_1.txt" : "PSJ*5.0*261",
+  "PREN Release.txt" : "PREN*1.0*1",
   "Release of Patient Assessment Documentation Pkg_NUPA_1.txt" : "NUPA 1.0",
   "Release of VA NATIONAL HEALTH INFO NETWORK NHIN_1.txt" : "NHIN 1.0",
   "Update to NUPA_1.txt" : "NUPA 1.0",
