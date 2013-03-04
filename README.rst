@@ -30,6 +30,8 @@ The source tree is organized as follows:
 
 * ``CMake/``: CMake build system modules.
 
+* ``Documentation/``: OSEHRA VistA documentation pages.
+
 * ``Scripts/``: Contains scripts to process VistA patch files, populate
   the ``Packages/`` directory layout, analyze dependencies, and compute
   an order for patch installation.
