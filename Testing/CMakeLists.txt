@@ -177,31 +177,16 @@ if(CCONTROL_EXECUTABLE)
   endif()
 endif()
 
-# Glob through the Packages directory for the routines to test.
-find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-FOIA DOC "Path to the folder that contains the routines and globals from OSEHRA")
-file(GLOB PACKAGES ${TEST_VISTA_FRESH_M_DIR}/Packages/*)
-foreach(package ${PACKAGES})
-  get_filename_component(package_name ${package} NAME)
-  string(REGEX MATCH ^[.] Packageflag ${package_name})
-  string(REPLACE  " " "_" package_file_name "${package_name}")
-
-  if(NOT Packageflag)
-    file(GLOB routines "${package}/Routines/*.m")
-    set(send_commands "")
-
-    foreach(routine ${routines})
-      get_filename_component(routine_name ${routine} NAME_WE)
-      set(send_commands "${send_commands},${routine_name}")
-    endforeach()
-    string(REGEX REPLACE  "^," "" send_commands "${send_commands}")
-    list(LENGTH routines NumberRoutines)
-    string(REPLACE  " " "_" package_file_name "${package_name}")
-
-    #Configures the CMAKE testing
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake @ONLY)
-    #Creates the command that will be called for the Test
-    add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake)
-  endif()
+include(CommonFunctions)
+FindPackages(${VISTA_SOURCE_DIR})
+list(APPEND PACKAGES "Uncategorized")
+foreach(package_file_name ${PACKAGES})
+#Configures the CMAKE testing
+  set(LOGFILENAME "@TEST_VISTA_OUTPUT_DIR@/@package_file_name@Test.log")
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake @ONLY)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.py.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.py @ONLY)
+  #Creates the command that will be called for the Test
+  add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake)
 endforeach()
 
 #-----------------------------------------------------------------------------#
@@ -209,8 +194,10 @@ endforeach()
 #-----------------------------------------------------------------------------#
 
 IF(TEST_VISTA_FRESH)
-
   set(freshinfo "")
+  find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-FOIA DOC "Path to the folder that contains the routines and globals from OSEHRA")
+  list(APPEND freshinfo TEST_VISTA_FRESH_M_DIR)
+
   if(CCONTROL_EXECUTABLE)
     set(TEST_VISTA_SETUP_VOLUME_SET "VISTA" CACHE STRING "Volume Set for new Vista Instance")
     set(TEST_VISTA_FRESH_CACHE_DAT_VISTA "" CACHE FILEPATH "Path to the CACHE.dat file with the imported VistA")
@@ -323,6 +310,7 @@ if(${CMAKE_VERSION} VERSION_GREATER 2.8.8)
 
   option(TEST_VISTA_COVERAGE "Create a coverage map of VistA based off the testing" OFF)
   if(TEST_VISTA_COVERAGE)
+    find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-FOIA DOC "Path to the folder that contains the routines and globals from OSEHRA")
     message(WARNING "Selecting the coverage option may cause the tests to run slower as there are more tasks to perform during a given test.
     This will also create new text files during the run.")
 
@@ -345,6 +333,7 @@ if(TEST_VISTA_MUNIT AND CLEAN_DATABASE AND NOT TEST_VISTA_SETUP_MUNIT)
   message(WARNING "Current configuration will cause Dashboard submissions to fail all MUnit Tests. Either include TEST_VISTA_SETUP_MUNIT or remove CLEAN_DATABASE")
 endif()
 if(TEST_VISTA_MUNIT)
+  find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-FOIA DOC "Path to the folder that contains the routines and globals from OSEHRA")
   if(GTM_DIST)
     set(TEST_VISTA_GTM_ROUTINE_DIR "" CACHE PATH "Location to which the MUnit test routines will be imported")
   endif()

@@ -20,17 +20,16 @@ sys.path = [os.path.dirname(__file__)+'/../../Python/vista'] + sys.path
 
 print ('sys.argv is %s' % sys.argv)
 if len(sys.argv) <= 1:
-  print ('Need the two arguments arguments:packagename,packages_csv_file ')
+  print ('Need the two arguments:packagename,packages_csv_file ')
   sys.exit()
 
 from ParseCSVforPackagePrefixes import FindPackagePrefixes
-
-ExpectedOutput =   ["'ABC", "'BCD", "'DEF", 'ABCD', "'CDEH", 'DEFG']
+ExpectedOutput = ["'%", "'ABC", "'BCD", "'DEF", 'ABCD', "'CDEH", 'DEFG']
 TestOutput = FindPackagePrefixes(sys.argv[1],sys.argv[2])
 
 if ExpectedOutput == TestOutput:
   print "Output of test matches the expected output"
   sys.exit(0)
 else:
-  print "Error:  Expected output was: " + ExpectedOutput + ".  Test output was: " + TestOutput
+  print "Error:  Expected output was: " + str(ExpectedOutput) + ".  Test output was: " + str(TestOutput)
   sys.exit(1)
