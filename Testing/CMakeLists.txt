@@ -211,10 +211,16 @@ endforeach()
 #-----------------------------------------------------------------------------#
 
 IF(TEST_VISTA_FRESH)
+
+  set(freshinfo "")
   if(CCONTROL_EXECUTABLE)
     set(TEST_VISTA_SETUP_VOLUME_SET "VISTA" CACHE STRING "Volume Set for new Vista Instance")
     set(TEST_VISTA_FRESH_CACHE_DAT_VISTA "" CACHE FILEPATH "Path to the CACHE.dat file with the imported VistA")
     set(TEST_VISTA_FRESH_CACHE_DAT_EMPTY "" CACHE FILEPATH "Path to an empty ******.DAT file for replacement")
+
+    list(APPEND freshinfo TEST_VISTA_SETUP_VOLUME_SET)
+    list(APPEND freshinfo TEST_VISTA_FRESH_CACHE_DAT_VISTA)
+    list(APPEND freshinfo TEST_VISTA_FRESH_CACHE_DAT_EMPTY)
 
     if(TEST_VISTA_FRESH_CACHE_DAT_VISTA)
       get_filename_component(filename ${TEST_VISTA_FRESH_CACHE_DAT_VISTA} NAME)
@@ -238,6 +244,11 @@ IF(TEST_VISTA_FRESH)
       set(TEST_VISTA_FRESH_GTM_ROUTINE_DIR ${TEST_VISTA_GTM_ROUTINE_DIR})
     endif()
     set(TEST_VISTA_FRESH_GTM_GLOBALS_DAT "" CACHE FILEPATH " Path to the GT.M database.dat")
+
+    list(APPEND freshinfo TEST_VISTA_SETUP_UCI_NAME)
+    list(APPEND freshinfo TEST_VISTA_SETUP_VOLUME_SET)
+    list(APPEND freshinfo TEST_VISTA_FRESH_GTM_ROUTINE_DIR)
+    list(APPEND freshinfo TEST_VISTA_FRESH_GTM_GLOBALS_DAT)
   endif()
 
   set(TEST_VISTA_FRESH_GLOBALS_IMPORT_TIMEOUT 3600 CACHE STRING "Timeout in seconds for importing globals")
@@ -245,6 +256,12 @@ IF(TEST_VISTA_FRESH)
   set(TEST_VISTA_SETUP_PRIMARY_HFS_DIRECTORY "@" CACHE PATH "Absolute path to the system temp directory.  The default of '@' will cause the system to use the working directory of the process as the temp directory.  This path has a limit of 50 characters.  Avoid Windows paths with a '~' ")
 
   set(RoutineImportFile "${VISTA_BINARY_DIR}/routines.ro")
+
+  foreach(fvariable ${freshinfo})
+    if(NOT ${fvariable})
+      message(SEND_ERROR "The value for ${fvariable} needs to be set for TEST_VISTA_FRESH to be run successfully.")
+    endif(NOT ${fvariable})
+  endforeach(fvariable ${freshinfo})
 
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/ImportRG.cmake.in ${VISTA_BINARY_DIR}/ImportRG.cmake @ONLY)
   set(logfile "${VISTA_BINARY_DIR}/Testing/Log/RoutineImport.log")
