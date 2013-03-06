@@ -1,4 +1,4 @@
-.. figure:: http://code.osehra.org/content/named/SHA1/c0286b38-OSEHRA_LogoText.png
+﻿.. figure:: http://code.osehra.org/content/named/SHA1/c0286b38-OSEHRA_LogoText.png
    :align: center
 
 Instructions for Establishing and Testing the OSEHRA Code Base

@@ -1,4 +1,4 @@
-Retrieving the code from Git and Importing into GT.M
+﻿Retrieving the code from Git and Importing into GT.M
 =====================================================
 
 .. role:: usertype

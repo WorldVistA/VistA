@@ -1,4 +1,4 @@
-Viewing the Results
+﻿Viewing the Results
 ===================
 
 .. role:: usertype

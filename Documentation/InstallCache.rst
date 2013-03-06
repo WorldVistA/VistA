@@ -1,4 +1,4 @@
-Installing Cache
+﻿Installing Cache
 =================
 
 .. role:: usertype

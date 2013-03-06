@@ -1,4 +1,4 @@
-Installing GT.M
+﻿Installing GT.M
 ===============
 
 .. role:: usertype

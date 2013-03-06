@@ -1,4 +1,4 @@
-Obtaining and Installing Auxiliary Programs
+﻿Obtaining and Installing Auxiliary Programs
 ===========================================
 
 .. role:: usertype

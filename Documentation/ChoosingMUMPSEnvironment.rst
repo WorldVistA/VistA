@@ -1,4 +1,4 @@
-Choosing the MUMPS Environment
+﻿Choosing the MUMPS Environment
 ===================================
 
 .. role:: usertype
