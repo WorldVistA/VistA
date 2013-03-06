@@ -1,10 +1,10 @@
-﻿Retrieving the code from Git and Importing into Cache
+﻿Retrieving the code from Git and Importing into Caché
 ==========================================================
 
 .. role:: usertype
     :class: usertype
 
-Starting from an empty instance of Cache, we need to retrieve the routines and globals that will populate the VistA environment from the OSEHRA Code Repository at code.osehra.org. Begin by bringing up a Git Bash terminal from the installed Git system.
+Starting from an empty instance of Caché, we need to retrieve the routines and globals that will populate the VistA environment from the OSEHRA Code Repository at code.osehra.org. Begin by bringing up a Git Bash terminal from the installed Git system.
 
 The git interface is a command-prompt interface with much of the functionality that should be familiar to Linux users; commands like \"ls\" and \"cd\" perform as they would in Cygwin shell or a Linux terminal. Git specific actions are always preceded by the \"git\" command on the input line. The command \"git --help\" displays a list of the most common commands.
 
@@ -28,7 +28,7 @@ to make a local clone of the remote repository.
 Packing Routines and Globals
 ----------------------------
 
-Within the Git repository, you can see the folders that contain all that is necessary to prepare the routines and globals to be imported into the Cache instance. The Packages folder contains all of the VistA FOIA software divided by package name.  Inside each package directory lies a Routines directory and a Globals directory. The latter contains globals divided up by the FileMan files they contain. The Scripts folder contains OSEHRA python scripts and helper routines. The python scripts are used to pack and unpack the routines.ro file, while the routines are used to import and export the globals from the MUMPS environment.
+Within the Git repository, you can see the folders that contain all that is necessary to prepare the routines and globals to be imported into the Caché instance. The Packages folder contains all of the VistA FOIA software divided by package name.  Inside each package directory lies a Routines directory and a Globals directory. The latter contains globals divided up by the FileMan files they contain. The Scripts folder contains OSEHRA python scripts and helper routines. The python scripts are used to pack and unpack the routines.ro file, while the routines are used to import and export the globals from the MUMPS environment.
 
 Execute the following two commands to prepare the data for import .
 
@@ -43,10 +43,10 @@ Execute the following two commands to prepare the data for import .
 
 The first command lists all the files that have the extension \'.m\' and passes those names to the python script PackRO.py to pack them into file routine.ro in routine transfer format. The second command lists all files that have the extension \'.zwr\' and writes those into globals.lst. This list will be read by the OSEHRA ZGI routine during the import step.
 
-Import routines and globals into Cache
+Import routines and globals into Caché
 --------------------------------------
 
-The next set of steps is to import the routines and globals into the Cache instance and then configure the instance to the point where testing can be performed. All of these steps are performed from the Cache terminal. Right click on the Cache icon and select terminal from the pop-up as shown to bring up a Cache terminal.
+The next set of steps is to import the routines and globals into the Caché instance and then configure the instance to the point where testing can be performed. All of these steps are performed from the Caché terminal. Right click on the Caché icon and select terminal from the pop-up as shown to bring up a Caché terminal.
 
 
 The first step is to change from the default \"USER\" namespace to the namespace that you created earlier. Entering \"D ^%CD\" will bring up a prompt to accept the name of the new namespace that you want to enter. For demonstration purposes, we will assume that the namespace is called \"VISTA\".
@@ -63,7 +63,7 @@ The first step is to change from the default \"USER\" namespace to the namespace
 
 
 The %RI routine is a MUMPS routine that is used to import other routines from a specific file type. When prompted for a device, enter the path to the routines.ro file and press <Enter> to accept the default parameters, read-only mode. The terminal will then display a warning saying
-\"This file may not be a %RO output file.\" This is an expected warning due to how we are creating the routines.ro file. At the prompt, enter \"Yes\" to continue and then enter then <Enter> to accept the 0th option (Cache) for the routines write type. To fully import the routines, enter
+\"This file may not be a %RO output file.\" This is an expected warning due to how we are creating the routines.ro file. At the prompt, enter \"Yes\" to continue and then enter then <Enter> to accept the 0th option (Caché) for the routines write type. To fully import the routines, enter
 \"All Routines\" at the Routine Input Option, and answer \"YES\" to \"replace similarly named routines.\" All other options may be answered with <Enter> to accept the default value.
 
 .. parsed-literal::
@@ -150,7 +150,7 @@ Configure the VistA Environment
 -------------------------------
 
 At this point, all routines and globals are imported and the environment is ready to be configured.  Enter \"D ^ZTMGRSET\"
-to initialize the current instance for use. Choose the default, Cache environment. Some routines are loaded and a series of prompts are shown on the screen.  The NAME OF MANAGER'S NAMESPACE, PRODUCTION (SIGN-ON) NAMESPACE, and NAME OF THIS CONFIGURATION prompts should be answered with the name of the namespace that was created earlier (VISTA in this configuration), . At the fourth prompt, \"Want to rename the FileMan routines,\" enter \"Y\" to rename the routines.
+to initialize the current instance for use. Choose the default, Caché environment. Some routines are loaded and a series of prompts are shown on the screen.  The NAME OF MANAGER'S NAMESPACE, PRODUCTION (SIGN-ON) NAMESPACE, and NAME OF THIS CONFIGURATION prompts should be answered with the name of the namespace that was created earlier (VISTA in this configuration), . At the fourth prompt, \"Want to rename the FileMan routines,\" enter \"Y\" to rename the routines.
 
 .. parsed-literal::
 
@@ -245,7 +245,7 @@ to initialize the current instance for use. Choose the default, Cache environmen
   VISTA>
 
 
-The final step needed for the testing is to alter a device within the File Manager. We need to change the $I value of the TELNET device to let the Cache terminal function as a display for the XINDEX routine.
+The final step needed for the testing is to alter a device within the File Manager. We need to change the $I value of the TELNET device to let the Caché terminal function as a display for the XINDEX routine.
 
 The first step is to identify yourself as a programmer and gain permissions to change the files attributes.  Enter \"VISTA> S DUZ=1 D Q^DI\"
 

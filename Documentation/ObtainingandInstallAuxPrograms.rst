@@ -6,7 +6,7 @@
 
 Testing the code requires several auxiliary programs to be available in the testing environment.
 The first component is a test driver, CMake, that configures the testing system, manages the generation of automatic tests from a template, executes the tests, and reports test results to the OSEHRA Software Quality Dashboard.
-In addition, some of the tests require scripting of user responses. For GT.M installations, the Linux utility Expect provides the scripting interface, while for Cache on Windows, this support is provided by the native scripting ability of the Cache Terminal.
+In addition, some of the tests require scripting of user responses. For GT.M installations, the Linux utility Expect provides the scripting interface, while for Caché on Windows, this support is provided by the native scripting ability of the Caché Terminal.
 Instructions on how to obtain and install these programs follow.
 
 CMake testing utility
@@ -29,11 +29,11 @@ Optional Download:  Sikuli is a cross platform utility for test graphical user i
 Scripting interfaces to OSEHRA codebase
 ---------------------------------------
 
-The testing currently supports three types of MUMPS environments: Cache on Windows and Linux and GT.M on Linux.  Both programs use an interface to script the interaction with XINDEX.  Previously, we used two different programs(Expect, Cache Scripting) to connect to a system depending on the operating system.  Now we have created a python module, which is included in the VistA repository, that governs the connection to all three types of instances.  This simplifies the testing preparation, as only one python file can be used to test the various platforms of VistA.
+The testing currently supports three types of MUMPS environments: Caché on Windows and Linux and GT.M on Linux.  Both programs use an interface to script the interaction with XINDEX.  Previously, we used two different programs(Expect, Caché Scripting) to connect to a system depending on the operating system.  Now we have created a python module, which is included in the VistA repository, that governs the connection to all three types of instances.  This simplifies the testing preparation, as only one python file can be used to test the various platforms of VistA.
 
 The OSEHRAHelper.py_ uses two Python libraries to connect to the various instances:
 
-* TELNET_ :  Used to connect to a Cache on Windows instance. The TELNET library is one of the standard libraries.
+* TELNET_ :  Used to connect to a Caché on Windows instance. The TELNET library is one of the standard libraries.
 
 * PExpect_ :  Use to connect to both of the Linux variants.  This is not a library that is included in the standard Python installation, but no downloading  is necessary.  We have already included the files in the VistA Repository.
 

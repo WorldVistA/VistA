@@ -40,7 +40,7 @@ later date, follow the instructions at the bottom of this page.
 The variables found after the first configure are very straight forward.
 
      =====================   ======================================  ======================================
-      Variable Name               Value for Testing in Cache              Value for Testing in GT.M
+      Variable Name               Value for Testing in Caché              Value for Testing in GT.M
      =====================   ======================================  ======================================
        BUILD_DELPHI            \"On\" to build CPRS from Source       \"On\" to build CPRS from Source
        BUILD_TESTING                            ON                                   ON
@@ -65,17 +65,17 @@ The following table has a list of some of the important variables to be set prio
 
 
      ========================   ===================================  ==================================
-         Variable Name              Value for Testing in Cache            Value for Testing in GT.M
+         Variable Name              Value for Testing in Caché            Value for Testing in GT.M
      ========================   ===================================  ==================================
       GIT_EXECUTABLE              Path to Git Executable                Path to Git Executable
       PYTHON_EXECUTABLE           Path to Python Executable             Path to Python Executable
       CCONTROL_EXECUTABLE         Path to CControl Executable                      N/A
       CTERM_EXECUTABLE            Path to CTerm Executable                         N/A
       VISTA_CACHE_NAMESPACE       Namespace of VistA routines                      N/A
-      VISTA_CACHE_INSTANCE        Cache Instance Name                              N/A
-      VISTA_CACHE_USERNAME        Login Username for Cache                         N/A
+      VISTA_CACHE_INSTANCE        Caché Instance Name                              N/A
+      VISTA_CACHE_USERNAME        Login Username for Caché                         N/A
                                   (if necessary)
-      VISTA_CACHE_PASSWORD        Login Password for Cache                         N/A
+      VISTA_CACHE_PASSWORD        Login Password for Caché                         N/A
                                   (if neccesary)
       GTM_DIST                             N/A                        Path to GTM distribution Dir
      ========================   ===================================  ==================================
@@ -121,7 +121,7 @@ the line position of a returned error or warning in the source file during the r
 The these variables are set in the following manner:
 
      =======================================   ===================================  ======================================
-      Variable Name                                 Value for Testing in Cache          Value for Testing in GT.M
+      Variable Name                                 Value for Testing in Caché          Value for Testing in GT.M
      =======================================   ===================================  ======================================
      TEST_VISTA_FRESH_M_DIR                      Path to OSEHRA M repository           Path to OSEHRA M repository
      TEST_VISTA_XINDEX_WARNINGS_AS_FAILURES               ON/OFF                                  ON/OFF
@@ -147,14 +147,14 @@ Roll-and-Scroll (RAS) tests.
    :alt:  Highlighting the TEST_VISTA_COVERAGE option.
 
 While there are no more variables to set after selecting the TEST_VISTA_COVERAGE option, it does display warnings during the configuration.  These messages warn that the tests will take longer
-and will create other files in addition to the standard log files.  There is a warning that is specific to Cache environments, it warns that an Advanced Memory variable may need to be changed
+and will create other files in addition to the standard log files.  There is a warning that is specific to Caché environments, it warns that an Advanced Memory variable may need to be changed
 have the monitor be used.  It give the variable to change and how to test it.  The GT.M users will only see the timing warning.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/f12fcd48-cmakeGUICoverageWarnings.png
    :align: center
-   :alt:  After selecting the TEST_VISTA_COVERAGE options, warnings are displayed in the output with the Cache specific warning.
+   :alt:  After selecting the TEST_VISTA_COVERAGE options, warnings are displayed in the output with the Caché specific warning.
 
-This option will create files in the binary directory with the extension of .mcov (GT.M M Coverage) or .cmcov (Cache M coverage).
+This option will create files in the binary directory with the extension of .mcov (GT.M M Coverage) or .cmcov (Caché M coverage).
 
 
 
@@ -173,16 +173,16 @@ This information is required to be there for the functional tests to complete su
    :alt:  The CMake-GUI with the TEST_VISTA_FRESH option highlighted.
 
 
-To utilize this option on Cache, the TEST_VISTA_FRESH checkbox must be checked to tell CMake to configure the correct files. You will also need to create a new cache.dat using the steps
-from earlier and set the TEST_VISTA_FRESH_CACHE_DAT_EMPTY to point to the location of that newly created cache.dat.  It will then shut down the Cache instance,
-copy the empty database in place of the old one, restart Cache, then collect and import the OSEHRA routines and globals.
+To utilize this option on Caché, the TEST_VISTA_FRESH checkbox must be checked to tell CMake to configure the correct files. You will also need to create a new cache.dat using the steps
+from earlier and set the TEST_VISTA_FRESH_CACHE_DAT_EMPTY to point to the location of that newly created cache.dat.  It will then shut down the Caché instance,
+copy the empty database in place of the old one, restart Caché, then collect and import the OSEHRA routines and globals.
 
 
 .. figure:: http://code.osehra.org/content/named/SHA1/40410f24-cmakeGUIFreshWinConfigure.png
    :align: center
-   :alt: The CMake-GUI on Windows/Cache after configuration.
+   :alt: The CMake-GUI on Windows/Caché after configuration.
 
-For GT.M, the overall process is the same, but has some internal actions that make it GT.M specific.  Instead of a the Cache variables, we ask for the TEST_VISTA_FRESH_GTM_GLOBALS_DAT and
+For GT.M, the overall process is the same, but has some internal actions that make it GT.M specific.  Instead of a the Caché variables, we ask for the TEST_VISTA_FRESH_GTM_GLOBALS_DAT and
 the TEST_VISTA_FRESH_GTM_ROUTINE_DIR.  The TEST_VISTA_FRESH_GTM_GLOBALS_DAT is the path to the database.dat that contains the VistA globals.  This file will be deleted and recreated
 automatically via the 'MUPIP' command.  The  TEST_VISTA_FRESH_GTM_ROUTINE_DIR is the path to the folder that contains the VistA routines.  This folder will be removed and recreated so that all routines within the GT.M instance will be from the latest import.  The other GT.M specific variable is the TEST_VISTA_SETUP_UCI_NAME which is used during the configuring of the VistA instance.
 
@@ -194,7 +194,7 @@ automatically via the 'MUPIP' command.  The  TEST_VISTA_FRESH_GTM_ROUTINE_DIR is
 If you plan to use these options, there are more variables that need to be set:
 
      ========================================   ==========================================   =======================================
-         Variable Name                             Value for Testing in Cache                    Value for Testing in GT.M
+         Variable Name                             Value for Testing in Caché                    Value for Testing in GT.M
      ========================================   ==========================================   =======================================
       TEST_VISTA_SETUP_PRIMARY_HFS_DIRECTORY       Path to temporary directory                 Path to temporary directory
                                                    (@ will use process directory)              (@ will use process directory)
@@ -227,7 +227,7 @@ When running the CMake GUI, the option to use the CPRS Functional Testing is cal
     :alt: Showing the TEST_VISTA_FUNCTIONAL_SIK option in the CMake-GUI
 
 After Pressing configure you can see some new variables come up on Windows. Since the CPRS executable can only be run within a Windows environment, this option will do nothing on a Linux/GTM
-or Linux/Cache environment.
+or Linux/Caché environment.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/231d5fdd-cmakeGUIFunctionalSIKConfigure.png
     :align: center
@@ -237,7 +237,7 @@ or Linux/Cache environment.
 Those variables ask for path to the two GUIs that were either downloaded from the above line or already on the system.
 
      =======================================   ========================================
-      Variable Name                              Value for Testing in Windows/Cache
+      Variable Name                              Value for Testing in Windows/Caché
      =======================================   ========================================
       CPRS_EXECUTABLE                           Path to the CPRSChart.exe
       VITALS_MANAGER_EXECUTABLE                 Path to the VitalsManager.exe
