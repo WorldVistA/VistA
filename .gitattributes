@@ -6,12 +6,15 @@
 
 # No whitespace or size checks in third-party content
 *.csv           -whitespace
+*.txt           -whitespace
 *.GBLs          -whitespace  hooks.MaxObjectKiB=0
 *.GBL           -whitespace  hooks.MaxObjectKiB=0
 *.KIDs          -whitespace  hooks.MaxObjectKiB=0
 *.KID           -whitespace  hooks.MaxObjectKiB=0
-*.txt           -whitespace  hooks.MaxObjectKiB=0
-*.TXT           -whitespace  hooks.MaxObjectKiB=0
 *.TXTs          -whitespace  hooks.MaxObjectKiB=0
+*.TXT           -whitespace  hooks.MaxObjectKiB=0
+
+# Restore checks in some files otherwise disabled above.
+CMakeLists.txt   whitespace
 
 /Scripts/GitSetup export-ignore
