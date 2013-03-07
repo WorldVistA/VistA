@@ -1,28 +1,28 @@
-﻿Installing Cache
+﻿Installing Caché
 =================
 
 .. role:: usertype
     :class: usertype
 
-The following instructions were adapted from Nancy Anthracite\'s document entitled InstallingVistAWithSingleUserVersionCache5.2, which was created to guide a user through installing InterSystems Cache onto a Windows operating system. The instructions were using an older version of Cache; this uses the most recent trial version and shows the most recent Management Portal interface.
+The following instructions were adapted from Nancy Anthracite\'s document entitled InstallingVistAWithSingleUserVersionCache5.2, which was created to guide a user through installing InterSystems Caché onto a Windows operating system. The instructions were using an older version of Caché; this uses the most recent trial version and shows the most recent Management Portal interface.
 
-Trial versions of the Cache installer can be downloaded from http://download.intersystems.com/download/register.csp. This installation guide uses Cache 2011.1. If you already have a Cache installation and are looking to install VistA as an additional database, you do not have to re-install Cache. Please use your existing installation and pick up the instructions at the point where the folder is created within the mgr folder.
+Trial versions of the Caché installer can be downloaded from http://download.intersystems.com/download/register.csp. This installation guide uses Caché 2011.1. If you already have a Caché installation and are looking to install VistA as an additional database, you do not have to re-install Caché. Please use your existing installation and pick up the instructions at the point where the folder is created within the mgr folder.
 
-Download and Install Cache
+Download and Install Caché
 --------------------------
 
-Download the Cache installer from the above link and double click on the downloaded  .exe file. The first window that requires interaction is the Licensing Agreement shown in the figure below. Agree to the license in order to continue in the installation process.
+Download the Caché installer from the above link and double click on the downloaded  .exe file. The first window that requires interaction is the Licensing Agreement shown in the figure below. Agree to the license in order to continue in the installation process.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/df177515-Cache2011License.png
    :align: center
-   :alt:  Cache License Terms
+   :alt:  Caché License Terms
 
-The next window asks to set the directory in which Cache will be installed. Most users will be able to accept the default path. If more than one instance is found on the machine, the next instances will be denoted with a number appended to the end of the instance name.
+The next window asks to set the directory in which Caché will be installed. Most users will be able to accept the default path. If more than one instance is found on the machine, the next instances will be denoted with a number appended to the end of the instance name.
 
 
 .. figure:: http://code.osehra.org/content/named/SHA1/3c138d88-Cache2011InstallPath.png
    :align: center
-   :alt:  Setting the installation path for Cache
+   :alt:  Setting the installation path for Caché
 
 Once the install directory is set, the installer will display a summary of the instance that will be installed in the process.
 There is the option to enter a license if you have one, but this is not a required step for the current testing configuration.
@@ -30,37 +30,37 @@ There is the option to enter a license if you have one, but this is not a requir
 
 .. figure:: http://code.osehra.org/content/named/SHA1/85434e9e-Cache2011InstallSummary.png
    :align: center
-   :alt:  Summary of Cache installation options
+   :alt:  Summary of Caché installation options
 
 After the installation has finished, the completion screen is shown.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/46c175c7-Cache2011InstallComplete.png
    :align: center
-   :alt:  Final window of Cache Installation
+   :alt:  Final window of Caché Installation
 
-The first sign of a correctly installed and running instance of Cache is the Cache Cube in the taskbar, like below.
+The first sign of a correctly installed and running instance of Caché is the Caché Cube in the taskbar, like below.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/d3df0e66-Cache2011Cube.png
    :align: center
-   :alt:  Screenshot of Cache Cube in taskbar.
+   :alt:  Screenshot of Caché Cube in taskbar.
 
-Clicking on the Cube will open a menu that displays the options to interact with the Cache database.
+Clicking on the Cube will open a menu that displays the options to interact with the Caché database.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/31e12788-Cache2011MenuDoc.png
    :align: center
-   :alt:  The main menu that shows when the Cache Cube is clicked.
+   :alt:  The main menu that shows when the Caché Cube is clicked.
 
-The next test to ensure that your Cache instance is working is to open the documentation. This will bring up the documentation home page in your default web browser.
+The next test to ensure that your Caché instance is working is to open the documentation. This will bring up the documentation home page in your default web browser.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/83e31c7b-Cache2011DocMainPage.png
    :align: center
    :alt:  Documentation font page in the web browser Google Chrome.
 
 
-Configuring Cache
+Configuring Caché
 ------------------
 
-Once Cache is installed, it is time to create the proper folders and environment to run the VistA instance within Cache. The first step is to go to the mgr folder of Cache and create a new folder as shown below. This folder will hold the database file cache.dat that will contain the VistA routines and globals.
+Once Caché is installed, it is time to create the proper folders and environment to run the VistA instance within Caché. The first step is to go to the mgr folder of Caché and create a new folder as shown below. This folder will hold the database file cache.dat that will contain the VistA routines and globals.
 
 
 .. figure:: http://code.osehra.org/content/named/SHA1/0f2c2ab6-Cache2011MgrFldr.png
@@ -73,11 +73,11 @@ As an example, the folder has been given the name \"VistA.\" While the choice of
    :align: center
    :alt:  mgr folder post-creation of VistA folder
 
-At this point we are ready to stand up the VistA instance. Right click on the Cache cube and select Management Portal of Cache.
+At this point we are ready to stand up the VistA instance. Right click on the Caché cube and select Management Portal of Caché.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/1f2af02f-Cache2011MenuSysMgt.png
    :align: center
-   :alt:  Management Portal link in Cache
+   :alt:  Management Portal link in Caché
 
 This link will open a Management Portal web page.  Click on System Administration to show administrative options.
 
@@ -85,7 +85,7 @@ This link will open a Management Portal web page.  Click on System Administratio
    :align: center
    :alt:  Main page of the Management Portal
 
-System Administration shows those options that can be used to change the Cache system. Our goal is to use the Configuration function to create and initialize an empty database that can then be filled with the VistA routines and globals. Starting from :alt: , click on Configuration, System Configuration, and Local Databases to arrive at :alt: .
+System Administration shows those options that can be used to change the Caché system. Our goal is to use the Configuration function to create and initialize an empty database that can then be filled with the VistA routines and globals. Starting from :alt: , click on Configuration, System Configuration, and Local Databases to arrive at :alt: .
 
 .. figure:: http://code.osehra.org/content/named/SHA1/f36ea51c-Cache2011SysAdminMenu.png
    :align: center
@@ -97,7 +97,7 @@ Create the database by clicking on the Local Databases tab and then selecting Go
    :align: center
    :alt:  System Configuration menu.
 
-This resulting page contains the list of all of the local databases. All of the selections shown were created automatically during the installation of Cache. Create a new database by clicking on the \"Create New Database\" button. This will bring up a wizard.
+This resulting page contains the list of all of the local databases. All of the selections shown were created automatically during the installation of Caché. Create a new database by clicking on the \"Create New Database\" button. This will bring up a wizard.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/2cc2f9ea-Cache2011CreateDatabase.png
    :align: center
@@ -168,7 +168,7 @@ Verify that the global mapping has been saved to the namespace.
    :align: center
    :alt:  Page displaying the newly mapped globals.
 
-The final step before Cache is ready for the import is to map the routines. From within the Namespaces menu in the Management Portal, click on the Routine Mappings link.
+The final step before Caché is ready for the import is to map the routines. From within the Namespaces menu in the Management Portal, click on the Routine Mappings link.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/d12fc19d-Cache2011RoutineMappingSelect.png
    :align: center
@@ -210,17 +210,17 @@ After the final mapping is set, click OK to be sent back to the Routine Mapping 
    :align: center
    :alt:  Final listing of Routine Mappings and the Save Changes button.
 
-The final step of preparing the Cache installation for testing is to set the instance to allow TELNET service. This is done though the System Administration > Security > Services menu.
+The final step of preparing the Caché installation for testing is to set the instance to allow TELNET service. This is done though the System Administration > Security > Services menu.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/494cd956-Cache2011ServicesMenu.png
    :align: center
    :alt:  Menu path to the Services option.
 
-Click on Go to be brought to the menu which lists all services that are supported by Cache. Near the bottom of the list you will see the \"%Service_Telnet\" listing.
+Click on Go to be brought to the menu which lists all services that are supported by Caché. Near the bottom of the list you will see the \"%Service_Telnet\" listing.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/8af9b9f4-Cache2011TelenetServiceoff.png
    :align: center
-   :alt:  The list of Services available to Cache
+   :alt:  The list of Services available to Caché
 
 Click on the link to bring up the \"Edit Service\" page (:alt: ).
 

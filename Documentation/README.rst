@@ -13,7 +13,7 @@ The instructions comprise of the following sections:
 
 For the following two sections, follow the instructions based upon which type of MUMPS database will be utilized:
 
-Cache:
+Caché:
 
   * InstallCache_
   * ImportCache_

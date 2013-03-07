@@ -22,7 +22,7 @@ to make a local clone of the remote repository.
 Packing Routines and Globals
 ----------------------------
 
-Within the Git repository, you can see the folders that contain all that is necessary to prepare the routines and globals to be imported into the Cache instance. The Packages folder contains all of the VistA FOIA software divided by package name.  Inside each package directory lies a Routines directory and a Globals directory. The latter contains globals divided up by the FileMan files they contain. The Scripts folder contains OSEHRA python scripts and helper routines. The python scripts are used to pack and unpack the routines.ro file, while the routines are used to import and export the globals from the MUMPS environment.
+Within the Git repository, you can see the folders that contain all that is necessary to prepare the routines and globals to be imported into the Caché instance. The Packages folder contains all of the VistA FOIA software divided by package name.  Inside each package directory lies a Routines directory and a Globals directory. The latter contains globals divided up by the FileMan files they contain. The Scripts folder contains OSEHRA python scripts and helper routines. The python scripts are used to pack and unpack the routines.ro file, while the routines are used to import and export the globals from the MUMPS environment.
 
 Execute the following two commands to prepare the data for import.
 
