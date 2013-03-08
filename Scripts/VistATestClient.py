@@ -19,6 +19,7 @@ import sys
 import subprocess
 import re
 import argparse
+from LoggerManager import logger
 
 
 """ Utility class to find out the OS platform """
@@ -125,6 +126,7 @@ class VistATestClientCache(VistATestClient):
   def __init__(self, platform, prompt = None, namespace = None):
     VistATestClient.__init__(self, platform, prompt, namespace)
   def __changeNamesapce__(self):
+    self.waitForPrompt()
     self._connection.send("znspace \"%s\"\r" % self.getNamespace())
   def __signIn__(self, username, password):
     child = self._connection

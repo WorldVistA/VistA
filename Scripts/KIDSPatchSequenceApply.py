@@ -50,6 +50,7 @@ from KIDSPatchOrderGenerator import KIDSPatchOrderGenerator
 from VistAPackageInfoFetcher import VistAPackageInfoFetcher
 from ExternalDownloader import obtainKIDSPatchFileBySha1
 from ConvertToExternalData import generateSha1Sum
+from VistATaskmanUtil import VistATaskmanUtil
 
 
 class KIDSPatchSequenceApply(object):
@@ -107,6 +108,9 @@ class KIDSPatchSequenceApply(object):
     else:
       numOfPatch = int(numOfPatches)
     restartCache = False
+    taskmanUtil = VistATaskmanUtil()
+    """ make sure taskman is running """
+    taskmanUtil.startTaskman(self._testClient)
     for index in range(0,min(totalPatch, numOfPatch)):
       patchInfo = self._outPatchList[index]
       """ double check to see if patch is already installed """
@@ -127,6 +131,7 @@ class KIDSPatchSequenceApply(object):
         self.__reloadPackagePatchHistory__(patchInfo)
         assert self.__isPatchInstalled__(patchInfo)
         restartCache = True
+    taskmanUtil.waitTaskmanToCurrent(self._testClient)
     """ restart Cache if needed """
     if restart and restartCache and self._testClient.isCache():
       self.__restartCache__()

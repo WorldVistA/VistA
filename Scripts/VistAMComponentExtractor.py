@@ -29,6 +29,7 @@ from VistARoutineExport import VistARoutineExport
 from VistARoutineImport import VistARoutineImport
 from VistAGlobalExport import VistAGlobalExport
 from LoggerManager import logger, initConsoleLogging, initFileLogging
+from VistATaskmanUtil import VistATaskmanUtil
 
 """ List of routine names that are excluded from export process """
 ROUTINE_EXTRACT_EXCLUDE_LIST = (
@@ -68,6 +69,7 @@ class VistADataExtractor:
 
   def extractData(self, vistATestClient):
     self.__setupLogging__(vistATestClient)
+    self.__stopTaskman__(vistATestClient)
     self.__extractRoutines__(vistATestClient)
     self.__importZGORoutine__(vistATestClient)
     self.__exportAllGlobals__(vistATestClient)
@@ -88,6 +90,10 @@ class VistADataExtractor:
     initConsoleLogging()
     initFileLogging(os.path.join(self._outputLogDir,
                                  DEFAULT_LOGGING_FILENAME))
+
+  def __stopTaskman__(self, vistATestClient):
+    taskmanUtil = VistATaskmanUtil()
+    taskmanUtil.shutdownAllTasks(vistATestClient)
 
   def __extractRoutines__(self, vistATestClient):
     # do not export ZGO, ZGI and xobw.* routines for now
