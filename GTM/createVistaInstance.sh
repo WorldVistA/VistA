@@ -35,16 +35,16 @@ else
 fi
 
 # Find GT.M:
-# Use LSB path of /usr/lib/fis-gtm we can list the directories
+# Use path of /opt/lsb-gtm we can list the directories
 # if > 1 directory fail
 # Default GT.M install path is /usr/lib/fis-gtm/{gtm_ver}_{gtm_arch}
 # where gtm_arch=(x86 | x86_64) for linux
-# TODO: take GT.M path as the first argument to bypass logic and force GT.M
+# TODO: take GT.M path as the an argument to bypass logic and force GT.M
 #       location
 # list directory contents (1 per line) | count lines | strip leading and
 #                                                      trailing whitespace
 
-gtm_dirs=$(ls -1 /usr/lib/fis-gtm/ | wc -l | sed 's/^[ \t]*//;s/[ \t]*$//')
+gtm_dirs=$(ls -1 /opt/lsb-gtm/ | wc -l | sed 's/^[ \t]*//;s/[ \t]*$//')
 if [ $gtm_dirs -gt 1 ]; then
     echo "More than one version of GT.M installed!"
     echo "Can't determine what version of GT.M to use"
@@ -52,16 +52,21 @@ if [ $gtm_dirs -gt 1 ]; then
 fi
 
 # Only one GT.M version found
-export gtm_dist=/usr/lib/fis-gtm/$(ls -1 /usr/lib/fis-gtm/)
-export gtmver=$(ls -1 /usr/lib/fis-gtm/)
+export gtm_dist=/opt/lsb-gtm/$(ls -1 /opt/lsb-gtm/)
+export gtmver=$(ls -1 /opt/lsb-gtm/)
 
 # TODO: implement arguments to allow multiple instances, script can probably
 #       handle it
-instance="FOIA"
+# $instance must be lowercase - this script depends on it!
+# if $instance must be uppercase that is the exception and the scripts must
+#    uppercase it when necessary
+instance="foia"
 
 # Create $instance User/Group
 # $instance user is a programmer user
 # $instance group is for permissions to other users
+# $instance group is auto created by adduser script
+adduser -c "$instance VistA instance owner" -m -U $instance
 
 
 # Make VistA Directories
@@ -106,7 +111,7 @@ echo "alias backup=\"\$gtm_dist/mupip backup -online \"*\""             >> /opt/
 # $instance is their shell - no access to ZSY
 # need to set users with /var/db/$instance/bin/tied.sh as their shell
 echo "#!/bin/bash"                      >> /opt/$instance/bin/tied.sh
-echo "source /opt/$instance/env"        >> /opt/$instance/bin/tied.sh
+echo "source /opt/$instance/etc/env"    >> /opt/$instance/bin/tied.sh
 echo "export SHELL=/bin/false"          >> /opt/$instance/bin/tied.sh
 echo "export gtm_nocenable=true"        >> /opt/$instance/bin/tied.sh
 echo "exec \$gtm_dist/mumps -run ^ZU"   >> /opt/$instance/bin/tied.sh
@@ -124,7 +129,7 @@ echo "a -n CacheTemp* -r=TEMP"                                                  
 echo "sh -a"                                                                        >> /opt/$instance/etc/db.gde
 
 # Set permissions
-chown -R root:$instance /opt/$instance
+chown -R $instance:$instance /opt/$instance
 chmod -R g+rw /opt/$instance
 
 # create the global directory
