@@ -62,81 +62,88 @@ export gtmver=$(ls -1 /opt/lsb-gtm/)
 #    uppercase it when necessary
 instance="foia"
 
+# TODO: implement argument for basedir
+# $basedir is the base directory for the instance
+# examples of $basedir are: /home/$instance, /opt/$instance, /var/db/$instance
+basedir=/home/$instance
+
 # Create $instance User/Group
 # $instance user is a programmer user
 # $instance group is for permissions to other users
 # $instance group is auto created by adduser script
 adduser -c "$instance VistA instance owner" -m -U $instance
 
-
 # Make VistA Directories
 # TODO: Move to new script?
 # Routines are GT.M version independant
-mkdir -p /opt/$instance/{r,etc,log,tmp,bin}
+mkdir -p $basedir/{r,etc,log,tmp,bin,lib,www}
 # xinetd scripts
-mkdir -p /opt/$instance/etc/xinetd.d
+mkdir -p $basedir/etc/xinetd.d
 # Globals, Objects, Journals, and GT.M version specific Routines are
 # Version Specific
-mkdir -p /opt/$instance/$gtmver/{g,j,o,r}
+mkdir -p $basedir/$gtmver/{g,j,o,r}
+
+# Symlink libs in
+ln -s $gtm_dist $basedir/lib/gtm
 
 # Create profile for instance
 # Required GT.M variables
-echo "export gtm_dist=$gtm_dist"                                 >> /opt/$instance/etc/env
-echo "export gtm_log=/opt/$instance/log"                        >> /opt/$instance/etc/env
-echo "export gtm_tmp=/opt/$instance/tmp"                        >> /opt/$instance/etc/env
-echo "export gtm_prompt=\"${instance^^}>\""                     >> /opt/$instance/etc/env
-echo "export gtmgbldir=/opt/$instance/$gtmver/g/$instance.gld"  >> /opt/$instance/etc/env
+echo "export gtm_dist=$basedir/lib/gtm"                   >> $basedir/etc/env
+echo "export gtm_log=$basedir/log"                        >> $basedir/etc/env
+echo "export gtm_tmp=$basedir/tmp"                        >> $basedir/etc/env
+echo "export gtm_prompt=\"${instance^^}>\""               >> $basedir/etc/env
+echo "export gtmgbldir=$basedir/$gtmver/g/$instance.gld"  >> $basedir/etc/env
 
 # 64bit GT.M can use a shared library instead of $gtm_dist
 if [ $gtm_arch == "x86_64" ]; then
-    echo "export gtmroutines=\"/opt/$instance/$gtmver/o(/opt/$instance/$gtmver/r /opt/$instance/r) \$gtm_dist/libgtmutil.so\""  >> /opt/$instance/etc/env
+    echo "export gtmroutines=\"$basedir/$gtmver/o($basedir/$gtmver/r $basedir/r) \$gtm_dist/libgtmutil.so\"" >> $basedir/etc/env
 else
-    echo "export gtmroutines=\"/opt/$instance/$gtmver/o(/opt/$instance/$gtmver/r /opt/$instance/r) \$gtm_dist\""                >> /opt/$instance/etc/env
+    echo "export gtmroutines=\"$basedir/$gtmver/o($basedir/$gtmver/r $basedir/r) \$gtm_dist\"" >> $basedir/etc/env
 fi
 
 # prog.sh - priviliged (programmer) user access
 # Allow access to ZSY
-echo "#!/bin/bash"                                              >> /opt/$instance/bin/prog.sh
-echo "alias gtm=\"\$gtm_dist/mumps -dir\""                      >> /opt/$instance/bin/prog.sh
-echo "alias GTM=\"\$gtm_dist/mumps -dir\""                      >> /opt/$instance/bin/prog.sh
-echo "alias mumps=\"\$gtm_dist/mumps\""                         >> /opt/$instance/bin/prog.sh
-echo "alias gde=\"\$gtm_dist/mumps -run GDE\""                  >> /opt/$instance/bin/prog.sh
-echo "alias lke=\"\$gtm_dist/mumps -run LKE\""                  >> /opt/$instance/bin/prog.sh
-echo "alias dse=\"\$gtm_dist/mumps -run DSE\""                  >> /opt/$instance/bin/prog.sh
-echo "alias mupip=\"\$gtm_dist/mupip\""                         >> /opt/$instance/bin/prog.sh
-echo "alias recover=\"\$gtm_dist/mupip -recover -backward $instance.mjl" >> /opt/$instance/bin/prog.sh
-echo "alias backup=\"\$gtm_dist/mupip backup -online \"*\""             >> /opt/$instance/bin/prog.sh
+echo "#!/bin/bash"                                  >> $basedir/bin/prog.sh
+echo "alias gtm=\"\$gtm_dist/mumps -dir\""          >> $basedir/bin/prog.sh
+echo "alias GTM=\"\$gtm_dist/mumps -dir\""          >> $basedir/bin/prog.sh
+echo "alias mumps=\"\$gtm_dist/mumps\""             >> $basedir/bin/prog.sh
+echo "alias gde=\"\$gtm_dist/mumps -run GDE\""      >> $basedir/bin/prog.sh
+echo "alias lke=\"\$gtm_dist/mumps -run LKE\""      >> $basedir/bin/prog.sh
+echo "alias dse=\"\$gtm_dist/mumps -run DSE\""      >> $basedir/bin/prog.sh
+echo "alias mupip=\"\$gtm_dist/mupip\""             >> $basedir/bin/prog.sh
+echo "alias recover=\"\$gtm_dist/mupip -recover -backward $instance.mjl" >> $basedir/bin/prog.sh
+echo "alias backup=\"\$gtm_dist/mupip backup -online \"*\"" >> $basedir/bin/prog.sh
 
 # tied.sh - unpriviliged user access
 # $instance is their shell - no access to ZSY
-# need to set users with /var/db/$instance/bin/tied.sh as their shell
-echo "#!/bin/bash"                      >> /opt/$instance/bin/tied.sh
-echo "source /opt/$instance/etc/env"    >> /opt/$instance/bin/tied.sh
-echo "export SHELL=/bin/false"          >> /opt/$instance/bin/tied.sh
-echo "export gtm_nocenable=true"        >> /opt/$instance/bin/tied.sh
-echo "exec \$gtm_dist/mumps -run ^ZU"   >> /opt/$instance/bin/tied.sh
+# need to set users with $basedir/bin/tied.sh as their shell
+echo "#!/bin/bash"                      >> $basedir/bin/tied.sh
+echo "source $basedir/etc/env"          >> $basedir/bin/tied.sh
+echo "export SHELL=/bin/false"          >> $basedir/bin/tied.sh
+echo "export gtm_nocenable=true"        >> $basedir/bin/tied.sh
+echo "exec \$gtm_dist/mumps -run ^ZU"   >> $basedir/bin/tied.sh
 
 
 # Create Global mapping
-echo "c -s DEFAULT -bl=4096 -al=200000 -f=/opt/$instance/$gtmver/g/$instance.dat"   >> /opt/$instance/etc/db.gde
-echo "a -s TEMP    -bl=4096 -al=10000  -f=/opt/$instance/$gtmver/g/TEMP.dat"        >> /opt/$instance/etc/db.gde
-echo "c -r DEFAULT    -r=4080 -k=255"                                               >> /opt/$instance/etc/db.gde
-echo "a -r TEMP       -r=4080 -k=255 -d=TEMP"                                       >> /opt/$instance/etc/db.gde
-echo "a -n TMP        -r=TEMP"                                                      >> /opt/$instance/etc/db.gde
-echo "a -n TEMP       -r=TEMP"                                                      >> /opt/$instance/etc/db.gde
-echo "a -n UTILITY    -r=TEMP"                                                      >> /opt/$instance/etc/db.gde
-echo "a -n CacheTemp* -r=TEMP"                                                      >> /opt/$instance/etc/db.gde
-echo "sh -a"                                                                        >> /opt/$instance/etc/db.gde
+echo "c -s DEFAULT -bl=4096 -al=200000 -f=$basedir/$gtmver/g/$instance.dat" >> $basedir/etc/db.gde
+echo "a -s TEMP    -bl=4096 -al=10000  -f=$basedir/$gtmver/g/TEMP.dat" >> $basedir/etc/db.gde
+echo "c -r DEFAULT    -r=4080 -k=255"                   >> $basedir/etc/db.gde
+echo "a -r TEMP       -r=4080 -k=255 -d=TEMP"           >> $basedir/etc/db.gde
+echo "a -n TMP        -r=TEMP"                          >> $basedir/etc/db.gde
+echo "a -n TEMP       -r=TEMP"                          >> $basedir/etc/db.gde
+echo "a -n UTILITY    -r=TEMP"                          >> $basedir/etc/db.gde
+echo "a -n CacheTemp* -r=TEMP"                          >> $basedir/etc/db.gde
+echo "sh -a"                                            >> $basedir/etc/db.gde
 
 # Set permissions
-chown -R $instance:$instance /opt/$instance
-chmod -R g+rw /opt/$instance
+chown -R $instance:$instance $basedir
+chmod -R g+rw $basedir
 
 # create the global directory
 # TODO redirect output to file
 # have to source the environment first to have GTM env vars available
-source /opt/$instance/etc/env
-$gtm_dist/mumps -run GDE < /opt/$instance/etc/db.gde
+source $basedir/etc/env
+$gtm_dist/mumps -run GDE < $basedir/etc/db.gde
 
 # Create the database
 $gtm_dist/mupip create
