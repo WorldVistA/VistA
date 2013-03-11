@@ -28,7 +28,7 @@ class SCActions (Actions):
             self.VistA.write(self.vcode)
             self.VistA.wait('//');
             self.VistA.write('')
-            self.VistA.wait('Option:')
+            self.VistA.wait('Core Applications')
             self.VistA.write('Scheduling')
 
     def schtime(self, plushour=1):
@@ -1021,7 +1021,7 @@ class SCActions (Actions):
         '''This enrolls a patient as an inpatient in a clinic'''
         self.VistA.wait('OPTION NAME')
         self.VistA.write('Appointment Menu')
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Appointment Menu')
         self.VistA.write('Edit Clinic Enrollment Data')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(patient)
@@ -1061,7 +1061,7 @@ class SCActions (Actions):
         self.VistA.write('')
         self.VistA.wait('NAME:')
         self.VistA.write('')
-        self.VistA.wait('Menu Option:')
+        self.VistA.wait('Appointment Menu')
         self.VistA.write('')
         self.VistA.wait('halt')
         self.VistA.write('')
@@ -1093,9 +1093,9 @@ class SCActions (Actions):
         '''Deletes checkout from the menu
         Must be signed in as fakedoc1 (1Doc!@#$)
         Must have the SD SUPERVISOR Key assigned to Dr. Alexander'''
-        self.VistA.wait('Menu Option:')
+        self.VistA.wait('Scheduling Manager\'s Menu')
         self.VistA.write('Appointment Menu')
-        self.VistA.wait('Menu Option:')
+        self.VistA.wait('Appointment Menu')
         self.VistA.write('Appointment Management')
         self.VistA.wait('Clinic name')
         self.VistA.write(clinic)
@@ -1125,9 +1125,9 @@ class SCActions (Actions):
         '''Enters a patient into the wait list
         This assumes that SDWL PARAMETER and SDWL MENU
         keys are given to fakedoc1'''
-        self.VistA.wait('Option:')
+        self.VistA.wait('Scheduling Manager\'s Menu')
         self.VistA.write('Appointment Menu')
-        self.VistA.wait('Option:')
+        self.VistA.wait('Appointment Menu')
         self.VistA.write('Appointment Management')
         self.VistA.wait('name:')
         self.VistA.write(clinic)

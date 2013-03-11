@@ -43,7 +43,7 @@ class PLActions (Actions):
             preader = TestHelper.CSVFileReader()
             prec = preader.getfiledata(pfile, 'key', getrow)
         for pitem in prec:
-            self.VistA.wait('Menu Option')
+            self.VistA.wait('Problem List Mgt Menu')
             self.VistA.write('Patient Problem List')
             self.VistA.wait('PATIENT NAME')
             self.VistA.write(ssn)
@@ -88,7 +88,7 @@ class PLActions (Actions):
     def add(self, ssn, clinic, comment, onsetdate, status, acutechronic,
               service, probnum=None, icd=None, evalue=None, verchknum=None):
         ''' Add a problem using clinic or user with assigned selection list'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -153,7 +153,7 @@ class PLActions (Actions):
     def addspec(self, ssn, clinic, comment, onsetdate, status, acutechronic,
               service, icd, prompt='yes', uselex='yes', screendups='yes', isdup=None, prob=None, vlist=None):
         ''' add problems with checks for the PL site parameters'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -249,7 +249,7 @@ class PLActions (Actions):
 
     def editsimple(self, ssn, probnum, itemnum, chgval):
         '''Simple edit of problem, items 1,2,4,5 or 6 only'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -275,7 +275,7 @@ class PLActions (Actions):
 
     def editinactivate (self, ssn, probnum, resdate):
         '''Inactivate a problem'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -298,7 +298,7 @@ class PLActions (Actions):
 
     def editactivate (self, ssn, probnum, acutechronic):
         '''Activate a problem'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -321,7 +321,7 @@ class PLActions (Actions):
 
     def verify(self, ssn, probnum, itemnum, evalue, view='AT'):
         '''Verify a problem exists'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -344,7 +344,7 @@ class PLActions (Actions):
 
     def comcm (self, ssn, probnum, comment):
         '''Comment on an Active problem'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -363,7 +363,7 @@ class PLActions (Actions):
 
     def rem (self, ssn):
         '''Remove the first problem on the list (Active or Inactive)'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -388,7 +388,7 @@ class PLActions (Actions):
         '''Remove the first problem on the list (Active or Inactive)'''
         rval = 0
         while rval is not 1:
-            self.VistA.wait('Menu Option')
+            self.VistA.wait('Problem List Mgt Menu')
             self.VistA.write('Patient Problem List')
             self.VistA.wait('PATIENT NAME')
             self.VistA.write(ssn)
@@ -411,7 +411,7 @@ class PLActions (Actions):
                 self.VistA.write('N')
             elif rval == 1:
                 self.VistA.write('QUIT')
-                r2val = self.VistA.multiwait(['Print a new problem list', 'Menu Option'])
+                r2val = self.VistA.multiwait(['Print a new problem list', 'Problem List Mgt Menu'])
                 if r2val == 0:
                     self.VistA.write('N')
                 elif r2val == 1:
@@ -423,7 +423,7 @@ class PLActions (Actions):
 
     def replace (self, ssn, probnum):
         '''Replace Removed Problem'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Replace Removed Problem')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -436,7 +436,7 @@ class PLActions (Actions):
 
     def checkempty (self, ssn):
         '''Verify that patient problem list is empty'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -445,9 +445,9 @@ class PLActions (Actions):
 
     def createsellist (self, listname, clinic):
         '''Create a Selection List'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Build')
         self.VistA.wait('Select LIST NAME:')
         self.VistA.write(listname)
@@ -457,14 +457,14 @@ class PLActions (Actions):
         self.VistA.write(clinic)
         self.VistA.wait('Select Action:')
         self.VistA.write('SV')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def createcat (self, listname, catname):
         '''Create a Category'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Build Problem Selection List')
         self.VistA.wait('Select LIST NAME:')
         self.VistA.write(listname)
@@ -478,14 +478,14 @@ class PLActions (Actions):
         self.VistA.write('SV')
         self.VistA.wait('Select Action')
         self.VistA.write('Quit')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def catad (self, listname, catname, icd, spec='', dtext='', seqnum=''):
         '''Add a Problem (ICD) to a Category'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Build')
         self.VistA.wait('Select LIST NAME:')
         self.VistA.write(listname)
@@ -532,14 +532,14 @@ class PLActions (Actions):
         self.VistA.write('SV')
         self.VistA.wait('Select Action')
         self.VistA.write('SV')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def sellistad (self, listname, catname, hdrname='', seqnum=''):
         '''Add a Category to a Selection List'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Build')
         self.VistA.wait('Select LIST NAME:')
         self.VistA.write(listname)
@@ -555,14 +555,14 @@ class PLActions (Actions):
         self.VistA.write('')
         self.VistA.wait('Select Action')
         self.VistA.write('SV')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def sellistss (self, listname, clinic, username):
         '''Assign a Selection List to a User'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Build')
         self.VistA.wait('Select LIST NAME:')
         self.VistA.write(listname)
@@ -578,14 +578,14 @@ class PLActions (Actions):
         self.VistA.write('Yes')
         self.VistA.wait('Select Action')
         self.VistA.write('SV')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def sellistgal (self, listname, username):
         '''Assign a Selection List to a User'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Assign')
         self.VistA.wait('Select LIST NAME:')
         self.VistA.write(listname)
@@ -595,14 +595,14 @@ class PLActions (Actions):
         self.VistA.write('')
         self.VistA.wait('Are you ready')
         self.VistA.write('Yes')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def sellistrfu (self, listname, username):
         '''De-Assign a Selection List from a User'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Remove')
         self.VistA.wait('Select LIST NAME:')
         self.VistA.write(listname)
@@ -612,14 +612,14 @@ class PLActions (Actions):
         self.VistA.write('')
         self.VistA.wait('Are you ready')
         self.VistA.write('Yes')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def sellistrm (self, listname, catnum='1'):
         ''' Remove Category from a Selection List'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Build')
         self.VistA.wait('Select LIST NAME:')
         self.VistA.write(listname)
@@ -631,14 +631,14 @@ class PLActions (Actions):
         self.VistA.write('Yes')
         self.VistA.wait('Select Action')
         self.VistA.write('SV')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def catdl (self, listname, catname):
         ''' Delete a Category'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Build')
         self.VistA.wait('Select LIST NAME:')
         self.VistA.write(listname)
@@ -654,33 +654,33 @@ class PLActions (Actions):
         self.VistA.write('')
         self.VistA.wait('Select Action')
         self.VistA.write('SV')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def sellistdl (self, listname):
         '''Delete a Selection List'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Delete')
         self.VistA.wait('Select LIST NAME:')
         self.VistA.write(listname)
         self.VistA.wait('Are you sure you want to delete this list')
         self.VistA.write('Yes')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def createibform (self, clinic, formname, groupname, plist):
         '''Create IB Encounter Form'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('')
-        self.VistA.wait('Select Core Applications Option')
+        self.VistA.wait('Core Applications')
         self.VistA.write('IB')
-        self.VistA.wait('Select Integrated Billing Master Menu Option:')
+        self.VistA.wait('Integrated Billing Master Menu')
         self.VistA.write('Encounter Forms')
-        self.VistA.wait('Forms Option:')
+        self.VistA.wait('Encounter Forms')
         self.VistA.write('Edit Encounter Forms')
-        self.VistA.wait('Forms Option:')
+        self.VistA.wait('Edit Encounter Forms')
         self.VistA.write('Clinic Setup')
         self.VistA.wait('WHICH CLINIC?')
         self.VistA.write(clinic)
@@ -713,14 +713,14 @@ class PLActions (Actions):
         self.VistA.write('QUIT\rYES')
         self.VistA.wait('Select Action')
         self.VistA.write('QUIT\r\r\r')
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Integrated Billing Master Menu')
         self.VistA.write('Problem List')
 
     def sellistib (self, formname, listname, clinic):
         '''Remove Category from a Selection List'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Copy Selection List from IB Encounter')
         self.VistA.wait('Select a FORM:')
         self.VistA.write(formname)
@@ -728,12 +728,12 @@ class PLActions (Actions):
         self.VistA.write(listname)
         self.VistA.wait('CLINIC')
         self.VistA.write(clinic)
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def versellist(self, ssn, clinic, vlist):
         '''Verify a clinic selection list, content and order'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -750,7 +750,7 @@ class PLActions (Actions):
 
     def verplist(self, ssn, vlist):
         '''Verify a patient problem list, content and order'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -761,7 +761,7 @@ class PLActions (Actions):
 
     def verlistpats(self, vlist):
         '''Verify a patient problem list, content and order'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('List Patients with Problem List data')
         self.VistA.wait('//')
         self.VistA.write('')
@@ -772,7 +772,7 @@ class PLActions (Actions):
 
     def verpatsrch(self, prob, vlist):
         '''Verify a patient problem list, content and order'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Search for Patients having selected Problem')
         self.VistA.wait('PROBLEM:')
         self.VistA.write(prob)
@@ -791,7 +791,7 @@ class PLActions (Actions):
 
     def detview (self, ssn, probnum, vlist1, vlist2):
         '''Checks the Detailed View'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -812,7 +812,7 @@ class PLActions (Actions):
 
     def verifyproblem(self, ssn, problem):
         '''Check that its unconfirmed'''
-        self.VistA.wait('Menu Option:')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('1')
         self.VistA.wait('PATIENT NAME:')
         self.VistA.write(ssn)
@@ -843,7 +843,7 @@ class PLActions (Actions):
 
     def selectnewpatient(self, ssn1, name1, ss2, name2):
         '''This checks to see if the select new patient feature works properly'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn1)
@@ -853,12 +853,12 @@ class PLActions (Actions):
         self.VistA.write(ss2)
         self.VistA.wait(name2)
         self.VistA.write('Q')
-        self.VistA.wait('Menu Option:')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('')
 
     def printproblemlist(self, ssn, vlist):
         '''This checks that the print function inside problem list works properly'''
-        self.VistA.wait("Menu Option")
+        self.VistA.wait("Problem List Mgt Menu")
         self.VistA.write('Patient Problem List')
         self.VistA.wait('NAME:')
         self.VistA.write(ssn)
@@ -877,9 +877,9 @@ class PLActions (Actions):
 
     def resequencecat(self, listname, catnames):
         '''Tests re-sequence function inside of category build list'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Build')
         self.VistA.wait('LIST NAME:')
         self.VistA.write(listname)
@@ -904,14 +904,14 @@ class PLActions (Actions):
         self.VistA.write('')
         self.VistA.wait('Save')
         self.VistA.write('Yes')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def categorydisp(self, listname, catname):
         '''Tests category display function'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Build')
         self.VistA.wait('LIST NAME')
         self.VistA.write(listname)
@@ -933,14 +933,14 @@ class PLActions (Actions):
         self.VistA.write('Yes')
         self.VistA.wait('Select Action')
         self.VistA.write('SV')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def changesellist(self, list1, list2, category=None):
         '''Changes the Selection List'''
-        self.VistA.wait('Menu Option:')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem')
-        self.VistA.wait('Lists Option:')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Build')
         self.VistA.wait('LIST NAME:')
         self.VistA.write(list1)
@@ -954,12 +954,12 @@ class PLActions (Actions):
         else:
             self.VistA.wait(category)
         self.VistA.write('')
-        self.VistA.wait('Lists Option')
+        self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def editpart1(self, ssn, probnum, itemnum, chgval):
         '''Simple edit of problem, items 1,2,4,5 or 6 only'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -988,7 +988,7 @@ class PLActions (Actions):
 
     def badeditpart1(self, ssn, probnum, itemnum, chgval):
         ''' Simple edit of problem, items 1,2,4,5 or 6 only'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -1003,7 +1003,7 @@ class PLActions (Actions):
 
     def editPLsite(self, ver, prompt, uselex, order, screendups):
         '''Simple edit of problem, items 1,2,4,5 or 6 only'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Edit PL Site Parameters')
         self.VistA.wait('VERIFY TRANSCRIBED PROBLEMS:')
         self.VistA.write(ver)
@@ -1018,7 +1018,7 @@ class PLActions (Actions):
 
     def checkVerplsetting(self, ssn):
         ''' Check Verify PL site setting'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
@@ -1031,7 +1031,7 @@ class PLActions (Actions):
     def checkRMsellist(self, ssn, clinic):
         '''Check to verify  response when adding problem
         via clinic with a removed selection list'''
-        self.VistA.wait('Menu Option')
+        self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)

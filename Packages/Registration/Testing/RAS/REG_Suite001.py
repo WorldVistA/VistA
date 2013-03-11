@@ -140,7 +140,7 @@ def reg_test004(resultlog, result_dir, namespace):
                               [['Effective Date'], ['']],
                               [['Choose Patient from PATIENT file'], ['']],
                               [['Select PATIENT NAME:'], ['']],
-                              [['Select Bed Control Menu Option'], ['']]])
+                              [['Bed Control Menu'], ['']]])
         reg.signoff()
     except TestHelper.TestError, e:
         resultlog.write(e.value)
