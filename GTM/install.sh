@@ -28,7 +28,7 @@ fi
 # TODO: kill output
 # TODO: log status
 # TODO; determine if this needs to be logged
-wget -c --trust-server-names=on http://downloads.sourceforge.net/project/fis-gtm/GT.M%20Installer/v0.12/gtminstall
+wget http://downloads.sourceforge.net/project/fis-gtm/GT.M%20Installer/v0.12/gtminstall
 
 # Verify hash as we are going to make it executable
 # TODO: get hash and compare
@@ -55,10 +55,21 @@ fi
 # Make it executable
 chmod +x gtminstall
 
+gtm_ver=V6.0-000
+
+# Determine processor architecture - used to determine if we can use GT.M
+#                                    Shared Libraries
+# Default to x86 (32bit) - algorithm similar to gtminstall script
+arch=$(uname -m | tr -d _)
+if [ $arch == "x8664" ]; then
+    gtm_arch="x86_64"
+else
+    gtm_arch="x86"
+fi
+
 # Accept most defaults for gtminstall
 # --ucaseonly-utils - override default to install only uppercase utilities
 #                     this follows VistA convention of uppercase only routines
-./gtminstall --ucaseonly-utils V6.0-000
-
+./gtminstall --ucaseonly-utils --installdir /opt/lsb-gtm/"$gtm_ver"_"$gtm_arch" $gtm_ver
 # remove installgtm script as it is unnecessary
 rm ./gtminstall
