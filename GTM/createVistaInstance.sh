@@ -15,7 +15,8 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-# Create directories for VistA Routines, Objects, Globals, Journals, Temp Files
+# Create directories for instance Routines, Objects, Globals, Journals,
+# Temp Files
 # This utility requires root privliges
 
 # Make sure we are root
@@ -71,69 +72,62 @@ basedir=/home/$instance
 # $instance user is a programmer user
 # $instance group is for permissions to other users
 # $instance group is auto created by adduser script
-adduser -c "$instance VistA instance owner" -m -U $instance
+adduser -c "$instance instance owner" -m -U $instance
 
-# Make VistA Directories
-# TODO: Move to new script?
-# Routines are GT.M version independant
-mkdir -p $basedir/{r,etc,log,tmp,bin,lib,www}
-# xinetd scripts
-mkdir -p $basedir/etc/xinetd.d
-# Globals, Objects, Journals, and GT.M version specific Routines are
-# Version Specific
-mkdir -p $basedir/$gtmver/{g,j,o,r}
+# Make instance Directories
+mkdir -p $basedir/{r,r/$gtmver,g,j,etc,etc/xinetd.d,log,tmp,bin,lib,www}
 
-# Symlink libs in
+# Symlink libs
 ln -s $gtm_dist $basedir/lib/gtm
 
 # Create profile for instance
 # Required GT.M variables
-echo "export gtm_dist=$basedir/lib/gtm"                   >> $basedir/etc/env
-echo "export gtm_log=$basedir/log"                        >> $basedir/etc/env
-echo "export gtm_tmp=$basedir/tmp"                        >> $basedir/etc/env
-echo "export gtm_prompt=\"${instance^^}>\""               >> $basedir/etc/env
-echo "export gtmgbldir=$basedir/$gtmver/g/$instance.gld"  >> $basedir/etc/env
+echo "export gtm_dist=$basedir/lib/gtm"         >> $basedir/etc/env
+echo "export gtm_log=$basedir/log"              >> $basedir/etc/env
+echo "export gtm_tmp=$basedir/tmp"              >> $basedir/etc/env
+echo "export gtm_prompt=\"${instance^^}>\""     >> $basedir/etc/env
+echo "export gtmgbldir=$basedir/g/$instance.gld" >> $basedir/etc/env
 
 # 64bit GT.M can use a shared library instead of $gtm_dist
 if [ $gtm_arch == "x86_64" ]; then
-    echo "export gtmroutines=\"$basedir/$gtmver/o($basedir/$gtmver/r $basedir/r) \$gtm_dist/libgtmutil.so\"" >> $basedir/etc/env
+    echo "export gtmroutines=\"$basedir/r/$gtmver($basedir/r) \$gtm_dist/libgtmutil.so\"" >> $basedir/etc/env
 else
-    echo "export gtmroutines=\"$basedir/$gtmver/o($basedir/$gtmver/r $basedir/r) \$gtm_dist\"" >> $basedir/etc/env
+    echo "export gtmroutines=\"$basedir/r/$gtmver($basedir/r) \$gtm_dist\"" >> $basedir/etc/env
 fi
 
 # prog.sh - priviliged (programmer) user access
 # Allow access to ZSY
-echo "#!/bin/bash"                                  >> $basedir/bin/prog.sh
-echo "alias gtm=\"\$gtm_dist/mumps -dir\""          >> $basedir/bin/prog.sh
-echo "alias GTM=\"\$gtm_dist/mumps -dir\""          >> $basedir/bin/prog.sh
-echo "alias mumps=\"\$gtm_dist/mumps\""             >> $basedir/bin/prog.sh
-echo "alias gde=\"\$gtm_dist/mumps -run GDE\""      >> $basedir/bin/prog.sh
-echo "alias lke=\"\$gtm_dist/mumps -run LKE\""      >> $basedir/bin/prog.sh
-echo "alias dse=\"\$gtm_dist/mumps -run DSE\""      >> $basedir/bin/prog.sh
-echo "alias mupip=\"\$gtm_dist/mupip\""             >> $basedir/bin/prog.sh
+echo "#!/bin/bash"                              >> $basedir/bin/prog.sh
+echo "alias gtm=\"\$gtm_dist/mumps -dir\""      >> $basedir/bin/prog.sh
+echo "alias GTM=\"\$gtm_dist/mumps -dir\""      >> $basedir/bin/prog.sh
+echo "alias mumps=\"\$gtm_dist/mumps\""         >> $basedir/bin/prog.sh
+echo "alias gde=\"\$gtm_dist/mumps -run GDE\""  >> $basedir/bin/prog.sh
+echo "alias lke=\"\$gtm_dist/mumps -run LKE\""  >> $basedir/bin/prog.sh
+echo "alias dse=\"\$gtm_dist/mumps -run DSE\""  >> $basedir/bin/prog.sh
+echo "alias mupip=\"\$gtm_dist/mupip\""         >> $basedir/bin/prog.sh
 echo "alias recover=\"\$gtm_dist/mupip -recover -backward $instance.mjl" >> $basedir/bin/prog.sh
 echo "alias backup=\"\$gtm_dist/mupip backup -online \"*\"" >> $basedir/bin/prog.sh
 
 # tied.sh - unpriviliged user access
 # $instance is their shell - no access to ZSY
 # need to set users with $basedir/bin/tied.sh as their shell
-echo "#!/bin/bash"                      >> $basedir/bin/tied.sh
-echo "source $basedir/etc/env"          >> $basedir/bin/tied.sh
-echo "export SHELL=/bin/false"          >> $basedir/bin/tied.sh
-echo "export gtm_nocenable=true"        >> $basedir/bin/tied.sh
-echo "exec \$gtm_dist/mumps -run ^ZU"   >> $basedir/bin/tied.sh
+echo "#!/bin/bash"                              >> $basedir/bin/tied.sh
+echo "source $basedir/etc/env"                  >> $basedir/bin/tied.sh
+echo "export SHELL=/bin/false"                  >> $basedir/bin/tied.sh
+echo "export gtm_nocenable=true"                >> $basedir/bin/tied.sh
+echo "exec \$gtm_dist/mumps -run ^ZU"           >> $basedir/bin/tied.sh
 
 
 # Create Global mapping
-echo "c -s DEFAULT -bl=4096 -al=200000 -f=$basedir/$gtmver/g/$instance.dat" >> $basedir/etc/db.gde
-echo "a -s TEMP    -bl=4096 -al=10000  -f=$basedir/$gtmver/g/TEMP.dat" >> $basedir/etc/db.gde
-echo "c -r DEFAULT    -r=4080 -k=255"                   >> $basedir/etc/db.gde
-echo "a -r TEMP       -r=4080 -k=255 -d=TEMP"           >> $basedir/etc/db.gde
-echo "a -n TMP        -r=TEMP"                          >> $basedir/etc/db.gde
-echo "a -n TEMP       -r=TEMP"                          >> $basedir/etc/db.gde
-echo "a -n UTILITY    -r=TEMP"                          >> $basedir/etc/db.gde
-echo "a -n CacheTemp* -r=TEMP"                          >> $basedir/etc/db.gde
-echo "sh -a"                                            >> $basedir/etc/db.gde
+echo "c -s DEFAULT -bl=4096 -al=200000 -f=$basedir/g/$instance.dat" >> $basedir/etc/db.gde
+echo "a -s TEMP    -bl=4096 -al=10000  -f=$basedir/g/TEMP.dat" >> $basedir/etc/db.gde
+echo "c -r DEFAULT    -r=4080 -k=255"           >> $basedir/etc/db.gde
+echo "a -r TEMP       -r=4080 -k=255 -d=TEMP"   >> $basedir/etc/db.gde
+echo "a -n TMP        -r=TEMP"                  >> $basedir/etc/db.gde
+echo "a -n TEMP       -r=TEMP"                  >> $basedir/etc/db.gde
+echo "a -n UTILITY    -r=TEMP"                  >> $basedir/etc/db.gde
+echo "a -n CacheTemp* -r=TEMP"                  >> $basedir/etc/db.gde
+echo "sh -a"                                    >> $basedir/etc/db.gde
 
 # Set permissions
 chown -R $instance:$instance $basedir
