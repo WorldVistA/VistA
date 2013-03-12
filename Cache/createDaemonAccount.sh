@@ -36,7 +36,7 @@ if ! getent group | grep -q "^$SERVER_GROUP:" ; then
     #echo "..done"
 fi
 # create homedir if not existing
-test -d $SERVER_HOME || mkdir $SERVER_HOME
+test -d $SERVER_HOME || mkdir -p $SERVER_HOME
 # create user if not existing
 if ! getent passwd | grep -q "^$SERVER_USER:"; then
     # TODO: echo this to log
