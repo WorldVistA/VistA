@@ -16,5 +16,5 @@
 #---------------------------------------------------------------------------
 
 # Modify the system firewall to allow needed ports
-sudo iptables -A INPUT -p tcp --dport 57772 -j ACCEPT # System Management Portal
-sudo iptables -A INPUT -p tcp --dport 1972  -j ACCEPT # SuperServer
+iptables -I INPUT 1 -p tcp --dport 57772 -j ACCEPT # System Management Portal
+iptables -I INPUT 1 -p tcp --dport 1972  -j ACCEPT # SuperServer
