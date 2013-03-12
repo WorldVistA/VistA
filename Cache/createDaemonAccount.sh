@@ -20,10 +20,11 @@
 
 # Used ideas from:
 # http://www.debian.org/doc/manuals/securing-debian-howto/ch9.en.html
-# to create daemon accounts & groups 
-SERVER_HOME=/opt/cachesys
+# to create daemon accounts & groups
+instance=prod
+SERVER_HOME=/opt/cachesys/$instance
 SERVER_USER=cacheusr
-SERVER_NAME="Intersystems Caché"
+SERVER_NAME="Intersystems Cache $instance instance"
 SERVER_GROUP=cachegrp
 # create user to avoid running server as root
 # create group if not existing
@@ -43,7 +44,6 @@ if ! getent passwd | grep -q "^$SERVER_USER:"; then
     adduser --quiet \
             --system \
             --ingroup $SERVER_GROUP \
-            --no-create-home \
             --disabled-password \
             $SERVER_USER 2>/dev/null || true
     # TODO: echo this to log
