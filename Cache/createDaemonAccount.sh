@@ -23,15 +23,15 @@
 # to create daemon accounts & groups
 instance=prod
 SERVER_HOME=/opt/cachesys/$instance
-SERVER_USER=cacheusr
+SERVER_USER=cacheusr$instance
 SERVER_NAME="Intersystems Cache $instance instance"
-SERVER_GROUP=cachegrp
+SERVER_GROUP=cachegrp$instance
 # create user to avoid running server as root
 # create group if not existing
 if ! getent group | grep -q "^$SERVER_GROUP:" ; then
     # TODO: echo this to log
     #echo -n "Adding group $SERVER_GROUP.."
-    addgroup --quiet --system $SERVER_GROUP 2>/dev/null ||true
+    groupadd --system $SERVER_GROUP 2>/dev/null ||true
     # TODO: echo this to log
     #echo "..done"
 fi
@@ -41,10 +41,9 @@ test -d $SERVER_HOME || mkdir $SERVER_HOME
 if ! getent passwd | grep -q "^$SERVER_USER:"; then
     # TODO: echo this to log
     #echo -n "Adding system user $SERVER_USER.."
-    adduser --quiet \
-            --system \
-            --ingroup $SERVER_GROUP \
-            --disabled-password \
+    adduser --system \
+            --groups $SERVER_GROUP \
+            --no-create-home \
             $SERVER_USER 2>/dev/null || true
     # TODO: echo this to log
     #echo "..done"
