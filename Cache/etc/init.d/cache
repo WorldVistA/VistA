@@ -5,7 +5,7 @@
 # http://training.intersystems.com/tutorials/DocBook.UI.Page.cls?KEY=GHA_redhat_clusters
 # Edit the name of the Cache instance to be started into the shell
 # variable below.
-inst="cache"
+inst="prod"
 basdir=`/usr/bin/ccontrol list $inst | grep -i directory: | awk {'print $2'}`
 if [ "${basdir}" = "" ]
 then
@@ -25,7 +25,7 @@ case "$type" in
       exit 1
    else
         # If there is no cache.ids file, it's just a normal startup.
-      touch /var/lock/subsys/cache
+      touch /var/lock/subsys/cacheprod
       failflag=""
    fi
    echo "Starting Ensemble instance $inst on $localnode"
@@ -45,7 +45,7 @@ case "$type" in
         # Stop daemons.
         echo "Stopping Ensemble instance $inst on $localnode"
    ccontrol stop $inst quietly
-   rm -f /var/lock/subsys/cache
+   rm -f /var/lock/subsys/cacheprod
    status=$?
    case $status in
    (1)

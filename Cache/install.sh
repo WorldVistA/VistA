@@ -32,8 +32,17 @@ echo "Red Hat Enterprise Linux (Santiago) release 6" > /etc/redhat-release
 
 # TODO: clear GZIP environment variable
 
+# setup instance name
+instance=prod
+
+# Need to know where script was ran from
+scriptdir=`dirname $0`
+
 # Path to Parameters File for silent/unattended install
 parametersFile=/root/VistA-installation-scripts/Cache/parameters.isc
+
+# CacheHome
+CacheHome=/opt/cachesys/$instance
 
 # unzip the cachekit in a temp directory
 cachekit=/root/cache-2011.1.2.701-lnxrh5x64.tar.gz
@@ -47,7 +56,19 @@ tar xzf $cachekit
 # This is how silent/automated installs work for *nix platforms
 package/installFromParametersFile $parametersFile
 
-# Clean up
-cd `dirname $0`
+# copy init scripts to $cacheHome
+cp -R $scriptdir/etc $CacheHome/etc
+ln -s $CacheHome/etc/init.d/cache /etc/init.d/cacheprod
+
+# shutdown cache manually
+ccontrol stop $instance quietly
+
+# use init script to start Caché again
+chkconfig --add cacheprod
+chkconfig cacheprod on
+service cacheprod start
+
+# Clean up from install
+cd $scriptdir
 rm -rf $tempdir
 mv /etc/redhat-release.orig /etc/redhat-release
