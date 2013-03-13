@@ -24,11 +24,17 @@ You must change into the GTM directory before running the scripts.
 
     1. sudo install.sh
     2. sudo createVistaInstance.sh
-    3. (Optional) sudo importVista.sh
+    3. (Optional & very BETA - you've been warned) sudo importVista.sh
 
 Caché
 -----
 This is currently a work in progress. The basic structure is there, but untested.
+
+Change into the Cache directory before running the scripts.
+
+    1. createDaemonAccount.sh
+    2. configureFirewall.sh
+    3. install.sh
 
 Repository Directory Layout
 ===========================
