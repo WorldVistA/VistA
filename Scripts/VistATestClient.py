@@ -126,7 +126,7 @@ class VistATestClientCache(VistATestClient):
   def __init__(self, platform, prompt = None, namespace = None):
     VistATestClient.__init__(self, platform, prompt, namespace)
   def __changeNamesapce__(self):
-    self.waitForPrompt()
+    self._connection.expect('>')
     self._connection.send("znspace \"%s\"\r" % self.getNamespace())
   def __signIn__(self, username, password):
     child = self._connection
