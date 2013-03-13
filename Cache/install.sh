@@ -26,6 +26,10 @@ fi
 
 # TODO: ensure we are on RHEL/CentOS
 
+# hack for CentOS
+cp /etc/redhat-release /etc/redhat-release.orig
+echo "Red Hat Enterprise Linux (Santiago) release 6" > /etc/redhat-release
+
 # TODO: clear GZIP environment variable
 
 # Path to Parameters File for silent/unattended install
@@ -42,5 +46,8 @@ tar xzf $cachekit
 # Install Caché using the installFromParametersFile command
 # This is how silent/automated installs work for *nix platforms
 package/installFromParametersFile $parametersFile
-cd ..
+
+# Clean up
+cd `dirname $0`
 rm -rf $tempdir
+mv /etc/redhat-release.orig /etc/redhat-release

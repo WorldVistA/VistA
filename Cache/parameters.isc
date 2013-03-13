@@ -1,0 +1,69 @@
+
+legacy_dist.source_dir: /tmp/cachekit2011.1.2.701/package/legacy_dist/../..
+product_info.version: 2011.1.2.701.0
+product_info.name: Cache
+platform_selection.platform: lnxrh5x64
+platform_selection.platform_family: lnxrh5x64
+platform_selection.endianness: little
+platform_selection.os: Linux
+posix_tools.user_add: /usr/sbin/useradd
+posix_tools.group_add: /usr/sbin/groupadd
+posix_tools.grep: grep
+posix_tools.id: id
+posix_tools.ps_opt: -ef
+posix_tools.gzip: gzip
+posix_tools.shared_ext: so
+posix_tools.symbolic_copy: cp -Rf
+posix_tools.tr: tr
+server_location.target_dir: /opt/cachesys/prod
+server_location.is_server_install: Y
+server_location.instance_name: prod
+server_location.is_new_install: Y
+server_location.registry_dir: /usr/local/etc/cachesys
+server_location.convert_ensemble_registry:
+server_location.ccontrol: /tmp/cachekit2011.1.2.701/package/legacy_dist/../../dist/Cache/bin/lnxrh5x64/shared/ccontrol
+postinstall: upgrade
+install_mode.setup_type: Server
+unicode_selection.binary_type: eightbit
+unicode_selection.install_unicode: N
+security_settings.cache_user: cacheusr
+security_settings.cache_group: cacheusr
+security_settings.manager_user: cacheusrprod
+security_settings.manager_group: root
+security_settings.personal_database:
+security_settings.initial_level: Locked Down
+security_settings.already_secured: N
+security_settings.password: cacheprod!
+installer.manifest:
+installer.manifest_parameters: SourceDir=/tmp/cachekit2011.1.2.701/package/legacy_dist/../..,ISCUpgrade=0,
+manager_source_code.available: Y
+port_selection.superserver_port: 1972
+port_selection.webserver_port: 57772
+port_selection.jdbcgateway_port: 62972
+csp_gateway.configure: N
+csp_gateway.web_server_type:
+csp_gateway.apache_version:
+csp_gateway.apache_user:
+csp_gateway.apache_conf_file:
+csp_gateway.apache_pid_file:
+csp_gateway.apache_use32bit:
+csp_gateway.sunone_server:
+csp_gateway.directory:
+license_key.enter_key: N
+license_key.license_file:
+agent.user_account: iscagent
+agent.user_group: iscagent
+agent.install: Y
+install: database_server
+postinstall: database_server
+install: samples
+samples.install: Y
+japanese_docs.install: N
+install: docbook
+docbook.install: Y
+client_location.target_dir: /opt/cachesys/prod
+client_location.is_client_install: N
+install: fop
+install: renderserver
+install: addenda
+install: copyright
