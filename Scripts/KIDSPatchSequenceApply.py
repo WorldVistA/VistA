@@ -125,7 +125,7 @@ class KIDSPatchSequenceApply(object):
       if not result:
         logger.error("Failed to install patch %s: KIDS %s" %
                       (patchInfo.installName, patchInfo.kidsFilePath))
-        break
+        return
       else:
         # also need to reload the package patch hist
         self.__reloadPackagePatchHistory__(patchInfo)
@@ -164,8 +164,9 @@ class KIDSPatchSequenceApply(object):
     patchHistInfo = self._vistaPatchInfo
     packageName = patchInfo.package
     namespace = patchInfo.namespace
+    verInfo = patchInfo.version
     if namespace:
-      patchHistInfo.getPackagePatchHistByNamespace(namespace)
+      patchHistInfo.getPackagePatchHistByNamespace(namespace, verInfo)
       if packageName:
         vistAPackageName = patchHistInfo.getPackageName(namespace)
         if vistAPackageName != packageName:
@@ -181,15 +182,6 @@ class KIDSPatchSequenceApply(object):
     patchHistInfo = self._vistaPatchInfo
     namespace = patchInfo.namespace
     installName = patchInfo.installName
-    if namespace == None:
-      installStatus = patchHistInfo.getInstallationStatus(installName)
-      logger.debug("%s installation status is %d" %
-                   (installName, installStatus))
-      if patchHistInfo.isInstallCompleted(installStatus):
-        logger.info("%s installed completed" % installName)
-        return True
-      else:
-        return False
     if patchHistInfo.hasPatchInstalled(patchInfo.installName,
                                        patchInfo.namespace,
                                        patchInfo.version,
@@ -197,7 +189,14 @@ class KIDSPatchSequenceApply(object):
                                        patchInfo.seqNo):
       logger.info("%s is already installed" % installName)
       return True
-    return False
+    installStatus = patchHistInfo.getInstallationStatus(installName)
+    logger.debug("%s installation status is %d" %
+                 (installName, installStatus))
+    if patchHistInfo.isInstallCompleted(installStatus):
+      logger.info("%s installed completed" % installName)
+      return True
+    else:
+      return False
 
   """ update package patch history """
   def __reloadPackagePatchHistory__(self, patchInfo):
@@ -213,7 +212,7 @@ class KIDSPatchSequenceApply(object):
         patchHistInfo.createAllPackageMapping()
       assert patchHistInfo.hasNamespace(namespace)
       packageName = patchHistInfo.getPackageName(namespace)
-      patchHistInfo.getPackagePatchHistory(packageName, namespace)
+      patchHistInfo.getPackagePatchHistory(packageName, namespace, ver)
 
   """ create KIDS Patch Installer by patch Info and install
       the patch specified in patchInfo, return the result
@@ -280,9 +279,10 @@ class KIDSPatchSequenceApply(object):
   """ check to see if patch is ready to be installed """
   def __isPatchReadyToInstall__(self, patchInfo, patchList = None):
     packageName = patchInfo.package
-    patchHist = self._vistaPatchInfo.getPackagePatchHistByName(packageName)
+    ver = patchInfo.version
+    patchHist = self._vistaPatchInfo.getPackagePatchHistByName(packageName, ver)
     if not patchHist or not patchHist.hasPatchHistory():
-      logger.info("no patch hist for %s" % packageName)
+      logger.info("no patch hist for %s, ver: %s" % (packageName, ver))
       return True # if no such an package or hist info, just return True
     """ check patch sequence no to see if it is out of order """
     if patchInfo.seqNo:
