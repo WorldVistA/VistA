@@ -39,17 +39,17 @@ sys.path = ['./Functional/RAS/lib'] + ['./dataFiles'] + ['./Python/vista'] + sys
 from ADTActions import ADTActions
 from Actions import Actions
 import datetime
-import time
 import TestHelper
-import logging
+import time
 
-def reg_test001(resultlog, result_dir, namespace):
+def reg_test001(test_suite_details):
     '''Test admission of 4 patients, then verify, then discharge '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA1 = connect_VistA(testname, result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(test_suite_details)
         reg = ADTActions(VistA1, user='fakedoc1', code='1Doc!@#$')
         reg.signon()
         reg.admit_a_patient(ssn='888776666', bed='1-A')
@@ -77,19 +77,23 @@ def reg_test001(resultlog, result_dir, namespace):
         reg.discharge_patient(ssn='656771234', dtime='NOW+100')
         reg.discharge_patient(ssn='444678924', dtime='NOW+1000')
         reg.signoff()
-    except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
-    else:
-        resultlog.write('Pass\n')
 
-def reg_test002(resultlog, result_dir, namespace):
+        test_driver.post_test_run(test_suite_details)
+    except TestHelper.TestError, e:
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
+
+def reg_test002(test_suite_details):
     '''Test to Schedule, Unschedule, and Transfer Patients '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA1 = connect_VistA(testname, result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(test_suite_details)
         reg = ADTActions(VistA1, user='fakedoc1', code='1Doc!@#$')
         reg.signon()
         reg.admit_a_patient(ssn='888776666', bed='1-A')
@@ -105,19 +109,23 @@ def reg_test002(resultlog, result_dir, namespace):
         reg.cancel_scheduled_admission(ssn='656451234')
         reg.cancel_scheduled_admission(ssn='656771234')
         reg.signoff()
-    except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
-    else:
-        resultlog.write('Pass\n')
 
-def reg_test003(resultlog, result_dir, namespace):
+        test_driver.post_test_run(test_suite_details)
+    except TestHelper.TestError, e:
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
+
+def reg_test003(test_suite_details):
     '''Test for Wait list entries '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA1 = connect_VistA(testname, result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(test_suite_details)
         reg = ADTActions(VistA1)
         reg.signon()
         reg.gotoADTmenu()
@@ -135,19 +143,23 @@ def reg_test003(resultlog, result_dir, namespace):
         reg.gotoADTmenu()
         reg.delete_waiting_list_entry(ssn='123455678')
         reg.signoff()
-    except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
-    else:
-        resultlog.write('Pass\n')
 
-def reg_test004(resultlog, result_dir, namespace):
+        test_driver.post_test_run(test_suite_details)
+    except TestHelper.TestError, e:
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
+
+def reg_test004(test_suite_details):
     '''Test for Lodger checkin / checkout '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA1 = connect_VistA(testname, result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(test_suite_details)
         reg = ADTActions(VistA1, user='fakedoc1', code='1Doc!@#$')
         reg.signon()
         reg.checkin_lodger(ssn='323554567', bed='1-A')
@@ -177,36 +189,42 @@ def reg_test004(resultlog, result_dir, namespace):
                               [['Select PATIENT NAME:'], ['']],
                               [['Bed Control Menu'], ['']]])
         reg.signoff()
-    except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
-    else:
-        resultlog.write('Pass\n')
 
-def reg_test005(resultlog, result_dir, namespace):
+        test_driver.post_test_run(test_suite_details)
+    except TestHelper.TestError, e:
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
+
+def reg_test005(test_suite_details):
     '''This is a basic ADT Menu Smoke Tests '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA1 = connect_VistA(testname, result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(test_suite_details)
         reg = ADTActions(VistA1, user='fakedoc1', code='1Doc!@#$')
         reg.signon()
         reg.adt_menu_smoke(ssn='323554567')
         reg.signoff()
     except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
+        test_driver.exception_handling(test_suite_details, e)
     else:
-        resultlog.write('Pass\n')
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
 
-def reg_test006(resultlog, result_dir, namespace):
+def reg_test006(test_suite_details):
     '''Discharge previously discharged patient (break test, REF-221 ticket) and then perform Detailed Inpatient Inquire (REF-268) '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA1 = connect_VistA(testname, result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(test_suite_details)
         reg = ADTActions(VistA1)
         reg.signon()
         reg.gotoADTmenu()
@@ -214,114 +232,136 @@ def reg_test006(resultlog, result_dir, namespace):
         reg.det_inpatient_inquiry(ssn='444678924', item='1', vlist=['DIRECT', '2-B', 'ALEXANDER,ROBER', 'SMITH,MARY'])
         reg.signoff()
     except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
+        test_driver.exception_handling(test_suite_details, e)
     else:
-        resultlog.write('Pass\n')
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
 
-def reg_test007(resultlog, result_dir, namespace):
+def reg_test007(test_suite_details):
     '''Add a new doctor, wait 2 minutes, add another doctor, then attempt to add doctor during patient admitting using a prior date (REF-218) '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA1 = connect_VistA(testname, result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(test_suite_details)
         reg = Actions(VistA1, user='SM1234', code='SM12345!!')
         reg.signon()
         reg.adduser(name='JONES,JOE', ssn='000000050', gender='M', initials='JJ', acode='fakejoe1', vcode1='1SWUSH1234!!')
-        VistA1 = connect_VistA(testname + '_01', result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(testname + '_01', result_dir, namespace)
         reg = Actions(VistA1)
         reg.sigsetup(acode='fakejoe1', vcode1='1SWUSH1234!!', vcode2='1SWUSH12345!!', sigcode='JOEJ123')
-        VistA1 = connect_VistA(testname + '_02', result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(testname + '_02', result_dir, namespace)
         reg = Actions(VistA1, user='SM1234', code='SM12345!!')
         reg.signon()
         reg.adduser(name='BURKE,BARBARA', ssn='000000051', gender='F', initials='BB', acode='fakebar1', vcode1='1OIG1234!!')
-        VistA1 = connect_VistA(testname + '_03', result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(testname + '_03', result_dir, namespace)
         reg = Actions(VistA1)
         reg.sigsetup(acode='fakebar1', vcode1='1OIG1234!!', vcode2='1OGI12345!!', sigcode='BARB123')
         reg.signoff()
-        VistA1 = connect_VistA(testname + '_04', result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(testname + '_04', result_dir, namespace)
         reg = ADTActions(VistA1, user='fakedoc1', code='1Doc!@#$')
         reg.signon()
         reg.admit_a_patient(ssn='666551234', bed='2-B', time='t-1@01am', doctorlist=['BURKE', 'Alexander', 'JONES', 'Alexander'])
         reg.signoff()
-    except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
-    else:
-        resultlog.write('Pass\n')
 
-def reg_logflow(resultlog, result_dir, namespace):
+        test_driver.post_test_run(test_suite_details)
+    except TestHelper.TestError, e:
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
+
+def reg_logflow(test_suite_details):
     '''Use XTFCR to log flow to file.  Note a test, just creates flow diagrams. '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA1 = connect_VistA(testname, result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(test_suite_details)
         reg = ADTActions(VistA1)
         reg.logflow(['DGPMV', 'DGSWITCH'])
-    except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
-    else:
-        resultlog.write('Pass\n')
 
-def setup_ward(resultlog, result_dir, namespace):
+        test_driver.post_test_run(test_suite_details)
+    except TestHelper.TestError, e:
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
+
+def setup_ward(test_suite_details):
     ''' Set up ward for ADT testing '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA1 = connect_VistA(testname, result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(test_suite_details)
         reg = ADTActions(VistA1)
         reg.signon()
         reg.adt_setup()
         reg.signoff()
-    except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
-    else:
-        resultlog.write('Pass\n')
 
-def startmon(resultlog, result_dir, namespace):
+        test_driver.post_test_run(test_suite_details)
+    except TestHelper.TestError, e:
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
+
+def startmon(test_suite_details):
     '''This starts the Coverage Monitor'''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', '
-                    + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA1 = connect_VistA(testname, result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(test_suite_details)
         VistA1.startCoverage(routines=['DGPMV', 'DGSWITCH', 'DGSCHAD', 'DGPMEX', 'DGWAIT', 'DGSILL'])
+
+        test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
     finally:
         '''
         Close Vista
         '''
         VistA1.write('^\r^\r^\r')
         VistA1.write('h\r')
+        test_driver.finally_handling(test_suite_details)
+    test_driver.end_method_handling(test_suite_details)
 
-def stopmon (resultlog, result_dir, humanreadable, namespace):
+def stopmon(test_suite_details):
     '''This stops the Coverage Monitor'''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', '
-                    + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        # Connect to VistA
-        VistA1 = connect_VistA(testname, result_dir, namespace)
-        path = (result_dir + '/' + timeStamped('ADT_coverage.txt'))
-        VistA1.stopCoverage(path, humanreadable)
+        VistA1 = test_driver.connect_VistA(test_suite_details)
+        path = (test_suite_details.result_dir + '/' + TestHelper.timeStamped('ADT_coverage.txt'))
+        VistA1.stopCoverage(path, test_suite_details.coverage_type)
+
+        test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
     finally:
         '''
         Close Vista
         '''
         VistA1.write('^\r^\r^\r')
         VistA1.write('h\r')
+        test_driver.finally_handling(test_suite_details)
+    test_driver.end_method_handling(test_suite_details)
 
 def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):
     '''This method appends a date/time stamp to a filename'''
@@ -339,3 +379,4 @@ def connect_VistA(testname, result_dir, namespace):
             pass
     VistA.wait(PROMPT)
     return VistA
+

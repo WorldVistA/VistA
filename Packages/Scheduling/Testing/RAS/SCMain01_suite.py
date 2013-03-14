@@ -41,18 +41,17 @@ from ADTActions import ADTActions
 from Actions import Actions
 import TestHelper
 import datetime
-import logging
 
-def sc_test001(resultlog, result_dir, namespace):
+def sc_test001(test_suite_details):
     '''
     Test for basic appointment management options.
     Make an Appointment, Check in, Check Out
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA = connect_VistA(testname, result_dir, namespace)
+        VistA = test_driver.connect_VistA(test_suite_details)
         SC = SCActions(VistA, scheduling='Scheduling')
         time = SC.schtime()
         SC.signon()
@@ -69,23 +68,25 @@ def sc_test001(resultlog, result_dir, namespace):
         SC.signon()
         SC.makeapp_bypat(clinic=tclinic, patient='333224444', datetime=time, fresh='No', prevCO='yes')
         SC.signoff()
+        test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
+        test_driver.exception_handling(test_suite_details, e)
     else:
-        resultlog.write('Pass\n')
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
 
-def sc_test002(resultlog, result_dir, namespace):
-    '''
-    Test basic appointment management options.
+def sc_test002(test_suite_details):
+    '''Test basic appointment management options.
     Make an Appointment (Scheduled and Unscheduled),
     record a No-Show, Cancel an appointment and change patients
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA = connect_VistA(testname, result_dir, namespace)
+        VistA = test_driver.connect_VistA(test_suite_details)
         SC = SCActions(VistA, scheduling='Scheduling')
         time = SC.schtime()
         SC.signon()
@@ -102,22 +103,25 @@ def sc_test002(resultlog, result_dir, namespace):
         SC.chgpatient(clinic=tclinic, patient1='345678233', patient2='345238901',
                       patientname1='Twelve', patientname2='Ten')
         SC.signoff()
+        test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
+        test_driver.exception_handling(test_suite_details, e)
     else:
-        resultlog.write('Pass\n')
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
 
-def sc_test003(resultlog, result_dir, namespace):
+def sc_test003(test_suite_details):
     '''
     This tests clinic features such as change clinic, change date-range,
     expand the entry, add and edit, and Patient demographics
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA = connect_VistA(testname, result_dir, namespace)
+        VistA = test_driver.connect_VistA(test_suite_details)
         SC = SCActions(VistA, scheduling='Scheduling')
         SC.signon()
         tclinic = SC.getclinic()
@@ -127,21 +131,25 @@ def sc_test003(resultlog, result_dir, namespace):
         SC.signon()
         SC.teaminfo(clinic=tclinic)
         SC.signoff()
-    except TestHelper.TestError, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
-    else:
-        resultlog.write('Pass\n')
 
-def sc_test004(resultlog, result_dir, namespace):
+        test_driver.post_test_run(test_suite_details)
+    except TestHelper.TestError, e:
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
+
+def sc_test004(test_suite_details):
     '''
     This tests clinic features such as expand the entry, add and edit, and Patient demographics
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA = connect_VistA(testname, result_dir, namespace)
+        VistA = test_driver.connect_VistA(test_suite_details)
         SC = SCActions(VistA, scheduling='Scheduling')
         time = SC.schtime(plushour=1)
         SC.signon()
@@ -157,21 +165,25 @@ def sc_test004(resultlog, result_dir, namespace):
         SC.signon()
         SC.addedit(clinic=tclinic, name='354623902', icd='305.91')
         SC.signoff()
-    except TestHelper.TestError, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
-    else:
-        resultlog.write('Pass\n')
 
-def sc_test005(resultlog, result_dir, namespace):
+        test_driver.post_test_run(test_suite_details)
+    except TestHelper.TestError, e:
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
+
+def sc_test005(test_suite_details):
     '''
     This test checks a patient into a clinic, then discharges him, then deletes his checkout
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA = connect_VistA(testname, result_dir, namespace)
+        VistA = test_driver.connect_VistA(test_suite_details)
         SC = SCActions(VistA)
         SC.signon()
         tclinic = SC.getclinic()
@@ -189,50 +201,53 @@ def sc_test005(resultlog, result_dir, namespace):
         SC.signon()
         SC.deletecheckout(clinic=tclinic, appnum='3')
         SC.signoff()
+        test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
+        test_driver.exception_handling(test_suite_details, e)
     else:
-        resultlog.write('Pass\n')
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
 
-def sc_test006(resultlog, result_dir, namespace):
-    '''
-    This test will exercise the wait list functionality
-    '''
+def sc_test006(test_suite_details):
+    '''This test will exercise the wait list functionality'''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA = connect_VistA(testname, result_dir, namespace)
+        VistA = test_driver.connect_VistA(test_suite_details)
         SC = SCActions(VistA, user='fakedoc1', code='1Doc!@#$')
         SC.signon()
         tclinic = SC.getclinic()
         SC.waitlistentry(clinic=tclinic, patient='323123456')
         SC.waitlistdisposition(clinic=tclinic, patient='323123456')
         SC.signoff()
+        test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
+        test_driver.exception_handling(test_suite_details, e)
     else:
-        resultlog.write('Pass\n')
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
 
-
-def sc_test007(resultlog, result_dir, namespace):
+def sc_test007(test_suite_details):
     '''
     This is a basic appointment, similar to sc_test001 but specifying patient name not clinic at first prompt
     This test will also use the space-bar to check recall feature works.
     Make an Appointment, Check in, Check Out
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA = connect_VistA(testname, result_dir, namespace)
+        VistA = test_driver.connect_VistA(test_suite_details)
         SC = SCActions(VistA, scheduling='Scheduling')
         time = SC.schtime()
         SC.signon()
         tclinic = SC.getclinic()
-        SC.makeapp_bypat(clinic=tclinic, patient='656454321', datetime=time, loopnum=2)
+        SC.makeapp_bypat(clinic=tclinic, patient='656454321', datetime=time)
         SC.signon()
         SC.use_sbar(clinic=tclinic, patient='656454321', fresh='No')
         time = SC.schtime(plushour=1)
@@ -249,21 +264,25 @@ def sc_test007(resultlog, result_dir, namespace):
                        DXvlist=['305.91', 'OTHER DRUG', 'RESULTING'],
                        CPvlist=['THREE,PATIENT C'])
         SC.signoff()
-    except TestHelper.TestError, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
-    else:
-        resultlog.write('Pass\n')
 
-def sc_test008(resultlog, result_dir, namespace):
+        test_driver.post_test_run(test_suite_details)
+    except TestHelper.TestError, e:
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
+
+def sc_test008(test_suite_details):
     '''
     This test makes future appointments and verifies, and also checks case sensitivity (cLiNiCx, ClInIcX, etc.)
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA = connect_VistA(testname, result_dir, namespace)
+        VistA = test_driver.connect_VistA(test_suite_details)
         SC = SCActions(VistA, scheduling='Scheduling')
         time = SC.schtime()
         SC.signon()
@@ -283,21 +302,24 @@ def sc_test008(resultlog, result_dir, namespace):
         SC.signon()
         SC.canapp(clinic='cLiNiCx', mult='2', future=1, rebook=1)
         SC.signoff()
+        test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
+        test_driver.exception_handling(test_suite_details, e)
     else:
-        resultlog.write('Pass\n')
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
 
-def sc_test009(resultlog, result_dir, namespace):
+def sc_test009(test_suite_details):
     '''
     This test makes appointments with variable length and makes appointment in distant future for EWL
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA = connect_VistA(testname, result_dir, namespace)
+        VistA = test_driver.connect_VistA(test_suite_details)
         SC = SCActions(VistA, scheduling='Scheduling')
         time = SC.schtime()
         SC.signon()
@@ -314,21 +336,24 @@ def sc_test009(resultlog, result_dir, namespace):
                         ALvlist=['THIRTEEN,PATIENT M', 'Clinicx', 'Clinica', 'Clinica'],
                         EPvlist=['THIRTEEN,PATIENT M', 'CLINICX', '8904', 'FUTURE', 'SCHEDULED', 'REGULAR'])
         SC.signoff()
+        test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
+        test_driver.exception_handling(test_suite_details, e)
     else:
-        resultlog.write('Pass\n')
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
 
-def sc_test010(resultlog, result_dir, namespace):
+def sc_test010(test_suite_details):
     '''
     This test makes appointments and saves demographics
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA = connect_VistA(testname, result_dir, namespace)
+        VistA = test_driver.connect_VistA(test_suite_details)
         SC = SCActions(VistA, scheduling='Scheduling')
         time = SC.schtime()
         # this signon() and fix_demographics() is a workaround for gtm bug
@@ -393,21 +418,24 @@ def sc_test010(resultlog, result_dir, namespace):
                                  ['PAGER NUMBER', ''],
                                  ['EMAIL ADDRESS', '']])
         SC.signoff()
+        test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
+        test_driver.exception_handling(test_suite_details, e)
     else:
-        resultlog.write('Pass\n')
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
 
-def sc_test011(resultlog, result_dir, namespace):
+def sc_test011(test_suite_details):
     '''
     This makes appointments via Multiple Clinic Display and then verifies the appointments
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA = connect_VistA(testname, result_dir, namespace)
+        VistA = test_driver.connect_VistA(test_suite_details)
         SC = SCActions(VistA, user='fakedoc1', code='1Doc!@#$')
         SC.signon()
         SC.multiclinicdisplay(cliniclist=['Clinic1', 'ClinicX'], patient='656454321', timelist=['7', '5'], pending=None)
@@ -420,91 +448,93 @@ def sc_test011(resultlog, result_dir, namespace):
     else:
         resultlog.write('Pass\n')
 
-def sc_test012(resultlog, result_dir, namespace):
+def sc_test012(test_suite_details):
     '''
     This test adds a new user with SDOB keys and creates & verifies appointments in timeslots outside a clinic's normal operating window
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        # Create new user with SDOB keys
-        VistA1 = connect_VistA(testname, result_dir, namespace)
+        # create new user with SDOB keys
+        VistA1 = test_driver.connect_VistA(test_suite_details)
         SC = Actions(VistA1, user='SM1234', code='SM12345!!')
         SC.signon()
         SC.adduser(name='CRANE,JON', ssn='000000065', gender='M', initials='JC', acode='fakejon1', vcode1='1SWUSH1234!!')
         SC.signoff()
-        VistA1 = connect_VistA(testname + '_01', result_dir, namespace)
+        VistA1 = test_driver.connect_VistA(testname + '_01', result_dir, namespace)
         SC = Actions(VistA1)
         SC.sigsetup(acode='fakejon1', vcode1='1SWUSH1234!!', vcode2='1SWUSH12345!!', sigcode='JONC123')
         SC.signoff()
         # Create appointment outside Clinic1's operating hours via fakedoc1
-        VistA2 = connect_VistA(testname + '_02', result_dir, namespace)
+        VistA2 = test_driver.connect_VistA(testname + '_02', result_dir, namespace)
         SC = SCActions(VistA2, user='fakedoc1', code='1Doc!@#$')
         SC.signon()
         SC.gotoApptMgmtMenu()
         SC.makeapp(patient='333224444', clinic='Clinic1', datetime='t+5@9AM', fresh='No', badtimeresp='noslot')
         SC.signoff()
         # Create appointment outside Clinic1's operating hours via fakejon1 (SDOB key)
-        VistA3 = connect_VistA(testname + '_02', result_dir, namespace)
+        VistA3 = test_driver.connect_VistA(testname + '_02', result_dir, namespace)
         SC = SCActions(VistA3, user='fakejon1', code='1SWUSH12345!!')
         SC.signon()
         SC.gotoApptMgmtMenu()
         SC.makeapp(patient='333224444', clinic='Clinic1', datetime='t+10@9AM', fresh='No', badtimeresp='overbook')
         SC.signoff()
     except TestHelper.TestError, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
+        test_driver.exception_handling(test_suite_details, e)
     else:
-        resultlog.write('Pass\n')
-
-def sc_test013(resultlog, result_dir, namespace):
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
+def sc_test013(test_suite_details):
     '''
     This test creates a Sharing Agreement subcategory and adds it to a select patient's eligibility
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     if sys.platform == 'win32':
         try:
             # Create Sharing Agreement sub-category
-            VistA1 = connect_VistA(testname, result_dir, namespace)
+            VistA1 = test_driver.connect_VistA(test_suite_details)
             aa = Actions(VistA1)
             aa.signon()
             aa.addSAsubtype(subcat='subcat1')
             aa.signon()
             aa.addSAsubtype(subcat='SUBCAT2')
         # Add Sharing Agreement to Patient Eligibility
-            VistA1 = connect_VistA(testname + '_1', result_dir, namespace)
+            VistA1 = test_driver.connect_VistA(testname + '_1', result_dir, namespace)
             adt = ADTActions(VistA1)
             adt.signon()
             adt.gotoADTmenu()
             adt.eligverific(patient='333224444', eligtype='SHARING AGREEMENT')
             adt.signoff()
         # Make Appointment using new sub-category
-            VistA1 = connect_VistA(testname + '_2', result_dir, namespace)
+            VistA1 = test_driver.connect_VistA(testname + '_2', result_dir, namespace)
             SC = SCActions(VistA1, user='fakejon1', code='1SWUSH12345!!')
             SC.signon()
             SC.gotoApptMgmtMenu()
             SC.makeapp(patient='333224444', clinic='Clinic1', datetime='t+9@5AM', fresh='No', apptype='SHARING AGREEMENT', subcat=['subcat1', 'SUBCAT2'])
             SC.signoff()
         except TestHelper.TestError, e:
-            resultlog.write('\nEXCEPTION ERROR:' + str(e))
-            logging.error('*****exception*********' + str(e))
-        else:
-            resultlog.write('Pass\n')
+            test_driver.exception_handling(test_suite_details, e)
+        finally:
+            test_driver.finally_handling(test_suite_details)
     else:
-        resultlog.write('Skip\n')
+        test_driver.finally_handling(test_suite_details)
 
-def sc_test014(resultlog, result_dir, namespace):
+def sc_test014(test_suite_details):
     '''
     This test verifies clinic setup parameters
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA = connect_VistA(testname, result_dir, namespace)
+        VistA = test_driver.connect_VistA(test_suite_details)
         SC = SCActions(VistA, scheduling='Scheduling')
         time = SC.schtime()
         SC.signon()
@@ -518,54 +548,65 @@ def sc_test014(resultlog, result_dir, namespace):
                         cslots='[4]', cxrays='', fresh='No', elig='Yes')
         SC.signoff()
     except TestHelper.TestError, e:
-        resultlog.write('\nEXCEPTION ERROR:' + str(e))
-        logging.error('*****exception*********' + str(e))
+        test_driver.exception_handling(test_suite_details, e)
     else:
-        resultlog.write('Pass\n')
+        test_driver.try_else_handling(test_suite_details)
+    finally:
+        test_driver.finally_handling(test_suite_details)
 
-def startmon(resultlog, result_dir, namespace):
+def startmon(test_suite_details):
     '''
     This method starts the Coverage Monitor
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', '
-                    + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
-        VistA1 = connect_VistA(testname, result_dir, namespace)
-        VistA1.startCoverage(routines=['SC*', 'SD*'])
+        VistA = test_driver.connect_VistA(test_suite_details)
+        VistA.startCoverage(routines=['SC*', 'SD*'])
+
+        test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
     finally:
         '''
         Close Vista
         '''
-        VistA1.write('^\r^\r^\r')
-        VistA1.write('h\r')
+        VistA.write('^\r^\r^\r')
+        VistA.write('h\r')
+        test_driver.finally_handling(test_suite_details)
+    test_driver.end_method_handling(test_suite_details)
 
-def stopmon (resultlog, result_dir, humanreadable, namespace):
+def stopmon (test_suite_details):
     '''
     This method stops the Coverage Monitor
     '''
     testname = sys._getframe().f_code.co_name
-    resultlog.write('\n' + testname + ', '
-                    + str(datetime.datetime.today()) + ': ')
-    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    test_driver = TestHelper.TestDriver(testname)
+
+    test_driver.pre_test_run(test_suite_details)
     try:
         # Connect to VistA
-        VistA1 = connect_VistA(testname, result_dir, namespace)
-        path = (result_dir + '/' + timeStamped('Scheduling_coverage.txt'))
-        VistA1.stopCoverage(path, humanreadable)
+        VistA=test_driver.connect_VistA(test_suite_details)
+        path = (test_suite_details.result_dir + '/' + TestHelper.timeStamped('Scheduling_coverage.txt'))
+        VistA.stopCoverage(path, test_suite_details.coverage_type)
+
+        test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:
-        resultlog.write(e.value)
-        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
+        test_driver.exception_handling(test_suite_details, e)
+    else:
+        test_driver.try_else_handling(test_suite_details)
     finally:
         '''
         Close Vista
         '''
-        VistA1.write('^\r^\r^\r')
-        VistA1.write('h\r')
+        VistA.write('^\r^\r^\r')
+        VistA.write('h\r')
+        test_driver.finally_handling(test_suite_details)
+    test_driver.end_method_handling(test_suite_details)
 
 def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):
     '''
