@@ -47,7 +47,8 @@ KIDS_GROUP_FILES_ASSOCIATION_DICT = {
   "IBRC1101[A-F].TXT" : "IB*2.0*445",
   "IBRC1110[A-F].TXT" : "IB*2.0*462",
   "IBRC1201[A-F].TXT" : "IB*2.0*468",
-  "IBRC1210[A-F].TXT" : "IB*2.0*484"
+  "IBRC1210[A-F].TXT" : "IB*2.0*484",
+  "IBRC1301[A-F].TXT" : "IB*2.0*491",
 }
 
 def getAssociatedInstallName(fileName):
