@@ -22,6 +22,7 @@ import time
 from VistAMenuUtil import VistAMenuUtil
 from LoggerManager import logger, initConsoleLogging
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
+from VistAPackageInfoFetcher import findChoiceNumber
 
 def getBoxVolPair(vistAClient):
   connection = vistAClient.getConnection()
@@ -55,15 +56,16 @@ class VistATaskmanUtil(object):
     connection.send("Site Parameters Edit\r")
     connection.expect("Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: ")
     connection.send("?\r")
-    connection.expect("Answer with TASKMAN SITE PARAMETERS BOX-VOLUME PAIR:")
+    connection.expect("Answer with TASKMAN SITE PARAMETERS BOX-VOLUME PAIR.*?:")
     connection.expect("You may enter a new TASKMAN SITE PARAMETERS")
     curBoxVol = connection.before.strip(' \r\n')
+    curBoxVol = [x.strip(' ') for x in curBoxVol.split('\r\n')]
     logger.debug("Box:Vol Pair is [%s] " % curBoxVol)
-    if curBoxVol != boxVolPair:
+    if boxVolPair not in curBoxVol :
       logger.error("taskman site parameter mismatch, current:[%s], correct:[%s]" %
                     (curBoxVol, boxVolPair))
       if autoFix:
-        self.__fixTaskmanSiteParameter__(connection, curBoxVol, boxVolPair)
+        self.__fixTaskmanSiteParameter__(connection, curBoxVol[0], boxVolPair)
       else:
         retValue = False
     connection.expect("Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: ")
@@ -211,9 +213,19 @@ class VistATaskmanUtil(object):
   def __fixTaskmanSiteParameter__(self, connection, curBoxVol, boxVol):
     connection.expect("Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: ")
     connection.send("%s\r" % curBoxVol)
-    connection.expect("BOX-VOLUME PAIR: %s//" % curBoxVol)
+    while True:
+      index = connection.expect(["BOX-VOLUME PAIR: %s//" % curBoxVol,
+                                 "CHOOSE [0-9]+-[0-9]+"])
+      if index == 0:
+        break
+      else:
+        choice = findChoiceNumber(connection.before, curBoxVol)
+        if choice:
+          connection.send('%s\r' % choice)
+        else:
+          connection.send('\r') # no match continue
     connection.send("%s\r" % boxVol)
-    connection.expect("//")
+    connection.expect(["//", ': '])
     connection.send("^\r")
 
   def __getTaskmanStatus__(self, connection):
