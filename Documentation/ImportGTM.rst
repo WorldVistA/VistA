@@ -4,21 +4,6 @@
 .. role:: usertype
     :class: usertype
 
-Starting from an empty instance of GT.M, we need to retrieve the routines and globals that will populate the VistA environment from the OSEHRA Code Repository at code.osehra.org. Begin by bringing up a Linux terminal.  To obtain a copy of the repository, create a directory (Folder) to hold the repository code and \"cd\" into that directory. Enter the commands
-
-.. parsed-literal::
-
-  $ :usertype:`git clone git://code.osehra.org/VistA-FOIA.git`
-  Cloning into 'VistA-FOIA'...
-  .
-  .
-  .
-  $ :usertype:`cd VistA-FOIA`
-
-
-to make a local clone of the remote repository.
-
-
 Packing Routines and Globals
 ----------------------------
 
@@ -99,8 +84,29 @@ After entering the path, the names of the routines that are imported are shown o
 
 Once the import process finishes, you can verify if it was succesful by visiting the "Output directory" from a terminal and using the "ls" command. This command should show  a large collection of "\*.m" files that were created during the import process.
 
-Importing the globals is done with the use of a routine that was just imported. The ZGI routine was written to import the globals from the OSEHRA structure into a MUMPS environment. The command to do this is:
+If you expect to use this testing beyond the XINDEX capacity, there is another .ro file
+that you should import.  It is found in the Testing/Setup directory called \"ZTLOAD1.ro\".
+It contains a new copy of the ZTLOAD1.m file which contains modifications that remove some
+transaction processing code that fails only on the GT.M platform.
 
+mporting the globals is done with the use of a routine that was just imported. The ZGI routine was
+written to import the globals from the OSEHRA structure into a MUMPS environment. The command to do
+this is:
+
+.. parsed-literal::
+
+  Formfeed delimited <No>? :usertype:`<ENTER>`
+  Input Device: <terminal>: :usertype:`/home/osehra/Downloads/VistA/Testing/Setup/ZTLOAD1.ro`
+
+  Routines
+
+  Output directory:  :usertype:`/home/osehra/Downloads/VistA/r/`
+
+  ZTLOAD1
+
+  Restored ...
+
+Importing the globals is done with the use of a routine that was just imported. The ZGI routine was written to import the globals from the OSEHRA structure into a MUMPS environment. The command to do this is:
 
 .. parsed-literal::
 

@@ -4,27 +4,6 @@
 .. role:: usertype
     :class: usertype
 
-Starting from an empty instance of Caché, we need to retrieve the routines and globals that will populate the VistA environment from the OSEHRA Code Repository at code.osehra.org. Begin by bringing up a Git Bash terminal from the installed Git system.
-
-The git interface is a command-prompt interface with much of the functionality that should be familiar to Linux users; commands like \"ls\" and \"cd\" perform as they would in Cygwin shell or a Linux terminal. Git specific actions are always preceded by the \"git\" command on the input line. The command \"git --help\" displays a list of the most common commands.
-
-To obtain a copy of the repository, create a directory (Folder) to hold the repository code and \"cd\" into that directory. Enter the commands
-
-.. parsed-literal::
-
-
-  $ :usertype:`git clone git://code.osehra.org/VistA-FOIA.git`
-  Cloning into 'VistA-FOIA'...
-  .
-  .
-  .
-  $
-  $ :usertype:`cd VistA-FOIA`
-
-
-to make a local clone of the remote repository.
-
-
 Packing Routines and Globals
 ----------------------------
 
@@ -35,9 +14,9 @@ Execute the following two commands to prepare the data for import .
 .. parsed-literal::
 
 
-  VistA-FOIA$ :usertype:`git ls-files -- "*.m" | python Scripts/PackRO.py > routines.ro`
+  VistA-FOIA$ :usertype:`git ls-files -- "\*.m" | python Scripts/PackRO.py > routines.ro`
 
-  VistA-FOIA$ :usertype:`git ls-files -- "*.zwr" > globals.lst`
+ VistA-FOIA$ :usertype:`git ls-files -- "\*.zwr" > globals.lst`
 
 
 

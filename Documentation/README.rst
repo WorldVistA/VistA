@@ -9,6 +9,7 @@ These pages describe the steps required to obtain the OSEHRA open source VistA c
 The instructions comprise of the following sections:
 
   * ObtainingandInstallAuxPrograms_
+  * ObtainingVistAMCode_
   * ChoosingMUMPSEnvironment_
 
 For the following two sections, follow the instructions based upon which type of MUMPS database will be utilized:
@@ -30,6 +31,10 @@ The last sections are common to both types of systems:
   * RunningandUploadingTests_
   * ReviewingResults_
 
+The import and simple configuration of the M components of VistA has been automated.
+See AutomatedVistAConfiguration_ for more details.
+
+
 Troubleshooting:
 ````````````````
 
@@ -38,6 +43,7 @@ To report a problem or see potential solutions visit the `Troubleshooting Page`_
 
 .. _`Troubleshooting Page`: http://www.osehra.org/wiki/troubleshooting-installation-and-testing
 .. _ObtainingandInstallAuxPrograms: ObtainingandInstallAuxPrograms.rst
+.. _ObtainingVistAMCode: ObtainingVistAMCode.rst
 .. _ChoosingMUMPSEnvironment: ChoosingMUMPSEnvironment.rst
 .. _InstallCache: InstallCache.rst
 .. _ImportCache: ImportCache.rst
@@ -47,3 +53,4 @@ To report a problem or see potential solutions visit the `Troubleshooting Page`_
 .. _SetupTestingEnvironment: SetupTestingEnvironment.rst
 .. _RunningandUploadingTests: RunningandUploadingTests.rst
 .. _ReviewingResults: ReviewingResults.rst
+.. _AutomatedVistAConfiguration: AutomatedVistAConfiguration.rst
