@@ -19,7 +19,7 @@ import sys
 import subprocess
 import re
 import argparse
-from LoggerManager import logger
+from LoggerManager import logger, initConsoleLogging
 
 
 """ Utility class to find out the OS platform """
@@ -80,7 +80,11 @@ class VistATestClient(object):
   def __enter__(self):
     return self
   def __exit__(self, exc_type, exc_value, traceback):
+    logger.debug("__exit__ is called %s,%s,%s" % (exc_type, exc_value, traceback))
     connection = self._connection
+    if exc_type is KeyboardInterrupt:
+      connection.terminate()
+      return True
     if connection is not None and connection.isalive():
     # try to close the connection gracefully
       try:
@@ -88,18 +92,18 @@ class VistATestClient(object):
           connection.send("^\r") # get out of the MENU prompt by sending ^
           connection.send("\r") # get out of the MENU prompt by sendng \r
         connection.send("Q\r") # clean up any stack
-        self.waitForPrompt(2) # wait for VistA prompt for 2 seconds
+        self.waitForPrompt(1) # wait for VistA prompt for 1 seconds
         connection.send("H\r") # Halt VistA connection
-      except TIMEOUT as ex:
-        pass
+      except Exception as ex:
+        logger.error(ex)
       if isLinuxSystem():
         if connection.isalive():
           """ pexpect close() will close all open handlers and is non-blocking """
           try:
-            self._connection.close()
+            connection.close()
           except ExceptionPexpect as ose:
             logger.error(ose)
-    self._connection.terminate()
+    connection.terminate()
     return
   def __del__(self):
     if self._connection is not None:
@@ -295,6 +299,8 @@ def main():
                                    parents=[testClientParser])
   result = parser.parse_args();
   print (result)
+  import logging
+  initConsoleLogging(logging.INFO)
   testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
   assert testClient
   """ this is to test the context manager to make sure the resource
