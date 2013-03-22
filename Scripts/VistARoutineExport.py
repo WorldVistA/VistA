@@ -35,7 +35,7 @@ class VistARoutineExport(object):
     connection.send("%s\r" % nativeName)
     """ this could be system dependent format """
     selectionList = ["Parameters\? \"WNS\" =>",
-                     "exists, do you want to overwrite it\? [ \r\n]*Yes =>",
+                     "Yes =>", # for prompt "file exists, do you want to overwrite it"
                      "Printer Format\? No =>"]
     while True:
       index = connection.expect(selectionList)

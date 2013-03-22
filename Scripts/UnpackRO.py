@@ -20,11 +20,12 @@
 #---------------------------------------------------------------------------
 
 import sys
+import os
 
-def unpack(ro):
+def unpack(ro, out=sys.stdout, odir=None):
     # Write out the two header lines for human reference.
-    sys.stdout.write(ro.readline())
-    sys.stdout.write(ro.readline())
+    out.write(ro.readline())
+    out.write(ro.readline())
 
     m = None
 
@@ -42,9 +43,12 @@ def unpack(ro):
             # ignore that.
             name,up,rest = line.partition('^')
             name = name.strip()
-            m = open(name+'.m','w')
+            rname = name+'.m'
+            if odir:
+              rname = os.path.join(odir, rname)
+            m = open(rname,'w')
             # Report the new routine name for human reference.
-            sys.stdout.write('%s\n' % name)
+            out.write('%s\n' % name)
     if m:
         m.close()
         m = None

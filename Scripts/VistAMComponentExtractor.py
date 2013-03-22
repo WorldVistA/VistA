@@ -23,7 +23,8 @@ import shutil
 import glob
 import argparse
 # add the current to sys.path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(SCRIPTS_DIR)
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
 from VistARoutineExport import VistARoutineExport
 from VistARoutineImport import VistARoutineImport
@@ -49,15 +50,13 @@ class VistADataExtractor:
     assert os.path.exists(vistARepoDir)
     assert os.path.exists(outputResultDir)
     assert os.path.exists(outputLogDir)
-    vistAScriptsDir = os.path.join(vistARepoDir, "Scripts")
-    assert os.path.exists(vistAScriptsDir)
-    sys.path.append(vistAScriptsDir) # append scripts dir to sys.path
     self._vistARepoDir = vistARepoDir
     self._outputLogDir = outputLogDir
     self._outputResultDir = outputResultDir
     self._packagesDir = os.path.join(self._vistARepoDir, "Packages")
     assert os.path.exists(self._packagesDir)
-    self._packagesCSV = os.path.join(self._vistARepoDir, "Packages.csv")
+    self._packagesCSV = os.path.normpath(os.path.join(SCRIPTS_DIR,
+                                                 "../Packages.csv"))
     assert os.path.exists(self._packagesCSV)
     self._routineOutputFile = os.path.join(self._outputResultDir, "Routines.ro")
     self._globalOutputDir = os.path.join(self._outputResultDir, "Globals")
@@ -140,13 +139,13 @@ class VistADataExtractor:
     from UnpackRO import unpack
     assert os.path.exists(routinesOutputFile)
     assert os.path.exists(outputDir)
+    absOutDir = os.path.abspath(outputDir)
+    logfile = os.path.join(absOutDir, "unpackro.log")
     logger.info("Unpack routines from %s to %s" %
                 (routinesOutputFile, outputDir))
-    curDir = os.getcwd()
-    os.chdir(outputDir)
     with open(routinesOutputFile, 'r') as routineFile: # open as txt
-      unpack(routineFile)
-    os.chdir(curDir)
+      with open(logfile, 'w') as logFile:
+        unpack(routineFile, out=logFile, odir=outputDir)
 
   def __unpackRoutines__(self):
     self.unpackRoutines(self._routineOutputFile, self._packagesDir)
@@ -230,7 +229,7 @@ def main():
     vistADataExtractor.extractData(testClient)
 
 def test1():
-  vistADataExtractor = VistADataExtractor("",".",".")
+  vistADataExtractor = VistADataExtractor(".",".",".")
   vistADataExtractor.unpackRoutines(sys.argv[1], sys.argv[2])
   #vistADataExtractor.__chmodGlobalOutput__()
   #vistADataExtractor.__removePackagesTree__()
