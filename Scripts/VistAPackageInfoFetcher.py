@@ -276,14 +276,20 @@ class VistAPackageInfoFetcher(object):
       pprint.pprint(self._packagePatchHist[packageName].patchHistory[-1])
 
 """ a utility class to find out the choice number from VistA choice prompt """
-def findChoiceNumber(choiceTxt, matchString, namespace):
+def findChoiceNumber(choiceTxt, matchString, extraInfo=None):
   logger.debug("txt is [%s]" % choiceTxt)
+  matchRegEx = None
+  if extraInfo and len(extraInfo) > 0:
+    matchRegEx = re.compile('^  +(?P<number>[0-9]+)   %s +%s$' %
+                            (matchString, extraInfo))
+  else:
+    matchRegEx = re.compile('^  +(?P<number>[0-9]+)   %s$' % (matchString))
   choiceLines = choiceTxt.split('\r\n')
   for line in choiceLines:
-    if len(line.rstrip()) == 0:
+    line = line.rstrip()
+    if len(line) == 0:
       continue
-    result = re.search('^ +(?P<number>[1-9])   %s +%s$' % (matchString,
-                                                      namespace), line)
+    result = matchRegEx.search(line)
     if result:
       return result.group('number')
     else:
@@ -466,7 +472,7 @@ def testMain():
   with testClient:
     initConsoleLogging()
     packagePatchHist = VistAPackageInfoFetcher(testClient)
-    #packagePatchHist.getAllPackagesPatchHistory()
+    packagePatchHist.getAllPackagesPatchHistory()
     packagePatchHist.getPackagePatchHistByName("TOOLKIT")
     packagePatchHist.printPackageLastPatch("TOOLKIT")
     packagePatchHist.getPackagePatchHistByName("IMAGING")
