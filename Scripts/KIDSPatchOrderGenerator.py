@@ -45,6 +45,7 @@ KIDS_BUILD_FILE_TYPE_HEADER = 1
 KIDS_BUILD_FILE_TYPE_SHA1 = 2
 
 from LoggerManager import logger, initConsoleLogging
+from KIDSPatchParser import KIDSPatchParser
 from KIDSPatchInfoParser import KIDSPatchInfoParser
 from KIDSPatchInfoParser import convertToInstallName
 from KIDSPatchInfoParser import dirNameToInstallName, KIDSPatchInfo
@@ -69,6 +70,7 @@ patch directory
 class KIDSPatchOrderGenerator(object):
   def __init__(self):
     self._kidsInstallNameDict = dict() # the install name -> kids files
+    self._kidsDepBuildDict = dict() # install name -> [dependency build]
     self._multiBuildDict = dict() # kids file -> [install names]
     self._kidsBuildFileDict = dict() # all the kids files name->[path,sha1path]
     self._kidsInstallNameSha1Dict = dict() # install name -> sha1
@@ -212,12 +214,24 @@ class KIDSPatchOrderGenerator(object):
 
   """ parse all the KIDS files, update kidsInstallNameDict, multibuildDict """
   def __parseAllKIDSBuildFilesList__(self):
-    kidsParser = KIDSPatchInfoParser()
     for basename in self._kidsBuildFileDict.iterkeys():
       kidsFile, sha1Path = self._kidsBuildFileDict[basename]
       if kidsFile == None:
         logger.error("No KIDS file available for name %s" % basename)
-      installNameList,seqNo = kidsParser.getKIDSBuildInstallNameSeqNo(kidsFile)
+        continue
+      installNameList, seqNo, kidsBuilds = None, None, None
+      if isValidKIDSPatchHeaderSuffix(kidsFile):
+        from KIDSPatchParser import loadMetaDataFromJSON
+        #continue
+        installNameList, seqNo, kidsBuilds = loadMetaDataFromJSON(kidsFile)
+      else:
+        kidsParser = KIDSPatchParser(None)
+        kidsParser.unregisterSectionHandler(KIDSPatchParser.ROUTINE_SECTION)
+        kidsParser.parseKIDSBuild(kidsFile)
+        installNameList = kidsParser.installNameList
+        logger.debug("install name list is %s" % installNameList)
+        seqNo = kidsParser.seqNo
+        kidsBuilds = kidsParser.kidsBuilds
       if len(installNameList) > 1:
         if not self._multiBuildDict.get(kidsFile):
           self._multiBuildDict[kidsFile] = installNameList
@@ -238,6 +252,19 @@ class KIDSPatchOrderGenerator(object):
           if installName in self._kidsInstallNameSha1Dict:
             logger.warn("%s is already in the dict %s" % (installName, sha1Path))
           self._kidsInstallNameSha1Dict[installName] = sha1Path
+        """ update kids dependency """
+        if installName in self._kidsDepBuildDict:
+          logger.warn("%s is already has the dep map %s" %
+                      (installName, self._kidsDepBuildDict[installName]))
+        if kidsBuilds:
+          for kidsBuild in kidsBuilds:
+            if kidsBuild.installName == installName:
+              depList = kidsBuild.dependencyList
+              if depList:
+                self._kidsDepBuildDict[installName] = set([x[0] for x in
+                  depList])
+                logger.info("%s: %s" % (installName,
+                  self._kidsDepBuildDict[installName]))
 
     logger.debug("%s" % sorted(self._kidsInstallNameDict.keys()))
     logger.info("Total # of install name %d" % len(self._kidsInstallNameDict))
@@ -248,7 +275,7 @@ class KIDSPatchOrderGenerator(object):
     for kidsInfoFile in self._kidsInfoFileList:
       patchInfo = kidsParser.parseKIDSInfoFile(kidsInfoFile)
       if not patchInfo:
-        logger.warn("invalid kids info file %s" % kidsInfoFile)
+        logger.debug("invalid kids info file %s" % kidsInfoFile)
         self._invalidInfoFileSet.add(kidsInfoFile)
         continue
       """ only add to list for info that is related to a KIDS patch"""
@@ -273,6 +300,23 @@ class KIDSPatchOrderGenerator(object):
         logger.warn("duplicated installName %s, %s, %s" %
                      (installName, self._patchInfoDict[installName],
                      kidsInfoFile))
+      """ merge the dependency if needed """
+      if installName in self._kidsDepBuildDict:
+        infoDepSet = set()
+        kidsDepSet = set()
+        if patchInfo.depKIDSPatch:
+          infoDepSet = patchInfo.depKIDSPatch
+        if self._kidsDepBuildDict[installName]:
+          kidsDepSet = self._kidsDepBuildDict[installName]
+        diffSet = kidsDepSet ^ infoDepSet
+        if len(diffSet):
+          logger.info("Merging kids dependencies %s" % installName)
+          logger.debug("kids build set is %s" % kidsDepSet)
+          logger.debug("info build set is %s" % infoDepSet)
+          logger.warning("difference set: %s" % diffSet)
+          patchInfo.depKIDSPatch = infoDepSet | kidsDepSet
+        else:
+          patchInfo.depKIDSPatch = infoDepSet
       self._patchInfoDict[installName] = patchInfo
 
   """ update multiBuild KIDS files dependencies """
@@ -377,6 +421,10 @@ class KIDSPatchOrderGenerator(object):
       if kidsInstallName in self._installNameSeqMap:
         kidsPatchInfo.seqNo = self._installNameSeqMap[kidsInstallName]
       kidsPatchInfo.kidsFilePath = self._kidsInstallNameDict[kidsInstallName]
+      if kidsInstallName in self._kidsDepBuildDict:
+        logger.info("update the Missing Info KIDS depencency %s" %
+            kidsInstallName)
+        kidsPatchInfo.depKIDSPatch = self._kidsDepBuildDict[kidsInstallName]
       self._patchInfoDict[kidsInstallName] = kidsPatchInfo
   """ update the associated files for patchInfo """
   def __handlePatchAssociatedFiles__(self):

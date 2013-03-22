@@ -161,32 +161,6 @@ class KIDSPatchInfoParser(object):
   def __init__(self):
     pass
 
-  """ one KIDS file can contains several kids build together
-      get the KIDS Install Name from KIDS Build File and also
-      the SeqNo if available
-      @parameter kidsFile: path to KIDS Patch Build
-      @return: a tuple consists of a list of installNames
-         and seqNo if available
-  """
-  def getKIDSBuildInstallNameSeqNo(self, kidsFile):
-    assert os.path.exists(kidsFile)
-    kidsFileHandle = open(kidsFile, 'rb')
-    installNames, seqNo = None, None
-    for line in kidsFileHandle:
-      line = line.rstrip(" \r\n")
-      if len(line) == 0:
-        continue
-      ret = re.search("Released (.*) SEQ #(?P<num>[0-9]+)",line)
-      if ret:
-        seqNo = ret.group('num')
-        continue
-      ret = re.search('^\*\*KIDS\*\*:(?P<name>.*)\^$', line)
-      if ret:
-        installNames = ret.group('name').strip().split('^')
-        break
-    kidsFileHandle.close()
-    return (installNames, seqNo)
-
   """ Parse KIDS Info File, and store result in KIDSPatchInfo
     @parameter infoFile: the path to KIDS Info file
     @return KIDSPatchInfo object if has installName, otherwise None
