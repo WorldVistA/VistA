@@ -208,7 +208,6 @@ class DefaultKIDSPatchInstaller(object):
 
   """ go to the restart KIDS build option """
   def __selectRestartInstallOption__(self, connection):
-    connection.expect("Select Kernel Installation & Distribution System ")
     connection.send("Installation\r")
     connection.expect("Select Installation ")
     connection.send("Restart Install of\r") # restart install of package(s)
@@ -217,7 +216,7 @@ class DefaultKIDSPatchInstaller(object):
 
   """ go to the unload a distribution option """
   def __selectUnloadDistributionOption__(self, connection):
-    connection.expect("Select Kernel Installation & Distribution System ")
+    #connection.expect("Select Kernel Installation & Distribution System ")
     connection.send("installation\r")
     connection.expect("Select Installation ")
     connection.send("Unload a Distribution\r")
@@ -485,45 +484,21 @@ class DefaultKIDSPatchInstaller(object):
 """ utility function to find the name associated the DUZ """
 def getPersonNameByDuz(inputDuz, vistAClient):
   logger.info ("inputDuz is %s" % inputDuz)
-  """ go to fileman options """
+  """ user Kernel User API """
   connection = vistAClient.getConnection()
   menuUtil = VistAMenuUtil(duz=1)
-  menuUtil.gotoFileManSearchFileEntryMenu(vistAClient)
-  connection.send("200\r")
-  connection.expect("-A- SEARCH FOR NEW PERSON FIELD: ")
-  connection.send("NUMBER\r")
-  connection.expect("-A- CONDITION: ")
-  connection.send("EQUALS\r")
-  connection.expect("-A- EQUALS: ")
-  connection.send("%s\r" %inputDuz)
-  connection.expect("-B- SEARCH FOR NEW PERSON FIELD: ")
-  connection.send("\r")
-  connection.expect("IF: A// ")
-  connection.send("\r")
-  connection.expect("STORE RESULTS OF SEARCH IN TEMPLATE: ")
-  connection.send("\r")
-  connection.expect("SORT BY: NAME// ")
-  connection.send("\r")
-  connection.expect("START WITH NAME: FIRST// ")
-  connection.send("\r")
-  connection.expect("FIRST PRINT FIELD: ")
-  connection.send(".01\r") # this is the fileman field number of NAME field
-  connection.expect("THEN PRINT FIELD: ")
-  connection.send("\r")
-  connection.expect("Heading \(S/C\): NEW PERSON SEARCH// ")
-  connection.send("@\r") # no heading
-  connection.expect("DEVICE: ")
-  connection.send("\r")
-  connection.expect("Right Margin: [0-9]+//")
-  connection.send("\r")
-  connection.expect("Select OPTION: ")
-  matchList = connection.before.split("\r\n")
-  menuUtil.exitFileManMenu(vistAClient, waitOption=False)
-  for line in matchList:
-    if len(line.strip()) == 0:
-      continue
-    return line.strip() # return the very first non-empty line as result
-  return None
+  menuUtil.gotoSystemMenu(vistAClient)
+  connection.send('Prog\r')
+  connection.expect('Select Programmer Options')
+  connection.send('^\r')
+  menuUtil.exitSystemMenu(vistAClient)
+  vistAClient.waitForPrompt()
+  connection.send('W $$NAME^XUSER(%s)\r' % inputDuz)
+  connection.expect('\)') # get rid of the echo
+  vistAClient.waitForPrompt()
+  result = connection.before.strip(' \r\n')
+  connection.send('\r')
+  return result
 
 """ function to add an entry to PACAKGE HISTORY """
 def addPackagePatchHistory(packageName, version, seqNo,
@@ -610,12 +585,10 @@ def testAddPackagePatchHistory():
 """ Test Function getPersonNameByDuz """
 def testGetPersonNameByDuz():
   testClient = createTestClient()
-  try:
-    result = getPersonNameByDuz(17, testClient)
+  initConsoleLogging()
+  with testClient:
+    result = getPersonNameByDuz(1, testClient)
     print ("Name is [%s]" % result)
-  finally:
-    testClient.getConnection().terminate()
-  sys.exit(0)
 
 """ main entry """
 def main():

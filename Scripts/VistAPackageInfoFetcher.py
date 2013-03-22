@@ -66,6 +66,7 @@ class VistAPackageInfoFetcher(object):
     menuUtil.exitFileManMenu(self._testClient, waitOption=False)
 
   def __parseAllPackages__(self, allPackageString):
+    MAX_PACKAGE_NAME_LEN = 32
     allLines = allPackageString.split('\r\n')
     packageStart = False
     for line in allLines:
@@ -76,11 +77,11 @@ class VistAPackageInfoFetcher(object):
         packageStart = True
         continue
       if packageStart:
-        packageName = line[:32].strip()
-        packageNamespace = line[32:].strip()
+        packageName = line[:MAX_PACKAGE_NAME_LEN].strip()
+        packageNamespace = line[MAX_PACKAGE_NAME_LEN:].strip()
         self._packageMapping[packageNamespace] = packageName
 
-  def getPackagePatchHistory(self, packageName, namespace):
+  def getPackagePatchHistory(self, packageName, namespace, version=None):
     if not self._packageMapping:
       self.createAllPackageMapping()
     connection = self._testClient.getConnection()
@@ -91,7 +92,7 @@ class VistAPackageInfoFetcher(object):
     connection.expect("Select PACKAGE NAME:")
     connection.send("%s\r" % packageName)
     while True:
-      index  = connection.expect(["Select VERSION: [0-9.]+\/\/",
+      index  = connection.expect(["Select VERSION: [0-9.VvTtPp]+\/\/",
                                   "Select VERSION: ",
                                   "Select Utilities ",
                                   "CHOOSE [0-9]+-[0-9]+"])
@@ -104,21 +105,56 @@ class VistAPackageInfoFetcher(object):
         continue
       if index == 0 or index == 1:
         if index == 0:
-          connection.send("\r")
+          if version:
+            connection.send("%s\r" % version)
+          else:
+            connection.send("\r")
         else:
           connection.send("1.0\r")
-        connection.expect("Do you want to see the Descriptions\?")
-        connection.send("\r")
-        connection.expect("DEVICE:")
-        connection.send(";132;99999\r")
+        """ handle the case that same version could also have different
+            history, like test version T1, T2 or V1, V2, or package does not
+            have a version information (old system)
+        """
+        while True:
+          idx = connection.expect(["Do you want to see the Descriptions\?",
+                                    "CHOOSE [0-9]+-[0-9]+",
+                                    "Select VERSION: ",
+                                    "DEVICE:"])
+          if idx == 0:
+            connection.send("\r")
+            continue
+          elif idx == 1:
+            connection.send("1\r") # always use the latest one
+            continue
+          elif idx == 2:
+            connection.send('^\r')
+            break
+          elif idx ==3 :
+            connection.send(";132;99999\r")
+            break
         connection.expect("Select Utilities ")
         result = parseKIDSPatchHistory(connection.before,
-                                       packageName, namespace)
+                                       packageName, namespace, version)
         break
       else:
         break
     menuUtil.exitKidsUtilMenu(self._testClient)
-    self._packagePatchHist[packageName] = result
+    if not result:
+      return result
+    assert result.version
+    # ignore the non-floating version
+    try:
+      curVer = float(result.version)
+    except ValueError as ve:
+      return None
+    if packageName not in self._packagePatchHist:
+      self._packagePatchHist[packageName] = dict()
+    verDict = self._packagePatchHist[packageName]
+    curVer = float(result.version)
+    if curVer in verDict:
+      logger.info("already has hist for ver:%s, package:%s" %
+                  (result.version, packageName))
+    self._packagePatchHist[packageName][curVer] = result
     return result
 
   def getAllPackagesPatchHistory(self):
@@ -129,25 +165,42 @@ class VistAPackageInfoFetcher(object):
       #if not (package[0] == "PHARMACY" and package[1] == "PS"): continue
       self.getPackagePatchHistory(package, namespace)
 
-  def getPackagePatchHistByName(self, packageName):
+  def getPackagePatchHistByName(self, packageName, version=None):
     if not self._packageMapping:
       self.createAllPackageMapping()
     if not packageName:
       return None
     if packageName in self._packagePatchHist:
-      return self._packagePatchHist[packageName]
+      result = self._getPackageHistListByVer(packageName, version)
+      if result:
+        return result
     for (namespace, package) in self._packageMapping.iteritems():
       if package == packageName:
-        result = self.getPackagePatchHistory(package, namespace)
+        result = self.getPackagePatchHistory(package, namespace, version)
         return result
+    return None
 
-  def getPackagePatchHistByNamespace(self, namespace):
+  def _getPackageHistListByVer(self, package, version):
+    verDict = self._packagePatchHist[package]
+    if version:
+      floatVer = float(version)
+      if floatVer in verDict:
+        return verDict[floatVer]
+      else:
+        return None
+    else:
+      return verDict[sorted(verDict.keys(),reverse=True)[0]]
+
+  def getPackagePatchHistByNamespace(self, namespace, version=None):
     if not self._packageMapping:
       self.createAllPackageMapping()
     if namespace in self._packageMapping:
       package = self._packageMapping[namespace]
-      if package in self._packagePatchHist: return
-      result = self.getPackagePatchHistory(package, namespace)
+      if package in self._packagePatchHist:
+        result = self._getPackageHistListByVer(package, version)
+        if result:
+          return result
+      result = self.getPackagePatchHistory(package, namespace, version)
       return result
 
   def hasPatchHistoryList(self, namespace):
@@ -175,19 +228,23 @@ class VistAPackageInfoFetcher(object):
       return False
     packageName = self._packageMapping[namespace]
     if packageName not in self._packagePatchHist:
-      self.getPackagePatchHistByNamespace(namespace)
-    patchHist = self._packagePatchHist[packageName]
-    if seqNo:
-      if patchHist.hasSeqNo(seqNo):
-        return True
-    if patchHist.version:
-      if float(patchHist.version) != float(version):
-        logger.info("Diff ver %s, %s" % (patchHist.version, version))
-        status = self.getInstallationStatus(installName)
-        return self.isInstallCompleted(status)
-    if patchNo:
-      return patchHist.hasPatchNo(patchNo)
-    logger.debug("Check to see if install is completed %s" % installName)
+      patchHist = self.getPackagePatchHistByNamespace(namespace, version)
+    else:
+      patchHist = self._getPackageHistListByVer(packageName, version)
+      if not patchHist:
+        patchHist = self.getPackagePatchHistByNamespace(namespace, version)
+    if patchHist:
+      if seqNo:
+        if patchHist.hasSeqNo(seqNo):
+          return True
+      if patchHist.version:
+        try:
+          if float(patchHist.version) != float(version):
+            logger.info("Diff ver %s, %s" % (patchHist.version, version))
+        except Exception as ex:
+          logger.error(ex)
+      if patchNo:
+        return patchHist.hasPatchNo(patchNo)
     status = self.getInstallationStatus(installName)
     return self.isInstallCompleted(status)
 
@@ -258,6 +315,21 @@ class VistAPackageInfoFetcher(object):
         continue
     menuUtil.exitFileManMenu(self._testClient)
     return result
+  """ use Kernel KIDS API to check the installation status """
+  def isPatchInstalled(self, installName):
+    connection = self._testClient.getConnection()
+    self._testClient.waitForPrompt()
+    connection.send('W $$PATCH^XPDUTL("%s")\r' % installName)
+    connection.expect('\)')
+    self._testClient.waitForPrompt()
+    result = connection.before.strip(' \r\n')
+    connection.send('\r')
+    try:
+      if int(result) == 1:
+        return True
+    except ValueError as ve:
+      pass
+    return False
 
   def printPackagePatchHist(self, packageName):
     import pprint
@@ -265,7 +337,9 @@ class VistAPackageInfoFetcher(object):
       print ("-----------------------------------------")
       print ("--- Package %s Patch History Info ---" % packageName)
       print ("-----------------------------------------")
-      pprint.pprint(self._packagePatchHist[packageName].patchHistory)
+      verDict = self._packagePatchHist[packageName]
+      for ver in sorted(verDict.keys(), reverse=True):
+        pprint.pprint(verDict[float(ver)].patchHistory)
 
   def printPackageLastPatch(self, packageName):
     import pprint
@@ -273,7 +347,10 @@ class VistAPackageInfoFetcher(object):
       print ("-----------------------------------------")
       print ("--- Package %s Last Patch Info ---" % packageName)
       print ("-----------------------------------------")
-      pprint.pprint(self._packagePatchHist[packageName].patchHistory[-1])
+      verDict = self._packagePatchHist[packageName]
+      for ver in sorted(verDict.keys(), reverse=True):
+        pprint.pprint("VERSION: %s" % ver)
+        pprint.pprint(verDict[float(ver)].patchHistory[-1])
 
 """ a utility class to find out the choice number from VistA choice prompt """
 def findChoiceNumber(choiceTxt, matchString, extraInfo=None):
@@ -343,7 +420,7 @@ a class to parse and store KIDS patch history info
 """
 class PatchInfo(object):
   PATCH_HISTORY_LINE_REGEX = re.compile("^   [0-9]")
-  PATCH_VERSION_LINE_REGEX = re.compile("^VERSION: [0-9.]+ ")
+  PATCH_VERSION_LINE_REGEX = re.compile("^VERSION: [0-9.]+ ?")
   PATCH_VERSION_START_INDEX = 3
   PATCH_APPLIED_DATETIME_INDEX = 20
   PATCH_APPLIED_USERNAME_INDEX = 50
@@ -445,7 +522,7 @@ def indexOfInstallStatus(statusTxt):
   return -1
 
 """ function to convert package patch history into PackagePatchHistory """
-def parseKIDSPatchHistory(historyString, packageName, namespace):
+def parseKIDSPatchHistory(historyString, packageName, namespace, version):
   allLines = historyString.split('\r\n')
   patchHistoryStart = False
   result = None
@@ -453,7 +530,7 @@ def parseKIDSPatchHistory(historyString, packageName, namespace):
     line = line.rstrip()
     if len(line) == 0:
       continue
-    if re.search("^-+$", line):
+    if re.search("^-+$", line): # find line with '----'
       patchHistoryStart = True
       continue
     if patchHistoryStart:
@@ -463,18 +540,28 @@ def parseKIDSPatchHistory(historyString, packageName, namespace):
       patchInfo = PatchInfo(line)
       result.addPatchInfo(patchInfo)
       if patchInfo.hasVersion():
+        if version:
+          try:
+            if float(version) != float(patchInfo.version):
+              logger.error("version mismatch, %s:%s" %
+                           (version, patchInfo.version))
+          except ValueError as ve:
+            logger.error(ve)
         result.setVersion(patchInfo.version)
   return result
 
 """ test the fetcher class """
 def testMain():
   testClient = createTestClient()
+  import logging
   with testClient:
-    initConsoleLogging()
+    initConsoleLogging(logging.INFO)
     packagePatchHist = VistAPackageInfoFetcher(testClient)
     packagePatchHist.getAllPackagesPatchHistory()
     packagePatchHist.getPackagePatchHistByName("TOOLKIT")
     packagePatchHist.printPackageLastPatch("TOOLKIT")
+    packagePatchHist.getPackagePatchHistByNamespace("FMDC")
+    packagePatchHist.printPackagePatchHist("FILEMAN DELPHI COMPONENTS")
     packagePatchHist.getPackagePatchHistByName("IMAGING")
     packagePatchHist.printPackageLastPatch("IMAGING")
     packagePatchHist.getPackagePatchHistByNamespace("VPR")
@@ -497,16 +584,24 @@ def createTestClient():
 def testIsInstallCompleted():
   testClient = createTestClient()
   assert testClient
+  import logging
   with testClient:
-    initConsoleLogging()
+    initConsoleLogging(logging.INFO)
     packagePatchHist = VistAPackageInfoFetcher(testClient)
     installNameLst = [
         "ECLAIMS 5 BUNDLE 1.0",
         "TEST 1.0",
+        "XOBU 1.6",
         "LR*5.2*334",
+        "XU*8.0*80",
         "TERATOGENIC MEDICATIONS ORDER CHECKS 1.0"
     ]
     for installName in installNameLst:
+      result = packagePatchHist.isPatchInstalled(installName)
+      if not result:
+        print ("%s installation status is %s" % (installName, "Not Installed"))
+      else:
+        print ("%s installation status is %s" % (installName, "Installed"))
       result = packagePatchHist.getInstallationStatus(installName)
       if packagePatchHist.isNotInstalled(result):
         print ("%s installation status is %s" % (installName, "Not Installed"))
