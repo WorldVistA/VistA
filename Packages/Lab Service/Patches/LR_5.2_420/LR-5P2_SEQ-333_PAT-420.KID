@@ -462,20 +462,3 @@ MISSED ;added in patch 420, process any records missed in previous month's extra
 ^333
 **END**
 **END**
-RY,U,8)
-"RTN","LRCAPDAR",123,0)
- . . . S LRNLT=$P($P(LRP8,"!",2),";"),LRLOINC=$P($P(LRP8,"!",3),";")
-"RTN","LRCAPDAR",124,0)
- . . . Q:'(+LRLOINC)
-"RTN","LRCAPDAR",125,0)
- . . . I +$G(^TMP($J,"ECXUTL6",LRLOINC))>0 D SET
-"RTN","LRCAPDAR",126,0)
- . . I $O(LRVV(0)) D FILE I $G(ECXTL)'="LAR" S ^XTMP("LRECX",CURMO,LRDFN,LRIDT)=1 ;Mark it as counted in this month's extract
-"RTN","LRCAPDAR",127,0)
- Q
-"VER")
-8.0^22.0
-"BLD",8259,6)
-^333
-**END**
-**END**

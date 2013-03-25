@@ -535,10 +535,11 @@ class KIDSPatchParser(object, ISectionParser):
         if envRtn not in [x.name for x in kidsBuild.routineList]:
           return False
       """ verify the routines inside each kids build """
-      for routine in kidsBuild.routineList:
-        if routine.expectCheckSum > 0:
-          if routine.checkSum != routine.expectCheckSum:
-            return False
+      if kidsBuild.routineList:
+        for routine in kidsBuild.routineList:
+          if routine.expectCheckSum > 0:
+            if routine.checkSum != routine.expectCheckSum:
+              return False
     return True
 
   """
