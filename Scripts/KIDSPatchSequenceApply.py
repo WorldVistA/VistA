@@ -42,7 +42,6 @@ def getCurrentTimestamp():
   return datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
-from VistATestClient import stopCache, forceDownCache, startCache
 from DefaultKIDSPatchInstaller import KIDSInstallerFactory
 from LoggerManager import logger, initConsoleLogging, initFileLogging
 from KIDSPatchInfoParser import extractInfoFromInstallName
@@ -71,70 +70,61 @@ class KIDSPatchSequenceApply(object):
     initFileLogging(os.path.join(logFileDir, self.DEFAULT_OUTPUT_FILE_LOG))
 
   """ generate the patch order sequence base on input """
-  def generateKIDSPatchSequence(self, patchDir, patchesCSV=None):
+  def generateKIDSPatchSequence(self, patchDir, installName=None,
+                                isUpToPatch=False):
     kidsOrderGen = self._kidsOrderGen
     patchHistInfo = self._vistaPatchInfo
     patchList = []
-    if patchesCSV and os.path.exists(patchCSVFile):
-      patchList = kidsOrderGen.generatePatchOrderByCSV(patchDir, patchCSVFile)
-    else:
+    if isUpToPatch:
       patchList = kidsOrderGen.generatePatchOrderTopologic(patchDir)
+    else:
+      patchList = kidsOrderGen.generatePatchOrderTopologic(patchDir, installName)
     self._patchSet.update([x.installName for x in patchList])
+    if installName and installName not in self._patchSet:
+      errMsg = ("Can not find patch for install name %s" % installName)
+      raise Exception(errMsg)
     for patchInfo in patchList:
       namespace = patchInfo.namespace
       self.__updatePatchInfoPackageName__(patchInfo)
       logger.info("Checking for patch info %s" % patchInfo.installName)
       logger.debug("Checking for patch info %s" % patchInfo)
       """ check to see if the patch is already installed """
-      if self.__isPatchInstalled__(patchInfo):
-        continue
-      if self.__isPatchReadyToInstall__(patchInfo, patchList):
-        self._outPatchList.append(patchInfo)
-      else:
-        logger.error("Can not install patch %s" % patchInfo.installName)
+      if not self.__isPatchInstalled__(patchInfo):
+        if self.__isPatchReadyToInstall__(patchInfo, patchList):
+          self._outPatchList.append(patchInfo)
+        else:
+          errorMsg = ("Can not install patch %s" % patchInfo.installName)
+          logger.error(errorMsg)
+          raise Exception(errorMsg)
+      if isUpToPatch and installName and installName == patchInfo.installName:
         break
+
     logger.info("Total patches are %d" % len(self._outPatchList))
     for patchInfo in self._outPatchList:
       logger.info("%s, %s, %s" % (patchInfo.installName,
                                   patchInfo.namespace,
                                   patchInfo.kidsFilePath))
 
-  """ apply the KIDS Patch in order """
-  def applyKIDSPatchSequence(self, numOfPatches = 1, restart = True):
+  """ Apply up to maxPatches KIDS Patches ordered by sequence number """
+  def applyKIDSPatchSequenceByNumber(self, maxPatches=1):
     totalPatch = len(self._outPatchList)
     numOfPatch = 1
-    if re.match("All", str(numOfPatches), re.IGNORECASE):
+    if re.match("All", str(maxPatches), re.IGNORECASE):
       numOfPatch = totalPatch
     else:
-      numOfPatch = int(numOfPatches)
-    restartCache = False
-    taskmanUtil = VistATaskmanUtil()
-    """ make sure taskman is running """
-    taskmanUtil.startTaskman(self._testClient)
-    for index in range(0,min(totalPatch, numOfPatch)):
-      patchInfo = self._outPatchList[index]
-      """ double check to see if patch is already installed """
-      if self.__isPatchInstalled__(patchInfo):
-        continue
-      if not self.__isPatchReadyToInstall__(patchInfo):
-        break
-      """ generate Sha1 Sum for patch Info """
-      self.generateSha1SumForPatchInfo(patchInfo)
-      """ install the KIDS patch """
-      result = self.__installKIDSPatch__(patchInfo)
-      if not result:
-        logger.error("Failed to install patch %s: KIDS %s" %
-                      (patchInfo.installName, patchInfo.kidsFilePath))
-        return
-      else:
-        # also need to reload the package patch hist
-        self.__reloadPackagePatchHistory__(patchInfo)
-        assert self.__isPatchInstalled__(patchInfo)
-        restartCache = True
-    taskmanUtil.waitTaskmanToCurrent(self._testClient)
-    """ restart Cache if needed """
-    if restart and restartCache and self._testClient.isCache():
-      self.__restartCache__()
+      numOfPatch = int(maxPatches)
+    endIndex = min(totalPatch, numOfPatch)
+    self.__applyKIDSPatchUptoIndex__(endIndex)
+
+  """ apply the KIDS Patch in sequence order up to specified install name """
+  def applyKIDSPatchSequenceByInstallName(self, installName, patchOnly=False):
+    if installName not in self._patchSet:
+      raise Exception("Invalid install name: %s" % installName)
+    if len(self._outPatchList) == 0:
+      logger.info("No Patch to apply")
+      return
+    logger.info("Apply patches up to %s" % installName)
+    self.__applyKIDSPatchUptoIndex__(len(self._outPatchList))
 
   @staticmethod
   def generateSha1SumForPatchInfo(patchInfo):
@@ -157,6 +147,60 @@ class KIDSPatchSequenceApply(object):
 #---------------------------------------------------------------------------
 # private implementation
 #---------------------------------------------------------------------------
+  """
+    apply patch incrementally up to the end index in self._outPatchList
+  """
+  def __applyKIDSPatchUptoIndex__(self, endIndex):
+    assert endIndex >= 0 and endIndex <= len(self._outPatchList)
+    """ make sure taskman is running """
+    taskmanUtil = VistATaskmanUtil()
+    taskmanUtil.startTaskman(self._testClient)
+    for index in range(0, endIndex):
+      patchInfo = self._outPatchList[index]
+      result = self.__applyIndividualKIDSPatch__(patchInfo)
+      if not result:
+        logger.error("Failed to install patch %s: KIDS %s" %
+                      (patchInfo.installName, patchInfo.kidsFilePath))
+        return
+    """ wait until taskman is current """
+    taskmanUtil.waitTaskmanToCurrent(self._testClient)
+
+#---------------------------------------------------------------------------
+# private implementation
+#---------------------------------------------------------------------------
+  """
+    get index of a patch in self._outPatchList by install name
+  """
+  def __getPatchIndexByInstallName__(self, installName):
+    idx = 0
+    for patchInfo in self._outPatchList:
+      if patchInfo.installName == installName:
+        return idx
+      idx += 1
+    return -1
+  """
+    apply individual KIDS patch
+  """
+  def __applyIndividualKIDSPatch__(self, patchInfo):
+    """ double check to see if patch is already installed """
+    if self.__isPatchInstalled__(patchInfo):
+      return True
+    if not self.__isPatchReadyToInstall__(patchInfo):
+      return False
+    """ generate Sha1 Sum for patch Info """
+    self.generateSha1SumForPatchInfo(patchInfo)
+    """ install the KIDS patch """
+    result = self.__installKIDSPatch__(patchInfo)
+    if not result:
+      errorMsg = ("Failed to install patch %s: KIDS %s" %
+                 (patchInfo.installName, patchInfo.kidsFilePath))
+      logger.error(errorMsg)
+      raise Exception(errorMsg)
+    else:
+      # also need to reload the package patch hist
+      self.__reloadPackagePatchHistory__(patchInfo)
+      assert self.__isPatchInstalled__(patchInfo)
+    return True
   """ get the package patch history and update package name
       for KIDS only build
   """
@@ -261,21 +305,6 @@ class KIDSPatchSequenceApply(object):
     assert kidsInstaller
     return kidsInstaller.runInstallation(self._testClient)
 
-  """ restart the cache instance """
-  def __restartCache__(self):
-    self._testClient.getConnection().terminate()
-    logger.info("Wait for 5 seconds")
-    time.sleep(5)
-    logger.info("Restart CACHE instance")
-    instanceName = self._testClient.getInstanceName()
-    result = stopCache(instanceName, True)
-    if not result:
-      result = forceDownCache(instanceName)
-      if result:
-        startCache(instanceName)
-      else:
-        logger.error("Can not stop cache instance %s" % instanceName)
-
   """ check to see if patch is ready to be installed """
   def __isPatchReadyToInstall__(self, patchInfo, patchList = None):
     packageName = patchInfo.package
@@ -325,8 +354,16 @@ def main():
                       help='Output dirctory to store all log file information')
   parser.add_argument('-i', '--install', default=False, action="store_true",
                       help = 'whether to install KIDS Patch or not')
-  parser.add_argument('-n', '--numOfPatch', required=False, default=1,
-    help="input All for all patches, otherwise just enter number, default is 1")
+  group = parser.add_mutually_exclusive_group()
+  group.add_argument('-n', '--numOfPatch', default=1,
+                     help="input All for all patches, "
+                          "otherwise just enter number, default is 1")
+  group.add_argument('-u', '--upToPatch',
+                     help="install patches up to specified install name")
+  group.add_argument('-o', '--onlyPatch',
+                     help='install specified patch and required patches only'
+                          ', this option will ignore the CSV dependencies')
+
   result = parser.parse_args();
   print (result)
   inputPatchDir = result.patchFileDir
@@ -338,9 +375,18 @@ def main():
   assert testClient
   with testClient as vistAClient:
     kidsPatchApply = KIDSPatchSequenceApply(vistAClient, outputDir)
-    kidsPatchApply.generateKIDSPatchSequence(inputPatchDir)
+    if result.upToPatch:
+      kidsPatchApply.generateKIDSPatchSequence(inputPatchDir,
+                                               result.upToPatch, True)
+    else:
+      kidsPatchApply.generateKIDSPatchSequence(inputPatchDir, result.onlyPatch)
     if result.install:
-      kidsPatchApply.applyKIDSPatchSequence(result.numOfPatch)
+      if result.onlyPatch:
+        kidsPatchApply.applyKIDSPatchSequenceByNumber("All")
+      elif result.upToPatch:
+        kidsPatchApply.applyKIDSPatchSequenceByInstallName(result.upToPatch)
+      else:
+        kidsPatchApply.applyKIDSPatchSequenceByNumber(result.numOfPatch)
 
 if __name__ == '__main__':
   main()

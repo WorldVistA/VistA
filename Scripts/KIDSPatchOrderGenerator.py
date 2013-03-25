@@ -88,15 +88,18 @@ class KIDSPatchOrderGenerator(object):
     self._installNameSeqMap = dict() # installName => seqNo, patch in order
     self._pythonScriptList = [] # all the python script files
 
-  def generatePatchOrder(self, patchReposDir):
-      return self.generatePatchOrderTopologic(patchReposDir)
+  def generatePatchOrder(self, patchReposDir, installName=None):
+      return self.generatePatchOrderTopologic(patchReposDir, installName)
 
   """ generate a patch seqence order by topologic sort """
-  def generatePatchOrderTopologic(self, patchDir):
+  def generatePatchOrderTopologic(self, patchDir, installName=None):
     self.analyzeVistAPatchDir(patchDir)
-    self.__updatePatchDependency__()
+    if installName:
+      if installName not in self._patchInfoDict:
+        raise Exception("Could not find patch for %s" % installName)
+    self.__updatePatchDependency__((installName is None))
     self.__generatePatchDependencyGraph__()
-    self.__topologicSort__()
+    self.__topologicSort__(installName)
     logger.info("After topologic sort %d" % len(self._patchOrder))
     self.printPatchOrderList()
     return self._patchOrder
@@ -304,9 +307,10 @@ class KIDSPatchOrderGenerator(object):
       if installName in self._csvDepDict:
         patchInfo.csvDepPatch = self._csvDepDict[installName]
 
-  def __updatePatchDependency__(self):
-    """ update the dependencies based on csv files """
-    self.__updateCSVDependencies__()
+  def __updatePatchDependency__(self, updCSVDep=True):
+    if updCSVDep:
+      """ update the dependencies based on csv files """
+      self.__updateCSVDependencies__()
     """ update the dependencies for multi-build KIDS files """
     self.__updateMultiBuildDependencies__()
 
@@ -537,19 +541,22 @@ class KIDSPatchOrderGenerator(object):
       using topologic sort algorithm, also for the patch under the
       same namepsace, make sure it was applied in the right sequence
   """
-  def __topologicSort__(self):
+  def __topologicSort__(self, installName=None):
     patchDict = self._patchInfoDict
     depDict = self._patchDependencyDict
     """ new generate a set consist of patch info that does not have incoming dependency"""
     startingSet = set()
-    for patch in patchDict.iterkeys():
-      found = False
-      for depSet in depDict.itervalues():
-        if patch in depSet:
-          found = True
-          break;
-      if not found:
-        startingSet.add(patch)
+    if installName:
+      startingSet.add(installName)
+    else:
+      for patch in patchDict.iterkeys():
+        found = False
+        for depSet in depDict.itervalues():
+          if patch in depSet:
+            found = True
+            break;
+        if not found:
+          startingSet.add(patch)
     startingList = [y.installName for y in sorted([patchDict[x] for x in startingSet],
                     cmp=comparePatchInfo)]
     visitSet = set() # store all node that are already visited
@@ -608,7 +615,10 @@ def testGeneratePatchOrder():
   if len(sys.argv) <= 1:
     sys.stderr.write("Specify patch directory")
     sys.exit(-1)
-  kidsInfoGen.generatePatchOrder(sys.argv[1])
+  if len(sys.argv) == 2:
+    kidsInfoGen.generatePatchOrder(sys.argv[1])
+  else:
+    kidsInfoGen.generatePatchOrder(sys.argv[1], sys.argv[2])
 
 if __name__ == '__main__':
   testGeneratePatchOrder()
