@@ -36,52 +36,7 @@ from KIDSPatchOrderGenerator import KIDSPatchOrderGenerator
 from KIDSPatchInfoParser import installNameToDirName
 from ConvertToExternalData import addToGitIgnoreList, isValidKIDSPatchHeaderSuffix
 from ConvertToExternalData import isValidSha1Suffix
-
-class Package:
-    def __init__(self, name, path):
-        self.name = name
-        self.path = path.strip().replace('/',os.path.sep)
-        self.included = set()
-        self.excluded = set()
-        self.globals = set()
-    def add_namespace(self, ns):
-        if ns:
-            if ns[0] in ('-','!'):
-                self.excluded.add(ns[1:])
-            else:
-                self.included.add(ns)
-    def add_number(self, n):
-        if n:
-            if n[0] == '.':
-                n = '0' + n
-            self.globals.add(n) # numbers work just like globals
-    def add_global(self, g):
-        if g:
-            self.globals.add(g)
-
-def order_long_to_short(l,r):
-    if len(l) > len(r):
-        return -1
-    elif len(l) < len(r):
-        return +1
-    else:
-        return cmp(l,r)
-
-def place(src,dst):
-    logger.info('%s => %s\n' % (src,dst))
-    d = os.path.dirname(dst)
-    if d and not os.path.exists(d):
-        try: os.makedirs(d)
-        except OSError as ex:
-          logger.error(ex)
-          pass
-    if not os.path.exists(dst):
-      try:
-        os.rename(src,dst)
-      except OSError as ex:
-        logger.error(ex)
-        logger.error( "%s => %s" % (src, dst))
-        pass
+from PopulatePackages import populatePackageMapByCSV, place, order_long_to_short
 
 def placeToDir(infoSrc, destDir, addToGitIgnore=True):
   if not infoSrc or not os.path.exists(infoSrc):
@@ -121,28 +76,7 @@ def placePatchInfo(patchInfo, curDir, path):
 #-----------------------------------------------------------------------------
 
 def populate(input):
-  packages_csv = csv.DictReader(input)
-  # Parse packages and namespaces from CSV table on stdin.
-  packages = []
-  pkg = None
-  for fields in packages_csv:
-      if fields['Package Name']:
-          pkg = Package(fields['Package Name'], fields['Directory Name'])
-          packages.append(pkg)
-      if pkg:
-          pkg.add_namespace(fields['Prefixes'])
-          pkg.add_number(fields['File Numbers'])
-          pkg.add_global(fields['Globals'])
-
-  # Construct "namespace => path" map.
-  namespaces = {}
-  for p in packages:
-      for ns in p.included:
-          namespaces[ns] = p.path
-      for ns in p.excluded:
-          if not namespaces.has_key(ns):
-              namespaces[ns] = None
-
+  packages, namespaces = populatePackageMapByCSV(input)
   #---------------------------------------------------------------------------
   # Collect all KIDS and info files under the current directory recursively
   #---------------------------------------------------------------------------

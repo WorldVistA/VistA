@@ -69,9 +69,7 @@ def place(src,dst):
         except OSError: pass
     os.rename(src,dst)
 
-#-----------------------------------------------------------------------------
-
-def populate(input):
+def populatePackageMapByCSV(input):
     packages_csv = csv.DictReader(input)
     # Parse packages and namespaces from CSV table on stdin.
     packages = []
@@ -94,6 +92,11 @@ def populate(input):
             if not namespaces.has_key(ns):
                 namespaces[ns] = None
 
+    return (packages, namespaces)
+#-----------------------------------------------------------------------------
+
+def populate(input):
+    packages, namespaces = populatePackageMapByCSV(input)
     #-----------------------------------------------------------------------------
 
     # Collect routines and globals in current directory.
