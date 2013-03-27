@@ -20,7 +20,7 @@ import os
 import argparse
 import time
 from VistAMenuUtil import VistAMenuUtil
-from LoggerManager import logger, initConsoleLogging
+from LoggerManager import logger, initConsoleLogging, getTempLogFile
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
 from VistAPackageInfoFetcher import findChoiceNumber
 
@@ -259,9 +259,6 @@ class VistATaskmanUtil(object):
     return self.TASKMAN_STATUS_UNKNOWN
 
 DEFAULT_OUTPUT_LOG_FILE_NAME = "TaskmanUtil.log"
-import tempfile
-def getTempLogFile():
-    return os.path.join(tempfile.gettempdir(), DEFAULT_OUTPUT_LOG_FILE_NAME)
 
 def main():
   import logging
@@ -278,7 +275,7 @@ def main():
   testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
   assert testClient
   with testClient as vistAClient:
-    logFilename = getTempLogFile()
+    logFilename = getTempLogFile(DEFAULT_OUTPUT_LOG_FILE_NAME)
     print "Log File is %s" % logFilename
     vistAClient.setLogFile(logFilename)
     taskmanUtil = VistATaskmanUtil()

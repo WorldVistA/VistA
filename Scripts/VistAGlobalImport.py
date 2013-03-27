@@ -18,6 +18,7 @@ import sys
 import os
 import argparse
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
+from LoggerManager import getTempLogFile
 
 DEFAULT_GLOBAL_IMPORT_TIMEOUT = 60 # default time out is 60 seconds
 class VistAGlobalImport(object):
@@ -56,9 +57,6 @@ class VistAGlobalImport(object):
     return True
 
 DEFAULT_OUTPUT_LOG_FILE_NAME = "GlobalImportTest.log"
-import tempfile
-def getTempLogFile():
-    return os.path.join(tempfile.gettempdir(), DEFAULT_OUTPUT_LOG_FILE_NAME)
 
 def testMain():
   testClientParser = createTestClientArgParser()
@@ -78,7 +76,7 @@ def testMain():
   testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
   assert testClient
   with testClient as vistAClient:
-    logFilename = getTempLogFile()
+    logFilename = getTempLogFile(DEFAULT_GLOBAL_IMPORT_TIMEOUT)
     print "Log File is %s" % logFilename
     vistAClient.setLogFile(logFilename)
     vistAGlobalImport = VistAGlobalImport()
