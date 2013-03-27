@@ -76,6 +76,33 @@ def addChangeSet(gitRepoDir=None, patternList=None):
   logger.info(output)
   return result
 
+def switchBranch(branchName, gitRepoDir=None):
+  """
+    Utility function to switch to a different branch
+    @branchName: the name of the branch to switch to
+    @gitRepoDir: git repository directory, default is current directory.
+                 if provided, will only add all changes under that directory
+    @return: return True if success, False otherwise
+  """
+  git_command_list = ["git", "checkout", branchName]
+  result, output = _runGitCommand(git_command_list, gitRepoDir)
+  logger.info(output)
+  return result
+
+def getStatus(gitRepoDir=None, subDirPath=None):
+  """
+    Utility function to report git status on the directory
+    @gitRepoDir: git repository directory, default is current directory.
+                 if provided, will only add all changes under that directory
+    @subDirPath: report only the status for the subdirectory provided
+    @return: return the status message
+  """
+  git_command_list = ["git", "status"]
+  if subDirPath:
+    git_command_list.extend(['--', subDirPath])
+  result, output = _runGitCommand(git_command_list, gitRepoDir)
+  return output
+
 def _runGitCommand(gitCmdList, workingDir):
   """
     Private Utility function to run git command in subprocess

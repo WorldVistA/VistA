@@ -32,6 +32,7 @@ from VistAGlobalExport import VistAGlobalExport
 from LoggerManager import logger, initConsoleLogging, initFileLogging
 from VistATaskmanUtil import VistATaskmanUtil
 from MCompReposReadMeGenerator import MCompReposReadMeGenerator
+from GitUtils import switchBranch, getStatus
 
 """ List of routine names that are excluded from export process """
 ROUTINE_EXTRACT_EXCLUDE_LIST = (
@@ -47,7 +48,8 @@ ROUTINE_EXTRACT_EXCLUDE_LIST = (
 """
 class VistADataExtractor:
   def __init__(self, vistARepoDir, outputResultDir,
-               outputLogDir, routineOutDir=None):
+               outputLogDir, routineOutDir=None,
+               gitBranch=None, generateReadMe=False):
     assert os.path.exists(vistARepoDir)
     assert os.path.exists(outputResultDir)
     assert os.path.exists(outputLogDir)
@@ -66,9 +68,11 @@ class VistADataExtractor:
     if routineOutDir:
       assert os.path.exists(routineOutDir)
     self._routineOutDir = routineOutDir
-
+    self._generateReadMe = generateReadMe
+    self._gitBranch = gitBranch
   def extractData(self, vistATestClient):
     self.__setupLogging__(vistATestClient)
+    self.__switchBranch__()
     self.__stopTaskman__(vistATestClient)
     self.__extractRoutines__(vistATestClient)
     self.__importZGORoutine__(vistATestClient)
@@ -109,7 +113,7 @@ class VistADataExtractor:
     logger.info("Import ZGO routine to VistA instance")
     from PackRO import pack
     zgoOutFile = os.path.join(self._outputResultDir, "ZGO.ro")
-    zgoRoutine = os.path.join(self._vistARepoDir, "Scripts", "ZGO.m")
+    zgoRoutine = os.path.join(SCRIPTS_DIR, "ZGO.m")
     assert os.path.exists(zgoRoutine)
     pack([zgoRoutine], open(zgoOutFile, 'w'))
     vistARoutineImport = VistARoutineImport()
@@ -141,7 +145,7 @@ class VistADataExtractor:
     assert os.path.exists(routinesOutputFile)
     assert os.path.exists(outputDir)
     absOutDir = os.path.abspath(outputDir)
-    logfile = os.path.join(absOutDir, "unpackro.log")
+    logfile = os.path.join(self._outputLogDir, "unpackro.log")
     logger.info("Unpack routines from %s to %s" %
                 (routinesOutputFile, outputDir))
     with open(routinesOutputFile, 'r') as routineFile: # open as txt
@@ -182,27 +186,26 @@ class VistADataExtractor:
 
   def __generatePackageReadMes__(self):
     # assume runs from the scripts directory
+    if not self._generateReadMe:
+      return
     curDir = os.getcwd()
     inputDir = os.path.normpath(os.path.join(curDir, "../"))
     readMeGen = MCompReposReadMeGenerator(inputDir,
                                           self._vistARepoDir)
     readMeGen.generatePackageReadMes()
 
+  def __switchBranch__(self):
+    if self._gitBranch is None:
+      return
+    switchBranch(self._gitBranch, self._vistARepoDir)
+
   def __reportGitStatus__(self):
-    curDir = os.getcwd()
-    try:
-      logger.info("Reporting git status on Uncategorized dir")
-      cmd = ["git","status","--","Uncategorized/"]
-      os.chdir(self._packagesDir)
-      output = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
-      logger.info(output)
-      logger.info("Reporting git status on Packages dir")
-      cmd = ["git","status","--","Packages/"]
-      os.chdir(self._vistARepoDir)
-      output = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
-      logger.info(output)
-    finally:
-      os.chdir(curDir)
+    logger.info("Reporting git status on Uncategorized dir")
+    output = getStatus(self._packagesDir, 'Uncategorized/')
+    logger.info(output)
+    logger.info("Reporting git status on Packages dir")
+    output = getStatus(self._packagesDir)
+    logger.info(output)
 
   def __cleanup__(self):
     pass
