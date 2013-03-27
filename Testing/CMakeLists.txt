@@ -378,3 +378,7 @@ if(TEST_VISTA_MUNIT)
     endif()
   endforeach()
 endif()
+#-----------------------------------------------------------------------------#
+##### SECTION TO RUN PACKAGE PREFIX PARSING TESTING #####
+#-----------------------------------------------------------------------------#
+add_test(PYTHON_PrefixParser ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Python/PrefixParserTest.py "Uncategorized" "${CMAKE_CURRENT_SOURCE_DIR}/Python/PackagePrefixSample.csv")
