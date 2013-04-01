@@ -1,0 +1,139 @@
+$TXT Created by GEBHART,BOBBIE at MNTVUU.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 10/05/12 at 10:50
+=============================================================================
+Run Date: MAR 04, 2013                     Designation: ECX*3*141
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #127                      Status: Released
+                  Compliance Date: APR 04, 2013
+=============================================================================
+
+Associated patches: (v)ECX*3*139   <<= must be installed BEFORE `ECX*3*141'
+
+Subject: NATIONAL CLINIC (728.441) FILE CODE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch ECX*3.0*141 adds 2 new clinic codes and updates the description
+ of 2 existing codes in the NATIONAL CLINIC (#728.441) file.
+   
+   ASSOCIATED REMEDY TICKET: 
+   =========================
+   1)  HD0000000752550    Update to the NATIONAL CLINIC (#728.441) file
+   
+   ASSOCIATED NSR:
+   ===============
+   N/A
+   
+   PARTICIPATING TEST SITES: 
+   =========================
+   Heartland-East HCS
+   Providence, RI
+   Tampa, FL
+   
+   Remedy Overview:
+   ================
+   1)  HD0000000752550    Update to the NATIONAL CLINIC (#728.441) file
+   
+   
+  
+   Problem:
+   --------
+   A request was made by the Decision Support Office (DSO) to update the 
+   NATIONAL CLINIC (#728.441) file with 2 new NATIONAL CLINIC codes and 
+   update the description of 2 existing codes.
+   
+   
+   Resolution:
+   -----------
+   This patch updates the NATIONAL CLINIC (#728.441) file by adding 2 
+   new records and updates the description of 2 existing codes.
+   
+   
+   The following entries have been added to the NATIONAL CLINIC (#728.441)
+   file:
+  
+   Code                 Short Description
+   --------------------------------------------
+   EQTH                 Equine Therapy
+   NCCH                 Nat'lCallCtrforHomelessVets
+  
+  
+   The following code's description changed:
+   
+   Existing Code        New Short Description
+   --------------------------------------------
+   PLTR                 Polytrauma PRC
+   PLTV                 TBI CVT Telehealth Eval
+  
+  
+  
+  Note: Each entry added to the ECX global will take approximately 85 bytes.
+  
+  
+  Installation Instructions:
+  --------------------------
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter ECX*3.0*141).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package ECX*3.0*141
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//" respond NO.
+   
+   ** 7. During install, verify that all entries were added successfully.
+         If an error is displayed, please file a Remedy Ticket.  
+   
+      8. You may delete the routine ECX141PT from your production system after 
+         the patch has been successfully tested.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;DEC 22,1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX141PT
+    Before:       n/a   After:  B8319711  **141**
+
+=============================================================================
+User Information:
+Entered By  : GEBHART,BOBBIE                Date Entered  : SEP 17, 2012
+Completed By: LEANORD,TATIANA               Date Completed: FEB 26, 2013
+Released By : VASSAR,CAROL                  Date Released : MAR 04, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

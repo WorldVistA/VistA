@@ -1,0 +1,285 @@
+$TXT Created by WESTRA,HERLAN at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 12/26/12 at 06:59
+=============================================================================
+Run Date: MAR 04, 2013                     Designation: XU*8*522
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #493                      Status: Released
+                  Compliance Date: APR 04, 2013
+=============================================================================
+
+Associated patches: (v)XU*8*595    <<= must be installed BEFORE `XU*8*522'
+
+Subject: ACTIVATE BROKER SECURITY ENHANCEMENT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is part of a series of patches shutting down CAPRI visitor
+ access and transitioning to the more secure Broker Security Enhancement
+ (BSE) visitor access.
+  
+ Patches XU*8*404 and XWB*1.1*45 provided the basis for the Broker Security
+ Enhancement (BSE) and provided applications which used the CAPRI visitor 
+ access with time to switch to the connection mechanisms provided in the 
+ BSE. Subsequently, patches XU*8*523 and XWB*1.1*53 provided support for
+ Imaging, VistA Web, and Medical Domain Web Services (MDWS) with support
+ for their use of the CAPRI visitor access. Patch XU*8*595 fixed a BSE 
+ issue and provided logging to help debug any future BSE issues.
+  
+ Now, almost six years later, this patch provides a parameter that gives 
+ sites the capability to trap CAPRI visitor access login attempts (for 
+ troubleshooting) and/or completely shut down CAPRI visitor access (for 
+ added security) and force usage of the Broker Security Enhancement.
+  
+ All sites, please follow these instructions below: 
+   1. Install patch XU*8*522 (see Installation Instructions below).
+      
+   2. Monitor your system for any user login / access problems. If there
+      are no new problems, you are done! 
+      
+   3. If you suspect there are any new user login / access problems after
+      installing patch XU*8*522, use the parameter XU522 (see example
+      below) to help troubleshoot. The parameter has four possible values:
+  
+       Y (YES) to disable CAPRI logins (the default behavior if not set).
+       E (ERROR) to disable CAPRI logins and trap attempts.
+       N (NO) to leave CAPRI logins enabled.
+       L (DEBUG) to leave CAPRI logins enabled but trap attempts.
+  
+      Note: This parameter is created by the installation, and is set to a 
+      value of "N" by a post-installation routine to leave CAPRI logins
+      enabled.
+  
+      To troubleshoot and to determine which applications may still be 
+      using CAPRI access to log onto your system, trap CAPRI login attempts
+      by setting the XU522 parameter to "E" or "L". Monitor the error trap
+      for trapped errors with a subject "OLDCAPRI LOGIN ATTEMPT". If any
+      such errors are found, file a Remedy ticket and examine the symbol
+      table to determine what application(s) are still trying to use CAPRI
+      to login to your system.
+      
+      If service to an application is being interrupted by this patch 
+      disabling CAPRI, you can enable CAPRI logins by changing the XU522
+      parameter to either "N" or "L" to re-enable the CAPRI logins until
+      the issue is resolved with the specific application(s) that may still
+      using CAPRI logins.
+      
+   4. Setting the XU522 parameter can be done from General Parameter Tools
+      menu under the CPRS Configuration (IRM) menu. It can also be set by
+      running the routine XPAREDIT.
+      
+   5. Once any problems are resolved, debugging can be turned off by 
+      setting the XU522 parameter back to "Y" or "N".
+     
+  Examples:
+  =========
+   Setting the XU522 parameter:
+  
+    CL     Clinician Menu ...
+    NM     Nurse Menu ...
+    WC     Ward Clerk Menu ...
+    PE     CPRS Configuration (Clin Coord) ...
+    IR     CPRS Configuration (IRM) ...
+  
+ Select CPRS Manager Menu Option: IR  CPRS Configuration (IRM)
+    OC     Order Check Expert System Main Menu ...
+    TI     ORMTIME Main Menu ...
+    UT     CPRS Clean-up Utilities ...
+    XX     General Parameter Tools ...
+    HD     HealtheVet Desktop Configuration ...
+    RD     Remote Data Order Checking Parameters
+  
+ Select CPRS Configuration (IRM) Option: GENERal Parameter Tools
+    LV     List Values for a Selected Parameter
+    LE     List Values for a Selected Entity
+    LP     List Values for a Selected Package
+    LT     List Values for a Selected Template
+    EP     Edit Parameter Values
+    ET     Edit Parameter Values with Template
+    EK     Edit Parameter Definition Keyword
+   
+ Select General Parameter Tools Option: EP  Edit Parameter Values
+                          --- Edit Parameter Values ---
+  
+ Select PARAMETER DEFINITION NAME: XU522     Patch 522 switch
+  
+ ---------- Setting XU522  for System: KRN.FO-OAKLAND.MED.VA.GOV ----------
+ CAPRI status: ? 
+  
+      Determines whether CAPRI logins are permitted and logged.
+      
+           Select one of the following:
+      
+                Y         Yes, disable
+                E         disable and trap attempts
+                N         No, do not disable
+                L         do not disable but trap attempts
+  
+ CAPRI status: <select appropriate setting>
+ --------------------------------------------------------------------------
+  
+ Select PARAMETER DEFINITION NAME:
+      
+  
+  Also can be set by running routine XPAREDIT
+  
+  >D ^XPAREDIT
+                          --- Edit Parameter Values ---
+  
+ Select PARAMETER DEFINITION NAME: XU522     Patch 522 switch
+  
+ ---------Setting XU522  for System: KRN.FO-OAKLAND.MED.VA.GOV ------------
+ CAPRI status: ? 
+  
+      Determines whether CAPRI logins are permitted and logged.
+      
+           Select one of the following:
+      
+                Y         Yes, disable
+                E         disable and trap attempts
+                N         No, do not disable
+                L         do not disable but trap attempts
+  
+ CAPRI status: <select appropriate setting> 
+ --------------------------------------------------------------------------
+  
+ Select PARAMETER DEFINITION NAME:  
+  
+  
+ Blood Bank Clearance: 
+ ====================
+ Blood Bank Review of Patch XU*8*522 (ACTIVATE BROKER SECURITY 
+ ENHANCEMENT), 2/23/2009.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*522 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of VISTA
+ Patches for Effects on VISTA Blood Bank Software. This patch does not
+ alter or modify any VistA Blood Bank software design safeguards or safety
+ critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*522 have no effect on Blood Bank
+ software functionality, therefore RISK is none.  
+  
+  
+ Patch Components
+ ================
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Test Sites: (Patch Tracking Message #57365382)
+ ----------
+ VA Ann Arbor Healthcare System, Ann Arbor, MI (506) - Large
+ Bay Pines VA Healthcare System, Bay Pines, FL (516) - Integrated
+ Edward Hines Jr. VA Hospital, Hines, IL (578) - Large
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel end-user documentation is available on the
+ VHA Software Document Library (VDL) at the following Internet Website:
+      http://www.va.gov/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the
+ system.  There are no menu options or protocols that need to be disabled.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 1 minute to install.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*522):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer "0" to 
+     "60" or "Q" (to queue the output to a printer).
+  
+  
+ Post-Installation Instructions
+ -----------------------------
+ There are no post-installation tasks to complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUP522
+    Before:       n/a   After:  B1027638  **522**
+Routine Name: XUSBSE1
+    Before: B82678942   After: B88363702  **404,439,523,595,522**
+ 
+Routine list of preceding patches: 595
+
+=============================================================================
+User Information:
+Entered By  : IVEY,JOEL                     Date Entered  : FEB 13, 2009
+Completed By: BEST,LISA                     Date Completed: JAN 14, 2013
+Released By : TILLIS,LEWIS                  Date Released : MAR 04, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

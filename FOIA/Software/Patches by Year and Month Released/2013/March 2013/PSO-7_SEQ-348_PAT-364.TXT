@@ -1,0 +1,132 @@
+$TXT Created by CREMEANS,THERESA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 03/05/12 at 11:59
+=============================================================================
+Run Date: MAR 05, 2013                     Designation: PSO*7*364
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #348                      Status: Released
+                  Compliance Date: APR 04, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*385   <<= must be installed BEFORE `PSO*7*364'
+
+Subject: LAST LOCAL NDC populated for Non E-billable drugs
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the issue where the LAST LOCAL NDC code (#1) is
+ being stored in the NDC BY OUTPATIENT SITE sub-file (#32) in the DRUG file
+ (#50) for non e-PAYABLE drugs.
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ HD0000000287015     Incorrect Drug Cost in Outpatient Rx.
+        Duplicates:           HD0000000310399
+                              HD0000000315367
+                              HD0000000324086
+                              HD0000000326615
+                              HD0000000326922
+                              HD0000000340646
+                              HD0000000378074
+                              HD0000000393590
+                              HD0000000453449
+                                      
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ James J Peters VA Medical Center - Bronx
+ San Francisco VA Medical Center
+ VA Western NY HCS 
+ Oklahoma City VA Medical Center
+   
+ Remedy Overview:
+ ================
+ HD0000000287015     Incorrect Drug Cost in Outpatient Rx.
+   
+ Problem: 
+ ========
+ The LAST LOCAL NDC field (#1) is incorrectly being populated in the NDC BY
+ OUTPATIENT SITE sub-file (#32) in the DRUG file (#50). This is causing the
+ incorrect drug cost being associated with non e-payable drugs, which
+ includes over-the-counter drugs, Investigational and some supply items.
+ The cost and NDC associated with those drugs should be from the top level
+ NDC field (#31) in the DRUG file (#50).  This top level NDC is only picked
+ up if there is no LAST LOCAL NDC (#1) stored in the NDC BY OUTPATIENT SITE
+ sub-file (#32) in the DRUG file (#50).
+  
+ Resolution:
+ ===========
+ Modify PSONDCUT to check for an e-payable status prior to making the call to
+ PSSNDCUT, which stores the NDC BY OUTPATIENT SITE multiple in the DRUG file
+ (#50). 
+  
+  
+  
+ ==============INSTALLATION INSTRUCTIONS ==============
+  
+ It is not necessary to disable any options.  The patch
+ should be installed during Non-Peak hours. It should
+ take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PS0*7.0*364)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package PSO*7.0*364.
+  
+   5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+   6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSONDCUT
+    Before: B54824511   After: B55461285  **148,287,317,289,385,364**
+ 
+Routine list of preceding patches: 385
+
+=============================================================================
+User Information:
+Entered By  : CREMEANS,THERESA              Date Entered  : JUL 21, 2010
+Completed By: HEFFERNAN,COREY               Date Completed: FEB 28, 2013
+Released By : VECE,VIRGINIA                 Date Released : MAR 05, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

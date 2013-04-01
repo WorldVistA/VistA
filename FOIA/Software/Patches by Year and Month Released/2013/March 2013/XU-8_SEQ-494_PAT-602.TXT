@@ -1,0 +1,350 @@
+$TXT Created by WESTRA,HERLAN at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Tuesday, 10/23/12 at 10:20
+=============================================================================
+Run Date: MAR 14, 2013                     Designation: XU*8*602
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #494                      Status: Released
+                  Compliance Date: APR 14, 2013
+=============================================================================
+
+Associated patches: (v)XU*8*513    <<= must be installed BEFORE `XU*8*602'
+
+Subject: FIX ALERT SURROGATE SETTINGS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Problems fixed in this patch include: 
+  
+   1.  If a surrogate is set for alerts using a START TIME of "NOW", and
+ then a second surrogate for a later time is added, the first entry (the
+ current surrogate setting) was removed.  After this patch is installed,
+ the current surrogate setting will only be removed if a replacement
+ surrogate is entered that also begins with a start time of "NOW", making
+ it the new current surrogate setting.
+  
+   2.  The prompts when setting a surrogate in VistA have been changed.  
+       a.  If no start date is entered, the start date will be entered as
+           "NOW" and only new alerts will be forwarded.  A start or end
+           date/time earlier than "NOW" is not permitted.  The user is
+           prompted that if a date is entered, then a time is also
+           required.
+       b.  If a start date or end date is entered without the year, and 
+           appending the current year will create a date in the past, then
+           a FUTURE year will be appended to the date.
+  
+   3.  Patch XU*8*513 added logic to restrict surrogate loops from 
+ forming.  In some cases, the logic was too restrictive and would not
+ permit a valid (non looping) surrogacy to be set.  The logic will now look
+ at the date/time when a surrogacy is scheduled to start or end when
+ evaluating cyclical surrogates, and will permit a valid surrogacy to be
+ set.
+  
+   4.  Mixed Operating System (Mixed-OS) VistA sites reported a problem
+ with forwarding alerts to a printer when logged into a Linux node.  The
+ "@CACHESYS0:PRINTQ: command not found" error that is generated indicates
+ that the selected printer was not set up with QUEUING=FORCED, which is a
+ requirement on Mixed-OS VistA systems.  The alerts software by default
+ would try to print directly (without queuing) to the printer.  The default
+ has now been changed to force queued printing.
+  
+   5.  The description for patch XU*8*513 states that when viewing alerts
+ in VistA, critical alerts will move to the top of the list.  They did not.
+ Now they do.
+  
+   6.  On rare occasions, a user received hundreds of mail message 
+ notifications of surrogate release.  This should no longer happen.
+  
+   7.  The prompts for the "Surrogate for which users?" [XQAL SURROGATE 
+ FOR WHICH USERS] menu option have been clarified.
+  
+ Blood Bank Team Coordination
+ ============================
+   
+ Clearance - 07/24/12
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*602 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+ not alter or modify any VistA Blood Bank software design safeguards or
+ safety critical elements functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8*602 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+  PSPO #1225 Exclusion of time entry at surrogacy removal date/time prompt 
+             causes no alert delivery to surrogate on last day
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  HD0000000063299    MOU-0502-31390-ALERTS Surrogate Problems
+  HD0000000289575    XQALERT SURROGATE SET/REMOVE
+  HD0000000371545    Unable to see surrogate under the Alerts - Set/Remove 
+                     Surrogate for User option
+  HD0000000429160    Forwarding an alert to PRINT COPY returns error
+  HD0000000470998    Abort when verifying a set of orders CPRS28
+  HD0000000499802    Repeating notification of Surrogate release
+  HD0000000707587    Multiple surrogates problem in settings after XU*8*513
+  HD0000000713880    issues with surrogate dropping when adding additional
+  HD0000000723243    Clerk action removing Provider Surrogate
+  HD0000000726019    XQALERT SURROGATE SET/REMOVE
+  HD0000000733753    Can't set surrogate
+  HD0000000748726    OERR - Other:  Surrogate Issue
+  HD0000000768068    Providers unable to enter in more than one surrogate
+  
+ 1. HD0000000063299 MOU-0502-31390-ALERTS Surrogate Problems
+  
+ Problem:
+ -------
+ While troubleshooting problems with surrogate settings (which have been 
+ corrected since this ticket was entered), it was suggested that the 
+ prompts be clarified for the "Surrogate for which users?" [XQAL SURROGATE 
+ FOR WHICH USERS] menu option to avoid confusion.
+  
+ Resolution:
+ ----------
+ The prompt has been changed from Select User (NEW PERSON entry) to Select 
+ Surrogate (NEW PERSON entry), as suggested.
+  
+ 2. HD0000000289575 XQALERT SURROGATE SET/REMOVE
+  
+ Problem:
+ -------
+ The option "Alerts - Set/Remove Surrogate for User" [XQALERT SURROGATE 
+ SET/REMOVE] asks for the date/time a surrogate should be removed.  The 
+ time is NOT required.  If the user does not enter a time it defaults to 
+ midnight of the previous date leaving the door open for the surrogate not 
+ to receive critical warnings for the last day entered.
+  
+ Resolution:
+ ----------
+ The prompts when setting a surrogate have been changed.  Date/time 
+ settings earlier than "NOW" are not permitted.  If a date, but no time, is
+ entered, the entry will not be accepted and the user will be prompted to
+ include a time.  This will implement step 1 of the permanent solution 
+ recommended for Patient Safety Issue #1225.  [PSPO #1225]
+  
+ 3. HD0000000371545 Unable to see surrogate under the Alerts - Set/Remove 
+ Surrogate for User option
+  
+ Problem:
+ -------
+ While setting a surrogate, the user specified an end date earlier than 
+ the start date and the surrogacy was not visible under the "Alerts - 
+ Set/Remove Surrogate for User" [XQALERT SURROGATE SET/REMOVE] menu 
+ option.  The user specified a start date of DEC 28 and an end date of JAN 
+ 03, and VistA appended the same year to both dates.
+  
+ Resolution:
+ ----------
+ The alerts software has been modified to only allow date/time settings 
+ "NOW" and into the future when setting surrogates in VistA. If the year is
+ omitted from the date, VistA will append a year for a date in the future.
+  
+ 4. HD0000000429160 Forwarding an alert to PRINT COPY returns error 
+ (duplicate HD0000000470998)
+  
+ Problem:
+ -------
+ Forwarding an Alert to PRINT COPY returns "@CACHESYS0:PRINTQ: command not
+ found".  This only happens when the user is logged in to a Linux
+ application server.  Subroutine FORWARD^XQALFWD (Integration Agreement
+ #3009) does not force print queuing if the Linux system is set up
+ incorrectly.  This also affects CPRS users if notifications are set to be
+ printed, and the printer has not been set to QUEUING=FORCED.
+  
+ Resolution:
+ ----------
+ Subroutine FORWARD^XQALFWD was modified to force print queuing by default.
+  
+ 5. HD0000000499802 Repeating notification of Surrogate release
+  
+ Problem:
+ -------
+ A nurse released her surrogate resulting in the released individual 
+ getting repeated emails concerning this release.
+  
+ Resolution:
+ ----------
+ This is due to old entries in the ALERTS file (#8992) SURROGATE multiple 
+ fields. In the past, Remedy tickets for this issue have been resolved by 
+ cleaning out historical entries that were no longer needed for processing 
+ of alerts. Expired surrogate entries will now be removed automatically 
+ from the file after all alert processing for those surrogacies has been 
+ completed.
+  
+ 6. HD0000000707587 Multiple surrogates problem in settings after XU*8*513 
+ (duplicates HD0000000713880, HD0000000723243, HD0000000726019, 
+ HD0000000748726, HD0000000768068)
+  
+ Problem:
+ -------
+ There is a problem with using a START TIME of "NOW" (or blank, which
+ defaults to "NOW") for setting a surrogate, and then entering a 
+ second surrogate entered in succession after the first.  When the second 
+ surrogate is entered, the first entry (the current surrogate setting) 
+ is deleted.  This happens any time that there is a current (active) 
+ surrogate setting and a future setting is added.
+  
+ Resolution:
+ ----------
+ Routine ^XQALSURO has been modified to only remove the current surrogate 
+ setting if a replacement setting is entered that also begins with a start 
+ time of "NOW" (or blank, which defaults to "NOW"), making it the new
+ current surrogate setting.
+  
+ 7. HD0000000733753 Can't set surrogate
+  
+ Problem:
+ -------
+ Dr. A is on leave and Dr. B is her surrogate.  Dr. B is going on leave 
+ next week and Dr. A will be back and will be surrogate for Dr. B.  Using 
+ option "Alerts - Set/Remove Surrogate for User" [XQALERT SURROGATE 
+ SET/REMOVE] won't allow us to put in the surrogate for next week.  VistA 
+ returns message "YOU are designated as the surrogate for this user (####) 
+ - can't do it!"
+  
+ Resolution:
+ ----------
+ The check for a cyclical surrogate has been moved from the start of the 
+ process (when surrogate start and end date/times are not yet available) 
+ to the end of the process, so the above scenario can now be entered in 
+ VistA without error.
+  
+  
+ Test Sites: (Patch Tracking Message #58175136)
+ ----------
+ Dayton VA Medical Center, Dayton OH (552) - Large
+ James E. Van Zandt VA Medical Center, Altoona PA (503) - Small
+ Ralph H. Johnson VA Medical Center, Charleston SC (534) - Large
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel end-user documentation is available on the
+ VHA Software Document Library (VDL) at the following Internet Website:
+      http://www.va.gov/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the
+ system.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 1 minute to install.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*602):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer "0" to 
+     "60" or "Q" (to queue the output to a printer).
+  
+  
+ Post-Installation Instructions
+ -----------------------------
+ There are no post-installation tasks to complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQALBUTL
+    Before: B72107811   After: B78074082  **114,125,171,285,602**
+Routine Name: XQALDATA
+    Before: B11750303   After: B11271249  **207,285,443,513,602**
+Routine Name: XQALDEL
+    Before: B55829845   After: B56273165  **6,24,65,114,174,285,443,602**
+Routine Name: XQALDOIT
+    Before: B16827192   After: B15175289  **1,6,65,114,128,129,207,602**
+Routine Name: XQALERT
+    Before: B18400944   After: B19925402  **1,65,125,173,285,366,513,602**
+Routine Name: XQALERT1
+    Before: B79700717   After: B93213944  **20,65,114,123,125,164,173,
+                                           285,366,443,513,602**
+Routine Name: XQALFWD
+    Before: B24652553   After: B28643229  **6,65,91,111,114,128,129,285,602**
+Routine Name: XQALMAKE
+    Before: B13487319   After: B13644529  **443,602**
+Routine Name: XQALSET
+    Before: B72175488   After: B72705650  **1,6,65,75,114,125,173,207,
+                                           285,443,602**
+Routine Name: XQALSUR1
+    Before: B64901704   After: B72344647  **366,443,602**
+Routine Name: XQALSUR2
+    Before:  B3811185   After:  B5665797  **366,513,602**
+Routine Name: XQALSURO
+    Before: B90015726   After: B93224133  **114,125,173,285,366,443,513,602**
+ 
+Routine list of preceding patches: 513
+
+=============================================================================
+User Information:
+Entered By  : WESTRA,HERLAN G               Date Entered  : MAY 24, 2012
+Completed By: BEST,LISA                     Date Completed: FEB 14, 2013
+Released By : TILLIS,LEWIS                  Date Released : MAR 14, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

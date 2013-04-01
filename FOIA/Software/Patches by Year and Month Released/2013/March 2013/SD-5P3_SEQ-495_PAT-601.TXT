@@ -1,0 +1,235 @@
+$TXT Created by POTTER,DAVID at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 11/14/12 at 13:28
+=============================================================================
+Run Date: MAR 25, 2013                     Designation: SD*5.3*601
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #495                    Status: Released
+                  Compliance Date: APR 01, 2013
+=============================================================================
+
+Associated patches: (v)SD*5.3*596  <<= must be installed BEFORE `SD*5.3*601'
+
+Subject: FY2013 MID YEAR CLINIC STOP FILE (#40.7) UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch provides Fiscal Year 2013 Mid Year updates to the CLINIC STOP
+ (#40.7) file as requested by the Decision Support Office (DSO).
+  
+                         ***IMPORTANT NOTE: ***
+ **************************************************************************
+ ** This patch should be installed as close to COB on March 31, 2013     **
+ ** as possible but not after the start of business on April 1, 2013.    **
+ **                                                                      **
+ ** Early installation of this patch could result in transmission of     **
+ ** incorrect stop codes that will result in errors from Austin.         **
+ ** Coordination with the MAS (Medical Administration Service) PAS       **
+ ** (Program Application Specialist)/ADPAC is imperative, as the patch   **
+ ** will cause changes to the CLINIC STOP file (#40.7).  Testing can be  **
+ ** done in a site's mirror account before installation in production to **
+ ** verify changes.                                                      **
+ **                                                                      **
+ ** This patch reactivates, creates and modifies descriptions of stop    **
+ ** codes effective April 1, 2013, therefore, installing early may       **
+ ** modify certain stop codes that may currently be in use at your site. **
+ ** It is advised that clinics with stop codes assigned that will        **
+ ** incur restriction date/type changes should be corrected as soon as   **
+ ** possible after installation.  Please keep in mind that new stop      **
+ ** code corrections cannot be assigned until April 1, 2013.             **
+ ** All other stop code corrections should be made as early as possible  **
+ ** on April 1, 2013.  Sites need to coordinate their DSS CLINICS AND    **
+ ** STOP CODES file (#728.44) worksheet maintenance to save the latest   **
+ ** FY2013 Mid Year values (as of March 31, 2013) and then not change    **
+ ** the worksheet to have FY2013 Mid Year values until after the DSS     **
+ ** Clinic (CLI) extract for March data has run successfully.            **
+ **************************************************************************
+  
+ DSS Instructions for FY13 Mid Year Stop Code Patch (SD*5.3*601):
+ =========================================================================
+ This patch makes additions and changes to the CLINIC STOP file (#40.7) as 
+ of April 1, 2013.
+  
+    - No clinic can be created using any of the new or reactivated Stop 
+      Codes contained in the patch until after this patch is implemented.
+  
+ DSS Site Teams and Scheduling and IRM should coordinate to perform the
+ following sequence:
+  
+ 1)  Before IRM installs patch SD*5.3*601, toward the end of March,
+     DSS should run the DSS worksheet option CREATE DSS CLINIC STOP FILE 
+     [ECXSCLOAD]. Then right at the end of March, but before the patch
+     is installed, make any necessary adjustments before approval so all
+     clinics on the worksheet have setups applicable for the month of
+     March 2013.
+  
+ 2)  IRM installs the patch late on March 31 or very early on 
+     April 1, 2013.
+  
+ 3)  Run the Non-Conforming Clinics Stop Code Report [SD CLN STOP CODE REP]
+     option to list those clinics that need changes in the HOSPITAL
+     LOCATION file (#44) for FY13 Mid Year.  Work with Scheduling staff to make
+     changes in HOSPICTAL LOCATION file (#44) so that the clinics
+     will have the correct stop codes in place for FY13 Mid Year clinic 
+     appointments.  Do not make changes using Enter/Edit DSS Stop Codes for
+     CLINICS AND STOP CODES file (#728.44) at this time.
+  
+ 4)  Follow normal procedures to run the DSS CLI Extract for March 
+     2013.  Updates should not be made for April stop code changes with
+     the Enter/Edit DSS Stop Codes for Clinics [ECXSCEDIT] option prior to
+     running the March CLI Extract.  Perform normal Audits for the CLI
+     Extract.
+  
+ 5)  After auditing the March CLI Extract and after making any 
+     necessary changes and transmitting the CLI Extract, proceed with FY13
+     Mid Year Stop Code changes to the DSS Clinics and Stop Codes Worksheet
+     clinics:
+  
+     a) Use the Create DSS Clinic Stop Code File [ECXSCLOAD] option to run
+        the Print "Unreviewed Clinics".
+     b) Update for FY13 Mid Year as needed using the Enter/Edit DSS Stop Codes
+        for Clinics [ECXSCEDIT] option. 
+     c) Approve changes using the Approve Reviewed DSS Clinic Worksheet 
+        [ECXSCAPPROV] option. Finalize all Stop Code changes on the
+        worksheet to be ready to run the monthly FY13 DSS CLI Extracts.
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ HD0000000757238 - FY2013 Mid Year Table Maintenance Clinic Stop file (#40.7)
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Texas HCS
+ Connecticut HCS
+ Louisville, KY
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ HD0000000757238 - FY2013 Mid Year Table Maintenance Clinic Stop file (#40.7)
+  
+ Problem:
+ --------
+ The Stop Code Council, through the Decision Support Office (DSO), has 
+ requested Fiscal Year 2013 Mid Year updates to the CLINIC STOP file (#40.7).
+  
+ Resolution:
+ -----------
+ The requested Fiscal Year 2013 Mid Year updates were submitted by the DSO to
+ be implemented effective April 1, 2013. Post-init routine SD53MY13 updates
+ the CLINIC STOP file (#40.7) by adding three (3) new stop codes,
+ reactivating and changing the names of one (1) stop codes, changing the
+ names for six (6) stop codes. A total of 9 stop codes are being updated
+ with this patch.
+   
+ Listed below are the applicable stop code updates:
+  
+ New Stop Codes Being Added:  (effective 4/1/2013)
+  
+ Stop Code Name/ Description            Restriction Type   Restriction Date
+   189     STORE & FORWARD HOME PROV SITE       S               4/1/2013
+   339     OBSTETRICS                           E               N/A
+   901     TELE-ICU PATIENT SITE                P               4/1/2013
+  
+  
+ Stop Code being Reactivated (4/1/2013) with Name Change only:
+  
+ 427   Old Name:  PRIMARY CARE/SURGERY
+       New Name:  ANES SPECIAL PROCS IN OR SUITE
+  
+ Stop Codes with Name Change only:  (effective 4/1/2013)
+  
+ 188   Old Name:  PHYSICIAN RESIDENT 2ND ONLY
+       New Name:  FELLOW/RESIDENT
+  
+ 204   Old Name:  SPEECH PATHOLOGY
+       New Name:  SPEECH-LANGUAGE PATHOLOGY
+  
+ 404   Old Name:  OB/GYN
+       New Name:  GYNECOLOGY
+  
+ 448   Old Name:  DES EXAM
+       New Name:  INTGRTED DIS EVAL (IDES) EXAM
+  
+ 704   Old Name:  WOMENS GEN SPEC CA CARE
+       New Name:  WMS SPECIFIC PREVENTIVE CARE
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be run with users on the system, but it is recommended that
+ it be queued to run after normal business hours.
+  
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+ ***Routine SD53MY13 can be manually deleted after patch is installed***
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+  
+   3. From this menu, you may select the following options:
+      (when prompted for INSTALL NAME, enter SD*5.3*601)
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package SD*5.3*601.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO//" respond NO.
+  
+ NOTE: Details of the changes applied by this patch are provided during the
+       installation and may also be reviewed with the Install File Print
+       option on the Utilities menu on the Kernel Installation and
+       Distribution System menu.
+  
+       It is important to check the CLINIC STOP (#40.7) file post
+       installation to make sure that all of the updates are correctly
+       reflected in the CLINIC STOP file (#40.7). If any discrepancies
+       are found you should enter a Remedy Ticket.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53MY13
+    Before:       n/a   After: B71654450  **601**
+
+=============================================================================
+User Information:                          Hold Date     : MAR 25, 2013
+Entered By  : POTTER,DAVID                  Date Entered  : SEP 24, 2012
+Completed By: SESSLER,APRIL                 Date Completed: MAR 04, 2013
+Released By : BARFIELD,RICHARD              Date Released : MAR 25, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,281 @@
+$TXT Created by NABER,DAVID at DEVVCC.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 12/05/12 at 15:22
+=============================================================================
+Run Date: MAR 20, 2013                     Designation: ECX*3*143
+Package : ECX - DSS EXTRACTS                  Priority: EMERGENCY
+Version : 3       SEQ #128                      Status: Released
+                  Compliance Date: MAR 25, 2013
+=============================================================================
+
+Associated patches: (v)ECX*3*136   <<= must be installed BEFORE `ECX*3*143'
+
+Subject: DSS FY13 ENHANCEMENTS UPDATE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ Since the release of the DSS FY13 updates patch, ECX*3*136, three problems
+ have been reported.  The first problem is with the Laboratory Blood Bank 
+ (LBB) Pre-Extract Audit report.  The second problem is related to IV costs
+ as they appear on both the Pharmacy Extracts Unusual Volume Report and in 
+ the IV Extract (IVP). The third problem is the feeder key for the BCMA 
+ extract is using the wrong file for drug identification.
+  
+  
+ Problem #1: The Laboratory Blood Bank (LBB) Pre-Extract Audit report.
+  
+   ASSOCIATED REMEDY: 
+   ==================
+   1) HD0000000775100
+   2) HD0000000775133
+   3) HD0000000775269
+   4) HD0000000775518
+   
+   ASSOCIATED NSR:
+   ===============
+   N/A
+   
+   Remedy Overview:
+   ================
+   1) HD0000000775100
+   2) HD0000000775133
+   3) HD0000000775269
+   4) HD0000000775518
+  
+  
+   Problem:
+   --------
+   The lab blood bank pre-extract report only displays the report header
+   even when there is data to be displayed.
+  
+   
+   Resolution:
+   -----------
+   Modified routine ECXPLBB to correctly display the data on the
+   report.
+  
+ Problem #2: IV cost issue on the unusual volume report and in the IVP 
+             extract.
+  
+   ASSOCIATED REMEDY: 
+   ==================
+   N/A
+  
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:
+   --------
+   When determining total IV cost per patient the calculation is average
+   cost per unit times the number of units times the number of times given.
+   When obtaining the average cost per unit it was possible to get the
+   wrong value for the drug if the drug was associated with an inactive
+   entry in the IV ADDITIVES file (#52.6).  The wrong average cost per
+   unit was causing unusually large dollar amounts to appear on the
+   report and in the extract.
+  
+  
+   Resolution:
+   -----------
+   The correct average cost per unit is now being applied to the 
+   calculation so that the correct costs are reported on both the unusual
+   volume report as well as the IVP extract. Routine ECXAPHA2 was updated
+   to fix the issue in the unusual volume report and routine ECXPIVDN was
+   updated to fix the issue in the IV extract.
+  
+  
+ Problem #3: Incorrect data used in feeder key creation.
+  
+   ASSOCIATED REMEDY: 
+   ==================
+   N/A
+  
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:
+   --------
+   The first portion of the Feeder Key value in the BCMA Extract (BCM) 
+   corresponds to the drug IEN.  For all other pharmacy related DSS
+   extracts, the IEN is taken from the VA PRODUCT file (#50.68). Currently,
+   the IEN being used in the Feeder Key for the BCM extract is being
+   retrieved from the DRUG file (#50), which is not accurate for the
+   purposes of this extract.
+  
+   Resolution:
+   -----------
+   Routine ECXBCM has been updated so that the IEN included in the Feeder
+   Key for the BCM Extract is now being retrieved from the VA PRODUCT file
+   (#50.68).  As a result of needing to change the file associated with the
+   DRUG IEN (#42) field of the BCMA EXTRACT (#727.833) file, post-install
+   routine ECX3P143 will purge all existing BCMA extracts from the system
+   so that data in the DRUG IEN field will be correct going forward.
+  
+  
+ The following file is included in this patch:
+  
+                                           UP    SEND  DATA               
+                                           DATE  SEC.  COMES  SITE   RSLV 
+ FILE #       NAME                         DD    CODE  W/FILE DATA   PTS 
+ ------------------------------------------------------------------------
+ 727.833      BCMA EXTRACT                 YES   NO    NO
+  
+ The following field is included with this patch:
+  
+ Field Name (Number)            File Name (Number)
+ -------------------            ------------------
+ DRUG IEN (#42)                 BCMA EXTRACT (#727.833)
+  
+ Test Sites:
+ -----------
+ North Texas
+ Boston
+ Little Rock
+  
+ Documentation Retrieval:
+ ------------------------ 
+ Updated documentation is available.
+  
+ The preferred method is to FTP the files from download.vista.med.va.gov.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+   
+  
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at: http://www4.va.gov/vdl/application.asp?appid=35
+  
+ Below is a list of the files related to this patch that will be available
+ via the FTP sites listed above.
+  
+ File Description                       File Name                FTP Mode
+ -----------------------------------------------------------------------
+ Data Definitions Document              DSS_FY2013_DD_P143.pdf   Binary
+  
+ INSTALLATION:
+ =============
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+                 Extract Manager's Options [ECXMGR]
+  
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+ ***********************************************************  
+  
+    1.   LOAD TRANSPORT GLOBAL 
+         ---------------------
+         Choose the PackMan message containing this patch and invoke the 
+         INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2.   START UP KIDS 
+         -------------
+         Start up the Kernel Installation and Distribution System Menu 
+         [XPD MAIN]: 
+  
+              Edits and Distribution ...  
+              Utilities ...
+              Installation ...  
+     
+    Select Kernel Installation & Distribution System Option: INStallation 
+                                                             ---
+              Load a Distribution 
+              Print Transport Global 
+              Compare Transport Global to Current System 
+              Verify Checksums in Transport Global 
+              Install Package(s) 
+              Restart Install of Package(s) 
+              Unload a Distribution 
+              Backup a Transport Global 
+     
+    Select Installation Option:
+  
+    3.   Select Installation Option: 
+         --------------------------
+         NOTE: The following are OPTIONAL (When prompted for the INSTALL
+                NAME, enter ECX*3.0*143):
+        
+         a.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will
+             not backup any other changes such as DD's or templates.
+         b.  Compare Transport Global to Current System - This option 
+             will allow you to view all changes that will be made when 
+             this patch is installed.  It compares all components of this 
+             patch (routines, DD's, templates, etc.).
+         c.  Verify Checksums in Transport Global - This option will
+             allow you to ensure the integrity of the routines that are 
+             in the transport global.
+       
+    4.   Select Installation Option: Install Package(s) 
+                                     ----------------
+         **This is the step to start the installation of this KIDS patch: 
+     
+        a.  Choose the Install Package(s) option to start the patch
+            install.  Enter ECX*3.0*143 when prompted for a build name.
+        b.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+            install?  YES//' answer NO (unless otherwise indicated).
+        c.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? YES//' hit '<return>'. YES (unless
+               otherwise indicated).
+  
+        d.  When prompted 'Enter options you wish to mark as 'Out Of
+            Order':'  Enter the following options:
+   
+                    Extract Manager's Options [ECXMGR]
+  
+        e.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order':' press <return>.
+  
+        f. If prompted 'Delay Install (Minutes):  (0-60):  0//'
+           answer "0" (unless otherwise indicated).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P143
+    Before:       n/a   After:  B1454370  **143**
+Routine Name: ECXAPHA2
+    Before: B31277218   After: B28836077  **40,49,84,104,105,113,136,143**
+Routine Name: ECXBCM
+    Before: B69163399   After: B71824253  **107,127,132,136,143**
+Routine Name: ECXPIVDN
+    Before: B60600395   After: B58842000  **10,11,8,13,24,33,39,46,49,
+                                           71,84,96,92,107,105,112,120,
+                                           127,136,143**
+Routine Name: ECXPLBB
+    Before: B21006006   After: B20947806  **78,92,105,136,143**
+ 
+Routine list of preceding patches: 136
+
+=============================================================================
+User Information:
+Entered By  : NABER,DAVID A                 Date Entered  : NOV 14, 2012
+Completed By: SBERRO,SANDRA                 Date Completed: MAR 04, 2013
+Released By : MORRIS,THERESA                Date Released : MAR 20, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,133 @@
+$TXT Created by HERRING,VENESSA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 11/16/11 at 14:51
+=============================================================================
+Run Date: MAR 19, 2013                     Designation: PSO*7*333
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #349                      Status: Released
+                  Compliance Date: APR 19, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*117   <<= must be installed BEFORE `PSO*7*333'
+
+Subject: Print From Suspense Label Issues
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ This patch contains a fix for the issues summarized below:
+  1. Undefined error during OPAI HL7 generation for Other Language Sig.
+  2. Noun missing from sig on label when Print from Suspense
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1) HD0000000100772 - *Default summary
+            dupes HD106741
+ 2) HD0000000540633 - label missing noun in sig
+   
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Oklahoma City VA Medical Center
+ Central Texas Veterans HCS 
+  
+ Remedy Overview:
+ ================
+  
+ 1) HD0000000100772 - *Default summary 
+  
+ Problem:
+ --------
+ An undefined error occurred when Print From Suspense was selected.  An
+ error occurred in a routine that is called as part of the OPAI HL7 message
+ generation build process, to create the other language SIG component.
+  
+ Resolution:
+ -----------
+ Change calling routine (PSOSPSIG), to use a $G around the XDOSE array 
+ that is returned by the PDM API, PSSORPH.  The $G will prevent the 
+ Undefined error reported.
+  
+  
+ 2) HD0000000540633 - label missing noun in sig
+  
+ Problem:
+ --------
+ After fixing an Undefined error when printing from suspense (Issue 1), it was
+ noticed that the noun was missing from the sig on the label.  This issue 
+ occurs when the label is printed for a prescription where the patient has 
+ another language preference, the drug for the prescription is inactive and 
+ the prescription was placed on suspense.
+  
+ Resolution:
+ -----------
+ This will be resolved by including the noun in the sig when printing a label
+ using Print from Suspense.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  Users should not be printing
+ suspense labels while installing this patch.  It should take less than 2 
+ minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*333)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*333.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       No//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? No//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOSPSIG
+    Before: B63360791   After: B64067993  **117,333**
+ 
+Routine list of preceding patches: 117
+
+=============================================================================
+User Information:
+Entered By  : HERRING,VENESSA               Date Entered  : APR 29, 2009
+Completed By: HEFFERNAN,COREY               Date Completed: FEB 28, 2013
+Released By : MENEGUZZO,KIMBERLY            Date Released : MAR 19, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

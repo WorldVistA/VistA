@@ -1,0 +1,572 @@
+
+=============================================================================
+Run Date: MAR 11, 2013                     Designation: DGBT*1*20
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #22                      Status: Released
+                  Compliance Date: APR 11, 2013
+=============================================================================
+
+Associated patches: (v)DGBT*1*18   <<= must be installed BEFORE `DGBT*1*20'
+                    (v)DGBT*1*19   <<= must be installed BEFORE `DGBT*1*20'
+
+Subject: BENEFICIARYTRAVEL PACKAGE & MILEAGE REPORTING ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+  
+  This patch has enhancements which extend the capabilities of the Veterans
+  Health Information Systems and Technology Architecture (VistA) 
+  Beneficiary Travel application.
+  
+  THE FOLLOWING CHANGES MUST BE MADE TO THE BENEFICIARY TRAVEL ACCOUNT 
+  FILE 392.3 PRIOR TO INSTALLING THIS PATCH.  The Beneficiary Travel 
+  Supervisor or ADPAC should make these changes through the Bene Travel 
+  Account file Enter/Edit [DGBT BENE TRAVEL ACCOUNT] option which is locked
+  with the DGBT SUPERVISOR key:
+      A. THE SITE NEEDS TO DE-ACTIVATE ALL ACCOUNTS FOR MILEAGE CLAIMS 
+         THAT ARE NOT OF TYPE 4 (ALL OTHER) OR TYPE 5 (C&P), OR IF A SITE 
+         PREFERS TO KEEP AN ACCOUNT THAT IS NOT TYPE 4 OR 5 ACTIVE, THEY
+         CAN CHANGE THAT ACCOUNT TYPE TO 4 OR 5. A SITE CAN HAVE MORE THAN
+         1 ACCOUNT OF EACH TYPE 4 AND TYPE 5 BUT THE DEFAULT WILL BE THE
+         FIRST ACTIVE ACCOUNT TYPE OF 4 (ALL OTHER).
+  
+      B. A SITE CAN HAVE ONLY ONE ACTIVE SPECIAL MODE ACCOUNT TYPE 
+         (TYPE 3). IT MUST CONTAIN THE EXACT VERBIAGE "SPECIAL MODE -
+         NON-EMERGEN" IN THE TEXT FOR THE ACCOUNT TYPE. 
+         ALL OTHER TYPE 3'S MUST BE DE-ACTIVATED.
+  
+  Sample edit session to deactivate account 051 and change the Account Type
+  for account 921 to All Other:
+  
+  BENE Travel Account file Enter/Edit
+  
+    You are about to enter/edit Bene Travel account types.  Although
+    this process is now decentralized, changes and additions should be
+    made with extreme care.
+  
+  Are you sure you wish to continue? No// YES
+  
+  Select BENEFICIARY TRAVEL ACCOUNT: 051 INTERFACILITY TRAVEL       051
+  ACTIVE DATE: OCT 1,1993// 
+  INACTIVE DATE: T  (DEC 03, 2012)
+  ACCOUNT TYPE: INTERFACILITY// 
+  Would you like to Enter/Edit another ACCOUNT? Yes//   YES
+  
+  Select BENEFICIARY TRAVEL ACCOUNT: 921 INTERFACILITY       921
+  ACTIVE DATE: OCT 1,1990// 
+  INACTIVE DATE: 
+  ACCOUNT TYPE: INTERFACILITY// ??
+         Field is designed to group like ACCOUNTs by account type, since 
+         the account name/number is subject to change.
+    
+      Choose from: 
+        1        EMERGENCIES
+        2        INTERFACILITY
+        3        SPECIAL MODE
+        4        ALL OTHER
+        5        C&P EXAMS
+  ACCOUNT TYPE: INTERFACILITY// 4  ALL OTHER
+  
+  Would you like to Enter/Edit another ACCOUNT? Yes//
+  
+  
+  This patch includes the following enhancements:
+  
+  (1) Provides End Users with an accounting method for Special Mode 
+  Transportation Authorization and Special Mode Transportation Vendor 
+  Billing.
+  
+  (2) Provides national tracking of BT Deductibles in a calendar month, and
+   allows the BT System to count the number of trips and amount of 
+   deductible paid during the current month at all sites the patient has 
+   visited during the current month. Credits the trips to the deductible
+   cap for the current month.
+  
+  (3) Allows the user to enter 2 different types of waivers to waive a 
+  patient's deductible amount:
+       a. Alternate Income Waiver - this is entered through the BT 
+          Alternate Income Enter/Edit option, and covers two status types,
+          Hardship and POW.
+          A patient would be given a Hardship waiver if they have a current
+          Means Test or RX Co-Pay test on file and their income or other
+          situation has created a temporary financial hardship determined 
+          by the BT clerk. Alternate income for a hardship case
+          will expire at the end of the current year.
+  
+          Normally the Registration/Enrollment system does not allow Means 
+          tests or RX-CoPay tests to be entered  for POW's as they are
+          automatically waived by the system for any visit deductible or
+          copays. But POW's are  not automatically eligible for travel
+          reimbursement. If a BT clerk determines a POW is below the low
+          income threshold this can now be entered through the BT Alternate
+          Income Enter/Edit option, and the deductible will be waived. 
+          Alternate Income for a POW will expire 365 days from
+          date of entry.
+  
+       b. "Manual Waiver" - entered through the new Manual Deductible 
+          Waiver option as a catch all determined by the BT clerk. A 
+          patient can be entered into the Manual Deductible Waiver option
+          if the clerk first determines they are considered below the
+          low income threshold, but this information is not stored 
+          elsewhere in the Registration/Enrollment package. This waiver
+          will expire at the end of the current year.
+   
+   The "manual" waiver is automatically retrieved, transparently to the 
+   user, at any other site while creating or editing a claim. It can only
+   be edited by the site that created the original "manual" Waiver.
+  
+  
+  (4) Standardizing Authorized BT Waiver to Expire. If the Veteran has an 
+  authorized waiver of the deductible in effect a message will display to 
+  alert the user to when the waiver expires.
+  The waivers expire as follows:
+      a. If the Veteran receives any type of Pension the message "PENSION"
+         will display.
+      b. If the Veteran qualifies because the income is below the Low
+         Income Threshold, based on the Means Test or RX-Copay test, the
+         message will display the date the Means Test or RX-Copay test
+         expires.
+      c. All others will expire at the end of the current year.
+  
+  (5) Automatically identifies Veterans who meet administrative criteria as
+   BT Eligible.
+  
+  (6) The Claim Enter/Edit option will automatically update the Veteran's 
+  BT Claim Income Fields if a valid, completed MT or Co-Pay test exists.
+  
+  (7) Displays current address based on data in Patient file.
+  
+  (8) Provides new features to deny a claim, document the reason,
+  and print and reprint a Denial of Benefits Letter that includes the
+  Veteran's Appellate Rights if a veteran has been denied BT Benefits. 
+  
+  (9) Provides local-level reporting. All reports can either be printed or
+ exported to a Excel file.
+ There are new 6 BT reports as follows:
+      Summary Report
+      Audit Report
+      Clerk Report  
+      Travel Pattern Report  
+      Special Mode Report
+      Fiscal Report
+  
+  (10) Changes the VA Form 70-354d, Cash Reimbursement of BT Expenses, to
+  include Number of Trips and Deductible Amount Paid at all sites the
+  Veteran has visited within the current month.
+  
+  (11)  Displays an informational reminder if the patient is eligible only 
+  for SC related appointments (<30% SC and above low income threshold).
+  
+  (12) Displays a Current-Year Income Test when calculating BT Travel
+  Benefits and when entering a Claim for a previous year. The information
+  is automatically retrieved from the Annual Means Test file.
+  
+  (13) A new Fiscal report for vouchers can be printed or imported to an 
+  Excel report.
+  
+  (14) Displays a new data item on the BT Claim Information Screen to 
+  account for Public Transportation (bus pass, etc).
+  
+  New files and new fields associated with the enhancements and modified 
+  files and fields:
+  
+  File Name (Number)                     Field Name (Number)              
+    
+  Beneficiary Travel Claim (#392)        44 MODE OF TRANSPORTATION
+                                         51 REMARKS
+                                         52 BUS PASS OR TICKET
+                                         53 BUS PASS EXPIRATION DATE
+                                         54 COMMON CARRIER DTE REIMBURSED
+                                         55 COMMON CARRIER FEE
+                                         55.1 COMMON CARRIER REQUIRED
+                                         56 TYPE OF CLAIM
+                                         57 SPECIAL MODE OF TRANSPORTATION
+                                         58 INVOICE NUMBER
+                                         59 DATE INVOICE RECEIVED
+                                         60 TOTAL INVOICE AMOUNT
+                                         61 BASE RATE FEE
+                                         62 MILEAGE FEE
+                                         63 NO SHOW/NO LOAD FEE
+                                         64 WAIT TIME FEE
+                                         65 EXTRA CREW FEE
+                                         66 SPECIAL MODE EQUIPMENT FEE
+                                         67 SPECIAL MODE RT/ONE WAY 
+                                         68 SPECIAL MODE TOTAL MILES
+                                         69 OTHER SM TRANSPORTATION
+                                         70 PRE-AUTHORIZED
+                                         71 SPECIAL MODE VENDOR
+                                         72 SPECIAL MODE OTHER REMARKS
+                                         73 SP MODE DEPARTURE ADDRESS1
+                                         74 SP MODE DEPARTURE ADDRESS2
+                                         75 SP MODE DEPARTURE CITY
+                                         76 SP MODE DEPARTURE STATE
+                                         77 SP MODE DEPARTURE ZIP CODE
+                                         78 SP MODE DESTINATION 1
+                                         79 SP MODE DESTINATION 2
+                                         80 SP MODE DESTINATION 3
+                                         81 SP MODE DESTINATION CITY
+                                         82 SP MODE DESTINATION STATE
+                                         83 SP MODE DESTINATION ZIP CODE
+                                         84 PRE-AUTHORIZED BY
+                                         85 SPECIAL MODE CLAIM AUTHORIZED
+                                         86 DATE/TIME AUTHORIZED
+                                        
+  
+  
+  BT SPECIAL MODE OF TRANSPORTATION       .01 Name
+  (#392.42)
+  
+  BT CLAIM ELIGIBILITY CODE               .01 BT ELIGIBILITY CODE
+                                          1 BT ELIGIBILITY CODE NAME
+  
+  COMMON CARRIER MODE OF TRANSPORTATION   .01 MODE OF TRANSPORTATION
+  TRANSPORTATION (#392.43)
+  
+  BENEFICIARY TRAVEL MANUAL
+  DEDUCTIBLE WAIVER (#392.7)             .01 WAIVER REQUEST DATE AND TIME
+                                         2   PATIENT NAME
+                                         3   WAIVER STATUS
+                                         4   GRANTED/DENIED BY
+                                         5   WAIVER APPROVAL/DENIAL DATE
+                                         6   WAIVER ENTERED BY
+                                         7   WAIVER REMARKS
+                                         8  EXPIRATION DATE
+                                         9  DATE ENTERED
+   
+  
+  BT CLAIM ELIGIBILITY CODE (#392.41)    .01 BT ELIGIBILITY CODE
+                                         1   BT ELIGIBILITY CODE NAME
+   
+   
+  BENEFICIARY TRAVEL DENIAL LETTERS
+  (#392.6)                               .01 NAME
+                                         1   MILEAGE LETTER TEXT PART 1
+                                         2   MILEAGE LETTER TEXT PART 2
+                                         3   SP MODE LETTER TEXT PART 1
+                                         4   SP MODE LETTER TEXT PART 2
+  
+  
+  BENEFICIARY TRAVEL DENIAL REASONS
+  (#392.8)                               .01 DENIAL REASON
+                                         1   TEXT
+  
+   
+  BT PATIENT ALTERNATE INCOME (#392.9)   .01 BT PATIENT
+              Multiple (392.91)          1   ALTERNATE INCOME
+                                           Multiple Fields
+                                           .01 ALTERNATE INCOME DATE
+                                           1   ALTERNATE INCOME
+                                           2   ALTERNATE INCOME REASON
+                                           3   ALTERNATE INCOME EXPIRATION
+                         
+  
+  Mail Group Associated:
+    N/A
+  
+  Options Associated:                             TYPE      NEW/MODIFIED
+  DGBT BENE TRAVEL MENU                           Menu      Modified
+  DGBT CLAIM DEDUCTIBLE PAID                      RPC       New
+  DGBT ALTERNATE INCOME                           Edit      New
+  DGBT EDIT DENIAL LETTERS                        Edit      New
+  DGBT MANUAL DEDUCTIBLE WAIVER                   Edit      New
+  DGBT REPRINT DENIAL LETTERS                     Print     New
+  DGBT TRAVEL REPORTS MENU                        Menu      New
+  DGBT SUMMARY REPORT                             Report    New
+  DGBT AUDIT REPORT                               Report    New
+  DGBT CLERK REPORT                               Report    New
+  DGBT TRAVEL PATTERN REPORT                      Report    New 
+  DGBT SPECIAL MODE REPORT                        Report    New
+  DGBT FISCAL REPORT                              Report    New
+  DGBT BENE TRAVEL CLAIM AMT RPT                  Report    Modified
+  
+  Protocols Associated:
+  N/A
+  
+  Security Keys Associated:
+  DGBT EDIT DENIAL LTRS
+  
+  Templates Associated:
+  N/A
+  
+  New Service Requests (NSRs)
+  There are no NSR associated with this patch.
+  
+  Remedy Ticket(s) & Overview
+  N/A 
+  
+  Remote Procedure(s):
+  DGBT CLAIM DEDUCTIBLE PAID
+  
+  Test Sites:
+  -----------
+  Minneapolis, MN
+  Kansas City, MO
+  El Paso, TX
+   
+  Documentation Retrieval:
+  ------------------------
+  Sites may retrieve documentation in one of the following ways:
+   
+   1.  The preferred method is to FTP the files from
+       download.vista.med.va.gov, which will transmit the files from the
+       first available FTP server.
+   
+   2.  Sites may also elect to retrieve documentation directly from a
+       specific server as follows:
+   
+       Albany          ftp.fo-albany.med.va.gov
+       Hines           ftp.fo-hines.med.va.gov
+       Salt Lake City  ftp.fo-slc.med.va.gov
+   
+   3.  Documentation can also be retrieved from the VistA Documentation
+       Library (VDL) on the Internet at the following address,
+       http://www.va.gov/vdl.
+  
+  The documentation distribution includes:
+   
+      FILE NAME                                       DESCRIPTION
+      ---------------------------------------------------------------------
+      DGBT_1_20P_RN.pdf                               BT Release Notes
+      DGBT_1_20P_TM.pdf                               BT Technical Manual
+      DGBT_1_20P_UM.pdf                               BT User Manual
+  
+      Word documents with .docx file extensions will also be available.  
+  
+  Pre/Post Installation Overview
+  ------------------------------
+  N/A.  
+   
+   
+         ================INSTALLATION INSTRUCTIONS =================
+   
+  To avoid disruptions, this patch should be installed when users are
+  not on the system and during non-peak hours.  Of particular concern would
+  be the items below.
+   
+      1. Do not queue this installation to run at a later time because you
+         may be prompted to enter information during the installation.
+      2. Do not install the patch when BT claims are being entered.
+      3. If installed during the normal workday, it is recommended that the
+  following selection(s) in the OPTION (#19) file be disabled to prevent 
+  possible  conflicts while running the KIDS Install. Other VISTA users 
+  will not be affected.
+  
+     Beneficiary Travel Menu               [DGBT BENE TRAVEL MENU]
+     Bene Travel Account file Enter/Edit   [DGBT BENE TRAVEL ACCOUNT]
+     Claim Enter/Edit                      [DGBT BENE TRAVEL SCREEN]
+     Distance Enter/Edit                   [DGBT BENE TRAVEL DISTANCES]
+     Edit the BT Dashboard configuration   [DGBT BENE TRAVEL CONFIG EDIT]
+     file
+     Income Certification Eligibility      [DGBT BENE TRAVEL CERTIFICATION]
+     Parameter Rates Enter/Edit            [DGBT BENE TRAVEL RATES]
+     Report of Claim Amounts               [DGBT BENE TRAVEL REPORT]
+     Reprint of 70-3542d form              [DGBT BENE TRAVEL REPRINT]
+     View of Claim                         [DGBT BENE TRAVEL VIEW]
+         
+  Install Time - Less than 5 minutes.  
+  
+  1.  OBTAIN PATCHES
+      --------------
+      Obtain the host file DGBT_1_P20.KID, 
+   
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+   
+                      download.vista.med.va.gov
+   
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+   
+         Albany                  ftp.fo-albany.med.va.gov
+         Hines                   ftp.fo-hines.med.va.gov
+         Salt Lake City          ftp.fo-slc.med.va.gov
+   
+      The DGBT_1_P20.KID host file is located in the anonymous.software
+      directory.  Use ASCII Mode when downloading the file.
+   
+  2.  START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu option
+      [XPD MAIN]:
+   
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+   
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           Load a Distribution
+           Print Transport Global
+           Compare Transport Global to Current System
+           Verify Checksums in Transport Global
+           Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+           Backup a Transport Global
+   
+      Select Installation Option:
+   
+  3.  LOAD TRANSPORT GLOBAL FOR SINGLE PATCH
+      -------------------------------------
+      From the Installation menu, select the Load a Distribution option.
+   
+      When prompted for "Enter a Host File:", enter the full 
+      local directory path where you saved the host file DGBT_1_20P.KID
+   
+      When prompted for "OK to continue with Load? NO//", enter "YES."
+   
+      The following will display:
+   
+      Loading Distribution...
+   
+          DGBT 1.0*20
+          
+      Use INSTALL NAME: DGBT 1.0*20 to install this Distribution.
+  
+  4.  RUN OPTIONAL INSTALLATION OPTIONS FOR SINGLE PATCH
+      -------------------------------------------------
+      From the Installation menu, you may select to use the following
+      options (when prompted for the INSTALL NAME, enter
+      DGBT*1*20):
+   
+        a. Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch.  It will not
+           backup any other changes such as DD's or templates.
+        b. Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+        c. Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+  
+  5. From the Installation Menu, select the Install Package(s) options
+ and choose the patch to install, DGBT*1*20.
+  
+  6. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? No//NO
+  
+  7. When prompted "Want KIDS to INHIBIT LOGONs during the install? No//NO
+  
+  8. If prompted "Enter Options you wish to mark as 'Out of Order':"
+     NO//YES
+    
+    Enter options you wish to mark as 'Out of Order':
+  
+     Beneficiary Travel Menu               [DGBT BENE TRAVEL MENU]
+     Bene Travel Account file Enter/Edit   [DGBT BENE TRAVEL ACCOUNT]
+     Claim Enter/Edit                      [DGBT BENE TRAVEL SCREEN]
+     Distance Enter/Edit                   [DGBT BENE TRAVEL DISTANCES]
+     Edit the BT Dashboard configuration   [DGBT BENE TRAVEL CONFIG EDIT]
+     file.
+     Income Certification Eligibility      [DGBT BENE TRAVEL CERTIFICATION]
+     Parameter Rates Enter/Edit            [DGBT BENE TRAVEL RATES]
+     Report of Claim Amounts               [DGBT BENE TRAVEL REPORT]
+     Reprint of 70-3542d form              [DGBT BENE TRAVEL REPRINT]
+     View of Claim                         [DGBT BENE TRAVEL VIEW]
+  
+  9. Enter protocols you wish to mark as 'Out of Order':
+  
+ 10. If prompted "Delay Install (Minutes):  (0-60): 0//" please enter
+     an appropriate number of minutes to delay the installation in
+     order to give users enough time to exit the disabled options
+     before the installation starts.
+  
+     When prompted "DEVICE: HOME//"  respond with the desired device.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGBT1
+    Before: B10865004   After:B121812295  **11,20**
+Routine Name: DGBT2
+    Before: B17424501   After: B17619778  **7,8,13,20**
+Routine Name: DGBTALTI
+    Before:       n/a   After: B50552972  **20**
+Routine Name: DGBTCD
+    Before: B21439384   After: B27058166  **2,7,9,20**
+Routine Name: DGBTCDSP
+    Before:       n/a   After: B34785132  **20**
+Routine Name: DGBTCE
+    Before: B23736161   After: B36783566  **2,14,17,20**
+Routine Name: DGBTCE1
+    Before:  B6499015   After: B12864135  **17,20**
+Routine Name: DGBTCR
+    Before: B18503421   After: B25841339  **7,14,20**
+Routine Name: DGBTCR1
+    Before: B11557361   After: B10630325  **18,20**
+Routine Name: DGBTCR2
+    Before: B16865334   After: B16402632  **7,14,20**
+Routine Name: DGBTDLT
+    Before:       n/a   After:B117344435  **20**
+Routine Name: DGBTDLT1
+    Before:       n/a   After: B74264382  **20**
+Routine Name: DGBTDW
+    Before:       n/a   After:B153522800  **20**
+Routine Name: DGBTE
+    Before: B14172323   After: B44311699  **2,19,20**
+Routine Name: DGBTE1
+    Before: B21074208   After: B29349842  **8,12,13,20**
+Routine Name: DGBTE1A
+    Before:  B8968861   After: B10407793  **20**
+Routine Name: DGBTEE
+    Before: B15382869   After: B60372352  **2,14,20**
+Routine Name: DGBTEE1
+    Before: B18940243   After: B20015303  **14,20**
+Routine Name: DGBTEE2
+    Before: B11057513   After: B23632699  **17,20**
+Routine Name: DGBTEND
+    Before: B15041979   After: B26000162  **18,20**
+Routine Name: DGBTMTTH
+    Before:       n/a   After:   B797719  **20**
+Routine Name: DGBTR
+    Before: B11233940   After: B18418330  **20**
+Routine Name: DGBTR121
+    Before:       n/a   After: B74474591  **20**
+Routine Name: DGBTR122
+    Before:       n/a   After: B36391990  **20**
+Routine Name: DGBTR123
+    Before:       n/a   After:B179962898  **20**
+Routine Name: DGBTR124
+    Before:       n/a   After: B36833401  **20**
+Routine Name: DGBTR125
+    Before:       n/a   After: B94720260  **20**
+Routine Name: DGBTR17
+    Before:       n/a   After:B130956711  **20**
+Routine Name: DGBTR3A
+    Before:       n/a   After: B18478741  **20**
+Routine Name: DGBTRDV
+    Before:       n/a   After: B21663244  **20**
+Routine Name: DGBTRDVW
+    Before:       n/a   After:  B8811174  **20**
+Routine Name: DGBTSP
+    Before:       n/a   After:B183996110  **20**
+Routine Name: DGBTSP1
+    Before:       n/a   After: B78025858  **20**
+Routine Name: DGBTUTL
+    Before:  B2136588   After: B99325524  **20**
+Routine Name: DGBTUTL1
+    Before:       n/a   After: B40695224  **20**
+
+=============================================================================
+User Information:
+Entered By  : DELLINGER,BARRY L             Date Entered  : NOV 02, 2011
+Completed By: ENGELBACH,ROBERT              Date Completed: FEB 26, 2013
+Released By : HEUER,CINDY                   Date Released : MAR 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

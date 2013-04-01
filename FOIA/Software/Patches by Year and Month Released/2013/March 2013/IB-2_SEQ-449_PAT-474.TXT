@@ -1,0 +1,193 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 04/27/12 at 18:46
+=============================================================================
+Run Date: MAR 26, 2013                     Designation: IB*2*474
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #449                      Status: Released
+                  Compliance Date: APR 25, 2013
+=============================================================================
+
+Associated patches: (v)IB*2*223    <<= must be installed BEFORE `IB*2*474'
+                    (v)IB*2*389    <<= must be installed BEFORE `IB*2*474'
+
+Subject: FILTER FOR NON BILLABLE PROSTHETICS 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains two issues. The first involves non billable HCPCS
+ (Healthcare Common Procedure Coding System) codes for prosthetic items
+ that need to be filtered out of the Claims Tracking module. The second
+ issue concerns the '^' key which, when entered, does not exit out of the 
+ Rate Schedule Adjustment Enter/Edit [IBCR ADJUSTMENT ENTER/EDIT] option as
+ expected.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000599144 New Filter for Integrated Billing
+ 2. HD0000000311105 ^ not exiting as expected
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Maryland HCS (Perry Point)
+ Memphis VAMC
+ Northwest Iowa HCS (Iowa City)
+ St. Cloud VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000599144 New Filter for Integrated Billing
+  
+  Problem
+  -------
+  The Chief Business Office (CBO) has requested a patch to filter
+  prosthetics out of the Claims Tracking module when their HCPCS codes have
+  2 alpha characters at the beginning: DI, DL, EC, EV, FE, HN, HS, NR, RE,
+  SB, SI, TH, TR, and VA. They are not billable codes and should not go to
+  the Claims Tracking module.
+  
+  Resolution
+  ----------
+  A filter was created in routine IBTRKR5 to stop adding prosthetics to the
+  Claims Tracking if the associated HCPCS codes start with 2 alpha
+  characters used by the CBO as listed above.
+  
+  
+ 2. HD0000000311105 ^ not exiting as expected
+  
+  Problem
+  -------
+  When site user did not do an adjustment for the rate schedule and entered
+  '^' at the 'Is it correct' question prompt, the system did not exit out
+  of option Rate Schedule Adjustment Enter/Edit [IBCR ADJUSTMENT 
+  ENTER/EDIT].
+  
+  Resolution
+  ----------
+  Modified routine IBCREE to display a note 'using '^' to exit the option
+  will not change the adjustment' before the 'Is this correct' question
+  is prompted. The help message for the question prompt was updated as
+  well to accommodate the change.
+  
+ ****** Note ****** 
+ VDL (VA Software Document Library) document Integrated Billing User Manual
+ has been updated accordingly and also available as listed below.
+ ******************
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+  
+ FILE NAME               DESCRIPTION             ADDITIONAL INFO      
+ ---------               -----------             ----------------     
+  
+ IB_2_0_UM_R0313.PDF     IB User Manual          BINARY               
+  
+ All VA Medical Centers are encouraged to use the TCPIP FTP functionality 
+ to obtain the updated user manual of the software from one of the 
+ following OI Field Offices:
+  
+ ANONYMOUS.SOFTWARE directories:
+  
+         OI Field Office        FTP Address             
+         ----------------       -----------              
+         Albany                 ftp.fo-albany.med.va.gov  
+         Hines                  ftp.fo-hines.med.va.gov  
+         Salt Lake City         ftp.fo-slc.med.va.gov
+         VistA Download Site    download.vista.med.va.gov
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ **** Do not install this patch when the IB MT NIGHT COMP background job
+ is running or scheduled to run. ****
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+  
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*474):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCREE
+    Before: B61788349   After: B68791412  **52,106,115,223,474**
+Routine Name: IBTRKR5
+    Before: B32356439   After: B34965270  **13,260,312,339,389,474**
+ 
+Routine list of preceding patches: 223, 389
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : FEB 23, 2012
+Completed By: LANG,MICKEY                   Date Completed: MAR 22, 2013
+Released By : BATIE,NADINE                  Date Released : MAR 26, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

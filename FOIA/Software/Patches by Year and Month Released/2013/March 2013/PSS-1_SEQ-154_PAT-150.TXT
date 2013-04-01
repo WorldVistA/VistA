@@ -1,0 +1,261 @@
+$TXT Created by THOMPSON,Seth at CHEY204.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 09/05/12 at 17:09
+=============================================================================
+Run Date: MAR 27, 2013                     Designation: PSS*1*150
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #154                      Status: Released
+                  Compliance Date: APR 26, 2013
+=============================================================================
+
+Associated patches: (v)PSS*1*69    <<= must be installed BEFORE `PSS*1*150'
+
+Subject: IV FLAG & STRENGTH DISCREPANCY
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ 1) In Outpatient Pharmacy, when the Drug Unit contains a slash the dosage
+    is not being calculated correctly internally. The second part of the
+    slash needs to be updated by the multiplier.
+  
+  
+ 2) Prevent the non-editable field IV FLAG (#.03) in the PHARMACY 
+    ORDERABLE ITEM FILE (#50.7) from displaying when attempting to edit 
+    via Fileman.
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1) HD0000000233174 - Pharmacy Dose Call issue
+ 2) HD0000000344317 - IV Flag
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+   
+ TEST SITES:
+ ===========
+ Oklahoma City VA Medical Center
+ VA Butler Healthcare - Butler
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1) HD0000000233174 - Pharmacy Dose Call issue
+  
+ Problem:
+ --------
+  In Outpatient Pharmacy, when the Drug Unit contains a slash the 
+  dosage is not being calculated correctly internally. The second part 
+  of the slash needs to be updated by the multiplier.
+  
+     Example:
+   This is how the Possible Dosages appear when they are viewed:
+   POSSIBLE DOSAGES:
+    DISPENSE UNITS PER DOSE: 1         DOSE: 0.4MG/1SPRAY    PACKAGE: IO
+    DISPENSE UNITS PER DOSE: 2         DOSE: 0.8MG/2SPRAY    PACKAGE: IO
+  
+   This is how Outpatient Pharmacy currently calculates them internally:
+  
+    DISPENSE UNITS PER DOSE: 1         0.4MG/SPRAY
+    DISPENSE UNITS PER DOSE: 2         0.8MG/SPRAY
+  
+  
+ Resolution:
+ -----------
+  The design of the calculation is the same for outpatient and 
+  inpatient, but the way the data is stored differs. The calculation 
+  needs to be corrected to account for the different data set sent by 
+  outpatient.
+               
+  This patch will change the calculation so that the second part of the
+  unit is updated by the dispense unit multiplier.  (Note: This is not
+  displayed to the user in Outpatient Pharmacy, it is an internal
+  calculation.)
+  
+    DISPENSE UNITS PER DOSE: 1         0.4MG/SPRAY
+    DISPENSE UNITS PER DOSE: 2         0.8MG/2SPRAY
+  
+ Technical:
+ ----------
+  Modify routine PSSORPH to convert the DRUG UNITS IEN stored by 
+  outpatient in the dose array to the actual dose, before running the 
+  calculation. The current system checks for a "/" and if one is found 
+  the calculation is run. Outpatient Pharmacy stores the IEN 
+  instead of the actual DRUG UNITS so the calculation never takes place. 
+  
+  
+ 2) HD0000000344317 - IV Flag
+  
+ Problem:
+ --------
+  The IV Flag in the Pharmacy Orderable Item file should not be able to 
+  be edited via Fileman. This is an old field that is no longer used 
+  after CPRS/Pharmacy Ordering Enhancements was implemented. Currently, 
+  you can set the IV Flag via Fileman, but once it is set, you cannot 
+  remove it via Fileman.  Once set, you cannot get to the pharmacy 
+  orderable item entry via the PDM options.
+  
+ Resolution:
+ -----------
+  The write access for the IV Flag field will be disabled by updating the 
+  Data Dictionary for the PHARMACY  ORDERABLE ITEM FILE (#50.7), field IV 
+  FLAG (#.03)".
+  
+  Post-init routine PSSP150 will update the Data Dictionary with this 
+  change.  Depending on your system's Kernel Parameter settings, this
+  routine may be automatically deleted when the patch is installed. 
+  
+  
+ Technical:
+ ----------
+  Stuffing an up-carrot "^" into the write access of the IV Flag field
+  definition will prevent it from showing up for edit in fileman.
+  
+ DATA DICTIONARY CHANGES:
+ ======================== 
+  
+ -----------------------------BEFORE---------------------------------------
+  
+ STANDARD DATA DICTIONARY #50.7 -- PHARMACY ORDERABLE ITEM FILE
+ STORED IN ^PS(50.7,  (3481 ENTRIES)   SITE: TEST.CHEYENNE.MED.VA.GOV
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+  
+ 50.7,.03      IV FLAG                0;3 SET
+  
+                               '1' FOR IV; 
+               LAST EDITED:    AUG 31, 2012 
+               HELP-PROMPT:    Enter '1' if this item is created from an IV
+                               additive or solution. 
+               DESCRIPTION:    This field indicates PHARMACY ORDERABLE 
+                               ITEMs that are related to IV additives or
+                               solutions.  
+  
+               TECHNICAL DESCR:  This field is used to indicate that a
+                                 site-selectable indicator of type IV is 
+                                 to be included in the PHARMACY ORDERABLE
+                                 ITEM.  
+  
+                                 UNEDITABLE
+               CROSS-REFERENCE:  50.7^AIV 
+                                 1)= S ^PS(50.7,"AIV",$E(X,1,30),DA)=""
+                                 2)= K ^PS(50.7,"AIV",$E(X,1,30),DA)
+                                 Cross-reference on IV FLAG field, which
+                                 indicates that an Orderable Item was 
+                                 created from the IV ADDITIVE or SOLUTION
+                                 file.  
+  
+  
+  
+ -----------------------------------------AFTER----------------------------
+  
+ STANDARD DATA DICTIONARY #50.7 -- PHARMACY ORDERABLE ITEM FILE
+ STORED IN ^PS(50.7,  (3481 ENTRIES)   SITE: TEST.CHEYENNE.MED.VA.GOV
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+  
+ 50.7,.03      IV FLAG                0;3 SET
+  
+                                 '1' FOR IV; 
+               LAST EDITED:      AUG 31, 2012 
+               HELP-PROMPT:      Enter '1' if this item is created from an 
+                                 IV additive or solution.
+               DESCRIPTION:      This field indicates PHARMACY ORDERABLE 
+                                 ITEMs  are related to IV additives or
+                                 solutions.  
+  
+  
+               TECHNICAL DESCR:  This field is used to indicate that a
+                                 site-selectable indicator of type IV is 
+                                 to be included in the PHARMACY ORDERABLE
+                                 ITEM.  
+  
+               WRITE AUTHORITY:  ^
+  
+                                 UNEDITABLE
+               CROSS-REFERENCE:  50.7^AIV 
+                                 1)= S ^PS(50.7,"AIV",$E(X,1,30),DA)=""
+                                 2)= K ^PS(50.7,"AIV",$E(X,1,30),DA)
+                                 Cross-reference on IV FLAG field, which
+                                 indicates that an Orderable Item was 
+                                 created from the IV ADDITIVE or SOLUTION
+                                 file.  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is recommended that this patch be queued to run after normal business
+ hours or installed when users are not on the system.
+  
+ Installation will take less than 1 minute.
+  
+ 1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+     the KIDS distribution included with this message.
+  
+ 2.  From the Kernel Installation and Distribution System Menu, select
+     the Installation menu.
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter PSS*1.0*150):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates. 
+      b.  Compare Transport Global to Current System  - this option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - this option will
+          allow you to ensure the integrity of the routines that are in
+          the transport global.
+      d.  Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+   
+ 4.  Use the Install Package(s) option and select the package PSS*1.0*150.
+  
+ 5.  When prompted ' Want KIDS to INHIBIT LOGONs during the install?
+     NO//', respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSORPH
+    Before: B77028088   After: B78689829  **34,38,49,69,150**
+Routine Name: PSSP150
+    Before:       n/a   After:    B29912  **150**
+ 
+Routine list of preceding patches: 69
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : SEP 08, 2009
+Completed By: HEFFERNAN,COREY               Date Completed: MAR 11, 2013
+Released By : VECE,VIRGINIA                 Date Released : MAR 27, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,218 @@
+$TXT Created by GREEN,LINDA A at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 09/26/12 at 17:03
+=============================================================================
+Run Date: MAR 01, 2013                     Designation: DG*5.3*846
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #760                    Status: Released
+                  Compliance Date: MAR 25, 2013
+=============================================================================
+
+
+Subject: DATA DICT TYPO;EDIT MISSING DATA TYPO;PAT TYP NAME FIELD CHANGE
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses 3 issues:
+  
+ 1.  There is a misspelled word in the data dictionary help text in the 
+     PATIENT Subfile (#2.98) for CANCELLATION REMARKS Field (#17).  
+ 2.  The NAME Field (#.01) of the PATIENT TYPE File (#391) is allowed to 
+     be changed.  
+ 3.  There is a misspelled word in data dictionary help text in the text in
+     the PATIENT TYPE File (#391) for EDIT MISSING DATA? Field (#102).
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. HD0000000467033   Typo in data dictionary
+ 2. HD0000000405592   Name field has been changed in Patient Type
+                      unknowingly
+ 3. HD0000000751852   Correction to Help Text in file 391 
+   
+    
+ Participating Test Sites:
+ =========================
+ Tuscaloosa VAMC
+ VA Boston HCS
+ Bay Pines VA HCS
+  
+ Remedy Overview:
+ ================
+   
+ 1. HD0000000467033 Typo in data dictionary  
+  
+ Problem: 
+ --------
+ The help text in the PATIENT Subfile (#2.98) for CANCELLATION REMARKS Field 
+ (#17) currently reads:
+  
+ If thsi appointment was cancelled, additional remarks as to the reason
+ the appointment was cancelled can be entered.  This is optional.
+  
+ It should read:
+ If this appointment was cancelled, additional remarks as to the reason
+ the appointment was cancelled can be entered.  This is optional.
+  
+ [The following change was requested of the DBA.]
+  
+ The PATIENT Subfile (#2.98) for CANCELLATION REMARKS Field (#17) reads:
+   
+ "ANSWER MUST BE 3-160 CHARACTERS IN LENGTH"
+  
+ It should read:
+ "Answer must be 3-160 characters in length."
+  
+ Resolution:
+ -----------
+ Modified the PATIENT Subfile (#2.98) for CANCELLATION REMARKS Field (#17) 
+ DESCRIPTION to read:
+  
+ "this" as opposed to "thsi"
+  
+ Modified the PATIENT Subfile (#2.98) for CANCELLATION REMARKS Field (#17) 
+ HELP-PROMPT to read:
+  
+ "Answer must be 3-160 characters in length." as opposed to 
+ "ANSWER MUST BE 3-160 CHARACTERS IN LENGTH"
+  
+ 2. HD0000000405592   Name field has been changed in Patient Type unknowingly
+                                  
+ Problem:
+ --------
+ In the TYPE OF PATIENT File (#391) NAME Field (#.01) the prompt was being
+ edited by the users because the field was set up as editable in the
+ system.
+  
+ Resolution:
+ -----------
+ The TYPE OF PATIENT File (#391) NAME Field (#.01) was modified to make the
+ field uneditable to prevent accidental editing by the user.
+   
+ 3. HD0000000751852  Correction to Help Text in file 391    
+   
+ Problem:
+ --------
+ The help text for the TYPE OF PATIENT File (#391) Edit Missing Data? Field 
+ (#102) the Edit Missing Data? prompt reads:
+   
+    If you want users to be able to edit the missing data for patients of thsi 
+    type, answer yes. 
+  
+ It should read:
+  
+    If you want users to be able to edit the missing data for patients of this 
+    type, answer yes. 
+  
+ Resolution:
+ -----------
+ Modified the TYPE OF PATIENT File (#391) Edit Missing Data? Field (#102)
+ help prompt text to read:
+  
+ "this" as opposed to "thsi"
+  
+   
+ Technical
+ =========
+ The following partial Data Dictionary entries are included:
+  
+  
+                                          UP    SEND  DATA                USER
+                                          DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                    DD    CODE  W/FILE  DATA  PTRS  RIDE
+ -------------------------------------------------------------------------------
+ 2           PATIENT                      YES   NO    NO                  NO
+  
+ Partial DD: subDD: 2          fld: .98
+  
+ 391|TAB|     TYPE OF PATIENT
+  
+ Partial DD: subDD: 391        fld: .01
+                               fld: 102
+  
+ Installation Instructions
+ =========================
+  
+ If installed during the normal workday, it is recommended that the
+ the Registration users be off the system. Other VISTA users will 
+ not be affected.
+   
+ Install Time - less than 2 minutes.
+  
+  1.   Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.   Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+           Patch Monitor Main Menu ...
+  
+       Select Kernel Installation & Distribution System Option: INStallation
+                           ---
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+            Select Installation Option:
+  
+  3.   From this menu, you may elect to use the following options
+       (When prompted for the INSTALL NAME, enter DG*5.3*846):
+  
+       a.  Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed. It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+  
+  4.   Use the Install Package(s) option and select the package
+       DG*5.3*846.
+  
+       a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+           NO//', answer NO
+       b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+           Options, and Protocols? Y//', answer YES.
+       c.  When prompted 'Enter options you wish to mark as 'Out Of
+           Order':', enter the following options:
+  
+           Patient Type Update  [DG PATIENT TYPE PARAMETER EDIT]
+  
+       d.  When prompted 'Enter protocols you wish to mark as 'Out Of
+           Order':', press <return>.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : GREEN,LINDA A                 Date Entered  : JUL 19, 2011
+Completed By: HEMPHILL,ELIZABETH            Date Completed: MAR 01, 2013
+Released By : BARKER,MARK D                 Date Released : MAR 01, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

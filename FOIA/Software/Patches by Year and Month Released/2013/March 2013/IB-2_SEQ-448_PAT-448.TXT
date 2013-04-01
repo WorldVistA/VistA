@@ -1,0 +1,114 @@
+$TXT Created by KOGER,RON at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 03/11/11 at 13:48
+=============================================================================
+Run Date: MAR 14, 2013                     Designation: IB*2*448
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #448                      Status: Released
+                  Compliance Date: APR 13, 2013
+=============================================================================
+
+Associated patches: (v)IB*2*389    <<= must be installed BEFORE `IB*2*448'
+
+Subject: INCORRECT POINTER TO PATIENT FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The View/Print EDI Bill Extract Data [IBCE EDI VIEW/PRINT EXTRACT] option
+ and its EDI Transmitted Bill Extract Data report is modified to account
+ for an outpatient event that takes place on a date that occurs between the
+ admit and discharge dates of an inpatient event.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) INC0000000460631   IB Routine Setting Variable Wrong
+      Duplicate: INC0000000460978   Error in Routine IBCEF21
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Alexandria VA Medical Center - Pineville 
+ Martinsburg VA Medical Center
+ VA Caribbean Healthcare System - San Juan    
+  
+ REMEDY OVERVIEW:
+ ================
+ 1) INC0000000460631   IB Routine Setting Variable Wrong
+  
+   Problem: 
+   --------
+   The start of care date is displayed incorrectly when an outpatient event
+   takes place on a date that occurs between the admit and discharge dates
+   of an inpatient event.
+  
+   Resolution
+   ----------
+   The option: View/Print EDI Bill Extract Data [IBCE EDI VIEW/PRINT 
+   EXTRACT] displays a report entitled EDI Transmitted Bill Extract Data.
+   On that report item [14] Admission/Start of Care DT is displayed. This
+   display function is being corrected to show the inpatient admit date as
+   the start of care date.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options. You may install 
+ this patch at any time without interruption to users. It should
+ take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*448)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*448.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCEF21
+    Before: B23765234   After: B23776552  **51,296,371,389,448**
+ 
+Routine list of preceding patches: 389
+
+=============================================================================
+User Information:
+Entered By  : KOGER,RON                     Date Entered  : FEB 14, 2011
+Completed By: DAWSON,TIM                    Date Completed: FEB 28, 2013
+Released By : BROWN,GAYLE F                 Date Released : MAR 14, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

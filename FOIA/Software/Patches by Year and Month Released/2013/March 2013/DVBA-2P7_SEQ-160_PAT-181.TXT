@@ -1,0 +1,832 @@
+$TXT Created by KOCIS,GEORGE at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 02/28/13 at 10:10
+=============================================================================
+Run Date: MAR 19, 2013                     Designation: DVBA*2.7*181
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #160                    Status: Released
+                  Compliance Date: APR 19, 2013
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*123<<= must be installed BEFORE `DVBA*2.7*181'
+                    (v)DVBA*2.7*168<<= must be installed BEFORE `DVBA*2.7*181'
+                    (v)DVBA*2.7*179<<= must be installed BEFORE `DVBA*2.7*181'
+
+Subject: CAPRI VIRTUAL VA, VOC. REHAB ENHANCEMENTS & DEFECT FIXES
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ I. OVERVIEW
+  
+    This patch (DVBA*2.7*181) and CAPRI GUI v181 provides defect fixes and
+    enhancements for the CAPRI GUI and the Automated Medical Information
+    Exchange (AMIE) package.  Please refer to the 'FUNCTIONAL OVERVIEW'
+    section (III) for the specific changes and primary functionality being
+    delivered.
+  
+  
+ II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+   
+    The following section lists the Remedy tickets and/or New Service 
+    Requests associated with this patch.
+   
+    1. Associated Remedy Ticket(s):
+       ----------------------------
+       HD0000000605999 (INC000000605999) - Space Limit in Exam Report Text
+        Window
+  
+         Duplicates:     None
+  
+       HD0000000612052 (INC000000612052)- Clinical Documents search box
+         Duplicates:     None
+  
+       HD0000000623336 (INC000000623336)- Patient worksheet causing CAPRI 
+          to stop responding
+  
+       Duplicates:       None
+  
+  
+    2. Associated New Service Request(s):
+       ----------------------------------
+       NSR #20081127 - VA Form 28-8861, Request for Medical Services -   
+       Chapter 31
+  
+   
+ III. FUNCTIONAL OVERVIEW
+   
+    The following is an overview of the changes and primary functionality
+    that will be delivered in CAPRI GUI v181 and this VistA patch 
+    (DVBA*2.7*181).
+    
+    1. The following Remedy tickets are being addressed:
+   
+       a. HD0000000605999 - Space Limit in Exam Report Text Window
+   
+       Problem
+       -------
+       C&P providers noted that when amending a released C&P exam report
+       using the C&P Exam Request Report Management dialog box, the Report
+       text field appears to freeze and will not allow additional text to
+       be inserted or appended. This occurs most often when editing
+       the contents of a merged exam report.
+  
+       Research determined that the text box has a default limit of approx.
+       64,000 characters when text is manually entered.
+  
+       Solution
+       --------
+       The MaxLength property of the text box has been set to the approx. 
+       2 gigabyte maximum size to override the default 64,000 character
+       limit to accommodate the increased size of merged Disability 
+       Benefit Questionnaire (DBQ ) templates.
+  
+  
+       b. HD0000000612052 - Clinical Documents search box
+   
+       Problem
+       -------
+       The 'Find' field on the Clinical Documents tab returns progress 
+       notes that contain the search word and highlights the word.  When
+       the user selects a different patient and performs the searches for
+       the same word, no results are returned when there are actually
+       matching records.  Entering a different search word and then
+       reverting to the original search word provides a workaround.
+  
+       Research determined that the original search word is never cleared
+       when the user switches patients.
+  
+       Solution
+       --------
+       CAPRI has been modified to clear the search criteria every time the
+       user selects a different patient.
+  
+  
+       c. HD0000000623336 - Patient worksheet causing CAPRI to stop
+                            responding
+  
+       Problem
+       -------
+       A patient with several hundred existing appointments for the same
+       clinic may cause CAPRI to hang when a user attempts to sign a
+       completed C&P exam. This occurs due to a potential infinite loop
+       that may occur when CAPRI retrieves appointment records in batches
+       of 50 records at a time.
+  
+       Solution
+       --------
+       CAPRI has been modified to retrieve appointment records in a single
+       batch.
+  
+  
+   2. The following defects that were reported directly to the CAPRI
+      development team are being addressed:
+  
+      a. Defect - Error when entering a lot of data in Review Events window
+  
+      Problem
+      -------
+      When several lines of text are added to the Comments field of the
+      Review Events dialog box, CAPRI generates an error: "In generation
+      of message to server, call to LPack where Length of string of 4
+      chars exceeds number of chars for output length (3)".  The error
+      appears to occur, because the Comments field provides a horizontal
+      scroll bar and does not wrap the text contents.
+  
+      Solution
+      --------
+      The Comments field has been modified to display only the vertical
+      scrollbar, which forces text to wrap correctly and avoids errors
+      when large amounts of text are entered on a single line.      
+  
+      b. Defect - Potential Access Violation when closing CAPRI with
+                  open template window
+  
+      Problem
+      -------
+      CAPRI displays a user message warning the user to close any open
+      C&P exam templates when exiting CAPRI with an open template.  The
+      open template is then displayed.  If the Template form has already
+      closed, then CAPRI will generate an Access Violation error.
+  
+      Solution
+      --------
+      CAPRI will verify that the Template form is still open before
+      attempting to show the Template form.
+    
+  
+   3. The following enhancements that were requested by Veterans Health
+      Administration Veterans Affairs Central Office (VHAVACO) are being
+      addressed:
+  
+      a. Create interface to Virtual VA web service.
+  
+      This patch addresses a requirement to create an interface between
+      CAPRI and the Virtual VA web service. 
+  
+      This enhancement allows CAPRI users to transmit CAPRI-generated
+      documents electronically to the VBA Paperless Delivery Virtual VA
+      system.  The elimination of the need to produce paper documents,
+      scan, and manually enter them into Virtual VA provides a
+      significant efficiency improvement in the veteran claim processing
+      workflow.     
+  
+      b. Align names of CAPRI Templates and exam names
+  
+      This patch addresses a requirement to make the names of the C&P
+      exams which can be selected in the CAPRI GUI more closely match
+      the names of the corresponding CAPRI examination templates.
+  
+      CAPRI uses the VistA  AMIE EXAM file to populate the list of
+      selectable exams.  Active DBQ entries in this file are being edited
+      to more closely align with CAPRI examination template names.
+  
+      c. Create an electronic interface to Vocational Rehabilitation
+         Chapter 31 VA-Form 28-8861 form.
+  
+      This CAPRI enhancement allows Vocational Rehabilitation users to
+      replace their paper 28-8861 form with a new electronic interface.
+      This interface enables users to create an electronic request for
+      medical services, track those requests and print reports. The 
+      request can be linked to a consult by a VHA Coordinator. Mailman
+      notifications are sent to both VR&E Counselor and VHA Coordinator
+      when the 28-8861 form status is updated. A nightly background job
+      will monitor consults that are linked to the 28-8861 file.
+                                                              
+      The VR&E personnel security key holders will be able to create new
+      28-8861 requests, and cancel them before consults are linked. This
+      will result in a real time Mailman notification alerting of the
+      28-8861 "new" status to the VHA Coordinator. Both the VHA Coordinator
+      and the VR&E personnel will get the "cancelled" status notification.
+      Note: When the VHA Coordinator "cancels" a 28-8861 request, it
+      must be after the request has been linked to a consult and then
+      that consult must be "discontinued." The VHA Coordinator is the
+      one who "discontinues" the consult, and that status becomes the
+      CPRS status of the consult. That is, a "discontinued" consult CPRS
+      status will equate to a "cancelled" 28-8861 status. 
+  
+      The VHA Coordinator security key holders will be able to link
+      consults associated to the 28-8861, resulting in the status of the
+      28-8861 changing to pending. This will result in a real time Mailman
+      Message and Outlook email notification alerting of the 28-8861 status
+      update to both the VHA Coordinator and the VR&E personnel.
+  
+      A nightly background job will monitor all the 28-8861 pending status
+      requests for the status of the consult linked to it in the CPRS
+      status field of the consult file. When the CPRS status changes to
+      "discontinued" or "complete", the 28-8861 status is updated to
+      "cancelled" or "complete". Also, when the 28-8861 status changes, a
+      Mailman notification alerting of the 28-8861 status update is sent to
+      both the VHA Coordinator and the VR&E personnel.
+  
+      The background job will also age "new" 28-8861 requests up to 7 days.
+      Once the age of "new" 28-8861 statuses reach 5 and 6 days old, a
+      Mailman notification is sent to the VHA coordinator alerting them to
+      link a consult to the form. But, if the 28-8861 form ages 7 days, an
+      Outlook email notification is sent to the VR&E personnel alerting to
+      the fact no consult has been linked to the form yet.
+  
+      The VR&E personnel notified with the Outlook email message is the
+      28-8861's point of contact. The VHA coordinator that the Mailman
+      message is sent to is listed in the mail group: DVBA VR VOCREHAB
+      PERSONNEL.
+  
+      d. Enterprise Patient/Veteran Search Capability
+  
+      This enhancement provides the capability to remote CAPRI users to
+      search the Master Veteran Index (MVI) for a patient by passing in the
+      first name, middle name, last name, social security number, and date
+      of birth.  A successful search will return the validated patient
+      demographic traits and the patient's list of treating facilities.  
+      The search utilizes a HealtheVet Web Services client called by
+      remote procedures to connect to the MVI Search Person and the MVI Get
+      Corresponding IDs web services.
+  
+      e. Validate the Patient Restricted List
+  
+      This enhancement allows the Health Information Access (HIA) staff to
+      validate patient demographic traits provided from external sources
+      prior to adding patients to the CAPRI Patient Restricted List.  CAPRI
+      imports a list of patients in the form of a spreadsheet, calls the
+      MVI Search Person web service for each patient, and edits each entry
+      in the spreadsheet list to indicate whether the patient is found, not
+      found, or has multiple matches found.  CAPRI displays a separate
+      dialog to display the total patients screened, the number of valid
+      records, the number of invalid records with the associated patient
+      traits, and the number of multiple match records with the potential
+      matches. The search utilizes a HealtheVet Web Services client called
+      by a remote procedure to connect to the MVI Search Person web
+      service.
+  
+      f. CAPRI On-line Help Features
+  
+      This enhancement offers users access to context-sensitive on-line
+      help while using the CAPRI GUI application.  Pressing the F1 key
+      will display a Help window containing information related to the
+      CAPRI window visible on the user's screen.  The Help window
+      provides an index and table of contents.
+  
+      g. Add Remote Procedure to Support SMART
+  
+      The Structured Module for Analytic and Report Templates (SMART)    
+      application requires the VAFCTFU CONVERT ICN TO DFN remote procedure
+      to be added to the DVBA CAPRI GUI menu option in the VistA account.
+      SMART is a full extract of the worksheet tab functionality from
+      within the CAPRI application. Adding this supported remote procedure
+      to the DVBA CAPRI GUI menu option is required to support the Patient
+      Context functionality within the SMART application to ensure that the
+      correct patient is always displayed to the user.
+  
+  
+ IV. TECHNICAL COMPONENTS
+  
+   The following section describes the technical components being exported
+   with this patch. 
+  
+                                        UP    SEND  DATA               USER
+                                        DATE  SEC.  COMES  SITE   RSLV OVER
+   FILE #   FILE NAME                   DD    CODE  W/FILE DATA   PTS  RIDE
+   ------------------------------------------------------------------------
+   396.9    FORM 28-8861                YES    YES    NO
+   396.918  MEDICAL SERVICES REQUESTED  YES    YES    YES   ADD    NO   NO
+  
+   1. The following Routines are being added/modified:
+  
+       a. Modify: DVBABURL
+          Description of changes:
+          The URL entry point of this routine has been modified to return
+          the URL address for the Virtual VA web services server.
+          A new VVATOKEN entry point has been added to support the new
+          DVBAB GET VVA TOKEN remote procedure.
+  
+      b. Modify: DVBAB82
+          Description of change:
+          This routine has been modified to add the new Form 28- 
+          8861 Request for Medical Services, Chapter 31 Status
+          Report.
+  
+      c. Add: DVBANTFY
+          Description of change:
+          This routine has been added to trigger a MailMan message to be 
+          sent when a "NEW" 8861 request has been submitted and when a 
+          consult has been linked to a request, changing the status to
+          "PENDING". In addition, when a linked consult or a request is
+          cancelled, a MailMan message is sent out.
+  
+      d. Add: DVBA8861
+          Description of change:
+          This routine has been added to produce a Form 28-8861 Request
+          for Medical Services, Chapter 31 Status Report. Various date 
+          ranges can be chosen from a drop down box, as well as the 
+          Regional Office, the status to report on and delimited or plain
+          text output.
+          
+      e. Add: DVBAVRX1
+          Description of change:
+          This routine is the entry point called for the nightly background
+          job that determines status changes to the 8861 form. When the
+          8861 is determined to be completed or cancelled, a MailMan email
+          will be sent to the appropriate staff.
+  
+          This routine also acts as the entry point for the RPC entry to
+          generate MailMan messages that an 8861 form has had a status
+          change to New, Pending or Cancelled.
+  
+      f. Add: DVBAVRX2
+          Description of change:
+          This routine is an extension of DVBAVRX1 that is processed during
+          the nightly background job. The logic contained in this routine
+          calculates the number of days old the 8861 request is before 
+          having a consult linked to the 8861.
+  
+          It will send a notification to the appropriate staff based on
+          5, 6, or 7 days of aging to alert the users to link the required
+          consult.
+  
+      g. Add: DVBA181P
+         Post Init routine DVBA181P will rename all active DBQ entries   
+         in the AMIE EXAM file to match the names of the corresponding
+         CAPRI examination templates. The renamed AMIE EXAM file entries
+         include the body system associated with the exam.
+  
+      h. Add: DVBAMVI1
+         Description:        
+          This new routine creates a 1305 HL7v3 XML message, transmits it
+          to the MVI search person web service, parses the returned 1306
+          HL7v3 XML response, and returns the results.  The routine is
+          called by the DVBA MVI SEARCH PERSON remote procedure.
+  
+      i. Add: DVBAMVI2
+         Description:
+          This new routine creates a 1309 HL7v3 XML message, transmits it
+          to the MVI Get Corresponding Ids web service, parses the returned
+          1310 HL7v3 XML response, and returns the results.  The routine is
+          called by the DVBA MVI GET CORRESPONDING IDS remote procedure.
+  
+      j. Add: DVBAHWSC
+         Description:
+          This new routine generates the proxy object on the CLAIMS
+          server.  The proxy object is utilized by CAPRI to access
+          MVI web services.
+  
+      k. Modify: DVBABFRM
+         Description:
+          Added retrieval of Date of Birth and Integration Control Number
+          to RSTLIST entry point. 
+  
+   2.  The following files have been created:
+  
+       a. FILE 396.9     FORM 28-8861
+       b. FILE 396.918   MEDICAL SERVICES REQUESTED
+  
+  
+   3.  The following REMOTE PROCEDURES entries are being added:
+  
+       a. NAME: DVBAB GET VVA TOKEN
+          TAG: VVATOKEN
+          ROUTINE: DVBABURL
+          RETURN VALUE TYPE: SINGLE VALUE
+          AVAILABILITY: RESTRICTED
+          DESCRIPTION: This remote procedure retrieves the username,
+                       password, and token value passed to the Virtual
+                       VA web service.
+          RETURN PARAMETER DESCRIPTION: Returns the values for username,
+                                        password, and token as a single 
+                                        caret-delimited string.
+                                        Example:  capri^XXXXX^Username-1 
+  
+       b. NAME: DVBAB 8861 NOTIFICATIONS
+          TAG: ENTER
+          ROUTINE: DVBANTFY
+          RETURN VALUE TYPE: SINGLE VALUE
+          AVAILABILITY: RESTRICTED
+          DESCRIPTION: This will perform MailMan notifications for 
+                       Form 8861 Requests based on the status of the 
+                       request.
+          RETURN PARAMETER DESCRIPTION: The RPC returns either a success 
+                                        or failure to send the MailMan
+                                        notification, either 1 or 0.
+  
+       c. NAME: DVBA MVI SEARCH PERSON
+          TAG: FNDPAT
+          ROUTINE: DVBAMVI1
+          RETURN VALUE TYPE: ARRAY
+          DESCRIPTION:   
+           This remote procedure passes the delimited person traits to the
+           MVI SEARCH PERSON web service and returns the results of the
+           search.
+  
+       d. NAME: DVBA MVI GET CORRESPONDING IDS
+          TAG: GETIDS
+          ROUTINE: DVBAMVI2
+          RETURN VALUE TYPE: ARRAY
+          AVAILABILITY: AGREEMENT
+          DESCRIPTION:   
+           The remote procedure passes the Integration Control Number ID to
+           the MVI GET CORRESPONDING IDS web service and returns the list
+           of VAMC treating facilities for the selected identifier.
+  
+                                                      
+   4.  The following OPTION entry is being modified:
+  
+       a. Capri GUI (Broker) [DVBA CAPRI GUI]
+          Description of changes:
+          The following remote procedures have been added to the RPC 
+          multiple:
+           * DVBAB GET VVA TOKEN
+           * DVBA MVI GET CORRESPONDING IDS
+           * DVBA MVI SEARCH PERSON
+           * DVBAB 8861 NOTIFICATIONS
+           * VAFCTFU CONVERT ICN TO DFN
+  
+   5.  The following OPTION entry has been added:
+  
+       b. DVBA VR BACKGROUND
+          DESCRIPTION: DVBA VR BACKGROUND
+                       This task runs in the background for the DVBA Form
+                       8861 Vocational Rehab Requests. It sends MailMan
+                       notifications based on changes to the request status
+                       and age of "New" requests.
+  
+  
+   6. The following entries are being added to the PARAMETER DEFINITION 
+      File (8989.51):
+  
+      a. NAME: DVBAB CAPRI VIRTUALVA PROD URL
+         DISPLAY TEXT: Virtual VA Production URL
+         MULTIPLE VALUED: No
+         VALUE DATA TYPE: free text
+         VALUE HELP: Enter the URL of the Virtual VA production
+                     server.
+         DESCRIPTION: This is the URL that CAPRI utilizes to 
+                      connect to the Virtual VA production server.
+         PRECEDENCE: 1
+         ENTITY FILE: PACKAGE
+  
+      b. NAME: DVBAB CAPRI VIRTUALVA TEST URL
+         DISPLAY TEXT: Virtual VA Test system URL
+         MULTIPLE VALUED: No
+         VALUE DATA TYPE: free text
+         VALUE HELP: Enter the URL of the Virtual VA test server.
+         DESCRIPTION: This is the URL that CAPRI utilizes to 
+                      connect to the Virtual VA test server.
+         PRECEDENCE: 1
+         ENTITY FILE: PACKAGE
+  
+      c. NAME: DVBAB CAPRI VVA PROD PASSWD
+         DISPLAY TEXT: CAPRI VIRTUALVA PRODUCTION PASSWORD
+         MULTIPLE VALUED: No
+         VALUE DATA TYPE: free text
+         VALUE HELP: Enter the password for the production Virtual
+                     VA web service.
+         DESCRIPTION: This is the password passed to the production
+                      Virtual VA web service.
+         PRECEDENCE: 1
+         ENTITY FILE: PACKAGE
+  
+      d. NAME: DVBAB CAPRI VVA PROD TOKEN
+         DISPLAY TEXT: CAPRI VIRTUALVA PRODUCTION TOKEN
+         MULTIPLE VALUED: No
+         VALUE DATA TYPE: free text
+         VALUE HELP: Enter the token required to connect to the
+                     Virtual VA web service.
+         DESCRIPTION: This is the token used to login to the
+                      production Virtual VA web service.
+         PRECEDENCE: 1
+         ENTITY FILE: PACKAGE
+  
+      e. NAME: DVBAB CAPRI VVA TEST PASSWD
+         DISPLAY TEXT: CAPRI VIRTUALVA TEST PASSWORD
+         MULTIPLE VALUED: No
+         VALUE DATA TYPE: free text
+         VALUE HELP: Enter the password for the test Virtual VA 
+                     web service.
+         DESCRIPTION: This is the password that CAPRI passes to 
+                      the test Virtual VA web service.
+         PRECEDENCE: 1
+         ENTITY FILE: PACKAGE
+  
+      f. NAME: DVBAB CAPRI VVA TEST TOKEN
+         DISPLAY TEXT: CAPRI VIRTUAL VA TEST TOKEN
+         MULTIPLE VALUED: No
+         VALUE DATA TYPE: free text
+         VALUE HELP: Enter the token passed to the test Virtual VA web
+                     service.
+         DESCRIPTION: This is the token that is passed to login to the
+                      test Virtual VA web service.
+         PRECEDENCE: 1
+         ENTITY FILE: PACKAGE
+  
+      g. NAME: DVBAB CAPRI VVA USER
+         DISPLAY TEXT: CAPRI VIRTUALVA USER
+         MULTIPLE VALUED: No
+         VALUE DATA TYPE: free text
+         VALUE HELP: Enter the fixed value username for the Virtual VA
+                     web service.
+         DESCRIPTION: This is the username that CAPRI passes to the
+                      Virtual VA web service.
+         PRECEDENCE: 1
+         ENTITY FILE: PACKAGE
+  
+  
+   7. The following INTEGRATION CONTROL REGISTRATION's (ICR's) have been
+      added or modified.
+          
+       a. ICR #875 - AMIE was added as a subscriber to this ICR which 
+          allows the ORDER STATUS file (#100.01) to be pointed to.
+  
+       b. ICR #4110 - AMIE was added as a subscriber to this ICR which
+          allows access to various fields in the REQUEST/CONSULTATION 
+          file (#123).
+  
+       c. ICR #3552 - AMIE was added as a subscriber to this ICR which
+          allows CAPRI to access the $$PARAM^HLCS2 function to retrieve
+          the HL7 Default Processing ID.
+  
+   8. The following MAIL GROUP entry is being added:
+     
+      a. DVBA VR VOCREHAB PERSONNEL
+         VocRehab personnel who should receive Form 28-8861 Notifications
+         should be assigned to this group. Users must have access to VistA
+         MailMan in order to receive messages.
+  
+   9. The following SECURITY KEYS have been added:
+  
+      a. DVBA CAPRI VRE_COUNSELOR
+          Anyone needing to see the VocRehab tab within CAPRI will need to
+          be assigned the CAPRI VRE Counselor security key.  This key gives
+          the user access to all portions of VocRehab except the ability to
+          assign a medical consult to a request for medical services.
+  
+      b. DVBA CAPRI VHA_COORDINATOR
+          The CAPRI VHA Coordinator key makes visible within CAPRI a button
+          allowing users with this key to assign a medical consult (created
+          in CPRS) to a request for medical services.  The only function of
+          this security key is allowing the ability to assign consults.  
+          Users with this security key will also need the CAPRI VRE
+          Counselor security key as well.
+  
+  
+ V. SOFTWARE AND DOCUMENTATION RETRIEVAL
+     
+   1. VistA Patch DVBA*2.7*181
+    
+      a. The VistA server software is being distributed as a PackMan patch
+         message through the National Patch Module (NPM). The KIDS build
+         for this patch is DVBA*2.7*181.
+  
+   2. CAPRI GUI v181 Client Software & User Documentation
+  
+      a.  The CAPRI GUI v181 client software is being distributed as
+          executable CAPRI.exe ([DVBA_27_P181_21.ZIP]). The 
+          installed executable for this patch is client version 
+          181.21 with a size of 14.0 MB.
+  
+          The CAPRI GUI v181 client software and documentation for this
+          patch may be retrieved directly using FTP. The preferred method
+          is to FTP the files from:
+  
+             download.vista.med.va.gov
+  
+         This transmits the files from the first available FTP server.
+         Sites may also elect to retrieve software directly from a specific
+         server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+         Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+         Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+  
+        The following files will be available:
+  
+        File Name             Contents                     Retrieval format
+        ---------             --------                     ----------------
+        DVBA_27_P181_21.ZIP   File(s) indented below:      BINARY
+         - CAPRI.exe             CAPRI v181 executable
+         - VACAPRIVVA.dll        Virtual VA dynamically linked library
+         - CAPRI_Help.chm        CAPRI On-line Help
+         - CAPRI.map             CAPRI error map
+         - CAPRISession.r2w      Reflections session configuration
+         - ssh_config            Secure Shell configuration       
+         - CAPRI_GUI_ISG.doc  CAPRI GUI Installation Supplemental Guide
+        DVBA_27_P181_RN.PDF   Patch Release Notes          BINARY
+        DVBA_27_P181_UM.PDF   Updated CAPRI User Manual    BINARY 
+  
+       The VistA Documentation Library (VDL) web site will also contain the
+       'Release Notes' and updated 'CAPRI User Manual'. This web site is
+       usually updated within 1-3 days of the patch release date.
+  
+       The VDL web address for CAPRI user documentation is:
+      
+          http://www.va.gov/vdl/application.asp?appid=133
+  
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES:
+  
+  1. Users On the System
+  
+     a. This patch (DVBA*2.7*181) may be installed while CAPRI users are
+        still using the previously released version of the CAPRI GUI
+        (i.e. DVBA_27_179.exe).
+  
+     b. Once the installation of this patch has been completed, CAPRI users
+        should be upgraded to the new released version of the CAPRI GUI
+        (CAPRI.exe [DVBA_27_P181_21.ZIP]). Please refer to the 
+        CAPRI_GUI_ISG.doc document within the DVBA_27_P181_21.zip file
+        for supplemental installation instructions regarding the
+        installation of the following files:
+            VACAPRIVVA.dll        Virtual VA dynamically linked library
+            CAPRI_Help.chm        CAPRI On-line Help
+            CAPRI.map             CAPRI error map
+            CAPRISession.r2w      Reflections session configuration
+            ssh_config            Secure Shell configuration
+  
+     c. This patch modifies routines used by the CAPRI GUI application 
+        and the Automated Medical Information Exchange (AMIE) package. It
+        should be installed during non-peak hours to minimize disruption to
+        users and to reduce the possibility of errors when the routines are
+        updated.
+  
+  2. VistA Options
+         
+     a. The following VistA options should be disabled while installing
+        this patch: NONE.
+  
+  3. Software Installation Time
+  
+     a. The estimated installation time for VistA patch DVBA*2.7*181 is 
+        less than 5 minutes during off peak hours.
+   
+  4. Required Builds
+  
+     a. The following is a list of REQUIRED builds for this KIDS
+        distribution (DVBA*2.7*181). KIDS will not allow the installation
+        of this patch without their prior installation.
+  
+        Required Builds:
+        ----------------
+        DVBA*2.7*123
+        DVBA*2.7*168
+        DVBA*2.7*179
+  
+  
+ VII. INSTALLATION INSTRUCTIONS:
+  
+    **********************************************************************
+    * NOTE: XINDEX from patch XT*7.3*132 reports the following error     *
+    *       for routines DVBAMVI1 and DVBAMVI2:                          *
+    *                                                                    *
+    *         "execute(     S - Lower/Mixed case Variable name used."    *
+    *                                                                    *
+    *       The error is reported, because the released version of       *
+    *       XINDEX does not recognized Cache' objects, which are         *
+    *       required by HealtheVet Web Services Client. A new ToolKit    *
+    *       patch XT*7.3*133 is under development that recognizes        *
+    *       and properly reports Cache' objects syntax.                  *
+    **********************************************************************
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+    2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+  
+    3. From this menu, you may now elect to use the following options (when
+       prompted for INSTALL NAME, enter DVBA*2.7*181).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+    4. Use the Install Package(s) option and select package DVBA*2.7*181.
+  
+    5. When prompted to "Enter the Coordinator for MailGroup 'DVBA VR
+       VOCREHAB PERSONNEL':", enter the name of the person responsible
+       for maintaining the members of this MailGroup.
+  
+    6. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//', respond NO.
+  
+    7. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', it is recommended you answer NO.
+  
+    8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond NO.
+  
+    9. If CAPRI GUI users have not already been upgraded to the new 
+       version of the CAPRI GUI v181 (CAPRI.exe [DVBA_27_P181_21.ZIP]), 
+       they should be upgraded as soon as possible upon installation of 
+       this patch.
+  
+   10. NOTE: Pre/Post-init routine DVBA181P is a temporary routine used
+       as part of the pre/post-install process. This routine may not be 
+       automatically deleted by KIDS after patch installation.  After 
+       successful completion of the installation, DVBA181P may be manually
+       deleted.
+  
+   11. DVBA VR VOCREHAB PERSONNEL
+       The MAIL GROUP, DVBA VR VOCREHAB PERSONNEL will need to have
+       users designated as Vocational Rehab personnel assigned to it.
+       Note: The Point of Contact is also an Exchange mail recipient and
+       will need to be assigned a va.gov email address in the new person
+       user file if they do not already have one. These users are the
+       VR&E Counselors. The new person file is file #200 and the email
+       address field is field number .151.
+  
+   12. DVBA CAPRI VRE_COUNSELOR
+       DVBA CAPRI VHA_COORDINATOR
+       The security keys contained in this patch will need to be given to
+       users of the Vocational Rehab application to grant access to it.
+  
+   13. DVBA VR BACKGROUND
+       The option DVBA VR BACKGROUND must be scheduled to run every
+       weekday after business hours (for example, 7pm) . This option must
+       be scheduled to start  at least an hour before midnight.    Use the
+       Kernel "Schedule/ Unschedule Options" [XUTM SCHEDULE]
+       to schedule the background job.
+  
+   14. Additional information on Post-Install Routine POST^DVBA181P
+       The Post-Install Routine for patch DVB*2.7*181, POST^DVBA181P, calls
+       two entry points: POST1 and POST2. DVBA181P adds the following
+       entries to the PARAMETER DEFINITION File (8989.51):
+         DVBAB CAPRI VIRTUALVA PROD URL
+         DVBAB CAPRI VIRTUALVA TEST URL
+         DVBAB CAPRI VVA PROD PASSWD
+         DVBAB CAPRI VVA PROD TOKEN
+         DVBAB CAPRI VVA TEST PASSWD
+         DVBAB CAPRI VVA TEST TOKEN
+         DVBAB CAPRI VVA USER
+    
+       The POST2 entry point of routine DVBA181P renames all active AMIE
+       EXAM file DBQs so that corresponding CAPRI templates and exam names
+       match more closely.  The renamed AMIE EXAM file entries indicate the
+       body system associated with the exam.
+  
+ VIII. TEST SITES
+  
+   The following sites participated in the testing of the CAPRI GUI v181 
+   and DVBA*2.7*181 server software.
+  
+    Test Sites:
+    ---------- 
+    * Alexandria
+    * Denver
+    * Greater LA                          
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 38
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA181P
+    Before:       n/a   After:B123889382  **181**
+Routine Name: DVBA8861
+    Before:       n/a   After:B137760050  **181**
+Routine Name: DVBAB82
+    Before:B109260107   After:B116645006  **42,90,100,119,156,149,179,181**
+Routine Name: DVBABFRM
+    Before: B51513354   After: B55183576  **53,57,90,123,181**
+Routine Name: DVBABURL
+    Before:  B2300547   After:  B6313636  **104,136,143,149,168,181**
+Routine Name: DVBAHWSC
+    Before:       n/a   After:  B4863059  **181**
+Routine Name: DVBAMVI1
+    Before:       n/a   After: B86814663  **181**
+Routine Name: DVBAMVI2
+    Before:       n/a   After: B42005360  **181**
+Routine Name: DVBANTFY
+    Before:       n/a   After:  B2472090  **181**
+Routine Name: DVBAVRX1
+    Before:       n/a   After: B93077870  **181**
+Routine Name: DVBAVRX2
+    Before:       n/a   After: B30177401  **181**
+
+=============================================================================
+User Information:
+Entered By  : MCGINNIS,RONALD P             Date Entered  : MAR 22, 2012
+Completed By: DELACRUZ,KRISTINA             Date Completed: MAR 11, 2013
+Released By : TAYLOR,KENNETH                Date Released : MAR 19, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

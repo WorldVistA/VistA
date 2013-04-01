@@ -1,0 +1,199 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Wednesday, 12/19/12 at 10:22
+=============================================================================
+Run Date: MAR 21, 2013                     Designation: MD*1*33
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #22                      Status: Released
+                  Compliance Date: APR 21, 2013
+=============================================================================
+
+Associated patches: (v)MD*1*31     <<= must be installed BEFORE `MD*1*33'
+
+Subject: CHANGE CC TO CUBIC CENTIMETER AND HIGH LIMIT FOR TEMPERATURE IN TERM FILE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will correct the following 2 issues:
+      
+ 1) A qualifier record in the Clinical Procedures (CP) Terminology TERM
+    file (#704.101) is set to utilize "cc" in the ABBREVIATION (#.03) field
+    and the DISPLAY_NAME (#.04) field. The CP Terminology review board has
+    requested the qualifier be changed from "cc" to "Cubic Cent" in the
+    ABBREVIATION (#.03) field and "Cubic Centimeter" in the DISPLAY_NAME
+    (#.04) field.
+      
+ 2) The term TEMPERATURE needs to be modified to accept 100.9 as the high 
+    limit for Fahrenheit and 38.3 as the high limit for Celsius. 
+            
+ Associated Remedy ticket:
+ =========================
+ 1) HD0000000744027 Remove Volume Qualifier "cc". Approved CP Terminology
+ 2) HD0000000769788 Terminology Correction (Approved)
+  
+      
+ Associated NSR(s):
+ ==================
+ N/A
+  
+       
+ Participating Test Sites:
+ =========================
+ Heartland - East HCS (Marion)
+ Huntington VA Medical Center 
+ North Texas HCS (Dallas)     
+            
+  
+ Overview of Remedy ticket(s):
+ =============================
+  
+ 1) HD0000000744027 Remove Volume Qualifier "cc". Approved CP Terminology
+  
+    Problem:
+    --------     
+    The CP Terminology Review Board has requested that "cc" be replaced
+    with "Cubic Cent" in the ABBREVIATION (#.03) field and "Cubic
+    Centimeter" in the DISPLAY_NAME (#.04) field for the Cubic Centimeter
+    qualifier record in TERM file (#704.101).
+       
+    Resolution:
+    -----------     
+    Post-Init routine MDTERMX will make a modification to the TERM file
+    (#704.101) as described in the Problem Section above.
+      
+ 2) HD0000000769788 Terminology Correction (Approved)
+      
+    Problem:
+    --------  
+    The high limit for the term TEMPERATURE in Fahrenheit is 101.5 F and 
+    needs to be set to 100.9 F to more closely match the high limits set in
+    Vitals and Measurements.  The high limit for the term TEMPERATURE in
+    Celsius is 39.0 C and needs to be set to 38.3 C to more closely match
+    the high limit set in Vital and Measurements.
+      
+    Resolution:
+    -----------
+    Post-Init routine MDTERMX will make a modification to the 
+    TERM_UNIT_PAIR file (#704.105) as described in the Problem Section
+    above.
+  
+  
+ DOCUMENTATION: 
+ ============== 
+  Documentation is available for the Clinical Observation (CliO) 
+  Terminology Dictionary And Clinical Data Model Documentation on the
+  ANONYMOUS.SOFTWARE directory at one of the following Office of  
+  Information (OI) Field Offices.
+  Sites will be able to download the documentation in the ".PDF" format.
+  
+  The preferred method is to FTP the files from: Download.vista.med.va.gov
+  
+  This transmits files from the first available FTP server. Sites may 
+  also elect to retrieve documentation directly from a specific server as 
+  follows:
+  
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+  
+ File Name:            Description:                     Protocol:
+ ==========            ============                     =========
+ MD1_0P33TERM.PDF      CliO Terminology Dictionary      Binary
+                       And Clinical Data Model
+  
+ Documentation may be found on the System Design and Development Web 
+ page at:  http://www.va.gov/vdl
+  
+      
+ Installation Instructions:
+ ==========================
+      
+ If installed during the normal workday, it is recommended that the
+ Clinical Procedures users are off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 5 minutes (unless otherwise indicated)
+     
+ 1.  Load Transport Global 
+     ---------------------
+  
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter MD*1.0*33):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//' answer NO 
+  
+ NOTE: Post-Init routine MDTERMX will be automatically deleted after 
+       it has made the file modifications.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Aug 2, 2012;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDTERMX
+    Before:  B4314808   After:  B4314808  **33**
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : OCT 05, 2012
+Completed By: SHERMAN,BILL                  Date Completed: MAR 21, 2013
+Released By : MILLIGAN,KERRY                Date Released : MAR 21, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

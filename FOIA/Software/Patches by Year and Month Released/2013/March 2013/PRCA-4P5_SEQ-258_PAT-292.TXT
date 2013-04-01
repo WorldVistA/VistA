@@ -1,0 +1,205 @@
+$TXT Created by HSI,TUAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 11/16/12 at 15:08
+=============================================================================
+Run Date: MAR 25, 2013                     Designation: PRCA*4.5*292
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #258                    Status: Released
+                  Compliance Date: APR 25, 2013
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*256<<= must be installed BEFORE `PRCA*4.5*292'
+
+Subject: CBO AR DATA EXTRACT - FULL LINUX OS SUPPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will support those sites that have migrated to a full Linux 
+ operating system for transmitting their CBO (Chief Business Office)
+ Data Extract files.
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+  
+ INC0000000728230 AR DATA not transmitting
+  
+ Duplicates:
+ INC000000722450 6/16/12 daily update of missing batches
+ INC000000753717 CBO/ARC FTP Attempt
+ INC000000773383 CBO Extract FTP Transmission to the ARC
+ INC000000790239 Sioux Falls CBO Extract FTP Transmission to the ARC
+ INC000000819122 Fargo CBO Extract FTP Transmission to the ARC
+  
+  
+ Associated NSR(s):
+ ==================
+ NA
+  
+  
+ Participating Test Sites:
+ =========================
+ VA Black Hills HCS
+ VA Northwest Iowa HCS (Omaha)
+ St.Cloud VAMC 
+  
+  
+ Remedy Overview:
+ ================
+  
+ HD0000000728230 AR DATA not transmitting
+  
+ Problem:
+ --------
+  
+ Site reported that the Data Extract files generated for the Veterans 
+ Health Administration (VHA) CBO were unable to transfer using File
+ Transfer Protocol (FTP) to the Allocation Resource Center (ARC)
+ automatically after the site migrated to a full Linux operating system.
+  
+ Resolution:
+ -----------
+  
+ Modified routines RCXVFTP and RCXVFTC to perform valid FTP commands for 
+ a full Linux operating system environment.
+  
+  
+ Pre-installation Instructions:
+ ==============================
+                 
+ IMPORTANT NOTE - for Linux based systems:
+ Prior to installation, sites should identify a directory to which Taskman 
+ has full read/write access.  It is recommended that you use the same HFS 
+ directory as specified in the PRIMARY HFS DIRECTORY field (#320) of the 
+ KERNEL SYSTEM PARAMETERS file (#8989.3).  For Linux based systems, this 
+ should have the form /srv/vista/scd/user/hfs/ (where scd is the 3 letter 
+ site code). You will need to enter this into the VITRIA STANDARD DIRECTORY
+ field (#20.01) of the AR SITE PARAMETER file (#342) using Fileman. Note
+ that the preceding and trailing slash ('/') in the directory name is
+ important.  
+  
+ Example:
+ Select OPTION: ENTER OR EDIT FILE ENTRIES  
+  
+ INPUT TO WHAT FILE: AR SITE PARAMETER// 342  AR SITE PARAMETER
+                                           (1 entry)
+ EDIT WHICH FIELD: ALL// 20.01  VITRIA STANDARD DIRECTORY
+ THEN EDIT FIELD: 
+  
+ Select AR SITE PARAMETER: `1  EL PASO VA HCS
+ VITRIA STANDARD DIRECTORY: /srv/vista/elp/user/hfs/
+            Replace
+  
+  
+ IMPORTANT NOTE - for non-Linux based systems:
+ No changes should be made to the directory or AR Site Parameter file at 
+ this time.  If you convert to a Linux based system in the future, you will
+ need to remember to follow the instructions for Linux based systems.
+  
+  
+ ALL SITES:
+ Please add yourself to the existing Mail Group specified by the MAIL GROUP
+ field (#20.02) of the AR SITE PARAMETER file (#342) (i.e. RCXVFTP).  This 
+ Mail Group will receive any FTP or other extract related failure messages.
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ This patch should be installed after normal business hours when all 
+ Accounts Receivable users are logged off the system. Please ensure that
+ option [PRCA NIGHTLY PROCESS] is NOT running while installing this patch.
+  
+ Install Time - less than 3 minutes.
+  
+ 1.  Load Transport Global
+     ---------------------
+  
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  Start Up KIDS
+     -------------
+  
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+         Edits and Distribution ...
+         Utilities ...
+         Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+  
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  Select Installation Option:
+     ------------------------
+     NOTE:   The following are OPTIONAL - (when prompted for the INSTALL
+             NAME, enter PRCA*4.5*292):
+  
+     a. Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch is
+        installed. 
+  
+     c. Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport 
+        global.
+  
+ 4.  Select Installation Option: Install Package(s):
+     -----------------------------------------------
+  
+     ** This is the step to start the installation of this KIDS patch:
+  
+     a. Choose the Install Package(s) option to start the patch install.
+  
+     b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//' answer NO.
+  
+     c. When prompted 'Want to DISABLE Scheduled Option, Menu Options, and
+        Protocols? YES//' answer YES.
+  
+        Accounts Receivable Nightly Process Background Job
+        [PRCA NIGHTLY PROCESS]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCXVFTC
+    Before:  B3062600   After:  B3646321  **201,292**
+Routine Name: RCXVFTP
+    Before:  B4726496   After:  B5181182  **201,256,292**
+ 
+Routine list of preceding patches: 256
+
+=============================================================================
+User Information:
+Entered By  : HSI,TUAN                      Date Entered  : OCT 04, 2012
+Completed By: LANG,MICKEY                   Date Completed: MAR 21, 2013
+Released By : GARRETT,WILLIAM               Date Released : MAR 25, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

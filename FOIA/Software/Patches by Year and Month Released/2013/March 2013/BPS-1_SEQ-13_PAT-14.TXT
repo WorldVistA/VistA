@@ -1,0 +1,181 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 05/31/12 at 12:46
+=============================================================================
+Run Date: MAR 18, 2013                     Designation: BPS*1*14
+Package : BPS - E CLAIMS MGMT ENGINE          Priority: Mandatory
+Version : 1        SEQ #13                      Status: Released
+                  Compliance Date: APR 17, 2013
+=============================================================================
+
+Associated patches: (v)BPS*1*11    <<= must be installed BEFORE `BPS*1*14'
+
+Subject: SUBSCRIPT ERRORS, PAYABLE CLAIMS REPORT, ECME USER SCREEN
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes random subscript errors, allows users to select a Drug
+ Class Code as an option during the Payable Claims Report [BPS RPT PAYABLE]
+ and fixes issues while sorting in the ECME User Screen [BPS USER SCREEN].
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1) HD0000000367742 - <SUBSCRIPT>RESP1000+3^BPSOSQ4 ^BPS
+    Duplicates:
+    HD0000000408259 - <SUBSCRIPT>RESP1000+3^BPSOSQ4 ^BPSR(156741,1000,"")
+    HD0000000435882 - SUBSCRIPT error in BPS
+    HD0000000466101 - Error<SUBSCRIPT>RESP1000+3^BPSOSQ4 
+                      ^BPSR(209065,1000,"")
+    HD0000000502445 - CMOP Transmission Error
+    HD0000000518844 - Found two errors in Pharmacy <SUBSCRIPT>
+                      RESP1000+3^BPSOSQ4 ^BPSR(178253 and ^BPSR(178269
+    HD0000000744541 - Outpatient Pharmacy - Suspend Issue:
+  
+ 2) HD0000000313337 - Payable Claims Report [BPS RPT PAYABLE] issue
+ 3) HD0000000337299 - Selected Default Division Disappears
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Palo Alto HCS
+ Providence, RI
+  
+   
+ REMEDY OVERVIEW:
+ ================
+ 1) HD0000000367742 - <SUBSCRIPT>RESP1000+3^BPSOSQ4 ^BPS
+  
+ Problem:
+ ========
+ Throughout E-Pharmacy the Application Package Interface (API) to retrieve
+ the HEADER RESPONSE STATUS (#501) field from the BPS RESPONSES
+ (#9002313.03) file is called while passing in the POSITION IN CLAIM (#14)
+ field from the BPS TRANSACTION (#9002313.59) file which is not a required
+ field and in some cases is not defined, resulting in a <SUBSCRIPT> error.
+    
+  
+ Resolution:
+ ===========
+ Instances where the POSITION IN CLAIM (#14) field of the BPS TRANSACTION 
+ (#9002313.59) file, is not defined, will default to 1.
+  
+ Routine: BPSOSUC
+  
+  
+ 2) HD0000000313337 - Payable Claims Report [BPS RPT PAYABLE] issue
+  
+ Problem: 
+ ========
+ While running the Payable Claims Report [BPS RPT PAYABLE] menu option 
+ the user should be able to enter either a CODE field (#.01) or
+ CLASSIFICATION field (#1) values found in the VA DRUG CLASS (#50.65) for
+ the Drug Class prompt; however only a CLASSIFICATION (#1) value is
+ recognized as valid.
+    
+ Resolution:
+ ===========
+ While validating the user response, the validation code will check both
+ the CODE (#.01) and CLASSIFICATION (#1) fields in the VA DRUG CLASS 
+ (#50.65) file for matches or partial matches and accept both.
+  
+ Routine: BPSRPT3
+  
+  
+ 3) HD0000000337299 - Selected Default Division Disappears
+  
+ Problem: 
+ ========
+ When running the ECME User Screen [BPS USER SCREEN] menu option, if the
+ user chooses the "Sort List (SO)" option and saves that as the preferred
+ view, the system will delete the "Division" choice from the selected view.
+  
+ Resolution:
+ ===========
+ Currently when the user saves the view after sorting, it attempts to save
+ a new "Division" value even though nothing was changed. Going forward, it
+ will only save a "Division" value if it has been updated or modified.
+  
+ Routine: BPSSCRCV
+  
+  
+        ==================INSTALLATION INSTRUCTIONS =================
+  
+ Installation should take less than 2 minutes. Users are allowed on the 
+ system during patch installation.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter BPS*1.0*14)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package BPS*1.0*14.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//" respond YES.
+    
+         a. When prompted 'Enter options you wish to mark as 'Out of Order':'  
+   
+            Enter the following options:
+       
+            Payable Claims Report [BPS RPT PAYABLE]
+            ECME User Screen    [BPS USER SCREEN] 
+  
+         b. When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;E CLAIMS MGMT ENGINE;**[Patch List]**;JUN 2004;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: BPSOSUC
+    Before:  B8834830   After:  B8931865  **1,5,7,10,11,14**
+Routine Name: BPSRPT3
+    Before: B38545074   After: B39556380  **1,3,5,7,11,14**
+Routine Name: BPSSCRCV
+    Before: B46628770   After: B47413521  **1,5,7,11,14**
+ 
+Routine list of preceding patches: 11
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : APR 12, 2012
+Completed By: SESSLER,APRIL                 Date Completed: MAR 05, 2013
+Released By : MURRAY,ANGELA                 Date Released : MAR 18, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
