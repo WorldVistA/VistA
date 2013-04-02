@@ -250,7 +250,8 @@ class BuildSectionParser(ISectionParser):
       (re.compile(',"INIT"\)$'), self.__handlePostInstallRoutine__),
       (re.compile(',"PRE"\)$'), self.__handleEnvCheckRoutine__),
       (re.compile(',6\)$'), self.__handleSeqNo__),
-      (re.compile(',"INID"\)$'), self.__handleRoutineCleanup__)
+      (re.compile(',"INID"\)$'), self.__handleRoutineCleanup__),
+      (re.compile(',"REQB",[0-9]+,0\)$'), self.__handleReqiredBuild__),
     )
   def __handlePreInstallRoutine__(self, lines, kidsBuild):
     line2 = lines[1]
@@ -288,6 +289,15 @@ class BuildSectionParser(ISectionParser):
       kidsBuild.deletePostInstallRoutine = True
     if len(options) ==3 and options[2] == 'y':
       kidsBuild.deletePreInstallRoutine = True
+  """ handle requried build information """
+  def __handleReqiredBuild__(self, lines, kidsBuild):
+    line1, line2 = lines
+    fields = line2.split('^')
+    if len(fields) > 0:
+      kidsBuild.addDependencyBuild(fields)
+    else:
+      logger.warn("no require build information for [%s]" % lines)
+
 """
   object to store information related to a KIDS build
 """
@@ -305,12 +315,17 @@ class KIDSBuild(object):
     self.deletePostInstallRoutine = False
     self.deleteEnvCheckRoutine = False
     self.seqNo = None
+    self._dependencyList = None # store dep builds, action
 
   def addRoutine(self, Routine):
     if not self._routineList:
       self._routineList = []
     self._routineList.append(Routine)
 
+  def addDependencyBuild(self, depBuild):
+    if not self._dependencyList:
+      self._dependencyList = []
+    self._dependencyList.append(depBuild)
   """ installName property """
   @property
   def installName(self):
@@ -333,14 +348,19 @@ class KIDSBuild(object):
   @property
   def routineList(self):
     return self._routineList
-
+  @property
+  def dependencyList(self):
+    return self._dependencyList
   def __repr__(self):
     return ("%s, seq:%s, ver:%s, pre:%s, env:%s, post:%s, "
-            "delEnv:%s, delPost:%s, delPre:%s, totalRoutine Affected:%s,\n%s" %
+            "delEnv:%s, delPost:%s, delPre:%s, "
+            "\ndependency builds: %s"
+            "\ntotalRoutine Affected:%s,\n%s" %
              ( self._installName, self.seqNo, self._verName,
                self._preInstallRoutine, self.envCheckRoutine,
                self._postInstallRoutine, self.deleteEnvCheckRoutine,
                self.deletePostInstallRoutine, self.deletePreInstallRoutine,
+               self._dependencyList,
                self._totalNumRoutinesChange, self._routineList
              )
            )
@@ -450,18 +470,39 @@ class KIDSPatchParser(object, ISectionParser):
 
   def __init__(self, outDir):
     self._outDir = outDir
-    self._kidsBuilds = []
+    self._kidsBuilds = [] # a list of all KIDS bulid
+    self._installNameList = [] # list of  all install name(s)
+    self._header = [] # header section of a KIDS build
+    self._seqNo = None # only for single build
     self._curKidsBuild = None
     self._curParser = None
     self._curSection = None
     self._regExSectionMapping = dict()
     self._sectionHandler = None
+    self._end = False
     self.__initSectionLineRegEx__(outDir)
     self.__initSectionHandler__()
   """
+  """
+  @property
+  def kidsBuilds(self):
+    return self._kidsBuilds
+  @property
+  def header(self):
+    return self._header
+  @property
+  def seqNo(self):
+    return self._seqNo
+  @property
+  def kidsBulids(self):
+    return self._kidsBuilds
+  @property
+  def installNameList(self):
+    return self._installNameList
+  """
     verify the integraty of a KIDS Patch
   """
-  def verifyKidsPatch(self, kidsPatch):
+  def verifyKIDSPatch(self, kidsPatch):
     self.parseKIDSBuild(kidsPatch)
     return self.__verifyResult__()
   """
@@ -481,6 +522,9 @@ class KIDSPatchParser(object, ISectionParser):
         lines = (curLine.rstrip('\r\n'), input.readline().rstrip('\r\n'))
         if lineNum == 1:
           self.__parseKIDSHeader__(lines)
+        elif self._end: # should not be any more lines after end section
+          for line in lines:
+            logger.warn("Extra line %d:[%s]" % (lineNum, line))
         else:
           section, parser = self.__isSectionLine__(curLine)
           if section == None: # could not find a valid section
@@ -498,10 +542,17 @@ class KIDSPatchParser(object, ISectionParser):
       else: # at end of file
         self.__resetCurrentSection__(None, None, lines)
 
+  def unregisterSectionHandler(self, section):
+    if section in self._sectionHandler:
+      self._sectionHandler[section] = None
+    for regex in self._regExSectionMapping.iterkeys():
+      if self._regExSectionMapping[regex][0] == section:
+        self._regExSectionMapping[regex] = (section, None)
   """
     print the result
   """
   def printResult(self):
+    print self.installNameList
     for kidsBuild in self._kidsBuilds:
       print kidsBuild
       if kidsBuild.preInstallRoutine:
@@ -553,7 +604,7 @@ class KIDSPatchParser(object, ISectionParser):
                                      kidsBuild=self._curKidsBuild)
     self._curSection = section
     self._curParser = parser
-    if section and parser:
+    if section is not None and parser is not None:
       parser.onSectionStart(section, lines, kidsBuild=self._curKidsBuild)
   """ Initial the LineRegEx -> (section, parser) mapping """
   def __initSectionLineRegEx__(self, outDir):
@@ -564,7 +615,7 @@ class KIDSPatchParser(object, ISectionParser):
       self.KIDS_PATCH_LINE : (self.KIDS_PATCH_SECTION, self),
       self.INSTALL_NAME_LINE : (self.INSTALL_NAME_SECTION, self),
       self.DATA_LINE : (self.DATA_SECTION, None),
-      self.DATA_DICTIONARY_LINE : (self.DD_SECTION, debugParser),
+      self.DATA_DICTIONARY_LINE : (self.DD_SECTION, None),
       self.SEC_LINE : (self.SEC_SECTION, None),
       self.UP_LINE : (self.UP_SECTION, None),
       self.QUES_LINE : (self.QUES_SECTION, None),
@@ -589,7 +640,6 @@ class KIDSPatchParser(object, ISectionParser):
       self.FRV1K_LINE: (self.FRV1K_SECTION, None),
       self.VERSION_LINE : (self.VERSION_SECTION, self)
     }
-
   """
     Method to check if current line is a valid section line
     @return (None, None) if not valid, else return (section, parser)
@@ -601,7 +651,9 @@ class KIDSPatchParser(object, ISectionParser):
     return (None, None)
 
   """
-    Implementation of INSTALL_NAME_SECTION and KIDS_PATCH_SECTION parser
+    Implementation of
+        INSTALL_NAME_SECTION, KIDS_PATCH_SECTION, PRE_INSTALL_SECTION
+        POST_INSTALL_SECTION and VERSION_SECTION, END_SECTION
   """
   """
   @override ISectionParser::onSectionStart
@@ -644,11 +696,21 @@ class KIDSPatchParser(object, ISectionParser):
     self._curKidsBuild = KIDSBuild(installName)
     self._kidsBuilds.append(self._curKidsBuild)
   def __onKidsPatchSectionStart__(self, section, lines, **kargs):
-    pass
+    line = lines[0].rstrip(" \r\n")
+    ret = re.search('^\*\*KIDS\*\*:(?P<name>.*)\^$', line)
+    if ret:
+      self._installNameList = ret.group('name').rstrip(' ').split('^')
+    else:
+      logger.error("Invalid KIDS line [%s]" % line)
+  """ handle end section of the KIDS """
   def __onEndSectionStart__(self, section, lines, **kargs):
-    pass
+    line2 = lines[1]
+    assert self.END_LINE.search(line2), "Wrong end of line format %s" % line2
+    self._end = True
+  """ handle version section of the KIDS """
   def __onVersionSecionStart__(self, section, lines, **kargs):
     pass
+  """ set up section handler """
   def __initSectionHandler__(self):
     self._sectionHandler = {
         self.KIDS_PATCH_SECTION: self.__onKidsPatchSectionStart__,
@@ -659,8 +721,20 @@ class KIDSPatchParser(object, ISectionParser):
         self.VERSION_SECTION: self.__onVersionSecionStart__,
         self.INSTALL_NAME_SECTION: self.__onInstallNameSectionStart__
     }
+  """ parse KIDS header section (first two line of KIDS) """
   def __parseKIDSHeader__(self, lines):
-    pass
+    self._header = lines
+    self._seqNo = self.parseKIDSHeader(lines)
+  """ static method to parse KIDS Header and return seqNo if found """
+  @staticmethod
+  def parseKIDSHeader(lines):
+    seqNo = None
+    for line in lines:
+      line = line.rstrip(" \r\n")
+      ret = re.search("Released (.*) SEQ #(?P<num>[0-9]+)",line)
+      if ret:
+        seqNo = ret.group('num')
+    return seqNo
 
 def routineLineCheckSum(routineLine, lineNum):
   totalLen = len(routineLine)
@@ -693,6 +767,51 @@ def checksum(routine):
       checksum += routineLineCheckSum(line, lineNumber)
   return checksum
 
+"""
+  output metadata result of a KIDS Patch to JSON format
+"""
+def outputMetaDataInJSON(kidsParser, outputFileName):
+  kidsBuilds = kidsParser.kidsBuilds
+  outputJSON = dict()
+  outputJSON['header'] = kidsParser.header
+  outputJSON['builds'] = []
+  for kidsBuild in kidsBuilds:
+    buildDict = dict()
+    buildDict['name'] = kidsBuild.installName
+    depList = kidsBuild.dependencyList
+    if depList:
+      buildDict['dependency'] = [x[0] for x in depList]
+    else:
+      buildDict['dependency'] = []
+    outputJSON['builds'].append(buildDict)
+  import json
+  with open(outputFileName, 'w') as output:
+    json.dump(outputJSON, output,
+              indent=4, sort_keys=False, separators=(',', ': '))
+    output.write('\n')
+
+"""
+  load kids metadata from input JSON file
+  current result the header section and builds section
+"""
+def loadMetaDataFromJSON(inputFileName):
+  import json
+  logger.info("reading KIDS metadata from %s" % inputFileName)
+  outputJSON = json.load(open(inputFileName, 'r'))
+  installNameList = []
+  kidsBuilds = []
+  header = outputJSON['header']
+  for build in outputJSON['builds']:
+    installName = build['name']
+    installNameList.append(installName)
+    kidsBuild = KIDSBuild(installName)
+    for depBuild in build['dependency']:
+      kidsBuild.addDependencyBuild([depBuild, None])
+    kidsBuilds.append(kidsBuild)
+  seqNo = KIDSPatchParser.parseKIDSHeader(header)
+  return (installNameList, seqNo, kidsBuilds)
+
+
 def main():
   parser = argparse.ArgumentParser(description='VistA KIDS Patch Parser')
   parser.add_argument('-i', '--inputFile', required=True,
@@ -703,6 +822,8 @@ def main():
                       help = 'Print checksum of a M Routine')
   parser.add_argument('-v', '--verify', default=False, action="store_true",
                       help = 'verify a KIDS patch')
+  parser.add_argument('-j', '--jsonOutputFile', default=None,
+                      help = 'output metadata as json format')
   result = parser.parse_args();
   import logging
   initConsoleLogging(logging.INFO)
@@ -711,7 +832,7 @@ def main():
     sys.stdout.write("Checksum is: %s\n" % chksum)
   elif result.verify:
     kidsParser = KIDSPatchParser(result.outputDir)
-    ret = kidsParser.verifyKidsPatch(result.inputFile)
+    ret = kidsParser.verifyKIDSPatch(result.inputFile)
     if ret:
       logger.info("%s is valid" % result.inputFile)
     else:
@@ -720,6 +841,9 @@ def main():
     kidsParser = KIDSPatchParser(result.outputDir)
     kidsParser.parseKIDSBuild(result.inputFile)
     kidsParser.printResult()
+  if result.jsonOutputFile:
+    outputMetaDataInJSON(kidsParser, result.jsonOutputFile)
+    loadMetaDataFromJSON(result.jsonOutputFile)
 
 if __name__ == '__main__':
     main()

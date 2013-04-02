@@ -96,5 +96,27 @@ def main():
   logger.info(sys.argv)
   obtainKIDSPatchFileBySha1(sys.argv[1], sys.argv[2], sys.argv[3])
 
+def downloadAllKIDSSha1File(topDir, cacheDir):
+  from ConvertToExternalData import isValidKIDSPatchSha1Suffix
+  from ConvertToExternalData import readSha1SumFromSha1File
+  import shutil
+  initConsoleLogging()
+  absCurDir = os.path.abspath(topDir)
+  for (root, dirs, files) in os.walk(absCurDir):
+    for f in files:
+      if not isValidKIDSPatchSha1Suffix(f):
+        continue
+      filePath = os.path.join(root, f)
+      sha1Sum = readSha1SumFromSha1File(filePath)
+      result, extFilePath = obtainKIDSPatchFileBySha1(filePath, sha1Sum, cacheDir)
+      if result:
+        destFile = filePath[:filePath.rfind('.')]
+        if os.path.exists(destFile) and generateSha1Sum(destFile) == sha1Sum:
+          logger.info("%s is already current" % destFile)
+          continue
+        logger.info("%s => %s" % (extFilePath, destFile))
+        shutil.copyfile(extFilePath, destFile)
+
 if __name__ == '__main__':
-  main()
+  #main()
+  downloadAllKIDSSha1File(sys.argv[1], sys.argv[2])

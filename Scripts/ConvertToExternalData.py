@@ -36,7 +36,7 @@ VALID_KIDS_PATCH_SUFFIX_LIST = (".KIDs", ".KID", ".kids", ".kid")
 VALID_KIDS_INFO_SUFFIX_LIST = (".TXTs",".TXT",".txt")
 VALID_CSV_FILE_SUFFIX_LIST = (".csv",".CSV")
 VALID_GLOBAL_FILE_SUFFIX_LIST = (".GBLs", ".GBL")
-VALID_HEADER_FILE_SUFFIX_LIST = (".HEAD",".head")
+VALID_HEADER_FILE_SUFFIX_LIST = (".json",".JSON")
 VALID_SHA1_FILE_SUFFIX_LIST = (".SHA1",".sha1")
 
 VALID_KIDS_PATCH_HEADER_SUFFIX_LIST = tuple(
@@ -161,9 +161,18 @@ def generateSha1Sum(inputFilename):
   import hashlib
   assert os.path.exists(inputFilename)
   sha1sum = hashlib.sha1()
+  fileSize = os.path.getsize(inputFilename)
+  MAX_READ_SIZE = 20 * 1024 * 1024 # 20 MiB
+  buf = fileSize/50
+  if buf > MAX_READ_SIZE:
+    buf = MAX_READ_SIZE
   with open(inputFilename, "r") as inputFile:
-    for line in inputFile:
-      sha1sum.update(line)
+    while True:
+      nByte = inputFile.read(buf)
+      if nByte:
+        sha1sum.update(nByte)
+      else:
+        break
   return sha1sum.hexdigest()
 
 """ Convert the KIDS Build, Global or TXT file to External Data format """
@@ -176,6 +185,9 @@ class ExternalDataConverter(object):
     self._gitIgnore = gitignore
     if externalDir != None and os.path.exists(externalDir):
       self._externDir = os.path.abspath(externalDir)
+    if sizeLimit <=0:
+      sizeLimit = EXTERNAL_DATA_SIZE_THRESHOLD
+    self._sizeLimit = sizeLimit
   """
       Convert All the files with size > than threshold under the current
       directory recursively
@@ -190,7 +202,7 @@ class ExternalDataConverter(object):
           continue
         # get the size of the file
         fileSize = os.path.getsize(absFileName)
-        if fileSize < EXTERNAL_DATA_SIZE_THRESHOLD:
+        if fileSize < self._sizeLimit:
           continue
         if isValidKIDSPatchSuffix(fileName):
           logger.info("converting KIDS file %s " % absFileName)
@@ -199,16 +211,15 @@ class ExternalDataConverter(object):
           self.convertToSha1File(absFileName)
   """ """
   def convertKIDSBuildFile(self, kidsFile):
+    from KIDSPatchParser import KIDSPatchParser, outputMetaDataInJSON
     assert os.path.exists(kidsFile)
-    """ write the KIDS header as .HEAD """
-    with open(kidsFile, "r") as input:
-      with open(kidsFile + ".head", "w") as output:
-        for line in input:
-          stripLine = line.rstrip(' \r\n')
-          ret = re.search('^\*\*KIDS\*\*:(?P<name>.*)\^$', stripLine)
-          output.write(line)
-          if ret:
-            break
+    """ write KIDS metadata file """
+    kidsParser = KIDSPatchParser(None)
+    """ do not parse the routine part """
+    kidsParser.unregisterSectionHandler(KIDSPatchParser.ROUTINE_SECTION)
+    kidsParser.parseKIDSBuild(kidsFile)
+    logger.info("output meta data as %s" % (kidsFile+".json"))
+    outputMetaDataInJSON(kidsParser, kidsFile+".json")
     self.convertToSha1File(kidsFile)
   """ """
   def convertToSha1File(self, inputFile):
@@ -245,16 +256,22 @@ def main():
   parser.add_argument('-i', '--inputDir', required=True,
                     help='path to top leve directory to convert all patch data')
   parser.add_argument('-e', '--externalDataDir', required=False, default=None,
-                      help='output dir to store the external data, default is inplace')
-  parser.add_argument('-g', '--gitignore', required=False, default=False, action="store_true",
+                      help='output dir to store the external data,'
+                      ' default is inplace')
+  parser.add_argument('-g', '--gitignore', required=False, default=False,
+                      action="store_true",
                       help='Add original file to .gitignore, default is not')
-  parser.add_argument('-l', '--logFile', default = None,
+  parser.add_argument('-s', '--size', default=1, type=int,
+                      help='file size threshold to be converted to external '
+                      'data, unit is MiB, default is 1(MiB)')
+  parser.add_argument('-l', '--logFile', default=None,
                       help='output log file, default is no')
   result = parser.parse_args();
   logger.info (result)
   if result.logFile:
     initFileLogging(result.logFile)
-  converter = ExternalDataConverter(result.externalDataDir, result.gitignore)
+  converter = ExternalDataConverter(result.externalDataDir, result.gitignore,
+      result.size*EXTERNAL_DATA_SIZE_THRESHOLD)
   converter.convertCurrentDir(result.inputDir)
 
 if __name__ == '__main__':
