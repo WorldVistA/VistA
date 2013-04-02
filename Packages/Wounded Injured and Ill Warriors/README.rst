@@ -21,9 +21,9 @@ Patches
 The `<Patches>`__ directory contains patch host files for the package
 organized into subdirectories named for each patch.
 
-------------
-VA Gold Disk
-------------
+-------------------
+VA Enterprise VistA
+-------------------
 
 US DVA sites standardize this package on
 patches through `WII*1.0*2 <Patches/WII_1.0_2>`__

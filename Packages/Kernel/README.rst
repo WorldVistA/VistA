@@ -21,9 +21,9 @@ Patches
 The `<Patches>`__ directory contains patch host files for the package
 organized into subdirectories named for each patch.
 
-------------
-VA Gold Disk
-------------
+-------------------
+VA Enterprise VistA
+-------------------
 
 US DVA sites standardize components of this package as follows.
 

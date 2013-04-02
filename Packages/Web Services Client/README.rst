@@ -21,9 +21,9 @@ Patches
 The `<Patches>`__ directory contains patch host files for the package
 organized into subdirectories named for each patch.
 
-------------
-VA Gold Disk
-------------
+-------------------
+VA Enterprise VistA
+-------------------
 
 US DVA sites standardize this package on
 patches through `XOBW*1.0*3 <Patches/XOBW_1.0_3>`__

@@ -39,9 +39,9 @@ Documentation for this package is available in the `VistA Document Library`_.
 """
 
 VISTA_GOLD_DISK_TXT = """
-------------
-VA Gold Disk
-------------
+-------------------
+VA Enterprise VistA
+-------------------
 
 US DVA sites standardize this package on the following routine checksums.
 """
@@ -111,7 +111,7 @@ class MCompReposReadMeGenerator(object):
   def __isGoldSection__(self, input, curLine):
     if re.search('^-+$', curLine):
       nextLine = input.readline()
-      if nextLine.startswith('VA Gold Disk'):
+      if nextLine.startswith('VA Enterprise VistA'):
         if re.search('^-+$', input.readline()):
           return True
     return False
