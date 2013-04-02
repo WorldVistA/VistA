@@ -1,6 +1,6 @@
-ZZRGUT2 ;RGI/VSL - Unit Tests - Problem List ;4/24/12
+ZZRGUT2 ;RGI/VSL - Unit Tests - Problem List ;3/28/13
  ;;1.0;UNIT TEST;;Apr 25, 2012;Build 1;
- Q:$T(^GMPLAPI2)=""
+ Q:$T(^GMPLSITE)=""
  TSTART
  I $T(EN^XTMUNIT)'="" D EN^XTMUNIT("ZZRGUT2")
  TROLLBACK
