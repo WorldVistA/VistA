@@ -36,7 +36,23 @@ from KIDSPatchOrderGenerator import KIDSPatchOrderGenerator
 from KIDSPatchInfoParser import installNameToDirName
 from ConvertToExternalData import addToGitIgnoreList, isValidKIDSPatchHeaderSuffix
 from ConvertToExternalData import isValidSha1Suffix
-from PopulatePackages import populatePackageMapByCSV, place, order_long_to_short
+from PopulatePackages import populatePackageMapByCSV, order_long_to_short
+
+def place(src,dst):
+    logger.info('%s => %s\n' % (src,dst))
+    d = os.path.dirname(dst)
+    if d and not os.path.exists(d):
+        try: os.makedirs(d)
+        except OSError as ex:
+          logger.error(ex)
+          pass
+    if not os.path.exists(dst):
+      try:
+        os.rename(src,dst)
+      except OSError as ex:
+        logger.error(ex)
+        logger.error( "%s => %s" % (src, dst))
+        pass
 
 def placeToDir(infoSrc, destDir, addToGitIgnore=True):
   if not infoSrc or not os.path.exists(infoSrc):
