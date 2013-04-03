@@ -340,9 +340,10 @@ class KIDSPatchOrderGenerator(object):
         if prevInstallName not in nextPatchInfo.depKIDSPatch:
           nextPatchInfo.depKIDSPatch.add(prevInstallName)
         #del patchList[installList[index]] #remove the other patch from the list
+        logger.debug("%s:%s" % (nextPatchInfo.installName, nextPatchInfo.depKIDSPatch))
       """ remove the self dependencies of the first patch """
       firstPatch.depKIDSPatch.difference_update(installList)
-      logger.debug(firstPatch)
+      logger.debug("%s:%s" % (firstPatch.installName, firstPatch.depKIDSPatch))
 
   """ update the csvDepPatch based on csv file based dependencies """
   def __updateCSVDependencies__(self):

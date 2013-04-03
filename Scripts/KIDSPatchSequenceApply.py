@@ -254,9 +254,9 @@ class KIDSPatchSequenceApply(object):
       (namespace,ver,patch) = extractInfoFromInstallName(installName)
       if not patchHistInfo.hasNamespace(namespace):
         patchHistInfo.createAllPackageMapping()
-      assert patchHistInfo.hasNamespace(namespace)
-      packageName = patchHistInfo.getPackageName(namespace)
-      patchHistInfo.getPackagePatchHistory(packageName, namespace, ver)
+      if patchHistInfo.hasNamespace(namespace):
+        packageName = patchHistInfo.getPackageName(namespace)
+        patchHistInfo.getPackagePatchHistory(packageName, namespace, ver)
 
   """ create KIDS Patch Installer by patch Info and install
       the patch specified in patchInfo, return the result
