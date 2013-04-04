@@ -755,6 +755,10 @@ def routineLineCheckSum(routineLine, lineNum):
   return checkSum
 
 def checksum(routine):
+  """
+  Compute the M routine checksum used by ``CHECK1^XTSUMBLD``,
+  implemented in ``^%ZOSF("RSUM1")`` and ``SUMB^XPDRSUM``.
+  """
   checksum = 0
   lineNumber = 0
   with open(routine, 'r') as f:
