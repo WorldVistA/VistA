@@ -155,6 +155,7 @@ def pl_test004(resultlog, result_dir, namespace):
         pl.catdl(listname='List001', catname='cat002')
         pl.sellistrfu(listname='List001', username='Alexander')
         pl.sellistdl(listname='List001')
+        pl.checkRMsellist(ssn='656454321', clinic='VISTA')
         pl.signoff()
     except TestHelper.TestError, e:
         resultlog.write(e.value)
@@ -531,6 +532,81 @@ def pl_test015(resultlog, result_dir, namespace):
         pl1.editpart2(ssn='656451234', probnum='1', itemnum='1', chgval='786.50')
         pl1.rem_all(ssn='656451234')
         pl1.signoff()
+    except TestHelper.TestError, e:
+        resultlog.write(e.value)
+        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
+    else:
+        resultlog.write('Pass\n')
+
+def pl_test016(resultlog, result_dir, namespace):
+    '''Tests PL Site Parameters '''
+    testname = sys._getframe().f_code.co_name
+    resultlog.write('\n' + testname + ', '
+                    + str(datetime.datetime.today()) + ': ')
+    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    try:
+        VistA1 = connect_VistA(testname, result_dir, namespace)
+        pl = PLActions(VistA1, user='fakedoc1', code='1Doc!@#$')
+        pl.signon()
+        # check verify pl setting
+        pl.editPLsite(ver='no', prompt='no', uselex='yes', order='CHRONO', screendups='yes')
+        pl.checkVerplsetting(ssn='656451234')
+        # check lexicon pl setting and prompt setting
+        pl.editPLsite(ver='yes', prompt='no', uselex='no', order='CHRONO', screendups='yes')
+        pl.addspec(ssn='656451234', clinic='Clinic1', comment='this is a test',
+               onsetdate='t-1', status='Active', acutechronic='A', service='N',
+               icd='785.2', prompt='no', uselex='no', screendups='yes', isdup='no')
+        # check chronology pl setting
+        pl.addspec(ssn='656451234', clinic='Clinic1', comment='this is a test',
+               onsetdate='t', status='Active', acutechronic='A', service='N',
+               icd='786.2', prompt='no', uselex='no', screendups='yes', isdup='no')
+        pl.verplist(ssn='656451234', vlist=['785.2', '786.2'])
+        pl.editPLsite(ver='yes', prompt='yes', uselex='yes', order='REVERSE', screendups='yes')
+        pl.addspec(ssn='656451234', clinic='Clinic1', comment='this is a test',
+               onsetdate='t', status='Active', acutechronic='A', service='N',
+               icd='787.1', prompt='yes', uselex='yes', screendups='yes', isdup='no',
+               vlist=['Heartburn', '785.2', '786.2'])
+        # check that re-adding a problem is detected properly
+        pl.editPLsite(ver='yes', prompt='yes', uselex='yes', order='REVERSE', screendups='yes')
+        pl.addspec(ssn='656451234', clinic='Clinic1', comment='this is a test',
+                   onsetdate='t', status='Active', acutechronic='A', service='N',
+                   icd='787.1', prompt='yes', uselex='yes', screendups='yes', isdup='yes', prob='Heartburn')
+        pl.signoff()
+    except TestHelper.TestError, e:
+        resultlog.write(e.value)
+        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
+    else:
+        resultlog.write('Pass\n')
+
+def pl_test017(resultlog, result_dir, namespace):
+    ''' Create Problem Selection List, do not delete at end '''
+    testname = sys._getframe().f_code.co_name
+    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    try:
+        VistA1 = connect_VistA(testname, result_dir, namespace)
+        pl = PLActions(VistA1)
+        pl.signon()
+        pl.createsellist(listname="List001", clinic='VISTA')
+        pl.createcat(listname='List001', catname='cat001')
+        pl.createcat(listname='List001', catname='cat002')
+        pl.createcat(listname='List001', catname='cat003')
+        pl.catad(listname='List001', catname='cat001', icd='785.2', spec='General', dtext='', seqnum='5')
+        pl.catad(listname='List001', catname='cat001', icd='786.50', spec='General', dtext='', seqnum='1')
+        pl.catad(listname='List001', catname='cat001', icd='786.2', spec='General', dtext='PAINFUL cough', seqnum='2')
+        pl.catad(listname='List001', catname='cat001', icd='786.05', spec='General', dtext='Trouble Breathing', seqnum='7')
+        pl.catad(listname='List001', catname='cat002', icd='829.0', spec='N', dtext='', seqnum='19')
+        pl.catad(listname='List001', catname='cat002', icd='807.00', spec='N', dtext='', seqnum='18')
+        pl.catad(listname='List001', catname='cat002', icd='806.12', spec='N', dtext='', seqnum='17')
+        pl.catad(listname='List001', catname='cat002', icd='829.1', spec='N', dtext='', seqnum='16')
+        pl.catad(listname='List001', catname='cat002', icd='802.8', spec='N', dtext='', seqnum='15')
+        pl.catad(listname='List001', catname='cat003', icd='780.50', spec='I', dtext='', seqnum='3')
+        pl.catad(listname='List001', catname='cat003', icd='292.0', spec='I', dtext='DRUG withdrawal', seqnum='1')
+        pl.catad(listname='List001', catname='cat003', icd='304.90', spec='I', dtext='', seqnum='2')
+        pl.sellistad(listname='List001', catname='cat001', hdrname='FATCAT', seqnum='7')
+        pl.sellistad(listname='List001', catname='cat002', hdrname='SKINNYcat', seqnum='1')
+        pl.sellistad(listname='List001', catname='cat003', hdrname='blackCAT', seqnum='5')
+        pl.signoff()
     except TestHelper.TestError, e:
         resultlog.write(e.value)
         logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
