@@ -15,13 +15,16 @@
 #---------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 # Define a function for parsing and reporting XINDEX output results
-function(ReportXINDEXResult PACKAGE_NAME PACKAGES_DIR VENDER_NAME GREP_EXEC OUTPUT USE_XINDEX_WARNINGS_AS_FAILURES OSEHRA_PATH)
+function(ReportXINDEXResult PACKAGE_NAME PACKAGES_DIR VENDER_NAME GREP_EXEC OUTPUT USE_XINDEX_WARNINGS_AS_FAILURES)
    if(USE_XINDEX_WARNINGS_AS_FAILURES)
      set(FAILURE_CONDITION "F -|W -")
    else()
      set(FAILURE_CONDITION "F -")
    endif()
    set(test_passed TRUE)
+   if(ARGC GREATER 6)
+     set(source_flag TRUE)
+   endif()
    foreach (line ${OUTPUT})
       # the XINDEX will always check the integrity of the routine using checksum
       if(line MATCHES "^[A-Z0-9][^ ]+ +\\* \\* .*[cC]hecksum:.*")
@@ -43,12 +46,12 @@ function(ReportXINDEXResult PACKAGE_NAME PACKAGES_DIR VENDER_NAME GREP_EXEC OUTP
         if (NOT ExceptionFound)
           string(REGEX MATCH ^\ \ \ [A-Z]+ tag ${line})
           message("${routine_name} in package ${PACKAGE_NAME}:\n${line}")
-          if(tag AND GREP_EXEC)
+          if(tag AND GREP_EXEC AND source_flag)
             string(REGEX MATCH "\\+[0-9]+" position ${line})
             string(STRIP ${tag} tag)
             string(REPLACE "_" " " PACKAGE_NAME ${PACKAGE_NAME})
             execute_process(COMMAND ${GREP_EXEC} -n -h ^${tag}
-                            "${OSEHRA_PATH}/Packages/${PACKAGE_NAME}/Routines/${routine_name}.m"
+                            "${ARGV6}/Packages/${PACKAGE_NAME}/Routines/${routine_name}.m"
                             OUTPUT_VARIABLE linematch)
             if(linematch)
 
@@ -92,4 +95,18 @@ function(ReportUnitTestResult PACKAGE_NAME DIRNAME OUTPUT)
    else()
      message(FATAL_ERROR "${PACKAGE_NAME} unit test Errors")
    endif()
+endfunction()
+
+function(FindPackages SOURCE_DIR)
+  file(STRINGS "${SOURCE_DIR}/Packages.csv" packages_csv REGEX "[A-Z ]+,[A-Za-z ]+,")
+  foreach(packages_csv_output ${packages_csv})
+    if(packages_csv_output)
+      string(REGEX MATCH ",[A-Za-z ]+," package_directory_name ${packages_csv_output})
+      string(REPLACE "," "" package_directory_name_clean "${package_directory_name}")
+      string(REPLACE  " " "_" package_directory_name_clean "${package_directory_name_clean}")
+      list(APPEND packages_tmp ${package_directory_name_clean})
+    endif()
+  endforeach()
+  set(PACKAGES ${packages_tmp} PARENT_SCOPE)
+
 endfunction()

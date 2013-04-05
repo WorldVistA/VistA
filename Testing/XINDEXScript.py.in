@@ -1,0 +1,72 @@
+#---------------------------------------------------------------------------
+# Copyright 2012 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+import sys,os,re,time
+sys.path = ['@VISTA_SOURCE_DIR@/Python/vista'] + sys.path
+from OSEHRAHelper import ConnectToMUMPS,PROMPT
+
+VistA=ConnectToMUMPS("@LOGFILENAME@","@VISTA_CACHE_INSTANCE@","@VISTA_CACHE_NAMESPACE@")
+if ('@VISTA_CACHE_USERNAME@' and '@VISTA_CACHE_PASSWORD@'):
+  VistA.login('@VISTA_CACHE_USERNAME@','@VISTA_CACHE_PASSWORD@')
+if VistA.type=='cache':
+  try:
+    VistA.ZN('@VISTA_CACHE_NAMESPACE@')
+  except IndexError,no_namechange:
+    pass
+
+if '@TEST_VISTA_COVERAGE@'=='ON':
+  VistA.wait(PROMPT)
+  VistA.startCoverage()
+VistA.wait(PROMPT)
+VistA.write('K ^XUTL("XQ",$J)')
+routines=VistA.GetVistARoutines('@VISTA_SOURCE_DIR@','@TEST_VISTA_OUTPUT_DIR@','@package_file_name@')
+VistA.write('D ^XINDEX')
+if VistA.type == 'cache':
+  VistA.wait('No =>')
+  VistA.write('No')
+if isinstance(routines,list):
+  for routine in routines:
+    VistA.wait('Routine:')
+    VistA.write(routine)
+  VistA.wait('Routine:')
+  VistA.write('')
+  selectionList = ['Select BUILD NAME:',
+                   'Select INSTALL NAME:',
+                   'Select PACKAGE NAME:']
+  while True:
+    index = VistA.multiwait(selectionList)
+    VistA.write('')
+    if index == len(selectionList) - 1:
+      break
+  index = VistA.multiwait(['warnings?',VistA.prompt])
+  if index==1:
+    sys.exit(0)
+  VistA.write('No')
+  VistA.wait('routines?')
+  VistA.write('NO')
+  VistA.wait('DEVICE:')
+  VistA.write(';;9999')
+  if sys.platform == 'win32':
+    VistA.wait('Right Margin:')
+    VistA.write('')
+  VistA.write('')
+  VistA.wait('continue:',120)
+  VistA.write('')
+  VistA.wait('--- END ---',120)
+  if '@TEST_VISTA_COVERAGE@'=='ON':
+    VistA.stopCoverage(os.path.normpath("@LOGFILENAME@"))
+  VistA.write('h')
+else:
+  print "No routines for the XINDEX test."

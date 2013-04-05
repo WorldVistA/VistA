@@ -74,6 +74,8 @@ def FindPackagePrefixes(packagename,packages_csv_file):
           included.add(prefix[1:])
         else:
           excluded.add(prefix)
+    # Exclude all system (%) routines
+    excluded.add("%")
     included = included - excluded
   else:
     inSpecifiedPackage=False
