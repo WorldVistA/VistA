@@ -42,7 +42,7 @@ class VistAGlobalImport(object):
                    globalList=None, timeout=DEFAULT_GLOBAL_IMPORT_TIMEOUT):
     assert os.path.exists(inputFile)
     connection = vistATestClient.getConnection()
-    nativeFile = os.path.normpath(inputFile)
+    nativeFile = os.path.normpath(os.path.abspath(inputFile))
     vistATestClient.waitForPrompt()
     connection.send("D ^%GI\r")
     if vistATestClient.isCache():
@@ -64,11 +64,15 @@ def testMain():
   testClientParser = createTestClientArgParser()
   parser = argparse.ArgumentParser(description='VistA Global Import Tool',
                                    parents=[testClientParser])
-  parser.add_argument('-i', '--inputFile', required=True,
+  parser.add_argument('inputGlobalFile',
                       help='input global file path to be imported to VistA')
+  parser.add_argument('-t', '--timeout', default=DEFAULT_GLOBAL_IMPORT_TIMEOUT,
+                      type=int,
+                      help=('global import time out in second, default is %s' %
+                             DEFAULT_GLOBAL_IMPORT_TIMEOUT) )
   result = parser.parse_args();
   print (result)
-  inputFile = result.inputFile
+  inputFile = result.inputGlobalFile
   assert os.path.exists(inputFile)
   """ create the VistATestClient"""
   testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
@@ -78,7 +82,7 @@ def testMain():
     print "Log File is %s" % logFilename
     vistAClient.setLogFile(logFilename)
     vistAGlobalImport = VistAGlobalImport()
-    vistAGlobalImport.importGlobal(vistAClient, inputFile)
+    vistAGlobalImport.importGlobal(vistAClient, inputFile, timeout=result.timeout)
 
 if __name__ == '__main__':
   testMain()
