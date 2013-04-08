@@ -575,13 +575,9 @@ def createTestClient():
 
 def testAddPackagePatchHistory():
   testClient = createTestClient()
-  assert testClient
-  try:
+  with testClient:
     addPackagePatchHistory("LAB SERVICE", "5.2", "288", "334",
                            testClient, 17)
-  finally:
-    testClient.getConnection().terminate()
-  sys.exit(0)
 
 """ Test Function getPersonNameByDuz """
 def testGetPersonNameByDuz():
@@ -596,13 +592,10 @@ def main():
   testClientParser = createTestClientArgParser()
   parser = argparse.ArgumentParser(description='Default KIDS Installer',
                                    parents=[testClientParser])
-  parser.add_argument('kidsFile', metavar='K', help='path to KIDS Build file')
-  parser.add_argument('installName', metavar='I', help='kids install name')
+  parser.add_argument('kidsFile', help='path to KIDS Build file')
   parser.add_argument('-l', '--logFile', default=None, help='path to logFile')
   parser.add_argument('-r', '--reinstall', default=False, action='store_true',
                 help='whether re-install the KIDS even it is already installed')
-  parser.add_argument('-m', '--multiBuildList', default=None, nargs='*',
-                      help='list of multibuild install names')
   parser.add_argument('-g', '--globalFiles', default=None, nargs='*',
                       help='list of global files that need to import')
 
@@ -613,10 +606,19 @@ def main():
   initConsoleLogging()
   with testClient:
     kidsFile = os.path.abspath(result.kidsFile)
+    from KIDSPatchParser import KIDSPatchParser
+    kidsParser = KIDSPatchParser(None)
+    kidsParser.unregisterSectionHandler(KIDSPatchParser.ROUTINE_SECTION)
+    kidsParser.parseKIDSBuild(kidsFile)
+    installNameList = kidsParser.installNameList
+    installName = installNameList[0]
+    multiBuildList = installNameList
+    if len(installNameList) == 1:
+      multiBuildList = None
     defaultKidsInstall = DefaultKIDSPatchInstaller(kidsFile,
-                                           result.installName,
+                                           installName,
                                            logFile=result.logFile,
-                                           multiBuildList=result.multiBuildList,
+                                           multiBuildList=multiBuildList,
                                            globals=result.globalFiles)
     defaultKidsInstall.runInstallation(testClient, result.reinstall)
 
