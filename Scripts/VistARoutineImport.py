@@ -27,14 +27,20 @@ class VistARoutineImport(object):
     nativeName = os.path.normpath(routineImportFile)
     connection.expect("Device: ")
     connection.send("%s\r" % nativeName)
-    connection.expect("Parameters\? \"R\" =>")
+    connection.expect("Parameters\? ")
     connection.send("\r")
-    connection.expect("Override and use this File with %RI\? No =>")
-    connection.send("YES\r")
-    connection.expect("Please enter a number from the above list:")
-    connection.send("\r")
-    connection.expect("Routine Input Option:")
-    connection.send("All\r")
+    while True:
+      index = connection.expect(["Override and use this File with %RI\? No =>",
+                                 "Please enter a number from the above list:",
+                                 "Routine Input Option:",
+                                ])
+      if index == 0:
+        connection.send("YES\r")
+      elif index == 1:
+        connection.send("\r")
+      else:
+        connection.send("All\r")
+        break
     connection.expect("shall it replace the one on file\? No =>")
     connection.send("YES\r")
     connection.expect("Recompile\? Yes =>")
@@ -74,7 +80,7 @@ def main():
   testClientParser = createTestClientArgParser()
   parser = argparse.ArgumentParser(description='VistA Routine Import',
                                    parents=[testClientParser])
-  parser.add_argument('-i', '--routineImportFile', required=True,
+  parser.add_argument('routineImportFile',
                       help='path to Routine Import File in .ro format')
   parser.add_argument('-o', '--routineOutputDir', default=None,
                       help='path to Routine output Dir, GTM only')
