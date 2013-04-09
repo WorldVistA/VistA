@@ -89,10 +89,6 @@ that you should import.  It is found in the Testing/Setup directory called \"ZTL
 It contains a new copy of the ZTLOAD1.m file which contains modifications that remove some
 transaction processing code that fails only on the GT.M platform.
 
-mporting the globals is done with the use of a routine that was just imported. The ZGI routine was
-written to import the globals from the OSEHRA structure into a MUMPS environment. The command to do
-this is:
-
 .. parsed-literal::
 
   Formfeed delimited <No>? :usertype:`<ENTER>`
