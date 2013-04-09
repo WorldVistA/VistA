@@ -12,7 +12,7 @@ The GT.M system is available for download from SourceForge_. This will download 
 
 The next step is to unzip and untar the downloaded files, which is assumed to be in the Downloads directory.
 
-.. parsed-literal:
+.. parsed-literal::
 
   $ :usertype:`gunzip gtm_V54002B_linus_i686_pro.tar.gz`
   $ :usertype:`tar -xf gtm_V54002B_linus_i686_pro.tar`
@@ -90,8 +90,15 @@ Now that files are being installed, it asks if the user would like to keep both 
   %GDE-I-GDCREATE, Creating Global Directory file
           /opt/gtm/gtmhelp.gld
 
-  Installation completed. Would you like all the temporary files
-  removed from this directory? (y or n)
+When installing GT.M in a 64 bit environment, an additional prompt will be shown that asks if you
+want to remove the object files of the installed M Routines.  Removing these object files will make it necessary
+to add the mentioned shared library to the gtmroutines environment variable in lieu of the path to the GT.M distribution.
+
+.. parsed-literal::
+
+  Object files of M routines placed in shared library /opt/gtm/libgtmutil.so
+  Keep original .o object files (y or n)? :usertype:`N`
+
 
 Now the installation of GT.M is complete. The last prompt asks if the user would like to remove the files in the current directory now that the installation is finished. Answer the prompt with a y or n with your preference. The script will then exit returning to the standard terminal prompt.
 
@@ -105,7 +112,11 @@ Now the installation of GT.M is complete. The last prompt asks if the user would
 Creation of Folder Structure
 ----------------------------
 
-The next step is to create a directory that contains the folders and files needed to hold the VistA routines and globals that GT.M will use. We will create this folder in the /Downloads directory, but this is not the only location. This location will be used as the database directory for VistA. Make a folder called VistA. Inside of that VistA folder, create another folder named r. The r folder will hold the routines that GT.M will use when running VistA. These steps are shown below.
+The next step is to create a directory that contains the folders and files needed to hold the VistA routines and globals that GT.M will use.
+We will create this folder in the /Downloads directory, but this is not the only location. This location will be used as the database
+directory for VistA. Make a folder called VistA. Inside of that VistA folder, create another folder named 'r' and one named 'o'. The
+'r' folder will hold the routines for VistA while the 'o' folder will contain the compiled version of these routine files in a '.o'
+extension. These steps are shown below.
 
 .. parsed-literal::
 
@@ -117,19 +128,30 @@ The next step is to create a directory that contains the folders and files neede
 
 The next step is to define and create the database that will be used to hold the information needed in the VistA instance. The first step is to source the gtmprofile that was created in the installation of GT.M: source  /opt/gtm/gtmprofile
 
-Once this is done we need to alter two environment variables that were just created to point the routines and globals to where the OSEHRA code base will reside. This will set up the environment variables needed to utilize GT.M from the command line. We will be changing the gtmgbldir entry and the gtmroutines entry. These control where the GT.M instance will look for globals and routines when it is running. These entries are set using the export command from the Linux terminal. The gtmgbldir should be set to the path to the VistA folder that was created above followed by \'database\'.  The gtmroutines will be set to contain two paths. The first is the path to the GT.M installation, in our case in the directory /opt/gtm/, and the path to the r folder within the VistA folder.
-::
+Once this is done we need to alter two environment variables that were just created to point the routines and globals to where the OSEHRA code base will reside. This will set up the environment variables needed to utilize GT.M from the command line. We will be changing the gtmgbldir entry and the gtmroutines entry. These control where the GT.M instance will look for globals and routines when it is running. These entries are set using the export command from the Linux terminal. The gtmgbldir should be set to the path to the VistA folder that was created above followed by 'database'.  The gtmroutines will contain a series of paths that lead to the routine and the object files. The first is the path to the 'o' and 'r' folders within the VistA folder in a special format::
 
-  export gtmgbldir =/path/to/VistA/database
-  export gtmroutines="/home/osehra/Downloads/VistA/o(/home/osehra/Downloads/VistA/r) /opt/gtm/ \"
+  /path/to/o(/path/to/r)
 
-The example usage of these commands are found below:
+The next path points to a specific path which depends on the type of system you are using. In a 64 bit GT.M install, the path should point to the libgtmutil.so file.  On a 32 bit environment, the final entry should be the path to the GT.M installation, in our case in the directory /opt/gtm/.
+
+An example usage of these commands is found below:
+
+For 32 bit:
 
 .. parsed-literal::
 
   ~/Downloads$ :usertype:`source /opt/gtm/gtmprofile`
   ~/Downloads$ :usertype:`export gtmgbldir=/home/osehra/Downloads/VistA/database`
-  ~/Downloads$ :usertype:`export gtmroutines="/home/osehra/Downloads/VistA/o(/home/osehra/Downloads/VistA/r) /opt/gtm."`
+  ~/Downloads$ :usertype:`export gtmroutines="/home/osehra/Downloads/VistA/o(/home/osehra/Downloads/VistA/r) /opt/gtm/"`
+  ~/Downloads$
+
+And 64 bit:
+
+.. parsed-literal::
+
+  ~/Downloads$ :usertype:`source /opt/gtm/gtmprofile`
+  ~/Downloads$ :usertype:`export gtmgbldir=/home/osehra/Downloads/VistA/database`
+  ~/Downloads$ :usertype:`export gtmroutines="/home/osehra/Downloads/VistA/o(/home/osehra/Downloads/VistA/r) /opt/gtm/libgtmutil.so"`
   ~/Downloads$
 
 The next step is to run the GT.M Global Directory Editor (GDE), accessed via the command:
@@ -143,7 +165,7 @@ The next step is to run the GT.M Global Directory Editor (GDE), accessed via the
 
   GDE>
 
-This command starts the GDE and will change the prompt from the standard terminal one to \"GDE>\". Within the GDE environment, the default database location needs to be changed. Enter the command:::
+This command starts the GDE and will change the prompt from the standard terminal one to \"GDE>\". Within the GDE environment, the default database location needs to be changed. Enter the command::
 
   change -s DEFAULT -f=/home/$user/Downloads/VistA/database
 
