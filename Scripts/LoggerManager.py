@@ -28,6 +28,7 @@ def initConsoleLogging(defaultLevel=logging.INFO,
   consoleHandler.setLevel(defaultLevel)
   consoleHandler.setFormatter(formatter)
   logger.addHandler(consoleHandler)
+  return consoleHandler
 
 def initFileLogging(outputFileName, defaultLevel=logging.INFO,
                     formatStr = '%(asctime)s %(levelname)s %(message)s'):
@@ -41,6 +42,7 @@ def initFileLogging(outputFileName, defaultLevel=logging.INFO,
   fileHandle.setFormatter(formatter)
   logger.addHandler(fileHandle)
   fileHandle.doRollover()
+  return fileHandler
 
 def getTempLogFile(outputFileName):
   import tempfile, os

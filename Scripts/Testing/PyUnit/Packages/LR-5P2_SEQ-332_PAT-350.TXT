@@ -1,0 +1,1033 @@
+
+=============================================================================
+Run Date: SEP 24, 2012                     Designation: LR*5.2*350
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #332                    Status: Released
+                  Compliance Date: JUL 13, 2013
+=============================================================================
+
+Associated patches: (v)LR*5.2*218  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*269  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*300  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*308  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*313  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*315  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*323  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*330  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*334  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*337  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*339  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*347  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*348  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*352  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LEX*2*41    <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*358  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*360  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*361  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*363  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)HDI*1*7     <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*373  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*375  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*378  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*384  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*386  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*388  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*392  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*395  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*402  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*406  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*413  <<= must be installed BEFORE `LR*5.2*350'
+                    (v)LR*5.2*415  <<= must be installed BEFORE `LR*5.2*350'
+
+Subject: LEDI IV - Laboratory Electronic Data Interchange (LEDI) Enhancements
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Blood Bank Clearance
+ ====================
+ VISTA Laboratory Package patch LA*5.2*74/LR*5.2*350 contains changes to
+ software controlled by VHA DIRECTIVE 2004-053, titled VISTA BLOOD BANK
+ SOFTWARE. Changes include:
+    Routines:
+      LRU
+      LRX
+  
+ All of the above changes have been reviewed by the VISTA Blood Bank
+ Developer and found to have no impact on the VISTA BLOOD BANK SOFTWARE
+ control functions.
+  
+ RISK ANALYSIS: Changes made by patch LA*5.2*74/LR*5.2*350 have no effect
+ on Blood Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*74/LR*5.2*350
+ does not alter or modify any software design safeguards or safety
+ critical elements functions.
+  
+ POTENTIAL IMPACT ON SITES: This patch contains changes to 2 routines and 
+ 0 files identified in Veterans Health Administration (VHA) Directive 
+ 2004-053, group B listing. The changes have no effect on Blood Bank 
+ functionality or medical device control functions. There is no adverse 
+ potential to sites.
+  
+ VALIDATION REQUIREMENTS BY OPTION: 
+ There are no validation requirements by option for this patch.
+  
+ MINIMAL TEST CASE SCENARIOS BY OPTION, INCLUSIVE OF ALL CONTROL FUNCTIONS:
+ There are no test case scenarios for this patch.
+  
+ --------------------------------------------------------------------------
+  
+  
+ Laboratory Electronic Data Interchange (LEDI) IV introduces enhancements
+ to the bi-directional interface that allows Department of Veterans Affairs
+ (VA) laboratories to communicate with other VA facilities, Commercial
+ Reference Laboratories, and Department of Defense (DoD) labs, and sets the
+ foundation for future communication of Anatomic Pathology (AP) and
+ Microbiology (Micro) orders and results.
+  
+ Note 1: The functionality to electronically transmit AP orders and AP and
+         Micro results are not being made available with this patch.
+  
+ Note 2: This patch is one of the patches in the LEDI IV project. The other
+         patches are: HDI*1.0*7 and LA*5.2*74. Because this is a
+         multi-package project, there is a multi-package host build that
+         installs the following builds: HDI*1.0*7, LR*5.2*350, and
+         LA*5.2*74.
+  
+ The software has the capacity and features necessary for sharing secure,
+ encrypted laboratory data between VA to VA, VA to Commercial Reference
+ Laboratories, and VA to DoD Labs. The LEDI IV software is an extension
+ of the LEDI III software, and enhances the general LEDI III functionality.
+  
+  
+ File #63 (Lab Data) Remediation Tool
+ ------------------------------------
+ The software creates an automated tool to check the LAB DATA File (#63)
+ for Data Dictionary issues. The tool checks for the following issues:
+  
+ 1. Errors that may have occurred when an antibiotic was added by the local
+    site to the Organism Sub-field (#63.3) of the LAB DATA file (#63).
+  
+ 2. Errors with the data names in the LABORATORY TEST file (#60), for tests
+    in the Clinical Chemistry (Chemistry and Hematology) section. It checks
+    the CHEM, HEM, TOX, RIA, SER, etc. Sub-file (#63.04) of the LAB DATA
+    file (#63) looking for possible discrepancies in the Data Dictionary.
+  
+  
+ Enhancements
+ ------------
+ LEDI IV introduces new functionality for the Systematized Nomenclature of
+ Medicine - Clinical Terms (SNOMED CT) codes. Data was retrieved and
+ extracted from the TOPOGRAPHY FIELD (#61), ETIOLOGY FIELD (#61.2) and
+ COLLECTION SAMPLE (#62) files, and submitted to Standards and Terminology
+ Service (STS). Based off the extracts, the STS group has created a mapping
+ file to be loaded at each site after the installation of LEDI IV. The
+ SNOMED CT codes are standardized for General Lab, Microbiology, and
+ Anatomic Pathology (AP) data.
+  
+ Microbiology Enhancements:
+  
+ 1. The entries in the TOPOGRAPHY FIELD File (#61), ETIOLOGY FIELD File
+    (#61.2), and COLLECTION SAMPLE File (#62) are mapped to appropriate
+    SNOMED CT codes.
+  
+ 2. The option 'Edit an Antibiotic' [LRWU7 EDIT] has been created to edit
+    an antibiotic, rather than going through VA FileMan. This option allows
+    the entry of existing mycobacterial drugs to the ANTIMICROBIAL
+    SUSCEPTIBILITY File (#62.06).
+  
+ 3. The option 'Add a new internal name for an antibiotic' [LRWU7] was
+    modified to allow the creation of a new Mycobacterium Antibiotic. This
+    option will add the appropriate field in the LAB DATA file (#63), and
+    create a corresponding entry in the Antimicrobial Susceptibly File
+    (#62.06). (The process for creating new Mycobacterium Antibiotics will
+    now be similar to the way Bacterial Antibiotics are created).
+  
+ 4. In Microbiology data entry options, the XXX RPT DATE APPROVED field
+    (e.g., BACT RPT DATE APPROVED, MYCOLOGY RPT DATE APPROVED, etc.) must
+    now contain a date and time entry (for example, "N" to designate "Now"
+    can be used, however, "T" to designate "Today" can no longer be used).
+  
+ 5. Within Microbiology result entry options, the user can opt to send one
+    of three alert types to the ordering provider and additional recipients
+    and/or mail groups. Depending on how the 'Prompt CPRS Alert in Micro
+    Result Entry' parameter is set, will determine whether the user is
+    prompted to send an alert. The alert types are: "Lab results 
+    available", "Abnormal lab results", and "Critical lab results". The
+    alert generation is dependent on parameter settings in the Computerized
+    Patient Record System (CPRS) and personal alert settings applied by
+    clinicians.
+  
+ 6. Within Microbiology result entry options, the user can designate the
+    performing laboratory for the entire report or for specific sections of
+    the report. If choosing to enter the performing laboratory for specific
+    sections, only the sections that have data will appear for selection.
+  
+ Anatomic Pathology Enhancements:
+  
+ 1. The VistA Laboratory Anatomic Pathology section new functionality
+    includes populating the LAB DATA File (#63), ACCESSION File (#68), and
+    LAB ORDER ENTRY File (#69) with:
+      a. The AP accession to be consistent with the rest of laboratory's
+         accession process.
+      b. The creation and storing of the Unique Identifier (UID), ordering
+         data, and order number.
+      c. Creation of the ORDERED TEST sub-file (#63.53) for the "SP", "EM",
+         and "CY" sections. This sub file contains information about the
+         ordered test(s) for this accession. The ORDERED TEST field (#.01)
+         contains the ordered test National Laboratory Test (NLT) code
+         requested by the clinical provider. The new ORDERED TEST sub file
+         (#63.53) contains fifteen fields.
+  
+ 2. The VistA Laboratory Anatomic Pathology application generates CPRS
+    Anatomic Pathology alerts/notifications. The mandatory recipients list
+    has been modified to include:
+      a. Ordering provider
+      b. If the patient is an inpatient as of the specimen date/time then:
+           i. Inpatient primary care provider
+          ii. Inpatient attending
+      c. Outpatient primary and associate care providers
+      d. If it is a related surgery case then:
+           i. The current surgeon if different from surgeon used as
+              ordering provider when specimen was logged in
+          ii. Attending surgeon
+      e. Any additional users/recipients or mail groups specified by the
+         user
+  
+ 3. Modified the laboratory user login process for AP ("SP", "CY", and "EM"
+    subscripts). The option 'Log-in, anat path' [LRAPLG] was modified to
+    require an entry of:
+      a. A Specimen Topography from the TOPOGRAPHY FIELD file (#61).
+      b. A Collection Sample from the COLLECTION SAMPLE file (#62).
+      c. A selection of an orderable test from the LABORATORY TEST file
+         (#60).
+  
+ 4. Within Anatomic Pathology result entry options, the user can designate
+    the performing laboratory for the entire report or for specific
+    sections of the report. If choosing to enter the performing laboratory
+    for specific sections, only the sections that have data will appear.
+  
+ Chemistry/Hematology Enhancements:
+  
+ 1. Within Chemistry and Hematology result entry options, the user can opt
+    to send one of three alert types to the ordering provider and
+    additional recipients and/or mail groups. Depending on how the 'Prompt
+    CPRS Alert in CH Result Entry' parameter is set, will determine whether
+    the user is prompted to send an alert. The alert types are: "Lab
+    results available", "Abnormal lab results", and "Critical lab results".
+    The alert generation is dependent on parameter settings in the
+    Computerized Patient Record System (CPRS) and personal alert settings
+    applied by clinicians.
+  
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ LABORATORY TEST (#60)      PRINT NAME (#51)                 Modified
+                            SITE/SPECIMEN (#60.01,.01)       Modified
+                            DEFAULT VALUE (#60.01,9)         Modified
+                            LAB TEST (#60.02,.01)            Modified
+                            COLLECTION SAMPLE (#60.03,.01)   Modified
+  
+ TOPOGRAPHY FIELD (#61)     NAME (.01)                       Modified
+                            SNOMED CODE (#2)                 Modified
+                            SNOMED CT ID(#20)                New
+                            SCT CODE STATUS (#21)            New
+                            SCT TOP CONCEPT (#22)            New
+                            SCT STATUS DATE (#61.023)        New
+  
+ ETIOLOGY FIELD (#61.2)     NAME (#.01)                      Modified
+                            SNOMED CODE (#2)                 Modified
+                            IDENTIFIER (#4)                  Modified
+                            SNOMED CT ID (#20)               New
+                            SCT CODE STATUS (#21)            New
+                            SCT TOP CONCEPT (#22)            New
+                            SCT STATUS DATE (#61.223)        New
+  
+ COLLECTION SAMPLE (#62)    NAME (#.01)                      Modified
+                            SNOMED CT ID (#20)               New
+                            SCT CODE STATUS (#21)            New
+                            SCT TOP CONCEPT (#22)            New
+                            SCT STATUS DATE (#62.023)        New
+  
+ ANTIMICROBIAL              DRUG NODE (#1)                   Modified
+ SUSCEPTIBILITY (#62.06)    AFB DRUG NODE (#1.1)             New
+                            INTERNAL NAME (#5)               Modified
+                            AFB INTERNAL NAME (#5.1)         New
+  
+ LAB DATA (#63)             LRDFN (#.01)                     Modified
+                            RELEASING SITE (#14.91)          New
+                            PRODUCING LABORATORY (#63.00012) New
+                            EXTERNAL PACKAGE REFERENCE       New
+                                (#63.00013)
+                            CODE SYSTEM REFERENCE            New
+                                (#63.00014)
+                            UID (#63.02,.31)                 New
+                            ORDERING SITE (#63.02,.32)       New
+                            COLLECTING SITE (#63.02,.33)     New
+                            HOST UID (#63.02,.34)            New
+                            ORDERING SITE UID                New
+                                (#63.02,.342)
+                            RELEASING SITE (#63.02,.345)     New
+                            RELEASING SITE (#63.04,.345)     New
+                            UID (#63.05,.31)                 New
+                            ORDERING SITE (#63.05,.32)       New
+                            COLLECTING SITE (#63.05,.33)     New
+                            HOST UID (#63.05,.34)            New
+                            ORDERING SITE UID (#63.05,.342)  New
+                            RELEASING SITE (#63.05,.345)     New
+                            ORDERED TEST (#63.07)            Modified
+                            UID (#63.08,.31)                 New
+                            ORDERING SITE (#63.08,.32)       New
+                            COLLECTING SITE (#63.08,.33)     New
+                            HOST UID (#63.08,.34)            New
+                            ORDERING SITE UID (#63.08,.342)  New
+                            RELEASING SITE (#63.08,.345)     New
+                            UID (#63.09,.31)                 New
+                            ORDERING SITE (#63.09,.32)       New
+                            COLLECTING SITE (#63.09,.33)     New
+                            HOST UID (#63.09,.34)            New
+                            ORDERING SITE UID (#63.09,.342)  New
+                            RELEASING SITE (#63.09,.345)     New
+                            SPECIMEN TOPOGRAPHY              New
+                                (#63.202,.06)
+                            COLLECTION SAMPLE (#63.202,.07)  New
+                            ORGANISM (#63.3,.01)             Modified
+                            ISOLATE ID (#63.3,.1)            New
+                            PARASITE (#63.34,.01)            Modified
+                            ISOLATE ID (#63.34,.1)           New
+                            FUNGUS/YEAST (#63.37,.01)        Modified
+                            ISOLATE ID (#63.37,.1)           New
+                            MYCOBACTERIUM (#63.39,.01)       Modified
+                            ISOLATE ID( #63.39,.1)           New
+                            VIRUS (#63.43,.01)               Modified
+                            ISOLATE ID (#63.43,.1)           New
+                            ORDERED TEST (#63.5)             New
+                            ORDERED TEST (#63.51)            New
+                            ORDERED TEST (#63.52)            New
+                            ORDERED TEST (#63.53)            New
+                            MICROBIOLOGY AUDIT (#63.539)     New
+                            SPECIMEN TOPOGRAPHY              New
+                                (#63.812,.06)
+                            COLLECTION SAMPLE (#63.812,.07)  New
+                            SPECIMEN TOPOGRAPHY              New
+                                (#63.902,.06)
+                            COLLECTION SAMPLE (#63.902,.07)  New
+  
+ WKLD CODE (#64)
+                            MI/AP DATABASE CODE (#63)        New
+  
+ LAB ELECTRONIC CODES                                        Modified
+ (#64.061)
+  
+ LAB ELECTRONIC SUBTYPES                                     Modified
+ (#64.062)
+  
+ LAB REPORTS (#64.5)
+                            PRINT TEST NAME (#64.53,2)       Modified
+  
+ LAB ORDER ENTRY (#69)      DATE/TIME RESULTS AVAILABLE      Modified
+                              (#63.01,21)
+                            CANCELED BY (#69.03,10)          Modified
+  
+ LAB PENDING ORDERS                                          Modified
+ ENTRY (#69.6)
+  
+ LAB MAPPING TRANSPORT                                       New
+   (#95.4)
+  
+  
+ Help Frames Associated:
+  
+ Help Frame Name:                                      New/Modified/Deleted
+ ---------------                                       --------------------
+ LRCAPFF                                                     New
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                       New/Modified/Deleted
+ ---------------                                       --------------------
+ LAB MAPPING                                                 New
+  
+  
+ Options Associated:
+  
+ Option Name                          Type             New/Modified/Deleted
+ -----------                          ----             --------------------
+   LR OUT                             menu                   Modified 
+   LR7O 60-64                         menu                   Modified
+   LR7O PAR USER LIST                 routine                New
+   LR7O PARAM MENU                    menu                   Modified
+   LRAC                               menu                   Modified
+   LRAC MOVE                          routine                New 
+   LRAP ALERT                         routine                Modified
+   LRAP VR                            routine                New 
+   LRAPD                              menu                   Modified
+   LRCAPFF                            routine                New
+   LRLIAISON                          menu                   Modified
+   LRMENU                             menu                   Modified
+   LRRP1                              routine                New 
+   LRWU7 EDIT                         routine                New
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Definition Name                             New/Modified/Deleted
+ -------------------------                             --------------------
+ LR ACCESSION DEFAULT COL SAMPLE                             New
+ LR ACCESSION DEFAULT LAB TEST                               New
+ LR ACCESSION DEFAULT SPECIMEN                               New
+ LR AP GUI REPORT RIGHT MARGIN                               New
+ LR AP REPORT SELECTION                                      New
+ LR AP SNOMED SYSTEM PRINT                                   New
+ LR AP SURGERY REFERENCE                                     New
+ LR ASK PERFORMING LAB AP                                    New
+ LR ASK PERFORMING LAB MICRO                                 New
+ LR CH GUI REPORT RIGHT MARGIN                               New
+ LR CH VERIFY CPRS ALERT                                     New
+ LR EGFR AGE CUTOFF                                          New
+ LR EGFR METHOD                                              New
+ LR EGFR RESULT SUPPRESS                                     New
+ LR LABEL PRINTER DEFAULT                                    New
+ LR MANIFEST DEFLT ACCESSION                                 New
+ LR MANIFEST EXC PREV TEST                                   New
+ LR MAPPING ASK DOMAIN                                       New
+ LR MAPPING DEFAULT DIRECTORY                                New
+ LR MAPPING DEFAULT FILESPEC                                 New
+ LR MAPPING MESSAGE MAX RECORDS                              New
+ LR MAPPING PROCESSED DIRECTORY                              New
+ LR MAPPING PURGE DAYS                                       New
+ LR MI GUI REPORT RIGHT MARGIN                               New
+ LR MI VERIFY CPRS ALERT                                     New
+ LR MI VERIFY DISPLAY PROVIDER                               New
+ LR REPORTS FACILITY PRINT                                   New
+ LR VER DEFAULT PERFORMING LAB                               New
+ LR VER EA VERIFY BY UID                                     New
+ LR VER EM VERIFY BY UID                                     New
+ LRAPRES1 AP ALERT                                           New
+  
+  
+ Parameter Templates Associated:
+  
+ Parameter Template Name                               New/Modified/Deleted
+ ----------------------------------                    --------------------
+ LR DOMAIN                                                   Modified
+ LR PKG                                                      Modified
+ LR USER                                                     Modified
+  
+  
+  
+ Remedy Tickets Overview
+ =======================
+  
+ 1. HD0000000149458 - LOCK TIMEOUT CONFLICT
+  
+    Problem
+    -------
+    Lab users are seeing 'This entry is being edited by someone else.' when
+    attempting to verify accessions. Moments later, they go back into the
+    same accession and error message is gone.
+  
+    Solution
+    --------
+    Lock timeouts are modified to use the standard DILOCKTM variable.
+  
+    Routine: LRVR3
+  
+ 2. HD0000000276601 - 2 Anatomic Path automatic alert to PCP not working
+                      after V27
+  
+    Problem
+    -------
+    Alerts are not always sent to the patient's Primary Care Provider (PCP)
+    but they are correctly being sent to the ordering provider. The lab
+    software is using the INP^VADPT API to determine who the primary
+    physician is to send an action alert when an anatomic pathology case
+    has been released. This is flawed in that it is only reliable if the
+    patient is still an inpatient at the time the case is signed out, which
+    is not always the correct scenario.
+  
+    Solution
+    --------
+    Routine LRAPUTL is modified to ensure that an alert is delivered as
+    intended to the PCP that was assigned at the time of the specimen
+    submission. If the patient was an inpatient on the specimen collection
+    date/time, it will notify the Inpatient Primary Care Provider and the 
+    Inpatient Attending Provider. If the patient was an outpatient on the 
+    specimen collection date/time, it will  notify the Outpatient Primary
+    Care Provider and the Outpatient Attending Provider. If the surgical
+    report is related to a Surgical case (SURGERY file #130) and the
+    surgical case info has been copied from Surgery to Lab, then it will
+    also notify the Surgeon, Attending Surgeon, Provider (Non-OR case), and
+    Attending Provider (Non-OR case).
+  
+    Routine: LRAPUTL
+  
+ 3. HD0000000277929 - Reports are not transmitting
+  
+    Problem
+    -------
+    If a configuration in the LA7 MESSAGE PARAMETER file #62.48 has an
+    interface type of Point of Care (POC) and is currently in an INACTIVE
+    status, an error is generated when data is received at the sites for
+    that configuration.
+  
+    Solution
+    --------
+    There is a bug in the code that allows processing to fall through,
+    looking for variable LA76248(0), which is never defined because the
+    configuration is in an INACTIVE status.  As a safeguard, routine LA7VHL
+    is modified to set variable LA76248(0) in the MSH line tag.
+  
+    Routine: LA7VHL
+  
+ 4. HD0000000355091 - Unable to use new HL7 1.6 for instruments with
+                      middleware because it will not pass words such as
+                      comment or hemolysed or cancel
+  
+    Problem
+    -------
+    The software has restrictions in place on what will get transmitted to
+    the host based on the data name definitions. Because of this
+    restriction, certain texts from the instrument's middleware is lost
+    during the auto-validation process.
+  
+    Solution
+    --------
+    Routine LA7VIN5A is modified to accept "canc" and "comment" as valid
+    results to conform to current VistA Lab rules.
+  
+    Routine: LA7VIN5A
+  
+ 5. HD0000000376862 - LOINC global storage issue using EA option
+  
+    Problem
+    -------
+    No LOINC codes, reference ranges, or units are stored when using the EA
+    - Enter/verify data (auto instrument) option to enter results of
+    'comment'.
+  
+    Solution
+    --------
+    The data verification process was incorrectly quitting before calling
+    line tag RANGE in routine LRVR4, which stores the units, reference
+    ranges, and LOINC codes. Routine LRVR4 is modified to call line tag NR
+    as there is no result to evaluate regarding reference ranges/flags.
+  
+    Routine: LRVR4
+  
+  
+  
+ Test Sites
+ ==========
+  
+   BILOXI VAMC
+   BOSTON HCS
+   LEXINGTON VAMC
+   MILWAUKEE VAMC
+   NEW MEXICO HCS
+   NORTHERN ARIZONA HCS
+   NORTHAMPTON VAMC
+   PALO ALTO HCS
+   PHOENIX VAMC
+   SOUTH TEXAS HCS (large)(integrated)
+   SOUTHERN ARIZONA VA HCS
+  
+ We would also like to thank the following sites who participated in the
+ testing of the LEDI IV patch:
+  
+   CAPTN JAMES LOVELL FED HLT CTR (NORTH CHICAGO VAMC)
+   EL PASO VA HCS
+   HUNTINGTON VAMC
+   TAMPA VAMC
+  
+  
+  
+ Software and Documentation Retrieval Information
+ ================================================
+  
+ The LEDI IV patch will be controlled by a phased release. To control the
+ implementation of the LEDI IV patch and related SNOMED CT files, a secured
+ File Transfer Protocol (FTP) server with passwords will be used. A member
+ of the Product Development team will contact your site with the FTP 
+ server, username, and password prior to your scheduled installation date.
+  
+ Although this is a controlled, phased released, the user and installation
+ documentation will be available to all sites when the patch is officially
+ released and the phased implementations start. This will give sites the
+ opportunity to retrieve the documents before their phased installation
+ date.
+  
+  
+ Documentation is available for LEDI IV on the ANONYMOUS.SOFTWARE directory
+ at one of the following Office of Information (OI) Field Offices.
+  
+ The preferred method is to FTP the files from:
+    download.vista.med.va.gov
+  
+ This transmits files from the first available FTP server. Sites may also
+ elect to retrieve documentation directly from a specific server as
+ follows:
+         Albany                  ftp.fo-albany.med.va.gov
+         Hines                   ftp.fo-hines.med.va.gov
+         Salt Lake City          ftp.fo-slc.med.va.gov
+  
+ NOTE: The files listed below will be listed in each of the LEDI IV patches
+       that are part of the LEDI IV bundle; they only need to be downloaded
+       once.
+  
+ File Name               Contents                       Retrieval Format
+ ------------------      ---------------------          ----------------
+ LAB_LEDI_IV_IG.PDF      LEDI IV Installation Guide     binary
+ LAB_LEDI_IV_UM.PDF      LEDI IV User Manual            binary
+  
+  
+  
+ Patch Installation
+ ==================
+  
+ LR*5.2*350 is part of a combined build exported as a Kernel Installation
+ and Distribution System (KIDS) host file named:
+  
+      LAB_LEDI_IV.KID
+  
+ This bundle contains the following builds:
+  
+      HDI*1.0*7
+      LR*5.2*350
+      LA*5.2*74
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ The File #63 Remediation tool runs after the successful installation of
+ patch LR*5.2*350. The file 63 Remediation tool runs automatically and will
+ locate errors that may have occurred when an antibiotic was added by the
+ local site to the Organism Sub-field (#63.3) of the LAB DATA file (#63).
+ It also will detect errors in Clinical Chemistry (Chemistry and
+ Hematology) with the data names in the LABORATORY TEST file (#60).
+  
+  
+ Installation Instructions
+ -------------------------
+ The install time for this patch is approximately sixty (60) minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+ This patch MUST BE installed when Laboratory users are NOT on the system.
+  
+ Refer to the LDSI/LEDI IV Installation Guide for installation
+ instructions.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR350
+    Before:       n/a   After: B99700348  **350**
+Routine Name: LR350A
+    Before:       n/a   After: B27118063  **350**
+Routine Name: LR7OB63
+    Before: B23908890   After: B57006283  **121,187,286,372,406,350**
+Routine Name: LR7OB63C
+    Before: B24889065   After: B28532845  **121,187,315,350**
+Routine Name: LR7OB63D
+    Before: B27039441   After: B28748245  **121,187,315,350**
+Routine Name: LR7OF1
+    Before: B24442487   After: B25392448  **121,187,223,256,299,291,350**
+Routine Name: LR7OFAO
+    Before:  B7685456   After: B37607643  **121,350**
+Routine Name: LR7OGG
+    Before: B39052367   After: B63370341  **187,290,364,350**
+Routine Name: LR7OGM
+    Before: B40186413   After: B42661615  **187,220,312,286,395,350**
+Routine Name: LR7OGMC
+    Before: B27604415   After: B33832740  **187,230,312,286,356,372,395,350**
+Routine Name: LR7OGMG
+    Before: B13380291   After: B17064297  **187,230,286,290,331,364,395,350**
+Routine Name: LR7OGMP
+    Before: B13919485   After: B17939589  **187,246,282,286,344,395,350**
+Routine Name: LR7OGMU
+    Before:  B6944993   After:  B6947212  **187,312,395,350**
+Routine Name: LR7OMERG
+    Before: B35154595   After: B51143327  **121,221,386,350**
+Routine Name: LR7OR1
+    Before: B27928982   After: B33990199  **121,187,219,230,256,310,340,
+                                           348,350**
+Routine Name: LR7OR2
+    Before: B17036514   After: B40394119  **121,187,219,285,286,372,350**
+Routine Name: LR7ORB3
+    Before:       n/a   After: B91737672  **350**
+Routine Name: LR7OS
+    Before:   B389461   After:   B192100  **121,350**
+Routine Name: LR7OSAP
+    Before: B37919526   After: B70117996  **121,187,230,256,259,317,350**
+Routine Name: LR7OSAP4
+    Before:  B2801060   After:  B3951083  **365,350**
+Routine Name: LR7OSMZ1
+    Before: B11745238   After: B17671319  **121,244,350**
+Routine Name: LR7OSMZ2
+    Before: B29263016   After: B44248028  **121,244,392,350**
+Routine Name: LR7OSMZ4
+    Before: B21549459   After: B29272550  **121,244,350**
+Routine Name: LR7OSMZ5
+    Before: B19804498   After: B61988118  **121,187,244,350**
+Routine Name: LR7OSMZU
+    Before:  B9722087   After: B17588750  **121,244,350**
+Routine Name: LR7OSUM
+    Before: B12163244   After: B15755012  **121,187,230,256,350**
+Routine Name: LR7OSUM1
+    Before: B46743574   After: B83587916  **121,187,256,286,384,350**
+Routine Name: LR7OSUM2
+    Before:       n/a   After: B38355976  **350**
+Routine Name: LR7OSUM3
+    Before: B11136933   After: B15244956  **121,201,187,228,250,350**
+Routine Name: LR7OSUM4
+    Before: B17427234   After: B20007671  **121,187,228,241,251,350**
+Routine Name: LR7OSUM5
+    Before: B33173238   After: B48077281  **121,187,228,241,250,251,256,
+                                           356,372,350**
+Routine Name: LR7OSUM6
+    Before: B12896437   After: B14781997  **121,201,187,286,356,372,350**
+Routine Name: LR7OU64
+    Before: B21637000   After: B21786622  **153,201,350**
+Routine Name: LR7OV0
+    Before: B28253396   After: B31803944  **121,187,357,361,350**
+Routine Name: LR7OV5
+    Before:       n/a   After:  B8563542  **350**
+Routine Name: LRACMOVE
+    Before:       n/a   After: B24954137  **350**
+Routine Name: LRAP
+    Before: B13785163   After: B24889097  **72,248,259,350**
+Routine Name: LRAPALRT
+    Before:  B3313237   After:  B7865668  **365,315,350**
+Routine Name: LRAPBK
+    Before: B20800863   After: B72642436  **51,72,201,274,350**
+Routine Name: LRAPBK1
+    Before: B14060271   After: B17043567  **350**
+Routine Name: LRAPBR1
+    Before: B64502362   After:B131863197  **259,317,363,350**
+Routine Name: LRAPBR4
+    Before: B32957954   After: B44175433  **259,317,350**
+Routine Name: LRAPBS
+    Before:  B9008611   After:  B9302870  **72,350**
+Routine Name: LRAPCUM
+    Before: B21346716   After: B23321950  **34,72,173,248,259,350**
+Routine Name: LRAPD1
+    Before: B22198195   After: B22367539  **41,91,248,259,317,350**
+Routine Name: LRAPDA
+    Before: B81540087   After: B88410283  **72,73,91,121,248,259,295,317,
+                                           365,350**
+Routine Name: LRAPDSR
+    Before: B25438900   After: B48581707  **248,259,295,317,350**
+Routine Name: LRAPED
+    Before: B19288730   After: B27109913  **1,31,72,115,259,350**
+Routine Name: LRAPF
+    Before:  B3081199   After:  B5527434  **173,201,248,259,350**
+Routine Name: LRAPFICH
+    Before:  B8356436   After: B11962057  **72,173,248,259,350**
+Routine Name: LRAPLG1
+    Before: B12975824   After:B161872680  **72,121,248,308,350**
+Routine Name: LRAPLG2
+    Before:  B6923143   After:  B4901786  **72,115,350**
+Routine Name: LRAPM
+    Before: B22087381   After: B22300887  **72,91,130,231,248,295,350**
+Routine Name: LRAPMRL
+    Before: B65001842   After: B67731027  **259,295,317,368,397,350**
+Routine Name: LRAPMRL1
+    Before: B22036774   After: B23860987  **259,317,397,350**
+Routine Name: LRAPP
+    Before:  B6044065   After:  B7507591  **72,259,350**
+Routine Name: LRAPPF1
+    Before: B18139085   After: B32286245  **72,173,201,259,362,392,350**
+Routine Name: LRAPQAR
+    Before: B15655534   After: B18456988  **72,173,350**
+Routine Name: LRAPR
+    Before: B88035016   After:B102075847  **72,248,259,317,365,350**
+Routine Name: LRAPR1
+    Before: B19317428   After: B20852920  **317,350**
+Routine Name: LRAPRES
+    Before:B105539463   After:B184355664  **259,295,317,315,350**
+Routine Name: LRAPRES1
+    Before: B44734045   After: B66194684  **259,336,369,365,397,413,350**
+Routine Name: LRAPRES2
+Routine Name: LRAPSNMD
+    Before: B27418160   After: B37542341  **259,350**
+Routine Name: LRAPTIUP
+    Before: B29244140   After: B34578178  **259,315,350**
+Routine Name: LRAPTT
+    Before: B16486069   After:B118014265  **1,72,201,397,350**
+Routine Name: LRAPUTL
+    Before: B64931804   After:B143796070  **259,308,350**
+Routine Name: LRBEBA3
+    Before: B64272559   After: B65375352  **291,359,352,350**
+Routine Name: LRCAPES
+    Before: B82507767   After: B86635853  **274,259,349,308,350**
+Routine Name: LRCAPES1
+    Before: B68838767   After: B78998804  **274,308,350**
+Routine Name: LRCAPFF
+    Before:       n/a   After: B27176612  **350**
+Routine Name: LRCE
+    Before: B56891634   After: B66243304  **28,76,103,121,153,210,202,263,350**
+Routine Name: LRCENDEL
+    Before: B33189750   After: B45893338  **100,121,202,221,263,350**
+Routine Name: LREGFR
+    Before: B10898587   After: B30928139  **289,313,350**
+Routine Name: LRERT
+    Before:       n/a   After: B38702192  **350**
+Routine Name: LRERT1
+    Before:       n/a   After: B37373031  **350**
+Routine Name: LRGP2
+    Before: B17898081   After: B20133526  **153,221,263,290,350**
+Routine Name: LRGV2
+    Before: B10632361   After:  B9894517  **121,153,269,350**
+Routine Name: LRLABLIO
+    Before: B14734817   After: B15144930  **107,161,218,350**
+Routine Name: LRMIAU1
+    Before:       n/a   After:  B2029471  **350**
+Routine Name: LRMIAU2
+    Before:       n/a   After:  B8206786  **350**
+Routine Name: LRMIAUD
+    Before:       n/a   After:  B1362054  **350**
+Routine Name: LRMIBUG
+    Before:  B7592571   After:  B9500545  **318,321,339,350**
+Routine Name: LRMIEDZ
+    Before:  B6348324   After:  B6581426  **295,350**
+Routine Name: LRMIEDZ2
+    Before: B18087286   After: B43535275  **23,104,242,295,350**
+Routine Name: LRMIEDZ4
+    Before:  B4457199   After:  B2660171  **350**
+Routine Name: LRMINEW1
+    Before:  B6425071   After:  B8153364  **295,350**
+Routine Name: LRMINEW2
+    Before:  B5098196   After:  B3998581  **350**
+Routine Name: LRMIPSU
+    Before:  B8854205   After: B70736403  **350**
+Routine Name: LRMIPSZ
+    Before: B11290226   After: B11196257  **104,350**
+Routine Name: LRMIPSZ1
+    Before: B17045967   After: B49126027  **283,350**
+Routine Name: LRMIPSZ2
+    Before: B15995898   After: B34660166  **388,350**
+Routine Name: LRMIPSZ3
+    Before: B10514282   After: B28861527  **350**
+Routine Name: LRMIPSZ4
+    Before: B14748253   After: B32976079  **350**
+Routine Name: LRMIPSZ5
+    Before: B16384077   After: B61501584  **350**
+Routine Name: LRMISEZ
+    Before: B13013881   After: B11672648  **350**
+Routine Name: LRMISEZB
+    Before: B11318829   After: B12235566  **350**
+Routine Name: LRMISR1
+    Before:  B5467885   After:  B5768153  **350**
+Routine Name: LRMISTF1
+    Before: B23532108   After: B39570376  **121,128,202,263,264,295,350**
+Routine Name: LRMITSPO
+    Before: B10854235   After: B11792474  **96,116,350**
+Routine Name: LRMIUT
+    Before:  B5576607   After:  B4291793  **254,266,350**
+Routine Name: LRMIUT1
+    Before:  B6347185   After:  B6708446  **100,121,323,350**
+Routine Name: LRMIVER1
+    Before: B14179737   After: B15048312  **295,350**
+Routine Name: LRNIGHT
+    Before:  B3519006   After:  B6404812  **291,350**
+Routine Name: LRORD
+    Before: B25739403   After: B27336248  **100,121,153,286,350**
+Routine Name: LRORD1
+    Before: B22670416   After: B23742203  **1,8,121,153,201,286,291,350**
+Routine Name: LRORDB
+    Before: B38948502   After: B46918556  **153,222,286,350**
+Routine Name: LROW3
+    Before: B12243120   After: B12501822  **33,121,286,350**
+Routine Name: LRPHSET2
+    Before: B25116124   After: B27648184  **121,202,350**
+Routine Name: LRRP
+    Before: B18090876   After: B28641479  **195,221,283,286,350**
+Routine Name: LRRP1
+    Before: B21664619   After: B56529861  **153,221,283,286,356,372,350**
+Routine Name: LRRP2
+    Before: B47997359   After: B61115638  **106,121,221,283,300,350**
+Routine Name: LRRPL
+    Before:       n/a   After:B138917268  **350**
+Routine Name: LRRPLU
+    Before:       n/a   After:B286239164  **350**
+Routine Name: LRRPLUA
+    Before:       n/a   After: B24542488  **350**
+Routine Name: LRRSP
+    Before:  B5200202   After:  B5673218  **121,283,350**
+Routine Name: LRSCT
+    Before:       n/a   After: B28378651  **350**
+Routine Name: LRSCTF
+    Before:       n/a   After: B91859854  **350**
+Routine Name: LRSCTF1
+    Before:       n/a   After:  B8364733  **350**
+Routine Name: LRSCTX
+    Before:       n/a   After: B51489941  **350**
+Routine Name: LRSCTX1
+    Before:       n/a   After: B48804373  **350**
+Routine Name: LRSPRPT
+    Before: B92562557   After: B65444483  **1,72,248,259,317,350**
+Routine Name: LRSPRPTA
+    Before:       n/a   After: B15274783  **350**
+Routine Name: LRSRVR
+    Before: B17596078   After: B18215977  **232,303,346,350**
+Routine Name: LRSRVR5
+    Before:       n/a   After: B45171198  **350**
+Routine Name: LRSRVR6
+    Before: B25829656   After: B34119485  **346,378,350**
+Routine Name: LRSRVR8
+    Before:       n/a   After:B248084471  **350**
+Routine Name: LRSTUF2
+    Before: B11456917   After: B21119353  **121,153,263,347,350**
+Routine Name: LRTSTJAM
+    Before: B17412817   After: B30520985  **121,153,291,350**
+Routine Name: LRTSTJAN
+    Before: B13864468   After: B15648125  **67,100,121,128,202,221,337,350**
+Routine Name: LRTSTJM1
+    Before:  B4975842   After: B28238574  **350**
+Routine Name: LRTSTOUT
+    Before: B60326116   After:B163383366  **100,121,153,202,221,337,350**
+Routine Name: LRTSTSET
+    Before: B18867118   After: B10120516  **65,100,121,153,201,202,263,
+                                           291,350**
+Routine Name: LRTT5P1
+    Before: B25400134   After: B25453515  **153,221,263,274,358,350**
+Routine Name: LRU
+    Before: B39094486   After: B44711331  **1,72,201,248,350**
+Routine Name: LRUCSR
+    Before:       n/a   After: B10392354  **350**
+Routine Name: LRUDEL
+    Before: B12781700   After: B17685487  **1,72,121,201,350**
+Routine Name: LRUEPR
+    Before:       n/a   After:  B9595740  **350**
+Routine Name: LRUTELL
+    Before:  B1731983   After:  B1166200  **350**
+Routine Name: LRUTIL
+    Before:       n/a   After: B42182036  **350**
+Routine Name: LRUTIL1
+    Before:       n/a   After: B18356877  **350**
+Routine Name: LRUTIL2
+    Before:       n/a   After: B20508256  **350**
+Routine Name: LRUTIL3
+    Before:       n/a   After: B21135813  **350**
+Routine Name: LRUWLF
+    Before:  B6292054   After: B10175468  **72,350**
+Routine Name: LRVER
+    Before: B42247710   After: B43503691  **153,286,350**
+Routine Name: LRVER1
+    Before: B31119261   After: B33061562  **42,153,201,215,239,240,263,
+                                           232,286,291,350**
+Routine Name: LRVER3
+    Before: B49397241   After: B75732733  **42,100,121,140,171,153,221,
+                                           286,291,406,350**
+Routine Name: LRVER3A
+    Before: B23895252   After: B25488291  **1,5,42,100,121,153,190,221,
+                                           254,263,266,274,295,373,350**
+Routine Name: LRVER4
+    Before: B81796487   After: B82238256  **14,42,112,121,140,171,153,
+                                           188,279,283,286,350**
+Routine Name: LRVER5
+    Before: B82061816   After:B147369024  **42,153,283,286,350**
+Routine Name: LRVERA
+    Before: B22675696   After: B50656389  **153,271,286,350**
+Routine Name: LRVR
+    Before: B29572000   After: B31822971  **42,153,263,286,350**
+Routine Name: LRVR0
+    Before:       n/a   After:B109458597  **350**
+Routine Name: LRVR1
+    Before: B36555743   After: B56535395  **42,153,221,286,291,350**
+Routine Name: LRVR3
+    Before: B37947077   After: B71492279  **42,121,153,286,291,350**
+Routine Name: LRVR4
+    Before: B51672898   After: B53036474  **14,42,121,153,221,263,279,
+                                           283,287,286,330,350**
+Routine Name: LRVRA
+    Before: B22603314   After: B28568230  **153,221,263,350**
+Routine Name: LRVRAP4
+    Before:       n/a   After: B33201794  **350**
+Routine Name: LRVRMI0
+    Before:       n/a   After:  B2697549  **350**
+Routine Name: LRVRMI1
+    Before:       n/a   After: B34551287  **350**
+Routine Name: LRVRMI1A
+    Before:       n/a   After: B13452364  **350**
+Routine Name: LRVRMI2
+    Before:       n/a   After: B34553820  **350**
+Routine Name: LRVRMI2A
+    Before:       n/a   After: B77056025  **350**
+Routine Name: LRVRMI3
+    Before:       n/a   After: B17349617  **350**
+Routine Name: LRVRMI4
+    Before:       n/a   After: B37691501  **350**
+Routine Name: LRVRMI4A
+    Before:       n/a   After: B95345785  **350**
+Routine Name: LRVRMI5
+    Before:       n/a   After: B10998053  **350**
+Routine Name: LRVRPOC
+    Before: B91536012   After: B82812080  **290,350**
+Routine Name: LRVRPOCU
+    Before: B42664730   After: B51599484  **290,350**
+Routine Name: LRVRW
+    Before: B13773840   After: B16901632  **153,221,350**
+Routine Name: LRWLST1
+    Before: B94767270   After: B81664062  **48,65,121,153,261,286,331,
+                                           379,415,350**
+Routine Name: LRWLST11
+    Before: B57149101   After: B73046359  **121,128,153,202,286,331,375,350**
+Routine Name: LRWLST12
+    Before:  B8101983   After: B55671661  **153,201,350**
+Routine Name: LRWLST1A
+    Before:       n/a   After: B15060477  **350**
+Routine Name: LRWRKLS1
+    Before: B14695265   After: B21972414  **121,153,185,268,350**
+Routine Name: LRWRKLST
+    Before: B41281168   After: B65810954  **1,17,38,153,185,221,268,362,350**
+Routine Name: LRWU4
+    Before: B24817010   After: B32373640  **128,153,201,271,402,350**
+Routine Name: LRWU6
+    Before: B10023759   After: B22920488  **316,402,350**
+Routine Name: LRWU7
+    Before: B10236249   After: B33901774  **350**
+Routine Name: LRWU8
+    Before:       n/a   After:B142893179  **350**
+Routine Name: LRWU8A
+    Before:       n/a   After:B118207612  **350**
+Routine Name: LRWU9
+    Before:       n/a   After:B178029023  **350**
+Routine Name: LRX
+    Before: B57348907   After: B71828345  **65,153,201,217,290,360,350**
+Routine Name: LRXREF
+    Before: B15428719   After: B75229218  **70,153,263,350**
+ 
+Routine list of preceding patches: 116, 218, 269, 300, 308, 313, 315, 323
+                           330, 337, 339, 347, 348, 352, 358, 360, 361, 363
+                           373, 375, 378, 384, 386, 388, 392, 395, 402, 406
+                           413, 415
+
+=============================================================================
+User Information:
+Entered By  : MCCORMACK,JOHN                Date Entered  : NOV 08, 2005
+Completed By: HARMON,LUCILLE                Date Completed: SEP 13, 2012
+Released By : BELSCHWINDER,MICHAEL          Date Released : SEP 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
