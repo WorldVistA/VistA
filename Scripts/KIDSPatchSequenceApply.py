@@ -336,6 +336,9 @@ class KIDSPatchSequenceApply(object):
       if self._vistaPatchInfo.hasPatchInstalled(item, namespace, ver, patch):
         logger.debug("%s is arelady installed" % item)
         continue
+      installStatus = self._vistaPatchInfo.getInstallationStatus(item)
+      if self._vistaPatchInfo.isInstallCompleted(installStatus):
+        continue
       else:
         logger.error("dep %s is not installed for %s %s" %
                     (item, patchInfo.installName, patchInfo.kidsFilePath))
