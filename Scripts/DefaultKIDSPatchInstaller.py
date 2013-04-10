@@ -56,7 +56,6 @@ class DefaultKIDSPatchInstaller(object):
   """
   KIDS_MENU_OPTION_ACTION_LIST = [
       ("Want to continue installing this build\?","YES", False),
-      ("Incoming Mail Groups:", "", False),
       ("Enter the Coordinator for Mail Group", "", False),
       ("Want KIDS to Rebuild Menu Trees Upon Completion of Install\?",
        "", False),
