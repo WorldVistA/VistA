@@ -25,11 +25,15 @@ from VistATestClient import VistATestClientFactory, createTestClientArgParser
 class TestZTMGRSET(unittest.TestCase):
 
     def test_PATCHlessThan999(self):
-        '''Test the PATCH^ZTMGRSET(PatchNumber) entrypoint'''
+        '''Test the PATCH^ZTMGRSET(patchnumber=998) entrypoint'''
         self.PATCH("998")
 
+    def test_PATCHequalTo999(self):
+        '''Test the PATCH^ZTMGRSET(patchnumber=999) entrypoint'''
+        self.PATCH("999")
+
     def test_PATCHgreaterThan999(self):
-        '''Test the PATCH^ZTMGRSET(PatchNumber) entrypoint'''
+        '''Test the PATCH^ZTMGRSET(patchnumber=1000) entrypoint'''
         self.PATCH("1000")
 
     def PATCH(self, patchNumber):
@@ -46,6 +50,10 @@ class TestZTMGRSET(unittest.TestCase):
     def test_RELOADlessThan999(self):
         '''Test the RELOAD^ZTMGRSET entrypoint'''
         self.RELOAD("998")
+
+    def test_RELOADequalTo999(self):
+        '''Test the RELOAD^ZTMGRSET entrypoint'''
+        self.RELOAD("999")
 
     def test_RELOADgreaterThan999(self):
         '''Test the RELOAD^ZTMGRSET entrypoint'''
