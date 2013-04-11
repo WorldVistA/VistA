@@ -754,6 +754,11 @@ def routineLineCheckSum(routineLine, lineNum):
     checkSum += (lineNum+i+1)*ord(routineLine[i])
   return checkSum
 
+""""
+# checksum() 
+#    implements the same algorithm as CHECK1^XTSUMBLD
+#     written in the VistA Kernel in MUMPS code 
+""""
 def checksum(routine):
   """
   Compute the M routine checksum used by ``CHECK1^XTSUMBLD``,
