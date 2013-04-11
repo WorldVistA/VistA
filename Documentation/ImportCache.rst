@@ -7,16 +7,19 @@
 Packing Routines and Globals
 ----------------------------
 
-Within the Git repository, you can see the folders that contain all that is necessary to prepare the routines and globals to be imported into the Caché instance. The Packages folder contains all of the VistA FOIA software divided by package name.  Inside each package directory lies a Routines directory and a Globals directory. The latter contains globals divided up by the FileMan files they contain. The Scripts folder contains OSEHRA python scripts and helper routines. The python scripts are used to pack and unpack the routines.ro file, while the routines are used to import and export the globals from the MUMPS environment.
+Within the Git repository, you can see the folders that contain all that is necessary to prepare the routines and globals to
+be imported into the Caché instance. The Packages folder contains all of the VistA FOIA software divided by package name.
+Inside each package directory lies a Routines directory and a Globals directory. The latter contains globals divided up by
+the FileMan files they contain.
 
-Execute the following two commands to prepare the data for import .
+Execute the following two commands to prepare the data for import.  This utilizes a python file called PackRO.py, found in the
+Scripts directory of the VistA git repository.
 
 .. parsed-literal::
 
+  VistA-FOIA$ :usertype:`git ls-files -- "*.m" | python /path-to/VistA/Scripts/PackRO.py > VistAroutines.ro`
 
-  VistA-FOIA$ :usertype:`git ls-files -- "\*.m" | python Scripts/PackRO.py > routines.ro`
-
- VistA-FOIA$ :usertype:`git ls-files -- "\*.zwr" > globals.lst`
+  VistA-FOIA$ :usertype:`git ls-files -- "*.zwr" > globals.lst`
 
 
 
@@ -49,7 +52,7 @@ The %RI routine is a MUMPS routine that is used to import other routines from a 
 
   VISTA> :usertype:`D ^%RI`
   Input routine from Sequential
-  Device: (path to routines.ro)
+  Device: (path to VistAroutines.ro)
   Parameters? "R" =>  (enter)
 
     *****  W A R N I N G *****
@@ -89,13 +92,25 @@ The system will respond with a list of all that have been processed and then dis
 \- indicates routines which have not been filed.
 
 
-The next step is to import the Globals using the newly imported ZGI routine. Enter
+There is a set of OSEHRA routines that have been written to handle the importing and exporting of globals in the ZWR format.
+These two routines are found in the Scripts directory of the VistA git repository.  They must be packed and imported like the
+other VistA routines before the globals can be imported.
+
+To pack the routines, run a modified version of the packing command found above.  This command limits the listing of files to the
+Scripts directory:
+
+.. parsed-literal::
+
+  VistA$ :usertype:`git ls-files -- "Scripts/\*.m" | python Scripts/PackRO.py > OSEHRAroutines.ro`
+
+Then, import these two routines using the ^%RI utility as above. The next step is to use the newly imported ZGI routine
+to import the VistA globals from the repository:
 
 .. parsed-literal::
 
   VISTA> :usertype:`D LIST^ZGI("c:/path/to/VistA-FOIA/globals.lst","c:/path/to/VistA-FOIA/")`
 
-where \"path\\to\" is replaced with the path to the code download . This routine will go through all of the globals contained in the list file and import them into the VistA instance . The last package to be imported is the Wounded Injured and Ill Warriors.  The example below will demonstrate the command and the first/last globals to be imported.
+where \"path/to\" is replaced with the path to the code download . This routine will go through all of the globals contained in the list file and import them into the VistA instance . The last package to be imported is the Wounded Injured and Ill Warriors.  The example below will demonstrate the command and the first/last globals to be imported.
 
 .. parsed-literal::
 

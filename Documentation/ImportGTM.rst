@@ -7,17 +7,19 @@
 Packing Routines and Globals
 ----------------------------
 
-Within the Git repository, you can see the folders that contain all that is necessary to prepare the routines and globals to be imported into the Caché instance. The Packages folder contains all of the VistA FOIA software divided by package name.  Inside each package directory lies a Routines directory and a Globals directory. The latter contains globals divided up by the FileMan files they contain. The Scripts folder contains OSEHRA python scripts and helper routines. The python scripts are used to pack and unpack the routines.ro file, while the routines are used to import and export the globals from the MUMPS environment.
+Within the Git repository, you can see the folders that contain all that is necessary to prepare the routines and globals to
+be imported into the GT.M instance. The Packages folder contains all of the VistA FOIA software divided by package name.
+Inside each package directory lies a Routines directory and a Globals directory. The latter contains globals divided up by
+the FileMan files they contain.
 
-Execute the following two commands to prepare the data for import.
+Execute the following two commands to prepare the data for import.  This utilizes a python file called PackRO.py, found in the
+Scripts directory of the VistA git repository.
 
 .. parsed-literal::
 
-  $ :usertype:`git ls-files -- "*.m" | python Scripts/PackRO.py > routines.ro`
+  VistA-FOIA$ :usertype:`git ls-files -- "*.m" | python /path-to/VistA/Scripts/PackRO.py > VistAroutines.ro`
 
-  $ :usertype:`git ls-files -- "*.zwr" > globals.lst`
-
-
+  VistA-FOIA$ :usertype:`git ls-files -- "*.zwr" > globals.lst`
 
 The first command lists all the files that have the extension \'.m\' and passes those names to the python script PackRO.py to pack them into file routine.ro in routine transfer format. The second command lists all files that have the extension \'.zwr\' and writes those into globals.lst. This list will be read by the OSEHRA ZGI routine during the import step.
 
@@ -51,7 +53,7 @@ The routines.ro file that was created earlier is not formfeed delimited, so the 
 .. parsed-literal::
 
   Formfeed delimited <No>? :usertype:`<ENTER>`
-  Input Device: <terminal>: :usertype:`/home/osehra/Downloads/VistA-FOIA/routines.ro`
+  Input Device: <terminal>: :usertype:`/home/osehra/Downloads/VistA-FOIA/VistAroutines.ro`
 
   Routines
 
@@ -78,7 +80,7 @@ After entering the path, the names of the routines that are imported are shown o
   .
   .
   WVYNOTP   WIIACT4   WIIADT1   WIIELG    WIIGATD   WIILM     WIILM01   WIILM02
-  WIILM03   WIILM04   WIISERV   ZGI       ZGO
+  WIILM03   WIILM04   WIISERV
 
   Restored 2349289 lines in 26037 routines
 
@@ -102,7 +104,18 @@ transaction processing code that fails only on the GT.M platform.
 
   Restored ...
 
-Importing the globals is done with the use of a routine that was just imported. The ZGI routine was written to import the globals from the OSEHRA structure into a MUMPS environment. The command to do this is:
+Also, there is a set of OSEHRA routines that have been written to handle the importing and exporting of globals in the ZWR format.
+These two routines are found in the Scripts directory of the VistA git repository.  They must be packed and imported like the
+other VistA routines before the globals can be imported.
+
+To pack the routines, run a modified version of the packing command found above:
+
+.. parsed-literal::
+
+  VistA$ :usertype:`git ls-files -- "Scripts/\*.m" | python Scripts/PackRO.py > OSEHRAroutines.ro`
+
+Then, import these two routines from using the ^%RI utility. The next step is to use the newly imported ZGI routine
+to import the VistA globals from the repository
 
 .. parsed-literal::
 

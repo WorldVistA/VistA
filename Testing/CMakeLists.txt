@@ -240,7 +240,7 @@ IF(TEST_VISTA_FRESH)
   set(TEST_VISTA_SETUP_SITE_NAME "DEMO.OSEHRA.ORG" CACHE STRING "Name to set for the site address when initializing VistA instance.  Default is 'DEMO.OSEHRA.ORG'")
   set(TEST_VISTA_SETUP_PRIMARY_HFS_DIRECTORY "@" CACHE PATH "Absolute path to the system temp directory.  The default of '@' will cause the system to use the working directory of the process as the temp directory.  This path has a limit of 50 characters.  Avoid Windows paths with a '~' ")
 
-  set(RoutineImportFile "${VISTA_BINARY_DIR}/routines.ro")
+
 
   foreach(fvariable ${freshinfo})
     if(NOT ${fvariable})
@@ -249,8 +249,15 @@ IF(TEST_VISTA_FRESH)
   endforeach(fvariable ${freshinfo})
 
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/ImportRG.cmake.in ${VISTA_BINARY_DIR}/ImportRG.cmake @ONLY)
-  set(logfile "${VISTA_BINARY_DIR}/Testing/Log/RoutineImport.log")
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/RoutineImport.py.in ${VISTA_BINARY_DIR}/RoutineImport.py)
+
+  set(logfile "${VISTA_BINARY_DIR}/Testing/Log/VistARoutineImport.log")
+  set(RoutineImportFile "${VISTA_BINARY_DIR}/VistAroutines.ro")
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/RoutineImport.py.in ${VISTA_BINARY_DIR}/VistARoutineImport.py)
+
+  set(logfile "${VISTA_BINARY_DIR}/Testing/Log/OSEHRARoutineImport.log")
+  set(RoutineImportFile "${VISTA_BINARY_DIR}/OSEHRAroutines.ro")
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/RoutineImport.py.in ${VISTA_BINARY_DIR}/OSEHRARoutineImport.py)
+
   set(logfile "${VISTA_BINARY_DIR}/Testing/Log/GlobalImport.log")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/GlobalImport.py.in ${VISTA_BINARY_DIR}/GlobalImport.py)
   set(logfile "${VISTA_BINARY_DIR}/Testing/Log/Initialize.log")
