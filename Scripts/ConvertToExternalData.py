@@ -161,21 +161,25 @@ def addToGitIgnoreList(fileName):
 
 """ utility method to generate sha1 hash key for input file """
 def generateSha1Sum(inputFilename):
-  import hashlib
   assert os.path.exists(inputFilename)
-  sha1sum = hashlib.sha1()
   fileSize = os.path.getsize(inputFilename)
   MAX_READ_SIZE = 20 * 1024 * 1024 # 20 MiB
   buf = fileSize/50
   if buf > MAX_READ_SIZE:
     buf = MAX_READ_SIZE
   with open(inputFilename, "r") as inputFile:
-    while True:
-      nByte = inputFile.read(buf)
-      if nByte:
-        sha1sum.update(nByte)
-      else:
-        break
+    return generateSha1SumCommon(inputFile, buf)
+
+""" utility method to generate sha1 hash key for file like object """
+def generateSha1SumCommon(fileObject, buf=1024):
+  import hashlib
+  sha1sum = hashlib.sha1()
+  while True:
+    nByte = fileObject.read(buf)
+    if nByte:
+      sha1sum.update(nByte)
+    else:
+      break
   return sha1sum.hexdigest()
 
 """ Convert the KIDS Build, Global or TXT file to External Data format """
@@ -276,6 +280,17 @@ def main():
   converter = ExternalDataConverter(result.externalDataDir, result.gitignore,
       result.size*EXTERNAL_DATA_SIZE_THRESHOLD)
   converter.convertCurrentDir(result.inputDir)
+
+""" -------- TEST CODE SECTION -------- """
+TEST_INPUT_STRING = "LR*5.2*334"
+def test_generateSha1SumCommon(inputString=TEST_INPUT_STRING):
+  import StringIO
+  stringIo = StringIO.StringIO(inputString) # convert string to stringIO
+  print generateSha1SumCommon(stringIo)
+
+TEST_INPUT_FILE = "../Packages/MultiBuilds/CPRS28_RELATED.KID"
+def test_generateSha1Sum(inputFile=TEST_INPUT_FILE):
+  print generateSha1Sum(inputFile)
 
 if __name__ == '__main__':
   main()
