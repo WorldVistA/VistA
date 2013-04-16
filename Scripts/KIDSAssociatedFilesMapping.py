@@ -20,6 +20,7 @@
 KIDS_SINGLE_FILE_ASSOCIATION_DICT = {
   ### Info Files Section
   "CPRS GUI VERSION 28 NOTES.txt" : "MultiBuilds",
+  "EDP-2.TXT" : "EDP 2.0",
   "MAG3_0P121.ReadMe.txt" : "MAG*3.0*121",
   "MOCHA_1.txt" : "PSJ*5.0*261",
   "PREN Release.txt" : "PREN*1.0*1",
