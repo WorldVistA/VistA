@@ -29,6 +29,7 @@ LOAD(IO) ; Read Globals from IO device in ZWR format
 LIST(IO,DIR) ; Read list from IO, load Globals from each DIR<entry> device
  N CONFIG D CONFIG
  N Q,ZWR S Q=1
+ S DIR=$G(DIR,"")
  C IO X CONFIG("OPENIO") I '$T W "Failed to open: "_IO,! Q 0
  F  Q:'$$READLINE(.ZWR)  U $P W DIR_ZWR,! I '$$LOAD(DIR_ZWR) S Q=0
  G QUIT

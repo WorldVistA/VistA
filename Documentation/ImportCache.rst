@@ -8,7 +8,6 @@ To prepare the M components for import into the VistA instance, follow the steps
 
 .. _PrepareMComponents: PrepareMComponents.rst
 
-
 Import routines and globals into Caché
 --------------------------------------
 
@@ -75,15 +74,20 @@ The system will respond with a list of all that have been processed and then dis
 
 \- indicates routines which have not been filed.
 
-.. parsed-literal::
-
-  VISTA> :usertype:`D LIST^ZGI("c:/path/to/VistA-FOIA/globals.lst","c:/path/to/VistA-FOIA/")`
-
-where \"path/to\" is replaced with the path to the code download . This routine will go through all of the globals contained in the list file and import them into the VistA instance . The last package to be imported is the Wounded Injured and Ill Warriors.  The example below will demonstrate the command and the first/last globals to be imported.
+The next step is to use the newly imported ZGI routine
+to import the VistA globals from the repository:
 
 .. parsed-literal::
 
-  VISTA> :usertype:`D LIST^ZGI("C:/Users/joe.snyder/Desktop/testbin/globals.lst","C:/Users/joe.snyder/Desktop/VistA-FOIA/")`
+  VISTA> :usertype:`W $$LIST^ZGI("/path-to/VistA/globals.lst")`
+
+This routine will go through all of the globals contained in the list file and import them into the VistA instance.
+The last package to be imported is the Wounded Injured and Ill Warriors.  The example below will demonstrate the
+command and the first/last globals to be imported.
+
+.. parsed-literal::
+
+  VISTA> :usertype:`D LIST^ZGI("C:/Users/joe.snyder/Desktop/VistA/globals.lst")`
 
   C:/Users/joe.snyder/Desktop/VistA-FOIA/Packages/Accounts Receivable/Globals/340+AR DEBTOR.zwr
 

@@ -250,13 +250,9 @@ IF(TEST_VISTA_FRESH)
 
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/ImportRG.cmake.in ${VISTA_BINARY_DIR}/ImportRG.cmake @ONLY)
 
-  set(logfile "${VISTA_BINARY_DIR}/Testing/Log/VistARoutineImport.log")
-  set(RoutineImportFile "${VISTA_BINARY_DIR}/VistAroutines.ro")
+  set(logfile "${VISTA_BINARY_DIR}/Testing/Log/RoutineImport.log")
+  set(RoutineImportFile "${VISTA_BINARY_DIR}/routines.ro")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/RoutineImport.py.in ${VISTA_BINARY_DIR}/VistARoutineImport.py)
-
-  set(logfile "${VISTA_BINARY_DIR}/Testing/Log/OSEHRARoutineImport.log")
-  set(RoutineImportFile "${VISTA_BINARY_DIR}/OSEHRAroutines.ro")
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/RoutineImport.py.in ${VISTA_BINARY_DIR}/OSEHRARoutineImport.py)
 
   set(logfile "${VISTA_BINARY_DIR}/Testing/Log/GlobalImport.log")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/GlobalImport.py.in ${VISTA_BINARY_DIR}/GlobalImport.py)
