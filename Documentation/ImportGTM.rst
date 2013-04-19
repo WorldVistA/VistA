@@ -4,24 +4,9 @@
 .. role:: usertype
     :class: usertype
 
-Packing Routines and Globals
-----------------------------
+To prepare the M components for import into the VistA instance, follow the steps found in the PrepareMComponents_ document.
 
-Within the Git repository, you can see the folders that contain all that is necessary to prepare the routines and globals to
-be imported into the GT.M instance. The Packages folder contains all of the VistA FOIA software divided by package name.
-Inside each package directory lies a Routines directory and a Globals directory. The latter contains globals divided up by
-the FileMan files they contain.
-
-Execute the following two commands to prepare the data for import.  This utilizes a python file called PackRO.py, found in the
-Scripts directory of the VistA git repository.
-
-.. parsed-literal::
-
-  VistA-FOIA$ :usertype:`git ls-files -- "*.m" | python /path-to/VistA/Scripts/PackRO.py > VistAroutines.ro`
-
-  VistA-FOIA$ :usertype:`git ls-files -- "*.zwr" > globals.lst`
-
-The first command lists all the files that have the extension \'.m\' and passes those names to the python script PackRO.py to pack them into file routine.ro in routine transfer format. The second command lists all files that have the extension \'.zwr\' and writes those into globals.lst. This list will be read by the OSEHRA ZGI routine during the import step.
+.. _PrepareMComponents: PrepareMComponents.rst
 
 Import the Routines
 -------------------
@@ -103,16 +88,6 @@ transaction processing code that fails only on the GT.M platform.
   ZTLOAD1
 
   Restored ...
-
-Also, there is a set of OSEHRA routines that have been written to handle the importing and exporting of globals in the ZWR format.
-These two routines are found in the Scripts directory of the VistA git repository.  They must be packed and imported like the
-other VistA routines before the globals can be imported.
-
-To pack the routines, run a modified version of the packing command found above:
-
-.. parsed-literal::
-
-  VistA$ :usertype:`git ls-files -- "Scripts/\*.m" | python Scripts/PackRO.py > OSEHRAroutines.ro`
 
 Then, import these two routines from using the ^%RI utility. The next step is to use the newly imported ZGI routine
 to import the VistA globals from the repository

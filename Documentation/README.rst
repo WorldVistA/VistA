@@ -10,6 +10,7 @@ The instructions comprise of the following sections:
 
   * ObtainingandInstallAuxPrograms_
   * ObtainingVistAMCode_
+  * PrepareMComponents_
   * ChoosingMUMPSEnvironment_
 
 For the following two sections, follow the instructions based upon which type of MUMPS database will be utilized:
@@ -54,3 +55,4 @@ To report a problem or see potential solutions visit the `Troubleshooting Page`_
 .. _RunningandUploadingTests: RunningandUploadingTests.rst
 .. _ReviewingResults: ReviewingResults.rst
 .. _AutomatedVistAConfiguration: AutomatedVistAConfiguration.rst
+.. _PrepareMComponents: PrepareMComponents.rst
