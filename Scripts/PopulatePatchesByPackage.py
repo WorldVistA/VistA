@@ -32,9 +32,9 @@ if curDir not in sys.path:
   sys.path.append(curDir)
 
 from LoggerManager import logger, initConsoleLogging
-from KIDSPatchOrderGenerator import KIDSPatchOrderGenerator
-from KIDSPatchInfoParser import installNameToDirName
-from ConvertToExternalData import addToGitIgnoreList, isValidKIDSPatchHeaderSuffix
+from PatchOrderGenerator import PatchOrderGenerator
+from PatchInfoParser import installNameToDirName
+from ConvertToExternalData import addToGitIgnoreList, isValidKIDSBuildHeaderSuffix
 from ConvertToExternalData import isValidSha1Suffix
 from PopulatePackages import populatePackageMapByCSV, order_long_to_short
 
@@ -97,15 +97,15 @@ def populate(input):
   # Collect all KIDS and info files under the current directory recursively
   #---------------------------------------------------------------------------
   curDir = os.getcwd()
-  kidsOrderGen = KIDSPatchOrderGenerator()
-  patchOrder = kidsOrderGen.generatePatchOrder(curDir)
-  patchInfoDict = kidsOrderGen.getPatchInfoDict()
+  patchOrderGen = PatchOrderGenerator()
+  patchOrder = patchOrderGen.generatePatchOrder(curDir)
+  patchInfoDict = patchOrderGen.getPatchInfoDict()
   patchInfoSet = set(patchInfoDict.keys())
   patchList = patchInfoDict.values()
-  noKidsInfoDict = kidsOrderGen.getNoKidsBuildInfoDict()
+  noKidsInfoDict = patchOrderGen.getNoKidsBuildInfoDict()
   noKidsInfoSet = set(noKidsInfoDict.keys())
   noKidsPatchList = noKidsInfoDict.values()
-  leftoverTxtFiles = kidsOrderGen.getInvalidInfoFiles()
+  leftoverTxtFiles = patchOrderGen.getInvalidInfoFiles()
   #---------------------------------------------------------------------------
   # place multiBuilds KIDS patch under MultiBuilds directory
   #---------------------------------------------------------------------------
@@ -118,7 +118,7 @@ def populate(input):
                                          os.path.basename(src)))
     if src != dest:
       place(src,dest)
-    if isValidKIDSPatchHeaderSuffix(dest):
+    if isValidKIDSBuildHeaderSuffix(dest):
       " add to ignore list if not there"
       addToGitIgnoreList(dest[0:dest.rfind('.')])
     src = patchInfo.kidsSha1Path

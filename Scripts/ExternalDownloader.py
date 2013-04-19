@@ -28,7 +28,7 @@ from ConvertToExternalData import generateSha1Sum
 DEFAULT_EXTERNAL_DOWNLOAD_SITE_URL = "http://code.osehra.org/content/SHA1"
 
 """ find or download the external KIDS patch data, return the file path """
-def obtainKIDSPatchFileBySha1(filePath, sha1Sum, cacheDir):
+def obtainKIDSBuildFileBySha1(filePath, sha1Sum, cacheDir):
   assert cacheDir and os.path.exists(cacheDir)
   rootDir = os.path.dirname(filePath)
   externalFileName = generateExternalDataFileName(sha1Sum)
@@ -92,23 +92,23 @@ class ExternalDataDownloader(object):
 
 def main():
   initConsoleLogging()
-  # testing the obtainKIDSPatchFileBySha1
+  # testing the PatchFileBySha1
   logger.info(sys.argv)
-  obtainKIDSPatchFileBySha1(sys.argv[1], sys.argv[2], sys.argv[3])
+  PatchFileBySha1(sys.argv[1], sys.argv[2], sys.argv[3])
 
 def downloadAllKIDSSha1File(topDir, cacheDir):
-  from ConvertToExternalData import isValidKIDSPatchSha1Suffix
+  from ConvertToExternalData import isValidKIDSBuildSha1Suffix
   from ConvertToExternalData import readSha1SumFromSha1File
   import shutil
   initConsoleLogging()
   absCurDir = os.path.abspath(topDir)
   for (root, dirs, files) in os.walk(absCurDir):
     for f in files:
-      if not isValidKIDSPatchSha1Suffix(f):
+      if not isValidKIDSBuildSha1Suffix(f):
         continue
       filePath = os.path.join(root, f)
       sha1Sum = readSha1SumFromSha1File(filePath)
-      result, extFilePath = obtainKIDSPatchFileBySha1(filePath, sha1Sum, cacheDir)
+      result, extFilePath = obtainKIDSBuildFileBySha1(filePath, sha1Sum, cacheDir)
       if result:
         destFile = filePath[:filePath.rfind('.')]
         if os.path.exists(destFile) and generateSha1Sum(destFile) == sha1Sum:

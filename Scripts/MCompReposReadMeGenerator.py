@@ -21,7 +21,7 @@ import argparse
 import csv
 from string import Template
 from LoggerManager import logger, initConsoleLogging, initFileLogging
-from KIDSPatchParser import checksum
+from KIDSBuildParser import checksum
 
 HEADER_DESCRIPTION = """
 This directory holds M routines and globals for a VistA package.

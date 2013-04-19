@@ -133,8 +133,8 @@ class VistAPackageInfoFetcher(object):
             connection.send(";132;99999\r")
             break
         connection.expect("Select Utilities ")
-        result = parseKIDSPatchHistory(connection.before,
-                                       packageName, namespace, version)
+        result = parsePackagePatchHistory(connection.before,
+                                          packageName, namespace, version)
         break
       else:
         break
@@ -381,20 +381,20 @@ class PackagePatchHistory(object):
     self.namespace = namespace
     self.patchHistory = []
     self.version = None
-  def addPatchInfo(self, PatchInfo):
-    self.patchHistory.append(PatchInfo)
+  def addPatchInstallLog(self, PatchInstallLog):
+    self.patchHistory.append(PatchInstallLog)
   def hasPatchHistory(self):
     return len(self.patchHistory) > 0
   def setVersion(self, version):
     self.version = version
   def hasSeqNo(self, seqNo):
-    for patchInfo in self.patchHistory:
-      if patchInfo.seqNo == int(seqNo):
+    for patchLog in self.patchHistory:
+      if patchLog.seqNo == int(seqNo):
         return True
     return False
   def hasPatchNo(self, patchNo):
-    for patchInfo in self.patchHistory:
-      if patchInfo.patchNo == int(patchNo):
+    for patchLog in self.patchHistory:
+      if patchLog.patchNo == int(patchNo):
         return True;
     return False
   def getLastPatchInfo(self):
@@ -406,9 +406,9 @@ class PackagePatchHistory(object):
       return 0
     last = len(self.patchHistory)
     for index in range(last,0,-1):
-      patchInfo = self.patchHistory[index-1]
-      if patchInfo.seqNo:
-        return patchInfo.seqNo
+      patchLog = self.patchHistory[index-1]
+      if patchLog.seqNo:
+        return patchLog.seqNo
     return 0
   def __str__(self):
     return self.patchHistory.__str__()
@@ -416,9 +416,9 @@ class PackagePatchHistory(object):
     return self.patchHistory.__str__()
 
 """
-a class to parse and store KIDS patch history info
+a class to parse and store KIDS patch install history info
 """
-class PatchInfo(object):
+class PatchInstallLog(object):
   PATCH_HISTORY_LINE_REGEX = re.compile("^   [0-9]")
   PATCH_VERSION_LINE_REGEX = re.compile("^VERSION: [0-9.]+ ?")
   PATCH_VERSION_START_INDEX = 3
@@ -489,13 +489,13 @@ class PatchInfo(object):
     self.version = historyLine[historyLine.find("VERSION: ")+9:]
   @staticmethod
   def isValidHistoryLine(historyLine):
-    return PatchInfo.isPatchLine(historyLine) or PatchInfo.isVersionLine(historyLine)
+    return PatchInstallLog.isPatchLine(historyLine) or PatchInstallLog.isVersionLine(historyLine)
   @staticmethod
   def isPatchLine(patchLine):
-    return PatchInfo.PATCH_HISTORY_LINE_REGEX.search(patchLine) != None
+    return PatchInstallLog.PATCH_HISTORY_LINE_REGEX.search(patchLine) != None
   @staticmethod
   def isVersionLine(versionLine):
-    return PatchInfo.PATCH_VERSION_LINE_REGEX.search(versionLine) != None
+    return PatchInstallLog.PATCH_VERSION_LINE_REGEX.search(versionLine) != None
 
   def __str__(self):
     retString = ""
@@ -522,7 +522,7 @@ def indexOfInstallStatus(statusTxt):
   return -1
 
 """ function to convert package patch history into PackagePatchHistory """
-def parseKIDSPatchHistory(historyString, packageName, namespace, version):
+def parsePackagePatchHistory(historyString, packageName, namespace, version):
   allLines = historyString.split('\r\n')
   patchHistoryStart = False
   result = None
@@ -534,20 +534,20 @@ def parseKIDSPatchHistory(historyString, packageName, namespace, version):
       patchHistoryStart = True
       continue
     if patchHistoryStart:
-      if not PatchInfo.isValidHistoryLine(line):
+      if not PatchInstallLog.isValidHistoryLine(line):
         continue
       if not result: result = PackagePatchHistory(packageName, namespace)
-      patchInfo = PatchInfo(line)
-      result.addPatchInfo(patchInfo)
-      if patchInfo.hasVersion():
+      patchLog = PatchInstallLog(line)
+      result.addPatchInstallLog(patchLog)
+      if patchLog.hasVersion():
         if version:
           try:
-            if float(version) != float(patchInfo.version):
+            if float(version) != float(patchLog.version):
               logger.error("version mismatch, %s:%s" %
-                           (version, patchInfo.version))
+                           (version, patchLog.version))
           except ValueError as ve:
             logger.error(ve)
-        result.setVersion(patchInfo.version)
+        result.setVersion(patchLog.version)
   return result
 
 """ test the fetcher class """

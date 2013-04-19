@@ -14,32 +14,32 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-from DefaultKIDSPatchInstaller import DefaultKIDSPatchInstaller
+from DefaultKIDSBuildInstaller import DefaultKIDSBuildInstaller
 
 """ This is an example of custom installer to handle post install questions
     Requirement for custom installer python script:
     1. Must be a class named CustomInstaller
     2. The constructor __init__ takes the exact arguments as the
-       DefaultKIDSPatchInstaller
-    3. Prefer to be a subclass of DefaultKIDSPatchInstaller
-    4. Refer to DefaultKIDSPatchInstaller for methods to override
-    5. If not a subclass of DefaultKIDSPatchInstaller, must have a method
+       DefaultKIDSBuildInstaller
+    3. Prefer to be a subclass of DefaultKIDSBuildInstaller
+    4. Refer to DefaultKIDSBuildInstaller for methods to override
+    5. If not a subclass of DefaultKIDSBuildInstaller, must have a method
        named runInstallation, and take an argument connection
        from VistATestClient.
 """
-class CustomInstaller(DefaultKIDSPatchInstaller):
+class CustomInstaller(DefaultKIDSBuildInstaller):
   def __init__(self, kidsFile, kidsInstallName,
                seqNo = None, logFile = None, multiBuildList=None,
                duz=17, **kargs):
     print kidsInstallName, seqNo
     assert kidsInstallName == "XU*8.0*599" and int(seqNo) == 481
-    DefaultKIDSPatchInstaller.__init__(self, kidsFile,
+    DefaultKIDSBuildInstaller.__init__(self, kidsFile,
                                        kidsInstallName,
                                        seqNo, logFile,
                                        multiBuildList,
                                        duz, **kargs)
   """
-    @override DefaultKIDSPatchInstaller.runPostInstallationRoutine
+    @override DefaultKIDSBuildInstaller.runPostInstallationRoutine
   """
   def runPostInstallationRoutine(self, connection, **kargs):
     connection.expect("ZTMGRSET Version")

@@ -23,7 +23,7 @@ import argparse
 import re
 
 from LoggerManager import initConsoleLogging, logger
-from KIDSPatchInfoParser import installNameToDirName
+from PatchInfoParser import installNameToDirName
 
 """
   KIDS Section Parser Interface
@@ -400,7 +400,7 @@ class Routine(object):
 """
   class to parse KIDS Build, also implement ISectionParser Interface for install Name
 """
-class KIDSPatchParser(object, ISectionParser):
+class KIDSBuildParser(object, ISectionParser):
   """
     enum for section
   """
@@ -502,18 +502,18 @@ class KIDSPatchParser(object, ISectionParser):
   """
     verify the integraty of a KIDS Patch
   """
-  def verifyKIDSPatch(self, kidsPatch):
-    self.parseKIDSBuild(kidsPatch)
+  def verifyKIDSBuild(self, kidsBuild):
+    self.parseKIDSBuild(kidsBuild)
     return self.__verifyResult__()
   """
     main workflow to parse a KIDS build
-    @kidsPatch: file path of a KIDS file
+    @kidsBuild: file path of a KIDS file
   """
-  def parseKIDSBuild(self, kidsPatch):
-    assert os.path.exists(kidsPatch)
-    logger.info("Parsing KIDS file %s" % kidsPatch)
+  def parseKIDSBuild(self, kidsBuild):
+    assert os.path.exists(kidsBuild)
+    logger.info("Parsing KIDS file %s" % kidsBuild)
     lines = None
-    with open(kidsPatch, 'r') as input:
+    with open(kidsBuild, 'r') as input:
       curLine = input.readline()
       lineNum = 0
       while len(curLine) > 0:
@@ -695,7 +695,7 @@ class KIDSPatchParser(object, ISectionParser):
       assert self._curKidsBuild.installName != installName
     self._curKidsBuild = KIDSBuild(installName)
     self._kidsBuilds.append(self._curKidsBuild)
-  def __onKidsPatchSectionStart__(self, section, lines, **kargs):
+  def __onKIDSSectionStart__(self, section, lines, **kargs):
     line = lines[0].rstrip(" \r\n")
     ret = re.search('^\*\*KIDS\*\*:(?P<name>.*)\^$', line)
     if ret:
@@ -713,7 +713,7 @@ class KIDSPatchParser(object, ISectionParser):
   """ set up section handler """
   def __initSectionHandler__(self):
     self._sectionHandler = {
-        self.KIDS_PATCH_SECTION: self.__onKidsPatchSectionStart__,
+        self.KIDS_PATCH_SECTION: self.__onKIDSSectionStart__,
         self.PRE_INSTALL_SECTION: self.__onPreInstallSectionStart__,
         self.POST_INSTALL_SECTION: self.__onPostInstallSectionStart__,
         self.PRE_SECTION: self.__onEnvCheckSectionStart__,
@@ -812,7 +812,7 @@ def loadMetaDataFromJSON(inputFileName):
     for depBuild in build['dependency']:
       kidsBuild.addDependencyBuild([depBuild, None])
     kidsBuilds.append(kidsBuild)
-  seqNo = KIDSPatchParser.parseKIDSHeader(header)
+  seqNo = KIDSBuildParser.parseKIDSHeader(header)
   return (installNameList, seqNo, kidsBuilds)
 
 
@@ -835,14 +835,14 @@ def main():
     chksum= checksum(result.inputFile)
     sys.stdout.write("Checksum is: %s\n" % chksum)
   elif result.verify:
-    kidsParser = KIDSPatchParser(result.outputDir)
-    ret = kidsParser.verifyKIDSPatch(result.inputFile)
+    kidsParser = KIDSBuildParser(result.outputDir)
+    ret = kidsParser.verifyKIDSBuild(result.inputFile)
     if ret:
       logger.info("%s is valid" % result.inputFile)
     else:
       logger.error("%s is  invalid" % result.inputFile)
   else:
-    kidsParser = KIDSPatchParser(result.outputDir)
+    kidsParser = KIDSBuildParser(result.outputDir)
     kidsParser.parseKIDSBuild(result.inputFile)
     kidsParser.printResult()
   if result.jsonOutputFile:

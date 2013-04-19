@@ -32,23 +32,23 @@ EXTERNAL_DATA_PREFIX = ".ExternalData_SHA1_"
 
 IGNORE_FILE_LIST = ("CMakeLists.txt")
 
-VALID_KIDS_PATCH_SUFFIX_LIST = (".KIDs", ".KID", ".kids", ".kid")
-VALID_KIDS_INFO_SUFFIX_LIST = (".TXTs",".TXT",".txt")
+VALID_KIDS_BUILD_SUFFIX_LIST = (".KIDs", ".KID", ".kids", ".kid")
+VALID_PATCH_INFO_SUFFIX_LIST = (".TXTs",".TXT",".txt")
 VALID_CSV_FILE_SUFFIX_LIST = (".csv",".CSV")
 VALID_GLOBAL_FILE_SUFFIX_LIST = (".GBLs", ".GBL")
 VALID_HEADER_FILE_SUFFIX_LIST = (".json",".JSON")
 VALID_SHA1_FILE_SUFFIX_LIST = (".SHA1",".sha1")
 
-VALID_KIDS_PATCH_HEADER_SUFFIX_LIST = tuple(
-  [x+y for x in VALID_KIDS_PATCH_SUFFIX_LIST for y in VALID_HEADER_FILE_SUFFIX_LIST]
+VALID_KIDS_BUILD_HEADER_SUFFIX_LIST = tuple(
+  [x+y for x in VALID_KIDS_BUILD_SUFFIX_LIST for y in VALID_HEADER_FILE_SUFFIX_LIST]
 )
 
-VALID_KIDS_PATCH_SHA1_SUFFIX_LIST = tuple(
-  [x+y for x in VALID_KIDS_PATCH_SUFFIX_LIST for y in VALID_SHA1_FILE_SUFFIX_LIST]
+VALID_KIDS_BUILD_SHA1_SUFFIX_LIST = tuple(
+  [x+y for x in VALID_KIDS_BUILD_SUFFIX_LIST for y in VALID_SHA1_FILE_SUFFIX_LIST]
 )
 
-VALID_KIDS_INFO_SHA1_SUFFIX_LIST = tuple(
-  [x+y for x in VALID_KIDS_INFO_SUFFIX_LIST for y in VALID_SHA1_FILE_SUFFIX_LIST]
+VALID_PATCH_INFO_SHA1_SUFFIX_LIST = tuple(
+  [x+y for x in VALID_PATCH_INFO_SUFFIX_LIST for y in VALID_SHA1_FILE_SUFFIX_LIST]
 )
 
 VALID_GLOBAL_SHA1_SUFFIX_LIST = tuple(
@@ -64,23 +64,23 @@ def isValidSha1Suffix(fileName):
 def isValidPythonSuffix(fileName):
   return fileName.endswith(".py")
 
-def isValidKIDSPatchSuffix(fileName):
-  return fileName.endswith(VALID_KIDS_PATCH_SUFFIX_LIST)
+def isValidKIDSBuildSuffix(fileName):
+  return fileName.endswith(VALID_KIDS_BUILD_SUFFIX_LIST)
 
-def isValidKIDSInfoSuffix(fileName):
-  return fileName.endswith(VALID_KIDS_INFO_SUFFIX_LIST)
+def isValidPatchInfoSuffix(fileName):
+  return fileName.endswith(VALID_PATCH_INFO_SUFFIX_LIST)
 
 def isValidGlobalFileSuffix(fileName):
   return fileName.endswith(VALID_GLOBAL_FILE_SUFFIX_LIST)
 
-def isValidKIDSPatchHeaderSuffix(fileName):
-  return fileName.endswith(VALID_KIDS_PATCH_HEADER_SUFFIX_LIST)
+def isValidKIDSBuildHeaderSuffix(fileName):
+  return fileName.endswith(VALID_KIDS_BUILD_HEADER_SUFFIX_LIST)
 
-def isValidKIDSPatchSha1Suffix(fileName):
-  return fileName.endswith(VALID_KIDS_PATCH_SHA1_SUFFIX_LIST)
+def isValidKIDSBuildSha1Suffix(fileName):
+  return fileName.endswith(VALID_KIDS_BUILD_SHA1_SUFFIX_LIST)
 
-def isValidKIDSInfoSha1Suffix(fileName):
-  return fileName.endswith(VALID_KIDS_INFO_SHA1_SUFFIX_LIST)
+def isValidPatchInfoSha1Suffix(fileName):
+  return fileName.endswith(VALID_PATCH_INFO_SHA1_SUFFIX_LIST)
 
 def isValidGlobalSha1Suffix(fileName):
   return fileName.endswith(VALID_GLOBAL_SHA1_SUFFIX_LIST)
@@ -89,16 +89,16 @@ def isValidCSVSuffix(fileName):
   return fileName.endswith(VALID_CSV_FILE_SUFFIX_LIST)
 
 def isValidPatchDataSuffix(fileName, includeExternalExt=False):
-  isValid = ( isValidKIDSPatchSuffix(fileName)  or
-              isValidKIDSInfoSuffix(fileName)   or
+  isValid = ( isValidKIDSBuildSuffix(fileName)  or
+              isValidPatchInfoSuffix(fileName)   or
               isValidGlobalFileSuffix(fileName) or
               isValidCSVSuffix(fileName)        or
               isValidPythonSuffix(fileName)
             )
   if includeExternalExt:
-    isValid = isValid or (isValidKIDSPatchHeaderSuffix(fileName) or
-                          isValidKIDSPatchSha1Suffix(fileName) or
-                          isValidKIDSInfoSha1Suffix(fileName) or
+    isValid = isValid or (isValidKIDSBuildHeaderSuffix(fileName) or
+                          isValidKIDSBuildSha1Suffix(fileName) or
+                          isValidPatchInfoSha1Suffix(fileName) or
                           isValidGlobalSha1Suffix(fileName))
   return isValid
 
@@ -108,8 +108,11 @@ def isValidPatchRelatedFiles(absFileName, checkExternalExt=False):
   if fileName.startswith('.'):
     return False
   # ignore symlink files as well
-  st = os.stat(absFileName)
-  if stat.S_ISLNK(st.st_mode):
+  try:
+    st = os.stat(absFileName)
+    if stat.S_ISLNK(st.st_mode):
+      return False
+  except OSError:
     return False
   # ignore the external data file
   if fileName.startswith(EXTERNAL_DATA_PREFIX):
@@ -204,19 +207,19 @@ class ExternalDataConverter(object):
         fileSize = os.path.getsize(absFileName)
         if fileSize < self._sizeLimit:
           continue
-        if isValidKIDSPatchSuffix(fileName):
+        if isValidKIDSBuildSuffix(fileName):
           logger.info("converting KIDS file %s " % absFileName)
           self.convertKIDSBuildFile(absFileName)
         else:
           self.convertToSha1File(absFileName)
   """ """
   def convertKIDSBuildFile(self, kidsFile):
-    from KIDSPatchParser import KIDSPatchParser, outputMetaDataInJSON
+    from KIDSBuildParser import KIDSBuildParser, outputMetaDataInJSON
     assert os.path.exists(kidsFile)
     """ write KIDS metadata file """
-    kidsParser = KIDSPatchParser(None)
+    kidsParser = KIDSBuildParser(None)
     """ do not parse the routine part """
-    kidsParser.unregisterSectionHandler(KIDSPatchParser.ROUTINE_SECTION)
+    kidsParser.unregisterSectionHandler(KIDSBuildParser.ROUTINE_SECTION)
     kidsParser.parseKIDSBuild(kidsFile)
     logger.info("output meta data as %s" % (kidsFile+".json"))
     outputMetaDataInJSON(kidsParser, kidsFile+".json")
